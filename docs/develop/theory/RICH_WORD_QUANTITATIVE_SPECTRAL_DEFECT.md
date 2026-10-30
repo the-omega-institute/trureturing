@@ -1397,3 +1397,619 @@ The minimum $H=30$ and the equality classification of Theorem 14.1 concern the l
 *Proof.* Apply Theorems 12.2 and 13.1 to (43). This is also an arbitrary-nonerasing-morphism existence witness, since that larger class contains the literal class. Taking the infimum over all infinite rich four-letter words proves (60). Theorem 14.1 uses the literal marker conditions in its size and word arguments; there is no implication giving them for an arbitrary morphism. Inequality (60) is an upper bound supplied by one actual word and supplies no lower bound for all words in $\mathcal C_4$. The construction fixes $r=3$ and gives one exact exponent, so it supplies neither the higher-parameter constructions nor a family with strictly positive exponent excess. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 16. A finite ordinary obstruction in the first enlarged row
+
+**Definition 16.1 (The enlarged row and its source prefix).** Fix an integer $r\ge4$ and retain exactly the original substitution $\varphi$, source $u=u_{2r+1}$, actual alphabet convention and ordinary critical exponent of Definitions 1.1–1.3 and 7.1. Define the full positive row $\widetilde h$ by
+
+$$
+\begin{gathered}
+\widetilde h_0=1,\qquad \widetilde h_{r-1}=3,\qquad
+\widetilde h_i=2\quad(1\le i\le r,\ i\ne r-1),\\
+\widetilde h_{r+j}=3\cdot2^{j-1}\quad(1\le j<r),\qquad
+\widetilde h_{2r}=3\cdot2^{r-1}+1.
+\end{gathered}
+\tag{61}
+$$
+
+Thus $H(\widetilde h)=2r+3\cdot2^r$. Put
+
+$$
+J=\{1,\ldots,r\}\setminus\{r-1\},\qquad
+T_n=\varphi^n(0),\qquad F_n=T_n[0,2^n-1)\quad(0\le n\le2r).
+$$
+
+The supplied ruler identity (36) says that $T_n$ is an actual prefix of $u$, has length $2^n$, and has letter $\nu_2(j+1)$ at position $j$. It follows in particular that
+
+$$
+T_n=F_n n,\qquad F_{n+1}=F_n n F_n\quad(0\le n<2r),
+\tag{62}
+$$
+
+where an integer in a concatenation denotes one source letter. For $n\ge1$, $F_n$ contains every letter $0,\ldots,n-1$, contains no other letter, and ends in $0$. These are consequences of the same identity, with the source unchanged.
+
+**Theorem 16.2 (A dictionary-uniform finite repetition witness).** For every integer $r\ge4$ and every pair $(\eta,p)\in\mathcal L_r$ of Definition 8.1 with length row exactly (61), suppose that $x=\eta(u_{2r+1})$ is rich and has exactly $r+1$ actual letters. Then the finite actual output prefix
+
+$$
+W=\eta(T_{r+3})=\eta\bigl(\varphi^{r+3}(0)\bigr)
+\tag{63}
+$$
+
+contains a factor of one of the following three forms, for output letters $d,e$ with $d\ne e$ in the last two forms:
+
+$$
+ddd,\qquad deded,\qquad d e e d e e d.
+\tag{64}
+$$
+
+The third word has length seven. Consequently
+
+$$
+E(x)\ge\frac73>e_r.
+\tag{65}
+$$
+
+The same source prefix $T_{r+3}$ works for every dictionary in (61), and its image length is $3\cdot2^{r+2}+24$. In particular, at $r=4$ every rich five-actual-letter pair in $\mathcal L_4$ with row $(1,2,2,3,2,3,6,12,25)$ and $H=56$ has a factor of (64) within its first $216$ output letters, and cannot have ordinary exponent $e_4$.
+
+*Proof.* Since $h_0=1$ and every image begins with the nonempty marker, $p$ is a single letter $a$ and $\eta(0)=a$. Write $\eta(i)=a q_i$. The complete-return condition in Definition 8.1 makes every $q_i$ free of $a$: any occurrence of $a$ in $q_i$ would give an additional occurrence of $p=a$ in $a q_i a$. All the $q_i$ are palindromes. For $i\in J$ their length is one, so write $q_i=b_i$. Injectivity makes these $r-1$ letters distinct, and each differs from $a$. Every source letter occurs in $u$, so the actual-alphabet hypothesis leaves exactly one further nonmarker letter, say $c$:
+
+$$
+\operatorname{Alph}(x)=\{a\}\cup\{b_i:i\in J\}\cup\{c\}.
+\tag{66}
+$$
+
+Put $K=\{b_i:i\in J\}$. The length-two palindromes at indices $r-1$ and $r+1$ have the form
+
+$$
+q_{r-1}=z^2,\qquad q_{r+1}=y^2,
+\qquad z,y\in K\cup\{c\}.
+\tag{67}
+$$
+
+Injectivity also gives $z\ne y$, although the argument below does not require that extra restriction. Every nonempty $q_i$ with $i\le r+1$ is therefore a constant word.
+
+We use the complete-return characterization of richness as a supplied intermediate result: every factor whose only occurrences of a letter $d$ are its two endpoints is a palindrome. This is Glen–Justin–Widmer–Zamboni, [*Palindromic richness*, Theorem 2.14 and Remark 2.15, arXiv:0801.1656v1](https://arxiv.org/html/0801.1656v1), [doi:10.1016/j.ejc.2008.04.006](https://doi.org/10.1016/j.ejc.2008.04.006). We use its implication from richness, with no recurrence or reversal-closure premise. In particular, the letter immediately after the first endpoint equals the letter immediately before the second endpoint. All applications below are to consecutive occurrences inside the displayed finite prefix $W$.
+
+Suppose for a contradiction that $W$ has none of the three factors (64). Any constant word of length at least three is then excluded, as is an alternating word of length five on distinct letters.
+
+The first occurrence of the source letter $r+2$ is preceded by $F_{r+2}$. Thus
+
+$$
+U=\eta(F_{r+2})a,\qquad Uq_{r+2}=\eta(T_{r+2})
+\tag{68}
+$$
+
+are prefixes of $W$. Here $|q_{r+2}|=5$, because $2<r$. Every nonmarker occurring in $U$ has its last occurrence there followed by $a$: take its last constant block among the $q_i$ for $i\le r+1$, and then the next marker, including the final appended marker. For any such letter $d$, its first occurrence in $q_{r+2}$ cannot be noninitial. Otherwise the factor from its last occurrence in $U$ to its first occurrence in $q_{r+2}$ is a complete return to $d$, with second letter $a$ and penultimate letter different from $a$, contradicting richness.
+
+If $c$ occurs in either word in (67), all the nonmarkers in (66) already occur in $U$. The preceding observation forces $q_{r+2}$ to be constant: every letter different from its first letter would have a noninitial first occurrence. Its length five contradicts the exclusion of $ddd$. Hence
+
+$$
+z,y\in K,
+\tag{69}
+$$
+
+and $c$ does not occur in $U$. The same observation shows that a nonconstant $q_{r+2}$ must start with a letter $b\in K$ and use only $b$ and $c$, with both occurring. Indeed, if it started with $c$, no member of $K$ could first enter later, and it would be constant. Write its length-five palindrome as $b s t s b$, where $s,t\in\{b,c\}$. Of the four choices for $(s,t)$, $(b,b)$ and $(c,c)$ contain a cube, and $(c,b)$ gives the alternating factor $bcbcb$. The only remaining choice is
+
+$$
+q_{r+2}=bb c bb.
+\tag{70}
+$$
+
+Next use (62) at $n=r+2$. Since $r+3<2r$, the entire prefix in (63) is still in the ruler range, and
+
+$$
+V=\eta(F_{r+3})a
+ =\eta(F_{r+2})\,a q_{r+2}\,\eta(F_{r+2})a,
+\qquad W=Vq_{r+3}.
+\tag{71}
+$$
+
+Every letter of $K$ occurs in the final $\eta(F_{r+2})$ and has its last occurrence in $V$ followed by $a$. The letter $c$ is absent from that final part by (69); its last occurrence in $V$ is the middle of (70), and is followed by $b$. The next palindrome $q_{r+3}$ has length eleven, since $3<r$.
+
+For a letter of $K$, the same last-to-first complete-return argument shows that its first occurrence in $q_{r+3}$, if any, must be initial. The word $q_{r+3}$ cannot start with $c$: the complete return from the last $c$ in $V$ would have second letter $b$ and penultimate letter $a$. Suppose it starts with $d\in K\setminus\{b\}$. No other member of $K$ can occur later. If $c$ first occurs later, the complete return from the last $c$ in $V$ requires its preceding letter to be $b$, which cannot have occurred. Thus $c$ cannot occur either, making $q_{r+3}$ constant and giving a cube. We conclude that $q_{r+3}$ starts with $b$ and uses only $b,c$.
+
+Its central seven-letter factor is a palindrome on at most two letters. Write that factor as $\alpha\beta\gamma\delta\gamma\beta\alpha$. If $\gamma=\delta$, its middle three letters are a cube. Otherwise $\gamma\ne\delta$. If $\beta=\delta$, the middle five letters are the alternating word $\delta\gamma\delta\gamma\delta$. The absence of these two forms therefore forces $\beta=\gamma$. If also $\alpha=\gamma$, the first three letters are a cube. The only remaining possibility is $\alpha=\delta$, giving
+
+$$
+\delta\gamma\gamma\delta\gamma\gamma\delta,
+$$
+
+which is the third form in (64). This contradicts the assumption on $W$ in every case. We have proved the finite witness assertion for every dictionary, without choosing any of the words at indices greater than $r+3$.
+
+The three forms in (64) have least periods one, two and three, respectively, and hence ordinary exponents $3$, $5/2$ and $7/3$. In the third case periods one and two are impossible because $d\ne e$; period three follows by direct comparison. Thus (63) certifies the ordinary bound in (65), even if $E(x)$ is infinite. Identity (27) gives
+
+$$
+e_r=2+\frac1{\Lambda^r-1}
+ <2+\frac1{2^r-1}\le\frac{31}{15}<\frac73.
+$$
+
+Finally $T_n$ has $2^{n-i-1}$ occurrences of each $i<n$ and one occurrence of $n$, by (36). At $n=r+3$ its image length is therefore
+
+$$
+\sum_{i=0}^{r+2}2^{r+2-i}\widetilde h_i+\widetilde h_{r+3}
+ =3\cdot2^{r+2}+24.
+$$
+
+At $r=4$ this is $216$, and (61) is exactly the row in the statement. The source ruler identity and the cited richness characterization are reused in full as intermediate inputs. The consequences (69)–(70), the restriction of the next block to two letters, and the finite-prefix obstruction for the whole row (61) are the additional inferences; neither a length equation nor the sufficient richness criterion in Dvořáková–Pelantová, [*The limit of repetition thresholds of rich sequences*, §7, arXiv:2509.06104v1, Definition 18 and Proposition 19](https://arxiv.org/html/2509.06104v1#S7), [doi:10.37236/14600](https://doi.org/10.37236/14600), supplies that row-wide conclusion. The literal class here is exactly their Definition 18, journal Definition 19, with the additional nonempty-marker convention of Definition 8.1. $\square$
+
+## 17. The necessary length boundary for every higher parameter
+
+**Corollary 17.1 (Exclusion below the next length boundary).** For every integer $r\ge4$ and every $(\eta,p)\in\mathcal L_r$ for which $\eta(u_{2r+1})$ is rich, has exactly $r+1$ actual letters and satisfies the ordinary equality $E(\eta(u_{2r+1}))=e_r$, one has
+
+$$
+H\ge2r+3\cdot2^r+2.
+\tag{72}
+$$
+
+In particular $H\ge58$ at $r=4$. This is a necessary boundary, with no assertion of sharpness or attainment. For $r=3$, the existing minimum and equality class remain precisely $H=30$ and (43) up to a bijective renaming, as supplied by Theorems 12.2, 13.1 and 14.1.
+
+*Proof.* Put
+
+$$
+S_r=r+2^{r+1}-1,\qquad H_0=2S_r-2^r=2r+3\cdot2^r-2.
+$$
+
+We reuse the exact-attainment cancellation of Corollary 3.2, its complete positive-integer parameterization in Theorem 4.2, and the marker relaxation of Theorem 8.2. In particular, with $m=|p|$ and $t=h_r$,
+
+$$
+H=(r+1)t+\sum_{i=0}^{r-1}2^{r-i}h_i,
+\qquad H\ge(m+1)S_r-2^r.
+\tag{73}
+$$
+
+If $m\ge2$, the latter inequality gives $H\ge H_0+S_r>H_0+4$, since $r\ge4$. Hence a putative pair with $H<H_0+4$ must have $m=1$.
+
+Among the independent positive integers $h_0,\ldots,h_{r-1},t$, at most one is one, since an image of length one would be the marker itself and $\eta$ is injective. If none is one, (73) gives $H\ge2S_r=H_0+2^r$. If the unique one is not $h_0$, its coefficient in (73) is at most $2^{r-1}$: all the other powers of two are at most this, and $r+1\le2^{r-1}$ for $r\ge4$. In that case
+
+$$
+H\ge2S_r-2^{r-1}=H_0+2^{r-1}\ge H_0+8.
+$$
+
+Both cases contradict $H<H_0+4$. Thus $h_0=1$ and $h_1,\ldots,h_{r-1},t\ge2$. Subtracting their minimum contribution in (73) gives the exact nonnegative integer equation
+
+$$
+H-H_0=(r+1)(t-2)+\sum_{i=1}^{r-1}2^{r-i}(h_i-2).
+\tag{74}
+$$
+
+The only coefficient below four on the right is two, at $h_{r-1}$; the coefficient of $t-2$ is at least five. Consequently $H<H_0+4$ permits exactly two parameter choices: all increments vanish, or $h_{r-1}-2=1$ and all other increments vanish. In the first case Theorem 4.2 gives the full row (34), excluded by the ordinary fifth-power conclusion of Theorem 9.1. In the second case the same parameterization gives exactly (61): the change of $h_{r-1}$ increases only the final dependent coordinate $h_{2r}$, by one. Theorem 16.2 excludes every rich dictionary in that row. Thus no attaining pair has $H<H_0+4$, proving (72).
+
+The range distinction is exact. Substituting $r=3$ into the formula for (61) gives $(1,2,3,2,3,6,13)$, the existing attaining row (43), whose literal construction, infinite richness, ordinary exponent and equality classification are reused from Theorems 12.2–14.1. Its block $q_{r+3}=q_6$ has even length twelve, whereas the obstruction above requires $r+3<2r$ and the odd length eleven. Thus Theorem 16.2 and (72) have the stated range $r\ge4$ and do not displace that construction.
+
+All uses of the marker concern the same morphism $\eta(i)=p q_i$ on the original $u_{2r+1}$. The general overlapping complete-return representation, a conjugated morphism or a derived source does not supply this literal factorization with these lengths, as distinguished in Section 11. The new length exclusion is the combination of the two exact possibilities in (74) with the finite witness of Theorem 16.2; the cancellation and parameterization in (73) are the existing supplied inputs. Cancellation alone still asserts no realizability. Rows of total length at or above (72), and exact rich original-source existence for $r\ge4$, are not settled by this exclusion, even within $\mathcal L_r$. Neither the finite ordinary witness nor the necessary morphic length inequality gives an asymptotic-exponent identity, an impossibility for all literal lengths, or the unrestricted lower inequality for $RT(\mathcal C_{r+1})$ in Definition 3.3. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 18. Simultaneous boundary extensions on the original nine-letter source
+
+**Definition 18.1 (The fixed source and its eight boundaries).** In Sections 18–22 fix $r=4$ in Definitions 1.2–1.3 and 8.1. Thus the source is the original nine-letter fixed point
+
+$$
+A_4=\{0,\ldots,8\},\qquad
+\varphi(i)=0(i+1)\ (0\le i<8),\qquad
+\varphi(8)=088,\qquad u_9=\varphi^\omega(0),
+$$
+
+and $M$, $b_j$, $\mathsf A$, $\mathsf B_i$ and $f_n$ are exactly those of (2), with $0\le i<8$. In particular
+
+$$
+\begin{gathered}
+\Lambda^4(\Lambda-2)=1,\quad 2<\Lambda<3,\qquad
+\beta^4-\beta^3-\beta^2-\beta-1=0,\quad 1<\beta<2,\\
+L=\frac1{3-\Lambda},\qquad e_4=1+L.
+\end{gathered}
+\tag{75}
+$$
+
+Let $(\eta,p)\in\mathcal L_4$, allowing any finite actual output alphabet and every nonempty palindromic marker $p$. Write
+
+$$
+\eta(j)=p q_j,\qquad h_j=|\eta(j)|\in\mathbb Z_{>0},\qquad
+m=|p|,\qquad x=\eta(u_9),
+$$
+
+where each $q_j$ is a palindrome and $\eta(j)p$ has exactly its two endpoint occurrences of $p$. For $0\le i<8$ define
+
+$$
+s_i=\operatorname{lcs}(\eta(i),\eta(8)),\qquad
+C_i=m+2|s_i|,\qquad J_i=h\mathsf B_i b_0.
+\tag{76}
+$$
+
+For a finite word $s$, write $\widetilde s$ for its reversal. No richness or cancellation condition is included in this definition. The literal factorization and injectivity concern this same morphism on this same $u_9$.
+
+**Theorem 18.2 (Actual Type I returns and simultaneous extensions).** There exist actual source factors $w_n$ and actual source return words $R_n$ for every $n\ge0$ such that, with $i=n\bmod8$,
+
+$$
+\begin{gathered}
+\operatorname{Lext}(w_n)=\operatorname{Rext}(w_n)=\{i,8\},\\
+\vec w_n=f_n+M^n b_8,\qquad \vec R_n=M^n b_8.
+\end{gathered}
+\tag{77}
+$$
+
+For every pair in Definition 18.1, the word
+
+$$
+v_n=s_i\eta(w_n)p\widetilde{s_i}
+\tag{78}
+$$
+
+is an actual factor of $x$. There is an actual return word $U_n$ to $v_n$ in $x$ with
+
+$$
+|v_n|=h(f_n+M^n b_8)+C_i,\qquad |U_n|=hM^n b_8.
+\tag{79}
+$$
+
+More precisely, every source occurrence of $w_n$ with a preceding letter extends on both sides to (78), and every occurrence of (78) decodes to an occurrence of that same $w_n$. Apart from a possible initial occurrence at the one-sided boundary, this is a bijection of occurrence sets, translating the starts by $-|s_i|$ after applying $\eta$ to source positions. It preserves consecutive occurrences. Hence the actual complete return
+
+$$
+Z_n=U_n v_n
+$$
+
+has period $|U_n|$, and its ordinary least-period exponent satisfies
+
+$$
+\frac{|Z_n|}{\operatorname{per}(Z_n)}
+\ \ge\ Q_n:=1+\frac{h(f_n+M^n b_8)+C_i}{hM^n b_8}.
+\tag{80}
+$$
+
+These conclusions retain all actual occurrences of the marker $p$.
+
+*Proof.* The source classification, including its word realization, is supplied by Dvořáková–Klouda–Pelantová, [arXiv:2409.06849v1, Corollary 5, Definition 8, Lemma 17 and Proposition 19](https://arxiv.org/pdf/2409.06849v1), with their source-size parameter $d=9$. In that notation the initial Type I triplet is $(0,8,0)$. Its iterated offspring have outer triplet coordinates $n\bmod8$ on both sides. The factors have exactly two left and two right extensions, with $8$ always an extension, so the two sets are precisely those in (77). In word form the update, for $i=n\bmod8$, is
+
+$$
+w_0=8,\qquad
+w_{n+1}=\begin{cases}
+\varphi(w_n)0,&0\le i<7,\\
+8\varphi(w_n)08,&i=7.
+\end{cases}
+\tag{81}
+$$
+
+The same supplier's Lemma 17 transports actual returns. Starting with the return $R_0=8$ to $w_0=8$, realized by the actual factor $88$, it gives
+
+$$
+R_{n+1}=a_i\varphi(R_n)a_i^{-1},\qquad
+ a_i=\begin{cases}\varepsilon,&i<7,\\8,&i=7.\end{cases}
+\tag{82}
+$$
+
+Here $a_i^{-1}$ means deletion of the indicated suffix, as in that lemma, not a group operation. When $i=7$, the last source letter before the second occurrence is $7$ or $8$, and its image ends in $8$, so this deletion is defined. Formula (82) describes actual consecutive source occurrences, not just a vector transformation. Equivalently, their existence and return vectors are the whole Type I conclusion of Dvořáková–Pelantová, [arXiv:2509.06104v1, §3, Remark 7 and Lemmas 8–9](https://arxiv.org/pdf/2509.06104v1), where the spectral parameter is $d=4$, not $9$. The journal counterparts are Remark 8 and Lemmas 9–10 in [EJC 33(2), P2.15](https://doi.org/10.37236/14600). Taking Parikh vectors in (81)–(82) gives exactly (77) with the original $f_n$ of (2). Thus both the extension sets and the return occur in the same source objects.
+
+We establish the output correspondence directly. Write $u_9=u_0u_1\cdots$ and set
+
+$$
+t_j=|\eta(u_0\cdots u_{j-1})|\quad(j\ge0).
+$$
+
+Every occurrence of $p$ in $x$ starts at a position $t_j$. Indeed a start $t_j+a$ with $0<a<h_{u_j}$ has all its $m$ letters inside $\eta(u_j)p$, since the next block begins with $p$. It would be an internal occurrence forbidden by the endpoint condition. Conversely each $t_j$ starts a copy of $p$. This argument includes occurrences crossing an image boundary and self-overlaps of $p$; none are discarded.
+
+Injectivity gives $\eta(i)\ne\eta(8)$. Neither word can be a suffix of the other: a proper such suffix would start with $p$ at a forbidden internal position in the longer word. Consequently
+
+$$
+|s_i|<\min(h_i,h_8).
+\tag{83}
+$$
+
+Both $\eta(i)p$ and $\eta(8)p$ are palindromes. Their longest common suffix is $s_i p$, and reversal therefore gives the exact prefix identity
+
+$$
+\operatorname{lcp}(\eta(i)p,\eta(8)p)=p\widetilde{s_i}.
+\tag{84}
+$$
+
+If $w_n$ occurs at a positive source position $j$, its preceding and following source letters both lie in $\{i,8\}$. Its left output context thus supplies $s_i$ and its right output context supplies $p\widetilde{s_i}$, simultaneously. This proves an occurrence of (78) beginning at $t_j-|s_i|$. By (83), its first complete marker is at offset $|s_i|$, its last is at offset $|s_i|+|\eta(w_n)|$, and its intervening markers are exactly the boundaries between the images of the letters of $w_n$.
+
+These marker offsets are properties of the finite word (78), so every occurrence of it in $x$ has its highlighted first marker at a genuine block boundary. The portion between its first and last markers is $\eta(w_n)$ and consists of whole blocks. If the decoded source portion is $w'$, then $\eta(w')=\eta(w_n)$; monoid injectivity forces $w'=w_n$. This proves the converse correspondence. A prefix occurrence lacking a predecessor is the only possible one-sided exception, and cannot intervene between two positive source positions.
+
+The substitution is primitive: every image contains $0$, every source letter is reached from $0$, and there is a loop at $0$. Hence its fixed point is uniformly recurrent. In particular a complete source return $R_nw_n$ realizing (77), with the finite neighboring context needed above, can be chosen away from the initial boundary. Two consecutive source occurrences then give two consecutive occurrences of (78). Their output starts differ by exactly $|\eta(R_n)|=hM^n b_8$. If $s=s_i$, the word $\eta(R_n)$ ends in $s$, because its last source letter is a left extension of the second occurrence. Thus the actual intervening output return is the word $s\eta(R_n)s^{-1}$, of the asserted length, including when the occurrences overlap. The complete return $U_nv_n$ has prefix and suffix $v_n$, so $|U_n|$ is a period. Its least period can be smaller; this proves (79)–(80) with the ordinary convention. The simultaneous extension and occurrence correspondence are additional deductions from the supplied source returns and the literal marker hypotheses. $\square$
+
+## 19. Exact boundary budgets on the whole integer cancellation family
+
+**Proposition 19.1 (Eight budgets without a cyclic recurrence).** For every $h\in\mathcal K_4$, with arbitrary independent positive integers $h_0,h_1,h_2,h_3$ and $t=h_4$, the complete cancellation family remains
+
+$$
+\begin{gathered}
+h_5=t+h_0,\qquad h_6=t+2h_0+h_1,\\
+h_7=t+4h_0+2h_1+h_2,\qquad
+h_8=t+8h_0+4h_1+2h_2+h_3.
+\end{gathered}
+\tag{85}
+$$
+
+For the original matrices $\mathsf B_i$ in (2), its budgets satisfy
+
+$$
+J_0=\frac{54h_0+18h_1+6h_2+2h_3+h_4}{80},\qquad
+J_{i+1}=3J_i-2h_i\quad(0\le i\le6).
+\tag{86}
+$$
+
+All eight quantities $J_0,\ldots,J_7$ are thereby determined. No identification of $J_8$ with $J_0$ is made.
+
+*Proof.* Formula (85) is the whole $r=4$ specialization of Theorem 4.2 and is reused in full. To compute the first budget, direct multiplication by $3I-M$ gives
+
+$$
+(3I-M)^{-1}b_0
+ =\frac1{3280}(2187,729,243,81,27,9,3,1,1)^T.
+\tag{87}
+$$
+
+For instance the coordinates numbered $1$ through $7$ satisfy $3c_j=c_{j-1}$, the last satisfies $c_8=c_7$, and $3c_0-\sum_{j=0}^8c_j=1$; these are all nine equations. Since $\mathsf B_0=(3I-M)^{-1}$, substitution of (85) into $h$ times (87) gives
+
+$$
+3280J_0=2214h_0+738h_1+246h_2+82h_3+41t,
+$$
+
+which is the first identity in (86).
+
+For the remaining identities put $D=M-I$ and $E=M-2I$. The original definition of $\mathsf B_i$ gives, using commuting rational functions of $M$,
+
+$$
+\begin{aligned}
+\mathsf B_{i+1}-3\mathsf B_i
+&=-2(3I-M)^{-1}
+ +2ED^{-1}\bigl(M^i(M-3I)+2I\bigr)(3I-M)^{-1}\\
+&=-2D^{-1}(I+EM^i).
+\end{aligned}
+\tag{88}
+$$
+
+All inverses here exist by the supplied simple spectrum. The source columns satisfy $Mb_j=b_0+b_{j+1}$ for $0\le j<8$. Iterating this equality gives
+
+$$
+b_i=M^i b_0-\sum_{j=0}^{i-1}M^j b_0
+   =D^{-1}(EM^i+I)b_0\quad(0\le i\le7),
+\tag{89}
+$$
+
+with an empty sum when $i=0$. Combining (88)–(89) for $0\le i\le6$ proves
+
+$$
+(\mathsf B_{i+1}-3\mathsf B_i)b_0=-2b_i.
+$$
+
+Multiplication by $h$ proves the second identity in (86). This latter calculation in fact holds for every row $h$; only the simplified initial value used cancellation. Thus (86) applies to every positive integer choice in (85), with no restriction to one minimizing row or to a fixed marker. $\square$
+
+## 20. Whole-conjugate cancellation and nonzero residuals on every stride
+
+**Proposition 20.1 (The exact four-root residual on each residue).** Let $h\in\mathcal K_4$. Define
+
+$$
+f(X)=X^5-2X^4-1,\qquad
+ g(X)=X^4-X^3-X^2-X-1,
+$$
+
+and let $\mathcal T$ be the four roots of $f$ other than $\Lambda$. There are nonzero coefficients $d_\lambda\in\mathbb C$, one for every $\lambda\in\mathcal T$, such that the real sequence
+
+$$
+S(n)=\sum_{\lambda\in\mathcal T}d_\lambda\lambda^n
+\tag{90}
+$$
+
+satisfies $S(n)\to0$ and
+
+$$
+h(f_n+M^n b_8)-LhM^n b_8=S(n)-J_{n\bmod8}
+\quad(n\ge0).
+\tag{91}
+$$
+
+For every $i\in\{0,\ldots,7\}$, the stride sequence
+
+$$
+S_i(k)=S(i+8k)\quad(k\ge0)
+\tag{92}
+$$
+
+is a real nonzero linear recurrence sequence. Its exact characteristic support consists of the four distinct numbers $\lambda^8$, $\lambda\in\mathcal T$, and none of these numbers is positive real. In particular it has no positive dominating characteristic root.
+
+*Proof.* We reuse the whole simple-spectrum description, minimal-polynomial statements and eigenvector normalization of Dvořáková–Pelantová, [arXiv:2509.06104v1, Appendix P1–P3 and Lemma 20](https://arxiv.org/pdf/2509.06104v1), journal Appendix P1–P3 and Lemma 21 in [EJC 33(2), P2.15](https://doi.org/10.37236/14600). They give
+
+$$
+\chi_M=fg,
+$$
+
+with both $f$ and $g$ irreducible over $\mathbb Q$, all nine roots simple, and every root of $f$ other than $\Lambda$ of modulus strictly less than one. The minimal-polynomial assertion for the literal $g$ is also the $q=4$ case of the existing `dbonacci_irreducible` in [DBonacci irreducibility](../../../D5/S0/Tower/DBonacci/Irreducibility.lean), with root identification in [DBonacci Perron root](../../../D5/S0/Tower/DBonacci/PerronRoot.lean). We use these suppliers rather than another irreducibility or root-location theorem.
+
+For this integer row define the nonzero rational polynomial
+
+$$
+F_h(X)=(X-2)\sum_{j=0}^7h_jX^{7-j}+h_8.
+\tag{93}
+$$
+
+It has degree exactly eight, with leading coefficient $h_0>0$, and $F_h(\lambda)=hv_\lambda$ for the original eigenvectors. Cancellation says $F_h(\beta)=0$. The minimal polynomial $g$ therefore divides $F_h$, so $hv_\gamma=0$ for every one of the four conjugates $\gamma$ of $\beta$. This discharges the entire $g$-spectrum, not just its real expanding root.
+
+If $hv_\lambda=0$ for any root $\lambda$ of $f$, its minimal polynomial $f$ would also divide $F_h$. Since the distinct irreducible polynomials $f$ and $g$ are coprime, the degree-nine polynomial $fg$ would divide the nonzero degree-eight polynomial $F_h$, a contradiction. Hence
+
+$$
+hv_\lambda\ne0\quad\text{for every root }\lambda\text{ of }f.
+\tag{94}
+$$
+
+This uses the actual integral row and its exact cancellation; no assertion about arbitrary real rows is required.
+
+Let $P_\lambda$ denote the spectral projectors of Theorem 2.1, and put $a_\lambda=hP_\lambda b_8$. The supplied left eigenvector $\ell_\lambda$ has $\ell_\lambda b_8=\lambda^4$ for a root of $f$. Thus
+
+$$
+a_\lambda=\frac{\lambda^4}{\ell_\lambda v_\lambda}\,hv_\lambda\ne0.
+\tag{95}
+$$
+
+The denominator is nonzero because the eigenvalue is simple, and $\lambda\ne0$. At roots of $g$ the coefficient is zero by the whole-conjugate cancellation just proved. The rational function $g_{\mathrm I}$ from (6) is
+
+$$
+g_{\mathrm I}(z)=\frac{z-\Lambda}{(3-z)(3-\Lambda)}.
+$$
+
+Its value vanishes at $\Lambda$ and is nonzero at every $\lambda\in\mathcal T$. Hence set
+
+$$
+d_\lambda=g_{\mathrm I}(\lambda)a_\lambda\ne0.
+\tag{96}
+$$
+
+Applying the supplied spectral decomposition to (5) proves exactly (90)–(91). Complex conjugates have conjugate coefficients, so $S(n)$ is real. Since every $|\lambda|<1$, its limit is zero.
+
+It remains to check every stride, including possible collisions of powers. A root of $f$ satisfies
+
+$$
+\lambda^4(\lambda-2)=1.
+\tag{97}
+$$
+
+The polynomial $f$ has just one real root. Indeed $f(t)<0$ for $t\le2$, while $f'(t)=t^3(5t-8)>0$ for $t>2$, where its unique zero is $\Lambda$. Thus all members of $\mathcal T$ are nonreal. If $\lambda^8$ were positive real, then $\lambda^4$ would be nonzero real; (97) would force $\lambda-2=1/\lambda^4$ to be real, a contradiction. There is consequently no positive real eighth power in this support.
+
+If $\lambda^8=\mu^8$ for $\lambda,\mu\in\mathcal T$, then $\mu^4=\lambda^4$ or $\mu^4=-\lambda^4$. Equation (97) makes the first case imply $\mu=\lambda$. In the second case it gives $\lambda+\mu=4$, impossible because $|\lambda|+|\mu|<2$. The four eighth powers are therefore distinct. For any fixed residue $i$, (90) reads
+
+$$
+S_i(k)=\sum_{\lambda\in\mathcal T}
+ (d_\lambda\lambda^i)(\lambda^8)^k.
+\tag{98}
+$$
+
+Every coefficient is nonzero. The Vandermonde matrix at $k=0,1,2,3$ is invertible, so (98) cannot vanish identically; the same independence shows that all four roots belong to its exact support. The polynomial $\prod_{\lambda\in\mathcal T}(X-\lambda^8)$ has real coefficients, since the support is conjugation invariant, and annihilates the sequence. This verifies a real constant-coefficient linear recurrence for each of the eight residues. In particular no positive root is present among its dominating roots. The removal of the whole $g$-spectrum, the nonvanishing in (94)–(98) and the stride assertions are the additional deductions needed beyond the supplied spectral formula. $\square$
+
+## 21. Strict overlap budgets, including the equality boundary
+
+**Theorem 21.1 (Strict budgets for every actual cancellation dictionary).** Let $(\eta,p)\in\mathcal L_4$ have any finite actual output alphabet and let its actual positive integer length row satisfy $hv_\beta=0$. Use (76) and choose the actual factors $Z_n$ of Theorem 18.2. For every $i\in\{0,\ldots,7\}$ the following assertions hold, with density always taken in the index $k\in\mathbb N$ of $n=i+8k$.
+
+If $C_i>J_i$, then $Q_{i+8k}>e_4$ for all sufficiently large $k$, and the same is true of $|Z_{i+8k}|/\operatorname{per}(Z_{i+8k})$.
+
+If $C_i=J_i$, the set
+
+$$
+\mathcal V_i=\{k\ge0:Q_{i+8k}>e_4\}
+\tag{99}
+$$
+
+has positive natural density. The set
+
+$$
+\mathcal W_i=\left\{k\ge0:
+\frac{|Z_{i+8k}|}{\operatorname{per}(Z_{i+8k})}>e_4\right\}
+\tag{100}
+$$
+
+has positive lower density, for every choice of the actual returns realizing (77). In both cases the witnessing lengths are unbounded. Consequently
+
+$$
+E(\eta(u_9))=e_4\quad\Longrightarrow\quad
+C_i<J_i\quad\text{for every }0\le i<8.
+\tag{101}
+$$
+
+No richness condition is needed for any of these implications.
+
+*Proof.* Put $P_n=hM^n b_8>0$. The actual factor formulas (79)–(80) and the exact residual (91) give
+
+$$
+Q_{i+8k}-e_4
+ =\frac{C_i-J_i+S_i(k)}{P_{i+8k}}.
+\tag{102}
+$$
+
+If $C_i-J_i>0$, then $S_i(k)\to0$ makes its numerator positive for every sufficiently large $k$. The least-period inequality (80) proves the first assertion without requiring $P_n$ to be the least period.
+
+If $C_i=J_i$, (102) gives the exact equality of index sets
+
+$$
+\mathcal V_i=\{k\ge0:S_i(k)>0\}.
+\tag{103}
+$$
+
+Apply the whole sign theorem of Jason P. Bell and Stefan Gerhold, [*The Positivity Set of a Recurrence Sequence*, arXiv:math/0506398v1, Theorem 2](https://arxiv.org/pdf/math/0506398v1). It states that for a nonzero real linear recurrence sequence with no positive dominating characteristic root, its positivity and negativity sets have positive natural density. All its hypotheses hold here: Proposition 20.1 proves real values, a constant-coefficient real recurrence for every $k\ge0$, nonzeroness on each fixed residue, and the absence of every positive real characteristic root in its exact support. The dominant roots are the roots of largest modulus within that support; none is positive. All roots are nonzero and there is no finite-support degeneracy. The theorem requires no independence of the arguments of the characteristic roots and no nondegeneracy condition on their quotients. Thus it applies separately to all eight sequences (98), even in the presence of multiplicative relations among their phases.
+
+It follows that the limit
+
+$$
+\delta_i=\lim_{N\to\infty}
+ \frac{\#(\mathcal V_i\cap\{0,\ldots,N-1\})}{N}>0
+\tag{104}
+$$
+
+exists. By (80), $\mathcal V_i\subseteq\mathcal W_i$, so
+
+$$
+\liminf_{N\to\infty}
+ \frac{\#(\mathcal W_i\cap\{0,\ldots,N-1\})}{N}
+ \ge\delta_i>0.
+\tag{105}
+$$
+
+Only lower density is asserted for the least-period set; a smaller least period can add indices not described by (103).
+
+For the length assertion, $M^n b_8$ is the Parikh vector of $\varphi^n(8)$. Every source image has at least two letters and every $h_j\ge1$, hence
+
+$$
+P_n=|\eta(\varphi^n(8))|\ge|\varphi^n(8)|\ge2^n,
+\qquad |Z_n|\ge P_n.
+\tag{106}
+$$
+
+The eventual set in the strict-excess case and the positive-density set in the equality case both contain arbitrarily large $k$. Their actual witnesses therefore have unbounded lengths. Either alternative $C_i\ge J_i$ produces a finite actual factor with ordinary least-period exponent strictly above $e_4$, contradicting exact attainment. This proves (101) simultaneously for all eight budgets.
+
+For precision, these densities count recursion indices, not physical positions in $x$, and (102) gives $Q_{i+8k}\to e_4$ because its numerator is bounded and its denominator tends to infinity. Thus the assertion of strict violations does not assert a uniform positive excess, a strict asymptotic-exponent gap, or a positive density of offending output positions. If $C_i<J_i$, the same formula shows that this particular certified ratio is eventually below $e_4$ on that residue; it provides no upper bound on other actual factors or on smaller least periods. The sign theorem itself is reused in full; its combination with the actual simultaneous boundary extensions and the nonzero stride residual proves the strict necessary condition. $\square$
+
+## 22. Compatibility and the remaining five-letter problem
+
+**Proposition 22.1 (The supplied twenty-letter comparator at its actual scope).** The whole weighted construction of Theorem 4.4 at $r=4$ gives an actual rich image on twenty letters, with original-source morphism $\pi_4$, row
+
+$$
+k=(1,1,1,1,1,2,4,8,16),\qquad H(k)=35,
+$$
+
+and ordinary exponent $e_4$. Its literal representative $\widehat\eta=\pi_4\circ\varphi$, acting on that same $u_9$, has the same infinite image, the marker $p=a=\pi_4(0)$, and
+
+$$
+\widehat h=(2,2,2,2,3,5,9,17,33),\qquad
+H(\widehat h)=75,\qquad
+(C_i)_{i=0}^7=(1,1,1,1,1,1,1,33).
+\tag{107}
+$$
+
+Its original budgets and margins are
+
+$$
+\begin{aligned}
+(J_i)_{i=0}^7
+ &=\tfrac1{80}(163,169,187,241,403,729,1387,2721),\\
+(J_i-C_i)_{i=0}^7
+ &=\tfrac1{80}(83,89,107,161,323,649,1307,81).
+\end{aligned}
+\tag{108}
+$$
+
+In particular this comparator satisfies all eight strict budgets, at total literal length $75$ on twenty actual letters.
+
+*Proof.* We reuse the weighted construction, its richness and its complete ordinary-exponent theorem as a whole from Dvořáková–Pelantová, [arXiv:2509.06104v1, Definition 11, Proposition 13, Theorem 2 and Appendix Lemma 21](https://arxiv.org/pdf/2509.06104v1), equivalently journal Definition 12, Proposition 14, Theorem 2 and Appendix Lemma 22 in [EJC 33(2), P2.15](https://doi.org/10.37236/14600). The parameter is their spectral $d=4$. Definition 12 gives palindromic images of the displayed lengths, with disjoint alphabets and the maximum possible number of distinct letters in each image, and states actual alphabet size $d+2^d=20$. The row sum is $4+(1+2+4+8+16)=35$. None of these supplied word or ordinary-exponent conclusions is replaced by a length-only argument.
+
+Since $\varphi(u_9)=u_9$, the composition has exactly the same output word. The letter $a=\pi_4(0)$ occurs in no other block. Thus
+
+$$
+\widehat\eta(i)=a\pi_4(i+1)\quad(i<8),\qquad
+\widehat\eta(8)=a\pi_4(8)\pi_4(8).
+$$
+
+The following words after $a$ are palindromes free of $a$, and the resulting morphism is injective by the disjoint-block argument of Theorem 8.2. This proves literal membership. Taking lengths gives (107), with sum $75$. For $i<7$ the terminal letters of $\pi_4(i+1)$ and $\pi_4(8)$ lie in disjoint alphabets, so $s_i=\varepsilon$. For $i=7$ the exact common suffix is $\pi_4(8)$, of length $16$: it cannot extend leftward, where the marker $a$ meets a nonmarker. This gives the values of $C_i$. The row satisfies (85) with $(h_0,h_1,h_2,h_3,t)=(2,2,2,2,3)$. Applying the exact original budgets (86) gives (108), all strictly positive. These compatibility values concern the supplied twenty-letter word and its two displayed rows; they give no five-letter construction. $\square$
+
+**Corollary 22.2 (Necessary conjunction for the original five-actual-letter target).** Let $(\eta,p)\in\mathcal L_4$ and suppose that $\eta(u_9)$ is rich, has exactly five actual letters and has ordinary critical exponent $e_4$. Then its row has all independent positive integer parameters of (85), satisfies
+
+$$
+H=5t+16h_0+8h_1+4h_2+2h_3\ge58,
+\tag{109}
+$$
+
+and obeys the eight strict inequalities (86), (101), with $C_i$ defined from its actual marker and its actual word suffixes. The row $(1,2,2,3,2,3,6,12,25)$ at $H=56$ remains excluded for every rich five-letter literal dictionary with that row. At $r=3$, the four-actual-letter construction (43), its complete ordinary upper theorem and its sharp literal minimum $H=30$ retain the scopes of Theorems 12.2–14.1.
+
+*Proof.* Corollary 3.2 forces exact cancellation for this actual nonerasing morphism. Theorem 4.2 supplies the entire family (85), including its unrestricted positive integer parameters, and Corollary 4.3 supplies the size expression in (109). Theorem 17.1 gives $H\ge58$ at $r=4$, using the whole-row finite ordinary exclusion of Theorem 16.2 at $H=56$. Theorem 21.1 applies to its actual literal marker and proves all eight strict budgets; it requires no further richness assumption or alphabet expansion. These implications concern only this same original source and dictionary.
+
+The complete-return characterization of richness used in the finite exclusions and in the $r=3$ results is [Amy Glen and Jacques Justin, *Palindromic richness*, arXiv:0801.1656v1, Theorem 2.14 and Remark 2.15](https://arxiv.org/pdf/0801.1656v1). That version has those two authors; the [journal article, doi:10.1016/j.ejc.2008.04.006](https://doi.org/10.1016/j.ejc.2008.04.006), has authors Amy Glen, Jacques Justin, Steve Widmer and Luca Q. Zamboni. The finite/infinite complete-return criterion has no recurrence or reversal-closure premise. The $r=3$ attainment and all-factor upper bound themselves are the existing Theorems 12.2–14.1, not consequences of a new five-letter construction or of Bell–Gerhold's sign theorem.
+
+The conditions in (109), exact cancellation and the eight strict budgets are necessary only, even when imposed together. They establish neither their sufficiency nor nonexistence of a qualifying dictionary at every larger length. The existence of an original $u_9$ image rich on five actual letters with ordinary exponent $e_4$, including its exhaustive ordinary upper bound over all actual factors, remains open here. So does a universal impossibility theorem for such literal dictionaries. Allowing arbitrary nonliteral morphisms and proving the unrestricted lower inequality for $RT(\mathcal C_5)$ remain distinct questions. $\square$
+
+## 追加锚（本行以下为增补区）

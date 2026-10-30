@@ -346,3 +346,222 @@ Proof. Reach a cycle entry $c$ by a fixed word $p$. The words $pL_c^k$ for $k\ge
 Theorems 3.1 and 7.2 use the same typed residual and additive-duration interfaces, but Theorem 7.2 removes global recurrence by a new rational-weight existence construction and a second obstruction between components. It is a repository-derived mathematical argument, with no claim of literature priority or Lean/kernel verification. Exact accounting here does not assert a native physical clock, a physical unification, a guarantee for noisy or finite-precision observations, or an equivalence of residual, boundary, spatial and time views. Transport to another view still requires the actual-image faithfulness and named-edge, type, legality and duration preservation of Remark 4.2 and [Process Geometry §§39–43](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md). Including the growing total or a full archive in the current response readout can change the quotient and requires its finiteness to be checked again, as in Remark 6.1.
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Fixed final clock error, native separation and robust designs
+
+**Definition 8.1 (one final observation and its recovery target).** Use the finite root-reachable typed complete response graph of Definition 7.1, with the actual source, named-edge lifting and fixed actual root $x_0$ of Definitions 1.1–1.2. The weighting in this definition is the source's fixed native $d:E\to\mathbb R_{>0}$ satisfying Assumption 2.1. Write $z(u)=r\cdot u$ and $\tau(u)=\tau_r^d(u)$ for every $u\in\mathcal P_r$, including $\varepsilon_r$. Fix $\epsilon>0$ in the declared clock unit, independently of the word, its duration and its length. The possible observations of $u$ are exactly
+
+$$
+\mathcal O_\epsilon(u)
+ =\{z(u)\}\times[\tau(u)-\epsilon,\tau(u)+\epsilon].
+$$
+
+The endpoint, including its type, is exact. There is one final real-valued clock observation $y$; its error is a bound on the total, not an independently repeated error on each edge. Negative reported values near the empty word are allowed by this contract. Uniform recovery means that there is a function
+
+$$
+D:V\times\mathbb R\longrightarrow\mathcal P_r\cup\{\bot\}
+\quad\text{such that}\quad
+D(z(u),y)=u
+\quad\text{for every }u\in\mathcal P_r
+\text{ and every }|y-\tau(u)|\le\epsilon.
+$$
+
+The symbol $\bot$ denotes rejection of an observation outside the possible observation image. The target is the entire finite ordered named root word, with its types. No policy restriction or maximum word length is imposed. A chronological memory target $m:\mathcal P_r\to M$ is lossless for this purpose when it is injective on this actual word image. This target differs from a complete residual for future prediction, as in Remark 4.1 and [Joint Kernel Minimal Predictive Core Bridge §§4–6,22–23](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_KERNEL_MINIMAL_PREDICTIVE_CORE_BRIDGE.md).
+
+The observation model assumes availability of the exact residual endpoint, a known graph and native duration law, and the stated common-unit, origin and final calibration/error contract over all words. The source definitions alone do not supply those acquisitions. In particular, an unknown offset, drift proportional to elapsed time, saturation, endpoint confusion, or merely approximate knowledge of each native duration is not this contract. An application must establish the stated total bound rather than infer it by summing an unspecified collection of local errors. Neither a bounded clock range nor bounded storage is assumed.
+
+**Theorem 8.2 (finite criterion for a fixed native weighting).** Under Definition 8.1, uniform recovery is equivalent to the following three conditions.
+
+1. The structural condition of Theorem 7.2 holds: every cyclic SCC is a directed named cycle, and every root condensation path meets at most one cyclic SCC.
+2. In the finite family decomposition below, any two cyclic families with the same endpoint have commensurable lap durations: their ratio belongs to $\mathbb Q_{>0}$. No commensurability between families with different endpoints is required.
+3. Every number in the following finite separation list is strictly greater than $2\epsilon$.
+
+Here is the decomposition and the complete list, all formed from the fixed native $d$. Let $\mathcal S$ be the finite set of simple root paths, including the empty path. Reuse the unique normal form in the sufficiency proof of Theorem 7.2: when $P\in\mathcal S$ visits a cyclic component $C$, a word in its family is
+
+$$
+u_{P,k}=\alpha L_c^k\gamma\beta,
+\qquad P=\alpha\gamma\beta,\qquad k\in\mathbb N_0,
+$$
+
+where $c$ is the first entry into $C$, $L_c$ is its one full named lap, and $\gamma$ is a proper initial cycle segment. This includes entry at the last vertex of $P$, an empty $\gamma$, a cyclic root, a self-loop and $k=0$. Put
+
+$$
+a_P=\tau(P),\qquad D_P=\sum_{e\text{ internal to }C}d(e)>0.
+$$
+
+Its time family is the ray $a_P+D_P\mathbb N_0$. A simple path visiting no cyclic component has the singleton family $\{P\}$ with time $a_P$. These word families are disjoint and exhaust $\mathcal P_r$; write $z_P$ for their common endpoint. The normal form depends only on condition 1, so applies to native real durations without using the integer construction in Theorem 7.2.
+
+Include $D_P$ for each cyclic family. For each unordered pair of distinct simple paths $P,Q$ with $z_P=z_Q$, include the following number, according to the two family types:
+
+| Families | Separation number |
+| --- | --- |
+| Two singletons | $\lvert a_P-a_Q\rvert$ |
+| A singleton $P$ and a ray $Q$ | $\min\{\lvert a_P-a_Q-n_0D_Q\rvert,\ \lvert a_P-a_Q-(n_0+1)D_Q\rvert\}$, where $n_0=\max\{0,\lfloor(a_P-a_Q)/D_Q\rfloor\}$ |
+| Two rays | $\operatorname{dist}(a_P-a_Q,h_{PQ}\mathbb Z)$, where $D_P=p h_{PQ}$ and $D_Q=q h_{PQ}$ for relatively prime positive integers $p,q$ |
+
+The last row is defined under condition 2. Its distance is a finite nearest-lattice calculation: with $j_0=\lfloor(a_P-a_Q)/h_{PQ}\rfloor$, take the minimum of the distances to $j_0h_{PQ}$ and $(j_0+1)h_{PQ}$. The minimum of the entire list is denoted $\delta_d$, with $\min\varnothing=+\infty$. Condition 3 is equivalently $\delta_d>2\epsilon$.
+
+This is a finite mathematical criterion, involving a finite graph, finitely many exact rationality predicates on real ratios and finitely many separation comparisons. It does not assert a decision procedure for unspecified or arbitrarily presented real numbers. In particular, finite approximations alone do not decide whether an arbitrary ratio is rational or whether an equality at the threshold holds.
+
+Proof. First, any two different words with the same endpoint must have disjoint closed clock intervals. Two closed intervals of radius $\epsilon$ about $s,t$ intersect exactly when $|s-t|\le2\epsilon$. An intersection gives one allowed observation requiring two different answers. Conversely, if all such intervals are disjoint, define $D(z,y)$ to be the unique word whose observation set contains $(z,y)$, or $\bot$ if none does. Thus the exact operational condition is
+
+$$
+|\tau(u)-\tau(v)|>2\epsilon
+\quad\text{whenever }u\ne v\text{ and }z(u)=z(v).
+\tag{8.1}
+$$
+
+This step is only the bounded-error separation principle; the graph and arithmetic arguments that follow reduce its infinitely many requirements to the stated finite criterion.
+
+For necessity of condition 1, the return-block obstruction proved in Theorems 3.1 and 7.2 already applies to real additive weights inside any reachable cyclic SCC with internal branching. It produces different actual legal words with the same endpoint and exactly the same time. Reuse that obstruction, which directly violates (8.1).
+
+If a root condensation path meets two cyclic SCCs, choose an actual legal prefix $p$ to a vertex $c_1$ of the first, a connecting word $Q:c_1\to c_2$ along that component route, and nonempty internal return words $L_1,L_2$ at $c_1,c_2$. Set $A=\tau_{c_1}(L_1)>0$ and $B=\tau_{c_2}(L_2)>0$. For every $\eta>0$ there are positive integers $n,m$ with
+
+$$
+|nA-mB|<\eta.
+\tag{8.2}
+$$
+
+For completeness, the classical Dirichlet estimate in [Kleinbock–Weiss, §1, equation (1.1), p.1](https://arxiv.org/pdf/math/0612171v2) gives, with their dimensions both one and $Y=A/B$, integers $q\ne0,p'$ satisfying $|qY-p'|<e^{-t}$ for arbitrarily large $t$. Reverse both signs if needed so that $q>0$. Taking $e^{-t}<Y$ forces $p'>0$, and taking $Be^{-t}<\eta$ proves (8.2) with $n=q,m=p'$. This uses only that classical estimate, not the paper's almost-everywhere improvement results.
+
+The words $pL_1^nQ$ and $pQL_2^m$ have the same endpoint $c_2$, and their time difference is $nA-mB$. They are different: their additional internal occurrences in the first component differ by $n|L_1|>0$, and a condensation path cannot return to that component. Both lift from the same actual root by Definition 1.2. Taking $\eta<2\epsilon$ contradicts (8.1). This proves the second structural requirement for real weights, extending the rational obstruction of Theorem 7.2 to fixed nonzero tolerance. It includes the successive-cycle example of Proposition 7.4 even when its exact map is injective.
+
+Assume now condition 1. Its unique normal form gives the finite disjoint singleton/ray decomposition stated above; no weighting choices are made. It remains to analyze the time differences between these actual families.
+
+Within one ray, distinct lap counts have absolute time difference $|k-\ell|D_P$, whose minimum is $D_P$, attained by consecutive counts including zero and one. A pair of singletons gives the first row of the list. Between a singleton and a ray, minimizing the distance to the increasing sequence $a_Q+kD_Q$, $k\ge0$, reduces to the two adjacent admissible indices stated in the second row. If the singleton lies below the ray's start, index zero is nearest. Otherwise the floor and its successor bracket it. All these minima are attained by actual nonnegative lap counts.
+
+Consider two rays with the same endpoint. If their ratio is irrational, their mutual distance has infimum zero, whatever their offsets. Here is the exact use of the existing irrational rotation theorem: [Weyl, §1, Satz 2, p.315, with proof on pp.316–317, DOI 10.1007/BF01475864](https://gdz.sub.uni-goettingen.de/download/pdf/PPN235181684_0077/LOG_0036.pdf) says that positive integer multiples of an irrational real number are uniformly distributed modulo one. Consequently every tail is dense modulo one. Apply it to $D_P/D_Q$ and the target residue $(a_Q-a_P)/D_Q$. Given $\eta>0$, arbitrarily large $n\ge0$ have an integer $m$ with
+
+$$
+\left|\frac{a_P-a_Q+nD_P}{D_Q}-m\right|
+ <\frac{\eta}{D_Q}.
+$$
+
+Since $D_P,D_Q>0$, choose such an $n$ large enough that $m\ge0$. Then
+
+$$
+|a_P+nD_P-a_Q-mD_Q|<\eta.
+$$
+
+The corresponding words belong to disjoint families, so are different even if this difference happens to be zero. Equation (8.1) fails. Hence commensurability is necessary whenever endpoints agree. This argument supplies arbitrarily close *legal nonnegative* lap counts, rather than only unrestricted integer combinations.
+
+If the periods are commensurable, write them uniquely as $ph,qh$ with $p,q$ relatively prime positive integers and $h=h_{PQ}>0$. Bézout's identity, followed by adding a sufficiently large common multiple, gives
+
+$$
+\{pn-qm:n,m\in\mathbb N_0\}=\mathbb Z.
+$$
+
+Explicitly, from any integer solution $(n_*,m_*)$ to $pn_*-qm_*=j$, replace it by $(n_*+qN,m_*+pN)$ for a large enough integer $N$ to make both coordinates nonnegative. Therefore the set of signed differences between the two rays is exactly
+
+$$
+(a_P-a_Q)+h\mathbb Z.
+$$
+
+Its least absolute value is precisely the third row, and is attained by two actual words. This remains true when the two families visit the same cyclic SCC, when $p=q=1$. Parallel crossing names, different cycle entries and zero-lap words remain different table rows through their different simple paths.
+
+Under conditions 1–2, every possible same-endpoint comparison is one of the comparisons just listed. Each listed minimum is attained. Thus (8.1) holds exactly when every entry exceeds $2\epsilon$, proving necessity and sufficiency. If the list is empty, there are no distinct words with a common endpoint and recovery follows from the endpoint alone.
+
+In particular, in this graph class $\delta_d=2\epsilon<\infty$ fails: an attaining pair has the common midpoint observation. One must not replace the strict inequality by $\ge$. Nor is a general inference from an unattained infimum being $2\epsilon$ being used; finiteness and the attained minima above justify the threshold here. On a single loop with lap duration $2\epsilon$, the empty word and one lap already share the permitted observation $y=\epsilon$. This also checks the closed-error equality case at the root. $\square$
+
+The theorem's graph and arithmetic synthesis is repo-derived. The finite cycle normal form is reused from Theorem 7.2. Its established automata counterpart is the cycle-contraction and finite-union decomposition in the proof of Krieger–Rampersad–Shallit, [*Finding the growth rate of a regular language in polynomial time*, arXiv:0711.4990v1, §3.1, Theorem 5, pp.4–5](https://arxiv.org/pdf/0711.4990v1). In that correspondence each vertex is accepting because every finite root word is in scope, and names remain distinct transitions. That paper supplies the decomposition perspective, not the native clock separation criterion. Weyl supplies irrational rotation, and the cited Dirichlet estimate supplies small differences of positive lap multiples. No priority claim for the combined graph result is made.
+
+**Theorem 8.3 (existence of robust mathematical design weights).** Fix the finite root-reachable graph and $\epsilon>0$. There exists a positive real *design* weighting $\widehat d:E\to\mathbb R_{>0}$ satisfying Definition 8.1's recovery property at tolerance $\epsilon$ if and only if the structural condition of Theorem 7.2 holds. Equivalently, the graph admits an exactly injective positive rational weighting. When the structure holds it admits robust real design weights for every prescribed finite $\epsilon>0$.
+
+Proof. A robust weighting must satisfy condition 1 of Theorem 8.2, which is independent of the weighting. Conversely, reuse Theorem 7.2 to obtain a positive integer weighting $d_0$ for which $F_{d_0}$ is injective; its construction is not repeated. For different words with the same endpoint, the two integer totals are distinct, hence differ by at least one. Choose any real $\lambda>2\epsilon$ and set $\widehat d=\lambda d_0$. Their new time difference is at least $\lambda>2\epsilon$, so the disjoint-interval argument of Theorem 8.2 supplies the decoder. This also covers an edgeless graph and an empty separation list. The equivalence with rational exact design is exactly Theorem 7.2.
+
+The existential weighting here changes mathematical edge data. It does not assert that the fixed source can tune those data, install $d_0$, multiply every duration by $\lambda$, or maintain the prescribed error over unbounded executions. A change of units multiplies both the native durations and the numerical error bound by the same factor and does not improve their ratio. Even a genuine positive multiplication of native durations cannot turn a zero infimum of same-endpoint gaps into a positive one. Source realization and calibration of a proposed design are additional premises.
+
+If a cyclic SCC is reachable, the lap argument of Proposition 7.5 still applies: $pL^k$ has the same endpoint for every $k\ge0$ and native total $\tau(p)+kD$ with $D>0$. The error-zero readings allowed by Definition 8.1 are already unbounded above. A retained record with at most $2^b$ values distinguishes at most $2^b$ members of this infinite same-endpoint family. Uniform absolute tolerance therefore provides no bound on clock range or chronological storage; a finite physical acquisition or bounded-width realization is not a conclusion of the design existence proof. $\square$
+
+**Proposition 8.4 (a finite native source with exact recovery and no positive tolerance).** There is an actual finite deterministic source satisfying the typed complete response and positive native cocycle contracts for which $F_d$ is injective on *all* finite legal root words, but uniform recovery fails for every $\epsilon>0$. Its graph nevertheless satisfies Theorem 8.3 and thus admits robust designs.
+
+Proof. Take one type and the actual state set $X=\{r,u,v,z\}$, with initial state $r$ and declared current readout $q(x)=x$. The entire legal transition set is
+
+$$
+r\xrightarrow{a}u,\qquad r\xrightarrow{b}v,\qquad
+u\xrightarrow{x}u,\qquad v\xrightarrow{w}v,\qquad
+u\xrightarrow{c}z,\qquad v\xrightarrow{e}z.
+$$
+
+Each operation has the singleton source domain displayed, the displayed successor, and a fixed complete one-step record containing its name, successor and native duration. There are no other operations, failures, resets or archive fields, and $z$ is terminal. Because the empty response contains $q$, distinct states have distinct complete residuals; equal states have identical responses by determinism. Thus the complete residual graph is exactly this four-state actual source, without any fictitious combinations of fields. Set
+
+$$
+d(a)=d(b)=d(c)=d(x)=1,\qquad d(e)=\tfrac32,\qquad d(w)=\sqrt2.
+$$
+
+One-step durations are representative independent and strictly positive, and the native total is their sum. The following is the exhaustive classification by endpoint, with all indices nonnegative:
+
+| Endpoint | All legal root words | Native totals |
+| --- | --- | --- |
+| $r$ | $\varepsilon_r$ | $0$ |
+| $u$ | $ax^n$, $n\ge0$ | $1+n$ |
+| $v$ | $bw^m$, $m\ge0$ | $1+m\sqrt2$ |
+| $z$ | $ax^nc$ or $bw^me$, $n,m\ge0$ | $2+n$ or $\tfrac52+m\sqrt2$ |
+
+Indeed, after choosing $a$ or $b$ at $r$, only that branch's loop can repeat until its exit, after which no further edge is legal. Choosing to stop gives the corresponding intermediate row. This proves exhaustiveness, including the empty word and both zero-lap exits $ac,be$.
+
+Each nonconstant sequence within a row is strictly increasing. At $z$, equality between the two branches would require
+
+$$
+n-m\sqrt2=\tfrac12.
+$$
+
+For $m=0$ this would make the integer $n$ equal to one half. For $m>0$ it would express $\sqrt2=(n-1/2)/m$ as a rational number. Both are impossible. Different endpoint rows are separated by the exact endpoint, regardless of coincidences between their times. In particular $a$ and $b$ have equal total one and distinct endpoints, and the two zero-lap totals at $z$ are $2$ and $5/2$. These facts establish injectivity on the entire $\mathcal P_r$.
+
+The two time rays at $z$ have incommensurable periods $1,\sqrt2$. The irrational-rotation argument in Theorem 8.2, now with the offset one half, supplies for every $\eta>0$ some $n,m\ge0$ with
+
+$$
+\left|(2+n)-(\tfrac52+m\sqrt2)\right|<\eta.
+$$
+
+These values are never equal by the preceding calculation, but their positive gaps have infimum zero. For any $\epsilon>0$, choose $\eta<2\epsilon$; the midpoint of the resulting two totals is an allowed observation for both words. Uniform recovery fails at that tolerance.
+
+Finally, the only cyclic components are the singleton loops at $u$ and $v$, and no root condensation path visits both. Theorem 8.3 therefore supplies robust design weights on this graph at any prescribed tolerance. This last statement does not replace the displayed native durations or give this actual source a new control operation. $\square$
+
+**Theorem 8.5 (transport of the observation contract and of chronological memory).** Suppose $b:V\to B$ and $s:V\to S$ are faithful typed boundary and spatial endpoint representations on the same reachable actual residual image: each is injective there. Their endpoint readings are exact. Use the same final clock reading $y$, the same native $d$, root and total error bound as in Definition 8.1. Then the following three observation contracts have uniform recovery for exactly the same graphs, weights and tolerances:
+
+$$
+(z(u),y),\qquad (b(z(u)),y),\qquad (s(z(u)),y),
+\qquad |y-\tau(u)|\le\epsilon.
+$$
+
+Whenever they recover the word they also recover every lossless chronological memory target $m(u)$ of Definition 8.1. The recovered word determines the exact modeled endpoint and accumulated duration. It does not determine the realized clock error or an arbitrary pre-existing source history. These conclusions alone give no pairwise invertibility of the four unaugmented endpoint, time, boundary and memory coordinates.
+
+Proof. Injectivity of $b$ gives an inverse $b^{-1}:b(V)\to V$ on its actual image. The map
+
+$$
+(z,y)\longmapsto(b(z),y)
+$$
+
+is a bijection of the possible noisy observation images, with inverse $(\beta,y)\mapsto(b^{-1}(\beta),y)$. It carries the full observation set of each word onto the boundary observation set of that same word, preserving intersections and disjointness. Composing either decoder with these maps proves equivalence in both directions. The same argument applies to $s$ and transports directly between the two augmented views. No independently possible endpoint and time values are inserted into the actual observation image.
+
+Once $u$ is decoded, apply $m$ to get its chronological memory value; conversely its actual-image inverse recovers $u$ from $m(u)$. This is the lossless ordered-word target, not the potentially coarser minimal predictive core. Since $x_0$ and the deterministic source model are fixed, mathematical replay also determines the declared response sequence along $u$. It is evaluation of the fixed model, not authorization to reset, query a new source, or recover fields omitted from that model.
+
+For a single fixed word $u$, all errors $\xi\in[-\epsilon,\epsilon]$ are allowed, with $y=\tau(u)+\xi$. At least two such values give the same decoded word. Thus neither $u$ nor $m(u)$ alone can recover the realized $\xi$ or $y$. If $y$ is additionally retained and the native model is exactly known, then $\xi=y-\tau(u)$ is determined by that *augmented* data. In particular, the noisy observation and the decoded word have a recovery map but need not be bijective records.
+
+For an explicit failure of unaugmented recovery, on the one-vertex one-loop source all residual, boundary and spatial endpoint coordinates are constant, whereas the words $x^n$ and their chronological memories vary with $n$. With native loop duration one they are uniformly recoverable from endpoint plus time whenever $0<\epsilon<1/2$. The constant endpoint coordinates cannot recover these histories. Conversely, in the finite acyclic source with just $r\xrightarrow{a}u$ and $r\xrightarrow{b}v$, both durations one and current readout equal to the state, endpoint plus noisy time recovers all three words $\varepsilon_r,a,b$ for every tolerance because their endpoints differ. The unaugmented exact total time merges $a,b$. Therefore even a successful joint reconstruction does not make each coordinate individually sufficient.
+
+For interpreting $b$ or $s$ as representations of the *process*, rather than just endpoint relabelings, additionally supply a rooted typed named-graph isomorphism onto its actual represented image, with both directions preserving legal menus, successors, complete declared outputs and durations. These are the same-source requirements of Remark 4.2, [Process Geometry §§39–43](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), and [Joint Kernel Minimal Predictive Core Bridge §23](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_KERNEL_MINIMAL_PREDICTIVE_CORE_BRIDGE.md). They give, by induction on the word, the same legal words and native totals in the represented process. Exact endpoint faithfulness then applies the preceding observation-set bijection. A view carrying extra history, a view with an unproved inverse, or a view with endpoint noise has not been supplied this contract. $\square$
+
+**Proposition 8.6 (invertible recoding and newly imposed additive error).** Exact invertible recoding of endpoint-time values need not preserve the existence of a positive uniform additive tolerance in the recoded time coordinate. Preservation under the *transported* observation contract remains valid.
+
+Proof. Use a one-vertex one-loop actual deterministic source with current readout its sole vertex and native loop duration one. Its words are exactly $x^n$, $n\in\mathbb N_0$, including the empty word at $n=0$, with times $n$. Adjacent same-endpoint times differ by one, so Theorem 8.2 gives uniform recovery for every $0<\epsilon<1/2$.
+
+Recode time by $f(t)=\log(1+t)$ for $t\ge0$. It is strictly increasing with inverse $f^{-1}(v)=e^v-1$ on its image, and hence preserves exact recovery of every word. But
+
+$$
+f(n+1)-f(n)=\log\left(1+\frac1{n+1}\right)>0,
+\qquad \lim_{n\to\infty}(f(n+1)-f(n))=0.
+$$
+
+For every newly imposed constant additive error $\eta>0$ around $f(n)$, two sufficiently late consecutive words have overlapping closed error intervals of radius $\eta$. Their midpoint observation prevents recovery. The recoded coordinate is not asserted to be a descended additive duration, so this is a counterexample to unrestricted recoding of the error model, not an exception to Theorem 8.2.
+
+If instead the native observation $y\in[n-\epsilon,n+\epsilon]$ is passed through the same $f$, extend $f$ to $(-1,\infty)$; it contains all these observations when $\epsilon<1/2$. The actual transported interval is
+
+$$
+[f(n-\epsilon),f(n+\epsilon)].
+$$
+
+These intervals remain disjoint because $f$ is injective on the entire possible noisy observation domain. They shrink with $n$ and are not the newly stipulated intervals $[f(n)-\eta,f(n)+\eta]$ for a fixed positive $\eta$. Thus an invertible recoding preserves the observation contract when the contract is transported with it, but its exact inverse alone supplies no calibration guarantee for a different instrument error measured after recoding. $\square$
+
+## 追加锚（本行以下为增补区）
