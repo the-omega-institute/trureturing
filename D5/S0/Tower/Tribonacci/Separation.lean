@@ -133,4 +133,181 @@ private theorem cubic_resultant_ne_zero (p : ℤ[X])
   have hr := resultant_ne_zero _ _ hc
   simpa only [resultant_map_map, natDegree_map] using hr
 
+private theorem secondary_root_relations {z : ℂ}
+    (hz : z ∈ tribonacciCharacteristicPolynomial.roots)
+    (hz_ne : z ≠ (β : ℂ)) :
+    z + star z = ((1 - β : ℝ) : ℂ) ∧
+      z * star z = ((β ^ 2 - β - 1 : ℝ) : ℂ) ∧
+      β * ‖z‖ ^ 2 = 1 := by
+  have hpoly : tribonacciCharacteristicPolynomial ≠ 0 := by
+    intro h
+    have he := congrArg (Polynomial.eval (2 : ℂ)) h
+    norm_num [tribonacciCharacteristicPolynomial] at he
+  have he := (Polynomial.mem_roots hpoly).mp hz
+  have hc : z ^ 3 = z ^ 2 + z + 1 := by
+    have := he
+    simp only [Polynomial.IsRoot, tribonacciCharacteristicPolynomial,
+      eval_sub, eval_pow, eval_X, eval_one] at this
+    linear_combination this
+  have ht : (β : ℂ) ^ 3 = (β : ℂ) ^ 2 + β + 1 := by
+    exact_mod_cast tribonacciConstant_cubic
+  have hf : (z - (β : ℂ)) *
+      (z ^ 2 + z * β + (β : ℂ) ^ 2 - z - β - 1) = 0 := by
+    linear_combination hc - ht
+  have hq := (mul_eq_zero.mp hf).resolve_left (sub_ne_zero.mpr hz_ne)
+  have hi : β ^ 2 - β - 1 = β⁻¹ := by
+    apply (eq_inv_iff_mul_eq_one₀ tribonacciConstant_ne_zero).mpr
+    nlinarith [tribonacciConstant_cubic]
+  have hquad : z ^ 2 + ((β - 1 : ℝ) : ℂ) * z + ((β⁻¹ : ℝ) : ℂ) = 0 := by
+    rw [← hi]
+    push_cast
+    linear_combination hq
+  have him := congrArg Complex.im hquad
+  have hre := congrArg Complex.re hquad
+  norm_num [pow_two, Complex.mul_re, Complex.mul_im] at him hre
+  have him_ne : z.im ≠ 0 := by
+    intro hzero
+    rw [hzero] at hre
+    have hd := D5.S0.Tower.Tribonacci.PerronRoot.tribonacci_errorEnergy_discriminant_pos
+    nlinarith [sq_nonneg (2 * z.re + (β - 1))]
+  have hre_eq : 2 * z.re + (β - 1) = 0 := by
+    apply (mul_eq_zero.mp (show z.im * (2 * z.re + (β - 1)) = 0 by
+      nlinarith [him])).resolve_left him_ne
+  have hn : Complex.normSq z = β⁻¹ := by
+    rw [Complex.normSq_apply]
+    nlinarith [hre_eq, sq_nonneg (2 * z.re + (β - 1))]
+  refine ⟨?_, ?_, ?_⟩
+  · apply Complex.ext <;> simp <;> linarith
+  · rw [mul_comm, ← Complex.normSq_eq_conj_mul_self, hn, hi]
+  · rw [Complex.sq_norm, hn, mul_inv_cancel₀ tribonacciConstant_ne_zero]
+
+private theorem cubic_factorization {z : ℂ}
+    (hz : z ∈ tribonacciCharacteristicPolynomial.roots)
+    (hz_ne : z ≠ (β : ℂ)) :
+    cubic.map (Int.castRingHom ℂ) =
+      (X - C (β : ℂ)) * (X - C z) * (X - C (star z)) := by
+  obtain ⟨hsum, hprod, _⟩ := secondary_root_relations hz hz_ne
+  have hquad : (X - C z) * (X - C (star z)) =
+      X ^ 2 - C ((1 - β : ℝ) : ℂ) * X + C ((β ^ 2 - β - 1 : ℝ) : ℂ) := by
+    calc
+      _ = X ^ 2 - C (z + star z) * X + C (z * star z) := by
+        simp only [map_add, map_mul]; ring
+      _ = _ := by rw [hsum, hprod]
+  rw [mul_assoc, hquad]
+  have ht : (β : ℂ) ^ 3 = (β : ℂ) ^ 2 + β + 1 := by
+    exact_mod_cast tribonacciConstant_cubic
+  simp only [cubic, Polynomial.map_sub, Polynomial.map_pow, map_X, map_one]
+  push_cast
+  have hCt := congrArg (C : ℂ → ℂ[X]) ht
+  simp only [map_add, map_pow, map_one] at hCt
+  linear_combination hCt
+
+private theorem resultant_three_embeddings {z : ℂ}
+    (hz : z ∈ tribonacciCharacteristicPolynomial.roots)
+    (hz_ne : z ≠ (β : ℂ)) (p : ℤ[X]) :
+    (cubic.resultant p : ℂ) =
+      (p.eval₂ (Int.castRingHom ℝ) β : ℂ) *
+        p.eval₂ (Int.castRingHom ℂ) z *
+        star (p.eval₂ (Int.castRingHom ℂ) z) := by
+  let pc := p.map (Int.castRingHom ℂ)
+  have hd : cubic.natDegree = 3 := by
+    unfold cubic
+    compute_degree!
+  have hn : pc.natDegree ≤ p.natDegree := natDegree_map_le
+  have htwo : ((X - C (β : ℂ)) * (X - C z)).natDegree = 2 := by
+    rw [(monic_X_sub_C _).natDegree_mul (monic_X_sub_C _)]
+    simp
+  have h12 := resultant_mul_left (X - C (β : ℂ)) (X - C z) pc p.natDegree hn
+  have h123 := resultant_mul_left ((X - C (β : ℂ)) * (X - C z))
+    (X - C (star z)) pc p.natDegree hn
+  simp only [natDegree_X_sub_C, htwo, Nat.reduceAdd,
+    resultant_X_sub_C_left _ _ _ hn] at h12 h123
+  rw [h12] at h123
+  have hmap := resultant_map_map cubic p cubic.natDegree p.natDegree (Int.castRingHom ℂ)
+  rw [hd, cubic_factorization hz hz_ne] at hmap
+  rw [← hmap, h123]
+  simp only [pc, eval_map]
+  have hreal := hom_eval₂ p (Int.castRingHom ℝ) Complex.ofRealHom β
+  have hconj := hom_eval₂ p (Int.castRingHom ℂ) (starRingEnd ℂ) z
+  simp only [RingHom.comp_intCast] at hreal hconj
+  rw [← hreal, ← hconj]
+  rfl
+
+private theorem integer_norm_lower_bound {z : ℂ}
+    (hz : z ∈ tribonacciCharacteristicPolynomial.roots)
+    (hz_ne : z ≠ (β : ℂ)) (p : ℤ[X])
+    (hp : p.eval₂ (Int.castRingHom ℝ) β ≠ 0) :
+    1 ≤ |p.eval₂ (Int.castRingHom ℝ) β| *
+      ‖p.eval₂ (Int.castRingHom ℂ) z‖ ^ 2 := by
+  have hn := cubic_resultant_ne_zero p hp
+  have hi : (1 : ℤ) ≤ |cubic.resultant p| := by
+    have := abs_pos.mpr hn
+    omega
+  have hc : (1 : ℝ) ≤ ‖(cubic.resultant p : ℂ)‖ := by
+    rw [Complex.norm_intCast, ← Int.cast_abs]
+    exact_mod_cast hi
+  rw [resultant_three_embeddings hz hz_ne p, norm_mul, norm_mul,
+    norm_star, Complex.norm_real] at hc
+  nlinarith only [hc]
+
+private theorem perron_difference_bound {Q : ℕ} (u v : TribonacciName Q) :
+    |(digitPolynomial u - digitPolynomial v).eval₂ (Int.castRingHom ℝ) β| * (β - 1)
+      ≤ β ^ Q := by
+  have hb : |(digitPolynomial u - digitPolynomial v).eval₂ (Int.castRingHom ℝ) β|
+      ≤ ∑ i : Fin Q, β ^ i.1 := by
+    rw [eval₂_sub, digitPolynomial_eval, digitPolynomial_eval, ← Finset.sum_sub_distrib]
+    apply (Finset.abs_sum_le_sum_abs _ _).trans
+    apply Finset.sum_le_sum
+    intro i _
+    cases hu : u.1 i <;> cases hv : v.1 i <;>
+      simp [hu, hv, abs_of_nonneg (pow_nonneg tribonacciConstant_pos.le i.1)]
+  have hg : (∑ i : Fin Q, β ^ i.1) * (β - 1) = β ^ Q - 1 := by
+    rw [Fin.sum_univ_eq_sum_range, geom_sum_mul]
+  have hm := mul_le_mul_of_nonneg_right hb (sub_nonneg.mpr one_lt_tribonacciConstant.le)
+  rw [hg] at hm
+  linarith
+
+/-- Distinct length-`Q` admissible names are uniformly separated at the
+natural conjugate scale, at either non-Perron Tribonacci root. -/
+theorem conjugateCoordinate_separation {z : ℂ}
+    (hz : z ∈ tribonacciCharacteristicPolynomial.roots)
+    (hz_ne : z ≠ (β : ℂ)) (Q : ℕ) (u v : TribonacciName Q) (huv : u ≠ v) :
+    Real.sqrt (β - 1) * ‖z‖ ^ Q ≤
+      dist (conjugateCoordinate z u) (conjugateCoordinate z v) := by
+  let p := digitPolynomial u - digitPolynomial v
+  have hp : p.eval₂ (Int.castRingHom ℝ) β ≠ 0 :=
+    digit_difference_perron_ne_zero u v huv
+  have hn := integer_norm_lower_bound hz hz_ne p hp
+  have hb := perron_difference_bound u v
+  have hscale := (secondary_root_relations hz hz_ne).2.2
+  have hpow : β ^ Q * (‖z‖ ^ Q) ^ 2 = 1 := by
+    calc
+      β ^ Q * (‖z‖ ^ Q) ^ 2 = (β * ‖z‖ ^ 2) ^ Q := by ring
+      _ = 1 := by rw [hscale, one_pow]
+  have ha : 0 < β - 1 := sub_pos.mpr one_lt_tribonacciConstant
+  have hcoord : p.eval₂ (Int.castRingHom ℂ) z =
+      conjugateCoordinate z u - conjugateCoordinate z v := by
+    simp only [p, eval₂_sub, digitPolynomial_eval, conjugateCoordinate]
+  rw [dist_eq_norm]
+  rw [hcoord] at hn
+  have ht : (β - 1) * (‖z‖ ^ Q) ^ 2 ≤
+      ‖conjugateCoordinate z u - conjugateCoordinate z v‖ ^ 2 := by
+    have h1 := mul_le_mul_of_nonneg_right hn ha.le
+    have h2 := mul_le_mul_of_nonneg_right hb
+      (sq_nonneg ‖conjugateCoordinate z u - conjugateCoordinate z v‖)
+    change |p.eval₂ (Int.castRingHom ℝ) β| * (β - 1) *
+      ‖conjugateCoordinate z u - conjugateCoordinate z v‖ ^ 2 ≤ _ at h2
+    have h3 : β - 1 ≤ β ^ Q * ‖conjugateCoordinate z u - conjugateCoordinate z v‖ ^ 2 := by
+      nlinarith only [h1, h2]
+    have h4 := mul_le_mul_of_nonneg_right h3 (sq_nonneg (‖z‖ ^ Q))
+    calc
+      (β - 1) * (‖z‖ ^ Q) ^ 2 ≤
+          (β ^ Q * (‖z‖ ^ Q) ^ 2) *
+            ‖conjugateCoordinate z u - conjugateCoordinate z v‖ ^ 2 := by
+              nlinarith only [h4]
+      _ = _ := by rw [hpow, one_mul]
+  have hs := Real.sq_sqrt ha.le
+  have hnonneg : 0 ≤ Real.sqrt (β - 1) * ‖z‖ ^ Q := by positivity
+  nlinarith [norm_nonneg (conjugateCoordinate z u - conjugateCoordinate z v)]
+
 end D5.S0.Tower.Tribonacci.Separation
