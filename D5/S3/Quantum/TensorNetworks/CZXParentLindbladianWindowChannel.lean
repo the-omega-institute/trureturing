@@ -322,6 +322,67 @@ private lemma block16_eq (l a : Fin 2) (m b : Fin 4) (z c : Fin 2) :
   · rintro ⟨rfl, rfl, rfl⟩
     rfl
 
+private lemma block16_eta (p : Fin 16) :
+    block16 (sector16 p) (multiplicity16 p) (bit16 p) = p := by
+  apply Fin.ext
+  change 8 * (p.val / 8) + 2 * (p.val % 8 / 2) + p.val % 2 = p.val
+  omega
+
+private lemma block_trace_single
+    (l k a b : Fin 2) (m t : Fin 4) (z w c d : Fin 2) :
+    (∑ j : Fin 4,
+      (Matrix.single (block16 l m z) (block16 k t w) 1 :
+        Matrix (Fin 16) (Fin 16) ℂ)
+        (block16 a j c) (block16 b j d)) =
+      if l = a ∧ k = b ∧ z = c ∧ w = d ∧ m = t then 1 else 0 := by
+  simp only [Matrix.single_apply, block16_eq]
+  by_cases hm : m = t
+  · subst t
+    simp [ite_and, Finset.sum_ite_irrel, eq_comm, and_left_comm, and_comm]
+  · have hz (j : Fin 4) : ¬ ((l = a ∧ m = j ∧ z = c) ∧
+        (k = b ∧ t = j ∧ w = d)) := by
+      rintro ⟨⟨_, h₁, _⟩, ⟨_, h₂, _⟩⟩
+      exact hm (h₁.trans h₂.symm)
+    simp only [if_neg (hz _), Finset.sum_const_zero]
+    simp [hm]
+
+private lemma pinching_single_block (l k : Fin 2) (a b : Fin 4) (z t : Fin 2) :
+    pinching (Matrix.single (block16 l a z) (block16 k b t) 1) =
+      if l = k ∧ a = b then
+        (4 : ℂ)⁻¹ • ∑ m : Fin 4,
+          Matrix.single (block16 l m z) (block16 k m t) 1
+      else 0 := by
+  ext r s
+  obtain ⟨u, v, w, hr⟩ : ∃ u v w, r = block16 u v w :=
+    ⟨sector16 r, multiplicity16 r, bit16 r, (block16_eta r).symm⟩
+  obtain ⟨u', v', w', hs⟩ : ∃ u v w, s = block16 u v w :=
+    ⟨sector16 s, multiplicity16 s, bit16 s, (block16_eta s).symm⟩
+  subst r s
+  simp only [pinching, (block16_components ..).1,
+    (block16_components ..).2.1, (block16_components ..).2.2,
+    block_trace_single]
+  simp only [Matrix.sum_apply, Matrix.smul_apply,
+    smul_eq_mul, Matrix.single_apply, block16_eq, Matrix.ite_apply,
+    Matrix.zero_apply]
+  by_cases hv : v = v'
+  · subst v'
+    by_cases hl : l = u
+    · subst u
+      by_cases hk : k = u'
+      · subst u'
+        by_cases he : l = k
+        · subst k
+          by_cases ha : a = b <;> by_cases hz : z = w <;> by_cases ht : t = w' <;>
+            simp [ha, hz, ht, ite_and, Finset.sum_ite_irrel, eq_comm]
+        · simp [he, Ne.symm he, ite_and, Finset.sum_ite_irrel]
+      · simp [hk, ite_and, Finset.sum_ite_irrel]
+    · simp [hl, ite_and, Finset.sum_ite_irrel]
+  · have hz (m : Fin 4) : ¬ ((l = u ∧ m = v ∧ z = w) ∧
+        (k = u' ∧ m = v' ∧ t = w')) := by
+      rintro ⟨⟨_, h₁, _⟩, ⟨_, h₂, _⟩⟩
+      exact hv (h₁.symm.trans h₂)
+    simp [hv, hz]
+
 private lemma pinching_single (p q : Fin 16) :
     pinching (Matrix.single p q 1) =
       if sector16 p = sector16 q ∧ multiplicity16 p = multiplicity16 q then
@@ -329,7 +390,9 @@ private lemma pinching_single (p q : Fin 16) :
           Matrix.single (block16 (sector16 p) m (bit16 p))
             (block16 (sector16 q) m (bit16 q)) 1
       else 0 := by
-  sorry
+  simpa only [block16_eta] using
+    pinching_single_block (sector16 p) (sector16 q)
+      (multiplicity16 p) (multiplicity16 q) (bit16 p) (bit16 q)
 
 set_option maxHeartbeats 2400000 in
 private lemma local_matrix_unit (v d : Fin 4 → Fin 2) :
