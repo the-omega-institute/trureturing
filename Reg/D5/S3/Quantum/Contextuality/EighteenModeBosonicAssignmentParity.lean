@@ -25,7 +25,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ n => @decide (Even n) (Classical.propDecidable _))
+  realize signature (fun _ _ n => decide (Even n))
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -45,9 +45,8 @@ theorem rejected_law : ¬ arena.Law rejected := by
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
-  change @decide (Even (0 : ℕ)) (Classical.propDecidable _) ≠
-    @decide (Even (1 : ℕ)) (Classical.propDecidable _)
-  simp
+  change decide (Even (0 : ℕ)) ≠ decide (Even (1 : ℕ))
+  decide
 
 def source_registration : Registration arena claim where
   actual := actual
@@ -79,7 +78,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ _ n => @decide (Even n) (Classical.propDecidable _))
+    (fun _ _ n => decide (Even n))
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
