@@ -692,7 +692,8 @@ lemma site_succ_injective (n : ℕ) :
   let : NeZero n := ⟨Nat.ne_of_gt (Nat.zero_lt_of_lt i.isLt)⟩
   apply add_left_injective (1 : Fin n)
   apply Fin.ext
-  simpa only [site, Fin.val_add, Fin.val_one', Nat.add_mod_mod] using congrArg Fin.val h
+  simpa only [Fin.val_add, Fin.val_one', Nat.add_mod_mod] using
+    (show (i.val + 1) % n = (j.val + 1) % n from congrArg Fin.val h)
 
 private lemma middle_edge_unchanged (n : ℕ) (i : Fin n)
     (x : Fin n → Fin 2) (b c : Fin 2) (j : Fin n)

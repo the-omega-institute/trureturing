@@ -111,8 +111,8 @@ private lemma exponential_limit (n : ℕ) (hn : Even n) (hsize : 4 ≤ n) :
     apply List.pairwise_map.mpr
     apply List.pairwise_of_forall_mem_list
     intro i hi j hj
-    have hei : i.val % 2 = 0 := by simpa [sites, evenStarts] using (List.mem_filter.mp hi).2
-    have hej : j.val % 2 = 0 := by simpa [sites, evenStarts] using (List.mem_filter.mp hj).2
+    have hei : i.val % 2 = 0 := by simpa only [beq_iff_eq] using (List.mem_filter.mp hi).2
+    have hej : j.val % 2 = 0 := by simpa only [beq_iff_eq] using (List.mem_filter.mp hj).2
     exact window_commute n hn hsize i j hei hej
   have hp : (sites.map (windowSuperoperator n)).prod = projection n := rfl
   simpa only [hsum, hp] using finite_projection_limit (sites.map (windowSuperoperator n)) hi hc
