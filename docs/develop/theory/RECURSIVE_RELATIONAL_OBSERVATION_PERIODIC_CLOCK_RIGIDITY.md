@@ -2100,3 +2100,638 @@ and whose conclusions are about the original mathematical orbit.
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 22. Effective authentic operator-image coding from the original source
+
+**Definition 22.1 (complete source input and charged synthesis).** The input
+is an authentic $(d,P)$ from the original entrance: $d\ge0$ and
+$P=z_1\cdots z_{2d}$ is PSA Definition 1.2's paid full-root prefix. The
+source belongs to the original all-index $\mathscr R_d$ of GPO Definition
+29.1. At $d=0$, $P$ is empty and the law is zero. An equivalent complete
+aligned-source descriptor must determine the same original stream,
+alignment and singular transient. Neither a local predictive boundary nor
+a periodic tail alone is this input. The original cut $n$, root binding and
+$K_d/\rho_d$ firstness retain their acquisition and verification costs.
+
+Here is one deliberately elementary synthesis algorithm. Enumerate monic
+binary forward polynomials in increasing degree $k=0,\ldots,d$, and then
+in fixed coefficient order. Give each candidate the first $k$ displayed
+bits, extend through $2d$, and compare with $P$. Degree zero denotes zero.
+Reject a negative bound, wrong length, nonbinary entry, or absence of a
+passing candidate. On the authentic promise at least one passes, and GPO
+Lemma 29.2 makes every passing extension the same full source. The first
+passing polynomial $h$ is its least annihilator: a smaller annihilator
+would have passed earlier. Two different least monic polynomials cannot
+occur, since their difference would be a smaller annihilator. This computes
+a behavioral law, not the hidden private recurrence presentation or the
+original first-passing object.
+
+Write $h=X^a g$, $g(0)=1$, and use ACR Theorem 27.3's coprime projections
+to compute $s=y+t$. Explicitly, extended polynomial Euclid supplies
+$UX^a+Vg=1$; then $y=U(E)E^as$ and $t=V(E)g(E)s$. Reduce $U$ modulo $g$
+when $g\ne1$. The needed aligned core seed and the first $a$ transient
+bits are obtained by forward recurrence. Minimality of $h$ gives the least
+core polynomial $g$ and $a+\deg g\le d$. At $g=1$ use the zero core.
+All projections use forward shifts of the original one-sided stream;
+there is no backwards extension of its transient. This representation
+check does not certify physical provenance or stationarity: those remain
+the authentic paid-input premises.
+
+**Definition 22.2 (streaming seeded residue image).** For $r=\deg g>0$,
+compute the least period $p$ by iterating multiplication by $x=X\bmod g$
+from $1$ until its first positive return. By (PCR.28) this is the actual
+core period, with $p\le2^r-1$. This works in a quotient ring, including
+repeated factors, rather than in a presumed field. At $r=0$ set $p=1$.
+Construct the actual $H_s,U_s,C_s$ and integer seed triples of
+(PCR.40)--(PCR.42). In particular retain shallow safe seeds, not just the
+frontier $A>a$. All these values are computed; none is supplied advice.
+
+Put $Q_p=\{0,\ldots,p-1\}^2$, $N=p^2$. The successor oracle on $q=(A,B)$
+evaluates $c_y(A)=y_{A-1}$ by periodic indexing and applies (PCR.39) modulo
+$p$, retaining physical names $a<b$. Evaluate the following recurrence
+depth first, without caching its subproblems:
+
+$$
+\begin{aligned}
+\mathsf{Reach}(u,v,0)&\Longleftrightarrow
+ (u=v)\lor(u\xrightarrow a v)\lor(u\xrightarrow b v),\\
+\mathsf{Reach}(u,v,j+1)&\Longleftrightarrow
+ \exists w\in Q_p\;
+ [\mathsf{Reach}(u,w,j)\land\mathsf{Reach}(w,v,j)].
+\end{aligned}
+\tag{PCR.53}
+$$
+
+This is reachability in at most $2^j$ edges, since shorter paths can be
+padded by zero-length portions. Set $\ell=\lceil\log_2(N+1)\rceil$ and
+
+$$
+\begin{aligned}
+\mathsf{InImage}_s(q)&\Longleftrightarrow
+ q\in Q_p\ \land\ \exists c\in C_s\;
+ \mathsf{Reach}((A_c,B_c)\bmod p,q,\ell),\\
+K_s&=\sum_{q\in Q_p}\mathbf1_{\mathsf{InImage}_s(q)}.
+\end{aligned}
+\tag{PCR.54}
+$$
+
+A numerical residue query uses canonical nonnegative coordinates and
+rejects out-of-range values before any reduction. Scan $Q_p$ in
+lexicographic order to count, rank and unrank its accepted values. Let
+$b_s=\lceil\log_2K_s\rceil$ and use exactly $b_s$ binary bits for a rank
+$0\le j<K_s$. At $K_s=1$ only the empty code is valid. Wrong lengths,
+nonbinary codes and indices $j\ge K_s$ are rejected. No image table is
+part of the input.
+
+**Definition 22.3 (the operator query and inverse code interface).** At
+$r>0$, an operator query consists of two canonical $r$-bit coefficient
+strings $(Q_1,Q_2)$ in $R_g$. First enumerate
+$1,x,\ldots,x^{p-1}$, comparing the supplied strings at each step. Reject
+unless each has a match; otherwise take the unique matching exponents
+$(u,v)\in Q_p$. Then accept exactly when
+$\mathsf{InImage}_s(u,v)$ holds, and return its residue rank as the code.
+This explicitly computes the numerical phase conversion. Being a unit,
+or merely being a pair of well-formed ring elements, is insufficient.
+Even pairs in $\langle x\rangle^2$ are rejected when their residues are
+outside the seeded image. Noncanonical coefficient lengths or symbols
+are invalid. No discrete logarithm, period or phase is supplied for free.
+
+Conversely, given $(d,P)$ and a valid $b_s$-bit code $j$, recompute the
+image count and unrank $j$ to $(u,v)$, then return $(x^u,x^v)$ in canonical
+coefficient form. This returns the source-relative operator class. It does
+not return a particular literal address, age or integer clock lift. At
+$r=0$ the operator interface has just the zero-core tag with both operator
+fields omitted; any extra pair is rejected. Its sole code is empty.
+The two constant sources remain distinguished by their core descriptors.
+
+**Theorem 22.4 (authentic operator-image correspondence and reversibility).**
+On every authentic input in $\mathscr R_d$, the accepted operator domain is
+exactly
+
+$$
+\mathcal O_s=
+ \{(x^{A_v},x^{B_v}):v\text{ is genuinely core-only in the original source}\}
+\tag{PCR.55}
+$$
+
+when $r>0$, with the stated zero-tag interpretation at $r=0$.
+The operator-to-code and code-to-operator maps are inverse between
+$\mathcal O_s$ and the valid codes. Its cardinality is exactly $K_s$.
+These assertions include zero, constants, all allowed singular transients,
+nonminimal private presentations and arbitrary repeated core factors.
+
+Proof. Synthesis identifies the entire original stream by GPO Lemma 29.2;
+the coprime decomposition and Theorem 18.2 therefore compute its actual
+seeds. Theorem 17.2 lifts every edge out of a seed to the corresponding
+literal physical child in that same source. Conversely every genuinely
+core-only address has a unique seed prefix by (PCR.43), so it supplies a
+seed-reachable graph path. Thus (PCR.54) is exactly $R_s$, in both
+directions. A shortest witness needs at most $N-|E_s|$ edges, hence is
+within the chosen reachability horizon. Shortening preserves only its
+endpoint: it can change both its address and its positive normalization
+time. A requested original witness's time must instead be evaluated along
+that witness by (PCR.47).
+
+By (PCR.28), $u\mapsto x^u$ is a bijection from $\mathbb Z/p\mathbb Z$
+onto $\langle x\rangle$. The explicit scan in Definition 22.3 terminates
+and computes its inverse for arbitrary supplied coefficients, rejecting
+elements outside this subgroup. Composing this bijection in both
+coordinates with the two realization directions for $R_s$ proves
+(PCR.55). In particular an accepted pair has an actual source cone and
+every actual safe cone's pair is accepted. Ordered enumeration gives
+inverse residue rank/unrank, and quotient powering gives inverse operator
+coding/decoding. At $p=1$, $R_s=\{(0,0)\}$; both constants have $K_s=1$,
+with the zero tag only for the zero core. $\square$
+
+**Proposition 22.5 (bit costs, polynomial peak space and exponential work).**
+Use explicit binary integers, binary coefficient arrays, delimited literal
+words, and a fixed multitape bit-operation model. Each elementary step
+reads or writes a bounded number of bits; cumulative writes count every
+scratch overwrite as well as retained output. Let $D=d+1$, and let $I$
+include the entire represented input length, including malformed query
+fields. On valid image queries $I=O(D)$. The following bounds concern the
+declared elementary algorithms; no exact numerical envelope is asserted.
+
+The raw synthesis and projections take
+$T_{\rm src}=O(I+2^dD^2+D^4)$ work and $O(I+D^2)$ peak bits. There are
+fewer than $2^{d+1}$ recurrence candidates, each tested in $O(D^2)$ bit
+operations. Schoolbook polynomial division and extended Euclid, and
+forward generation of the $O(D)$ seed entries needed by the projection,
+fit the additional $O(D^4)$ allowance. One coefficient-product-and-reduce
+operation modulo $g$ costs $O(D^2)$ bit operations and $O(D)$ temporary
+bits: form at most $r^2$ binary coefficient products and eliminate at most
+$r$ leading coefficients with at most $r+1$ XORs each. Each shifted-XOR
+pass is a sequential $O(D)$-bit scan; $O(D)$ passes suffice, including
+tape-head movement and loop control. Consequently
+binary powering at an exponent of $L$ bits, including the exponent scan,
+costs $O(D^2(L+1))$, with $O(D+L)$ temporary bits. The dot product with
+the core seed then evaluates $y_i$ at the same bound. This argument
+requires only a monic modulus, not square-freeness.
+
+Period computation costs $O(pD)$ work and $O(D)$ additional space, since
+multiplication by $x$ is one shift/reduction. A residue successor, including
+its core bit at an $O(D)$-bit index and modular integer additions, costs
+$O(D^3)$ work; it is not assigned a quadratic cost merely from a
+ring-operation bound. Enumerating the powers to convert an arbitrary
+operator pair costs a further $O(pD)$, and powering the decoded two
+operators costs $O(D^3)$, plus the $2r$ output bits.
+
+Seeds can be streamed in polynomial space and work. Traverse $H_s$ depth
+first; to decide $v\in U_s$, rescan $H_s$ for a marked descendant. Stream
+exactly the root if $U_s$ is empty, or the children of unsafe parents
+which are not unsafe. Theorem 18.2 bounds each traversal by $O(D^2)$
+nodes of depth $O(\log(D+1))$ with $O(\log(D+1))$-bit integer fields.
+Repeated descendant scans and original-source bit evaluation fit, for
+example, $O(D^8)$ work and $O(D^2)$ space. This generous polynomial
+bound includes all literal comparisons and copies; it is independent of
+$p$. There are $O(D^2)$ seeds and no stored seed/image table is needed.
+
+Put $R=(2N+2)^{\ell+1}$. A reachability call has at most $R$ recursive
+calls: if $R_0=1$, then $R_{j+1}\le1+2NR_j$. Every frame retains only its
+two endpoints, current midpoint, depth and flags, all $O(D)$ bits. Depth
+is $O(\log N)=O(D)$, so its peak stack is $O(D^2)$. Evaluating leaves
+and loop arithmetic costs $O(D^3R)$ work. Implement the calls with
+contiguous $O(D)$-bit frames on a stack tape whose head stays at the top
+frame between calls. Pushing, popping and restoring a frame take $O(D)$
+head moves and bit operations per call, within this allowance. Midpoints,
+image candidates and ranks use $O(D)$-bit binary counters, updated and
+compared by sequential scans. For count, either rank direction,
+and either operator direction, a common upper bound is
+
+$$
+ T_{\rm img}=O\!\left(T_{\rm src}+D^8+pD+
+               N(D^8+D^5R)+I+L_{\rm out}\right)
+           =2^{O(D^2)}+O(I+L_{\rm out}).
+\tag{PCR.56}
+$$
+
+Peak storage is $O(I+D^2+L_{\rm out})$ and cumulative bit writes are
+$O(T_{\rm img})$. A count or one code/operator class has $L_{\rm out}=O(D)$.
+The constants in the $O$ notation are uniform over all such sources.
+These bounds follow from the displayed loops and arithmetic, not from a
+measured running-time constant. A separately requested full image list
+pays its entire delimited output, at most $O(K_sD)$ bits in these formats;
+retaining that list also adds its actual size to peak storage.
+
+The streaming algorithm trades recomputation for peak space; it
+asserts neither polynomial time in $d$ nor sub-period or sub-period-square
+work. Its bound is exponential computation with polynomial peak workspace
+for one class/count output.
+
+Raw zero and constant inputs still pay input inspection and synthesis.
+Only an independently verified constant tag permits constant additional
+image postprocessing; the tag's verification, represented source input,
+acquisition, code schema and output remain charged. In particular $d=0$
+has the known zero law and empty $P$, but not a known physical cut or free
+installation. For a PSA supplier the composition is additive:
+
+$$
+ C_{\rm total}=C_{\rm PSA}(P,n)+T_{\rm img},\qquad
+ W_{\rm total}=W_{\rm PSA}(P,n)+W_{\rm img}.
+\tag{PCR.57}
+$$
+
+Here $W_{\rm img}$ includes its returned output. Source storage, backing,
+full-root Read traffic, synchronization and binding have their original
+bills; discarded expanded records are not refunded.
+
+**Proposition 22.6 (raw zero-prefix inspection obstruction).** For every
+$d\ge2$, an exact deterministic bit algorithm returning $K_s$ from raw
+$(d,P)$ must inspect at least $d$ of the $2d$ prefix positions on the
+zero input. Thus constant postprocessing on a verified tag cannot be a
+constant-work raw-input algorithm.
+
+Proof. For $j=0,\ldots,d-1$, compare zero with
+$s^{(j)}_i=\mathbf1_{i\equiv j\pmod d}$. These are authentic members of
+$\mathscr R_d$, with disjoint differing prefix-position pairs
+$\{j,j+d\}$ in zero-based indexing. Each has least period $d$, no
+transient, and the root is safe. The root residue's first coordinate is
+$1$; its initially beta child's first coordinate is $2$, by (PCR.39),
+so the image has at least two distinct residues modulo $d$. Zero has
+$K_s=1$. On the zero execution, leaving any pair wholly uninspected
+makes that valid alternative indistinguishable. The $d$ pairs are
+disjoint, proving the inspection bound. This is an input lower bound,
+not a hardness or physical-Read lower bound. $\square$
+
+## 23. The exact local-data boundary for global authentic images
+
+**Proposition 23.1 (same literal $aa$ cone, different global image).** Let
+$y_i=1$ for even $i$ and $y_i=0$ for odd $i$. Use the two permitted
+sources
+
+$$
+ s=y,\qquad s'_0=0,\quad s'_i=y_i\ (i\ge1).
+\tag{PCR.58}
+$$
+
+Both lie in the common public class $\mathscr R_3$. The first is purely
+periodic; the second has the one-bit singular transient of Proposition
+20.1. In both actual sources the literal physical cone with address $aa$
+has exactly
+
+$$
+ e_{aa}=4,\qquad (A_{aa},B_{aa})=(5,8),\qquad
+s_{A_{aa}-1}=s'_{A_{aa}-1}=1.
+\tag{PCR.59}
+$$
+
+Consequently every complete normalized future of this $aa$ cone is equal
+in the two sources. At any common mature age $T\ge8$ its complete support,
+its exact local integer clocks and origin, and the predictive boundary
+$(aa,T;g,(y_i)_{i<2},Q_1,Q_2)$ of (PCR.24) agree. The public binding token,
+permissions and evaluation instructions can be held fixed in this
+comparison; they are capabilities, not a hidden source prefix.
+
+Nevertheless, their global authentic images satisfy
+
+$$
+ |R_s|=2,\qquad |R_{s'}|=4.
+\tag{PCR.60}
+$$
+
+Proof. For $s$, the root consumes one, so (PCR.39) gives
+$(A_a,B_a,e_a)=(2,3,2)$; its first bit is $s_1=0$, and the same table gives
+$(A_{aa},B_{aa},e_{aa})=(5,8,4)$. For $s'$, the root consumes zero, giving
+$(A_a,B_a,e_a)=(3,5,3)$; the next bit is $s'_2=1$, and the one-bit branch
+of (PCR.39) again gives $(5,8,4)$. The two literal words are therefore
+the same actual physical address, with the same integer boundaries and
+normalization origin, rather than merely isomorphic abstract trees.
+
+The transient of $s'$ ends at index one. Every birth in $aa$ starts at
+$A_{aa}=5$, hence consumes source entries with indices at least four; the
+two streams in (PCR.58) coincide there. Theorem 17.2 and induction
+therefore identify every later child, bit and positive delay. The least
+core polynomial is $X^2+1$ and has the repeated factor $(X+1)^2$ over
+$\mathbb F_2$, so $F_5=5\ge4$ and the maturity condition (PCR.5) holds
+for $T\ge5+3=8$. Theorem 3.1 then turns the identical future stream and
+clock pair into identical complete supports and identical operator
+boundaries. The full-root acquisition of the literal $aa$ pays the same
+presence query in both comparison worlds; it does not reveal the source
+bits before that cone.
+
+The global image counts are the explicit calculations (PCR.49)--(PCR.51):
+the pure source has only the two off-diagonal residues, while the transient
+source has diagonal seed residues and reaches the whole four-state square.
+The missing datum is the global seed/defect ancestry $C_s$ and its integer
+seed triples, equivalently the transient-bearing prefix outside the local
+cone. The local descriptor contains no field from which that seed set can
+be reconstructed. The complete original $(d,P)$ does contain it: its
+canonical generator supplies the finite defect scan (PCR.40)--(PCR.42),
+after which (PCR.54) computes the image. This is an information boundary
+for a local predictive record, not a failure of PSA's original full-root
+acquisition protocol. $\square$
+
+## 24. Exact normalization-time address history and its code
+
+**Definition 24.1 (one authentic seed and the exact target).** Fix one
+actual seed $c\in C_s$ with its literal word and exact triple
+$(e_c,A_c,B_c)$ from Theorem 18.2. For every integer $t\ge0$ put
+
+$$
+ H_c(t)=\{w\in\{a,b\}^*:e_{cw}-e_c=t\},\qquad
+ \pi_{c,t}(w)=(A_{cw},B_{cw})\bmod p.
+\tag{PCR.61}
+$$
+
+Only this seed is used, not a union over seeds, an invented initial cone,
+or native elapsed time. The positive edge delays are exactly (PCR.37).
+Every $cw$ is an actual core-only cone and $\pi_{c,t}$ takes values in
+$R_s$. Let $J_{c,t}=\pi_{c,t}(H_c(t))$ and
+$M_{c,t}=\max_{q\in J_{c,t}}|\pi_{c,t}^{-1}(q)|$.
+The projection erases the relative address; a complete descriptor that
+retains the literal $v=cw$ has not erased it. The endpoint here omits
+integer lifts, the literal and its ancestry. All lower bounds below
+refer to this precise projection and this declared time.
+
+**Theorem 24.2 (exact count and endpoint-conditioned extra information).**
+For all such sources, seeds and $t\ge0$,
+
+$$
+ |H_c(t)|=F_{t+1},\qquad
+ M_{c,t}\ge\left\lceil\frac{F_{t+1}}{|J_{c,t}|}\right\rceil
+          \ge\left\lceil\frac{F_{t+1}}{K_s}\right\rceil.
+\tag{PCR.62}
+$$
+
+If $w\mapsto(\pi_{c,t}(w),\lambda(w))$ is injective, then
+$|\operatorname{range}(\lambda)|\ge M_{c,t}$. In particular a uniform
+fixed-length binary supplement needs at least
+$b^{\rm cond}_{c,t}=\lceil\log_2 M_{c,t}\rceil$ bits. This bound is
+attainable set theoretically by numbering each endpoint fiber; it does
+not assert a cheap fiber computation or an online update interface.
+
+Proof. At every node exactly one named child has delay one and the other
+has delay two, regardless of the consumed bit. For any actual core-only
+node let $h(t)$ count its descendants at exact relative normalization
+time $t$, and set $h(u)=0$ for $u<0$. At zero only the empty suffix is
+possible. Induction on $t$ gives the same count at every node, since
+partition by the first edge gives $h(t)=h(t-1)+h(t-2)$ for $t\ge1$,
+with $h(0)=1$. Hence $h(t)=F_{t+1}$, including $h(1)=1$.
+Positive delays also make each layer prefix-incomparable. It is nonempty
+at every nonnegative integer time. Its endpoint fibers partition it;
+the largest has at least the ceiling of the average size. Injectivity
+requires different supplements within each fiber. Fiber ranks reuse the
+same alphabet of size $M_{c,t}$, proving attainability of that alphabet
+size. Constants have one endpoint, but have $F_{t+1}$ addresses, rather
+than one address at every time. At $t=0,1$ this count is one. $\square$
+
+**Proposition 24.3 (the distinct physical-cut leaf domain).** If $L_t(c)$
+denotes the leaves at physical cut $e_c+t$, then $L_0(c)=H_c(0)$ and,
+for $t\ge1$,
+
+$$
+ L_t(c)=H_c(t)\;\dot\cup\;
+ \{wx:\ w\in H_c(t-1),\ \delta_x(c_{cw})=2\},\qquad
+ |L_t(c)|=F_{t+2}.
+\tag{PCR.63}
+$$
+
+The first part consists of beta leaves at their normalization origins;
+the second consists of initially alpha children just created at that cut,
+which normalize one cut later. Every leaf is one of these: a beta
+branches at the next cut, and an alpha promotes at the next cut. This
+proves the disjoint union and its count. It also identifies $H_c(t)$
+exactly as the beta leaves at that cut. It does not identify endpoint
+fibers across a shift of the cut. For the zero source at the root,
+$H_c(1)=\{b\}$ but $L_1(c)=\{a,b\}$. For $s=(10)^\infty$ at the root,
+$L_1$ has two endpoints both $(0,1)$ modulo two, whereas
+$H_c(2)=\{ab,b\}$ has endpoints $(1,0)$ and $(0,1)$. Thus even the
+equality $|L_{t-1}|=|H_c(t)|$ for $t\ge1$ transfers neither this target's
+addresses nor its conditioned fibers. The coding below uses (PCR.61)
+directly.
+
+**Definition 24.4 (period-free rank/unrank on the exact layer).** Order
+$H_c(t)$ lexicographically in the physical order $a<b$, and encode its
+rank in exactly
+
+$$
+ B_t=\lceil\log_2 F_{t+1}\rceil\text{ bits},\qquad
+ \operatorname{Hcode}_{c,t}(w)=
+ \operatorname{bin}_{B_t}(\operatorname{hrank}_{c,t}(w)).
+\tag{PCR.64}
+$$
+
+At a current exact integer descriptor $(e,A,B)$ and remaining time $u$,
+evaluate $y_{A-1}$ from the supplied core recurrence and seed, compute
+$\delta_a,\delta_b$ by (PCR.37), and set
+
+$$
+ n_x(u)=\begin{cases}F_{u-\delta_x+1},&u\ge\delta_x,\\
+                      0,&u<\delta_x.
+        \end{cases}
+\tag{PCR.65}
+$$
+
+If $u>0$, these are exactly the two first-letter block sizes. To rank a
+word, take its actual next letter $x$, add $n_a(u)$ to the rank if $x=b$,
+reject if $n_x(u)=0$, and update only that child's exact descriptor using
+(PCR.38)--(PCR.39), with $u\leftarrow u-\delta_x$. Accept only if the
+word ends exactly at $u=0$. An early ending, trailing letter after zero,
+nonphysical symbol, or overshooting delay is invalid. To unrank, choose
+$a$ when the remaining rank is below $n_a(u)$, otherwise subtract that
+block size and choose $b$. Continue until $u=0$; return the suffix, or
+the full literal $cw$ when that output is requested.
+
+The source and seed must be authentic as above. On a raw $(d,P,c)$
+interface, recompute $C_s$ by Definition 22.2 and verify this exact literal
+and its triple; reject a different seed, an inconsistent supplied triple,
+or a malformed source representation. No malformed representation proves
+a physical authenticity premise. Reject $t<0$, nonintegral time, codes of
+wrong length, nonbinary codes or ranks outside $[0,F_{t+1})$. At $t=0,1$
+the sole valid rank is zero and its fixed-length code is empty; the
+decoded suffix is respectively empty or the actual delay-one child.
+No period, phase, endpoint, $K_s$, or image table is required by this
+address codec. In particular it does not run the period computation of
+the image interface.
+
+**Theorem 24.5 (reversibility and a gap for this exact target).** The two
+maps in Definition 24.4 are mutually inverse on $H_c(t)$ and all valid
+codes. Relative to the optimal endpoint-conditioned fixed-length
+supplement their length obeys
+
+$$
+ 0\le B_t-b^{\rm cond}_{c,t}
+ \le\lceil\log_2|J_{c,t}|\rceil
+ \le\lceil\log_2K_s\rceil\le2r.
+\tag{PCR.66}
+$$
+
+Thus $b^{\rm cond}_{c,t}\ge\max(0,B_t-2r)$. For either constant,
+$K_s=1$ and the gap is zero for every $t$. The gap statement compares a
+period-free full-address code with a supplement after this particular
+endpoint is known, not a substitute recovery output.
+
+Proof. Theorem 24.2 applied at each actual child gives precisely
+(PCR.65). All words in the $a$ block precede every word in the $b$ block;
+positive delays guarantee termination in at most $t$ edges. The exact
+integer transport proves that every selected child is in the original
+source, with the updated normalization time. Induction on the remaining
+time therefore proves both rank/unrank identities and the stated invalid
+domains, including empty codes. For the gap, $M_{c,t}\le F_{t+1}$ and
+$F_{t+1}\le |J_{c,t}|M_{c,t}$. Taking ceilings of logarithms gives
+$B_t\le\lceil\log_2|J_{c,t}|\rceil+b^{\rm cond}_{c,t}$. Finally
+$|J_{c,t}|\le K_s\le p^2\le2^{2r}$, also at $r=0$. $\square$
+
+**Proposition 24.6 (represented widths and charged address computation).**
+Use the bit model of Proposition 22.5. Let $I$ be the actual input length,
+including the raw source, seed literal/triple, binary time and supplied
+word/code. Let $\beta$ be one plus the sum of the bit lengths of
+$A_c,B_c,e_c$, and put
+
+$$
+ W=\beta+t+\lceil\log_2(t+2)\rceil+1.
+\tag{PCR.67}
+$$
+
+The canonical seed has the bounds of Theorem 18.2, but no exact integer
+at later time is treated as an $O(d)$-bit quantity. After at most $t$
+child steps all coordinates have $O(W)$ bits: (PCR.39) gives
+$B_{vx}+1\le3(B_v+1)$ and (PCR.38) gives $e_{vx}\le e_v+2$.
+All Fibonacci counts and ranks have $O(t+1)$ bits, by $F_j\le2^j$.
+The time field and source/seed literals remain represented input even
+when a code has zero bits.
+
+A declared implementation needs no retained ancestor stack. First compute
+$(F_t,F_{t+1})$ by $t$ successive additions, using $O((t+1)^2)$ work and
+writes and $O(t+1)$ peak bits. During descent retain only the current
+integer descriptor, remaining time, rank and two Fibonacci values. From
+$(F_u,F_{u+1})$, subtraction gives $F_{u-1}=F_{u+1}-F_u$ when needed;
+a delay-one step keeps $(F_{u-1},F_u)$, and a delay-two step also computes
+$F_{u-2}=F_u-F_{u-1}$. Treat the $u=1$ zero slow block directly and stop
+at zero. Thus block counts and the next pair cost $O(t+1)$ bits of
+arithmetic per step without a Fibonacci table. Each chosen-child
+coordinate update costs $O(W)$; evaluating its parent bit by schoolbook
+quotient powering costs $O(D^2(W+1))$, using $O(D+W)$ temporary bits.
+
+Including raw synthesis and the polynomial seed verification scan, for
+either valid direction, or rejection of an invalid supplied word/code,
+a uniform upper bound is
+
+$$
+\begin{aligned}
+ T_{\rm addr}&=O\!\left(T_{\rm src}+D^8+I+
+                     (t+1)D^2W+(t+1)^2+L_{\rm out}\right),\\
+ S_{\rm addr}&=O(I+D^2+W+L_{\rm out}),\qquad
+ W_{\rm addr}=O(T_{\rm addr}).
+\end{aligned}
+\tag{PCR.68}
+$$
+
+Scanning malformed extra input costs its actual length $I$. The suffix
+output has at most $t$ letters and a code has $B_t=O(t+1)$ bits; returning
+$cw$ additionally pays the seed literal length. Peak space here includes
+retained input and output. At $t=0$ the empty suffix still pays raw-source
+and seed validation; at $d=0$ only core evaluation simplifies. Arithmetic
+and writes have not been measured in fixed machine words.
+
+If an implementation instead retains a descriptor at every descent depth,
+its stack upper bound is $O((t+1)W+D^2)$ bits, in addition to input/output;
+it can require quadratic space. For the authentic $d=1$ all-one source
+and its root seed, the members $a^t\in H_c(t)$ satisfy
+$(A_{a^j},B_{a^j},e_{a^j})=(F_{j+2},F_{j+3},1+j)$. The members
+$b^h\in H_c(2h)$ satisfy
+$(A_{b^j},B_{b^j},e_{b^j})=(F_{2j+3}-1,F_{2j+4}-1,1+2j)$.
+Both formulas follow by induction in (PCR.39). Since the logarithm of
+these Fibonacci integers grows linearly in $j$ (use
+$F_{2k+2}\ge2^k$ and $F_k\le2^k$), separately retained
+frames require $\Theta(t^2)$ coordinate bits and at least that many
+writes on these families. Even the iterative exact-coordinate algorithm
+writes $\Theta(t^2)$ boundary bits along these paths; it saves peak space,
+not these writes. Its upper bound at fixed $d,\beta$ is quadratic work
+and linear peak space, consistent with this obstruction.
+
+The codec's work is polynomial in the numeric $t$ and represented seed
+sizes after source synthesis; it is not polynomial in $\log(t+2)$.
+Indeed $B_t=\Theta(t)$ for growing $t$, so even one general code output
+can be that large. Enumerating all exact-layer addresses has its full
+exponential enumeration and literal-output cost. This is mathematical
+address recovery with supplied source data, not a physical clock or an
+execution journal. No native acquisition, source advancement, recentering
+or installation operation is introduced.
+
+## 25. Comparison with the typed residual-cocycle route
+
+TRC11, specifically Definition 11.1 and Theorem 11.2 of
+[TRC](RECURSIVE_RELATIONAL_OBSERVATION_TYPED_RESIDUAL_COCYCLE_RECONSTRUCTION.md),
+requires a fixed finite actual root-reachable complete residual graph,
+named legal edges, exact endpoint acquisition, fixed positive native
+vectors descending to that residual, and the complete joint box of
+endpoint-plus-native observations. Its online update receives only the
+executed name; all persistent control is charged. TRC12--15 keep the
+successive-loop source and its joint-support/native-acquisition contract.
+
+Here the literal address tree is infinite and acyclic. Its residue image
+is finite, and the mathematical normalization delays do descend to its
+named edges, since $y_{A-1}$ is determined by the residue. Their sums are
+exactly (PCR.47). This fact does not make the residue image the complete
+physical response quotient or give a native instrument. The predictive
+boundary retains age and literal information, and its Read responses are
+presence-only. Neither exact residual endpoint acquisition nor a native
+positive-vector readout with the stipulated uncertainty support has been
+supplied. Even zero mathematical observation error would not instantiate
+TRC11's prescribed positive-error full-box theorem.
+
+A physical transfer would need a proved rooted named-operation map
+preserving every legal operation, complete response, endpoint, positive
+native vector, same-source legality, physical order and binding, together
+with the required joint acquisition. None is constructed here. Declaring
+normalization increments to be a native elapsed-time response would add
+an unavailable clock service. Therefore no TRC11 route-rank criterion or
+TRC12--15 support classification is transferred to this source. The
+endpoint-conditioned result (PCR.62) is instead proved directly for the
+actual exact-normalization-time domain; no leaf-layer shift or noisy
+native-duration premise enters its proof.
+
+The loss measured here is the erasure of a rooted suffix by $\pi_{c,t}$.
+A retained literal $v=cw$ already specifies that address. This does not
+refute the full predictive descriptor (PCR.24), the original
+transient-inclusive $(P,n)$ recovery, or PSA's paid full-root acquisition.
+The chronological physical execution target and an online history
+supplement require their own input and update contracts.
+
+## 26. Suppliers, scope and the remaining original obligations
+
+The source-specific additions are the complete-source seeded operator
+query/code interface, the actual local/global information separation of
+Proposition 23.1, and exact-normalization-layer coding and its
+endpoint-conditioned gap. The finite reachability recurrence, fiber
+pigeonhole bound and ordered-block coding are elementary reused methods;
+the actual child transport, transient seed selection and operator/residue
+classification are supplied by §§9 and 17--21. They are not recast as
+new general quotient or automata theorems. The supplied-input projections
+and bounded-prefix uniqueness are ACR27.3 and GPO29.2, with the singular
+convention also described by [Massey §§II--IV][MAS].
+
+The quotient-power evaluation is the monic-recurrence identity in
+[Bostan--Mori v1 §1.3][PCR-BM], with binary coefficient arrays and an
+explicit schoolbook multiplication/reduction bound here. It supplies
+neither free source entries nor a constant-width integer clock.
+Rigo--Stipulanti's abstract-numeration correspondence cited in §19
+concerns decorated regular address trees, not this source's chronological
+birth indexing or a native elapsed-time interface. The synthesis and
+coding here are repository-derived applications and deductions on the
+stated original source; no literature-priority claim or new Lean/kernel
+verification is made. Finite executable checks can test the formulas
+on specimens; they do not replace the quantified arguments above.
+
+All assertions retain the unknown law and actual cut, the original
+all-index $\mathscr R_d$, singular transients, nonminimal presentations,
+arbitrary repeated core factors and physical order $a<b$. The original
+output remains the transient-inclusive $(P,n)$ with original $K_d/\rho_d$
+firstness and separately charged normalization. A complete aligned
+source is sufficient for the computations; a complete local mature cone
+can still miss the global transient-bearing seed information, as §23
+shows. Computing a period, numerical residues or phases is explicit paid
+computation, not new acquired advice. None of these computations acquires
+the physical source or recovers a missing actual cut from local data.
+
+Paid full-root presence Reads, stationarity over the service interval,
+source storage, grants, backing, root binding, synchronization and
+completed installation keep their original premises and costs. Computing
+$R_s,K_s$, an operator-class code or an exact-layer suffix does not
+advance the source, create a new physical operation, prove atomic
+universality, or finish the recursive relational-recovery programme.
+General acquisition, original firstness, normalization, installation and
+whole-goal completion remain separate obligations.
+
+## 追加锚（本行以下为增补区）
