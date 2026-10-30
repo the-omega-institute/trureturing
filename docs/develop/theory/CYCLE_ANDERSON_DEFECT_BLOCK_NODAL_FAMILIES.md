@@ -1346,3 +1346,304 @@ $$
 | [F] `D5/S3/Combinatorics/Graph/Walks/AndersonDefectFamily.lean` 的 `defect_family`，及其输入 `AndersonDefectSeed.lean` 的 `defect_diagonal_seed` | 既有缺陷族代数：$r\ge3,m\ge2$ 的共享交换子结论；同一族的节点与坏势结论另要求 $m\ge3$。这里只消费前者的参数范围，不重复推导这些代数结论。 |
 
 ## 追加锚（本行以下为增补区）
+## 18. 两个对径持续站点的实际反射分类
+
+**定义 18.1（逐耦合持续性与两个独立的存在量词）。** 设 $p\ge3$ 为奇素数，实际带标号圈为 $\mathbb Z/(2p)\mathbb Z$，边权和顶点质量均为 $1$，$v\in\{-1,1\}^{2p}$，并沿用约定 13.1 的 $H_t$。记
+
+$$
+\mathsf N_j(v)\iff
+\forall t\in\mathbb R\ \exists\lambda\in\mathbb R\
+\exists\psi\in\mathbb R^{2p}\setminus\{0\},\qquad
+H_t\psi=\lambda\psi,\quad\psi_j=0.
+\tag{18.1}
+$$
+
+母卷定理 3.2 将此条件与约定 2.1 的持续节点等同。$\mathsf N_j(v)\land\mathsf N_{j+p}(v)$ 中的两个存在量词分别属于各自的站点和耦合；不要求预先选定同一本征值、同一本征向量或与 $t$ 无关的向量。
+
+**定理 18.2（全部二值势的两个对径持续站点分类）。** 对每个奇素数 $p\ge3$、每个上述实际二值势 $v$ 和每个带标号站点 $j$，有
+
+$$
+\boxed{\quad
+\mathsf N_j(v)\land\mathsf N_{j+p}(v)
+\quad\Longleftrightarrow\quad
+\forall i\in\mathbb Z/(2p)\mathbb Z,\quad v_{2j-i}=v_i.
+\quad}
+\tag{18.2}
+$$
+
+右端成立时，一个同时与原矩阵 $\Delta_{2p}$、$\operatorname{diag}(v)$ 可交换的固定实际实正交矩阵为
+
+$$
+(O_j\psi)_i=\psi_{2j-i},\qquad O_j\ne I,\quad O_j\ne-I.
+\tag{18.3}
+$$
+
+**证明。** 置 $a=j+p$、$n=p-1$。沿用定义 15.1 的实际有序字 $u,z$ 和多项式 $F,G,B,D,M$。从 $a$ 的正、负方向走向 $j$ 时，有序开半圆字分别为 $\operatorname{rev}z$、$\operatorname{rev}u$；continuant 的反转不变性给出相应多项式分别为 $G,F$。因此，如果两个站点都持续，定理 15.3 给出的两个首一节点因子在 $x$ 坐标下都是
+
+$$
+M=\frac{F+G}{2},\qquad \deg_xM=n.
+\tag{18.4}
+$$
+
+这里使用的是实际主子矩阵和实际有向重构，不需要实际圈的谱简单。定理 13.3 给出 $M$ 无重根及 $M(x,0)=D_p(x)$，定理 15.3 的二值和约束给出
+
+$$
+s:=\sum_{r=1}^n u_r=\sum_{r=1}^n z_r.
+\tag{18.5}
+$$
+
+先说明此处可用于任意两个有理字的一个二择推断。若 $b,c\in\mathbb Q^n$，令 $F_b=\mathcal K_b$、$F_c=\mathcal K_c$，并在 $\mathbb Q(t)[x]$ 中取首一 gcd $d$。首一因子的整闭性使 $d$ 及其商属于 $\mathbb Q[t][x]$，故 $d(x,0)\mid D_p(x)$，且次数不降。三对角行列式的二分符号共轭给出
+
+$$
+F_b(-x,-t)=(-1)^nF_b(x,t),\qquad
+F_c(-x,-t)=(-1)^nF_c(x,t).
+$$
+
+gcd 的首一唯一性遂给出 $d(x,t)=(-1)^{\deg d}d(-x,-t)$。因此 $d(x,0)$ 的根集在取负下封闭。直接使用定理 13.3 证明中的两个有理分圆轨道：$D_p$ 的首一有理因子若具有这种根集，只能为 $1$ 或 $D_p$。所以
+
+$$
+\gcd(F_b,F_c)=1\quad\hbox{或}\quad F_b=F_c.
+\tag{18.6}
+$$
+
+这段推断只要求两个字有理、长度为 $p-1$；并未使用约定 16.1 的反周期关系。分圆轨道是定理 13.3 的既有输入，首一因子下降和 Gauss 引理亦同该定理及 [A]。
+
+反设 $F\ne G$。式 (18.6) 给出 $\gcd(F,G)=\gcd(F,M)=1$。在 $\overline{\mathbb Q(t)}$ 中取 $M$ 的任一根 $x_*$。引理 15.2 的实际递推在该域中仍成立，给出一个原圈本征向量 $\psi$，满足
+
+$$
+\psi_j=0,\qquad\psi_a=F(x_*,t)\ne0.
+$$
+
+另一方面，$a$ 的节点因子也是 $M$，故同一谱值有一个在 $a$ 为零的非零原圈本征向量。存在性使用引理 3.4，两个向量因在 $a$ 处的取值而线性无关。于是 $M$ 的每个根都是实际特征多项式
+
+$$
+\mathcal P(x,t)=\det(xI-A_{2p}+t\operatorname{diag}(v))
+$$
+
+的至少二重根。$M$ 无重根，故 $M^2\mid\mathcal P$；首一除法使二次首一商属于 $\mathbb Q[t][x]$。令 $e=v_j$、$f=v_a$，写
+
+$$
+\mathcal P=(x^2+\alpha(t)x+\beta(t))M^2.
+\tag{18.7}
+$$
+
+下面的系数计算全部属于同一个实际圈。两个半圆矩阵 $A_{\rm path}-t\operatorname{diag}(u)$、$A_{\rm path}-t\operatorname{diag}(z)$ 的迹均为 $-ts$，平方迹均为 $nt^2+2(n-1)$。所以 $F,G,M$ 的前两项系数相同：
+
+$$
+M=x^n+ts\,x^{n-1}
+ +\left(\frac{s^2-n}{2}t^2-(n-1)\right)x^{n-2}
+ +\text{更低次项}.
+\tag{18.8}
+$$
+
+$n=2$ 时公式止于常数项。对原圈矩阵 $A_{2p}-t\operatorname{diag}(v)$，总势和为 $S=2s+e+f$，迹为 $-tS$，平方迹为 $2pt^2+4p$。利用特征多项式的第二项系数 $((\operatorname{tr}K)^2-\operatorname{tr}(K^2))/2$，比较式 (18.7) 的最高两项，得到
+
+$$
+\begin{aligned}
+\alpha(t)&=t(e+f),\\
+\beta(t)&=\left(\frac{S^2-2p}{2}-(2s^2-n)-2s(e+f)\right)t^2-4\\
+ &=ef\,t^2-4.
+\end{aligned}
+$$
+
+最后一步使用 $n=p-1$ 和 $e^2=f^2=1$。因此反设所迫使的精确恒等式为
+
+$$
+\mathcal P=\bigl((x+te)(x+tf)-4\bigr)M^2.
+\tag{18.9}
+$$
+
+在 $t=0$，$M=D_p$ 的根全部严格小于 $2$。由于首一多项式根的连续性，对充分小的实数 $|t|$，实际矩阵 $K_t=A_{2p}-t\operatorname{diag}(v)$ 的最大本征值必为二次因子的较大根
+
+$$
+r(t)=-\frac{e+f}{2}t+
+ \sqrt{4+\frac{(e-f)^2}{4}t^2}.
+\tag{18.10}
+$$
+
+这里仅用自由最大本征值与其余根的严格间隙，不假设所有耦合处谱简单。在单位常向量上的 Rayleigh 商给出
+
+$$
+2-\frac{S}{2p}t\le r(t).
+$$
+
+将式 (18.10) 在零处的一次展开代入，分别令 $t\downarrow0$ 和 $t\uparrow0$，得到
+
+$$
+\frac{S}{2p}=\frac{e+f}{2}.
+\tag{18.11}
+$$
+
+若 $e=f$，平均值为 $e\in\{-1,1\}$ 的二值势必处处等于 $e$；于是 $u=z$、$F=G$，与反设矛盾。
+
+若 $e=-f$，式 (18.11) 给出 $S=0$。置 $\mathbf1=(1,\ldots,1)^{\mathsf T}$，将 $K_t$ 压缩到实际二维空间 $\operatorname{span}\{\mathbf1,v\}$。因为 $S=0$、$v_i^2=1$，基 $\mathbf1/\sqrt{2p},v/\sqrt{2p}$ 正交标准，压缩矩阵为
+
+$$
+\begin{pmatrix}2&-t\\-t&\gamma\end{pmatrix},\qquad
+\gamma=\frac{v^{\mathsf T}A_{2p}v}{2p}
+ =\frac1p\sum_{i=0}^{2p-1}v_iv_{i+1}\ge-2.
+\tag{18.12}
+$$
+
+这是定理 16.3 证明中二维压缩的同一个计算；其所需条件在这里由式 (18.11) 和二值性保证，未借用反周期性。对固定 $t\ne0$，压缩的最大本征值为
+
+$$
+L_t(\gamma)=\frac{2+\gamma+
+ \sqrt{(2-\gamma)^2+4t^2}}2,
+$$
+
+且 $L_t' (\gamma)>0$，$L_t(-2)=\sqrt{4+t^2}$。取充分小的非零实数 $t$，式 (18.10) 断言原矩阵的最大本征值等于 $\sqrt{4+t^2}$；Rayleigh 原理禁止压缩具有更大的最大本征值。因此 $\gamma=-2$，从而每个 $v_iv_{i+1}=-1$，势严格交替。严格交替势由 $i\mapsto2j-i$ 保持，仍给出 $u=z$、$F=G$，矛盾。两种端点情形穷尽，故 $F=G$。
+
+定理 15.3 的有向闭合式 (15.5) 现在给出 $B=D$。直接采用定理 16.3 证明末段的有向重构：已知首一 $K_k$ 及其删末位的 $K_{k-1}$，递推
+
+$$
+K_k=(x+tb_k)K_{k-1}-K_{k-2}
+$$
+
+的首一带余除法唯一恢复最后字母 $b_k$ 和下一项 $K_{k-2}$。从 $(F,B)=(G,D)$ 递归恢复全部字母，得 $u=z$。这正是原带标号势满足 $v_{2j-i}=v_i$；反射固定的两个端点 $j,a$ 对其自身势值没有额外限制。至此证明了必要性。
+
+反之，设该实际顶点反射保持 $v$。式 (18.3) 的置换保持实际邻接关系和势值，故分别与原 $\Delta_{2p}$、$\operatorname{diag}(v)$ 可交换。它固定 $e_j$，交换 $e_{j+1},e_{j-1}$，所以 $O_j\ne\pm I$。其负特征子空间
+
+$$
+W_j=\operatorname{span}_{\mathbb R}
+ \{e_{j+r}-e_{j-r}:1\le r\le p-1\}
+$$
+
+维数为 $p-1>0$，每个向量在 $j,a$ 均为零，且被每个实际 $H_t$ 保持。对每个实数 $t$，实对称限制 $H_t|_{W_j}$ 有非零实本征向量，因而同时提供两处所需的节点。这一充分机制也是 [LG] 引理 3.2 (2) 和定理 16.3 充分方向的实际反射机制。Rayleigh 原理及压缩比较使用 [M] §4.2–4.3；周期 Jacobi 的单值解释见 [J] §7.1–7.2，但式 (18.7)–(18.12) 直接计算原圈矩阵，不将辅助周期谱当作原谱。∎
+
+## 19. 两条回文开半圆的完整分类
+
+**定义 19.1（实际双回文切口）。** 对定义 18.1 的 $p,v,j$，置 $a=j+p$，保留从 $j$ 向 $a$ 的两个实际有序字
+
+$$
+u_r=v_{j+r},\qquad z_r=v_{j-r},\qquad1\le r\le p-1.
+$$
+
+称此切口双回文，若
+
+$$
+u_r=u_{p-r},\qquad z_r=z_{p-r}\qquad(1\le r\le p-1).
+\tag{19.1}
+$$
+
+**定理 19.2（双回文切口的逐站点分类）。** 对每个奇素数 $p\ge3$、每个实际二值势和每个满足式 (19.1) 的切口，有
+
+$$
+\boxed{\qquad
+\mathsf N_j(v)\quad\Longleftrightarrow\quad
+\mathsf N_{j+p}(v)\quad\Longleftrightarrow\quad u=z.
+\qquad}
+\tag{19.2}
+$$
+
+任一条件成立时，式 (18.3) 的 $O_j$ 就是原势的固定非平凡共享实正交反射。
+
+**证明。** 先设 $\mathsf N_j(v)$。在同一个带标号单位圈上定义二值势 $\widehat v$，仅把 $j$ 处的值换为 $v_a$：
+
+$$
+\widehat v_i=v_i\ (i\ne j),\qquad\widehat v_j=v_a.
+$$
+
+对每个实数 $t$，原节点向量 $\psi_j=0$ 满足
+
+$$
+H_t(\widehat v)\psi
+ =H_t(v)\psi+t(v_a-v_j)E_{jj}\psi
+ =H_t(v)\psi.
+\tag{19.3}
+$$
+
+故 $\mathsf N_j(\widehat v)$，并且这个等式反向同样成立。式 (19.3) 是本卷式 (11.1) 所用单点节点不变性的向量形式；这里只消费该初等秩一事实，不使用缺陷重复数或 Chebyshev 块族的假设。
+
+令 $\sigma(i)=2j+p-i\pmod{2p}$。它交换 $j,a$；对两条开半圆分别有
+
+$$
+\sigma(j+r)=j+p-r,\qquad
+\sigma(j-r)=j-p+r.
+$$
+
+式 (19.1) 使每条半圆的实际内部势在这次反转下不变，而 $\widehat v_j=\widehat v_a$ 使端点也相容。因此 $\sigma$ 的实际置换矩阵 $R$ 分别与 $\Delta_{2p}$、$\operatorname{diag}(\widehat v)$ 可交换。将 $\widehat v$ 在 $j$ 处的每个节点向量乘以 $R$，得到同一耦合下在 $a$ 为零的非零本征向量。所以 $\mathsf N_a(\widehat v)$。
+
+现在将定理 18.2 应用于实际势 $\widehat v$，得 $\widehat v_{j+r}=\widehat v_{j-r}$，即 $u=z$。这里 $R$ 只用于 $\widehat v$ 上的节点传递；原势所需的对称由 $u=z$ 回接：$\rho_j(i)=2j-i$ 固定两个原端点，并逐项配对原势的两条半圆，因而确实保持原 $v$。所得原反射是 $O_j$，不是把 $R$ 冒作原势的对称。
+
+若从 $\mathsf N_a(v)$ 出发，从 $a$ 看到的两条字为 $\operatorname{rev}z$、$\operatorname{rev}u$，仍各自回文。相同论证以 $a$ 为起点给出这两个字相等，亦即 $u=z$。最后，$u=z$ 时直接用定理 18.2 的实际反射充分方向，得到两个站点均持续及所述 $O_j$。∎
+
+**定理 19.3（非常数配对和下的全局好坏分类）。** 在定理 19.2 的条件下，另设实际配对和 $w_r=v_r+v_{r+p}$ 非常数。则
+
+$$
+\boxed{\qquad \operatorname{Bad}(v)\iff u=z.\qquad}
+\tag{19.4}
+$$
+
+因此，每个 $u\ne z$ 的双回文切口势都是好势：除有限个实耦合外，原 $H_t$ 谱简单且每个非零本征向量的每个坐标均非零。这包括 $\sum_ru_r=\sum_rz_r$ 的所有不等字对，不限制其内部排列、游程或长度 $p-1$。每个坏例都有式 (18.3) 的固定原反射。
+
+**证明。** 对 $1\le r\le p-1$，原配对和与有序字满足
+
+$$
+w_{j+r}=u_r+z_{p-r},\qquad
+w_{j-r}=z_r+u_{p-r}.
+$$
+
+双回文性使二者都等于 $u_r+z_r$，故 $w$ 关于 $j\bmod p$ 反射。由于 $w$ 非常数，定理 14.2 保证这是唯一剩余类反射中心，且任何持续站点只能为 $j$ 或 $a$。若 $v$ 坏，母卷推论 3.3 给出某个持续站点，定理 19.2 遂给出 $u=z$。反之 $u=z$ 时，定理 18.2 直接构造原节点与原反射，故坏。若 $u\ne z$，两个候选站点均不持续，其余站点由定理 14.2 排除；母卷推论 3.3 给出好势及有限例外集合。等和字对未在任何一步被排除，故所述范围全部成立。∎
+
+**命题 19.4（常数配对和的准确边界）。** 对双回文切口，若 $w$ 为常数，则有以下穷尽分类。
+
+若 $w\equiv2\varepsilon$、$\varepsilon\in\{-1,1\}$，原势处处等于 $\varepsilon$，故 $u=z$，两个切口端点持续，且 $O_j$ 是原共享反射。
+
+若 $w\equiv0$，则 $v_{i+p}=-v_i$，$z=-u$，所以 $u\ne z$，定理 19.2 保证两个切口端点均不持续。然而全局结论为
+
+$$
+\operatorname{Bad}(v)
+\iff\exists k\in\mathbb Z/(2p)\mathbb Z\
+ \forall i,\ v_{2k-i}=v_i;
+\tag{19.5}
+$$
+
+存在这样的 $k$ 时，原共享反射为 $(O_k\psi)_i=\psi_{2k-i}$，且 $k\bmod p\ne j\bmod p$。特别地，式 (19.4) 不能去掉非常数条件。
+
+**证明。** 二值配对和的常数值只能为 $-2,0,2$。值为 $2\varepsilon$ 时每对的两个值均为 $\varepsilon$。值为零时恰为反周期势；由 $z_r=-u_{p-r}$ 及式 (19.1) 得 $z=-u$。全局等价式 (19.5) 直接采用推论 16.4，且其构造为原 $O_k$；若 $k$ 与 $j$ 同剩余类，就会使 $u=z$，与 $z=-u$ 矛盾。
+
+具体地，对每个奇素数 $p\ge3$，在原标号上取
+
+$$
+v_i=1\quad(0\le i\le p-1),\qquad
+v_i=-1\quad(p\le i\le2p-1),\qquad j=0.
+$$
+
+此时 $u=1^{p-1}$、$z=(-1)^{p-1}$，两字都回文而不等，且 $w\equiv0$。实际反射 $i\mapsto p-1-i$ 保持两个常号半圆；它的顶点中心为 $k=(p-1)/2$，因此按推论 16.4 或定理 18.2，势是坏势并有固定原共享反射。它在指定端点 $0,p$ 均不持续，仍在另一对径对持续。这正是常数 $w$ 时失去唯一候选站点限制所允许的情形。∎
+
+## 20. 原剩余推断的单站点与非回文限制
+
+**推论 20.1（式 (17.1) 的实际剩余形状）。** 固定原断言 $T$ 的范围 $p\ge11$ 为奇素数。设一个实际二值势和站点 $j$ 满足式 (17.1) 的全部前提：$w$ 非常数且关于 $j\bmod p$ 反射，两条实际有序开半圆等和而不等，并满足原有向恒等式
+
+$$
+(x+tv_{j+p})(F-G)=2(B-D).
+$$
+
+则两个候选站点中恰好 $j$ 持续，$j+p$ 不持续；原圈的全部持续站点集合恰为 $\{j\}$。此外，$u,z$ 中至少一个不是回文。
+
+**证明。** 等和与所述恒等式经定理 15.3 直接给出 $\mathsf N_j(v)$。若 $\mathsf N_{j+p}(v)$ 也成立，定理 18.2 就给出原反射，亦即 $u=z$，矛盾。定理 14.2 的唯一配对和反射中心排除其余站点，因此持续站点集合确为单点。若两字都回文，定理 19.2 又由 $\mathsf N_j(v)$ 推出 $u=z$，仍矛盾。这些推断均由原节点、有向重构和原反射桥接而来。∎
+
+**命题 20.2（剩余范围与全部实际正交矩阵）。** 令 $\mathcal R$ 为式 (17.1) 的前提所定义的实际势与指定站点对的集合，并令
+
+$$
+\mathcal R'=\{(p,v,j)\in\mathcal R:
+ \{i:\mathsf N_i(v)\}=\{j\},\quad
+ u\ne\operatorname{rev}u\ \text{或}\ z\ne\operatorname{rev}z\}.
+$$
+
+则 $\mathcal R=\mathcal R'$。原断言 $T$ 仍等价于
+
+$$
+\forall(p,v,j)\in\mathcal R',\quad
+\exists O\in O(2p,\mathbb R),\quad O\ne\pm I,\quad
+O\Delta_{2p}=\Delta_{2p}O,\quad
+O\operatorname{diag}(v)=\operatorname{diag}(v)O.
+\tag{20.1}
+$$
+
+推论 20.1 不决定 $\mathcal R'$ 是否为空，亦不判定式 (20.1) 的真假。仅排除二面体置换不能排除式 (20.1) 中的全部实际实正交矩阵。
+
+**证明。** 包含 $\mathcal R'\subseteq\mathcal R$ 来自定义，反向包含是推论 20.1。命题 17.1 给出 $T$ 与对 $\mathcal R$ 的同一共享正交对称蕴含等价，代入集合等式即得式 (20.1)。最后的矩阵量词保持约定 13.1 的原定义；二面体置换只是 $O(2p,\mathbb R)$ 中的有限子集，检查该子集没有给出其余矩阵不存在的推断。∎
+
+## 追加锚（本行以下为增补区）
