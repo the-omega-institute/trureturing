@@ -1423,3 +1423,938 @@ positive equality rays to every exact resistance level; it does not
 supply these missing all-weight or sequence conclusions.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Exterior parameters and all escapes in original coordinates
+
+**Definition 10.1 (Exterior parameters and mathematical inputs).** In
+Sections 10–15 assume throughout that
+
+$$
+2\le a\le b\le c,\qquad m=a+b,\qquad c>m,\qquad
+n=m+c,\qquad d=c-m\in\mathbb N_{>0}.
+\tag{10.1}
+$$
+
+The labelled vertices, original edge coordinates, counting inner product,
+all unordered original-pair resistance, and domains $\mathcal P$,
+$\mathcal N$, $\mathcal C$ are exactly Definitions 1.1 and 3.1.
+Write $M=M_{a,b,c}$ and set
+
+$$
+B_\infty=n(n-3)+m+1,\qquad
+B_{\rm bip}=n(n-3)+\frac{c(d+3)}{d+1}.
+\tag{10.2}
+$$
+
+Distances between conductance vectors are Euclidean distances in
+$\mathbb R^E$, with the original labelled coordinates. For a nonempty
+set $K$, $\operatorname{dist}(h,K)=\inf_{k\in K}\|h-k\|_2$.
+
+The identity $R=n\operatorname{tr}L^+$, its connected nonnegative
+extension and its scaling are the classical inputs in Convention 1.2.
+In Ghosh–Boyd–Saberi,
+[*Minimizing Effective Resistance of a Graph*, DOI:10.1137/050645452](https://web.stanford.edu/~boyd/papers/pdf/eff_res.pdf),
+§§2.4–2.6, equations (8), (13)–(15), the correspondence remains
+$G=L(g)$, $g_l=g_e$, and $R_{\rm tot}=R(g)$, with all $n$ vertices
+and all unordered pairs retained. Cruz Ortega–Menéndez-Conde,
+[*Maximal Algebraic Connectivity for Paths with Fixed Effective
+Resistance*, arXiv:2306.08187v1](https://arxiv.org/pdf/2306.08187v1),
+§5, equation (3), supplies the fixed-resistance formulation and its
+scale-invariant product correspondence.
+The whole bipartite optimizers used below are the
+[two-hub Theorem 2.1](FIEDLER_RESISTANCE_K2M_OPTIMIZER.md),
+[three-hub Theorems 2.2–4.1](FIEDLER_RESISTANCE_K3M_OPTIMIZER.md), and
+[general bipartite Theorems 3.1–4.1](FIEDLER_RESISTANCE_GENERAL_BIPARTITE_OPTIMIZER.md).
+Their uses are whole-domain substitutions with the vertex maps specified
+in the proofs, rather than new bipartite optimizations.
+The escape estimate, its compactness consequences, the comparisons
+between the three face values, the exhaustive rank-one classification
+and the upper comparison in Section 14 are additional deductions here.
+
+For the design interpretation, the matrix
+$\mathcal I(g)=Q^{\mathsf T}L(g)Q$ in Definition 7.1 uses every original
+incidence vector. Rosa–Harman,
+[*Laplacian Network Optimization via Information Functions*,
+arXiv:2512.19279v1](https://arxiv.org/pdf/2512.19279v1),
+§§2.3–2.4 and Theorem 1, supplies the correspondence
+$F=n(n-1)\Phi_E/\Phi_A$. Every positive conductance ray has exactly
+one representative $p_e=g_e/\sum_f g_f$ in the positive simplex, so
+this same ratio on these design points is an equivalent formulation.
+Optimizing an individual criterion or choosing a fixed number of edges
+does not supply that ratio optimum. No theorem from Harman,
+[*Minimal efficiency of designs under the class of orthogonally invariant
+information criteria*, DOI:10.1007/s001840300301](https://link.springer.com/article/10.1007/s001840300301),
+or the [Menéndez-Conde article 16817](https://repository.uaeh.edu.mx/revistas/index.php/icbi/article/view/16817)
+is a premise below.
+
+**Theorem 10.2 (A sufficient ceiling for every normalized escape).** Let
+$(h_j)$ be any sequence in $\mathcal C_{a,b,c}$ such that
+$\max_{e\in E}(h_j)_e\to\infty$. Then
+
+$$
+\limsup_{j\to\infty}R(h_j)\le B_\infty.
+\tag{10.3}
+$$
+
+If any fixed $e\in E_{AB}$ satisfies $(h_j)_e\to\infty$, without
+any boundedness assumption on the other coordinates, the stronger bound is
+
+$$
+\limsup_{j\to\infty}R(h_j)\le n(n-3)+m.
+\tag{10.4}
+$$
+
+These are sufficient escape ceilings; no sharpness is asserted.
+
+*Proof.* Throughout, normalization is the actual condition
+$\lambda_2(L(h_j))=1$, so $L(h_j)\succeq P$ and
+$R(h_j)\le n(n-1)$. Choose a subsequence along which $R(h_j)$ tends
+to its limsup. After further subsequences, each of the finitely many
+edge coordinates has a limit in $[0,\infty]$. At least one limit is
+infinite. This selection preserves the resistance limit. It suffices
+to handle every resulting possibility.
+
+Suppose first that two distinct edges $e,f$ have infinite limits.
+Their incidence vectors $b_e=e_x-e_y$ and $b_f=e_z-e_t$ are linearly
+independent: proportional nonzero incidence vectors of unordered
+simple-graph edges have the same two endpoints. The matrix
+$b_e b_e^{\mathsf T}+b_f b_f^{\mathsf T}$ has two strictly positive
+eigenvalues. Since
+
+$$
+L(h_j)\succeq
+\min\{(h_j)_e,(h_j)_f\}
+       (b_e b_e^{\mathsf T}+b_f b_f^{\mathsf T}),
+$$
+
+the min–max principle makes the largest two eigenvalues of $L(h_j)$
+tend to infinity. Every other positive eigenvalue is at least $1$.
+Consequently
+
+$$
+\limsup_j R(h_j)\le n(n-3)<B_\infty.
+\tag{10.5}
+$$
+
+There is no assumption about the relative divergence rates.
+
+It remains to consider exactly one edge $e=\{u,v\}$ with infinite
+limit. All other coordinates now have finite limits. Put
+
+$$
+ b=e_u-e_v,\qquad t_j=(h_j)_e,\qquad
+ L(h_j)=t_jbb^{\mathsf T}+L_j^0,\qquad L_j^0\longrightarrow L^0.
+$$
+
+Here $L_j^0$ is the actual original Laplacian with only coordinate $e$
+set to zero; its support need not be connected. Let
+
+$$
+ W=\mathbf1^\perp\cap b^\perp,\qquad
+ Q=P-\tfrac12bb^{\mathsf T},\qquad
+ T=(QL^0Q)|_W.
+\tag{10.6}
+$$
+
+The matrix $Q$ is the orthogonal projection onto $W$, whose dimension
+is $n-2$. For $z\in W$, the divergent edge contributes zero energy,
+and $z^{\mathsf T}L_j^0z=z^{\mathsf T}L(h_j)z\ge\|z\|^2$.
+Passing to the limit proves $T\succeq I_W$.
+
+In the orthogonal decomposition
+$\mathbf1^\perp=\mathbb R(b/\sqrt2)\oplus W$, the original Laplacian
+has block matrix
+
+$$
+\begin{pmatrix}2t_j+\alpha_j&v_j^{\mathsf T}\\
+                 v_j&T_j\end{pmatrix},\qquad
+\alpha_j,v_j\text{ bounded},\qquad T_j\to T\succeq I_W.
+$$
+
+Its inverse has Schur complement
+$T_j-v_jv_j^{\mathsf T}/(2t_j+\alpha_j)\to T$.
+The inverse therefore tends to $0\oplus T^{-1}$. In particular the
+original all-pairs identity gives the exact limit
+
+$$
+\lim_j R(h_j)=n\operatorname{tr}_W T^{-1}.
+\tag{10.7}
+$$
+
+This is an inverse limit in the original counting space; no contracted
+graph resistance or replacement vertex measure has been substituted.
+
+Choose an original independent set $I$ containing neither $u$ nor $v$,
+and write $k=|I|\ge2$. Define on the full original space
+
+$$
+H_0=QL^0Q-Q\succeq0.
+$$
+
+It vanishes on $W^\perp$, in particular on $\mathbf1$.
+For $i\in I$, $Qe_i=e_i-\mathbf1/n$. Since $L^0\mathbf1=0$ and
+$I$ is independent, its $I$ block is
+
+$$
+(H_0)_{II}=\operatorname{diag}(d_i^0-1)_{i\in I}
+                 +\frac1n\mathbf1_I\mathbf1_I^{\mathsf T}.
+\tag{10.8}
+$$
+
+Taking the trace on the $k-1$ dimensional difference space supported
+on $I$ gives
+$0\le (k-1)(\sum_{i\in I}d_i^0-k)/k$.
+Thus, for Gram vectors $v_x$ of $H_0$ and
+$A_I=\sum_{i\in I}\|v_i\|^2$, (10.8) implies
+
+$$
+ A_I\ge\frac kn,\qquad
+ \left\|\sum_{i\in I}v_i\right\|^2
+ =A_I+\frac{k(k-1)}n\ge\frac{k^2}n.
+$$
+
+Also $\sum_{x\in V}v_x=0$, because the squared norm of this sum is
+$\mathbf1^{\mathsf T}H_0\mathbf1=0$. Cauchy–Schwarz on the other
+$n-k$ original vectors now yields
+
+$$
+ S_0:=\operatorname{tr}H_0
+ \ge\frac kn+\frac{k^2}{n(n-k)}=\frac{k}{n-k}.
+\tag{10.9}
+$$
+
+Let $q_1,\ldots,q_{n-2}\ge0$ be the eigenvalues of $T-I_W$.
+They sum to $S_0$. Applying the finite-list comparison (3.5) to this
+same list, not to separately optimized spectra, gives
+
+$$
+\begin{aligned}
+\operatorname{tr}_W T^{-1}
+ &=n-2-\sum_{r=1}^{n-2}\frac{q_r}{1+q_r}\\
+ &\le n-2-\frac{S_0}{1+S_0}
+ \le n-2-\frac kn.
+\end{aligned}
+\tag{10.10}
+$$
+
+If $e\in E_{AB}$, take $I=C$ and $k=c$. Equations (10.7)–(10.10)
+give $n(n-2)-c=n(n-3)+m$.
+If $e$ joins $C$ to either other part, take $I$ to be $C$ with that
+endpoint removed. Then $k=c-1\ge2$, and the bound is
+$n(n-2)-(c-1)=B_\infty$. These alternatives cover every original
+edge. They prove (10.3) on the chosen limsup subsequence and hence on
+the original sequence. Under the additional hypothesis of (10.4),
+every such subsequence either has at least two infinite edge limits,
+where (10.5) applies, or has just the stated $AB$ edge with infinite
+limit, where the stronger choice $I=C$ applies. This proves (10.4)
+even if other original coordinates are unbounded. ∎
+
+## 11. Compact superlevels and the entire nonnegative optimizer set
+
+**Theorem 11.1 (Existence above the escape ceiling).** For every exterior
+triple (10.1),
+
+$$
+M\ge B_{\rm bip}>B_\infty.
+\tag{11.1}
+$$
+
+For every real $\alpha>B_\infty$ the set
+
+$$
+\mathcal S_\alpha=\{h\in\mathcal C_{a,b,c}:R(h)\ge\alpha\}
+\tag{11.2}
+$$
+
+is compact, with the empty set allowed. There is a nonempty compact set
+
+$$
+K=\{h\in\mathcal C_{a,b,c}:R(h)=M\},\qquad
+M=\max_{h\in\mathcal C_{a,b,c}}R(h).
+\tag{11.3}
+$$
+
+Here $K$ denotes the entire optimizer set, not a selected collection of
+face suppliers. Its definition is implicit.
+
+*Proof.* Use the whole general bipartite Theorem 4.1 with smaller class
+of size $m=a+b\ge4$, larger class of size $c>m$, and its original
+vertices mapped bijectively onto $(A\sqcup B,C)$. Its retained edges
+are precisely $E_{AC}\sqcup E_{BC}$; set every $AB$ coordinate to zero.
+For any chosen label $x_*\in A\sqcup B$, its normalized supplier is
+
+$$
+ h_{x_*w}=\frac{d+1}{c},\qquad
+ h_{xw}=\frac1c\quad(x\in(A\sqcup B)\setminus\{x_*\},\ w\in C),
+ \qquad h|_{E_{AB}}=0.
+\tag{11.4}
+$$
+
+The supplier proves $\lambda_2(h)=1$, connectedness and
+$R(h)=B_{\rm bip}$ on all $n$ original vertices. Its complete spectrum
+is $0$, $1$ with multiplicity $n-3$, and $\mu_-,\mu_+$, where
+
+$$
+\mu_-+\mu_+=d+3,\qquad
+\mu_-\mu_+=\frac{n(d+1)}c,\qquad 1<\mu_-\le\mu_+.
+$$
+
+Thus the map preserves the Laplacian, counting measure and every
+unordered pair, including original $AB$ pairs which are now nonedges.
+It is a whole optimizer on that bipartite face, not an upper comparison
+for the tripartite domain. The positive approximants (8.3) on all
+original edges give $M\ge B_{\rm bip}$. Direct subtraction gives
+
+$$
+B_{\rm bip}-B_\infty
+ =d-1+\frac{2c}{d+1}>0.
+\tag{11.5}
+$$
+
+The domain $\mathcal C$ is closed in $\mathbb R^E$: limits preserve
+nonnegativity and $\lambda_2=1$. Such limits have connected support,
+and $R$ is continuous there, by Convention 1.2. Hence
+$\mathcal S_\alpha$ is closed. If it were unbounded, one could choose
+$h_j\in\mathcal S_\alpha$ with $\max_e(h_j)_e\to\infty$.
+Theorem 10.2 would give
+$\alpha\le\limsup_jR(h_j)\le B_\infty$, a contradiction.
+Finite-dimensional closedness and boundedness prove compactness.
+
+A positive maximizing sequence exists by the definition of the finite
+supremum $M$. Normalize each term by its own $\lambda_2$.
+Choose $\alpha$ strictly between $B_\infty$ and $B_{\rm bip}$.
+The normalized tail belongs to $\mathcal S_\alpha$, so it has a limit
+point $h\in\mathcal C$ with $R(h)=M$. For every $h\in\mathcal C$,
+the explicit positive approximation (8.3) gives $R(h)\le M$.
+This proves the maximum assertion and nonemptiness of $K$.
+Finally $K$ is a closed subset of the compact $\mathcal S_\alpha$,
+so it is compact. ∎
+
+**Theorem 11.2 (Every positive maximizing sequence).** For every sequence
+$(g_j)$ of arbitrary independent positive original-edge assignments, put
+$h_j=g_j/\lambda_2(g_j)$. Then
+
+$$
+F(g_j)\longrightarrow M
+\quad\Longleftrightarrow\quad
+\operatorname{dist}(h_j,K)\longrightarrow0.
+\tag{11.6}
+$$
+
+Every maximizing sequence $(h_j)$ is bounded. Its cluster points all
+belong to $K$. Conversely, every point of $K$ is the limit of a
+normalized strictly positive maximizing sequence.
+
+*Proof.* If $F(g_j)\to M$, take $\alpha$ as in the proof of
+Theorem 11.1. The tail of $(h_j)$ lies in $\mathcal S_\alpha$; its
+finitely many preceding terms do not affect boundedness. Every cluster
+point has $\lambda_2=1$ and resistance $M$, hence belongs to $K$.
+If the distances failed to tend to zero, a subsequence would have
+distance at least some $\epsilon>0$ from $K$. Compactness supplies a
+further subsequence converging to a point of $K$, a contradiction.
+
+Conversely suppose the distances tend to zero. Compactness of $K$
+allows a nearest $k_j\in K$ to be chosen for each $h_j$.
+Then $\|h_j-k_j\|_2\to0$ and $(h_j)$ is bounded. If
+$R(h_j)$ did not tend to $M$, some subsequence would stay a fixed
+positive distance in resistance from $M$. Pass to a further subsequence
+with $k_j\to k\in K$; then $h_j\to k$. Continuity at this connected
+limit gives $R(h_j)\to R(k)=M$, a contradiction. Since
+$F(g_j)=R(h_j)$, this proves the reverse implication for every positive
+sequence, without any initial boundedness assumption.
+
+For any fixed $k\in K$, the vectors
+$(k+\epsilon\mathbf1_E)/\lambda_2(k+\epsilon\mathbf1_E)$ in (8.3)
+are strictly positive, normalized, and converge to $k$ as
+$\epsilon\downarrow0$. Their resistances tend to $R(k)=M$.
+Choosing any positive sequence $\epsilon_j\downarrow0$ proves the
+last assertion. ∎
+
+## 12. Exact comparison of all three whole-deletion faces
+
+**Definition 12.1 (Face-value notation).** For the fixed exterior triple,
+define, for integers $2\le k<n/2$,
+
+$$
+\beta_n(k)=n(n-3)+\begin{cases}
+ n+1+\dfrac2{n-2},&k=2,\\[4pt]
+ n-k+1+\dfrac{n-1}{n-2k+1},&k\ge3.
+ \end{cases}
+\tag{12.1}
+$$
+
+All face values below refer to connected nonnegative assignments on
+exactly the original vertices, as in Definition 9.1, and to the
+scale-invariant product $F$. The smaller bipartite class has size $m$
+for $\mathcal D_{AB}$, $b$ for $\mathcal D_{AC}$, and $a$ for
+$\mathcal D_{BC}$; all are strictly less than $n/2$ by $c>a+b$.
+
+**Theorem 12.2 (Whole-face maxima and labelled suppliers).** On the three
+entire faces,
+
+$$
+ X:=\max_{\mathcal D_{AB}}F=\beta_n(m)=B_{\rm bip},\qquad
+ Y:=\max_{\mathcal D_{AC}}F=\beta_n(b),\qquad
+ Z:=\max_{\mathcal D_{BC}}F=\beta_n(a).
+\tag{12.2}
+$$
+
+Each displayed value is attained by finite conductances positive on
+every retained edge. Explicit normalized suppliers are as follows.
+Map the smaller class onto a labelled set $S$ of size $k$, and the
+larger onto its complement $T$ of size $\ell=n-k$. Set the deleted
+original edge class to zero. If $k=2$, write $S=\{s_1,s_2\}$ and take
+
+$$
+ h_{s_1t}=\tfrac12\left(1+\epsilon\sqrt{\frac{n-4}{n}}\right),\qquad
+ h_{s_2t}=\tfrac12\left(1-\epsilon\sqrt{\frac{n-4}{n}}\right)
+ \quad(t\in T),\qquad \epsilon\in\{-1,1\}.
+\tag{12.3}
+$$
+
+If $k\ge3$, choose any $s_*\in S$ and take
+
+$$
+ h_{s_*t}=\frac{\ell-k+1}{\ell},\qquad
+ h_{st}=\frac1\ell\quad(s\in S\setminus\{s_*\},\ t\in T).
+\tag{12.4}
+$$
+
+In these formulas $(S,T)$ is respectively
+$(A\sqcup B,C)$, $(B,A\sqcup C)$ or $(A,B\sqcup C)$.
+In particular $M\ge\max\{X,Y,Z\}$; this is a lower comparison for
+$M$, not an assertion of equality with any face value.
+
+*Proof.* Each indicated map is an actual vertex bijection of the
+bipartite graph in (9.1). Its retained edges, ordinary Laplacian and all
+unordered original-pair resistances are identical; no vertices are
+identified. If $k=2$, the whole two-hub Theorem 2.1 applies with
+$\ell=n-2\ge3$. It gives (12.3) and product
+$n(n-2+1/(n-2))=\beta_n(2)$, using
+$n/(n-2)=1+2/(n-2)$.
+If $k=3$, the whole three-hub Theorems 2.2 and 3.1 apply with
+$\ell=n-3>3$. Their normalized rows are
+$(\ell-2)/\ell,1/\ell,1/\ell$, precisely (12.4), and their product is
+
+$$
+\ell n+\frac{\ell^2}{\ell-2}
+ =n(n-3)+n-1+\frac4{n-5}=\beta_n(3).
+$$
+
+For $k\ge4$, the whole general bipartite Theorems 3.1–4.1 apply
+with $4\le k<\ell$ and give (12.4). Their constant is
+
+$$
+ n(n-3)+\frac{\ell(\ell-k+3)}{\ell-k+1}
+ =n(n-3)+n-k+1+\frac{n-1}{n-2k+1}=\beta_n(k).
+$$
+
+These whole theorems optimize every independent positive retained
+coordinate, not just the displayed row-constant suppliers. Each
+supplier has actual $\lambda_2=1$ and connected support.
+For a face assignment with additional zero retained coordinates and
+connected support, add $\epsilon>0$ to every retained edge. This
+converges within the same face through strictly positive bipartite
+assignments, so continuity extends the whole upper comparison to that
+assignment. The displayed positive retained suppliers therefore attain
+the maximum on the entire connected nonnegative face. This extension
+does not assert that a positive-domain equality classification alone
+classifies all further-zero face equalities.
+Finally adding $\epsilon$ to the deleted original coordinates of any
+supplier gives strictly positive tripartite assignments whose products
+tend to its face value. This proves the lower comparison for $M$. ∎
+
+**Theorem 12.3 (Every integer boundary and every face-value tie).** Retain
+$X,Y,Z$ from (12.2).
+If $a=b=2$, then $Y=Z>X$ for every $d\ge1$.
+If $a=2<b$, then $Z>\max\{X,Y\}$ and the remaining comparison is
+
+$$
+\operatorname{sgn}(X-Y)
+ =\operatorname{sgn}\bigl(4b-4(d-1)-d^2-3\bigr).
+\tag{12.5}
+$$
+
+For $d=1,2$ this sign is positive. For $d\ge3$, it changes according
+as $b$ is below, equal to, or above
+
+$$
+ b_0=d-1+\frac{d^2+3}{4}.
+\tag{12.6}
+$$
+
+The equality $X=Y$ occurs exactly when $d\ge3$ is odd and $b=b_0$.
+For even $d$ there is no integer tie.
+
+If $a\ge3$, then $Z\ge Y$, with equality exactly when $a=b$, and
+
+$$
+\begin{aligned}
+\operatorname{sgn}(X-Z)
+ &=\operatorname{sgn}\bigl(4a-2b(d-1)-d^2-3\bigr),\\
+\operatorname{sgn}(X-Y)
+ &=\operatorname{sgn}\bigl(4b-2a(d-1)-d^2-3\bigr).
+\end{aligned}
+\tag{12.7}
+$$
+
+More explicitly, for $d=1$ one has $X>Z\ge Y$.
+For $d=2$, one has $X>Z\ge Y$ if $b\le2a-4$.
+If $d=2$ and $b\ge2a-3$, then $Z>X>Y$ except that
+$(a,b)=(3,3)$ gives $Z=Y>X$.
+For $d\ge3$ one always has $Z>X$, while the position of $X$
+relative to $Y$ is decided by comparing $b$ to
+
+$$
+ b_0=\frac{a(d-1)}2+\frac{d^2+3}{4}:
+ \quad b<b_0\Rightarrow X<Y,\quad
+ b=b_0\Rightarrow X=Y,\quad
+ b>b_0\Rightarrow X>Y.
+\tag{12.8}
+$$
+
+Here $X=Y$ occurs exactly for odd $d\ge3$ and the integer $b=b_0$.
+There is no $X=Z$ tie and no three-way tie. Together with $Y=Z$
+exactly at $a=b$, the listed equalities exhaust all ties.
+
+*Proof.* For real $k<n/2$ set
+
+$$
+ f(k)=n-k+1+\frac{n-1}{n-2k+1}.
+$$
+
+For integers $3\le r<s<n/2$, subtraction gives
+
+$$
+ f(s)-f(r)=(s-r)
+ \left(-1+\frac{2(n-1)}{(n-2r+1)(n-2s+1)}\right),\qquad
+ f''(k)=\frac{8(n-1)}{(n-2k+1)^3}>0.
+\tag{12.9}
+$$
+
+For $a,b\ge3$ the denominator for $r=a,s=b$ exceeds $2(n-1)$,
+because
+
+$$
+ (2b+d+1)(2a+d+1)-2(n-1)
+ =4ab+2(a+b)(d-1)+d^2+3>0.
+$$
+
+Thus $f(a)>f(b)$ if $a<b$, and equality holds if $a=b$.
+For $r=a,s=m$ and for $r=b,s=m$, the numerators of the parentheses
+in (12.9), after multiplication by the positive denominators, are
+respectively
+
+$$
+ J_a=4a-2b(d-1)-d^2-3,\qquad
+ J_b=4b-2a(d-1)-d^2-3.
+\tag{12.10}
+$$
+
+The factors $m-a=b$ and $m-b=a$ are positive. This proves (12.7).
+For $d=1$, $J_a=4a-4>0$ and $J_b=4b-4>0$.
+For $d=2$, $J_a=4a-2b-7$ is positive precisely when
+$b\le2a-4$, and is negative precisely when $b\ge2a-3$;
+it cannot vanish. Also $J_b=4b-2a-7$ is positive for all
+$a\ge3,b\ge a$ except $(a,b)=(3,3)$, where it is $-1$.
+For $d\ge3$,
+$J_a\le4a-4b-d^2-3<0$.
+The sign and zero of $J_b$ are exactly (12.8).
+If $d$ is even its right-hand equation
+$4b=2a(d-1)+d^2+3$ has an odd right side, so has no integer solution.
+If $d\ge3$ is odd the value in (12.8) is an integer and is greater
+than $a$, so it gives precisely the stated tie, strictly below $Z$.
+These calculations also exclude $X=Z$ and three-way ties.
+
+For $a=2$, compare the two-hub value $Z$ directly to $X$. Subtracting
+$n(n-2)$ from each gives
+
+$$
+ X-n(n-2)=\frac{m-d(m-2)}{d+1},\qquad
+ Z-n(n-2)=\frac n{n-2}>1.
+\tag{12.11}
+$$
+
+At $d=1$ the first expression is $1$; at $d\ge2$ it is at most
+$(4-m)/(d+1)\le0$, since $m\ge4$. Hence $Z>X$ always.
+If also $b=2$, the $AC$ and $BC$ faces have the same two-hub value,
+proving $Y=Z>X$.
+If $b\ge3$, then $m=b+2\ge5$ and $n\ge11$. One has
+$f(3)=n-1+4/(n-5)<n$, whereas
+$Z-n(n-3)=n+1+2/(n-2)>n+1$.
+The just-proved $X<Z$ gives the other endpoint inequality for $f(m)$.
+Convexity in (12.9) bounds $f$ on $[3,m]$ by its endpoint maximum,
+which is strictly below $Z-n(n-3)$. In particular $Y<Z$.
+Both $b$ and $m$ are at least $3$, so (12.9) gives the sign (12.5)
+by $J_b$ with $a=2$. It is positive for $d=1,2$ and $b\ge3$.
+Solving $J_b=0$ for $d\ge3$ gives (12.6), with the same parity test
+as above. All the face comparisons have now been covered. ∎
+
+## 13. All normalized assignments with one-dimensional excess
+
+**Theorem 13.1 (Exhaustive rank-one classification).** Among all
+$h\in\mathcal C_{a,b,c}$ for an exterior triple, assignments with
+$\operatorname{rank}(L(h)-P)=1$ exist if and only if $a=2$.
+They are exactly the following assignments: choose an entire original
+part $S=\{s_1,s_2\}$ of size two, apply (12.3) to every edge from
+$S$ to $V\setminus S$, and set every original edge between the other
+two parts to zero. There are exactly two such normalized assignments
+when $a=2<b$, and exactly four when $a=b=2$. Their common product is
+
+$$
+T_n=n\left(n-2+\frac1{n-2}\right).
+\tag{13.1}
+$$
+
+No strictly positive original assignment has rank-one excess after
+normalization by its own $\lambda_2$. This classification imposes no
+rank restriction on unrestricted maximizers.
+
+*Proof.* Factor $L(h)-P=vv^{\mathsf T}$, where $v\ne0$ and
+$\sum_xv_x=0$. At distinct vertices of the same original part,
+nonadjacency gives
+
+$$
+ v_xv_y=\frac1n.
+\tag{13.2}
+$$
+
+Thus all entries in any one part have the same nonzero sign. If the
+part has at least three vertices, comparing (13.2) for three labels
+shows that all its entries equal either $1/\sqrt n$ or $-1/\sqrt n$.
+In particular this holds for $C$, since $c>a+b\ge4$. Reverse $v$
+if necessary so that $v_w=-1/\sqrt n$ for every $w\in C$.
+
+For $x\notin C$, original conductance nonnegativity gives
+$0\le h_{xw}=1/n+v_x/\sqrt n$, hence $v_x\ge-1/\sqrt n$.
+A negative size-two part must also have both entries $-1/\sqrt n$:
+their absolute values are at most $1/\sqrt n$ and their product is
+$1/n$ by (13.2). Thus every negative part is uniform at that value.
+A positive part of size at least three is uniform at $1/\sqrt n$.
+A positive size-two part has entries $t/\sqrt n$ and
+$1/(t\sqrt n)$ for some $t>0$.
+
+If both $A$ and $B$ are positive, then all their entries must actually
+be $1/\sqrt n$. Indeed a nonuniform positive size-two pair has one
+entry greater than $1/\sqrt n$, while any other positive part has an
+entry at least $1/\sqrt n$; their cross conductance
+$1/n-v_xv_y$ would be negative. With both parts uniform positive,
+the sum of $v$ is $(a+b-c)/\sqrt n\ne0$, impossible.
+If both parts are negative, the sum is negative, also impossible.
+There is therefore exactly one positive part $S$. If it had size at
+least three, its uniform value would give total sum
+$(2|S|-n)/\sqrt n<0$, because $|S|\le a+b<c$.
+It must have size two; all other entries are $-1/\sqrt n$.
+The zero-sum condition is now
+
+$$
+ t+t^{-1}=n-2.
+\tag{13.3}
+$$
+
+There are exactly two positive roots, interchanged by $t\mapsto t^{-1}$,
+since $n>4$. The two conductances from these hubs to every other
+vertex are $(1+t)/n$ and $(1+t^{-1})/n$. Their sum is $1$ and their
+product is $1/n$, so they are exactly
+
+$$
+ \tfrac12\left(1+\sqrt{\frac{n-4}{n}}\right),\qquad
+ \tfrac12\left(1-\sqrt{\frac{n-4}{n}}\right).
+$$
+
+Between any two vertices outside $S$, the rank-one formula gives
+$h_{xy}=1/n-1/n=0$ whenever that pair is an original edge. This
+proves necessity of every coordinate.
+
+Conversely each listed assignment is exactly the whole two-hub
+supplier on $K_{2,n-2}$, with the two hubs mapped to the entire
+original part $S$ and every other original vertex a leaf. Its support
+is connected. The supplier gives full spectrum $0$, $1$ with
+multiplicity $n-2$, and $n-2$ once, so $\lambda_2=1$, excess rank one
+and product (13.1). All retained coordinates are positive.
+Only $A$ can have size two when $a=2<b$; when $a=b=2$, either $A$
+or $B$ can be chosen. For each choice the two unequal hub values give
+two distinct labelled assignments. Assignments with different chosen
+parts also differ: an edge from the other size-two part to $C$ is
+zero for one and positive for the other. This gives the stated counts
+and proves nonexistence if $a>2$. Each listed assignment has a whole
+nonempty original edge class zero, proving the positive-domain
+exclusion. No step assumes or concludes that unrestricted optimizers
+have rank-one excess. ∎
+
+## 14. A quantitative upper comparison below the exterior trace estimate
+
+**Theorem 14.1 (An explicit strict upper bound for the supremum).** Put
+
+$$
+ N=n(n-2),\qquad q=d+3,\qquad B=B_{\rm bip},\qquad
+ U_{\rm ext}=
+ \frac{B+qN+n+\sqrt{(B+qN+n)^2-4qBN}}{2q}.
+\tag{14.1}
+$$
+
+For every exterior triple,
+
+$$
+ \max\{B,N\}<U_{\rm ext}
+ <n\left(n-2+\frac1{d+2}\right),\qquad
+ B\le M<U_{\rm ext}.
+\tag{14.2}
+$$
+
+Every independently positive original assignment therefore satisfies
+$F(g)\le M<U_{\rm ext}$; in fact $R(h)<U_{\rm ext}$ for every
+$h\in\mathcal C$. The number $U_{\rm ext}$ is an upper bound,
+not an evaluation of the unrestricted supremum.
+
+*Proof.* Write $V=N+n/(d+2)$ for the estimate in Proposition 6.1.
+A direct computation gives
+
+$$
+ V-B=\frac{d(m-1)(d+3)}{(d+1)(d+2)}>0.
+\tag{14.3}
+$$
+
+Consider the polynomial
+
+$$
+ p(r)=(r-N)(qr-B)-nr
+     =qr^2-(B+qN+n)r+BN.
+\tag{14.4}
+$$
+
+One has $p(N)=-nN<0$, and
+
+$$
+ p(B)=B\bigl((d+2)(B-N)-n\bigr)<0,\qquad
+ p(V)=\frac n{d+2}(V-B)>0.
+$$
+
+Since $q>0$, these signs imply two distinct real roots, with the larger
+root strictly between $\max\{B,N\}$ and $V$. The quadratic formula
+identifies that root as (14.1), proving its reality and the first
+comparisons in (14.2).
+
+Fix any $h\in\mathcal C$ and put
+
+$$
+ r=R(h),\qquad x=\sum_{e\in E_{AB}}h_e\ge0.
+$$
+
+By Lemma 2.1, $D_C\ge c$. The sum of all original conductances is
+$D_C+x$, so the trace excess satisfies
+$S=2(D_C+x)-n+1\ge d+1+2x$.
+The finite-list comparison (3.5) gives
+
+$$
+ r\le N+\frac n{d+2+2x}.
+\tag{14.5}
+$$
+
+Let $h^0$ be obtained from this same $h$ by setting only its $AB$
+coordinates to zero, and let $D=L(h)-L(h^0)$. Since each incidence
+vector has squared norm $2$ and lies in $\mathbf1^\perp$,
+
+$$
+ 0\preceq D\preceq2xP,\qquad
+ L(h^0)\succeq(1-2x)P.
+\tag{14.6}
+$$
+
+If $x<1/2$, this original bipartite assignment has connected support
+and actual $\lambda_2(h^0)\ge1-2x$. The whole bipartite bound,
+extended to connected nonnegative assignments as in Theorem 12.2,
+gives $\lambda_2(h^0)R(h^0)\le B$.
+For $0<x<1/2$, adding the nonzero $D$ strictly decreases the trace
+of the inverse on $\mathbf1^\perp$, hence
+
+$$
+ r<R(h^0)\le\frac B{1-2x}.
+\tag{14.7}
+$$
+
+Here strictness can be seen directly: for positive definite
+$A=L(h^0)|_{\mathbf1^\perp}$, the difference
+$A^{-1}-(A+D)^{-1}$ is the congruence by $A^{-1/2}$ of
+$I-(I+A^{-1/2}DA^{-1/2})^{-1}$. It is positive semidefinite and
+nonzero when $D\ne0$, so has strictly positive trace.
+This also proves the required strict total-resistance comparison on
+the original vertices. The non-strict monotonicity is the classical
+one in Ghosh–Boyd–Saberi, §2.6.
+
+If $r\le B$, then $r<U_{\rm ext}$ already. Suppose $r>B$.
+The case $x=0$ is excluded by the whole bipartite bound.
+For $0<x<1/2$, (14.7) implies
+$x>(1-B/r)/2$; for $x\ge1/2$ the same strict inequality holds because
+$0<(1-B/r)/2<1/2$. Thus (14.5) yields
+
+$$
+ r<N+\frac n{d+3-B/r}.
+$$
+
+The denominator is positive since $r>B>0$. Multiplying by $qr-B>0$
+gives $p(r)<0$. A quadratic with positive leading coefficient is
+negative only between its two roots, so $r<U_{\rm ext}$.
+This proves the pointwise strict assertion on the entire
+$\mathcal C$, without a symmetry, trace or rank restriction.
+
+For strictness of the supremum, take any positive maximizing sequence
+and normalize each term by its own $\lambda_2$. Theorem 11.2 gives a
+convergent subsequence with limit $k\in K$ and
+$R(k)=\lim_jF(g_j)=M$. The pointwise strict result applied to this
+actual connected limit gives $M=R(k)<U_{\rm ext}$.
+This limiting argument, rather than pointwise strictness alone,
+justifies the strict-supremum claim. The lower comparison is
+Theorem 11.1. ∎
+
+## 15. Every exact resistance level and the remaining optimizer coordinates
+
+**Theorem 15.1 (Closed level optimizers and all positive level sequences).**
+For every exterior triple and every real $R_0>0$, let
+
+$$
+\overline{\mathcal F}_{R_0}
+ =\{g\in[0,\infty)^E:\text{the positive support is connected},
+                         R(g)=R_0\},\qquad
+ K_{R_0}=\frac M{R_0}K.
+\tag{15.1}
+$$
+
+The scaling maps (5.1) extend to mutually inverse continuous maps
+between $\mathcal C$ and $\overline{\mathcal F}_{R_0}$.
+The entire closed level optimizer set is the nonempty compact set
+$K_{R_0}$, and
+
+$$
+ \max_{g\in\overline{\mathcal F}_{R_0}}\lambda_2(g)
+ =\sup_{g\in\mathcal F_{a,b,c,R_0}}\lambda_2(g)
+ =\frac M{R_0},\qquad
+ \frac{B_{\rm bip}}{R_0}\le\frac M{R_0}
+ <\frac{U_{\rm ext}}{R_0}
+ <\frac n{R_0}\left(n-2+\frac1{d+2}\right).
+\tag{15.2}
+$$
+
+For every $\alpha>B_\infty$, the closed level superlevel
+
+$$
+ \{g\in\overline{\mathcal F}_{R_0}:\lambda_2(g)\ge\alpha/R_0\}
+\tag{15.3}
+$$
+
+is compact. For every sequence $(g_j)$ in the closed level with
+$\max_e(g_j)_e\to\infty$,
+
+$$
+ \limsup_j\lambda_2(g_j)\le B_\infty/R_0.
+\tag{15.3a}
+$$
+
+If any fixed $AB$ coordinate tends to infinity, this improves to
+$\limsup_j\lambda_2(g_j)\le(n(n-3)+m)/R_0$.
+For every sequence $(g_j)$ of strictly positive assignments
+with $R(g_j)=R_0$ exactly,
+
+$$
+ \lambda_2(g_j)\longrightarrow M/R_0
+ \quad\Longleftrightarrow\quad
+ \operatorname{dist}(g_j,K_{R_0})\longrightarrow0.
+\tag{15.4}
+$$
+
+Every point of $K_{R_0}$ is the limit of strictly positive assignments
+of resistance exactly $R_0$ whose Fiedler values tend to $M/R_0$.
+Their terms are maximizing approximants; no assertion that an individual
+positive term attains the supremum is included.
+The three whole-face level maxima are respectively
+$X/R_0,Y/R_0,Z/R_0$, with every comparison and tie in Theorem 12.3
+unchanged. The normalized rank-one suppliers in Theorem 13.1 give
+exact-level assignments with $\operatorname{rank}(L(g)-\lambda_2(g)P)=1$
+by multiplication by $T_n/R_0$; these exhaust such assignments at that
+level.
+
+*Proof.* The scaling proof of Theorem 5.1 uses only connectedness,
+positivity of $\lambda_2$, and (1.6), so it applies verbatim to
+nonnegative connected assignments. In explicit terms,
+
+$$
+ \Psi_{R_0}(h)=\frac{R(h)}{R_0}h,\qquad
+ \Theta(g)=\frac g{\lambda_2(g)},\qquad
+ \lambda_2(\Psi_{R_0}(h))=\frac{R(h)}{R_0}.
+\tag{15.5}
+$$
+
+Continuity holds throughout the two domains. The closed level set
+in (15.1) is also closed in $\mathbb R^E$: at any connected level
+point the spectral identity gives
+$R_0\ge n/\lambda_2(g)$, so $\lambda_2(g)\ge n/R_0$.
+A convergent sequence in that level therefore has a nonnegative limit
+with positive $\lambda_2$, hence connected support and, by continuity,
+resistance $R_0$. No disconnected assignment is added by taking limits.
+
+Theorem 11.1 and (15.5) identify all closed level maximizers as
+$\Psi_{R_0}(K)=(M/R_0)K$. This set is nonempty and compact.
+The positive level supremum and the bounds are Theorem 5.1 and
+Theorems 11.1, 14.1. Equation (15.5) identifies (15.3) exactly with
+$\Psi_{R_0}(\mathcal S_\alpha)$, a continuous image of the compact
+set in Theorem 11.1, proving its compactness.
+The bounds $n/R_0\le\lambda_2(g)\le M/R_0$ on this closed level
+show that $\max_e(g_j)_e\to\infty$ implies
+$\max_e(\Theta(g_j))_e\to\infty$. A fixed diverging $AB$
+coordinate has the same property after this normalization. Applying
+Theorem 10.2 to $\Theta(g_j)$ and using
+$R(\Theta(g_j))=R_0\lambda_2(g_j)$ proves (15.3a) and its
+stronger $AB$ version.
+
+If a positive exact-level sequence is maximizing, then
+$F(g_j)=R_0\lambda_2(g_j)\to M$.
+By Theorem 11.2 its normalizations $h_j=\Theta(g_j)$ are bounded
+and have distance to $K$ tending to zero. Choose nearest $k_j\in K$.
+Since $\lambda_2(g_j)\to M/R_0$, boundedness of $h_j,k_j$ gives
+
+$$
+ \left\|g_j-\frac M{R_0}k_j\right\|_2
+ \le \lambda_2(g_j)\|h_j-k_j\|_2
+       +\left|\lambda_2(g_j)-\frac M{R_0}\right|\|k_j\|_2
+ \longrightarrow0.
+$$
+
+This proves necessity in (15.4). Conversely, if the distances in
+(15.4) tend to zero, choose nearest points in the compact $K_{R_0}$.
+Any subsequence on which the Fiedler values fail to tend to $M/R_0$
+has a further subsequence converging in original coordinates to a
+point of $K_{R_0}$. Eigenvalue continuity contradicts that failure.
+This proves sufficiency for every positive exact-level sequence.
+
+For an arbitrary $k\in K$, take
+
+$$
+ h^{(\epsilon)}=
+ \frac{k+\epsilon\mathbf1_E}{\lambda_2(k+\epsilon\mathbf1_E)},\qquad
+ G^{(\epsilon)}=
+ \frac{R(h^{(\epsilon)})}{R_0}h^{(\epsilon)}.
+\tag{15.6}
+$$
+
+Every original coordinate of $G^{(\epsilon)}$ is finite and strictly
+positive, and its resistance is exactly $R_0$ by (1.6).
+Moreover $h^{(\epsilon)}\to k$ and
+$R(h^{(\epsilon)})\to M$, so
+$G^{(\epsilon)}\to(M/R_0)k$ and
+$\lambda_2(G^{(\epsilon)})\to M/R_0$.
+This proves positive exact-level approximation of every closed
+optimizer. Applying the same scaling to the whole face suppliers
+and to the exhaustive rank-one classification gives the final claims.
+
+In particular positive attainment is equivalent to
+$K\cap(0,\infty)^E\ne\varnothing$, or equivalently
+$K_{R_0}\cap(0,\infty)^E\ne\varnothing$. The results above determine
+neither that intersection nor the exact value of $M$ nor the explicit
+coordinates of all members of $K$. Thus the full exterior optimization
+in Definitions 6.2 and 9.4 is not solved by these bounds, face comparisons
+or the rank-one classification. Unbounded normalization is excluded
+for every maximizing sequence by Theorems 10.2–11.2; the remaining
+sequence description is the implicit distance to the entire compact
+optimizer set, whose coordinates are still undetermined. ∎
+
+## 追加锚（本行以下为增补区）
