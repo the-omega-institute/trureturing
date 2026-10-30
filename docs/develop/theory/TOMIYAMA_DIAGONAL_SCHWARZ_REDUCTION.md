@@ -1113,3 +1113,336 @@ Failure of $2$-positivity excludes every $k$-positive supplier with $k\ge2$. The
 **Convention 15.4 (source hypotheses and evidence boundary).** The original family remains exactly Eq. (6) of Bera, Bhattacharya and Chruściński, arXiv:2604.18600v1, under $\alpha=dq$ and $\beta=1-dq-\lambda$; its §4 Schwarz question is Question 12.2. The external CP and $k$-positive suppliers and the separately justified depolarizing and reduction suppliers are those specified in §§4,11,12, at precisely their stated hypotheses. Theorem 9.1 is reused only at its actual sufficient condition, not at a rescaled multiplier with a different first coordinate. The added sufficiency arguments are (13.1)–(13.2) and (14.1)–(14.10), using the published complex row reduction and the complete simplex-boundary theorem. They do not use the invalid full sufficient criteria of arXiv:2603.11204v1, arXiv:2512.18900v3 or arXiv:2601.02282v1. Their mathematical status is repo-derived prose; they make no Lean/kernel or global novelty claim. Overlap with the unavailable original full texts identified in Convention 12.1 remains undetermined.
 
 ## 追加锚（本行以下为增补区）
+
+## 16. Uniform coercivity and an extension in the original trace parameter
+
+**Theorem 16.1 (uniform base coercivity).** On $M_3(\mathbb C)$ retain exactly the original maps
+
+$$
+\Phi_{\lambda,q}(X)=\lambda X+(1-3q-\lambda)\operatorname{diag}(X)
+ +q\operatorname{tr}(X)I_3,
+\qquad
+S_{\lambda,q}(X)=\Phi_{\lambda,q}(X^\ast X)
+ -\Phi_{\lambda,q}(X)^\ast\Phi_{\lambda,q}(X).
+$$
+
+For every complex $X$, put $X_0=X-\operatorname{tr}(X)I_3/3$. Then
+
+$$
+S_{1/2,1/3}(X)\ \ge\ \frac{\|X_0\|_F^2}{10944}I_3.
+\tag{16.1}
+$$
+
+Equivalently, for every $v\in\mathbb C^3$,
+
+$$
+v^\ast S_{1/2,1/3}(X)v
+ \ge\frac{\|X_0\|_F^2\|v\|^2}{10944}.
+$$
+
+For a nonzero probe, equality in this scalar inequality holds exactly when $X$ is scalar; for $v=0$ it always holds. In particular the defect of a nonscalar input is positive definite. All supports of the probe are included. The scalar-shift, phase and row reductions are those of Lemma 3.1 and Theorem 3.2; the quantitative lower bound is the further inference proved here.
+
+**Proof.** Base sufficiency itself is already supplied: in the original $(\lambda,q)$ coordinates,
+
+$$
+(1/2,1/3)=\tfrac14(1,0)+\tfrac34(1/3,4/9),
+$$
+
+where Proposition 4.2, Theorem 13.2 and the convexity identity of Remark 4.4 supply the endpoints and their segment. To obtain the quantitative assertion, use Lemma 3.1 to replace $X$ by $X_0$. For a unit probe use precisely the diagonal-unitary conjugation of Theorem 3.2 to reduce it to $s=(\sqrt{t_1},\sqrt{t_2},\sqrt{t_3})^T$, $t\in\Delta_3$. These operations preserve the trace-zero Frobenius norm. Write the resulting input as $D+Y$, with $D=\operatorname{diag}(z_1,z_2,z_3)$, $z_1+z_2+z_3=0$, and $Y$ of zero diagonal. All entries remain complex.
+
+In row $i$, put $x=t_i$ and denote the other weights by $y,w$. The row blocks and couplings of Convention 2.2 at these parameters are
+
+$$
+A_i=\tfrac13,\qquad
+P_i=\begin{pmatrix}1/3-y/4&\sqrt{yw}/4\\
+\sqrt{yw}/4&1/3-w/4\end{pmatrix},\qquad
+b_i=\tfrac12\sqrt{x}(\sqrt y,\sqrt w)^T.
+$$
+
+Indeed $P_i=I_2/3-uu^T/4$ with $u=(\sqrt y,-\sqrt w)^T$. Its eigenvalues are $1/3$ and $(1+3x)/12$, including when $y$ or $w$ is zero. Thus
+
+$$
+P_i\ge I_2/12,\qquad
+\det P_i=(1+3x)/36>0,\qquad
+\|P_i^{-1}b_i\|\le12\|b_i\|
+ =6\sqrt{x(1-x)}\le3.
+\tag{16.2}
+$$
+
+Put $T=t_1t_2t_3$ and $\beta_i=P_i^{-1}b_i$. The adjugate contraction is
+
+$$
+(\sqrt y,\sqrt w)\operatorname{adj}(P_i)(\sqrt y,\sqrt w)^T
+ =(1-x)/3-yw.
+$$
+
+Consequently the original Schur coefficient is
+
+$$
+\begin{aligned}
+\kappa_i
+ &=\tfrac13-\frac{3x(1-x-3yw)}{1+3x}
+ =\frac{(1-3t_i)^2+27T}{3(1+3t_i)}\ge0.
+\end{aligned}
+\tag{16.3}
+$$
+
+For every $t\in\Delta_3$ at least two distinct coefficients are strictly greater than $1/192$. If all weights are at least $1/6$, then $T\ge1/216$ and (16.3) gives $\kappa_i\ge1/96$ for every $i$, since its denominator is at most $12$. Otherwise choose $i$ with $t_i\le1/6$ and $j$ with $t_j\ge5/12$, which is possible because the other two weights sum to at least $5/6$. Then $\kappa_i\ge1/48$, and $\kappa_j\ge1/192$ follows from $(1-3t_j)^2\ge1/16$ and $3(1+3t_j)\le12$. The last inequality is strict: simultaneous equality would require both $t_j=5/12$ and $t_j=1$.
+
+Let $Z=\sum_i|z_i|^2$. The third diagonal variable is minus the sum of the selected two, so complex Cauchy–Schwarz gives
+
+$$
+Z\le3(|z_i|^2+|z_j|^2),\qquad
+\sum_i\kappa_i|z_i|^2\ge Z/576.
+\tag{16.4}
+$$
+
+The second inequality is strict if $Z>0$, since the selected pair cannot both vanish then. With $\eta_i=(y_{ij})_{j\ne i}$ and $R=\sum_i\|\eta_i+z_i\beta_i\|^2$, completing the original row squares gives
+
+$$
+\begin{aligned}
+s^T S_{1/2,1/3}(X_0)s
+ &=\sum_i(\eta_i+z_i\beta_i)^\ast P_i(\eta_i+z_i\beta_i)
+   +\sum_i\kappa_i|z_i|^2\\
+ &\ge R/12+Z/576.
+\end{aligned}
+\tag{16.5}
+$$
+
+This uses no division by a probe coordinate. From (16.2) and $\|a-b\|^2\le2\|a\|^2+2\|b\|^2$,
+
+$$
+\|Y\|_F^2\le2R+18Z,\qquad
+\|X_0\|_F^2\le2R+19Z
+ \le10944(R/12+Z/576).
+$$
+
+This proves (16.1) on unit probes and hence, by homogeneity, on every complex probe. If $R>0$, the last comparison is strict because $10944/12>2$. If $R=0$ and $X_0\ne0$, then $Z>0$ and (16.4) makes (16.5) strict. Thus the scalar lower bound is strict whenever $X_0\ne0$ and $v\ne0$. Scalar inputs have zero defect by Lemma 3.1, proving the equality assertions. ∎
+
+**Theorem 16.2 (a closed sufficient interval in the original $q$).** For every $\epsilon\in[0,1/40000]$, every complex $X$ and every complex probe $v$, one has
+
+$$
+\begin{aligned}
+S_{1/2,\,1/3+\epsilon}(X)&\ge c(\epsilon)\|X_0\|_F^2 I_3,\\
+v^\ast S_{1/2,\,1/3+\epsilon}(X)v
+ &\ge c(\epsilon)\|X_0\|_F^2\|v\|^2,\\
+c(\epsilon)&=\frac1{10944}-\frac72\epsilon-9\epsilon^2>0.
+\end{aligned}
+\tag{16.6}
+$$
+
+Therefore the original map is Schwarz on the entire closed interval
+
+$$
+\lambda=\tfrac12,\qquad 0\le q\le\frac{40003}{120000}.
+\tag{16.7}
+$$
+
+For $q>0$ in (16.7) and a nonzero probe, the scalar defect is zero exactly for scalar inputs. Equality in the lower bound (16.6) has the same criterion. At $q=0$ the scalar defect is zero exactly when $y_{ij}v_j=0$ for every $i\ne j$, where $Y=X-\operatorname{diag}(X)$. The zero probe always gives equality.
+
+**Proof.** Work first with the original traceless complex $X_0=D+Y$ and a unit complex probe $v$. Set $N=\|X_0\|_F^2=\|D\|_F^2+\|Y\|_F^2$. The original defect identity, with $3q=1+3\epsilon$ and $1-3q=-3\epsilon$, gives exactly
+
+$$
+\begin{aligned}
+S_{1/2,\,1/3+\epsilon}(X_0)-S_{1/2,1/3}(X_0)
+={}&\epsilon\left(NI_3-3D^\ast D
+ +\tfrac32(D^\ast Y+Y^\ast D)-3\operatorname{diag}(Y^\ast Y)\right)\\
+&-9\epsilon^2D^\ast D.
+\end{aligned}
+\tag{16.8}
+$$
+
+In particular $q$ has not been rescaled. The estimates
+
+$$
+\begin{gathered}
+\|Dv\|^2\le\|D\|_F^2,\qquad
+v^\ast\operatorname{diag}(Y^\ast Y)v\le\|Y\|_F^2,\\
+3\operatorname{Re}\langle Dv,Yv\rangle
+ \ge-3\|D\|_F\|Y\|_F\ge-\tfrac32N
+\end{gathered}
+$$
+
+give a lower bound $-(7/2)\epsilon N-9\epsilon^2N$ for (16.8) on $v$. Here the positive $\epsilon NI_3$ term is included: $N-3N-(3/2)N=-(7/2)N$. Apply Theorem 16.1 and undo the scalar shift and probe normalization to obtain (16.6). Since $c$ is decreasing on this nonnegative interval,
+
+$$
+c(\epsilon)\ge c(1/40000)
+ =\frac{1058461}{273600000000}>0.
+$$
+
+Theorem 16.1 is strict on every nonscalar input and nonzero probe, so the lower bound (16.6) is also strict in that case, including both endpoints of the $\epsilon$ interval.
+
+For $0\le q\le1/3$, retain $\lambda=1/2$ and write $\theta=3q$. Affine dependence of the original map gives
+
+$$
+\Phi_{1/2,q}=(1-\theta)\Phi_{1/2,0}+\theta\Phi_{1/2,1/3}.
+$$
+
+Proposition 4.2 supplies the first endpoint, and Theorem 16.1 supplies the second. The convexity identity of Remark 4.4 proves the Schwarz inequality throughout this closed segment. For $q>0$, its term $\theta S_{1/2,1/3}(X)$ makes the defect strictly positive on every nonzero probe when $X$ is nonscalar. Together with (16.6) and $1/3+1/40000=40003/120000$, this proves (16.7) with the stated equality boundary. At $q=0$, Proposition 4.2 gives
+
+$$
+v^\ast S_{1/2,0}(X)v
+ =\tfrac14\|Yv\|^2+\tfrac12\sum_{i\ne j}|y_{ij}v_j|^2,
+$$
+
+whose equality criterion is exactly the one asserted. No step excludes zero coordinates, singular defects or closed parameter endpoints. ∎
+
+## 17. A specified supplier hull and its strict extension
+
+**Definition 17.1 (the declared full-complex suppliers).** All coordinates in this section are the original $(\lambda,q)$ coordinates; put $p=1-2q$. Define
+
+$$
+\begin{aligned}
+\mathcal T&=\{(\lambda,q):0\le q\le1/2,\ -p/2\le\lambda\le p\},\\
+\mathcal Q&=\{(\lambda,q):0\le q\le1/2,\ 4\lambda^2\le p\},\\
+\mathcal D&=\{(t,(1-t)/3):-1/3\le t\le1\},\qquad G=(1/6,4/9),\\
+\mathcal P_k&=\left\{(\lambda,q):0\le q\le1/2,\
+ \max\left\{-\frac p{k-1},-\frac{3-k+3(k-1)p}{4k}\right\}\le\lambda\le p\right\}
+ \quad(k=2,3),\\
+\mathcal B&=\{(\lambda,q):|\lambda|\le1/3,\ 0\le q\le(1-\lambda^2)/2\},\\
+\mathcal N&=K_3\cap\{\lambda\le0\}.
+\end{aligned}
+$$
+
+Also let $\mathcal R$ consist of the real parameter pairs for which the original $\Phi_{\lambda,q}$ equals
+
+$$
+R_{a,\Psi}(X)=\frac{\operatorname{tr}(X)I_3-a\Psi(X)}{3-a}
+$$
+
+for some $0\le a\le3/4$ and a positive, unital, trace-preserving complex-linear $\Psi:M_3(\mathbb C)\to M_3(\mathbb C)$ satisfying $\|\Psi(X)\|_F\le\|X\|_F$ for every complex $X$. Define precisely
+
+$$
+\mathcal C_{\rm declared}
+ =\operatorname{conv}\left(\mathcal T\cup\mathcal Q\cup\mathcal D\cup\{G\}
+ \cup\mathcal P_2\cup\mathcal P_3\cup\mathcal B\cup\mathcal N\cup\mathcal R\right).
+\tag{17.1}
+$$
+
+The suppliers here are consumed in their whole stated ranges: $\mathcal T$ is Remark 4.4 and Bera, Bhattacharya and Chruściński, arXiv:2604.18600v1, Proposition 2.1(2); $\mathcal Q$ is Theorem 9.1; $\mathcal D$, $G$ and $\mathcal R$ are the constructions of §11 at the valid $k=1$ reduction range of Mukhamedov and Chruściński, arXiv:2603.11204v1, Theorem 3.2, with the hypotheses and direct justification in Proposition 11.2. The sets $\mathcal P_k$ are the quadrilaterals in Definition 11.1 and the cited [k-positive-region result](../../../Blueprint/D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity.md), combined with Choi's unital $2$-positive Schwarz implication. The sets $\mathcal B$ and $\mathcal N$ are Theorems 13.2 and 15.1. Thus each listed point supplies the Schwarz inequality for every original complex input and probe. The exact $q=0$ interval is contained in $\mathcal T$, the curves used in §§10–11 are contained in $\mathcal Q$, the supplier hull $\mathcal H_3$ of §11 converts into a subset of (17.1), and the negative cap arc is contained in $\mathcal N$. Theorem 8.1 supplies restricted probes and is not included as a full-complex supplier.
+
+**Proposition 17.2 (the separating affine inequality).** Every point of $\mathcal C_{\rm declared}$ satisfies
+
+$$
+2\lambda+3q\le2.
+\tag{17.2}
+$$
+
+Its equality set is exactly the segment with original-coordinate endpoints $A=(1,0)$ and $B=(1/3,4/9)$. For every $0<\epsilon\le1/40000$, Theorem 16.2 supplies a Schwarz point $(1/2,1/3+\epsilon)$ strictly outside this declared hull. This comparison quantifies over exactly (17.1).
+
+**Proof.** For $\mathcal T$ and either $\mathcal P_k$, $\lambda\le p$ gives $2\lambda+3q\le2p+3(1-p)/2=(3+p)/2\le2$, with equality only at $A$. On $\mathcal Q$,
+
+$$
+2\lambda+3q\le\tfrac32+2\lambda-6\lambda^2
+ =\tfrac53-6(\lambda-1/6)^2<2.
+$$
+
+On $\mathcal D$, the affine expression is $1+t\le2$, with equality only at $A$, while at $G$ it is $5/3$. On $\mathcal B$,
+
+$$
+2\lambda+3q\le\tfrac32+2\lambda-\tfrac32\lambda^2
+ =2-\tfrac12(1-\lambda)(1-3\lambda)\le2,
+$$
+
+with equality only at $B$, because $-1/3\le\lambda\le1/3$. On $\mathcal N$, $\lambda\le0$ and $q\le1/2$ give $2\lambda+3q\le3/2<2$.
+
+For completeness the entire declared reduction class $\mathcal R$, rather than only $G$, also satisfies a strict bound. If $a=0$, its only original-family parameter is $(0,1/3)$. If $a>0$ and $\Phi_{\lambda,q}=R_{a,\Psi}$, solving for $\Psi$ shows that its off-diagonal multiplier is $\lambda_\Psi=-(3-a)\lambda/a$. Its diagonal action fixes $I_3$, so on the all-ones positive matrix $J$ it has
+
+$$
+\Psi(J)=I_3+\lambda_\Psi(J-I_3).
+$$
+
+Positivity on the all-ones vector gives $1+2\lambda_\Psi\ge0$, hence $\lambda\le a/(2(3-a))$. Also, for $i\ne j$, the $j$th diagonal entry of the positive matrix $\Psi(E_{ii})$ is $(1-(3-a)q)/a\ge0$. Consequently
+
+$$
+2\lambda+3q\le\frac{a+3}{3-a}\le\frac53<2
+\qquad(0<a\le3/4).
+$$
+
+Thus every generator satisfies (17.2), and only $A,B$ can give equality. Affinity preserves the inequality under every finite convex combination; equality requires every generator of positive weight to be $A$ or $B$. Conversely both endpoints belong to the declared class, proving the equality-set assertion. Finally
+
+$$
+2(1/2)+3(1/3+\epsilon)=2+3\epsilon>2,
+$$
+
+whereas Theorem 16.2 proves full-complex Schwarz sufficiency at these same original parameters. ∎
+
+**Corollary 17.3 (a triangle in the original coordinates).** Let
+
+$$
+C=(1/2,40003/120000),\qquad
+\mathcal V=\operatorname{conv}\{A,B,C\}.
+$$
+
+For every $a,b,c\ge0$ with $a+b+c=1$, the original map at $(\lambda,q)=aA+bB+cC$ is Schwarz for every complex input and every complex probe. Such a point lies outside $\mathcal C_{\rm declared}$ exactly when $c>0$; in particular every positive barycentric weight at the third vertex strictly escapes that hull. All three vertices and all closed edges are included.
+
+**Proof.** The suppliers for $A,B$ are those in Theorem 16.1, and Theorem 16.2 supplies $C$. Apply the convexity identity of Remark 4.4 successively to these original maps. This gives the asserted inequality for every complex input and probe, including zero probes, without a new assumption on support. Affinity gives
+
+$$
+2\lambda+3q=2+\frac{3c}{40000}.
+$$
+
+If $c>0$, Proposition 17.2 separates the point. If $c=0$, it is on $[A,B]\subset\mathcal C_{\rm declared}$. This is the direct convex consequence of the three endpoint suppliers. ∎
+
+## 18. The joint condition still required on the positive top arc
+
+**Proposition 18.1 (the unchanged original-domain implication).** Retain the complete necessary region
+
+$$
+K_3=\left\{(\lambda,q):0\le q\le\tfrac12,\quad
+\lambda^2\le1-2q,\quad
+5\lambda^2\le(5-9q)(1-q),\quad
+2\lambda^2-\lambda\le1-q\right\}.
+$$
+
+For a parameter in $K_3$, full-complex Schwarz sufficiency is equivalent to the following joint requirement at every $t\in\Delta_3^\circ$: all $P_i(t)\ge0$, all $b_i(t)\in\operatorname{Ran}P_i(t)$, and their original finite Moore–Penrose coefficients satisfy
+
+$$
+\kappa_i(t)+\kappa_j(t)\ge0\quad(i<j),\qquad
+\kappa_1(t)\kappa_2(t)+\kappa_1(t)\kappa_3(t)
+ +\kappa_2(t)\kappa_3(t)\ge0.
+\tag{18.1}
+$$
+
+The entire probe-simplex boundary, including its singular faces and parameter equalities, remains supplied by Theorem 8.1. Individual inequalities $\kappa_i\ge0$ are not necessary for this joint condition. Whether every point of the whole positive top arc
+
+$$
+1/3<\lambda<1,\qquad
+q=\frac{7-\sqrt{4+45\lambda^2}}9
+\tag{18.2}
+$$
+
+satisfies the full-support condition remains the open implication of Question 12.2 on that arc. The sufficient interval and triangle above do not assert that implication.
+
+**Proof.** Corollary 8.2 and Theorem 3.2 already give the exact reduction, with the stated range conditions at singular blocks. On $z_1+z_2+z_3=0$, the minimized diagonal form is represented by
+
+$$
+H(t)=\begin{pmatrix}\kappa_1+\kappa_3&\kappa_3\\
+\kappa_3&\kappa_2+\kappa_3\end{pmatrix}.
+$$
+
+Its determinant is the last expression in (18.1). Nonnegativity of all pair sums and of this determinant implies $H\ge0$ by the Hermitian $2\times2$ criterion. Conversely a nonnegative form on the trace-zero hyperplane, tested on each $e_i-e_j$, gives all pair sums, and $H\ge0$ gives its determinant. Thus (18.1) is equivalent to the full joint trace-zero condition, with zero determinants and zero coefficients allowed.
+
+For an explicit distinction from individual nonnegativity, Theorem 14.1 supplies $\lambda=-2/5$, $q=7/25$ for every complex input and probe. At the full-support triple $t=(1/6,5/12,5/12)$, (14.3), with $r=2/5$, gives
+
+$$
+\kappa_1=\frac7{25}\cdot\frac15
+ \left(\frac{48}{5}\cdot\frac16-\frac{11}{5}\right)
+ =-\frac{21}{625}<0.
+$$
+
+The row blocks there are positive definite by (14.2), so these are the original coefficients. This Schwarz parameter satisfies the joint condition while violating the individual inequality. Hence imposing individual nonnegativity would change the target.
+
+Finally (18.2) is the positive top boundary of the original $K_3$. To see that the other necessary conditions are retained, put $\ell=\lambda\in(1/3,1)$. The third inequality is equality on (18.2); its residual as a function of $q\in[0,1/2]$ is strictly decreasing. At $q=(1-\ell^2)/2$ that residual is $(1-\ell^2)(1-9\ell^2)/4<0$, and at $q=(1-\ell)(1+2\ell)$ it is
+
+$$
+4\ell(\ell-1)(3\ell-1)(3\ell+1)<0.
+$$
+
+If the latter trial value exceeds $1/2$, the fourth inequality already follows from $q\le1/2$; otherwise strict decrease shows that (18.2) is below that trial value. The first trial value is in $[0,1/2]$ and gives the second inequality in the same way. Formula (18.2) itself gives $0<q<4/9$. Thus it retains all four original necessary conditions. None of these necessary inequalities proves (18.1) on every full-support triple. ∎
+
+**Convention 18.2 (mathematical premises and their scope).** The original-family correspondence remains $\alpha=3q$, $\beta=1-3q-\lambda$ in Bera, Bhattacharya and Chruściński, arXiv:2604.18600v1, Eq. (6); their Proposition 2.1(2), Eq. (9), supplies exactly the completely positive region used in Definition 17.1, and their §4 asks the Schwarz question. The qubit premise consumed inside Theorem 9.1 is precisely Chruściński and Bhattacharya, arXiv:2404.10895v1, Proposition 3, Eq. (27), at $a=b=p$, zero conjugate multiplier and real direct multiplier. The reduction premise in Definition 17.1 has $0\le a\le3/4$, positivity, unitality, trace preservation and Hilbert–Schmidt contraction, as justified in §11; no larger printed interval is a premise. Choi, *A Schwarz inequality for positive linear maps on $C^\ast$-algebras*, Illinois J. Math. 18, 565–574, supplies the unital $2$-positive implication. Convexity is consumed through the identity already given in Remark 4.4. These facts and the original-model reductions supply intermediate steps; the quantitative lower bound (16.1) and its perturbation inference (16.6) are the additional mathematical content.
+
+The exclusions in Convention 12.1 are retained: the full printed sufficient criteria of arXiv:2603.11204v1, arXiv:2512.18900v3 and arXiv:2601.02282v1 are not premises. The restricted-probe theorem 8.1 is not a full-complex supplier. No theorem from the original full texts of Tomiyama, *On the geometry of positive maps in matrix algebras. II*, DOI 10.1016/0024-3795(85)90074-6, or Sun and Li, *k Positivity and Schwarz inequality for two linear maps*, DOI 10.1007/s11117-022-00863-8, is a premise; overlap with those original full texts remains undetermined. The supplier comparison is exactly (17.1), without a quantifier over all literature. The classification question retains the joint condition (18.1) and the whole arc (18.2).
+
+## 追加锚（本行以下为增补区）
