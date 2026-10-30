@@ -37,7 +37,7 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                         "The proposition states two separate equivalences in each chain: "
                         + "global sign iff complete monotonicity, and complete monotonicity iff "
                         + "the sharp parameter bound. It is a target definition, not an asserted theorem. "
-                        + "The general-a coefficient identity, exact Laplace representation, "
+                        + "The exact Laplace representation, "
                         + "infinity asymptotic and both classification "
                         + "chains remain open."))),
                 DescribeRole.Definition),
@@ -50,17 +50,17 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                 + "After multiplying the finite remainder by x^(2n), every lower truncation "
                 + "term vanishes at zero and only the original nth Gamma coefficient remains."),
             Proof("positive-origin-obstruction", "positive_cm_necessary",
-                "Necessary coefficient sign for the positive branch",
+                "Sharp necessary threshold for the positive branch",
                 "For every n >= 2 and real a, if the original F n a is completely monotone, "
-                + "then u n a (a-2) <= 0. "
+                + "then a <= theta (n-2). "
                 + "The proof consumes the zeroth derivative sign and the concrete origin limit. "
                 + "The hypothesis that F is globally nonnegative alone suffices, "
-                + "as established by positive_sign_necessary. Translating this coefficient sign "
-                + "to a <= theta (n-2) still requires the general-a coefficient identity."),
+                + "as established by positive_sign_necessary. The exact general-a Gamma coefficient "
+                + "identity and positivity of B_(n-2) translate u_n <= 0 into the threshold bound."),
             Proof("negative-origin-obstruction", "negative_cm_necessary",
                 "Origin obstruction for the negative branch",
                 "For every n >= 2 and real a, if -F n a is completely monotone, or merely globally nonnegative, "
-                + "then u n a (a-2) >= 0. This is the obstruction at the origin; "
+                + "then a >= theta (n-2). This is the obstruction at the origin; "
                 + "it does not establish the required infinity obstruction u (n+1) a (a-2) >= 0 "
                 + "or the sharp negative-branch threshold theta (n-1)."),
             Proof("remainder-upper-multiplier", "exp_remainder_ratio_strict_anti",
@@ -99,6 +99,15 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                 + "and a. The strict inner bounds include both parameter endpoints. "
                 + "This proves the kernel sign ranges; equality of its Laplace integral with the original "
                 + "F, all derivative signs and the complete classification remain open."),
+            Proof("original-coefficient-identity", "coefficient_identity",
+                "Exact general-parameter Gamma coefficient correspondence",
+                "For every r >= 0 and real a, the original u_(r+2)(a,a-2) equals "
+                + "(2r+3)! / (4^(r+1) r!) times (I_r+(2a-1)B_r). "
+                + "The proof directly consumes Result.coeff_sum, Result.intPow_rec and "
+                + "Result.coeff_factorial at their original owner. "
+                + "Linearity of the polynomial moment gives B_r=I_(r+1)-I_r. "
+                + "The coefficient is a strictly positive factor times a-theta_r. "
+                + "Both coefficient-sign equivalences include the zero endpoint."),
             Proof("gaussian-kernel-identity", "gaussian_kernel_identity",
                 "General-parameter Gaussian convolution kernel identity",
                 "For every real a and t, the source kernel G_a(t) equals "

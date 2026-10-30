@@ -118,5 +118,221 @@ def registration :
   familyRecord := none
   options := #[] }
 
+namespace PolynomialRecurrence
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ _ m => intPow m) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ m : ℕ, (2 * (m : ℝ) + 3) * R.readout () () (m + 1) -
+    2 * (m + 1) * R.readout () () m = 2 ^ (m + 1)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have H := h 0
+  norm_num [rejected, realize] at H
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  change intPow 0 ≠ intPow 1
+  have h0 : intPow 0 = 1 := by norm_num [intPow]
+  have h1 := intPow_rec 0
+  norm_num at h1
+  intro he
+  rw [← he, h0] at h1
+  norm_num at h1
+
+def family : Registration arena (type_of% @intPow_rec) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@intPow_rec, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@intPow_rec) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.XuYangMillsRemainder.Result.PolynomialRecurrence.unit
+  realizationName := `Reg.D5.S3.Analytic.XuYangMillsRemainder.Result.PolynomialRecurrence.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ m => intPow m) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.XuYangMillsRemainder.Result
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "fn", "arg", "fn", "arg", "arg"]
+        stateBinder := 0
+        functionOperand := false
+        stateOperand := some #["arg"]
+        booleanPredicate := false },
+      { path := #["body", "fn", "arg", "arg", "arg"]
+        stateBinder := 0
+        functionOperand := false
+        stateOperand := some #["arg"]
+        booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end PolynomialRecurrence
+
+namespace CoefficientSum
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ _ m => intPow m) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ m : ℕ, (∑ j ∈ Finset.range (m + 1), coeff j / j.factorial) =
+    coeff (m + 1) / ((2 : ℝ) ^ m * m.factorial) * R.readout () () m
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have H := h 0
+  have hc : coeff 0 = 1 := by
+    simp only [coeff, Nat.cast_zero, zero_add, pow_zero, one_mul]
+    exact div_self (ne_of_gt (Gamma_pos_of_pos (by norm_num)))
+  norm_num [rejected, realize, hc] at H
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  change intPow 0 ≠ intPow 1
+  have h0 : intPow 0 = 1 := by norm_num [intPow]
+  have h1 := intPow_rec 0
+  norm_num at h1
+  intro he
+  rw [← he, h0] at h1
+  norm_num at h1
+
+def family : Registration arena (type_of% @coeff_sum) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@coeff_sum, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@coeff_sum) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.XuYangMillsRemainder.Result.CoefficientSum.unit
+  realizationName := `Reg.D5.S3.Analytic.XuYangMillsRemainder.Result.CoefficientSum.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ m => intPow m) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.XuYangMillsRemainder.Result
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "arg", "arg"]
+        stateBinder := 0
+        functionOperand := false
+        stateOperand := none
+        booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end CoefficientSum
+
+namespace CoefficientFactorial
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ _ m => coeff (m + 1)) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ m : ℕ, R.readout () () m * ((2 : ℝ) ^ m * m.factorial) =
+    (2 * m + 1).factorial
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have H := h 0
+  norm_num [rejected, realize] at H
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  change coeff (0 + 1) ≠ coeff (1 + 1)
+  have h0 := coeff_factorial 0
+  have h1 := coeff_factorial 1
+  norm_num at h0 h1 ⊢
+  linarith
+
+def family : Registration arena (type_of% @coeff_factorial) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@coeff_factorial, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@coeff_factorial) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.XuYangMillsRemainder.Result.CoefficientFactorial.unit
+  realizationName := `Reg.D5.S3.Analytic.XuYangMillsRemainder.Result.CoefficientFactorial.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ m => coeff (m + 1)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.XuYangMillsRemainder.Result
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "fn", "arg", "fn", "arg"]
+        stateBinder := 0
+        functionOperand := false
+        stateOperand := none
+        booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end CoefficientFactorial
+
 end
 end Reg.D5.S3.Analytic.XuYangMillsRemainder.Result

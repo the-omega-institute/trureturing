@@ -91,10 +91,19 @@ private theorem mills_smooth : ContDiff ℝ ∞ millsRatio := by
 
 /-! The exact finite truncation has a removable singularity after rescaling. -/
 
+private theorem coefficient_one_zero (a : ℝ) : u 1 a (a - 2) = 0 := by
+  have hg : Gamma ((1 : ℝ) + 1 / 2) = (1 / 2) * Gamma (1 / 2) := by
+    rw [show (1 : ℝ) + 1 / 2 = 1 / 2 + 1 by ring,
+      Gamma_add_one (by norm_num)]
+  have hz : Gamma (1 / 2) ≠ 0 := ne_of_gt (Gamma_pos_of_pos (by norm_num))
+  norm_num [u, Finset.sum_range_succ, hg]
+  field_simp
+  <;> ring
+
 private theorem rescaled_f (n : ℕ) (a : ℝ) {x : ℝ} (hx : x ≠ 0) :
     x ^ (2 * n) * F n a x = (-1 : ℝ) ^ n *
       (x ^ (2 * n) * (Y a (a - 2) x - (a - 1)) -
-        ∑ k ∈ Finset.Icc 1 n, (-1 : ℝ) ^ k * u k a (a - 2) * x ^ (2 * (n - k))) := by
+        ∑ k ∈ Finset.Icc 2 n, (-1 : ℝ) ^ k * u k a (a - 2) * x ^ (2 * (n - k))) := by
   have hterm (k : ℕ) (hk : k ∈ Finset.Icc 1 n) :
       x ^ (2 * n) * ((-1 : ℝ) ^ k * u k a (a - 2) / x ^ (2 * k)) =
         (-1 : ℝ) ^ k * u k a (a - 2) * x ^ (2 * (n - k)) := by
@@ -108,26 +117,41 @@ private theorem rescaled_f (n : ℕ) (a : ℝ) {x : ℝ} (hx : x ≠ 0) :
       ∑ k ∈ Finset.Icc 1 n, (-1 : ℝ) ^ k * u k a (a - 2) * x ^ (2 * (n - k)) := by
     rw [Finset.mul_sum]
     exact Finset.sum_congr rfl hterm
+  have hdrop : (∑ k ∈ Finset.Icc 1 n,
+      (-1 : ℝ) ^ k * u k a (a - 2) * x ^ (2 * (n - k))) =
+      ∑ k ∈ Finset.Icc 2 n,
+        (-1 : ℝ) ^ k * u k a (a - 2) * x ^ (2 * (n - k)) := by
+    symm
+    apply Finset.sum_subset
+    · intro k hk
+      obtain ⟨hk0, hk1⟩ := Finset.mem_Icc.mp hk
+      exact Finset.mem_Icc.mpr ⟨by omega, hk1⟩
+    · intro k hk hk'
+      have hk1 : k = 1 := by
+        simp only [Finset.mem_Icc] at hk hk'
+        omega
+      subst k
+      simp [coefficient_one_zero]
   unfold F D
   calc
     _ = (-1 : ℝ) ^ n * (x ^ (2 * n) * (Y a (a - 2) x - (a - 1)) -
         x ^ (2 * n) *
           (∑ k ∈ Finset.Icc 1 n, (-1 : ℝ) ^ k * u k a (a - 2) / x ^ (2 * k))) := by ring
-    _ = _ := by rw [hsum]
+    _ = _ := by rw [hsum, hdrop]
 
 private theorem zero_endpoint (n : ℕ) (hn : 2 ≤ n) (a : ℝ) :
     Tendsto (fun x : ℝ => x ^ (2 * n) * F n a x) (𝓝[>] (0 : ℝ))
       (𝓝 (-u n a (a - 2))) := by
   let P : ℝ → ℝ := fun x => (-1 : ℝ) ^ n *
       (x ^ (2 * n) * (Y a (a - 2) x - (a - 1)) -
-        ∑ k ∈ Finset.Icc 1 n, (-1 : ℝ) ^ k * u k a (a - 2) * x ^ (2 * (n - k)))
+        ∑ k ∈ Finset.Icc 2 n, (-1 : ℝ) ^ k * u k a (a - 2) * x ^ (2 * (n - k)))
   have hY : Continuous (Y a (a - 2)) := by
     have hm := mills_smooth.continuous
     unfold Y
     fun_prop
   have hP : Continuous P := by dsimp [P]; fun_prop
   have hz : P 0 = -u n a (a - 2) := by
-    have hs : (∑ k ∈ Finset.Icc 1 n,
+    have hs : (∑ k ∈ Finset.Icc 2 n,
         (-1 : ℝ) ^ k * u k a (a - 2) * (0 : ℝ) ^ (2 * (n - k))) =
         (-1 : ℝ) ^ n * u n a (a - 2) := by
       calc
@@ -198,28 +222,6 @@ private theorem nonnegative_sign_forces_nonpositive_limit {f : ℝ → ℝ}
   have hclosed : -u ∈ Ici (0 : ℝ) := isClosed_Ici.mem_of_tendsto hlim hev
   change 0 ≤ -u at hclosed
   linarith
-
-/-! Necessary coefficient signs for the actual Gaussian Mills remainder. -/
-
-private theorem positive_sign_necessary (n : ℕ) (hn : 2 ≤ n) (a : ℝ)
-    (h : globalNonnegative n a) : u n a (a - 2) ≤ 0 :=
-  nonnegative_sign_forces_nonpositive_limit (zero_endpoint n hn a) h
-
-private theorem positive_cm_necessary (n : ℕ) (hn : 2 ≤ n) (a : ℝ)
-    (h : completelyMonotone n a) : u n a (a - 2) ≤ 0 :=
-  positive_sign_necessary n hn a (cm_sign_projections n a h)
-
-private theorem negative_sign_necessary (n : ℕ) (hn : 2 ≤ n) (a : ℝ)
-    (h : globalNonpositive n a) : 0 ≤ u n a (a - 2) := by
-  have hl : Tendsto (fun x : ℝ => x ^ (2 * n) * (-F n a x)) (𝓝[>] (0 : ℝ))
-      (𝓝 (-(-u n a (a - 2)))) := by
-    simpa only [neg_mul_eq_mul_neg, neg_neg] using (zero_endpoint n hn a).neg
-  have hu := nonnegative_sign_forces_nonpositive_limit hl h
-  linarith
-
-private theorem negative_cm_necessary (n : ℕ) (hn : 2 ≤ n) (a : ℝ)
-    (h : CompletelyMonotoneOn (fun x => -F n a x)) : 0 ≤ u n a (a - 2) :=
-  negative_sign_necessary n hn a (neg_cm_sign_projection n a h)
 
 /-! Signed finite exponential remainders: the two required multiplier orders. -/
 
@@ -524,6 +526,103 @@ private theorem kernel_closed_ranges (r : ℕ) (a : ℝ) {t : ℝ} (ht : 0 < t) 
   · intro ha
     exact mul_neg_of_pos_of_neg (by positivity)
       (mul_neg_of_pos_of_neg (by positivity) (sub_neg.mpr (hu.trans_le ha)))
+
+/-! Exact original Gamma coefficients and the sharp origin obstruction. -/
+
+private theorem moment_difference (r : ℕ) : B r = I (r + 1) - I r := by
+  unfold B I
+  rw [← intervalIntegral.integral_sub
+    (by apply Continuous.intervalIntegrable; fun_prop)
+    (by apply Continuous.intervalIntegrable; fun_prop)]
+  apply intervalIntegral.integral_congr
+  intro v _
+  rw [pow_succ]
+  ring
+
+private theorem coefficient_identity (r : ℕ) (a : ℝ) :
+    u (r + 2) a (a - 2) =
+      (2 * r + 3).factorial / ((4 : ℝ) ^ (r + 1) * r.factorial) *
+        (I r + (2 * a - 1) * B r) := by
+  have hs := coeff_sum (r + 1)
+  have hr := intPow_rec r
+  have hf := coeff_factorial (r + 1)
+  have hd : (2 : ℝ) ^ (r + 1) ≠ 0 := by positivity
+  have hfac : ((r + 1).factorial : ℝ) ≠ 0 := by positivity
+  have hfr : (r.factorial : ℝ) ≠ 0 := by positivity
+  have hu : u (r + 2) a (a - 2) = (a - 1) * coeff (r + 2) +
+      ((r : ℝ) + 2 - a) * (r + 1).factorial *
+        (coeff (r + 2) / ((2 : ℝ) ^ (r + 1) * (r + 1).factorial) * I (r + 1)) := by
+    unfold u
+    simp only [show r + 2 - 1 = r + 1 by omega, Nat.cast_add, Nat.cast_ofNat]
+    have hsum : (∑ j ∈ Finset.range (r + 2),
+        (2 : ℝ) ^ j * Gamma (j + 1 / 2) / (Gamma (1 / 2) * j.factorial)) =
+        coeff (r + 2) / ((2 : ℝ) ^ (r + 1) * (r + 1).factorial) * I (r + 1) := by
+      convert hs using 1
+      apply Finset.sum_congr rfl
+      intro j _
+      dsimp [coeff]
+      ring
+    rw [hsum]
+    dsimp [coeff]
+    ring
+  have hc : coeff (r + 2) =
+      (2 * r + 3).factorial / ((2 : ℝ) ^ (r + 1) * (r + 1).factorial) := by
+    apply (eq_div_iff (mul_ne_zero hd hfac)).mpr
+    convert hf using 1 <;> congr 2 <;> omega
+  change (2 * (r : ℝ) + 3) * I (r + 1) - 2 * (r + 1) * I r =
+    (2 : ℝ) ^ (r + 1) at hr
+  rw [hu, hc, moment_difference, Nat.factorial_succ]
+  have hp : (4 : ℝ) ^ (r + 1) = (2 : ℝ) ^ (r + 1) * 2 ^ (r + 1) := by
+    rw [← mul_pow]; norm_num
+  rw [hp]
+  push_cast
+  field_simp
+  linear_combination (2 * r + 3).factorial * (a - 1) * hr
+
+private theorem coefficient_threshold_signs (r : ℕ) (a : ℝ) :
+    (u (r + 2) a (a - 2) ≤ 0 ↔ a ≤ theta r) ∧
+      (0 ≤ u (r + 2) a (a - 2) ↔ theta r ≤ a) := by
+  have hB := (polynomial_moments_pos r).2
+  have hc : 0 < ((2 * r + 3).factorial : ℝ) /
+      ((4 : ℝ) ^ (r + 1) * r.factorial) := by positivity
+  rw [coefficient_identity]
+  have hi : I r + (2 * a - 1) * B r = 2 * B r * (a - theta r) := by
+    dsimp [theta]
+    field_simp
+    <;> ring
+  rw [hi]
+  constructor
+  · rw [mul_nonpos_iff_of_pos_left hc, mul_nonpos_iff_of_pos_left (by positivity)]
+    exact sub_nonpos
+  · rw [mul_nonneg_iff_of_pos_left hc, mul_nonneg_iff_of_pos_left (by positivity)]
+    exact sub_nonneg
+
+private theorem positive_sign_necessary (n : ℕ) (hn : 2 ≤ n) (a : ℝ)
+    (h : globalNonnegative n a) : a ≤ theta (n - 2) := by
+  have he : n - 2 + 2 = n := by omega
+  have hs := (coefficient_threshold_signs (n - 2) a).1
+  rw [he] at hs
+  exact hs.mp (nonnegative_sign_forces_nonpositive_limit (zero_endpoint n hn a) h)
+
+private theorem positive_cm_necessary (n : ℕ) (hn : 2 ≤ n) (a : ℝ)
+    (h : completelyMonotone n a) : a ≤ theta (n - 2) :=
+  positive_sign_necessary n hn a (cm_sign_projections n a h)
+
+private theorem negative_sign_necessary (n : ℕ) (hn : 2 ≤ n) (a : ℝ)
+    (h : globalNonpositive n a) : theta (n - 2) ≤ a := by
+  have hl : Tendsto (fun x : ℝ => x ^ (2 * n) * (-F n a x)) (𝓝[>] (0 : ℝ))
+      (𝓝 (-(-u n a (a - 2)))) := by
+    simpa only [neg_mul_eq_mul_neg, neg_neg] using (zero_endpoint n hn a).neg
+  have hu := nonnegative_sign_forces_nonpositive_limit hl h
+  have he : n - 2 + 2 = n := by omega
+  have hs := (coefficient_threshold_signs (n - 2) a).2
+  rw [he] at hs
+  apply hs.mp
+  linarith
+
+private theorem negative_cm_necessary (n : ℕ) (hn : 2 ≤ n) (a : ℝ)
+    (h : CompletelyMonotoneOn (fun x => -F n a x)) : theta (n - 2) ≤ a :=
+  negative_sign_necessary n hn a (neg_cm_sign_projection n a h)
 
 /-! The general-parameter Gaussian convolution kernel, before finite subtraction. -/
 

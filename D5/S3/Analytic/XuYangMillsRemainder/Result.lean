@@ -272,10 +272,10 @@ private lemma laplaceCM {f : ℝ → ℝ} (hf : Continuous f)
     rw [← mul_assoc, ← mul_assoc, he]
     exact mul_nonneg (mul_nonneg (pow_nonneg ht.le _) (exp_nonneg _)) (hp t ht)
 
-private def coeff (k : ℕ) : ℝ := 2 ^ k * Gamma (k + 1/2) / Gamma (1/2)
-private def intPow (m : ℕ) : ℝ := ∫ v in (0:ℝ)..1, (1+v^2)^m
+def coeff (k : ℕ) : ℝ := 2 ^ k * Gamma (k + 1/2) / Gamma (1/2)
+def intPow (m : ℕ) : ℝ := ∫ v in (0:ℝ)..1, (1+v^2)^m
 private def intWeight (m : ℕ) : ℝ := ∫ v in (0:ℝ)..1, v^2*(1-v^2)*(1+v^2)^m
-private lemma intPow_rec (m : ℕ) :
+lemma intPow_rec (m : ℕ) :
     (2*(m:ℝ)+3)*intPow (m+1) - 2*(m+1)*intPow m = 2^(m+1) := by
   have hd (v : ℝ) : HasDerivAt (fun v : ℝ => v*(1+v^2)^(m+1))
       ((2*(m:ℝ)+3)*(1+v^2)^(m+1)-2*(m+1)*(1+v^2)^m) v := by
@@ -298,7 +298,7 @@ private lemma coeff_rec (m : ℕ) : coeff (m+1) = (2*(m:ℝ)+1)*coeff m := by
   rw [show (↑(m+1):ℝ)+1/2 = ((m:ℝ)+1/2)+1 by push_cast; ring,
     Gamma_add_one (by positivity), pow_succ]
   ring
-private lemma coeff_sum (m : ℕ) :
+lemma coeff_sum (m : ℕ) :
     (∑ j ∈ Finset.range (m+1), coeff j / j.factorial) =
       coeff (m+1) / (2^m * m.factorial) * intPow m := by
   induction m with
@@ -334,7 +334,7 @@ private lemma intWeight_eq (m : ℕ) :
   push_cast at h1
   simp only [pow_succ] at h0 h1 ⊢
   nlinarith [h0, h1]
-private lemma coeff_factorial (m : ℕ) :
+lemma coeff_factorial (m : ℕ) :
     coeff (m+1)*(2^m*m.factorial) = (2*m+1).factorial := by
   have hfac := Nat.factorial_eq_mul_doubleFactorial (2*m)
   rw [Nat.doubleFactorial_two_mul] at hfac
