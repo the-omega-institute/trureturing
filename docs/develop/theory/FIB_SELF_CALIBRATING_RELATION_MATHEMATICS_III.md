@@ -3113,3 +3113,282 @@ Definition 11、Definition 16、Theorem 6.1](https://arxiv.org/html/1907.11034v2
 上述结论不决定更高维来源的完整分类、最优阈值或逐来源尖锐读数费用。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 16. 固定正误差下逐来源全误差预算的达到最大值
+
+### 定义 16.1（同一来源上的最小统一报告预算）
+
+固定 $k\ge2$ 和有限实数 $\varepsilon>0$，沿用定义 9.1、13.1、14.1
+的完整 $\mathcal M_k$、一项或两项严格正外积分解、普通初始实秩、原子 $N,L_0$，
+以及单条不可复制、不可复位轨迹。初读和每个原子后的必读报告均计费，误差满足
+闭约束 $|\eta_i|\le\varepsilon$，允许任意相关与历史依赖；协议是完整
+动作—报告历史的任意确定性函数，不附加正则性。
+
+对 $R\in\mathcal M_k$，令
+
+$$
+ \begin{aligned}
+ c_{k,\varepsilon}(R)=\min\{B\in\mathbb N_{\ge1}:\;&
+   \exists\Pi\quad \Pi\text{ 在完整 }\mathcal M_k
+       \text{ 上为 }\varepsilon\text{-可靠部分秩二认证器},\\
+ &\forall\text{ 在 }R\text{ 上允许的误差历史，}\quad
+       \Pi\text{ 在至多 }B\text{ 次报告内有限输出 }2\}.
+ \end{aligned}
+\tag{16.1}
+$$
+
+空集的最小值约定为 $\infty$。这里 $B$ 对同一个 $R$ 的全部允许误差历史
+统一，协议可按 $R$ 存在选择，但其可靠性始终比较完整 $\mathcal M_k$；
+不要求它在其他来源上停止或输出 $2$。集合 $\mathcal I_k(\varepsilon)$
+仍按 (14.1) 定义，不预先要求统一预算。定理 14.2 给出
+
+$$
+ R\in\mathcal I_k(\varepsilon)
+ \quad\Longrightarrow\quad c_{k,\varepsilon}(R)\le2k-1.
+\tag{16.2}
+$$
+
+### 引理 16.2（实际 $H_k$ 的终端尾部与非负秩一像的闭分离）
+
+设 $k\ge3$，$H_k$ 为引理 12.4 按 (12.5)、(12.7)--(12.9a)
+构造的来源，递归中的参数可作该引理允许的任意选择。记
+$T=T_{k-1}$ 为定义 13.1 的终端非重复数据向量，并定义辅助数据集合
+
+$$
+ \mathcal V_k=\{T(c\ell):c\in\mathbb R_{\ge0}^{k},\quad
+                     \ell\in\mathbb R_{\ge0}^{1\times k}\},
+ \qquad \mathcal Z_k=\overline{\mathcal V_k}.
+\tag{16.3}
+$$
+
+这里允许零因子的辅助像不改变来源域 $\mathcal M_k$。
+实际 $H_k$ 满足
+
+$$
+ \begin{aligned}
+ (a_{k-3},a_{k-2},a_{k-1})(H_k)&=(3,2,1),\\
+ (b^{(k-1)}_{k-3},b^{(k-1)}_{k-2},b^{(k-1)}_{k-1})(H_k)
+     &=(55/24,3/2,1).
+ \end{aligned}
+\tag{16.4}
+$$
+
+对任意 $\lambda>0$，到整个辅助闭包的最大范数距离满足
+
+$$
+ \operatorname{dist}_\infty\bigl(\lambda T(H_k),\mathcal Z_k\bigr)
+       >\frac{\lambda}{128}.
+\tag{16.5}
+$$
+
+**证明。** 基例 $H_3$ 由 (12.5) 直接给出纯 $N$ 读数 $(3,2,1)$
+和第一行 $(55/24,3/2,1)$。对终端切口，$b^{(n-1)}_j(H_n)=(H_n)_{0j}$。
+(12.7) 向左添加新列、向下添加新行，所以
+
+$$
+ b^{(n)}_{j+1}(H_{n+1})=b^{(n-1)}_j(H_n)
+       \quad(0\le j<n),\qquad
+ a_{i+1}(H_{n+1})=a_i(H_n)\quad(0\le i<n),
+\tag{16.6}
+$$
+
+后一式就是 (12.8)。两个序列的末三项均保留，归纳得到 (16.4)。
+这一结论使用实际递归矩阵的继承坐标，不另选来源。
+
+将 $T$ 的任意数据向量写为
+$z=(\alpha_0,\ldots,\alpha_{k-1},\beta_0,\ldots,\beta_{k-2})$，
+其中被省去的 $\beta_{k-1}=\alpha_{k-1}$ 只是同一坐标的别名。定义连续
+二次多项式
+
+$$
+ \Phi_k(z)=
+   (\alpha_{k-3}-\beta_{k-3})\alpha_{k-1}
+       -(\alpha_{k-2}-\beta_{k-2})\beta_{k-2}.
+\tag{16.7}
+$$
+
+对任意非负因子 $c,\ell$，直接展开相应的五个不同数据坐标：
+
+$$
+ \begin{aligned}
+ \alpha_{k-3}&=c_0\ell_{k-3}+c_1\ell_{k-2}+c_2\ell_{k-1},
+ &\beta_{k-3}&=c_0\ell_{k-3},\\
+ \alpha_{k-2}&=c_0\ell_{k-2}+c_1\ell_{k-1},
+ &\beta_{k-2}&=c_0\ell_{k-2},\\
+ \alpha_{k-1}&=c_0\ell_{k-1}.
+ \end{aligned}
+\tag{16.8}
+$$
+
+因此
+
+$$
+ \Phi_k(T(c\ell))=c_0c_2\ell_{k-1}^{\,2}\ge0,
+ \qquad \mathcal Z_k\subseteq\{z:\Phi_k(z)\ge0\}.
+\tag{16.9}
+$$
+
+第一式没有除以任何因子，故零因子同样在内；第二式由多项式连续性成立。
+即使一列因子或一行因子沿序列无界，只要数据收敛，其极限仍满足该不等式。
+
+另一方面，(16.4) 给出
+
+$$
+ \Phi_k(T(H_k))=(3-55/24)\cdot1-(2-3/2)(3/2)=-1/24.
+\tag{16.10}
+$$
+
+令 $r=1/128$，设 $\|z-T(H_k)\|_\infty\le r$，并记相关坐标的扰动为
+
+$$
+ \begin{aligned}
+ u&=\alpha_{k-3}-3,&v&=\alpha_{k-2}-2,&w&=\alpha_{k-1}-1,\\
+ s&=\beta_{k-3}-55/24,&t&=\beta_{k-2}-3/2.
+ \end{aligned}
+$$
+
+五者的绝对值均至多 $r$。式 (16.7) 的精确展开为
+
+$$
+ \Phi_k(z)=-\frac1{24}+u-s+\frac{17}{24}w-\frac32v+t
+                     +(u-s)w-vt+t^2.
+\tag{16.11}
+$$
+
+逐项取上界，得到整个闭球上的严格负界
+
+$$
+ \Phi_k(z)\le-\frac1{24}+\frac{125}{24}r+4r^2
+             =-\frac3{4096}<0.
+\tag{16.12}
+$$
+
+故半径 $1/128$ 的闭数据球与 $\mathcal Z_k$ 不交。若到该闭集的距离
+不大于 $1/128$，取逼近距离下确界的数据序列；该序列在有限维数据空间中
+有界，存在收敛子列。其极限属于闭集 $\mathcal Z_k$，同时属于上述闭球，
+矛盾。因此单位尺度下的距离严格大于 $1/128$。这里使用的数据有界性
+不要求任何因子序列有界。
+
+最后，$T$ 对矩阵线性，$\Phi_k$ 为二次齐次式，而
+$\lambda\mathcal V_k=\mathcal V_k$ 对所有 $\lambda>0$ 成立，故
+$\lambda\mathcal Z_k=\mathcal Z_k$。距离按 $\lambda$ 缩放，证明 (16.5)；
+相应半径 $\lambda/128$ 的闭球上还保有
+$\Phi_k\le-3\lambda^2/4096$。
+
+秩一条目多项式消去的相关背景见
+[*The Algebraic Combinatorial Approach for Low-Rank Matrix Completion*，
+Theorem 34、Remark 35](https://arxiv.org/html/1211.4116v4)（条目观测的电路关系）。
+本条的迹—首行观测恒等式 (16.9) 及其对实际递归 $H_k$ 的闭分离界，
+是由 (12.5)、(12.7)--(12.8) 和上述代数计算得到的本卷推导（repo-derived）。∎
+
+### 定理 16.3（固定正容限下逐来源最优预算的达到最大值）
+
+对每个 $k\ge2$ 和每个给定有限 $\varepsilon>0$，有
+
+$$
+ \max_{R\in\mathcal I_k(\varepsilon)}c_{k,\varepsilon}(R)=2k-1.
+\tag{16.13}
+$$
+
+具体地，对任意有限实数 $\lambda\ge256\varepsilon$，令
+
+$$
+ R_\lambda=
+ \begin{cases}
+    \lambda H_k,&k\ge3,\\
+    \lambda W_2,&k=2,
+ \end{cases}
+ \qquad
+ W_2=\dfrac1{32}\begin{pmatrix}15&17\\17&15\end{pmatrix},
+\tag{16.14}
+$$
+
+其中 $H_k$ 恰为引理 12.4 的来源，$W_2$ 恰为命题 9.8、推论 13.7
+中的二维来源。则 $R_\lambda\in\mathcal I_k(\varepsilon)$，且
+$c_{k,\varepsilon}(R_\lambda)=2k-1$。
+
+**证明。** 全域上界就是 (16.2)，直接复用定理 14.2 的正规形结论。
+下面在 (16.14) 的同一实际来源上分别取得全误差上界与任意协议下界。
+
+先设 $k\ge3$。引理 12.4 已给出 $H_k$ 的两项严格正分解及普通秩二。
+把该分解的两个列因子均乘以 $\lambda>0$，得到同一
+$R_\lambda=\lambda H_k\in\mathcal M_k$，普通秩仍为二。
+执行固定规范词：先 $k-1$ 次 $N$，再一次 $L_0$，最后 $k-2$ 次 $N$。
+取得完整非重复报告 $y$ 后，在且仅在不存在同一个严格正秩一来源
+$S=c\ell$ 满足
+
+$$
+       \|y-T(S)\|_\infty\le\varepsilon
+\tag{16.15}
+$$
+
+时输出 $2$，否则停止而不作断言。此处使用引理 13.2 的共同来源相容性，
+全部未知参数在全部报告上共用；$a_{k-1}=b^{(k-1)}_{k-1}$ 使用同一份旧报告。
+在任何实际严格正秩一来源上，该来源自身满足 (16.15)，所以规则在完整
+$\mathcal M_k$ 上 $\varepsilon$-可靠。
+
+对 $R_\lambda$ 的任一允许误差历史，有
+$\|y-\lambda T(H_k)\|_\infty\le\varepsilon$。若 (16.15) 仍有解，
+这个固定严格正秩一来源的 $T(S)\in\mathcal V_k\subseteq\mathcal Z_k$，且
+
+$$
+ \|T(S)-\lambda T(H_k)\|_\infty
+    \le2\varepsilon\le\frac{\lambda}{128},
+\tag{16.16}
+$$
+
+与引理 16.2 的闭分离矛盾。因此全部允许误差历史都输出 $2$，
+包括 $\lambda=256\varepsilon$ 以及每个 $|\eta_i|=\varepsilon$ 的闭端点。
+这只使用逐报告的绝对误差界，允许误差任意相关和依赖历史。
+费用复用定义 12.1 的终端共享报告计数：
+
+$$
+       1+(k-1)+1+(k-2)=2k-1.
+\tag{16.17}
+$$
+
+最后一个新增报告是 $b^{(k-1)}_{k-2}$；
+$b^{(k-1)}_{k-1}=a_{k-1}$ 已在首次 $L_0$ 前取得，不再执行一次原子或产生
+第二份误差。于是 $R_\lambda\in\mathcal I_k(\varepsilon)$ 且
+$c_{k,\varepsilon}(R_\lambda)\le2k-1$。
+
+为证同一来源上的下界，先注意精确费用的正缩放不变性
+
+$$
+             c_k(\lambda R)=c_k(R)\qquad(\lambda>0).
+\tag{16.18}
+$$
+
+事实上，给定在 $\lambda R$ 上成功的全域可靠精确协议，在 $R$ 上运行时，
+把每个已取得报告乘以 $\lambda$ 后交给该协议的完整历史决策函数，动作与
+报告数保持不变。对任意环境来源 $S\in\mathcal M_k$，这恰好模拟原协议在
+$\lambda S\in\mathcal M_k$ 上的精确运行；普通秩不变，故仍全域可靠。
+反向使用 $1/\lambda$，即得 (16.18)。此模拟只是确定性决策函数对已取得
+数字的运算，不增加读数端口或改变原子的作用。
+
+现在取任何在 $R_\lambda$ 上全误差成功且有统一预算 $B$ 的
+$\varepsilon$-可靠协议。零误差历史是允许历史，它在此历史上至多 $B$ 读
+输出 $2$；将所有环境来源也限制为零误差，该规则便是全域可靠精确协议。
+直接应用定理 12.7 已证的任意协议下界及 (16.18)，得到
+
+$$
+       B\ge c_k(\lambda H_k)=c_k(H_k)=2k-1.
+\tag{16.19}
+$$
+
+因此下界和全误差上界均作用于同一个 $\lambda H_k$，没有把精确相容性
+本身用作正误差裕量，也没有对候选协议施加正则性。
+
+当 $k=2$ 时，完全复用命题 9.8 的实际 $W_2$ 及推论 13.7 的同源三读
+结论。它的扫描数据为 $t=15/16$、$s_0=s_1=1$；因
+$\lambda\ge256\varepsilon>64\varepsilon$，推论 13.7 保证
+$\lambda W_2$ 在固定 $L_0,N$ 扫描上全部允许误差三读成功。
+该推论的任意协议下界已经排除两读全误差成功，故
+$c_{2,\varepsilon}(\lambda W_2)=3=2k-1$。
+
+两个维数情形均给出 (16.2) 的实际达到来源，证明最大值 (16.13)。
+引理 16.2 给出实际 $H_k$ 上与维数无关的闭分离界；普遍上界、精确
+重放下界和二维边界分别复用定理 14.2、12.7 与推论 13.7。
+这些结论是本卷既定模型上的推导（repo-derived）。∎
+
+## 追加锚（本行以下为增补区）
