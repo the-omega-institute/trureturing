@@ -8,7 +8,9 @@ The construction uses the original Carrier D, its literal FixedCarrier D, and th
 
 The ambient bilinear form B is an explicit parameter. The assumptions are ambient left and right nondegeneracy, theta isometry, commutation of theta with the existing grade projection, and orthogonality of distinct grades. The fixed-grade witness is plusPart D (gradeProjection h y): projection is recovered by the existing finite grade decomposition, then theta averaging supplies fixed-space membership.
 
-With the existing positive-Gram finite-grade supplier, every fixed grade is finite-dimensional. The proved restriction is nondegenerate in both slots, so BilinForm.toDual gives the actual grade dual equivalence. The dependent direct sum of these algebraic duals and its evaluation through the genuine fixed-energy decomposition are defined explicitly.
+With the existing positive-Gram finite-grade supplier, every fixed grade is finite-dimensional. The proved restriction is nondegenerate in both slots, so BilinForm.toDual gives the actual grade dual equivalence. The dependent direct sum of these algebraic duals and its evaluation through the genuine fixed-energy decomposition are defined explicitly. For arbitrary fixed vectors x and y, including mixed finite energy support, evaluation of fixedRestrictedDualEquiv(x) at y equals B(x,y) on their original Carrier inclusions. The proof uses the existing internal direct sum: same-grade terms use the finite-grade pairing and all cross-grade terms vanish by the explicit orthogonality hypothesis.
+
+Consequently the actual inverse represents every finitely supported grade functional f by the actual fixed vector x = fixedRestrictedDualEquiv.symm(f), with B(x,y) = fixedRestrictedDualEvaluation(f)(y) for every fixed y. This follows by applying the global identity to the inverse and using LinearEquiv.apply_symm_apply; it does not identify the restricted dual with the unrestricted algebraic dual of the full carrier.
 
 This is a conditional algebraic supplier. It does not instantiate the live P1 pairing, prove module equivariance, all-source BPZ, Hilbert or analytic CFT, fusion, full string theory, anomaly cancellation, or AdS-CFT.
 
@@ -264,7 +266,19 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedRestrictedD
 
 The actual algebraic graded restricted-dual equivalence assembled from the finite-grade equivalences and the fixed-energy decomposition.
 
-**Theorem 1.22 (fixedGrade_dual_evaluation).**
+**Theorem 1.22 (fixedRestrictedDualEquiv_ambient_evaluation).**
+
+Lean statement: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedRestrictedDualEquiv_ambient_evaluation`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedRestrictedDualEquiv_ambient_evaluation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every pair of actual FixedCarrier vectors, evaluation of the constructed restricted-dual equivalence equals ambient B on the original Carrier inclusions, under ambient nondegeneracy, theta isometry, grade commutation, distinct-grade orthogonality and positive Gram.
+
+**Theorem 1.23 (fixedGrade_dual_evaluation).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedGrade_dual_evaluation`
 
@@ -299,6 +313,7 @@ The restricted form evaluates the inverse of toDual exactly as the given grade f
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedGrades_iSup`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedGrades_independent`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedRestrictedDualEquiv`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedRestrictedDualEquiv_ambient_evaluation`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedRestrictedDualEvaluation`
 - Dependency: [D5/S3/VertexAlgebra/LatticeEnergyGrading](../LatticeEnergyGrading.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeInvolution](../LatticeInvolution.md)
