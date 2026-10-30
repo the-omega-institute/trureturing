@@ -1,91 +1,132 @@
 # Recursive Relational Observation: Actual Cut Reinstatement Continuation
 
-This continuation fixes the information earned by paid presence replies in the
+This continuation concerns information earned by paid presence replies in the
 actual autonomous birth source of [GPO][GPO] and the actual-cut service of
-[ACR][ACR].  The source remains the single root with persistent physical ports
-$a<b$, the alpha origin, chronological beta births, an unknown all-index law,
-and a mature cut.  A reply is a paid current-source literal reply.  It is not
-a supplied law bit, a clock, a private label, or an equivalence oracle.
+[ACR][ACR]. The source has one root, persistent physical ports $a<b$, the
+alpha origin, chronological beta births and an unknown all-index law. Unless
+an earlier cut is explicitly specified, retain ACR Definition 9.1's mature
+cut, public bound $d$, stationary binding, grants and complete charges. A
+reply is a paid current-source literal reply, with no generator, archive or
+chronological-bit channel. Section 35 states its early-cut domain separately.
 
-The statements below concern exact finite certificates and their information
-fibres.  They do not change the original $\rho_d$, $K_d$, output convention,
-resource bills, or the unrestricted polynomial-TOTAL question.
+The results concern exact certificates and their information fibres. The
+original $\rho_d$, $K_d$, output convention and TOTAL bills are retained.
+The unrestricted deterministic polynomial-TOTAL and exact-original-normalizer
+questions remain unresolved.
 
 ## 33. Authenticated chronology after a root certificate
 
-**Definition 33.1 (chronological indices and the normalized clock).**
+**Definition 33.1 (chronological indices and well-formed witnesses).**
 Let $F_0=0$, $F_1=1$, $F_{i+2}=F_{i+1}+F_i$, and
 
 $$
-B_t=F_{t+1}-1,\qquad v_t=B_{t-1}=F_t-1\quad(t\ge2).
+B_t=F_{t+1}-1\quad(t\ge1),\qquad v_n=B_{n-1}\quad(n\ge2).
 $$
 
-The $j$th birth belongs to the unique update
+For the one-based raw stream $z_j=s_{j-1}$, birth $j\ge1$ belongs to
 
 $$
 \tau(j)=\min\{t\ge2:j\le B_t\},\qquad
 R(j)=j-B_{\tau(j)-1}.
 $$
 
-The normalized birth sample at update index $i\ge0$ is
+A normalized update index is $i=t-1\ge1$ for an update containing births.
+Its last-birth sample is
 
 $$
-b_i=z_{B_{i+1}}.
+b_i=z_{B_{i+1}}=s_{B_{i+1}-1}\quad(i\ge1).
 $$
 
-This convention begins at the slot $B_1$ and is not the assertion
-$A_2=3$ for every source.  When the raw physical stream is one-based, its
-first consumed bit remains $z_1$ at $B_2$; the $b$-index is a normalized address
-and does not shift the raw update time.  Whenever a suffix is evaluated at a
-proposed cut $\tau$, its normalized clock argument is $\tau-1$; this is
-distinct from the raw update index $\tau$.
+There is no $b_0$: $B_1=0$, whereas $z_0$ is undefined. In particular,
+$b_1=z_1=s_0$. These batch-end samples need not satisfy the original
+recurrence in their $i$ index. Their consumer below uses the actual birth
+$j=B_{i+1}$, update $\tau(j)=i+1$ and suffix length $n-i-1$.
 
-For $\nu\ge2$, a root rank certificate supplies $x,y$ with
-$|x|=\nu-1$ and tests
+For a proposed cut $\nu\ge2$, a root rank certificate consists of supplied
+physical words $x,y$ with $|x|=\nu-1$ and
 
 $$
-\begin{array}{c|c}
-\nu=2k+1&\operatorname{Read}(ya)=0\\
-\nu=2k&\operatorname{Read}(yaa)=\operatorname{Read}(yba)=0,
+\begin{array}{c|c|c}
+\nu&|y|&\text{required replies}\\
+2k+1&k&\operatorname{Read}(ya)=0\\
+2k&k-1&\operatorname{Read}(yaa)=\operatorname{Read}(yba)=0,
 \end{array}
 $$
 
-in addition to $\operatorname{Read}(x)=1$.  All words are submitted to the
-same physical root.  A proposed prefix $A=(a_1,\ldots,a_{2d})$ determines
-$p_j(A)$ by the old tree at cut $\tau(j)-1$; the proposed orientation is
-$c_j=a$ when $a_j=1$ and $c_j=b$ when $a_j=0$.  Put
-$t_j=\nu-\tau(j)$ for a mature birth $1\le j\le v_n$; maturity gives
-$t_j\ge1$.
+in addition to $\operatorname{Read}(x)=1$. Malformed lengths are rejected.
+Every Read is at the same stationary physical root; no separate presence
+premise for $y$ is assumed. Write $C_n(\nu;x,y)$ for acceptance on the
+actual support $S_n$.
 
-**Theorem 33.2 (the cut alternatives and exact root conjunction).**
-For every actual cut $n\ge2$ and every $\nu\ge2$:
+After acceptance, a proposed prefix $A=(a_1,\ldots,a_m)$ is checked in
+increasing birth order, with $m\le B_{\nu-1}$. Reconstruct the old tree
+at cut $\tau(j)-1$ from the first $B_{\tau(j)-1}<j$ proposed bits and
+let $p_j(A)$ be its $R(j)$th beta leaf in physical lexicographic order.
+Set $c_j=a$ for $a_j=1$, $c_j=b$ for $a_j=0$, and
+$t_j=\nu-\tau(j)\ge1$. In ACR's full-law application $m=2d$ and
+$\nu\ge n_0$, where $n_0$ is exactly ACR (ACR.23).
 
-1. $\operatorname{Read}(x)=1$ for a word of length $\nu-1$ implies
-   $n\ge\nu$.  Its converse is false for an arbitrary $x$.
-2. $\operatorname{Read}(x)=0$ has the necessary alternatives
-   $n<\nu$, or $n\ge\nu$ and $x$ reaches a terminal node before its end.
-   Thus a general negative reply is not a cut certificate.
-3. The whole conjunction consisting of the positive $x$ test and the odd or
-   even two-child absence tests passes if and only if $\nu=n$.
+**Theorem 33.2 (universal soundness and existential completeness).**
+For every actual source, actual cut $n\ge2$, proposed $\nu\ge2$ and
+supplied well-formed $x,y$:
 
-Proof. A present word of length $\nu-1$ requires a root rank at least $\nu$,
-which proves the first assertion. If $x$ is absent, either the cut is too
-young or a terminal node blocks the extension; both alternatives occur in the
-Fibonacci rank trees. For the conjunction, a positive $x$ forces rank at
-least $\nu$. At $\nu=2k+1$, rank at least $2k+2$ makes every length-$k+1$
-suffix present, contradicting the odd test. At $\nu=2k$, rank at least
-$2k+1$ leaves a length-$k-1$ prefix with a child of rank at least two, so
-one of $yaa,yba$ is present. Hence a passing test has rank at most $\nu$.
-At rank $\nu$, a longest path supplies $x$ and a shortest rank descent
-supplies $y$ and the displayed absences. This includes $\nu=2$, where $y$
-is empty. The root is the actual rank-$n$ cone, so the conjunction is
-equivalent to $\nu=n$. No presentation minimality or invertibility is used.
-$\square$
+1. A present word $x$ of length $\nu-1$ implies $n\ge\nu$.
+   An arbitrary word of that length need not be present when $n\ge\nu$.
+2. For $|x|=\nu-1$, a negative reply has the alternatives $n<\nu$, or
+   $n\ge\nu$ and $x$ attempts to continue beyond a terminal node.
+3. $C_n(\nu;x,y)$ implies $\nu=n$, and
 
-**Theorem 33.3 (maximal-witness conjunction and earned indexed samples).**
-Assume the root conjunction has passed and the proposed bits before $j$ have
-already passed their own positive witness tests. Then $p_j(A)$ is the actual
-birth parent and
+$$
+\bigl(\exists x,y\;C_n(\nu;x,y)\bigr)\quad\Longleftrightarrow\quad\nu=n.
+$$
+
+The reverse direction quantifies existentially over witnesses. It does not
+say that every well-formed supplied pair passes at the correct cut.
+
+Proof. Use the rank-cone facts of ACR Theorem 22.2. A rank-$q\ge1$
+cone has maximum present suffix depth $q-1$, while rank zero is terminal.
+Every word of length $\ell$ is present for $q\ge2\ell$. The root at
+cut $n$ has rank $n$. These facts prove the first two assertions.
+
+A passing positive test forces $n\ge\nu$. If $\nu=2k+1$ and
+$n\ge\nu+1$, every length-$(k+1)$ word is present. The required
+length $|y|=k$ makes $ya$ such a word, contradicting its absence. If
+$\nu=2k$ and $n\ge\nu+1$, every supplied length-$(k-1)$ word $y$
+is present with residual rank at least three. One of its children has
+rank at least two, so at least one of $yaa,yba$ is present. Thus acceptance
+forces $n=\nu$, for every supplied well-formed pair.
+
+Conversely, at $n=\nu$ choose a longest path for $x$. Repeatedly choosing
+a rank-two decrement gives a length-$k$ path ending at rank one in the odd
+case, or a length-$(k-1)$ path ending at rank two in the even case. These
+supply the required $y$ and absences. At $\nu=2$ this means $y$ is empty,
+$x$ is either child, and $aa,ba$ are absent. Ranks zero and one cannot pass
+any proposed $\nu\ge2$ certificate. For a failure with correct proposed
+cut, the zero source at $n=3$ has $aa$ absent, so the well-formed supplied
+pair $x=aa,y=a$ fails. $\square$
+
+**Proposition 33.2a (the length constraint is necessary).**
+If the parity-dependent $y$ length is omitted, the root conjunction and its
+indexed consequence are false even in ACR's mature domain. On the zero
+all-index source with public $d=1$, actual $n=6$, proposed $\nu=4$,
+$x=aaa$ (also $bbb$) and $y=aaaaaa$ pass the literal positive and two
+negative tests. Yet $n\ne\nu$. Moreover $j=1$ has actual $z_1=0$ and
+$\tau(1)=2$, but proposed $a_1=1$ gives $t_1=2$ and a present suffix
+$aa$ below the proposed child $a$.
+
+Proof. At cut six both constant-port spines have height at least three:
+in the zero source their heights are three at $a$ and five at $b$.
+Thus both choices of $x$ are present. The negative words have length eight,
+exceeding the maximum depth five. The erroneous birth test is $aaa$, which
+is present. The supplier requires $|y|=1$ at $\nu=4$, so this tuple is
+not a well-formed certificate of Definition 33.1. The actual maturity
+threshold for $d=1$ is $n_0=4$. $\square$
+
+**Theorem 33.3 (maximal witnesses and earned indexed samples).**
+Suppose a well-formed root certificate has passed. For $1\le j\le m$,
+assume all proposed bits before $j$ have already been authenticated, either
+by positive maximal witnesses or by complete negative certificates as below.
+Then $p_j(A)$ is the actual birth parent, $t_j=n-\tau(j)$, and
 
 $$
 \begin{aligned}
@@ -101,79 +142,119 @@ z_j\ne a_j
 \tag{ACRC.1}
 $$
 
-Consequently a paid native support-refutation service may enumerate the
-$2^{t_j}$ suffixes, return a present maximal witness, or return the complete
-zero certificate $\bot$.  Its answer is nonempty exactly for the authentic
-orientation.  A positive returned witness is an authenticated sample at the
-actual index $j$; it is not merely a prediction from $A$.
+A supplied suffix of length $t_j$ with positive reply universally certifies
+that proposed bit under these hypotheses. An accepting supplied suffix
+exists for the correct bit; an arbitrary supplied suffix need not pass.
+Consequently an accepting supplied root-and-birth certificate for $(\nu,A)$
+exists exactly when $\nu=n$ and $A=z_1\cdots z_m$, for $m\le v_n$.
 
-Proof. The authenticated prefix reconstructs the actual old tree at
-$\tau(j)-1$, by the chronological parent rule. At the actual cut, the child
-selected by $z_j$ has rank $t_j+1$ and the opposite child has rank $t_j$.
-The former has a suffix of length $t_j$, while the latter has maximum suffix
-depth $t_j-1$. This proves both implications in (ACRC.1). The service is a
-finite conjunction of actual literal replies, so its zero output is a paid
-refutation of that proposed orientation. $\square$
+Proof. Theorem 33.2 authenticates the cut. The authenticated earlier bits
+reconstruct the actual old tree at $\tau(j)-1$, so GPO Proposition 39.2
+identifies the actual parent independently of later bits. At cut $n$ the
+child selected by $z_j$ has rank $t_j+1$, and the opposite child has rank
+$t_j$. The former has a suffix of length $t_j$; the latter has maximum
+suffix depth $t_j-1$. This proves both equivalences and the supplied-witness
+soundness. Choose a longest suffix in each correct child to obtain
+existential completeness, inductively in $j$. $\square$
 
-For an arbitrary single birth reply, the exact weaker statement is
+For a single reply under the same actual-parent and maturity hypotheses,
 
 $$
 \operatorname{Read}(p_jc_jv)=0
 \Longrightarrow
 \bigl(a_j\ne z_j\bigr)
 \vee
-\bigl(a_j=z_j\ \wedge\ v\text{ is not a present maximal witness}\bigr).
+\bigl(a_j=z_j\ \wedge\ v\text{ is not a present maximal witness}\bigr)
+\quad(|v|=t_j).
 \tag{ACRC.2}
 $$
 
-The second disjunct is real: a correct child can have absent suffixes of the
-tested length.  Therefore a negative reply to one unqualified literal neither
-names an erroneous bit nor refutes the candidate source.  The complete
-maximal-witness conjunction is the extra information that removes this
-alternative.
+The second alternative occurs: on the zero source at cut four, $j=1$,
+the correct child is $b$ and $t_1=2$, but $baa$ is absent whereas $bba$
+is present. An unqualified negative literal therefore does not by itself
+identify an erroneous bit or refute a candidate source.
 
-After the root certificate, the first $m\le v_n$ earned bits therefore use at most
+**Proposition 33.4 (paid complete native construction and its bills).**
+After checking a supplied accepting root certificate, choose a trial bit at
+each next index and enumerate all $2^{t_j}$ suffixes under its proposed
+child. Stop with a positive witness if one appears; otherwise retain the
+complete zero certificate $\bot$ and authenticate the complementary bit.
+Reconstruct later parents using the bits thereby authenticated. For the
+first $m\le v_n$ bits this uses at most
 
 $$
 3+\sum_{j=1}^{m}2^{t_j}
 $$
 
-paid Reads and at most
+Reads, counting the supplied root certificate's verification. If
+$L_{\rm root}$ is its actual literal traffic, the total literal traffic is
+at most
 
 $$
-O\!\left((n+1)+\sum_{j=1}^{m}t_j2^{t_j}\right)
+L_{\rm root}+\sum_{j=1}^{m}(|p_j|+1+t_j)2^{t_j}
+\le 3(n+1)+(n-1)\sum_{j=1}^{m}2^{t_j}.
 $$
 
-literal traffic, including the root certificate and the complete zero
-certificates.  These are exact finite support-service bounds; they are not a
-polynomial acquisition claim.  The data identify the authenticated prefix
-and its chronological indices.  They do not identify a private recurrence,
-its seed presentation, or any source bit outside the tested prefix.
+A supplied positive witness per authentic bit instead needs at most $m+3$
+verification Reads. Its construction costs are separate. Both bounds
+include the full parent addresses; $t_j$ alone is not the literal length.
+Every enumerated reply, zero certificate, local computation, scratch write,
+retained output and handoff remains paid in the original TOTAL model.
+
+Proof. Apply (ACRC.1) at each step. A positive reply authenticates the trial
+bit; exhausting all suffixes authenticates its complement. There is no
+free disagreement or bit query. The old tree has at most $2j-1$ nodes and
+$|p_j|\le\tau(j)-2$, hence each birth literal has length at most $n-1$.
+Root words have length at most $n$, including the $n=2$ endpoint. These
+give the stated bills. Sequential suffix enumeration and finite old-tree
+reconstruction use finite backing and work; no polynomial TOTAL bound is
+inferred from these exponential enumerations.
+
+For completeness without supplied root witnesses, one may try
+$\nu=2,3,\ldots$, search all $2^{\nu-1}$ possible positive $x$ words,
+then all parity-length $y$ words for the required absences. At a proposal
+with no positive $x$, skip the $y$ search. Soundness excludes an early
+acceptance and completeness guarantees termination at $\nu=n$. Discovery
+uses at most
+
+$$
+\sum_{\nu=2}^{n}\left(2^{\nu-1}+2^{\lfloor\nu/2\rfloor}\right)
+$$
+
+Reads: the odd $y$ search has one test per word, the even search at most
+two. Its traffic is at most $n$ times this bound and is additional to any
+subsequent verification bill. For a known public $d$ one may start at
+$n_0$ instead. At $d=0$ the empty prefix requires no birth tests and the
+zero descriptor is fixed; root recovery still has its own bill.
+
+Finally, for $i\ge1$, $i+2\le n$ and $B_{i+1}\le m$, the same procedure
+at $j=B_{i+1}$ authenticates the declared $b_i$, using suffix length
+$n-i-1$. It does not obtain that sample without the preceding authenticated
+prefix or the native witnesses. $\square$
 
 ## 34. Feedback algebra and the two-to-five all-index bridge
 
 **Lemma 34.1 (all-index feedback composition, including singular laws).**
-Let $p(E)s=0$ for every index $i\ge0$, and let a feedback service produce $y$
-from the same initial origin by
+Let $p(E)s=0$ for every index $i\ge0$, and define $y$ at the same initial
+origin by $q(E)y=s$, where $p,q$ are monic binary polynomials. All
+nonleading taps, including the constant taps, may vanish. Then
 
 $$
-q(E)y=s,
+(pq)(E)y=0\quad(i\ge0),
 $$
 
-where $p,q$ are monic binary polynomials and either polynomial may have zero
-intermediate or final taps.  Then
+so the least all-index order of $y$ is at most $\deg p+\deg q$ and may
+be smaller. These equations describe an autonomous generator construction,
+not an added physical feedback, law-bit or chronological query service.
 
-$$
-(pq)(E)y=0\quad\text{for every }i\ge0,
-$$
-
-and the least order of $y$ is at most $\deg p+\deg q$ and may be smaller
-after cancellation.
-
-Proof. Both equations hold at every nonnegative index, so commuting forward
-shifts gives $p(E)q(E)y=p(E)s=0$ at every such index. The argument never
-divides by a constant tap, extends a recurrence backwards, or discards a
-finite transient. $\square$
+Proof. Commuting forward shifts gives $p(E)q(E)y=p(E)s=0$ at every
+nonnegative index. Given the two finite seeds, monicity computes $s$ and
+then $y$ forward; their joint state defines an autonomous generator fixed
+before the first birth. No inverse transition or removal of a transient is
+used. Degree-zero $p=1$ means $s=0$, and degree-zero $q=1$ means $y=s$.
+The classical annihilator calculation is the ingredient already used in
+GPO Lemma 29.2; the physical indexed application below still requires
+Theorem 33.3's native replies. $\square$
 
 **Theorem 34.2 (an exact order-$2$ source feeding an exact order-$5$ law).**
 Let
@@ -182,36 +263,33 @@ $$
 p(E)=E^2+E+1,\qquad q(E)=E^3+E+1.
 $$
 
-Take the order-$2$ source $s_0=0,s_1=1$ and
-$s_{i+2}=s_i+s_{i+1}$, and initialize $y_0=y_1=y_2=0$.  The paid feedback
-equation is
+Take $s_0=0,s_1=1$, $s_{i+2}=s_i+s_{i+1}$, and initialize
+$y_0=y_1=y_2=0$. Define the feedback output by
 
 $$
 y_{i+3}=y_i+y_{i+1}+s_i\quad(i\ge0).
 \tag{ACRC.3}
 $$
 
-Then $y$ satisfies the all-index order-$5$ recurrence
+Then $s$ has least all-index order two, while $y$ has least all-index order
+five and satisfies
 
 $$
-y_{i+5}=y_{i+4}+y_i,
+y_{i+5}=y_{i+4}+y_i,\qquad
+ y[0{:}21]=000011111010100110001.
 \tag{ACRC.4}
 $$
 
-and its least all-index order is exactly five.  Its initial segment is
-
-$$
-000011111010100110001\cdots.
-$$
-
-Proof. Multiplication over $\mathbb F_2$ gives
+Proof. The $2$ by $2$ Hankel matrix of $s$ beginning at zero is
+$\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$, of rank two.
+Multiplication over $\mathbb F_2$ gives
 
 $$
 (E^2+E+1)(E^3+E+1)=E^5+E^4+1,
 $$
 
-so (ACRC.4) follows from Lemma 34.1.  The first five consecutive Hankel
-rows are
+so Lemma 34.1 gives (ACRC.4). Direct forward substitution gives the stated
+prefix and its first five Hankel rows:
 
 $$
 \begin{pmatrix}
@@ -223,19 +301,23 @@ $$
 \end{pmatrix}.
 $$
 
-This is anti-triangular with diagonal one over $\mathbb F_2$, hence has rank
-five.  No recurrence of order below five can generate the displayed
-all-index stream.  The example consumes the feedback output in (ACRC.1):
-the resulting stream is a legal source law for indexed witness extraction,
-while the extraction still requires paid current-root support replies.
-The proof remains valid for singular endpoint laws; for example
-$p(E)=E^2$ and $q(E)=E^3+1$ give the same product argument for a finite
-impulse source, without an inverse transition. $\square$
+This matrix is anti-triangular with anti-diagonal one and has rank five.
+An order-$r<5$ all-index recurrence would express every column after the
+first $r$ as a combination of its preceding columns, contradicting that
+rank. Thus an order-two driver does not impose order two on its feedback
+output. Installed as $z_j=y_{j-1}$, this is a legal autonomous source with
+public bound $d=5$. Its first ten bits are mature for $n\ge7$ and can be
+consumed by Theorem 33.3 with paid root and birth witnesses. This supplies
+no free installation or acquisition. Singular examples such as $p(E)=E^2$
+with seed $10$, a finite impulse, and $q(E)=E^3+1$ use the same forward
+product argument. $\square$
 
 **Proposition 34.3 (extremal-spine formula and its precise domain).**
-In the fixed global-port substitution supplier of GPO, let $d_L,d_R$ be the
-original left and right extreme heights and let $\eta_L,\eta_R$ indicate
-whether the corresponding terminal is beta.  For $x=\rho^{2k+1}u$,
+In GPO's fixed global-port supplier, take an arbitrary nonempty ordered
+alpha/beta tree $u$, one persistent bijection of physical ports with semantic
+$L,R$ at every branch, $k\ge1$, and $x=\rho^{2k+1}u$. If $d_L,d_R$
+are the original extreme-path lengths and $\eta_L,\eta_R$ indicate beta
+terminal leaves, then
 
 $$
 h_L(x)=d_L+2k+\eta_L,\qquad
@@ -243,44 +325,48 @@ h_R(x)=d_R+k+\eta_R.
 \tag{ACRC.5}
 $$
 
-If the physical port $a$ is the global left port, $(h_a,h_b)=(h_L,h_R)$;
-if it is the global right port, the pair is reversed.  The two formulas are
-the exact extremal feedback values used to construct the corresponding
-longest and shortest rank witnesses in a fixed-port root certificate.
+For physical $a=L$ the pair $(h_a,h_b)$ is $(h_L,h_R)$; for $a=R$ it
+is reversed. These are exactly GPO (GPO.25)'s fixed-port values. They
+support its orientation probe, not a law-independent identity for arbitrary
+autonomous orientations $z_j$.
 
-They are not a law-independent identity for the autonomous orientation bits
-$z_j$.  In that source, the paid chronology and (ACRC.1), rather than a
-semantic extremal formula, authenticate each physical orientation.
+Proof. Substitution preserves original branches. The terminal replacement
+is $T_{2k+1}$ for alpha and $T_{2k+2}$ for beta, where $T_m=\rho^m\alpha$.
+Its left height is $m-1$ for $m\ge1$ and its right height is
+$\lfloor m/2\rfloor$. Adding the original path lengths gives (ACRC.5),
+including both terminal labels and both global port bijections.
 
-Proof. The left extreme gains two levels per homogeneous $\rho$ pair and the
-terminal beta gains one extra level; the right extreme gains one level per
-pair and the same terminal correction. Induction on $k$ gives (ACRC.5).
-The port exchange is a renaming. The distinction between the fixed-port
-supplier and the autonomous-bit source follows because a changed early $z_j$
-can move a physical $a$-spine while preserving every semantic rank. $\square$
+For $u=\alpha$ these two spines supply longest and shortest root-rank
+paths. For arbitrary $u$ they need not do so: take
+$u=\langle\alpha,\langle\alpha,\beta\rangle\rangle$ and $k=1$.
+The two heights are $3,4$, but the maximum root-to-leaf depth is five and
+the minimum is two, by adding the original leaf depths $1,2,2$ to those
+of their $T_3,T_3,T_4$ replacements. Thus the claim that these spines
+always supply globally longest and shortest rank witnesses is false in
+the stated arbitrary-$u$ supplier domain. Autonomous birth-bit sources
+instead use the actual-parent rank witnesses of Theorem 33.3. $\square$
 
 ## 35. A period-eleven extremal-observation fibre
 
-**Definition 35.1 (two period-eleven source laws).**
-Let $s^{A}$ and $s^{B}$ be the period-eleven words
+**Definition 35.1 (source laws and observation domains).**
+Let $s^A,s^B$ be the repeating words
 
 $$
-s^{A}[0{:}11]=10000000000,\qquad
-s^{B}[0{:}11]=01000000000,\qquad z_j=s[j-1].
+s^A[0{:}11]=10000000000,\qquad
+s^B[0{:}11]=01000000000,\qquad z_j=s[j-1].
 $$
 
-Both satisfy the all-index law $s_{i+11}=s_i$ and have exact period eleven.
-Start at the alpha root and run the actual chronological updates to cut
-$n=4$, so $B_4=4$.  The two consumed birth prefixes are $1000$ and $0100$.
+Both satisfy $s_{i+11}=s_i$ at every $i\ge0$ and have exact period
+eleven. Use the actual alpha origin and chronological updates. The
+following cut-four supports have $B_4=4$ consumed births and $v_4=2$
+mature bits. They are early-cut statements: for the public recurrence
+bound $d=11$, ACR's full-law maturity threshold is $n_0=9$, since
+$F_8-1=20<22\le F_9-1=33$. They do not satisfy that full-law maturity
+premise at cut four.
 
-**Theorem 35.2 (same extremal observations, complete legal separator).**
-For the two sources of Definition 35.1,
-
-$$
-(h_a,h_b)=(2,2)\quad\text{at cut }4
-$$
-
-for both sources, but their supports are respectively
+**Theorem 35.2 (exact extremal ambiguity and complete legal separators).**
+At cut four, the sources of Definition 35.1 both have $(h_a,h_b)=(2,2)$,
+but their complete supports are
 
 $$
 \begin{aligned}
@@ -289,7 +375,7 @@ S_B&=\{\varepsilon,a,aa,ab,b,ba,bb,baa,bab\}.
 \end{aligned}
 $$
 
-The full legal distinguishing words are
+Every finite word on which their replies differ belongs to
 
 $$
 S_A\setminus S_B=\{aba,abb\},\qquad
@@ -297,84 +383,133 @@ S_B\setminus S_A=\{baa,bab\}.
 \tag{ACRC.6}
 $$
 
-Proof. At cut two, the first bit $1$ places beta at $a$ and the first bit
-$0$ places beta at $b$.  At cut three, the second bit splits that beta leaf;
-at cut four, the two later bits split the lexicographically ordered beta
-leaves.  Applying the four prefixes gives exactly the displayed sets.
-Both sets contain $a^2$ and $b^2$ and neither contains a cube in one port,
-so both extremal heights are two.  The four words in (ACRC.6) are precisely
-the symmetric difference, hence every legal support separator is listed. $\square$
+Proof. Write $c(1)=a,c(0)=b$, and let $\bar c$ be the other port.
+At update two the root splits: its beta child is $c(z_1)$ and its alpha
+child is $\bar c(z_1)$. At update three the former splits using $z_2$,
+creating both its depth-two children; the latter only changes alpha to
+beta. At update four that latter depth-one beta splits, completing all
+words through depth two. The depth-two beta at
+$u=c(z_1)c(z_2)$ also splits, creating exactly $ua,ub$ at depth three.
+The old leaves are processed once, so no deeper node is created then.
+For prefixes $1000$ and $0100$, $u$ is respectively $ab$ and $ba$.
+This gives both full supports. Each contains $aa,bb$ and neither contains
+$aaa,bbb$, giving heights two. Set subtraction gives all separators.
+The new bits consumed at update four determine the labels of its newborn
+children, not which of those children are present. $\square$
 
-**Proposition 35.3 (two distinct same-transcript ambiguities).**
-At cut four every birth prefix with the same first two bits has the same
-complete support, although its third and fourth indexed bits can differ.
-In particular, the period-eleven laws with prefixes $0100$ and $0101$ have
-identical replies on every legal word at cut four; their unresolved bits are
-$z_3$ and $z_4$.  This is tested-bit uncertainty, not a failure to choose a
-convenient separator.
-
-There is also a stronger inability-to-name-one-disagreement witness.  The
-four period-eleven prefixes
-
-$$
-0000,\quad0100,\quad1000,\quad1100
-$$
-
-have identical replies on
+**Proposition 35.3 (invisible newest bits and a common disagreement).**
+Let $W_2=\{\varepsilon,a,aa,ab,b,ba,bb\}$ and, for a consumed
+four-bit prefix $r$, write $S_r$ for its cut-four support. Then for every
+choice of the four bits,
 
 $$
-W_2=\{\varepsilon,a,aa,ab,b,ba,bb\}.
+S_r=W_2\cup\{c(r_1)c(r_2)a,\ c(r_1)c(r_2)b\}.
 $$
 
-Relative to the $0000$ source, the additional depth-three supports for the
-other three candidates are respectively
+Thus all four sources with a fixed first two bits have identical complete
+support, independently of $z_3,z_4$. For example, the eleven-cycles whose
+first four bits are $01uv$, $u,v\in\{0,1\}$, and whose other seven bits
+are zero all have exact period eleven and identical complete cut-four
+replies. Both newest bits can independently vary in this fibre. The
+mature bits at this cut are exactly $z_1,z_2$.
+
+For the comparison with reference $0000$, however, there is a common
+word distinguishing it from each of $0100,1000,1100$. The full differences
+are, in the order of those three alternatives,
 
 $$
-\{baa,bab\},\quad\{aba,abb\},\quad\{aaa,aab\},
+\begin{aligned}
+S_{0000}\triangle S_{0100}&=\{bba,bbb,baa,bab\},\\
+S_{0000}\triangle S_{1000}&=\{bba,bbb,aba,abb\},\\
+S_{0000}\triangle S_{1100}&=\{bba,bbb,aaa,aab\}.
+\end{aligned}
 $$
 
-which are pairwise disjoint.  Thus a transcript restricted to $W_2$ does not
-name any one word that must be a disagreement for the unknown alternative.
-The conclusion is about this finite fibre and includes newest, not mature,
-births; it does not claim that no later paid word can separate a chosen pair.
+In particular,
 
-Proof. Chronological replacement shows that the support through depth two
-uses only the first two births; the third and fourth births attach only
-depth-three children.  Direct replacement gives the three displayed pairs.
-Each nonzero listed cycle is exact period eleven; the $0000$ cycle is the
-zero all-index law and is also eleven-periodic.  Thus all four are legal
-all-index sources. $\square$
+$$
+\bigcap_{r\in\{0100,1000,1100\}}
+   (S_{0000}\triangle S_r)=\{bba,bbb\}.
+$$
+
+The assertion that this fibre has no single reference-versus-every-alternative
+disagreement is false. Either displayed common word is present in the
+reference and absent in all three alternatives. Pairwise disjoint additions
+alone do not settle that assertion: the removals are common.
+
+Proof. The chronology in Theorem 35.2 gives the formula for every prefix.
+If $z_1=0$, the update-four beta parents are $a$ first and $bc(z_2)$
+second; if $z_1=1$, they are $ac(z_2)$ first and $b$ second. Thus $z_3$
+and $z_4$ select labels at these actual ordered births. Their newborn
+beta children can first split at update five, so neither orientation has
+a support effect at cut four. This proves the full-support fibre and its
+visibility boundary.
+
+For first two bits $00,01,10,11$, the depth-three pairs are respectively
+$\{bba,bbb\},\{baa,bab\},\{aba,abb\},\{aaa,aab\}$. They are mutually
+disjoint, so every full symmetric difference between two of the four
+representatives is the union of the corresponding two pairs. This proves
+the three displayed differences, all other pair differences, and their
+intersection. Each nonzero eleven-cycle used here is nonconstant; since
+eleven is prime, its least period is eleven. The all-zero reference is
+an eleven-periodic zero all-index law with least period one. All are legal
+members of $\mathscr R_{11}$.
+
+At any common mature cut $n\ge9$, all these sources still have the same
+transcript restricted to $W_2$, since every word of length at most two is
+present at every cut $n\ge4$. This statement does not assert equal mature
+extremal heights, equal full mature supports, or a mature full-law ambiguity.
+The common-disagreement calculation above concerns the original cut-four
+reference comparison, not those later supports. $\square$
 
 ## 36. What the earned data do and do not recover
 
 **Corollary 36.1 (native support-refutation is exact but paid).**
-Under the authenticated-prefix hypotheses of Theorem 33.3, the complete
-finite service over $\{a,b\}^{t_j}$ is a proper native support-refutation
-service. It returns the authentic $z_j$ after at most $2^{t_j}$ literal
-presence replies, and it returns no source law, no arbitrary-DFA equivalence
-answer, and no chronological bit outside the authenticated index.
+Under Theorem 33.3's authenticated cut, prefix and maturity hypotheses,
+the complete finite service over $\{a,b\}^{t_j}$ authenticates the actual
+$z_j$ with at most $2^{t_j}$ literal presence replies. A positive reply
+certifies the trial orientation; a complete zero certificate certifies its
+complement. Neither a single arbitrary negative reply nor a predicted
+witness has that force.
 
-The period-eleven fibre proves that extremal heights alone cannot replace
-those support replies. The same-transcript families prove separately that a
-tested bit may remain unknown and that, with several surviving candidates,
-no single unqueried word need be a certified disagreement. A source recovery
-claim therefore requires the full source promise, the root certificate, the
-authenticated-prefix induction, and the paid witness or zero certificate at
-each requested index.
+Proof. Apply (ACRC.1), with the parent computed from the authenticated
+prefix, and Proposition 33.4's actual enumeration. For $m=2d$, ACR's
+maturity promise supplies every requested index, including the empty
+prefix at $d=0$. The authentic prefix determines the full behavior by
+GPO Lemma 29.2, but selecting and installing the exact $K_d(P)$ still uses
+its original fixed enumeration and its paid work. $\square$
 
-The suppliers have the following exact correspondence. GPO §§27--29 supply
-the alpha origin, chronological beta order, $B_t$, all-index recurrence
-class, and finite-separation convention. ACR §§22, 25 and 31--32 supply the
-paid root certificate, authentic-prefix boundary, and typed local normalizer
-whose original $\rho_d$ remains unchanged. Massey, [*Shift-Register Synthesis
-and BCH Decoding*][MAS], supplies shortest finite-prefix register
-synthesis; it supplies no physical chronology or paid support witness.
-Rueppel, [*Linear Complexity and Random Sequences*][RUEPPEL], supplies the
-classical count and recurrence correspondence for binary semi-infinite
-linear-complexity streams; it supplies no native-root acquisition result.
-These correspondences are restricted to the stated domains and make no
-global novelty, original-$\rho_d$ hardness, polynomial automaton-size, or
-full-goal claim.
+The cut-four period-eleven pair separates extremal observations from full
+support at that early cut. The same-first-two-bit fibre concerns newest
+bits, while Proposition 35.3 refutes the proposed no-common-disagreement
+strengthening in its reference comparison. None of these finite observations
+is an impossibility theorem for mature polynomial acquisition. Equally,
+the finite witness constructions do not prove that acquisition polynomial.
+
+The supplier correspondence is as follows. GPO §§27--29 supply the alpha
+origin, actual beta order, $B_t$, the all-index class and its finite-separation
+convention, including singular laws and zero order. GPO §39 supplies the
+actual chronological-parent relation. ACR Definition 22.1 and Theorem 22.2
+supply exactly the parity lengths, rank tests, universal certificate
+soundness and existential completeness used here. ACR §§25 and 31--32
+retain the original local normalizer and $\rho_d$. GPO Lemma 7.2 supplies
+the fixed-global-port extremal formulas in their separate source domain.
+
+Massey's [*Shift-Register Synthesis and BCH Decoding*][MAS] supplies classical
+finite-prefix synthesis, and Rueppel's [*Linear Complexity and Random
+Sequences*][RUEPPEL] supplies the classical linear-complexity setting. Neither
+supplies physical chronology, a paid native witness or the exact original
+normalizer's bill. The shift algebra is a reused ingredient; the source
+applications, support fibres and comparison refutations above are derived
+within the stated repository models. No literature-priority claim is made.
+
+The unresolved target remains deterministic polynomial TOTAL acquisition
+for the unrestricted unknown all-index source and unknown mature cut,
+with the exact original $(P,K_d(P),n,B_n)$ output and original $\rho_d$.
+Exponential native enumeration, a different recurrence presentation or a
+changed normalizer does not settle it. Source binding, grants, stationary
+visibility, actual backing, retained writes and handoff remain separate
+paid prerequisites throughout.
 
 [ACR]: RECURSIVE_RELATIONAL_OBSERVATION_ACTUAL_CUT_REINSTATEMENT.md
 [GPO]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GLOBAL_PORT_ORIENTATION.md
