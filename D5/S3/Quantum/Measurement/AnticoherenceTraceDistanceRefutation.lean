@@ -6,7 +6,6 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Measurement/AnticoherenceTraceDistanceRefutation.claim; result=D5/S3/Quantum/Measurement/AnticoherenceTraceDistanceRefutation.result; claim=D5/S3/Quantum/Measurement/AnticoherenceTraceDistanceRefutation.claim
    digest: A spin-four covariant channel lowers order-seven trace-distance anticoherence. -/
 
-import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation
 import D5.S3.Quantum.Measurement.AnticoherenceCovariantChannel
 import D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
@@ -36,7 +35,8 @@ open D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm)
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf (MatrixMap)
 open D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound (Jplus Jx Jy Jz)
 open D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
-  (pauliAxes pauli_rotation tensor_unitary quadratic_rotation orthogonal_sandwich)
+  (pauliAxes pauli_rotation tensor_unitary quadratic_rotation orthogonal_sandwich
+    local_action collectiveSpin collective_tensor_rotation)
 
 /-- The tensor power in the computational basis of `n` qubits. -/
 def qubitPower (n : ℕ) (u : Matrix (Fin 2) (Fin 2) ℂ) :
@@ -333,8 +333,10 @@ private lemma partialTrace_isometries {a b i j : Type*}
   simp_rw [he]
   simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
     ite_true]
-  rw [Finset.sum_comm]
   simp only [Finset.mul_sum, Finset.sum_mul, mul_assoc]
+  apply Finset.sum_congr rfl
+  intro k _
+  rw [Finset.sum_comm]
 
 set_option backward.isDefEq.respectTransparency false in
 private lemma dicke_split_partialTrace (t s : ℕ)
@@ -361,8 +363,14 @@ private lemma dicke_split_partialTrace (t s : ℕ)
   rw [he, partialTrace_isometries _ _ (dicke_isometry s)]
   have hd : partialTraceRight (dickeSplitSum t s * ρ * (dickeSplitSum t s)ᴴ) =
       reducedState t ρ := by
-    unfold reducedState dickeSplitSum dickeSplit
-    simp only [Nat.add_sub_cancel_left]
+    let v (m : ℕ) : Matrix (Fin (t + 1) × Fin (m + 1)) (Fin (t + s + 1)) ℂ :=
+      fun kl r => if kl.1.val + kl.2.val = r.val then
+        ((Real.sqrt ((t.choose kl.1.val : ℝ) * (m.choose kl.2.val : ℝ)) /
+          Real.sqrt ((t + s).choose r.val : ℝ) : ℝ) : ℂ) else 0
+    change partialTraceRight (v s * ρ * (v s)ᴴ) =
+      partialTraceRight (v (t + s - t) * ρ * (v (t + s - t))ᴴ)
+    exact congrArg (fun m => partialTraceRight (v m * ρ * (v m)ᴴ))
+      (Nat.add_sub_cancel_left t s).symm
   rw [hd]
 
 set_option maxHeartbeats 1000000 in
@@ -407,7 +415,7 @@ private lemma kraus_cartesian (q : Fin 5) : witnessKraus q =
 
 private lemma quadrupole_adjoint (a b : Fin 3) :
     (quadrupole a b)ᴴ = quadrupole a b := by
-  have hz : (Jz 8)ᴴ = Jz 8 := by simp [Jz, Matrix.conjTranspose_diagonal]
+  have hz : (Jz 8)ᴴ = Jz 8 := by simp [Jz]
   fin_cases a <;> fin_cases b <;>
     simp [quadrupole, Jx, Jy, Matrix.conjTranspose_sub, Matrix.conjTranspose_smul,
       Matrix.conjTranspose_add, Matrix.conjTranspose_mul, hz] <;>
@@ -419,7 +427,7 @@ private lemma cartesian_channel (x : Matrix (Fin 9) (Fin 9) ℂ) :
     witnessChannel x = (3 / 770 : ℂ) •
       ∑ a : Fin 3, ∑ b : Fin 3, quadrupole a b * x * quadrupole a b := by
   have h22 : quadrupole 2 2 = -(quadrupole 0 0 + quadrupole 1 1) := by
-    linear_combination (norm := module) -quadrupole_tracefree
+    linear_combination (norm := module) quadrupole_tracefree
   have hs (a b : Fin 3) : quadrupole a b = quadrupole b a := by
     simp only [quadrupole, add_comm, eq_comm]
   simp only [witnessChannel, MatrixMap.of_kraus, LinearMap.coe_sum,
@@ -430,11 +438,12 @@ private lemma cartesian_channel (x : Matrix (Fin 9) (Fin 9) ℂ) :
     Matrix.conjTranspose_smul, quadrupole_adjoint, h22,
     hs 1 0, hs 2 0, hs 2 1]
   norm_num
+  simp only [quadrupole_adjoint, h22, hs 1 0, hs 2 0, hs 2 1]
   simp only [Matrix.add_mul, Matrix.mul_add, Matrix.sub_mul, Matrix.mul_sub,
     Matrix.smul_mul, Matrix.mul_smul, Matrix.neg_mul, Matrix.mul_neg,
-    smul_add, smul_sub, smul_neg, neg_smul, smul_smul]
-  match_scalars <;> ring_nf <;>
-    norm_num [Complex.I_sq, ← inv_pow, ← Complex.ofReal_pow, Real.sq_sqrt] <;> ring
+    smul_add, smul_sub, smul_neg, neg_smul, smul_smul, Matrix.mul_assoc]
+  match_scalars <;> (try ring_nf) <;>
+    norm_num [Complex.I_sq, inv_pow, ← Complex.ofReal_pow, Real.sq_sqrt]
 
 private lemma spin_action_unitary (n : ℕ)
     (u : Matrix.specialUnitaryGroup (Fin 2) ℂ) :
@@ -453,12 +462,148 @@ private lemma spin_action_unitary (n : ℕ)
         dickeIsometry n := by simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
     _ = 1 := by rw [ht, Matrix.mul_one, dicke_isometry]
 
+private def dickeCoefficient (n w r : ℕ) : ℂ :=
+  if w = r then (Real.sqrt (n.choose r : ℝ) : ℂ)⁻¹ else 0
+
+private lemma two_value_sum (n : ℕ) (x : Fin n → Fin 2) (f : Fin 2 → ℂ) :
+    (∑ k, f (x k)) = ((n : ℂ) - (∑ k, (x k).val : ℕ)) * f 0 +
+      (∑ k, (x k).val : ℕ) * f 1 := by
+  have he (b : Fin 2) : f b = f 0 + (b.val : ℂ) * (f 1 - f 0) := by
+    fin_cases b <;> norm_num
+  calc
+    _ = ∑ k : Fin n, (f 0 + ((x k).val : ℂ) * (f 1 - f 0)) :=
+      Finset.sum_congr rfl (fun k _ => he (x k))
+    _ = _ := ?_
+  rw [Finset.sum_add_distrib, ← Finset.sum_mul]
+  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+  push_cast
+  ring
+
+private lemma dicke_site_sum (n : ℕ) (a : Matrix (Fin 2) (Fin 2) ℂ)
+    (x : Fin n → Fin 2) (r : Fin (n + 1)) :
+    (∑ k : Fin n, ∑ b : Fin 2, a (x k) b *
+      dickeIsometry n (Function.update x k b) r) =
+      ((n : ℂ) - (∑ k, (x k).val : ℕ)) *
+        (a 0 0 * dickeCoefficient n (∑ k, (x k).val) r.val +
+          a 0 1 * dickeCoefficient n ((∑ k, (x k).val) + 1) r.val) +
+      (∑ k, (x k).val : ℕ) *
+        (a 1 0 * dickeCoefficient n ((∑ k, (x k).val) - 1) r.val +
+          a 1 1 * dickeCoefficient n (∑ k, (x k).val) r.val) := by
+  let w := ∑ k, (x k).val
+  have hu (k : Fin n) (b : Fin 2) :
+      (∑ i, (Function.update x k b i).val) + (x k).val = w + b.val := by
+    have he : (fun i => (Function.update x k b i).val) =
+        Function.update (fun i => (x i).val) k b.val := by
+      funext i
+      by_cases hi : i = k <;> simp [Function.update_apply, hi]
+    rw [he, Finset.sum_update_of_mem (Finset.mem_univ k)]
+    simp only [Finset.sdiff_singleton_eq_erase]
+    have h := Finset.add_sum_erase Finset.univ (fun i => (x i).val) (Finset.mem_univ k)
+    dsimp only [w]
+    omega
+  let f : Fin 2 → ℂ :=
+    ![a 0 0 * dickeCoefficient n w r.val + a 0 1 * dickeCoefficient n (w + 1) r.val,
+      a 1 0 * dickeCoefficient n (w - 1) r.val + a 1 1 * dickeCoefficient n w r.val]
+  have hf (k : Fin n) : (∑ b : Fin 2, a (x k) b *
+      dickeIsometry n (Function.update x k b) r) = f (x k) := by
+    have h0 := hu k 0
+    have h1 := hu k 1
+    by_cases hk : x k = 0
+    · have hz : (∑ i, (Function.update x k 0 i).val) = w := by simp [hk] at h0; omega
+      have ho : (∑ i, (Function.update x k 1 i).val) = w + 1 := by simp [hk] at h1; omega
+      simp [Fin.sum_univ_two, dickeIsometry, hz, ho, f, hk, dickeCoefficient]
+    · have hk1 : x k = 1 := Fin.ext (by have hh := (x k).isLt; omega)
+      have hz : (∑ i, (Function.update x k 0 i).val) = w - 1 := by simp [hk1] at h0; omega
+      have ho : (∑ i, (Function.update x k 1 i).val) = w := by simp [hk1] at h1; omega
+      simp [Fin.sum_univ_two, dickeIsometry, hz, ho, f, hk1, dickeCoefficient]
+  simp_rw [hf]
+  simpa only [f, Matrix.cons_val_zero, Matrix.cons_val_one] using two_value_sum n x f
+
+set_option maxHeartbeats 2000000 in
+-- The three axes are checked on nine Dicke weights and nine input coordinates.
+private lemma dicke_collective (a : Fin 3) :
+    collectiveSpin 8 a * dickeIsometry 8 =
+      dickeIsometry 8 * (![Jx 8, Jy 8, Jz 8] a) := by
+  have h8 : Real.sqrt 8 = 2 * Real.sqrt 2 := by
+    rw [show (8 : ℝ) = 4 * 2 by norm_num, Real.sqrt_mul (by positivity)]; norm_num
+  have h14 : Real.sqrt 14 = Real.sqrt 2 * Real.sqrt 7 := by rw [← Real.sqrt_mul (by positivity)]; norm_num
+  have h18 : Real.sqrt 18 = 3 * Real.sqrt 2 := by
+    rw [show (18 : ℝ) = 9 * 2 by norm_num, Real.sqrt_mul (by positivity)]; norm_num
+  have h20 : Real.sqrt 20 = 2 * Real.sqrt 5 := by
+    rw [show (20 : ℝ) = 4 * 5 by norm_num, Real.sqrt_mul (by positivity)]; norm_num
+  have h28 : Real.sqrt 28 = 2 * Real.sqrt 7 := by
+    rw [show (28 : ℝ) = 4 * 7 by norm_num, Real.sqrt_mul (by positivity)]; norm_num
+  have h56 : Real.sqrt 56 = 2 * Real.sqrt 2 * Real.sqrt 7 := by
+    rw [show (56 : ℝ) = 4 * (2 * 7) by norm_num,
+      Real.sqrt_mul (by positivity), Real.sqrt_mul (by positivity)]
+    norm_num
+    ring
+  have h70 : Real.sqrt 70 = Real.sqrt 2 * Real.sqrt 5 * Real.sqrt 7 := by
+    rw [show (70 : ℝ) = (2 * 5) * 7 by norm_num,
+      Real.sqrt_mul (by positivity), Real.sqrt_mul (by positivity)]
+  ext x r
+  have he (k : Fin 8) :
+      (D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.localOp k
+        (pauliAxes a) * dickeIsometry 8) x r =
+      ∑ b : Fin 2, pauliAxes a (x k) b * dickeIsometry 8 (Function.update x k b) r :=
+    local_action k (pauliAxes a) (fun y => dickeIsometry 8 y r) x
+  simp only [collectiveSpin, Matrix.smul_mul, Matrix.sum_mul, Matrix.smul_apply,
+    Matrix.sum_apply, smul_eq_mul]
+  simp_rw [he]
+  rw [dicke_site_sum]
+  have hwle := weight_le 8 x
+  generalize hw : (∑ k, (x k).val) = w at *
+  fin_cases a <;> fin_cases r <;> interval_cases w <;>
+    norm_num [pauliAxes,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
+      D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
+      dickeCoefficient, dickeIsometry, hw, Matrix.mul_apply, Fin.sum_univ_succ, Nat.choose,
+      Jx, Jy, Jplus, Jz, Matrix.conjTranspose_apply, Complex.star_def,
+      Complex.conj_ofReal, h8, h14, h18, h20, h28, h56, h70] <;>
+    field_simp <;> (try ring_nf) <;>
+    norm_num [← Complex.ofReal_pow, Real.sq_sqrt] <;> (try ring) <;>
+    norm_num [starRingEnd_apply]
+
 private lemma collective_rotation (u : Matrix.specialUnitaryGroup (Fin 2) ℂ) :
     ∃ r : Matrix (Fin 3) (Fin 3) ℝ, rᵀ * r = 1 ∧
       ∀ a : Fin 3,
         spinAction 8 u * (![Jx 8, Jy 8, Jz 8] a) * (spinAction 8 u)ᴴ =
           ∑ c : Fin 3, (r a c : ℂ) • (![Jx 8, Jy 8, Jz 8] c) := by
-  sorry
+  obtain ⟨r, hr, hpauli⟩ := pauli_rotation u
+  refine ⟨r, hr, ?_⟩
+  have ht : (qubitPower 8 u.val)ᴴ * qubitPower 8 u.val = 1 := tensor_unitary 8 u
+  have hd : spinAction 8 u * (spinAction 8 u)ᴴ = 1 :=
+    mul_eq_one_comm.mp (spin_action_unitary 8 u)
+  have hi : (qubitPower 8 u.val)ᴴ * dickeIsometry 8 =
+      dickeIsometry 8 * (spinAction 8 u)ᴴ := by
+    calc
+      _ = (qubitPower 8 u.val)ᴴ * (dickeIsometry 8 * spinAction 8 u) *
+          (spinAction 8 u)ᴴ := by simp only [Matrix.mul_assoc, hd, Matrix.mul_one]
+      _ = (qubitPower 8 u.val)ᴴ * (qubitPower 8 u.val * dickeIsometry 8) *
+          (spinAction 8 u)ᴴ := by rw [tensor_preserves_symmetric]
+      _ = _ := by rw [← Matrix.mul_assoc _ _ (dickeIsometry 8), ht, Matrix.one_mul]
+  have hc (a : Fin 3) : (dickeIsometry 8)ᴴ * collectiveSpin 8 a *
+      dickeIsometry 8 = ![Jx 8, Jy 8, Jz 8] a := by
+    rw [Matrix.mul_assoc, dicke_collective, ← Matrix.mul_assoc,
+      dicke_isometry, Matrix.one_mul]
+  intro a
+  have hrot : qubitPower 8 u.val * collectiveSpin 8 a * (qubitPower 8 u.val)ᴴ =
+      ∑ c : Fin 3, (r a c : ℂ) • collectiveSpin 8 c :=
+    collective_tensor_rotation 8 u r hpauli a
+  calc
+    _ = (dickeIsometry 8)ᴴ * qubitPower 8 u.val *
+        (dickeIsometry 8 * (![Jx 8, Jy 8, Jz 8] a)) * (spinAction 8 u)ᴴ := by
+      change ((dickeIsometry 8)ᴴ * qubitPower 8 u.val * dickeIsometry 8) * _ * _ = _
+      simp only [Matrix.mul_assoc]
+    _ = (dickeIsometry 8)ᴴ *
+        (qubitPower 8 u.val * collectiveSpin 8 a * (qubitPower 8 u.val)ᴴ) *
+          dickeIsometry 8 := by
+      rw [← dicke_collective]
+      simp only [Matrix.mul_assoc]
+      rw [← hi]
+    _ = _ := by
+      rw [hrot]
+      simp only [Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_smul, Matrix.smul_mul, hc]
 
 private lemma channel_covariant (u : Matrix.specialUnitaryGroup (Fin 2) ℂ)
     (x : Matrix (Fin 9) (Fin 9) ℂ) :
@@ -468,11 +613,13 @@ private lemma channel_covariant (u : Matrix.specialUnitaryGroup (Fin 2) ℂ)
   let q : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
     Matrix.kronecker (r.map Complex.ofReal) (r.map Complex.ofReal)
   have hrc : (r.map Complex.ofReal)ᵀ * r.map Complex.ofReal = 1 := by
-    simpa only [← Matrix.map_transpose, ← Matrix.map_mul, hr, Matrix.map_one] using
-      congrArg (fun m : Matrix (Fin 3) (Fin 3) ℝ => m.map Complex.ofReal) hr
+    have h := congrArg (fun m : Matrix (Fin 3) (Fin 3) ℝ => m.map Complex.ofRealHom) hr
+    rw [Matrix.map_mul, Matrix.transpose_map,
+      Matrix.map_one Complex.ofRealHom (map_zero _) (map_one _)] at h
+    exact h
   have hq : qᵀ * q = 1 := by
     dsimp only [q, Matrix.kronecker]
-    rw [Matrix.transpose_kronecker, ← Matrix.mul_kronecker_mul, hrc]
+    rw [← Matrix.kroneckerMap_transpose, ← Matrix.mul_kronecker_mul, hrc]
     exact Matrix.one_kronecker_one
   have hs (ab : Fin 3 × Fin 3) : spinAction 8 u * quadrupole ab.1 ab.2 *
       (spinAction 8 u)ᴴ = ∑ ce : Fin 3 × Fin 3,
@@ -637,6 +784,20 @@ private lemma output_reduction : reducedState 7 witnessOutput =
 
 private lemma input_distance :
     traceNorm (reducedState 7 witnessState - mixedState 7) = 19 / 84 := by
+  let v := dickeIsometry 7
+  let w := fun xy : (Fin 7 → Fin 2) × (Fin 1 → Fin 2) => Fin.append xy.1 xy.2
+  let p := partialTraceRight
+    ((dickeIsometry 8 * witnessState * (dickeIsometry 8)ᴴ).submatrix w w)
+  have hp : p = v * reducedState 7 witnessState * vᴴ :=
+    dicke_split_partialTrace 7 1 witnessState
+  suffices h : traceNorm (p - v * mixedState 7 * vᴴ) = 19 / 84 by
+    rw [hp, ← Matrix.sub_mul, ← Matrix.mul_sub,
+      D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.traceNorm_isometry
+        v (dicke_isometry 7)] at h
+    exact h
+  rw [hp, ← Matrix.sub_mul, ← Matrix.mul_sub,
+    D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.traceNorm_isometry
+      v (dicke_isometry 7)]
   rw [input_reduction]
   have he : diagonal (fun k => (![21, 21, 40, 21, 21, 21, 21, 2] k : ℂ) / 168) -
       mixedState 7 = diagonal (fun k : Fin 8 =>
