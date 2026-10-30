@@ -6,7 +6,7 @@
    utility: none
    digest: Normalized Bell and contextuality inequalities obey the binary n-cycle trade-off. -/
 
-import D5.S3.Combinatorics.Graph.LayeredCirculation.PositiveCircuitSupplier
+import D5.S3.QuantumContext.NCycleNondisturbingGenerators
 import Mathlib.Logic.Equiv.Fin.Rotate
 import Mathlib.Algebra.Ring.BooleanRing
 
@@ -136,10 +136,6 @@ private lemma vertex_nd {n : ℕ} (γ : Fin n → Bool) : IsND (vertex γ) := by
     cases h : γ i <;> cases k : γ (finRotate n i) <;>
       cases c <;> norm_num [vertex, Fintype.sum_bool, h, k]
 
-private lemma cycle_generators {n : ℕ} (hn : 3 ≤ n)
-    (r : BobBehavior n) (hr : IsND r) : r ∈ convexHull ℝ (generators n) := by
-  sorry
-
 private lemma bool_sign_sum {ι : Type} (s : Finset ι) (γ : ι → Bool) :
     (∏ i ∈ s, if γ i then (-1 : ℝ) else 1) = if ∑ i ∈ s, γ i then -1 else 1 := by
   classical
@@ -219,6 +215,27 @@ private lemma even_vertex_noncontextual {n : ℕ} (γ : Fin n → Bool)
     (subset_convexHull ℝ _ ⟨s, rfl⟩)
     (subset_convexHull ℝ _ ⟨fun i => !(s i), rfl⟩)
     (by norm_num) (by norm_num) (by norm_num)
+
+private lemma cycle_generators {n : ℕ} (hn : 3 ≤ n)
+    (r : BobBehavior n) (hr : IsND r) : r ∈ convexHull ℝ (generators n) := by
+  have hd := D5.S3.QuantumContext.NCycleNondisturbingGenerators.decomposition
+    n (by omega) r hr.1 hr.2.1 hr.2.2
+  change r ∈ convexHull ℝ (Set.range deterministic ∪ Set.range vertex) at hd
+  apply convexHull_min ?_ (convex_convexHull ℝ (generators n)) hd
+  rintro q (hq | ⟨γ, rfl⟩)
+  · exact subset_convexHull ℝ _ (Or.inl hq)
+  · by_cases hγ : oddSigns γ
+    · exact subset_convexHull ℝ _ (Or.inr ⟨γ, hγ, rfl⟩)
+    · have heven : ∑ i, γ i = false := by
+        cases he : (∑ i, γ i) with
+        | false => rfl
+        | true =>
+          exfalso
+          apply hγ
+          unfold oddSigns
+          rw [bool_sign_sum, he]
+          rfl
+      exact convexHull_mono (fun _ h => Or.inl h) (even_vertex_noncontextual γ heven)
 
 private lemma midpoint_noncontextual {n : ℕ}
     (γ η : Fin n → Bool) (hγ : oddSigns γ) (hη : oddSigns η) (hne : γ ≠ η) :
