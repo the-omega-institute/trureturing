@@ -1,0 +1,165 @@
+**定理 83.1（确定谱的显式实二维构造）。**
+设 $b>0$，且 $r=(x,y,\xi,w)$ 满足 (XII.3)，
+特别可以取定理 82.2 的 $(X,Y,Z,W)$。
+以下三个互斥分支给出实 $2\times2$ 矩阵 $M$，
+其奇异值恰为 $\alpha=\sqrt A=a/2$、$\beta=\sqrt B=b/2$，
+且
+
+$$
+\left\|
+\operatorname{diag}(\sqrt x,\sqrt\xi)^{-1}
+M\operatorname{diag}(\sqrt y,\sqrt w)^{-1}
+\right\|_{\mathrm{op}}\leq1.
+\tag{XII.22}
+$$
+
+一次共同实正交共轭便把该 $M$ 变成指定人口的两实际密度矩阵。
+
+**证明。** 正 $b$ 使四个谱坐标均严格正。
+记四个容量和共同乘积为
+
+$$
+p=xw,\quad q_0=y\xi,\quad r_0=xy,\quad c_0=\xi w,\quad
+K=xy\xi w=pq_0=r_0c_0,\quad
+L=\max\{p,q_0\},\quad \ell=\min\{p,q_0\}.
+\tag{XII.23}
+$$
+
+这里 $q_0,r_0$ 只在本证明表示容量，不表示原端口块维数或四谱。
+已知 $A\leq r_0$、$B\leq\ell$、$AB\leq K$，
+且 $r_0\geq L\geq\ell\geq c_0>0$。
+
+第一分支为 $A\leq L$。若 $p\geq q_0$，取
+
+$$
+M=\begin{pmatrix}0&\alpha\\ \beta&0\end{pmatrix};
+\qquad
+\text{若 }p<q_0,\quad
+M=\begin{pmatrix}0&\beta\\ \alpha&0\end{pmatrix}.
+\tag{XII.24}
+$$
+
+大奇异值必须放在较大反对角容量的位置。
+归一化后的两个非零元素分别被 $A\leq L$、$B\leq\ell$ 控制，
+故 (XII.22) 成立，奇异值也正是 $\alpha,\beta$。
+
+第二分支为 $A>L$ 且 $B\leq c_0$。取
+
+$$
+M=\operatorname{diag}(\alpha,\beta).
+\tag{XII.25}
+$$
+
+$A\leq xy$、$B\leq\xi w$ 直接给 (XII.22)。
+第一、第二分支都允许其所含的等号。
+
+第三分支为 $A>L$ 且 $B>c_0$。定义
+
+$$
+\begin{aligned}
+\tau&=(AB/K)^{1/4},\\
+\delta&=(xy+\xi w)-(xw+y\xi)=(x-\xi)(y-w),\\
+\theta&=\frac{(A+B)/\tau^2-(xw+y\xi)}{\delta},\\
+U_\theta&=
+\begin{pmatrix}
+\sqrt\theta&-\sqrt{1-\theta}\\
+\sqrt{1-\theta}&\sqrt\theta
+\end{pmatrix},\\
+M&=\tau\operatorname{diag}(\sqrt x,\sqrt\xi)\,
+U_\theta\,\operatorname{diag}(\sqrt y,\sqrt w).
+\end{aligned}
+\tag{XII.26}
+$$
+
+这些根式均有定义。事实上 $0<\tau\leq1$。
+若 $x=\xi$，排序给 $x=y=\xi$，便有
+$A\leq xy=y\xi\leq L$，矛盾；
+若 $y=w$，则 $A\leq xy=xw\leq L$，同样矛盾。
+故 $\delta>0$，没有在容量并列的零分母上取商。
+
+由 $A>L$、$B\leq\ell$、$A\leq r_0$、$B>c_0$ 得
+
+$$
+L/\ell\leq A/B\leq r_0/c_0.
+\tag{XII.27}
+$$
+
+函数 $t\mapsto\sqrt K(\sqrt t+1/\sqrt t)$ 在 $t\geq1$ 上不减。
+在 (XII.27) 的两端，其值分别为 $p+q_0$ 和 $r_0+c_0$；
+在 $t=A/B$，其值为 $(A+B)/\tau^2$。
+所以 $0\leq\theta\leq1$，包括旋转的两个端点。
+归一化矩阵恰为 $\tau U_\theta$，给出 (XII.22)。
+又有
+
+$$
+\begin{aligned}
+\operatorname{tr}(MM^T)
+ &=\tau^2[\theta(xy+\xi w)+(1-\theta)(xw+y\xi)]
+ =A+B,\\
+\det(MM^T)&=\tau^4xy\xi w=AB.
+\end{aligned}
+\tag{XII.28}
+$$
+
+因此 $MM^T$ 的两个特征值为 $A,B$；
+$A=B$ 时这仍成立，不需要选择不同的特征根。
+三个分支穷尽全部可能。
+
+在分组坐标 $(1,3\mid2,4\mid5)$ 中，置
+
+$$
+\begin{aligned}
+R_*&=\operatorname{diag}(x,\xi,y,w,0),\\
+C_*&=\begin{pmatrix}0&M\\-M^T&0\end{pmatrix}\oplus0,\qquad
+T_*=\operatorname{diag}(\sqrt x,\sqrt\xi)^{-1}
+M\operatorname{diag}(\sqrt y,\sqrt w)^{-1}.
+\end{aligned}
+\tag{XII.29}
+$$
+
+在前四轴上的合同分解为
+
+$$
+R_*\pm iC_*=
+\operatorname{diag}(\sqrt x,\sqrt\xi,\sqrt y,\sqrt w)
+\begin{pmatrix}I&\pm iT_*\\ \mp iT_*^T&I\end{pmatrix}
+\operatorname{diag}(\sqrt x,\sqrt\xi,\sqrt y,\sqrt w),
+\tag{XII.30}
+$$
+
+第五轴补零。中间块的特征值为 $1\pm s_j(T_*)$，
+故两边半正，迹均为一；差 $2iC_*$ 的谱为 (XII.2)。
+
+由 $x\geq P$、$x+y\geq Q$、$w\leq V$ 和迹一，
+$(x,y,\xi,w,0)$ 主序支配 $\zeta$；
+第三前缀恰为 $1-w\geq1-V$，第四前缀自动成立。
+使用原卷定理 76.1 证明内的实 Schur–Horn 接口，
+选同一个实正交矩阵 $O$ 使
+$\operatorname{diag}(OR_*O^T)=z$，并置
+
+$$
+\rho=O(R_*+iC_*)O^T,\qquad
+\sigma=O(R_*-iC_*)O^T.
+\tag{XII.31}
+$$
+
+这给两个半正迹一矩阵，人口恰为原顺序中的 $z$，
+共同实部为 $OR_*O^T$，差谱和迹距离均准确保持。
+若先对排序后的 $\zeta$ 选 $O$，则把同一个逆排序置换同时吸收到 $O$。
+实 Schur–Horn 的经典来源为
+Carlen–Lieb，*Short proofs of theorems of Mirsky and Horn on diagonals and eigenvalues of matrices*，
+[arXiv:0904.0734v3](https://arxiv.org/pdf/0904.0734v3) 的开篇 Horn 陈述及其 Horn 归纳证明；
+不是其中属于 Mirsky 的 Theorem 1.2。
+这里复用该实对角接口，不另立标准 Schur–Horn 定理。
+最后 $D_3\rho D_3^\dagger,D_3\sigma D_3^\dagger$
+给原物理坐标的态对；$D_3$ 为对角被动变换，保留人口。
+
+$b=0$ 不使用 (XII.22) 的逆矩阵。
+此时使用原卷定理 77.3 的
+$R_*=\operatorname{diag}(m,1-m,0,0,0)$、
+$C_{12}=a/2$、$C_{21}=-a/2$，其余元素为零。
+唯一非零块的行列式为 $m(1-m)-a^2/4\geq0$。
+同一实 Schur–Horn 共轭给 (XII.7) 的全部实际见证；
+$P=1$ 时只有 $a=0$，可直接取 $\rho=\sigma=\operatorname{diag}z$。
+因此奇异第五轴、其他零轴、重复人口、容量并列和 $a=b$ 均在相应分支内。$\square$
+

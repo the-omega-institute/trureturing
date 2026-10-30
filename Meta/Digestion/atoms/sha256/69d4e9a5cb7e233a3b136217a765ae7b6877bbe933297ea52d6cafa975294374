@@ -1,0 +1,18 @@
+**Proposition 1.4 (all eleven actual root profiles).** The following cases are disjoint, nonempty and exhaustive. Remaining values range over every permitted finite branch image, with all whole-class disequalities retained.
+
+| Case | Forced coordinates | All remaining coordinates | Whole target |
+| --- | --- | --- | --- |
+| $\Pi_1$ | $x_a=\beta,\ x_{b_1}=\alpha$ | Four distinct members of $\mathcal B$ | $R_1$ |
+| $\Pi_2$ | $x_a=\beta,\ x_{b_2}=\alpha$ | Four distinct members of $\mathcal B$ | $R_2$ |
+| $\Pi_3$ | $x_c=\beta,\ x_{b_3}=\alpha$ | Four distinct members of $\mathcal B$ | $R_3$ |
+| $\Pi_4$ | $x_c=\beta,\ x_{b_4}=\alpha$ | Four distinct members of $\mathcal B$ | $R_4$ |
+| $Z_a$ | $x_a=\beta$ | Five distinct members of $\mathcal B$ | $R_0$ |
+| $Z_c$ | $x_c=\beta$ | Five distinct members of $\mathcal B$ | $R_0$ |
+| $Z_{b_1}$ | $x_{b_1}=\beta$ | Five distinct members of $\mathcal B$ | $R_0$ |
+| $Z_{b_2}$ | $x_{b_2}=\beta$ | Five distinct members of $\mathcal B$ | $R_0$ |
+| $Z_{b_3}$ | $x_{b_3}=\beta$ | Five distinct members of $\mathcal B$ | $R_0$ |
+| $Z_{b_4}$ | $x_{b_4}=\beta$ | Five distinct members of $\mathcal B$ | $R_0$ |
+| $Z_*$ | None | Six distinct members of $\mathcal B$ | $R_0$ |
+
+Proof. This is the classification of FCS Proposition 1.4 and BPS Proposition 1.4. The root and two depth-one pairs of $\mathscr S(x)$ have branch right children and cannot be $E$. Each depth-two block is consequently $E$ or a pair of images. An $E$ block forces its right class to alpha and its left partner to beta. Otherwise its two coordinates are images. Thus $a,c$ are images, a right class can be alpha only with its indicated beta partner, and injectivity of the six-value assignment permits at most one alpha class and at most one beta class. With an alpha, the other four values must be branch images. Without alpha, all six are images and at most one is beta. These are exactly the displayed cases. Conversely each case makes all four blocks and then $\mathscr S(x)$ images, so its finite inverse is actual. Distinct positive-height $B_j$ realize every case. These witnesses demonstrate nonemptiness; they do not restrict the domain. The targets are calculated next. $\square$
+
