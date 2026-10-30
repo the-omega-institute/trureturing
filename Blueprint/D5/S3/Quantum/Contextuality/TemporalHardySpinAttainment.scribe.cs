@@ -35,6 +35,15 @@ internal sealed class TemporalHardySpinAttainmentDocument : IScribeDocumentDefin
                 "The spin component u·S is u₀Jx(n) + u₁Jy(n) + u₂Jz(n). "
                     + "This definition allows every real direction u; the unit-length "
                     + "conditions for the four measurement directions appear in claim."),
+            Describe.Lean(
+                DescribeId.Create("temporal-hardy-spin-raising-entry"),
+                DeclarationHandle.Create(Prefix + "raising_entry"),
+                H("Entries of the raising matrix"),
+                StatementSource.FromAuthor(Disp(RaisingEntryFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The raising matrix has the square-root spin coefficient on its superdiagonal and zero elsewhere."))),
+                DescribeRole.Theorem),
             Node("spectral-projector", "The projector onto an outcome eigenspace", "IsSpectralProjector",
                 SpectralProjectorFormula(),
                 "For complex matrices M and Π and a real outcome a, IsSpectralProjector "
@@ -158,6 +167,21 @@ internal sealed class TemporalHardySpinAttainmentDocument : IScribeDocumentDefin
             Mul(Call("ofReal", At(u, D(index))), Call(component, n));
         return All(n, Naturals(), All(u, Directions(), Equal(Call("spinComponent", n, u),
             Add(Add(term(0, "Jx"), term(1, "Jy")), term(2, "Jz")))));
+    }
+
+    private static Formula RaisingEntryFormula()
+    {
+        var n = F.Id("n"); var i = F.Id("i"); var j = F.Id("j");
+        var iv = Call("val", i); var jv = Call("val", j);
+        var coefficient = Call("ofReal", Call("sqrt",
+            Mul(Typed(Call("cast", jv), Reals()),
+                Subtract(Add(Typed(Call("cast", n), Reals()), D(1)),
+                    Typed(Call("cast", jv), Reals())))));
+        var entry = Seq(Begin, Grp(F.Id("cases")), coefficient, Amp,
+            Equal(Add(iv, D(1)), jv), RowBreak, D(0), Amp,
+            Seq(F.Text, Grp(F.Id("otherwise"))), End, Grp(F.Id("cases")));
+        return All(n, Naturals(), All(i, SpinIndex(n), All(j, SpinIndex(n),
+            Equal(Call("Jplus", n, i, j), entry))));
     }
 
     private static Formula SpectralProjectorFormula()
