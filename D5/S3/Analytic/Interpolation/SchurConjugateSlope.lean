@@ -139,8 +139,8 @@ private theorem coarse_error_bound (g : ℂ → ℂ) (hg : Differentiable ℂ g)
   have hv : (a : ℂ) - b * I ∈ closedBall (0 : ℂ) 1 := by
     simpa [sub_eq_add_neg] using node_mem (b := -b) (by nlinarith : a ^ 2 + (-b) ^ 2 ≤ 1) (le_refl |a|)
   let f : ℂ → ℂ := fun z => g z - deriv g x * z
-  have hf (z : ℂ) : HasDerivAt f (deriv g z - deriv g x) z := by
-    simpa [f] using (hg z).hasDerivAt.sub ((hasDerivAt_id z).const_mul (deriv g x))
+  have hf (z : ℂ) := (hg z).hasDerivAt.sub
+    ((hasDerivAt_id z).const_mul (deriv g x))
   have hd (z : ℂ) (hz : z ∈ closedBall (0 : ℂ) 1) : ‖deriv f z‖ ≤ 2 * diskNorm g := by
     rw [(hf z).deriv]
     have hh := (convex_closedBall (0 : ℂ) 1).norm_image_sub_le_of_norm_deriv_le
@@ -163,7 +163,8 @@ private theorem coarse_error_bound (g : ℂ → ℂ) (hg : Differentiable ℂ g)
   have hquot : (f ((a : ℂ) + b * I) - f ((a : ℂ) - b * I)) / (2 * b * I) =
       slope g a b - deriv g x := by
     dsimp [f, slope]
-    field_simp
+    have hbC : (b : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hb.ne'
+    field_simp [hbC]
     <;> ring
   rw [hquot, norm_sub_rev, ← interpolant_deriv g a b x] at hh'
   exact hh'
@@ -215,11 +216,13 @@ private theorem quadratic_sup (a b : ℝ) (hb : 0 < b) :
   have hatt : 1 + |a| ∈ innerValues quadratic a b := by
     by_cases ha : 0 ≤ a
     · refine ⟨-1, by norm_num, ?_⟩
-      change ‖deriv quadratic (-1) - deriv (interpolant quadratic a b) (-1)‖ = _
+      change ‖deriv quadratic ((-1 : ℝ) : ℂ) -
+        deriv (interpolant quadratic a b) ((-1 : ℝ) : ℂ)‖ = _
       rw [quadratic_error a b (-1) hb, abs_of_nonneg ha, abs_of_nonpos (by linarith)]
       ring
     · refine ⟨1, by norm_num, ?_⟩
-      change ‖deriv quadratic 1 - deriv (interpolant quadratic a b) 1‖ = _
+      change ‖deriv quadratic ((1 : ℝ) : ℂ) -
+        deriv (interpolant quadratic a b) ((1 : ℝ) : ℂ)‖ = _
       rw [quadratic_error a b 1 hb, abs_of_nonpos (le_of_not_ge ha),
         abs_of_nonneg (by linarith)]
       ring

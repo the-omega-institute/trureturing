@@ -117,18 +117,31 @@ private theorem cosine_geometric (q θ : ℝ) (hq0 : 0 ≤ q) (hq1 : q < 1) :
   simp_rw [he] at hh
   convert hh using 1
   rw [← div_eq_mul_inv]
-  dsimp [u]
-  rw [Complex.exp_ofReal_mul_I]
-  simp only [Complex.div_re, Complex.normSq_apply, Complex.add_re, Complex.add_im,
-    Complex.sub_re, Complex.sub_im, Complex.mul_re, Complex.mul_im, Complex.neg_re,
-    Complex.neg_im, Complex.ofReal_re, Complex.ofReal_im, Complex.one_re,
-    Complex.one_im, pow_two, Complex.I_re, Complex.I_im]
+  have huR : u.re = Real.cos θ := by
+    dsimp [u]
+    exact Complex.exp_ofReal_mul_I_re θ
+  have huI : u.im = Real.sin θ := by
+    dsimp [u]
+    exact Complex.exp_ofReal_mul_I_im θ
+  have hdR : (1 - -(q : ℂ) * u ^ 2).re =
+      1 + q * (Real.cos θ ^ 2 - Real.sin θ ^ 2) := by
+    simp [pow_two, Complex.mul_re, Complex.mul_im, huR, huI]
+  have hdI : (1 - -(q : ℂ) * u ^ 2).im =
+      2 * q * Real.cos θ * Real.sin θ := by
+    simp [pow_two, Complex.mul_re, Complex.mul_im, huR, huI]
+    ring
   have htrig := Real.sin_sq_add_cos_sq θ
-  have hd : 0 < (1 - q) ^ 2 + 4 * q * Real.cos θ ^ 2 := by
-    have hpos : 0 < (1 - q) ^ 2 := sq_pos_of_pos (sub_pos.mpr hq1)
-    positivity
-  field_simp
-  nlinarith [sq_nonneg (Real.sin θ), sq_nonneg (Real.cos θ)]
+  have hN : u.re * (1 - -(q : ℂ) * u ^ 2).re +
+      u.im * (1 - -(q : ℂ) * u ^ 2).im = Real.cos θ * (1 + q) := by
+    rw [huR, huI, hdR, hdI]
+    linear_combination q * Real.cos θ * htrig
+  have hD : Complex.normSq (1 - -(q : ℂ) * u ^ 2) =
+      (1 - q) ^ 2 + 4 * q * Real.cos θ ^ 2 := by
+    rw [Complex.normSq_apply, hdR, hdI]
+    linear_combination
+      (-2 * q + q ^ 2 * (Real.sin θ ^ 2 + Real.cos θ ^ 2 + 1)) * htrig
+  rw [Complex.div_re, hN, hD]
+
 
 private def densityTerm (b θ : ℝ) (j : ℕ) (t : ℝ) : ℝ :=
   -2 * b ^ 2 * (-b ^ 2) ^ j * Real.cos ((2 * (j : ℝ) + 1) * θ) *
@@ -194,7 +207,6 @@ private theorem kernel_integral_interior (b θ : ℝ) (hb0 : 0 ≤ b) (hb1 : b <
       linarith [ht.1]
     have hc := Real.abs_cos_le_one ((2 * (j : ℝ) + 1) * θ)
     dsimp [densityTerm, U]
-    rw [Real.norm_eq_abs]
     simp only [abs_mul, abs_pow, abs_neg, abs_of_nonneg (sq_nonneg b),
       abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2), abs_of_nonneg ht0]
     have htP' : t ^ (2 * j + 1) ≤ 1 := pow_le_one₀ ht0 ht.2
@@ -234,7 +246,10 @@ private theorem term_integral_zero (b : ℝ) (j : ℕ) :
   rw [intervalIntegral.integral_comp_mul_left Real.cos hk, integral_cos]
   have he : (2 * (j : ℝ) + 1) * (2 * Real.pi) =
       ((4 * j + 2 : ℕ) : ℝ) * Real.pi := by push_cast; ring
-  simp [he, Real.sin_nat_mul_pi]
+  have hs : Real.sin ((2 * (j : ℝ) + 1) * (2 * Real.pi)) = 0 := by
+    rw [he]
+    exact Real.sin_nat_mul_pi (4 * j + 2)
+  simp only [mul_zero, Real.sin_zero, hs, sub_zero, smul_zero, zero_mul]
 
 private theorem kernel_mean_zero {b : ℝ} (hb : b ∈ Icc (0 : ℝ) 1) :
     (∫ θ in (0 : ℝ)..(2 * Real.pi), boundaryKernel b θ) = 0 := by
@@ -270,7 +285,7 @@ private theorem kernelQ_small {t c : ℝ} (ht : t ∈ Icc (0 : ℝ) (1 / 3))
   have h1 : 0 ≤ 1 - t ^ 2 - 2 * t := by nlinarith [ht.1, ht.2]
   have h2 : 0 ≤ (1 - t ^ 2) ^ 2 - 4 * c * t ^ 2 := by
     nlinarith [sq_nonneg (1 - t ^ 2 - 2 * t),
-      mul_nonneg h1 (by nlinarith : 0 ≤ 1 - t ^ 2 + 2 * t),
+      mul_nonneg h1 (by nlinarith [ht.1] : 0 ≤ 1 - t ^ 2 + 2 * t),
       mul_nonneg (sub_nonneg.mpr hc.2) (sq_nonneg t)]
   have h3 := mul_nonneg (sub_nonneg.mpr hc.2) h2
   have h4 := mul_nonneg ht.1 h3
@@ -289,7 +304,7 @@ private theorem kernelQ_small_envelope {t c : ℝ}
   have h := mul_le_mul_of_nonneg_left (kernelQ_small ht hc) (sub_nonneg.mpr ht1)
   apply h.trans
   unfold smallEnvelope
-  rw [mul_div_assoc]
+  rw [← mul_div_assoc]
   apply (div_le_iff₀ (by positivity : 0 < 1 + t ^ 2)).mpr
   have hpoly : 0 ≤ t ^ 2 * (1 - 9 * t ^ 2) := by
     apply mul_nonneg (sq_nonneg t)
@@ -303,7 +318,7 @@ private theorem kernelQ_large_envelope {t c : ℝ}
   have ht0 : 0 ≤ t := (by norm_num : (0 : ℝ) ≤ 1 / 3).trans ht.1
   have hfirst : (1 - t) * kernelQ t c ≤ (1 + t ^ 2) / (2 * (1 + t)) := by
     unfold kernelQ
-    rw [mul_div_assoc]
+    rw [← mul_div_assoc]
     apply (div_le_div_iff₀ (kernelQ_den_pos hc.1) (by positivity)).mpr
     have h := mul_nonneg (show 0 ≤ 1 + t ^ 2 by positivity)
       (sq_nonneg (1 - t ^ 2 - 2 * c * t))
@@ -311,7 +326,7 @@ private theorem kernelQ_large_envelope {t c : ℝ}
   apply hfirst.trans
   apply (div_le_iff₀ (by positivity : 0 < 2 * (1 + t))).mpr
   unfold largeEnvelope
-  have h := mul_nonneg (by linarith : 0 ≤ 3 * t - 1) (sq_nonneg (t - 1))
+  have h := mul_nonneg (by linarith [ht.1] : 0 ≤ 3 * t - 1) (sq_nonneg (t - 1))
   nlinarith
 
 private theorem envelope_integrals :
@@ -325,7 +340,7 @@ private theorem envelope_integrals :
         (((hasDerivAt_id t).pow 3).const_mul (2 / 3))).sub
         (((hasDerivAt_id t).pow 4).const_mul (9 / 20))).add
         (((hasDerivAt_id t).pow 5).const_mul (9 / 25)) using 1 <;>
-        dsimp [smallEnvelope] <;> ring
+        dsimp [smallEnvelope] <;> (first | (funext y; ring) | ring)
     rw [intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => hd t)
       ((show Continuous smallEnvelope by unfold smallEnvelope; fun_prop).intervalIntegrable _ _)]
     norm_num
@@ -335,17 +350,21 @@ private theorem envelope_integrals :
       convert (((hasDerivAt_id t).const_mul (7 / 16)).sub
         (((hasDerivAt_id t).pow 2).const_mul (1 / 16))).add
         (((hasDerivAt_id t).pow 3).const_mul (1 / 16)) using 1 <;>
-        dsimp [largeEnvelope] <;> ring
+        dsimp [largeEnvelope] <;> (first | (funext y; ring) | ring)
     rw [intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => hd t)
       ((show Continuous largeEnvelope by unfold largeEnvelope; fun_prop).intervalIntegrable _ _)]
     norm_num
 
+private theorem kernelQ_continuous {c : ℝ} (hc : 0 < c) :
+    Continuous (fun t => kernelQ t c) := by
+  unfold kernelQ
+  exact (by fun_prop : Continuous (fun t : ℝ => 2 * c * t * (1 + t ^ 2))).div
+    (by fun_prop) (fun t => (kernelQ_den_pos hc).ne')
+
 private theorem kernelQ_integral_bound {c : ℝ} (hc : c ∈ Ioc (0 : ℝ) 1) :
     (∫ t in (0 : ℝ)..1, (1 - t) * kernelQ t c) ≤ 3067 / 8100 := by
   have hcont : Continuous (fun t : ℝ => (1 - t) * kernelQ t c) := by
-    unfold kernelQ
-    exact (continuous_const.sub continuous_id).mul
-      (by fun_prop (disch := exact (kernelQ_den_pos hc.1).ne'))
+    exact (continuous_const.sub continuous_id).mul (kernelQ_continuous hc.1)
   have hsmall := intervalIntegral.integral_mono_on (by norm_num : (0 : ℝ) ≤ 1 / 3)
     (hcont.intervalIntegrable 0 (1 / 3))
     ((show Continuous smallEnvelope by unfold smallEnvelope; fun_prop).intervalIntegrable _ _)
@@ -363,7 +382,7 @@ private theorem kernelQ_integral_bound {c : ℝ} (hc : c ∈ Ioc (0 : ℝ) 1) :
 private theorem kernel_size_interior (b θ : ℝ) (hb0 : 0 ≤ b) (hb1 : b < 1) :
     |boundaryKernel b θ| ≤ 3067 / 8100 := by
   by_cases hb : b = 0
-  · simp [boundaryKernel, boundaryTerm, hb]
+  · norm_num [boundaryKernel, boundaryTerm, hb]
   have hbpos : 0 < b := lt_of_le_of_ne hb0 (Ne.symm hb)
   by_cases hz : Real.cos θ = 0
   · rw [kernel_integral_interior b θ hb0 hb1, hz]
@@ -392,16 +411,15 @@ private theorem kernel_size_interior (b θ : ℝ) (hb0 : 0 ≤ b) (hb1 : b < 1) 
     change 2 * b ^ 2 * c * _ = _
     rw [← intervalIntegral.integral_const_mul]
     apply intervalIntegral.integral_congr
-    intro t
+    intro t _
     simp only [kernelQ, hden]
     ring
   let f : ℝ → ℝ := fun t => (1 - t) * kernelQ t c
   have hcont : Continuous f := by
-    unfold f kernelQ
-    fun_prop (disch := exact (kernelQ_den_pos hc.1).ne')
+    exact (continuous_const.sub continuous_id).mul (kernelQ_continuous hc.1)
   have hcontLeft : Continuous (fun t : ℝ => b * (1 - t) * kernelQ (b * t) c) := by
-    unfold kernelQ
-    fun_prop (disch := exact (kernelQ_den_pos hc.1).ne')
+    exact (continuous_const.mul (continuous_const.sub continuous_id)).mul
+      ((kernelQ_continuous hc.1).comp (continuous_const.mul continuous_id))
   have hpoint (t : ℝ) (ht : t ∈ Icc (0 : ℝ) 1) :
       b * (1 - t) * kernelQ (b * t) c ≤ b * f (b * t) := by
     dsimp [f]
@@ -423,8 +441,9 @@ private theorem kernel_size_interior (b θ : ℝ) (hb0 : 0 ≤ b) (hb1 : b < 1) 
     _ = ∫ t in (0 : ℝ)..b, f t := hchange
     _ ≤ ∫ t in (0 : ℝ)..1, f t :=
       intervalIntegral.integral_mono_interval le_rfl hb0 hb1.le
-        (.of_forall (fun t ht => mul_nonneg (sub_nonneg.mpr ht.2)
-          (kernelQ_nonneg ht.1.le hc.1))) (hcont.intervalIntegrable _ _)
+        ((ae_restrict_iff' measurableSet_Ioc).mpr (.of_forall (fun t ht =>
+          mul_nonneg (sub_nonneg.mpr ht.2) (kernelQ_nonneg ht.1.le hc.1))))
+        (hcont.intervalIntegrable _ _)
     _ ≤ 3067 / 8100 := kernelQ_integral_bound hc
 
 private theorem kernel_size_closed (b θ : ℝ) (hb : b ∈ Icc (0 : ℝ) 1) :
