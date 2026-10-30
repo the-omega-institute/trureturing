@@ -45,11 +45,12 @@ $$
 \tag{1.3}
 $$
 
-The quantifiers in the last two conditions range over every $A,B\in\mathcal L$.
+All three conditions quantify over every $A,B\in\mathcal L$, with
+$A\le B$ in the first.
 The supplied arbitrary-lattice criterion is
 
 $$
-\left(\forall A,B,C\in\mathcal L,\
+\left(\forall A,B,C\in\mathcal L,\quad
  d_f(A,C)\le d_f(A,B)+d_f(B,C)\right)
 \quad\Longleftrightarrow\quad
 \mathrm{Mon}(f)\ \land\ \mathrm{Sup}(f)\ \land\ \mathrm{Sup}(1/f),
@@ -79,7 +80,9 @@ $$
 
 where $m,M$ are the eigenvalues of the Hermitian positive definite compression
 $K$. Write $[R,S]=\{X:R\subseteq X\subseteq S\}$. Neither $R$ nor $T$ is
-assumed invariant under $\rho$. For a line $L\subset T$, set
+assumed invariant under $\rho$. For $x,y\in T$,
+$\langle x,Ky\rangle=\langle x,\rho y\rangle$; thus $K$ is Hermitian
+and $\langle x,Kx\rangle>0$ for $x\ne0$. For a line $L\subset T$, set
 
 $$
 a_L=\operatorname{Tr}_T(KP_L)=\langle u,Ku\rangle\quad(\|u\|=1,\ u\in L).
@@ -398,9 +401,9 @@ These are inherited Boolean valuation consequences. $\square$
 Definition 1.1, $\mu$ is orthogonally additive and strictly increasing on
 subspace inclusions. It is modular on the full subspace lattice if and
 only if $\rho=I_H/n$. For nonscalar $\rho$, its orthogonal additivity does
-not imply even supermodularity on arbitrary pairs. For $n\ge3$ and
-$c=0$ there are triangle-violating interval witnesses with $R\ne0$,
-so every valuation on that interval is strictly positive.
+not imply even supermodularity on arbitrary pairs. For every nonscalar
+$\rho$ with $n\ge3$ and $c=0$, there are triangle-violating interval
+witnesses with $R\ne0$, and $f_0$ is strictly positive on the entire interval.
 
 *Proof.* Orthogonal additivity follows from $P_{X\oplus Z}=P_X+P_Z$
 when $X\perp Z$, and strict increase was proved in Definition 1.1.
@@ -458,8 +461,8 @@ The quantum-event discussion [B1, Section 7.1] groups projection trace
 with quantum probabilities obtained via Gleason representation.
 Gleason's original theorem [G1, Theorem 4.1] concerns measures additive on
 mutually orthogonal subspaces in a separable real or complex Hilbert
-space of dimension at least three, represented by a positive trace
-operator. Orthogonal additivity is weaker than the arbitrary-subspace
+space of dimension at least three, represented by a positive semidefinite
+trace-class operator. Orthogonal additivity is weaker than the arbitrary-subspace
 identity (1.3). Proposition 5.1 shows directly why the representation
 alone cannot justify the latter substitution. The two-dimensional
 calculation uses only the explicitly given density operator, independently
@@ -527,6 +530,7 @@ fixed-overlap optimization (2.2).
 
 [G1] A. M. Gleason, *Measures on the Closed Subspaces of a Hilbert Space*,
 [DOI:10.1512/iumj.1957.6.56050](https://doi.org/10.1512/iumj.1957.6.56050),
+[original full text](https://www.iumj.indiana.edu/IUMJ/FTDLOAD/1957/6/56050/pdf),
 Theorem 4.1 and the orthogonally additive measure definition in Section 1.
 The representation's dimension hypothesis and its orthogonal domain of
 additivity are retained in Proposition 5.2.
