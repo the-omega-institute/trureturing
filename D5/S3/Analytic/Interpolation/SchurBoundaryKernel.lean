@@ -601,7 +601,7 @@ private theorem rational_real_average (h : ℂ → ℂ) (hh : Differentiable ℂ
         (rationalKernel r z + conj (rationalKernel r z)) / 2 :=
       RCLike.re_eq_add_conj (rationalKernel r z)
     rw [hre]
-    dsimp [rationalKernel]
+    unfold rationalKernel
     simp only [map_div, map_add, map_one, map_mul, map_pow, RCLike.conj_ofReal,
       ← RCLike.inv_eq_conj hz']
     field_simp [hz0, hd, rationalKernel_den_ne hr z hz'.le,
@@ -623,28 +623,34 @@ private theorem rational_real_average (h : ℂ → ℂ) (hh : Differentiable ℂ
         (1 / 4 : ℂ) * (h z / (z - -(r : ℂ) * Complex.I))) 0 1 = _ at hadd₁
   change Real.circleAverage (fun z => (1 / 2 : ℂ) * (rationalKernel r z * h z) +
         (1 / 4 : ℂ) * (h z / (z - (r : ℂ) * Complex.I))) 0 1 = _ at hadd₂
-  rw [hadd₁, hadd₂] at hsum
+  have hsum' : Real.circleAverage (fun z => ((rationalKernel r z).re : ℂ) * h z) 0 1 =
+      (Real.circleAverage (fun z => (1 / 2 : ℂ) * (rationalKernel r z * h z)) 0 1 +
+        Real.circleAverage (fun z => (1 / 4 : ℂ) *
+          (h z / (z - (r : ℂ) * Complex.I))) 0 1) +
+        Real.circleAverage (fun z => (1 / 4 : ℂ) *
+          (h z / (z - -(r : ℂ) * Complex.I))) 0 1 :=
+    hsum.trans (hadd₁.trans (congrArg (fun u : ℂ => u + _) hadd₂))
   have hmul (c : ℂ) (f : ℂ → ℂ) : Real.circleAverage (fun z => c * f z) 0 1 =
       c * Real.circleAverage f 0 1 := by
     simpa only [smul_eq_mul] using
       (Real.circleAverage_fun_smul (a := c) (f := f) (c := 0) (R := 1))
-  simp_rw [hmul] at hsum
+  simp_rw [hmul] at hsum'
   rw [rational_zero_mean h hh r hr,
     divided_cauchy_average h hh _ hnorm hrI,
-    divided_cauchy_average h hh _ hnorm' hrI'] at hsum
-  rw [hsum]
+    divided_cauchy_average h hh _ hnorm' hrI'] at hsum'
+  rw [hsum']
   field_simp [Complex.ofReal_ne_zero.mpr hr0, Complex.I_ne_zero]
   <;> ring
 
 private theorem kernel_rational_integral (b θ : ℝ) (hb0 : 0 ≤ b) (hb1 : b < 1) :
     boundaryKernel b θ = ∫ t in (0 : ℝ)..1,
       (-2 * b ^ 2 * t * (1 - t)) *
-        (rationalKernel (b * t) (Complex.circleMap 0 1 θ)).re := by
-  have hrat (t : ℝ) : (rationalKernel (b * t) (Complex.circleMap 0 1 θ)).re =
+        (rationalKernel (b * t) (circleMap 0 1 θ)).re := by
+  have hrat (t : ℝ) : (rationalKernel (b * t) (circleMap 0 1 θ)).re =
       Real.cos θ * (1 + b ^ 2 * t ^ 2) /
         ((1 - b ^ 2 * t ^ 2) ^ 2 + 4 * (b ^ 2 * t ^ 2) * Real.cos θ ^ 2) := by
     convert rational_cosine_real ((b * t) ^ 2) θ using 1
-    · simp only [rationalKernel, Complex.circleMap_zero, Complex.ofReal_one, one_mul,
+    · simp only [rationalKernel, circleMap_zero, Complex.ofReal_one, one_mul,
         Complex.ofReal_pow, neg_mul, sub_neg_eq_add]
     · rw [mul_pow]
   rw [kernel_integral_interior b θ hb0 hb1]
@@ -658,25 +664,25 @@ private theorem kernel_pairing_interior (h : ℂ → ℂ) (hh : Differentiable �
     (b : ℝ) (hb0 : 0 < b) (hb1 : b < 1) :
     ((2 * Real.pi)⁻¹ : ℝ) •
       (∫ θ in (0 : ℝ)..(2 * Real.pi),
-        (boundaryKernel b θ : ℂ) * h (Complex.circleMap 0 1 θ)) =
+        (boundaryKernel b θ : ℂ) * h (circleMap 0 1 θ)) =
       ((b : ℂ) * Complex.I / 2) * ∫ t in (0 : ℝ)..1,
         (1 - (t : ℂ)) *
           (h ((b * t : ℝ) * Complex.I) - h (-(b * t : ℝ) * Complex.I)) := by
   let F : ℝ × ℝ → ℂ := fun p =>
     ((-2 * b ^ 2 * p.1 * (1 - p.1) : ℝ) : ℂ) *
-      ((rationalKernel (b * p.1) (Complex.circleMap 0 1 p.2)).re : ℂ) *
-      h (Complex.circleMap 0 1 p.2)
+      ((rationalKernel (b * p.1) (circleMap 0 1 p.2)).re : ℂ) *
+      h (circleMap 0 1 p.2)
   have hbt (t : ℝ) (ht : t ∈ Icc (0 : ℝ) 1) : |b * t| < 1 := by
     rw [abs_of_nonneg (mul_nonneg hb0.le ht.1)]
     nlinarith [ht.2]
   have hcψ : ContinuousOn
-      (fun p : ℝ × ℝ => rationalKernel (b * p.1) (Complex.circleMap 0 1 p.2))
+      (fun p : ℝ × ℝ => rationalKernel (b * p.1) (circleMap 0 1 p.2))
       (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) (2 * Real.pi)) := by
     unfold rationalKernel
     apply ContinuousOn.div (by fun_prop) (by fun_prop)
     intro p hp
     exact rationalKernel_den_ne (hbt p.1 hp.1) _
-      (by simp [Complex.norm_circleMap_zero])
+      (by simp [norm_circleMap_zero])
   have hF : ContinuousOn F (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) (2 * Real.pi)) := by
     exact ((by fun_prop : ContinuousOn
       (fun p : ℝ × ℝ => ((-2 * b ^ 2 * p.1 * (1 - p.1) : ℝ) : ℂ))
@@ -695,7 +701,7 @@ private theorem kernel_pairing_interior (h : ℂ → ℂ) (hh : Differentiable �
     simpa only [intervalIntegral.integral_of_le (by norm_num : (0 : ℝ) ≤ 1),
       intervalIntegral.integral_of_le Real.two_pi_pos.le] using
       (integral_integral_swap hip).symm
-  have hB (θ : ℝ) : (boundaryKernel b θ : ℂ) * h (Complex.circleMap 0 1 θ) =
+  have hB (θ : ℝ) : (boundaryKernel b θ : ℂ) * h (circleMap 0 1 θ) =
       ∫ t in (0 : ℝ)..1, F (t, θ) := by
     rw [kernel_rational_integral b θ hb0.le hb1]
     rw [← intervalIntegral.integral_ofReal, ← intervalIntegral.integral_mul_const]
@@ -726,6 +732,8 @@ private theorem kernel_pairing_interior (h : ℂ → ℂ) (hh : Differentiable �
       apply intervalIntegral.integral_congr
       intro t ht
       have ht' : t ∈ Icc (0 : ℝ) 1 := by simpa only [uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using ht
+      change ((2 * Real.pi)⁻¹ : ℝ) •
+        (∫ θ in (0 : ℝ)..(2 * Real.pi), F (t, θ)) = _
       rw [hangle]
       by_cases ht0 : t = 0
       · simp [ht0]
