@@ -1,0 +1,13 @@
+**Remark 10.3 (Multiplicity and parameter boundaries).** A pair $(a+ib,a-ib)$ with $b>0$ satisfies the source's Definition 6.1 directly: each nonreal conjugate occurs once, and each real number has multiplicity zero. This fact does not identify arbitrary lists satisfying conjugate membership with lists having equal multiplicities for nonreal conjugates. Conjugate membership alone imposes no such multiplicity equality; the two-node simple case has no multiplicity ambiguity.
+
+The condition $b=0$ is outside Definition 9.1 and Theorem 9.5, irrespective of any confluent convention used for separate results on doubled real nodes. The classification includes all admissible points with $b>0$, so there is no remaining admissible subregion of simple pairs requiring negative witnesses. The cases $k=0$, larger numbers of nodes, and general grids in the original all-$n$, all-$k$ Conjecture 6.3 are not settled by this two-node derivative theorem.
+
+**Open question 10.4 (Exact pointwise analytic error).** For each admissible $a,b$ and each fixed $x\in[-1,1]$, determine
+
+$$
+\sup_{g\in\mathscr E_2(\mathbb D)}
+\left|g'(x)-\frac{g(a+ib)-g(a-ib)}{2ib}\right|,
+$$
+
+and hence the exact analytic Kallioniemi set of that pair. Theorem 9.5 determines the supremum of this quantity over the interval and supplies a quadratic attaining it at a far endpoint, but does not determine every pointwise value. In particular the exact pointwise supremum at $x=1$ on the grids $W_d$ is not identified by the quartic lower bound of Section 8.
+

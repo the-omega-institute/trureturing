@@ -1,0 +1,10 @@
+**Lemma 9.2 (the common-fibre separation test).** For either a static label \(h\) or an online value \(\mu\), a decoder with the stated closed error contract exists if and only if
+\[
+u\ne v,\quad z(u)=z(v),\quad h(u)=h(v)
+\quad\Longrightarrow\quad
+\lvert\tau(u)-\tau(v)\rvert>2\epsilon.
+\tag{9.1}
+\]
+
+Proof. The two closed intervals of radius \(\epsilon\) about \(s\) and \(t\) intersect exactly when \(\lvert s-t\rvert\le2\epsilon\). If (9.1) fails, a point in the intersection has two legal explanations with the same endpoint and supplement, so no decoder can be correct on both. If (9.1) holds, every possible triple \((z,h,y)\) belongs to at most one word's observation set; define the decoder to return that word and to return \(\bot\) outside the union. The endpoint is typed, so equality here includes equality of its type. \(\square\)
+

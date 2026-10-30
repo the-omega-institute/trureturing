@@ -1,0 +1,62 @@
+**Theorem 29.2 (same-source installation with the original normalizer).**
+After Theorem 28.4 returns, run exactly the normalization and completed
+handoff of Theorem 26.1 on its authentic $P,n$. In particular retain
+
+$$
+ \bigl(P,K_d(P),n,F_{n+1}-1\bigr),\qquad
+ K_d(P)=\bigl(\rho_d(i_P),P[0:d]\bigr),\quad
+ i_P=\min\{i:H(P)\rho_d(i)=y(P)\},
+ \tag{ACR.123}
+$$
+
+with the original empty row/seed at $d=0$. The acquisition and
+normalization bills are additive on every execution:
+
+$$
+ \begin{aligned}
+ C_{\rm total}&\le CS^{40}4^r+C_{\rm norm}(P)+C_B+C_\phi
+                +O((d+n+1)L_{d,n}^2),\\
+ W_{\rm total}&\le CS^{40}4^r+W_{\rm norm}(P)+W_B+W_\phi
+                +O((d+n+1)L_{d,n}^2),\\
+ V_{\rm total}&\le CS^3+V_{\rm norm}(P)+V_B+V_\phi
+                +O(d+n+1+L_{d,n}).
+ \end{aligned}
+ \tag{ACR.124}
+$$
+
+Use the full-rank bounds (ACR.89) or the original deficient-rank bill
+(ACR.90), including rank computation, $e_d,\omega_d,v_d$, every
+tested-row transfer and every row-test write. Keep the explicit
+binary Fibonacci bill (ACR.108), the actual payload/ready-control
+writes and, when requested, the single forward-phase bill of §21.7.
+Actual service, code delivery and installation, binding and grants,
+allocation, intermediate and retained physical writes, retention
+and completed handoff retain all their physical tariffs and durations.
+Stationarity and sufficient backing cover this entire realized run.
+
+Proof. The new controller returns its output on sequential tapes, so
+the input to the §21 normalizer is already explicit. Its auxiliary
+Gaussian row was used only to find a proper verification candidate.
+Theorem 21.2 identifies the authentic passing fibre; Corollary 21.3
+selects its original first row, never an equivalent minimal recurrence
+or a newly ordered row. At deficient rank this remains the original
+enumeration with all of (ACR.90)'s costs. Theorem 26.1 then gives the
+Fibonacci arithmetic, optional forward evaluation and real writeback
+with the disjoint bills displayed above. Set ready only after all
+fields are actually installed in granted readable backing and the
+handoff completes. No predicted reply or logical flag creates a
+binding, permission or completed write.
+
+On the surviving actual binding, GPO Theorems 34.2--34.3 and 39.4
+therefore give the same spatial incidence, terminal boundary, actual
+birth chronology and synchronized memory views and their finite
+same-source continuation. Every later source update, local commit,
+Read and requested output keeps its own charge and synchronization
+conditions. GPO Proposition 39.5 gives request-sized evaluation;
+whole-tree, whole-boundary and full chronological output pay their
+potentially exponential output length. No private generator state,
+arbitrary erased journal, origin receipt, capability or physical
+duration is reconstructed. A bound on local bit work supplies no
+bound on the duration or weighted tariff of an actual service.
+$\square$
+

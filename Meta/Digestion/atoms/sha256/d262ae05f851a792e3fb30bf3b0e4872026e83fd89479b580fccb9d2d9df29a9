@@ -1,0 +1,88 @@
+**Theorem 24.1 (total supplemental acquisition with polynomial expected
+local cost).** Set
+
+$$
+K=d+\left\lceil\log_4(4L)\right\rceil.
+\tag{ACR.101}
+$$
+
+Allow at most $K$ attempts in each certified phase of Definition
+23.1. If one phase exhausts its attempts, abandon the fast acquisition
+and run the deterministic acquisition of Theorems 14.2 and 13.2 on
+the same unchanged root, using the already earned $h,H$. Stop that
+supplier after acquiring $P,n$, before any canonical normalization.
+After either route returns, execute the original normalization and
+writeback specified in §26 exactly once.
+
+For every actual source and cut, this supplemented acquisition returns
+the authentic $P,n$ on every coin tape. For absolute constants and
+with $S=d+H+2$, before normalization and its output arithmetic,
+
+$$
+\begin{aligned}
+Q_{\rm acq}&\le CS^6,&J_{\rm acq}&\le CS^7,&M_{\rm acq}&\le H,\\
+\mathsf{coins}_{\rm acq}&\le CS^6,&V_{\rm acq}&\le CS^8,\\
+\mathbb E C_{\rm acq},\ \mathbb E W_{\rm acq}&\le CS^{24},&
+C_{\rm acq},W_{\rm acq}&\le C4^dS^{24}.
+\end{aligned}
+\tag{ACR.102}
+$$
+
+The first line and the coin/backing bounds hold on every execution,
+including fallback executions. Expectations are only over the added
+fair coins, uniformly for each fixed source and cut. The last bound
+honestly retains exponential worst-case local work and writes.
+Source updates, resets, cloning and source-generator advances are zero.
+No polynomial bound on physical tariffs or elapsed service duration
+is asserted.
+
+Proof. Every failed phase preserves a certified state. Conditional
+failure bounds from Theorem 23.2 give
+
+$$
+\Pr\{\text{fallback}\}\le L4^{-K}\le\frac14\,4^{-d}.
+\tag{ACR.103}
+$$
+
+This is a union bound over exhausted phases, including the possibility
+that later phases are never reached. The fast part has at most $LK$
+attempts, whether or not it falls back. Its local work and writes
+are $O(S^{14})$ by (ACR.98), since $L,K=O(S)$.
+Its Reads and coins are $O(LK(H+2)^3R)=O(S^6)$ and its traffic
+is $O(S^7)$. These bounds include all failed attempts and their
+buffer, coin and counter writes. A bounded binary counter now records
+the at-most-$K$ attempts; it is part of the stated storage and writes.
+
+The fallback constructs and verifies the original common list, then
+measures the actual root and early child cones. Theorems 14.2--15.1
+give its complete acquisition work and writes at most
+$C4^dS^{24}$, acquisition backing $CS^8$, polynomially many Reads
+$O((4d+1)TH)$, and polynomial traffic $O((4d+1)TH^2)$, with
+$T$ exactly (ACR.48). Thus these interaction terms are at most
+$CS^5,CS^6$. Its catalogue preparation is still paid on every
+fallback run. The retained partial fast prefix is unnecessary to the
+fallback, but nothing is reset, cloned, advanced or replaced: only
+the local inference is restarted against the same stationary source.
+The already acquired spine remains valid.
+
+Keep the fallback's supplied bit-operation model and operand/backing
+costs; no free sequential simulation is presumed. Transfer its explicit
+earned $P,n$ into the local controller by §21.7's charged rule.
+With $O(S^8)$ supplier backing and $O(S)$ returned bits, the extra
+work and writes are $O(S^{17})$ and backing $O(S^8)$. These are
+included in the displayed fallback envelope, not in a repeated
+normalization. The pure fast part is already in the sequential model.
+Clearing fast buffers and initializing fallback buffers are paid writes.
+
+Multiplying the acquisition-only fallback work/write bound by
+(ACR.103) gives at most $CS^{24}/4$ in expectation; adding all fast
+work and the spine proves the expected terms of (ACR.102). No
+operation is erased from a realized fallback bill. The deterministic
+fallback terminates and returns authentic data on every source;
+all fast paths are finitely capped. Every coin tape therefore returns,
+including the all-zero tape of Theorem 23.3. Finite progress and
+completion premises are the original ones, and the stationary interval
+must cover the full realized exponential fallback when it occurs.
+This is stronger than almost-sure return but still weaker than the
+original every-execution polynomial TOTAL requirement. $\square$
+

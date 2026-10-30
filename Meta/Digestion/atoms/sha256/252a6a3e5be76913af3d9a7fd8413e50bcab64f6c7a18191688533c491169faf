@@ -1,0 +1,50 @@
+**Definition 22.1 (same-root certificate relation).** Retain Definition
+9.1 in its entirety. In particular the authentic all-index bound is
+$d$, the actual cut is mature, and the only source replies used here
+are paid total physical-literal presence bits at the one surviving
+stationary root. Earn $h,H=2h+1$ by Proposition 9.2. A proposed answer
+is $(\nu,A)$ with $n_0\le\nu\le H$ and
+$A=(a_1,\ldots,a_{2d})\in\{0,1\}^{2d}$; a malformed answer is
+rejected before source interaction. Letters $a,b$ below remain the
+physical ports; a numerical bit $a_j$ is not a port name.
+
+For a present cone $p$ and a proposed rank $\nu\ge2$, a rank
+certificate consists of physical suffixes $x,y$. Require
+$|x|=\nu-1$ and $\operatorname{Read}(px)=1$. The additional tests are
+
+$$
+\begin{array}{c|c|c}
+\nu&|y|&\text{required paid replies}\\
+2k+1&k&\operatorname{Read}(pya)=0\\
+2k&k-1&\operatorname{Read}(pyaa)=\operatorname{Read}(pyba)=0.
+\end{array}
+\tag{ACR.94}
+$$
+
+The checker does not assume that the supplied $y$ is present, and
+does not consult a supplied rank or an estimated mean. All displayed
+words are submitted literally to the original root. The root uses
+$p=\varepsilon$. Thus it needs at most three certificate Reads.
+
+After this root test, check the proposed prefix in increasing birth
+order. For birth $j$ compute
+$\tau_j=\min\{u\ge2:j\le F_{u+1}-1\}$ and reconstruct the old
+labelled tree at cut $\tau_j-1$ using the proposed first
+$B_{\tau_j-1}<j$ bits. Select its
+$(j-B_{\tau_j-1})$th beta leaf in physical lexicographic order;
+call its address $p_j(A)$. Put $t_j=\nu-\tau_j\ge1$ and
+$c_j=a$ for proposed bit one, $c_j=b$ for proposed bit zero.
+The birth witness is a suffix $v_j$ of length $t_j$, with required
+reply
+
+$$
+\operatorname{Read}\bigl(p_j(A)c_jv_j\bigr)=1.
+\tag{ACR.95}
+$$
+
+Accept exactly when every length, maturity, rank and birth test passes.
+A transcript records the actual paid replies to these tests, rather
+than predictions of them. Witness construction is outside this
+checking relation and has its own work, writes, backing and any
+discovery Reads.
+

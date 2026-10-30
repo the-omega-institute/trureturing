@@ -1,0 +1,15 @@
+#### 定义 5.3（双酉）
+
+对 $U:\mathbb{C}^d\otimes\mathbb{C}^d\to\mathbb{C}^d\otimes\mathbb{C}^d$，
+记 $U_{cd,ab}=\langle c,d|U|a,b\rangle$。
+定义横向重排
+
+$$
+\widetilde U_{(a,c),(b,d)}=U_{cd,ab}.
+$$
+
+若 $U$ 和 $\widetilde U$ 均为酉矩阵，称其在这两个切面下双酉。
+若指定更多等维分组均酉，则是相应的多酉要求。
+
+<a id="statement-5-4"></a>
+

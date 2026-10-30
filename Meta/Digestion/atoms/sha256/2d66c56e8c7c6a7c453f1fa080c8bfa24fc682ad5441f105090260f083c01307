@@ -1,0 +1,24 @@
+**定义 2.4 (Separated circular matchings and their decoder).** Let
+$\mathcal M_L$ consist of noncrossing perfect matchings on six distinct
+sites of the circle $\{1,\ldots,L\}$, with all six indexed sites at
+circular distance at least eight. Noncrossing means that no two matched
+pairs have alternating endpoints in circular order. Let $\rho$ add one
+to every site, preserving the matched pairs.
+
+Call such a matching *ordinary* if neither $n+3$ nor $n+4$ is an endpoint.
+For an ordinary matching, cut between $L$ and $1$ and call the smaller
+endpoint of each pair an opening and the larger a closing. Write the
+openings as $s_1<s_2<s_3$ and the closings as $t_1<t_2<t_3$. Define
+$D_0$ by
+
+$$
+(D_0(M))_{4-j}=[s_j,t_j-2],\qquad j=1,2,3. \tag{2.7}
+$$
+
+For a matching with endpoint $n+3$, put $j=1$; for one with endpoint
+$n+4$, put $j=2$. There can be only one such endpoint. Rotate back by
+$j$, decode the resulting ordinary matching as $I=D_0(\rho^{-j}M)$,
+and use the $t=j$ line of (2.6) to define $D(M)$. For an ordinary
+matching put $D(M)=D_0(M)$. Thus $D$ is specified entirely by row
+intervals.
+

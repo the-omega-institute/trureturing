@@ -1,0 +1,151 @@
+**定理 18.2（全部二值势的两个对径持续站点分类）。** 对每个奇素数 $p\ge3$、每个上述实际二值势 $v$ 和每个带标号站点 $j$，有
+
+$$
+\boxed{\quad
+\mathsf N_j(v)\land\mathsf N_{j+p}(v)
+\quad\Longleftrightarrow\quad
+\forall i\in\mathbb Z/(2p)\mathbb Z,\quad v_{2j-i}=v_i.
+\quad}
+\tag{18.2}
+$$
+
+右端成立时，一个同时与原矩阵 $\Delta_{2p}$、$\operatorname{diag}(v)$ 可交换的固定实际实正交矩阵为
+
+$$
+(O_j\psi)_i=\psi_{2j-i},\qquad O_j\ne I,\quad O_j\ne-I.
+\tag{18.3}
+$$
+
+**证明。** 置 $a=j+p$、$n=p-1$。沿用定义 15.1 的实际有序字 $u,z$ 和多项式 $F,G,B,D,M$。从 $a$ 的正、负方向走向 $j$ 时，有序开半圆字分别为 $\operatorname{rev}z$、$\operatorname{rev}u$；continuant 的反转不变性给出相应多项式分别为 $G,F$。因此，如果两个站点都持续，定理 15.3 给出的两个首一节点因子在 $x$ 坐标下都是
+
+$$
+M=\frac{F+G}{2},\qquad \deg_xM=n.
+\tag{18.4}
+$$
+
+这里使用的是实际主子矩阵和实际有向重构，不需要实际圈的谱简单。定理 13.3 给出 $M$ 无重根及 $M(x,0)=D_p(x)$，定理 15.3 的二值和约束给出
+
+$$
+s:=\sum_{r=1}^n u_r=\sum_{r=1}^n z_r.
+\tag{18.5}
+$$
+
+先说明此处可用于任意两个有理字的一个二择推断。若 $b,c\in\mathbb Q^n$，令 $F_b=\mathcal K_b$、$F_c=\mathcal K_c$，并在 $\mathbb Q(t)[x]$ 中取首一 gcd $d$。首一因子的整闭性使 $d$ 及其商属于 $\mathbb Q[t][x]$，故 $d(x,0)\mid D_p(x)$，且次数不降。三对角行列式的二分符号共轭给出
+
+$$
+F_b(-x,-t)=(-1)^nF_b(x,t),\qquad
+F_c(-x,-t)=(-1)^nF_c(x,t).
+$$
+
+gcd 的首一唯一性遂给出 $d(x,t)=(-1)^{\deg d}d(-x,-t)$。因此 $d(x,0)$ 的根集在取负下封闭。直接使用定理 13.3 证明中的两个有理分圆轨道：$D_p$ 的首一有理因子若具有这种根集，只能为 $1$ 或 $D_p$。所以
+
+$$
+\gcd(F_b,F_c)=1\quad\hbox{或}\quad F_b=F_c.
+\tag{18.6}
+$$
+
+这段推断只要求两个字有理、长度为 $p-1$；并未使用约定 16.1 的反周期关系。分圆轨道是定理 13.3 的既有输入，首一因子下降和 Gauss 引理亦同该定理及 [A]。
+
+反设 $F\ne G$。式 (18.6) 给出 $\gcd(F,G)=\gcd(F,M)=1$。在 $\overline{\mathbb Q(t)}$ 中取 $M$ 的任一根 $x_*$。引理 15.2 的实际递推在该域中仍成立，给出一个原圈本征向量 $\psi$，满足
+
+$$
+\psi_j=0,\qquad\psi_a=F(x_*,t)\ne0.
+$$
+
+另一方面，$a$ 的节点因子也是 $M$，故同一谱值有一个在 $a$ 为零的非零原圈本征向量。存在性使用引理 3.4，两个向量因在 $a$ 处的取值而线性无关。于是 $M$ 的每个根都是实际特征多项式
+
+$$
+\mathcal P(x,t)=\det(xI-A_{2p}+t\operatorname{diag}(v))
+$$
+
+的至少二重根。$M$ 无重根，故 $M^2\mid\mathcal P$；首一除法使二次首一商属于 $\mathbb Q[t][x]$。令 $e=v_j$、$f=v_a$，写
+
+$$
+\mathcal P=(x^2+\alpha(t)x+\beta(t))M^2.
+\tag{18.7}
+$$
+
+下面的系数计算全部属于同一个实际圈。两个半圆矩阵 $A_{\rm path}-t\operatorname{diag}(u)$、$A_{\rm path}-t\operatorname{diag}(z)$ 的迹均为 $-ts$，平方迹均为 $nt^2+2(n-1)$。所以 $F,G,M$ 的前两项系数相同：
+
+$$
+M=x^n+ts\,x^{n-1}
+ +\left(\frac{s^2-n}{2}t^2-(n-1)\right)x^{n-2}
+ +\text{更低次项}.
+\tag{18.8}
+$$
+
+$n=2$ 时公式止于常数项。对原圈矩阵 $A_{2p}-t\operatorname{diag}(v)$，总势和为 $S=2s+e+f$，迹为 $-tS$，平方迹为 $2pt^2+4p$。利用特征多项式的第二项系数 $((\operatorname{tr}K)^2-\operatorname{tr}(K^2))/2$，比较式 (18.7) 的最高两项，得到
+
+$$
+\begin{aligned}
+\alpha(t)&=t(e+f),\\
+\beta(t)&=\left(\frac{S^2-2p}{2}-(2s^2-n)-2s(e+f)\right)t^2-4\\
+ &=ef\,t^2-4.
+\end{aligned}
+$$
+
+最后一步使用 $n=p-1$ 和 $e^2=f^2=1$。因此反设所迫使的精确恒等式为
+
+$$
+\mathcal P=\bigl((x+te)(x+tf)-4\bigr)M^2.
+\tag{18.9}
+$$
+
+在 $t=0$，$M=D_p$ 的根全部严格小于 $2$。由于首一多项式根的连续性，对充分小的实数 $|t|$，实际矩阵 $K_t=A_{2p}-t\operatorname{diag}(v)$ 的最大本征值必为二次因子的较大根
+
+$$
+r(t)=-\frac{e+f}{2}t+
+ \sqrt{4+\frac{(e-f)^2}{4}t^2}.
+\tag{18.10}
+$$
+
+这里仅用自由最大本征值与其余根的严格间隙，不假设所有耦合处谱简单。在单位常向量上的 Rayleigh 商给出
+
+$$
+2-\frac{S}{2p}t\le r(t).
+$$
+
+将式 (18.10) 在零处的一次展开代入，分别令 $t\downarrow0$ 和 $t\uparrow0$，得到
+
+$$
+\frac{S}{2p}=\frac{e+f}{2}.
+\tag{18.11}
+$$
+
+若 $e=f$，平均值为 $e\in\{-1,1\}$ 的二值势必处处等于 $e$；于是 $u=z$、$F=G$，与反设矛盾。
+
+若 $e=-f$，式 (18.11) 给出 $S=0$。置 $\mathbf1=(1,\ldots,1)^{\mathsf T}$，将 $K_t$ 压缩到实际二维空间 $\operatorname{span}\{\mathbf1,v\}$。因为 $S=0$、$v_i^2=1$，基 $\mathbf1/\sqrt{2p},v/\sqrt{2p}$ 正交标准，压缩矩阵为
+
+$$
+\begin{pmatrix}2&-t\\-t&\gamma\end{pmatrix},\qquad
+\gamma=\frac{v^{\mathsf T}A_{2p}v}{2p}
+ =\frac1p\sum_{i=0}^{2p-1}v_iv_{i+1}\ge-2.
+\tag{18.12}
+$$
+
+这是定理 16.3 证明中二维压缩的同一个计算；其所需条件在这里由式 (18.11) 和二值性保证，未借用反周期性。对固定 $t\ne0$，压缩的最大本征值为
+
+$$
+L_t(\gamma)=\frac{2+\gamma+
+ \sqrt{(2-\gamma)^2+4t^2}}2,
+$$
+
+且 $L_t' (\gamma)>0$，$L_t(-2)=\sqrt{4+t^2}$。取充分小的非零实数 $t$，式 (18.10) 断言原矩阵的最大本征值等于 $\sqrt{4+t^2}$；Rayleigh 原理禁止压缩具有更大的最大本征值。因此 $\gamma=-2$，从而每个 $v_iv_{i+1}=-1$，势严格交替。严格交替势由 $i\mapsto2j-i$ 保持，仍给出 $u=z$、$F=G$，矛盾。两种端点情形穷尽，故 $F=G$。
+
+定理 15.3 的有向闭合式 (15.5) 现在给出 $B=D$。直接采用定理 16.3 证明末段的有向重构：已知首一 $K_k$ 及其删末位的 $K_{k-1}$，递推
+
+$$
+K_k=(x+tb_k)K_{k-1}-K_{k-2}
+$$
+
+的首一带余除法唯一恢复最后字母 $b_k$ 和下一项 $K_{k-2}$。从 $(F,B)=(G,D)$ 递归恢复全部字母，得 $u=z$。这正是原带标号势满足 $v_{2j-i}=v_i$；反射固定的两个端点 $j,a$ 对其自身势值没有额外限制。至此证明了必要性。
+
+反之，设该实际顶点反射保持 $v$。式 (18.3) 的置换保持实际邻接关系和势值，故分别与原 $\Delta_{2p}$、$\operatorname{diag}(v)$ 可交换。它固定 $e_j$，交换 $e_{j+1},e_{j-1}$，所以 $O_j\ne\pm I$。其负特征子空间
+
+$$
+W_j=\operatorname{span}_{\mathbb R}
+ \{e_{j+r}-e_{j-r}:1\le r\le p-1\}
+$$
+
+维数为 $p-1>0$，每个向量在 $j,a$ 均为零，且被每个实际 $H_t$ 保持。对每个实数 $t$，实对称限制 $H_t|_{W_j}$ 有非零实本征向量，因而同时提供两处所需的节点。这一充分机制也是 [LG] 引理 3.2 (2) 和定理 16.3 充分方向的实际反射机制。Rayleigh 原理及压缩比较使用 [M] §4.2–4.3；周期 Jacobi 的单值解释见 [J] §7.1–7.2，但式 (18.7)–(18.12) 直接计算原圈矩阵，不将辅助周期谱当作原谱。∎
+
