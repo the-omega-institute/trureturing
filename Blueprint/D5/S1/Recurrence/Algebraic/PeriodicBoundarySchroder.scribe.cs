@@ -56,8 +56,9 @@ internal sealed class PeriodicBoundarySchroderDocument : IScribeDocumentDefiniti
                         + "without convergence or a finite-column cutoff.")),
                     Paragraph(Text(
                         "Let S be Mathlib's largeSchroderSeries mapped to the rationals. "
-                        + "The original owner SchroderIntegralEGF.R supplies S, and its R_eq and R_zero give S=1+xS+xS^2 and constant "
-                        + "coefficient is one. For f2 take H(2j)=(1+xS)S^j and "
+                        + "The original owner SchroderIntegralEGF.R supplies S; its "
+                        + "R_eq and R_zero give S=1+xS+xS^2 and constant coefficient "
+                        + "one. For f2 take H(2j)=(1+xS)S^j and "
                         + "H(2j+1)=S^(j+1). The even and odd recurrences follow from "
                         + "this quadratic identity; the odd branch includes d=1.")),
                     Paragraph(Text(
