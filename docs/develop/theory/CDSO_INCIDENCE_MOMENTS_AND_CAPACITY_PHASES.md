@@ -3095,7 +3095,7 @@ n=O_R(\sqrt a),\qquad t=O_R(a^{-1/2}),\qquad
 0\le j\le4C_0.
 \tag{14.4}
 $$
-For the last lower bound, $j\ge-t>-1$ eventually and $j$ is an integer.
+For the last lower bound, $j\ge-t>-1$ eventually and $j$ is an integer. The upper bound $j\le4C_0$ follows from (14.3) and $t\ge0$, including when $n=0$. In that branch $t=0$ and $h+1=j\le4C_0$. In particular, along any sequence on the comparison sublevel with $h\to\infty$, one has $n>0$ eventually, without any positive lower bound on $h/\sqrt a$.
 
 Put $A=\{T\cap\mathcal D\ne\varnothing\}$, $p=\mathbb P(A)$, $e=\mathbb E[K;A]$, and let $H_D$ be the energy contribution of $\mathcal D$. The small tail marginals and the same residual give, for large $a$,
 $$
@@ -3181,7 +3181,29 @@ $$
 \end{aligned}
 \tag{14.9}
 $$
-The last inequality is arithmetic--geometric mean followed by $n=h+1-j$ and boundedness of $j$. The upper bound (14.1) differs from $2\sqrt2 h/\sqrt a$ by $O_R(a^{-1})$, so (14.9) excludes $j\ge2$ uniformly. If $n=0$, then $j=h+1\ge2$ is bounded; (14.8) with $v=0$ gives $d/a^2\ge2j-2-O_R(a^{-1/2})$, whereas (14.1) gives $d/a^2=O_R(a^{-1/2})$. This also is impossible. Hence $j=1$, $m=r$, and $n=h$. For large $a$, $b/a<c_0$, proving the strict separation. ∎
+The last inequality is arithmetic--geometric mean followed by $n=h+1-j$ and boundedness of $j$. The upper bound (14.1) differs from $2\sqrt2 h/\sqrt a$ by $O_R(a^{-1})$, so (14.9) excludes $j\ge2$ uniformly whenever $n>0$.
+
+It remains to exclude $n=0$. In this branch $\mathcal C=[s]$, $m=a+h+1$, $j=h+1$, and (14.3) gives
+$$
+2\le j=h+1=\sum_{i\in\mathcal C}(1-y_i)\le4C_0.
+$$
+The original law itself has mean $a$, deficit $j$ relative to $m$, and every marginal at least $c_0$. Applying the elementary bound proved in (14.7), with $q_0=a$, $d_0=j$ and $\gamma\ge c_0$, gives
+$$
+H\ge am^2-\frac{4mj^2}{c_0^2},\qquad
+\frac{d(x)}{a^2}
+\ge2h+\frac{j^2-1}{a}-\frac{4(a+j)j^2}{c_0^2a^2}
+\ge2h-\frac{D_R}{a},
+$$
+where one may take $D_R=4(1+4C_0)(4C_0)^2/c_0^2$. On the other hand, retaining the $h$ factor in (14.1) gives a constant $E_R\ge0$, depending only on $R$, such that
+$$
+2h-\frac{D_R}{a}
+\le\frac{d(x)}{a^2}
+\le\left(\frac{2\sqrt2}{\sqrt a}+\frac{E_R}{a^{3/2}}\right)h.
+\tag{14.9a}
+$$
+Choose $a$ large enough, depending only on $R$, that $D_R/a\le1/2$ and the coefficient of $h$ on the right is at most $1$. Since $h\ge1$, (14.9a) would imply $2h-1/2\le h$, a contradiction. Thus $n=0$ is impossible as well.
+
+Only $j=1$ remains, so $m=r$ and $n=h$. All thresholds used above depend only on $R$. For large $a$, $b/a<c_0$, proving the strict separation over the entire stated range. ∎
 
 **Lemma 14.3 (A uniform cost for every nonsingleton tail event).** Under (14.2), let $C$ and $D$ be the sets of Lemma 14.2 and put
 $$
