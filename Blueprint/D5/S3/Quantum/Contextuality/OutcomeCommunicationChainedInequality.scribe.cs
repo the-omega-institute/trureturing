@@ -37,7 +37,7 @@ internal sealed class OutcomeCommunicationChainedInequalityDocument : IScribeDoc
                 AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The finite odd-input COD inequality", "claim", ClaimFormula(),
                 "For every odd natural number of inputs and every finite hidden-variable binary COD model, "
-                    + "the relabelled chained expression is at least one. This is the repository's precise finite formal reading of the conjecture in TeX lines 321–325.",
+                    + "the relabelled chained expression is at least one. This is the precise finite formal reading of the conjecture in TeX lines 321–325.",
                 AssessedProvenance.FromRepo(Source)),
             Describe.Lean(
                 DescribeId.Create("outcome-communication-chained-inequality-result"),
