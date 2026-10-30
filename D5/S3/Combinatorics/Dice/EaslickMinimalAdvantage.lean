@@ -63,7 +63,8 @@ theorem winCount_eq_indexWinCount (d e : List ℕ) : winCount d e = indexWinCoun
       ∑ j : Fin e.length, if e[j.val] < x then 1 else 0 := by
     rw [← List.ofFn_getElem_eq_map e (fun y => if y < x then 1 else 0), List.sum_ofFn]
   simp_rw [winCount, row]
-  rw [indexWinCount, ← List.ofFn_getElem_eq_map d (fun x => ∑ j : Fin e.length, if e[j.val] < x then 1 else 0), List.sum_ofFn]
+  rw [indexWinCount, ← List.ofFn_getElem_eq_map d
+    (fun x => ∑ j : Fin e.length, if e[j.val] < x then 1 else 0), List.sum_ofFn]
 
 @[simp] private theorem wins_nil_left (e : List ℕ) : winCount [] e = 0 := by simp [winCount]
 @[simp] private theorem wins_nil_right (d : List ℕ) : winCount d [] = 0 := by simp [winCount]
@@ -83,9 +84,6 @@ private theorem wins_replicate (a b m k : ℕ) :
     winCount (List.replicate m a) (List.replicate k b) =
       if b < a then m * k else 0 := by
   by_cases h : b < a <;> simp [winCount, h]
-
-private theorem wins_single_left (a : ℕ) (e : List ℕ) :
-    winCount [a] e = (e.map fun b => if b < a then 1 else 0).sum := by simp [winCount]
 
 private theorem wins_shift (d e : List ℕ) (s : ℕ) :
     winCount (d.map (· + s)) (e.map (· + s)) = winCount d e := by
@@ -139,7 +137,7 @@ private theorem even_wins (k : ℕ) (hk : 2 ≤ k) :
   simp [evenX, evenY, winCount, threshold, hsq, hsub]
   ring
 
-private theorem odd_wins (k : ℕ) (hk : 1 ≤ k) :
+private theorem odd_wins (k : ℕ) (_hk : 1 ≤ k) :
     winCount (oddX k) (oddY k) = threshold (2*k+1) := by
   have hsq : (2*k+1)*(2*k+1) = (2*k*k+2*k)*2+1 := by ring
   have hdiv : ((2*k*k+2*k)*2+1)/2 = 2*k*k+2*k := by omega
@@ -198,7 +196,6 @@ theorem edge_iff (n : ℕ) (hn : 3 ≤ n) (d e : List ℕ)
   have hm := minimum_probability n hn
   have hp : winProbability d e = (winCount d e : ℚ) / (n*n : ℕ) := by
     simp [winProbability, ← winCount_eq_indexWinCount, hd.1, he.1]
-  have hden : (n*n : ℚ) ≠ 0 := by positivity
   constructor
   · intro h
     have hmin : winProbability d e = (threshold n : ℚ) / (n*n : ℕ) := by
@@ -311,11 +308,11 @@ theorem padded_isDie (r b t j : ℕ) (c : Bool) (d : List ℕ)
       simpa only [List.pairwise_map, Nat.add_le_add_iff_right] using hsort
     cases c <;>
       simp [padded, List.pairwise_append, List.pairwise_replicate, List.mem_replicate, hm] <;>
-      aesop (add safe (by omega))
+      aesop (add safe (by omega)) (add safe (by have hx := hb _ (by assumption); omega))
   · intro x hx
     cases c <;>
       simp [padded, List.mem_replicate, List.mem_map] at hx <;>
-      aesop (add safe (by omega))
+      aesop (add safe (by omega)) (add safe (by have hx := hb _ (by assumption); omega))
 
 private theorem padded_central (b t j : ℕ) (c : Bool) (d : List ℕ)
     (hb : ∀ x ∈ d, 1 ≤ x ∧ x ≤ b) :
@@ -329,7 +326,7 @@ private theorem padded_central (b t j : ℕ) (c : Bool) (d : List ℕ)
     omega
   have h₁ : ¬ b+5 ≤ b+4 := by omega
   have h₂ : ¬ b+6 ≤ b+4 := by omega
-  cases c <;> simp [padded, List.filter_append, List.filter_replicate, hmid, h₁, h₂]
+  cases c <;> simp [padded, List.filter_append, List.filter_replicate, hmid, h₁, h₂] <;> exact hb
 
 private theorem padded_low_count (b t j : ℕ) (c : Bool) (d : List ℕ)
     (hb : ∀ x ∈ d, 1 ≤ x ∧ x ≤ b) :
@@ -352,7 +349,7 @@ theorem padded_eq_imp (b t j k : ℕ) (c c' : Bool) (d e : List ℕ)
   constructor
   · have hm := congrArg (fun l : List ℕ => l.filter (fun x => 5 ≤ x ∧ x ≤ b+4)) h
     rw [padded_central b t j c d hd, padded_central b t k c' e he] at hm
-    exact List.map_injective (fun x y hxy => Nat.add_right_cancel hxy) hm
+    exact (List.map_injective_iff.mpr (fun x y hxy => Nat.add_right_cancel hxy)) hm
   · intro hc
     subst c'
     have hm := congrArg (fun l : List ℕ => l.count (1+2*c.toNat)) h
