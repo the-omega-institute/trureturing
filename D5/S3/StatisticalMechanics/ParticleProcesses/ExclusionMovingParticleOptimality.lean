@@ -93,7 +93,7 @@ private lemma expect_product {v : Type} [Fintype v]
     (if t = 1 then α else 1 - α) * g z t)]
   apply Finset.prod_congr rfl
   intro z _
-  simp only [Fin.sum_univ_two, Fin.zero_eta, Fin.isValue, Fin.reduceEq, ite_false,
+  simp only [Fin.sum_univ_two, Fin.isValue, Fin.reduceEq, ite_false,
     ite_true]
 
 private lemma expect_coordinate {v : Type} [Fintype v]
@@ -208,7 +208,14 @@ private lemma linear_energy {v : Type} [Fintype v] [DecidableEq v]
     exclusionEnergy c α (linearObservable h) = α * (1 - α) * electricEnergy c h := by
   change (1 / 2 : ℝ) * ((1 / 2) *
     ∑ u, ∑ w, c u w * expect α (fun ζ => grad u w (linearObservable h) ζ ^ 2)) = _
-  simp only [linear_gradient_moment]
+  have hm : (∑ u, ∑ w, c u w * expect α (fun ζ => grad u w (linearObservable h) ζ ^ 2)) =
+      ∑ u, ∑ w, c u w * (2 * α * (1 - α) * (h u - h w) ^ 2) := by
+    apply Finset.sum_congr rfl
+    intro u _
+    apply Finset.sum_congr rfl
+    intro w _
+    rw [linear_gradient_moment]
+  rw [hm]
   change _ = α * (1 - α) * ((1 / 2) * ∑ u, ∑ w, c u w * (h u - h w) ^ 2)
   simp only [Finset.mul_sum]
   apply Finset.sum_congr rfl
