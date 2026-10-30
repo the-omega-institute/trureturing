@@ -1,0 +1,15 @@
+**Lemma 8.2 (FCS finite coverage and exact multiplicities).** For the finite installed menu of $T$, there is an exactly attained finite prefix-profile partition of $\mathcal U_*$ on which both good sets and the whole target are constant. Each retained closed profile has exactly one actual point; each retained live profile has countably infinitely many actual points.
+
+Proof. This is FCS Propositions 4.3, 5.2 and Theorem 4.4; the needed mathematical ingredients are as follows. Let
+
+$$
+b=\max\bigl(\{0\}\cup\{|a_T(q)|-3:q\in Q_T,\ |a_T(q)|\ge3\}\bigr).
+\tag{POC.20}
+$$
+
+Expose each class through inclusive relative depth $b$, stopping at early literal alpha/beta leaves with their absent cones. At a frontier branch place a live name filled only by a finite branch image. Different names are independent; the same whole partner pattern and its names recur at both partner occurrences. For the six resulting free terms $A_d$, retain the entire list $A_d\ne A_e$, $d\ne e$. The structural image predicate has alpha false, beta and names true, and a pair true exactly when it is literally $E$ or both children pass. It is exact under all branch-image fillings: a name cannot become a leaf, so it cannot create a new literal-$E$ alternative. Retain profiles passing this predicate on $\mathscr S(A)$ and whose different class terms have different free syntax.
+
+To prove simultaneous attainment, let $h\ge1$ bound the free-term heights, treating names as leaves, and assign distinct names $z_i$ to $B_{N_i}$ with every $N_i>h$ and successive gaps greater than $h$. At a first syntactic mismatch different concrete constructors remain different and different names have different heights. A name against a ground term has height greater than $h$. Against a nonvariable term containing names, let $N_j$ be the largest assigned height present. If $N_j<N_i$, the evaluated subterm has height at most $\max(h,N_j+h)<N_i$; if $N_j>N_i$, it has height greater than $N_i$; if $N_j=N_i$, the name occurs at positive depth and again gives greater height. Thus every nontrivial whole-term negative holds simultaneously. The image test and inverse give one actual origin of precisely that exposed profile. With no live names, unequal free syntax is already unequal ground syntax. Conversely every actual origin exposes a unique passing profile; identical free class terms could not yield its required distinct values. This proves exact finite coverage, with no missing source.
+
+A closed profile fixes the whole tuple and its unique inverse, hence is singleton. In a live profile increase every $N_i$ by $k\ge0$. Separation gaps and the exposed prefix remain fixed, and a chosen live occurrence has strictly increasing inserted height. The resulting tuples and inverse origins are all different. Finite terms are countable, so the cell is countably infinite. All installed literal replies are fixed by the prefix and short common exterior; class-root types fix the whole target. Lemma 6.2 consequently fixes each good set. This includes unused serving words in $b$ and leaves finite/closed pieces literal. $\square$
+
