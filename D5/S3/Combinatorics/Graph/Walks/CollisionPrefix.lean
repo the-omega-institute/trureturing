@@ -9,6 +9,8 @@ import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Fintype.Prod
 import Mathlib.Tactic
 
+/-! Ordered edge sequences, missing-edge classification, and exact collision counts. -/
+
 set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Graph.Walks.CollisionPrefix
@@ -39,6 +41,12 @@ def OrderedEdges (V : Type u) (v : V) (k : ℕ) :=
   {e : Fin (k + 1) → V × V //
     (e 0).1 = v ∧ ∀ i : Fin k, (e i.castSucc).2 = (e i.succ).1}
 
+noncomputable instance orderedEdgesFintype {V : Type u} [Fintype V] (v : V) (k : ℕ) :
+    Fintype (OrderedEdges V v k) := by
+  classical
+  unfold OrderedEdges
+  infer_instance
+
 /-- Convert actual vertex walks to, and reconstruct them from, ordered edges.
 The inverse retains the first vertex and each successive edge head. -/
 def orderedEdgesEquiv {V : Type u} (v : V) (k : ℕ) :
@@ -51,6 +59,7 @@ def orderedEdgesEquiv {V : Type u} (v : V) (k : ℕ) :
     refine Fin.cases ?_ (fun j => ?_) i
     · exact w.2.symm
     · rfl
+
   right_inv e := by
     apply Subtype.ext
     funext i
@@ -59,6 +68,54 @@ def orderedEdgesEquiv {V : Type u} (v : V) (k : ℕ) :
       · exact e.2.1.symm
       · exact e.2.2 j
     · rfl
+
+/-- The collision conditions stated directly on the source's ordered edges. -/
+def SourceCollision {V : Type u} {v : V} {k : ℕ} (e : OrderedEdges V v k) : Prop :=
+  Function.Injective (fun i : Fin k => e.1 i.castSucc) ∧
+    e.1 (Fin.last k) ∈ Set.range (fun i : Fin k => e.1 i.castSucc) ∧
+    ∀ a : V, a = v ∨ ∃ i : Fin (k + 1), (e.1 i).2 = a
+
+private theorem coverage_iff {V : Type u} {k : ℕ} (w : Walk V (k + 1)) :
+    Function.Surjective w ↔ ∀ a : V, a = w 0 ∨ ∃ i : Fin (k + 1), (edge w i).2 = a := by
+  constructor
+  · intro h a
+    obtain ⟨i, hi⟩ := h a
+    exact Fin.cases (fun hzero => Or.inl hzero.symm)
+      (fun j hj => Or.inr ⟨j, hj⟩) i hi
+  · intro h a
+    rcases h a with ha | ⟨i, hi⟩
+    · exact ⟨0, ha.symm⟩
+    · exact ⟨i.succ, hi⟩
+
+/-- Exact collision-walk correspondence, including fixed start and coverage.
+In particular no quotient by cyclic rotation enters either finite carrier. -/
+def sourceCollisionEquiv {V : Type u} (v : V) (k : ℕ) :
+    {w : Walk V (k + 1) // Collision v w} ≃
+      {e : OrderedEdges V v k // SourceCollision e} where
+  toFun w := ⟨orderedEdgesEquiv v k ⟨w.1, w.2.1⟩,
+    w.2.2.1, w.2.2.2.1, by
+      change ∀ a, a = v ∨ ∃ i, (edge w.1 i).2 = a
+      simpa only [w.2.1] using (coverage_iff w.1).mp w.2.2.2.2⟩
+  invFun e :=
+    let w := (orderedEdgesEquiv v k).symm e.1
+    ⟨w.1, w.2, by
+      have he : edge w.1 = e.1.1 := congrArg Subtype.val
+        ((orderedEdgesEquiv v k).apply_symm_apply e.1)
+      have hp : edge (initialWalk w.1) = fun i : Fin k => e.1.1 i.castSucc := by
+        funext i
+        exact congrFun he i.castSucc
+      refine ⟨?_, ?_, ?_⟩
+      · simpa only [hp] using e.2.1
+      · simpa only [hp, he] using e.2.2.1
+      · apply (coverage_iff w.1).mpr
+        simpa only [he, w.2] using e.2.2.2⟩
+  left_inv w := by
+    exact Subtype.ext (congrArg
+      (fun p : {u : Walk V (k + 1) // u 0 = v} => p.1)
+      ((orderedEdgesEquiv v k).symm_apply_apply ⟨w.1, w.2.1⟩))
+  right_inv e := by
+    apply Subtype.ext
+    exact (orderedEdgesEquiv v k).apply_symm_apply e.1
 
 private def indicator {V : Type u} [DecidableEq V] (a x : V) : ℤ :=
   if a = x then 1 else 0
@@ -174,5 +231,96 @@ theorem collision_prefix_structure {n : ℕ} (hn : 2 ≤ n) (v : Fin n)
         (a = b ∧ a ≠ v ∧ initialWalk w (Fin.last (n * n - 1)) = v)) := by
   have hs : initialWalk w 0 = v := h.1
   simpa only [hs] using prefix_structure hn (initialWalk w) h.2.1
+
+/-- Full edge coverage records actual directed edges, rather than a count formula. -/
+def Euler (n : ℕ) (v : Fin n) :=
+  {w : Walk (Fin n) (n * n) // w 0 = v ∧ Function.Bijective (edge w)}
+
+noncomputable instance eulerFintype (n : ℕ) (v : Fin n) : Fintype (Euler n v) := by
+  classical
+  unfold Euler
+  infer_instance
+
+private theorem full_closed {n : ℕ} (v : Fin n) (w : Euler n v) :
+    w.1 (Fin.last (n * n)) = v := by
+  have ht := telescope (fun i => indicator (w.1 i) v)
+  have hs := Equiv.sum_comp (Equiv.ofBijective (edge w.1) w.2.2)
+    (fun e : Fin n × Fin n => indicator e.1 v - indicator e.2 v)
+  have hz := complete_balance v
+  change (∑ i : Fin (n * n), (indicator (w.1 i.castSucc) v - indicator (w.1 i.succ) v)) = _ at hs
+  have hh : indicator (w.1 0) v - indicator (w.1 (Fin.last (n * n))) v = 0 := by
+    linarith
+  by_contra hne
+  simp [indicator, w.2.1, hne] at hh
+
+private theorem full_covers {n : ℕ} (v : Fin n) (w : Euler n v) :
+    Function.Surjective w.1 := by
+  intro a
+  obtain ⟨i, hi⟩ := w.2.2.2 (a, a)
+  exact ⟨i.castSucc, congrArg Prod.fst hi⟩
+
+private def appendVertex {V : Type u} {k : ℕ} (w : Walk V k) (z : V) : Walk V (k + 1) :=
+  Fin.snoc w z
+
+private theorem initial_snoc {V : Type u} {k : ℕ} (w : Walk V k) (z : V) :
+    initialWalk (appendVertex w z) = w := by
+  funext i
+  exact Fin.snoc_castSucc (α := fun _ : Fin (k + 2) => V) z w i
+
+private theorem last_edge_snoc {V : Type u} {k : ℕ} (w : Walk V k) (z : V) :
+    edge (appendVertex w z) (Fin.last k) = (w (Fin.last k), z) := by
+  change ((appendVertex w z) (Fin.last k).castSucc,
+    (appendVertex w z) (Fin.last (k + 1))) = _
+  simp only [appendVertex, Fin.snoc_castSucc, Fin.snoc_last]
+
+/-- Delete the final repeated edge, or append one of the n outgoing edges.
+This is an equivalence of actual ordered finite carriers. -/
+noncomputable def longCollisionEquiv (n : ℕ) (v : Fin n) :
+    {w : Walk (Fin n) (n * n + 1) // Collision v w} ≃ Euler n v × Fin n where
+  toFun w := (⟨initialWalk w.1, w.2.1,
+    (Fintype.bijective_iff_injective_and_card _).mpr
+      ⟨w.2.2.1, by simp⟩⟩, w.1 (Fin.last (n * n + 1)))
+  invFun p := ⟨appendVertex p.1.1 p.2, by
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · change appendVertex p.1.1 p.2 0 = v
+      simpa only [appendVertex, Fin.snoc_apply_zero] using p.1.2.1
+    · rw [initial_snoc]
+      exact p.1.2.2.1
+    · rw [initial_snoc, last_edge_snoc, full_closed v p.1]
+      exact p.1.2.2.2 (v, p.2)
+    · intro a
+      obtain ⟨i, hi⟩ := full_covers v p.1 a
+      exact ⟨i.castSucc, (Fin.snoc_castSucc (α := fun _ : Fin (n * n + 2) => Fin n) p.2 p.1.1 i).trans hi⟩⟩
+  left_inv w := by
+    apply Subtype.ext
+    exact Fin.snoc_init_self w.1
+  right_inv p := by
+    apply Prod.ext
+    · apply Subtype.ext
+      exact initial_snoc _ _
+    · exact Fin.snoc_last (α := fun _ : Fin (n * n + 2) => Fin n) _ _
+
+/-- T(n,k) counts the literal ordered edge sequences of total length k. -/
+noncomputable def collisionCount (n : ℕ) (v : Fin n) (k : ℕ) : ℕ := by
+  classical
+  exact match k with
+    | 0 => 0
+    | k + 1 => Fintype.card {e : OrderedEdges (Fin n) v k // SourceCollision e}
+
+/-- The number of full ordered Euler walks with this fixed start. -/
+noncomputable def eulerCount (n : ℕ) (v : Fin n) : ℕ := by
+  classical
+  exact Fintype.card (Euler n v)
+
+/-- The denominator count is n times the number of full ordered Euler walks. -/
+theorem long_count (n : ℕ) (v : Fin n) :
+    collisionCount n v (n * n + 1) = n * eulerCount n v := by
+  classical
+  change Fintype.card {e : OrderedEdges (Fin n) v (n * n) // SourceCollision e} = _
+  calc
+    _ = Fintype.card {w : Walk (Fin n) (n * n + 1) // Collision v w} :=
+      Fintype.card_congr (sourceCollisionEquiv v (n * n)).symm
+    _ = Fintype.card (Euler n v × Fin n) := Fintype.card_congr (longCollisionEquiv n v)
+    _ = n * eulerCount n v := by simp [Fintype.card_prod, eulerCount, Nat.mul_comm]
 
 end D5.S3.Combinatorics.Graph.Walks.CollisionPrefix

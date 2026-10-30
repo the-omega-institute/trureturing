@@ -12,6 +12,14 @@ internal sealed class CollisionPrefixDocument : IScribeDocumentDefinition
         "Almost-complete ordered directed walks",
         H("Almost-complete ordered directed walks"), Blocks(
             Paragraph(Text("A walk of length k is a function from Fin(k+1) to the vertex type. Its edge at i is the ordered pair of its vertices at i and i+1. Thus loops are included, the first position is distinguished, and no rotations are identified. Write E(w) for the finite image of the edge map and end(w) for the last vertex. The prefix deletes only the final edge and its terminal vertex. Collision(v,w) means that w starts at v, its prefix edges are pairwise distinct, its final edge occurs in the prefix, and every vertex is visited.")),
+            Definition("Walk", "Ordered vertex walks", "For every vertex type V and natural k, Walk(V,k) is the function type Fin(k+1) to V."),
+            Definition("edge", "Actual directed edges", "For any walk w and i in Fin(k), edge(w,i) is (w(i),w(i+1)), with both vertices interpreted in Fin(k+1)."),
+            Definition("initialWalk", "Deleting the last edge", "For a walk of length k+1, initialWalk restricts its vertex function to the first k+1 positions."),
+            Definition("Collision", "First collision at the final edge", "The walk starts at v, its first k directed edges are distinct, its final edge repeats one of them, and its vertex function is surjective."),
+            Definition("OrderedEdges", "Source edge sequences", "An element consists of k+1 ordered pairs. The first tail is v, and each edge head equals the next edge tail."),
+            Definition("orderedEdgesEquiv", "Reconstructing vertex walks", "For every V, v in V and natural k, based vertex walks of length k+1 are equivalent to OrderedEdges(V,v,k). The inverse writes v followed by the successive edge heads. Both composites are the identity."),
+            Definition("SourceCollision", "Collision directly on ordered edges", "The first k edges are distinct, the last repeats one of them, and each vertex is either v or a head of one of the k+1 edges."),
+            Definition("sourceCollisionEquiv", "Exact source collision correspondence", "For every V, v and k, collision vertex walks of length k+1 are equivalent to ordered edge sequences satisfying SourceCollision. The equivalence preserves the distinguished start, adjacency, distinctness, final repetition and vertex coverage. For finite V both carriers are finite and consequently have equal cardinalities."),
             Describe.Lean(DescribeId.Create("collision-prefix-structure"),
                 DeclarationHandle.Create(Owner + "prefix_structure"),
                 H("The two omitted-edge configurations"),
@@ -23,7 +31,31 @@ internal sealed class CollisionPrefixDocument : IScribeDocumentDefinition
                 H("The actual prefix of an edge-collision walk"),
                 StatementSource.FromAuthor(CollisionFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For an edge-collision walk of length (n*n-1)+1, the same alternatives hold for its actual prefix with the specified starting vertex v. This length equals n*n for n at least two. The prefix already visits every vertex. These structural statements do not enumerate the two classes or assert the ratio of their cardinalities."))),
+                DescribeRole.Theorem),
+            Definition("Euler", "Full ordered Euler walks", "Euler(n,v) consists of actual walks of length n*n starting at v whose edge map is bijective onto Fin(n) times Fin(n). The incidence sum proves that every such walk ends at v, and surjectivity of the edge map proves that it visits every vertex."),
+            Definition("longCollisionEquiv", "Appending the repeated final edge", "For every n and v in Fin(n), collision walks of length n*n+1 are equivalent to Euler(n,v) times Fin(n). Delete the final edge in one direction. In the other, append the selected destination to the full Euler walk. All directed edges have already occurred, so the appended edge repeats one. The two operations are inverse on linear ordered walks."),
+            Definition("collisionCount", "The literal collision count", "The value at total length zero is zero. At length k+1 the value is the finite cardinality of the source's ordered edge sequences satisfying SourceCollision, with fixed start v on n labeled vertices."),
+            Definition("eulerCount", "The Euler-walk count", "The finite cardinality of Euler(n,v), with the first vertex and cut fixed."),
+            Describe.Lean(DescribeId.Create("collision-long-count"),
+                DeclarationHandle.Create(Owner + "long_count"), H("The denominator count"),
+                StatementSource.FromAuthor(LongCountFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Apply the exact source collision correspondence and the append/delete equivalence, then take finite cardinalities. The equality supplies the denominator factor n without assuming a factorial formula. It does not assert that the Euler count is positive or establish the numerator count."))),
                 DescribeRole.Theorem))));
+
+    private static DocumentBlock Definition(string name, string title, string text) =>
+        Describe.Lean(DescribeId.Create("collision-prefix-definition-" + name.ToLowerInvariant()),
+            DeclarationHandle.Create(Owner + name), H(title), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), DescribeRole.Definition);
+
+    private static Formula LongCountFormula()
+    {
+        Formula n = F.Id("n"), v = F.Id("v");
+        Formula length = new Formula.Binary(new Formula.Binary(n, FormulaBinaryOperator.Multiply, n),
+            FormulaBinaryOperator.Add, D(1));
+        return Disp(All("n", Call("Nat"), All("v", Call("Fin", n),
+            Eq(Call("collisionCount", n, v, length),
+                new Formula.Binary(n, FormulaBinaryOperator.Multiply, Call("eulerCount", n, v))))));
+    }
 
     private static Formula PrefixFormula()
     {

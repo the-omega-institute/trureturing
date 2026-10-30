@@ -154,4 +154,6 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end ActualCollision
 
+
+
 end Reg.D5.S3.Combinatorics.Graph.Walks.CollisionPrefix
