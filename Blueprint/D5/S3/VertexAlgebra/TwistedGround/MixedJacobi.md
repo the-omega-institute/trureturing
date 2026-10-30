@@ -4,7 +4,7 @@
 
 Finite actual mixed coefficient transport and the Leech vacuum channel
 
-The original Carrier, ActualTensor, correctedField, tensor stress L1, rank/16 intercept and selected actualForm are retained. The finite transport statements do not identify the fixed restricted dual with the original fixed source. All bilinear pairings retain their original ordered slots.
+The original Carrier, ActualTensor, correctedField, actual tensor lowering T, original inverse-Gram Sugawara source L1, rank/16 intercept and selected actualForm are retained. The finite transport statements do not identify the fixed restricted dual with the original fixed source. All bilinear pairings retain their original ordered slots.
 
 For finite Mobius transport, the input cutoff exceeds its maximum supported odd weight. The common rectangle cutoff also exceeds the maximum supported odd weight of each corrected-field output on those finitely many lowered inputs. Input nilpotence kills the omitted columns; actual output nilpotence kills the remaining omitted rows. The map (i,j) to (n=i+j,i), with inverse (n,i) to (i,n-i), is used only on that bounded rectangle.
 
@@ -14,7 +14,7 @@ For signed ordered-product transport, let o be the Hahn order of the rightmost a
 
 The vacuum-channel construction uses RealLeech.exists_positive_even_unimodular_gram, retaining the integral charge equivalence with the actual Golay real lattice and its original pairing. A single lowest half-oscillator on an actual ground basis vector has negative parity and conformal weight two. Nondegeneracy of the unchanged form supplies a detecting vector, and odd-grade orthogonality supplies a detecting basis vector of the same weight. Evaluating the normalized coefficient on the actual vacuum gives B(v,u) at standard mode I_3, and this value is nonzero. Neither a positive form nor a symmetry premise is used.
 
-These are repository Lean finite coefficient derivations using the existing covariance, inversion, nondegeneracy and actual Golay lattice suppliers. FLM's PNAS announcement supplies the carrier conventions recorded with MixedIntertwiner; it is not attributed a detailed proof of these formulas. The full signed all-source mixed Jacobi identity still requires the finite source-law substitution and the uniform transformed-input support bounds and both signed triangular branch identifications. The first dual-action branch is evaluated explicitly on its actual target grade by mixed_first_branch_pairing. Three-twisted crossing and identification of the restricted dual with the original fixed source are separate obligations.
+These are repository Lean finite coefficient derivations using the existing covariance, inversion, nondegeneracy and actual Golay lattice suppliers. FLM's PNAS announcement supplies the carrier conventions recorded with MixedIntertwiner; it is not attributed a detailed proof of these formulas. MixedJacobiFinite completes the full signed all-source mixed Jacobi identity through the finite source-law substitution, uniform transformed-input support bounds and both signed triangular branch identifications. The first dual-action branch is evaluated explicitly on its actual target grade by mixed_first_branch_pairing. Three-twisted crossing and identification of the restricted dual with the original fixed source are separate obligations.
 
 **Theorem 1.1 (Finite evaluation of original all-order Mobius covariance).**
 
