@@ -339,11 +339,9 @@ private lemma inertia_upper_bound {m : ℕ} (hm : 1 ≤ m) (d : ℝ)
   rw [hdim, hcod] at hd
   exact hd
 
-private lemma result_core : claim := by
+theorem result : claim := by
   intro m hm d hd u hu0 huLast hsteady hpos k hk hbroken h
   exact ⟨inertia_lower_bound hm d u hd hpos k hk hbroken h,
     inertia_upper_bound hm d u hd hpos k hk hbroken h⟩
-
-theorem result : claim := result_core
 
 end D5.S3.StatisticalMechanics.LennardJonesChainBreakInstabilityCount
