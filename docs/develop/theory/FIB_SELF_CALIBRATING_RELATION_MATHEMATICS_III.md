@@ -2750,3 +2750,366 @@ Casini--Garulli--Vicino，
 宣称外部文献首创性。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 15. 固定正容限下自适应切口的实际分离与二维边界
+
+### 定义 15.1（固定规范成功域与幸存块）
+
+固定有限实数 $\varepsilon>0$ 和 $k\ge2$，沿用定义 9.1、13.1、14.1
+的完整 $\mathcal M_k$、至多两项严格正来源、普通初始实秩、单条不可复制不可复位
+轨迹，以及初读和每个原子后必读的收费合同。误差满足闭约束
+$|\eta_i|\le\varepsilon$，允许任意相关和历史依赖；确定性完整历史规则不附加
+正则性。记 $p_{\le q}=(p_0,\ldots,p_q)$，定义
+
+$$
+ \begin{aligned}
+ \mathcal F_k(\varepsilon)
+ &=\{R\in\mathcal M_k:\ \exists q\in\{0,\ldots,k-1\}\quad
+       \forall p\in P_\varepsilon(R)\quad
+           \neg\mathsf C_q(R,p_{\le q})\},\\
+ H(R)&=(R_{ij})_{0\le i\le k-2,\ 0\le j<k}.
+ \end{aligned}
+\tag{15.1}
+$$
+
+$P_\varepsilon$ 和 $\mathsf C_q$ 恰为 (14.3)--(14.4) 的共同来源系统。
+由引理 13.2、14.4，$\mathcal F_k(\varepsilon)$ 是固定某个规范切口、在其
+完整规范历史末端以严格正相容性规则全误差成功的来源之并；允许任意其他可靠
+末端规则也不扩大这个并集。定理 14.5 给出
+$\mathcal F_k(\varepsilon)\subseteq\mathcal I_k(\varepsilon)$。
+这里没有把不同切口的数据放入同一次运行。
+
+### 定理 15.2（幸存块秩一时的共同伴随与切口量词坍缩）
+
+对每个 $R\in\mathcal M_k$，有
+
+$$
+ \operatorname{rank}H(R)=1
+ \quad\Longleftrightarrow\quad
+ \exists c,v\in\mathbb R_{>0}^k:\quad
+ N(cv^{\mathsf T})=NR,\quad
+ \operatorname{tr}(cv^{\mathsf T})=\operatorname{tr}R.
+\tag{15.2}
+$$
+
+在此条件下，只要实际首原子是 $N$，任何 $\varepsilon$-可靠完整历史协议
+在该分支的任何允许后继历史上都不能有限输出 $2$。并且
+
+$$
+ \forall p\in P_\varepsilon(R)\quad
+ \forall q\in\{1,\ldots,k-1\}\quad
+       \mathsf C_q(R,p_{\le q}),
+\tag{15.3}
+$$
+
+从而在同一实际来源和同一 $\varepsilon$ 上，
+
+$$
+ \begin{aligned}
+ &\forall p\in P_\varepsilon(R)\ \exists q<k\quad
+         \neg\mathsf C_q(R,p_{\le q})\\
+ &\quad\Longleftrightarrow\quad
+   \forall p\in P_\varepsilon(R)\quad\neg\mathsf C_0(R,p_0)\\
+ &\quad\Longleftrightarrow\quad
+   \exists q<k\ \forall p\in P_\varepsilon(R)\quad
+         \neg\mathsf C_q(R,p_{\le q}).
+ \end{aligned}
+\tag{15.4}
+$$
+
+因此固定切口 $q=0$ 的同一个相容性认证器覆盖这类来源中的全部
+$\mathcal I_k(\varepsilon)$，收费为初读计入 $k+1$ 次，且可靠性比较域仍为
+完整 $\mathcal M_k$。
+
+**证明。** $R$ 的每个条目严格为正。若 $\operatorname{rank}H(R)=1$，取
+$v_j=R_{0j}$ 和 $u_i=R_{i0}/R_{00}$（$0\le i<k-1$），则 $u,v>0$ 且
+$H(R)=uv^{\mathsf T}$。置
+
+$$
+ c_i=u_i\quad(i<k-1),\qquad
+ c_{k-1}=\frac{R_{k-1,k-1}}{v_{k-1}}>0,\qquad
+ S=cv^{\mathsf T}.
+\tag{15.5}
+$$
+
+这个固定严格正秩一来源属于 $\mathcal M_k$，与 $R$ 的前 $k-1$ 行及最后
+一个对角条目相同。故 $NS=NR$ 且 $\operatorname{tr}S=\operatorname{tr}R$。
+任意允许初读报告都同时兼容两来源；若协议首选 $N$，执行后两者真状态相同。
+对每个后继前缀使用相同报告，仍在两来源上合法，且确定性迫使相同动作、停止
+和输出。因此该分支上的任意有限秩二断言都会在固定秩一来源 $S$ 上违反可靠性。
+反过来，若 (15.2) 右侧成立，置 $S=cv^{\mathsf T}$，则 $NS=NR$ 强制
+$S,R$ 的前 $k-1$ 行相同；
+这个非零严格正块是秩一矩阵的行子块，故其秩为一。这证明 (15.2)。
+
+固定 (15.5) 的同一个 $S$。它满足
+$a_i(S)=a_i(R)$（$0\le i<k$），以及
+$b_j^{(q)}(S)=b_j^{(q)}(R)$（$1\le q<k$，$0\le j<k$）。
+前一等式在 $i=0$ 使用迹相等，在 $i\ge1$ 使用 $NS=NR$；后一等式的行和
+均不含最后一行。对每个 $q\ge1$ 令
+
+$$
+ \sigma_q=\sum_{h=0}^{k-1-q}c_h>0,\qquad
+ x^{(q)}=c/\sigma_q,\qquad v^{(q)}=\sigma_qv.
+\tag{15.6}
+$$
+
+这是同一个 $S=x^{(q)}(v^{(q)})^{\mathsf T}$ 的不同归一化，且
+$\sum_{h=0}^{k-1-q}x_h^{(q)}=1$。对每个允许的 $p$，同一组正参数满足
+
+$$
+ \begin{aligned}
+ A_i(x^{(q)},v^{(q)})&=a_i(R),
+       &|a_i(R)-p_i|&\le\varepsilon\quad(0\le i\le q),\\
+ v_j^{(q)}&=b_j^{(q)}(R),
+       &|v_j^{(q)}-b_j^{(q)}(R)|&=0\quad(j\in B_q).
+ \end{aligned}
+\tag{15.7}
+$$
+
+于是 (14.4) 有实际严格正解，得到 (15.3)。当 $q=k-1$ 时，
+$x_0^{(q)}=1$ 且 $v_{k-1}^{(q)}=A_{k-1}=a_{k-1}(R)$；只使用原有
+$p_{k-1}$，没有第二次报告。
+
+由 (15.3)，(15.4) 第一行中可提供否定的切口只有 $q=0$，故它等价于
+第二行。第二行直接蕴含第三行，第三行蕴含第一行，证明全部等价。
+再直接使用定理 14.5 和引理 14.4，便得到固定扫描的覆盖性。
+扫描末端仍按 (13.5) 排除严格正秩一来源；任何实际秩一来源都提供该系统
+的共同正解，所以可靠性始终比较完整 $\mathcal M_k$，没有把比较域限制为
+$\operatorname{rank}H=1$。费用复用定义 12.1 的 $q=0$ 计费。∎
+
+### 推论 15.3（幸存块类的精确阈值与首个可能分离维数）
+
+沿用 (13.20) 的 $t=\operatorname{tr}R$、$s_j=\sum_iR_{ij}$ 和 $g(R)$。
+在 $\operatorname{rank}H(R)=1$ 的来源类中，
+
+$$
+ \begin{aligned}
+ R\in\mathcal I_k(\varepsilon)
+ &\quad\Longleftrightarrow\quad R\in\mathcal F_k(\varepsilon)\\
+ &\quad\Longleftrightarrow\quad
+ g(R)>4\varepsilon\quad\text{或}\quad
+ \bigl[g(R)=4\varepsilon>0\ \text{且 }s_j\text{ 不全相等}\bigr].
+ \end{aligned}
+\tag{15.8}
+$$
+
+特别地，$\mathcal I_2(\varepsilon)=\mathcal F_2(\varepsilon)$ 恰由右端条件
+刻画，同一个固定 $L_0,N$ 扫描以三次初始计入报告覆盖它。
+任何满足 $R\in\mathcal I_k(\varepsilon)\setminus\mathcal F_k(\varepsilon)$
+的实际来源必有 $k\ge3$ 和 $\operatorname{rank}H(R)=2$。
+
+**证明。** 定理 15.2 把这类来源的任意协议成功性归为固定 $q=0$ 扫描成功性；
+其充要条件直接复用定理 13.6，包含该定理已经处理的闭误差端点，不重证
+扫描距离和下确界达到性。$k=2$ 时 $H(R)$ 是一行非零正向量，恒有秩一。
+一般地，$1\le\operatorname{rank}H(R)\le\operatorname{rank}R\le2$；排除
+秩一幸存块后只能为二。∎
+
+### 定理 15.4（三维同一严格正来源的自适应与全部固定规范切口严格分离）
+
+对每个给定的有限 $\varepsilon>0$，令
+
+$$
+ R_\varepsilon=\varepsilon R_*,\qquad
+ R_*=
+ \begin{pmatrix}
+ 3&40&1\\
+ 13&10&5\\
+ 3/2&20&1/2
+ \end{pmatrix}.
+\tag{15.9}
+$$
+
+则 $R_\varepsilon\in\mathcal M_3$，普通秩为二，且
+
+$$
+ R_\varepsilon\in
+ \mathcal I_3(\varepsilon)\setminus\mathcal F_3(\varepsilon).
+\tag{15.10}
+$$
+
+存在一个在完整 $\mathcal M_3$ 上 $\varepsilon$-可靠的确定性完整历史协议，
+在这个实际来源的每条允许误差历史上以五次初始计入报告输出 $2$；三个固定
+规范切口各自都有这个同一来源的一条允许历史，使任何可靠末端规则都不能
+输出 $2$。五读是所给协议的上界。
+
+**证明。** 先在单位容限下证明构造，再按给定 $\varepsilon$ 缩放。
+有运行前固定的严格正两项分解
+
+$$
+ R_*=
+ \frac1{58}\begin{pmatrix}10\\2\\5\end{pmatrix}
+                 \begin{pmatrix}5&230&1\end{pmatrix}
+ +\frac1{58}\begin{pmatrix}2\\12\\1\end{pmatrix}
+                 \begin{pmatrix}62&10&24\end{pmatrix}.
+\tag{15.11}
+$$
+
+行 $0,1$、列 $1,2$ 的子式为 $40\cdot5-1\cdot10=190\ne0$；结合两项
+分解给出的秩至多二，得到普通秩恰为二，也有 $\operatorname{rank}H(R_*)=2$。
+其真实规范坐标为
+
+$$
+ \begin{aligned}
+ (a_0,a_1,a_2)&=(27/2,45,1),\\
+ b^{(0)}&=(35/2,70,13/2),\\
+ b^{(1)}&=(16,50,6),\\
+ b^{(2)}&=(3,40,1),\\
+ P_1(R_*)&=[25/2,29/2]\times[44,46]\times[0,2].
+ \end{aligned}
+\tag{15.12}
+$$
+
+协议先取得初读 $u_0$，执行一次 $N$ 并取得 $u_1$。随后选择
+
+$$
+ \begin{cases}
+ L_0,N,N,&u_1\le45\quad(q=1),\\
+ N,L_0,N,&u_1>45\quad(q=2).
+ \end{cases}
+\tag{15.13}
+$$
+
+每个已执行原子后立即取得并计费报告，两个分支均恰有五次报告。
+末端在且仅在 (13.5) 无严格正解时输出 $2$，否则停止而不作秩断言。
+第二分支使用已取得的 $u_2$ 同时作为 $a_2=b_2^{(2)}$ 的报告，实际只再取得
+$b_0^{(2)},b_1^{(2)}$。这定义了任意报告历史上的一个确定性协议。
+在完整 $\mathcal M_3$ 中，任何实际秩一来源在被选分支上都提供 (13.5)
+的共同正参数，故无论其报告如何选择，协议的有限秩二断言均可靠。
+
+现证两个分支在 $R_*$ 上的全误差成功性。固定任意
+$p\in P_1(R_*)$。若 $p_1\le45$ 而 $\mathsf C_1(R_*,p_{\le1})$ 成立，
+将同一正解写为 $x_0=t$、$x_1=1-t$、$x_2>0$，其中 $0<t<1$。
+由 (14.4) 有 $v_0\ge14$、$v_1\ge48$、$v_2\ge4$。因此
+
+$$
+ \begin{aligned}
+ A_0&=tv_0+(1-t)v_1+x_2v_2>48-34t,\\
+ A_0&\le p_0+1\le31/2
+       \quad\Longrightarrow\quad t>65/68,\\
+ A_1&=tv_1+(1-t)v_2\ge4+44t
+       >783/17=46+1/17,\\
+ A_1&\le p_1+1\le46,
+ \end{aligned}
+\tag{15.14}
+$$
+
+矛盾。故该整个闭分支均满足 $\neg\mathsf C_1$，包括 $p_1=45$。
+
+若 $p_1>45$ 而 $\mathsf C_2(R_*,p_{\le2})$ 成立，其正解满足 $x_0=1$、
+$v_0\ge1$、$38\le v_1\le42$。共享末前缀报告的约束给出
+$0<v_2=A_2\le p_2+1\le3$。于是
+
+$$
+ \begin{aligned}
+ A_1&=v_1+x_1v_2\ge p_1-1>44,\\
+ x_1v_2&>2,\qquad x_1>2/3,\\
+ A_0&=v_0+x_1v_1+x_2v_2
+       >1+38\cdot(2/3)=79/3>31/2,\\
+ A_0&\le p_0+1\le31/2,
+ \end{aligned}
+\tag{15.15}
+$$
+
+再次矛盾。这一步没有为 $b_2^{(2)}$ 引入未来报告或误差变量。
+
+每个 $p\in P_1(R_*)$ 恰落入上述两个分支之一，故
+$\forall p\,\exists q\,\neg\mathsf C_q(R_*,p_{\le q})$。
+在第一分支，实际取得的 $(u_0,u_1)$ 可以延拓为这样的 $p$；在第二分支，
+实际 $(u_0,u_1,u_2)$ 本身就是这样的 $p$。引理 14.4 因而保证选定切口后的
+每份允许补全报告都排除严格正秩一来源。协议对同一个 $R_*$ 的全部允许误差
+历史成功；没有使用误差的独立性或均值，所有闭端点均在上述不等式中保留。
+
+接着对每个固定切口分别给出一条共同实际历史。以下每组均一次性固定
+$S=xv^{\mathsf T}\in\mathcal M_3$，所有 $x,v$ 坐标严格正。
+
+切口 $q=0$ 取
+
+$$
+ \begin{aligned}
+ p&=(27/2,45,1),\\
+ x&=(1/2,3/127,121/254),\qquad
+ v=(35/2,70,13/2).
+ \end{aligned}
+\tag{15.16}
+$$
+
+有 $\sum_hx_h=1$、$A_0=27/2=p_0$，且 $v=b^{(0)}(R_*)$。
+因此完整扫描报告 $(27/2,35/2,70,13/2)$ 同时是 $R_*,S$ 的零误差报告。
+特别地，$\mathsf C_0(R_*,p_0)$ 成立。
+
+切口 $q=1$ 取
+
+$$
+ \begin{aligned}
+ p&=(29/2,46,1),\\
+ x&=(24/25,1/25,1/100),\qquad v=(14,48,4),\\
+ (A_0,A_1)&=(77/5,1156/25),\\
+ (A_0-p_0,A_1-p_1)&=(9/10,6/25),\\
+ v-b^{(1)}(R_*)&=(-2,-2,-2).
+ \end{aligned}
+\tag{15.17}
+$$
+
+归一化为 $x_0+x_1=1$。未来报告取 $(15,49,5)$，每项距 $R_*$ 和这个固定
+$S$ 的真值均为 $1$；先前报告 $(29/2,46)$ 距两来源的相应真值均至多 $1$。
+故一组共同正参数同时满足全部约束，$\mathsf C_1(R_*,p_{\le1})$ 成立。
+
+切口 $q=2$ 取
+
+$$
+ \begin{aligned}
+ p&=(29/2,44,2),\\
+ x&=(1,1/3,1/10),\qquad v=(1,42,3),\\
+ (A_0,A_1,A_2)&=(153/10,43,3),\\
+ (A_0-p_0,A_1-p_1,A_2-p_2)&=(4/5,-1,1),\\
+ (v_0-b_0^{(2)}(R_*),v_1-b_1^{(2)}(R_*))&=(-2,2).
+ \end{aligned}
+\tag{15.18}
+$$
+
+归一化为 $x_0=1$。仅有的两项未来报告取 $(2,41)$，各距两来源的真值均为
+$1$。既有 $p_2=2$ 同时约束 $a_2=b_2^{(2)}$：该真值在 $R_*$ 上为 $1$，
+在 $S$ 上为 $3$，因此同一份旧报告在两者上均合法。
+于是 $\mathsf C_2(R_*,p_{\le2})$ 成立；完整报告为 $(29/2,44,2,2,41)$，
+没有第六次报告。
+
+三个显示的 $p$ 都属于同一个 $P_1(R_*)$。这些共同历史逐一阻止相应固定
+规范词的任何可靠末端规则作秩二断言，所以
+
+$$
+ \begin{aligned}
+ &\forall p\in P_1(R_*)\ \exists q<3\quad
+          \neg\mathsf C_q(R_*,p_{\le q}),\\
+ &\forall q<3\ \exists p\in P_1(R_*)\quad
+          \mathsf C_q(R_*,p_{\le q}).
+ \end{aligned}
+\tag{15.19}
+$$
+
+不同反事实切口允许有不同的秩一伴随，但每条选定的完整历史只使用一个
+运行前固定的 $S$；没有逐行拟合或来源拼接。由定理 14.5 和定义 15.1，
+两行恰给出单位容限下的 (15.10)。
+
+最后，对给定 $\varepsilon>0$ 使用 (15.9)，把 (15.11) 的两个列因子均乘以
+$\varepsilon$，保持行因子不变；严格正性和普通秩均保留。
+所有报告、$p,v,a,b$ 同乘 $\varepsilon$，所有 $x$ 不变。由于
+$A_i(x,\varepsilon v)=\varepsilon A_i(x,v)$，(14.4) 的全部约束、共享旧报告、
+两分支的矛盾和三个共同历史都同尺度保留。把 (15.13) 的阈值改为
+$45\varepsilon$，末端用容限 $\varepsilon$ 的 (13.5)，就得到五读的全域可靠
+协议及同一实际 $R_\varepsilon$ 上全部固定规范切口的失败。
+这里按已给定容限选择来源，不在论证中按来源缩小容限。
+
+本定理复用定义 14.3、引理 14.4 的共同来源判据与引理 13.2 的末端认证，
+共同参数条带的文献归属沿用定义 14.7 所引 Casini--Garulli--Vicino，
+[*A linear programming approach to online set membership parameter estimation for linear regression models*，§4，式 (7)--(9)](https://control.dii.unisi.it/~casini/pdf/IJACSP_2017a.pdf)。
+van den Bos--Vaandrager，
+[*State Identification for Labeled Transition Systems with Inputs and Outputs*，
+Definition 11、Definition 16、Theorem 6.1](https://arxiv.org/html/1907.11034v2)，
+给出的自适应区分图和单射分裂是 literature-attested 的有限状态背景；其
+悬挂自动机及两两不相容假设没有在此正矩阵域中实例化。
+(15.2)--(15.8) 的幸存块边界与 (15.9)--(15.19) 的同一正来源分离是本模型上的
+推导（repo-derived），不由这些引文推断外部优先权。
+上述结论不决定更高维来源的完整分类、最优阈值或逐来源尖锐读数费用。∎
+
+## 追加锚（本行以下为增补区）
