@@ -323,4 +323,282 @@ theorem long_count (n : ℕ) (v : Fin n) :
     _ = Fintype.card (Euler n v × Fin n) := Fintype.card_congr (longCollisionEquiv n v)
     _ = n * eulerCount n v := by simp [Fintype.card_prod, eulerCount, Nat.mul_comm]
 
+/-- Insert a loop at a specified linear vertex position. The cut is retained. -/
+def insertLoop {V : Type u} {k : ℕ} (w : Walk V k) (p : Fin (k + 1)) :
+    Walk V (k + 1) :=
+  fun j => if h : j.val ≤ p.val then w ⟨j.val, by omega⟩
+    else w ⟨j.val - 1, by omega⟩
+
+private theorem insert_loop_edge {V : Type u} {k : ℕ}
+    (w : Walk V k) (p : Fin (k + 1)) :
+    edge (insertLoop w p) p = (w p, w p) := by
+  simp only [edge, insertLoop, Fin.val_castSucc, Fin.val_succ]
+  simp only [le_refl, dite_true, Nat.not_succ_le_self, dite_false, Nat.add_sub_cancel]
+
+private theorem insert_loop_other {V : Type u} {k : ℕ}
+    (w : Walk V k) (p : Fin (k + 1)) (i : Fin k) :
+    edge (insertLoop w p) (p.succAbove i) = edge w i := by
+  by_cases h : i.castSucc < p
+  · rw [Fin.succAbove_of_castSucc_lt _ _ h]
+    apply Prod.ext
+    · simp only [edge, insertLoop, Fin.val_castSucc]
+      rw [dif_pos (by simpa only [Fin.lt_def, Fin.val_castSucc] using Nat.le_of_lt h)]
+    · simp only [edge, insertLoop, Fin.val_castSucc, Fin.val_succ]
+      rw [dif_pos (by simpa only [Fin.lt_def, Fin.val_castSucc] using h)]
+  · rw [Fin.succAbove_of_le_castSucc _ _ (le_of_not_gt h)]
+    apply Prod.ext
+    · simp only [edge, insertLoop, Fin.val_castSucc, Fin.val_succ]
+      rw [dif_neg (by simp only [Fin.lt_def, Fin.val_castSucc] at h; omega)]
+      simp only [Nat.add_sub_cancel]
+    · simp only [edge, insertLoop, Fin.val_castSucc, Fin.val_succ]
+      rw [dif_neg (by simp only [Fin.lt_def, Fin.val_castSucc] at h; omega)]
+      congr 1
+      apply Fin.ext
+      simp
+
+private theorem insert_loop_start {V : Type u} {k : ℕ}
+    (w : Walk V k) (p : Fin (k + 1)) : insertLoop w p 0 = w 0 := by
+  simp [insertLoop]
+
+private theorem insert_loop_end {V : Type u} {k : ℕ}
+    (w : Walk V k) (p : Fin (k + 1)) :
+    insertLoop w p (Fin.last (k + 1)) = w (Fin.last k) := by
+  simp only [insertLoop, Fin.val_last]
+  rw [dif_neg (by omega)]
+  rfl
+
+/-- Remove the head vertex of the edge at the marked position. -/
+def removeLoop {V : Type u} {k : ℕ} (w : Walk V (k + 1)) (p : Fin (k + 1)) :
+    Walk V k :=
+  fun j => if h : j.val ≤ p.val then w ⟨j.val, by omega⟩
+    else w ⟨j.val + 1, by omega⟩
+
+private theorem remove_insert_loop {V : Type u} {k : ℕ}
+    (w : Walk V k) (p : Fin (k + 1)) : removeLoop (insertLoop w p) p = w := by
+  funext j
+  simp only [removeLoop, insertLoop]
+  split_ifs with h h' h'
+  · rfl
+  · omega
+  · omega
+  · congr 1
+    apply Fin.ext
+    simp
+
+private theorem insert_remove_loop {V : Type u} {k : ℕ}
+    (w : Walk V (k + 1)) (p : Fin (k + 1))
+    (hp : w p.castSucc = w p.succ) : insertLoop (removeLoop w p) p = w := by
+  funext j
+  simp only [insertLoop, removeLoop]
+  split_ifs with h h' h'
+  · rfl
+  · omega
+  · have hj : j.val = p.val + 1 := by omega
+    have h₁ : (⟨j.val - 1, by omega⟩ : Fin (k + 2)) = p.castSucc := by
+      apply Fin.ext; simp; omega
+    have h₂ : j = p.succ := by apply Fin.ext; exact hj
+    rw [h₁, h₂]
+    exact hp
+  · congr 1
+    apply Fin.ext
+    simp
+    omega
+
+private theorem remove_loop_start {V : Type u} {k : ℕ}
+    (w : Walk V (k + 1)) (p : Fin (k + 1)) : removeLoop w p 0 = w 0 := by
+  simp [removeLoop]
+
+private theorem remove_loop_edge {V : Type u} {k : ℕ}
+    (w : Walk V (k + 1)) (p : Fin (k + 1))
+    (hp : w p.castSucc = w p.succ) (i : Fin k) :
+    edge (removeLoop w p) i = edge w (p.succAbove i) := by
+  have hw := congrArg (fun z => edge z (p.succAbove i)) (insert_remove_loop w p hp)
+  rw [insert_loop_other] at hw
+  exact hw
+
+/-- The actual almost-complete trails omitting the loop at a. -/
+def MissingLoop (n : ℕ) (v a : Fin n) :=
+  {w : Walk (Fin n) (n * n - 1) // w 0 = v ∧
+    Function.Injective (edge w) ∧
+    Finset.univ.image (edge w) = Finset.univ.erase (a, a)}
+
+noncomputable instance missingLoopFintype (n : ℕ) (v a : Fin n) :
+    Fintype (MissingLoop n v a) := by
+  classical
+  unfold MissingLoop
+  infer_instance
+
+private theorem missing_loop_no_loop {n : ℕ} {v a : Fin n} (w : MissingLoop n v a)
+    (i : Fin (n * n - 1)) : edge w.1 i ≠ (a, a) := by
+  intro h
+  have hm : (a, a) ∈ Finset.univ.image (edge w.1) := Finset.mem_image.mpr ⟨i, by simp, h⟩
+  rw [w.2.2.2] at hm
+  simpa using hm
+
+/-- A missing-loop trail together with one of its linear cuts at that vertex. -/
+def MarkedLoop (n : ℕ) (v a : Fin n) :=
+  Σ w : MissingLoop n v a, {p : Fin (n * n - 1 + 1) // w.1 p = a}
+
+noncomputable instance markedLoopFintype (n : ℕ) (v a : Fin n) :
+    Fintype (MarkedLoop n v a) := by
+  classical
+  unfold MarkedLoop
+  infer_instance
+
+private theorem insert_loop_bijective {n : ℕ} (hn : 2 ≤ n) {v a : Fin n}
+    (w : MissingLoop n v a) (p : Fin (n * n - 1 + 1)) (hp : w.1 p = a) :
+    Function.Bijective (edge (insertLoop w.1 p)) := by
+  classical
+  have hsize : n * n - 1 + 1 = n * n := by have : 0 < n * n := by positivity; omega
+  apply (Fintype.bijective_iff_injective_and_card _).mpr
+  refine ⟨?_, by simp only [Fintype.card_fin, Fintype.card_prod]; exact hsize⟩
+  intro i j hij
+  induction i using Fin.succAboveCases p with
+  | refl =>
+    induction j using Fin.succAboveCases p with
+    | refl => rfl
+    | step j =>
+      rw [insert_loop_edge, insert_loop_other, hp] at hij
+      exact False.elim (missing_loop_no_loop w j hij.symm)
+  | step i =>
+    induction j using Fin.succAboveCases p with
+    | refl =>
+      rw [insert_loop_edge, insert_loop_other, hp] at hij
+      exact False.elim (missing_loop_no_loop w i hij)
+    | step j =>
+      rw [insert_loop_other, insert_loop_other] at hij
+      exact congrArg p.succAbove (w.2.2.1 hij)
+
+private theorem missing_loop_closed {n : ℕ} {v a : Fin n} (w : MissingLoop n v a) :
+    w.1 (Fin.last (n * n - 1)) = v := by
+  have h := balance_cases _ _ a a
+    (missing_balance w.1 a a w.2.2.1 w.2.2.2)
+  rcases h with ⟨h₁, h₂⟩ | ⟨_, _, h₂⟩
+  · exact h₂.trans (h₁.trans w.2.1)
+  · exact h₂.trans w.2.1
+
+private theorem loop_cut_card {n : ℕ} {v a : Fin n} (ha : a ≠ v)
+    (w : MissingLoop n v a) :
+    Fintype.card {p : Fin (n * n - 1 + 1) // w.1 p = a} = n - 1 := by
+  classical
+  let f : {p : Fin (n * n - 1 + 1) // w.1 p = a} → {z : Fin n // z ≠ a} := fun p => by
+    have hp : p.1 ≠ Fin.last (n * n - 1) := by
+      intro h
+      have := p.2
+      rw [h, missing_loop_closed w] at this
+      exact ha this.symm
+    let i : Fin (n * n - 1) := p.1.castPred hp
+    have hi : i.castSucc = p.1 := Fin.castSucc_castPred _ _
+    refine ⟨(edge w.1 i).2, ?_⟩
+    intro hz
+    apply missing_loop_no_loop w i
+    exact Prod.ext (hi ▸ p.2) hz
+  have hf : Function.Bijective f := by
+    constructor
+    · intro p q h
+      apply Subtype.ext
+      have hp : p.1 ≠ Fin.last (n * n - 1) := by
+        intro hh; exact ha (p.2.symm.trans (hh ▸ missing_loop_closed w))
+      have hq : q.1 ≠ Fin.last (n * n - 1) := by
+        intro hh; exact ha (q.2.symm.trans (hh ▸ missing_loop_closed w))
+      have he : edge w.1 (p.1.castPred hp) = edge w.1 (q.1.castPred hq) := by
+        apply Prod.ext
+        · simpa only [edge, Fin.castSucc_castPred] using p.2.trans q.2.symm
+        · exact congrArg Subtype.val h
+      have := congrArg Fin.castSucc (w.2.2.1 he)
+      simpa only [Fin.castSucc_castPred] using this
+    · intro z
+      have hz : (a, z.1) ∈ Finset.univ.image (edge w.1) := by
+        rw [w.2.2.2]
+        simp only [Finset.mem_erase, Finset.mem_univ, and_true, Prod.mk.injEq,
+          true_and]
+        exact z.2
+      obtain ⟨i, _, hi⟩ := Finset.mem_image.mp hz
+      refine ⟨⟨i.castSucc, congrArg Prod.fst hi⟩, ?_⟩
+      apply Subtype.ext
+      simpa only [f, Fin.castPred_castSucc] using congrArg Prod.snd hi
+  calc
+    _ = Fintype.card {z : Fin n // z ≠ a} := Fintype.card_congr (Equiv.ofBijective f hf)
+    _ = n - 1 := by simp
+
+private theorem remove_loop_missing {n : ℕ} {k : ℕ} {v a : Fin n}
+    (w : Walk (Fin n) (k + 1)) (hw : w 0 = v)
+    (he : Function.Bijective (edge w)) (p : Fin (k + 1))
+    (hp : edge w p = (a, a)) :
+    (removeLoop w p) 0 = v ∧ Function.Injective (edge (removeLoop w p)) ∧
+      Finset.univ.image (edge (removeLoop w p)) = Finset.univ.erase (a, a) := by
+  classical
+  have hpp : w p.castSucc = w p.succ :=
+    (congrArg Prod.fst hp).trans (congrArg Prod.snd hp).symm
+  refine ⟨(remove_loop_start w p).trans hw, ?_, ?_⟩
+  · intro i j h
+    rw [remove_loop_edge w p hpp, remove_loop_edge w p hpp] at h
+    exact Fin.succAbove_right_injective (he.1 h)
+  · ext e
+    simp only [Finset.mem_image, Finset.mem_univ, true_and,
+      Finset.mem_erase, and_true]
+    constructor
+    · rintro ⟨i, hi⟩ h
+      rw [remove_loop_edge w p hpp] at hi
+      have := he.1 (hi.trans (h.trans hp.symm))
+      exact Fin.succAbove_ne p i this
+    · intro h
+      obtain ⟨i, hi⟩ := he.2 e
+      rcases Fin.eq_self_or_eq_succAbove p i with rfl | ⟨j, rfl⟩
+      · exact False.elim (h (hi.symm.trans hp))
+      · exact ⟨j, (remove_loop_edge w p hpp j).trans hi⟩
+
+/-- Inserting the omitted loop at the retained linear cut recovers an Euler walk. -/
+noncomputable def loopInsertionEquiv {n : ℕ} (hn : 2 ≤ n) (v a : Fin n) :
+    MarkedLoop n v a ≃ Euler n v := by
+  classical
+  let E := {w : Walk (Fin n) (n * n - 1 + 1) //
+    w 0 = v ∧ Function.Bijective (edge w)}
+  let f : MarkedLoop n v a → E := fun x =>
+    ⟨insertLoop x.1.1 x.2.1, (insert_loop_start _ _).trans x.1.2.1,
+      insert_loop_bijective hn x.1 x.2.1 x.2.2⟩
+  have hf : Function.Bijective f := by
+    constructor
+    · rintro ⟨w, p, hp⟩ ⟨z, q, hq⟩ h
+      have hval : insertLoop w.1 p = insertLoop z.1 q := congrArg Subtype.val h
+      have hpq : p = q := by
+        apply (insert_loop_bijective hn z q hq).1
+        rw [← hval, insert_loop_edge, hp]
+        rw [hval, insert_loop_edge, hq]
+      subst q
+      have hwz : w = z := by
+        apply Subtype.ext
+        have := congrArg (fun t => removeLoop t p) hval
+        simpa only [remove_insert_loop] using this
+      subst z
+      rfl
+    · intro w
+      obtain ⟨p, hp⟩ := w.2.2.2 (a, a)
+      let z : MissingLoop n v a :=
+        ⟨removeLoop w.1 p, remove_loop_missing w.1 w.2.1 w.2.2 p hp⟩
+      have hz : z.1 p = a := by
+        change removeLoop w.1 p p = a
+        simp only [removeLoop, le_refl, dite_true]
+        exact congrArg Prod.fst hp
+      refine ⟨⟨z, p, hz⟩, ?_⟩
+      apply Subtype.ext
+      exact insert_remove_loop w.1 p
+        ((congrArg Prod.fst hp).trans (congrArg Prod.snd hp).symm)
+  refine (Equiv.ofBijective f hf).trans (Equiv.cast ?_)
+  have hs : n * n - 1 + 1 = n * n := by have : 0 < n * n := by positivity; omega
+  change {w : Walk (Fin n) (n * n - 1 + 1) //
+    w 0 = v ∧ Function.Bijective (edge w)} = Euler n v
+  rw [hs]
+  rfl
+
+/-- At a vertex other than the fixed start there are exactly n-1 insertion cuts. -/
+theorem loop_count {n : ℕ} (hn : 2 ≤ n) (v a : Fin n) (ha : a ≠ v) :
+    eulerCount n v = (n - 1) * Fintype.card (MissingLoop n v a) := by
+  classical
+  rw [eulerCount, ← Fintype.card_congr (loopInsertionEquiv hn v a)]
+  change Fintype.card (Σ w : MissingLoop n v a,
+    {p : Fin (n * n - 1 + 1) // w.1 p = a}) = _
+  simp only [Fintype.card_sigma, loop_cut_card ha]
+  simp [Nat.mul_comm]
+
 end D5.S3.Combinatorics.Graph.Walks.CollisionPrefix
