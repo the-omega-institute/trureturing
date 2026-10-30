@@ -6,8 +6,12 @@
    utility: none
    digest: Unbounded far masks in the strict smallest-b largest-a chamber. -/
 import Batteries.Tactic.OpenPrivate
+import all D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoMasks
 import D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift
 
+/-! Explicit mask certificates for one strict physical chamber. -/
+
+set_option maxHeartbeats 1600000
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -36,8 +40,8 @@ private theorem far_certificate (s q h : ℤ) (hs : 8 ≤ s) (hq : 1 ≤ q) (hh 
     let z := (2 * H + s / 2 + 1 - u) / (2 * L - s - 1)
     Certificate r s t (makePlan 0 .agb .t ⟨(s-1)*q,0,0⟩ ⟨0,0,z⟩) := by
   dsimp only
-  let t := 2 * s * q
-  let r := 4 * t * h
+  generalize htdef : 2 * s * q = t
+  generalize hrdef : 4 * t * h = r
   let u := 1 + r + r * s
   let L := 1 + s + s * t
   let C := r * s * (t / 2) - 1
@@ -47,27 +51,50 @@ private theorem far_certificate (s q h : ℤ) (hs : 8 ≤ s) (hq : 1 ≤ q) (hh 
   let z := Y / lam
   let R := Y - lam * z
   let delta := H - L * z
-  have ht : 2 * s ≤ t := by dsimp [t]; nlinarith
-  have hr : 4 * t ≤ r := by dsimp [r]; nlinarith
-  have ht2 : 2 * (t / 2) = t := by dsimp [t]; omega
-  have hr2 : 2 * (r / 2) = r := by dsimp [r]; omega
+  have ht : 2 * s ≤ t := by nlinarith [mul_nonneg (show 0≤s by omega) (show 0≤q-1 by omega)]
+  have hr : 4 * t ≤ r := by nlinarith [mul_nonneg (show 0≤t by omega) (show 0≤h-1 by omega)]
+  have htHalf : t/2=s*q := by
+    have he : t=2*(s*q) := by nlinarith only [htdef]
+    rw [he]; omega
+  have hrHalf : r/2=2*t*h := by
+    have he : r=2*(2*t*h) := by nlinarith only [hrdef]
+    rw [he]; omega
+  have ht2 : 2*(t/2)=t := by rw [htHalf]; nlinarith only [htdef]
+  have hr2 : 2*(r/2)=r := by rw [hrHalf]; nlinarith only [hrdef]
+  have hC : 2*C=r*s*t-2 := by
+    dsimp [C]
+    nlinarith only [show r*s*(2*(t/2)-t)=0 by rw [ht2]; ring]
+  have hH : 2*H=2*C-(t+1)*s := by
+    dsimp [H]
+    nlinarith only [show (t+1)*(2*(s/2)-s)=0 by rw [hs2]; ring]
   have hs0 : 0 ≤ s / 2 := by omega
   have ht0 : 0 < t := by omega
   have hr0 : 0 < r := by omega
   have hL : 0 < L := by dsimp [L]; positivity
   have hlam : 0 < lam := by dsimp [lam,L]; nlinarith
+  have hYe : Y=r*(s*t-s-1)-s*t-s/2-2 := by
+    dsimp [Y,u]
+    nlinarith only [hH,hC,hs2]
   have hY : 0 ≤ Y := by
-    dsimp [Y,H,C,u]
-    nlinarith [mul_nonneg (r-4*t) (s*t-s-1),
-      mul_nonneg (t-2*s) (s-1), mul_nonneg (s-8) (t-1), sq_nonneg t]
+    have hp : 0 ≤ r*(s*t-s-1)-s*t-s-2 := by
+      obtain ⟨x,hx,rfl⟩ := le_iff_exists_nonneg_add.mp hs
+      obtain ⟨y,hy,hty⟩ := le_iff_exists_nonneg_add.mp ht
+      obtain ⟨v,hv,hrv⟩ := le_iff_exists_nonneg_add.mp hr
+      rw [hrv,hty]
+      ring_nf
+      positivity
+    nlinarith only [hYe,hp,hs2,hs]
   have hz0 : 0 ≤ z := Int.ediv_nonneg hY hlam.le
   have hz := floor_bounds Y lam hlam
   change lam*z ≤ Y ∧ Y < lam*(z+1) at hz
   have hR : 0 ≤ R ∧ R < lam := by dsimp [R]; constructor <;> nlinarith
   have hzr : z < r / 2 := by
-    have hE : 0 < lam * (r / 2) - Y := by
-      dsimp [lam,L,Y,H,C,u]
-      nlinarith
+    have hEe : 2*(lam*(r/2)-Y)=3*r*(s+1)+lam+3 := by
+      dsimp [lam,L,Y,u]
+      nlinarith only [hH,hC,hs2,
+        show (2*L-s-1)*(2*(r/2)-r)=0 by rw [hr2]; ring]
+    have hE : 0 < lam*(r/2)-Y := by
+      nlinarith [mul_pos hr0 (show 0<s+1 by omega)]
     by_contra hn
     have hm := mul_le_mul_of_nonneg_left (show r/2 ≤ z by omega) hlam.le
     omega
@@ -89,23 +116,42 @@ private theorem far_certificate (s q h : ℤ) (hs : 8 ≤ s) (hq : 1 ≤ q) (hh 
     refine ⟨hd0, ?_⟩
     by_cases corner : q=1 ∧ h=1
     · obtain ⟨rfl,rfl⟩ := corner
-      have ht' : t=2*s := by dsimp [t]; ring
-      have hr' : r=8*s := by dsimp [r]; rw [ht']; ring
+      have ht' : t=2*s := by nlinarith only [htdef]
+      have hr' : r=8*s := by nlinarith only [hrdef,ht']
+      have htHalf' : t/2=s := by rw [ht']; omega
+      have hrHalf' : r/2=4*s := by rw [hr']; omega
       have hz' : z=r/2-4 := by
         apply (Int.ediv_eq_iff_of_pos hlam).mpr
-        dsimp [Y,H,C,lam,L,u]
-        rw [hr',ht'] at *
-        have hsdiv : s/2*2=s := by omega
-        constructor <;> nlinarith [sq_nonneg (s-4),
-          mul_nonneg (s-4) (4*s-1)]
-      dsimp [delta]
-      rw [hz']
-      dsimp [H,C,L,u] at *
-      rw [hr',ht'] at *
+        have hrem : Y-lam*(r/2-4)=(s-4)*(4*s-1)/2 := by
+          rw [hYe]
+          dsimp [lam,L]
+          rw [ht',hr',hrHalf']
+          omega
+        have hrem0 : 0 ≤ Y-lam*(r/2-4) := by
+          rw [hrem]
+          exact Int.ediv_nonneg (mul_nonneg (by omega) (by omega)) (by norm_num)
+        have hrem2 : 2*(Y-lam*(r/2-4))=(s-4)*(4*s-1) := by
+          rw [hYe]
+          dsimp [lam,L]
+          rw [ht',hr',hrHalf']
+          nlinarith only [hs2]
+        constructor
+        · omega
+        · dsimp [lam,L] at *
+          rw [ht'] at *
+          nlinarith [sq_nonneg (s-4)]
+      have hde : 2*delta=6*s*s-s+6 := by
+        dsimp [delta]
+        rw [hz',hrHalf']
+        dsimp [L]
+        rw [ht'] at *
+        nlinarith only [hH,hC,hr']
+      dsimp [u]
+      rw [hr']
       nlinarith [sq_nonneg (s-4)]
     · have hd : 0 < r*(s+1)*(s*t-s-1)-L*(2*lam+1)-s-1 := by
         rcases le_or_gt 2 q with hq2 | hq2
-        · have ht4 : 4*s ≤ t := by dsimp [t]; nlinarith
+        · have ht4 : 4*s ≤ t := by nlinarith [mul_nonneg (show 0≤s by omega) (show 0≤q-2 by omega)]
           obtain ⟨x,hx,rfl⟩ := le_iff_exists_nonneg_add.mp (show (4:ℤ) ≤ s by omega)
           obtain ⟨y,hy,hty⟩ := le_iff_exists_nonneg_add.mp ht4
           obtain ⟨v,hv,hrv⟩ := le_iff_exists_nonneg_add.mp hr
@@ -115,7 +161,7 @@ private theorem far_certificate (s q h : ℤ) (hs : 8 ≤ s) (hq : 1 ≤ q) (hh 
           positivity
         · have hq1 : q=1 := by omega
           have hh2 : 2 ≤ h := by omega
-          have hr8 : 8*t ≤ r := by dsimp [r]; nlinarith
+          have hr8 : 8*t ≤ r := by nlinarith [mul_nonneg (show 0≤t by omega) (show 0≤h-2 by omega)]
           obtain ⟨x,hx,rfl⟩ := le_iff_exists_nonneg_add.mp (show (4:ℤ) ≤ s by omega)
           obtain ⟨y,hy,hty⟩ := le_iff_exists_nonneg_add.mp ht
           obtain ⟨v,hv,hrv⟩ := le_iff_exists_nonneg_add.mp hr8
@@ -133,15 +179,24 @@ private theorem far_certificate (s q h : ℤ) (hs : 8 ≤ s) (hq : 1 ≤ q) (hh 
       exact (mul_lt_mul_left hlam).mp hineq
   have hlam : lam < (s+1)*(r/2) := by
     dsimp [lam,L]
-    nlinarith [mul_nonneg (s+1) (r-4*t), mul_nonneg (s-1) (t-2*s)]
+    nlinarith [mul_nonneg (show 0≤s+1 by omega) (show 0≤r-4*t by omega),
+      mul_nonneg (show 0≤s-1 by omega) (show 0≤t-2*s by omega),
+      show (s+1)*(2*(r/2)-r)=0 by rw [hr2]; ring]
   have hp0 : 0 ≤ (s-1)*q := by positivity
-  have hpc : (s-1)*q < t/2 := by dsimp [t]; omega
-  have heps : 1 < 2*((1+r+r*s)*((s-1)*q) - (C-(r+1)*(t/2))) := by
-    dsimp [C,t] at *
-    nlinarith [mul_nonneg (r+1) ((s-1)*q), mul_nonneg s q]
-  have hepsc : 2*((1+r+r*s)*((s-1)*q) - (C-(r+1)*(t/2))) < (r+1)*t := by
-    dsimp [C,t,r] at *
-    nlinarith [mul_nonneg (r+1-s) q]
+  have hpc : (s-1)*q < t/2 := by rw [htHalf]; nlinarith
+  have hepsEq : 2*((1+r+r*s)*((s-1)*q)-(C-(r+1)*(t/2))) =
+      2*q*(r+1)*(s-1)+t+2 := by
+    rw [htHalf]
+    dsimp [C]
+    rw [htHalf]
+    nlinarith only [htdef]
+  have heps : 1 < 2*((1+r+r*s)*((s-1)*q)-(C-(r+1)*(t/2))) := by
+    rw [hepsEq]; positivity
+  have hepsc : 2*((1+r+r*s)*((s-1)*q)-(C-(r+1)*(t/2))) < (r+1)*t := by
+    rw [hepsEq]
+    have hp := mul_nonneg (show 0≤r-s by omega) (show 0≤q-1 by omega)
+    nlinarith only [htdef,hp,hr,ht,hs,hq,
+      show (r+1)*(2*s*q-t)=0 by rw [htdef]; ring]
   change Certificate r s t (makePlan 0 .agb .t ⟨(s-1)*q,0,0⟩ ⟨0,0,z⟩)
   refine ⟨?_,?_,?_,?_⟩
   · dsimp [Bounded,makePlan]; exact ⟨hp0,hpc,by omega,by omega,by omega,by omega⟩
@@ -150,8 +205,10 @@ private theorem far_certificate (s q h : ℤ) (hs : 8 ≤ s) (hq : 1 ≤ q) (hh 
   · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
       Order.first,Order.middle,Order.last,atNegative]
     norm_num
-    change _ at hdel
     dsimp [delta,H,C,L,u,R,Y,lam] at hdel hR hlam
-    repeat' constructor <;> nlinarith
+    repeat' constructor <;> nlinarith [
+      show (s+1)*(2*(r/2)-r)=0 by rw [hr2]; ring,
+      show (t+1)*(2*(s/2)-s)=0 by rw [hs2]; ring,
+      show (r+1)*(2*(t/2)-t)=0 by rw [ht2]; ring]
 
 end D5.S3.Combinatorics.Circle.ThreeNegativeSmallestBLargestAJointLift
