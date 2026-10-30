@@ -744,3 +744,323 @@ remains unassessed. That paper is not an input theorem here, and
 no worldwide priority assertion is attached to these deductions.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. Rooted incidence patterns at finite positive budgets
+
+**Definition 7.1 (Tail patterns with core ports).** Write
+$g(t)=2(\sqrt{1+t^2}-1)$. A rooted tail pattern consists of a finite
+simple bipartite incidence graph with $n\ge1$ tail vertices and $q$
+source vertices, together with a nonnegative integer $\ell_u$ at each
+source. Every source has at least one tail neighbor. Put
+
+$$
+b_u=|N(u)|,\qquad k_u=b_u+\ell_u,\qquad
+d_i=|N(i)|.
+\tag{7.1}
+$$
+
+Require $k_u<d_i$ on every tail incidence, and require each connected
+component of the incidence graph to contain a source with
+$\ell_u>0$. The $\ell_u$ core ports represent distinct future core
+neighbors of that source; they are not additional tail incidences.
+Equivalently, joining all ports to one auxiliary root gives a connected
+multigraph. No degree condition is imposed at this auxiliary root.
+Define the two normalized quantities
+
+$$
+r=\frac qn,\qquad
+c=\frac1n\sum_{ui}g(k_u/d_i).
+\tag{7.2}
+$$
+
+Disjoint unions of patterns share the auxiliary root and are allowed.
+Thus their pairs $(r,c)$ are combined with weights proportional to
+their tail counts. These patterns are auxiliary objects; actual
+simple graphs with the original prescribed budgets are constructed
+in Theorem 11.1 below.
+
+**Definition 7.2 (Finite incidence linear programs).** For an integer
+$M\ge3$ use nonnegative variables $t_d$ for $2\le d\le M$,
+$q_k$ for $1\le k<M$, and $z_{kd},w_{kd}$ for $1\le k<d\le M$.
+Variables with other indices are zero. Put
+
+$$
+E_k=\sum_{d>k}(z_{kd}+w_{kd}),\qquad
+Z_k=\sum_{d>k}z_{kd}.
+$$
+
+The constraints are
+
+$$
+\begin{gathered}
+\sum_{d=2}^M t_d=1,\qquad
+\sum_{k<d}z_{kd}=t_d,\qquad
+\sum_{k<d}w_{kd}=(d-1)t_d,\\
+q_k\le E_k\le kq_k,\qquad
+Z_k\le(k-1)q_k.
+\end{gathered}
+\tag{7.3}
+$$
+
+For a feasible array set
+
+$$
+r=\sum_kq_k,\qquad
+c=\sum_{k<d}(z_{kd}+w_{kd})g(k/d).
+\tag{7.4}
+$$
+
+For $\alpha,\beta>0$ and $R>1$ let
+$\mathcal L_M(\alpha,\beta;R)$ be the minimum of
+$\alpha r+\beta c$ subject to (7.3) and $r\le R$, with value
+$+\infty$ if infeasible. Define
+
+$$
+\mathcal L(\alpha,\beta;R)
+=\inf_{M\ge3}\mathcal L_M(\alpha,\beta;R).
+\tag{7.5}
+$$
+
+For $R\le1$ its value is defined as $+\infty$. The marked incidences
+$z$ will be parent-to-child incidences of a rooted spanning tree.
+In particular, the last inequality of (7.3) retains a joint
+connectivity condition in addition to degree and incidence counts.
+
+## 8. From connected patterns to arrays and back
+
+**Theorem 8.1 (Exact incidence constraints and asymptotic realization).**
+Every rooted pattern gives a feasible array (7.3) for some finite $M$,
+with its actual pair (7.2). Conversely, every finite feasible array
+is a limit of pairs of rooted patterns. For rational arrays the latter
+patterns can have uniformly bounded source degrees, tail degrees and
+core ports. The bounds may depend on the array. Consequently, for
+$R>1$,
+
+$$
+\mathcal L(\alpha,\beta;R)
+=\inf\{\alpha r+\beta c:
+    (r,c)\text{ comes from a rooted pattern},\ r<R\}.
+\tag{8.1}
+$$
+
+The same infimum results from replacing $r<R$ by $r\le R$.
+
+**Proof.** Adjoin the root to a pattern and take a spanning tree,
+oriented away from the root. Mark the parent incidence of each tail
+vertex. A source of total degree $k$ has its own parent edge and
+therefore at most $k-1$ marked tail incidences. It has $b$ tail
+incidences with $1\le b\le k$. Counting, and dividing by $n$, gives
+exactly (7.3), including one marked incidence at each tail vertex.
+All degrees and all costs are those of the same pattern.
+
+First consider a rational feasible array. If $q_k>0$, the pair
+
+$$
+(E_k/q_k,Z_k/q_k)
+\tag{8.2}
+$$
+
+lies in the polygon
+$1\le b\le k$, $0\le z\le b$, $z\le k-1$.
+For $k=1$ this polygon is the point $(1,0)$. For $k\ge2$ its
+vertices are integral: they occur among
+$(1,0),(k,0),(k,k-1),(k-1,k-1),(1,1)$.
+Triangulating the polygon expresses any rational point as a rational
+convex combination of integral pairs $(b,z)$ in it. Thus sources of
+degree $k$ can be assigned integer tail counts $b$ and marked counts
+$z$, with $k-b$ core ports, in exactly the proportions (8.2).
+
+Clear denominators. Make the prescribed numbers of sources and tail
+vertices, give a degree-$d$ tail vertex one marked stub and $d-1$
+unmarked stubs, and pair stubs according to $z_{kd},w_{kd}$.
+This produces a bipartite multigraph with the prescribed degrees,
+marks and port counts. Each source has at least one tail edge, and
+every tail edge has $k<d$. The marked count at a source is at most
+$k-1$.
+
+Parallel edges can be removed without changing any normalized count.
+Replace each vertex by $L$ copies indexed modulo $L$. For each
+parallel class assign distinct shifts to its edges, and replace an
+edge of shift $a$ by all edges from source copy $i$ to tail copy
+$i+a$. Taking $L$ at least the largest parallel multiplicity gives
+a simple incidence graph. Every copy has the original degree,
+marked count and ports. In particular its cost is exactly replicated.
+
+A component without a port contains a cycle. Indeed if it has $n_0$
+tails, $q_0$ sources and $e_0$ edges, then all its sources have $b=k$.
+Counting marked incidences gives
+
+$$
+n_0\le\sum_u(k_u-1)=e_0-q_0,
+\tag{8.3}
+$$
+
+so it cannot be a tree. In each such component choose a nonbridge
+edge. In $L'$ disjoint copies delete this edge in every copy, and
+cyclically join its source endpoint in copy $i$ to its tail endpoint
+in copy $i+1$. The component with the chosen edge deleted is
+connected. The resulting cyclic join is therefore connected and
+simple, preserves all degrees and marks, and contains all $L'$
+copies. Add one new source with one core port and one incidence to
+any tail vertex of this joined component. Its degree is two and
+the chosen tail degree increases from $d$ to $d+1$. Every original
+orientation inequality remains strict; the new inequality is
+$2<d+1$. Here $d\ge3$: a degree-two tail could only meet
+degree-one sources, which have no marked capacity in (7.3).
+
+Components already containing ports need no alteration. There are
+only finitely many component types before replication. Hence this
+construction adds $O(1)$ sources and changes $O(1)$ tail costs as
+$L'\to\infty$, while the number of tails grows linearly. It gives
+rooted patterns whose pairs tend to (7.4). All their degrees and
+ports are bounded by constants depending on the rational array.
+
+General real feasible arrays are approximated by rational feasible
+arrays. This follows, for example, by decomposing the finite rational
+polyhedron (7.3) into rational faces and approximating the convex
+coefficients within each face; the normalization is rational.
+Thus their pairs are also limits of rooted-pattern pairs.
+
+It remains to preserve a strict cap on $r$. There are rooted
+patterns with $r$ arbitrarily close to one from above. For each
+integer $t\ge2$, take $t$ tails and $t+1$ sources of degree $t$,
+with all possible incidences between them. Add a degree-two source
+with one core port and one incidence to a chosen tail. This is a
+rooted pattern, all inequalities are strict, and
+
+$$
+r_t=1+2/t,\qquad
+c_t=\frac{(t-1)(t+1)g(t/(t+1))
+              +(t+1)g(t/(t+2))+g(2/(t+2))}{t}.
+\tag{8.4}
+$$
+
+Given $R>1$, fix such a pattern with $r_t<R$. Mixing any finite
+array with an arbitrarily small positive amount of this pattern
+moves a pair with $r=R$ strictly below $R$, changing its cost by
+arbitrarily little. A pair already below $R$ requires no change.
+Rational approximation and the preceding realization then preserve
+the strict inequality. The forward direction bounds every rooted
+pattern from below by (7.5), and the converse gives the reverse
+inequality in (8.1). The same mixing argument proves the last
+assertion. ∎
+
+## 9. Coercivity and a certified finite degree cutoff
+
+**Lemma 9.1 (Tail moment and source-count bounds).** Put
+$\gamma=2/(1+\sqrt2)$. Every finite feasible array in (7.3), and
+every rooted pattern, satisfies $r>1$ and
+
+$$
+c\ge\frac{\gamma}{r(r-1)},\qquad
+\sum_d t_d d^{1/3}\le(c r^2/\gamma)^{1/3}.
+\tag{9.1}
+$$
+
+**Proof.** Write $e_{kd}=z_{kd}+w_{kd}$. For $t_d>0$ set
+
+$$
+u_d=\frac1{t_d}\sum_{k<d}\frac{e_{kd}}k,
+\qquad c_d=\frac1{t_d}\sum_{k<d}e_{kd}g(k/d).
+$$
+
+There are $d$ incidences per tail of degree $d$. Since $k\le d-1$,
+
+$$
+u_d\ge\frac d{d-1}>1,\qquad
+\sum_d t_d u_d=\sum_k E_k/k\le r.
+\tag{9.2}
+$$
+
+On $0\le t\le1$, $g(t)\ge\gamma t^2$. Jensen applied to the
+convex function $x\mapsto x^{-2}$, with incidence weights
+$e_{kd}/(dt_d)$ and arguments $1/k$, gives
+
+$$
+c_d\ge\frac{\gamma d}{u_d^2}
+\ge\frac{\gamma}{u_d(u_d-1)}.
+\tag{9.3}
+$$
+
+The last step uses $d\ge u_d/(u_d-1)$ from (9.2).
+The function $u\mapsto1/[u(u-1)]$ is decreasing and convex on
+$u>1$. Jensen and (9.2) prove the first inequality in (9.1).
+Also $d^{1/3}\le(c_d/\gamma)^{1/3}u_d^{2/3}$; summing and
+applying Hölder proves the second one. In particular $r>1$.
+Theorem 8.1 supplies the array of every rooted pattern, so the
+same conclusions apply to its actual counts. ∎
+
+**Theorem 9.2 (Finite linear programs with explicit error).** Fix
+$\alpha,\beta>0$ and $R>1$. Choose $t\ge2$ with $r_t<R$ in
+(8.4), and put
+
+$$
+\begin{gathered}
+L_0=\alpha r_t+\beta c_t,\qquad C=(L_0+1)/\beta,\\
+\delta_M=(C R^2/(\gamma M))^{1/3},\qquad
+\varepsilon_M=
+\frac{L_0\delta_M}{1-\delta_M}
+\left(1+\frac R{R-r_t}\right).
+\end{gathered}
+\tag{9.4}
+$$
+
+For every integer $M\ge t+2$ with $\delta_M<1$,
+
+$$
+0\le\mathcal L_M(\alpha,\beta;R)
+          -\mathcal L(\alpha,\beta;R)
+\le\varepsilon_M.
+\tag{9.5}
+$$
+
+In particular (7.5) is finite, and (9.5) evaluates it by finite
+linear programs with an explicit error tending to zero.
+
+**Proof.** The pattern (8.4) is feasible at cutoff $t+2$, so
+$0\le\mathcal L\le L_0$. Take any finite feasible array with
+$r\le R$ and objective at most $\mathcal L+\eta$, where
+$0<\eta\le1$. Its cost $c$ is at most $C$. Delete every tail
+degree $d>M$ and let $\delta$ be its total deleted mass.
+Lemma 9.1 gives $\delta\le\delta_M$.
+
+Retain the other edge variables. With their new row sums $E'_k,Z'_k$
+set
+
+$$
+q'_1=E'_1,\qquad
+q'_k=\max\{E'_k/k,Z'_k/(k-1)\}\quad(k\ge2).
+\tag{9.6}
+$$
+
+These obey $q'_k\le q_k$, $q'_k\le E'_k$ and all the source
+constraints. For $k\ge M$ their values vanish. Dividing all
+retained variables by $1-\delta$ therefore gives a feasible
+cutoff-$M$ array with
+
+$$
+r'\le\frac R{1-\delta},\qquad
+\alpha r'+\beta c'\le
+\frac{\mathcal L+\eta}{1-\delta}.
+\tag{9.7}
+$$
+
+If $r'>R$, mix this array with (8.4), using the weight
+$\theta=(r'-R)/(r'-r_t)$ on (8.4). Otherwise put $\theta=0$.
+In either case the mixed array has $r\le R$ and
+
+$$
+0\le\theta\le
+\frac{R\delta}{(1-\delta)(R-r_t)}.
+$$
+
+Its objective is at most
+$(\mathcal L+\eta)/(1-\delta)+\theta L_0$.
+Subtract $\mathcal L$, use $\mathcal L\le L_0$ and
+$\delta\le\delta_M$, and let $\eta\downarrow0$.
+This proves the upper inequality in (9.5). The lower inequality
+is the definition (7.5). All cutoff problems with $r\le R$ are
+compact when feasible: $q_k\le R$, $E_k\le kR$, and the remaining
+variables are bounded by these row sums. Thus their minima exist. ∎
+
+## 追加锚（本行以下为增补区）
