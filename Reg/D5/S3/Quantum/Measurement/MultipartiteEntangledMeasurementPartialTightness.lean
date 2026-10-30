@@ -53,7 +53,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   have hbad : (1 : ℝ) = 0 := Eq.mp (congrFun he 0) rfl
   norm_num at hbad
 
-def source_registration : Registration arena claim where
+def source : Registration arena claim where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨result, rejected, rejected_law⟩
@@ -67,14 +67,14 @@ def registration :
       (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Measurement.MultipartiteEntangledMeasurementPartialTightness.unit
   realizationName :=
-    `Reg.D5.S3.Quantum.Measurement.MultipartiteEntangledMeasurementPartialTightness.source_registration
+    `Reg.D5.S3.Quantum.Measurement.MultipartiteEntangledMeasurementPartialTightness.source
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
   objectArena := .source ⟨arena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨source_registration⟩
+  realization := .source arena ⟨source⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ x y => x = y) (fun e => nomatch e))
@@ -90,7 +90,7 @@ def registration :
       path := #[] }
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+      path := #["body", "body", "body", "body", "body", "body",
         "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
@@ -100,7 +100,7 @@ def registration :
   familyRecord := none
   options := #[] }
 
-#print axioms source_registration
+#print axioms source
 #print axioms registration
 
 end
