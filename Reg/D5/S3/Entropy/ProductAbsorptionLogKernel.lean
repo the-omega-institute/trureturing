@@ -34,7 +34,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   · change (if r ≤ 1 then (-1 : ℝ) else 1) = 0 at he
     split_ifs at he <;> norm_num at he
 
-private theorem dependence : ObservationalDependence signature actual := by
+theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨⟨1 / 2, 1 / 2⟩, 1 / 4, 1, ?_⟩
   have hlog1 : Real.log ((405 : ℝ) / 256) =

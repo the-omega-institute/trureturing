@@ -7,6 +7,7 @@ doi: null
 claim: "The scalar input gives a logarithmic integral proof of the closed-domain binary-entropy product absorption inequality. Its kernel lemma proves the exact quartic single-crossing property. The independent product-seed input constructs the explicit sharp noise-record comparison channel."
 strata_touched:
   - D5/S3/Entropy/ProductAbsorptionLogKernel
+  - D5/S3/Entropy/ProductAbsorptionLogIntegral
 license: citation-only
 triage: anchor
 ---
@@ -45,6 +46,14 @@ It establishes neither the entropy integral representation nor the
 nonnegative logarithmic first moment. Those statements, the closed-domain
 scalar entropy inequality, and the actual density-channel absorption
 endpoint remain separate proof obligations.
+
+The logarithmic integral module uses the primitive
+`(s+x)log(s+x)-slog(s)`, whose derivative is `log(1+x/s)` for `s>0`.
+After subtracting `xlog(s)` it lies between `x` and `x+x^2/s`.
+The first-order coefficient cancellation gives the exact moment as the
+improper integral. The single-crossing theorem supplies absolute
+integrability by separate nonnegative and nonpositive derivative FTC
+arguments. Nonnegativity of that moment is a separate obligation.
 
 The kernel theorem includes the entire closed parameter square. Its
 boundary reduction uses the zero kernel at one zero parameter and the
