@@ -35,7 +35,7 @@ theorem delta_fixed_count_skew_zmod (f : X → X) (c : X → ZMod q) [Fintype X]
     delta (fixedCount (skewStep f c)) n =
       (q : ℤ) * delta (zeroHolonomyCount f c) n := by
   unfold delta
-  rw [mul_sum]
+  rw [Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro p hp
   rw [fixed_count_skew_zmod f c p.2]
