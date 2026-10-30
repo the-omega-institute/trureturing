@@ -697,7 +697,7 @@ preservation.remove(argparse.Namespace(source=Path({str(self.main)!r}), names="t
         def busy(boundary):
             with ExitStack() as contender:
                 with self.assertRaisesRegex(protocol.Refused, "busy_scope:tree:"):
-                    protocol.tree_scope(contender, self.main, self.tree, True)
+                    protocol.tree_scope(contender, self.main, self.tree)
             checked.append(boundary)
         def guarded(operation, phase):
             def invoke(*args, **kwargs):
@@ -714,7 +714,7 @@ preservation.remove(argparse.Namespace(source=Path({str(self.main)!r}), names="t
                 patch.object(preservation, "remove_payload", guarded(preservation.remove_payload, "payload")), \
                 patch.object(preservation, "git", side_effect=guarded_git):
             result = preservation.remove(self.removal_options())
-        self.assertEqual("succeeded", result["status"])
+        self.assertEqual("succeeded", result["status"], result)
         self.assertEqual("removed", result["items"][0]["outcome"])
         self.assertEqual(["payload_entry", "payload_return", "native_entry", "native_return"], checked)
         self.assertFalse(self.tree.exists())
