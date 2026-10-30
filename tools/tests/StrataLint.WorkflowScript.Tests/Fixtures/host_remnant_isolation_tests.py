@@ -321,6 +321,28 @@ print('finished without isolation', flush=True)
                              "[FAIL] bounded_recovery_tree_reads")
         self.assertTrue((target / "Blueprint/Retained.md").exists())
 
+    def test_recovery_seventeenth_distinct_tip_is_outside_the_sample(self):
+        baseline = self.git(self.main, "rev-parse", "HEAD")
+        baseline_tree = self.git(self.main, "rev-parse", "HEAD^{tree}")
+        target = self.remnant("tip-cap")
+        retained = self.git(self.main, "rev-parse", "HEAD")
+        self.git(self.main, "update-ref", "refs/heads/z-retained", retained)
+        self.git(self.main, "reset", "--hard", baseline)
+        self.unrelated_tips(15, baseline_tree)
+        calls = []
+        recovery = cleanup.RefRecovery(self.main)
+        self.addCleanup(recovery.close)
+        with self.bounded_recovery_calls(calls):
+            result = self.clean_remnant(target, delete=False, recovery=recovery)
+        self.assertEqual(17, len({oid for _, oid in recovery.roots}))
+        self.assertEqual(16, len(recovery.selected_roots()), "[FAIL] distinct_tip_sample_cap")
+        self.assertNotIn(retained.encode("ascii"), recovery.selected_roots())
+        scanned = {call[call.index("ls-tree") + 4] for call in calls if "ls-tree" in call}
+        self.assertEqual(16, len(scanned), "[FAIL] distinct_tip_tree_reads")
+        self.assertNotIn(retained, scanned)
+        self.assertEqual(("kept", "blueprint_unrecoverable"), (result["action"], result["reason"]), result)
+        self.assertEqual(b"retained blueprint\x00bytes\n", (target / "Blueprint/Retained.md").read_bytes())
+
     def test_recovery_sampled_parent_is_recoverable_without_a_tip_copy(self):
         target = self.remnant()
         self.git(self.main, "rm", "Blueprint/Retained.md")
