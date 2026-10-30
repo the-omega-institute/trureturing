@@ -36,7 +36,6 @@ section
 
 variable {F : Type u} [Field F] [CharP F 2]
 variable {V : Type v} [AddCommGroup V] [Module F V]
-variable [FiniteDimensional F V]
 
 private lemma char_two_add_self {F : Type u} [Field F] [CharP F 2]
     {V : Type v} [AddCommGroup V] [Module F V] (x : V) : x + x = 0 := by
@@ -84,6 +83,9 @@ private lemma opposite_sum_inclusion
       _ = b + c := by rw [char_two_add_self (F := F), zero_add]
   simpa only [hcancel] using add_mem hab' hac'
 
+variable [FiniteDimensional F V]
+
+omit [CharP F 2] in
 private lemma finrank_opposite_le_deficiency
     (A B C Z : Submodule F V)
     (hT : (A ⊔ B) ⊔ (C ⊔ Z) = A ⊔ B ⊔ C ⊔ Z)
@@ -119,7 +121,10 @@ theorem finrank_opposite_sum_le_two_deficiency
         finrank F (A ⊔ B ⊔ C ⊔ Z : Submodule F V) := by
     have h := finrank_opposite_le_deficiency A C B Z
       (by simp [sup_left_comm, sup_comm]) OX rfl
-    simpa [add_left_comm, add_comm, sup_assoc, sup_left_comm, sup_comm] using h
+    have hperm : (A ⊔ C ⊔ B ⊔ Z : Submodule F V) = A ⊔ B ⊔ C ⊔ Z := by
+      ac_rfl
+    rw [hperm] at h
+    omega
   have hOY : OY ≤ OW ⊔ OX := by
     dsimp [OW, OX, OY]
     exact opposite_sum_inclusion A B C Z
@@ -128,7 +133,7 @@ theorem finrank_opposite_sum_le_two_deficiency
   have hsum' : finrank F (OW ⊔ OX ⊔ OY : Submodule F V) ≤
       finrank F OW + finrank F OX := by
     exact (Submodule.finrank_mono (sup_le le_rfl hOY)).trans hsum
-  dsimp [OW, OX, OY] at hsum'
+  change finrank F (OW ⊔ OX ⊔ OY : Submodule F V) ≤ _
   omega
 
 end

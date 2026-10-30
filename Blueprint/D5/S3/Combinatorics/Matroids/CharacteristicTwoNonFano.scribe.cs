@@ -18,7 +18,7 @@ internal sealed class CharacteristicTwoNonFanoDocument : IScribeDocumentDefiniti
                 H("Three opposite intersections are controlled by twice the relation deficiency"),
                 StatementSource.FromAuthor(Disp(Statement())),
                 AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/Combinatorics/blasiak2011lexicographicnetworkcoding")),
+                    LibraryNoteRef.Create("D5/L/Entropy/blasiak2011lexicographicnetworkcoding")),
                 Blocks(Paragraph(Text(
                     "For four arbitrary finite-dimensional submodules over characteristic two, the third opposite intersection "
                     + "is contained in the sum of the first two by the identity (a+b)+(a+c)=b+c. "
