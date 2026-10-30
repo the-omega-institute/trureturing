@@ -50,6 +50,15 @@ internal sealed class PriceRecordPrimeBlockTailDocument : IScribeDocumentDefinit
                         + "the weighted inequality. The existing occupied-layer marginal bound "
                         + "then gives G(P) <= (1/P)^a(P) <= 1/P.")),
                 Paragraph(Text(
+                    "For the four primes in the support of 5040, take S = {2,3,5,7} and k = 1. "
+                        + "If P > 210, the product condition holds. Since every T(q) is "
+                        + "nonnegative and 1-1/q >= 1/2 on this set, their unweighted sum D4 "
+                        + "satisfies D4 < 2/P - 2*lambda*log(P/210). For lambda > 0 this is "
+                        + "strictly less than 2/P. The four tails share one removed-layer "
+                        + "budget; summing four separate one-prime bounds would give 8/P. "
+                        + "This application requires the same full predecessor record, and "
+                        + "makes no assumption that the valuations equal those of 5040.")),
+                Paragraph(Text(
                     "This is a bound conditional on a full predecessor record, with the "
                         + "actual Euler tails of that same integer. It assumes neither global "
                         + "colossal-abundance optimality nor initial prime support. It does not "
