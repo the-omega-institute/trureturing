@@ -116,7 +116,10 @@ internal sealed class PauliFisherGHZRefutationDocument : IScribeDocumentDefiniti
                             + "so V satisfies the tangent condition. The bound would imply c/2 ≤ (2/3)^n, "
                             + "contradicting the chosen n. This disproves the universal assertion already at rank one; "
                             + "it makes no assertion about a lower bound restricted to higher ranks or to random measurement bases."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("acharya-kypraios-guta-2016-pauli-fisher-ghz-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title, Formula formula,
         AssessedProvenance provenance, string prose) =>
