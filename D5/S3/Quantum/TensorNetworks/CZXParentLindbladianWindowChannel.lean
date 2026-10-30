@@ -840,7 +840,7 @@ lemma window_channels_commute (n : ℕ) (hn : 4 ≤ n) (i j : Fin n)
       exact congrFun (map_zero (avg n {site j 1, site j 2})) x
     · simp only [ite_eq_right hi, ite_eq_right hj, map_zero]
   exact congrArg (fun l => l a) heq
-lemma window_channel_comp (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
+private lemma window_channel_comp (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
     (a : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :
     windowChannel n i (windowChannel n i a) = windowChannel n i a := by
   have hk (r s u v : Fin 16) :
