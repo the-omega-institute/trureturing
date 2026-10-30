@@ -40,18 +40,27 @@ def thetaRep (D : LatticeData) (g : ReflectionGroup) : Carrier D ≃ₗ[ℂ] Car
 private def thetaPerm (D : LatticeData) (g : ReflectionGroup) : Equiv.Perm (Carrier D) :=
   if g = 0 then Equiv.refl _ else (theta D).toEquiv
 
+private theorem theta_apply_involutive (D : LatticeData) (v : Carrier D) :
+    theta D (theta D v) = v := by
+  change thetaLinear D (thetaLinear D v) = v
+  exact theta_involutive D v
+
 /-- The cyclic order-two representation, with the additive `ZMod 2` law made
 visible through the standard `Additive` type tag on permutations. -/
 def thetaRepHom (D : LatticeData) :
     ReflectionGroup →+ Additive (Equiv.Perm (Carrier D)) :=
   { toFun := fun g => Additive.ofMul (thetaPerm D g)
-    map_zero' := by simp [thetaPerm]
+    map_zero' := by
+      change (Equiv.refl (Carrier D)) = 1
+      rfl
     map_add' := by
       intro g h
       fin_cases g <;> fin_cases h <;>
         apply Additive.ext
-        ext v
-        simp [thetaPerm, theta_involutive] }
+      all_goals
+        apply Equiv.ext
+        intro v
+        simp [thetaPerm, theta_apply_involutive] }
 
 @[simp] theorem thetaRep_zero (D : LatticeData) :
     thetaRep D 0 = LinearEquiv.refl ℂ (Carrier D) := by
@@ -85,7 +94,7 @@ theorem thetaRep_pairing (D : LatticeData) (g : ReflectionGroup)
 
 theorem thetaRep_involutive (D : LatticeData) (v : Carrier D) :
     thetaRep D 1 (thetaRep D 1 v) = v := by
-  simp [theta_involutive]
+  simpa [thetaRep] using theta_apply_involutive D v
 
 theorem thetaRep_fixed (D : LatticeData) (g : ReflectionGroup)
     (v : ↥(fixedSpace D)) :
