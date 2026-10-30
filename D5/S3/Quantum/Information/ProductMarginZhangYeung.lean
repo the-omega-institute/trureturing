@@ -28,38 +28,6 @@ open D5.S3.Quantum.Information.QubitNormalFormState
 open D5.S3.Quantum.Divergence.LegacyRelativeEntropyBoundary
 open D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
 
-private theorem marginalLeft_mixture {ι A B : Type*} [Fintype ι]
-    [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
-    (p : ι → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1)
-    (rho : ι → DensityState (A × B)) :
-    marginalLeft (mixtureState p hp hs rho) =
-      mixtureState p hp hs (fun i => marginalLeft (rho i)) := by
-  apply Subtype.ext
-  change CStarMatrix.ofMatrix (partialTraceLeft
-    (∑ i, p i • CStarMatrix.ofMatrix.symm (rho i).1)) =
-      CStarMatrix.ofMatrix (∑ i, p i • partialTraceLeft (CStarMatrix.ofMatrix.symm (rho i).1))
-  congr 1
-  ext b d
-  simp only [partialTraceLeft, Matrix.sum_apply, Matrix.smul_apply]
-  rw [Finset.sum_comm]
-  exact Finset.sum_congr rfl fun i _ => Finset.smul_sum.symm
-
-private theorem marginalRight_mixture {ι A B : Type*} [Fintype ι]
-    [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
-    (p : ι → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1)
-    (rho : ι → DensityState (A × B)) :
-    marginalRight (mixtureState p hp hs rho) =
-      mixtureState p hp hs (fun i => marginalRight (rho i)) := by
-  apply Subtype.ext
-  change CStarMatrix.ofMatrix (partialTraceRight
-    (∑ i, p i • CStarMatrix.ofMatrix.symm (rho i).1)) =
-      CStarMatrix.ofMatrix (∑ i, p i • partialTraceRight (CStarMatrix.ofMatrix.symm (rho i).1))
-  congr 1
-  ext a c
-  simp only [partialTraceRight, Matrix.sum_apply, Matrix.smul_apply]
-  rw [Finset.sum_comm]
-  exact Finset.sum_congr rfl fun i _ => Finset.smul_sum.symm
-
 private theorem mutual_information_relative_entropy
     {a b : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
     (rho : DensityState (a × b))
