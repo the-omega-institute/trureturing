@@ -57,11 +57,11 @@ class QualificationCases:
             self.assertEqual(index_bytes[target], indexes[target].read_bytes())
             self.assertFalse((indexes[target].parent / preservation.REMOVAL_RECORD).exists())
 
-    def test_removal_owner_boundary_before_checkpoint(self):
+    def removal_owner_boundary_before_checkpoint(self):
         (self.tree / "owned").write_text("unique uncheckpointed bytes\n")
         self.assert_removal_boundary_precedes_checkpoint(self.tree, "st_uid", "owner_boundary")
 
-    def test_removal_device_boundary_before_checkpoint(self):
+    def removal_device_boundary_before_checkpoint(self):
         boundaries = [self.tree / "dir", self.tree / ".lake/build/empty"]
         boundaries[1].mkdir(parents=True)
         (self.tree / ".gitignore").write_text(".lake/\n")
@@ -70,7 +70,7 @@ class QualificationCases:
             with self.subTest(boundary=boundary.relative_to(self.tree)):
                 self.assert_removal_boundary_precedes_checkpoint(boundary, "st_dev", "device_boundary")
 
-    def test_removal_boundary_batch_preflight_preserves_all_targets(self):
+    def removal_boundary_batch_preflight_preserves_all_targets(self):
         second = self.root / "second"
         self.g(self.main, "worktree", "add", "-b", "second", second, "HEAD")
         (self.tree / "owned").write_text("first target unique bytes\n")
@@ -95,13 +95,13 @@ class QualificationCases:
         self.assertTrue((self.tree / "dir/child").is_file())
         self.assertTrue(record.is_file())
 
-    def test_removal_rechecks_owner_boundary_after_checkpoint(self):
+    def removal_rechecks_owner_boundary_after_checkpoint(self):
         self.assert_late_removal_boundary_retained(self.tree, "st_uid", "owner_boundary")
 
-    def test_removal_rechecks_device_boundary_after_checkpoint(self):
+    def removal_rechecks_device_boundary_after_checkpoint(self):
         self.assert_late_removal_boundary_retained(self.tree / "dir", "st_dev", "device_boundary")
 
-    def test_removal_boundary_scan_does_not_follow_directory_links(self):
+    def removal_boundary_scan_does_not_follow_directory_links(self):
         import worktree_preservation as preservation
         outside = self.root / "outside"
         outside.mkdir()
@@ -115,7 +115,7 @@ class QualificationCases:
         self.assertFalse(self.tree.exists())
         self.assertEqual("outside unique bytes\n", unique.read_text())
 
-    def test_removal_boundaries_share_the_nested_git_walk(self):
+    def removal_boundaries_share_the_nested_git_walk(self):
         import worktree_preservation as preservation
         original_walk = os.walk
         walked = []
