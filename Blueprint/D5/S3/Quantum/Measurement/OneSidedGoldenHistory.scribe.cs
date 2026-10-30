@@ -91,9 +91,9 @@ internal sealed class OneSidedGoldenHistoryDocument : IScribeDocumentDefinition
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula Div(Formula a, Formula b) => new Formula.Fraction(a, b);
-    private static Formula NatType() => Seq(Mathbb, Grp(Id("N")));
-    private static Formula RealType() => Seq(Mathbb, Grp(Id("R")));
-    private static Formula ComplexType() => Seq(Mathbb, Grp(Id("C")));
+    private static Formula NatType() => Seq(Mathbb, Grp(FormulaDsl.Id("N")));
+    private static Formula RealType() => Seq(Mathbb, Grp(FormulaDsl.Id("R")));
+    private static Formula ComplexType() => Seq(Mathbb, Grp(FormulaDsl.Id("C")));
     private static Formula FinitePredictors(Formula body) => All("S", C("Type"),
         All("inst", Call("Fintype", X("S")), All("M", Call("Predictor", X("S")), body)));
 }

@@ -55,7 +55,7 @@ private def projection : Matrix (Fin 2) (Fin 2) ℂ := Matrix.diagonal ![0,1]
 private def density : DensityState (Fin 2) :=
   ⟨(1/2 : ℝ) • (1 : CStarMatrix (Fin 2) (Fin 2) ℂ),
     smul_nonneg (by norm_num : (0 : ℝ) ≤ 1/2) zero_le_one,
-    by norm_num [Matrix.trace,Fin.sum_univ_two,Matrix.smul_apply,Matrix.one_apply]⟩
+    by norm_num [Matrix.trace,Matrix.diag_apply,Fin.sum_univ_two,Matrix.smul_apply,Matrix.one_apply]⟩
 private theorem projection_idem : projection*projection=projection := by
   simp [projection,Matrix.diagonal_mul_diagonal]
 private theorem projection_hermitian : projection.IsHermitian := by
@@ -77,7 +77,7 @@ theorem bad_law : ¬ arena.{u}.Law bad := by
 def evidence : Registration arena.{u} (arena.{u}.Law actual) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨native_predictor_minimum,bad,bad_law⟩
+  variation := ⟨native_predictor_minimum.{u},bad,bad_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ bad_law
   dependence := by
     intro i
@@ -85,7 +85,7 @@ def evidence : Registration arena.{u} (arena.{u}.Law actual) where
     refine ⟨p,[],[true],?_⟩
     intro h
     change mass projection _ [] = mass projection _ [true] at h
-    have hl := (native_predictor_minimum projection projection_idem projection_hermitian density qrange).2.1
+    have hl := (native_predictor_minimum.{u} projection projection_idem projection_hermitian density qrange).2.1
     have h0 := (hl 0).1
     have h1 := (hl 1).1
     norm_num [qvalue] at h0 h1
