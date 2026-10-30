@@ -42,7 +42,7 @@ private lemma endpoint_support_zero_iff (l : Fin 6 → ℝ) (hl : ∀ q, 0 < l q
           · exact ⟨hki, hkj⟩
     | inr k =>
         by_cases hki : k = i
-        · simpa [hki] using hr
+        · simpa [incident] using hki
         · exfalso
           exact (ne_of_lt (ho k hki) (by simpa [support] using h))
   · intro h
@@ -69,7 +69,10 @@ private lemma endpoint_ne (l : Fin 6 → ℝ) (hl : ∀ q, 0 < l q)
   intro h
   apply hpq
   have hinj := (cut_body_polytope l hl).2.2.1
-  exact congrArg Subtype.val (hinj (show endpoint l i j = endpoint l k m from h))
+  have hsub : (⟨(i, j), hij⟩ : EndpointLabel) = ⟨(k, m), hkm⟩ := by
+    apply hinj
+    simpa using h
+  exact congrArg Subtype.val hsub
 
 private lemma endpoint_eq_false (l : Fin 6 → ℝ) (hl : ∀ q, 0 < l q)
     {i j k m : Fin 4} (h : endpoint l i j = endpoint l k m)
