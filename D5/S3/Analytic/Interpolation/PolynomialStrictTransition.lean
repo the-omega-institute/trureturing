@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unfrozen-content)
    anchors: []
    utility: none
-   digest: Strict downward neighborhoods under positive polynomial multipliers. -/
+   digest: Polynomial sign boundaries give strict downward neighborhoods. -/
 
 module
 
@@ -23,8 +23,8 @@ namespace D5.S3.Analytic.Interpolation.PolynomialStrictTransition
 
 open Set Filter Topology Polynomial
 
-/-- Opposite signs of a function with a positive polynomial multiplier give a
-strict downward transition, including a closed neighborhood inside the interval.
+/-- Opposite signs of a function whose product with a positive multiplier is
+polynomial give a strict transition with a closed neighborhood inside the interval.
 No simplicity of the polynomial root or continuity of the multiplier is required. -/
 theorem strict_downward_of_polynomial_multiplier
     (p : ℝ[X]) (g w : ℝ → ℝ) {l r : ℝ} (hlr : l < r)
