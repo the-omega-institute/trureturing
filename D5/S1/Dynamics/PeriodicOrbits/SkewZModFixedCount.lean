@@ -6,7 +6,7 @@
    utility: none
    digest: Zero holonomy exactly controls fixed points of a finite cyclic skew product. -/
 
-import D5.S1.Dynamics.PeriodicOrbits.SkewZModOrder
+import D5.S1.Dynamics.PeriodicOrbits.SkewAdditiveReturn
 import D5.S1.Dynamics.PeriodicOrbits.OrbitCounting
 import Mathlib.Data.ZMod.Basic
 
