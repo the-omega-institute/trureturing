@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/algebra/vertex/vertexoperator, mathlib/algebra/mvpolynomial/pderiv]
+   anchors: [mathlib/module/Mathlib.Algebra.Vertex.VertexOperator, mathlib/module/Mathlib.Algebra.MvPolynomial.PDeriv]
    utility: none
    digest: Integer-frequency retuning of the signed polynomial Wick form and its finite-charge lift to the original Carrier. -/
 
