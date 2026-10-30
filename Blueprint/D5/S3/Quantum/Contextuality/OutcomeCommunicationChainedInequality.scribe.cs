@@ -63,7 +63,10 @@ internal sealed class OutcomeCommunicationChainedInequalityDocument : IScribeDoc
                             + "sum to one, and reproduce the original factorized behaviour by finite response marginalization. "
                             + "The chained expression is linear in the behaviour, so it is the weighted sum of the deterministic expressions. "
                             + "Applying the deterministic lower bound to each table and summing the weighted inequalities gives the claimed bound."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("brask-chaves-2017-outcome-communication-chained-inequality"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
