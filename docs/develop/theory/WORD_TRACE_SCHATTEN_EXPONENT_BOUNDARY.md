@@ -332,6 +332,4 @@ Schatten exponents.  It makes no assertion about $p=\infty$, minimum
 dimension, fixed-dimension optimality, tensor-product spin families, strong
 alignment, entropy, or the status of any external conjecture.
 
-## 5. Boundary of this volume
-
 ## Append anchor (content below is an addition zone)
