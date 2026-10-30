@@ -316,5 +316,6 @@ theorem whole_sharp_native_law (h ε : ℝ) (hh : 0 < h) (hε : 0 < ε) (C E : V
   exact ⟨hm.1, hm.2, no_supplement h ε hh C E,
     quantum_threshold h ε hh hε.le⟩
 
+
 #print axioms whole_sharp_native_law
 end D5.S3.Observer.Completion.TypedCocycleSharpNative

@@ -43,6 +43,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, 1/4, 1, ?_⟩
   norm_num [actual, realize, quantum]
+  rw [show ⌊(1 / 2 : ℝ)⌋₊ = 0 from Nat.floor_eq_zero.mpr (by norm_num)]
+  decide
 
 def family : Registration arena (type_of% (@whole_sharp_native_law)) where
   actual := actual
