@@ -4,14 +4,15 @@
    mirror-E: none
    anchors: [D5/S3/Analytic/XuYangMillsRemainder/Result]
    utility: none
-   digest: Original Mills coefficients, origin obstruction and closed kernel ranges. -/
+   digest: Original Mills coefficients, signed Laplace moments and exact subtraction. -/
 
 /-
 The general-parameter Mills definitions retain the original normalization from
 `Result.D`. Both complete equivalence chains are recorded as a proposition.
 The Gamma coefficient correspondence identifies the sharp positive-branch
-origin obstruction. The Laplace identity, infinity asymptotic and complete
-classification proof remain open here.
+origin obstruction. Absolute signed-kernel moments and finite subtraction give
+an exact Gaussian defect in every derivative of the original F. The Gaussian
+Laplace identity, infinity asymptotic and complete classification remain open.
 -/
 
 import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
@@ -824,7 +825,6 @@ private theorem kernel_zero (a t : ℝ) :
   have he (y : ℝ) : E 0 y = 1 - exp (-y) := by
     rw [e_original, expRemainder_eq]
     norm_num
-    ring
   rw [gaussian_kernel_identity]
   unfold L
   simp_rw [he]
@@ -841,6 +841,7 @@ private theorem kernel_zero (a t : ℝ) :
       (by apply Continuous.intervalIntegrable; fun_prop)]
     apply intervalIntegral.integral_congr
     intro v _
+    dsimp only
     rw [show -(t ^ 2 / 4 * (1 + v ^ 2)) = -(1 + v ^ 2) * t ^ 2 / 4 by ring]
     ring
   rw [hi]
@@ -854,6 +855,7 @@ private theorem gaussian_exponential_integrable (a : ℝ) {x : ℝ} (hx : 0 < x)
   simp only [← neg_mul] at hm
   apply (hk.add (hm.mul_const ((I 0 + (2 * a - 1) * B 0) / 4))).congr
   filter_upwards with t
+  dsimp only [Pi.add_apply]
   rw [kernel_zero]
   ring
 
@@ -895,7 +897,7 @@ private theorem laplace_finite_subtraction (r : ℕ) (a : ℝ) {x : ℝ} (hx : 0
       norm_num
     have hp : 2 * (r + 2 + 1) = 2 * r + 6 := by omega
     simp only [pow_succ, hp]
-    linear_combination -(u (r + 3) a (a - 2) / x ^ (2 * r + 6)) * hs
+    linear_combination (u (r + 3) a (a - 2) / x ^ (2 * r + 6)) * hs
 
 private theorem f_laplace_defect (r : ℕ) (a : ℝ) {x : ℝ} (hx : 0 < x) :
     F (r + 2) a x - (∫ t in Ioi (0 : ℝ), exp (-x * t) * L r a t) =
@@ -904,5 +906,104 @@ private theorem f_laplace_defect (r : ℕ) (a : ℝ) {x : ℝ} (hx : 0 < x) :
   rw [laplace_finite_subtraction r a hx]
   unfold F D
   ring
+
+/-! Differentiation of the actual signed kernel requires no parameter sign premise. -/
+
+private theorem signed_kernel_moment_deriv (r m : ℕ) (a : ℝ) {x : ℝ} (hx : 0 < x) :
+    HasDerivAt (moment (L r a) m) (moment (L r a) (m + 1) x) x := by
+  have hint : IntegrableOn (fun t : ℝ => (-t) ^ m * exp (-x * t) * L r a t) (Ioi 0) := by
+    apply ((kernel_exponential_moments r m a hx).const_mul ((-1 : ℝ) ^ m)).congr
+    filter_upwards with t
+    rw [neg_eq_neg_one_mul, mul_pow]
+    ring
+  have hb := (TwoScaleEndpointMoments.exponential_moment (x / 2) (half_pos hx)
+    (m + 1 + 2 * r + 5)).1.const_mul (|1 - 2 * a| + 1)
+  simp only [← neg_mul] at hb
+  apply (hasDerivAt_integral_of_dominated_loc_of_deriv_le
+    (μ := volume.restrict (Ioi (0 : ℝ)))
+    (F := fun y t : ℝ => (-t) ^ m * exp (-y * t) * L r a t)
+    (F' := fun y t : ℝ => (-t) ^ (m + 1) * exp (-y * t) * L r a t)
+    (s := Ioi (x / 2))
+    (bound := fun t : ℝ => (|1 - 2 * a| + 1) *
+      (t ^ (m + 1 + 2 * r + 5) * exp (-(x / 2) * t)))
+    (Ioi_mem_nhds (by linarith : x / 2 < x))
+    (Eventually.of_forall (fun y =>
+      (((by fun_prop : Continuous (fun t : ℝ => (-t) ^ m * exp (-y * t))).mul
+        (kernel_continuous r a)).aestronglyMeasurable))) hint
+    (((by fun_prop : Continuous (fun t : ℝ => (-t) ^ (m + 1) * exp (-x * t))).mul
+      (kernel_continuous r a)).aestronglyMeasurable)
+    ?_ hb ?_).2
+  · filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+    intro y hy
+    have hex : exp (-y * t) ≤ exp (-(x / 2) * t) := by
+      apply exp_le_exp.mpr
+      change x / 2 < y at hy
+      change 0 < t at ht
+      nlinarith
+    simp only [norm_mul, norm_pow, norm_neg, Real.norm_of_nonneg ht.le,
+      Real.norm_of_nonneg (exp_nonneg _)]
+    calc
+      _ ≤ t ^ (m + 1) * exp (-(x / 2) * t) * ‖L r a t‖ :=
+        mul_le_mul_of_nonneg_right
+          (mul_le_mul_of_nonneg_left hex (pow_nonneg ht.le _)) (norm_nonneg _)
+      _ ≤ t ^ (m + 1) * exp (-(x / 2) * t) *
+          ((|1 - 2 * a| + 1) * t ^ (2 * r + 5)) :=
+        mul_le_mul_of_nonneg_left (kernel_polynomial_bound r a ht.le)
+          (mul_nonneg (pow_nonneg ht.le _) (exp_nonneg _))
+      _ = _ := by
+        rw [show m + 1 + 2 * r + 5 = (m + 1) + (2 * r + 5) by omega, pow_add]
+        ring
+  · filter_upwards with t
+    intro y _
+    convert ((((hasDerivAt_id y).neg.mul_const t).exp).const_mul
+      ((-t) ^ m)).mul_const (L r a t) using 1 <;>
+      simp only [Pi.neg_apply, id_eq, pow_succ] <;> ring
+
+private theorem signed_kernel_moment_iterated (r : ℕ) (a : ℝ) (m : ℕ) :
+    EqOn (iteratedDeriv m (moment (L r a) 0)) (moment (L r a) m) (Ioi 0) := by
+  induction m with
+  | zero => intro x _; rfl
+  | succ m ih =>
+    intro x hx
+    rw [iteratedDeriv_succ]
+    have he : iteratedDeriv m (moment (L r a) 0) =ᶠ[𝓝 x] moment (L r a) m := by
+      filter_upwards [Ioi_mem_nhds hx] with y hy
+      exact ih hy
+    exact he.deriv_eq.trans (signed_kernel_moment_deriv r m a hx).deriv
+
+private theorem signed_kernel_laplace_smooth (r : ℕ) (a : ℝ) :
+    ContDiffOn ℝ ∞ (moment (L r a) 0) (Ioi 0) := by
+  apply contDiffOn_of_differentiableOn_deriv (n := ⊤)
+  intro m _ x hx
+  have he : iteratedDerivWithin m (moment (L r a) 0) (Ioi 0) =ᶠ[𝓝 x]
+      moment (L r a) m := by
+    filter_upwards [Ioi_mem_nhds hx] with y hy
+    rw [iteratedDerivWithin_of_isOpen isOpen_Ioi hy]
+    exact signed_kernel_moment_iterated r a m hy
+  exact ((signed_kernel_moment_deriv r m a hx).differentiableAt.congr_of_eventuallyEq
+    he).differentiableWithinAt
+
+private theorem all_order_laplace_defect (r m : ℕ) (a : ℝ) {x : ℝ} (hx : 0 < x) :
+    iteratedDeriv m (F (r + 2) a) x =
+      (∫ t in Ioi (0 : ℝ), (-t) ^ m * exp (-x * t) * L r a t) +
+      iteratedDeriv m (fun y : ℝ => (-1 : ℝ) ^ (r + 2) *
+        (Y a (a - 2) y - (a - 1) -
+          ∫ t in Ioi (0 : ℝ), exp (-y * t) * G a t)) x := by
+  have he : EqOn (F (r + 2) a - moment (L r a) 0)
+      (fun y : ℝ => (-1 : ℝ) ^ (r + 2) *
+        (Y a (a - 2) y - (a - 1) -
+          ∫ t in Ioi (0 : ℝ), exp (-y * t) * G a t)) (Ioi 0) := by
+    intro y hy
+    simpa only [Pi.sub_apply, moment, pow_zero, one_mul] using f_laplace_defect r a hy
+  have hF : ContDiffAt ℝ m (F (r + 2) a) x :=
+    ((regularity_and_origin (r + 2) (by omega) a).1.contDiffAt (Ioi_mem_nhds hx)).of_le
+      (by exact_mod_cast le_top)
+  have hM : ContDiffAt ℝ m (moment (L r a) 0) x :=
+    ((signed_kernel_laplace_smooth r a).contDiffAt (Ioi_mem_nhds hx)).of_le
+      (by exact_mod_cast le_top)
+  have hd := he.iteratedDeriv_of_isOpen isOpen_Ioi m hx
+  rw [iteratedDeriv_sub hF hM, signed_kernel_moment_iterated r a m hx] at hd
+  dsimp only [moment] at hd
+  linarith
 
 end D5.S3.Analytic.XuYangMillsRemainder.GeneralParameter

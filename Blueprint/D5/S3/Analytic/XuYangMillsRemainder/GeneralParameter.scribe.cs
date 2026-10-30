@@ -130,6 +130,32 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                 + "The exact original exponential-remainder recurrence gives the polynomial "
                 + "kernel difference. Absolute integrability permits integral subtraction, "
                 + "and the original coefficient_identity identifies the polynomial moment."),
+            Proof("finite-laplace-subtraction", "laplace_finite_subtraction",
+                "Exact finite subtraction inside the Laplace integral",
+                "For every r>=0, real a and x>0, the Laplace integral of L r a equals "
+                + "(-1)^(r+2) times the Laplace integral of the original G_a minus the "
+                + "finite sum of the original (-1)^k u_k(a,a-2)/x^(2k), with 1<=k<=r+2. "
+                + "The base case subtracts u_2/x^4 and uses u_1=0. The exact kernel recurrence "
+                + "then adds each successive Gamma term. All integral subtractions are absolutely integrable. "
+                + "The difference between this expression and the actual F is precisely "
+                + "(-1)^(r+2) times Y_(a,a-2)-(a-1)-Laplace(G_a)."),
+            Proof("signed-kernel-all-orders", "signed_kernel_moment_iterated",
+                "Every ordinary derivative of the signed kernel integral",
+                "For every r,m>=0 and every real a, the mth ordinary derivative of the Laplace "
+                + "integral of L r a equals the integral of (-t)^m exp(-xt) L r a t for x>0. "
+                + "No positivity assumption on the kernel or parameter is used. "
+                + "On y>x/2, the absolute derivative integrand is dominated by "
+                + "(abs(1-2a)+1) t^(m+2r+6) exp(-xt/2), an integrable exponential moment. "
+                + "Repeated dominated differentiation also gives C-infinity regularity of this integral."),
+            Proof("all-order-original-defect", "all_order_laplace_defect",
+                "The exact outstanding Gaussian term in every derivative of the original F",
+                "For every derivative order m including zero, the mth derivative of the original "
+                + "F_(r+2,a) equals the signed-kernel moment plus the mth derivative of "
+                + "(-1)^(r+2) [Y_(a,a-2)-(a-1)-Laplace(G_a)]. "
+                + "The finite-subtraction identity and smoothness justify this equality on x>0. "
+                + "The outstanding Gaussian identity is Y_(a,a-2)-(a-1)=Laplace(G_a); "
+                + "this identity is not assumed or asserted as proved. Consequently the actual F "
+                + "derivative signs, its infinity asymptotic and the full classification remain open."),
             Proof("gaussian-kernel-identity", "gaussian_kernel_identity",
                 "General-parameter Gaussian convolution kernel identity",
                 "For every real a and t, the source kernel G_a(t) equals "

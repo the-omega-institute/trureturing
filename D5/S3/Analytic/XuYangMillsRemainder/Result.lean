@@ -199,7 +199,7 @@ private lemma convolutionClosed (t : ℝ) :
   field_simp at hc
   simpa only [neg_div, neg_mul] using hc.symm
 
-private def moment (f : ℝ → ℝ) (m : ℕ) (x : ℝ) : ℝ :=
+def moment (f : ℝ → ℝ) (m : ℕ) (x : ℝ) : ℝ :=
   ∫ t in Ioi (0:ℝ), (-t)^m * exp (-x*t) * f t
 
 private lemma momentDeriv {f : ℝ → ℝ} (hf : Continuous f)

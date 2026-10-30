@@ -361,7 +361,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   change expRemainder 0 0 ≠ expRemainder 0 1
   simp only [expRemainder_eq]
   norm_num
-  exact fun h => (exp_injective h).elim (by norm_num)
+  have he : exp (-1 : ℝ) < 1 := exp_lt_one_iff.mpr (by norm_num)
+  linarith
 
 def family : Registration arena (type_of% @expRemainder_eq) where
   actual := actual
@@ -430,7 +431,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   change expRemainder 0 0 ≠ expRemainder 0 1
   simp only [expRemainder_eq]
   norm_num
-  exact fun h => (exp_injective h).elim (by norm_num)
+  have he : exp (-1 : ℝ) < 1 := exp_lt_one_iff.mpr (by norm_num)
+  linarith
 
 def family : Registration arena (type_of% @expRemainderBounds) where
   actual := actual
@@ -499,7 +501,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   change expRemainder 1 0 ≠ expRemainder 1 1
   simp only [expRemainder_eq]
   norm_num
-  have he := exp_pos (-1 : ℝ)
+  have he : exp (-1 : ℝ) < 1 := exp_lt_one_iff.mpr (by norm_num)
   linarith
 
 def family : Registration arena (type_of% @expRemainderRec) where
