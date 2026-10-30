@@ -54,7 +54,6 @@ import D5.S3.Combinatorics.Graph.PrincipalSpecialization.BinghamCaterpillarPs3Fa
 import Mathlib.Data.Complex.Basic
 import Mathlib.Algebra.Polynomial.Eval.Coeff
 import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Tactic.Decide
 
 namespace Trureturing.OpenProblems.BinghamCaterpillarUniquenessRefutation
 
