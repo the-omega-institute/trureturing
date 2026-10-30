@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation
 import D5.S3.Quantum.Measurement.AnticoherenceCovariantChannel
+import D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
 import D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability
 
 /-!
@@ -34,6 +35,8 @@ open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
 open D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm)
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf (MatrixMap)
 open D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound (Jplus Jx Jy Jz)
+open D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
+  (pauliAxes pauli_rotation tensor_unitary quadratic_rotation orthogonal_sandwich)
 
 /-- The tensor power in the computational basis of `n` qubits. -/
 def qubitPower (n : ℕ) (u : Matrix (Fin 2) (Fin 2) ℂ) :
@@ -94,11 +97,11 @@ def claim : Prop :=
 private lemma dicke_count (n k : ℕ) :
     (∑ x : Fin n → Fin 2, if (∑ i, (x i).val) = k then (1 : ℂ) else 0) =
       (n.choose k : ℂ) := by
-  have hp : (∏ _i : Fin n, ∑ b : Fin 2, (Polynomial.X : ℂ[X]) ^ b.val) =
+  have hp : (∏ _i : Fin n, ∑ b : Fin 2, (Polynomial.X : Polynomial ℂ) ^ b.val) =
       (1 + Polynomial.X) ^ n := by simp [Fin.sum_univ_two]
   rw [Fintype.prod_sum] at hp
   simp_rw [Finset.prod_pow_eq_pow_sum] at hp
-  have h := congrArg (fun p : ℂ[X] => p.coeff k) hp
+  have h := congrArg (fun p : Polynomial ℂ => p.coeff k) hp
   simpa [Polynomial.finsetSum_coeff, Polynomial.coeff_X_pow, eq_comm,
     Polynomial.coeff_one_add_X_pow] using h
 
@@ -131,8 +134,9 @@ private lemma dicke_isometry (n : ℕ) : (dickeIsometry n)ᴴ * dickeIsometry n 
     · have hs : (∑ i, (x i).val) ≠ s.val := by
         intro hs
         exact hrs (Fin.ext (hr.symm.trans hs))
-      simp [dickeIsometry, hr, hs]
-    · simp [dickeIsometry, hr]
+      have hrsval : r.val ≠ s.val := fun he => hrs (Fin.ext he)
+      simp [dickeIsometry, hr, hrsval]
+    · simp only [dickeIsometry, hr, ite_false, star_zero, zero_mul]
 
 private lemma weight_card (n : ℕ) (x : Fin n → Fin 2) :
     (∑ i, (x i).val) = (Finset.univ.filter (fun i => x i = 1)).card := by
@@ -140,8 +144,9 @@ private lemma weight_card (n : ℕ) (x : Fin n → Fin 2) :
     _ = ∑ i : Fin n, if x i = 1 then 1 else 0 := by
       apply Finset.sum_congr rfl
       intro i _
-      fin_cases hx : x i <;> simp [hx]
-    _ = _ := by rw [Finset.sum_boole]
+      generalize hx : x i = b
+      fin_cases b <;> simp
+    _ = _ := by simpa using (Finset.sum_boole (Finset.univ : Finset (Fin n)) (fun i => x i = 1))
 
 private lemma weight_le (n : ℕ) (x : Fin n → Fin 2) : (∑ i, (x i).val) ≤ n := by
   rw [weight_card]
@@ -161,7 +166,9 @@ private lemma same_weight_permutation (n : ℕ) (x y : Fin n → Fin 2)
         i ∈ Finset.univ.filter (fun i => x i = 1) := by rw [← hσ]; simp
     simpa using he
   change y (σ i) = x i
-  fin_cases hx : x i <;> fin_cases hy : y (σ i) <;> simp_all
+  generalize hx : x i = b at *
+  generalize hy : y (σ i) = c at *
+  fin_cases b <;> fin_cases c <;> simp_all
 
 private lemma tensor_weight_constant (n : ℕ) (u : Matrix (Fin 2) (Fin 2) ℂ)
     (x y : Fin n → Fin 2) (r : Fin (n + 1))
@@ -180,9 +187,10 @@ private lemma tensor_weight_constant (n : ℕ) (u : Matrix (Fin 2) (Fin 2) ℂ)
       _ = _ := by
         apply Finset.sum_congr rfl
         intro z _
-        have hw : (∑ i, (z (σ i)).val) = ∑ i, (z i).val := σ.sum_comp _
+        have hw : (∑ i, (z (σ i)).val) = ∑ i, (z i).val :=
+          Equiv.sum_comp σ (fun i => (z i).val)
         have hu : qubitPower n u (x ∘ σ) (z ∘ σ) = qubitPower n u x z :=
-          σ.prod_comp (fun i => u (x i) (z i))
+          Equiv.prod_comp σ (fun i => u (x i) (z i))
         simp only [hu, dickeIsometry, Function.comp_apply, hw]
   obtain ⟨σ, hσ⟩ := same_weight_permutation n x y h
   rw [← hσ]
@@ -198,8 +206,10 @@ private lemma dicke_projector_entry (n : ℕ) (x y : Fin n → Fin 2) :
       exact_mod_cast Real.sq_sqrt (Nat.cast_nonneg (n.choose r.val))
     by_cases hxy : (∑ i, (x i).val) = ∑ i, (y i).val
     · have hy : (∑ i, (y i).val) = r.val := hxy.symm
-      simp only [Matrix.conjTranspose_apply, dickeIsometry, r, ite_true, hy,
-        hxy, Complex.star_def, map_inv₀, Complex.conj_ofReal]
+      have hx : (∑ i, (x i).val) = r.val := rfl
+      rw [if_pos hxy]
+      simp only [Matrix.conjTranspose_apply, dickeIsometry, hx, hy,
+        ite_true, Complex.star_def, map_inv₀, Complex.conj_ofReal]
       rw [← mul_inv, ← sq]
       exact congrArg Inv.inv hs
     · have hy : (∑ i, (y i).val) ≠ r.val := by
@@ -239,6 +249,94 @@ private lemma tensor_preserves_symmetric (n : ℕ)
     rw [← mul_assoc, mul_inv_cancel₀ hn, one_mul]
   simpa only [spinAction, Matrix.mul_assoc] using hp.symm
 
+private def dickeSplitSum (t s : ℕ) :
+    Matrix (Fin (t + 1) × Fin (s + 1)) (Fin (t + s + 1)) ℂ :=
+  fun kl r => if kl.1.val + kl.2.val = r.val then
+    ((Real.sqrt ((t.choose kl.1.val : ℝ) * (s.choose kl.2.val : ℝ)) /
+      Real.sqrt ((t + s).choose r.val : ℝ) : ℝ) : ℂ) else 0
+
+private lemma dicke_split_factor (t s : ℕ) :
+    (dickeIsometry (t + s)).submatrix
+      (fun xy : (Fin t → Fin 2) × (Fin s → Fin 2) => Fin.append xy.1 xy.2) id =
+      Matrix.kronecker (dickeIsometry t) (dickeIsometry s) * dickeSplitSum t s := by
+  ext ⟨x, y⟩ r
+  let k : Fin (t + 1) := ⟨∑ i, (x i).val, Nat.lt_succ_of_le (weight_le t x)⟩
+  let l : Fin (s + 1) := ⟨∑ i, (y i).val, Nat.lt_succ_of_le (weight_le s y)⟩
+  have hw : (∑ i : Fin (t + s), (Fin.append x y i).val) = k.val + l.val := by
+    rw [Fin.sum_univ_add]
+    simp [k, l]
+  rw [Matrix.mul_apply, Finset.sum_eq_single (k, l)]
+  · simp only [Matrix.submatrix_apply, id_eq, Matrix.kronecker, Matrix.kroneckerMap,
+      Matrix.of_apply, dickeIsometry,
+      hw, show (∑ i, (x i).val) = k.val from rfl,
+      show (∑ i, (y i).val) = l.val from rfl, ite_true, dickeSplitSum,
+      Nat.add_sub_cancel_left]
+    by_cases h : k.val + l.val = r.val
+    · rw [if_pos h, if_pos h, Real.sqrt_mul (by positivity)]
+      have hk : Real.sqrt (t.choose k.val : ℝ) ≠ 0 :=
+        (Real.sqrt_pos.2 (by exact_mod_cast Nat.choose_pos (by omega : k.val ≤ t))).ne'
+      have hl : Real.sqrt (s.choose l.val : ℝ) ≠ 0 :=
+        (Real.sqrt_pos.2 (by exact_mod_cast Nat.choose_pos (by omega : l.val ≤ s))).ne'
+      push_cast
+      field_simp [hk, hl]
+    · simp [h]
+  · rintro ⟨a, b⟩ _ hab
+    by_cases ha : a = k
+    · have hb : (∑ i, (y i).val) ≠ b.val := by
+        intro hb
+        exact hab (Prod.ext ha (Fin.ext hb.symm))
+      simp [Matrix.kronecker, Matrix.kroneckerMap, dickeIsometry, hb]
+    · have hx : (∑ i, (x i).val) ≠ a.val := by
+        intro hx
+        exact ha (Fin.ext hx.symm)
+      simp [Matrix.kronecker, Matrix.kroneckerMap, dickeIsometry, hx]
+  · simp
+
+set_option backward.isDefEq.respectTransparency false in
+private lemma partialTrace_isometries {a b i j : Type*}
+    [Fintype a] [Fintype b] [Fintype i] [Fintype j]
+    [DecidableEq j] (v : Matrix a i ℂ) (w : Matrix b j ℂ)
+    (hw : wᴴ * w = 1) (z : Matrix (i × j) (i × j) ℂ) :
+    partialTraceRight (Matrix.kronecker v w * z * (Matrix.kronecker v w)ᴴ) =
+      v * partialTraceRight z * vᴴ := by
+  have hb (k l : j) : (∑ d : b, w d k * star (w d l)) = if k = l then 1 else 0 := by
+    have h := congrFun (congrFun hw l) k
+    simpa [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply,
+      mul_comm, eq_comm] using h
+  ext x y
+  simp only [partialTraceRight, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    Matrix.kronecker, Matrix.kroneckerMap, Matrix.of_apply, Fintype.sum_prod_type, star_mul]
+  simp_rw [Finset.sum_mul]
+  conv_lhs =>
+    rw [Finset.sum_comm]
+    arg 2
+    ext k
+    rw [Finset.sum_comm]
+    arg 2
+    ext l
+    rw [Finset.sum_comm]
+    arg 2
+    ext m
+    rw [Finset.sum_comm]
+  have he (k m : i) (l n : j) :
+      (∑ d : b, v x m * w d n * z (m, n) (k, l) *
+        (star (w d l) * star (v y k))) =
+      v x m * z (m, l) (k, l) * star (v y k) * (if n = l then 1 else 0) := by
+    calc
+      _ = (v x m * z (m, n) (k, l) * star (v y k)) *
+          (∑ d : b, w d n * star (w d l)) := by
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro d _
+        ring
+      _ = _ := by rw [hb]; split_ifs with h <;> simp_all
+  simp_rw [he]
+  simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
+    ite_true]
+  rw [Finset.sum_comm]
+  simp only [Finset.mul_sum, Finset.sum_mul, mul_assoc]
+
+set_option backward.isDefEq.respectTransparency false in
 private lemma dicke_split_partialTrace (t s : ℕ)
     (ρ : Matrix (Fin (t + s + 1)) (Fin (t + s + 1)) ℂ) :
     let v := dickeIsometry (t + s)
@@ -246,12 +344,114 @@ private lemma dicke_split_partialTrace (t s : ℕ)
       Fin.append xy.1 xy.2
     partialTraceRight ((v * ρ * vᴴ).submatrix w w) =
       dickeIsometry t * reducedState t ρ * (dickeIsometry t)ᴴ := by
-  sorry
+  dsimp only
+  have hf := dicke_split_factor t s
+  have he : ((dickeIsometry (t + s) * ρ * (dickeIsometry (t + s))ᴴ).submatrix
+      (fun xy : (Fin t → Fin 2) × (Fin s → Fin 2) => Fin.append xy.1 xy.2)
+      (fun xy : (Fin t → Fin 2) × (Fin s → Fin 2) => Fin.append xy.1 xy.2)) =
+      Matrix.kronecker (dickeIsometry t) (dickeIsometry s) *
+        (dickeSplitSum t s * ρ * (dickeSplitSum t s)ᴴ) *
+          (Matrix.kronecker (dickeIsometry t) (dickeIsometry s))ᴴ := by
+    rw [← Matrix.submatrix_mul_equiv _ _ _ (Equiv.refl _) _,
+      ← Matrix.submatrix_mul_equiv _ _ _ (Equiv.refl _) _]
+    change ((dickeIsometry (t + s)).submatrix _ id) * ρ *
+      ((dickeIsometry (t + s)).submatrix _ id)ᴴ = _
+    rw [hf, Matrix.conjTranspose_mul]
+    simp only [Matrix.mul_assoc]
+  rw [he, partialTrace_isometries _ _ (dicke_isometry s)]
+  have hd : partialTraceRight (dickeSplitSum t s * ρ * (dickeSplitSum t s)ᴴ) =
+      reducedState t ρ := by
+    unfold reducedState dickeSplitSum dickeSplit
+    simp only [Nat.add_sub_cancel_left]
+  rw [hd]
+
+set_option maxHeartbeats 1000000 in
+-- The ladder Casimir identity is diagonal on nine coordinates.
+private lemma ladder_casimir :
+    Jplus 8 * (Jplus 8)ᴴ + (Jplus 8)ᴴ * Jplus 8 =
+      (40 : ℂ) • 1 - (2 : ℂ) • (Jz 8 * Jz 8) := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [Jplus, Jz, Matrix.mul_apply, Fin.sum_univ_succ,
+      Matrix.conjTranspose_apply, Complex.star_def, Complex.conj_ofReal] <;>
+    ring_nf <;> norm_num [← Complex.ofReal_pow, Real.sq_sqrt]
+
+private lemma quadrupole_tracefree :
+    quadrupole 0 0 + quadrupole 1 1 = -quadrupole 2 2 := by
+  simp only [quadrupole, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val, Matrix.head_cons, Fin.isValue, ite_true, Jx, Jy]
+  norm_num [div_eq_mul_inv]
+  simp only [Matrix.add_mul, Matrix.mul_add, Matrix.sub_mul, Matrix.mul_sub,
+    Matrix.smul_mul, Matrix.mul_smul, smul_add, smul_sub, smul_smul]
+  have h := ladder_casimir
+  linear_combination (norm := (match_scalars <;> ring_nf <;> norm_num [Complex.I_sq]))
+    (1 / 2 : ℂ) • h
+
+private lemma kraus_cartesian (q : Fin 5) : witnessKraus q =
+    ![(3 / (Real.sqrt 1540 : ℂ)) • quadrupole 2 2,
+      (-2 * (Real.sqrt (3 / 3080) : ℂ)) •
+        (quadrupole 0 2 + Complex.I • quadrupole 1 2),
+      (2 * (Real.sqrt (3 / 3080) : ℂ)) •
+        (quadrupole 0 2 - Complex.I • quadrupole 1 2),
+      (Real.sqrt (3 / 3080) : ℂ) •
+        (quadrupole 0 0 - quadrupole 1 1 + (2 * Complex.I) • quadrupole 0 1),
+      (Real.sqrt (3 / 3080) : ℂ) •
+        (quadrupole 0 0 - quadrupole 1 1 - (2 * Complex.I) • quadrupole 0 1)] q := by
+  fin_cases q <;>
+    simp only [witnessKraus, quadrupole, Matrix.cons_val_zero, Matrix.cons_val_one,
+      Matrix.cons_val, Matrix.head_cons, Fin.isValue, Jx, Jy] <;>
+    norm_num [div_eq_mul_inv] <;>
+    simp only [Matrix.add_mul, Matrix.mul_add, Matrix.sub_mul, Matrix.mul_sub,
+      Matrix.smul_mul, Matrix.mul_smul, smul_add, smul_sub, smul_smul] <;>
+    match_scalars <;> ring_nf <;> norm_num [Complex.I_sq] <;> ring
+
+private lemma quadrupole_adjoint (a b : Fin 3) :
+    (quadrupole a b)ᴴ = quadrupole a b := by
+  have hz : (Jz 8)ᴴ = Jz 8 := by simp [Jz, Matrix.conjTranspose_diagonal]
+  fin_cases a <;> fin_cases b <;>
+    simp [quadrupole, Jx, Jy, Matrix.conjTranspose_sub, Matrix.conjTranspose_smul,
+      Matrix.conjTranspose_add, Matrix.conjTranspose_mul, hz] <;>
+    simp only [Matrix.add_mul, Matrix.mul_add, Matrix.sub_mul, Matrix.mul_sub,
+      Matrix.smul_mul, Matrix.mul_smul, smul_add, smul_sub, smul_smul] <;>
+    match_scalars <;> ring_nf <;> norm_num [Complex.I_sq] <;> ring
 
 private lemma cartesian_channel (x : Matrix (Fin 9) (Fin 9) ℂ) :
     witnessChannel x = (3 / 770 : ℂ) •
       ∑ a : Fin 3, ∑ b : Fin 3, quadrupole a b * x * quadrupole a b := by
-  sorry
+  have h22 : quadrupole 2 2 = -(quadrupole 0 0 + quadrupole 1 1) := by
+    linear_combination (norm := module) -quadrupole_tracefree
+  have hs (a b : Fin 3) : quadrupole a b = quadrupole b a := by
+    simp only [quadrupole, add_comm, eq_comm]
+  simp only [witnessChannel, MatrixMap.of_kraus, LinearMap.coe_sum,
+    LinearMap.coe_mk, AddHom.coe_mk, Finset.sum_apply, kraus_cartesian]
+  simp only [Fin.sum_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val, Fin.isValue, Finset.sum_empty, add_zero]
+  simp only [Matrix.conjTranspose_add, Matrix.conjTranspose_sub,
+    Matrix.conjTranspose_smul, quadrupole_adjoint, h22,
+    hs 1 0, hs 2 0, hs 2 1]
+  norm_num
+  simp only [Matrix.add_mul, Matrix.mul_add, Matrix.sub_mul, Matrix.mul_sub,
+    Matrix.smul_mul, Matrix.mul_smul, Matrix.neg_mul, Matrix.mul_neg,
+    smul_add, smul_sub, smul_neg, neg_smul, smul_smul]
+  match_scalars <;> ring_nf <;>
+    norm_num [Complex.I_sq, ← inv_pow, ← Complex.ofReal_pow, Real.sq_sqrt] <;> ring
+
+private lemma spin_action_unitary (n : ℕ)
+    (u : Matrix.specialUnitaryGroup (Fin 2) ℂ) :
+    (spinAction n u)ᴴ * spinAction n u = 1 := by
+  have ht : (qubitPower n u.val)ᴴ * qubitPower n u.val = 1 := tensor_unitary n u
+  calc
+    _ = (dickeIsometry n * spinAction n u)ᴴ *
+        (dickeIsometry n * spinAction n u) := by
+      simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
+      rw [← Matrix.mul_assoc (dickeIsometry n)ᴴ (dickeIsometry n), dicke_isometry,
+        Matrix.one_mul]
+    _ = (qubitPower n u.val * dickeIsometry n)ᴴ *
+        (qubitPower n u.val * dickeIsometry n) := by
+      rw [tensor_preserves_symmetric]
+    _ = (dickeIsometry n)ᴴ * ((qubitPower n u.val)ᴴ * qubitPower n u.val) *
+        dickeIsometry n := by simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
+    _ = 1 := by rw [ht, Matrix.mul_one, dicke_isometry]
 
 private lemma collective_rotation (u : Matrix.specialUnitaryGroup (Fin 2) ℂ) :
     ∃ r : Matrix (Fin 3) (Fin 3) ℝ, rᵀ * r = 1 ∧
@@ -264,7 +464,48 @@ private lemma channel_covariant (u : Matrix.specialUnitaryGroup (Fin 2) ℂ)
     (x : Matrix (Fin 9) (Fin 9) ℂ) :
     witnessChannel (spinAction 8 u * x * (spinAction 8 u)ᴴ) =
       spinAction 8 u * witnessChannel x * (spinAction 8 u)ᴴ := by
-  sorry
+  obtain ⟨r, hr, hj⟩ := collective_rotation u
+  let q : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
+    Matrix.kronecker (r.map Complex.ofReal) (r.map Complex.ofReal)
+  have hrc : (r.map Complex.ofReal)ᵀ * r.map Complex.ofReal = 1 := by
+    simpa only [← Matrix.map_transpose, ← Matrix.map_mul, hr, Matrix.map_one] using
+      congrArg (fun m : Matrix (Fin 3) (Fin 3) ℝ => m.map Complex.ofReal) hr
+  have hq : qᵀ * q = 1 := by
+    dsimp only [q, Matrix.kronecker]
+    rw [Matrix.transpose_kronecker, ← Matrix.mul_kronecker_mul, hrc]
+    exact Matrix.one_kronecker_one
+  have hs (ab : Fin 3 × Fin 3) : spinAction 8 u * quadrupole ab.1 ab.2 *
+      (spinAction 8 u)ᴴ = ∑ ce : Fin 3 × Fin 3,
+        q ab ce • quadrupole ce.1 ce.2 := by
+    simpa only [quadrupole, Fintype.sum_prod_type, q, Matrix.kronecker,
+      Matrix.kroneckerMap, Matrix.of_apply, Matrix.map_apply] using
+      quadratic_rotation (spinAction 8 u) (spin_action_unitary 8 u) r hr
+        (![Jx 8, Jy 8, Jz 8]) hj ab.1 ab.2
+  have hd : (spinAction 8 u)ᴴ * spinAction 8 u = 1 := spin_action_unitary 8 u
+  have hsum : spinAction 8 u *
+      (∑ ab : Fin 3 × Fin 3, quadrupole ab.1 ab.2 * x * quadrupole ab.1 ab.2) *
+        (spinAction 8 u)ᴴ =
+      ∑ ab : Fin 3 × Fin 3, quadrupole ab.1 ab.2 *
+        (spinAction 8 u * x * (spinAction 8 u)ᴴ) * quadrupole ab.1 ab.2 := by
+    calc
+      _ = ∑ ab : Fin 3 × Fin 3,
+          (spinAction 8 u * quadrupole ab.1 ab.2 * (spinAction 8 u)ᴴ) *
+            (spinAction 8 u * x * (spinAction 8 u)ᴴ) *
+              (spinAction 8 u * quadrupole ab.1 ab.2 * (spinAction 8 u)ᴴ) := by
+        simp only [Matrix.mul_sum, Matrix.sum_mul]
+        apply Finset.sum_congr rfl
+        intro ab _
+        simp only [Matrix.mul_assoc]
+        simp only [← Matrix.mul_assoc (spinAction 8 u)ᴴ (spinAction 8 u), hd,
+          Matrix.one_mul]
+      _ = _ := by
+        simp_rw [hs]
+        exact orthogonal_sandwich q hq (fun ab => quadrupole ab.1 ab.2)
+          (spinAction 8 u * x * (spinAction 8 u)ᴴ)
+  rw [cartesian_channel, cartesian_channel]
+  simp only [Matrix.mul_smul, Matrix.smul_mul]
+  congr 1
+  simpa only [Fintype.sum_prod_type] using hsum.symm
 
 private lemma witness_channel : IsCovariantChannel (n := 8) witnessChannel := by
   exact ⟨MatrixMap.of_kraus_isCompletelyPositive witnessKraus,
@@ -360,7 +601,10 @@ private lemma diagonal_reduction (n t : ℕ) (ht : t ≤ n) (p : Fin (n + 1) →
             (if k.val ≤ r.val then 1 else 0) := by
       rw [split_weight_sum]
       ring
-    exact_mod_cast hh
+    have hhh := congrArg (fun a : ℝ => (a : ℂ)) hh
+    push_cast at hhh
+    simpa only [Nat.cast_mul, apply_ite, Complex.ofReal_div, Complex.ofReal_mul,
+      Complex.ofReal_zero, Complex.ofReal_natCast] using hhh
   · simp [hkm, diagonal_apply_ne _ hkm]
 
 private lemma input_reduction : reducedState 7 witnessState =
