@@ -69,8 +69,11 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
       refine ⟨by decide, ?_, ?_⟩
       · norm_num [actualSource, centered, modulus]
       · intro n
-        simp [actualSource, centered, modulus,
-          show ([0,0,0] : List ℤ) = List.replicate 3 0 from rfl]
+        simp [actualSource, centered, modulus]
+        change 0 ≤ (List.take n (List.replicate 3 (0 : ℤ))).sum ∧
+          (List.take n (List.replicate 3 (0 : ℤ))).sum ≤ 3
+        simp only [List.take_replicate, List.sum_replicate, smul_zero]
+        omega
     have hh : OriginalOrder 3 1 [2,1,0] := (congrFun he [2,1,0]).mp hz
     have hp := (hh.2.2 1).1
     norm_num [actualSource, centered, modulus] at hp
@@ -81,15 +84,18 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
       refine ⟨by decide, ?_, ?_⟩
       · norm_num [actualSource, centered, modulus]
       · intro n
-        simp [actualSource, centered, modulus,
-          show ([0,0,0,0] : List ℤ) = List.replicate 4 0 from rfl]
+        simp [actualSource, centered, modulus]
+        change 0 ≤ (List.take n (List.replicate 4 (0 : ℤ))).sum ∧
+          (List.take n (List.replicate 4 (0 : ℤ))).sum ≤ 7
+        simp only [List.take_replicate, List.sum_replicate, smul_zero]
+        omega
     have hh : OriginalOrder 4 1 [3,2,1,0] := (congrFun he [3,2,1,0]).mp hz
     have hp := (hh.2.2 1).1
     norm_num [actualSource, centered, modulus] at hp
 
 def source_registration : Registration arena
     (type_of%
-      (@_root_.D5.S3.Combinatorics.Circle.TwoNegativeJointLift.actualSource_two_negative_joint_lift)) where
+      (@actualSource_two_negative_joint_lift)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨actualSource_two_negative_joint_lift, reject_old, reject_old_law⟩
@@ -114,7 +120,7 @@ def source_registration : Registration arena
   dependence := actual_dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
-    (@_root_.D5.S3.Combinatorics.Circle.TwoNegativeJointLift.actualSource_two_negative_joint_lift)
+    (@actualSource_two_negative_joint_lift)
     (Realization signature) Nat Unit where
   unitName := `D5.S3.Combinatorics.Circle.TwoNegativeJointLift.actualSource_two_negative_joint_lift.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Circle.TwoNegativeJointLift.source_registration
