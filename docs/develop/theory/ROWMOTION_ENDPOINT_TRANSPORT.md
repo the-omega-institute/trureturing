@@ -73,109 +73,129 @@ being substituted.
 
 **Lemma 2.1 (framed endpoint transport).** Let \(n\ge11\), \(L=n+4\), and let
 \(I\) be separated good. There is a finite framed endpoint diagram
-\(\mathscr D_n(I)\) with the following properties.
+\(\mathscr D_n(I)\), a decoder \(\operatorname{Dec}_n\), and a one-step map
+\(\rho\) with the following properties.
 
-1. The diagram has six labelled endpoint tokens \(a_i,b_i\), four ordered frame
-   tokens \(f_0,f_1,f_2,f_3\), and a noncrossing pairing \(a_i\)--\(b_i\). The
-   six endpoint sites are the six columns in (2.1); the pairing is one of the
-   five tableaux above. Sites may carry several tokens after a rotation, and
-   equal sites are ordered by
-   \[
-   a_3<a_2<a_1<b_3<b_2<b_1. \tag{2.2}
-   \]
-   The frame tokens are consecutive on an oriented circle of \(L\) sites.
+1. A diagram is a circle with \(L\) sites, four consecutive ordered frame tokens
+\(f_0,f_1,f_2,f_3\), and six endpoint tokens joined in three pairs. Reading
+clockwise after \(f_3\), the endpoint word (with ties read in the indicated
+order) is one of the five words
+\[
+\begin{array}{ccccc}
+ a_3a_2a_1b_3b_2b_1,&a_3a_2b_3a_1b_2b_1,&
+ a_3a_2b_3b_2a_1b_1,\\
+ a_3b_3a_2a_1b_2b_1,&a_3b_3a_2b_2a_1b_1.
+\end{array}\tag{2.2}
+\]
+If tokens share a site, this word is the tie order. The three pairs are the row
+endpoints, and their noncrossing pairing is retained when the word is recut.
 
-2. Cutting immediately before \(f_0\), reading the \(n\) non-frame sites as
-   columns \(1,\ldots,n\), and taking, in each row, the cyclic interval from
-   \(a_i\) to \(b_i\) selected by the order (2.2), gives back \(I\). If an
-   endpoint is on a frame site, the same rule gives a (possibly repeated-endpoint)
-   interval in the original rectangle. Thus the decoder always produces an
-   actual subset of \(P_n\), not a quotient state.
+2. Cut immediately before \(f_0\). The \(n\) sites not occupied by frame tokens
+are columns \(1,\ldots,n\). For each paired endpoint, take the clockwise arc
+whose interior contains no frame token; if both choices have empty frame
+interior, take the choice selected by the word (2.2). The non-frame sites on
+that arc are the occupied columns of the corresponding row. At a frame site,
+the two incident frame ports are ordered by (2.2), so this rule also defines an
+empty interval and a repeated-endpoint interval. The result is an actual subset
+of \(P_n\), and every decoded set is interval-closed.
 
-3. Let \(\rho\) advance every endpoint token by one site while leaving the four
-   frame tokens fixed, followed by the canonical recutting just described. For
-   every complete reverse linear extension \(e\),
-   \[
-      \mathscr D_n(R_e I)=\rho\mathscr D_n(I),\qquad
-      R_e^tI=\operatorname{Dec}_n(\rho^t\mathscr D_n(I))\quad(t\ge0). \tag{2.3}
-   \]
-   The decoder is injective on the separated-good diagrams, and therefore
-   \[
-      R_e^tI=I\quad\Longleftrightarrow\quad
-      \rho^t\mathscr D_n(I)=\mathscr D_n(I). \tag{2.4}
-   \]
+3. For an endpoint diagram, \(\rho\) advances every endpoint token one site in the
+clockwise direction, leaves the frame tokens fixed, and then recuts using (2.2).
+For every complete reverse linear extension \(e\),
+\[
+ \operatorname{Dec}_n(\rho\mathscr D_n(I))=R_eI,\qquad
+ R_e^tI=\operatorname{Dec}_n(\rho^t\mathscr D_n(I))\quad(t\ge0). \tag{2.3}
+\]
+The only possible failure of injectivity of \(\operatorname{Dec}_n\) on the
+\(\rho\)-orbit of \(\mathscr D_n(I)\) is a repeated circular endpoint pattern:
+if \(\operatorname{Dec}_n(\rho^t\mathscr D_n(I))=I\) for \(0<t<L\), then, with
+\(d=\gcd(t,L)\), the six endpoint tokens repeat under translation by \(d\), and
+there are at most three endpoint sites in one \(d\)-period. Conversely, a repeated
+endpoint pattern with the same pairing and frame cut gives the corresponding
+return. Thus, if no such pattern occurs, the least period is \(L\).
 
-4. Every diagram has \(\rho^L\mathscr D_n(I)=\mathscr D_n(I)\). Consequently the
-   least period of a separated-good state divides \(L=n+4\). If the diagram has
-   no nontrivial rotational stabilizer, its least period is exactly \(L\).
+4. The diagram operation has period \(L\): \(\rho^L\) returns every endpoint and
+frame token to its original site and tie order. Hence every separated-good state
+has least period dividing \(L\), and a shorter period is possible only through the
+repeated pattern in (3).
 
 *Proof.* Use the reverse extension which scans row \(3\) from right to left,
-then row \(2\) from right to left, then row \(1\) from right to left. It is a
-legal reverse linear extension because every point in a higher row or a later
-column is processed first. The global formula of Theorem 1.1 gives the same map
-for every legal \(e\), so it suffices to use this scan.
+then row \(2\) from right to left, then row \(1\) from right to left. It is legal
+because a larger point is processed before a smaller point. The local/global
+identification in the cited rowmotion theorem therefore lets us use this scan for
+all \(e\).
 
-For a row interval \([a,b]\), the right-to-left scan has only two possible
-changes: its left endpoint can be deleted and its right endpoint can be inserted.
-An interior deletion would leave two occupied points with a missing point between
-them, and an interior insertion would lie between two comparable occupied points;
-therefore both are illegal. The only remaining question is whether an endpoint
-change is blocked by a point in one of the two other rows. With (2.1), the
-answer is determined solely by the relative order of the six endpoints and by
-whether the endpoint is at one of the four frame positions. Writing the six
-endpoints in the order (2.2), the complete local alternatives are:
-
+For an interval-closed set \(S\), the literal toggle criterion is
 \[
-\begin{array}{c|c|c}
-\text{endpoint event}&\text{absent-point test}&\text{present-point test}\\ \hline
- a_i\text{ is crossed}&\text{a point of a lower row lies below and a point of an
- upper row lies above}&\text{the row interval would split}\\
- b_i\text{ is crossed}&\text{the row interval would split}&\text{a point of a lower row lies
- below and a point of an upper row lies above}.
-\end{array}\tag{2.5}
+\begin{aligned}
+x\notin S:\quad&S\triangle\{x\}\text{ is interval-closed}\\
+&\Longleftrightarrow
+ \neg\bigl((\exists u\in S\;u\le x)\land(\exists v\in S\;x\le v)\bigr),\\
+ x\in S:\quad&S\triangle\{x\}\text{ is interval-closed}\\
+&\Longleftrightarrow
+ \neg\exists u,v\in S\setminus\{x\}\;(u\le x\le v).
+\end{aligned}\tag{2.4}
 \]
-Here “below/above” means coordinatewise below/above the tested point. If the
-first alternative in a row of (2.5) occurs, the toggle is the identity; otherwise
-it flips the endpoint. This is exactly the two interval-closed toggle conditions
-for an absent and a present point. Since the rows are intervals, (2.5) is an
-exhaustive case split; no assumption that the six endpoint coordinates remain
-distinct is used.
+These equivalences follow by applying interval-closedness only to intervals whose
+new endpoint is \(x\); all other intervals already occur in \(S\).
 
-Now perform the scan from right to left. Away from the frame, every endpoint
-crossed by the scan advances by one column. When an endpoint reaches a frame site,
-(2.5) changes the selected cyclic interval to the other side of that frame. The
-tie order (2.2) is precisely the order in which two such changes are processed;
-thus equal endpoint coordinates and the repeated-coordinate states produced by a
-boundary collision are decoded by the same rule. This proves the one-step
-identity in (2.3). Induction on the number of scans proves the second identity.
-The six labelled endpoints and their pairing are recovered from the decoded row
-intervals whenever the initial state is separated good, so the decoder is
-injective there, proving (2.4). After \(L\) advances every endpoint and every
-frame cut has returned to its original site. This proves (4) and the lemma.
+During the right-to-left scan, an interior occupied point of a row has occupied
+points on both sides in that row, so the second line of (2.4) forbids its deletion.
+An absent point strictly between the two row endpoints is impossible, and an
+absent point outside an endpoint has a same-row witness on only one side. Thus
+only the left deletion and right insertion of a row can change. For an endpoint
+\(x=(i,j)\), the first line of (2.4) is blocked exactly when a point in one of
+rows \(r\le i\) lies at a column \(\le j\) and a point in one of rows \(r\ge i\)
+lies at a column \(\ge j\); the second line is blocked exactly when the same two
+witnesses remain after \(x\) is removed. The row intervals turn these statements
+into comparisons of their six endpoints and of the four frame ports.
+
+For completeness, the comparison words are precisely the five words in (2.2).
+For each word, and for each of the four possible frame ports, substitute the
+nearest endpoint on the lower side and the nearest endpoint on the upper side in
+(2.4). If both witnesses exist, the toggle is the identity; if one witness is
+missing, the endpoint flips. The resulting rule is: away from a frame, each
+endpoint moves one site clockwise; at a frame, it changes to the other incident
+port. This is an exhaustive check because every endpoint event is a left deletion
+or a right insertion, every pair of rows is represented in the five words, and
+(2.4) has exactly the two witness alternatives. When endpoints coincide, the
+previously scanned token is removed or inserted first; the tie order in (2.2) is
+exactly that processing order. Therefore the same check covers all repeated
+coordinates and both boundary collisions. It proves the first identity in (2.3),
+and induction proves the second.
+
+For the return statement, reconstruct from a decoded row interval its two
+endpoint ports unless the interval meets a frame. The only ambiguity at a frame
+is exchanging a complete repeated block of endpoint tokens around the circle; if
+\(\rho^t\mathscr D_n(I)\) decodes to the original separated-good set, all six
+endpoints must therefore occur in translates of a common fundamental block. The
+fundamental length is \(d=\gcd(t,L)\), and a nontrivial repetition uses at least
+two copies of each endpoint, hence at most three endpoint sites in one block.
+This proves the asserted fiber/return alternative. Finally, \(\rho^L\) is the
+identity on the finite framed diagram, completing the proof.
 \(\square\)
 
-The proof deliberately uses the original rectangle at every step. The framed
-circle is only an injective bookkeeping device for the literal toggle trace; it
-is not a replacement state space. In particular, collisions at \(1\) and \(n\),
-coincident endpoint coordinates, and all intermediate states in the orbit remain
-in \(\mathcal C_n\) and in the denominator counted below.
+The proof works in the original rectangle at every scan step. The framed circle
+only records which endpoint witness is on which side of the cut; it does not
+replace the state space. Boundary collisions, coincident endpoint coordinates,
+and all intermediate states therefore remain actual members of \(\mathcal C_n\).
 
 ### 2.2. How many separated-good diagrams can have a shorter period?
 
-A nontrivial stabilizer of a six-endpoint framed diagram repeats the endpoint
-configuration at least twice around the circle. Hence the six endpoint tokens are
-contained in at most three free sites in one fundamental period; the pairing has
-only the five tableau choices, and the four frame tokens have at most \(L\) possible
-phases. The elementary divisor count therefore gives
+If a separated-good state has a period \(t<L\), put \(d=\gcd(t,L)\). The
+fiber/return part of Lemma 2.1 forces a periodic endpoint pattern of fundamental
+length \(d\), with at most three endpoint sites in one period. There are five
+possible pairing words, at most \(L\) phases for the frame block, and at most
+\(\binom{d+2}{3}\) multisets of endpoint sites in one period. Therefore
 \[
- \#\{I\text{ separated good}:\operatorname{per}(I)<L\}\le 30L^5. \tag{2.6}
+ \#\{I\text{ separated good}:\operatorname{per}(I)<L\}
+ \le 5L\sum_{d\mid L,\ d\le L/2}\binom{d+2}{3}
+ \le 30L^5. \tag{2.6}
 \]
-The bound is intentionally coarse. To see it directly, choose a proper divisor
-\(d\mid L\), choose the phase of the frame, choose at most five endpoint sites in
-one \(d\)-period, and then force all remaining sites by periodicity; summing over
-proper divisors and using \(d\le L/2\) gives at most \(30L^5\). This argument is
-independent of the endpoint pairing and so includes every rotationally symmetric
-case, not only the half-turn cases.
+The last inequality is deliberately coarse and holds for \(L\ge15\): use at most
+\(L/2\) proper divisors and \(d+2\le L\). It is independent of the pairing word
+and includes all rotationally symmetric cases. Every state not in this short-period
+subfamily remains in the full denominator below.
 
 The full number of interval-closed sets is the published polynomial
 \[
@@ -273,10 +293,10 @@ at \(t=1,2,3\), the two endpoint tests are performed in the order (2.2); both
 possible toggles are therefore accounted for. This is a direct check in the
 original rectangle, including every repeated-coordinate intermediate state.
 
-The first coordinates in the first five lines and in the last line of (2.12) are
-all distinct for \(0\le t<m+2\): the first five are
-\(m,m+1,m+2,m+3,m+4\), while the remaining values are \(3,4,\ldots,m-1\).
-Therefore no positive \(d<m+2\) fixes \(E_m\). Hence
+The row-1 left endpoints in the displayed table are \(m,m+1,m+2,m+3,m+4\)
+for \(t=0,1,2,3,4\), then \(3,4\) for \(t=5,6\), and \(t-2\) for
+\(7\le t<m+2\). They are pairwise distinct in that range. Therefore no
+positive \(d<m+2\) fixes \(E_m\). Hence
 \[
  \operatorname{per}_{R_e}(E_m)=m+2=\frac{n+4}{2}\ne n+4. \tag{2.13}
 \]
