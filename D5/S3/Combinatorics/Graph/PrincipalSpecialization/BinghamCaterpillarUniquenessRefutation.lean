@@ -200,8 +200,7 @@ private lemma root_ext {l : ℕ} {a : Parts l} {x y : Vertex a}
   rcases y with ⟨j,s⟩
   dsimp at h hx hy
   subst j
-  congr 1
-  exact Fin.ext (hx.trans hy.symm)
+  exact congrArg (Sigma.mk i) (Fin.ext (hx.trans hy.symm))
 
 private lemma nonleaf_root {l : ℕ} {a : Parts l} {x : Vertex a}
     (h : twoNeighbors (caterpillar a) x) : x.2.val = 0 := by
@@ -243,11 +242,14 @@ private lemma no_iso_short {l : ℕ} (a : Parts l) (hl : l < 8) :
   omega
 
 private lemma outside_list : ¬ listed witnessA witnessB := by
-  rintro (⟨h,_⟩ | ⟨h,_⟩ | ⟨j,⟨h,_⟩ | ⟨h,_⟩⟩)
-  · exact no_iso_short baseA (by decide) h
-  · exact no_iso_short baseB (by decide) h
-  · exact no_iso_short (alpha j) (by decide) h
-  · exact no_iso_short (beta j) (by decide) h
+  intro h
+  rcases h with hb | ⟨j,hj⟩
+  · rcases hb with ⟨h,_⟩ | ⟨h,_⟩
+    · exact no_iso_short baseA (by decide) h
+    · exact no_iso_short baseB (by decide) h
+  · rcases hj with ⟨h,_⟩ | ⟨h,_⟩
+    · exact no_iso_short (alpha j) (by decide) h
+    · exact no_iso_short (beta j) (by decide) h
 
 /-- The second, exhaustive-pairs assertion in Remark 3.11 is false. -/
 theorem result : ¬ claim := by
