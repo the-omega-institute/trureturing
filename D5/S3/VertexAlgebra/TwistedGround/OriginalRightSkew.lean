@@ -27,6 +27,8 @@ open ActualChargedAdjoint LatticeSugawaraCurrents LatticeSugawaraVirasoro
 open HalfFock.LatticeHalfFockParityField
 open private mixedMode mixed_mode_tail
   from D5.S3.VertexAlgebra.TwistedGround.MixedJacobiFinite
+open private phase_even_shift
+  from D5.S3.VertexAlgebra.TwistedGround.MixedJacobiCommonCube
 open private raising raising_weight translation_val actual_stress_transpose
   from D5.S3.VertexAlgebra.TwistedGround.MixedTranslation
 
@@ -57,19 +59,26 @@ def originalRightCoefficient (D : LatticeData) (hu : IsUnit D.G.det) (s : ℤ) :
       exact finsum_add_distrib (rightTerm_finite D hu s u a)
         (rightTerm_finite D hu s u b)
     map_smul' z a := by
-      simp only [rightTerm, map_smul, LinearMap.smul_apply, RingHom.id_apply,
-        smul_comm z]
-      exact (smul_finsum z _).symm }
+      simpa only [rightTerm, map_smul, LinearMap.smul_apply, RingHom.id_apply,
+        smul_smul, mul_comm] using
+        (smul_finsum z (rightTerm D hu s u a)).symm }
   map_add' u v := by
-    ext a
-    simp only [LinearMap.add_apply, rightTerm, map_add, smul_add]
+    apply LinearMap.ext
+    intro a
+    change (∑ᶠ ell : ℕ, rightTerm D hu s (u+v) a ell) =
+      (∑ᶠ ell : ℕ, rightTerm D hu s u a ell) +
+        (∑ᶠ ell : ℕ, rightTerm D hu s v a ell)
+    simp only [rightTerm, map_add, smul_add]
     exact finsum_add_distrib (rightTerm_finite D hu s u a)
       (rightTerm_finite D hu s v a)
   map_smul' z u := by
-    ext a
-    simp only [LinearMap.smul_apply, rightTerm, map_smul, RingHom.id_apply,
-      smul_comm z]
-    exact (smul_finsum z _).symm
+    apply LinearMap.ext
+    intro a
+    change (∑ᶠ ell : ℕ, rightTerm D hu s (z • u) a ell) =
+      z • (∑ᶠ ell : ℕ, rightTerm D hu s u a ell)
+    simpa only [LinearMap.smul_apply, rightTerm, map_smul, RingHom.id_apply,
+      smul_smul, mul_comm] using
+      (smul_finsum z (rightTerm D hu s u a)).symm
 
 private theorem right_raw_energy (D : LatticeData) (hu : IsUnit D.G.det)
     (H : ℕ) (h s : ℤ) (a : FixedCarrier D) (ha : a.val ∈ grade D h)
@@ -81,8 +90,12 @@ private theorem right_raw_energy (D : LatticeData) (hu : IsUnit D.G.det)
   have energy := original_mode_integer_energy D hu h (H : ℤ)
     (s+(ell : ℤ)) a.val ha u.val huH
   change actualTensorL0 D hu
-      ((correctedField D hu a.val).coeff (2*(-(s+(ell : ℤ))-1)) u.val) = _
-  convert energy using 1 <;> congr 2 <;> omega
+      ((correctedField D hu a.val).coeff (2*(-(s+(ell : ℤ))-1)) u.val) =
+    (((H : ℤ)+h-s-1-(ell : ℤ) : ℤ) : ℂ) •
+      ((correctedField D hu a.val).coeff (2*(-(s+(ell : ℤ))-1)) u.val)
+  rw [show 2*(-(s+(ell : ℤ))-1) = -2*(s+(ell : ℤ))-2 by ring,
+    show (H : ℤ)+h-s-1-(ell : ℤ) = (H : ℤ)+h-(s+(ell : ℤ))-1 by ring]
+  exact energy
 
 private theorem translation_power_energy (D : LatticeData) (hu : IsUnit D.G.det)
     (W : ℕ) (x : paritySpace D hu (-1))
@@ -114,6 +127,11 @@ private theorem translation_power_pairing (D : LatticeData) (hu : IsUnit D.G.det
         ((translation D hu ^ ell) x).val).symm]
     rw [ih, pow_succ, Module.End.mul_apply]
 
+/- proof_shape: content
+   admission_basis: escape-witness
+   escape_witness: translation_power_pairing and translation_power_energy establish
+   the iterated actual stress transport used on the finite right coefficient.
+   rightTerm_finite and right_raw_energy are consumed bind-only helpers. -/
 /-- Exact integer zero branch, sharp spectral upper support, energy and ordered
 stress contraction of the original right coefficient. -/
 theorem original_right_skew_finite
@@ -137,10 +155,20 @@ theorem original_right_skew_finite
       (∀ ell : ℕ, (E-1).toNat ≤ ell → raw ell = 0) ∧
       R = (∑ ell ∈ Finset.range (E-1).toNat, term ell) ∧
       actualTensorL0 D hu R.val = (E : ℂ) • R.val ∧
-      actualForm D hu d R.val =
+      (actualForm D hu d R.val =
         ∑ ell ∈ Finset.range (E-1).toNat,
           ((-1 : ℂ)^(s+(ell : ℤ)+1) * (ell.factorial : ℂ)⁻¹) *
-            actualForm D hu ((C ^ ell) d) (raw ell).val) := by
+            actualForm D hu ((C ^ ell) d) (raw ell).val) ∧
+      (∀ (m r : ℤ) (j : ℕ), s = m+r-(j : ℤ) →
+        ((-1 : ℂ)^(j : ℤ) * Ring.choose (r : ℂ) j) * actualForm D hu d R.val =
+          ∑ ell ∈ Finset.range (E-1).toNat,
+            Ring.choose (r : ℂ) j * (-1 : ℂ)^(m+r+(ell : ℤ)+1) *
+              (ell.factorial : ℂ)⁻¹ * actualForm D hu ((C ^ ell) d) (raw ell).val) ∧
+      (∀ (n r : ℤ) (j : ℕ), s = n+r-(j : ℤ) →
+        ((-1 : ℂ)^((j : ℤ)+r) * Ring.choose (r : ℂ) j) * actualForm D hu d R.val =
+          ∑ ell ∈ Finset.range (E-1).toNat,
+            Ring.choose (r : ℂ) j * (-1 : ℂ)^(n+(ell : ℤ)+1) *
+              (ell.factorial : ℂ)⁻¹ * actualForm D hu ((C ^ ell) d) (raw ell).val)) := by
   classical
   dsimp only
   let E : ℤ := (H : ℤ)+h-s-1
@@ -187,14 +215,53 @@ theorem original_right_skew_finite
         exact energy ell
       have raised := translation_power_energy D hu (E-(ell : ℤ)).toNat (raw ell) hx ell
       have scalar : (((E-(ell : ℤ)).toNat+ell : ℕ) : ℂ) = (E : ℂ) := by
-        exact_mod_cast (show ((E-(ell : ℤ)).toNat+ell : ℕ) = E.toNat by omega)
-      dsimp [rightTerm]
-      simp only [Submodule.coe_smul, map_smul, raised, scalar, smul_comm]
-    · rw [finite]
-      simp only [Submodule.coe_sum, map_sum]
-      apply Finset.sum_congr rfl
-      intro ell hell
-      simp only [rightTerm, Submodule.coe_smul, map_smul, smul_eq_mul,
-        translation_power_pairing]
+        exact_mod_cast (show (((E-(ell : ℤ)).toNat+ell : ℕ) : ℤ) = E by omega)
+      dsimp only [rightTerm]
+      simp only [Submodule.coe_smul, map_smul]
+      rw [raised, scalar]
+      exact smul_comm _ _ _
+    · have pairing : actualForm D hu d (originalRightCoefficient D hu s u a).val =
+          ∑ ell ∈ Finset.range (E-1).toNat,
+            ((-1 : ℂ)^(s+(ell : ℤ)+1) * (ell.factorial : ℂ)⁻¹) *
+              actualForm D hu
+                ((tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D)
+                  1 ^ ell) d) (raw ell).val := by
+        rw [finite]
+        simp only [Submodule.coe_sum, map_sum]
+        apply Finset.sum_congr rfl
+        intro ell hell
+        simp only [rightTerm, Submodule.coe_smul, map_smul, smul_eq_mul,
+          translation_power_pairing] <;> rfl
+      refine ⟨pairing, ?_, ?_⟩
+      · intro m r j hs
+        rw [pairing, Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro ell hell
+        have sign : (-1 : ℂ)^(j : ℤ) * (-1 : ℂ)^(s+(ell : ℤ)+1) =
+            (-1 : ℂ)^(m+r+(ell : ℤ)+1) := by
+          rw [← zpow_add₀ (by norm_num : (-1 : ℂ) ≠ 0), hs]
+          congr 1
+          ring
+        have scaled := congrArg (fun z : ℂ =>
+          Ring.choose (r : ℂ) j * (ell.factorial : ℂ)⁻¹ *
+            actualForm D hu
+              ((tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D)
+                1 ^ ell) d) (raw ell).val * z) sign
+        simpa only [raw, mixedMode, mul_assoc, mul_left_comm, mul_comm] using scaled
+      · intro n r j hs
+        rw [pairing, Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro ell hell
+        have sign : (-1 : ℂ)^((j : ℤ)+r) * (-1 : ℂ)^(s+(ell : ℤ)+1) =
+            (-1 : ℂ)^(n+(ell : ℤ)+1) := by
+          rw [← zpow_add₀ (by norm_num : (-1 : ℂ) ≠ 0), hs,
+            show ((j : ℤ)+r)+(n+r-(j : ℤ)+(ell : ℤ)+1) =
+              (n+(ell : ℤ)+1)+2*r by ring, phase_even_shift]
+        have scaled := congrArg (fun z : ℂ =>
+          Ring.choose (r : ℂ) j * (ell.factorial : ℂ)⁻¹ *
+            actualForm D hu
+              ((tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D)
+                1 ^ ell) d) (raw ell).val * z) sign
+        simpa only [raw, mixedMode, mul_assoc, mul_left_comm, mul_comm] using scaled
 
 end D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner
