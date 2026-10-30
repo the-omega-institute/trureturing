@@ -387,7 +387,8 @@ private lemma slot_decomposition (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ) :
     · subst y
       have hf := flip_ne n r x
       by_cases hr : r ∈ x <;>
-        simp [Ne.symm hf, symmDiff_symmDiff_cancel_right, Finset.mem_symmDiff, hr]
+        simp [Ne.symm hf, symmDiff_symmDiff_cancel_right, Finset.mem_symmDiff, hr,
+          sub_eq_add_neg]
     · have hx : x ≠ y ∆ {r} := fun h => hy ((flip_eq n r x y).mp h)
       simp [hxy, hy, hx]
 
@@ -440,7 +441,7 @@ private lemma chsh_dilation (n : ℕ) (hn : 2 ≤ n) (a c b d : Fin 3 → ℝ) :
   have hn0 : (n : ℂ) ≠ 0 := by exact_mod_cast (show n ≠ 0 by omega)
   have hscale : ((n : ℂ) / 2) ^ 2 * (2 / n : ℂ) ^ 2 = 1 := by
     field_simp
-  rw [lifted_expansion]
+  rw [lifted_expansion n hn a c b d]
   simp only [Matrix.mul_add, Matrix.mul_sub, Matrix.add_mul, Matrix.sub_mul,
     hk, ← smul_add, ← smul_sub,
     smul_smul, hscale, one_smul]
@@ -448,7 +449,7 @@ private lemma chsh_dilation (n : ℕ) (hn : 2 ≤ n) (a c b d : Fin 3 → ℝ) :
 
 private lemma lifted_hermitian (n : ℕ) (hn : 2 ≤ n) (a c b d : Fin 3 → ℝ) :
     (liftedOperator n ⟨0, by omega⟩ ⟨1, by omega⟩ a c b d).IsHermitian := by
-  rw [lifted_expansion]
+  rw [lifted_expansion n hn a c b d]
   have hh (r t : Fin n) (u v : Fin 3 → ℝ) :
       (slotPauli n r u ⊗ₖ slotPauli n t v).IsHermitian := by
     change (_ ⊗ₖ _)ᴴ = _
@@ -459,7 +460,7 @@ private lemma lifted_hermitian (n : ℕ) (hn : 2 ≤ n) (a c b d : Fin 3 → ℝ
 private lemma lifted_square (n : ℕ) (hn : 2 ≤ n) (a c b d : Fin 3 → ℝ)
     (ha : unit a) (hc : unit c) (hb : unit b) (hd : unit d) :
     (liftedOperator n ⟨0, by omega⟩ ⟨1, by omega⟩ a c b d) ^ 2 = (4 : ℂ) • 1 := by
-  rw [lifted_expansion]
+  rw [lifted_expansion n hn a c b d]
   have hfour : (4 : ℂ) • (1 : Matrix (Finset (Fin n) × Finset (Fin n))
       (Finset (Fin n) × Finset (Fin n)) ℂ) = (4 : ℕ) • 1 := by
     ext x y
