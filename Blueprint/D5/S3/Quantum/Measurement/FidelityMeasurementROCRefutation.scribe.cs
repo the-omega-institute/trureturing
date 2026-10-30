@@ -52,7 +52,10 @@ internal sealed class FidelityMeasurementROCRefutationDocument : IScribeDocument
                         "The positive square-root uniqueness argument identifies the Fuchs–Caves observable with the displayed diagonal matrix. Its coordinate basis is an ordered eigenbasis: the eigenvalues are 2, 1 and 1/2, while the readout probabilities are q = (1/10, 1/2, 2/5) and p = (2/5, 1/2, 1/10), so the likelihood ratios decrease as 4, 1, 1/4. At k = 1 the cumulative point is (1/10, 2/5).")),
                     Paragraph(Text(
                         "Take the rank-one effect vvᵀ/1382 with v = (37,2,−3). Its positive-semidefinite and upper-bound certificates place it in the interval [0,1]. Exact multiplication gives false-positive coordinate 1/10 and true-positive coordinate 5539/13820, while 2/5 is 5528/13820. Applying the claimed optimality at k = 1 would therefore give 5539/13820 ≤ 2/5, which is false."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bodor-koniorczyk-2017-fidelity-measurement-roc-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
