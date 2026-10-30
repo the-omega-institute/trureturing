@@ -22,7 +22,7 @@ abbrev arena : Arena where
   Law R := ∀ n : ℕ, 2 ≤ n →
     CompletelyMonotoneOn (fun x => (-1:ℝ)^n * D n (R.readout () () x) (-1))
 
-private theorem mills_neg_one_pos : 0 < millsRatio (-1) := by
+theorem mills_neg_one_pos : 0 < millsRatio (-1) := by
   have hi : IntegrableOn (fun t : ℝ => exp (-t^2/2)) (Ioi (-1)) := by
     convert (integrable_exp_neg_mul_sq (by norm_num : (0:ℝ) < 1/2)).integrableOn
       (s := Ioi (-1)) using 1
@@ -57,7 +57,7 @@ private theorem small_coefficients :
       field_simp
       ring
 
-private theorem D_three_neg_one : D 3 (-1) (-1) = 3*millsRatio (-1) := by
+theorem D_three_neg_one : D 3 (-1) (-1) = 3*millsRatio (-1) := by
   have hu := small_coefficients
   norm_num [D, Y, show Finset.Icc 1 3 = {1,2,3} by decide, hu.1, hu.2.1, hu.2.2]
 private theorem rejected_law : ¬ arena.Law rejected := by

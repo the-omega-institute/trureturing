@@ -120,7 +120,7 @@ def claim : Prop :=
   ∀ n : ℕ, 2 ≤ n → CompletelyMonotoneOn (fun x => (-1 : ℝ) ^ n * D n x (-1))
 
 
-private lemma millsLaplace (x : ℝ) :
+lemma millsLaplace (x : ℝ) :
     millsRatio x = ∫ t in Ioi (0 : ℝ), exp (-x * t - t ^ 2 / 2) := by
   have hs : (∫ t in Ioi (0 : ℝ), exp (-(t + x) ^ 2 / 2)) =
       ∫ t in Ioi x, exp (-t ^ 2 / 2) := by
@@ -138,7 +138,7 @@ private lemma millsLaplace (x : ℝ) :
   congr 1
   ring
 
-private lemma millsLaplaceIntegrable {x : ℝ} (hx : 0 ≤ x) :
+lemma millsLaplaceIntegrable {x : ℝ} (hx : 0 ≤ x) :
     IntegrableOn (fun t : ℝ => exp (-x * t - t ^ 2 / 2)) (Ioi 0) := by
   apply (integrable_exp_neg_mul_sq (by norm_num : (0:ℝ) < 1/2)).integrableOn.mono' (by fun_prop)
   filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
@@ -146,7 +146,7 @@ private lemma millsLaplaceIntegrable {x : ℝ} (hx : 0 ≤ x) :
   apply exp_le_exp.mpr
   nlinarith [mul_nonneg hx ht.le]
 
-private lemma millsSquareConvolution {x : ℝ} (hx : 0 ≤ x) :
+lemma millsSquareConvolution {x : ℝ} (hx : 0 ≤ x) :
     millsRatio x ^ 2 = ∫ t in Ioi (0 : ℝ), exp (-x * t) *
       ∫ s in 0..t, exp (-s ^ 2 / 2) * exp (-(t-s)^2/2) := by
   rw [millsLaplace, pow_two]
@@ -164,7 +164,7 @@ private lemma millsSquareConvolution {x : ℝ} (hx : 0 ≤ x) :
   congr 1
   ring
 
-private lemma convolutionClosed (t : ℝ) :
+lemma convolutionClosed (t : ℝ) :
     (∫ s in 0..t, exp (-s ^ 2 / 2) * exp (-(t-s)^2/2)) =
       t * ∫ v in (0:ℝ)..1, exp (-(1+v^2)*t^2/4) := by
   let f := fun v : ℝ => exp (-(1+v^2)*t^2/4)
@@ -199,7 +199,7 @@ private lemma convolutionClosed (t : ℝ) :
   field_simp at hc
   simpa only [neg_div, neg_mul] using hc.symm
 
-private def moment (f : ℝ → ℝ) (m : ℕ) (x : ℝ) : ℝ :=
+def moment (f : ℝ → ℝ) (m : ℕ) (x : ℝ) : ℝ :=
   ∫ t in Ioi (0:ℝ), (-t)^m * exp (-x*t) * f t
 
 private lemma momentDeriv {f : ℝ → ℝ} (hf : Continuous f)
@@ -249,7 +249,7 @@ private lemma momentIterated {f : ℝ → ℝ} (hf : Continuous f)
       Filter.eventuallyEq_iff_exists_mem.mpr ⟨Ioi 0, Ioi_mem_nhds hx, fun t ht => ih ht⟩
     rw [he.deriv_eq, (momentDeriv hf hp hi m hx).deriv]
 
-private lemma laplaceCM {f : ℝ → ℝ} (hf : Continuous f)
+lemma laplaceCM {f : ℝ → ℝ} (hf : Continuous f)
     (hp : ∀ t : ℝ, 0 < t → 0 ≤ f t)
     (hi : ∀ m : ℕ, ∀ x : ℝ, 0 < x →
       IntegrableOn (fun t : ℝ => t^m * exp (-x*t) * f t) (Ioi 0)) :
@@ -272,10 +272,10 @@ private lemma laplaceCM {f : ℝ → ℝ} (hf : Continuous f)
     rw [← mul_assoc, ← mul_assoc, he]
     exact mul_nonneg (mul_nonneg (pow_nonneg ht.le _) (exp_nonneg _)) (hp t ht)
 
-private def coeff (k : ℕ) : ℝ := 2 ^ k * Gamma (k + 1/2) / Gamma (1/2)
-private def intPow (m : ℕ) : ℝ := ∫ v in (0:ℝ)..1, (1+v^2)^m
+def coeff (k : ℕ) : ℝ := 2 ^ k * Gamma (k + 1/2) / Gamma (1/2)
+def intPow (m : ℕ) : ℝ := ∫ v in (0:ℝ)..1, (1+v^2)^m
 private def intWeight (m : ℕ) : ℝ := ∫ v in (0:ℝ)..1, v^2*(1-v^2)*(1+v^2)^m
-private lemma intPow_rec (m : ℕ) :
+lemma intPow_rec (m : ℕ) :
     (2*(m:ℝ)+3)*intPow (m+1) - 2*(m+1)*intPow m = 2^(m+1) := by
   have hd (v : ℝ) : HasDerivAt (fun v : ℝ => v*(1+v^2)^(m+1))
       ((2*(m:ℝ)+3)*(1+v^2)^(m+1)-2*(m+1)*(1+v^2)^m) v := by
@@ -290,15 +290,15 @@ private lemma intPow_rec (m : ℕ) :
     (by apply Continuous.intervalIntegrable; fun_prop), intervalIntegral.integral_const_mul,
     intervalIntegral.integral_const_mul] at h
   simpa [intPow, show (1:ℝ)+1 = 2 by norm_num] using h
-private lemma coeff_zero : coeff 0 = 1 := by
+lemma coeff_zero : coeff 0 = 1 := by
   simp only [coeff, Nat.cast_zero, zero_add, pow_zero, one_mul]
   exact div_self (ne_of_gt (Gamma_pos_of_pos (by norm_num)))
-private lemma coeff_rec (m : ℕ) : coeff (m+1) = (2*(m:ℝ)+1)*coeff m := by
+lemma coeff_rec (m : ℕ) : coeff (m+1) = (2*(m:ℝ)+1)*coeff m := by
   unfold coeff
   rw [show (↑(m+1):ℝ)+1/2 = ((m:ℝ)+1/2)+1 by push_cast; ring,
     Gamma_add_one (by positivity), pow_succ]
   ring
-private lemma coeff_sum (m : ℕ) :
+lemma coeff_sum (m : ℕ) :
     (∑ j ∈ Finset.range (m+1), coeff j / j.factorial) =
       coeff (m+1) / (2^m * m.factorial) * intPow m := by
   induction m with
@@ -334,7 +334,7 @@ private lemma intWeight_eq (m : ℕ) :
   push_cast at h1
   simp only [pow_succ] at h0 h1 ⊢
   nlinarith [h0, h1]
-private lemma coeff_factorial (m : ℕ) :
+lemma coeff_factorial (m : ℕ) :
     coeff (m+1)*(2^m*m.factorial) = (2*m+1).factorial := by
   have hfac := Nat.factorial_eq_mul_doubleFactorial (2*m)
   rw [Nat.doubleFactorial_two_mul] at hfac
@@ -408,14 +408,14 @@ private lemma D_two (x : ℝ) :
   norm_num [D, Y, show Finset.Icc 1 2 = {1,2} by decide, u_one_zero, u_two_zero]
   ring
 
-private def J (p : ℝ → ℝ) (t : ℝ) : ℝ :=
+def J (p : ℝ → ℝ) (t : ℝ) : ℝ :=
   ∫ v in (0:ℝ)..1, p v * exp (-(1+v^2)*t^2/4)
-private def q0 (t : ℝ) : ℝ := t * J (fun _ => 1) t
-private def q1 (t : ℝ) : ℝ := J (fun _ => 1) t - t^2/2 * J (fun v => 1+v^2) t
-private def q2 (t : ℝ) : ℝ := t^3/4 * J (fun v => (1+v^2)^2) t - 3*t/2 * J (fun v => 1+v^2) t
-private def K (t : ℝ) : ℝ := t^5/8 * J (fun v => v^2*(1-v^2)) t
+def q0 (t : ℝ) : ℝ := t * J (fun _ => 1) t
+def q1 (t : ℝ) : ℝ := J (fun _ => 1) t - t^2/2 * J (fun v => 1+v^2) t
+def q2 (t : ℝ) : ℝ := t^3/4 * J (fun v => (1+v^2)^2) t - 3*t/2 * J (fun v => 1+v^2) t
+def K (t : ℝ) : ℝ := t^5/8 * J (fun v => v^2*(1-v^2)) t
 
-private lemma JDeriv (p : ℝ → ℝ) (hp : Continuous p) (t : ℝ) :
+lemma JDeriv (p : ℝ → ℝ) (hp : Continuous p) (t : ℝ) :
     HasDerivAt (J p) (-(t/2) * J (fun v => p v*(1+v^2)) t) t := by
   have hd (y v : ℝ) : HasDerivAt (fun y => p v * exp (-(1+v^2)*y^2/4))
       (-(y/2) * (p v*(1+v^2)) * exp (-(1+v^2)*y^2/4)) y := by
@@ -432,16 +432,16 @@ private lemma JDeriv (p : ℝ → ℝ) (hp : Continuous p) (t : ℝ) :
     congr 1; ext v; ring] at h
   exact h
 
-private lemma q0Deriv (t : ℝ) : HasDerivAt q0 (q1 t) t := by
+lemma q0Deriv (t : ℝ) : HasDerivAt q0 (q1 t) t := by
   have h := (hasDerivAt_id t).mul (JDeriv (fun _ => 1) continuous_const t)
   convert h using 1 <;> (try ext z) <;> dsimp [q0,q1] <;> simp only [one_mul] <;> ring
 
-private lemma q1Deriv (t : ℝ) : HasDerivAt q1 (q2 t) t := by
+lemma q1Deriv (t : ℝ) : HasDerivAt q1 (q2 t) t := by
   have h := (JDeriv (fun _ => 1) continuous_const t).sub
     (((hasDerivAt_id t).pow 2 |>.div_const 2).mul (JDeriv (fun v => 1+v^2) (by fun_prop) t))
   convert h using 1 <;> (try ext z) <;> dsimp [q1,q2] <;> simp only [one_mul, ← pow_two] <;> ring
 
-private lemma kernelIdentity (t : ℝ) :
+lemma kernelIdentity (t : ℝ) :
     q2 t - q0 t + 3*t*exp (-t^2/2) = K t := by
   let e := fun v : ℝ => exp (-(1+v^2)*t^2/4)
   have hd0 (v : ℝ) : HasDerivAt (fun v : ℝ => v*e v) ((1-v^2*t^2/2)*e v) v := by
@@ -507,7 +507,7 @@ private lemma JBound (p : ℝ → ℝ) (hp : Continuous p) : ∃ C : ℝ, 0 ≤ 
       exact (mul_le_mul_of_nonneg_left he (norm_nonneg _)).trans (by simpa only [mul_one] using (hC v hv').trans (le_max_left C (0:ℝ))))
   simpa only [J, sub_zero, abs_one, mul_one] using h
 
-private lemma JMomentIntegrable (p : ℝ → ℝ) (hp : Continuous p) (m : ℕ) {x : ℝ} (hx : 0 < x) :
+lemma JMomentIntegrable (p : ℝ → ℝ) (hp : Continuous p) (m : ℕ) {x : ℝ} (hx : 0 < x) :
     IntegrableOn (fun t : ℝ => t^m*exp (-x*t)*J p t) (Ioi 0) := by
   obtain ⟨C,hC,hbound⟩ := JBound p hp
   have hcont : Continuous (J p) := continuous_iff_continuousAt.mpr (fun t => (JDeriv p hp t).continuousAt)
@@ -518,7 +518,7 @@ private lemma JMomentIntegrable (p : ℝ → ℝ) (hp : Continuous p) (m : ℕ) 
   rw [norm_mul, Real.norm_of_nonneg (mul_nonneg (pow_nonneg ht.le _) (exp_nonneg _))]
   exact mul_le_mul_of_nonneg_left (hbound t) (mul_nonneg (pow_nonneg ht.le _) (exp_nonneg _))
 
-private lemma JMomentTendsto (p : ℝ → ℝ) (hp : Continuous p) (m : ℕ) {x : ℝ} (hx : 0 < x) :
+lemma JMomentTendsto (p : ℝ → ℝ) (hp : Continuous p) (m : ℕ) {x : ℝ} (hx : 0 < x) :
     Tendsto (fun t : ℝ => t^m*exp (-x*t)*J p t) atTop (𝓝 0) := by
   obtain ⟨C,hC,hbound⟩ := JBound p hp
   have hlim : Tendsto (fun t : ℝ => t^m*exp (-x*t)*C) atTop (𝓝 0) := by
@@ -529,7 +529,7 @@ private lemma JMomentTendsto (p : ℝ → ℝ) (hp : Continuous p) (m : ℕ) {x 
   rw [norm_mul, Real.norm_of_nonneg (mul_nonneg (pow_nonneg ht _) (exp_nonneg _))]
   exact mul_le_mul_of_nonneg_left (hbound t) (mul_nonneg (pow_nonneg ht _) (exp_nonneg _))
 
-private lemma laplaceIBP {f g : ℝ → ℝ} {x : ℝ}
+lemma laplaceIBP {f g : ℝ → ℝ} {x : ℝ}
     (hd : ∀ t, HasDerivAt f (g t) t)
     (hf : IntegrableOn (fun t => exp (-x*t)*f t) (Ioi 0))
     (hg : IntegrableOn (fun t => exp (-x*t)*g t) (Ioi 0))
@@ -543,7 +543,7 @@ private lemma laplaceIBP {f g : ℝ → ℝ} {x : ℝ}
   rw [integral_sub hg (hf.const_mul x), integral_const_mul] at h
   simp only [mul_zero, exp_zero, one_mul, zero_sub] at h
   linarith
-private lemma kernelLaplace {x : ℝ} (hx : 0 < x) (r : ℝ)
+lemma kernelLaplace {x : ℝ} (hx : 0 < x) (r : ℝ)
     (hr : r = ∫ t in Ioi (0:ℝ), exp (-x*t)*exp (-t^2/2))
     (hr2 : r^2 = ∫ t in Ioi (0:ℝ), exp (-x*t)*q0 t) :
     (x^2-1)*r^2-3*x*r+2 = ∫ t in Ioi (0:ℝ), exp (-x*t)*K t := by
@@ -616,13 +616,13 @@ private lemma kernelLaplace {x : ℝ} (hx : 0 < x) (r : ℝ)
   rw [hk, ib1, ib0, ← hr2, ibh, ← hr]
   ring
 
-private def expRemainder (r : ℕ) (v : ℝ) : ℝ :=
+def expRemainder (r : ℕ) (v : ℝ) : ℝ :=
   (-1:ℝ)^r * (D5.S3.Analytic.ExpRemainderDifferences.R r (-v) + (-v)^r/r.factorial)
-private lemma expRemainder_eq (r : ℕ) (v : ℝ) :
+lemma expRemainder_eq (r : ℕ) (v : ℝ) :
     expRemainder r v = (-1:ℝ)^r * (exp (-v) - ∑ j ∈ Finset.range r, (-v)^j / j.factorial) := by
   simp only [expRemainder, D5.S3.Analytic.ExpRemainderDifferences.R, Finset.sum_range_succ]
   ring
-private lemma expRemainderBounds (r : ℕ) {v : ℝ} (hv : 0 ≤ v) :
+lemma expRemainderBounds (r : ℕ) {v : ℝ} (hv : 0 ≤ v) :
     0 ≤ expRemainder r v ∧ expRemainder r v ≤ v^r / r.factorial := by
   cases r with
   | zero => simpa [expRemainder_eq] using And.intro (exp_nonneg (-v)) (exp_le_one_iff.mpr (neg_nonpos.mpr hv))
@@ -664,10 +664,10 @@ private lemma expRemainderBounds (r : ℕ) {v : ℝ} (hv : 0 ≤ v) :
     constructor
     · positivity
     · exact div_le_div_of_nonneg_right (mul_le_of_le_one_left (by positivity) hexp) (by positivity)
-private lemma expRemainderContinuous (r : ℕ) : Continuous (expRemainder r) := by
+lemma expRemainderContinuous (r : ℕ) : Continuous (expRemainder r) := by
   unfold expRemainder D5.S3.Analytic.ExpRemainderDifferences.R
   fun_prop
-private lemma expRemainderRec (r : ℕ) (v : ℝ) :
+lemma expRemainderRec (r : ℕ) (v : ℝ) :
     expRemainder (r+1) v = v^r / r.factorial - expRemainder r v := by
   have hs : (-1:ℝ)^r * (-v)^r = v^r := by rw [← mul_pow]; congr 1; ring
   simp only [expRemainder_eq, Finset.sum_range_succ, pow_succ]
