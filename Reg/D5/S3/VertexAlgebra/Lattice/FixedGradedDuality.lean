@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.VertexAlgebra.Lattice.FixedGradedDuality
 
+/-! Partial source-bound audits of fixed graded duality. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
@@ -50,16 +52,13 @@ theorem source_bridge : (type_of% (@fixedGrade_dualEquiv)) ↔ arena.Law actual 
 
 theorem source_actual : arena.Law actual := source_bridge.mp (@fixedGrade_dualEquiv)
 
-/-- Conditional assembly of the actual four-slot contract. The three arguments
-are missing evidence, not certificates established by this module. -/
-def audit
-    (variation : Variation arena actual)
-    (sensitivity : Sensitivity arena actual)
-    (dependence : ObservationalDependence signature actual) :
-    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@fixedGrade_dualEquiv) (Realization signature) Params Unit where
+/-- Typed conditional assembly, not a closed schema registration. The three
+antecedents remain missing mathematical evidence. -/
+theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena actual →
+    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@fixedGrade_dualEquiv) (Realization signature) Params Unit) := ⟨fun variation sensitivity dependence => {
   unitName := `Reg.D5.S3.VertexAlgebra.Lattice.FixedGradedDuality.GradeNondegeneracy.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.Lattice.FixedGradedDuality.GradeNondegeneracy.audit
+  realizationName := `Reg.D5.S3.VertexAlgebra.Lattice.FixedGradedDuality.GradeNondegeneracy.registrationAttempt
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -80,14 +79,19 @@ def audit
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.FixedGradedDuality
+    owner := `D5.S3.VertexAlgebra.Lattice.FixedGradedDuality
     definition := none
     coordinates := #[0, 7]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 1,
-      functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
-  options := #[]
+  options := #[] }⟩
+
 end GradeNondegeneracy
 
 namespace GlobalEvaluation
@@ -137,16 +141,13 @@ theorem source_bridge :
 theorem source_actual : arena.Law actual :=
   source_bridge.mp (@fixedRestrictedDualEquiv_ambient_evaluation)
 
-/-- Conditional assembly of the actual four-slot contract. The three arguments
-are missing evidence, not certificates established by this module. -/
-def audit
-    (variation : Variation arena actual)
-    (sensitivity : Sensitivity arena actual)
-    (dependence : ObservationalDependence signature actual) :
-    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@fixedRestrictedDualEquiv_ambient_evaluation) (Realization signature) Params Unit where
+/-- Typed conditional assembly, not a closed schema registration. The three
+antecedents remain missing mathematical evidence. -/
+theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena actual →
+    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@fixedRestrictedDualEquiv_ambient_evaluation) (Realization signature) Params Unit) := ⟨fun variation sensitivity dependence => {
   unitName := `Reg.D5.S3.VertexAlgebra.Lattice.FixedGradedDuality.GlobalEvaluation.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.Lattice.FixedGradedDuality.GlobalEvaluation.audit
+  realizationName := `Reg.D5.S3.VertexAlgebra.Lattice.FixedGradedDuality.GlobalEvaluation.registrationAttempt
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -167,13 +168,18 @@ def audit
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.FixedGradedDuality
+    owner := `D5.S3.VertexAlgebra.Lattice.FixedGradedDuality
     definition := none
     coordinates := #[0, 1, 2, 3, 4, 5, 6, 7]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 8,
-      functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 8
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
-  options := #[]
+  options := #[] }⟩
+
 end GlobalEvaluation
 end Reg.D5.S3.VertexAlgebra.Lattice.FixedGradedDuality
