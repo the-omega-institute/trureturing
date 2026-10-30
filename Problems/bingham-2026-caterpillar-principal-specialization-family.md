@@ -69,7 +69,7 @@ A positive j for which the ordinary third coloring polynomials differ, or for wh
 coloring polynomials agree, would contradict the target. Numerical agreement at a chosen X
 does not establish formal polynomial equality.
 
-## Result and scope
+## Evidence
 
 `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.result`
 establishes the displayed conjunction for every positive j. The dependent vertex carrier,
@@ -78,11 +78,15 @@ The coloring factorization includes empty leaf sets. The repeated-weight identit
 outside blocks 5 and 4 and the final block 3 fixed; it does not assert arbitrary endpoint
 replacement. The two-color formulas separate the coefficients at degree j+5.
 
+## Triage
+
+`theorem`; this dossier concerns the first question of Remark 3.11.
+
 The separate `BinghamCaterpillarUniquenessRefutation.result` refutes the exhaustive-pairs
 assertion using an eighteen-vertex witness. The family theorem supplies no classification.
 The source's four-color questions and analogous t-refined statements remain unresolved here.
 
-## Literature limits
+## ASSUMED-UNVERIFIED
 
 The bounded literature screen described in the Library note found no earlier settlement;
 citation and third-party code searches were incomplete. This does not establish exhaustive

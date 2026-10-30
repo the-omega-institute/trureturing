@@ -2,7 +2,7 @@
 slug: bingham-2026-caterpillar-principal-specialization-uniqueness
 bibkey: bingham2026principalspecializations
 doi: 10.48550/arXiv.2610.31785
-url: https://arxiv.org/html/2610.31785v1#S3.Thmtheorem11
+url: https://arxiv.org/abs/2610.31785v1
 triage: theorem
 motivation_gids:
   - D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarUniquenessRefutation.result
@@ -13,7 +13,7 @@ motivation_gids:
 ## Problem
 
 Bingham, Celano, Commins, Orellana, Pan and Simone, *Principal specializations of the
-t-chromatic symmetric function*, arXiv:2610.31785v1, Remark 3.11, second question:
+t-chromatic symmetric function*, arXiv:2610.31785v1, [Remark 3.11](https://arxiv.org/html/2610.31785v1#S3.Thmtheorem11), second question:
 
 > And if so, do they continue to be the only pairs of compositions which do?
 
@@ -79,7 +79,7 @@ the second polynomials, or an actual graph isomorphism placing the witness pair 
 listed class would invalidate this counterexample. Agreement only at finitely many
 values of X would not establish the needed identity.
 
-## Result and scope
+## Evidence
 
 `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarUniquenessRefutation.result`
 negates the full exhaustive-pairs assertion. The coloring-sum identities give unequal second
@@ -87,12 +87,16 @@ and equal third ordinary specializations over the source's complex coefficient r
 nonleaf invariant excludes A from every base and positive-j family member, and therefore
 excludes the witness from the full unordered graph-isomorphism closure.
 
+## Triage
+
+`theorem`; the exhaustive-pairs assertion is false.
+
 The earlier first-question theorem, that every positive-j listed pair exhibits the phenomenon,
 is compatible with this refutation. A classification of all pairs, the smallest counterexample
 size, other infinite families, four-color questions and t-refined analogues remain unresolved
 here. None follows from this finite counterexample alone.
 
-## Literature limits
+## ASSUMED-UNVERIFIED
 
 The bounded source and literature screen for the external question did not locate an earlier
 settlement. Citation and third-party code searches were incomplete. This does not establish

@@ -64,7 +64,7 @@ internal sealed class BinghamCaterpillarPs3FamilyDocument : IScribeDocumentDefin
         Seq(new Formula.Subscript(Prod,Seq(F.Id(x),Colon,type)),Sp,body);
     private static Formula IntegerPolynomial() => Call("Polynomial",Seq(Mathbb,Grp(F.Id("Z"))));
     private static Formula ColorBinders(Formula body) => All("k",Nat(),All("c",Call("Fin",F.Id("k")),body));
-    private static Formula AllowedColors() => Seq(OpenBrace,F.Id("d"),Colon,Call("Fin",F.Id("k")),Mid,Ne(F.Id("d"),F.Id("c")),CloseBrace);
+    private static Formula AllowedColors() => Seq(OpenBrace,F.Id("d"),Colon,Call("Fin",F.Id("k")),Mid,Sp,Ne(F.Id("d"),F.Id("c")),CloseBrace);
     private static Formula SpineGoodFormula() => All("l",Nat(),All("k",Nat(),
         All("c",Arrow(Call("Fin",F.Id("l")),Call("Fin",F.Id("k"))),
             Iff(Call("SpineGood",F.Id("c")),All("i",Call("Fin",F.Id("l")),All("j",Call("Fin",F.Id("l")),
