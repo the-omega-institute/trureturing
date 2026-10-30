@@ -1377,7 +1377,7 @@ B>\max(2,H_*+W_*+1),\qquad
 K'>\max\bigl(2(B+T_*),\ B H_*+1+(n-1)X_nV_n\bigr).
 $$
 
-由 $K'>2(B+T_*)$ 有 $\mu'_s>K'-B-T_s>B>0$。置
+由 $K'>2(B+T_*)$ 有 $\mu'_s=K'-B-T_s>B>0$。置
 
 $$
 r'_s=(B,r_s),\qquad w'_s=(1,w_s),\qquad
