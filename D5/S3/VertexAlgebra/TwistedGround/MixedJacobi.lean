@@ -415,6 +415,49 @@ private theorem signed_supported_transform (R : ℕ) (f : ℕ → ℂ)
       intro k hk
       rw [← Finset.sum_mul, mixed_signed_diagonal]
 
+/- The second input branch has two independent lowering indices.  This is the
+   finite diagonal contraction needed before applying any source law: the
+   factorials are retained literally, and only then rewritten as the
+   supported binomial factor choose (ell+z) ell /(ell+z)!. -/
+theorem twice_signed_supported_factorial_contraction (R : ℕ) (F : ℕ → ℕ → ℂ)
+    (tail : ∀ ell z, R ≤ ell ∨ R ≤ z → F ell z = 0) :
+    (∑ ell ∈ Finset.range R, ∑ z ∈ Finset.range R,
+      ((ell.factorial : ℂ)⁻¹ * (z.factorial : ℂ)⁻¹) * F ell z) =
+      ∑ L ∈ Finset.range (2*R), ∑ ell ∈ Finset.range (L+1),
+        (Ring.choose (L : ℂ) ell / (L.factorial : ℂ)) * F ell (L-ell) := by
+  classical
+  let g (ell z : ℕ) : ℂ :=
+    ((ell.factorial : ℂ)⁻¹ * (z.factorial : ℂ)⁻¹) * F ell z
+  have gtail (ell z : ℕ) (hout : R ≤ ell ∨ R ≤ z) : g ell z = 0 := by
+    dsimp [g]
+    rw [tail ell z hout, mul_zero]
+  rw [rectangle_to_diagonals R g gtail]
+  apply Finset.sum_congr rfl
+  intro L hL
+  apply Finset.sum_congr rfl
+  intro ell hell
+  by_cases hout : R ≤ ell ∨ R ≤ L-ell
+  · have hz : F ell (L-ell) = 0 := tail ell (L-ell) hout
+    simp [hz]
+  · have hle : ell ≤ L := by
+      have := Finset.mem_range.mp hell
+      omega
+    have hfac : Nat.choose L ell * ell.factorial * (L-ell).factorial = L.factorial := by
+      simpa [Nat.sub_add_cancel hle] using
+        (Nat.choose_mul_factorial_mul_factorial hle)
+    have hfacC : (Ring.choose (L : ℂ) ell) * (ell.factorial : ℂ) *
+        ((L-ell).factorial : ℂ) = (L.factorial : ℂ) := by
+      exact_mod_cast hfac
+    have hellfac : (ell.factorial : ℂ) ≠ 0 := by
+      exact_mod_cast Nat.factorial_ne_zero ell
+    have hzfac : ((L-ell).factorial : ℂ) ≠ 0 := by
+      exact_mod_cast Nat.factorial_ne_zero (L-ell)
+    have hLfac : (L.factorial : ℂ) ≠ 0 := by
+      exact_mod_cast Nat.factorial_ne_zero L
+    rw [div_eq_mul_inv]
+    field_simp [hellfac, hzfac, hLfac]
+    simpa [mul_assoc, mul_left_comm, mul_comm] using hfacC
+
 private def orderedCutoff (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Carrier D) (e : ℤ) (u : ActualTensor D hu) : ℕ :=
   (e-((HahnModule.of ℂ).symm ((correctedField D hu a) u)).order).toNat+1
@@ -660,13 +703,13 @@ theorem mixed_first_branch_pairing (D : LatticeData) (hu : IsUnit D.G.det)
 
 
 set_option backward.isDefEq.respectTransparency true in
-private theorem fixed_mode_energy (D : LatticeData) (hu : IsUnit D.G.det)
-    (K W : ℕ) (d l : ℤ) (a : fixedGrade D d) (v : paritySpace D hu (-1))
+private theorem fixed_mode_energy_int (D : LatticeData) (hu : IsUnit D.G.det)
+    (K : ℕ) (w d l : ℤ) (a : fixedGrade D d) (v : paritySpace D hu (-1))
     (hvK : actualTensorL0 D hu v.val = (K : ℂ) • v.val)
-    (hW : (W : ℤ) = (K : ℤ)+d-l-1) :
+    (hw : w = (K : ℤ)+d-l-1) :
     actualTensorL0 D hu
       (((fixedParitySlice D hu (-1) (⟨a.val,a.property.2⟩ : FixedCarrier D))[[l]]) v).val =
-    (W : ℂ) •
+    (w : ℂ) •
       (((fixedParitySlice D hu (-1) (⟨a.val,a.property.2⟩ : FixedCarrier D))[[l]]) v).val := by
   have value :
       (((fixedParitySlice D hu (-1) (⟨a.val,a.property.2⟩ : FixedCarrier D))[[l]]) v).val =
@@ -683,9 +726,81 @@ private theorem fixed_mode_energy (D : LatticeData) (hu : IsUnit D.G.det)
   rw [hvK, map_smul, sub_eq_iff_eq_add] at cov
   rw [cov, ← add_smul]
   congr 1
-  have weights : (W : ℂ) = (K : ℂ)+(d : ℂ)-(l : ℂ)-1 := by exact_mod_cast hW
+  have weights : (w : ℂ) = (K : ℂ)+(d : ℂ)-(l : ℂ)-1 := by
+    exact_mod_cast hw
   push_cast
   linear_combination -weights
+
+set_option backward.isDefEq.respectTransparency true in
+private theorem fixed_mode_energy (D : LatticeData) (hu : IsUnit D.G.det)
+    (K W : ℕ) (d l : ℤ) (a : fixedGrade D d) (v : paritySpace D hu (-1))
+    (hvK : actualTensorL0 D hu v.val = (K : ℂ) • v.val)
+    (hW : (W : ℤ) = (K : ℤ)+d-l-1) :
+    actualTensorL0 D hu
+      (((fixedParitySlice D hu (-1) (⟨a.val,a.property.2⟩ : FixedCarrier D))[[l]]) v).val =
+    (W : ℂ) •
+      (((fixedParitySlice D hu (-1) (⟨a.val,a.property.2⟩ : FixedCarrier D))[[l]]) v).val := by
+  exact fixed_mode_energy_int D hu K (W : ℤ) d l a v hvK hW
+
+private theorem negative_actual_eigen_zero (D : LatticeData) (hu : IsUnit D.G.det)
+    (h24 : D.rank = 24) (w : ℤ) (x : ActualTensor D hu)
+    (hx : actualTensorL0 D hu x = (w : ℂ) • x) (hw : w < 0) : x = 0 := by
+  classical
+  let b := actualAmbientBasis D hu
+  apply b.repr.injective
+  ext ib
+  have hc := congrArg (fun z => b.repr z ib) hx
+  rw [actualTensorL0_repr] at hc
+  simp only [map_smul, Finsupp.smul_apply, smul_eq_mul] at hc
+  have nonneg : 0 ≤ (oddWeight D ib.1 : ℤ) := by positivity
+  have scalar : ((D.rank : ℂ) / 16 + (oddWeight D ib.1 : ℂ) / 2) - (w : ℂ) ≠ 0 := by
+    intro hs
+    have hs' : (12 : ℂ) + 4 * (oddWeight D ib.1 : ℂ) - 8 * (w : ℂ) = 0 := by
+      rw [h24] at hs
+      linear_combination 8 * hs
+    have hs'' : (12 : ℤ) + 4 * (oddWeight D ib.1 : ℤ) - 8 * w = 0 := by
+      exact_mod_cast hs'
+    omega
+  have hmul : (((D.rank : ℂ) / 16 + (oddWeight D ib.1 : ℂ) / 2) - (w : ℂ)) *
+      (b.repr x ib) = 0 := by
+    linear_combination hc
+  exact (mul_eq_zero.mp hmul).resolve_left scalar
+
+private theorem fixed_mode_zero_of_negative (D : LatticeData) (hu : IsUnit D.G.det)
+    (h24 : D.rank = 24) (K : ℕ) (d l : ℤ) (a : fixedGrade D d)
+    (v : paritySpace D hu (-1))
+    (hvK : actualTensorL0 D hu v.val = (K : ℂ) • v.val)
+    (hw : (K : ℤ)+d-l-1 < 0) :
+    ((fixedParitySlice D hu (-1) (⟨a.val,a.property.2⟩ : FixedCarrier D))[[l]]) v = 0 := by
+  apply Subtype.ext
+  apply negative_actual_eigen_zero D hu h24 ((K : ℤ)+d-l-1) _
+    (fixed_mode_energy_int D hu K _ d l a v hvK rfl) hw
+
+/-- A signed transformed-input mode with negative actual output energy is
+    identically zero. This is the zero-output branch used before padding any
+    nonnegative-weight coefficient triangle. -/
+theorem mixed_second_input_zero_of_negative (D : LatticeData) (hu : IsUnit D.G.det)
+    (h24 : D.rank = 24) (K : ℕ) (d k l : ℤ) (a : fixedGrade D d)
+    (u v : paritySpace D hu (-1))
+    (hvK : actualTensorL0 D hu v.val = (K : ℂ) • v.val)
+    (hw : (K : ℤ)+d-l-1 < 0) :
+    normalizedCoefficient D hu k u
+      (((fixedParitySlice D hu (-1)
+        (⟨a.val,a.property.2⟩ : FixedCarrier D))[[l]]) v) = 0 := by
+  rw [fixed_mode_zero_of_negative D hu h24 K d l a v hvK hw]
+  exact LinearMap.map_zero (normalizedCoefficient D hu k u)
+
+/-- The corresponding signed zero-output branch for the first twisted input. -/
+theorem mixed_first_input_zero_of_negative (D : LatticeData) (hu : IsUnit D.G.det)
+    (h24 : D.rank = 24) (H : ℕ) (d k l : ℤ) (a : fixedGrade D d)
+    (u v : paritySpace D hu (-1))
+    (huH : actualTensorL0 D hu u.val = (H : ℂ) • u.val)
+    (hw : (H : ℤ)+d-l-1 < 0) :
+    normalizedCoefficient D hu k
+      (((fixedParitySlice D hu (-1)
+        (⟨a.val,a.property.2⟩ : FixedCarrier D))[[l]]) u) v = 0 := by
+  rw [fixed_mode_zero_of_negative D hu h24 H d l a u huH hw]
+  exact LinearMap.map_zero (normalizedCoefficient D hu k)
 
 set_option backward.isDefEq.respectTransparency true in
 /-- The normalized coefficient with an actual fixed-source mode acting in
