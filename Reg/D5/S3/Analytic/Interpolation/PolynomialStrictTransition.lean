@@ -77,9 +77,9 @@ noncomputable def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "arg", "body", "arg", "body", "arg", "arg", "fn", "arg", "fn", "arg"]
-      stateBinder := 1
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
