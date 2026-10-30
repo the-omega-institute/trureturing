@@ -410,6 +410,93 @@ private theorem integrated_function_representation (h : ℂ → ℂ) (hh : Diffe
       rw [intervalIntegral.integral_mul_const, intervalIntegral.integral_ofReal]
       exact mul_comm _ _
 
+private theorem primitive_error_interior (h H : ℂ → ℂ) (hh : Differentiable ℂ h)
+    (hH : ∀ z : ℂ, HasDerivAt H (h z) z) (hH0 : H 0 = 0)
+    (b : ℝ) (hb : b ∈ Ioc (0 : ℝ) 1) (x : ℝ) (hx : |x| < 1) :
+    ‖H (x : ℂ) - (1 / (2 * b) : ℝ) • (∫ t in -b..b, H ((t : ℂ) * I))‖ ≤
+      sSup ((fun z => ‖h z‖) '' closedBall (0 : ℂ) 1) := by
+  let M : ℝ := sSup ((fun z => ‖h z‖) '' closedBall (0 : ℂ) 1)
+  have hbd : BddAbove ((fun z => ‖h z‖) '' closedBall (0 : ℂ) 1) :=
+    (isCompact_closedBall (0 : ℂ) 1).bddAbove_image hh.continuous.norm.continuousOn
+  have hM (z : ℂ) (hz : z ∈ closedBall (0 : ℂ) 1) : ‖h z‖ ≤ M :=
+    le_csSup hbd ⟨z, hz, rfl⟩
+  have hM0 : 0 ≤ M := (norm_nonneg (h 0)).trans (hM 0 (by simp))
+  have hMb (θ : ℝ) : ‖h (circleMap 0 1 θ)‖ ≤ M :=
+    hM _ (by simp only [mem_closedBall, dist_zero_right, circle_norm, le_refl])
+  have hFTC : (∫ t in (0 : ℝ)..x, h (t : ℂ)) = H (x : ℂ) := by
+    simpa only [Complex.ofReal_zero, hH0, sub_zero] using
+      (intervalIntegral.integral_eq_sub_of_hasDerivAt
+        (fun t (_ : t ∈ uIcc (0 : ℝ) x) => (hH (t : ℂ)).comp_ofReal)
+        ((hh.continuous.comp Complex.continuous_ofReal).intervalIntegrable 0 x))
+  have hA : H (x : ℂ) = ((2 * Real.pi)⁻¹ : ℝ) •
+      (∫ θ in (0 : ℝ)..(2 * Real.pi),
+        h (circleMap 0 1 θ) * (integratedPoisson x θ : ℂ)) :=
+    hFTC.symm.trans (integrated_function_representation h hh x hx)
+  have hB := boundary_primitive_representation h H hh hH hH0 b hb
+  have hK : Continuous (fun θ => integratedPoisson x θ - boundaryKernel b θ) :=
+    (integrated_continuous hx).sub (boundary_kernel_control b 0 ⟨hb.1.le, hb.2⟩).1
+  have hhc : Continuous (fun θ : ℝ => h (circleMap 0 1 θ)) := hh.continuous.comp (by fun_prop)
+  have hcA : Continuous (fun θ => h (circleMap 0 1 θ) * (integratedPoisson x θ : ℂ)) :=
+    hhc.mul (Complex.continuous_ofReal.comp (integrated_continuous hx))
+  have hcB : Continuous (fun θ => h (circleMap 0 1 θ) * (boundaryKernel b θ : ℂ)) :=
+    hhc.mul (Complex.continuous_ofReal.comp (boundary_kernel_control b 0 ⟨hb.1.le, hb.2⟩).1)
+  have hcK : Continuous (fun θ => h (circleMap 0 1 θ) *
+      ((integratedPoisson x θ - boundaryKernel b θ : ℝ) : ℂ)) :=
+    hhc.mul (Complex.continuous_ofReal.comp hK)
+  have he : H (x : ℂ) - (1 / (2 * b) : ℝ) • (∫ t in -b..b, H ((t : ℂ) * I)) =
+      ((2 * Real.pi)⁻¹ : ℝ) • (∫ θ in (0 : ℝ)..(2 * Real.pi),
+        h (circleMap 0 1 θ) * ((integratedPoisson x θ - boundaryKernel b θ : ℝ) : ℂ)) := by
+    rw [hA, hB, ← smul_sub,
+      ← intervalIntegral.integral_sub (hcA.intervalIntegrable _ _) (hcB.intervalIntegrable _ _)]
+    congr 1
+    apply intervalIntegral.integral_congr
+    intro θ _
+    dsimp only
+    push_cast
+    ring
+  rw [he, norm_smul, Real.norm_eq_abs,
+    abs_of_nonneg (inv_nonneg.mpr Real.two_pi_pos.le)]
+  calc
+    _ ≤ (2 * Real.pi)⁻¹ * (∫ θ in (0 : ℝ)..(2 * Real.pi),
+        ‖h (circleMap 0 1 θ) * ((integratedPoisson x θ - boundaryKernel b θ : ℝ) : ℂ)‖) :=
+      mul_le_mul_of_nonneg_left (intervalIntegral.norm_integral_le_integral_norm
+        Real.two_pi_pos.le) (inv_nonneg.mpr Real.two_pi_pos.le)
+    _ ≤ (2 * Real.pi)⁻¹ * (∫ θ in (0 : ℝ)..(2 * Real.pi),
+        M * |integratedPoisson x θ - boundaryKernel b θ|) := by
+      apply mul_le_mul_of_nonneg_left _ (inv_nonneg.mpr Real.two_pi_pos.le)
+      apply intervalIntegral.integral_mono_on Real.two_pi_pos.le
+        (hcK.norm.intervalIntegrable _ _) ((continuous_const.mul hK.abs).intervalIntegrable _ _)
+      intro θ _
+      rw [norm_mul, Complex.norm_real, Real.norm_eq_abs]
+      exact mul_le_mul_of_nonneg_right (hMb θ) (abs_nonneg _)
+    _ = M * ((2 * Real.pi)⁻¹ * (∫ θ in (0 : ℝ)..(2 * Real.pi),
+        |integratedPoisson x θ - boundaryKernel b θ|)) := by
+      rw [intervalIntegral.integral_const_mul]
+      ring
+    _ ≤ M * 1 := mul_le_mul_of_nonneg_left
+      (boundary_l1_control b x ⟨hb.1.le, hb.2⟩ hx) hM0
+    _ = M := mul_one M
+
+/-- The actual primitive functional is bounded by the original closed-disk norm on the
+full closed real interval and the full closed parameter edge. -/
+theorem primitive_error_bound (h H : ℂ → ℂ) (hh : Differentiable ℂ h)
+    (hH : ∀ z : ℂ, HasDerivAt H (h z) z) (hH0 : H 0 = 0)
+    (b : ℝ) (hb : b ∈ Ioc (0 : ℝ) 1) (x : ℝ) (hx : x ∈ Icc (-1 : ℝ) 1) :
+    ‖H (x : ℂ) - (1 / (2 * b) : ℝ) • (∫ t in -b..b, H ((t : ℂ) * I))‖ ≤
+      sSup ((fun z => ‖h z‖) '' closedBall (0 : ℂ) 1) := by
+  have hHc : Continuous H := (show Differentiable ℂ H from fun z => (hH z).differentiableAt).continuous
+  have hc : Continuous (fun x : ℝ =>
+      ‖H (x : ℂ) - (1 / (2 * b) : ℝ) • (∫ t in -b..b, H ((t : ℂ) * I))‖) :=
+    ((hHc.comp Complex.continuous_ofReal).sub continuous_const).norm
+  have hcl : closure (Ioo (-1 : ℝ) 1) = Icc (-1 : ℝ) 1 := closure_Ioo (by norm_num)
+  exact le_on_closure (s := Ioo (-1 : ℝ) 1)
+    (f := fun x : ℝ => ‖H (x : ℂ) - (1 / (2 * b) : ℝ) •
+      (∫ t in -b..b, H ((t : ℂ) * I))‖)
+    (g := fun _ => sSup ((fun z => ‖h z‖) '' closedBall (0 : ℂ) 1))
+    (fun y hy => primitive_error_interior h H hh hH hH0 b hb y (abs_lt.mpr hy))
+    hc.continuousOn continuousOn_const (by simpa only [hcl] using hx)
+
 #print axioms boundary_l1_control
+#print axioms primitive_error_bound
 
 end D5.S3.Analytic.Interpolation.SchurIntegratedKernel

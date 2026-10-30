@@ -6,6 +6,7 @@
    utility: none
    digest: Horizontal transport of an actual entire-function conjugate-pair slope. -/
 
+import D5.S3.Analytic.Interpolation.SchurIntegratedKernel
 import Mathlib.Analysis.Complex.CauchyIntegral
 import Mathlib.Analysis.Complex.RealDeriv
 import Mathlib.Analysis.Calculus.MeanValue
@@ -16,7 +17,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 noncomputable section
-open Set Metric Complex
+open Set Metric Complex MeasureTheory
 
 namespace D5.S3.Analytic.Interpolation.SchurConjugateSlope
 
@@ -366,6 +367,44 @@ theorem original_suprema_bounded (a b : ℝ) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 �
     exact (coarse_error_bound g hg.1 a b x hb hab hx).trans (by linarith [hg.2])
   · rw [hn.1]
     ring
+
+private theorem slope_primitive_identity (g : ℂ → ℂ) (hg : Differentiable ℂ g)
+    (b : ℝ) (hb : 0 < b) :
+    slope g 0 b = deriv g 0 + (1 / (2 * b) : ℝ) •
+      (∫ t in -b..b, (deriv g ((t : ℂ) * I) - deriv g 0)) := by
+  let f : ℂ → ℂ := fun z => g (z * I)
+  have hd (z : ℂ) : HasDerivAt f (deriv g (z * I) * I) z := by
+    exact (hg (z * I)).hasDerivAt.comp z ((hasDerivAt_id z).mul_const I)
+  have hc : Continuous (fun t : ℝ => deriv g ((t : ℂ) * I)) :=
+    hg.deriv.continuous.comp (by fun_prop)
+  have he : (∫ t in -b..b, deriv g ((t : ℂ) * I) * I) =
+      g ((b : ℂ) * I) - g (-((b : ℂ) * I)) := by
+    simpa only [f, Complex.ofReal_neg, neg_mul] using
+      (intervalIntegral.integral_eq_sub_of_hasDerivAt
+        (fun t (_ : t ∈ uIcc (-b) b) => (hd (t : ℂ)).comp_ofReal)
+        ((hc.mul continuous_const).intervalIntegrable (-b) b))
+  rw [intervalIntegral.integral_mul_const] at he
+  have hden : (2 * (b : ℂ) * I) ≠ 0 :=
+    mul_ne_zero (mul_ne_zero (by norm_num) (Complex.ofReal_ne_zero.mpr hb.ne')) I_ne_zero
+  have hs : slope g 0 b = (1 / (2 * b) : ℝ) •
+      (∫ t in -b..b, deriv g ((t : ℂ) * I)) := by
+    simp only [slope, Complex.ofReal_zero, zero_add, zero_sub]
+    apply (div_eq_iff hden).mpr
+    rw [← he, Complex.real_smul]
+    push_cast
+    field_simp [Complex.ofReal_ne_zero.mpr hb.ne']
+    <;> ring
+  have hH : (∫ t in -b..b, (deriv g ((t : ℂ) * I) - deriv g 0)) =
+      (∫ t in -b..b, deriv g ((t : ℂ) * I)) - (2 * b : ℝ) • deriv g 0 := by
+    rw [intervalIntegral.integral_sub (hc.intervalIntegrable (-b) b) intervalIntegrable_const,
+      intervalIntegral.integral_const]
+    congr 1
+    rw [show b - -b = 2 * b by ring]
+  rw [hs, hH]
+  simp only [Complex.real_smul]
+  push_cast
+  field_simp [Complex.ofReal_ne_zero.mpr hb.ne']
+  <;> ring
 
 #print axioms original_suprema_bounded
 
