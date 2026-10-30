@@ -2,6 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.IncompleteBeta.Comparison
 import D5.S3.Analytic.IncompleteBeta.Moment
 import Reg.Support.SingleDependentReadout
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
 /-! Dependent-family evidence for the strict beta comparison. -/
 
@@ -145,6 +146,7 @@ def family : Registration arena (type_of% @weighted_means_lt) where
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
+    change ObservationalDependence signature actual
     intro i
     exact ⟨⟨fun u => u, ()⟩, 0, 1, by norm_num [actual, realize]⟩
 

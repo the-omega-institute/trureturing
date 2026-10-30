@@ -406,7 +406,8 @@ private theorem moment_ratio_bounds (r : ℕ) {z : ℝ} (hz : 0 < z) :
       (show z * (1 + w ^ 2) ∈ Ioi (0 : ℝ) by exact mul_pos hz (hA _)) (harg hv hw hvw)
     change E r (z * (1 + w ^ 2)) / (z * (1 + w ^ 2)) ^ (r + 1) <
       E r (z * (1 + v ^ 2)) / (z * (1 + v ^ 2)) ^ (r + 1) at h
-    simpa only [mul_pow, div_mul_eq_div_div_swap, div_lt_div_iff_of_pos_right (pow_pos hz _)] using h
+    simpa only [mul_pow, div_mul_eq_div_div_swap,
+      div_lt_div_iff_of_pos_right (pow_pos hz _)] using h
   have hlower : StrictMonoOn
       (fun v : ℝ => E r (z * (1 + v ^ 2)) / (1 + v ^ 2) ^ r) (Ioo 0 1) := by
     intro v hv w hw hvw
@@ -415,7 +416,8 @@ private theorem moment_ratio_bounds (r : ℕ) {z : ℝ} (hz : 0 < z) :
       (show z * (1 + w ^ 2) ∈ Ioi (0 : ℝ) by exact mul_pos hz (hA _)) (harg hv hw hvw)
     change E r (z * (1 + v ^ 2)) / (z * (1 + v ^ 2)) ^ r <
       E r (z * (1 + w ^ 2)) / (z * (1 + w ^ 2)) ^ r at h
-    simpa only [mul_pow, div_mul_eq_div_div_swap, div_lt_div_iff_of_pos_right (pow_pos hz _)] using h
+    simpa only [mul_pow, div_mul_eq_div_div_swap,
+      div_lt_div_iff_of_pos_right (pow_pos hz _)] using h
   have hinverse : StrictAntiOn
       (fun v : ℝ => (1 + v ^ 2) ^ r / E r (z * (1 + v ^ 2))) (Ioo 0 1) := by
     intro v hv w hw hvw
@@ -489,12 +491,20 @@ private theorem kernel_moment_identity (r : ℕ) (a t : ℝ) :
   have hi : (∫ v in (0 : ℝ)..1,
       ((1 - 2 * a) * v ^ 2 - 1) * E r (t ^ 2 / 4 * (1 + v ^ 2))) =
       (1 - 2 * a) * M2 r (t ^ 2 / 4) - M0 r (t ^ 2 / 4) := by
-    simp_rw [sub_mul, one_mul, mul_assoc]
-    rw [intervalIntegral.integral_sub
-      (show IntervalIntegrable (fun v : ℝ => (1 - 2 * a) * (v ^ 2 * E r (t ^ 2 / 4 * (1 + v ^ 2)))) volume 0 1 from
-        (continuous_const.mul ((continuous_id.pow 2).mul hc)).intervalIntegrable 0 1)
-      (hc.intervalIntegrable 0 1), intervalIntegral.integral_const_mul]
-    rfl
+    calc
+      _ = ∫ v in (0 : ℝ)..1, (1 - 2 * a) *
+          (v ^ 2 * E r (t ^ 2 / 4 * (1 + v ^ 2))) -
+            E r (t ^ 2 / 4 * (1 + v ^ 2)) := by
+        apply intervalIntegral.integral_congr
+        intro v _
+        ring
+      _ = _ := by
+        rw [intervalIntegral.integral_sub
+          (show IntervalIntegrable (fun v : ℝ => (1 - 2 * a) *
+              (v ^ 2 * E r (t ^ 2 / 4 * (1 + v ^ 2)))) volume 0 1 from
+            (continuous_const.mul ((continuous_id.pow 2).mul hc)).intervalIntegrable 0 1)
+          (hc.intervalIntegrable 0 1), intervalIntegral.integral_const_mul]
+        rfl
   unfold L
   rw [hi]
   dsimp [innerTheta]
@@ -538,7 +548,8 @@ private theorem gaussian_kernel_identity (a t : ℝ) :
   have he' : (∫ v in (0 : ℝ)..1,
       (1 - t ^ 2 / 2 * v ^ 2) * exp (-(1 + v ^ 2) * t ^ 2 / 4)) =
       exp (-t ^ 2 / 2) := by
-    convert he using 1 <;> norm_num <;> congr 1 <;> ring
+    simpa only [one_pow, one_mul, zero_mul, sub_zero,
+      show -((1 : ℝ) + 1) * t ^ 2 / 4 = -t ^ 2 / 2 by ring] using he
   unfold G
   rw [← he', ← intervalIntegral.integral_const_mul, ← intervalIntegral.integral_const_mul,
     ← intervalIntegral.integral_sub
