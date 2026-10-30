@@ -10,6 +10,11 @@
 admission_basis: open-problem-resolution (#21488; Proved)
 proof_shape: bind-only
 escape_witness: D5.S1.Recurrence.Residue.HannaEGFMachinery.residual_transfer
+numerator2: proof_shape: bind-only; escape_witness: none; consumer: residual2
+multiple2: proof_shape: bind-only; escape_witness: none; consumer: residual2
+numerator4: proof_shape: bind-only; escape_witness: none; consumer: residual4
+multiple4: proof_shape: bind-only; escape_witness: none; consumer: residual4
+Literal polynomial substitution and finite coefficient arithmetic are normalization; these consumed helpers supply no escape content.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21758.
 The rational series equation is stated as printed; coefficient congruences concern n! times coeff n A.
 The convolution and power constructions are reused from ExponentialImplicitParityPeriodThree.
