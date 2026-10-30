@@ -364,7 +364,7 @@ private theorem physical_schedule {α : Type*} (f : α → ℤ) (labels F Q G : 
   simpa only [zero_add, hAv, ← sub_eq_add_neg, List.append_assoc, List.cons_append] using hq
 
 /-- Masks select original ladder positions through the existing bounded decoder. -/
-public def mask_labels (len off x : ℕ) (hx : x < 2 ^ len) : Finset ℕ :=
+private def mask_labels (len off x : ℕ) (hx : x < 2 ^ len) : Finset ℕ :=
   (DyadicPrefix.bitSubset len x hx).image (fun i => off + i.val)
 
 private theorem mask_labels_mem (len off x i : ℕ) (hx : x < 2 ^ len) :
@@ -378,12 +378,12 @@ private theorem mask_labels_mem (len off x i : ℕ) (hx : x < 2 ^ len) :
   · rintro ⟨e, he, hb, rfl⟩
     exact Finset.mem_image.mpr ⟨⟨e, he⟩, (DyadicPrefix.bit_subset_mem hx).mpr hb, rfl⟩
 
-public theorem mask_labels_bound {len off x i : ℕ} {hx : x < 2 ^ len}
+private theorem mask_labels_bound {len off x i : ℕ} {hx : x < 2 ^ len}
     (hi : i ∈ mask_labels len off x hx) : off ≤ i ∧ i < off + len := by
   obtain ⟨e, he, _, hi⟩ := (mask_labels_mem len off x i hx).mp hi
   omega
 
-public theorem mask_labels_disjoint {len off x y : ℕ}
+private theorem mask_labels_disjoint {len off x y : ℕ}
     {hx : x < 2 ^ len} {hy : y < 2 ^ len}
     (hxy : Disjoint x.bitIndices.toFinset y.bitIndices.toFinset) :
     Disjoint (mask_labels len off x hx) (mask_labels len off y hy) := by
@@ -396,7 +396,7 @@ public theorem mask_labels_disjoint {len off x y : ℕ}
   exact Finset.disjoint_left.mp hxy (by simpa using Nat.mem_bitIndices.mpr hb)
     (by simpa using Nat.mem_bitIndices.mpr hb')
 
-public theorem mask_labels_sum (len off x : ℕ) (hx : x < 2 ^ len)
+private theorem mask_labels_sum (len off x : ℕ) (hx : x < 2 ^ len)
     (f : ℕ → ℤ) (A : ℤ) (hf : ∀ e < len, f (off + e) = (2 : ℤ) ^ e * A) :
     ∑ i ∈ mask_labels len off x hx, f i = (x : ℤ) * A := by
   classical
@@ -414,7 +414,7 @@ public theorem mask_labels_sum (len off x : ℕ) (hx : x < 2 ^ len)
   rw [hs]
 
 /-- Disjoint physical supports, including three separate event labels, exhaust the whole word. -/
-public theorem labelled_permutation (k av aw au : ℕ) (F Q : Finset ℕ)
+private theorem labelled_permutation (k av aw au : ℕ) (F Q : Finset ℕ)
     (hF : F ⊆ Finset.range k) (hQ : Q ⊆ Finset.range k)
     (hFQ : Disjoint F Q)
     (hne : av ≠ aw ∧ av ≠ au ∧ aw ≠ au)

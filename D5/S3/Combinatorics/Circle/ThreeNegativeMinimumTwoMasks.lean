@@ -157,26 +157,6 @@ private theorem disjoint_low_bits (d x y : ℕ) (hx : x < 2 ^ d) :
   rw [Nat.testBit_eq_false_of_lt hxi] at hb
   contradiction
 
-private theorem axes_zero : Certificate 4 4 4 (constructor 4 4 4) := by
-  norm_num [Certificate,constructor,makePlan,Bounded,Separate,Seams,oldMass,newMass,
-    cap,oldHeight,newHeight,Order.first,Order.middle,Order.last,atNegative,
-    Nat.bitIndices_two_mul,Nat.bitIndices_one]
-
-private theorem axes_one : Certificate 4 4 8 (constructor 4 4 8) := by
-  norm_num [Certificate,constructor,makePlan,Bounded,Separate,Seams,oldMass,newMass,
-    cap,oldHeight,newHeight,Order.first,Order.middle,Order.last,atNegative,
-    Nat.bitIndices_two_mul,Nat.bitIndices_one]
-
-private theorem axes_four : Certificate 8 4 4 (constructor 8 4 4) := by
-  norm_num [Certificate,constructor,makePlan,Bounded,Separate,Seams,oldMass,newMass,
-    cap,oldHeight,newHeight,Order.first,Order.middle,Order.last,atNegative,
-    Nat.bitIndices_two_mul,Nat.bitIndices_one]
-
-private theorem axes_five : Certificate 16 4 4 (constructor 16 4 4) := by
-  norm_num [Certificate,constructor,makePlan,Bounded,Separate,Seams,oldMass,newMass,
-    cap,oldHeight,newHeight,Order.first,Order.middle,Order.last,atNegative,
-    Nat.bitIndices_two_mul,Nat.bitIndices_one]
-
 private theorem axes_two (d : ℕ) :
     Certificate 4 4 (16 * (2 : ℤ) ^ d) (constructor 4 4 (16 * (2 : ℤ) ^ d)) := by
   let q : ℤ := 2 ^ d
@@ -263,24 +243,6 @@ private def exceptionalTriples : List (ℤ × ℤ × ℤ) :=
   [(4,16,8),(4,32,8),(4,64,16),(16,4,8),(8,8,4),
       (8,16,4),(16,8,4),(16,16,4),(32,16,4),(64,16,4),(8,32,4),
       (16,32,4),(32,32,4),(32,64,4),(32,4,8),(8,4,8),(4,8,8)]
-
-private theorem finite_rows (r s t : ℤ)
-    (h : (r,s,t) ∈ exceptionalTriples) :
-    Certificate r s t (constructor r s t) := by
-  simp [exceptionalTriples,Prod.mk.injEq] at h
-  rcases h with h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h
-  all_goals
-    rcases h with ⟨rfl,rfl,rfl⟩
-    norm_num [Certificate,constructor,makePlan,chooseEar,Bounded,Separate,Seams,
-      oldMass,newMass,cap,oldHeight,newHeight,Order.first,Order.middle,Order.last,
-      atNegative,Nat.bitIndices_two_mul,Nat.bitIndices_one] <;>
-      simp [List.disjoint_left,
-        show (2:ℕ).bitIndices=[1] by decide,
-        show (3:ℕ).bitIndices=[0,1] by decide,
-        show (4:ℕ).bitIndices=[2] by decide,
-        show (6:ℕ).bitIndices=[1,2] by decide,
-        show (9:ℕ).bitIndices=[0,3] by decide,
-        show (10:ℕ).bitIndices=[1,3] by decide]
 
 private theorem a_two_twice (d : ℕ) :
     Certificate 4 (32 * (2 : ℤ)^d) (16 * (2 : ℤ)^d)

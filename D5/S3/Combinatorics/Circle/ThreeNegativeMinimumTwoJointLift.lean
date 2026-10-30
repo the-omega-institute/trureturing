@@ -20,10 +20,18 @@ namespace D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
 
+open private ThreeBitSource.mask_labels ThreeBitSource.mask_labels_bound
+  ThreeBitSource.mask_labels_disjoint ThreeBitSource.mask_labels_sum
+  ThreeBitSource.labelled_permutation
+  from D5.S3.Combinatorics.Circle.ThreeBitSource
+open private ThreeNegativeEqualOuterJointLift.label ThreeNegativeEqualOuterJointLift.lift_order
+  ThreeNegativeEqualOuterJointLift.marked_word ThreeNegativeEqualOuterJointLift.schedule_from_tail
+  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+
 open private Mask Mask.u Mask.v Mask.w Negative Negative.alpha Negative.beta Negative.gamma
   Order Ear Ear.p Ear.q Ear.t Plan.p Plan.t Plan.order Plan.ear atNegative Order.first Order.middle Order.last oldMass
-  newMass cap oldHeight newHeight Plan constructor Bounded Seams Certificate axes_zero axes_one
-  axes_four axes_five axes_two axes_three axes_six exceptionalTriples finite_rows a_two_twice
+  newMass cap oldHeight newHeight Plan constructor Bounded Seams Certificate makePlan chooseEar Separate
+  axes_two axes_three axes_six exceptionalTriples a_two_twice
   c_two_small_s_eight c_two_small_s_sixteen c_two_small_r_eight c_two_small_r_sixteen
   c_two_small_r_thirtytwo a_two_four_times b_two_twice c_two_equal c_two_double_s
   c_two_double_r
@@ -523,6 +531,24 @@ private theorem realize (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ 
 private theorem constructor_certificate (a b c : ℕ)
     (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hmin : min a (min b c)=2) :
     Certificate (2^a) (2^b) (2^c) (constructor (2^a) (2^b) (2^c)) := by
+  by_cases hexceptional : ((2 : ℤ)^a,(2 : ℤ)^b,(2 : ℤ)^c) ∈ exceptionalTriples
+  · generalize hr : (2 : ℤ)^a = r at hexceptional ⊢
+    generalize hs : (2 : ℤ)^b = s at hexceptional ⊢
+    generalize ht : (2 : ℤ)^c = t at hexceptional ⊢
+    simp [exceptionalTriples,Prod.mk.injEq] at hexceptional
+    rcases hexceptional with h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h
+    all_goals
+      rcases h with ⟨rfl,rfl,rfl⟩
+      norm_num [Certificate,constructor,makePlan,chooseEar,Bounded,Separate,Seams,
+        oldMass,newMass,cap,oldHeight,newHeight,Order.first,Order.middle,Order.last,
+        atNegative,Nat.bitIndices_two_mul,Nat.bitIndices_one] <;>
+        simp [List.disjoint_left,
+          show (2:ℕ).bitIndices=[1] by decide,
+          show (3:ℕ).bitIndices=[0,1] by decide,
+          show (4:ℕ).bitIndices=[2] by decide,
+          show (6:ℕ).bitIndices=[1,2] by decide,
+          show (9:ℕ).bitIndices=[0,3] by decide,
+          show (10:ℕ).bitIndices=[1,3] by decide]
   have factor (x m : ℕ) (hm : m≤x) : (2:ℤ)^x=2^m*2^(x-m) := by
     rw [←pow_add]
     congr 1
@@ -534,9 +560,15 @@ private theorem constructor_certificate (a b c : ℕ)
   by_cases hab : a=2 ∧ b=2
   · obtain ⟨rfl,rfl⟩ := hab
     by_cases hc2 : c=2
-    · subst c; exact axes_zero
+    · subst c
+      norm_num [Certificate,constructor,makePlan,Bounded,Separate,Seams,oldMass,newMass,
+        cap,oldHeight,newHeight,Order.first,Order.middle,Order.last,atNegative,
+        Nat.bitIndices_two_mul,Nat.bitIndices_one]
     · by_cases hc3 : c=3
-      · subst c; exact axes_one
+      · subst c
+        norm_num [Certificate,constructor,makePlan,Bounded,Separate,Seams,oldMass,newMass,
+          cap,oldHeight,newHeight,Order.first,Order.middle,Order.last,atNegative,
+          Nat.bitIndices_two_mul,Nat.bitIndices_one]
       · have hcf : (2:ℤ)^c=16*2^(c-4) := by simpa using factor c 4 (by omega)
         rw [hcf]
         exact axes_two (c-4)
@@ -548,9 +580,15 @@ private theorem constructor_certificate (a b c : ℕ)
     · by_cases hbc : b=2 ∧ c=2
       · obtain ⟨rfl,rfl⟩ := hbc
         by_cases ha3 : a=3
-        · subst a; exact axes_four
+        · subst a
+          norm_num [Certificate,constructor,makePlan,Bounded,Separate,Seams,oldMass,newMass,
+            cap,oldHeight,newHeight,Order.first,Order.middle,Order.last,atNegative,
+            Nat.bitIndices_two_mul,Nat.bitIndices_one]
         · by_cases ha4 : a=4
-          · subst a; exact axes_five
+          · subst a
+            norm_num [Certificate,constructor,makePlan,Bounded,Separate,Seams,oldMass,newMass,
+              cap,oldHeight,newHeight,Order.first,Order.middle,Order.last,atNegative,
+              Nat.bitIndices_two_mul,Nat.bitIndices_one]
           · have haf : (2:ℤ)^a=32*2^(a-5) := by simpa using factor a 5 (by omega)
             rw [haf]
             exact axes_six (a-5)
@@ -566,7 +604,7 @@ private theorem constructor_certificate (a b c : ℕ)
             rw [hbf,hcf]
             exact a_two_twice (c-4)
           · by_cases hf : (4,(2:ℤ)^b,(2:ℤ)^c) ∈ exceptionalTriples
-            · exact finite_rows _ _ _ hf
+            · exact False.elim (hexceptional (by simpa using hf))
             · by_cases hordered : b≤c
               · have hq : 1≤(2:ℤ)^(c-b) := by exact_mod_cast Nat.one_le_two_pow
                 by_cases hbthree : b=3
@@ -612,7 +650,7 @@ private theorem constructor_certificate (a b c : ℕ)
           rcases hwhich with hb2|hc2
           · subst b
             by_cases hf : ((2:ℤ)^a,4,(2:ℤ)^c) ∈ exceptionalTriples
-            · exact finite_rows _ _ _ hf
+            · exact False.elim (hexceptional (by simpa using hf))
             · by_cases hlarge : a<c
               · by_cases hnext : c=a+1
                 · have haf : (2:ℤ)^a=8*2^(a-3) := by simpa using factor a 3 (by omega)
@@ -667,7 +705,7 @@ private theorem constructor_certificate (a b c : ℕ)
                     exact b_two_far _ _ hq hh hex
           · subst c
             by_cases hf : ((2:ℤ)^a,(2:ℤ)^b,4) ∈ exceptionalTriples
-            · exact finite_rows _ _ _ hf
+            · exact False.elim (hexceptional (by simpa using hf))
             · by_cases hb3 : b=3
               · subst b
                 have ha5 : 5≤a := by
