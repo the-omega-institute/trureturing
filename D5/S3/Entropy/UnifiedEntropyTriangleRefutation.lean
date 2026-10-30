@@ -227,11 +227,6 @@ private lemma measurement_expansions (u v : Matrix.unitaryGroup (Fin 2) ℂ)
       (rankOneDensity (fun a => u a i) ⊗ₖ rankOneDensity (fun a => v a j)) *
       ρ * (rankOneDensity (fun a => u a i) ⊗ₖ rankOneDensity (fun a => v a j)) := ⟨rfl, rfl, rfl⟩
 
-private lemma bloch_entries (a : ℝ) (n : EuclideanSpace ℝ (Fin 3)) :
-    blochMatrix a n =
-      !![((a + n 2 : ℝ) : ℂ) / 2, ((n 0 : ℂ) - (n 1 : ℂ) * Complex.I) / 2;
-         ((n 0 : ℂ) + (n 1 : ℂ) * Complex.I) / 2, ((a - n 2 : ℝ) : ℂ) / 2] := rfl
-
 set_option maxHeartbeats 4000000 in
 -- Four local outcome blocks expand to polynomial traces of degree eight.
 private lemma measured_purities (u v : Matrix.unitaryGroup (Fin 2) ℂ) :
@@ -244,8 +239,8 @@ private lemma measured_purities (u v : Matrix.unitaryGroup (Fin 2) ℂ) :
         (1 + ((n 0)^2 + (m 0)^2) / 16 + (n 2)^2 * (m 2)^2 / 4) / 4 := by
   obtain ⟨n, hn, hn0, hn1⟩ := qubit_projectors u
   obtain ⟨m, hm, hm0, hm1⟩ := qubit_projectors v
-  have hn0 := hn0.trans (bloch_entries 1 n)
-  have hm0 := hm0.trans (bloch_entries 1 m)
+  have hn0 := hn0.trans (blochMatrix.eq_1 1 n)
+  have hm0 := hm0.trans (blochMatrix.eq_1 1 m)
   have hnz : (n 2)^2 = 1 - (n 0)^2 - (n 1)^2 := by
     have h := EuclideanSpace.real_norm_sq_eq n
     simp only [Fin.sum_univ_three, hn, one_pow] at h
