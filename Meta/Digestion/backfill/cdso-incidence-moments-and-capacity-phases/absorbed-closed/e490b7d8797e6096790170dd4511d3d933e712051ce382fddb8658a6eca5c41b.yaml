@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:e490b7d8797e6096790170dd4511d3d933e712051ce382fddb8658a6eca5c41b
   normalized_sha256: sha256:e490b7d8797e6096790170dd4511d3d933e712051ce382fddb8658a6eca5c41b
 cas_ref: sha256:e490b7d8797e6096790170dd4511d3d933e712051ce382fddb8658a6eca5c41b
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Combinatorics/CDSO/LocalizationBootstrap.lemma135
+    target_statement_id: sha256:423880c29c8691b444814eb706713f9b531b10a78138545f8724892e2ff436c0
 receipts:
   unresolved_subitems: []
