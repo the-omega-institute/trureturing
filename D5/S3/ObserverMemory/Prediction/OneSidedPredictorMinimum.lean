@@ -99,45 +99,34 @@ private theorem reset_ne_ones {S : Type*} (M : Predictor S) (x ε : ℝ) (p : �
     simpa using (hp.comp (by simpa [Nat.add_comm] using tendsto_add_atTop_nat i)).add_const (2*ε)
   exact (not_le_of_gt hsmall) (ge_of_tendsto hl (Eventually.of_forall hbound))
 
-private def encode (N : ℕ) : Option ℕ → Fin (N+1) ⊕ Unit
-  | none => .inr ()
-  | some n => .inl ⟨min n N, by omega⟩
-
-private def sourceUpdate : Bool → Option ℕ → Option ℕ
-  | false, _ => none
-  | true, none => none
-  | true, some n => some (n+1)
-
 private def machineUpdate (N : ℕ) : Bool → Fin (N+1) ⊕ Unit → Fin (N+1) ⊕ Unit
   | false, _ => .inr ()
   | true, .inr _ => .inr ()
   | true, .inl n => .inl ⟨min (n.val+1) N, by omega⟩
 
-private theorem encode_update (N : ℕ) (b : Bool) (s : Option ℕ) :
-    encode N (sourceUpdate b s) = machineUpdate N b (encode N s) := by
-  cases b <;> cases s <;> simp [encode, sourceUpdate, machineUpdate]
-  omega
-
-private theorem encoded_run (N : ℕ) (h : List Bool) (s : Option ℕ) :
-    runWord (machineUpdate N) h (encode N s) = encode N (runWord sourceUpdate h s) := by
-  induction h generalizing s with
+private theorem reset_run (N : ℕ) (h : List Bool) :
+    runWord (machineUpdate N) h (.inr ()) = .inr () := by
+  induction h with
   | nil => rfl
-  | cons b h ih =>
-    simp only [runWord, ← encode_update]
-    exact ih _
+  | cons b h ih => cases b <;> simpa [runWord,machineUpdate] using ih
 
-private theorem source_run (h : List Bool) (n : ℕ) :
-    runWord sourceUpdate h (some n) = if false ∈ h then none else some (n+h.length) := by
-  have hn (l : List Bool) : runWord sourceUpdate l none = none := by
-    induction l with
-    | nil => rfl
-    | cons b l ih => cases b <;> simpa [runWord, sourceUpdate] using ih
+private theorem saturated_run (N : ℕ) (h : List Bool) (n : ℕ) :
+    runWord (machineUpdate N) h (.inl ⟨min n N,by omega⟩) =
+      if false ∈ h then .inr () else .inl ⟨min (n+h.length) N,by omega⟩ := by
   induction h generalizing n with
   | nil => simp [runWord]
   | cons b h ih =>
     cases b
-    · simp [runWord, sourceUpdate, hn]
-    · simpa [runWord, sourceUpdate, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using ih (n+1)
+    · simp [runWord,machineUpdate,reset_run]
+    · have he : (Sum.inl ⟨min (min n N+1) N,by omega⟩ : Fin (N+1) ⊕ Unit) =
+          .inl ⟨min (n+1) N,by omega⟩ := by
+        congr 1
+        apply Fin.ext
+        dsimp
+        omega
+      simp only [runWord,machineUpdate]
+      rw [he,ih]
+      simp [Nat.add_assoc,Nat.add_comm,Nat.add_left_comm]
 
 /-- For any nonnegative decreasing law tending to zero, the first nonstrict cutoff
 at twice the error gives the exact attained number of fully charged states.
@@ -155,7 +144,7 @@ theorem sharp_predictor_minimum (x ε : ℝ) (p : ℕ → ℝ) (N : ℕ)
       | .inr _ => x
       | .inl n => if n.val < N then p n.val else p N / 2
     let M : Predictor (Fin (N+1) ⊕ Unit) := {
-      initial := encode N (some 0)
+      initial := .inl ⟨0,by omega⟩
       update := machineUpdate N
       output := out
       output_mem := by
@@ -168,12 +157,12 @@ theorem sharp_predictor_minimum (x ε : ℝ) (p : ℕ → ℝ) (N : ℕ)
           · exact ⟨hp0 _,(hpx _).trans hx.2⟩
           · constructor <;> linarith [hp0 N,hpx N,hx.2] }
     refine ⟨M,fun h => ?_⟩
-    have hr : M.run h = encode N (if false ∈ h then none else some h.length) := by
-      simpa [M,Predictor.run,source_run] using encoded_run N h (some 0)
+    have hr : M.run h = if false ∈ h then .inr () else .inl ⟨min h.length N,by omega⟩ := by
+      simpa [M,Predictor.run] using saturated_run N h 0
     rw [hr]
     by_cases hz : false ∈ h
-    · simpa [M,out,historyLaw,hz,encode] using hε
-    · simp only [historyLaw,hz,↓reduceIte,encode]
+    · simpa [M,out,historyLaw,hz] using hε
+    · simp only [historyLaw,hz,↓reduceIte]
       change |(if min h.length N < N then p (min h.length N) else p N/2) - p h.length| ≤ ε
       by_cases hn : h.length < N
       · simp [min_eq_left hn.le,hn,hε]
