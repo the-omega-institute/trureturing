@@ -168,9 +168,7 @@ $$\forall n \in \mathit{Nat},\; 3 \le n \Rightarrow \left(\exists d \in \operato
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Dice/EaslickMinimalAdvantage.threshold_attained` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Terry Easlick (2026). *Computer-assisted results for n-sided non-transitive dice taking face values in [n]*. URL: <https://arxiv.org/abs/2610.40321v1>.
+*Citation.* Terry Easlick (2026). *Computer-assisted results for n-sided non-transitive dice taking face values in [n]*. URL: <https://arxiv.org/abs/2610.40321v1>.
 
 *Commentary.*
 
@@ -200,9 +198,7 @@ $$\forall n \in \mathit{Nat},\; 3 \le n \Rightarrow \operatorname{IsMinimum}\lef
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Dice/EaslickMinimalAdvantage.minimum_probability` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Terry Easlick (2026). *Computer-assisted results for n-sided non-transitive dice taking face values in [n]*. URL: <https://arxiv.org/abs/2610.40321v1>.
+*Citation.* Terry Easlick (2026). *Computer-assisted results for n-sided non-transitive dice taking face values in [n]*. URL: <https://arxiv.org/abs/2610.40321v1>.
 
 *Commentary.*
 
@@ -216,9 +212,7 @@ $$\forall n \in \mathit{Nat}, d \in \operatorname{List}\left(\mathit{Nat}\right)
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Dice/EaslickMinimalAdvantage.edge_iff` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Terry Easlick (2026). *Computer-assisted results for n-sided non-transitive dice taking face values in [n]*. URL: <https://arxiv.org/abs/2610.40321v1>.
+*Citation.* Terry Easlick (2026). *Computer-assisted results for n-sided non-transitive dice taking face values in [n]*. URL: <https://arxiv.org/abs/2610.40321v1>.
 
 *Commentary.*
 
