@@ -654,6 +654,88 @@ private theorem kernel_rational_integral (b θ : ℝ) (hb0 : 0 ≤ b) (hb1 : b <
   rw [hrat]
   ring
 
+private theorem kernel_pairing_interior (h : ℂ → ℂ) (hh : Differentiable ℂ h)
+    (b : ℝ) (hb0 : 0 < b) (hb1 : b < 1) :
+    ((2 * Real.pi)⁻¹ : ℝ) •
+      (∫ θ in (0 : ℝ)..(2 * Real.pi),
+        (boundaryKernel b θ : ℂ) * h (Complex.circleMap 0 1 θ)) =
+      ((b : ℂ) * Complex.I / 2) * ∫ t in (0 : ℝ)..1,
+        (1 - (t : ℂ)) *
+          (h ((b * t : ℝ) * Complex.I) - h (-(b * t : ℝ) * Complex.I)) := by
+  let F : ℝ × ℝ → ℂ := fun p =>
+    ((-2 * b ^ 2 * p.1 * (1 - p.1) : ℝ) : ℂ) *
+      ((rationalKernel (b * p.1) (Complex.circleMap 0 1 p.2)).re : ℂ) *
+      h (Complex.circleMap 0 1 p.2)
+  have hbt (t : ℝ) (ht : t ∈ Icc (0 : ℝ) 1) : |b * t| < 1 := by
+    rw [abs_of_nonneg (mul_nonneg hb0.le ht.1)]
+    nlinarith [ht.2]
+  have hcψ : ContinuousOn
+      (fun p : ℝ × ℝ => rationalKernel (b * p.1) (Complex.circleMap 0 1 p.2))
+      (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) (2 * Real.pi)) := by
+    unfold rationalKernel
+    apply ContinuousOn.div (by fun_prop) (by fun_prop)
+    intro p hp
+    exact rationalKernel_den_ne (hbt p.1 hp.1) _
+      (by simp [Complex.norm_circleMap_zero])
+  have hF : ContinuousOn F (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) (2 * Real.pi)) := by
+    exact ((by fun_prop : ContinuousOn
+      (fun p : ℝ × ℝ => ((-2 * b ^ 2 * p.1 * (1 - p.1) : ℝ) : ℂ))
+      (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) (2 * Real.pi))).mul
+      (Complex.continuous_ofReal.comp_continuousOn
+        (Complex.continuous_re.comp_continuousOn hcψ))).mul
+      (hh.continuous.comp (by fun_prop)).continuousOn
+  have hi := hF.integrableOn_compact (μ := volume.prod volume)
+    (isCompact_Icc.prod isCompact_Icc)
+  have hip : Integrable F ((volume.restrict (Ioc (0 : ℝ) 1)).prod
+      (volume.restrict (Ioc (0 : ℝ) (2 * Real.pi)))) := by
+    rw [Measure.prod_restrict]
+    exact hi.mono_set (Set.prod_mono Ioc_subset_Icc_self Ioc_subset_Icc_self)
+  have hswap : (∫ θ in (0 : ℝ)..(2 * Real.pi), ∫ t in (0 : ℝ)..1, F (t, θ)) =
+      ∫ t in (0 : ℝ)..1, ∫ θ in (0 : ℝ)..(2 * Real.pi), F (t, θ) := by
+    simpa only [intervalIntegral.integral_of_le (by norm_num : (0 : ℝ) ≤ 1),
+      intervalIntegral.integral_of_le Real.two_pi_pos.le] using
+      (integral_integral_swap hip).symm
+  have hB (θ : ℝ) : (boundaryKernel b θ : ℂ) * h (Complex.circleMap 0 1 θ) =
+      ∫ t in (0 : ℝ)..1, F (t, θ) := by
+    rw [kernel_rational_integral b θ hb0.le hb1]
+    rw [← intervalIntegral.integral_ofReal, ← intervalIntegral.integral_mul_const]
+    simp only [F, Complex.ofReal_mul]
+  have hangle (t : ℝ) : ((2 * Real.pi)⁻¹ : ℝ) •
+      (∫ θ in (0 : ℝ)..(2 * Real.pi), F (t, θ)) =
+      ((-2 * b ^ 2 * t * (1 - t) : ℝ) : ℂ) *
+        Real.circleAverage (fun z => ((rationalKernel (b * t) z).re : ℂ) * h z) 0 1 := by
+    rw [Real.circleAverage_def]
+    simp only [Complex.real_smul]
+    dsimp [F]
+    simp_rw [mul_assoc]
+    rw [intervalIntegral.integral_const_mul]
+    ring
+  calc
+    _ = ((2 * Real.pi)⁻¹ : ℝ) •
+        (∫ θ in (0 : ℝ)..(2 * Real.pi), ∫ t in (0 : ℝ)..1, F (t, θ)) := by
+      congr 1
+      exact intervalIntegral.integral_congr (fun θ _ => hB θ)
+    _ = ((2 * Real.pi)⁻¹ : ℝ) •
+        (∫ t in (0 : ℝ)..1, ∫ θ in (0 : ℝ)..(2 * Real.pi), F (t, θ)) := by rw [hswap]
+    _ = ∫ t in (0 : ℝ)..1, ((2 * Real.pi)⁻¹ : ℝ) •
+        (∫ θ in (0 : ℝ)..(2 * Real.pi), F (t, θ)) := by
+      rw [intervalIntegral.integral_smul]
+    _ = ∫ t in (0 : ℝ)..1,
+        (((b : ℂ) * Complex.I / 2) * ((1 - (t : ℂ)) *
+          (h ((b * t : ℝ) * Complex.I) - h (-(b * t : ℝ) * Complex.I)))) := by
+      apply intervalIntegral.integral_congr
+      intro t ht
+      have ht' : t ∈ Icc (0 : ℝ) 1 := by simpa only [uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using ht
+      rw [hangle]
+      by_cases ht0 : t = 0
+      · simp [ht0]
+      · rw [rational_real_average h hh (b * t) (hbt t ht') (mul_ne_zero hb0.ne' ht0)]
+        push_cast
+        field_simp [Complex.ofReal_ne_zero.mpr hb0.ne', Complex.ofReal_ne_zero.mpr ht0,
+          Complex.I_ne_zero]
+        <;> ring_nf <;> simp [Complex.I_sq]
+    _ = _ := by rw [intervalIntegral.integral_const_mul]
+
 /-- Uniform convergence, continuity, reflection, and the sign of the actual source kernel,
 including the entire closed parameter edge `b = 1`. -/
 theorem boundary_kernel_control (b θ : ℝ) (hb : b ∈ Icc (0 : ℝ) 1) :
