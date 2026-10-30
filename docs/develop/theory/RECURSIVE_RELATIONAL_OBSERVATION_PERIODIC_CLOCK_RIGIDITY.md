@@ -784,7 +784,7 @@ $u\ge0$,
 
 $$
  \mathcal P_v(T;u,w)=\mathbf1_{vw\in S^{\rm actual}_{n+u}}.
- \tag{PCR.17}
+ \tag{PCR.21}
 $$
 
 Every actual request submits the complete literal $vw$ at the original
@@ -792,7 +792,7 @@ root. A value for $u>0$ before those updates is a prediction; an actual
 reply at that future cut requires the completed original-source updates.
 This family includes every suffix, empty or absent, and every finite
 serial adaptive continuation of local literals and original updates.
-Words outside this cone are not part of (PCR.17). An arbitrary global
+Words outside this cone are not part of (PCR.21). An arbitrary global
 literal service still needs its own earned global descriptor, as in GPO
 Theorem 39.4. In particular this local interface does not replace the
 original acquisition of $(P,n)$.
@@ -837,7 +837,7 @@ $A=I_s-1,B=I_{s+1}-1$, the identities
 
 $$
  u=E^Ay,\qquad v'=E^By,\qquad w'=E^{A+B+1}y.
- \tag{PCR.18}
+ \tag{PCR.22}
 $$
 
 Here $w'$ denotes a stream, not a physical suffix. Its first $2d$
@@ -851,7 +851,7 @@ All three prefixes are visible because $s+2\le T-1$.
 To check the dependency rather than assume a broader theorem, PSA
 Theorem 3.1 computes $r$ as the rank of $H_d(w')$, obtains $g$ and a
 polynomial $f$ by its two nonsingular leading-Hankel solves, and uses
-$f(E)w'=Ev'$. Substitution of (PCR.18) gives
+$f(E)w'=Ev'$. Substitution of (PCR.22) gives
 $E^{B+1}(f(E)u-y)=0$. The constant term of the *core* polynomial makes
 shift injective on its solution space, so $f(E)u=y$. These are precisely
 its proof's data and cancellation hypotheses. Its leading-Hankel
@@ -876,7 +876,7 @@ mathematical proof, not a compiled application. $\square$
 $$
  R_g=\mathbb F_2[X]/(g),\qquad x=X\bmod g,\qquad
  \lambda\left(\sum_{i<r}a_i x^i\right)=\sum_{i<r}a_i y_i.
- \tag{PCR.19}
+ \tag{PCR.23}
 $$
 
 Use degree-less-than-$r$ coefficient strings for ring elements. The
@@ -885,7 +885,7 @@ proposed retained mathematical boundary is
 $$
  \mathcal B_v(T)=(v,T;g,(y_i)_{i<r},Q_1,Q_2),\qquad
  Q_i=x^{I_i}.
- \tag{PCR.20}
+ \tag{PCR.24}
 $$
 
 The last identities specify the mathematical meaning, not numerical
@@ -896,7 +896,7 @@ binding/permissions accompany this data with their separate supply and
 retention bills.
 
 **Theorem 9.2 (executable acquisition of the two operators).** The
-record of Definition 8.1 determines (PCR.20) by finite binary linear
+record of Definition 8.1 determines (PCR.24) by finite binary linear
 algebra, polynomial arithmetic and $s-1$ reverse operator transitions.
 There is no period enumeration, factorization, multiplicative-order
 calculation or discrete logarithm. Every inverted element is a proved
@@ -908,7 +908,7 @@ annihilator ideal says that the map
 $$
  R_g\longrightarrow\operatorname{span}_{\mathbb F_2}\{E^i y:i\ge0\},
  \qquad a\longmapsto a(E)y
- \tag{PCR.21}
+ \tag{PCR.25}
 $$
 
 is well defined and injective: its polynomial kernel is exactly $(g)$.
@@ -926,7 +926,7 @@ solve
 $$
  H_r(y)\,q^{(k)}=(W_k(1),\ldots,W_k(r))^{\mathsf T},\qquad
  \widehat Q_k=\sum_{j<r}q^{(k)}_j x^j,
- \tag{PCR.22}
+ \tag{PCR.26}
 $$
 
 where $W_k(i)$ has zero-based word coordinate $i$. The right side is
@@ -943,7 +943,7 @@ $$
  Q_{k+2}=Q_{k+1}Q_k,\qquad
  (Q_k,Q_{k+1})\longmapsto(Q_{k+1},Q_kQ_{k+1}),\qquad
  (A,B)\longmapsto(BA^{-1},A)
- \tag{PCR.23}
+ \tag{PCR.27}
 $$
 
 for the forward map and its inverse. Start at the acquired pair
@@ -965,7 +965,7 @@ Theorems 3--4][MAS]. None of these steps replaces the original $K_d$ by a
 minimal core descriptor. $\square$
 
 **Theorem 9.3 (exact data-to-boundary correspondence).** At a common
-mature $T$ and for the same literal-prefix convention, (PCR.20) is a
+mature $T$ and for the same literal-prefix convention, (PCR.24) is a
 canonical mathematical representative of complete local future presence
 behaviour in this actual source comparison domain. Acquired complete
 support determines it, and it determines that support. Two such supports
@@ -980,13 +980,13 @@ Theorems 8.2 and 9.2 give the stated deterministic map. The evaluator in
 Theorem 10.2 below reconstructs all finite indexed supports from the
 boundary. For the converse and uniqueness reuse Theorem 4.1: equal
 mature supports give the same original aligned core and both clock
-seeds modulo its least period $p$. On (PCR.21),
+seeds modulo its least period $p$. On (PCR.25),
 
 $$
  x^h=1\quad\Longleftrightarrow\quad E^h y=y
  \quad\Longleftrightarrow\quad p\mid h
  \qquad(h\in\mathbb Z).
- \tag{PCR.24}
+ \tag{PCR.28}
 $$
 
 The first equivalence uses injectivity and invertibility, the second
@@ -1008,13 +1008,13 @@ a new clock theorem. $\square$
 the normalized root immutable descriptor $(b_\varepsilon,\sigma_\varepsilon)
 =(0,\beta)$. For a relative node $q$ put
 $\theta_q=b_q+2-\mathbf1_{\sigma_q=\beta}$. Define $Q_k$ by
-(PCR.23), for $k\ge1$. For a proposed branch $q$ at $k=\theta_q$ form
+(PCR.27), for $k\ge1$. For a proposed branch $q$ at $k=\theta_q$ form
 
 $$
  D_q=\sum_{tb\preceq q}
        \lambda_{\sigma_{ta}}(k-1-\theta_t),\qquad
  \lambda_\alpha(h)=F_h,\quad\lambda_\beta(h)=F_{h+1},
- \tag{PCR.25}
+ \tag{PCR.29}
 $$
 
 using precisely the skipped physical $a$ siblings at proper ancestors.
@@ -1023,10 +1023,10 @@ For nonzero core set
 
 $$
  \omega(q)=\lambda\bigl(x^{-1}Q_k x^{D_q}\bigr).
- \tag{PCR.26}
+ \tag{PCR.30}
 $$
 
-Here the outer $\lambda$ is the linear functional (PCR.19), not a
+Here the outer $\lambda$ is the linear functional (PCR.23), not a
 sibling mass. For the zero core set $\omega(q)=0$. At this branch the
 children have birth time $k$ and initial labels $(\beta,\alpha)$ at
 $(a,b)$ if $\omega(q)=1$, and $(\alpha,\beta)$ otherwise.
@@ -1044,22 +1044,22 @@ also supplies a requested single-word terminal-boundary indicator.
 
 **Theorem 10.2 (literal correctness, including chronology and absent
 extensions).** For every descriptor acquired as above, every $u\ge0$
-and every finite suffix $w$, Definition 10.1 returns (PCR.17). It uses
+and every finite suffix $w$, Definition 10.1 returns (PCR.21). It uses
 at most $|w|$ orientation evaluations and neither an expanded tree nor
 a list of the core period. If a response discrepancy exists, a finite
 full-root literal $vw$ at a finite indexed cut witnesses it.
 
 Proof. ACR Theorem 27.2 supplies the *actual* index of branch $q$ as
 $J_v(q)=I_k+D_q$. The initial normalized descriptor, immutable sibling
-descriptors, chronological order and masses in (PCR.25) are exactly its
+descriptors, chronological order and masses in (PCR.29) are exactly its
 (ACR.115), not semantic addresses or counts with order forgotten.
-By (PCR.19) and the recurrence, $\lambda(x^a)=y_a$ for $a\ge0$.
+By (PCR.23) and the recurrence, $\lambda(x^a)=y_a$ for $a\ge0$.
 For negative $a$ the same identity follows from invertibility on the
-periodic core. Hence (PCR.26) is
+periodic core. Hence (PCR.30) is
 
 $$
  \lambda(x^{I_k+D_q-1})=y_{J_v(q)-1}=z_{J_v(q)}.
- \tag{PCR.27}
+ \tag{PCR.31}
 $$
 
 The last equality is licensed by genuine core-only evolution. It is
@@ -1106,7 +1106,7 @@ Definition 8.1. For every finite serial continuation of local literal
 Reads and completed original-source updates, including adaptive choices
 based on actually returned replies, the retained descriptor answers
 exactly the actual presence family at every completed boundary. The
-map from actual normalized source histories to (PCR.20) commutes with
+map from actual normalized source histories to (PCR.24) commutes with
 completed updates. No new source-learning Read is needed after
 installation while the authentic autonomous-source promise continues.
 
@@ -1158,7 +1158,7 @@ at the first sufficient $s$ satisfies, for an absolute constant $c$,
 $$
  C_{\rm cv},W_{\rm cv}\le c A^{12},\qquad
  V_{\rm cv}\le c A^4,\qquad Q_{\rm cv}=U_{\rm cv}=0.
- \tag{PCR.28}
+ \tag{PCR.32}
 $$
 
 Reading/transferring the actual record and its metadata is included
@@ -1168,7 +1168,7 @@ retained mathematical data have length
 
 $$
  4r+m+b_T+O(\log(d+2)+1)
- \tag{PCR.29}
+ \tag{PCR.33}
 $$
 
 at $r>0$, using four length-$r$ coefficient/seed/operator strings,
@@ -1197,19 +1197,19 @@ uses a numerical operand of length proportional to the core period.
 
 Proof. The input prefixes have $6d$ bits. Minimal Hankel rank and solves
 use $O((d+1)^2)$ bits of matrices and polynomially many binary row
-operations. The two solves (PCR.22), monic polynomial multiplication,
+operations. The two solves (PCR.26), monic polynomial multiplication,
 reduction and extended Euclid use $O((d+1)^3)$ elementary bit operations
 per operation under ordinary dense implementations. There are
 $O(\log(d+2))$ reverse steps. Sequential scans can implement all of them
 on polynomially bounded strings; even a scan for every indexed access
-and a further quadratic sequential simulation are absorbed in (PCR.28).
+and a further quadratic sequential simulation are absorbed in (PCR.32).
 The retained strings are $g$'s $r$ coefficients below its implicit monic
 term, $r$ seed bits and two $r$-bit operators. Their degree and framing,
-the literal $v$, age and metadata give (PCR.29).
+the literal $v$, age and metadata give (PCR.33).
 
 For a request, an ancestor of relative depth $i$ has branch time at
 most $2i+1$. Only proper prefixes of $w$ need bits, so $k\le2h-1$ at
-$h>0$. Precompute $Q_1,\ldots,Q_{2h}$ by (PCR.23), or stream and
+$h>0$. Precompute $Q_1,\ldots,Q_{2h}$ by (PCR.27), or stream and
 recompute as needed; this uses $O(h)$ ring products and $O(rh)$ bits
 if the table is kept. Fibonacci numbers through $2h+2$ have $O(h+1)$
 bits. Their table occupies $O((h+1)^2)$ bits and can be constructed by
@@ -1223,7 +1223,7 @@ of degree-less-than-$r$ operands. There are at most $h$ such evaluations.
 The remaining path times, sibling labels, additions and comparisons
 with $T+u$ are polynomial in $h,b_T,b_u$. This is the classical
 supplied-recurrence quotient evaluation of [Bostan--Mori, §1.3][PCR-BM], with the
-actual index split proved in (PCR.27). No field or square-free quotient
+actual index split proved in (PCR.31). No field or square-free quotient
 is required.
 
 All temporary tables, counters, prefix descriptors and literal buffers
@@ -1252,7 +1252,7 @@ complete, the source consumes exactly
 
 $$
  F_{n+u+1}-F_{n+1}
- \tag{PCR.30}
+ \tag{PCR.34}
 $$
 
 new birth bits. Inside this cone the number of births is
@@ -1264,11 +1264,11 @@ Proof. Sequential composition adds work, writes and paid calls. Scratch
 can be released between calls but previously written bits remain in
 $W$; retained outputs and records remain in peak backing until actually
 released. Original total births at cut $n$ are $F_{n+1}-1$; subtracting
-the two completed totals proves (PCR.30). The local beta-origin total
+the two completed totals proves (PCR.34). The local beta-origin total
 births through $T$ are $\sum_{k=1}^T F_k=F_{T+2}-1$, giving the local
 formulas. A representation of a request does not perform any of these
 source operations. Global $n$ is not recoverable from this local $T$
-alone, so (PCR.30) is an accounting fact about the actual execution,
+alone, so (PCR.34) is an accounting fact about the actual execution,
 not an additional numerical register furnished by the boundary.
 
 For explicit full support at local age $t$ there are
@@ -1293,13 +1293,13 @@ or a young support already meets that definition.
 
 First, at any actual cone satisfying the core-only premise, a complete
 stationary paid root-literal scan supplies its whole ordered support,
-its age and its visible batches. If $T\ge s+3$, this yields (PCR.20).
+its age and its visible batches. If $T\ge s+3$, this yields (PCR.24).
 With $N=2F_{T+2}-1$, a scan which pays both child tests at every
 present node has
 
 $$
  Q\le2N+1,\qquad M\le m+T+1,\qquad J\le(m+T+1)(2N+1),\quad U=0.
- \tag{PCR.31}
+ \tag{PCR.35}
 $$
 
 The initial confirmation is included; an already earned root can omit
@@ -1307,8 +1307,8 @@ it. If the acquired full-address support record has encoded length $L$,
 conversion/extraction has conservative sequential work and cumulative
 writes at most $c(L+d+\Gamma+2)^{12}$ and peak backing at most
 $c(L+d+\Gamma+2)^4$. Expanded-record disposal does not refund its
-writes. The retained boundary still has (PCR.29)'s size. In particular
-(PCR.31) is generally exponential in $T$, not a polynomial paid
+writes. The retained boundary still has (PCR.33)'s size. In particular
+(PCR.35) is generally exponential in $T$, not a polynomial paid
 acquisition in $d,\log T$.
 
 Second, in PSA Definition 1.1's *original entrance* with earned spine
@@ -1333,7 +1333,7 @@ Proof. Prefix closure and actual full binarity justify scheduling each
 positive child once. Paying both child tests at each present node
 closes all terminal absences and cannot stop at an unqueried fringe.
 The normalized maximum depth is $T$ and a terminal test adds at most
-one, giving (PCR.31). The acquired leaf count $F_{T+2}$ determines
+one, giving (PCR.35). The acquired leaf count $F_{T+2}$ determines
 $T$ uniquely, including $T=0,1$. Theorem 2.1 determines exactly the
 visible batches, sorted by normalized update and *physical* address.
 Counts, heights and addresses can be stored in delimited records and
@@ -1349,7 +1349,7 @@ ancestors and rank decrements give exactly the stated local age
 interval. Its selected depth is at least the ACR core cutoff, so every
 subsequent birth is a core birth at its original index even when the
 original stream has a singular transient. PSA Theorem 2.2 supplies
-(PCR.18). These are precisely the physical selection hypotheses which
+(PCR.22). These are precisely the physical selection hypotheses which
 Theorem 8.2 did not give for an arbitrary cone. Its scan node/address
 bounds and polynomial finite record processing give the stated price;
 the larger conservative envelopes also accommodate the matrix/operator
@@ -1361,7 +1361,7 @@ their own supplier. $\square$
 
 **Theorem 13.2 (necessary information, rather than a prescribed menu).**
 On any fixed comparison family at a common age, equality of an acquired
-data map $D$ implying equality of every response in (PCR.17) is necessary
+data map $D$ implying equality of every response in (PCR.21) is necessary
 for an exact deterministic predictive decoder. It is sufficient for a
 set-theoretic factorization of those responses through $D$; neither
 effectivity nor a polynomial decoding algorithm follows from that alone.
@@ -1440,7 +1440,7 @@ $y$ above are at actual original indices in a genuinely core-only cone.
 The transient can be arbitrary within that promise, including early
 bits used to create $v$ and its exterior. Their consequences for the
 later local indexing are retained in $Q_1,Q_2$; their full values are
-not recovered. If a birth inside the cone is transient, (PCR.27)'s
+not recovered. If a birth inside the cone is transient, (PCR.31)'s
 last equality is not licensed. Proposition 6.2 gives actual constant-core
 pairs with identical normalized exterior clocks and different early
 local supports; it refutes precisely that extension. No inference of
@@ -1471,7 +1471,7 @@ logarithm in fixed-length binary capacity. This counts initial behaviours
 at one cut, not a finite carrier closed under unbounded updates. There is no assertion that all $p^2$
 trials occur as actual histories.
 
-Proof. The Hankel matrix $H_r(y)$ is nonsingular by (PCR.21)--(PCR.22).
+Proof. The Hankel matrix $H_r(y)$ is nonsingular by (PCR.25)--(PCR.26).
 Any $q$-dimensional linear realization factors its Hankel matrix into
 a matrix of reachable rows times observable columns, of inner dimension
 $q$, so $q\ge r$. The companion realization achieves $r$. This is the
@@ -1485,7 +1485,7 @@ dimension zero. This argument concerns a supplied scalar series, not
 acquisition or the address-driven response transformation.
 
 The state count is exactly Corollary 3.2, now represented by the
-operator pair through (PCR.24). Count the whole predictive configuration,
+operator pair through (PCR.28). Count the whole predictive configuration,
 including any source-dependent code or immutable advice; moving a clock
 into such advice cannot evade this distinction bound. Distinct behaviours force distinct
 retained deterministic predictive states at the common age; a carrier
@@ -1495,7 +1495,7 @@ lengths and corresponding counting bound. An encoding can combine the
 two clocks into one register; two named registers are not a lower
 bound. Restriction to $\mathcal A$ gives its image size and no
 surjectivity claim. The stored pair uses $2r$ coefficient bits, and the
-whole descriptor has (PCR.29)'s upper bound; it is not claimed to be a
+whole descriptor has (PCR.33)'s upper bound; it is not claimed to be a
 bit-optimal representation. The period may be as large as $2^r-1$ in
 a primitive core, so a small description is compatible with exponentially
 many discrete states. $\square$
@@ -1505,7 +1505,7 @@ carrier).** Even for a fixed zero core and a fixed actual $v$, the
 family of all normalized cuts cannot be represented by one fixed finite
 state carrier which answers every local literal correctly, unless the
 unbounded age or equivalent state is supplied externally and charged.
-A finite description at each cut, such as (PCR.20), is consistent with
+A finite description at each cut, such as (PCR.24), is consistent with
 this obstruction.
 
 Proof. The supports at ages $T=0,1,2,\ldots$ have strictly increasing
@@ -1517,7 +1517,7 @@ any further update. A finite carrier cannot do so for infinitely many
 ages. Allowing an external age argument, unbounded backing, a changing
 address journal or the actual source as additional readable state moves
 the information and its cost rather than refuting the argument. The
-binary age counter in (PCR.29) grows without bound; it is finite for
+binary age counter in (PCR.33) grows without bound; it is finite for
 each finite cut. This proof is independent of numerical phase extraction
 and already holds at $r=0$. $\square$
 
@@ -1535,7 +1535,7 @@ The faithful correspondence is as follows.
 | Supplier | Parameters and conclusion consumed | Obligation not supplied |
 | --- | --- | --- |
 | PCR Theorems 2.1, 3.1, 4.1 and Corollary 3.2 | Actual ordered batches, mature equality and least-period two-clock classification | A small arbitrary Read menu, attainable surjectivity or installed consumer |
-| PSA Theorem 3.1 and Proposition 3.2 | Three acquired $2d$ prefixes satisfying (PCR.18), least core and original aligned seed, proved-unit/padding boundary | Its terminal-spine physical selection outside the separately mapped prelude, original firstness or source execution |
+| PSA Theorem 3.1 and Proposition 3.2 | Three acquired $2d$ prefixes satisfying (PCR.22), least core and original aligned seed, proved-unit/padding boundary | Its terminal-spine physical selection outside the separately mapped prelude, original firstness or source execution |
 | ACR Theorems 27.2--27.3 | Same $v,e,k$, actual one-based $I_k$, skipped physical siblings and a sufficient depth cutoff | An earned arbitrary cone, cheap deep-clock phase or free normalization |
 | GPO Definitions 27.1, 29.1 and Theorems 34.3, 39.4 | Original alpha source, all-index law including singular transients, full-root requests and serialized completed use | A relative-root port, free synchronization, source-free execution or a core-only certificate from finite apparent periodicity |
 | Massey §§II--IV; Shoup §§16.4, 18.1--18.2 | Connection/forward polynomial conventions, least Hankel synthesis, module action, Euclidean unit inverse | Physical samples, ordered birth provenance, original cut or $\rho_d$ firstness |
@@ -1554,7 +1554,7 @@ and $q>0$, using the specific polynomial
 $P(u,q)=X^q-u\sum_{j<q}X^j$, the first-vertex vector and its particular
 forward-time map. Its Blueprint gives the explicit coordinate inverse,
 including the zero ring. An arbitrary acquired binary core polynomial
-$g$ is not that polynomial family. Mapping (PCR.21) therefore requires
+$g$ is not that polynomial family. Mapping (PCR.25) therefore requires
 the annihilator/Hankel argument actually supplied here; specializing
 $A=\mathbb F_2$ alone does not identify the time map or provide the
 presence observations. The inspected project imports
