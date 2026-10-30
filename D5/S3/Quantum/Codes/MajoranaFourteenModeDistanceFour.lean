@@ -11,7 +11,7 @@ import Mathlib.Algebra.Group.AddChar
 import Mathlib.Data.ZMod.Basic
 import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+import Mathlib.LinearAlgebra.Dual.Lemmas
 import Mathlib.LinearAlgebra.Dimension.DivisionRing
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.IntervalCases
@@ -71,7 +71,10 @@ private lemma mem_commutant {ι : Type*} [Fintype ι]
 
 private lemma binary_value (x : ZMod 2) : x = 0 ∨ x = 1 := by
   change (x : Fin 2) = 0 ∨ x = 1
-  omega
+  rcases x with ⟨a, ha⟩
+  interval_cases a
+  · exact Or.inl rfl
+  · exact Or.inr rfl
 
 private lemma parity_card {ι : Type*} [Fintype ι]
     (c : Submodule (ZMod 2) (ι → ZMod 2)) (hc : IsSelfOrthogonal c)
@@ -94,11 +97,13 @@ private lemma pair_weight {ι : Type*} [Fintype ι] [DecidableEq ι]
       simp only [Finset.mem_filter, Finset.mem_univ, Pi.add_apply, Pi.single_eq_same,
         Pi.single_eq_of_ne hij, add_zero, one_ne_zero, and_self, Finset.mem_insert,
         true_or]
+      decide
     · by_cases haj : a = j
       · subst a
         simp only [Finset.mem_filter, Finset.mem_univ, Pi.add_apply, Pi.single_eq_same,
           Pi.single_eq_of_ne hij.symm, zero_add, one_ne_zero, and_self,
           Finset.mem_insert, Finset.mem_singleton, or_true]
+        decide
       · simp only [Finset.mem_filter, Finset.mem_univ, Pi.add_apply,
           Pi.single_eq_of_ne hai, Pi.single_eq_of_ne haj, zero_add, ne_eq,
           not_true_eq_false, and_false, Finset.mem_insert, Finset.mem_singleton,
@@ -439,7 +444,7 @@ private lemma affine_weight (k : ℕ) (f : (Fin k → ZMod 2) → ZMod 2)
       simp only [Finset.card_eq_sum_ones, Finset.sum_filter, ite_not]
     have bij : (∑ x, if f (x + u) = 0 then (0 : ℕ) else 1) =
         ∑ x, if f x = 0 then (0 : ℕ) else 1 :=
-      Equiv.sum_comp (Equiv.addRight u) _
+      Equiv.sum_comp (Equiv.addRight u) (fun x => if f x = 0 then (0 : ℕ) else 1)
     have each (x : Fin k → ZMod 2) :
         (if f x = 0 then (0 : ℕ) else 1) +
           (if f (x + u) = 0 then (0 : ℕ) else 1) = 1 := by
@@ -447,9 +452,9 @@ private lemma affine_weight (k : ℕ) (f : (Fin k → ZMod 2) → ZMod 2)
       rcases binary_value (f x) with h | h <;> rw [h] <;> decide
     have total := Finset.sum_congr (s₁ := Finset.univ) (s₂ := Finset.univ) rfl
       (fun x _ => each x)
-    rw [Finset.sum_add_distrib, bij, count] at total
+    simp only [Finset.sum_add_distrib, bij, count] at total
     simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fun, ZMod.card,
-      Fintype.card_fin, smul_eq_mul, mul_one] at total
+      Fintype.card_fin, nsmul_eq_mul, mul_one] at total
     exact Or.inr (Or.inl (by omega))
 
 private lemma quadratic_polarization (k : ℕ)
@@ -604,12 +609,12 @@ private lemma moments_obstruction (k : ℕ) (s : Finset (Fin k → ZMod 2))
   obtain ⟨q, hq, hf⟩ := moment_degree k (by omega) _ hm
   rcases cases with hfour | hfive
   · have hw := affine_weight k _ q (by simpa only [hfour] using hq) hf
-    rw [hcard] at hw
-    have powk : 2 ^ k = 16 := by rw [hfour]
+    simp only [hcard] at hw
+    have powk : 2 ^ k = 16 := by rw [hfour]; decide
     rw [powk] at hw
     rcases hw with hw | hw | hw <;> omega
   · have hw := quadratic_weight k hfive _ q (by simpa only [hfive] using hq) hf
-    rw [hcard] at hw
+    simp only [hcard] at hw
     obtain ⟨m, hm⟩ := he
     have hs : s.card = 14 := by omega
     rw [hs] at hw
