@@ -118,7 +118,10 @@ internal sealed class LennardJonesChainBreakInstabilityCountDocument : IScribeDo
                         + "for all its stated parameters. The argument uses positive bond lengths and their "
                         + "broken-bond count; the steady-state, endpoint, and positive-pre-stretch hypotheses "
                         + "are retained in the statement. It asserts no existence of steady states with a specified count."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rodrigues-kevrekidis-dobson-2019-n-break-instability-count"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
