@@ -67,6 +67,6 @@ internal sealed class LiteralSecondStarCoordinateBoundDocument : IScribeDocument
                     "For each original vertex, the equal-weight barycenter of the four "
                         + "parent-flag vertices lies in the corresponding closed star and "
                         + "has first coordinate exactly 25/48."))),
-                DescribeRole.Theorem),
+                DescribeRole.Theorem)),
         []));
 }
