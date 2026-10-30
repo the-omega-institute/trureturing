@@ -24,6 +24,7 @@ open private ThreeBitSource.centered_ladder ThreeBitSource.mask_labels
   ThreeBitSource.mask_complement ThreeBitSource.mask_labels_disjoint
   ThreeBitSource.mask_labels_sum ThreeBitSource.labelled_permutation
   from D5.S3.Combinatorics.Circle.ThreeBitSource
+open ThreeBitSource
 open private ThreeNegativeEqualOuterJointLift.label
   ThreeNegativeEqualOuterJointLift.lift_order
   ThreeNegativeEqualOuterJointLift.marked_word
@@ -617,7 +618,9 @@ private theorem four_phase_selector (a b c : ℕ)
       · rw [max_eq_right h']; exact hL
       · rw [max_eq_left h']; exact hB
   have hcapB : 2 * nB < z := by
-    have hnp : 2 * nB * DB < P := by change R < 4 * r at hR; nlinarith only [hM0, hR, hMr, hsmall] only [hL0, hR, hLr, hsmall] only [hB0, hR, hBr, hsmall]
+    have hnp : 2 * nB * DB < P := by
+      change R < 4 * r at hR
+      nlinarith only [hB0, hR, hBr, hsmall]
     have hrel : z * DB = P + DL := by dsimp [DB, DL, P]; ring
     have hpos : 0 < DB := by omega
     have hposL : 0 < DL := by omega
@@ -625,7 +628,9 @@ private theorem four_phase_selector (a b c : ℕ)
     have := mul_le_mul_of_nonneg_right (show z ≤ 2 * nB by omega) hpos.le
     nlinarith only [hnp, hrel, hposL, this]
   have hcapL : 2 * nL < y := by
-    have hnp : 2 * nL * DL < P := by change R < 4 * r at hR; nlinarith
+    have hnp : 2 * nL * DL < P := by
+      change R < 4 * r at hR
+      nlinarith only [hL0, hR, hLr, hsmall]
     have hrel : y * DL = P + DM := by dsimp [DL, DM, P]; ring
     have hpos : 0 < DL := by omega
     have hposM : 0 < DM := by omega
@@ -633,7 +638,9 @@ private theorem four_phase_selector (a b c : ℕ)
     have := mul_le_mul_of_nonneg_right (show y ≤ 2 * nL by omega) hpos.le
     nlinarith only [hnp, hrel, hposM, this]
   have hcapM : 2 * nM < x := by
-    have hnp : 2 * nM * DM < P := by change R < 4 * r at hR; nlinarith
+    have hnp : 2 * nM * DM < P := by
+      change R < 4 * r at hR
+      nlinarith only [hM0, hR, hMr, hsmall]
     have hrel : x * DM = P := by dsimp [DM, P]; ring
     have hpos : 0 < DM := by omega
     by_contra h
@@ -756,23 +763,23 @@ private theorem four_mask_parameters (a b c d : ℕ)
   have hchargeB : nB * 1 < A := by
     have hxy' : 1 ≤ x * y := by omega
     have hzP : z ≤ P := by dsimp [P]; nlinarith
-    dsimp [A]; nlinarith only [hB.2.1, hzP, hDB]
+    dsimp [A]; nlinarith only [hB.1, hB.2.1, hzP, hDB]
   have hchargeL : nL * (1 + z) < A := by
     have hmul := mul_lt_mul_of_pos_right hL.2.1 (show 0 < 1 + z by omega)
     have hP' : 4 * (y * z) ≤ P := by dsimp [P]; nlinarith
     have hy' : y ≤ y * z := by nlinarith
-    dsimp [A]; nlinarith only [hmul, hP', hy', hDB]
+    dsimp [A]; nlinarith only [hmul, hP', hy', hDB, hP]
   have hchargeM : nM * (1 + y + y * z) < A := by
-    have hmul := mul_lt_mul_of_pos_right hM.2.1 (show 0 < 1 + y + y * z by nlinarith)
+    have hmul := mul_lt_mul_of_pos_right hM.2.1 (show 0 < 1 + y + y * z by nlinarith only [hy, hyz])
     have he : x * (1 + y + y * z) = A - 1 := by dsimp [A, P, DB]; ring
-    have hpos : 0 < nM * (1 + y + y * z) := mul_pos (by omega) (by nlinarith)
+    have hpos : 0 < nM * (1 + y + y * z) := mul_pos (by omega) (by nlinarith only [hy, hyz])
     nlinarith only [hmul, he, hpos]
   have hseamB := rounded_phase_seam P A DB 1 t R nB q hP hA hAP ht
     (by norm_num) hchargeB hB.2.2.1 hB.2.2.2 heps heps'
   have hseamL := rounded_phase_seam P A DL (1 + z) t R nL q hP hA hAP ht
     (by omega) hchargeL hL.2.2.1 hL.2.2.2 heps heps'
   have hseamM := rounded_phase_seam P A DM (1 + y + y * z) t R nM q hP hA hAP ht
-    (by nlinarith) hchargeM hM.2.2.1 hM.2.2.2 heps heps'
+    (by nlinarith only [hy, hyz]) hchargeM hM.2.2.1 hM.2.2.2 heps heps'
   refine ⟨nB, nL, nM, q, ⟨hq, hqt⟩, ⟨hB.1, hB.2.1⟩, ⟨hL.1, hL.2.1⟩,
     ⟨hM.1, hM.2.1⟩, ?_, ?_, ?_⟩
   · simpa [A, P, DB] using hseamB
@@ -872,11 +879,79 @@ private theorem four_mask_inventory (a b c d q nB nL nM : ℕ)
     ac_rfl
   have hrange : List.range' 0 d ++ List.range' d c ++ List.range' (d + c) b ++
       List.range' (d + c + b) a = List.range (a + b + c + d) := by
-    rw [← List.append_assoc, ← List.append_assoc]
     rw [← List.range'_append_1 (s := 0) (m := d) (n := c)]
     rw [← List.range'_append_1 (s := 0) (m := d + c) (n := b)]
     rw [← List.range'_append_1 (s := 0) (m := d + c + b) (n := a)]
     simp [← List.range_eq_range', show d + c + b + a = a + b + c + d by omega]
-  exact hreorder.trans (by simpa only [hrange] using hu.append (hv.append (hw.append hx)))
+  exact hreorder.trans (by simpa only [← List.append_assoc, hrange] using hu.append (hv.append (hw.append hx)))
+
+private def maskWord (a b c d q nB nL nM : ℕ) : List ℕ :=
+  chainMask (d - 1) 0 (2 ^ (d - 1) - q) ++
+  chainMask (c - 1) d (nB - 1) ++ [d - 1] ++
+  chainMask (c - 1) d (2 ^ (c - 1) - nB) ++
+  chainMask (b - 1) (d + c) (nL - 1) ++ [d + c - 1] ++
+  chainMask (b - 1) (d + c) (2 ^ (b - 1) - nL) ++
+  chainMask (a - 1) (d + c + b) (nM - 1) ++ [d + c + b - 1] ++
+  chainMask (d - 1) 0 (q - 1) ++
+  chainMask (a - 1) (d + c + b) (2 ^ (a - 1) - nM) ++ [d + c + b + a - 1]
+
+/-- Simultaneous phases produce actual complementary physical masks and strict seams. -/
+private theorem eventual_mask_certificate (a b c d : ℕ)
+    (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : a + b + c + 3 ≤ d) :
+    let x : ℤ := 2 ^ a
+    let y : ℤ := 2 ^ b
+    let z : ℤ := 2 ^ c
+    let t : ℤ := 2 ^ d
+    let A := x * y * z + (1 + x + x * y)
+    let B := t * (1 + x + x * y) + 1
+    let L := t * (z * (1 + x)) + 1 + z
+    let M := t * (y * z) + 1 + y + y * z
+    ∃ q nB nL nM : ℕ,
+      (1 ≤ q ∧ q ≤ 2 ^ (d - 1)) ∧
+      (1 ≤ nB ∧ nB ≤ 2 ^ (c - 1)) ∧
+      (1 ≤ nL ∧ nL ≤ 2 ^ (b - 1)) ∧
+      (1 ≤ nM ∧ nM ≤ 2 ^ (a - 1)) ∧
+      (maskWord a b c d q nB nL nM).Perm (List.range (a + b + c + d)) ∧
+      ((nB : ℤ) < nB * B - A * q ∧ 2 * (nB * B - A * q) < B - 1) ∧
+      ((nL : ℤ) * (1 + z) < nL * L - A * q ∧ 2 * (nL * L - A * q) < L - 1) ∧
+      ((nM : ℤ) * (1 + y + y * z) < nM * M - A * q ∧
+        2 * (nM * M - A * q) < M - 1) := by
+  dsimp only
+  obtain ⟨nB, nL, nM, q, hq, hB, hL, hM, hsB, hsL, hsM⟩ :=
+    four_mask_parameters a b c d ha hb hc hd
+  have half_pow (e : ℕ) (he : 1 ≤ e) : (2 : ℤ) ^ e = 2 * (2 : ℤ) ^ (e - 1) := by
+    calc
+      (2 : ℤ) ^ e = 2 ^ ((e - 1) + 1) := by congr 1 <;> omega
+      _ = 2 * (2 : ℤ) ^ (e - 1) := by rw [pow_succ]; ring
+  have hqcast : (q.toNat : ℤ) = q := Int.toNat_of_nonneg (by omega)
+  have hBcast : (nB.toNat : ℤ) = nB := Int.toNat_of_nonneg (by omega)
+  have hLcast : (nL.toNat : ℤ) = nL := Int.toNat_of_nonneg (by omega)
+  have hMcast : (nM.toNat : ℤ) = nM := Int.toNat_of_nonneg (by omega)
+  have hqn : 1 ≤ q.toNat ∧ q.toNat ≤ 2 ^ (d - 1) := by
+    have hp := half_pow d (by omega)
+    constructor
+    · exact_mod_cast (show (1 : ℤ) ≤ (q.toNat : ℤ) by omega)
+    · exact_mod_cast (show (q.toNat : ℤ) ≤ (2 : ℤ) ^ (d - 1) by omega)
+  have hBn : 1 ≤ nB.toNat ∧ nB.toNat ≤ 2 ^ (c - 1) := by
+    have hp := half_pow c (by omega)
+    constructor
+    · exact_mod_cast (show (1 : ℤ) ≤ (nB.toNat : ℤ) by omega)
+    · exact_mod_cast (show (nB.toNat : ℤ) ≤ (2 : ℤ) ^ (c - 1) by omega)
+  have hLn : 1 ≤ nL.toNat ∧ nL.toNat ≤ 2 ^ (b - 1) := by
+    have hp := half_pow b (by omega)
+    constructor
+    · exact_mod_cast (show (1 : ℤ) ≤ (nL.toNat : ℤ) by omega)
+    · exact_mod_cast (show (nL.toNat : ℤ) ≤ (2 : ℤ) ^ (b - 1) by omega)
+  have hMn : 1 ≤ nM.toNat ∧ nM.toNat ≤ 2 ^ (a - 1) := by
+    have hp := half_pow a (by omega)
+    constructor
+    · exact_mod_cast (show (1 : ℤ) ≤ (nM.toNat : ℤ) by omega)
+    · exact_mod_cast (show (nM.toNat : ℤ) ≤ (2 : ℤ) ^ (a - 1) by omega)
+  refine ⟨q.toNat, nB.toNat, nL.toNat, nM.toNat, hqn, hBn, hLn, hMn, ?_, ?_, ?_, ?_⟩
+  · exact four_mask_inventory a b c d q.toNat nB.toNat nL.toNat nM.toNat
+      ha hb hc (by omega) hqn hBn hLn hMn
+  · simpa only [hqcast, hBcast] using hsB
+  · simpa only [hqcast, hLcast] using hsL
+  · simpa only [hqcast, hMcast] using hsM
 
 end D5.S3.Combinatorics.Circle.FourNegativeEventual
