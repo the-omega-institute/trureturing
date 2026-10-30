@@ -39,7 +39,7 @@ internal sealed class CompositionBanksDocument : IScribeDocumentDefinition
                         + "representations of the actual branch. This is an intermediate analytic bridge "
                         + "with zero solved-problem credit. It does not assert a general power-log "
                         + "asymptotic. Its rho is local and composition-dependent; it does not supply the "
-                        + "still-missing normalized extension on a fixed slit disk, the Taylor or formal-"
+                        + "normalized extension on a fixed slit disk, the Taylor or formal-"
                         + "inverse coefficient identification, finite-contour transfer, or the all-j "
                         + "assembly required for Xu-Zhao Conjecture 1.3. The full conjecture remains open, "
                         + "with no resolution, novelty or priority claim."))),
