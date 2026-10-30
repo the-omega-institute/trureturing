@@ -1,0 +1,18 @@
+**Lemma 33.2 (exact quotient at a core-only frontier).** Suppose a frontier
+is at the depth covered by Theorem 27.3, and let its aligned core have
+period $u$ and support $W$. If two local trials use the same $(u,W)$ and
+have clock seeds congruent modulo $u$, then, at the same proposed rank,
+they produce the same local orientation at every relative node and the
+same finite local support.
+
+Proof. The two clock pairs agree at the initial two indices modulo $u$.
+The recurrence $A_{j+2}=A_{j+1}+A_j$ preserves this congruence. Induct on
+the relative path. Equal preceding orientations give equal physical
+creation descriptors and equal skipped-sibling terms; reducing (ACR.115)
+therefore gives congruent next indices. Equation (ACR.125) gives equal
+orientation bits. The induction also gives the same children and hence the
+same support and rank-witness paths. This is a quotient of the two integer
+coordinates only at the proved core-only frontier. It reconstructs neither
+integer clock, nor a global realization of an enumerated residue pair.
+$\square$
+
