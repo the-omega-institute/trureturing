@@ -1,0 +1,78 @@
+#### 定理 8.9（黄金门谱到四概率读出的局部完整桥）
+
+<a id="thm:classicalfractal"></a>
+
+固定一个长度 $n\ge1$ 的程序前缀 $s$，
+令 $\Gamma_s=U_n(s)$、$\delta=r^n$。
+对柱集 $[s]$ 中的每个条件门纤维 $b$，
+使用同一个内部联合读口
+$h_{a,s}=(\Gamma_s\otimes I)h_a$，
+其中 $h_a$ 是命题 [8.8](#prop:bellthree) 的四个向量。
+令
+
+$$
+p_a^s(b)=|\langle h_{a,s},(U(b)\otimes I)\Phi\rangle|^2,
+ \qquad
+ m_\delta=\frac{1-\delta^2/2-\sqrt3\,\delta}{2}>\frac3{50}.
+$$
+
+那么四个读出振幅在固定实基下均为正，
+其概率律在整个柱集上唯一确定条件门 $U(b)$，并满足
+
+$$
+m_\delta\left\lVert U(b)-U(b')\right\rVert
+ \le\operatorname{TV}(p^s(b),p^s(b'))
+ \le\left\lVert U(b)-U(b')\right\rVert.
+$$
+
+故该四概率响应像的 Hausdorff 维数也恰为
+$\log2/(2\log\varphi)$。
+
+**证明。**
+
+相对门 $V_b=\Gamma_s^*U(b)$ 满足
+$\left\lVert V_b-I\right\rVert\le\delta$。
+每个 $\operatorname{SU}(2)$ 矩阵唯一写成
+$V_b=a_0I-i\mathbf a\cdot\boldsymbol\sigma$，
+其中四系数为实，$a_0^2+|\mathbf a|^2=1$。
+有 $\left\lVert V_b-I\right\rVert^2=2(1-a_0)$，所以
+$a_0\ge1-\delta^2/2$、$|\mathbf a|\le\delta$。
+四个振幅是
+$z_a=(a_0+\mathbf s_a\cdot\mathbf a)/2\ge m_\delta$。
+因 $\delta\le r<2/5$ 且 $\sqrt3<2$，所列严格正下界成立。
+因此可先取 $z_a=\sqrt{p_a^s}$ 的正根，
+再以逆正交 Hadamard 变换恢复 $(a_0,\mathbf a)$，
+进而恢复 $V_b$ 和 $U(b)$。
+
+两实四元数矩阵之差的算符范数恰等于其四实系数差的 Euclidean 范数，
+Hadamard 变换保持该范数。
+又每个 $z_a+z_a'\ge2m_\delta$，故
+$\left\lVert p-p'\right\rVert_2\ge2m_\delta\left\lVert U-U'\right\rVert$。
+使用 $\operatorname{TV}=\left\lVert p-p'\right\rVert_1/2\ge\left\lVert p-p'\right\rVert_2/2$ 给下界；
+上界为命题 [7.3](#prop:effectbound)。
+柱集是整个二进制超度量空间的缩放副本，
+结合定理 [7.4](#thm:goldencantor) 的双 Lipschitz 界给维数。
+
+∎
+
+这里基底只依赖已知有限前缀，不依赖未知后缀。
+四个概率有一个归一化约束，局部组织三个门参数；
+参考 $\Phi$、三个正交切向 $e_x,e_y,e_z$ 与预测向量 $\Psi_U$
+也给 AURIC 五角色一个可研究的内部表示。
+这是一个明确构造，尚不是从原五点关联图唯一推出该表示或物理三维空间的定理。
+
+若实际输入是命题 [7.7](#prop:prefix) 的正规化程序 $p_s$，
+后缀仍相干存在而读口只作用于数据和参考，
+实际边缘为
+
+$$
+\bar p_a^s
+ =\frac1{\nu([s])}\int_{[s]}p_a^s(b)\,d\nu(b).
+$$
+
+这四个平均数不能重建整个后缀分布或波函数，也不会选定一条无限程序。
+上述注入性针对固定但未知条件门的概率函数，
+不表示一次随机结果就能精确读取连续门参数。
+
+<a id="statement-8-10"></a>
+

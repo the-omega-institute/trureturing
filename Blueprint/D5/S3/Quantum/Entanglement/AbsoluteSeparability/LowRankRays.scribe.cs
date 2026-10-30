@@ -33,6 +33,12 @@ internal sealed class LowRankRaysDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/axler2024innerproduct")),
                 Blocks(Paragraph(Text("For two complex vectors on a finite index type, the squared modulus of their conjugate dot product is bounded by the product of their squared coordinate norms."))),
                 DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("rank-one-scalar-identity-upper-bound"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.rank_one_upper"),
+                H("A scalar identity bounds a rank-one matrix"), StatementSource.FromAuthor(F.Disp(RankOneUpperStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every complex vector on a finite index type with decidable equality, its squared coordinate norm times the identity minus its outer product is positive semidefinite."))),
+                DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("identity-plus-twice-rank-one-is-separable"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.separableCone_one_add_two_rankOne"),
                 H("A normalized rank-one ray"), StatementSource.FromAuthor(F.Disp(Statement())),
@@ -74,6 +80,24 @@ internal sealed class LowRankRaysDocument : IScribeDocumentDefinition
             F.OpenBracket, Call("Fintype", j), F.CloseBracket, F.Comma, F.Sp,
             All("d", new Formula.TypeArrow(j, C),
                 All("x", new Formula.TypeArrow(j, C), inequality))));
+    }
+
+    private static Formula RankOneUpperStatement()
+    {
+        var j = F.Id("J");
+        var d = F.Id("d");
+        var real = F.Seq(F.Mathbb, F.Grp(F.Id("R")));
+        var sum = F.Seq(new Formula.Subscript(F.Sum, F.Seq(F.Id("j"), F.Colon, F.Sp, j)),
+            F.Sp, Pow(new Formula.Norm(Call("d", F.Id("j"))), 2));
+        var scalar = Par(F.Seq(Par(F.Seq(sum, F.Colon, F.Sp, real)), F.Colon, F.Sp, C));
+        var identity = Par(F.Seq(F.D(1), F.Colon, F.Sp, Call("Matrix", j, j, C)));
+        var bound = Call("smul", scalar, identity);
+        var difference = new Formula.Binary(bound, FormulaBinaryOperator.Subtract,
+            Call("vecMulVec", d, Call("star", d)));
+        return All("J", F.Id("Type"), F.Seq(
+            F.OpenBracket, Call("Fintype", j), F.CloseBracket, F.Comma, F.Sp,
+            F.OpenBracket, Call("DecidableEq", j), F.CloseBracket, F.Comma, F.Sp,
+            All("d", new Formula.TypeArrow(j, C), Call("PosSemidef", difference))));
     }
 
     private static Formula Statement()
