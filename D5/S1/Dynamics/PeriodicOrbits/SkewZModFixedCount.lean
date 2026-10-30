@@ -1,3 +1,11 @@
+/- GID: D5/S1/Dynamics/PeriodicOrbits/SkewZModFixedCount
+   generality: G
+   mirror-B: D5/B/S1/Dynamics/PeriodicOrbits/SkewZModFixedCount
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Zero holonomy exactly controls fixed points of a finite cyclic skew product. -/
+
 import D5.S1.Dynamics.PeriodicOrbits.SkewZModOrder
 import D5.S1.Dynamics.PeriodicOrbits.OrbitCounting
 import Mathlib.Data.ZMod.Basic
