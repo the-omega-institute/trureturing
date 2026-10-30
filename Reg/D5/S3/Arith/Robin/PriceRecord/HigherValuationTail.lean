@@ -84,13 +84,15 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hval : (4 : ℕ).factorization 2 = 2 := by
     change ((2 : ℕ) ^ 2).factorization 2 = 2
     exact Nat.factorization_pow_self Nat.prime_two
+  have hS : (4 : ℕ).primeFactors.filter (fun p => 2 ≤ (4 : ℕ).factorization p) = {2} := by
+    simp only [hfour, Finset.filter_singleton, hval, le_refl, if_true]
   have htail : layerTail 4 2 = -Real.log (7 / 8 : ℝ) := by
     norm_num [layerTail, hval]
   have hpos : 0 < -Real.log (7 / 8 : ℝ) :=
     neg_pos.mpr (Real.log_neg (by norm_num) (by norm_num))
   have hzero : largestPrime 0 = 0 := by simp [largestPrime]
   have he : (0 : ℝ) ^ (2 / 3 : ℝ) = 0 := Real.zero_rpow (by norm_num)
-  simpa [rejected, realize, hfour, hval, htail, hzero, he, not_le.mpr hpos] using hbad
+  simpa [rejected, realize, hS, htail, hzero, he, not_le.mpr hpos] using hbad
 
 def family : Registration arena (type_of% @higher_valuation_tail) where
   actual := actual
