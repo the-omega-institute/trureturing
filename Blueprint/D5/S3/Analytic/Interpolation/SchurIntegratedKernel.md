@@ -18,7 +18,7 @@ The function uses Mathlib's actual disk Poisson kernel at the real point t and a
 
 **Definition 1.2 (The oriented Poisson integral).**
 
-$$\forall x : \mathbb{R}, \forall theta : \mathbb{R}, \operatorname{integratedPoisson}\left(x, theta\right) = \operatorname{integral}\left(0, x, \operatorname{poissonDensity}\left(t, theta\right)\right)$$
+$$\forall x : \mathbb{R}, \forall theta : \mathbb{R}, \operatorname{integratedPoisson}\left(x, theta\right) = \operatorname{integral}\left(0, x, (t : \mathbb{R}) \mapsto \operatorname{poissonDensity}\left(t, theta\right)\right)$$
 
 *Formalization.* `D5/S3/Analytic/Interpolation/SchurIntegratedKernel.integratedPoisson` (`✓ std3`).
 
@@ -30,7 +30,7 @@ The interval integral runs from zero to x with its orientation. For |x|<1, the e
 
 **Theorem 1.3 (Normalized L1 control on the entire interior interval).**
 
-$$\forall b : \mathbb{R}, \forall x : \mathbb{R}, 0 \le b \le 1 \land \operatorname{abs}\left(x\right) < 1 \implies \frac{1}{2\pi} \operatorname{integral}\left(0, 2\pi, \operatorname{abs}\left(\operatorname{integratedPoisson}\left(x, theta\right)-\operatorname{boundaryKernel}\left(b, theta\right)\right)\right) \le 1$$
+$$\forall b : \mathbb{R}, \forall x : \mathbb{R}, 0 \le b \le 1 \land \operatorname{abs}\left(x\right) < 1 \implies \frac{1}{2\pi} \operatorname{integral}\left(0, 2\pi, (theta : \mathbb{R}) \mapsto \operatorname{abs}\left(\operatorname{integratedPoisson}\left(x, theta\right)-\operatorname{boundaryKernel}\left(b, theta\right)\right)\right) \le 1$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Interpolation/SchurIntegratedKernel.boundary_l1_control` (`✓ std3`). ∎
 
@@ -42,7 +42,7 @@ The normalized integral of |A_x-B_b| is at most one for every |x|<1 and b in [0,
 
 **Theorem 1.4 (The sharp actual primitive functional on the closed interval).**
 
-$$\forall b : \mathbb{R}, \forall x : \mathbb{R}, \forall h H : \mathbb{C} \to \mathbb{C}, \operatorname{Entire}\left(h\right) \land \operatorname{HasDerivativeEverywhere}\left(H, h\right) \land \operatorname{H}\left(0\right) = 0 \land 0 < b \le 1 \land -1 \le x \le 1 \implies \operatorname{norm}\left(\operatorname{H}\left(x\right)-\frac{1}{2b}\operatorname{integral}\left(-b, b, \operatorname{H}\left(ti\right)\right)\right) \le \operatorname{sSup}\left(\operatorname{normImageOfClosedDisk}\left(h\right)\right)$$
+$$\forall b : \mathbb{R}, \forall x : \mathbb{R}, \forall h H : \mathbb{C} \to \mathbb{C}, \operatorname{Entire}\left(h\right) \land \operatorname{HasDerivativeEverywhere}\left(H, h\right) \land \operatorname{H}\left(0\right) = 0 \land 0 < b \le 1 \land -1 \le x \le 1 \implies \operatorname{norm}\left(\operatorname{H}\left(x\right)-\frac{1}{2b}\operatorname{integral}\left(-b, b, (t : \mathbb{R}) \mapsto \operatorname{H}\left(ti\right)\right)\right) \le \operatorname{sSup}\left(\operatorname{normImageOfClosedDisk}\left(h\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Interpolation/SchurIntegratedKernel.primitive_error_bound` (`✓ std3`). ∎
 

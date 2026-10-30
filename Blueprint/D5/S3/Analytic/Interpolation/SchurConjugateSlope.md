@@ -6,7 +6,7 @@ Entire complex functions obey horizontal transport of their actual conjugate-pai
 
 **Definition 1.1 (The original closed-disk norm).**
 
-$$\forall g : \mathbb{C} \to \mathbb{C}, \operatorname{M}\left(g\right) = \operatorname{sSup}\left(\operatorname{normSecondDerivativeImageOfClosedUnitDisk}\left(g\right)\right)$$
+$$(\forall g : \mathbb{C} \to \mathbb{C}, \operatorname{M}\left(g\right) = \operatorname{sSup}\left(\operatorname{normSecondDerivativeImageOfClosedUnitDisk}\left(g\right)\right))$$
 
 *Formalization.* `D5/S3/Analytic/Interpolation/SchurConjugateSlope.diskNorm` (`✓ std3`).
 
@@ -18,7 +18,7 @@ M(g) is the real supremum of the norms of the complex second derivative over the
 
 **Definition 1.2 (The actual divided difference).**
 
-$$\forall g : \mathbb{C} \to \mathbb{C}, \forall a : \mathbb{R}, \forall b : \mathbb{R}, \operatorname{S}\left(g, a, b\right) = \frac{\operatorname{g}\left(a+bi\right)-\operatorname{g}\left(a-bi\right)}{2bi}$$
+$$(\forall g : \mathbb{C} \to \mathbb{C}, (\forall a : \mathbb{R}, (\forall b : \mathbb{R}, \operatorname{S}\left(g, a, b\right) = \frac{\operatorname{g}\left(a+bi\right)-\operatorname{g}\left(a-bi\right)}{2bi})))$$
 
 *Formalization.* `D5/S3/Analytic/Interpolation/SchurConjugateSlope.slope` (`✓ std3`).
 
@@ -30,7 +30,7 @@ The two values are evaluated independently at a+ib and a-ib. No relation between
 
 **Definition 1.3 (The original two-node Lagrange expression).**
 
-$$\forall g : \mathbb{C} \to \mathbb{C}, \forall a : \mathbb{R}, \forall b : \mathbb{R}, \forall z : \mathbb{C}, \operatorname{interpolant}\left(g, a, b, z\right) = \frac{z-{a-bi}}{2bi}\operatorname{g}\left(a+bi\right)+\frac{{a+bi}-z}{2bi}\operatorname{g}\left(a-bi\right)$$
+$$(\forall g : \mathbb{C} \to \mathbb{C}, (\forall a : \mathbb{R}, (\forall b : \mathbb{R}, (\forall z : \mathbb{C}, \operatorname{interpolant}\left(g, a, b, z\right) = \frac{z-(a-bi)}{2bi}\operatorname{g}\left(a+bi\right)+\frac{(a+bi)-z}{2bi}\operatorname{g}\left(a-bi\right)))))$$
 
 *Formalization.* `D5/S3/Analytic/Interpolation/SchurConjugateSlope.interpolant` (`✓ std3`).
 
@@ -42,7 +42,7 @@ For b>0 the displayed affine polynomial interpolates g at the distinct conjugate
 
 **Definition 1.4 (The actual nodal polynomial).**
 
-$$\forall a : \mathbb{R}, \forall b : \mathbb{R}, \forall z : \mathbb{C}, \operatorname{nodalPolynomial}\left(a, b, z\right) = {z-{a+bi}}{z-{a-bi}}$$
+$$(\forall a : \mathbb{R}, (\forall b : \mathbb{R}, (\forall z : \mathbb{C}, \operatorname{nodalPolynomial}\left(a, b, z\right) = (z-(a+bi))(z-(a-bi)))))$$
 
 *Formalization.* `D5/S3/Analytic/Interpolation/SchurConjugateSlope.nodalPolynomial` (`✓ std3`).
 
@@ -54,7 +54,7 @@ The polynomial is the original product (z-(a+ib))(z-(a-ib)). Its derivative is 2
 
 **Definition 1.5 (The original nodal derivative norm).**
 
-$$\forall a : \mathbb{R}, \forall b : \mathbb{R}, \operatorname{nodalDerivativeNorm}\left(a, b\right) = \operatorname{sSup}\left(\operatorname{nodalDerivativeNormValues}\left(a, b\right)\right)$$
+$$(\forall a : \mathbb{R}, (\forall b : \mathbb{R}, \operatorname{nodalDerivativeNorm}\left(a, b\right) = \operatorname{sSup}\left(\operatorname{nodalDerivativeNormValues}\left(a, b\right)\right)))$$
 
 *Formalization.* `D5/S3/Analytic/Interpolation/SchurConjugateSlope.nodalDerivativeNorm` (`✓ std3`).
 
@@ -66,7 +66,7 @@ The real supremum is over the norms of the actual complex derivative at real x i
 
 **Theorem 1.6 (The Lagrange derivative).**
 
-$$\forall g : \mathbb{C} \to \mathbb{C}, \forall a : \mathbb{R}, \forall b : \mathbb{R}, \forall z : \mathbb{C}, \operatorname{deriv}\left(\operatorname{interpolant}\left(g, a, b\right), z\right) = \operatorname{S}\left(g, a, b\right)$$
+$$(\forall g : \mathbb{C} \to \mathbb{C}, (\forall a : \mathbb{R}, (\forall b : \mathbb{R}, (\forall z : \mathbb{C}, \operatorname{deriv}\left(\operatorname{interpolant}\left(g, a, b\right), z\right) = \operatorname{S}\left(g, a, b\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Interpolation/SchurConjugateSlope.interpolant_deriv` (`✓ std3`). ∎
 
@@ -78,7 +78,7 @@ At every complex test point the derivative is the original divided difference. T
 
 **Theorem 1.7 (Horizontal transport for every entire function).**
 
-$$\forall g : \mathbb{C} \to \mathbb{C}, \forall a : \mathbb{R}, \forall b : \mathbb{R}, \operatorname{Entire}\left(g\right) \land 0 < b \land a^{2} + b^{2} \le 1 \implies \operatorname{norm}\left(\operatorname{S}\left(g, a, b\right)-\operatorname{S}\left(g, 0, b\right)\right) \le \operatorname{abs}\left(a\right)\operatorname{M}\left(g\right)$$
+$$(\forall g : \mathbb{C} \to \mathbb{C}, (\forall a : \mathbb{R}, (\forall b : \mathbb{R}, \operatorname{Entire}\left(g\right) \land 0 < b \land a^{2} + b^{2} \le 1 \implies \operatorname{norm}\left(\operatorname{S}\left(g, a, b\right)-\operatorname{S}\left(g, 0, b\right)\right) \le \operatorname{abs}\left(a\right)\operatorname{M}\left(g\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Interpolation/SchurConjugateSlope.slope_transport` (`✓ std3`). ∎
 
@@ -90,7 +90,7 @@ Let g be entire, let a and b be real, b>0 and a squared plus b squared at most o
 
 **Definition 1.8 (The original entire-function class).**
 
-$$\forall g : \mathbb{C} \to \mathbb{C}, \operatorname{member}\left(g, \operatorname{E}\left(\right)\right) \iff \operatorname{Entire}\left(g\right) \land \operatorname{M}\left(g\right) \le 1$$
+$$(\forall g : \mathbb{C} \to \mathbb{C}, \operatorname{member}\left(g, \operatorname{E}\left(\right)\right) \iff \operatorname{Entire}\left(g\right) \land \operatorname{M}\left(g\right) \le 1)$$
 
 *Formalization.* `D5/S3/Analytic/Interpolation/SchurConjugateSlope.entireClass` (`✓ std3`).
 
@@ -102,7 +102,7 @@ E consists of all complex-coefficient entire functions g with M(g) at most one. 
 
 **Definition 1.9 (The inner value set).**
 
-$$\forall g : \mathbb{C} \to \mathbb{C}, \forall a : \mathbb{R}, \forall b : \mathbb{R}, \operatorname{V}\left(g, a, b\right) = \operatorname{image}\left(\operatorname{actualError}\left(g, a, b\right), \operatorname{Icc}\left(-1, 1\right)\right)$$
+$$(\forall g : \mathbb{C} \to \mathbb{C}, (\forall a : \mathbb{R}, (\forall b : \mathbb{R}, \operatorname{V}\left(g, a, b\right) = \operatorname{image}\left(\operatorname{actualError}\left(g, a, b\right), \operatorname{Icc}\left(-1, 1\right)\right))))$$
 
 *Formalization.* `D5/S3/Analytic/Interpolation/SchurConjugateSlope.innerValues` (`✓ std3`).
 
@@ -114,7 +114,7 @@ V(g,a,b) is the image of the closed real interval [-1,1] under x mapped to the n
 
 **Definition 1.10 (The outer value set).**
 
-$$\forall a : \mathbb{R}, \forall b : \mathbb{R}, \operatorname{W}\left(a, b\right) = \operatorname{image}\left(\operatorname{innerSupremum}\left(a, b\right), \operatorname{E}\left(\right)\right)$$
+$$(\forall a : \mathbb{R}, (\forall b : \mathbb{R}, \operatorname{W}\left(a, b\right) = \operatorname{image}\left(\operatorname{innerSupremum}\left(a, b\right), \operatorname{E}\left(\right)\right)))$$
 
 *Formalization.* `D5/S3/Analytic/Interpolation/SchurConjugateSlope.outerValues` (`✓ std3`).
 
@@ -126,7 +126,7 @@ W(a,b) is the image of the original entire-function class under g mapped to the 
 
 **Definition 1.11 (The original nested uniform supremum).**
 
-$$\forall a : \mathbb{R}, \forall b : \mathbb{R}, \operatorname{uniformError}\left(a, b\right) = \operatorname{sSup}\left(\operatorname{W}\left(a, b\right)\right)$$
+$$(\forall a : \mathbb{R}, (\forall b : \mathbb{R}, \operatorname{uniformError}\left(a, b\right) = \operatorname{sSup}\left(\operatorname{W}\left(a, b\right)\right)))$$
 
 *Formalization.* `D5/S3/Analytic/Interpolation/SchurConjugateSlope.uniformError` (`✓ std3`).
 
@@ -138,7 +138,7 @@ The supremum over g is outside the supremum over x, exactly as in Definition 9.1
 
 **Theorem 1.12 (Bounded original suprema and an actual quadratic witness).**
 
-$$\forall a : \mathbb{R}, \forall b : \mathbb{R}, 0 < b \land a^{2}+b^{2} \le 1 \implies \operatorname{Nonempty}\left(\operatorname{E}\left(\right)\right) \land (\forall g : \mathbb{C} \to \mathbb{C}, \operatorname{member}\left(g, \operatorname{E}\left(\right)\right) \implies \operatorname{Nonempty}\left(\operatorname{V}\left(g, a, b\right)\right) \land \operatorname{BddAbove}\left(\operatorname{V}\left(g, a, b\right)\right) \land (\exists z \in \operatorname{closedBall}\left(0, 1\right), \operatorname{M}\left(g\right) = \operatorname{normSecondDerivative}\left(g, z\right)) \land \exists x \in \operatorname{Icc}\left(-1, 1\right), \operatorname{sSup}\left(\operatorname{V}\left(g, a, b\right)\right) = \operatorname{actualError}\left(g, a, b, x\right)) \land \operatorname{Nonempty}\left(\operatorname{W}\left(a, b\right)\right) \land \operatorname{BddAbove}\left(\operatorname{W}\left(a, b\right)\right) \land 1+\operatorname{abs}\left(a\right) \le \operatorname{uniformError}\left(a, b\right) \land \operatorname{uniformError}\left(a, b\right) \le 2 \land \exists g \in \operatorname{E}\left(\right), g = \operatorname{quadratic}\left(\right) \land \operatorname{M}\left(g\right) = 1 \land \operatorname{S}\left(g, a, b\right) = a \land (\forall x : \mathbb{R}, \operatorname{actualError}\left(g, a, b, x\right) = \operatorname{abs}\left(x-a\right)) \land \operatorname{sSup}\left(\operatorname{V}\left(g, a, b\right)\right) = 1+\operatorname{abs}\left(a\right) \land \operatorname{nodalDerivativeNorm}\left(a, b\right) = 2{1+\operatorname{abs}\left(a\right)} \land \frac{1}{2}\operatorname{nodalDerivativeNorm}\left(a, b\right) = 1+\operatorname{abs}\left(a\right) \land \exists x \in \operatorname{Icc}\left(-1, 1\right), \operatorname{nodalDerivativeNorm}\left(a, b\right) = \operatorname{normNodalDerivative}\left(a, b, x\right)$$
+$$(\forall a : \mathbb{R}, (\forall b : \mathbb{R}, 0 < b \land a^{2}+b^{2} \le 1 \implies \operatorname{Nonempty}\left(\operatorname{E}\left(\right)\right) \land ((\forall g : \mathbb{C} \to \mathbb{C}, \operatorname{member}\left(g, \operatorname{E}\left(\right)\right) \implies \operatorname{Nonempty}\left(\operatorname{V}\left(g, a, b\right)\right) \land \operatorname{BddAbove}\left(\operatorname{V}\left(g, a, b\right)\right) \land (\exists z \in \operatorname{closedBall}\left(0, 1\right), \operatorname{M}\left(g\right) = \operatorname{normSecondDerivative}\left(g, z\right)) \land \exists x \in \operatorname{Icc}\left(-1, 1\right), \operatorname{sSup}\left(\operatorname{V}\left(g, a, b\right)\right) = \operatorname{actualError}\left(g, a, b, x\right))) \land \operatorname{Nonempty}\left(\operatorname{W}\left(a, b\right)\right) \land \operatorname{BddAbove}\left(\operatorname{W}\left(a, b\right)\right) \land 1+\operatorname{abs}\left(a\right) \le \operatorname{uniformError}\left(a, b\right) \land \operatorname{uniformError}\left(a, b\right) \le 2 \land \exists g \in \operatorname{E}\left(\right), g = \operatorname{quadratic}\left(\right) \land \operatorname{M}\left(g\right) = 1 \land \operatorname{S}\left(g, a, b\right) = a \land ((\forall x : \mathbb{R}, \operatorname{actualError}\left(g, a, b, x\right) = \operatorname{abs}\left(x-a\right))) \land \operatorname{sSup}\left(\operatorname{V}\left(g, a, b\right)\right) = 1+\operatorname{abs}\left(a\right) \land \operatorname{nodalDerivativeNorm}\left(a, b\right) = 2(1+\operatorname{abs}\left(a\right)) \land \frac{1}{2}\operatorname{nodalDerivativeNorm}\left(a, b\right) = 1+\operatorname{abs}\left(a\right) \land \exists x \in \operatorname{Icc}\left(-1, 1\right), \operatorname{nodalDerivativeNorm}\left(a, b\right) = \operatorname{normNodalDerivative}\left(a, b, x\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Interpolation/SchurConjugateSlope.original_suprema_bounded` (`✓ std3`). ∎
 
@@ -150,7 +150,7 @@ For every admissible a,b both original value sets are nonempty and bounded. For 
 
 **Theorem 1.13 (The complete original uniform identity).**
 
-$$\forall a : \mathbb{R}, \forall b : \mathbb{R}, 0 < b \land a^{2}+b^{2} \le 1 \implies \operatorname{uniformError}\left(a, b\right) = 1+\operatorname{abs}\left(a\right) \land \operatorname{uniformError}\left(a, b\right) = \frac{1}{2}\operatorname{nodalDerivativeNorm}\left(a, b\right) \land \forall g \in \operatorname{E}\left(\right), \forall x \in \operatorname{Icc}\left(-1, 1\right), \operatorname{actualError}\left(g, a, b, x\right) \le 1+\operatorname{abs}\left(a\right) \land \operatorname{Nonempty}\left(\operatorname{E}\left(\right)\right) \land \forall g \in \operatorname{E}\left(\right), \operatorname{Nonempty}\left(\operatorname{V}\left(g, a, b\right)\right) \land \operatorname{BddAbove}\left(\operatorname{V}\left(g, a, b\right)\right) \land \exists z \in \operatorname{closedBall}\left(0, 1\right), \operatorname{M}\left(g\right) = \operatorname{normSecondDerivative}\left(g, z\right) \land \exists x \in \operatorname{Icc}\left(-1, 1\right), \operatorname{sSup}\left(\operatorname{V}\left(g, a, b\right)\right) = \operatorname{actualError}\left(g, a, b, x\right) \land \operatorname{Nonempty}\left(\operatorname{W}\left(a, b\right)\right) \land \operatorname{BddAbove}\left(\operatorname{W}\left(a, b\right)\right) \land \exists g \in \operatorname{E}\left(\right), g = \operatorname{quadratic}\left(\right) \land \operatorname{M}\left(g\right) = 1 \land \operatorname{S}\left(g, a, b\right) = a \land \forall x : \mathbb{R}, \operatorname{actualError}\left(g, a, b, x\right) = \operatorname{abs}\left(x-a\right) \land \operatorname{sSup}\left(\operatorname{V}\left(g, a, b\right)\right) = \operatorname{uniformError}\left(a, b\right) \land (0 \le a \implies \operatorname{actualError}\left(g, a, b, -1\right) = \operatorname{uniformError}\left(a, b\right)) \land (a \le 0 \implies \operatorname{actualError}\left(g, a, b, 1\right) = \operatorname{uniformError}\left(a, b\right)) \land \exists x \in \operatorname{Icc}\left(-1, 1\right), \operatorname{nodalDerivativeNorm}\left(a, b\right) = \operatorname{normNodalDerivative}\left(a, b, x\right)$$
+$$(\forall a : \mathbb{R}, (\forall b : \mathbb{R}, 0 < b \land a^{2}+b^{2} \le 1 \implies \operatorname{uniformError}\left(a, b\right) = 1+\operatorname{abs}\left(a\right) \land \operatorname{uniformError}\left(a, b\right) = \frac{1}{2}\operatorname{nodalDerivativeNorm}\left(a, b\right) \land (\forall g \in \operatorname{E}\left(\right), (\forall x \in \operatorname{Icc}\left(-1, 1\right), \operatorname{actualError}\left(g, a, b, x\right) \le 1+\operatorname{abs}\left(a\right))) \land \operatorname{Nonempty}\left(\operatorname{E}\left(\right)\right) \land (\forall g \in \operatorname{E}\left(\right), \operatorname{Nonempty}\left(\operatorname{V}\left(g, a, b\right)\right) \land \operatorname{BddAbove}\left(\operatorname{V}\left(g, a, b\right)\right) \land (\exists z \in \operatorname{closedBall}\left(0, 1\right), \operatorname{M}\left(g\right) = \operatorname{normSecondDerivative}\left(g, z\right)) \land (\exists x \in \operatorname{Icc}\left(-1, 1\right), \operatorname{sSup}\left(\operatorname{V}\left(g, a, b\right)\right) = \operatorname{actualError}\left(g, a, b, x\right))) \land \operatorname{Nonempty}\left(\operatorname{W}\left(a, b\right)\right) \land \operatorname{BddAbove}\left(\operatorname{W}\left(a, b\right)\right) \land (\exists g \in \operatorname{E}\left(\right), g = \operatorname{quadratic}\left(\right) \land \operatorname{M}\left(g\right) = 1 \land \operatorname{S}\left(g, a, b\right) = a \land (\forall x : \mathbb{R}, \operatorname{actualError}\left(g, a, b, x\right) = \operatorname{abs}\left(x-a\right)) \land \operatorname{sSup}\left(\operatorname{V}\left(g, a, b\right)\right) = \operatorname{uniformError}\left(a, b\right) \land (0 \le a \implies \operatorname{actualError}\left(g, a, b, -1\right) = \operatorname{uniformError}\left(a, b\right)) \land (a \le 0 \implies \operatorname{actualError}\left(g, a, b, 1\right) = \operatorname{uniformError}\left(a, b\right)) \land (\exists x \in \operatorname{Icc}\left(-1, 1\right), \operatorname{nodalDerivativeNorm}\left(a, b\right) = \operatorname{normNodalDerivative}\left(a, b, x\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Interpolation/SchurConjugateSlope.complete_classification` (`✓ std3`). ∎
 

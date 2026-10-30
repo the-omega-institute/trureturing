@@ -6,7 +6,7 @@ The actual Fourier kernel has a uniformly convergent series, reflection symmetry
 
 **Definition 1.1 (The actual Fourier term).**
 
-$$\forall b : \mathbb{R}, \forall t : \mathbb{R}, \forall j : \mathbb{N}, \operatorname{boundaryTerm}\left(b, t, j\right) = \frac{2{-1}^{j+1}b^{2j+2}}{{2j+2}{2j+3}}\operatorname{cos}\left({2j+1}t\right)$$
+$$\forall b : \mathbb{R}, \forall t : \mathbb{R}, \forall j : \mathbb{N}, \operatorname{boundaryTerm}\left(b, t, j\right) = \frac{2(-1)^{j+1}b^{2j+2}}{(2j+2)(2j+3)}\operatorname{cos}\left((2j+1)t\right)$$
 
 *Formalization.* `D5/S3/Analytic/Interpolation/SchurBoundaryKernel.boundaryTerm` (`✓ std3`).
 
@@ -42,7 +42,7 @@ For b in [0,1], the angle function is continuous, B_b(pi-t)=-B_b(t), and cos(t) 
 
 **Theorem 1.4 (The normalized entire primitive representation).**
 
-$$\forall h : \mathbb{C} \to \mathbb{C}, \forall H : \mathbb{C} \to \mathbb{C}, \forall b : \mathbb{R}, \operatorname{Entire}\left(h\right) \land \operatorname{HasDerivativeEverywhere}\left(H, h\right) \land \operatorname{H}\left(0\right) = 0 \land 0 < b \le 1 \implies \frac{1}{2b}\operatorname{integral}\left(-b, b, \operatorname{H}\left(it\right)\right) = \frac{1}{2\pi}\operatorname{integral}\left(0, 2\pi, \operatorname{h}\left(\operatorname{circleMap}\left(0, 1, t\right)\right)\operatorname{boundaryKernel}\left(b, t\right)\right)$$
+$$\forall h : \mathbb{C} \to \mathbb{C}, \forall H : \mathbb{C} \to \mathbb{C}, \forall b : \mathbb{R}, \operatorname{Entire}\left(h\right) \land \operatorname{HasDerivativeEverywhere}\left(H, h\right) \land \operatorname{H}\left(0\right) = 0 \land 0 < b \le 1 \implies \frac{1}{2b}\operatorname{integral}\left(-b, b, (t : \mathbb{R}) \mapsto \operatorname{H}\left(it\right)\right) = \frac{1}{2\pi}\operatorname{integral}\left(0, 2\pi, (t : \mathbb{R}) \mapsto \operatorname{h}\left(\operatorname{circleMap}\left(0, 1, t\right)\right)\operatorname{boundaryKernel}\left(b, t\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Interpolation/SchurBoundaryKernel.boundary_primitive_representation` (`✓ std3`). ∎
 
