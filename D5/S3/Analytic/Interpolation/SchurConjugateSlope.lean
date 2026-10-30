@@ -394,7 +394,7 @@ private theorem slope_primitive_identity (g : ℂ → ℂ) (hg : Differentiable 
     rw [← he, Complex.real_smul]
     push_cast
     field_simp [Complex.ofReal_ne_zero.mpr hb.ne']
-    <;> ring
+    <;> ring <;> simp only [mul_comm]
   have hH : (∫ t in -b..b, (deriv g ((t : ℂ) * I) - deriv g 0)) =
       (∫ t in -b..b, deriv g ((t : ℂ) * I)) - (2 * b : ℝ) • deriv g 0 := by
     rw [intervalIntegral.integral_sub (hc.intervalIntegrable (-b) b) intervalIntegrable_const,
@@ -405,7 +405,7 @@ private theorem slope_primitive_identity (g : ℂ → ℂ) (hg : Differentiable 
   simp only [Complex.real_smul]
   push_cast
   field_simp [Complex.ofReal_ne_zero.mpr hb.ne']
-  <;> ring
+  <;> ring <;> simp only [mul_comm]
 
 private theorem imaginary_axis_bound (g : ℂ → ℂ) (hg : Differentiable ℂ g)
     (b x : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) (hx : x ∈ Icc (-1 : ℝ) 1) :
