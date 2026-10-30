@@ -5,7 +5,6 @@
    anchors: []
    utility: none
    digest: The CZX four-site window channel and gauge action. -/
-import Mathlib.Algebra.CharP.Basic
 import D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging
 import D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction
 /-! Source: Liu et al., arXiv:2501.10552v2, Example VI.6 and Appendix F.
@@ -19,7 +18,7 @@ set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
 namespace D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState
 open Matrix Filter
-attribute [local instance] Classical.propDecidable
+attribute [local instance low] Classical.propDecidable
 open scoped Topology ComplexConjugate
 /-- The two-site change of basis in Appendix F. -/
 def czxU : Matrix (Fin 4) (Fin 4) ℂ :=

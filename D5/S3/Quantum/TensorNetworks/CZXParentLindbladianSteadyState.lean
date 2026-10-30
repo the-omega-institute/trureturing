@@ -19,7 +19,7 @@ set_option backward.isDefEq.respectTransparency false
 namespace D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState
 
 open Matrix Filter
-attribute [local instance] Classical.propDecidable
+attribute [local instance low] Classical.propDecidable
 open scoped Topology ComplexConjugate
 
 private lemma window_commute (n : ℕ) (_hn : Even n) (hsize : 4 ≤ n)
