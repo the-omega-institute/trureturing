@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Fin]
    utility: none
-   digest: Ordered directed walks missing one edge have exactly the two possible endpoint and omitted-edge configurations. -/
+   digest: A directed trail missing one edge has two possible endpoint configurations. -/
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Fintype.Prod
 import Mathlib.Tactic
@@ -25,13 +25,40 @@ def edge {V : Type u} {k : ℕ} (w : Walk V k) (i : Fin k) : V × V :=
   (w i.castSucc, w i.succ)
 
 /-- Delete only the last edge and its final vertex. -/
-def prefix {V : Type u} {k : ℕ} (w : Walk V (k + 1)) : Walk V k :=
+def initialWalk {V : Type u} {k : ℕ} (w : Walk V (k + 1)) : Walk V k :=
   fun i => w i.castSucc
 
 /-- The first repeated directed edge is the final edge; every vertex occurs. -/
 def Collision {V : Type u} {k : ℕ} (v : V) (w : Walk V (k + 1)) : Prop :=
-  w 0 = v ∧ Function.Injective (edge (prefix w)) ∧
-    edge w (Fin.last k) ∈ Set.range (edge (prefix w)) ∧ Function.Surjective w
+  w 0 = v ∧ Function.Injective (edge (initialWalk w)) ∧
+    edge w (Fin.last k) ∈ Set.range (edge (initialWalk w)) ∧ Function.Surjective w
+
+/-- The source's linearly ordered edge sequences have a distinguished start.
+There is one sequence for every compatible edge list, including loops. -/
+def OrderedEdges (V : Type u) (v : V) (k : ℕ) :=
+  {e : Fin (k + 1) → V × V //
+    (e 0).1 = v ∧ ∀ i : Fin k, (e i.castSucc).2 = (e i.succ).1}
+
+/-- Convert actual vertex walks to, and reconstruct them from, ordered edges.
+The inverse retains the first vertex and each successive edge head. -/
+def orderedEdgesEquiv {V : Type u} (v : V) (k : ℕ) :
+    {w : Walk V (k + 1) // w 0 = v} ≃ OrderedEdges V v k where
+  toFun w := ⟨edge w.1, w.2, fun _ => rfl⟩
+  invFun e := ⟨Fin.cons v (fun i => (e.1 i).2), Fin.cons_zero _ _⟩
+  left_inv w := by
+    apply Subtype.ext
+    funext i
+    refine Fin.cases ?_ (fun j => ?_) i
+    · exact w.2.symm
+    · rfl
+  right_inv e := by
+    apply Subtype.ext
+    funext i
+    apply Prod.ext
+    · refine Fin.cases ?_ (fun j => ?_) i
+      · exact e.2.1.symm
+      · exact e.2.2 j
+    · rfl
 
 private def indicator {V : Type u} [DecidableEq V] (a x : V) : ℤ :=
   if a = x then 1 else 0
@@ -45,7 +72,9 @@ private theorem telescope {k : ℕ} (f : Fin (k + 1) → ℤ) :
 
 private theorem complete_balance {V : Type u} [Fintype V] [DecidableEq V] (x : V) :
     (∑ e : V × V, (indicator e.1 x - indicator e.2 x)) = 0 := by
-  simp [Fintype.sum_prod_type, indicator, Finset.sum_sub_distrib]
+  rw [Finset.sum_sub_distrib]
+  have h := Equiv.sum_comp (Equiv.prodComm V V) (fun e : V × V => indicator e.1 x)
+  exact sub_eq_zero.mpr h.symm
 
 private theorem missing_balance {V : Type u} [Fintype V] [DecidableEq V]
     {k : ℕ} (w : Walk V k) (a b : V) (hinj : Function.Injective (edge w))
@@ -55,9 +84,8 @@ private theorem missing_balance {V : Type u} [Fintype V] [DecidableEq V]
   have hs : (∑ i : Fin k, (indicator (edge w i).1 x - indicator (edge w i).2 x)) =
       ∑ e ∈ Finset.univ.erase (a, b), (indicator e.1 x - indicator e.2 x) := by
     rw [← hmiss, Finset.sum_image]
-    · rfl
-    · intro i _ j _ hij
-      exact hinj hij
+    intro i _ j _ hij
+    exact hinj hij
   have he := Finset.sum_erase_add (Finset.univ : Finset (V × V))
     (fun e => indicator e.1 x - indicator e.2 x) (Finset.mem_univ (a, b))
   have hz := complete_balance x
@@ -79,13 +107,13 @@ private theorem balance_cases {V : Type u} [DecidableEq V] (v t a b : V)
   · have hb : b = v := by
       by_contra hb
       have := h b
-      simp [indicator, hab, hb, Ne.symm hb] at this
-      split_ifs at this <;> omega
+      simp [indicator, hab, Ne.symm hb] at this
+      split_ifs at this; omega
     subst b
     have ht : t = a := by
       by_contra ht
       have := h a
-      simp [indicator, hab, Ne.symm hab, ht] at this
+      simp [indicator, Ne.symm hab, ht] at this
     exact Or.inl ⟨rfl, ht⟩
 
 private theorem missing_edge {n : ℕ} (hn : 2 ≤ n)
@@ -112,7 +140,7 @@ private theorem almost_covers {n : ℕ} (hn : 2 ≤ n) {k : ℕ}
     (hm : Finset.univ.image (edge w) = Finset.univ.erase e) : Function.Surjective w := by
   intro a
   obtain ⟨b, hb⟩ : ∃ b : Fin n, b ≠ e.2 := by
-    have hc : 1 < Fintype.card (Fin n) := by simpa using hn
+    have hc : 1 < Fintype.card (Fin n) := by simpa only [Fintype.card_fin] using (show 1 < n by omega)
     obtain ⟨b, hb⟩ := Fintype.exists_ne_of_one_lt_card hc e.2
     exact ⟨b, hb⟩
   have he : (a, b) ∈ Finset.univ.image (edge w) := by
@@ -135,5 +163,16 @@ theorem prefix_structure {n : ℕ} (hn : 2 ≤ n)
   obtain ⟨⟨a, b⟩, hm⟩ := missing_edge hn w hinj
   exact ⟨almost_covers hn w (a, b) hm, a, b, hm,
     balance_cases _ _ _ _ (missing_balance w a b hinj hm)⟩
+
+/-- Apply the omitted-edge classification to the actual collision initialWalk.
+The parameterization by `(n*n-1)+1` equals `n*n` whenever `2 ≤ n`. -/
+theorem collision_prefix_structure {n : ℕ} (hn : 2 ≤ n) (v : Fin n)
+    (w : Walk (Fin n) ((n * n - 1) + 1)) (h : Collision v w) :
+    Function.Surjective (initialWalk w) ∧ ∃ a b : Fin n,
+      Finset.univ.image (edge (initialWalk w)) = Finset.univ.erase (a, b) ∧
+      ((b = v ∧ initialWalk w (Fin.last (n * n - 1)) = a) ∨
+        (a = b ∧ a ≠ v ∧ initialWalk w (Fin.last (n * n - 1)) = v)) := by
+  have hs : initialWalk w 0 = v := h.1
+  simpa only [hs] using prefix_structure hn (initialWalk w) h.2.1
 
 end D5.S3.Combinatorics.Graph.Walks.CollisionPrefix
