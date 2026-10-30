@@ -1857,7 +1857,10 @@ seed prefix and supplies such a path. Every state in $R_s$ has a
 realization with at most $p^2-|E_s|$ edges after some seed, although
 this shortened witness need not retain an original witness's address
 or normalization time. A cone on a particular path has normalized age
-$T\ge0$ at actual cut $n$ exactly when $n=e_{cw}+T$.
+$T\ge0$ at actual cut $n$ exactly when $n=e_{cw}+T$. In particular the
+full square is attained if and only if every coordinate of the explicit
+column in (PCR.45) is positive; a zero coordinate is a strict-image
+certificate for that supplied source.
 
 Proof. By Theorem 18.2 every seed is an actual core-only cone. Suppose
 a path prefix has been lifted. Both actual children eventually exist;
@@ -2011,8 +2014,10 @@ give exactly the displayed sets. $\square$
 **Theorem 21.1 (capacity on the authentic image).** Fix the entire
 aligned source $s$ above as a comparison parameter, and put $K_s=|R_s|$.
 There are exactly $K_s$ distinct complete normalized local forward
-behaviours among its genuinely core-only physical cones. At any common
-normalized age satisfying (PCR.5), the same $K_s$ behaviours are already
+behaviours among its genuinely core-only physical cones. For every
+common normalized age $T\ge0$, the future families $(S_{T+u})_{u\ge0}$
+still have exactly $K_s$ behaviours. At any common normalized age
+satisfying (PCR.5), the same $K_s$ behaviours are already
 distinguished by complete current support. The statement includes the
 constants with $p=1,K_s=1$, without a maturity requirement for clocks.
 It compares cones at their respective actual cuts $e_v+T$; it does not
@@ -2031,7 +2036,10 @@ Proof. Theorem 19.2 identifies exactly the authentic residue image, with
 a real cone for each member. Theorem 3.1 separates any two members by a
 finite presence witness and identifies equal residues with equal full
 local histories; its mature-cut conclusion gives the current-support
-assertion. Thus the restriction of that earlier exact classification
+assertion. For a future family beginning at any earlier common age $T$,
+choose a mature age at least $T$; that future cut separates every distinct
+pair as well. Equal residues agree at every future cut. Thus the
+restriction of that earlier exact classification
 has cardinality $K_s$, now with a specified finite source presentation
 and both realization directions instead of an abstract image. The
 configuration lower bound and indexed coding argument are finite
