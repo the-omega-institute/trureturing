@@ -1,0 +1,14 @@
+### 8.1 来源限制恢复稳定性
+
+对任意 $W\subset\mathbb R^d$，定义
+
+$$
+\Gamma(W)=\{v\in\Gamma_d:P_-v\in W\},\qquad
+\Lambda(W)=P_+\Gamma(W).
+$$
+
+这个窗口是来源合同：它限制允许的内部值，并不声称观察者已取得 $P_-$ 读数。
+令 $D=\operatorname{diam}_\infty W$。
+
+<a id="statement-8-1"></a>
+
