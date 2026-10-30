@@ -5,9 +5,8 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Adjacent two-chain masks and unbounded ceiling estimates. -/
-module
 import Batteries.Tactic.OpenPrivate
-import all D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoMasks
+import D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoMasks
 import D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift
 
 /-! Explicit mask certificates for one strict physical chamber. -/
@@ -18,8 +17,8 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Circle.ThreeNegativeSmallestBLargestAJointLift
 open ThreeNegativeMinimumTwoJointLift
-open private Mask Mask.u Mask.v Mask.w Negative Negative.alpha Negative.beta Negative.gamma
-  Order Ear Plan Plan.p Plan.t Plan.order Plan.ear atNegative Order.first Order.middle Order.last
+open private Mask Mask.mk Mask.u Mask.v Mask.w Negative Negative.alpha Negative.beta Negative.gamma
+  Order Order.agb Order.bag Ear Ear.p Ear.q Ear.t Plan Plan.p Plan.t Plan.order Plan.ear atNegative Order.first Order.middle Order.last
   oldMass newMass cap oldHeight newHeight Bounded Seams Certificate makePlan Separate
   disjoint_low_bits
   from D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoMasks
@@ -234,9 +233,9 @@ private theorem adjacent_certificate (b d : ℕ) (hb : 3 ≤ b) (hd : 1 ≤ d) :
         show s*(2*(s*2/2)-s*2)=0 by rw [ht2]; ring]
     · rw [if_neg (by omega)]
       dsimp [t] at *
-      have hp := mul_nonneg (show 0≤s*q by positivity) (show 0≤s*q-2*s-1 by nlinarith)
+      have hp := mul_nonneg (show 0≤s*q by positivity) (show 0≤s*q-2*s-1 by nlinarith [mul_nonneg (show 0≤s by omega) (show 0≤q-4 by omega)])
       constructor <;> nlinarith [show s*q*s*(2*(s*q/2)-s*q)=0 by rw [ht2]; ring]
-  refine ⟨makePlan 0 .bag .q ⟨p,0,w⟩ ⟨0,0,z⟩,?_,?_,?_,?_⟩
+  refine ⟨makePlan 0 Order.bag Ear.q (Mask.mk p 0 w) (Mask.mk 0 0 z),?_,?_,?_,?_⟩
   · dsimp [Bounded,makePlan]; rw [hr2]
     exact ⟨hp0,hpt,by omega,by omega,hw0,by omega⟩
   · dsimp [Bounded,makePlan]; rw [hr2]

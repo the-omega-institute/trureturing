@@ -5,9 +5,8 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Unbounded far masks in the strict smallest-b largest-a chamber. -/
-module
 import Batteries.Tactic.OpenPrivate
-import all D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoMasks
+import D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoMasks
 import D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift
 
 /-! Explicit mask certificates for one strict physical chamber. -/
@@ -18,8 +17,8 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Circle.ThreeNegativeSmallestBLargestAJointLift
 open ThreeNegativeMinimumTwoJointLift
-open private Mask Mask.u Mask.v Mask.w Negative Negative.alpha Negative.beta Negative.gamma
-  Order Ear Plan Plan.p Plan.t Plan.order Plan.ear atNegative Order.first Order.middle Order.last
+open private Mask Mask.mk Mask.u Mask.v Mask.w Negative Negative.alpha Negative.beta Negative.gamma
+  Order Order.agb Order.bag Ear Ear.p Ear.q Ear.t Plan Plan.p Plan.t Plan.order Plan.ear atNegative Order.first Order.middle Order.last
   oldMass newMass cap oldHeight newHeight Bounded Seams Certificate makePlan Separate
   disjoint_low_bits
   from D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoMasks
@@ -37,9 +36,9 @@ private theorem far_certificate (s q h : ℤ) (hs : 8 ≤ s) (hq : 1 ≤ q) (hh 
     let r := 4 * t * h
     let u := 1 + r + r * s
     let L := 1 + s + s * t
-    let H := oldHeight r s t .beta
+    let H := oldHeight r s t Negative.beta
     let z := (2 * H + s / 2 + 1 - u) / (2 * L - s - 1)
-    Certificate r s t (makePlan 0 .agb .t ⟨(s-1)*q,0,0⟩ ⟨0,0,z⟩) := by
+    Certificate r s t (makePlan 0 Order.agb Ear.t (Mask.mk ((s-1)*q) 0 0) (Mask.mk 0 0 z)) := by
   dsimp only
   generalize htdef : 2 * s * q = t
   generalize hrdef : 4 * t * h = r
@@ -189,13 +188,15 @@ private theorem far_certificate (s q h : ℤ) (hs : 8 ≤ s) (hq : 1 ≤ q) (hh 
     rw [htHalf]
     nlinarith only [htdef]
   have heps : 1 < 2*((1+r+r*s)*((s-1)*q)-(C-(r+1)*(t/2))) := by
-    rw [hepsEq]; positivity
+    rw [hepsEq]
+    have hp : 0≤2*q*(r+1)*(s-1) := by positivity
+    nlinarith only [hp,ht0]
   have hepsc : 2*((1+r+r*s)*((s-1)*q)-(C-(r+1)*(t/2))) < (r+1)*t := by
     rw [hepsEq]
     have hp := mul_nonneg (show 0≤r-s by omega) (show 0≤q-1 by omega)
     nlinarith only [htdef,hp,hr,ht,hs,hq,
       show (r+1)*(2*s*q-t)=0 by rw [htdef]; ring]
-  change Certificate r s t (makePlan 0 .agb .t ⟨(s-1)*q,0,0⟩ ⟨0,0,z⟩)
+  change Certificate r s t (makePlan 0 Order.agb Ear.t (Mask.mk ((s-1)*q) 0 0) (Mask.mk 0 0 z))
   refine ⟨?_,?_,?_,?_⟩
   · dsimp [Bounded,makePlan]; exact ⟨hp0,hpc,by omega,by omega,by omega,by omega⟩
   · dsimp [Bounded,makePlan]; exact ⟨by omega,by omega,by omega,by omega,hz0,hzr⟩
