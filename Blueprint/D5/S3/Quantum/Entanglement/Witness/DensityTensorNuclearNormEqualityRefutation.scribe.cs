@@ -15,7 +15,7 @@ internal sealed class DensityTensorNuclearNormEqualityRefutationDocument : IScri
         H("Refuting the density-tensor nuclear-norm equality conjecture"),
         Blocks(
             Node("nuclear-norm", "The complex nuclear norm", NuclearNormFormula(),
-                "For a finite mode type κ, nuclearNorm is the infimum of the costs of finite decompositions of a complex tensor into products of factor functions. Each product cost is the product of Mathlib's Euclidean norms of its factors, matching the source's definition at TeX lines 494–497.",
+                "For a finite mode type κ, nuclearNorm is Mathlib's projective tensor norm of the tensor whose coefficients are t in the product of the standard Euclidean bases. Basis.piTensorProduct constructs this product basis, and its equivFun.symm sends the coefficient array to the tensor. Mathlib supplies the infimum over finite product decompositions, with Euclidean factor norms, matching the source's definition at TeX lines 494–497.",
                 "nuclearNorm", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("alpha", "The maximal nuclear norm of unit tensors", AlphaFormula(),
                 "For a finite mode type κ and mode sizes m, alpha is the supremum of nuclearNorm over coefficient tensors whose Mathlib Euclidean norm is one. This is the source's α(n,ℂ) definition at TeX lines 525–526.",
@@ -61,22 +61,12 @@ internal sealed class DensityTensorNuclearNormEqualityRefutationDocument : IScri
         Formula modes = Kappa;
         Formula m = X("m");
         Formula tensor = TensorType(modes, m);
-        Formula xType = Arrow(FinOf(X("r")),
-            PiType(X("j"), modes, Arrow(FinOf(At(m, X("j"))), Complexes())));
-        Formula reconstructed = LambdaOf(X("i"), PiType(X("j"), modes, FinOf(At(m, X("j")))),
-            SumOver("a", FinOf(X("r")),
-                ProductOver("j", modes,
-                    At(At(At(X("x"), X("a")), X("j")),
-                        At(X("i"), X("j"))))));
-        Formula cost = SumOver("a", FinOf(X("r")),
-            ProductOver("j", modes,
-                Norm(At(Qualified("WithLp", "toLp"), D(2), At(At(X("x"), X("a")), X("j"))))));
-        Formula decomposition = And(Equal(X("t"), reconstructed),
-            Equal(X("s"), cost));
-        Formula set = SetOf(X("s"), Reals(),
-            Exists(X("r"), Naturals(), Exists(X("x"), xType, decomposition)));
-        Formula body = Equal(LocalCall("nuclearNorm", m, X("t")),
-            At(Qualified("sInf"), set));
+        Formula basis = At(Qualified("Basis", "piTensorProduct"),
+            LambdaOf(X("j"), modes,
+                At(Qualified("PiLp", "basisFun"), D(2), Complexes(), FinOf(At(m, X("j"))))));
+        Formula image = At(Qualified("LinearEquiv", "symm"),
+            At(Qualified("Basis", "equivFun"), basis), X("t"));
+        Formula body = Equal(LocalCall("nuclearNorm", m, X("t")), Norm(image));
         return All(modes, TypeUniverse(), WithFintype(modes,
             All(m, Arrow(modes, Naturals()),
                 All(X("t"), tensor, body))));
@@ -176,10 +166,6 @@ internal sealed class DensityTensorNuclearNormEqualityRefutationDocument : IScri
         Seq(LambdaLower, Sp, Typed(variable, type), Sp, Mapsto, Sp, Parenthesized(body));
     private static Formula SetOf(Formula variable, Formula type, Formula body) =>
         Seq(OpenBrace, Typed(variable, type), Sp, Mid, Sp, Parenthesized(body), CloseBrace);
-    private static Formula SumOver(string variable, Formula type, Formula body) =>
-        Seq(new Formula.Subscript(Sum, Typed(X(variable), type)), Sp, Parenthesized(body));
-    private static Formula ProductOver(string variable, Formula type, Formula body) =>
-        Seq(new Formula.Subscript(Prod, Typed(X(variable), type)), Sp, Parenthesized(body));
     private static Formula Typed(Formula value, Formula type) =>
         Parenthesized(Seq(value, Colon, Sp, type));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);

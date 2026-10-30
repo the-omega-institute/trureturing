@@ -6,16 +6,26 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/Witness/DensityTensorNuclearNormEqualityRefutation.claim; result=D5/S3/Quantum/Entanglement/Witness/DensityTensorNuclearNormEqualityRefutation.result; claim=D5/S3/Quantum/Entanglement/Witness/DensityTensorNuclearNormEqualityRefutation.claim
    digest: A flagged Bell mixture refutes the pure-state nuclear-norm equality case. -/
 
-import D5.S3.Quantum.PureState.PureStateHandshake
-import D5.S3.QuantumBounds.CHSHWitness
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Analysis.Normed.Module.PiTensorProduct.ProjectiveSeminorm
+public import Mathlib.LinearAlgebra.PiTensorProduct.Basis
 
 /-! Complex nuclear norms of coefficient tensors and a mixed equality-case counterexample. -/
+
+@[expose] public section
 
 set_option linter.style.longLine false
 
 noncomputable section
 
-open scoped BigOperators ComplexOrder
+open scoped BigOperators ComplexOrder TensorProduct
 open Matrix
 
 namespace D5.S3.Quantum.Entanglement.Witness.DensityTensorNuclearNormEqualityRefutation
@@ -24,11 +34,11 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
-/-- The source's complex nuclear norm, over finite sums of product tensors. -/
+/-- Mathlib's projective tensor norm in the product of the standard Euclidean bases. -/
 def nuclearNorm {κ : Type*} [Fintype κ] (m : κ → ℕ)
-    (t : ((j : κ) → Fin (m j)) → ℂ) : ℝ :=
-  sInf {s : ℝ | ∃ (r : ℕ) (x : Fin r → (j : κ) → Fin (m j) → ℂ),
-    t = (fun i => ∑ a, ∏ j, x a j (i j)) ∧ s = ∑ a, ∏ j, ‖WithLp.toLp 2 (x a j)‖}
+    (t : ((j : κ) → Fin (m j)) → ℂ) : ℝ := by
+  classical
+  exact ‖(Basis.piTensorProduct (fun j => PiLp.basisFun 2 ℂ (Fin (m j)))).equivFun.symm t‖
 
 /-- Maximal nuclear norm among Euclidean unit tensors. -/
 def alpha {κ : Type*} [Fintype κ] (m : κ → ℕ) : ℝ := by
@@ -51,32 +61,13 @@ def claim : Prop :=
     ∃ t : ((j : Fin d) → Fin (n j)) → ℂ,
       ‖WithLp.toLp 2 t‖ = 1 ∧ nuclearNorm n t = alpha n ∧ a = vecMulVec t (star t)
 
-private lemma decomposition_nonempty {κ : Type*} [Fintype κ] [Nonempty κ]
-    (m : κ → ℕ) (t : ((j : κ) → Fin (m j)) → ℂ) :
-    Set.Nonempty {s : ℝ | ∃ (r : ℕ) (x : Fin r → (j : κ) → Fin (m j) → ℂ),
-      t = (fun i => ∑ a, ∏ j, x a j (i j)) ∧ s = ∑ a, ∏ j, ‖WithLp.toLp 2 (x a j)‖} := by
+private lemma tensor_coordinates {κ : Type*} [Fintype κ] (m : κ → ℕ)
+    (x : (j : κ) → EuclideanSpace ℂ (Fin (m j))) :
+    (Basis.piTensorProduct (fun j => PiLp.basisFun 2 ℂ (Fin (m j)))).equivFun
+      (PiTensorProduct.tprod ℂ x) = fun i => ∏ j, x j (i j) := by
   classical
-  let j₀ : κ := Classical.choice inferInstance
-  let e := (Fintype.equivFin ((j : κ) → Fin (m j))).symm
-  let x : Fin (Fintype.card ((j : κ) → Fin (m j))) → (j : κ) → Fin (m j) → ℂ :=
-    fun a j b => if b = e a j then (if j = j₀ then t (e a) else 1) else 0
-  have hp (a) (i) : (∏ j, x a j (i j)) = if e a = i then t i else 0 := by
-    by_cases h : e a = i
-    · subst i
-      simp only [x, ite_eq_left rfl, ite_eq_left]
-      exact Fintype.prod_ite_eq' j₀ (fun _ => t (e a))
-    · rw [ite_eq_right h]
-      obtain ⟨j, hj⟩ : ∃ j, i j ≠ e a j := by
-        by_contra hn
-        apply h
-        funext j
-        exact (not_not.mp (not_exists.mp hn j)).symm
-      exact Finset.prod_eq_zero (Finset.mem_univ j) (by simp only [x, ite_eq_right hj])
-  refine ⟨∑ a, ∏ j, ‖WithLp.toLp 2 (x a j)‖, Fintype.card _, x, ?_, rfl⟩
-  funext i
-  simp_rw [hp]
-  rw [e.sum_comp (fun a => if a = i then t i else 0)]
-  simp
+  ext i
+  exact Basis.piTensorProduct_repr_tprod_apply _ x i
 
 private lemma nuclear_le {κ : Type*} [Fintype κ] (m : κ → ℕ)
     (t : ((j : κ) → Fin (m j)) → ℂ) (r : ℕ)
@@ -84,30 +75,43 @@ private lemma nuclear_le {κ : Type*} [Fintype κ] (m : κ → ℕ)
     (hx : t = fun i => ∑ a, ∏ j, x a j (i j)) :
     nuclearNorm m t ≤ ∑ a, ∏ j, ‖WithLp.toLp 2 (x a j)‖ := by
   classical
-  change sInf _ ≤ _
-  apply csInf_le
-  · refine ⟨0, ?_⟩
-    rintro s ⟨q, y, _, rfl⟩
-    exact Finset.sum_nonneg fun a _ => Finset.prod_nonneg fun j _ =>
-      norm_nonneg _
-  · exact ⟨r, x, hx, rfl⟩
+  let b := Basis.piTensorProduct (fun j => PiLp.basisFun 2 ℂ (Fin (m j)))
+  have he : b.equivFun.symm t =
+      ∑ a, PiTensorProduct.tprod ℂ (fun j => WithLp.toLp 2 (x a j)) := by
+    apply b.equivFun.injective
+    rw [LinearEquiv.apply_symm_apply, map_sum]
+    ext i
+    simpa only [Finset.sum_apply, b, tensor_coordinates, PiLp.toLp_apply] using congrFun hx i
+  change ‖b.equivFun.symm t‖ ≤ _
+  rw [he]
+  exact (norm_sum_le _ _).trans (Finset.sum_le_sum fun a _ =>
+    PiTensorProduct.projectiveSeminorm_tprod_le (fun j => WithLp.toLp 2 (x a j)))
 
-private lemma dual_bound {κ : Type*} [Fintype κ] [Nonempty κ]
+private lemma dual_bound {κ : Type*} [Fintype κ]
     (m : κ → ℕ) (t : ((j : κ) → Fin (m j)) → ℂ)
     (s : ((((j : κ) → Fin (m j)) → ℂ)) →ₗ[ℂ] ℂ)
     (hs : ∀ x : (j : κ) → Fin (m j) → ℂ,
       ‖s (fun i => ∏ j, x j (i j))‖ ≤ ∏ j, ‖WithLp.toLp 2 (x j)‖) :
     ‖s t‖ ≤ nuclearNorm m t := by
   classical
-  change _ ≤ sInf _
-  apply le_csInf (decomposition_nonempty m t)
-  rintro c ⟨r, x, hx, rfl⟩
-  have he : t = ∑ a, (fun i => ∏ j, x a j (i j)) := by
-    rw [hx]
-    ext i
-    simp only [Finset.sum_apply]
-  rw [he, map_sum]
-  exact (norm_sum_le _ _).trans (Finset.sum_le_sum fun a _ => hs (x a))
+  let b := Basis.piTensorProduct (fun j => PiLp.basisFun 2 ℂ (Fin (m j)))
+  let l := s.comp b.equivFun.toLinearMap
+  let f := l.compMultilinearMap (PiTensorProduct.tprod ℂ)
+  have hf (x : (j : κ) → EuclideanSpace ℂ (Fin (m j))) :
+      ‖f x‖ ≤ 1 * ∏ j, ‖x j‖ := by
+    change ‖s (b.equivFun (PiTensorProduct.tprod ℂ x))‖ ≤ _
+    rw [tensor_coordinates]
+    simpa only [one_mul, WithLp.toLp_ofLp] using hs (fun j => WithLp.ofLp (x j))
+  let fc := f.mkContinuous 1 hf
+  have hn : ‖fc‖ ≤ 1 := f.mkContinuous_norm_le zero_le_one hf
+  have heval : PiTensorProduct.lift fc.toMultilinearMap (b.equivFun.symm t) = s t := by
+    change PiTensorProduct.lift (PiTensorProduct.lift.symm l) (b.equivFun.symm t) = s t
+    rw [LinearEquiv.apply_symm_apply]
+    exact congrArg s (b.equivFun.apply_symm_apply t)
+  change ‖s t‖ ≤ ‖b.equivFun.symm t‖
+  rw [← heval]
+  exact (PiTensorProduct.norm_eval_le_projectiveSeminorm fc _).trans
+    ((mul_le_mul_of_nonneg_right hn (norm_nonneg _)).trans_eq (one_mul _))
 
 private lemma row_bound (n : ℕ)
     (t : ((j : Fin 2) → Fin ((![2, n] : Fin 2 → ℕ) j)) → ℂ) :
@@ -208,9 +212,7 @@ private lemma pure_idempotent {ι : Type*} [Fintype ι] (t : ι → ℂ)
     rw [dotProduct_comm]
     simpa only [EuclideanSpace.inner_toLp_toLp, ht, RCLike.ofReal_one, one_pow] using
       inner_self_eq_norm_sq_to_K (𝕜 := ℂ) (WithLp.toLp 2 t)
-  simpa only [D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity] using
-    (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake t hd
-      (0 : Matrix ι ι ℂ)).1
+  rw [vecMulVec_mul_vecMulVec, hd, one_smul]
 
 set_option maxHeartbeats 2000000 in
 -- The finite counterexample expands eight rank-one terms across four tensor modes.
@@ -229,13 +231,13 @@ theorem result : ¬ claim := by
   have hrootpos : 0 < Real.sqrt 2 := Real.sqrt_pos.2 (by norm_num)
   have hrootc : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by exact_mod_cast hroot
   have hrootcne : (Real.sqrt 2 : ℂ) ≠ 0 :=
-    D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_ne_zero
+    by exact_mod_cast (ne_of_gt hrootpos)
   have hcoeff : ((Real.sqrt 2 : ℂ)⁻¹) ^ 2 = 1 / 2 := by
-    simpa only [pow_two, one_div] using
-      D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_inv_mul_self
+    rw [inv_pow, hrootc]
+    norm_num
   have hcoeffnorm : ‖(Real.sqrt 2 : ℂ)⁻¹‖ ^ 2 = 1 / 2 := by
-    simpa only [norm_inv, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hrootpos,
-      pow_two, one_div] using TsirelsonInequality.sqrt_two_inv_mul_self
+    rw [← norm_pow, hcoeff]
+    norm_num
   have hv : ‖WithLp.toLp 2 (v 0)‖ = 1 := by
     rw [PiLp.norm_eq_of_L2, ← e.symm.sum_comp (fun i => ‖v 0 i‖ ^ 2)]
     simp only [Fintype.sum_prod_type, v, Equiv.apply_symm_apply]
