@@ -3035,9 +3035,11 @@ $$
 
 The constants are independent of source, period, transient, query and
 cut. Work $C$ and writes $W$ include preparation from raw authentic
-$(d,P)$, not just access to a prepared term evaluator. On invalid
-fields the same bound uses their actual lengths (and $R$ equal to the
-query field's digit or symbol length plus one when it cannot be parsed).
+$(d,P)$, not just access to a prepared term evaluator. If $d$ itself is
+malformed, reject before synthesis in $O(I+L_{\rm out})$ work, writes
+and backing. Otherwise $D$ uses that parsed bound; on an invalid query
+field take $R$ to be its actual digit or symbol length plus one. The
+same bound covers all other invalid fields at their actual lengths.
 At an already-occurred query, the length of $n$ is charged in $I$;
 its numeric value adds no forward simulation. No all-previous-node,
 period or image table is expanded.
