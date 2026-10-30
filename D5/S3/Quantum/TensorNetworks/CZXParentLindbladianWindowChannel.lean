@@ -110,11 +110,6 @@ noncomputable def evolution (n : ℕ) (t : ℝ)
     Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ := fun x y =>
   (NormedSpace.exp ((t : ℂ) • parentLindbladian n)).mulVec
     (fun p => a p.1 p.2) (x, y)
-/-- The conjecture for every even ring on which the four window sites are distinct. -/
-def claim : Prop := ∀ n : ℕ, Even n → 4 ≤ n →
-  Tendsto (fun t : ℝ => evolution n t (((2 : ℂ) ^ n)⁻¹ • (1 + tensorX n))) atTop
-    (𝓝 (((2 : ℂ) ^ n)⁻¹ •
-      (1 + (2 : ℂ) ^ (1 - (n / 2 : ℕ) : ℤ) • czxUnitary n)))
 private noncomputable def pinching (x : Matrix (Fin 16) (Fin 16) ℂ) :
     Matrix (Fin 16) (Fin 16) ℂ := fun r s =>
   if @Fin.divNat 2 8 r = @Fin.divNat 2 8 s ∧

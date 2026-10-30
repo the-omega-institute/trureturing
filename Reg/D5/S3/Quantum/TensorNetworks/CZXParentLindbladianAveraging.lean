@@ -171,37 +171,59 @@ end Empty
 
 namespace Composition
 
+/-- Observe the source union as its second coordinate varies. -/
+abbrev signature : Signature where
+  Params := Σ n : ℕ, Finset (Fin n)
+  State p := Finset (Fin p.1)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := Finset (Fin p.1)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ p t => p.2 ∪ t) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => ∅) (fun e => nomatch e)
+
 abbrev arena : Arena where
-  signature := operatorSignature.{u_1}
+  signature := signature
   Law r := ∀ {V : Type u_1} [AddCommGroup V] [Module ℂ V]
     (n : ℕ) (s t : Finset (Fin n)),
-    avg (V := V) n s * avg n t =
-      r.readout () ⟨V, ⟨inferInstance, ⟨inferInstance, n⟩⟩⟩ (s ∪ t)
+    avg (V := V) n s * avg n t = avg n (r.readout () ⟨n, s⟩ t)
 
-theorem rejected_law : ¬ arena.{u_1}.Law operatorRejected := by
+theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
   intro h
-  have he := h (V := ProbeSpace.{u_1}) 0 ∅ ∅
-  rw [avg_empty, one_mul] at he
-  have hz := congrArg (fun T => T (fun _ _ => 1) (fun i => Fin.elim0 i) ⟨()⟩) he
-  change (1 : ℂ) = 0 at hz
-  exact one_ne_zero hz
+  have he := h (V := ProbeSpace.{u_1}) 2 {0, 1} ∅
+  rw [avg_empty, mul_one] at he
+  have hz := congrArg (fun T => T probe (fun _ => 0) ⟨()⟩) he
+  change avg 2 {0, 1} probe (fun _ => 0) ⟨()⟩ = avg 2 ∅ probe (fun _ => 0) ⟨()⟩ at hz
+  rw [avg_empty, avg_pair_apply 2 0 1 (by decide)] at hz
+  norm_num [probe, Fin.sum_univ_two, Function.update_apply] at hz
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨1, ∅⟩, ∅, {0}, ?_⟩
+  simp [actual, realize]
 
 def source_registration : Registration arena.{u_1} (type_of% @avg_mul.{u_1}) where
-  actual := operatorActual
+  actual := actual
   bridge := Iff.rfl
-  variation := ⟨avg_mul, operatorRejected, rejected_law⟩
+  variation := ⟨avg_mul, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
-      exact ⟨operatorRejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
     · intro e
       exact nomatch e
-  dependence := operatorDependence
+  dependence := dependence
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@avg_mul.{u_1})
-      (Realization operatorSignature.{u_1}) Unit Unit := {
+      (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging.Composition.unit
   realizationName :=
     `Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging.Composition.source_registration
@@ -214,10 +236,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize operatorSignature (fun _ p s => by
-    letI := p.2.1
-    letI := p.2.2.1
-    exact avg p.2.2.2 s) (fun e => Empty.elim e))
+  readout := some (realize signature (fun _ p t => p.2 ∪ t) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -225,12 +244,12 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging
     definition := none
-    coordinates := #[0, 1, 2, 3]
+    coordinates := #[3, 4]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 0
+      path := #["body", "body", "body", "body", "body", "body", "arg", "arg"]
+      stateBinder := 5
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

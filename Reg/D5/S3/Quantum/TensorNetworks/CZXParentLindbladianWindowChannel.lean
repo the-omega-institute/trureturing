@@ -635,60 +635,40 @@ end SuperoperatorAction
 
 namespace WindowIdempotence
 
-open private middleUpdate from D5.S3.Quantum.TensorNetworks.CZXParentLindbladianWindowChannel
-
-/-- Observe the superoperator as the starting site of its window varies. -/
+/-- Observe the source idempotence predicate on a matrix operand. -/
 abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature ℕ
-    (fun n => Fin n)
     (fun n => Matrix ((Fin n → Fin 2) × (Fin n → Fin 2))
       ((Fin n → Fin 2) × (Fin n → Fin 2)) ℂ)
+    (fun _ => Prop)
 
 def actual : Realization signature :=
-  realize signature (fun _ n i => windowSuperoperator n i) (fun e => nomatch e)
+  realize signature (fun _ _ M => IsIdempotentElem M) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => 2) (fun e => nomatch e)
+  realize signature (fun _ _ _ => False) (fun e => nomatch e)
 
 def arena : Arena where
   signature := signature
   Law R := ∀ (n : ℕ) (_hn : 4 ≤ n) (i : Fin n),
-    IsIdempotentElem (R.readout () n i)
+    R.readout () n (windowSuperoperator n i)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hbad := h 4 (by decide) 0
-  change IsIdempotentElem
-    (2 : Matrix ((Fin 4 → Fin 2) × (Fin 4 → Fin 2))
-      ((Fin 4 → Fin 2) × (Fin 4 → Fin 2)) ℂ) at hbad
-  norm_num [IsIdempotentElem] at hbad
-  have hentry := congrArg (fun A => A (0, 0) (0, 0)) hbad
-  norm_num [Matrix.ofNat_apply] at hentry
-
-private theorem windows_distinct :
-    windowSuperoperator 5 0 ≠ windowSuperoperator 5 1 := by
-  intro h
-  let δ : Fin 5 → Fin 2 := fun k => if k = 4 then 1 else 0
-  have hg : goodWindow (0 : Fin 5) δ := by
-    intro k
-    fin_cases k <;> rfl
-  have hb : ¬ goodWindow (1 : Fin 5) δ := by
-    intro hh
-    have hbad := hh 3
-    change (1 : Fin 2) = 0 at hbad
-    exact one_ne_zero hbad
-  have ha := congrArg
-    (fun A => A.mulVec (fun p => gaugedUnit 5 δ 0 p.1 p.2) (δ, 0)) h
-  simp only [window_superoperator_action] at ha
-  rw [gauged_window_sector 5 (by decide) 0 δ 0, ite_eq_left hg,
-    gauged_window_sector 5 (by decide) 1 δ 0, ite_eq_right hb] at ha
-  norm_num [gaugedUnit, sectorGauge, middleUpdate, site, δ, Matrix.single_apply,
-    Matrix.smul_apply, Matrix.sum_apply, Fin.sum_univ_two, Fin.sum_univ_succ,
-    funext_iff, Fin.forall_fin_succ, Function.update_apply] at ha
+  exact h 4 (by decide) 0
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  exact ⟨5, 0, 1, windows_distinct⟩
+  refine ⟨0, 0, 2, ?_⟩
+  intro he
+  have hbad : IsIdempotentElem
+      (2 : Matrix ((Fin 0 → Fin 2) × (Fin 0 → Fin 2))
+        ((Fin 0 → Fin 2) × (Fin 0 → Fin 2)) ℂ) := Eq.mp he (by
+          change (0 : Matrix _ _ ℂ) * 0 = 0
+          exact zero_mul _)
+  change (2 : Matrix _ _ ℂ) * 2 = 2 at hbad
+  have hentry := congrArg (fun A => A (0, 0) (0, 0)) hbad
+  norm_num [Matrix.mul_apply, Matrix.ofNat_apply] at hentry
 
 def source_registration : Registration arena (type_of% @window_idempotent) where
   actual := actual
@@ -713,7 +693,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some
-    (realize signature (fun _ n i => windowSuperoperator n i) (fun e => nomatch e))
+    (realize signature (fun _ _ M => IsIdempotentElem M) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -723,9 +703,9 @@ def registration :
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "arg"]
-      stateBinder := 2
-      functionOperand := false
+      path := #["body", "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown

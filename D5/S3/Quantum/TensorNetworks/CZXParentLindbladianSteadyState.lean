@@ -632,6 +632,12 @@ private lemma evolution_limit (n : ℕ)
   exact tendsto_finsetSum _ fun p _ =>
     ((tendsto_pi_nhds.mp (tendsto_pi_nhds.mp h (x, y))) p).mul tendsto_const_nhds
 
+/-- The conjecture for every even ring on which the four window sites are distinct. -/
+def claim : Prop := ∀ n : ℕ, Even n → 4 ≤ n →
+  Tendsto (fun t : ℝ => evolution n t (((2 : ℂ) ^ n)⁻¹ • (1 + tensorX n))) atTop
+    (𝓝 (((2 : ℂ) ^ n)⁻¹ •
+      (1 + (2 : ℂ) ^ (1 - (n / 2 : ℕ) : ℤ) • czxUnitary n)))
+
 /-- The steady-state conjecture for every even N at least four. -/
 theorem result : claim := by
   intro n hn hsize

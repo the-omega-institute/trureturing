@@ -67,7 +67,8 @@ def source_registration : Registration arena (claim) where
       exact nomatch e
   dependence := dependence
 
-#print _root_.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState.result
+#print _root_.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState.claim
+#print axioms _root_.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState.result
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -93,9 +94,8 @@ def registration :
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState
-    -- The claim is defined in the imported window-channel source owner.
     definition := some {
-      owner := `D5.S3.Quantum.TensorNetworks.CZXParentLindbladianWindowChannel
+      owner := `D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState
       name := `D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState.claim
       path := #[] }
     coordinates := #[]
