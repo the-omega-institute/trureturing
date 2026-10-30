@@ -70,8 +70,9 @@ noncomputable def registration : Contract.Registration
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum
+    definition := none
     coordinates := #[1]
-    readouts := #[{path := #["body","body","domain","body","arg"],stateBinder := 2}] }
+    readouts := #[{path := #["body","body","domain","body","arg"],stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -104,7 +105,11 @@ theorem bad_law : ¬ arena.{u}.Law badZero := by
       simp [p,show n ≠ 0 by omega]
     exact (tendsto_congr' he).mpr tendsto_const_nhds
   have hc (n : ℕ) : p n ≤ 2*(1/8:ℝ) ↔ 1 ≤ n := by
-    by_cases hn : n=0 <;> simp [p,hn] <;> omega
+    by_cases hn : n=0
+    · subst n
+      norm_num [p]
+    · have hge : 1 ≤ n := by omega
+      norm_num [p,hn,hge]
   obtain ⟨M,hM⟩ := (h (1/2) (1/8) p 1 (by norm_num) (by norm_num)
     (by norm_num) (by intro n; dsimp [p]; split_ifs <;> norm_num)
     (by intro n; norm_num [badZero,realize]) hm hl hc).1
@@ -142,8 +147,9 @@ noncomputable def registration : Contract.Registration
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum
+    definition := none
     coordinates := #[2]
-    readouts := #[{path := #["body","body","body","body","body","body","body","body","domain","body","fn","arg"],stateBinder := 8}] }
+    readouts := #[{path := #["body","body","body","body","body","body","body","body","domain","body","fn","arg"],stateBinder := 8, functionOperand := false, stateOperand := none, booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -151,4 +157,5 @@ end Sharp
 
 #print axioms Exact.evidence
 #print axioms Sharp.evidence
+end
 end Reg.D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum

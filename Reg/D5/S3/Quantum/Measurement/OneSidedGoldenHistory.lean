@@ -12,7 +12,7 @@ open scoped CStarAlgebra ComplexOrder MatrixOrder
 noncomputable section
 universe u
 
-def signature : Signature where
+abbrev signature : Signature where
   Params := Σ d : ℕ, Σ _ : Matrix (Fin d) (Fin d) ℂ, DensityState (Fin d)
   State _ := List Bool
   Role := Unit
@@ -55,11 +55,9 @@ private def projection : Matrix (Fin 2) (Fin 2) ℂ := Matrix.diagonal ![0,1]
 private def density : DensityState (Fin 2) :=
   ⟨(1/2 : ℝ) • (1 : CStarMatrix (Fin 2) (Fin 2) ℂ),
     smul_nonneg (by norm_num : (0 : ℝ) ≤ 1/2) zero_le_one,
-    by simp [Matrix.trace_smul,Matrix.trace_one]⟩
+    by norm_num [Matrix.trace,Fin.sum_univ_two,Matrix.smul_apply,Matrix.one_apply]⟩
 private theorem projection_idem : projection*projection=projection := by
   simp [projection,Matrix.diagonal_mul_diagonal]
-  ext i j
-  fin_cases i <;> fin_cases j <;> norm_num
 private theorem projection_hermitian : projection.IsHermitian := by
   ext i j
   fin_cases i <;> fin_cases j <;> norm_num [projection,Matrix.conjTranspose_apply]
@@ -119,11 +117,13 @@ noncomputable def registration : Contract.Registration
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.OneSidedGoldenHistory
+    definition := none
     coordinates := #[0,1,4]
-    readouts := #[{path := #["body","body","body","body","body","body","body","body","fn","arg","body","fn","arg","arg"],stateBinder := 8}] }
+    readouts := #[{path := #["body","body","body","body","body","body","body","body","fn","arg","body","fn","arg","arg"],stateBinder := 8, functionOperand := false, stateOperand := none, booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
 
 #print axioms evidence
+end
 end Reg.D5.S3.Quantum.Measurement.OneSidedGoldenHistory
