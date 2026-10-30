@@ -9,6 +9,7 @@ set_option backward.isDefEq.respectTransparency false
 open D5.S3.VertexAlgebra.LatticeSectorIntertwiner
 open D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
 open D5.S3.VertexAlgebra.LatticeFiniteNegativeGeneration
+open D5.S3.VertexAlgebra.LatticeAllStateField
 open D5.S3.VertexAlgebra.LatticeSugawaraCurrents
 open D5.S3.VertexAlgebra.FieldNormalProduct
 open scoped VertexOperator
