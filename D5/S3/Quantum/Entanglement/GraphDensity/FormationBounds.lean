@@ -330,9 +330,9 @@ theorem qubit_entropy_det (τ : Matrix (Fin 2) (Fin 2) ℂ)
   have entropy_formula (x : ℝ) : binaryEntropyBits x = Real.binEntropy x / Real.log 2 := by
     simp only [binaryEntropyBits, Real.logb, Real.binEntropy, Real.log_inv]
     ring
-  rw [S, dif_pos hτ.1,
-    D5.S3.Quantum.Information.QubitNormalFormState.qubit_spectral_entropy_det τ hτ ht,
-    entropy_formula]
+  rw [entropy_eigenvalues τ hτ.1, entropy_formula]
+  exact congrArg (fun value : ℝ => value / Real.log 2)
+    (D5.S3.Quantum.Information.QubitNormalFormState.qubit_spectral_entropy_det τ hτ ht)
 
 theorem qubit_det_bounds (τ : Matrix (Fin 2) (Fin 2) ℂ)
     (hτ : τ.PosSemidef) (ht : τ.trace = 1) : 0 ≤ τ.det.re ∧ τ.det.re ≤ 1/4 := by
