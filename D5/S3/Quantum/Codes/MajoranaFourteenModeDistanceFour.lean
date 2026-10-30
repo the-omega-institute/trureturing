@@ -8,13 +8,10 @@
 
 import Mathlib.InformationTheory.Hamming
 import Mathlib.Algebra.Group.AddChar
-import Mathlib.Data.ZMod.Basic
+import Mathlib.Algebra.Field.ZMod
 import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Mathlib.LinearAlgebra.Dimension.DivisionRing
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.IntervalCases
+import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
@@ -69,13 +66,6 @@ private lemma mem_commutant {ι : Type*} [Fintype ι]
   change (∀ x ∈ c, x ⬝ᵥ v = 0) ↔ _
   simp only [dotProduct_comm]
 
-private lemma binary_value (x : ZMod 2) : x = 0 ∨ x = 1 := by
-  change (x : Fin 2) = 0 ∨ x = 1
-  rcases x with ⟨a, ha⟩
-  interval_cases a
-  · exact Or.inl rfl
-  · exact Or.inr rfl
-
 private lemma parity_card {ι : Type*} [Fintype ι]
     (c : Submodule (ZMod 2) (ι → ZMod 2)) (hc : IsSelfOrthogonal c)
     (hp : (fun _ => 1) ∈ c) : Even (Fintype.card ι) := by
@@ -95,13 +85,13 @@ private lemma pair_weight {ι : Type*} [Fintype ι] [DecidableEq ι]
     by_cases hai : a = i
     · subst a
       simp only [Finset.mem_filter, Finset.mem_univ, Pi.add_apply, Pi.single_eq_same,
-        Pi.single_eq_of_ne hij, add_zero, one_ne_zero, and_self, Finset.mem_insert,
+        Pi.single_eq_of_ne hij, add_zero, Finset.mem_insert,
         true_or]
       decide
     · by_cases haj : a = j
       · subst a
         simp only [Finset.mem_filter, Finset.mem_univ, Pi.add_apply, Pi.single_eq_same,
-          Pi.single_eq_of_ne hij.symm, zero_add, one_ne_zero, and_self,
+          Pi.single_eq_of_ne hij.symm, zero_add,
           Finset.mem_insert, Finset.mem_singleton, or_true]
         decide
       · simp only [Finset.mem_filter, Finset.mem_univ, Pi.add_apply,
@@ -182,7 +172,7 @@ private lemma remove_pair {ι : Type*} [Fintype ι] [DecidableEq ι]
     funext a
     change 1 + ((Pi.single i 1 + Pi.single j 1 : ι → ZMod 2) a.val) = 1
     simp only [Pi.add_apply, Pi.single_eq_of_ne a.property.1,
-      Pi.single_eq_of_ne a.property.2, zero_add, add_zero]
+      Pi.single_eq_of_ne a.property.2, add_zero]
   · have hev : Function.Surjective ev := by
       intro z
       refine ⟨z • ⟨(fun _ => 1), hp⟩, ?_⟩
@@ -205,8 +195,10 @@ private lemma remove_pair {ι : Type*} [Fintype ι] [DecidableEq ι]
     omega
   · intro v hvc hvd hvw
     let w : ι → ZMod 2 := fun a => if h : a ≠ i ∧ a ≠ j then v ⟨a, h⟩ else 0
-    have wi : w i = 0 := dite_eq_right (by simp only [ne_eq, not_true_eq_false, false_and, not_false_eq_true])
-    have wj : w j = 0 := dite_eq_right (by simp only [ne_eq, not_true_eq_false, and_false, not_false_eq_true])
+    have wi : w i = 0 := dite_eq_right (by
+      simp only [ne_eq, not_true_eq_false, false_and, not_false_eq_true])
+    have wj : w j = 0 := dite_eq_right (by
+      simp only [ne_eq, not_true_eq_false, and_false, not_false_eq_true])
     have wrest (a : {a : ι // a ≠ i ∧ a ≠ j}) : w a.val = v a := dite_eq_left a.property
     refine ⟨w, ?_, ?_, ?_⟩
     · rw [mem_commutant] at hvc ⊢
@@ -228,7 +220,7 @@ private lemma remove_pair {ι : Type*} [Fintype ι] [DecidableEq ι]
       change v a * x a.val = v a *
         (x a.val + x i * ((Pi.single i 1 + Pi.single j 1 : ι → ZMod 2) a.val))
       simp only [Pi.add_apply, Pi.single_eq_of_ne a.property.1,
-        Pi.single_eq_of_ne a.property.2, zero_add, mul_zero, add_zero]
+        Pi.single_eq_of_ne a.property.2, mul_zero, add_zero]
     · intro hwc
       have hwker : (⟨w, hwc⟩ : c) ∈ LinearMap.ker ev := wi
       apply hvd
@@ -294,7 +286,7 @@ private lemma column_encoding {ι : Type*} [Fintype ι] [DecidableEq ι]
   change x i + x i₀ * 1 = x j + x i₀ * 1 at hxy
   exact add_right_cancel hxy
 
-private lemma column_moments {ι : Type*} [Fintype ι] [DecidableEq ι]
+private lemma column_moments {ι : Type*} [Fintype ι]
     (c : Submodule (ZMod 2) (ι → ZMod 2)) (hc : IsSelfOrthogonal c)
     (hp : (fun _ => 1) ∈ c) (k : ℕ) (r : Fin k → c)
     (hi : Function.Injective (fun i : ι => fun a : Fin k => (r a).val i)) :
@@ -343,6 +335,9 @@ private lemma boolean_expansion (k : ℕ) (f : (Fin k → ZMod 2) → ZMod 2)
       (∑ y : Fin k → ZMod 2, f y * ∏ i ∈ Finset.univ \ a, y i) *
         ∏ i ∈ a, (x i + 1) := by
   classical
+  have binary_value (x : ZMod 2) : x = 0 ∨ x = 1 :=
+    ((Fin.forall_fin_two (p := fun a : Fin 2 => a = 0 ∨ a = 1)).mpr
+      ⟨Or.inl rfl, Or.inr rfl⟩) x
   have delta (y : Fin k → ZMod 2) :
       (∏ i, (x i + 1 + y i)) = if y = x then 1 else 0 := by
     by_cases hy : y = x
@@ -401,6 +396,9 @@ private lemma affine_weight (k : ℕ) (f : (Fin k → ZMod 2) → ZMod 2)
       q a * ∏ i ∈ a, (x i + 1)) :
     weight f = 0 ∨ 2 * weight f = 2 ^ k ∨ weight f = 2 ^ k := by
   classical
+  have binary_value (x : ZMod 2) : x = 0 ∨ x = 1 :=
+    ((Fin.forall_fin_two (p := fun a : Fin 2 => a = 0 ∨ a = 1)).mpr
+      ⟨Or.inl rfl, Or.inr rfl⟩) x
   have derivative (x u : Fin k → ZMod 2) : f (x + u) + f x = f u + f 0 := by
     rw [hf (x + u), hf x, hf u, hf 0, ← Finset.sum_add_distrib,
       ← Finset.sum_add_distrib]
@@ -426,8 +424,8 @@ private lemma affine_weight (k : ℕ) (f : (Fin k → ZMod 2) → ZMod 2)
       have he : f = fun _ => 1 := funext fun x => (hc x).trans ho
       rw [he]
       change (Finset.univ.filter fun _ : Fin k → ZMod 2 => (1 : ZMod 2) ≠ 0).card = _
-      simp only [ne_eq, one_ne_zero, not_false_eq_true, Finset.filter_true, Finset.card_univ, Fintype.card_fun,
-        ZMod.card, Fintype.card_fin]
+      simp only [ne_eq, one_ne_zero, not_false_eq_true, Finset.filter_true,
+        Finset.card_univ, Fintype.card_fun, ZMod.card, Fintype.card_fin]
   · obtain ⟨u, hu⟩ := not_forall.mp hc
     have huone : f u + f 0 = 1 := by
       rcases binary_value (f u) with h | h <;>
@@ -450,11 +448,18 @@ private lemma affine_weight (k : ℕ) (f : (Fin k → ZMod 2) → ZMod 2)
           (if f (x + u) = 0 then (0 : ℕ) else 1) = 1 := by
       rw [flip]
       rcases binary_value (f x) with h | h <;> rw [h] <;> decide
-    have total := Finset.sum_congr (s₁ := Finset.univ) (s₂ := Finset.univ) rfl
-      (fun x _ => each x)
-    simp only [Finset.sum_add_distrib, bij, count] at total
-    simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fun, ZMod.card,
-      Fintype.card_fin, nsmul_eq_mul, mul_one] at total
+    have shifted := bij.trans count
+    have total : weight f + weight f = 2 ^ k := by
+      calc
+        weight f + weight f = (∑ x, if f x = 0 then (0 : ℕ) else 1) +
+            (∑ x, if f (x + u) = 0 then (0 : ℕ) else 1) :=
+          congrArg₂ (fun a b : ℕ => a + b) count.symm shifted.symm
+        _ = ∑ x, ((if f x = 0 then (0 : ℕ) else 1) +
+            (if f (x + u) = 0 then (0 : ℕ) else 1)) := Finset.sum_add_distrib.symm
+        _ = ∑ x : Fin k → ZMod 2, (1 : ℕ) := Finset.sum_congr rfl (fun x _ => each x)
+        _ = 2 ^ k := by
+          simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fun, ZMod.card,
+            Fintype.card_fin, nsmul_eq_mul, mul_one, Nat.cast_id]
     exact Or.inr (Or.inl (by omega))
 
 private lemma quadratic_polarization (k : ℕ)
@@ -476,7 +481,7 @@ private lemma quadratic_polarization (k : ℕ)
       simp only [Finset.prod_singleton, Pi.add_apply, Pi.zero_apply]
       ring_nf
       simp only [show (2 : ZMod 2) = 0 by decide, show (4 : ZMod 2) = 0 by decide,
-        show (8 : ZMod 2) = 0 by decide, mul_zero, add_zero, zero_add]
+        show (8 : ZMod 2) = 0 by decide, mul_zero, add_zero]
     · by_cases ht : a.card = 2
       · obtain ⟨i, j, hij, rfl⟩ := Finset.card_eq_two.mp ht
         simp only [Finset.prod_pair hij, Pi.add_apply, Pi.zero_apply]
@@ -491,6 +496,9 @@ private lemma walsh_square (k : ℕ) (f : (Fin k → ZMod 2) → ZMod 2)
       (f (x + u) + f x + f u + f 0) + (f (y + u) + f y + f u + f 0)) :
     (2 ^ k : ℤ) ∣ (∑ x, if f x = 0 then (1 : ℤ) else -1) ^ 2 := by
   classical
+  have binary_value (x : ZMod 2) : x = 0 ∨ x = 1 :=
+    ((Fin.forall_fin_two (p := fun a : Fin 2 => a = 0 ∨ a = 1)).mpr
+      ⟨Or.inl rfl, Or.inr rfl⟩) x
   let χ : ZMod 2 → ℤ := fun a => if a = 0 then 1 else -1
   have χadd (a b : ZMod 2) : χ (a + b) = χ a * χ b := by
     rcases binary_value a with ha | ha <;>
@@ -636,7 +644,7 @@ private lemma nondegenerate {ι : Type*} [Fintype ι] [DecidableEq ι]
   exact moments_obstruction k _ (by omega) (by omega) (by omega)
     (by rw [hcard]; exact parity_card c hc hp) hm
 
-private lemma general_result {ι : Type*} [Fintype ι] [DecidableEq ι]
+private lemma general_result {ι : Type*} [Fintype ι]
     (c : Submodule (ZMod 2) (ι → ZMod 2)) (hc : IsSelfOrthogonal c)
     (hp : (fun _ => 1) ∈ c) (hn : Fintype.card ι ≤ 14)
     (hd : 2 * Module.finrank (ZMod 2) c < Fintype.card ι) :
