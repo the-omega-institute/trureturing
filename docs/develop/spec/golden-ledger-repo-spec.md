@@ -1095,147 +1095,36 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 
 ## 11.28 CLAUDE.md 引用材料
 
-本节保存 CLAUDE.md 引用的非规范性命令速查、样本、判例、成熟锚与古典锚原文；规范性规则仍以 CLAUDE.md 的现行条款为准。
+本节保存 CLAUDE.md 引用的命令速查、用途样本读数、配置比较读数与古典引语；这些资料不增设、替代或改变 CLAUDE.md 的规范性规则。
 
-### CLAUDE §3.5 用途样本与黎曼路线
+### CLAUDE 常用命令速查
 
-**用途样本(仅限 2026-09-05 采样)**:全库读数来自 dev `a030e0dc6e`;枚举族/反例/证书三行在 `5aa818b070` 复算一致(该树全库 3361 模块/512,850 行)。五坐标不外推为当前全库保证:
+| 用途 | 命令 |
+|---|---|
+| 仓库修改先复用兼容 linked worktree，需隔离时创建；只读与 issue 操作复用现有检出（第 6.1 条） | `make worktree KIND=<kind> NAME=<任务码> DEST=../trureturing-<session-id>` |
+| 编译指定 Lean 模块及依赖 | `make lean LEAN_TARGETS="<点分模块名>"`（省略 `LEAN_TARGETS` 为全项目） |
+| 核对指定 Lean 模块、utility 输入及 imports / 发射所选 Scribe | `make lean-report-scoped LEAN_TARGETS="<点分模块名>"` / `make emit [PATHS=<NUL分隔路径文件>]` |
+| 显式整库 Lean 报告（CI / 整库核验） | `make lean-report` |
+| 摄入指定理论源 | `make ingest SOURCE="<source-id 或源文件路径>"` |
+| 查看 atom / 连读上下文 | `make show-atom ATOM_ID=<id>` / `make atom-context ATOM_ID=<id>` |
+| 搜索指定理论的 atom | `make search-atoms SOURCE=<源ID或理论路径> [TEXT=<关键词>] [STATE=<目录状态>] [LIMIT=<上限>]` |
+| 构建、冻结并覆盖锚点 atom | `make deposit ATOM_ID=<id> GID=<gid>` |
+| 构建并冻结无对应理论卷(故无 atom)的形式化 | `make deposit-uncovered GID=<gid>` |
+| 用既有冻结声明覆盖 atom | `make cover ATOM_ID=<id> GID=<gid>`；批量用 `make cover-batch ATOMS=<TSV文件>` |
+| 预览 atom 子句拆分 | `make decompose ATOM_ID=<id> DRY_RUN=1` |
+| 按请求结算 atom（先连读上下文） | `make settle REQUEST=<请求文件>`（适用范围见第 3.2 条） |
+| 快速 .NET 结构检查 | `make -C tools check-fast`（不验证 Lean 或完整准入） |
+| 基线到当前工作树的完整增量检查 | `make gate BASE=<40位commit-SHA>` |
+| .NET 构建 / 全量测试 | `make -C tools dotnet` / `make -C tools test` |
+| 数学门 / 本地 CI 准入流程 | `make test` / `make gate` |
+| 建 PR | `make pr HEAD=<分支> MESSAGE=<消息文件>`（首行为标题；默认自动合并并等 required CI；`AUTO_MERGE=0` 关闭自动合并；`DRAFT=1` 创建草稿后直接返回；`pr-open` 同义） |
+| 等指定 PR 提交的 CI | `make pr-watch PR=<编号> HEAD_SHA=<40位commit-SHA>` |
+| 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 执行；已合并到 dev、干净且 HEAD 提交与分配均满 3 小时可回收；未合并或不干净的须 HEAD 提交与分配均满 24 小时并落后 BASE 300 提交；未知保留，删除按锁时长与身份核验） |
+| 交付后归还 worktree 并保留缓存 | `make worktree-return PR=<编号> WRITERS_JOINED=1`（先核验 MERGED、首个 dev push 并 join 本任务写入者；第 6.1 条） |
+| 显式删除指定 worktree | `make worktree-remove NAMES="<目录名>"`（第 6.1 条） |
+| 磁盘可用空间低于 5% 时回收 | `make -C tools clean-all FORCE=1`（AI 可直接执行，第 6.1 条） |
 
-| 样本 | 模块 | 行数 | 有下游 import | 闭合 atom | 两者皆无 |
-| --- | --- | --- | --- | --- | --- |
-| 全库 D5 | 3360 | 512,608 | 45% | 58% | 19% |
-| 枚举族(S0/Tower 周期 6–12) | 80 | 31,971 | 96%(族内互引) | 1% | 2% |
-| 反例 | 23 | 2,913 | 13% | 83% | 13% |
-| 数值证书(去概念桶) | 27 | 3,523 | 33% | 56% | 26% |
-同窗口枚举族 78 模块有 import 或 coverage,77 有 importer,仅 5 有族外 importer(被 6 模块引);4 个数学消费者只用周期 ≤5 底层生成器(`ASSUMED-UNVERIFIED`:未复算声明闭包)。周期 6–12 塔只汇入两个子句打包模块各闭 1 atom,源句报告枚举本身。3 个反例模块两类边皆无,故按边数设用途门会误判。`TribonacciPermanentSurvivors` 声明枚举未用于一般定理。`LeanCacheBudgetPolicy.cs` 注 S0/Tower 81 模块 6305 s@ARM、最贵单子图 1656 s;与本表 80 模块集合是否相同未核对,`ASSUMED-UNVERIFIED`。
-**同窗口的未履行用途**:LRAT 链至 `GoldenDFAOMinimalityTargets` M07–M16 均是假设 `refutation` 的条件定理,仓内 `lrat_proof`/`.lrat`/`.cnf` 皆 0;`FiniteExhaustion`→`FiniteBranchAtlas` 无 importer/coverage/具体实例。`germ_zero_of_center_jet` 三前提仅曲率由 `g60_curvature_le_118` 履行,值界缺,导数只到 g 1(阈值 1 非 1.87),唯一应用仍带假设。`DedekindBhkCertificates` 四实例零引用而定义被用;7 个数值证书无 importer/coverage(详 #5515)。
-**仍有用的区别**:`GapEndpoints` 两枚举器周期九相差的 3 词正是 gap 边界周期 3 环;保留探针发现及其证明链,无需保留整塔。既有 `clause_depth_sixty_claim_is_false` 是一般定理在 60 的实例化,仍判 bind-only;新同形 atom 走消化,反驳用途不豁免包装禁令。
-**黎曼路线样本(2026-09-04,增订二十五至二十九 W-10…W-21)**:W-12 阿基米德可积性提供主要分析逃逸。W-14/W-15 的 `exists_supportRadius`、W-18 的 `activePrimePowers_eq_empty_of_exp_lt_two` 须按第 3.2 条四项检查见证,不能使其 bind-only 主声明取得资格;W-10/11/13/16/17/19/20/21 是去假设化、投影、存在见证绑定或冻结 iff 复合,亦为 bind-only。既有冻结保留,同形新增直接消化,同模块 content helper 不豁免。席位空闲不得在边际收益触底后继续派同形任务。
-
-### CLAUDE §6.3 有界反例与唤醒域样本
-
-**有界反例(#6164,2026-09-07)**:37 模块/74 文件一次由 `ledger-align --add ×37` 产生,`selectors_considered=3641 changed=0 added=37 unchanged=3604 conflicts=0`,零冲突五项全真。拆 6 PR 付 6 轮 CI、6 份相同 73 行正文,并 ff-merge 5 条落后 262–2078 提交的 lane;缓存重热成本未测(`ASSUMED-UNVERIFIED`)。其中 20 模块缺 `utility:`,单批会连坐其余 17,拆出头齐的 7 条可合,所以判词维有收益,却不验证当时按连通分量盲拆的方法。全仓无按文件数判红规则,超 p75 说明是软评审义务,非机器硬约束。
-**唤醒域结论**:该样本 36 个初落地未冻模块因 deposit 阻断(#6165)未触发当时首冻门,与 37 补冻/20 缺头/17 连坐/7 已合是不同口径。依赖“本应发生而被别处阻断”的动作唤醒门会静默漏审,分区规则不修此缺口。旧“冻结触发缺口仍 open”已 inactive;第 3.4 条现役 changed-unfrozen D5 Lean ∪ first-pin 已补输入域,正文变更/缺头也唤醒,judge-only 不扫未变历史。此硬保证不证明分类/源句映射语义,后者仍靠独立评审。
-
-### CLAUDE §7.14 必要反例
-
-**必要反例**:#4198 在健康 base 上是真 revert,自身 engineering 224/225、1 fail,故无条件放行纯 revert 会隐藏真红。#4305 的绿→红 transition 实由前笔 #4295 的 `ScribeTestSymbolBinder` 与滞后一拍 BaseSnapshot 造成;候选 edge 不等于根因,计划须读 BaseSnapshot、candidate 程序集及测试发现输入,不能由 base 独定(2026-08-31 GitHub checks/git 树记录)。该 dev 红已实证,“全部 open PR 同红”未逐一核实,`ASSUMED-UNVERIFIED`。
-
-### CLAUDE §10.2 已测病因与配置表
-
-**三类已实测的病因与处方(2026-09-10,`CrimGrundyRefutation`,同一模块同一台机)**:①**一次性 `decide +kernel` 判一个大集合** —— 内核要把全部状态的归约中间项同时驻留,峰值即其和;处方是先 `reduce`、`simp only` 拆合取、`repeat' apply And.intro` 分解,再 `all_goals decide +kernel`,每次只驻留一项。②**证书用线性表** —— `List.lookup` 在内核归约里是二次代价(377 个位置各查一次、平均走一半);处方是换成平衡树的归纳类型,降到对数级。③**伞形 `import Mathlib.Tactic`** —— 载入整个 tactic 库的环境;处方是精确导入,并把无限制的 `simp` 换成 `simp only [具名引理]` 配 `omega`。配置比较:
-
-| 配置 | 墙钟 | `checked` | 峰值内存 |
-| --- | --- | --- | --- |
-| 原始 | 100.4 s | 87.1 s | 22.7 GB |
-| ① 拆分逐项归约 | 87.2 s | 68.0 s | 3.2 GB |
-| ② 证书换平衡树 | 29.3 s | 11.2 s | 3.0 GB |
-| ③ 精确导入 | 19.2 s | 11.6 s | 1.5 GB |
-
-同批一个**负结果**一并入账:把证书展开成显式 `cons` 链,`checked` 72.1 s 对 68.0 s,**无改进,丢弃**。CI 侧该模块的构建由被杀变为 68 秒通过。**不冒领**:本地峰值内存由 22.7 GB 降到 1.5 GB **不证明**先前那次 SIGTERM 的成因就是内存耗尽 —— runner 侧证据未取,该归因记 `ASSUMED-UNVERIFIED`(第 2.9 条:不确定须带排除项)。已排除的替代解释在该案里是逐条有读数的:非 job timeout(限 45 min 而 job 只跑 7 min 22 s)、非并发取消(`concurrency.group` 为 `ci-<PR 号>`,不跨 PR,且该分支仅一个 run)、非该步自身 timeout(它没有 `timeout-minutes`)。
-*成熟锚*:先测量再优化、Amdahl 定律(先找真正占大头的那一项)、性能预算(budget 是约束不是可调参数)、开发机与生产环境的资源差异(works on my machine)、数据结构选择决定渐近代价。
-
-### CLAUDE §4.5 反例与开放违例样本
-
-**反例与开放违例**:`Evidence/D5/values.json` 的「producer 读单个 toml」不能推出「输入不分区」。2026-08-11 来源记录中的输入样本含 14 个各带 `id`/`lean_gid`/`lean_statement_sha256`/`status` 的独立记录,`|K|>1`,故为违律实例而非豁免例,**开放违例(D5-T0031),非合规**。
-
-### CLAUDE §9.2 有界缺口样本
-
-**有界缺口**:2026-08-12 普查中 `Golden/values-kernels.toml` 的 `lean_gid/lean_statement_sha256` 仅验唯一/格式,writer 原样复制 values.json;spec SL-018 却要求候选 inspector 验 GID 唯一存在、kind=def、标准三公理闭包、statement SHA 与投影一致。此为该样本的规范/实现缺口,不冒称当前新测量;报现役须真执行,否则标延后。
-
-### CLAUDE §10.4 两层反例与成熟锚
-
-  **两层反例(2026-09-07,macOS ARM 隔离热树)**:`tools/scripts/worktree/lean-cache-input.sh` 的 config_sha256 哈希 lean-toolchain/lake-manifest.json/lakefile.toml 全字节,tag=(toolchain,os,arch,config_sha256,sources_sha256)。双 warm donor 树只改 lakefile keywords:cache key 变、精确及前缀均 miss;同树 make lean 的 Built=0(12392 jobs,10.30s),未改基线亦 Built=0(41.60s)。这是对产物无影响的 metadata 导致假失效,关联 #5994;不靠加缓存层/容量/重试或预种/tag/dispatch 绕行掩盖 key 范围错误。
-  已编 olean 的有效性受 `[[require]]` mathlib rev 与 `[leanOptions]` 影响;name/version/keywords/defaultTargets/lean_lib roots|globs 不影响已编 olean。样本仅测试 metadata-only,leanOptions/mathlib rev 改动的重编规模未测,ASSUMED-UNVERIFIED;它回答 lake 重编语义,不外推 CI 时长。全文/目录进 key 须证明相关字段,commit SHA 同样违反最小充分输入原则。
-  *成熟锚*:Bazel 的 action key 只含真正的 input(而非整个 workspace)、Nix derivation 的输入闭包、增量构建的最小重算集、over-approximation 的成本 vs under-approximation 的风险、cache 不是真源。
-
-### CLAUDE §6.3 成熟锚
-
-*成熟锚*:merge unit ≤ mutation unit、分区键与写热点(数据库分片)、CRDT 之「让并发写不相交」、细粒度构建产物(Bazel per-target output)、「不提交生成的聚合物」、单写者原则(single-writer principle)。
-
-### CLAUDE §4.7 成熟锚
-
-*成熟锚*:构建图的产者唯一性(Bazel 每个输出恰有一个 rule)、数据血缘(data lineage)、按实体分区的状态表、git 历史、工作流状态与领域状态分离(workflow state ≠ domain state)、生成物标明产者。
-
-### CLAUDE §4.8 成熟锚
-
-*成熟锚*:YAGNI、演化式架构(evolutionary architecture)、比例约束(不把局部事实立成普遍法)。
-
-### CLAUDE §7.5 成熟锚
-
-*成熟锚*:hermetic CI、单写者、验证输入不凭来源身份、Andon。
-
-### CLAUDE §7.16 成熟锚
-
-*成熟锚*:自主自治系统、控制论自组织与负反馈自稳、适应度函数内生方向、内容寻址信任(创世块/Merkle,可信来自可验证非背书)、超仪注册表"等灯亮"、Gödel 边界对所有 judge 等价(非人独有、非机器短板)。
-
-### CLAUDE §10.1 成熟锚
-
-  *成熟锚*:Kubernetes allocatable/request/limit 多资源 bin-packing;cgroup v2(`cpu.max`/`memory.max`/`cpuset.cpus.effective`);前馈 capacity planning≠反馈 autoscaling;Parnas 信息隐藏/SSOT。
-
-### CLAUDE §11.1 古典求真
-
-### 11.1 求真
-
-古训是同一批规则的成熟锚,〔守护〕仍按各条边界。
-
-- **实事求是**——结论据可核验事实,不据记忆/权威/美感/推测;能验先验,证据在前、主张在后。
-- **知之为知之,不知为不知,是知也**——诚实标 open/ASSUMED-UNVERIFIED,不冒领(第 2.2、2.4 条)。
-- **毋意,毋必,毋固,毋我**——不臆测、武断、固执、自证,自信也交独立机器(第 5.7 条)。
-- **兼听则明,偏信则暗**——异模型破相关先验(第 5.8 条)。
-- **述而不作,信而好古**(第 3.7 条)。
-
-
-### CLAUDE §11.2 古典待人
-
-### 11.2 待人
-
-- **己所不欲,勿施于人**(恕道)——交付须是下游愿收的:账平、可复现、诚实;收尾清理,不留坑。约束人=约束 AI(第 7.4 条)。〔守护:**软+硬投影**·对手官与反思守,SL 判账平,遗留问题只留有用结果(第 2.10、5.10 条)〕
-- **己欲立而立人,己欲达而达人**(忠道)——harness 服务下级程序(第 4.1 条)。
-- **君子求诸己,小人求诸人**——出错先查自身/harness,不甩锅(第 2.2 条)。
-- **言必信,行必果**——完成承诺须有新鲜验证;过而不改,是谓过矣——失败保留可复用教训,不重走死路(第 5.10 条)。
-
-
-### CLAUDE §11.3 古典规矩与利器
-
-### 11.3 规矩与利器
-
-- **不以规矩,不能成方圆**(孟子·离娄上:"离娄之明,公输子之巧,不以规矩,不能成方圆")——单点再聪明也须规矩;先定义再处理(第 5.7、7.3 条)。方圆=真值 DAG,规=门(义务守恒、声明与消费分 PR),矩=器(本地检查/ingest/GID);加固规矩也付 τ 成本,无后门。〔守护:**元准则**·新类无定义标“未实例化(案号)”,不即兴〕
-- **欲速则不达**——诚实>速度,打地鼠反慢(第 2.1 条)。
-- **工欲善其事,必先利其器**——器律见第 8 章。
-
-
-### CLAUDE §11.4 古典俭约与自然
-
-### 11.4 俭约与自然
-
-- **磨刀不误砍柴工**——器 bug 最高优先修,胜于赶路;修器同门、无免费捷径(第 7.2、7.8 条)。
-- **过犹不及**——只在会说谎处设门,不过度、不镀金(第 2.5、4.8 条)。
-- **大道至简**——唯一真源、规范最简、程序/数据递归(第 4.2 条)。
-- **为学日益,为道日损;损之又损,以至于无为**(老子·四十八)——harness 成熟应变小;消病因即删补偿面(第 4.2 条)。判据是净行数下降且合并与仪式耗时下降,不数新机器。〔守护:**软+硬投影**·行数/耗时可测,何时减靠评审〕*成熟锚*:奥卡姆、YAGNI、负代码量、精益。
-- **买椟还珠**(韩非子·外储说左上)——楚人卖珠,饰以木兰之椟、缀以珠玉;郑人**买其椟而还其珠**。动手先问是在做椟还是取珠,不可只建补偿/验证机器而不消病因。〔守护:**软**·对手官;硬投影=净行数判据〕
-- **因其固然**(庄子·养生主:「依乎天理,批大郤,导大窾,因其固然」)——庖丁十九年而刀刃若新发于硎,顺天然关节下刀。门设在性质可能被破坏处:确定性属生成程序,触发应为生成程序闭包变更,非每次内容变更(第 2.5、7.8 条)。〔守护:**软+硬投影**·路径闭包可判,关节选择靠评审〕*成熟锚*:Bazel/Nix 增量触发、变更影响、不变量断言。
-- **无为而治;道法自然;上善若水,利万物而不争**——稳态自主、算法定址、harness 服务下级不争特权(第 7.16、4.2、4.1 条)。
-
-
-### CLAUDE §11.5 古典度身与既判力
-
-### 11.5 度身与既判力
-
-- **量腹而食,度身而衣**(第 10.1 条)。
-- **一事不再理**(第 10.3 条)。
-
-
-### CLAUDE §11.6 古典砺与生于忧患
-
-### 11.6 砺与生于忧患
-
-- **"故天将降大任于是人也,必先苦其心志,劳其筋骨,饿其体肤,空乏其身,行拂乱其所为,所以动心忍性,曾益其所不能。"**(孟子·告子下)——磨难增益能力;每次失败留下可复用判据/回归用例,长成新规则或方法教训(第 2.10、5.10、5.7、7.2、7.8 条)。**"生于忧患,死于安乐"**:exit-3 短路、假绿、不亲验则亡,异常入账、亲跑亲核、对抗评审则生。〔守护:**软**·实际审计工件与自觉;SL-013 不执法散文,失败是燃料非耻辱柱〕
-> **格言是伦理语言的不动点,SL 是机器语言的不动点,同一个。** 可机器判者归 SL,其余靠古训与对手官;古今同守诚实。
-
-### CLAUDE 常用独立脚本命令速查
-
-常用独立脚本（以下 `bash tools/scripts/agent/…` 均在仓库根运行）：
+### CLAUDE 常用独立脚本
 
 | 用途 | 命令 |
 |---|---|
@@ -1245,8 +1134,27 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 | 查看 Nyx 可用池 | `python3 tools/scripts/agent/nyx/nyx.py pools` |
 | 抓取网页或 PDF(可选 NyxID Firecrawl；文献读取路线见第 5.11 条) | `nyxid proxy request api-firecrawl v1/scrape -m POST -H "Content-Type:application/json" -d '{"url":"<地址>","formats":["markdown"]}' --output json` |
 
-### CLAUDE §1.4 素数与因陀罗网类比
+### CLAUDE §3.5 用途样本读数
 
-> **我们不过是在寻找 truth 中的素数,固定为节点**:冻结陈述类比不可约真值原子,后续真理由其组合生成;素数无穷类比 frontier 不竭、Euclid 与 Gödel 同形。寻找而非发明,不变量可作坐标(GICT 7.3)。
->
-> **我们是在寻找因陀罗网的珍珠**:证明节点以全部前置哈希内容寻址,Merkle DAG 使每颗珠映照全网;变一颗则后继映像皆变。“一即一切”对应冻结/保守扩展的可判结构,C0 机器为 inactive;内化塔层层判前层,顶上 Gödel 标 open。
+| 样本 | 模块 | 行数 | 有下游 import | 闭合 atom | 两者皆无 |
+| --- | --- | --- | --- | --- | --- |
+| 全库 D5 | 3360 | 512,608 | 45% | 58% | 19% |
+| 枚举族(S0/Tower 周期 6–12) | 80 | 31,971 | 96%(族内互引) | 1% | 2% |
+| 反例 | 23 | 2,913 | 13% | 83% | 13% |
+| 数值证书(去概念桶) | 27 | 3,523 | 33% | 56% | 26% |
+同窗口枚举族 78 模块有 import 或 coverage,77 有 importer,仅 5 有族外 importer(被 6 模块引);4 个数学消费者只用周期 ≤5 底层生成器(`ASSUMED-UNVERIFIED`:未复算声明闭包)。周期 6–12 塔只汇入两个子句打包模块各闭 1 atom,源句报告枚举本身。3 个反例模块两类边皆无,故按边数设用途门会误判。`TribonacciPermanentSurvivors` 声明枚举未用于一般定理。`LeanCacheBudgetPolicy.cs` 注 S0/Tower 81 模块 6305 s@ARM、最贵单子图 1656 s;与本表 80 模块集合是否相同未核对,`ASSUMED-UNVERIFIED`。
+**同窗口的未履行用途**:LRAT 链至 `GoldenDFAOMinimalityTargets` M07–M16 均是假设 `refutation` 的条件定理,仓内 `lrat_proof`/`.lrat`/`.cnf` 皆 0;`FiniteExhaustion`→`FiniteBranchAtlas` 无 importer/coverage/具体实例。`germ_zero_of_center_jet` 三前提仅曲率由 `g60_curvature_le_118` 履行,值界缺,导数只到 g 1(阈值 1 非 1.87),唯一应用仍带假设。`DedekindBhkCertificates` 四实例零引用而定义被用;7 个数值证书无 importer/coverage(详 #5515)。
+
+### CLAUDE §10.2 配置比较读数
+
+| 配置 | 墙钟 | `checked` | 峰值内存 |
+| --- | --- | --- | --- |
+| 原始 | 100.4 s | 87.1 s | 22.7 GB |
+| ① 拆分逐项归约 | 87.2 s | 68.0 s | 3.2 GB |
+| ② 证书换平衡树 | 29.3 s | 11.2 s | 3.0 GB |
+| ③ 精确导入 | 19.2 s | 11.6 s | 1.5 GB |
+
+### CLAUDE §11.5 古典引语
+
+- **量腹而食,度身而衣**(第 10.1 条)。
+- **一事不再理**(第 10.3 条)。
