@@ -4,7 +4,7 @@
 
 Strong subadditivity for actual finite density matrices, including singular states.
 
-The supplier is Physlib at immutable revision 2725b6f621901d4cd330869e9b77105045c1582e. Its original Apache-2.0 copyright notices and proof bodies are retained in the consumed D5 closure. The receiving carrier is the project's PSD trace-one CStarMatrix. toMState keeps exactly the same complex matrix. Both actual partial traces agree entry by entry, including after the tensor associator. This is an integration of an existing theorem, with no novelty claim. Library/Quantum/meiburg2026ssa.md records all 32 consumed modules, their immutable upstream source mapping and adaptations, the original Meiburg/Lessa/Soldati attribution, and the full Apache-2.0 license retained in the supplier ForMathlib/Misc.lean.
+The supplier is Physlib at immutable revision 2725b6f621901d4cd330869e9b77105045c1582e. Its original Apache-2.0 copyright notices and proof bodies are retained in the consumed D5 closure. The receiving carrier is the project's PSD trace-one CStarMatrix. toMState keeps exactly the same complex matrix. Both actual partial traces agree entry by entry, including after the tensor associator. This is an integration of an existing theorem, with no novelty claim. Library/Divergence/meiburg2026ssa.md records all 32 consumed modules, their immutable upstream source mapping and adaptations, the original Meiburg/Lessa/Soldati attribution, and the full Apache-2.0 license retained in the supplier ForMathlib/Misc.lean.
 
 **Theorem 1.1 (The entropy normalization agrees).**
 

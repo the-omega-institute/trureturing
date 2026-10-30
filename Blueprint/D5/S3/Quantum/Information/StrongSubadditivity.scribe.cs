@@ -19,7 +19,7 @@ internal sealed class StrongSubadditivityDocument : IScribeDocumentDefinition
                 + "toMState keeps exactly the same complex matrix. Both actual partial traces "
                 + "agree entry by entry, including after the tensor associator. "
                 + "This is an integration of an existing theorem, with no novelty claim. "
-                + "Library/Quantum/meiburg2026ssa.md records all 32 consumed modules, "
+                + "Library/Divergence/meiburg2026ssa.md records all 32 consumed modules, "
                 + "their immutable upstream source mapping and adaptations, the original "
                 + "Meiburg/Lessa/Soldati attribution, and the full Apache-2.0 license "
                 + "retained in the supplier ForMathlib/Misc.lean.")),
