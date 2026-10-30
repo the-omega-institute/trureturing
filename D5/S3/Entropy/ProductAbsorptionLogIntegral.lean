@@ -153,7 +153,8 @@ private lemma moment_tendsto {u v : ℝ} (hu : u ∈ Icc (0 : ℝ) 1)
   · funext s
     dsimp [momentPrimitive]
     ring
-  · ring
+  · congr 1
+    ring
 
 private lemma moment_zero (u v : ℝ) : momentPrimitive u v 0 = -productLogMoment u v := by
   simp only [momentPrimitive, primitive, productLogMoment, zero_add, zero_mul, sub_zero]
