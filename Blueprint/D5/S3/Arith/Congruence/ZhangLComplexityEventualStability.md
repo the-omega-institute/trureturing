@@ -60,6 +60,10 @@ $$\forall l \in \operatorname{Nat},\; (1 < l) \Rightarrow (\forall n \in \operat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/ZhangLComplexityEventualStability.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhang-2024-l-complexity-question-3` (proved) by `D5/S3/Arith/Congruence/ZhangLComplexityEventualStability.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhang-2024-l-complexity-question-3","declaration_gid":"D5/S3/Arith/Congruence/ZhangLComplexityEventualStability.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Pengcheng Zhang (2024). *The 2-complexity of even positive integers*. DOI: [10.48550/arXiv.2411.19364](https://doi.org/10.48550/arXiv.2411.19364). URL: <https://arxiv.org/abs/2411.19364v1>.
