@@ -1064,3 +1064,396 @@ compact when feasible: $q_k\le R$, $E_k\le kR$, and the remaining
 variables are bounded by these row sums. Thus their minima exist. ∎
 
 ## 追加锚（本行以下为增补区）
+
+## 10. The finite-budget value function
+
+**Definition 10.1 (A finite set of core sizes and a universal value).**
+For $\kappa,D>0$ put
+
+$$
+\alpha=2\kappa/D,\qquad \beta=D\kappa,\qquad
+R_j=Dj/\kappa.
+\tag{10.1}
+$$
+
+The one-tail rooted pattern with two degree-one sources and one
+degree-two source having a core port has
+
+$$
+r_*=3,\qquad c_*=2g(1/3)+g(2/3).
+$$
+
+Define
+
+$$
+\begin{gathered}
+j_0=\lfloor3\kappa/D\rfloor+1,\qquad
+T_0=2j_0+3\alpha+\beta c_*,\qquad
+J_0=\lceil T_0/2\rceil,\\
+F(\kappa,D)=-2-\frac1{4D^2}
+ +\min_{\substack{1\le j\le J_0\\R_j>1}}
+       \{2j+\mathcal L(\alpha,\beta;R_j)\}.
+\end{gathered}
+\tag{10.2}
+$$
+
+This is a nonempty finite minimum of finite numbers: the index $j_0$
+has $R_{j_0}>3$, and Theorem 9.2 applies to every $R_j>1$.
+Equivalently the minimum can be taken over all positive integers,
+since any $j>J_0$ has $2j>T_0$ and cannot improve the comparison
+at $j_0$.
+
+For each index in (10.2), choose $t_j$ and $M$ as in Theorem 9.2.
+Replacing $\mathcal L$ by $\mathcal L_M$ gives an upper bound for
+$F$; replacing it by $\mathcal L_M-\varepsilon_{M,j}$ gives a
+lower bound. Their difference is at most
+$\max_j\varepsilon_{M,j}\to0$. Thus (10.2) is specified by finite
+linear programs and explicit error bounds, without a limit of the
+original graph optima as part of its definition. The coefficients
+$g(k/d)$ of those programs are explicit real algebraic numbers.
+
+## 11. Exact integer graph budgets from every rooted pattern
+
+**Theorem 11.1 (Original-graph realization of a finite pattern).**
+Fix a rooted pattern with pair $(r,c)$ and an integer $j\ge1$.
+Suppose $\kappa,D>0$ and $\kappa r/D<j$. On every integer sequence
+
+$$
+a\to\infty,\qquad h/\sqrt a\to\kappa,\qquad
+N/a^{3/2}\to D,
+\tag{11.1}
+$$
+
+there is, for every sufficiently large term, a graph in the full
+class $\mathfrak G_N(a,h)$ of Definition 1.1 with
+
+$$
+\frac{W(G)-B_0(a)}{a^2}
+\longrightarrow
+2j-2+\frac{2\kappa r}{D}+D\kappa c-\frac1{4D^2}.
+\tag{11.2}
+$$
+
+In particular this uses exactly $N$ sources and $aN$ edges at each
+term, without a congruence restriction on $N$.
+
+**Proof.** Set $m=a+j$ and $n=h+1-j$. For all sufficiently large
+terms these are positive and sum to $s$. Make $\lfloor n/t\rfloor$
+copies of the fixed pattern, where $t$ is its tail count. Supply the
+remaining fewer than $t$ tails with copies of the one-tail pattern
+in Definition 10.1. If $q$ is the resulting number of tail-touching
+sources, $\tau$ the sum of their full degrees, and $\rho$ the sum
+of their core ports, then
+
+$$
+\begin{gathered}
+q=rn+O(1),\qquad \tau=O(n),\qquad \rho=O(n),\\
+\sum_{ui:\ i\text{ tail}}g(k_u/d_i)=cn+O(1).
+\end{gathered}
+\tag{11.3}
+$$
+
+The constants depend only on the fixed pattern. Its source and
+tail degrees remain bounded. Allocate its $\rho$ ports to distinct
+core labels, even across different sources. This is possible since
+$\rho=O(\sqrt a)<m$ eventually. Every source then has distinct
+neighbors, and every core label receives at most one port.
+
+There remain $Q=N-q$ sources and exactly $B=aN-\tau$ core incidences
+to allocate to them. Put
+
+$$
+v=aq/N,\qquad w=B/Q-a=\frac{aq-\tau}{N-q}.
+\tag{11.4}
+$$
+
+Here $v\to\kappa r/D$, $w=v+O(a^{-1})$, and eventually
+$0<w<j$. Give these $Q$ sources degrees
+$a+\lfloor w\rfloor$ and $a+\lfloor w\rfloor+1$, with exactly
+$B-(a+\lfloor w\rfloor)Q$ of the latter degree. Both degrees
+are at most $m$, and their sum is exactly $B$.
+
+Assign these neighborhoods as consecutive blocks in the cyclic word
+of the $m$ core labels, continuing each block where the previous one
+ended. All labels in a block are distinct, and each core label has
+regular degree $B/m+O(1)$. Adding ports preserves this estimate.
+All regular neighborhoods have size at least $a$, so any two meet
+when $2a>m$. Every core label occurs since $B/m\sim N$.
+Thus the core incidence graph is connected. Each component of the
+tail pattern has a port and hence joins it. This proves connectedness
+of the entire graph.
+
+The source and edge counts are $Q+q=N$ and $B+\tau=aN$.
+The graph is simple and bipartite. At every core sink,
+$d_i\sim N\gg a+j$; the bounded-degree pattern sources also
+obey the strict core inequality. At tail sinks the original pattern
+inequalities are unchanged. Thus this is a member of the exact
+original graph class, not merely a law or a degree prescription.
+
+For its core marginals, uniformly in the core label,
+
+$$
+y_i=\frac{B}{mN}+O(N^{-1})
+    =1-j/a+o(a^{-1}).
+\tag{11.5}
+$$
+
+The regular source degrees are adjacent integers with mean $a+w$;
+their averaged cube differs from $(a+w)^3$ by $O(a)$. Since
+$Q/N=1-v/a$, their contribution to the actual quadratic core
+energy is therefore
+
+$$
+\begin{aligned}
+H_C^{\rm reg}
+&=(1+2j/a+o(a^{-1}))(1-v/a)
+                      \{(a+w)^3+O(a)\}\\
+&=a^3+(2j+2v)a^2+o(a^2).
+\end{aligned}
+\tag{11.6}
+$$
+
+The bounded-degree port incidences add $O(q/N)=o(1)$ to $H_C$.
+Taylor expansion of $g(t)=t^2-t^4/4+O(t^6)$ on the core gives
+
+$$
+W_C=H_C-\frac1{4N^2}
+     \mathbb E\left[K^4\sum_{i\in T\cap C}y_i^{-4}\right]
+     +O(a^7/N^4)
+=H_C-\frac{a^2}{4D^2}+o(a^2).
+\tag{11.7}
+$$
+
+The quartic expectation is $(1+o(1))a^5$: regular sources have
+$K=a+O(1)$, almost all their $a+O(1)$ neighbors are core labels,
+their total mass tends to one, and (11.5) is uniform.
+The tail contribution is exactly $N(cn+O(1))$ by (11.3).
+Since $Nn/a^2\to D\kappa$, (11.6)--(11.7), followed by subtracting
+$B_0=a^3+2a^2+a$, give (11.2). ∎
+
+## 12. The full-class lower bound and the universal core correction
+
+**Lemma 12.1 (Core expansion on every nonlinear sublevel).** Fix
+$\kappa,D>0$ and a finite constant $C_0$. On any sequence (11.1),
+every sequence of actual graphs satisfying
+$W\le a^3+C_0a^2$ has the core and tail partition of Growing,
+Lemma 7.1, with
+
+$$
+\begin{gathered}
+m=a+j,\quad n=h+1-j,\quad 1\le j\le J,\quad
+p=q/N=v/a,\quad 0<v\le j+O(a^{-1/2}),\\
+\min_{i\in C}y_i\ge c_0>0,\qquad
+\sum_{i\in C}(1-y_i)=O(1),\\
+H_C\ge a^3+(2j+2v)a^2-O(a^{3/2}),\\
+W_C=H_C-\frac{a^2}{4D^2}+o(a^2).
+\end{gathered}
+\tag{12.1}
+$$
+
+Here $q$ is the number of actual sources touching the tail, and
+$J,c_0$ and the estimates are uniform over the indicated sublevel.
+Its tail incidences and actual core-neighbor counts form a rooted
+pattern. Its pair
+
+$$
+r=q/n,\qquad c=W_D/(Nn)
+\tag{12.2}
+$$
+
+has both coordinates bounded, and $r$ is bounded away from one.
+
+**Proof.** Lemma 2.1, which holds for every original graph, gives
+
+$$
+H\le a^3+\sqrt2\left(W-a^3+\frac{s^5}{4N^2}\right)
+\le a^3+C_1a^2
+\tag{12.3}
+$$
+
+for a fixed $C_1\ge1$, since $s/a\to1$ and $N/a^{3/2}\to D>0$.
+The latter implication does not require $D\ge1$. Apply Growing,
+Lemma 7.1, in a fixed positive window containing $\kappa$.
+Its (7.7), (7.10), (7.13)--(7.14) and (7.19) give all the
+core and event estimates in (12.1) except the nonlinear expansion.
+In particular the denominators in $H_C$ are the original actual
+marginals, rather than conditional marginals.
+
+Every core edge has ratio $K/(Ny_i)=O(a/N)=O(a^{-1/2})$.
+The same Taylor formula as in (11.7) applies uniformly, with
+remainder $O(a^7/N^4)=O(a)$. Write $L=|T\cap C|$ and
+$B=|T\cap\mathcal D|$. Bounded core deficit and the derived
+positive core marginal floor give
+
+$$
+\sum_{i\in C}(y_i^{-4}-1)=O(1),\qquad
+\mathbb E\left[K^4\sum_{i\in T\cap C}y_i^{-4}\right]
+=\mathbb E K^5-\mathbb E[K^4B]+O(a^4).
+\tag{12.4}
+$$
+
+Jensen and $K\le s=a+O(\sqrt a)$ imply
+$a^5\le\mathbb E K^5\le s^4\mathbb E K
+=a^5+O(a^{9/2})$. Also $B\le n=O(\sqrt a)$, so the second
+term in (12.4) is $O(a^{9/2})$. Thus (12.4) is
+$a^5+O(a^{9/2})$. Its quartic correction is
+$a^2/(4D^2)+o(a^2)$, proving the last line of (12.1).
+
+To obtain a rooted pattern, retain all sources touching the tail,
+with their actual tail incidences and their actual numbers of core
+neighbors as ports. Every such incidence preserves the strict
+degree inequality, including the source's full degree. Every
+tail component reaches the nonempty core because the original
+graph is connected. Hence Definition 7.1 applies, even if the
+core induced incidence graph itself has several components.
+
+The bound on $v$ gives bounded $r=q/n$ since
+$q=vN/a$ and $n\sim\kappa\sqrt a$. The lower estimate for $W_C$
+and the upper estimate for $W$ imply $0\le W_D=O(a^2)$, so $c$
+is bounded as well. Lemma 9.1 now gives a uniform positive lower
+bound on $r-1$. This argument imposed no degree bound, marginal
+floor, source type or connected-law hypothesis on the original
+domain. ∎
+
+**Proposition 12.2 (Lower limit over the full prescribed graph class).**
+On every sequence (11.1), every sequence of graphs with
+$W\le a^3+C_0a^2$ satisfies
+
+$$
+\liminf\frac{W-B_0(a)}{a^2}\ge F(\kappa,D).
+\tag{12.5}
+$$
+
+**Proof.** Lemma 12.1 gives the lower estimate
+
+$$
+\frac{W-B_0}{a^2}
+\ge2j-2+\frac{2an}{N}r+\frac{Nn}{a^2}c
+                    -\frac1{4D^2}+o(1).
+\tag{12.6}
+$$
+
+All $j,r,c$ on its right are bounded. Along a subsequence attaining
+the lower limit, pass to a further subsequence with a fixed $j$
+and convergent $r,c$. The inequality $v\le j+o(1)$ gives
+$r\le R_j+o(1)$. Since $r$ is bounded away from one, necessarily
+$R_j>1$.
+
+If a term has $r>R_j$, mix its actual feasible array from
+Theorem 8.1 with a fixed pattern (8.4) of ratio $r_t<R_j$ until
+the ratio is $R_j$. The mixing weight tends to zero. Boundedness
+of $r,c$ shows that this changes $\alpha r+\beta c$ by $o(1)$.
+If $r\le R_j$ no repair is required. Consequently
+
+$$
+\alpha r+\beta c\ge\mathcal L(\alpha,\beta;R_j)-o(1).
+\tag{12.7}
+$$
+
+The coefficients of $r,c$ in (12.6) tend to $\alpha,\beta$.
+If $j\le J_0$, (12.7) and (10.2) prove (12.5). If $j>J_0$,
+nonnegativity of $r,c$ gives a limiting right side at least
+$2j-2-1/(4D^2)>T_0-2-1/(4D^2)\ge F$. This treats the full
+sublevel, including source degrees or tail degrees tending to
+infinity and arbitrarily small actual tail marginals. ∎
+
+## 13. The universal finite positive budget limit
+
+**Theorem 13.1 (All positive parameters and all integer sequences).**
+Let $\kappa,D$ be arbitrary elements of $(0,\infty)$. For every
+integer sequence (11.1), with $a\ge4$, $h\ge1$, $N\ge1$ and
+$s=a+1+h$, the original class $\mathfrak G_N(a,h)$ is eventually
+nonempty, and
+
+$$
+\frac{V_N(a,h)-a(a+1)^2}{a^2}\longrightarrow F(\kappa,D),
+\tag{13.1}
+$$
+
+where the finite real number $F$ is exactly (10.2), with the
+finite-linear-program bounds of Theorem 9.2. The class retains
+all finite simple connected bipartite graphs with exactly the
+prescribed part sizes and edge count, and strict source-to-sink
+degree inequalities. No further source-cardinality restriction
+or marginal lower bound is imposed. Formula (13.1) includes every
+parameter boundary; no uniqueness of a minimizing index or pattern
+is assumed.
+
+**Proof.** Use the one-tail pattern of Definition 10.1 and $j=j_0$.
+It has $\kappa r_*/D<j_0$. Theorem 11.1 therefore proves
+nonemptiness at every sufficiently large term and provides an
+upper bound $V_N\le a^3+C_0a^2$ with a fixed finite $C_0$.
+At each such term the graph minimum is attained by finiteness.
+Proposition 12.2 applies to any sequence of those actual minimizers
+and gives the lower limit at least $F$.
+
+Conversely, choose an index attaining the finite minimum in (10.2).
+For any $\epsilon>0$, Theorem 8.1 gives a fixed rooted pattern
+with $r<R_j$ and
+
+$$
+\alpha r+\beta c
+\le\mathcal L(\alpha,\beta;R_j)+\epsilon.
+$$
+
+Theorem 11.1 realizes this fixed pattern at every sufficiently
+large exact integer budget of the given sequence. Its limit
+(11.2) is at most $F+\epsilon$. Hence the upper limit of the
+graph minima is at most $F+\epsilon$. Letting $\epsilon\downarrow0$
+proves (13.1). The argument takes limits only after fixing the
+pattern, so it uses no fixed-parameter remainder with parameters
+silently varying. ∎
+
+**Corollary 13.2 (The finite-budget gap from the original law).**
+On the same sequences,
+
+$$
+\frac{V_N(a,h)-M(a,h)}{a^2}
+\longrightarrow F(\kappa,D)-U(\kappa),
+\tag{13.2}
+$$
+
+with exactly the existing $U$ of Growing, Theorem 7.2, or (5.5).
+Neither (13.1) nor (13.2) presupposes that this difference is
+nonzero or has a specified sign.
+
+**Proof.** Subtract Growing (7.20) from (13.1). Continuity of the
+displayed existing $U$ gives the asserted law limit, including
+its phase boundaries. ∎
+
+## 14. Mathematical dependencies and remaining distinctions
+
+**Attribution 14.1 (Scope of the finite-budget deductions).**
+The graph and common-law domains in Definition 1.1 are unchanged.
+Growing, Lemma 7.1, supplies the actual-law core partition and
+quadratic core lower estimate used in Lemma 12.1; its proof gives
+the needed bounded deficit and positive core marginal floor.
+Lemma 2.1 supplies the full-graph nonlinear-to-quadratic sublevel
+implication. Growing, Theorem 7.2, supplies only the law value
+$U$ in Corollary 13.2. No exact-law classification or cap comparison
+is rederived in Sections 7--13.
+
+The rooted incidence constraints, their converse by common actual
+patterns, the explicit degree cutoff, the nonlinear core coefficient
+at finite positive $D$, and their matching exact-budget upper and
+full-class lower limits are repo-derived deductions. Their proofs
+use finite spanning trees, stub pairing and cyclic joins, finite
+linear programming, Jensen, Hölder and the displayed Taylor
+expansions. The limit function is determined by (7.3), (9.4)--(9.5)
+and (10.2), independently of an extremal theorem from the external
+literature. The original CDSO convention is the maximum-degree
+denominator without $1/\sqrt2$ in [1, §1, p.109], as in (1.4).
+
+Theorem 13.1 settles the finite-positive-ratio limit and eventual
+nonemptiness portion of Open problem 6.3. It does not classify exact
+finite-budget minimizers or give a smaller-order remainder, eventual
+source types, a moving-$\kappa$ limit, or an extremum over all
+connected graphs outside the prescribed bipartite domain. The
+fixed-pair periodic correction of Periodic, Theorem 1.3, has different
+quantifiers. The universal-vertex counterexamples in [2,
+Proposition 2.1] concern a different original-graph question and
+are not a premise of the finite-budget limit. The Zhao--Zhao
+full-text overlap identified in Section 6 remains unassessed;
+no global priority statement is attached to these deductions.
+
+## 追加锚（本行以下为增补区）
