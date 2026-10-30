@@ -982,3 +982,418 @@ The representation in Definition 8.1 is narrower than the complete-return formul
 For the source/exponent distinction, Dvořáková–Klouda–Pelantová, [*The asymptotic repetition threshold of sequences rich in palindromes*, arXiv:2409.06849v1, Theorems 24–25 and Corollary 29](https://arxiv.org/pdf/2409.06849v1), [doi:10.1016/j.ejc.2025.104124](https://doi.org/10.1016/j.ejc.2025.104124), supplies a rich binary projection $i\mapsto ab^i$ preserving the asymptotic exponent. This is an asymptotic supplier, not an ordinary-exponent upper bound. Currie–Mol–Peltomäki, [*The repetition threshold for ternary rich words*, EJC 32(2), P2.55, Theorems 1.1–1.2](https://doi.org/10.37236/13499), supplies the ternary ordinary threshold and its transducer construction. Dvořáková–Pelantová, [*Symmetries of rich sequences with minimum critical exponent*, arXiv:2501.15135v1, Proposition 2](https://arxiv.org/pdf/2501.15135v1), supplies its original-source morphic representation on $u_5$. These are exact supplied results in their respective ranges, rather than solutions of the original $u_{2r+1}$ problem for $r\ge3$. A finite rich word, including a long word with a controlled exponent, is also distinct from the infinite-word existence required in Definition 3.3.
 
 ## 追加锚（本行以下为增补区）
+## 12. A four-letter literal image of the original source
+
+**Definition 12.1 (The dictionary and its parameters).** Retain the original $u_7$ of Definition 1.2 with $r=3$, and put
+
+$$
+\begin{gathered}
+p=a,\qquad
+(\eta(0),\ldots,\eta(6))
+=(a,ab,abb,ac,acc,accdcc,accdccddccdcc),\\
+q_i=a^{-1}\eta(i),\qquad
+(q_0,\ldots,q_6)=(\varepsilon,b,bb,c,cc,ccdcc,ccdccddccdcc),\\
+h=(1,2,3,2,3,6,13),\qquad x=\eta(u_7),\qquad
+L=\frac1{3-\Lambda},\qquad e_3=1+L=2+\frac1{\Lambda^3-1},
+\end{gathered}
+\tag{42}
+$$
+
+where $a,b,c,d$ are four distinct letters and $\Lambda>2$ satisfies $\Lambda^3(\Lambda-2)=1$. The notation $a^{-1}\eta(i)$ means deletion of the displayed initial letter, not inversion in a group. All critical exponents are those of Definition 1.1.
+
+The source inputs used below are Dvořáková–Pelantová, [*The limit of repetition thresholds of rich sequences*, arXiv:2509.06104v1](https://arxiv.org/pdf/2509.06104v1), Theorem 5, §§3–4, Lemmas 8–10, Proposition 19 and Appendix Lemmas 20–21. Their spectral parameter $d$ is $3$, their source alphabet is $\{0,\ldots,6\}$, and their Perron equation is exactly the equation in (42). Proposition 19 instead uses $d$ for the source alphabet size: its applicable instance is $d=7$. The corresponding journal results are Theorem 5, Lemmas 9–11, Proposition 20 and Appendix Lemmas 21–22 in [EJC 33(2), P2.15](https://www.combinatorics.org/ojs/index.php/eljc/article/download/v33i2p15/pdf/). Source extension and return descriptions also occur in Dvořáková–Klouda–Pelantová, [*The asymptotic repetition threshold of sequences rich in palindromes*, arXiv:2409.06849v1](https://arxiv.org/pdf/2409.06849v1), Proposition 4, Corollary 5, Definition 8 and Propositions 15 and 19, with source-size parameter $d=7$. These results supply the source classifications and the criteria; the dictionary (42), its boundary estimates and its equality classification are the additional inferences here.
+
+**Theorem 12.2 (Literal membership and infinite richness).** The morphism in (42) is nonerasing and injective as a morphism of free monoids. The pair $(\eta,a)$ belongs to the original literal class $\mathcal L_3$ of Definition 8.1, its total image length is $H=30$, and $x$ is an infinite rich word with exactly four actual letters.
+
+*Proof.* Each $q_i$ is a palindrome without $a$. Therefore $a q_i a$ is a palindrome with exactly two occurrences of $a$, its endpoints, including when $q_0=\varepsilon$. In a concatenation of image words, successive occurrences of $a$, together with the end of a finite concatenation, identify the intervening $q_i$. The seven intervening words are distinct. They uniquely recover the source letters, proving monoid injectivity. The positive lengths in (42) sum to $30$. Every source letter occurs in $u_7$, so all of $a,b,c,d$, and only these letters, occur in $x$.
+
+It remains to verify the hypothesis of the supplied richness criterion, arXiv Proposition 19, journal Proposition 20. A nonempty factor without $a$ lies inside one of the displayed $q_i$. For such a factor $v$, encode a both-sided extension $\ell v r$ by the pair $\ell r$. Its complete extension set is obtained inside the finite words $a q_i a$. The following table gives all the nonempty bispecial factors without $a$, their extension pairs, their bilateral orders, and the numbers of palindromic extensions when applicable.
+
+| $v$ | Extension pairs | $\mathrm b(v)$ | $\#\mathrm{Pext}(v)$ for palindromic $v$ |
+|---|---|---:|---:|
+| $b$ | $aa,ab,ba$ | $0$ | $1$ |
+| $c$ | $aa,ac,ca,cd,dc$ | $0$ | $1$ |
+| $d$ | $cc,cd,dc$ | $0$ | $1$ |
+| $cc$ | $aa,ad,da,dd$ | $1$ | $2$ |
+| $ccd$ | $ac,dc,dd$ | $0$ | — |
+| $dcc$ | $ca,cd,dd$ | $0$ | — |
+| $dccd$ | $cd,dc$ | $-1$ | $0$ |
+| $ccdcc$ | $aa,ad,da$ | $0$ | $1$ |
+
+For completeness of this finite list, the nonempty left-special factors without $a$ are precisely
+
+$$
+b,c,d,cc,dc,ccd,dcc,ccdc,dccd,ccdcc.
+$$
+
+The two words $dc$ and $ccdc$ have only the right extension $c$ and are discarded. This enumeration follows by taking all substrings of the explicit $q_i$ and comparing their preceding letters in $a q_i a$. No word of length at least six can add an entry: it occurs only in $q_6$, and the longest substring repeated at different positions in $q_6$ has length five. Each such longer factor thus has a fixed preceding and following letter. All the extension pairs in the table actually occur, since each $i$ occurs in the recurrent source and each image block is surrounded by marker letters.
+
+The empty factor has extension pairs
+
+$$
+aa,ab,ba,bb,ac,ca,cc,cd,dc,dd.
+$$
+
+Its bilateral order is $10-4-4+1=3$, and it has four palindromic extensions. Thus it too satisfies the criterion. In the nonempty table every nonpalindrome has bilateral order zero, and every palindrome has bilateral order $\#\mathrm{Pext}(v)-1$. Proposition 19 applies with the nonempty marker $a$ and source $u_7$, and proves infinite richness. $\square$
+
+## 13. The complete ordinary upper bound
+
+**Theorem 13.1 (Ordinary exponent of the dictionary).** For the very same $u_7$ and $\eta$ in (42),
+
+$$
+E(x)=e_3.
+\tag{43}
+$$
+
+*Proof.* The source is uniformly recurrent, since its defining substitution is primitive. A nonerasing image of a uniformly recurrent word is uniformly recurrent: a sufficiently long output factor contains the image of a sufficiently long source factor, and the bounded gaps of each source factor give bounded output gaps. The source is aperiodic; in particular its supplied finite value $E^*(u_7)=e_3$ precludes eventual periodicity. If $x$ were eventually periodic, the successive gaps between its marker letters would give an eventually periodic sequence of the distinct words $q_i$. Decoding them would make $u_7$ eventually periodic. Hence $x$ is aperiodic as well.
+
+We may therefore apply the supplied ordinary-exponent Theorem 5 to $x$: it suffices to prove $|v|\le L|R'|$ for every bispecial factor $v$ of $x$ and every return word $R'$ to $v$. This criterion covers every finite factor and its least period; it is not an asymptotic criterion.
+
+First suppose $v$ does not contain $a$. For the empty factor the ratio is zero. For the eight nonempty factors in Theorem 12.2 the following lower bounds on the distance $P=|R'|$ suffice.
+
+| $v$ | Lower bound on $P$ | Upper bound on $|v|/P$ |
+|---|---:|---:|
+| $b,c,d$ | $1$ | $1$ |
+| $cc$ | $3$ | $2/3$ |
+| $ccd,dcc$ | $3$ | $1$ |
+| $dccd$ | $4$ | $1$ |
+| $ccdcc$ | $6$ | $5/6$ |
+
+Here $cc$ occurs only as a run of exactly two $c$'s, so two starts are at distance at least three. The words $ccd,dcc$ have least period three. Within $q_6$, the two starts of $dccd$ are at positions $2$ and $6$, using zero-based positions; it occurs in no other $q_i$. Starts in different blocks are farther apart. The starts of $ccdcc$ in $q_6$ are $0$ and $7$, and its only other block is $q_5$ itself. Two occurrences in different blocks have a marker between them, hence distance at least six. These facts prove every bound in the table, including possible overlapping returns. Since $L>1$, all these ratios are at most $L$.
+
+Now suppose $v$ contains $a$. Markers uniquely delimit image blocks. Highlighting its first and last marker writes it uniquely as
+
+$$
+v=s\eta(w)a t,
+\qquad |v|=h\vec w+1+|s|+|t|,
+\tag{44}
+$$
+
+where $s,t$ have no $a$ and $w$ is a source factor, possibly empty. As in the proof of the supplied Proposition 19, bispeciality of $v$ makes $w$ bispecial. The possible $s$ are longest common suffixes of distinct blocks $q_i$, and $t$ are the corresponding longest common prefixes. Directly from (42), the only possible boundary words are
+
+$$
+\mathcal S=\{\varepsilon,b,c,cc,T\},\qquad T=ccdcc.
+\tag{45}
+$$
+
+All these words are palindromes. Shorter suffixes of a common suffix cannot create a new left extension until their preceding letters differ; this explains why, for example, $dcc$ and $cdcc$ do not occur in (45).
+
+Every occurrence of (44) determines an occurrence of $w$. Two occurrences of $v$ at distance $P$ determine two occurrences of $w$ whose gap has output length $P$: their offsets from the first highlighted marker are the same. If they are not consecutive occurrences of $w$, the gap is a concatenation of source return words. Consequently any lower bound on the image length of every source return to $w$ also bounds $P$. This observation includes restrictions imposed by $s,t$; it does not assert that every source return is an output return.
+
+The supplied exhaustive source classification has the finite palindromes $F_k$, $0\le k\le5$, the two infinite palindromic series, and the nonpalindromic series and their reversals. We treat all these classes.
+
+For $w=F_k$, the source extension pairs are
+
+$$
+\{(k,j),(j,k):k<j\le6\}\cup\{(6,6)\}.
+\tag{46}
+$$
+
+This is source Proposition 4 for $k\le4$; the final pair of extensions $\{5,6\}$ gives the same formula for $F_5$. Put $D_k=|\eta(F_k)|$. The recursion for $F_k$ or its ruler-word expression gives
+
+$$
+(D_0,D_1,D_2,D_3,D_4,D_5)=(0,1,4,11,24,51).
+$$
+
+For $k\ge1$, each return to $F_k$ is an image $\varphi^k(i)$: the occurrences of $F_{k+1}=\varphi(F_k)0$ are exactly the images of the occurrences of $F_k$, since the zeros are precisely the substitution boundaries. This is also the return description used in the proof of source Lemma 9. Each such return begins with $F_k$ and has at least one further letter; thus occurrences of $F_k$ do not overlap. If the output occurrence in (44) has a right neighbor $j$ of $F_k$, and the next one has a left neighbor $i$, then
+
+$$
+P\ge D_k+h_j,\qquad P\ge D_k+h_i.
+\tag{47}
+$$
+
+The first follows by including the prefix $F_kj$ of the gap; the second by including its prefix $F_k$ and its final letter $i$. These bounds remain true if the gap contains several returns. At $k=0$ the same bounds hold with $D_0=0$.
+
+Restrict (45) to extension indices at least $k$ in (46). For instance, the suffix $b$ permits indices $1,2$, the suffix $c$ permits $3,4,5,6$, $cc$ permits $4,5,6$, and $T$ permits $5,6$. Their preceding letters are read from the explicit blocks. Formula (46), and the requirement of two distinct extensions on both sides, leave precisely the following unordered boundary pairs; reversing a pair is allowed.
+
+| $k$ | Possible $\{s,t\}$, with multiplicity | Bound on $|v|/P$ |
+|---:|---|---:|
+| $0$ | $(\varepsilon,z)$, $z\in\mathcal S$ | $1$ |
+| $1$ | $(\varepsilon,z)$, $z\in\mathcal S$; $(b,b)$ | $1$ |
+| $2$ | $(\varepsilon,z)$, $z\in\{\varepsilon,c,cc,T\}$ | $1$ |
+| $3$ | $(c,c),(c,cc),(c,T)$ | $14/13$ |
+| $4$ | $(cc,cc),(cc,T)$ | $29/27$ |
+| $5$ | $(T,T)$ | $62/57$ |
+
+Here is a full numerical verification of the bounds. At $k=0$, a nonempty boundary of length $1,1,2,5$ requires a gap containing respectively a block of length at least $2,2,3,6$, equal to $1+|z|$. At $k=1$ the corresponding numerators $D_k+1+|z|$ are $3,3,4,7$, bounded by (47); the empty pair has numerator $2$ and denominator at least $3$. For $(b,b)$ the numerator is $4$. A smaller possible gap would have to be the single return $01$, of output length $3$, with both output occurrences supported on source extensions $1,2$. Formula (46) would then force the source factor $20102$. It is absent: its middle $010$ parses as $\varphi(0)0$, and parsing the complete factor forces $101$ in the preimage; $101$ would in turn force $00$, which the substitution never produces. Thus $P\ge4$. At $k=2$ the positive-boundary numerators are $6,7,10$, with denominators at least $6,7,10$; the empty numerator is $5$ and its denominator at least $6$. At $k=3$ the three ratios are bounded by $14/13,15/14,18/17$; at $k=4$ by $29/27,32/30$; and at $k=5$ by $62/57$. This proves the table. Its boundary list is exhaustive: if both boundary restrictions omit the central index $k$, (46) leaves only $(6,6)$ and no bispecial factor; the remaining exclusions have a single output extension. All displayed bounds are smaller than $10/9<L$. The last strict inequality follows from $\Lambda>21/10$, since $(21/10)^3(21/10-2)<1$.
+
+For a nonpalindromic source bispecial $w$, including either orientation, source Lemma 10 gives for every source return $R$ either
+
+$$
+\vec R\ge\vec w+b_6
+\quad\text{or}\quad
+\vec R\ge\vec w+b_0+b_1+\cdots+b_5.
+$$
+
+The respective extra image lengths are $13$ and $17$. Since $1+|s|+|t|\le11$ by (45), every output return satisfies $|v|\le P-2<P$. This disposes of every nonpalindromic series at every index.
+
+For the infinite palindromic series, retain $M,\mathsf A,\mathsf B_i,f_n$ from (2). Here $i=n\bmod6$. Both extension sets of the Type I factor at index $n$, and of the Type II factor corresponding to $f_n$ for $n\ge6$, are $\{i,6\}$. This follows from the cyclic extension update in source Definition 8, starting with extensions $\{0,6\}$. Therefore their boundary contributions in (44) are bounded by
+
+$$
+(b_0',b_1',b_2',b_3',b_4',b_5')=(1,1,1,3,5,11).
+\tag{48}
+$$
+
+The primes distinguish these six scalars from the coordinate vectors $b_j$. Source Lemma 9 and Remark 7 supply the minimum return vectors $M^n b_6$ for Type I and $M^n b_0$ for Type II, with componentwise domination by every other return vector. Thus it remains to prove
+
+$$
+\begin{aligned}
+h(f_n+M^n b_6)+b_i'&\le LhM^n b_6 &&(n\ge0),\\
+h f_n+b_i'&\le LhM^n b_0 &&(n\ge6).
+\end{aligned}
+\tag{49}
+$$
+
+We give finite and uniform estimates for the entire index domains. Put
+
+$$
+k=(1,1,1,1,2,4,8),\qquad
+Q(z)=(z-1)(z^2-3),\qquad A_n=hM^n b_6.
+$$
+
+Direct row multiplication gives $h=kQ(M)$. Using the whole supplied spectral formula of Appendix Lemma 21, with its exact $d=3$ normalization, gives
+
+$$
+A_n=\sum_{\lambda^4-2\lambda^3-1=0}
+ \frac{Q(\lambda)\lambda^{n+4}}{4\lambda-6}.
+\tag{50}
+$$
+
+In particular, there are no tribonacci-root contributions, and
+
+$$
+A_{n+4}=2A_{n+3}+A_n,\qquad
+(A_0,A_1,A_2,A_3)=(13,27,57,121).
+$$
+
+Define
+
+$$
+S(n)=\sum_{\substack{\lambda^4-2\lambda^3-1=0\\\lambda\ne\Lambda}}
+ \frac{Q(\lambda)}{4\lambda-6}
+ \left(\frac{\lambda-2}{3-\lambda}
+       -\frac{\Lambda-2}{3-\Lambda}\right)\lambda^{n+4}.
+$$
+
+The supplied expression (2), with the rational functions (6), now yields the exact equalities
+
+$$
+\begin{aligned}
+h(f_n+M^n b_6)-LA_n&=S(n)-h\mathsf B_i b_0,\\
+h f_n-LhM^n b_0&=S(n-3)-h\mathsf B_i b_0\qquad(n\ge6).
+\end{aligned}
+\tag{51}
+$$
+
+For the second equality, use $(\lambda-2)\lambda^3=1$ for every root in (50). No estimate of an asymptotic exponent replaces either equality.
+
+The exact boundary margins are
+
+$$
+\begin{gathered}
+(h\mathsf B_i b_0)_{i=0}^5
+ =\tfrac1{13}(19,31,41,45,83,171),\\
+(h\mathsf B_i b_0-b_i')_{i=0}^5
+ =\tfrac1{13}(6,18,28,6,18,28).
+\end{gathered}
+\tag{52}
+$$
+
+They follow by substituting the row $h$ into the explicit matrix $\mathsf B_i$ in (2). Notice that the margins have period three, which will cover Type II without losing its initial indices.
+
+We next bound $S(n)$ uniformly. The negative root of $z^4-2z^3-1$ is $-s$, with $7/10<s<3/4$. The derivative $2z^2(2z-3)$ shows that the only real roots are this root and $\Lambda$; write the others as $z,\overline z$. Their product gives $|z|^2=1/(\Lambda s)<100/147<25/36$, since $\Lambda>21/10$. Thus each of the three non-Perron roots has modulus less than $5/6$. For any such root $\lambda$,
+
+$$
+|Q(\lambda)|<7,\qquad |4\lambda-6|>8/3,
+$$
+
+and its summand before the factor $\lambda^n$ can be bounded using
+
+$$
+\begin{aligned}
+\left|\left(\frac{\lambda-2}{3-\lambda}
+ -\frac{\Lambda-2}{3-\Lambda}\right)\lambda^4\right|
+&\le \frac{|\lambda|}{3-|\lambda|}
+ +\frac{|\lambda|^4}{\Lambda^3-1}\\
+&<\frac5{13}+\frac{625}{9072}<\frac12.
+\end{aligned}
+$$
+
+We used $(\lambda-2)\lambda^3=1$ and $\Lambda^3>8$. Summing the three terms proves
+
+$$
+|S(n)|<\frac{63}{16}(5/6)^n<4(5/6)^n.
+$$
+
+For every $n\ge12$, this is smaller than $6/13$, because $4(5/6)^{12}<6/13$. It is therefore smaller than every margin in (52).
+
+For $0\le n\le11$, use the rational lower bound
+
+$$
+\Lambda>\frac{2106919}{10^6},\qquad L>\frac{10^6}{893081}.
+$$
+
+Indeed substitution into $z^4-2z^3-1$ gives
+$-3668139160725701279/10^{24}<0$, and the polynomial is strictly increasing for $z>2$. The following integer table proves the first inequality in (49) at all the remaining indices: its last column is exactly
+$10^6 A_n-893081(A_n+h f_n+b_i')$.
+
+| $n$ | $A_n$ | $h f_n$ | $b_i'$ | Positive numerator |
+|---:|---:|---:|---:|---:|
+| $0$ | $13$ | $0$ | $1$ | $496866$ |
+| $1$ | $27$ | $1$ | $1$ | $1100651$ |
+| $2$ | $57$ | $4$ | $1$ | $1628978$ |
+| $3$ | $121$ | $11$ | $3$ | $434065$ |
+| $4$ | $255$ | $24$ | $5$ | $1364996$ |
+| $5$ | $537$ | $51$ | $11$ | $2044481$ |
+| $6$ | $1131$ | $134$ | $1$ | $359454$ |
+| $7$ | $2383$ | $283$ | $1$ | $1152973$ |
+| $8$ | $5021$ | $598$ | $1$ | $1884780$ |
+| $9$ | $10579$ | $1263$ | $3$ | $455555$ |
+| $10$ | $22289$ | $2662$ | $5$ | $1270564$ |
+| $11$ | $46961$ | $5609$ | $11$ | $1907939$ |
+
+Every entry follows from (50) and the supplied recurrence
+$f_0=0$, $f_{n+1}=Mf_n+b_0+2b_6$ when $n+1\equiv0\pmod6$, and $f_{n+1}=Mf_n+b_0$ otherwise. Thus the table is finite exact arithmetic, with the remaining infinitely many indices covered by the preceding estimate.
+
+Together with (51)–(52) this proves $S(n)<h\mathsf B_i b_0-b_i'$ for every $n\ge0$. For Type II, set $m=n-3\ge3$. The margin at $m\bmod6$ equals the margin at $n\bmod6$ by (52). Apply the already proved inequality to $S(m)$ in the second line of (51). This proves the second line of (49) for every $n\ge6$, including its finite initial segment. Componentwise domination of all source returns then proves the required output return bound for both series.
+
+We have exhausted the marker-free factors, all finite source classes, both infinite palindromic classes and every nonpalindromic class, including all output boundary contributions. The ordinary-exponent criterion consequently gives $E(x)\le1+L=e_3$. The reverse inequality follows directly from Theorem 2.1 for this nonerasing morphism. This proves (43). $\square$
+
+## 14. Equality classification at total length thirty
+
+**Theorem 14.1 (Sharpness and uniqueness in the four-total-letter literal class).** Among all $(\theta,p)\in\mathcal L_3$ for which $\theta(u_7)$ is rich, has exactly four actual letters, and has ordinary exponent $e_3$, the minimum of
+
+$$
+H(\theta)=\sum_{i=0}^6|\theta(i)|
+$$
+
+is $30$. Every pair attaining $H=30$ is (42), including its marker, up to a bijective renaming of the four output letters.
+
+*Proof.* Corollary 9.2 already supplies $H\ge30$ with precisely these hypotheses and every nonempty marker. Theorems 12.2 and 13.1 supply attainment, so only equality classification remains.
+
+Write $m=|p|$, $h_i=|\theta(i)|$ and $t=h_3$. Theorem 8.2 excludes $m\ge2$, since then $H\ge46$. Thus $p=a$ is a single letter. Cancellation, the complete row parameterization and the size formula are reused from Corollary 3.2 and Theorem 4.2:
+
+$$
+H=4t+8h_0+4h_1+2h_2=30.
+\tag{53}
+$$
+
+Each independent parameter is at least one, and at most one of $h_0,h_1,h_2,t$ can be one, by monoid injectivity. If none is one, the right side of (53) is at least $36$. If its unique one is at $h_1,t,h_2$, the respective minimum values are $32,32,34$. Hence $h_0=1$, the other three parameters are at least two, and (53) reduces to
+
+$$
+4(t-2)+4(h_1-2)+2(h_2-2)=2.
+$$
+
+It forces $(h_0,h_1,h_2,t)=(1,2,3,2)$. Formula (19) gives the full row $(1,2,3,2,3,6,13)$. This arithmetic step establishes row uniqueness only; the following steps determine the words.
+
+Write $\theta(i)=a q_i$ with palindromic, $a$-free $q_i$. Then $q_0=\varepsilon$, $q_1=b$ and $q_3=c$ for distinct nonmarker letters $b,c$. Let $d$ be the third nonmarker. There are exactly these three nonmarkers, since every source letter occurs. The length-two palindromes are
+
+$$
+q_2=z^2,\qquad q_4=y^2,\qquad z,y\in\{b,c,d\},\quad z\ne y.
+\tag{54}
+$$
+
+We use the supplied complete-return characterization of richness, Glen–Justin–Widmer–Zamboni, [*Palindromic richness*, arXiv:0801.1656v1, Theorem 2.14 and Remark 2.15](https://arxiv.org/pdf/0801.1656v1). In particular, a factor from a last previous occurrence of a letter $\ell$ to its first occurrence in a new block is a complete return. Its second and penultimate letters must agree. Also $e_3<15/7$, so any explicitly found repetition of larger exponent is impossible.
+
+First $z\ne c$. Otherwise the actual source factor $2F_2 3F_2 2$ gives the two occurrences of
+
+$$
+v=c\theta(F_2)a c.
+$$
+
+The word $F_2=010$ has image length $4$, so $|v|=7$. The starts are at distance $|\theta(F_2 3)|=6$, since $q_2=cc$ and $q_3=c$. The factor ending at the end of the second occurrence has period $6$ and length $13$, giving $E\ge13/6>15/7$. The source factor used here occurs already in $F_4$.
+
+If $z=d$, or if $y=d$, all three nonmarkers have occurred in the unary blocks $q_1,q_2,q_3,q_4$ before the first $q_5$. Consider the actual prefix $\theta(F_5)a q_5$. For each of these letters its last occurrence in $\theta(F_5)a$ is followed by $a$. If $q_5$ is not constant, take its first letter different from its initial letter. This occurrence is preceded by a nonmarker, and the complete return from its last previous occurrence cannot be a palindrome. If $q_5$ is constant, its length five gives exponent five. Both alternatives are impossible. Consequently (54) forces
+
+$$
+q_2=bb,\qquad q_4=cc.
+\tag{55}
+$$
+
+This accounts for every ordered choice in (54).
+
+The only letters used before $q_5$ are now $a,b,c$. In $\theta(F_5)a$, the last $b$ and last $c$ are followed by $a$. In $q_5$, the first occurrence of either of these two letters cannot be at a noninitial position, by the same complete-return argument. A constant $q_5$ is impossible. It follows that $q_5$ uses exactly $\{x,d\}$, starts with $x\in\{b,c\}$, and contains $d$. Write its length-five palindrome as $xuvux$. There are only three possibilities using both letters:
+
+$$
+xxdxx,\qquad xdxdx,\qquad xdddx.
+$$
+
+Indeed the alternative $u=x,v=x$ is constant. The last two displayed possibilities have exponents $5/2$ and $3$ on their indicated alternating factor or constant run. Thus
+
+$$
+q_5=xxdxx\qquad(x=b\text{ or }c).
+\tag{56}
+$$
+
+We next determine $q_6$ without choosing between these two branches. The ruler identity gives $F_6=F_5 5F_5$. Immediately before the first $q_6$, the last occurrences of $b,c$ are in the final unary-block word $\theta(F_5)$ and are followed by $a$. The last $d$ is the middle of the preceding $q_5=xxdxx$ and is followed by $x$.
+
+The first letter of $q_6$ cannot be $d$: its preceding letter would be the marker $a$, contradicting the complete return from the preceding $d$, whose second letter is $x$. If the first letter is the other letter in $\{b,c\}\setminus\{x\}$, the first subsequent $x$ would contradict its preceding complete return, and a first subsequent $d$ would have to be preceded by $x$, also impossible. This would make $q_6$ constant. Hence $q_6$ starts with $x$, contains no other member of $\{b,c\}$, and contains $d$.
+
+The complete return from the last preceding $d$ to the first $d$ in $q_6$ has the form
+
+$$
+d\,xx\,\theta(F_5)a\,x^j d,
+$$
+
+where $j$ is the initial run length of $x$ in $q_6$. It must be a palindrome. A run of length three is impossible, and $j=1$ makes its third letter $x$ and its third letter from the end $a$. Thus $j=2$. Palindromicity and the even length $12$ now give
+
+$$
+q_6=xxd\,u v w w v u\,dxx,
+\qquad (u,v,w)\in\{x,d\}^3.
+\tag{57}
+$$
+
+All eight branches of (57) are settled by the following table. The indicated obstruction is a factor of the corresponding word in (57).
+
+| $uvw$ | Obstruction or surviving word |
+|---|---|
+| $xxx$ | $xxx$ |
+| $xxd$ | $xxdxxddxxdxx$ |
+| $xdx$ | $xdxdx$ |
+| $xdd$ | $ddd$ |
+| $dxx$ | $xxx$ |
+| $dxd$ | $ddxddxdd$ |
+| $ddx$ | $ddd$ |
+| $ddd$ | $ddd$ |
+
+The obstructions have exponents $3$, $5/2$ or, for $ddxddxdd$, $8/3$, all larger than $e_3$. Consequently
+
+$$
+q_6=xxdxxddxxdxx.
+\tag{58}
+$$
+
+Finally exclude $x=b$. In that branch $q_2=bb$ and $q_6$ both start and end in $bb$. Take the supplied Type I source factor at index $2$. It has both extension sets $\{2,6\}$, Parikh vector $f_2+M^2b_6$, and an actual return of Parikh vector $M^2b_6$. The already fixed row gives
+
+$$
+h f_2=4,\qquad hM^2b_6=57.
+$$
+
+Extend each of two occurrences realizing this return by $bb$ to the left and $a bb$ to the right. All these extensions are legitimate, because both possible source neighbors are $2$ or $6$. Thus the actual output factor
+
+$$
+v=bb\,\theta(w_2^{\mathrm I})a bb
+$$
+
+has length $57+4+5=66$, and two occurrences at distance $57$. The factor from the first start through the second end has period $57$, hence exponent at least
+
+$$
+1+\frac{66}{57}=\frac{41}{19}>\frac{15}{7}>e_3.
+$$
+
+This contradiction excludes the entire $x=b$ branch. Hence $x=c$, and (55), (56), (58), together with $q_0,q_1,q_3$, give precisely (42). The marker was already forced to be $a$. All identifications used only a bijective naming of the four actual letters, completing the equality classification. $\square$
+
+## 15. Consequences for the original-source and threshold questions
+
+**Corollary 15.1 (Four-letter existence and the retained lower-bound question).** The original $u_7$ admits a nonerasing morphism onto exactly four actual letters whose image is infinite rich and has ordinary critical exponent $e_3$. In the notation of Definition 3.3,
+
+$$
+RT(\mathcal C_4)\le e_3.
+\tag{59}
+$$
+
+The minimum $H=30$ and the equality classification of Theorem 14.1 concern the literal class $\mathcal L_3$ with a nonempty marker. They impose no such minimum or classification on arbitrary nonliteral morphisms. The unrestricted reverse inequality $RT(\mathcal C_4)\ge e_3$, the analogous exact small-alphabet existence for every $r\ge4$, and existence of a nonconstant family of rich original-source images with exponents strictly above and tending to $e_3$ remain separate questions.
+
+*Proof.* Apply Theorems 12.2 and 13.1 to (42). This is also an arbitrary-nonerasing-morphism existence witness, since that larger class contains the literal class. Taking the infimum over all infinite rich four-letter words proves (59). Theorem 14.1 uses the literal marker conditions in its size and word arguments; there is no implication giving them for an arbitrary morphism. Inequality (59) is an upper bound supplied by one actual word and supplies no lower bound for all words in $\mathcal C_4$. The construction fixes $r=3$ and gives one exact exponent, so it supplies neither the higher-parameter constructions nor a family with strictly positive exponent excess. $\square$
+
+## 追加锚（本行以下为增补区）
