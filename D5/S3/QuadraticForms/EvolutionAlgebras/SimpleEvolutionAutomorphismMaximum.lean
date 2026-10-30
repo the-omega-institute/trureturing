@@ -166,6 +166,8 @@ Frozen declaration identities:
 -/
 
 import D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionPermutationFamily
+import D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionAutomorphismControl
+import D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionBasisTransport
 import D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks
 
 set_option autoImplicit false
