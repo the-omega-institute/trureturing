@@ -97,6 +97,7 @@ private theorem mask_bound (t u m : ℤ) (hu : 4 ≤ u) (hm : m = 4 ∨ 8 ≤ m)
     have := mul_le_mul_of_nonneg_left (show m - 1 ≤ f by omega) (le_of_lt hH)
     omega
   have hfit : f < t / 2 := by
+    have htm : 4 * m ≤ t := by nlinarith [mul_nonneg (show 0 ≤ u - 4 by omega) (show 0 ≤ m by omega)]
     have ht2 := Int.emod_add_mul_ediv t 2
     have htmod := Int.emod_lt_of_pos t (by norm_num : (0 : ℤ) < 2)
     nlinarith
@@ -119,8 +120,10 @@ private theorem mask_bound (t u m : ℤ) (hu : 4 ≤ u) (hm : m = 4 ∨ 8 ≤ m)
       dsimp [H] at hh1
       nlinarith
     have hmterm : 4 * ((t + 1) * m) ≤ t * (t + 1) := by
-      have hu4 := mul_nonneg (show 0 ≤ u - 4 by omega) (show 0 ≤ m * (t + 1) by positivity)
-      nlinarith [show m * u = t by omega]
+      calc
+        4 * ((t + 1) * m) ≤ u * ((t + 1) * m) :=
+          mul_le_mul_of_nonneg_right hu (by positivity)
+        _ = t * (t + 1) := by rw [htu]; ring
     have htuterm : 8 * t * u ≤ t * (t + 1) := by
       nlinarith [mul_nonneg ht0 (show 0 ≤ t + 1 - 8 * u by omega)]
     omega
@@ -189,12 +192,26 @@ private theorem source_rows (a c : ℕ) (hc : 2 ≤ c) (hca : c < a) : Rows a c 
     have := hN
     unfold modulus at this
     omega
-  have hc0 : 0 ≤ C a c := by dsimp [C]; nlinarith [mul_nonneg (show 0 ≤ sh a * T a - 1 by nlinarith) (show 0 ≤ U c - 1 by omega)]
+  have hNraw : 2 * C a c + 1 = T a * T a * U c - 1 := by
+    dsimp only [C]
+    rw [hts]
+    ring
+  have hCraw : C a c = T a * T a * rh c - 1 := by
+    dsimp only [C]
+    rw [hts, hur]
+    ring
+  have hc0 : 0 ≤ C a c := by
+    have hst : (1 : ℤ) * 1 ≤ sh a * T a :=
+      mul_le_mul (by omega) (by omega) (by norm_num) (by omega)
+    have hprod : (1 : ℤ) * 1 ≤ (sh a * T a) * U c :=
+      mul_le_mul (by simpa using hst) (by omega) (by norm_num) (by nlinarith only [hst])
+    dsimp only [C]
+    nlinarith only [hprod]
   have hca0 : 0 ≤ (T a + 1) * rh c := by positivity
   have hcb0 : 0 ≤ sh a * (U c + 1) := by positivity
   have hcg0 : 0 ≤ sh a * (T a + 1) := by positivity
   have hcaC : (T a + 1) * rh c ≤ C a c := by
-    dsimp [C]
+    rw [hCraw]
     have hh : 1 ≤ T a * T a - T a - 1 := by nlinarith
     nlinarith [mul_nonneg (show 0 ≤ rh c - 1 by omega) (show 0 ≤ T a * T a - T a - 1 by omega)]
   have hcbC : sh a * (U c + 1) ≤ C a c := by
@@ -208,27 +225,36 @@ private theorem source_rows (a c : ℕ) (hc : 2 ≤ c) (hca : c < a) : Rows a c 
   have hnewa : 0 ≤ (T a + 1) * U c ∧ (T a + 1) * U c ≤ 2 * C a c + 1 := by
     constructor
     · positivity
-    · nlinarith only [hcaC, hur]
+    · calc
+        (T a + 1) * U c = 2 * ((T a + 1) * rh c) := by rw [hur]; ring
+        _ ≤ 2 * C a c + 1 := by omega
   have hnewb : 0 ≤ T a * U c + sh a ∧ T a * U c + sh a ≤ 2 * C a c + 1 := by
     constructor
     · positivity
-    · nlinarith only [hcbC, hts, hs]
+    · calc
+        T a * U c + sh a = 2 * (sh a * (U c + 1)) - sh a := by rw [hts]; ring
+        _ ≤ 2 * C a c + 1 := by omega
   have hnewg : 0 ≤ sh a * (T a + 1) ∧ sh a * (T a + 1) ≤ 2 * C a c + 1 := by omega
   have hlastU : (2 : ℤ) ^ (c - 1) * A a = C a c + 1 + (T a + 1) * rh c := by
-    change rh c * A a = _
-    dsimp [A, C]
-    nlinarith only [congrArg (fun z : ℤ => sh a * T a * z) hur, hts]
+    rw [hCraw]
+    dsimp only [A]
+    ring
   have hlastV : (2 : ℤ) ^ (a - 1) * B a c = C a c + 1 + sh a * (U c + 1) := by
     dsimp [B, C]; ring
   have hlastW : (2 : ℤ) ^ (a - 1) * H a c = C a c + 1 + sh a * (T a + 1) := by
     dsimp [H, C]; ring
   have hlastUn : (2 : ℤ) ^ (c - 1) * (2 * A a) =
-      (2 * C a c + 1) + 1 + (T a + 1) * U c := by nlinarith only [hlastU, hur]
+      (2 * C a c + 1) + 1 + (T a + 1) * U c := by
+    calc
+      _ = 2 * ((2 : ℤ) ^ (c - 1) * A a) := by ring
+      _ = 2 * (C a c + 1 + (T a + 1) * rh c) := by rw [hlastU]
+      _ = _ := by rw [hur]; ring
   have hlastVn : (2 : ℤ) ^ (a - 1) * (2 * B a c - 1) =
       (2 * C a c + 1) + 1 + (T a * U c + sh a) := by
-    change sh a * (2 * B a c - 1) = _
-    dsimp [B, C]
-    nlinarith only [hts]
+    calc
+      _ = 2 * ((2 : ℤ) ^ (a - 1) * B a c) - sh a := by ring
+      _ = 2 * (C a c + 1 + sh a * (U c + 1)) - sh a := by rw [hlastV]
+      _ = _ := by rw [hts]; ring
   have hlastWn : (2 : ℤ) ^ (a - 1) * (2 * H a c - T a - 1) =
       (2 * C a c + 1) + 1 + sh a * (T a + 1) := by
     dsimp [H, C]; ring
@@ -258,8 +284,9 @@ private theorem source_rows (a c : ℕ) (hc : 2 ≤ c) (hca : c < a) : Rows a c 
     apply centered_congr
     have he : (2 : ℤ) ^ c * 2 ^ i * A a = 2 ^ i * B a c + (2 * C a c + 1) * 2 ^ i := by
       change U c * 2 ^ i * A a = _
-      dsimp [A, B, C]
-      nlinarith only [congrArg (fun z : ℤ => z * (T a * U c * 2 ^ i)) hts]
+      rw [hNraw]
+      dsimp only [A, B]
+      ring
     rw [he, Int.add_mul_emod_self_left]
   have hXv (i : ℕ) : X a c (c + i) =
       centered (2 * (2 * C a c + 1) + 1) (2 ^ i * (2 * B a c - 1)) := by
@@ -268,8 +295,9 @@ private theorem source_rows (a c : ℕ) (hc : 2 ≤ c) (hca : c < a) : Rows a c 
     have he : (2 : ℤ) ^ c * 2 ^ i * (2 * A a) =
         2 ^ i * (2 * B a c - 1) + (2 * (2 * C a c + 1) + 1) * 2 ^ i := by
       change U c * 2 ^ i * (2 * A a) = _
-      dsimp [A, B, C]
-      nlinarith only [congrArg (fun z : ℤ => z * (T a * U c * 2 ^ i)) hts]
+      rw [hNraw]
+      dsimp only [A, B]
+      ring
     rw [he, Int.add_mul_emod_self_left]
   have hSw (i : ℕ) : S a c (a + c + i) = centered (2 * C a c + 1) (2 ^ i * H a c) := by
     rw [S, raw, hseed, pow_add, pow_add, hN]
@@ -277,8 +305,9 @@ private theorem source_rows (a c : ℕ) (hc : 2 ≤ c) (hca : c < a) : Rows a c 
     have he : (2 : ℤ) ^ a * 2 ^ c * 2 ^ i * A a =
         2 ^ i * H a c + (2 * C a c + 1) * ((T a + 1) * 2 ^ i) := by
       change T a * U c * 2 ^ i * A a = _
-      dsimp [A, H, C]
-      nlinarith only [congrArg (fun z : ℤ => z * (T a * U c * (T a + 1) * 2 ^ i)) hts]
+      rw [hNraw]
+      dsimp only [A, H]
+      ring
     rw [he, Int.add_mul_emod_self_left]
   have hXw (i : ℕ) : X a c (a + c + i) =
       centered (2 * (2 * C a c + 1) + 1) (2 ^ i * (2 * H a c - T a - 1)) := by
@@ -288,8 +317,9 @@ private theorem source_rows (a c : ℕ) (hc : 2 ≤ c) (hca : c < a) : Rows a c 
         2 ^ i * (2 * H a c - T a - 1) +
           (2 * (2 * C a c + 1) + 1) * ((T a + 1) * 2 ^ i) := by
       change T a * U c * 2 ^ i * (2 * A a) = _
-      dsimp [A, H, C]
-      nlinarith only [congrArg (fun z : ℤ => z * (T a * U c * (T a + 1) * 2 ^ i)) hts]
+      rw [hNraw]
+      dsimp only [A, H]
+      ring
     rw [he, Int.add_mul_emod_self_left]
   refine ⟨hN, hM, hc0, ⟨⟨hca0, hcaC⟩, ⟨hcb0, hcbC⟩, hcg0, hcgC⟩,
     ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
@@ -313,9 +343,9 @@ private theorem source_rows (a c : ℕ) (hc : 2 ≤ c) (hca : c < a) : Rows a c 
       rw [pow_succ] at hh
       nlinarith only [congrArg (fun z : ℤ => z * A a) hh]
     have hAe : A a ≤ 2 * C a c + 1 := by
-      dsimp [A, C]
-      have := mul_nonneg (show 0 ≤ U c - 2 by omega) (show 0 ≤ sh a * T a by positivity)
-      nlinarith
+      rw [hNraw]
+      dsimp only [A]
+      nlinarith [mul_nonneg (show 0 ≤ U c - 2 by omega) (sq_nonneg (T a))]
     apply centered_unique (by omega) (by omega) (centered_bounds (by omega) (by omega) _) ?_ ?_
     · have hh : (2 * (2 * C a c + 1) + 1) / 2 = 2 * C a c + 1 := by omega
       rw [hh]; constructor <;> dsimp [A] at * <;> nlinarith
@@ -357,7 +387,7 @@ private theorem paired_selection (off len n : ℕ) (hn : n < 2 ^ len)
   obtain ⟨F, E, hp, hs⟩ := dyadic_select hw n (by simpa using hn)
   refine ⟨F, E, hp, ?_, ?_⟩
   have hm (i : ℕ) (hi : i ∈ F) : off ≤ i ∧ i < off + len := by
-    have := List.mem_range'.mp (hp.mem_iff.mp (List.mem_append_left E hi))
+    obtain ⟨i, hi, he⟩ := List.mem_range'.mp (hp.mem_iff.mp (List.mem_append_left E hi))
     omega
   have hlin (v : ℕ → ℤ) (b : ℤ)
       (hv : ∀ i < len, v (off + i) = (2 : ℤ) ^ i * b) :
@@ -404,9 +434,9 @@ private theorem row_partition (a c : ℕ) (hc : 0 < c) (ha : 0 < a) :
     row 0 (c - 1) ++ [c - 1] ++ row c (a - 1) ++ [a + c - 1] ++
       row (a + c) (a - 1) ++ [K a c - 1] = List.range (K a c) := by
   have hblock (off len : ℕ) : row off len ++ [off + len] = row off (len + 1) := by
-    simpa only [row, Nat.mul_one] using (List.range'_concat off len).symm
+    simpa only [row, Nat.mul_one] using (List.range'_1_concat (s := off) (n := len)).symm
   have hjoin (off l r : ℕ) : row off l ++ row (off + l) r = row off (l + r) := by
-    simpa only [row, Nat.mul_one] using (List.range'_append off l r).symm
+    simpa only [row, Nat.mul_one] using (List.range'_append_1 (s := off) (m := l) (n := r))
   rw [show c - 1 = 0 + (c - 1) by omega, hblock]
   rw [show c - 1 + 1 = c by omega]
   rw [show a + c - 1 = c + (a - 1) by omega, List.append_assoc, hblock]
@@ -416,7 +446,7 @@ private theorem row_partition (a c : ℕ) (hc : 0 < c) (ha : 0 < a) :
     List.append_assoc, List.append_assoc, hblock]
   rw [show a - 1 + 1 = a by omega]
   rw [hjoin, show c + a + a = K a c by dsimp [K]; omega]
-  simpa [row] using (List.range'_eq_range (K a c))
+  simpa [row] using (List.range_eq_range' (n := K a c)).symm
 
 private theorem joint_lift (k v j : ℕ) (hk : 0 < k) (l : List ℕ)
     (hl : l.Perm (List.range k)) (hj : j ≤ k)
@@ -499,5 +529,297 @@ private theorem joint_lift (k v j : ℕ) (hk : 0 < k) (l : List ℕ)
         (fun i hi => hnew i (List.mem_of_mem_take hi))
       rw [← List.map_take, he]
       exact inStrip_prefix hsn n
+
+
+/-- Assemble the two literal words using a single partition of the physical W row. -/
+private theorem assemble (a c : ℕ) (hc : 2 ≤ c) (hca : c < a)
+    (before : Bool) (F E : List ℕ) (n : ℕ)
+    (hFE : (F ++ E).Perm (row (a + c) (a - 1)))
+    (hFs : (F.map (S a c)).sum = (n : ℤ) * H a c)
+    (hFx : (F.map (X a c)).sum = (n : ℤ) * (2 * H a c - T a - 1))
+    (hh : 0 ≤ (T a + 1) * (T a - U c) - H a c * n ∧
+      (T a + 1) * (T a - U c) - H a c * n ≤ sh a * (T a + 1))
+    (hqq : 0 ≤ 2 * ((T a + 1) * (T a - U c) - H a c * n) -
+        T a * (T a + 1) + (T a + 1) * n + (if before then A a else 0) ∧
+      2 * ((T a + 1) * (T a - U c) - H a c * n) -
+        T a * (T a + 1) + (T a + 1) * n + (if before then A a else 0) ≤
+          sh a * (T a + 1)) :
+    ∃ sigma : List (Fin (K a c)), ∃ j : ℕ, j ≤ K a c ∧
+      OriginalOrder (K a c) (seed a) sigma ∧
+      OriginalOrder (K a c + 1) (2 * seed a)
+        (RunFirstEarTransport.earWord (K a c) sigma j) := by
+  let d := source_rows a c hc hca
+  let UL := row 0 (c - 1)
+  let VL := row c (a - 1)
+  let WL := row (a + c) (a - 1)
+  let al := c - 1
+  let be := a + c - 1
+  let ga := K a c - 1
+  let l := VL ++ [be] ++ E ++ [ga] ++ F ++ UL ++ [al]
+  let Qn := E ++ (if before then [K a c] else [])
+  let Rn := (if before then [] else [K a c]) ++ F ++ UL
+  let ln := VL ++ [be] ++ Qn ++ [ga] ++ Rn ++ [al]
+  let j := (VL ++ [be] ++ E).length + (if before then 0 else 1)
+  let delta := T a - U c
+  let h := (T a + 1) * delta - H a c * n
+  let q := 2 * h - T a * (T a + 1) + (T a + 1) * n +
+    (if before then A a else 0)
+  have ht : 4 ≤ T a := pow_lower a (by omega)
+  have hu : 4 ≤ U c := pow_lower c hc
+  have hs : 0 ≤ sh a := by positivity
+  have hr : 0 ≤ rh c := by positivity
+  have hts : T a = 2 * sh a := pow_half a (by omega)
+  have hur : U c = 2 * rh c := pow_half c (by omega)
+  have hut : 2 * U c ≤ T a := by
+    have hp := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show c + 1 ≤ a by omega)
+    simpa only [pow_succ] using hp
+  have hup (i : ℕ) (hi : i < c - 1) : S a c (0 + i) = (2 : ℤ) ^ i * A a := by simpa using d.oldU i hi
+  have hux (i : ℕ) (hi : i < c - 1) : X a c (0 + i) = (2 : ℤ) ^ i * (2 * A a) := by simpa using d.newU i hi
+  have su := row_sum 0 (c - 1) (S a c) (A a) hup
+  have xu := row_sum 0 (c - 1) (X a c) (2 * A a) hux
+  have sv := row_sum c (a - 1) (S a c) (B a c) d.oldV
+  have xv := row_sum c (a - 1) (X a c) (2 * B a c - 1) d.newV
+  have sw := row_sum (a + c) (a - 1) (S a c) (H a c) d.oldW
+  have xw := row_sum (a + c) (a - 1) (X a c) (2 * H a c - T a - 1) d.newW
+  have netu : (UL.map (S a c)).sum + S a c al = (T a + 1) * (U c - T a) := by
+    rw [su, d.oldAlpha]
+    dsimp only [A, C]
+    rw [hts, hur]
+    ring
+  have netv : (VL.map (S a c)).sum + S a c be = delta := by
+    rw [sv, d.oldBeta]
+    dsimp only [B, C, delta]
+    rw [hts]
+    ring
+  have netw : (WL.map (S a c)).sum + S a c ga = T a * delta := by
+    rw [sw, d.oldGamma]
+    dsimp only [H, C, delta]
+    rw [hts]
+    ring
+  have netun : (UL.map (X a c)).sum + X a c al = 2 * (T a + 1) * (U c - T a) - 1 := by
+    rw [xu, d.newAlpha]
+    dsimp only [A, C]
+    rw [hts, hur]
+    ring
+  have netvn : (VL.map (X a c)).sum + X a c be = 2 * delta - T a := by
+    rw [xv, d.newBeta]
+    dsimp only [B, C, delta]
+    rw [hts]
+    ring
+  have netwn : (WL.map (X a c)).sum + X a c ga = 2 * T a * delta - T a * T a := by
+    rw [xw, d.newGamma]
+    dsimp only [H, C, delta]
+    rw [hts]
+    ring
+  have hEs : (E.map (S a c)).sum = (WL.map (S a c)).sum - (n : ℤ) * H a c := by
+    have hh := (hFE.map (S a c)).sum_eq
+    simp only [List.map_append, List.sum_append, hFs] at hh
+    omega
+  have hEx : (E.map (X a c)).sum = (WL.map (X a c)).sum -
+      (n : ℤ) * (2 * H a c - T a - 1) := by
+    have hh := (hFE.map (X a c)).sum_eq
+    simp only [List.map_append, List.sum_append, hFx] at hh
+    omega
+  have hperm : l.Perm (List.range (K a c)) := by
+    rw [← row_partition a c (by omega) (by omega)]
+    apply List.perm_iff_count.mpr
+    intro i
+    have hh := hFE.count_eq i
+    simp only [List.count_append] at hh
+    dsimp only [l, UL, VL, WL, al, be, ga]
+    simp only [List.count_append]
+    omega
+  have hj : j ≤ K a c := by
+    have hh := hFE.length_eq
+    simp only [List.length_append, List.length_range'] at hh
+    dsimp only [j, VL]
+    simp only [List.length_append, List.length_range', List.length_singleton]
+    split_ifs <;> dsimp only [K] <;> omega
+  have hear : l.take j ++ [K a c] ++ l.drop j = ln := by
+    cases before <;>
+      simp [l, j, ln, Qn, Rn, List.append_assoc, List.take_append, List.drop_append]
+  have hpos (v : ℕ → ℤ) (off len : ℕ) (b : ℤ) (hb : 0 ≤ b)
+      (hv : ∀ i < len, v (off + i) = (2 : ℤ) ^ i * b) :
+      ∀ i ∈ row off len, 0 ≤ v i :=
+    dyadic_nonneg hb (row_dyadic off len v b hv)
+  have hsu := hpos (S a c) 0 (c - 1) (A a) (by dsimp [A]; positivity) hup
+  have hxu := hpos (X a c) 0 (c - 1) (2 * A a) (by dsimp [A]; positivity) hux
+  have hsv := hpos (S a c) c (a - 1) (B a c) (by dsimp [B]; positivity) d.oldV
+  have hxv := hpos (X a c) c (a - 1) (2 * B a c - 1) (by dsimp [B]; positivity) d.newV
+  have hsw := hpos (S a c) (a + c) (a - 1) (H a c) (by dsimp [H]; positivity) d.oldW
+  have hxw := hpos (X a c) (a + c) (a - 1) (2 * H a c - T a - 1) (by dsimp [H]; positivity) d.newW
+  have hsubF (i : ℕ) (hi : i ∈ F) : i ∈ WL := hFE.mem_iff.mp (List.mem_append_left E hi)
+  have hsubE (i : ℕ) (hi : i ∈ E) : i ∈ WL := hFE.mem_iff.mp (List.mem_append_right F hi)
+  have hPs : ∀ i ∈ VL, 0 ≤ S a c i := hsv
+  have hQs : ∀ i ∈ E, 0 ≤ S a c i := fun i hi => hsw i (hsubE i hi)
+  have hRs : ∀ i ∈ F ++ UL, 0 ≤ S a c i := by
+    intro i hi
+    rcases List.mem_append.mp hi with hi | hi
+    · exact hsw i (hsubF i hi)
+    · exact hsu i hi
+  have hPx : ∀ i ∈ VL, 0 ≤ X a c i := hxv
+  have hQx : ∀ i ∈ Qn, 0 ≤ X a c i := by
+    intro i hi
+    simp only [Qn, List.mem_append] at hi
+    rcases hi with hi | hi
+    · exact hxw i (hsubE i hi)
+    · cases before <;> simp only [Bool.false_eq_true, if_false, if_true,
+        List.mem_nil_iff, List.mem_singleton] at hi
+      subst i
+      rw [d.ear]
+      dsimp [A]; positivity
+  have hRx : ∀ i ∈ Rn, 0 ≤ X a c i := by
+    intro i hi
+    simp only [Rn, List.mem_append] at hi
+    rcases hi with (hi | hi) | hi
+    · cases before <;> simp only [Bool.false_eq_true, if_false, if_true,
+        List.mem_nil_iff, List.mem_singleton] at hi
+      subst i
+      rw [d.ear]
+      dsimp [A]; positivity
+    · exact hxw i (hsubF i hi)
+    · exact hxu i hi
+  have htot : (l.map (S a c)).sum = 0 := by
+    have he : (T a + 1) * (U c - T a) + delta + T a * delta = 0 := by dsimp [delta]; ring
+    dsimp only [l]
+    simp only [List.map_append, List.sum_append, List.map_singleton, List.sum_singleton]
+    linarith [netu, netv, netw, hEs, hFs]
+  have htotn : (ln.map (X a c)).sum = 0 := by
+    have he : (2 * (T a + 1) * (U c - T a) - 1) +
+        (2 * delta - T a) + (2 * T a * delta - T a * T a) + A a = 0 := by
+      dsimp [delta, A]; ring
+    have hearg : ((if before then [K a c] else []).map (X a c)).sum +
+        ((if before then [] else [K a c]).map (X a c)).sum = A a := by
+      cases before <;> simp [d.ear]
+    dsimp only [ln, Qn, Rn]
+    simp only [List.map_append, List.sum_append, List.map_singleton, List.sum_singleton]
+    linarith [netun, netvn, netwn, hEx, hFx]
+  have hpn : (VL.map (X a c)).sum + X a c be = T a - 2 * U c := by
+    dsimp [delta] at netvn
+    linarith
+  have hqn : (T a - 2 * U c) + (Qn.map (X a c)).sum + X a c ga = q := by
+    have hearg : ((if before then [K a c] else []).map (X a c)).sum =
+        (if before then A a else 0) := by cases before <;> simp [d.ear]
+    dsimp only [Qn]
+    simp only [List.map_append, List.sum_append]
+    rw [hearg, hEx]
+    dsimp only [q, h, delta]
+    nlinarith only [netwn]
+  have hqs : delta + (E.map (S a c)).sum + S a c ga = h := by
+    rw [hEs]
+    dsimp only [h]
+    nlinarith only [netw]
+  have hbeta : 0 ≤ delta ∧ delta ≤ sh a * (U c + 1) := by
+    dsimp only [delta]
+    constructor
+    · omega
+    · nlinarith [mul_nonneg (show 0 ≤ T a by omega) (show 0 ≤ U c - 1 by omega)]
+  have hbetan : 0 ≤ T a - 2 * U c ∧ T a - 2 * U c ≤ T a * U c + sh a := by
+    constructor
+    · omega
+    · nlinarith [mul_nonneg (show 0 ≤ T a by omega) (show 0 ≤ U c - 1 by omega)]
+  have hstrip : InStrip (S a c) (C a c) 0 l := by
+    change InStrip (S a c) (C a c) 0 (VL ++ [be] ++ E ++ [ga] ++ (F ++ UL) ++ [al])
+    apply three_seams (S a c) VL E (F ++ UL) be ga al (C a c) delta h
+      hPs hQs hRs
+    · rw [d.oldBeta]; linarith [d.caps.2.1.2]
+    · rw [d.oldGamma]; linarith [d.caps.2.2.2]
+    · rw [d.oldAlpha]; constructor <;> linarith [d.caps.1]
+    · exact netv
+    · exact hqs
+    · simp only [List.map_append, List.sum_append] at htot ⊢
+      dsimp only [l] at htot
+      simp only [List.map_append, List.sum_append, List.map_singleton, List.sum_singleton] at htot
+      linarith
+    · rw [d.oldBeta]; simpa using hbeta
+    · rw [d.oldGamma]; simpa using hh
+  have hstripn : InStrip (X a c) (2 * C a c + 1) 0 ln := by
+    apply three_seams (X a c) VL Qn Rn be ga al (2 * C a c + 1) (T a - 2 * U c) q
+      hPx hQx hRx
+    · rw [d.newBeta]
+      have hh := d.caps.2.1.2
+      nlinarith only [hh, hts, hs]
+    · rw [d.newGamma]
+      linarith [d.caps.2.2.2, d.cap0]
+    · rw [d.newAlpha]
+      constructor <;> nlinarith only [d.caps.1.1, d.caps.1.2, hur]
+    · exact hpn
+    · exact hqn
+    · dsimp only [ln] at htotn
+      simp only [List.map_append, List.sum_append, List.map_singleton, List.sum_singleton] at htotn
+      linarith
+    · rw [d.newBeta]; simpa using hbetan
+    · rw [d.newGamma]; simpa only [q, h, delta] using hqq
+  obtain ⟨sigma, ho, hn⟩ := joint_lift (K a c) (seed a) j (by dsimp [K]; omega) l hperm hj
+    (by simpa only [d.oldMod, show (2 * C a c + 1) / 2 = C a c by omega] using hstrip)
+    htot
+    (by rw [hear]; simpa only [d.newMod, show (2 * (2 * C a c + 1) + 1) / 2 = 2 * C a c + 1 by omega] using hstripn)
+    (by rw [hear]; exact htotn)
+  exact ⟨sigma, j, hj, ho, hn⟩
+
+/-- For every c<a, one native physical permutation and one literal ear cut
+complete both centered sources, with all natural prefixes and exact total zero. -/
+theorem native_three_negative_common_cut (a c : ℕ) (hc : 2 ≤ c) (hca : c < a) :
+    let k := 2 * a + c
+    let v := 1 + 2 ^ a + 2 ^ (2 * a)
+    ∃ sigma : List (Fin k), ∃ j : ℕ, j ≤ k ∧ OriginalOrder k v sigma ∧
+      OriginalOrder (k + 1) (2 * v) (RunFirstEarTransport.earWord k sigma j) := by
+  have ht : 4 ≤ T a := pow_lower a (by omega)
+  have hu : 4 ≤ U c := pow_lower c hc
+  have hts : T a = 2 * sh a := pow_half a (by omega)
+  have hg : T a * (T a + 1) / 2 = sh a * (T a + 1) := by
+    have he : T a * (T a + 1) = 2 * (sh a * (T a + 1)) := by rw [hts]; ring
+    rw [he]; omega
+  by_cases hboundary : a = c + 1
+  · have htu : T a = 2 * U c := by rw [hboundary]; simp only [T, U, pow_succ]; ring
+    apply assemble a c hc hca false [] (row (a + c) (a - 1)) 0
+      (by simp) (by simp) (by simp)
+    · simp only [Nat.cast_zero, mul_zero, sub_zero]
+      constructor
+      · positivity
+      · nlinarith only [htu, hts]
+    · simp only [Bool.false_eq_true, if_false, Nat.cast_zero, mul_zero, sub_zero, add_zero]
+      constructor <;> nlinarith only [htu]
+  · have hgap : 2 ≤ a - c := by omega
+    let m : ℤ := 2 ^ (a - c)
+    have hm : m = 4 ∨ 8 ≤ m := by
+      by_cases he : a - c = 2
+      · left; simp [m, he]
+      · right
+        have hh := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show 3 ≤ a - c by omega)
+        norm_num at hh
+        exact hh
+    have htu : T a = m * U c := by
+      dsimp only [T, U, m]
+      rw [← pow_add, show a - c + c = a by omega]
+    let f := (T a + 1) * (T a - U c) / H a c
+    have hf := mask_bound (T a) (U c) m hu hm htu
+    change 0 ≤ f ∧ f ≤ m - 2 ∧ f < T a / 2 ∧
+      0 ≤ (T a + 1) * (T a - U c) - H a c * f ∧
+      2 * ((T a + 1) * (T a - U c) - H a c * f) + 1 + (T a + 1) * f ≤
+        T a * (T a + 1) / 2 at hf
+    let n := f.toNat
+    have hn : (n : ℤ) = f := Int.toNat_of_nonneg hf.1
+    have hnfit : n < 2 ^ (a - 1) := by
+      have hs : T a / 2 = sh a := by omega
+      have hh : (n : ℤ) < (2 : ℤ) ^ (a - 1) := by simpa only [hn, hs] using hf.2.2.1
+      exact_mod_cast hh
+    let d := source_rows a c hc hca
+    obtain ⟨F, E, hFE, hFs, hFx⟩ := paired_selection (a + c) (a - 1) n hnfit
+      (S a c) (X a c) (H a c) (2 * H a c - T a - 1) d.oldW d.newW
+    apply assemble a c hc hca true F E n hFE hFs hFx
+    · rw [hn]
+      constructor
+      · exact hf.2.2.2.1
+      · rw [hg] at hf
+        nlinarith [mul_nonneg (show 0 ≤ T a + 1 by omega) hf.1]
+    · simp only [if_true, hn]
+      have he : A a = T a * (T a + 1) + 1 := by dsimp [A]; ring
+      rw [he, ← hg]
+      constructor
+      · nlinarith [mul_nonneg (show 0 ≤ T a + 1 by omega) hf.1, hf.2.2.2.1]
+      · nlinarith only [hf.2.2.2.2]
+
+#print axioms native_three_negative_common_cut
 
 end D5.S3.Combinatorics.Circle.ThreeNegativeCommonCut
