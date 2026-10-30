@@ -7,8 +7,8 @@
    digest: The largest strongly complementary permutation family has size two to the valuation. -/
 
 import Mathlib.LinearAlgebra.Matrix.Permutation
-import Mathlib.GroupTheory.PGroup
 import D5.S3.Combinatorics.Games.DivisorNimBoundOutcome
+import D5.S3.StatisticalMechanics.CellularAutomata.YangBaxterAutomatonPeriod
 
 /-! The matrix convention is `σ.permMatrix ℕ i j = 1 ↔ σ i = j`.
 The definitions are Definitions 4.1 and 4.3 of Rajchel–Gąsiorowski–Życzkowski,
@@ -202,22 +202,6 @@ private lemma normalized_involutions {n : ℕ} (s : Finset (Equiv.Perm (Fin n)))
   change σ * τ = τ * σ
   rw [← hinv, mul_inv_rev, hτi, hσi]
 
-private lemma closure_exponent_two {n : ℕ} (s : Finset (Equiv.Perm (Fin n)))
-    (hs : ∀ σ ∈ s, σ ^ 2 = 1)
-    (hc : (s : Set (Equiv.Perm (Fin n))).Pairwise Commute) :
-    ∀ g ∈ Subgroup.closure (s : Set (Equiv.Perm (Fin n))), g ^ 2 = 1 := by
-  let g := Subgroup.closure (s : Set (Equiv.Perm (Fin n)))
-  let : IsMulCommutative g := Subgroup.isMulCommutative_closure hc
-  intro x hx
-  induction hx using Subgroup.closure_induction with
-  | mem x hx => exact hs x hx
-  | one => exact one_pow 2
-  | mul x y hx hy hxi hyi =>
-    have hcomm : Commute x y := by
-      exact congrArg Subtype.val (mul_comm' (⟨x, hx⟩ : g) (⟨y, hy⟩ : g))
-    rw [hcomm.mul_pow, hxi, hyi, one_mul]
-  | inv x hx hxi => rw [inv_pow, hxi, inv_one]
-
 private lemma orbit_evaluation_bound {n : ℕ} (s : Finset (Equiv.Perm (Fin n)))
     (hs : (s : Set (Equiv.Perm (Fin n))).Pairwise (fun σ τ =>
       IsStronglyComplementary (σ.permMatrix ℕ) (τ.permMatrix ℕ))) (x : Fin n) :
@@ -262,6 +246,7 @@ private lemma least_orbit_divisor {n : ℕ} (hn : 1 ≤ n)
   apply (congrArg (fun k : ℕ => 2 ^ Nat.find hex ∣ k) hc).mpr
   exact Finset.dvd_sum (fun ω _ => hd ω.out)
 
+open D5.S3.StatisticalMechanics.CellularAutomata.YangBaxterAutomatonPeriod in
 private lemma permutation_family_upper {n : ℕ} (hn : 1 ≤ n)
     (s : Finset (Equiv.Perm (Fin n))) (hs : (s : Set (Equiv.Perm (Fin n))).Pairwise (fun σ τ =>
       IsStronglyComplementary (σ.permMatrix ℕ) (τ.permMatrix ℕ))) :
@@ -270,12 +255,15 @@ private lemma permutation_family_upper {n : ℕ} (hn : 1 ≤ n)
   by_cases hne : s.Nonempty
   · obtain ⟨t, hcard, h1, ht⟩ := normalize_family s hs hne
     obtain ⟨hi, hc⟩ := normalized_involutions t h1 ht
-    have he := closure_exponent_two t hi hc
     have hg : IsPGroup 2 (Subgroup.closure (t : Set (Equiv.Perm (Fin n)))) := by
-      intro g
-      refine ⟨1, ?_⟩
-      apply Subtype.ext
-      exact he g g.property
+      apply isPGroup_closure_of_commuting_involutions
+        (G := Equiv.Perm (Fin n)) (S := (t : Set _))
+      · intro σ hσ τ hτ
+        by_cases h : σ = τ
+        · rw [h]
+        · exact (hc hσ hτ h).eq
+      · intro σ hσ
+        simpa only [pow_two] using hi σ hσ
     obtain ⟨x, a, ha, hd⟩ :=
       least_orbit_divisor hn (Subgroup.closure (t : Set (Equiv.Perm (Fin n)))) hg
     have hb := orbit_evaluation_bound t ht x

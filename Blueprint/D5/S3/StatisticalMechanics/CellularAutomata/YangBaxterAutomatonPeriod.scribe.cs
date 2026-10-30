@@ -31,7 +31,16 @@ internal sealed class YangBaxterAutomatonPeriodDocument : IScribeDocumentDefinit
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("araoka-2026-yang-baxter-automaton-period"),
-                    ResolutionKind.Proved))),
+                    ResolutionKind.Proved)),
+            Describe.Lean(
+                DescribeId.Create("ybautomaton-commuting-involutions"),
+                DeclarationHandle.Create("D5/S3/StatisticalMechanics/CellularAutomata/YangBaxterAutomatonPeriod.isPGroup_closure_of_commuting_involutions"),
+                H("Commuting involutions generate a 2-group"),
+                StatementSource.FromAuthor(CommutingInvolutionsFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "In any group, a set of pairwise commuting elements whose squares are the identity generates a 2-group."))),
+                DescribeRole.Theorem)),
         []));
 
     private static DocumentBlock Node(
@@ -64,6 +73,22 @@ internal sealed class YangBaxterAutomatonPeriodDocument : IScribeDocumentDefinit
     private static Formula Nats() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Apply1(Formula fn, Formula arg) => new Formula.Apply(fn, [arg]);
     private static Formula Pair(Formula left, Formula right) => Seq(Open, left, Comma, Sp, right, Close);
+
+    private static Formula CommutingInvolutionsFormula()
+    {
+        Formula g = F.Id("G"), s = F.Id("S"), x = F.Id("x"), y = F.Id("y");
+        Formula xy = new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
+        Formula yx = new Formula.Binary(y, FormulaBinaryOperator.Multiply, x);
+        Formula xx = new Formula.Binary(x, FormulaBinaryOperator.Multiply, x);
+        Formula xs = Rel(x, FormulaRelationOperator.MemberOf, s);
+        Formula ys = Rel(y, FormulaRelationOperator.MemberOf, s);
+        Formula commutes = All("x", g, Implies(xs, All("y", g, Implies(ys, Equal(xy, yx)))));
+        Formula squares = All("x", g, Implies(xs, Equal(xx, D(1))));
+        Formula conclusion = Call(F.Id("IsPGroup"), D(2), Call(F.Id("SubgroupClosure"), s));
+        return Disp(All("G", Seq(Named(F.Id("Type")), Caret, Grp(Star)),
+            Seq(OpenBracket, Call(F.Id("Group"), g), CloseBracket, Sp,
+                All("S", Call(F.Id("Set"), g), Implies(commutes, Implies(squares, conclusion))))));
+    }
 
     private static Formula RmatFormula()
     {
