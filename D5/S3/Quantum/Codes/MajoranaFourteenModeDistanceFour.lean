@@ -6,9 +6,10 @@
    utility: none
    digest: Parity Majorana codes with a logical qubit need sixteen modes for distance four. -/
 
+import D5.S3.Fourier.CharacterSelection.BinaryCharacterCodeDuality
 import Mathlib.InformationTheory.Hamming
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
+import Mathlib.Data.Nat.Factorization.Root
+import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
 
 /-!
 Hastings, arXiv:1703.00612v1, `c.tex` lines 86–117 and 272–273.
@@ -22,28 +23,18 @@ publication and freezing belong to the caller.
 
 open scoped BigOperators
 open Matrix
+open D5.S3.Fourier.CharacterSelection.BinaryCharacterCodeDuality
+  (characterOrthogonalComplement)
 
 noncomputable section
 
 namespace D5.S3.Quantum.Codes.MajoranaFourteenModeDistanceFour
-
-/-- The weight of the Majorana product is the Hamming weight of its bit string
-(Hastings, source line 113). This directly reuses Mathlib's Hamming norm. -/
-def weight {ι : Type*} [Fintype ι] (v : ι → ZMod 2) : ℕ := hammingNorm v
 
 /-- Stabilizer subspaces are pairwise orthogonal, including each vector with
 itself (Hastings, source lines 94–97). -/
 def IsSelfOrthogonal {ι : Type*} [Fintype ι]
     (c : Submodule (ZMod 2) (ι → ZMod 2)) : Prop :=
   ∀ x ∈ c, ∀ y ∈ c, x ⬝ᵥ y = 0
-
-/-- Products commuting with every stabilizer (source lines 107–108).
-Mathlib's orthogonal complement uses the other dot-product argument, which is
-equal by commutativity over the binary field. -/
-def commutant {ι : Type*} [Fintype ι]
-    (c : Submodule (ZMod 2) (ι → ZMod 2)) : Submodule (ZMod 2) (ι → ZMod 2) :=
-  LinearMap.BilinForm.orthogonal
-    (dotProductBilin (ZMod 2) (ZMod 2) : LinearMap.BilinForm (ZMod 2) (ι → ZMod 2)) c
 
 /-- Hastings's belief for at most fourteen modes: under the parity convention
 (lines 115–117), a positive logical-qubit count (lines 99–104) forces a logical
@@ -53,13 +44,20 @@ def claim : Prop :=
   ∀ n : ℕ, n ≤ 14 → ∀ c : Submodule (ZMod 2) (Fin n → ZMod 2),
     IsSelfOrthogonal c → (fun _ => 1) ∈ c →
     2 * Module.finrank (ZMod 2) c < n →
-    ∃ v ∈ commutant c, v ∉ c ∧ weight v < 4
+    ∃ v ∈ characterOrthogonalComplement (ZMod 2) c, v ∉ c ∧ hammingNorm v < 4
 
 private lemma mem_commutant {ι : Type*} [Fintype ι]
     (c : Submodule (ZMod 2) (ι → ZMod 2)) (v : ι → ZMod 2) :
-    v ∈ commutant c ↔ ∀ x ∈ c, v ⬝ᵥ x = 0 := by
-  change (∀ x ∈ c, x ⬝ᵥ v = 0) ↔ _
-  simp only [dotProduct_comm]
+    v ∈ characterOrthogonalComplement (ZMod 2) c ↔ ∀ x ∈ c, v ⬝ᵥ x = 0 := by
+  have h := (LinearMap.BilinForm.mem_orthogonal_iff
+      (B := dotProductBilin (ZMod 2) (ZMod 2)) (N := c) (m := v))
+  change (v ∈ characterOrthogonalComplement (ZMod 2) c ↔
+    ∀ x ∈ c, x ⬝ᵥ v = 0) at h
+  constructor
+  · intro hv x hx
+    exact (dotProduct_comm v x).trans (h.mp hv x hx)
+  · intro hv
+    exact h.mpr fun x hx => (dotProduct_comm x v).trans (hv x hx)
 
 private lemma parity_card {ι : Type*} [Fintype ι]
     (c : Submodule (ZMod 2) (ι → ZMod 2)) (hc : IsSelfOrthogonal c)
@@ -70,7 +68,7 @@ private lemma parity_card {ι : Type*} [Fintype ι]
   rwa [one_dotProduct_one] at h
 
 private lemma pair_weight {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (i j : ι) (hij : i ≠ j) : weight (Pi.single i 1 + Pi.single j 1 : ι → ZMod 2) = 2 := by
+    (i j : ι) (hij : i ≠ j) : hammingNorm (Pi.single i 1 + Pi.single j 1 : ι → ZMod 2) = 2 := by
   classical
   change (Finset.univ.filter fun a : ι =>
     (Pi.single i 1 + Pi.single j 1 : ι → ZMod 2) a ≠ 0).card = 2
@@ -108,16 +106,12 @@ private lemma sum_remove_pair {ι : Type*} [Fintype ι] [DecidableEq ι]
     (i j : ι) (g : ι → ZMod 2) (hi : g i = 0) (hj : g j = 0) :
     ∑ a, g a = ∑ a : {a : ι // a ≠ i ∧ a ≠ j}, g a.val := by
   classical
-  let t := Finset.univ.filter (fun a : ι => a ≠ i ∧ a ≠ j)
-  have hs : ∑ a ∈ t, g a = ∑ a, g a := by
-    apply Finset.sum_subset (Finset.filter_subset _ _)
-    intro a ha hnot
-    have h : a = i ∨ a = j := by
-      simpa only [Finset.mem_filter, Finset.mem_univ, true_and, not_and_or,
-        not_not] using hnot
-    rcases h with rfl | rfl <;> assumption
-  exact hs.symm.trans (Finset.sum_subtype t (by intro x; simp only [t, Finset.mem_filter,
-    Finset.mem_univ, true_and]) g)
+  exact Finset.sum_congr_set {a | a ≠ i ∧ a ≠ j} g (fun a => g a.val)
+    (fun _ _ => rfl) (by
+      intro a ha
+      have h : a = i ∨ a = j := by
+        simpa only [Set.mem_ofPred_eq, not_and_or, not_not] using ha
+      rcases h with rfl | rfl <;> assumption)
 
 private lemma remove_pair {ι : Type*} [Fintype ι] [DecidableEq ι]
     (c : Submodule (ZMod 2) (ι → ZMod 2)) (hc : IsSelfOrthogonal c)
@@ -127,14 +121,13 @@ private lemma remove_pair {ι : Type*} [Fintype ι] [DecidableEq ι]
       IsSelfOrthogonal d ∧ (fun _ => 1) ∈ d ∧
       Module.finrank (ZMod 2) d + 1 = Module.finrank (ZMod 2) c ∧
       Fintype.card {a : ι // a ≠ i ∧ a ≠ j} + 2 = Fintype.card ι ∧
-      (∀ v ∈ commutant d, v ∉ d → weight v < 4 →
-        ∃ w ∈ commutant c, w ∉ c ∧ weight w < 4) := by
+      (∀ v ∈ characterOrthogonalComplement (ZMod 2) d, v ∉ d → hammingNorm v < 4 →
+        ∃ w ∈ characterOrthogonalComplement (ZMod 2) c, w ∉ c ∧ hammingNorm w < 4) := by
   classical
   let ev : c →ₗ[ZMod 2] ZMod 2 := (LinearMap.proj i).comp c.subtype
   let res : LinearMap.ker ev →ₗ[ZMod 2] ({a : ι // a ≠ i ∧ a ≠ j} → ZMod 2) :=
-    { toFun := fun x a => x.val.val a.val
-      map_add' := fun _ _ => rfl
-      map_smul' := fun _ _ => rfl }
+    (LinearMap.funLeft (ZMod 2) (ZMod 2) Subtype.val).comp
+      (c.subtype.comp (LinearMap.ker ev).subtype)
   have zero_i (x : LinearMap.ker ev) : x.val.val i = 0 := x.property
   have zero_j (x : LinearMap.ker ev) : x.val.val j = 0 :=
     (pair_agreement c hc i j hv _ x.val.property).symm.trans (zero_i x)
@@ -221,7 +214,7 @@ private lemma remove_pair {ι : Type*} [Fintype ι] [DecidableEq ι]
       apply hvd
       refine ⟨⟨⟨w, hwc⟩, hwker⟩, ?_⟩
       exact funext wrest
-    · have hw : weight w = weight v := by
+    · have hw : hammingNorm w = hammingNorm v := by
         change (Finset.univ.filter fun a => w a ≠ 0).card =
           (Finset.univ.filter fun a => v a ≠ 0).card
         symm
@@ -244,7 +237,8 @@ private lemma remove_pair {ι : Type*} [Fintype ι] [DecidableEq ι]
 private lemma column_encoding {ι : Type*} [Fintype ι] [DecidableEq ι]
     (c : Submodule (ZMod 2) (ι → ZMod 2)) (hp : (fun _ => 1) ∈ c)
     (hn : 0 < Fintype.card ι)
-    (hs : ∀ i j : ι, i ≠ j → Pi.single i 1 + Pi.single j 1 ∉ commutant c) :
+    (hs : ∀ i j : ι, i ≠ j →
+      Pi.single i 1 + Pi.single j 1 ∉ characterOrthogonalComplement (ZMod 2) c) :
     ∃ k : ℕ, k + 1 = Module.finrank (ZMod 2) c ∧
       ∃ r : Fin k → c, Function.Injective (fun i : ι => fun a : Fin k => (r a).val i) := by
   classical
@@ -389,7 +383,7 @@ private lemma affine_weight (k : ℕ) (f : (Fin k → ZMod 2) → ZMod 2)
     (q : Finset (Fin k) → ZMod 2) (hq : ∀ a, 1 < a.card → q a = 0)
     (hf : ∀ x, f x = ∑ a ∈ (Finset.univ : Finset (Fin k)).powerset,
       q a * ∏ i ∈ a, (x i + 1)) :
-    weight f = 0 ∨ 2 * weight f = 2 ^ k ∨ weight f = 2 ^ k := by
+    hammingNorm f = 0 ∨ 2 * hammingNorm f = 2 ^ k ∨ hammingNorm f = 2 ^ k := by
   classical
   have binary_value (x : ZMod 2) : x = 0 ∨ x = 1 :=
     ((Fin.forall_fin_two (p := fun a : Fin 2 => a = 0 ∨ a = 1)).mpr
@@ -431,7 +425,7 @@ private lemma affine_weight (k : ℕ) (f : (Fin k → ZMod 2) → ZMod 2)
       have hh := derivative x u
       rw [huone] at hh
       exact (CharTwo.add_eq_iff_eq_add.mp hh).trans (add_comm _ _)
-    have count : (∑ x, if f x = 0 then (0 : ℕ) else 1) = weight f := by
+    have count : (∑ x, if f x = 0 then (0 : ℕ) else 1) = hammingNorm f := by
       change (∑ x, if f x = 0 then (0 : ℕ) else 1) =
         (Finset.univ.filter fun x => f x ≠ 0).card
       simp only [Finset.card_eq_sum_ones, Finset.sum_filter, ite_not]
@@ -444,9 +438,9 @@ private lemma affine_weight (k : ℕ) (f : (Fin k → ZMod 2) → ZMod 2)
       rw [flip]
       rcases binary_value (f x) with h | h <;> rw [h] <;> decide
     have shifted := bij.trans count
-    have total : weight f + weight f = 2 ^ k := by
+    have total : hammingNorm f + hammingNorm f = 2 ^ k := by
       calc
-        weight f + weight f = (∑ x, if f x = 0 then (0 : ℕ) else 1) +
+        hammingNorm f + hammingNorm f = (∑ x, if f x = 0 then (0 : ℕ) else 1) +
             (∑ x, if f (x + u) = 0 then (0 : ℕ) else 1) :=
           congrArg₂ (fun a b : ℕ => a + b) count.symm shifted.symm
         _ = ∑ x, ((if f x = 0 then (0 : ℕ) else 1) +
@@ -491,29 +485,17 @@ private lemma walsh_square (k : ℕ) (f : (Fin k → ZMod 2) → ZMod 2)
       (f (x + u) + f x + f u + f 0) + (f (y + u) + f y + f u + f 0)) :
     (2 ^ k : ℤ) ∣ (∑ x, if f x = 0 then (1 : ℤ) else -1) ^ 2 := by
   classical
-  have binary_value (x : ZMod 2) : x = 0 ∨ x = 1 :=
-    ((Fin.forall_fin_two (p := fun a : Fin 2 => a = 0 ∨ a = 1)).mpr
-      ⟨Or.inl rfl, Or.inr rfl⟩) x
-  let χ : ZMod 2 → ℤ := fun a => if a = 0 then 1 else -1
-  have χadd (a b : ZMod 2) : χ (a + b) = χ a * χ b := by
-    rcases binary_value a with ha | ha <;>
-      rcases binary_value b with hb | hb <;>
-        subst a <;> subst b <;> decide
-  have χzero : χ 0 = 1 := rfl
+  let χ : AddChar (ZMod 2) ℤ :=
+    AddChar.zmodChar 2 (show (-1 : ℤ) ^ 2 = 1 by decide)
+  have χapply (a : ZMod 2) : χ a = if a = 0 then 1 else -1 :=
+    (Fin.forall_fin_two (p := fun a : Fin 2 => χ a = if a = 0 then 1 else -1)).mpr
+      ⟨by decide, by decide⟩ a
   let b := fun u x : Fin k → ZMod 2 => f (x + u) + f x + f u + f 0
   have badd (u x y : Fin k → ZMod 2) : b u (x + y) = b u x + b u y := hb u x y
   have linear_sum (u : Fin k → ZMod 2) :
       (∑ x, χ (b u x)) = 0 ∨ (∑ x, χ (b u x)) = 2 ^ k := by
     let ψ : AddChar (Fin k → ZMod 2) ℤ :=
-      { toFun := fun x => χ (b u x)
-        map_zero_eq_one' := by
-          have hz : b u 0 = 0 := by
-            change f (0 + u) + f 0 + f u + f 0 = 0
-            rw [zero_add]
-            ring_nf
-            simp only [show (2 : ZMod 2) = 0 by decide, mul_zero, zero_add]
-          rw [hz, χzero]
-        map_add_eq_mul' := fun x y => by rw [badd, χadd] }
+      χ.compAddMonoidHom (AddMonoidHom.mk' (b u) (badd u))
     have hs := AddChar.sum_eq_ite ψ
     change (∑ x, χ (b u x)) = if ψ = 0 then (Fintype.card (Fin k → ZMod 2) : ℤ) else 0 at hs
     by_cases hz : ψ = 0
@@ -528,9 +510,10 @@ private lemma walsh_square (k : ℕ) (f : (Fin k → ZMod 2) → ZMod 2)
     intro x hx
     calc
       (∑ y, χ (f x) * χ (f y)) = ∑ y, χ (f y + f x) := by
-        simp only [χadd, mul_comm]
+        simp only [AddChar.map_add_eq_mul, mul_comm]
       _ = ∑ u, χ (f (x + u) + f x) :=
         (Equiv.sum_comp (Equiv.addLeft x) (fun y => χ (f y + f x))).symm
+  simp only [← χapply]
   change (2 ^ k : ℤ) ∣ (∑ x, χ (f x)) ^ 2
   rw [square]
   apply Finset.dvd_sum
@@ -544,7 +527,7 @@ private lemma walsh_square (k : ℕ) (f : (Fin k → ZMod 2) → ZMod 2)
       change f (x + u) + f x = (f u + f 0) + (f (x + u) + f x + f u + f 0)
       ring_nf
       simp only [show (2 : ZMod 2) = 0 by decide, mul_zero, add_zero]
-    rw [he, χadd]
+    rw [he, AddChar.map_add_eq_mul]
   rw [inner]
   rcases linear_sum u with hz | ht
   · rw [hz, mul_zero]
@@ -556,26 +539,30 @@ private lemma quadratic_weight (k : ℕ) (hk : k = 5)
     (f : (Fin k → ZMod 2) → ZMod 2)
     (q : Finset (Fin k) → ZMod 2) (hq : ∀ a, 2 < a.card → q a = 0)
     (hf : ∀ x, f x = ∑ a ∈ (Finset.univ : Finset (Fin k)).powerset,
-      q a * ∏ i ∈ a, (x i + 1)) : 4 ∣ weight f := by
+      q a * ∏ i ∈ a, (x i + 1)) : 4 ∣ hammingNorm f := by
   have hb := quadratic_polarization k f q hq hf
   have hw := walsh_square k f hb
   classical
   let w : ℤ := ∑ x, if f x = 0 then 1 else -1
   have hw32 : (32 : ℤ) ∣ w ^ 2 := by simpa only [hk, show (2 : ℤ) ^ 5 = 32 by decide] using hw
   have hw8 : (8 : ℤ) ∣ w := by
-    have hmod := Int.emod_eq_zero_of_dvd hw32
-    rw [pow_two, Int.mul_emod] at hmod
-    have hlo := Int.emod_nonneg w (by decide : (32 : ℤ) ≠ 0)
-    have hhi := Int.emod_lt_of_pos w (by decide : (0 : ℤ) < 32)
-    have hdiv := Int.emod_add_mul_ediv w 32
-    apply Int.dvd_of_emod_eq_zero
-    interval_cases h : w % 32 <;> norm_num [h] at hmod <;> omega
-  have count : (∑ x, if f x = 0 then (0 : ℤ) else 1) = (weight f : ℤ) := by
+    have hn : (32 : ℕ) ∣ w.natAbs ^ 2 := by
+      simpa only [Int.natAbs_pow] using
+        (Int.natCast_dvd (m := 32) (n := w ^ 2)).mp hw32
+    apply (Int.natCast_dvd (m := 8) (n := w)).mpr
+    have hh := (Nat.dvd_pow_iff_ceilRoot_dvd (n := 2) (by decide) (a := 32)
+      (b := w.natAbs)).mp hn
+    have hr : Nat.ceilRoot 2 32 = 8 := by
+      change Nat.ceilRoot 2 (2 ^ 5) = 8
+      rw [Nat.ceilRoot, ite_eq_right (by decide), Nat.prime_two.factorization_pow]
+      norm_num [Finsupp.prod_single_index]
+    rwa [hr] at hh
+  have count : (∑ x, if f x = 0 then (0 : ℤ) else 1) = (hammingNorm f : ℤ) := by
     change (∑ x, if f x = 0 then (0 : ℤ) else 1) =
       ((Finset.univ.filter fun x => f x ≠ 0).card : ℤ)
     simp only [Finset.card_eq_sum_ones, Nat.cast_sum, Nat.cast_one,
       Finset.sum_filter, ite_not, Nat.cast_ite, Nat.cast_zero, Nat.cast_one]
-  have relation : w = 2 ^ k - 2 * (weight f : ℤ) := by
+  have relation : w = 2 ^ k - 2 * (hammingNorm f : ℤ) := by
     have each (x : Fin k → ZMod 2) :
         (if f x = 0 then (1 : ℤ) else -1) =
           1 - 2 * (if f x = 0 then (0 : ℤ) else 1) := by
@@ -587,7 +574,7 @@ private lemma quadratic_weight (k : ℕ) (hk : k = 5)
   obtain ⟨t, ht⟩ := hw8
   have powk : (2 : ℤ) ^ k = 32 := by rw [hk]; decide
   rw [powk] at relation
-  have hz : (4 : ℤ) ∣ (weight f : ℤ) := ⟨4 - t, by omega⟩
+  have hz : (4 : ℤ) ∣ (hammingNorm f : ℤ) := ⟨4 - t, by omega⟩
   exact_mod_cast hz
 
 private lemma moments_obstruction (k : ℕ) (s : Finset (Fin k → ZMod 2))
@@ -596,7 +583,7 @@ private lemma moments_obstruction (k : ℕ) (s : Finset (Fin k → ZMod 2))
     (hm : ∀ a : Finset (Fin k), a.card ≤ 2 →
       ∑ x, (if x ∈ s then (1 : ZMod 2) else 0) * ∏ i ∈ a, x i = 0) : False := by
   classical
-  have hcard : weight (fun x => if x ∈ s then (1 : ZMod 2) else 0) = s.card := by
+  have hcard : hammingNorm (fun x => if x ∈ s then (1 : ZMod 2) else 0) = s.card := by
     change (Finset.univ.filter fun x => (if x ∈ s then (1 : ZMod 2) else 0) ≠ 0).card = _
     congr 1
     ext x
@@ -628,10 +615,11 @@ private lemma nondegenerate {ι : Type*} [Fintype ι] [DecidableEq ι]
     (hp : (fun _ => 1) ∈ c) (hn : Fintype.card ι ≤ 14)
     (hd : 2 * Module.finrank (ZMod 2) c < Fintype.card ι)
     (hs : ∀ i j : ι, i ≠ j → Pi.single i 1 + Pi.single j 1 ∉ c) :
-    ∃ v ∈ commutant c, v ∉ c ∧ weight v < 4 := by
+    ∃ v ∈ characterOrthogonalComplement (ZMod 2) c, v ∉ c ∧ hammingNorm v < 4 := by
   classical
   by_contra h
-  have hscomm : ∀ i j : ι, i ≠ j → Pi.single i 1 + Pi.single j 1 ∉ commutant c := by
+  have hscomm : ∀ i j : ι, i ≠ j →
+      Pi.single i 1 + Pi.single j 1 ∉ characterOrthogonalComplement (ZMod 2) c := by
     intro i j hij hv
     exact h ⟨_, hv, hs i j hij, by rw [pair_weight i j hij]; decide⟩
   obtain ⟨k, hk, r, hi⟩ := column_encoding c hp (by omega) hscomm
@@ -643,7 +631,7 @@ private lemma general_result {ι : Type*} [Fintype ι]
     (c : Submodule (ZMod 2) (ι → ZMod 2)) (hc : IsSelfOrthogonal c)
     (hp : (fun _ => 1) ∈ c) (hn : Fintype.card ι ≤ 14)
     (hd : 2 * Module.finrank (ZMod 2) c < Fintype.card ι) :
-    ∃ v ∈ commutant c, v ∉ c ∧ weight v < 4 := by
+    ∃ v ∈ characterOrthogonalComplement (ZMod 2) c, v ∉ c ∧ hammingNorm v < 4 := by
   classical
   induction hncard : Fintype.card ι using Nat.strong_induction_on generalizing ι with
   | h m ih =>
@@ -651,7 +639,8 @@ private lemma general_result {ι : Type*} [Fintype ι]
     · obtain ⟨i, j, hij, hv⟩ := hs
       obtain ⟨d, hdc, hdp, hdim, hsize, hlift⟩ := remove_pair c hc hp i j hij hv
       have smaller : Fintype.card {a : ι // a ≠ i ∧ a ≠ j} < m := by omega
-      have short : ∃ v ∈ commutant d, v ∉ d ∧ weight v < 4 := by
+      have short : ∃ v ∈ characterOrthogonalComplement (ZMod 2) d,
+          v ∉ d ∧ hammingNorm v < 4 := by
         exact ih _ smaller d hdc hdp (by omega) (by omega) rfl
       obtain ⟨v, hvc, hvd, hvw⟩ := short
       exact hlift v hvc hvd hvw
