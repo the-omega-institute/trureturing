@@ -191,17 +191,150 @@ private lemma unique_positive_generator {n : ℕ}
   simp only [map_add, map_smul, smul_eq_mul] at hm
   linarith
 
-private lemma common_local_part {n : ℕ}
+private lemma generator_dominance {n : ℕ}
+    (r : BobBehavior n) (hr : r ∈ convexHull ℝ (generators n))
+    (t : (BobBehavior n →ₗ[ℝ] ℝ) × ℝ) (ht : IsNormalizedNC t)
+    (γ : Fin n → Bool) (hmax : t.1 (vertex γ) + t.2 = 1)
+    (hother : ∀ η, oddSigns η → η ≠ γ → t.1 (vertex η) + t.2 ≤ 0) :
+    ∃ v : ℝ, 0 ≤ v ∧ t.1 r + t.2 ≤ v ∧
+      ∀ i b c, v * vertex γ i b c ≤ r i b c := by
+  classical
+  obtain ⟨ι, inst, w, z, hw, hsum, hz, heq⟩ := mem_convexHull_iff_exists_fintype.mp hr
+  let v : ℝ := ∑ j, if z j = vertex γ then w j else 0
+  have hznonneg (j : ι) (i : Fin n) (b c : Bool) : 0 ≤ z j i b c := by
+    rcases hz j with ⟨s, hs⟩ | ⟨η, _, he⟩
+    · rw [← hs]
+      dsimp [deterministic]
+      split_ifs <;> norm_num
+    · rw [he]
+      exact (vertex_nd η).1 i b c
+  have hzbound (j : ι) : t.1 (z j) + t.2 ≤ if z j = vertex γ then 1 else 0 := by
+    split_ifs with hj
+    · rw [hj, hmax]
+    · rcases hz j with ⟨s, hs⟩ | ⟨η, hη, he⟩
+      · rw [← hs]
+        exact ht.1 _ (subset_convexHull ℝ _ ⟨s, rfl⟩)
+      · rw [he]
+        exact hother η hη (fun h => hj (he.trans (congrArg vertex h)))
+  refine ⟨v, sum_nonneg (fun j _ => by split_ifs <;> first | exact hw j | exact le_rfl), ?_, ?_⟩
+  · have heval : t.1 r + t.2 = ∑ j, w j * (t.1 (z j) + t.2) := by
+      rw [← heq, map_sum]
+      simp only [map_smul, smul_eq_mul, mul_add, sum_add_distrib, ← sum_mul, hsum, one_mul]
+    rw [heval]
+    have hle := sum_le_sum fun j (_ : j ∈ (univ : Finset ι)) =>
+      mul_le_mul_of_nonneg_left (hzbound j) (hw j)
+    simpa only [mul_ite, mul_one, mul_zero] using hle
+  · intro i b c
+    have heqpoint := congrArg (fun q : BobBehavior n => q i b c) heq
+    simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at heqpoint
+    rw [← heqpoint]
+    change (∑ j, if z j = vertex γ then w j else 0) * vertex γ i b c ≤ _
+    rw [sum_mul]
+    apply sum_le_sum
+    intro j hj
+    split_ifs with he
+    · rw [he]
+    · simpa only [zero_mul] using mul_nonneg (hw j) (hznonneg j i b c)
+
+private lemma slice_dominance {n : ℕ}
+    (hgen : ∀ r : BobBehavior n, IsND r → r ∈ convexHull ℝ (generators n))
+    (p : Behavior n) (hp : IsNSND p) (i₀ : Fin n) (x : Fin 2) (a : Bool)
+    (t : (BobBehavior n →ₗ[ℝ] ℝ) × ℝ) (ht : IsNormalizedNC t)
+    (γ : Fin n → Bool) (hmax : t.1 (vertex γ) + t.2 = 1)
+    (hother : ∀ η, oddSigns η → η ≠ γ → t.1 (vertex η) + t.2 ≤ 0) :
+    ∃ w : ℝ, 0 ≤ w ∧
+      t.1 (fun i b c => p x i a b c) + (∑ b, ∑ c, p x i₀ a b c) * t.2 ≤ w ∧
+      ∀ i b c, w * vertex γ i b c ≤ p x i a b c := by
+  let m := ∑ b, ∑ c, p x i₀ a b c
+  let q : BobBehavior n := fun i b c => p x i a b c
+  have hm : 0 ≤ m := sum_nonneg fun b _ => sum_nonneg fun c _ => hp.1 x i₀ a b c
+  have hmass (i : Fin n) : ∑ b, ∑ c, q i b c = m := hp.2.2.2.2 x i i₀ a
+  by_cases hm0 : m = 0
+  · have hq : q = 0 := by
+      ext i b c
+      have hb := (sum_eq_zero_iff_of_nonneg (fun b _ =>
+        sum_nonneg fun c _ => hp.1 x i a b c)).mp ((hmass i).trans hm0)
+      exact (sum_eq_zero_iff_of_nonneg (fun c _ => hp.1 x i a b c)).mp
+        (hb b (mem_univ b)) c (mem_univ c)
+    refine ⟨0, le_rfl, ?_, ?_⟩
+    · change t.1 q + m * t.2 ≤ 0
+      simp only [hq, hm0, map_zero, zero_mul, add_zero, le_refl]
+    · intro i b c
+      have hz := congrArg (fun r : BobBehavior n => r i b c) hq
+      change p x i a b c = 0 at hz
+      simp only [zero_mul, hz, le_refl]
+  · have hmpos : 0 < m := lt_of_le_of_ne hm (Ne.symm hm0)
+    let r : BobBehavior n := m⁻¹ • q
+    have hr : IsND r := by
+      refine ⟨?_, ?_, ?_⟩
+      · intro i b c
+        exact mul_nonneg (inv_nonneg.mpr hm) (hp.1 x i a b c)
+      · intro i
+        change (∑ b, ∑ c, m⁻¹ * q i b c) = 1
+        simp only [← mul_sum, hmass, inv_mul_cancel₀ hm0]
+      · intro i c
+        change (∑ b, m⁻¹ * p x i a b c) = ∑ d, m⁻¹ * p x (finRotate n i) a c d
+        rw [← mul_sum, ← mul_sum, hp.2.2.1 x i a c]
+    obtain ⟨v, hv, hval, hdom⟩ := generator_dominance r (hgen r hr) t ht γ hmax hother
+    have hqr : q = m • r := by
+      dsimp only [r]
+      rw [smul_smul, mul_inv_cancel₀ hm0, one_smul]
+    refine ⟨m * v, mul_nonneg hm hv, ?_, ?_⟩
+    · change t.1 q + m * t.2 ≤ m * v
+      rw [hqr, map_smul]
+      change m * t.1 r + m * t.2 ≤ m * v
+      nlinarith [mul_le_mul_of_nonneg_left hval hm]
+    · intro i b c
+      have h := mul_le_mul_of_nonneg_left (hdom i b c) hm
+      have heq := congrArg (fun r : BobBehavior n => r i b c) hqr
+      change q i b c = m * r i b c at heq
+      change m * v * vertex γ i b c ≤ q i b c
+      nlinarith
+
+private lemma common_local_part {n : ℕ} (hn : 3 ≤ n)
     (hgen : ∀ r : BobBehavior n, IsND r → r ∈ convexHull ℝ (generators n))
     (p : Behavior n) (hp : IsNSND p)
     (t : (BobBehavior n →ₗ[ℝ] ℝ) × ℝ) (ht : IsNormalizedNC t)
     (hc : 0 < t.1 (bobMarginal p) + t.2)
-    (γ : Fin n → Bool) (hγ : oddSigns γ) (hmax : t.1 (vertex γ) + t.2 = 1)
+    (γ : Fin n → Bool) (hmax : t.1 (vertex γ) + t.2 = 1)
     (hother : ∀ η, oddSigns η → η ≠ γ → t.1 (vertex η) + t.2 ≤ 0) :
     ∃ α : AliceResponse, IsAliceResponse α ∧
       ∀ x i a b c, (t.1 (bobMarginal p) + t.2) *
         (α x a * vertex γ i b c) ≤ p x i a b c := by
-  sorry
+  classical
+  let i₀ : Fin n := ⟨0, by omega⟩
+  have hslices := fun x a => slice_dominance hgen p hp i₀ x a t ht γ hmax hother
+  choose w hw hval hdom using hslices
+  let total : Fin 2 → ℝ := fun x => ∑ a, w x a
+  have htotal (x : Fin 2) : t.1 (bobMarginal p) + t.2 ≤ total x := by
+    have h := sum_le_sum fun a (_ : a ∈ (univ : Finset Bool)) => hval x a
+    have hq : (∑ a, (fun i b c => p x i a b c : BobBehavior n)) = bobMarginal p := by
+      ext i b c
+      simpa only [Finset.sum_apply, bobMarginal] using hp.2.2.2.1 x 0 i b c
+    rw [sum_add_distrib, ← map_sum, ← sum_mul, hp.2.1 x i₀, one_mul, hq] at h
+    exact h
+  have hpos (x : Fin 2) : 0 < total x := hc.trans_le (htotal x)
+  let α : AliceResponse := fun x a => w x a / total x
+  have hα : IsAliceResponse α := by
+    constructor
+    · intro x a
+      exact div_nonneg (hw x a) (hpos x).le
+    · intro x
+      change (∑ a, w x a / total x) = 1
+      rw [← sum_div]
+      exact div_self (hpos x).ne'
+  refine ⟨α, hα, ?_⟩
+  intro x i a b c
+  have hscale : (t.1 (bobMarginal p) + t.2) * α x a ≤ w x a := by
+    change _ * (w x a / total x) ≤ w x a
+    rw [← mul_div_assoc]
+    exact (div_le_iff₀ (hpos x)).mpr (by nlinarith [mul_le_mul_of_nonneg_right (htotal x) (hw x a)])
+  have h := mul_le_mul_of_nonneg_right hscale ((vertex_nd γ).1 i b c)
+  calc
+    (t.1 (bobMarginal p) + t.2) * (α x a * vertex γ i b c) =
+      ((t.1 (bobMarginal p) + t.2) * α x a) * vertex γ i b c := by ring
+    _ ≤ w x a * vertex γ i b c := h
+    _ ≤ p x i a b c := hdom x a i b c
 
 private lemma dominated_local_tradeoff {n : ℕ}
     (p l : Behavior n) (hp : IsNSND p) (hl : IsNSND l)
@@ -247,7 +380,7 @@ private lemma dominated_local_tradeoff {n : ℕ}
       change _ = c * l x i a b d + (1 - c) *
         ((1 - c)⁻¹ * (p x i a b d - c * l x i a b d))
       field_simp
-      <;> ring
+      ring
     have hfl := hf.1 l hloc
     have hfr := hf.2.1 r hr
     have heval : f.1 p + f.2 = c * (f.1 l + f.2) + (1 - c) * (f.1 r + f.2) := by
@@ -264,10 +397,10 @@ theorem result : claim := by
   by_cases hc : t.1 (bobMarginal p) + t.2 ≤ 0
   · linarith [hf.2.1 p hp]
   · have hcpos : 0 < t.1 (bobMarginal p) + t.2 := lt_of_not_ge hc
-    obtain ⟨γ, hγ, hmax, hother⟩ := unique_positive_generator
+    obtain ⟨γ, _, hmax, hother⟩ := unique_positive_generator
       (cycle_generators hn) (midpoint_noncontextual hn) t ht
-    obtain ⟨α, hα, hdom⟩ := common_local_part
-      (cycle_generators hn) p hp t ht hcpos γ hγ hmax hother
+    obtain ⟨α, hα, hdom⟩ := common_local_part hn
+      (cycle_generators hn) p hp t ht hcpos γ hmax hother
     have hlocal : IsGeneralizedLocal (productBehavior α (vertex γ)) :=
       subset_convexHull ℝ _ ⟨α, vertex γ, hα, vertex_nd γ, rfl⟩
     have hbound := dominated_local_tradeoff p (productBehavior α (vertex γ)) hp
