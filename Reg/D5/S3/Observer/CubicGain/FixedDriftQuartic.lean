@@ -14,19 +14,19 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature Unit
-    (fun _ => OriginalWorld) (fun _ => Prop)
+    (fun _ => OriginalWorld) (fun _ => Bool)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ => OriginalParent) (fun e => nomatch e)
+  realize signature (fun _ _ W =>
+    @decide (OriginalParent W) (Classical.propDecidable _)) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => True) (fun e => nomatch e)
+  realize signature (fun _ _ _ => true) (fun e => nomatch e)
 
-abbrev arena : Arena where
-  signature := signature
-  Law R := ∀ (d p v : ℝ), d ≠ 0 → d ≠ 24 →
+def sourceLaw (parent : OriginalWorld → Prop) : Prop :=
+  ∀ (d p v : ℝ), d ≠ 0 → d ≠ 24 →
     let parents : Set OriginalWorld :=
-      {W | R.readout () () W ∧ W.2.2.1=d ∧ (originalPolynomial W).eval 7=0}
+      {W | parent W ∧ W.2.2.1=d ∧ (originalPolynomial W).eval 7=0}
     let children : Set OriginalWorld :=
       {W | W ∈ parents ∧ originalRead W 5=p ∧ originalRead W 6=v}
     (∃ e : S d p v ≃ children,
@@ -38,6 +38,10 @@ abbrev arena : Arena where
         sourceN (e u).1.1 (e u).1.2.1 = n d u.1)) ∧
     parents.Finite ∧ parents.ncard ≤ 10 ∧ children.Finite ∧ children.ncard ≤ 4
 
+abbrev arena : Arena where
+  signature := signature
+  Law R := sourceLaw (fun W => R.readout () () W = true)
+
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hfin := (h 1 0 0 (by norm_num) (by norm_num)).2.1
@@ -46,7 +50,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     intro x y he
     exact congrArg Prod.fst he
   have hrange : Set.range f ⊆
-      {W : OriginalWorld | rejected.readout () () W ∧ W.2.2.1=1 ∧
+      {W : OriginalWorld | rejected.readout () () W = true ∧ W.2.2.1=1 ∧
         (originalPolynomial W).eval 7=0} := by
     rintro _ ⟨x,rfl⟩
     simp [f,rejected,realize,originalPolynomial,Polynomial.ofFn_zero]
@@ -60,13 +64,27 @@ private theorem dependence : ObservationalDependence signature actual := by
     ⟨by norm_num,by norm_num,by norm_num,by norm_num [parentEq]⟩
   refine ⟨(),good,bad,?_⟩
   intro he
-  have hb : OriginalParent bad := Eq.mp he hg
-  norm_num [OriginalParent,bad] at hb
+  have hgood : actual.readout () () good = true := by simp [actual,realize,hg]
+  have hbad : actual.readout () () bad = false := by
+    simp [actual,realize,OriginalParent,bad]
+  rw [hgood,hbad] at he
+  cases he
+
+private theorem actual_predicate :
+    (fun W : OriginalWorld => actual.readout () () W = true) = OriginalParent := by
+  funext W
+  simp [actual,realize]
 
 def source_registration : Registration arena (type_of% @fixed_drift_classification) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨fixed_drift_classification,rejected,rejected_law⟩
+  bridge := by
+    change sourceLaw OriginalParent ↔ sourceLaw (fun W => actual.readout () () W = true)
+    rw [actual_predicate]
+  variation := ⟨by
+    change sourceLaw (fun W => actual.readout () () W = true)
+    rw [actual_predicate]
+    exact fixed_drift_classification,
+    rejected,rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
     rejected_law
   dependence := dependence
@@ -74,7 +92,8 @@ def source_registration : Registration arena (type_of% @fixed_drift_classificati
 def registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@fixed_drift_classification) (Realization signature) Unit Unit := {
-  unitName := `D5.S3.Observer.CubicGain.FixedDriftQuartic.fixed_drift_classification.__information_unit
+  unitName :=
+    `D5.S3.Observer.CubicGain.FixedDriftQuartic.fixed_drift_classification.__information_unit
   realizationName := `Reg.D5.S3.Observer.CubicGain.FixedDriftQuartic.source_registration
   realizationSource := none
   generated := false
@@ -85,7 +104,8 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ => OriginalParent) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ W =>
+    @decide (OriginalParent W) (Classical.propDecidable _)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -95,11 +115,11 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body","body","body","body","body","value","arg","body","fn","arg","fn"]
+      path := #["body","body","body","body","body","value","arg","body","fn","arg"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
