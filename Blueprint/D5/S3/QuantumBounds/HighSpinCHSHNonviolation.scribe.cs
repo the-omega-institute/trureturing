@@ -83,10 +83,10 @@ internal sealed class HighSpinCHSHNonviolationDocument : IScribeDocumentDefiniti
                             + "the norm of (n/2)² yields (n/2)²·2 = n²/2. This proves the claim for every n ≥ 2."))),
                 DescribeRole.Theorem))));
 
-    private static Formula UnitFormula() => All("u", VectorType(), Equal(
+    private static Formula UnitFormula() => All("u", VectorType(), Equivalence(Unit(X("u")), Equal(
         Add(Add(Pow(At(X("u"), D(0)), D(2)), Pow(At(X("u"), D(1)), D(2))),
             Pow(At(X("u"), D(2)), D(2))),
-        Typed(D(1), Reals())));
+        Typed(D(1), Reals()))));
 
     private static Formula ChshOperatorFormula() =>
         All("n", Naturals(), AllDirections(Equal(
@@ -153,7 +153,7 @@ internal sealed class HighSpinCHSHNonviolationDocument : IScribeDocumentDefiniti
     private static Formula FinOf(Formula size) => At(Qualified("Fin"), size);
 
     private static Formula Product(Formula left, Formula right) =>
-        Parenthesized(Seq(left, Comma, Sp, right));
+        Parenthesized(Seq(left, Sp, Times, Sp, right));
 
     private static Formula LocalCall(string name, params Formula[] arguments) =>
         At(Qualified("D5", "S3", "QuantumBounds", "HighSpinCHSHNonviolation", name), arguments);
