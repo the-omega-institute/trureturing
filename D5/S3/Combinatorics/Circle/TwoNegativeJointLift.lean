@@ -56,10 +56,11 @@ private theorem split_perm {k : ℕ} (E : Finset (Fin k)) (x y : Fin k)
     exact hh (Finset.mem_union_left _ (Finset.mem_toList.mp hi))
   have hN : (E.toList ++ F.toList ++ [x,y]).Nodup := by
     apply List.nodup_append.mpr
-    refine ⟨List.nodup_append.mpr ⟨E.nodup_toList, F.nodup_toList, hEF⟩,
+    refine ⟨List.nodup_append.mpr ⟨E.nodup_toList, F.nodup_toList,
+      fun a ha b hb hab => List.disjoint_left.mp hEF ha (hab ▸ hb)⟩,
       by simp [hxy], ?_⟩
-    apply List.disjoint_left.mpr
-    intro i hi hj
+    intro i hi j hj hij
+    subst j
     simp only [List.mem_append, Finset.mem_toList] at hi
     simp only [List.mem_cons, List.mem_singleton] at hj
     rcases hi with hi | hi
@@ -391,12 +392,12 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
         by_contra h
         have hm := mul_le_mul_of_nonneg_left (show (w : ℤ) + 1 ≤ r - 2 by omega)
           (show 0 ≤ 2*r+1 by omega)
-        nlinarith
+        nlinarith only [hu, hm]
       have hhi : (w : ℤ) < r - 1 := by
         by_contra h
         have hm := mul_le_mul_of_nonneg_left (show r - 1 ≤ (w : ℤ) by omega)
           (show 0 ≤ 2*r+1 by omega)
-        nlinarith
+        nlinarith only [hl, hm]
       omega
     have hQeq : Q = r := by omega
     have hp2 : p = C - Q - 1 := by
@@ -426,10 +427,10 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
         (fun i hi => (Epos i hi).1)
       · rw [hOldMass,hAlpha,hBeta,hEold]; ring
       · rw [hOldMass]; change 0 ≤ 2*C-R-Q-p ∧ 2*C-R-Q-p ≤ C
-        rw [hp2]; constructor <;> nlinarith [hC,hqr]
+        rw [hp2]; omega
       · rw [hOldMass,hAlpha]; change 0 ≤ 2*C-R-Q-p+(-C+R)
         rw [hp2]; omega
-      · rw [hBeta]; constructor <;> nlinarith [hC,hqr]
+      · rw [hBeta]; omega
     have hn : InStrip gn N 0 (earWord k sigma (k - 1)) := by
       rw [hear]
       have hns : InStrip gn N 0 (FN ++ [alpha.castSucc] ++ (EN ++ [fresh]) ++ [beta.castSucc]) := by
@@ -444,12 +445,12 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
           change (FN.map gn).sum + g alpha + ((EN.map gn).sum + gn fresh) + g beta = 0
           rw [hNewMass,hEN,hAlphaNew,hBetaNew,hFresh]; ring
         · rw [hNewMass]; change 0 ≤ 2*N-r-Q-(v:ℤ)-z ∧ 2*N-r-Q-(v:ℤ)-z ≤ N
-          constructor <;> nlinarith [hN,hqr,hz2]
+          omega
         · change 0 ≤ (FN.map gn).sum + g alpha
           rw [hNewMass,hAlphaNew]; change 0 ≤ 2*N-r-Q-(v:ℤ)-z+(-N+r)
-          nlinarith [hqr,hz2]
+          omega
         · change 0 ≤ -g beta ∧ -g beta ≤ N
-          rw [hBetaNew]; constructor <;> nlinarith [hN]
+          rw [hBetaNew]; omega
       simpa only [List.append_assoc, List.cons_append, List.nil_append] using hns
     exact finish sigma (k-1) (by omega) hsperm hs hn
   · have h4 : b + 2 ≤ a := by omega
@@ -464,12 +465,12 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
             by_contra h
             have hm := mul_le_mul_of_nonneg_left (show (w:ℤ)+1 ≤ 2*r-3 by omega)
               (show 0 ≤ 2*r+1 by omega)
-            nlinarith
+            nlinarith only [hu, hm]
           have hhi : (w:ℤ) < 2*r-2 := by
             by_contra h
             have hm := mul_le_mul_of_nonneg_left (show 2*r-2 ≤ (w:ℤ) by omega)
               (show 0 ≤ 2*r+1 by omega)
-            nlinarith
+            nlinarith only [hl, hm, hr4]
           omega
         have hQeq : Q = 2*r := by omega
         have hp4 : p - (C-Q) = r-2 := by
@@ -491,7 +492,8 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
           omega
         have hzu : z ≤ N-q-1 := by have hh := hfloor.1; rw [hvc] at hh; omega
         have margin : 0 ≤ q*(r-1)-4*r^2-4*r-2 := by
-          nlinarith [mul_nonneg (show 0 ≤ q-8*r by omega) (show 0 ≤ r-1 by omega),
+          nlinarith only [hr4,
+            mul_nonneg (show 0 ≤ q-8*r by omega) (show 0 ≤ r-1 by omega),
             mul_nonneg (show 0 ≤ r-4 by omega) (show 0 ≤ 4*r+4 by omega)]
         have hidlo : 2*(r+1)*(N-q-2*r-1)-(2*C-q)*A = q*(r-1)-4*r^2-4*r-2 := by
           rw [show 2*C-q = N-1-q by omega,hN]; dsimp [A]; ring
@@ -503,10 +505,10 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
         refine ⟨?_,?_,?_,?_⟩
         · apply (Int.mul_le_mul_right (show 0 < 2*A by omega)).mp
           rw [hq] at hidlo hmlo margin
-          nlinarith
+          nlinarith only [hidlo, hmlo, margin, hrel]
         · apply (Int.mul_le_mul_right (show 0 < 2*A by omega)).mp
-          nlinarith
-        · nlinarith [hvc,h8]
+          nlinarith only [hidhi, hmhi, hrel, hq8, hr4]
+        · omega
         · exact (by have hh := hfloor.1; dsimp [z] at *; omega)
     obtain ⟨hpl,hpu,hzl,hzu⟩ := bounds
     let sigma := E ++ [beta] ++ F ++ [alpha]
@@ -528,7 +530,7 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
       · rw [hOldMass,hAlpha,hBeta,hEold]; ring
       · exact ⟨by simpa [p] using hp0, by simpa [p] using hpu⟩
       · rw [hEold,hBeta]; change 0 ≤ p+(-C+Q); omega
-      · rw [hAlpha]; constructor <;> nlinarith [hC]
+      · rw [hAlpha]; omega
     have hn : InStrip gn N 0 (earWord k sigma E.length) := by
       rw [hear]
       have hns : InStrip gn N 0 ((EN ++ [fresh]) ++ [beta.castSucc] ++ FN ++ [alpha.castSucc]) := by
@@ -541,12 +543,12 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
           rw [hNewMass,hEN,hAlphaNew,hBetaNew,hFresh]; ring
         · simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton]
           rw [hEN,hFresh]; change 0 ≤ z+(v:ℤ) ∧ z+(v:ℤ) ≤ N
-          constructor <;> nlinarith
+          omega
         · simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton]
           change 0 ≤ ((EN.map gn).sum + gn fresh) + g beta
           rw [hEN,hFresh,hBetaNew]; change 0 ≤ z+(v:ℤ)+(-N+Q); omega
         · change 0 ≤ -g alpha ∧ -g alpha ≤ N
-          rw [hAlphaNew]; constructor <;> nlinarith [hN]
+          rw [hAlphaNew]; omega
       simpa only [List.append_assoc, List.cons_append, List.nil_append] using hns
     have hj : E.length ≤ k := by
       have hh := hsperm.length_eq
