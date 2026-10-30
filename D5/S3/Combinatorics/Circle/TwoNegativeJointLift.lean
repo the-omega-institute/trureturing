@@ -90,7 +90,7 @@ private theorem inserted_perm {k : ℕ} (l : List (Fin k)) (j : ℕ)
     calc
       _ ~r (l.take j).map Fin.castSucc ++ (l.drop j).map Fin.castSucc ++ [Fin.last k] := by
         simpa only [List.append_assoc] using
-          (List.perm_append_comm [Fin.last k] ((l.drop j).map Fin.castSucc)).append_left
+          (List.perm_append_comm (l₁ := [Fin.last k]) (l₂ := (l.drop j).map Fin.castSucc)).append_left
             ((l.take j).map Fin.castSucc)
       _ ~r l.map Fin.castSucc ++ [Fin.last k] := by
         rw [← List.append_assoc, ← List.map_append, List.take_append_drop]
@@ -252,7 +252,7 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
     constructor <;> nlinarith
   have hwQ : (w : ℤ) < Q := by
     have hh : N - (v : ℤ) < A * Q := by rw [hN, hvc, hq]; dsimp [A]; nlinarith
-    exact (mul_lt_mul_left hA).mp (lt_of_le_of_lt hfloor.1 hh)
+    exact (Int.mul_lt_mul_left hA).mp (lt_of_le_of_lt hfloor.1 hh)
   have hwbits : w < 2 ^ (a - 1) := by
     exact_mod_cast (show (w:ℤ) < (2:ℤ) ^ (a-1) from hwQ)
   let mask := DyadicPrefix.bitSubset (a - 1) w hwbits
@@ -392,9 +392,9 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
       calc
         _ ~r F ++ E ++ [alpha] ++ [beta] := by
           simpa [sigma,List.append_assoc] using
-            ((List.perm_append_comm [alpha] E).append_right [beta]).append_left F
+            ((List.perm_append_comm (l₁ := [alpha]) (l₂ := E)).append_right [beta]).append_left F
         _ ~r E ++ F ++ [alpha,beta] := by
-          simpa [List.append_assoc] using (List.perm_append_comm F E).append_right [alpha,beta]
+          simpa [List.append_assoc] using (List.perm_append_comm (l₁ := F) (l₂ := E)).append_right [alpha,beta]
     have hlen : (F ++ [alpha] ++ E).length = k - 1 := by
       have hh := hsperm.length_eq
       simp only [sigma,List.length_append,List.length_cons,List.length_nil,List.length_finRange] at hh ⊢
@@ -422,7 +422,7 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
                 subst i
                 rw [hFresh]
                 omega)
-        · simp only [List.map_append,List.sum_append,List.map_singleton]
+        · simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton]
           change (FN.map gn).sum + g alpha + ((EN.map gn).sum + gn fresh) + g beta = 0
           rw [hNewMass,hEN,hAlphaNew,hBetaNew,hFresh]; ring
         · rw [hNewMass]; change 0 ≤ 2*N-r-Q-(v:ℤ)-z ∧ 2*N-r-Q-(v:ℤ)-z ≤ N
@@ -483,10 +483,10 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
         have hmhi := mul_le_mul_of_nonneg_left hzu (show 0 ≤ 2*(r+1) by omega)
         have hrel : 2*(r+1)*z = 2*p*A := by dsimp [p,z]; ring
         refine ⟨?_,?_,?_,?_⟩
-        · apply (mul_le_mul_right (show 0 < 2*A by omega)).mp
+        · apply (Int.mul_le_mul_right (show 0 < 2*A by omega)).mp
           rw [hq] at hidlo hmlo margin
           nlinarith
-        · apply (mul_le_mul_right (show 0 < 2*A by omega)).mp
+        · apply (Int.mul_le_mul_right (show 0 < 2*A by omega)).mp
           nlinarith
         · nlinarith [hvc,h8]
         · exact (by have hh := hfloor.1; dsimp [z] at *; omega)
@@ -497,9 +497,9 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
       calc
         _ ~r E ++ F ++ [beta] ++ [alpha] := by
           simpa [sigma,List.append_assoc] using
-            ((List.perm_append_comm [beta] F).append_right [alpha]).append_left E
+            ((List.perm_append_comm (l₁ := [beta]) (l₂ := F)).append_right [alpha]).append_left E
         _ ~r E ++ F ++ [alpha,beta] := by
-          simpa [List.append_assoc] using (List.Perm.swap beta alpha []).append_left (E ++ F)
+          simpa [List.append_assoc] using (List.Perm.swap alpha beta []).append_left (E ++ F)
     have hear : earWord k sigma E.length = EN ++ [fresh,beta.castSucc] ++ FN ++ [alpha.castSucc] := by
       simp [earWord,sigma,EN,FN,fresh,List.append_assoc]
     have hs : InStrip f C 0 sigma := by
@@ -516,13 +516,13 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
           (by intro i hi; rcases List.mem_append.mp hi with hi|hi
               · exact ENpos i hi
               · have he := List.mem_singleton.mp hi; subst i; rw [hFresh]; omega) FNpos
-        · simp only [List.map_append,List.sum_append,List.map_singleton]
+        · simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton]
           change ((EN.map gn).sum + gn fresh) + g beta + (FN.map gn).sum + g alpha = 0
           rw [hNewMass,hEN,hAlphaNew,hBetaNew,hFresh]; ring
         · simp only [List.map_append,List.sum_append,List.map_singleton]
           rw [hEN,hFresh]; change 0 ≤ z+(v:ℤ) ∧ z+(v:ℤ) ≤ N
           constructor <;> nlinarith
-        · simp only [List.map_append,List.sum_append,List.map_singleton]
+        · simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton]
           change 0 ≤ ((EN.map gn).sum + gn fresh) + g beta
           rw [hEN,hFresh,hBetaNew]; change 0 ≤ z+(v:ℤ)+(-N+Q); omega
         · change 0 ≤ -g alpha ∧ -g alpha ≤ N
