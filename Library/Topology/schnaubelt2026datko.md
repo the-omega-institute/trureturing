@@ -45,7 +45,7 @@ separability, compactness, spectrum, generator-domain or common-energy
 hypothesis. The result gives no energy estimate for an individual heat
 semigroup and asserts no uniform gap from merely individual positive rates.
 
-## Verified locators
+## Verified locator
 
 https://iana.math.kit.edu/downloads/iana3/schnaubelt/Skripten/evgl-skript.pdf
 
