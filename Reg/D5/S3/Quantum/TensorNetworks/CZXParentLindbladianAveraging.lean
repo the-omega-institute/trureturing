@@ -25,10 +25,10 @@ abbrev evaluationSignature : Signature where
   finiteAnchor := inferInstance
 
 def evaluationActual : Realization evaluationSignature :=
-  realize evaluationSignature (fun _ p x => p.2.2 x) (fun e => nomatch e)
+  realize evaluationSignature (fun _ p x => p.2.2 x) (fun e => Empty.elim e)
 
 def evaluationRejected : Realization evaluationSignature :=
-  realize evaluationSignature (fun _ p _ => p.2.2 (fun _ => 0)) (fun e => nomatch e)
+  realize evaluationSignature (fun _ p _ => p.2.2 (fun _ => 0)) (fun e => Empty.elim e)
 
 theorem evaluationDependence :
     ObservationalDependence evaluationSignature.{u} evaluationActual := by
@@ -58,13 +58,13 @@ def operatorActual : Realization operatorSignature :=
   realize operatorSignature (fun _ p s => by
     letI := p.2.1
     letI := p.2.2.1
-    exact avg p.2.2.2 s) (fun e => nomatch e)
+    exact avg p.2.2.2 s) (fun e => Empty.elim e)
 
 def operatorRejected : Realization operatorSignature :=
   realize operatorSignature (fun _ p _ => by
     letI := p.2.1
     letI := p.2.2.1
-    exact 0) (fun e => nomatch e)
+    exact 0) (fun e => Empty.elim e)
 
 private abbrev ProbeSpace := ULift.{u} Unit → ℂ
 
@@ -98,7 +98,7 @@ def commutationRejected : Realization operatorSignature :=
   realize operatorSignature (fun _ p _ => by
     letI := p.2.1
     letI := p.2.2.1
-    exact spike p.2.2.2) (fun e => nomatch e)
+    exact spike p.2.2.2) (fun e => Empty.elim e)
 
 namespace Empty
 
@@ -145,7 +145,7 @@ def registration :
   readout := some (realize operatorSignature (fun _ p s => by
     letI := p.2.1
     letI := p.2.2.1
-    exact avg p.2.2.2 s) (fun e => nomatch e))
+    exact avg p.2.2.2 s) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -217,7 +217,7 @@ def registration :
   readout := some (realize operatorSignature (fun _ p s => by
     letI := p.2.1
     letI := p.2.2.1
-    exact avg p.2.2.2 s) (fun e => nomatch e))
+    exact avg p.2.2.2 s) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -293,7 +293,7 @@ def registration :
   readout := some (realize operatorSignature (fun _ p s => by
     letI := p.2.1
     letI := p.2.2.1
-    exact avg p.2.2.2 s) (fun e => nomatch e))
+    exact avg p.2.2.2 s) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -368,7 +368,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize evaluationSignature
-    (fun _ p x => p.2.2 x) (fun e => nomatch e))
+    (fun _ p x => p.2.2 x) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -444,7 +444,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize evaluationSignature
-    (fun _ p x => p.2.2 x) (fun e => nomatch e))
+    (fun _ p x => p.2.2 x) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -520,7 +520,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize evaluationSignature
-    (fun _ p x => p.2.2 x) (fun e => nomatch e))
+    (fun _ p x => p.2.2 x) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
