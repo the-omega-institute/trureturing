@@ -4,8 +4,7 @@
    mirror-E: none(waiver:no-escape-mirror-specified)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
-   digest: Physical repeated one-bit periods admit a literal first-ear joint order.
--/
+   digest: Physical repeated one-bit periods admit a literal first-ear joint order. -/
 import D5.S3.Combinatorics.Circle.RunFirstEarTransport
 import D5.S3.Combinatorics.Circle.PeriodicShorteningArithmetic
 import D5.S3.Combinatorics.Circle.ThreeRowSource
@@ -85,6 +84,7 @@ private theorem quotient_bounds (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) :
       (2 : ℤ) ^ (d * m - 1) := by
     rw [hpow] at hrel
     have hdZ : (3 : ℤ) ≤ (2 : ℤ) ^ d - 1 := by exact_mod_cast hden
+    have hmul := mul_le_mul_of_nonneg_right hdZ hT
     nlinarith
   have hlt : (2 ^ (d * m) - 1) / (2 ^ d - 1) < 2 ^ (d * m - 1) := by
     exact_mod_cast hltZ
@@ -96,20 +96,21 @@ private theorem old_source (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m)
       (((2 ^ (d * m) - 1) / (2 ^ d - 1) : ℕ) : ℤ) *
         baseValue d (i.val % d) := by
   have hd0 : 0 < d := by omega
+  have hk : 2 ≤ d*m := by nlinarith
   have hrep := repeated_source d m 1 hd0 hm (i.cast (Nat.mul_comm d m))
   have hquot := multiplier_quotient d m hd0
   have hlt : (2 ^ (d * m) - 1) / (2 ^ d - 1) < 2 ^ (m * d) - 1 := by
     obtain ⟨_, hh, _⟩ := quotient_bounds d m hd hm
     have hp : 1 ≤ (2 : ℕ) ^ (d * m - 1) := Nat.one_le_two_pow
     have hpow : 2 ^ (d * m) = 2 * 2 ^ (d * m - 1) := by
-      rw [show d * m = (d * m - 1) + 1 by nlinarith, pow_succ]
+      rw [show d * m = (d * m - 1) + 1 by omega, pow_succ]
     rw [Nat.mul_comm m d]
     omega
   have hquot' : multiplier d m = (2 ^ (d * m) - 1) / (2 ^ d - 1) := by
     simpa [Nat.mul_comm] using hquot
   simp only [mul_one, hquot', Nat.mod_eq_of_lt hlt] at hrep
   have hbase := base_source d hd ⟨i.val % d, Nat.mod_lt _ hd0⟩
-  simpa only [Nat.mul_comm, Fin.val_cast] using hrep.trans
+  simpa only [actualSource, Nat.mul_comm, Fin.val_cast] using hrep.trans
     (congrArg (fun z : ℤ =>
       (((2 ^ (d * m) - 1) / (2 ^ d - 1) : ℕ) : ℤ) * z) hbase)
 
@@ -145,10 +146,14 @@ private theorem prefix_formula (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) (n : �
       rw [ih, if_pos (show n ≤ d*m by omega), hi,
         if_pos (show n+1 ≤ d*m by omega)]
       by_cases hwrap : n % d = d - 1
-      · have hnext : (n + 1) % d = 0 := by omega
+      · have hnext : (n + 1) % d = 0 := by
+          rw [Nat.add_mod, hwrap, Nat.mod_eq_of_lt (by omega : 1 < d),
+            Nat.sub_add_cancel (by omega : 1 ≤ d), Nat.mod_self]
         simp [hwrap, hnext, baseValue]
       · have hlt : n % d < d - 1 := by omega
-        have hnext : (n + 1) % d = n % d + 1 := by omega
+        have hnext : (n + 1) % d = n % d + 1 := by
+          rw [Nat.add_mod, Nat.mod_eq_of_lt (by omega : 1 < d),
+            Nat.mod_eq_of_lt (by omega : n % d + 1 < d)]
         simp only [hnext, baseValue, if_neg hwrap, pow_succ]
         ring
     · have htake : (List.finRange k).take (n + 1) = List.finRange k :=
@@ -180,6 +185,7 @@ private theorem prefix_bounds (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) (n : ℕ
     · exact mul_nonneg ht0 (sub_nonneg.mpr (one_le_pow₀ (by norm_num)))
     · unfold modulus
       rw [hpow] at hrel
+      have hmul := mul_le_mul_of_nonneg_left hp ht0
       nlinarith
   · have hrel := quotient_relation d m hd hm
     change ((2 : ℤ)^d-1)*(t : ℤ) = (2 : ℤ)^k-1 at hrel
@@ -190,8 +196,9 @@ private theorem prefix_bounds (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) (n : ℕ
       omega
     simp only [if_neg hn, mul_zero, add_zero, zero_add]
     constructor
-    · rfl
+    · exact le_rfl
     · unfold modulus
+      have hmul := mul_le_mul_of_nonneg_right hdZ ht0
       nlinarith
 
 private theorem charge_prefix_bound (k t : ℕ) (hk : 2 ≤ k)
@@ -208,7 +215,7 @@ private theorem charge_prefix_bound (k t : ℕ) (hk : 2 ≤ k)
     intro x hx
     obtain ⟨i, hi, rfl⟩ := List.mem_map.mp hx
     exact hnonneg i
-  have hd : 0 ≤ ((List.finRange k).drop n).map (charge k t) |>.sum := by
+  have hd : 0 ≤ (((List.finRange k).drop n).map (charge k t)).sum := by
     apply List.sum_nonneg
     intro x hx
     obtain ⟨i, hi, rfl⟩ := List.mem_map.mp hx
@@ -216,7 +223,7 @@ private theorem charge_prefix_bound (k t : ℕ) (hk : 2 ≤ k)
   have he := congrArg (fun l : List (Fin k) => (l.map (charge k t)).sum)
     (List.take_append_drop n (List.finRange k))
   simp only [List.map_append, List.sum_append] at he
-  rw [← hq] at he
+  rw [hq] at he
   exact ⟨hp, by omega⟩
 
 private theorem fresh_value (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) :
@@ -227,7 +234,7 @@ private theorem fresh_value (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) :
   let k := d * m
   let t := (2 ^ (d * m) - 1) / (2 ^ d - 1)
   have hq := quotient_bounds d m hd hm
-  have hk : 2 ≤ k := by omega
+  have hk : 2 ≤ k := by dsimp [k]; nlinarith
   have hN : 0 < modulus (k + 1) := (TwoRunSource.modulus_positive_odd (k + 1) (by omega)).1
   have hodd := (TwoRunSource.modulus_positive_odd (k + 1) (by omega)).2
   have hhalf : modulus (k + 1) / 2 = modulus k := by
@@ -238,16 +245,16 @@ private theorem fresh_value (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) :
     rw [hhalf]
     constructor
     · exact Int.natCast_nonneg _
-    · have hp := pow_le_pow_right₀ (by decide : (1 : ℕ) ≤ 2) (Nat.sub_le k 1)
-      have ht : t ≤ 2^k-1 := by have := hq.2.2; omega
+    · have hp := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (Nat.sub_le k 1)
+      have ht : (t : ℤ) < (2 : ℤ)^(k-1) := by exact_mod_cast hq.2.1
       unfold modulus
-      exact_mod_cast ht
+      omega
   change centered (modulus (k + 1))
       ((2 : ℤ) ^ k * ((2 * t : ℕ) : ℤ)) = (t : ℤ)
   calc
     _ = centered (modulus (k + 1)) ((2 : ℤ) ^ (k + 1) * (t : ℤ)) := by
-      rw [pow_succ]
-      norm_num [Nat.cast_mul]
+      congr 1
+      simp only [Nat.cast_mul, Nat.cast_ofNat, pow_succ]
       ring
     _ = centered (modulus (k + 1)) (t : ℤ) := centered_full_period (k + 1) t
     _ = (t : ℤ) := by
@@ -265,7 +272,7 @@ public theorem periodic_first_ear_joint_lift (d m : ℕ) (hd : 2 ≤ d) (hm : 1 
   let k := d * m
   let t := (2 ^ (d * m) - 1) / (2 ^ d - 1)
   have hq := quotient_bounds d m hd hm
-  have hk : 2 ≤ k := by omega
+  have hk : 2 ≤ k := by dsimp [k]; nlinarith
   have hsum : ((List.finRange k).map (actualSource k t)).sum = 0 :=
     source_sum k t (by omega)
   have hold : OriginalOrder k t (List.finRange k) := by
@@ -284,16 +291,19 @@ public theorem periodic_first_ear_joint_lift (d m : ℕ) (hd : 2 ≤ d) (hm : 1 
     have hs : ([Fin.last k] ++ (List.finRange k).map Fin.castSucc).Perm
         ((List.finRange k).map Fin.castSucc ++ [Fin.last k]) := List.perm_append_comm
     simpa [earWord, List.finRange_succ_last] using hs.trans hp'
-  have hdigits := fun i : Fin k => digit_data k t hk (by exact hq.3) i
+  have hdigits := fun i : Fin k => digit_data k t hk (by exact hq.2.2) i
   have hnew : OriginalOrder (k + 1) (2 * t) (earWord k (List.finRange k) 0) := by
     refine ⟨hnewperm, ?_, ?_⟩
     · rw [hnewperm.map (actualSource (k + 1) (2 * t)).sum_eq]
       exact source_sum (k+1) (2*t) (by omega)
     · intro n
       cases n with
-      | zero => simp [earWord]
+      | zero =>
+        simp only [List.take_zero, List.map_nil, List.sum_nil, Set.mem_Icc]
+        have hN := (TwoRunSource.modulus_positive_odd (k+1) (by omega)).1
+        constructor <;> omega
       | succ n =>
-        have hqpref := charge_prefix_bound k t hk hq.3 n
+        have hqpref := charge_prefix_bound k t hk hq.2.2 n
         have holdpref := prefix_bounds d m hd hm n
         have hrel :
             ((((List.finRange k).take n).map
@@ -317,7 +327,7 @@ public theorem periodic_first_ear_joint_lift (d m : ℕ) (hd : 2 ≤ d) (hm : 1 
           simpa [sub_eq_add_neg] using hs
         simp only [earWord, List.take_zero, List.drop_zero, List.map_nil,
           List.nil_append, List.singleton_append, List.take_succ_cons,
-          List.map_cons, List.sum_cons, List.map_take, List.map_map, Function.comp_def]
+          List.map_cons, List.sum_cons, ← List.map_take, List.map_map, Function.comp_def]
         rw [hrel]
         have hf := fresh_value d m hd hm
         rw [hf]
