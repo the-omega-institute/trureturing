@@ -8,6 +8,7 @@
 
 import D5.S3.VertexAlgebra.SourceBPZ.NormalScalarTranspose
 import D5.S3.VertexAlgebra.LatticeAllStateField
+import D5.S3.VertexAlgebra.LatticeInvolution
 import D5.S3.VertexAlgebra.SourceMobius.OriginalCarrier
 import D5.S3.VertexAlgebra.SourceMobius.Coordinates
 import D5.S3.VertexAlgebra.Sectors.LatticeSectorIntertwiner
