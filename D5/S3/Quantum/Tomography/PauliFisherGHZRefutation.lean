@@ -6,12 +6,9 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Tomography/PauliFisherGHZRefutation.claim; result=D5/S3/Quantum/Tomography/PauliFisherGHZRefutation.result; claim=D5/S3/Quantum/Tomography/PauliFisherGHZRefutation.claim
    digest: GHZ phase tangents refute a uniform lower bound for mean Pauli Fisher information. -/
 
-import Mathlib.Analysis.Matrix.Normed
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.Calculus.Deriv.Prod
-import Mathlib.Analysis.Calculus.Deriv.Star
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.LinearAlgebra.Matrix.Rank
+import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
+import D5.S3.Quantum.Information.LiTheilHarrowChuangPurifyCloneRefutation
+import D5.S3.Quantum.Magic.WignerDistanceMinimum
 
 /-!
 The GHZ phase family refutes the uniform Pauli Fisher lower bound in
@@ -28,30 +25,32 @@ noncomputable section
 namespace D5.S3.Quantum.Tomography.PauliFisherGHZRefutation
 
 open scoped BigOperators Matrix.Norms.Elementwise ComplexOrder
-open Matrix
-
-def IsDensity {n : ℕ} (ρ : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) : Prop :=
-  ρ.PosSemidef ∧ ρ.trace = 1
+open _root_.Matrix
+open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
+open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (Pauli pauliMatrix)
+open D5.S3.Quantum.Magic.WignerDistanceMinimum (eigenVector spectral spectral_stabilizer)
+open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
+open D5.S3.Quantum.Recovery.ProductPrefixRigidity (productMap readout)
 
 def pauliEigen (s : Fin 3) (o b : Fin 2) : ℂ :=
-  if s = 2 then if b = o then 1 else 0
-  else (if b = 0 then 1 else (-1 : ℂ) ^ (o : ℕ) * (if s = 0 then 1 else Complex.I)) /
-    (Real.sqrt 2 : ℂ)
+  eigenVector (if s = 2 then .Z else if s = 0 then .X else .Y) o b
 
 def productVector {n : ℕ} (s : Fin n → Fin 3) (o : Fin n → Fin 2)
-    (b : Fin n → Fin 2) : ℂ := ∏ j, pauliEigen (s j) (o j) (b j)
+    (b : Fin n → Fin 2) : ℂ :=
+  productMap (fun _ : Fin n => Fin 2) (fun j (_ : Unit) => pauliEigen (s j) (o j))
+    (fun _ => ()) b
 
 def outcomeProb {n : ℕ} (ρ : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)
     (s : Fin n → Fin 3) (o : Fin n → Fin 2) : ℝ :=
-  (star (productVector s o) ⬝ᵥ (ρ *ᵥ productVector s o)).re
+  readout ρ (productVector s o)
 
 def settingFisher {n : ℕ} (ρ v : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)
     (s : Fin n → Fin 3) : ℝ :=
-  ∑ o, (star (productVector s o) ⬝ᵥ (v *ᵥ productVector s o)).re ^ 2 /
+  ∑ o, readout v (productVector s o) ^ 2 /
     outcomeProb ρ s o
 
 def averageFisher {n : ℕ} (ρ v : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) : ℝ :=
-  (∑ s, settingFisher ρ v s) / 3 ^ n
+  Finset.univ.expect (settingFisher ρ v)
 
 def IsRankTangent {n : ℕ} (r : ℕ)
     (ρ v : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) : Prop :=
@@ -70,7 +69,7 @@ private def ghzKet (n : ℕ) (θ : ℝ) (b : Fin n → Fin 2) : ℂ :=
     (Real.sqrt 2 : ℂ)
 
 private def ghz (n : ℕ) (θ : ℝ) : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ :=
-  vecMulVec (ghzKet n θ) (star (ghzKet n θ))
+  rankOneDensity (ghzKet n θ)
 
 private def phaseDirection (n : ℕ) (θ : ℝ) :
     Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ := fun a b =>
@@ -83,17 +82,10 @@ private def phaseDirection (n : ℕ) (θ : ℝ) :
 private def outcomePhase {n : ℕ} (s : Fin n → Fin 3) (o : Fin n → Fin 2) : ℂ :=
   ∏ j, (-1 : ℂ) ^ (o j : ℕ) * (if s j = 0 then 1 else -Complex.I)
 
-private lemma branches_distinct (n : ℕ) (hn : 0 < n) :
-    (fun _ : Fin n => (0 : Fin 2)) ≠ (fun _ => 1) := by
-  intro h
-  have hzero := congrFun h ⟨0, hn⟩
-  exact Fin.zero_ne_one hzero
-
 private lemma phase_unit (θ : ℝ) :
     Complex.exp (θ * Complex.I) * star (Complex.exp (θ * Complex.I)) = 1 := by
-  rw [Complex.star_def, Complex.mul_conj, Complex.normSq_eq_norm_sq,
-    Complex.norm_exp_ofReal_mul_I]
-  norm_num
+  simpa only [Complex.ofReal_neg, mul_neg, neg_mul, neg_neg, mul_comm] using
+    D5.S3.Quantum.Dynamics.PositivePauliClockOrder.phase_unit (-θ)
 
 private lemma ghz_entry (n : ℕ) (hn : 0 < n) (θ : ℝ)
     (a b : Fin n → Fin 2) :
@@ -104,7 +96,7 @@ private lemma ghz_entry (n : ℕ) (hn : 0 < n) (θ : ℝ)
          (if a = (fun _ => 1) ∧ b = (fun _ => 0) then 1 else 0) +
        star (Complex.exp (θ * Complex.I)) *
          (if a = (fun _ => 0) ∧ b = (fun _ => 1) then 1 else 0)) / 2 := by
-  have hab := branches_distinct n hn
+  have hab := D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Attainment.zero_ne_one n hn
   have hs : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by
     exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
   have hu := phase_unit θ
@@ -122,7 +114,7 @@ private lemma ghz_entry (n : ℕ) (hn : 0 < n) (θ : ℝ)
 
 private lemma ghz_density_rank (n : ℕ) (hn : 0 < n) (θ : ℝ) :
     IsDensity (ghz n θ) ∧ (ghz n θ).rank = 1 := by
-  have hab := branches_distinct n hn
+  have hab := D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Attainment.zero_ne_one n hn
   have hd (a : Fin n → Fin 2) : ghz n θ a a =
       ((if a = (fun _ => 0) then 1 else 0) +
        (if a = (fun _ => 1) then 1 else 0)) / 2 := by
@@ -135,18 +127,8 @@ private lemma ghz_density_rank (n : ℕ) (hn : 0 < n) (θ : ℝ) :
     rw [Finset.sum_add_distrib]
     norm_num [← Finset.sum_div]
   refine ⟨⟨posSemidef_vecMulVec_self_star _, htrace⟩, ?_⟩
-  apply le_antisymm (rank_vecMulVec_le _ _)
-  have hdet : ((ghz n θ).submatrix
-      (fun _ : Fin 1 => fun _ => 0) (fun _ : Fin 1 => fun _ => 0)).det ≠ 0 := by
-    rw [Matrix.det_unique]
-    change ghz n θ (fun _ => 0) (fun _ => 0) ≠ 0
-    rw [hd]
-    simp [hab]
-  have hlow := rank_submatrix_le (ghz n θ)
-    (fun _ : Fin 1 => fun _ => 0) (fun _ : Fin 1 => fun _ => 0)
-  rw [rank_of_det_ne_zero hdet] at hlow
-  change 1 ≤ (ghz n θ).rank
-  simpa only [Fintype.card_fin] using hlow
+  exact D5.S3.Quantum.Information.LiTheilHarrowChuangPurifyCloneRefutation.vecPure_rank_one
+    (ghzKet n θ) htrace
 
 private lemma ghz_derivative (n : ℕ) (hn : 0 < n) (θ : ℝ) :
     HasDerivAt (fun t : ℝ => ghz n (θ + t)) (phaseDirection n θ) 0 := by
@@ -226,7 +208,7 @@ private lemma ghz_expectation (n : ℕ) (hn : 0 < n) (θ : ℝ)
 
 private lemma phase_norm (n : ℕ) (hn : 0 < n) (θ : ℝ) :
     ((phaseDirection n θ * phaseDirection n θ).trace).re = 1 / 2 := by
-  have hab := branches_distinct n hn
+  have hab := D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Attainment.zero_ne_one n hn
   have hu := phase_unit θ
   have hv (a b : Fin n → Fin 2) : phaseDirection n θ a b =
       Complex.I / 2 *
@@ -269,14 +251,12 @@ private lemma z_setting_zero (n : ℕ) (_hn : 0 < n) (θ : ℝ)
       change (∏ k, pauliEigen (s k) (o k) 1) = 0
       apply Finset.prod_eq_zero (Finset.mem_univ j)
       rw [hj]
-      change (if (1 : Fin 2) = o j then (1 : ℂ) else 0) = 0
-      simp [ho]
+      simp [pauliEigen, eigenVector, ho]
     · left
       change (∏ k, pauliEigen (s k) (o k) 0) = 0
       apply Finset.prod_eq_zero (Finset.mem_univ j)
       rw [hj]
-      change (if (0 : Fin 2) = o j then (1 : ℂ) else 0) = 0
-      simp [Ne.symm ho]
+      simp [pauliEigen, eigenVector, ho]
   rw [phase_expectation]
   rcases hp with hp | hp <;> simp [hp]
 
@@ -285,27 +265,27 @@ private lemma pauli_xy_products (s : Fin 3) (hs : s ≠ 2) (o : Fin 2) :
     star (pauliEigen s o 1) * pauliEigen s o 1 = (1 / 2 : ℂ) ∧
     star (pauliEigen s o 1) * pauliEigen s o 0 =
       ((-1 : ℂ) ^ (o : ℕ) * (if s = 0 then 1 else -Complex.I)) / 2 := by
-  have hvals : pauliEigen s o 0 = 1 / (Real.sqrt 2 : ℂ) ∧
-      pauliEigen s o 1 = ((-1 : ℂ) ^ (o : ℕ) *
-        (if s = 0 then 1 else Complex.I)) / (Real.sqrt 2 : ℂ) := by
-    constructor
-    · change (if s = 2 then (if (0 : Fin 2) = o then (1 : ℂ) else 0)
-        else 1 / (Real.sqrt 2 : ℂ)) = _
-      rw [ite_eq_right hs]
-    · change (if s = 2 then (if (1 : Fin 2) = o then (1 : ℂ) else 0)
-        else ((-1 : ℂ) ^ (o : ℕ) * (if s = 0 then 1 else Complex.I)) /
-          (Real.sqrt 2 : ℂ)) = _
-      rw [ite_eq_right hs]
-  rw [hvals.1, hvals.2]
-  fin_cases o <;> by_cases h : s = 0 <;> norm_num [h, Complex.star_def]
-  all_goals repeat' constructor
-  all_goals ring_nf
-  all_goals try simp only [Complex.I_sq]
-  all_goals norm_num
-  all_goals first
-    | rw [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
-    | rw [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
-  all_goals norm_num
+  let p : Pauli := if s = 0 then .X else .Y
+  have hp : p ≠ .I := by dsimp [p]; split_ifs <;> decide
+  obtain ⟨_, _, _, _, _, _, _, hproj⟩ := spectral_stabilizer p o hp
+  have he : eigenVector p o = pauliEigen s o := by
+    funext b
+    rw [pauliEigen.eq_1]
+    simp [hs, p]
+  rw [he] at hproj
+  have h0 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 0 0) hproj
+  have h1 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 1 1) hproj
+  have hcross := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 0 1) hproj
+  simp only [vecMulVec_apply, Pi.star_apply] at h0 h1 hcross
+  by_cases h : s = 0
+  all_goals
+    simp [spectral, p, h, pauliMatrix,
+      D5.S3.Quantum.FiniteDimensional.qubitX,
+      D5.S3.Quantum.FiniteDimensional.qubitZ] at h0 h1 hcross
+    refine ⟨?_, ?_, ?_⟩
+    · simpa [h, mul_comm] using h0.symm
+    · simpa [h, mul_comm] using h1.symm
+    · simpa [h, div_eq_mul_inv, mul_comm, mul_left_comm, mul_assoc] using hcross.symm
 
 private lemma xy_amplitudes (n : ℕ) (s : Fin n → Fin 3)
     (hs : ∀ j, s j ≠ 2) (o : Fin n → Fin 2) :
@@ -404,24 +384,20 @@ private lemma outcome_phase_fourth (n : ℕ) (s : Fin n → Fin 3) (o : Fin n �
   have h (j : Fin n) :
       ((-1 : ℂ) ^ (o j : ℕ) * (if s j = 0 then 1 else -Complex.I)) ^ 4 = 1 := by
     rw [mul_pow, ← pow_mul, Nat.mul_comm, pow_mul]
-    by_cases hj : s j = 0 <;> norm_num [hj, pow_succ, Complex.I_sq]
+    by_cases hj : s j = 0 <;> norm_num [hj, neg_pow, Complex.I_pow_four]
   simp_rw [h]
   simp
 
 private lemma fourth_root_cases (q : ℂ) (hq : q ^ 4 = 1) :
     q = 1 ∨ q = -1 ∨ q = Complex.I ∨ q = -Complex.I := by
-  have hf : (q - 1) * (q + 1) * (q - Complex.I) * (q + Complex.I) = 0 := by
-    calc
-      _ = (q ^ 2 - 1) * (q ^ 2 - Complex.I ^ 2) := by ring
-      _ = q ^ 4 - 1 := by rw [Complex.I_sq]; ring
-      _ = 0 := by rw [hq]; ring
-  rcases mul_eq_zero.mp hf with hf | hf
-  · rcases mul_eq_zero.mp hf with hf | hf
-    · rcases mul_eq_zero.mp hf with hf | hf
-      · exact Or.inl (sub_eq_zero.mp hf)
-      · exact Or.inr (Or.inl (eq_neg_of_add_eq_zero_left hf))
-    · exact Or.inr (Or.inr (Or.inl (sub_eq_zero.mp hf)))
-  · exact Or.inr (Or.inr (Or.inr (eq_neg_of_add_eq_zero_left hf)))
+  have hs : (q ^ 2) ^ 2 = (1 : ℂ) ^ 2 := by simpa [← pow_mul] using hq
+  rcases eq_or_eq_neg_of_sq_eq_sq (q ^ 2) 1 hs with h | h
+  · rcases eq_or_eq_neg_of_sq_eq_sq q 1 (by simpa using h) with h | h
+    · exact Or.inl h
+    · exact Or.inr (Or.inl h)
+  · rcases eq_or_eq_neg_of_sq_eq_sq q Complex.I (h.trans Complex.I_sq.symm) with h | h
+    · exact Or.inr (Or.inr (Or.inl h))
+    · exact Or.inr (Or.inr (Or.inr h))
 
 private lemma phase_coordinates (n : ℕ) (s : Fin n → Fin 3) (o : Fin n → Fin 2) :
     (Complex.exp ((Real.pi / 4 : ℝ) * Complex.I) * outcomePhase s o).re ^ 2 = 1 / 2 ∧
@@ -484,6 +460,7 @@ private lemma xy_setting_one (n : ℕ) (hn : 0 < n)
     rw [← Complex.re_sum, ← Finset.mul_sum, hsum, mul_zero]
     rfl
   change (∑ o, _) = 1
+  dsimp only [readout]
   simp_rw [hterm]
   rw [← Finset.sum_div, Finset.sum_sub_distrib, hrez]
   simp [Nat.cast_pow]
@@ -493,12 +470,8 @@ private lemma xy_setting_count (n : ℕ) :
   have h (s : Fin n → Fin 3) :
       (if ∀ j, s j ≠ 2 then (1 : ℝ) else 0) = ∏ j, if s j ≠ 2 then 1 else 0 := by
     classical
-    by_cases hs : ∀ j, s j ≠ 2
-    · simp [hs]
-    · obtain ⟨j, hj⟩ := not_forall.mp hs
-      rw [ite_eq_right hs]
-      symm
-      exact Finset.prod_eq_zero (Finset.mem_univ j) (ite_eq_right hj)
+    simpa only [Finset.mem_univ, forall_true_left] using
+      (Finset.prod_boole (M₀ := ℝ) (s := Finset.univ) (p := fun j => s j ≠ 2)).symm
   simp_rw [h]
   rw [← Fintype.prod_sum (fun (_ : Fin n) (a : Fin 3) =>
     if a ≠ 2 then (1 : ℝ) else 0)]
@@ -510,6 +483,9 @@ private lemma average_exact (n : ℕ) (hn : 0 < n) :
   have hz := z_setting_zero n hn (Real.pi / 4)
   have hxy := xy_setting_one n hn
   have hcount := xy_setting_count n
+  rw [averageFisher, Finset.expect_eq_sum_div_card]
+  simp only [Finset.card_univ, Fintype.card_fun, Fintype.card_fin, Nat.cast_pow,
+    Nat.cast_ofNat]
   change (∑ s, settingFisher (ghz n (Real.pi / 4))
     (phaseDirection n (Real.pi / 4)) s) / 3 ^ n = (2 / 3 : ℝ) ^ n
   rw [div_pow, ← hcount]
