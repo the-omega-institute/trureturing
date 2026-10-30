@@ -1989,3 +1989,176 @@ Thus source size, legal terminal depth and installed descriptions grow with $k$.
 
 ## 追加锚（本行以下为增补区）
 
+## 23. Constant readout, minimal success records and the genuine future quotient
+
+**Definition 23.1 (the minimal-record source and its acquisition).** For each $k\ge1$, retain exactly Definition 22.2's carrier $X_N$, fixed actual root $x_0=v_{0,0}$, two partial successor maps (22.7), and notation $N=2^k$, $L=N-1$, $P=\binom N2$, $\rho$, $J_i$, $B_i$ and $p_i$. Define a different actual source $X_N^{\min}$ on those same vertices and maps by declaring
+
+$$
+q_X(x)=\ast\quad(x\in X_N),\qquad
+\ell_c(x)=(c,1,\mathrm{ok})\quad(x\in D_c,\ c\in\{a,b\}).
+\tag{23.1}
+$$
+
+There is exactly one type $\iota$. The two tokens $a,b:\iota\to\iota$ have no parameters, aliases or timing variants. The outcome tag $\mathrm{ok}$ is identical on every legal edge, including an edge entering a terminal vertex. There are no other record fields, readouts or executed failure edges. In particular neither a successor nor a source, edge, pair or terminal identifier occurs in (23.1). Termination means that the future legal menu is empty; it has no additional event or distinguished recorded outcome. An unlisted operation is an illegal attempt, not an executed failure. The indices in (22.7) describe the installed partial maps and are not operation-name or record data.
+
+Use the complete responses of Definitions 1.1–1.2 with these declarations, and let $\pi_{\min}$ denote their actual response quotient. Write $o=\pi_{\min}(x_0)$. Retain the whole root language, empty word and every stopping prefix of Definitions 11.1 and 16.1. Fix the native and acquisition law (22.1) once across this family, so that
+
+$$
+z(u)=\pi_{\min}(x_0\cdot u),\qquad
+T(u)=|u|,\qquad
+\mathcal O(u)=\{z(u)\}\times[\,|u|-1/4,\ |u|+1/4\,].
+\tag{23.2}
+$$
+
+Every error in this entire closed interval is allowed for every legal word. Exact final acquisition of this genuine quotient endpoint, together with the final supplement, remains an explicit assumption. The supplement contracts and capacities are precisely Definition 22.1's: static labels may depend on the whole history, while the complete online state has one fixed initialization and one total update receiving only the next actually executed name. The final decoder receives only endpoint, supplement and final $y$. No live quotient, readout, response, clock, increment, event index, parser mode, stop signal or future input is supplied to the update.
+
+For a set $H$ of binary words, write $\operatorname{Pref}(H)$ for all its prefixes, including the empty word. For a nonempty finite $A\subseteq\mathbb N_0$, put
+
+$$
+\begin{aligned}
+\mathcal B(A)
+ &=\operatorname{Pref}\{b^s a:s\in A\}\\
+ &=\{b^h:0\le h\le\max A\}\ \cup\ \{b^s a:s\in A\}.
+\end{aligned}
+\tag{23.3}
+$$
+
+Thus $A=\{s:b^s a\in\mathcal B(A)\}$. These finite languages describe complete future legality; they are not additional acquired fields.
+
+**Proposition 23.2 (the actual quotient and its length fibers).** For $x\in X_N^{\min}$ let $R(x)$ be the set of all finite words legal from $x$, including the empty word. The exact response quotient is the finite actual image
+
+$$
+V_N=\{R(x):x\in X_N\},\qquad
+\pi_{\min}(x)=R(x),\qquad
+x\sim y\ \Longleftrightarrow\ R(x)=R(y).
+\tag{23.4}
+$$
+
+Its values are completely specified by
+
+$$
+\begin{aligned}
+R(v_{i,0})
+ &=\operatorname{Pref}\{a^{h-i}b^{L-h+q}a:
+                  i\le h<N,\ q\in J_h\},\\
+R(v_{i,j})
+ &=\mathcal B(\{L-i-j+q:q\in J_i\})
+                  &&(j\ge1,\ i+j\le L),\\
+R(w_{i,t})
+ &=\mathcal B(\{q-t:q\in J_i,\ q\ge t\})
+                  &&(1\le t\le B_i),\\
+R(z_q)&=\{\varepsilon\} &&(0\le q<P).
+\end{aligned}
+\tag{23.5}
+$$
+
+In particular all terminal presentation states are identified. All nonterminal presentation states having equal languages in (23.5) are also identified, without further distinctions. Every legal quotient word lifts from every actual representative, the quotient is root reachable and acyclic, and its native edge duration is one. For
+
+$$
+F_{\min}(u)=(R(x_0\cdot u),|u|),\qquad u\in\mathcal P_o,
+\tag{23.6}
+$$
+
+every fiber has size at most two, and some fiber has size exactly two. Distinct histories in any one fiber have different residues $\#_a(u)\pmod N$.
+
+Proof. The partial maps and actual root are unchanged from (22.7), so reuse Proposition 22.3's exhaustive table of actual root words, its reachability and actual-image closure. That table is a statement about executions of the partial maps and does not require an injective readout. Its endpoint column here names presentation states, before applying $\pi_{\min}$. In particular the entire legal language consists of the base histories $a^i b^j$, the chain histories $p_i b^t$, and the terminal histories $p_i b^q a$ for $q\in J_i$, with precisely the ranges of that table. No additional horizon or promise is imposed.
+
+From $v_{i,0}$ one may first increase the initial $a$-run to an index $h$, then traverse $L-h$ base $b$-edges and $q$ selector $b$-edges, and take the final $a$-exit exactly for $q\in J_h$. From a base state with $j\ge1$, that initial run has already been fixed to $i$, leaving $L-i-j$ base $b$-edges before the selector. From $w_{i,t}$ exactly the exits with $q\ge t$ remain. Every such state has a terminal descendant, since each $J_i$ is nonempty and its maximum is $B_i$. Thus every legal suffix is a prefix of one of the stated terminal suffixes, and each such prefix is legal. This proves (23.5), including all stopping cuts. Each set used in $\mathcal B$ is nonempty.
+
+If $R(x)=R(y)$, every finite attempted word has the same maximal legal prefix from the two states. At its cuts the readout is always $\ast$, and each executed name $c$ contributes exactly $(c,1,\mathrm{ok})$. The first illegal attempt, when present, therefore occurs at the same position. The legal menus after any common legal prefix agree as well, since membership of each one-letter extension is the same. In particular the distinction between a terminal menu and a nonterminal menu agrees. Hence the entire responses, including their legality distinctions and empty responses, agree. Conversely, if the languages differ, a word legal on just one side gives different complete responses. This proves (23.4) for all finite attempted words, not only for selected successful continuations.
+
+For any $Q=R(x)\in V_N$ and $c\in\{a,b\}$, the name is legal exactly when the one-letter word $c$ belongs to $Q$. When legal,
+
+$$
+R(T_cx)=c^{-1}Q:=\{w:cw\in Q\}.
+\tag{23.7}
+$$
+
+This value is independent of the representative and belongs to $V_N$ by the actual-image closure of (22.7). Thus (23.7) is the full quotient transition law. Induction lifts every legal quotient word from every representative, including the fixed $x_0$, and projects every actual word back. Actual reachability makes every member of $V_N$ root reachable. The maximum word length in the finite language $Q$ strictly decreases along a legal edge, proving acyclicity of this quotient as well as of the presentation. The constant duration descends to every quotient edge. Terminal states have exactly $R=\{\varepsilon\}$, whereas every nonterminal state has a nonempty legal extension. Nonterminal identifications really occur: with $q_*=P-1=\rho(N-2,N-1)$ and the existing notation $w_{i,0}=v_{i,L-i}$,
+
+$$
+R(w_{N-2,q_*})=R(w_{N-1,q_*})
+ =\mathcal B(\{0\})=\{\varepsilon,a\}.
+\tag{23.8}
+$$
+
+These vertices exist since $B_{N-2}=B_{N-1}=q_*$. Equality in (23.5), rather than a chosen state label, specifies every identification, including any between different presentation depths.
+
+It remains to bound fibers of (23.6); identities between different depths cannot be discarded, but the length coordinate separates them. Fix a length $n$. Terminal root words exist exactly when $n=N+q$ for $0\le q<P$. By the supplied table and the bijection $\rho$, exactly the two words
+
+$$
+p_i b^q a,\quad p_j b^q a,
+\qquad q=\rho(i,j),\quad i<j,
+\tag{23.9}
+$$
+
+then reach the terminal quotient $\{\varepsilon\}$. Their $a$-counts are $i+1,j+1$, distinct modulo $N$. No nonterminal word can share their quotient endpoint.
+
+For $n<L$ every root word is $a^i b^{n-i}$, $0\le i\le n$. The endpoint of $a^n$ has an immediate legal $a$, whereas those with $i<n$ have only $b$ legal. Thus its response class is separate. For $i<n$, (23.5) gives
+
+$$
+R(x_0\cdot a^i b^{n-i})
+ =\mathcal B(\{L-n+q:q\in J_i\}).
+\tag{23.10}
+$$
+
+Equality for several indices forces their nonempty $J_i$ sets to agree by (23.3). Any chosen $q$ in that common set belongs to exactly two $J_i$'s, namely the endpoints of its indexed pair. Consequently at most two indices can occur in one fiber. The case $n=0$ is just the empty history.
+
+For $n\ge L$, all nonterminal histories of length $n$ have the form $p_i b^t$, where $t=n-L$ is fixed and $0\le t\le B_i$; $t=0$ includes every boundary base state. Their future languages are
+
+$$
+\mathcal B(A_i(t)),\qquad
+A_i(t)=\{q-t:q\in J_i,\ q\ge t\}\ne\varnothing.
+\tag{23.11}
+$$
+
+The first line of (23.5) at $v_{L,0}$ also reduces to this formula. If several indices have the same language, their $A_i(t)$ agree. Choose $s$ in that common nonempty set. The pair index $q=t+s$ then belongs to all their $J_i$'s, so again there are at most two such indices. At either nonterminal range a fixed $i$ specifies just one history of that length, with exactly $i$ occurrences of $a$. Distinct indices in $\{0,\ldots,N-1\}$ have distinct residues modulo $N$. This proves all the asserted fiber and residue properties, and (23.9) supplies a fiber of size two. $\square$
+
+**Theorem 23.3 (exact capacities with constant readout and minimal records).** For every $k\ge1$, Definition 23.1's source with the genuine quotient (23.4) has
+
+$$
+\boxed{(C_{\rm stat},C_{\rm on})=(2,N)=(2,2^k).}
+\tag{23.12}
+$$
+
+The online lower bound quantifies over every finite complete state set, every fixed initialization and every total names-only update. Both upper bounds recover every legal root history, including the empty word and every stopping prefix, for every final error in (23.2). Hence this constant-readout, identical-success-record class has no universal finite online capacity bound even when the static capacity is exactly two.
+
+Proof. Apply Proposition 16.2 with the native total $|u|$, $r=1$, $K=[-1,1]$ and $\epsilon=1/4$. Integer lengths differ either by zero or by at least one, so two whole observation supports overlap exactly when their quotient endpoints and lengths agree. Thus the static problem is precisely equality-fiber repair for the finite carrier $\mathcal P_o$, record $F_{\min}$ of (23.6), and identity target $u\mapsto u$. Directly reuse `DefectGraphMinimumColoring.minimum_repair_labels_eq_chromatic_eq_fiber_diversity` with that correspondence: Proposition 23.2 supplies its largest target diversity, two. Explicitly, within each $F_{\min}$ fiber order its one or two words lexicographically using $a<b$, and let $h(u)$ be the number of preceding words in that fiber. This gives one function $h:\mathcal P_o\to\{0,1\}$ separating every fiber. Return the unique legal word with the acquired endpoint and label whose length differs from $y$ by at most $1/4$, rejecting when none exists. Proposition 16.2 gives uniqueness, and the actual word passes for every allowed $y$, including both interval endpoints. Conversely the two histories (23.9) have the same endpoint and the same allowed clock value $y=N+q$. A one-value label cannot distinguish them, regardless of its definition. Therefore $C_{\rm stat}=2$.
+
+For the online lower bound reuse the pair-dependent common-continuation argument of (22.12)–(22.13), checking its final fields on this new quotient. If a successful complete machine has $\mu(p_i)=\mu(p_j)$ for $i<j$, put $q=\rho(i,j)$. The actual continuation $b^q a$ is legal from both presentation states by (22.7), and both extended words end at the same quotient $\{\varepsilon\}$ with length $N+q$. The append-evaluation law gives
+
+$$
+\mu(p_i b^q a)=U_{b^q a}(\mu(p_i))
+             =U_{b^q a}(\mu(p_j))=\mu(p_j b^q a).
+\tag{23.13}
+$$
+
+At $y=N+q$ all three permitted final fields agree for two distinct words, contradicting successful decoding. These are actual same-source continuations and a common point of their full supports. Thus all $N$ states $\mu(p_i)$ are distinct, proving $|M|\ge N$ for any proposed machine, without restricting its encoding, control arrangement or initialization.
+
+For attainment directly reuse the entire machine (22.14): $M=\mathbb Z/N\mathbb Z$, $m_0=0$, $U(m,a)=m+1$, $U(m,b)=m$. The induction (22.15) is independent of the source records and gives $\mu(u)=\#_a(u)\pmod N$ on every binary word. Proposition 23.2 proves that this residue separates all histories in every $F_{\min}$ fiber, including the newly merged nonterminal classes and the single terminal class. Define the decoder to return the unique legal word satisfying its acquired quotient endpoint, final residue and $|y-|u||\le1/4$, and reject if none exists. A candidate exists at every allowed observation of every actual word, and two candidates would lie in one $F_{\min}$ fiber with equal residues, which is impossible. The argument includes the empty history, all base and selector cuts, all exits and all final errors. The one residue is the complete persistent value; no source vertex, phase, parser, selector, route or clock is stored elsewhere or supplied live. Both updates are total, and all $N$ states are reached on the legal words $p_i$. Hence $C_{\rm on}\le N$, establishing the exact minimum. Choosing $k$ arbitrarily large proves the final assertion. $\square$
+
+**Proposition 23.4 (source correspondence, transport and resource boundary).** The separation (23.12) persists under the exact same-source faithful endpoint representations of Proposition 20.1, with the whole support (23.2) transported and the supplement unchanged. It separates instantaneous retrospective ambiguity from the memory needed to preserve all future common-continuation distinctions, even though the current readout is constant and every success record is minimal. Its resources satisfy
+
+$$
+\begin{aligned}
+|X_N^{\min}|&=\frac{N(N+1)}2+\sum_i B_i+P,\\
+|V_N|&\le |X_N^{\min}|-P+1,\\
+|\mathcal P_o|&=\frac{N(N+1)}2+\sum_i B_i+2P,\\
+\max_{u\in\mathcal P_o}|u|&=L+P.
+\end{aligned}
+\tag{23.14}
+$$
+
+These are finite source and intrinsic-depth resources, permitted to grow with $k$; the operation alphabet, unit duration and error support do not grow or change.
+
+Proof. Apply Proposition 20.1 to $V_N$, its exact endpoint and (23.2); the actual-image closure and lifting needed for its process correspondence were proved in Proposition 23.2. For a process representation retain its full rooted typed named-graph isomorphism requirement, including the menus and minimal records, rather than relying on an endpoint injection alone. The source and history counts and intrinsic maximum length directly reuse (22.9). All $P$ terminals collapse to one response class, proving the displayed quotient bound; (23.8) exhibits further nonterminal collapse. Every integer length from zero to $L+P$ occurs along a longest actual root history. Thus the full clock range is still $\bigcup_{n=0}^{L+P}[n-1/4,n+1/4]$, with no external stopping restriction.
+
+The suppliers have their original telescopes. Definitions 1.1–1.2, 11.1 and 16.1 supply the actual source, complete-response and acquisition contracts. Definition 22.2's partial maps and Proposition 22.3's execution table are reused as presentation data, not as an identity-quotient assertion for (23.1). Proposition 16.2 supplies support overlap. Theorem 18.1 already supplies finite supplementation on this acyclic quotient, but no exact minimum here. Theorem 9.4 keeps its cycle minima: under unit durations a cycle of $m$ vertices has lap duration $m$, and its static minimum at tolerance $1/4$ is one. No shrinking-duration cycle is substituted for this family.
+
+The finite coloring declaration used above, and its owning Blueprint Scribe, take an arbitrary finite carrier, deterministic record and target. The present substitution is $X=\mathcal P_o$, record $F_{\min}$, target the identity; it is valid because integer-length support overlap has become exactly record equality. `DFAOStateLowerBound.state_lower_bound_of_distinguishing_family` and its Scribe supply the state-only output version of the common-suffix mechanism. Here the decoder also has a final endpoint and clock, and (23.9), rather than a hidden addition to the machine state or feed, makes those fields identical for each tested pair. The exact append law is `DFA.evalFrom_of_append` in mathlib at revision `56a005855ea17e0b0958f73ec801ae140b0a1679`, instantiated with step $U$, start $m_0$ and binary words. `TypedFiniteViewKernel.typed_finite_view_kernel` and its Scribe describe typed partial response equivalence; `ReachableBehaviorMinimality.finite_state_minimality` concerns finite reachable action systems and their future-behavior factors. Neither supplies the two-history length-fiber bound (23.10)–(23.11) for this minimal-record source.
+
+The bounded primary-literature correspondence is the established right-invariant suffix relation in Kozen, [*On the Myhill–Nerode Theorem for Trees*, opening string theorem, PDF p.1](https://www.cs.cornell.edu/~kozen/Papers/mn.pdf): $x\equiv_R y$ precisely when $xz\in R\Longleftrightarrow yz\in R$ for all suffixes $z$. Here the state future language $R(x)$ is defined by actual partial execution, and (23.4)–(23.7) prove its full response meaning with the stipulated records. That automata principle does not by itself bound the past-history fibers of the joint acquired record or prove their online separation. The repo-derived increment is exactly (23.4)–(23.11) and their preservation of both capacities after replacing the state-identifying observations of §22 by (23.1). It is not a new coloring or automata theorem, a duplicate identity-quotient construction, a priority claim or an exhaustive literature claim.
+
+This containment in the same owner expresses one common relation in three roles: future languages determine residual endpoints, native length places histories in separated clock intervals, and a supplement preserves chronological distinctions inside their joint fibers. The sharp binary retrospective label and $k$-bit online residue show why minimal current records need not make chronological memory uniformly small. Exact quotient acquisition is a separate assumption: the constant current readout alone does not furnish it, and no acquisition procedure or cost bound is asserted. The finite language descriptions, installed source and decoder descriptions, decoder work, output length and final acquisition are outside $|M|$. The result supplies conditional supplemented chronological recovery and its faithful transports; it supplies no inverse among unaugmented space, time, boundary and memory, no source-uniform total-resource bound, and no physical realization claim. $\square$
+
+## 追加锚（本行以下为增补区）
