@@ -71,6 +71,11 @@ private lemma endpoint_ne (l : Fin 6 → ℝ) (hl : ∀ q, 0 < l q)
   have hinj := (cut_body_polytope l hl).2.2.1
   exact congrArg Subtype.val (hinj (show endpoint l i j = endpoint l k m from h))
 
+private lemma endpoint_eq_false (l : Fin 6 → ℝ) (hl : ∀ q, 0 < l q)
+    {i j k m : Fin 4} (h : endpoint l i j = endpoint l k m)
+    (hij : i ≠ j) (hkm : k ≠ m) (hpq : (i, j) ≠ (k, m)) : False := by
+  exact endpoint_ne l hl hij hkm hpq h
+
 /-- Every one of the twenty original four-point cells is an affine simplex.
 
 The proof uses the literal facet and ridge support table from
@@ -101,17 +106,14 @@ theorem vertices_affine_independent (l : Fin 6 → ℝ) (hl : ∀ q, 0 < l q)
         simpa [incident] using hz
   have hlast : vertices l n 2 ≠ vertices l n 3 := by
     fin_cases n <;> intro h <;>
-      apply endpoint_ne l hl (by decide) (by decide) (by decide) <;>
-      simpa [vertices] using h
+      apply endpoint_eq_false l hl (by simpa [vertices] using h) (by decide) (by decide) (by decide)
   apply support_affine_independent (vertices l n)
     (support l (facet n)) (support l (ridge n))
-  · exact barycenter_support_ne l hl (facet n)
+  · simpa [vertices] using barycenter_support_ne l hl (facet n)
   · exact hfacet
   · exact hridge_ne
-  · intro j
-    fin_cases j
-    · exact hridge_zero 0
-    · exact hridge_zero 1
+  · exact hridge_zero 0
+  · exact hridge_zero 1
   · exact hlast
 
 #print axioms vertices_affine_independent
