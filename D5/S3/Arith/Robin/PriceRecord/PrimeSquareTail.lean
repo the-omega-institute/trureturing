@@ -37,7 +37,10 @@ private theorem finite_theta_abel_lower {y z rho : ℝ} (hy : 1 < y) (hyz : y �
   have hd (t : ℝ) (ht : t ∈ Set.Icc y z) : HasDerivAt f (-2 / t ^ 3) t := by
     have ht0 : t ≠ 0 := (hy0.trans_le ht.1).ne'
     convert (hasDerivAt_const t (1 : ℝ)).fun_div ((hasDerivAt_id t).pow 2)
-      (pow_ne_zero 2 ht0) using 1 <;> dsimp [f] <;> field_simp <;> ring
+      (pow_ne_zero 2 ht0) using 1
+    dsimp [f]
+    field_simp
+    ring
   have hcont : ContinuousOn (fun t : ℝ => -2 / t ^ 3) (Set.Icc y z) :=
     continuousOn_const.div (continuousOn_id.pow 3)
       (fun t ht => pow_ne_zero _ (hy0.trans_le ht.1).ne')
@@ -62,7 +65,8 @@ private theorem finite_theta_abel_lower {y z rho : ℝ} (hy : 1 < y) (hyz : y �
       have hh := mul_le_mul_of_nonpos_left (htheta t ht).1
         (show -2 / t ^ 3 ≤ 0 by
           exact div_nonpos_of_nonpos_of_nonneg (by norm_num) (by positivity))
-      convert hh using 1 <;> field_simp <;> ring)
+      convert hh using 1
+      field_simp)
   have hFTC : (∫ t in y..z, -2 * (1 - rho) / t ^ 2) =
       2 * (1 - rho) / z - 2 * (1 - rho) / y := by
     apply intervalIntegral.integral_eq_sub_of_hasDerivAt
@@ -76,11 +80,15 @@ private theorem finite_theta_abel_lower {y z rho : ℝ} (hy : 1 < y) (hyz : y �
   have htop : (1 - rho) / z ≤ f z * θ z := by
     have hh := mul_le_mul_of_nonneg_left (htheta z ⟨hyz, le_rfl⟩).1
       (show 0 ≤ f z by dsimp [f]; positivity)
-    convert hh using 1 <;> dsimp [f] <;> field_simp <;> ring
+    convert hh using 1
+    dsimp [f]
+    field_simp
   have hbot : f y * θ y ≤ (1 + rho) / y := by
     have hh := mul_le_mul_of_nonneg_left (htheta y ⟨le_rfl, hyz⟩).2
       (show 0 ≤ f y by dsimp [f]; positivity)
-    convert hh using 1 <;> dsimp [f] <;> field_simp <;> ring
+    convert hh using 1
+    dsimp [f]
+    field_simp
   have hs : (∑ p ∈ Ioc ⌊y⌋₊ ⌊z⌋₊, f p * c p) =
       ∑ p ∈ (Ioc ⌊y⌋₊ ⌊z⌋₊).filter Nat.Prime,
         Real.log p / (p : ℝ) ^ 2 := by
@@ -140,14 +148,14 @@ theorem prime_square_tail_uniform (epsilon : ℝ) (hepsilon : 0 < epsilon) :
   have hupper : y * Real.log y *
       (∑ p ∈ (Ioc ⌊y⌋₊ ⌊z⌋₊).filter Nat.Prime,
         (1 : ℝ) / (p : ℝ) ^ 2) ≤ 1 + 3 * eta := by
-    exact (le_div_iff₀ (mul_pos hy0 hlogy)).mp hu |>.trans_eq (by ring)
+    convert (le_div_iff₀ (mul_pos hy0 hlogy)).mp hu using 1 <;> ring
   have hlogCy : 0 < Real.log (C * y) := Real.log_pos (hy.trans_le hyC)
   have hlogbound : Real.log C ≤ eta * Real.log y := by
     have hexp : Real.exp (Real.log C / eta) ≤ y :=
       (le_max_right _ _).trans ((le_max_right _ _).trans hYy)
     have h := (Real.log_le_log (Real.exp_pos _) hexp)
     rw [Real.log_exp] at h
-    exact (div_le_iff₀ heta0).mp h
+    simpa only [mul_comm] using (div_le_iff₀ heta0).mp h
   have hlogratio : 1 - eta ≤ Real.log y / Real.log (C * y) := by
     apply (le_div_iff₀ hlogCy).mpr
     rw [Real.log_mul hC0.ne' hy0.ne']
@@ -177,10 +185,15 @@ theorem prime_square_tail_uniform (epsilon : ℝ) (hepsilon : 0 < epsilon) :
           (1 : ℝ) / (p : ℝ) ^ 2) := by
     have hcorr : (1 - eta) / (C * y) ≤ eta / y := by
       apply (div_le_div_iff₀ (mul_pos hC0 hy0) hy0).mpr
+      have hid : eta * (C * y) = y := by
+        rw [← mul_assoc, mul_comm eta C, hCeta, one_mul]
+      rw [hid]
       nlinarith [mul_pos heta0 hy0]
-    exact (by linarith : (1 - 4 * eta) / y ≤
-      (1 - 3 * eta) / y - (1 - eta) / (C * y)).trans
-        (hweighted.trans hcompare)
+    calc
+      (1 - 4 * eta) / y = (1 - 3 * eta) / y - eta / y := by ring
+      _ ≤ (1 - 3 * eta) / y - (1 - eta) / (C * y) :=
+        sub_le_sub_left hcorr _
+      _ ≤ _ := hweighted.trans hcompare
   have hsub :
       (∑ p ∈ (Ioc ⌊y⌋₊ ⌊C * y⌋₊).filter Nat.Prime,
         (1 : ℝ) / (p : ℝ) ^ 2) ≤
@@ -201,14 +214,14 @@ theorem prime_square_tail_uniform (epsilon : ℝ) (hepsilon : 0 < epsilon) :
     have hf := mul_le_mul_of_nonneg_left hfinite
       (div_nonneg (mul_nonneg hy0.le hlogy.le) hlogCy.le)
     have heq : y * Real.log y / Real.log (C * y) * ((1 - 4 * eta) / y) =
-        (1 - 4 * eta) * (Real.log y / Real.log (C * y)) := by field_simp; ring
+        (1 - 4 * eta) * (Real.log y / Real.log (C * y)) := by field_simp [hy0.ne', hlogCy.ne']
     have heq' : y * Real.log y / Real.log (C * y) *
         (Real.log (C * y) *
           (∑ p ∈ (Ioc ⌊y⌋₊ ⌊C * y⌋₊).filter Nat.Prime,
             (1 : ℝ) / (p : ℝ) ^ 2)) =
         y * Real.log y *
           (∑ p ∈ (Ioc ⌊y⌋₊ ⌊C * y⌋₊).filter Nat.Prime,
-            (1 : ℝ) / (p : ℝ) ^ 2) := by field_simp
+            (1 : ℝ) / (p : ℝ) ^ 2) := by field_simp [hlogCy.ne']
     rw [heq, heq'] at hf
     have hmono := mul_le_mul_of_nonneg_left hsub (mul_pos hy0 hlogy).le
     have hprod : 1 - 5 * eta ≤ (1 - 4 * eta) * (1 - eta) := by nlinarith [sq_nonneg eta]
