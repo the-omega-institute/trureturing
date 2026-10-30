@@ -6,6 +6,9 @@
    utility: none
    digest: Exact divisor-sum and normalized-sigma factorization on the 5040 valuation fibre. -/
 
+/- New public theorem registration audits remain linked to issue #24055; no
+   four-slot registration status is asserted without source-bound evidence. -/
+
 import D5.S3.Arith.ExponentExchange.IntegerSwap
 import D5.S3.Arith.ExponentExchange.CoprimeNormalForm
 import D5.S3.Arith.Robin.PrimeValuation5040Bridge
@@ -33,8 +36,16 @@ private theorem sigma_5040 : ArithmeticFunction.sigma 1 5040 = 19344 := by
 theorem sigma_5040_mul_of_coprime {n : ℕ} (hn : n.Coprime 210) :
     ArithmeticFunction.sigma 1 (5040 * n) =
       19344 * ArithmeticFunction.sigma 1 n := by
-  rw [ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime
-      (coprime_5040_of_coprime_210 hn), sigma_5040]
+  have hmul :
+      ArithmeticFunction.sigma 1 (n * 5040) =
+        ArithmeticFunction.sigma 1 n * ArithmeticFunction.sigma 1 5040 :=
+    ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime
+      (coprime_5040_of_coprime_210 hn)
+  calc
+    ArithmeticFunction.sigma 1 (5040 * n) =
+        ArithmeticFunction.sigma 1 (n * 5040) := by rw [Nat.mul_comm]
+    _ = ArithmeticFunction.sigma 1 n * ArithmeticFunction.sigma 1 5040 := hmul
+    _ = 19344 * ArithmeticFunction.sigma 1 n := by rw [sigma_5040]; ring
 
 /-- The normalized sigma ratio splits into the exact finite 5040 factor `403/105`
 and the unrestricted residual ratio. -/
@@ -46,8 +57,16 @@ theorem normalized_sigma_5040_mul_of_coprime {n : ℕ} (hn0 : n ≠ 0)
   have hnorm := normalized_sigma_mul (coprime_5040_of_coprime_210 hn)
   have h5040 : (ArithmeticFunction.sigma 1 5040 : ℝ) / 5040 = 403 / 105 := by
     norm_num [sigma_5040]
-  rw [h5040] at hnorm
-  exact hnorm
+  calc
+    (ArithmeticFunction.sigma 1 (5040 * n) : ℝ) / (5040 * (n : ℝ)) =
+        (ArithmeticFunction.sigma 1 (n * 5040) : ℝ) / ((n : ℝ) * 5040) := by
+          rw [Nat.mul_comm 5040 n, mul_comm (5040 : ℝ) (n : ℝ)]
+    _ = ((ArithmeticFunction.sigma 1 n : ℝ) / n) *
+        ((ArithmeticFunction.sigma 1 5040 : ℝ) / 5040) := by
+          convert hnorm using 1 <;> norm_num [Nat.cast_mul]
+    _ = (403 / 105 : ℝ) * ((ArithmeticFunction.sigma 1 n : ℝ) / n) := by
+          rw [h5040]
+          ring
 
 /-- The normalized factorization applies directly to the exact 5040 valuation fibre.
 The fibre theorem supplies both nonzeroness and the residual coprimality. -/

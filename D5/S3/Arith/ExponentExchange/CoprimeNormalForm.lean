@@ -3,8 +3,11 @@
    mirror-B: D5/B/S3/Arith/ExponentExchange/CoprimeNormalForm
    mirror-E: none(waiver:general-theorem-no-numerical-experiment)
    anchors: []
-   utility: consumed-by-robin-5040
+   utility: none
    digest: Prime-exponent exchange preserves coprimality with an external modulus. -/
+
+/- New public theorem registration audits remain linked to issue #24055; no
+   four-slot registration status is asserted without source-bound evidence. -/
 
 import D5.S3.Arith.ExponentExchange.IntegerSwap
 
@@ -45,7 +48,7 @@ theorem exists_coprime_allowed_ordered_form {M n : ℕ} (hn : 1 ≤ n)
       let t := n / (p ^ a * q ^ b)
       have htM : t.Coprime M := hcn.coprime_dvd_left (by
         rw [hdecomp]
-        simpa [Nat.mul_assoc] using (dvd_mul_right t (p ^ a * q ^ b)))
+        exact ⟨p ^ a * q ^ b, by simp [a, b, t, Nat.mul_assoc]⟩)
       have hrestM : (p ^ b * q ^ a).Coprime M :=
         (hpM.pow_left b).mul_left (hqM.pow_left a)
       have hn'M : (t * p ^ b * q ^ a).Coprime M := by
