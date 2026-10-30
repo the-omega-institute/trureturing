@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Dice;
 
@@ -29,9 +30,37 @@ internal sealed class EaslickCycleSeedsDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), (declaration == "sourceSeed" ? StatementSource.WithoutFormula() : declaration == "finite_cycle_witnesses" ? StatementSource.FromAuthor(StrataLint.Scribe.FormulaDsl.Disp(Statement(declaration))) : StatementSource.FromLean()), AssessedProvenance.FromRepo(Source),
+            H(title), (declaration == "sourceSeed" ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(F.Disp(Statement(declaration)))), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
     private static Formula And(params Formula[] xs) => xs.Aggregate((a,b) => new Formula.Logic(a, FormulaLogicOperator.And,b));
-    private static Formula Statement(string declaration) => And(Call("HasCycle",Num(6),Num(6)),Call("HasCycle",Num(7),Num(14)),Call("HasCycle",Num(8),Num(29)),Call("HasCycle",Num(9),Num(10)),Call("HasCycle",Num(10),Num(110)),Call("HasCycle",Num(11),Num(14)));
-
+    private static Formula.BoundVariable B(string name, Formula type) => new(FormulaIdentifier.Create(name), type);
+    private static Formula All(Formula body, params Formula.BoundVariable[] variables) => new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.Implies,b);
+    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.Iff,b);
+    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
+    private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
+    private static Formula Mem(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.MemberOf,b);
+    private static Formula Arrow(Formula a, Formula b) => F.Seq(F.Open,a,F.Sp,F.To,F.Sp,b,F.Close);
+    private static Formula Len(Formula a) => Call("length",a);
+    private static Formula At(Formula a, Formula i) => Call("at",a,i);
+    private static Formula N => Id("Nat");
+    private static Formula L => Call("List",N);
+    private static Formula LL => Call("List",L);
+    private static Formula T => Id("true");
+    private static Formula Adjacent(Formula c, Func<Formula,Formula,Formula> relation) =>
+        All(Imp(Lt(Add(Id("i"),Num(1)),Len(c)),relation(At(c,Id("i")),At(c,Add(Id("i"),Num(1))))),B("i",N));
+    private static Formula Statement(string declaration)
+    {
+        Formula n=Id("n"),d=Id("d"),c=Id("c"),a=Id("A"),edge=Id("edge");
+        return declaration switch
+        {
+            "checkSteps" => All(Iff(Equal(Call("checkSteps",edge,c),T),Adjacent(c,(x,y)=>Equal(new Formula.Apply(edge,[x,y]),T))),B("A",Id("Type")),B("edge",Arrow(a,Arrow(a,Id("Bool")))),B("c",Call("List",a))),
+            "checkDie" => All(Iff(Equal(Call("checkDie",n,d),T),And(Equal(Len(d),n),Adjacent(d,Le),All(Imp(Mem(Id("x"),d),And(Le(Num(1),Id("x")),Le(Id("x"),n))),B("x",N)))),B("n",N),B("d",L)),
+            "checkCycle" => All(Iff(Equal(Call("checkCycle",n,c),T),And(NotEqual(c,Call("nil")),Equal(Len(Call("dedup",c)),Len(c)),All(Imp(Mem(d,c),Equal(Call("checkDie",n,d),T)),B("d",L)),All(Imp(Lt(Id("i"),Len(c)),Equal(Call("winCount",At(c,Id("i")),At(c,new Formula.Modulo(Add(Id("i"),Num(1)),Len(c)))),Call("threshold",n))),B("i",N)))),B("n",N),B("c",LL)),
+            "checkCycle_sound" => All(Imp(And(Le(Num(3),n),Equal(Call("checkCycle",n,c),T)),Call("HasCycle",n,Len(c))),B("n",N),B("c",LL)),
+            "sourceSeed_check" => All(Imp(new Formula.Logic(Equal(n,Num(6)),FormulaLogicOperator.Or,new Formula.Logic(Equal(n,Num(7)),FormulaLogicOperator.Or,new Formula.Logic(Equal(n,Num(8)),FormulaLogicOperator.Or,new Formula.Logic(Equal(n,Num(9)),FormulaLogicOperator.Or,new Formula.Logic(Equal(n,Num(10)),FormulaLogicOperator.Or,Equal(n,Num(11))))))),Equal(Call("checkCycle",n,Call("sourceSeed",n)),T)),B("n",N)),
+            "finite_cycle_witnesses" => And(Call("HasCycle",Num(6),Num(6)),Call("HasCycle",Num(7),Num(14)),Call("HasCycle",Num(8),Num(29)),Call("HasCycle",Num(9),Num(10)),Call("HasCycle",Num(10),Num(110)),Call("HasCycle",Num(11),Num(14))),
+            _ => throw new ArgumentException("Unknown dice declaration",nameof(declaration))
+        };
+    }
 }

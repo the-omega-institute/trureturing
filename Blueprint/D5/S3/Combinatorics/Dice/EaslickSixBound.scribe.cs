@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Dice;
 
@@ -27,8 +28,8 @@ internal sealed class EaslickSixBoundDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), ((declaration == "checkRank" || declaration == "checkRank_sound") || declaration == "sixRank_check" ? StatementSource.FromLean() : StatementSource.FromAuthor(StrataLint.Scribe.FormulaDsl.Disp(Statement(declaration)))), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), declaration == "checkRank" ? DescribeRole.Definition : DescribeRole.Theorem);
+            H(title), StatementSource.FromAuthor(F.Disp(Statement(declaration))), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose)), Paragraph(Text("In these formulas, at is zero-based list indexing, length and dedup are list length and duplicate removal, head is Lean head!, fst and snd are product projections, and List subset means membership inclusion. The names diceSix, rankSix, fiberSix and cutsSix denote exactly the private Lean inputs dice6, rank6, fiber6 and cuts6, respectively; decide converts the displayed decidable proposition to Bool. The checker definitions are characterized by equality to the Boolean value true, including empty-input behavior. All quantifiers include their full carrier types and anonymous instance dictionaries."))), declaration == "checkRank" ? DescribeRole.Definition : DescribeRole.Theorem);
     private static Formula.BoundVariable B(string name, Formula type) => new(FormulaIdentifier.Create(name), type);
     private static Formula All(Formula body, params Formula.BoundVariable[] variables) => new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
     private static Formula And(params Formula[] xs) => xs.Aggregate((a,b) => new Formula.Logic(a, FormulaLogicOperator.And,b));
@@ -36,8 +37,38 @@ internal sealed class EaslickSixBoundDocument : IScribeDocumentDefinition
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
     private static Formula Not(Formula a) => new Formula.Not(a);
     private static Formula N => Id("Nat");
+    private static Formula Or(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.Or,b);
+    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.Iff,b);
+    private static Formula Mem(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.MemberOf,b);
+    private static Formula Arrow(Formula a, Formula b) => F.Seq(F.Open,a,F.Sp,F.To,F.Sp,b,F.Close);
+    private static Formula Product(Formula a, Formula b) => F.Seq(F.Open,a,F.Sp,F.Times,F.Sp,b,F.Close);
+    private static Formula Fn(string name, Formula type, Formula body) => F.Seq(F.LambdaLower,F.Sp,F.Open,Id(name),F.Colon,type,F.Close,F.Sp,F.Mapsto,F.Sp,body);
+    private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f,[.. args]);
+    private static Formula Len(Formula c) => Call("length",c);
+    private static Formula Instance(string name, Formula a, Formula body) => F.Seq(F.OpenBracket,Call(name,a),F.CloseBracket,F.Comma,F.Sp,body);
+    private static Formula RankStatement(bool sound)
+    {
+        Formula a=Id("A"),v=Id("V"),e=Id("E"),r=Id("r"),f=Id("F"),w=Id("W"),b=Id("b"),d=Id("d"),x=Id("x"),c=Id("c"),t=Id("true");
+        Formula fiber=App(f,App(r,d)),cut=App(w,App(r,d));
+        Formula first=Call("fst",cut),second=Call("fst",Call("snd",cut)),target=Call("snd",Call("snd",cut));
+        Formula row=And(Mem(d,fiber),Equal(Len(Call("dedup",fiber)),Len(fiber)),Le(Len(fiber),Add(b,Num(1))),
+            All(Imp(And(Mem(x,v),Equal(App(e,d,x),t)),Le(App(r,x),App(r,d))),B("x",a)),
+            Or(Le(Len(fiber),b),And(Mem(first,fiber),Mem(second,fiber),NotEqual(first,second),
+                All(Imp(Mem(x,fiber),And(Imp(Equal(App(e,first,x),t),Equal(x,target)),Imp(Equal(App(e,second,x),t),Equal(x,target)))),B("x",a)))));
+        Formula check=Equal(Call("checkRank",v,e,r,f,w,b),t);
+        Formula body=sound
+            ? All(Imp(And(check,Call("Nodup",c),NotEqual(c,Call("nil")),new Formula.Relation(c,FormulaRelationOperator.SubsetOf,v),
+                Call("IsChain",Fn("u",a,Fn("z",a,Equal(App(e,Id("u"),Id("z")),t))),Call("append",c,Call("singleton",Call("head",c))))),Le(Len(c),b)),B("c",Call("List",a)))
+            : Iff(check,All(Imp(Mem(d,v),row),B("d",a)));
+        body=All(body,B("V",Call("List",a)),B("E",Arrow(a,Arrow(a,Id("Bool")))),B("r",Arrow(a,N)),B("F",Arrow(N,Call("List",a))),B("W",Arrow(N,Product(a,Product(a,a)))),B("b",N));
+        if(sound) body=Instance("Inhabited",a,body);
+        return All(Instance("DecidableEq",a,body),B("A",Id("Type")));
+    }
     private static Formula Statement(string declaration) => declaration switch
     {
+        "checkRank" => RankStatement(false),
+        "checkRank_sound" => RankStatement(true),
+        "sixRank_check" => Equal(Call("checkRank",Id("diceSix"),Fn("d",Call("List",N),Fn("e",Call("List",N),Call("decide",Equal(Call("winCount",Id("d"),Id("e")),Num(19))))),Id("rankSix"),Id("fiberSix"),Id("cutsSix"),Num(6)),Id("true")),
         "six_cycle_bound" => All(Imp(Call("HasCycle",Num(6),Id("k")),Le(Id("k"),Num(6))),B("k",N)),
         "S_six" => Call("S",Num(6)),
         "conjecture_one" => And(Call("S",Num(6)),All(Imp(Le(Num(7),Id("n")),Not(Call("S",Id("n")))),B("n",N))),
