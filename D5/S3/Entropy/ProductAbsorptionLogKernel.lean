@@ -13,7 +13,7 @@ import Mathlib.Tactic
 
 noncomputable section
 namespace D5.S3.Entropy.ProductAbsorptionLogKernel
-open Set
+open Set Filter
 open scoped Topology
 
 /-- The five-term logarithmic kernel, with the two quadratic roots kept explicitly.
@@ -109,7 +109,7 @@ private lemma coefficient_signs {u v : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1)
   by_cases hsmall : w ≤ 1 / 3
   · have hlow : 0 ≤ (1 - B) * (1 - 4 * B) / 2 := by
       have hBsmall : B ≤ 1 / 9 := by nlinarith
-      positivity
+      exact div_nonneg (mul_nonneg (by linarith) (by linarith)) (by norm_num)
     have hdiff : 0 ≤ (A - (1 + 3 * B) / 2) *
         (4 * (A + (1 + 3 * B) / 2) - 6 * B - 1) := by
       apply mul_nonneg (sub_nonneg.mpr hthresh)
@@ -138,14 +138,14 @@ private lemma normalized_four (A B s : ℝ) (hs : s ≠ 0) :
     poly A B s / s ^ 4 = c4 A B + c3 A B / s + c2 A B / s ^ 2 +
       c1 A B / s ^ 3 + c0 A B / s ^ 4 := by
   dsimp [poly]
-  field_simp
+  field_simp [hs]
   <;> ring
 
 private lemma normalized_three (A B s : ℝ) (hs : s ≠ 0) :
     poly A B s / s ^ 3 = c4 A B * s + c3 A B + c2 A B / s +
       c1 A B / s ^ 2 + c0 A B / s ^ 3 := by
   dsimp [poly]
-  field_simp
+  field_simp [hs]
   <;> ring
 
 private lemma ratio_strictAnti {A B : ℝ}
@@ -186,7 +186,6 @@ private lemma polynomial_crossing {A B : ℝ}
     positivity
   · have h4' : c4 A B < 0 := lt_of_not_ge h4
     obtain ⟨n, hanti⟩ := ratio_strictAnti h0 h1 h2 h4'
-    open Filter in
     have hpos : ∃ a > (0 : ℝ), 0 < poly A B a := by
       let g := fun s : ℝ => c4 A B * s ^ 3 + c3 A B * s ^ 2 + c2 A B * s + c1 A B
       have hg : Continuous g := by fun_prop
@@ -199,7 +198,6 @@ private lemma polynomial_crossing {A B : ℝ}
       rw [hid]
       exact add_pos_of_pos_of_nonneg (mul_pos ha hga) h0
     obtain ⟨a, ha, hpa⟩ := hpos
-    open Filter in
     have hneg : ∃ b > a, poly A B b < 0 := by
       have hinv : Tendsto (fun s : ℝ => s⁻¹) atTop (𝓝 0) := tendsto_inv_atTop_zero
       have hlim : Tendsto
@@ -214,7 +212,7 @@ private lemma polynomial_crossing {A B : ℝ}
         (hlim.eventually (eventually_lt_nhds h4'))).exists
       refine ⟨b, hb, ?_⟩
       rw [← normalized_four A B b (by linarith)] at hpb
-      exact (div_neg_iff_of_pos (pow_pos (ha.trans hb) 4)).mp hpb
+      simpa only [zero_mul] using (div_lt_iff₀ (pow_pos (ha.trans hb) 4)).mp hpb
     obtain ⟨b, hab, hpb⟩ := hneg
     have hcont : Continuous (poly A B) := by unfold poly; fun_prop
     obtain ⟨r, hr, hpr⟩ := intermediate_value_Icc' hab.le hcont.continuousOn
@@ -225,11 +223,11 @@ private lemma polynomial_crossing {A B : ℝ}
     · intro s hs
       have hh := hanti hs.1 hrapos hs.2
       rw [hpr, zero_div] at hh
-      exact (div_pos_iff_of_pos (pow_pos hs.1 n)).mp hh
+      exact (div_pos_iff_of_pos_right (pow_pos hs.1 n)).mp hh
     · intro s hs
       have hh := hanti hrapos (hrapos.trans hs) hs
       rw [hpr, zero_div] at hh
-      exact (div_neg_iff_of_pos (pow_pos (hrapos.trans hs) n)).mp hh
+      simpa only [zero_mul] using (div_lt_iff₀ (pow_pos (hrapos.trans hs) n)).mp hh
 
 private lemma kernel_sign {u v s : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1)
     (hv : v ∈ Ioo (0 : ℝ) 1) (hs : 0 < s) :
@@ -242,6 +240,8 @@ private lemma kernel_sign {u v s : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1)
   let q := Real.sqrt (B * (1 - A + B))
   let mp := A - 2 * B + 2 * q
   let mm := A - 2 * B - 2 * q
+  have hu0 : 0 < u := hu.1
+  have hv0 : 0 < v := hv.1
   have hB : 0 < B := mul_pos hu.1 hv.1
   have hAB : 0 < A - 2 * B := by
     dsimp [A, B]
