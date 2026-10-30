@@ -78,13 +78,15 @@ private lemma circuit_generator {n : ℕ} (hn : 0 < n) {a : Fin n × Bool}
     have hout (i : Fin (k + 1)) (b : Bool) :
         (signedGraph (graph (k + 1))).outgoingMultiplicity w.edgeMultiplicity (i, b) =
           ∑ c, count i b c := by
-      simp [EdgeGraph.outgoingMultiplicity, sum_filter, Fintype.sum_prod_type,
-        Fintype.sum_bool, signedGraph, graph, hzero, Prod.mk.injEq, ite_and, count]
+      simp only [EdgeGraph.outgoingMultiplicity, sum_filter, Fintype.sum_prod_type,
+        Fintype.sum_bool, hzero, ite_self, zero_add]
+      cases b <;> simp [signedGraph, graph, Prod.mk.injEq, ite_and, count, sum_add_distrib]
     have hin (i : Fin (k + 1)) (c : Bool) :
         (signedGraph (graph (k + 1))).incomingMultiplicity w.edgeMultiplicity
           (finRotate (k + 1) i, c) = ∑ b, count i b c := by
-      simp [EdgeGraph.incomingMultiplicity, sum_filter, Fintype.sum_prod_type,
-        Fintype.sum_bool, signedGraph, graph, hzero, Prod.mk.injEq, ite_and, count]
+      simp only [EdgeGraph.incomingMultiplicity, sum_filter, Fintype.sum_prod_type,
+        Fintype.sum_bool, hzero, ite_self, zero_add]
+      cases c <;> simp [signedGraph, graph, Prod.mk.injEq, ite_and, count, sum_add_distrib]
     have hrow (i : Fin (k + 1)) (b : Bool) : (∑ c, count i b c) ≤ 1 := by
       rw [← hout]
       exact simple_departures_le_one w hw (i, b)
