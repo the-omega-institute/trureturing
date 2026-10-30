@@ -43,7 +43,8 @@ theorem skew_orbit_coordinates (f : X → X) (c : X → A) (x : X) (a : A)
     apply (mem_periodicOrbit_iff hper).mpr
     refine ⟨z.1.val + minimalPeriod f x * k, ?_⟩
     rw [iterate_add_apply,
-      skew_iterate_block f c (isPeriodicPt_minimalPeriod f x), skew_iterate, hk]
+      skew_iterate_block f c (isPeriodicPt_minimalPeriod f x), skew_iterate]
+    simpa only [hk]
   · intro z _ w _ heq
     have hi : z.1 = w.1 := Fin.ext
       ((iterate_eq_iterate_iff_of_lt_minimalPeriod z.1.isLt w.1.isLt).mp
