@@ -1,0 +1,31 @@
+**Proposition 2.3 (Normalization, observable completeness and the classical-access boundary; source facts).** The preparation and states in Definitions 2.1–2.2 are normalized. Equality of $T_n$ is equivalent to equality of all permitted terminal measurement laws at that horizon. The classical CP branches alone do not supply this coherent access.
+
+**Proof.** One has $\|x_\theta\|=1$ and
+
+$$
+S^\dagger S=I-e_He_H^\dagger,\qquad
+J_\theta^\dagger J_\theta=e_He_H^\dagger.
+\tag{2.4}
+$$
+
+Thus $V_\theta$ is an isometry and all its iterated output states are normalized. For every input density $\sigma$,
+
+$$
+J_\theta\sigma J_\theta^\dagger=\sigma_{HH}x_\theta x_\theta^\dagger.
+\tag{2.5}
+$$
+
+Whenever the tick occurs with positive probability, normalization gives exactly the stated posterior. A terminal effect commuting with $Q_n$ is block diagonal and has equal expectation on $\Omega_n$ and $T_n$. Conversely, rank-one effects within any count block are allowed; their expectations determine every quadratic form, and hence the whole Hermitian block. These effects therefore determine $T_n$.
+
+For the access boundary, take a fresh inaccessible orthogonal record at each use:
+
+$$
+\widetilde V_\theta\psi
+=S\psi\otimes|0\rangle\otimes|r_0\rangle
+ +J_\theta\psi\otimes|1\rangle\otimes|r_1\rangle,
+\qquad \langle r_0,r_1\rangle=0.
+\tag{2.6}
+$$
+
+Measuring the flag gives exactly the same two CP branches. Tracing the fresh records makes distinct chronological words orthogonal in the inaccessible system, removing their flag coherences. This is source (24.18) for the present memory. It explicitly separates a classical instrument interface from Definition 2.2. Constant scalar phases on $S,J_\theta$ cancel within each fixed length/count block; phases varying independently from use to use do not fall under the stable-isometry assumption. $\square$
+

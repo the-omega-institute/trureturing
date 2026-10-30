@@ -1,0 +1,2 @@
+**Definition 10.1 (bounded synthesis language).** SOME-PREPARER-UNARY-N takes explicit $T,e_0,e_1$, unary $N$ and binary $P,L$. It asks whether any nonempty finite installed native preparer, initially with arbitrary finite literal lengths, satisfies Definition 3.3 at those original upper budgets. It includes both universal two-stage validity and actual BOTH attainment. Serving resources and all services remain those of §3.
+

@@ -1,0 +1,14 @@
+**命题 4.2（An interior block, zero in the source, and other bases）。**
+A failing interior block can coexist with a matched nonblock basis,
+even when $0\in A$.
+
+Proof. Take $A=\{0,1,2,3\}$, $M$ uniform of rank two on $A$,
+$B=\{-1,1,4,5\}$, and let $N$ have all two-element bases except
+$H=\{4,5\}$. The supplied construction in Section 4 makes $N$ loopless and sparse paving.
+For $a=0$, $d=1$, $m=4$, $r=2$, $j=1$,
+$S=\{1,2\}$ and $U=\{-1,1\}$ meet Theorem 3.3, so $S$ fails.
+The nonblock basis $\{0,3\}$ does match: send $0$ to $4$ and $3$
+to $1$. Both sums equal $4\notin A$, and $\{1,4\}$ is an actual
+basis of $N$. Thus failure of $M$ to be matched does not mean that
+all its bases fail, or that all its bases are consecutive blocks.
+

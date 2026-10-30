@@ -1,0 +1,114 @@
+**Theorem 9.4 (Uniform finite-budget graph interface).** Fix
+$0<L\le R<\infty$. Choose constants $A_7\ge4$, $C_7\ge0$ supplied by
+Theorem 7.2, enlarging $C_7$ so that $C_7\ge2^8K_0^6$, and define
+
+$$
+\Gamma_{L,R}=R^2+2+2\sqrt2\,R,\qquad
+K=1+R+J+v_0^{-1}+A_7+C_7+\Gamma_{L,R},
+\tag{9.18}
+$$
+
+$$
+A=\max\{A_7,\,64K^2,\,4C_7^2,\,16\Gamma_{L,R}^2,
+          \,16(J+1)^2/L^2\},\qquad
+D=2^{20}K^{12},\qquad C=2^{22}K^{12}.
+\tag{9.19}
+$$
+
+For every integer $a\ge A$, every integer $h\ge1$ with
+$L\le h/\sqrt a\le R$, and every integer
+
+$$
+N\ge\left\lceil Da^5\right\rceil,
+\tag{9.20}
+$$
+
+$\mathfrak G_N(a,h)$ is nonempty and
+
+$$
+\left|\frac{V_N(a,h)-a(a+1)^2}{a^2}
+       -U\!\left(\frac h{\sqrt a}\right)\right|
+ \le C\left(a^{-1/2}+\frac{a^4}{N}\right).
+\tag{9.21}
+$$
+
+The constants are deliberately nonminimal and depend only on $L,R$. In
+particular, (9.20) is one explicit sufficient polynomial condition; no claim
+is made about the least exponent or the least coefficient.
+
+**Proof.** Write $k=h/\sqrt a$ and $B_0=a(a+1)^2$. By (7.23)--(7.28), a
+minimizing pair $(j,v)$ for the scalar envelope satisfies (9.7): if
+$k\le\sqrt2$ choose $j=1$, $v=k/\sqrt2$, and otherwise a minimizing integer
+branch has $v=j$. The bound on $j$ is (7.24). The threshold $A$ in (9.19)
+is at least $A_0$, and $D\ge c_0$.
+
+With $r=a+j$, $p=v/(a+v-1)$, and the core and tail energies $H_C,H_D$
+as in Lemma 9.3, put $\mu=a+v$ and $\theta=v-\lfloor v\rfloor$. The
+interpolated third moment is
+$f(\mu)=\mu^3+3\mu\theta(1-\theta)+\theta(1-\theta)(1-2\theta)$, so
+$0\le f(\mu)-\mu^3\le\mu$. Since $r\le2a$, $p\le1/4$,
+$1/(1-p)=1+v/(a-1)$ and $j,v,v^{-1},R\le K_0$, expansion of the two
+terms of (3.4) gives the explicit bounds
+
+$$
+0\le H_C-[a^3+(2j+2v)a^2]\le64K_0^4a,\qquad
+\left|H_D-\frac{k^2}{v}a^2\right|\le8K_0^3a^{3/2}.
+$$
+
+For the first bound expand $(a+j)^2(a+v)(1+v/(a-1))$; the interpolation
+adds at most $6a$. For the second expand
+$(h+1-j)^2(a+v-1)/v$ and use $|1-j|\le K_0$ and $h\le K_0\sqrt a$.
+Consequently $C_7\ge2^8K_0^6$ and the scalar minimizing identity give
+
+$$
+H_{j,v}(a,h)\le B_0+a^2U(k)+C_7a^{3/2}.\tag{9.22}
+$$
+
+Lemma 9.3 therefore supplies an actual graph, proving nonemptiness and
+
+$$
+V_N(a,h)\le B_0+a^2U(k)+2^{13}K^{12}
+       \left(a^{3/2}+\frac{a^6}{N}\right).\tag{9.23}
+$$
+
+For the lower bound, let $G\in\mathfrak G_N(a,h)$ and let $Q(G)$ be (9.3).
+Theorem 7.2 applied to its actual profile gives
+
+$$
+Q(G)\ge M(a,h)\ge B_0+a^2U(k)-C_7a^{3/2}.\tag{9.24}
+$$
+
+Set $W=2NE(G)$ and $\gamma=2/(\sqrt2+1)$. For every edge ratio
+$0\le t<1$,
+$2(\sqrt{1+t^2}-1)=2t^2/(\sqrt{1+t^2}+1)\ge\gamma t^2$.
+Thus $W\ge\gamma Q(G)$. The fixed threshold $4a^3$ separates all comparison
+graphs into two cases. Since $U(k)\le\Gamma_{L,R}$ and $a\ge64K^2$,
+
+$$
+B_0+a^2U(k)\le a^3\left((1+1/a)^2+\Gamma_{L,R}/a\right)<2a^3.
+$$
+
+If $W\ge4a^3$, the required lower bound follows immediately. If $W<4a^3$,
+then $Q(G)\le4a^3/\gamma$. The elementary inequality
+$\sum_e t_e^4\le(\sum_e t_e^2)^2$ and (9.5) now give
+
+$$
+W\ge Q(G)-\frac{Q(G)^2}{4N}
+ \ge Q(G)-\frac{4a^6}{\gamma^2N}
+ \ge Q(G)-\frac{6a^6}{N}.
+\tag{9.25}
+$$
+
+The last inequality uses $4/\gamma^2=3+2\sqrt2<6$. The estimate depends
+only on the energy sublevel and the ratios of this graph.
+Combining (9.24) with either case, and $C\ge C_7+6$, gives for every graph
+in the original class, and hence for its infimum,
+
+$$
+V_N(a,h)\ge B_0+a^2U(k)-C\left(a^{3/2}+\frac{a^6}{N}\right).\tag{9.26}
+$$
+
+Together with (9.23), division by $a^2$ proves (9.21). The lower estimate used
+all graphs in $\mathfrak G_N(a,h)$ through their own actual profiles and made
+no support, symmetry, minimum-marginal, or cardinality restriction. ∎
+

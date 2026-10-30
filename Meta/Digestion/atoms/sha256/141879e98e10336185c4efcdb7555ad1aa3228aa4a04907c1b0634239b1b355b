@@ -1,0 +1,42 @@
+**定义 20.1（原始七点模型与比较阈值）。** 本节至第 24 节取定义 4.1 的
+$n=7$：顶点为 $1,\ldots,7$，每个顶点的计数质量为一，
+$e_0=\{7,1\}$、$e_i=\{i,i+1\}$（$1\le i\le6$）。七条边电导独立遍历
+有限严格正实数，$\lambda_2$ 始终是普通 Laplacian 的最小正特征值，
+$R$ 始终对全部 $21$ 个原始无序不同顶点对求和。保留定义 4.1 的
+$H,P,a_i,M,T,\rho,\Phi$，并置
+
+$$
+\begin{aligned}
+x&=\pi/7,&u&=\cos x,&a&=\frac{u}{1+u},&b&=\frac{1-u}{1+u},\\
+p^*&=(a,a,0,0,b,0,0),&p^0&=(1/7,\ldots,1/7),&
+e&=\sqrt{7/6}\,P\delta_1,\\
+\kappa&=\frac1{16\sin^2 x},&\tau&=\frac47,&
+\rho_7&=\frac1{28\sin^2 x}=\kappa\tau,&U_7&=\frac7\kappa=112\sin^2 x.
+\end{aligned} \tag{20.1}
+$$
+
+标量 $a$ 与带下标的原始顶点向量 $a_i$ 区分。
+在定义 9.1 的原始顶点 Fourier 基中，令 $A_{12}(p)$、$A_{16}(p)$
+分别为 $M(p)$ 在指标 $\{1,2\}$、$\{1,6\}$ 上的 Hermitian 主压缩。
+这些压缩没有改变顶点质量或原边标签。
+式 (9.2) 是矩阵元素的多项式恒等式，故也用于闭单纯形上的 $p^*$。
+本节直接消费式 (5.4)–(5.5)、(7.3)、(9.2) 的完整参数对应：
+对每个 $p\in\Delta^\circ$ 与每个 $R_0>0$，
+
+$$
+c_i^{(R_0)}(p)=\frac{7T(p)}{R_0p_i},\qquad
+R(c^{(R_0)}(p))=R_0,\qquad
+\lambda_2(L(c^{(R_0)}(p)))R_0=\Phi(p)=\frac{7T(p)}{\rho(p)}.
+\tag{20.2}
+$$
+
+反向，对任意实际正电导，$p_i=c_i^{-1}/\sum_jc_j^{-1}$；若
+$s=\sum_jc_j^{-1}$，则 $L(c)^+|_H=sM(p)$、
+$\lambda_2(L(c))=1/(s\rho(p))$、$R(c)=7sT(p)$。
+固定 $R_0$ 时 $s=R_0/(7T(p))$，所以 (20.2) 覆盖整个该电阻水平。
+这些电学输入采用
+[Cruz Ortega–Menéndez-Conde，arXiv:2306.08187v1](https://arxiv.org/html/2306.08187v1)
+§§2–4，特别是定义 4.2 的全点对约束，以及
+[Ghosh–Boyd–Saberi，DOI:10.1137/050645452](https://web.stanford.edu/~boyd/papers/pdf/eff_res.pdf)
+§§2.4–2.5 的伪逆与迹公式；下述比较针对同一个 $M(p)$。
+

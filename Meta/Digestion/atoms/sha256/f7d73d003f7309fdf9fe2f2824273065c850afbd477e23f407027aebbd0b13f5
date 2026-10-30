@@ -1,0 +1,127 @@
+## 文献与固定项目来源
+
+<a id="ref-repoaudit"></a>
+
+**[1]** 
+The Omega Institute, *trureturing*, dev snapshot
+[e04787282d069](https://github.com/the-omega-institute/trureturing/commit/e04787282d06951e87972128ec8e4ef90b58543c),
+2026-10-30. 本稿固定审读版本。
+
+<a id="ref-repofusion"></a>
+
+**[2]** 
+[FUSION SPIN CHAIN QCA CUT OBSTRUCTIONS](https://github.com/the-omega-institute/trureturing/blob/e04787282d06951e87972128ec8e4ef90b58543c/docs/develop/theory/FUSION_SPIN_CHAIN_QCA_CUT_OBSTRUCTIONS.md),
+特别是 §§12–15：类型路径、迹、五边形、带权投影和局部门。
+
+<a id="ref-repoborn"></a>
+
+**[3]** 
+[AURIC FIB ATOM QUANTUM PRINCIPLES AND COHERENT RECONSTRUCTION, CONTINUATION II](https://github.com/the-omega-institute/trureturing/blob/e04787282d06951e87972128ec8e4ef90b58543c/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md),
+§77 原生来源，§§85–89 响应刻画，§90 统一稳定性。
+
+<a id="ref-repov15"></a>
+
+**[4]** 
+[AURIC GOLDEN GATE NAND UNIVERSALITY AND ARITHMETIC LIMITS V15](https://github.com/the-omega-institute/trureturing/blob/e04787282d06951e87972128ec8e4ef90b58543c/docs/develop/theory/AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md),
+§3 黄金编织缺陷，§6 融合规范。
+
+<a id="ref-repov18"></a>
+
+**[5]** 
+[AURIC TRIANGULATION, COLLAPSE AND RECURSIVE UNITARY GATES V18](https://github.com/the-omega-institute/trureturing/blob/e04787282d06951e87972128ec8e4ef90b58543c/docs/develop/theory/AURIC_TRIANGULATION_COLLAPSE_AND_RECURSIVE_UNITARY_GATES_V18.md#statement-7-2),
+§7.2，共享子门的谱相容条件。
+
+<a id="ref-repov23"></a>
+
+**[6]** 
+[AURIC APERIODIC MONOTILES, UNITARY PROJECTIONS, TRIANGLE CENTRES AND RECURSIVE VARIATION V23](https://github.com/the-omega-institute/trureturing/blob/e04787282d06951e87972128ec8e4ef90b58543c/docs/develop/theory/AURIC_APERIODIC_MONOTILES_UNITARY_PROJECTIONS_TRIANGLE_CENTRES_AND_RECURSIVE_VARIATION_V23.md).
+既有研究保存，不作独立验证。
+
+<a id="ref-hat"></a>
+
+**[7]** 
+D. Smith, J. S. Myers, C. S. Kaplan, C. Goodman-Strauss,
+*An aperiodic monotile*, 2023/2024.
+[arXiv:2303.10798](https://arxiv.org/abs/2303.10798);
+[作者项目页](https://cs.uwaterloo.ca/~csk/hat/)。
+
+<a id="ref-spectre"></a>
+
+**[8]** 
+D. Smith, J. S. Myers, C. S. Kaplan, C. Goodman-Strauss,
+*A chiral aperiodic monotile*, 2023/2024.
+[arXiv:2305.17743](https://arxiv.org/abs/2305.17743);
+[作者项目页](https://cs.uwaterloo.ca/~csk/spectre/)。
+
+<a id="ref-trebst"></a>
+
+**[9]** 
+S. Trebst, M. Troyer, Z. Wang, A. W. W. Ludwig,
+*A short introduction to Fibonacci anyon models*.
+[arXiv:0902.3275](https://arxiv.org/pdf/0902.3275),
+特别是 §§2.4–2.5 和 §4。
+
+<a id="ref-egno"></a>
+
+**[10]** 
+P. Etingof, S. Gelaki, D. Nikshych, V. Ostrik,
+*Tensor Categories*, AMS, 2015,
+[作者许可公开版本](https://math.mit.edu/~etingof/egnobookfinal.pdf)，
+§§2.8–2.9，特别是 Theorem 2.9.2。
+此项作为标准结合相容供应。
+
+<a id="ref-flw"></a>
+
+**[11]** 
+M. H. Freedman, M. Larsen, Z. Wang,
+*The two-eigenvalue problem and density of Jones representation of braid groups*.
+[arXiv:math/0103200](https://arxiv.org/abs/math/0103200),
+Communications in Mathematical Physics 228 (2002).
+本稿引用项目已明确对接的来源，不扩展其操作权限。
+
+<a id="ref-dual"></a>
+
+**[12]** 
+B. Bertini, P. Kos, T. Prosen,
+*Exact Correlation Functions for Dual-Unitary Lattice Models in 1+1 Dimensions*,
+Physical Review Letters 123, 210601 (2019).
+[arXiv:1904.02140v3](https://arxiv.org/pdf/1904.02140),
+式 (5)–(7)。
+
+<a id="ref-caves"></a>
+
+**[13]** 
+C. M. Caves, C. A. Fuchs, K. Manne, J. M. Renes,
+*Gleason-Type Derivations of the Quantum Probability Rule for Generalized Measurements*.
+[arXiv:quant-ph/0306179](https://arxiv.org/pdf/quant-ph/0306179)，
+trine 测量及全朝向相容背景。
+
+<a id="ref-urbantke"></a>
+
+**[14]** 
+H. K. Urbantke, *The Hopf fibration—seven times in physics*,
+Journal of Geometry and Physics 46 (2003), 125–150.
+[作者论文 PDF](https://www.fuw.edu.pl/~suszek/pdf/Urbantke2003.pdf),
+§2 及附录。
+
+<a id="ref-liboyle"></a>
+
+**[15]** 
+Z. Li, L. Boyle, *The Penrose Tiling is a Quantum Error-Correcting Code*.
+[arXiv:2311.13040v2](https://arxiv.org/pdf/2311.13040), 2024。
+
+<a id="ref-batle"></a>
+
+**[16]** 
+J. Batle, A. Bednorz,
+*Quantum error-correcting codes from aperiodic monotiles: the Hat and the Spectre*.
+[arXiv:2607.15326](https://arxiv.org/abs/2607.15326), 2026-07-16.
+本稿仅据其公开摘要说明研究方向和奇异 Hat 情形的保留问题，不借其未在本文重证的整体定理。
+
+<a id="ref-knill"></a>
+
+**[17]** 
+E. Knill, R. Laflamme, *A Theory of Quantum Error-Correcting Codes*.
+[arXiv:quant-ph/9604034](https://arxiv.org/html/quant-ph/9604034v1).
+本稿第 [10](#sec-qec) 节给出了所用有限编码的直接恢复证明。
+

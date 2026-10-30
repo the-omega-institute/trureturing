@@ -1,0 +1,61 @@
+**Definition 10.1 (Exterior parameters and mathematical inputs).** In
+Sections 10–15 assume throughout that
+
+$$
+2\le a\le b\le c,\qquad m=a+b,\qquad c>m,\qquad
+n=m+c,\qquad d=c-m\in\mathbb N_{>0}.
+\tag{10.1}
+$$
+
+The labelled vertices, original edge coordinates, counting inner product,
+all unordered original-pair resistance, and domains $\mathcal P$,
+$\mathcal N$, $\mathcal C$ are exactly Definitions 1.1 and 3.1.
+Write $M=M_{a,b,c}$ and set
+
+$$
+B_\infty=n(n-3)+m+1,\qquad
+B_{\rm bip}=n(n-3)+\frac{c(d+3)}{d+1}.
+\tag{10.2}
+$$
+
+Distances between conductance vectors are Euclidean distances in
+$\mathbb R^E$, with the original labelled coordinates. For a nonempty
+set $K$, $\operatorname{dist}(h,K)=\inf_{k\in K}\|h-k\|_2$.
+
+The identity $R=n\operatorname{tr}L^+$, its connected nonnegative
+extension and its scaling are the classical inputs in Convention 1.2.
+In Ghosh–Boyd–Saberi,
+[*Minimizing Effective Resistance of a Graph*, DOI:10.1137/050645452](https://web.stanford.edu/~boyd/papers/pdf/eff_res.pdf),
+§§2.4–2.6, equations (8), (13)–(15), the correspondence remains
+$G=L(g)$, $g_l=g_e$, and $R_{\rm tot}=R(g)$, with all $n$ vertices
+and all unordered pairs retained. Cruz Ortega–Menéndez-Conde,
+[*Maximal Algebraic Connectivity for Paths with Fixed Effective
+Resistance*, arXiv:2306.08187v1](https://arxiv.org/pdf/2306.08187v1),
+§5, equation (3), supplies the fixed-resistance formulation and its
+scale-invariant product correspondence.
+The whole bipartite optimizers used below are the
+[two-hub Theorem 2.1](FIEDLER_RESISTANCE_K2M_OPTIMIZER.md),
+[three-hub Theorems 2.2–4.1](FIEDLER_RESISTANCE_K3M_OPTIMIZER.md), and
+[general bipartite Theorems 3.1–4.1](FIEDLER_RESISTANCE_GENERAL_BIPARTITE_OPTIMIZER.md).
+Their uses are whole-domain substitutions with the vertex maps specified
+in the proofs, rather than new bipartite optimizations.
+The escape estimate, its compactness consequences, the comparisons
+between the three face values, the exhaustive rank-one classification
+and the upper comparison in Section 14 are additional deductions here.
+
+For the design interpretation, the matrix
+$\mathcal I(g)=Q^{\mathsf T}L(g)Q$ in Definition 7.1 uses every original
+incidence vector. Rosa–Harman,
+[*Laplacian Network Optimization via Information Functions*,
+arXiv:2512.19279v1](https://arxiv.org/pdf/2512.19279v1),
+§§2.3–2.4 and Theorem 1, supplies the correspondence
+$F=n(n-1)\Phi_E/\Phi_A$. Every positive conductance ray has exactly
+one representative $p_e=g_e/\sum_f g_f$ in the positive simplex, so
+this same ratio on these design points is an equivalent formulation.
+Optimizing an individual criterion or choosing a fixed number of edges
+does not supply that ratio optimum. No theorem from Harman,
+[*Minimal efficiency of designs under the class of orthogonally invariant
+information criteria*, DOI:10.1007/s001840300301](https://link.springer.com/article/10.1007/s001840300301),
+or the [Menéndez-Conde article 16817](https://repository.uaeh.edu.mx/revistas/index.php/icbi/article/view/16817)
+is a premise below.
+

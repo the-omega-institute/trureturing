@@ -1,0 +1,50 @@
+**Definition 22.2 (the actual terminal-pair source).** For $k\ge1$ put
+
+$$
+N=2^k,\qquad L=N-1,\qquad P=\binom N2.
+\tag{22.3}
+$$
+
+Index unordered pairs of distinct elements of $\{0,\ldots,N-1\}$ in lexicographic order by
+
+$$
+\rho(i,j)=\frac{i(2N-i-1)}2+j-i-1,
+\qquad 0\le i<j<N.
+\tag{22.4}
+$$
+
+Thus $\rho$ is a bijection onto $\{0,\ldots,P-1\}$. For each $i$ let
+
+$$
+J_i=\{\rho(\min\{i,j\},\max\{i,j\}):0\le j<N,\ j\ne i\},
+\qquad B_i=\max J_i.
+\tag{22.5}
+$$
+
+These maxima exist because $N\ge2$. The actual source image $X_N$ consists of the following distinct vertices, all of type $\iota$:
+
+$$
+\begin{aligned}
+&v_{i,j} &&(i,j\ge0,\ i+j\le L),\\
+&w_{i,t} &&(0\le i<N,\ 1\le t\le B_i),\\
+&z_q &&(0\le q<P).
+\end{aligned}
+\tag{22.6}
+$$
+
+In the transition formulas only, set $w_{i,0}=v_{i,L-i}$; this identifies a notation with an existing vertex and adds no state. Fix the actual root representative $x_0=v_{0,0}$. The full legal transition table is
+
+$$
+\begin{aligned}
+T_a(v_{i,0})&=v_{i+1,0} &&(0\le i<L),\\
+T_b(v_{i,j})&=v_{i,j+1} &&(i+j<L),\\
+T_b(w_{i,t})&=w_{i,t+1} &&(0\le t<B_i),\\
+T_a(w_{i,t})&=z_t &&(t\in J_i).
+\end{aligned}
+\tag{22.7}
+$$
+
+There are no other legal edges. In particular, each $z_q$ is terminal. The domains of the two partial maps are exactly the vertices displayed for their respective tokens in (22.7). These rules specify the same two operation names throughout the family; their indices name installed source vertices and are never parameters in an executed name. The base rules apply only before $i+j=L$, so they do not conflict with the rules at $w_{i,0}$.
+
+Take the declared current readout to be $q_X(x)=x$. Each legal operation has duration one and the complete declared record consisting of its executed token, successor, duration and outcome: success at a nonterminal successor, terminal success at a successor $z_q$. There are no other fields or executed failures. Missing operations are illegal attempts, distinguished from these success outcomes as in Definition 1.1. The response to a word retains the readouts, records and legality distinctions stipulated there. Stopping at a cut introduces no extra operation. These declarations define an intrinsically terminal actual source, without a separately imposed stopping horizon.
+

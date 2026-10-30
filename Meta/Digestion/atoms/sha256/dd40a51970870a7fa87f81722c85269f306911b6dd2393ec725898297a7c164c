@@ -1,0 +1,21 @@
+#### 命题 9.3（从相容预测得到一个 Hilbert 表示）
+
+上述 $\omega$ 定义半内积
+$\langle A,B\rangle_\omega=\omega(A^\dagger B)$。
+除去零范数向量并完备化，得到 Hilbert 空间、循环向量 $\Omega=[I]$ 与有界表示 $\pi$，
+满足
+$\omega(A)=\langle\Omega,\pi(A)\Omega\rangle$。
+
+**证明。**
+
+正性给 Cauchy–Schwarz 不等式，故零范数向量与所有向量正交，商内积良定。
+$\omega(B^\dagger A^\dagger AB)\le\left\lVert A\right\rVert^2\omega(B^\dagger B)$，
+所以左乘 $A$ 保持零空间并在商上有界。
+令 $\pi(A)[B]=[AB]$，完备化后仍有界，且保持乘法与伴随。
+取 $\Omega=[I]$ 即得表示公式；局部算符类稠密，故循环性成立。 ∎
+
+这是 GNS 构造在本框架中的直接形式。
+它以复算符代数、正性、相容性为前提，并未从裸静态图自动推导这些输入。
+
+<a id="sec-9-1"></a>
+

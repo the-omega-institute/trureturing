@@ -1,0 +1,56 @@
+**Proposition 27.7 (the resource scope and the unacquired interfaces).**
+The word and ordinal lengths in (PCR.78) are comparable on valid inverse
+pairs, up to absolute constants and an additive one. Linear peak
+backing is attained on a fixed admitted source. Nevertheless (PCR.79)
+is a supplied-data query bound and supplies no source acquisition,
+original-enumeration firstness, physical installation or finite-state
+online history machine.
+
+Proof. For $|v|=h$ the branch time lies in $[h+2,2h+2]$.
+By (PCR.71), $F_{\tau_v}\le Q_s(v)<F_{\tau_v+1}$.
+The inequalities $F_k\le2^k$ and $F_{2k+2}\ge2^k$ give
+$|\operatorname{bin}(Q_s(v))|=\Theta(h+1)$. For the all-one source,
+$v=a^h$ has $(e,A,B)=(h+1,F_{h+2},F_{h+3})$ by (PCR.39).
+Its inverse literal output has $h$ symbols and thus requires
+$\Omega(R)$ output bits. Separately materializing the current exact
+boundary at every step writes $\Theta(h^2)$ bits along this family;
+Retaining all those boundaries would require quadratic peak space. The iterative query uses only the current boundary, so
+this is consistent with its quadratic work and linear peak space.
+It is not a universal quadratic-work lower bound on all possible
+query algorithms.
+
+The preparation in (PCR.79) reuses the original authentic prefix and
+seed. It does not establish that the prefix has been earned: paid
+full-root presence-only Reads, source storage, root binding,
+stationarity throughout the service interval, grants, backing and
+synchronization retain exactly their original premises and tariffs.
+The acquired actual $n$ and the original transient-inclusive $(P,n)$
+output are preserved; law-ready hypothetical evaluation cannot replace
+them. Minimal-source synthesis also does not select $K_d(P)$ or the
+original $\rho_d$ first passing row on a deficient-rank fibre. Those
+normalization and completed physical-installation obligations remain
+the separate tasks in ACR §§21 and 26 and GPO §§34 and 39.
+
+The ordinary inverse here reuses ACR Proposition 10.2; its global birth
+calibration is GPO Proposition 39.2 and ACR Theorem 27.2, while the
+source-specific linear-backing query bound uses the exact integer
+transport of §17 and the exact-layer block counts of §24. Equation
+(PCR.79), with authentic raw preparation and growing operand widths,
+is the resource assertion in addition to those existing inverses.
+Massey's finite synthesis [MAS] and the monic-quotient identity
+(PCR.80) are reused suppliers, not new recurrence theorems or a
+literature-priority claim for this application.
+
+The distinct typed interfaces also prevent a change of source model.
+`ActualTreeReadoutAcquisition.readout` in D5 takes an explicit finite
+native labelled tree and returns alpha, beta, branch or absent;
+`ArchiveClockRecovery.archive_clock_recovery_and_finite_ambiguity`
+takes a finite partial-action system and complete visible archives.
+Neither supplies this entrance's paid presence-only full prefix,
+actual cut, or an ordinal service. The conditional exact quotient
+endpoint and native-clock acquisition of TRC23, Definition 23.1,
+also differs from these inputs, even with constant current readout.
+No such native readout or clock is an argument to (PCR.69)--(PCR.80).
+These are ordinary mathematical deductions on the original supplied
+source, without a fresh compiled Lean assertion. $\square$
+

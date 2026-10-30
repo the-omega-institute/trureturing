@@ -1,0 +1,54 @@
+**Theorem 25.2 (polynomial native simulation and circuit correspondence).**
+Every function $C_{s,n}$ of Definition 25.1 has a Boolean circuit of
+size polynomial in $S=d+H+2$, with
+
+$$
+\Pr_{u\ \mathrm{fair}}\{C_{s,n}(u)=1\}\ge3/4.
+\tag{ACR.105}
+$$
+
+One uniform polynomial-work procedure constructs such a circuit from
+the explicit hypothetical recurrence, seed, cut and $d,H$. This is
+a representation theorem for the actual source-specific functions,
+not an actual-root simulation granted to the law-erased controller.
+
+Proof. Certificates make the bounded finder zero error. Its failure
+probability is at most $L4^{-K_0}\le1/4$, by the same conditional
+phase argument as (ACR.103). Its step, literal, index, tape and backing
+bounds are polynomial on every input tape, including FAIL branches.
+
+For a supplied hypothetical source only, replace each Read by GPO
+Definition 39.3's forward physical evaluator, using that source's
+presented order at most $d$. Its proof of literal correctness is an
+induction on the actual chronological descriptor relations, not a
+minimality or invertibility argument, so any such presentation works.
+No supplied actual-law presentation is needed by the physical finder.
+Every literal has length at most $H$, and its required birth-bit
+indices are at most $F_{2H+1}-1$, with $O(H+1)$ binary digits.
+Forward companion powers, Fibonacci sibling masses and comparisons
+with the supplied cut implement each reply in polynomial bit work
+and backing, by GPO Proposition 39.5. They never iterate over the
+possibly exponentially many birth indices or expand the whole tree.
+All arrays here have polynomial length. Implementing their accesses
+by paid sequential scans as in §21 increases the operation count by
+only a polynomial factor, including every operand, counter and copy.
+Composing with the bounded finder gives a deterministic sequential
+machine of some fixed polynomial time $t(S)$, with tape $u$ as its
+only varying input and all the supplied source data as constants.
+
+For completeness, encode the finite control, tape symbols and head
+positions of that machine on the at-most-$t(S)$ visited cells.
+At each of $t(S)$ steps a fixed finite Boolean local rule computes
+the next symbol/head/control flags; copy unchanged cells as well.
+Unrolling the steps gives $O(t(S)^2)$ bounded-fan-in gates, plus
+polynomial initialization and output gates. The accepting flag equals
+the physical finder's flag because each simulated reply equals that
+same source's literal reply. The uniform compiler can emit these
+gates in polynomial work and writes with explicit binary wire indices.
+Conversely, evaluating this compiled circuit on $u$ yields exactly
+the finder's success flag on that hypothetical source; its satisfying
+tape is not a source certificate without the actual paid checks.
+This proves the claimed correspondence, including singular laws,
+finite transients and $d=0$. It asserts no converse representation of
+arbitrary circuits by actual FIB sources. $\square$
+

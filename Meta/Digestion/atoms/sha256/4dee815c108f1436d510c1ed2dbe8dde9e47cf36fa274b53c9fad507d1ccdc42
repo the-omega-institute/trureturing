@@ -1,0 +1,34 @@
+**Definition 9.4 (The remaining exact all-weight and sequence bridges).**
+The strict-triangle part of Definition 6.2 is determined by Theorems
+7.3 and 8.2. The case $c=a+b$ is supplied by Theorems 4.1, 4.3, 5.1
+and 5.2, including its nonattainment and full sequence classification.
+For every integer triple $2\le a\le b\le c$ with $c>a+b$, the
+remaining complementary target is still the exact value of
+$M_{a,b,c}$, the full positive equality set
+$\mathcal E_{a,b,c}$, positive attainment or nonattainment, and a
+classification of every positive maximizing sequence on the original
+labelled coordinates, together with its exact-$R_0$ counterpart for
+every $R_0>0$.
+
+The all-weight bridge requires a sharp upper comparison for every
+$g\in(0,\infty)^{ab+ac+bc}$, matching positive assignments or positive
+approximants, and necessity of every claimed equality coordinate.
+An optimum within block-constant weights, within a deletion face, or
+under an additional trace or rank constraint does not provide that
+comparison. Proposition 6.1 remains an upper estimate and Propositions
+9.2–9.3 supply specified lower estimates; they do not identify this
+exact value for $c>a+b$.
+
+The sequence bridge requires controlling all normalized escape
+sequences and identifying every connected nonnegative original
+maximizer that can occur as a limit. If normalized coordinates are
+bounded, Lemma 8.1's connected-limit and positive-approximation argument
+is available; the actual limiting coordinates still have to be
+determined. For $a=2$, Proposition 9.3 supplies boundedness and connected
+maximizing cluster points but leaves their complete set and positive
+attainment undetermined when $c>a+b$. For general $a$, a coercivity
+argument or a complete treatment of unbounded normalization is also
+required. Theorem 5.1 transfers an established product answer and its
+positive equality rays to every exact resistance level; it does not
+supply these missing all-weight or sequence conclusions.
+

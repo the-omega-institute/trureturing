@@ -1,0 +1,19 @@
+**Definition 5.2 (Explicit finite cutoff).** Assume $|K|\ge3$ and put $h=\max(K\setminus\{H\})$. For every $a<b<c$ in $K$, define
+
+$$
+g_{abc}=\gcd(b-a,c-a),\qquad
+q_{abc}=\frac{c-a}{g_{abc}},\qquad
+U_K=\min_{a<b<c\text{ in }K}(b+1)(q_{abc}-1).
+\tag{5.2}
+$$
+
+Set
+
+$$
+E_K=U_K+h+1,\qquad
+\mathcal F_K=\{0\ne z\in L_K:\ell_z\le E_K\}.
+\tag{5.3}
+$$
+
+These are definitions in finite support arithmetic and bounded integer relations. They do not refer to matrix entries, phase nonconstancy tests or an executed enumeration.
+

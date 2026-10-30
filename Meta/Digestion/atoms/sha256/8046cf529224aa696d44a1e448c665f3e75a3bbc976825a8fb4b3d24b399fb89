@@ -1,0 +1,19 @@
+**推论 8.5（有限等差链的长度界）。**
+
+若 $x,x+t,\ldots,x+Nt\in\Lambda(W)$，$t\ne0$，且 $W$ 直径为 $D<\infty$，
+则
+
+$$
+N\le D\left\lVert t\right\rVert_\infty.
+$$
+
+**证明。**
+
+写 $t=P_+u$。两个端点给出
+$N\left\lVert P_-u\right\rVert_\infty\le D$，而某个非零坐标的代数范数保证
+$\left\lVert P_+u\right\rVert_\infty\left\lVert P_-u\right\rVert_\infty\ge1$。
+合并即得。证毕。
+ □
+
+<a id="subsection-8-3"></a>
+

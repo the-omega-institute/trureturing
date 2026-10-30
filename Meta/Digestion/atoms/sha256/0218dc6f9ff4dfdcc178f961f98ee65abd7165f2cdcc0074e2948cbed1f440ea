@@ -1,0 +1,16 @@
+**Theorem 12.2 (Literal membership and infinite richness).** The morphism in (43) is nonerasing and injective as a morphism of free monoids. The pair $(\eta,a)$ belongs to the original literal class $\mathcal L_3$ of Definition 8.1, its total image length is $H=30$, and $x$ is an infinite rich word with exactly four actual letters.
+
+*Proof.* Each $q_i$ is a palindrome without $a$. Therefore $a q_i a$ is a palindrome with exactly two occurrences of $a$, its endpoints, including when $q_0=\varepsilon$. In a concatenation of image words, successive occurrences of $a$, together with the end of a finite concatenation, identify the intervening $q_i$. The seven intervening words are distinct. They uniquely recover the source letters, proving monoid injectivity. The positive lengths in (43) sum to $30$. Every source letter occurs in $u_7$, so all of $a,b,c,d$, and only these letters, occur in $x$.
+
+It remains to verify the hypothesis of the supplied richness criterion, arXiv Proposition 19, journal Proposition 20. A nonempty factor without $a$ lies inside one of the displayed $q_i$. For such a factor $v$, encode a both-sided extension $\ell v r$ by the pair $\ell r$. Its complete extension set is obtained inside the finite words $a q_i a$. The following table gives all the nonempty bispecial factors without $a$, their extension pairs, their bilateral orders, and the numbers of palindromic extensions when applicable.
+
+| $v$ | Extension pairs | $\mathrm b(v)$ | $\#\mathrm{Pext}(v)$ for palindromic $v$ |
+|---|---|---:|---:|
+| $b$ | $aa,ab,ba$ | $0$ | $1$ |
+| $c$ | $aa,ac,ca,cd,dc$ | $0$ | $1$ |
+| $d$ | $cc,cd,dc$ | $0$ | $1$ |
+| $cc$ | $aa,ad,da,dd$ | $1$ | $2$ |
+| $ccd$ | $ac,dc,dd$ | $0$ | — |
+| $dcc$ | $ca,cd,dd$ | $0$ | — |
+| $dccd$ | $cd,dc$ | $-1$ | $0$ |
+| $ccdcc$ | $aa,ad,da$ | $0$ | $1$ |

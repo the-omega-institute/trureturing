@@ -1,0 +1,90 @@
+**Theorem 4.1 (uniform recovery on the full original model).** The $L$ readings in Definition 3.1 uniquely recover the full target $(R_0,H,D)$ of Definition 1.1 for every allowed source and gain polynomial, including initial gain zero and all degree and root degeneracies.
+
+Proof. Use coordinates of the single original source
+
+$$
+r=R_{21}>0,\qquad
+S=\frac Rr=\begin{pmatrix}p&q\\1&s\end{pmatrix},\qquad
+K=rG,\qquad a=p+s.
+$$
+
+Strict positivity gives $p,q,s>0$, and determinant zero gives $q=ps$. The polynomial $K$ is nonzero and has degree at most $k$. Define
+
+$$
+P=D+aK,\qquad \deg P\le\max(k,d)=B-1.
+$$
+
+Here and below a degree upper bound includes the zero polynomial. The normalized target in these coordinates is
+
+$$
+R_0=S/a,\qquad H=aK,\qquad D=P-aK.
+$$
+
+At every initial repeat $\operatorname{tr}S=a$, so $z_i=P(i)$ for $0\le i<B$. Lemma 2.1 therefore recovers exactly the entire polynomial
+
+$$
+P(t)=\sum_{h=0}^{B-1}z_h
+\prod_{\substack{0\le b<B\\b\ne h}}\frac{t-b}{h-b}.
+$$
+
+No assumption that $P$ is nonzero is needed. At the calibration endpoint $U^\ell$, the trace is $a+\ell$. Consequently
+
+$$
+e_\ell=\frac{z_{c_\ell}-P(c_\ell)}{\ell}=K(c_\ell)
+\qquad(1\le\ell\le k+1).
+$$
+
+The $k+1$ distinct indices $c_\ell$ determine exactly
+
+$$
+K(t)=\sum_{\ell=1}^{k+1}e_\ell
+\prod_{\substack{1\le b\le k+1\\b\ne\ell}}
+\frac{t-c_b}{c_\ell-c_b}.
+$$
+
+This division uses $\ell>0$, not a gain value. In particular a calibration value may be zero. The values cannot all be zero for an actual source, since the nonzero degree-at-most-$k$ polynomial $K$ cannot have $k+1$ distinct roots.
+
+The $k+2$ terminal clock values are distinct, so at least two of their gains $K(T+j)$ are nonzero by Lemma 2.1. Choose any two surviving local indices $u<v$, after the fixed acquisition. At every surviving index define
+
+$$
+V_j=\frac{z_{T+j}-P(T+j)}{K(T+j)},\qquad
+W_j=V_j-1-\nu j.
+$$
+
+The terminal trace formula of Lemma 1.2 is
+
+$$
+\operatorname{tr}(A_{T+j}S)
+=jp+1+\nu j+q+\nu s.
+$$
+
+Since $P=D+aK$, subtracting $P$ rather than $D$ gives $V_j=\operatorname{tr}(A_{T+j}S)-a$. It follows that
+
+$$
+\begin{aligned}
+W_j&=(j-1)p+q+(k+1)s\\
+&=(j-1)p+s(p+k+1).
+\end{aligned}
+$$
+
+Thus any two surviving positions have the global inverse
+
+$$
+p=\frac{W_v-W_u}{v-u},\qquad
+s=\frac{W_u-(u-1)p}{p+k+1},\qquad
+q=ps.
+$$
+
+The first formula returns the true $p>0$ because $W_v-W_u=(v-u)p$. The numerator of the second is the true $s(p+k+1)$, and its denominator is positive because $p>0,k\ge0$. Hence it returns the true $s>0$. Conversely, two positive matrices $(\begin{smallmatrix}p&ps\\1&s\end{smallmatrix})$ producing the same $W_u,W_v$ must have equal $p$ by subtraction and then equal $s$ by division by $p+k+1$. This proves injectivity for every pair on the whole positive source domain. The values $W_j$ themselves need not be positive. Every available pair returns the same source, and an additional surviving terminal sample remains an equation on that same source.
+
+Recover $a=p+s>0$ and output $S/a,aK,P-aK$. For the original realization,
+
+$$
+\frac Sa=\frac{R/r}{a_R/r}=\frac R{a_R},\qquad
+aK=\frac{a_R}{r}\,rG=a_RG.
+$$
+
+The recovered $P-aK$ is exactly the original polynomial $D$, not only its values at the sampled indices. This includes cancellations of all coefficients above degree $d$ when $d<k$.
+
+For global target injectivity, two actual realizations with the same $L$ data first have the same $P$ by baseline interpolation and the same nonzero $K$ by calibration interpolation. Their terminal zero sets are identical, so the same surviving pair can be used for both. The positive pair inverse gives the same $p,s,S,a$, and then the same entire $R_0,H,D$. Every step used coordinates of one common source, gain, and drift; no independently lifted relations are fitted. ∎
+

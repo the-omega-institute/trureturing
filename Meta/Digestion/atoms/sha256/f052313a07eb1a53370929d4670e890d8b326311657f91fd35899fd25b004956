@@ -1,0 +1,79 @@
+### 定理 21.3（增强域覆盖数的明确阈值发散）
+
+对每个固定有限 $\varepsilon>0$ 和每个整数 $N\ge1$，可取
+
+$$
+ \delta_N=\frac{\varepsilon}{512N}>0.
+\tag{21.12}
+$$
+
+对所有 $0<\delta<\delta_N$，存在恰含 $N$ 个实际来源的集合
+$K_{N,\delta}\subseteq\mathcal I_3(\varepsilon+\delta)$，每个来源具有
+严格正两项因子和普通初始秩二，且每个全域 $\varepsilon$-可靠协议至多
+全误差覆盖其中一个。具体地，$N=1$ 时取 $K_{1,\delta}=\{\gamma R_0\}$；
+$N\ge2$ 时取
+
+$$
+ s_j=\frac{j}{2(N-1)}\quad(0\le j<N),\qquad
+ K_{N,\delta}=\{\gamma R_{s_j}:0\le j<N\}.
+\tag{21.13}
+$$
+
+于是
+
+$$
+ \nu_{3,\varepsilon}(K_{N,\delta})=N
+ \le C_\varepsilon(\delta),\qquad
+ \lim_{\delta\downarrow0}C_\varepsilon(\delta)=\infty.
+\tag{21.14}
+$$
+
+**证明。** 对所有这些参数，严格正两项分解直接取 (17.5)，将其中两个
+行因子同乘正数 $\gamma$；引理 17.2 给出普通初始秩恰为二。
+命题 17.3 的容限参数取 $\gamma$，即给出每个 $\gamma R_{s_j}$ 在全部
+闭 $\gamma$ 误差历史上的五报告成功协议，其可靠性比较完整 $\mathcal M_3$。
+故这些都是所需增强域的实际成员。将允许历史限制为容限 $\varepsilon$，
+同一协议仍全域可靠且成功，因此用每个来源的这一个协议便有
+$\nu_{3,\varepsilon}(K_{N,\delta})\le N$。
+矩阵条目 $(\gamma R_s)_{00}=\gamma(3-s)$ 区分所有参数，集合确有 $N$ 个元素。
+
+若 $N\ge2$，阈值 (21.12) 给出
+
+$$
+ 0<h=\frac{\delta}{\varepsilon+\delta}
+       <\frac1{512N}\le\frac1{1024},\qquad
+ |s_i-s_j|\ge\frac1{2(N-1)}>\frac1{2N}>256h
+       \quad(i\ne j).
+\tag{21.15}
+$$
+
+若一个全域 $\varepsilon$-可靠协议同时成功于两个 $\gamma R_{s_i}$，
+在单位来源的每次实际报告上同乘 $\gamma$ 后交给该协议，保持动作和停止规则，
+便得到一个同时成功于两个 $R_{s_i}$ 的全域 $\alpha$-可靠协议。
+这是因为 $S\mapsto\gamma S$ 是完整 $\mathcal M_3$ 上的保秩双射，
+闭误差区间恰由 $[-\alpha,\alpha]$ 送到 $[-\varepsilon,\varepsilon]$；
+所显示的实际伴随和完整报告也同乘 $\gamma$，仍为同一固定正来源及其合法历史。
+这与引理 21.2 矛盾，故每个原协议至多覆盖一个成员。
+$N=1$ 时这一数量限制直接成立。任何覆盖 $K_{N,\delta}$ 的族因而至少有
+$N$ 个成员，与上界合得等式；覆盖增强域的任何族也必须覆盖这个子集。
+这只比较预选协议的成功集合，不包含未知来源上事后免费选择成员的步骤。
+
+式 (21.12)--(21.14) 正是
+$\forall N\ge1\ \exists\delta_N>0\ \forall\delta\in(0,\delta_N)\ C_\varepsilon(\delta)\ge N$。
+另一方面，定理 20.3 已给出每个固定 $\delta>0$ 时
+$C_\varepsilon(\delta)<\infty$；其有限性与此处趋零时无统一有限界同时成立。
+命题 18.5 排除了未重新缩放的旧族进入任何增强域，本证明实际使用的是
+$\gamma R_s$，而不是把定理 17.5 的同容限无限覆盖结论传到另一容限。
+
+新增的数学内容是 (21.5)--(21.11) 在较小容限 $\alpha=1-h$ 下的实际
+严格正共同伴随，以及由参数间距得到的 (21.12)--(21.14)。
+来源、增强成员资格、任意历史正规化及共同补全分别直接复用引理 17.2、
+命题 17.3、定理 14.2、引理 14.4；未重复证明这些结果。
+有限状态自适应区分的文献背景仍取 van den Bos--Vaandrager，
+[*State Identification for Labeled Transition Systems with Inputs and Outputs*，
+Definition 11、Definition 16、Theorem 6.1](https://arxiv.org/html/1907.11034v2)。
+该有限状态模型及其两两不相容假设不供应这里连续严格正来源、闭误差和
+破坏性切口的数量下界；本定理属于本模型内推导（repo-derived）。
+常数仅为充分阈值，不断言最优覆盖数、最优发散速率、$k>3$ 的结论、
+有效求解复杂度或有限位记忆；比较域没有扩大到非负因子闭包。∎
+
