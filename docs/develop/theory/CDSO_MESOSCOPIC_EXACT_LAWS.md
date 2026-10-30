@@ -93,8 +93,11 @@ $\mathcal D=\mathbb E[K\sum_{i<l,\ i,l\in T}
 
 **Proof.** The construction and expansion in Growing, Theorem 8.2,
 give the comparison
-$U\le a^3+(4+o(1))a^{3/2}h$. The nonnegative remainder in Growing,
-(8.4), implies $S_j\ge a^3+4a^2j$. Hence
+$U\le a^3+(4+o(1))a^{3/2}h$. The polynomial remainder displayed in
+Growing, (8.4), has positive coefficients for every $j\ge1$ and
+$a\ge4$, so its identity implies $S_j\ge a^3+4a^2j$ for all these
+indices; its restricted asymptotic remainder estimate is not needed
+for this step. Hence
 $j_0=O(h/\sqrt a)=o(a)$ and $n_0/h\to1$.
 The tail term, which is at least $an_0^2/j_0$, also implies
 $j_0\ge c h/\sqrt a$. These two bounds give, uniformly for the
