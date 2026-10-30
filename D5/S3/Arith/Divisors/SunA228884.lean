@@ -180,10 +180,12 @@ private theorem K_crt (u v : ℕ) [NeZero u] [NeZero v] (h : u.Coprime v) :
   haveI : NeZero (u*v) := ⟨Nat.mul_ne_zero (NeZero.ne u) (NeZero.ne v)⟩
   have hf (x : ZMod (u*v)) :
       (ZMod.chineseRemainder h x).1 = (x.val : ZMod u) := by
-    simpa using congrArg Prod.fst (map_natCast (ZMod.chineseRemainder h) x.val)
+    simpa only [ZMod.natCast_zmod_val, Prod.fst_natCast] using
+      congrArg Prod.fst (map_natCast (ZMod.chineseRemainder h) x.val)
   have hg (x : ZMod (u*v)) :
       (ZMod.chineseRemainder h x).2 = (x.val : ZMod v) := by
-    simpa using congrArg Prod.snd (map_natCast (ZMod.chineseRemainder h) x.val)
+    simpa only [ZMod.natCast_zmod_val, Prod.snd_natCast] using
+      congrArg Prod.snd (map_natCast (ZMod.chineseRemainder h) x.val)
   ext i j
   change (Nat.gcd (i-j).val (u*v) : ℤ) =
     (Nat.gcd ((ZMod.chineseRemainder h i).1 - (ZMod.chineseRemainder h j).1).val u : ℤ) *
