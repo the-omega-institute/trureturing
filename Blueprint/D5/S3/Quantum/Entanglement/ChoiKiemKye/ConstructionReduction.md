@@ -4,19 +4,7 @@
 
 Public declarations of ConstructionReduction, with complete parameters and the Lean operations.
 
-**Theorem 1.1 (Square of a complex sign).**
-
-$$\forall i : \mathbb{N}, (-1 : \mathbb{C})^{i} \cdot (-1 : \mathbb{C})^{i} = 1$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.sign_square` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The product of two identical natural powers of complex minus one is one.
-
-**Theorem 1.2 (Block diagonal matrix-vector action).**
+**Theorem 1.1 (Block diagonal matrix-vector action).**
 
 $$\forall (\iota : Type*), [\operatorname{Fintype} \iota] [\operatorname{DecidableEq} \iota] \forall (\kappa : \iota \to Type*), [\forall i, \operatorname{Fintype} (\kappa i)] [\forall i, \operatorname{DecidableEq} (\kappa i)] \forall (M : \forall i, \operatorname{Matrix} (\kappa i) (\kappa i) \mathbb{C}), \forall (v : (\Sigma i, \kappa i) \to \mathbb{C}), \forall (i : \iota), \forall (j : (\kappa i)), (\operatorname{Matrix}.\operatorname{blockDiagonal}'\left(M\right).\operatorname{mulVec}) v \langle i, j \rangle = ((M i).\operatorname{mulVec}) (\operatorname{fun} k \mapsto v \langle i, k \rangle) j$$
 
@@ -28,7 +16,7 @@ $$\forall (\iota : Type*), [\operatorname{Fintype} \iota] [\operatorname{Decidab
 
 The matrix-vector action of Matrix.blockDiagonal' on a dependent-sum coordinate is the action of the corresponding block on that coordinate.
 
-**Definition 1.3 (phaseAt).**
+**Definition 1.2 (phaseAt).**
 
 $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (j : \mathbb{N}) , \operatorname{phaseAt} a j = (if h : j - 1 < n \operatorname{then} a \langle j - 1 , h \rangle \operatorname{else} 1)$$
 
@@ -40,7 +28,7 @@ $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (j : \
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.4 (pEntry).**
+**Definition 1.3 (pEntry).**
 
 $$\forall (d : \mathbb{N}) , \forall (z : \mathbb{N} \to \mathbb{C}) , \forall (i : \mathbb{N}) , \forall (j : \mathbb{N}) , \operatorname{pEntry} d z i j = (if i = j \operatorname{then} if d = 2 \operatorname{then} 1 \operatorname{else} 2 \operatorname{else} if j = i + 1 \operatorname{then} z j \operatorname{HDiv}.\operatorname{hDiv} z i \operatorname{else} if i = j + 1 \operatorname{then} z j \operatorname{HDiv}.\operatorname{hDiv} z i \operatorname{else} if i = 0 \land j + 1 = d \operatorname{then} z j \operatorname{else} if j = 0 \land i + 1 = d \operatorname{then} ((z i))^{- 1} \operatorname{else} 0)$$
 
@@ -52,7 +40,7 @@ $$\forall (d : \mathbb{N}) , \forall (z : \mathbb{N} \to \mathbb{C}) , \forall (
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.5 (P).**
+**Definition 1.4 (P).**
 
 $$\forall (d : \mathbb{N}) , \forall (z : \mathbb{N} \to \mathbb{C}) , P d z = (\lambda (i j : Fin d) \mapsto \operatorname{ConstructionReduction}. \operatorname{pEntry} d z \operatorname{val}\left(i\right) \operatorname{val}\left(j\right))$$
 
@@ -64,7 +52,7 @@ $$\forall (d : \mathbb{N}) , \forall (z : \mathbb{N} \to \mathbb{C}) , P d z = (
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.6 (alphaUpper).**
+**Definition 1.5 (alphaUpper).**
 
 $$\forall (k : \mathbb{N}) , \operatorname{alphaUpper} k = (\operatorname{List}. map (\lambda (j : \mathbb{N}) \mapsto (j + 1 , k - j)) (\operatorname{List}. \operatorname{range} (k \operatorname{HDiv}.\operatorname{hDiv} 2)))$$
 
@@ -76,7 +64,7 @@ $$\forall (k : \mathbb{N}) , \operatorname{alphaUpper} k = (\operatorname{List}.
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.7 (betaUpper).**
+**Definition 1.6 (betaUpper).**
 
 $$\forall (n : \mathbb{N}) , \forall (l : \mathbb{N}) , \operatorname{betaUpper} n l = (\operatorname{List}. map (\lambda (j : \mathbb{N}) \mapsto (l + j , n - j)) (\operatorname{List}. \operatorname{range} ((n - l + 1) \operatorname{HDiv}.\operatorname{hDiv} 2)))$$
 
@@ -88,7 +76,7 @@ $$\forall (n : \mathbb{N}) , \forall (l : \mathbb{N}) , \operatorname{betaUpper}
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.8 (indexList).**
+**Definition 1.7 (indexList).**
 
 $$\forall (\operatorname{upper} : \operatorname{List} (\mathbb{N} \times \mathbb{N})) , \operatorname{indexList} \operatorname{upper} = (\operatorname{upper} ++ \operatorname{List}. map \operatorname{Prod}. \operatorname{swap} \operatorname{upper}. \operatorname{reverse})$$
 
@@ -100,7 +88,7 @@ $$\forall (\operatorname{upper} : \operatorname{List} (\mathbb{N} \times \mathbb
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.9 (blockZ).**
+**Definition 1.8 (blockZ).**
 
 $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (\operatorname{upper} : \operatorname{List} (\mathbb{N} \times \mathbb{N})) , \forall (j : \mathbb{N}) , \operatorname{blockZ} a \operatorname{upper} j = (if j < \operatorname{upper}. \operatorname{length} \operatorname{then} 1 \operatorname{else} if j < (\operatorname{ConstructionReduction}. \operatorname{indexList} \operatorname{upper}) . \operatorname{length} \operatorname{then} ((\operatorname{ConstructionReduction}. \operatorname{phaseAt} a ((\operatorname{ConstructionReduction}. \operatorname{indexList} \operatorname{upper}) [j]) . 2))^{- 1} \cdot \operatorname{ConstructionReduction}. \operatorname{phaseAt} a ((\operatorname{ConstructionReduction}. \operatorname{indexList} \operatorname{upper}) [j]) . 1 \operatorname{else} 1)$$
 
@@ -112,7 +100,7 @@ $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (\oper
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion. Optional list indexing is expanded into its defining in-bounds and out-of-bounds branches.
 
-**Definition 1.10 (blockEntry).**
+**Definition 1.9 (blockEntry).**
 
 $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (\operatorname{upper} : \operatorname{List} (\mathbb{N} \times \mathbb{N})) , \forall (\operatorname{scale} : \mathbb{C}) , \forall (row : Fin n \times Fin n) , \forall (col : Fin n \times Fin n) , \operatorname{blockEntry} a \operatorname{upper} \operatorname{scale} row col = (\operatorname{have} \operatorname{indices} := \operatorname{ConstructionReduction}. \operatorname{indexList} \operatorname{upper} ; \operatorname{have} rr := (\operatorname{val}\left(row. 1\right) + 1 , \operatorname{val}\left(row. 2\right) + 1) ; \operatorname{have} cc := (\operatorname{val}\left(col. 1\right) + 1 , \operatorname{val}\left(col. 2\right) + 1) ; if rr \in \operatorname{indices} \land cc \in \operatorname{indices} \operatorname{then} \operatorname{scale} \cdot \operatorname{ConstructionReduction}. \operatorname{pEntry} \operatorname{indices}. \operatorname{length} (\operatorname{ConstructionReduction}. \operatorname{blockZ} a \operatorname{upper}) (\operatorname{List}. \operatorname{idxOf} rr \operatorname{indices}) (\operatorname{List}. \operatorname{idxOf} cc \operatorname{indices}) \operatorname{else} 0)$$
 
@@ -124,7 +112,7 @@ $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (\oper
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.11 (rhoGamma).**
+**Definition 1.10 (rhoGamma).**
 
 $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : Fin n \to \mathbb{C}) , \forall (r : \mathbb{R}) , \operatorname{rhoGamma} a b r = (\lambda (row col : Fin n \times Fin n) \mapsto (if row . 1 = row . 2 \land row = col \operatorname{then} (r : \mathbb{C}) \operatorname{else} 0) + \operatorname{blockEntry} a [(1 , 2)] 1 row col + \operatorname{blockEntry} a [(1 , 3)] 2 row col + (\sum (k : \mathbb{N}) \in \operatorname{Finset}. \operatorname{range} (n + 1) , if 4 \leq k \operatorname{then} \operatorname{blockEntry} a (\operatorname{alphaUpper} k) 1 row col \operatorname{else} 0) + (\sum (l : \mathbb{N}) \in \operatorname{Finset}. \operatorname{range} (n + 1) , if 2 \leq l \land l + 3 \leq n \operatorname{then} \operatorname{blockEntry} b (\operatorname{betaUpper} n l) 1 row col \operatorname{else} 0) + (if 3 < n \operatorname{then} \operatorname{blockEntry} b [(n - 2 , n)] 2 row col \operatorname{else} 0) + \operatorname{blockEntry} b [(n - 1 , n)] 1 row col)$$
 
@@ -136,7 +124,7 @@ $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : F
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.12 (partialTranspose).**
+**Definition 1.11 (partialTranspose).**
 
 $$\forall (n : \mathbb{N}) , \forall (A : \operatorname{Matrix} (Fin n \times Fin n) (Fin n \times Fin n) \mathbb{C}) , \operatorname{partialTranspose} A = (D5. S3. \operatorname{Quantum}. \operatorname{Entanglement}. \operatorname{StructuredNegativityCoincidenceRefutation}. \operatorname{partialTransposeB} A. \operatorname{transpose})$$
 
@@ -148,7 +136,7 @@ $$\forall (n : \mathbb{N}) , \forall (A : \operatorname{Matrix} (Fin n \times Fi
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion. Source, p. 1, verbatim: “The partial transpose (x ⊗ y)Γ of x ⊗ y ∈ Mₘ ⊗ Mₙ is given by xᵗ ⊗ y with the usual transpose xᵗ.” In the bound matrix carrier the entry at ((i,j),(k,l)) is A ((k,j),(i,l)); the frozen second-factor operation is applied to the ordinary transpose to obtain precisely this first-factor operation.
 
-**Definition 1.13 (rho).**
+**Definition 1.12 (rho).**
 
 $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : Fin n \to \mathbb{C}) , \forall (r : \mathbb{R}) , rho a b r = (\operatorname{ConstructionReduction}. \operatorname{partialTranspose} (\operatorname{ConstructionReduction}. \operatorname{rhoGamma} a b r))$$
 
@@ -160,7 +148,7 @@ $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : F
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.14 (D).**
+**Definition 1.13 (D).**
 
 $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : Fin n \to \mathbb{C}) , \forall (r : \mathbb{R}) , D a b r = (\lambda (i j : Fin n) \mapsto if i = j \operatorname{then} \operatorname{val}\left(r\right) \operatorname{else} if \operatorname{val}\left(i\right) = 0 \operatorname{then} (if \operatorname{val}\left(j\right) = 2 \operatorname{then} 2 \operatorname{else} 1) \cdot (\operatorname{starRingEnd} \mathbb{C}) (a j) \operatorname{else} if \operatorname{val}\left(j\right) = 0 \operatorname{then} (if \operatorname{val}\left(i\right) = 2 \operatorname{then} 2 \operatorname{else} 1) \cdot a i \operatorname{else} if \operatorname{val}\left(j\right) + 1 = n \operatorname{then} (if \operatorname{val}\left(i\right) + 3 = n \operatorname{then} 2 \operatorname{else} 1) \cdot b i \operatorname{else} if \operatorname{val}\left(i\right) + 1 = n \operatorname{then} (if \operatorname{val}\left(j\right) + 3 = n \operatorname{then} 2 \operatorname{else} 1) \cdot (\operatorname{starRingEnd} \mathbb{C}) (b j) \operatorname{else} if \operatorname{val}\left(i\right) + 1 = \operatorname{val}\left(j\right) \lor \operatorname{val}\left(j\right) + 1 = \operatorname{val}\left(i\right) \lor \operatorname{val}\left(i\right) + 2 = \operatorname{val}\left(j\right) \lor \operatorname{val}\left(j\right) + 2 = \operatorname{val}\left(i\right) \operatorname{then} if \operatorname{val}\left(i\right) + \operatorname{val}\left(j\right) + 1 \leq n \operatorname{then} a i \cdot (\operatorname{starRingEnd} \mathbb{C}) (a j) \operatorname{else} b i \cdot (\operatorname{starRingEnd} \mathbb{C}) (b j) \operatorname{else} 0)$$
 
@@ -172,7 +160,7 @@ $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : F
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.15 (tensor).**
+**Definition 1.14 (tensor).**
 
 $$\forall (n : \mathbb{N}) , \forall (x : Fin n \to \mathbb{C}) , \forall (y : Fin n \to \mathbb{C}) , \forall (a : Fin n \times Fin n) , \operatorname{tensor} x y a = (\operatorname{Matrix}. \operatorname{vecMulVec} x y a . 1 a . 2)$$
 
@@ -184,7 +172,7 @@ $$\forall (n : \mathbb{N}) , \forall (x : Fin n \to \mathbb{C}) , \forall (y : F
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.16 (InRange).**
+**Definition 1.15 (InRange).**
 
 $$\forall (n : \mathbb{N}) , \forall (A : \operatorname{Matrix} (Fin n \times Fin n) (Fin n \times Fin n) \mathbb{C}) , \forall (v : Fin n \times Fin n \to \mathbb{C}) , \operatorname{InRange} A v = (v \in A. \operatorname{mulVecLin}. \operatorname{range})$$
 
@@ -196,7 +184,7 @@ $$\forall (n : \mathbb{N}) , \forall (A : \operatorname{Matrix} (Fin n \times Fi
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.17 (PPT).**
+**Definition 1.16 (PPT).**
 
 $$\forall (n : \mathbb{N}) , \forall (A : \operatorname{Matrix} (Fin n \times Fin n) (Fin n \times Fin n) \mathbb{C}) , PPT A = (A. \operatorname{PosSemidef} \land (\operatorname{ConstructionReduction}. \operatorname{partialTranspose} A) . \operatorname{PosSemidef})$$
 
@@ -208,7 +196,7 @@ $$\forall (n : \mathbb{N}) , \forall (A : \operatorname{Matrix} (Fin n \times Fi
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.18 (Edge).**
+**Definition 1.17 (Edge).**
 
 $$\forall (n : \mathbb{N}) , \forall (A : \operatorname{Matrix} (Fin n \times Fin n) (Fin n \times Fin n) \mathbb{C}) , \operatorname{Edge} A = (\forall (x y : Fin n \to \mathbb{C}) , x \neq 0 \to y \neq 0 \to \neg (\operatorname{ConstructionReduction}. \operatorname{InRange} A (\operatorname{ConstructionReduction}. \operatorname{tensor} x y) \land \operatorname{ConstructionReduction}. \operatorname{InRange} (\operatorname{ConstructionReduction}. \operatorname{partialTranspose} A) (\operatorname{ConstructionReduction}. \operatorname{tensor} (\lambda (i : Fin n) \mapsto (\operatorname{starRingEnd} \mathbb{C}) (x i)) y)))$$
 
@@ -220,7 +208,7 @@ $$\forall (n : \mathbb{N}) , \forall (A : \operatorname{Matrix} (Fin n \times Fi
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion. Source, p. 1, verbatim: “There exists no nonzero product vector |ξᵢ⟩ ⊗ |ηᵢ⟩ ∈ Im ϱ such that |ξ̄ᵢ⟩ ⊗ |ηᵢ⟩ ∈ Im ϱΓ. Such states are called PPT entangled edge states [19], in short, edge states in this paper.” The predicate encodes the range exclusion; PPT and nonzeroness are separate conjuncts of Full.claim.
 
-**Definition 1.19 (GenericPhases).**
+**Definition 1.18 (GenericPhases).**
 
 $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : Fin n \to \mathbb{C}) , \operatorname{GenericPhases} a b = ((\forall (i : Fin n) , a i \neq 0 \land b i \neq 0) \land (\forall (i j : Fin n) , i < j \to ((a i))^{- 1} \cdot a j \neq ((b i))^{- 1} \cdot b j))$$
 
@@ -232,7 +220,7 @@ $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : F
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.20 (Admissible).**
+**Definition 1.19 (Admissible).**
 
 $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : Fin n \to \mathbb{C}) , \operatorname{Admissible} a b = ((\forall (i : Fin n) , \left\lVert a i \right\rVert = 1 \land \left\lVert b i \right\rVert = 1) \land \operatorname{ConstructionReduction}. \operatorname{phaseAt} a 1 = 1 \land \operatorname{ConstructionReduction}. \operatorname{phaseAt} b n = 1 \land (\forall (i j : Fin n) , i < j \to ((a i))^{- 1} \cdot a j \neq ((b i))^{- 1} \cdot b j))$$
 
@@ -244,7 +232,7 @@ $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : F
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.21 (LargestRoot).**
+**Definition 1.20 (LargestRoot).**
 
 $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : Fin n \to \mathbb{C}) , \forall (r : \mathbb{R}) , \operatorname{LargestRoot} a b r = ((\operatorname{ConstructionReduction}. D a b r) . det = 0 \land (\forall (s : \mathbb{R}) , (\operatorname{ConstructionReduction}. D a b s) . det = 0 \to s \leq r))$$
 
@@ -256,7 +244,7 @@ $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : F
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.22 (SimpleRoot).**
+**Definition 1.21 (SimpleRoot).**
 
 $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : Fin n \to \mathbb{C}) , \forall (r : \mathbb{R}) , \operatorname{SimpleRoot} a b r = (\exists (d : \mathbb{R}) , d \neq 0 \land \operatorname{HasDerivAt} (\lambda (s : \mathbb{R}) \mapsto (\operatorname{ConstructionReduction}. D a b s) . det. re) d r)$$
 
@@ -268,7 +256,7 @@ $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : F
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.23 (bracket).**
+**Definition 1.22 (bracket).**
 
 $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (x : Fin n \to \mathbb{C}) , \forall (y : Fin n \to \mathbb{C}) , \forall (i : \mathbb{N}) , \forall (j : \mathbb{N}) , \operatorname{bracket} a x y i j = (\operatorname{ConstructionReduction}. \operatorname{phaseAt} x i \cdot \operatorname{ConstructionReduction}. \operatorname{phaseAt} y j - ((\operatorname{ConstructionReduction}. \operatorname{phaseAt} a i))^{- 1} \cdot \operatorname{ConstructionReduction}. \operatorname{phaseAt} a j \cdot \operatorname{ConstructionReduction}. \operatorname{phaseAt} x j \cdot \operatorname{ConstructionReduction}. \operatorname{phaseAt} y i)$$
 
@@ -280,7 +268,7 @@ $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (x : F
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.24 (BilinearSystem).**
+**Definition 1.23 (BilinearSystem).**
 
 $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : Fin n \to \mathbb{C}) , \forall (x : Fin n \to \mathbb{C}) , \forall (y : Fin n \to \mathbb{C}) , \operatorname{BilinearSystem} a b x y = ((\forall k \in \operatorname{Finset}. Icc 2 n , (\sum j \in \operatorname{Finset}. \operatorname{range} (k \operatorname{HDiv}.\operatorname{hDiv} 2) , ((- 1))^{j} \cdot \operatorname{ConstructionReduction}. \operatorname{bracket} a x y (j + 1) (k - j)) = 0) \land (\forall l \in \operatorname{Finset}. Icc 1 (n - 2) , (\sum j \in \operatorname{Finset}. \operatorname{range} ((l + 1) \operatorname{HDiv}.\operatorname{hDiv} 2) , ((- 1))^{j} \cdot \operatorname{ConstructionReduction}. \operatorname{bracket} b x y (n - l + j) (n - j)) = 0))$$
 
@@ -292,7 +280,7 @@ $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : F
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.25 (AllowedSupport).**
+**Definition 1.24 (AllowedSupport).**
 
 $$\forall (n : \mathbb{N}) , \forall (\operatorname{isAlpha} : \operatorname{Bool}) , \forall (s : \operatorname{Finset} (Fin n)) , \operatorname{AllowedSupport} n \operatorname{isAlpha} s = (if \operatorname{isAlpha} = \operatorname{true} \operatorname{then} ((\forall i \in s , 2 \cdot (\operatorname{val}\left(i\right) + 1) \leq n + 1) \lor \exists (p : Fin n) (q : Fin n) , p \in s \land q \in s \land \operatorname{val}\left(p\right) + \operatorname{val}\left(q\right) + 2 \leq n + 1 \land 2 \cdot (\operatorname{val}\left(p\right) + 1) < n + 1 \land n + 1 < 2 \cdot (\operatorname{val}\left(q\right) + 1) \land (\forall i \in s , i = q \lor p \leq i \land \operatorname{val}\left(i\right) + \operatorname{val}\left(q\right) + 2 \leq n + 1)) \operatorname{else} ((\forall i \in s , n + 1 \leq 2 \cdot (\operatorname{val}\left(i\right) + 1)) \lor \exists (p : Fin n) (q : Fin n) , p \in s \land q \in s \land n + 1 < \operatorname{val}\left(p\right) + \operatorname{val}\left(q\right) + 2 \land 2 \cdot (\operatorname{val}\left(p\right) + 1) < n + 1 \land n + 1 < 2 \cdot (\operatorname{val}\left(q\right) + 1) \land (\forall i \in s , i = p \lor n + 1 < \operatorname{val}\left(i\right) + \operatorname{val}\left(p\right) + 2 \land i \leq q)))$$
 
@@ -304,7 +292,7 @@ $$\forall (n : \mathbb{N}) , \forall (\operatorname{isAlpha} : \operatorname{Boo
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.26 (Classified).**
+**Definition 1.25 (Classified).**
 
 $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : Fin n \to \mathbb{C}) , \forall (x : Fin n \to \mathbb{C}) , \forall (y : Fin n \to \mathbb{C}) , \operatorname{Classified} a b x y = (x = 0 \lor y = 0 \lor \exists (\operatorname{isAlpha} : \operatorname{Bool}) (s : \operatorname{Finset} (Fin n)) (c : Fin n \to \mathbb{C}) (t : \mathbb{C}) , t \neq 0 \land s. \operatorname{Nonempty} \land \operatorname{ConstructionReduction}. \operatorname{AllowedSupport} n \operatorname{isAlpha} s \land (\forall (i : Fin n) , c i \neq 0 \Leftrightarrow i \in s) \land (\forall (i : Fin n) , x i = c i \cdot t \land y i = c i \cdot if \operatorname{isAlpha} = \operatorname{true} \operatorname{then} a i \operatorname{else} b i))$$
 
@@ -316,7 +304,7 @@ $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : F
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.27 (StarCondition).**
+**Definition 1.26 (StarCondition).**
 
 $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : Fin n \to \mathbb{C}) , \forall (w : Fin n \to \mathbb{C}) , \operatorname{StarCondition} a b w = (\forall (\operatorname{isAlpha} : \operatorname{Bool}) (s : \operatorname{Finset} (Fin n)) , s. \operatorname{Nonempty} \to \operatorname{ConstructionReduction}. \operatorname{AllowedSupport} n \operatorname{isAlpha} s \to \forall (u : Fin n \to \mathbb{R}) , (\forall (i : Fin n) , 0 \leq u i) \to (\forall (i : Fin n) , u i \neq 0 \Leftrightarrow i \in s) \to (\sum i : Fin n , (\operatorname{val}\left(u i\right) \cdot if \operatorname{isAlpha} = \operatorname{true} \operatorname{then} a i \operatorname{else} b i) \cdot (\operatorname{starRingEnd} \mathbb{C}) (w i)) \neq 0)$$
 
@@ -328,7 +316,7 @@ $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : F
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.28 (proposition61_statement).**
+**Definition 1.27 (proposition61_statement).**
 
 $$\operatorname{proposition61}_{\operatorname{statement}} = (\forall (n : \mathbb{N}) , 3 \leq n \to \forall (a b : Fin n \to \mathbb{C}) (r : \mathbb{R}) (w : Fin n \to \mathbb{C}) , \operatorname{ConstructionReduction}. \operatorname{Admissible} a b \to 1 < r \to \operatorname{ConstructionReduction}. \operatorname{LargestRoot} a b r \to \operatorname{ConstructionReduction}. \operatorname{SimpleRoot} a b r \to w \neq 0 \to (\operatorname{ConstructionReduction}. D a b r) . \operatorname{mulVec} w = 0 \to \operatorname{ConstructionReduction}. \operatorname{StarCondition} a b w \to \operatorname{ConstructionReduction}. PPT (\operatorname{ConstructionReduction}. rho a b r) \land \operatorname{ConstructionReduction}. \operatorname{Edge} (\operatorname{ConstructionReduction}. rho a b r) \land (\operatorname{ConstructionReduction}. rho a b r) . \operatorname{rank} = n \cdot n - 1 \land (\operatorname{ConstructionReduction}. \operatorname{rhoGamma} a b r) . \operatorname{rank} = n \cdot n - 2 \cdot n + 3)$$
 
@@ -340,7 +328,7 @@ $$\operatorname{proposition61}_{\operatorname{statement}} = (\forall (n : \mathb
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.29 (Partition.lo).**
+**Definition 1.28 (Partition.lo).**
 
 $$\forall (n : \mathbb{N}) , \forall (t : \mathbb{N}) , \operatorname{Partition}. lo n t = (if t + 2 \leq n \operatorname{then} 1 \operatorname{else} t + 3 - n)$$
 
@@ -352,7 +340,7 @@ $$\forall (n : \mathbb{N}) , \forall (t : \mathbb{N}) , \operatorname{Partition}
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Definition 1.30 (Partition.hi).**
+**Definition 1.29 (Partition.hi).**
 
 $$\forall (n : \mathbb{N}) , \forall (t : \mathbb{N}) , \operatorname{Partition}. hi n t = (if t + 2 \leq n \operatorname{then} t + 2 \operatorname{else} n)$$
 
@@ -364,7 +352,7 @@ $$\forall (n : \mathbb{N}) , \forall (t : \mathbb{N}) , \operatorname{Partition}
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Theorem 1.31 (Draft.triangular_pivot).**
+**Theorem 1.30 (Draft.triangular_pivot).**
 
 $$\forall (u : \mathbb{N} \to \mathbb{C}) , \forall (v : \mathbb{N} \to \mathbb{C}) , \forall (\operatorname{weight} : \mathbb{N} \to \mathbb{N} \to \mathbb{C}) , \forall (N : \mathbb{N}) , \forall (p : \mathbb{N}) , (1 \leq p) \to ((u p \neq 0 \lor v p \neq 0) \to ((\forall (i : \mathbb{N}) , 1 \leq i \to i < p \to u i = 0 \land v i = 0) \to ((\forall (k i : \mathbb{N}) , 2 \leq k \to k \leq N \to i < k \operatorname{HDiv}.\operatorname{hDiv} 2 \to \operatorname{weight} k i \neq 0) \to ((\forall (k : \mathbb{N}) , 2 \leq k \to k \leq N \to (\sum j \in \operatorname{Finset}. \operatorname{range} (k \operatorname{HDiv}.\operatorname{hDiv} 2) , \operatorname{weight} k j \cdot (u (j + 1) \cdot v (k - j) - u (k - j) \cdot v (j + 1))) = 0) \to (\forall (q : \mathbb{N}) , (p < q) \to ((p + q \leq N + 1) \to ((u p \cdot v q - u q \cdot v p) = 0)))))))$$
 
@@ -376,7 +364,7 @@ $$\forall (u : \mathbb{N} \to \mathbb{C}) , \forall (v : \mathbb{N} \to \mathbb{
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion. The private scalar wedge is displayed by its literal defining expression.
 
-**Definition 1.32 (Spectral.pencil).**
+**Definition 1.31 (Spectral.pencil).**
 
 $$\forall (\iota : \operatorname{Type}*) , \forall [\operatorname{DecidableEq} \iota] , \forall (A : \operatorname{Matrix} \iota \iota \mathbb{C}) , \forall (s : \mathbb{R}) , \operatorname{Spectral}. \operatorname{pencil} A s = (\operatorname{val}\left(s\right) \cdot 1 - A)$$
 
@@ -388,7 +376,7 @@ $$\forall (\iota : \operatorname{Type}*) , \forall [\operatorname{DecidableEq} \
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Theorem 1.33 (Spectral.det_pencil).**
+**Theorem 1.32 (Spectral.det_pencil).**
 
 $$\forall (\iota : \operatorname{Type}*) , \forall [\operatorname{Fintype} \iota] , \forall [\operatorname{DecidableEq} \iota] , \forall (A : \operatorname{Matrix} \iota \iota \mathbb{C}) , \forall (hA : A. \operatorname{IsHermitian}) , \forall (s : \mathbb{R}) , (\operatorname{ConstructionReduction}. \operatorname{Spectral}. \operatorname{pencil} A s) . det = \prod i : \iota , \operatorname{val}\left(s - hA. \operatorname{eigenvalues} i\right)$$
 
@@ -400,7 +388,7 @@ $$\forall (\iota : \operatorname{Type}*) , \forall [\operatorname{Fintype} \iota
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Theorem 1.34 (Spectral.pencil_conjugate).**
+**Theorem 1.33 (Spectral.pencil_conjugate).**
 
 $$\forall (\iota : \operatorname{Type}*) , \forall [\operatorname{Fintype} \iota] , \forall [\operatorname{DecidableEq} \iota] , \forall (A : \operatorname{Matrix} \iota \iota \mathbb{C}) , \forall (hA : A. \operatorname{IsHermitian}) , \forall (s : \mathbb{R}) , \operatorname{ConstructionReduction}. \operatorname{Spectral}. \operatorname{pencil} A s = ((\operatorname{Unitary}. \operatorname{conjStarAlgAut} \mathbb{C} (\operatorname{Matrix} \iota \iota \mathbb{C})) hA. \operatorname{eigenvectorUnitary}) (\operatorname{Matrix}. \operatorname{diagonal} \lambda (i : \iota) \mapsto \operatorname{val}\left(s - hA. \operatorname{eigenvalues} i\right))$$
 
@@ -412,7 +400,7 @@ $$\forall (\iota : \operatorname{Type}*) , \forall [\operatorname{Fintype} \iota
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Theorem 1.35 (Spectral.largest_root_psd).**
+**Theorem 1.34 (Spectral.largest_root_psd).**
 
 $$\forall (\iota : \operatorname{Type}*) , \forall [\operatorname{Fintype} \iota] , \forall [\operatorname{DecidableEq} \iota] , \forall (A : \operatorname{Matrix} \iota \iota \mathbb{C}) , (A. \operatorname{IsHermitian}) \to (\forall (r : \mathbb{R}) , (\forall (s : \mathbb{R}) , (\operatorname{ConstructionReduction}. \operatorname{Spectral}. \operatorname{pencil} A s) . det = 0 \to s \leq r) \to ((\operatorname{ConstructionReduction}. \operatorname{Spectral}. \operatorname{pencil} A r) . \operatorname{PosSemidef}))$$
 
@@ -424,7 +412,7 @@ $$\forall (\iota : \operatorname{Type}*) , \forall [\operatorname{Fintype} \iota
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Theorem 1.36 (Spectral.det_pencil_re).**
+**Theorem 1.35 (Spectral.det_pencil_re).**
 
 $$\forall (\iota : \operatorname{Type}*) , \forall [\operatorname{Fintype} \iota] , \forall [\operatorname{DecidableEq} \iota] , \forall (A : \operatorname{Matrix} \iota \iota \mathbb{C}) , \forall (hA : A. \operatorname{IsHermitian}) , \forall (s : \mathbb{R}) , (\operatorname{ConstructionReduction}. \operatorname{Spectral}. \operatorname{pencil} A s) . det. re = \prod i : \iota , (s - hA. \operatorname{eigenvalues} i)$$
 
@@ -436,7 +424,7 @@ $$\forall (\iota : \operatorname{Type}*) , \forall [\operatorname{Fintype} \iota
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Theorem 1.37 (D_hermitian).**
+**Theorem 1.36 (D_hermitian).**
 
 $$\forall (n : \mathbb{N}) , (3 \leq n) \to (\forall (a : Fin n \to \mathbb{C}) , \forall (b : Fin n \to \mathbb{C}) , \forall (r : \mathbb{R}) , (\operatorname{ConstructionReduction}. D a b r) . \operatorname{IsHermitian})$$
 
@@ -448,7 +436,7 @@ $$\forall (n : \mathbb{N}) , (3 \leq n) \to (\forall (a : Fin n \to \mathbb{C}) 
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Theorem 1.38 (D_pencil).**
+**Theorem 1.37 (D_pencil).**
 
 $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : Fin n \to \mathbb{C}) , \forall (r : \mathbb{R}) , \operatorname{ConstructionReduction}. D a b r = \operatorname{ConstructionReduction}. \operatorname{Spectral}. \operatorname{pencil} (- \operatorname{ConstructionReduction}. D a b 0) r$$
 
@@ -460,7 +448,7 @@ $$\forall (n : \mathbb{N}) , \forall (a : Fin n \to \mathbb{C}) , \forall (b : F
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Theorem 1.39 (partialTranspose_involutive).**
+**Theorem 1.38 (partialTranspose_involutive).**
 
 $$\forall (n : \mathbb{N}) , \forall (A : \operatorname{Matrix} (Fin n \times Fin n) (Fin n \times Fin n) \mathbb{C}) , \operatorname{ConstructionReduction}. \operatorname{partialTranspose} (\operatorname{ConstructionReduction}. \operatorname{partialTranspose} A) = A$$
 
@@ -472,7 +460,7 @@ $$\forall (n : \mathbb{N}) , \forall (A : \operatorname{Matrix} (Fin n \times Fi
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Theorem 1.40 (Path.scaled_dominance_posDef).**
+**Theorem 1.39 (Path.scaled_dominance_posDef).**
 
 $$\forall (\iota : \operatorname{Type}*) , \forall [\operatorname{Fintype} \iota] , \forall [\operatorname{DecidableEq} \iota] , \forall (A : \operatorname{Matrix} \iota \iota \mathbb{C}) , (A. \operatorname{IsHermitian}) \to (\forall (g : \iota \to \mathbb{C}) , (\forall (i : \iota) , g i \neq 0) \to ((\forall (i : \iota) , (\sum j \in \operatorname{Finset}. \operatorname{univ}. \operatorname{erase} i , \left\lVert ((g i))^{- 1} \cdot A i j \cdot g j \right\rVert) < (A i i) . re) \to (A. \operatorname{PosDef})))$$
 
@@ -484,7 +472,7 @@ $$\forall (\iota : \operatorname{Type}*) , \forall [\operatorname{Fintype} \iota
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Theorem 1.41 (Path.sum_indicator_le).**
+**Theorem 1.40 (Path.sum_indicator_le).**
 
 $$\forall (\iota : \operatorname{Type}*) , \forall [\operatorname{Fintype} \iota] , \forall (P : \iota \to \operatorname{Prop}) , \forall [\operatorname{DecidablePred} P] , (\forall (i j : \iota) , P i \to P j \to i = j) \to (\forall (c : \mathbb{R}) , (0 \leq c) \to (((\sum i : \iota , if P i \operatorname{then} c \operatorname{else} 0)) \leq c))$$
 
@@ -496,7 +484,7 @@ $$\forall (\iota : \operatorname{Type}*) , \forall [\operatorname{Fintype} \iota
 
 The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in infix position for Lean’s division operator: natural-number floor division, Euclidean integer division, or field division according to the carrier. Natural-number subtraction is truncated. val denotes the displayed Lean coercion.
 
-**Theorem 1.42 (proposition61).**
+**Theorem 1.41 (proposition61).**
 
 $$\forall (n : \mathbb{N}) , 3 \leq n \to \forall (a b : Fin n \to \mathbb{C}) (r : \mathbb{R}) (w : Fin n \to \mathbb{C}) , \operatorname{ConstructionReduction}. \operatorname{Admissible} a b \to 1 < r \to \operatorname{ConstructionReduction}. \operatorname{LargestRoot} a b r \to \operatorname{ConstructionReduction}. \operatorname{SimpleRoot} a b r \to w \neq 0 \to (\operatorname{ConstructionReduction}. D a b r) . \operatorname{mulVec} w = 0 \to \operatorname{ConstructionReduction}. \operatorname{StarCondition} a b w \to \operatorname{ConstructionReduction}. PPT (\operatorname{ConstructionReduction}. rho a b r) \land \operatorname{ConstructionReduction}. \operatorname{Edge} (\operatorname{ConstructionReduction}. rho a b r) \land (\operatorname{ConstructionReduction}. rho a b r) . \operatorname{rank} = n \cdot n - 1 \land (\operatorname{ConstructionReduction}. \operatorname{rhoGamma} a b r) . \operatorname{rank} = n \cdot n - 2 \cdot n + 3$$
 
@@ -548,7 +536,6 @@ The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in i
 - Truth anchor: `D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.rho`
 - Truth anchor: `D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.rhoGamma`
 - Truth anchor: `D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.scaled_dominance_posDef`
-- Truth anchor: `D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.sign_square`
 - Truth anchor: `D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.sum_indicator_le`
 - Truth anchor: `D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.tensor`
 - Truth anchor: `D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.triangular_pivot`
