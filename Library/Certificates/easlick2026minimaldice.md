@@ -30,8 +30,9 @@ The source cycle data in Appendices G, H, I and J are by Terry Easlick,
 [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/).
 The eleven-face and uniformly padded cycles are derived constructions.
 
-## Source locator
+## Verified locator
 
-https://arxiv.org/abs/2610.40321v1
+URL: https://arxiv.org/abs/2610.40321v1
 
-Definitions 1 and 2, Example 1, Conjecture 1 and Appendices G--J.
+Pinned source: Terry Easlick, arXiv:2610.40321v1, Definitions 1 and 2,
+Example 1, Conjecture 1 and Appendices G--J. No DOI is declared.
