@@ -100,10 +100,10 @@ namespace WeightedMeans
 
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature
-    (Σ _ : ℝ → ℝ, Unit) (fun _ => ℝ) (fun _ => ℝ)
+    (ℝ → ℝ) (fun _ => ℝ) (fun _ => ℝ)
 
 def actual : Realization signature :=
-  realize signature (fun _ q u => q.1 u) (fun e => nomatch e)
+  realize signature (fun _ W u => W u) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
@@ -118,7 +118,7 @@ def arena : Arena where
     (∀ u ∈ Ioo 0 h, 0 < p u) → (∀ u ∈ Ioo 0 h, 0 < q u) →
     StrictMonoOn W (Ioo 0 h) →
     StrictAntiOn (fun u => q u / p u) (Ioo 0 h) →
-    (∫ u in (0:ℝ)..h, q u * R.readout () ⟨W, ()⟩ u) / (∫ u in (0:ℝ)..h, q u) <
+    (∫ u in (0:ℝ)..h, q u * R.readout () W u) / (∫ u in (0:ℝ)..h, q u) <
       (∫ u in (0:ℝ)..h, p u * W u) / (∫ u in (0:ℝ)..h, p u)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -136,8 +136,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hq : (∫ u in (0:ℝ)..1, 2-u) = 3/2 := by
     rw [intervalIntegral.integral_sub (by apply Continuous.intervalIntegrable; fun_prop)
       (by apply Continuous.intervalIntegrable; fun_prop)]
-    norm_num [intervalIntegral.integral_id]
-  norm_num [rejected, realize, hq, intervalIntegral.integral_id] at H
+    norm_num [_root_.integral_id]
+  norm_num [rejected, realize, hq, _root_.integral_id] at H
 
 def family : Registration arena (type_of% @weighted_means_lt) where
   actual := actual
@@ -148,7 +148,7 @@ def family : Registration arena (type_of% @weighted_means_lt) where
   dependence := by
     change ObservationalDependence signature actual
     intro i
-    exact ⟨⟨fun u => u, ()⟩, 0, 1, by norm_num [actual, realize]⟩
+    exact ⟨(fun u => u), 0, 1, by norm_num [actual, realize]⟩
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@weighted_means_lt) (Realization signature) Unit Unit where
@@ -163,7 +163,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ q u => q.1 u) (fun e => nomatch e))
+  readout := some (realize signature (fun _ W u => W u) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
