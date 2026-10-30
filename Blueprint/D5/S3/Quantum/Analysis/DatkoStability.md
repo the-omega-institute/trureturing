@@ -10,9 +10,7 @@ $$\forall E \in \operatorname{RealBanachSpace}\left(\right),\; \forall S \in \op
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/DatkoStability.integrable_sq_orbit_iff_exponential_stability` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Roland Schnaubelt (2026). *Evolution Equations, Lemma 4.4*. URL: <https://iana.math.kit.edu/downloads/iana3/schnaubelt/Skripten/evgl-skript.pdf>.
+*Citation.* Roland Schnaubelt (2026). *Evolution Equations, Lemma 4.4*. URL: <https://iana.math.kit.edu/downloads/iana3/schnaubelt/Skripten/evgl-skript.pdf>.
 
 *Commentary.*
 
