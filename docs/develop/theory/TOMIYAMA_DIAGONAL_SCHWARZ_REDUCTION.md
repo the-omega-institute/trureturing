@@ -665,153 +665,451 @@ For $d=3$, Theorem 8.1 already supplies all boundary points of the probe simplex
 
 ## 13. The closed small-multiplier strip
 
-Put $m=d-1$ and $p=1-mq$. The next lemma is an algebraic consequence of the row reduction in Theorem 3.2. It is stated separately so that the endpoint cases in the theorem are not hidden by an inverse formula.
-
-**Lemma 13.1 (strip Schur-complement lemma).** Let $d\ge3$, $r\in[0,1/d]$, $q\ge0$, and $p=1-(d-1)q\ge r^2$. For either $\lambda=r$ or $\lambda=-r$, form the matrices $P_i(t)$, vectors $b_i(t)$ and numbers $\kappa_i(t)$ of Convention 2.2. For every $t\in\Delta_d$ the following hold.
-
-1. $P_i(t)\ge0$ and $b_i(t)\in\operatorname{Ran}P_i(t)$ for every $i$.
-2. For every $z\in\mathbb C^d$ with $\sum_i z_i=0$, one has $\sum_i\kappa_i(t)|z_i|^2\ge0$, with the value $-\infty$ interpreted as in Convention 2.2.
-
-These assertions remain true when some $t_j$ or some $e_j(t)$ is zero.
-
-**Proof.** The case $q=0$ is Proposition 4.2, so assume $q>0$. Fix $t$ and $i$. Delete the coordinates $j\ne i$ for which $t_j=0$; the deleted coordinates contribute a nonnegative diagonal term and a zero component of $\sigma^{(i)}$. On the remaining face write
+**Lemma 13.1 (a denominator-free identity on the parabolic boundary).** Fix $d\ge3$, $m=d-1$, $|\lambda|\le1/d$, and put
 
 $$
- e_j=q+\mu t_j,\qquad \mu=1-dq-\lambda,\qquad \gamma=\lambda(1-\lambda),\qquad c=\sum_{j\ne i}\frac{t_j}{e_j}.
+q_b=\frac{1-\lambda^2}{m},\qquad k=d\lambda,\qquad
+\delta=1-k^2,\qquad h=\frac{m\lambda}{1+\lambda}.
 $$
 
-Whenever the displayed denominators are nonzero, the rank-one identities of cited fact (d) give
-
-$$
- P_i=E+\gamma\sigma\sigma^T,\qquad
- \det P_i=\det E\,(1+\gamma c),\qquad
- b_i^TP_i^{-1}b_i=\lambda^2d^2q^2t_i\,\frac{c}{1+\gamma c}.
-$$
-
-The same formulas with limits are valid on a face on which one of the denominators vanishes; equivalently one uses the range clause in the generalized Schur complement of cited fact (e).
-
-We first record the two scalar estimates used below. If $\lambda=-r$, then $e_j>0$: indeed $e_j$ is affine in $t_j$, its endpoint values are $q$ and $p+r$, and both are positive. If $\mu\ge0$, the concavity of $u\mapsto u/(q+\mu u)$ gives
-
-$$
- c\le\frac d{dq+\mu}=\frac d{1+r},\qquad r(1+r)c\le dr\le1.
-$$
-
-If $\mu<0$, the same sum is convex on every face on which it is finite, hence its maximum is at a vertex; therefore
-
-$$
- c\le\frac1{q+\mu}=\frac1{p+r},\qquad r(1+r)c\le1
-$$
-
-because $r^2\le p$. Since $\gamma=-r(1+r)$, these estimates imply $1+\gamma c\ge0$ and hence $P_i\ge0$.
-
-If $\lambda=r$, then $\gamma\ge0$. When $\mu\ge0$ all $e_j$ are positive and the rank-one update is positive. When $\mu<0$, at most one $e_j$ is negative. On a face with one negative entry, the function $u/(q+\mu u)$ has a single pole; its one-sided monotonicity shows
-
-$$
- 1+\gamma c\le0.
-$$
-
-Thus the determinant has the sign of $\det E$ and the update has exactly the one eigenvalue needed to turn the negative diagonal entry positive. This is precisely the second alternative in Proposition 3.3. If an $e_j$ is zero, the corresponding $2\times2$ principal minor is $\gamma t_j e_k$ (with the evident one-coordinate interpretation), so the same conclusion follows by a direct limit; in the positive semidefinite case the range condition for $b_i$ is then the limiting Schur-complement condition.
-
-It remains to check the diagonal form on $\sum z_i=0$. Completing the square in every row and using the last displayed rank-one formula gives
-
-$$
- \sum_i\kappa_i|z_i|^2
- =\sum_i\left(q+dq(1-dq)t_i-\lambda^2d^2q^2t_i\,\frac{c_i}{1+\gamma c_i}\right)|z_i|^2 .
-$$
-
-On each open face, clear the positive factors $\prod_i|1+\gamma c_i|$ and the nonzero $|e_j|$. The numerator of the restriction to $\sum_i z_i=0$ is a quadratic form whose diagonal Schur pivots are obtained successively by eliminating $z_d,z_{d-1},\ldots,z_2$. At the $\ell$-th elimination the remainder is
+For $t\in\Delta_d$, write $s_j=\sqrt{t_j}$ and let $X=D+Y$ be an arbitrary complex traceless matrix, with $D=\operatorname{diag}(z_1,\ldots,z_d)$ and $Y=(y_{ij})$ of zero diagonal. For the original map at $(\lambda,q_b)$, the following exact identity holds:
 
 $$
 \begin{aligned}
- &(p-r^2)\sum_{a<b\le\ell}t_at_b\left|\frac{z_a}{e_a}-\frac{z_b}{e_b}\right|^2
- +(1-dr)\sum_{a\le\ell}t_a(1-t_a)\left|\sum_{b\ne a}\frac{z_b}{e_b}\right|^2\\
- &\qquad +q\sum_{a<b\le\ell}\left|\,t_bz_a-t_az_b\,\right|^2
- +q\left|\sum_{a\le\ell}t_az_a\right|^2 .
+\frac{s^T S_b(X)s}{q_b}
+={}&\frac{\delta}{m}\sum_a t_a
+ \sum_{\substack{i<j\\i,j\ne a}}|z_i-z_j|^2
+ +\sum_i\sum_{j\ne i}|\sqrt{t_i}y_{ij}+k\sqrt{t_j}z_i|^2\\
+&+\frac12\sum_i\sum_{\substack{j<\ell\\j,\ell\ne i}}
+ \left((1+h)|\sqrt{t_\ell}y_{ij}+\sqrt{t_j}y_{i\ell}|^2
+ +(1-h)|\sqrt{t_\ell}y_{ij}-\sqrt{t_j}y_{i\ell}|^2\right).
 \end{aligned}
 \tag{13.1}
 $$
 
-The factors suppressed in clearing denominators are squares of the nonzero $e_j$ and the positive Schur pivots already eliminated. Thus every term in (13.1) is nonnegative because $p-r^2\ge0$, $1-dr\ge0$ and $q\ge0$. If a pivot or an $e_j$ vanishes, (13.1) is read after deleting the corresponding zero coordinate and then by continuity; the generalized Schur-complement range condition gives the same limit. Hence the restricted diagonal form is nonnegative. This proves both assertions. ∎
+Every coefficient on the right is nonnegative. The identity includes every face of the simplex and both signs and endpoints of $\lambda$. Stance: repo-derived.
 
-**Theorem 13.2 (exact closed strip in every dimension).** For every integer $d\ge3$ and every real $\lambda,q$ with $|\lambda|\le1/d$, the map of Convention 2.1 is Schwarz if and only if
+**Proof.** Here $q_b>0$, $1+\lambda\ge1-1/d>0$, $\delta\ge0$, and
+
+$$
+-1\le h\le\frac{d-1}{d+1}<1.
+$$
+
+The last bound follows either by cross multiplication with $1+\lambda>0$ or from the positive derivative $m/(1+\lambda)^2$. Put $a=1-dq_b$. Since $p=\lambda^2$, one has
+
+$$
+a-\lambda^2=-q_b,\qquad
+\frac{\lambda(1-\lambda)}{q_b}=h,\qquad
+d a=-k^2-\frac{d\delta}{m}.
+$$
+
+The row identity in Step 3 of Theorem 3.2 therefore gives the following coefficients in $s^TS_b(X)s/q_b$: the coefficient of $|z_i|^2$ is $1+da\,t_i$; the coefficient of $|y_{ij}|^2$ is $1-t_j$; the mixed diagonal-row term is $2k\sqrt{t_it_j}\operatorname{Re}(\bar z_i y_{ij})$; and the mixed terms within row $i$ are $2h\sqrt{t_jt_\ell}\operatorname{Re}(\bar y_{ij}y_{i\ell})$.
+
+To verify (13.1), first use the full complex trace constraint:
+
+$$
+\begin{aligned}
+\sum_{\substack{i<j\\i,j\ne a}}|z_i-z_j|^2
+ &=m\sum_{i\ne a}|z_i|^2-\left|\sum_{i\ne a}z_i\right|^2
+ =m\sum_i|z_i|^2-d|z_a|^2,\\
+\frac1m\sum_a t_a\sum_{\substack{i<j\\i,j\ne a}}|z_i-z_j|^2
+ &=\sum_i\left(1-\frac d m t_i\right)|z_i|^2.
+\end{aligned}
+$$
+
+Consequently the first two sums in (13.1) have $|z_i|^2$ coefficient
+
+$$
+\delta\left(1-\frac d m t_i\right)+k^2(1-t_i)
+=1+da\,t_i.
+$$
+
+For each $y_{ij}$ the second sum contributes $t_i|y_{ij}|^2$ and the last sum contributes $\sum_{\ell\ne i,j}t_\ell|y_{ij}|^2$, whose sum is $(1-t_j)|y_{ij}|^2$. Expanding each plus/minus pair in the last sum gives exactly the mixed coefficient $2h\sqrt{t_jt_\ell}$ above, and the second sum gives exactly $2k\sqrt{t_it_j}$. These exhaust all monomials of the row identity. Thus (13.1) is an identity on the original complex row variables, with no eliminated variable or suppressed multiplier. ∎
+
+**Theorem 13.2 (exact closed strip in every dimension).** For every integer $d\ge3$ and all real $\lambda,q$ with $|\lambda|\le1/d$, the original map of Convention 2.1 is Schwarz if and only if
 
 $$
 0\le q\le\frac{1-\lambda^2}{d-1}.
 $$
 
-The statement quantifies over all $X\in M_d(\mathbb C)$ and all $v\in\mathbb C^d$, including zero probes, zero coordinates, singular row blocks and equality in either bound.
+The assertion is for every $X\in M_d(\mathbb C)$ and every $v\in\mathbb C^d$, including singular row blocks, zero-support coordinates and all closed endpoints. Stance: repo-derived.
 
-**Proof.** If $\Phi$ is Schwarz, Theorem 4.1(i) gives $q\ge0$, and Theorem 4.1(ii) gives $\lambda^2\le p=1-(d-1)q$, which is the upper bound on $q$. Conversely, assume the displayed inequalities. Then $p\ge\lambda^2$ and $|\lambda|\le1/d$, so Lemma 13.1 verifies conditions (A) and (B) of Theorem 3.2 at every $t\in\Delta_d$. Theorem 3.2 therefore gives $S(X)\ge0$ for every traceless complex $X$ and every probe with nonnegative coordinates. Diagonal-unitary covariance and scalar-shift invariance, exactly as in Steps 1 and 2 of that theorem, give the assertion for arbitrary complex $X$ and $v$. The proof of Lemma 13.1 used limits at every singular face, so no strict inequality was introduced. ∎
+**Proof.** Necessity is Theorem 4.1(i),(ii). For sufficiency, the upper boundary $q=q_b$ is Lemma 13.1. The lower boundary $q=0$ is Proposition 4.2, since $[-1/d,1/d]\subset[-1/(d-1),1]$. For $0\le q\le q_b$ put $\theta=q/q_b$. The original maps satisfy
+
+$$
+\Phi_{\lambda,q}=(1-\theta)\Phi_{\lambda,0}+\theta\Phi_{\lambda,q_b}.
+$$
+
+The exact convexity identity in Remark 4.4, evaluated on a traceless $X=D+Y$ and the normalized probe $s$, is
+
+$$
+s^TS_q(X)s=(1-\theta)s^TS_0(X)s+\theta s^TS_b(X)s
+ +\theta(1-\theta)d^2q_b^2\sum_i t_i|z_i|^2.
+\tag{13.2}
+$$
+
+Indeed $(\Phi_{\lambda,q_b}-\Phi_{\lambda,0})(X)=-dq_bD$. All three terms are nonnegative, including when $\theta$ is zero or one. Scalar-shift invariance and diagonal-unitary covariance, proved in Lemma 3.1 and Theorem 3.2, transfer these identities to arbitrary complex inputs and probes; the zero probe has defect zero.
+
+This argument also proves the row range claims directly, without any inverse or limiting convention. At any fixed admissible $(\lambda,q,t)$, set $z=0$ and vary one row of $Y$: nonnegativity forces $P_i\ge0$. If a real $w\in\ker P_i$ had $b_i^Tw\ne0$, choose $z_i=1$, $z_j=-1$ for one $j\ne i$, all other diagonal entries zero, and vary that row as $\eta_i=\tau w$. Its contribution has the nonconstant linear term $2\tau b_i^Tw$ and zero quadratic term in $\tau$; all other contributions are fixed. One choice of sign as $|\tau|\to\infty$ contradicts (13.2). Hence $b_i\perp\ker P_i$, equivalently $b_i\in\operatorname{Ran}P_i$, at every singular point as well. Its Moore–Penrose quadratic value is therefore finite. Completing squares exactly as in Step 4 of Theorem 3.2, and minimizing the independent rows, gives the nonnegative restricted form $\sum_i\kappa_i|z_i|^2$ and thus condition (B), with its zero-coefficient cases. No expression $c_i/(1+\gamma c_i)$ is used, so zeros of $e_j$ and of $1+\gamma c_i$, and their intersections, require no denominator cancellation. ∎
+
+**Proposition 13.3 (equality in the strip).** Use the normalized, phase-removed, traceless variables of Lemma 13.1. At $q=q_b$, equality holds if and only if every term on the right of (13.1) with positive coefficient vanishes. Explicitly these conditions are
+
+$$
+\begin{gathered}
+\delta t_a>0\ \Longrightarrow\ z_i=z_j\quad(i,j\ne a),\\
+\sqrt{t_i}y_{ij}+k\sqrt{t_j}z_i=0\quad(i\ne j),\\
+(1+h)>0\ \Longrightarrow\ \sqrt{t_\ell}y_{ij}+\sqrt{t_j}y_{i\ell}=0,\\
+(1-h)>0\ \Longrightarrow\ \sqrt{t_\ell}y_{ij}-\sqrt{t_j}y_{i\ell}=0
+\quad(j<\ell,\ j,\ell\ne i).
+\end{gathered}
+$$
+
+Zero coefficients impose no condition. At $q=0$, equality holds exactly when $y_{ij}s_j=0$ for all $i\ne j$. For $0<q<q_b$ and a nonzero probe, equality holds exactly when the original input is a scalar matrix. In particular all equality assertions concern the original defect, not a quotient by a singular block. Stance: repo-derived.
+
+**Proof.** The first assertion is the equality criterion for a finite sum of nonnegative squared complex moduli. On $q=0$, Proposition 4.2 gives
+
+$$
+s^TS_0(X)s=(1-\lambda)\left(\lambda\|Ys\|^2+\sum_{i\ne j}|y_{ij}s_j|^2\right).
+$$
+
+For $\lambda\ge0$ its equality criterion is immediate. For $\lambda<0$, $\|Ys\|^2\le m\sum_{i\ne j}|y_{ij}s_j|^2$ and $1+m\lambda\ge1/d>0$ give the same criterion. If $0<\theta<1$, equality in (13.2) implies both this criterion and $z_is_i=0$ for every $i$. In Lemma 3.1 all terms other than $q_b\|X\|^2I$ then vanish after evaluation on $s$: $Ds=Ys=0$ and $\sum_{i\ne j}t_j|y_{ij}|^2=0$. Thus $s^TS_b(X)s=q_b\|X\|^2$, so the traceless input is zero. Scalar inputs do have zero defect.
+
+At $\lambda=-1/d$, $q_b=(d+1)/d^2$, the row matrix in (13.1), ordered as $(z_i,(y_{ij})_{j\ne i})$, is $q_b(I-ss^T)$ with the corresponding coordinate order. If $t_i>0$, its lower block $q_b(I-\sigma\sigma^T)$ is positive definite; if $t_i=0$, its kernel is $\operatorname{span}\{\sigma\}$ and $b_i=0$. At $d=3$, $t=(1/3,1/3,1/3)$, minimizing a row gives $y_{ij}=z_i$ and $\kappa_i=0$, so the restricted diagonal form is exactly zero, as is (13.1) at those minimizing rows. For any $d$ the same projection description gives the equivalent endpoint equality condition $X=cI+a v^\ast$ with $v^\ast a=0$ for a nonzero original probe $v$. This also includes every zero coordinate of $v$. ∎
 
 ## 14. The dimension-three negative cap arc
 
-**Theorem 14.1 (closed negative cap arc).** For $1/3\le r\le1/2$, set
+**Theorem 14.1 (closed negative cap arc).** For every $1/3\le r\le1/2$, the original map on $M_3(\mathbb C)$ with
 
 $$
-\lambda=-r,\qquad q=(1+r)(1-2r).
+\lambda=-r,\qquad q=(1+r)(1-2r)
 $$
 
-Then the original map on $M_3(\mathbb C)$ is Schwarz for every complex input and every complex probe.
+is Schwarz for every complex input and every complex probe. Stance: repo-derived.
 
-**Proof.** The proof uses only the already established Schwarz suppliers and convexity. In the coordinates $(\lambda,p)$ of Definition 11.1, put
-
-$$
-z_-(r)=(-r/2,r^2),\qquad c(r)=(1+r)(1-2r).
-$$
-
-Theorem 9.1 gives $z_-(r)\in\widehat{\mathcal S}_3$ for $0\le r\le1$, since $m^2\lambda^2=r^2=p$. Its $q$-coordinate is $(1-r^2)/2$. For $r\ge1/3$,
+**Proof.** Set $L=1+r$, $u=1-2r$, $v=3r-1$. The endpoints $r=1/3$ and $r=1/2$ are respectively Theorem 13.2 and Proposition 4.2. Assume for now $1/3<r<1/2$, so $u,v>0$ and $r-v=u$. The parameter lies in the original $K_3$ because
 
 $$
-0\le c(r)\le\frac{1-r^2}{2},\qquad
-\frac{1-r^2}{2}-c(r)=\frac{(3r-1)(r+1)}2.
+\begin{gathered}
+0<q\le4/9<1/2,\qquad p-r^2=L v>0,\qquad 1-q-r-2r^2=0,\\
+(5-9q)(1-q)-5r^2=4r(r+1)(3r-1)(3r+1)>0.
+\end{gathered}
+\tag{14.1}
 $$
 
-The point $(-r/2,1)$ is the $q=0$ Schur multiplier and is Schwarz by Proposition 4.2. The parameter with $\lambda=-r$ and $q=c(r)$ is the convex combination of these two Schwarz parameters with weight
+Here $4/9-q=(r-1/3)(2r+5/3)$. Theorem 8.1 supplies the whole probe-simplex boundary, with its singular-block range conditions. It remains to prove the original row criterion at every full-support $t=(x,y,z)$.
+
+For row $i$, denote its weight by $x$ and the other two weights by $y,z$. In this paragraph the notation is cyclically permuted for the other rows. With $a=1-3q$, the original quantities are
 
 $$
-\theta=\frac{2c(r)}{1-r^2}\in[0,1]
+\begin{aligned}
+P_i&=L\begin{pmatrix}u+(5r-2)y&-r\sqrt{yz}\\-r\sqrt{yz}&u+(5r-2)z\end{pmatrix},\\
+b_i&=-3rLu\sqrt{x}\,(\sqrt y,\sqrt z)^T,\qquad
+A_i=q(1+3ax).
+\end{aligned}
 $$
 
-on $z_-(r)$ and weight $1-\theta$ on $(-r/2,1)$. The convexity identity in Remark 4.4 then proves the Schwarz inequality. At $r=1/3$ the two points coincide in $q$; at $r=1/2$ the weight on $z_-(r)$ is zero. Thus both endpoints and every complex input are included. ∎
+Both diagonal entries of $P_i/L$ are positive: the affine function $u+(5r-2)y$ has the positive endpoint values $u$ and $v$. Define
+
+$$
+D_i=x(r-vx)+v(y-z)^2.
+$$
+
+Its first summand is positive since $x>0$ and $r-vx\ge r-v=u>0$. Multiplying the two diagonal entries and subtracting $r^2yz$, using $y+z=1-x$ and $r=u+v$, gives the exact determinant
+
+$$
+\det P_i=L^2uD_i>0.
+\tag{14.2}
+$$
+
+Thus every row block is positive definite and its inverse is legitimate. Its adjugate has
+
+$$
+(\sqrt y,\sqrt z)\operatorname{adj}(P_i/L)(\sqrt y,\sqrt z)^T
+=u(1-x)+4v yz.
+$$
+
+Consequently
+
+$$
+\begin{aligned}
+\frac{\kappa_i}{q}
+&=1+3ax-\frac{9r^2x\bigl(u(1-x)+4v yz\bigr)}{D_i}
+=v\frac{N_i}{D_i},\\
+N_i&=\bigl((9r+6)x-(3r+1)\bigr)D_i+9r^2(y-z)^2.
+\end{aligned}
+\tag{14.3}
+$$
+
+For example, this last identity follows by writing $4yz=(1-x)^2-(y-z)^2$ and $a=6r^2+3r-2$: the coefficients of $(y-z)^2$ on the two sides after multiplication by $D_i$ are both $v\bigl(1+(27r^2+9r-6)x\bigr)$; the remaining part on both sides is $v x(r-vx)\bigl((9r+6)x-(3r+1)\bigr)$.
+
+Here is a complete polynomial certificate for the determinant of the trace-zero form. Write
+
+$$
+E=xy+xz+yz,\qquad T=xyz,\qquad C=3r^2+r,
+$$
+
+and define
+
+$$
+\begin{aligned}
+f&=f_0+f_1E+f_2T,\\
+f_0&=(1-2r)(4r^2+2r-1),\qquad
+f_1=4(9r^3-4r+1),\qquad f_2=-4v^2(3r+2),\\
+g&=(4E-1)\bigl(1+4(C-1)E\bigr)
+ +4T\bigl((8-12C)E+C-2\bigr).
+\end{aligned}
+$$
+
+Then
+
+$$
+N_1N_2D_3+N_1N_3D_2+N_2N_3D_1=-9fg.
+\tag{14.4}
+$$
+
+To verify the certificate without an unspecified elimination, use $x^3=x^2-Ex+T$ and its two cyclic counterparts. The three $D_i$ and $N_i$ are respectively the values, at $x,y,z$, of the following two quadratic polynomials:
+
+$$
+\begin{array}{c|ccc}
+ &1&\xi&\xi^2\\ \hline
+D(\xi)&d_0=v(1-4E)&d_1=7r-2&d_2=-4v\\
+N(\xi)&n_0=1-4E-12v(3r+2)T&n_1=4(6r^2+2r-1)&n_2=-4v(3r+2).
+\end{array}
+\tag{14.5}
+$$
+
+Indeed $(y-z)^2=1-4E+2x-3x^2$ gives the $D$ row; inserting it in (14.3) and replacing the cubic term by $x^2-Ex+T$ gives the $N$ row. For any three coefficients $A,B,H$, multiplying one term from each of the three factors gives
+
+$$
+\begin{aligned}
+\mathcal N(A,B,H)
+:=\prod_{\xi\in\{x,y,z\}}(A+B\xi+H\xi^2)
+={}&A^3+A^2B+A^2H(1-2E)+AB^2E+ABH(E-3T)\\
+&+AH^2(E^2-2T)+B^3T+B^2HT+BH^2ET+H^3T^2.
+\end{aligned}
+\tag{14.6}
+$$
+
+The mixed sums used here are $\sum x^2=1-2E$, $\sum_{i\ne j}x_i^2x_j=E-3T$, and $\sum_{i<j}x_i^2x_j^2=E^2-2T$; the other terms use $x+y+z=1$ and $xyz=T$. Thus the left side of (14.4) is precisely the coefficient of $\tau^2$ in $\mathcal N(d_0+\tau n_0,d_1+\tau n_1,d_2+\tau n_2)$. Explicitly that coefficient is
+
+$$
+\begin{aligned}
+&3d_0n_0^2+(d_1n_0^2+2d_0n_0n_1)
+ +(d_2n_0^2+2d_0n_0n_2)(1-2E)\\
+&+(d_0n_1^2+2n_0d_1n_1)E
+ +(n_0n_1d_2+n_0d_1n_2+d_0n_1n_2)(E-3T)\\
+&+(d_0n_2^2+2n_0d_2n_2)(E^2-2T)
+ +3d_1n_1^2T+(d_2n_1^2+2d_1n_1n_2)T\\
+&+(d_1n_2^2+2n_1d_2n_2)ET+3d_2n_2^2T^2.
+\end{aligned}
+\tag{14.7}
+$$
+
+For clarity, all coefficients after substituting (14.5) into (14.7) and dividing by $-9$ are given below. Put $g_1=8-4C$, $g_2=16(C-1)$, $g_3=4(C-2)$, $g_4=32-48C$, so $g=-1+g_1E+g_2E^2+g_3T+g_4ET$.
+
+| Monomial | Coefficient of (14.7) divided by $-9$ |
+| --- | --- |
+| $1$ | $-f_0$ |
+| $E$ | $f_0g_1-f_1$ |
+| $E^2$ | $f_0g_2+f_1g_1$ |
+| $E^3$ | $f_1g_2$ |
+| $T$ | $f_0g_3-f_2$ |
+| $ET$ | $f_0g_4+f_1g_3+f_2g_1$ |
+| $E^2T$ | $f_1g_4+f_2g_2$ |
+| $T^2$ | $f_2g_3$ |
+| $ET^2$ | $f_2g_4$ |
+
+All other coefficients are zero. This is the coefficient list of $(f_0+f_1E+f_2T)(-1+g_1E+g_2E^2+g_3T+g_4ET)$, proving (14.4). In particular its multiplier and all variables are specified; no pivot or clearing factor is implicit.
+
+We next prove the signs of the two factors for every full-support simplex point. Since $0<E\le1/3$ and
+
+$$
+\frac E T=\frac1x+\frac1y+\frac1z\ge9,
+$$
+
+one has $T\le E/9$. Here $f_2<0$, and
+
+$$
+f\ge f_0+(f_1+f_2/9)E
+\ge\min\left\{f_0,\ f_0+\frac{f_1+f_2/9}{3}\right\}
+=\min\{f_0,1/27\}>0.
+\tag{14.8}
+$$
+
+The last strict sign follows from $u>0$ and $4r^2+2r-1\ge1/9$ for $r\ge1/3$.
+
+For $g$, $2/3<C<5/4$, and its coefficient of $T$ is strictly negative:
+
+$$
+4\bigl((8-12C)E+C-2\bigr)<0.
+$$
+
+If $E\le1/4$, the factor $1+4(C-1)E$ is positive (it is at least $1-4E/3$), while $4E-1\le0$ and $T>0$. Hence $g<0$.
+
+If $1/4<E\le1/3$, the minimum of $T$ at fixed $E$ is attained at $(1-2b,b,b)$ up to permutation, where
+
+$$
+b=\frac{1+\sqrt{1-3E}}3\in[1/3,1/2).
+$$
+
+Here is the justification of this minimization. The fixed-$E$ subset of the closed simplex is compact and has no boundary point when $E>1/4$, since a boundary point has $E=x(1-x)\le1/4$. For $E<1/3$ its two constraint gradients are independent. The Lagrange equations for $xyz$ give $yz=A+B(y+z)$ and its cyclic versions. Subtraction gives $(y-x)(z-B)=0$ and its cyclic versions; three distinct weights are impossible, so two weights are equal. The two possible equal weights are $(1\pm s)/3$, $s=\sqrt{1-3E}$. Their products are $(1-3s^2\mp2s^3)/27$, respectively, so the plus choice minimizes the product. At $E=1/3$ the only triple is uniform, giving the same formula.
+
+Because $g$ decreases in $T$, it is bounded above by its value on this minimizing triple. Direct substitution into the displayed formula defining $g$ gives
+
+$$
+\begin{aligned}
+g&\le-(2b-1)^2 H_C(b),\\
+H_C(b)&=72Cb^3-48Cb^2+8Cb-48b^3+44b^2-12b+1.
+\end{aligned}
+\tag{14.9}
+$$
+
+The polynomial $H_C$ is affine in $C$. Its values at the two endpoints of the larger closed interval $[2/3,5/4]$ are strictly positive for $b\in[1/3,1/2]$:
+
+$$
+\begin{aligned}
+H_{2/3}(b)&=\frac{36b^2-20b+3}{3}
+=12(b-5/18)^2+2/27>0,\\
+H_{5/4}(b)&=42b^3-16b^2-2b+1\\
+&=42(b-1/3)^3+26(b-1/3)^2+\frac43(b-1/3)+\frac19>0.
+\end{aligned}
+$$
+
+Thus $H_C(b)>0$. Since $b<1/2$, (14.9) proves $g<0$ also in this case.
+
+Finally restrict the diagonal form to $z_1+z_2+z_3=0$. Its matrix on $(z_1,z_2)$ is
+
+$$
+H(t)=\begin{pmatrix}\kappa_1+\kappa_3&\kappa_3\\
+\kappa_3&\kappa_2+\kappa_3\end{pmatrix}.
+$$
+
+Equations (14.2)–(14.4), (14.8) and (14.9) give
+
+$$
+\det H(t)=\kappa_1\kappa_2+\kappa_1\kappa_3+\kappa_2\kappa_3
+=\frac{-9q^2v^2 f g}{D_1D_2D_3}>0.
+\tag{14.10}
+$$
+
+At the uniform triple (14.3) gives $\kappa_i=qv>0$, so $H_{11}>0$. Along the segment from that triple to any full-support $t$, the denominators $D_i$ stay positive and (14.10) stays strictly positive. The real continuous entry $H_{11}$ cannot pass through zero, since at such a point $\det H=-\kappa_3^2\le0$. Hence $H_{11}>0$ and $H>0$ throughout the full-support simplex. This is a sign argument on nonvanishing denominators, not an extension across a singular face.
+
+With $\beta_i=P_i^{-1}b_i$, the exact completed-square identity is
+
+$$
+s^TS(X)s=\sum_i(\eta_i+z_i\beta_i)^\ast P_i(\eta_i+z_i\beta_i)
+ +(z_1,z_2)^\ast H(t)(z_1,z_2),
+\qquad \eta_i=(y_{ij})_{j\ne i}.
+$$
+
+It is nonnegative for arbitrary complex row variables. The already supplied boundary theorem and the two separately supplied parameter endpoints finish every case. Undoing the scalar shift and diagonal-unitary conjugation proves the assertion on the original complex map. ∎
+
+**Proposition 14.2 (equality and singular faces of the cap).** For $1/3<r<1/2$ and a nonzero probe, equality in Theorem 14.1 is possible for a nonscalar input exactly when the probe has precisely two nonzero coordinates of equal modulus. If $i$ is its missing coordinate, those inputs are
+
+$$
+X=cI+\tau e_i v^\ast,\qquad c,\tau\in\mathbb C.
+$$
+
+At $r=1/3$ the equality criterion is Proposition 13.3 at its negative endpoint. At $r=1/2$, write $Y=X-\operatorname{diag}(X)$; equality is exactly
+
+$$
+y_{ij}v_j=y_{i\ell}v_\ell\quad\text{for each row }i,
+\qquad\{j,\ell\}=\{1,2,3\}\setminus\{i\}.
+$$
+
+The zero probe always gives equality. Stance: repo-derived.
+
+**Proof.** On full support and the open arc all $P_i$ and $H$ in the proof of Theorem 14.1 are positive definite. The completed-square identity therefore forces every traceless row variable to be zero.
+
+For a two-coordinate normalized probe $s=(\sqrt w,\sqrt{1-w},0)$, $0<w<1$, use the exact boundary squares and $H(w)$ of Theorem 8.1. Its two determinant factors have strictly positive endpoints as affine functions of $w(1-w)\in[0,1/4]$: at zero they are $qp>0$, $p-r^2>0$, and at $1/4$ they are $((1-q)^2-r^2)/4>0$ and the strict third residual in (14.1) divided by four. The first strict sign follows from $(1-q)^2-r^2\ge q^2>0$. Thus $H(w)>0$ by the sign argument already proved there, forcing $z=0$. The positive scalar squares force $y_{12}=y_{21}=y_{13}=y_{23}=0$. For the remaining row the determinant is, by (14.2) with its row weight zero,
+
+$$
+L^2uv(2w-1)^2.
+$$
+
+It is positive unless $w=1/2$. At that exceptional point the row block is
+
+$$
+\frac{Lr}{2}\begin{pmatrix}1&-1\\-1&1\end{pmatrix},
+$$
+
+with kernel $\operatorname{span}\{(1,1)^T\}$ and $b_i=0$. Thus precisely $y_{31}=y_{32}$ is free in these coordinates. Undoing phases and normalization gives the stated $\tau e_i v^\ast$ and verifies it by the same squares. In particular the only singular row block on the open arc has an explicitly orthogonal coupling vector, so its Moore–Penrose contribution is zero.
+
+For a singleton probe $t=(1,0,0)$, all off-diagonal coefficients are $q>0$ or $p-r^2>0$ and all $b_i=0$. The diagonal coefficients are $q(1+3a),q,q$, with
+
+$$
+1+3a=18r^2+9r-5=(3r-1)(6r+5)>0.
+$$
+
+Thus equality forces every traceless variable to vanish. At $r=1/2$, Proposition 4.2 evaluated without an estimate gives the exact scalar identity
+
+$$
+v^\ast S(X)v=\frac34\sum_i|y_{ij}v_j-y_{i\ell}v_\ell|^2,
+\qquad\{j,\ell\}=\{1,2,3\}\setminus\{i\},
+$$
+
+which proves its equality statement on all supports. ∎
 
 ## 15. The exact nonpositive region in dimension three
 
-**Theorem 15.1 (classification for $\lambda\le0$ in dimension three).** Let $K_3$ be the necessary region of Theorem 8.1. For $\lambda\le0$, the original map on $M_3(\mathbb C)$ is Schwarz if and only if $(\lambda,q)\in K_3$.
+**Theorem 15.1 (classification for $\lambda\le0$ in dimension three).** Let $K_3$ be the original necessary region in Theorem 8.1 and Question 12.2. For all real $\lambda,q$ with $\lambda\le0$, the original map on $M_3(\mathbb C)$ is Schwarz if and only if $(\lambda,q)\in K_3$. Stance: repo-derived.
 
-**Proof.** Necessity is Theorem 4.1, specialized to $d=3$, and is exactly membership in $K_3$. For sufficiency write $\lambda=-r$ with $r\ge0$. The conditions $q\ge0$, $q\le1/2$ and the second and fourth inequalities defining $K_3$ are
-
-$$
-q\le\frac{1-r^2}{2},\qquad q\le1-r-2r^2.
-$$
-
-The third inequality is redundant on the resulting interval. If $0\le r\le1/3$, it is enough to substitute the larger endpoint $(1-r^2)/2$; the difference between its right and left sides is
+**Proof.** Necessity is Theorem 4.1. For sufficiency write $\lambda=-r$, $r\ge0$. The second and fourth inequalities defining $K_3$ say
 
 $$
-\frac{(1-r^2)(1-9r^2)}4\ge0.
+q\le\frac{1-r^2}{2},\qquad q\le(1+r)(1-2r).
 $$
 
-If $1/3\le r\le1/2$, substitute the larger permitted endpoint $1-r-2r^2$; the difference is
+Together with $q\ge0$, the latter excludes $r>1/2$. The difference between the two upper bounds is $(r+1)(3r-1)/2$. Hence their minimum is $(1-r^2)/2$ on $[0,1/3]$ and $(1+r)(1-2r)$ on $[1/3,1/2]$. Both bounds are at most $1/2$ on the respective intervals.
+
+The third residual $R(q)=(5-9q)(1-q)-5r^2$ decreases on $0\le q\le1/2$, since $R'(q)=18q-14<0$. It suffices to check it at the active upper bound. The two exact endpoint values are
 
 $$
-4r(r+1)(3r-1)(3r+1)\ge0.
+\begin{aligned}
+R((1-r^2)/2)&=\frac{(1-r^2)(1-9r^2)}4\ge0
+&& (0\le r\le1/3),\\
+R((1+r)(1-2r))&=4r(r+1)(3r-1)(3r+1)\ge0
+&& (1/3\le r\le1/2).
+\end{aligned}
 $$
 
-For $r>1/2$ the fourth inequality gives $q<0$, so no point of $K_3$ occurs. Hence $K_3$ is the union of
+Thus $K_3\cap\{\lambda\le0\}$ is exactly the union of the two closed regions
 
 $$
-0\le r\le\frac13,\quad 0\le q\le\frac{1-r^2}{2},
+\begin{gathered}
+0\le r\le1/3,\qquad 0\le q\le(1-r^2)/2,\\
+1/3\le r\le1/2,\qquad 0\le q\le(1+r)(1-2r).
+\end{gathered}
 $$
 
-and
+Theorem 13.2 supplies the first. Theorem 14.1 supplies the upper boundary of the second, and Proposition 4.2 supplies its $q=0$ boundary. At each fixed $r<1/2$, affine interpolation in $q$ and the exact convexity identity of Remark 4.4 supply every intermediate $q$ for every complex input. At $r=1/2$ the interval consists only of $q=0$. The formulas agree at $r=1/3$, where both upper bounds are $4/9$. No strict parameter inequality or probe-support restriction remains. ∎
+
+**Corollary 15.2 (the surviving original-domain implication).** The closed strip $|\lambda|\le1/d$ and the whole nonpositive part of $K_3$ have the full-complex sufficiency property in Question 12.2. In dimension three the remaining implication is $K_3\subseteq\mathcal S_3$ at positive parameters $\lambda>1/3$ outside the already supplied sufficient sets and their convex hull. At such parameters Theorem 8.1 still supplies the entire simplex boundary; the missing assertion is exactly conditions (A),(B) of Theorem 3.2 for every full-support $t$, including their range and equality conditions. For $d>3$, Question 12.2 likewise remains unresolved outside the strip and the sufficient sets already supplied in §§4,9,11 and their convex hull. No full $K_3$ classification, unrestricted all-$d$ classification, or classification of the transposition family is asserted. Stance: repo-derived, by Theorems 13.2, 15.1 and Corollary 8.2.
+
+**Proposition 15.3 (strict gain against the specified suppliers).** Use the supplier hull $\mathcal H_d$ and coordinates $(\lambda,p)$ of Definition 11.1. Every positive boundary point
 
 $$
-\frac13\le r\le\frac12,\quad 0\le q\le(1+r)(1-2r).
+(\lambda,p)=(r,r^2),\qquad 0<r\le1/d,
 $$
 
-The first part is Theorem 13.2. On the second part, Theorem 14.1 gives the upper boundary and Proposition 4.2 gives the lower boundary $q=0$; convexity in Remark 4.4 gives every intermediate $q$. This proves both implications, including $r=1/3$ and $r=1/2$. ∎
+and every negative boundary point $(-r,r^2)$ with $0<r<1/d$ supplied by Theorem 13.2 lies outside $\mathcal H_d$ and the pair-compression sufficient region of Theorem 9.1. The positive points are also outside every $k$-positive region with $k\ge2$. In dimension three, every open-arc point of Theorem 14.1 lies outside $\mathcal H_3$, the pair-compression sufficient region and every $k$-positive region with $k\ge2$. These comparisons concern precisely the declared suppliers, without a worldwide absence or priority assertion. Stance: repo-derived.
 
-**Corollary 15.2 (remaining original-domain gap).** Theorem 13.2 settles the closed strip $|\lambda|\le1/d$. Theorem 15.1 settles all of $K_3$ on the half-plane $\lambda\le0$. The unproved part of the original classification is the positive-lambda portion outside the strip (and, in dimensions $d>3$, the corresponding part of the exact region $K_d$); no assertion here identifies that remainder with $K_d$ or with any finite affine description.
+**Proof.** All generators of $\mathcal H_d$ satisfy $\lambda\le dp/m$ as proved in Proposition 11.2, and also $\lambda\ge-dp$. For the latter, the CP triangle has $\lambda\ge-p/m\ge-dp$; the depolarizing segment has $t+dp=1+dt\ge0$; and $G_d$ has positive coordinates. Both inequalities survive convex combinations. At $(r,r^2)$ the first requires $r\ge m/d$, which fails on the stated interval. At $(-r,r^2)$ the second requires $r\ge1/d$. Theorem 9.1 requires $m^2r^2\le r^2$, which fails for $r>0$ and $m\ge2$. The positive points violate $\lambda\le p$, required by every declared $k$-positive quadrilateral.
 
-**Remark 15.3 (source correspondence).** The family is the specialization $\alpha=dq$, $\beta=1-dq-\lambda$ of Eq. (6) of Bera, Bhattacharya and Chruściński, arXiv:2604.18600v1. The only external Schwarz input used in Theorem 14.1 is the pair-compression theorem already proved in Theorem 9.1; the invalid full sufficient criteria discussed in Convention 12.1 are not used. The arguments are for the original complex matrix family and do not replace it by a real or compressed algebra.
+For $d=3$, every generator of $\mathcal H_3$ satisfies $3p+16\lambda+5\ge0$: it holds at the CP vertices $(0,0),(-1/2,1),(1,1)$, at the endpoints $(-1/3,1/9),(1,1)$ of the depolarizing segment, and at $G_3=(1/6,1/9)$. On the arc $p=4r^2+2r-1$, this affine expression is
+
+$$
+3p-16r+5=2(3r-1)(2r-1)<0.
+$$
+
+The pair-compression condition would require $4r^2\le p$, whereas $p-4r^2=2r-1<0$. Finally the $k=2$ quadrilateral requires $\lambda\ge-(1+3p)/8$, but
+
+$$
+1+3p-8r=2(3r+1)(2r-1)<0.
+$$
+
+Failure of $2$-positivity excludes every $k$-positive supplier with $k\ge2$. The arc endpoints are the already supplied negative depolarizing endpoint and $q=0$ CP endpoint, respectively. ∎
+
+**Convention 15.4 (source hypotheses and evidence boundary).** The original family remains exactly Eq. (6) of Bera, Bhattacharya and Chruściński, arXiv:2604.18600v1, under $\alpha=dq$ and $\beta=1-dq-\lambda$; its §4 Schwarz question is Question 12.2. The external CP and $k$-positive suppliers and the separately justified depolarizing and reduction suppliers are those specified in §§4,11,12, at precisely their stated hypotheses. Theorem 9.1 is reused only at its actual sufficient condition, not at a rescaled multiplier with a different first coordinate. The added sufficiency arguments are (13.1)–(13.2) and (14.1)–(14.10), using the published complex row reduction and the complete simplex-boundary theorem. They do not use the invalid full sufficient criteria of arXiv:2603.11204v1, arXiv:2512.18900v3 or arXiv:2601.02282v1. Their mathematical status is repo-derived prose; they make no Lean/kernel or global novelty claim. Overlap with the unavailable original full texts identified in Convention 12.1 remains undetermined.
 
 ## 追加锚（本行以下为增补区）
