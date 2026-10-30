@@ -464,6 +464,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("lake_dependency_retains_custom_hook")]
     [InlineData("lake_dependency_retains_info_attributes")]
     [InlineData("lake_dependency_retains_active_info_exclude")]
+    [InlineData("lake_dependency_retains_indented_exclude")]
     [InlineData("lake_dependency_retains_unknown_config_key")]
     [InlineData("lake_dependency_retains_object_alternates")]
     [InlineData("lake_dependency_retains_changed_description")]

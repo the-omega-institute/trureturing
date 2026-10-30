@@ -29,6 +29,16 @@ class LakeDependencyAllowlistCases:
         self.assert_lake_metadata_retained(
             "info/exclude", b"# local exclusion\nprivate-content\n", "info_exclude")
 
+    def test_lake_dependency_retains_indented_exclude(self):
+        boundary = self.clean_lake_clone(self.tree)
+        pattern = " # private-content"
+        exclude = boundary / ".git/info/exclude"
+        exclude.write_text(pattern + "\n")
+        self.assertEqual(pattern, self.g(boundary, "check-ignore", "--no-index", pattern).strip("\n"))
+        self.assert_lake_content_retained(
+            boundary, "lake_dependency_unknown_shape:.lake/packages/mathlib:info_exclude")
+        self.assertEqual(pattern + "\n", exclude.read_text())
+
     def test_lake_dependency_retains_unknown_config_key(self):
         boundary = self.clean_lake_clone(self.tree)
         self.g(boundary, "config", "alias.x", "status")
