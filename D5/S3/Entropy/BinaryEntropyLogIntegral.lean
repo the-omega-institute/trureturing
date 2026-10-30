@@ -100,7 +100,7 @@ private lemma raw_hasDerivAt {x s : ℝ} (hx : x ∈ Ioc (0 : ℝ) 1) (hs : 0 < 
   have h := (((hdy.mul (hlogx.sub hlogs)).const_mul 2).add
     ((hlogpr.sub hlogmr).const_mul (2 * r))).sub ((hlogp1.sub hlogm1).const_mul 2)
   have hlog : Real.log (1 + x / s) = Real.log (s + x) - Real.log s := by
-    rw [show 1 + x / s = (s + x) / s by field_simp [hs.ne']; ring]
+    rw [show 1 + x / s = (s + x) / s by field_simp [hs.ne']]
     exact Real.log_div hsp.ne' hs.ne'
   have hsid : s = y ^ 2 - 1 := by dsimp [y]; linarith
   have hxid : x = 1 - r ^ 2 := by dsimp [r]; linarith
@@ -175,7 +175,7 @@ private lemma primitive_tendsto {x : ℝ} (hx : x ∈ Ioc (0 : ℝ) 1) :
     filter_upwards [eventually_gt_atTop (0 : ℝ)] with s hs
     have hsp : 0 < s + x := by linarith [hx.1]
     have hlog : Real.log (1 + x / s) = Real.log (s + x) - Real.log s := by
-      rw [show 1 + x / s = (s + x) / s by field_simp [hs.ne']; ring]
+      rw [show 1 + x / s = (s + x) / s by field_simp [hs.ne']]
       exact Real.log_div hsp.ne' hs.ne'
     simp only [rawPrimitive, hlog]
   apply hraw.congr'
@@ -214,7 +214,7 @@ theorem binEntropy_sqrt_log_integral {x : ℝ} (hx : x ∈ Icc (0 : ℝ) 1) :
   by_cases hx0 : x = 0
   · subst x
     simp
-  have hx' : x ∈ Ioc (0 : ℝ) 1 := ⟨lt_of_le_of_ne hx.1 hx0.symm, hx.2⟩
+  have hx' : x ∈ Ioc (0 : ℝ) 1 := ⟨lt_of_le_of_ne hx.1 (Ne.symm hx0), hx.2⟩
   have hc := (primitive_continuousAt_zero hx').continuousWithinAt (s := Ici (0 : ℝ))
   have hd := fun s (hs : s ∈ Ioi (0 : ℝ)) => primitive_hasDerivAt hx' hs
   have hp : ∀ s ∈ Ioi (0 : ℝ), 0 ≤ Real.log (1 + x / s) / Real.sqrt (1 + s) := by

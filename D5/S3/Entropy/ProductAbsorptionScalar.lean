@@ -148,7 +148,7 @@ private lemma root_entropy_absorption {u v c : ℝ} (hu : u ∈ Icc (0 : ℝ) 1)
   by_cases hc0 : c = 0
   · subst c
     simp [rootEntropy]
-  have hcp : 0 < c := lt_of_le_of_ne hc.1 hc0.symm
+  have hcp : 0 < c := lt_of_le_of_ne hc.1 (Ne.symm hc0)
   let A := u + v
   let B := u * v
   let L := A - B

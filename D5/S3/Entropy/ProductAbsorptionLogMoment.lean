@@ -137,7 +137,7 @@ private lemma pair_hasDerivAt {d s : ℝ} (hd : 0 ≤ d) (hs : d < s) :
     simp only [pairSlope, if_pos rfl]
     rw [Real.log_mul (by norm_num) hsp.ne']
     ring
-  · have hdp : 0 < d := lt_of_le_of_ne hd hd0.symm
+  · have hdp : 0 < d := lt_of_le_of_ne hd (Ne.symm hd0)
     obtain ⟨hsp, hq, hqs, hq2, _⟩ := pair_positive_data hdp hs
     let q := Real.sqrt (s ^ 2 - d ^ 2)
     have hp : 0 < s + q := by dsimp [q]; linarith
@@ -173,7 +173,7 @@ private lemma pair_slope_hasDerivAt {d s : ℝ} (hd : 0 ≤ d) (hs : d < s) :
     · dsimp [pairCurvature]
       field_simp [hsp.ne']
       <;> ring
-  · have hdp : 0 < d := lt_of_le_of_ne hd hd0.symm
+  · have hdp : 0 < d := lt_of_le_of_ne hd (Ne.symm hd0)
     obtain ⟨hsp, hq, hqs, hq2, hr⟩ := pair_positive_data hdp hs
     let q := Real.sqrt (s ^ 2 - d ^ 2)
     have hden : 0 < 1 - (q / s) ^ 2 := by
@@ -202,7 +202,7 @@ private lemma pair_curvature_lower {d s : ℝ} (hd : 0 ≤ d) (hs : d < s) :
   · simp only [pairCurvature, if_pos hd0]
     apply (div_le_div_iff₀ (by positivity : 0 < 3 * s) hsp).mpr
     linarith
-  · have hdp : 0 < d := lt_of_le_of_ne hd hd0.symm
+  · have hdp : 0 < d := lt_of_le_of_ne hd (Ne.symm hd0)
     obtain ⟨_, _, _, _, hr⟩ := pair_positive_data hdp hs
     let r := Real.sqrt (s ^ 2 - d ^ 2) / s
     have hb := artanh_cubic_gap ⟨hr.1.le, hr.2⟩
@@ -500,9 +500,9 @@ theorem product_log_moment_nonneg {u v : ℝ} (hu : u ∈ Icc (0 : ℝ) 1)
     rw [moment_symm, moment_one_left]
     exact Real.binEntropy_nonneg hu.1 hu.2
   have hu' : u ∈ Ioo (0 : ℝ) 1 :=
-    ⟨lt_of_le_of_ne hu.1 hu0.symm, lt_of_le_of_ne hu.2 hu1⟩
+    ⟨lt_of_le_of_ne hu.1 (Ne.symm hu0), lt_of_le_of_ne hu.2 hu1⟩
   have hv' : v ∈ Ioo (0 : ℝ) 1 :=
-    ⟨lt_of_le_of_ne hv.1 hv0.symm, lt_of_le_of_ne hv.2 hv1⟩
+    ⟨lt_of_le_of_ne hv.1 (Ne.symm hv0), lt_of_le_of_ne hv.2 hv1⟩
   rcases le_total u v with huv | hvu
   · exact interior_moment_nonneg hu' hv' huv
   · rw [moment_symm]

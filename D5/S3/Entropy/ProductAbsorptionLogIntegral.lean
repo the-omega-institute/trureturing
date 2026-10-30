@@ -39,7 +39,7 @@ private lemma primitive_hasDerivAt {x s : ℝ} (hx : 0 ≤ x) (hs : 0 < s) :
     HasDerivAt (primitive x) (Real.log (1 + x / s)) s := by
   have hsp : 0 < s + x := by linarith
   have hlog : Real.log (1 + x / s) = Real.log (s + x) - Real.log s := by
-    rw [show 1 + x / s = (s + x) / s by field_simp [hs.ne']; ring]
+    rw [show 1 + x / s = (s + x) / s by field_simp [hs.ne']]
     exact Real.log_div hsp.ne' hs.ne'
   have h := ((Real.hasDerivAt_mul_log hsp.ne').comp s
     ((hasDerivAt_id s).add_const x)).sub (Real.hasDerivAt_mul_log hs.ne')
@@ -65,7 +65,7 @@ private lemma primitive_shift_tendsto {x : ℝ} (hx : 0 ≤ x) :
     have hlo := mul_le_mul_of_nonneg_left (Real.one_sub_inv_le_log_of_pos hpos) hsp.le
     have hhi := mul_le_mul_of_nonneg_left (Real.log_le_sub_one_of_pos hpos) hsp.le
     have helo : (s + x) * (1 - (1 + x / s)⁻¹) = x := by
-      rw [show 1 + x / s = (s + x) / s by field_simp [hs.ne']; ring]
+      rw [show 1 + x / s = (s + x) / s by field_simp [hs.ne']]
       field_simp [hs.ne', hsp.ne']
       <;> ring
     have hehi : (s + x) * ((1 + x / s) - 1) = x + x ^ 2 / s := by

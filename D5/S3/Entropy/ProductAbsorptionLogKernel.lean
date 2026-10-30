@@ -52,7 +52,8 @@ private lemma coefficient_signs {u v : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1)
   let B := u * v
   let w := Real.sqrt B
   have hB : 0 < B := mul_pos hu.1 hv.1
-  have hB1 : B < 1 := by dsimp [B]; nlinarith [mul_pos hu.1 (sub_pos.mpr hv.2)]
+  have hB1 : B < 1 := by
+    exact (mul_lt_mul_of_pos_left hv.2 hu.1).trans (by simpa using hu.2)
   have hw : 0 < w := Real.sqrt_pos.mpr hB
   have hw1 : w < 1 := (Real.sqrt_lt' (by norm_num)).mpr (by simpa using hB1)
   have hw2 : w ^ 2 = B := Real.sq_sqrt hB.le
@@ -158,20 +159,26 @@ private lemma ratio_strictAnti {A B : ℝ}
   by_cases h3 : 0 ≤ c3 A B
   · refine ⟨4, ?_⟩
     intro s hs t ht hst
+    change 0 < s at hs
+    change 0 < t at ht
+    change poly A B t / t ^ 4 < poly A B s / s ^ 4
     rw [normalized_four A B s hs.ne', normalized_four A B t ht.ne']
     have hthree : c3 A B / t ≤ c3 A B / s := by gcongr
-    have htwo : c2 A B / t ^ 2 ≤ c2 A B / s ^ 2 := by gcongr
+    have htwo : c2 A B / t ^ 2 ≤ c2 A B / s ^ 2 := by gcongr <;> positivity
     have hone : c1 A B / t ^ 3 < c1 A B / s ^ 3 :=
       div_lt_div_of_pos_left h1 (pow_pos hs 3) (pow_lt_pow_left₀ hst hs.le (by decide))
-    have hzero : c0 A B / t ^ 4 ≤ c0 A B / s ^ 4 := by gcongr
+    have hzero : c0 A B / t ^ 4 ≤ c0 A B / s ^ 4 := by gcongr <;> positivity
     linarith
   · refine ⟨3, ?_⟩
     intro s hs t ht hst
+    change 0 < s at hs
+    change 0 < t at ht
+    change poly A B t / t ^ 3 < poly A B s / s ^ 3
     rw [normalized_three A B s hs.ne', normalized_three A B t ht.ne']
     have hfour : c4 A B * t < c4 A B * s := mul_lt_mul_of_neg_left hst h4
     have htwo : c2 A B / t ≤ c2 A B / s := by gcongr
-    have hone : c1 A B / t ^ 2 ≤ c1 A B / s ^ 2 := by gcongr
-    have hzero : c0 A B / t ^ 3 ≤ c0 A B / s ^ 3 := by gcongr
+    have hone : c1 A B / t ^ 2 ≤ c1 A B / s ^ 2 := by gcongr <;> positivity
+    have hzero : c0 A B / t ^ 3 ≤ c0 A B / s ^ 3 := by gcongr <;> positivity
     linarith
 
 private lemma polynomial_crossing {A B : ℝ}
@@ -186,7 +193,10 @@ private lemma polynomial_crossing {A B : ℝ}
     intro s hs
     dsimp [poly]
     have h3 := h43 h4
-    positivity
+    exact add_nonneg (add_nonneg (add_nonneg (add_nonneg
+      (mul_nonneg h4 (pow_nonneg hs.le 4))
+      (mul_nonneg h3 (pow_nonneg hs.le 3)))
+      (mul_nonneg h2.le (pow_nonneg hs.le 2))) (mul_nonneg h1.le hs.le)) h0
   · have h4' : c4 A B < 0 := lt_of_not_ge h4
     obtain ⟨n, hanti⟩ := ratio_strictAnti h0 h1 h2 h4'
     have hpos : ∃ a > (0 : ℝ), 0 < poly A B a := by
@@ -195,7 +205,8 @@ private lemma polynomial_crossing {A B : ℝ}
       have hlim : ∀ᶠ s in 𝓝[>] (0 : ℝ), 0 < g s :=
         (hg.continuousAt.tendsto.mono_left nhdsWithin_le_nhds).eventually
           (eventually_gt_nhds (by simpa [g] using h1))
-      obtain ⟨a, ha, hga⟩ := (self_mem_nhdsWithin.and hlim).exists
+      have hmem : ∀ᶠ s : ℝ in 𝓝[>] (0 : ℝ), 0 < s := self_mem_nhdsWithin
+      obtain ⟨a, ha, hga⟩ := (hmem.and hlim).exists
       refine ⟨a, ha, ?_⟩
       have hid : poly A B a = a * g a + c0 A B := by dsimp [poly, g]; ring
       rw [hid]
@@ -225,10 +236,12 @@ private lemma polynomial_crossing {A B : ℝ}
     refine ⟨r, hrapos, hpr, ?_, ?_⟩
     · intro s hs
       have hh := hanti hs.1 hrapos hs.2
+      dsimp only at hh
       rw [hpr, zero_div] at hh
       exact (div_pos_iff_of_pos_right (pow_pos hs.1 n)).mp hh
     · intro s hs
       have hh := hanti hrapos (hrapos.trans hs) hs
+      dsimp only at hh
       rw [hpr, zero_div] at hh
       simpa only [zero_mul] using (div_lt_iff₀ (pow_pos (hrapos.trans hs) n)).mp hh
 
@@ -280,9 +293,10 @@ private lemma kernel_sign {u v s : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1)
   have hD : Real.log D = 2 * Real.log s + 4 * Real.log (s + L) := by
     dsimp only [D]
     rw [Real.log_mul (by positivity) (by positivity), Real.log_pow, Real.log_pow]
+    norm_num
   have hlog (x : ℝ) (hx : 0 ≤ x) :
       Real.log (1 + x / s) = Real.log (s + x) - Real.log s := by
-    rw [show 1 + x / s = (s + x) / s by field_simp [hs.ne']; ring]
+    rw [show 1 + x / s = (s + x) / s by field_simp [hs.ne']]
     exact Real.log_div (by positivity) hs.ne'
   have he : 2 * productLogKernel u v s = Real.log N - Real.log D := by
     rw [hN, hD]
@@ -299,7 +313,7 @@ private lemma kernel_sign {u v s : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1)
       nlinarith [hq2]
     dsimp only [N, D]
     rw [hfirst, hsecond]
-    exact expansion A B s
+    simpa only [L, add_sub_assoc] using expansion A B s
   have hn := Real.log_le_log_iff hDp hNp
   have hp' := Real.log_lt_log_iff hDp hNp
   have hm' := Real.log_lt_log_iff hNp hDp
@@ -411,8 +425,8 @@ theorem product_log_kernel_single_crossing {u v : ℝ} (hu : u ∈ Icc (0 : ℝ)
       rw [kernel_symm, kernel_one_left]
       exact log_partition_nonneg hu hs)
   exact interior_single_crossing
-    ⟨lt_of_le_of_ne hu.1 hu0.symm, lt_of_le_of_ne hu.2 hu1⟩
-    ⟨lt_of_le_of_ne hv.1 hv0.symm, lt_of_le_of_ne hv.2 hv1⟩
+    ⟨lt_of_le_of_ne hu.1 (Ne.symm hu0), lt_of_le_of_ne hu.2 hu1⟩
+    ⟨lt_of_le_of_ne hv.1 (Ne.symm hv0), lt_of_le_of_ne hv.2 hv1⟩
 
 #print axioms product_log_kernel_single_crossing
 end D5.S3.Entropy.ProductAbsorptionLogKernel
