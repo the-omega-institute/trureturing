@@ -1,0 +1,27 @@
+**Theorem 13.1 (zero error, zero support and tolerance quantifiers).** On the entire source of Definition 12.1 the following boundaries hold.
+
+1. At $\epsilon=0$, finite static and complete finite online supplementation exist exactly when $A,B$ are independent or $B=\lambda A$ for an irrational $\lambda>0$. In either feasible case the endpoint and exact native vector already recover every history, with one register state. The support has no role in this statement.
+2. If $K=\{0\}$, the same exact criterion holds for every $\epsilon\ge0$.
+3. For fixed $K$ and positive tolerances, existence separately at every tolerance, allowing different finite registers, is equivalent to existence at one positive tolerance and to condition 3 of Theorem 12.2.
+4. There exists one fixed finite static label, or one fixed complete finite names-only register, successful for every finite positive tolerance, if and only if
+
+$$
+\{(j,k)\in\mathbb Z^2:jA+kB\in L\}=\{(0,0)\}.
+\tag{13.1}
+$$
+
+When (13.1) holds, one state already suffices for every tolerance, including zero. A decoder may know the prescribed tolerance; allowing that knowledge does not relax the necessity of (13.1).
+
+Proof. At zero error, $\epsilon\Delta K=\{0\}$. The integer count map $(m,n)\mapsto mA+nB$ is injective precisely in the two alternatives of item 1: independence ensures this, while in the dependent case $j+\lambda k=0$ has a nonzero integer solution precisely when $\lambda$ is rational. Equation (12.7) then proves unsupplemented recovery in the injective cases, simultaneously on all three rows. The arbitrarily large exact fibers (12.11) rule out every finite supplement in the rational case. Item 2 follows because multiplication of the zero support by any tolerance still gives the zero support. Item 3 is Theorem 12.2 with its tolerance-dependent constructions.
+
+For item 4, $\Delta K$ contains a neighborhood of zero relative to $L$, so
+
+$$
+\bigcup_{\epsilon>0}\epsilon\Delta K=L.
+\tag{13.2}
+$$
+
+Under (13.1), every distinct same-endpoint difference is outside $L$, and hence outside every $\epsilon\Delta K$; (12.7) supplies the constant register for all tolerances.
+
+Conversely, suppose a nonzero integer pair $v=(j,k)$ has $jA+kB\in L$. Consider a proposed fixed label with $Q$ values. Choose a nonnegative integer base pair $b$ large enough that $b+iv\in\mathbb N_0^2$ for $0\le i\le Q$. These $Q+1$ different pairs give different legal words in the $s$ row. Two have the same label. Their native difference is $(i-i')(jA+kB)\in L$, and by (13.2) it belongs to $\epsilon\Delta K$ for some finite positive $\epsilon$. At that tolerance their allowed observations overlap and (12.6) fails. If the difference is zero, it fails at every tolerance. A fixed finite online register is also such a label. This proves necessity without assuming periodic labels or an online counting form. $\square$
+

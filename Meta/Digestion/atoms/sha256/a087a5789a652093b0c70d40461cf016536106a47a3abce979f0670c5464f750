@@ -1,0 +1,15 @@
+**Corollary 22.2 (Necessary conjunction for the original five-actual-letter target).** Let $(\eta,p)\in\mathcal L_4$ and suppose that $\eta(u_9)$ is rich, has exactly five actual letters and has ordinary critical exponent $e_4$. Then its row has all independent positive integer parameters of (85), satisfies
+
+$$
+H=5t+16h_0+8h_1+4h_2+2h_3\ge58,
+\tag{109}
+$$
+
+and obeys the eight strict inequalities (86), (101), with $C_i$ defined from its actual marker and its actual word suffixes. The row $(1,2,2,3,2,3,6,12,25)$ at $H=56$ remains excluded for every rich five-letter literal dictionary with that row. At $r=3$, the four-actual-letter construction (43), its complete ordinary upper theorem and its sharp literal minimum $H=30$ retain the scopes of Theorems 12.2–14.1.
+
+*Proof.* Corollary 3.2 forces exact cancellation for this actual nonerasing morphism. Theorem 4.2 supplies the entire family (85), including its unrestricted positive integer parameters, and Corollary 4.3 supplies the size expression in (109). Theorem 17.1 gives $H\ge58$ at $r=4$, using the whole-row finite ordinary exclusion of Theorem 16.2 at $H=56$. Theorem 21.1 applies to its actual literal marker and proves all eight strict budgets; it requires no further richness assumption or alphabet expansion. These implications concern only this same original source and dictionary.
+
+The complete-return characterization of richness used in the finite exclusions and in the $r=3$ results is [Amy Glen and Jacques Justin, *Palindromic richness*, arXiv:0801.1656v1, Theorem 2.14 and Remark 2.15](https://arxiv.org/pdf/0801.1656v1). That version has those two authors; the [journal article, doi:10.1016/j.ejc.2008.04.006](https://doi.org/10.1016/j.ejc.2008.04.006), has authors Amy Glen, Jacques Justin, Steve Widmer and Luca Q. Zamboni. The finite/infinite complete-return criterion has no recurrence or reversal-closure premise. The $r=3$ attainment and all-factor upper bound themselves are the existing Theorems 12.2–14.1, not consequences of a new five-letter construction or of Bell–Gerhold's sign theorem.
+
+The conditions in (109), exact cancellation and the eight strict budgets are necessary only, even when imposed together. They establish neither their sufficiency nor nonexistence of a qualifying dictionary at every larger length. The existence of an original $u_9$ image rich on five actual letters with ordinary exponent $e_4$, including its exhaustive ordinary upper bound over all actual factors, remains open here. So does a universal impossibility theorem for such literal dictionaries. Allowing arbitrary nonliteral morphisms and proving the unrestricted lower inequality for $RT(\mathcal C_5)$ remain distinct questions. $\square$
+

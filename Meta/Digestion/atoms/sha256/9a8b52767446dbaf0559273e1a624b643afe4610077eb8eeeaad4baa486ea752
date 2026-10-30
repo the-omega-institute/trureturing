@@ -1,0 +1,61 @@
+**Lemma 13.1 (a denominator-free identity on the parabolic boundary).** Fix $d\ge3$, $m=d-1$, $|\lambda|\le1/d$, and put
+
+$$
+q_b=\frac{1-\lambda^2}{m},\qquad k=d\lambda,\qquad
+\delta=1-k^2,\qquad h=\frac{m\lambda}{1+\lambda}.
+$$
+
+For $t\in\Delta_d$, write $s_j=\sqrt{t_j}$ and let $X=D+Y$ be an arbitrary complex traceless matrix, with $D=\operatorname{diag}(z_1,\ldots,z_d)$ and $Y=(y_{ij})$ of zero diagonal. For the original map at $(\lambda,q_b)$, the following exact identity holds:
+
+$$
+\begin{aligned}
+\frac{s^T S_b(X)s}{q_b}
+={}&\frac{\delta}{m}\sum_a t_a
+ \sum_{\substack{i<j\\i,j\ne a}}|z_i-z_j|^2
+ +\sum_i\sum_{j\ne i}|\sqrt{t_i}y_{ij}+k\sqrt{t_j}z_i|^2\\
+&+\frac12\sum_i\sum_{\substack{j<\ell\\j,\ell\ne i}}
+ \left((1+h)|\sqrt{t_\ell}y_{ij}+\sqrt{t_j}y_{i\ell}|^2
+ +(1-h)|\sqrt{t_\ell}y_{ij}-\sqrt{t_j}y_{i\ell}|^2\right).
+\end{aligned}
+\tag{13.1}
+$$
+
+Every coefficient on the right is nonnegative. The identity includes every face of the simplex and both signs and endpoints of $\lambda$. Stance: repo-derived.
+
+**Proof.** Here $q_b>0$, $1+\lambda\ge1-1/d>0$, $\delta\ge0$, and
+
+$$
+-1\le h\le\frac{d-1}{d+1}<1.
+$$
+
+The last bound follows either by cross multiplication with $1+\lambda>0$ or from the positive derivative $m/(1+\lambda)^2$. Put $a=1-dq_b$. Since $p=\lambda^2$, one has
+
+$$
+a-\lambda^2=-q_b,\qquad
+\frac{\lambda(1-\lambda)}{q_b}=h,\qquad
+d a=-k^2-\frac{d\delta}{m}.
+$$
+
+The row identity in Step 3 of Theorem 3.2 therefore gives the following coefficients in $s^TS_b(X)s/q_b$: the coefficient of $|z_i|^2$ is $1+da\,t_i$; the coefficient of $|y_{ij}|^2$ is $1-t_j$; the mixed diagonal-row term is $2k\sqrt{t_it_j}\operatorname{Re}(\bar z_i y_{ij})$; and the mixed terms within row $i$ are $2h\sqrt{t_jt_\ell}\operatorname{Re}(\bar y_{ij}y_{i\ell})$.
+
+To verify (13.1), first use the full complex trace constraint:
+
+$$
+\begin{aligned}
+\sum_{\substack{i<j\\i,j\ne a}}|z_i-z_j|^2
+ &=m\sum_{i\ne a}|z_i|^2-\left|\sum_{i\ne a}z_i\right|^2
+ =m\sum_i|z_i|^2-d|z_a|^2,\\
+\frac1m\sum_a t_a\sum_{\substack{i<j\\i,j\ne a}}|z_i-z_j|^2
+ &=\sum_i\left(1-\frac d m t_i\right)|z_i|^2.
+\end{aligned}
+$$
+
+Consequently the first two sums in (13.1) have $|z_i|^2$ coefficient
+
+$$
+\delta\left(1-\frac d m t_i\right)+k^2(1-t_i)
+=1+da\,t_i.
+$$
+
+For each $y_{ij}$ the second sum contributes $t_i|y_{ij}|^2$ and the last sum contributes $\sum_{\ell\ne i,j}t_\ell|y_{ij}|^2$, whose sum is $(1-t_j)|y_{ij}|^2$. Expanding each plus/minus pair in the last sum gives exactly the mixed coefficient $2h\sqrt{t_jt_\ell}$ above, and the second sum gives exactly $2k\sqrt{t_it_j}$. These exhaust all monomials of the row identity. Thus (13.1) is an identity on the original complex row variables, with no eliminated variable or suppressed multiplier. ∎
+

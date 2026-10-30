@@ -1,0 +1,9 @@
+**Definition 8.1 (Same-morphism literal prefix class).** A pair $(\eta,p)$ belongs to $\mathcal L_r$ if $`\eta:A_r^*\to B^*`$ is an injective nonerasing morphism into a finite alphabet, $p$ is a nonempty palindrome, and for every $i\in A_r$ there is a palindrome $q_i$, possibly empty, such that
+
+$$
+\eta(i)=p q_i,\qquad \eta(i)p=pq_ip
+\text{ has exactly two occurrences of }p,
+$$
+
+at its prefix and suffix. Put $m=|p|\ge1$. An attaining pair additionally satisfies $E(\eta(u))=e_r$. This is the literal representation in Dvořáková–Pelantová, journal Definition 19, [doi:10.37236/14600](https://doi.org/10.37236/14600), arXiv Definition 18. The same $\eta$ acts on the original $u$; no conjugation, replacement by a derived sequence, or change of source is included in this definition.
+

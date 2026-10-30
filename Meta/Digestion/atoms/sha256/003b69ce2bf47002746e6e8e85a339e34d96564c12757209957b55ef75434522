@@ -1,0 +1,32 @@
+**Theorem 15.1 (classification for $\lambda\le0$ in dimension three).** Let $K_3$ be the original necessary region in Theorem 8.1 and Question 12.2. For all real $\lambda,q$ with $\lambda\le0$, the original map on $M_3(\mathbb C)$ is Schwarz if and only if $(\lambda,q)\in K_3$. Stance: repo-derived.
+
+**Proof.** Necessity is Theorem 4.1. For sufficiency write $\lambda=-r$, $r\ge0$. The second and fourth inequalities defining $K_3$ say
+
+$$
+q\le\frac{1-r^2}{2},\qquad q\le(1+r)(1-2r).
+$$
+
+Together with $q\ge0$, the latter excludes $r>1/2$. The difference between the two upper bounds is $(r+1)(3r-1)/2$. Hence their minimum is $(1-r^2)/2$ on $[0,1/3]$ and $(1+r)(1-2r)$ on $[1/3,1/2]$. Both bounds are at most $1/2$ on the respective intervals.
+
+The third residual $R(q)=(5-9q)(1-q)-5r^2$ decreases on $0\le q\le1/2$, since $R'(q)=18q-14<0$. It suffices to check it at the active upper bound. The two exact endpoint values are
+
+$$
+\begin{aligned}
+R((1-r^2)/2)&=\frac{(1-r^2)(1-9r^2)}4\ge0
+&& (0\le r\le1/3),\\
+R((1+r)(1-2r))&=4r(r+1)(3r-1)(3r+1)\ge0
+&& (1/3\le r\le1/2).
+\end{aligned}
+$$
+
+Thus $K_3\cap\{\lambda\le0\}$ is exactly the union of the two closed regions
+
+$$
+\begin{gathered}
+0\le r\le1/3,\qquad 0\le q\le(1-r^2)/2,\\
+1/3\le r\le1/2,\qquad 0\le q\le(1+r)(1-2r).
+\end{gathered}
+$$
+
+Theorem 13.2 supplies the first. Theorem 14.1 supplies the upper boundary of the second, and Proposition 4.2 supplies its $q=0$ boundary. At each fixed $r<1/2$, affine interpolation in $q$ and the exact convexity identity of Remark 4.4 supply every intermediate $q$ for every complex input. At $r=1/2$ the interval consists only of $q=0$. The formulas agree at $r=1/3$, where both upper bounds are $4/9$. No strict parameter inequality or probe-support restriction remains. ∎
+

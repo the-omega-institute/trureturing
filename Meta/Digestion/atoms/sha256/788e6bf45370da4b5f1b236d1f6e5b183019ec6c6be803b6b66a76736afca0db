@@ -1,0 +1,16 @@
+### 2.1. 边上的类型与隐藏完成方式
+
+取类型集合 $L=\{\mathbf{1},\tau\}$，规定
+
+<a id="eq-fusion"></a>
+
+$$
+\mathbf{1}\otimes a=a\otimes\mathbf{1}=a,\qquad
+\tau\otimes\tau=\mathbf{1}\oplus\tau .
+\tag{1}
+$$
+
+这是明确输入的 Fibonacci 融合规则，不能由“存在平面铺砌”本身推出。
+
+<a id="statement-2-1"></a>
+

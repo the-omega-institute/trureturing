@@ -1,0 +1,62 @@
+**定理 78.3（原生秩的函数实现及有限秩表示）。** 在假设 78.1 下，
+
+$$
+ r(P)=\dim_{\mathbb R}V_P.
+ \tag{78.4}
+$$
+
+若此维数有限，则 $V_P$ 是连续 $PU(13)$ 作用下的不变空间，并等于所有数学酉接续 $P_w\circ U$ 的实张成。存在有限集 $\mathcal J\subset\mathbb N_0$、$0\in\mathcal J$，使
+
+$$
+ V_P=\bigoplus_{j\in\mathcal J}\mathcal H_j,\qquad
+ \dim_{\mathbb R}\mathcal H_j=D_j,
+ \quad D_0=1,\quad
+ D_j=\binom{12+j}{j}^{\!2}-\binom{11+j}{j-1}^{\!2}\quad(j\ge1).
+ \tag{78.5}
+$$
+
+各 $\mathcal H_j$ 是射线函数中的唯一相应不可约子空间；尤其 $\mathcal H_0$ 为常数，$\mathcal H_1$ 为 $\psi\mapsto\langle\psi,A\psi\rangle$、$A$ 为迹零 Hermitian 算子所组成的 $168$ 维空间。所有这些张成和表示只用于证明，没有物理随机混合或连续控制的含义。
+
+证明。首先说明 (78.4) 的两边确实使用原生字。记 $R=\{[K_pv]:p\in\mathsf W\}$；由定理 77.2，$R$ 稠密。连续函数在 $R$ 上的限制是单射。任取 $n$ 个线性独立的 (78.3) 生成函数 $g_1,\ldots,g_n$，其在 $R$ 上仍独立。于是向量 $(g_1(r),\ldots,g_n(r))$、$r\in R$ 张成 $\mathbb R^n$；否则有非零线性组合在 $R$ 上恒零，进而处处为零。可选 $n$ 个实际 $r=[K_{p_i}v]$ 组成非奇异评价矩阵。这些 $g_i$ 的指标本来就是实际 $(f_i,w_i)$，故得到真正原生有限子矩阵的秩至少 $n$。反向每个有限子矩阵的列都来自 $V_P$，秩至多 $\dim V_P$。对任意 $n$ 应用即包括无限维情形。
+
+若 $V_P$ 有限维，它在一致范数下闭。原生逆均为正向九次重复，故 $V_P$ 在原生群的拉回作用下不变。对数学酉 $U$，由 (77.3) 取射影收敛的实际 $K_{a_n}$；相位不变性及紧射线空间上的一致连续性给
+
+$$
+ P_w\circ K_{a_n}\longrightarrow P_w\circ U
+ \quad\text{一致收敛}.
+ \tag{78.6}
+$$
+
+所以右边仍在 $V_P$。对任何 $g\in V_P$ 同理，得到全群不变性。采用 $T_Ug=g\circ U^{-1}$ 后 $T_UT_V=T_{UV}$，且 $U\mapsto T_U$ 在有限维空间上连续。评价泛函 $\Omega_{[\psi]}(g)=g([\psi])$ 满足全群等变，所有评价泛函张成 $V_P^*$，因为被它们共同消去的函数只能是零。这里没有对未执行制备的概率进行混合；$\Omega$ 是函数的数学评价。
+
+此处所消费的已知表示论是 Galley–Masanes，[*Classification of all alternatives to the Born rule in terms of informational properties*, 1610.04859v3，§2.3 Result 2、(16)、Appendix A.2/A.12](https://arxiv.org/html/1610.04859v3) 的射线稳定子分类，以及 Masanes–Galley–Müller，[1811.11060v2，Appendix A Lemmas 5、7](https://arxiv.org/html/1811.11060v2) 的函数无重数与对称幂分解。只用其单系统连续有限维表示部分，具体对应如下。
+
+在固定射线 $[e]$ 的稳定子 $S(U(1)\times U(12))$ 下，评价泛函不变。对任一不可约函数分量，其评价限制非零：若在 $[e]$ 为零，则等变性和群的传递性使它在每个射线为零。原文的稳定子分类给这些不可约分量只能有最高权 $(j,0,\ldots,0,j)$，且各自的稳定子不变线唯一。若一个分量有重数 $m>1$，其评价在重数空间上只有一个固定方向；全群平移仍保持这个方向，于是存在非零的另一重数方向被全部评价消去，与函数的忠实评价矛盾。所以没有重数。原文 A.12.6 保证这些分量是实型，实维数就是 (16) 的数值，不再加倍。常数由归一化已经在 $V_P$ 内。
+
+为同时说明 (78.5) 的数值和后面多项式界，置 $N_k=\binom{12+k}{k}$、$N_0=1$。对 $k\ge0$，令
+
+$$
+ \mathcal F_k=\{[\psi]\mapsto
+ \langle\psi^{\otimes k},A\psi^{\otimes k}\rangle:
+ A\in\operatorname{Herm}(\operatorname{Sym}^kH)\},\qquad \|\psi\|=1.
+ \tag{78.7}
+$$
+
+这是数学多项式特征，不是 $k$ 份独立物理系统。其系数是双次数 $(k,k)$ 的 Hermitian 多项式。若函数在单位球面恒零，齐次性使多项式在全部向量上恒零；把 $z_i,\bar z_i$ 换成实、虚部的可逆复线性坐标可知全部系数为零。因此 (78.7) 的系数映射单射，$\dim_{\mathbb R}\mathcal F_k=N_k^2$。乘以 $\sum_i|z_i|^2$ 给 $\mathcal F_{k-1}\subset\mathcal F_k$。上述 Lemma 7 的分解恰给
+
+$$
+ \mathcal F_k=\bigoplus_{j=0}^k\mathcal H_j,\qquad
+ D_j=N_j^2-N_{j-1}^2\quad(j\ge1).
+ \tag{78.8}
+$$
+
+取 $k=1$ 就是全部 Hermitian 二次型，分成常数和迹零二次型。一般维数也等于原文 (16) 的
+
+$$
+ D_j=\left(1+\frac{2j}{12}\right)
+       \prod_{a=1}^{11}\left(1+\frac ja\right)^2.
+ \tag{78.9}
+$$
+
+两式相等可由 $N_{j-1}=N_jj/(12+j)$ 直接化简。这完成分类在本函数空间上的条件核对。∎
+

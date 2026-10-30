@@ -1,0 +1,37 @@
+**定义 10.1（$K_{3,m}$ 的有限支付与计数赤字）。** 对整数 $m\ge3$，令 $G=K_{3,m}$，并令
+
+$$
+H_m=(m+1)(m+2)(m+3),
+$$
+
+并沿用定理 5.1 的有限阶乘支付，写成
+
+$$
+\begin{aligned}
+P_m(k)&=(m+2-k)(m+1-k)
+ +2(\sqrt2-1)(k+1)(m+1-k)\\
+&\qquad +(\sqrt3-\sqrt2)(k+1)(k+2),\\
+X_m&=\frac2{H_m}\sum_{k=0}^m\sqrt k\,P_m(k),\\
+Y_m&=\frac{2\sqrt{3m}-3X_m}{m}.
+\end{aligned}
+\tag{10.1}
+$$
+
+这里 $X_m=x_{3,m}$、$Y_m=y_{3,m}$ 是定义 1.2 的原始阶乘归一化 Shapley 支付；由 (5.3) 有
+
+$$
+X_m>0,\qquad Y_m>0,\qquad 3X_m+mY_m=2\sqrt{3m}.
+\tag{10.2}
+$$
+
+对整数 $0\le i\le3$、$0\le j\le m$ 记
+
+$$
+d_m(i,j)=2\sqrt{ij}-iX_m-jY_m,
+\qquad
+D_{3,m}=\max_{i,j}d_m(i,j),
+\tag{10.3}
+$$
+
+其中每个计数对均代表全部相应的标号联盟。
+
