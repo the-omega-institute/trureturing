@@ -107,6 +107,7 @@ utility: none: an unbounded symbolic congruence, with a consumed polynomial iden
 no bounded enumeration, checker interface, numerical reduction, or standalone instance.
 -/
 
+import D5.S1.Recurrence.Residue.IntegralEGFComposition
 import D5.S1.Recurrence.Residue.QuarticEGFFixedPoint
 
 open PowerSeries Finset
