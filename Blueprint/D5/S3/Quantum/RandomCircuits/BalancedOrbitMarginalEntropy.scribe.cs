@@ -36,7 +36,10 @@ internal sealed class BalancedOrbitMarginalEntropyDocument : IScribeDocumentDefi
                         "Apply this matrix identity to u ρ u†. The adjoint of the product F u is u† F†, and associativity identifies (F u) ρ (F u)† with F (u ρ u†) F†. Passing through the matrix representation of density states and using equality of their underlying matrices gives equality of the right marginal at F u and the left marginal at u.")),
                     Paragraph(Text(
                         "For each n and ρ, first use left invariance of Haar measure to replace u by F u in the integral of the right marginal entropy. The marginal equality then gives equality of the two entropy integrands at every u, hence almost everywhere. Equality of their integrals proves the displayed identity, answering item (ii) in QINP-D-16-00527-revision.tex, lines 916–920."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zhang-xiang-2017-balanced-orbit-marginal-entropy"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ClaimBody()
     {
