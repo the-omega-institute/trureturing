@@ -27,7 +27,7 @@ internal sealed class LyndonFactorizationUniqueDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create(Module + ".last_factor_is_min_nonempty_suffix"),
                 H("The final factor is the minimum nonempty suffix"),
                 StatementSource.FromAuthor(MinimumFormula()),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "If fs followed by the final factor m is a nonincreasing list of Lyndon words, "
                     + "then m is nonempty, is a suffix of the concatenation, and is no greater than "
