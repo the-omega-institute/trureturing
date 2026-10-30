@@ -725,7 +725,7 @@ originality, priority, or exhaustive literature coverage.
 | [Bonin] J. E. Bonin, *Sparse paving matroids, basis-exchange properties, and cyclic flats*, [arXiv:1011.1010v1](https://arxiv.org/pdf/1011.1010v1), Introduction and Lemma 2.1 | The Introduction states equivalence of dual paving with the rank-sized basis-or-circuit-hyperplane characterization; Lemma 2.1 gives the one-exchange property. Lemma 3.1 derives the rank facts used here directly from the dual rank identity and paving. The cardinality of a hyperplane, not a choice of linear realization, is decisive. |
 | [Family] [AliabadiZerbibMatroidMatching](../../../D5/S3/Combinatorics/Matroids/AliabadiZerbibMatroidMatching.lean) | The supplied predicates give the same paving and matching conventions. The supplied `allowed_exchange`, `extend_avoiding`, `punctured`, dual-basis and small-independence arguments give the one-deleted-base construction; `family_sparse_paving` and `family_not_matched` supply the all-parameter interval family. Its $n,s$ correspond to $r,m-r$; its initial basis has $a=d=1$, $j=0$. Proposition 6.3 recovers that supplied family. Theorems 4.1 and 5.3 are additional prose deductions, not additional assertions about the supplied declarations. |
 | [AWY] M. Aliabadi, Y. Wu and S. Yermolenko, *Matchings in matroids over abelian groups, II*, [arXiv:2412.04516v4](https://arxiv.org/html/2412.04516v4), Theorem 3.2 | That sufficient result assumes positive ground sets, cardinality $n+1$, and $\max E(M)\preceq n\min E(N)$. Those hypotheses are not imposed here. The cited theorem is not a supplier for either main proof. |
-| [AK] M. Aliabadi and E. Krop, *Matchings in Matroids over Abelian Groups, III*, [arXiv:2509.14339v2](https://arxiv.org/html/2509.14339v2), Lemma 2.8 and Claim 3.3 | Counterexamples 7.1 and 7.2 address these exact statement/condition pairs. Neither lemma nor claim supplies a main proof step. No inference about unrelated results is made from those defects. |
+| [AK] M. Aliabadi and E. Krop, *Matchings in Matroids over Abelian Groups, III*, [arXiv:2509.14339v2](https://arxiv.org/html/2509.14339v2), Lemma 2.8 and Claim 3.3 | Counterexamples 7.1 and 7.2 address these exact statement/condition pairs. Neither lemma nor claim supplies a main proof step. Theorem 3.9(1), and Theorem 3.10(1) at hyperplane-nullity parameter $t=1$, retain $|A|<|B|-1$. No inference about unrelated results is made from those defects. |
 
 The target in Theorems 4.1 and 5.3 is the independently specified
 matroid of Definition 1.3 with all of its actual bases. The results
@@ -733,7 +733,7 @@ settle the stated torsion-free strict-gap problem and classify the
 stated equal-size failures. They do not claim that the unrestricted
 disjunctive Question 2.7 is affirmative.
 
-**开放问题 8.1（A precise torsion boundary）。** For a fixed prime $p$,
+**问题 8.1（A precise torsion boundary）。** For a fixed prime $p$,
 classify equal-size failures, and the one-element-gap case, for
 loopless sparse paving targets in $\mathbb Z/p\mathbb Z$ with
 $|A|\le |B|<p$ and $0\notin B$. The torsion-free proof of Lemma 2.2
@@ -742,7 +742,7 @@ The needed replacement is a sumset theorem with its exact equality
 and wraparound alternatives for $X+(U_X\cup\{0\})\subseteq A$.
 Counterexample 7.4 does not decide this prime-order problem.
 
-**开放问题 8.2（Paving targets with larger hyperplanes）。** For
+**问题 8.2（Paving targets with larger hyperplanes）。** For
 arbitrary loopless paving $N$ without dual paving, give a structural
 classification of failures when $|A|\le |B|$ over torsion-free
 abelian groups. Proposition 3.3 and Lemma 2.3 remain exact necessary
