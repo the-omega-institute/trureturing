@@ -56,14 +56,15 @@ internal sealed class ExtremePOVMRankThreeThreeTwoSixDocument : IScribeDocumentD
                 Blocks(
                     Paragraph(Text(
                         "The construction uses the ordered coordinates (e₀,e₁,e₂,f₀,f₁,f₂,g) of complex seven-space. "
-                            + "Eight blocks of vectors are formed: the three e coordinates, the three f coordinates, "
-                            + "two phase-zero and phase-i edge blocks for each of the three pairs of e coordinates, "
-                            + "and the corresponding apex blocks containing g. For each block, form the positive matrix "
+                            + "Eight blocks of vectors are formed: two coordinate blocks consisting of the three e coordinates "
+                            + "and the three f coordinates, and six phase blocks with phase-zero and phase-i choices for each "
+                            + "of the three pairs of e coordinates. Four of the six phase blocks contain the apex coordinate g. "
+                            + "For each block, form the positive matrix "
                             + "effect j by summing b bᴴ over its vectors, and let frame be the sum of all eight effects.")),
                     Paragraph(Text(
-                        "A direct exact coordinate calculation writes frame as the displayed Hermitian 7 by 7 matrix. "
-                            + "Its positive-semidefinite sum decomposition and an injectivity calculation for its matrix-vector "
-                            + "action prove positive definiteness. The positive square-root factorization of a strictly positive "
+                        "Lean's frame_posDef lemma proves positive definiteness of frame using its positive-semidefinite sum "
+                            + "decomposition and an exact coordinate calculation showing that its matrix-vector action is injective. "
+                            + "The positive square-root factorization of a strictly positive "
                             + "matrix then supplies an invertible normalizer with normalizer · frame · normalizerᴴ = 1. "
                             + "Conjugating every effect by this normalizer gives witness; congruence preserves positive semidefiniteness, "
                             + "the conjugated effects sum to the identity, and congruence by an invertible matrix preserves rank.")),
