@@ -251,9 +251,10 @@ theorem sourcePairing_charged_primary (D : LatticeData) (a : Charge D) (m : ℤ)
       paritySign (chargeEnergy D a) * sourcePairing D u
         ((Y D (Finsupp.single a 1))[[2*chargeEnergy D a-m-2]] v) := by
   have hm : -(2*chargeEnergy D a-m-2)-1 = -(-m-1)-bilinear D a a := by
-    rw [← two_chargeEnergy]
+    rw [← two_chargeEnergy D a]
     omega
-  simp only [stateField_ground, actual_modes, hm]
+  simp only [LatticeAllStateField.stateField_ground,
+    LatticeActualGeneratorLocality.actual_modes, hm]
   exact raw_transpose D a (-m-1) u v
 
 #print axioms sourcePairing_charged_primary
