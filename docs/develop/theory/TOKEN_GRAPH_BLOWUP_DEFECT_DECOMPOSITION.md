@@ -444,7 +444,7 @@ At the critical density $1/\sqrt5$, the quadratic coefficient vanishes. The sign
 
 ## 追加锚（本行以下为增补区）
 
-## 6. Half-filled block-spin separation
+## 6. Half-filled block-spin sectors and a separation obstruction
 
 **定义 6.1（Spin-chain sectors）。** Assume (3.1), let $s$ be even, and put
 $r=ms/2$. For $t=(t_1,\ldots,t_m)\in\mathbb N^m$ with
@@ -483,192 +483,115 @@ $$
 Write $\mu_{s,t}=\lambda_{\min}(\mathsf K_{s,t})$. The sector $t=0$ is
 called the block-symmetric sector.
 
-**引理 6.2（Uniform finite-spin separation）。** Let
-$\ell=-\lambda>0$, let
+**命题 6.2（The supplied identities do not prove the proposed separation）。**
+The chain decomposition in Feinsilver,
+[Proposition 4.1](https://arxiv.org/pdf/1102.0368v2), and Srinivasan,
+[Theorem 1.2](https://arxiv.org/pdf/1001.0280v2), does give (6.1): a chain
+starting at rank $t_i$ has length $d_i+1$, and in its unit basis
 
 $$
-\gamma_H=\min\{\theta-\lambda:\theta\in\operatorname{spec}(a),\ \theta>\lambda\},
+L_i|t_i,q_i\rangle=u_i^-(q)|t_i,q_i-1\rangle,
 \qquad
-M_H=1+\|a\|_{\mathrm{op}}+\ell+\gamma_H^{-1},
-$$
-
-and define the completely explicit constants
-
-$$
-c_H=\frac{\ell\gamma_H}{2^{12}m^2M_H^4},\qquad
-s_H=2\left\lceil\frac{2^{20}m^4M_H^6}{\ell\gamma_H}\right\rceil+2m+4.
+L_i^*|t_i,q_i\rangle=u_i^+(q)|t_i,q_i+1\rangle.
 \tag{6.2}
 $$
 
-For every even $s\geq s_H$ and every $t\ne0$,
+Tensoring the chains and imposing total occupancy $r$ gives an orthogonal sum
+of copies of $\mathsf K_{s,t}$ over the chain multiplicity labels. The
+following two calculations are obstructions to the claimed proof of a uniform
+positive separation.
+
+First, the estimate
 
 $$
-\mu_{s,t}-\mu_{s,0}\geq c_Hs.
+\sum_i t_i(s+1-t_i)\geq sT(t)
 \tag{6.3}
 $$
 
-In particular, the least half-filled eigenvalue is attained in the block-symmetric
-sector.
-
-**证明。** The Boolean-lattice decomposition supplied by Feinsilver,
-[Proposition 4.1](https://arxiv.org/pdf/1102.0368v2), and by Srinivasan,
-[Theorem 1.2](https://arxiv.org/pdf/1001.0280v2), is an orthogonal direct sum of
-chains. In block $i$, a chain beginning at rank $t_i$ has length $d_i+1$.
-After unit normalization its lowering and raising coefficients are
+is false on the stated domain. If $s\geq4$ and
+$t=(2,0,\ldots,0)$, its two sides are respectively $2(s-1)$ and $2s$.
+The valid uniform bound from $0\leq t_i\leq s/2$ is only
 
 $$
-L_i|t_i,q_i\rangle=u_i^-(q)|t_i,q_i-1\rangle,\qquad
-L_i^*|t_i,q_i\rangle=u_i^+(q)|t_i,q_i+1\rangle.
+\sum_i t_i(s+1-t_i)\geq\left(\frac{s}{2}+1\right)T(t).
 \tag{6.4}
 $$
 
-Tensoring the chains and restricting to total occupancy $r$ gives exactly
-$\mathcal Q_{s,t}$, and (2.4) gives (6.1). Every choice of the chain
-multiplicity labels gives the same matrix. Thus the full half-filled space is an
-orthogonal sum of copies of the matrices $\mathsf K_{s,t}$, while $P_{\rm sym}$
-is the sum of the copies with $t=0$.
-
-We record the estimate needed below. Put
+Second, the asserted equality-condition step fails when the least eigenvalue
+is degenerate. Let $m=4$ and let $H$ be the disjoint union of the edges
+$\{1,2\}$ and $\{3,4\}$. Then
 
 $$
-U_{s,t}=\frac14\sum_i d_i^2+\frac12\sum_i d_i
-=b+\frac{ms}{2}-(s+1)T(t)+\sum_i t_i^2,\qquad b=\frac{ms^2}{4}.
+a=\begin{pmatrix}0&1&0&0\\1&0&0&0\\0&0&0&1\\0&0&1&0\end{pmatrix},
+\qquad \lambda=-1,
+\qquad z=(1,-1,1,-1),
+$$
+
+so (3.1) holds and
+$\ker(a-\lambda I)=\{(x,-x,y,-y):x,y\in\mathbb C\}$.
+For every even $s\geq2$, take $t=(1,1,0,0)$, so
+$d_1=d_2=s-2$ and $d_3=d_4=s$. For an integer $d\geq0$ define the unit
+vector in two equal chains
+
+$$
+\eta_d=\frac1{\sqrt{d+1}}\sum_{q=0}^d(-1)^q|q,d-q\rangle .
 \tag{6.5}
 $$
 
-For a unit vector $f$ in the $t$-sector, write $x_i=q_i-d_i/2$ on the basis
-vectors. The exact ladder identity is
+The lowering coefficients in (6.2) give, by reindexing the first sum,
 
 $$
-\sum_i\|L_if\|^2
-=U_{s,t}-\sum_i\|x_if\|^2.
+\begin{aligned}
+L_1\eta_d
+ &=\frac1{\sqrt{d+1}}\sum_{r=0}^{d-1}(-1)^{r+1}
+   \sqrt{(r+1)(d-r)}\,|r,d-1-r\rangle,\\
+L_2\eta_d
+ &=\frac1{\sqrt{d+1}}\sum_{r=0}^{d-1}(-1)^r
+   \sqrt{(r+1)(d-r)}\,|r,d-1-r\rangle .
+\end{aligned}
+$$
+
+Consequently $L_1\eta_d+L_2\eta_d=0$. Set
+
+$$
+ f=\eta_{s-2}^{(1,2)}\otimes\eta_s^{(3,4)}.
+$$
+
+Each factor has total chain occupancy equal to its chain length, so $f$ lies
+in the $t$-sector at total occupancy
+$$(s-2)+s=2s-2=D(t)/2,$$
+which is the half-filled layer for $m=4$. If
+$y=(L_1f,L_2f,L_3f,L_4f)$, the two cancellation identities give
+$y_2=-y_1$ and $y_4=-y_3$. Therefore
+
+$$
+ay=-y,
+\qquad\text{hence}\qquad
+(I-\Pi)y=0,
 \tag{6.6}
 $$
 
-Applying $a-\lambda I\succeq0$ to the lowering tuple, then separating its
-$\lambda$-eigenspace from its orthogonal complement, gives
+where $\Pi$ is the coordinate projection onto
+$\ker(a-\lambda I)$. Here $t\neq0$. Thus vanishing of the projected leakage
+in the quadratic-form bound
 
 $$
-\langle f,\mathsf K_{s,t}f\rangle
-\geq\lambda\sum_i\|L_if\|^2
-+\gamma_H\|(I-\Pi)\,(L_1f,\ldots,L_mf)\|^2,
-\tag{6.7}
+\langle f,\mathsf K_{s,t}f\rangle\geq
+\lambda\sum_i\|L_if\|^2+
+\gamma_H\|(I-\Pi)(L_1f,\ldots,L_mf)\|^2
 $$
 
-where $\Pi$ is the coordinate projection onto $\ker(a-\lambda I)$. The
-commutation relations in (6.4), followed by
-$2|xy|\leq\varepsilon|x|^2+\varepsilon^{-1}|y|^2$ with
-$\varepsilon=(4mM_H^2)^{-1}$, give the following exact finite-spin estimate:
+does not force the sector label to be $t=0$.
 
-$$
-\mu_{s,t}-\mu_{s,0}
-\geq\frac{\ell\gamma_H}{2^{10}m^2M_H^4}s
--2^8m^2M_H^2.
-\tag{6.8}
-$$
-
-This holds whenever $1\leq T(t)\leq2(m+1)$ and $s\geq2\max_i t_i$. For
-clarity, the three algebraic bounds used in obtaining (6.8) are
-
-$$
-\begin{aligned}
-\sum_i t_i(s+1-t_i)&\geq sT(t),\\
-\sum_i t_i^2&\leq \tfrac{s}{2}T(t),\\
-\|(a-\lambda I)\|_{\mathrm{op}}&\leq 2M_H.
-\end{aligned}
-\tag{6.9}
-$$
-
-Indeed, insert (6.6) in (6.7), complete the square in the $x_i$ terms, and
-use the first line of (6.9) for the Johnson (within-chain) part. The terms
-containing $\Pi$ are eliminated by the equality condition in (6.7): if they
-all vanished, the chain relations in (6.4) would give $t_i=0$ for every $i$;
-the first nonzero chain coefficient is at least $s$, and the second and third
-lines of (6.9) bound the discarded cross terms. This is the displayed
-constant in (6.8), with no dependence on the multiplicity labels or on $s$.
-
-It remains to treat $T(t)>2(m+1)$. The phase-product vector from (3.5) lies in
-the $t=0$ sector, so $\mu_{s,0}\leq\lambda b\,ms/(ms-1)$. From (6.6) and
-$\lambda<0$,
-
-$$
-\mu_{s,t}\geq\lambda U_{s,t}.
-$$
-
-Since $\sum_i t_i^2\leq(s/2)T(t)$ and $b/(ms-1)\geq0$,
-
-$$
-\begin{aligned}
-\mu_{s,t}-\mu_{s,0}
-&\geq\ell\left(\frac{b}{ms-1}-\frac{ms}{2}+(s+1)T(t)-\sum_i t_i^2\right)\\
-&\geq\ell s.
-\end{aligned}
-\tag{6.10}
-$$
-
-For the finitely many $t$ with $1\leq T(t)\leq2(m+1)$, the choice of $s_H$
-in (6.2) makes the error term in (6.8) at most half its positive linear term.
-The latter is at least $2c_Hs$. Equations (6.8) and (6.10) prove (6.3).
-The direct-sum description then shows that no $t\ne0$ sector can contain a
-least eigenvector. $\square$
-
-**定理 6.3（Half-filled symmetry confinement）。** Under Definitions 1.1–1.2 and
-Assumption 3.1, let $s$ be even and $s\geq s_H$ from (6.2), let
-$N=ms$, $k=N/2$, and let $E=E(s,k)$. Then
-
-$$
-\boxed{\qquad K_k-EI\succeq c_Hs\,(I-P_{\rm sym}).\qquad}
-\tag{6.11}
-$$
-
-The constant is independent of the vector and of all chain multiplicity labels.
-
-**Proof.** By the orthogonal chain decomposition in the proof of Lemma 6.2,
-$K_k$ is the direct sum of the matrices $\mathsf K_{s,t}$. Lemma 6.2 gives
-$\mu_{s,t}\geq\mu_{s,0}+c_Hs$ for every $t\ne0$. Hence
-
-$$
-E=\mu_{s,0},
-$$
-
-and the restriction of $K_k-EI$ to each nonsymmetric summand is at least
-$c_HsI$, while its restriction to the $t=0$ summands is nonnegative. The
-orthogonal sum of these restrictions is exactly (6.11). This argument is at
-the operator level and therefore covers arbitrary complex superpositions of
-all block-spin and multiplicity sectors. $\square$
-
-**推论 6.4（Near-ground-state mass and the code correspondence）。** Under the
-hypotheses of Theorem 6.3, for every unit $\phi\in\mathcal H_{N/2}$ and every
-$\delta\geq0$ such that
-
-$$
-\langle\phi,K_k\phi\rangle\leq E+\delta,
-$$
-
-one has
-
-$$
-\boxed{\quad\|(I-P_{\rm sym})\phi\|^2\leq\frac{\delta}{c_Hs}.\quad}
-\tag{6.12}
-$$
-
-Consequently, any sequence of such states with $\delta_s=o(s)$ has
-$\|(I-P_{\rm sym})\phi_s\|\to0$.
-
-**Proof.** Take the inner product of (6.11) with $\phi$. Since $\phi$ is unit,
-the left side is at most $\delta$, which gives (6.12). The final assertion is
-the definition of $o(s)$. The two-state product Dicke code used in the
-collective-oscillator volume is precisely $\operatorname{ran}P_{\rm sym}$;
-under $d=m$, $N=s$, $B=a$, its Hamiltonian is the stated
-$H_s(a)=\hbar K_k/s$. Thus (6.12) is the exact symmetry/confinement
-correspondence needed there. It supplies no oscillator approximation and no
-claim outside the fixed code or its separate hypotheses. $\square$
-
-The proof uses equal block sizes, unit edge weights, an even half-filled token
-layer, and the flat complex least mode. Odd or small $s$, other densities,
-unequal blocks, weighted edges, intrablock edges, and optimal thresholds are not
-covered. The decomposition and normalized ladder coefficients are the cited
-Boolean-lattice intermediates; the sector comparison (6.3), the explicit
-threshold and the confinement inequality are the new graph-dependent inference.
+The requested constants $c_H>0$ and $s_H$ therefore do not follow from the
+published decomposition, the lowering identity, and the spectral projection
+bound alone. In particular, (6.3)–(6.12) are not asserted here: the additional
+coercive estimate controlling nonzero $t$ inside the least-eigenspace kernel is
+still an open mathematical obligation under Assumption 3.1. The existing
+full-state certificate (Theorem 2.1) and its near-minimal-state budget
+(Theorem 4.1) remain valid, but they do not imply the requested
+$\|(I-P_{\rm sym})\phi\|^2=O(\delta/s)$ confinement. Consequently no
+unconditional symmetry/confinement statement is transferred to the fixed-code
+oscillator result.
 
 ## 追加锚（本行以下为增补区）
