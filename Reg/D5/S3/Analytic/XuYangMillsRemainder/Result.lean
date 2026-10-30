@@ -181,11 +181,12 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Analytic.XuYangMillsRemainder.Result
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "fn", "arg", "arg", "arg"]
-        stateBinder := 0
-        functionOperand := false
-        stateOperand := none
-        booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "fn", "arg", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -255,11 +256,12 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Analytic.XuYangMillsRemainder.Result
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "arg", "arg"]
-        stateBinder := 0
-        functionOperand := false
-        stateOperand := none
-        booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -323,11 +325,12 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Analytic.XuYangMillsRemainder.Result
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "fn", "arg", "fn", "arg"]
-        stateBinder := 0
-        functionOperand := false
-        stateOperand := none
-        booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
