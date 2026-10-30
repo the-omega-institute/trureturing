@@ -156,7 +156,9 @@ private theorem prefix_formula (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) (n : �
           rw [Nat.add_mod, hwrap, Nat.mod_eq_of_lt (by omega : 1 < d),
             Nat.sub_add_cancel (by omega : 1 ≤ d), Nat.mod_self]
         simp [hwrap, hnext, baseValue]
-      · have hlt : n % d < d - 1 := by omega
+        ring
+      · have hmod : n % d < d := Nat.mod_lt _ (by omega)
+        have hlt : n % d < d - 1 := by omega
         have hnext : (n + 1) % d = n % d + 1 := by
           rw [Nat.add_mod, Nat.mod_eq_of_lt (by omega : 1 < d),
             Nat.mod_eq_of_lt (by omega : n % d + 1 < d)]
