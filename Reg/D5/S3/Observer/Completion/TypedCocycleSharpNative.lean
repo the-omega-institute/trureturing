@@ -10,8 +10,8 @@ open D5.S3.Observer.Completion.TypedCocycleSharpNative
 namespace Reg.D5.S3.Observer.Completion.TypedCocycleSharpNative
 
 abbrev signature : Signature where
-  Params := Unit
-  State _ := ℝ × ℝ
+  Params := ℝ
+  State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -20,18 +20,18 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature := realize signature
-  (fun _ _ x => quantum x.1 x.2) (fun e => nomatch e)
+  (fun _ h ε => quantum h ε) (fun e => nomatch e)
 def rejected : Realization signature := realize signature
   (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law f := ∀ (h ε : ℝ), 0 < h → 0 < ε → ∀ C E : Vector,
-    LeastCost (StaticCost h ε C E) ((f.readout () () (h, ε)) ^ 2) ∧
-    LeastCost (OnlineCost h ε C E) ((f.readout () () (h, ε)) ^ 2) ∧
+    LeastCost (StaticCost h ε C E) ((f.readout () h ε) ^ 2) ∧
+    LeastCost (OnlineCost h ε C E) ((f.readout () h ε) ^ 2) ∧
     (Feasible h ε C E (fun _ : History => ()) ↔ 2 * ε < h) ∧
     (∀ k : ℕ, (k : ℝ) * h ≤ 2 * ε → 2 * ε < (k + 1 : ℕ) * h →
-      f.readout () () (h, ε) = k + 1)
+      f.readout () h ε = k + 1)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
@@ -41,7 +41,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), (1, 1/4), (1, 1), ?_⟩
+  refine ⟨1, 1/4, 1, ?_⟩
   norm_num [actual, realize, quantum]
 
 def family : Registration arena (type_of% (@whole_sharp_native_law)) where
@@ -66,7 +66,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => quantum x.1 x.2) (fun e => nomatch e))
+  readout := some (realize signature (fun _ h ε => quantum h ε) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -74,10 +74,10 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.Observer.Completion.TypedCocycleSharpNative
     definition := none
-    coordinates := #[0, 1]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "arg", "fn"]
-      stateBinder := 0
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "fn", "arg"]
+      stateBinder := 1
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false }] }

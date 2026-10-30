@@ -44,6 +44,8 @@ inductive History
   | terminal (m n : ℕ)
   deriving DecidableEq
 
+instance : Inhabited History := ⟨.pre 0⟩
+
 def endpoint : History → Vertex
   | .pre _ => .p
   | .mid _ _ => .s
@@ -213,7 +215,6 @@ private theorem totals (h : ℝ) (C E : Vector) (u : History) :
       simp [word, List.append_assoc]
     rw [hw, accumulate_append h C E .p .s _ [.e] (executes (.mid m n))]
     have hm := totals_mid h C E m n
-    simp only [word] at hm
     rw [hm]
     simp [accumulate, transition, edgeVector, native, Prod.mk_add_mk]
     apply Prod.ext <;> dsimp <;> ring

@@ -186,9 +186,8 @@ private theorem modular_close (h ε : ℝ) (hh : 0 < h) (q : ℕ)
     simpa only [Nat.cast_natAbs, Int.cast_abs, Int.cast_sub, Int.cast_natCast] using hh'
   have hg'' := mul_le_mul_of_nonneg_left hg' hh.le
   have hr : |h * x - h * y| = h * |(y : ℝ) - x| := by
-    rw [← abs_of_pos hh, ← abs_mul, ← abs_neg]
-    congr 1
-    ring
+    rw [show h * (x : ℝ) - h * y = h * ((x : ℝ) - y) by ring,
+      abs_mul, abs_of_pos hh, abs_sub_comm]
   rw [hr] at hc
   linarith
 
