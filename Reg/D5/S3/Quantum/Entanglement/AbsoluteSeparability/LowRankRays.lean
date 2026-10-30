@@ -230,7 +230,7 @@ theorem rejected_law : ¬ arena.{u}.Law rejected := by
   norm_num [rejected, realize, Matrix.sub_apply, Matrix.smul_apply,
     Matrix.one_apply, Matrix.vecMulVec_apply, Pi.star_apply, Complex.le_def] at bad
 
-def source_registration : Registration arena.{u} (type_of% @rank_one_upper.{u}) where
+def evidence : Registration arena.{u} (type_of% @rank_one_upper.{u}) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨rank_one_upper, rejected, rejected_law⟩
@@ -251,14 +251,14 @@ def registration :
       (@rank_one_upper.{u}) (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.RankOneUpper.unit
   realizationName :=
-    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.RankOneUpper.source_registration
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.RankOneUpper.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
   objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena.{u} ⟨source_registration.{u}⟩
+  realization := .source arena.{u} ⟨evidence.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ z => ‖z‖ ^ 2) (fun e => nomatch e))
@@ -271,7 +271,8 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg", "arg", "arg", "body"]
+      path := #["body", "body", "body", "body", "arg", "fn", "arg",
+        "fn", "arg", "arg", "arg", "body"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg", "arg"]
@@ -281,7 +282,7 @@ def registration :
   options := #[] }
 
 #print _root_.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.rank_one_upper
-#print axioms source_registration
+#print axioms evidence
 #print axioms registration
 
 end Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.RankOneUpper

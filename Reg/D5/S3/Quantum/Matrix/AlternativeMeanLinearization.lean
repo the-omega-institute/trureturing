@@ -227,7 +227,7 @@ theorem rejected_law : ¬ arena.Law HalfPower.rejected := by
   have bad := law (n := 1) (A := 1) Matrix.PosDef.one
   norm_num [HalfPower.rejected, realize, cfc_const_zero] at bad
 
-def source_registration : Registration arena (type_of% @half_eq_sqrt) where
+def evidence : Registration arena (type_of% @half_eq_sqrt) where
   actual := HalfPower.actual
   bridge := Iff.rfl
   variation := ⟨half_eq_sqrt, HalfPower.rejected, rejected_law⟩
@@ -243,14 +243,14 @@ def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@half_eq_sqrt) (Realization HalfPower.signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.HalfEqSqrt.unit
-  realizationName := `Reg.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.HalfEqSqrt.source_registration
+  realizationName := `Reg.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.HalfEqSqrt.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
   objectArena := .source ⟨arena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨source_registration⟩
+  realization := .source arena ⟨evidence⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize HalfPower.signature (fun _ _ x => x ^ (1 / 2 : ℝ)) (fun e => nomatch e))
@@ -273,7 +273,7 @@ def registration :
   options := #[] }
 
 #print _root_.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.half_eq_sqrt
-#print axioms source_registration
+#print axioms evidence
 #print axioms registration
 
 end Reg.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.HalfEqSqrt
@@ -297,7 +297,7 @@ theorem rejected_law : ¬ arena.Law HalfPower.rejected := by
   have bad := bad.1
   norm_num [HalfPower.rejected, realize, cfc_const_zero] at bad
 
-def source_registration : Registration arena (type_of% @half_inverse) where
+def evidence : Registration arena (type_of% @half_inverse) where
   actual := HalfPower.actual
   bridge := Iff.rfl
   variation := ⟨half_inverse, HalfPower.rejected, rejected_law⟩
@@ -313,14 +313,14 @@ def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@half_inverse) (Realization HalfPower.signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.HalfInverse.unit
-  realizationName := `Reg.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.HalfInverse.source_registration
+  realizationName := `Reg.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.HalfInverse.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
   objectArena := .source ⟨arena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨source_registration⟩
+  realization := .source arena ⟨evidence⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize HalfPower.signature (fun _ _ x => x ^ (1 / 2 : ℝ)) (fun e => nomatch e))
@@ -343,7 +343,7 @@ def registration :
   options := #[] }
 
 #print _root_.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.half_inverse
-#print axioms source_registration
+#print axioms evidence
 #print axioms registration
 
 end Reg.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.HalfInverse
