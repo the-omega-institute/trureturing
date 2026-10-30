@@ -6,23 +6,12 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Tomography/PauliFisherGHZRefutation.claim; result=D5/S3/Quantum/Tomography/PauliFisherGHZRefutation.result; claim=D5/S3/Quantum/Tomography/PauliFisherGHZRefutation.claim
    digest: GHZ phase tangents refute a uniform lower bound for mean Pauli Fisher information. -/
 
+import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.Calculus.Deriv.Prod
 import Mathlib.Analysis.Calculus.Deriv.Star
-import Mathlib.Analysis.Matrix.Normed
-import Mathlib.Analysis.Complex.Order
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 set_option linter.style.longLine false
@@ -187,7 +176,7 @@ private lemma corner_expectation {α : Type} [Fintype α] [DecidableEq α]
      (if i = b ∧ j = b then bb else 0) +
      (if i = b ∧ j = a then ba else 0) +
      (if i = a ∧ j = b then ab else 0)) * u j) = _
-  simp [add_mul, mul_add, Finset.mul_sum,
+  simp [add_mul, mul_add,
     Finset.sum_add_distrib, ite_mul, mul_ite, ite_and, mul_comm, mul_left_comm,
     mul_assoc]
 
@@ -245,8 +234,7 @@ private lemma phase_norm (n : ℕ) (hn : 0 < n) (θ : ℝ) :
     rw [Matrix.mul_apply]
     simp_rw [hv]
     by_cases ha : a = (fun _ => 0) <;> by_cases hb : a = (fun _ => 1) <;>
-      simp_all [mul_ite, ite_mul, ite_and, Finset.sum_ite_irrel]
-    all_goals try simp only [Complex.star_def] at hu ⊢
+      simp_all [mul_ite, ite_and]
     all_goals ring_nf at hu ⊢
     all_goals try simp only [Complex.I_sq]
     all_goals linear_combination hu / 4
@@ -255,17 +243,11 @@ private lemma phase_norm (n : ℕ) (hn : 0 < n) (θ : ℝ) :
     simp_rw [hd]
     rw [Finset.sum_add_distrib]
     simp
-    <;> norm_num
+    norm_num
   rw [ht]
   norm_num
 
-private lemma pauli_eigen_apply (s : Fin 3) (o b : Fin 2) :
-    pauliEigen s o b =
-      if s = 2 then if b = o then 1 else 0
-      else (if b = 0 then 1 else (-1 : ℂ) ^ (o : ℕ) *
-        (if s = 0 then 1 else Complex.I)) / (Real.sqrt 2 : ℂ) := rfl
-
-private lemma z_setting_zero (n : ℕ) (hn : 0 < n) (θ : ℝ)
+private lemma z_setting_zero (n : ℕ) (_hn : 0 < n) (θ : ℝ)
     (s : Fin n → Fin 3) (hs : ∃ j, s j = 2) :
     settingFisher (ghz n θ) (phaseDirection n θ) s = 0 := by
   change (∑ o, (star (productVector s o) ⬝ᵥ
@@ -279,11 +261,15 @@ private lemma z_setting_zero (n : ℕ) (hn : 0 < n) (θ : ℝ)
     · right
       change (∏ k, pauliEigen (s k) (o k) 1) = 0
       apply Finset.prod_eq_zero (Finset.mem_univ j)
-      simp [pauli_eigen_apply, hj, ho]
+      rw [hj]
+      change (if (1 : Fin 2) = o j then (1 : ℂ) else 0) = 0
+      simp [ho]
     · left
       change (∏ k, pauliEigen (s k) (o k) 0) = 0
       apply Finset.prod_eq_zero (Finset.mem_univ j)
-      simp [pauli_eigen_apply, hj, Ne.symm ho]
+      rw [hj]
+      change (if (0 : Fin 2) = o j then (1 : ℂ) else 0) = 0
+      simp [Ne.symm ho]
   rw [phase_expectation]
   rcases hp with hp | hp <;> simp [hp]
 
@@ -292,15 +278,27 @@ private lemma pauli_xy_products (s : Fin 3) (hs : s ≠ 2) (o : Fin 2) :
     star (pauliEigen s o 1) * pauliEigen s o 1 = (1 / 2 : ℂ) ∧
     star (pauliEigen s o 1) * pauliEigen s o 0 =
       ((-1 : ℂ) ^ (o : ℕ) * (if s = 0 then 1 else -Complex.I)) / 2 := by
-  have hroot : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by
-    exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
-  have hroot0 : (Real.sqrt 2 : ℂ) ≠ 0 := by
-    exact_mod_cast (ne_of_gt (Real.sqrt_pos.2 (by norm_num : (0 : ℝ) < 2)))
-  fin_cases s <;> fin_cases o <;> simp_all [pauli_eigen_apply, Complex.star_def]
+  have hvals : pauliEigen s o 0 = 1 / (Real.sqrt 2 : ℂ) ∧
+      pauliEigen s o 1 = ((-1 : ℂ) ^ (o : ℕ) *
+        (if s = 0 then 1 else Complex.I)) / (Real.sqrt 2 : ℂ) := by
+    constructor
+    · change (if s = 2 then (if (0 : Fin 2) = o then (1 : ℂ) else 0)
+        else 1 / (Real.sqrt 2 : ℂ)) = _
+      rw [ite_eq_right hs]
+    · change (if s = 2 then (if (1 : Fin 2) = o then (1 : ℂ) else 0)
+        else ((-1 : ℂ) ^ (o : ℕ) * (if s = 0 then 1 else Complex.I)) /
+          (Real.sqrt 2 : ℂ)) = _
+      rw [ite_eq_right hs]
+  rw [hvals.1, hvals.2]
+  fin_cases o <;> by_cases h : s = 0 <;> norm_num [h, Complex.star_def]
   all_goals repeat' constructor
-  all_goals field_simp
-  all_goals try simp only [Complex.I_sq]
-  all_goals first | linear_combination -hroot | linear_combination hroot
+  all_goals ring_nf
+  all_goals try simp only [← inv_pow, Complex.I_sq]
+  all_goals norm_num
+  all_goals first
+    | rw [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+    | rw [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+  all_goals norm_num
 
 private lemma xy_amplitudes (n : ℕ) (s : Fin n → Fin 3)
     (hs : ∀ j, s j ≠ 2) (o : Fin n → Fin 2) :
@@ -326,10 +324,10 @@ private lemma xy_amplitudes (n : ℕ) (s : Fin n → Fin 3)
   refine ⟨?_, ?_, ?_⟩
   · rw [hzero]
     simp_rw [(hp _).1]
-    simp [div_pow]
+    simp
   · rw [hone]
     simp_rw [(hp _).2.1]
-    simp [div_pow]
+    simp
   · rw [hcross]
     simp_rw [(hp _).2.2]
     rw [Finset.prod_div_distrib]
@@ -364,9 +362,7 @@ private lemma xy_prob_direction (n : ℕ) (hn : 0 < n)
       ring
     rw [hform]
     simp only [Complex.star_def, Complex.add_conj, Complex.ofReal_mul,
-      Complex.ofReal_ofNat, mul_div_cancel_left₀ _ (by norm_num : (2 : ℂ) ≠ 0),
-      ← Complex.ofReal_pow, Complex.div_ofReal_re, Complex.add_re, Complex.one_re,
-      Complex.ofReal_re]
+      Complex.ofReal_ofNat, mul_div_cancel_left₀ _ (by norm_num : (2 : ℂ) ≠ 0)]
     rw [show (2 : ℂ) ^ n = Complex.ofReal ((2 : ℝ) ^ n) from
       (Complex.ofReal_pow 2 n).symm]
     simp only [Complex.div_ofReal_re, Complex.add_re, Complex.one_re,
@@ -427,7 +423,7 @@ private lemma phase_coordinates (n : ℕ) (s : Fin n → Fin 3) (o : Fin n → F
   rcases fourth_root_cases _ (outcome_phase_fourth n s o) with h | h | h | h <;>
     rw [h] <;>
     simp [Complex.exp_mul_I, ← Complex.ofReal_cos, ← Complex.ofReal_sin,
-      ← Complex.ofReal_div,
+      -Complex.ofReal_div,
       Real.cos_pi_div_four, Real.sin_pi_div_four, Complex.mul_re, Complex.mul_im] <;>
     nlinarith
 
@@ -483,7 +479,7 @@ private lemma xy_setting_one (n : ℕ) (hn : 0 < n)
   change (∑ o, _) = 1
   simp_rw [hterm]
   rw [← Finset.sum_div, Finset.sum_sub_distrib, hrez]
-  simp [Fintype.card_fun, Nat.cast_pow]
+  simp [Nat.cast_pow]
 
 private lemma xy_setting_count (n : ℕ) :
     (∑ s : Fin n → Fin 3, if ∀ j, s j ≠ 2 then (1 : ℝ) else 0) = 2 ^ n := by
@@ -493,9 +489,9 @@ private lemma xy_setting_count (n : ℕ) :
     by_cases hs : ∀ j, s j ≠ 2
     · simp [hs]
     · obtain ⟨j, hj⟩ := not_forall.mp hs
-      rw [if_neg hs]
+      rw [ite_eq_right hs]
       symm
-      exact Finset.prod_eq_zero (Finset.mem_univ j) (if_neg hj)
+      exact Finset.prod_eq_zero (Finset.mem_univ j) (ite_eq_right hj)
   simp_rw [h]
   rw [← Fintype.prod_sum (fun (_ : Fin n) (a : Fin 3) =>
     if a ≠ 2 then (1 : ℝ) else 0)]
@@ -514,8 +510,8 @@ private lemma average_exact (n : ℕ) (hn : 0 < n) :
   apply Finset.sum_congr rfl
   intro s _
   by_cases hs : ∀ j, s j ≠ 2
-  · rw [if_pos hs, hxy s hs]
-  · rw [if_neg hs, hz s]
+  · rw [ite_eq_left hs, hxy s hs]
+  · rw [ite_eq_right hs, hz s]
     simpa only [not_forall, not_not] using hs
 
 private lemma small_ratio (c : ℝ) (hc : 0 < c) :
