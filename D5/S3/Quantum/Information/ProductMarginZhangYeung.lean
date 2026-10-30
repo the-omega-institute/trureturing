@@ -396,7 +396,7 @@ private theorem row_ac (c d : LocalPair) :
     CStarMatrix.ofMatrix.symm (localRecord c).1 (a,i) (b,j)
   simp only [rowMixture, localRecord, record_entry, Fin.sum_univ_two]
   fin_cases a <;> fin_cases b <;> fin_cases i <;> fin_cases j <;>
-    simp [positiveMargin, negativeMargin, productState, Matrix.kronecker_apply,
+    simp [positiveMargin, negativeMargin, productState, Matrix.kroneckerMap,
       LocalPair.plus, LocalPair.minus, qubitState, qubitMatrix] <;> ring
 
 private theorem row_ad (c d : LocalPair) :
@@ -408,7 +408,7 @@ private theorem row_ad (c d : LocalPair) :
     CStarMatrix.ofMatrix.symm (localRecord d).1 (a,i) (b,j)
   simp only [rowMixture, localRecord, record_entry, Fin.sum_univ_two]
   fin_cases a <;> fin_cases b <;> fin_cases i <;> fin_cases j <;>
-    simp [positiveMargin, negativeMargin, productState, Matrix.kronecker_apply,
+    simp [positiveMargin, negativeMargin, productState, Matrix.kroneckerMap,
       LocalPair.plus, LocalPair.minus, qubitState, qubitMatrix] <;> ring
 
 private def abProbability {c d : LocalPair} (k : Coupling c d) (ab : AB) : ℝ :=
@@ -444,7 +444,7 @@ private theorem actual_ab {c d : LocalPair} (k : Coupling c d) :
   have hkreal : (k.K.trace.re : ℂ) = k.K.trace := by
     apply Complex.ext
     · simp
-    · simpa using (Complex.nonneg_iff.mp k.positive.trace_nonneg).2.symm
+    · simpa using (Complex.nonneg_iff.mp k.positive.trace_nonneg).2
   have hp : (CStarMatrix.ofMatrix.symm (positiveMargin c d).1).trace = 1 :=
     (positiveMargin c d).2.2
   have hq : (CStarMatrix.ofMatrix.symm (negativeMargin c d).1).trace = 1 :=
@@ -453,7 +453,7 @@ private theorem actual_ab {c d : LocalPair} (k : Coupling c d) :
     rcases ab with ⟨a,b⟩
     fin_cases a <;> fin_cases b <;>
       simp [block, abProbability, Matrix.trace_smul, Matrix.trace_sub,
-        hp, hq, ← hkreal, Complex.real_smul] <;> ring
+        hp, hq, Complex.real_smul] <;> push_cast <;> rw [hkreal] <;> ring
   by_cases h : a = b
   · subst b
     simp only [↓reduceIte]
@@ -509,8 +509,308 @@ theorem actual_gap_identity (c d : LocalPair) (k : Coupling c d) :
     local_record_entropy, row_entropy, ab_entropy, actual_cd,
     (product_marginals c d).1, (product_marginals c d).2,
     holevo_value, quantumMutualInformation]
-  rw [(product_marginals c d).1, (product_marginals c d).2]
   ring
+
+private theorem local_record_marginals (c : LocalPair) :
+    marginalRight (localRecord c) = uniformBit ∧
+    marginalLeft (localRecord c) = c.average := by
+  constructor
+  · unfold localRecord recordState
+    rw [marginalRight_mixture]
+    simp only [marginalRight_productState]
+    rfl
+  · unfold localRecord recordState
+    rw [marginalLeft_mixture]
+    simpa only [marginalLeft_productState] using average_mixture c
+
+private theorem local_record_information (c : LocalPair) :
+    quantumMutualInformation (localRecord c) = qubitHolevo c.x c.z c.disk := by
+  rw [quantumMutualInformation, (local_record_marginals c).1,
+    (local_record_marginals c).2, uniform_bit_entropy, local_record_entropy, holevo_value]
+  ring
+
+private theorem uniform_faithful :
+    (CStarMatrix.ofMatrix.symm uniformBit.1).PosDef := by
+  have he : uniformBit = qubitState 0 0 (by norm_num) := by
+    apply Subtype.ext
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [uniformBit, mixtureState, pointerState, Fin.sum_univ_two,
+        qubitState, qubitMatrix, Matrix.diagonal_apply]
+  rw [he]
+  exact average_faithful ⟨0, 0, le_refl _, le_refl _, by norm_num⟩ (by norm_num)
+
+private theorem local_preparation_information
+    (rho sigma : DensityState (Bit × Bit)) (p : Bit → DensityState Bit)
+    (hrA : (CStarMatrix.ofMatrix.symm (marginalRight rho).1).PosDef)
+    (hrB : (CStarMatrix.ofMatrix.symm (marginalLeft rho).1).PosDef)
+    (hsA : (CStarMatrix.ofMatrix.symm (marginalRight sigma).1).PosDef)
+    (hsB : (CStarMatrix.ofMatrix.symm (marginalLeft sigma).1).PosDef)
+    (he : ∀ r t : Bit × Bit,
+      ∑ i : Bit, CStarMatrix.ofMatrix.symm rho.1 (r.1,i) (t.1,i) *
+        CStarMatrix.ofMatrix.symm (p i).1 r.2 t.2 =
+          CStarMatrix.ofMatrix.symm sigma.1 r t)
+    (hp : ∀ r t : Bit × Bit,
+      ∑ i : Bit, CStarMatrix.ofMatrix.symm
+          (productState (marginalRight rho) (marginalLeft rho)).1 (r.1,i) (t.1,i) *
+        CStarMatrix.ofMatrix.symm (p i).1 r.2 t.2 =
+          CStarMatrix.ofMatrix.symm
+            (productState (marginalRight sigma) (marginalLeft sigma)).1 r t) :
+    quantumMutualInformation sigma ≤ quantumMutualInformation rho := by
+  obtain ⟨channel, hc⟩ :=
+    D5.S3.Quantum.Foundation.FinitePreparationChannel.finite_local_preparation_quantum_channel
+      (fun i => fromLegacyDensityState (p i)) (s := Bit)
+  have hm (u v : DensityState (Bit × Bit))
+      (huv : ∀ r t : Bit × Bit,
+        ∑ i : Bit, CStarMatrix.ofMatrix.symm u.1 (r.1,i) (t.1,i) *
+          CStarMatrix.ofMatrix.symm (p i).1 r.2 t.2 =
+            CStarMatrix.ofMatrix.symm v.1 r t) :
+      channel.mapState (fromLegacyDensityState u) = fromLegacyDensityState v := by
+    apply Subtype.ext
+    apply CStarMatrix.ofMatrix.symm.injective
+    ext r t
+    change CStarMatrix.ofMatrix.symm
+      (channel.toCompletelyPositiveMap
+        (CStarMatrix.ofMatrix (CStarMatrix.ofMatrix.symm u.1))) r t = _
+    rw [hc]
+    exact huv r t
+  exact mutual_information_dpi rho sigma channel hrA hrB hsA hsB
+    (hm rho sigma he) (hm _ _ hp)
+
+private theorem prepare_record_information (e f p : LocalPair)
+    (he : e.x < 1) (hf : f.x < 1) (hfx : f.x = p.x) (hfz : f.z = e.z * p.z) :
+    quantumMutualInformation (localRecord f) ≤ quantumMutualInformation (localRecord e) := by
+  apply local_preparation_information (localRecord e) (localRecord f)
+    (fun i => if i = 0 then p.plus else p.minus)
+  · rw [(local_record_marginals e).1]; exact uniform_faithful
+  · rw [(local_record_marginals e).2]; exact average_faithful e he
+  · rw [(local_record_marginals f).1]; exact uniform_faithful
+  · rw [(local_record_marginals f).2]; exact average_faithful f hf
+  · intro ⟨a,i⟩ ⟨b,j⟩
+    simp only [localRecord, record_entry, Fin.sum_univ_two]
+    fin_cases a <;> fin_cases b <;> fin_cases i <;> fin_cases j <;>
+      simp [LocalPair.plus, LocalPair.minus, qubitState, qubitMatrix, hfx, hfz] <;> ring
+  · intro ⟨a,i⟩ ⟨b,j⟩
+    rw [(local_record_marginals e).1, (local_record_marginals e).2,
+      (local_record_marginals f).1, (local_record_marginals f).2]
+    fin_cases a <;> fin_cases b <;> fin_cases i <;> fin_cases j <;>
+      simp [productState, Matrix.kroneckerMap, uniformBit, mixtureState,
+        pointerState, Fin.sum_univ_two, Matrix.diagonal_apply, LocalPair.average,
+        LocalPair.plus, LocalPair.minus, qubitState, qubitMatrix, hfx] <;> ring
+
+private def LocalPair.scaled (c : LocalPair) (t : ℝ) (ht : t ∈ Set.Icc (0 : ℝ) 1) :
+    LocalPair :=
+  ⟨c.x, t * c.z, c.x_nonneg, mul_nonneg ht.1 c.z_nonneg, by
+    nlinarith [c.disk, mul_nonneg (show 0 ≤ 1 - t ^ 2 by nlinarith [ht.1, ht.2])
+      (sq_nonneg c.z)]⟩
+
+private theorem scaled_average (c : LocalPair) (t : ℝ) (ht : t ∈ Set.Icc (0 : ℝ) 1) :
+    (c.scaled t ht).average = c.average := rfl
+
+private theorem swap_record_marginals (c : LocalPair) :
+    marginalRight (reindexState (Equiv.prodComm Bit Bit) (localRecord c)) = c.average ∧
+    marginalLeft (reindexState (Equiv.prodComm Bit Bit) (localRecord c)) = uniformBit := by
+  constructor
+  · exact (local_record_marginals c).2
+  · exact (local_record_marginals c).1
+
+private theorem prepare_product_information (c d p : LocalPair) (t : ℝ)
+    (ht : t ∈ Set.Icc (0 : ℝ) 1) (hc : c.x < 1) (hd : d.x < 1)
+    (hdx : d.x = p.x) (hdz : d.z = t * p.z) :
+    quantumMutualInformation (productMixture c d) ≤
+      quantumMutualInformation (localRecord (c.scaled t ht)) := by
+  rw [← mutual_information_swap (localRecord (c.scaled t ht))]
+  apply local_preparation_information
+    (reindexState (Equiv.prodComm Bit Bit) (localRecord (c.scaled t ht)))
+    (productMixture c d) (fun i => if i = 0 then p.plus else p.minus)
+  · rw [(swap_record_marginals _).1, scaled_average]; exact average_faithful c hc
+  · rw [(swap_record_marginals _).2]; exact uniform_faithful
+  · rw [(product_marginals c d).1]; exact average_faithful c hc
+  · rw [(product_marginals c d).2]; exact average_faithful d hd
+  · intro ⟨a,i⟩ ⟨b,j⟩
+    change (∑ v : Bit, CStarMatrix.ofMatrix.symm
+      (localRecord (c.scaled t ht)).1 (v,a) (v,b) *
+        CStarMatrix.ofMatrix.symm (if v = 0 then p.plus else p.minus).1 i j) = _
+    simp only [localRecord, record_entry, ↓reduceIte, Fin.sum_univ_two]
+    fin_cases a <;> fin_cases b <;> fin_cases i <;> fin_cases j <;>
+      simp [productMixture, mixtureState, Fin.sum_univ_two, positiveMargin, negativeMargin,
+        productState, Matrix.kroneckerMap, LocalPair.plus, LocalPair.minus,
+        LocalPair.scaled, qubitState, qubitMatrix, hdx, hdz] <;> ring
+  · intro ⟨a,i⟩ ⟨b,j⟩
+    rw [(swap_record_marginals _).1, (swap_record_marginals _).2,
+      scaled_average, (product_marginals c d).1, (product_marginals c d).2]
+    fin_cases a <;> fin_cases b <;> fin_cases i <;> fin_cases j <;>
+      simp [productState, Matrix.kroneckerMap, uniformBit, mixtureState,
+        pointerState, Fin.sum_univ_two, Matrix.diagonal_apply, LocalPair.average,
+        LocalPair.plus, LocalPair.minus, qubitState, qubitMatrix, hdx] <;> ring
+
+private theorem mutual_information_nonneg (rho : DensityState (Bit × Bit))
+    (hA : (CStarMatrix.ofMatrix.symm (marginalRight rho).1).PosDef)
+    (hB : (CStarMatrix.ofMatrix.symm (marginalLeft rho).1).PosDef) :
+    0 ≤ quantumMutualInformation rho := by
+  have h := local_preparation_information rho
+    (productState (marginalRight rho) uniformBit) (fun _ => uniformBit)
+    hA hB (by rw [marginalRight_productState]; exact hA)
+    (by rw [marginalLeft_productState]; exact uniform_faithful) ?_ ?_
+  · simpa only [quantumMutualInformation_productState] using h
+  · intro r t
+    change (∑ i : Bit, CStarMatrix.ofMatrix.symm rho.1 (r.1,i) (t.1,i) *
+      CStarMatrix.ofMatrix.symm uniformBit.1 r.2 t.2) =
+        (∑ i : Bit, CStarMatrix.ofMatrix.symm rho.1 (r.1,i) (t.1,i)) *
+          CStarMatrix.ofMatrix.symm uniformBit.1 r.2 t.2
+    exact (Finset.sum_mul _ _ _).symm
+  · intro r t
+    rw [marginalRight_productState, marginalLeft_productState]
+    change (∑ i : Bit, CStarMatrix.ofMatrix.symm (marginalRight rho).1 r.1 t.1 *
+      CStarMatrix.ofMatrix.symm (marginalLeft rho).1 i i *
+      CStarMatrix.ofMatrix.symm uniformBit.1 r.2 t.2) =
+      CStarMatrix.ofMatrix.symm (marginalRight rho).1 r.1 t.1 *
+        CStarMatrix.ofMatrix.symm uniformBit.1 r.2 t.2
+    calc
+      _ = CStarMatrix.ofMatrix.symm (marginalRight rho).1 r.1 t.1 *
+          (∑ i : Bit, CStarMatrix.ofMatrix.symm (marginalLeft rho).1 i i) *
+          CStarMatrix.ofMatrix.symm uniformBit.1 r.2 t.2 := by
+        simp only [Finset.sum_mul, Finset.mul_sum]
+      _ = _ := by rw [(marginalLeft rho).2.2]; ring
+
+private def LocalPair.radius (c : LocalPair) : ℝ := Real.sqrt (1 - c.x ^ 2)
+private def LocalPair.reliability (c : LocalPair) : ℝ := c.z / c.radius
+
+private theorem local_radius_sq (c : LocalPair) : c.radius ^ 2 = 1 - c.x ^ 2 :=
+  Real.sq_sqrt (by nlinarith [c.disk, sq_nonneg c.z])
+
+private def LocalPair.pure (c : LocalPair) : LocalPair :=
+  ⟨c.x, c.radius, c.x_nonneg, Real.sqrt_nonneg _, by rw [local_radius_sq]; ring_nf⟩
+
+private theorem reliability_range (c : LocalPair) (hx : c.x < 1) :
+    c.reliability ∈ Set.Icc (0 : ℝ) 1 := by
+  have hr : 0 < c.radius := Real.sqrt_pos.mpr (by nlinarith [c.x_nonneg])
+  refine ⟨div_nonneg c.z_nonneg hr.le, (div_le_one hr).mpr ?_⟩
+  have hs := local_radius_sq c
+  nlinarith [c.disk, c.z_nonneg]
+
+private theorem reliability_radius (c : LocalPair) (hx : c.x < 1) :
+    c.reliability * c.radius = c.z := by
+  have hr : c.radius ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by nlinarith [c.x_nonneg]))
+  exact div_mul_cancel₀ _ hr
+
+private theorem reliability_sq (c : LocalPair) :
+    c.reliability ^ 2 = c.z ^ 2 / (1 - c.x ^ 2) := by
+  rw [LocalPair.reliability, div_pow, local_radius_sq]
+
+private theorem holevo_nonneg (c : LocalPair) : 0 ≤ qubitHolevo c.x c.z c.disk := by
+  have h := D5.S3.Quantum.Information.QubitEntropyContraction.qubit_holevo_contraction
+    c.disk (show (1 : ℝ) ∈ Set.Icc (0 : ℝ) 1 by norm_num)
+  simpa only [one_mul] using h.1
+
+private theorem product_information_contraction (c d : LocalPair)
+    (hc : c.x < 1) (hd : d.x < 1) :
+    quantumMutualInformation (productMixture c d) ≤
+      d.reliability ^ 2 * qubitHolevo c.x c.z c.disk := by
+  have h := prepare_product_information c d d.pure d.reliability
+    (reliability_range d hd) hc hd rfl (reliability_radius d hd).symm
+  rw [local_record_information] at h
+  exact h.trans (D5.S3.Quantum.Information.QubitEntropyContraction.qubit_holevo_contraction
+    c.disk (reliability_range d hd)).2
+
+private theorem product_information_swap (c d : LocalPair) :
+    quantumMutualInformation (productMixture c d) =
+      quantumMutualInformation (productMixture d c) := by
+  have he : reindexState (Equiv.prodComm Bit Bit) (productMixture c d) =
+      productMixture d c := by
+    apply Subtype.ext
+    ext ⟨a,i⟩ ⟨b,j⟩
+    fin_cases a <;> fin_cases b <;> fin_cases i <;> fin_cases j <;>
+      simp [reindexState, productMixture, mixtureState, Fin.sum_univ_two,
+        positiveMargin, negativeMargin, productState, Matrix.kroneckerMap,
+        LocalPair.plus, LocalPair.minus, qubitState, qubitMatrix] <;> ring
+  rw [← he, mutual_information_swap]
+
+private def classicalPair (s : ℝ) (hs : s ∈ Set.Icc (0 : ℝ) 1) : LocalPair :=
+  ⟨0, s, le_refl _, hs.1, by nlinarith [hs.1, hs.2]⟩
+
+private theorem product_information_absolute (c d : LocalPair)
+    (hc : c.x < 1) (hd : d.x < 1) :
+    quantumMutualInformation (productMixture c d) ≤ Real.log 2 -
+      Real.binEntropy ((1 + c.reliability * d.reliability) / 2) := by
+  have hct := reliability_range c hc
+  have hdt := reliability_range d hd
+  have hs : c.reliability * d.reliability ∈ Set.Icc (0 : ℝ) 1 :=
+    ⟨mul_nonneg hct.1 hdt.1, mul_le_one₀ hct.2 hdt.1 hdt.2⟩
+  let e := classicalPair (c.reliability * d.reliability) hs
+  let f := c.scaled d.reliability hdt
+  have hprep := prepare_record_information e f c.pure (by norm_num [e, classicalPair]) hc rfl (by
+    change d.reliability * c.z = (c.reliability * d.reliability) * c.radius
+    rw [mul_assoc, mul_comm d.reliability, ← mul_assoc, reliability_radius c hc]
+    ring)
+  have h := prepare_product_information c d d.pure d.reliability hdt hc hd rfl
+    (reliability_radius d hd).symm
+  have hle := h.trans hprep
+  rw [local_record_information, holevo_value] at hle
+  have heval : vonNeumannEntropy e.average - vonNeumannEntropy e.plus =
+      Real.log 2 - Real.binEntropy ((1 + c.reliability * d.reliability) / 2) := by
+    simp only [e, classicalPair, LocalPair.average, LocalPair.plus, qubit_state_entropy]
+    rw [show (0 : ℝ) ^ 2 + (0 : ℝ) ^ 2 = 0 by norm_num, Real.sqrt_zero]
+    rw [show (0 : ℝ) ^ 2 + (c.reliability * d.reliability) ^ 2 =
+        (c.reliability * d.reliability) ^ 2 by ring, Real.sqrt_sq hs.1]
+    norm_num [Real.binEntropy_two_inv]
+  exact hle.trans_eq heval
+
+private theorem product_mixture_zero_left (c d : LocalPair) (hz : c.z = 0) :
+    productMixture c d = productState c.average d.average := by
+  apply Subtype.ext
+  ext ⟨a,i⟩ ⟨b,j⟩
+  fin_cases a <;> fin_cases b <;> fin_cases i <;> fin_cases j <;>
+    simp [productMixture, mixtureState, Fin.sum_univ_two, positiveMargin, negativeMargin,
+      productState, Matrix.kroneckerMap, LocalPair.average, LocalPair.plus, LocalPair.minus,
+      qubitState, qubitMatrix, hz] <;> ring
+
+/-- The original four-parameter product-margin theorem on its actual sixteen-dimensional
+state. The closed disks and every complex positive common lower matrix remain in scope. -/
+theorem actual_zhang_yeung_nonneg (c d : LocalPair) (k : Coupling c d) :
+    0 ≤ zhangYeungGap k := by
+  rw [actual_gap_identity]
+  have hk : 0 ≤ k.K.trace.re := (trace_coupling_range k).1
+  have hcchi := holevo_nonneg c
+  have hdchi := holevo_nonneg d
+  have hbin : 0 ≤ Real.log 2 - Real.binEntropy k.K.trace.re :=
+    sub_nonneg.mpr Real.binEntropy_le_log_two
+  by_cases hc : c.x < 1
+  · by_cases hd : d.x < 1
+    · have ha : c.reliability ^ 2 ∈ Set.Icc (0 : ℝ) 1 :=
+        ⟨sq_nonneg _, by nlinarith [(reliability_range c hc).1,
+          (reliability_range c hc).2]⟩
+      have hb : d.reliability ^ 2 ∈ Set.Icc (0 : ℝ) 1 :=
+        ⟨sq_nonneg _, by nlinarith [(reliability_range d hd).1,
+          (reliability_range d hd).2]⟩
+      have hs : Real.sqrt (c.reliability ^ 2 * d.reliability ^ 2) =
+          c.reliability * d.reliability := by
+        rw [← mul_pow, Real.sqrt_sq (mul_nonneg (reliability_range c hc).1
+          (reliability_range d hd).1)]
+      apply D5.S3.Quantum.Information.ProductMarginEntropyCertificate.information_budget_nonneg
+        ha hb hk hcchi hdchi
+      · apply mutual_information_nonneg
+        · rw [(product_marginals c d).1]; exact average_faithful c hc
+        · rw [(product_marginals c d).2]; exact average_faithful d hd
+      · rw [reliability_sq, reliability_sq]
+        exact D5.S3.Quantum.Information.ProductMarginQubitOrder.common_lower_trace_bound
+          c.x_nonneg hc d.x_nonneg hd c.disk d.disk k.positive k.le_positive k.le_negative
+      · exact product_information_contraction c d hc hd
+      · rw [product_information_swap]
+        exact product_information_contraction d c hd hc
+      · rw [hs]
+        exact product_information_absolute c d hc hd
+    · have hz : d.z = 0 := by nlinarith [d.disk, d.z_nonneg, d.x_nonneg]
+      have hj : quantumMutualInformation (productMixture c d) = 0 := by
+        rw [product_information_swap, product_mixture_zero_left d c hz,
+          quantumMutualInformation_productState]
+      rw [hj]
+      linarith
+  · have hz : c.z = 0 := by nlinarith [c.disk, c.z_nonneg, c.x_nonneg]
+    rw [product_mixture_zero_left c d hz, quantumMutualInformation_productState]
+    linarith
+
+#print axioms actual_zhang_yeung_nonneg
 
 #print axioms actual_gap_identity
 

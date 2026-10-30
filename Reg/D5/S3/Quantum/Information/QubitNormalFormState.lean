@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 import D5.S3.Quantum.Information.QubitNormalFormState
 
+open scoped ComplexOrder MatrixOrder
+
 noncomputable section
 namespace Reg.D5.S3.Quantum.Information.QubitNormalFormState
 open LeanInformationAudit
