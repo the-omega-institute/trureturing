@@ -4,17 +4,24 @@
    mirror-E: none(waiver:unfrozen-content)
    anchors: []
    utility: none
-   digest: Positive polynomial multipliers turn opposite endpoint signs into strict downward neighborhoods. -/
+   digest: Strict downward neighborhoods under positive polynomial multipliers. -/
 
-import Mathlib.Analysis.Polynomial.Basic
-import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.Topology.Order.IntermediateValue
+module
+
+public import Mathlib.Analysis.Polynomial.Basic
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.Topology.Algebra.Polynomial
+public import Mathlib.Topology.Order.IntermediateValue
+
+/-! Strict signed neighborhoods from polynomial zeros. -/
+
+@[expose] public section
 
 set_option autoImplicit false
 
 namespace D5.S3.Analytic.Interpolation.PolynomialStrictTransition
 
-open Set Filter Topology
+open Set Filter Topology Polynomial
 
 /-- Opposite signs of a function with a positive polynomial multiplier give a
 strict downward transition, including a closed neighborhood inside the interval.
@@ -34,7 +41,7 @@ theorem strict_downward_of_polynomial_multiplier
   have hpr : p.eval r < 0 := by
     rw [← heq r ⟨hlr.le, le_rfl⟩]
     exact mul_neg_of_pos_of_neg (hw r ⟨hlr.le, le_rfl⟩) hr
-  have hp : p ≠ 0 := by intro h; simpa [h] using hpl
+  have hp : p ≠ 0 := by intro h; simp [h] at hpl
   let S : Set ℝ := {x | x ∈ Icc l r ∧ 0 < p.eval x}
   have hSl : l ∈ S := ⟨⟨le_rfl, hlr.le⟩, hpl⟩
   have hSne : S.Nonempty := ⟨l, hSl⟩
@@ -74,7 +81,7 @@ theorem strict_downward_of_polynomial_multiplier
     intro h
     rw [← h] at hpξ0
     linarith
-  have hZ : Set.Finite {x : ℝ | p.eval x = 0} := p.finite_setOf_isRoot hp
+  have hZ : Set.Finite {x : ℝ | p.eval x = 0} := p.finite_setOfPred_isRoot hp
   have hpunct : ({x : ℝ | p.eval x = 0} \ {ξ})ᶜ ∈ 𝓝 ξ :=
     (hZ.subset sdiff_subset).isClosed.isOpen_compl.mem_nhds (by simp)
   obtain ⟨e, he, heZ⟩ := Metric.mem_nhds_iff.mp hpunct
@@ -96,7 +103,7 @@ theorem strict_downward_of_polynomial_multiplier
     constructor <;> linarith [hx.1, hx.2]
   have hleft : ∀ x ∈ Ioo (ξ - δ) ξ, 0 < p.eval x := by
     intro x hx
-    have hxe : dist x ξ < e := by rw [Real.dist_eq, abs_of_neg (by linarith : x - ξ < 0)]; linarith [hx.1]
+    have hxe : dist x ξ < e := by rw [Real.dist_eq, abs_of_neg (by linarith [hx.2] : x - ξ < 0)]; linarith [hx.1]
     have hxne : p.eval x ≠ 0 := hisol hxe (ne_of_lt hx.2)
     by_contra hnot
     have hxneg : p.eval x < 0 := lt_of_le_of_ne (le_of_not_gt hnot) hxne
@@ -116,11 +123,11 @@ theorem strict_downward_of_polynomial_multiplier
     exact hisol hte (ne_of_lt (ht.2.trans hzlt)) ht0
   have hright : ∀ x ∈ Ioo ξ (ξ + δ), p.eval x < 0 := by
     intro x hx
-    have hxe : dist x ξ < e := by rw [Real.dist_eq, abs_of_pos (by linarith : 0 < x - ξ)]; linarith [hx.2]
+    have hxe : dist x ξ < e := by rw [Real.dist_eq, abs_of_pos (by linarith [hx.1] : 0 < x - ξ)]; linarith [hx.2]
     have hxne := hisol hxe (ne_of_gt hx.1)
     by_contra hnot
     have hxpos : 0 < p.eval x := lt_of_le_of_ne (le_of_not_gt hnot) (Ne.symm hxne)
-    have hxS : x ∈ S := ⟨⟨by linarith, by linarith [hx.2]⟩, hxpos⟩
+    have hxS : x ∈ S := ⟨⟨by linarith [hx.1], by linarith [hx.2]⟩, hxpos⟩
     have := le_csSup hSb hxS
     change x ≤ ξ at this
     linarith [hx.1]
@@ -130,12 +137,14 @@ theorem strict_downward_of_polynomial_multiplier
     rw [hpξ0] at this
     exact (mul_eq_zero.mp this).resolve_left (ne_of_gt (hw ξ hξI))
   · intro x hx
-    have hxI : x ∈ Icc l r := (hinside ⟨hx.1.le, by linarith [hx.2]⟩).le
+    have hxI : x ∈ Icc l r := Ioo_subset_Icc_self (hinside ⟨hx.1.le, by linarith [hx.2]⟩)
     have hmul : 0 < w x * g x := by rw [heq x hxI]; exact hleft x hx
     exact (mul_pos_iff_of_pos_left (hw x hxI)).mp hmul
   · intro x hx
-    have hxI : x ∈ Icc l r := (hinside ⟨by linarith [hx.1], hx.2.le⟩).le
+    have hxI : x ∈ Icc l r := Ioo_subset_Icc_self (hinside ⟨by linarith [hx.1], hx.2.le⟩)
     have hmul : w x * g x < 0 := by rw [heq x hxI]; exact hright x hx
-    exact (mul_neg_iff_of_pos_left (hw x hxI)).mp hmul
+    by_contra h
+    have := mul_nonneg (hw x hxI).le (le_of_not_gt h)
+    linarith
 
 end D5.S3.Analytic.Interpolation.PolynomialStrictTransition
