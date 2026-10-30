@@ -602,10 +602,15 @@ private theorem rational_real_average (h : ℂ → ℂ) (hh : Differentiable ℂ
         (rationalKernel r z + conj (rationalKernel r z)) / 2 :=
       RCLike.re_eq_add_conj (rationalKernel r z)
     have hzconj : conj z = z⁻¹ := (RCLike.inv_eq_conj hz').symm
+    have hrconj : conj (r : ℂ) = (r : ℂ) := by
+      apply Complex.ext
+      · rfl
+      · change -(0 : ℝ) = 0
+        exact neg_zero
     have hcj : conj (rationalKernel r z) =
         conj z / (1 + (r : ℂ) ^ 2 * conj z ^ 2) := by
       simp only [rationalKernel, _root_.map_div₀, _root_.map_add, _root_.map_one,
-        _root_.map_mul, _root_.map_pow, RCLike.conj_ofReal]
+        _root_.map_mul, _root_.map_pow, hrconj]
     have hcj' : conj (rationalKernel r z) = z / (z ^ 2 + (r : ℂ) ^ 2) := by
       rw [hcj, hzconj]
       field_simp [hz0, hd]
@@ -772,14 +777,13 @@ private theorem primitive_weighted_identity (h H : ℂ → ℂ)
   have hdF (z : ℂ) : HasDerivAt F (D z) z := by
     convert! ((hH _).comp z (((hasDerivAt_id z).const_mul (b : ℂ)).mul_const Complex.I)).add
       ((hH _).comp z (((hasDerivAt_id z).const_mul (-(b : ℂ))).mul_const Complex.I)) using 1
-    · rfl
-    · dsimp [D]
-      ring
+    dsimp [D]
+    ring
   let U : ℂ → ℂ := fun z => (1 - z) * F z
   have hdU (z : ℂ) : HasDerivAt U ((1 - z) * D z - F z) z := by
     convert! (((hasDerivAt_const z (1 : ℂ)).sub (hasDerivAt_id z)).mul (hdF z)) using 1
-    · rfl
-    · ring
+    ring
+  have hhc : Continuous h := hh.continuous
   have hcF : Continuous F := by dsimp [F]; fun_prop
   have hcD : Continuous D := by dsimp [D]; fun_prop
   have hiF : IntervalIntegrable (fun t : ℝ => F t) volume 0 1 :=
@@ -798,13 +802,14 @@ private theorem primitive_weighted_identity (h H : ℂ → ℂ)
       intro t _
       dsimp [D]
       push_cast
+      simp only [neg_mul]
       ring
     _ = (1 / 2 : ℂ) * ∫ t in (0 : ℝ)..1, F t := by rw [hFTC']
     _ = _ := by
       congr 1
       apply intervalIntegral.integral_congr
       intro t _
-      simp only [F, Complex.ofReal_mul, Complex.ofReal_neg]
+      simp only [F, Complex.ofReal_mul, Complex.ofReal_neg, neg_mul]
 
 /-- Uniform convergence, continuity, reflection, and the sign of the actual source kernel,
 including the entire closed parameter edge `b = 1`. -/
@@ -832,6 +837,57 @@ theorem boundary_kernel_control (b θ : ℝ) (hb : b ∈ Icc (0 : ℝ) 1) :
       (by simpa only [hcl] using hc) continuousOn_const (by simpa only [hcl] using hb)
   · exact continuousOn_tsum (fun j => by unfold boundaryTerm; fun_prop)
       majorant_summable (fun j p hp => term_norm_le hp p.2 j)
+
+private theorem fixed_interval_continuous {X : Type*} [TopologicalSpace X]
+    [FirstCountableTopology X] [LocallyCompactSpace X]
+    (f : X → ℝ → ℂ) (hf : Continuous f.uncurry) (a c : ℝ) (hac : a ≤ c) :
+    Continuous (fun x => ∫ t in a..c, f x t) := by
+  have hc := continuous_parametric_integral_of_continuous (μ := volume) hf
+    (s := Icc a c) isCompact_Icc
+  simpa only [intervalIntegral.integral_of_le hac, integral_Icc_eq_integral_Ioc] using hc
+
+private theorem kernel_pairing_closed (h : ℂ → ℂ) (hh : Differentiable ℂ h)
+    (b : ℝ) (hb : b ∈ Icc (0 : ℝ) 1) :
+    ((2 * Real.pi)⁻¹ : ℝ) •
+      (∫ θ in (0 : ℝ)..(2 * Real.pi),
+        (boundaryKernel b θ : ℂ) * h (circleMap 0 1 θ)) =
+      ((b : ℂ) * Complex.I / 2) * ∫ t in (0 : ℝ)..1,
+        (1 - (t : ℂ)) *
+          (h ((b * t : ℝ) * Complex.I) - h (-(b * t : ℝ) * Complex.I)) := by
+  let L : ℝ → ℂ := fun b => ((2 * Real.pi)⁻¹ : ℝ) •
+    (∫ θ in (0 : ℝ)..(2 * Real.pi), (boundaryKernel b θ : ℂ) * h (circleMap 0 1 θ))
+  let R : ℝ → ℂ := fun b => ((b : ℂ) * Complex.I / 2) * ∫ t in (0 : ℝ)..1,
+    (1 - (t : ℂ)) *
+      (h ((b * t : ℝ) * Complex.I) - h (-(b * t : ℝ) * Complex.I))
+  have hk := (boundary_kernel_control 0 0 (by norm_num)).2.2.2.2.1
+  have hks : Continuous (fun p : (Icc (0 : ℝ) 1) × ℝ =>
+      boundaryKernel p.1.val p.2) := by
+    apply continuousOn_univ.mp
+    exact hk.comp
+      (((continuous_subtype_val.comp continuous_fst).prodMk continuous_snd).continuousOn)
+      (fun p _ => p.1.property)
+  have hL : ContinuousOn L (Icc (0 : ℝ) 1) := by
+    apply continuousOn_iff_continuous_domRestrict.mpr
+    change Continuous (fun b : Icc (0 : ℝ) 1 => L b.val)
+    have hprod : Continuous (fun p : (Icc (0 : ℝ) 1) × ℝ =>
+        (boundaryKernel p.1.val p.2 : ℂ) * h (circleMap 0 1 p.2)) :=
+      (Complex.continuous_ofReal.comp hks).mul (hh.continuous.comp (by fun_prop))
+    exact continuous_const.smul (fixed_interval_continuous
+      (fun b : Icc (0 : ℝ) 1 => fun θ =>
+        (boundaryKernel b.val θ : ℂ) * h (circleMap 0 1 θ))
+      hprod 0 (2 * Real.pi) Real.two_pi_pos.le)
+  have hR : Continuous R := by
+    apply Continuous.mul (by fun_prop)
+    apply fixed_interval_continuous _ _ 0 1 (by norm_num)
+    dsimp [Function.uncurry]
+    fun_prop
+  have he : EqOn L R (Ico (0 : ℝ) 1) := by
+    intro c hc
+    by_cases hc0 : c = 0
+    · simp [L, R, hc0, boundaryKernel, boundaryTerm]
+    · exact kernel_pairing_interior h hh c (lt_of_le_of_ne hc.1 (Ne.symm hc0)) hc.2
+  exact he.of_subset_closure hL hR.continuousOn Ico_subset_Icc_self
+    (by rw [closure_Ico (by norm_num : (0 : ℝ) < 1)]; exact subset_rfl) hb
 
 #print axioms boundary_kernel_control
 
