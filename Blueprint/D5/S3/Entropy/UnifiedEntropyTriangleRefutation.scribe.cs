@@ -133,7 +133,10 @@ internal sealed class UnifiedEntropyTriangleRefutationDocument : IScribeDocument
                             + "It would give 1/10 ≤ 1/21 + 1/21, which is false because their difference is 1/210 > 0. "
                             + "The universal proposition is therefore false. This counterexample concerns the "
                             + "nonlimiting unified entropy at (2,-1); it does not assert a classification of other indices."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bosyk-et-al-2016-unified-entropy-triangle-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("unified-entropy-triangle-" + name.ToLowerInvariant()),
