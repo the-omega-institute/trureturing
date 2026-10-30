@@ -10,6 +10,7 @@ import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.Analysis.SpecialFunctions.Exponential
 import Mathlib.LinearAlgebra.Matrix.Permutation
 import Mathlib.LinearAlgebra.Matrix.StdBasis
+import D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -21,7 +22,6 @@ open Matrix Filter Classical
 open scoped Topology ComplexConjugate
 
 /- Source: Liu et al., arXiv:2501.10552v2, Example VI.6 and Appendix F.
-   admission_basis: open-problem-resolution (#23957)
    The first site is the most significant bit of each four-site window.
    Evolution uses the matrix of the superoperator on pairs of configurations.
    No matrix norm instance is installed.
@@ -868,6 +868,63 @@ private lemma gauged_window (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
   have hg : goodWindow i (fun _ => e) := fun _ => rfl
   simpa only [hg, if_pos, gaugedUnit, sectorGauge_const, middleUpdate] using h
 
+private lemma matrix_linearMap_ext_gauged (n : ℕ)
+    {f g : Module.End ℂ (Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)}
+    (h : ∀ δ x, f (gaugedUnit n δ x) = g (gaugedUnit n δ x)) : f = g := by
+  apply (Matrix.stdBasis ℂ (Fin n → Fin 2) (Fin n → Fin 2)).ext
+  rintro ⟨u, v⟩
+  rw [Matrix.stdBasis_eq_single]
+  have hv : v + (u + v) = u := by
+    funext j
+    apply Fin.ext
+    change ((v j).val + ((u j).val + (v j).val) % 2) % 2 = (u j).val
+    have := (u j).isLt
+    have := (v j).isLt
+    omega
+  have hu : Matrix.single u v (1 : ℂ) = sectorGauge n (u + v) v • gaugedUnit n (u + v) v := by
+    change _ = sectorGauge n (u + v) v •
+      (sectorGauge n (u + v) v • Matrix.single (v + (u + v)) v 1)
+    rw [smul_smul, sectorGauge_mul_self, one_smul, hv]
+  rw [hu, map_smul, map_smul, h]
+
+lemma window_channels_commute (n : ℕ) (hn : 4 ≤ n) (i j : Fin n)
+    (a : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :
+    windowChannel n i (windowChannel n j a) = windowChannel n j (windowChannel n i a) := by
+  have hact (k : Fin n) (δ x : Fin n → Fin 2) :
+      windowLM n k (gaugedUnit n δ x) = if goodWindow k δ then
+        avg n {site k 1, site k 2} (gaugedUnit n δ) x else 0 := by
+    change windowChannel n k (gaugedUnit n δ x) = _
+    rw [gauged_window_sector n hn]
+    split_ifs
+    · have h12 : site k 1 ≠ site k 2 := fun h =>
+        (by decide : (1 : Fin 4) ≠ 2) ((site_injective n hn k 1 2).mp h)
+      rw [avg_pair_apply n _ _ h12]
+      rfl
+    · rfl
+  have heq : windowLM n i * windowLM n j = windowLM n j * windowLM n i := by
+    apply matrix_linearMap_ext_gauged n
+    intro δ x
+    change windowLM n i (windowLM n j (gaugedUnit n δ x)) =
+      windowLM n j (windowLM n i (gaugedUnit n δ x))
+    rw [hact, hact]
+    by_cases hi : goodWindow i δ <;> by_cases hj : goodWindow j δ
+    · simp only [if_pos hi, if_pos hj]
+      rw [avg_map, avg_map]
+      simp only [hact, if_pos hi, if_pos hj]
+      exact congrArg (fun l => l (gaugedUnit n δ) x)
+        (avg_commute (V := Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)
+          n {site j 1, site j 2} {site i 1, site i 2}).eq
+    · simp only [if_pos hi, if_neg hj, map_zero]
+      rw [avg_map]
+      simp only [hact, if_neg hj]
+      exact (congrFun (map_zero (avg n {site i 1, site i 2})) x).symm
+    · simp only [if_neg hi, if_pos hj, map_zero]
+      rw [avg_map]
+      simp only [hact, if_neg hi]
+      exact congrFun (map_zero (avg n {site j 1, site j 2})) x
+    · simp only [if_neg hi, if_neg hj, map_zero]
+  exact congrArg (fun l => l a) heq
+
 lemma window_channel_comp (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
     (a : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :
     windowChannel n i (windowChannel n i a) = windowChannel n i a := by
@@ -906,18 +963,7 @@ lemma window_superoperator_action (n : ℕ) (i : Fin n)
     (a : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) (x y : Fin n → Fin 2) :
     (windowSuperoperator n i).mulVec (fun p => a p.1 p.2) (x, y) =
       windowChannel n i a x y := by
-  let f : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ →ₗ[ℂ]
-      Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ :=
-    { toFun := windowChannel n i
-      map_add' := by
-        intro a b
-        ext u v
-        simp only [windowChannel, Matrix.add_apply, mul_add, Finset.sum_add_distrib]
-      map_smul' := by
-        intro c a
-        ext u v
-        simp only [windowChannel, Matrix.smul_apply, RingHom.id_apply, smul_eq_mul,
-          ← Finset.mul_sum, mul_left_comm] }
+  let f := windowLM n i
   have hs (p q : Fin n → Fin 2) : Matrix.single p q (a p q) =
       a p q • Matrix.single p q 1 := by
     rw [Matrix.smul_single]

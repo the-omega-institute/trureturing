@@ -20,7 +20,16 @@ open scoped Topology ComplexConjugate
 private lemma window_commute (n : ℕ) (hn : Even n) (hsize : 4 ≤ n)
     (i j : Fin n) (hi : i.val % 2 = 0) (hj : j.val % 2 = 0) :
     Commute (windowSuperoperator n i) (windowSuperoperator n j) := by
-  sorry
+  change windowSuperoperator n i * windowSuperoperator n j =
+    windowSuperoperator n j * windowSuperoperator n i
+  ext x y
+  change (windowSuperoperator n i).mulVec
+      (fun p => windowChannel n j (Matrix.single y.1 y.2 1) p.1 p.2) x =
+    (windowSuperoperator n j).mulVec
+      (fun p => windowChannel n i (Matrix.single y.1 y.2 1) p.1 p.2) x
+  rw [window_superoperator_action, window_superoperator_action,
+    window_channels_commute n hsize]
+
 
 set_option backward.isDefEq.respectTransparency false in
 private lemma exponential_idempotent {k : Type*} [Fintype k] [DecidableEq k]
