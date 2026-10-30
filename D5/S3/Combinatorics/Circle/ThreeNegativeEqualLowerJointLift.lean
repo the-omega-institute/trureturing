@@ -157,8 +157,9 @@ theorem actualSource_three_negative_equal_lower_joint_lift (a b c : ℕ)
     have hhm : h ≤ m := pow_le_pow_right₀ (by norm_num) (by omega)
     have hr : (2 : ℤ)^a=2*h*m := by
       dsimp [h,m]
-      rw [show a=(a-b)+(b-1)+1 by omega, pow_succ, pow_add]
-      ring
+      calc
+        (2 : ℤ)^a=2^((a-b)+(b-1)+1) := by congr 1; omega
+        _ = 2*2^(a-b)*2^(b-1) := by rw [pow_succ,pow_add]; ring
     apply realize a b b (by omega) hb hb (makePlan 0 .bga .q ⟨0,m-1,h-1⟩ ⟨m-1,0,0⟩)
     rw [hr,hs]
     exact near_certificate m h hm hh hhm
@@ -168,8 +169,9 @@ theorem actualSource_three_negative_equal_lower_joint_lift (a b c : ℕ)
       pow_le_pow_right₀ (by norm_num) (by omega)
     have hr : (2 : ℤ)^a=4*H*m := by
       dsimp [H,m]
-      rw [show a=(a-b-1)+(b-1)+2 by omega, pow_add, pow_add]
-      norm_num; ring
+      calc
+        (2 : ℤ)^a=2^((a-b-1)+(b-1)+2) := by congr 1; omega
+        _ = 4*2^(a-b-1)*2^(b-1) := by rw [pow_add,pow_add]; norm_num; ring
     apply realize a b b (by omega) hb hb (makePlan 1 .agb .q ⟨1,m-2,H-1⟩ ⟨m-2,1,H⟩)
     rw [hr,hs]
     exact far_certificate (b-1) (a-b-1) (by omega) hmd
