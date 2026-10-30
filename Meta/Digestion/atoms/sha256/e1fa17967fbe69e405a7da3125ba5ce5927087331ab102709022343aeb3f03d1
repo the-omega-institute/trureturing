@@ -1,0 +1,169 @@
+**Theorem 2.1 (Strict rank separation).** For every finite connected simple undirected unweighted bipartite graph $G$ of order $n\ge2$, if $\operatorname{rank}A(G)\ge4$, then
+
+$$
+T_A(G)<n-\frac52.
+\tag{2.1}
+$$
+
+**Proof.** Use Definition 1.2. The kernel of $A$ is $\ker B^{\mathsf T}\oplus\ker B$, so
+
+$$
+\operatorname{rank}A=2r,
+\qquad
+S=\begin{pmatrix}P&0\\0&Q\end{pmatrix},
+\tag{2.2}
+$$
+
+where $P$ projects onto $\operatorname{im}B$ and $Q$ onto $\operatorname{im}B^{\mathsf T}$. Consequently
+
+$$
+0\le s_v\le1,
+\qquad
+\sum_{v\in X}s_v=\sum_{v\in Y}s_v=r.
+\tag{2.3}
+$$
+
+The identity $JAJ=-A$ sends the entire $\theta$-eigenspace isometrically onto the entire $-\theta$-eigenspace. Hence $E_{-\theta}=JE_\theta J$, including all multiplicities, and their diagonal entries agree. Orthogonal projections are positive semidefinite, so these entries are nonnegative. Summing the paired nonzero projections gives, at each vertex,
+
+$$
+\sum_{\theta>0}(E_\theta)_{vv}=\frac{s_v}{2},
+\qquad
+\sum_{\theta\ne0}(E_\theta)_{vv}^{,2}
+ =2\sum_{\theta>0}(E_\theta)_{vv}^{,2}
+ \le2\left(\sum_{\theta>0}(E_\theta)_{vv}\right)^2
+ =\frac{s_v^2}{2}.
+\tag{2.4}
+$$
+
+Only distinct positive eigenvalues are summed. Since $(E_0)_{vv}=1-s_v$, the diagonal deficit $d_v=1-(\widehat M_A)_{vv}$ therefore satisfies
+
+$$
+d_v\ge 2s_v-\frac32s_v^2\ge\frac12s_v.
+\tag{2.5}
+$$
+
+By (2.3), this yields
+
+$$
+n-T_A(G)=\sum_vd_v\ge r.
+\tag{2.6}
+$$
+
+If $r\ge3$, (2.6) gives $T_A(G)\le n-3<n-5/2$. It remains to treat $r=2$.
+
+First determine the possible equal-neighborhood classes directly from the binary matrix $B$. Choose independent rows $u,w$. Divide the columns into their three possible nonzero types relative to these rows:
+
+$$
+X_0=\{j:(u_j,w_j)=(1,0)\},\qquad
+Y_0=\{j:(u_j,w_j)=(0,1)\},\qquad
+Z_0=\{j:(u_j,w_j)=(1,1)\}.
+\tag{2.7}
+$$
+
+A column with $(u_j,w_j)=(0,0)$ would vanish on every row, since every row is in the span of $u,w$; it is excluded by connectivity. Independence ensures that at least two of $X_0,Y_0,Z_0$ are nonempty. Any row has the form $\alpha u+\beta w$, with values $\alpha,\beta,\alpha+\beta$ on the respective nonempty sets in (2.7), and each such value must be zero or one. No row is zero.
+
+If all three sets are nonempty, the only possibilities are $u,w$: the pair $(\alpha,\beta)=(1,1)$ is forbidden by $Z_0$. Coalescing the columns gives types $(1,0),(0,1),(1,1)$, which form a path on five vertices.
+
+If $X_0,Y_0$ are nonempty and $Z_0$ is empty, the possible rows are $u,w,u+w$. The row $u+w$ must occur, since otherwise the graph splits into the two nonempty components supported on $X_0$ and $Y_0$. After coalescence the two column types join the third row to each of the first two, again giving a path on five vertices.
+
+If $X_0,Z_0$ are nonempty and $Y_0$ is empty, the possible nonzero pairs $(\alpha,\alpha+\beta)$ are $(1,1),(0,1),(1,0)$. Thus the possible rows are $u,w,u-w$. If $u-w$ is absent, the two row types and two column types give a path on four vertices; if it is present, they give a path on five vertices. Interchanging $u,w$ treats the remaining case $Y_0,Z_0\ne\varnothing$, $X_0=\varnothing$.
+
+This exhausts the possibilities. Coalescing rows cannot create new distinctions between columns, and conversely, so the resulting graph is exactly $P_4$ or $P_5$. Thus $G$ is an independent blow-up of one of these two paths. This elementary classification is used only as an intermediate step in the trace estimate.
+
+For either path let
+
+$$
+f_i=\frac{\mathbf 1_{C_i}}{\sqrt{t_i}},\qquad
+W=\operatorname{span}\{f_1,\ldots,f_k\}.
+\tag{2.8}
+$$
+
+The $f_i$ are orthonormal. The matrix $A$ kills $W^\perp$, since a vector in $W^\perp$ sums to zero on every class. Its matrix on $W$ is the symmetric weighted path matrix $H$ with
+
+$$
+H_{i,i+1}=H_{i+1,i}=\sqrt{t_it_{i+1}},
+\qquad H_{ij}=0\quad\text{otherwise}.
+\tag{2.9}
+$$
+
+These conclusions follow by multiplying $A$ by each $f_i$; no eigenspace-refinement assertion for general equitable partitions is needed.
+
+Suppose first that $k=4$. The determinant of $H$ is $(t_1t_2)(t_3t_4)>0$, so $\operatorname{im}A=W$. Therefore $s_v=1/t_i$ for $v\in C_i$. Summing the first inequality in (2.5) gives
+
+$$
+n-T_A(G)\ge\sum_{i=1}^4\left(2-\frac{3}{2t_i}\right)
+ =8-\frac32\sum_{i=1}^4\frac1{t_i}.
+\tag{2.10}
+$$
+
+If any $t_i\ge2$, then $\sum_i1/t_i\le7/2$, and (2.10) is at least $11/4>5/2$.
+
+The only remaining four-class case has every $t_i=1$, hence $G=P_4$. Here its two-by-two biadjacency matrix can be taken as
+
+$$
+B=\begin{pmatrix}1&0\\1&1\end{pmatrix},
+\quad
+BB^{\mathsf T}=\begin{pmatrix}1&1\\1&2\end{pmatrix},
+\quad
+B^{\mathsf T}B=\begin{pmatrix}2&1\\1&1\end{pmatrix}.
+\tag{2.11}
+$$
+
+The two squared singular values are $\mu_\pm=(3\pm\sqrt5)/2$. For either of the last two matrices $C$, the projections are $(C-\mu_\mp I)/(\mu_\pm-\mu_\mp)$. At each coordinate their diagonal entries are $(1+1/\sqrt5)/2$ and $(1-1/\sqrt5)/2$, in some order. The $\pm\sqrt{\mu_\pm}$ adjacency projections have half these entries on the corresponding part: this follows from the normalized adjacency eigenvectors $(x,\pm B^{\mathsf T}x/\sqrt\mu)/\sqrt2$ for a unit $\mu$-eigenvector $x$ of $BB^{\mathsf T}$. There is no zero eigenspace. Each vertex consequently contributes
+
+$$
+\frac12\left[\left(\frac{1+1/\sqrt5}{2}\right)^2
+                  +\left(\frac{1-1/\sqrt5}{2}\right)^2\right]
+ =\frac3{10},
+\qquad T_A(P_4)=\frac65<\frac32.
+\tag{2.12}
+$$
+
+This is an explicit specialization of the classical spectral/path formulas, not an additional path theorem.
+
+Finally suppose that $k=5$, and write the class sizes in path order as $(a,b,c,d,e)$. The odd classes lie in one bipartition part. On their normalized coordinates the column space of $B$ is spanned by
+
+$$
+(\sqrt a,\sqrt c,0)^{\mathsf T},
+\qquad (0,\sqrt c,\sqrt e)^{\mathsf T};
+\tag{2.13}
+$$
+
+multipliers $\sqrt b,\sqrt d$ do not change this span. Its unit perpendicular vector is
+
+$$
+z=\frac{(\sqrt{ce},-\sqrt{ae},\sqrt{ac})^{\mathsf T}}{\sqrt L},
+\qquad L=ac+ae+ce.
+\tag{2.14}
+$$
+
+Projecting onto the span in (2.13), and then converting from normalized class coordinates back to vertices, gives
+
+$$
+s_v=
+\begin{cases}
+(c+e)/L,&v\in C_1,\\
+(a+e)/L,&v\in C_3,\\
+(a+c)/L,&v\in C_5.
+\end{cases}
+\tag{2.15}
+$$
+
+For example $(1-z_1^2)/a=(L-ce)/(aL)=(c+e)/L$. Because all class sizes are positive integers,
+
+$$
+L=a(c+e)+ce\ge c+e+ce\ge\frac32(c+e),
+\tag{2.16}
+$$
+
+where $2ce\ge c+e$ follows from $(c-1)e+(e-1)c\ge0$. The cyclic versions of (2.16) give $s_v\le2/3$ at every vertex in the odd classes. Their $s_v$ sum is two by (2.3), so (2.5) gives a total deficit at least
+
+$$
+\sum_{v\in C_1\cup C_3\cup C_5}
+       \left(2-\frac32s_v\right)s_v
+ \ge\sum_{v\in C_1\cup C_3\cup C_5}s_v=2.
+\tag{2.17}
+$$
+
+On the other part $s_v\le1$ and the sum is again two. Its deficit is at least one by the second inequality in (2.5). Thus $n-T_A(G)\ge3>5/2$ for every five-class case. Together with (2.6), (2.10) and (2.12), this proves (2.1) for every possible rank and order under its hypotheses. $\square$
+
