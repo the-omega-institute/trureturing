@@ -60,8 +60,8 @@ def thetaRepHom (D : LatticeData) :
       all_goals
         apply Equiv.ext
         intro v
-        have htwo : (2 : ReflectionGroup) = 0 := by decide
-        simp [thetaPerm, htwo, theta_apply_involutive] }
+        have hsum : (1 + 1 : ReflectionGroup) = 0 := by decide
+        simp [thetaPerm, hsum, theta_apply_involutive] }
 
 @[simp] theorem thetaRep_zero (D : LatticeData) :
     thetaRep D 0 = LinearEquiv.refl ℂ (Carrier D) := by
