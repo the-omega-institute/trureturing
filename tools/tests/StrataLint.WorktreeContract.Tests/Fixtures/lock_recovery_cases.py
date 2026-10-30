@@ -96,6 +96,7 @@ class LockRecoveryCases:
         self.assert_scan_lock_retained("payload")
 
     def assert_final_refusal_is_last_observation(self, empty):
+        import worktree_protocol as protocol
         if empty:
             self.g(self.tree, "rm", "-r", "--", ".")
             self.g(self.tree, "commit", "-m", "empty payload")
@@ -132,11 +133,17 @@ class LockRecoveryCases:
         with ExitStack() as patches:
             patches.enter_context(patch.object(preservation, "native_removal_preflight", side_effect=preflight))
             for owner, name in ((Path, "resolve"), (Path, "iterdir"), (Path, "is_dir"),
-                                (Path, "is_symlink"), (os, "walk"), (os, "scandir"),
-                                (os, "stat"), (os, "lstat")):
+                                (Path, "is_symlink"), (Path, "read_bytes"),
+                                (Path, "read_text"), (Path, "open"), (os, "walk"),
+                                (os, "scandir"), (os, "stat"), (os, "lstat"),
+                                (os, "open"), (os, "fstat"), (os.DirEntry, "is_dir"),
+                                (os.DirEntry, "is_file"), (os.DirEntry, "is_symlink"),
+                                (os.DirEntry, "stat"), (os.DirEntry, "inode"),
+                                (subprocess, "Popen")):
                 original = getattr(owner, name)
                 patches.enter_context(patch.object(owner, name, observed(name, original)))
             patches.enter_context(patch.object(preservation, "git", side_effect=native_git))
+            patches.enter_context(patch.object(protocol, "git", observed("protocol.git", protocol.git)))
             patches.enter_context(patch.object(Path, "unlink", destructive(Path.unlink)))
             patches.enter_context(patch.object(os, "unlink", destructive(os.unlink)))
             patches.enter_context(patch.object(preservation.shutil, "rmtree", destructive(preservation.shutil.rmtree)))
@@ -151,6 +158,28 @@ class LockRecoveryCases:
 
     def test_final_refusal_evaluation_immediately_precedes_empty_unregistration(self):
         self.assert_final_refusal_is_last_observation(True)
+
+    def test_final_preflight_owns_initializer_scope_until_payload_and_unregistration(self):
+        import worktree_protocol as protocol
+        import worktree_preservation as preservation
+        original_preflight = preservation.native_removal_preflight
+        observations = []
+        def late_preflight(source, target, flags, stack=None):
+            self.g(self.main, "worktree", "lock", "--reason", "worktree-init:late", target)
+            try:
+                return original_preflight(source, target, flags, stack)
+            except preservation.Refused:
+                observations.append("preflight")
+                with ExitStack() as contender:
+                    with self.assertRaisesRegex(protocol.Refused, "busy_scope:tree:"):
+                        protocol.tree_scope(contender, self.main, target, True)
+                raise
+        options = self.removal_options()
+        with patch.object(preservation, "native_removal_preflight", side_effect=late_preflight):
+            result = preservation.remove(options)
+        self.assertEqual(["preflight"], observations)
+        self.assertEqual("refused", result["items"][0]["outcome"])
+        self.assertIn("native_locked:worktree-init:late", result["items"][0]["reason"])
 
     def test_removal_rechecks_gitlinks_after_nested_git_scan(self):
         import worktree_preservation as preservation
