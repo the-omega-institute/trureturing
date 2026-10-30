@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2610.40321v1
 claim: "Conjecture 1 asks whether six is the largest n at least three for which the global maximum length of a simple cycle at the least attainable unconditional strict winning probability above one half equals n."
 strata_touched:
   - D5/S3/Combinatorics/Dice/EaslickMinimalAdvantage
+  - D5/S3/Combinatorics/Dice/EaslickCycleSeeds
 license: CC-BY-4.0
 triage: anchor
 ---
@@ -26,3 +27,9 @@ The source cycle data in Appendices G, H, I and J are by Terry Easlick,
 [arXiv:2610.40321v1](https://arxiv.org/html/2610.40321v1), licensed under
 [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/).
 The eleven-face and uniformly padded cycles are derived constructions.
+
+## Source locator
+
+https://arxiv.org/abs/2610.40321v1
+
+Definitions 1 and 2, Example 1, Conjecture 1 and Appendices G--J.
