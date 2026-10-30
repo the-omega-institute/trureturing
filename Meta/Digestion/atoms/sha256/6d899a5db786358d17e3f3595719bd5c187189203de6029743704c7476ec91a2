@@ -1,0 +1,22 @@
+**Definition 11.1 (Coordinates and a fixed supplier class).** In this section $m=d-1$, $d\ge3$, and all displayed parameter pairs are $(\lambda,p)$ pairs, with $q=(1-p)/m$. Let
+
+$$
+\begin{aligned}
+\widehat{\mathcal T}_d
+&=\{(\lambda,p):0\le p\le1,\ -p/m\le\lambda\le p\},\\
+\mathcal D_d
+&=\{(t,(1+mt)/d):-1/d\le t\le1\},\\
+G_d&=\left(\frac1{dm},\frac1{d^2}\right),\\
+\mathcal H_d&=\operatorname{conv}\bigl(\widehat{\mathcal T}_d\cup\mathcal D_d\cup\{G_d\}\bigr).
+\end{aligned}
+$$
+
+Here $\widehat{\mathcal T}_d$ is the known completely positive triangle (Remark 4.4 and arXiv:2604.18600v1, Proposition 2.1(2)); $\mathcal D_d$ is the exact Schwarz interval for the depolarizing maps $X\mapsto tX+(1-t)\operatorname{tr}(X)I_d/d$; and $G_d$ is the generalized-reduction supplier specified in the proof below. The exact $q=0$ Schwarz interval remains $-1/m\le\lambda\le1$ by Proposition 4.2. The existing $k$-positive characterization, for each $2\le k\le d$, is the quadrilateral of arXiv:2604.18600v1, Conjecture 2.4, proved in the repository's [k-positive-region result](../../../Blueprint/D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity.md). In these coordinates it reads
+
+$$
+0\le p\le1,\qquad
+\max\left\{-\frac p{k-1},-\frac{d-k+d(k-1)p}{km^2}\right\}\le\lambda\le p.
+$$
+
+These known regions, and every valid convex combination of their Schwarz members, are retained as sufficient regions independently of Theorem 9.1. The class $\mathcal H_d$ is precisely the convex hull displayed above; it does not mean the class of all known Schwarz constructions or all possible generalized reductions. The cited depolarizing and reduction facts are used only as intermediate suppliers in the following comparison.
+
