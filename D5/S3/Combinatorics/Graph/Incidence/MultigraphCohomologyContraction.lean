@@ -36,7 +36,7 @@ variable {V : Type u} {E : Type v}
 def coboundary (G : DirectedMultigraph V E) : (V → ℚ) →ₗ[ℚ] (E → ℚ) where
   toFun h f := h (G.target f) - h (G.source f)
   map_add' h k := by ext f; simp only [Pi.add_apply]; ring
-  map_smul' c h := by ext f; simp only [Pi.smul_apply, smul_eq_mul]; ring
+  map_smul' c h := by ext f; simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply]; ring
 
 /-- Native first graph cohomology: edge functions modulo actual coboundaries. -/
 abbrev Cohomology (G : DirectedMultigraph V E) := (E → ℚ) ⧸ (coboundary G).range
@@ -49,7 +49,7 @@ def evacuate (G : DirectedMultigraph V E) (e : E) :
     (E → ℚ) →ₗ[ℚ] (Surviving e → ℚ) where
   toFun a f := a f.val - a e * incidence G (G.target e) f.val
   map_add' a b := by ext f; simp only [Pi.add_apply]; ring
-  map_smul' c a := by ext f; simp only [Pi.smul_apply, smul_eq_mul]; ring
+  map_smul' c a := by ext f; simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply]; ring
 
 /-- Zero extension at exactly the deleted edge ID. -/
 def extend (e : E) : (Surviving e → ℚ) →ₗ[ℚ] (E → ℚ) where
@@ -73,7 +73,8 @@ theorem evacuate_coboundary (G : DirectedMultigraph V E) (e : E)
     (k (G.target e) - k (G.source e)) * incidence G (G.target e) f.val =
       k (vertexMap G e h (G.target f.val)).val -
         k (vertexMap G e h (G.source f.val)).val
-  rw [restrict_vertexMap, restrict_vertexMap]
+  rw [restrict_vertexMap G e h k (G.target f.val),
+    restrict_vertexMap G e h k (G.source f.val)]
   by_cases ht : G.target f.val = G.target e <;>
     by_cases hs : G.source f.val = G.target e <;>
       simp [incidence, signedIncidence, ht, hs, eq_comm] <;> ring
@@ -106,8 +107,7 @@ theorem extend_evacuate_sub (G : DirectedMultigraph V E) (e : E)
     simp [extend, coboundary, h]
   · by_cases ht : G.target f = G.target e <;>
       by_cases hs : G.source f = G.target e <;>
-        simp [extend, evacuate, coboundary, incidence, signedIncidence,
-          hf, ht, hs, eq_comm] <;> ring
+        simp_all [extend, evacuate, coboundary, incidence, signedIncidence, eq_comm] <;> ring
 
 private def quotientEvacuate (G : DirectedMultigraph V E) (e : E)
     (h : G.source e ≠ G.target e) :
@@ -179,7 +179,7 @@ private theorem endpoint_duality (G : DirectedMultigraph V E) (k : V → ℚ) (z
       simp only [incidence, signedIncidence, Int.cast_sub, Int.cast_ite,
         Int.cast_one, Int.cast_zero, sub_mul, mul_sub, Finset.sum_sub_distrib]
       simp only [mul_ite, mul_one, mul_zero, ite_mul, zero_mul]
-      simp only [Finset.sum_ite_eq', ht, hs, if_true]
+      simp only [Finset.sum_ite_eq', ht, hs, ite_true, one_mul]
       change k (G.target f) * z f - k (G.source f) * z f = _
       change _ = (k (G.target f) - k (G.source f)) * z f
       ring
@@ -250,10 +250,14 @@ theorem cohomology_pairing_naturality (G : DirectedMultigraph V E) (e : E)
   refine ⟨fun _ _ => rfl, ?_, ?_⟩
   · intro a z
     induction a using Submodule.Quotient.induction_on with | H a =>
+      change cohomologyPairing (contract G e h)
+        (cohomologyEquiv G e h ((coboundary G).range.mkQ a)) z = _
       rw [(cohomologyEquiv_representatives G e h).1]
       exact evacuation_inverse_transpose G e h a z
   · intro b z
     induction b using Submodule.Quotient.induction_on with | H b =>
+      change cohomologyPairing G
+        ((cohomologyEquiv G e h).symm ((coboundary (contract G e h)).range.mkQ b)) z = _
       rw [(cohomologyEquiv_representatives G e h).2]
       have hb := evacuation_inverse_transpose G e h (extend e b) (cycleEquiv G e h z)
       rw [evacuate_extend, LinearEquiv.symm_apply_apply] at hb
