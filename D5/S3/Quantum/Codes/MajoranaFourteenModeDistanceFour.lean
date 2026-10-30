@@ -9,7 +9,6 @@
 import Mathlib.InformationTheory.Hamming
 import Mathlib.Algebra.Field.ZMod
 import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
