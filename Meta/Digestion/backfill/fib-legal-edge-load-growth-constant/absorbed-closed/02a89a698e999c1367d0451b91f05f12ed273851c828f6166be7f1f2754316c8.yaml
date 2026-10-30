@@ -1,0 +1,29 @@
+fingerprints:
+  raw_sha256: sha256:02a89a698e999c1367d0451b91f05f12ed273851c828f6166be7f1f2754316c8
+  normalized_sha256: sha256:02a89a698e999c1367d0451b91f05f12ed273851c828f6166be7f1f2754316c8
+cas_ref: sha256:02a89a698e999c1367d0451b91f05f12ed273851c828f6166be7f1f2754316c8
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/LegalWords/BlockGrowth.legal_nonempty
+    target_statement_id: sha256:f1140d5776afb36de2e925cfe080283bd9400cc571e74aace51b11b0be0adad6
+  - gid: D5/S3/Combinatorics/Graph/LegalWords/ConstrainedHarmonicOptimizer.adj_iff
+    target_statement_id: sha256:e3eb71e3c5d1f26f875c1dc344d86b2f9e463032bfe28eac657f1bef1cf23d34
+  - gid: D5/S3/Combinatorics/Graph/LegalWords/ConstrainedHarmonicOptimizer.objective
+    target_statement_id: sha256:48e1a875ae9884cbbbb7e118ab7ddf0e69ffa0870b44c8a9c56d3d816fdc1952
+  - gid: D5/S3/Combinatorics/Graph/QuadraticEdgeLoad.kappa_le
+    target_statement_id: sha256:88d39650e697b2ab6318bfb00aa9f408440ff9c70dbac5c9b816fa7581d25c66
+  - gid: D5/S3/Combinatorics/Graph/QuadraticEdgeLoad.load_le_maxLoad
+    target_statement_id: sha256:a33824e00dbf3c5a9ad125a2b448cb6a33c1e1b83e156d24356a069bd2668a6d
+  - gid: D5/S3/Combinatorics/Graph/QuadraticEdgeLoad.minimum_attained
+    target_statement_id: sha256:42639065ec67b64b567bf61ba8590ee350e8c2b9e607fdc7ffa0dc3844441634
+  - gid: D5/S3/Combinatorics/Graph/QuadraticLoad/NativeTransport.exists_lower_law
+    target_statement_id: sha256:f8c413bb0092ce1cd66fcfa6b1eaaafffa33c2ecee46f047604b9e20c7f6a66d
+  - gid: D5/S3/Combinatorics/Graph/QuadraticLoad/NativeTransport.feasible_convex
+    target_statement_id: sha256:69391e7b8edb0242c693f239f7c36a667a869679a7a8f72a01bbed488828623b
+  - gid: D5/S3/Combinatorics/Graph/QuadraticLoad/NativeTransport.payoff
+    target_statement_id: sha256:595fe29369b0cb3fccb184d8f8d06df023de9ba45f7a5c04f68dc152a467edb6
+  - gid: D5/S3/Combinatorics/Graph/QuadraticLoad/NativeTransport.payoff_convex
+    target_statement_id: sha256:19a2f94bbf2956375ca7187f716f26a0d8e7c80dc5c4680891f1d7215e83f320
+  - gid: D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.adm_reverse
+    target_statement_id: sha256:3759655bd459a16728a8ac712ff54046219a2dff587479c71720c70c3c2f51c0
+receipts:
+  unresolved_subitems: []

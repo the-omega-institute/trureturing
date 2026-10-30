@@ -1,0 +1,36 @@
+**Definition 1.2 (Ordinary principal specialization).** For a finite graph $T$
+and an integer $k\geq1$, define, with $q$ an indeterminate,
+
+$$
+P_k(T)=\sum_{\substack{c:V(T)\to\{0,\ldots,k-1\}\\
+                     c(u)\ne c(v)\text{ for every }uv\in E(T)}}
+                     q^{\sum_{v\in V(T)}c(v)}\in\mathbb Z[q].
+$$
+
+The sum includes every proper map, with no surjectivity condition and no
+specified root. Its exponent includes every actual vertex. It is the
+ordinary specialization of [P1, Definition 2.9 and equation (2.1)].
+The same sum in $\mathbb C[q]$ is its coefficientwise image under the
+injective inclusion $\iota:\mathbb Z[q]\hookrightarrow\mathbb C[q]$.
+For the one-based color convention of [P2, equation (1)],
+
+$$
+\chi_T^{\mathbf1}(q,k)=q^{|V(T)|}P_k(T).
+$$
+
+Indeed, replacing $c(v)$ by $c(v)+1$ adds $|V(T)|$ to every exponent.
+Consequently, comparisons of the present equal-order pairs are unchanged
+by that shift. The polynomial in [P2, Theorem 1] instead has an additional
+variable $x$, coefficients in $\mathbb Q(q)$ and specializes at $x=[k]_q$;
+its existence does not identify two evaluations at a fixed $k$.
+
+The rooted invariant in [P3, Theorem 17] is
+$X_0(T_*;q,q,1,1)$, where the root is required to receive color $0$.
+It uses four color variables with two repeated values. It is different
+from the unrooted sum $P_3(T)$ at $(1,q,q^2)$, and also from $P_4(T)$ at
+$(1,q,q^2,q^3)$. For [P1, Definition 3.1], the finite $t$-refined specialization gives
+each coloring the additional factor $t^{|\operatorname{im}c|}$; the
+ordinary polynomial $P_k$ is its value at $t=1$. No rooted, four-color,
+$t$-refined or stable
+specialization is implicit in the notation $P_k$.
+

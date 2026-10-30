@@ -89,6 +89,19 @@ lemma signedFunctional_norm_le (s : SignedMeasure K) :
     ‖signedFunctional s‖ ≤ s.totalVariation.real univ :=
   (signedLinear s).mkContinuous_norm_le (measureReal_nonneg) (signedLinear_bound s)
 
+/-- Signed integration commutes with continuous pushforward. Shared with the historical capture consumer. -/
+theorem functional_map {X : Type u} {Y : Type v}
+    [TopologicalSpace X] [CompactSpace X] [MeasurableSpace X] [BorelSpace X]
+    [TopologicalSpace Y] [CompactSpace Y] [MeasurableSpace Y] [BorelSpace Y]
+    (s : SignedMeasure X) (p : C(X, Y)) (g : C(Y, ℝ)) :
+    signedFunctional (s.map p) g = signedFunctional s (g.comp p) := by
+  change (∫ᵛ y, g y ∂•s.map p) = ∫ᵛ x, g (p x) ∂•s
+  apply VectorMeasure.integral_map p.continuous.measurable
+    g.continuous.aestronglyMeasurable
+  rw [VectorMeasure.Integrable, ← SignedMeasure.totalVariation_eq_variation]
+  exact (g.comp p).continuous.integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)
+
+
 /-- The signed functional of a difference of finite positive measures is the
     difference of their ordinary Bochner integrals. -/
 lemma signedFunctional_sub_toSignedMeasure (μ ν : Measure K)

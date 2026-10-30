@@ -1,0 +1,40 @@
+#### 定理 4.2（平方最优预测及递归下降）
+
+<a id="thm:ls"></a>
+
+唯一最优预测为
+
+$$
+Q_{\mathcal{D}}(A)=\sum_h
+ \frac{\operatorname{Re}\operatorname{Tr}(\rho P_hA)}{p_h}\,P_h.
+ \tag{7}
+$$
+
+而且
+
+$$
+R_\rho(A,X)=R_\rho(A,Q_{\mathcal{D}}A)
+ +\sum_hp_h\bigl(x_h-q_h(A)\bigr)^2.
+$$
+
+若 $\mathcal{D}_n\subseteq\mathcal{D}_m$ 为嵌套记录代数，则
+
+$$
+Q_nQ_m=Q_n,\qquad
+ R_\rho(A,Q_nA)-R_\rho(A,Q_mA)
+ =\left\lVert Q_mA-Q_nA\right\rVert_\rho^2\ge0.
+ \tag{8}
+$$
+
+**证明。**
+
+$X^2=\sum_hx_h^2P_h$，交叉项为
+$\operatorname{Tr}\rho(AX+XA)=2\sum_hx_h\operatorname{Re}\operatorname{Tr}\rho P_hA$。
+逐项配方给式 (7) 及唯一性。
+这些映射是实半内积商空间中的正交投影；
+嵌套子空间的正交分解给塔式等式与平方差恒等式。
+
+∎
+
+<a id="statement-4-3"></a>
+

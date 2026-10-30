@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:545c08c1eea12764dfe7f24190b818c8b85930ff8ced14092d350076851a5aa5
+  normalized_sha256: sha256:545c08c1eea12764dfe7f24190b818c8b85930ff8ced14092d350076851a5aa5
+cas_ref: sha256:545c08c1eea12764dfe7f24190b818c8b85930ff8ced14092d350076851a5aa5
+coverage_gids:
+  - gid: D5/S3/Quantum/Dynamics/LaplacianTwoLevelTreeSharpTransferDecay.sharp_asymptotic_tail_decay
+    target_statement_id: sha256:c12d0dfce8143955b1adb1cdab370eb72508deaf68202f67b96297ae9aaec974
+receipts:
+  unresolved_subitems: []

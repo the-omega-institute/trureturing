@@ -1,0 +1,69 @@
+**Theorem 22.4 (exact fixed-resource separation).** For every $k\ge1$, the actual source of Definition 22.2 under the fixed acquisition (22.1) has
+
+$$
+\boxed{\bigl(C_{\rm stat},C_{\rm on}\bigr)=(2,2^k).}
+\tag{22.10}
+$$
+
+The lower bounds hold for arbitrary finite static labels and arbitrary total complete names-only machines with any fixed initialization. The attaining online machine has exactly $2^k$ full states, all reachable on legal root histories. Both decoders are correct for every allowed final error and every legal stopping prefix.
+
+Proof. First reuse Proposition 16.2, or its scalar form Lemma 9.2, with $T(u)=|u|$ and $2\epsilon=1/2$. Because lengths are integers, two words have overlapping observation sets exactly when their endpoints and lengths agree. Thus on the finite set $\mathcal P_o$ this is the equality-fiber repair problem for the record
+
+$$
+F(u)=(z(u),|u|)
+\tag{22.11}
+$$
+
+and identity target $u\mapsto u$. The finite fiber/coloring supplier `DefectGraphMinimumColoring.minimum_repair_labels_eq_chromatic_eq_fiber_diversity` applies mathematically with precisely this source, record and target. Proposition 22.3 supplies its largest fiber size, namely two. In particular any successful static label must give different labels to the two histories at every $z_q$: the identical allowed clock value $y=N+q$ would otherwise give the same final decoder input for both. This excludes every one-value label without imposing any form on the label.
+
+For an explicit attaining static label, give every nonterminal history label $0$. At $z_q$, where $q=\rho(i,j)$ and $i<j$, give $p_i b^q a$ label $0$ and $p_j b^q a$ label $1$. The endpoint and label now identify a unique word by the table. Return that word when $|y-|u||\le1/4$, and reject otherwise. This decoder succeeds on the entire support (22.2), including its endpoints, and on the empty word with every $y\in[-1/4,1/4]$. Thus $C_{\rm stat}=2$.
+
+For the online lower bound, let $(M,m_0,U)$ be any successful complete machine, and write $\mu(u)$ for its reached state. Suppose $\mu(p_i)=\mu(p_j)$ for distinct $i,j$, ordered so that $i<j$. Set $q=\rho(i,j)$ and use the same actual continuation
+
+$$
+c_{ij}=b^q a
+\tag{22.12}
+$$
+
+on both histories. Proposition 22.3 supplies legality from both actual cuts, the common endpoint $z_q$ and their common duration $N+q$. Deterministic evaluation gives
+
+$$
+\mu(p_i c_{ij})
+ =U_{c_{ij}}(\mu(p_i))
+ =U_{c_{ij}}(\mu(p_j))
+ =\mu(p_j c_{ij}),
+\tag{22.13}
+$$
+
+where $U_c$ is iteration of the one total update along the names of $c$. This is the supplied append-evaluation law, `DFA.evalFrom_of_append`, with start $m_0$, step $U$ and alphabet $\{a,b\}$. At the allowed final clock value $y=N+q$, endpoint, final complete state and clock are all identical, yet the two root words are different. No decoder with those three fields can return both. Therefore $i\mapsto\mu(p_i)$ is injective. Every such state is reached on a legal root word, so $|M|\ge N$ for every initialization and every total update, including machines whose state encodings or control organization differ from the construction below.
+
+For attainment take exactly
+
+$$
+M=\mathbb Z/N\mathbb Z,\qquad m_0=0,\qquad
+U(m,a)=m+1,\qquad U(m,b)=m.
+\tag{22.14}
+$$
+
+These two formulas define one total update on the entire carrier, including all state/token pairs that do not arise during a legal source run. Induction on the executed names gives
+
+$$
+\mu(u)=\#_a(u)\pmod N
+\quad\text{for every binary word},\qquad
+\mu(p_i)=i\pmod N,
+\tag{22.15}
+$$
+
+where $\#_a$ counts occurrences of $a$. No phase, source vertex, selector position or event count is retained outside this residue. In particular all $N$ states are reached by the legal words $p_i$. The update uses neither an intermediate response nor any endpoint or clock value.
+
+At a nonterminal endpoint the word is unique, irrespective of register collisions elsewhere. At a terminal $z_q$, $q=\rho(i,j)$, its two histories have the distinct residues
+
+$$
+\mu(p_i b^q a)=i+1\pmod N,
+\qquad
+\mu(p_j b^q a)=j+1\pmod N.
+\tag{22.16}
+$$
+
+They are distinct because $0\le i<j<N$. Consequently the final endpoint and residue determine at most one legal word at every cut. Define the online decoder to return that word if its length differs from $y$ by at most $1/4$, and reject if no such word exists. Equivalently, it consults the finite table of Proposition 22.3, tests the residue (22.15) and the closed interval (22.2), and returns the unique candidate. At a terminal the pair index is obtained from the final endpoint by this decoder, never supplied to $U$. Every allowed input passes these tests for its actual word, and no other word passes. This proves success for all errors, for the empty history, for cuts within every selector chain, and for every terminal outcome. Thus $C_{\rm on}\le N$, completing (22.10). $\square$
+

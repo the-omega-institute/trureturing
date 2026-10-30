@@ -1,0 +1,32 @@
+**定理 7.3（高度与最小间隔）。**
+
+<a id="thm-height"></a>
+
+$$
+\boxed{\ \frac1{2\varphi H}\le\delta_H<\frac{\varphi}{2H}.\ }
+$$
+
+因此 $\delta_H=\Theta(H^{-1})$，常数与 $d$ 无关。
+
+**证明。**
+
+不同 $u,v\in D_H$ 的差在某个坐标有非零整数对 $(p,q)$，
+且 $|p|,|q|\le2H$。由引理 [7.1](#lem-algnorm)，
+
+$$
+|p+\varphi q|\ge\frac1{|p+\sigma q|}
+\ge\frac1{2H(1+|\sigma|)}=\frac1{2\varphi H}.
+$$
+
+向量最大范数至少为这个坐标绝对值，得到下界。
+
+取最大的 $n\ge1$ 使 $F_{n+1}\le2H$，于是 $F_{n+2}>2H$。
+因 $D_H-D_H=D_{2H}$，向量 $v_n$ 是两个允许来源之差。
+所以 $\delta_H\le|\sigma|^n=\varphi^{-n}$。
+由递推归纳 $F_k\le\varphi^{k-1}$，故
+$2H<F_{n+2}\le\varphi^{n+1}$，即
+$\varphi^{-n}<\varphi/(2H)$，得到上界。证毕。
+ □
+
+<a id="statement-7-4"></a>
+

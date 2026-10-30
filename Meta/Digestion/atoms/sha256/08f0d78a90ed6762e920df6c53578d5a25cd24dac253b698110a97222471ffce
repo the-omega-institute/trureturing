@@ -1,0 +1,14 @@
+**Lemma 116.5 (the reused matching schedule, including the smallest case).** The $W$ colex-ordered vertices of $\mathcal A$ admit a specified list of $W-1$ perfect matchings, each with $W/2$ ordered edges, in which every unordered pair occurs in exactly one matching. The $W$ different first-$a$-bit keys of the suffixes in $\mathcal F_{b_*}$ can be mapped onto these matchings.
+
+Proof. The integer $W$ is even, since $\binom a{a/2}=2\binom{a-1}{a/2-1}$. If $W=2$, use the sole edge in the sole matching and map both attainable keys to it. This includes $a=2$.
+
+For $W\ge4$, identify the colex-ordered vertices, in that order, with $0,1,\ldots,W-2,\infty$. In round $j\in\mathbb Z/(W-1)$ the first edge is $\{\infty,j\}$, followed, in order $t=1,\ldots,W/2-1$, by
+
+$$
+\{j+t,j-t\}.
+$$
+
+Every nonzero residue modulo the odd integer $W-1$ has a unique representation as one of $t,-t$ in this range. Thus each round is a perfect matching. An edge incident to $\infty$ has a unique round. For two distinct finite vertices $x,y$, its round is the unique $j=(x+y)/2$ modulo $W-1$, and its edge is then uniquely specified by the sign-pair of $(x-y)/2$. Division by 2 is valid for every odd $W-1$; no primality assumption is needed. This is the matching formula already used in Boundary Dynamics (110.15).
+
+The attainable keys are $1-t$ for $|t|=a/2$ and are all different. Order these $W$ keys by colex, with indices $i=0,\ldots,W-1$, and map index $i$ to round $\min(i,W-2)$. This is onto the $W-1$ rounds. Extend this public map, denoted $J$, to every other binary key of length $a$ by assigning round 0. For $W=2$ use $J=0$ on every key. $\square$
+

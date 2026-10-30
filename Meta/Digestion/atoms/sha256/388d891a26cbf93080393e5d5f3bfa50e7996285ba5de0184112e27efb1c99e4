@@ -1,0 +1,35 @@
+#### 定理 7.8（有限编译与全部保留误差）
+
+<a id="thm:compile"></a>
+
+若在正确的联合受控载体上，实际酉实现
+$\widetilde V_k$ 满足 $\left\lVert \widetilde V_k-V_k\right\rVert\le\delta_k$，则
+
+$$
+\left\lVert U-\widetilde V_N\cdots\widetilde V_1\right\rVert
+ \le Mr^N+\sum_{k=1}^N\delta_k.                          \tag{33}
+$$
+
+若 $M>0$，使尾至多 $\varepsilon/2$ 的一个深度为
+
+$$
+N=\max\left\{0,
+ \left\lceil\frac{\log(2M/\varepsilon)}{\log(1/r)}\right\rceil
+ \right\}.
+$$
+
+**证明。**
+
+在无限极限与实际有限乘积之间插入理想有限乘积，
+分别用尾界与酉伸缩求和。再解 $Mr^N\le\varepsilon/2$。
+
+∎
+
+这个对数界是分辨率细化深度，不自动给原生门数、寻找门字的成本或物理钟时。
+逐个经典分支存在逼近字，也不自动给一个保持所有分支相对相位的相干受控实现。
+项目 §§100、105 的代码范围和误差范数必须逐项对应：
+ready 输入上的等距误差不能直接升级为整个载体的算符或 diamond 范数误差。
+相干控制之外的实际概率合同仍按定义 [1.1](#def:layers) 单列。
+
+<a id="sec-8"></a>
+

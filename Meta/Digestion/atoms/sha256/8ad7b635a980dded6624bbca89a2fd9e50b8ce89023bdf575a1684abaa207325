@@ -1,0 +1,208 @@
+**Theorem 11.1 (Prescribed-budget transition realization).** There are
+finite positive constants $A,D,C$, depending only on $I$, such that the
+following holds for every integer $a\ge A$, every integer $h\ge1$ with
+$\rho_a=h/a^{3/2}\in I$, and every integer $N\ge\lceil Da^6\rceil$.
+Put $s=a+1+h$, $t=t(\rho_a)$ as in Definition 8.3, and
+
+$$
+j=\lfloor a(t-1)\rfloor,\quad m=a+j,\quad n=s-m=h+1-j,
+\quad \alpha=\frac{a-1}{m-1},\quad p=\frac{j}{m-1}=1-\alpha.
+\tag{11.1}
+$$
+
+Then $1\le j\le h$, and there exists
+$G_N\in\mathfrak G_N(a,h)$ such that
+
+$$
+\left|Q(G_N)-H_j(a,h)\right|
+\le C\frac{a^{15/2}}N,
+\qquad
+H_j(a,h)=\frac{m^3}{\alpha}+\frac{n^2}{p}.
+\tag{11.2}
+$$
+
+Here $H_j$ is exactly the actual-law energy (8.3). The graph has exactly
+$N$ sources and $aN$ edges; there is no divisibility condition on $N$.
+
+**Proof.** By Definition 8.3, $t\in[1+\delta,T]$ for some
+$\delta>0$ and $T<\infty$ depending only on $I$. The parameter estimates
+in the upper-bound proof of Theorem 8.4 show, after increasing $A$, that
+$1\le j\le h$. They also allow a constant $K\ge4$, depending only on $I$,
+such that throughout the domain
+
+$$
+\begin{gathered}
+K^{-1}\le\alpha,p\le1-K^{-1},\qquad
+ a\le m\le Ka,\qquad
+ K^{-1}a^{3/2}\le n\le Ka^{3/2},\qquad
+ s\le Ka^{3/2}.
+\end{gathered}
+\tag{11.3}
+$$
+
+Indeed $m/a=t+O_I(a^{-1})$,
+$p=(t-1)/t+O_I(a^{-1})$, $\alpha=1/t+O_I(a^{-1})$, and
+$n/a^{3/2}=\rho_a+O_I(a^{-1/2})$; the displayed limiting quantities
+range in compact positive intervals, with $p,\alpha$ bounded away from
+one. Fix such $K,A$, and take $D\ge64K^6$.
+
+Partition the $s$ sink labels into a core of size $m$ and a tail of size
+$n$. Reserve one source whose neighborhood is all $s$ sink labels. To
+choose the other neighborhoods, use integer division:
+
+$$
+R=(a-1)N-(s-1),\qquad
+q=\left\lfloor\frac{R}{m-1}\right\rfloor,\qquad
+r=R-q(m-1),\qquad 0\le r\le m-2,
+\tag{11.4}
+$$
+
+and put $e=\mathbf1_{\{r>0\}}$ and $L=N-1-q-e$.
+Since $m-1\ge a$, (11.3) gives
+
+$$
+|q-\alpha N|\le\frac{s-1}{m-1}+1\le2K\sqrt a,
+\qquad |L-pN|\le4K\sqrt a.
+\tag{11.5}
+$$
+
+Our lower bound on $N$ implies $N\ge16K^2\sqrt a$, so (11.5) implies
+$q\ge\alpha N/2>0$ and $L\ge pN/2>0$. In particular all source counts
+below are nonnegative integers, and their sum is $N$.
+
+Use $q$ sources with the entire core as neighborhood. If $r>0$, use one
+additional source with any $r+1$ distinct core neighbors; this is feasible
+because $2\le r+1\le m-1$. Use the remaining $L$ sources as singletons
+on the tail. Distribute them as evenly as possible: for tail label $i$,
+choose an integer $\ell_i\in\{\lfloor L/n\rfloor,\lceil L/n\rceil\}$
+with $\sum_{i\in\mathrm{tail}}\ell_i=L$, and give precisely $\ell_i$
+sources the neighborhood $\{i\}$. Such integers exist by the remainder
+of the integer division of $L$ by $n$.
+
+The edge count is exactly
+
+$$
+\begin{aligned}
+s+qm+e(r+1)+L
+ &=s+N-1+q(m-1)+r\\
+ &=s+N-1+R=aN.
+\end{aligned}
+\tag{11.6}
+$$
+
+All neighborhoods consist of distinct sink labels, so this is a simple
+bipartite graph even though distinct sources may have equal neighborhoods.
+The reserved source connects every sink, and every other source has a
+nonempty neighborhood; hence the graph is connected.
+
+For core label $i$, let $\delta_i\in\{0,1\}$ indicate incidence with the
+additional source, setting every $\delta_i=0$ when $r=0$. The actual sink
+degrees and actual marginals are
+
+$$
+\begin{array}{lll}
+d_i=q+1+\delta_i,& y_i=(q+1+\delta_i)/N,& i\in\mathrm{core},\\
+d_i=\ell_i+1,& y_i=(\ell_i+1)/N,& i\in\mathrm{tail}.
+\end{array}
+\tag{11.7}
+$$
+
+Every core degree is at least $N/(2K)$, and every tail degree is at least
+$L/n\ge N/(2Kn)$. Thus every sink degree is at least $N/(2Kn)>s$:
+indeed $2Kns\le2K^3a^3<N$ by the choice of $D$. Every source degree
+is at most $s$. Consequently the strict orientation condition (9.1)
+holds for every edge, and the constructed graph belongs to
+$\mathfrak G_N(a,h)$.
+
+It remains to control its actual quadratic energy, including the reserved
+source. Equations (11.5)--(11.7) give
+
+$$
+\begin{aligned}
+|q/N-\alpha|&\le2K\sqrt a/N,\\
+|y_i-\alpha|&\le4K\sqrt a/N,
+ & y_i&\ge\alpha/2 &&(i\in\mathrm{core}),\\
+|y_i-p/n|&\le6K^2/N,
+ & y_i&\ge p/(2n) &&(i\in\mathrm{tail}).
+\end{aligned}
+\tag{11.8}
+$$
+
+For the tail error, explicitly,
+$|\ell_i+1-pN/n|\le2+4K\sqrt a/n\le6K^2$, using (11.3).
+All these are estimates on the marginals in (11.7), rather than on
+separately chosen marginal data.
+
+Let $C_K$ denote finite constants depending only on $K$. The contribution
+of the $q$ full-core sources is
+
+$$
+Q_C=\frac qN m^2\sum_{i\in\mathrm{core}}y_i^{-2},
+\qquad
+\left|Q_C-\frac{m^3}{\alpha}\right|
+\le C_K\frac{a^{7/2}}N.
+\tag{11.9}
+$$
+
+For completeness, for each core label the difference of the coefficients
+is bounded by
+
+$$
+\left|\frac{q/N}{y_i^2}-\frac1\alpha\right|
+\le \frac{|q/N-\alpha|}{y_i^2}
+ +\alpha\left|y_i^{-2}-\alpha^{-2}\right|
+\le C_K\frac{\sqrt a}{N}.
+$$
+
+The last step follows either by factoring the difference of squares or by
+the derivative of $z^{-2}$ on $z\ge1/(2K)$. Summing over $m$ labels and
+multiplying by $m^2\le K^2a^2$ proves (11.9).
+
+The $L$ singleton sources contribute
+
+$$
+Q_D=\sum_{i\in\mathrm{tail}}\frac{\ell_i/N}{y_i^2}
+=\sum_{i\in\mathrm{tail}}\left(\frac1{y_i}-\frac1{Ny_i^2}\right).
+\tag{11.10}
+$$
+
+By (11.8), for each tail label,
+
+$$
+\left|\frac1{y_i}-\frac np\right|
+\le\frac{|y_i-p/n|}{y_i(p/n)}\le C_K\frac{n^2}{N},
+\qquad \frac1{Ny_i^2}\le C_K\frac{n^2}{N}.
+$$
+
+Therefore
+
+$$
+\left|Q_D-\frac{n^2}p\right|
+\le C_K\frac{n^3}{N}\le C_K\frac{a^{9/2}}N.
+\tag{11.11}
+$$
+
+The additional source, when present, has at most $m$ core neighbors, so
+its contribution $Q_R$ satisfies
+
+$$
+0\le Q_R\le C_K\frac{m^3}{N}\le C_K\frac{a^3}{N}.
+\tag{11.12}
+$$
+
+Finally the reserved source has degree $s$ and meets all labels. Its
+contribution is bounded, using both lower bounds in (11.8), by
+
+$$
+\begin{aligned}
+0\le Q_*&=\frac{s^2}N\sum_{i=1}^s y_i^{-2}\\
+&\le C_K\frac{s^2}N(m+n^3)
+\le C_K\frac{a^{15/2}}N.
+\end{aligned}
+\tag{11.13}
+$$
+
+The identity $Q(G_N)=Q_C+Q_D+Q_R+Q_*$ and (11.9)--(11.13) prove
+(11.2), after enlarging one constant. This construction works separately
+for every integer $N$ in the stated range. ∎
+

@@ -1,0 +1,18 @@
+**Definition 22.1 (fixed acquisition and the two capacities).** Specialize Definition 16.1 to one type $\iota$, the same two atomic operation-name tokens $\mathcal A=\{a,b\}$, and the fixed native and acquisition data
+
+$$
+r=1,\qquad d(e)=1\text{ for every legal edge},\qquad
+K=[-1,1],\qquad \epsilon=\tfrac14.
+\tag{22.1}
+$$
+
+These data are identical throughout the family below. Neither token carries a source parameter, vertex, edge identifier or timing variant. The accumulated native duration is $T(u)=|u|$, and the entire permitted observation support is
+
+$$
+\mathcal O(u)=\{z(u)\}\times
+       [\,|u|-\tfrac14,\ |u|+\tfrac14\,].
+\tag{22.2}
+$$
+
+Every value in this interval is allowed for every finite legal root word, including the empty word and every stopping prefix. Define $C_{\rm stat}$ to be the least cardinality of the range of a successful finite static label. Define $C_{\rm on}$ to be the least cardinality of a complete finite state set $M$ with one fixed initialization and one total update $U:M\times\{a,b\}\to M$ satisfying Definition 16.1. All persistent control belongs to $M$. The decoder has exactly the final endpoint, supplement and clock fields of that definition. These capacities count supplements under this fixed acquisition, rather than the installed source, transition descriptions, endpoint representation or decoder resources.
+
