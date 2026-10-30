@@ -24,7 +24,7 @@ internal sealed class ProductMarginZhangYeungDocument : IScribeDocumentDefinitio
     private static Formula Nonnegative()
     {
         var c = F.Id("c"); var d = F.Id("d"); var k = F.Id("k");
-        return Seq(Forall, Sp, c, Comma, d, Colon, Call("LocalPair"), Comma, Esc,
+        return Seq(Forall, Sp, c, Comma, d, Colon, F.Id("LocalPair"), Comma, Esc,
             Forall, Sp, k, Colon, Call("Coupling", c, d), Comma, Esc,
             D(0), Le, Sp, Call("zhangYeungGap", k));
     }
@@ -37,7 +37,7 @@ internal sealed class ProductMarginZhangYeungDocument : IScribeDocumentDefinitio
             Call("qubitHolevo", Call("x", c), Call("z", c)), Plus,
             Call("qubitHolevo", Call("x", d), Call("z", d)), Minus,
             D(3), Cdot, Sp, Call("quantumMutualInformation", Call("productMixture", c, d)));
-        return Seq(Forall, Sp, c, Comma, d, Colon, Call("LocalPair"), Comma, Esc,
+        return Seq(Forall, Sp, c, Comma, d, Colon, F.Id("LocalPair"), Comma, Esc,
             Forall, Sp, k, Colon, Call("Coupling", c, d), Comma, Esc,
             Call("zhangYeungGap", k), Eq, rhs);
     }

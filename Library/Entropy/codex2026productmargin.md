@@ -66,8 +66,8 @@ operators with an arbitrary finite spectator identity gives the local channel
 on the complete joint matrix algebra. Its entry formula preserves every
 spectator coherence and supplies the physical operation for data processing.
 
-These ingredients do not by themselves prove the whole four-party
-Zhang–Yeung endpoint, its coordinate-free corollary, or any inequality for
-arbitrary quantum states. Physical preparation, the actual-state entropy
-reduction and the local information-processing estimates must be connected before
-claiming that endpoint.
+The ProductMarginZhangYeung source connects these ingredients to the actual
+sixteen-dimensional state, its spectral entropy identity and local
+information-processing estimates. Its nonnegative-gap statement concerns only
+the four-parameter product-margin construction. It does not assert the
+coordinate-free corollary or an inequality for arbitrary quantum states.
