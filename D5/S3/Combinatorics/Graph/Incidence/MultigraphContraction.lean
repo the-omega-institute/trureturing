@@ -85,8 +85,8 @@ private theorem vertexMap_fiber [DecidableEq V] (G : DirectedMultigraph V E)
   rw [Subtype.ext_iff]
   by_cases hw : w = G.target e
   · subst w
-    simp [vertexMap, v.property, Ne.symm v.property, eq_comm]
-  · simp [vertexMap, hw, eq_comm]
+    simp [vertexMap, v.property, Ne.symm v.property]
+  · simp [vertexMap, hw]
 
 section FiniteEdges
 
@@ -109,13 +109,8 @@ private theorem boundary_split (G : DirectedMultigraph V E) (e : E)
     (x : E → ℚ) (v : V) : boundary G x v =
       incidence G v e * x e + residual G e (restrict e x) v := by
   rw [boundary_apply]
-  have hs := Finset.sum_subtype (Finset.univ.erase e)
-    (by intro f; simp : ∀ f : E, f ∈ Finset.univ.erase e ↔ f ≠ e)
-    (fun f => incidence G v f * x f)
-  change (∑ f : E, incidence G v f * x f) =
-    incidence G v e * x e + ∑ f : Surviving e, incidence G v f.val * x f.val
-  rw [← hs]
-  exact (Finset.add_sum_erase _ _ (Finset.mem_univ e)).symm
+  rw [Fintype.sum_eq_add_sum_subtype_ne (fun f : E => incidence G v f * x f) e]
+  rfl
 
 private theorem contracted_incidence (G : DirectedMultigraph V E) (e : E)
     (h : G.source e ≠ G.target e) (v : ContractedVertex G e) (f : Surviving e) :
@@ -124,14 +119,18 @@ private theorem contracted_incidence (G : DirectedMultigraph V E) (e : E)
   have hvb := v.property
   have hfiber (w : V) : v = vertexMap G e h w ↔
       w = v.val ∨ (w = G.target e ∧ v.val = G.source e) := by
-    rw [eq_comm v (vertexMap G e h w), vertexMap_fiber]
+    constructor
+    · intro hv
+      exact (vertexMap_fiber G e h w v).mp hv.symm
+    · intro hv
+      exact ((vertexMap_fiber G e h w v).mpr hv).symm
   simp only [incidence_apply, contract, hfiber]
   by_cases hva : v.val = G.source e <;>
     by_cases hvh : G.target f.val = v.val <;>
     by_cases hvta : G.source f.val = v.val <;>
     by_cases hbh : G.target f.val = G.target e <;>
     by_cases hbt : G.source f.val = G.target e <;>
-    simp_all [eq_comm] <;> ring
+    simp_all [eq_comm] <;> try ring
 
 private theorem contracted_boundary (G : DirectedMultigraph V E) (e : E)
     (h : G.source e ≠ G.target e) (x : Surviving e → ℚ)
@@ -156,10 +155,12 @@ private theorem restrict_cycle (G : DirectedMultigraph V E) (e : E)
   · have hvb := v.property
     simp only [incidence_apply, ha, if_pos rfl, if_neg h, if_neg (Ne.symm h)] at hv hb
     simp only [hz] at hv hb
+    simp only [Pi.zero_apply] at hv hb ⊢
     simp only [ha, if_pos rfl]
     linarith
   · have hvb := v.property
     simp [incidence_apply, ha, hvb, hz] at hv
+    simp only [Pi.zero_apply] at hv ⊢
     simp only [ha, if_false]
     linarith
 
@@ -185,9 +186,10 @@ private theorem lift_cycle (G : DirectedMultigraph V E) (e : E)
     rw [contracted_boundary] at hz
     by_cases hva : v = G.source e
     · simp only [hva, if_pos rfl] at hz
+      simp only [Pi.zero_apply] at hz ⊢
       simp [lift, incidence_apply, hva, h]
       linarith
-    · simpa [incidence_apply, hvb, hva] using hz
+    · simpa [incidence_apply, hvb, hva, Pi.zero_apply] using hz
 
 private theorem lift_restrict_cycle (G : DirectedMultigraph V E) (e : E)
     (h : G.source e ≠ G.target e) (z : CycleSpace G) :
@@ -199,6 +201,7 @@ private theorem lift_restrict_cycle (G : DirectedMultigraph V E) (e : E)
     rw [boundary_split G e] at hz
     simp only [incidence_apply, if_pos rfl, if_neg (Ne.symm h), sub_zero,
       one_mul] at hz
+    simp only [Pi.zero_apply] at hz ⊢
     simp [lift]
     linarith
   · simp [lift, hf, restrict]
