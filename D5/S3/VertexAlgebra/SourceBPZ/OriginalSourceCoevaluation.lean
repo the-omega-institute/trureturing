@@ -7,6 +7,7 @@
    digest: Explicit inverse integer Gram occupation coefficients and the projected finite coevaluation on the full original fixed energy grades. -/
 
 import D5.S3.VertexAlgebra.SourceBPZ.SourcePairingLaws
+import D5.S3.VertexAlgebra.Lattice.FixedGradedDuality
 import Mathlib.Algebra.BigOperators.Finprod
 
 /-!
@@ -178,13 +179,6 @@ private theorem theta_mem_grade (D : LatticeData) (h : ℤ) (v : Carrier D)
 private def plusLinear (D : LatticeData) : Module.End ℂ (Carrier D) :=
   (2 : ℂ)⁻¹ • (LinearMap.id + thetaLinear D)
 
-private theorem plusPart_mem_fixedSpace (D : LatticeData) (v : Carrier D) :
-    plusPart D v ∈ fixedSpace D := by
-  rw [mem_fixedSpace]
-  have ht : theta D (theta D v) = v := theta_involutive D v
-  simp only [plusPart, map_smul, map_add, ht]
-  rw [add_comm (theta D v) v]
-
 private theorem plusPart_mem_grade (D : LatticeData) (h : ℤ) (v : Carrier D)
     (hv : v ∈ grade D h) : plusPart D v ∈ grade D h :=
   (grade D h).smul_mem _ ((grade D h).add_mem hv (theta_mem_grade D h v hv))
@@ -210,7 +204,7 @@ def fixedFrame (D : LatticeData) (h : ℤ) (a : EnergyFiber D h) :
   ⟨plusPart D (carrierBasis D a.1),
     ⟨plusPart_mem_grade D h _ (by
       rw [← a.2]; exact carrierBasis_mem_grade D a.1),
-     plusPart_mem_fixedSpace D _⟩⟩
+     FixedGradedDuality.plusPart_mem_fixedSpace D _⟩⟩
 
 /-- Project the explicit opposite-charge inverse vector, using the existing half. -/
 def fixedDualFrame (D : LatticeData) (h : ℤ) (a : EnergyFiber D h) :
@@ -218,7 +212,7 @@ def fixedDualFrame (D : LatticeData) (h : ℤ) (a : EnergyFiber D h) :
   ⟨plusPart D (dualCarrierBasis D a.1),
     ⟨plusPart_mem_grade D h _ (by
       rw [← a.2]; exact dualCarrierBasis_mem_grade D a.1),
-     plusPart_mem_fixedSpace D _⟩⟩
+     FixedGradedDuality.plusPart_mem_fixedSpace D _⟩⟩
 
 private theorem fixedDualFrame_pairing (D : LatticeData) (hu : IsUnit D.G.det)
     (h : ℤ) (a : EnergyFiber D h) (x : ↥(grade D h ⊓ fixedSpace D)) :
