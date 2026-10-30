@@ -706,3 +706,313 @@ $$
 is still unproved here. Mutual absolute continuity and a common merging word permit unequal first-gap rows within one phase; Proposition 8.2 rules out deducing (9.1) from the posterior band alone. Proposition 7.2 excludes only the singleton-class branch. The reductions do not establish nonattainment for the general past-visible class, root summability for arbitrary finite-hidden laws, uniform rates or risk gaps, or finite visible order.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Actual reset recursion and finite all-distance tests
+
+**Proposition 10.1 (Actual reset recursion).** Work in the setting of Definition 4.1. Write
+
+$$
+Z=M_0,\qquad E=M_1,\qquad A_g=Z^{g-1}E\quad(g\ge2).
+\tag{10.1}
+$$
+
+At a Palm anchor let
+$\mathcal H_0=\sigma(C_j:j\le0;G_j:j<0)$. The strict-left decoder and the past gaps recover one another modulo the actual Palm null sets, so $\mathcal H_0$ is the marked strict visible past at the known anchor. If $C_0=c$ and $f_c(g)>0$, then on $\{G_0=g\}$ the next anchor is at $T_1=g$, and the original joint path law gives
+
+$$
+Q\!\left(H_{T_1+1}\in\cdot\mid\mathcal H_0,G_0=g,C_0=c\right)
+=\frac{r_cA_g}{f_c(g)}.
+\tag{10.2}
+$$
+
+The reset condition at index $1$ identifies this conditional row with $r_{\tau_g(c)}$. Hence
+
+$$
+\boxed{\quad r_cA_g=f_c(g)r_{\tau_g(c)}
+\quad(c\in C_+,\ g\ge2,\ f_c(g)>0).\quad}
+\tag{10.3}
+$$
+
+Proof. The path product after the anchor is $r_cM_u$ for a finite future word $u$, and summing its terminal hidden state gives $r_cM_u\mathbf1$. For the word consisting of $g-1$ zeros followed by one this scalar is $r_cA_g\mathbf1=f_c(g)$. Conditioning the original product law on the marked past and on the positive event $G_0=g$ therefore gives (10.2), while $T_1=g$ and $C_1=\tau_g(C_0)$ are deterministic on that event. Palm event stationarity transports the same identity to every integer event index; no negative-index stopping-time argument is used. Under attainment, Proposition 4.2 gives $f_c(g)>0$ for every $c\in C_+$ and every $g\ge2$, so this positivity is a scalar gap-mass conclusion and does not assert entrywise positivity of $Z$, $E$, or any hidden row. Conditioning on a recurrent class preserves (10.3), because its event belongs to every marked history. $\square$
+
+**Proposition 10.2 (Entire future laws and the finite all-distance tensor interface).** Work under Definition 4.1 with the attainment hypothesis $d(P)=c_\star$. Proposition 4.2 then makes every scalar gap mass positive and every successor of a positive context belong to $C_+$. Fix $c\in C_+$ and $l,r\ge2$, and set
+
+$$
+\begin{aligned}
+&p=l-1,\qquad q=r-1,\qquad x=r_c,\\
+&v=xZ^{p+q+1}E,\qquad u=xZ^pEZ^qE,\\
+&M=v\mathbf1=f_c(l+r),\qquad
+ B=u\mathbf1=f_c(l)f_{\tau_l(c)}(r),\\
+&a=\tau_{l+r}(c),\qquad b=\tau_r(\tau_l(c)).
+\end{aligned}
+\tag{10.4}
+$$
+
+Let $F_{c_1}$ denote the law of the entire future gap sequence from a positive context $c_1$. The future anchors are unbounded almost surely under Definition 4.1, so on an actual conull set the infinite future bit string and its gap sequence determine one another. Consequently,
+
+$$
+F_{c_1}=F_{d_1}
+\quad\Longleftrightarrow\quad
+(r_{c_1}-r_{d_1})M_t\mathbf1=0
+\quad\text{for every finite binary word }t.
+\tag{10.5}
+$$
+
+Inside the present interface, use the already supplied observable-space stabilization from [the intrinsic null-kernel volume, Theorem 2.2](FIB_LEGAL_EDGE_LOAD_INTRINSIC_NULL_KERNEL_DUAL_RESIDUAL_AND_PRESENTATION_OBSTRUCTION.md): with
+
+$$
+\mathscr O_0=\operatorname{span}\{\mathbf1\},\qquad
+\mathscr O_{k+1}=\mathscr O_k+Z\mathscr O_k+E\mathscr O_k,
+\tag{10.6}
+$$
+
+one has $\mathscr O_k=\operatorname{span}\{M_t\mathbf1:|t|\le k\}$ and $\mathscr O_{N-1}=\mathscr O_\infty$. Thus (10.5) may be tested using only $|t|\le N-1$; this is cited support for the tensor interface, not a separate observable-span result.
+
+Under attainment, Proposition 4.2 makes the scalar masses $M,B$ positive, and (10.3) gives $r_a=v/M$ and $r_b=u/B$. For $o\in\mathbb R^N$, put
+
+$$
+\mathcal A=Z\otimes Z,\qquad
+\mathcal H=I\otimes E,\qquad R_c=x\otimes x,
+$$
+
+$$
+ w_o=(ZE\mathbf1)\otimes(Eo)-(ZEo)\otimes(E\mathbf1)\in\mathbb R^{N^2}.
+\tag{10.7}
+$$
+
+Because $M_t\mathbf1\in\mathbb R^N$, every terminal column below is the defined lift $w_{M_t\mathbf1}\in\mathbb R^{N^2}$; consequently each displayed tensor product is a scalar at the original $N$-state dimensions. Direct expansion gives
+
+$$
+R_c\mathcal A^p\mathcal H\mathcal A^q w_o
+=(v\mathbf1)(uo)-(vo)(u\mathbf1)
+=MB\,(r_b-r_a)o.
+\tag{10.8}
+$$
+
+Therefore all split equalities
+
+$$
+F_{\tau_{l+r}(c)}=F_{\tau_r(\tau_l(c))}
+\qquad(l,r\ge2)
+\tag{10.9}
+$$
+
+hold if and only if
+
+$$
+R_c\mathcal A^p\mathcal H\mathcal A^q w_{M_t\mathbf1}=0
+\quad\text{for all }p,q\ge1\text{ and all binary }|t|\le N-1.
+\tag{10.10}
+$$
+
+For a $d$-dimensional real matrix, Cayley--Hamilton multiplied once by the matrix expresses every positive power in the span of the first $d$ positive powers. Applying this separately to the two powers of $\mathcal A$, with $d=N^2$, yields the finite original-matrix characterization
+
+$$
+\boxed{\quad
+(10.9)\text{ for every }l,r\ge2
+\Longleftrightarrow
+R_c\mathcal A^p\mathcal H\mathcal A^q w_{M_t\mathbf1}=0
+\quad\begin{matrix}
+1\le p,q\le N^2,\\ |t|\le N-1.
+\end{matrix}\quad}
+\tag{10.11}
+$$
+
+Any basis of $\mathscr O_{N-1}$ may replace the finite family of word columns, provided each basis vector is passed through the same map $w_{\,\cdot\,}$. This is a finite algebraic characterization for the specified original representation, including singular matrices and structural zeros; it is not an algorithm for arbitrary exact-real input and does not assert that the tests vanish.
+
+For the sharper rectangle, put
+
+$$
+\eta_o=(E\mathbf1)\otimes(Eo)-(Eo)\otimes(E\mathbf1),
+\qquad \mathcal H'=E\otimes Z.
+\tag{10.12}
+$$
+
+Then the same expansion, in the opposite tensor orientation, is
+
+$$
+R_c\mathcal A^p\mathcal H'\mathcal A^q\eta_o
+=B(vo)-M(uo)=MB\,(r_a-r_b)o.
+\tag{10.13}
+$$
+
+The exchange involution fixes $R_c$ and commutes with $\mathcal A$; $R_c\mathcal A^p$ lies in the symmetric dual space of dimension $N(N+1)/2$, while $\mathcal A^q\eta_o$ lies in the antisymmetric space of dimension $N(N-1)/2$. Cayley--Hamilton on these invariant spaces reduces the same zero set to
+
+$$
+1\le p\le\frac{N(N+1)}2,\qquad
+1\le q\le\frac{N(N-1)}2,\qquad |t|\le N-1,
+\tag{10.14}
+$$
+
+with the terminal column understood as $\eta_{M_t\mathbf1}$. When $N=1$, every $\eta_o$ is zero; the scalar no11 condition then forces $M_1=0$, hence $\iota=0$, so the standing hypothesis $\iota>0$ has no member at $N=1$. The orientation in (10.12), rather than the terminal column in (10.7), is the one for which the antisymmetry assertion is valid.
+
+An optional gap-only version has the explicit finite domain
+
+$$
+0\le k\le N-1,\qquad g_1,\ldots,g_k\in\{2,3,\ldots,N+1\},
+\tag{10.15}
+$$
+
+with terminal columns
+$A_{g_1}\cdots A_{g_k}\mathbf1$ (the empty product is $\mathbf1$). Replacing the binary lifts in (10.11) and (10.14) by
+$w_{A_{g_1}\cdots A_{g_k}\mathbf1}$ and $\eta_{A_{g_1}\cdots A_{g_k}\mathbf1}$, respectively, for all columns in (10.15), gives the same equality test: the positive powers $Z,Z^2,\ldots,Z^N$ span all positive powers, so these gap matrices span the same stabilized observable space. No conditional law at a zero-mass gap or successor is used in this optional formulation. $\square$
+
+**Proposition 10.3 (Sufficient certificate and the unresolved implication).** For an actual producer in Definition 4.1, suppose that for every $c\in C_+$ all the finitely many expressions in (10.11) vanish (or, equivalently, the sharper rectangle (10.14) vanishes). Then
+
+$$
+ d(P)<c_\star.
+\tag{10.16}
+$$
+
+Proof. Assume for contradiction that $d(P)=c_\star$. Proposition 4.2 supplies positive scalar gap masses and the rows used in Proposition 10.2, so the finite vanishing gives all split equalities. On each recurrent component $D$, first form the quotient
+
+$$
+S_D=D/\!\sim,\qquad s\sim t\ \Longleftrightarrow\ F_s=F_t,
+\tag{10.17}
+$$
+
+of equality of entire future laws. This is the predictive-state carrier; it is formed before the mutual-absolute-continuity quotient or any synchronization argument. The successor maps descend to $S_D$, and the split equalities give
+$\bar\tau_{l+r}=\bar\tau_r\bar\tau_l$ for $l,r\ge2$. The positive gap rows make each recurrent component of this finite labelled graph strongly connected. The elementary finite-map algebra on this quotient then makes every $\bar\tau_g$ a permutation and gives $\bar\tau_g=U^g$ for one cyclic permutation $U$.
+
+Proposition 5.3 supplies a finite word merging any pair of predictive states in one mutual-absolute-continuity class. Its action on $S_D$ is a composition of the permutations just obtained, hence is injective. Such a pair must therefore have been the same element of $S_D$, so every mutual-absolute-continuity class of predictive states is a singleton. Proposition 7.2 now gives the contradiction. Thus (10.16) is a sufficient certificate for the actual producer.
+
+The converse implication is deliberately absent: attainment has not been shown to force any expression in (10.11) or (10.14) to vanish. Nonvanishing supplies neither an attaining producer nor a positive lower bound for $c_\star-d(P)$. Without attainment, (10.3) is used only on positive gap events; null contexts and zero completion masses impose no conditional successor law. $\square$
+
+## 11. Future-information deficit under the actual law
+
+**Proposition 11.1 (Quantified split-information deficit).** In the actual-law setting of Proposition 4.3, let
+
+$$
+M=f_c(l+r),\qquad B=f_c(l)f_{\tau_l(c)}(r),
+$$
+
+and let $F_a,F_b$ be the two entire future gap measures there. For $M,B>0$ put $\rho=F_a+F_b$, choose densities $u=dF_a/d\rho$ and $v=dF_b/d\rho$, and define
+
+$$
+\Delta_{c,l,r}
+=\frac{MB}{M+B}
+-\int\frac{MBuv}{Mu+Bv}\,d\rho,
+\tag{11.1}
+$$
+
+where the integrand is set to zero on $\{Mu+Bv=0\}$. Let
+
+$$
+\eta=\frac{MF_a+BF_b}{M+B},\qquad
+p=\frac{Bv}{Mu+Bv},\qquad
+\alpha=\frac{B}{M+B}.
+\tag{11.2}
+$$
+
+Then $\eta$ is a probability measure, $\mathbb E_\eta p=\alpha$, and
+
+$$
+\begin{aligned}
+\Delta_{c,l,r}
+&=(M+B)\operatorname{Var}_\eta(p)\\
+&=\frac{M^2B^2}{(M+B)^2}
+\int\frac{(u-v)^2}{Mu+Bv}\,d\rho\ \ge0.
+\end{aligned}
+\tag{11.3}
+$$
+
+Proof. Since $d\eta=(Mu+Bv)d\rho/(M+B)$, direct substitution gives the integral term in (11.1) as $(M+B)\mathbb E_\eta[p(1-p)]$, while $(M+B)\alpha(1-\alpha)=MB/(M+B)$. Their difference is the variance in (11.3). This is the actual-measure form of the conditional Brier variance calculation in Dawid--Lauritzen--Parry, *Proper Local Scoring Rules on Discrete Sample Spaces*, §4.2, Example 4.4 and equation (14); the displayed derivation supplies the needed no11-domain identity directly. Equality holds exactly when $F_a=F_b$. The algebra in (11.1)--(11.4), including this equality case, applies to any two positive actual completion channels under Definition 4.1; it does not require the attained comparison (4.11).
+
+Since $\int|u-v|\,d\rho=2\operatorname{TV}(F_a,F_b)$, weighted Cauchy--Schwarz gives
+
+$$
+\Delta_{c,l,r}
+\ge\frac{4M^2B^2}{(M+B)^3}\operatorname{TV}(F_a,F_b)^2.
+\tag{11.4}
+$$
+
+Under attainment, Proposition 4.3 gives $M/3\le B\le M$, and hence
+
+$$
+\frac{\Delta_{c,l,r}}{M+B}
+\ge\frac9{64}\operatorname{TV}(F_a,F_b)^2.
+\tag{11.5}
+$$
+
+If a binary word $t$ of length at most $N-1$ has
+
+$$
+\varepsilon_t=(r_a-r_b)M_t\mathbf1,
+\tag{11.6}
+$$
+
+then its future cylinder gives $\operatorname{TV}(F_a,F_b)\ge|\varepsilon_t|$. Under the same attainment hypothesis as in (11.5), this yields
+
+$$
+\Delta_{c,l,r}\ge\frac9{64}(M+B)\varepsilon_t^2.
+\tag{11.7}
+$$
+
+The optional gap-only finite domain is exactly the one in (10.15); its positive gap-word cylinders give the analogous bound. These are quantitative actual-law consequences and do not infer an upper bound on any auxiliary risk.
+
+## 12. Exact erasure sum for an explicitly named auxiliary field
+
+**Proposition 12.1 (Future-erasure identity).** Under Definition 4.1, define
+
+$$
+\mathcal G=\sigma(X_i:i<0)\vee\sigma(R_+),
+\qquad R_+=\min\{j\ge1:X_j=1\},
+\tag{12.1}
+$$
+
+and its actual-law Brier risk
+
+$$
+ d_{\mathcal G}=\mathbb E_P\left[(X_0-\mathbb E_P[X_0\mid\mathcal G])^2\right].
+\tag{12.2}
+$$
+
+The explicit two-sided unbounded-anchor clause of Definition 4.1 gives $R_+<\infty$ almost surely; this scope is part of the definition and is not inferred merely from $\iota>0$ or $\mu<\infty$. For a positive context $c$ and $l,r\ge2$, put
+
+$$
+\begin{aligned}
+M&=Q(G_0=l+r\mid C_0=c)=r_cA_{l+r}\mathbf1,\\
+B&=Q(G_0=l,G_1=r\mid C_0=c)=r_cA_lA_r\mathbf1,\\
+a&=\tau_{l+r}(c),\qquad b=\tau_r(\tau_l(c)).
+\end{aligned}
+\tag{12.3}
+$$
+
+These actual path masses are defined for every $c\in C_+$ and $l,r\ge2$ before any conditional law at a successor is selected. If $f_c(l)>0$, Palm event stationarity gives $\tau_l(c)\in C_+$, and the actual reset recursion gives $B=f_c(l)f_{\tau_l(c)}(r)$. If $f_c(l)=0$, nonnegativity gives $r_cA_l=0$ and hence $B=0$, without evaluating a row at $\tau_l(c)$. In particular, every positive two-gap path has the conditional-product expression. If $M,B>0$, then $a,b\in C_+$ and $\Delta_{c,l,r}$ is the quantity in (11.1), using its algebra for these two positive actual channels. If $M=0$ or $B=0$, define $\Delta_{c,l,r}=0$ and choose no conditional law at a null successor. Thus every $\Delta_{c,l,r}$ is defined without extending a conditional future law through a zero-mass channel.
+
+Then the exact original-law identity is
+
+$$
+\boxed{\quad
+ d_{\mathcal G}-d(P)
+=\iota\sum_{c\in C_+}\nu_c
+  \sum_{l,r\ge2}\Delta_{c,l,r}.
+\quad}
+\tag{12.4}
+$$
+
+Proof. The original path law (4.2) and actual reset (4.4) give the masses $r_cA_{l+r}\mathbf1$ and $r_cA_lA_r\mathbf1$ for the one-gap and two-gap completions, respectively. On positive completions, (10.3) identifies the terminal hidden rows as $r_a$ and $r_b$; a zero path mass is the zero subprobability channel. Partition the free cells by their nearest anchors $-l,r$ and strict-left context $c$. On a cell with $M,B>0$, the two completion channels after the right anchor, including every full-left-past test, factor as
+
+$$
+\iota\nu_c M\,\kappa_c^-\otimes F_a,
+\qquad
+\iota\nu_c B\,\kappa_c^-\otimes F_b,
+\tag{12.5}
+$$
+
+where $\kappa_c^-$ is the actual left-past channel. The field $\mathcal G$ retains the common strict-left past and the location of the nearest right anchor, while it erases the future after that anchor. The common left factor cancels; the full-exterior conditional risk is the second term of (11.1), and the erased-future risk is its first term. If one channel has zero mass, both its contribution and the corresponding summand are zero, so no successor posterior is selected. Forced cells contribute zero to both risks because $\mathcal G$ retains the left neighbor and reveals whether the right neighbor is an anchor. Tonelli's theorem gives (12.4).
+
+When $d(P)=c_\star$, Proposition 4.2 supplies the recurrent component decomposition and the same identity componentwise with the actual $\iota_D,\nu^D$; the mixture relation is
+
+$$
+P(E_D)\,\iota_D\nu^D_c=\iota\nu_c.
+\tag{12.6}
+$$
+
+Since $\mathcal G\subseteq\mathcal E_0$, conditional-variance monotonicity gives $d_{\mathcal G}\ge d(P)$. The original universal comparison applies only to $d(P)$; (12.4) supplies no conclusion of the form $d_{\mathcal G}\le c_\star$ and does not settle the original attainment event. $\square$
+
+## 13. Boundary of the finite interface
+
+**Boundary 13.1 (Unresolved vanishing branch).** The finite identities (10.11), the sharper rectangle (10.14), and the nonnegative deficits (11.1)--(11.7) are exact interfaces for the unchanged original joint law, visible marginal, and Palm law. They provide a sufficient strict-risk certificate when they vanish and a quantitative measure of unequal split futures when they do not. No result in this append proves that an attaining original producer must make them vanish. The full nonnegative hidden domain, all positive contexts, every $l,r\ge2$, the original full-exterior posterior, and the original unresolved event remain the quantified objects.
+
+## 追加锚（本行以下为增补区）
