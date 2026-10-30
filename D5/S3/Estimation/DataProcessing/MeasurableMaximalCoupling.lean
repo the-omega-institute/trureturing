@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Probability.Kernel.RadonNikodym]
    utility: none
-   digest: Standard Borel probability kernels admit a measurable maximal coupling at every parameter. -/
+   digest: Standard Borel state spaces admit measurable maximal coupling kernels. -/
 
 import D5.S3.Estimation.DataProcessing.MeasurablePostprocessingDefectContraction
 import Mathlib.Probability.Kernel.RadonNikodym
@@ -483,7 +483,7 @@ private theorem commonKernel_le_right : commonKernel P Q ≤ Q := by
   exact rnCommonPart_le_right _ _ _ (Measure.AbsolutelyContinuous.rfl.add_right' _)
 
 private instance commonKernel_finite : IsFiniteKernel (commonKernel P Q) :=
-  Kernel.isFiniteKernel_of_le (commonKernel_le_left P Q)
+  isFiniteKernel_of_le (commonKernel_le_left P Q)
 
 private def dominatedDifference (K L : Kernel Z X) [IsFiniteKernel L] (h : L ≤ K) :
     Kernel Z X where
@@ -499,7 +499,7 @@ private theorem dominatedDifference_apply (K L : Kernel Z X) [IsFiniteKernel L]
 private instance dominatedDifference_finite (K L : Kernel Z X)
     [IsFiniteKernel K] [IsFiniteKernel L] (h : L ≤ K) :
     IsFiniteKernel (dominatedDifference K L h) :=
-  Kernel.isFiniteKernel_of_le (fun _ => Measure.sub_le)
+  isFiniteKernel_of_le (fun _ => Measure.sub_le)
 
 private def leftResidual : Kernel Z X :=
   dominatedDifference P (commonKernel P Q) (commonKernel_le_left P Q)
@@ -547,12 +547,13 @@ private theorem maximalCoupling_apply (z : Z) :
   classical
   rw [maximalCoupling, Kernel.piecewise_apply]
   by_cases h : tvDist (P z) (Q z) = 0
-  · simp only [Set.mem_setOf_eq, h, if_true, overlapCoupling, dite_eq_left]
+  · simp only [Set.mem_setOf_eq, if_pos h, overlapCoupling, dif_pos h]
     exact Kernel.map_apply _ (measurable_id.prodMk measurable_id) _
-  · simp only [Set.mem_setOf_eq, h, if_false, overlapCoupling, dite_eq_right]
-    rw [Kernel.add_apply, Kernel.map_apply _ (measurable_id.prodMk measurable_id),
+  · simp only [Set.mem_setOf_eq, if_neg h, overlapCoupling, dif_neg h]
+    rw [Kernel.add_apply, Kernel.map_apply (commonKernel P Q)
+        (f := fun x : X => (x, x)) (measurable_id.prodMk measurable_id),
       Kernel.withDensity_apply _ (residualWeight_measurable P Q),
-      Measure.withDensity_const, Kernel.prod_apply, leftResidual_mass]
+      withDensity_const, Kernel.prod_apply, leftResidual_mass]
     simp only [leftResidual, rightResidual, dominatedDifference_apply, commonKernel_apply]
 
 end KernelFamily
@@ -591,16 +592,18 @@ private theorem event_tv_maps_le {A X : Type*} [MeasurableSpace A] [MeasurableSp
     have hi : f ⁻¹' E.val ⊆ g ⁻¹' E.val ∪ {a | f a ≠ g a} := by
       intro a ha
       by_cases h : f a = g a
-      · exact Or.inl (h ▸ ha)
+      · exact Or.inl (by simpa only [Set.mem_preimage, ← h] using ha)
       · exact Or.inr h
-    exact (measure_mono hi).trans (measure_union_le _ _)
+    exact (measure_mono hi).trans (by simpa only [add_comm] using
+      (measure_union_le (μ := π) (g ⁻¹' E.val) {a | f a ≠ g a}))
   · apply tsub_le_iff_right.mpr
     have hi : g ⁻¹' E.val ⊆ f ⁻¹' E.val ∪ {a | f a ≠ g a} := by
       intro a ha
       by_cases h : f a = g a
-      · exact Or.inl (h.symm ▸ ha)
+      · exact Or.inl (by simpa only [Set.mem_preimage, h] using ha)
       · exact Or.inr h
-    exact (measure_mono hi).trans (measure_union_le _ _)
+    exact (measure_mono hi).trans (by simpa only [add_comm] using
+      (measure_union_le (μ := π) (f ⁻¹' E.val) {a | f a ≠ g a}))
 
 private theorem overlapCoupling_offDiagonal {X : Type*} [MeasurableSpace X]
     [MeasurableEq X] (μ ν : Measure X) [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] :
