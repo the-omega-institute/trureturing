@@ -1267,7 +1267,7 @@ K_0=1+R+J+v_0^{-1}.
 \tag{9.6}
 $$
 
-There is an absolute numerical constant $c_0=2^{12}K_0^6$ with the following
+There is a constant $c_0=2^{12}K_0^6$, depending only on $L,R$, with the following
 property. If $a$ is sufficiently large in terms of $L,R$, $L\le
 k=h/\sqrt a\le R$, and $(j,v)$ satisfies
 
@@ -1330,9 +1330,13 @@ sink receives, from the core sources of one size, either the lower or upper
 integer nearest to the corresponding uniform incidence count. This is a
 simple bipartite incidence construction: a source is a set, and repeated sets
 are carried by different source vertices, so no edge is repeated. The resulting
-core incidence degrees differ from the ideal values by at most $4a$ in total,
-while each is at least $M/3$ for all sufficiently large $a$; here we use
-$Q/M\ge1-2J/a$ and $r\le a+J$. The balanced singleton assignment gives
+core incidence degrees differ from the ideal values by at most $4a$ in total.
+Indeed, if $D_i^{C}$ is the degree at a core sink and
+$\mu_b=q_b(a+\ell+b)/r$, the cyclic intervals give
+$|D_i^{C}-(\mu_0+\mu_1)|\le2$, while (9.9)--(9.10) give
+$|\mu_0+\mu_1-M(1-p)(a+v)/r|\le4a$. Moreover
+$Q/M\ge1-2J/a$ and $r\le a+J$, so every core degree is at least $M/3$
+for all sufficiently large $a$. The balanced singleton assignment gives
 
 $$
  t_d\ge \frac{v_0M}{4a(h+1)}-1
@@ -1376,7 +1380,7 @@ $$
 The integer choice (9.9) also gives
 
 $$
-\sum_{\text{core types}}\left|q_b/M-(1-p)
+\sum_{b=0}^{1}\left|q_b/M-(1-p)
        \begin{cases}1-\theta,&b=0,\\ \theta,&b=1\end{cases}\right|
  +\sum_{d\in D}\left|t_d/M-p/n\right|
  \le\frac{8K_0^2a}{M}.
@@ -1401,6 +1405,18 @@ actual sink denominators, and the third is the deleted memberships together
 with the universal source. These estimates are obtained by summing first over
 core incidences (where $d_i^*\ge M/5$) and then over tail incidences (where
 $d_i^*\ge v_0M/(4(R+1)a^{3/2})$); no independent marginal is introduced.
+More explicitly, with the ideal denominators held fixed, a core source
+contributes at most $8K_0^2a^3$ and a tail singleton at most $8K_0^2a^3$
+after the common $1/M$ normalization. Multiplying these bounds by (9.15)
+gives the first term of (9.16). The denominator inequality gives a relative
+factor at most $48K_0^2a/M$ on core incidences and at most
+$48K_0^2a^{5/2}/M$ on tail incidences; multiplying by the ideal core and tail
+energies (bounded by $8K_0^2a^3$ and $8K_0^2a^2$, respectively) gives the
+second term. Finally, the at most $h+1$ changed core incidences and the $s$
+universal incidences are bounded directly by
+$N(2a)^2(d_i^*)^{-2}$, using the two displayed lower bounds on $d_i^*$;
+this gives the third term. These are sums over the actual edge set, so the
+estimate also covers a zero type mass.
 Since $M\ge N/2$ and $a^{11/2}/M\le a^6/N$ after enlarging $c_0$, (9.16)
 gives
 
@@ -1505,7 +1521,8 @@ no support, symmetry, minimum-marginal, or cardinality restriction. ∎
 **Corollary 9.5 (Common realized normalized limits).** Let
 $a_r,h_r,N_r$ be integers with $a_r\to\infty$,
 $h_r/\sqrt{a_r}\to\kappa\in(0,\infty)$, and
-$N_r\ge D_{L,R}a_r^5$ eventually for some $0<L<\kappa<R<\infty$. Then
+$N_r\ge Da_r^5$ eventually for some $0<L<\kappa<R<\infty$, where $D$ is
+the constant in (9.19) for this interval. Then
 
 $$
 \frac{V_{N_r}(a_r,h_r)-a_r(a_r+1)^2}{a_r^2}\longrightarrow U(\kappa).\tag{9.27}
