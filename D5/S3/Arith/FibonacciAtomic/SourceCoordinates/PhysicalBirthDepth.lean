@@ -8,6 +8,8 @@
 
 import D5.S3.Arith.FibonacciAtomic.ActualImageAddressCertificate
 
+/-! The stream is consumed only by lexicographically ordered old beta leaves. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxRecDepth 4096
@@ -105,16 +107,10 @@ private theorem advance_physical (z : Nat → Bool) (t : Nat)
       cases z (j + 1) <;> rfl
   | fork d e h l ihh ihl =>
       cases hb : e.bit <;>
-        simp only [advance, Ranked.physical, hb, Bool.false_eq_true, if_false, if_true, update]
-      · have hx := ihl j
-        have hy := ihh (advance z t l j).2
-        cases hx
-        cases hy
+        simp only [advance, Ranked.physical, hb, Bool.false_eq_true, ite_false, ite_true, update]
+      · rw [← ihl j, ← ihh (advance z t l j).2]
         rfl
-      · have hx := ihh j
-        have hy := ihl (advance z t h j).2
-        cases hx
-        cases hy
+      · rw [← ihh j, ← ihl (advance z t h j).2]
         rfl
 
 private theorem advance_root (z : Nat → Bool) (t : Nat)
@@ -140,10 +136,10 @@ private theorem advance_stamp (z : Nat → Bool) (n : Nat)
   | beta d =>
       change n + 1 = d.born + (if d.initial then 2 else 1) ∧ _
       refine ⟨?_, le_rfl, rfl, rfl, Or.inr ⟨rfl, rfl⟩, rfl, rfl⟩
-      rcases s with ⟨hi, hn⟩ | ⟨hi, hn⟩ <;> simp only [hi, if_true, if_false] <;> omega
+      rcases s with ⟨hi, hn⟩ | ⟨hi, hn⟩ <;> simp [hi, hn, Nat.add_assoc]
   | fork d e h l ihh ihl =>
       rcases s with ⟨he, hn, hh, hl, sh, sl⟩
-      cases hb : e.bit <;> simp only [advance, hb, Bool.false_eq_true, if_false, if_true, Stamp]
+      cases hb : e.bit <;> simp only [advance, hb, Bool.false_eq_true, ite_false, ite_true, Stamp]
       · exact ⟨he, by omega, (advance_root z _ h _).trans hh,
           (advance_root z _ l _).trans hl, ihh _ sh, ihl _ sl⟩
       · exact ⟨he, by omega, (advance_root z _ h _).trans hh,
@@ -159,8 +155,11 @@ private theorem stamp_rank {n q : Nat} (T : Ranked q) (s : Stamp n T) :
       rcases s with ⟨he, hn, hh, hl, sh, sl⟩
       have rh := ihh sh
       rw [hh] at rh
+      dsimp at rh
       simp only [Ranked.root]
-      cases hi : d.initial <;> simp only [hi, if_true, if_false] at he ⊢ <;> omega
+      by_cases hi : d.initial = true
+      · simp only [hi, ite_true] at he ⊢; omega
+      · simp only [hi, ite_false] at he ⊢; omega
 
 private def rankedOrbit (z : Nat → Bool) : (n : Nat) → Ranked n × Nat
   | 0 => (.alpha ⟨0, true⟩, 0)
@@ -173,9 +172,10 @@ private theorem orbit_correspondence (z : Nat → Bool) (n : Nat) :
   | zero => exact ⟨rfl, rfl, rfl⟩
   | succ n ih =>
       constructor
-      · change ((advance z (n + 1) (rankedOrbit z n).1 _).1.physical, _) = _
-        rw [advance_physical]
-        simpa only [orbit, ← ih.1]
+      · change ((advance z (n + 1) (rankedOrbit z n).1 (rankedOrbit z n).2).1.physical,
+          (advance z (n + 1) (rankedOrbit z n).1 (rankedOrbit z n).2).2) =
+          update z (n + 1) (orbit z n).1 (orbit z n).2
+        rw [advance_physical, ← ih.1]
       · exact advance_stamp z n _ _ ih.2
 
 end D5.S3.Arith.FibonacciAtomic.SourceCoordinates.PhysicalBirthDepth
