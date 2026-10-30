@@ -224,7 +224,7 @@ noncomputable def recordState {ι : Type*} [Fintype ι] [DecidableEq ι]
     (rho : ι → DensityState n) : DensityState (ι × n) :=
   mixtureState p hp hs (fun i => productState (pointerState i) (rho i))
 
-theorem marginalLeft_mixture {ι A B : Type*} [Fintype ι]
+private theorem marginalLeft_mixture {ι A B : Type*} [Fintype ι]
     [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
     (p : ι → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1)
     (rho : ι → DensityState (A × B)) :
@@ -240,7 +240,7 @@ theorem marginalLeft_mixture {ι A B : Type*} [Fintype ι]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.smul_sum.symm
 
-theorem marginalRight_mixture {ι A B : Type*} [Fintype ι]
+private theorem marginalRight_mixture {ι A B : Type*} [Fintype ι]
     [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
     (p : ι → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1)
     (rho : ι → DensityState (A × B)) :
