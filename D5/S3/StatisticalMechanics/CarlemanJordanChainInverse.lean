@@ -8,7 +8,7 @@
 
 import Mathlib.RingTheory.PowerSeries.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 
 /-! The normalized Jordan chain of each critical Carleman truncation is dual to
 the rows of powers of its strictly upper triangular part. -/
@@ -35,7 +35,7 @@ def IsJordanChain (α : ℕ → ℝ) (n : ℕ) (w : Matrix (Fin n) (Fin n) ℝ) 
 
 /-- Increasing-path sum: append the final edge to each shorter path from index zero.
 The zero-edge path has weight one exactly at index zero. -/
-def sigma (α : ℕ → ℝ) (n : ℕ) : ℕ → Fin n → ℝ
+noncomputable def sigma (α : ℕ → ℝ) (n : ℕ) : ℕ → Fin n → ℝ
   | 0, j => if j.val = 0 then 1 else 0
   | m + 1, j => ∑ i : Fin n, if i < j then sigma α n m i * carleman α n i j else 0
 
@@ -70,15 +70,15 @@ private lemma carleman_structure (α : ℕ → ℝ) (n : ℕ)
     change carleman α n i j - (1 : Matrix (Fin n) (Fin n) ℝ) i j = 0
     by_cases he : i = j
     · subst j
-      rw [hc, if_pos (by omega), Nat.sub_self, PowerSeries.coeff_zero_eq_constantCoeff,
+      rw [hc, ite_eq_left (by omega), Nat.sub_self, PowerSeries.coeff_zero_eq_constantCoeff,
         map_pow, hfc, one_pow, Matrix.one_apply_eq, sub_self]
     · have hji0 : j < i := lt_of_le_of_ne hij (Ne.symm he)
       have hji : j.val < i.val := hji0
-      rw [hc, if_neg (by omega), Matrix.one_apply_ne he, sub_self]
+      rw [hc, ite_eq_right (by omega), Matrix.one_apply_ne he, sub_self]
   · intro i j hij
     change carleman α n i j - (1 : Matrix (Fin n) (Fin n) ℝ) i j = _
     have he : i ≠ j := by intro h; have := congrArg Fin.val h; omega
-    rw [hc, if_pos (by omega), show j.val + 1 - (i.val + 1) = 1 by omega,
+    rw [hc, ite_eq_left (by omega), show j.val + 1 - (i.val + 1) = 1 by omega,
       PowerSeries.coeff_one_pow, hfc, one_pow, mul_one, Matrix.one_apply_ne he, sub_zero]
     simp only [f, PowerSeries.coeff_mk]
 
@@ -125,12 +125,12 @@ private lemma back_substitution (n : ℕ) (a : Matrix (Fin n) (Fin n) ℝ)
       have hip : i ≠ p := by intro h; have := congrArg Fin.val h; dsimp only [p] at this; omega
       change u i + e i = 0
       rw [hu0 i hi]
-      simp only [e, if_neg hip, add_zero]
+      simp only [e, ite_eq_right hip, add_zero]
     · intro i hi
       have hip : i ≠ p := by intro h; subst i; exact (lt_irrefl _ hi)
       change u i + e i = 0
       rw [hus i (by omega)]
-      simp only [e, if_neg hip, add_zero]
+      simp only [e, ite_eq_right hip, add_zero]
     · rw [Matrix.mulVec_add, hu, sub_add_cancel]
 
 private lemma chain_exists (α : ℕ → ℝ) (n : ℕ) (hn : 0 < n)
@@ -159,21 +159,21 @@ private lemma chain_exists (α : ℕ → ℝ) (n : ℕ) (hn : 0 < n)
           (∀ i, t < i.val → v i = 0) := by
         by_cases ht0 : t = 0
         · refine ⟨fun i => if i.val = 0 then 1 else 0, ?_, ?_, ?_⟩
-          · rw [dif_pos ht0]
+          · rw [dite_eq_left ht0]
             ext i
             change (∑ l, a i l * (if l.val = 0 then 1 else 0)) = 0
             apply Finset.sum_eq_zero
             intro l _
             by_cases hl : l.val = 0
-            · rw [if_pos hl, mul_one]
+            · rw [ite_eq_left hl, mul_one]
               exact ha i l (by change l.val ≤ i.val; omega)
-            · rw [if_neg hl, mul_zero]
+            · rw [ite_eq_right hl, mul_zero]
           · intro i hi
             change (if i.val = 0 then 1 else 0) = _
-            rw [if_pos hi, if_pos ht0]
+            rw [ite_eq_left hi, ite_eq_left ht0]
           · intro i hi
             change (if i.val = 0 then 1 else 0) = 0
-            rw [if_neg (by omega)]
+            rw [ite_eq_right (by omega)]
         · let p : Fin n := ⟨t - 1, by omega⟩
           obtain ⟨v, hv0, hvs, hv⟩ := back_substitution n a ha hs t htlt
             (fun i => w i p) (by
@@ -181,54 +181,54 @@ private lemma chain_exists (α : ℕ → ℝ) (n : ℕ) (hn : 0 < n)
               exact (hw p (by dsimp only [p]; omega)).2.2 i
                 (by change t - 1 < i.val; omega))
           refine ⟨v, ?_, ?_, hvs⟩
-          · rw [dif_neg ht0]; exact hv
-          · intro i hi; rw [if_neg ht0]; exact hv0 i hi
+          · rw [dite_eq_right ht0]; exact hv
+          · intro i hi; rw [ite_eq_right ht0]; exact hv0 i hi
       obtain ⟨v, hv, hv0, hvs⟩ := next
       let u : Matrix (Fin n) (Fin n) ℝ := fun i k => if k.val = t then v i else w i k
       refine ⟨u, ?_⟩
       intro k hk
       by_cases hkt : k.val = t
       · have hcol : (fun i => u i k) = v := by
-          funext i; exact if_pos hkt
+          funext i; exact ite_eq_left hkt
         refine ⟨?_, ?_, ?_⟩
         · rw [hcol, hv]
           by_cases ht0 : t = 0
-          · rw [dif_pos ht0, dif_pos (hkt.trans ht0)]
-          · rw [dif_neg ht0, dif_neg (by omega)]
+          · rw [dite_eq_left ht0, dite_eq_left (hkt.trans ht0)]
+          · rw [dite_eq_right ht0, dite_eq_right (by omega)]
             funext i
             change w i ⟨t - 1, _⟩ = if k.val - 1 = t then v i else w i ⟨k.val - 1, _⟩
-            rw [if_neg (by omega)]
+            rw [ite_eq_right (by omega)]
             congr 1
             apply Fin.ext
             dsimp only
             omega
         · intro i hi
           change (if k.val = t then v i else w i k) = _
-          rw [if_pos hkt, hv0 i hi, hkt]
+          rw [ite_eq_left hkt, hv0 i hi, hkt]
         · intro i hi
           change (if k.val = t then v i else w i k) = 0
-          rw [if_pos hkt]
+          rw [ite_eq_left hkt]
           exact hvs i (by change k.val < i.val at hi; omega)
       · have hklt : k.val < t := by omega
         obtain ⟨hc, hc0, hcs⟩ := hw k hklt
         have hcol : (fun i => u i k) = fun i => w i k := by
-          funext i; exact if_neg hkt
+          funext i; exact ite_eq_right hkt
         refine ⟨?_, ?_, ?_⟩
         · rw [hcol, hc]
           by_cases hk0 : k.val = 0
-          · rw [dif_pos hk0, dif_pos hk0]
-          · rw [dif_neg hk0, dif_neg hk0]
+          · rw [dite_eq_left hk0, dite_eq_left hk0]
+          · rw [dite_eq_right hk0, dite_eq_right hk0]
             funext i
             change w i ⟨k.val - 1, _⟩ =
               if k.val - 1 = t then v i else w i ⟨k.val - 1, _⟩
-            rw [if_neg (by omega)]
+            rw [ite_eq_right (by omega)]
         · intro i hi
           change (if k.val = t then v i else w i k) = _
-          rw [if_neg hkt]
+          rw [ite_eq_right hkt]
           exact hc0 i hi
         · intro i hi
           change (if k.val = t then v i else w i k) = 0
-          rw [if_neg hkt]
+          rw [ite_eq_right hkt]
           exact hcs i hi
   obtain ⟨w, hw⟩ := build n le_rfl
   refine ⟨w, ?_, ?_, ?_⟩
@@ -242,21 +242,21 @@ private lemma chain_power (α : ℕ → ℝ) (n : ℕ)
     (carleman α n - 1) ^ m *ᵥ (fun i => w i j) =
       if h : m ≤ j.val then fun i => w i ⟨j.val - m, by omega⟩ else 0 := by
   induction m generalizing j with
-  | zero => simp only [pow_zero, Matrix.one_mulVec, Nat.zero_le, dif_pos,
+  | zero => simp only [pow_zero, Matrix.one_mulVec, Nat.zero_le, dite_eq_left,
       Nat.sub_zero]
   | succ m ih =>
     rw [pow_succ, ← Matrix.mulVec_mulVec, hw.1 j]
     by_cases hj : j.val = 0
-    · rw [dif_pos hj, Matrix.mulVec_zero, dif_neg (by omega)]
-    · rw [dif_neg hj, ih]
+    · rw [dite_eq_left hj, Matrix.mulVec_zero, dite_eq_right (by omega)]
+    · rw [dite_eq_right hj, ih]
       by_cases hm : m + 1 ≤ j.val
-      · rw [dif_pos (by dsimp only; omega), dif_pos hm]
+      · rw [dite_eq_left (by dsimp only; omega), dite_eq_left hm]
         funext i
         congr 1
         apply Fin.ext
         dsimp only
         omega
-      · rw [dif_neg (by dsimp only; omega), dif_neg hm]
+      · rw [dite_eq_right (by dsimp only; omega), dite_eq_right hm]
 
 private lemma krylov_inverse (α : ℕ → ℝ) (n : ℕ) (hn : 0 < n)
     (w : Matrix (Fin n) (Fin n) ℝ) (hw : IsJordanChain α n w) :
@@ -269,14 +269,14 @@ private lemma krylov_inverse (α : ℕ → ℝ) (n : ℕ) (hn : 0 < n)
     change ((carleman α n - 1) ^ k.val *ᵥ (fun i => w i j)) ⟨0, hn⟩ = _
     rw [chain_power α n w hw]
     by_cases h : k.val ≤ j.val
-    · rw [dif_pos h, hw.2.1 _ _ rfl, Matrix.one_apply]
+    · rw [dite_eq_left h, hw.2.1 _ _ rfl, Matrix.one_apply]
       have he : j.val - k.val = 0 ↔ k = j := by
         constructor
         · intro hh; apply Fin.ext; omega
         · intro hh; subst j; simp
       change (if j.val - k.val = 0 then 1 else 0) = _
       simp only [he]
-    · rw [dif_neg h, Matrix.one_apply_ne (by intro he; subst j; omega)]
+    · rw [dite_eq_right h, Matrix.one_apply_ne (by intro he; subst j; omega)]
       rfl
   exact ⟨Matrix.isUnit_det_of_left_inverse hq, Matrix.inv_eq_left_inv hq⟩
 
@@ -284,9 +284,11 @@ private lemma path_expansion (α : ℕ → ℝ) (n : ℕ) (hn : 0 < n)
     (ha : ∀ i j : Fin n, j ≤ i → (carleman α n - 1) i j = 0)
     (m : ℕ) (j : Fin n) :
     ((carleman α n - 1) ^ m) ⟨0, hn⟩ j = sigma α n m j := by
+  have hs (r : ℕ) (l : Fin n) : sigma α n r l = sigma._sunfold α n r l := by
+    cases r <;> rfl
+  rw [hs]
   induction m generalizing j with
   | zero =>
-    rw [sigma]
     change (1 : Matrix (Fin n) (Fin n) ℝ) ⟨0, hn⟩ j = if j.val = 0 then 1 else 0
     rw [Matrix.one_apply]
     have he : (⟨0, hn⟩ : Fin n) = j ↔ j.val = 0 := by
@@ -295,17 +297,17 @@ private lemma path_expansion (α : ℕ → ℝ) (n : ℕ) (hn : 0 < n)
       · intro h; exact Fin.ext h.symm
     simp only [he]
   | succ m ih =>
-    rw [pow_succ, Matrix.mul_apply, sigma]
+    rw [pow_succ, Matrix.mul_apply]
     change (∑ i, ((carleman α n - 1) ^ m) ⟨0, hn⟩ i *
       (carleman α n - 1) i j) =
       ∑ i, if i < j then sigma α n m i * carleman α n i j else 0
     apply Finset.sum_congr rfl
     intro i _
     by_cases hij : i < j
-    · rw [if_pos hij, ih]
+    · rw [ite_eq_left hij, ih, ← hs m i]
       change _ * (carleman α n i j - (1 : Matrix (Fin n) (Fin n) ℝ) i j) = _
       rw [Matrix.one_apply_ne (ne_of_lt hij), sub_zero]
-    · rw [if_neg hij, ha i j (le_of_not_gt hij), mul_zero]
+    · rw [ite_eq_right hij, ha i j (le_of_not_gt hij), mul_zero]
 
 theorem result : claim := by
   intro α h0 h1 h2 n hn
