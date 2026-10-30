@@ -84,17 +84,17 @@ values of X would not establish the needed identity.
 
 The designated declaration is
 `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarUniquenessRefutation.result`.
-Its type is literally the negation of the module's full `claim : Prop`. All polynomial,
+Its source-declared type is literally the negation of the module's full `claim : Prop`. All polynomial,
 coefficient-extension and isomorphism-exclusion helpers are on that result's proof path.
 The claim includes the base pair, every positive j, and both pair orders through actual
 graph isomorphisms. A finite witness negates this universal assertion for all sizes.
 
 ## Triage
 
-- Proved by the designated result: the whole exhaustive-pairs assertion is false.
-- Proved on its live proof path: the witness polynomials have unequal second and equal
+- Kernel-unverified target of the designated result: the whole exhaustive-pairs assertion is false.
+- Kernel-unverified target on its source proof path: the witness polynomials have unequal second and equal
   third ordinary specializations over the source's complex coefficient ring.
-- Proved on its live proof path: A is not isomorphic to any base or positive-j family
+- Kernel-unverified target on its source proof path: A is not isomorphic to any base or positive-j family
   member, so no listed unordered pair can represent this witness.
 - The earlier first-question result, that every positive-j listed pair exhibits the
   phenomenon, is compatible with this refutation and remains a separate theorem.
@@ -105,6 +105,10 @@ graph isomorphisms. A finite witness negates this universal assertion for all si
   this is a research direction, not a proved replacement assertion.
 
 ## ASSUMED-UNVERIFIED
+
+The second-question proof source has not passed its kernel check. Its polynomial identities,
+coefficient-extension bridge and universal isomorphism exclusion remain unverified formal
+targets. No formal settlement of the second question is asserted.
 
 The bounded source and literature screen supporting the named external question did
 not locate an earlier settlement. Citation and third-party code searches were incomplete.
