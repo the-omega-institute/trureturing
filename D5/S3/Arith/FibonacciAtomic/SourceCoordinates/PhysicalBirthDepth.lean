@@ -307,4 +307,180 @@ private theorem branch_law (n : Nat) (z : Nat → Bool) {q : Nat} (T : Ranked q)
         exact ⟨by omega, ht, hn, hi, hz, rfl, rfl, rfl, rfl,
           by omega, by omega, by omega, by omega⟩
 
+open PhysicalTapeDepth (depth probes PaidWalk)
+
+/-- A maximum is stated only through values of the complete fixed-length tape function. -/
+def DepthMaximum (T : Source) (L m : Nat) : Prop :=
+  (∀ u : Address, u.length = L → depth T u ≤ m) ∧
+    ∃ u : Address, u.length = L ∧ depth T u = m
+
+/-- The comparison reads only the two complete depth functions, not descriptors or labels. -/
+def Beats (a b : Source) (L : Nat) : Prop :=
+  ∃ u : Address, u.length = L ∧
+    ∀ v : Address, v.length = L → depth b v < depth a u
+
+private theorem maximum_of_height (T : Source) (L : Nat) (h : height T ≤ L) :
+    DepthMaximum T L (height T) :=
+  ⟨fun u _ => (PhysicalTapeDepth.tape_geometry T).2.2.1 u,
+    (PhysicalTapeDepth.tape_geometry T).2.2.2.2.1 L h⟩
+
+private theorem beats_iff_height (a b : Source) (L : Nat)
+    (ha : height a ≤ L) (hb : height b ≤ L) :
+    Beats a b L ↔ height b < height a := by
+  obtain ⟨ua, hua, hda⟩ := (maximum_of_height a L ha).2
+  obtain ⟨ub, hub, hdb⟩ := (maximum_of_height b L hb).2
+  constructor
+  · rintro ⟨u, hu, h⟩
+    have e := h ub hub
+    have bound := (maximum_of_height a L ha).1 u hu
+    omega
+  · intro h
+    refine ⟨ua, hua, ?_⟩
+    intro v hv
+    have bound := (maximum_of_height b L hb).1 v hv
+    omega
+
+private theorem small_rank {q : Nat} (T : Ranked q) :
+    (q ≤ 1 ↔ ∃ d c, T.physical = .leaf d c) ∧
+    (q = 2 → ∀ (d : Descriptor) (e : Birth) (a b : Physical),
+      T.physical = .branch d e a b → a.source = .of (!e.bit) ∧ b.source = .of e.bit) := by
+  cases T with
+  | alpha d => exact ⟨⟨fun _ => ⟨d, true, rfl⟩, fun _ => by omega⟩, by omega⟩
+  | beta d => exact ⟨⟨fun _ => ⟨d, false, rfl⟩, fun _ => by omega⟩, by omega⟩
+  | @fork r d e h l =>
+      constructor
+      · constructor
+        · omega
+        · rintro ⟨c, b, eq⟩
+          cases hb : e.bit <;> simp [Ranked.physical, hb] at eq
+      · intro hr c f a b eq
+        have er : r = 0 := by omega
+        subst r
+        cases h with
+        | beta hd =>
+          cases l with
+          | alpha ld =>
+            cases hb : e.bit <;> simp [Ranked.physical, hb] at eq
+            · cases eq; exact ⟨rfl, rfl⟩
+            · cases eq; exact ⟨rfl, rfl⟩
+
+/-- All depth claims for one reached physical cone; q is its immutable descriptor rank. -/
+def ConeLaw (n : Nat) (z : Nat → Bool) (p : Address) (T : Physical) : Prop :=
+  let q := rank n T
+  T.descriptor.born ≤ n ∧ q + p.length ≤ n ∧ height T.source = q - 1 ∧
+  (q ≤ 1 ↔ ∃ d c, T = .leaf d c) ∧
+  (∀ u : Address, depth T.source u ≤ q - 1) ∧
+  (∀ (L : Nat), q - 1 ≤ L → DepthMaximum T.source L (q - 1)) ∧
+  (∀ u : Address, q - 1 ≤ u.length →
+    PaidWalk (orbit z n).1.source p u (probes T.source p u) (depth T.source u) ∧
+      (probes T.source p u).length = depth T.source u + 1) ∧
+  (∀ u v : Address, q - 1 ≤ u.length → depth T.source (u ++ v) = depth T.source u) ∧
+  (∀ (L : Nat), n - 1 ≤ L → q - 1 ≤ L - p.length) ∧
+  (∀ u : Address, depth (orbit z n).1.source (p ++ u) = p.length + depth T.source u) ∧
+  (∀ u v : Address, 2 ≤ n → u.length = (2 * n - 1) - p.length →
+    v.length = p.length →
+    depth (orbit z n).1.source (p ++ u) = p.length + depth T.source u ∧
+    p.length + depth T.source u = p.length + depth T.source (u ++ v)) ∧
+  (∀ (U : Source) (L : Nat), q - 1 ≤ L → height U ≤ L →
+    (∀ u : Address, u.length = L → depth T.source u = depth U u) →
+      (decompose T.source).1 = (decompose U).1) ∧
+  (∀ (d : Descriptor) (e : Birth) (a b : Physical), T = .branch d e a b →
+    2 ≤ q ∧ e.time = d.born + (if d.initial then 2 else 1) ∧ e.time ≤ n ∧
+    0 < e.index ∧ e.bit = z e.index ∧ a.descriptor.born = e.time ∧
+    b.descriptor.born = e.time ∧ a.descriptor.initial = !e.bit ∧
+    b.descriptor.initial = e.bit ∧
+    (if e.bit then rank n a else rank n b) = q - 1 ∧
+    (if e.bit then rank n b else rank n a) = q - 2 ∧
+    (if e.bit then height a.source else height b.source) = q - 2 ∧
+    (if e.bit then height b.source else height a.source) = q - 3 ∧
+    (∀ (L : Nat), q - 2 ≤ L →
+      DepthMaximum (if e.bit then a.source else b.source) L (q - 2) ∧
+      DepthMaximum (if e.bit then b.source else a.source) L (q - 3) ∧
+      (3 ≤ q → (e.bit = true ↔ Beats a.source b.source L))) ∧
+    (q = 3 → (if e.bit then height a.source else height b.source) = 1 ∧
+      (if e.bit then height b.source else height a.source) = 0) ∧
+    (q = 2 → a.source = .of (!e.bit) ∧ b.source = .of e.bit ∧
+      (∀ u : Address, u ≠ [] → depth T.source u = 1) ∧
+      ∀ u : Address, depth T.source u = depth (.mul b.source a.source) u))
+
+private theorem cone_law (n : Nat) (z : Nat → Bool) (p : Address) (T : Physical)
+    (found : Physical.at p (orbit z n).1 = some T) : ConeLaw n z p T := by
+  have corr := orbit_correspondence z n
+  have rootEq : (rankedOrbit z n).1.physical = (orbit z n).1 := congrArg Prod.fst corr.1
+  have rootHeight : height (orbit z n).1.source = n - 1 := by
+    rw [← rootEq]; exact ranked_height _
+  obtain ⟨q, R, eq, stamp, aligned, margin⟩ :=
+    reached n z (rankedOrbit z n).1 corr.2 (orbit_aligned z n) p T (by rw [rootEq]; exact found)
+  have sr := stamp_rank R stamp
+  have qr : rank n T = q := by
+    rw [← eq, rank, physical_root]
+    exact sr.2.symm
+  have ht : height T.source = q - 1 := by rw [← eq]; exact ranked_height R
+  have atSource := source_at (orbit z n).1 T p found
+  have geo := PhysicalTapeDepth.tape_geometry T.source
+  have prefix := geo.2.2.2.2.2.1 (orbit z n).1.source p atSource
+  have remaining : ∀ L : Nat, n - 1 ≤ L → q - 1 ≤ L - p.length := by
+    intro L hL
+    have hp := prefix.1
+    rw [ht, rootHeight] at hp
+    omega
+  have loc : ∀ w, readout (p ++ w) (orbit z n).1.source = readout w T.source := by
+    intro w
+    have h := ActualLeafHistoryRigidity.actual_address_geometry.2.2.2.2.2.2.2.2.2.2.2.2.2.1
+      p w (orbit z n).1.source
+    simpa only [atSource] using h
+  change _ at sr
+  unfold ConeLaw
+  rw [qr]
+  refine ⟨?_, margin, ht, ?_, ?_, ?_, ?_, ?_, remaining, prefix.2, ?_, ?_, ?_⟩
+  · rw [← eq, physical_root]; exact sr.1
+  · simpa only [← eq] using (small_rank R).1
+  · intro u; simpa only [ht] using geo.2.2.1 u
+  · intro L hL; simpa only [ht] using maximum_of_height T.source L (by omega)
+  · intro u hu
+    exact ⟨geo.1 _ _ _ loc (by omega), geo.2.1 p u⟩
+  · intro u v hu; exact geo.2.2.2.1 u v (by omega)
+  · intro u v hn hu hv
+    refine ⟨prefix.2 u, ?_⟩
+    have hp := geo.2.2.2.1 u v (by rw [ht, hu]; exact remaining _ (by omega))
+    rw [hp]
+  · intro U L hL hU same
+    exact geo.2.2.2.2.2.2 U L (by omega) hU same
+  · intro d e a b he
+    have bl := branch_law n z R stamp aligned d e a b (eq.trans he)
+    rcases bl with ⟨hq, htime, hn, hi, hz, hab, hbb, hai, hbi, har, hbr, hah, hbh⟩
+    refine ⟨hq, htime, hn, hi, hz, hab, hbb, hai, hbi, har, hbr, hah, hbh, ?_, ?_, ?_⟩
+    · intro L hL
+      have ha : height a.source ≤ L := by cases hb : e.bit <;> simp [hb] at hah hbh <;> omega
+      have hb : height b.source ≤ L := by cases hc : e.bit <;> simp [hc] at hah hbh <;> omega
+      constructor
+      · cases hc : e.bit <;> simp [hc] at hah ⊢ <;>
+          simpa only [← hah] using maximum_of_height _ L (by omega)
+      constructor
+      · cases hc : e.bit <;> simp [hc] at hbh ⊢ <;>
+          simpa only [← hbh] using maximum_of_height _ L (by omega)
+      · intro hthree
+        rw [beats_iff_height a.source b.source L ha hb]
+        cases hc : e.bit <;> simp [hc] at hah hbh ⊢ <;> omega
+    · intro hthree; rw [hthree] at hah hbh; exact ⟨hah, hbh⟩
+    · intro htwo
+      obtain ⟨ha, hb⟩ := (small_rank R).2 htwo d e a b (eq.trans he)
+      refine ⟨ha, hb, ?_, ?_⟩
+      · intro u hu
+        rw [he]
+        cases u with
+        | nil => exact False.elim (hu rfl)
+        | cons c u => cases c <;> simp [Physical.source, depth, ha, hb]
+      · intro u
+        rw [he]
+        cases u with
+        | nil => rfl
+        | cons c u => cases c <;> simp [Physical.source, depth, ha, hb]
+
+/-- Every actual reached cone has complete physical depth geometry and recovers
+all branch bits of rank at least three, with precisely the depth-only rank-two boundary. -/
+theorem observable_orientations (n : Nat) (z : Nat → Bool) :
+    ∀ (p : Address) (T : Physical), Physical.at p (orbit z n).1 = some T → ConeLaw n z p T :=
+  cone_law n z
+
 end D5.S3.Arith.FibonacciAtomic.SourceCoordinates.PhysicalBirthDepth

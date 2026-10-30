@@ -166,6 +166,7 @@ private theorem blank_leaves (T : Source) : leaves (blank T) = leaves T := by
   | mul a b iha ihb =>
       change (leaves (blank a)).map (false :: ·) ++ (leaves (blank b)).map (true :: ·) = _
       rw [iha, ihb]
+      rfl
 
 private theorem frontier_from_depth (V U : Source) (L : Nat)
     (hv : height V ≤ L) (hu : height U ≤ L)
