@@ -9,6 +9,7 @@
 import Mathlib.Analysis.Convex.Jensen
 import Mathlib.Analysis.Convex.Deriv
 import Mathlib.Analysis.Calculus.Deriv.Inv
+import Mathlib.Analysis.Calculus.Deriv.Pow
 import Mathlib.Data.Finset.Sort
 import Mathlib.Tactic
 
@@ -248,7 +249,7 @@ private lemma weight_le_iff {a : ℕ} (y : Fin (a + 2) → ℝ)
   exact inv_le_inv₀ hi hj
 
 /-- The certificate and its complete zero set use actual marginals of the given law. -/
-theorem capacity_certificate {a : ℕ} (ha : 4096 ≤ a) {δ : ℝ}
+private theorem capacity_certificate {a : ℕ} (ha : 4096 ≤ a) {δ : ℝ}
     (hδ : 0 < δ) (hδu : δ ≤ 1 / (a : ℝ)) (x : DenseLaw a δ)
     (hsort : Antitone (marginal x.mass))
     (T : Finset (Fin (a + 2))) (hT : T.Nonempty) :
@@ -375,7 +376,7 @@ private lemma energy_identity {a : ℕ} {δ : ℝ} (hδ : 0 < δ)
       ring
 
 /-- Exact expectation decomposition and equality on the actual positive-mass support. -/
-theorem same_law_bound {a : ℕ} (ha : 4096 ≤ a) {δ : ℝ}
+private theorem same_law_bound {a : ℕ} (ha : 4096 ≤ a) {δ : ℝ}
     (hδ : 0 < δ) (hδu : δ ≤ 1 / (a : ℝ)) (x : DenseLaw a δ)
     (hsort : Antitone (marginal x.mass)) :
     let y := marginal x.mass
@@ -528,7 +529,6 @@ private lemma tail_card {a : ℕ} (ha : 1 ≤ a) : (tailSet a).card = a - 1 := b
     omega
   rw [he, Finset.card_sdiff_of_subset (Finset.subset_univ _)]
   simp [Fin.ext_iff]
-  omega
 
 private lemma linear_part_grouping {a : ℕ} (ha : 1 ≤ a) (δ : ℝ)
     (y : Fin (a + 2) → ℝ) (hy : ∀ i, 0 < y i) (hsort : Antitone y) :
@@ -563,15 +563,356 @@ private lemma linear_part_grouping {a : ℕ} (ha : 1 ≤ a) (δ : ℝ)
     intro i hi
     rw [htail i hi, mul_zero, mul_zero]
   rw [htailzero] at hb
-  dsimp only at hb
+  dsimp only [z, o, t] at h0 h1 hb ⊢
   rw [max_eq_left (sub_nonneg.mpr h0), max_eq_left (sub_nonneg.mpr h1)] at hb
   simp only [sub_self, max_self, mul_zero, add_zero] at hb
   unfold linearPart
   rw [hb, split_three ha (fun i => (y i)⁻¹), split_three ha (weight y)]
   simp only [g1, f, weight, Finset.sum_sub_distrib, ← Finset.mul_sum]
+  ring_nf
+  field_simp [(hy ⟨0, by omega⟩).ne', (hy ⟨1, by omega⟩).ne', (hy ⟨2, by omega⟩).ne']
   ring
 
-#print axioms capacity_certificate
-#print axioms same_law_bound
+private lemma grouping_domain {a : ℕ} (ha : 4096 ≤ a) {δ : ℝ}
+    (hδ : 0 < δ) (x : DenseLaw a δ) (hsort : Antitone (marginal x.mass)) :
+    let y := marginal x.mass
+    let z : Fin (a + 2) := ⟨0, by omega⟩
+    let o : Fin (a + 2) := ⟨1, by omega⟩
+    let t : Fin (a + 2) := ⟨2, by omega⟩
+    let u := (y z + y o) / 2
+    let v := (∑ i ∈ tailSet a, y i) / (a - 1 : ℝ)
+    v = groupedV a δ u (y t) ∧ Omega a δ u (y t) := by
+  dsimp only
+  let y := marginal x.mass
+  let z : Fin (a + 2) := ⟨0, by omega⟩
+  let o : Fin (a + 2) := ⟨1, by omega⟩
+  let t : Fin (a + 2) := ⟨2, by omega⟩
+  let u := (y z + y o) / 2
+  let v := (∑ i ∈ tailSet a, y i) / (a - 1 : ℝ)
+  have haR : (4096 : ℝ) ≤ a := by exact_mod_cast ha
+  have hn : (0 : ℝ) < a - 1 := by linarith
+  have hcard : ((tailSet a).card : ℝ) = a - 1 := by
+    rw [tail_card (by omega : 1 ≤ a), Nat.cast_sub (by omega : 1 ≤ a)]
+    norm_num
+  have hmean : (∑ i, y i) = (a + 1 : ℝ) - δ :=
+    (marginal_total x.mass).trans x.mean
+  have hs := split_three (by omega : 1 ≤ a) y
+  have hv : v = groupedV a δ u (y t) := by
+    unfold groupedV
+    change (∑ i ∈ tailSet a, y i) / (a - 1 : ℝ) = _
+    congr 1
+    dsimp [u]
+    linarith only [hmean, hs]
+  have hlo : (a - 1 : ℝ) * threshold a δ ≤ ∑ i ∈ tailSet a, y i := by
+    simpa only [Finset.sum_const, nsmul_eq_mul, hcard] using
+      Finset.sum_le_sum (s := tailSet a) (fun i _ => x.dense i)
+  have hhi : (∑ i ∈ tailSet a, y i) ≤ (a - 1 : ℝ) * y t := by
+    simpa only [Finset.sum_const, nsmul_eq_mul, hcard] using
+      Finset.sum_le_sum (s := tailSet a) (fun i hi =>
+      hsort (show t ≤ i by
+        have := (Finset.mem_filter.mp hi).2
+        change 2 ≤ i.val
+        omega))
+  have hvlo : threshold a δ ≤ v := (le_div_iff₀ hn).mpr (by nlinarith only [hlo])
+  have hvhi : v ≤ y t := (div_le_iff₀ hn).mpr (by nlinarith only [hhi])
+  have htu : y t ≤ u := by
+    have h0 := hsort (show z ≤ t by change 0 ≤ 2; omega)
+    have h1 := hsort (show o ≤ t by change 1 ≤ 2; omega)
+    dsimp [u]
+    linarith
+  have hu1 : u ≤ 1 := by
+    have h0 := (marginal_bounds x hδ z).2
+    have h1 := (marginal_bounds x hδ o).2
+    dsimp [u]
+    linarith
+  exact ⟨hv, by change _ ∧ _ ∧ _ ∧ _; rw [← hv]; exact ⟨hvlo, hvhi, htu, hu1⟩⟩
+
+/-- The second grouped bound, with the original necessary strict equality consequences. -/
+private theorem grouped_second_bound {a : ℕ} (ha : 4096 ≤ a) {δ : ℝ}
+    (hδ : 0 < δ) (hδu : δ ≤ 1 / (a : ℝ)) (x : DenseLaw a δ)
+    (hsort : Antitone (marginal x.mass)) :
+    let y := marginal x.mass
+    let z : Fin (a + 2) := ⟨0, by omega⟩
+    let o : Fin (a + 2) := ⟨1, by omega⟩
+    let t : Fin (a + 2) := ⟨2, by omega⟩
+    let u := (y z + y o) / 2
+    let v := (∑ i ∈ tailSet a, y i) / (a - 1 : ℝ)
+    v = groupedV a δ u (y t) ∧ Omega a δ u (y t) ∧
+      F1 a δ u (y t) ≤ energy x.mass ∧
+      (energy x.mass = F1 a δ u (y t) →
+        y z = u ∧ y o = u ∧ (∀ i ∈ tailSet a, y i = v) ∧
+          ∀ T : Atom a, 0 < x.mass T →
+            residual (weight y) (weight y t) T.val = 0) := by
+  dsimp only
+  let y := marginal x.mass
+  let z : Fin (a + 2) := ⟨0, by omega⟩
+  let o : Fin (a + 2) := ⟨1, by omega⟩
+  let t : Fin (a + 2) := ⟨2, by omega⟩
+  let u := (y z + y o) / 2
+  let v := (∑ i ∈ tailSet a, y i) / (a - 1 : ℝ)
+  let C : Finset (Fin (a + 2)) := {z, o}
+  have haR : (4096 : ℝ) ≤ a := by exact_mod_cast ha
+  have hap : (0 : ℝ) < a := by linarith
+  have hδ1 : δ < 1 := lt_of_le_of_lt hδu ((div_lt_one hap).mpr (by linarith))
+  have hτ : 0 < threshold a δ := by unfold threshold; positivity
+  have hmem (i : Fin (a + 2)) : y i ∈ Set.Icc (threshold a δ) 1 :=
+    ⟨x.dense i, (marginal_bounds x hδ i).2⟩
+  have hfc : StrictConvexOn ℝ (Set.Icc (threshold a δ) 1) (f a δ) := by
+    have h := reciprocal_strict (A := (a : ℝ) ^ 2) (u := 1)
+      (B := -(2 * a + 1 : ℝ) * (1 - δ)) hτ (fun ξ hξ => by
+        have hp : 0 < ξ := lt_of_lt_of_le hτ hξ.1
+        have hc : (0 : ℝ) < 2 * a + 1 := by positivity
+        nlinarith [mul_pos (sq_pos_of_pos hap) hp, mul_pos hc (sub_pos.mpr hδ1)])
+    convert h using 1
+    funext ξ
+    simp only [f, reciprocal, div_eq_mul_inv, inv_pow]
+    ring
+  have hgc : StrictConvexOn ℝ (Set.Icc (threshold a δ) 1) (g1 a δ) := by
+    have ht : (a + 1 : ℝ) ^ 2 * threshold a δ -
+        3 * ((2 * a + 1 : ℝ) * δ) = 6 * δ := by
+      unfold threshold
+      field_simp
+      ring
+    have h := reciprocal_strict (A := (a + 1 : ℝ) ^ 2) (u := 1)
+      (B := (2 * a + 1 : ℝ) * δ) hτ (fun ξ hξ => by
+        have hm := mul_nonneg (sq_nonneg (a + 1 : ℝ)) (sub_nonneg.mpr hξ.1)
+        nlinarith only [hm, ht, hδ])
+    convert h using 1
+    funext ξ
+    simp only [g1, reciprocal, div_eq_mul_inv, inv_pow]
+  have hCcard : C.card = 2 := by simp [C, z, o, Fin.ext_iff]
+  have hCavg : (∑ i ∈ C, y i) / C.card = u := by
+    simp [C, z, o, Fin.ext_iff, u]
+  have hhead := finite_jensen C (by simp [C]) _ _ hfc y (fun i _ => hmem i)
+  rw [hCavg, hCcard] at hhead
+  norm_num only [Nat.cast_ofNat] at hhead
+  have hQcard : ((tailSet a).card : ℝ) = a - 1 := by
+    rw [tail_card (by omega : 1 ≤ a), Nat.cast_sub (by omega : 1 ≤ a)]
+    norm_num
+  have hQne : (tailSet a).Nonempty := Finset.card_pos.mp (by
+    rw [tail_card (by omega : 1 ≤ a)]; omega)
+  have htail := finite_jensen (tailSet a) hQne _ _ hgc y (fun i _ => hmem i)
+  rw [hQcard] at htail
+  have hgeom := grouping_domain ha hδ x hsort
+  have hbase := same_law_bound ha hδ hδu x hsort
+  have hgroup := linear_part_grouping (by omega : 1 ≤ a) δ y
+    (fun i => (marginal_bounds x hδ i).1) hsort
+  have hCs : (∑ i ∈ C, f a δ (y i)) = f a δ (y z) + f a δ (y o) := by
+    simp [C, z, o, Fin.ext_iff]
+  rw [hCs] at hhead
+  have hform : F1 a δ u (y t) = 2 * f a δ u + (a + 1 : ℝ) ^ 2 * (y t)⁻¹ +
+      (2 * a + 1 : ℝ) * (y z + y o + δ - 2) * (y t)⁻¹ ^ 2 +
+      (a - 1 : ℝ) * g1 a δ v := by
+    unfold F1
+    rw [← hgeom.1]
+    dsimp only [u]
+    ring
+  refine ⟨hgeom.1, hgeom.2, ?_, ?_⟩
+  · rw [hform]
+    linarith only [hhead.1, htail.1, hgroup, hbase.2.1]
+  · intro he
+    have hheadEq : f a δ (y z) + f a δ (y o) = 2 * f a δ u := by
+      rw [hform] at he
+      linarith only [he, hhead.1, htail.1, hgroup, hbase.2.1]
+    have htailEq : (∑ i ∈ tailSet a, g1 a δ (y i)) = (a - 1 : ℝ) * g1 a δ v := by
+      rw [hform] at he
+      linarith only [he, hhead.1, htail.1, hgroup, hbase.2.1]
+    have hEL : energy x.mass = linearPart δ y (weight y t) := by
+      rw [hform] at he
+      linarith only [he, hhead.1, htail.1, hgroup, hbase.2.1]
+    exact ⟨hhead.2 hheadEq z (by simp [C]), hhead.2 hheadEq o (by simp [C]),
+      htail.2 htailEq, hbase.2.2.mp hEL⟩
+
+private lemma omitted_pair_lower {a : ℕ} (α : Fin (a + 2) → ℝ)
+    (hα : ∀ i, 0 ≤ α i) (hmono : Monotone α)
+    (J : Finset (Fin (a + 2))) (hJ : 2 ≤ J.card) :
+    α ⟨0, by omega⟩ + α ⟨1, by omega⟩ ≤ ∑ i ∈ J, α i := by
+  obtain ⟨P, hPJ, hP⟩ := Finset.exists_subset_card_eq hJ
+  obtain ⟨i, j, hij, rfl⟩ := Finset.card_eq_two.mp hP
+  have hsum := Finset.sum_le_sum_of_subset_of_nonneg hPJ (fun k _ _ => hα k)
+  simp only [Finset.sum_pair hij] at hsum
+  apply le_trans _ hsum
+  have hmin (k : Fin (a + 2)) : α ⟨0, by omega⟩ ≤ α k :=
+    hmono (show (⟨0, by omega⟩ : Fin (a + 2)) ≤ k by change 0 ≤ k.val; omega)
+  by_cases hi : i = ⟨0, by omega⟩
+  · rw [hi]
+    have hj : (⟨1, by omega⟩ : Fin (a + 2)) ≤ j := by
+      have : j.val ≠ 0 := by
+        intro h
+        apply hij
+        apply Fin.ext
+        exact (congrArg Fin.val hi).trans h.symm
+      change 1 ≤ j.val
+      omega
+    linarith [hmono hj]
+  · have hi' : (⟨1, by omega⟩ : Fin (a + 2)) ≤ i := by
+      have : i.val ≠ 0 := by intro h; apply hi; ext; exact h
+      change 1 ≤ i.val
+      omega
+    linarith [hmono hi', hmin j]
+
+/-- The first grouped bound uses the two smallest actual inverse-square weights. -/
+private theorem grouped_first_bound {a : ℕ} (ha : 4096 ≤ a) {δ : ℝ}
+    (hδ : 0 < δ) (hδu : δ ≤ 1 / (a : ℝ)) (x : DenseLaw a δ)
+    (hsort : Antitone (marginal x.mass)) :
+    let y := marginal x.mass
+    let z : Fin (a + 2) := ⟨0, by omega⟩
+    let o : Fin (a + 2) := ⟨1, by omega⟩
+    let t : Fin (a + 2) := ⟨2, by omega⟩
+    F0 a δ ((y z + y o) / 2) (y t) ≤ energy x.mass := by
+  dsimp only
+  let y := marginal x.mass
+  let z : Fin (a + 2) := ⟨0, by omega⟩
+  let o : Fin (a + 2) := ⟨1, by omega⟩
+  let t : Fin (a + 2) := ⟨2, by omega⟩
+  let α := weight y
+  let W := ∑ i, α i
+  let M := W - α z - α o
+  let G := fun T : Atom a => ((a + 1 : ℝ) - T.val.card) *
+    ((2 * a + 1 : ℝ) * M - ((a + 1 : ℝ) + T.val.card) * ∑ i ∈ T.val, α i)
+  have hα (i : Fin (a + 2)) : 0 ≤ α i := sq_nonneg _
+  have hmono : Monotone α := by
+    intro i j hij
+    exact (weight_le_iff y i j (marginal_bounds x hδ i).1
+      (marginal_bounds x hδ j).1).mpr (hsort hij)
+  have hG (T : Atom a) : 0 ≤ G T := by
+    let J := univ \ T.val
+    have hjk : J.card + T.val.card = a + 2 := by
+      simpa [J] using Finset.card_sdiff_add_card_eq_card (Finset.subset_univ T.val)
+    have hs : (∑ i ∈ J, α i) + (∑ i ∈ T.val, α i) = W :=
+      Finset.sum_sdiff (Finset.subset_univ T.val)
+    have hWT : 0 ≤ ∑ i ∈ T.val, α i := Finset.sum_nonneg (fun i _ => hα i)
+    have hc : (0 : ℝ) ≤ 2 * a + 1 := by positivity
+    by_cases hk : T.val.card ≤ a
+    · have hJ := omitted_pair_lower α hα hmono J (by omega : 2 ≤ J.card)
+      have hMT : (∑ i ∈ T.val, α i) ≤ M := by dsimp [M]; linarith only [hs, hJ]
+      have hkR : (T.val.card : ℝ) ≤ a := by exact_mod_cast hk
+      have hbr : 0 ≤ (2 * a + 1 : ℝ) * M -
+          ((a + 1 : ℝ) + T.val.card) * (∑ i ∈ T.val, α i) := by
+        nlinarith only [mul_nonneg hc (sub_nonneg.mpr hMT),
+          mul_nonneg (show (0 : ℝ) ≤ a - T.val.card by linarith) hWT]
+      exact mul_nonneg (by change (0 : ℝ) ≤ a + 1 - T.val.card; linarith) hbr
+    · have hkmax : T.val.card ≤ a + 2 := by simpa using T.val.card_le_univ
+      rcases (show T.val.card = a + 1 ∨ T.val.card = a + 2 by omega) with hk1 | hk2
+      · dsimp [G]
+        rw [hk1]
+        push_cast
+        ring_nf
+        exact le_rfl
+      · have hJ : J = ∅ := Finset.card_eq_zero.mp (by omega)
+        have hTW : (∑ i ∈ T.val, α i) = W := by simpa [hJ] using hs
+        have hW : 0 ≤ W := Finset.sum_nonneg (fun i _ => hα i)
+        have hMW : M ≤ W := by dsimp [M]; linarith [hα z, hα o]
+        dsimp [G]
+        rw [hk2, hTW]
+        push_cast
+        nlinarith only [hW, mul_nonneg hc (sub_nonneg.mpr hMW)]
+  have hi : (∑ T, x.mass T * ∑ i ∈ T.val, α i) = ∑ i, (y i)⁻¹ := by
+    rw [expected_incidence]
+    apply Finset.sum_congr rfl
+    intro i _
+    have hy := (marginal_bounds x hδ i).1.ne'
+    change (y i)⁻¹ ^ 2 * y i = (y i)⁻¹
+    field_simp
+  have hm : (∑ T, x.mass T * ((a + 1 : ℝ) - T.val.card)) = δ := by
+    simp only [mul_sub, Finset.sum_sub_distrib, ← Finset.sum_mul, x.total,
+      x.mean, one_mul]
+    ring
+  have hloweq :
+      (∑ T, x.mass T * ((a + 1 : ℝ) ^ 2 * (∑ i ∈ T.val, α i) -
+        (2 * a + 1 : ℝ) * M * ((a + 1 : ℝ) - T.val.card))) =
+      (a + 1 : ℝ) ^ 2 * (∑ T, x.mass T * ∑ i ∈ T.val, α i) -
+        ((2 * a + 1 : ℝ) * M) * (∑ T, x.mass T * ((a + 1 : ℝ) - T.val.card)) := by
+    simp only [mul_sub, Finset.sum_sub_distrib, Finset.mul_sum]
+    congr 1
+    · apply Finset.sum_congr rfl; intro T _; ring
+    · congr 1 <;> apply Finset.sum_congr rfl <;> intro T _ <;> ring
+  have hsum := Finset.sum_le_sum (s := univ) (fun T _ =>
+    show x.mass T * ((a + 1 : ℝ) ^ 2 * (∑ i ∈ T.val, α i) -
+      (2 * a + 1 : ℝ) * M * ((a + 1 : ℝ) - T.val.card)) ≤
+      x.mass T * (T.val.card : ℝ) ^ 2 * (∑ i ∈ T.val, α i) from by
+        have h := mul_nonneg (x.nonneg T) (hG T)
+        dsimp [G] at h
+        nlinarith only [h])
+  rw [hloweq, hi, hm] at hsum
+  have hraw : (a + 1 : ℝ) ^ 2 * (∑ i, (y i)⁻¹) -
+      (2 * a + 1 : ℝ) * δ * M ≤ energy x.mass := by
+    change _ ≤ energy x.mass at hsum
+    nlinarith only [hsum]
+  have hgroup : (a + 1 : ℝ) ^ 2 * (∑ i, (y i)⁻¹) - (2 * a + 1 : ℝ) * δ * M =
+      g0 a (y z) + g0 a (y o) + g1 a δ (y t) + ∑ i ∈ tailSet a, g1 a δ (y i) := by
+    dsimp [M, W]
+    rw [split_three (by omega : 1 ≤ a) (fun i => (y i)⁻¹),
+      split_three (by omega : 1 ≤ a) α]
+    simp only [g0, g1, α, weight, Finset.sum_sub_distrib, ← Finset.mul_sum]
+    dsimp [z, o, t]
+    ring
+  have hτ : 0 < threshold a δ := by unfold threshold; positivity
+  have hmem (i : Fin (a + 2)) : y i ∈ Set.Icc (threshold a δ) 1 :=
+    ⟨x.dense i, (marginal_bounds x hδ i).2⟩
+  have hg0 : StrictConvexOn ℝ (Set.Icc (threshold a δ) 1) (g0 a) := by
+    have h := reciprocal_strict (A := (a + 1 : ℝ) ^ 2) (B := 0) (u := 1) hτ
+      (fun ξ hξ => by
+        have hp : 0 < ξ := lt_of_lt_of_le hτ hξ.1
+        simpa only [mul_zero, sub_zero] using
+          mul_pos (sq_pos_of_pos (show (0 : ℝ) < a + 1 by positivity)) hp)
+    convert h using 1
+    funext ξ
+    simp [g0, reciprocal, div_eq_mul_inv]
+  have hg1 : StrictConvexOn ℝ (Set.Icc (threshold a δ) 1) (g1 a δ) := by
+    have ht : (a + 1 : ℝ) ^ 2 * threshold a δ -
+        3 * ((2 * a + 1 : ℝ) * δ) = 6 * δ := by unfold threshold; field_simp; ring
+    have h := reciprocal_strict (A := (a + 1 : ℝ) ^ 2) (B := (2 * a + 1 : ℝ) * δ)
+      (u := 1) hτ (fun ξ hξ => by
+        have hm := mul_nonneg (sq_nonneg (a + 1 : ℝ)) (sub_nonneg.mpr hξ.1)
+        nlinarith only [hm, ht, hδ])
+    convert h using 1
+    funext ξ
+    simp only [g1, reciprocal, div_eq_mul_inv, inv_pow]
+  let C : Finset (Fin (a + 2)) := {z, o}
+  have hhead := (finite_jensen C (by simp [C]) _ _ hg0 y (fun i _ => hmem i)).1
+  have htail := (finite_jensen (tailSet a) (Finset.card_pos.mp (by
+    rw [tail_card (by omega : 1 ≤ a)]; omega)) _ _ hg1 y (fun i _ => hmem i)).1
+  have hcard : ((tailSet a).card : ℝ) = a - 1 := by
+    rw [tail_card (by omega : 1 ≤ a), Nat.cast_sub (by omega : 1 ≤ a)]; norm_num
+  simp only [C, Finset.sum_pair (show z ≠ o by simp [z, o, Fin.ext_iff]),
+    Finset.card_pair (show z ≠ o by simp [z, o, Fin.ext_iff]), Nat.cast_ofNat] at hhead
+  rw [hcard, (grouping_domain ha hδ x hsort).1] at htail
+  unfold F0
+  linarith only [hhead, htail, hgroup, hraw]
+
+/-- The whole capacity lemma, on a single native law and all nonempty subsets. -/
+theorem capacity_lemma {a : ℕ} (ha : 4096 ≤ a) {δ : ℝ}
+    (hδ : 0 < δ) (hδu : δ ≤ 1 / (a : ℝ)) (mass : Atom a → ℝ)
+    (hnonneg : ∀ T, 0 ≤ mass T) (htotal : ∑ T, mass T = 1)
+    (hmean : ∑ T, mass T * (T.val.card : ℝ) = (a + 1 : ℝ) - δ)
+    (hdense : ∀ i, threshold a δ ≤ marginal mass i)
+    (hsort : Antitone (marginal mass)) :
+    let y := marginal mass
+    let z : Fin (a + 2) := ⟨0, by omega⟩
+    let o : Fin (a + 2) := ⟨1, by omega⟩
+    let t : Fin (a + 2) := ⟨2, by omega⟩
+    let u := (y z + y o) / 2
+    let v := (∑ i ∈ tailSet a, y i) / (a - 1 : ℝ)
+    (∀ T : Finset (Fin (a + 2)), T.Nonempty →
+      0 ≤ residual (weight y) (weight y t) T ∧
+        (residual (weight y) (weight y t) T = 0 ↔
+          (T.card = a + 1 ∧ ∃ i, univ \ T = {i} ∧ y i ≤ y t) ∨
+          (T.card = a ∧ ∃ i j, i ≠ j ∧ univ \ T = {i, j} ∧ y t ≤ y i ∧ y t ≤ y j))) ∧
+      v = groupedV a δ u (y t) ∧ Omega a δ u (y t) ∧
+      max (F0 a δ u (y t)) (F1 a δ u (y t)) ≤ energy mass ∧
+      (energy mass = F1 a δ u (y t) →
+        y z = u ∧ y o = u ∧ (∀ i ∈ tailSet a, y i = v) ∧
+          ∀ T : Atom a, 0 < mass T → residual (weight y) (weight y t) T.val = 0) ∧
+      energy mass = linearPart δ y (weight y t) +
+        ∑ T : Atom a, mass T * residual (weight y) (weight y t) T.val := by
+  let x : DenseLaw a δ := ⟨mass, hnonneg, htotal, hmean, hdense⟩
+  have hp := capacity_certificate ha hδ hδu x hsort
+  have hs := grouped_second_bound ha hδ hδu x hsort
+  have hf := grouped_first_bound ha hδ hδu x hsort
+  have he := same_law_bound ha hδ hδu x hsort
+  exact ⟨hp, hs.1, hs.2.1, max_le hf hs.2.2.1, hs.2.2.2, he.1⟩
+
+#print axioms capacity_lemma
 
 end D5.S3.Combinatorics.Probability.CdsoCapacityCertificate

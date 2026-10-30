@@ -8,74 +8,94 @@ internal sealed class CdsoCapacityCertificateDocument : IScribeDocumentDefinitio
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A capacity certificate for the actual marginals of one finite subset law.",
-        H("CDSO capacity residual on the entire subset domain"),
+        H("CDSO capacity certificate on the entire subset domain"),
         Blocks(
             Paragraph(Text(
-                "The carrier is Fin(a+2), with natural a at least 4096. This represents exactly the " +
-                "integer domain a>=4096. The real parameter satisfies 0<delta<=1/a, including delta=1/a. " +
-                "Set r=a+1, s=a+2, c=2a+1 and tau=3(2a+3)delta/r^2. Atom(a) is the type of all nonempty " +
-                "finite subsets of this carrier. No atom is removed because its mass is zero.")),
+                "The native carrier is Fin(a+2), with natural a at least 4096; this represents the integer " +
+                "range a>=4096 exactly. The real parameter satisfies 0<delta<=1/a, including its terminal " +
+                "endpoint. Write r=a+1, s=a+2, n=a-1, q=r-delta, mu=q/s, theta=1-delta, c=2a+1, " +
+                "gamma=c*delta and tau=3(2a+3)delta/r^2. Labels are zero based, so label 2 is the source's " +
+                "third label. The theorem uses the ordered presentation of the same law: its actual " +
+                "marginals y(0),...,y(s-1) are nonincreasing, with ties allowed.")),
             Describe.Lean(DescribeId.Create("dense-law"),
                 DeclarationHandle.Create(Prefix + "DenseLaw"), H("One dense subset law"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "A DenseLaw consists of nonnegative real masses x(T) on every nonempty T, of total one, " +
-                    "with sum_T x(T)|T|=a+1-delta. Its actual marginal y(i) is sum_T 1_(i in T)x(T), and " +
-                    "each marginal is at least tau. Marginals are derived from this same mass function; " +
-                    "they are not independent input data. All cardinalities 1 through s, disconnected " +
-                    "incidence supports, zero masses and nonsymmetric laws remain in scope."))),
+                    "Atom(a) is the type of all nonempty finite subsets of Fin(a+2). A DenseLaw assigns " +
+                    "nonnegative real masses x(T) to this entire type, of total one, with sum_T x(T)|T|=q. " +
+                    "Its actual marginal is y(i)=sum_T 1_(i in T)x(T), and every marginal is at least tau. " +
+                    "All cardinalities 1 through s, zero atom masses, nonsymmetric laws and disconnected " +
+                    "incidence supports remain in scope. The public theorem takes this mass function and " +
+                    "its native law conditions explicitly and constructs the DenseLaw internally."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("energy"),
-                DeclarationHandle.Create(Prefix + "energy"), H("Native energy"),
+                DeclarationHandle.Create(Prefix + "energy"), H("Native energy and source normalization"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "energy(x)=sum_T x(T)|T|^2 sum_(i in T) y(i)^(-2), with y=marginal(x). This is H in " +
-                    "Definition 1.1 of CDSO capacity crossovers and rare phases. That source identifies " +
-                    "H=2J_s and B=2F_r(q) through its cited common-array parent model. This module proves " +
-                    "finite-law statements; it supplies no additional finite-graph realization bridge. " +
-                    "The source reference moment Z=delta*a^3+(1-delta)r^3 is not assumed to be the third " +
-                    "moment of an arbitrary admissible law."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("capacity-certificate"),
-                DeclarationHandle.Create(Prefix + "capacity_certificate"), H("Pointwise certificate and entire zero set"),
+                    "energy(x)=H(x)=sum_T x(T)|T|^2 sum_(i in T)y(i)^(-2). Definition 1.1 of the source " +
+                    "uses B=a^2*r^2/q+c*theta*r^3/q^2=r^2*Z/q^2, Z=delta*a^3+theta*r^3, and d=H-B. " +
+                    "Z is a reference adjacent-cardinality third moment, not the third moment of an " +
+                    "arbitrary law. The source identifies H=2J_s and B=2F_r(q) by its common-array parent " +
+                    "model and cited CDSO normalization. No new finite-graph realization bridge is asserted."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("capacity-lemma"),
+                DeclarationHandle.Create(Prefix + "capacity_lemma"), H("Whole capacity certificate and grouped bounds"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "For every DenseLaw in the stated parameter range whose actual marginals are in " +
-                        "nonincreasing order, let t be label 2, the third label in zero-based indexing. Put " +
-                        "alpha(i)=y(i)^(-2), W=sum_i alpha(i), omega=alpha(t), b(i)=c*max(omega-alpha(i),0), " +
-                        "and W_T=sum_(i in T) alpha(i). For every nonempty subset T, including zero-mass atoms, " +
-                        "R(T)=(r-|T|)[c(W-2omega)-(r+|T|)W_T]+sum_(i outside T)b(i) is nonnegative.")),
+                        "For every mass function satisfying exactly the stated nonnegativity, normalization, " +
+                        "mean, density and ordering conditions, put alpha(i)=y(i)^(-2), W=sum_i alpha(i), " +
+                        "omega=alpha(2), b(i)=c*max(omega-alpha(i),0), and W_T=sum_(i in T)alpha(i). For " +
+                        "every nonempty T, including zero-mass atoms, R(T)=(r-|T|)[c(W-2omega)-(r+|T|)W_T] " +
+                        "+sum_(i outside T)b(i) is nonnegative.")),
                     Paragraph(Text(
-                        "Its full zero set is exactly the union of these two cases: |T|=r, the complement " +
-                        "is {i}, and y(i)<=y(t); or |T|=a, the complement is {i,j} with i different from j, " +
-                        "and both y(i) and y(j) are at least y(t). All ties are included.")),
+                        "The full zero set is exactly the union of two cases: |T|=r, the complement is {i}, " +
+                        "and y(i)<=y(2); or |T|=a, the complement is {i,j} with i different from j, and " +
+                        "both y(i) and y(j) are at least y(2). No strict ordering is imposed.")),
                     Paragraph(Text(
-                        "The mean and ordering give q<=2+a*y(t), hence y(t)>=(a-1-delta)/a>=1-2/a. " +
-                        "The proof obtains alpha(i)>=1 and 1<=omega<16/15. At |T|=r, R is the omitted " +
-                        "positive part. At |T|=a, reflection of the positive part gives c times the sum " +
-                        "of max(alpha(i)-omega,0) over omitted indices. At |T|=s, R=2W+2c*omega>0. " +
-                        "For |T|<a, the omitted cardinality is between 3 and s-1. The residual bracket is " +
-                        "at least (41a-2)/15>0. These four cases exhaust the full subset domain."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("same-law-bound"),
-                DeclarationHandle.Create(Prefix + "same_law_bound"), H("Exact same-law decomposition and support equality"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(
+                        "Let u=(y(0)+y(1))/2, w=y(2) and v=sum_(i>=3)y(i)/n. The theorem proves " +
+                        "v=(q-2u-w)/n and tau<=v<=w<=u<=1. Define g0(z)=r^2/z, g1(z)=r^2/z-gamma/z^2 " +
+                        "and f(z)=a^2/z+c*theta/z^2. The Lean definitions use inverse notation for these " +
+                        "same rational functions. Set F0=2g0(u)+g1(w)+n*g1(v), " +
+                        "F1=2f(u)+r^2/w+c*(2u+delta-2)/w^2+n*g1(v). Then H>=max(F0,F1).")),
                     Paragraph(Text(
-                        "Under the same complete parameter and law hypotheses, define L=r^2 sum_i 1/y(i) " +
-                        "-c*delta*(W-2omega)-sum_i(1-y(i))*b(i). Then H=L+sum_T x(T)R(T), so H>=L. " +
-                        "Moreover H=L if and only if R(T)=0 for every T with x(T)>0. Zero masses impose " +
-                        "no support equality condition.")),
+                        "Equality H=F1 forces y(0)=y(1)=u, every y(i)=v for i>=3, and R(T)=0 on every " +
+                        "atom of positive mass. This is a necessary consequence, not an unqualified " +
+                        "characterization of equality by an if and only if.")),
                     Paragraph(Text(
-                        "Finite sums are interchanged to identify E[sum_(i in T)h(i)] with sum_i h(i)y(i). " +
-                        "The complement identity uses P(i outside T)=1-y(i), and the cardinality term uses " +
-                        "E[r-|T|]=delta. All three expectations use the original mass function. The " +
-                        "existing Finset.sum_eq_zero_iff_of_nonneg supplies the final support argument."))),
-                DescribeRole.Theorem),
-            Paragraph(Text(
-                "The grouped functions F0, F1 and their strict Jensen equality consequences in Lemma 16.2 " +
-                "require additional statements beyond the pointwise and expectation conclusions described here. " +
-                "The present statements do not assert convexity of H as a function of its law, a fixed-budget " +
-                "finite-graph realization, or a literature priority claim."))
+                        "The theorem also records the exact same-law identity " +
+                        "H=r^2*sum_i(1/y(i))-c*delta*(W-2omega)-sum_i(1-y(i))*b(i)+sum_T x(T)R(T). " +
+                        "It follows by interchanging finite incidence sums, using P(i outside T)=1-y(i), " +
+                        "and using E[r-|T|]=delta. Every expectation and weight comes from the given x.")),
+                    Paragraph(Text(
+                        "The mean and ordering give q<=2+a*y(2) and y(2)>=(a-1-delta)/a>=1-2/a. " +
+                        "The inverse-square weights are at least one, and omega is bounded by (32/31)^2, " +
+                        "which is less than 16/15. At |T|=r the residual is the omitted positive part. " +
+                        "At |T|=a it is c times the sum of max(alpha(i)-omega,0) on omitted labels. " +
+                        "At |T|=s it is 2W+2c*omega>0. In the remaining range |T|<a the omitted " +
+                        "cardinality lies between 3 and s-1 and the bracket is at least (41a-2)/15>0.")),
+                    Paragraph(Text(
+                        "For the first grouped bound, monotonicity of the weights shows that any omission " +
+                        "set of at least two elements has weight at least alpha(0)+alpha(1). Thus every " +
+                        "subset of cardinality at most a has weight at most M=W-alpha(0)-alpha(1). " +
+                        "The pointwise expression (r-|T|)[c*M-(r+|T|)W_T] is nonnegative on every atom. " +
+                        "Taking its expectation gives the source's first certificate lower bound.")),
+                    Paragraph(Text(
+                        "For the second grouped bound only b(0) and b(1) can be nonzero. The non-residual " +
+                        "part becomes f(y(0))+f(y(1))+r^2/w+c*(y(0)+y(1)+delta-2)/w^2 " +
+                        "+sum_(i>=3)g1(y(i)). The second derivatives of f and g1 are positive on the " +
+                        "closed density interval. In particular g1''(z)=2(r^2*z-3*gamma)/z^4 and " +
+                        "r^2*tau-3*gamma=6*delta>0. The generic derivative criterion is " +
+                        "Mathlib's strictConvexOn_of_deriv2_pos. Finite Jensen and its strict equality " +
+                        "case are applied directly via ConvexOn.map_sum_le and " +
+                        "StrictConvexOn.map_sum_eq_iff_of_pos. The existing " +
+                        "Finset.sum_eq_zero_iff_of_nonneg gives the positive-mass support consequence.")),
+                    Paragraph(Text(
+                        "The proof concerns the finite-law model. It does not assert convexity of H as a " +
+                        "function of the law, a resource-bounded graph realization, or literature priority. " +
+                        "The source citations to Bertsimas-Popescu Theorem 2.1 and Boyd-Vandenberghe " +
+                        "section 3.1.8 describe weak duality and finite Jensen; their names do not replace " +
+                        "the target-specific certificate and domain proofs above."))),
+                DescribeRole.Theorem)
         )));
 }
