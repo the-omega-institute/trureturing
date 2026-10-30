@@ -35,6 +35,69 @@ internal sealed class EaslickMinimalAdvantageDocument : IScribeDocumentDefinitio
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.FromLean(), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(StrataLint.Scribe.FormulaDsl.Disp(Statement(declaration))), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose)), Paragraph(Text("In the formulas, at selects a zero-based face or cycle position, sum sums every element of the displayed finite sequence, NatToRat is the natural-to-rational cast, NatSub is truncated natural subtraction, shift adds its displayed constant to each face, and head denotes head!; HasCycle separately requires a nonempty cycle. Boolean toNat sends false to zero and true to one. Rational division is total, with x divided by zero equal to zero; all graph applications use at least three faces. All finite face-index domains retain repeated-face multiplicities."))), role);
+    private static Formula.BoundVariable B(string name, Formula type) => new(FormulaIdentifier.Create(name), type);
+    private static Formula All(Formula body, params Formula.BoundVariable[] variables) => new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
+    private static Formula Ex(Formula body, params Formula.BoundVariable[] variables) => new Formula.BindMany(FormulaQuantifier.Exists, [.. variables], body);
+    private static Formula And(params Formula[] xs) => xs.Aggregate((a,b) => new Formula.Logic(a, FormulaLogicOperator.And,b));
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.Implies,b);
+    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.Iff,b);
+    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
+    private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
+    private static Formula Mem(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.MemberOf,b);
+    private static Formula Not(Formula a) => new Formula.Not(a);
+    private static Formula Frac(Formula a, Formula b) => new Formula.Fraction(a,b);
+    private static Formula Len(Formula a) => Call("length",a);
+    private static Formula N => Id("Nat");
+    private static Formula L => Call("List",N);
+    private static Formula LL => Call("List",L);
+    private static Formula Half => Frac(Num(1),Num(2));
+    private static Formula Bounds(Formula d, Formula b) => All(Imp(Mem(Id("x"),d),And(Le(Num(1),Id("x")),Le(Id("x"),b))),B("x",N));
+    private static Formula Sorted(Formula d) => All(Imp(Lt(Id("i"),Id("j")),Le(Call("at",d,Id("i")),Call("at",d,Id("j")))),B("i",Call("Fin",Len(d))),B("j",Call("Fin",Len(d))));
+    private static Formula Closed(Formula n, Formula c) => Call("IsChain",Call("Edge",n),Call("append",c,Call("singleton",Call("head",c))));
+    internal static Formula Statement(string declaration)
+    {
+        Formula n=Id("n"),r=Id("r"),b=Id("b"),t=Id("t"),j=Id("j"),k=Id("k");
+        Formula d=Id("d"),e=Id("e"),c=Id("c"),cp=Id("cprime"),p=Id("p");
+        Formula target=Add(r,Multiply(Num(2),t));
+        Formula dieD=Call("IsDie",n,d),dieE=Call("IsDie",n,e),w=Call("winCount",d,e),prob=Call("winProbability",d,e),th=Call("threshold",n);
+        Formula padD=Call("padded",b,t,j,c,d),padE=Call("padded",b,t,k,cp,e);
+        Formula minimum=Call("IsMinimum",n,Frac(Call("NatToRat",th),Call("NatToRat",Multiply(n,n))));
+        Formula sum=Call("sum",new Formula.Sequence(Call("sum",new Formula.Sequence(Call("ite",Lt(Call("at",e,Id("v")),Call("at",d,Id("u"))),Num(1),Num(0)),Id("v"),Call("Fin",Len(e)))),Id("u"),Call("Fin",Len(d))));
+        Formula result=declaration switch
+        {
+            "IsDie" => All(Iff(dieD,And(Equal(Len(d),n),Sorted(d),Bounds(d,n))),B("n",N),B("d",L)),
+            "winCount" => All(Equal(w,sum),B("d",L),B("e",L)),
+            "indexWinCount" => All(Equal(Call("indexWinCount",d,e),sum),B("d",L),B("e",L)),
+            "winProbability" => All(Equal(prob,Frac(Call("NatToRat",Call("indexWinCount",d,e)),Call("NatToRat",Multiply(Len(d),Len(e))))),B("d",L),B("e",L)),
+            "threshold" => All(Equal(th,Add(new Formula.Floor(Frac(Multiply(n,n),Num(2))),Num(1))),B("n",N)),
+            "IsMinimum" => All(Iff(Call("IsMinimum",n,p),And(Ex(And(dieD,dieE,Equal(prob,p)),B("d",L),B("e",L)),Lt(Half,p),All(Imp(And(dieD,dieE,Lt(Half,prob)),Le(p,prob)),B("d",L),B("e",L)))),B("n",N),B("p",Id("Rat"))),
+            "Edge" => All(Iff(Call("Edge",n,d,e),And(dieD,dieE,Call("IsMinimum",n,prob))),B("n",N),B("d",L),B("e",L)),
+            "HasCycle" => All(Iff(Call("HasCycle",n,k),Ex(And(Equal(Len(c),k),Call("Nodup",c),NotEqual(c,Call("nil")),Closed(n,c)),B("c",LL))),B("n",N),B("k",N)),
+            "S" => All(Iff(Call("S",n),And(Call("HasCycle",n,n),All(Imp(Lt(n,k),Not(Call("HasCycle",n,k))),B("k",N)))),B("n",N)),
+            "ConjectureOne" => Iff(Call("ConjectureOne"),And(Call("S",Num(6)),All(Imp(Le(Num(7),n),Not(Call("S",n))),B("n",N)))),
+            "padded" => All(Equal(padD,Call("append",Call("replicate",j,Add(Num(1),Multiply(Num(2),Call("toNat",c)))),Call("append",Call("replicate",Call("NatSub",t,j),Add(Num(2),Multiply(Num(2),Call("toNat",c)))),Call("append",Call("shift",d,Num(4)),Call("replicate",t,Call("NatSub",Add(b,Num(6)),Call("toNat",c))))))),B("b",N),B("t",N),B("j",N),B("c",Id("Bool")),B("d",L)),
+            "winCount_eq_indexWinCount" => All(Equal(w,Call("indexWinCount",d,e)),B("d",L),B("e",L)),
+            "threshold_attained" => All(Imp(Le(Num(3),n),Ex(And(dieD,dieE,Equal(w,th)),B("d",L),B("e",L))),B("n",N)),
+            "above_half_iff" => All(Imp(And(Lt(Num(0),n),dieD,dieE),Iff(Lt(Half,prob),Le(th,w))),B("n",N),B("d",L),B("e",L)),
+            "minimum_probability" => All(Imp(Le(Num(3),n),minimum),B("n",N)),
+            "edge_iff" => All(Imp(And(Le(Num(3),n),dieD,dieE),Iff(Call("Edge",n,d,e),Equal(w,th))),B("n",N),B("d",L),B("e",L)),
+            "padded_winCount" => All(Imp(And(Le(j,t),Le(k,t),Bounds(d,b),Bounds(e,b)),Equal(Call("winCount",padD,Call("padded",b,t,k,Call("BoolNot",c),e)),Add(Add(Add(w,Multiply(t,Len(d))),Multiply(t,Len(e))),Multiply(Multiply(Num(2),t),t)))),B("b",N),B("t",N),B("j",N),B("k",N),B("c",Id("Bool")),B("d",L),B("e",L)),
+            "threshold_padding" => All(Equal(Call("threshold",target),Add(Add(Call("threshold",r),Multiply(Multiply(Num(2),t),r)),Multiply(Multiply(Num(2),t),t))),B("r",N),B("t",N)),
+            "padded_isDie" => All(Imp(And(Le(j,t),Equal(Len(d),r),Sorted(d),Bounds(d,b),Le(Add(b,Num(6)),target)),Call("IsDie",target,padD)),B("r",N),B("b",N),B("t",N),B("j",N),B("c",Id("Bool")),B("d",L)),
+            "padded_eq_imp" => All(Imp(And(Bounds(d,b),Bounds(e,b),Equal(padD,padE)),And(Equal(d,e),Imp(Equal(c,cp),Equal(j,k)))),B("b",N),B("t",N),B("j",N),B("k",N),B("c",Id("Bool")),B("cprime",Id("Bool")),B("d",L),B("e",L)),
+            "finite_cycle_witnesses" => And(Call("HasCycle",Num(6),Num(6)),Call("HasCycle",Num(7),Num(14)),Call("HasCycle",Num(8),Num(29)),Call("HasCycle",Num(9),Num(10)),Call("HasCycle",Num(10),Num(110)),Call("HasCycle",Num(11),Num(14))),
+            "cycle_edge_at" => All(Imp(And(Equal(Len(c),k),Closed(r,c),Lt(Num(0),k)),All(Call("Edge",r,Call("at",c,Id("i")),Call("at",c,new Formula.Modulo(Add(Id("i"),Num(1)),k))),B("i",Call("Fin",k)))),B("r",N),B("k",N),B("c",LL)),
+            "padded_cycle" => All(Imp(And(Le(Num(3),r),Lt(Num(0),k),Equal(new Formula.Modulo(k,Num(2)),Num(0)),Le(Add(r,Num(6)),target),Call("HasCycle",r,k)),Call("HasCycle",target,Multiply(k,Add(t,Num(1))))),B("r",N),B("k",N),B("t",N)),
+            "longer_cycle" => All(Imp(Le(Num(7),n),Ex(And(Lt(n,k),Call("HasCycle",n,k)),B("k",N))),B("n",N)),
+            "not_S_above_six" => All(Imp(Le(Num(7),n),Not(Call("S",n))),B("n",N)),
+            "six_cycle_bound" => All(Imp(Call("HasCycle",Num(6),k),Le(k,Num(6))),B("k",N)),
+            "S_six" => Call("S",Num(6)),
+            "conjecture_one" => And(Call("S",Num(6)),All(Imp(Le(Num(7),n),Not(Call("S",n))),B("n",N))),
+            _ => throw new ArgumentException("Unknown dice declaration",nameof(declaration))
+        };
+        return result;
+    }
+
 }

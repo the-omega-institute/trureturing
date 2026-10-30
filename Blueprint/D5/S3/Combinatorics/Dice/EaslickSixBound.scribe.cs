@@ -21,6 +21,21 @@ internal sealed class EaslickSixBoundDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.FromLean(), AssessedProvenance.FromRepo(Source),
+            H(title), (declaration == "sourceSeed" ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(StrataLint.Scribe.FormulaDsl.Disp(Statement(declaration)))), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+    private static Formula.BoundVariable B(string name, Formula type) => new(FormulaIdentifier.Create(name), type);
+    private static Formula All(Formula body, params Formula.BoundVariable[] variables) => new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
+    private static Formula And(params Formula[] xs) => xs.Aggregate((a,b) => new Formula.Logic(a, FormulaLogicOperator.And,b));
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.Implies,b);
+    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
+    private static Formula Not(Formula a) => new Formula.Not(a);
+    private static Formula N => Id("Nat");
+    private static Formula Statement(string declaration) => declaration switch
+    {
+        "six_cycle_bound" => All(Imp(Call("HasCycle",Num(6),Id("k")),Le(Id("k"),Num(6))),B("k",N)),
+        "S_six" => Call("S",Num(6)),
+        "conjecture_one" => And(Call("S",Num(6)),All(Imp(Le(Num(7),Id("n")),Not(Call("S",Id("n")))),B("n",N))),
+        _ => throw new ArgumentException("Unknown dice declaration",nameof(declaration))
+    };
+
 }

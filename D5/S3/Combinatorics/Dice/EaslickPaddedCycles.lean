@@ -24,14 +24,15 @@ private theorem closed_ofFn {α : Type} [Inhabited α] (R : α → α → Prop)
   intro i hi
   have hi' : i < k := by simpa using hi
   have hhead : (List.ofFn f).head! = f ⟨0,hk⟩ := by
-    rw [List.head!_eq_getElem_zero (by simpa using hk)]
-    simp
+    rw [List.head!_eq_getElem!]
+    simp [hk]
   by_cases hnext : i+1 < k
   · simpa [List.getElem_append, hi', hnext, Nat.mod_eq_of_lt hnext] using h ⟨i,hi'⟩
   · have heq : i+1 = k := by omega
     simpa [List.getElem_append, hi', hnext, heq, hhead] using h ⟨i,hi'⟩
 
-private theorem edge_at (r k : ℕ) (c : List (List ℕ)) (hlen : c.length = k)
+/-- Reading any cyclic seed edge includes the final return to the first vertex. -/
+theorem cycle_edge_at (r k : ℕ) (c : List (List ℕ)) (hlen : c.length = k)
     (hchain : (c ++ [c.head!]).IsChain (Edge r)) (hk : 0 < k) (i : Fin k) :
     Edge r c[i.val] c[(i.val+1)%k] := by
   have hi : i.val < c.length := by omega
@@ -40,7 +41,8 @@ private theorem edge_at (r k : ℕ) (c : List (List ℕ)) (hlen : c.length = k)
   by_cases hn : i.val+1 < k
   · simpa [List.getElem_append, hi, hlen, hn, Nat.mod_eq_of_lt hn] using h
   · have heq : i.val+1 = k := by omega
-    have hh : c.head! = c[0] := List.head!_eq_getElem_zero (by simp [hlen]; omega)
+    have hh : c.head! = c[0] := by
+      rw [List.head!_eq_getElem!, getElem!_pos c 0 (by omega)]
     simpa [List.getElem_append, hi, hlen, hn, heq, hh] using h
 
 /-- An even simple seed cycle yields one longer simple cycle using every clone block. -/
@@ -54,9 +56,10 @@ theorem padded_cycle (r k t : ℕ) (hr : 3 ≤ r) (hk : 0 < k) (hke : k%2=0)
   have hmod (a : Fin (k*(t+1))) : a.val%k < c.length := by
     simpa [hlen] using Nat.mod_lt a.val hk
   have hvalid (a : Fin (k*(t+1))) : IsDie r c[a.val%k] :=
-    (edge_at r k c hlen hchain hk ⟨a.val%k, Nat.mod_lt _ hk⟩).1
+    (cycle_edge_at r k c hlen hchain hk ⟨a.val%k, Nat.mod_lt _ hk⟩).1
   have hdiv (a : Fin (k*(t+1))) : a.val/k ≤ t := by
-    have := (Nat.div_lt_iff_lt_mul hk).mpr a.isLt
+    have : a.val/k < t+1 := (Nat.div_lt_iff_lt_mul hk).mpr
+      (by simpa only [Nat.mul_comm] using a.isLt)
     omega
   have hinj : Function.Injective f := by
     intro a b hab
@@ -67,25 +70,24 @@ theorem padded_cycle (r k t : ℕ) (hr : 3 ≤ r) (hk : 0 < k) (hke : k%2=0)
     have hm : a.val%k = b.val%k := (hnd.getElem_inj_iff).mp he.1
     have hd : a.val/k = b.val/k := he.2 (by rw [hm])
     apply Fin.ext
-    omega
+    calc
+      a.val = a.val%k+k*(a.val/k) := (Nat.mod_add_div _ _).symm
+      _ = b.val%k+k*(b.val/k) := by rw [hm,hd]
+      _ = b.val := Nat.mod_add_div _ _
   have hedge (a : Fin (k*(t+1))) :
       Edge (r+2*t) (f a) (f ⟨(a.val+1)%(k*(t+1)),Nat.mod_lt _ hN⟩) := by
     let b : Fin (k*(t+1)) := ⟨(a.val+1)%(k*(t+1)),Nat.mod_lt _ hN⟩
     have hm : b.val%k = (a.val%k+1)%k := by
       dsimp [b]
-      rw [Nat.mod_mod_of_dvd _ (by exact Nat.dvd_mul_right k (t+1))]
-      omega
+      rw [Nat.mod_mod_of_dvd _ (Nat.dvd_mul_right k (t+1))]
+      simp [Nat.add_mod]
     have hp : decide (b.val%k%2=1) = !(decide (a.val%k%2=1)) := by
-      rw [hm]
-      have ha := Nat.mod_lt a.val hk
-      have htwo := Nat.mod_lt (a.val%k) (by omega : 0<2)
-      by_cases hl : a.val%k+1 < k
-      · rw [Nat.mod_eq_of_lt hl]
-        split_ifs <;> simp_all <;> omega
-      · have he : a.val%k+1=k := by omega
-        rw [he, Nat.mod_self]
-        have : a.val%k%2=1 := by omega
-        simp [this]
+      rw [hm,Nat.mod_mod_of_dvd _ (Nat.dvd_of_mod_eq_zero hke)]
+      by_cases ho : a.val%k%2=1
+      · have hn : (a.val%k+1)%2 ≠ 1 := by omega
+        simp [ho,hn]
+      · have hn : (a.val%k+1)%2 = 1 := by omega
+        simp [ho,hn]
     have ha := hvalid a
     have hb := hvalid b
     have hva := padded_isDie r r t (a.val/k) _ _ (hdiv a) ha.1 ha.2.1 ha.2.2 hcap
@@ -93,7 +95,7 @@ theorem padded_cycle (r k t : ℕ) (hr : 3 ≤ r) (hk : 0 < k) (hke : k%2=0)
     apply (edge_iff (r+2*t) (by omega) _ _ hva hvb).mpr
     change winCount (padded r t (a.val/k) _ _) (padded r t (b.val/k) _ _) = _
     rw [hp, padded_winCount r t (a.val/k) (b.val/k) _ _ _ (hdiv a) (hdiv b) ha.2.2 hb.2.2]
-    have hs := edge_at r k c hlen hchain hk ⟨a.val%k,Nat.mod_lt _ hk⟩
+    have hs := cycle_edge_at r k c hlen hchain hk ⟨a.val%k,Nat.mod_lt _ hk⟩
     have hs' : winCount c[a.val%k] c[b.val%k] = threshold r := by
       rw [hm]
       exact (edge_iff r hr _ _ hs.1 hs.2.1).mp hs

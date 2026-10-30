@@ -7,6 +7,7 @@
    digest: A complete rank certificate bounds all six-face simple cycles. -/
 
 import D5.S3.Combinatorics.Dice.EaslickPaddedCycles
+import Mathlib.Logic.Equiv.Fin.Rotate
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -1004,8 +1005,8 @@ private theorem equal_fiber (d e : List ℕ) (hd : d ∈ dice6) (he : e ∈ dice
   rw [hr]
   exact (certificate e he).1
 
-private def blockA : List (List ℕ) := [[1,1,2,5,5,6],[2,2,2,3,6,6],[1,2,2,3,6,6],[1,3,4,4,4,4],[2,2,3,3,3,6],[1,3,3,4,4,4],[1,1,2,5,5,5]]
-private def blockB : List (List ℕ) := [[3,3,3,4,4,6],[1,4,4,4,5,5],[1,1,4,5,5,6],[2,2,2,5,6,6],[1,1,4,5,5,5],[1,2,2,5,6,6],[3,3,3,3,4,6]]
+private def blockA : List (List ℕ) := [[1,1,2,5,5,5],[1,1,2,5,5,6],[1,2,2,3,6,6],[1,3,3,4,4,4],[1,3,4,4,4,4],[2,2,2,3,6,6],[2,2,3,3,3,6]]
+private def blockB : List (List ℕ) := [[1,1,4,5,5,5],[1,1,4,5,5,6],[1,2,2,5,6,6],[1,4,4,4,5,5],[2,2,2,5,6,6],[3,3,3,3,4,6],[3,3,3,4,4,6]]
 
 private theorem large_fiber (d : List ℕ) (hd : d ∈ dice6)
     (hlarge : 7 ≤ (fiber6 (rank6 d)).length) :
@@ -1018,22 +1019,10 @@ private theorem successor_injective (c : List (List ℕ)) (hnd : c.Nodup) (hk : 
     (i j : Fin c.length)
     (he : c[(i.val+1)%c.length] = c[(j.val+1)%c.length]) : i=j := by
   have hm : (i.val+1)%c.length = (j.val+1)%c.length := hnd.getElem_inj_iff.mp he
+  letI : NeZero c.length := ⟨by omega⟩
+  apply (finRotate c.length).injective
   apply Fin.ext
-  have hi := i.isLt
-  have hj := j.isLt
-  have hmodi := Nat.mod_lt (i.val+1) hk
-  have hmodj := Nat.mod_lt (j.val+1) hk
-  omega
-
-private theorem cycle_edge (c : List (List ℕ)) (hk : 0 < c.length)
-    (hc : (c ++ [c.head!]).IsChain (Edge 6)) (i : Fin c.length) :
-    Edge 6 c[i.val] c[(i.val+1)%c.length] := by
-  have h := hc.getElem i.val (by simp; omega)
-  by_cases hn : i.val+1 < c.length
-  · simpa [List.getElem_append,i.isLt,hn,Nat.mod_eq_of_lt hn] using h
-  · have heq : i.val+1=c.length := by omega
-    have hh : c.head! = c[0] := List.head!_eq_getElem_zero (by simpa using hk)
-    simpa [List.getElem_append,i.isLt,hn,heq,hh] using h
+  simpa [finRotate_apply,Fin.add_def,Nat.add_mod] using hm
 
 private theorem collision_excludes (B : List (List ℕ)) (a b z : List ℕ)
     (ha : a ∈ B) (hb : b ∈ B) (hab : a ≠ b)
@@ -1043,8 +1032,8 @@ private theorem collision_excludes (B : List (List ℕ)) (a b z : List ℕ)
     (hc : (c ++ [c.head!]).IsChain (Edge 6)) (heq : ∀ x, x ∈ c ↔ x ∈ B) : False := by
   obtain ⟨i,hi,hia⟩ := List.mem_iff_getElem.mp ((heq a).mpr ha)
   obtain ⟨j,hj,hjb⟩ := List.mem_iff_getElem.mp ((heq b).mpr hb)
-  have hI := cycle_edge c hk hc ⟨i,hi⟩
-  have hJ := cycle_edge c hk hc ⟨j,hj⟩
+  have hI := cycle_edge_at 6 c.length c rfl hc hk ⟨i,hi⟩
+  have hJ := cycle_edge_at 6 c.length c rfl hc hk ⟨j,hj⟩
   have hsi : c[(i+1)%c.length] = z := hs _
     ((heq _).mp (List.getElem_mem _)) (by
       have h := (edge_iff 6 (by decide) _ _ hI.1 hI.2.1).mp hI
