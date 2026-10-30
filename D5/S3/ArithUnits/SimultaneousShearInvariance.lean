@@ -4,8 +4,9 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Two independent simultaneous translations force a polynomial over a characteristic-zero integral domain to be constant. -/
+   digest: Two independent simultaneous translations force a polynomial to be constant. -/
 
+import Mathlib.Algebra.CharZero.Infinite
 import Mathlib.Algebra.MvPolynomial.Funext
 import Mathlib.RingTheory.MvPolynomial.Basic
 import Mathlib.Tactic.FinCases
@@ -49,7 +50,10 @@ private theorem eval_linePolynomial {σ : Type*}
     · intro r
       simp [L]
     · intro i
-      simp [L, mul_comm]
+      change (Polynomial.C (x i) + Polynomial.C (v i) * Polynomial.X).eval t =
+        x i + t * v i
+      rw [Polynomial.eval_add, Polynomial.eval_mul, Polynomial.eval_C,
+        Polynomial.eval_C, Polynomial.eval_X, mul_comm]
   exact DFunLike.congr_fun h F
 
 /-- Integer iteration is promoted to every scalar parameter by an infinite
@@ -80,7 +84,7 @@ private theorem eval_line_of_translation {σ : Type*}
     apply Polynomial.eq_of_infinite_eval_eq
     apply (Set.infinite_range_of_injective (Nat.cast_injective (R := R))).mono
     rintro z ⟨n, rfl⟩
-    simpa only [eval_linePolynomial, Polynomial.eval_C] using hn n
+    simpa only [Set.mem_setOf_eq, eval_linePolynomial, Polynomial.eval_C] using hn n
   simpa only [eval_linePolynomial, Polynomial.eval_C] using
     congrArg (fun P : Polynomial R => P.eval t) hline
 
