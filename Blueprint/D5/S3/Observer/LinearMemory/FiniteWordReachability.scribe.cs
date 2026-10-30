@@ -236,7 +236,6 @@ internal sealed class FiniteWordReachabilityDocument : IScribeDocumentDefinition
                         + "cost, time, disturbance or write service; each such conclusion needs its own "
                         + "permission-preserving realization and resource correspondence."))),
                 DescribeRole.Theorem),
-            H("Output-resolved future closure and the five-state affine fiber"),
             Paragraph(Text("For the application in AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE, "
                 + "section 15, Theorem 15.1, take K = R, E = S -> R for an arbitrary finite state type S, "
                 + "I = A x O, and A(a,o) = Matrix.toLinAlgEquiv'(M(a,o)). The action and output types "
