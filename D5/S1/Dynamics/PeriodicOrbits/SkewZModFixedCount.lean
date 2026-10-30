@@ -22,10 +22,10 @@ variable {X : Type*} {q : ℕ}
 
 /-! Fixed-point counts for cyclic additive skew products. -/
 
+open scoped Classical in
 /-- A cyclic additive fiber contributes all `q` phases exactly when its Birkhoff
 holonomy vanishes. Thus the fixed-point table of the skew product is a weighted
 zero-holonomy return table on the base. -/
-open scoped Classical in
 theorem fixed_count_skew_zmod (f : X → X) (c : X → ZMod q) [Fintype X]
     [NeZero q] (n : ℕ) :
     fixedCount (skewStep f c) n =
