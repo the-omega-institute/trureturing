@@ -638,7 +638,7 @@ theorem Matrix.IsDiag.exists_cfc {U : Matrix.unitaryGroup d 𝕜} {M : Matrix d 
   · exact Matrix.inv_eq_right_inv U.2.1
   · exact Matrix.inv_eq_left_inv U.2.1
   simp_rw [← RCLike.ofReal_natCast (K := 𝕜)]
-  rw [Matrix.cfc_diagonal]
+  rw [Matrix.cfc_diagonal_real]
   congr
   ext i
   simp only [Matrix.diag_apply, Function.comp_apply, Nat.cast_inj, exists_apply_eq_apply,

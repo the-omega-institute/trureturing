@@ -218,7 +218,7 @@ nonrec lemma cfc_conj : (A.cfc f).conj (A.cfc g) = A.cfc (f * g^2) := by
 @[simp]
 lemma cfc_diagonal (g : d → ℝ) : (diagonal 𝕜 g).cfc f = diagonal 𝕜 (f ∘ g) := by
   ext1
-  exact Matrix.cfc_diagonal g f
+  exact Matrix.cfc_diagonal_real g f
 
 lemma cfc_conj_unitary (U : Matrix.unitaryGroup d 𝕜) :
     (A.conj U.val).cfc f = (A.cfc f).conj U := by

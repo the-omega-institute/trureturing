@@ -480,27 +480,6 @@ lemma ker_add [DecidableEq n] (hA : 0 ≤ A) (hB : 0 ≤ B) :
            (hB'.dotProduct_mulVec_zero_iff (x := v)).mp hzB⟩
   · simp +contextual [Matrix.add_mulVec]
 
-lemma ker_sum [DecidableEq n] (f : ι → HermitianMat n 𝕜) (hf : ∀ i, 0 ≤ f i) :
-    (∑ i, f i).ker = ⨅ i, (f i).ker := by
-  ext v
-  simp only [Submodule.mem_iInf, mem_ker_iff_mulVec_zero]
-  constructor
-  · intro hv i
-    have hfi := zero_le_iff.mp (hf i)
-    rw [← hfi.dotProduct_mulVec_zero_iff]
-    have hge : ∀ j, 0 ≤ star v ⬝ᵥ (f j).mat *ᵥ v := by
-      intro j
-      have := zero_le_iff.mp (hf j)
-      rw [Matrix.posSemidef_iff_dotProduct_mulVec] at this
-      exact this.2 v
-    have hsum : ∑ j, star v ⬝ᵥ (f j).mat *ᵥ v = 0 := by
-      rw [← dotProduct_sum, ← Matrix.sum_mulVec, ← mat_finset_sum, hv, dotProduct_zero]
-    exact le_antisymm
-      (hsum ▸ Finset.single_le_sum (fun j _ => hge j) (Finset.mem_univ i))
-      (hge i)
-  · intro h
-    simp [Matrix.sum_mulVec, h]
-
 set_option backward.isDefEq.respectTransparency false in
 lemma ker_conj [DecidableEq n] (hA : 0 ≤ A) (B : Matrix n n 𝕜) :
     (A.conj B).ker = Submodule.comap (Matrix.toEuclideanLin B.conjTranspose) A.ker := by

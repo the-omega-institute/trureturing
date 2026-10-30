@@ -682,6 +682,7 @@ lemma PosSemidef.piProd [RCLike R] (hA : ∀ i, (A i).PosSemidef) :
 end finprod
 
 --TODO: Can this be used for `Matrix.reindex_eq_conj` cleanup?
+set_option backward.isDefEq.respectTransparency false in
 lemma submatrix_eq_mul_mul {d d₂ d₃ R : Type*} [DecidableEq d] [Fintype d] [Semiring R]
   (A : Matrix d d R) (e : d₂ → d) (f : d₃ → d) :
     A.submatrix e f = (submatrix (α := R) 1 e id : Matrix d₂ d R) * A * (submatrix (α := R) 1 id f) := by

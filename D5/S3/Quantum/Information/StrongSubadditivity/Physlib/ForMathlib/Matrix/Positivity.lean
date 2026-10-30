@@ -809,52 +809,6 @@ lemma IsHermitian.cfc_eigenvalues {M : Matrix d d 𝕜} (hM : M.IsHermitian) (f 
   simp_all only [Function.comp_apply, Equiv.apply_symm_apply, algebraMap.coe_inj]
 
 
-set_option maxHeartbeats 0 in
---Should be combined the above...? TODO Cleanup
-/--
-If a Hermitian matrix A is unitarily similar to a diagonal matrix with real entries f, then the eigenvalues of A are a permutation of f.
--/
-lemma IsHermitian.eigenvalues_eq_of_unitary_similarity_diagonal {d 𝕜 : Type*}
-    [Fintype d] [DecidableEq d] [RCLike 𝕜]
-    {A : Matrix d d 𝕜} (hA : A.IsHermitian)
-    {U : Matrix d d 𝕜} (hU : U ∈ Matrix.unitaryGroup d 𝕜)
-    {f : d → ℝ}
-    (h : A = U * Matrix.diagonal (fun i => (RCLike.ofReal (f i) : 𝕜)) * Matrix.conjTranspose U) :
-    ∃ σ : d ≃ d, hA.eigenvalues ∘ σ = f := by
-  -- Since A is unitarily similar to D, they have the same characteristic polynomial.
-  have h_char_poly : Matrix.charpoly A = Matrix.charpoly (Matrix.diagonal fun i => (f i : 𝕜)) := by
-    have h_char_poly : Matrix.charpoly (U * Matrix.diagonal (fun i => (f i : 𝕜)) * Uᴴ) = Matrix.charpoly (Matrix.diagonal (fun i => (f i : 𝕜))) := by
-      have h_det : ∀ (t : 𝕜), Matrix.det (t • 1 - U * Matrix.diagonal (fun i => (f i : 𝕜)) * Uᴴ) = Matrix.det (t • 1 - Matrix.diagonal (fun i => (f i : 𝕜))) := by
-        intro t
-        have h_det : Matrix.det (t • 1 - U * Matrix.diagonal (fun i => (f i : 𝕜)) * Uᴴ) = Matrix.det (U * (t • 1 - Matrix.diagonal (fun i => (f i : 𝕜))) * Uᴴ) := by
-          simp [ mul_sub, sub_mul, Matrix.mul_assoc ];
-          rw [ show U * Uᴴ = 1 from by exact hU.2 ];
-        rw [h_det, Matrix.det_mul_comm, ← mul_assoc]
-        rw [← star_eq_conjTranspose, Matrix.UnitaryGroup.star_mul_self ⟨U, hU⟩]
-        simp
-      refine' Polynomial.funext fun t => _;
-      convert h_det t using 1 <;> simp [ Matrix.charpoly, Matrix.det_apply' ];
-      · simp [ Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_prod, Matrix.one_apply ];
-        exact Finset.sum_congr rfl fun _ _ => by congr; ext; aesop;
-      · simp [ Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_prod, Matrix.one_apply ];
-        exact Finset.sum_congr rfl fun _ _ => by congr; ext; aesop;
-    rw [ h, h_char_poly ];
-  -- The roots of the characteristic polynomial of A are its eigenvalues (by `IsHermitian.charpoly_roots_eq_eigenvalues`).
-  have h_eigenvalues : (Matrix.charpoly A).roots = Multiset.map (RCLike.ofReal ∘ hA.eigenvalues) Finset.univ.val := by
-    exact Matrix.IsHermitian.roots_charpoly_eq_eigenvalues hA;
-  -- The roots of the characteristic polynomial of D are the diagonal entries f.
-  have h_diag_roots : (Matrix.charpoly (Matrix.diagonal fun i => (f i : 𝕜))).roots = Multiset.map (fun i => (f i : 𝕜)) Finset.univ.val := by
-    simp [ Matrix.charpoly, Matrix.det_diagonal ];
-    rw [ Polynomial.roots_prod ];
-    · aesop;
-    · exact Finset.prod_ne_zero_iff.mpr fun i _ => Polynomial.X_sub_C_ne_zero _;
-  have := Multiset.map_univ_eq_iff ( RCLike.ofReal ∘ hA.eigenvalues ) f
-  subst h
-  simp_all only [Function.comp_apply, RCLike.ofReal_real_eq_id, id_eq, CompTriple.comp_eq]
-  refine' this.mp _ |> fun ⟨ e, he ⟩ => ⟨ e.symm, _ ⟩
-  · simpa [ Function.comp ] using congr_arg ( Multiset.map ( RCLike.re : 𝕜 → ℝ ) ) h_eigenvalues.symm
-  · exact funext fun x => by simpa using congr_fun he ( e.symm x ) ;
-
 end eigenvalues
 
 section
@@ -876,7 +830,7 @@ variable {d 𝕜 : Type*} [Fintype d] [DecidableEq d] [RCLike 𝕜]
 
 set_option backward.isDefEq.respectTransparency false in
 @[simp]
-lemma cfc_diagonal (g : d → ℝ) (f : ℝ → ℝ) :
+lemma cfc_diagonal_real (g : d → ℝ) (f : ℝ → ℝ) :
     cfc f (Matrix.diagonal (fun x ↦ (g x : 𝕜))) = diagonal (RCLike.ofReal ∘ f ∘ g) := by
   --Thanks Aristotle
   have h_self_adjoint : _root_.IsSelfAdjoint (diagonal (fun x => (g x : 𝕜))) := by

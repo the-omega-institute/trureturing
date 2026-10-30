@@ -85,7 +85,12 @@ The Hermitian-matrix umbrella omits unconsumed `LiebConcavity`, `Peierls`,
 and its trace-norm import, and unused `MState.ofClassical_pow` and `Rpow`.
 The von Neumann entropy port omits `coherentInfo` and channel imports;
 the SSA port stops after strong subadditivity. Local elaboration options and
-project module headers are adapted. `FiniteDensityPurification` shares the
+project module headers are adapted. The existing `Schatten/MatrixSimilarity`
+provides multiset permutation and unitary-similarity eigenvalue lemmas; their
+duplicate supplier proofs and the unconsumed `HermitianMat.ker_sum` are omitted.
+The supplier matrix diagonal-CFC lemma is named `Matrix.cfc_diagonal_real` to
+avoid ambiguity with existing entropy-production lemmas.
+`FiniteDensityPurification` shares the
 consumed carrier while retaining the project conversions and purification witness.
 Replace each port by a direct import when equivalent declarations become
 available in the repository's pinned Mathlib.
