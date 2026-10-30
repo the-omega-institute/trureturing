@@ -24,12 +24,16 @@ abbrev signature : Signature where
   Role := Bool
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output role p := List (Fin (if role then p.1 + p.2 + 1 else p.1 + p.2)) → Prop
+  Output role p := match role with
+    | false => List (Fin (p.1 + p.2)) → Prop
+    | true => List (Fin (p.1 + p.2 + 1)) → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun role p => OriginalOrder (if role then p.1 + p.2 + 1 else p.1 + p.2))
+  realize signature (fun role p => match role with
+    | false => OriginalOrder (p.1 + p.2)
+    | true => OriginalOrder (p.1 + p.2 + 1))
     (fun e => nomatch e)
 
 def reject_old : Realization signature :=
@@ -134,7 +138,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun role p => OriginalOrder (if role then p.1 + p.2 + 1 else p.1 + p.2))
+    (fun role p => match role with
+      | false => OriginalOrder (p.1 + p.2)
+      | true => OriginalOrder (p.1 + p.2 + 1))
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
