@@ -191,7 +191,11 @@ private theorem density_mean {t : ℝ} (ht : |t| < 1) :
     (hc.smul continuousOn_const).circleIntegrable'
   have hp := (differentiable_const (1 : ℂ)).diffContOnCl.circleAverage_poissonKernel_smul hw
   have hp' : Real.circleAverage (fun z => poissonKernel 0 (t : ℂ) z • (1 : ℂ)) 0 1 = 1 := by
-    simpa only [Pi.smul_apply'] using hp
+    have hfun : poissonKernel 0 (t : ℂ) • (fun _ : ℂ => (1 : ℂ)) =
+        (fun z : ℂ => poissonKernel 0 (t : ℂ) z • (1 : ℂ)) := by
+      funext z
+      exact Pi.smul_apply' _ _
+    rwa [hfun] at hp
   have hh := Complex.reCLM.circleAverage_comp_comm hi
   rw [hp'] at hh
   have havg : (2 * Real.pi)⁻¹ *
