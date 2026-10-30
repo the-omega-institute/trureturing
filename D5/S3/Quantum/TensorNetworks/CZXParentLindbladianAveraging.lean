@@ -7,9 +7,6 @@
    digest: Commuting coordinate averages on finite binary configurations. -/
 
 import Mathlib.Analysis.Complex.Basic
-import Mathlib.Data.Finset.NoncommProd
-import Mathlib.LinearAlgebra.Pi
-import Mathlib.Tactic.Module
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

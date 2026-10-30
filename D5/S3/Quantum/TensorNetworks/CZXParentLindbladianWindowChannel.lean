@@ -8,7 +8,6 @@
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.Analysis.SpecialFunctions.Exponential
 import Mathlib.LinearAlgebra.Matrix.Permutation
-import Mathlib.LinearAlgebra.Matrix.StdBasis
 import D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -585,7 +584,7 @@ private def middleWord (v : Fin 4 → Fin 2) (b c : Fin 2) : Fin 4 → Fin 2 :=
 private def middleUpdate {n : ℕ} (i : Fin n) (x : Fin n → Fin 2)
     (b c : Fin 2) : Fin n → Fin 2 :=
   Function.update (Function.update x (site i 1) b) (site i 2) c
-lemma site_zero {n : ℕ} (i : Fin n) : site i 0 = i := by
+private lemma site_zero {n : ℕ} (i : Fin n) : site i 0 = i := by
   apply Fin.ext
   change (i.val + 0) % n = i.val
   simp only [Nat.add_zero, Nat.mod_eq_of_lt i.isLt]
