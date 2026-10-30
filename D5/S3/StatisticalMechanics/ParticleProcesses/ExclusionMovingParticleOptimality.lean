@@ -6,7 +6,6 @@
    utility: none
    digest: Effective resistance is the optimal finite-graph moving particle constant. -/
 
-import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
