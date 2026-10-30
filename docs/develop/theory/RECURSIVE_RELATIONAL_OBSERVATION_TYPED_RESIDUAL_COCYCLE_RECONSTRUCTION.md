@@ -569,7 +569,7 @@ These intervals remain disjoint because $f$ is injective on the entire possible 
 
 ## 9. Finite online clock-memory completion
 
-**Definition 9.1 (finite clock-memory supplements and the acquisition boundary).** Keep the actual root-reachable typed graph, the fixed native positive duration \(d\), the complete finite legal-word set \(\mathcal P_r\), the exact typed endpoint \(z(u)=r\cdot u\), and the single final observation \(y\) with \(\lvert y-\tau(u)\rvert\le\epsilon\) from Definition 8.1. A parameterized operation name, including its declared type and all of its parameters, is one atomic symbol of a typed alphabet \(\mathcal A\).
+**Definition 9.1 (finite clock-memory supplements and the acquisition boundary).** Keep the actual root-reachable typed graph, the fixed native positive duration \(d\), the complete set of finite legal words \(\mathcal P_r\), the exact typed endpoint \(z(u)=r\cdot u\), and the single final observation \(y\) with \(\lvert y-\tau(u)\rvert\le\epsilon\) from Definition 8.1. A parameterized operation name, including its declared type and all of its parameters, is one atomic symbol of a typed alphabet \(\mathcal A\).
 
 A finite static supplement is a map \(h:\mathcal P_r\to H\) with finite range. It is admissible at \(\epsilon\) when there is a decoder
 \[
