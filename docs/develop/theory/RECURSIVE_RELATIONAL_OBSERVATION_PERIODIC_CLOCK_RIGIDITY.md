@@ -2260,7 +2260,9 @@ forward generation of the $O(D)$ seed entries needed by the projection,
 fit the additional $O(D^4)$ allowance. One coefficient-product-and-reduce
 operation modulo $g$ costs $O(D^2)$ bit operations and $O(D)$ temporary
 bits: form at most $r^2$ binary coefficient products and eliminate at most
-$r$ leading coefficients with at most $r+1$ XORs each. Consequently
+$r$ leading coefficients with at most $r+1$ XORs each. Each shifted-XOR
+pass is a sequential $O(D)$-bit scan; $O(D)$ passes suffice, including
+tape-head movement and loop control. Consequently
 binary powering at an exponent of $L$ bits, including the exponent scan,
 costs $O(D^2(L+1))$, with $O(D+L)$ temporary bits. The dot product with
 the core seed then evaluates $y_i$ at the same bound. This argument
@@ -2629,7 +2631,8 @@ $(A_{a^j},B_{a^j},e_{a^j})=(F_{j+2},F_{j+3},1+j)$. The members
 $b^h\in H_c(2h)$ satisfy
 $(A_{b^j},B_{b^j},e_{b^j})=(F_{2j+3}-1,F_{2j+4}-1,1+2j)$.
 Both formulas follow by induction in (PCR.39). Since the logarithm of
-these Fibonacci integers grows linearly in $j$, separately retained
+these Fibonacci integers grows linearly in $j$ (use
+$F_{2k+2}\ge2^k$ and $F_k\le2^k$), separately retained
 frames require $\Theta(t^2)$ coordinate bits and at least that many
 writes on these families. Even the iterative exact-coordinate algorithm
 writes $\Theta(t^2)$ boundary bits along these paths; it saves peak space,
