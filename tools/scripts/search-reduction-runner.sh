@@ -7,11 +7,17 @@ native_run() {
 }
 
 case "${1:-}" in
+  sensitivity-test)
+    sensitivity_test_dir=$(mktemp -d build/lean-inspector/sensitivity-isolation.XXXXXX)
+    SEARCH_REDUCTION_RESUME="$sensitivity_test_dir/checkpoints" \
+      SEARCH_REDUCTION_QUERY_CACHE="$sensitivity_test_dir/answers" \
+      make lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.SensitivityTests"
+    ;;
   test)
     shift
     test "$#" -eq 0 || { echo 'search-reduction-runner test takes no arguments' >&2; exit 2; }
     make search-reduction-probe-cache-test
-    modules=(GraphModel LookupModel BlockerTests CertificateModel CertificateTests CertificateScope
+    modules=(GraphModel LookupModel BlockerTests SensitivityTests CertificateModel CertificateTests CertificateScope
       ProbeCacheKernel ProbeCacheReplay ProbeCacheReplayCertificate ProbeCacheReplayVerdict
       LookupPruningTests LookupTests LookupRecallTests LookupColdTests LookupCacheTests CacheRetentionTests LookupIsolationTests IsolationUnitTests LookupTelemetry LookupScope NativeCertification GraphCalibration PublicationMutation
       Calibration FaultPaths SingleSourceModel VocabularyModel PresentationCoverage
@@ -66,7 +72,15 @@ LEAN
     shift
     native_run "$@"
     ;;
-  run)
+  run|sensitivity-v1)
+    if test "$1" = sensitivity-v1; then
+      export SEARCH_REDUCTION_DIAGNOSTIC_ENTRY=sensitivity-v1
+      export SEARCH_REDUCTION_PROBE_CACHE=0
+      export SEARCH_REDUCTION_QUERY_CACHE=
+      export SEARCH_REDUCTION_RESUME=
+      unset SEARCH_REDUCTION_PROBE_READ SEARCH_REDUCTION_PROBE_WRITE SEARCH_REDUCTION_PROBE_ID
+      unset SEARCH_REDUCTION_PROBE_PLANNED SEARCH_REDUCTION_RESUME_INPUTS
+    fi
     test -f "${SEARCH_REDUCTION_REQUESTS:-}" || {
       echo 'REQUESTS must name a Lean declaration list' >&2; exit 2;
     }
@@ -97,5 +111,5 @@ LEAN
     }
     native_run python3 -c 'import os,pathlib,sys; root,library,module=sys.argv[1:]; relative=module.replace(".","/"); output=pathlib.Path(library)/(relative+".olean"); output.parent.mkdir(parents=True,exist_ok=True); os.environ["LEAN_PATH"]=library+os.pathsep+os.environ.get("LEAN_PATH",""); os.execvp("lean",["lean","-j1","--root="+root,"-o",str(output),str(pathlib.Path(root)/(relative+".lean"))])' "$2" "$3" "$4"
     ;;
-  *) echo 'Expected native, run or source-module' >&2; exit 2 ;;
+  *) echo 'Expected native, run, sensitivity-v1 or source-module' >&2; exit 2 ;;
 esac

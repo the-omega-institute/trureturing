@@ -431,7 +431,8 @@ private def catchBranch {α : Type} (action : MetaM α)
 /-- Each route receives the same independent budget and exports only a closed
 certificate. Failed metavariables, caches and messages cannot reach its peer. -/
 def boundedRebuildBranch (action : MetaM LocalResult)
-    (budget? : Option (IO.Ref LookupBudgetState) := none) : MetaM LocalResult := do
+    (budget? : Option (IO.Ref LookupBudgetState) := none)
+    (coverageLimit : Nat := lookupCoverageBudget) : MetaM LocalResult := do
   let original ← saveState
   resetCache
   modifyThe Core.State fun s => {s with cache := {}}
@@ -465,7 +466,7 @@ def boundedRebuildBranch (action : MetaM LocalResult)
     ("preparation_internal_heartbeats", toJson preparation.preparation),
     ("search_limit", toJson localBudget), ("preparation_limit", toJson lookupPreparationBudget),
     ("coverage_internal_heartbeats", toJson preparation.coverage),
-    ("coverage_limit", toJson lookupCoverageBudget),
+    ("coverage_limit", toJson coverageLimit),
     ("preparation_ns", toJson preparation.preparationNs),
     ("search_ns", toJson (elapsed - preparation.preparationNs)),
     ("cost", toJson (reprStr result.cost)), ("detail", toJson result.detail)] |>.compress}"
@@ -477,13 +478,14 @@ def boundedRebuildBranch (action : MetaM LocalResult)
 /-- A success in either route wins. Negative evidence requires both routes to
 finish normally; timeout in one route never becomes a one-price edge. -/
 def independentRebuild (localRoute lookup : MetaM LocalResult)
-    (budget? : Option (IO.Ref LookupBudgetState) := none) : MetaM LocalResult := do
+    (budget? : Option (IO.Ref LookupBudgetState) := none)
+    (coverageLimit : Nat := lookupCoverageBudget) : MetaM LocalResult := do
   let started ← IO.monoMsNow
   let old ← boundedRebuildBranch localRoute
   lookupPhase s!"rebuild/local ms={(← IO.monoMsNow) - started} cost={reprStr old.cost}"
   if old.cost == .zero then return old
   let lookupStart ← IO.monoMsNow
-  let found ← boundedRebuildBranch lookup budget?
+  let found ← boundedRebuildBranch lookup budget? coverageLimit
   lookupPhase s!"rebuild/lookup ms={(← IO.monoMsNow) - lookupStart} cost={reprStr found.cost} detail={found.detail}"
   if found.cost == .zero then return found
   return {found with
@@ -710,6 +712,25 @@ unsafe def localRebuild (target : Expr) (types : List Expr := [])
       query := .fault "certificate.R_export_replay_failed"}
   certificateNominations.modify (·.push ⟨certificate, "R-hit"⟩)
   return ← finish {checked with lookup := result.lookup}
+
+/-- Offline replay bypasses answer caches and query/certificate-pool writers.
+The caller supplies a fresh on-demand table; only candidate κ and coverage G differ. -/
+unsafe def sensitivityRebuildV1 (target : Expr) (types : List Expr)
+    (table : LookupTable) : MetaM LocalResult := do
+  unless table.allocation == .sensitivity4xV1 do
+    throwError "sensitivity.v1.requires_diagnostic_allocation"
+  let result ← try
+      independentRebuild (rebuildRoute target types none)
+        (rebuildRoute target types (some table)) table.budget? table.allocation.coverage
+    finally
+      if let some close := table.close? then close
+  if result.cost != .zero then return result
+  let some certificate := result.certificate?
+    | return {detail := "sensitivity.v1.missing_certificate", query := .fault "missing-certificate"}
+  let checked ← replayCertificate target types certificate (some table)
+  if checked.cost != .zero then
+    return {detail := "sensitivity.v1.certificate_replay_failed", query := .fault "certificate-replay-failed"}
+  return {checked with lookup := result.lookup}
 
 /-- Positive-only front end. Empty nominations and failed verification remain
 unknown; neither path invokes primary-index enumeration. -/

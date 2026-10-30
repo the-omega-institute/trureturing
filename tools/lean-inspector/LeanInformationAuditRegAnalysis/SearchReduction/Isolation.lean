@@ -526,10 +526,15 @@ unsafe def onDemandLookup (table : LookupTable)
         placeholder.mvarId!.assign (mkConst entry.leanName levels)}}
 
 
+/-- Explicit inspection of a production reading in its exact query environment.
+The production entry leaves this callback absent. -/
+abbrev ReadingDiagnostic := LookupTable → Option ImportState → GraphReading → MetaM Unit
+
 private unsafe def runCore (source base : Environment) (request : Request)
     (lookupComplete : Bool) (disk? : Option DiskLookup.Index := none)
     (sharedImports? : Option ImportState := none)
-    (implicationModules? : Option (Array Name) := none) : IO Observation := do
+    (implicationModules? : Option (Array Name) := none)
+    (diagnostic? : Option ReadingDiagnostic := none) : IO Observation := do
   isolationUnitReadings.set #[]
   isolationUnitCount.set 0
   isolationRejection.set none
@@ -597,6 +602,8 @@ private unsafe def runCore (source base : Environment) (request : Request)
         rejection? := ← isolationRejection.get,
         presentationComplete := match presentation with | .incomplete _ => false | _ => true}
       let baseRun := intervalRun reading.graph reading.baseline
+      if let some diagnostic := diagnostic? then
+        withEnv graphEnv <| diagnostic table sharedImports? reading
       let pairedGraph := {reading.graph with edges := reading.graph.edges.map (fun edge => {edge with cost := edge.pairedCost})}
       let pairRun := match structureFailure with
         | some failure => .incomplete failure
@@ -627,7 +634,8 @@ private unsafe def runCore (source base : Environment) (request : Request)
 /-- Fork only immutable module storage. Candidate extensions are never merged
 into the baseline environment used for local reconstruction. -/
 unsafe def run (source : Environment) (request : Request)
-    (sharedImports : ImportState := default) (fixture : Bool := false) : IO Observation := do
+    (sharedImports : ImportState := default) (fixture : Bool := false)
+    (diagnostic? : Option ReadingDiagnostic := none) : IO Observation := do
   unless source.contains request.target do
     return {
       target := request.target, verdict := .insufficient, base := .incomplete .missing,
@@ -662,7 +670,7 @@ unsafe def run (source : Environment) (request : Request)
           pure (some (← DiskLookup.openIndex directory
             request.baselineCommit mathlibRevision catalog.excluded))
         catch ex => throw <| IO.userError s!"search.production_index_open_failed:{directory}:{ex}"
-    let result ← runCore source base request disk?.isSome disk? (some baseImports) (some ancestors)
+    let result ← runCore source base request disk?.isSome disk? (some baseImports) (some ancestors) diagnostic?
     let used := request.additions.filter fun name =>
       result.graph?.any fun reading => reading.selectedSeeds.any fun id =>
         reading.graph.vertices.any fun vertex => vertex.id == id &&

@@ -32,6 +32,20 @@ abbrev lookupCandidateBudget : Nat := 200000
 /-- Frozen from verdict-free fallback and fixed-stride candidate telemetry. -/
 abbrev lookupCoverageBudget : Nat := 340000000
 
+/-- Only the offline diagnostic selects the alternative allocation.
+Production construction reads no allocation environment variable. -/
+inductive LookupAllocation where
+  | production | sensitivity4xV1
+  deriving BEq, Inhabited
+
+def LookupAllocation.candidate : LookupAllocation → Nat
+  | .production => lookupCandidateBudget
+  | .sensitivity4xV1 => 4 * lookupCandidateBudget
+
+def LookupAllocation.coverage : LookupAllocation → Nat
+  | .production => lookupCoverageBudget
+  | .sensitivity4xV1 => 4 * lookupCoverageBudget
+
 /-- Bounded, query-local metadata reuse; certificates are always checked anew. -/
 structure LookupQueryMemo where
   primary? : Option (Environment × Std.HashMap Expr DiskLookup.Candidates) := none
@@ -49,6 +63,7 @@ structure LookupCandidate where
 partial basis may supply a hit, but never a completed negative query. -/
 structure LookupTable where
   environment : Environment
+  allocation : LookupAllocation := .production
   implicationModules? : Option (Array Name) := none
   complete : Bool := true
   enabled : Bool := true
@@ -228,8 +243,8 @@ def catchLookupCandidate {α : Type} (action : MetaM α)
     catch ex => runInBase (handler ex) ctx state
 
 private def coverageAvailable (table : LookupTable) : MetaM Bool := do
-  if lookupCoverageBudget == 0 then return true
-  return (← table.budget?.mapM (·.get)).all (·.coverage < lookupCoverageBudget * 1000)
+  if table.allocation.coverage == 0 then return true
+  return (← table.budget?.mapM (·.get)).all (·.coverage < table.allocation.coverage * 1000)
 
 /-- The final certificate is checked in the original query environment, after
 all temporary support is inlined. Its locals are exactly the registered Γ. -/
@@ -431,10 +446,11 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
     (goal : MVarId) (action : MetaM LookupTrace) : MetaM LookupTrace := do
   if (← IO.getEnv "SEARCH_REDUCTION_PREPARATION_TELEMETRY").isSome then
     throwError "lookup.preparation_telemetry_cannot_judge"
-  let ordinal ← if table.speculative then pure 0 else lookupAttemptOrdinal.get
-  unless table.speculative do lookupAttemptOrdinal.modify (· + 1)
+  let transient := table.speculative || table.allocation == .sensitivity4xV1
+  let ordinal ← if transient then pure 0 else lookupAttemptOrdinal.get
+  unless transient do lookupAttemptOrdinal.modify (· + 1)
   let configuredResume ← IO.getEnv "SEARCH_REDUCTION_RESUME"
-  let resume? := if table.speculative then none else configuredResume.filter (!·.isEmpty)
+  let resume? := if transient then none else configuredResume.filter (!·.isEmpty)
   let mut xs := #[]
   for decl in ← getLCtx do xs := xs.push decl.toExpr
   let query ← mkForallFVars xs (← instantiateMVars (← goal.getType))
@@ -476,7 +492,7 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
   let checkedProof ← IO.mkRef (none : Option Expr)
   let result ← catchLookupCandidate
     (withTheReader Core.Context (fun ctx => {ctx with
-      initHeartbeats := started, maxHeartbeats := lookupCandidateBudget * 1000}) do
+      initHeartbeats := started, maxHeartbeats := table.allocation.candidate * 1000}) do
       if let some boundary := table.boundaryTest? then
         unless table.fixture && table.disk?.any (·.header.scope == "test") do
           throwError "lookup.boundary_test_requires_test_index"
@@ -889,7 +905,7 @@ unsafe def lookupLeafPass (table : LookupTable) (goal : MVarId)
           -- No speculative proof or state is admitted as a certificate.
           attemptLookupLeaf table entry goal unify close
         else do
-          lookupAttemptOrdinal.modify (· + 1)
+          unless table.allocation == .sensitivity4xV1 do lookupAttemptOrdinal.modify (· + 1)
           IO.addHeartbeats usage.candidateSearch
           if let some budget := table.budget? then
             budget.modify fun state => {state with
