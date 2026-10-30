@@ -2531,7 +2531,7 @@ Proof. Proposition 16.2 applies with exactly (25.1). Two integer lengths have in
 For the binary static label, assign $0$ at every noncycle history. At the uniquely represented cycle history in Proposition 25.4 with entry index $i$, put
 
 $$
-h\bigl(p_i\rho_hW_h^kW_h[0:j]\bigr)
+h_{\rm stat}\bigl(p_i\rho_hW_h^kW_h[0:j]\bigr)
  =\begin{cases}1,&2i>i_h+j_h,\\0,&2i\le i_h+j_h.\end{cases}
 \tag{25.15}
 $$
