@@ -30,7 +30,10 @@ internal sealed class EaslickSixBoundDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(F.Disp(Statement(declaration))),
             declaration is "six_cycle_bound" or "S_six" ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose)), Paragraph(Text("In these formulas, at is zero-based list indexing, length and dedup are list length and duplicate removal, head is Lean head!, fst and snd are product projections, and List subset means membership inclusion. dice6, rank6, fiber6 and cuts6 are the private Lean inputs; decide converts the displayed decidable proposition to Bool. The checker definitions are characterized by equality to the Boolean value true, including empty-input behavior. All quantifiers include their full carrier types and anonymous instance dictionaries."))), declaration == "checkRank" ? DescribeRole.Definition : DescribeRole.Theorem);
+            Blocks(Paragraph(Text(prose)), Paragraph(Text("In these formulas, at is zero-based list indexing, length and dedup are list length and duplicate removal, head is Lean head!, fst and snd are product projections, and List subset means membership inclusion. dice6, rank6, fiber6 and cuts6 are the private Lean inputs; decide converts the displayed decidable proposition to Bool. The checker definitions are characterized by equality to the Boolean value true, including empty-input behavior. All quantifiers include their full carrier types and anonymous instance dictionaries."))), declaration == "checkRank" ? DescribeRole.Definition : DescribeRole.Theorem,
+            declaration == "conjecture_one"
+                ? new OpenProblemResolutionClaim(ProblemSlugRef.Create("easlick-2026-minimal-advantage-cycle-conjecture-one"), ResolutionKind.Proved)
+                : null);
     private static Formula.BoundVariable B(string name, Formula type) => new(FormulaIdentifier.Create(name), type);
     private static Formula All(Formula body, params Formula.BoundVariable[] variables) => new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
     private static Formula And(params Formula[] xs) => xs.Aggregate((a,b) => new Formula.Logic(a, FormulaLogicOperator.And,b));

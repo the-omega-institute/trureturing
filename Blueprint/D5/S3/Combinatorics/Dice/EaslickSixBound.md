@@ -86,6 +86,10 @@ $$\operatorname{S}\left(6\right) \land \left(\forall n \in \mathit{Nat},\; 7 \le
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Dice/EaslickSixBound.conjecture_one` (`✓ std3`). ∎
 
+*Resolves.* `Problems/easlick-2026-minimal-advantage-cycle-conjecture-one` (proved) by `D5/S3/Combinatorics/Dice/EaslickSixBound.conjecture_one`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"easlick-2026-minimal-advantage-cycle-conjecture-one","declaration_gid":"D5/S3/Combinatorics/Dice/EaslickSixBound.conjecture_one","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Terry Easlick (2026). *Computer-assisted results for n-sided non-transitive dice taking face values in [n]*. URL: <https://arxiv.org/abs/2610.40321v1>.
