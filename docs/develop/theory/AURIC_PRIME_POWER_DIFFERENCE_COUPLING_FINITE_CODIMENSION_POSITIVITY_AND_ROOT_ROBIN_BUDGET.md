@@ -4,6 +4,8 @@
 
 导航：[一](#section-1) · [二](#section-2) · [三](#section-3) · [四](#section-4) · [五](#section-5) · [六](#section-6) · [七](#section-7) · [八](#section-8) · [九](#section-9) · [附注](#editorial-notes)
 
+> **编号排版。** 原稿的 38 个公式编号逐一显示在对应公式下方的独立文本行，编号 (1)–(38) 与公式前的 `eq-1`–`eq-38` 锚点一一对应；点击编号即回到该公式。原稿的 `\tag{n}` 仅转为下方的 `(n)`，公式内部内容不变。比对原稿时，将这行编号还原为该公式末尾的 `\tag{n}`；其余数学与正文按原顺序比对。
+
 <a id="author-manuscript"></a>
 
 <!-- author-source-start -->
@@ -84,8 +86,9 @@ S+\frac h2\log h
 +O(h^2|\log h|)
 }
 \qquad(h\downarrow0).
-\tag{1}
 $$
+
+<p align="center" data-equation-number="1"><a href="#eq-1">(1)</a></p>
 
 
 下面使用的每个关系矩阵，都由这个同一实际核产生。
@@ -136,8 +139,9 @@ N(t)+P(t)
 +\sum_{m\ge2}\frac{\Lambda(m)}{\sqrt m}\,
 g(t-\log m),
 }
-\tag{2}
 $$
+
+<p align="center" data-equation-number="2"><a href="#eq-2">(2)</a></p>
 
 
 其中
@@ -186,8 +190,9 @@ $$
 =
 f(t+h)-2\cosh(h/2)f(t)+f(t-h).
 }
-\tag{3}
 $$
+
+<p align="center" data-equation-number="3"><a href="#eq-3">(3)</a></p>
 
 
 相应的带符号读出为
@@ -215,8 +220,9 @@ $$
 \qquad
 \int e^{-u/2}\,d\omega_{t,h}(u)=0.
 }
-\tag{4}
 $$
+
+<p align="center" data-equation-number="4"><a href="#eq-4">(4)</a></p>
 
 
 因此
@@ -252,8 +258,9 @@ $$
 
 $$
 \boxed{\Delta_h^2N(t)=0.}
-\tag{5}
 $$
+
+<p align="center" data-equation-number="5"><a href="#eq-5">(5)</a></p>
 
 
 这里 $\Delta_h^2$ 表示连续施加两次 $\Delta_h$。
@@ -335,8 +342,9 @@ $$
 \frac{\Lambda(m)}{\sqrt m}
 \,\upsilon_h(d-\log m),
 }
-\tag{6}
 $$
+
+<p align="center" data-equation-number="6"><a href="#eq-6">(6)</a></p>
 
 
 其中
@@ -353,8 +361,9 @@ c_ke^{-\lambda_kd}
 2\cosh(\lambda_kh)-2\cosh(h/2)
 \right]^2
 >0.
-\tag{7}
 $$
+
+<p align="center" data-equation-number="7"><a href="#eq-7">(7)</a></p>
 
 
 对固定 $d>0$，还有
@@ -408,8 +417,9 @@ W_h(i,j)
 =
 \Delta_h^2\mathscr K(t_i-t_j).
 }
-\tag{8}
 $$
+
+<p align="center" data-equation-number="8"><a href="#eq-8">(8)</a></p>
 
 
 这就是对每个中心采用 $\omega_{t_i,h}$ 后，由原实际核得到的二次型矩阵。
@@ -439,8 +449,9 @@ $$
 0,&\text{否则}.
 \end{cases}
 }
-\tag{9}
 $$
+
+<p align="center" data-equation-number="9"><a href="#eq-9">(9)</a></p>
 
 
 ### 定理 1：真实关系的算术极限
@@ -457,8 +468,9 @@ $$
 \longrightarrow
 (1-\gamma-\log\pi)I_m-\mathsf A
 }
-\tag{10}
 $$
+
+<p align="center" data-equation-number="10"><a href="#eq-10">(10)</a></p>
 
 
 在矩阵算子范数中成立。
@@ -537,8 +549,9 @@ W_h(i,i)
 +
 O(h^2|\log h|).
 }
-\tag{11}
 $$
+
+<p align="center" data-equation-number="11"><a href="#eq-11">(11)</a></p>
 
 
 固定维数下，逐项收敛推出算子范数收敛。因此
@@ -577,8 +590,9 @@ $$
 \boxed{
 G_h:=\frac{W_h}{V_h}\longrightarrow I_m.
 }
-\tag{12}
 $$
+
+<p align="center" data-equation-number="12"><a href="#eq-12">(12)</a></p>
 
 
 更精确地，
@@ -605,8 +619,9 @@ $$
 \boxed{
 V_h\sim2h\log(1/h)\longrightarrow0.
 }
-\tag{13}
 $$
+
+<p align="center" data-equation-number="13"><a href="#eq-13">(13)</a></p>
 
 
 归一关系稳定，与未归一信号大小，是这里需要同时记录的两个量。
@@ -637,8 +652,9 @@ $$
 \frac{\max(m_i,m_j)}{\min(m_i,m_j)}
 \text{ 是整数素数幂。}
 }
-\tag{14}
 $$
+
+<p align="center" data-equation-number="14"><a href="#eq-14">(14)</a></p>
 
 
 因此，最初的 $<5040$ 分类问题现在具有一个统一的解析解释。以下结论也适用于任意其他有限上界。
@@ -722,8 +738,9 @@ p_h
 \qquad
 Z_h=1-p_h\longrightarrow1.
 }
-\tag{15}
 $$
+
+<p align="center" data-equation-number="15"><a href="#eq-15">(15)</a></p>
 
 
 选定一个旧中心 $t_j$，再定义
@@ -749,8 +766,9 @@ X_h,Y_h,Z_h\ge0,
 \qquad
 X_h+Y_h+Z_h=1.
 }
-\tag{16}
 $$
+
+<p align="center" data-equation-number="16"><a href="#eq-16">(16)</a></p>
 
 
 它们分别对应选定旧方向、其余旧方向、新增正交剩余。按项目的原五模式次序，可以使用
@@ -838,8 +856,9 @@ $$
 \int t^j\,d\mu(t)=0,
 \qquad j=0,\ldots,N
 }
-\tag{17}
 $$
+
+<p align="center" data-equation-number="17"><a href="#eq-17">(17)</a></p>
 
 
 必然推出
@@ -852,8 +871,9 @@ $$
 Q_{\mathscr K}(\mu)
 \ge\kappa\|F_\mu\|_2^2.
 }
-\tag{18}
 $$
+
+<p align="center" data-equation-number="18"><a href="#eq-18">(18)</a></p>
 
 
 若 $\mu\ne0$，则右端严格为正。
@@ -920,8 +940,9 @@ $$
 |Q_{R_D}(\mu)|
 \le M_D\|F_\mu\|_2^2.
 }
-\tag{19}
 $$
+
+<p align="center" data-equation-number="19"><a href="#eq-19">(19)</a></p>
 
 
 这个公式对原子测度也成立：先光滑化 $F_\mu$，进行普通分部积分，再用 $L^2$ 收敛与 $R_D$ 的连续性取极限。
@@ -961,8 +982,9 @@ Q_P(\mu)
 \frac1{2\pi}
 \int_{\mathbb R}
 m(\xi)|\widehat F_\mu(\xi)|^2\,d\xi,
-\tag{20}
 $$
+
+<p align="center" data-equation-number="20"><a href="#eq-20">(20)</a></p>
 
 
 其中
@@ -997,8 +1019,9 @@ $$
 
 $$
 \boxed{m(\xi)\longrightarrow+\infty.}
-\tag{21}
 $$
+
+<p align="center" data-equation-number="21"><a href="#eq-21">(21)</a></p>
 
 
 可以选择有限的 $R_0>0$，使
@@ -1009,8 +1032,9 @@ $$
 $$
 m(\xi)\ge2(M_D+\kappa)
 \qquad(|\xi|\ge R_0).
-\tag{22}
 $$
+
+<p align="center" data-equation-number="22"><a href="#eq-22">(22)</a></p>
 
 
 ### 证明第三步：有限个矩条件抑制低频部分
@@ -1079,8 +1103,9 @@ $$
 \frac{(DR_0/2)^{2N}}{(N!)^2}
 \longrightarrow0.
 }
-\tag{23}
 $$
+
+<p align="center" data-equation-number="23"><a href="#eq-23">(23)</a></p>
 
 
 选择有限 $N$，使 $\varepsilon_N\le\frac12$。
@@ -1162,8 +1187,9 @@ a^*Ha>0
 \quad
 (a\in\ker V,\ a\ne0).
 }
-\tag{24}
 $$
+
+<p align="center" data-equation-number="24"><a href="#eq-24">(24)</a></p>
 
 
 由于节点互异，
@@ -1186,8 +1212,9 @@ $$
 H\text{ 的负特征值与零特征值总数}
 \le N+1.
 }
-\tag{25}
 $$
+
+<p align="center" data-equation-number="25"><a href="#eq-25">(25)</a></p>
 
 
 **证明。** 若非正特征子空间的维数大于 $\operatorname{rank}V$，它与 $\ker V$ 必有非零交。交中的向量一方面二次型非正，另一方面由式 (24) 严格为正，矛盾。证毕。
@@ -1229,8 +1256,9 @@ $$
 =
 C-B^*A^{-1}B.
 }
-\tag{26}
 $$
+
+<p align="center" data-equation-number="26"><a href="#eq-26">(26)</a></p>
 
 
 分块合同变换给出
@@ -1262,8 +1290,9 @@ H\succeq0
 \iff
 \mathcal S_{\mathrm{low}}\succeq0.
 }
-\tag{27}
 $$
+
+<p align="center" data-equation-number="27"><a href="#eq-27">(27)</a></p>
 
 
 而且两者的负方向数、零方向数完全相同。
@@ -1311,8 +1340,9 @@ a^*Ha
 \frac{\kappa h_{\min}}4\|a\|_2^2
 \qquad(a\in\ker V).
 }
-\tag{28}
 $$
+
+<p align="center" data-equation-number="28"><a href="#eq-28">(28)</a></p>
 
 
 任何满足
@@ -1361,8 +1391,9 @@ $$
 \qquad
 \mathcal D(n)\ge0.
 }
-\tag{29}
 $$
+
+<p align="center" data-equation-number="29"><a href="#eq-29">(29)</a></p>
 
 
 其中
@@ -1433,8 +1464,9 @@ T\ge2^{19}
 \mathcal B(T)>
 \frac{\log2}{64\sqrt2\,\sqrt T\log T}.
 }
-\tag{30}
 $$
+
+<p align="center" data-equation-number="30"><a href="#eq-30">(30)</a></p>
 
 
 ### 证明第一步：所需的初等素数计数界
@@ -1457,8 +1489,9 @@ $$
 
 $$
 \vartheta(x)\le2cx\qquad(x\ge1),
-\tag{31}
 $$
+
+<p align="center" data-equation-number="31"><a href="#eq-31">(31)</a></p>
 
 
 以及
@@ -1469,8 +1502,9 @@ $$
 $$
 \vartheta(x)\ge\frac c2x
 \qquad(x\ge2^{10}).
-\tag{32}
 $$
+
+<p align="center" data-equation-number="32"><a href="#eq-32">(32)</a></p>
 
 
 式 (31) 由中央二项式系数归纳得到：
@@ -1636,8 +1670,9 @@ $$
 \boxed{
 \mathcal B_p(T)>\frac1{4p^2}.
 }
-\tag{33}
 $$
+
+<p align="center" data-equation-number="33"><a href="#eq-33">(33)</a></p>
 
 
 于是，只要该区间非空，
@@ -1648,8 +1683,9 @@ $$
 $$
 \mathcal B(T)>
 \frac14\sum_{y<p\le X}\frac1{p^2}.
-\tag{34}
 $$
+
+<p align="center" data-equation-number="34"><a href="#eq-34">(34)</a></p>
 
 
 下一步同时证明区间内确实存在素数。
@@ -1723,8 +1759,9 @@ $$
 \frac{c}{32y\log T}
 \left(1-\frac{4y}{X}\right).
 }
-\tag{35}
 $$
+
+<p align="center" data-equation-number="35"><a href="#eq-35">(35)</a></p>
 
 
 最后 $X\ge8y$，故括号至少为 $1/2$。代入 $y=\sqrt{2T}$，式 (30) 成立。证毕。
@@ -1771,8 +1808,9 @@ Q(T)\ge-c_0
 \quad\Longrightarrow\quad
 R(n)<1,
 }
-\tag{36}
 $$
+
+<p align="center" data-equation-number="36"><a href="#eq-36">(36)</a></p>
 
 
 以及
@@ -1787,8 +1825,9 @@ R(n)\ge1
 Q(T)<
 -c_0-\sqrt T\log T\,\mathcal D(n).
 }
-\tag{37}
 $$
+
+<p align="center" data-equation-number="37"><a href="#eq-37">(37)</a></p>
 
 
 所以，在这个范围内，任何弱 Robin 反例都必须产生一个越过固定负阈值的归一化带符号尾项。
@@ -1814,8 +1853,9 @@ $$
 \quad\Longrightarrow\quad
 R(n)<1.
 }
-\tag{38}
 $$
+
+<p align="center" data-equation-number="38"><a href="#eq-38">(38)</a></p>
 
 
 这正好落实“结果、误差、归一尺度一起保存”的要求：误差界直接参与接纳条件。
