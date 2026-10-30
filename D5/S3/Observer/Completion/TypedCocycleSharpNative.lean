@@ -72,7 +72,6 @@ private theorem fold_a (q m : ℕ) (x : ZMod q × ZMod q) :
       (x.1 + 1, x.2) = (x.1 + (m + 1 : ℕ), x.2)
     rw [ih]
     simp only [Nat.cast_add, Nat.cast_one, Prod.mk.injEq, and_true]
-    dsimp
     ac_rfl
 
 private theorem value_eq_tag (q : ℕ) (u : History) : value (residueRegister q) u = tag q u := by
