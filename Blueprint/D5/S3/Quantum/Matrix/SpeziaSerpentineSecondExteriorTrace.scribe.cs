@@ -64,7 +64,9 @@ internal sealed class SpeziaSerpentineSecondExteriorTraceDocument : IScribeDocum
     private static DocumentBlock Entry(string id, string name, string title, Formula formula, string prose,
         AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("sp322844-serpentine"), ResolutionKind.Proved) : null);
 
     private static Formula ClaimBody()
     {
