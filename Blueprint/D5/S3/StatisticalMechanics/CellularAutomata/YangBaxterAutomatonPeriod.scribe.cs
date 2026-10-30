@@ -84,7 +84,7 @@ internal sealed class YangBaxterAutomatonPeriodDocument : IScribeDocumentDefinit
         Formula ys = Rel(y, FormulaRelationOperator.MemberOf, s);
         Formula commutes = All("x", g, Implies(xs, All("y", g, Implies(ys, Equal(xy, yx)))));
         Formula squares = All("x", g, Implies(xs, Equal(xx, D(1))));
-        Formula conclusion = Call(F.Id("IsPGroup"), D(2), Call(F.Id("SubgroupClosure"), s));
+        Formula conclusion = Call(F.Id("IsPGroup"), D(2), Call(Seq(F.Id("Subgroup"), Dot, F.Id("closure")), s));
         return Disp(All("G", Seq(Named(F.Id("Type")), Caret, Grp(Star)),
             Seq(OpenBracket, Call(F.Id("Group"), g), CloseBracket, Sp,
                 All("S", Call(F.Id("Set"), g), Implies(commutes, Implies(squares, conclusion))))));
