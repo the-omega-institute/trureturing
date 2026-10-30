@@ -94,7 +94,8 @@ internal sealed class TribonacciBinetDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "The existing residual-quadratic computation also gives the sum "
-                        + "of a secondary root and its conjugate, their product, and "
+                        + "of a secondary root and its conjugate equal to 1 - beta, "
+                        + "their product equal to beta squared - beta - 1, and "
                         + "beta times the squared root norm equal to one. These identities "
                         + "are consumed by the resultant separation and positive-area "
                         + "packing in the proof of nonempty Rauzy interior."))),

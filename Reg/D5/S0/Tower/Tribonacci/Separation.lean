@@ -72,8 +72,10 @@ private theorem positive_scale :
     (pow_pos (norm_pos_iff.mpr hz) 1)
 
 theorem erased_fails (i : Fin 2) : ¬ arena.Law (erasedAt i) := by
-  have hne : oneName ≠ zeroName := fun h =>
-    Bool.true_ne_false (congrArg (fun u : TribonacciName 1 => u.1 0) h)
+  have hne : oneName ≠ zeroName := by
+    intro h
+    have he : (true : Bool) = false := congrArg (fun u : TribonacciName 1 => u.1 0) h
+    cases he
   intro h
   fin_cases i
   · have hb := h root_mem tribonacciSecondaryRoot.2.2.1 1 oneName zeroName hne

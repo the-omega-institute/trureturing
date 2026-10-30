@@ -72,7 +72,8 @@ def family : Registration arena sourceScope where
   dependence := by
     intro i
     refine ⟨(), ∅, univ, ?_⟩
-    simp [actual, realize]
+    change interior (∅ : Set ℂ) ≠ interior (univ : Set ℂ)
+    simpa only [interior_empty, interior_univ] using (Set.empty_ne_univ : (∅ : Set ℂ) ≠ univ)
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}

@@ -63,7 +63,8 @@ def family : Registration arena sourceScope where
   dependence := by
     intro i
     refine ⟨(), 0, 1, ?_⟩
-    simp [actual, realize]
+    change ‖(0 : ℂ)‖ ≠ ‖(1 : ℂ)‖
+    norm_num
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
