@@ -357,3 +357,183 @@ Proof. Every binary word of length $n$ is legal and Theorem 6.2 separates them. 
 **Obligation 9.6 (uniform bounds and formalization).** No uniform finite context depth for arbitrary actual sources follows from §4, and no effective predecessor algorithm follows from §5 without decidable domains and effective maps. A Lean formalization of the rooted boundary-history/record synthesis, its exact supplier instantiations and the convention bridge is not supplied by this prose. Existing declarations remain authoritative only for their own compiled statements and hypotheses. These boundaries leave the finite deterministic mathematical conclusions intact and specify the additional obligations needed to use them for a concrete implementation or a physical model.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Finite-precision acquisition of the original rational history
+
+**Definition 10.1 (one original source and a rectangular reading contract).** Keep exactly the root, chronological pair process, name-only event labels and exact response $B$ of Definition 6.1. One unknown finite original word $w$ has already been executed, with original response $x=B(w)$. Every subsequent action acts on that same source and epoch. If the controller has subsequently executed the chronological probe word $u$, its present state is $\operatorname{enc}(wu)$ and its exact current response is
+
+$$
+f_u(x)=\frac{ax+b}{cx+d},\qquad
+G_u=W(\operatorname{reverse}u)=
+\begin{pmatrix}a&b\\c&d\end{pmatrix}.
+$$
+
+Here $ad-bc=1$, all entries are nonnegative integers and $d\ge1$. These are the generators and multiplication convention of Definition 6.3. In particular $f_L(x)=x/(1+x)$, $f_R(x)=x+1$ and $f_{uv}=f_v\circ f_u$. The set of original candidates under a supplied promise $|w|\le n$ is
+
+$$
+H_{\le n}=\{w\in\{L,R\}^*:|w|\le n\},\qquad
+Q_n=\{B(w):w\in H_{\le n}\}.
+$$
+
+The integer $n$ is side information promised before acquisition. It is neither a cutoff learned from the reports nor a restriction on legal future actions: $wu$ may have length greater than $n$. For $n=0$ the original word is the known singleton $\varepsilon$, needing no read. Unless stated otherwise below, $n\ge1$.
+
+At a read, the controller requests a finite nonnegative rational radius $\epsilon_i$ and receives a finite rational report $y_i$, with the closed certificate
+
+$$
+|y_i-f_{u_i}(x)|\le\epsilon_i.
+$$
+
+A read leaves the source state unchanged. Conditional on the entire previous transcript, **every** rational report satisfying this inequality is admissible, independently of which admissible reports occurred earlier. This is a rectangular adversarial joint channel, a support condition rather than a stochastic independence assumption. It imposes no shared bias, averaging law or hidden consistency constraint between errors. Reports may lie outside $\mathbb Q_{>0}$; only the certified absolute bound is required.
+
+The deterministic controller uses its actual transcript, including its own actions, reports and requested radii, to choose the next forward $L/R$ action, read, precision request or stop. Apart from the stated promise, that transcript is its entire source-dependent input. Computation on the given finite rational strings is allowed. There is no reset, copy, inverse source action, exact-equality oracle or accessible archive of the unknown original word. Both actions remain total and their labels give only their names. An acquisition policy must stop after finitely many actions, reads and computation steps and return the correct **original** word for every permitted original source and every admissible report sequence. Recovering the subsequent word $wu$ without identifying its original cut is a different target.
+
+**Theorem 10.2 (sharp precision for original-history acquisition, including a fixed probe).** Under Definition 10.1, fix a chronological word $u$ that must be executed before any read, without any earlier source-dependent record. Set
+
+$$
+\begin{aligned}
+\alpha&=\min(c,d),&\beta&=\max(c,d),\\
+A&=F_n\alpha+F_{n+1}\beta,
+&B&=F_{n+1}\alpha+F_{n+2}\beta,
+\end{aligned}
+$$
+
+where $F_0=0$, $F_1=1$ and $F_{k+2}=F_{k+1}+F_k$. Then
+
+$$
+\min_{\substack{x,z\in Q_n\\x\ne z}}|f_u(x)-f_u(z)|=\frac1{AB}.
+\tag{10.1}
+$$
+
+For a fixed rational report radius $\epsilon\ge0$, exact original-word acquisition after this required probe, with arbitrary subsequent adaptive forward actions and repeated reads, is possible if and only if
+
+$$
+2\epsilon<\frac1{AB}.
+\tag{10.2}
+$$
+
+One read immediately after $u$ suffices when (10.2) holds. In particular, with no required probe, $u=\varepsilon$, this gives the sharp condition
+
+$$
+2\epsilon<\delta_n,\qquad
+\delta_n=\frac1{F_{n+1}F_{n+2}}.
+\tag{10.3}
+$$
+
+Thus one read **before** probing suffices below (10.3), and no adaptive forward probing or repeated-reading policy at that fixed radius can recover all original words at or above the threshold. The impossibility also holds if the policy may request coarser radii $\epsilon_i\ge\epsilon$.
+
+Proof. First establish the actual candidate gap, keeping the ordering conventions separate. Start with the ordered endpoint row $0/1,1/0$ and insert the mediant in every adjacent interval, repeatedly. After $k$ such refinements call the full ordered row $\mathcal P_k$. By the Stern–Brocot chart of Definition 6.4, the positive finite interior of $\mathcal P_{n+1}$ is exactly $Q_n$: the mediants first inserted at refinement $j+1$ have Stern–Brocot path length $j$, and reversal is a bijection on words of each length. This identifies the sets, not the chronological prefix orders. The endpoint construction, its adjacency determinant and its relation to the Calkin–Wilf children are classical supporting arithmetic; see Glasby, *Enumerating the rationals from left to right*, [arXiv:1011.2823](https://arxiv.org/abs/1011.2823), introduction.
+
+Write adjacent fractions in this row as $p/q<r/s$, including the auxiliary endpoints. Their determinant is $rq-ps=1$. It holds initially and survives each mediant insertion, since
+
+$$
+(p+r)q-p(q+s)=rq-ps=r(q+s)-(p+r)s.
+$$
+
+Consequently all inserted fractions are reduced. For finite interior neighbors, the determinant-one transformation gives
+
+$$
+f_u(r/s)-f_u(p/q)
+=\frac1{(cp+dq)(cr+ds)}.
+\tag{10.4}
+$$
+
+The weights $cp+dq$ of the two initial endpoints $0/1,1/0$ are $d,c$. Mediant insertion replaces an interval's weight pair $(s,t)$ by either $(s,s+t)$ or $(s+t,t)$. Sort its pair increasingly. If $s\le t$, either sorted child is coordinatewise at most $(t,s+t)$; this upper bound is attained by retaining the endpoint of larger weight and replacing the other by the mediant. Starting at $(\alpha,\beta)$, induction therefore bounds every sorted pair after $k\ge1$ refinements by the single pair
+
+$$
+\left(F_{k-1}\alpha+F_k\beta,\quad
+F_k\alpha+F_{k+1}\beta\right).
+\tag{10.5}
+$$
+
+Indeed the bound is $(\beta,\alpha+\beta)$ at $k=1$, and applying $(s,t)\mapsto(t,s+t)$ produces the next displayed pair. Monotonicity of both coordinates gives the bound for every branch, not just for a chosen extremizer.
+
+The two bounds in (10.5) are attained **together** along an actual nested sequence of intervals: at every step retain an endpoint of maximal weight. At the first step retain an original endpoint with weight $\beta$; the new mediant has weight $\alpha+\beta\ge\beta$. At the second step retain that mediant and replace the surviving original endpoint, choosing this option also in the tie case $\alpha=0$. Both endpoints are then inserted positive finite fractions, and subsequent refinements keep them positive and finite. This works also when $c=0$ or $c=d$. Since $k=n+1\ge2$, an actual pair of interior neighbors attains the product $AB$. No maximum from one candidate has been multiplied by an independently attained maximum from another.
+
+All interior neighbor gaps are at least $1/(AB)$ by (10.4)–(10.5), and the constructed interior pair attains it. The function $f_u$ is strictly increasing on positive inputs. A nonneighbor gap is a sum of positive neighbor gaps, so cannot be smaller. This proves (10.1). For $u=\varepsilon$ the initial weights are $(d,c)=(1,0)$, yielding $A=F_{n+1}$, $B=F_{n+2}$. This unprobed Fibonacci arithmetic is literature-attested, rather than a new minimum-gap result: Kesseböhmer–Stratmann, *A multifractal analysis for Stern–Brocot intervals, continued fractions and Diophantine growth rates*, [DOI:10.1515/crelle.2007.029](https://doi.org/10.1515/crelle.2007.029), [arXiv:math/0509603v2](https://arxiv.org/abs/math/0509603v2), gives the smallest length $(F_{n+1}F_{n+2})^{-1}$ for its order-$n$ partition of $[0,1)$. Its initial row is $0/1,1/1$, so it is the part of $\mathcal P_{n+1}$ between $0$ and $1$. The interior attainment above additionally checks that the extremal gap belongs to the actual positive candidates and supplies the required weighted post-probe version.
+
+For sufficiency, enumerate the finitely many original candidates $z\in Q_n$ and their $f_u(z)$. On receiving $y$, retain exactly those with $|y-f_u(z)|\le\epsilon$. The true candidate remains. Two retained candidates would have separation at most $2\epsilon$, contradicting (10.1) and (10.2). All comparisons are computations on specified rationals, so this terminates without a source equality oracle. Decode the unique original rational by Definition 6.3. The enumeration is computed from the supplied root and bound; it is not an archive of the unknown execution.
+
+For necessity, each allowed forward action is nonexpansive in the absolute response metric on positive rationals:
+
+$$
+|f_R(x)-f_R(z)|=|x-z|,\qquad
+|f_L(x)-f_L(z)|=\frac{|x-z|}{(1+x)(1+z)}\le|x-z|.
+\tag{10.6}
+$$
+
+Take two actual original candidates attaining (10.1). If $2\epsilon\ge1/(AB)$, their post-$u$ responses differ by at most $2\epsilon$. Before the first read, the deterministic controller has the same source-independent transcript in the two executions and hence takes the same forward actions. By (10.6), the two current responses stay within $2\epsilon$ after any such common word. At each requested read supply the rational midpoint of the two current responses, which is permitted for both sources, including for any requested radius at least $\epsilon$. Induction preserves the identical transcript, the same next actions and radius requests, and the separation bound. The rectangular channel admits these successive choices conditional on the common transcript. Name-only labels and total enabledness give no additional distinction.
+
+If the policy does not stop on this admissible common path, it violates the finite-stopping requirement. If it does stop, its identical output cannot be the two different original words. This proves necessity for all such adaptive policies. At equality, the closed error intervals touch at the rational midpoint, which is still admissible; the inequality must therefore be strict. $\square$
+
+**Corollary 10.3 (precision index and its resource scope).** For the unprobed acquisition of Theorem 10.2, using the convention $\epsilon=2^{-b}$ with an integer precision index $b\ge0$, the least successful index is
+
+$$
+b_{\min}=\left\lfloor\log_2\bigl(F_{n+1}F_{n+2}\bigr)\right\rfloor+2.
+\tag{10.7}
+$$
+
+For a required fixed probe, replace the Fibonacci product inside the logarithm by $AB$.
+
+Proof. With $D=F_{n+1}F_{n+2}$, the strict inequality $2^{1-b}<1/D$ is equivalent to $b>1+\log_2 D$. The least integer satisfying it is (10.7). When $D$ is a power of two, the preceding index gives equality and is excluded by Theorem 10.2. The same calculation applies to $AB$.
+
+This $b$ indexes a certified absolute radius. It is not the bit length of the rational report, an observer-memory bound, an output-size bound or a computation-cost bound. For example there are $2^{n+1}-1$ possible original words of length at most $n$, so a fixed-length binary encoding of all possible word outputs requires at least $\lceil\log_2(2^{n+1}-1)\rceil=n+1$ bits. That elementary counting bound has a different meaning from (10.7). The finite enumeration above proves attainability under the stated access contract without asserting algorithmic optimality. $\square$
+
+**Theorem 10.4 (unbounded finite-certification obstruction and truthful-path scope).** Remove the supplied original-depth bound and allow arbitrary adaptive requests of strictly positive rational radii. No policy under Definition 10.1 can both stop finitely and recover the exact original word for every finite original history and every admissible error sequence.
+
+More precisely, fix any finite truthful transcript, meaning that at each read its rational report is the exact current response of one original source, while its certified radius is strictly positive. For every finite chronological prefix $v$ and every integer $N\ge0$, that same finite transcript is compatible with an original word $w'$ beginning with $v$ and satisfying $|w'|>N$. Thus, even restricted to nonempty original histories, a finite truthful transcript certifies neither the first ancestral $L/R$ letter nor any finite upper bound on the original depth, and hence neither the exact depth nor the exact original word. These assertions concern original ancestry, not the known probe letters in the controller's own transcript.
+
+Proof. Let $x$ be the original rational on the truthful path, with read radii $\epsilon_1,\ldots,\epsilon_m>0$ and chronological probe prefixes $u_1,\ldots,u_m$. If $m>0$, choose $\eta>0$ smaller than every $\epsilon_i$; if $m=0$, choose any $\eta>0$. Each $f_{u_i}$ is nonexpansive by (10.6), so every positive rational $z$ with $|z-x|<\eta$ satisfies
+
+$$
+|f_{u_i}(z)-y_i|
+=|f_{u_i}(z)-f_{u_i}(x)|
+\le |z-x|<\epsilon_i.
+\tag{10.8}
+$$
+
+Induction through the given finite transcript shows that its very same reports are admissible from $z$: preceding reports agree, so the deterministic controller requests the same precision and takes the same actions. Each named action is legal and has the same name-only label. This induction also preserves a stopping decision if it occurs at the end of the transcript. It does not assume continuity of the controller's choices as functions of a report; the reports themselves are identical.
+
+For the prefix assertion use the classical descendant-density result of Alkauskas–Steuding, *Statistical properties of the Calkin–Wilf tree: real and $p$-adic distribution*, [arXiv:0801.0054v2](https://arxiv.org/abs/0801.0054v2), Corollary 3: every nonempty open interval in $\mathbb R_{>0}$ contains a node reached by continuing any prescribed finite Calkin–Wilf path. Its left and right children are exactly Definition 6.1's chronological actions. This is density for chronological descendants; no Stern–Brocot prefix identification is used.
+
+There are only finitely many rationals in $Q_N$. Choose a nonempty open interval inside $(x-\eta,x+\eta)\cap\mathbb R_{>0}$ avoiding $Q_N$ and $x$. The cited density applied to the prefix $v$ gives $z=B(w')$ in this interval, with $w'$ extending $v$. Theorem 6.2 and $z\notin Q_N$ imply $|w'|>N$. Equation (10.8) and the transcript induction give the claimed compatibility. In particular take $v=L$ and $v=R$ to obtain the two first-letter possibilities, and let $N$ be any proposed finite depth upper bound. This is a finite-path proof with strictly positive slack, not an assertion that every nontruthful boundary-saturating transcript has these ambiguities.
+
+Finally suppose an all-source always-correct policy also always stops finitely. Run it on the original root with truthful reports, an admissible error sequence. Its promised finite stopping supplies such a finite transcript. The compatibility just proved supplies a different finite original word with the identical stopped transcript and hence the identical output, contradicting correctness. Arbitrarily small adaptively chosen positive radii do not change this argument: a finite truthful path has only finitely many of them, with a positive minimum. The conclusion does not address an infinite reading sequence, a zero-radius read, a supplied finite original-depth bound or a stronger joint channel. $\square$
+
+**Proposition 10.5 (the same marginal radii can have different joint acquisition power).** Consider instead a joint channel that supplies two exact rational report strings with one common unknown rational bias $e$, $|e|\le\epsilon$:
+
+$$
+y_0=x+e,\qquad
+y_1=\frac{x}{1+x}+e,\qquad x\in\mathbb Q_{>0}.
+\tag{10.9}
+$$
+
+The first read is before probing and the second is after the single chronological action $L$. Every report separately satisfies the same closed absolute-radius guarantee as in Definition 10.1. Nevertheless these two reports determine the exact unbounded original response $x$, and hence its original word.
+
+Proof. Subtraction eliminates the shared bias:
+
+$$
+D=y_0-y_1=\frac{x^2}{1+x}>0,\qquad
+x^2-Dx-D=0.
+$$
+
+The quadratic has exactly one positive root,
+
+$$
+x=\frac{D+\sqrt{D^2+4D}}2.
+$$
+
+It is rational for every report pair allowed by (10.9), since the actual $x$ is rational; indeed $D^2+4D=(2x-D)^2$. Exact rational arithmetic and rational-square-root extraction recover it from the finite strings. For a concrete allowed pair, $x=2/3$ and $e=\epsilon=1/10$ give $y_0=23/30$, $y_1=1/2$ and $D=4/15$, which determine $x=2/3$ uniquely. Theorem 6.2 then decodes the original word.
+
+This channel is not rectangular: after a first report from a specified source, its bias is fixed, so the second report is constrained by that same bias. Its allowed two-report set is smaller than the Cartesian product of the two marginal error intervals. Therefore the freely chosen successive midpoint reports in Theorem 10.2, and the replayed truthful reports for alternative sources in Theorem 10.4, need not be allowed by (10.9). There is no contradiction. Per-read error bounds alone do not specify joint acquisition power. $\square$
+
+**Corollary 10.6 (transport to the original four views).** Under the same source/epoch, operation and joint-channel contracts, replace the original-word target in Theorems 10.2 and 10.4 by any one of the original exact boundary response, the original root-oriented named-incidence path, the original literal chronology or the original indexed prefix-memory table of §6. The same attainability thresholds and unbounded finite-certification obstruction hold.
+
+Proof. Each such exact output determines the original word by Theorems 5.2 and 6.2 and Definition 5.4; conversely the word constructs all four finite outputs. Compose these already supplied decoders and transports with the acquisition policy. The original cut is retained, even when probing has extended the source. These are computations of the specified original expressions, not permission to undo an action or retrieve a physically retained archive. Approximate boundaries, unnamed incidence and compressed outputs with a different decoding contract require separate target definitions. $\square$
+
+**Definition 10.7 (mathematical suppliers and extent of the acquisition statement).** The source-specific acquisition conclusions of this section are `repo-derived` consequences for the process of §§5–6: the exact fixed-probe gap with joint interior attainment, the adaptive rectangular-channel threshold, the unbounded truthful-transcript obstruction and their original-four-view transports. This designation locates the synthesis; it does not certify worldwide originality. The mediant determinant arithmetic, Fibonacci minimum-interval formula and chronological descendant density used inside the proofs are `literature-attested` supporting results with the sources and conventions stated there.
+
+The matrix supplier [WordNodesAreReduced](../../../D5/S3/PrimeForms/SternBrocot/WordNodesAreReduced.lean) defines the same $G_L,G_R$ and $W$ and supplies `unimodular_wordMatrix` and `wordMatrix_lower_right_pos`. Its `word_node_is_reduced` states coprimality of the lower row; it does not identify that row with the positive column-action response. [UnimodularGeneration](../../../D5/S3/PrimeForms/SternBrocot/UnimodularGeneration.lean), `unimodular_iff_wordMatrix`, supplies existence of word factorizations of natural determinant-one matrices, without asserting the noisy original-history theorem. [FiniteHorizonKernelRecurrence](../../../D5/S3/ObserverMemory/RefinementClosure/FiniteHorizonKernelRecurrence.lean) concerns exact iterated readouts and obtains its finite completion bound under a finite-state hypothesis. [FiniteCapacity](../../../D5/S3/ObserverMemory/Knowledge/FiniteCapacity.lean), `finite_knowledge_capacity`, counts realized exact readout classes under its finite-type and factorization hypotheses. Neither supplies a finite noisy certificate on the present unbounded rational carrier. These supplier correspondences assert no new Lean verification of the acquisition proofs.
+
+The contract is a deterministic mathematical acquisition model with finite rational reports, specified errors and permitted forward operations. The precision index, finite computation, output representation and source identity remain distinct obligations. The section asserts no physical spacetime interpretation, universally optimal algorithm or impossibility for observers with other measurements, priors, joint-error relations or source access.
+
+## 追加锚（本行以下为增补区）
