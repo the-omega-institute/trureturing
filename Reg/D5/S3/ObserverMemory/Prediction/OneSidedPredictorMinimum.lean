@@ -50,17 +50,17 @@ def evidence : Registration arena.{u} (arena.{u}.Law actual) where
   dependence := dependent actual rfl
 
 noncomputable def registration : Contract.Registration
-    (@_root_.D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum.exact_prediction_impossible.{u})
+    (@_root_.D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum.exact_prediction_impossible.{0})
     (type_of% (realize signature (fun _ p n => p n) (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum.Exact.unit
   realizationName := `Reg.D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum.Exact.evidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena.{u}⟩
-  objectArena := .source ⟨arena.{u}⟩
+  arena := .source ⟨arena.{0}⟩
+  objectArena := .source ⟨arena.{0}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena.{u} ⟨evidence.{u}⟩
+  realization := .source arena.{0} ⟨evidence.{0}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ p n => p n) (fun e => nomatch e))
@@ -127,17 +127,17 @@ def evidence : Registration arena.{u} (arena.{u}.Law actual) where
   dependence := dependent actual rfl
 
 noncomputable def registration : Contract.Registration
-    (@_root_.D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum.sharp_predictor_minimum.{u})
+    (@_root_.D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum.sharp_predictor_minimum.{0})
     (type_of% (realize signature (fun _ p n => p n) (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum.Sharp.unit
   realizationName := `Reg.D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum.Sharp.evidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena.{u}⟩
-  objectArena := .source ⟨arena.{u}⟩
+  arena := .source ⟨arena.{0}⟩
+  objectArena := .source ⟨arena.{0}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena.{u} ⟨evidence.{u}⟩
+  realization := .source arena.{0} ⟨evidence.{0}⟩
   correspondence := {stage := .evidence,objectStage := .evidence}
   bundleNonempty := .absent
   readout := some (realize signature (fun _ p n => p n) (fun e => nomatch e))

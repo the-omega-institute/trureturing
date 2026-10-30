@@ -99,18 +99,18 @@ def evidence : Registration arena.{u} (arena.{u}.Law actual) where
     nlinarith [mul_pos hx.1 (sub_pos.mpr hx.2)]
 
 noncomputable def registration : Contract.Registration
-    (@_root_.D5.S3.Quantum.Measurement.OneSidedGoldenHistory.native_predictor_minimum.{u})
+    (@_root_.D5.S3.Quantum.Measurement.OneSidedGoldenHistory.native_predictor_minimum.{0})
     (type_of% (realize signature
       (fun _ p h => mass p.2.1 (CStarMatrix.ofMatrix.symm p.2.2.val) h) (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Measurement.OneSidedGoldenHistory.unit
   realizationName := `Reg.D5.S3.Quantum.Measurement.OneSidedGoldenHistory.evidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena.{u}⟩
-  objectArena := .source ⟨arena.{u}⟩
+  arena := .source ⟨arena.{0}⟩
+  objectArena := .source ⟨arena.{0}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena.{u} ⟨evidence.{u}⟩
+  realization := .source arena.{0} ⟨evidence.{0}⟩
   correspondence := {stage := .evidence,objectStage := .evidence}
   bundleNonempty := .absent
   readout := some (realize signature
