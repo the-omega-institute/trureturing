@@ -1,0 +1,200 @@
+**Theorem 15.2 (Unique finite crossing and the complete phase diagram).** For every
+$1/2<L<1$ and every integer $a\ge A_\times(L)$ there is a unique number
+
+$$
+\delta_c(a)\in\left(0,\frac1{2a}\right)\subset\left(0,\frac La\right)
+\tag{15.3}
+$$
+
+such that
+
+$$
+M_a(\delta_c(a))=R_a(\delta_c(a)).
+\tag{15.4}
+$$
+
+For every $0<\delta\le L/a$, on the full law domain of Definition 1.1,
+including arbitrary cardinalities, zero type masses, disconnected support and
+non-symmetric laws,
+
+$$
+\boxed{\quad
+\inf_x H(x)=\min\{M_a(\delta),R_a(\delta)\},
+\qquad
+D_a(\delta)=\min\{M_a(\delta),R_a(\delta)\}-B(\delta).
+\quad}
+\tag{15.5}
+$$
+
+The infimum is attained. Its equality laws are exactly as follows.
+
+* If $0<\delta<\delta_c(a)$, they are the $\binom{s}{2}$ laws $D_P$ indexed by
+  $P\subset[s]$, $|P|=2$, with
+
+  $$
+  x_{[s]\setminus P}=\delta,
+  \quad
+  x_{[s]\setminus\{i\}}=\frac{1-r\delta}{s}-\varepsilon_*(\delta)\ (i\in P),
+  \quad
+  x_{[s]\setminus\{j\}}=\frac{1+\delta}{s}+\frac{2\varepsilon_*(\delta)}a\ (j\notin P),
+  \tag{15.6}
+  $$
+
+  with all other masses zero.
+* If $\delta_c(a)<\delta\le L/a$, they are the $s$ laws $R_e$ indexed by
+  $e\in[s]$, with
+
+  $$
+  x_{\{e\}}=\frac\delta a,
+  \qquad
+  x_{[s]\setminus\{e\}}=1-\frac\delta a,
+  \tag{15.7}
+  $$
+
+  and all other masses zero.
+* At $\delta=\delta_c(a)$ the equality class is the disjoint union of the two
+  displayed families. There is no additional mixed equality law.
+
+Put $F_a=R_a-M_a$. Then $F_a$ is continuous on $(0,L/a]$, is $C^1$ on
+$(0,L/a)$, and
+
+$$
+F_a'(\delta)<-a^3+44a^2<0.
+\tag{15.8}
+$$
+
+Consequently $F_a>0$ before $\delta_c(a)$ and $F_a<0$ after it.
+
+**Proof.** Write $m(\delta)=(1-r\delta)/s$. Since
+$\delta\le L/a<1/a$ and $a\ge64/(1-L)$,
+
+$$
+ r\delta\le L+\frac1a
+ \le L+\frac{1-L}{64}<1,
+\tag{15.9}
+$$
+
+so $m>0$. On $0\le\varepsilon\le m$, the quantities in (14.2) obey
+
+$$
+ u=\mu+\varepsilon\le\mu+m=1-\delta<1,
+ \qquad
+ v=\mu-\frac{2\varepsilon}{a}
+ \ge\frac{a+1-3/a}{a+2}>\frac12,
+ \qquad \mu>\frac12.
+\tag{15.10}
+$$
+
+Also $0<\gamma< C/a<3$. Direct differentiation of the scalar energy in
+(14.2) gives
+
+$$
+\partial_\varepsilon h
+ =2r^2(v^{-2}-u^{-2})-4\gamma v^{-3},
+\qquad
+\partial_{\varepsilon\varepsilon}h
+ =\frac{4r^2}{u^3}
+ +\frac{8(r^2v-3\gamma)}{av^4}.
+\tag{15.11}
+$$
+
+The second expression is strictly positive, because
+$r^2v-3\gamma>a^2/2-9>0$. The point $\varepsilon_*(\delta)$ is interior by
+Theorem 14.3, so the implicit-function theorem and (15.11) make it $C^1$ in
+$\delta$; uniqueness makes the local branches agree. It is continuous at the
+right endpoint by the same interior bounds. Moreover
+$u_*>v_*>1/2$, and hence $v_*/u_*\in(1/2,1)$.
+
+The partial derivative with respect to $\delta$, at fixed $\varepsilon$, has
+the exact identity
+
+$$
+\partial_\delta h
+ =\frac{r^2}{u^2}-\frac{aC}{v^2}
+ +\frac{a}{2s}\,\partial_\varepsilon h.
+\tag{15.12}
+$$
+
+At the stationary point the last term vanishes. Therefore the envelope value
+satisfies
+
+$$
+M_a'(\delta)=\frac{r^2}{u_*^2}-\frac{aC}{v_*^2}
+ \ge-4aC\ge-12a^2,
+\tag{15.13}
+$$
+
+where $C=2a+1\le3a$. On the other hand,
+
+$$
+R_a'(\delta)=-\frac a{\delta^2}
+ +\frac{r^3}{a(1-\delta/a)^2}
+ <-a^3+32a^2.
+\tag{15.14}
+$$
+
+Indeed $\delta<1/a$ gives the first bound, while $r\le2a$ and
+$1-\delta/a>1-1/a^2\ge3/4$ give the second. Equations (15.13)–(15.14)
+prove (15.8), since $a\ge10^4$.
+
+It remains to establish opposite endpoint signs. At $\varepsilon=0$,
+$\partial_\varepsilon h=-4\gamma/\mu^3$. Using
+$\partial_{\varepsilon\varepsilon}h\ge4r^2$ and the mean-value theorem at the
+zero $\varepsilon_*$ gives
+
+$$
+0<\varepsilon_*(\delta)
+ \le\frac{\gamma}{r^2\mu^3}.
+\tag{15.15}
+$$
+
+Thus $\varepsilon_*(\delta)\to0$ as $\delta\downarrow0$ and
+$M_a(\delta)\to h(0,0)=rs^2$, whereas $R_a(\delta)\to+\infty$. Hence
+$F_a(\delta)\to+\infty$ at the left endpoint.
+
+For a finite negative value, set $\delta_0=1/(2a)$. It lies in the prescribed
+window because $L>1/2$. With
+
+$$
+ P_a=24a^6+56a^5-72a^3-38a^2+12a+9,
+ \qquad
+ Q_a=(2a^2-1)(2a^2+2a-1)^2,
+\tag{15.16}
+$$
+
+substitution into the exact rational expressions for $R_a$ and $H_d$ gives
+
+$$
+R_a(\delta_0)-H_d(\delta_0)+a=-a\frac{P_a}{Q_a}.
+\tag{15.17}
+$$
+
+Both $P_a$ and $Q_a$ are positive for $a\ge2$: group the first two negative
+terms as
+$24a^3(a^3-3)$ and $56a^5-38a^2$, with the remaining terms positive.
+The dense minimizer is dense, and at $\delta_0$ the hypothesis of Theorem 8.1
+holds because $b=(2r+1)\delta_0<2$ and $\mu>1/2$, so
+$b/(r^2\mu)<4/a^2\le1/12$. Therefore
+
+$$
+M_a(\delta_0)\ge H_d(\delta_0)-72\delta_0^2\mu^{-6}
+ >H_d(\delta_0)-\frac{1152}{a^2}.
+\tag{15.18}
+$$
+
+Equations (15.17)–(15.18) imply
+$F_a(\delta_0)<-a+1152/a^2<0$. Continuity and the intermediate value theorem
+produce a zero in $(0,\delta_0)$, and (15.8) makes it unique and fixes the
+signs on both sides.
+
+For each fixed $\delta$, Theorem 14.3 gives the exact lower bound $M_a$ and
+all dense equality laws, while Theorem 9.1 gives the exact lower bound $R_a$ and
+all rare equality laws. The conditions $\min_i y_i\ge\tau$ and
+$\min_i y_i<\tau$ partition the full original law domain, so the two attained
+bounds give (15.5) and the three equality alternatives. In particular, a law
+mixing distinct displayed minimizers cannot be an additional minimizer: it lies
+in one of the two regions and would then have to belong to that region's
+exhaustive equality class. The masses in (15.6) and (15.7) are actual laws of
+mean $q$ by the constructions in Theorems 14.3 and 9.1, so no independent
+marginal or cardinality optimization has been spliced into the comparison. ∎
+
