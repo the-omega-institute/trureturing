@@ -213,6 +213,12 @@ from Lafrenière et al., arXiv:2505.04000v1, §4.1. Thus
  =\frac{3n^{5}-43n^{4}+463n^{3}-2453n^{2}+7118n-8392}{8}\le n^5
  \quad(n\ge11). \tag{2.9}
 \]
+Indeed,
+\[
+8\bigl(n^5-(T_n-G_n)\bigr)
+ =(n-11)(5n^4+98n^3+615n^2+9218n+94280)+1045472>0
+\]
+for \(n\ge11\).
 All interval-closed sets outside the separated-good family stay in the full
 count \(T_n\); (2.9) is the required negligible bound, rather than a change of
 denominator.
