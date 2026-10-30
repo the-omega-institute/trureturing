@@ -19,6 +19,7 @@ The convolution and power constructions are reused from ExponentialImplicitParit
 -/
 
 import D5.S1.Recurrence.Residue.HannaEGFMachinery
+import D5.S1.Recurrence.Residue.IntegralEGFComposition
 
 set_option maxHeartbeats 4000000
 
