@@ -62,7 +62,7 @@ private theorem split_perm {k : ℕ} (E : Finset (Fin k)) (x y : Fin k)
     intro i hi j hj hij
     subst j
     simp only [List.mem_append, Finset.mem_toList] at hi
-    simp only [List.mem_cons, List.mem_singleton] at hj
+    simp only [List.mem_cons, List.not_mem_nil, or_false] at hj
     rcases hi with hi | hi
     · rcases hj with rfl | rfl <;> contradiction
     · have hh := (Finset.mem_sdiff.mp hi).2
@@ -528,7 +528,7 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
       apply two_blocks f C E F beta alpha (fun i hi => (Epos i hi).1)
         (fun i hi => (Fpos i hi).1)
       · rw [hOldMass,hAlpha,hBeta,hEold]; ring
-      · exact ⟨by simpa [p] using hp0, by simpa [p] using hpu⟩
+      · rw [hEold]; exact ⟨hp0, hpu⟩
       · rw [hEold,hBeta]; change 0 ≤ p+(-C+Q); omega
       · rw [hAlpha]; omega
     have hn : InStrip gn N 0 (earWord k sigma E.length) := by
