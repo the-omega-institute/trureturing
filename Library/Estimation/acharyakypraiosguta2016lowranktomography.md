@@ -29,5 +29,6 @@ Source: https://arxiv.org/abs/1510.03229v2
 - URL: https://arxiv.org/abs/1510.03229v2. The e-print member `Efficient-Ion-Tomography.tex` has 861 lines and md5 `3d551c60e2cb8bfac911d3ecc1dc781c`. Locations:
   - the measurement model, l. 113–121;
   - the local parametrisation and $G$, l. 157–173;
-  - the Fisher matrix and its averages, l. 176–183;
+  - the Fisher matrix of one setting, l. 174–176, and its average over a set of settings, l. 178–181;
+  - the average $\bar I$ over all $3^n$ Pauli settings, l. 335;
   - the conjecture, l. 360.

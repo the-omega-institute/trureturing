@@ -278,7 +278,7 @@ $$
 
 **Theorem 1.22 (Unit modulus of a scalar phase).**
 
-$$\forall t \in R, (\operatorname{exp}\left(-i t\right))^{*} \operatorname{exp}\left(-i t\right) = 1$$
+$$\forall t \in R, (\operatorname{exp}\left(-i \operatorname{Complex.ofReal}\left(t\right)\right))^{*} \operatorname{exp}\left(-i \operatorname{Complex.ofReal}\left(t\right)\right) = 1$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.phase_unit` (`✓ std3`). ∎
 
