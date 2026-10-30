@@ -2290,7 +2290,12 @@ Put $R=(2N+2)^{\ell+1}$. A reachability call has at most $R$ recursive
 calls: if $R_0=1$, then $R_{j+1}\le1+2NR_j$. Every frame retains only its
 two endpoints, current midpoint, depth and flags, all $O(D)$ bits. Depth
 is $O(\log N)=O(D)$, so its peak stack is $O(D^2)$. Evaluating leaves
-and loop arithmetic costs $O(D^3R)$ work. For count, either rank direction,
+and loop arithmetic costs $O(D^3R)$ work. Implement the calls with
+contiguous $O(D)$-bit frames on a stack tape whose head stays at the top
+frame between calls. Pushing, popping and restoring a frame take $O(D)$
+head moves and bit operations per call, within this allowance. Midpoints,
+image candidates and ranks use $O(D)$-bit binary counters, updated and
+compared by sequential scans. For count, either rank direction,
 and either operator direction, a common upper bound is
 
 $$
@@ -2308,11 +2313,7 @@ measured running-time constant. A separately requested full image list
 pays its entire delimited output, at most $O(K_sD)$ bits in these formats;
 retaining that list also adds its actual size to peak storage.
 
-A direct visited-table/queue traversal remains a valid alternative after
-source synthesis and seeding. It uses $O(ND+D^2)$ scratch bits,
-$O(T_{\rm src}+D^8+ND^3)$ work, and $O(ND)$ writes to the visited table
-and queue alone. Its other scratch/output writes are charged by its work
-bound. The streaming algorithm trades recomputation for peak space; it
+The streaming algorithm trades recomputation for peak space; it
 asserts neither polynomial time in $d$ nor sub-period or sub-period-square
 work. Its bound is exponential computation with polynomial peak workspace
 for one class/count output.
