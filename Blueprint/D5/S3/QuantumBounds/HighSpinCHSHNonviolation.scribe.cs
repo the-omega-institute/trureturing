@@ -35,7 +35,7 @@ internal sealed class HighSpinCHSHNonviolationDocument : IScribeDocumentDefiniti
                     "For four real measurement directions, this is the alternating sum of the four "
                         + "Kronecker products of their linear spin components. It is the operator in "
                         + "the source's CHSH expression (Final_Revision_Hanotel_Loubenets.tex, lines 108–115), "
-                        + "with the spin observables described in the companion paper (TeX lines 253–258)."))),
+                        + "with the spin observables described in the companion paper (TeX lines 253–261)."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("high-spin-chsh-claim"),
