@@ -201,7 +201,7 @@ internal sealed class AbsolutelyEntangledAllPartitionsDocument : IScribeDocument
             Imp(new Formula.Not(Parenthesized(EqualTo(X("v"), Typed(D(0), vector)))),
                 All("a", MatrixType(), Imp(At(Qualified("Matrix", "IsHermitian"), X("a")),
                     Imp(kernel, All("j", FinOf(X("d")), Some("z", Complexes(),
-                        EqualTo(column, Smul(X("z"), X("v")))))))))));
+                        EqualTo(Parenthesized(column), Smul(X("z"), X("v")))))))))));
     }
 
     private static Formula Orthogonal() => EqualTo(
