@@ -484,7 +484,7 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
         have hrel : 2*(r+1)*z = 2*p*A := by dsimp [p,z]; ring
         refine ⟨?_,?_,?_,?_⟩
         · apply (mul_le_mul_right (show 0 < 2*A by omega)).mp
-          rw [hq] at hidlo
+          rw [hq] at hidlo hmlo margin
           nlinarith
         · apply (mul_le_mul_right (show 0 < 2*A by omega)).mp
           nlinarith
