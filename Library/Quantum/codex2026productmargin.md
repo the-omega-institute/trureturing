@@ -2,6 +2,8 @@
 bibkey: codex2026productmargin
 authors: Codex CLI
 year: 2026
+doi: null
+url: https://github.com/the-omega-institute/trureturing
 title: A harmonic-mean certificate for the unequal-local-pair product-margin quantum Zhang–Yeung family
 claim: Scalar entropy, common-lower-matrix and physical-state ingredients for a four-parameter equal-spectrum local-qubit product-margin family.
 strata_touched:
@@ -18,7 +20,8 @@ triage: anchor
 
 # Equal-spectrum local-qubit product margins
 
-The statement source is a local unpublished ordinary-mathematics manuscript,
+The HTTPS locator identifies the repository implementation, not a public copy
+of the manuscript. The statement source is a local unpublished ordinary-mathematics manuscript,
 `product-margin-equal-spectrum-proof/proof.tex`, supplied by the caller.
 Its SHA256 is `e845aacc22ca07a78aa4309fc69aec72eff91489632ba3688aa10ccea33ff3c8`.
 It is fallible input, with no priority or novelty claim. The Lean source derives
