@@ -18,6 +18,8 @@ set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState
 
+open D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging
+open D5.S3.Quantum.TensorNetworks.CZXParentLindbladianWindowChannel
 open Matrix Filter
 attribute [local instance low] Classical.propDecidable
 open scoped Topology ComplexConjugate
@@ -289,7 +291,7 @@ private lemma sum_gauged_zero (n : ℕ) :
       (1 : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) := by
   delta gaugedUnit
   simp only [sectorGauge_const]
-  delta gauge
+  delta D5.S3.Quantum.TensorNetworks.CZXParentLindbladianWindowChannel.gauge
   simp only [Fin.val_zero, zero_mul, pow_zero,
     one_smul]
   simp only [show (fun _ : Fin n => (0 : Fin 2)) = 0 from rfl, add_zero]
