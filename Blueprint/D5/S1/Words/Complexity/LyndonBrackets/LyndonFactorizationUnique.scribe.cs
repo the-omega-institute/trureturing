@@ -84,4 +84,6 @@ internal sealed class LyndonFactorizationUniqueDocument : IScribeDocumentDefinit
         Seq(OpenBracket, Call("LinearOrder", F.Id("A")), CloseBracket, Sp, body));
     private static Formula Word() => Call("List", F.Id("A"));
     private static Formula Words() => Call("List", Word());
+    private static Formula All(string name, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
 }
