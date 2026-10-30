@@ -140,7 +140,7 @@ private theorem cosine_geometric (q θ : ℝ) (hq0 : 0 ≤ q) (hq1 : q < 1) :
     rw [Complex.normSq_apply, hdR, hdI]
     linear_combination
       (-2 * q + q ^ 2 * (Real.sin θ ^ 2 + Real.cos θ ^ 2 + 1)) * htrig
-  rw [Complex.div_re, hN, hD]
+  rw [Complex.div_re, ← add_div, hN, hD]
 
 
 private def densityTerm (b θ : ℝ) (j : ℕ) (t : ℝ) : ℝ :=
@@ -340,7 +340,7 @@ private theorem envelope_integrals :
         (((hasDerivAt_id t).pow 3).const_mul (2 / 3))).sub
         (((hasDerivAt_id t).pow 4).const_mul (9 / 20))).add
         (((hasDerivAt_id t).pow 5).const_mul (9 / 25)) using 1 <;>
-        dsimp [smallEnvelope] <;> (first | (funext y; ring) | ring)
+        dsimp [smallEnvelope] <;> (first | (funext y; simp only [Pi.sub_apply, Pi.add_apply, Pi.pow_apply, id_eq]; ring) | ring)
     rw [intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => hd t)
       ((show Continuous smallEnvelope by unfold smallEnvelope; fun_prop).intervalIntegrable _ _)]
     norm_num
@@ -350,7 +350,7 @@ private theorem envelope_integrals :
       convert (((hasDerivAt_id t).const_mul (7 / 16)).sub
         (((hasDerivAt_id t).pow 2).const_mul (1 / 16))).add
         (((hasDerivAt_id t).pow 3).const_mul (1 / 16)) using 1 <;>
-        dsimp [largeEnvelope] <;> (first | (funext y; ring) | ring)
+        dsimp [largeEnvelope] <;> (first | (funext y; simp only [Pi.sub_apply, Pi.add_apply, Pi.pow_apply, id_eq]; ring) | ring)
     rw [intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => hd t)
       ((show Continuous largeEnvelope by unfold largeEnvelope; fun_prop).intervalIntegrable _ _)]
     norm_num
@@ -365,11 +365,11 @@ private theorem kernelQ_integral_bound {c : ℝ} (hc : c ∈ Ioc (0 : ℝ) 1) :
     (∫ t in (0 : ℝ)..1, (1 - t) * kernelQ t c) ≤ 3067 / 8100 := by
   have hcont : Continuous (fun t : ℝ => (1 - t) * kernelQ t c) := by
     exact (continuous_const.sub continuous_id).mul (kernelQ_continuous hc.1)
-  have hsmall := intervalIntegral.integral_mono_on (by norm_num : (0 : ℝ) ≤ 1 / 3)
+  have hsmall := intervalIntegral.integral_mono_on (μ := volume) (by norm_num : (0 : ℝ) ≤ 1 / 3)
     (hcont.intervalIntegrable 0 (1 / 3))
     ((show Continuous smallEnvelope by unfold smallEnvelope; fun_prop).intervalIntegrable _ _)
     (fun t ht => kernelQ_small_envelope ht hc)
-  have hlarge := intervalIntegral.integral_mono_on (by norm_num : (1 / 3 : ℝ) ≤ 1)
+  have hlarge := intervalIntegral.integral_mono_on (μ := volume) (by norm_num : (1 / 3 : ℝ) ≤ 1)
     (hcont.intervalIntegrable (1 / 3) 1)
     ((show Continuous largeEnvelope by unfold largeEnvelope; fun_prop).intervalIntegrable _ _)
     (fun t ht => kernelQ_large_envelope ht hc)

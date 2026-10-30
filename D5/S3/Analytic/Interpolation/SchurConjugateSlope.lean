@@ -141,8 +141,9 @@ private theorem coarse_error_bound (g : ℂ → ℂ) (hg : Differentiable ℂ g)
   let f : ℂ → ℂ := fun z => g z - deriv g x * z
   have hf (z : ℂ) := (hg z).hasDerivAt.sub
     ((hasDerivAt_id z).const_mul (deriv g x))
-  have hd (z : ℂ) (hz : z ∈ closedBall (0 : ℂ) 1) : ‖deriv f z‖ ≤ 2 * diskNorm g := by
-    rw [(hf z).deriv]
+  have hd (z : ℂ) (hz : z ∈ closedBall (0 : ℂ) 1) :
+      ‖deriv g z - deriv g x * 1‖ ≤ 2 * diskNorm g := by
+    rw [mul_one]
     have hh := (convex_closedBall (0 : ℂ) 1).norm_image_sub_le_of_norm_deriv_le
       (fun t _ => hg.deriv t) (fun t ht => le_diskNorm hg ht) hx' hz
     have hdist : ‖z - (x : ℂ)‖ ≤ 2 := by
@@ -150,8 +151,11 @@ private theorem coarse_error_bound (g : ℂ → ℂ) (hg : Differentiable ℂ g)
       have hx'' : ‖(x : ℂ)‖ ≤ 1 := by simpa using hx'
       exact (norm_sub_le _ _).trans (by linarith)
     exact hh.trans (by nlinarith)
-  have hh := (convex_closedBall (0 : ℂ) 1).norm_image_sub_le_of_norm_deriv_le
-    (fun z _ => (hf z).differentiableAt) hd hv hw
+  have hh : ‖f ((a : ℂ) + b * I) - f ((a : ℂ) - b * I)‖ ≤
+      2 * diskNorm g * ‖((a : ℂ) + b * I) - ((a : ℂ) - b * I)‖ := by
+    simpa only [f, Pi.sub_apply, id_eq] using
+      (convex_closedBall (0 : ℂ) 1).norm_image_sub_le_of_norm_hasDerivWithin_le
+        (fun z _ => (hf z).hasDerivWithinAt) hd hv hw
   have he : ((a : ℂ) + b * I) - ((a : ℂ) - b * I) = 2 * b * I := by ring
   rw [he] at hh
   have hden : (2 * (b : ℂ) * I) ≠ 0 :=
