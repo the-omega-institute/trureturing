@@ -6,8 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/Witness/DensityTensorNuclearNormEqualityRefutation.claim; result=D5/S3/Quantum/Entanglement/Witness/DensityTensorNuclearNormEqualityRefutation.result; claim=D5/S3/Quantum/Entanglement/Witness/DensityTensorNuclearNormEqualityRefutation.claim
    digest: A flagged Bell mixture refutes the pure-state nuclear-norm equality case. -/
 
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.LinearAlgebra.Matrix.PosDef
+import D5.S3.Quantum.PureState.PureStateHandshake
+import D5.S3.QuantumBounds.CHSHWitness
 
 /-! Complex nuclear norms of coefficient tensors and a mixed equality-case counterexample. -/
 
@@ -71,17 +71,14 @@ private lemma tensorNorm_sq {ι : Type*} [Fintype ι] (t : ι → ℂ) :
 
 private lemma spike_norm {ι : Type*} [Fintype ι] [DecidableEq ι] (a : ι) (c : ℂ) :
     tensorNorm (fun b => if b = a then c else 0) = ‖c‖ := by
-  rw [tensorNorm_eq]
-  simp only [apply_ite norm, norm_zero, ite_pow, zero_pow (by decide : 2 ≠ 0)]
-  simp only [Finset.sum_ite_eq', Finset.mem_univ, if_pos, Real.sqrt_sq (norm_nonneg c)]
+  simpa only [PiLp.norm_eq_of_L2, PiLp.single_apply, Pi.single_apply, tensorNorm_eq] using
+    PiLp.norm_single 2 (fun _ : ι => ℂ) a c
 
 private lemma dot_bound {ι : Type*} [Fintype ι] (x y : ι → ℂ) :
     ‖∑ i, x i * y i‖ ≤ tensorNorm x * tensorNorm y := by
-  calc
-    _ ≤ ∑ i, ‖x i * y i‖ := norm_sum_le _ _
-    _ = ∑ i, ‖x i‖ * ‖y i‖ := by simp only [norm_mul]
-    _ ≤ tensorNorm x * tensorNorm y :=
-      Real.sum_mul_le_sqrt_mul_sqrt Finset.univ (fun i => ‖x i‖) (fun i => ‖y i‖)
+  simpa only [EuclideanSpace.inner_toLp_toLp, dotProduct, Pi.star_apply,
+    star_star, PiLp.norm_eq_of_L2, PiLp.toLp_apply, norm_star, tensorNorm_eq, mul_comm] using
+      norm_inner_le_norm (𝕜 := ℂ) (WithLp.toLp 2 (star x)) (WithLp.toLp 2 y)
 
 private lemma decomposition_nonempty {κ : Type*} [Fintype κ] [Nonempty κ]
     (m : κ → ℕ) (t : ((j : κ) → Fin (m j)) → ℂ) :
@@ -180,22 +177,11 @@ private lemma row_bound (n : ℕ)
 
 private lemma bell_bound (x : Fin 2 → ℂ) (y : Fin 4 → ℂ) :
     ‖x 0 * y 0 + x 1 * y 1‖ ≤ tensorNorm x * tensorNorm y := by
-  let a : Fin 2 → ℂ := fun i => y ⟨i.val, by change _ < 4; omega⟩
-  have ha : tensorNorm a ≤ tensorNorm y := by
-    rw [tensorNorm_eq, tensorNorm_eq]
-    apply Real.sqrt_le_sqrt
-    simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero]
-    dsimp only [a]
-    change ‖y 0‖ ^ 2 + ‖y 1‖ ^ 2 ≤
-      ‖y 0‖ ^ 2 + (‖y 1‖ ^ 2 + (‖y 2‖ ^ 2 + ‖y 3‖ ^ 2))
-    calc
-      _ ≤ (‖y 0‖ ^ 2 + ‖y 1‖ ^ 2) + (‖y 2‖ ^ 2 + ‖y 3‖ ^ 2) :=
-        le_add_of_nonneg_right (add_nonneg (sq_nonneg _) (sq_nonneg _))
-      _ = _ := by ring
-  calc
-    _ = ‖∑ i, x i * a i‖ := by simp only [Fin.sum_univ_two]; rfl
-    _ ≤ tensorNorm x * tensorNorm a := dot_bound x a
-    _ ≤ tensorNorm x * tensorNorm y := mul_le_mul_of_nonneg_left ha (tensorNorm_nonneg x)
+  simpa [EuclideanSpace.inner_toLp_toLp, dotProduct, PiLp.norm_eq_of_L2, tensorNorm_eq,
+    Fin.sum_univ_succ, mul_comm] using
+      norm_inner_le_norm (𝕜 := ℂ)
+        (WithLp.toLp 2 (![star (x 0), star (x 1), 0, 0] : Fin 4 → ℂ))
+        (WithLp.toLp 2 y)
 
 private lemma flag_bound (x z : Fin 2 → ℂ) (y w : Fin 4 → ℂ) :
     ‖(x 0 * y 0 + x 1 * y 1) * (z 0 * w 0 + z 1 * w 1) +
@@ -248,7 +234,9 @@ private lemma pure_idempotent {ι : Type*} [Fintype ι] (t : ι → ℂ)
       simpa only [Complex.star_def, Complex.ofReal_pow] using Complex.conj_mul' z
     simp_rw [hh]
     exact_mod_cast hsq
-  rw [vecMulVec_mul_vecMulVec, hd, one_smul]
+  simpa only [D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity] using
+    (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake t hd
+      (0 : Matrix ι ι ℂ)).1
 
 set_option maxHeartbeats 2000000 in
 /-- A mixed density tensor attains the conjectured pure-state maximum. -/
@@ -265,13 +253,14 @@ theorem result : ¬ claim := by
   have hroot : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
   have hrootpos : 0 < Real.sqrt 2 := Real.sqrt_pos.2 (by norm_num)
   have hrootc : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by exact_mod_cast hroot
-  have hrootcne : (Real.sqrt 2 : ℂ) ≠ 0 := by exact_mod_cast hrootpos.ne'
+  have hrootcne : (Real.sqrt 2 : ℂ) ≠ 0 :=
+    D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_ne_zero
   have hcoeff : ((Real.sqrt 2 : ℂ)⁻¹) ^ 2 = 1 / 2 := by
-    rw [inv_pow, hrootc]
-    norm_num
+    simpa only [pow_two, one_div] using
+      D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_inv_mul_self
   have hcoeffnorm : ‖(Real.sqrt 2 : ℂ)⁻¹‖ ^ 2 = 1 / 2 := by
-    rw [norm_inv, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hrootpos, inv_pow, hroot]
-    norm_num
+    simpa only [norm_inv, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hrootpos,
+      pow_two, one_div] using TsirelsonInequality.sqrt_two_inv_mul_self
   have hv : tensorNorm (v 0) = 1 := by
     rw [tensorNorm_eq, ← e.symm.sum_comp (fun i => ‖v 0 i‖ ^ 2)]
     simp only [Fintype.sum_prod_type, v, Equiv.apply_symm_apply]
