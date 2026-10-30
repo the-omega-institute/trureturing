@@ -64,7 +64,7 @@ def family : Registration arena (type_of% (@D5.S3.VertexAlgebra.TwistedGround.Mi
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law complexEqual complexFalse rejectedLaw
   dependence := complexEqualDependence
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner.mixed_first_input_reindexed_pairing)
     (type_of% (realize complexSignature complexEqual.readout complexEqual.anchor)) Type Unit where
   unitName := Lean.Name.str `D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner.mixed_first_input_reindexed_pairing "__information_unit"
@@ -146,7 +146,7 @@ def family : Registration arena (type_of% (@D5.S3.VertexAlgebra.TwistedGround.Mi
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law complexEqual complexFalse rejectedLaw
   dependence := complexEqualDependence
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner.mixed_source_finite_cancellation)
     (type_of% (realize complexSignature complexEqual.readout complexEqual.anchor)) Type Unit where
   unitName := Lean.Name.str `D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner.mixed_source_finite_cancellation "__information_unit"
@@ -220,7 +220,7 @@ def family : Registration arena (type_of% (@D5.S3.VertexAlgebra.TwistedGround.Mi
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law complexEqual complexFalse rejectedLaw
   dependence := complexEqualDependence
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner.mixed_first_input_branch_reindexed)
     (type_of% (realize complexSignature complexEqual.readout complexEqual.anchor)) Type Unit where
   unitName := Lean.Name.str `D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner.mixed_first_input_branch_reindexed "__information_unit"
@@ -295,7 +295,7 @@ def family : Registration arena (type_of% (@D5.S3.VertexAlgebra.TwistedGround.Mi
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law complexEqual complexFalse rejectedLaw
   dependence := complexEqualDependence
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner.mixed_second_input_reindexed_pairing)
     (type_of% (realize complexSignature complexEqual.readout complexEqual.anchor)) Type Unit where
   unitName := Lean.Name.str `D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner.mixed_second_input_reindexed_pairing "__information_unit"
@@ -372,7 +372,7 @@ def family : Registration arena (type_of% (@D5.S3.VertexAlgebra.TwistedGround.Mi
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law complexEqual complexFalse rejectedLaw
   dependence := complexEqualDependence
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner.mixed_second_source_factorial_contraction)
     (type_of% (realize complexSignature complexEqual.readout complexEqual.anchor)) Type Unit where
   unitName := Lean.Name.str `D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner.mixed_second_source_factorial_contraction "__information_unit"
@@ -473,7 +473,7 @@ def family : Registration arena
   sensitivity := actualSensitivity
   dependence := actualDependence
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner.mixed_jacobi)
     (type_of% (realize signature actualEqual.readout actualEqual.anchor)) Type Unit where
   unitName := Lean.Name.str `D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner.mixed_jacobi "__information_unit"
