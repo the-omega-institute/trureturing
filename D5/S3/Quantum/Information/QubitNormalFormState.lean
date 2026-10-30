@@ -7,6 +7,7 @@
    digest: Actual closed-disk qubit density matrices and their natural-log spectral entropy. -/
 
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Quantum.Information.InputInformationBalance
 import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
 import Mathlib.Tactic
 
@@ -102,7 +103,13 @@ private lemma spectral_qubit_entropy (x z : ℝ) (h : x ^ 2 + z ^ 2 ≤ 1) :
 theorem qubit_state_entropy (x z : ℝ) (h : x ^ 2 + z ^ 2 ≤ 1) :
     D5.S3.Quantum.Divergence.VonNeumannEntropyPinching.vonNeumannEntropy (qubitState x z h) =
       Real.binEntropy ((1 + Real.sqrt (x ^ 2 + z ^ 2)) / 2) := by
-  rw [entropy_eq_spectral]
+  have hs :
+      D5.S3.Quantum.Divergence.VonNeumannEntropyPinching.vonNeumannEntropy
+          (qubitState x z h) =
+        spectralEntropy (qubit_hermitian x z) := by
+    convert D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_sum
+      (qubitState x z h) using 1 <;> simp only [spectralEntropy] <;> congr
+  rw [hs]
   exact spectral_qubit_entropy x z h
 
 /-- Symmetric binary Holevo entropy of the two actual density states, with no support division. -/
