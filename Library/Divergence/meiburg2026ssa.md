@@ -90,6 +90,12 @@ provides multiset permutation and unitary-similarity eigenvalue lemmas; their
 duplicate supplier proofs and the unconsumed `HermitianMat.ker_sum` are omitted.
 The supplier matrix diagonal-CFC lemma is named `Matrix.cfc_diagonal_real` to
 avoid ambiguity with existing entropy-production lemmas.
+The partial-trace scalar type is explicit. The isometry CFC proofs keep the
+spectral unitary in `Matrix` and normalize matrix associativity explicitly;
+rectangular products select the canonical `Matrix` multiplication instance
+explicitly, and the
+`Matrix`/`CStarMatrix` elaboration setting is confined to the isometry
+conjugation lemma.
 `FiniteDensityPurification` shares the
 consumed carrier while retaining the project conversions and purification witness.
 Replace each port by a direct import when equivalent declarations become

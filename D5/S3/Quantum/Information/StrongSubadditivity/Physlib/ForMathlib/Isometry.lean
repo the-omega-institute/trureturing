@@ -199,31 +199,34 @@ theorem Matrix.IsHermitian.cfc_eq_any_isometry {n m 𝕜 : Type*} [RCLike 𝕜]
   (hU₁ : U * Uᴴ = 1) (hU₂ : Uᴴ * U = 1) {D : m → ℝ}
   (hUD : A = (U * diagonal (RCLike.ofReal ∘ D) : Matrix _ _ _) * Uᴴ) (f : ℝ → ℝ) :
     hA.cfc f = (U * diagonal (RCLike.ofReal ∘ f ∘ D) : Matrix _ _ _) * Uᴴ := by
-  --Thanks Aristotle
-  rw [Matrix.IsHermitian.cfc]
-  have hUV := hA.spectral_theorem
-  set V := hA.eigenvectorUnitary with hV; clear_value V
-  set D2 := hA.eigenvalues with hD; clear_value D2
-  rcases V with ⟨V, hV₁, hV₂⟩
-  simp only [Unitary.conjStarAlgAut_apply] at hUV ⊢
-  clear hV hD
-  subst A; clear hA
-  have h_diag_eq : diagonal (RCLike.ofReal ∘ D) * (Uᴴ * V) = (Uᴴ * V) * diagonal (RCLike.ofReal ∘ D2) := by
-    have h_mul : (Uᴴ * U * diagonal (RCLike.ofReal ∘ D) * Uᴴ : Matrix m n 𝕜) * V = Uᴴ * V * (diagonal (RCLike.ofReal ∘ D2) * star V * V) := by
-      simp only [Matrix.mul_assoc, hUV]
-    simp_all [ Matrix.mul_assoc ];
-  have h_diag_eq_f : diagonal (RCLike.ofReal ∘ f ∘ D) * (Uᴴ * V) = (Uᴴ * V) * diagonal (RCLike.ofReal ∘ f ∘ D2) := by
+  -- Thanks Aristotle. Rectangular products use the Matrix instances throughout.
+  let V : Matrix n n 𝕜 := hA.eigenvectorUnitary
+  let D2 := hA.eigenvalues
+  have hV₁ : Vᴴ * V = 1 := hA.eigenvectorUnitary.2.1
+  have hV₂ : V * Vᴴ = 1 := hA.eigenvectorUnitary.2.2
+  have hUV : (@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) ((@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) U (diagonal (RCLike.ofReal ∘ D))) Uᴴ =
+      (@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) ((@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) V (diagonal (RCLike.ofReal ∘ D2))) Vᴴ := by
+    exact hUD.symm.trans hA.spectral_theorem
+  have h_diag_eq : (@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) (diagonal (RCLike.ofReal ∘ D)) ((@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) Uᴴ V) =
+      (@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) ((@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) Uᴴ V) (diagonal (RCLike.ofReal ∘ D2)) := by
+    have h_mul := congrArg
+      (fun X : Matrix n n 𝕜 => (@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) ((@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) Uᴴ X) V) hUV
+    simp only [← Matrix.mul_assoc, hU₂, Matrix.one_mul] at h_mul
+    simpa only [Matrix.mul_assoc, hV₁, Matrix.mul_one] using h_mul
+  have h_diag_eq_f : (@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) (diagonal (RCLike.ofReal ∘ f ∘ D)) ((@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) Uᴴ V) =
+      (@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) ((@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) Uᴴ V) (diagonal (RCLike.ofReal ∘ f ∘ D2)) := by
     ext i j
     simp_all only [diagonal_mul, Function.comp_apply, mul_diagonal]
     replace h_diag_eq := congr_fun ( congr_fun h_diag_eq i ) j
     by_cases hi : D i = D2 j <;> simp_all [ mul_comm ] ;
-  have h_final : U * diagonal (RCLike.ofReal ∘ f ∘ D) * Uᴴ * V = V * diagonal (RCLike.ofReal ∘ f ∘ D2) := by
-    have h_final : U * diagonal (RCLike.ofReal ∘ f ∘ D) * (Uᴴ * V) = U * (Uᴴ * V) * diagonal (RCLike.ofReal ∘ f ∘ D2) := by
-      rw [ Matrix.mul_assoc, h_diag_eq_f, Matrix.mul_assoc ];
-      rw [ Matrix.mul_assoc, Matrix.mul_assoc ];
-    simp_all +decide [ ← Matrix.mul_assoc ];
-  rw [ ← h_final, Matrix.mul_assoc ];
-  rw [hV₂, mul_one ]
+  have h_final : (@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid)
+      ((@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) ((@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) U (diagonal (RCLike.ofReal ∘ f ∘ D))) Uᴴ) V =
+      (@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) V (diagonal (RCLike.ofReal ∘ f ∘ D2)) := by
+    simpa only [← Matrix.mul_assoc, hU₁, Matrix.one_mul] using
+      congrArg (fun X : Matrix m n 𝕜 => (@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) U X) h_diag_eq_f
+  change (@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) ((@HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid) V (diagonal (RCLike.ofReal ∘ f ∘ D2))) Vᴴ = _
+  rw [← h_final, Matrix.mul_assoc, hV₂, Matrix.mul_one]
+  rfl
 
 /-- Generalizes `Matrix.IsHermitian.cfc.eq_1`, which gives a definition for the matrix CFC in terms of
 `Matrix.IsHermitian.eigenvalues` and `Matrix.IsHermitian.eigenvectorUnitary`, to show that the CFC works
@@ -235,6 +238,7 @@ theorem Matrix.IsHermitian.cfc_eq_any_unitary {n 𝕜 : Type*} [RCLike 𝕜] [Fi
     hA.cfc f = U.val * diagonal (RCLike.ofReal ∘ f ∘ D) * star U.val :=
   Matrix.IsHermitian.cfc_eq_any_isometry hA U.2.2 U.2.1 hUD f
 
+set_option backward.isDefEq.respectTransparency false in
 private lemma Matrix.cfc_conj_isometry' (hA : A.IsHermitian) (f : ℝ → ℝ) {u : Matrix d₂ d 𝕜}
   (hu₁ : u.Isometry) (hu₂ : uᴴ.Isometry) :
     cfc f (u * A * uᴴ) = u * (cfc f A) * uᴴ := by
@@ -254,8 +258,8 @@ private lemma Matrix.cfc_conj_isometry' (hA : A.IsHermitian) (f : ℝ → ℝ) {
     rw [hu₁, Matrix.one_mul]
     exact hA.eigenvectorUnitary.2.1
   · rw [hA.spectral_theorem]
-    simp [U', Matrix.mul_assoc]
-    rfl
+    simp only [U', D, Unitary.conjStarAlgAut_apply, conjTranspose_mul,
+      star_eq_conjTranspose, Matrix.mul_assoc]
   rw [Matrix.IsHermitian.cfc_eq, this]
   rw [hA.cfc_eq, Matrix.IsHermitian.cfc.eq_1]
   simp only [Unitary.conjStarAlgAut_apply]

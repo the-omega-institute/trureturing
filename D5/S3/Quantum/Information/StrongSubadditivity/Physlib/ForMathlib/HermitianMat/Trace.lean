@@ -223,7 +223,7 @@ lemma traceRight_sub : (A - B).traceRight = A.traceRight - B.traceRight := by
 end addCommGroup
 section rcLike
 
-variable {𝕜} [RCLike 𝕜]
+variable {𝕜 : Type*} [RCLike 𝕜]
 variable (A : HermitianMat (m × n) 𝕜)
 
 omit [Fintype n] in
