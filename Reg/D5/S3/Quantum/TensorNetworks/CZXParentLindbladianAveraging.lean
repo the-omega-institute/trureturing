@@ -5,7 +5,7 @@ import Reg.Support.DependentFamily
 /-! Source-bound audits of coordinate averaging and its pointwise formulas. -/
 
 namespace Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging
-open _root_.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState
+open _root_.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 set_option autoImplicit false
