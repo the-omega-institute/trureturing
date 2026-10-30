@@ -57,17 +57,20 @@ internal sealed class CollisionPrefixDocument : IScribeDocumentDefinition
             Theorem("long_count_positive", "Positive source denominator", PositiveFormula(),
                 "The constructed Euler walk makes its finite count positive. The exact denominator bijection gives T(n,n*n+1)=nE, which is positive for n at least two."),
             Theorem("collision_ratio", "The exact all-n rational ratio", RatioFormula(),
-                "For every n at least two and arbitrary fixed v in Fin(n), substitute the two source count identities and cancel the positive Euler count. Both carriers count ordered walks with loops and vertex coverage; no rotation quotient or separate factorial count is assumed."))));
+                "For every n at least two and arbitrary fixed v in Fin(n), substitute the two source count identities and cancel the positive Euler count. Both carriers count ordered walks with loops and vertex coverage; no rotation quotient or separate factorial count is assumed.",
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a396659-edge-collision-ratio"),
+                    ResolutionKind.Proved, [DeclarationHandle.Create(Owner + "long_count_positive")])))));
 
     private static DocumentBlock Definition(string name, string title, string text) =>
         Describe.Lean(DescribeId.Create("collision-prefix-definition-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Owner + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), DescribeRole.Definition);
 
-    private static DocumentBlock Theorem(string name, string title, Formula formula, string text) =>
+    private static DocumentBlock Theorem(string name, string title, Formula formula, string text,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("collision-" + name.Replace('_', '-')),
             DeclarationHandle.Create(Owner + name), H(title), StatementSource.FromAuthor(formula),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), DescribeRole.Theorem, resolution);
 
     private static Formula Times(Formula a, Formula b) =>
         new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
