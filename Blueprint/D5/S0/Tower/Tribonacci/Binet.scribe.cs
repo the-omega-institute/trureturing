@@ -84,6 +84,20 @@ internal sealed class TribonacciBinetDocument : IScribeDocumentDefinition
                         + "discriminant forces each secondary root to be nonreal, while its "
                         + "real and imaginary equations give squared modulus t inverse, "
                         + "which is strictly below one."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
+                    DescribeId.Create("tribonacci-secondary-root-relations"),
+                    DeclarationHandle.Create(
+                        "D5/S0/Tower/Tribonacci/Binet.tribonacci_secondary_root_relations"),
+                    H("Secondary-root embedding relations"),
+                    StatementSource.WithoutFormula(),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "The existing residual-quadratic computation also gives the sum "
+                        + "of a secondary root and its conjugate, their product, and "
+                        + "beta times the squared root norm equal to one. These identities "
+                        + "are consumed by the resultant separation and positive-area "
+                        + "packing on the live path to nonempty Rauzy interior."))),
                     DescribeRole.Theorem)),
             [
                 DocumentEdge.Dependency.Create(

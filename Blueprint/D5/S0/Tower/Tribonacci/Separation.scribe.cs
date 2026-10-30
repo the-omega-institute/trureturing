@@ -41,9 +41,9 @@ internal sealed class TribonacciSeparationDocument : IScribeDocumentDefinition
                             + "and beta times norm(z)^2 = 1 yield the stated quantitative bound.")),
                         Paragraph(Text(
                             "This is an infinite-family arithmetic estimate for every length "
-                            + "and every admissible pair. It is a standalone separation milestone "
-                            + "toward planar geometry; positive area, interior and tiling remain "
-                            + "outside this theorem's conclusion."))),
+                            + "and every admissible pair. It is consumed by the positive-area "
+                            + "packing and synchronized-cluster proof of Tribonacci interior; "
+                            + "it is not a standalone admission endpoint."))),
                     DescribeRole.Theorem)),
             [
                 DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Tower/Tribonacci/ModelSet")),

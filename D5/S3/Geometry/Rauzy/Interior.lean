@@ -48,7 +48,7 @@ claimed.
 namespace D5.S3.Geometry.Rauzy.Interior
 
 open Set Metric Filter MeasureTheory
-open scoped Topology
+open scoped Topology ENNReal
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -93,13 +93,15 @@ private theorem finite_translate_cover_of_separated_approximants
         dist (u n i) a ≤ dist (u n i) b + dist b a := dist_triangle _ _ _
         _ < c := by
           have hh := (hu n i hocc).2
+          change dist (u n i) b < c / 3 at hh
+          have hab' : dist a b < c / 3 := hab
           rw [dist_comm b a]
           linarith
     exact (not_lt_of_ge (hsep n (u n i) (hu n i hocc).1 a ha hne)) hdist
   have hprod : IsCompact (Set.pi (univ : Set ι) (fun _ => closedBall (0 : ℂ) S)) :=
     isCompact_univ_pi (fun _ => isCompact_closedBall (0 : ℂ) S)
   obtain ⟨t, _, φ, hφ, ht⟩ := hprod.tendsto_subseq
-    (x := u) (fun n => by simpa only [mem_pi, mem_univ, forall_true_left] using hubound n)
+    (x := u) (fun n => by simpa only [Set.mem_pi, mem_univ, forall_true_left] using hubound n)
   let L : Set ℂ := ⋃ i : ι, (fun k => t i + k) '' K
   have hL : IsCompact L := isCompact_iUnion (fun i =>
     hK.image (continuous_const.add continuous_id))
@@ -113,7 +115,7 @@ private theorem finite_translate_cover_of_separated_approximants
       intro i
       exact ((tendsto_pi_nhds.mp ht) i).eventually
         (ball_mem_nhds (t i) (by linarith))
-    have hhit := (hfill y hy (δ / 2) (by linarith)).comp_tendsto hφ.tendsto_atTop
+    have hhit := hφ.tendsto_atTop.eventually (hfill y hy (δ / 2) (by linarith))
     obtain ⟨n, hclose, a, ha, k, hk, hnear⟩ := (hclose.and hhit).exists
     obtain ⟨i, hi⟩ := hrepresented (φ n) a ha
     have hlim : t i + k ∈ ball y δ := by
@@ -122,8 +124,9 @@ private theorem finite_translate_cover_of_separated_approximants
         dist (t i + k) y ≤ dist (t i + k) (a + k) + dist (a + k) y :=
           dist_triangle _ _ _
         _ < δ := by
-          rw [dist_add_right, ← hi, dist_comm (t i)]
-          linarith [hclose i]
+          have herr : dist (t i) a < δ / 2 := by simpa [hi, dist_comm] using hclose i
+          rw [dist_add_right]
+          linarith
     exact hδL hlim (mem_iUnion.mpr ⟨i, k, hk, rfl⟩)
   let e := Fintype.equivFin ι
   refine ⟨Fintype.card ι, fun i => t (e.symm i), ?_⟩
@@ -153,7 +156,7 @@ private theorem density_hits_scaled_ball {K : Set ℂ} (x z : ℂ)
     ∀ᶠ n in atTop,
       (K ∩ ball (x + z ^ n * y) (δ * ‖z‖ ^ n)).Nonempty := by
   have hstrict : 1 - δ ^ 2 < (1 : ℝ) := by nlinarith [sq_pos_of_pos hδ]
-  filter_upwards [hdensity.eventually (gt_mem_nhds hstrict)] with n hn
+  filter_upwards [hdensity.eventually (lt_mem_nhds hstrict)] with n hn
   by_contra hmiss
   have hr : 0 < ‖z‖ ^ n := pow_pos hz n
   have hBC : ball (x + z ^ n * y) (δ * ‖z‖ ^ n) ⊆ closedBall x (‖z‖ ^ n) := by
@@ -173,8 +176,10 @@ private theorem density_hits_scaled_ball {K : Set ℂ} (x z : ℂ)
   have hsum : volume.real (K ∩ closedBall x (‖z‖ ^ n)) +
       volume.real (ball (x + z ^ n * y) (δ * ‖z‖ ^ n)) ≤
         volume.real (closedBall x (‖z‖ ^ n)) := by
-    rw [← measureReal_union hdisj measurableSet_ball]
-    exact measureReal_mono (union_subset inter_subset_right hBC)
+    rw [← measureReal_union hdisj measurableSet_ball
+      (measure_ne_top_of_subset inter_subset_right measure_closedBall_lt_top.ne)
+      measure_ball_ne_top]
+    exact measureReal_mono (union_subset inter_subset_right hBC) measure_closedBall_lt_top.ne
   rw [real_volume_ball _ (mul_nonneg hδ.le hr.le), real_volume_closedBall _ hr.le] at hsum
   rw [real_volume_closedBall _ hr.le] at hn
   have hden : 0 < (‖z‖ ^ n) ^ 2 * Real.pi := mul_pos (sq_pos_of_pos hr) Real.pi_pos
@@ -260,26 +265,40 @@ private theorem interior_nonempty_of_finite_translate_cover {K : Set ℂ}
     intro i
     exact (Homeomorph.addLeft (t i)).isInducing.isNowhereDense_image hndK
   have hndball := hnd.mono hcover
-  have hempty : interior (ball (0 : ℂ) 1) = ∅ := by
-    simpa only [IsNowhereDense, closure_ball (by norm_num : (1 : ℝ) ≠ 0),
-      interior_closedBall] using hndball
   have hzero : (0 : ℂ) ∈ interior (ball (0 : ℂ) 1) := by
     rw [isOpen_ball.interior_eq]
     simp
-  simpa only [hempty, mem_empty_iff_false] using hzero
+  have hz := interior_mono (subset_closure : ball (0 : ℂ) 1 ⊆ closure (ball 0 1)) hzero
+  change interior (closure (ball (0 : ℂ) 1)) = ∅ at hndball
+  simpa only [hndball, mem_empty_iff_false] using hz
+
+/-- Geometric data for an actual compact planar cylinder construction.
+The finite disk cover and interior are conclusions, not fields of the data. -/
+structure SeparatedCylinderSystem where
+  carrier : Set ℂ
+  compact : IsCompact carrier
+  positive_volume : 0 < volume carrier
+  radius : ℝ
+  separation : ℝ
+  radius_nonneg : 0 ≤ radius
+  separation_pos : 0 < separation
+  bounded : carrier ⊆ closedBall 0 radius
+  contraction : ℂ
+  norm_pos : 0 < ‖contraction‖
+  norm_lt_one : ‖contraction‖ < 1
+  centers : ℕ → Set ℂ
+  separated : ∀ n, ∀ a ∈ centers n, ∀ b ∈ centers n, a ≠ b →
+    separation * ‖contraction‖ ^ n ≤ dist a b
+  upper_cover : ∀ n, ∀ w ∈ carrier, ∃ a ∈ centers n,
+    ∃ k ∈ carrier, w = a + contraction ^ n * k
 
 /-- Compact planar sets of positive area with uniformly separated shrinking
 upper cylinder covers have nonempty interior. The proof constructs a finite
 family of actual translates covering a disk at one density point. -/
-theorem interior_nonempty_of_separated_cylinders {K : Set ℂ} (hK : IsCompact K)
-    (hpos : 0 < volume K) {R c : ℝ} (hR : 0 ≤ R) (hc : 0 < c)
-    (hbound : K ⊆ closedBall 0 R) (z : ℂ) (hz0 : 0 < ‖z‖) (hz1 : ‖z‖ < 1)
-    (P : ℕ → Set ℂ)
-    (hsep : ∀ n, ∀ a ∈ P n, ∀ b ∈ P n, a ≠ b →
-      c * ‖z‖ ^ n ≤ dist a b)
-    (hcover : ∀ n, ∀ w ∈ K, ∃ a ∈ P n, ∃ k ∈ K, w = a + z ^ n * k) :
-    (interior K).Nonempty := by
-  obtain ⟨x, _, hx⟩ := exists_mem_of_measure_ne_zero_of_ae hpos.ne'
+theorem interior_nonempty_of_separated_cylinders (S : SeparatedCylinderSystem) :
+    (interior S.carrier).Nonempty := by
+  rcases S with ⟨K, hK, hpos, R, c, hR, hc, hbound, z, hz0, hz1, P, hsep, hcover⟩
+  obtain ⟨x, _, hx⟩ := Measure.exists_mem_of_measure_ne_zero_of_ae hpos.ne'
     (Besicovitch.ae_tendsto_measure_inter_div volume K)
   have hscale : Tendsto (fun n : ℕ => ‖z‖ ^ n) atTop (𝓝[>] (0 : ℝ)) := by
     apply tendsto_nhdsWithin_iff.mpr

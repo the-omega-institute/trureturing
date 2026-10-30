@@ -34,6 +34,8 @@ open D5.S0.Tower.Tribonacci.Binet
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
+noncomputable section
+
 local notation "β" => tribonacciConstant
 
 open Polynomial
@@ -64,8 +66,16 @@ private theorem admissible_reverse (Q : ℕ) (w : Fin Q → Bool)
           (n + 3) n w hw (by omega)
         apply hn
         rcases h with ⟨h0, h1, h2⟩
-        convert And.intro h2 (And.intro h1 h0) using 1 <;>
-          congr 1 <;> apply Fin.ext <;> simp [Fin.rev] <;> omega
+        have hidx0 : (0 : Fin (n + 3)).rev = ⟨n + 2, by omega⟩ := by
+          apply Fin.ext
+          simp [Fin.rev]
+        have hidx1 : (1 : Fin (n + 3)).rev = ⟨n + 1, by omega⟩ := by
+          apply Fin.ext
+          simp [Fin.rev]
+        have hidx2 : (2 : Fin (n + 3)).rev = ⟨n, by omega⟩ := by
+          apply Fin.ext
+          simp [Fin.rev, Nat.mod_eq_of_lt (show 2 < n + 3 by omega)]
+        exact ⟨hidx2 ▸ h2, hidx1 ▸ h1, hidx0 ▸ h0⟩
       · have hi := ih (n + 2) (by omega) (Fin.init w)
           (D5.S0.Tower.Tribonacci.Representation.admissible_init (n + 2) w hw)
         convert hi using 1
@@ -73,7 +83,6 @@ private theorem admissible_reverse (Q : ℕ) (w : Fin Q → Bool)
         apply congrArg w
         apply Fin.ext
         simp [Fin.tail, Fin.init, Fin.rev]
-        omega
 
 private def reverseName {Q : ℕ} (u : TribonacciName Q) : TribonacciName Q :=
   ⟨fun i => u.1 i.rev, admissible_reverse Q u.1 u.2⟩
@@ -139,61 +148,12 @@ private theorem cubic_resultant_ne_zero (p : ℤ[X])
   apply hr
   simpa only [hdc, hdp, resultant_map_map, hzero, map_zero]
 
-private theorem secondary_root_relations {z : ℂ}
-    (hz : z ∈ tribonacciCharacteristicPolynomial.roots)
-    (hz_ne : z ≠ (β : ℂ)) :
-    z + star z = ((1 - β : ℝ) : ℂ) ∧
-      z * star z = ((β ^ 2 - β - 1 : ℝ) : ℂ) ∧
-      β * ‖z‖ ^ 2 = 1 := by
-  have hpoly : tribonacciCharacteristicPolynomial ≠ 0 := by
-    intro h
-    have he := congrArg (Polynomial.eval (2 : ℂ)) h
-    norm_num [tribonacciCharacteristicPolynomial] at he
-  have he := (Polynomial.mem_roots hpoly).mp hz
-  have hc : z ^ 3 = z ^ 2 + z + 1 := by
-    have := he
-    simp only [Polynomial.IsRoot, tribonacciCharacteristicPolynomial,
-      eval_sub, eval_pow, eval_X, eval_one] at this
-    linear_combination this
-  have ht : (β : ℂ) ^ 3 = (β : ℂ) ^ 2 + β + 1 := by
-    exact_mod_cast tribonacciConstant_cubic
-  have hf : (z - (β : ℂ)) *
-      (z ^ 2 + z * β + (β : ℂ) ^ 2 - z - β - 1) = 0 := by
-    linear_combination hc - ht
-  have hq := (mul_eq_zero.mp hf).resolve_left (sub_ne_zero.mpr hz_ne)
-  have hi : β ^ 2 - β - 1 = β⁻¹ := by
-    field_simp [tribonacciConstant_ne_zero]
-    nlinarith [tribonacciConstant_cubic]
-  have hquad : z ^ 2 + ((β - 1 : ℝ) : ℂ) * z + ((β⁻¹ : ℝ) : ℂ) = 0 := by
-    rw [← hi]
-    push_cast
-    linear_combination hq
-  have him := congrArg Complex.im hquad
-  have hre := congrArg Complex.re hquad
-  norm_num [pow_two, Complex.mul_re, Complex.mul_im] at him hre
-  have him_ne : z.im ≠ 0 := by
-    intro hzero
-    rw [hzero] at hre
-    have hd := D5.S0.Tower.Tribonacci.PerronRoot.tribonacci_errorEnergy_discriminant_pos
-    nlinarith [sq_nonneg (2 * z.re + (β - 1))]
-  have hre_eq : 2 * z.re + (β - 1) = 0 := by
-    apply (mul_eq_zero.mp (show z.im * (2 * z.re + (β - 1)) = 0 by
-      nlinarith [him])).resolve_left him_ne
-  have hre_mul := congrArg (fun x : ℝ => z.re * x) hre_eq
-  have hn : Complex.normSq z = β⁻¹ := by
-    rw [Complex.normSq_apply]
-    nlinarith [hre, hre_mul]
-  refine ⟨?_, ?_, ?_⟩
-  · apply Complex.ext <;> simp <;> linarith
-  · rw [mul_comm, ← Complex.normSq_eq_conj_mul_self, hn, hi]
-  · rw [Complex.sq_norm, hn, mul_inv_cancel₀ tribonacciConstant_ne_zero]
-
 private theorem cubic_factorization {z : ℂ}
     (hz : z ∈ tribonacciCharacteristicPolynomial.roots)
     (hz_ne : z ≠ (β : ℂ)) :
     cubic.map (Int.castRingHom ℂ) =
       (X - C (β : ℂ)) * (X - C z) * (X - C (star z)) := by
-  obtain ⟨hsum, hprod, _⟩ := secondary_root_relations hz hz_ne
+  obtain ⟨hsum, hprod, _⟩ := tribonacci_secondary_root_relations hz hz_ne
   have hquad : (X - C z) * (X - C (star z)) =
       X ^ 2 - C ((1 - β : ℝ) : ℂ) * X + C ((β ^ 2 - β - 1 : ℝ) : ℂ) := by
     calc
@@ -203,8 +163,9 @@ private theorem cubic_factorization {z : ℂ}
   rw [mul_assoc, hquad]
   have ht : (β : ℂ) ^ 3 = (β : ℂ) ^ 2 + β + 1 := by
     exact_mod_cast tribonacciConstant_cubic
-  simp only [cubic, Polynomial.map_sub, Polynomial.map_pow, map_X, map_one]
+  simp only [cubic, Polynomial.map_sub, Polynomial.map_pow, map_X, Polynomial.map_one]
   push_cast
+  simp only [map_sub, map_add, map_pow, map_one]
   have hCt := congrArg (C : ℂ → ℂ[X]) ht
   simp only [map_add, map_pow, map_one] at hCt
   linear_combination hCt
@@ -213,7 +174,7 @@ private theorem resultant_three_embeddings {z : ℂ}
     (hz : z ∈ tribonacciCharacteristicPolynomial.roots)
     (hz_ne : z ≠ (β : ℂ)) (p : ℤ[X]) :
     (cubic.resultant p : ℂ) =
-      (p.eval₂ (Int.castRingHom ℝ) β : ℂ) *
+      ((p.eval₂ (Int.castRingHom ℝ) β : ℝ) : ℂ) *
         p.eval₂ (Int.castRingHom ℂ) z *
         star (p.eval₂ (Int.castRingHom ℂ) z) := by
   let pc := p.map (Int.castRingHom ℂ)
@@ -237,8 +198,8 @@ private theorem resultant_three_embeddings {z : ℂ}
     exact hmap.symm
   rw [hemb, cubic_factorization hz hz_ne, h123]
   simp only [pc, eval_map]
-  have hreal := hom_eval₂ (Int.castRingHom ℝ) Complex.ofRealHom p β
-  have hconj := hom_eval₂ (Int.castRingHom ℂ) (starRingEnd ℂ) p z
+  have hreal := hom_eval₂ p (Int.castRingHom ℝ) Complex.ofRealHom β
+  have hconj := hom_eval₂ p (Int.castRingHom ℂ) (starRingEnd ℂ) z
   have hcompR : Complex.ofRealHom.comp (Int.castRingHom ℝ) = Int.castRingHom ℂ := by
     ext n; simp
   have hcompC : (starRingEnd ℂ).comp (Int.castRingHom ℂ) = Int.castRingHom ℂ := by
@@ -273,9 +234,8 @@ private theorem perron_difference_bound {Q : ℕ} (u v : TribonacciName Q) :
     apply (Finset.abs_sum_le_sum_abs _ _).trans
     apply Finset.sum_le_sum
     intro i _
-    cases hu : u.1 i <;> cases hv : v.1 i <;>
-      simp [hu, hv, abs_of_nonneg (pow_nonneg tribonacciConstant_pos.le i.1)] <;>
-      positivity
+    have ht : 0 ≤ β ^ i.1 := pow_nonneg tribonacciConstant_pos.le i.1
+    split_ifs <;> simp [abs_of_nonneg ht, ht]
   have hg : (∑ i : Fin Q, β ^ i.1) * (β - 1) = β ^ Q - 1 := by
     rw [Fin.sum_univ_eq_sum_range, geom_sum_mul]
   have hm := mul_le_mul_of_nonneg_right hb (sub_nonneg.mpr one_lt_tribonacciConstant.le)
@@ -294,7 +254,7 @@ theorem conjugateCoordinate_separation {z : ℂ}
     digit_difference_perron_ne_zero u v huv
   have hn := integer_norm_lower_bound hz hz_ne p hp
   have hb := perron_difference_bound u v
-  have hscale := (secondary_root_relations hz hz_ne).2.2
+  have hscale := (tribonacci_secondary_root_relations hz hz_ne).2.2
   have hpow : β ^ Q * (‖z‖ ^ Q) ^ 2 = 1 := by
     calc
       β ^ Q * (‖z‖ ^ Q) ^ 2 = (β * ‖z‖ ^ 2) ^ Q := by
@@ -327,5 +287,7 @@ theorem conjugateCoordinate_separation {z : ℂ}
   have hsquare : (Real.sqrt (β - 1) * ‖z‖ ^ Q) ^ 2 =
       (β - 1) * (‖z‖ ^ Q) ^ 2 := by rw [mul_pow, hs]
   nlinarith [norm_nonneg (conjugateCoordinate z u - conjugateCoordinate z v)]
+
+end
 
 end D5.S0.Tower.Tribonacci.Separation
