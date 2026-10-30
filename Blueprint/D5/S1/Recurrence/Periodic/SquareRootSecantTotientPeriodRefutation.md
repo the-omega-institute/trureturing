@@ -50,6 +50,10 @@ $$\neg ((\exists (A: \operatorname{PowerSeries}\left(\mathbb{Q}\right)), \operat
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/SquareRootSecantTotientPeriodRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bala126156` (refuted) by `D5/S1/Recurrence/Periodic/SquareRootSecantTotientPeriodRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bala126156","declaration_gid":"D5/S1/Recurrence/Periodic/SquareRootSecantTotientPeriodRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Bala (2026). *OEIS A126156: eventual periods dividing the Euler totient*. URL: <https://oeis.org/A126156>.

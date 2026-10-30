@@ -52,13 +52,16 @@ internal sealed class SquareRootSecantTotientPeriodRefutationDocument : IScribeD
                 + "two by adding consecutive differences. The two-step identity excludes either "
                 + "period at every onset. This does not settle a bound of twice the totient "
                 + "or a general assertion for odd moduli.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bala126156"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
         DescribeId.Create("bala-a126156-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula CosineFormula()
     {
