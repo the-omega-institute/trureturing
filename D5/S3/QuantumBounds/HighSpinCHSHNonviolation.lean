@@ -63,14 +63,6 @@ private def liftedOperator (n : ℕ) (r t : Fin n) (a c b d : Fin 3 → ℝ) :
   let δ := (1 : Matrix (Finset (Fin n)) (Finset (Fin n)) ℂ) ⊗ₖ slotPauli n t d
   α * (β + δ) + γ * (β - δ)
 
-private lemma weight_count (n k : ℕ) :
-    (Finset.univ.filter (fun x : Finset (Fin n) => x.card = k)).card = n.choose k := by
-  have hf : Finset.univ.filter (fun x : Finset (Fin n) => x.card = k) =
-      (Finset.univ : Finset (Fin n)).powersetCard k := by
-    ext x
-    simp
-  rw [hf, Finset.card_powersetCard, Finset.card_univ, Fintype.card_fin]
-
 private lemma dicke_isometry (n : ℕ) : (dicke n)ᴴ * dicke n = 1 := by
   have hd (x : Finset (Fin n)) (k : Fin (n + 1)) :
       dicke n x k = if x.card = k.val then
@@ -86,7 +78,12 @@ private lemma dicke_isometry (n : ℕ) : (dicke n)ᴴ * dicke n = 1 := by
         simp [conjTranspose_apply, hd, hx, pow_two]
     simp_rw [hh]
     rw [← Finset.sum_filter]
-    simp only [Finset.sum_const, nsmul_eq_mul, weight_count, Matrix.one_apply_eq]
+    have hcount :
+        (Finset.univ.filter (fun x : Finset (Fin n) => x.card = i.val)).card = n.choose i.val := by
+      have h := Finset.card_powersetCard (s := (Finset.univ : Finset (Fin n))) i.val
+      rw [Finset.powersetCard_eq_filter] at h
+      simpa only [Finset.powerset_univ, Finset.card_univ, Fintype.card_fin] using h
+    simp only [Finset.sum_const, nsmul_eq_mul, hcount, Matrix.one_apply_eq]
     have hc : (n.choose i.val : ℝ) ≠ 0 := by
       exact_mod_cast (Nat.ne_of_gt (Nat.choose_pos (by omega : i.val ≤ n)))
     have hn : (n.choose i.val : ℝ) * (1 / Real.sqrt (n.choose i.val : ℝ)) ^ 2 = 1 := by
@@ -329,8 +326,13 @@ private lemma z_compression (n : ℕ) (r : Fin n) :
       by_cases hx : x.card = k <;> by_cases hr : r ∈ x <;> norm_num [hx, hr]
     simp_rw [he]
     rw [Finset.sum_sub_distrib, ← Finset.mul_sum]
+    have hweight :
+        (Finset.univ.filter (fun x : Finset (Fin n) => x.card = k)).card = n.choose k := by
+      have h := Finset.card_powersetCard (s := (Finset.univ : Finset (Fin n))) k
+      rw [Finset.powersetCard_eq_filter] at h
+      simpa only [Finset.powerset_univ, Finset.card_univ, Fintype.card_fin] using h
     simp only [← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul, mul_one,
-      absent_count, weight_count]
+      absent_count, hweight]
   ext i j
   change ((dicke n)ᴴ * (diagonal (fun x => if r ∈ x then (-1 : ℂ) else 1) :
       Matrix (Finset (Fin n)) (Finset (Fin n)) ℂ) * dicke n) i j =
