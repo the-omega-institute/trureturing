@@ -8,7 +8,7 @@
 
 **Python 版本**：仓库脚本及构建、测试、gate 使用 **Python 3.12 或更新版本**。执行前用 `python3 -c 'import sys; assert sys.version_info >= (3, 12), sys.version; import tomllib; print(sys.executable, sys.version)'` 核对实际解释器。版本不符时，先选择已安装的合规 Python，将其 `python3` 所在目录放在本次命令的 `PATH` 最前，并让 Make、Shell、Lean 子进程继承该环境；macOS 可使用 Homebrew 安装或升级的 Python。本条为 agent 执行约定，自动版本检查以现役脚本为准。
 
-常用命令速查表见 SPEC §11.28（CLAUDE.md 常用命令速查）。
+仓库修改先复用兼容 linked worktree，需隔离时创建；只读与 issue 操作复用现有检出（第 6.1 条）。常用命令速查表见 SPEC §11.28（CLAUDE.md 常用命令速查）。
 
 常用独立脚本速查见 SPEC §11.28（CLAUDE.md 常用独立脚本）；其中 `bash tools/scripts/agent/…` 均在仓库根运行。
 
