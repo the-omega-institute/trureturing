@@ -34,7 +34,7 @@ private def majorant (j : ℕ) : ℝ :=
 private theorem majorant_summable : Summable majorant := by
   have hs : Summable (fun j : ℕ => 1 / ((j : ℝ) + 1) ^ 2) := by
     simpa only [Nat.cast_add, Nat.cast_one] using
-      (summable_nat_add_iff 1).mpr (summable_one_div_nat_pow.mpr (by norm_num : 1 < (2 : ℕ)))
+      (summable_nat_add_iff 1).mpr (Real.summable_one_div_nat_pow.mpr (by norm_num : 1 < (2 : ℕ)))
   apply Summable.of_nonneg_of_le (fun j => by dsimp [majorant]; positivity) _ hs
   intro j
   dsimp [majorant]
@@ -87,5 +87,156 @@ private theorem kernel_reflection (b θ : ℝ) :
     rw [he, Real.cos_nat_mul_pi_sub]
     norm_num [pow_add, pow_mul]
   simp only [boundaryTerm, hc, mul_neg]
+
+private theorem cosine_geometric (q θ : ℝ) (hq0 : 0 ≤ q) (hq1 : q < 1) :
+    HasSum (fun j : ℕ => (-q) ^ j * Real.cos ((2 * (j : ℝ) + 1) * θ))
+      (Real.cos θ * (1 + q) / ((1 - q) ^ 2 + 4 * q * (Real.cos θ) ^ 2)) := by
+  let u : ℂ := Complex.exp ((θ : ℂ) * Complex.I)
+  have hu : ‖u‖ = 1 := Complex.norm_exp_ofReal_mul_I θ
+  have hr : ‖-(q : ℂ) * u ^ 2‖ < 1 := by
+    simp only [norm_mul, norm_neg, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hq0,
+      norm_pow, hu, one_pow, mul_one]
+    exact hq1
+  have hh := Complex.reCLM.hasSum
+    ((hasSum_geometric_of_norm_lt_one hr).mul_left u)
+  have he (j : ℕ) :
+      (u * (-(q : ℂ) * u ^ 2) ^ j).re =
+        (-q) ^ j * Real.cos ((2 * (j : ℝ) + 1) * θ) := by
+    have hp : u * (-(q : ℂ) * u ^ 2) ^ j = (-q : ℂ) ^ j * u ^ (2 * j + 1) := by
+      rw [mul_pow, ← pow_mul, pow_succ]
+      ring
+    have hex : (u ^ (2 * j + 1)).re = Real.cos ((2 * (j : ℝ) + 1) * θ) := by
+      rw [show u ^ (2 * j + 1) =
+        Complex.exp ((((2 * j + 1 : ℕ) : ℂ) * θ) * Complex.I) by
+          rw [mul_assoc, Complex.exp_nat_mul]]
+      simpa only [Nat.cast_add, Nat.cast_mul, Nat.cast_one, Nat.cast_ofNat,
+        Complex.ofReal_add, Complex.ofReal_mul, Complex.ofReal_natCast] using
+          Complex.exp_ofReal_mul_I_re ((2 * (j : ℝ) + 1) * θ)
+    rw [hp]
+    simpa only [← Complex.ofReal_neg, ← Complex.ofReal_pow, Complex.ofReal_mul_re] using
+      congrArg (fun x : ℝ => (-q) ^ j * x) hex
+  simp_rw [he] at hh
+  convert hh using 1
+  dsimp
+  rw [← div_eq_mul_inv]
+  dsimp [u]
+  rw [Complex.exp_ofReal_mul_I]
+  simp only [Complex.div_re, Complex.normSq_apply, Complex.add_re, Complex.add_im,
+    Complex.sub_re, Complex.sub_im, Complex.mul_re, Complex.mul_im, Complex.neg_re,
+    Complex.neg_im, Complex.ofReal_re, Complex.ofReal_im, Complex.one_re,
+    Complex.one_im, Complex.pow_two, Complex.I_re, Complex.I_im]
+  have htrig := Real.sin_sq_add_cos_sq θ
+  have hd : 0 < (1 - q) ^ 2 + 4 * q * Real.cos θ ^ 2 := by
+    have hpos : 0 < (1 - q) ^ 2 := sq_pos_of_pos (sub_pos.mpr hq1)
+    positivity
+  field_simp
+  nlinarith [sq_nonneg (Real.sin θ), sq_nonneg (Real.cos θ)]
+
+private def densityTerm (b θ : ℝ) (j : ℕ) (t : ℝ) : ℝ :=
+  -2 * b ^ 2 * (-b ^ 2) ^ j * Real.cos ((2 * (j : ℝ) + 1) * θ) *
+    (t ^ (2 * j + 1) * (1 - t))
+
+private theorem density_integral (b θ : ℝ) (j : ℕ) :
+    (∫ t in (0 : ℝ)..1, densityTerm b θ j t) = boundaryTerm b θ j := by
+  unfold densityTerm
+  rw [intervalIntegral.integral_const_mul]
+  have he : (fun t : ℝ => t ^ (2 * j + 1) * (1 - t)) =
+      (fun t => t ^ (2 * j + 1) - t ^ (2 * j + 2)) := by
+    funext t
+    rw [show 2 * j + 2 = (2 * j + 1) + 1 by omega, pow_succ]
+    ring
+  rw [he, intervalIntegral.integral_sub (by fun_prop) (by fun_prop),
+    integral_pow, integral_pow]
+  simp only [one_pow, zero_pow (by omega : 2 * j + 1 + 1 ≠ 0),
+    zero_pow (by omega : 2 * j + 2 + 1 ≠ 0), sub_zero]
+  unfold boundaryTerm
+  push_cast
+  rw [show -b ^ 2 = (-1 : ℝ) * b ^ 2 by ring, mul_pow, ← pow_mul,
+    show 2 * j + 2 = 2 * j + 2 by rfl, pow_add, pow_succ (-1 : ℝ) j]
+  have hj : 0 ≤ (j : ℝ) := Nat.cast_nonneg j
+  field_simp
+  <;> ring
+
+private theorem kernel_integral_interior (b θ : ℝ) (hb0 : 0 ≤ b) (hb1 : b < 1) :
+    boundaryKernel b θ = -2 * b ^ 2 * Real.cos θ *
+      ∫ t in (0 : ℝ)..1, t * (1 - t) * (1 + b ^ 2 * t ^ 2) /
+        ((1 - b ^ 2 * t ^ 2) ^ 2 + 4 * b ^ 2 * t ^ 2 * Real.cos θ ^ 2) := by
+  have hb2 : b ^ 2 < 1 := by nlinarith
+  let U : ℕ → ℝ := fun j => 2 * b ^ 2 * (b ^ 2) ^ j
+  have hU : Summable U :=
+    (summable_geometric_of_lt_one (sq_nonneg b) hb2).mul_left _
+  let R : ℝ → ℝ := fun t => -2 * b ^ 2 * Real.cos θ *
+    (t * (1 - t) * (1 + b ^ 2 * t ^ 2) /
+      ((1 - b ^ 2 * t ^ 2) ^ 2 + 4 * b ^ 2 * t ^ 2 * Real.cos θ ^ 2))
+  have hlim (t : ℝ) (ht : t ∈ Ioc (0 : ℝ) 1) :
+      HasSum (fun j => densityTerm b θ j t) (R t) := by
+    have hq : b ^ 2 * t ^ 2 < 1 := by
+      have ht2 : t ^ 2 ≤ 1 := by nlinarith [ht.1, ht.2]
+      nlinarith [sq_nonneg b, sq_nonneg t]
+    convert (cosine_geometric (b ^ 2 * t ^ 2) θ (by positivity) hq).mul_left
+      (-2 * b ^ 2 * t * (1 - t)) using 1
+    · funext j
+      dsimp [densityTerm]
+      rw [show -(b ^ 2 * t ^ 2) = (-b ^ 2) * t ^ 2 by ring,
+        mul_pow, ← pow_mul, pow_succ]
+      ring
+    · dsimp [R]
+      ring
+  have hbound (j : ℕ) (t : ℝ) (ht : t ∈ Ioc (0 : ℝ) 1) :
+      ‖densityTerm b θ j t‖ ≤ U j := by
+    have ht0 : 0 ≤ t := ht.1.le
+    have htP : |t ^ (2 * j + 1)| ≤ 1 := by
+      rw [abs_pow, abs_of_nonneg ht0]
+      exact pow_le_one₀ ht0 ht.2
+    have hsub : |1 - t| ≤ 1 := by rw [abs_of_nonneg (by linarith)]; linarith
+    have hc := Real.abs_cos_le_one ((2 * (j : ℝ) + 1) * θ)
+    dsimp [densityTerm, U]
+    rw [Real.norm_eq_abs, abs_mul, abs_mul, abs_mul, abs_mul, abs_mul,
+      abs_neg, abs_ofNat, abs_of_nonneg (sq_nonneg b), abs_pow,
+      abs_neg, abs_of_nonneg (sq_nonneg b)]
+    calc
+      _ ≤ 2 * b ^ 2 * (b ^ 2) ^ j * 1 * (1 * 1) := by gcongr
+      _ = _ := by ring
+  have hsum := intervalIntegral.hasSum_integral_of_dominated_convergence
+    (μ := volume) (fun j (_ : ℝ) => U j)
+    (fun j => (by fun_prop : Continuous (densityTerm b θ j)).aestronglyMeasurable)
+    (fun j => .of_forall (fun t ht => hbound j t (by simpa using ht)))
+    (.of_forall (fun _ _ => hU)) intervalIntegrable_const
+    (.of_forall (fun t ht => hlim t (by simpa using ht)))
+  simp_rw [density_integral] at hsum
+  rw [← hsum.tsum_eq]
+  unfold boundaryKernel
+  congr 1
+  dsimp [R]
+  rw [intervalIntegral.integral_const_mul]
+
+private theorem kernel_sign_interior (b θ : ℝ) (hb0 : 0 ≤ b) (hb1 : b < 1) :
+    Real.cos θ * boundaryKernel b θ ≤ 0 := by
+  rw [kernel_integral_interior b θ hb0 hb1]
+  have hi : 0 ≤ ∫ t in (0 : ℝ)..1,
+      t * (1 - t) * (1 + b ^ 2 * t ^ 2) /
+        ((1 - b ^ 2 * t ^ 2) ^ 2 + 4 * b ^ 2 * t ^ 2 * Real.cos θ ^ 2) := by
+    apply intervalIntegral.integral_nonneg (by norm_num)
+    intro t ht
+    exact div_nonneg (by positivity [ht.1, sub_nonneg.mpr ht.2]) (by positivity)
+  nlinarith [sq_nonneg (Real.cos θ), sq_nonneg b,
+    mul_nonneg (mul_nonneg (sq_nonneg b) (sq_nonneg (Real.cos θ))) hi]
+
+/-- Uniform convergence, continuity, reflection, and the sign of the actual source kernel,
+including the entire closed parameter edge `b = 1`. -/
+theorem boundary_kernel_control (b θ : ℝ) (hb : b ∈ Icc (0 : ℝ) 1) :
+    Continuous (boundaryKernel b) ∧
+    boundaryKernel b (Real.pi - θ) = -boundaryKernel b θ ∧
+    Real.cos θ * boundaryKernel b θ ≤ 0 := by
+  refine ⟨kernel_continuous hb, kernel_reflection b θ, ?_⟩
+  have hc : ContinuousOn (fun b => Real.cos θ * boundaryKernel b θ) (Icc (0 : ℝ) 1) := by
+    apply ContinuousOn.const_mul
+    exact continuousOn_tsum (fun j => by unfold boundaryTerm; fun_prop)
+      majorant_summable (fun j b hb => term_norm_le hb θ j)
+  have hcl : closure (Ico (0 : ℝ) 1) = Icc (0 : ℝ) 1 := closure_Ico (by norm_num)
+  exact le_on_closure (fun c hc => kernel_sign_interior c θ hc.1 hc.2)
+    (by simpa only [hcl] using hc) continuousOn_const (by simpa only [hcl] using hb)
+
+#print axioms boundary_kernel_control
 
 end D5.S3.Analytic.Interpolation.SchurBoundaryKernel
