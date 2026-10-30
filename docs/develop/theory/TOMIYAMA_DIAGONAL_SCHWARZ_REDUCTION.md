@@ -662,3 +662,156 @@ For García-Velo and Ibort, arXiv:2601.02282v1, only the necessary tests of Theo
 For $d=3$, Theorem 8.1 already supplies all boundary points of the probe simplex. By Corollary 8.2 the remaining condition is exactly that (A) and (B) of Theorem 3.2 hold for every full-support $t\in\Delta_3^\circ$, with their singular-block range conditions, zero coefficients and equality cases unchanged. Theorem 10.1 excludes a finite affine half-plane description near the cusp; it neither settles this full-support condition nor excludes a finite nonlinear or semialgebraic description. The separate Schwarz classification of the transposition family $\Lambda_{\mu,\nu}$ in arXiv:2604.18600v1 is also unresolved here.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. The closed small-multiplier strip
+
+Put $m=d-1$ and $p=1-mq$. The next lemma is an algebraic consequence of the row reduction in Theorem 3.2. It is stated separately so that the endpoint cases in the theorem are not hidden by an inverse formula.
+
+**Lemma 13.1 (strip Schur-complement lemma).** Let $d\ge3$, $r\in[0,1/d]$, $q\ge0$, and $p=1-(d-1)q\ge r^2$. For either $\lambda=r$ or $\lambda=-r$, form the matrices $P_i(t)$, vectors $b_i(t)$ and numbers $\kappa_i(t)$ of Convention 2.2. For every $t\in\Delta_d$ the following hold.
+
+1. $P_i(t)\ge0$ and $b_i(t)\in\operatorname{Ran}P_i(t)$ for every $i$.
+2. For every $z\in\mathbb C^d$ with $\sum_i z_i=0$, one has $\sum_i\kappa_i(t)|z_i|^2\ge0$, with the value $-\infty$ interpreted as in Convention 2.2.
+
+These assertions remain true when some $t_j$ or some $e_j(t)$ is zero.
+
+**Proof.** The case $q=0$ is Proposition 4.2, so assume $q>0$. Fix $t$ and $i$. Delete the coordinates $j\ne i$ for which $t_j=0$; the deleted coordinates contribute a nonnegative diagonal term and a zero component of $\sigma^{(i)}$. On the remaining face write
+
+$$
+ e_j=q+\mu t_j,\qquad \mu=1-dq-\lambda,\qquad \gamma=\lambda(1-\lambda),\qquad c=\sum_{j\ne i}\frac{t_j}{e_j}.
+$$
+
+Whenever the displayed denominators are nonzero, the rank-one identities of cited fact (d) give
+
+$$
+ P_i=E+\gamma\sigma\sigma^T,\qquad
+ \det P_i=\det E\,(1+\gamma c),\qquad
+ b_i^TP_i^{-1}b_i=\lambda^2d^2q^2t_i\,\frac{c}{1+\gamma c}.
+$$
+
+The same formulas with limits are valid on a face on which one of the denominators vanishes; equivalently one uses the range clause in the generalized Schur complement of cited fact (e).
+
+We first record the two scalar estimates used below. If $\lambda=-r$, then $e_j>0$: indeed $e_j$ is affine in $t_j$, its endpoint values are $q$ and $p+r$, and both are positive. If $\mu\ge0$, the concavity of $u\mapsto u/(q+\mu u)$ gives
+
+$$
+ c\le\frac d{dq+\mu}=\frac d{1+r},\qquad r(1+r)c\le dr\le1.
+$$
+
+If $\mu<0$, the same sum is convex on every face on which it is finite, hence its maximum is at a vertex; therefore
+
+$$
+ c\le\frac1{q+\mu}=\frac1{p+r},\qquad r(1+r)c\le1
+$$
+
+because $r^2\le p$. Since $\gamma=-r(1+r)$, these estimates imply $1+\gamma c\ge0$ and hence $P_i\ge0$.
+
+If $\lambda=r$, then $\gamma\ge0$. When $\mu\ge0$ all $e_j$ are positive and the rank-one update is positive. When $\mu<0$, at most one $e_j$ is negative. On a face with one negative entry, the function $u/(q+\mu u)$ has a single pole; its one-sided monotonicity shows
+
+$$
+ 1+\gamma c\le0.
+$$
+
+Thus the determinant has the sign of $\det E$ and the update has exactly the one eigenvalue needed to turn the negative diagonal entry positive. This is precisely the second alternative in Proposition 3.3. If an $e_j$ is zero, the corresponding $2\times2$ principal minor is $\gamma t_j e_k$ (with the evident one-coordinate interpretation), so the same conclusion follows by a direct limit; in the positive semidefinite case the range condition for $b_i$ is then the limiting Schur-complement condition.
+
+It remains to check the diagonal form on $\sum z_i=0$. Completing the square in every row and using the last displayed rank-one formula gives
+
+$$
+ \sum_i\kappa_i|z_i|^2
+ =\sum_i\left(q+dq(1-dq)t_i-\lambda^2d^2q^2t_i\,\frac{c_i}{1+\gamma c_i}\right)|z_i|^2 .
+$$
+
+On each open face, clear the positive factors $\prod_i|1+\gamma c_i|$ and the nonzero $|e_j|$. The numerator of the restriction to $\sum_i z_i=0$ is a quadratic form whose diagonal Schur pivots are obtained successively by eliminating $z_d,z_{d-1},\ldots,z_2$. At the $\ell$-th elimination the remainder is
+
+$$
+\begin{aligned}
+ &(p-r^2)\sum_{a<b\le\ell}t_at_b\left|\frac{z_a}{e_a}-\frac{z_b}{e_b}\right|^2
+ +(1-dr)\sum_{a\le\ell}t_a(1-t_a)\left|\sum_{b\ne a}\frac{z_b}{e_b}\right|^2\\
+ &\qquad +q\sum_{a<b\le\ell}\left|\,t_bz_a-t_az_b\,\right|^2
+ +q\left|\sum_{a\le\ell}t_az_a\right|^2 .
+\end{aligned}
+\tag{13.1}
+$$
+
+The factors suppressed in clearing denominators are squares of the nonzero $e_j$ and the positive Schur pivots already eliminated. Thus every term in (13.1) is nonnegative because $p-r^2\ge0$, $1-dr\ge0$ and $q\ge0$. If a pivot or an $e_j$ vanishes, (13.1) is read after deleting the corresponding zero coordinate and then by continuity; the generalized Schur-complement range condition gives the same limit. Hence the restricted diagonal form is nonnegative. This proves both assertions. ∎
+
+**Theorem 13.2 (exact closed strip in every dimension).** For every integer $d\ge3$ and every real $\lambda,q$ with $|\lambda|\le1/d$, the map of Convention 2.1 is Schwarz if and only if
+
+$$
+0\le q\le\frac{1-\lambda^2}{d-1}.
+$$
+
+The statement quantifies over all $X\in M_d(\mathbb C)$ and all $v\in\mathbb C^d$, including zero probes, zero coordinates, singular row blocks and equality in either bound.
+
+**Proof.** If $\Phi$ is Schwarz, Theorem 4.1(i) gives $q\ge0$, and Theorem 4.1(ii) gives $\lambda^2\le p=1-(d-1)q$, which is the upper bound on $q$. Conversely, assume the displayed inequalities. Then $p\ge\lambda^2$ and $|\lambda|\le1/d$, so Lemma 13.1 verifies conditions (A) and (B) of Theorem 3.2 at every $t\in\Delta_d$. Theorem 3.2 therefore gives $S(X)\ge0$ for every traceless complex $X$ and every probe with nonnegative coordinates. Diagonal-unitary covariance and scalar-shift invariance, exactly as in Steps 1 and 2 of that theorem, give the assertion for arbitrary complex $X$ and $v$. The proof of Lemma 13.1 used limits at every singular face, so no strict inequality was introduced. ∎
+
+## 14. The dimension-three negative cap arc
+
+**Theorem 14.1 (closed negative cap arc).** For $1/3\le r\le1/2$, set
+
+$$
+\lambda=-r,\qquad q=(1+r)(1-2r).
+$$
+
+Then the original map on $M_3(\mathbb C)$ is Schwarz for every complex input and every complex probe.
+
+**Proof.** The proof uses only the already established Schwarz suppliers and convexity. In the coordinates $(\lambda,p)$ of Definition 11.1, put
+
+$$
+z_-(r)=(-r/2,r^2),\qquad c(r)=(1+r)(1-2r).
+$$
+
+Theorem 9.1 gives $z_-(r)\in\widehat{\mathcal S}_3$ for $0\le r\le1$, since $m^2\lambda^2=r^2=p$. Its $q$-coordinate is $(1-r^2)/2$. For $r\ge1/3$,
+
+$$
+0\le c(r)\le\frac{1-r^2}{2},\qquad
+\frac{1-r^2}{2}-c(r)=\frac{(3r-1)(r+1)}2.
+$$
+
+The point $(-r/2,1)$ is the $q=0$ Schur multiplier and is Schwarz by Proposition 4.2. The parameter with $\lambda=-r$ and $q=c(r)$ is the convex combination of these two Schwarz parameters with weight
+
+$$
+\theta=\frac{2c(r)}{1-r^2}\in[0,1]
+$$
+
+on $z_-(r)$ and weight $1-\theta$ on $(-r/2,1)$. The convexity identity in Remark 4.4 then proves the Schwarz inequality. At $r=1/3$ the two points coincide in $q$; at $r=1/2$ the weight on $z_-(r)$ is zero. Thus both endpoints and every complex input are included. ∎
+
+## 15. The exact nonpositive region in dimension three
+
+**Theorem 15.1 (classification for $\lambda\le0$ in dimension three).** Let $K_3$ be the necessary region of Theorem 8.1. For $\lambda\le0$, the original map on $M_3(\mathbb C)$ is Schwarz if and only if $(\lambda,q)\in K_3$.
+
+**Proof.** Necessity is Theorem 4.1, specialized to $d=3$, and is exactly membership in $K_3$. For sufficiency write $\lambda=-r$ with $r\ge0$. The conditions $q\ge0$, $q\le1/2$ and the second and fourth inequalities defining $K_3$ are
+
+$$
+q\le\frac{1-r^2}{2},\qquad q\le1-r-2r^2.
+$$
+
+The third inequality is redundant on the resulting interval. If $0\le r\le1/3$, it is enough to substitute the larger endpoint $(1-r^2)/2$; the difference between its right and left sides is
+
+$$
+\frac{(1-r^2)(1-9r^2)}4\ge0.
+$$
+
+If $1/3\le r\le1/2$, substitute the larger permitted endpoint $1-r-2r^2$; the difference is
+
+$$
+4r(r+1)(3r-1)(3r+1)\ge0.
+$$
+
+For $r>1/2$ the fourth inequality gives $q<0$, so no point of $K_3$ occurs. Hence $K_3$ is the union of
+
+$$
+0\le r\le\frac13,\quad 0\le q\le\frac{1-r^2}{2},
+$$
+
+and
+
+$$
+\frac13\le r\le\frac12,\quad 0\le q\le(1+r)(1-2r).
+$$
+
+The first part is Theorem 13.2. On the second part, Theorem 14.1 gives the upper boundary and Proposition 4.2 gives the lower boundary $q=0$; convexity in Remark 4.4 gives every intermediate $q$. This proves both implications, including $r=1/3$ and $r=1/2$. ∎
+
+**Corollary 15.2 (remaining original-domain gap).** Theorem 13.2 settles the closed strip $|\lambda|\le1/d$. Theorem 15.1 settles all of $K_3$ on the half-plane $\lambda\le0$. The unproved part of the original classification is the positive-lambda portion outside the strip (and, in dimensions $d>3$, the corresponding part of the exact region $K_d$); no assertion here identifies that remainder with $K_d$ or with any finite affine description.
+
+**Remark 15.3 (source correspondence).** The family is the specialization $\alpha=dq$, $\beta=1-dq-\lambda$ of Eq. (6) of Bera, Bhattacharya and Chruściński, arXiv:2604.18600v1. The only external Schwarz input used in Theorem 14.1 is the pair-compression theorem already proved in Theorem 9.1; the invalid full sufficient criteria discussed in Convention 12.1 are not used. The arguments are for the original complex matrix family and do not replace it by a real or compressed algebra.
+
+## 追加锚（本行以下为增补区）
