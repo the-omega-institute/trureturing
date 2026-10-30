@@ -167,17 +167,19 @@ private lemma exponential_of_strict_time {τ : ℝ≥0} (hτ : 0 < τ)
       ∀ t : ℝ≥0, ‖S t‖ ≤ M * Real.exp (-ω * (t : ℝ)) := by
   have hτr : 0 < (τ : ℝ) := hτ
   have hlog : 0 < Real.log 2 := Real.log_pos (by norm_num)
+  let φ : Multiplicative ℝ≥0 →* (E →L[ℝ] E) := {
+    toFun := fun t => S t.toAdd
+    map_one' := S.zero
+    map_mul' := fun s t => S.add s.toAdd t.toAdd }
   have hpow (n : ℕ) : ‖S (n • τ)‖ ≤ (1 / 2 : ℝ) ^ n := by
-    induction n with
+    cases n with
     | zero => simpa using S.norm_operator_le_one 0
-    | succ n hn =>
-      calc
-        ‖S ((n + 1) • τ)‖ = ‖(S τ).comp (S (n • τ))‖ := by
-          rw [succ_nsmul', S.add]
-        _ ≤ ‖S τ‖ * ‖S (n • τ)‖ := ContinuousLinearMap.opNorm_comp_le _ _
-        _ ≤ (1 / 2) * (1 / 2 : ℝ) ^ n :=
-          mul_le_mul hq hn (norm_nonneg _) (by norm_num)
-        _ = (1 / 2 : ℝ) ^ (n + 1) := by rw [pow_succ]; ring
+    | succ n =>
+      have hm : S ((n + 1) • τ) = (S τ) ^ (n + 1) := by
+        simpa [φ] using φ.map_pow (Multiplicative.ofAdd τ) (n + 1)
+      rw [hm]
+      exact (norm_pow_le' (S τ) (Nat.succ_pos n)).trans
+        (pow_le_pow_left₀ (norm_nonneg _) hq _)
   refine ⟨2, Real.log 2 / (τ : ℝ), by norm_num, div_pos hlog hτr, fun t => ?_⟩
   let n := ⌊(t : ℝ) / (τ : ℝ)⌋₊
   have hnt : (n : ℝ) * (τ : ℝ) ≤ (t : ℝ) :=

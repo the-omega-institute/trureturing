@@ -38,7 +38,7 @@ internal sealed class DatkoStabilityDocument : IScribeDocumentDefinition
     {
         Formula e=F.Id("E"), s=F.Id("S"), x=F.Id("x"), t=F.Id("t"), m=F.Id("M"), w=F.Id("omega");
         Formula real=Call("Real"), zero=new Formula.Number(0), one=new Formula.Number(1);
-        Formula orbit=At(At(s, Call("Real.toNNReal", t)), x);
+        Formula orbit=At(At(s, Call("toNNReal", t)), x);
         Formula energy=All("x", e, Call("IntegrableOn",
             Seq(t, F.Mapsto, new Formula.Power(new Formula.Norm(orbit), new Formula.Number(2))),
             Call("Ioi", zero), F.Id("volume")));
