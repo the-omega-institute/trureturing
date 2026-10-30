@@ -1,0 +1,50 @@
+**Lemma 4.1 (Every first-one subtree).** For every second address $t_1$,
+
+$$
+B_1\le a\eta.
+\tag{4.2}
+$$
+
+Proof. Only phase $\alpha$ remains, so its target is the fixed vertex
+$v_\alpha$. If $t_1$ is a separator in that phase or repeats the
+first address, it adds no information. In the separator case its
+reply is necessarily zero; in the repeated case it is necessarily
+one. By Lemma 3.1 the maximal correct mass is $\eta/2$ if the target
+belongs to $e$, and $a\eta$ otherwise. Both are at most $a\eta$.
+
+Otherwise the second call is a distinct active edge $f$. If $e,f$
+share a vertex, each second-reply value imposes a mixed triple of
+Lemma 3.2. Each leaf then has maximal correct mass $a\eta/2$,
+including an exterior target, so their sum is $a\eta$.
+
+If the two edges have disjoint vertex sets, consider all three target
+placements. For a target in $e$, the first-one condition gives equal
+target-spin masses $\eta$ before the phase factor, independently of
+$f$. Summing the maximal masses over the two labels of $f$ gives
+
+$$
+\frac{\eta}{2}(c+2\eta)=\frac{\eta}{2}.
+\tag{4.3}
+$$
+
+For a target in $f$, the first constraint has probability $2\eta$
+and is independent of the edge and target calculation at $f$.
+Lemma 3.1 therefore gives total correct mass
+$\tfrac12(2\eta)a=a\eta$. For a target in neither edge, it remains
+independent of both constraints, so the first-one mass $\eta$
+multiplied by its majority probability $a$ gives $a\eta$.
+
+These exhaustive possibilities can be summarized by their total
+subtree correct masses:
+
+| Second call in the certified phase | Target placement | $B_1$ |
+| --- | --- | --- |
+| Separator or repeated edge | In $e$ | $\eta/2$ |
+| Separator or repeated edge | Outside $e$ | $a\eta$ |
+| Distinct edge sharing a vertex with $e$ | Anywhere | $a\eta$ |
+| Edge vertex-disjoint from $e$ | In $e$ | $\eta/2$ |
+| Edge vertex-disjoint from $e$ | In $f$ or in neither edge | $a\eta$ |
+
+Since $a>1/2$, every row proves (4.2). The table includes null leaves
+with mass zero in its summed values. $\square$
+
