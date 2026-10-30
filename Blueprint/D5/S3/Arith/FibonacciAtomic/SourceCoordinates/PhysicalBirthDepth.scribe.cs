@@ -106,7 +106,7 @@ internal sealed class PhysicalBirthDepthDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Def(string name, string title, string prose) => Describe.Lean(
         DescribeId.Create("physical-birth-depth-" + name.Replace(".", "-").ToLowerInvariant()),
-        DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
+        DeclarationHandle.Create(Prefix + name[(name.LastIndexOf('.') + 1)..]), H(title), StatementSource.WithoutFormula(),
         AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
     private static Formula V(string s) => F.Id(s);
     private static Formula Par(Formula x) => Seq(Open, x, Close);
