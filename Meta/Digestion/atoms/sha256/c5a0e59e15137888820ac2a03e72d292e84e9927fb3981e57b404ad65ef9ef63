@@ -1,0 +1,19 @@
+**Lemma 2.3 (full-domain chronological correspondence).** For every actual rank-$q$ cone $p$ at cut $n$ satisfying Definition 2.2, $\mathcal B_{q,s,d}(D_{n,p})$ is exactly a consecutive global output block
+
+$$
+ (z_{J_p},z_{J_p+1},\ldots,z_{J_p+d-1})
+ \quad\text{born in update }t=n-q+s+1.
+ \tag{NRW.5}
+$$
+
+Every decoded orientation has final rank at least $q-s+1$. For prefix-incomparable cones of the same rank, their intervals in (NRW.5) are disjoint and their $J_p$ differ. In particular, equality of complete residuals forces equality of these blocks even for mixed creation descriptors.
+
+*Proof.* Lemma 2.1 identifies normalized time zero with the actual cut $\tau-1=n-q+1$. Induct on normalized updates, asserting equality of the decoder's labelled leaf roster with the actual old leaves in the cone, at the same relative physical addresses. The assertion holds at time zero. If a beta parent branches in normalized update $k$, its actual branch time is $\tau-1+k$, and its final rank, by (NRW.4), is
+
+$$
+ r=n-(\tau-1+k)+2=q+1-k\ge q+1-s\ge3.
+ \tag{NRW.6}
+$$
+
+Its complete-function orientation is consequently its actual birth bit. Updating all and only the old leaves gives exactly the next actual roster. All parents exist at the final cut because their branch times are at most $n-1$. This proves the induction for every allowed descriptor and orientation history. Immediately before update $s$ there are $F_s\ge d$ beta leaves. All global beta leaves beginning with $p$ form one lexicographic interval, since beta leaves are prefix-incomparable. The actuator consumes one consecutive stream segment on this interval during that actual update; selecting its first $d$ entries gives (NRW.5). No other cone's entries interleave it. Prefix-incomparable cones give disjoint intervals at the same update $t$. Finally the decoder has one input domain and one rule, so equal input functions give equal output blocks. $\square$
+

@@ -1,0 +1,4 @@
+**Lemma 1.4 (observable orientations).** A complete depth function determines the ordered finite tree of its terminal and branch positions. At any reached branch of rank $r\ge3$, it determines its orientation bit. A branch of rank two has two terminal children and its orientation is not determined this way.
+
+*Proof.* Restricting the function to tapes beginning with a direction word $w$ and subtracting $|w|$ gives the local depth function at the reached node. It is identically zero exactly at a terminal node, and strictly positive at a branch. Induction reconstructs the ordered tree. The maximum local depth at rank $j\ge1$ is $j-1$, and at rank zero is zero. Thus the two child maxima at rank $r\ge3$ are $r-2,r-3$. Their order identifies the rank-$r-1$ child and its bit. At $r=3$ they are one and zero; at rank two both are zero. All restrictions have sufficient remaining horizon by the rank decrease along $w$. $\square$
+

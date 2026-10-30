@@ -1,0 +1,27 @@
+**Theorem 5.2 (native state and bit consequences).** Under the integer contract, exact output or strict pointwise approximation to that integer depth requires
+
+$$
+ w_{h_d}\ge N_d,\qquad
+ b_{h_d}\ge\lceil\log_2N_d\rceil
+ \ge\left\lceil h_d-\log_2(h_d+1)\right\rceil.
+ \tag{NRW.22}
+$$
+
+Under the single fixed Boolean contract (NRW.21), exact output or strict pointwise approximation to that Boolean output requires
+
+$$
+ \begin{gathered}
+ w_{h_d}\ge |\mathcal Q_d|\ge N_d^{1/s_d},\\
+ b_{h_d}\ge\left\lceil\frac{\log_2N_d}{s_d}\right\rceil
+ \ge\left\lceil\frac{h_d-\log_2(h_d+1)}{s_d}\right\rceil,\\
+ d\ge64\ \Longrightarrow\quad
+ w_{h_d}\ge2^{d/(96\log_2d)},\qquad
+ b_{h_d}\ge\left\lceil\frac{d}{96\log_2d}\right\rceil.
+ \end{gathered}
+ \tag{NRW.23}
+$$
+
+*Proof.* After the prefixes $\eta(p)$ at the common layer, (NRW.3) identifies root integer cofactors with $h_d$ plus the local residuals on the shorter suffix domain. Two distinct members of $\mathcal P_d$ have a common suffix on which these integers differ, by Theorem 3.2 and padding independence. If their retained states merged, their outputs on that same suffix would agree, contradicting exactness. For real approximation, the open intervals of radius $1/2$ around two distinct integer answers are disjoint, giving the same contradiction. Thus there are at least $N_d$ states.
+
+For (NRW.21), the common offset cancels in the comparison: the root cofactor at $\eta(p)$ is exactly $\Theta_{p,t_d}$ on the shorter suffix domain. Distinct members of $\mathcal Q_d$ therefore need distinct states. Pointwise error strictly below $1/2$ is now error to these Boolean values: the open intervals about zero and one are disjoint. Taking binary logarithms and integer ceilings proves (NRW.22)–(NRW.23). This is the fixed-order residual principle underlying Bryant, [*Graph-Based Algorithms for Boolean Function Manipulation*][BRYANT], §§1.1–2 and Theorem 1, applied to these native cofactors. The Boolean state lower bound is superpolynomial; its bit consequence is $\Omega(d/\log d)$. The stronger integer contract has the separate $\Omega(d)$ bit bound (NRW.22). Neither bound asserts exponentially many bits. $\square$
+

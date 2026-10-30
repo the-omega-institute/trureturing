@@ -1,0 +1,11 @@
+**Theorem 2.4 (same-source phase separation).** Let
+
+$$
+ g(X)=X^d+\sum_{i=0}^{d-1}c_iX^i
+ \tag{NRW.7}
+$$
+
+be primitive over $\mathbb F_2$, and let $z$ be the nonzero stream satisfying $z_{j+d}=\sum_{i<d}c_i z_{j+i}$ for every $j\ge1$, aligned to the first birth. Let $T=2^d-1$. For any one actual cut $n$ with $B_n<T$, any $s$ with $F_s\ge d$, and prefix-incomparable rank-$q$ cones with $q-s+1\ge3$, their complete integer residuals are pairwise distinct.
+
+*Proof.* The companion state is the ordered consecutive window $(z_j,\ldots,z_{j+d-1})$. A primitive characteristic polynomial has nonzero constant term, so the shift is invertible. On every nonzero seed its orbit has period $T$ and visits each nonzero state exactly once. These are the nonsingular primitive-LFSR facts in Menezes–van Oorschot–Vanstone, [*Handbook of Applied Cryptography*, Chapter 6][HAC], §6.2.1, Facts 6.9, 6.11–6.12; its connection-polynomial convention may use the reciprocal of (NRW.7), also primitive. Thus two equal length-$d$ consecutive output windows have starting indices congruent modulo $T$. Lemma 2.3 makes equal residuals give equal such windows. Their distinct starts satisfy $1\le J_p\le J_p+d-1\le B_n<T$, which precludes that congruence. The polynomial, seed, actual source and cut are the same for all cones. $\square$
+

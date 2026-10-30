@@ -1,0 +1,29 @@
+**Theorem 4.3 (one fixed threshold has superpolynomial width).** In the one source, cut and physical layer of Theorem 3.2, there exist a single $t_d\in\mathcal T_d$ and a subset $\mathcal Q_d\subseteq\mathcal P_d$ such that
+
+$$
+ \begin{gathered}
+ |\mathcal Q_d|\ge N_d^{1/s_d}
+ \ge2^{(h_d-\log_2(h_d+1))/s_d},\\
+ \Theta_{p,t_d}\ne\Theta_{p',t_d}\quad(p,p'\in\mathcal Q_d,\ p\ne p').
+ \end{gathered}
+ \tag{NRW.17}
+$$
+
+For every $d\ge64$ this implies the explicit lower bound
+
+$$
+ |\mathcal Q_d|\ge2^{d/(96\log_2d)}.
+ \tag{NRW.18}
+$$
+
+*Proof.* Lemma 4.1 shows that the tuple $(\Theta_{p,t})_{t\in\mathcal T_d}$ is injective on the entire mixed-descriptor set $\mathcal P_d$. If $M_t$ counts its distinct profiles at threshold $t$, then
+
+$$
+ N_d\le\prod_{t\in\mathcal T_d}M_t.
+ \tag{NRW.19}
+$$
+
+Since $|\mathcal T_d|=s_d$, some $M_{t_d}\ge N_d^{1/s_d}$. Choose one prefix for each of those profiles. The threshold is then fixed across every prefix and continuation of this instance. No threshold input is introduced.
+
+For $d\ge64$, $h_d\ge8$ and $h_d\ge d/16$. The integer inequality $\log_2(h+1)\le h/2$ holds for $h\ge6$: its base is $7\le8$, and $\sqrt2(h+1)\ge h+2$ gives its induction step. Moreover Lemma 3.1 gives $s_d\le2\log_2d+4\le3\log_2d$. Therefore $(h_d-\log_2(h_d+1))/s_d\ge d/(96\log_2d)$. The bound dominates every fixed power of $d$, since $d/(\log_2d)^2$ tends to infinity. $\square$
+

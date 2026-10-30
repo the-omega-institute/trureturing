@@ -1,0 +1,24 @@
+**Theorem 3.2 (exponential integer residuals in one native layer).** For every $d\ge32$, fix any one primitive degree-$d$ polynomial and any nonzero seed, giving one actual source from Definition 1.1. Use (NRW.8), set $k_d=\lfloor h_d/2\rfloor$ and
+
+$$
+ q_d=n_d-h_d-k_d,\qquad
+ \mathcal P_d=\{p\in\{a,b\}^{h_d}:\kappa_{n_d}(p)=q_d\},\qquad
+ N_d=\binom{h_d}{k_d}.
+ \tag{NRW.12}
+$$
+
+At this one mature cut all length-$h_d$ words are branches, and
+
+$$
+ |\mathcal P_d|=N_d\ge\left\lceil\frac{2^{h_d}}{h_d+1}\right\rceil,
+ \qquad q_d\ge d+4,
+ \qquad D_{n_d,p}\ne D_{n_d,p'}\quad(p\ne p').
+ \tag{NRW.13}
+$$
+
+Both immutable descriptor types occur in $\mathcal P_d$: $(n_d-q_d,\alpha)$ occurs $\binom{h_d-1}{k_d-1}$ times, and $(n_d-q_d+1,\beta)$ occurs $\binom{h_d-1}{k_d}$ times.
+
+*Proof.* Primitive degree-$d$ polynomials exist for every $d$: a generator of the cyclic group $\mathbb F_{2^d}^{\times}$ has degree $d$ over $\mathbb F_2$ and primitive minimal polynomial. Fix one such polynomial and one nonzero seed throughout. Along any direction prefix of length at most $h_d$, rank is at least $n_d-2h_d=d+4$, so every such position is a branch. At each edge the choices of rank drop one or two are in bijection with the two physical letters at that actual branch. This gives a bijection from all physical words of length $h_d$ to all sequences of $h_d$ rank drops. Exactly $\binom{h_d}{k}$ of them have $k$ drops of two, and final rank $n_d-h_d-k$. The central coefficient gives (NRW.13)'s count. If the last drop is two the final initial label is alpha; if it is one the initial label is beta. Counting the preceding drops gives the two stated descriptor counts, which are positive since $h_d\ge4$ and $1\le k_d<h_d$.
+
+Lemma 3.1 supplies maturity, $B_{n_d}<2^d-1$, and $q_d-s_d+1\ge9$. All selected cones are prefix-incomparable and have the common branch time $n_d-q_d+2$. Apply Theorem 2.4 with $s=s_d$. The beta/alpha mixture is inside the domain of the single decoder, with no class removed. $\square$
+

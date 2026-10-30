@@ -1,0 +1,39 @@
+**Proposition 6.2 (agreement before an update does not fix that update).** Use the degree-five recurrence $z_{j+5}=z_j+z_{j+2}$ with initial outputs $(1,0,0,0,0)$, and its actual lexicographic source. At cut $n=16$ the physical prefixes $p=\mathrm{aaaba}$ and $p'=\mathrm{ababa}$ both have immutable descriptor $(8,\alpha)$ and rank eight. Their common branch time is ten, and their beta-origin time is nine. Their complete orientation records through normalized update three agree; in normalized update four the records differ. At global update fourteen, the first five beta-parent birth bits below them are respectively $00111$ and $10001$, starting at global indices $385$ and $453$.
+
+*Proof.* For every parent $w$, its actual index is [GPO Proposition 39.2][GPO]'s
+
+$$
+ j_w=F_{\tau_w}-1+1+
+ \sum_{\substack{vc\preceq w\\c=b}}
+ \lambda_{\sigma_{va}}(\tau_w-1-\tau_v),
+ \quad\lambda_\alpha(e)=F_e,\quad\lambda_\beta(e)=F_{e+1}.
+ \tag{NRW.25}
+$$
+
+The recurrence can equivalently be evaluated as $z_j=[X^0](X^{j-1}\bmod(X^5+X^2+1))$. At each traversed branch use its resulting bit to place beta at $a$ exactly for one, alpha at the other child. Applying (NRW.25) to the proper prefixes gives
+
+$$
+ \begin{array}{c|ccccc}
+ w&\varepsilon&a&aa&aaa&aaab\\\hline
+ (b_w,\sigma_w)&(0,\alpha)&(2,\beta)&(3,\alpha)&(5,\alpha)&(7,\beta)\\[2pt]
+ w&\varepsilon&a&ab&aba&abab\\\hline
+ (b_w,\sigma_w)&(0,\alpha)&(2,\beta)&(3,\beta)&(4,\alpha)&(6,\alpha)
+ \end{array}
+ \tag{NRW.26}
+$$
+
+Both final alpha children are created at eight. The following pairs $(v,z_{j_{pv}})$ specify the whole normalized records in each indicated update, in physical order:
+
+$$
+ \begin{array}{c|c|c}
+ k&\text{below }p&\text{below }p'\\\hline
+ 1&(\varepsilon,0)&(\varepsilon,0)\\
+ 2&(b,0)&(b,0)\\
+ 3&(a,1),(bb,1)&(a,1),(bb,1)\\
+ 4&(aa,0),(ba,0),(bba,1)&(aa,1),(ba,0),(bba,0)
+ \end{array}
+ \tag{NRW.27}
+$$
+
+For the next update $k=5$, the first parent lists are $(aab,ab,bab,bbaa,bbb)$ and $(aaa,ab,bab,bbab,bbb)$. Since $F_{14}-1=376$, the sibling-mass sums in (NRW.25) for their first entries are respectively eight and seventy-six, giving $J_p=385$ and $J_{p'}=453$. Prefix intervals make the next four indices consecutive. The recurrence gives $(z_{385},\ldots,z_{389})=00111$ and $(z_{453},\ldots,z_{457})=10001$. The records (NRW.27) prove the pre-update agreement and next-update difference; they are an indexing example at degree five, not a replacement for the all-$d\ge32$ theorem. $\square$
+

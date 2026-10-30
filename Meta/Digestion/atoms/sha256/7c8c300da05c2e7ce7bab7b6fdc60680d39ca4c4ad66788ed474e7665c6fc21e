@@ -1,0 +1,9 @@
+**Definition 6.3 (supplier correspondence).** The beta-origin synchronization, its residual-only consecutive-block correspondence, and the bounded-deficit native consequence (NRW.17) are repo-derived statements with proofs above. The LFSR and fixed-order cofactor principles used in their proofs are literature-attested by [HAC §6.2.1][HAC] and [Bryant §§1.1–2][BRYANT]. Their standard forms alone do not state the native-source correspondence proved in Lemmas 2.1–2.3. No claim of global literature novelty is attached to this source-specific consequence.
+
+The existing formal source [GenealogicalFiberTransport.lean](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean), especially `substitution`, `decompose`, `assemble` and `sourceEquiv`, supplies ordered semantic leaf substitution and its labelled-shape correspondence. [ActualFibonacciSupportChain.lean](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualFibonacciSupportChain.lean), `actual_fibonacci_support_chain`, supplies the actual ordered-support recurrence and finite-prefix limitation in its semantic address domain. These declarations do not identify those ordered semantic ports with the hidden local physical ports here. Equations (NRW.1), (NRW.25) use the physical correspondence of GPO §§27,39 and ACR §§2,10,13 instead. The direction-order residuals retain that physical order; neither the semantic suppliers nor their mathematical inverses acquire a missing source binding, label sensor, generator state, law or cut.
+
+[GPO]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GLOBAL_PORT_ORIENTATION.md
+[ACR]: RECURSIVE_RELATIONAL_OBSERVATION_ACTUAL_CUT_REINSTATEMENT.md
+[HAC]: https://cacr.uwaterloo.ca/hac/about/chap6.pdf
+[BRYANT]: https://www.cs.cmu.edu/~bryant/pubdir/ieeetc86.pdf
+

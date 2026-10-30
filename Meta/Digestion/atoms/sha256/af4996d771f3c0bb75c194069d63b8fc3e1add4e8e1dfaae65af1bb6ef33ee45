@@ -1,0 +1,19 @@
+**Lemma 1.3 (padding and root offset).** Every path in a rank-$q$ cone has at most $\max(q-1,0)$ edges. If $L'\ge L\ge\max(q-1,0)$, then
+
+$$
+ D_{n,p}^{L'}(uv)=D_{n,p}^{L}(u)
+ \quad(u\in\{0,1\}^L,\ v\in\{0,1\}^{L'-L}).
+ \tag{NRW.2}
+$$
+
+For every present $p$ of length $h$, every $u\in\{0,1\}^{H_n-h}$ and every $v\in\{0,1\}^h$,
+
+$$
+ D_{n,\varepsilon}^{H_n}(\eta(p)u)
+ =h+D_{n,p}^{H_n-h}(u)
+ =h+D_{n,p}^{H_n}(uv).
+ \tag{NRW.3}
+$$
+
+*Proof.* At a branch each edge reduces rank by one or two, and ranks zero and one are terminal. Induction gives the depth bound, also attained at $q\ge1$ by always taking the larger-rank child. After termination later tape bits are unused, proving (NRW.2). Since $p$ is present, the root walk follows its first $h$ directions without early termination. The root rank is $n$, and along this present path $q_p\le n-h$; hence $H_n-h\ge\max(q_p-1,0)$. Its remaining procedure is exactly the local walk, including the same terminal test. This proves both equalities for every padding word. In particular, equality or inequality of complete local residuals transfers to the shorter suffix domain in (NRW.3). $\square$
+

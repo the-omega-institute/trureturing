@@ -1,0 +1,11 @@
+**Lemma 2.1 (beta-origin synchronization for all descriptors).** Every rank-$q\ge2$ cone at cut $n$ has the same branch time
+
+$$
+ \tau=n-q+2.
+ \tag{NRW.4}
+$$
+
+At update $\tau-1$ it consists of a single beta leaf. Measured from that cut, its entire future follows the same beta-origin substitution rule, regardless of its initial descriptor. After $k\ge0$ further updates its number of beta leaves is $F_{k+1}$. The beta leaves immediately before its $k$th further update, $k\ge1$, therefore number $F_k$.
+
+*Proof.* Add the two equations (NRW.1). For initial alpha, $(b_p,\sigma_p)=(n-q,\alpha)$: the node changes to beta at $b_p+1=\tau-1$ and branches at $\tau=b_p+2$. For initial beta, $(b_p,\sigma_p)=(n-q+1,\beta)$: it is created at $\tau-1$ and branches at $\tau$. Thus both cases have the identical one-beta initial tree at the common cut. Alpha changes to beta, beta branches into one alpha and one beta, and neither rule updates newborns twice. Induction on further updates gives the local substitution and Fibonacci masses, with all physical letters retained. These two cases exhaust (NRW.1); a later beta label never replaces the immutable initial label. $\square$
+

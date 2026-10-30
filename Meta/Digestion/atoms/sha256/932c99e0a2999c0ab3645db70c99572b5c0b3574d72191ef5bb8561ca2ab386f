@@ -1,0 +1,17 @@
+**Lemma 4.1 (first differing update and its depth deficit).** For any two distinct $p,p'\in\mathcal P_d$, there are a normalized update $k\le s_d$, a common relative beta-parent address $v$ with $|v|\le k-1$, and a tape $u$ such that, in one order of the pair,
+
+$$
+ D_{n_d,p}(u)=q_d-1-c,
+ \qquad D_{n_d,p'}(u)\le q_d-2-c,
+ \qquad 0\le c\le |v|\le s_d-1.
+ \tag{NRW.15}
+$$
+
+Here $c$ is exactly the number of rank drops of two along the common prefix $v$.
+
+*Proof.* The two length-$d$ blocks from normalized update $s_d$ have different global starts below one primitive period, so they differ. If every orientation assigned during normalized updates $1,\ldots,s_d$ agreed on the common beta rosters, the roster induction of Lemma 2.3 would make these two ordered blocks equal. Therefore choose the first differing normalized update $k\le s_d$. Agreement through update $s_d-1$ alone would not suffice for that implication; the selected block is assigned in update $s_d$ itself.
+
+All earlier rosters and orientations agree at common physical addresses. Choose a beta parent $v$ whose bit differs in update $k$. Starting from a single beta at normalized time zero, each update can increase relative physical depth by at most one, since it does not revisit newborns. A parent before update $k$ thus has depth at most $k-1$. Along the proper prefixes of $v$, the two final ranked trees agree: those branches were created in earlier updates. If $c$ edges of $v$ drop rank by two, its rank in both trees is $r=q_d-|v|-c=q_d+1-k\ge q_d+1-s_d\ge9$.
+
+Choose at $v$ the physical child of rank $r-1$ in the first cone, which has rank $r-2$ in the second. In the first cone continue by its larger-rank child at every later branch. The tail after this chosen edge has exactly $r-2$ edges there; any tail in the second has at most $r-3$. Thus the first complete path has length $|v|+1+(r-2)=q_d-1-c$, and the second at most $q_d-2-c$. Extend the chosen direction word arbitrarily to the common horizon; Lemma 1.3 makes the extension immaterial. This proves (NRW.15), including differences first assigned in the selected update itself. $\square$
+

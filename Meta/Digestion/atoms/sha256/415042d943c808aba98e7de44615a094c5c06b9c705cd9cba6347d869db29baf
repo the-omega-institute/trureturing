@@ -1,0 +1,12 @@
+**Proposition 3.3 (identical fair-tape depth laws).** At any rank $q$, the probability generating polynomial of depth on an independent fair tape of sufficient length is
+
+$$
+ G_0(x)=G_1(x)=1,\qquad
+ G_q(x)=\frac{x}{2}\bigl(G_{q-1}(x)+G_{q-2}(x)\bigr)\quad(q\ge2).
+ \tag{NRW.14}
+$$
+
+Consequently all $N_d$ residuals of Theorem 3.2 have the same law, despite being pointwise distinct.
+
+*Proof.* At each reached branch the next fair physical direction chooses the two child ranks equiprobably. Swapping their physical order changes neither this sum nor the independent suffix law. Induction with the two terminal ranks proves (NRW.14). Its first derivative at one agrees with [ACR Theorem 13.2][ACR]'s rank-only mean. $\square$
+

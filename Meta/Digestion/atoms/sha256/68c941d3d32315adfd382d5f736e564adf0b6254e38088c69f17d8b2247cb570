@@ -1,0 +1,12 @@
+**Proposition 6.1 (adequacy of finite signatures).** For sufficient horizon, a complete integer depth residual can be represented by the finite signature
+
+$$
+ S(\text{terminal})=\bot,\qquad
+ S(\text{branch with children }A,B)=(S(A),S(B)).
+ \tag{NRW.24}
+$$
+
+Equality of these signatures is equivalent to equality of the complete depth functions. A Boolean threshold cofactor has an exact finite representation obtained by recursively retaining the current direction position and its two child cofactors, replacing equal child cofactors by their common value and retaining constants zero and one. For a fixed direction order, equality of the resulting signatures is equivalent to equality of the complete Boolean functions. Leaf-depth multiplicities $a_j$ represent the fair law exactly by $\Pr(D=j)=a_j2^{-j}$.
+
+*Proof.* The forward implication for integer signatures follows by evaluating the same tree on each tape. Conversely the complete depth function determines the finite ordered terminal/branch tree by Lemma 1.4; induction gives its signature. For Boolean functions, apply Shannon's two-cofactor identity at each remaining position. Equal children remove an irrelevant position; distinct children retain both their values and the actual position, so functions with different relevant positions are not conflated. Induction on the remaining horizon proves canonicity and adequacy. These are the usual reduced fixed-order cofactors of [Bryant][BRYANT]; no enumeration of a $2^H$ tape cube is needed for this representation. Finally the independent fair tape reaches each depth-$j$ leaf with probability $2^{-j}$, giving the law formula. $\square$
+

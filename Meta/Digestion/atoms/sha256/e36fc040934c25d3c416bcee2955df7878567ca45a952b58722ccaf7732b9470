@@ -1,0 +1,12 @@
+**Definition 1.1 (source and immutable descriptors).** Use the single alpha-origin source of [GPO, Definition 27.1][GPO]: persistent physical links $a<b$, one actual root, total paid literal presence, simultaneous old-leaf substitution, and beta-leaf births committed in physical lexicographic order. At the $j$th birth the actuator consumes $z_j$, placing beta at $a$ exactly when $z_j=1$. Old branches persist; a newborn leaf is not updated in its birth update. The only observer operations are the original serial localStep, applyRho, presence-Read and stop, with their actual binding, grants, backing, completion and stationarity premises.
+
+Write $F_0=0,F_1=1,F_{i+2}=F_{i+1}+F_i$ and $B_t=F_{t+1}-1$ for the total births by cut $t$. For a physical node $p$, its creation update $b_p$ and initial label $\sigma_p$ remain immutable even after its label changes. [ACR, Definitions 2.1 and 10.1][ACR] give
+
+$$
+ \tau_p=b_p+2-\mathbf1_{\sigma_p=\beta},\qquad
+ q_p=\kappa_n(p)=n-b_p+\mathbf1_{\sigma_p=\beta}.
+ \tag{NRW.1}
+$$
+
+Here $\tau_p$ is the branch update, the root has descriptor $(0,\alpha)$, and both children are created at $\tau_p$. A present cone of rank zero or one is terminal. A branch of rank $q\ge2$ has child ranks $q-1,q-2$, the larger at $a$ precisely when its birth bit is one. Prefixes, ranks and descriptors are mathematical coordinates, not extra observations or acquired address records.
+

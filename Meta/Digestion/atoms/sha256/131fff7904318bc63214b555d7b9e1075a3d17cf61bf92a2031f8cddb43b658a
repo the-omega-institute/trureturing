@@ -1,0 +1,10 @@
+**Definition 4.2 (fixed Boolean profiles).** For an integer $t$, let
+
+$$
+ \Theta_{p,t}(u)=\mathbf1\{D_{n_d,p}(u)\ge t\},\qquad
+ \mathcal T_d=\{q_d-1-c:0\le c<s_d\}.
+ \tag{NRW.16}
+$$
+
+Each $t$ defines one Boolean function on direction tapes. It is a fixed parameter of that function, not a coordinate supplied with a suffix.
+

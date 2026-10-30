@@ -1,0 +1,12 @@
+**Proposition 4.4 (integer separation alone is insufficient).** For each $m\ge1$, the $2^m$ integer functions
+
+$$
+ A_x(j,c)=2j+(c\mathbin{\mathsf{xor}}x_j),\qquad
+ x\in\{0,1\}^m,\quad 1\le j\le m,\ c\in\{0,1\},
+ \tag{NRW.20}
+$$
+
+are pairwise distinct with identical uniform distributions. For each fixed threshold their Boolean profiles number at most two. Thus a conclusion like (NRW.17) needs additional structure beyond distinct integer residuals and equal laws.
+
+*Proof.* For each $j$, changing $x_j$ interchanges the two values $2j,2j+1$. This preserves their multiplicities and changes the function. A threshold can separate these two values for at most one $j$; all other pairs lie wholly on one side. Only that one bit of $x$ affects the threshold profile. This family is an abstract counterexample to the generic inference, not an alternative native source. The native implication uses Lemma 4.1's small set of depth deficits. $\square$
+

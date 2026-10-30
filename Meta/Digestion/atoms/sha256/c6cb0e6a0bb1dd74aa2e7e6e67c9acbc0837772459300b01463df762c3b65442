@@ -1,0 +1,11 @@
+**Definition 5.1 (direction-order sequential representation).** For the fixed source and cut of Theorem 3.2, consider a deterministic sequential machine that consumes a length-$H_{n_d}$ tape in order. Its complete retained state after $h_d$ directions includes every mutable field that can affect the output, including control position, counters, accessible prefix summaries and any retained work. The transition after that layer depends only on this state and the remaining directions; it has no new source reply or auxiliary threshold input. Let $w_{h_d}$ be the number of distinct such states reached at that layer. For a retained binary encoding using $b_{h_d}$ bits, $2^{b_{h_d}}\ge w_{h_d}$. Source-specific constant code is allowed, but any prefix-dependent code position is part of the state.
+
+There are two output contracts. The integer contract outputs $D_{n_d,\varepsilon}^{H_{n_d}}$. The fixed Boolean contract outputs
+
+$$
+ F_d(u)=\mathbf1\{D_{n_d,\varepsilon}^{H_{n_d}}(u)\ge h_d+t_d\},
+ \tag{NRW.21}
+$$
+
+where the one threshold is fixed by Theorem 4.3 before any input tape is supplied. A strict pointwise approximation to a specified contract $F$ is a real output $A(u)$ satisfying $|A(u)-F(u)|<1/2$ for every tape $u$.
+

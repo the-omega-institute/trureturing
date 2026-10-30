@@ -1,0 +1,44 @@
+**Lemma 3.1 (all-degree numerical slack).** For every integer $d\ge32$, put
+
+$$
+ s_d=\min\{s\ge4:F_s\ge d\},\quad
+ h_d=\lfloor d/8\rfloor,\quad
+ n_d=d+2h_d+4.
+ \tag{NRW.8}
+$$
+
+Then
+
+$$
+ \begin{gathered}
+ s_d\le2\lceil\log_2d\rceil+2,\qquad s_d\le d-4,\qquad n_d\le5d/4+4,\\
+ B_{n_d}=F_{n_d+1}-1<2^d-1,\qquad F_{n_d}-1\ge2d,\\
+ q\ge d+4\ \Longrightarrow\ q-s_d+1\ge9.
+ \end{gathered}
+ \tag{NRW.9}
+$$
+
+*Proof.* $F_{m+2}\ge2F_m$ for $m\ge1$, so $F_{2k+2}\ge2^k$ for $k\ge0$. Take $k=\lceil\log_2d\rceil$. Also $F_{28}=317811\ge32$, and $F_{m+1}\ge F_m+1$ for $m\ge2$. Induction gives $F_{d-4}\ge d$ for all $d\ge32$, proving the second bound and then the rank margin. The bound on $n_d$ follows from $\lfloor d/8\rfloor\le d/8$.
+
+For the period bound, $\varphi=(1+\sqrt5)/2<13/8$ since $\sqrt5<9/4$, and $F_m<\varphi^m$ for $m\ge1$ follows by the Fibonacci recurrence. Write $a_d=n_d+1=d+2\lfloor d/8\rfloor+5$. The base rational inequality is
+
+$$
+ \begin{aligned}
+ 13^{45}
+ &=134106816713249934153658112422086110743809315028093\\
+ &<187072209534799430564191535264372276764693034434560
+ =(2^{32}-1)8^{45}.
+ \end{aligned}
+ \tag{NRW.10}
+$$
+
+For $32\le d\le39$, $a_d=45+(d-32)$; increasing $d$ multiplies the left rational power by $13/8<2$ and the right side $2^d-1$ by more than two. This proves those eight base cases. For every $d$, $a_{d+8}=a_d+10$, and
+
+$$
+ 13^{10}=137858491849<274877906944=2^8\,8^{10},\qquad
+ 2^{d+8}-1>2^8(2^d-1).
+ \tag{NRW.11}
+$$
+
+Induction in each residue class modulo eight proves $(13/8)^{a_d}<2^d-1$ for all $d\ge32$, and hence the stated period slack. Finally $F_{32}=2178309\ge65$ and $F_{d+1}\ge F_d+2$ for $d\ge32$, so $F_d\ge2d+1$ by induction. Since $n_d\ge d$, maturity follows. $\square$
+
