@@ -47,7 +47,8 @@ def incidence [DecidableEq V] (G : DirectedMultigraph V E) : Matrix V E ℚ :=
 private theorem incidence_apply [DecidableEq V] (G : DirectedMultigraph V E)
     (v : V) (f : E) : incidence G v f =
       (if v = G.target f then 1 else 0) - (if v = G.source f then 1 else 0) := by
-  simp [incidence, signedIncidence]
+  by_cases hh : v = G.target f <;> by_cases ht : v = G.source f <;>
+    simp [incidence, signedIncidence, hh, ht]
 
 /-- Actual signed boundary on edge coordinates. -/
 def boundary [DecidableEq V] [Fintype E] (G : DirectedMultigraph V E) :
@@ -121,8 +122,10 @@ private theorem contracted_incidence (G : DirectedMultigraph V E) (e : E)
     incidence (contract G e h) v f = incidence G v.val f.val +
       if v.val = G.source e then incidence G (G.target e) f.val else 0 := by
   have hvb := v.property
-  simp only [incidence_apply, contract, eq_comm (a := v)]
-  rw [vertexMap_fiber, vertexMap_fiber]
+  have hfiber (w : V) : v = vertexMap G e h w ↔
+      w = v.val ∨ (w = G.target e ∧ v.val = G.source e) := by
+    rw [eq_comm v (vertexMap G e h w), vertexMap_fiber]
+  simp only [incidence_apply, contract, hfiber]
   by_cases hva : v.val = G.source e <;>
     by_cases hvh : G.target f.val = v.val <;>
     by_cases hvta : G.source f.val = v.val <;>
@@ -174,7 +177,7 @@ private theorem lift_cycle (G : DirectedMultigraph V E) (e : E)
     lift G e z.val ∈ CycleSpace G := by
   apply LinearMap.mem_ker.mpr
   funext v
-  rw [boundary_split, restrict_lift]
+  rw [boundary_split G e, restrict_lift]
   by_cases hvb : v = G.target e
   · subst v
     simp [lift, incidence_apply, Ne.symm h]
@@ -193,7 +196,7 @@ private theorem lift_restrict_cycle (G : DirectedMultigraph V E) (e : E)
   by_cases hf : f = e
   · subst f
     have hz := congrFun z.property (G.target e)
-    rw [boundary_split] at hz
+    rw [boundary_split G e] at hz
     simp only [incidence_apply, if_pos rfl, if_neg (Ne.symm h), sub_zero,
       one_mul] at hz
     simp [lift]
