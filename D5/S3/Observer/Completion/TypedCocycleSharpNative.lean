@@ -47,7 +47,7 @@ def OnlineCost (h ε : ℝ) (C E : Vector) (n : ℕ) : Prop :=
 /-- A least cost includes attainment and a bound for every feasible competitor. -/
 def LeastCost (cost : ℕ → Prop) (n : ℕ) : Prop := cost n ∧ ∀ m, cost m → n ≤ m
 
-def quantum (h ε : ℝ) : ℕ := ⌊2 * ε / h⌋₊ + 1
+noncomputable def quantum (h ε : ℝ) : ℕ := ⌊2 * ε / h⌋₊ + 1
 
 /-- One entire persistent state, with no vertex, phase, event index or clock. -/
 def residueRegister (q : ℕ) : Register (ZMod q × ZMod q) where
@@ -67,10 +67,18 @@ private theorem fold_a (q m : ℕ) (x : ZMod q × ZMod q) :
   induction m generalizing x with
   | zero => simp
   | succ m ih =>
-    simp [List.replicate_succ, List.foldl, ih, residueRegister, Nat.cast_add, add_assoc]
+    rw [List.replicate_succ, List.foldl_cons]
+    change (List.replicate m Name.a).foldl (residueRegister q).update
+      (x.1 + 1, x.2) = (x.1 + (m + 1 : ℕ), x.2)
+    rw [ih]
+    simp only [Nat.cast_add, Nat.cast_one, Prod.mk.injEq, and_true]
+    dsimp
+    ac_rfl
 
 private theorem value_eq_tag (q : ℕ) (u : History) : value (residueRegister q) u = tag q u := by
-  cases u <;> simp [value, word, List.foldl_append, fold_a, residueRegister, tag]
+  cases u <;>
+    simp only [value, word, List.foldl_append, fold_a, List.foldl_cons, List.foldl_nil] <;>
+    simp [residueRegister, tag]
 
 private theorem tag_surjective (q : ℕ) (hq : q ≠ 0) : Function.Surjective (tag q) := by
   letI : NeZero q := ⟨hq⟩
@@ -106,7 +114,7 @@ private theorem square_total (h : ℝ) (C E : Vector) (k : ℕ)
     native h C E (square k i) =
       (C.1 + h * (2 * k + i.1.val), C.2 + h * (3 * k + i.2.val)) := by
   have hc := square_counts k i
-  unfold square native
+  simp only [square, native]
   have h1 : ((k + 2 * i.1.val - i.2.val : ℕ) : ℝ) +
       ((k + i.2.val - i.1.val : ℕ) : ℝ) = 2 * k + i.1.val := by exact_mod_cast hc.1
   have h2 : ((k + 2 * i.1.val - i.2.val : ℕ) : ℝ) +
