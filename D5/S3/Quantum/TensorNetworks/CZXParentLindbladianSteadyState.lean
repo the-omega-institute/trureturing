@@ -10,17 +10,20 @@ import D5.S3.Quantum.TensorNetworks.CZXParentLindbladianWindowChannel
 import D5.S3.Quantum.Dynamics.BarrigaTenModeFourierEdgeRefutation
 import D5.S3.Combinatorics.Graph.CycleItalianDominationRecurrence
 
+/-! The limiting state of the CZX parent Lindbladian on even rings. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState
 
-open Matrix Filter Classical
+open Matrix Filter
+attribute [local instance] Classical.propDecidable
 open scoped Topology ComplexConjugate
 
-private lemma window_commute (n : ℕ) (hn : Even n) (hsize : 4 ≤ n)
-    (i j : Fin n) (hi : i.val % 2 = 0) (hj : j.val % 2 = 0) :
+private lemma window_commute (n : ℕ) (_hn : Even n) (hsize : 4 ≤ n)
+    (i j : Fin n) (_hi : i.val % 2 = 0) (_hj : j.val % 2 = 0) :
     Commute (windowSuperoperator n i) (windowSuperoperator n j) := by
   change windowSuperoperator n i * windowSuperoperator n j =
     windowSuperoperator n j * windowSuperoperator n i
@@ -54,8 +57,7 @@ private lemma finite_projection_limit {k : Type} [Fintype k] [DecidableEq k]
     Tendsto (fun t : ℝ => NormedSpace.exp
       ((t : ℂ) • (es.map (fun e => e - 1)).sum)) atTop (𝓝 es.prod) := by
   induction es with
-  | nil => simpa using (tendsto_const_nhds : Tendsto (fun _ : ℝ =>
-      (1 : Matrix k k ℂ)) atTop (𝓝 1))
+  | nil => simp
   | cons e es ih =>
     have he := hi e (List.mem_cons_self ..)
     have hes : ∀ f ∈ es, IsIdempotentElem f := fun f hf => hi f (List.mem_cons_of_mem _ hf)
@@ -229,13 +231,13 @@ private lemma window_word_gauged (n : ℕ) (hn : 4 ≤ n) (l : List (Fin n))
   induction l with
   | nil =>
     simp only [List.map_nil, List.prod_nil, List.toFinset_nil, Finset.biUnion_empty]
-    rw [if_pos (by intro j hj; cases hj), avg_empty]
+    rw [ite_eq_left (by intro j hj; cases hj), avg_empty]
     rfl
   | cons i l ih =>
     change windowLM n i (((l.map (windowLM n)).prod) (gaugedUnit n δ x)) = _
     rw [ih]
     by_cases hl : ∀ j ∈ l, goodWindow j δ
-    · simp only [if_pos hl]
+    · simp only [ite_eq_left hl]
       rw [avg_map]
       simp only [hact]
       by_cases hi : goodWindow i δ
@@ -244,19 +246,19 @@ private lemma window_word_gauged (n : ℕ) (hn : 4 ≤ n) (l : List (Fin n))
           rcases List.mem_cons.mp hj with rfl | hj
           · exact hi
           · exact hl j hj
-        rw [if_pos hc]
-        simp only [if_pos hi, List.toFinset_cons, Finset.biUnion_insert]
+        rw [ite_eq_left hc]
+        simp only [ite_eq_left hi, List.toFinset_cons, Finset.biUnion_insert]
         have he := congrArg (fun a => a (gaugedUnit n δ) x)
           (avg_mul (V := Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) n
             (l.toFinset.biUnion (fun j => {site j 1, site j 2})) {site i 1, site i 2})
         simpa only [Module.End.mul_apply, Finset.union_comm] using he
-      · simp only [if_neg hi, map_zero, Pi.zero_apply, List.mem_cons,
-          forall_eq_or_imp, hi, false_and, if_false]
+      · simp only [List.mem_cons,
+          forall_eq_or_imp, hi, false_and, ite_false]
         exact congrFun (map_zero (avg n (l.toFinset.biUnion (fun j => {site j 1, site j 2})))) x
     · have hc : ¬ ∀ j ∈ i :: l, goodWindow j δ := by
         intro h
         exact hl (fun j hj => h j (List.mem_cons_of_mem i hj))
-      simp only [if_neg hl, if_neg hc, map_zero]
+      simp only [ite_eq_right hl, ite_eq_right hc, map_zero]
 
 private lemma gauge_flip (n : ℕ) (hn : Even n) (x : Fin n → Fin 2) :
     gauge n 1 (x + fun _ => 1) = gauge n 1 x := by
@@ -265,7 +267,8 @@ private lemma gauge_flip (n : ℕ) (hn : Even n) (x : Fin n → Fin 2) :
     fin_cases a <;> fin_cases b <;> norm_num
   have hs : (∑ j : Fin n, (x (site j 1)).val) = ∑ j : Fin n, (x j).val := by
     exact Fintype.sum_bijective (fun j : Fin n => site j 1)
-      ⟨site_succ_injective n, Finite.surjective_of_injective (site_succ_injective n)⟩ _ _ (fun _ => rfl)
+      ⟨site_succ_injective n, Finite.surjective_of_injective (site_succ_injective n)⟩
+      _ _ (fun _ => rfl)
   have hq : (∑ j : Fin n, ((x j + 1).val * (x (site j 1) + 1).val)) +
         2 * ∑ j : Fin n, (x j).val =
       (∑ j : Fin n, (x j).val * (x (site j 1)).val) + n := by
@@ -288,9 +291,8 @@ private lemma sum_gauged_zero (n : ℕ) :
   simp only [sectorGauge_const]
   delta gauge
   simp only [Fin.val_zero, zero_mul, pow_zero,
-    one_smul, add_zero]
+    one_smul]
   simp only [show (fun _ : Fin n => (0 : Fin 2)) = 0 from rfl, add_zero]
-  change (∑ x : Fin n → Fin 2, Matrix.single x x (1 : ℂ)) = 1
   exact Matrix.sum_single_one
 
 private lemma sum_gauged_one (n : ℕ) (hn : Even n) :
@@ -311,11 +313,11 @@ private lemma sum_gauged_one (n : ℕ) (hn : Even n) :
   rw [Finset.sum_eq_single v]
   · by_cases h : u = v + fun _ => 1
     · subst u
-      simp only [and_self, if_true, mul_one]
+      simp only [and_self, ite_true, mul_one]
       exact (gauge_flip n hn v).symm
     · simp [h, eq_comm]
   · intro x hx hxv
-    simp only [hxv, and_false, if_false, mul_zero]
+    simp only [hxv, and_false, ite_false, mul_zero]
   · simp
 
 private lemma trace_gauged (n : ℕ) (δ x : Fin n → Fin 2) :
@@ -334,7 +336,7 @@ private lemma trace_gauged (n : ℕ) (δ x : Fin n → Fin 2) :
       (x (site j 1)).val) = 1
     simp only [Fin.val_zero, zero_mul, Finset.sum_const_zero, pow_zero]
   · have hne : x + δ ≠ x := mt he.mp h
-    rw [Matrix.trace_single_eq_of_ne _ _ _ hne, smul_zero, if_neg h]
+    rw [Matrix.trace_single_eq_of_ne _ _ _ hne, smul_zero, ite_eq_right h]
 
 private lemma trace_symmetry_gauged (n : ℕ) (hn : Even n)
     (δ x : Fin n → Fin 2) :
@@ -357,13 +359,13 @@ private lemma trace_symmetry_gauged (n : ℕ) (hn : Even n)
     smul_eq_mul, hu]
   by_cases h : δ = (fun _ => 1)
   · subst δ
-    simp only [if_true, mul_one, sectorGauge_const, gauge_flip n hn]
+    simp only [ite_true, mul_one, sectorGauge_const, gauge_flip n hn]
     have hs : star (gauge n 1 x) = gauge n 1 x := by
       change star ((-1 : ℂ) ^ _) = (-1 : ℂ) ^ _
       simp only [star_pow, star_neg, star_one]
     rw [hs]
     simpa only [sectorGauge_const] using sectorGauge_mul_self n (fun _ => 1) x
-  · rw [if_neg (mt (add_right_inj x).mp h), if_neg h]
+  · rw [ite_eq_right (mt (add_right_inj x).mp h), ite_eq_right h]
     simp only [mul_zero, star_zero]
 
 private lemma projection_formula (n : ℕ) (hn : Even n) (hsize : 4 ≤ n)
@@ -408,7 +410,7 @@ private lemma projection_formula (n : ℕ) (hn : Even n) (hsize : 4 ≤ n)
     rw [trace_gauged, trace_symmetry_gauged n hn]
     by_cases hd : ∃ e : Fin 2, δ = fun _ => e
     · have hg := (all_good_iff_constant n hsize δ).mpr hd
-      rw [if_pos hg, middle_sites_cover n hn hsize, avg_univ]
+      rw [ite_eq_left hg, middle_sites_cover n hn hsize, avg_univ]
       obtain ⟨e, rfl⟩ := hd
       fin_cases e
       · change ((2 : ℂ) ^ n)⁻¹ • (∑ y, gaugedUnit n (fun _ => 0) y) = _
@@ -428,19 +430,19 @@ private lemma projection_formula (n : ℕ) (hn : Even n) (hsize : 4 ≤ n)
         change ((2 : ℂ) ^ n)⁻¹ • czxUnitary n = ((2 : ℂ) ^ n)⁻¹ •
           ((if (fun _ : Fin n => (1 : Fin 2)) = 0 then 1 else 0) • 1 +
             (if (fun _ : Fin n => (1 : Fin 2)) = (fun _ => 1) then 1 else 0) • czxUnitary n)
-        simp only [if_neg hne, if_true, zero_smul, one_smul, zero_add]
+        simp only [ite_eq_right hne, ite_true, zero_smul, one_smul, zero_add]
     · have hg : ¬ ∀ i ∈ evenStarts n, goodWindow i δ :=
         mt (all_good_iff_constant n hsize δ).mp hd
       have h0 : δ ≠ 0 := fun h => hd ⟨0, h⟩
       have h1 : δ ≠ (fun _ => 1) := fun h => hd ⟨1, h⟩
-      simp only [if_neg hg, if_neg h0, if_neg h1, zero_smul, add_zero, smul_zero]
+      simp only [ite_eq_right hg, ite_eq_right h0, ite_eq_right h1, zero_smul, add_zero, smul_zero]
   exact congrArg (fun l => l a) heq
 
 
 private lemma flip_diagonal (n : ℕ) (hn : 0 < n) (x : Fin n → Fin 2) :
     tensorX n x x = 0 := by
   change (if x = (fun j => x j + 1) then (1 : ℂ) else 0) = 0
-  apply if_neg
+  apply ite_eq_right
   intro h
   have hj := congrArg Fin.val (congrFun h (⟨0, hn⟩ : Fin n))
   change (x ⟨0, hn⟩).val = ((x ⟨0, hn⟩).val + 1) % 2 at hj
@@ -518,23 +520,27 @@ private lemma partition_transfer (n : ℕ) (hn : 0 < n) :
   symm
   calc
     Matrix.trace (h ^ (m + 1)) = ∑ a : Fin 2, ∑ x : Fin m → Fin 2,
-        ∏ j : Fin (m + 1), h (Fin.cons (α := fun _ => Fin 2) a x j) (Fin.snoc (α := fun _ => Fin 2) x a j) := by
+        ∏ j : Fin (m + 1), h (Fin.cons (α := fun _ => Fin 2) a x j)
+          (Fin.snoc (α := fun _ => Fin 2) x a j) := by
       change (∑ a, (h ^ (m + 1)) a a) = _
       simp_rw [← hcast, transfer_path]
     _ = ∑ p : Fin 2 × (Fin m → Fin 2),
-        ∏ j : Fin (m + 1), h (Fin.cons (α := fun _ => Fin 2) p.1 p.2 j) (Fin.snoc (α := fun _ => Fin 2) p.2 p.1 j) := by
+        ∏ j : Fin (m + 1), h (Fin.cons (α := fun _ => Fin 2) p.1 p.2 j)
+          (Fin.snoc (α := fun _ => Fin 2) p.2 p.1 j) := by
       rw [Fintype.sum_prod_type]
     _ = ∑ x : Fin (m + 1) → Fin 2, (-1 : ℂ) ^
         ∑ j : Fin (m + 1), (x j).val * (x (site j 1)).val := by
       apply Fintype.sum_equiv (Fin.consEquiv (fun _ : Fin (m + 1) => Fin 2))
       intro p
-      change (∏ j : Fin (m + 1), h (Fin.cons (α := fun _ => Fin 2) p.1 p.2 j) (Fin.snoc (α := fun _ => Fin 2) p.2 p.1 j)) =
+      change (∏ j : Fin (m + 1), h (Fin.cons (α := fun _ => Fin 2) p.1 p.2 j)
+          (Fin.snoc (α := fun _ => Fin 2) p.2 p.1 j)) =
         (-1 : ℂ) ^ ∑ j : Fin (m + 1), (Fin.cons (α := fun _ => Fin 2) p.1 p.2 j).val *
           (Fin.cons (α := fun _ => Fin 2) p.1 p.2 (site j 1)).val
       rw [← Finset.prod_pow_eq_pow_sum]
       apply Finset.prod_congr rfl
       intro j _
-      have hj : Fin.cons (α := fun _ => Fin 2) p.1 p.2 (site j 1) = Fin.snoc (α := fun _ => Fin 2) p.2 p.1 j := by
+      have hj : Fin.cons (α := fun _ => Fin 2) p.1 p.2 (site j 1) =
+          Fin.snoc (α := fun _ => Fin 2) p.2 p.1 j := by
         cases j using Fin.lastCases with
         | last =>
           have hs : site (Fin.last m) 1 = 0 := by
@@ -623,7 +629,7 @@ private lemma evolution_limit (n : ℕ)
   change Tendsto (fun t : ℝ => ∑ p,
     NormedSpace.exp ((t : ℂ) • parentLindbladian n) (x, y) p *
       (((2 : ℂ) ^ n)⁻¹ • (1 + tensorX n)) p.1 p.2) _ _
-  exact tendsto_finset_sum _ fun p _ =>
+  exact tendsto_finsetSum _ fun p _ =>
     ((tendsto_pi_nhds.mp (tendsto_pi_nhds.mp h (x, y))) p).mul tendsto_const_nhds
 
 /-- The steady-state conjecture for every even N at least four. -/

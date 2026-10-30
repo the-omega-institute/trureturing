@@ -9,6 +9,8 @@
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Data.Finset.Update
 
+/-! Commuting coordinate averages on finite binary configurations. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -151,7 +153,8 @@ private lemma avg_fill (n : ℕ) (s : Finset (Fin n))
           · funext j
             have hj : j.val ≠ k := fun h => hk (h ▸ j.property)
             simp [hj] }
-    have hsum : (∑ d : ({j // j ∈ insert k s} → Fin 2), f (Function.updateFinset x (insert k s) d)) =
+    have hsum : (∑ d : ({j // j ∈ insert k s} → Fin 2),
+        f (Function.updateFinset x (insert k s) d)) =
         ∑ z : Fin 2 × ({j // j ∈ s} → Fin 2),
           f (Function.updateFinset (Function.update x k z.1) s z.2) := by
       apply Fintype.sum_equiv e
@@ -162,7 +165,7 @@ private lemma avg_fill (n : ℕ) (s : Finset (Fin n))
       · subst j
         (delta Function.updateFinset; simp [hk, e])
       · by_cases hs : j ∈ s <;>
-          (delta Function.updateFinset; simp [hs, hj, e, Function.update_apply])
+          (delta Function.updateFinset; simp [hs, hj, e])
     rw [avg_insert n s k hk]
     change (2 : ℂ)⁻¹ • (∑ b : Fin 2, avg n s f (Function.update x k b)) = _
     simp only [ih]
