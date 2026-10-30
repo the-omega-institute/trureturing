@@ -550,4 +550,137 @@ private theorem simultaneous_half_phase (p q r : ℤ) (i j k : ℕ)
       · obtain ⟨R, hR, hR', hT, hQ, hP⟩ := hsorted r q p k j i hrq hqp hr hr' hq hq' hp hp'
         exact ⟨R, hR, by simpa [max_eq_left hrq, max_eq_left hqp] using hR', hP, hQ, hT⟩
 
+private theorem four_phase_selector (a b c : ℕ)
+    (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) :
+    let x : ℤ := 2 ^ a
+    let y : ℤ := 2 ^ b
+    let z : ℤ := 2 ^ c
+    let P := x * y * z
+    let DB := 1 + x + x * y
+    let DL := z * (1 + x)
+    let DM := y * z
+    ∃ R nB nL nM : ℤ, 0 < R ∧ 3 * R < 4 * P ∧
+      (1 ≤ nB ∧ 2 * nB < z ∧ 1 ≤ 4 * nB * DB - R ∧
+        1 ≤ R - (4 * nB - 2) * DB) ∧
+      (1 ≤ nL ∧ 2 * nL < y ∧ 1 ≤ 4 * nL * DL - R ∧
+        1 ≤ R - (4 * nL - 2) * DL) ∧
+      (1 ≤ nM ∧ 2 * nM < x ∧ 1 ≤ 4 * nM * DM - R ∧
+        1 ≤ R - (4 * nM - 2) * DM) := by
+  dsimp only
+  let x : ℤ := 2 ^ a
+  let y : ℤ := 2 ^ b
+  let z : ℤ := 2 ^ c
+  let P := x * y * z
+  let DB := 1 + x + x * y
+  let DL := z * (1 + x)
+  let DM := y * z
+  have hx : 4 ≤ x := by
+    have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) ha
+    simpa [x] using this
+  have hy : 4 ≤ y := by
+    have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hb
+    simpa [y] using this
+  have hz : 4 ≤ z := by
+    have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hc
+    simpa [z] using this
+  have hxy : 0 < x * y := mul_pos (by omega) (by omega)
+  have hxz : 0 < x * z := mul_pos (by omega) (by omega)
+  have hyz : 0 < y * z := mul_pos (by omega) (by omega)
+  have hDB : x * y ≤ DB ∧ 3 * DB < 4 * (x * y) := by dsimp [DB]; constructor <;> nlinarith
+  have hDL : x * z ≤ DL ∧ 3 * DL < 4 * (x * z) := by dsimp [DL]; constructor <;> nlinarith
+  have hDM : y * z ≤ DM ∧ 3 * DM < 4 * (y * z) := by dsimp [DM]; constructor <;> nlinarith
+  obtain ⟨R, hR0, hR, ⟨nB, hnB, hB0, hB1⟩,
+      ⟨nL, hnL, hL0, hL1⟩, ⟨nM, hnM, hM0, hM1⟩⟩ :=
+    simultaneous_half_phase DB DL DM (a + b) (a + c) (b + c)
+      (by simpa [pow_add, x, y] using hDB.1) (by simpa [pow_add, x, y] using hDB.2)
+      (by simpa [pow_add, x, z] using hDL.1) (by simpa [pow_add, x, z] using hDL.2)
+      (by simpa [pow_add, y, z] using hDM.1) (by simpa [pow_add, y, z] using hDM.2)
+  let r := max DB (max DL DM)
+  have hBr : DB ≤ r := le_max_left _ _
+  have hLr : DL ≤ r := le_trans (le_max_left _ _) (le_max_right _ _)
+  have hMr : DM ≤ r := le_trans (le_max_right _ _) (le_max_right _ _)
+  have hsmall : 3 * r < P := by
+    have hB : 3 * DB < P := by dsimp [P]; nlinarith [mul_le_mul_of_nonneg_left hz hxy.le]
+    have hL : 3 * DL < P := by
+      have := mul_le_mul_of_nonneg_left hy hxz.le
+      dsimp [P]; nlinarith
+    have hM : 3 * DM < P := by dsimp [P]; nlinarith [mul_le_mul_of_nonneg_left hx hyz.le]
+    dsimp [r]
+    rcases le_total DL DM with h | h
+    · rw [max_eq_right h]
+      rcases le_total DB DM with h' | h'
+      · rw [max_eq_right h']; exact hM
+      · rw [max_eq_left h']; exact hB
+    · rw [max_eq_left h]
+      rcases le_total DB DL with h' | h'
+      · rw [max_eq_right h']; exact hL
+      · rw [max_eq_left h']; exact hB
+  have hcapB : 2 * nB < z := by
+    have hnp : 2 * nB * DB < P := by change R < 4 * r at hR; nlinarith
+    have hrel : z * DB = P + DL := by dsimp [DB, DL, P]; ring
+    have hpos : 0 < DB := by omega
+    have hposL : 0 < DL := by omega
+    by_contra h
+    have := mul_le_mul_of_nonneg_right (show z ≤ 2 * nB by omega) hpos.le
+    nlinarith
+  have hcapL : 2 * nL < y := by
+    have hnp : 2 * nL * DL < P := by change R < 4 * r at hR; nlinarith
+    have hrel : y * DL = P + DM := by dsimp [DL, DM, P]; ring
+    have hpos : 0 < DL := by omega
+    have hposM : 0 < DM := by omega
+    by_contra h
+    have := mul_le_mul_of_nonneg_right (show y ≤ 2 * nL by omega) hpos.le
+    nlinarith
+  have hcapM : 2 * nM < x := by
+    have hnp : 2 * nM * DM < P := by change R < 4 * r at hR; nlinarith
+    have hrel : x * DM = P := by dsimp [DM, P]; ring
+    have hpos : 0 < DM := by omega
+    by_contra h
+    have := mul_le_mul_of_nonneg_right (show x ≤ 2 * nM by omega) hpos.le
+    nlinarith
+  refine ⟨R, nB, nL, nM, hR0, ?_, ⟨hnB, hcapB, by nlinarith, by nlinarith⟩,
+    ⟨hnL, hcapL, by nlinarith, by nlinarith⟩, ⟨hnM, hcapM, by nlinarith, by nlinarith⟩⟩
+  change R < 4 * r at hR
+  nlinarith
+
+/-- Ceiling in the quarter-grid coordinate, with its exact rounding loss. -/
+private theorem quarter_ceiling (A t R : ℤ) (hA : 0 < A) (ht : 0 < t)
+    (hR : 0 < R) (hRA : R < 2 * A) (hte : t % 2 = 0) :
+    ∃ q : ℤ, 1 ≤ q ∧ 2 * q ≤ t ∧ 0 ≤ 4 * A * q - t * R ∧
+      4 * A * q - t * R < 4 * A := by
+  let q := (t * R - 1) / (4 * A) + 1
+  have hprod : 0 < t * R := mul_pos ht hR
+  have hmod := Int.emod_nonneg (t * R - 1) (show 4 * A ≠ 0 by omega)
+  have hmod' := Int.emod_lt_of_pos (t * R - 1) (show 0 < 4 * A by omega)
+  have hdiv := Int.ediv_add_emod (t * R - 1) (4 * A)
+  have hq : 1 ≤ q := by
+    dsimp [q]
+    have := Int.ediv_nonneg (show 0 ≤ t * R - 1 by omega) (show 0 ≤ 4 * A by omega)
+    omega
+  have heps : 0 ≤ 4 * A * q - t * R ∧ 4 * A * q - t * R < 4 * A := by
+    dsimp [q]; constructor <;> nlinarith
+  have hhalf : 2 * (t / 2) = t := by omega
+  have hqt : q ≤ t / 2 := by
+    by_contra h
+    have hq' : t / 2 + 1 ≤ q := by omega
+    have := mul_le_mul_of_nonneg_left hq' (show 0 ≤ 4 * A by omega)
+    have hmul := mul_lt_mul_of_pos_left hRA ht
+    nlinarith
+  exact ⟨q, hq, by omega, heps⟩
+
+/-- A quarter-grid margin absorbs the entire ceiling loss at t >= 8P. -/
+private theorem rounded_phase_seam (P A D rho t R n q : ℤ)
+    (hP : 0 < P) (hA : 0 < A) (hAP : A < 2 * P)
+    (ht : 8 * P ≤ t) (hrho : 1 ≤ rho) (hnrho : n * rho < A)
+    (hlo : 1 ≤ 4 * n * D - R) (hhi : 1 ≤ R - (4 * n - 2) * D)
+    (heps : 0 ≤ 4 * A * q - t * R) (heps' : 4 * A * q - t * R < 4 * A) :
+    let Y := t * D + rho
+    let tau := n * Y - A * q
+    n * rho < tau ∧ 2 * tau < Y - 1 := by
+  dsimp only
+  have ht0 : 0 < t := by omega
+  have hmul := mul_le_mul_of_nonneg_left hlo ht0.le
+  have hmul' := mul_le_mul_of_nonneg_left hhi ht0.le
+  constructor <;> nlinarith
+
 end D5.S3.Combinatorics.Circle.FourNegativeEventual
