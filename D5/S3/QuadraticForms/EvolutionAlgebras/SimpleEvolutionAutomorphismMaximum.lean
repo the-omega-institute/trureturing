@@ -168,7 +168,13 @@ Frozen declaration identities:
 import D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionPermutationFamily
 import D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionAutomorphismControl
 import D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionBasisTransport
+import D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionSharpBound
+import D5.S3.QuadraticForms.EvolutionAlgebras.HuEvolutionLowerBound
+import D5.S3.QuadraticForms.EvolutionAlgebras.HuEvolutionJordanFamily
 import D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks
+import D5.S3.FiniteGroups.SuccessorQuotient
+import D5.S3.FiniteGroups.SuccessorPowerAssignments
+import D5.S3.Combinatorics.Partitions.EvolutionAutomorphismWeight
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
