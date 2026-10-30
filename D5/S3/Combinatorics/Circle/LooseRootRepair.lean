@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/LooseRootRepair
    mirror-E: none(waiver:audit-open-22063)
-   anchors: [mathlib/module/Mathlib.Data.Finset.Basic, mathlib/module/Mathlib.Algebra.Order.BigOperators.Group.Finset]
+   anchors: [mathlib/module/Mathlib.Algebra.Order.BigOperators.Group.Finset]
    utility: none
    digest: A labelled finite mesh constructs a local physical two-root repair with a legal first slot. -/
 module
