@@ -976,16 +976,12 @@ $$
 
 下文采用 $x=2-\lambda$。关于 $\lambda$ 的首一多项式 $f$ 的 $x$ 坐标首一版本为 $(-1)^{\deg f}f(2-x,t)$。长度 $p-1$ 为偶数，因而该长度的连分式行列式在两种坐标下均首一。
 
-**引理 13.2（自由节点多项式的两个有理轨道）。** 置 $n=p-1$、$h=(p-1)/2$，则
+**约定 13.2（自由节点多项式）。** 置 $n=p-1$、$h=(p-1)/2$，并记
 
 $$
 D_p(x)=S_{p-1}(x)=\prod_{k=1}^{p-1}\left(x-2\cos\frac{\pi k}{p}\right)
 \tag{13.2}
 $$
-
-为首一无重根多项式。它在 $\mathbb Q[x]$ 中恰有两个首一不可约因子，各为 $h$ 次；变换 $x\mapsto-x$ 交换这两个因子。因此，$D_p$ 的偶首一有理因子只有 $1$ 与 $D_p$。
-
-**证明。** Chebyshev 根公式取自约定 2.4。令 $\zeta=\exp(2\pi i/p)$。偶数 $k$ 对应的根为 $\zeta^a+\zeta^{-a}$，$a\in(\mathbb Z/p\mathbb Z)^\times/\{\pm1\}$。经典的素数分圆多项式不可约性给出 $[\mathbb Q(\zeta):\mathbb Q]=p-1$；又 $\zeta$ 满足 $Z^2-(\zeta+\zeta^{-1})Z+1=0$，且 $\mathbb Q(\zeta+\zeta^{-1})\subset\mathbb R$、$\zeta\notin\mathbb R$，故这个实子域的次数恰为 $h$。分圆自同构传递地作用于上述 $h$ 个不同的根，它们组成一个不可约因子的根集。其余奇数 $k$ 的根恰为这些根的相反数，也组成一个不可约因子；两根集不交，因为 $\cos(\pi k/p)$ 在 $1\le k\le p-1$ 上严格递减，而 $p-k$ 与 $k$ 奇偶相反。偶因子的根集在取负下封闭，故只能同时包含这两个有理轨道，或都不包含。分圆不可约性是经典输入；Lindblad–Guerrero [LG] 命题 4.1 的证明也使用 $\Phi_p(Z)=1+\cdots+Z^{p-1}$ 的这一性质。∎
 
 **定理 13.3（有理势的节点次数饱和）。** 对每个 $v\in\mathbb Q^{2p}$ 与每个站点 $j$，有
 
@@ -1021,6 +1017,8 @@ $$
 
 **证明。** 母卷注 3.4 允许在 $\mathbb Q(t)$ 内计算同一个 gcd；母卷定理 3.2 的整闭论证给出首一因子及其商均在 $\mathbb Q[t][\lambda]$。以下不重新证明该定理的全实耦合准则。
 
+下面使用经典分圆输入：$D_p$ 的根组成两个互异的有理共轭轨道，每个含 $h$ 个根，取负交换这两个轨道。故 $D_p$ 的根集在取负下封闭的首一有理因子只能是 $1$ 或 $D_p$。Chebyshev 根公式取自约定 2.4。令 $\zeta=\exp(2\pi i/p)$。偶数 $k$ 对应的根为 $\zeta^a+\zeta^{-a}$，$a\in(\mathbb Z/p\mathbb Z)^\times/\{\pm1\}$。经典的素数分圆多项式不可约性给出 $[\mathbb Q(\zeta):\mathbb Q]=p-1$；又 $\zeta$ 满足 $Z^2-(\zeta+\zeta^{-1})Z+1=0$，且 $\mathbb Q(\zeta+\zeta^{-1})\subset\mathbb R$、$\zeta\notin\mathbb R$，故这个实子域的次数恰为 $h$。分圆自同构传递地作用于上述 $h$ 个不同的根，它们组成一个不可约因子的根集。其余奇数 $k$ 的根恰为这些根的相反数，也组成一个不可约因子；两根集不交，因为 $\cos(\pi k/p)$ 在 $1\le k\le p-1$ 上严格递减，而 $p-k$ 与 $k$ 奇偶相反。偶因子的根集在取负下封闭，故只能同时包含这两个有理轨道，或都不包含。分圆不可约性是经典输入；Lindblad–Guerrero [LG] 命题 4.1 的证明也使用 $\Phi_p(Z)=1+\cdots+Z^{p-1}$ 的这一性质。
+
 在 $t=0$，实际删点矩阵是对角元 $2$ 的 $2p-1$ 阶 Dirichlet 路矩阵，故
 
 $$
@@ -1043,7 +1041,7 @@ g_j(\lambda,t)=(-1)^d g_j(4-\lambda,-t).
 \tag{13.6}
 $$
 
-在 $t=0$，其根集在 $\lambda\mapsto4-\lambda$ 下封闭，亦即在 $x\mapsto-x$ 下封闭。引理 13.2 迫使这个根集为空或为全部自由节点根集，证明式 (13.3)、(13.4)。
+在 $t=0$，其根集在 $\lambda\mapsto4-\lambda$ 下封闭，亦即在 $x\mapsto-x$ 下封闭。上述分圆轨道结论迫使这个根集为空或为全部自由节点根集，证明式 (13.3)、(13.4)。
 
 对任意实数 $t_0$，$H_{t_0}^{(j)}$ 为非零相邻非对角元的实对称三对角矩阵。它的本征向量由第一个坐标和零 Dirichlet 边界唯一确定；第一个坐标为零就使全部坐标为零。因此每个本征空间至多一维，实对称性使全部本征值实且简单。于是每个 $Q_j(\cdot,t_0)$ 无重根，特别地 $Q_j$ 在函数域上无重根。首一整除保留全部实特化的次数，故 $g_j\mid Q_j$ 给出全部所述重数结论。节点向量的存在及其实值性直接采用母卷定理 3.2。
 
@@ -1218,7 +1216,7 @@ $$
 
 **引理 16.2（半圆公因子的二择）。** 对满足式 (16.1) 的势，$F$ 与 $G=F(x,-t)$ 在 $\mathbb Q(t)[x]$ 中或者互素，或者相等。
 
-**证明。** 设 $d$ 为二者首一 gcd。整闭性给出 $d\in\mathbb Q[t][x]$，且 $d(x,0)\mid D_p(x)$，次数不降。由式 (16.3)，$x\mapsto-x$ 交换 $F,G$ 的根集，故 $d(x,0)$ 的根集在取负下封闭。引理 13.2 迫使 $\deg d=0$ 或 $n$。后一情形两个 $n$ 次首一多项式均等于 $d$。∎
+**证明。** 设 $d$ 为二者首一 gcd。整闭性给出 $d\in\mathbb Q[t][x]$，且 $d(x,0)\mid D_p(x)$，次数不降。由式 (16.3)，$x\mapsto-x$ 交换 $F,G$ 的根集，故 $d(x,0)$ 的根集在取负下封闭。定理 13.3 证明中的分圆轨道结论迫使 $\deg d=0$ 或 $n$。后一情形两个 $n$ 次首一多项式均等于 $d$。∎
 
 **定理 16.3（反周期势在指定站点的完整分类）。** 对每个奇素数 $p\ge3$、每个满足式 (16.1) 的实际二值势 $v$ 与每个实际站点 $j$，下列条件等价：
 
@@ -1341,7 +1339,7 @@ $$
 
 | 引用 | 数学内容与实际使用范围 |
 | --- | --- |
-| [LG] O. Lindblad, E. Guerrero, *Simple Eigenvalues and Non-vanishing Eigenvectors of the Anderson Model*, [arXiv:2512.00278v1](https://arxiv.org/html/2512.00278v1)，定义 1.1、命题 2.3、引理 3.2、命题 4.1 及其式 (4)–(7) | 实际算子 $\Delta+tV$、好坏势、共同正交对称机制；命题 4.1 处理素数圈，证明中的分圆及一阶 Fourier 关系是引理 13.2、定理 14.2 所用经典方法的对应。这里的 $C_{2p}$ 结论不由该素数圈命题直接推出；定理 14.2 使用全部饱和节点根，未假设一阶劈裂非零。 |
+| [LG] O. Lindblad, E. Guerrero, *Simple Eigenvalues and Non-vanishing Eigenvectors of the Anderson Model*, [arXiv:2512.00278v1](https://arxiv.org/html/2512.00278v1)，定义 1.1、命题 2.3、引理 3.2、命题 4.1 及其式 (4)–(7) | 实际算子 $\Delta+tV$、好坏势、共同正交对称机制；命题 4.1 处理素数圈，证明中的分圆及一阶 Fourier 关系是定理 13.3、14.2 所用经典方法的对应。这里的 $C_{2p}$ 结论不由该素数圈命题直接推出；定理 14.2 使用全部饱和节点根，未假设一阶劈裂非零。 |
 | [J] G. Teschl, *Jacobi Operators and Completely Integrable Nonlinear Lattices*, AMS，Mathematical Surveys and Monographs 72，2000，[作者全文](https://www.mat.univie.ac.at/~gerald/ftp/book-jac/jacop.pdf)，§7.1 | 周期 Jacobi 传递矩阵及 Floquet 半迹；对应 Jacobi 系数 $a(k)=-1,b(k)=2+tv_k$，谱参数 $\lambda$。本章实际行列式与端部约定直接采用本卷事实 3.2，不以一个自由端路 Laplace 矩阵替代实际主子矩阵。 |
 | [A] S. Lang, *Algebra*, 修订第三版，Springer，2002，第 IV 章 §2、§8 | Gauss 引理、首一 gcd、结式及特化；用于定理 13.3、15.3 与引理 16.2 的系数域及多项式整除。 |
 | [M] R. A. Horn, C. R. Johnson, *Matrix Analysis*, 第二版，Cambridge，2013，§4.2–4.3 | 实对称谱、Rayleigh 商与实际主子矩阵的谱关系；定理 16.3 中的二维压缩保持同一实际矩阵，比较方向为压缩的最大 Rayleigh 商不超过全矩阵最大本征值。 |
