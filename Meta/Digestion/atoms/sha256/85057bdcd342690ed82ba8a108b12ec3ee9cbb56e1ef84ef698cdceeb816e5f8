@@ -1,0 +1,25 @@
+### 定理 9.3（显式测量误差与符号稳定）
+
+若十个平方钟读数每个误差至多$\delta$，恢复形式$\widetilde G$满足
+
+$$
+\boxed{\|\widetilde G-G\|_F
+ \le\delta\sqrt{1+\frac{3}{2\varepsilon^2}+\frac{36}{\varepsilon^4}}.}
+ \tag{16}
+$$
+
+若右侧小于$\mu=\min_j|\lambda_j(G)|$，则恢复形式保持同一 Lorentz 符号。
+
+**证明。**
+
+式 [式 eq:metric](#eq:metric) 分别给$|\Delta G_{00}|\le\delta$、$|\Delta G_{0i}|\le\delta/(2\varepsilon)$、$|\Delta G_{ii}|,|\Delta G_{ij}|\le2\delta/\varepsilon^2$。
+Frobenius 平方中对角项各计一次、非对角项各计两次，得到公式。
+若误差小于$\mu$，则对$0\le t\le1$，$\|tG^{-1}(\widetilde G-G)\|_{\rm op}<1$，
+所以$G+t(\widetilde G-G)$从不退化。
+连续路径上的惯性指数不变。
+
+∎
+
+让方向无限聚拢会按$\varepsilon^{-2}$放大空间分量误差。
+可区分的方向关系是资源，重复测同一钟方向不能替代它。
+
