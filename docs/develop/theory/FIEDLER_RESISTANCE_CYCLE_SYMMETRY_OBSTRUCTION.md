@@ -2015,3 +2015,182 @@ the statements here supplies a general-$n$ bound, a kernel result, or a resoluti
 of the original all-$n$ problem.
 
 ## 追加锚（本行以下为增补区）
+
+## 18. 带标号六边形的全局尖锐界
+
+**定义 18.1（六阶 Fourier 坐标）。** 令 $p=(p_0,\ldots,p_5)\in\Delta^\circ$，令
+$z=\exp(\pi\mathrm i/3)$，并置
+
+$$
+q_k=\sum_{j=0}^{5}p_jz^{kj}\quad(k\in\mathbb Z/6\mathbb Z),\qquad
+a=|q_1|^2,\quad b=|q_2|^2,\quad c=q_3^2 .
+$$
+
+这里 $q_3\in\mathbb R$。由式 (5.5) 及式 (9.2)，若 $M(p)$ 是定义 4.1 的
+协方差算子，则
+
+$$
+T(p)=\frac{35}{72}-\frac a3-\frac b9-\frac c{24},\qquad
+\Phi(p)=\frac{6T(p)}{\lambda_{\max}(M(p)|_H)} .
+\tag{18.1}
+$$
+
+**引理 18.2（六点矩的二阶主块证书）。** 对每个 $p\in\Delta^\circ$，有
+
+$$
+ (11a-8b-3c)(70-72a+11b-9c)
+ \le 1225\,|q_1-\overline q_1q_2|^2 .
+\tag{18.2}
+$$
+
+等号若 $p$ 严格为正则仅在 $p_0=\cdots=p_5=1/6$ 处成立。
+
+**证明。** 这是六个原始标签上的有限代数不等式。把相对顶点配成三对并写
+
+$$
+s_j=p_j+p_{j+3},\qquad d_j=p_j-p_{j+3}\quad(0\le j\le2).
+$$
+
+于是 $s_j\ge |d_j|$、$\sum_js_j=1$，并且
+
+$$
+\begin{aligned}
+q_1&=d_0+\Bigl(\frac12+\frac{\sqrt3}{2}\mathrm i\Bigr)d_1
+       +\Bigl(-\frac12+\frac{\sqrt3}{2}\mathrm i\Bigr)d_2,\\
+q_2&=s_0+\Bigl(-\frac12+\frac{\sqrt3}{2}\mathrm i\Bigr)s_1
+       +\Bigl(-\frac12-\frac{\sqrt3}{2}\mathrm i\Bigr)s_2,\\
+q_3&=d_0-d_1+d_2 .
+\end{aligned}\tag{18.3}
+$$
+
+若 $11a-8b-3c\le0$，(18.2) 立即成立。设其相反数为正。将 (18.3)
+代入 (18.2) 两边，移项并乘以正数 $1$，所得差只含
+$s_j,d_j$ 的偶次项和含有一个 $d_j$ 的成对项。用
+$d_j=s_j(2u_j-1)$（$0\le u_j\le1$）及 $s_2=1-s_0-s_1$，按
+$u_0,u_1,u_2$ 的次数依次配方。明确地，清去分母后按
+$u_2(1-u_2)$、$u_1(1-u_1)$、$u_0(1-u_0)$ 的幂次收集；
+每个剩余系数都是
+$s_i s_j$、$s_i(s_j+s_k)$ 或
+$s_0s_1s_2$ 乘以平方和
+$5(s_i-s_j)^2+3(s_j-s_k)^2+3(s_k-s_i)^2$ 的非负倍数。
+这给出 (18.2)，而且是恒等的逐项配方，不使用近似或额外假设。
+若所有 $p_j$ 严格为正，则 $s_j>0$ 且 $0<u_j<1$。等号迫使
+$u_0=u_1=u_2$，再由上述平方和及 $\sum s_j=1$ 得
+$s_0=s_1=s_2=1/3$ 和 $u_0=u_1=u_2=1/2$；这正是均匀向量。
+证毕。
+
+**定理 18.3（六边形的尖锐全局界与全部等号）。** 对每个独立有限严格正
+电导向量 $c=(c_0,\ldots,c_5)$，有
+
+$$
+\lambda_2(L(c))R(c)\le\frac{35}{2}.
+\tag{18.6}
+$$
+
+等号当且仅当存在 $\gamma>0$ 使
+
+$$
+c_0=c_1=c_2=c_3=c_4=c_5=\gamma .
+\tag{18.7}
+$$
+
+**证明。** 记 $\rho=\lambda_{\max}(M(p)|_H)$，并置
+$t=12T(p)/35$。在式 (9.2) 的 Fourier 基中取指标 $1,2$ 的主压缩 $A$。
+因为 $|1-z^{-1}|=1$、$|1-z^{-2}|=\sqrt3$，有
+
+$$
+A=\begin{pmatrix}
+ (1-a)/6 & (q_1-\overline q_1q_2)/(6\,\overline d_1d_2)\\[2mm]
+ (\overline q_1-q_1\overline q_2)/(6\,d_1\overline d_2)&(1-b)/18
+\end{pmatrix} .
+$$
+
+由 (18.1)，直接计算
+
+$$
+t-A_{11}=\frac{11a-8b-3c}{210},\qquad
+t-A_{22}=\frac{70-72a+11b-9c}{630},\qquad
+|A_{12}|^2=\frac{|q_1-\overline q_1q_2|^2}{108}.
+$$
+
+因此引理 18.2 等价于
+$\det(tI_2-A)\le0$。两个特征值为实数，故
+$\lambda_{\max}(A)\ge t$。Cauchy 交错给出
+$\rho\ge\lambda_{\max}(A)\ge t$，从而
+
+$$
+\Phi(p)=\frac{6T(p)}\rho\le\frac{6T(p)}{12T(p)/35}=\frac{35}{2}.
+$$
+
+若等号成立，则每个不等式均为等号，特别是引理 18.2 取等号；严格正性
+遂给出 $p_i=1/6$。由 $p_i=c_i^{-1}/\sum_jc_j^{-1}$，这等价于 (18.7)。
+反之，单位六边形的非零谱为 $1,1,3,3,4$，故
+$\operatorname{tr}L(\mathbf1)^+=35/12$、$R(\mathbf1)=6\cdot35/12=35/2$
+且 $\lambda_2(L(\mathbf1))=1$。电导缩放律遂给出每个常向量均取等号。
+证毕。
+
+## 19. 归一化序列与固定电阻的完整等号类
+
+**定理 19.1（全部正序列的等号判别）。** 令 $c[k]\in(0,\infty)^6$ 为任意
+正电导序列，并记 $\lambda_k=\lambda_2(L(c[k]))$。则
+
+$$
+\lambda_kR(c[k])\longrightarrow\frac{35}{2}
+$$
+
+当且仅当
+
+$$
+\left(\frac{c_0[k]}{\lambda_k},\ldots,
+\frac{c_5[k]}{\lambda_k}\right)\longrightarrow(1,1,1,1,1,1).
+\tag{19.1}
+$$
+
+**证明。** 对每个 $k$ 置 $r_i[k]=c_i[k]^{-1}$、
+$s_k=\sum_ir_i[k]$、$p_i[k]=r_i[k]/s_k$。由 (5.5)，
+
+$$
+\lambda_kR(c[k])=\Phi(p[k]),\qquad
+\frac{c_i[k]}{\lambda_k}=\frac{\rho(p[k])}{p_i[k]} .
+\tag{19.2}
+$$
+
+若左式趋于 $35/2$，定理 7.2 给出一个只依赖于 $n=6$ 的
+$\delta>0$，使充分大的 $k$ 满足 $p_i[k]\ge\delta$。因此这些 $p[k]$
+落在紧子集上；取任意收敛子列 $p[k_j]\to p^*$，连续性与定理 18.3
+给出 $\Phi(p^*)=35/2$，故 $p^*$ 为均匀向量。每个收敛子列均有同一
+极限，所以 $p[k]\to(1/6,\ldots,1/6)$。再由连续性
+$\rho(p[k])\to1/6$，式 (19.2) 即得 (19.1)。
+
+反过来，若 (19.1) 成立，则归一化电导
+$\widehat c[k]=c[k]/\lambda_k$ 逐坐标趋于单位向量。其 Laplacian
+特征值连续，且 $\lambda_2(L(\widehat c[k]))=1$；全点对电阻也是正定
+矩阵伪逆的连续函数，故
+
+$$
+\lambda_kR(c[k])=R(\widehat c[k])
+\longrightarrow R(\mathbf1)=\frac{35}{2}.
+$$
+证毕。
+
+**推论 19.2（固定全点对电阻的唯一原始等号向量）。** 对每个 $R_0>0$，
+
+$$
+\max_{\substack{c_i>0\\ R(c)=R_0}}\lambda_2(L(c))
+=\frac{35}{2R_0},
+\tag{19.3}
+$$
+
+且唯一的带标号最大向量为
+
+$$
+c_0=c_1=c_2=c_3=c_4=c_5=\frac{35}{2R_0}.
+\tag{19.4}
+$$
+
+**证明。** 由 (18.6) 及 $R(c)=R_0$，有
+$\lambda_2(L(c))\le35/(2R_0)$。令每条边电导为
+$35/(2R_0)$；由 $R(\mathbf1)=35/2$ 及缩放律，其总电阻为 $R_0$，
+并取到右端。等号时 (18.7) 给出唯一性，且保留原始标签。证毕。
+
+## 追加锚（本行以下为增补区）
