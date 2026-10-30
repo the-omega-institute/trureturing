@@ -116,9 +116,6 @@ private def machineUpdate (N : ℕ) : Bool → Fin (N+1) ⊕ Unit → Fin (N+1) 
 private theorem encode_update (N : ℕ) (b : Bool) (s : Option ℕ) :
     encode N (sourceUpdate b s) = machineUpdate N b (encode N s) := by
   cases b <;> cases s <;> simp [encode, sourceUpdate, machineUpdate]
-  apply congrArg Sum.inl
-  apply Fin.ext
-  dsimp
   omega
 
 private theorem encoded_run (N : ℕ) (h : List Bool) (s : Option ℕ) :

@@ -44,7 +44,9 @@ def arena : Arena where
       Fintype.card (Fin (N+1) ⊕ Unit) = N+2 ∧
       ∀ (S : Type u) [Fintype S] (M : Predictor S), NativeCorrect M P ρ ε → N+2 ≤ Fintype.card S) ∧
     (∀ ε : ℝ, x/2 ≤ ε → ∃ M : Predictor Unit, NativeCorrect M P ρ ε) ∧
-    (∀ (S : Type u) [Fintype S] (M : Predictor S), ¬ NativeCorrect M P ρ 0)
+    (∀ (S : Type u) [Fintype S] (M : Predictor S), ¬ NativeCorrect M P ρ 0) ∧
+    ((kraus P false).conjTranspose * kraus P false +
+      (kraus P true).conjTranspose * kraus P true = 1)
 
 private def projection : Matrix (Fin 2) (Fin 2) ℂ := Matrix.diagonal ![0,1]
 private def density : DensityState (Fin 2) :=

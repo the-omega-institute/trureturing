@@ -96,7 +96,8 @@ theorem bad_law : ¬ arena.{u}.Law badZero := by
   have hm : Antitone p := by
     intro m n hmn
     dsimp [p]
-    split_ifs <;> omega
+    split_ifs <;> try norm_num
+    omega
   have hl : Tendsto p atTop (𝓝 0) := by
     have he : p =ᶠ[atTop] (fun _ : ℕ => (0 : ℝ)) := by
       filter_upwards [eventually_ge_atTop 1] with n hn

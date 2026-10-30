@@ -28,10 +28,8 @@ def phase : ℂ := (Complex.exp ((3*Real.pi/5 : ℝ) * Complex.I)) ^ (-3 : ℤ)
 
 private theorem x_properties : 0 < x ∧ x < 1 ∧ x+x^2=1 := by
   refine ⟨inv_pos.mpr Real.goldenRatio_pos, inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio, ?_⟩
-  dsimp [x]
-  have hp := Real.goldenRatio_sq
-  field_simp
-  nlinarith
+  rw [x, Real.inv_goldenRatio]
+  nlinarith [Real.goldenConj_sq]
 
 variable {d : ℕ}
 
@@ -42,7 +40,7 @@ private theorem block_mul (P : Matrix (Fin d) (Fin d) ℂ) (hP : P*P=P) (a b c e
   have hEE : (1-P)*(1-P) = 1-P := by noncomm_ring [hP]
   have hEP : (1-P)*P = 0 := by simp [sub_mul,hP]
   have hPE : P*(1-P) = 0 := by simp [mul_sub,hP]
-  simp [block,add_mul,mul_add,Matrix.smul_mul,Matrix.mul_smul,hEE,hEP,hPE,smul_smul]
+  simp [block,add_mul,mul_add,Matrix.smul_mul,Matrix.mul_smul,hEE,hEP,hPE,hP,smul_smul,mul_comm]
 
 private theorem block_star (P : Matrix (Fin d) (Fin d) ℂ) (hP : P.IsHermitian) (a b : ℂ) :
     (block P a b).conjTranspose = block P (star a) (star b) := by
@@ -83,8 +81,35 @@ private def alive (h : List Bool) : ℂ := if false ∈ h then 0 else 1
 private theorem phase_unit : star phase * phase = 1 := by
   have he : ‖Complex.exp ((3*Real.pi/5 : ℝ)*Complex.I)‖ = 1 := by
     simp [Complex.norm_exp]
-  have hp : ‖phase‖ = 1 := by simp [phase,norm_zpow,he]
-  simpa [Complex.normSq_eq_conj_mul_self,Complex.sq_norm] using congrArg (fun r : ℝ => (r^2 : ℂ)) hp
+  have hp : ‖phase‖ = 1 := by
+    unfold phase
+    rw [norm_zpow, he]
+    norm_num
+  have hn : (Complex.normSq phase : ℂ) = 1 := by
+    rw [Complex.normSq_eq_norm_sq, hp]
+    norm_num
+  simpa only [Complex.normSq_eq_conj_mul_self, Complex.star_def] using hn
+
+private theorem complete_kraus (P : Matrix (Fin d) (Fin d) ℂ)
+    (hP : P*P=P) (hPh : P.IsHermitian) :
+    (kraus P false).conjTranspose * kraus P false +
+      (kraus P true).conjTranspose * kraus P true = 1 := by
+  have hs : star (Real.sqrt x : ℂ)*(Real.sqrt x : ℂ) = x := by
+    simp only [Complex.star_def, Complex.conj_ofReal]
+    exact_mod_cast (show Real.sqrt x * Real.sqrt x = x by
+      nlinarith [Real.sq_sqrt x_properties.1.le])
+  have h0 : kraus P false = block P (Real.sqrt x) 0 := by simp [kraus,block]
+  have h1 : kraus P true = block P x phase := rfl
+  have he : (kraus P false).conjTranspose * kraus P false = (x : ℂ) • (1-P) := by
+    rw [h0,block_star P hPh,block_mul P hP]
+    simp only [block,hs,star_zero,zero_mul,zero_smul,add_zero]
+  have hq : (kraus P true).conjTranspose * kraus P true = (x : ℂ)^2 • (1-P)+P := by
+    rw [h1,block_star P hPh,block_mul P hP]
+    simp only [block,phase_unit,one_smul]
+    rw [show star (x : ℂ)*(x : ℂ) = (x : ℂ)^2 by simp [pow_two]]
+  have hx : (x : ℂ)+(x : ℂ)^2 = 1 := by exact_mod_cast x_properties.2.2
+  rw [he,hq,← add_assoc,← add_smul,hx,one_smul]
+  simp
 
 private theorem sector_trace (P : Matrix (Fin d) (Fin d) ℂ) (hP : P*P=P)
     (hPh : P.IsHermitian) (a b : ℂ) (ρ : Matrix (Fin d) (Fin d) ℂ) :
@@ -100,11 +125,23 @@ private theorem sector_trace (P : Matrix (Fin d) (Fin d) ℂ) (hP : P*P=P)
     simp only [← Matrix.mul_assoc]
     rw [Matrix.trace_mul_cycle]
     simp only [Matrix.mul_assoc]
+  have ht (c e : ℂ) :
+      (block P a b).conjTranspose * block P c e * block P a b =
+        block P (star a*c*a) (star b*e*b) := by
+    rw [block_star P hPh, block_mul P hP, block_mul P hP]
   constructor
-  · rw [htrace,block_star P hPh,hE,block_mul P hP,block_mul P hP]
-    simp [block,Matrix.smul_mul,Matrix.trace_smul]
-  · rw [htrace,block_star P hPh,hQ,block_mul P hP,block_mul P hP]
-    simp [block,Matrix.smul_mul,Matrix.trace_smul]
+  · have hi : (block P a b).conjTranspose*(1-P)*block P a b = (star a*a) • (1-P) := by
+      calc
+        _ = (block P a b).conjTranspose * block P 1 0 * block P a b := by rw [← hE]
+        _ = _ := by rw [ht]; simp [block]
+    rw [htrace, hi]
+    simp [Matrix.smul_mul, Matrix.trace_smul]
+  · have hi : (block P a b).conjTranspose*P*block P a b = (star b*b) • P := by
+      calc
+        _ = (block P a b).conjTranspose * block P 0 1 * block P a b := by rw [← hQ]
+        _ = _ := by rw [ht]; simp [block]
+    rw [htrace, hi]
+    simp [Matrix.smul_mul, Matrix.trace_smul]
 
 private theorem word_trace (P : Matrix (Fin d) (Fin d) ℂ) (hP : P*P=P)
     (hPh : P.IsHermitian) (ρ : Matrix (Fin d) (Fin d) ℂ) (h : List Bool) :
@@ -118,13 +155,14 @@ private theorem word_trace (P : Matrix (Fin d) (Fin d) ℂ) (hP : P*P=P)
     cases bit
     · have hh := sector_trace P hP hPh (Real.sqrt x) 0 ρ
       have hs : (star (Real.sqrt x : ℂ))*(Real.sqrt x : ℂ) = x := by
-        norm_cast
-        exact Real.sq_sqrt x_properties.1.le
+        simp only [Complex.star_def, Complex.conj_ofReal]
+        exact_mod_cast (show Real.sqrt x * Real.sqrt x = x by nlinarith [Real.sq_sqrt x_properties.1.le])
       have hE : Matrix.trace ((1-P)*branch P false ρ) =
           (x : ℂ)*Matrix.trace ((1-P)*ρ) := by
-        simpa [branch,kraus,block,hs] using hh.1
+        rw [hs] at hh
+        simpa only [branch,kraus,block,zero_smul,add_zero] using hh.1
       have hQ : Matrix.trace (P*branch P false ρ) = 0 := by
-        simpa [branch,kraus,block] using hh.2
+        simpa only [branch,kraus,block,zero_smul,add_zero,star_zero,zero_mul] using hh.2
       rw [hE,hQ]
       simp [exponent,alive,pow_add]
       ring
@@ -132,7 +170,7 @@ private theorem word_trace (P : Matrix (Fin d) (Fin d) ℂ) (hP : P*P=P)
       rw [show star (x : ℂ)*(x : ℂ) = (x : ℂ)^2 by simp [pow_two],phase_unit] at hh
       rw [show Matrix.trace ((1-P)*branch P true ρ) =
           (x : ℂ)^2*Matrix.trace ((1-P)*ρ) from hh.1,
-        show Matrix.trace (P*branch P true ρ) = Matrix.trace (P*ρ) by simpa using hh.2]
+        show Matrix.trace (P*branch P true ρ) = Matrix.trace (P*ρ) by simpa only [branch,kraus,block,one_mul] using hh.2]
       simp [exponent,alive,pow_add]
       ring
 
@@ -147,16 +185,17 @@ private theorem word_projection_trace (P : Matrix (Fin d) (Fin d) ℂ) (hP : P*P
     cases bit
     · have hh := (sector_trace P hP hPh (Real.sqrt x) 0 ρ).2
       have hQ : Matrix.trace (P*branch P false ρ) = 0 := by
-        simpa [branch,kraus,block] using hh
+        simpa only [branch,kraus,block,zero_smul,add_zero,star_zero,zero_mul] using hh
       simp [hQ,alive]
     · have hh := (sector_trace P hP hPh x phase ρ).2
       have hQ : Matrix.trace (P*branch P true ρ) = Matrix.trace (P*ρ) := by
-        simpa [branch,kraus,block,phase_unit] using hh
+        rw [phase_unit,one_mul] at hh
+        simpa only [branch,kraus,block] using hh
       simp [hQ,alive]
 
 private theorem exponent_append (a b : List Bool) : exponent (a++b) = exponent a+exponent b := by
   induction a with
-  | nil => rfl
+  | nil => simp [exponent]
   | cons t a ih => cases t <;> simp [exponent,ih,Nat.add_assoc]
 
 private theorem exponent_no_zero (h : List Bool) (hz : false ∉ h) : exponent h = 2*h.length := by
@@ -194,7 +233,8 @@ private theorem native_history_law (P : Matrix (Fin d) (Fin d) ℂ)
   let state := CStarMatrix.ofMatrix.symm ρ.val
   let q := (Matrix.trace (P*state)).re
   have hn : Matrix.trace state = 1 := ρ.property.2
-  have hm := real_mass P hP hPh state hn
+  have hm (h : List Bool) : mass P state h = x^exponent h * (1-q) +
+      if false ∈ h then 0 else q := real_mass P hP hPh state hn h
   have hq0 : 0 < q := hq.1
   have hq1 : q < 1 := hq.2
   have hpos (h : List Bool) : 0 < mass P state h := by
@@ -205,23 +245,19 @@ private theorem native_history_law (P : Matrix (Fin d) (Fin d) ℂ)
   · intro n
     have hz : false ∉ List.replicate n true := by simp
     rw [hm,if_neg hz,exponent_no_zero _ hz]
-    dsimp [q,state]
+    simp only [List.length_replicate]
     ring
   · intro h
     unfold nextZero
     rw [hm (h++[false]),exponent_append]
     simp only [List.mem_append,List.mem_singleton,or_true,↓reduceIte,exponent,add_zero]
     by_cases hz : false ∈ h
-    · rw [if_pos hz,hm h,if_pos hz]
-      dsimp [q] at *
-      rw [pow_add,pow_one]
-      field_simp
-      <;> ring
-    · rw [if_neg hz,hm h,if_neg hz,exponent_no_zero _ hz]
-      unfold ageProbability
-      dsimp [q]
-      rw [pow_add,pow_one]
+    · rw [if_pos hz,hm h,if_pos hz,add_zero,pow_add,pow_one]
+      apply (div_eq_iff (ne_of_gt (mul_pos (pow_pos x_properties.1 _) (by linarith : 0 < 1-q)))).mpr
       ring
+    · rw [if_neg hz,hm h,if_neg hz,exponent_no_zero _ hz,pow_add,pow_one]
+      unfold ageProbability
+      congr 1 <;> ring
 
 open Filter Topology
 open D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum
@@ -247,7 +283,7 @@ private theorem age_properties (q : ℝ) (hq : 0 < q ∧ q < 1) :
       nlinarith [mul_pos hx.1 hq.1]
   · intro m n hmn
     have ht : x^(2*n) ≤ x^(2*m) := by
-      exact pow_le_pow_of_le_one hx.1.le hx.2.le (Nat.mul_le_mul_left 2 hmn)
+      exact pow_le_pow_of_le_one hx.1.le hx.2.1.le (Nat.mul_le_mul_left 2 hmn)
     unfold ageProbability
     apply (div_le_div_iff₀ (hd n) (hd m)).mpr
     nlinarith [mul_nonneg (mul_nonneg hx.1.le (by linarith : 0 ≤ 1-q))
@@ -255,9 +291,15 @@ private theorem age_properties (q : ℝ) (hq : 0 < q ∧ q < 1) :
   · have hh : x^2 < 1 := by nlinarith [hx.2]
     have ht : Tendsto (fun n : ℕ => x^(2*n)) atTop (𝓝 0) := by
       simpa [pow_mul] using tendsto_pow_atTop_nhds_zero_of_lt_one (sq_nonneg x) hh
-    have hl := ((tendsto_const_nhds.mul ht).div
-      (tendsto_const_nhds.add (tendsto_const_nhds.mul ht)) (ne_of_gt hq.1))
-    simpa [ageProbability] using hl
+    have hn : Tendsto (fun n : ℕ => x*(1-q)*x^(2*n)) atTop (𝓝 0) := by
+      simpa using ht.const_mul (x*(1-q))
+    have hd : Tendsto (fun n : ℕ => q+(1-q)*x^(2*n)) atTop (𝓝 q) := by
+      simpa using (ht.const_mul (1-q)).const_add q
+    have hquot : Tendsto
+        (fun n : ℕ => x*(1-q)*x^(2*n)/(q+(1-q)*x^(2*n))) atTop (𝓝 (0/q)) :=
+      hn.div hd (ne_of_gt hq.1)
+    change Tendsto (fun n : ℕ => x*(1-q)*x^(2*n)/(q+(1-q)*x^(2*n))) atTop (𝓝 0)
+    simpa only [zero_div] using hquot
 
 /-- Natural ceiling includes truncation at zero. -/
 def cutoff (q ε : ℝ) : ℕ :=
@@ -268,14 +310,16 @@ private theorem cutoff_iff (q ε : ℝ) (hq : 0 < q ∧ q < 1)
     ageProbability q n ≤ 2*ε ↔ cutoff q ε ≤ n := by
   let A := (1-q)*(x-2*ε)/(2*ε*q)
   have hx := x_properties
-  have hd : 0 < q+(1-q)*x^(2*n) := by positivity
-  have hden : 0 < 2*ε*q := by positivity
+  have hd : 0 < q+(1-q)*x^(2*n) :=
+    add_pos hq.1 (mul_pos (by linarith) (pow_pos hx.1 _))
+  have hden : 0 < 2*ε*q := mul_pos (mul_pos (by norm_num) hε) hq.1
   have hA : 0 < A := div_pos (mul_pos (by linarith) (by linarith)) hden
   have ht : 0 < x^(2*n) := pow_pos hx.1 _
   have hphi : 0 < Real.goldenRatio^(2*n) := pow_pos Real.goldenRatio_pos _
   have hinv : Real.goldenRatio^(2*n)*x^(2*n) = 1 := by
     rw [← mul_pow]
-    simp [x,Real.goldenRatio_ne_zero]
+    change (Real.goldenRatio*Real.goldenRatio⁻¹)^(2*n) = 1
+    rw [mul_inv_cancel₀ Real.goldenRatio_ne_zero,one_pow]
   have ha : ageProbability q n ≤ 2*ε ↔ A*x^(2*n) ≤ 1 := by
     dsimp [ageProbability,A]
     rw [div_le_iff₀ hd,div_mul_eq_mul_div,div_le_iff₀ hden]
@@ -283,7 +327,9 @@ private theorem cutoff_iff (q ε : ℝ) (hq : 0 < q ∧ q < 1)
   have hb : A*x^(2*n) ≤ 1 ↔ A ≤ Real.goldenRatio^(2*n) := by
     calc
       A*x^(2*n) ≤ 1 ↔ A*x^(2*n) ≤ Real.goldenRatio^(2*n)*x^(2*n) := by rw [hinv]
-      _ ↔ A ≤ Real.goldenRatio^(2*n) := mul_le_mul_iff_right₀ ht
+      _ ↔ A ≤ Real.goldenRatio^(2*n) := by
+        simpa only [mul_comm] using (mul_le_mul_iff_right₀ ht :
+          x^(2*n)*A ≤ x^(2*n)*Real.goldenRatio^(2*n) ↔ A ≤ Real.goldenRatio^(2*n))
   have hc : A ≤ Real.goldenRatio^(2*n) ↔
       Real.log A/(2*Real.log Real.goldenRatio) ≤ (n : ℝ) := by
     rw [← Real.log_le_log_iff hA hphi,Real.log_pow,
@@ -292,6 +338,23 @@ private theorem cutoff_iff (q ε : ℝ) (hq : 0 < q ∧ q < 1)
     constructor <;> intro h <;> nlinarith
   rw [ha,hb,hc]
   exact Nat.ceil_le.symm
+
+private theorem native_correct_iff {S : Type*} (M : Predictor S) (ε : ℝ)
+    (P : Matrix (Fin d) (Fin d) ℂ) (hP : P*P=P) (hPh : P.IsHermitian)
+    (ρ : DensityState (Fin d))
+    (hq : 0 < (Matrix.trace (P*CStarMatrix.ofMatrix.symm ρ.val)).re ∧
+      (Matrix.trace (P*CStarMatrix.ofMatrix.symm ρ.val)).re < 1) :
+    NativeCorrect M P ρ ε ↔ Correct M x
+      (ageProbability (Matrix.trace (P*CStarMatrix.ofMatrix.symm ρ.val)).re) ε := by
+  have hlaw := native_history_law P hP hPh ρ hq
+  constructor
+  · intro h hst
+    have hh := h hst (hlaw.1 hst)
+    simpa only [historyLaw,hlaw.2.2 hst] using hh
+  · intro h hst _
+    simpa only [historyLaw,hlaw.2.2 hst] using h hst
+
+universe u
 
 /-- The actual retained golden process has the attained N+2 state minimum at
 the first nonstrict threshold, a one-state high-error predictor, and no exact
@@ -310,23 +373,17 @@ theorem native_predictor_minimum (P : Matrix (Fin d) (Fin d) ℂ)
       (∀ n, ageProbability q n ≤ 2*ε ↔ N ≤ n) ∧
       (∃ M : Predictor (Fin (N+1) ⊕ Unit), NativeCorrect M P ρ ε) ∧
       Fintype.card (Fin (N+1) ⊕ Unit) = N+2 ∧
-      ∀ (S : Type*) [Fintype S] (M : Predictor S), NativeCorrect M P ρ ε → N+2 ≤ Fintype.card S) ∧
+      ∀ (S : Type u) [Fintype S] (M : Predictor S), NativeCorrect M P ρ ε → N+2 ≤ Fintype.card S) ∧
     (∀ ε : ℝ, x/2 ≤ ε → ∃ M : Predictor Unit, NativeCorrect M P ρ ε) ∧
-    (∀ (S : Type*) [Fintype S] (M : Predictor S), ¬ NativeCorrect M P ρ 0) := by
+    (∀ (S : Type u) [Fintype S] (M : Predictor S), ¬ NativeCorrect M P ρ 0) ∧
+    ((kraus P false).conjTranspose * kraus P false +
+      (kraus P true).conjTranspose * kraus P true = 1) := by
   dsimp only
   let state := CStarMatrix.ofMatrix.symm ρ.val
   let q := (Matrix.trace (P*state)).re
   have hlaw := native_history_law P hP hPh ρ hq
   have hp := age_properties q hq
-  have heq {S : Type*} (M : Predictor S) (ε : ℝ) :
-      NativeCorrect M P ρ ε ↔ Correct M x (ageProbability q) ε := by
-    constructor
-    · intro h hst
-      have hh := h hst (hlaw.1 hst)
-      simpa [Correct,historyLaw,hlaw.2.2 hst,q,state] using hh
-    · intro h hst _
-      simpa [historyLaw,hlaw.2.2 hst,q,state] using h hst
-  refine ⟨fun h => ⟨hlaw.1 h,hlaw.2.2 h⟩,?_,?_,?_,?_⟩
+  refine ⟨fun h => ⟨hlaw.1 h,hlaw.2.2 h⟩,?_,?_,?_,?_,complete_kraus P hP hPh⟩
   · intro n
     refine ⟨hlaw.2.1 n,?_⟩
     unfold posterior
@@ -340,15 +397,15 @@ theorem native_predictor_minimum (P : Matrix (Fin d) (Fin d) ℂ)
       ⟨x_properties.1,x_properties.2.1.le⟩ hε.le (by linarith)
       (fun n => (hp.1 n).1.le) (fun n => (hp.1 n).2) hp.2.1 hp.2.2 hcut
     obtain ⟨M,hM⟩ := hmin.1
-    exact ⟨N,rfl,hcut,⟨M,(heq M ε).mpr hM⟩,hmin.2.1,
-      fun S _ M hM => hmin.2.2 S M ((heq M ε).mp hM)⟩
+    exact ⟨N,rfl,hcut,⟨M,(native_correct_iff M ε P hP hPh ρ hq).mpr hM⟩,hmin.2.1,
+      fun S _ M hM => hmin.2.2 S M ((native_correct_iff M ε P hP hPh ρ hq).mp hM)⟩
   · intro ε hε
     let M : Predictor Unit := {
       initial := ()
       update := fun _ _ => ()
       output := fun _ => x/2
       output_mem := fun _ => ⟨by linarith [x_properties.1],by linarith [x_properties.2.1]⟩ }
-    refine ⟨M,(heq M ε).mpr (fun h => ?_)⟩
+    refine ⟨M,(native_correct_iff M ε P hP hPh ρ hq).mpr (fun h => ?_)⟩
     change |x/2 - historyLaw x (ageProbability q) h| ≤ ε
     by_cases hz : false ∈ h
     · rw [historyLaw,if_pos hz]
@@ -357,7 +414,7 @@ theorem native_predictor_minimum (P : Matrix (Fin d) (Fin d) ℂ)
       exact abs_le.mpr ⟨by linarith [(hp.1 h.length).2],by linarith [(hp.1 h.length).1]⟩
   · intro S _ M hm
     exact exact_prediction_impossible x (ageProbability q) (fun n => (hp.1 n).1)
-      hp.2.2 M ((heq M 0).mp hm)
+      hp.2.2 M ((native_correct_iff M 0 P hP hPh ρ hq).mp hm)
 
 #print axioms native_predictor_minimum
 
