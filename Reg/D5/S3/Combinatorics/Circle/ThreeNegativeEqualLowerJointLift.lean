@@ -27,16 +27,17 @@ abbrev signature : Signature where
   Role := Bool
   finiteRole := inferInstance
   nonemptyRole := inferInstance
+  -- The finite Bool dictionary reads true (new) before false (old).
   Output side p := match side with
-    | false => List (Fin (p.1 + p.2.1 + p.2.2 + 1)) → Prop
-    | true => List (Fin (p.1 + p.2.1 + p.2.2)) → Prop
+    | false => List (Fin (p.1 + p.2.1 + p.2.2)) → Prop
+    | true => List (Fin (p.1 + p.2.1 + p.2.2 + 1)) → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
   realize signature (fun side p seed => match side with
-    | false => OriginalOrder (p.1 + p.2.1 + p.2.2 + 1) seed
-    | true => OriginalOrder (p.1 + p.2.1 + p.2.2) seed) (fun e => nomatch e)
+    | false => OriginalOrder (p.1 + p.2.1 + p.2.2) seed
+    | true => OriginalOrder (p.1 + p.2.1 + p.2.2 + 1) seed) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun side _ _ => match side with
@@ -51,8 +52,8 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (a b c : ℕ) (_hb : 2≤b) (_hbc : b=c) (_hba : b<a),
     ∃ sigma : List (Fin (a+b+c)), ∃ j : ℕ, j≤a+b+c ∧
-      R.readout true ⟨a,b,c⟩ (1+2^a+2^(a+b)) sigma ∧
-      R.readout false ⟨a,b,c⟩ (2*(1+2^a+2^(a+b))) (earWord (a+b+c) sigma j)
+      R.readout false ⟨a,b,c⟩ (1+2^a+2^(a+b)) sigma ∧
+      R.readout true ⟨a,b,c⟩ (2*(1+2^a+2^(a+b))) (earWord (a+b+c) sigma j)
 
 private theorem actual_law : arena.Law actual := by
   intro a b c hb hbc hba
@@ -67,8 +68,8 @@ private theorem deleted_law (side : Bool) : ¬ arena.Law (deleted side) := by
   intro h
   obtain ⟨sigma,j,hj,hold,hnew⟩ := h 3 2 2 (by decide) (by decide) (by decide)
   cases side
-  · simp [deleted,rejected,realize] at hnew
   · simp [deleted,rejected,realize] at hold
+  · simp [deleted,rejected,realize] at hnew
 
 private def identityWord : List (Fin 7) := List.finRange 7
 
@@ -103,17 +104,17 @@ private theorem bad_new : ¬ OriginalOrder 8 1 (earWord 7 identityWord 0) := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro side
   cases side
+  · refine ⟨⟨3, 2, 2⟩, 0, 2, ?_⟩
+    intro he
+    have hp := congrFun he identityWord
+    change OriginalOrder 7 0 identityWord = OriginalOrder 7 2 identityWord at hp
+    exact bad_old (hp.mp zero_old)
   · refine ⟨⟨3, 2, 2⟩, 0, 1, ?_⟩
     intro he
     have hp := congrFun he (earWord 7 identityWord 0)
     change OriginalOrder 8 0 (earWord 7 identityWord 0) =
       OriginalOrder 8 1 (earWord 7 identityWord 0) at hp
     exact bad_new (hp.mp zero_new)
-  · refine ⟨⟨3, 2, 2⟩, 0, 2, ?_⟩
-    intro he
-    have hp := congrFun he identityWord
-    change OriginalOrder 7 0 identityWord = OriginalOrder 7 2 identityWord at hp
-    exact bad_old (hp.mp zero_old)
 
 def source_registration : Registration arena
     (type_of% (@actualSource_three_negative_equal_lower_joint_lift)) where
