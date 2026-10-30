@@ -9,6 +9,8 @@
 import D5.S3.Quantum.TensorNetworks.UniformMPSExpectedDimensionRefutation
 import D5.S0.Observation.MatrixTracePowerSum
 
+/-! Trace coordinates and weighted invariants of pairs of two-by-two complex matrices. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
@@ -21,7 +23,7 @@ noncomputable section
 
 private abbrev parameters := Fin 2 → Matrix (Fin 2) (Fin 2) ℂ
 
-private def degree (e : Fin 5 → ℕ) : ℕ :=
+def degree (e : Fin 5 → ℕ) : ℕ :=
   e 0 + e 1 + 2 * e 2 + 2 * e 3 + 2 * e 4
 
 private def invariants (p : parameters) : Fin 5 → ℂ :=
@@ -47,7 +49,7 @@ private def coordinates (n : ℕ) : Submodule ℂ (parameters → ℂ) :=
 private def ordered (n : ℕ) (a : Fin (n + 1)) (p : parameters) : ℂ :=
   (p 0 ^ a.val * p 1 ^ (n - a.val)).trace
 
-private abbrev extraIndex (n : ℕ) :=
+abbrev extraIndex (n : ℕ) :=
   {e : Fin 5 → Fin (n + 1) // degree (fun j => (e j).val) + 4 = n}
 
 private abbrev normalIndex (n : ℕ) := Fin (n + 1) ⊕ extraIndex n
@@ -329,7 +331,8 @@ private lemma trace_adjacent_mem (a b : List (Fin 2)) (x y : Fin 2) :
     exact trace_word_commutator (b ++ a)
   fin_cases x <;> fin_cases y <;> simp only [Fin.mk_zero, Fin.mk_one] at *
   · simpa only [sub_self, Pi.zero_def] using
-      ((graded (((a ++ (0 : Fin 2) :: 0 :: b).length : ℤ) - 4)).map (LinearMap.mulLeft ℂ delta)).zero_mem
+      ((graded (((a ++ (0 : Fin 2) :: 0 :: b).length : ℤ) - 4)).map
+        (LinearMap.mulLeft ℂ delta)).zero_mem
   · rw [trace_swap]
     exact h
   · have heq : (fun p => (word (a ++ (1 : Fin 2) :: 0 :: b) p).trace -
@@ -342,7 +345,8 @@ private lemma trace_adjacent_mem (a b : List (Fin 2)) (x y : Fin 2) :
     rw [heq]
     exact (Submodule.map (LinearMap.mulLeft ℂ delta) _).neg_mem h
   · simpa only [sub_self, Pi.zero_def] using
-      ((graded (((a ++ (1 : Fin 2) :: 1 :: b).length : ℤ) - 4)).map (LinearMap.mulLeft ℂ delta)).zero_mem
+      ((graded (((a ++ (1 : Fin 2) :: 1 :: b).length : ℤ) - 4)).map
+        (LinearMap.mulLeft ℂ delta)).zero_mem
 
 private lemma trace_perm_mem {l r : List (Fin 2)} (h : l.Perm r) (a : List (Fin 2)) :
     (fun p => (word (a ++ l) p).trace - (word (a ++ r) p).trace) ∈
@@ -419,7 +423,8 @@ private lemma coordinates_upper (n : ℕ) :
   have hs : ordered n a ∈ Submodule.span ℂ (Set.range (ordered n)) :=
     Submodule.subset_span ⟨a, rfl⟩
   have ht : (fun p => traceWord 2 2 n p i - ordered n a p) ∈
-      Submodule.span ℂ (Set.range (ordered n)) ⊔ (graded ((n : ℤ) - 4)).map (LinearMap.mulLeft ℂ delta) :=
+      Submodule.span ℂ (Set.range (ordered n)) ⊔
+        (graded ((n : ℤ) - 4)).map (LinearMap.mulLeft ℂ delta) :=
     Submodule.mem_sup_right hp
   have hu : ordered n a ∈ Submodule.span ℂ (Set.range (ordered n)) ⊔
       (graded ((n : ℤ) - 4)).map (LinearMap.mulLeft ℂ delta) := Submodule.mem_sup_left hs
@@ -490,7 +495,7 @@ private lemma wordOp_pure (j : Fin 5) {n : ℕ} {q : List (Fin 2) →₀ ℂ}
   have hw (a b : List (Fin 2)) := pure_wrap hq a b
   dsimp only [wordOp]
   fin_cases j <;>
-    simp only [Matrix.cons_val_zero, Matrix.cons_val_succ', Matrix.cons_val_zero',
+    simp only [Matrix.cons_val_succ', Matrix.cons_val_zero',
       Fin.isValue, Nat.reduceLT, ↓reduceIte]
   · exact pure_add (by simpa [Nat.add_comm] using hw [0] [])
       (by simpa using hw [] [0])
@@ -548,8 +553,8 @@ private lemma wordOp_eval (j : Fin 5) (q : List (Fin 2) →₀ ℂ) (f : paramet
     Matrix.tail_cons] at h0 h1 h2 h3 h4
   dsimp only [wordOp, invariants]
   fin_cases j <;>
-    simp only [Matrix.cons_val_zero, Matrix.cons_val_zero',
-      Matrix.cons_val_succ', combinationEval_add, wrap_eval, hq p]
+    simp only [Matrix.cons_val_zero', Matrix.cons_val_succ',
+      combinationEval_add, wrap_eval, hq p]
   all_goals dsimp only [word]
   all_goals simp only [List.map_cons, List.map_nil, List.prod_cons, List.prod_nil,
     one_mul, mul_one]
@@ -720,7 +725,7 @@ private lemma invariants_attained (z : Fin 5 → ℂ) (hz : z 0 ^ 2 ≠ 4 * z 2)
   · exact hsum
   · exact hab
   · exact hprod
-  · ring <;> rfl
+  · ring; rfl
   · exact hw
 
 private lemma invariant_polynomial_injective :
@@ -850,7 +855,7 @@ private lemma normal_independent (n : ℕ) : LinearIndependent ℂ (normalFamily
     have h := congrArg (fun r : MvPolynomial (Fin 5) ℂ => r.coeff (ex e)) hq0
     simpa only [q, MvPolynomial.coeff_sum, MvPolynomial.coeff_monomial,
       hex.eq_iff, Finset.sum_ite_eq', Finset.mem_univ, ite_true,
-      MvPolynomial.coeff_zero, Finsupp.zero_apply] using h
+      AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] using h
 
 private lemma normal_span (n : ℕ) :
     Submodule.span ℂ (Set.range (normalFamily n)) = coordinates n := by
@@ -904,8 +909,7 @@ private lemma normal_span (n : ℕ) :
 theorem coordinate_dimension (n : ℕ) :
     Module.finrank ℂ (Submodule.span ℂ (Set.range fun i : Fin n → Fin 2 =>
       fun p : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ => traceWord 2 2 n p i)) =
-      (n + 1) + Fintype.card {e : Fin 5 → Fin (n + 1) //
-        (e 0).val + (e 1).val + 2 * (e 2).val + 2 * (e 3).val + 2 * (e 4).val + 4 = n} := by
+      (n + 1) + Fintype.card (extraIndex n) := by
   change Module.finrank ℂ (coordinates n) = (n + 1) + Fintype.card (extraIndex n)
   rw [← normal_span, finrank_span_eq_card (normal_independent n)]
   change Fintype.card (Fin (n + 1) ⊕ extraIndex n) = _

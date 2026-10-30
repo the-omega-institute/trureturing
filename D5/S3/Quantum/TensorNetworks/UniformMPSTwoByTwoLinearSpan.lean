@@ -17,6 +17,7 @@ namespace D5.S3.Quantum.TensorNetworks.UniformMPSTwoByTwoLinearSpan
 
 open scoped BigOperators Matrix
 open UniformMPSExpectedDimensionRefutation (traceWord uMPS)
+open UniformMPSTwoByTwoTraceWords (degree extraIndex)
 
 noncomputable section
 
@@ -26,10 +27,6 @@ def claim : Prop :=
     (Module.finrank ℂ (Submodule.span ℂ (uMPS 2 2 n)) : ℚ) =
       if Even n then ((n : ℚ) ^ 4 - 4 * n ^ 2 + 192 * n + 192) / 192
       else ((n : ℚ) ^ 4 - 10 * n ^ 2 + 192 * n + 201) / 192
-
-private abbrev extraIndex (n : ℕ) :=
-  {e : Fin 5 → Fin (n + 1) //
-        (e 0).val + (e 1).val + 2 * (e 2).val + 2 * (e 3).val + 2 * (e 4).val + 4 = n}
 
 private lemma evaluation_bridge (n : ℕ) :
     Module.finrank ℂ (Submodule.span ℂ (uMPS 2 2 n)) =
@@ -82,13 +79,10 @@ private lemma evaluation_bridge (n : ℕ) :
   change Module.finrank ℂ s = Module.finrank ℂ (c)
   omega
 
-private def weight (e : Fin 5 → ℕ) : ℕ :=
-  e 0 + e 1 + 2 * e 2 + 2 * e 3 + 2 * e 4
-
-private abbrev weighted (n : ℕ) := {e : Fin 5 → ℕ // weight e + 4 = n}
+private abbrev weighted (n : ℕ) := {e : Fin 5 → ℕ // degree e + 4 = n}
 private abbrev compositions (k : ℕ) := {e : Fin 5 → ℕ // ∑ j, e j = k}
 
-private lemma weight_bound (e : Fin 5 → ℕ) (j : Fin 5) : e j ≤ weight e := by
+private lemma degree_bound (e : Fin 5 → ℕ) (j : Fin 5) : e j ≤ degree e := by
   fin_cases j
   · change e 0 ≤ e 0 + e 1 + 2 * e 2 + 2 * e 3 + 2 * e 4; omega
   · change e 1 ≤ e 0 + e 1 + 2 * e 2 + 2 * e 3 + 2 * e 4; omega
@@ -99,7 +93,7 @@ private lemma weight_bound (e : Fin 5 → ℕ) (j : Fin 5) : e j ≤ weight e :=
 private def index_unbounded (n : ℕ) : extraIndex n ≃ weighted n where
   toFun e := ⟨(fun j => (e.val j).val), e.property⟩
   invFun e := ⟨(fun j => ⟨e.val j, by
-    have h := weight_bound e.val j
+    have h := degree_bound e.val j
     have he := e.property
     omega⟩),
     e.property⟩
@@ -137,8 +131,8 @@ private lemma half_sum (e : Fin 5 → ℕ) :
   rw [Fin.sum_univ_five]
   rfl
 
-private lemma expand_weight (r s : ℕ) (e : Fin 5 → ℕ) :
-    weight (expandExponents r s e) = 2 * (∑ j, e j) + r + s := by
+private lemma expand_degree (r s : ℕ) (e : Fin 5 → ℕ) :
+    degree (expandExponents r s e) = 2 * (∑ j, e j) + r + s := by
   rw [Fin.sum_univ_five]
   change (2 * e 0 + r) + (2 * e 1 + s) + 2 * e 2 + 2 * e 3 + 2 * e 4 = _
   omega
@@ -151,7 +145,7 @@ private def odd_equiv (k : ℕ) : weighted (2 * k + 5) ≃ Fin 2 × compositions
       change e.val 0 + e.val 1 + 2 * e.val 2 + 2 * e.val 3 + 2 * e.val 4 + 4 = _ at he
       omega⟩)
   invFun a := ⟨expandExponents a.1.val (1 - a.1.val) a.2.val, by
-    rw [expand_weight, a.2.property]
+    rw [expand_degree, a.2.property]
     have h := a.1.isLt
     omega⟩
   left_inv e := by
@@ -195,8 +189,8 @@ private def even_equiv (k : ℕ) :
       change e.val 0 + e.val 1 + 2 * e.val 2 + 2 * e.val 3 + 2 * e.val 4 + 4 = _ at he
       omega⟩
   invFun a := match a with
-    | .inl a => ⟨expandExponents 0 0 a.val, by rw [expand_weight, a.property] <;> omega⟩
-    | .inr a => ⟨expandExponents 1 1 a.val, by rw [expand_weight, a.property] <;> omega⟩
+    | .inl a => ⟨expandExponents 0 0 a.val, by rw [expand_degree, a.property]; omega⟩
+    | .inr a => ⟨expandExponents 1 1 a.val, by rw [expand_degree, a.property]⟩
   left_inv e := by
     dsimp only
     split_ifs with h
@@ -224,7 +218,7 @@ private def even_equiv (k : ℕ) :
     cases a with
     | inl a =>
       dsimp only
-      rw [dif_pos (by change (2 * a.val 0 + 0) % 2 = 0; omega)]
+      rw [dite_eq_left (by change (2 * a.val 0 + 0) % 2 = 0; omega)]
       apply congrArg Sum.inl
       apply Subtype.ext
       funext j
@@ -236,7 +230,7 @@ private def even_equiv (k : ℕ) :
       · rfl
     | inr a =>
       dsimp only
-      rw [dif_neg (by change ¬(2 * a.val 0 + 1) % 2 = 0; omega)]
+      rw [dite_eq_right (by change ¬(2 * a.val 0 + 1) % 2 = 0; omega)]
       apply congrArg Sum.inr
       apply Subtype.ext
       funext j
@@ -260,9 +254,9 @@ private lemma count_four : Fintype.card (extraIndex 4) = 1 := by
   apply Subtype.ext
   funext j
   apply Fin.ext
-  have h := weight_bound (fun j => (e.val j).val) j
+  have h := degree_bound (fun j => (e.val j).val) j
   have he := e.property
-  change weight (fun j => (e.val j).val) + 4 = 4 at he
+  change degree (fun j => (e.val j).val) + 4 = 4 at he
   change (e.val j).val = 0
   omega
 
@@ -315,13 +309,13 @@ private lemma normal_count (n : ℕ) (hn : 1 ≤ n) :
   classical
   push_cast
   by_cases he : Even n
-  · rw [if_pos he]
+  · rw [ite_eq_left he]
     obtain ⟨k, hk⟩ := he
     have hnk : n = 2 * k := by omega
     rw [hnk, monomial_count_even]
     push_cast
     ring
-  · rw [if_neg he]
+  · rw [ite_eq_right he]
     obtain ⟨k, hk⟩ := (Nat.not_even_iff_odd.mp he).exists_bit1
     subst n
     rw [monomial_count_odd]
