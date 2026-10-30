@@ -18,9 +18,9 @@ internal sealed class OriginalHalfBinomialIntegralDocument : IScribeDocumentDefi
                     + "halfBinomial(n)^2 times (r:Complex)^n is summable. The real function "
                     + "theta maps to 1/sqrt(1-r*sin(theta)^2) is interval integrable from zero "
                     + "to pi/2, and the sum of that same complex series equals the complex "
-                    + "embedding of (2/pi) times that real integral. The coefficient is exactly "
-                    + "the original finite-correction owner's halfBinomial, including its zeroth "
-                    + "term and its alternating sign before squaring. No analytic identity or "
+                    + "embedding of (2/pi) times that real integral. The original coefficient "
+                    + "halfBinomial(n) is the product of (-1/2-j) for 0<=j<n, divided by n!, "
+                    + "including its zeroth term and its alternating sign before squaring. No analytic identity or "
                     + "convergence assertion is a hypothesis.")),
                 Paragraph(Text("Write b_n=centralBinom(n)/4^n. The original successor law gives "
                     + "halfBinomial(n)=(-1)^n b_n. Mathlib's binomial power series identifies "
