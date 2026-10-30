@@ -99,14 +99,13 @@ theorem price_record_third_layer_mass_vanishing :
       rw [← Real.rpow_sub hP]
       congr 1
       norm_num
-    have hinverse : (P ^ (1 / 6 : ℝ))⁻¹ = P ^ (-(1 / 6 : ℝ)) :=
-      (Real.rpow_neg hP.le _).symm
-    simp only [div_eq_mul_inv] at hinverse hpowers ⊢
-    rw [hinverse]
+    have hlogquot : Real.log P / P ^ (1 / 6 : ℝ) =
+        Real.log P * P ^ (-(1 / 6 : ℝ)) := by
+      rw [div_eq_mul_inv, ← Real.rpow_neg hP.le]
     calc
-      _ = 2 * Real.log 4 * (P ^ (1 / 3 : ℝ) * (P ^ (1 / 2 : ℝ))⁻¹) +
-          4 * Real.log P * (P ^ (1 / 3 : ℝ) * (P ^ (1 / 2 : ℝ))⁻¹) := by
-        rw [hpowers]
+      _ = 2 * Real.log 4 * (P ^ (1 / 3 : ℝ) / P ^ (1 / 2 : ℝ)) +
+          4 * Real.log P * (P ^ (1 / 3 : ℝ) / P ^ (1 / 2 : ℝ)) := by
+        rw [hpowers, hlogquot]
         ring
       _ = _ := by ring
   intro epsilon hepsilon
