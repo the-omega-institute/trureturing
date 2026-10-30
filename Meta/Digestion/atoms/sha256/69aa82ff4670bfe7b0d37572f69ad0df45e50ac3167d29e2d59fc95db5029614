@@ -1,0 +1,49 @@
+**定理 8.1（窗口分离与 Lipschitz 恢复）。**
+
+<a id="thm-window"></a>
+
+若 $0<D<\infty$，则任意不同 $v,w\in\Gamma(W)$ 满足
+
+$$
+\left\lVert P_+v-P_+w\right\rVert_\infty\ge\frac1D.
+$$
+
+并且
+
+$$
+\left\lVert v-w\right\rVert_\infty
+\le C_D\left\lVert P_+v-P_+w\right\rVert_\infty,\qquad
+C_D=\frac1{\sqrt5}\max\{|\sigma|+\varphi D^2,\ 1+D^2\}.
+$$
+
+因此闭噪声 $\left\lVert \eta\right\rVert_\infty\le\varepsilon<1/(2D)$
+足以在整个窗口来源域上保证唯一恢复。若 $D=0$，来源域至多含一个元素。
+
+**证明。**
+
+对非零差选一个非零整数坐标对 $(p,q)$。
+内部差满足 $|p+\sigma q|\le D$，而引理 [7.1](#lem-algnorm) 给出
+$|(p+\varphi q)(p+\sigma q)|\ge1$，因此可见差至少为 $1/D$。
+
+记可见差为 $x$、内部差为 $y$。由联合逆公式，
+
+$$
+\left\lVert \Delta a\right\rVert_\infty
+\le\frac{|\sigma|\left\lVert x\right\rVert_\infty+\varphi D}{\sqrt5},\qquad
+\left\lVert \Delta b\right\rVert_\infty
+\le\frac{\left\lVert x\right\rVert_\infty+D}{\sqrt5}.
+$$
+
+非零差时 $\left\lVert x\right\rVert_\infty\ge1/D$，故
+$D\le D^2\left\lVert x\right\rVert_\infty$。代入即得 Lipschitz 常数。
+不同来源的噪声球在 $2\varepsilon<1/D$ 时不交，给出恢复保证。
+若 $D=0$，所有来源有同一个 $P_-$ 值；
+$P_-$ 的整数域单射性由 $\sigma$ 的无理性证明，故至多一个来源。证毕。
+ □
+
+箱窗 $W_R=[-R,R]^d$ 的 $D=2R$，所以间隔至少为 $1/(2R)$，
+闭噪声小于 $1/(4R)$ 即充分。这个保证不依赖整数高度。
+Fibonacci 失稳方向被排除的原因很明确：其内部读出为 $\varphi^ne_1$，无界。
+
+<a id="subsection-8-2"></a>
+

@@ -1,0 +1,44 @@
+**命题 4.5（额外提供多份来源时的成功率）。**
+
+<a id="prop-copies"></a>
+
+若可取得同一未知相位的 $n$ 份 $\psi_a$ 并允许联合测量，记
+$w^{*n}$ 为 $\mathbb F_5$ 上的循环卷积，则
+
+$$
+P_{\rm opt}^{(n)}=\frac15\left(\sum_r\sqrt{w^{*n}_r}\right)^2.
+$$
+
+若 $w$ 支持至少两个分级，令
+$r_*=\max_{d\ne0}|\sum_jw_j\zeta^{dj}|<1$，则
+
+$$
+1-P_{\rm opt}^{(n)}\le4r_*^{\,2n}.
+$$
+
+有限 $n$ 的完美辨别仍当且仅当最初 $w$ 均匀。
+
+**证明。**
+
+按总分级 $j_1+\cdots+j_n$ 分解 $\psi^{\otimes n}$，
+所得正交分量的平方范数为 $w^{*n}_r$，故第一式由
+定理 [4.3](#thm-phaseopt) 得到。
+非零 $d$ 时，素数性使两个不同支持点的 $\zeta^{dj}$ 不同，
+严格三角不等式给出 $r_*<1$。
+设 $p=w^{*n}$、$u_j=1/5$、$B=\sum_j\sqrt{p_ju_j}$。则
+
+$$
+1-B^2
+\le\sum_j(\sqrt{p_j}-\sqrt{u_j})^2
+\le5\sum_j(p_j-u_j)^2
+=\sum_{d\ne0}|\widehat w(d)|^{2n}.
+$$
+
+这里第一式来自 $1-B^2\le2(1-B)$，第二式来自分母
+$(\sqrt{p_j}+\sqrt{u_j})^2\ge u_j$，最后为有限 Fourier 的 Parseval 等式。
+这给出误差界。有限次卷积均匀恰等价于所有非平凡
+$\widehat w(d)^n=0$，也即最初 $\widehat w(d)=0$，等价于 $w$ 均匀。证毕。
+ □
+
+<a id="section-5"></a>
+
