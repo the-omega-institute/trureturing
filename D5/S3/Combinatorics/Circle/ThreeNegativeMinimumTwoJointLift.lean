@@ -229,6 +229,12 @@ private theorem assemble (k n1 n2 n3 : ℕ) (P T : Finset ℕ)
     List.nil_append, ← Multiset.cons_coe, ← Multiset.singleton_add, Multiset.coe_singleton]
   ac_rfl
 
+private theorem block_cut_bounds {α : Type*} (P Q T : List α) (x y z : α) (k : ℕ)
+    (hl : (P ++ x :: Q ++ y :: T ++ [z]).length = k) :
+    P.length + 1 ≤ k ∧ P.length + 1 + Q.length + 1 ≤ k := by
+  simp only [List.length_append, List.length_cons, List.length_nil] at hl
+  omega
+
 set_option maxHeartbeats 1000000 in
 private theorem realize (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c)
     (plan : Plan) (cert : Certificate (2 ^ a) (2 ^ b) (2 ^ c) plan) :
@@ -479,12 +485,13 @@ private theorem realize (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ 
   let cut : ℕ := match (Plan.ear plan) with
     | Ear.p => 0 | Ear.q => P.length + 1 | Ear.t => P.length + 1 + Q.length + 1
   have hcut : cut ≤ k := by
-    have hl : P.length + Q.length + T.length + 3 = k := by
-      simpa [word, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using hperm.length_eq
+    have hl : word.length = k := by
+      simpa only [List.length_range] using hperm.length_eq
+    have hbnd := block_cut_bounds P Q T _ _ _ k hl
     cases he : (Plan.ear plan)
     · simpa only [cut,he] using (Nat.zero_le k)
-    · simpa only [cut,he] using (show P.length + 1 ≤ k by omega)
-    · simpa only [cut,he] using (show P.length + 1 + Q.length + 1 ≤ k by omega)
+    · simpa only [cut,he] using hbnd.1
+    · simpa only [cut,he] using hbnd.2
   have hear : earWord k (word.map (ThreeNegativeEqualOuterJointLift.label k (by dsimp [k]; omega))) cut =
       plus.map (ThreeNegativeEqualOuterJointLift.label (k + 1) (by dsimp [k]; omega)) := by
     cases he : (Plan.ear plan)
