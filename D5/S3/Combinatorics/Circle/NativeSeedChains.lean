@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/NativeSeedChains
    mirror-E: none(waiver:audit-open-22063)
-   anchors: [D5/S3/Combinatorics/Circle/SourceWidth, D5/S3/Combinatorics/Circle/ExpandingSourcePath]
+   anchors: [mathlib/module/Mathlib.Data.Nat.ModEq]
    utility: none
    digest: Native positive-SMALL sources have physical dyadic chains with exact seed transport. -/
 module
