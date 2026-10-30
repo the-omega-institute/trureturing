@@ -73,8 +73,7 @@ internal sealed class WangConjecture326RefutationDocument : IScribeDocumentDefin
                     + "relative constants. The closed Prop uses ordinary small carriers."))), DescribeRole.Definition),
             Node("infinite-carrier", "Model", "One fixed infinite carrier",
                 "The carrier is Finset(N) times Fin 3. The map i maps to ({i},0) is injective, "
-                    + "giving a separate certificate of infinitude. This instance is not consumed "
-                    + "by result and is neither a result helper nor an escape witness. "
+                    + "giving a separate proof that Model is infinite. "
                     + "No finite truncation replaces this carrier."),
             Node("capped-addition", "modelAdd", "Union and min-capped addition",
                 "Add (A,k) and (B,l) as (A union B,min(2,k+l)). The Fin 3 levels use this "
@@ -108,12 +107,7 @@ internal sealed class WangConjecture326RefutationDocument : IScribeDocumentDefin
                     + "supremum is therefore top inside this single infinite periodic semigroup. "
                     + "This negates the entire original implication. Exact individual constants, "
                     + "novelty, priority, and the separate Conjecture 5.3 are not conclusions "
-                    + "of this theorem. Every authored theorem has proof_shape: bind-only. "
-                    + "The admission basis is the named external Tier1 open-problem-resolution "
-                    + "exception in issue 23896. Consumed private theorems organize this "
-                    + "derivation and supply no escape witness. The only public authored "
-                    + "theorem is this designated literal refutation, exempt from the "
-                    + "four-slot escape audit."))), DescribeRole.Theorem,
+                    + "of this theorem."))), DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("wang-conjecture326"),
                     ResolutionKind.Refuted)))));
 

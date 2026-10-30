@@ -238,7 +238,7 @@ Lean statement: `D5/S0/Certificates/Algebra/WangConjecture326Refutation.Model`
 
 *Commentary.*
 
-The carrier is Finset(N) times Fin 3. The map i maps to ({i},0) is injective, giving a separate certificate of infinitude. This instance is not consumed by result and is neither a result helper nor an escape witness. No finite truncation replaces this carrier.
+The carrier is Finset(N) times Fin 3. The map i maps to ({i},0) is injective, giving a separate proof that Model is infinite. No finite truncation replaces this carrier.
 
 **Definition 1.18 (Union and min-capped addition).**
 
@@ -326,7 +326,7 @@ $$\neg claim$$
 
 *Commentary.*
 
-Over Q the all-ones coefficient assignment kills every sequence of length at least two. An idempotent gives a zero factor; two level-one terms give four coincident basis products whose coefficients cancel. Thus algebraicD(Model,Q)<=1. Principal ideals distinguish every model element, so the actual Green quotient map is injective. Every subsequence of witnessSequence(n) with sum target(n) has at least n+1 terms by the subadditive weight, proving quotient irreducibility. Every target is cyclic nongroup, and its relative constant is at least n+1. The filtered supremum is therefore top inside this single infinite periodic semigroup. This negates the entire original implication. Exact individual constants, novelty, priority, and the separate Conjecture 5.3 are not conclusions of this theorem. Every authored theorem has proof_shape: bind-only. The admission basis is the named external Tier1 open-problem-resolution exception in issue 23896. Consumed private theorems organize this derivation and supply no escape witness. The only public authored theorem is this designated literal refutation, exempt from the four-slot escape audit.
+Over Q the all-ones coefficient assignment kills every sequence of length at least two. An idempotent gives a zero factor; two level-one terms give four coincident basis products whose coefficients cancel. Thus algebraicD(Model,Q)<=1. Principal ideals distinguish every model element, so the actual Green quotient map is injective. Every subsequence of witnessSequence(n) with sum target(n) has at least n+1 terms by the subadditive weight, proving quotient irreducibility. Every target is cyclic nongroup, and its relative constant is at least n+1. The filtered supremum is therefore top inside this single infinite periodic semigroup. This negates the entire original implication. Exact individual constants, novelty, priority, and the separate Conjecture 5.3 are not conclusions of this theorem.
 
 ## References
 
