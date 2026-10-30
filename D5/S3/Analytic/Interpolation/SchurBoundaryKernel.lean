@@ -12,6 +12,7 @@ import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Analysis.Complex.Poisson
 import Mathlib.Analysis.Complex.HasPrimitives
+import Mathlib.Analysis.Complex.RealDeriv
 import Mathlib.MeasureTheory.Integral.Prod
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
 
@@ -603,8 +604,8 @@ private theorem rational_real_average (h : ℂ → ℂ) (hh : Differentiable ℂ
     have hzconj : conj z = z⁻¹ := (RCLike.inv_eq_conj hz').symm
     have hcj : conj (rationalKernel r z) =
         conj z / (1 + (r : ℂ) ^ 2 * conj z ^ 2) := by
-      simp only [rationalKernel, map_div, map_add, map_one, map_mul, map_pow,
-        RCLike.conj_ofReal]
+      simp only [rationalKernel, _root_.map_div, _root_.map_add, _root_.map_one,
+        _root_.map_mul, _root_.map_pow, RCLike.conj_ofReal]
     have hcj' : conj (rationalKernel r z) = z / (z ^ 2 + (r : ℂ) ^ 2) := by
       rw [hcj, hzconj]
       field_simp [hz0, hd]
@@ -664,6 +665,7 @@ private theorem kernel_rational_integral (b θ : ℝ) (hb0 : 0 ≤ b) (hb1 : b <
   rw [← intervalIntegral.integral_const_mul]
   apply intervalIntegral.integral_congr
   intro t _
+  dsimp only
   change -2 * b ^ 2 * Real.cos θ *
     (t * (1 - t) * (1 + b ^ 2 * t ^ 2) /
       ((1 - b ^ 2 * t ^ 2) ^ 2 + 4 * b ^ 2 * t ^ 2 * Real.cos θ ^ 2)) = _
@@ -753,6 +755,56 @@ private theorem kernel_pairing_interior (h : ℂ → ℂ) (hh : Differentiable �
           Complex.I_ne_zero]
         <;> ring_nf <;> simp [Complex.I_sq] <;> ring
     _ = _ := by rw [intervalIntegral.integral_const_mul]
+
+private theorem primitive_weighted_identity (h H : ℂ → ℂ)
+    (hh : Differentiable ℂ h) (hH : ∀ z : ℂ, HasDerivAt H (h z) z)
+    (hH0 : H 0 = 0) (b : ℝ) :
+    ((b : ℂ) * Complex.I / 2) * (∫ t in (0 : ℝ)..1,
+      (1 - (t : ℂ)) *
+        (h ((b * t : ℝ) * Complex.I) - h (-(b * t : ℝ) * Complex.I))) =
+      (1 / 2 : ℂ) * ∫ t in (0 : ℝ)..1,
+        (H ((b * t : ℝ) * Complex.I) + H (-(b * t : ℝ) * Complex.I)) := by
+  have hHd : Differentiable ℂ H := fun z => (hH z).differentiableAt
+  have hHc : Continuous H := hHd.continuous
+  let F : ℂ → ℂ := fun z => H ((b : ℂ) * z * Complex.I) + H (-(b : ℂ) * z * Complex.I)
+  let D : ℂ → ℂ := fun z => (b : ℂ) * Complex.I *
+    (h ((b : ℂ) * z * Complex.I) - h (-(b : ℂ) * z * Complex.I))
+  have hdF (z : ℂ) : HasDerivAt F (D z) z := by
+    convert! ((hH _).comp z (((hasDerivAt_id z).const_mul (b : ℂ)).mul_const Complex.I)).add
+      ((hH _).comp z (((hasDerivAt_id z).const_mul (-(b : ℂ))).mul_const Complex.I)) using 1
+    · rfl
+    · dsimp [D]
+      ring
+  let U : ℂ → ℂ := fun z => (1 - z) * F z
+  have hdU (z : ℂ) : HasDerivAt U ((1 - z) * D z - F z) z := by
+    convert! (((hasDerivAt_const z (1 : ℂ)).sub (hasDerivAt_id z)).mul (hdF z)) using 1
+    · rfl
+    · ring
+  have hcF : Continuous F := by dsimp [F]; fun_prop
+  have hcD : Continuous D := by dsimp [D]; fun_prop
+  have hiF : IntervalIntegrable (fun t : ℝ => F t) volume 0 1 :=
+    (hcF.comp Complex.continuous_ofReal).intervalIntegrable _ _
+  have hiD : IntervalIntegrable (fun t : ℝ => (1 - (t : ℂ)) * D t) volume 0 1 :=
+    (by fun_prop : Continuous (fun t : ℝ => (1 - (t : ℂ)) * D t)).intervalIntegrable _ _
+  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt
+    (fun t (_ : t ∈ uIcc (0 : ℝ) 1) => (hdU (t : ℂ)).comp_ofReal) (hiD.sub hiF)
+  have hFTC' : (∫ t in (0 : ℝ)..1, (1 - (t : ℂ)) * D t - F t) = 0 := by
+    simpa [U, F, hH0] using hFTC
+  rw [intervalIntegral.integral_sub hiD hiF, sub_eq_zero] at hFTC'
+  calc
+    _ = (1 / 2 : ℂ) * ∫ t in (0 : ℝ)..1, (1 - (t : ℂ)) * D t := by
+      rw [← intervalIntegral.integral_const_mul, ← intervalIntegral.integral_const_mul]
+      apply intervalIntegral.integral_congr
+      intro t _
+      dsimp [D]
+      push_cast
+      ring
+    _ = (1 / 2 : ℂ) * ∫ t in (0 : ℝ)..1, F t := by rw [hFTC']
+    _ = _ := by
+      congr 1
+      apply intervalIntegral.integral_congr
+      intro t _
+      simp only [F, Complex.ofReal_mul, Complex.ofReal_neg]
 
 /-- Uniform convergence, continuity, reflection, and the sign of the actual source kernel,
 including the entire closed parameter edge `b = 1`. -/
