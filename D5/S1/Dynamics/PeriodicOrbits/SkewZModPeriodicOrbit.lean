@@ -230,8 +230,9 @@ theorem skewOrbitFamily_card
     _ = q / addOrderOf h := by
       rw [Nat.card_zmod q]
       rw [show Nat.card H = addOrderOf h by
-        simpa [H, h, Nat.card_eq_fintype_card] using
-          (Fintype.card_zmultiples (x := h))]
+        change Nat.card (AddSubgroup.zmultiples h) = addOrderOf h
+        rw [Nat.card_eq_fintype_card]
+        exact Fintype.card_zmultiples (x := h)]
 
 #print axioms skew_periodicOrbit_eq_iff
 #print axioms skew_periodicOrbit_quotient_eq_iff
