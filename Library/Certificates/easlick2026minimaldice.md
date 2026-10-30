@@ -9,6 +9,8 @@ claim: "Conjecture 1 asks whether six is the largest n at least three for which 
 strata_touched:
   - D5/S3/Combinatorics/Dice/EaslickMinimalAdvantage
   - D5/S3/Combinatorics/Dice/EaslickCycleSeeds
+  - D5/S3/Combinatorics/Dice/EaslickPaddedCycles
+  - D5/S3/Combinatorics/Dice/EaslickSixBound
 license: CC-BY-4.0
 triage: anchor
 ---

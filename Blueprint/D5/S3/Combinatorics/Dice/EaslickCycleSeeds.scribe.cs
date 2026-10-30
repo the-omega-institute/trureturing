@@ -19,6 +19,6 @@ internal sealed class EaslickCycleSeedsDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+            H(title), StatementSource.FromLean(), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
 }

@@ -27,14 +27,14 @@ internal sealed class EaslickMinimalAdvantageDocument : IScribeDocumentDefinitio
             Node("easlick-minimum-probability", "The actual attained minimum", "minimum_probability", "For every natural n≥3, IsMinimum(n,threshold(n)/n²). The explicit attaining pair supplies existence, and the integer-grid condition bounds every other actual probability above one half.", DescribeRole.Theorem),
             Node("easlick-edge-iff", "Edges are exactly threshold scores", "edge_iff", "For every natural n≥3 and all valid n-face dice d,e, Edge(n,d,e) if and only if winCount(d,e)=threshold(n). This equivalence identifies the graph from the actual minimum among all ordered dice pairs.", DescribeRole.Theorem),
             Node("easlick-padded","Nested interval padding","padded","For natural b,t,j, a Boolean c and a seed list d, padded(b,t,j,c,d) concatenates j copies of 1+2c, t−j copies of 2+2c, the seed labels increased by four, and t copies of b+6−c, with c read as zero or one.", DescribeRole.Definition),
-            Node("easlick-padded-winCount","Exact score in both directions","padded_winCount","For all naturals b,t,j,k with j≤t and k≤t, Boolean c, and seed lists d,e whose labels lie between one and b, the score from padded(b,t,j,c,d) to padded(b,t,k,not c,e) equals winCount(d,e)+t length(d)+t length(e)+2t². The two clone indices can be chosen independently.", DescribeRole.Theorem),
+            Node("easlick-padded-wincount","Exact score in both directions","padded_winCount","For all naturals b,t,j,k with j≤t and k≤t, Boolean c, and seed lists d,e whose labels lie between one and b, the score from padded(b,t,j,c,d) to padded(b,t,k,not c,e) equals winCount(d,e)+t length(d)+t length(e)+2t². The two clone indices can be chosen independently.", DescribeRole.Theorem),
             Node("easlick-threshold-padding","The threshold under even padding","threshold_padding","For every natural r,t, threshold(r+2t)=threshold(r)+2tr+2t², with no restriction on the parity of r.", DescribeRole.Theorem),
-            Node("easlick-padded-isDie","Sortedness and label bounds of padding","padded_isDie","For all naturals r,b,t,j, Boolean c and list d, suppose j≤t, d has length r and is nondecreasing, all its labels lie in [1,b], and b+6≤r+2t. Then padded(b,t,j,c,d) is a valid sorted (r+2t)-face die.", DescribeRole.Theorem),
+            Node("easlick-padded-isdie","Sortedness and label bounds of padding","padded_isDie","For all naturals r,b,t,j, Boolean c and list d, suppose j≤t, d has length r and is nondecreasing, all its labels lie in [1,b], and b+6≤r+2t. Then padded(b,t,j,c,d) is a valid sorted (r+2t)-face die.", DescribeRole.Theorem),
             Node("easlick-padded-eq-imp","Recovering seed and clone","padded_eq_imp","For all naturals b,t,j,k, Booleans c,c′ and seed lists d,e with labels in [1,b], equality padded(b,t,j,c,d)=padded(b,t,k,c′,e) implies d=e and implies j=k whenever c=c′. Restricting to central labels recovers the seed and the first low-label multiplicity recovers the clone.", DescribeRole.Theorem)
         ), []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+            H(title), StatementSource.FromLean(), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
 }
