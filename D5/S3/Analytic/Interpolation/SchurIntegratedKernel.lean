@@ -289,7 +289,7 @@ private theorem integrated_neg (x θ : ℝ) :
   calc
     integratedPoisson (-x) θ = -(∫ t in (0 : ℝ)..x, poissonDensity (-t) θ) := by
       rw [hh]
-      exact intervalIntegral.integral_symm 0 (-x)
+      exact intervalIntegral.integral_symm (-x) 0
     _ = _ := by simp_rw [density_neg]; rfl
 
 private theorem l1_periodic (b x : ℝ) (hb : b ∈ Icc (0 : ℝ) 1) :
