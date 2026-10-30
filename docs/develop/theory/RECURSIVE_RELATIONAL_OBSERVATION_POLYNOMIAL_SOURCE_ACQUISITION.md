@@ -1062,28 +1062,7 @@ cells increases $W$ each time, even though it does not increase $V$.
 This proves $C,W,V$ for every execution, without favorable averaging
 or free advice. $\square$
 
-**Proposition 8.5 (the scope of the improvement).** Theorem 8.4 changes
-only the acquisition bound. Its output composes with Theorem 6.1 with
-exactly the original $K_d/\rho_d$ firstness, deficient-rank normalization,
-Fibonacci payload, physical writes and completed handoff obligations.
-It gives neither an optimality theorem nor a bound on physical service
-time or weighted total cost.
-
-**Proof.** The retained output is precisely the authentic input used by
-Theorem 6.1. Neither a maximizing trial clock nor the Gaussian
-verification row replaces $K_d(P)$. The additional acquisition work
-and writes are added to the original normalization and installation
-bills, including every failed normalization row and tested-row transfer.
-The grants, genuine binding, completed Reads, readable backing and
-stationary interval of Definition 1.1 must cover all realized local
-work and writes; installation additionally needs its actual completed
-field writes and handoff. The existing source material is separate
-from the newly used local backing. No operation count supplies these
-physical premises or a uniform latency. The broader canonical recovery
-and installation obligations therefore retain their original scope.
-$\square$
-
-**Mathematical correspondence 8.6 (suppliers and boundaries).** The new
+**Mathematical correspondence 8.5 (suppliers and boundaries).** The new
 source-specific content is (PSA.8.2)--(PSA.8.5) and its composition with
 the already acquired aligned core and original-prefix consumer. ACR
 Theorem 27.2 supplies both bounded shallow integer clocks and the exact
@@ -1094,6 +1073,16 @@ Proposition 39.2 supplies the original early-parent selection.
 Theorems 2.1--3.1 supply the paid cone and alignment; their PCR complete-
 support correspondence is applied only to an actually acquired cone.
 These suppliers have exactly Definition 1.1's source and service domain.
+
+Composition uses Theorem 6.1 with the original $K_d/\rho_d$ firstness
+and deficient-rank normalization, including failed rows and transfers.
+The Fibonacci payload, optional phase, binding, grants, code and service
+apparatus, actual Read tariffs and durations, allocation, retention,
+physical field writes and completed handoff retain their separate bills.
+The stationary interval must cover all realized acquisition work and
+writes, and additionally all installation work when installation is
+requested. The local $V$ bound excludes the existing source material.
+No uniform physical latency or weighted total-cost optimum is asserted.
 
 Bentley--Yao, *An Almost Optimal Algorithm for Unbounded Searching*,
 [SLAC-PUB-1679](https://www.slac.stanford.edu/pubs/slacpubs/1500/slac-pub-1679.pdf),
