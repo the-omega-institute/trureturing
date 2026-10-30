@@ -5,8 +5,10 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: A floor-mask physical joint constructor for all strictly ordered middle-minimum gaps. -/
-import Batteries.Tactic.OpenPrivate
-import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+module
+import all D5.S3.Combinatorics.Circle.ThreeBitSource
+public import Batteries.Tactic.OpenPrivate
+public import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -25,7 +27,9 @@ private theorem floor_margin (r s t p C : ℤ)
     (hodd : r % (s + 1) ≠ 0) :
     0 < s * t + p - 1 - 2 * (C % (1 + r + r * s)) := by
   let u := 1 + r + r * s
-  have hu : 0 < u := by dsimp [u]; nlinarith
+  have hu : 0 < u := by
+    have hh : 0 ≤ r * s := mul_nonneg (by omega) (by omega)
+    dsimp [u]; omega
   have hG0 := Int.emod_nonneg C (ne_of_gt hu)
   have hGu := Int.emod_lt_of_pos C hu
   change 0 < s * t + p - 1 - 2 * (C % u)
@@ -42,9 +46,14 @@ private theorem floor_margin (r s t p C : ℤ)
     have hde : r = h * (s + 1) + d := by
       have := Int.emod_add_mul_ediv r (s + 1)
       dsimp [h, d]; nlinarith only [this]
-    have hhr : h < r := by nlinarith
+    have hhr : h < r := by
+      have hh := mul_le_mul_of_nonneg_left (show 1 ≤ s + 1 by omega) hh0
+      nlinarith only [hh, hde, hd0]
     let w := r * (s - d) + h
-    have hw0 : 0 ≤ w := by dsimp [w]; positivity
+    have hw0 : 0 ≤ w := by
+      have hsd : 0 ≤ s - d := by omega
+      have hr0 : 0 ≤ r := by omega
+      dsimp [w]; positivity
     have hwrs : w < r * s := by
       dsimp [w]
       nlinarith [mul_le_mul_of_nonneg_left hd0 (show 0 ≤ r by omega)]
@@ -195,7 +204,7 @@ private theorem paired_chains (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 
 set_option maxHeartbeats 4000000 in
 /-- The complete middle-minimum chamber has one actual physical order and one
 literal natural ear cut, uniformly in all three exponents. -/
-theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
+public theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
     (hb : 2 ≤ b) (hba : b < a) (hac : a < c) :
     ∃ sigma : List (Fin (a + b + c)), ∃ j : ℕ,
       j ≤ a + b + c ∧
@@ -290,7 +299,7 @@ theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
   have hHgC : Hg ≤ C := by omega
   have hKa0 : 0 ≤ Ka := by dsimp [Ka]; omega
   have hKb0 : 0 ≤ Kb := by dsimp [Kb]; omega
-  have hKg0 : 0 ≤ Kg := by dsimp [Kg]; omega
+  have hKg0 : 0 ≤ Kg := by dsimp [Kg]; positivity
   have hKgN : Kg ≤ N := by omega
   have hC0 : 0 ≤ C := by omega
   let m := (C / u).toNat
@@ -396,16 +405,16 @@ theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
   let yn := (q - 1) * (2 * L - s - 1)
   have hPsum : (P.toList.map f).sum = x ∧ (P.toList.map g).sum = xn := by
     constructor
-    · rw [Finset.sum_toList]
+    · rw [Finset.sum_map_toList]
       exact (mask_labels_sum (c - 1) 0 m hcapacity f u (fun i hi => by simpa using (hU i hi).1)).trans (by dsimp [x]; ring)
-    · rw [Finset.sum_toList]
+    · rw [Finset.sum_map_toList]
       exact (mask_labels_sum (c - 1) 0 m hcapacity g (2 * u) (fun i hi => by simpa using (hU i hi).2)).trans (by dsimp [xn, x]; ring)
   have hTsum : (T.toList.map f).sum = y ∧ (T.toList.map g).sum = yn := by
     constructor
-    · rw [Finset.sum_toList, mask_labels_sum (a - 1) (c + b) z hzcap f L (fun i hi => (hW i hi).1), hzc]
-    · rw [Finset.sum_toList, mask_labels_sum (a - 1) (c + b) z hzcap g (2 * L - s - 1) (fun i hi => (hW i hi).2), hzc]
+    · rw [Finset.sum_map_toList, mask_labels_sum (a - 1) (c + b) z hzcap f L (fun i hi => (hW i hi).1), hzc]
+    · rw [Finset.sum_map_toList, mask_labels_sum (a - 1) (c + b) z hzcap g (2 * L - s - 1) (fun i hi => (hW i hi).2), hzc]
   have hA : 0 < xn - Kb := by
-    have hh := floor_margin r s t p C hs (by omega) hsp hcases (by rw [← hNC, hN]; omega)
+    have hh := floor_margin r s t p C hs (by omega) hsp hcases (by rw [hN] at hNC; omega)
       (power_odd_remainder a b (by omega))
     have he : xn - Kb = s * t + p - 1 - 2 * G := by
       change 2 * (u * (m : ℤ)) - (2 * (C - p * (t + 1)) + p + 1) = _
@@ -436,7 +445,7 @@ theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
     omega
   have hfirst : Hb ≤ x ∧ x ≤ C := by
     dsimp only [xn, Kb] at hA
-    dsimp only [x] at *
+    have hx : x = C - G := by dsimp [x]; omega
     constructor <;> omega
   have hfirstn : Kb ≤ xn ∧ xn ≤ N := by dsimp [xn]; constructor <;> omega
   have htail : y ≤ Hg ∧ Ha + Hg - y ≤ C := by
