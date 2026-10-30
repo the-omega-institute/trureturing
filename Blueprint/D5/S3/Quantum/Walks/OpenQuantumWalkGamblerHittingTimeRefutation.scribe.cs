@@ -286,8 +286,8 @@ internal sealed class OpenQuantumWalkGamblerHittingTimeRefutationDocument : IScr
         Formula witnesses = Some("h", functionType,
             Some("j", functionType,
                 And(antisym, density)));
-        return All("l", Matrix2(), Implies(norm,
-            All("m", Naturals(), Implies(LessThanOrEqual(Typed(D(3), Naturals()), m), witnesses))));
+        return All("l", Matrix2(), All("r", Matrix2(), Implies(norm,
+            All("m", Naturals(), Implies(LessThanOrEqual(Typed(D(3), Naturals()), m), witnesses)))));
     }
 
 }
