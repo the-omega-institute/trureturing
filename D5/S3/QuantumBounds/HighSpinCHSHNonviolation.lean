@@ -55,10 +55,8 @@ private def dilation (n : ℕ) :
     Matrix (Finset (Fin n) × Finset (Fin n)) (Fin (n + 1) × Fin (n + 1)) ℂ :=
   dicke n ⊗ₖ dicke n
 
-private def liftedOperator (n : ℕ) (hn : 2 ≤ n) (a c b d : Fin 3 → ℝ) :
+private def liftedOperator (n : ℕ) (r t : Fin n) (a c b d : Fin 3 → ℝ) :
     Matrix (Finset (Fin n) × Finset (Fin n)) (Finset (Fin n) × Finset (Fin n)) ℂ :=
-  let r : Fin n := ⟨0, by omega⟩
-  let t : Fin n := ⟨1, by omega⟩
   let α := slotPauli n r a ⊗ₖ (1 : Matrix (Finset (Fin n)) (Finset (Fin n)) ℂ)
   let γ := slotPauli n t c ⊗ₖ (1 : Matrix (Finset (Fin n)) (Finset (Fin n)) ℂ)
   let β := (1 : Matrix (Finset (Fin n)) (Finset (Fin n)) ℂ) ⊗ₖ slotPauli n r b
@@ -73,11 +71,10 @@ private lemma weight_count (n k : ℕ) :
     simp
   rw [hf, Finset.card_powersetCard, Finset.card_univ, Fintype.card_fin]
 
-private lemma dicke_entry (n : ℕ) (x : Finset (Fin n)) (k : Fin (n + 1)) :
-    dicke n x k = if x.card = k.val then
-      ((1 / Real.sqrt (n.choose k.val : ℝ) : ℝ) : ℂ) else 0 := rfl
-
 private lemma dicke_isometry (n : ℕ) : (dicke n)ᴴ * dicke n = 1 := by
+  have hd (x : Finset (Fin n)) (k : Fin (n + 1)) :
+      dicke n x k = if x.card = k.val then
+        ((1 / Real.sqrt (n.choose k.val : ℝ) : ℝ) : ℂ) else 0 := rfl
   ext i j
   rw [Matrix.mul_apply]
   by_cases hij : i = j
@@ -86,7 +83,7 @@ private lemma dicke_isometry (n : ℕ) : (dicke n)ᴴ * dicke n = 1 := by
         (dicke n)ᴴ i x * dicke n x i = if x.card = i.val then
           (((1 / Real.sqrt (n.choose i.val : ℝ) : ℝ) : ℂ)) ^ 2 else 0 := by
       by_cases hx : x.card = i.val <;>
-        simp [conjTranspose_apply, dicke_entry, hx, pow_two]
+        simp [conjTranspose_apply, hd, hx, pow_two]
     simp_rw [hh]
     rw [← Finset.sum_filter]
     simp only [Finset.sum_const, nsmul_eq_mul, weight_count, Matrix.one_apply_eq]
@@ -101,8 +98,8 @@ private lemma dicke_isometry (n : ℕ) : (dicke n)ᴴ * dicke n = 1 := by
     intro x _
     by_cases hi : x.card = i.val
     · have hj : x.card ≠ j.val := fun hj => hij (Fin.ext (hi.symm.trans hj))
-      simp [conjTranspose_apply, dicke_entry, hj]
-    · simp [conjTranspose_apply, dicke_entry, hi]
+      simp [conjTranspose_apply, hd, hj]
+    · simp [conjTranspose_apply, hd, hi]
 
 private lemma slot_entry (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ)
     (x y : Finset (Fin n)) : slotPauli n r u x y =
@@ -246,11 +243,17 @@ private lemma raising_coefficient (n k : ℕ) (hk : k < n) :
   change a * (1 / Real.sqrt b) * (1 / Real.sqrt c) = (1 / n : ℝ) * Real.sqrt q
   have hsb : Real.sqrt b ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr hb)
   have hsc : Real.sqrt c ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr hc)
-  apply (mul_right_cancel₀ (show (n : ℝ) * Real.sqrt b * Real.sqrt c ≠ 0 by positivity))
+  apply (mul_left_cancel₀ (ne_of_gt hnR))
+  rw [one_div, one_div, one_div]
   calc
-    _ = (n : ℝ) * a := by field_simp
-    _ = Real.sqrt q * Real.sqrt b * Real.sqrt c := hroot
-    _ = _ := by field_simp
+    _ = ((n : ℝ) * a) * ((Real.sqrt b)⁻¹ * (Real.sqrt c)⁻¹) := by ring
+    _ = (Real.sqrt q * Real.sqrt b * Real.sqrt c) *
+        ((Real.sqrt b)⁻¹ * (Real.sqrt c)⁻¹) := by rw [hroot]
+    _ = Real.sqrt q * (Real.sqrt b * (Real.sqrt b)⁻¹) *
+        (Real.sqrt c * (Real.sqrt c)⁻¹) := by ring
+    _ = Real.sqrt q := by rw [mul_inv_cancel₀ hsb, mul_inv_cancel₀ hsc, mul_one, mul_one]
+    _ = (n : ℝ) * ((n : ℝ)⁻¹ * Real.sqrt q) := by
+      rw [← mul_assoc, mul_inv_cancel₀ (ne_of_gt hnR), one_mul]
 
 private def raisingSlot (n : ℕ) (r : Fin n) :
     Matrix (Finset (Fin n)) (Finset (Fin n)) ℂ :=
@@ -260,15 +263,17 @@ private def zSlot (n : ℕ) (r : Fin n) :
     Matrix (Finset (Fin n)) (Finset (Fin n)) ℂ :=
   diagonal fun x => if r ∈ x then -1 else 1
 
-private lemma raising_entry (n : ℕ) (r : Fin n) (x y : Finset (Fin n)) :
-    raisingSlot n r x y = if r ∉ x ∧ y = x ∆ {r} then 1 else 0 := rfl
-
 private lemma raising_action (n : ℕ) (r : Fin n) (x : Finset (Fin n)) (j : Fin (n + 1)) :
     (raisingSlot n r * dicke n) x j = if r ∉ x then dicke n (x ∆ {r}) j else 0 := by
-  by_cases hr : r ∈ x <;> simp [Matrix.mul_apply, raising_entry, hr]
+  have he (x y : Finset (Fin n)) :
+      raisingSlot n r x y = if r ∉ x ∧ y = x ∆ {r} then 1 else 0 := rfl
+  by_cases hr : r ∈ x <;> simp [Matrix.mul_apply, he, hr]
 
 private lemma raising_compression (n : ℕ) (r : Fin n) :
     (dicke n)ᴴ * raisingSlot n r * dicke n = (1 / n : ℂ) • Jplus n := by
+  have hd (x : Finset (Fin n)) (k : Fin (n + 1)) :
+      dicke n x k = if x.card = k.val then
+        ((1 / Real.sqrt (n.choose k.val : ℝ) : ℝ) : ℂ) else 0 := rfl
   ext i j
   rw [Matrix.mul_assoc, Matrix.mul_apply]
   have he (x : Finset (Fin n)) :
@@ -283,10 +288,10 @@ private lemma raising_compression (n : ℕ) (r : Fin n) :
     · simp [hr]
     · have hf := flip_card_absent n r x hr
       by_cases hi : x.card = i.val <;> by_cases hij : i.val + 1 = j.val <;>
-        simp [dicke_entry, hr, hf, hi, hij]
+        simp [hd, hr, hf, hi, hij]
   simp_rw [he]
   by_cases hij : i.val + 1 = j.val
-  · simp only [if_pos hij]
+  · simp only [ite_eq_left hij]
     rw [← Finset.sum_filter]
     simp only [Finset.sum_const, nsmul_eq_mul, absent_count, Matrix.smul_apply,
       smul_eq_mul]
@@ -295,7 +300,7 @@ private lemma raising_compression (n : ℕ) (r : Fin n) :
     have hJ : Jplus n i j =
         (Real.sqrt (((i.val : ℝ) + 1) * ((n : ℝ) - i.val)) : ℂ) := by
       change (if i.val + 1 = j.val then _ else 0) = _
-      rw [if_pos hij]
+      rw [ite_eq_left hij]
       congr 1
       rw [hjR]
       congr 1
@@ -305,12 +310,15 @@ private lemma raising_compression (n : ℕ) (r : Fin n) :
     have hhC := congrArg Complex.ofReal hh
     push_cast at hhC ⊢
     simpa only [mul_assoc] using hhC
-  · simp only [if_neg hij, Finset.sum_const_zero, Matrix.smul_apply, smul_eq_mul]
+  · simp only [ite_eq_right hij, Finset.sum_const_zero, Matrix.smul_apply, smul_eq_mul]
     change 0 = (1 / n : ℂ) * (if i.val + 1 = j.val then _ else 0)
-    rw [if_neg hij, mul_zero]
+    rw [ite_eq_right hij, mul_zero]
 
 private lemma z_compression (n : ℕ) (r : Fin n) :
     (dicke n)ᴴ * zSlot n r * dicke n = (2 / n : ℂ) • Jz n := by
+  have hd (x : Finset (Fin n)) (k : Fin (n + 1)) :
+      dicke n x k = if x.card = k.val then
+        ((1 / Real.sqrt (n.choose k.val : ℝ) : ℝ) : ℂ) else 0 := rfl
   have hsum (k : ℕ) :
       (∑ x : Finset (Fin n), if x.card = k then (if r ∈ x then (-1 : ℂ) else 1) else 0) =
         2 * ((n - 1).choose k : ℂ) - (n.choose k : ℂ) := by
@@ -335,7 +343,8 @@ private lemma z_compression (n : ℕ) (r : Fin n) :
         star (dicke n x i) * ((if r ∈ x then (-1 : ℂ) else 1) * dicke n x i) =
           (((1 / Real.sqrt (n.choose i.val : ℝ) : ℝ) : ℂ)) ^ 2 *
             (if x.card = i.val then (if r ∈ x then (-1 : ℂ) else 1) else 0) := by
-      by_cases hx : x.card = i.val <;> simp [dicke_entry, hx] <;> ring
+      by_cases hx : x.card = i.val <;> by_cases hr : r ∈ x <;>
+        simp [hd, hx, hr, pow_two]
     simp_rw [he]
     rw [← Finset.mul_sum, hsum, Matrix.diagonal_apply_eq]
     have hn : 0 < n := by have := r.isLt; omega
@@ -357,17 +366,19 @@ private lemma z_compression (n : ℕ) (r : Fin n) :
     intro x _
     by_cases hi : x.card = i.val
     · have hj : x.card ≠ j.val := fun hj => hij (Fin.ext (hi.symm.trans hj))
-      simp [dicke_entry, hj]
-    · simp [dicke_entry, hi]
+      simp [hd, hj]
+    · simp [hd, hi]
 
 private lemma slot_decomposition (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ) :
     slotPauli n r u = ((u 0 : ℂ) - I * (u 1 : ℂ)) • raisingSlot n r +
       ((u 0 : ℂ) + I * (u 1 : ℂ)) • (raisingSlot n r)ᴴ + (u 2 : ℂ) • zSlot n r := by
   have hz (x y : Finset (Fin n)) : zSlot n r x y =
       if x = y then (if r ∈ x then (-1 : ℂ) else 1) else 0 := rfl
+  have he (x y : Finset (Fin n)) :
+      raisingSlot n r x y = if r ∉ x ∧ y = x ∆ {r} then 1 else 0 := rfl
   ext x y
   simp only [slot_entry, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, conjTranspose_apply,
-    raising_entry, hz]
+    he, hz]
   by_cases hxy : x = y
   · subst y
     have hf := flip_ne n r x
@@ -376,7 +387,7 @@ private lemma slot_decomposition (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ) :
     · subst y
       have hf := flip_ne n r x
       by_cases hr : r ∈ x <;>
-        simp [hf, Ne.symm hf, symmDiff_symmDiff_cancel_right, Finset.mem_symmDiff, hr] <;> ring
+        simp [Ne.symm hf, symmDiff_symmDiff_cancel_right, Finset.mem_symmDiff, hr]
     · have hx : x ≠ y ∆ {r} := fun h => hy ((flip_eq n r x y).mp h)
       simp [hxy, hy, hx]
 
@@ -406,7 +417,7 @@ private lemma dilation_isometry (n : ℕ) : (dilation n)ᴴ * dilation n = 1 := 
   rw [conjTranspose_kronecker, ← mul_kronecker_mul, dicke_isometry, one_kronecker_one]
 
 private lemma lifted_expansion (n : ℕ) (hn : 2 ≤ n) (a c b d : Fin 3 → ℝ) :
-    liftedOperator n hn a c b d =
+    liftedOperator n ⟨0, by omega⟩ ⟨1, by omega⟩ a c b d =
       slotPauli n ⟨0, by omega⟩ a ⊗ₖ slotPauli n ⟨0, by omega⟩ b +
       slotPauli n ⟨0, by omega⟩ a ⊗ₖ slotPauli n ⟨1, by omega⟩ d +
       slotPauli n ⟨1, by omega⟩ c ⊗ₖ slotPauli n ⟨0, by omega⟩ b -
@@ -418,7 +429,7 @@ private lemma lifted_expansion (n : ℕ) (hn : 2 ≤ n) (a c b d : Fin 3 → ℝ
 
 private lemma chsh_dilation (n : ℕ) (hn : 2 ≤ n) (a c b d : Fin 3 → ℝ) :
     chshOperator n a c b d = ((n : ℂ) / 2) ^ 2 •
-      ((dilation n)ᴴ * liftedOperator n hn a c b d * dilation n) := by
+      ((dilation n)ᴴ * liftedOperator n ⟨0, by omega⟩ ⟨1, by omega⟩ a c b d * dilation n) := by
   have hk (r t : Fin n) (u v : Fin 3 → ℝ) :
       (dilation n)ᴴ * (slotPauli n r u ⊗ₖ slotPauli n t v) * dilation n =
         (2 / n : ℂ) ^ 2 • (spinComponent n u ⊗ₖ spinComponent n v) := by
@@ -436,7 +447,7 @@ private lemma chsh_dilation (n : ℕ) (hn : 2 ≤ n) (a c b d : Fin 3 → ℝ) :
   rfl
 
 private lemma lifted_hermitian (n : ℕ) (hn : 2 ≤ n) (a c b d : Fin 3 → ℝ) :
-    (liftedOperator n hn a c b d).IsHermitian := by
+    (liftedOperator n ⟨0, by omega⟩ ⟨1, by omega⟩ a c b d).IsHermitian := by
   rw [lifted_expansion]
   have hh (r t : Fin n) (u v : Fin 3 → ℝ) :
       (slotPauli n r u ⊗ₖ slotPauli n t v).IsHermitian := by
@@ -447,7 +458,7 @@ private lemma lifted_hermitian (n : ℕ) (hn : 2 ≤ n) (a c b d : Fin 3 → ℝ
 
 private lemma lifted_square (n : ℕ) (hn : 2 ≤ n) (a c b d : Fin 3 → ℝ)
     (ha : unit a) (hc : unit c) (hb : unit b) (hd : unit d) :
-    (liftedOperator n hn a c b d) ^ 2 = (4 : ℂ) • 1 := by
+    (liftedOperator n ⟨0, by omega⟩ ⟨1, by omega⟩ a c b d) ^ 2 = (4 : ℂ) • 1 := by
   rw [lifted_expansion]
   have hfour : (4 : ℂ) • (1 : Matrix (Finset (Fin n) × Finset (Fin n))
       (Finset (Fin n) × Finset (Fin n)) ℂ) = (4 : ℕ) • 1 := by
@@ -474,8 +485,8 @@ private lemma dilated_density (n : ℕ)
 private lemma density_involution_bound {ι : Type*} [Fintype ι] [DecidableEq ι]
     (τ l : Matrix ι ι ℂ) (hτ : τ.PosSemidef) (ht : τ.trace = 1)
     (hl : l.IsHermitian) (hs : l ^ 2 = (4 : ℂ) • 1) : ‖(τ * l).trace‖ ≤ 2 := by
-  letI := τ.toMatrixSeminormedAddCommGroup hτ
-  letI := τ.toMatrixInnerProductSpace hτ
+  let _ := τ.toMatrixSeminormedAddCommGroup hτ
+  let _ := τ.toMatrixInnerProductSpace hτ
   have hcs := inner_mul_inner_self_le (𝕜 := ℂ) (1 : Matrix ι ι ℂ) l
   change ‖(l * τ * (1 : Matrix ι ι ℂ)ᴴ).trace‖ * ‖(1 * τ * lᴴ).trace‖ ≤
     ((1 * τ * (1 : Matrix ι ι ℂ)ᴴ).trace).re * ((l * τ * lᴴ).trace).re at hcs
@@ -498,12 +509,13 @@ private lemma expectation_bound (n : ℕ) (hn : 2 ≤ n)
   have hbnd := density_involution_bound _ _ hτ.1 hτ.2
     (lifted_hermitian n hn a c b d) (lifted_square n hn a c b d ha hc hb hd)
   have he := chsh_dilation n hn a c b d
-  have htrace : (ρ * ((dilation n)ᴴ * liftedOperator n hn a c b d * dilation n)).trace =
-      ((dilation n * ρ * (dilation n)ᴴ) * liftedOperator n hn a c b d).trace := by
+  let l := liftedOperator n ⟨0, by omega⟩ ⟨1, by omega⟩ a c b d
+  have htrace : (ρ * ((dilation n)ᴴ * l * dilation n)).trace =
+      ((dilation n * ρ * (dilation n)ᴴ) * l).trace := by
     calc
-      _ = ((ρ * (dilation n)ᴴ * liftedOperator n hn a c b d) * dilation n).trace := by
+      _ = ((ρ * (dilation n)ᴴ * l) * dilation n).trace := by
         simp only [Matrix.mul_assoc]
-      _ = (dilation n * (ρ * (dilation n)ᴴ * liftedOperator n hn a c b d)).trace :=
+      _ = (dilation n * (ρ * (dilation n)ᴴ * l)).trace :=
         trace_mul_comm _ _
       _ = _ := by simp only [Matrix.mul_assoc]
   rw [he, Matrix.mul_smul, trace_smul, norm_smul, htrace]
