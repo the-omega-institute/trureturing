@@ -90,7 +90,7 @@ private theorem mills_smooth : ContDiff ℝ ∞ millsRatio := by
 
 /-! The exact finite truncation has a removable singularity after rescaling. -/
 
-private theorem rescaled_F (n : ℕ) (a : ℝ) {x : ℝ} (hx : x ≠ 0) :
+private theorem rescaled_f (n : ℕ) (a : ℝ) {x : ℝ} (hx : x ≠ 0) :
     x ^ (2 * n) * F n a x = (-1 : ℝ) ^ n *
       (x ^ (2 * n) * (Y a (a - 2) x - (a - 1)) -
         ∑ k ∈ Finset.Icc 1 n, (-1 : ℝ) ^ k * u k a (a - 2) * x ^ (2 * (n - k))) := by
@@ -147,7 +147,7 @@ private theorem zero_endpoint (n : ℕ) (hn : 2 ≤ n) (a : ℝ) :
   rw [← hz]
   apply (hP.continuousAt.tendsto.mono_left nhdsWithin_le_nhds).congr'
   filter_upwards [self_mem_nhdsWithin] with x hx
-  exact (rescaled_F n a (ne_of_gt hx)).symm
+  exact (rescaled_f n a (ne_of_gt hx)).symm
 
 private theorem regularity_and_origin (n : ℕ) (hn : 2 ≤ n) (a : ℝ) :
     ContDiffOn ℝ ∞ (F n a) (Ioi 0) ∧
@@ -278,7 +278,7 @@ private theorem normalized_exp_remainder (r : ℕ) {y : ℝ} (hy : 0 < y) :
       _ = _ := by rw [hsgn]
   rw [hnum, mul_div_cancel_left₀ _ (pow_ne_zero _ hy0)]
 
-private theorem exp_remainder_ratio_strictAnti (r : ℕ) :
+private theorem exp_remainder_ratio_strict_anti (r : ℕ) :
     StrictAntiOn (fun y : ℝ =>
       (-1 : ℝ) ^ (r + 1) * D5.S3.Analytic.ExpRemainderDifferences.R r (-y) /
         y ^ (r + 1)) (Ioi 0) := by
@@ -313,7 +313,7 @@ private theorem lower_normalized_exp_remainder (r : ℕ) {y : ℝ} (hy : 0 < y) 
   rw [pow_succ] at h
   linear_combination h
 
-private theorem exp_remainder_ratio_strictMono (r : ℕ) :
+private theorem exp_remainder_ratio_strict_mono (r : ℕ) :
     StrictMonoOn (fun y : ℝ =>
       (-1 : ℝ) ^ (r + 1) * D5.S3.Analytic.ExpRemainderDifferences.R r (-y) /
         y ^ r) (Ioi 0) := by

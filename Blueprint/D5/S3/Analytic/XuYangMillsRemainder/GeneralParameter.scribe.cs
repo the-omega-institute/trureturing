@@ -62,7 +62,7 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                 + "then u n a (a-2) >= 0. This is the obstruction at the origin; "
                 + "it does not establish the required infinity obstruction u (n+1) a (a-2) >= 0 "
                 + "or the sharp negative-branch threshold theta (n-1)."),
-            Proof("remainder-upper-multiplier", "exp_remainder_ratio_strictAnti",
+            Proof("remainder-upper-multiplier", "exp_remainder_ratio_strict_anti",
                 "Strictly decreasing upper normalized remainder",
                 "Write E_k(y) = (-1)^k (exp(-y) - sum_{j<k} (-y)^j/j!). "
                 + "For every k >= 1, E_k(y)/y^k strictly decreases on y > 0. "
@@ -70,7 +70,7 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                 + "then the pinned Mathlib Taylor integral theorem gives "
                 + "E_k(y)/y^k = integral_0^1 (1-s)^(k-1) exp(-sy) ds / (k-1)!. "
                 + "Strict integral comparison at s=1/2 proves the multiplier order."),
-            Proof("remainder-lower-multiplier", "exp_remainder_ratio_strictMono",
+            Proof("remainder-lower-multiplier", "exp_remainder_ratio_strict_mono",
                 "Strictly increasing lower normalized remainder",
                 "For every k >= 1, E_k(y)/y^(k-1) strictly increases on y > 0. "
                 + "Changing variables in the same Taylor integral gives "
