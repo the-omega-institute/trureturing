@@ -1,0 +1,37 @@
+### 定义 20.1（同一连续来源族与预选覆盖）
+
+固定有限实数 $\varepsilon,\delta>0$，置
+
+$$
+ \gamma=\varepsilon+\delta,\qquad
+ h=\frac{\delta}{\gamma}\in(0,1),\qquad
+ X=\frac{\gamma}{\delta}=1+\frac{\varepsilon}{\delta},\qquad
+ K_\gamma=\{\gamma R_s:0\le s\le1/2\},
+\tag{20.1}
+$$
+
+其中 $R_s$ 严格取 [III 卷](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_III.md)
+定义 17.1 的 (17.2)，严格正两项实现取其引理 17.2 的 (17.5)。
+环境仍是 III 定义 9.1、13.1 的完整 $\mathcal M_3$：来源为一项或两项
+严格正外积之和，目标为普通初始实秩；只有 $N,L_0$ 原子和一条不可复制、
+不可复位的实际轨迹。初读及每个原子后的必读均收费。
+容限 $\varepsilon$ 的每次误差满足闭约束 $|\eta_i|\le\varepsilon$，
+可任意相关并依赖全部历史。协议是完整动作—报告历史的任意确定性函数，
+不附加连续、可测、可计算或共同停止预算条件。
+
+成功集合 $\operatorname{Succ}_\varepsilon(\Pi)$、完整环境域可靠性及
+$\nu_{3,\varepsilon}$ 均取 III 定义 14.1、推论 14.6。
+若 $\mathscr H_\varepsilon(S,\Pi)$ 表示协议 $\Pi$ 在同一个固定来源
+$S$ 上的全部允许误差历史，覆盖 $K_\gamma$ 的量词是
+
+$$
+ \exists\text{有限预选族 }F\quad
+ \forall s\in[0,1/2]\quad\exists\Pi_s\in F\quad
+ \forall H\in\mathscr H_\varepsilon(\gamma R_s,\Pi_s)
+ \quad\Pi_s\text{ 在 }H\text{ 上有限输出 }2.
+\tag{20.2}
+$$
+
+每个成员须在完整 $\mathcal M_3$ 上 $\varepsilon$-可靠。
+$F$ 在来源未知前固定，同一个 $\Pi_s$ 覆盖该来源的全部历史。
+
