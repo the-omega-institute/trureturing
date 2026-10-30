@@ -4873,4 +4873,126 @@ $$
 逐来源协议的存在不提供未知来源的在线选择器或有限预选覆盖。
 本节不作外部原创性或形式核验声明。
 
+## 24. 五维固定来源族的精确九报告费用
+
+### 定义 24.1（五维逐来源全误差费用）
+
+在定义 22.1 的完整 $\mathcal M_5$、$N,L_0$、单条不可复制不可复位轨迹和初读及每个原子后必读的收费合同下，定义
+
+$$
+ \begin{aligned}
+ c_{5,\varepsilon}(R)=\min\{B\in\mathbb N_{\ge1}:\;&
+ \exists\Pi\quad \Pi\text{ 在完整 }\mathcal M_5
+                          \text{ 上 }\varepsilon\text{-可靠},\\
+ &\forall H\in\mathscr H_\varepsilon(R,\Pi)\quad
+       \Pi\text{ 在 }H\text{ 上至多 }B\text{ 报告内有限输出 }2\}.
+ \end{aligned}
+\tag{24.1}
+$$
+
+这里的可靠性仍量化完整来源域的一项或两项严格正外积之和，误差可任意相关并依赖全部历史；协议是任意确定性完整动作—报告函数。空集的最小值为 $\infty$。费用是单个固定来源的统一报告预算，不是预选覆盖基数，也不是未知来源上的在线选择器。
+
+### 定理 24.2（五维族的精确九报告费用）
+
+对每个有限实数 $\varepsilon>0$ 和每个 $s\in[0,1/2]$，令 $Q_{\varepsilon,s}=\varepsilon Q_s$。则
+
+$$
+                         c_{5,\varepsilon}(Q_{\varepsilon,s})=9.
+\tag{24.2}
+$$
+
+**证明。** 上界直接由命题 22.3：把所有报告、阈值和共同来源约束同时乘以 $\varepsilon$，并把实际报告先除以 $\varepsilon$ 后运行同一分支规则。初读加上八次原子后的报告数为九，严格正性、普通秩和完整 $\mathcal M_5$ 可靠性均保持。
+
+下面证明单位容限下的下界。设 $\Pi$ 是完整 $\mathcal M_5$ 上可靠的确定性协议，且在 $Q_s$ 的每条允许误差历史上至多八次报告输出 $2$。记
+
+$$
+ u=\tau_s+\frac1{16},\qquad p=(K,100,16,u,2).
+\tag{24.3}
+$$
+
+因为 $17\le\tau_s\le17+1/8$，且 $u=\tau_s+1/16$，$p$ 与 $Q_s$ 的纯 $N$ 真值 $(K,100,15,18,1)$ 的逐坐标差均不超过一；故 $p$ 是一条合法的纯 $N$ 报告前缀。若协议在首次 $L_0$ 前停止并输出 $2$，III 引理 10.3 以正数据 $(p_0,\ldots,p_q)$ 给出固定严格正秩一来源，逐前缀重放产生同一历史，违反可靠性。这也覆盖初读即停。若它在取得 $p_0,\ldots,p_4$ 后继续执行一次 $N$，累计矩阵为 $N^5=0$；以后报告恒为零，III 引理 10.3 的同一来源仍给出相同历史，故八报告内也不能输出 $2$。所以在本历史上协议必在某个 $q\in\{0,1,2,3,4\}$ 次纯 $N$ 之后首次执行 $L_0$。
+
+对这个 $q$ 固定一个严格正秩一伴随 $S_q=x^{[q]}(v^{[q]})^{\mathsf T}$。当 $q=0,1,2$ 时取引理 22.4 的三个早切口伴随；它们的旧坐标满足 $(A_0,\ldots,A_q)=(K,100,16,\ldots)$ 的闭一误差约束，且全部 $b_j^{(q)}$ 坐标逐项满足闭二误差约束。这里的 $q=1,2$ 正是把 IV 引理 21.4 的伴随提升一个首坐标并由 $A_0=K$ 解出尾权重，因而仍是五维严格正外积。
+
+当 $q=3$，取
+
+$$
+ \begin{aligned}
+ h&=\frac{u-\tau_s}{25}=\frac1{400},&z&=\rho_s+h,\\
+ v^{[3]}&=(1001,c_s+1,L_s,M,7),&x^{[3]}_0&=z,&x^{[3]}_1&=1-z,\\
+ x^{[3]}_2&=D_sh/7,\\
+ x^{[3]}_3&=\frac{100-z(c_s+1)-(1-z)L_s-Mx^{[3]}_2}{7},\\
+ x^{[3]}_4&=\frac{K-\sum_{h=0}^{3}x^{[3]}_hv^{[3]}_h}{7}.
+ \end{aligned}
+\tag{24.4}
+$$
+
+这是 22.4 中晚切口伴随的五维形式；八报告预算只使用其 $b_0,b_1,b_2,b_3$ 四个坐标，与 23.2 的部分伴随接口相同。由 $22/25\le\rho_s\le89/100$、$0<D_s<3$、$0<L_s<M<20$ 及 $c_s+1<81$，并有 $z<0.9$、$x^{[3]}_2<1/400$，所以
+
+$$
+z(c_s+1)+(1-z)L_s+Mx^{[3]}_2<82<100.
+$$
+
+故 $0<x^{[3]}_3<100/7$；各 $v^{[3]}_j$ 也严格正，且 $x^{[3]}_2<1/400$，从而 $\sum_{h=0}^3x^{[3]}_hv^{[3]}_h<1400<K$，所以 $x^{[3]}_4>0$。直接代入给出
+
+$$
+ (A_0,A_1,A_2,A_3)=\left(K,100,17,\tau_s+1+\frac{u-\tau_s}{2}\right),
+\tag{24.5}
+$$
+
+所以与 $p_0,p_1,p_2,p_3$ 的差分别为 $0,0,1,1-(u-\tau_s)/2$，均在 $[-1,1]$ 内；并且
+
+$$
+ v^{[3]}-b^{(3)}(Q_s)=(0,0,-2,-2,-2).
+\tag{24.6}
+$$
+
+八报告预算在 $q=3$ 首次 $L_0$ 后至多取得 $b_0,b_1,b_2,b_3$，故 (24.6) 已覆盖全部实际可见的新坐标。
+
+当 $q=4$，八报告预算在首次 $L_0$ 后至多取得 $b_0,b_1,b_2$。取
+
+$$
+ \begin{aligned}
+ v^{[4]}&=(1000,c_s,3-s,u-\tfrac32,2),\\
+ x^{[4]}_0&=1,&x^{[4]}_1&=\frac34,\\
+ x^{[4]}_2&=\frac{16-(3-s)-\frac34(u-\frac32)}{2},\\
+ x^{[4]}_3&=\frac{100-c_s-\frac34(3-s)-x^{[4]}_2(u-\frac32)}{2},\\
+ x^{[4]}_4&=\frac{K-v^{[4]}_0-x^{[4]}_1v^{[4]}_1-x^{[4]}_2v^{[4]}_2-x^{[4]}_3v^{[4]}_3}{2}.
+ \end{aligned}
+\tag{24.7}
+$$
+
+Here $v^{[4]}_3=(4s+249)/16$, $x^{[4]}_2=(52s+85)/128\in(0,1)$, and $70<c_s<80$ gives $0<x^{[4]}_3<6$ by the defining numerator bounds. Since $c_s<80$, $v^{[4]}_2\le3$, and $v^{[4]}_3<16$, we have
+
+$$
+ v^{[4]}_0+x^{[4]}_1v^{[4]}_1+x^{[4]}_2v^{[4]}_2+x^{[4]}_3v^{[4]}_3<1000+60+3+96<2000<K,
+$$
+
+so $x^{[4]}_4>4000$. The equations in (24.7) give
+
+$$
+ (A_0,A_1,A_2,A_3,A_4)=(K,100,16,u,2),
+\tag{24.8}
+$$
+
+and $v^{[4]}_0,v^{[4]}_1,v^{[4]}_2$ equal the first three coordinates of $b^{(4)}(Q_s)$; the shared old terminal report is $p_4=2=A_4$. Thus this companion matches every new coordinate visible within the eight-report budget. It is valid also at $s=0$ and $s=1/2$; no overlap parameter or strict inequality between two members is used.
+
+For any selected cut $q$, after the first $L_0$ choose each newly reported coordinate to be the midpoint of the corresponding true value for $Q_s$ and for $S_q$. The old prefix is already within one of both sources, and the displayed $b$ differences are at most two, so each midpoint is within one of both. The number of distinct nonzero coordinates that can be reached with at most eight reports is
+
+$$
+\begin{array}{c|ccccc}
+q&0&1&2&3&4\\ \hline
+\text{largest visible }b_j&4&4&4&3&2 .
+\end{array}
+\tag{24.9}
+$$
+
+This is the budget identity $1+q+1+j\le8$; for $q=4$ the old $a_4$ report is shared and the two subsequent $N$ steps expose $b_1,b_2$ after the initial $b_0$. Repeated $L_0$ only repeats $b_0$, and after $j=4$ every further $N$ enters the permanent zero state; hence the same fixed $S_q$ and the same report table cover every repeated-reset and zero-tail continuation allowed before report eight. Determinism now forces $\Pi$ to make identical actions, stopping decisions and output on $Q_s$ and on $S_q$. If it outputs $2$ within eight reports on the former, it does so on the rank-one latter, contradicting full-domain reliability. Therefore $c_{5,1}(Q_s)\ge9$.
+
+Finally let $\varepsilon>0$. The map $R\mapsto\varepsilon R$ is a bijection of $\mathcal M_5$ preserving strict positivity and ordinary rank, and $\operatorname{tr}(A\varepsilon R)=\varepsilon\operatorname{tr}(AR)$. If an $\varepsilon$-reliable protocol achieved $Q_{\varepsilon,s}$ in at most eight reports, construct a unit protocol by multiplying each unit-scale report by $\varepsilon$ before feeding it to the original decision function. This would be a unit-reliable protocol achieving $Q_s$ in at most eight reports, contradicting the preceding paragraph. The scaled version of the nine-report protocol gives the matching upper bound, proving (24.2). All new algebra and the finite cut table are repo-derived synthesis; no external optimality or formal-verification claim is made. ∎
+
+### 约定 24.3（费用边界）
+
+定理 24.2 只计算固定五维族 $Q_{\varepsilon,s}$ 的逐来源费用。它不推出其余 $\mathcal M_5$ 来源的统一最优费用，不把维数递归推广到 $k\ge6$，也不改变第 22.6 节的条件性递归。严格正性、$\varepsilon>0$、任意相关闭误差、单轨迹、共享末坐标、重复 $L_0$ 与永久零尾均保留；预选覆盖、来源分解恢复、未知来源在线选择、随机协议、有效实数判定和位复杂度均不在结论内。
+
 ## 追加锚（本行以下为增补区）
