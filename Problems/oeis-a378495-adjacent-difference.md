@@ -88,10 +88,11 @@ identity is `sha256:38f5f82bc3c0255dc8908fb63b1c0200d69e76147a4b223e00f6ffd41fd9
 The definition `claim` has literal compiled type `Prop`, and `result`
 has literal compiled type `Not claim`. The accepted axiom closure is
 contained in `Classical.choice`, `Quot.sound`, `propext`.
-The display formulas are typed authored presentations of the exact
-source, with complete mathematical prose. The projector reports
-`missing` for the unfrozen declarations; no kernel-derived formula
-projection is claimed. Independent fidelity review remains required.
+The display formulas use a hand-authored typed Scribe AST of the exact
+Lean statements; FromLean had no unfrozen fixture entries (`missing`).
+No kernel-derived formula projection is claimed. The formula preserves
+every quantifier, rational cast, natural index subtraction and the
+literal closed negation of the original claim.
 
 ### Declaration form, admission and utility
 
@@ -106,15 +107,17 @@ Names below are relative to `AdjacentDifferenceRefutation`.
 There are no new helper theorems and no escape witness. The inline proof
 uses pinned cycle-type facts, the actual `TerminalDifference`
 partition/count suppliers, logical decomposition and exact arithmetic.
-The intended admission basis is `open-problem-resolution`. Utility is
+The admission basis is `open-problem-resolution`. Utility is
 `certified-instance`, with `basis=refutes` referring to the exact local
 `claim` and the designated `result`. The definitions support that same
 refutation and introduce no independent positive instance. Generality
 is `I`, reflecting the concrete five-label witness.
 
-The source and its supplier are unfrozen. Independent pre-freeze review,
-canonical doors and the final typed Refuted claim remain pending.
-No existing frozen project declaration on the live proof path is claimed.
+The result Describe carries the typed Refuted resolution claim for this
+dossier and names the exact canonical frozen declaration. Its frozen
+project suppliers are `TerminalDifference.noFixed_iff_sum`,
+`TerminalDifference.T_add_excluded` and
+`TerminalDifference.excluded_penultimate_mul`, with their definitions.
 The designated refutation result is exempt from four-slot registration;
 `b` and `claim` are definitions, not additional audit targets. The nine
 supplier theorems retain their unfinished
@@ -146,8 +149,9 @@ unsupported historical fence, and are not replaced by these values.
 - **Unaffected:** the separate original terminal formula has its own
   [proof dossier](oeis-a378495-terminal-difference.md). No failure of
   Kallat's other results or of the whole paper is inferred.
-- **Boundary:** admission and publication remain pending; no delivery
-  or KPI is claimed from the scientific settlement or readout.
+- **Boundary:** remote required CI and final independent integration
+  review remain pending; no delivery or KPI is claimed from the
+  scientific settlement or readout.
 
 ## ASSUMED-UNVERIFIED
 
@@ -156,5 +160,5 @@ including the named rate-limited search endpoints. Historical producer
 times are recorded assertions with unchanged server evidence, not newly
 recovered process telemetry. Pre-mathematics full native closure ordering
 remains unestablished. The supplier's audit is unfinished and the first
-event's readings are unproduced. No final CI, freeze or publication
+event's readings are unproduced. No final CI, integration or delivery
 completion is asserted.

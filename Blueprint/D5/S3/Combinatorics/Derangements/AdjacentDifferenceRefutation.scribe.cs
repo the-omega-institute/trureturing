@@ -32,7 +32,10 @@ internal sealed class AdjacentDifferenceRefutationDocument : IScribeDocumentDefi
         Describe.Lean(DescribeId.Create("a378495-adjacent-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(Statement(declaration))),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: declaration == "result"
+                ? new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a378495-adjacent-difference"), ResolutionKind.Refuted)
+                : null);
 
     private static Formula Statement(string declaration)
     {

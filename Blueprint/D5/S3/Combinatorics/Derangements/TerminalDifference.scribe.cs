@@ -57,7 +57,10 @@ internal sealed class TerminalDifferenceDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("a378495-terminal-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(Statement(declaration))),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: declaration == "result"
+                ? new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a378495-terminal-difference"), ResolutionKind.Proved)
+                : null);
 
     private static Formula Statement(string declaration)
     {

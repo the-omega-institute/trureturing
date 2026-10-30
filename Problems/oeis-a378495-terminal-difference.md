@@ -90,11 +90,11 @@ The proof source is `D5/S3/Combinatorics/Derangements/TerminalDifference.lean`;
 its typed descriptions and generated mirror are under the corresponding
 Blueprint path. The accepted axiom closure is contained in
 `Classical.choice`, `Quot.sound`, `propext`; no new axiom is introduced.
-The typed display formulas are authored from the exact source statements:
-the current projector has no fixture entries for these unfrozen
-declarations (`missing`). They are not claimed to be kernel-derived
-formula projections. The formulas, mathematical prose and original
-source remain subject to independent fidelity review.
+The displayed formulas use a hand-authored typed Scribe AST of the exact
+Lean statements; FromLean had no unfrozen fixture entries (`missing`).
+They are not claimed to be kernel-derived formula projections. Their
+quantifiers, casts, natural subtractions, factorials and proof references
+agree with the Lean declarations and source-agreeing column domain.
 
 ### Declaration form and actual consumers
 
@@ -121,10 +121,11 @@ not an escape argument. The actual suppliers are the pinned Mathlib
 cycle-type cardinalities, support identities and finite-set partition,
 combined by logical decomposition and factorial/rational normalization.
 There is no frozen project theorem on the terminal proof's dependency
-path. The intended admission basis is `open-problem-resolution`, with
-the exact preregistration above. Admission is pending independent
-pre-freeze review and the later canonical doors and typed Proved claim.
-This source is unfrozen; the dossier asserts no publication completion.
+path. The admission basis is `open-problem-resolution`, with the exact
+preregistration above. The result Describe carries the typed Proved
+resolution claim for this dossier and names the exact canonical frozen
+declaration. Remote required CI and final independent integration review
+remain separate obligations; this dossier asserts no delivery completion.
 
 ### Utility and unfinished audit
 
@@ -165,8 +166,8 @@ separate kernel-checked mathematical conclusion.
 - **Open:** extensions below five or a corrected adjacent shift are not
   settled here. The separate literal adjacent question has its own
   [refutation dossier](oeis-a378495-adjacent-difference.md).
-- **Boundary:** pre-freeze review, canonical admission and publication
-  remain pending; no delivery or discovery KPI follows from this dossier.
+- **Boundary:** remote required CI and final independent integration
+  review remain pending; no delivery or discovery KPI follows from this dossier.
 
 ## ASSUMED-UNVERIFIED
 
