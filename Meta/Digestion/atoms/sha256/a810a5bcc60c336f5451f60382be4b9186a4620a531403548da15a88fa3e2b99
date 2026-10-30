@@ -1,0 +1,39 @@
+**Theorem 10.2 (literal correctness, including chronology and absent
+extensions).** For every descriptor acquired as above, every $u\ge0$
+and every finite suffix $w$, Definition 10.1 returns (PCR.21). It uses
+at most $|w|$ orientation evaluations and neither an expanded tree nor
+a list of the core period. If a response discrepancy exists, a finite
+full-root literal $vw$ at a finite indexed cut witnesses it.
+
+Proof. ACR Theorem 27.2 supplies the *actual* index of branch $q$ as
+$J_v(q)=I_k+D_q$. The initial normalized descriptor, immutable sibling
+descriptors, chronological order and masses in (PCR.29) are exactly its
+(ACR.115), not semantic addresses or counts with order forgotten.
+By (PCR.23) and the recurrence, $\lambda(x^a)=y_a$ for $a\ge0$.
+For negative $a$ the same identity follows from invertibility on the
+periodic core. Hence (PCR.30) is
+
+$$
+ \lambda(x^{I_k+D_q-1})=y_{J_v(q)-1}=z_{J_v(q)}.
+ \tag{PCR.31}
+$$
+
+The last equality is licensed by genuine core-only evolution. It is
+not a backwards extension of the original singular stream. The $-1$
+retains the original one-based birth convention; omitting it would
+already give the wrong root orientation in general.
+
+Induct on the length of the actual physical prefix. At a branch the
+computed bit therefore creates exactly the actual two initial child
+labels at the actual normalized time, preserving physical order. Alpha
+promotion and later branching give exactly the label predicate in
+Definition 10.1. Every failed descent is an actual absent extension;
+every successful descent retains the correct immutable descriptor.
+The root exists at every nonnegative normalized cut, including $T=0$.
+This proves presence and the terminal predicate, including empty words,
+newest cherries and later descendants. It is the local version of GPO
+Theorem 39.4 with its previously unsupplied clock inputs now earned as
+operators. A disagreement between finite supports has a word in their
+symmetric difference, whose full literal is the promised witness.
+$\square$
+
