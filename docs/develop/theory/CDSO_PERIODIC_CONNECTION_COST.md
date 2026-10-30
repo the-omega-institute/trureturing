@@ -327,7 +327,8 @@ H(x)=S_j+P(x)+O_{a,h}(\|x-x^*\|^2)
 \tag{3.3}
 $$
 
-in this neighborhood. No global convexity of $H$ is asserted.
+in this neighborhood, where the norm is Euclidean. No global
+convexity of $H$ is asserted.
 
 **Proof.** Set $z=x_C$, $w_k=x_{\{k\}}$ for $k\in D$, and regard
 the exceptional masses as variables. The original normalization
@@ -401,15 +402,15 @@ $A\varepsilon\le p_0/2$, obtaining the third line.
 All marginal denominators are positive in a real open
 neighborhood of the cap. The full rational function has bounded
 second derivatives on a smaller neighborhood, giving (3.3).
-The scalar supporting-tangent and strong-convexity steps in
-(3.7) have the usual meaning of Boyd--Vandenberghe, *Convex
-Optimization*, §§3.1.3 and 3.1.8,
+The first inequality in (3.7) is the scalar supporting-tangent
+inequality applied to $1/t$ after subtracting a positive
+quadratic; see Boyd--Vandenberghe, *Convex Optimization*, §3.1.3,
 [author text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf);
-their hypotheses were checked here for the scalar reciprocals,
-rather than assumed for $H$. ∎
+the positive second derivative above verifies the needed
+convexity. No such hypothesis is imposed on $H$. ∎
 
 **Lemma 3.2 (Compact localization for actual graphs).** Fix $a,h$.
-For any finite $L_0$, graphs in Definition 1.1 satisfying
+For any finite $L_0>0$, graphs in Definition 1.1 satisfying
 $W(G)\le L_0$ have actual sink marginals bounded below by a
 positive constant depending only on $L_0$. Uniformly on this
 sublevel,
