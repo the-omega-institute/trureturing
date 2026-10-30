@@ -37,11 +37,30 @@ The statement uses the literal toggle trace above.  In particular, the endpoint 
 
 **定义 2.1 (States and separated coordinates).** Let $n\ge11$,
 $P_n=[3]\times[n]$ with its coordinatewise order, and
-$\mathcal C_n=\mathcal{IC}(P_n)$, including the empty set. For a complete
-reverse linear extension $e$, let $R_e$ be the composition of the literal
-toggles in the prefix, and let $\operatorname{per}_{R_e}(I)$ be its least
-positive return time. Put $L=n+4$. An integer interval $[v,w]$ is empty when
-$v>w$.
+let $\mathcal C_n=\mathcal{IC}(P_n)$ be the set of all interval-closed
+subsets, including the empty set: $S\subseteq P_n$ belongs to $\mathcal C_n$
+when $u,v\in S$ and $u\le y\le v$ imply $y\in S$ for every $y\in P_n$.
+For each $x\in P_n$, define the literal convexity toggle on $\mathcal C_n$ by
+
+$$
+T_x(S)=
+\begin{cases}
+S\mathbin{\triangle}\{x\},&\text{if }S\mathbin{\triangle}\{x\}\in\mathcal C_n,\\
+S,&\text{otherwise}.
+\end{cases}
+$$
+
+A complete legal reverse extension is a sequence $e=(x_1,\ldots,x_{3n})$
+containing every point of $P_n$ exactly once, with $x_i>x_j$ implying
+$i<j$. For every such $e$ and every $I\in\mathcal C_n$, set $I_0=I$,
+$I_k=T_{x_k}(I_{k-1})$ for $1\le k\le3n$, and define
+
+$$
+R_e(I)=I_{3n}=(T_{x_{3n}}\circ\cdots\circ T_{x_1})(I).
+$$
+
+Let $\operatorname{per}_{R_e}(I)$ be its least positive return time.
+Put $L=n+4$. An integer interval $[v,w]$ is empty when $v>w$.
 
 For a state meeting every row, write its three row intervals as
 $[a_i,b_i]$, $1\le i\le3$. Define $\mathcal F_n$ to consist of those states
@@ -622,8 +641,7 @@ initial value equals $m$. Hence no positive time below $m+2$
 returns to $E_m$, proving (2.20). $\square$
 
 The scope of (2.12) is compatible with (2.20) and with the literal
-$73$-state orbit in $[3]\times[12]$ supplied by
-[IntervalClosedSignedCardinalityRefutation](../../../D5/S3/Combinatorics/Geometry/IntervalClosedSignedCardinalityRefutation.lean).
+$73$-state orbit in $[3]\times[12]$.
 The latter orbit has period $73\nmid16$; its seed has an empty middle
 row and is outside $\mathcal F_{12}$. The matching action above
 represents only the rotation-invariant family $D(\mathcal M_{n+4})$.
