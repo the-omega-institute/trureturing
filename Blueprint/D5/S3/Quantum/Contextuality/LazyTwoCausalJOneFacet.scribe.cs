@@ -123,7 +123,10 @@ internal sealed class LazyTwoCausalJOneFacetDocument : IScribeDocumentDefinition
                             + "inequality. They force the face dimension plus one to equal the polytope "
                             + "dimension. Together with validity, this proves the stated facet property "
                             + "for every n ≥ 2."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("abbott-wechs-costa-branciard-2017-lazy-two-causal-j-one-facet"),
+                    ResolutionKind.Proved)))));
 
     private static Formula StrategyFormula()
     {
