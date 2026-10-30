@@ -7,6 +7,7 @@
    digest: Complete finite direction depths, paid terminal tests and ordered terminal frontiers. -/
 
 import D5.S3.Arith.FibonacciAtomic.ActualImageAddressCertificate
+import D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialMachine
 
 /-! Full root literals and the terminal frontier of a complete direction function. -/
 
@@ -45,6 +46,43 @@ inductive PaidWalk (U : Source) : Address → Address → List Address → Nat �
       (present : readout (p ++ [false]) U ≠ .absent)
       (next : PaidWalk U (p ++ [b]) u tr d) :
       PaidWalk U p (b :: u) ((p ++ [false]) :: tr) (d + 1)
+
+/-- A source-blind finite-tape control. Every walk state first issues a Read;
+only its returned absence can trigger the successful terminal stop. -/
+inductive Control where
+  | walk : Address → Address → Nat → Control
+  | stop : Nat → Control
+
+def controller : Control → Observer.NativeSerialMachine.Op Control Nat
+  | .stop k => .stop k
+  | .walk p u k => .read (p ++ [false]) (fun y =>
+      if y = .absent then .stop k else
+        match u with
+        | [] => .stop k
+        | b :: v => .walk (p ++ [b]) v (k + 1))
+
+/-- Every query is an actual serial Read of that literal in the same stationary root. -/
+def eventTrace (U : Source) (qs : List Address) : Observer.NativeSerialMachine.Trace :=
+  qs.map (fun a => .read 0 a (readout a U))
+
+private theorem paid_execution {U : Source} {p u : Address} {qs : List Address} {d : Nat}
+    (h : PaidWalk U p u qs d) (k : Nat) :
+    Observer.NativeSerialMachine.Run controller (.walk p u k) 0 U (eventTrace U qs) (k + d) := by
+  induction h generalizing k with
+  | stop p u absent =>
+      change Observer.NativeSerialMachine.Run controller (.walk p u k) 0 U
+        [.read 0 (p ++ [false]) (readout (p ++ [false]) U)] k
+      refine Observer.NativeSerialMachine.Run.read rfl rfl ?_
+      simpa only [absent, ite_true] using
+        (Observer.NativeSerialMachine.Run.stop (δ := controller) (c := Control.stop k) rfl)
+  | step p u b tr d present next ih =>
+      change Observer.NativeSerialMachine.Run controller (.walk p (b :: u) k) 0 U
+        (.read 0 (p ++ [false]) (readout (p ++ [false]) U) :: eventTrace U tr) (k + (d + 1))
+      refine Observer.NativeSerialMachine.Run.read rfl rfl ?_
+      have tail := ih (k + 1)
+      have hk : k + 1 + d = k + (d + 1) := by omega
+      rw [hk] at tail
+      simpa only [present, ite_false] using tail
 
 private theorem probe_count (T : Source) (p u : Address) :
     (probes T p u).length = depth T u + 1 := by
@@ -224,7 +262,9 @@ full root literals and include the final absent-child test. -/
 theorem tape_geometry (T : Source) :
     (∀ (U : Source) (p u : Address),
       (∀ w, readout (p ++ w) U = readout w T) → height T ≤ u.length →
-      PaidWalk U p u (probes T p u) (depth T u)) ∧
+      PaidWalk U p u (probes T p u) (depth T u) ∧
+        Observer.NativeSerialMachine.Run controller (.walk p u 0) 0 U
+          (eventTrace U (probes T p u)) (depth T u)) ∧
     (∀ p u : Address, (probes T p u).length = depth T u + 1) ∧
     (∀ u : Address, depth T u ≤ height T) ∧
     (∀ u v : Address, height T ≤ u.length → depth T (u ++ v) = depth T u) ∧
@@ -235,7 +275,10 @@ theorem tape_geometry (T : Source) :
     (∀ (U : Source) (L : Nat), height T ≤ L → height U ≤ L →
       (∀ u : Address, u.length = L → depth T u = depth U u) →
       (decompose T).1 = (decompose U).1) :=
-  ⟨paid_walk T, probe_count T, depth_bound T, depth_padding T, depth_maximum T,
+  ⟨fun U p u loc enough => by
+      have h := paid_walk T U p u loc enough
+      exact ⟨h, by simpa using paid_execution h 0⟩,
+    probe_count T, depth_bound T, depth_padding T, depth_maximum T,
     fun U p found => ⟨height_prefix U T p found, fun u => depth_prefix U T p u found⟩,
     shape_from_depth T⟩
 

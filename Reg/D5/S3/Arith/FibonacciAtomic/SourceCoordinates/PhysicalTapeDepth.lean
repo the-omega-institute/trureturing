@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Arith.FibonacciAtomic.SourceCoordinates.PhysicalTapeDepth
 
+/-! Complete direction geometry as a dependent depth and literal-query family. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -17,9 +19,13 @@ open ActualImageAddressCertificate (height)
 
 inductive Role where
   | depths | queries
-  deriving DecidableEq, Fintype, Inhabited
+  deriving DecidableEq, Inhabited
 
-def signature : DependentFamily.Signature where
+instance : Fintype Role := ⟨{.depths, .queries}, by
+  intro i
+  cases i <;> simp⟩
+
+abbrev signature : DependentFamily.Signature where
   Params := Unit
   State := fun _ => Source × Address × Address
   Role := Role
@@ -42,7 +48,9 @@ def geometry (d : Source → Address → Nat) (pr : Source → Address → Addre
   ∀ T : Source,
     (∀ (U : Source) (p u : Address),
       (∀ w, readout (p ++ w) U = readout w T) → height T ≤ u.length →
-      PaidWalk U p u (pr T p u) (d T u)) ∧
+      PaidWalk U p u (pr T p u) (d T u) ∧
+        Observer.NativeSerialMachine.Run controller (.walk p u 0) 0 U
+          (eventTrace U (pr T p u)) (d T u)) ∧
     (∀ p u : Address, (pr T p u).length = d T u + 1) ∧
     (∀ u : Address, d T u ≤ height T) ∧
     (∀ u v : Address, height T ≤ u.length → d T (u ++ v) = d T u) ∧
@@ -63,10 +71,13 @@ abbrev sourceScope := type_of% (@tape_geometry)
 
 theorem source_bridge : sourceScope ↔ arena.Law actual := Iff.rfl
 
+def erasedReadout (i : Role) : ∀ (j : Role) (p : Unit),
+    signature.State p → signature.Output j p
+  | .depths, _, s => if i = .depths then 0 else depth s.1 s.2.2
+  | .queries, _, s => if i = .queries then [] else probes s.1 s.2.1 s.2.2
+
 def erased (i : Role) : DependentFamily.Realization signature :=
-  DependentFamily.realize signature (fun j p s =>
-    if j = i then (match j with | .depths => 0 | .queries => []) else actualReadout j p s)
-    (fun e => nomatch e)
+  DependentFamily.realize signature (erasedReadout i) (fun e => nomatch e)
 
 theorem erasure_fails (i : Role) : ¬ arena.Law (erased i) := by
   intro h
@@ -91,7 +102,8 @@ def family : DependentFamily.Registration arena sourceScope where
       refine ⟨erased i, ?_, rfl, erasure_fails i⟩
       intro j hj
       funext p s
-      simp [erased, actual, DependentFamily.realize, hj]
+      cases i <;> cases j <;> simp [erased, erasedReadout, actual,
+        actualReadout, DependentFamily.realize] at hj ⊢
     · intro e; exact nomatch e
   dependence := by
     intro i

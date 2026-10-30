@@ -33,6 +33,18 @@ internal sealed class PhysicalTapeDepthDocument : IScribeDocumentDefinition
                 + "not a stop rule. This is a mathematical description of the original stationary "
                 + "presence service; root binding, grants, backing and completed serial reads remain "
                 + "premises for using that service."),
+            Def("Control", "Finite-tape control", "A walk state contains only the current absolute address, "
+                + "remaining tape and accumulated edge count. A stop state contains the returned count."),
+            Def("controller", "Original serial Read controller", "Every walk state first issues a native "
+                + "Read at append(p,[false]). Absence selects stop. Presence with a next direction b "
+                + "selects walk(append(p,[b]),tail,k+1). The total control also stops on exhausted "
+                + "presence, a case excluded by every asserted sufficient-horizon paid walk. "
+                + "A stop state executes the original stop operation; no source, descriptor or clock "
+                + "is an input to the control, and it issues no update."),
+            Def("eventTrace", "Actual stationary Read trace", "eventTrace(U,qs) maps every operand a to "
+                + "the native event Read(0,a,readout(a,U)). Run is the existing NativeSerialMachine.Run: "
+                + "the same physical root is passed between reads, and every final absent reply "
+                + "remains an actual charged read event."),
             Describe.Lean(DescribeId.Create("physical-tape-depth-geometry"),
                 DeclarationHandle.Create(Prefix + "tape_geometry"), H("Complete tape geometry"),
                 StatementSource.FromAuthor(Disp(Result())), AssessedProvenance.FromRepo(), Blocks(
@@ -81,7 +93,9 @@ internal sealed class PhysicalTapeDepthDocument : IScribeDocumentDefinition
         return All("T", source, And(
             All("U",source,All("p",address,All("u",address,
                 Imp(All("w",address,EqOf(Call("readout",App(p,w),root),Call("readout",w,t))),
-                    Imp(enough,Call("PaidWalk",root,p,u,Call("probes",t,p,u),Dp(t,u))))))),
+                    Imp(enough,And(Call("PaidWalk",root,p,u,Call("probes",t,p,u),Dp(t,u)),
+                        Call("Run",V("controller"),Call("walk",p,u,D(0)),D(0),root,
+                            Call("eventTrace",root,Call("probes",t,p,u)),Dp(t,u)))))))),
             All("p",address,All("u",address,EqOf(Len(Call("probes",t,p,u)),Add(Dp(t,u),D(1))))),
             All("u",address,LeOf(Dp(t,u),Ht(t))),
             All("u",address,All("v",address,Imp(enough,EqOf(Dp(t,App(u,v)),Dp(t,u))))),
