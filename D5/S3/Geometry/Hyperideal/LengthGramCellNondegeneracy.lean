@@ -109,7 +109,10 @@ theorem vertices_affine_independent (l : Fin 6 → ℝ) (hl : ∀ q, 0 < l q)
       apply endpoint_eq_false l hl (by simpa [vertices] using h) (by decide) (by decide) (by decide)
   apply support_affine_independent (vertices l n)
     (support l (facet n)) (support l (ridge n))
-  · simpa [vertices] using barycenter_support_ne l hl (facet n)
+  · have hzero : vertices l n 0 = barycenter := by
+      fin_cases n <;> rfl
+    rw [hzero]
+    exact barycenter_support_ne l hl (facet n)
   · exact hfacet
   · exact hridge_ne
   · exact hridge_zero 0
