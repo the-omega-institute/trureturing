@@ -59,10 +59,6 @@ private theorem term_norm_le {b : ℝ} (hb : b ∈ Icc (0 : ℝ) 1) (θ : ℝ) (
         (by positivity)) hc (abs_nonneg _) (by positivity)
     _ = _ := by ring
 
-private theorem term_summable {b : ℝ} (hb : b ∈ Icc (0 : ℝ) 1) (θ : ℝ) :
-    Summable (boundaryTerm b θ) :=
-  (majorant_summable.of_nonneg_of_le (fun _ => norm_nonneg _) (term_norm_le hb θ)).of_norm
-
 private theorem kernel_continuous {b : ℝ} (hb : b ∈ Icc (0 : ℝ) 1) :
     Continuous (boundaryKernel b) := by
   exact continuous_tsum (fun j => by unfold boundaryTerm; fun_prop)
@@ -118,7 +114,6 @@ private theorem cosine_geometric (q θ : ℝ) (hq0 : 0 ≤ q) (hq1 : q < 1) :
     ((u * (1 - (-(q : ℂ) * u ^ 2))⁻¹).re) at hh
   simp_rw [he] at hh
   convert hh using 1
-  dsimp
   rw [← div_eq_mul_inv]
   dsimp [u]
   rw [Complex.exp_ofReal_mul_I]
@@ -146,8 +141,7 @@ private theorem density_integral (b θ : ℝ) (j : ℕ) :
     funext t
     rw [show 2 * j + 2 = (2 * j + 1) + 1 by omega, pow_succ]
     ring
-  rw [he, intervalIntegral.integral_sub ((continuous_id.pow _).intervalIntegrable 0 1)
-    ((continuous_id.pow _).intervalIntegrable 0 1),
+  rw [he, intervalIntegral.integral_sub (by fun_prop) (by fun_prop),
     integral_pow, integral_pow]
   simp only [one_pow, zero_pow (by omega : 2 * j + 1 + 1 ≠ 0),
     zero_pow (by omega : 2 * j + 2 + 1 ≠ 0), sub_zero]
@@ -196,8 +190,10 @@ private theorem kernel_integral_interior (b θ : ℝ) (hb0 : 0 ≤ b) (hb1 : b <
       linarith [ht.1]
     have hc := Real.abs_cos_le_one ((2 * (j : ℝ) + 1) * θ)
     dsimp [densityTerm, U]
-    simp only [Real.norm_eq_abs, abs_mul, abs_pow, abs_neg, abs_ofNat,
-      abs_of_nonneg (sq_nonneg b)]
+    rw [Real.norm_eq_abs]
+    simp only [abs_mul, abs_pow, abs_neg, abs_of_nonneg (sq_nonneg b),
+      abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2), abs_of_nonneg ht0]
+    have htP' : t ^ (2 * j + 1) ≤ 1 := pow_le_one₀ ht0 ht.2
     calc
       _ ≤ 2 * b ^ 2 * (b ^ 2) ^ j * 1 * (1 * 1) := by gcongr
       _ = _ := by ring
@@ -231,8 +227,11 @@ including the entire closed parameter edge `b = 1`. -/
 theorem boundary_kernel_control (b θ : ℝ) (hb : b ∈ Icc (0 : ℝ) 1) :
     Continuous (boundaryKernel b) ∧
     boundaryKernel b (Real.pi - θ) = -boundaryKernel b θ ∧
-    Real.cos θ * boundaryKernel b θ ≤ 0 := by
-  refine ⟨kernel_continuous hb, kernel_reflection b θ, ?_⟩
+    Real.cos θ * boundaryKernel b θ ≤ 0 ∧
+    TendstoUniformlyOn
+      (fun n (p : ℝ × ℝ) => ∑ j ∈ Finset.range n, boundaryTerm p.1 p.2 j)
+      (fun p => boundaryKernel p.1 p.2) atTop {p | p.1 ∈ Icc (0 : ℝ) 1} := by
+  refine ⟨kernel_continuous hb, kernel_reflection b θ, ?_, kernel_uniform_convergence⟩
   have hc : ContinuousOn (fun b => Real.cos θ * boundaryKernel b θ) (Icc (0 : ℝ) 1) := by
     apply ContinuousOn.const_mul
     exact continuousOn_tsum (fun j => by unfold boundaryTerm; fun_prop)

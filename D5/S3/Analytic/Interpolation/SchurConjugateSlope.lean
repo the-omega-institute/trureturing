@@ -100,16 +100,6 @@ theorem slope_transport (g : ℂ → ℂ) (hg : Differentiable ℂ g) (a b : ℝ
     (show a ∈ Icc (-|a|) |a| from ⟨neg_abs_le a, le_abs_self a⟩)
   simpa only [f, sub_zero, Real.norm_eq_abs, mul_comm] using hh
 
-/-- The horizontal transport estimate for the derivatives of the actual interpolants. -/
-theorem interpolant_transport (g : ℂ → ℂ) (hg : Differentiable ℂ g) (a b : ℝ)
-    (hb : 0 < b) (hab : a ^ 2 + b ^ 2 ≤ 1) (z : ℂ) :
-    ‖deriv (interpolant g a b) z - deriv (interpolant g 0 b) z‖ ≤ |a| * diskNorm g := by
-  simpa only [interpolant_deriv] using slope_transport g hg a b hb hab
-
-#print axioms slope_transport
-#print axioms interpolant_deriv
-
-
 /-- The original arbitrary-complex entire class with the closed-disk norm constraint. -/
 def entireClass : Set (ℂ → ℂ) := {g | Differentiable ℂ g ∧ diskNorm g ≤ 1}
 
@@ -126,13 +116,13 @@ def uniformError (a b : ℝ) : ℝ := sSup (outerValues a b)
 private theorem coarse_error_bound (g : ℂ → ℂ) (hg : Differentiable ℂ g) (a b x : ℝ)
     (hb : 0 < b) (hab : a ^ 2 + b ^ 2 ≤ 1) (hx : x ∈ Icc (-1 : ℝ) 1) :
     ‖deriv g x - deriv (interpolant g a b) x‖ ≤ 2 * diskNorm g := by
-  have hM : 0 ≤ diskNorm g := (norm_nonneg _).trans (le_diskNorm hg (by simp))
+  have hM : 0 ≤ diskNorm g := (norm_nonneg _).trans (le_diskNorm (z := 0) hg (by simp))
   have hx' : (x : ℂ) ∈ closedBall (0 : ℂ) 1 := by
     simpa only [mem_closedBall, dist_zero_right, Complex.norm_real, Real.norm_eq_abs] using
       abs_le.mpr hx
   have hw := node_mem hab (le_refl |a|)
   have hv : (a : ℂ) - b * I ∈ closedBall (0 : ℂ) 1 := by
-    simpa using node_mem (b := -b) (by nlinarith : a ^ 2 + (-b) ^ 2 ≤ 1) (le_refl |a|)
+    simpa [sub_eq_add_neg] using node_mem (b := -b) (by nlinarith : a ^ 2 + (-b) ^ 2 ≤ 1) (le_refl |a|)
   let f : ℂ → ℂ := fun z => g z - deriv g x * z
   have hf (z : ℂ) : HasDerivAt f (deriv g z - deriv g x) z := by
     simpa [f] using (hg z).hasDerivAt.sub ((hasDerivAt_id z).const_mul (deriv g x))
@@ -167,8 +157,11 @@ private def quadratic : ℂ → ℂ := fun z => z ^ 2 / 2
 
 private theorem quadratic_deriv : deriv quadratic = id := by
   funext z
-  have h := ((hasDerivAt_id z).pow 2).div_const (2 : ℂ)
-  convert h.deriv using 1 <;> dsimp [quadratic] <;> ring
+  have h : HasDerivAt quadratic (2 * z ^ (2 - 1) * 1 / 2) z :=
+    ((hasDerivAt_id z).pow 2).div_const (2 : ℂ)
+  rw [h.deriv]
+  dsimp
+  ring
 
 private theorem quadratic_second : deriv (deriv quadratic) = fun _ => 1 := by
   rw [quadratic_deriv]
@@ -179,7 +172,11 @@ private theorem quadratic_member : quadratic ∈ entireClass := by
   constructor
   · unfold quadratic
     fun_prop
-  · simp [diskNorm, quadratic_second, Set.image_const, entireClass]
+  · unfold diskNorm
+    apply csSup_le
+    · exact ⟨_, 0, by simp, rfl⟩
+    · rintro v ⟨z, hz, rfl⟩
+      simp [quadratic_second]
 
 private theorem quadratic_slope (a b : ℝ) (hb : 0 < b) : slope quadratic a b = a := by
   have hden : (2 * (b : ℂ) * I) ≠ 0 :=
@@ -197,14 +194,17 @@ private theorem quadratic_sup (a b : ℝ) (hb : 0 < b) :
     sSup (innerValues quadratic a b) = 1 + |a| := by
   have hbound : ∀ v ∈ innerValues quadratic a b, v ≤ 1 + |a| := by
     rintro v ⟨x, hx, rfl⟩
+    change ‖deriv quadratic x - deriv (interpolant quadratic a b) x‖ ≤ _
     rw [quadratic_error a b x hb]
     exact (abs_sub x a).trans (by linarith [abs_le.mpr hx])
   have hatt : 1 + |a| ∈ innerValues quadratic a b := by
     by_cases ha : 0 ≤ a
     · refine ⟨-1, by norm_num, ?_⟩
+      change ‖deriv quadratic (-1) - deriv (interpolant quadratic a b) (-1)‖ = _
       rw [quadratic_error a b (-1) hb, abs_of_nonneg ha, abs_of_nonpos (by linarith)]
       ring
     · refine ⟨1, by norm_num, ?_⟩
+      change ‖deriv quadratic 1 - deriv (interpolant quadratic a b) 1‖ = _
       rw [quadratic_error a b 1 hb, abs_of_nonpos (le_of_not_ge ha),
         abs_of_nonneg (by linarith)]
       ring
@@ -235,7 +235,11 @@ theorem original_suprema_bounded (a b : ℝ) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 �
     quadratic, quadratic_member, quadratic_sup a b hb⟩
   · apply le_csSup hbout
     exact ⟨quadratic, quadratic_member, quadratic_sup a b hb⟩
-  · exact csSup_le hout hbout.choose_spec
+  · apply csSup_le hout
+    rintro v ⟨g, hg, rfl⟩
+    apply csSup_le (hinner g hg).1
+    rintro w ⟨x, hx, rfl⟩
+    exact (coarse_error_bound g hg.1 a b x hb hab hx).trans (by linarith [hg.2])
 
 #print axioms original_suprema_bounded
 

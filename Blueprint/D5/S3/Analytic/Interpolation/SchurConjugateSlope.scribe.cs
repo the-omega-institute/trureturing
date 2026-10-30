@@ -54,9 +54,7 @@ internal sealed class SchurConjugateSlopeDocument : IScribeDocumentDefinition
             Entry("transport", "slope_transport", "Horizontal transport for every entire function",
                 Transport(Bound(S(A), S(D(0)))),
                 "Let g be entire, let a and b be real, b>0 and a squared plus b squared at most one. Then |S(g,a,b)-S(g,0,b)| <= |a| M(g). Both signs of a and all closed-segment endpoints are included. The derivative of g is M(g)-Lipschitz on the closed disk. At each horizontal coordinate s between zero and a, the vertical divided difference of g prime therefore has norm at most M(g). Applying the real mean value bound to the actual slope gives the estimate. There is no real-coefficient hypothesis and no use of conjugation of function values.", DescribeRole.Theorem),
-            Entry("interpolant-transport", "interpolant_transport", "Transport of the actual interpolants",
-                Transport(All("z", C, Bound(Call("deriv", I(A), Z), Call("deriv", I(D(0)), Z)))),
-                "Under exactly the same hypotheses, the derivative of the actual interpolant differs from the imaginary-axis interpolant derivative by at most |a| M(g), at every complex point. This is the horizontal component of the uniform-error argument; the sharp imaginary-axis estimate is a separate analytic assertion.", DescribeRole.Theorem))));
+
 
     private static DocumentBlock Entry(string id, string declaration, string title,
         Formula formula, string prose, DescribeRole role) =>

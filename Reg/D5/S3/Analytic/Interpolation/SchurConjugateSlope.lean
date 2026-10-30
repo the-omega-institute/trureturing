@@ -75,57 +75,6 @@ def slopeAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
-abbrev interpolantArena : Arena where
-  signature := normSignature
-  Law R := ∀ (g : ℂ → ℂ) (_hg : Differentiable ℂ g) (a b : ℝ)
-    (_hb : 0 < b) (_hab : a ^ 2 + b ^ 2 ≤ 1) (z : ℂ),
-    R.readout () () ‖deriv (interpolant g a b) z - deriv (interpolant g 0 b) z‖
-      (|a| * diskNorm g)
-
-private theorem interpolantRejected : ¬ interpolantArena.Law normRejected := by
-  intro h
-  exact h (fun _ => 0) (by fun_prop) 0 1 (by norm_num) (by norm_num) 0
-
-def interpolantFamily : Registration interpolantArena (type_of% @interpolant_transport) where
-  actual := normActual
-  bridge := Iff.rfl
-  variation := ⟨@interpolant_transport, normRejected, interpolantRejected⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    interpolantArena.Law normActual normRejected interpolantRejected
-  dependence := normDependence
-
-def interpolantAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@interpolant_transport) (Realization normSignature) Unit Unit where
-  unitName := `D5.S3.Analytic.Interpolation.SchurConjugateSlope.interpolant_transport.__information_unit
-  realizationName := `Reg.D5.S3.Analytic.Interpolation.SchurConjugateSlope.interpolantFamily
-  realizationSource := none
-  generated := false
-  arena := .source ⟨interpolantArena⟩
-  objectArena := .source ⟨interpolantArena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source interpolantArena ⟨interpolantFamily⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize normSignature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.Interpolation.SchurConjugateSlope
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
 abbrev equalitySignature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ) (fun _ => ℂ → Prop)
 
@@ -192,7 +141,6 @@ def derivativeAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 #print axioms slopeAudit
-#print axioms interpolantAudit
 #print axioms derivativeAudit
 
 end Reg.D5.S3.Analytic.Interpolation.SchurConjugateSlope
