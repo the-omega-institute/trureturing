@@ -36,8 +36,8 @@ internal sealed class CdsoUniversalVertexRefutationDocument : IScribeDocumentDef
             RareHubApplication()),
         []));
 
-    private static DocumentBlock RareHubApplication() => Blocks(
-        H("Actual incidence arrays and the scale of a uniform gap"),
+    private static DocumentBlock RareHubApplication() => new DocumentBlock.Section(
+        H("Actual incidence arrays and the scale of a uniform gap"), Blocks(
         Paragraph(Text(
             "Let a be any integer at least four, r=a+1 and s=a+2. The finite labels " +
             "are Fin s; adding one to their values identifies them with [s]. The extra " +
@@ -99,7 +99,7 @@ internal sealed class CdsoUniversalVertexRefutationDocument : IScribeDocumentDef
             "every finite budget. Its support is disconnected. A prescribed-budget " +
             "graph realization requires its separate fixed-parameter, capacity and " +
             "positive-marginal hypotheses. The cdso definition above fixes the original graph normalization. The graph refutation is not a premise for the array inference. No external literature-priority claim is " +
-            "made for the array construction or its consequences.")));
+            "made for the array construction or its consequences."))));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
         string declaration, AssessedProvenance provenance) => Describe.Lean(
