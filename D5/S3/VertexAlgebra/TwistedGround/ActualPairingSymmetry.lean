@@ -7,6 +7,7 @@
    digest: Symmetry of the unchanged selected tensor pairing from the actual scalar commutant. -/
 
 import Batteries.Tactic.OpenPrivate
+import Mathlib.LinearAlgebra.BilinearForm.Properties
 import D5.S3.VertexAlgebra.TwistedGround.ActualChargedAdjoint
 import D5.S3.VertexAlgebra.TwistedGround.SymmetricPairing
 
