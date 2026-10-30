@@ -203,6 +203,93 @@ def supremaAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+abbrev classificationSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
+
+def classificationActual : Realization classificationSignature :=
+  realize classificationSignature (fun _ _ x y => x = y) (fun e => nomatch e)
+
+def classificationRejected : Realization classificationSignature :=
+  realize classificationSignature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev classificationArena : Arena where
+  signature := classificationSignature
+  Law R := ∀ (a b : ℝ) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 ≤ 1),
+    R.readout () () (uniformError a b) (1 + |a|) ∧
+    uniformError a b = (1 / 2) * nodalDerivativeNorm a b ∧
+    (∀ g ∈ entireClass, ∀ x ∈ Icc (-1 : ℝ) 1,
+      ‖deriv g (x : ℂ) - deriv (interpolant g a b) (x : ℂ)‖ ≤ 1 + |a|) ∧
+    entireClass.Nonempty ∧
+    (∀ g ∈ entireClass, (innerValues g a b).Nonempty ∧ BddAbove (innerValues g a b) ∧
+      (∃ z ∈ Metric.closedBall (0 : ℂ) 1, diskNorm g = ‖deriv (deriv g) z‖) ∧
+      ∃ x ∈ Icc (-1 : ℝ) 1,
+        sSup (innerValues g a b) = ‖deriv g x - deriv (interpolant g a b) x‖) ∧
+    (outerValues a b).Nonempty ∧ BddAbove (outerValues a b) ∧
+    ∃ g ∈ entireClass, g = (fun z => z ^ 2 / 2) ∧ diskNorm g = 1 ∧
+      slope g a b = a ∧
+      (∀ x : ℝ, ‖deriv g x - deriv (interpolant g a b) x‖ = |x - a|) ∧
+      sSup (innerValues g a b) = uniformError a b ∧
+      (0 ≤ a → ‖deriv g ((-1 : ℝ) : ℂ) -
+        deriv (interpolant g a b) ((-1 : ℝ) : ℂ)‖ = uniformError a b) ∧
+      (a ≤ 0 → ‖deriv g ((1 : ℝ) : ℂ) -
+        deriv (interpolant g a b) ((1 : ℝ) : ℂ)‖ = uniformError a b) ∧
+      ∃ x ∈ Icc (-1 : ℝ) 1,
+        nodalDerivativeNorm a b = ‖deriv (nodalPolynomial a b) x‖
+
+private theorem classificationRejectedLaw : ¬ classificationArena.Law classificationRejected := by
+  intro h
+  exact (h 0 1 (by norm_num) (by norm_num)).1
+
+private theorem classificationDependence :
+    ObservationalDependence classificationSignature classificationActual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have hh := congrFun h 0
+  norm_num [classificationActual, realize] at hh
+
+def classificationFamily : Registration classificationArena (type_of% @complete_classification) where
+  actual := classificationActual
+  bridge := Iff.rfl
+  variation := ⟨@complete_classification, classificationRejected, classificationRejectedLaw⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    classificationArena.Law classificationActual classificationRejected classificationRejectedLaw
+  dependence := classificationDependence
+
+def classificationAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@complete_classification) (Realization classificationSignature) Unit Unit where
+  unitName := `D5.S3.Analytic.Interpolation.SchurConjugateSlope.complete_classification.__information_unit
+  realizationName := `Reg.D5.S3.Analytic.Interpolation.SchurConjugateSlope.classificationFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨classificationArena⟩
+  objectArena := .source ⟨classificationArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source classificationArena ⟨classificationFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize classificationSignature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Interpolation.SchurConjugateSlope
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms classificationAudit
+
 #print axioms supremaAudit
 
 #print axioms slopeAudit

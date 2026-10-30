@@ -888,7 +888,7 @@ private theorem kernel_pairing_closed (h : ℂ → ℂ) (hh : Differentiable ℂ
     · simp [L, R, hc0, boundaryKernel, boundaryTerm]
     · exact kernel_pairing_interior h hh c (lt_of_le_of_ne hc.1 (Ne.symm hc0)) hc.2
   exact he.of_subset_closure hL hR.continuousOn Ico_subset_Icc_self
-    (by rw [closure_Ico (by norm_num : (0 : ℝ) ≠ 1)]; exact subset_rfl) hb
+    (by rw [closure_Ico (by norm_num : (0 : ℝ) ≠ 1)]) hb
 
 private theorem primitive_vertical_average (H : ℂ → ℂ) (hH : Continuous H)
     (b : ℝ) (hb : 0 < b) :

@@ -27,6 +27,40 @@ internal sealed class SchurConjugateSlopeDocument : IScribeDocumentDefinition
     private static Formula Transport(Formula conclusion) => Disp(All("g", Functions,
         All("a", R, All("b", R, Seq(Hypotheses, Sp, Implies, Sp, conclusion)))));
 
+    private static Formula U => Call("uniformError", A, B);
+    private static Formula V => Call("V", G, A, B);
+    private static Formula W => Call("W", A, B);
+    private static Formula Interval => Call("Icc", Seq(Minus, D(1)), D(1));
+    private static Formula Sharp => Seq(D(1), Plus, Call("abs", A));
+    private static Formula Error(Formula x) => Call("actualError", G, A, B, x);
+    private static Formula On(string v, Formula domain, Formula body) =>
+        Seq(Forall, Sp, F.Id(v), Sp, InMacro, Sp, domain, Comma, Sp, body);
+    private static Formula Some(string v, Formula domain, Formula body) =>
+        Seq(Exists, Sp, F.Id(v), Sp, InMacro, Sp, domain, Comma, Sp, body);
+    private static Formula InnerAttainment => Seq(
+        Call("Nonempty", V), Sp, Land, Sp, Call("BddAbove", V), Sp, Land, Sp,
+        Some("z", Call("closedBall", D(0), D(1)), Eqn(Call("M", G), Call("normSecondDerivative", G, Z))),
+        Sp, Land, Sp, Some("x", Interval, Eqn(Call("sSup", V), Error(F.Id("x")))));
+    private static Formula QuadraticAttainment => Some("g", Call("E"), Seq(
+        Eqn(G, Call("quadratic")), Sp, Land, Sp, Eqn(Call("M", G), D(1)), Sp, Land, Sp,
+        Eqn(S(A), A), Sp, Land, Sp,
+        All("x", R, Eqn(Error(F.Id("x")), Call("abs", Seq(F.Id("x"), Minus, A)))),
+        Sp, Land, Sp, Eqn(Call("sSup", V), U), Sp, Land, Sp,
+        Open, D(0), Sp, Le, Sp, A, Sp, Implies, Sp, Eqn(Error(Seq(Minus, D(1))), U), Close,
+        Sp, Land, Sp, Open, A, Sp, Le, Sp, D(0), Sp, Implies, Sp, Eqn(Error(D(1)), U), Close,
+        Sp, Land, Sp, Some("x", Interval,
+            Eqn(Call("nodalDerivativeNorm", A, B), Call("normNodalDerivative", A, B, F.Id("x"))))));
+    private static Formula CompleteStatement => Disp(All("a", R, All("b", R, Seq(
+        D(0), Sp, Lt, Sp, B, Sp, Land, Sp, new Formula.Power(A, D(2)), Plus,
+        new Formula.Power(B, D(2)), Sp, Le, Sp, D(1), Sp, Implies, Sp,
+        Eqn(U, Sharp), Sp, Land, Sp,
+        Eqn(U, Seq(Frac, Grp(D(1)), Grp(D(2)), Call("nodalDerivativeNorm", A, B))),
+        Sp, Land, Sp, On("g", Call("E"), On("x", Interval,
+            Seq(Error(F.Id("x")), Sp, Le, Sp, Sharp))), Sp, Land, Sp,
+        Call("Nonempty", Call("E")), Sp, Land, Sp, On("g", Call("E"), InnerAttainment),
+        Sp, Land, Sp, Call("Nonempty", W), Sp, Land, Sp, Call("BddAbove", W),
+        Sp, Land, Sp, QuadraticAttainment))));
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Entire complex functions obey horizontal transport of their actual conjugate-pair divided differences on the closed unit disk.",
         H("Horizontal transport of conjugate-pair slopes"),
@@ -108,7 +142,10 @@ internal sealed class SchurConjugateSlopeDocument : IScribeDocumentDefinition
                         Seq(D(1), Plus, Call("abs", A))), Sp, Land, Sp,
                     Exists, Sp, F.Id("x"), Sp, InMacro, Sp, Call("Icc", Seq(Minus, D(1)), D(1)), Comma, Sp,
                     Eqn(Call("nodalDerivativeNorm", A, B), Call("normNodalDerivative", A, B, F.Id("x"))))))),
-                "For every admissible a,b both original value sets are nonempty and bounded. For every member, compactness gives an actual point attaining the disk norm and an actual real point attaining the inner supremum. The existential witness is explicitly the entire quadratic quadratic(z)=z squared divided by two. It has disk norm one, slope a, error |x-a| and inner supremum 1+|a|. This value is attained at -1 for a nonnegative and at 1 for a nonpositive, with both endpoints when a=0. The actual nodal derivative norm is 2(1+|a|), so its half-norm is 1+|a|; a real endpoint attains the norm. The norm value set is nonempty and bounded. The coarse estimate uses the live horizontal transport theorem and the imaginary-axis bound sqrt(1+b squared) M(g), whose sum with |a| M(g) is at most 2 M(g). This gives uniformError at most two. The sharp upper estimate uniformError at most 1+|a| remains unproved here; this theorem does not assert the full classification.", DescribeRole.Theorem))));
+                "For every admissible a,b both original value sets are nonempty and bounded. For every member, compactness gives an actual point attaining the disk norm and an actual real point attaining the inner supremum. The existential witness is explicitly the entire quadratic quadratic(z)=z squared divided by two. It has disk norm one, slope a, error |x-a| and inner supremum 1+|a|. This value is attained at -1 for a nonnegative and at 1 for a nonpositive, with both endpoints when a=0. The actual nodal derivative norm is 2(1+|a|), so its half-norm is 1+|a|; a real endpoint attains the norm. The norm value set is nonempty and bounded. The coarse estimate uses the horizontal transport theorem and the imaginary-axis bound sqrt(1+b squared) M(g), whose sum with |a| M(g) is at most 2 M(g). This gives uniformError at most two. The following classification supplies the sharp upper estimate uniformError at most 1+|a|.", DescribeRole.Theorem),
+            Entry("complete", "complete_classification", "The complete original uniform identity",
+                CompleteStatement,
+                "For every real a,b with b>0 and a squared plus b squared at most one, every member of the original arbitrary-complex entire class and every real x in the closed interval obey the sharp pointwise error bound 1+|a|. The original nested supremum equals 1+|a| and half the actual nodal derivative norm. The entire class and the inner and outer value sets are nonempty and bounded. Every entire member attains its disk norm and inner supremum on the original compact domains. The actual entire quadratic g(z)=z squared divided by two belongs to the original class, has disk norm one and slope a, and has error |x-a| for every real x. Its inner supremum equals the outer supremum, so it attains the outer optimization. The far endpoint -1 attains that value for a>=0 and the endpoint 1 does so for a<=0; both endpoints attain it at a=0. A real endpoint also attains the actual nodal derivative norm. To obtain the upper estimate, take h=g double prime and H=g prime minus g prime at zero. The actual vertical-segment FTC identifies the normalized primitive average with S(g,0,b)-g prime at zero. The sharp primitive bound gives |g prime(x)-S(g,0,b)|<=M(g). Actual horizontal transport adds |a|M(g). Multiplying by M(g)<=1 bounds each member and each point. The two suprema are then bounded in their original order; no limit is exchanged with a supremum. The quadratic gives the reverse inequality. All equalities and estimates use the closed admissibility inequality throughout, including b=1, x=-1, x=1 and every nonreal unit-circle conjugate pair.", DescribeRole.Theorem))));
 
     private static DocumentBlock Entry(string id, string declaration, string title,
         Formula formula, string prose, DescribeRole role) =>

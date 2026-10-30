@@ -374,7 +374,8 @@ private theorem slope_primitive_identity (g : ℂ → ℂ) (hg : Differentiable 
       (∫ t in -b..b, (deriv g ((t : ℂ) * I) - deriv g 0)) := by
   let f : ℂ → ℂ := fun z => g (z * I)
   have hd (z : ℂ) : HasDerivAt f (deriv g (z * I) * I) z := by
-    exact (hg (z * I)).hasDerivAt.comp z ((hasDerivAt_id z).mul_const I)
+    simpa only [one_mul, id_eq, Function.comp_def] using
+      (hg (z * I)).hasDerivAt.comp z ((hasDerivAt_id z).mul_const I)
   have hc : Continuous (fun t : ℝ => deriv g ((t : ℂ) * I)) :=
     hg.deriv.continuous.comp (by fun_prop)
   have he : (∫ t in -b..b, deriv g ((t : ℂ) * I) * I) =
@@ -406,6 +407,88 @@ private theorem slope_primitive_identity (g : ℂ → ℂ) (hg : Differentiable 
   field_simp [Complex.ofReal_ne_zero.mpr hb.ne']
   <;> ring
 
+private theorem imaginary_axis_bound (g : ℂ → ℂ) (hg : Differentiable ℂ g)
+    (b x : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) (hx : x ∈ Icc (-1 : ℝ) 1) :
+    ‖deriv g (x : ℂ) - slope g 0 b‖ ≤ diskNorm g := by
+  have hH (z : ℂ) : HasDerivAt (fun z : ℂ => deriv g z - deriv g 0)
+      (deriv (deriv g) z) z := (hg.deriv z).hasDerivAt.sub_const _
+  have hp := SchurIntegratedKernel.primitive_error_bound (deriv (deriv g))
+    (fun z : ℂ => deriv g z - deriv g 0) hg.deriv.deriv hH (by simp)
+    b ⟨hb, hb1⟩ x hx
+  have he : deriv g (x : ℂ) - slope g 0 b =
+      (deriv g (x : ℂ) - deriv g 0) - (1 / (2 * b) : ℝ) •
+        (∫ t in -b..b, (deriv g ((t : ℂ) * I) - deriv g 0)) := by
+    rw [slope_primitive_identity g hg b hb]
+    ring
+  rw [he]
+  exact hp
+
+private theorem sharp_error_bound (g : ℂ → ℂ) (hg : Differentiable ℂ g)
+    (a b x : ℝ) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 ≤ 1)
+    (hx : x ∈ Icc (-1 : ℝ) 1) :
+    ‖deriv g (x : ℂ) - deriv (interpolant g a b) (x : ℂ)‖ ≤
+      (1 + |a|) * diskNorm g := by
+  have hb1 : b ≤ 1 := by nlinarith [sq_nonneg a]
+  rw [interpolant_deriv]
+  calc
+    _ = ‖(deriv g (x : ℂ) - slope g 0 b) + (slope g 0 b - slope g a b)‖ := by
+      congr 1
+      ring
+    _ ≤ ‖deriv g (x : ℂ) - slope g 0 b‖ + ‖slope g 0 b - slope g a b‖ := norm_add_le _ _
+    _ ≤ diskNorm g + |a| * diskNorm g := by
+      apply add_le_add (imaginary_axis_bound g hg b x hb hb1 hx)
+      rw [norm_sub_rev]
+      exact slope_transport g hg a b hb hab
+    _ = _ := by ring
+
+/-- The original entire-function error and its nested supremum are sharp on the full
+admissible closed half disk, with actual quadratic and endpoint attainment. -/
+theorem complete_classification (a b : ℝ) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 ≤ 1) :
+    uniformError a b = 1 + |a| ∧
+    uniformError a b = (1 / 2) * nodalDerivativeNorm a b ∧
+    (∀ g ∈ entireClass, ∀ x ∈ Icc (-1 : ℝ) 1,
+      ‖deriv g (x : ℂ) - deriv (interpolant g a b) (x : ℂ)‖ ≤ 1 + |a|) ∧
+    entireClass.Nonempty ∧
+    (∀ g ∈ entireClass, (innerValues g a b).Nonempty ∧ BddAbove (innerValues g a b) ∧
+      (∃ z ∈ closedBall (0 : ℂ) 1, diskNorm g = ‖deriv (deriv g) z‖) ∧
+      ∃ x ∈ Icc (-1 : ℝ) 1,
+        sSup (innerValues g a b) = ‖deriv g x - deriv (interpolant g a b) x‖) ∧
+    (outerValues a b).Nonempty ∧ BddAbove (outerValues a b) ∧
+    ∃ g ∈ entireClass, g = (fun z => z ^ 2 / 2) ∧ diskNorm g = 1 ∧
+      slope g a b = a ∧
+      (∀ x : ℝ, ‖deriv g x - deriv (interpolant g a b) x‖ = |x - a|) ∧
+      sSup (innerValues g a b) = uniformError a b ∧
+      (0 ≤ a → ‖deriv g ((-1 : ℝ) : ℂ) -
+        deriv (interpolant g a b) ((-1 : ℝ) : ℂ)‖ = uniformError a b) ∧
+      (a ≤ 0 → ‖deriv g ((1 : ℝ) : ℂ) -
+        deriv (interpolant g a b) ((1 : ℝ) : ℂ)‖ = uniformError a b) ∧
+      ∃ x ∈ Icc (-1 : ℝ) 1,
+        nodalDerivativeNorm a b = ‖deriv (nodalPolynomial a b) x‖ := by
+  obtain ⟨hclass, hinner, hout, hbout, hlo, _hcoarse,
+    g, hg, hgquad, hgnorm, hgslope, hgerror, hgsup, _hnorm, hhalf, hnod⟩ :=
+    original_suprema_bounded a b hb hab
+  have hpoint (f : ℂ → ℂ) (hf : f ∈ entireClass) (x : ℝ) (hx : x ∈ Icc (-1 : ℝ) 1) :
+      ‖deriv f (x : ℂ) - deriv (interpolant f a b) (x : ℂ)‖ ≤ 1 + |a| := by
+    exact (sharp_error_bound f hf.1 a b x hb hab hx).trans
+      (by simpa only [mul_one] using
+        mul_le_mul_of_nonneg_left hf.2 (show 0 ≤ 1 + |a| by positivity))
+  have hub : uniformError a b ≤ 1 + |a| := by
+    apply csSup_le hout
+    rintro v ⟨f, hf, rfl⟩
+    apply csSup_le (hinner f hf).1
+    rintro w ⟨x, hx, rfl⟩
+    exact hpoint f hf x hx
+  have hE : uniformError a b = 1 + |a| := le_antisymm hub hlo
+  refine ⟨hE, hE.trans hhalf.symm, hpoint, hclass, hinner, hout, hbout,
+    g, hg, hgquad, hgnorm, hgslope, hgerror, hgsup.trans hE.symm, ?_, ?_, hnod⟩
+  · intro ha
+    rw [hgerror (-1), hE, abs_of_nonneg ha, abs_of_nonpos (by linarith : -1 - a ≤ 0)]
+    ring
+  · intro ha
+    rw [hgerror 1, hE, abs_of_nonpos ha, abs_of_nonneg (by linarith : 0 ≤ 1 - a)]
+    ring
+
+#print axioms complete_classification
 #print axioms original_suprema_bounded
 
 end D5.S3.Analytic.Interpolation.SchurConjugateSlope
