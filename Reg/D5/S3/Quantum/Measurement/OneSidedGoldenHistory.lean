@@ -46,7 +46,10 @@ def arena : Arena where
     (∀ ε : ℝ, x/2 ≤ ε → ∃ M : Predictor Unit, NativeCorrect M P ρ ε) ∧
     (∀ (S : Type u) [Fintype S] (M : Predictor S), ¬ NativeCorrect M P ρ 0) ∧
     ((kraus P false).conjTranspose * kraus P false +
-      (kraus P true).conjTranspose * kraus P true = 1)
+      (kraus P true).conjTranspose * kraus P true = 1) ∧
+    (∀ b, nativePort P b = zeta^2 • kraus P b) ∧
+    (∀ b σ, nativePort P b * σ * (nativePort P b).conjTranspose = branch P b σ) ∧
+    (∀ h, false ∈ h → posterior P state h = 0)
 
 private def projection : Matrix (Fin 2) (Fin 2) ℂ := Matrix.diagonal ![0,1]
 private def density : DensityState (Fin 2) :=

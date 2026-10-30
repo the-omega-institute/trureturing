@@ -23,6 +23,9 @@ open D5.S3.Quantum.Foundation.FiniteStateChannel (DensityState)
 /-- Inverse golden ratio, with the source's square-root normalization. -/
 def x : ℝ := Real.goldenRatio⁻¹
 
+/-- The source record phase. -/
+def zeta : ℂ := Complex.exp ((3*Real.pi/5 : ℝ) * Complex.I)
+
 /-- The source's relative phase on the P branch. -/
 def phase : ℂ := (Complex.exp ((3*Real.pi/5 : ℝ) * Complex.I)) ^ (-3 : ℤ)
 
@@ -110,6 +113,106 @@ private theorem complete_kraus (P : Matrix (Fin d) (Fin d) ℂ)
   have hx : (x : ℂ)+(x : ℂ)^2 = 1 := by exact_mod_cast x_properties.2.2
   rw [he,hq,← add_assoc,← add_smul,hx,one_smul]
   simp
+
+/-- The two coefficient operators of the source preparation V. -/
+def preparation (P : Matrix (Fin d) (Fin d) ℂ) : Bool → Matrix (Fin d) (Fin d) ℂ
+  | false => (Real.sqrt x : ℂ) • 1
+  | true => (x : ℂ) • ((1-P)+zeta • P)
+
+/-- The record-basis coefficients of the source reader B_R. -/
+def reader : Bool → Bool → ℂ
+  | false, false => -(x : ℂ)
+  | false, true => (Real.sqrt x : ℂ)*zeta⁻¹
+  | true, false => (Real.sqrt x : ℂ)*zeta⁻¹
+  | true, true => -(x : ℂ)*zeta^3
+
+/-- Coefficients of (I tensor B_R)V, retaining both record coordinates. -/
+def nativePort (P : Matrix (Fin d) (Fin d) ℂ) (b : Bool) :=
+  reader b false • preparation P false + reader b true • preparation P true
+
+private theorem zeta_relations :
+    zeta+zeta⁻¹ = -(x : ℂ) ∧ zeta^5 = -1 := by
+  have hn : ‖zeta‖ = 1 := by simp [zeta,Complex.norm_exp]
+  have hi : zeta⁻¹ = star zeta := by
+    simp only [Complex.inv_def,Complex.normSq_eq_norm_sq,hn,one_pow,
+      Complex.ofReal_one,div_one,Complex.star_def]
+  have hcos : 2*Real.cos (3*Real.pi/5) = -x := by
+    rw [show 3*Real.pi/5 = Real.pi-2*(Real.pi/5) by ring,
+      Real.cos_pi_sub,Real.cos_two_mul,Real.cos_pi_div_five,x,Real.inv_goldenRatio]
+    dsimp [Real.goldenConj]
+    nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)]
+  constructor
+  · rw [hi]
+    apply Complex.ext
+    · simpa [zeta,Complex.exp_mul_I,two_mul] using hcos
+    · simp [Complex.star_def]
+  · rw [zeta,← Complex.exp_nat_mul]
+    rw [show (5 : ℂ)*(↑(3*Real.pi/5)*Complex.I) =
+      (3 : ℂ)*((Real.pi : ℂ)*Complex.I) by push_cast; ring]
+    rw [Complex.exp_nat_mul,Complex.exp_pi_mul_I]
+    norm_num
+
+private theorem native_port_identity (P : Matrix (Fin d) (Fin d) ℂ) (b : Bool) :
+    nativePort P b = zeta^2 • kraus P b := by
+  have hz0 : zeta ≠ 0 := Complex.exp_ne_zero _
+  have hx : (x : ℂ)+(x : ℂ)^2 = 1 := by exact_mod_cast x_properties.2.2
+  have hinv : zeta⁻¹ = -(x : ℂ)-zeta := by linear_combination zeta_relations.1
+  have hp : zeta^2+(x : ℂ)*zeta+1 = 0 := by
+    have h := congrArg (fun a : ℂ => a*zeta) zeta_relations.1
+    simp only [add_mul,inv_mul_cancel₀ hz0] at h
+    linear_combination h
+  have hz4 : zeta^4 = -zeta⁻¹ := by
+    calc
+      zeta^4 = zeta^5/zeta := by field_simp; ring
+      _ = -zeta⁻¹ := by rw [zeta_relations.2]; ring
+  have hphase : zeta^2*phase = zeta⁻¹ := by
+    change zeta^2*zeta^(-3 : ℤ) = zeta⁻¹
+    rw [zpow_neg,zpow_natCast]
+    field_simp
+    ring
+  have hzero : (x : ℂ)*(zeta⁻¹-1) = zeta^2 := by
+    rw [hinv]
+    linear_combination -hp-hx
+  have hone : (x : ℂ)*zeta⁻¹-(x : ℂ)^2*zeta^3 = (x : ℂ)*zeta^2 := by
+    rw [hinv]
+    linear_combination -(x : ℂ)^2*(zeta+1)*hp+(x : ℂ)*(zeta^2+zeta)*hx
+  have hproj : (x : ℂ)*zeta⁻¹-(x : ℂ)^2*zeta^4 = zeta^2*phase := by
+    rw [hz4,hphase]
+    linear_combination zeta⁻¹*hx
+  have hs : (Real.sqrt x : ℂ)^2 = x := by exact_mod_cast Real.sq_sqrt x_properties.1.le
+  cases b
+  · calc
+      nativePort P false = ((Real.sqrt x : ℂ)*(x : ℂ)*(zeta⁻¹-1)) • (1-P) := by
+        dsimp [nativePort,reader,preparation]
+        module
+      _ = zeta^2 • kraus P false := by
+        rw [mul_assoc,hzero]
+        simp only [kraus,smul_smul,mul_comm]
+  · calc
+      nativePort P true =
+          ((Real.sqrt x : ℂ)^2*zeta⁻¹-(x : ℂ)^2*zeta^3) • (1-P)+
+          ((Real.sqrt x : ℂ)^2*zeta⁻¹-(x : ℂ)^2*zeta^4) • P := by
+        dsimp [nativePort,reader,preparation]
+        module
+      _ = zeta^2 • kraus P true := by
+        rw [hs,hone,hproj]
+        simp only [kraus,smul_add,smul_smul,mul_comm]
+
+private theorem native_port_branch (P : Matrix (Fin d) (Fin d) ℂ)
+    (b : Bool) (ρ : Matrix (Fin d) (Fin d) ℂ) :
+    nativePort P b * ρ * (nativePort P b).conjTranspose = branch P b ρ := by
+  have hn : ‖zeta‖ = 1 := by simp [zeta,Complex.norm_exp]
+  have hu : star (zeta^2)*zeta^2 = 1 := by
+    have hh : (Complex.normSq (zeta^2) : ℂ) = 1 := by
+      rw [Complex.normSq_eq_norm_sq,norm_pow,hn]
+      norm_num
+    simpa only [Complex.normSq_eq_conj_mul_self,Complex.star_def] using hh
+  rw [native_port_identity]
+  calc
+    _ = (star (zeta^2)*zeta^2) • (kraus P b*ρ*(kraus P b).conjTranspose) := by
+      simp only [Matrix.conjTranspose_smul,Matrix.smul_mul,Matrix.mul_smul,smul_smul]
+      module
+    _ = branch P b ρ := by rw [hu,one_smul]; rfl
 
 private theorem sector_trace (P : Matrix (Fin d) (Fin d) ℂ) (hP : P*P=P)
     (hPh : P.IsHermitian) (a b : ℂ) (ρ : Matrix (Fin d) (Fin d) ℂ) :
@@ -377,13 +480,16 @@ theorem native_predictor_minimum (P : Matrix (Fin d) (Fin d) ℂ)
     (∀ ε : ℝ, x/2 ≤ ε → ∃ M : Predictor Unit, NativeCorrect M P ρ ε) ∧
     (∀ (S : Type u) [Fintype S] (M : Predictor S), ¬ NativeCorrect M P ρ 0) ∧
     ((kraus P false).conjTranspose * kraus P false +
-      (kraus P true).conjTranspose * kraus P true = 1) := by
+      (kraus P true).conjTranspose * kraus P true = 1) ∧
+    (∀ b, nativePort P b = zeta^2 • kraus P b) ∧
+    (∀ b σ, nativePort P b * σ * (nativePort P b).conjTranspose = branch P b σ) ∧
+    (∀ h, false ∈ h → posterior P state h = 0) := by
   dsimp only
   let state := CStarMatrix.ofMatrix.symm ρ.val
   let q := (Matrix.trace (P*state)).re
   have hlaw := native_history_law P hP hPh ρ hq
   have hp := age_properties q hq
-  refine ⟨fun h => ⟨hlaw.1 h,hlaw.2.2 h⟩,?_,?_,?_,?_,complete_kraus P hP hPh⟩
+  refine ⟨fun h => ⟨hlaw.1 h,hlaw.2.2 h⟩,?_,?_,?_,?_,complete_kraus P hP hPh,native_port_identity P,native_port_branch P,?_⟩
   · intro n
     refine ⟨hlaw.2.1 n,?_⟩
     unfold posterior
@@ -415,6 +521,11 @@ theorem native_predictor_minimum (P : Matrix (Fin d) (Fin d) ℂ)
   · intro S _ M hm
     exact exact_prediction_impossible x (ageProbability q) (fun n => (hp.1 n).1)
       hp.2.2 M ((native_correct_iff M 0 P hP hPh ρ hq).mp hm)
+
+  · intro h hz
+    unfold posterior
+    rw [word_projection_trace P hP hPh]
+    simp [alive,hz]
 
 #print axioms native_predictor_minimum
 
