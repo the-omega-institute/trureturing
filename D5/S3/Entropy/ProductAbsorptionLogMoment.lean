@@ -1,0 +1,305 @@
+/- GID: D5/S3/Entropy/ProductAbsorptionLogMoment
+   generality: G
+   mirror-B: D5/B/S3/Entropy/ProductAbsorptionLogMoment
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Nonnegative exact logarithmic first moment for binary product absorption. -/
+
+import D5.S3.Entropy.ProductAbsorptionLogIntegral
+import D5.S3.Entropy.BinaryEntropyLogIntegral
+import D5.S3.QuantumChannels.ContractionSpectrumOrder
+import Mathlib.Analysis.Convex.Deriv
+import Mathlib.Analysis.Convex.Jensen
+
+noncomputable section
+namespace D5.S3.Entropy.ProductAbsorptionLogMoment
+open Set Filter MeasureTheory
+open scoped Topology
+open D5.S3.Entropy.ProductAbsorptionLogIntegral
+open D5.S3.Entropy.BinaryEntropyLogIntegral
+open D5.S3.QuantumChannels.ContractionSpectrumOrder (hasDerivAt_artanh)
+
+private def artanhRemainder (r : ℝ) : ℝ :=
+  (r - (2 / 3 : ℝ) * r ^ 3) / (1 - r ^ 2) - Real.artanh r
+
+private lemma artanh_remainder_hasDerivAt {r : ℝ} (hr : r ∈ Ioo (-1 : ℝ) 1) :
+    HasDerivAt artanhRemainder
+      ((2 / 3 : ℝ) * r ^ 4 / (1 - r ^ 2) ^ 2) r := by
+  have hden : 0 < 1 - r ^ 2 := by
+    nlinarith [mul_pos (show 0 < 1 + r by linarith [hr.1])
+      (show 0 < 1 - r by linarith [hr.2])]
+  have h := (((hasDerivAt_id r).sub
+    (((hasDerivAt_id r).pow 3).const_mul (2 / 3 : ℝ))).div
+    ((hasDerivAt_const r 1).sub ((hasDerivAt_id r).pow 2)) hden.ne').sub
+    (hasDerivAt_artanh hr)
+  convert h using 1
+  · rfl
+  · field_simp [hden.ne']
+    <;> ring
+
+private lemma artanh_cubic_gap {r : ℝ} (hr : r ∈ Ico (0 : ℝ) 1) :
+    (2 / 3 : ℝ) * r ^ 3 ≤ r - (1 - r ^ 2) * Real.artanh r := by
+  have hd : ∀ t ∈ Icc (0 : ℝ) r,
+      HasDerivAt artanhRemainder ((2 / 3 : ℝ) * t ^ 4 / (1 - t ^ 2) ^ 2) t := by
+    intro t ht
+    exact artanh_remainder_hasDerivAt ⟨by linarith [ht.1], ht.2.trans_lt hr.2⟩
+  have hm : MonotoneOn artanhRemainder (Icc 0 r) := by
+    apply monotoneOn_of_hasDerivWithinAt_nonneg (convex_Icc 0 r)
+      (fun t ht => (hd t ht).continuousAt.continuousWithinAt)
+      (fun t ht => (hd t (interior_subset ht)).hasDerivWithinAt)
+    intro t ht
+    positivity
+  have hh := hm ⟨le_rfl, hr.1⟩ ⟨hr.1, le_rfl⟩ hr.1
+  have hzero : artanhRemainder 0 = 0 := by simp [artanhRemainder]
+  rw [hzero] at hh
+  have hden : 0 < 1 - r ^ 2 := by nlinarith [hr.1, hr.2]
+  have hupper : Real.artanh r ≤ (r - (2 / 3 : ℝ) * r ^ 3) / (1 - r ^ 2) := by
+    dsimp [artanhRemainder] at hh
+    linarith
+  have hh' := (le_div_iff₀ hden).mp hupper
+  nlinarith
+
+private def pairLog (d s : ℝ) : ℝ :=
+  let q := Real.sqrt (s ^ 2 - d ^ 2)
+  ((s + q) * Real.log (s + q) + (s - q) * Real.log (s - q)) / 2
+
+private def pairSlope (d s : ℝ) : ℝ :=
+  if d = 0 then Real.log (2 * s) + 1 else
+    1 + Real.log d + (s / Real.sqrt (s ^ 2 - d ^ 2)) *
+      Real.artanh (Real.sqrt (s ^ 2 - d ^ 2) / s)
+
+private def pairCurvature (d s : ℝ) : ℝ :=
+  if d = 0 then 1 / s else
+    let r := Real.sqrt (s ^ 2 - d ^ 2) / s
+    (r - (1 - r ^ 2) * Real.artanh r) / (s * r ^ 3)
+
+private lemma pair_continuous (d : ℝ) : Continuous (pairLog d) := by
+  have hq : Continuous (fun s : ℝ => Real.sqrt (s ^ 2 - d ^ 2)) := by fun_prop
+  exact (((continuous_id.add hq).mul_log).add ((continuous_id.sub hq).mul_log)).div_const 2
+
+private lemma pair_zero {s : ℝ} (hs : 0 ≤ s) : pairLog 0 s = s * Real.log (2 * s) := by
+  simp only [pairLog, zero_pow (by decide : 2 ≠ 0), sub_zero, Real.sqrt_sq_eq_abs,
+    abs_of_nonneg hs, sub_self, zero_mul, add_zero]
+  ring
+
+private lemma pair_positive_data {d s : ℝ} (hd : 0 < d) (hs : d < s) :
+    let q := Real.sqrt (s ^ 2 - d ^ 2)
+    0 < s ∧ 0 < q ∧ q < s ∧ q ^ 2 = s ^ 2 - d ^ 2 ∧
+      q / s ∈ Ioo (0 : ℝ) 1 := by
+  have hsp : 0 < s := hd.trans hs
+  have hdisc : 0 < s ^ 2 - d ^ 2 := by nlinarith
+  have hq := Real.sqrt_pos.mpr hdisc
+  have hq2 := Real.sq_sqrt hdisc.le
+  have hqs : Real.sqrt (s ^ 2 - d ^ 2) < s := by nlinarith [sq_pos_of_pos hd]
+  exact ⟨hsp, hq, hqs, hq2, div_pos hq hsp, (div_lt_one hsp).mpr hqs⟩
+
+private lemma root_hasDerivAt {d s : ℝ} (hd : 0 < d) (hs : d < s) :
+    HasDerivAt (fun t : ℝ => Real.sqrt (t ^ 2 - d ^ 2))
+      (s / Real.sqrt (s ^ 2 - d ^ 2)) s := by
+  obtain ⟨_, hq, _, hq2, _⟩ := pair_positive_data hd hs
+  have h := (((hasDerivAt_id s).pow 2).sub_const (d ^ 2)).sqrt
+    (show s ^ 2 - d ^ 2 ≠ 0 by rw [← hq2]; positivity)
+  convert h using 1
+  · field_simp [hq.ne']
+    <;> ring
+
+private lemma root_artanh_identity {d s : ℝ} (hd : 0 < d) (hs : d < s) :
+    let q := Real.sqrt (s ^ 2 - d ^ 2)
+    Real.artanh (q / s) = (Real.log (s + q) - Real.log (s - q)) / 2 := by
+  obtain ⟨hsp, hq, hqs, _, hr⟩ := pair_positive_data hd hs
+  let q := Real.sqrt (s ^ 2 - d ^ 2)
+  have hp : 0 < s + q := by dsimp [q]; linarith
+  have hm : 0 < s - q := by dsimp [q]; linarith
+  have hp' : 0 < 1 + q / s := by dsimp [q]; positivity
+  have hm' : 0 < 1 - q / s := by dsimp [q]; linarith [hr.2]
+  change Real.artanh (q / s) = _
+  rw [Real.artanh_eq_half_log ⟨by linarith [hr.1], hr.2.le⟩,
+    Real.log_div hp'.ne' hm'.ne',
+    show 1 + q / s = (s + q) / s by field_simp [hsp.ne']; ring,
+    show 1 - q / s = (s - q) / s by field_simp [hsp.ne']; ring,
+    Real.log_div hp.ne' hsp.ne', Real.log_div hm.ne' hsp.ne']
+  ring
+
+private lemma pair_hasDerivAt {d s : ℝ} (hd : 0 ≤ d) (hs : d < s) :
+    HasDerivAt (pairLog d) (pairSlope d s) s := by
+  by_cases hd0 : d = 0
+  · subst d
+    have hsp : 0 < s := hs
+    have h := (((hasDerivAt_id s).mul_const (Real.log 2)).add
+      (Real.hasDerivAt_mul_log hsp.ne'))
+    have he : pairLog 0 =ᶠ[𝓝 s]
+        (fun t : ℝ => t * Real.log 2 + t * Real.log t) := by
+      filter_upwards [eventually_gt_nhds hsp] with t ht
+      rw [pair_zero ht.le, Real.log_mul (by norm_num) ht.ne']
+      ring
+    apply (h.congr_of_eventuallyEq he).congr_deriv
+    simp only [pairSlope, if_pos rfl]
+    rw [Real.log_mul (by norm_num) hsp.ne']
+    ring
+  · have hdp : 0 < d := lt_of_le_of_ne hd hd0.symm
+    obtain ⟨hsp, hq, hqs, hq2, _⟩ := pair_positive_data hdp hs
+    let q := Real.sqrt (s ^ 2 - d ^ 2)
+    have hp : 0 < s + q := by dsimp [q]; linarith
+    have hm : 0 < s - q := by dsimp [q]; linarith
+    have hplus := (Real.hasDerivAt_mul_log hp.ne').comp s
+      ((hasDerivAt_id s).add (root_hasDerivAt hdp hs))
+    have hminus := (Real.hasDerivAt_mul_log hm.ne').comp s
+      ((hasDerivAt_id s).sub (root_hasDerivAt hdp hs))
+    have hprod : (s + q) * (s - q) = d ^ 2 := by dsimp [q]; nlinarith
+    have hsum : Real.log (s + q) + Real.log (s - q) = 2 * Real.log d := by
+      rw [← Real.log_mul hp.ne' hm.ne', hprod, Real.log_pow]
+    have ha := root_artanh_identity hdp hs
+    convert (hplus.add hminus).div_const 2 using 1
+    · rfl
+    · dsimp only [pairSlope]
+      rw [if_neg hd0, ha]
+      have hlm : Real.log (s - q) = 2 * Real.log d - Real.log (s + q) := by
+        linarith
+      rw [hlm]
+      field_simp [hq.ne']
+      ring
+
+private lemma pair_slope_hasDerivAt {d s : ℝ} (hd : 0 ≤ d) (hs : d < s) :
+    HasDerivAt (pairSlope d) (pairCurvature d s) s := by
+  by_cases hd0 : d = 0
+  · subst d
+    have hsp : 0 < s := hs
+    have h := ((((hasDerivAt_id s).const_mul 2).log
+      (show (2 : ℝ) * s ≠ 0 by positivity)).add_const 1)
+    convert h using 1
+    · funext t
+      simp [pairSlope]
+    · dsimp [pairCurvature]
+      field_simp [hsp.ne']
+      <;> ring
+  · have hdp : 0 < d := lt_of_le_of_ne hd hd0.symm
+    obtain ⟨hsp, hq, hqs, hq2, hr⟩ := pair_positive_data hdp hs
+    let q := Real.sqrt (s ^ 2 - d ^ 2)
+    have hden : 0 < 1 - (q / s) ^ 2 := by
+      dsimp [q]
+      nlinarith [hr.1, hr.2]
+    have hroot := root_hasDerivAt hdp hs
+    have hquot := (hasDerivAt_id s).div hroot hq.ne'
+    have hratio := hroot.div (hasDerivAt_id s) hsp.ne'
+    have hat := (hasDerivAt_artanh ⟨by linarith [hr.1], hr.2⟩).comp s hratio
+    have h := ((hasDerivAt_const s (1 + Real.log d)).add (hquot.mul hat))
+    convert h using 1
+    · funext t
+      simp only [pairSlope, if_neg hd0]
+    · dsimp only [pairCurvature]
+      rw [if_neg hd0]
+      dsimp only
+      field_simp [hsp.ne', hq.ne', hden.ne']
+      have hd2 : d ^ 2 = s ^ 2 - q ^ 2 := by dsimp [q]; linarith
+      rw [hd2]
+      ring
+
+private lemma pair_curvature_lower {d s : ℝ} (hd : 0 ≤ d) (hs : d < s) :
+    (2 : ℝ) / (3 * s) ≤ pairCurvature d s := by
+  have hsp : 0 < s := hd.trans_lt hs
+  by_cases hd0 : d = 0
+  · simp only [pairCurvature, if_pos hd0]
+    apply (div_le_div_iff₀ (by positivity : 0 < 3 * s) hsp).mpr
+    linarith
+  · have hdp : 0 < d := lt_of_le_of_ne hd hd0.symm
+    obtain ⟨_, _, _, _, hr⟩ := pair_positive_data hdp hs
+    let r := Real.sqrt (s ^ 2 - d ^ 2) / s
+    have hb := artanh_cubic_gap ⟨hr.1.le, hr.2⟩
+    have hden : 0 < s * r ^ 3 := mul_pos hsp (pow_pos hr.1 3)
+    have he : (2 : ℝ) / (3 * s) * (s * r ^ 3) = (2 / 3 : ℝ) * r ^ 3 := by
+      field_simp [hsp.ne']
+      <;> ring
+    dsimp only [pairCurvature]
+    rw [if_neg hd0]
+    apply (le_div_iff₀ hden).mpr
+    rw [he]
+    exact hb
+
+private lemma entropy_linear_lower {x : ℝ} (hx : x ∈ Icc (0 : ℝ) 1) :
+    x * Real.log 2 ≤ Real.binEntropy ((1 + Real.sqrt (1 - x)) / 2) := by
+  have hxI := binEntropy_sqrt_log_integral hx
+  have h1I := binEntropy_sqrt_log_integral (x := 1) (by norm_num)
+  have he1 : Real.binEntropy ((1 + Real.sqrt (1 - (1 : ℝ))) / 2) = Real.log 2 := by
+    norm_num
+  rw [he1] at h1I
+  have hlog : ∀ s ∈ Ioi (0 : ℝ),
+      x * Real.log (1 + 1 / s) ≤ Real.log (1 + x / s) := by
+    intro s hs
+    have hp : (1 : ℝ) ∈ Ioi 0 := by norm_num
+    have hq : 1 + 1 / s ∈ Ioi (0 : ℝ) := by positivity
+    have hj := Real.concaveOn_log.2 hp hq (sub_nonneg.mpr hx.2) hx.1
+      (show (1 - x) + x = (1 : ℝ) by ring)
+    have he : (1 - x) * 1 + x * (1 + 1 / s) = 1 + x / s := by ring
+    simpa only [smul_eq_mul, Real.log_one, mul_zero, zero_add, he] using hj
+  have hm : (∫ s in Ioi (0 : ℝ), x * (Real.log (1 + 1 / s) / Real.sqrt (1 + s))) ≤
+      ∫ s in Ioi (0 : ℝ), Real.log (1 + x / s) / Real.sqrt (1 + s) := by
+    apply integral_mono_ae (h1I.1.const_mul x) hxI.1
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with s hs
+    simpa only [mul_div_assoc] using
+      div_le_div_of_nonneg_right (hlog s hs) (Real.sqrt_nonneg (1 + s))
+  rw [integral_const_mul] at hm
+  have he := congrArg (fun z : ℝ => x * z) h1I.2
+  nlinarith [hxI.2]
+
+private def normalizedGap (p t : ℝ) : ℝ :=
+  Real.binEntropy p + 2 * ((1 - t) * Real.log (1 - t)) - pairLog (1 - 2 * p) (1 - 2 * t)
+
+private def gapSlope (p t : ℝ) : ℝ :=
+  -2 * (Real.log (1 - t) + 1) + 2 * pairSlope (1 - 2 * p) (1 - 2 * t)
+
+private def gapCurvature (p t : ℝ) : ℝ :=
+  2 / (1 - t) - 4 * pairCurvature (1 - 2 * p) (1 - 2 * t)
+
+private lemma gap_continuous (p : ℝ) : Continuous (normalizedGap p) := by
+  have hml := Real.continuous_mul_log.comp (continuous_const.sub continuous_id)
+  have hp := (pair_continuous (1 - 2 * p)).comp
+    (continuous_const.sub (continuous_id.const_mul 2))
+  exact (continuous_const.add (hml.const_mul 2)).sub hp
+
+private lemma gap_hasDerivAt {p t : ℝ} (hp : p ∈ Ioc (0 : ℝ) (1 / 2))
+    (ht : t ∈ Ioo (0 : ℝ) p) : HasDerivAt (normalizedGap p) (gapSlope p t) t := by
+  have hpt : 0 < 1 - t := by linarith [hp.2, ht.2]
+  have hd : 0 ≤ 1 - 2 * p := by linarith [hp.2]
+  have hst : 1 - 2 * p < 1 - 2 * t := by linarith [ht.2]
+  have hml := (Real.hasDerivAt_mul_log hpt.ne').comp t ((hasDerivAt_id t).const_sub 1)
+  have hpair := (pair_hasDerivAt hd hst).comp t (((hasDerivAt_id t).const_mul 2).const_sub 1)
+  have h := ((hasDerivAt_const t (Real.binEntropy p)).add (hml.const_mul 2)).sub hpair
+  convert h using 1
+  · rfl
+  · dsimp only [gapSlope]
+    ring
+
+private lemma gap_slope_hasDerivAt {p t : ℝ} (hp : p ∈ Ioc (0 : ℝ) (1 / 2))
+    (ht : t ∈ Ioo (0 : ℝ) p) : HasDerivAt (gapSlope p) (gapCurvature p t) t := by
+  have hpt : 0 < 1 - t := by linarith [hp.2, ht.2]
+  have hd : 0 ≤ 1 - 2 * p := by linarith [hp.2]
+  have hst : 1 - 2 * p < 1 - 2 * t := by linarith [ht.2]
+  have hlog := (((hasDerivAt_id t).const_sub 1).log hpt.ne').add_const 1
+  have hpair := (pair_slope_hasDerivAt hd hst).comp t
+    (((hasDerivAt_id t).const_mul 2).const_sub 1)
+  have h := (hlog.const_mul (-2)).add (hpair.const_mul 2)
+  convert h using 1
+  · rfl
+  · dsimp only [gapCurvature]
+    ring
+
+private lemma gap_concave {p : ℝ} (hp : p ∈ Ioc (0 : ℝ) (1 / 2)) :
+    ConcaveOn ℝ (Icc 0 p) (normalizedGap p) := by
+  apply concaveOn_of_hasDerivWithinAt2_nonpos (convex_Icc 0 p) (gap_continuous p).continuousOn
+    (fun t ht => (gap_hasDerivAt hp (by simpa only [interior_Icc] using ht)).hasDerivWithinAt)
+    (fun t ht => (gap_slope_hasDerivAt hp (by simpa only [interior_Icc] using ht)).hasDerivWithinAt)
+  intro t ht
+  have ht' : t ∈ Ioo (0 : ℝ) p := by simpa only [interior_Icc] using ht
+  have hpt : 0 < 1 - t := by linarith [hp.2, ht'.2]
+  have hst : 0 < 1 - 2 * t := by linarith [hp.2, ht'.2]
+  have hb := pair_curvature_lower (show 0 ≤ 1 - 2 * p by linarith [hp.2])
+    (show 1 - 2 * p < 1 - 2 * t by linarith [ht'.2])
+  have hf : (2 : ℝ) / (1 - t) ≤ 8 / (3 * (1 - 2 * t)) := by
+    apply (div_le_div_iff₀ hpt (show 0 < 3 * (1 - 2 * t) by positivity)).mpr
+    nlinarith [ht'.1]
+  have he : (4 : ℝ) * (2 / (3 * (1 - 2 * t))) = 8 / (3 * (1 - 2 * t)) := by ring
+  dsimp only [gapCurvature]
+  linarith
+
+end D5.S3.Entropy.ProductAbsorptionLogMoment
