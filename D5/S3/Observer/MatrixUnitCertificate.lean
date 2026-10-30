@@ -83,7 +83,7 @@ private theorem window_root_pow_val_eq_character (r : ZMod M) :
   congr 1
   simp [r.natCast_zmod_val]
 
-private theorem clock_phase_pow_eq_character (r k : ZMod M) :
+theorem clock_phase_pow_eq_character (r k : ZMod M) :
     (windowRoot M ^ r.val) ^ k.val = character (m := M) k r := by
   rw [window_root_pow_val_eq_character, ← AddChar.map_nsmul_eq_pow,
     nsmul_eq_mul, k.natCast_zmod_val]
