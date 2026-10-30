@@ -14,6 +14,14 @@ internal sealed class NonlocalityDepthQuantumBoundDocument : IScribeDocumentDefi
         "For every n >= 3, the Bernards--Gühne Bell functional has exact quantum maximum sqrt(2) n 2^(n-2), over all finite local dimensions, binary observables and density matrices.",
         H("The exact quantum bound for nonlocality depth"),
         Blocks(
+            Node("zero_ne_one", "The two constant qubit strings are distinct",
+                Disp(All("n", Numbers("N"), Implies(
+                    new Formula.Relation(D(0), FormulaRelationOperator.LessThan, X("n")),
+                    Seq(At(Q("Function", "const"), Fin(X("n")), Seq(D(0), Colon, Fin(D(2)))),
+                        Sp, Neq, Sp,
+                        At(Q("Function", "const"), Fin(X("n")), Seq(D(1), Colon, Fin(D(2)))))))),
+                "For every positive natural number n, the constant zero and constant one functions from Fin n to Fin 2 are distinct.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Node("expectation_upper", "An operator bound controls every density expectation", ExpectationUpperFormula(),
                 "If q times the identity minus B is positive semidefinite, then the real trace pairing of B with any positive semidefinite trace-one matrix is at most q.",
                 DescribeRole.Lemma, AssessedProvenance.FromRepo()),
