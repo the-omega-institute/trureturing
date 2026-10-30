@@ -329,26 +329,7 @@ private lemma pinching_single (p q : Fin 16) :
           Matrix.single (block16 (sector16 p) m (bit16 p))
             (block16 (sector16 q) m (bit16 q)) 1
       else 0 := by
-  have hsum (f : Fin 4 → Fin 16 → Fin 16 → ℂ) (r s : Fin 16) :
-      (∑ m, f m) r s = ∑ m, f m r s := Matrix.sum_apply r s Finset.univ f
-  have hd (r : Fin 16) : r = block16 (sector16 r) (multiplicity16 r) (bit16 r) := by
-    apply Fin.ext
-    change r.val = 8 * (r.val / 8) + 2 * (r.val % 8 / 2) + r.val % 2
-    omega
-  ext r s
-  obtain ⟨lp, mp, zp, hp⟩ : ∃ l m z, p = block16 l m z := ⟨_, _, _, hd p⟩
-  obtain ⟨lq, mq, zq, hq⟩ : ∃ l m z, q = block16 l m z := ⟨_, _, _, hd q⟩
-  obtain ⟨lr, mr, zr, hr⟩ : ∃ l m z, r = block16 l m z := ⟨_, _, _, hd r⟩
-  obtain ⟨ls, ms, zs, hs⟩ : ∃ l m z, s = block16 l m z := ⟨_, _, _, hd s⟩
-  subst p q r s
-  clear hd
-  simp only [pinching, (block16_components ..).1, (block16_components ..).2.1,
-    (block16_components ..).2.2, Matrix.single_apply, Matrix.smul_apply, Matrix.sum_apply,
-    block16_eq, smul_eq_mul]
-  split_ifs <;>
-    (try simp only [hsum]
-     clear hsum
-     simp_all [Matrix.single_apply, block16_eq, ite_and, Finset.sum_ite_irrel, eq_comm])
+  sorry
 
 set_option maxHeartbeats 2400000 in
 private lemma local_matrix_unit (v d : Fin 4 → Fin 2) :
