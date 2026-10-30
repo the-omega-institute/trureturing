@@ -65,3 +65,11 @@ Zhang–Yeung endpoint, its coordinate-free corollary, or any inequality for
 arbitrary quantum states. Physical preparation, the actual-state entropy
 reduction and the local information-processing estimates must be connected before
 claiming that endpoint.
+
+## Verified locator
+
+URL: https://github.com/the-omega-institute/trureturing
+
+The repository URL identifies the Lean implementation and its accompanying
+source record for this local manuscript; the manuscript itself is unpublished
+and is not represented as a public external publication.
