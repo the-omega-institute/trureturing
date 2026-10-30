@@ -2,12 +2,11 @@
    generality: G
    mirror-B: D5/B/S3/Observer/CubicGain/FixedDriftQuartic
    mirror-E: none(waiver:universal-original-world-classification)
-   anchors: [mathlib/module/Mathlib.LinearAlgebra.Lagrange, mathlib/module/Mathlib.Algebra.Polynomial.Roots]
+   anchors: [mathlib/module/Mathlib.Algebra.Polynomial.Roots]
    utility: none
-   digest: Guarded polynomial coordinates reconstruct the complete fixed-drift zero-terminal-gain worlds. -/
+   digest: Guarded roots reconstruct all fixed-drift zero-terminal-gain worlds. -/
 
 import D5.S3.Observer.CubicGain.OriginalWorld
-import Mathlib.Data.Set.Card
 
 /-! Fixed drift and a zero gain at literal clock seven, on the full original carrier. -/
 
@@ -80,6 +79,10 @@ def reconstruct (d u : ℝ) : OriginalWorld :=
 
 def coordinate (W : OriginalWorld) : ℝ := 1+2*W.2.1
 
+private theorem read_trace (W : OriginalWorld) (i : ℕ) :
+    originalRead W i = W.2.2.1+(originalPolynomial W).eval (i:ℝ)*
+      traceAt W.1 W.2.1 i := rfl
+
 private theorem g_degree (d u : ℝ) : (gPoly d u).natDegree ≤ 3 := by
   unfold gPoly hPoly
   compute_degree
@@ -93,8 +96,7 @@ private theorem basic_samples (d u : ℝ) :
     (gPoly d u).eval 2 = 5*e2 d u ∧
     (gPoly d u).eval 4 = 3*e4 d u ∧
     (gPoly d u).eval 7 = 0 := by
-  simp [gPoly,hPoly,e0]
-  <;> ring
+  refine ⟨?_,?_,?_,?_⟩ <;> simp [gPoly,hPoly,e0] <;> ring
 
 private theorem odd_samples (d u : ℝ) (hu : 1 < u) :
     (gPoly d u).eval 1 = 6*A d u/K u ∧
@@ -126,7 +128,11 @@ private theorem denominators (d u : ℝ) (h : Guard d u) :
 
 private theorem n_sub_j (d u : ℝ) (ha : A d u ≠ 0) (hb : B d u ≠ 0) :
     n d u-j d u = r d u := by
-  simp [n,j,r,N,L,nPoly,lPoly,A,B]
+  have hN : N d u = (24-d)*K u*(3*A d u-2*B d u) := by
+    simp [N,nPoly,A,B,K]
+  have hL : L d u = 12*A d u*B d u := by simp [L,lPoly,A,B]
+  dsimp [n,j,r]
+  rw [hN,hL]
   field_simp [ha,hb]
   <;> ring
 
@@ -164,28 +170,28 @@ private theorem prefix_gain (d : ℝ) (W : OriginalWorld)
   have row0 := hp.2.2.2.2 (0 : Fin 5)
   have row2 := hp.2.2.2.2 (2 : Fin 5)
   have row4 := hp.2.2.2.2 (4 : Fin 5)
-  change W.2.2.1+(originalPolynomial W).eval 0*traceAt W.1 W.2.1 0 = history 0 at row0
-  change W.2.2.1+(originalPolynomial W).eval 2*traceAt W.1 W.2.1 2 = history 2 at row2
-  change W.2.2.1+(originalPolynomial W).eval 4*traceAt W.1 W.2.1 4 = history 4 at row4
+  rw [read_trace] at row0 row2 row4
   norm_num [ht0,ht2,ht4,history,hd] at row0 row2 row4
   have h0 : (originalPolynomial W).eval 0 = -d := by linarith
   have h2 : (originalPolynomial W).eval 2 = 5*e2 d u := by
     apply (mul_right_cancel₀ (by linarith [hp.2.2.1] : (1+W.2.1) ≠ 0))
     have he : 5*e2 d u*(1+W.2.1) = 147/5-d := by
-      dsimp [e2,u,coordinate]
-      field_simp
+      have heU : u+1 = 2*(1+W.2.1) := by dsimp [u,coordinate]; ring
+      dsimp [e2]
+      rw [heU]
+      field_simp [show 1+W.2.1 ≠ 0 by linarith [hp.2.2.1]]
       <;> ring
     rw [he]
     linarith
   have h4 : (originalPolynomial W).eval 4 = 3*e4 d u := by
     apply (mul_right_cancel₀ hu0)
     have he : 3*e4 d u*u = 18-d := by
-      dsimp [e4]; field_simp; ring
+      dsimp [e4]; field_simp [hu0]
     rw [he]
     change d+(originalPolynomial W).eval 4*u=18 at row4
     linarith
   apply Polynomial.eq_of_degrees_lt_of_eval_finset_eq (s := {0,2,4,7})
-  · simpa using (Polynomial.ofFn_degree_lt W.2.2.2)
+  · simpa [originalPolynomial] using (Polynomial.ofFn_degree_lt W.2.2.2)
   · have hh := degree_le_of_natDegree_le (g_degree d u)
     simpa using lt_of_le_of_lt hh (show (3 : WithBot ℕ) < 4 by norm_num)
   · intro x hx
@@ -207,18 +213,19 @@ private theorem prefix_coordinates (d : ℝ) (hd24 : d ≠ 24)
   have hu1 : u+1 ≠ 0 := by linarith
   have hk : K u ≠ 0 := by
     simp [K,kPoly,hu0,hu1]
-  have hg := prefix_gain d W hW
+  have hg := prefix_gain d W ⟨hp,hd,h7⟩
   have hs := odd_samples d u hu
   have ht1 := congrFun (literal_traces W.1 W.2.1) (1 : Fin 7)
   have ht3 := congrFun (literal_traces W.1 W.2.1) (3 : Fin 7)
   norm_num at ht1 ht3
   have row1 := hp.2.2.2.2 (1 : Fin 5)
   have row3 := hp.2.2.2.2 (3 : Fin 5)
-  change W.2.2.1+(originalPolynomial W).eval 1*traceAt W.1 W.2.1 1 = history 1 at row1
-  change W.2.2.1+(originalPolynomial W).eval 3*traceAt W.1 W.2.1 3 = history 3 at row3
-  rw [hd,hg,ht1,hs.1] at row1
-  rw [hd,hg,ht3,hs.2.1] at row3
-  norm_num [history] at row1 row3
+  rw [read_trace] at row1 row3
+  norm_num [history,hd,hg,ht1,ht3,hs.1,hs.2.1] at row1 row3
+  change d+(gPoly d u).eval 1*sourceJ W.1 W.2.1=24 at row1
+  change d+(gPoly d u).eval 3*sourceN W.1 W.2.1=24 at row3
+  rw [hs.1] at row1
+  rw [hs.2.1] at row3
   have ha : A d u ≠ 0 := by
     intro hz
     rw [hz] at row1
@@ -290,7 +297,7 @@ private theorem reconstructed_read (d u : ℝ) (hg : Guard d u)
   have hT : 1+width u = (u+1)/2 := by dsimp [width]; ring
   have hU : 1+2*width u = u := by dsimp [width]; ring
   ext i
-  change d+(originalPolynomial (reconstruct d u)).eval (i : ℕ)*
+  change d+(originalPolynomial (reconstruct d u)).eval ((i : ℕ):ℝ)*
     traceAt (r d u) (width u) i = _
   rw [reconstruct_polynomial]
   have ht := congrFun (literal_traces (r d u) (width u)) i
@@ -336,5 +343,160 @@ private theorem reconstruct_prefix (d u : ℝ) (hd0 : d ≠ 0)
       <;> ring
   · rw [reconstruct_polynomial]
     exact hs.2.2.2
+
+private theorem late_equivalences (d u p v : ℝ) (hg : Guard d u) :
+    (d+(gPoly d u).eval 5*(u+n d u)=p ↔ (ePoly d p).eval u=0) ∧
+    (d+(gPoly d u).eval 6*(2*u+n d u)=v ↔ (fPoly d v).eval u=0) := by
+  obtain ⟨_,hb,_,_,_⟩ := denominators d u hg
+  have hu0 : u ≠ 0 := by linarith [hg.1]
+  have hu1 : u+1 ≠ 0 := by linarith [hg.1]
+  have hK : K u = 4200*u*(u+1) := by simp [K,kPoly]
+  have he : (ePoly d p).eval u = 2100*(u+1)*B d u*
+      (p-d-(gPoly d u).eval 5*(u+n d u)) := by
+    rw [(odd_samples d u hg.1).2.2.1]
+    simp only [ePoly,eval_sub,eval_mul,eval_C,eval_add,eval_X,eval_one]
+    change 2100*(p-d)*(u+1)*B d u-
+      Z d u*(B d u+1050*(24-d)*(u+1)) = _
+    dsimp [n]
+    rw [hK]
+    field_simp [hu0,hu1,hb]
+    <;> ring
+  have hf : (fPoly d v).eval u = 4200*(u+1)*B d u*
+      (v-d-(gPoly d u).eval 6*(2*u+n d u)) := by
+    rw [(odd_samples d u hg.1).2.2.2]
+    simp only [fPoly,eval_sub,eval_mul,eval_C,eval_add,eval_X,eval_one,eval_ofNat]
+    change 4200*(v-d)*(u+1)*B d u-
+      Y d u*(2*B d u+1050*(24-d)*(u+1)) = _
+    dsimp [n]
+    rw [hK]
+    field_simp [hu0,hu1,hb]
+    <;> ring
+  have hn2 : 2100*(u+1)*B d u ≠ 0 :=
+    mul_ne_zero (mul_ne_zero (by norm_num) hu1) hb
+  have hn4 : 4200*(u+1)*B d u ≠ 0 :=
+    mul_ne_zero (mul_ne_zero (by norm_num) hu1) hb
+  constructor
+  · rw [he,mul_eq_zero]
+    simp only [hn2,false_or]
+    constructor <;> intro h <;> linarith
+  · rw [hf,mul_eq_zero]
+    simp only [hn4,false_or]
+    constructor <;> intro h <;> linarith
+
+private theorem child_coordinates (d p v : ℝ) (hd24 : d ≠ 24)
+    (W : OriginalWorld) (hW : W ∈ ChildWorlds d p v) : coordinate W ∈ S d p v := by
+  obtain ⟨hg,hR,hw⟩ := prefix_coordinates d hd24 W hW.1
+  have hreads := reconstructed_read d (coordinate W) hg hR
+  have h5 := congrFun hreads (5 : Fin 7)
+  have h6 := congrFun hreads (6 : Fin 7)
+  norm_num only [Matrix.cons_val_succ,Matrix.cons_val_zero,Fin.reduceFinMk] at h5 h6
+  rw [hw] at h5 h6
+  exact ⟨hg,hR,(late_equivalences d (coordinate W) p v hg).1.mp
+    (h5.symm.trans hW.2.1),(late_equivalences d (coordinate W) p v hg).2.mp
+    (h6.symm.trans hW.2.2)⟩
+
+private theorem reconstruct_child (d p v u : ℝ) (hd0 : d ≠ 0)
+    (hu : u ∈ S d p v) : reconstruct d u ∈ ChildWorlds d p v := by
+  have hp := reconstruct_prefix d u hd0 hu.1 hu.2.1
+  have hreads := reconstructed_read d u hu.1 hu.2.1
+  have h5 := congrFun hreads (5 : Fin 7)
+  have h6 := congrFun hreads (6 : Fin 7)
+  norm_num only [Matrix.cons_val_succ,Matrix.cons_val_zero,Fin.reduceFinMk] at h5 h6
+  exact ⟨hp,h5.trans ((late_equivalences d u p v hu.1).1.mpr hu.2.2.1),
+    h6.trans ((late_equivalences d u p v hu.1).2.mpr hu.2.2.2)⟩
+
+private theorem coordinate_injective (d : ℝ) (hd24 : d ≠ 24) :
+    Set.InjOn coordinate (PrefixWorlds d) := by
+  intro W hW V hV he
+  rw [← (prefix_coordinates d hd24 W hW).2.2,
+    ← (prefix_coordinates d hd24 V hV).2.2,he]
+
+private theorem r_degree (d : ℝ) : (rPoly d).natDegree ≤ 10 := by
+  unfold rPoly nPoly lPoly kPoly aPoly bPoly
+  compute_degree
+
+private theorem e_degree (d p : ℝ) : (ePoly d p).natDegree ≤ 4 := by
+  unfold ePoly zPoly bPoly
+  compute_degree
+
+private theorem r_top (d : ℝ) : (rPoly d).coeff 10 = -41006250000*d^4 := by
+  unfold rPoly nPoly lPoly kPoly aPoly bPoly
+  compute_degree!
+  <;> ring
+
+private theorem e_top (d p : ℝ) : (ePoly d p).coeff 4 = 16875*d^2 := by
+  unfold ePoly zPoly bPoly
+  compute_degree!
+  <;> ring
+
+private theorem prefix_bound (d : ℝ) (hd0 : d ≠ 0) (hd24 : d ≠ 24) :
+    (PrefixWorlds d).Finite ∧ (PrefixWorlds d).ncard ≤ 10 := by
+  have hP : rPoly d ≠ 0 := by
+    intro hz
+    have hh := r_top d
+    rw [hz] at hh
+    simp only [coeff_zero] at hh
+    exact (mul_ne_zero (by norm_num) (pow_ne_zero 4 hd0)) hh.symm
+  have hmap : Set.MapsTo coordinate (PrefixWorlds d) ((rPoly d).rootSet ℝ) := by
+    intro W hW
+    rw [mem_rootSet_of_ne hP,aeval_def,Algebra.algebraMap_self,eval₂_id]
+    exact (prefix_coordinates d hd24 W hW).2.1
+  have hfin := (rPoly d).rootSet_finite ℝ
+  exact ⟨hfin.of_injOn hmap (coordinate_injective d hd24),
+    (Set.ncard_le_ncard_of_injOn coordinate hmap (coordinate_injective d hd24) hfin).trans
+      ((ncard_rootSet_le (rPoly d) ℝ).trans (r_degree d))⟩
+
+private theorem child_bound (d p v : ℝ) (hd0 : d ≠ 0) (hd24 : d ≠ 24) :
+    (ChildWorlds d p v).Finite ∧ (ChildWorlds d p v).ncard ≤ 4 := by
+  have hP : ePoly d p ≠ 0 := by
+    intro hz
+    have hh := e_top d p
+    rw [hz] at hh
+    simp only [coeff_zero] at hh
+    exact (mul_ne_zero (by norm_num) (pow_ne_zero 2 hd0)) hh.symm
+  have hmap : Set.MapsTo coordinate (ChildWorlds d p v) ((ePoly d p).rootSet ℝ) := by
+    intro W hW
+    rw [mem_rootSet_of_ne hP,aeval_def,Algebra.algebraMap_self,eval₂_id]
+    exact (child_coordinates d p v hd24 W hW).2.2.1
+  have hinj : Set.InjOn coordinate (ChildWorlds d p v) :=
+    (coordinate_injective d hd24).mono (fun _ h => h.1)
+  have hfin := (ePoly d p).rootSet_finite ℝ
+  exact ⟨hfin.of_injOn hmap hinj,
+    (Set.ncard_le_ncard_of_injOn coordinate hmap hinj hfin).trans
+      ((ncard_rootSet_le (ePoly d p) ℝ).trans (e_degree d p))⟩
+
+/-- The exact guarded classification, its prescribed native inverse, and both
+cardinality bounds. The parameters p and v are unrestricted real numbers. -/
+theorem fixed_drift_classification (d p v : ℝ) (hd0 : d ≠ 0) (hd24 : d ≠ 24) :
+    (∃ e : S d p v ≃ ChildWorlds d p v,
+      (∀ u, (e u).1 = reconstruct d u.1) ∧
+      (∀ W, (e.symm W).1 = coordinate W.1) ∧
+      (∀ u : S d p v,
+        originalPolynomial (e u).1 = gPoly d u.1 ∧
+        sourceJ (e u).1.1 (e u).1.2.1 = j d u.1 ∧
+        sourceN (e u).1.1 (e u).1.2.1 = n d u.1)) ∧
+    (PrefixWorlds d).Finite ∧ (PrefixWorlds d).ncard ≤ 10 ∧
+    (ChildWorlds d p v).Finite ∧ (ChildWorlds d p v).ncard ≤ 4 := by
+  let e : S d p v ≃ ChildWorlds d p v := {
+    toFun := fun u => ⟨reconstruct d u.1,reconstruct_child d p v u.1 hd0 u.2⟩
+    invFun := fun W => ⟨coordinate W.1,child_coordinates d p v hd24 W.1 W.2⟩
+    left_inv := by
+      intro u
+      apply Subtype.ext
+      change coordinate (reconstruct d u.1) = u.1
+      dsimp [coordinate,reconstruct,width]
+      ring
+    right_inv := by
+      intro W
+      apply Subtype.ext
+      exact (prefix_coordinates d hd24 W.1 W.2.1).2.2 }
+  refine ⟨⟨e,fun _ => rfl,fun _ => rfl,?_⟩,
+    (prefix_bound d hd0 hd24).1,(prefix_bound d hd0 hd24).2,
+    (child_bound d p v hd0 hd24).1,(child_bound d p v hd0 hd24).2⟩
+  intro u
+  exact ⟨reconstruct_polynomial d u.1,
+    reconstructed_traces d u.1 u.2.1 u.2.2.1⟩
+
+#print axioms fixed_drift_classification
 
 end D5.S3.Observer.CubicGain.FixedDriftQuartic
