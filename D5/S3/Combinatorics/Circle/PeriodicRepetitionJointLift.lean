@@ -18,8 +18,7 @@ namespace D5.S3.Combinatorics.Circle.PeriodicRepetitionJointLift
 open SourceWidth PeriodicShorteningArithmetic PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
 
-open private PeriodicShortening.chargedWord_perm PeriodicShortening.beta_prefix_bound
-  PeriodicShortening.early_blocks PeriodicShortening.strip_of_prefix
+open private chargedWord_perm beta_prefix_bound early_blocks strip_of_prefix
   from D5.S3.Combinatorics.Circle.PeriodicShortening
 
 /-- Distinct physical copies retain the base phase without quotienting occurrences. -/
@@ -41,7 +40,7 @@ private theorem cycles_perm (m : ℕ) (hm : 2 ≤ m) :
     have hf : (fun r : Fin n => (⟨r.val, by omega⟩ : Fin (n + 1))) = Fin.castSucc := by
       funext r; apply Fin.ext; rfl
     have hl : (⟨n, by omega⟩ : Fin (n + 1)) = Fin.last n := Fin.ext rfl
-    simpa only [cycles, Nat.add_sub_cancel, hf, hl, List.finRange_succ_last] using
+    simpa only [cycles, Nat.add_sub_cancel_right, hf, hl, List.finRange_succ_last, List.singleton_append] using
       (List.perm_append_comm : ([Fin.last n] ++ (List.finRange n).map Fin.castSucc).Perm
         ((List.finRange n).map Fin.castSucc ++ [Fin.last n]))
 
@@ -54,9 +53,10 @@ private theorem repeated_perm (d m : ℕ) (hm : 2 ≤ m) (alpha : List (Fin d))
   have htheta (r : Fin m) (i : Fin d) : blockLabel d m r i = theta (r, i) := by
     apply Fin.ext
     simp [theta, blockLabel, finProdFinEquiv, Nat.add_comm, Nat.mul_comm]
+  have htheta' (r : Fin m) : blockLabel d m r = fun i => theta (r, i) := funext (htheta r)
   have he : (List.finRange m).flatMap (fun r => (List.finRange d).map (blockLabel d m r)) =
       ((List.finRange m).product (List.finRange d)).map theta := by
-    simp only [List.product, List.map_flatMap, List.map_map, Function.comp_def, htheta]
+    simp only [List.product, List.map_flatMap, List.map_map, Function.comp_def, htheta']
   apply (List.Perm.flatMap (cycles_perm m hm) (fun r _ => ha.map (blockLabel d m r))).trans
   rw [he]
   apply (List.perm_ext_iff_of_nodup
@@ -84,7 +84,7 @@ private theorem source_successor (n t : ℕ) (i : Fin (n + 1)) :
   · rw [rotate_castSucc]
     unfold actualSource
     congr 1
-    simp only [Fin.val_castSucc, Fin.val_mk, Nat.cast_mul, Nat.cast_ofNat, pow_succ]
+    simp only [Fin.val_castSucc, Fin.val_succ, Nat.cast_mul, Nat.cast_ofNat, pow_succ]
     ring
 
 private theorem successor_order (n t : ℕ) (l : List (Fin (n + 1))) :
@@ -105,7 +105,7 @@ private theorem successor_order (n t : ℕ) (l : List (Fin (n + 1))) :
     refine ⟨?_, by simpa only [hmap] using hz, ?_⟩
     · have hh := hp.map (finRotate (n + 1)).symm
       simpa only [List.map_map, Equiv.symm_comp_self, List.map_id] using
-        hh.trans ((finRotate (n + 1)).symm : Equiv.Perm (Fin (n + 1))).map_finRange_perm
+        hh.trans (Equiv.Perm.map_finRange_perm ((finRotate (n + 1)).symm))
     · intro h
       simpa only [← List.map_take, hmap] using hs h
 
@@ -198,7 +198,7 @@ private theorem literal_ear_identity (d m : ℕ) (hm : 2 ≤ m) (alpha : List (F
         lastLabel d m hm (finRotate (d + 1) i.castSucc) := by
     rw [rotate_castSucc, rotate_castSucc]
     apply Fin.ext
-    simp [lastLabel, blockLabel]
+    simp [lastLabel, blockLabel, Nat.add_assoc]
   have hearly (r : Fin (m - 1)) (i : Fin d) :
       finRotate (d * m + 1) (blockLabel d m ⟨r.val, by omega⟩ i).castSucc =
         earlyLabel d m hm r i := by
@@ -255,10 +255,13 @@ theorem periodic_repetition_joint_lift (d w m : ℕ) (hd : 2 ≤ d) (hw0 : 1 ≤
     have hp := Nat.one_le_two_pow (n := d - 1)
     rw [show d = (d - 1) + 1 by omega, pow_succ]
     omega
+  have hgeom : 1 ≤ geom d m := by
+    change (1 : ℤ) ≤ (geom d m : ℤ) at hG1
+    exact_mod_cast hG1
   have hseed : (ThreeRowSource.multiplier d m * w) % (2 ^ (m * d) - 1) = w * geom d m := by
     rw [hmult, Nat.mul_comm m d, hN, Nat.mod_eq_of_lt]
     · exact Nat.mul_comm _ _
-    · exact Nat.mul_lt_mul_of_pos_left hwN (by have hg : 1 ≤ geom d m := by exact_mod_cast hG1; omega)
+    · exact Nat.mul_lt_mul_of_pos_left hwN (by omega)
   have hphysical (r : Fin m) (i : Fin d) : f (blockLabel d m r i) = G * actualSource d w i := by
     have hh := ThreeRowSource.repeated_source d m w (by omega) (by omega)
       (Fin.cast (Nat.mul_comm d m) (blockLabel d m r i))
