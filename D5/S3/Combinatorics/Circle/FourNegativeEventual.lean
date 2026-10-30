@@ -9,6 +9,8 @@ import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.ThreeBitSource
 import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
+/-! Eventual physical four-chain source table and joint lift. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -37,8 +39,42 @@ private theorem centered_shift (N X Y : ℤ) (e i : ℕ)
   rw [centered_mod, centered_mod, pow_add]
   have hmul : (2 : ℤ) ^ i * ((2 : ℤ) ^ e * X) =
       (2 : ℤ) ^ i * (N + Y) := by rw [hrel]
-  rw [← hmul, mul_add, Int.add_mul_emod_self_left]
+  rw [show (2 : ℤ) ^ e * (2 : ℤ) ^ i * X =
+      (2 : ℤ) ^ i * ((2 : ℤ) ^ e * X) by ring, hrel, mul_add]
+  rw [show (2 : ℤ) ^ i * N + (2 : ℤ) ^ i * Y =
+      (2 : ℤ) ^ i * Y + (2 : ℤ) ^ i * N by ring,
+    Int.add_mul_emod_self_right]
 
+private theorem centered_ladder (N u v : ℤ) (z e : ℕ)
+    (hN : 0 < N) (hodd : N % 2 = 1) (hu : 0 < u)
+    (hv : 1 ≤ v ∧ v ≤ N) (he : e < z)
+    (hrel : (2 : ℤ) ^ z * u = N + v) :
+    centered N ((2 : ℤ) ^ e * u) =
+      if e + 1 < z then (2 : ℤ) ^ e * u else -(N - v) / 2 := by
+  by_cases hez : e + 1 < z
+  · rw [ite_eq_left hez]
+    have hp := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show e + 2 ≤ z by omega)
+    rw [pow_add] at hp
+    norm_num at hp
+    have hm := mul_le_mul_of_nonneg_right hp (le_of_lt hu)
+    apply centered_unique hN hodd (centered_bounds hN hodd _) ?_ (centered_mod N _)
+    have hx0 : 0 ≤ (2 : ℤ) ^ e * u := by positivity
+    have hn0 : 0 ≤ N / 2 := Int.ediv_nonneg (le_of_lt hN) (by decide)
+    have hbound : 2 * ((2 : ℤ) ^ e * u) ≤ N := by
+      nlinarith [hm, hrel, hv.2]
+    exact ⟨by omega, by omega⟩
+  · rw [ite_eq_right hez]
+    have hexp : z = e + 1 := by omega
+    have hp : 2 * ((2 : ℤ) ^ e * u) = N + v := by
+      rw [hexp, pow_succ] at hrel
+      nlinarith
+    have hval : -(N - v) / 2 = (2 : ℤ) ^ e * u - N := by omega
+    rw [hval]
+    apply centered_unique hN hodd (centered_bounds hN hodd _) ?_ ?_
+    · constructor <;> omega
+    · rw [centered_mod, Int.sub_emod_right]
+
+set_option maxHeartbeats 1000000 in
 private theorem four_chain_table (a b c d : ℕ)
     (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c)
     (hd : a + b + c + 3 ≤ d) :
@@ -92,158 +128,212 @@ private theorem four_chain_table (a b c d : ℕ)
   let N : ℤ := P * t - 1
   let f := fun i : ℕ => centered N ((2 : ℤ) ^ i * A)
   let g := fun i : ℕ => centered (2 * N + 1) ((2 : ℤ) ^ i * (2 * A))
-  have hx : 4 ≤ x := by dsimp [x]; norm_num; exact_mod_cast ha
-  have hy : 4 ≤ y := by dsimp [y]; norm_num; exact_mod_cast hb
-  have hz : 4 ≤ z := by dsimp [z]; norm_num; exact_mod_cast hc
+  have hx : 4 ≤ x := by
+    have h := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) ha
+    norm_num at h
+    simpa [x] using h
+  have hy : 4 ≤ y := by
+    have h := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hb
+    norm_num at h
+    simpa [y] using h
+  have hz : 4 ≤ z := by
+    have h := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hc
+    norm_num at h
+    simpa [z] using h
   have ht : 0 < t := by dsimp [t]; positivity
   have hP : 0 < P := by dsimp [P]; positivity
   have hN : 0 < N := by
-    dsimp [N, P, t]
     have hk : 8 ≤ a + b + c + d := by omega
     have hp : (2 : ℤ) ^ 8 ≤ 2 ^ (a + b + c + d) := by
       exact pow_le_pow_right₀ (by norm_num) hk
-    rw [show (2 : ℤ) ^ (a + b + c + d) =
-      (2 : ℤ) ^ a * 2 ^ b * 2 ^ c * 2 ^ d by ring] at hp
+    have he : (2 : ℤ) ^ (a + b + c + d) = P * t := by
+      dsimp [P, t, x, y, z]
+      ring
+    rw [he] at hp
+    dsimp [N]
+    norm_num at hp ⊢
     omega
-  have hodd : N % 2 = 1 := by dsimp [N]; omega
+  have ht_even : t = 2 * (2 : ℤ) ^ (d - 1) := by
+    dsimp [t]
+    calc
+      (2 : ℤ) ^ d = (2 : ℤ) ^ ((d - 1) + 1) := by congr 1 <;> omega
+      _ = (2 : ℤ) ^ (d - 1) * 2 := by rw [pow_succ]
+      _ = 2 * (2 : ℤ) ^ (d - 1) := by ring
+  have hodd : N % 2 = 1 := by
+    have hNform : N = 2 * (P * (2 : ℤ) ^ (d - 1) - 1) + 1 := by
+      dsimp [N]
+      rw [ht_even]
+      ring
+    rw [hNform]
+    omega
+  have hDBP : DB < P := by
+    dsimp [DB, P]
+    have hxy : 0 < x * y := mul_pos (by omega) (by omega)
+    have hdb : 1 + x + x * y < 2 * (x * y) := by nlinarith
+    have hp : 4 * (x * y) ≤ x * y * z := by nlinarith
+    nlinarith
+  have ht8 : 8 ≤ t := by
+    have h := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show 3 ≤ d by omega)
+    norm_num at h
+    simpa [t] using h
   have hA : 1 ≤ A ∧ A < N := by
-    dsimp [A, N, P, DB]
-    have hxa : 0 < (2 : ℤ) ^ a := by positivity
-    have hxb : 0 < (2 : ℤ) ^ b := by positivity
-    have hxc : 0 < (2 : ℤ) ^ c := by positivity
-    have hxd : 8 * (2 : ℤ) ^ (a + b + c) ≤ 2 ^ d := by
-      have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show a + b + c + 3 ≤ d by omega)
-      rw [show (2 : ℤ) ^ (a + b + c + 3) =
-        8 * 2 ^ (a + b + c) by ring] at this
-      exact this
-    rw [show (2 : ℤ) ^ (a + b + c) =
-      (2 : ℤ) ^ a * 2 ^ b * 2 ^ c by ring] at hxd
-    constructor <;> nlinarith
-  have hB : 1 ≤ B ∧ B < N := by
-    dsimp [B, N, P, DB]
-    have hxa : 0 < (2 : ℤ) ^ a := by positivity
-    have hxb : 0 < (2 : ℤ) ^ b := by positivity
-    have hxc : 0 < (2 : ℤ) ^ c := by positivity
-    have hxd : 8 * (2 : ℤ) ^ (a + b + c) ≤ 2 ^ d := by
-      have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show a + b + c + 3 ≤ d by omega)
-      rw [show (2 : ℤ) ^ (a + b + c + 3) = 8 * 2 ^ (a + b + c) by ring] at this
-      exact this
-    rw [show (2 : ℤ) ^ (a + b + c) = (2 : ℤ) ^ a * 2 ^ b * 2 ^ c by ring] at hxd
-    constructor <;> nlinarith
-  have hL : 1 ≤ L ∧ L < N := by
-    dsimp [L, N, P, DL]
-    have hxd : 8 * (2 : ℤ) ^ (a + b + c) ≤ 2 ^ d := by
-      have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show a + b + c + 3 ≤ d by omega)
-      rw [show (2 : ℤ) ^ (a + b + c + 3) = 8 * 2 ^ (a + b + c) by ring] at this
-      exact this
-    rw [show (2 : ℤ) ^ (a + b + c) = (2 : ℤ) ^ a * 2 ^ b * 2 ^ c by ring] at hxd
-    constructor <;> nlinarith
-  have hM : 1 ≤ M ∧ M < N := by
-    dsimp [M, N, P, DM]
-    have hxd : 8 * (2 : ℤ) ^ (a + b + c) ≤ 2 ^ d := by
-      have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show a + b + c + 3 ≤ d by omega)
-      rw [show (2 : ℤ) ^ (a + b + c + 3) = 8 * 2 ^ (a + b + c) by ring] at this
-      exact this
-    rw [show (2 : ℤ) ^ (a + b + c) = (2 : ℤ) ^ a * 2 ^ b * 2 ^ c by ring] at hxd
-    constructor <;> nlinarith
+    constructor
+    · dsimp [A, P, DB]
+      nlinarith [hP]
+    · dsimp [A, N]
+      have hPt : 8 * P ≤ P * t := by
+        simpa [mul_comm] using mul_le_mul_of_nonneg_left ht8 hP.le
+      nlinarith [hP, hDBP, hPt]
   have hrelA : t * A = N + B := by dsimp [A, B, N, P, DB]; ring
   have hrelB : z * B = N + L := by dsimp [B, L, N, P, DB, DL]; ring
   have hrelL : y * L = N + M := by dsimp [L, M, N, P, DL, DM]; ring
   have hrelM : x * M = N + A := by dsimp [M, A, N, P, DB, DM]; ring
+  have hB : 1 ≤ B ∧ B < N := by
+    constructor
+    · dsimp [B]
+      have hDB0 : 0 < DB := by dsimp [DB]; positivity
+      nlinarith
+    · nlinarith [hrelA, hA.1, hA.2, hx]
+  have hM : 1 ≤ M ∧ M < N := by
+    constructor
+    · dsimp [M]
+      have hDM0 : 0 < DM := by dsimp [DM]; positivity
+      nlinarith
+    · nlinarith [hrelM, hA.1, hA.2, hx]
+  have hL : 1 ≤ L ∧ L < N := by
+    constructor
+    · dsimp [L]
+      have hDL0 : 0 < DL := by dsimp [DL]; positivity
+      nlinarith
+    · nlinarith [hrelL, hM.1, hM.2, hy]
   have hN' : 0 < 2 * N + 1 := by omega
   have hodd' : (2 * N + 1) % 2 = 1 := by omega
   have hB' : 1 ≤ 2 * B - 1 ∧ 2 * B - 1 < 2 * N + 1 := by omega
   have hL' : 1 ≤ 2 * L - 1 - z ∧ 2 * L - 1 - z < 2 * N + 1 := by
-    constructor <;> dsimp [L]; nlinarith
+    constructor
+    · dsimp [L]
+      have hDL0 : 0 < DL := by dsimp [DL]; positivity
+      nlinarith
+    · nlinarith [hL.2, hz]
   have hM' : 1 ≤ 2 * M - 1 - y - y * z ∧ 2 * M - 1 - y - y * z < 2 * N + 1 := by
-    constructor <;> dsimp [M]; nlinarith
+    constructor
+    · dsimp [M]
+      have hDM0 : 0 < DM := by dsimp [DM]; positivity
+      nlinarith
+    · nlinarith [hM.2, hy, hz]
   have hrelA' : t * (2 * A) = (2 * N + 1) + (2 * B - 1) := by nlinarith
   have hrelB' : z * (2 * B - 1) = (2 * N + 1) + (2 * L - 1 - z) := by nlinarith [hrelB]
   have hrelL' : y * (2 * L - 1 - z) = (2 * N + 1) + (2 * M - 1 - y - y * z) := by nlinarith [hrelL]
   have hrelM' : x * (2 * M - 1 - y - y * z) = (2 * N + 1) + A := by nlinarith [hrelM]
   have hshiftA (i : ℕ) : f (d + i) = centered N ((2 : ℤ) ^ i * B) := by
-    dsimp [f]; rw [show d + i = d + i by rfl, pow_add]
-    exact centered_shift N A B d i hN hodd hrelA
+    simpa [f] using centered_shift N A B d i hN hodd hrelA
   have hshiftB (i : ℕ) : f (d + c + i) = centered N ((2 : ℤ) ^ i * L) := by
-    rw [hshiftA, show d + i = d + i by rfl]
-    exact centered_shift N B L c i hN hodd hrelB
+    calc
+      f (d + c + i) = centered N ((2 : ℤ) ^ (c + i) * B) := by
+        simpa [Nat.add_assoc] using hshiftA (c + i)
+      _ = centered N ((2 : ℤ) ^ i * L) := centered_shift N B L c i hN hodd hrelB
   have hshiftL (i : ℕ) : f (d + c + b + i) = centered N ((2 : ℤ) ^ i * M) := by
-    rw [hshiftB]
-    exact centered_shift N L M b i hN hodd hrelL
+    calc
+      f (d + c + b + i) = centered N ((2 : ℤ) ^ (b + i) * L) := by
+        simpa [Nat.add_assoc] using hshiftB (b + i)
+      _ = centered N ((2 : ℤ) ^ i * M) := centered_shift N L M b i hN hodd hrelL
   have hshiftG (i : ℕ) : f (d + c + b + a + i) = centered N ((2 : ℤ) ^ i * A) := by
-    rw [hshiftL]
-    exact centered_shift N M A a i hN hodd hrelM
+    calc
+      f (d + c + b + a + i) = centered N ((2 : ℤ) ^ (a + i) * M) := by
+        simpa [Nat.add_assoc] using hshiftL (a + i)
+      _ = centered N ((2 : ℤ) ^ i * A) := centered_shift N M A a i hN hodd hrelM
   have hu (i : ℕ) (hi : i < d) :
       f i = if i + 1 < d then (2 : ℤ) ^ i * A else -(N - B) / 2 :=
-    centered_ladder N A B d i hN hodd (by omega) hB hi hrelA
+    centered_ladder N A B d i hN hodd (by omega) ⟨hB.1, hB.2.le⟩ hi hrelA
   have hv (i : ℕ) (hi : i < c) :
       f (d + i) = if i + 1 < c then (2 : ℤ) ^ i * B else -(N - L) / 2 := by
-    rw [hshiftA]
-    exact centered_ladder N B L c i hN hodd (by omega) hL hi hrelB
+    calc
+      f (d + i) = centered N ((2 : ℤ) ^ i * B) := hshiftA i
+      _ = if i + 1 < c then (2 : ℤ) ^ i * B else -(N - L) / 2 :=
+        centered_ladder N B L c i hN hodd (by omega) ⟨hL.1, hL.2.le⟩ hi hrelB
   have hw (i : ℕ) (hi : i < b) :
       f (d + c + i) = if i + 1 < b then (2 : ℤ) ^ i * L else -(N - M) / 2 := by
-    rw [hshiftB]
-    exact centered_ladder N L M b i hN hodd (by omega) hM hi hrelL
+    calc
+      f (d + c + i) = centered N ((2 : ℤ) ^ i * L) := hshiftB i
+      _ = if i + 1 < b then (2 : ℤ) ^ i * L else -(N - M) / 2 :=
+        centered_ladder N L M b i hN hodd (by omega) ⟨hM.1, hM.2.le⟩ hi hrelL
   have hu4 (i : ℕ) (hi : i < a) :
       f (d + c + b + i) = if i + 1 < a then (2 : ℤ) ^ i * M else -(N - A) / 2 := by
-    rw [hshiftL]
-    exact centered_ladder N M A a i hN hodd (by omega) hA hi hrelM
+    calc
+      f (d + c + b + i) = centered N ((2 : ℤ) ^ i * M) := hshiftL i
+      _ = if i + 1 < a then (2 : ℤ) ^ i * M else -(N - A) / 2 :=
+        centered_ladder N M A a i hN hodd (by omega) ⟨hA.1, hA.2.le⟩ hi hrelM
   have hgu (i : ℕ) (hi : i < d) :
       g i = if i + 1 < d then (2 : ℤ) ^ i * (2 * A)
         else -((2 * N + 1) - (2 * B - 1)) / 2 :=
-    centered_ladder (2 * N + 1) (2 * A) (2 * B - 1) d i hN' hodd' (by omega) hB' hi hrelA'
+    centered_ladder (2 * N + 1) (2 * A) (2 * B - 1) d i hN' hodd' (by omega) ⟨hB'.1, hB'.2.le⟩ hi hrelA'
   have hgv (i : ℕ) (hi : i < c) :
       g (d + i) = if i + 1 < c then (2 : ℤ) ^ i * (2 * B - 1)
         else -((2 * N + 1) - (2 * L - 1 - z)) / 2 := by
-    have hs : g (d + i) = centered (2 * N + 1) ((2 : ℤ) ^ i * (2 * B - 1)) := by
-      dsimp [g]; rw [pow_add]
-      exact centered_shift (2 * N + 1) (2 * A) (2 * B - 1) d i hN' hodd' hrelA'
-    rw [hs]
-    exact centered_ladder (2 * N + 1) (2 * B - 1) (2 * L - 1 - z) c i hN' hodd' (by omega) hL' hi hrelB'
+    calc
+      g (d + i) = centered (2 * N + 1) ((2 : ℤ) ^ i * (2 * B - 1)) := by
+        simpa [g] using centered_shift (2 * N + 1) (2 * A) (2 * B - 1) d i hN' hodd' hrelA'
+      _ = if i + 1 < c then (2 : ℤ) ^ i * (2 * B - 1)
+          else -((2 * N + 1) - (2 * L - 1 - z)) / 2 :=
+        centered_ladder (2 * N + 1) (2 * B - 1) (2 * L - 1 - z) c i hN' hodd' (by omega) ⟨hL'.1, hL'.2.le⟩ hi hrelB'
   have hgw (i : ℕ) (hi : i < b) :
       g (d + c + i) = if i + 1 < b then (2 : ℤ) ^ i * (2 * L - 1 - z)
         else -((2 * N + 1) - (2 * M - 1 - y - y * z)) / 2 := by
-    have hs : g (d + c + i) = centered (2 * N + 1) ((2 : ℤ) ^ i * (2 * L - 1 - z)) := by
-      dsimp [g]; rw [pow_add]
-      rw [show (2 : ℤ) ^ (d + c) * (2 * A) =
-        (2 : ℤ) ^ c * (2 * B - 1) by
-          rw [pow_add]; nlinarith [hrelA']]
-      exact centered_shift (2 * N + 1) (2 * B - 1) (2 * L - 1 - z) c i hN' hodd' hrelB'
-    rw [hs]
-    exact centered_ladder (2 * N + 1) (2 * L - 1 - z) (2 * M - 1 - y - y * z)
-      b i hN' hodd' (by omega) hM' hi hrelL'
+    calc
+      g (d + c + i) = centered (2 * N + 1) ((2 : ℤ) ^ (c + i) * (2 * B - 1)) := by
+        simpa [Nat.add_assoc, g] using
+          (show g (d + (c + i)) = centered (2 * N + 1) ((2 : ℤ) ^ (c + i) * (2 * B - 1)) by
+            simpa [g] using centered_shift (2 * N + 1) (2 * A) (2 * B - 1) d (c + i) hN' hodd' hrelA')
+      _ = centered (2 * N + 1) ((2 : ℤ) ^ i * (2 * L - 1 - z)) :=
+        centered_shift (2 * N + 1) (2 * B - 1) (2 * L - 1 - z) c i hN' hodd' hrelB'
+      _ = if i + 1 < b then (2 : ℤ) ^ i * (2 * L - 1 - z)
+          else -((2 * N + 1) - (2 * M - 1 - y - y * z)) / 2 :=
+        centered_ladder (2 * N + 1) (2 * L - 1 - z) (2 * M - 1 - y - y * z)
+          b i hN' hodd' (by omega) ⟨hM'.1, hM'.2.le⟩ hi hrelL'
   have hgu4 (i : ℕ) (hi : i < a) :
       g (d + c + b + i) = if i + 1 < a then
         (2 : ℤ) ^ i * (2 * M - 1 - y - y * z)
         else -((2 * N + 1) - A) / 2 := by
-    have hs : g (d + c + b + i) = centered (2 * N + 1) ((2 : ℤ) ^ i * (2 * M - 1 - y - y * z)) := by
-      dsimp [g]; rw [pow_add]
-      rw [show (2 : ℤ) ^ (d + c + b) * (2 * A) =
-        (2 : ℤ) ^ b * (2 * L - 1 - z) by
-          rw [pow_add]; nlinarith [hrelA', hrelB']]
-      rw [show (2 : ℤ) ^ b * (2 * L - 1 - z) =
-        (2 : ℤ) ^ b * (2 * L - 1 - z) by rfl]
-      exact centered_shift (2 * N + 1) (2 * M - 1 - y - y * z) A a i hN' hodd' hrelM'
-    rw [hs]
-    exact centered_ladder (2 * N + 1) (2 * M - 1 - y - y * z) A a i hN' hodd' (by omega) hA hi hrelM'
+    calc
+      g (d + c + b + i) = centered (2 * N + 1) ((2 : ℤ) ^ (c + b + i) * (2 * B - 1)) := by
+        simpa [Nat.add_assoc, g] using
+          centered_shift (2 * N + 1) (2 * A) (2 * B - 1) d (c + (b + i)) hN' hodd' hrelA'
+      _ = centered (2 * N + 1) ((2 : ℤ) ^ (b + i) * (2 * L - 1 - z)) :=
+        (by simpa [Nat.add_assoc] using
+          centered_shift (2 * N + 1) (2 * B - 1) (2 * L - 1 - z) c (b + i) hN' hodd' hrelB')
+      _ = centered (2 * N + 1) ((2 : ℤ) ^ i * (2 * M - 1 - y - y * z)) := by
+        exact centered_shift (2 * N + 1) (2 * L - 1 - z) (2 * M - 1 - y - y * z)
+          b i hN' hodd' hrelL'
+      _ = if i + 1 < a then (2 : ℤ) ^ i * (2 * M - 1 - y - y * z)
+          else -((2 * N + 1) - A) / 2 :=
+        centered_ladder (2 * N + 1) (2 * M - 1 - y - y * z) A a i hN' hodd' (by omega)
+          ⟨hA.1, by omega⟩ hi hrelM'
   refine ⟨hA, hB, hL, hM, hu, hv, hw, hu4, hgu, hgv, hgw, hgu4, ?_⟩
-  dsimp [g]
   have hfull : (2 : ℤ) ^ (d + c + b + a) * (2 * A) =
       (2 : ℤ) ^ (d + c + b + a) * (2 * A) := rfl
-  have hp := centered_full_period (a + b + c + d + 1) A
   rw [show d + c + b + a = a + b + c + d by omega]
   rw [show (2 : ℤ) ^ (a + b + c + d) * (2 * A) =
     (2 : ℤ) ^ (a + b + c + d + 1) * A by
       rw [pow_succ]; ring]
-  have hcenter : centered (2 * N + 1) ((2 : ℤ) ^ (a + b + c + d + 1) * A) =
-      centered (2 * N + 1) A := by
-    simpa [show 2 * N + 1 = modulus (a + b + c + d + 1) by
-      dsimp [N, modulus]; rw [pow_succ]; ring] using hp
-  rw [hcenter]
-  dsimp [centered]
-  have hApos := hA.1
-  have hAlt := hA.2
-  rw [Int.emod_eq_of_lt (by omega) (by omega)]
-  omega
+  have hA0 := hA.1
+  have hAN := hA.2
+  have hhalf' : (2 * N + 1) / 2 = N := by omega
+  have hAbound : -((2 * N + 1) / 2) ≤ A ∧ A ≤ (2 * N + 1) / 2 := by
+    rw [hhalf']
+    omega
+  symm
+  apply centered_unique (x := A)
+    (y := centered (2 * N + 1) ((2 : ℤ) ^ (a + b + c + d + 1) * A))
+    hN' hodd' hAbound (centered_bounds hN' hodd' _)
+  rw [centered_mod]
+  have hpow : (2 : ℤ) ^ (a + b + c + d) = N + 1 := by
+    dsimp [N, modulus]
+    ring
+  rw [show (2 : ℤ) ^ (a + b + c + d + 1) =
+      (2 : ℤ) ^ (a + b + c + d) * 2 by rw [pow_succ]]
+  rw [hpow]
+  rw [show (N + 1) * 2 * A = (2 * N + 1) * A + A by ring]
+  rw [show (2 * N + 1) * A + A = A + (2 * N + 1) * A by ring]
+  simp [Int.add_emod, Int.mul_emod]
 
 end D5.S3.Combinatorics.Circle.FourNegativeEventual
