@@ -144,9 +144,13 @@ private theorem prefix_formula (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) (n : �
         (by simpa using hn)
       rw [← ht, List.map_append, List.sum_append]
       simp only [List.map_singleton, List.sum_singleton, List.getElem_finRange]
-      have hi := old_source d m hd hm ⟨n, hn⟩
-      rw [ih, if_pos (show n ≤ d*m by omega), hi,
-        if_pos (show n+1 ≤ d*m by omega)]
+      change (((List.finRange k).take n).map (actualSource k t)).sum +
+        actualSource k t ⟨n, hn⟩ =
+          if n + 1 ≤ k then (t : ℤ) * ((2 : ℤ) ^ ((n + 1) % d) - 1) else 0
+      have hi : actualSource k t ⟨n, hn⟩ =
+          (t : ℤ) * baseValue d (n % d) := old_source d m hd hm ⟨n, hn⟩
+      rw [ih, if_pos (show n ≤ k by omega), hi,
+        if_pos (show n+1 ≤ k by omega)]
       by_cases hwrap : n % d = d - 1
       · have hnext : (n + 1) % d = 0 := by
           rw [Nat.add_mod, hwrap, Nat.mod_eq_of_lt (by omega : 1 < d),
@@ -161,7 +165,7 @@ private theorem prefix_formula (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) (n : �
     · have htake : (List.finRange k).take (n + 1) = List.finRange k :=
         List.take_of_length_le (by simp; omega)
       rw [htake, if_neg (show ¬ n+1 ≤ d*m by omega)]
-      exact source_sum k t (by nlinarith)
+      exact source_sum k t (by dsimp [k]; nlinarith)
 
 private theorem prefix_bounds (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) (n : ℕ) :
     let k := d * m
@@ -286,6 +290,9 @@ public theorem periodic_first_ear_joint_lift (d m : ℕ) (hd : 2 ≤ d) (hm : 1 
     refine ⟨List.Perm.refl _, hsum, ?_⟩
     intro n
     have hh := prefix_bounds d m hd hm n
+    change 0 ≤ (((List.finRange k).take n).map (actualSource k t)).sum ∧
+      2 * (((List.finRange k).take n).map (actualSource k t)).sum + (t : ℤ) ≤
+        modulus k at hh
     change 0 ≤ (((List.finRange k).take n).map (actualSource k t)).sum ∧
       (((List.finRange k).take n).map (actualSource k t)).sum ≤ modulus k / 2
     constructor
