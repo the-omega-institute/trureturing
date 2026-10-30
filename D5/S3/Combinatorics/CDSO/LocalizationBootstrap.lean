@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/CDSO/LocalizationBootstrap
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [D5/S3/Combinatorics/CDSO/ArrayCore]
+   anchors: [mathlib/module/Mathlib.Algebra.Order.BigOperators.Ring.Finset]
    utility: none
    digest: Uniform actual-array localization and two-stage bootstrap for fixed surplus hubs. -/
 
