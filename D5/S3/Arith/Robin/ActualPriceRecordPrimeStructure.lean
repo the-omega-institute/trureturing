@@ -320,7 +320,7 @@ theorem price_record_largest_prime_localization :
     change P / X - 1 < epsilon
     linarith only [hr]
 
-private theorem finite_theta_abel_upper {y z rho : ℝ} (hy : 1 < y) (hyz : y ≤ z)
+theorem finite_theta_abel_upper {y z rho : ℝ} (hy : 1 < y) (hyz : y ≤ z)
     (hrho : 0 ≤ rho)
     (htheta : ∀ t ∈ Set.Icc y z,
       (1 - rho) * t ≤ θ t ∧ θ t ≤ (1 + rho) * t) :
