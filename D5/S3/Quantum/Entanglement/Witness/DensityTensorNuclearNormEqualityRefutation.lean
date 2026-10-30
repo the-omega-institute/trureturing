@@ -402,6 +402,15 @@ theorem result : ¬ claim := by
       simp only [sf, LinearMap.sum_apply, Fin.sum_univ_two, LinearMap.add_apply,
         LinearMap.proj_apply, Fintype.prod_sum_type, Fin.prod_univ_two, he0, he1]
       norm_num only [Fin.val_zero, Fin.val_one]
+      change
+        x (.inl 0) 0 * x (.inl 1) (0 : Fin 4) * x (.inr 0) 0 * x (.inr 1) (0 : Fin 4) +
+        x (.inl 0) 0 * x (.inl 1) (0 : Fin 4) * x (.inr 0) 1 * x (.inr 1) (1 : Fin 4) +
+        x (.inl 0) 0 * x (.inl 1) (2 : Fin 4) * x (.inr 0) 0 * x (.inr 1) (2 : Fin 4) +
+        x (.inl 0) 0 * x (.inl 1) (2 : Fin 4) * x (.inr 0) 1 * x (.inr 1) (3 : Fin 4) +
+        x (.inl 0) 1 * x (.inl 1) (1 : Fin 4) * x (.inr 0) 0 * x (.inr 1) (0 : Fin 4) +
+        x (.inl 0) 1 * x (.inl 1) (3 : Fin 4) * x (.inr 0) 0 * x (.inr 1) (2 : Fin 4) +
+        x (.inl 0) 1 * x (.inl 1) (1 : Fin 4) * x (.inr 0) 1 * x (.inr 1) (1 : Fin 4) +
+        x (.inl 0) 1 * x (.inl 1) (3 : Fin 4) * x (.inr 0) 1 * x (.inr 1) (3 : Fin 4) = _
       ring
     rw [he]
     simpa only [Fintype.prod_sum_type, Fin.prod_univ_two, mul_assoc] using h
