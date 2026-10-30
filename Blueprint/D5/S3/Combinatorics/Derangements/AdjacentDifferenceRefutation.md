@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Derangements/AdjacentDifferenceRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a378495-adjacent-difference` (refuted) by `D5/S3/Combinatorics/Derangements/AdjacentDifferenceRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a378495-adjacent-difference","declaration_gid":"D5/S3/Combinatorics/Derangements/AdjacentDifferenceRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Kagey (2024). *OEIS A378495: derangements with no k-cycles*. URL: <https://oeis.org/A378495>.

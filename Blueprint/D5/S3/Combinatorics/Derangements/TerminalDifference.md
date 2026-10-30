@@ -160,6 +160,10 @@ $$\forall n \in \mathrm{Nat},\; 5 \le n \Rightarrow \operatorname{castQ}\left(\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Derangements/TerminalDifference.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a378495-terminal-difference` (proved) by `D5/S3/Combinatorics/Derangements/TerminalDifference.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a378495-terminal-difference","declaration_gid":"D5/S3/Combinatorics/Derangements/TerminalDifference.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Kagey (2024). *OEIS A378495: derangements with no k-cycles*. URL: <https://oeis.org/A378495>.

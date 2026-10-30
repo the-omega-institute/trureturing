@@ -120,8 +120,8 @@ Names below are relative to `TerminalDifference`; `Adjacent` means
 not an escape argument. The actual suppliers are the pinned Mathlib
 cycle-type cardinalities, support identities and finite-set partition,
 combined by logical decomposition and factorial/rational normalization.
-There is no frozen project theorem on the terminal proof's dependency
-path. The admission basis is `open-problem-resolution`, with the exact
+The terminal module imports only pinned Mathlib suppliers; it has no
+dependency on another project module. The admission basis is `open-problem-resolution`, with the exact
 preregistration above. The result Describe carries the typed Proved
 resolution claim for this dossier and names the exact canonical frozen
 declaration. Remote required CI and final independent integration review
