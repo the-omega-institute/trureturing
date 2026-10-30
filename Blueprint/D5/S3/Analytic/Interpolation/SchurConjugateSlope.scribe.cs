@@ -1,0 +1,66 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Interpolation;
+
+internal sealed class SchurConjugateSlopeDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Analytic/Interpolation/SchurConjugateSlope.";
+    private static Formula G => F.Id("g");
+    private static Formula A => F.Id("a");
+    private static Formula B => F.Id("b");
+    private static Formula Z => F.Id("z");
+    private static Formula R => Seq(Mathbb, Grp(F.Id("R")));
+    private static Formula C => Seq(Mathbb, Grp(F.Id("C")));
+    private static Formula Functions => Seq(C, Sp, To, Sp, C);
+    private static Formula All(string v, Formula type, Formula body) =>
+        Seq(Forall, Sp, F.Id(v), Sp, Colon, Sp, type, Comma, Sp, body);
+    private static Formula Eqn(Formula l, Formula r) => Seq(l, Sp, Eq, Sp, r);
+    private static Formula S(Formula a) => Call("S", G, a, B);
+    private static Formula I(Formula a) => Call("interpolant", G, a, B);
+    private static Formula Hypotheses => Seq(Call("Entire", G), Sp, Land, Sp,
+        D(0), Sp, Lt, Sp, B, Sp, Land, Sp,
+        new Formula.Power(A, D(2)), Sp, Plus, Sp, new Formula.Power(B, D(2)), Sp, Le, Sp, D(1));
+    private static Formula Bound(Formula l, Formula r) => Seq(Call("norm", Seq(l, Minus, r)),
+        Sp, Le, Sp, Call("abs", A), Call("M", G));
+    private static Formula Transport(Formula conclusion) => Disp(All("g", Functions,
+        All("a", R, All("b", R, Seq(Hypotheses, Sp, Implies, Sp, conclusion)))));
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Entire complex functions obey horizontal transport of their actual conjugate-pair divided differences on the closed unit disk.",
+        H("Horizontal transport of conjugate-pair slopes"),
+        Blocks(
+            Entry("norm", "diskNorm", "The original closed-disk norm",
+                Disp(All("g", Functions, Eqn(Call("M", G), Call("sSup", Call("normSecondDerivativeImageOfClosedUnitDisk", G))))),
+                "M(g) is the real supremum of the norms of the complex second derivative over the closed unit disk. For entire g the image is nonempty and bounded, by continuity and compactness.", DescribeRole.Definition),
+            Entry("slope", "slope", "The actual divided difference",
+                Disp(All("g", Functions, All("a", R, All("b", R,
+                    Eqn(S(A), Seq(Frac, Grp(Call("g", Seq(A, Plus, B, F.Id("i"))), Minus,
+                        Call("g", Seq(A, Minus, B, F.Id("i")))), Grp(D(2), B, F.Id("i")))))))),
+                "The two values are evaluated independently at a+ib and a-ib. No relation between those values is assumed. The denominator is nonzero when b>0.", DescribeRole.Definition),
+            Entry("interpolant", "interpolant", "The original two-node Lagrange expression",
+                Disp(All("g", Functions, All("a", R, All("b", R, All("z", C,
+                    Eqn(Call("interpolant", G, A, B, Z), Seq(
+                        Frac, Grp(Z, Minus, Grp(A, Minus, B, F.Id("i"))), Grp(D(2), B, F.Id("i")),
+                        Call("g", Seq(A, Plus, B, F.Id("i"))), Plus,
+                        Frac, Grp(Grp(A, Plus, B, F.Id("i")), Minus, Z), Grp(D(2), B, F.Id("i")),
+                        Call("g", Seq(A, Minus, B, F.Id("i")))))))))),
+                "For b>0 the displayed affine polynomial interpolates g at the distinct conjugate nodes. The formula uses complex division.", DescribeRole.Definition),
+            Entry("derivative", "interpolant_deriv", "The Lagrange derivative",
+                Disp(All("g", Functions, All("a", R, All("b", R, All("z", C,
+                    Eqn(Call("deriv", I(A), Z), S(A))))))),
+                "At every complex test point the derivative is the original divided difference. This identity is algebraic and does not require analyticity of g.", DescribeRole.Theorem),
+            Entry("transport", "slope_transport", "Horizontal transport for every entire function",
+                Transport(Bound(S(A), S(D(0)))),
+                "Let g be entire, let a and b be real, b>0 and a squared plus b squared at most one. Then |S(g,a,b)-S(g,0,b)| <= |a| M(g). Both signs of a and all closed-segment endpoints are included. The derivative of g is M(g)-Lipschitz on the closed disk. At each horizontal coordinate s between zero and a, the vertical divided difference of g prime therefore has norm at most M(g). Applying the real mean value bound to the actual slope gives the estimate. There is no real-coefficient hypothesis and no use of conjugation of function values.", DescribeRole.Theorem),
+            Entry("interpolant-transport", "interpolant_transport", "Transport of the actual interpolants",
+                Transport(All("z", C, Bound(Call("deriv", I(A), Z), Call("deriv", I(D(0)), Z)))),
+                "Under exactly the same hypotheses, the derivative of the actual interpolant differs from the imaginary-axis interpolant derivative by at most |a| M(g), at every complex point. This is the horizontal component of the uniform-error argument; the sharp imaginary-axis estimate is a separate analytic assertion.", DescribeRole.Theorem))));
+
+    private static DocumentBlock Entry(string id, string declaration, string title,
+        Formula formula, string prose, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create("schur-conjugate-slope-" + id),
+            DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.FromAuthor(formula),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+}
