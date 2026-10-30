@@ -8,8 +8,6 @@
 
 import D5.S3.Entropy.NamingWindow.SumProductUpdate
 import D5.S3.TotalVariation.Equality.FiberwiseEqualDistanceLift
-import Mathlib.Data.Fin.Rev
-import Mathlib.Tactic.Linarith
 
 /-! Brask–Chaves, arXiv:1607.08182v1, Eq. (7) and the conjecture following Eq. (25).
 Alice's communicated output is raw; only the output read by the inequality is relabelled.
