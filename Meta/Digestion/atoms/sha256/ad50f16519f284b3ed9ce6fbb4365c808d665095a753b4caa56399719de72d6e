@@ -1,0 +1,88 @@
+## 文献与项目来源
+
+<a id="ref-snapshot"></a>
+
+<strong>[1]</strong> the-omega-institute/trureturing.
+[固定提交 ce2773bd（dev，2026-10-29 UTC）](https://github.com/the-omega-institute/trureturing/commit/ce2773bd014df637336d2e89f83f220d8535c5be)；
+[相对 v20 的固定比较](https://github.com/the-omega-institute/trureturing/compare/837df9a7545012a9e669c61716dac078f5552d96...ce2773bd014df637336d2e89f83f220d8535c5be)。
+本文使用定向源码阅读与完整 theory 子树对照。
+
+<a id="ref-qprinciples"></a>
+
+<strong>[2]</strong> 项目：[量子原则与相干重构](https://github.com/the-omega-institute/trureturing/blob/ce2773bd014df637336d2e89f83f220d8535c5be/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md)。
+命题 3.4；定义及定理 11.1–11.5；公理接口 12.1–12.2。
+
+<a id="ref-pyramid"></a>
+
+<strong>[3]</strong> 项目：[AURIC FIB 金字塔基础公式与关系](https://github.com/the-omega-institute/trureturing/blob/ce2773bd014df637336d2e89f83f220d8535c5be/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)。
+第 2–4 节：五个事件幂等元、三坐标及 $\kappa$ 纤维。
+
+<a id="ref-threeaxis"></a>
+
+<strong>[4]</strong> 项目：[观察者内生三轴几何与预测接口](https://github.com/the-omega-institute/trureturing/blob/ce2773bd014df637336d2e89f83f220d8535c5be/docs/develop/theory/AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md)。
+第 3、7–9 节：投影残差、第三响应、未来充分性、Pauli 坐标和保留环境。
+
+<a id="ref-localmodels"></a>
+
+<strong>[5]</strong> 项目：[观察者相对局部模型与未来可辨识性](https://github.com/the-omega-institute/trureturing/blob/ce2773bd014df637336d2e89f83f220d8535c5be/docs/develop/theory/AURIC_FIB_ATOM_OBSERVER_RELATIVE_LOCAL_MODELS_AND_FUTURE_IDENTIFIABILITY.md)。
+第 9–10 节：来源校准、物理速率与钟势。
+
+<a id="ref-clockvolume"></a>
+
+<strong>[6]</strong> 项目：[局部时钟、因果场与纤维动力学](https://github.com/the-omega-institute/trureturing/blob/ce2773bd014df637336d2e89f83f220d8535c5be/docs/develop/theory/AURIC_FIB_ATOM_LOCAL_CLOCK_CAUSAL_FIELD_AND_FIBER_DYNAMICS.md)。
+混合参考输入；优先限定 Q2、Q13、Q14。
+
+<a id="ref-clockkernel"></a>
+
+<strong>[7]</strong> 项目：[局部时钟核与输出分辨接缝可见性](https://github.com/the-omega-institute/trureturing/blob/ce2773bd014df637336d2e89f83f220d8535c5be/docs/develop/theory/AURIC_FIB_ATOM_LOCAL_CLOCK_KERNEL_AND_OUTPUT_RESOLVED_SEAM_VISIBILITY.md)。
+混合参考输入及后续条件论证；假设 18、定理 19–21 明确保留相位与等待标定。
+
+<a id="ref-v16"></a>
+
+<strong>[8]</strong> 项目：[预测、递归、最优化与变分 v16](https://github.com/the-omega-institute/trureturing/blob/ce2773bd014df637336d2e89f83f220d8535c5be/docs/develop/theory/AURIC_PREDICTION_RECURSION_OPTIMIZATION_AND_VARIATION_V16.md)。
+前稿 XeLaTeX 的仓内转录；传播残差、历史态及有成本递归。
+
+<a id="ref-v18"></a>
+
+<strong>[9]</strong> 项目：[三角剖分、塌缩与递归酉门 v18](https://github.com/the-omega-institute/trureturing/blob/ce2773bd014df637336d2e89f83f220d8535c5be/docs/develop/theory/AURIC_TRIANGULATION_COLLAPSE_AND_RECURSIVE_UNITARY_GATES_V18.md)。
+前稿 XeLaTeX 的仓内转录；固定黄金数据、三读口保持的 Schur 通道及静态切面。
+
+<a id="ref-pw"></a>
+
+<strong>[10]</strong> D. N. Page and W. K. Wootters.
+<em>Evolution without evolution: Dynamics described by stationary observables</em>.
+Physical Review D 27, 2885–2892 (1983).
+[doi:10.1103/PhysRevD.27.2885](https://doi.org/10.1103/PhysRevD.27.2885).
+本文核对公开摘要，作为内部时钟条件描述的历史来源。
+
+<a id="ref-history"></a>
+
+<strong>[11]</strong> D. Aharonov, W. van Dam, J. Kempe, Z. Landau, S. Lloyd and O. Regev.
+<em>Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation</em>.
+SIAM Journal on Computing 37, 166–194 (2007).
+[arXiv:quant-ph/0405098](https://arxiv.org/abs/quant-ph/0405098).
+历史态与传播约束的标准背景；本文自足证明带权版本。
+
+<a id="ref-joint"></a>
+
+<strong>[12]</strong> T. Heinosaari, D. Reitzner and P. Stano.
+<em>Notes on Joint Measurability of Quantum Observables</em>.
+Foundations of Physics 38, 1133–1147 (2008).
+[arXiv:0811.0783](https://arxiv.org/abs/0811.0783).
+尖锐测量与一般 POVM 的兼容性区别。
+
+<a id="ref-program"></a>
+
+<strong>[13]</strong> T. Heinosaari and M. Tukiainen.
+<em>Notes on Deterministic Programming of Quantum Observables and Channels</em>.
+Quantum Information Processing 14, 3097–3114 (2015).
+[arXiv:1412.0419](https://arxiv.org/abs/1412.0419)，Proposition 4。
+固定后处理合同下不同尖锐可观测量的程序正交。
+
+<a id="ref-disturb"></a>
+
+<strong>[14]</strong> D. Kretschmann, D. Schlingemann and R. F. Werner.
+<em>The Information-Disturbance Tradeoff and the Continuity of Stinespring's Representation</em>.
+IEEE Transactions on Information Theory 54, 1708–1717 (2008).
+[arXiv:quant-ph/0605009](https://arxiv.org/abs/quant-ph/0605009).
+本文仅使用并自足证明全态精确零扰动的特例。

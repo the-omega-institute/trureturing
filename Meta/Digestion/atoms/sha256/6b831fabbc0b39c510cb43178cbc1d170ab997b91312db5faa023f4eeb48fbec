@@ -1,0 +1,14 @@
+**编者局部说明（C1）。** 首次使用量子投影时，$P$ 按正交 Hilbert 投影解释，即 $P=P^*=P^2$。仅有一般斜幂等 $P^2=P$ 不能推出这里所声称的酉性；下文分解与行列式公式使用该正交投影解释。
+
+v18 的勾股恒等式在此成为
+
+$$
+1=\left|\frac{\zeta(\sigma+it)}{\zeta(\sigma)}\right|^2
++\left\lVert{(W_t-m_\sigma(t)I)\sqrt{\rho_\sigma}}\right\rVert_{\rm HS}^2.
+$$
+
+证明只需展开第二项并使用 $\operatorname{Tr}\rho_\sigma=1$、
+$\operatorname{Tr}(\rho_\sigma W_t)=m_\sigma(t)$。它是概率和酉重叠的精确关系，不能在 $\sigma\le1$ 继续使用已经失去归一化的 $\rho_\sigma$。
+
+<a id="thm-double"></a>
+

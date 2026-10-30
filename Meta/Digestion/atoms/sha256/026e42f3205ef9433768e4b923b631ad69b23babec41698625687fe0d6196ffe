@@ -1,0 +1,22 @@
+#### 定义 7.1（算术对数 Hamiltonian）
+
+在 $\ell^2(\mathbb{N}_{\ge1})$ 上取
+
+$$
+H\lvert{n}\rangle{}=(\log n)\lvert{n}\rangle{},\qquad
+D(H)=\left\{\psi:\sum_n(\log n)^2|\psi_n|^2<\infty\right\}.
+$$
+
+这是自伴乘法算子，$W_t=e^{-itH}$ 为酉算子。
+$t$ 是对数谱的共轭读出参数，无须解释为外部物理时间。
+在 $\sigma>1$，定义
+
+$$
+\rho_\sigma=\frac{e^{-\sigma H}}{\zeta(\sigma)},\qquad
+\lvert{\psi_\sigma}\rangle{}=\frac{\sum_n n^{-\sigma/2}\lvert{n}\rangle{}}{\sqrt{\zeta(\sigma)}}.
+$$
+
+这里的算术 Hamiltonian 和全部整数态是显式新增输入，尚未由一个有限黄金门字实现。
+
+<a id="thm-pointer"></a>
+

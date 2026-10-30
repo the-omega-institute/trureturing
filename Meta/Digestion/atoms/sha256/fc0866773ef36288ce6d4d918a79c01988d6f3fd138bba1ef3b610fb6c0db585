@@ -1,0 +1,68 @@
+**证明 131.2（定理 128.2）。** 先在同一个实际纤维合成。
+由引理 131.1，
+
+$$
+\log G_y(\alpha)=\alpha c_0+|H|\log B+\log Z_L(\alpha)
+                         +\log\mathcal J_\eta(\alpha,y)+e_\alpha(y),
+\tag{131.7}
+$$
+
+其中 $N_p(e)$ 由 (131.1) 控制。
+式 (121.6) 中的模态常数与输出无关，所以
+$\Xi_\alpha(y)=\log G_y(\alpha)-\log G_0(\alpha)$ 精确成立。
+(131.7) 的前三项在此差中精确消去；引理 129.2 支付
+$\log(\mathcal J_\eta/\mathcal J_0)$ 的完整 $p$ 喷射。
+$\mathcal J_0$ 的 Gaussian 归一化同样在输出比中消去，剩下
+$\log(g_\alpha(y)/g_\alpha(0))$。
+推论 129.3 因此给 (128.4)，其中
+$\sqrt\delta=Q^{-1/4}$、$\eta\le C\delta^5$、$1/\delta=\sqrt Q$。
+每一步均在原完整质量或它的同输出比较上进行。
+
+为了明确阶数去权重，任意有限正后验满足
+
+$$
+\kappa_r(y)=(-1)^r\left.\partial_\alpha^r
+                  \log\sum_m(P_x^y(m))^\alpha\right|_1,
+\quad
+\Delta\kappa_r(y)=(-1)^r\partial_\alpha^r\Xi_\alpha(y)\big|_1,
+\quad r\ge2.
+\tag{131.8}
+$$
+
+第一式是惊讶的矩母函数
+$\sum_mP_x^y(m)e^{s[-\log P_x^y(m)]}=\sum_m(P_x^y(m))^{1-s}$；
+第二式用 (122.4) 第一行的精确有限恒等式，其仿射项在 $r\ge2$ 时消失。
+代入 $F$ 的定义，故 (128.5) 左侧至多
+
+$$
+\max_{2\le r\le p}r!\rho^{-r}N_p(F)
+ \le p!\max(1,\rho^{-p})N_p(F).
+\tag{131.9}
+$$
+
+由 (128.1)，
+
+$$
+\log\{p!\max(1,\rho^{-p})\}
+ \le p\log p+p\log\max(1,\rho^{-1})
+ = (1/64+o(1))\log Q\le\tfrac1{32}\log Q.
+\tag{131.10}
+$$
+
+所以第一误差项去权重后至多 $CQ^{-7/32}$。
+其余三项去权重后的对数额外成本为
+$O((p+1)\log[Q(p+2)]+\log Q)=o(\sqrt Q)$。
+$-cQ^4+L+CQ^2$ 仍为负的 $Q^4$ 阶，因为 $L\le lQ^3$。
+三项最终均小于 $Q^{-1/4}$ 的任意固定正倍数。
+因此它们与 $CQ^{-7/32}$ 之和最终小于 $Q^{-1/8}$。
+这给原始未归一化累积量的 (128.5)，并非只给 Taylor 系数误差。
+
+最后使用证明 127.2 的原好事件穷尽。对任意 $\zeta>0$，先固定一个原常数类，
+使其补集概率对 pair、path 及全部确定大小 $q$ 支持的上确界最终小于 $\zeta$。
+在这个同一类上，(128.5) 对全部 $2\le r\le p(Q)$ 同时成立，
+其阈值可依赖该类及原确定噪声序列。对每个固定 $\varepsilon>0$，
+$Q^{-1/8}<\varepsilon$ 最终成立，故 (128.6) 的上极限至多 $\zeta$。
+令 $\zeta\downarrow0$ 即得结论。
+没有对导数阶数另选好事件；原支持置换等变性及紧输出上确界的可测性仍按证明 127.2 使用。
+完整有限系数族 (128.3) 在首项抵消时也不作替换。∎
+

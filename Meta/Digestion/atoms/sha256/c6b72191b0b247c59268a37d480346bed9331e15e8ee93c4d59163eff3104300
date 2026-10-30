@@ -1,0 +1,32 @@
+#### 命题 6.3（平方平均不控制指定相位的点值）
+
+对任意固定 $\mathbf z_0\in\mathbb{T}^{\mathcal P}$，不存在常数 $C$ 使所有有限字符多项式都满足
+$|f(\mathbf z_0)|\le C\left\lVert{f}\right\rVert_2$。
+
+**证明。**
+
+取
+
+$$
+g_N(\mathbf z)=N^{-1/2}\sum_{n=1}^N
+\overline{\chi_n(\mathbf z_0)}\chi_n(\mathbf z).
+$$
+
+正交性给 $\left\lVert{g_N}\right\rVert_2=1$，但 $g_N(\mathbf z_0)=\sqrt N$。
+
+∎
+
+在算术相位 $\mathbf z(t)=(p^{-it})_p$ 上，只有在 $a>1$ 时，以上级数的绝对收敛直接给出
+$F_a(\mathbf z(t))=\zeta(a+it)$。
+当 $1/2<a\le1$，$L^2$ 等价类不能自动在这条轨道上取值；例如 $\mathbf z=1$ 上的正项和仍发散。
+解析延拓、Haar 几乎处处的陈述、指定算术点的读出，是不同的数学任务。
+
+**一个确实存在的 Hilbert 空间。**
+
+对平方可和系数 $b_n$，$f(s)=\sum b_nn^{-s}$ 在 $\operatorname{Re} s>1/2$ 有界点评价，
+因为 Cauchy–Schwarz 给
+$|f(s)|^2\le\sum|b_n|^2\,\zeta(2\operatorname{Re} s)$。
+它的再生核为 $K(s,w)=\zeta(s+\overline w)$。这是精确的谱–Hilbert 联系；此时 $\operatorname{Re}(s+\overline w)>1$，所以核正性没有提前证明临界带内的零点定理。上一命题考察圆周边界点，故与这里的半平面内点评价并不矛盾。
+
+<a id="section-7"></a>
+

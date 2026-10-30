@@ -1,0 +1,14 @@
+**定义 72.1（条件推导的供应对应）。** §§69–71 的数学对象固定为 v15 的复振幅表示；其承重接续按下表取值。`repo-derived` 指这些实际来源、地址、响应和完整输出之间的综合推导，不主张一般平方律、离散尺度或无信号机制的文献优先权。
+
+| 供应与位置 | 消费的内容及没有供应的接口 |
+| --- | --- |
+| [v15，式 (3.1)–(3.2)、定理 4.3、6.1–6.2](AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md)；Freedman–Larsen–Wang，math/0103200，§6 定理 6.2 | 固定 $K$、正向逆替换、二维闭包、十站点码及全扇区逼近。概率公设取出后，只消费这些振幅及算符范数结论；不消费 v15 推论 6.3 的 Born 概率误差。 |
+| 本卷 §68 | 五站点全零来源的逐字振幅、相位与原两设置；不供应十站点基字初始化或多体密度。式 (69.3)、(69.7)–(69.9) 给该来源的非幂律余量及额外设置。 |
+| [原卷命题 5.1、定义 5.2、定理 5.3](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md)；[EffectProbabilityExtension](../../../Blueprint/D5/S3/Quantum/Foundation/EffectProbabilityExtension.md) 的 `effect_real_homogeneity`、`effect_cone_extension`、`effect_linear_extension`、`effect_density_representation` | 平方律及 Busch 全效果表示是既有供应。全效果函数的可加性比 (71.1) 的有限菜单条件不同；这里通过原生可达性和固定本征第二行取得所需单位区间可加性，不假设已取得全效果。 |
+| [SpatiotemporalBornRuleDichotomy](../../../Blueprint/D5/S3/Quantum/Measurements/SpatiotemporalBornRuleDichotomy.md) 的 `BornRuleExists`、`born_identity`、`ray_identity`、`two_ray_equation`、`result` | 对密度态、CPTP 映射和已定义的顺序迹概率研究共同算子表示；这些公开或私有结果不提供 (69.2) 的未知终端响应或固定 $K$ 取得桥。 |
+| [MoranComplexDimensions](../../../Blueprint/D5/S3/Constants/MoranComplexDimensions.md) 的 `moran_complex_dimension`；Sornette，cond-mat/9707012v2，§§2、3.1 | 前者是等比例 Moran 方程的复解，后者给离散尺度和对数周期的成熟机制。它们不等于本源的逐字概率断言；(69.4) 的模长取样才是此处消耗该机制的对应。 |
+| Aaronson，[quant-ph/0401062v2，§2](https://arxiv.org/html/quant-ph/0401062v2)；Galley–Masanes，[1801.06414v4，§5.2、式 (21)](https://arxiv.org/html/1801.06414v4) | 前者分析归一幂律及不同动力学选择下的信号机制，后者明确该族的限制并给更一般无信号测量修改。定理 71.1 扩展到 (69.1) 声明的径向类，不将这些一般问题误当作新的发现，也不覆盖后者的全部 OPF／组合修改。 |
+| Han–Choi，[Scientific Reports 6, 22986，推导式 (2)、(5)–(10) 与 Methods](https://doi.org/10.1038/srep22986) | 其局部二结果响应、投影后的归一后继及 Alice-first／Bob-first 联合律相等，属于保留状态约化的空间类因果前提。这里仅定义一次完整终端律 (69.2)，不供应中间塌缩或用该先后次序条件替代 (71.1)。 |
+| Masanes–Galley–Müller，[1811.11060v2，§II.4 的 measurement theorem、条件 (7)–(14)](https://arxiv.org/html/1811.11060v2) | 在各维度的 OPF 家族、闭合操作、相容且结合的组合及有限状态估计条件下取得一般测量表示。这里的单一有限寄存器径向响应假设不同，未从固定门菜单建立那些组合与估计前提。 |
+| Cavendish，[2610.22823v1，定理 1、§§3.3、4.3、6.1、6.11](https://arxiv.org/html/2610.22823v1) | $\mathrm{NS}\Rightarrow\mathrm{POVM}$ 的方向使用 EQC 与 SMQC，不使用 IP；反向使用 IP。EQC 要求每个 qubit 方向与每个可用实验的孤立复合存在；SMQC 明定 $|\alpha|^2p(\psi)+|\beta|^2p(\phi)$ 的标准边缘。§3.3 明确将限于真子集的制备问题留开。定理 71.1 不调用该结论，而以 (70.3)、(70.6) 处理实际有限字、以 (71.4) 推导平方律，未预供 SMQC。 |
+

@@ -389,6 +389,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("dead_initializer_is_removable_without_lock_age")]
     [InlineData("live_initializer_is_retained")]
     [InlineData("native_clearance_keeps_dead_initializer_exclusive_until_removal")]
+    [InlineData("final_qualification_reuses_owned_initializer_scope")]
     [InlineData("failed_initialization_recovers_in_place_idempotently")]
     [InlineData("large_initialization_checkout_preserves_partial_bytes")]
     [InlineData("owned_unregistered_branch_can_resume")]
@@ -401,6 +402,43 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("removal_record_mismatch_reconverges_and_keeps_both_roots")]
     [InlineData("reconvergence_interruption_retains_record_and_recovery_objects")]
     public void LockTaxonomyAndRecoveryPreserveBothSnapshots(string probe)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
+                root, "ProtocolTests.test_" + probe], root, TimeSpan.FromSeconds(90), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Theory]
+    [InlineData("removal_payload_failure_retains_registration_and_resumes")]
+    [InlineData("removal_payload_process_death_retains_registration_and_resumes")]
+    [InlineData("native_unregistration_failure_leaves_only_git_link")]
+    [InlineData("removal_refuses_nested_repository_before_any_payload")]
+    [InlineData("qualification_keeps_nonremoval_nested_cache_eligibility")]
+    [InlineData("removal_refuses_gitlink_before_any_payload")]
+    [InlineData("removal_refuses_submodule_before_any_payload")]
+    [InlineData("removal_refuses_foreign_worktree_before_any_payload")]
+    [InlineData("removal_refuses_bare_repository_before_any_payload")]
+    [InlineData("removal_rechecks_native_lock_after_checkpoint_before_payload")]
+    [InlineData("removal_rechecks_lock_after_nested_git_scan")]
+    [InlineData("removal_rechecks_lock_after_payload_planning")]
+    [InlineData("final_refusal_evaluation_immediately_precedes_payload_action")]
+    [InlineData("final_refusal_evaluation_immediately_precedes_empty_unregistration")]
+    [InlineData("removal_rechecks_gitlinks_after_nested_git_scan")]
+    [InlineData("removal_rechecks_target_identity_after_checkpoint_before_payload")]
+    [InlineData("removal_resumes_after_worktree_ignore_is_deleted")]
+    [InlineData("removal_with_deleted_ignore_retains_new_ordinary_file")]
+    [InlineData("removal_native_timeout_uses_remaining_payload_budget")]
+    [InlineData("removal_expired_budget_never_starts_native_unregistration")]
+    [InlineData("removal_payload_alarm_keeps_record_and_can_resume")]
+    [InlineData("force_removal_disables_only_the_removal_budget")]
+    public void RemovalKeepsRegistrationUntilPayloadIsGone(string probe)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();

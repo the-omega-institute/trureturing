@@ -1,0 +1,73 @@
+**定理 65.2（含全部原始字的联合终端概率）。** 对全部 $\mathbf s$，包括重复源，令
+$\mathbf x=(x_0,x_1,x_2)$，下标按模三计算，并置
+
+$$
+ A_{\mathbf s}^X(\mathbf x)=\prod_{j=0}^2d_{s_j}^X(x_j),\qquad
+ A_{\mathbf s,\epsilon}^X(\mathbf x)=\prod_{j=0}^2d_{s_{j+\epsilon}}^X(x_j).
+\tag{65.2}
+$$
+
+则对比较位结果 $z\in\{0,1\}$ 及每个完整块字三元组，
+
+$$
+ p_{\mathbf s,\epsilon,o}^X(z,\mathbf x)
+ =\frac14\left|A_{\mathbf s}^X(\mathbf x)
+             +(-1)^ze^{i\phi_o}A_{\mathbf s,\epsilon}^X(\mathbf x)\right|^2.
+\tag{65.3}
+$$
+
+相应物理字为 $w=J_L(z,x_0,x_1,x_2)$，并且对任意 $B\in\Sigma$，
+
+$$
+ \Pr\{\mathsf R\in B,\mathsf E=\epsilon,\mathsf O=o,
+              w=J_L(z,\mathbf x)\}
+ =\sum_{\mathbf s\in T_D^3}\nu_{\mathbf s,\epsilon,o}(B)
+                    p_{\mathbf s,\epsilon,o}^X(z,\mathbf x).
+\tag{65.4}
+$$
+
+所有不在 $J_L$ 像内的物理字质量为零；码内未被 (64.3) 或其循环支支持的字质量也为零。
+$(65.3)$ 非负且对全部 $z,\mathbf x$ 求和为一；$(65.4)$ 保留完整记录概率，总质量为一。
+不需要连续记录空间上的“每点一个归一正交记录向量”。
+
+证明。先固定 $\mathbf s,\epsilon,o$，比较位首个旋转产生
+$(|0\rangle+|1\rangle)/\sqrt2$。中间受控循环与相位作用后，
+两个比较分支的三块振幅分别是 $A_{\mathbf s}$、$e^{i\phi_o}A_{\mathbf s,\epsilon}$。
+末个 $R_y(-\pi/4)$ 给原生字的完整振幅
+
+$$
+ e^{i\chi_\epsilon-i\phi_o/2}\frac{(-1)^z}{2}
+ \left[A_{\mathbf s}^X(\mathbf x)+(-1)^ze^{i\phi_o}
+                                      A_{\mathbf s,\epsilon}^X(\mathbf x)\right].
+\tag{65.5}
+$$
+
+这展示了比较位一支的负号和编译的全部整体相位；Born 合同给 (65.3)。
+对 $z$ 求和消去交叉项，剩下 $(|A|^2+|A_\epsilon|^2)/2$；
+两项各对全部字求和为一，故没有失败分支被归一化掩盖。
+(64.4) 的零终端泄漏给码外零质量，(64.3) 的零系数给其余原始零事件。
+比较位一的结果是被保留的终端记录，不是被丢弃的失败。
+
+更一般，对任意三块密度算子 $\rho$ 及旁观量子参考，令
+
+$$
+ B_{z,\mathbf x}=\frac12\langle\mathbf x|
+                   [I+(-1)^ze^{i\phi_o}T^\epsilon],\qquad
+ E_{z,\mathbf x}=B_{z,\mathbf x}^\dagger B_{z,\mathbf x}.
+\tag{65.6}
+$$
+
+这些效果之和为恒等，实际字读出与它们在比较位初始为零的输入切片上对应；
+对参考的未归一条件态是
+$(B_{z,\mathbf x}\otimes I)\rho(B_{z,\mathbf x}^\dagger\otimes I)$。
+省略的 $(-1)^z$ 和整体相位在该式中相消。因此对应并不只是在语法已知的态上成立。
+本式只描述终端字效果及未触动参考，不把被完整测量的三块宣告为保留的量子输出，
+也不把它当作 §54 的共同拒绝或 Lüders 仪器。
+
+最后在每个实际分量记录测度上积分，得到 (65.4)。来源和设置的指标有限，
+对每个分量的量子条件态及字固定，故可数可加性由 $\nu$ 直接给出。
+$\sum_{\mathbf s,\epsilon,o}\nu_{\mathbf s,\epsilon,o}(\mathcal R)=1$ 给总归一化。
+同一三元组可有许多不同控制记录，零分量无需条件化；
+制备、控制、读出所共有的随机性一直留在 $\nu$ 内，没有被三个来源边缘律替代。
+这里推广的是 §63 实际记录测度的来源特定接续，不把独立初始化与无条件独立混用。∎
+

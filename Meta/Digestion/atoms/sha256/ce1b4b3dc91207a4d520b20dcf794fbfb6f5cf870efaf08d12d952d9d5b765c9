@@ -1,0 +1,41 @@
+**Convention 1.3 (Whole suppliers and the additional inference).** The
+[complete bipartite optimizer](FIEDLER_RESISTANCE_GENERAL_BIPARTITE_OPTIMIZER.md),
+Theorem 4.1, supplies the whole labelled $K_{k,k}$ optimization for every
+$k\ge4$: its product maximum is $k(4k-3)$, its unique normalized equality
+assignment has every edge $1/k$, and that assignment has original-vertex
+spectrum $0,1$ with multiplicity $2k-2$, and $2$.
+For $c=a+b$, its actual-object map is the bijection from the first
+bipartite class to $A\sqcup B$ and from the second class to $C$.
+The edges of this $K_{c,c}$ are precisely $E_{AC}\sqcup E_{BC}$ on the
+same $2c$ original vertices. Assigning zero to $E_{AB}$ gives exactly
+its Laplacian and its full original-pair resistance. There is no
+contraction or change of vertex measure. Since $c=a+b\ge4$, all the
+hypotheses of that whole supplier hold, even when $a=2$ or $b=2$.
+
+The [two-hub optimizer](FIEDLER_RESISTANCE_K2M_OPTIMIZER.md), Theorem 2.1,
+and the [three-hub optimizer](FIEDLER_RESISTANCE_K3M_OPTIMIZER.md),
+Theorems 2.2–4.1, concern the complete positive domains on $K_{2,m}$ and
+$K_{3,m}$. Their vertices and edges are bipartite; the original edges
+$E_{AB}$ in (1.1) are additional coordinates. Those whole conclusions
+are therefore not comparisons for $\mathcal P_{a,b,c}$. The two-hub
+Theorem 2.1 also supplies, within its proof, the elementary spectral
+comparison $\sum q_k/(1+q_k)\ge S/(1+S)$ for nonnegative $q_k$ of sum $S$,
+which is used as an intermediate step below.
+
+Rosa–Harman,
+[*Laplacian Network Optimization via Information Functions*,
+arXiv:2512.19279v1](https://arxiv.org/pdf/2512.19279v1), §2.3, define
+$\Phi_A=(n-1)/\operatorname{tr}L^+$ and $\Phi_E=\lambda_2$ after reversing
+their decreasing eigenvalue order to the increasing order here.
+Consequently $F=n(n-1)\Phi_E/\Phi_A$. Their prescribed-edge-count
+optimization and Ghosh–Boyd–Saberi's conductance-budget minimization
+have different feasible sets from (1.1) or $R=R_0$.
+
+The additional deductions here are the simultaneous trace constraint
+from all three independent parts, its strict positive-domain bound,
+the complete original-labelled boundary classification, the resulting
+strict gap for each other fixed triple, and the characterization of
+every maximizing sequence. The cited bipartite equality assignment is
+used in full for the boundary sufficiency; it is not asserted to
+optimize the tripartite positive domain by itself.
+

@@ -1,0 +1,67 @@
+**Lemma 14.2 (A weighted certificate on every nonempty subset).** For any law of Definition 1.1 with $\delta>0$, define from its actual marginals
+
+$$
+\alpha_i=y_i^{-2},\qquad
+W_T=\sum_{i\in T}\alpha_i,\qquad
+W=\sum_{i=1}^s\alpha_i,\qquad
+M=\max_{\substack{U\subseteq[s]\\|U|=a}}W_U.
+\tag{14.3}
+$$
+
+For every nonempty $T\subseteq[s]$, put $k=|T|$ and
+
+$$
+G_y(T)=(r-k)\big[(2r-1)M-(r+k)W_T\big].
+\tag{14.4}
+$$
+
+Then $G_y(T)\ge0$, and its complete zero set is
+
+$$
+G_y(T)=0
+\quad\Longleftrightarrow\quad
+k=r\ \text{ or }\ (k=a\ \text{ and }\ W_T=M).
+\tag{14.5}
+$$
+
+For the same original law one has the exact decomposition
+
+$$
+\boxed{\quad
+H(x)=r^2\sum_{i=1}^s\frac1{y_i}-\gamma M
+       +\mathbb E_xG_y(T).
+\quad}
+\tag{14.6}
+$$
+
+In particular this certificate requires neither density nor localization of the marginals.
+
+**Proof.** If $k\le a$, extend $T$ to an $a$-subset. The positive weights give $W_T\le M$. For $k<a$ it follows that
+
+$$
+(2r-1)M-(r+k)W_T
+\ge(a-k)M>0,
+$$
+
+so $G_y(T)>0$. At $k=a$ it equals $(2r-1)(M-W_T)$, giving the second zero case of (14.5). At $k=r$ it vanishes. The only remaining cardinality is $k=s=r+1$, for which $T=[s]$ and
+
+$$
+G_y([s])=(2r+1)W-(2r-1)M\ge2M>0.
+$$
+
+This proves the inequality and every equality case on the whole allowed cardinality range. Expanding (14.4) gives
+
+$$
+G_y(T)=(k^2-r^2)W_T+(2r-1)(r-k)M.
+$$
+
+Since $\mathbb E_x(r-K)=\delta$ and
+
+$$
+\mathbb E_x W_T
+=\sum_i\alpha_i\mathbb E_x I_i
+=\sum_i\frac1{y_i},
+$$
+
+taking expectation proves (14.6). The passage from a pointwise inequality to an expectation bound is the classical weak-duality principle; see D. Bertsimas and I. Popescu, *Optimal inequalities in probability theory: A convex optimization approach*, SIAM J. Optim. 15(3), 780–804, DOI [10.1137/S1052623401399903](https://doi.org/10.1137/S1052623401399903), Theorem 2.1. The explicit expression (14.4) supplies its pointwise inequality here. All weights and expectations in (14.6) are computed from $x$. ∎
+

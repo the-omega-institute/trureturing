@@ -1,0 +1,46 @@
+**Lemma 3.3 (Uniform bounded conditional moment on the rare branch).** For each fixed $M>0$ there are constants $A_M,C_M$, depending only on $M$, such that for every $a\ge A_M$, $\delta\in[0,1]$, and actual law with
+
+$$
+t<t_{\rm conv},\qquad d\le M W_a(\delta),\tag{3.6}
+$$
+
+one has $m\le C_M$ and
+
+$$
+d\ge\frac{m^2}{t}+(2a^3-C_Ma^2)t,\qquad
+\delta\ge a(1-C_M/a)t.\tag{3.7}
+$$
+
+The constants are independent of $\delta$, the support, all positive marginal sizes, and the choice of a least marginal.
+
+**Proof.** The rare branch is empty when $\delta=0$. Otherwise (3.1) gives $t\le C\delta/a$ with an absolute constant. By Lemma 2.2,
+
+$$
+m^2\le td+C_0a^2t^2.\tag{3.8}
+$$
+
+If $0<\delta\le a^{-1/2}$, use
+$W_a(\delta)\le a/\delta+2a^2\delta$, which follows either by (3.5) or by evaluating the scalar objective at $\delta/a$. Then
+
+$$
+m^2\le C_M(1+a\delta^2+\delta^2)=O_M(1).
+$$
+
+If $\delta\ge a^{-1/2}$, then $W_a(\delta)\le2\sqrt2\,a^{3/2}$ and (3.8) first gives
+
+$$
+m^2\le C_M(\delta\sqrt a+\delta^2)=O_M(\sqrt a),\qquad
+m=O_M(a^{1/4}).
+$$
+
+The coefficient in the second certificate of (2.9) is therefore
+
+$$
+C_a-E_a(m-1)-\mathcal A_\theta(t)
+=2a^3+O_M(a^{9/4})\ge a^3
+$$
+
+for all sufficiently large $a$ depending only on $M$. Thus
+$d\ge m^2/t+a^3t$. Since $d=O_M(a^{3/2})$ in this case, it follows that $t=O_M(a^{-3/2})$ and $m^2\le dt=O_M(1)$. In both cases $m=O_M(1)$. Substitution back in the same certificate makes its coefficient $2a^3+O_M(a^2)$, proving the first inequality in (3.7). The actual capacity (2.2) and $\mu\le m$ give
+$r-\mu=a+1-\mu\ge a-C_M$, proving the second. ∎
+

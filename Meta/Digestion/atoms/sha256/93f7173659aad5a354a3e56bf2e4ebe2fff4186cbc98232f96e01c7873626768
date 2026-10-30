@@ -1,0 +1,53 @@
+**Theorem 5.1 (The primary crossover and its necessary rare structure).** Define
+
+$$
+F(c)=\min_{0<\tau\le c}\left(\frac1\tau+2\tau\right)
+=\begin{cases}
+1/c+2c,&0<c\le1/\sqrt2,\\
+2\sqrt2,&c\ge1/\sqrt2.
+\end{cases}\tag{5.1}
+$$
+
+If $\sqrt a\,\delta_a\to c\in(0,\infty)$, then
+
+$$
+\frac{D_a(\delta_a)}{a^{3/2}}\longrightarrow F(c).\tag{5.2}
+$$
+
+For every fixed $0<c_-\le c_+<\infty$, uniformly for $c_-\le\sqrt a\,\delta\le c_+$,
+
+$$
+D_a(\delta)=a^{3/2}F(\sqrt a\,\delta)+O_{c_-,c_+}(a^{1/2}).\tag{5.3}
+$$
+
+If actual laws $x_a$ in the regime of (5.2) satisfy
+$d(x_a)/a^{3/2}\to F(c)$, then for every choice of a least-marginal label $e_a$,
+
+$$
+a^{3/2}y_{e_a}\longrightarrow\min\{c,1/\sqrt2\},\qquad
+\mathbb E[K^2\mid e_a\in T]\longrightarrow1,\qquad
+\mathbb P(T=\{e_a\}\mid e_a\in T)\longrightarrow1.
+\tag{5.4}
+$$
+
+All other marginals tend uniformly to one, and $e_a$ is eventually unique.
+
+**Proof.** The explicit scalar formula gives
+$S_a(\delta)=a^{3/2}F(\sqrt a\,\delta)$. On any of the stated compact intervals this is $O(a^{3/2})$, and is less than $2a^2$ eventually. Thus $W_a=S_a$ there. The relative error $O(1/a)$ of Theorem 3.4 proves (5.3) and (5.2).
+
+For the structure, Corollary 3.5 applies to $x_a$ with one fixed $M$. Thus $\tau=a^{3/2}t$ stays in a compact subinterval of $(0,\infty)$ and $m$ is bounded. Equation (3.11) implies that every limit point of $\tau$ is at most $c$. Along any subsequence where $\tau\to\tau_*$ and $m^2\to m_*^2$, (3.10) gives
+
+$$
+F(c)\ge\frac{m_*^2}{\tau_*}+2\tau_*
+\ge\frac1{\tau_*}+2\tau_*\ge F(c).
+$$
+
+The constrained scalar minimum has the unique minimizing point $\min\{c,1/\sqrt2\}$. Thus $\tau_*$ is that point and $m_*^2=1$. Every subsequence has the same possible limits, proving the first two conclusions in (5.4); $3\beta\le m^2-1$ proves the third. Finally
+
+$$
+\sum_{i\ne e_a}(1-y_i)=r-(q-t)=\delta_a+t\longrightarrow0.
+\tag{5.5}
+$$
+
+So all the other marginals tend uniformly to one, whereas $t\to0$. This proves eventual uniqueness. ∎
+

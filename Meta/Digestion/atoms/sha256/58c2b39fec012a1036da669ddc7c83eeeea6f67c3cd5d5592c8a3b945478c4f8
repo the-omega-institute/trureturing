@@ -1,0 +1,89 @@
+**Theorem 3.1 (The fixed-$r$ remainder as a stability estimate).** For every integer $r\ge5$, every profile on $[r]$ with $q\in[r-1,r]$ satisfies $J_r(x)\ge F_r(q)$. Write
+
+$$
+\Delta=J_r(x)-F_r(q),\qquad
+p_{\mathrm{low}}=\sum_{|T|\le r-2}x_T.
+$$
+
+Then
+
+$$
+\Delta\ge3(r-1)p_{\mathrm{low}}
++\frac{(r-1)^2}{2}\sum_{i=1}^r\left(y_i-\frac qr\right)^2,\tag{3.1}
+$$
+
+$$
+\|x-x^*(q)\|_1
+\le\frac{\sqrt{2r}}{r-1}\sqrt\Delta+\frac23\Delta.\tag{3.2}
+$$
+
+Equality $J_r(x)=F_r(q)$ holds exactly for $x=x^*(q)$, including $q=r-1$ and $q=r$.
+
+**Proof.** The following type identity is the intermediate structure needed for the estimates, rather than an assumption of equal marginals. For $\theta=q-a$ define
+
+$$
+R_i=w_i-a^2y_i-(2r-1)\theta.
+$$
+
+Expansion separately over types containing and avoiding $i$ gives
+
+$$
+R_i=\sum_{T\not\ni i}(2r-1)(r-|T|-1)x_T
++\sum_{T\ni i}(r-|T|)(r-|T|-1)x_T.\tag{3.3}
+$$
+
+All occurring coefficients are nonnegative: a type avoiding $i$ has $|T|\le r-1$, and the other product vanishes at $|T|=r-1,r$. For a type of cardinality $k\le r-2$, its coefficient in $\sum_iR_i$ is
+
+$$
+(r-k)(r-k-1)(2r-1+k)\ge6(r-1).
+$$
+
+To verify the last inequality for all such integers, set $z=r-k\in\{2,\ldots,r-1\}$. The expression is $z(z-1)(3r-z-1)$; its increment from $z$ to $z+1$ is $3z(2r-z-1)>0$, and its value at $z=2$ is $6(r-1)$. Since $y_i\le1$,
+
+$$
+J_r(x)=\sum_{i=1}^rh_\theta(y_i)+\frac12\sum_i\frac{R_i}{y_i^2}
+\ge\sum_i h_\theta(y_i)+3a p_{\mathrm{low}},
+$$
+
+$$
+h_\theta(y)=\frac{a^2}{2y}+\frac{(2r-1)\theta}{2y^2},\qquad
+h_\theta''(y)=\frac{a^2}{y^3}+\frac{3(2r-1)\theta}{y^4}\ge a^2
+\quad(0<y\le1).
+$$
+
+The ordinary strong-convexity inequality, summed at $y=q/r$ using $\sum_i(y_i-q/r)=0$, yields
+
+$$
+\sum_i h_\theta(y_i)\ge r h_\theta(q/r)
++\frac{a^2}{2}\sum_i(y_i-q/r)^2.
+$$
+
+The first term is $F_r(q)$, as is also seen by substituting $x^*$. This proves (3.1). The convexity inequality and Cauchy–Schwarz used here are standard; their consumers are the quantitative remainder and the cross-hub and finite-graph conclusions below.
+
+For the distributional estimate, put
+
+$$
+p=p_{\mathrm{low}},\qquad
+\varepsilon=\sum_{|T|\le a-1}(a-|T|)x_T,\qquad
+l_i=\sum_{\substack{|T|\le a-1\\i\notin T}}x_T.
+$$
+
+The mean identity implies $x_{[r]}=\theta+\varepsilon$, and the marginal identity implies
+
+$$
+x_{[r]\setminus\{i\}}-\frac{r-q}{r}
+=-(y_i-q/r)-l_i.
+$$
+
+Here $0\le\varepsilon\le(a-1)p$ and $\sum_i l_i=\varepsilon+p$. Thus
+
+$$
+\begin{aligned}
+\|x-x^*(q)\|_1
+&\le\sum_i|y_i-q/r|+2\varepsilon+2p\\
+&\le\sqrt r\left(\sum_i(y_i-q/r)^2\right)^{1/2}+2ap.
+\end{aligned}\tag{3.4}
+$$
+
+Combining (3.4) with (3.1) gives (3.2). Finally $\Delta=0$ forces $p=0$ and every $y_i=q/r$. The displayed identities then give exactly $x^*(q)$. Conversely that candidate attains $F_r(q)$ by Definition 1.2. The proof did not require either $\theta$ or $1-\theta$ to be positive. ∎
+

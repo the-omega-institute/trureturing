@@ -1,0 +1,43 @@
+#### 定理 3.4（固定绝对后接门的商上递归判据）
+
+给 $A,B\in G$，按
+$(U,V)\mapsto(AU,BV)$ 更新。其相对输出为
+
+$$
+R'=V^\dagger(B^\dagger A)V R.
+$$
+
+这一输出对同一 $R$ 的所有代表无关，当且仅当
+
+<a id="equation-4"></a>
+
+<a id="eq-center"></a>
+
+$$
+\boxed{B^\dagger A\in Z(G).}
+\tag{4}
+$$
+
+全群 $G=\operatorname{U} (d)$ 时，中心是标量相位。
+
+**证明。**
+
+乘法给第一式。令 $C=B^\dagger A$。若 $C$ 在中心，$V^\dagger CV=C$，所以 $R'=CR$。反之考察所有 $R=I$ 的代表 $(V,V)$；输出独立于 $V$ 要求 $V^\dagger CV=C$ 对全部 $V\in G$ 成立，正是中心条件。
+
+∎
+
+例如取 $A=Z,B=I$。$(I,I)$ 与 $(H,H)$ 原来都给 $R=I$，更新后却分别给 $Z$ 与 $HZH=X$，用 $\lvert 0\rangle$ 和标准读口即可区分。因此删去共同框架后，不能无说明地继续调用原来固定的绝对门。
+
+有两种明确的修复。共同换框架时，把控制菜单也协变：
+$A\mapsto WAW^\dagger,B\mapsto WBW^\dagger$；或保留内生相对增量
+$D=V^\dagger B^\dagger AV$，使 $R'=DR$。若接口直接供应右侧增量
+$U'=Ua,V'=Vb$，则
+
+$$
+R'=b^\dagger Ra
+$$
+
+自动闭合；这只是声明的参考接口乘法，不能悄悄改称物理最先施加的门。
+
+<a id="statement-3-5"></a>
+

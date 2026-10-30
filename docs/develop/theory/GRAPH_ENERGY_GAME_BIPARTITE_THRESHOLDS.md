@@ -1758,3 +1758,1732 @@ $$
 本定理确定定义 5.2 的全部 $Z_a=\{a\}$（$a\ge5$）。其量词不改变定理 2.1 中 $a=2$ 的额外零赤字情形，也不改变定理 3.1 的星图边界；定理 5.1 与定理 6.1 分别处理 $a=3,4$。式 (7.23) 仅断言所述联盟严格阻塞，未确定 $b>a$ 时 $D_{a,b}$ 的精确值或全部最大联盟。∎
 
 ## 追加锚（本行以下为增补区）
+## 8. 联合参数的定量赤字与实际联盟
+
+本节固定自然对数 $L=\log a$ 及
+
+$$
+\delta=\frac1a-\frac1b=\frac{b-a}{ab}>0,
+\qquad
+H=H(a,b)=U_{a,b}-\frac12,
+$$
+
+其中 $U_{a,b}$ 是 (7.2) 的实际阶乘 Shapley 份额。所有联盟仍是实际标号联盟；若其两侧计数为 $(i,j)$，就取恰好 $i$ 个指定的 $A$ 顶点和 $j$ 个指定的 $B$ 顶点。由两侧内部置换，赤字只依赖于 $(i,j)$，但以下结论对每一个达到最大值的标号联盟都成立。普通邻接能量和阶乘权重分别沿用 Arizmendi–Arizmendi，*The graph energy*，arXiv:2012.14114v2，Definition 3.1 与 §2.4；二项式平均的删样本 Jensen 比较沿用 Lamkin–Tkocz，arXiv:2001.06439v3，§1。
+
+**引理 8.1（联合二项式估计）。** 对整数 $b>a\ge5$，有
+
+$$
+\left|H-\frac{\delta L}{16}\right|\le27\delta .
+\tag{8.1}
+$$
+
+因而 $H>0$，且显式的、只依赖于 $a$ 的相对误差为
+
+$$
+\left|\frac{H}{\delta L/16}-1\right|\le \frac{432}{L}.
+\tag{8.2}
+$$
+
+**证明。** 复用 (7.3)、(7.12)、(7.21)–(7.22)，令
+
+$$
+\alpha_a(t)=\mu_a'(t),\qquad
+g_n(t)=\mu_{n+1}(t)-\mu_n(t),\qquad
+G_n(t)=n(n+1)g_n(t).
+$$
+
+字面的全部阶乘权重已经由 (7.21) 接到优先级积分，故有限望远镜求和给出
+
+$$
+H=\sum_{n=a}^{b-1}L_{a,n},\qquad
+L_{a,n}=\int_0^1\alpha_a(t)g_n(t)\,dt .
+\tag{8.3}
+$$
+
+以下直接证明对每个 $n\ge a\ge5$ 的积分估计，不把固定概率的渐近式用于 $t=0$ 附近。
+
+（一）先给出所需的有限二项式矩界。若 $X\sim\operatorname{Bin}(M,t)$、$M\ge1$、$0<t\le1$，写 $\lambda=Mt$。经典移位恒等式
+
+$$
+\mathbb E\frac1{X+1}
+=\frac{1-(1-t)^{M+1}}{(M+1)t}\le\frac1\lambda
+$$
+
+采用仓内[保留零行的逆矩](../../../Library/Analytic/znidaric2005inversemoments.md)中的同一全分布公式。正二项式逆矩与移位逆矩的文献背景见 Žnidarič，[*Asymptotic expansion for inverse moments of binomial and Poisson distributions*, arXiv:math/0511226v1](https://arxiv.org/pdf/math/0511226v1)，(1.1)–(1.4)。这里所有不移位的逆矩均只在 $X\ge1$ 上求和，不给零值取负幂；不使用该文的固定参数渐近展开。
+
+由 $((k+1)(k+2))^{-1}=\int_0^1u^k(1-u)\,du$ 及二项式定理，
+
+$$
+\begin{aligned}
+\mathbb E\frac1{(X+1)(X+2)}
+&=\int_0^1(1-u)(1-t+tu)^M\,du\\
+&\le\int_0^1v e^{-\lambda v}\,dv
+\le\int_0^\infty v e^{-\lambda v}\,dv=\lambda^{-2}.
+\end{aligned}
+$$
+
+这里用 $v=1-u$ 及 $1-tv\le e^{-tv}$。对每个整数 $k\ge1$，有
+$k^{-1}\le2/(k+1)$、$k^{-2}\le6/((k+1)(k+2))$。相乘后用 Cauchy–Schwarz，得到
+
+$$
+\mathbb E[X^{-1};X\ge1]\le\frac2\lambda,\qquad
+\mathbb E[X^{-2};X\ge1]\le\frac6{\lambda^2},\qquad
+\mathbb E[X^{-3/2};X\ge1]\le\frac{2\sqrt3}{\lambda^{3/2}}.
+$$
+
+令 $W=X+1$。由于 $\mathbb EW=\lambda+1$，
+
+$$
+\mathbb E\frac{(W-\lambda)^2}{W}
+=\mathbb EW-2\lambda+\lambda^2\mathbb EW^{-1}\le1.
+$$
+
+平方根有理化及 Cauchy–Schwarz 因而给出
+
+$$
+\left|\mathbb EW^{-1/2}-\lambda^{-1/2}\right|
+\le\frac1\lambda\mathbb E\frac{|W-\lambda|}{\sqrt W}
+\le\frac1\lambda.
+$$
+
+另一方面，
+
+$$
+\begin{aligned}
+T&:=\mathbb E[X^{-1/2};X\ge1],\\
+T-\mathbb E(X+1)^{-1/2}
+&=\mathbb E[X^{-1/2}-(X+1)^{-1/2};X\ge1]-\mathbb P(X=0).
+\end{aligned}
+$$
+
+其中期望的被积项介于 $0$ 与 $1/(2X^{3/2})$ 之间；
+$\mathbb P(X=0)=(1-t)^M\le e^{-\lambda}\le1/\lambda$。
+因此当 $\lambda\ge1$ 时，
+
+$$
+\left|T-\lambda^{-1/2}\right|
+\le\frac2\lambda+\frac{\sqrt3}{\lambda^{3/2}}
+\le\frac4\lambda.
+$$
+
+另由 $\operatorname{Var}X=\lambda(1-t)$，
+
+$$
+\left|\mathbb E\sqrt X-\sqrt\lambda\right|
+\le\mathbb E\frac{|X-\lambda|}{\sqrt\lambda}
+\le1.
+$$
+
+这些都是有限分布的估计，并且保留了 $\mathbb P(X=0)$。
+
+（二）估计导数。令 $Z=1+\operatorname{Bin}(a-1,t)$、$\lambda=at$。
+上述移位恒等式在此给出 $\mathbb EZ^{-1}\le1/\lambda$；又
+$\mathbb EZ=\lambda+1-t$，故
+
+$$
+\mathbb E\frac{(Z-\lambda)^2}{Z}\le1-t\le1,\qquad
+\left|\mathbb EZ^{-1/2}-\lambda^{-1/2}\right|\le\lambda^{-1}.
+$$
+
+为同时处理 $Z=1$，对每个整数 $k\ge1$ 定义
+
+$$
+A(k)=\frac1{1+\sqrt{1-1/k}}.
+$$
+
+若 $s=\sqrt{1-1/k}$，直接有理化给出
+
+$$
+A(k)=\frac12+\frac1{8k}+r_k,\qquad
+r_k=\frac{3+s}{8k^2(1+s)^3},\qquad
+0\le r_k\le\frac3{8k^2},\qquad
+0\le A(k)-\frac12\le\frac1{2k}.
+$$
+
+最后两个界来自 $(3+s)/(1+s)^3\le3$ 和
+$A(k)-1/2=1/(2k(1+s)^2)$。特别地 $A(1)=1$、$r_1=3/8$，没有舍去端点。
+因为 $d_{Z-1}=A(Z)/\sqrt Z$，(7.12) 给出
+
+$$
+\begin{aligned}
+0\le\alpha_a(t)&\le\min\{\sqrt a,t^{-1/2}\},\\
+\left|\alpha_a(t)-\frac1{2\sqrt t}\right|
+&\le\frac{\sqrt a}{2}
+ \left(\lambda^{-1}+\mathbb EZ^{-3/2}\right)
+\le\frac1{\sqrt a\,t}.
+\end{aligned}
+$$
+
+第一行使用 $d_r\le1$、$d_{Z-1}\le Z^{-1/2}$ 以及
+$\mathbb EZ^{-1/2}\le(\mathbb EZ^{-1})^{1/2}$；第二行用 $Z\ge1$。
+
+（三）估计度数增量。令 $N=n+1$、$K\sim\operatorname{Bin}(N,t)$。
+复用引理 7.3 的条件 Jensen 差：$q_{n,0}=0$，对 $1\le k\le N$，
+
+$$
+\begin{aligned}
+q_{n,k}
+&=\sqrt{\frac kN}
+-\frac{N-k}{N}\sqrt{\frac kn}
+-\frac kN\sqrt{\frac{k-1}{n}}\\
+&=\frac{\sqrt k}{N\sqrt n}\bigl(A(k)-A(N)\bigr).
+\end{aligned}
+$$
+
+因为 $A$ 递减，这也逐项证明非负性；$k=N$ 时恰为零。
+于是有包含全部端点的有限和
+
+$$
+G_n(t)=\sqrt n\sum_{k=1}^N
+ \binom Nk t^k(1-t)^{N-k}\sqrt k\bigl(A(k)-A(N)\bigr).
+$$
+
+由 $A(k)-A(N)\le1/(2k)$ 及（一）的第一个逆矩界，
+
+$$
+0\le G_n(t)\le\frac{\sqrt n}{2}\mathbb E[K^{-1/2};K\ge1]
+\le\frac{\sqrt n}{2}\sqrt{\frac2{Nt}}
+\le\frac1{\sqrt{2t}}.
+$$
+
+现在设 $nt\ge1$，令 $\lambda=Nt$、
+$T=\mathbb E[K^{-1/2};K\ge1]$、$U=\mathbb E\sqrt K$。
+使用上面的 $r_k$ 精确分解，
+
+$$
+\begin{aligned}
+G_n(t)&=\frac{\sqrt n}{8}\left(T-\frac UN\right)+R_n(t),\\
+R_n(t)&=\sqrt n\,\mathbb E[\sqrt K(r_K-r_N);K\ge1],\\
+|R_n(t)|
+&\le\frac{3\sqrt n}{8}\mathbb E[K^{-3/2};K\ge1]
+ +\frac{3\sqrt n}{8N^2}\mathbb E\sqrt K\\
+&\le\frac{3\sqrt3}{4nt^{3/2}}+\frac{3\sqrt t}{8n}.
+\end{aligned}
+$$
+
+此处 $\sqrt n/N^{3/2}\le1/n$、
+$\sqrt{nN}/N^2\le1/n$，且 Jensen 给 $U\le\sqrt{Nt}$。
+把 $T$ 换成 $\lambda^{-1/2}$ 的误差至多
+$1/(2\sqrt n\,t)$，把 $U$ 换成 $\sqrt\lambda$ 的误差至多
+$1/(8\sqrt n)$。换完后的主项为
+$\sqrt{n/N}(1-t)/(8\sqrt t)$。
+再用 $1-\sqrt{n/N}\le1/(2n)$，得到完整的误差界
+
+$$
+\begin{aligned}
+\left|G_n(t)-\frac{1-t}{8\sqrt t}\right|
+&\le\frac1{2\sqrt n\,t}+\frac1{8\sqrt n}
++\frac1{16n\sqrt t}
++\frac{3\sqrt3}{4nt^{3/2}}+\frac{3\sqrt t}{8n}\\
+&\le\left(\frac{17}{16}+\frac{3\sqrt3}{4}\right)
+ \frac1{\sqrt n\,t}
+\le\frac5{2\sqrt n\,t}.
+\end{aligned}
+$$
+
+第二行只用 $nt\ge1$、$0<t\le1$、$n\ge1$；
+最后用 $\sqrt3<7/4$。没有未展开的余项。
+
+（四）将积分分成 $[0,1/a]$ 和 $[1/a,1]$。
+在第一段，由（二）和（三）的全域上界，
+
+$$
+0\le\int_0^{1/a}\alpha_a(t)G_n(t)\,dt
+\le\sqrt a\int_0^{1/a}\frac{dt}{\sqrt{2t}}=\sqrt2.
+$$
+
+在第二段，$nt\ge1$，故
+
+$$
+\begin{aligned}
+\left|\alpha_a(t)G_n(t)-\frac{1-t}{16t}\right|
+&\le\alpha_a(t)\left|G_n(t)-\frac{1-t}{8\sqrt t}\right|
++\frac{1-t}{8\sqrt t}
+ \left|\alpha_a(t)-\frac1{2\sqrt t}\right|\\
+&\le\frac{21}{8\sqrt a\,t^{3/2}}.
+\end{aligned}
+$$
+
+这个上界的积分不超过 $21/4$，而
+
+$$
+\int_{1/a}^1\frac{1-t}{16t}\,dt
+=\frac{L-1+1/a}{16}.
+$$
+
+因此，对全部整数 $n\ge a\ge5$，
+
+$$
+\left|n(n+1)L_{a,n}-\frac L{16}\right|
+\le\sqrt2+\frac{21}{4}+\frac1{16}<7<27.
+\tag{8.4}
+$$
+
+$t=0$ 时 $\alpha_a(0)=\sqrt a$、$g_n(0)=0$；
+$t=1$ 时 $g_n(1)=0$。两端均是原有限多项式的值；
+上述含 $t^{-1/2}$ 的界仅在 $t>0$ 使用，且在零处可积。
+最后将 (8.4) 除以 $n(n+1)$，用 (8.3) 及
+$\sum_{n=a}^{b-1}(n(n+1))^{-1}=\delta$ 得 (8.1)。
+$H>0$ 复用 (7.19)，相对误差则由除以 $\delta L/16$ 得到。∎
+
+**定理 8.2（实际 Shapley 份额的三种参数区间）。** 令 $\vartheta=432/L$。
+对全部整数 $b>a\ge5$，有以下有效的相对误差界。
+
+若 $d=b-a$，则
+
+$$
+\left|\frac{H}{dL/(16a^2)}-1\right|
+\le\vartheta+\frac da.
+$$
+
+若 $s=b/a$，对任意指定实数 $r>1$，则
+
+$$
+\left|\frac{H}{(1-1/r)L/(16a)}-1\right|
+\le\vartheta+(1+\vartheta)\frac{|s-r|}{s(r-1)}.
+$$
+
+同时，
+
+$$
+\left|\frac{H}{L/(16a)}-1\right|
+\le\vartheta+\frac ab.
+$$
+
+因而，分别在 $d=o(a)$、$s\to r\in(1,\infty)$、$s\to\infty$ 时，
+
+$$
+\begin{aligned}
+H&=\frac{dL}{16a^2}\left(1+O(L^{-1}+d/a)\right),\\
+H&=\frac{(1-1/r)L}{16a}
+ \left(1+O_r(L^{-1}+|s-r|)\right),\\
+H&=\frac L{16a}\left(1+O(L^{-1}+a/b)\right).
+\end{aligned}
+$$
+
+第一式、第三式的隐常数绝对；第二式允许依赖固定的 $r$。
+对全部比率共同适用的相对误差仍为 (8.2)。
+
+**证明。** 写 $H=(\delta L/16)(1+\epsilon)$，
+$|\epsilon|\le\vartheta$。第一式的比例因子为 $a/b$，
+故误差不超过 $(a/b)\vartheta+d/b\le\vartheta+d/a$。
+第三式的因子为 $1-a/b$，故误差不超过
+$(1-a/b)\vartheta+a/b\le\vartheta+a/b$。
+第二式使用精确恒等式
+
+$$
+\frac{1-1/s}{1-1/r}-1=\frac{s-r}{s(r-1)}.
+$$
+
+将这个差记为 $v$，则
+$|(1+v)(1+\epsilon)-1|\le\vartheta+(1+\vartheta)|v|$。
+在所述三个极限中相应误差趋于零；第二式不要求对 $r\downarrow1$ 一致。∎
+
+**引理 8.3（连续赤字与合法等删联盟）。** 对 $z,s\in[0,1]$，置
+
+$$
+\mathfrak d_H(z,s)=\sqrt{zs}-\left(\frac12+H\right)z-\left(\frac12-H\right)s .
+$$
+
+则
+
+$$
+\max_{z,s\in[0,1]}\mathfrak d_H(z,s)\le\frac{2H^2}{1+2H},
+\qquad
+D_{a,b}\le\frac{4\sqrt{ab}\,H^2}{1+2H}.
+\tag{8.5}
+$$
+
+令
+
+$$
+ m_a=\max\left\{1,\left\lfloor\frac L4+\frac12\right\rfloor\right\},
+\qquad
+ C_a^\#=(A\setminus K)\sqcup(B\setminus L'),
+\quad |K|=|L'|=m_a .
+$$
+
+则 $C_a^\#$ 是实际合法联盟，并且
+
+$$
+\frac{\Delta(C_a^\#;\phi)}{2\sqrt{ab}}
+ =m_a\delta\left[
+ H-\frac{m_a\delta}
+ {2\bigl(\sqrt{1-m_a/a}+\sqrt{1-m_a/b}\bigr)^2}
+ \right].
+\tag{8.6}
+$$
+
+**证明。** 令 $q=\sqrt{z/s}$（$s=0$ 时直接取值为非正），则
+
+$$
+\mathfrak d_H(z,s)=s\left[q-\left(\frac12+H\right)q^2-\left(\frac12-H\right)\right].
+$$
+
+对固定 $s$，右侧关于 $q$ 的顶点为 $q=(1+2H)^{-1}$，其值为 $2H^2s/(1+2H)$，故 (8.5) 的第一式成立。对实际联盟，(4.9) 给出
+$\Delta/(2\sqrt{ab})=\mathfrak d_H(i/a,j/b)$；取最大值即得第二式。
+
+对 $C_a^\#$ 令 $z=1-m_a/a$、$s=1-m_a/b$。恒等式
+
+$$
+\sqrt{zs}=1-\frac12\left(\frac{m_a}{a}+\frac{m_a}{b}\right)
+-\frac12(\sqrt z-\sqrt s)^2
+$$
+
+和 $z-s=-m_a\delta$ 给出 (8.6)。由 $\log a\le a-1$，
+$m_a\le1+L/4\le(a+3)/4\le a/2$（$a\ge5$），
+所以两个删除集合均为合法的有限标号集合。∎
+
+**定理 8.4（全局有符号赤字渐近）。** 对所有整数 $b>a\ge5$，置
+
+$$
+D_0(a,b)=\frac{(b-a)^2L^2}{64(ab)^{3/2}}
+=\frac{\sqrt{ab}\,\delta^2L^2}{64},
+\qquad
+\mathcal E_D(a)=\frac{10^6}{L}+\frac{10^6L}{a}.
+$$
+
+则
+
+$$
+\left|\frac{D_{a,b}}{D_0(a,b)}-1\right|\le\mathcal E_D(a),
+\tag{8.7}
+$$
+
+其中下界按 $(1-\mathcal E_D)D_0\le D$ 理解；当右端为负时它仍是有效的有限域下界。特别地，误差只依赖于 $a$ 且趋于零，并有统一渐近
+
+$$
+D_{a,b}\sim\frac{(b-a)^2\log(a)^2}{64(ab)^{3/2}}
+\qquad(a\to\infty),
+\tag{8.8}
+$$
+
+量词为所有整数 $b>a$。
+
+**证明。** 先由 (8.5) 和 (8.2) 得
+
+$$
+\frac{D_{a,b}}{D_0(a,b)}
+\le\frac{(1+432/L)^2}{1+2H}
+\le(1+432/L)^2\le1+10^6/L.
+\tag{8.9}
+$$
+
+最后一步可由 $L\ge\log5>1$ 核对：
+$(1+432/L)^2-1=(864+186624/L)/L<10^6/L$。
+这是全体实际联盟的上界。对下界，若 $\mathcal E_D(a)\ge1$，只需使用 $D_{a,b}\ge0$；同时 (8.9) 已给出所需上界。设以下 $\mathcal E_D(a)<1$，于是 $L>10^6$ 且 $L/a<10^{-6}$。令 $m=m_a$，则
+
+$$
+\left|\frac{4m}{L}-1\right|\le\frac2L,
+\qquad
+\left|\frac{16H}{\delta L}-1\right|\le\frac{432}{L},
+\qquad
+\frac ma\le\frac{L+2}{4a}.
+\tag{8.10}
+$$
+
+令 $t=4m/L$、$u=m/a$、$\vartheta=432/L$、
+$S=\sqrt{1-m/a}+\sqrt{1-m/b}$。
+式 (8.6) 及 $S^2\ge4(1-u)$ 直接给出
+
+$$
+\begin{aligned}
+\frac{\Delta(C_a^\#;\phi)}{D_0}
+&\ge2t(1-\vartheta)-\frac{t^2}{1-u}\\
+&=1-(t-1)^2-2t\vartheta-\frac{t^2u}{1-u}.
+\end{aligned}
+$$
+
+这里 $|t-1|\le2/L$、$t\le2$、
+$u\le(L+2)/(4a)\le L/(2a)<1/2$。因此损失至多
+
+$$
+\frac4{L^2}+\frac{1728}{L}+8u
+\le\frac{1732}{L}+\frac{4L}{a}
+\le10^5\left(\frac1L+\frac La\right).
+$$
+
+这证明了
+
+$$
+\frac{\Delta(C_a^\#;\phi)}{2\sqrt{ab}}
+\ge\frac{\delta^2L^2}{128}
+ \left(1-10^5\left(\frac1L+\frac La\right)\right).
+\tag{8.11}
+$$
+
+乘以 $2\sqrt{ab}$，(8.11) 给出
+$D_{a,b}/D_0\ge1-10^5(1/L+L/a)\ge1-\mathcal E_D(a)$。
+与 (8.9) 合并即得 (8.7)。由于 $\mathcal E_D(a)\to0$ 而不含 $b$，(8.8) 是全局而非固定比率的结论。式 (8.6) 是所要求的物理可实现整数联盟比较；本定理没有断言任何有限 $b$ 的精确最大联盟。
+∎
+
+**定理 8.5（每一个最大联盟的联合计数）。** 设 $C$ 是任意实际最大赤字联盟，记
+
+$$
+ i=a-k,\quad j=b-l,\quad x=\frac ka,\quad y=\frac lb,\quad q=x-y.
+$$
+
+令
+
+$$
+\vartheta(a)=\frac{432}{L},\qquad
+\sigma(a)=\mathcal E_D(a)+2\vartheta(a)+\vartheta(a)^2.
+$$
+
+在 $\sigma(a)<1/4$ 的范围内，所有这样的最大联盟同时满足
+
+$$
+\frac ia\ge1-\frac{4\sigma(a)}{(1-\sqrt{\sigma(a)})^2},
+\qquad
+\frac jb\ge1-\frac{4\sigma(a)}{(1-\sqrt{\sigma(a)})^2}.
+\tag{8.12}
+$$
+
+$$
+\left|q-4H\right|\le4H\sqrt{\sigma(a)}.
+\tag{8.13}
+$$
+
+$$
+\left|\frac{q}{\delta L/4}-1\right|
+\le Q(a):=\frac{432}{L}+(1+\vartheta(a))\sqrt{\sigma(a)}.
+\tag{8.14}
+$$
+
+因此 $i/a,j/b\to1$，并且
+
+$$
+\frac jb-\frac ia\sim4H,
+\qquad
+\frac ka-\frac lb\sim\frac{\delta L}{4}.
+\tag{8.15}
+$$
+
+等价的联合缺失计数关系保留比率因子：
+
+$$
+\left|
+ \frac{k-(a/b)l}{(1-a/b)L/4}-1
+\right|\le Q(a).
+$$
+
+这些式子对所有并列最大联盟同时成立；它们没有分别给出 $k$ 和 $l$ 的无约束比率律。
+
+**证明。** 由 (8.6) 的同一平方根恒等式，对任意 $x,y$ 有
+
+$$
+\frac{\Delta(C;\phi)}{2\sqrt{ab}}
+=Hq-\frac12(\sqrt{1-x}-\sqrt{1-y})^2.
+\tag{8.16}
+$$
+
+由 (7.19)、(7.23)，最大赤字严格为正，故 (8.16) 蕴含 $q>0$。
+因此 $S=\sqrt{1-x}+\sqrt{1-y}>0$，则第二项为 $q^2/(2S^2)$，且 $S^2\le4$。所以
+
+$$
+2H^2-\mathfrak d_H(1-x,1-y)
+\ge\frac{(q-4H)^2}{8}.
+\tag{8.17}
+$$
+
+此外 $4-S^2\ge x+y$、$S^2\le4$，故
+
+$$
+2H^2-\mathfrak d_H(1-x,1-y)
+\ge\frac{(q-4H)^2}{8}+\frac{q^2(x+y)}{32}.
+\tag{8.18}
+$$
+
+由 (8.7)、(8.2)，最大联盟的归一化赤字至少为
+$2H^2(1-\sigma(a))$；这里使用
+$(1-\mathcal E_D)/(1+\vartheta)^2\ge1-\sigma$。于是 (8.17) 给出 (8.13)，并给出
+$q\ge4H(1-\sqrt\sigma)$。再代入 (8.18)，得到
+$x+y\le4\sigma/(1-\sqrt\sigma)^2$，即 (8.12)。最后
+
+$$
+|q-\delta L/4|\le|q-4H|+4|H-\delta L/16|
+\le4H\sqrt\sigma+108\delta,
+$$
+
+再用 $16H/(\delta L)\le1+\vartheta$，即得 (8.14)。因为 $\mathcal E_D(a),\vartheta(a)\to0$，(8.15) 随即成立。∎
+
+**推论 8.6（固定差值的等删计数）。** 固定正整数 $d$，令 $b=a+d$。若 $a$ 满足
+
+$$
+L\ge8,\quad a\ge10^6L^3,\quad
+\sigma(a)<\frac1{16},\quad
+d\,\frac{L/2+216}{a+d}<1,\quad
+ d\,\frac{4\sigma(a)}{(1-\sqrt{\sigma(a)})^2}<1,
+\tag{8.19}
+$$
+
+则每一个实际最大赤字联盟都有
+
+$$
+ k=l=m,\qquad
+\left|m-\frac L4\right|\le300.
+\tag{8.20}
+$$
+
+条件 (8.19) 对每个固定 $d$ 由足够大的 $a$ 满足，因此
+$k=l=L/4+O(1)$，其中误差界 $300$ 与 $d$、$a$ 无关。
+
+**证明。** 最大联盟的赤字为正，故由 (8.16) 有 $0<q<8H$。由 (8.1)，
+
+$$
+q<\delta\left(\frac L2+216\right).
+\tag{8.21}
+$$
+
+若 $k-l\ge1$，则
+$q=(k-l)/a+ld/(ab)\ge1/a$，与 (8.19)、(8.21) 矛盾。若 $l-k\ge1$，则 $q>0$ 要求 $ld/b>1$；而 (8.12) 和 (8.19) 给出 $l/b\le x+y<1/d$，也矛盾。故 $k=l=m$。
+
+在等删情形，$q=m\delta$。记
+$h=H/\delta=L/16+e$、$|e|\le27$，并令
+$M=4h=L/4+4e$、$P(r)=rh-r^2/8$。
+对实际最大联盟 $C_m$，由 $S^2\le4$ 得
+
+$$
+\frac{\Delta(C_m;\phi)}{2\sqrt{ab}\,\delta^2}\le P(m).
+\tag{8.22}
+$$
+
+取 $m_0$ 为最接近 $L/4$ 的正整数；$L\ge8$ 保证
+$|m_0-L/4|\le1/2$，且 $m_0$ 合法。由
+$S^2\ge4(1-m_0/a)$ 得
+
+$$
+\frac{\Delta(C_{m_0};\phi)}{2\sqrt{ab}\,\delta^2}
+\ge P(m_0)-\frac{m_0^3}{8a(1-m_0/a)}.
+\tag{8.23}
+$$
+
+由 $m_0\le L/4+1/2\le5L/16$、
+$a\ge10^6L^3$，有 $m_0/a<1/2$，且最后的修正项至多
+$125L^3/(16384a)<1$。
+配方 $P(r)=2h^2-(r-M)^2/8$，
+以及 $|M-L/4|\le108$，给出
+$|m_0-M|\le108+1/2$。
+若 $|m-L/4|>300$，则 $|m-M|>192$，于是
+
+$$
+P(m)-P(m_0)
+<-\frac{192^2-(108+1/2)^2}{8}<-3000.
+$$
+
+这与最大性及 (8.22)–(8.23) 矛盾，所以 (8.20) 成立。
+最后，固定 $d$ 时，$L/a\to0$、$L^3/a\to0$、
+$\sigma(a)\to0$，故 (8.19) 的五个条件同时最终成立；
+它给出非空且显式可检验的充分域。∎
+
+**命题 8.7（等删剖面的统一误差）。** 对每个 $b>a\ge5$ 和整数 $0\le k\le a/2$，令 $C_k$ 为删除恰好 $k$ 个 $A$ 顶点和 $k$ 个 $B$ 顶点后的联盟。则
+
+$$
+D_0(a,b)>0,
+$$
+
+且有精确主项与显式误差
+
+$$
+\left|
+\frac{\Delta(C_k;\phi)}{D_0(a,b)}
+-\left(\frac{8k}{L}-16\left(\frac{k}{L}\right)^2\right)
+\right|
+\le
+\frac{3456k}{L^2}
++\frac{16k^3}{aL^2(1-k/a)}.
+\tag{8.24}
+$$
+
+特别地，对每个固定 $M>0$，当 $k\le ML$ 且 $ML\le a/2$ 时，误差一致满足
+
+$$
+\left|
+\frac{\Delta(C_k;\phi)}{D_0(a,b)}
+-\left(\frac{8k}{L}-16\left(\frac{k}{L}\right)^2\right)
+\right|
+\le
+\varepsilon_M(a):=\frac{3456M}{L}+\frac{32M^3L}{a},
+\tag{8.25}
+$$
+
+其中 $\varepsilon_M(a)\to0$。
+
+**证明。** 此时 $x=k/a$、$y=k/b$，故 $x-y=k\delta$。由 (8.16) 和
+$D_0=\sqrt{ab}\delta^2L^2/64$，
+
+$$
+\frac{\Delta(C_k;\phi)}{D_0}
+=\frac{128}{\delta^2L^2}
+\left(Hk\delta-
+\frac12(\sqrt{1-k/a}-\sqrt{1-k/b})^2\right).
+\tag{8.26}
+$$
+
+其中线性项为 $128kH/(\delta L^2)$，
+它与 $8k/L$ 的差由 (8.1) 控制，至多
+$128\cdot27k/L^2=3456k/L^2$。又
+
+$$
+(\sqrt{1-k/a}-\sqrt{1-k/b})^2
+=\frac{k^2\delta^2}
+ {\bigl(\sqrt{1-k/a}+\sqrt{1-k/b}\bigr)^2}.
+$$
+
+用 $k/b\le k/a$ 得
+$S^2\ge4(1-k/a)$、$4-S^2\le4k/a$，从而
+
+$$
+0\le\frac1{2S^2}-\frac18
+=\frac{4-S^2}{8S^2}
+\le\frac{k}{8a(1-k/a)}.
+$$
+
+代入 (8.26) 即得第二项 $16k^3/[aL^2(1-k/a)]$，证明 (8.24)。若 $k\le ML$、$k/a\le1/2$，两项分别不超过
+$3456M/L$ 与 $32M^3L/a$，得到 (8.25)。∎
+
+第 3–4 节提供固定 $a$ 的极限，第 7 节提供联合正下界；(8.4) 的统一积分估计把这些中间结构接到 $a$、$b$ 同变的相对误差、实际整数见证及全体最大联盟的稳定性上。谱值、阶乘分配、优先级积分、删样本 Jensen 比较和移位逆矩分别采用上述仓内结果与原始文献；本节的定量联合推导不把这些经典中间步骤另算为新结果。
+
+二阶渐近修正、有限参数下的精确最大联盟、整数取整与并列结构，以及不受 $k=l$ 约束的分开删除律，仍未由上述估计决定。固定 $d$ 的 (8.19) 也未给出 $1\le d\le c(\log a)^2$ 的统一等删窗口。
+
+## 追加锚（本行以下为增补区）
+
+## 9. 二顶点侧的有限最大联盟与全部并列判定
+
+**定义 9.1（有限计数赤字与标号实现）。** 对所有整数 $2\le a\le b$，取任意不交的有限标号集 $A,B$，$|A|=a$、$|B|=b$，令 $G=K_{a,b}$。采用定义 1.1–1.3 的普通邻接能量和原始阶乘分配，即
+
+$$
+\begin{aligned}
+w(C)&=\mathcal E(G[C]),\\
+\phi_v&=\sum_{S\subseteq(A\sqcup B)\setminus\{v\}}
+\frac{|S|!(a+b-|S|-1)!}{(a+b)!}
+\bigl(w(S\cup\{v\})-w(S)\bigr),\\
+d_{a,b}(i,j)&=2\sqrt{ij}-ix_{a,b}-jy_{a,b},\\
+D_{a,b}&=\max_{C\subseteq A\sqcup B}
+\left(w(C)-\sum_{v\in C}\phi_v\right)
+=\max_{\substack{0\le i\le a,\ 0\le j\le b\\i,j\in\mathbb Z}}d_{a,b}(i,j).
+\end{aligned}
+\tag{9.1}
+$$
+
+最后一个等式复用 (2.1)–(2.3)，是同一个有符号最大值。计数 $(i,j)$ 的全部标号实现恰为
+
+$$
+\{I\sqcup J:I\subseteq A,\ |I|=i,\ J\subseteq B,\ |J|=j\},
+\qquad\text{数量为 }\binom ai\binom bj.
+\tag{9.2}
+$$
+
+这些定义对应 Arizmendi–Arizmendi，[*The graph energy game*, arXiv:2012.14114v2](https://arxiv.org/pdf/2012.14114v2)，§2.2、§2.4、Definition 3.1；这里的玩家数为 $a+b$，价值是普通邻接能量，不是该文 Proposition 4.13 的 $2$-energy。对 $a=2,b=m\ge2$，沿用 (2.7) 的实际有限分配 $x_m,y_m$，并记
+
+$$
+U_m=\frac{x_m}{\sqrt{2m}},\qquad
+\Gamma_m(j)=d_{2,m}(1,j)=2\sqrt j-x_m-jy_m
+\quad(j=0,\ldots,m).
+\tag{9.3}
+$$
+
+**引理 9.2（实际单顶点行的无并列性）。** 对每个整数 $m\ge5$ 及任意整数 $0\le k<j\le m$，有
+
+$$
+\Gamma_m(j)\ne\Gamma_m(k).
+\tag{9.4}
+$$
+
+**证明。** 所用算术输入是经典的 Bertrand–Chebyshev 素数定理及实根式的线性无关性。前者按 Erdős，[*Beweis eines Satzes von Tschebyschef*](https://users.renyi.hu/~p_erdos/1932-01.pdf)，§5，第 197–198 页的原假设使用：对每个整数 $n>1$，存在素数 $p$ 满足 $n<p<2n$。令 $n=\lfloor m/2\rfloor\ge2$，得到一个奇素数 $p$，且
+
+$$
+\frac m2<p<m<2p.
+\tag{9.5}
+$$
+
+当 $m=2n+1$ 时，第一步用 $p\ge n+1>m/2$；当 $m=2n$ 时它直接来自 $p>n$。两种情形的 $p<m$ 都来自 $p<2n\le m$。
+
+根式输入采用 Carr–O’Sullivan，[*On the Linear Independence of Roots*, arXiv:math/0703522v2](https://arxiv.org/pdf/math/0703522v2)，Theorem 1.1，第 2 页：在实域 $K\subseteq L\subseteq\mathbb R$ 中，一组至少含两元素、各有正整数次幂落入 $K$、且在 $K$ 上两两线性无关的根式，在 $K$ 上线性无关。这里取 $K=\mathbb Q$、$L=\mathbb R$，取有限组不同正无平方因子整数 $d$ 的正平方根，包括需要时的 $\sqrt1=1$。它们的平方属于 $\mathbb Q$；不同 $d,e$ 的比 $d/e$ 不是有理数的平方，因为约分后的素因子指数至少有一个为奇数，所以 $\sqrt d/\sqrt e\notin\mathbb Q$。故该定理的两两线性无关假设满足，特征为零也没有正特征限制。因而把各个正整数平方根写成正整数乘以无平方因子整数的平方根后，其有理线性展开的每个系数唯一。
+
+令 $H_m=(m+1)(m+2)$。直接展开已给出的有限分配 (2.7)，得到
+
+$$
+y_m=\frac{2\sqrt{2m}}m-
+\frac4{mH_m}\sum_{r=1}^m
+\left((m-2r)\sqrt r+(r+1)\sqrt{2r}\right).
+\tag{9.6}
+$$
+
+因为 $p$ 为奇素数，$2p$ 是无平方因子整数。在 (9.6) 的上述唯一展开中，$\sqrt{2p}$ 的系数恰为
+
+$$
+-\frac{4(p+1)}{mH_m}\ne0.
+\tag{9.7}
+$$
+
+逐项核对如下。$r\le m<2p$，所以任何 $\sqrt r$ 都不可能有无平方因子部分 $2p$。$\sqrt{2r}$ 的无平方因子部分为 $2p$ 当且仅当 $r=pq^2$，其中 $q$ 为正整数；由 $r\le m<2p$，只能 $q=1,r=p$。最后，$\sqrt{2m}$ 的无平方因子部分若为 $2p$，就有 $m=pq^2$；$p<m<2p$ 同时排除 $q=1$ 与 $q\ge2$。因此没有其它项抵消 (9.7)。
+
+若 (9.4) 失败，由 (9.3) 及 $j-k>0$ 得
+
+$$
+y_m=\frac{2(\sqrt j-\sqrt k)}{j-k}.
+\tag{9.8}
+$$
+
+右边只含 $0\le k<j\le m<2p$ 的平方根，零根式可删去，其余根式的无平方因子部分均不可能为 $2p$。因此右边的 $\sqrt{2p}$ 系数为零，与 (9.7) 及所引线性无关定理矛盾。这里的素数存在和根式线性无关均为所引经典输入；所得结论是它们对实际有限分配 (9.6) 的应用。∎
+
+**定理 9.3（每个 $m\ge5$ 的唯一最大计数与精确取整）。** 对每个整数 $m\ge5$、每对不交的有限标号集 $A,B$，$|A|=2$、$|B|=m$，定义
+
+$$
+T_m^{\mathrm{int}}=y_m^{-2}+\frac12+\frac{y_m^2}{16},
+\qquad
+J_m=\left\lfloor T_m^{\mathrm{int}}\right\rfloor.
+\tag{9.9}
+$$
+
+其中 $y_m$ 是 (2.7) 的实际有限阶乘分配。则
+
+$$
+\left\lfloor\frac m2\right\rfloor+1
+\le J_m\le m-1,
+\qquad
+J_m<T_m^{\mathrm{int}}<J_m+1,
+\tag{9.10}
+$$
+
+并且原有符号最大赤字及其全部最大联盟为
+
+$$
+\begin{aligned}
+D_{2,m}&=2\sqrt{J_m}-x_m-J_my_m>0,\\
+\{C:\Delta(C;\phi)=D_{2,m}\}
+&=\{\{v\}\sqcup J:v\in A,\ J\subseteq B,\ |J|=J_m\},\\
+\#\{C:\Delta(C;\phi)=D_{2,m}\}&=2\binom m{J_m}.
+\end{aligned}
+\tag{9.11}
+$$
+
+因此唯一最大计数对是 $(1,J_m)$；引理 9.2 同时排除整个 $i=1$ 行的任意两个不同计数并列。
+
+**证明。** 首先给出全部有限端点所用的实际份额界。定理 2.1 的 (2.16) 给出
+
+$$
+U_m>\frac{77}{100\sqrt2}>\frac12.
+\tag{9.12}
+$$
+
+最后一步由 $2\cdot77^2>100^2$ 的正数平方比较成立。上界直接从定理 3.1 的有限前提推出，而不从其极限反推：对每个 $t\in[0,1]$，令 $S_{m,t}\sim\operatorname{Bin}(m,t)$，沿用 (3.3) 的
+
+$$
+\mu_m(t)=\mathbb E\sqrt{S_{m,t}/m},\qquad
+h_2(t)=1+(\sqrt2-2)t>0.
+$$
+
+因为 $\mathbb E(S_{m,t}/m)=t$，平方根的有限 Jensen 不等式给出 $\mu_m(t)\le\sqrt t$，包含 $t=0,1$。将它乘以正的 $h_2(t)$，在 (3.3) 的实际有限分配恒等式中积分，得到
+
+$$
+\begin{aligned}
+U_m&=\sqrt2\int_0^1h_2(t)\mu_m(t)\,dt\\
+&\le\sqrt2\int_0^1h_2(t)\sqrt t\,dt\\
+&=\sqrt2\left(\frac23+\frac25(\sqrt2-2)\right)
+=\frac{12-2\sqrt2}{15}=u_2.
+\end{aligned}
+\tag{9.13}
+$$
+
+这里的 $u_2$ 与命题 4.3 相同；(9.13) 的不等号是对每一个有限 $m$ 在同一个积分中证明的。该积分由独立均匀优先级条件下的有限二项分布给出，与定义 9.1 的全部阶乘权重相同，所需对应已在 (3.3) 中建立。
+
+由效率与正性，
+
+$$
+y_m=\frac{2\sqrt2}{\sqrt m}(1-U_m)>0.
+$$
+
+式 (9.12) 给 $y_m<\sqrt{2/m}<1$；(9.13) 则给有限下界
+
+$$
+\sqrt m\,y_m\ge2\sqrt2(1-u_2)
+=\frac{8+6\sqrt2}{15}>\frac{16}{15}.
+\tag{9.14}
+$$
+
+严格比较用 $\sqrt2>4/3$，由 $18>16$ 得到。另一方面，对所有 $m\ge5$，
+
+$$
+\frac{2\sqrt m}{\sqrt m+\sqrt{m-1}}
+=\frac2{1+\sqrt{1-1/m}}
+\le\frac2{1+2/\sqrt5}<\frac{16}{15}.
+\tag{9.15}
+$$
+
+最后一步等价于 $\sqrt5<16/7$，由 $245<256$ 得到。结合 (9.14)–(9.15)，在每一个实际有限分配处都有
+
+$$
+y_m>\frac2{\sqrt m+\sqrt{m-1}},\qquad
+\Gamma_m(m)-\Gamma_m(m-1)<0.
+\tag{9.16}
+$$
+
+现在处理所有计数行及下端点。置 $\tau_m=(1-U_m)/U_m$。由 (9.12) 及正性，$0<\tau_m<1$。对 $i,j>0$，复用 (2.4)：
+
+$$
+-d_{2,m}(i,j)
+=2\sqrt{2m}\,\frac jm U_m(r-1)(r-\tau_m),
+\qquad r=\sqrt{\frac{im}{2j}}.
+\tag{9.17}
+$$
+
+$i=2,1\le j<m$ 时 $r>1>\tau_m$，故 $d_{2,m}(2,j)<0$；$j=m$ 时 $r=1$，全体联盟赤字为零。$i=0$ 时 $d_{2,m}(0,j)=-jy_m$，仅 $j=0$ 取零；$j=0,i>0$ 时赤字为 $-ix_m<0$。这已覆盖所有纯侧和空联盟。
+
+对于 $i=1$ 且 $1\le j\le\lfloor m/2\rfloor$，(9.17) 有 $r\ge1$，所以 $\Gamma_m(j)\le0$，包括偶数 $m$、$j=m/2$ 的等号。另有 $\Gamma_m(0)=-x_m<0$。令
+
+$$
+j_0=\left\lfloor\frac m2\right\rfloor+1.
+$$
+
+定理 2.1 已给出实际联盟 $(1,j_0)$ 的严格正见证，故
+
+$$
+\Gamma_m(j_0)>0\ge\Gamma_m(j_0-1),\qquad
+\Gamma_m(j_0)-\Gamma_m(j_0-1)>0.
+\tag{9.18}
+$$
+
+于是全部联盟的正最大赤字必来自 $i=1$ 行。
+
+剩下是在这一有限整数行上作精确比较。对实数 $s\ge1$ 定义
+
+$$
+q(s)=2(\sqrt s-\sqrt{s-1})
+=\frac2{\sqrt s+\sqrt{s-1}}.
+$$
+
+分母严格递增，故 $q$ 严格递减。由于 $0<y_m<1<2$，(9.9) 满足
+
+$$
+\sqrt{T_m^{\mathrm{int}}}=y_m^{-1}+y_m/4,
+\qquad
+\sqrt{T_m^{\mathrm{int}}-1}=y_m^{-1}-y_m/4>0,
+\qquad q(T_m^{\mathrm{int}})=y_m.
+\tag{9.19}
+$$
+
+因此对每个整数 $1\le j\le m$，
+
+$$
+\Gamma_m(j)-\Gamma_m(j-1)=q(j)-y_m
+\begin{cases}
+>0,&j<T_m^{\mathrm{int}},\\
+=0,&j=T_m^{\mathrm{int}},\\
+<0,&j>T_m^{\mathrm{int}}.
+\end{cases}
+\tag{9.20}
+$$
+
+式 (9.18) 和 (9.16) 分别给 $j_0<T_m^{\mathrm{int}}<m$。如果 $T_m^{\mathrm{int}}$ 为整数，它必属于 $\{1,\ldots,m\}$，(9.20) 就给出相邻两项相等，与引理 9.2 矛盾。所以 $T_m^{\mathrm{int}}$ 不是整数，取整立即给出 (9.10)。
+
+由 (9.20)，$\Gamma_m$ 在整数 $0,\ldots,J_m$ 上严格递增，在 $J_m,\ldots,m$ 上严格递减。故其唯一最大计数为 $J_m$，且 $\Gamma_m(J_m)\ge\Gamma_m(j_0)>0$。其余两行非正，遂得到原始全部联盟上的 (9.11)。式 (9.2) 给出每个最大计数的全部标号实现；选择 $A$ 侧一名有两种，选择 $B$ 侧 $J_m$ 名有 $\binom m{J_m}$ 种，且不同选择产生不同联盟。这证明数量及完备性。空联盟和全体联盟的赤字虽均为零，因最大值严格为正，都不属于此时的最大联盟。∎
+
+**定理 9.4（三个小参数的精确零赤字集合）。** 在定义 9.1 的相同图、价值与实际阶乘分配下，$m=2,3,4$ 时均有 $D_{2,m}=0$。达到最大值的计数对分别恰为
+
+$$
+\begin{aligned}
+m=2:&\quad\{(0,0),(1,1),(2,2)\},\\
+m=3:&\quad\{(0,0),(2,3)\},\\
+m=4:&\quad\{(0,0),(1,2),(2,4)\}.
+\end{aligned}
+\tag{9.21}
+$$
+
+每个列出计数的全部标号实现都达到最大值，其余联盟均不达到；标号最大联盟总数依次为 $6,2,14$。
+
+**证明。** 复用定理 2.1 的实际小参数分配及严格比较，不将它们另计为新的分配计算。$m=2$ 时 $x_2=y_2=1$，所以对所有 $0\le i,j\le2$，
+
+$$
+d_{2,2}(i,j)=2\sqrt{ij}-i-j
+=-(\sqrt i-\sqrt j)^2.
+$$
+
+它取零当且仅当 $i=j$，得到 (9.21) 第一行，包括空联盟和全体联盟；非空纯侧的平方严格为正。
+
+$m=3,4$ 时，定理 2.1 的 (2.8)–(2.9) 已严格证明
+
+$$
+\frac{\sqrt{2m}}2<x_m<T_m,
+\qquad
+R_m<\tau_m<1,
+\quad R_m=\sqrt{\frac{m}{2(\lfloor m/2\rfloor+1)}}.
+\tag{9.22}
+$$
+
+此处 $T_m$ 仍为定理 2.1 的核阈值，和 (9.9) 的 $T_m^{\mathrm{int}}$ 不同。对任一混合计数，使用 (9.17) 的同一因式分解。若 $r>1$，由 $\tau_m<1$ 两因子均严格为正；若 $r<1$，因为 $i\in\{1,2\}$、$j\le m$，必有 $i=1$、$j>m/2$，从而 $r\le R_m<\tau_m$，两个因子均严格为负，其乘积仍严格为正。因此每个 $r\ne1$ 的混合计数都有严格负赤字；$r=1$ 时赤字为零。
+
+条件 $r=1$ 恰为 $im=2j$。在 $m=3$ 的正整数范围内，仅 $(i,j)=(2,3)$ 满足；在 $m=4$ 时，恰为 $(1,2),(2,4)$。所有非空纯侧联盟由 $x_m,y_m>0$ 严格负赤字，空联盟赤字为零，全体联盟由效率赤字为零，故没有遗漏端点。这证明 (9.21)，并且所有计数赤字非正而空联盟取零，故三个最大值确为零。
+
+由 (9.2)，不同计数的实现不相交，全部实现的数量分别为
+
+$$
+\begin{aligned}
+m=2:&\quad1+\binom21\binom21+1=6,\\
+m=3:&\quad1+1=2,\\
+m=4:&\quad1+\binom21\binom42+1=14.
+\end{aligned}
+\tag{9.23}
+$$
+
+因此这些数量包括每一个标号实现，而非仅计同构类型。∎
+
+**定义 9.5（其余有限最大化域）。** 对原范围内的每个整数对 $b>a\ge3$，仍以 (9.1) 在全部标号联盟上定义的 $D_{a,b}$ 为目标，要求确定其精确值、所有最大计数行及跨行并列，并由 (9.2) 还原全部标号实现。定理 9.3–9.4 仅确定 $a=2$、全部整数 $b=m\ge2$ 的有限分类；定理 5.1、6.1、7.4 给出的正见证与零赤字分类，以及第 4、8 节的渐近结论，不确定这个 $b>a\ge3$ 的有限最大化问题。(9.9) 的取整公式不在该域作断言。
+
+## 追加锚（本行以下为增补区）
+
+## 10. 三顶点侧的有限最大赤字
+
+**定义 10.1（$K_{3,m}$ 的有限支付与计数赤字）。** 对整数 $m\ge3$，令 $G=K_{3,m}$，并令
+
+$$
+H_m=(m+1)(m+2)(m+3),
+$$
+
+并沿用定理 5.1 的有限阶乘支付，写成
+
+$$
+\begin{aligned}
+P_m(k)&=(m+2-k)(m+1-k)
+ +2(\sqrt2-1)(k+1)(m+1-k)\\
+&\qquad +(\sqrt3-\sqrt2)(k+1)(k+2),\\
+X_m&=\frac2{H_m}\sum_{k=0}^m\sqrt k\,P_m(k),\\
+Y_m&=\frac{2\sqrt{3m}-3X_m}{m}.
+\end{aligned}
+\tag{10.1}
+$$
+
+这里 $X_m=x_{3,m}$、$Y_m=y_{3,m}$ 是定义 1.2 的原始阶乘归一化 Shapley 支付；由 (5.3) 有
+
+$$
+X_m>0,\qquad Y_m>0,\qquad 3X_m+mY_m=2\sqrt{3m}.
+\tag{10.2}
+$$
+
+对整数 $0\le i\le3$、$0\le j\le m$ 记
+
+$$
+d_m(i,j)=2\sqrt{ij}-iX_m-jY_m,
+\qquad
+D_{3,m}=\max_{i,j}d_m(i,j),
+\tag{10.3}
+$$
+
+其中每个计数对均代表全部相应的标号联盟。
+
+**引理 10.2（有限支付的份额范围）。** 置
+
+$$
+u_m=\frac{3X_m}{2\sqrt{3m}},
+\qquad \tau_m=\frac{1-u_m}{u_m}.
+\tag{10.4}
+$$
+
+对每个 $m\ge4$，有
+
+$$
+\frac12<u_m<1-\frac1{\sqrt6},
+\qquad
+0<\tau_m<1,
+\qquad
+Y_m>\sqrt{\frac2m}.
+\tag{10.5}
+$$
+
+**证明。** 定理 5.1 的 (5.4) 给出
+
+$$
+u_m=\sqrt3\int_0^1h_3(t)\mu_m(t)\,dt,
+\qquad
+\mu_m(t)=\mathbb E\sqrt{\operatorname{Bin}(m,t)/m},
+$$
+
+其中 $h_3(t)>0$。定理 5.1 的 (5.6)、(5.9) 已给出 $u_m>1/2$：$m=4$ 时 $u_4>1287/2500$，而 $m\ge5$ 时 $u_m\ge u_5>53/100$。另一方面，有限 Jensen 不等式给出 $\mu_m(t)\le\sqrt t$，因而
+
+$$
+u_m\le u_\infty:=\sqrt3\int_0^1h_3(t)\sqrt t\,dt
+=\frac67-\frac{2\sqrt6}{35}-\frac{8\sqrt3}{105}.
+$$
+
+由 $\sqrt6>61/25$、$\sqrt3>17/10$，有
+
+$$
+u_\infty<\frac{1544}{2625}<\frac{59}{100}.
+$$
+
+又 $\sqrt6>61/25>100/41$，故 $1-1/\sqrt6>36/61>59/100$。于是 $u_m<1-1/\sqrt6$，再由 (10.2) 写成
+
+$$
+Y_m=\frac{2\sqrt3}{\sqrt m}(1-u_m)
+$$
+
+即得 $Y_m>\sqrt{2/m}$；其余两项随 (10.4) 立即成立。∎
+
+**引理 10.3（可行区间内的取整点不相等）。** 对每个整数 $m\ge4$，定义
+
+$$
+\theta_m=\frac2{Y_m^2}+\frac12+\frac{Y_m^2}{32}.
+\tag{10.6}
+$$
+
+则 $\theta_m\notin\{1,\ldots,m\}$。
+
+**证明。** 先记
+
+$$
+q(s)=2\sqrt2(\sqrt s-\sqrt{s-1})
+\qquad(s\ge1).
+$$
+
+由引理 10.2 及 (10.2) 有 $0<Y_m<1$；直接由 (10.6) 计算得
+
+$$
+\sqrt{\theta_m}=\frac{\sqrt2}{Y_m}+\frac{Y_m}{4\sqrt2},
+\qquad q(\theta_m)=Y_m.
+$$
+
+由
+
+$$
+d_m(2,j)-d_m(2,j-1)=q(j)-Y_m
+\tag{10.7}
+$$
+
+以及定理 5.1 的严格见证
+$d_m(2,\lfloor2m/3\rfloor+1)>0$，而
+$d_m(2,\lfloor2m/3\rfloor)\le0$，可知 $q(\lfloor2m/3\rfloor+1)>Y_m$。因为 $q$ 严格递减，解 $q(\theta_m)=Y_m$ 的数满足
+
+$$
+\theta_m>\left\lfloor\frac{2m}{3}\right\rfloor+1.
+\tag{10.8}
+$$
+
+当 $m=4,5$ 时，(10.1) 直接化简为
+
+$$
+Y_4=-\frac37-\frac{2\sqrt6}{35}+\frac{9\sqrt2}{35}+\frac{3\sqrt3}{5},
+$$
+
+以及
+
+$$
+Y_5=-\frac{27\sqrt3}{140}-\frac{33}{140}-\frac{2\sqrt6}{35}
+ +\frac{\sqrt2}{28}+\frac{\sqrt5}{28}+\frac{3\sqrt{10}}{28}+\frac{\sqrt{15}}4.
+$$
+
+使用 $\sqrt2>7/5$、$\sqrt3>17/10$、$\sqrt6<5/2$ 得
+$Y_4>283/350>4/5$。又 $q(4)<4/5$，因为
+
+$$
+q(4)^2=56-32\sqrt3<\frac{16}{25}
+$$
+
+等价于 $\sqrt3>173/100$。所以 $\theta_4<4$，结合 (10.8) 得 $3<\theta_4<4$。
+
+同样，使用
+
+$$
+\sqrt3<\frac74,\quad \sqrt6<\frac{49}{20},\quad
+\sqrt2>\frac75,\quad \sqrt5>\frac{11}{5},\quad
+\sqrt{10}>\frac{79}{25},\quad \sqrt{15}>\frac{387}{100}
+$$
+
+得到 $Y_5>101/140>7/10$。另一方面
+
+$$
+q(5)=2\sqrt{10}-4\sqrt2<\frac7{10}
+$$
+
+由 $\sqrt{10}<317/100$、$\sqrt2>141/100$，故 $\theta_5<5$；结合 (10.8) 得 $4<\theta_5<5$。
+
+现设 $m\ge6$。取 Bertrand–Chebyshev 定理给出的素数
+
+$$
+\frac m2<p<m<2p,
+$$
+
+其中 $p\ge5$。将 (10.1) 和 (10.2) 展开为平方根的有理线性组合，并按无平方因子部分分组。$\sqrt{3p}$ 的系数只来自 $r=p$ 时的
+$(\sqrt3-\sqrt2)(r+1)(r+2)$ 项，因而恰为
+
+$$
+Y_m=\frac{2\sqrt{3m}}m-\frac6{mH_m}
+\sum_{r=1}^m\sqrt r\,P_m(r).
+$$
+
+在这个展开中，
+
+$$
+-\frac{6(p+1)(p+2)}{mH_m}\ne0.
+\tag{10.9}
+$$
+
+确实，$\sqrt r$ 的无平方因子部分不可能为 $3p$，$\sqrt{2r}$ 需 $r=6ps^2>m$，$\sqrt{3r}$ 只有 $r=p$，而首项 $\sqrt{3m}$ 需 $m=ps^2$，均被 $p<m<2p$ 排除。Carr–O’Sullivan 的根式线性无关性（其假设和在引理 9.2 中已核对）保证该系数是唯一的。
+
+若 $\theta_m=j\in\{1,\ldots,m\}$，则由 (10.6) 的求解等式有
+
+$$
+Y_m=q(j)=2\sqrt{2j}-2\sqrt{2(j-1)}.
+$$
+
+但 $j\le m<2p$ 时，右端的两个根式都不含无平方因子部分 $3p$：$2j=3ps^2$ 或 $2(j-1)=3ps^2$ 将迫使 $j$ 或 $j-1$ 至少为 $6p$。这与 (10.9) 及根式线性无关性矛盾。∎
+
+**引理 10.4（第二行的唯一整数峰）。** 对 $m\ge4$ 令
+
+$$
+j_0=\left\lfloor\frac{2m}{3}\right\rfloor+1,
+\qquad
+k_m=\min\{m,\lfloor\theta_m\rfloor\}.
+\tag{10.10}
+$$
+
+则 $j_0\le k_m\le m$，且 $j\mapsto d_m(2,j)$ 在 $\{0,\ldots,m\}$ 上唯一于 $j=k_m$ 取得最大值；该最大值严格为正。
+
+**证明。** 置
+
+$$
+q(s)=2\sqrt2(\sqrt s-\sqrt{s-1})
+=\frac{2\sqrt2}{\sqrt s+\sqrt{s-1}}.
+$$
+
+它严格递减，并且 (10.7) 给出全部相邻差分。由 (10.8)，$\theta_m>j_0$。引理 10.3 排除了可行整数等式 $\theta_m=j$。因此若 $\theta_m<m$，差分在 $j=\lfloor\theta_m\rfloor$ 前为正、之后为负；若 $\theta_m>m$，全部可行差分为正。唯一峰正是 $k_m$，且其值至少为定理 5.1 的正见证 $d_m(2,j_0)>0$。∎
+
+**定理 10.5（$K_{3,m}$ 的完整有限最大赤字）。** 对任意不交的有限标号集 $A,B$，若 $|A|=3$、$|B|=m\ge3$，采用定义 1.1–1.2 的普通邻接能量与原始阶乘 Shapley 支付，则如下结论成立。
+
+当 $m=3$ 时，
+
+$$
+D_{3,3}=0,
+$$
+
+且达到最大值的计数对恰为
+
+$$
+(0,0),\ (1,1),\ (2,2),\ (3,3).
+\tag{10.11}
+$$
+
+因此全部标号最大联盟恰有
+
+$$
+\binom30\binom30+\binom31\binom31+\binom32\binom32+\binom33\binom33=20
+$$
+
+个。
+
+当 $m\ge4$ 时，令 $\theta_m$、$k_m$ 如 (10.6)、(10.10)，则
+
+$$
+D_{3,m}=2\sqrt{2k_m}-2X_m-k_mY_m>0,
+\tag{10.12}
+$$
+
+唯一最大计数对为 $(2,k_m)$，全部且仅有的最大联盟为任取两名 $A$ 侧玩家和任取 $k_m$ 名 $B$ 侧玩家组成的联盟，数量为
+
+$$
+3\binom m{k_m}.
+\tag{10.13}
+$$
+
+特别地，$m=4$ 时 $k_4=3$，最大值为
+
+$$
+D_{3,4}=\frac{15-9\sqrt2-301\sqrt3+212\sqrt6}{105},
+\tag{10.14}
+$$
+
+并有十二个标号最大联盟。
+
+**证明。** $m=3$ 时，定理 5.1 的 (5.5) 给出 $X_3=Y_3=1$。所以任意计数对满足
+
+$$
+d_3(i,j)=2\sqrt{ij}-i-j=-(\sqrt i-\sqrt j)^2\le0,
+$$
+
+等号恰在 $i=j$ 时成立。这包含空联盟和全体联盟，并由 (9.2) 得到二十个标号实现。
+
+现设 $m\ge4$。由 (10.2)、引理 10.2，$X_m,Y_m>0$ 且 $0<\tau_m<1$。对 $i=3$、$1\le j\le m$，在 (2.4) 中取 $r=\sqrt{m/j}\ge1$，得到
+
+$$
+3X_m+jY_m-2\sqrt{3j}
+=2\sqrt{3m}\,\frac jm u_m(r-1)(r-\tau_m)\ge0.
+$$
+
+故 $d_m(3,j)\le0$；$j=0$ 时 $d_m(3,0)=-3X_m<0$，而 $d_m(3,m)=0$。同理，$d_m(0,j)=-jY_m\le0$，纯 $A$ 侧计数 $d_m(i,0)=-iX_m\le0$。
+
+还需排除 $i=1$ 行。令
+
+$$
+f(s)=2\sqrt s-X_m-sY_m\qquad(s\ge0).
+$$
+
+由引理 10.2，$Y_m>\sqrt{2/m}$，所以 $f$ 在 $[m/2,\infty)$ 上严格递减。若 $1\le j\le m/2$，则
+
+$$
+d_m(2,2j)=2d_m(1,j);
+$$
+
+故当 $d_m(1,j)>0$ 时，第二行已有严格更大的值，当 $d_m(1,j)\le0$ 时则被引理 10.4 的正值严格超过。若 $j>m/2$，则 $d_m(1,j)=f(j)<f(m/2)$，而
+
+$$
+d_m(2,m)=2f(m/2).
+$$
+
+当 $f(m/2)>0$ 时有 $d_m(2,m)>d_m(1,j)$，当 $f(m/2)\le0$ 时 $d_m(1,j)<0$，仍被第二行正最大值严格超过。因此全部 $i=1$ 行均严格小于 $d_m(2,k_m)$。
+
+引理 10.4 已给出第二行唯一峰及其正性，遂得到 (10.12)–(10.13)。对 $m=4$，由引理 10.3 中的 $3<\theta_4<4$ 得 $k_4=3$；将 (10.1) 中
+
+$$
+X_4=-\frac{12\sqrt2}{35}+\frac{8\sqrt6}{105}+\frac47+\frac{8\sqrt3}{15},
+\qquad
+Y_4=-\frac37-\frac{2\sqrt6}{35}+\frac{9\sqrt2}{35}+\frac{3\sqrt3}{5}
+$$
+
+代入 $2\sqrt6-2X_4-3Y_4$，化简即得 (10.14)。其标号实现数为 $\binom32\binom43=12$。∎
+
+## 追加锚（本行以下为增补区）
+
+## 11. 四顶点侧的有限最大赤字与全部最大联盟
+
+**定义 11.1（四顶点侧的实际有限分配）。** 对每个整数 $m\ge4$，取任意不交有限标号集 $A,B$，满足 $|A|=4$、$|B|=m$，令 $G=K_{4,m}$。本节采用定义 1.1–1.2 的普通邻接能量和全部阶乘权重，即对每个 $C\subseteq A\sqcup B$ 及每名玩家 $v$，
+
+$$
+\begin{aligned}
+w(C)&=\mathcal E(G[C])=2\sqrt{|C\cap A|\,|C\cap B|},\\
+\phi_v&=\sum_{S\subseteq(A\sqcup B)\setminus\{v\}}
+\frac{|S|!(m+3-|S|)!}{(m+4)!}
+\bigl(w(S\cup\{v\})-w(S)\bigr).
+\end{aligned}
+\tag{11.1}
+$$
+
+这里 $\mathcal E$ 是全部邻接特征值绝对值之和，$w(\varnothing)=0$。文献对应为 Arizmendi–Arizmendi，[*The graph energy game*, arXiv:2012.14114v2](https://arxiv.org/pdf/2012.14114v2)，§2.2、§2.4、Definition 3.1：玩家集为 $A\sqcup B$，总人数为 $m+4$，联盟图为 $G[C]$。该文 Theorems 3.5–3.6 的 vertex-energy 分配及 Proposition 4.13 的 $2$-energy 博弈不替代 (11.1)。
+
+本节局部记号为 $x_m=x_{4,m}$、$y_m=y_{4,m}$。取 $H_m=(m+1)(m+2)(m+3)(m+4)$，并令 $P_m(k)$ 为 (6.10) 中取 $b=m$ 的同一多项式。复用 (6.5)、(6.9)–(6.10)，有
+
+$$
+\begin{aligned}
+x_m&=\frac2{H_m}\sum_{k=0}^m\sqrt k\,P_m(k)>0,\\
+y_m&=\frac{4\sqrt m-4x_m}{m}>0,\qquad
+4x_m+my_m=4\sqrt m,\\
+u_m&=\frac{x_m}{\sqrt m},\qquad
+c_m=\sqrt m\,y_m=4(1-u_m),\qquad
+\tau_m=\frac{1-u_m}{u_m},\\
+d_m(i,j)&=2\sqrt{ij}-ix_m-jy_m
+\quad(0\le i\le4,\ 0\le j\le m),\\
+D_{4,m}&=\max_{C\subseteq A\sqcup B}\Delta(C;\phi)
+=\max_{\substack{0\le i\le4,\ 0\le j\le m\\i,j\in\mathbb Z}}d_m(i,j).
+\end{aligned}
+\tag{11.2}
+$$
+
+每次固定 $m$ 后，全部计数行使用 (11.2) 的同一实际支付对。两侧各自的标号双射逐项保持 (11.1) 的前驱集合、阶乘权重和边际，故这些式子适用于每对所述标号集。式 (6.9) 对应目标玩家以外的三名同侧玩家及 $m$ 名异侧玩家的全部前驱计数，包含零边际端点。计数 $(i,j)$ 的全部实际联盟及其数目仍由 (9.2) 给出，参数为 $a=4,b=m$。
+
+**引理 11.2（用于有限行比较的支付界）。** 对每个整数 $m\ge5$，有
+
+$$
+\frac12<u_m<\frac{57}{100},\qquad
+\frac{43}{25}<c_m<2,\qquad 0<y_m<1,\qquad 0<\tau_m<1.
+\tag{11.3}
+$$
+
+另外，
+
+$$
+u_5<\frac{13}{25},\qquad
+u_m>\frac{53}{100}\quad(m\ge9).
+\tag{11.4}
+$$
+
+**证明。** 先复用 (6.7) 的实际有限积分及 (6.8)、(6.12) 的 Jensen 比较：
+
+$$
+u_m=2\int_0^1h_4(t)\mu_m(t)\,dt,\qquad
+u_5>\frac{51}{100},\qquad
+u_m\ge u_6>\frac{13}{25}\quad(m\ge6).
+$$
+
+其中 $h_4(t)>0$，$\mu_m(t)=\mathbb E\sqrt{\operatorname{Bin}(m,t)/m}$。给目标玩家独立均匀优先级并条件于其值 $t$，其余同侧和异侧的前驱数条件独立，样本量分别为 $3,m$；这正是 (6.7) 与字面阶乘和的对应，不要求无条件独立。
+
+有限 Jensen 界 $\mu_m(t)\le\sqrt t$ 在 $t=0,1$ 也成立。因此直接对每个有限 $m$ 得到
+
+$$
+\begin{aligned}
+u_m&\le2\int_0^1h_4(t)\sqrt t\,dt\\
+&=\frac2{315}\bigl(32+48(\sqrt2-1)
+ +60(\sqrt3-\sqrt2)+70(2-\sqrt3)\bigr)\\
+&=\frac{248-24\sqrt2-20\sqrt3}{315}
+<\frac{37379}{65625}<\frac{57}{100}.
+\end{aligned}
+\tag{11.5}
+$$
+
+积分的四个有理系数分别来自
+$\int_0^1t^{1/2}(1-t)^3dt=32/315$、
+$3\int_0^1t^{3/2}(1-t)^2dt=48/315$、
+$3\int_0^1t^{5/2}(1-t)dt=60/315$、
+$\int_0^1t^{7/2}dt=70/315$。
+严格有理上界使用已给出的 $\sqrt2>14142/10000$、$\sqrt3>17320/10000$。由 $c_m=4(1-u_m)$，得到 (11.3) 的 $c_m$ 界；由 $m\ge5$，$0<y_m<2/\sqrt m<1$，其余项也随即成立。
+
+为得 (11.4) 的第一个界，在 (6.11) 的实际 $u_5$ 式中，沿用已给出的根式端点，另取 $U_5=22361/10000$。由于 $22361^2=500014321>5\cdot10^8$，有 $\sqrt5<U_5$。按各系数符号代入，得到
+
+$$
+\begin{aligned}
+u_5
+&<\frac{535-75L_2-175L_3+173U_5-5L_{10}
+ +27U_{15}+8U_{30}}{1260}\\
+&=\frac{6452587}{12600000}<\frac{13}{25},
+\end{aligned}
+\tag{11.6}
+$$
+
+这里 $L_2=14142/10000$、$L_3=17320/10000$、$L_{10}=31622/10000$、$U_{15}=38730/10000$、$U_{30}=54773/10000$，均为前述严格平方比较的端点。
+
+最后证明 $u_9>53/100$，再用同一 Jensen 比较推广。复用 (7.11) 的定量项，记 $d_n=\sqrt{n+1}-\sqrt n$，则
+
+$$
+\mu_{n+1}(t)-\mu_n(t)\ge d_n t(1-t)^n.
+$$
+
+这是删去一个 Bernoulli 样本的 Jensen 差中保留总成功数为一的非负项。该删样本恒等式的经典来源为 Lamkin–Tkocz，[*Log-concavity and log-convexity of moments of averages of i.i.d. random variables*, arXiv:2001.06439v3](https://arxiv.org/pdf/2001.06439v3)，§1，第 1 页，式 (1) 后。此处样本独立同分布、取值于 $\{0,1\}$，函数为在零处连续的平方根；仅用有限 Jensen 比较，不用该文对正随机变量的更强矩结论。
+
+由 $\sqrt2>7/5$ 及 $h_4$ 的四项表达式，在 $0<t<1$ 上有
+
+$$
+h_4(t)>(1-t)^3+\frac65t(1-t)^2.
+$$
+
+对每个整数 $n\ge4$，两次多项式积分于是给出
+
+$$
+u_{n+1}-u_n>
+\frac{2d_n}{(n+4)(n+5)}
+\left(1+\frac{12}{5(n+3)}\right).
+\tag{11.7}
+$$
+
+对 $n=6,7,8$，分别有 $d_6>19/100$、$d_7>18/100$、$d_8>17/100$。确实，$\sqrt6<5/2$、$\sqrt7<8/3$、$\sqrt8<17/6$ 的平方比较为 $24<25$、$63<64$、$288<289$，故
+
+$$
+d_6>\frac6{31}>\frac{19}{100},\qquad
+d_7>\frac2{11}>\frac{18}{100},\qquad
+d_8>\frac6{35}>\frac{17}{100}.
+$$
+
+将三项 (11.7) 相加，得到
+
+$$
+\begin{aligned}
+u_9-u_6
+&>\frac{2(19/100)}{10\cdot11}\left(1+\frac{12}{45}\right)
+ +\frac{2(18/100)}{11\cdot12}\left(1+\frac{12}{50}\right)\\
+&\qquad+\frac{2(17/100)}{12\cdot13}\left(1+\frac{12}{55}\right)\\
+&=\frac{1489}{143000}
+=\frac1{100}+\frac{59}{143000}.
+\end{aligned}
+$$
+
+结合 $u_6>13/25$，得 $u_9>53/100$。对每个 $m\ge9$，$u_m\ge u_9$，完成 (11.4)。∎
+
+**引理 11.3（四个实际计数行的可行阈值均无等号）。** 对每个整数 $m\ge5$、$i\in\{1,2,3,4\}$ 和 $r\in\{1,\ldots,m\}$，定义
+
+$$
+q_i(s)=\frac{2\sqrt i}{\sqrt s+\sqrt{s-1}}
+=2\sqrt i(\sqrt s-\sqrt{s-1})\quad(s\ge1).
+$$
+
+则 $y_m\ne q_i(r)$。
+
+**证明。** 所用经典算术输入与引理 9.2 相同。Erdős，[*Beweis eines Satzes von Tschebyschef*](https://users.renyi.hu/~p_erdos/1932-01.pdf)，§5，第 197–198 页，给出对每个整数 $n>1$ 都有素数 $n<p<2n$。当 $m\ge6$ 时取 $n=\lfloor m/2\rfloor$，便得 $p\ge5$ 及 $m/2<p<m<2p$；当 $m=5$ 时直接取素数 $p=5$。因此两种情形统一满足
+
+$$
+p\ge5,\qquad p\le m<2p.
+\tag{11.8}
+$$
+
+根式的系数唯一性使用 Carr–O’Sullivan，[*On the Linear Independence of Roots*, arXiv:math/0703522v2](https://arxiv.org/pdf/math/0703522v2)，Theorem 1.1，第 2 页。参数为 $K=\mathbb Q\subseteq L=\mathbb R$，根式集为所需的不同正无平方因子整数的正平方根，需要时包含 $1$。各元素的平方在 $K$ 中，不同元素的比不是有理数，因为其平方的素因子指数有奇数；故满足两两线性无关条件。有限集合至少含所用的两个根式，特征为零，满足该定理全部假设。因此按无平方因子部分分组的有理系数唯一。
+
+把 (6.10) 的 $P_m(k)$ 按 $1,\sqrt2,\sqrt3$ 展开，写成
+
+$$
+P_m(k)=A_m(k)+B_m(k)\sqrt2+C_m(k)\sqrt3,
+$$
+
+其中
+
+$$
+\begin{aligned}
+A_m(k)&=(m+3-k)(m+2-k)(m+1-k)\\
+&\quad-3(k+1)(m+2-k)(m+1-k)
+ +2(k+1)(k+2)(k+3),\\
+B_m(k)&=3(k+1)(m+1-k)(m-2k),\\
+C_m(k)&=(k+1)(k+2)(3m-4k).
+\end{aligned}
+$$
+
+由同一个实际效率式，
+
+$$
+y_m=\frac{4\sqrt m}{m}-\frac8{mH_m}
+\sum_{k=1}^m\left(A_m(k)\sqrt k+B_m(k)\sqrt{2k}
+ +C_m(k)\sqrt{3k}\right).
+\tag{11.9}
+$$
+
+$2p,3p$ 都无平方因子。在 (11.9) 中，$\sqrt{2p}$ 的系数恰为 $-8B_m(p)/(mH_m)$，$\sqrt{3p}$ 的系数恰为 $-8C_m(p)/(mH_m)$。逐项说明其唯一来源：$k\le m<2p$ 排除 $\sqrt k$ 和首项 $\sqrt m$ 的这两种无平方因子部分；$\sqrt{2k}$ 具有无平方因子部分 $2p$ 时 $k=ps^2$，只能 $s=1,k=p$，具有无平方因子部分 $3p$ 时则须 $k=6ps^2>m$。同理，$\sqrt{3k}$ 对 $3p$ 只有 $k=p$，对 $2p$ 则须 $k=6ps^2>m$。
+
+两个系数均非零：$m-2p<0$、$m+1-p\ge1$ 给出 $B_m(p)\ne0$；若 $C_m(p)=0$，则 $3m=4p$，迫使素数 $p=3$，与 (11.8) 矛盾。这个论证包括 $m=p=5$，无需假定 $p<m$。
+
+若 $i=1,3,4$，等式 $y_m=q_i(r)$ 的右端不含无平方因子部分 $2p$。对 $i=1,4$，去掉整数因子后只含 $\sqrt r,\sqrt{r-1}$，而 $r\le m<2p$；对 $i=3$，$3r$ 或 $3(r-1)$ 具有无平方因子部分 $2p$ 将要求 $r$ 或 $r-1$ 为 $6ps^2$，也不可能。故与 (11.9) 的非零 $\sqrt{2p}$ 系数矛盾。若 $i=2$，右端为 $2\sqrt{2r}-2\sqrt{2(r-1)}$，具有无平方因子部分 $3p$ 将要求 $r$ 或 $r-1$ 为 $6ps^2>m$，故与非零 $\sqrt{3p}$ 系数矛盾。零根式不参与系数比较。于是全部所述可行阈值的等号都被排除。∎
+
+**引理 11.4（每个固定行的唯一合法峰）。** 对 $m\ge5$、$i\in\{1,2,3,4\}$，置
+
+$$
+T_{i,m}=\frac{i}{y_m^2}+\frac12+\frac{y_m^2}{16i},
+\qquad K_{i,m}=\min\{m,\lfloor T_{i,m}\rfloor\}.
+\tag{11.10}
+$$
+
+则 $T_{i,m}\notin\{1,\ldots,m\}$，且 $1\le K_{i,m}\le m$。行 $j\mapsto d_m(i,j)$ 在整数 $0,\ldots,m$ 上唯一于 $K_{i,m}$ 取得最大值。对每个 $1\le r\le m-1$，
+
+$$
+K_{i,m}=r\quad\Longleftrightarrow\quad
+q_i(r+1)<y_m<q_i(r),
+\tag{11.11}
+$$
+
+而合法右端点的充要条件为
+
+$$
+K_{i,m}=m\quad\Longleftrightarrow\quad
+y_m<q_i(m)\quad\Longleftrightarrow\quad T_{i,m}>m.
+\tag{11.12}
+$$
+
+$i=0$ 行的唯一峰为 $j=0$；$i=4$ 行的唯一峰为 $j=m$。当 $m=4$ 时，每个 $i\in\{0,\ldots,4\}$ 行的唯一峰为 $j=i$。
+
+**证明。** 对 $m\ge5$，由 (11.3)，$0<y_m<1<2\sqrt i$。直接求解给出
+
+$$
+\sqrt{T_{i,m}}=\frac{\sqrt i}{y_m}+\frac{y_m}{4\sqrt i},
+\qquad
+\sqrt{T_{i,m}-1}=\frac{\sqrt i}{y_m}-\frac{y_m}{4\sqrt i}>0,
+\qquad q_i(T_{i,m})=y_m.
+$$
+
+$q_i$ 在 $[1,\infty)$ 上严格递减，且 $T_{i,m}>1$。每个合法相邻差分为
+
+$$
+d_m(i,j)-d_m(i,j-1)=q_i(j)-y_m
+\quad(1\le j\le m).
+\tag{11.13}
+$$
+
+引理 11.3 排除 $T_{i,m}$ 等于任何可行整数；因而当 $T_{i,m}<m$ 时，整数差分在 $j\le\lfloor T_{i,m}\rfloor$ 为正，之后为负；当 $T_{i,m}>m$ 时，全部可行差分为正。这证明唯一峰及 (11.11)–(11.12)，只使用可行区间内的无等号结论。
+
+$i=0$ 时 $d_m(0,j)=-jy_m$，唯一峰为零。$i=4$ 时，$q_4(m)>2/\sqrt m>y_m$，故全部差分为正，唯一峰为 $m$。$m=4$ 时直接复用 (6.2)，$d_4(i,j)=-(\sqrt i-\sqrt j)^2$，固定 $i$ 后等号仅在 $j=i$，故结论也包括这五行。∎
+
+**引理 11.5（第三行严格胜过其余所有行）。** 对每个整数 $m\ge5$，令
+
+$$
+M_m=\max_{0\le j\le m,\ j\in\mathbb Z}d_m(3,j).
+$$
+
+则 $M_m>0$，且对每个 $i\in\{0,1,2,4\}$ 及每个整数 $0\le j\le m$，都有 $d_m(i,j)<M_m$。
+
+**证明。** 全部比较固定同一个 $m$ 和 (11.2) 的同一实际 $x_m,y_m$，下文简写为 $u,c,x,y,\tau$。定理 6.1 的实际见证给出
+
+$$
+j_0=\left\lfloor\frac{3m}{4}\right\rfloor+1\le m,
+\qquad d_m(3,j_0)>0,
+\tag{11.14}
+$$
+
+故 $M_m>0$。$i=0$ 行与 $j=0$ 的纯侧计数由支付正性非正。对 $i=4$、$1\le j\le m$，(2.4) 的参数为 $a=4,b=m$、$r=\sqrt{m/j}\ge1$；由 $0<\tau<1$，$d_m(4,j)\le0$，只在 $j=m$ 取零。这已严格排除两端行及全部纯侧计数。
+
+先证明每个正的第二行值都被一个第三行值严格超过。由 (2.4)，若 $d_m(2,j)>0$，必有 $j>m/2$。分两种合法计数范围。
+
+（一）设 $m/2<j\le2m/3$，并记整数 $\delta=2j-m\ge1$。若 $j$ 为偶数，$k=3j/2\le m$ 是整数，且齐次性给出
+
+$$
+d_m(3,k)=\frac32d_m(2,j)>d_m(2,j).
+\tag{11.15}
+$$
+
+若 $j$ 为奇数且 $\delta\ge2$，取 $k=(3j-1)/2\le m$。为直接比较实际支付式，定义无量纲仿射表达式
+
+$$
+F_{i,j}(v)=2\sqrt{ij/m}-iv-\frac{4j}{m}(1-v),
+\qquad d_m(i,j)=\sqrt m\,F_{i,j}(u).
+$$
+
+置 $r=\sqrt{m/(2j)}$、$v_0=(1+r)^{-1}$。由 $j>m/2$，$F_{2,j}$ 的斜率为 $2\delta/m>0$，其唯一零点为 $v_0$；实际正性即 $u>v_0$。又
+
+$$
+k-\frac{3m}{4}=\frac{3\delta-2}{4}>0,
+\qquad k<\frac{3j}{2},
+$$
+
+故 $r<r_3:=\sqrt{3m/(4k)}<1$。同一因式分解的代数恒等式给出
+
+$$
+F_{3,k}(v_0)=4\frac{k}{m}v_0(1-r_3)(r_3-r)>0,
+\qquad F_{2,j}(v_0)=0.
+$$
+
+$F_{3,k}-F_{2,j}$ 的斜率恰为 $(\delta-2)/m\ge0$。因此在实际 $u>v_0$ 处，$F_{3,k}(u)>F_{2,j}(u)$，从而 $d_m(3,k)>d_m(2,j)$。$v_0$ 只用于该仿射差的代数比较，两行在实际取值处始终使用相同的 $u,x,y$。
+
+还剩 $j$ 为奇数、$\delta=1$。此时 $m\equiv1\pmod4$、$j=(m+1)/2$。若 $m=5$，则 $j=3$；由 (11.4)，
+
+$$
+\begin{aligned}
+\sqrt5\bigl(d_5(3,4)-d_5(2,3)\bigr)
+&=4\sqrt{15}-2\sqrt{30}-4-u_5\\
+&>4L_{15}-2U_{30}-\frac{113}{25}\\
+&=\frac{4537}{1000}-\frac{113}{25}>0.
+\end{aligned}
+\tag{11.16}
+$$
+
+其中 $L_{15}=38729/10000$、$U_{30}=54773/10000$，是已有严格根式端点。
+
+若 $m\ge9$，取整数 $k=(3m+5)/4\le m$。使用实际效率式消去 $x$，得到
+
+$$
+\frac{d_m(3,k)-d_m(2,j)}{\sqrt m}
+=\sqrt{9+15/m}-2\sqrt{1+1/m}-1-\frac{3(1-u)}m.
+\tag{11.17}
+$$
+
+为给出统一有限下界，令 $A(t)=\sqrt{9+15t}-2\sqrt{1+t}-1$，$t\ge0$。有 $A(0)=0$、$A'(0)=3/2$、$A''(0)=-19/12$，且
+
+$$
+\begin{aligned}
+A'''(t)&=\frac{10125}{8(9+15t)^{5/2}}
+ -\frac3{4(1+t)^{5/2}}\\
+&\ge\frac{3(\sqrt{15}-2)}{8(1+t)^{5/2}}>0,
+\end{aligned}
+$$
+
+因为 $9+15t\le15(1+t)$。逐次积分得对 $t>0$，
+
+$$
+A(t)>\frac32t-\frac{19}{24}t^2.
+$$
+
+代入 (11.17)，再用 (11.4) 的 $u>53/100$，得
+
+$$
+\frac{d_m(3,k)-d_m(2,j)}{\sqrt m}
+>\frac1m\left(3(u-1/2)-\frac{19}{24m}\right)
+>\frac1m\left(\frac9{100}-\frac{19}{216}\right)
+=\frac{11}{5400m}>0.
+\tag{11.18}
+$$
+
+这覆盖该剩余同余类的全部整数；$m=4$ 是平衡端点，$m=5$ 已由 (11.16) 处理。
+
+（二）设 $j>2m/3$。记 $u_*=1-\sqrt3/4$。若 $u\le u_*$，则 $y\ge\sqrt{3/m}$，函数
+
+$$
+f_2(s)=2\sqrt{2s}-2x-sy
+$$
+
+在 $[2m/3,\infty)$ 上递减，并在 $s>2m/3$ 严格递减。于是实际正值 $d_m(2,j)=f_2(j)>0$ 满足
+
+$$
+d_m(3,m)=\frac32f_2(2m/3)>f_2(j)=d_m(2,j).
+\tag{11.19}
+$$
+
+若 $u>u_*$，则对所有 $s\ge0$ 配方得到 $f_2(s)\le2/y-2x$。另一方面，
+
+$$
+\frac{d_m(3,m)-(2/y-2x)}{\sqrt m}
+=g(u):=3u+2\sqrt3-4-\frac1{2(1-u)}.
+$$
+
+在 $u_*\le v\le57/100$ 上，
+
+$$
+g'(v)=3-\frac1{2(1-v)^2}
+\ge3-\frac{5000}{1849}>0,
+\qquad
+g(u_*)=\frac{7\sqrt3}{12}-1>0,
+$$
+
+最后一个比较由 $147>144$ 得到。由 (11.3) 的 $u<57/100$，有 $d_m(3,m)>2/y-2x\ge d_m(2,j)$。至此，每个第二行的正值都被某个合法第三行值严格超过；第二行非正值由 $M_m>0$ 严格超过。因此第二行的每个值都严格小于 $M_m$。
+
+最后排除第一行。由 (11.3)，$\sqrt m\,y>43/25>\sqrt2$，其中最后一步的平方比较为 $1849>1250$。所以
+
+$$
+f_1(s)=2\sqrt s-x-sy
+$$
+
+在 $[m/2,\infty)$ 上严格递减。若 $1\le j\le m/2$ 且 $d_m(1,j)>0$，则合法整数 $2j\le m$ 满足 $d_m(2,2j)=2d_m(1,j)>d_m(1,j)$，再用已证明的第二行比较。若 $j>m/2$ 且 $d_m(1,j)>0$，则 $f_1(m/2)>f_1(j)>0$，故 $d_m(2,m)=2f_1(m/2)>d_m(1,j)$，仍被 $M_m$ 严格超过。第一行的非正值及 $j=0$ 已由正性排除。所有五行、纯侧、空联盟与全体联盟均已涵盖。∎
+
+**定理 11.6（$K_{4,m}$ 的精确有限最大值与全部标号实现）。** 对定义 11.1 的每个整数 $m\ge4$ 及每对相应的不交有限标号集 $A,B$，采用 (11.1) 的普通邻接能量和原始完整阶乘 Shapley 分配。
+
+当 $m=4$ 时，$D_{4,4}=0$，达到最大值的计数对恰为
+
+$$
+(0,0),\ (1,1),\ (2,2),\ (3,3),\ (4,4).
+\tag{11.20}
+$$
+
+每个计数的全部标号实现都达到最大值，总数为 $70$。
+
+当 $m\ge5$ 时，令
+
+$$
+T_m=\frac3{y_m^2}+\frac12+\frac{y_m^2}{48},
+\qquad J_m=\min\{m,\lfloor T_m\rfloor\}.
+\tag{11.21}
+$$
+
+则
+
+$$
+\left\lfloor\frac{3m}{4}\right\rfloor+1\le J_m\le m,
+\qquad
+D_{4,m}=2\sqrt{3J_m}-3x_m-J_my_m>0.
+\tag{11.22}
+$$
+
+唯一最大计数对为 $(3,J_m)$，全部最大联盟恰为
+
+$$
+\{I\sqcup J:I\subseteq A,\ |I|=3,\ J\subseteq B,\ |J|=J_m\},
+\qquad\text{数量为 }4\binom m{J_m}.
+\tag{11.23}
+$$
+
+对每个合法内点 $1\le r\le m-1$，
+
+$$
+J_m=r\quad\Longleftrightarrow\quad q_3(r+1)<y_m<q_3(r),
+$$
+
+而 $J_m=m$ 当且仅当 $y_m<q_3(m)$，亦当且仅当 $T_m>m$。这里的取整断言只排除 $T_m\in\{1,\ldots,m\}$；不要求可行区间外的非整性，不断言 $J_m$ 随 $m$ 单调，也不指定右端点出现的整数参数区间。本定理量词固定为 $|A|=4$，不确定 $b>a\ge5$ 的精确有限最大计数及其跨行并列结构。
+
+**证明。** $m=4$ 时复用 (6.2) 的实际分配 $x_4=y_4=1$。任意联盟满足 $d_4(i,j)=-(\sqrt i-\sqrt j)^2\le0$，取零当且仅当 $i=j$，故 (11.20) 完备，包含空联盟与全体联盟。由 (9.2)，全部标号实现数为
+
+$$
+\sum_{i=0}^4\binom4i^2=1+16+36+16+1=70.
+$$
+
+现设 $m\ge5$。引理 11.4 在 $i=3$ 时的 $T_{i,m}$ 正是 (11.21) 的 $T_m$，唯一第三行峰为 $J_m$。引理 11.5 严格排除每个其它行的每个实际计数；故全部联盟的最大赤字恰为 $d_m(3,J_m)>0$，且最大计数唯一。
+
+为核对左端范围，取 (11.14) 的 $j_0=\lfloor3m/4\rfloor+1$。$j_0-1\le3m/4$，若它为正则 (2.4) 中 $r=\sqrt{3m/(4(j_0-1))}\ge1>\tau_m$，故 $d_m(3,j_0-1)\le0$；零端点也由支付正性非正。结合 $d_m(3,j_0)>0$，有
+
+$$
+q_3(j_0)-y_m=d_m(3,j_0)-d_m(3,j_0-1)>0.
+$$
+
+由于 $q_3(T_m)=y_m$ 且 $q_3$ 严格递减，得到 $j_0<T_m$。$j_0\le m$，所以 $\min\{m,\lfloor T_m\rfloor\}\ge j_0$，证明 (11.22) 的完整合法范围。内点与右端点的充要式直接为 (11.11)–(11.12) 的 $i=3$ 情形；引理 11.3 同时排除了其它三行的每一个可行阈值等号。
+
+最后，(9.2) 在 $a=4,b=m,i=3,j=J_m$ 时给出 (11.23)。不同选择得到不同实际联盟，任意该计数联盟都有同一赤字；其它计数由严格行比较及唯一行峰不能达到最大值。因此数量恰为 $\binom43\binom m{J_m}=4\binom m{J_m}$，没有遗漏最大并列。空联盟和全体联盟的赤字均为零，在 $m\ge5$ 时均严格小于此正最大值。
+
+这里支付公式、有限 Jensen 比较、零赤字端点、正见证与标号计数分别复用第 6 节、(7.11)、(6.2)、(6.15) 与 (9.2)，经典素数与根式输入按引理 11.3 的假设使用。承重的有限结论由 (11.7) 的份额增量、(11.9) 的实际支付系数及引理 11.5 的严格行比较组合得到，是针对本节实际支付的综合推导。上述引文均使用所列原始版本，不以期刊 DOI 断言版本等同。∎
+
+## 追加锚（本行以下为增补区）

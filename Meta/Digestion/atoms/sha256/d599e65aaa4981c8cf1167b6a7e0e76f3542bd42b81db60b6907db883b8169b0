@@ -1,0 +1,18 @@
+#### 定义 11.3（乘法逆的符号）
+
+令 $\mu(1)=1$；若 $n$ 含平方素因子则 $\mu(n)=0$；否则
+$\mu(n)=(-1)^k$，其中 $k$ 是互异素因子数。令
+$M(x)=\sum_{n\le x}\mu(n)$。
+
+唯一素数分解给
+$\sum_{d\mid n}\mu(d)=\prod_{p\mid n}(1-1)=0$（$n>1$）。
+因此 $\mu$ 是常数算术函数 $1$ 的 Dirichlet 卷积逆，在 $\operatorname{Re} s>1$，
+
+$$
+\frac1{\zeta(s)}=\sum_{n\ge1}\mu(n)n^{-s}
+$$
+
+是经典恒等式 [3](#ref-dlmfeuler)。这是一种有实际算术约束的“取反”，不是任意独立的随机正负号。
+
+<a id="thm-mobius"></a>
+

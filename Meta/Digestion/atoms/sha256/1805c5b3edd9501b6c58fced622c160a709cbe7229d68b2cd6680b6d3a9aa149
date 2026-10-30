@@ -1,0 +1,48 @@
+**Convention 1.2 (The resistance identity and scale).** The harmonic and
+counting conventions in (1.1)–(1.2) are those of Cruz Ortega–Menéndez-Conde,
+[*Maximal Algebraic Connectivity for Paths with Fixed Effective Resistance*,
+arXiv:2306.08187v1](https://arxiv.org/pdf/2306.08187v1), §§2–4.
+The classical identities used as intermediate steps are
+
+$$
+r(p,q)=(e_p-e_q)^{\mathsf T}L^+(e_p-e_q),\qquad
+R(c)=n\operatorname{tr}L^+=n\sum_{k=2}^n\lambda_k^{-1}.
+\tag{1.3}
+$$
+
+Here $L^+$ is inverse to $L$ on $\mathbf1^\perp$ and zero on constants.
+The primary supplier for (1.3) is Ghosh–Boyd–Saberi,
+[*Minimizing Effective Resistance of a Graph*, SIAM Review 50(1), 37–66,
+DOI:10.1137/050645452](https://web.stanford.edu/~boyd/papers/pdf/eff_res.pdf),
+§2.4, equation (8), and §2.5, equations (13)–(15): their $G$, $g$ and
+$R_{\rm tot}$ are respectively our $L$, $c$ and $R$.
+
+For the connection with (1.2), the energy identity is
+
+$$
+x^{\mathsf T}Lx=\sum_{i,j}c_{ij}(x_{u_i}-x_{v_j})^2.
+\tag{1.4}
+$$
+
+Positive conductances and connectedness give $\ker L=\mathbb R\mathbf1$.
+The Dirichlet quadratic form with zero values at $p,q$ is positive definite,
+since zero energy would force a constant vector with zero boundary values.
+Thus the harmonic extension exists uniquely. If $I=(Lh)_p$, zero row sums
+and harmonicity give $Lh=I(e_p-e_q)$ and
+$I=h^{\mathsf T}Lh>0$. Applying $L^+$ and taking the $p,q$ coordinate
+difference proves the first identity in (1.3). Summing it uses
+
+$$
+\sum_{\{p,q\}\subseteq A\cup B,\ p\ne q}
+(e_p-e_q)(e_p-e_q)^{\mathsf T}=nI_n-\mathbf1\mathbf1^{\mathsf T},
+$$
+
+which proves the second identity. In particular, for every $\gamma>0$,
+
+$$
+L(\gamma c)=\gamma L(c),\quad
+\lambda_2(L(\gamma c))=\gamma\lambda_2(L(c)),\quad
+R(\gamma c)=R(c)/\gamma.
+\tag{1.5}
+$$
+

@@ -1,0 +1,30 @@
+#### 定理 7.3（振幅平方使实指数加倍）
+
+令 $a>1/2$，则
+
+$$
+\lvert{\chi_a}\rangle{}=\frac{\sum_n n^{-a}\lvert{n}\rangle{}}{\sqrt{\zeta(2a)}}
+$$
+
+是合法单位态，但其可见酉重叠为
+
+<a id="eq-double"></a>
+
+$$
+\langle{\chi_a}\rvert{}W_t\lvert{\chi_a}\rangle{}
+=\frac{\zeta(2a+it)}{\zeta(2a)}, \tag{13}
+$$
+
+而不是 $\zeta(a+it)$。
+
+**证明。**
+
+范数由 $\sum_n n^{-2a}$ 给出。内积把每个振幅与其共轭相乘，系数变为 $n^{-2a}$，再乘 $n^{-it}$。
+直接相加振幅以获得 $\sum_n n^{-a-it}$，相当于与全一向量配对；该向量不属于 $\ell^2$，不是有界 Hilbert 读出。事实上 $N$ 项全一向量的范数为 $\sqrt N$。
+
+∎
+
+因此，平方可积性确实在 $a=1/2$ 改变，但合法 Born 指针的参数仍位于 $\operatorname{Re} s=2a>1$。若试图把它直接当成 RH 临界带上的测量，少了一项不可忽略的指数变化。
+
+<a id="section-8"></a>
+

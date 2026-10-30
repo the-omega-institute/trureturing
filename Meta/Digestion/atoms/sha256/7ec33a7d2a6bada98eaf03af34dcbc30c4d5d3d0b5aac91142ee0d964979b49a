@@ -1,0 +1,35 @@
+**Lemma 13.3 (The scalar optimizer).** For every fixed $h$ and all sufficiently large $a$, $\Phi_{a,h}$ has a unique minimizer $u_h\in(0,1/a)$. It is the unique solution in $(0,a)$ of
+$$
+\frac{h^2}{u_h^2}
+ =\frac{a^2r^2}{(a-u_h)^2}
+ +\frac{(a-1)(2a+1)r^3(a+u_h)}{(a-u_h)^3}.
+\tag{13.2}
+$$
+With
+$$
+M_a=2a^3+2a^2-2a-1,
+\qquad N_a=2a^3-2a-1,
+\qquad b_a=\frac{r^2M_a}{a^2},
+$$
+its scale is
+$$
+ u_h=\frac{h}{\sqrt2\,a^{3/2}}\left(1+O_h(a^{-1})\right).
+\tag{13.3}
+$$
+
+**Proof.** Differentiation gives
+$$
+\Phi_{a,h}''(u)=\frac{2h^2}{u^3}+\frac{2a^2r^2}{(a-u)^3}
+ +\frac{2(a-1)(2a+1)r^3(2a+u)}{(a-u)^4}>0
+$$
+for $0<u<a$. Thus $\Phi_{a,h}'$ is strictly increasing, tends to $-\infty$ at $0$, and tends to $+\infty$ at $a$. Its zero is unique and (13.2) is the equation $\Phi_{a,h}'(u_h)=0$. At $u=1/a$, the positive last term in $\Phi_{a,h}'$ is of order $a^3$, whereas the negative term is $O_h(a^2)$, so the zero lies below $1/a$ for all sufficiently large $a$.
+
+The exact rearrangement of (13.2) is
+$$
+\frac{h^2}{u_h^2}
+=b_a\left(1+\frac{N_a}{M_a}\frac{u_h}{a}\right)
+       \left(1-\frac{u_h}{a}\right)^{-3}.
+\tag{13.4}
+$$
+The two factors after $b_a$ are at least one. Hence $u_h\le h/\sqrt{b_a}=O_h(a^{-3/2})$, and (13.4) gives $u_h=h/\sqrt{b_a}\,(1+O_h(a^{-5/2}))$. Since $b_a=2a^3+O(a^2)$, (13.3) follows. ∎
+
