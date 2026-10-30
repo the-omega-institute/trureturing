@@ -29,7 +29,7 @@ abbrev slopeArena : Arena where
   signature := normSignature
   Law R := ∀ (g : ℂ → ℂ) (_hg : Differentiable ℂ g) (a b : ℝ)
     (_hb : 0 < b) (_hab : a ^ 2 + b ^ 2 ≤ 1),
-    R.readout () () ‖slope g a b - slope g 0 b‖ (|a| * diskNorm g)
+    R.readout () () ‖_root_.D5.S3.Analytic.Interpolation.SchurConjugateSlope.slope g a b - _root_.D5.S3.Analytic.Interpolation.SchurConjugateSlope.slope g 0 b‖ (|a| * diskNorm g)
 
 private theorem slopeRejected : ¬ slopeArena.Law normRejected := by
   intro h
@@ -87,7 +87,7 @@ def equalityRejected : Realization equalitySignature :=
 abbrev derivativeArena : Arena where
   signature := equalitySignature
   Law R := ∀ (g : ℂ → ℂ) (a b : ℝ) (z : ℂ),
-    R.readout () () (deriv (interpolant g a b) z) (slope g a b)
+    R.readout () () (deriv (interpolant g a b) z) (_root_.D5.S3.Analytic.Interpolation.SchurConjugateSlope.slope g a b)
 
 private theorem derivativeRejected : ¬ derivativeArena.Law equalityRejected := by
   intro h
@@ -151,7 +151,7 @@ abbrev supremaArena : Arena where
     (outerValues a b).Nonempty ∧ BddAbove (outerValues a b) ∧
     R.readout () () (1 + |a|) (uniformError a b) ∧ uniformError a b ≤ 2 ∧
     ∃ g ∈ entireClass, g = (fun z => z ^ 2 / 2) ∧ diskNorm g = 1 ∧
-      slope g a b = a ∧ (∀ x : ℝ,
+      _root_.D5.S3.Analytic.Interpolation.SchurConjugateSlope.slope g a b = a ∧ (∀ x : ℝ,
         ‖deriv g x - deriv (interpolant g a b) x‖ = |x - a|) ∧
       sSup (innerValues g a b) = 1 + |a|
 

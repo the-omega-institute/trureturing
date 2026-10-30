@@ -336,21 +336,31 @@ private theorem envelope_integrals :
   · have hd (t : ℝ) : HasDerivAt
         (fun t : ℝ => t ^ 2 - (2 / 3) * t ^ 3 - (9 / 20) * t ^ 4 + (9 / 25) * t ^ 5)
         (smallEnvelope t) t := by
-      convert ((((hasDerivAt_id t).pow 2).sub
+      convert! ((((hasDerivAt_id t).pow 2).sub
         (((hasDerivAt_id t).pow 3).const_mul (2 / 3))).sub
         (((hasDerivAt_id t).pow 4).const_mul (9 / 20))).add
         (((hasDerivAt_id t).pow 5).const_mul (9 / 25)) using 1 <;>
-        dsimp [smallEnvelope] <;> (first | (funext y; simp only [Pi.sub_apply, Pi.add_apply, Pi.pow_apply, id_eq]; ring) | ring)
+        first
+        | (funext y
+           change y ^ 2 - (2 / 3) * y ^ 3 - (9 / 20) * y ^ 4 + (9 / 25) * y ^ 5 =
+             y ^ 2 - y ^ 3 * (2 / 3) - y ^ 4 * (9 / 20) + y ^ 5 * (9 / 25)
+           ring)
+        | (dsimp [smallEnvelope]; ring)
     rw [intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => hd t)
       ((show Continuous smallEnvelope by unfold smallEnvelope; fun_prop).intervalIntegrable _ _)]
     norm_num
   · have hd (t : ℝ) : HasDerivAt
         (fun t : ℝ => (7 / 16) * t - (1 / 16) * t ^ 2 + (1 / 16) * t ^ 3)
         (largeEnvelope t) t := by
-      convert (((hasDerivAt_id t).const_mul (7 / 16)).sub
+      convert! (((hasDerivAt_id t).const_mul (7 / 16)).sub
         (((hasDerivAt_id t).pow 2).const_mul (1 / 16))).add
         (((hasDerivAt_id t).pow 3).const_mul (1 / 16)) using 1 <;>
-        dsimp [largeEnvelope] <;> (first | (funext y; simp only [Pi.sub_apply, Pi.add_apply, Pi.pow_apply, id_eq]; ring) | ring)
+        first
+        | (funext y
+           change (7 / 16) * y - (1 / 16) * y ^ 2 + (1 / 16) * y ^ 3 =
+             y * (7 / 16) - y ^ 2 * (1 / 16) + y ^ 3 * (1 / 16)
+           ring)
+        | (dsimp [largeEnvelope]; ring)
     rw [intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => hd t)
       ((show Continuous largeEnvelope by unfold largeEnvelope; fun_prop).intervalIntegrable _ _)]
     norm_num
