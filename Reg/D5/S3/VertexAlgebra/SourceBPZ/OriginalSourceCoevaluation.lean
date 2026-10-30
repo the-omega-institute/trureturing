@@ -26,7 +26,6 @@ private theorem emptyUnit : IsUnit emptyLattice.G.det := by
 namespace Coefficient
 structure Params where
   D : LatticeData
-  hu : IsUnit D.G.det
   a : Label D
 
 abbrev signature : Signature :=
@@ -44,7 +43,7 @@ def arena : Arena where
   signature := signature
   Law r := ∀ (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Label D) (v : Carrier D),
-    r.readout () ⟨D, hu, a⟩ v = carrierCoeffEquiv D v a
+    r.readout () ⟨D, a⟩ v = carrierCoeffEquiv D v a
 
 theorem sourceBridge : (type_of% (@dualCarrierBasis_pairing)) ↔ arena.Law actual := Iff.rfl
 
@@ -56,7 +55,7 @@ private theorem rejectedLaw : ¬ arena.Law bad := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨⟨emptyLattice, emptyUnit, (0,0)⟩, 0, vacuum emptyLattice, ?_⟩
+  refine ⟨⟨emptyLattice, (0,0)⟩, 0, vacuum emptyLattice, ?_⟩
   change sourcePairing emptyLattice (dualCarrierBasis emptyLattice (0,0)) 0 ≠
     sourcePairing emptyLattice (dualCarrierBasis emptyLattice (0,0)) (vacuum emptyLattice)
   rw [dualCarrierBasis_pairing _ emptyUnit, dualCarrierBasis_pairing _ emptyUnit]
@@ -70,7 +69,7 @@ def family : Registration arena (type_of% (@dualCarrierBasis_pairing)) where
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual bad rejectedLaw
   dependence := dependence
 
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@dualCarrierBasis_pairing)
     (type_of% (realize signature actual.readout actual.anchor)) Params Unit where
   unitName := `D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.dualCarrierBasis_pairing.__information_unit
@@ -92,7 +91,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation
     definition := none
-    coordinates := #[0, 1, 2]
+    coordinates := #[0, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "arg"]
       stateBinder := 3
@@ -127,7 +126,7 @@ theorem source_actual : arena.Law actual := sourceBridge.mp (@dualCarrierBasis_m
 /-- The original telescope and readout are retained. Variation, sensitivity,
 actual observational dependence and native binding remain required. -/
 theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena actual →
-    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
       (@dualCarrierBasis_mem_grade) (Realization signature) LatticeData Unit) :=
   ⟨fun variation sensitivity dependence => {
     unitName := `D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.dualCarrierBasis_mem_grade.__information_unit
@@ -189,7 +188,7 @@ theorem source_actual : arena.Law actual := sourceBridge.mp (@coevaluation_pairi
 /-- The original telescope and readout are retained. Variation, sensitivity,
 actual observational dependence and native binding remain required. -/
 theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena actual →
-    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
       (@coevaluation_pairing) (Realization signature) Params Unit) :=
   ⟨fun variation sensitivity dependence => {
     unitName := `D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.coevaluation_pairing.__information_unit
@@ -255,7 +254,7 @@ theorem source_actual : arena.Law actual := sourceBridge.mp (@inverse_contractio
 /-- The original telescope and readout are retained. Variation, sensitivity,
 actual observational dependence and native binding remain required. -/
 theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena actual →
-    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
       (@inverse_contraction) (Realization signature) Params Unit) :=
   ⟨fun variation sensitivity dependence => {
     unitName := `D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.inverse_contraction.__information_unit
@@ -322,7 +321,7 @@ theorem source_actual : arena.Law actual := sourceBridge.mp (@inverse_contractio
 /-- The original telescope and readout are retained. Variation, sensitivity,
 actual observational dependence and native binding remain required. -/
 theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena actual →
-    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
       (@inverse_contraction_half_average) (Realization signature) Params Unit) :=
   ⟨fun variation sensitivity dependence => {
     unitName := `D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.inverse_contraction_half_average.__information_unit
@@ -381,7 +380,7 @@ theorem source_actual : arena.Law actual := sourceBridge.mp (@coevaluation_negat
 /-- The original telescope and readout are retained. Variation, sensitivity,
 actual observational dependence and native binding remain required. -/
 theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena actual →
-    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
       (@coevaluation_negative) (Realization signature) Params Unit) :=
   ⟨fun variation sensitivity dependence => {
     unitName := `D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.coevaluation_negative.__information_unit
@@ -438,7 +437,7 @@ theorem source_actual : arena.Law actual := sourceBridge.mp (@coevaluation_vacuu
 /-- The original telescope and readout are retained. Variation, sensitivity,
 actual observational dependence and native binding remain required. -/
 theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena actual →
-    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
       (@coevaluation_vacuum) (Realization signature) Params Unit) :=
   ⟨fun variation sensitivity dependence => {
     unitName := `D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.coevaluation_vacuum.__information_unit
@@ -507,7 +506,7 @@ theorem source_actual : arena.Law actual := sourceBridge.mp (@inverse_contractio
 /-- The original telescope and readout are retained. Variation, sensitivity,
 actual observational dependence and native binding remain required. -/
 theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena actual →
-    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
       (@inverse_contraction_signed) (Realization signature) Params Unit) :=
   ⟨fun variation sensitivity dependence => {
     unitName := `D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.inverse_contraction_signed.__information_unit

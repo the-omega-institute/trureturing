@@ -276,6 +276,10 @@ private theorem projection_basis (D : LatticeData) (h : ℤ) (a : Label D) :
   have hc : carrierCoeffEquiv D (carrierBasis D a) = Finsupp.single a 1 :=
     (carrierBasis D).repr_self a
   split_ifs <;> simp_all [hc, Finsupp.single_apply]
+  all_goals
+    intro hab
+    subst b
+    contradiction
 
 private theorem theta_projection (D : LatticeData) (h : ℤ) (v : Carrier D) :
     theta D (gradeProjection D h v) = gradeProjection D h (theta D v) := by
@@ -292,7 +296,7 @@ private theorem theta_projection (D : LatticeData) (h : ℤ) (v : Carrier D) :
       unfold energy chargeEnergy
       rw [bilinear_neg_neg]
     simp only [LinearMap.comp_apply, projection_basis, ht, map_smul, he]
-    split_ifs <;> simp only [map_zero, smul_zero]
+    split_ifs <;> simp only [ht, map_zero, smul_zero]
   exact LinearMap.congr_fun heq v
 
 private def gradeOrderEquiv (D : LatticeData) (h : ℤ) :
