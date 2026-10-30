@@ -7,8 +7,6 @@
    digest: The lazy two-causal inequality J1 induces a facet for every party count at least two. -/
 
 import D5.S3.TotalVariation.Equality.FiberwiseEqualDistanceLift
-import Mathlib.Analysis.Convex.Hull
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 
 /-! The lazy binary scenario and inequality (10) of Abbott–Wechs–Costa–Branciard,
     Genuinely Multipartite Noncausality, arXiv:1708.07663v2, Definition 2.
