@@ -372,7 +372,7 @@ private lemma correlations : correlationA 2 (-1) witness = 1 / 21 ∧
   · rw [hr _ (measured_hermitian 1 1).2.2, hcab]
     norm_num
 
-/-- The two-qubit rational state refutes universal validity of the inequality. -/
+/-- Correlations 1/21, 1/21 and 1/10 of the rational two-qubit state refute the inequality. -/
 theorem result : ¬ claim := by
   intro h
   have hv := h 2 (-1) (by norm_num) (by norm_num) (by norm_num)
