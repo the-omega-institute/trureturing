@@ -10,7 +10,6 @@ import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
 import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Ring
 
 /-! The finite-graph optimality assertion in J. P. Chen, arXiv:1606.01577v4,
     with each undirected edge counted once and density strictly between zero and one. -/
