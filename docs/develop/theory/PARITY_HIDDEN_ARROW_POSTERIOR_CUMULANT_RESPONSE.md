@@ -2257,3 +2257,331 @@ arXiv:1207.5654v1](https://arxiv.org/html/1207.5654v1)，
 仍不在所证范围内。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 137. 全盒配分的模型特异共零排除
+
+**定义 137.1（实际全盒）。** 固定定义 121.1 的 $r,eta$、全部 floor、均匀大小 $q$ 先验、完整 pair 与均匀初态 path 实验，以及一个确定正噪声序列 $sigma_n$ 满足 (122.1)。对实际记录 $x$，置
+
+$$
+N_J=sum_jC_j,qquad N_c=M-N_J,qquad
+\mathcal B_x=left\{m\in\prod_j\{0,\ldots,C_j\}:0\le q-sum_jm_jle N_c\right\}.
+\tag{137.1}
+$$
+
+空组仍保留为 $C_j=0$。因为补集的每个权重严格为正，(137.1) 正是式 (121.6) 的完整实际支持：没有把任何二项多重度或补集 elementary-symmetric mass 删掉。若
+
+$$
+L_x=max(0,q-N_c),qquad U_x=min(q,N_J),
+\tag{137.2}
+$$
+
+则 $mathcal B_x$ 为空当且仅当 $L_x>U_x$。其基数的精确式为
+
+$$
+|\mathcal B_x|=sum_{s=L_x}^{U_x}[u^s]prod_j(1+u+cdots+u^{C_j}),
+\tag{137.3}
+$$
+
+其中空和为零；因此它是 singleton 当且仅当右端等于 $1$。特别地，原全盒
+
+$$
+\mathcal B_x=\prod_j\{0,\ldots,C_j\}
+\quad\Longleftrightarrow\quad N_J\le qle N_c.
+\tag{137.4}
+$$
+
+在 singleton 情形，任何实际配分是一个非零指数函数，因而没有零点。
+
+沿用 (132.1)，写
+
+$$
+F_{x,y}(m)=A_x(m)-\frac{yT_x(m)}{\sigma^2}+rac{y^2}{2\sigma^2},qquad
+A_x(m)=S_Q(m)-\ell(m)+\frac{T_x(m)^2}{2\sigma^2},
+\tag{137.5}
+$$
+
+并定义完整实际配分
+
+$$
+G_{x,y}(z)=\sum_{m\in\mathcal B_x}e^{-zF_{x,y}(m)}.
+\tag{137.6}
+$$
+
+它是 $z$ 的整个函数，且等于 (132.1) 的 $G_y$。若将式 (121.6) 的全部质量直接幂化，则
+
+$$
+\sum_{m\in\mathcal B_x}(P_x(m)e^{-\lambda_y(m)})^z
+ =\mathfrak m_x^{,z}G_{x,y}(z),
+\tag{137.7}
+$$
+
+其中 $mathfrak m_x>0$ 与 $y$ 无关；所以 (137.6) 和原始全质量配分有完全相同的零点及重数。
+
+**引理 137.2（实际壳层的非塌缩）。** 假定 (137.4)，且 $lvertmathcal B_x
+vert>1$。令
+
+$$
+\Theta_x=\{T_x(m):m\in\mathcal B_x\},qquad
+H_{x,t}(z)=\sum_{m:T_x(m)=t}e^{-zA_x(m)}quad(t\in\Theta_x).
+\tag{137.8}
+$$
+
+对每个 $z_0$ 满足 $G_{x,0}(z_0)=0$，至少有一个 $t\in\Theta_x$ 使 $H_{x,t}(z_0)\ne0$。这条结论允许不同的 $m$ 有相同的 $T_x(m)$；它只排除所有 tied shell 同时塌缩，不要求 $m\mapsto T_x(m)$ 为单射。
+
+**证明。** 在全盒上，补集质量严格正，故相邻元组的质量比和能量差分别为
+
+$$
+\frac{P_x(m+e_j)}{P_x(m)}
+ =\frac{C_j-m_j}{m_j+1}e^{W_j}
+   \frac{e_{q-1-\sum_i m_i}((e^{W_i})_{i\notin J})}
+        {e_{q-\sum_i m_i}((e^{W_i})_{i\notin J})},
+\tag{137.9}
+$$
+
+$$
+T_x(m+e_j)-T_x(m)=
+ \frac{2(m_j-\mu_j)+1}{B^2\sqrt\delta}.
+\tag{137.10}
+$$
+
+取一个非空 coordinate face，按 $m_j$ 从 $0$ 到 $C_j$ 逐层消元。若所有 (137.8) 在 $z_0$ 都为零，则在每层相邻面上相减，先由 (137.10) 消去相同的 energy exponent，再由 (137.9) 消去相邻的 positive mass. 迭代到两个相对面的端点，得到
+
+$$
+e^{-z_0\,[T_x(m+e_j)-T_x(m)]y}=1
+\quad	ext{for every real }y
+\quad	ext{on every surviving face}.
+\tag{137.11}
+$$
+
+若某个 surviving face 有非零差，(137.11) 对所有 $y$ 强迫 $z_0=0$。若所有差都为零，则 (137.10) 给出 $mu_j=m_j+1/2$ 对每个 nontrivial coordinate；代回相邻面比值 (137.9)，再沿一个补集交换得到 $q=M/2$. 这与 $q<M$ 矛盾。故只能有 $z_0=0$, 但
+
+$$
+G_{x,0}(0)=|\mathcal B_x|>0,
+$$
+
+矛盾。空 coordinate 不参与消元；当只有一个 nontrivial coordinate 时同一端点计算给出相同结论。整个过程中按 (137.8) 保留 tied shell 的和，因而没有使用 lattice injectivity。证毕。
+
+**定理 137.3（固定噪声的全盒模型特异除零集）。** 对每一个固定的正噪声序列 $sigma=(sigma_n)$，存在一个确定的可数集 $E_\sigma\subset\mathbb R$，$0\in E_\sigma$，它只由固定模型、floor 序列和 $sigma$ 决定，不依赖真实支持、实际记录或紧输出区间。对充分大的合法 $n$，在 pair 与 path 两种实验中，对每一个满足 (137.4) 的实际记录 $x$ 及每一个 $y\notin E_\sigma$，
+
+$$
+Z(G_{x,y})\cap Z(G_{x,0})=\varnothing,
+\tag{137.12}
+$$
+
+其中零点按集合计；本定理不把 tied shells 拆开，也不声称所有记录的整数格映射注入。
+
+**证明。** 由 (137.5)–(137.8)，
+
+$$
+G_{x,y}(z)=e^{-zy^2/(2\sigma^2)}
+ \sum_{t\in\Theta_x}e^{zyt/\sigma^2}H_{x,t}(z).
+\tag{137.13}
+$$
+
+固定 $x$。有限整个函数 $G_{x,0}$ 非零，因为其在 $0$ 的值为 $|\mathcal B_x|$；所以 $Z(G_{x,0})$ 是可数离散集。若 $z_0\in Z(G_{x,0})$, 引理 137.2 说明右侧作为 $y$ 的整个函数不是恒零，故它的实零集可数。于是
+
+$$
+E_{\sigma,x}=\{y\in\mathbb R:\exists z, G_{x,0}(z)=G_{x,y}(z)=0\}
+$$
+
+是可数集。所有合法层级的实际记录集合是可数并且每一层有限；取所有 full-box 记录的 $E_{\sigma,x}$ 的并，再加入 $0$, 得到所需 $E_\sigma$. 这一定义同时覆盖空盒和 singleton：它们的配分没有零点，贡献为空。式 (137.12) 由并集定义得到。该构造先对所有输出取并，故不依赖 $R$；支持一致性来自原核对正类置换的等变性。证毕。
+
+## 138. 实际响应的零因子判据与精确半径
+
+**定义 138.1（归一化响应与零因子）。** 在实轴 $[1,2]$ 上 $G_{x,y}$、$G_{x,0}$ 均严格为正。令
+
+$$
+\mathcal R_{x,y}(z)=
+ \frac{G_{x,y}(z)G_{x,0}(1)}{G_{x,0}(z)G_{x,y}(1)},qquad
+\Xi_{x,z}(y)=\log\frac{G_{x,y}(z)}{G_{x,0}(z)},
+\tag{138.1}
+$$
+
+先在 $z=1$ 的实邻域取实分支，因此 $mathcal R_{x,y}(1)=1$。对整个函数 $H$ 记 $\operatorname{ord}_\zeta H$ 为零点重数，零点不存在时取零，并令
+
+$$
+\nu_{x,y}(\zeta)=\operatorname{ord}_\zeta G_{x,y}-\operatorname{ord}_\zeta G_{x,0}.
+\tag{138.2}
+$$
+
+**定理 138.2（有限纤维的充要零因子准则）。** 设 $U\subset\mathbb C$ 是包含 $[1,2]$ 的单连通开集。以下三项等价：
+
+1. $mathcal R_{x,y}$ 的 $z=1$ germ 延拓为 $U$ 上处处非零的全纯函数，并且存在唯一满足 $L(1)=0$ 的全纯函数 $L$ 使 $e^{L}=\mathcal R_{x,y}$；
+2. 对每个 $\zeta\in U$，有
+   
+   $$
+   \operatorname{ord}_\zeta G_{x,y}=\operatorname{ord}_\zeta G_{x,0};
+   \tag{138.3}
+   $$
+   
+3. $\Xi_{x,z}(y)-\Xi_{x,1}(y)$ 有 $U$ 上的全纯延拓，并在 $z=1$ 为零。
+
+**证明。** (138.3) 正是分子、分母局部幂级数可约去的充要条件；约去后所得商既全纯又无零，故得到 (1) 的第一部分。单连通域上的无零全纯函数有唯一归一化全纯对数，给出 (1)。由 $\mathcal R(1)=1$，(1) 取对数后等价于 (3)。反向若有 (3)，指数化得到无零商，局部唯一分解定理迫使分子、分母每个零点的重数相等，故得 (138.3)。证毕。
+
+**推论 138.3（Taylor 半径、区间管半径及全盒最小值）。** 定义
+
+$$
+\rho_T(x,y)=\inf_{\nu_{x,y}(\zeta)\ne0}|\zeta-1|,qquad
+\rho_I(x,y)=\inf_{\nu_{x,y}(\zeta)\ne0}\operatorname{dist}(\zeta,[1,2]),
+\tag{138.4}
+$$
+
+空下确界取 $+\infty$. 则 $\rho_T$ 是归一化响应 germ 的 Taylor 对数可延拓半径，$\rho_I$ 是含 $[1,2]$ 的开 interval-tube 可延拓半径：任意半径小于相应数值时延拓存在，任意大于相应数值时延拓不可能。这里的障碍只由 unmatched zeros 及其重数给出；共同零点完全消去。
+
+若 $y\notin E_\sigma$ 且 $x$ 满足 (137.4)，则 (137.12) 给出
+
+$$
+\rho_T(x,y)=\min\left\{\inf_{G_{x,y}(\zeta)=0}|\zeta-1|,
+                         \inf_{G_{x,0}(\zeta)=0}|\zeta-1|\right\},
+\tag{138.5}
+$$
+
+$$
+\rho_I(x,y)=\min\left\{\inf_{G_{x,y}(\zeta)=0}\operatorname{dist}(\zeta,[1,2]),
+                         \inf_{G_{x,0}(\zeta)=0}\operatorname{dist}(\zeta,[1,2])\right\}.
+\tag{138.6}
+$$
+
+当 $y=0$ 时 $G_{x,y}=G_{x,0}$，故所有零点均按相同重数约去，$\mathcal R_{x,0}=1$ 且两半径为 $+\infty$；这正是原归一化 response 中的 $y=0$ cancellation。
+
+**证明。** 在圆盘 $|z-1|<r$ 内，商的唯一全纯对数存在当且仅当 (138.3) 在该圆盘内成立；最近未匹配零点给出最大圆盘半径。集合 $\{z:\operatorname{dist}(z,[1,2])<r\}$ 是单连通的 stadium 域，完全相同的局部约去论证给第二式。若没有未匹配零点，商为整个无零函数，半径为 $+\infty$. (138.5)–(138.6) 只是 (138.4) 中的 signed divisor 在 (137.12) 下退化为两个零集合的并。证毕。
+
+**命题 138.4（惊讶 MGF 与重数反射）。** 令 $I_y(m)=-\log P_x^y(m)$. 则
+
+$$
+I_y(m)=F_{x,y}(m)+\log G_{x,y}(1),qquad
+M_{x,y}(s)=\mathbb E_{P_x^y}e^{sI_y}
+ =e^{(s-1)\log G_{x,y}(1)}G_{x,y}(1-s).
+\tag{138.7}
+$$
+
+在 $V=\{s:1-s\in U\}$ 上取归一化解析对数，有
+
+$$
+\log M_{x,y}(s)=(s-1)L_{x,y}(1)+L_{x,y}(1-s),
+\tag{138.8}
+$$
+
+$$
+\log M_{x,y}(s)-\log M_{x,0}(s)
+ =\Xi_{x,1-s}(y)-(1-s)\Xi_{x,1}(y).
+\tag{138.9}
+$$
+
+$M_{x,y}$ 的零点是 $G_{x,y}$ 在 $z=1-s$ 下的像，重数保持；非零 affine factor 不产生或消除零点。
+
+**证明。** 由 (132.2)，$P_x^y(m)=e^{-F_{x,y}(m)}/G_{x,y}(1)$，逐项求和即得 (138.7)。在共同无零域上取 (138.7) 的解析对数得到 (138.8)，相减后 affine 项只留下 (138.9)。线性反射的导数为 $-1$，所以局部参数变换保持零点重数。证毕。
+
+## 139. 两标记行的精确三质量根与坏类
+
+**定义 139.1（两行记录）。** 对每个充分大的合法 $n$，选两条不同的正类行 $i_1,i_2$，并选一份与真实支持无关的完整 pair 记录和一份与真实支持无关的完整 path 记录，使两条标记行有同一实际分数 $W_n$，其余观察填在任意背景行并用任意合法桥接边连接。取
+
+$$
+W_n^*=\log\frac{M_n-q_n}{q_n},qquad
+|W_n-W_n^*|\le C\left(\lambda_n\epsilon_{c,n}+q_n^{-1}+q_n/M_n\right).
+\tag{139.1}
+$$
+
+这是原格线 $(k_0+jQ,l_0+jP)$ 在完整计数线上的最近点；剩余 slots 可任意分配，所以所得两种记录均对每个大小为 $q_n$ 的真实支持有严格正概率。令
+
+$$
+A_m=\binom2m e^{mW_n}\binom{M_n-2}{q_n-m},quad m=0,1,2,qquad
+Z=\sum_{m=0}^2A_m,qquad a_m=A_m/Z.
+\tag{139.2}
+$$
+
+实际 posterior 的标记行中心和校准参数为
+
+$$
+\mu_n=\frac{A_1+2A_2}{Z},qquad
+p_n=\frac{e^{W_n+h_n}}{1+e^{W_n+h_n}},qquad
+2p_n+\sum_{i\notin\{i_1,i_2\}}p_i=q_n,
+\tag{139.3}
+$$
+
+其中 $h_n$ 是原精确共同赔率乘子。固定原 $sigma_n>0$ 并保留严格噪声条件 (122.1)，对固定 $R<\infty$ 置
+
+$$
+\varepsilon_n=\lambda_n\epsilon_{c,n}+\frac1{q_n}+rac{q_n}{M_n}
+       +\frac{Q_n^{11/4}}{q_n\sigma_n^2}.
+\tag{139.4}
+$$
+
+**命题 139.2（两行根、response 与概率）。** 对每个有限 $K$，两种完整实验的上述确定记录都满足，统一于 $|y|\le R$,
+
+$$
+a_0=\frac14+O(\varepsilon_n),qquad
+a_1=\frac12+O(\varepsilon_n),qquad
+a_2=\frac14+O(\varepsilon_n),qquad
+\mu_n=1+O(\varepsilon_n),
+\tag{139.5}
+$$
+
+以及原实际 partition 的简单零点
+
+$$
+z_{(n,k)}(y)=1+\frac{(2k+1)\pi i}{\log2}+O_{R,K}(\varepsilon_n),qquad |k|\le K.
+\tag{139.6}
+$$
+
+误差对 $y$ 一致。实际 $G_{x,y}$ 与 $G_{x,0}$ 的上下两个最近原始零点满足
+
+$$
+\operatorname{dist}(1,Z(G_{x,y}))
+ =\operatorname{dist}(1,Z(G_{x,0}))
+ =\frac\pi{\log2}+O_R(\varepsilon_n),
+\tag{139.7}
+$$
+
+并且把 $1$ 换成闭区间 $[1,2]$ 后同式仍成立。MGF 的对应零点为 $1-z_{(n,k)}(y)$，重数为一；当 $y\notin E_\sigma$ 时，(138.5)–(138.6) 给出 generic response 的两个半径为实际两 partition 半径的最小值。$y=0$ 时仍完全 cancellation，半径为 $+\infty$。
+
+这些两行记录不属于任何固定原 good class：若 good class 要求 (123.1) 的核心条件 $N_J\ge c/\delta_n$, 则 $N_J=2<c/\delta_n$ 最终成立。并且对每个真实支持 $S$，
+
+$$
+\mathbb P_S^{\rm pair}\{x_n\}\le
+ \left(\frac{1+r}{4M_n^2}\right)^{\mathsf T_n},qquad
+\mathbb P_S^{\rm path}\{x_n\}\le
+ \frac1{2M_n}\left(\frac{1+r}{2M_n}\right)^{\mathsf T_n},
+\tag{139.8}
+$$
+
+故两种单个记录概率都一致趋于零；这里没有对这族记录的并集作概率估计，也没有由此推出 typical-data obstruction。
+
+**证明。** 由二项式比值，(139.2) 精确给出
+
+$$
+\frac{A_1}{A_0}=2e^{W_n}\frac{q_n}{M_n-1-q_n},qquad
+\frac{A_2}{A_1}=e^{W_n}\frac{q_n-1}{2(M_n-q_n)}.
+\tag{139.9}
+$$
+
+代入 (139.1) 及 $q_n<M_n$，两式分别为 $2(1+O(\lambda\epsilon_c+q^{-1}+q/M))$ 和 $\frac12(1+O(\lambda\epsilon_c+q^{-1}+q/M))$，从而得 (139.5)。同一个赔率校准在两标记行上给相同 $p_n$；由 (139.9) 的 elementary-symmetric 公式，精确 posterior 中心就是 (139.3)，并给 $\mu_n=1+O(\varepsilon_n)$。
+
+把 (139.5) 代入实际的三项全质量 partition，并乘去不影响零点的公共因子 $4^z$。在 $|y|\le R$ 的输出项中，
+
+$$
+\lambda_y(m)-\frac{(m-1)^2}{2B_n^2\delta_n\sigma_n^2}
+ =O_R\!\left(\frac{Q_n^{11/4}}{q_n\sigma_n^2}
+          +\lambda_n\epsilon_{c,n}+q_n^{-1}+q_n/M_n\right),
+\tag{139.10}
+$$
+
+由 (121.8)、(139.3) 和 $B_n^2=q_n/Q_n^{5/2}$；同一界对 $m=0,1,2$ 成立。公共的 $m$ 无关项可再除去。于是，在每个固定紧 $z$ 集上，归一化 partition 与
+
+$$
+\overline G(z)=2^{-2z}(2+2^z)
+\tag{139.11}
+$$
+
+的差为 $O_R(\varepsilon_n)$，且 $\overline G$ 的零点 $\bar z_k=1+(2k+1)\pi i/\log2$ 都是简单的。取互不相交的小圆盘围住有限个 $\bar z_k$，圆周上 $|\overline G|$ 有正下界，Rouché 定理给出每个圆盘恰一个简单实际零点，得到 (139.6)。在圆盘外的固定带内，因式分解 $2+2^z$ 给出正下界；在带外由两项的较大模支配，故不存在更近零点。这给 (139.7)，且误差常数对 $|y|\le R$ 一致。Rouché 的带重数稳定性也可表述为 D5/S3/Weil/ZetaAnalytic/RoucheZeroCount 的同一计数原理。
+
+式 (138.7) 的线性反射给出 MGF 结论；(137.12) 和 (138.4) 给出 generic response 结论，且使用的是同一个 $E_\sigma$. 两标记行的 $N_J=2$ 直接否定任何含固定核心下界的原 good class。最后，pair 的每个完整相邻对质量至多 $(1+r)/(4M^2)$，path 的初态质量为 $(2M)^{-1}$ 且每一步转移质量至多 $(1+r)/(2M)$，故 (139.8)；估计对 $S$ 无关。证毕。
+
+## 140. 来源对应、复用与边界
+
+定义 137.1 和式 (137.7) 直接复用定义 121.1–121.3、121.6–121.9 的完整整数、完整多重度、校准 $p_i$、实际中心与正噪声；全盒的等价条件 (137.4) 是对补集 elementary-symmetric 支持的新增有限组合。定理 68.2 的完整计数线、(68.12) 的 pair/path 生成函数、(68.13)–(68.15) 的原始计数界提供 (139.1) 的格线选择与两种实际记录；`FiniteSupportSelectionBayes.finite_support_bayes`、`UniformPosteriorOdds.result`、`FiniteSupportPosteriorMoment.finite_support_posterior_moment` 和 `ActualMarkedPathPgfPoissonEnvelope.actual_marked_path_pgf_poisson_envelope` 提供有限支持的正性、校准后验、矩与 path 行界。D5/S3/Analytic/Entire/ExponentialBlockIndependence 的指数块独立性只用于有限指数表示的去重说明；D5/S3/Zeros/SimpleZeroLogResidue 的重数局部事实与 D5/S3/Weil/ZetaAnalytic/RoucheZeroCount 的带重数 Rouché 稳定性分别支撑 (138.2) 和 (139.6) 的经典中间步骤。Baker–Wüstholz, *Logarithmic forms and group varieties*, DOI 10.1515/crll.1993.442.19, 主定理给出固定代数数对数线性形式的高度下界；在本模型中它只承担原分数格线的算术隔离，不承担本附录的复零点结论。
+
+新增数学组合是：全盒支持的精确区间判别、tied-shell 保留下的可数共零投影、带重数的全纯商与两种精确半径，以及同一原噪声和同一 $E_\sigma$ 下的两标记行 Rouché 根扰动。它们没有把 tied shells 改判为 lattice injectivity，没有扩大 good-class 域，没有给出固定普适管宽、最近零点的最优尺度、零点间距下界或更大的输出域；也没有把两行族的单记录概率改写为族概率或 typical-data 结论。
+
+
+## 追加锚（本行以下为增补区）
