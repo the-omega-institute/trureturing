@@ -9,7 +9,13 @@
 import Mathlib.Analysis.Calculus.Deriv.ZPow
 import D5.S3.Weil.ZetaLinear.Sylvester
 
-/-! The positive index of the clamped-chain Jacobian is bounded by the broken-bond count. -/
+/-!
+# Instability count for the clamped Lennard-Jones chain
+
+Source: Rodrigues–Kevrekidis–Dobson, arXiv:1802.03477v2, abstract and equations (1)–(2).
+The bond-difference factorization and the codimension-one range give the two inertia bounds.
+The steady-state and endpoint hypotheses are retained from the source statement.
+-/
 
 noncomputable section
 open scoped BigOperators
