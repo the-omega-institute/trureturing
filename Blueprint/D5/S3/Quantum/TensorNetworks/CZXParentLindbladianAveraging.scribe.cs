@@ -25,6 +25,8 @@ internal sealed class CZXParentLindbladianAveragingDocument : IScribeDocumentDef
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
         Describe.Lean(DescribeId.Create("czx-avg-" + name.ToLowerInvariant().Replace("_", "-")), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+    private static Formula Local(string name) => Q(Prefix.Replace('/', '.') + name);
+
     private static Formula Q(string name)
     {
         var parts=name.Split('.'); var items=new List<Formula> { Operatorname, Grp(F.Id(parts[0])) };
@@ -33,18 +35,18 @@ internal sealed class CZXParentLindbladianAveragingDocument : IScribeDocumentDef
     }
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Q(name), [.. args]);
     private static Formula At(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
-    private static Formula P(Formula x) => Seq(Open, x, Close);
-    private static Formula T(Formula x, Formula type) => P(Seq(x, Colon, Sp, type));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula T(Formula x, Formula type) => Parenthesized(Seq(x, Colon, Sp, type));
     private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp, T(F.Id(name), type), Comma, Sp, body);
     private static Formula Typeclass(string name, params Formula[] args) => Seq(OpenBracket, Call(name, args), CloseBracket);
     private static Formula Eqn(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
-    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(P(a), FormulaLogicOperator.Implies, P(b));
-    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(P(a), FormulaBinaryOperator.Multiply, P(b));
-    private static Formula Pow(Formula a, Formula b) => new Formula.Power(P(a),b);
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
+    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
+    private static Formula Pow(Formula a, Formula b) => new Formula.Power(Parenthesized(a),b);
     private static Formula Inv(Formula a) => Pow(a,Seq(Minus,D(1)));
-    private static Formula Smul(Formula scalar, Formula value) => Seq(P(scalar),Sp,Cdot,Sp,P(value));
-    private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(P(a),P(b));
+    private static Formula Smul(Formula scalar, Formula value) => Seq(Parenthesized(scalar),Sp,Cdot,Sp,Parenthesized(value));
+    private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(Parenthesized(a),Parenthesized(b));
     private static Formula SumOver(Formula v, Formula domain, Formula body) => Seq(new Formula.Subscript(Sum,Seq(v,Colon,Sp,domain)),Sp,body);
     private static Formula Fin(Formula n) => Call("Fin",n);
     private static Formula Nat() => Seq(Mathbb,Grp(F.Id("N")));
@@ -53,7 +55,7 @@ internal sealed class CZXParentLindbladianAveragingDocument : IScribeDocumentDef
     private static Formula FunctionSpace(Formula n, Formula V) => Arrow(Config(n),V);
     private static Formula Finset(Formula n) => Call("Finset",Fin(n));
     private static Formula Update(Formula x, Formula k, Formula b) => Call("Function.update",x,k,b);
-    private static Formula AvgCall(Formula n, Formula s) => At(F.Id("avg"),n,s);
+    private static Formula AvgCall(Formula n, Formula s) => At(Local("avg"),n,s);
     private static Formula VBinders(Formula body) => Seq(Forall,Sp,T(F.Id("V"),F.Id("Type")),Comma,Sp,Typeclass("AddCommGroup",F.Id("V")),Comma,Sp,Typeclass("Module",Complex(),F.Id("V")),Comma,Sp,body);
     private static Formula WBinders(Formula body) => Seq(Forall,Sp,T(F.Id("V"),F.Id("Type")),Comma,Sp,Typeclass("AddCommGroup",F.Id("V")),Comma,Sp,Typeclass("Module",Complex(),F.Id("V")),Comma,Sp,Forall,Sp,T(F.Id("W"),F.Id("Type")),Comma,Sp,Typeclass("AddCommGroup",F.Id("W")),Comma,Sp,Typeclass("Module",Complex(),F.Id("W")),Comma,Sp,body);
 
@@ -74,5 +76,5 @@ internal sealed class CZXParentLindbladianAveragingDocument : IScribeDocumentDef
     private static Formula AvgUniv()
     { var n=F.Id("n"); var f=F.Id("f"); var x=F.Id("x"); var lhs=At(At(AvgCall(n,Call("Finset.univ")),f),x); var rhs=Smul(Inv(T(Pow(D(2),n),Complex())),SumOver(F.Id("y"),Config(n),At(f,F.Id("y")))); return VBinders(All("n",Nat(),All("f",FunctionSpace(n,F.Id("V")),All("x",Config(n),Eqn(lhs,rhs))))); }
     private static Formula CastOne() => T(D(1),Call("Module.End",Complex(),FunctionSpace(F.Id("n"),F.Id("V"))));
-    private static Formula Lam(string name, Formula type, Formula body) => Seq(LambdaLower,Sp,T(F.Id(name),type),Sp,Mapsto,Sp,P(body));
+    private static Formula Lam(string name, Formula type, Formula body) => Seq(LambdaLower,Sp,T(F.Id(name),type),Sp,Mapsto,Sp,Parenthesized(body));
 }

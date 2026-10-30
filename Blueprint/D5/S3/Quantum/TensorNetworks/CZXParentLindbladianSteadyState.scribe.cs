@@ -33,7 +33,7 @@ internal sealed class CZXParentLindbladianSteadyStateDocument : IScribeDocumentD
                     Paragraph(Text(
                         "For an even n with 4 ≤ n, the window superoperators at even starting sites are idempotent and commute because the four-site windows have distinct sites and their gauged actions average disjoint middle bits. The exponential of each shifted idempotent therefore converges to that projection, and the finite product converges to the product projection for the parent Lindbladian.")),
                     Paragraph(Text(
-                        "The gauge action turns each window word into an average over its two middle sites. The middle sites of the even-starting windows cover the ring, so the product projection sends every matrix to the sum of its identity and CZX-unitary components, weighted by the normalized traces of the matrix and its CZX-unitary conjugate.")),
+                        "The gauge action turns each window word into an average over its two middle sites. The middle sites of the even-starting windows cover the ring, so the product projection sends every matrix to the sum of its identity and CZX-unitary components, weighted by the normalized trace tr(A) and the normalized pairing tr(U_CZX† A), where U_CZX = czxUnitary n.")),
                     Paragraph(Text(
                         "For the initial matrix ((2 : ℂ)^n)⁻¹ • (1 + tensorX n), the tensor-x diagonal trace is zero and the CZX-unitary trace is zero. The remaining coefficient is the transfer trace, identified with the trace of the n-th power of the two-by-two matrix [[1,1],[1,−1]]. Its square is 2 times the identity, so for even n the transfer trace is 2^(n/2+1). Combining this with the normalization gives 2^(1−n/2), and the evolution-limit identity then yields the displayed target. Nat.div denotes natural-number floor division and Nat.mod the remainder; Fin.divNat a b p and Fin.modNat a b p have values p.val / b and p.val % b, respectively."))),
                 DescribeRole.Theorem))));
@@ -42,19 +42,22 @@ internal sealed class CZXParentLindbladianSteadyStateDocument : IScribeDocumentD
     {
         Formula n = X("n");
         Formula scalar = Inverse(Pow(Typed(D(2), Complex()), n));
-        Formula initial = Smul(scalar, Add(Identity(n), At(Qualified("tensorX"), n)));
+        Formula initial = Smul(scalar, Add(Identity(n), At(Window("tensorX"), n)));
         Formula exponent = Subtract(Typed(D(1), Integers()), Cast(NatDiv(n, D(2)), Integers()));
         Formula target = Smul(scalar,
             Add(Identity(n), Smul(Pow(Typed(D(2), Complex()), exponent),
-                At(Qualified("czxUnitary"), n))));
+                At(Window("czxUnitary"), n))));
         Formula tendsto = At(Qualified("Filter", "Tendsto"),
-            LambdaOf("t", Reals(), At(Qualified("evolution"), n, X("t"), initial)),
+            LambdaOf("t", Reals(), At(Window("evolution"), n, X("t"), initial)),
             Qualified("Filter", "atTop"),
             At(Qualified("nhds"), target));
         return All("n", Naturals(),
             Imp(At(Qualified("Even"), n),
                 Imp(LessEqual(Typed(D(4), Naturals()), n), tendsto)));
     }
+
+    private static Formula Window(string name) => Qualified(
+        "D5", "S3", "Quantum", "TensorNetworks", "CZXParentLindbladianWindowChannel", name);
 
     private static Formula Local(string name) => Qualified(
         "D5", "S3", "Quantum", "TensorNetworks", "CZXParentLindbladianSteadyState", name);

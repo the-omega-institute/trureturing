@@ -73,7 +73,7 @@ internal sealed class CZXParentLindbladianWindowChannelDocument : IScribeDocumen
             Node("window_channels_commute", "Translated window channels commute", WindowChannelsCommute(),
                 "The gauged-unit action identifies each good window channel with an average over its two middle coordinates. The coordinate averages commute, and the four cases of good or bad windows give equality for every matrix.", Repo, DescribeRole.Theorem),
             Node("window_superoperator_action", "The window superoperator action", WindowSuperoperatorAction(),
-                "Expanding an arbitrary matrix in matrix units and evaluating the resulting linear map shows that the matrix-vector action of windowSuperoperator equals windowChannel entrywise.", Repo, DescribeRole.Theorem),
+                "Applying LinearMap.toMatrix_mulVec_repr to windowLM in Matrix.stdBasis identifies the matrix-vector action of windowSuperoperator with windowChannel entrywise.", Repo, DescribeRole.Theorem),
             Node("window_idempotent", "Idempotence of a window superoperator", WindowIdempotent(),
                 "The local channel is idempotent on matrix units; the window channel therefore composes with itself to itself. The preceding action formula transfers this identity to the window superoperator.", Repo, DescribeRole.Theorem)
         ), []));
@@ -86,6 +86,8 @@ internal sealed class CZXParentLindbladianWindowChannelDocument : IScribeDocumen
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
             Blocks(Paragraph(Text(prose))), role);
 
+    private static Formula Local(string name) => Q(Prefix.Replace('/', '.') + name);
+
     private static Formula Q(string name)
     {
         var parts=name.Split('.'); var items=new List<Formula> { Operatorname, Grp(F.Id(parts[0])) };
@@ -94,26 +96,26 @@ internal sealed class CZXParentLindbladianWindowChannelDocument : IScribeDocumen
     }
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Q(name), [.. args]);
     private static Formula At(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
-    private static Formula P(Formula value) => Seq(Open, value, Close);
-    private static Formula T(Formula value, Formula type) => P(Seq(value, Colon, Sp, type));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula T(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
     private static Formula Var(string name) => name == "δ" ? Delta : F.Id(name);
     private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp, T(Var(name), type), Comma, Sp, body);
-    private static Formula Lam(string name, Formula type, Formula body) => Seq(LambdaLower, Sp, T(Var(name), type), Sp, Mapsto, Sp, P(body));
+    private static Formula Lam(string name, Formula type, Formula body) => Seq(LambdaLower, Sp, T(Var(name), type), Sp, Mapsto, Sp, Parenthesized(body));
     private static Formula Const(Formula domain, Formula value) => At(Q("Function.const"), domain, value);
     private static Formula Eqn(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Mem(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
-    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(P(a), FormulaLogicOperator.Implies, P(b));
-    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(P(a), FormulaLogicOperator.Iff, P(b));
-    private static Formula Add(Formula a, Formula b) => new Formula.Binary(P(a), FormulaBinaryOperator.Add, P(b));
-    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(P(a), FormulaBinaryOperator.Subtract, P(b));
-    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(P(a), FormulaBinaryOperator.Multiply, P(b));
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
+    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Iff, Parenthesized(b));
+    private static Formula Add(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
+    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
+    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
     private static Formula Div(Formula a, Formula b) => new Formula.Fraction(a, b);
-    private static Formula Pow(Formula a, Formula b) => new Formula.Power(P(a), b);
+    private static Formula Pow(Formula a, Formula b) => new Formula.Power(Parenthesized(a), b);
     private static Formula Inv(Formula a) => Pow(a, Neg(D(1)));
-    private static Formula Smul(Formula scalar, Formula value) => Seq(P(scalar), Sp, Cdot, Sp, P(value));
+    private static Formula Smul(Formula scalar, Formula value) => Seq(Parenthesized(scalar), Sp, Cdot, Sp, Parenthesized(value));
     private static Formula Neg(Formula a) => Seq(Minus, a);
-    private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(P(a), P(b));
+    private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(Parenthesized(a), Parenthesized(b));
     private static Formula SumOver(Formula variable, Formula domain, Formula body) => Seq(new Formula.Subscript(Sum, Seq(variable, Colon, Sp, domain)), Sp, body);
     private static Formula Fin(Formula n) => Call("Fin", n);
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
@@ -121,7 +123,7 @@ internal sealed class CZXParentLindbladianWindowChannelDocument : IScribeDocumen
     private static Formula Complex() => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula FinVal(Formula x) => Call("Fin.val", x);
     private static Formula Matrix(Formula r, Formula c, Formula k) => Call("Matrix", r, c, k);
-    private static Formula Pair(Formula a, Formula b) => P(Seq(a, Comma, Sp, b));
+    private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
     private static Formula FinMk(Formula value) => Call("Fin.mk", value);
     private static Formula DivNat(Formula a, Formula b, Formula x) => Call("Fin.divNat", a, b, x);
     private static Formula ModNat(Formula a, Formula b, Formula x) => Call("Fin.modNat", a, b, x);
@@ -137,7 +139,7 @@ internal sealed class CZXParentLindbladianWindowChannelDocument : IScribeDocumen
     private static Formula Matrix4() => Matrix(Fin(D(4)), Fin(D(4)), Complex());
     private static Formula Config(Formula n) => Arrow(Fin(n), Fin(D(2)));
     private static Formula ConfigMatrix(Formula n) => Matrix(Config(n), Config(n), Complex());
-    private static Formula PairConfig(Formula n) => P(Seq(P(Config(n)), Sp, Times, Sp, P(Config(n))));
+    private static Formula PairConfig(Formula n) => Parenthesized(Seq(Parenthesized(Config(n)), Sp, Times, Sp, Parenthesized(Config(n))));
     private static Formula PairMatrix(Formula n) => Matrix(PairConfig(n), PairConfig(n), Complex());
     private static Formula Adj(Formula x) => Call("Matrix.conjTranspose", x);
     private static Formula Update(Formula x, Formula i, Formula value) => Call("Function.update", x, i, value);
@@ -145,13 +147,13 @@ internal sealed class CZXParentLindbladianWindowChannelDocument : IScribeDocumen
     private static Formula Block4(Formula l, Formula z) => FinMk(Add(Mul(D(2), FinVal(l)), FinVal(z)));
     private static Formula Block16(Formula l, Formula m, Formula z) => FinMk(Add(Add(Mul(D(8), FinVal(l)), Mul(D(2), FinVal(m))), FinVal(z)));
     private static Formula MiddleUpdate(Formula i, Formula x, Formula b, Formula c) => Update(Update(x, SiteAt(i, D(1)), b), SiteAt(i, D(2)), c);
-    private static Formula SiteAt(Formula i, Formula k) => Call("site", i, k);
+    private static Formula SiteAt(Formula i, Formula k) => Call("D5.S3.Quantum.TensorNetworks.CZXParentLindbladianWindowChannel.site", i, k);
     private static Formula SetList(params Formula[] values) => Seq(OpenBrace, Seq(values.SelectMany((v, i) => i == 0 ? new[] { v } : new Formula[] { Comma, Sp, v }).ToArray()), CloseBrace);
     private static Formula Filter(Formula predicate, Formula set) => Call("Finset.filter", predicate, set);
     private static Formula FinsetUniv(Formula type) => Call("Finset.univ", type);
     private static Formula MatrixSingle(Formula r, Formula c, Formula value) => Call("Matrix.single", r, c, value);
 
-    private static Formula CzxU() => Eqn(F.Id("czxU"), Seq(Begin, Grp(F.Id("pmatrix")),
+    private static Formula CzxU() => Eqn(Local("czxU"), Seq(Begin, Grp(F.Id("pmatrix")),
         D(1), Amp, D(0), Amp, D(0), Amp, D(0), RowBreak,
         D(0), Amp, D(0), Amp, D(0), Amp, D(1), RowBreak,
         D(0), Amp, D(1), Amp, D(0), Amp, D(0), RowBreak,
@@ -162,20 +164,20 @@ internal sealed class CZXParentLindbladianWindowChannelDocument : IScribeDocumen
         Formula r = F.Id("r"), c = F.Id("c");
         Formula positive = SetList(Pair(D(0),D(0)),Pair(D(1),D(1,5)),Pair(D(2),D(2)),Pair(D(3),D(1,3)),Pair(D(4),D(4)),Pair(D(5),D(1,1)),Pair(D(6),D(6)),Pair(D(8),D(1)),Pair(D(9),D(1,4)),Pair(D(1,0),D(3)),Pair(D(1,2),D(5)),Pair(D(1,3),D(1,0)),Pair(D(1,4),D(7)),Pair(D(1,5),D(8)));
         Formula signed = new Formula.Logic(Eqn(Pair(r,c),Pair(D(7),D(9))), FormulaLogicOperator.Or, Eqn(Pair(r,c),Pair(D(1,1),D(1,2))));
-        return Eqn(F.Id("czxV"), Lam("r", Fin(D(1,6)), Lam("c", Fin(D(1,6)), If(Mem(Pair(r,c),positive), COne(), If(signed, Neg(COne()), Cast(D(0),Complex()))))));
+        return Eqn(Local("czxV"), Lam("r", Fin(D(1,6)), Lam("c", Fin(D(1,6)), If(Mem(Pair(r,c),positive), COne(), If(signed, Neg(COne()), Cast(D(0),Complex()))))));
     }
 
-    private static Formula MuFormula() => Eqn(F.Id("mu"), Div(Call("Real.sqrt", D(3)), D(4)));
-    private static Formula NuFormula() => Eqn(F.Id("nu"), Div(Call("Real.sqrt", D(3)), D(1,6)));
+    private static Formula MuFormula() => Eqn(Local("mu"), Div(Call("Real.sqrt", D(3)), D(4)));
+    private static Formula NuFormula() => Eqn(Local("nu"), Div(Call("Real.sqrt", D(3)), D(1,6)));
 
     private static Formula RenormS()
     {
         Formula x=F.Id("x"), r=F.Id("r"), s=F.Id("s"), m=F.Id("m");
         Formula block = If(Eqn(DivNat(D(2),D(2),r),DivNat(D(2),D(2),s)),
-            SumOver(m,Fin(D(4)), At(Mul(Mul(F.Id("czxV"),x),Adj(F.Id("czxV"))), Block16(DivNat(D(2),D(2),r),m,ModNat(D(2),D(2),r)), Block16(DivNat(D(2),D(2),s),m,ModNat(D(2),D(2),s)))),
+            SumOver(m,Fin(D(4)), At(Mul(Mul(Local("czxV"),x),Adj(Local("czxV"))), Block16(DivNat(D(2),D(2),r),m,ModNat(D(2),D(2),r)), Block16(DivNat(D(2),D(2),s),m,ModNat(D(2),D(2),s)))),
             Cast(D(0),Complex()));
-        Formula body=Mul(Mul(Adj(F.Id("czxU")),Call("Matrix.of",Lam("r",Fin(D(4)),Lam("s",Fin(D(4)),block)))),F.Id("czxU"));
-        return All("x",Matrix16(),Eqn(At(F.Id("renormS"),x),body));
+        Formula body=Mul(Mul(Adj(Local("czxU")),Call("Matrix.of",Lam("r",Fin(D(4)),Lam("s",Fin(D(4)),block)))),Local("czxU"));
+        return All("x",Matrix16(),Eqn(At(Local("renormS"),x),body));
     }
 
     private static Formula RenormT()
@@ -185,19 +187,19 @@ internal sealed class CZXParentLindbladianWindowChannelDocument : IScribeDocumen
         Formula row=CompFin(DivNatFn(D(4),D(2)),ModNatFn(D(2),D(8)),r);
         Formula col=CompFin(DivNatFn(D(4),D(2)),ModNatFn(D(2),D(8)),s);
         Formula block=If(Eqn(DivNat(D(2),D(8),r),DivNat(D(2),D(8),s)),
-            Mul(Mul(Cast(Div(F.Id("nu"),F.Id("mu")),Complex()),At(id4,row,col)),
-                At(Mul(Mul(F.Id("czxU"),y),Adj(F.Id("czxU"))),Block4(DivNat(D(2),D(8),r),ModNat(D(8),D(2),r)),Block4(DivNat(D(2),D(8),s),ModNat(D(8),D(2),s)))),
+            Mul(Mul(Cast(Div(Local("nu"),Local("mu")),Complex()),At(id4,row,col)),
+                At(Mul(Mul(Local("czxU"),y),Adj(Local("czxU"))),Block4(DivNat(D(2),D(8),r),ModNat(D(8),D(2),r)),Block4(DivNat(D(2),D(8),s),ModNat(D(8),D(2),s)))),
             Cast(D(0),Complex()));
-        Formula body=Mul(Mul(Adj(F.Id("czxV")),Call("Matrix.of",Lam("r",Fin(D(1,6)),Lam("s",Fin(D(1,6)),block)))),F.Id("czxV"));
-        return All("y",Matrix4(),Eqn(At(F.Id("renormT"),y),body));
+        Formula body=Mul(Mul(Adj(Local("czxV")),Call("Matrix.of",Lam("r",Fin(D(1,6)),Lam("s",Fin(D(1,6)),block)))),Local("czxV"));
+        return All("y",Matrix4(),Eqn(At(Local("renormT"),y),body));
     }
 
-    private static Formula LocalChannel() => All("x",Matrix16(),Eqn(At(F.Id("localChannel"),F.Id("x")),At(F.Id("renormT"),At(F.Id("renormS"),F.Id("x")))));
+    private static Formula LocalChannel() => All("x",Matrix16(),Eqn(At(Local("localChannel"),F.Id("x")),At(Local("renormT"),At(Local("renormS"),F.Id("x")))));
 
     private static Formula Site()
     {
         var n=F.Id("n"); var i=F.Id("i"); var k=F.Id("k");
-        var eq=Eqn(At(F.Id("site"),i,k),FinMk(NatMod(Add(FinVal(i),k),n)));
+        var eq=Eqn(At(Local("site"),i,k),FinMk(NatMod(Add(FinVal(i),k),n)));
         return All("n",Nat(),All("i",Fin(n),All("k",Nat(),eq)));
     }
     private static Formula WindowCode()
@@ -208,23 +210,23 @@ internal sealed class CZXParentLindbladianWindowChannelDocument : IScribeDocumen
         var t2=Mul(D(2),FinVal(At(x,SiteAt(i,D(2)))));
         var t3=FinVal(At(x,SiteAt(i,D(3))));
         var code=Add(Add(Add(t0,t1),t2),t3);
-        return All("n",Nat(),All("i",Fin(n),All("x",Config(n),Eqn(At(F.Id("windowCode"),i,x),FinMk(code)))));
+        return All("n",Nat(),All("i",Fin(n),All("x",Config(n),Eqn(At(Local("windowCode"),i,x),FinMk(code)))));
     }
-    private static Formula WindowUpdate() => All("n",Nat(),All("i",Fin(F.Id("n")),All("x",Config(F.Id("n")),All("p",Fin(D(1,6)),Eqn(At(F.Id("windowUpdate"),F.Id("i"),F.Id("x"),F.Id("p")),Update(Update(Update(Update(F.Id("x"),SiteAt(F.Id("i"),D(0)),Digit(F.Id("p"),D(3))),SiteAt(F.Id("i"),D(1)),Digit(F.Id("p"),D(2))),SiteAt(F.Id("i"),D(2)),Digit(F.Id("p"),D(1))),SiteAt(F.Id("i"),D(3)),Digit(F.Id("p"),D(0))))))));
+    private static Formula WindowUpdate() => All("n",Nat(),All("i",Fin(F.Id("n")),All("x",Config(F.Id("n")),All("p",Fin(D(1,6)),Eqn(At(Local("windowUpdate"),F.Id("i"),F.Id("x"),F.Id("p")),Update(Update(Update(Update(F.Id("x"),SiteAt(F.Id("i"),D(0)),Digit(F.Id("p"),D(3))),SiteAt(F.Id("i"),D(1)),Digit(F.Id("p"),D(2))),SiteAt(F.Id("i"),D(2)),Digit(F.Id("p"),D(1))),SiteAt(F.Id("i"),D(3)),Digit(F.Id("p"),D(0))))))));
 
     private static Formula WindowChannel()
     {
         Formula n=F.Id("n"),i=F.Id("i"),a=F.Id("a"),x=F.Id("x"),y=F.Id("y"),p=F.Id("p"),q=F.Id("q");
-        Formula body=SumOver(p,Fin(D(1,6)),SumOver(q,Fin(D(1,6)),Mul(At(At(F.Id("localChannel"),MatrixSingle(p,q,COne())),At(F.Id("windowCode"),i,x),At(F.Id("windowCode"),i,y)),At(a,At(F.Id("windowUpdate"),i,x,p),At(F.Id("windowUpdate"),i,y,q)))));
-        return All("n",Nat(),All("i",Fin(n),All("a",ConfigMatrix(n),All("x",Config(n),All("y",Config(n),Eqn(At(At(At(F.Id("windowChannel"),n),i),a,x,y),body))))));
+        Formula body=SumOver(p,Fin(D(1,6)),SumOver(q,Fin(D(1,6)),Mul(At(At(Local("localChannel"),MatrixSingle(p,q,COne())),At(Local("windowCode"),i,x),At(Local("windowCode"),i,y)),At(a,At(Local("windowUpdate"),i,x,p),At(Local("windowUpdate"),i,y,q)))));
+        return All("n",Nat(),All("i",Fin(n),All("a",ConfigMatrix(n),All("x",Config(n),All("y",Config(n),Eqn(At(At(At(Local("windowChannel"),n),i),a,x,y),body))))));
     }
 
     private static Formula WindowSuperoperator()
     {
         Formula n=F.Id("n"),i=F.Id("i"),x=F.Id("x"),y=F.Id("y");
         Formula pair=PairConfig(n);
-        Formula body=At(F.Id("windowChannel"),n,i,MatrixSingle(Call("Prod.fst",y),Call("Prod.snd",y),COne()),Call("Prod.fst",x),Call("Prod.snd",x));
-        return All("n",Nat(),All("i",Fin(n),Eqn(At(At(F.Id("windowSuperoperator"),n),i),Lam("x",pair,Lam("y",pair,body)))));
+        Formula body=At(Local("windowChannel"),n,i,MatrixSingle(Call("Prod.fst",y),Call("Prod.snd",y),COne()),Call("Prod.fst",x),Call("Prod.snd",x));
+        return All("n",Nat(),All("i",Fin(n),Eqn(At(At(Local("windowSuperoperator"),n),i),Lam("x",pair,Lam("y",pair,body)))));
     }
 
     private static Formula ParentLindbladian()
@@ -232,42 +234,42 @@ internal sealed class CZXParentLindbladianWindowChannelDocument : IScribeDocumen
         Formula n=F.Id("n"),i=F.Id("i");
         Formula pred=Lam("i",Fin(n),Eqn(NatMod(FinVal(i),D(2)),D(0)));
         Formula domain=Filter(pred,FinsetUniv(Fin(n)));
-        return All("n",Nat(),Eqn(At(F.Id("parentLindbladian"),n),Seq(new Formula.Subscript(Sum,Mem(i,domain)),Sp,P(Sub(At(F.Id("windowSuperoperator"),n,i),Cast(D(1),PairMatrix(n)))))));
+        return All("n",Nat(),Eqn(At(Local("parentLindbladian"),n),Seq(new Formula.Subscript(Sum,Mem(i,domain)),Sp,Parenthesized(Sub(At(Local("windowSuperoperator"),n,i),Cast(D(1),PairMatrix(n)))))));
     }
 
-    private static Formula TensorX() => All("n",Nat(),Eqn(At(F.Id("tensorX"),F.Id("n")),Lam("x",Config(F.Id("n")),Lam("y",Config(F.Id("n")),If(Eqn(F.Id("x"),Lam("j",Fin(F.Id("n")),Add(At(F.Id("y"),F.Id("j")),D(1)))),COne(),Cast(D(0),Complex()))))));
-    private static Formula Cz() => All("n",Nat(),Eqn(At(F.Id("cz"),F.Id("n")),Call("Matrix.diagonal",Lam("x",Config(F.Id("n")),Pow(Neg(COne()),SumOver(F.Id("j"),Fin(F.Id("n")),Mul(FinVal(At(F.Id("x"),F.Id("j"))),FinVal(At(F.Id("x"),SiteAt(F.Id("j"),D(1)))))))))));
-    private static Formula CzxUnitary() => All("n",Nat(),Eqn(At(F.Id("czxUnitary"),F.Id("n")),Mul(At(F.Id("cz"),F.Id("n")),At(F.Id("tensorX"),F.Id("n")))));
+    private static Formula TensorX() => All("n",Nat(),Eqn(At(Local("tensorX"),F.Id("n")),Lam("x",Config(F.Id("n")),Lam("y",Config(F.Id("n")),If(Eqn(F.Id("x"),Lam("j",Fin(F.Id("n")),Add(At(F.Id("y"),F.Id("j")),D(1)))),COne(),Cast(D(0),Complex()))))));
+    private static Formula Cz() => All("n",Nat(),Eqn(At(Local("cz"),F.Id("n")),Call("Matrix.diagonal",Lam("x",Config(F.Id("n")),Pow(Neg(COne()),SumOver(F.Id("j"),Fin(F.Id("n")),Mul(FinVal(At(F.Id("x"),F.Id("j"))),FinVal(At(F.Id("x"),SiteAt(F.Id("j"),D(1)))))))))));
+    private static Formula CzxUnitary() => All("n",Nat(),Eqn(At(Local("czxUnitary"),F.Id("n")),Mul(At(Local("cz"),F.Id("n")),At(Local("tensorX"),F.Id("n")))));
     private static Formula Evolution()
     {
         Formula n=F.Id("n"),t=F.Id("t"),a=F.Id("a"),x=F.Id("x"),y=F.Id("y"),p=F.Id("p");
         Formula vector=Lam("p",PairConfig(n),At(a,Call("Prod.fst",p),Call("Prod.snd",p)));
-        Formula body=At(Call("Matrix.mulVec",Call("NormedSpace.exp",Smul(Cast(t,Complex()),At(F.Id("parentLindbladian"),n))),vector),Pair(x,y));
-        return All("n",Nat(),All("t",Real(),All("a",ConfigMatrix(n),All("x",Config(n),All("y",Config(n),Eqn(At(F.Id("evolution"),n,t,a,x,y),body))))));
+        Formula body=At(Call("Matrix.mulVec",Call("NormedSpace.exp",Smul(Cast(t,Complex()),At(Local("parentLindbladian"),n))),vector),Pair(x,y));
+        return All("n",Nat(),All("t",Real(),All("a",ConfigMatrix(n),All("x",Config(n),All("y",Config(n),Eqn(At(Local("evolution"),n,t,a,x,y),body))))));
     }
-    private static Formula Gauge() => All("n",Nat(),All("e",Fin(D(2)),All("x",Config(F.Id("n")),Eqn(At(F.Id("gauge"),F.Id("n"),F.Id("e"),F.Id("x")),Pow(Neg(COne()),Mul(FinVal(F.Id("e")),SumOver(F.Id("j"),Fin(F.Id("n")),Mul(FinVal(At(F.Id("x"),F.Id("j"))),FinVal(At(F.Id("x"),SiteAt(F.Id("j"),D(1))))))))))));
+    private static Formula Gauge() => All("n",Nat(),All("e",Fin(D(2)),All("x",Config(F.Id("n")),Eqn(At(Local("gauge"),F.Id("n"),F.Id("e"),F.Id("x")),Pow(Neg(COne()),Mul(FinVal(F.Id("e")),SumOver(F.Id("j"),Fin(F.Id("n")),Mul(FinVal(At(F.Id("x"),F.Id("j"))),FinVal(At(F.Id("x"),SiteAt(F.Id("j"),D(1))))))))))));
     private static Formula SiteInjective() => All("n",Nat(),Imp(Le(D(4),F.Id("n")),All("i",Fin(F.Id("n")),All("k",Fin(D(4)),All("l",Fin(D(4)),Iff(Eqn(SiteAt(F.Id("i"),FinVal(F.Id("k"))),SiteAt(F.Id("i"),FinVal(F.Id("l")))),Eqn(F.Id("k"),F.Id("l"))))))));
     private static Formula WindowLM()
-    { var n=F.Id("n"); var i=F.Id("i"); var a=F.Id("a"); var eq=Eqn(At(At(F.Id("windowLM"),n,i),a),At(F.Id("windowChannel"),n,i,a)); return All("n",Nat(),All("i",Fin(n),All("a",ConfigMatrix(n),eq))); }
+    { var n=F.Id("n"); var i=F.Id("i"); var a=F.Id("a"); var eq=Eqn(At(At(Local("windowLM"),n,i),a),At(Local("windowChannel"),n,i,a)); return All("n",Nat(),All("i",Fin(n),All("a",ConfigMatrix(n),eq))); }
     private static Formula GoodWindow()
-    { var n=F.Id("n"); var i=F.Id("i"); var d=Delta; var k=F.Id("k"); var pred=All("k",Fin(D(4)),Eqn(At(d,SiteAt(i,FinVal(k))),At(d,i))); return All("n",Nat(),All("i",Fin(n),All("δ",Config(n),Eqn(At(F.Id("goodWindow"),i,d),pred)))); }
+    { var n=F.Id("n"); var i=F.Id("i"); var d=Delta; var k=F.Id("k"); var pred=All("k",Fin(D(4)),Eqn(At(d,SiteAt(i,FinVal(k))),At(d,i))); return All("n",Nat(),All("i",Fin(n),All("δ",Config(n),Eqn(At(Local("goodWindow"),i,d),pred)))); }
     private static Formula SectorGauge()
-    { var n=F.Id("n"); var d=Delta; var x=F.Id("x"); var j=F.Id("j"); var edge=Mul(Mul(FinVal(At(d,j)),FinVal(At(x,j))),FinVal(At(x,SiteAt(j,D(1))))); var rhs=Pow(Neg(COne()),SumOver(j,Fin(n),edge)); return All("n",Nat(),All("δ",Config(n),All("x",Config(n),Eqn(At(F.Id("sectorGauge"),n,d,x),rhs)))); }
+    { var n=F.Id("n"); var d=Delta; var x=F.Id("x"); var j=F.Id("j"); var edge=Mul(Mul(FinVal(At(d,j)),FinVal(At(x,j))),FinVal(At(x,SiteAt(j,D(1))))); var rhs=Pow(Neg(COne()),SumOver(j,Fin(n),edge)); return All("n",Nat(),All("δ",Config(n),All("x",Config(n),Eqn(At(Local("sectorGauge"),n,d,x),rhs)))); }
     private static Formula GaugedUnit()
-    { var n=F.Id("n"); var d=Delta; var x=F.Id("x"); var rhs=Smul(At(F.Id("sectorGauge"),n,d,x),MatrixSingle(Add(x,d),x,COne())); return All("n",Nat(),All("δ",Config(n),All("x",Config(n),Eqn(At(F.Id("gaugedUnit"),n,d,x),rhs)))); }
+    { var n=F.Id("n"); var d=Delta; var x=F.Id("x"); var rhs=Smul(At(Local("sectorGauge"),n,d,x),MatrixSingle(Add(x,d),x,COne())); return All("n",Nat(),All("δ",Config(n),All("x",Config(n),Eqn(At(Local("gaugedUnit"),n,d,x),rhs)))); }
     private static Formula SectorGaugeConst()
-    { var n=F.Id("n"); var e=F.Id("e"); var x=F.Id("x"); var constant=Const(Fin(n),e); return All("n",Nat(),All("e",Fin(D(2)),All("x",Config(n),Eqn(At(F.Id("sectorGauge"),n,constant,x),At(F.Id("gauge"),n,e,x))))); }
+    { var n=F.Id("n"); var e=F.Id("e"); var x=F.Id("x"); var constant=Const(Fin(n),e); return All("n",Nat(),All("e",Fin(D(2)),All("x",Config(n),Eqn(At(Local("sectorGauge"),n,constant,x),At(Local("gauge"),n,e,x))))); }
     private static Formula SectorGaugeMulSelf()
-    { var n=F.Id("n"); var d=Delta; var x=F.Id("x"); var phase=At(F.Id("sectorGauge"),n,d,x); return All("n",Nat(),All("δ",Config(n),All("x",Config(n),Eqn(Mul(phase,phase),COne())))); }
+    { var n=F.Id("n"); var d=Delta; var x=F.Id("x"); var phase=At(Local("sectorGauge"),n,d,x); return All("n",Nat(),All("δ",Config(n),All("x",Config(n),Eqn(Mul(phase,phase),COne())))); }
     private static Formula SiteSuccInjective() { var n=F.Id("n"); return All("n",Nat(),Call("Function.Injective",Lam("i",Fin(n),SiteAt(F.Id("i"),D(1))))); }
     private static Formula GaugedWindowSector()
-    { var n=F.Id("n"); var i=F.Id("i"); var d=Delta; var x=F.Id("x"); var b=F.Id("b"); var c=F.Id("c"); var sum=SumOver(b,Fin(D(2)),SumOver(c,Fin(D(2)),At(F.Id("gaugedUnit"),n,d,MiddleUpdate(i,x,b,c)))); var rhs=If(At(F.Id("goodWindow"),i,d),Smul(Inv(Cast(D(4),Complex())),sum),Cast(D(0),ConfigMatrix(n))); var eq=Eqn(At(F.Id("windowChannel"),n,i,At(F.Id("gaugedUnit"),n,d,x)),rhs); return All("n",Nat(),Imp(Le(D(4),n),All("i",Fin(n),All("δ",Config(n),All("x",Config(n),eq))))); }
+    { var n=F.Id("n"); var i=F.Id("i"); var d=Delta; var x=F.Id("x"); var b=F.Id("b"); var c=F.Id("c"); var sum=SumOver(b,Fin(D(2)),SumOver(c,Fin(D(2)),At(Local("gaugedUnit"),n,d,MiddleUpdate(i,x,b,c)))); var rhs=If(At(Local("goodWindow"),i,d),Smul(Inv(Cast(D(4),Complex())),sum),Cast(D(0),ConfigMatrix(n))); var eq=Eqn(At(Local("windowChannel"),n,i,At(Local("gaugedUnit"),n,d,x)),rhs); return All("n",Nat(),Imp(Le(D(4),n),All("i",Fin(n),All("δ",Config(n),All("x",Config(n),eq))))); }
     private static Formula MatrixLinearMapExtGauged()
-    { var n=F.Id("n"); var f=F.Id("f"); var g=F.Id("g"); var d=Delta; var x=F.Id("x"); var hu=Eqn(At(f,At(F.Id("gaugedUnit"),n,d,x)),At(g,At(F.Id("gaugedUnit"),n,d,x))); var hyp=All("δ",Config(n),All("x",Config(n),hu)); return All("n",Nat(),All("f",Call("Module.End",Complex(),ConfigMatrix(n)),All("g",Call("Module.End",Complex(),ConfigMatrix(n)),Imp(hyp,Eqn(f,g))))); }
+    { var n=F.Id("n"); var f=F.Id("f"); var g=F.Id("g"); var d=Delta; var x=F.Id("x"); var hu=Eqn(At(f,At(Local("gaugedUnit"),n,d,x)),At(g,At(Local("gaugedUnit"),n,d,x))); var hyp=All("δ",Config(n),All("x",Config(n),hu)); return All("n",Nat(),All("f",Call("Module.End",Complex(),ConfigMatrix(n)),All("g",Call("Module.End",Complex(),ConfigMatrix(n)),Imp(hyp,Eqn(f,g))))); }
     private static Formula WindowChannelsCommute()
-    { var n=F.Id("n"); var i=F.Id("i"); var j=F.Id("j"); var a=F.Id("a"); var lhs=At(F.Id("windowChannel"),n,i,At(F.Id("windowChannel"),n,j,a)); var rhs=At(F.Id("windowChannel"),n,j,At(F.Id("windowChannel"),n,i,a)); return All("n",Nat(),Imp(Le(D(4),n),All("i",Fin(n),All("j",Fin(n),All("a",ConfigMatrix(n),Eqn(lhs,rhs)))))); }
+    { var n=F.Id("n"); var i=F.Id("i"); var j=F.Id("j"); var a=F.Id("a"); var lhs=At(Local("windowChannel"),n,i,At(Local("windowChannel"),n,j,a)); var rhs=At(Local("windowChannel"),n,j,At(Local("windowChannel"),n,i,a)); return All("n",Nat(),Imp(Le(D(4),n),All("i",Fin(n),All("j",Fin(n),All("a",ConfigMatrix(n),Eqn(lhs,rhs)))))); }
     private static Formula WindowSuperoperatorAction()
-    { var n=F.Id("n"); var i=F.Id("i"); var a=F.Id("a"); var x=F.Id("x"); var y=F.Id("y"); var p=F.Id("p"); var vec=Lam("p",PairConfig(n),At(a,Call("Prod.fst",p),Call("Prod.snd",p))); var lhs=At(Call("Matrix.mulVec",At(F.Id("windowSuperoperator"),n,i),vec),Pair(x,y)); var rhs=At(F.Id("windowChannel"),n,i,a,x,y); return All("n",Nat(),All("i",Fin(n),All("a",ConfigMatrix(n),All("x",Config(n),All("y",Config(n),Eqn(lhs,rhs)))))); }
+    { var n=F.Id("n"); var i=F.Id("i"); var a=F.Id("a"); var x=F.Id("x"); var y=F.Id("y"); var p=F.Id("p"); var vec=Lam("p",PairConfig(n),At(a,Call("Prod.fst",p),Call("Prod.snd",p))); var lhs=At(Call("Matrix.mulVec",At(Local("windowSuperoperator"),n,i),vec),Pair(x,y)); var rhs=At(Local("windowChannel"),n,i,a,x,y); return All("n",Nat(),All("i",Fin(n),All("a",ConfigMatrix(n),All("x",Config(n),All("y",Config(n),Eqn(lhs,rhs)))))); }
     private static Formula WindowIdempotent()
-    { var n=F.Id("n"); var i=F.Id("i"); var p=Call("IsIdempotentElem",At(F.Id("windowSuperoperator"),n,i)); return All("n",Nat(),Imp(Le(D(4),n),All("i",Fin(n),p))); }
+    { var n=F.Id("n"); var i=F.Id("i"); var p=Call("IsIdempotentElem",At(Local("windowSuperoperator"),n,i)); return All("n",Nat(),Imp(Le(D(4),n),All("i",Fin(n),p))); }
 }
