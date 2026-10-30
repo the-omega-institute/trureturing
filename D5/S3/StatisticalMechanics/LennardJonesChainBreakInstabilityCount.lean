@@ -18,9 +18,11 @@ import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
+import D5.S3.Weil.ZetaLinear.Sylvester
 
 noncomputable section
 open scoped BigOperators
+open Matrix
 namespace D5.S3.StatisticalMechanics.LennardJonesChainBreakInstabilityCount
 
 set_option autoImplicit false
@@ -127,21 +129,112 @@ private lemma jacobian_factorization {m : ℕ} (d : ℝ) (u : Fin (m + 2) → �
         (if n.succ = j then 1 else 0)) ∧
       (∀ j, c j = deriv (deriv ljPotential) (bondLength d u j)) ∧
       jacobian d u = -(b.transpose * Matrix.diagonal c * b) := by
-  sorry
+  classical
+  let b : Matrix (Fin (m + 1)) (Fin m) ℝ := fun j n =>
+    (if n.castSucc = j then 1 else 0) - (if n.succ = j then 1 else 0)
+  let c : Fin (m + 1) → ℝ := fun j => deriv (deriv ljPotential) (bondLength d u j)
+  refine ⟨b, c, fun _ _ => rfl, fun _ => rfl, ?_⟩
+  have he (n q : Fin m) : (b.transpose * Matrix.diagonal c * b) n q =
+      c n.castSucc * b n.castSucc q - c n.succ * b n.succ q := by
+    rw [Matrix.mul_apply]
+    simp only [Matrix.mul_diagonal, Matrix.transpose_apply]
+    have hb (j : Fin (m + 1)) : b j n =
+        (if n.castSucc = j then 1 else 0) - (if n.succ = j then 1 else 0) := rfl
+    simp_rw [hb, sub_mul, ite_mul, one_mul, zero_mul, Finset.sum_sub_distrib]
+    simp only [Finset.sum_ite_eq, Finset.mem_univ, if_true]
+  ext n q
+  change (if n = q then -c n.castSucc - c n.succ
+    else if n.val + 1 = q.val then c n.succ
+    else if q.val + 1 = n.val then c q.succ else 0) =
+      -((b.transpose * Matrix.diagonal c * b) n q)
+  rw [he]
+  change _ = -(c n.castSucc *
+      ((if q.castSucc = n.castSucc then 1 else 0) - (if q.succ = n.castSucc then 1 else 0)) -
+    c n.succ * ((if q.castSucc = n.succ then 1 else 0) -
+      (if q.succ = n.succ then 1 else 0)))
+  by_cases hnq : n = q
+  · subst q
+    have hne : n.succ ≠ n.castSucc := by intro heq; have := congrArg Fin.val heq; simp at this
+    simp only [ite_true, ite_eq_right hne, ite_eq_right hne.symm]
+    ring
+  · have hqn : q ≠ n := Ne.symm hnq
+    have hcross : q.castSucc = n.succ ↔ n.val + 1 = q.val := by
+      constructor <;> intro heq
+      · have := congrArg Fin.val heq; simpa using this.symm
+      · apply Fin.ext; exact heq.symm
+    have hcross2 : q.succ = n.castSucc ↔ q.val + 1 = n.val := by
+      constructor <;> intro heq
+      · exact congrArg Fin.val heq
+      · exact Fin.ext heq
+    simp only [if_neg hnq, Fin.castSucc_inj, Fin.succ_inj, if_neg hqn, hcross, hcross2]
+    split_ifs with hright hleft hleft
+    · omega
+    · ring
+    · have heq : q.succ = n.castSucc := hcross2.mpr hleft
+      rw [heq]
+      ring
+    · ring
 
 private lemma bond_difference_injective {m : ℕ}
     (b : Matrix (Fin (m + 1)) (Fin m) ℝ)
     (hb : ∀ j n, b j n = (if n.castSucc = j then 1 else 0) -
       (if n.succ = j then 1 else 0)) :
     Function.Injective (b.mulVec) := by
-  sorry
+  classical
+  suffices hz : ∀ x : Fin m → ℝ, b *ᵥ x = 0 → x = 0 by
+    intro x y hxy
+    have he : b *ᵥ (x - y) = 0 := by
+      rw [Matrix.mulVec_sub, hxy, sub_self]
+    exact sub_eq_zero.mp (hz (x - y) he)
+  intro x hx
+  have he : ∀ t : ℕ, ∀ n : Fin m, n.val = t → x n = 0 := by
+    intro t
+    induction t using Nat.strong_induction_on with
+    | h t ih =>
+      intro n hn
+      have hrow := congrFun hx n.castSucc
+      change (∑ q : Fin m, b n.castSucc q * x q) = 0 at hrow
+      simp_rw [hb, sub_mul, ite_mul, one_mul, zero_mul,
+        Finset.sum_sub_distrib, Fin.castSucc_inj] at hrow
+      have hsecond : (∑ q : Fin m, if q.succ = n.castSucc then x q else 0) = 0 := by
+        apply Finset.sum_eq_zero
+        intro q _
+        split_ifs with hqn
+        · apply ih q.val
+          · have hval := congrArg Fin.val hqn
+            simp only [Fin.val_succ, Fin.val_castSucc] at hval
+            omega
+          · rfl
+        · rfl
+      rw [hsecond] at hrow
+      simpa only [Finset.sum_ite_eq', Finset.mem_univ, if_true, sub_zero] using hrow
+  funext n
+  exact he n.val n rfl
 
 private lemma bond_difference_range {m : ℕ}
     (b : Matrix (Fin (m + 1)) (Fin m) ℝ)
     (hb : ∀ j n, b j n = (if n.castSucc = j then 1 else 0) -
       (if n.succ = j then 1 else 0)) :
     Module.finrank ℝ (LinearMap.range b.mulVecLin) = m := by
-  sorry
+  have hi : Function.Injective b.mulVecLin := bond_difference_injective b hb
+  simpa only [Module.finrank_pi, Module.finrank_self, Fintype.card_fin, mul_one] using
+    LinearMap.finrank_range_of_inj hi
+
+private lemma factorization_form {m : ℕ}
+    (a : Matrix (Fin m) (Fin m) ℝ)
+    (b : Matrix (Fin (m + 1)) (Fin m) ℝ) (c : Fin (m + 1) → ℝ)
+    (ha : a = -(b.transpose * Matrix.diagonal c * b)) (x : Fin m → ℝ) :
+    RHLinalg.hermForm a x = -∑ j, c j * (b *ᵥ x) j ^ 2 := by
+  rw [ha]
+  change x ⬝ᵥ ((-(b.transpose * Matrix.diagonal c * b)) *ᵥ x) = _
+  rw [Matrix.neg_mulVec, dotProduct_neg, ← Matrix.mulVec_mulVec,
+    ← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, Matrix.vecMul_transpose]
+  congr 1
+  change (∑ j, (b *ᵥ x) j * ((Matrix.diagonal c) *ᵥ (b *ᵥ x)) j) = _
+  simp only [Matrix.mulVec_diagonal]
+  apply Finset.sum_congr rfl
+  intro j _
+  ring
 
 private lemma inertia_lower_bound {m : ℕ} (hm : 1 ≤ m) (d : ℝ)
     (u : Fin (m + 2) → ℝ) (hd : 0 < d)
@@ -150,7 +243,52 @@ private lemma inertia_lower_bound {m : ℕ} (hm : 1 ≤ m) (d : ℝ)
     (hbroken : (Finset.univ.filter (fun j => inflectionPoint < bondLength d u j)).card = k)
     (h : (jacobian d u).IsHermitian) :
     k - 1 ≤ Finset.card (Finset.univ.filter (fun i => 0 < h.eigenvalues i)) := by
-  sorry
+  classical
+  obtain ⟨b, c, hb, hc, hfac⟩ := jacobian_factorization d u
+  let e := Pi.spanSubset ℝ {j | inflectionPoint < bondLength d u j}
+  let v := e.comap b.mulVecLin
+  have hi : Function.Injective b.mulVecLin := bond_difference_injective b hb
+  have he : Module.finrank ℝ e = k := by
+    change Module.finrank ℝ (Pi.spanSubset ℝ _) = k
+    rw [Pi.dim_spanSubset, Set.ncard_eq_toFinset_card']
+    simpa only [Set.toFinset_ofPred] using hbroken
+  have hv : Module.finrank ℝ v =
+      Module.finrank ℝ ((LinearMap.range b.mulVecLin ⊓ e :
+        Submodule ℝ (Fin (m + 1) → ℝ))) := by
+    rw [← Submodule.map_comap_eq]
+    exact (Submodule.equivMapOfInjective b.mulVecLin hi v).finrank_eq
+  have hdim : k - 1 ≤ Module.finrank ℝ v := by
+    have hsum := Submodule.finrank_sup_add_finrank_inf_eq
+      (LinearMap.range b.mulVecLin) e
+    have hsup := (LinearMap.range b.mulVecLin ⊔ e).finrank_le
+    rw [bond_difference_range b hb, he, ← hv] at hsum
+    have hamb : Module.finrank ℝ (Fin (m + 1) → ℝ) = m + 1 := by simp
+    rw [hamb] at hsup
+    omega
+  have hpositive : RHLinalg.PosDefOn (jacobian d u) v := by
+    intro x hx hne
+    rw [factorization_form _ b c hfac]
+    apply neg_pos.mpr
+    have hs : ∀ j, ¬inflectionPoint < bondLength d u j → (b *ᵥ x) j = 0 :=
+      Pi.mem_spanSubset_iff.mp hx
+    apply Finset.sum_neg'
+    · intro j _
+      by_cases hj : inflectionPoint < bondLength d u j
+      · have hneg : c j < 0 := by rw [hc]; exact (curvature_sign _ (hpos j)).mpr hj
+        exact mul_nonpos_of_nonpos_of_nonneg hneg.le (sq_nonneg _)
+      · rw [hs j hj]
+        simp only [ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow, mul_zero, le_refl]
+    · have hbx : b *ᵥ x ≠ 0 := by
+        intro hz
+        exact hne (hi (hz.trans (Matrix.mulVec_zero b).symm))
+      obtain ⟨j, hj⟩ := Function.ne_iff.mp hbx
+      have hbj : inflectionPoint < bondLength d u j := by
+        by_contra hn
+        exact hj (hs j hn)
+      refine ⟨j, Finset.mem_univ j, ?_⟩
+      have hneg : c j < 0 := by rw [hc]; exact (curvature_sign _ (hpos j)).mpr hbj
+      exact mul_neg_of_neg_of_pos hneg (sq_pos_of_ne_zero hj)
+  exact hdim.trans (RHLinalg.finrank_le_posIndex_of_posDefOn h hpositive)
 
 private lemma inertia_upper_bound {m : ℕ} (hm : 1 ≤ m) (d : ℝ)
     (u : Fin (m + 2) → ℝ) (hd : 0 < d)
@@ -159,7 +297,38 @@ private lemma inertia_upper_bound {m : ℕ} (hm : 1 ≤ m) (d : ℝ)
     (hbroken : (Finset.univ.filter (fun j => inflectionPoint < bondLength d u j)).card = k)
     (h : (jacobian d u).IsHermitian) :
     Finset.card (Finset.univ.filter (fun i => 0 < h.eigenvalues i)) ≤ k := by
-  sorry
+  classical
+  obtain ⟨b, c, hb, hc, hfac⟩ := jacobian_factorization d u
+  obtain ⟨w, hw, hdim⟩ := RHLinalg.posIndex_eq_max_finrank_posDefOn h
+  let l : w →ₗ[ℝ] ({j // inflectionPoint < bondLength d u j} → ℝ) :=
+    LinearMap.pi fun j => (LinearMap.proj j.val).comp (b.mulVecLin.comp w.subtype)
+  have hi : Function.Injective l := by
+    rw [← LinearMap.ker_eq_bot, eq_bot_iff]
+    intro x hx
+    apply Subtype.ext
+    change (x : Fin m → ℝ) = 0
+    by_contra hne
+    have hp := hw x x.property hne
+    have hn : RHLinalg.hermForm (jacobian d u) x ≤ 0 := by
+      rw [factorization_form _ b c hfac]
+      apply neg_nonpos.mpr
+      apply Finset.sum_nonneg
+      intro j _
+      by_cases hj : inflectionPoint < bondLength d u j
+      · have hz : (b *ᵥ (x : Fin m → ℝ)) j = 0 := congrFun hx ⟨j, hj⟩
+        rw [hz]
+        positivity
+      · have hnn : 0 ≤ c j := by
+          rw [hc]
+          exact not_lt.mp (fun hn => hj ((curvature_sign _ (hpos j)).mp hn))
+        exact mul_nonneg hnn (sq_nonneg _)
+    exact (not_lt.mpr hn) hp
+  have hd := LinearMap.finrank_le_finrank_of_injective hi
+  have hcod : Module.finrank ℝ ({j // inflectionPoint < bondLength d u j} → ℝ) = k := by
+    simpa only [Module.finrank_pi, Module.finrank_self, mul_one,
+      Fintype.card_subtype] using hbroken
+  rw [hdim, hcod] at hd
+  exact hd
 
 private lemma result_core : claim := by
   intro m hm d hd u hu0 huLast hsteady hpos k hk hbroken h
