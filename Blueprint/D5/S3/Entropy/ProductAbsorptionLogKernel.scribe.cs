@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Entropy;
 internal sealed class ProductAbsorptionLogKernelDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Entropy/ProductAbsorptionLogKernel.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Entropy/localproductabsorption");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Entropy/local2026productabsorption");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The exact five-term logarithmic kernel for binary product absorption has at most one positive sign change, from positive to negative.",
@@ -22,13 +22,7 @@ internal sealed class ProductAbsorptionLogKernelDocument : IScribeDocumentDefini
                 "The definition is a total real function. Its single-crossing theorem concerns 0<=u,v<=1 and s>0. "
                 + "The logarithm is the natural logarithm. A zero quadratic root contributes log(1)=0."),
             Node("product_log_kernel_single_crossing", "One positive sign change", DescribeRole.Theorem,
-                AllReal("u", AllReal("v", Imp(Inside(N("u")), Imp(Inside(N("v")),
-                    Or(AllReal("s", Imp(Lt(D(0), N("s")), Le(D(0), K(N("s"))))),
-                        ExistsReal("r", And(Lt(D(0), N("r")),
-                            And(Equal(K(N("r")), D(0)), And(
-                                AllReal("s", Imp(And(Lt(D(0), N("s")), Lt(N("s"), N("r"))),
-                                    Lt(D(0), K(N("s"))))),
-                                AllReal("s", Imp(Lt(N("r"), N("s")), Lt(K(N("s")), D(0)))))))))))),
+                Statement(),
                 "Either K is nonnegative for every positive s, or there exists a positive r with K(r)=0, "
                 + "K(s)>0 for every 0<s<r, and K(s)<0 for every s>r. The strict signs make the zero unique in the second case. "
                 + "There is no assumption that u and v are unequal, and all parameter endpoints are included."),
@@ -73,7 +67,6 @@ internal sealed class ProductAbsorptionLogKernelDocument : IScribeDocumentDefini
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Inside(Formula x) => And(Le(D(0), x), Le(x, D(1)));
     private static Formula Frac(Formula a, Formula b) => new Formula.Fraction(a, b);
-    private static Formula Sq(Formula x) => new Formula.Power(Par(x), D(2));
     private static Formula A() => Add(N("u"), N("v"));
     private static Formula B() => Multiply(N("u"), N("v"));
     private static Formula L() => Subtract(A(), B());
@@ -83,6 +76,14 @@ internal sealed class ProductAbsorptionLogKernelDocument : IScribeDocumentDefini
         : Subtract(Subtract(A(), Multiply(D(2), B())), Multiply(D(2), Q()));
     private static Formula LogTerm(Formula x) => Call("log", Add(D(1), Frac(x, N("s"))));
     private static Formula K(Formula s) => Call("productLogKernel", N("u"), N("v"), s);
+    private static Formula Nonnegative() => AllReal("s", Imp(Lt(D(0), N("s")), Le(D(0), K(N("s")))));
+    private static Formula Before() => AllReal("s", Imp(And(Lt(D(0), N("s")), Lt(N("s"), N("r"))),
+        Lt(D(0), K(N("s")))));
+    private static Formula After() => AllReal("s", Imp(Lt(N("r"), N("s")), Lt(K(N("s")), D(0))));
+    private static Formula Crossing() => ExistsReal("r", And(Lt(D(0), N("r")),
+        And(Equal(K(N("r")), D(0)), And(Before(), After()))));
+    private static Formula Statement() => AllReal("u", AllReal("v", Imp(Inside(N("u")),
+        Imp(Inside(N("v")), Or(Nonnegative(), Crossing())))));
     private static Formula KernelBody() => Add(
         Subtract(Add(LogTerm(N("u")), LogTerm(N("v"))), Multiply(D(2), LogTerm(L()))),
         Frac(Add(LogTerm(Root(true)), LogTerm(Root(false))), D(2)));

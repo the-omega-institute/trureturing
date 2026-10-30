@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Entropy;
 internal sealed class ProductAbsorptionLogIntegralDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Entropy/ProductAbsorptionLogIntegral.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Entropy/localproductabsorption");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Entropy/local2026productabsorption");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The exact logarithmic kernel is absolutely integrable and its integral is its five-term logarithmic moment.",

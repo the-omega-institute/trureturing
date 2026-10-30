@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Entropy;
 internal sealed class ProductAbsorptionScalarDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Entropy/ProductAbsorptionScalar.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Entropy/localproductabsorption");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Entropy/local2026productabsorption");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The complete closed-domain product absorption scalar inequality uses actual natural-log binary entropy.",
         H("Binary-Entropy Product Absorption"), Blocks(
@@ -64,6 +64,6 @@ internal sealed class ProductAbsorptionScalarDocument : IScribeDocumentDefinitio
     private static Formula T() => Call("sqrt", Multiply(Subtract(D(1), Pow(N("z"))), Subtract(D(1), Pow(N("w")))));
     private static Formula HValue() => Add(Subtract(Add(E(N("z")), E(N("w"))), Multiply(D(2), E(L()))),
         Frac(Add(E(Add(L(), T())), E(Subtract(L(), T()))), D(2)));
-    private static Formula Statement() => All("z", All("w", All("b", Imp(Inside(N("z"), D(-1)),
-        Imp(Inside(N("w"), D(-1)), Imp(Inside(N("b"), D(0)), Le(D(0), HValue())))))));
+    private static Formula Statement() => All("z", All("w", All("b", Imp(Inside(N("z"), Seq(Minus, D(1))),
+        Imp(Inside(N("w"), Seq(Minus, D(1))), Imp(Inside(N("b"), D(0)), Le(D(0), HValue())))))));
 }

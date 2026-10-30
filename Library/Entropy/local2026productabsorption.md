@@ -1,5 +1,5 @@
 ---
-bibkey: localproductabsorption
+bibkey: local2026productabsorption
 authors: Task-supplied local unpublished mathematical inputs
 year: 2026
 title: "The scalar product absorption inequality for binary qubit entropy; A sharp physical record bound for complex product seeds"

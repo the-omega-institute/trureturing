@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Entropy;
 
 internal sealed class BinaryEntropyLogIntegralDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Entropy/localproductabsorption");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Entropy/local2026productabsorption");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Square-root binary entropy is exactly a positive logarithmic integral on the entire closed unit interval.",
