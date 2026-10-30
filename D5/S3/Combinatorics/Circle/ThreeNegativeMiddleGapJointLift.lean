@@ -75,15 +75,16 @@ private theorem floor_margin (r s t p C : ℤ)
 private theorem power_odd_remainder (a b : ℕ) (hb : 1 ≤ b) :
     (2 : ℤ) ^ a % ((2 : ℤ) ^ b + 1) ≠ 0 := by
   have he : (2 : ℕ) ^ b = 2 * 2 ^ (b - 1) := by
-    rw [show b = (b - 1) + 1 by omega, pow_succ]
-    ring
+    calc
+      (2 : ℕ) ^ b = 2 ^ ((b - 1) + 1) := by congr 1; omega
+      _ = 2 * 2 ^ (b - 1) := by rw [pow_succ]; ring
   have hodd : Odd ((2 : ℕ) ^ b + 1) := by
     refine ⟨2 ^ (b - 1), ?_⟩
     omega
   have hcop : Nat.Coprime ((2 : ℕ) ^ b + 1) (2 ^ a) :=
     (Nat.coprime_two_right.mpr hodd).pow_right a
   intro hz
-  have hd : ((2 : ℤ) ^ b + 1) ∣ (2 : ℤ) ^ a := Int.emod_eq_zero.mp hz
+  have hd : ((2 : ℤ) ^ b + 1) ∣ (2 : ℤ) ^ a := Int.dvd_of_emod_eq_zero hz
   have hd' : ((2 : ℕ) ^ b + 1) ∣ (2 : ℕ) ^ a := by exact_mod_cast hd
   have hh := Nat.eq_one_of_dvd_coprimes hcop (dvd_refl _) hd'
   have hb0 : 0 < (2 : ℕ) ^ b := by positivity
@@ -229,11 +230,20 @@ theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
   have hs : 4 ≤ s := by
     simpa [s] using pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hb
   have hrq : r = 2 * q := by
-    dsimp [r, q]; rw [show a = (a - 1) + 1 by omega, pow_succ]; ring
+    dsimp only [r, q]
+    calc
+      (2 : ℤ) ^ a = 2 ^ ((a - 1) + 1) := by congr 1; omega
+      _ = 2 * 2 ^ (a - 1) := by rw [pow_succ]; ring
   have hsp : s = 2 * p := by
-    dsimp [s, p]; rw [show b = (b - 1) + 1 by omega, pow_succ]; ring
+    dsimp only [s, p]
+    calc
+      (2 : ℤ) ^ b = 2 ^ ((b - 1) + 1) := by congr 1; omega
+      _ = 2 * 2 ^ (b - 1) := by rw [pow_succ]; ring
   have htv : t = 2 * vhalf := by
-    dsimp [t, vhalf]; rw [show c = (c - 1) + 1 by omega, pow_succ]; ring
+    dsimp only [t, vhalf]
+    calc
+      (2 : ℤ) ^ c = 2 ^ ((c - 1) + 1) := by congr 1; omega
+      _ = 2 * 2 ^ (c - 1) := by rw [pow_succ]; ring
   have hqs : s ≤ q := by
     exact pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show b ≤ a - 1 by omega)
   have htr : 2 * r ≤ t := by
@@ -324,12 +334,16 @@ theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
       by_contra hn
       have he := mul_le_mul_of_nonneg_left (show vhalf ≤ (m : ℤ) by omega) (show 0 ≤ u by omega)
       omega
+    dsimp only [vhalf] at hm
     exact_mod_cast hm
   let z := 2 ^ (a - 1) - 1
-  have hzcap : z < 2 ^ (a - 1) := by dsimp [z]; have : 0 < (2 : ℕ) ^ (a - 1) := by positivity; omega
+  have hzcap : z < 2 ^ (a - 1) := by
+    dsimp only [z]
+    have hpow : 0 < (2 : ℕ) ^ (a - 1) := by positivity
+    omega
   have hzc : (z : ℤ) = q - 1 := by
     dsimp [z, q]
-    rw [Nat.cast_sub (show 1 ≤ (2 : ℕ) ^ (a - 1) by positivity)]
+    rw [Nat.cast_sub (Nat.one_le_two_pow : 1 ≤ (2 : ℕ) ^ (a - 1))]
     norm_cast
   let P := mask_labels (c - 1) 0 m hcapacity
   let T := mask_labels (a - 1) (c + b) z hzcap
@@ -359,8 +373,9 @@ theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
       apply Multiset.coe_eq_coe.mp
       simp only [← Multiset.coe_add]
       ac_rfl
-    exact (by simpa only [word, List.append_assoc, List.singleton_append,
-      List.cons_append, List.nil_append] using he).trans hi
+    apply List.Perm.trans ?_ hi
+    simpa only [word, List.append_assoc, List.singleton_append,
+      List.cons_append, List.nil_append] using he
   have hplus : plus.Perm (List.range (k + 1)) := by
     have he : plus.Perm (word ++ [k]) := by
       have he' : (P.toList ++ [c + b - 1] ++ [k] ++ Q.toList ++ [c - 1] ++ T.toList ++ [k - 1]).Perm

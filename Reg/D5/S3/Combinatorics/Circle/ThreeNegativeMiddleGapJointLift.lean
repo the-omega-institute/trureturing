@@ -129,7 +129,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Circle.ThreeNegativeMiddleGapJointLift
     definition := none
-    coordinates := #[0, 1]
+    coordinates := #[0, 1, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "fn", "fn"]
       stateBinder := 0
