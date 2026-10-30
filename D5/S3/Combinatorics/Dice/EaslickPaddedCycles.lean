@@ -102,7 +102,10 @@ theorem padded_cycle (r k t : ℕ) (hr : 3 ≤ r) (hk : 0 < k) (hke : k%2=0)
     rw [hp, padded_winCount r t (a.val/k) (b.val/k) _ _ _ (hdiv a) (hdiv b) ha.2.2 hb.2.2]
     have hs := cycle_edge_at r k c hlen hchain hk ⟨a.val%k,Nat.mod_lt _ hk⟩
     have hs' : winCount (getElem c (a.val%k) (hmod a)) (getElem c (b.val%k) (hmod b)) = threshold r := by
-      rw [hm]
+      have hcidx : getElem c (b.val%k) (hmod b) =
+          getElem c ((a.val%k+1)%k) (by simpa only [hlen] using Nat.mod_lt (a.val%k+1) hk) :=
+        getElem_congr rfl hm (hmod b)
+      rw [hcidx]
       exact (edge_iff r hr _ _ hs.1 hs.2.1).mp hs
     rw [hs',ha.1,hb.1,threshold_padding]
     ring
