@@ -134,8 +134,7 @@ private theorem zeta_relations :
     zeta+zeta⁻¹ = -(x : ℂ) ∧ zeta^5 = -1 := by
   have hn : ‖zeta‖ = 1 := by simp [zeta,Complex.norm_exp]
   have hi : zeta⁻¹ = star zeta := by
-    simp only [Complex.inv_def,Complex.normSq_eq_norm_sq,hn,one_pow,
-      Complex.ofReal_one,div_one,Complex.star_def]
+    simp [Complex.inv_def,Complex.normSq_eq_norm_sq,hn,Complex.star_def]
   have hcos : 2*Real.cos (3*Real.pi/5) = -x := by
     rw [show 3*Real.pi/5 = Real.pi-2*(Real.pi/5) by ring,
       Real.cos_pi_sub,Real.cos_two_mul,Real.cos_pi_div_five,x,Real.inv_goldenRatio]
@@ -144,13 +143,17 @@ private theorem zeta_relations :
   constructor
   · rw [hi]
     apply Complex.ext
-    · simpa [zeta,Complex.exp_mul_I,two_mul] using hcos
+    · simpa only [Complex.add_re,Complex.star_def,Complex.conj_re,zeta,
+        Complex.exp_ofReal_mul_I_re,Complex.neg_re,Complex.ofReal_re,two_mul] using hcos
     · simp [Complex.star_def]
-  · rw [zeta,← Complex.exp_nat_mul]
-    rw [show (5 : ℂ)*(↑(3*Real.pi/5)*Complex.I) =
-      (3 : ℂ)*((Real.pi : ℂ)*Complex.I) by push_cast; ring]
-    rw [Complex.exp_nat_mul,Complex.exp_pi_mul_I]
-    norm_num
+  · have hf : zeta^5 = Complex.exp (3*((Real.pi : ℂ)*Complex.I)) := by
+      rw [zeta,← Complex.exp_nat_mul]
+      congr 1
+      push_cast
+      ring
+    have he := Complex.exp_nat_mul ((Real.pi : ℂ)*Complex.I) 3
+    norm_num [Complex.exp_pi_mul_I] at he
+    exact hf.trans he
 
 private theorem native_port_identity (P : Matrix (Fin d) (Fin d) ℂ) (b : Bool) :
     nativePort P b = zeta^2 • kraus P b := by
@@ -163,13 +166,12 @@ private theorem native_port_identity (P : Matrix (Fin d) (Fin d) ℂ) (b : Bool)
     linear_combination h
   have hz4 : zeta^4 = -zeta⁻¹ := by
     calc
-      zeta^4 = zeta^5/zeta := by field_simp; ring
+      zeta^4 = zeta^5/zeta := by field_simp [hz0] <;> ring
       _ = -zeta⁻¹ := by rw [zeta_relations.2]; ring
   have hphase : zeta^2*phase = zeta⁻¹ := by
     change zeta^2*zeta^(-3 : ℤ) = zeta⁻¹
-    rw [zpow_neg,zpow_natCast]
-    field_simp
-    ring
+    rw [_root_.zpow_neg,zpow_natCast]
+    field_simp [hz0] <;> ring
   have hzero : (x : ℂ)*(zeta⁻¹-1) = zeta^2 := by
     rw [hinv]
     linear_combination -hp-hx
@@ -184,6 +186,9 @@ private theorem native_port_identity (P : Matrix (Fin d) (Fin d) ℂ) (b : Bool)
   · calc
       nativePort P false = ((Real.sqrt x : ℂ)*(x : ℂ)*(zeta⁻¹-1)) • (1-P) := by
         dsimp [nativePort,reader,preparation]
+        simp only [smul_add,smul_smul]
+        rw [show ((Real.sqrt x : ℂ)*zeta⁻¹*(x : ℂ))*zeta =
+          (Real.sqrt x : ℂ)*(x : ℂ) by field_simp [hz0] <;> ring]
         module
       _ = zeta^2 • kraus P false := by
         rw [mul_assoc,hzero]
@@ -210,8 +215,7 @@ private theorem native_port_branch (P : Matrix (Fin d) (Fin d) ℂ)
   rw [native_port_identity]
   calc
     _ = (star (zeta^2)*zeta^2) • (kraus P b*ρ*(kraus P b).conjTranspose) := by
-      simp only [Matrix.conjTranspose_smul,Matrix.smul_mul,Matrix.mul_smul,smul_smul]
-      module
+      simp only [Matrix.conjTranspose_smul,Matrix.smul_mul,Matrix.mul_smul,smul_smul] <;> module
     _ = branch P b ρ := by rw [hu,one_smul]; rfl
 
 private theorem sector_trace (P : Matrix (Fin d) (Fin d) ℂ) (hP : P*P=P)
