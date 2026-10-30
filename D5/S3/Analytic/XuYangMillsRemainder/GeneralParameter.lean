@@ -889,7 +889,7 @@ private theorem laplace_finite_subtraction (r : ℕ) (a : ℝ) {x : ℝ} (hx : 0
     simpa [show Finset.Icc 1 2 = {1, 2} by decide, coefficient_one_zero]
       using kernel_laplace_zero a hx
   | succ r ih =>
-    rw [kernel_laplace_rec, ih,
+    rw [kernel_laplace_rec r a hx, ih,
       show r + 1 + 2 = (r + 2) + 1 by omega,
       Finset.sum_Icc_succ_top (by omega : 1 ≤ (r + 2) + 1), pow_succ]
     have hs : (-1 : ℝ) ^ (r + 2) * (-1 : ℝ) ^ (r + 2) = 1 := by
