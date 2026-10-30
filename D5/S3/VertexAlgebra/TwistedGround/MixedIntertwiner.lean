@@ -19,9 +19,10 @@ For rank twenty-four these are the integer conformal weights, starting at two.
 The chosen actualForm, its ordered slots, and the rank/16 zero mode are retained.
 The public index m is the coefficient of z^(-m-1).
 
-This coefficient construction does not assert translation, mixed Jacobi,
-skew exchange, an identification with the original source, or three-twisted
-crossing. Those identities require further proofs about this same coefficient.
+Translation and the full signed mixed Jacobi identity for this same coefficient
+are proved in MixedTranslation and MixedJacobiFinite, respectively. Skew exchange,
+an identification with the original source, and three-twisted crossing remain
+separate obligations.
 Classical carrier conventions are FLM, PNAS 81 (1984), pp.3257--3258, (5).
 The finite coefficient derivation here is a repository Lean construction;
 the announcement is not cited as a detailed proof of this formula.

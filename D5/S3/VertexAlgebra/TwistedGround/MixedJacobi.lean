@@ -14,7 +14,7 @@ import Batteries.Tactic.OpenPrivate
 /-! Finite transport on the original carriers. The rectangle is bounded by
 actual tensor supports before the change (i,j) -> (n=i+j,i). Neither a numeric
 infinite exponential nor a full mixed Jacobi identity is assumed. The full
-signed normalized mixed identity remains a separate proof obligation. -/
+signed normalized mixed identity is proved in MixedJacobiFinite. -/
 set_option autoImplicit false
 set_option maxRecDepth 4096
 set_option maxHeartbeats 4000000
@@ -460,39 +460,6 @@ theorem twice_signed_supported_factorial_contraction (R : ℕ) (F : ℕ → ℕ 
     apply (eq_div_iff hLfac).2
     rw [← hfacC]
     field_simp
-
-private def orderedCutoff (D : LatticeData) (hu : IsUnit D.G.det)
-    (a : Carrier D) (e : ℤ) (u : ActualTensor D hu) : ℕ :=
-  (e-((HahnModule.of ℂ).symm ((correctedField D hu a) u)).order).toNat+1
-
-private theorem ordered_tail (D : LatticeData) (hu : IsUnit D.G.det)
-    (a b : Carrier D) (e f : ℤ) (u v : ActualTensor D hu) (k : ℕ)
-    (hk : orderedCutoff D hu a e u ≤ k) :
-    actualForm D hu v
-      ((correctedField D hu b).coeff (f+2*(k : ℤ))
-        ((correctedField D hu a).coeff (e-2*(k : ℤ)) u)) = 0 := by
-  have zero : (correctedField D hu a).coeff (e-2*(k : ℤ)) u = 0 := by
-    apply HahnSeries.coeff_eq_zero_of_lt_order
-    dsimp [orderedCutoff] at hk
-    omega
-  rw [zero, map_zero, map_zero]
-
-/-- Signed triangular transport of an actual ordered product. Finiteness is
-established from the actual rightmost field applied to the actual input before
-using (j,h) -> (k=j+h,j). Both binomial parameters may be negative. -/
-theorem ordered_signed_transport (D : LatticeData) (hu : IsUnit D.G.det)
-    (a b : Carrier D) (e f : ℤ) (u v : ActualTensor D hu) (x y : ℂ) :
-    let R := orderedCutoff D hu a e u
-    (∑ j ∈ Finset.range R, ∑ h ∈ Finset.range R,
-      (Ring.choose x j * (-1 : ℂ)^h * Ring.choose (y-(j : ℂ)) h) *
-        actualForm D hu v ((correctedField D hu b).coeff (f+2*((j+h : ℕ) : ℤ))
-          ((correctedField D hu a).coeff (e-2*((j+h : ℕ) : ℤ)) u))) =
-      ∑ k ∈ Finset.range R,
-        ((-1 : ℂ)^k * Ring.choose (y-x) k) *
-          actualForm D hu v ((correctedField D hu b).coeff (f+2*(k : ℤ))
-            ((correctedField D hu a).coeff (e-2*(k : ℤ)) u)) := by
-  intro R
-  exact signed_supported_transform R _ (ordered_tail D hu a b e f u v) x y
 
 open private vacuum_coeff
   from D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds
