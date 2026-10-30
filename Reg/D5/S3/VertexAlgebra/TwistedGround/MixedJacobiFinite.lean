@@ -82,7 +82,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℂ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.TwistedGround.MixedJacobiFinite
     definition := none
@@ -164,7 +164,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℂ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.TwistedGround.MixedJacobiFinite
     definition := none
@@ -238,7 +238,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℂ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.TwistedGround.MixedJacobiFinite
     definition := none
@@ -313,7 +313,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℂ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.TwistedGround.MixedJacobiFinite
     definition := none
@@ -390,7 +390,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℂ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.TwistedGround.MixedJacobiFinite
     definition := none
@@ -409,12 +409,12 @@ end mixed_second_source_factorial_contraction
 
 namespace mixed_jacobi
 abbrev signature : Signature where
-  Params := Type
-  State V := V
+  Params := LatticeData
+  State D := FixedRestrictedDual D
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ V := V → Prop
+  Output _ D := FixedRestrictedDual D → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
@@ -428,7 +428,7 @@ def arena : Arena where
   Law observed := ∀ (D : LatticeData) (hu : IsUnit D.G.det)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h24 : D.rank = 24)
     (m n r : ℤ) (a : FixedCarrier D) (u v : paritySpace D hu (-1)),
-    observed.readout () (FixedRestrictedDual D)
+    observed.readout () D
       (∑ᶠ j : ℕ, Ring.choose (m : ℂ) j •
         normalizedCoefficient D hu (m+n-(j : ℤ))
           (((fixedParitySlice D hu (-1) a)[[r+(j : ℤ)]]) u) v)
@@ -448,10 +448,15 @@ private theorem rejectedLaw : ¬ arena.Law rejectedEqual := by
   exact law D hu hpos h24 0 0 0 0 0 0
 private theorem actualDependence : ObservationalDependence signature actualEqual := by
   intro i
-  refine ⟨ℂ, 0, 1, ?_⟩
+  obtain ⟨D, e, hu, h24, hpos, hpair, a, u, v, ha, huH, hvK, hvac, hne⟩ :=
+    _root_.D5.S3.VertexAlgebra.TwistedGround.MixedJacobi.actual_leech_vacuum_channel
+  let z : FixedRestrictedDual D := normalizedCoefficient D hu 3 u v
+  refine ⟨D, 0, z, ?_⟩
   intro he
-  have h : (1 : ℂ) = 0 := Eq.mp (congrFun he 0) rfl
-  exact one_ne_zero h
+  have hz : z = 0 := Eq.mp (congrFun he 0) rfl
+  apply hne
+  have evaluated := congrArg (fun q : FixedRestrictedDual D => q 0 a) hz
+  simpa [z] using evaluated
 
 private theorem actualSensitivity : Sensitivity arena actualEqual := by
   constructor
@@ -495,7 +500,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.TwistedGround.MixedJacobiFinite
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
