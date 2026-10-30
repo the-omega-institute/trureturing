@@ -8,12 +8,17 @@
 
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
 import D5.S3.Quantum.PureState.PureStateHandshake
+import D5.S3.Quantum.Matrix.SpectralPower
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
 
 /-! A rational two-qubit state violates the universal triangle-like correlation inequality. -/
 
 open scoped BigOperators Kronecker ComplexOrder
 open Matrix
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum
+open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
+open D5.S3.Observer.Conditioning (unreadState)
+open D5.S3.Quantum.Information.PartialTraceMutualInformation (isHermitian_kronecker)
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -24,33 +29,29 @@ namespace D5.S3.Entropy.UnifiedEntropyTriangleRefutation
 /-- Spectral power trace, with real powers on the spectrum. -/
 def genPurity {α : Type} [Fintype α] [DecidableEq α]
     (q : ℝ) (σ : Matrix α α ℂ) : ℝ :=
-  (cfc (fun x : ℝ => x ^ q) σ).trace.re
+  (D5.S3.Quantum.Matrix.SpectralPower.mpow σ q).trace.re
 
 /-- Unified entropy away from its limiting indices. -/
 def unifiedEntropy {α : Type} [Fintype α] [DecidableEq α]
     (q s : ℝ) (σ : Matrix α α ℂ) : ℝ :=
   (genPurity q σ ^ s - 1) / ((1 - q) * s)
 
-/-- The rank-one projector on a column of a unitary matrix. -/
-def projector {α : Type} [Fintype α] [DecidableEq α]
-    (u : Matrix.unitaryGroup α ℂ) (i : α) : Matrix α α ℂ :=
-  fun a b => u a i * star (u b i)
-
 /-- Unread rank-one projective measurement on the first factor. -/
 def measureA {α β : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β]
     (u : Matrix.unitaryGroup α ℂ) (ρ : Matrix (α × β) (α × β) ℂ) :=
-  ∑ i, (projector u i ⊗ₖ (1 : Matrix β β ℂ)) * ρ * (projector u i ⊗ₖ 1)
+  unreadState (fun i => rankOneDensity (fun a => u a i) ⊗ₖ (1 : Matrix β β ℂ)) ρ
 
 /-- Unread rank-one projective measurement on the second factor. -/
 def measureB {α β : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β]
     (v : Matrix.unitaryGroup β ℂ) (ρ : Matrix (α × β) (α × β) ℂ) :=
-  ∑ j, ((1 : Matrix α α ℂ) ⊗ₖ projector v j) * ρ * (1 ⊗ₖ projector v j)
+  unreadState (fun j => (1 : Matrix α α ℂ) ⊗ₖ rankOneDensity (fun b => v b j)) ρ
 
 /-- Unread local rank-one projective measurement on both factors. -/
 def measureAB {α β : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β]
     (u : Matrix.unitaryGroup α ℂ) (v : Matrix.unitaryGroup β ℂ)
     (ρ : Matrix (α × β) (α × β) ℂ) :=
-  ∑ i, ∑ j, (projector u i ⊗ₖ projector v j) * ρ * (projector u i ⊗ₖ projector v j)
+  ∑ i, unreadState
+    (fun j => rankOneDensity (fun a => u a i) ⊗ₖ rankOneDensity (fun b => v b j)) ρ
 
 /-- Entropic disturbance normalized by the original spectral power trace. -/
 def disturbance {α : Type} [Fintype α] [DecidableEq α]
@@ -147,16 +148,9 @@ private lemma witness_purity : (witness * witness).trace.re = 11 / 32 := by
 
 private lemma genPurity_two {α : Type} [Fintype α] [DecidableEq α]
     (σ : Matrix α α ℂ) (hσ : σ.IsHermitian) :
-    genPurity 2 σ = (σ * σ).trace.re := by
-  change (cfc (fun x : ℝ => x ^ (2 : ℝ)) σ).trace.re = _
-  simp only [Real.rpow_two]
-  have hpow : cfc (fun x : ℝ => x ^ (2 : ℕ)) σ = σ ^ 2 := by
-    calc
-      _ = cfc (fun x : ℝ => x) σ ^ (2 : ℕ) :=
-        cfc_pow (fun x : ℝ => x) 2 σ (ha := hσ.isSelfAdjoint)
-      _ = σ ^ 2 := by rw [cfc_id' ℝ σ hσ.isSelfAdjoint]
-  exact congrArg (fun a : Matrix α α ℂ => a.trace.re)
-    (hpow.trans (pow_two σ))
+    genPurity 2 σ = (σ * σ).trace.re :=
+  congrArg (fun a : Matrix α α ℂ => a.trace.re)
+    (D5.S3.Quantum.Matrix.SpectralPower.mpow_two hσ)
 
 private lemma disturbance_two_neg_one {α : Type} [Fintype α] [DecidableEq α]
     (σ ρ : Matrix α α ℂ) (hσ : σ.IsHermitian) (hρ : ρ.IsHermitian)
@@ -173,28 +167,28 @@ private lemma disturbance_two_neg_one {α : Type} [Fintype α] [DecidableEq α]
 
 private lemma qubit_projectors (u : Matrix.unitaryGroup (Fin 2) ℂ) :
     ∃ n : EuclideanSpace ℝ (Fin 3), ‖n‖ = 1 ∧
-      projector u 0 = blochMatrix 1 n ∧ projector u 1 = 1 - projector u 0 := by
+      rankOneDensity (fun a => u a 0) = blochMatrix 1 n ∧
+      rankOneDensity (fun a => u a 1) = 1 - rankOneDensity (fun a => u a 0) := by
   have hcol : ∑ k, star (u k 0) * u k 0 = (1 : ℂ) := by
     simpa only [Matrix.mul_apply, Matrix.star_apply, Fin.sum_univ_two,
       Matrix.one_apply, ite_true] using congrFun (congrFun u.prop.1 0) 0
-  have hh : (projector u 0).IsHermitian := by
-    ext a b
-    change star (u b 0 * star (u a 0)) = u a 0 * star (u b 0)
-    simp only [star_mul, star_star]
-  have ht : (projector u 0).trace = 1 := by
+  have hh : (rankOneDensity (fun a => u a 0)).IsHermitian :=
+    (Matrix.posSemidef_vecMulVec_self_star (fun a => u a 0)).isHermitian
+  have ht : (rankOneDensity (fun a => u a 0)).trace = 1 := by
     change ∑ k, u k 0 * star (u k 0) = 1
     simpa only [mul_comm] using hcol
-  have hp : projector u 0 * projector u 0 = projector u 0 :=
+  have hp : rankOneDensity (fun a => u a 0) * rankOneDensity (fun a => u a 0) =
+      rankOneDensity (fun a => u a 0) :=
     (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake
       (fun k => u k 0) hcol 0).1
-  have hc : projector u 0 + projector u 1 = 1 := by
+  have hc : rankOneDensity (fun a => u a 0) + rankOneDensity (fun a => u a 1) = 1 := by
     ext a b
     change u a 0 * star (u b 0) + u a 1 * star (u b 1) =
       (1 : Matrix (Fin 2) (Fin 2) ℂ) a b
     simpa only [Matrix.mul_apply, Matrix.star_apply, Fin.sum_univ_two] using
       congrFun (congrFun u.prop.2 a) b
-  have hg := bloch_geometry_of_isHermitian (projector u 0) hh
-  refine ⟨bloch (projector u 0), hg.2 ht hp, ?_, ?_⟩
+  have hg := bloch_geometry_of_isHermitian (rankOneDensity (fun a => u a 0)) hh
+  refine ⟨bloch (rankOneDensity (fun a => u a 0)), hg.2 ht hp, ?_, ?_⟩
   · simpa only [ht, Complex.one_re] using hg.1
   · exact eq_sub_iff_add_eq.mpr ((add_comm _ _).trans hc)
 
@@ -202,38 +196,36 @@ private lemma measured_hermitian (u v : Matrix.unitaryGroup (Fin 2) ℂ) :
     (measureA u witness).IsHermitian ∧ (measureB v witness).IsHermitian ∧
       (measureAB u v witness).IsHermitian := by
   have hp (w : Matrix.unitaryGroup (Fin 2) ℂ) (i : Fin 2) :
-      (projector w i).IsHermitian := by
-    ext a b
-    change star (w b i * star (w a i)) = w a i * star (w b i)
-    simp only [star_mul, star_star]
-  have hk (a b : Matrix (Fin 2) (Fin 2) ℂ) (ha : a.IsHermitian) (hb : b.IsHermitian) :
-      (a ⊗ₖ b).IsHermitian := by
-    change (a ⊗ₖ b)ᴴ = a ⊗ₖ b
-    rw [Matrix.conjTranspose_kronecker, ha.eq, hb.eq]
+      (rankOneDensity (fun a => w a i)).IsHermitian :=
+    (Matrix.posSemidef_vecMulVec_self_star (fun a => w a i)).isHermitian
   have hs (p : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) (h : p.IsHermitian) :
       (p * witness * p).IsHermitian := by
     simpa only [h.eq] using Matrix.isHermitian_mul_mul_conjTranspose p
       witness_posSemidef.isHermitian
   refine ⟨?_, ?_, ?_⟩
-  · change IsSelfAdjoint (∑ i, (projector u i ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)) *
-      witness * (projector u i ⊗ₖ 1))
-    exact isSelfAdjoint_sum _ fun i _ => hs _ (hk _ _ (hp u i) Matrix.isHermitian_one)
-  · change IsSelfAdjoint (∑ j, ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ projector v j) *
-      witness * (1 ⊗ₖ projector v j))
-    exact isSelfAdjoint_sum _ fun j _ => hs _ (hk _ _ Matrix.isHermitian_one (hp v j))
-  · change IsSelfAdjoint (∑ i, ∑ j, (projector u i ⊗ₖ projector v j) *
-      witness * (projector u i ⊗ₖ projector v j))
+  · change IsSelfAdjoint (∑ i,
+      (rankOneDensity (fun a => u a i) ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)) *
+      witness * (rankOneDensity (fun a => u a i) ⊗ₖ 1))
+    exact isSelfAdjoint_sum _ fun i _ => hs _ (isHermitian_kronecker (hp u i) Matrix.isHermitian_one)
+  · change IsSelfAdjoint (∑ j,
+      ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ rankOneDensity (fun a => v a j)) *
+      witness * (1 ⊗ₖ rankOneDensity (fun a => v a j)))
+    exact isSelfAdjoint_sum _ fun j _ => hs _ (isHermitian_kronecker Matrix.isHermitian_one (hp v j))
+  · change IsSelfAdjoint (∑ i, ∑ j,
+      (rankOneDensity (fun a => u a i) ⊗ₖ rankOneDensity (fun a => v a j)) *
+      witness * (rankOneDensity (fun a => u a i) ⊗ₖ rankOneDensity (fun a => v a j)))
     exact isSelfAdjoint_sum _ fun i _ => isSelfAdjoint_sum _ fun j _ =>
-      hs _ (hk _ _ (hp u i) (hp v j))
+      hs _ (isHermitian_kronecker (hp u i) (hp v j))
 
 private lemma measurement_expansions (u v : Matrix.unitaryGroup (Fin 2) ℂ)
     (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
-    measureA u ρ = ∑ i, (projector u i ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)) *
-      ρ * (projector u i ⊗ₖ 1) ∧
-    measureB v ρ = ∑ j, ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ projector v j) *
-      ρ * (1 ⊗ₖ projector v j) ∧
-    measureAB u v ρ = ∑ i, ∑ j, (projector u i ⊗ₖ projector v j) *
-      ρ * (projector u i ⊗ₖ projector v j) := ⟨rfl, rfl, rfl⟩
+    measureA u ρ = ∑ i, (rankOneDensity (fun a => u a i) ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)) *
+      ρ * (rankOneDensity (fun a => u a i) ⊗ₖ 1) ∧
+    measureB v ρ = ∑ j, ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ rankOneDensity (fun a => v a j)) *
+      ρ * (1 ⊗ₖ rankOneDensity (fun a => v a j)) ∧
+    measureAB u v ρ = ∑ i, ∑ j,
+      (rankOneDensity (fun a => u a i) ⊗ₖ rankOneDensity (fun a => v a j)) *
+      ρ * (rankOneDensity (fun a => u a i) ⊗ₖ rankOneDensity (fun a => v a j)) := ⟨rfl, rfl, rfl⟩
 
 private lemma bloch_entries (a : ℝ) (n : EuclideanSpace ℝ (Fin 3)) :
     blochMatrix a n =
@@ -321,14 +313,10 @@ private lemma computational_purities :
     (measureB 1 witness * measureB 1 witness).trace.re = 21 / 64 ∧
     (measureAB 1 1 witness * measureAB 1 1 witness).trace.re = 5 / 16 := by
   obtain ⟨ha, hb, hab⟩ := measurement_expansions 1 1 witness
-  have hp (i a b : Fin 2) :
-      projector (1 : Matrix.unitaryGroup (Fin 2) ℂ) i a b =
-        (1 : Matrix (Fin 2) (Fin 2) ℂ) a i *
-          star ((1 : Matrix (Fin 2) (Fin 2) ℂ) b i) := rfl
   rw [ha, hb, hab]
   norm_num [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Matrix.sum_apply,
     Matrix.kroneckerMap_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
-    hp, Matrix.one_apply, witness_entries]
+    rankOneDensity, Matrix.vecMulVec_apply, Pi.star_apply, Matrix.one_apply, witness_entries]
 
 private lemma correlations : correlationA 2 (-1) witness = 1 / 21 ∧
     correlationB 2 (-1) witness = 1 / 21 ∧ correlationAB 2 (-1) witness = 1 / 10 := by
@@ -358,11 +346,8 @@ private lemma correlations : correlationA 2 (-1) witness = 1 / 21 ∧
       (lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1 / 4) hl)).mpr
       (le_trans (mul_le_mul_of_nonneg_left hu (by norm_num)) (by norm_num)))
   have hinf {ι : Type} (f : ι → ℝ) (a : ℝ) (i : ι)
-      (hl : ∀ j, a ≤ f j) (he : f i = a) : sInf (Set.range f) = a := by
-    apply le_antisymm
-    · rw [← he]
-      exact csInf_le ⟨a, by rintro _ ⟨j, rfl⟩; exact hl j⟩ ⟨i, rfl⟩
-    · exact le_csInf ⟨f i, i, rfl⟩ (by rintro _ ⟨j, rfl⟩; exact hl j)
+      (hl : ∀ j, a ≤ f j) (he : f i = a) : sInf (Set.range f) = a :=
+    IsLeast.csInf_eq ⟨⟨i, he⟩, by rintro _ ⟨j, rfl⟩; exact hl j⟩
   obtain ⟨hca, hcb, hcab⟩ := computational_purities
   refine ⟨hinf _ _ 1 ha ?_, hinf _ _ 1 hb ?_, hinf _ _ (1, 1) hab ?_⟩
   · rw [hr _ (measured_hermitian 1 1).1, hca]
