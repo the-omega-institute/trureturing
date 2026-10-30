@@ -2455,7 +2455,7 @@ $\log M_{x,y}(s)-\log M_{x,0}(s)=\Xi_{x,1-s}(y)-(1-s)\Xi_{x,1}(y)$。
 
 ## 139. 两标记行的精确三质量根与坏类
 
-**定义 139.1（完整两行记录与实际参数）。** 对每个充分大的合法 $n$，固定不同正类顶点 $u_1,u_2$ 和一个负类顶点 $v$，均不依赖真实支持。保持原 $k_0,l_0,\lambda,\mathsf T$。
+**定义 139.1（完整两行记录与实际参数）。** 对每个充分大的合法 $n$，固定不同正类行 $i_1,i_2$，记 $u_a=\operatorname{inl}i_a$，并固定一个负类顶点 $v$，均不依赖真实支持。保持原 $k_0,l_0,\lambda,\mathsf T$。
 完整 pair 记录依次对每个 $a=1,2$ 列出 $k_0$ 个 $(u_a,u_a)$ 和 $l_0$ 个 $(u_a,v)$，最后列出 $\mathsf T-2\lambda$ 个 $(v,v)$。
 完整 path 从 $v$ 出发，对每个 $a=1,2$ 依次作 $v\to u_a$、$k_0$ 次 $u_a\to u_a$、$u_a\to v$，再作 $l_0-1$ 次 $v\to u_a\to v$，最后作 $\mathsf T-2(k_0+2l_0)$ 次 $v\to v$。因 $l_0\ge1$ 且 $2(k_0+2l_0)\le4\lambda\le\mathsf T$，这些次数均为合法非负整数。
 
@@ -2469,7 +2469,7 @@ W_n^*=\log\frac{M-q}{q},\quad
 \tag{139.1}
 $$
 
-以下证明 $|W_n-W_n^*|=O(\kappa_n)$ 且 $J=\{u_1,u_2\}$。故只有一个非空分数组、$C=2$，实际三质量为
+以下证明 $|W_n-W_n^*|=O(\kappa_n)$ 且 $J=\{i_1,i_2\}$。故只有一个非空分数组、$C=2$，实际三质量为
 
 $$
 A_m=\binom2m e^{mW_n}\binom{M-2}{q-m},\quad m=0,1,2,\qquad
@@ -2505,7 +2505,7 @@ a_0=\frac14+O(\kappa_n),\quad a_1=\frac12+O(\kappa_n),\quad
 \tag{139.5}
 $$
 
-对每个 $R<\infty$ 和每个有限指标集 $K\subset\mathbb Z$，充分大的层级上，两个实际实验的原完整配分均有简单零点
+对每个 $0\le R<\infty$ 和每个有限指标集 $K\subset\mathbb Z$，充分大的层级上，两个实际实验的原完整配分均有简单零点
 
 $$
 z_{(n,k)}(y)=1+\frac{(2k+1)\pi i}{\log2}+O_{R,K}(\varepsilon_n),\qquad k\in K,
@@ -2588,7 +2588,7 @@ $$
 $$
 
 比较函数的全部零点为 $\bar z_k=1+(2k+1)\pi i/\log2$，且
-$\overline G'(\bar z_k)=-2(\log2)4^{-\bar z_k}\ne0$。对有限 $K$，选互不相交的固定小闭圆盘 $D_k$，使 $\overline G$ 在每个盘内恰一个简单零点，并使
+$\overline G'(\bar z_k)=-2(\log2)4^{-\bar z_k}\ne0$。当 $K=\varnothing$ 时根断言为空；对非空有限 $K$，选互不相交的固定小闭圆盘 $D_k$，使 $\overline G$ 在每个盘内恰一个简单零点，并使
 $|\overline G(z)|\ge c_K|z-\bar z_k|$ 对 $z\in D_k$ 成立；这是连续无零因子 $\overline G(z)/(z-\bar z_k)$ 在小闭盘上的正最小值。先在固定盘的边界用 (139.12) 和 Rouché 定理，知每盘内实际零点总重数为 $1$。再取固定 $A>C_{R,\cup D_k}/c_K$，在半径 $A\varepsilon_n$ 的圆周上有严格的 Rouché 不等式。故这个小盘也恰有一个重数为 $1$ 的实际零点，从而给出 (139.6) 的定量位移，而不仅是零点计数。
 
 为排除一切更近根，取固定 $h>0$ 充分小，使 $d+2h<3d$，并使以 $\bar z_0,\bar z_{-1}$ 为中心的半径 $h$ 闭盘互不相交。它们是固定闭管
