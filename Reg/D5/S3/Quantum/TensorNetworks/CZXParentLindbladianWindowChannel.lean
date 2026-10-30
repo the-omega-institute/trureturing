@@ -244,33 +244,32 @@ end SectorGaugeSquare
 
 namespace SuccessorInjective
 
-/-- The selected source predicate is observed on its original data operands. -/
+/-- Observe the cyclic successor on each site, including the empty fiber. -/
 abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature ℕ
-    (fun n => Fin n → Fin n)
-    (fun _ => Prop)
+    (fun n => Fin n)
+    (fun n => Fin n)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ f => Function.Injective f) (fun e => nomatch e)
+  realize signature (fun _ _ i => site i 1) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ i => ⟨0, Nat.zero_lt_of_lt i.isLt⟩) (fun e => nomatch e)
 
 def arena : Arena where
   signature := signature
-  Law R := ∀ n : ℕ, R.readout () n (fun i : Fin n => site i 1)
+  Law R := ∀ n : ℕ, Function.Injective (R.readout () n)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact h 0
+  have hbad : (0 : Fin 2) = 1 := h 2 (a₁ := 0) (a₂ := 1) rfl
+  exact (by decide : (0 : Fin 2) ≠ 1) hbad
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨2, id, fun _ => 0, ?_⟩
-  intro he
-  have hbad : Function.Injective (fun _ : Fin 2 => (0 : Fin 2)) :=
-    Eq.mp he Function.injective_id
-  exact (by decide : (0 : Fin 2) ≠ 1) (hbad (a₁ := 0) (a₂ := 1) rfl)
+  refine ⟨2, 0, 1, ?_⟩
+  change site (0 : Fin 2) 1 ≠ site (1 : Fin 2) 1
+  decide
 
 def source_registration : Registration arena (type_of% @site_succ_injective) where
   actual := actual
@@ -294,7 +293,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ f => Function.Injective f) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ i => site i 1) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -304,7 +303,7 @@ def registration :
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "fn"]
+      path := #["body", "arg"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -636,47 +635,52 @@ end SuperoperatorAction
 
 namespace WindowIdempotence
 
-/-- The selected source predicate is observed on its original data operands. -/
+/-- Observe the Boolean idempotence predicate on the source superoperator. -/
 abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature ℕ
     (fun n => Matrix ((Fin n → Fin 2) × (Fin n → Fin 2)) ((Fin n → Fin 2) × (Fin n → Fin 2)) ℂ)
-    (fun _ => Prop)
+    (fun _ => Bool)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ A => IsIdempotentElem A) (fun e => nomatch e)
+  realize signature (fun _ _ A => decide (IsIdempotentElem A)) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
 
 def arena : Arena where
   signature := signature
   Law R := ∀ (n : ℕ) (_hn : 4 ≤ n) (i : Fin n),
-    R.readout () n (windowSuperoperator n i)
+    R.readout () n (windowSuperoperator n i) = true
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact h 4 (by decide) 0
+  have hbad := h 4 (by decide) 0
+  exact Bool.false_ne_true hbad
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨0, 0, 2, ?_⟩
   intro he
+  change decide (IsIdempotentElem
+      (0 : Matrix ((Fin 0 → Fin 2) × (Fin 0 → Fin 2))
+        ((Fin 0 → Fin 2) × (Fin 0 → Fin 2)) ℂ)) =
+    decide (IsIdempotentElem (2 : Matrix ((Fin 0 → Fin 2) × (Fin 0 → Fin 2))
+      ((Fin 0 → Fin 2) × (Fin 0 → Fin 2)) ℂ)) at he
   have hbad : IsIdempotentElem
       (2 : Matrix ((Fin 0 → Fin 2) × (Fin 0 → Fin 2))
-        ((Fin 0 → Fin 2) × (Fin 0 → Fin 2)) ℂ) :=
-    Eq.mp he (by
-      change IsIdempotentElem
-        (0 : Matrix ((Fin 0 → Fin 2) × (Fin 0 → Fin 2))
-          ((Fin 0 → Fin 2) × (Fin 0 → Fin 2)) ℂ)
-      simp [IsIdempotentElem])
+        ((Fin 0 → Fin 2) × (Fin 0 → Fin 2)) ℂ) := by
+    apply of_decide_eq_true
+    rw [← he]
+    simp [IsIdempotentElem]
   norm_num [IsIdempotentElem] at hbad
   have hentry := congrArg (fun A => A (0, 0) (0, 0)) hbad
   norm_num [Matrix.ofNat_apply] at hentry
 
 def source_registration : Registration arena (type_of% @window_idempotent) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@window_idempotent, rejected, rejected_law⟩
+  bridge := by simp [arena, actual, realize]
+  variation := ⟨by simpa [arena, actual, realize] using @window_idempotent,
+    rejected, rejected_law⟩
   sensitivity :=
     Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
@@ -695,7 +699,8 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ A => IsIdempotentElem A) (fun e => nomatch e))
+  readout := some
+    (realize signature (fun _ _ A => decide (IsIdempotentElem A)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -705,11 +710,11 @@ def registration :
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "fn"]
+      path := #["body", "body", "body"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
