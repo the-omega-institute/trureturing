@@ -3435,3 +3435,718 @@ of Theorem 3.1; no asymptotic expansion with varying fixed parameters
 is needed. ∎
 
 ## 追加锚（本行以下为增补区）
+
+## 14. The full second transition and its exact two-family envelope
+
+**Definition 14.1 (The two finite scalar branches).** Retain exactly
+Definition 1.1. Write $m_1(a,h)=m_{a,h}$ for the constrained scalar
+value in (13.18), whose definition is valid for every $a\ge4$, $h\ge1$.
+For $h\ge2$ put $m=a+2$, $n=h-1$ and
+
+$$
+\begin{aligned}
+G_2(p)&=\frac{n^2}{p}+\frac{(m-1)^2m^2}{a-p}
+ +\frac{(2m-1)m^3(ap-1)}{(a-p)^2},\\
+m_2(a,h)&=\min_{1/a\le p\le2/(a+1)}G_2(p).
+\end{aligned}
+\tag{14.1}
+$$
+
+Set $m_2(a,1)=+\infty$. For unified notation, when $j\in\{1,2\}$
+and $h\ge j$, define
+
+$$
+\begin{gathered}
+m=a+j,\quad r=m-1,\quad n=h+1-j,\quad d=2m-1,\\
+\ell_j=\frac{j-1}{m-2},\qquad u_c=\frac jr,\qquad
+b_j(u)=d\bigl((m-2)u-(j-1)\bigr),\\
+F_j(u)=\frac{n^2}{u}+\frac{r^2m^2}{a-u}
+                    +\frac{m^3b_j(u)}{(a-u)^2}.
+\end{gathered}
+\tag{14.2}
+$$
+
+The scalar interval is $(0,u_c]$ for $j=1$ and $[\ell_2,u_c]$
+for $j=2$. Thus $F_1=\Phi_{a,h}$, $F_2=G_2$ and their minima are
+$m_j(a,h)$. Denote their minimizing parameters by $p_j$.
+The second family is the portion $1\le v\le2$ of Proposition 3.2:
+the substitution $u=v/(a+v-1)$ gives, on a partition $C\dot\cup D$
+of sizes $m,n$,
+
+$$
+\begin{gathered}
+x_{\{k\}}=u/n\quad(k\in D),\qquad
+x_C=1-j+(m-2)u,\\
+x_{C\setminus\{i\}}=\frac{j-ru}{m}\quad(i\in C),
+\qquad x_T=0\quad\hbox{otherwise}.
+\end{gathered}
+\tag{14.3}
+$$
+
+For $j=1$ these are exactly the published laws (13.19), with an
+arbitrary legal scalar parameter. The cap member has energy
+
+$$
+S_j=\frac{m^3r}{a-1}+\frac{n^2r}{j}.
+\tag{14.4}
+$$
+
+All these are comparison laws, without any support restriction on
+$\mathcal X(a,h)$. In the compact range $5/2\le q=h/\sqrt a\le R$,
+put $U=\min\{S_1,S_2\}$. Every constant and threshold indexed by $R$
+below is independent of the actual law, the integer pair and the
+labeling. Here $2\sqrt2<R<2\sqrt6$ is fixed.
+
+**Lemma 14.2 (Only the two adjacent core sizes survive).** There are
+$A_R,b,c_0>0$ such that, for $a\ge A_R$, $5/2\le q\le R$, every
+$x\in\mathcal X(a,h)$ with $H(x)\le U$ has a unique partition
+$C\dot\cup D=[a+1+h]$ with
+
+$$
+\begin{gathered}
+|C|=a+j,\quad |D|=h+1-j,\quad j\in\{1,2\},\\
+y_i\ge c_0\quad(i\in C),\qquad 0<y_k<b/a<c_0\quad(k\in D).
+\end{gathered}
+\tag{14.5}
+$$
+
+If $A=\{T\cap D\ne\varnothing\}$ and $v=a\mathbb P(A)$, then
+
+$$
+\begin{cases}
+q\le2\sqrt2+O_R(a^{-1/2}),&j=1,\\
+q\ge2\sqrt2-O_R(a^{-1/2}),\quad
+v=2+O_R(a^{-1/4}),&j=2.
+\end{cases}
+\tag{14.6}
+$$
+
+In particular, with $u=\sum_{k\in D}y_k$, the second case has
+$au\ge3/2$ eventually.
+
+**Proof.** The cap laws (14.4) give, uniformly for each $j=1,2$,
+
+$$
+\frac{S_j-B_0}{a^2}=\frac{q^2}{j}+4j-2+O_R(a^{-1/2}).
+\tag{14.7}
+$$
+
+Consequently $H\le U$ implies $H\le a^3+C_Ra^2$ for some fixed
+$C_R\ge1$. Apply Lemma 7.1 with $(C,L,R)=(C_R,5/2,R)$.
+Its actual-marginal threshold construction gives $b=4C_R$,
+$c_0=(8C_R+1)^{-1}$, a bounded positive integer $j$, and a positive
+$v\le j+O_R(a^{-1/2})$. Its lower bound, including the lower bound
+on $v$ there, implies
+
+$$
+\frac{H-B_0}{a^2}\ge\frac{q^2}{v}+2v+2j-2-O_R(a^{-1/2}).
+\tag{14.8}
+$$
+
+Replacing $v$ by $\min\{v,j\}$ changes this expression by at most
+$O_R(a^{-1/2})$. For each positive integer $k$, let
+
+$$
+\varphi_k(q)=\min_{0<w\le k}\{q^2/w+2w+2k-2\}.
+$$
+
+The scalar evaluation (7.23)--(7.28) shows that on
+$[5/2,R]$ only $k=1,2$ can attain
+$\min_k\varphi_k(q)=\min\{q^2+2,q^2/2+6\}$.
+Since $R<2\sqrt6$, no $k\ge3$ attains it, even at an endpoint of
+this compact interval. The bounded set of possible integers from
+Lemma 7.1 is finite. Continuity therefore gives a strictly positive
+uniform gap for its integers $k\ge3$. Equations (14.7)--(14.8)
+exclude all of them for sufficiently large $a$. This proves (14.5),
+after increasing the threshold until $b/a<c_0$.
+
+For $j=1$, $\varphi_1(q)=q^2+2$ throughout this range.
+If $q\ge2\sqrt2$, its excess over $q^2/2+6$ is $q^2/2-4$.
+Comparison with (14.7)--(14.8) bounds that excess by
+$O_R(a^{-1/2})$, giving the first line of (14.6).
+For $j=2$ and $5/2\le q\le2\sqrt2$,
+$\varphi_2(q)=2+2\sqrt2 q$ and
+
+$$
+\varphi_2(q)-(q^2+2)=q(2\sqrt2-q).
+$$
+
+The same comparison gives the lower bound on $q$ in (14.6).
+To obtain the asserted control of $v$, put $w=\min\{v,2\}$.
+Using $H\le S_2$ in (14.8) gives
+
+$$
+\frac{q^2}{w}+2w-\left(\frac{q^2}{2}+4\right)
+=(2-w)\left(\frac{q^2}{2w}-2\right)
+\le O_R(a^{-1/2}).
+\tag{14.9}
+$$
+
+The lower bound already proved for $q$ gives $q^2\ge8-O_R(a^{-1/2})$.
+The positive lower bound on $w$ from Lemma 7.1 therefore bounds the
+left side of (14.9) below by
+$2(2-w)^2/w-O_R(a^{-1/2})$. Hence
+$2-w=O_R(a^{-1/4})$; also $v\le2+O_R(a^{-1/2})$.
+Finally $u=\mathbb E|T\cap D|\ge\mathbb P(A)=v/a$.
+All these are identities or estimates for the original common law. ∎
+
+**Lemma 14.3 (A mean-aware residual on every actual type).** On the
+entire sublevel of Lemma 14.2, use its $j,m,r,n,C,D$ and put
+
+$$
+\begin{gathered}
+t_k=y_k\ (k\in D),\quad u=\sum_{k\in D}t_k,\quad
+\delta=\max_{k\in D}t_k,\quad c=\min_{i\in C}y_i,\\
+B=|T\cap D|,\quad L=|T\cap C|,\quad K=L+B,\quad A=\{B>0\},\\
+\alpha=mr(2m-1),\quad \beta=3m^2-3m+1,\\
+Q(l)=(m-l)(r-l)(2m-1+l)=\alpha-\beta l+l^3,\\
+f_u(y)=\frac{r^2}{y}-\frac{d(j-1+u)}{y^2},\quad
+\bar y=\frac{a-u}{m},\quad
+\mathcal S_f=\sum_{i\in C}f_u(y_i)-m f_u(\bar y),\\
+\mathcal B_j(w)=\frac{r^2m^2}{a-w}
+             -\frac{d(j-1+w)m^3}{(a-w)^2},\quad
+\mathcal A_j(u)=\frac{\mathcal B_j(0)-\mathcal B_j(u)}{u},\\
+\eta_0=\sqrt{\alpha-\mathcal A_j(u)},\quad
+\eta_c=\frac{rn}{j},\quad \eta=\max\{\eta_0,\eta_c\},\quad
+\gamma=\eta^2-\alpha+\mathcal A_j(u)\ge0.
+\end{gathered}
+\tag{14.10}
+$$
+
+The square root is positive for sufficiently large $a$.
+On $A$ define
+
+$$
+\begin{gathered}
+V_T=\sum_{k\in T\cap D}t_k^{-1},\qquad
+Z_T=K^2\sum_{k\in T\cap D}t_k^{-2},\\
+\mathcal G_T=Z_T+Q(L)-\mathcal A_j(u)B-2\eta V_T+\gamma B
+ -\frac\gamma r\bigl(m(B-1)+L\bigr).
+\end{gathered}
+\tag{14.11}
+$$
+
+There are $\kappa_R,C_R>0$ such that, uniformly on this sublevel,
+
+$$
+\begin{aligned}
+\mathcal G_{\{k\}}&=(t_k^{-1}-\eta)^2\quad(k\in D),\\
+\mathcal G_T&\ge\kappa_Ra^3\quad(B>0,\ K\ge2),\\
+\mathcal S_f&\ge\frac{a^2}{2}\sum_{i\in C}(y_i-\bar y)^2,\\
+0\le\mathbb E[\mathcal G_T;A]+\mathbb E[Q(L);A^c]
+ +\mathcal S_f&\le C_Ra.
+\end{aligned}
+\tag{14.12}
+$$
+
+In particular
+
+$$
+\begin{gathered}
+\mathbb P(A,K\ge2)=O_R(a^{-2}),\qquad
+c\ge1-O_R(a^{-1/2}),\qquad
+\delta\le\frac{1+O_R(a^{-1/4})}{\eta},\\
+\frac{\eta^2}{a^3}=\max\left\{2,\frac{n^2}{j^2a}\right\}
+                         +O_R(a^{-1}).
+\end{gathered}
+\tag{14.13}
+$$
+
+**Proof.** The threshold partition gives $u\le bn/a=O_R(a^{-1/2})$.
+On $0\le w\le u$, differentiation of (14.10) gives
+
+$$
+\mathcal B_j'(w)=\frac{r^2m^2}{(a-w)^2}
+ -\frac{dm^3(a+w+2j-2)}{(a-w)^3}
+=-a^2+O_R(a).
+\tag{14.14}
+$$
+
+Thus $\mathcal A_j(u)=a^2+O_R(a)$,
+$\alpha-\mathcal A_j(u)=2a^3+O_R(a^2)$,
+$\eta_0=\sqrt2\,a^{3/2}+O_R(\sqrt a)$ and
+$\eta,\gamma^{1/2}=O_R(a^{3/2})$. These follow from rational
+expressions with $a-w\ge a/2$, uniformly for both possible $j$.
+They give the last assertion of (14.13).
+
+For $i\in C$, let $I_i=\mathbf1_{\{i\in T\}}$ and set
+
+$$
+\rho_i=(1-I_i)d(r-L)+I_i(m-L)(m-L-1),\qquad R_i=\mathbb E\rho_i.
+\tag{14.15}
+$$
+
+Every $\rho_i\ge0$: when $I_i=0$ one has $L\le r$;
+when $I_i=1$ the last two factors are consecutive integers.
+Their sum is $Q(L)$, nonnegative at every integer $0\le L\le m$.
+The exact expansion
+
+$$
+\rho_i=I_i(L^2-r^2)+d(r-L)
+$$
+
+gives, using $\mathbb E L=a-u$,
+
+$$
+R_i=\mathbb E[L^2I_i]-r^2y_i+d(j-1+u).
+\tag{14.16}
+$$
+
+The term $j-1$ here retains the difference between the original
+mean $a$ and the adjacent lower core size $r$.
+Since $K^2\ge L^2$ and $0<y_i\le1$, (14.16) yields
+
+$$
+H\ge H_D+\mathcal B_j(u)+\mathbb E Q(L)+\mathcal S_f,
+\qquad H_D=\mathbb E[Z_T;A].
+\tag{14.17}
+$$
+
+On the interval $c_0\le y\le1$,
+
+$$
+f_u''(y)=\frac{2\{r^2y-3d(j-1+u)\}}{y^4}\ge a^2
+\tag{14.18}
+$$
+
+for sufficiently large $a$: the subtracted term is $O_R(a)$,
+whereas $r^2y\ge r^2c_0$, and eventually it is at most half of
+$r^2y$. Jensen applied to $f_u(y)-a^2y^2/2$ proves the third line
+of (14.12), including nonnegativity of $\mathcal S_f$.
+
+The original mean gives the cap correction without assuming the cap:
+
+$$
+a\le m\mathbb P(A^c)+\mathbb E[L+B;A],\qquad
+ru-j\le m\mathbb E[B-1;A]+\mathbb E[L;A].
+\tag{14.19}
+$$
+
+Also $\mathbb E[V_T;A]=n$, by the actual inclusion probability of
+each tail label. Substituting (14.11) into (14.17), and applying
+(14.19) with multiplier $\gamma/r\ge0$, gives
+
+$$
+H\ge E_j+\mathbb E[\mathcal G_T;A]+\mathbb E[Q(L);A^c]
+                 +\mathcal S_f,\qquad
+E_j=\mathcal B_j(0)+2\eta n-\frac{j\gamma}{r}.
+\tag{14.20}
+$$
+
+For a tail singleton, $L=0$, $B=K=1$, so (14.11) is exactly the
+square in (14.12). For every other type meeting $D$, completing
+each reciprocal square gives
+
+$$
+\mathcal G_T\ge
+\eta^2\left(1-\frac B{K^2}\right)
+-\mathcal A_j(u)(B-1)-\beta L+L^3-\frac\gamma r(K-1).
+\tag{14.21}
+$$
+
+If $2\le K\le\sqrt a$, then $B/K^2\le1/2$ and $B,L\le\sqrt a$.
+Since $\eta^2\ge a^3$ eventually, (14.21) is at least
+$a^3/2-O_R(a^{5/2})\ge a^3/4$.
+If $K>\sqrt a$, every reciprocal $z=t_k^{-1}$ exceeds $a/b$.
+Consequently $K^2z>4\eta$ eventually and
+
+$$
+Z_T-2\eta V_T\ge\tfrac12 Z_T
+\ge\frac{BK^2a^2}{2b^2},\qquad
+\mathcal G_T\ge\frac{BK^2a^2}{2b^2}-\mathcal A_j(u)B
+                 +\gamma\left(1-\frac{K-1}{r}\right).
+\tag{14.22}
+$$
+
+For $K\le m=r+1$ the last term is nonnegative, giving at least
+$Ba^3/(4b^2)$ eventually. If $K>m$, then $K\le m+n$ and that term
+is at least $-\gamma n/r=-O_R(a^{5/2})$, while the first term is
+at least $Ba^4/(2b^2)$. Thus (14.22) is again at least
+$a^3/(4b^2)$ eventually. This proves the second line of (14.12)
+with $\kappa_R=\min\{1/4,1/(4b^2)\}$, for every allowed actual type.
+
+It remains to bound the residual in (14.20). Direct expansion gives
+
+$$
+\mathcal B_j(0)=a^3+2ja^2+O(a),\qquad
+S_j=a^3+4ja^2+\frac{n^2a}{j}+O_R(a).
+\tag{14.23}
+$$
+
+If $\eta=\eta_c$, then
+
+$$
+E_j=\mathcal B_j(0)+\frac{rn^2}{j}
+                 +\frac{j\eta_0^2}{r}=S_j+O_R(a).
+\tag{14.24}
+$$
+
+For $j=1$ the inequality $q\ge5/2$ ensures $\eta_c>\eta_0$
+eventually. For $j=2$, (14.6) implies
+$n/\sqrt a\ge2\sqrt2-O_R(a^{-1/2})$, and hence
+$(\eta_0-\eta_c)_+=O_R(a)$. Completing the scalar square in
+$2\eta n-(j/r)(\eta^2-\eta_0^2)$ shows that if $\eta_0>\eta_c$,
+its value at $\eta_0$ is its value at $\eta_c$ minus
+$(j/r)(\eta_0-\eta_c)^2=O_R(a)$. Thus (14.24) remains true in
+both cases. Since $H\le U\le S_j$, (14.20) proves the last line
+of (14.12); all its residuals are nonnegative by the signs just proved.
+
+The nonsingleton bound and strong Jensen now give
+$\mathbb P(A,K\ge2)=O_R(a^{-2})$ and
+$\sum_{i\in C}(y_i-\bar y)^2=O_R(a^{-1})$.
+As $\bar y=1-O_R(a^{-1})$, this proves the assertion about $c$.
+For a tail label $k$, put $x_k=x_{\{k\}}$ and
+$p_2=\mathbb P(A,K\ge2)$. Actual marginals satisfy
+$0\le t_k-x_k\le p_2$ and $\eta p_2=O_R(a^{-1/2})$.
+If $t_k\ge1/\eta$, then $x_k\ge t_k/2$ eventually. Writing
+$z=\eta t_k\ge1$, its singleton square in (14.12) gives
+
+$$
+\frac\eta2\frac{(z-1)^2}{z}
+\le x_k(t_k^{-1}-\eta)^2\le C_Ra,
+\qquad \frac{(z-1)^2}{z}=O_R(a^{-1/2}).
+$$
+
+For $z\ge1$, this implies $z-1=O_R(a^{-1/4})$.
+Labels with $t_k<1/\eta$ already satisfy the asserted upper bound.
+Taking the maximum proves the remaining assertion of (14.13).
+
+The expectation step is the elementary pointwise-certificate form of
+weak duality, as in D. Bertsimas and I. Popescu, *Optimal inequalities
+in probability theory: A convex optimization approach*, SIAM J. Optim.
+15(3), 780--804, DOI [10.1137/S1052623401399903](https://doi.org/10.1137/S1052623401399903),
+Theorem 2.1, p.785. The particular residual (14.11), its signs and its
+common-law cap correction are repo-derived here; no strong-duality or
+independent moment-realizability assertion is used. Strong Jensen is
+finite Jensen applied to the function with its displayed quadratic
+subtracted, in the sense of S. Boyd and L. Vandenberghe, *Convex
+Optimization*, §3.1.8, pp.77--78,
+[author text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf). ∎
+
+**Lemma 14.4 (Strict payment to the correct constrained branch).** On
+the same sublevel, put
+
+$$
+e=\mathbb E[K-1;A],\qquad
+\Lambda=\frac3{\delta^2}-\frac{\max\{\alpha,\beta\}}{c^2},\qquad
+P_j=\bigl(-F_j'(u_c)\bigr)_+.
+\tag{14.25}
+$$
+
+For sufficiently large $a$, uniformly,
+
+$$
+\Lambda-\frac mrP_j\ge a^3,\qquad
+H(x)\ge m_j(a,h)+\left(\Lambda-\frac mrP_j\right)e
+       \ge m_j(a,h)+a^3e.
+\tag{14.26}
+$$
+
+Equality with $m_j(a,h)$ forces every positive-mass tail-containing
+type to be a singleton and forces $u=p_j$.
+
+**Proof.** Retain the nonnegative terms in (14.16), and put
+
+$$
+\Delta_i=\mathbb E[(K^2-L^2)I_i],\quad c_m=rd,\quad
+Z=\mathbb E\left[(K^2-1)\sum_{k\in T\cap D}t_k^{-2}\right].
+$$
+
+The exact identity is
+
+$$
+H=\sum_{k\in D}t_k^{-1}+Z+
+\sum_{i\in C}\left\{\frac{r^2}{y_i}
+ -\frac{d(j-1+u)}{y_i^2}+\frac{R_i+\Delta_i}{y_i^2}\right\}.
+\tag{14.27}
+$$
+
+On $A$ every deficit $c_mB-\rho_i$ is nonnegative.
+For $I_i=0$ it is $d\{r(B-1)+L\}$; for $I_i=1$ it is
+$c_m(B-1)+r^2+dL-L^2\ge0$, since $L\le m\le d$.
+Their sum is
+
+$$
+\alpha(B-1)+\beta L-L^3
+\le\max\{\alpha,\beta\}(K-1).
+\tag{14.28}
+$$
+
+Off $A$, the $\rho_i$ are nonnegative. Weighting these signed
+inequalities only after establishing the signs yields
+
+$$
+\sum_{i\in C}\frac{R_i-c_mu}{y_i^2}
+\ge-\frac{\max\{\alpha,\beta\}}{c^2}e.
+$$
+
+The tail integrand in $Z$ is at least
+$B(K^2-1)/\delta^2\ge3(K-1)/\delta^2$ on $A$ and is zero off $A$.
+Discarding only the nonnegative $\Delta_i$ in (14.27) gives
+
+$$
+H\ge\sum_{k\in D}t_k^{-1}+
+\sum_{i\in C}\left\{\frac{r^2}{y_i}+\frac{b_j(u)}{y_i^2}\right\}
++\Lambda e\ge F_j(u)+\Lambda e.
+\tag{14.29}
+$$
+
+For $j=1$, $b_j(u)>0$. For $j=2$, Lemma 14.2 gives
+$au\ge3/2$, so $b_2(u)=d(au-1)>0$. Thus the last step is Cauchy
+on the actual tail marginals and strict Jensen on the actual core
+marginals, whose sum is $a-u$. No convexity of $H$ in $x$ is assumed.
+
+On $[\ell_j,a)$, with zero excluded when $j=1$, one has $b_j(u)\ge0$
+and
+
+$$
+F_j''(u)=\frac{2n^2}{u^3}+\frac{2r^2m^2}{(a-u)^3}
+ +\frac{4m^3d(m-2)}{(a-u)^3}
+ +\frac{6m^3b_j(u)}{(a-u)^4}>0.
+\tag{14.30}
+$$
+
+This proves uniqueness of each constrained scalar minimizer;
+existence follows from compactness for $j=2$ and the divergence at
+zero for $j=1$. Our actual $u$ is in this interval: $0<u<a$ by the
+common marginal budget, and $u>\ell_2=1/a$ when $j=2$.
+The mean inequality (14.19) gives
+
+$$
+(u-u_c)_+\le\frac mr e.
+\tag{14.31}
+$$
+
+Convexity and the supporting tangent at $u_c$ give, for every such $u$,
+
+$$
+F_j(u)\ge m_j(a,h)-P_j(u-u_c)_+.
+\tag{14.32}
+$$
+
+Indeed, if $F_j'(u_c)\ge0$, the minimum on the extended interval is
+already on its constrained part. If $F_j'(u_c)<0$, the constrained
+minimum is $F_j(u_c)$ and its supporting tangent has slope $-P_j$.
+This is the first-order convexity inequality of Boyd--Vandenberghe,
+§3.1.3, p.69; its hypotheses here are (14.30).
+
+To check strict payment with the entire cap derivative retained,
+write $z=n^2/(j^2a)$. Exact differentiation gives
+
+$$
+\begin{gathered}
+F_j'(u_c)=-\frac{n^2r^2}{j^2}+D_j,\\
+D_1=\frac{a^2(2a^3+2a^2+2a+1)}{(a-1)^2},\qquad
+D_2=\frac{(a+1)^2(2a^3+8a^2+12a+7)}{(a-1)^2}.
+\end{gathered}
+\tag{14.33}
+$$
+
+Hence $P_j/a^3=(z-2)_++O_R(a^{-1})$.
+By (14.13), $\max\{\alpha,\beta\}/a^3=2+O(a^{-1})$ and
+
+$$
+\frac\Lambda{a^3}\ge3\max\{2,z\}-2-O_R(a^{-1/4}).
+$$
+
+Since $m/r=1+O(a^{-1})$ and $z$ is bounded uniformly,
+
+$$
+\frac{\Lambda-(m/r)P_j}{a^3}
+\ge3\max\{2,z\}-2-(z-2)_+-O_R(a^{-1/4})
+\ge4-O_R(a^{-1/4}).
+\tag{14.34}
+$$
+
+Increase the threshold to obtain the first assertion of (14.26).
+Combining (14.29), (14.31) and (14.32) proves its lower bound.
+Equality forces $e=0$. The nonnegative integer $K-1$ then vanishes
+on every positive-mass type meeting $D$, and (14.31) gives $u\le u_c$.
+Equation (14.29) and uniqueness of the scalar minimum give $u=p_j$. ∎
+
+**Theorem 14.5 (Exact value and every actual equality law through the
+second transition).** For every fixed $2\sqrt2<R<2\sqrt6$ there is an
+integer $A_R$ such that every integer pair $a\ge A_R$,
+$1\le h\le R\sqrt a$ satisfies
+
+$$
+M(a,h)=\min\{m_1(a,h),m_2(a,h)\}.
+\tag{14.35}
+$$
+
+The infimum on the full domain of Definition 1.1 is attained.
+Up to arbitrary permutations of the labels, every minimizing law is
+(13.19) at $p_1$ when $m_1$ attains this minimum, or, when $h\ge2$,
+
+$$
+\begin{gathered}
+|C|=a+2=m,\quad |D|=h-1=n,\qquad
+x_{\{k\}}=p_2/n\quad(k\in D),\\
+x_C=ap_2-1,\qquad
+x_{C\setminus\{i\}}=\frac{2-(a+1)p_2}{m}\quad(i\in C),\\
+x_T=0\quad\hbox{for every other nonempty }T,
+\end{gathered}
+\tag{14.36}
+$$
+
+when $m_2$ attains the minimum. These conditions are necessary and
+sufficient. At an exact tie the two classes are both included and
+there are no further minimizing laws. A nontrivial convex combination
+of distinct minimizing laws is not a minimizing law.
+The scalar parameters are unique within each branch.
+All actual marginals in these laws are positive, including the
+endpoint degeneracies.
+
+**Proof.** The existing comparisons (14.3) are actual mean-$a$ laws.
+For completeness their total tail mass is $u$, their full-core mass
+is $z=1-j+(m-2)u$, and their total missing-one mass is $w=j-ru$.
+The scalar intervals in Definition 14.1 give $z,w\ge0$, and
+
+$$
+u+z+w=1,\qquad u+mz+rw=a.
+\tag{14.37}
+$$
+
+Every tail marginal is $u/n>0$, and every core marginal is
+$1-u-w/m=(a-u)/m>0$. The energy is
+
+$$
+\frac{n^2}{u}+\frac{m^3z+r^3w}{((a-u)/m)^2}=F_j(u).
+\tag{14.38}
+$$
+
+The scalar minima exist, by Proposition 5.2 for $j=1$ and by the
+closed interval in (14.1) for $j=2$; uniqueness also follows from
+(14.30). Thus these laws prove the upper bound in (14.35) with
+actual attainment of each scalar branch.
+
+For $1\le h\le(5/2)\sqrt a$, use Theorem 13.5 with its fixed upper
+ratio $5/2<2\sqrt2$. It proves $M=m_1$ and every equality law there.
+When $h\ge2$, an attaining second-family law cannot be one of those
+first-family laws: for sufficiently large $a$, exactly $a+2$ of
+its marginals exceed $1/2$, whereas exactly $a+1$ first-family
+marginals do. Therefore $m_2>m_1$ in this portion. When $h=1$ its
+defined value is $+\infty$. This proves all claims on this portion
+by direct reuse of the published theorem, uniformly also for bounded
+$h$ and for $h/\sqrt a\to0$.
+
+Now take $5/2\le q\le R$. If $H(x)>U$, it already exceeds the
+minimum in (14.35), since $m_j\le S_j$ for each $j$.
+Otherwise Lemmas 14.2--14.4 apply to this same actual law, with
+$j=1$ or $j=2$, and give
+
+$$
+H(x)\ge m_j(a,h)+a^3e
+\ge\min\{m_1(a,h),m_2(a,h)\}.
+\tag{14.39}
+$$
+
+This proves the lower bound for every law on every nonempty subset;
+no existence of a global optimizer was assumed in deriving it.
+Together with (14.38) it proves (14.35) and attainment.
+
+Suppose equality holds. Then (14.39) forces $m_j$ to attain the
+minimum and $e=0$. Every positive-mass type meeting $D$ is a tail
+singleton; $u=p_j$. Equality in the Cauchy and strict Jensen steps
+of (14.29) forces
+
+$$
+t_k=p_j/n\quad(k\in D),\qquad y_i=(a-p_j)/m\quad(i\in C).
+\tag{14.40}
+$$
+
+With only tail singletons, $\Delta_i=0$ and the part of $R_i$ on
+$A$ is exactly $c_mp_j$. Consequently the exact identity (14.27)
+reduces to the expression before Jensen in (14.29) plus
+
+$$
+\mathbb E\left[\sum_{i\in C}\frac{\rho_i}{y_i^2};A^c\right]\ge0.
+\tag{14.41}
+$$
+
+Equality makes this term zero. On a nonempty core-only type, the
+only integer zeros of $\sum_i\rho_i=Q(L)$ are $L=r$ and $L=m$.
+Thus the only remaining possible types are $C$ and the
+$C\setminus\{i\}$. If their masses are $z,b_i$, normalization and
+the original mean force
+
+$$
+z=1-j+(m-2)p_j,\qquad \sum_i b_i=j-rp_j.
+$$
+
+Their equal marginals (14.40) give
+$1-p_j-b_i=(a-p_j)/m$, hence $b_i=(j-rp_j)/m$ individually.
+This is precisely (13.19) or (14.36), including every asserted zero.
+Conversely (14.38) proves sufficiency whenever the branch attains
+the smaller value. The partition is recovered from the large and
+small actual marginals, so no additional equality partition or law
+is lost by relabeling.
+
+For the endpoint assertions in the second family, at $p=1/a$ the
+full-core mass vanishes and the missing-one masses are
+$(a-1)/(am)>0$; at $p=2/(a+1)$ the missing-one masses vanish and the
+full-core mass is $(a-1)/(a+1)>0$. The tail and core marginals just
+computed remain positive at both endpoints. The first family's cap
+and its positive marginals are already described in (13.19)--(13.20).
+The second scalar minimum is at its lower endpoint if
+$G_2'(1/a)\ge0$, at its upper endpoint if
+$G_2'(2/(a+1))\le0$, and otherwise at the unique zero of $G_2'$ in
+between. Strict convexity (14.30) includes the cases of zero endpoint
+derivative, so these degeneracies introduce no extra scalar minima.
+
+Finally, every winning second-family law is in the compact-ratio
+portion, and Lemma 14.2 applied to it gives $ap_2\ge3/2$.
+In particular it has a positive full-core mass of cardinality $a+2$.
+A mixture that is a first-family minimizing law cannot contain such
+a component, because the first-family support has no type of that
+cardinality. A mixture that is a second-family minimizing law cannot
+contain a first-family component: that component has positive
+singleton masses at $h$ distinct labels, whereas the second-family
+law has singleton masses only at $h-1$ labels. Among components in
+the same family, positivity of every tail singleton forces their
+tail sets to be contained in the resulting law's tail set; equality
+of their cardinalities forces the tail sets to agree. The scalar
+parameter is unique, so all such components are the identical law.
+This proves the assertion excluding nontrivial mixtures, also at a tie.
+
+The new lower bound, mean-aware residual and equality reconstruction
+are repo-derived consequences of the common-law model. The reused
+suppliers are Lemma 7.1 and the scalar phase evaluation in Theorem
+7.2, the actual comparison families in Section 3 and (13.19), and
+Theorem 13.5 on the lower portion. The adjacent-incidence polynomial
+in (14.15)--(14.17) extends the identity of Incidence Lemma 13.4 to
+a core whose lower adjacent size need not equal the original mean.
+The finite graph reductions and realizations in the universal-vertex,
+sink-incidence and higher-capacity volumes, and the moving-mean
+phases in *CDSO capacity crossovers and rare phases*, have different
+parameter domains and do not supply this growing-surplus equality
+classification. The elementary weak-duality and convexity principles
+are literature-attested only in the intermediate roles cited in
+Lemmas 14.3--14.4.
+
+The normalization is the maximum-degree denominator without
+$1/\sqrt2$ in Albalahi--Das--Ali--Barman--Hamza, *On the hyperbolic
+Sombor index and its counterpart*, DOI
+[10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176),
+§1, p.109. Its Conjecture 4.1 supplies historical graph motivation.
+Albalahi, *On Two Conjectures Concerning the Hyperbolic Sombor Index
+and Its Counterpart*, DOI
+[10.47443/dml.2026.217](https://doi.org/10.47443/dml.2026.217),
+Proposition 2.1, treats connected graphs of order $5\ell+7$ and
+cyclomatic number $\ell$; its Theorem 2.2 is a graph maximum theorem.
+Smirnov, *Bicyclic Graphs with Maximum Complementary Diminished
+Sombor Index*, DOI
+[10.47443/dml.2026.164](https://doi.org/10.47443/dml.2026.164),
+Theorem 2.1, is also a finite connected-graph maximum theorem.
+Neither is a premise for (14.35). The full text of Zhao--Zhao,
+DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+is not an input; its possible overlap remains unassessed. No worldwide
+priority assertion is made.
+
+The range stops strictly below $2\sqrt6$; no assertion includes
+that third boundary, growing core index, a least threshold, a
+small-parameter classification, or an extremal connected finite
+graph with prescribed budgets. The finite-value and equality parts
+of Open problem 7.3 are resolved here only on the stated range. ∎
+
+## 追加锚（本行以下为增补区）
