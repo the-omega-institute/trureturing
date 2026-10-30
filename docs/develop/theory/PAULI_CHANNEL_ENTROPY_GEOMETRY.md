@@ -1661,3 +1661,385 @@ local penalty $f_C+f_D$ to be funded. The signed BKM overlap integral
 provides the alternative unresolved funding expression in Assertion 9.1.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 10. Obstructions to the auxiliary funding assertions
+
+**Proposition 10.1 (Correction to the sufficient assertion in 9.1).**
+The existential PSD-witness and product-observable funding assertion in
+Assertion 9.1 is false. The statements calling that sufficient assertion
+unresolved in §1, Assertion 9.1, and the last sentence of Proposition 9.2
+are superseded by this proposition. The original question
+$\Delta(\rho)\geq0$ on the domain of Definition 1.1 remains open;
+Theorems 3.3, 4.2, and 5.1 remain valid lower bounds.
+
+More precisely, let $|\pm\rangle_Y$ be the two $Y$ eigenvectors and take
+
+$$
+\rho=\frac34|++\rangle_Y\langle++|
+ +\frac14|--\rangle_Y\langle--|
+ =\frac14[I+\tfrac12(YI+IY)+YY],\qquad
+ a=\frac12,\quad b=\frac14.
+\tag{10.1}
+$$
+
+At this complex, nonreal rank-two state, both combined right sides in
+Theorem 5.1 are at most $-87/16384$ for every allowed $N$ and every
+product observable $W$. Adding any family of joint score observables,
+or allowing any $\theta\geq0$ in the endpoint bound (4.9), does not
+remove this obstruction. At the same state,
+
+$$
+\Delta=2\mathsf h(1/8)+\mathsf h(1/4)-\mathsf h(1/16)
+ \geq\frac32\log2>0,
+\quad
+\mathsf h(x)=-\frac{1+x}{2}\log\frac{1+x}{2}
+            -\frac{1-x}{2}\log\frac{1-x}{2}.
+\tag{10.2}
+$$
+
+Proof.
+Put $A(s)=[I+s(YI+IY)+YY]/4$. Both channels preserve
+$\mathcal S=\operatorname{span}\{|++\rangle_Y,|--\rangle_Y\}$, and
+
+$$
+P=A(1/8),\qquad Q=A(1/4),\qquad R=A(1/16).
+$$
+
+The nonzero eigenvalues of $A(s)$, and the eigenvalues of each of its
+margins, are $(1\pm s)/2$. In particular the source spectrum is
+$(3/4,1/4,0,0)$, and $S(A(s))=I_{A(s)}=\mathsf h(s)$.
+
+Write $m=1/8$. The supported path is $A_t=A(mt)$, and $H$ has
+entries $(m/2,-m/2)$ on $\mathcal S$. The compressions of $XI,ZI,IX,IZ$
+vanish, while $YI$ and $IY$ both compress to
+$\operatorname{diag}(1,-1)$. With $c_t=1-m^2t^2$, the active local
+Gram block and derivative vector are
+
+$$
+V_{YY,t}=c_t\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
+ d_{YY}=(m,m)^{\mathsf T},\qquad
+ B_t=\operatorname{diag}(0,c_t,0).
+$$
+
+Each marginal BKM matrix has longitudinal entry $c_t$, so the full
+normalized cross operator (3.9) has just one nonzero singular value,
+equal to $1$. Thus $\kappa_t=1$. Direct differentiation on $\mathcal S$
+gives
+
+$$
+\begin{aligned}
+\mathrm D\log_{A_t}[H]
+ &=\frac m{c_t}(YI-mt I_{\mathcal S}),\\
+G_{A_t}(H)&=\frac{m^2}{c_t}=d_t^{\mathsf T}V_t^+d_t,
+& s_t&=\frac{2m^2}{c_t}.
+\end{aligned}
+\tag{10.3}
+$$
+
+The full optimal score already lies in the centered local span.
+Consequently the score pairing of every orthogonal additional observable
+is zero. Every Schur score residual is zero, even after adding any family
+of observables. Both covariance integrands in Theorem 5.1 are therefore
+$-G_{A_t}(H)$.
+
+For the source margins $u_y=v_y=1/2$, (4.2) gives
+
+$$
+T^0_{yy}=\frac{a^2+b^2}{2}\left(\frac12\right)^2=\frac5{128},\qquad
+\rho_0=\frac14[I+\tfrac12(YI+IY)+\tfrac5{128}YY].
+$$
+
+The four eigenvalues of this reference are
+$(261,123,123,5)/512$. Hence $\rho_0>0$, and
+$\mu=\operatorname{tr}(N\rho_0)\geq0$ for every allowed PSD witness.
+The prescribed $\theta_0$ is zero for all of them. Moreover,
+
+$$
+E_P=\frac3{512}YY,\qquad E_Q=-\frac3{512}YY,\qquad
+ v_0=\frac9{32768}.
+$$
+
+For the supported Gibbs state
+$\omega_\pi(X)=\exp(\log(\pi|_\Pi)+\Pi X\Pi)/Z_\pi(X)$,
+direct subtraction of logarithms yields
+$\Lambda_\pi(X)=D(\pi\Vert\omega_\pi(X))\geq0$.
+Thus (4.9) is at most $2v_0$ for every $\theta\geq0$, and in particular
+
+$$
+\mathcal C_N=2v_0-\Lambda_{\pi_P}(2E_P)
+                    -\Lambda_{\pi_Q}(2E_Q)\leq2v_0.
+$$
+
+The path identity (3.12) and
+$\mathsf h'(x)=-\operatorname{atanh}x$ give
+
+$$
+g=\mathsf h(1/16)-\mathsf h(1/8)
+ =\int_{1/16}^{1/8}\operatorname{atanh}x\,dx
+ \geq\int_{1/16}^{1/8}x\,dx=\frac3{512}.
+$$
+
+Both combined right sides are consequently at most
+
+$$
+2v_0-g\leq\frac9{16384}-\frac3{512}=-\frac{87}{16384}<0.
+\tag{10.4}
+$$
+
+This disproves the universal sufficient funding assertion in 9.1,
+with its witness and observable choices quantified before the bound.
+Since the two marginal entropy gains both equal $g$, (1.4) gives
+(10.2). Concavity gives $\mathsf h(x)\geq(1-x)\log2$ for
+$0\leq x\leq1$, and $\mathsf h(x)\leq\log2$, proving its strict sign.
+
+**Definition 10.2 (Actual-correlation budget).** For a two-qubit state
+$A$, let $p,q,T$ be its actual Pauli data, and choose unit vectors $n,m$
+in the directions of its marginal Bloch vectors; use the $Z$ direction
+when a vector is zero. Put
+
+$$
+r=|p|,\quad s=|q|,\quad c=n^{\mathsf T}Tm,\qquad
+w_{uv}=\frac{1+ur+vs+uvc}{4},\quad u,v\in\{-1,1\}.
+\tag{10.5}
+$$
+
+These are the probabilities of the product spectral pinching
+$\bar A=\mathscr D_A(A)$ in the actual marginal eigenbases. Define
+
+$$
+\begin{aligned}
+M(A)&=S(A_C)+S(A_D),\\
+J_A&=M(A)+\sum_{u,v}w_{uv}\log w_{uv},\\
+\mathsf V(A)&=J_A+\frac{\|T\|_F^2-c^2}{4},\qquad
+ \mathcal B_{\rm vis}=\mathsf V(P)+\mathsf V(Q).
+\end{aligned}
+\tag{10.6}
+$$
+
+The usual zero conventions apply to the probabilities.
+
+**Proposition 10.3 (Validity and limits of the visible lower bound).**
+For every complex two-qubit state, including singular states,
+
+$$
+I_A=J_A+D(A\Vert\bar A)\geq\mathsf V(A)\geq0,
+\qquad
+\mathsf V(A)=0\ \Longleftrightarrow\ A=A_C\otimes A_D.
+\tag{10.7}
+$$
+
+For any measurable score lower estimate $0\leq\gamma_t\leq G_{A_t}(H)$,
+
+$$
+\Delta\geq\mathcal L_{\rm vis}(\gamma):=
+ \mathcal B_{\rm vis}+\int_0^1 w_a(t)(3\gamma_t-2s_t)\,dt.
+\tag{10.8}
+$$
+
+This lower bound need not be nonnegative, even when $\gamma_t$ is the
+full BKM curvature, as Proposition 10.4 shows.
+
+Proof.
+The pinching preserves both margins. A zero diagonal entry of
+$\bar A$ forces the corresponding row and column of $A$ to vanish by
+positivity. Hence
+$\operatorname{supp}A\subseteq\operatorname{supp}\bar A
+\subseteq\operatorname{supp}(A_C\otimes A_D)$.
+The logarithms of the latter two matrices are diagonal on their
+supports, so tracing them against $A$ or $\bar A$ gives the same result.
+Subtracting relative entropies gives
+$I_A=J_A+D(A\Vert\bar A)$.
+
+The standard CPTP relative-entropy data-processing and Pinsker bounds
+(Watrous, *The Theory of Quantum Information*) imply
+$D(B\Vert C)\geq\|B-C\|_2^2$ for density matrices with the necessary
+support inclusion. Indeed, measurement of the positive spectral
+projection of $B-C$ gives $D(B\Vert C)\geq2t^2$, where $t$ is the
+positive trace of $B-C$. Its positive and negative parts each have
+trace $t$, so $\|B-C\|_2^2\leq2t^2$.
+Pauli orthogonality now gives
+
+$$
+\|A-\bar A\|_2^2=\frac{\|T\|_F^2-c^2}{4}.
+$$
+
+This proves (10.7). If equality $\mathsf V(A)=0$ holds, the residual
+vanishes, so $A=\bar A$, and $J_A=0$ forces this classical state to be
+the product of its margins. The converse is direct. Finally insert
+$I_P+I_Q\geq\mathcal B_{\rm vis}$ and
+$g\geq\int w_a\gamma_t$, $h=\int w_a s_t$ into (1.4).
+The weighted curvature identity bounds $\int w_a\gamma_t$ by the
+finite number $g$, so all displayed weighted integrals are defined.
+All endpoint identities retain the supported interpretation of §3.
+
+**Proposition 10.4 (Full-rank obstruction to visible funding).**
+In the computational basis of Definition 1.1, take
+
+$$
+v=(-1+3i,-2,12,2+6i)^{\mathsf T},\qquad
+\rho=\frac{999}{1000}\frac{vv^*}{198}+\frac{I_4}{4000},\qquad
+ a=\frac14,\quad b=\frac{15}{16}.
+\tag{10.9}
+$$
+
+This is a nonreal positive definite trace-one state with unequal valid
+biases. With $g,h$ from Definition 1.2, set
+$U=\mathcal B_{\rm vis}+3g-2h$. Then
+
+$$
+-\frac{24077097}{10^9}\leq U\leq-\frac{24077096}{10^9}
+ <-\frac{24}{1000},\qquad
+\frac{307125175}{10^9}\leq\Delta\leq\frac{307125176}{10^9}.
+\tag{10.10}
+$$
+
+Consequently $\mathcal L_{\rm vis}(\gamma)<0$ for every score estimate
+in Proposition 10.3. In particular the universal visible funding
+assertion
+
+$$
+\int_0^1w_a(t)(2s_t-3\gamma_t)\,dt\leq\mathcal B_{\rm vis}
+\tag{10.11}
+$$
+
+is false for the local score augmented by the maximum of the nine
+separate Pauli Schur residuals from (3.4), for any genuine larger score
+projection, and even for the full score $\gamma_t=G_{A_t}(H)$.
+
+Proof.
+First $v^*v=10+4+144+40=198$, so the spectrum of $\rho$ is
+$(3997,1,1,1)/4000$. Every path state is at least $I_4/4000$:
+all channels and all path points are convex mixtures of unitary
+conjugations of $\rho$. There are therefore no singular endpoint
+logarithms at this example. The exact output matrices are
+
+$$
+P=\frac{31\rho+L\rho L}{32},\qquad
+Q=\frac{5\rho+3K\rho K}{8},\qquad
+R=\frac{5P+3KPK}{8}.
+\tag{10.12}
+$$
+
+Here is rational spectral and Pauli data sufficient to evaluate every
+entropy in (10.10). Write $\chi_A(z)=\det(zI_4-A)$. Direct determinant
+expansion gives
+
+$$
+\begin{aligned}
+\chi_P(z)&=(z-1/4000)^2
+ \left(z^2-\frac{1999}{2000}z+\frac{357173771}{15488000000}\right),\\
+\chi_Q(z)&=(z-1/4000)^2
+ \left(z^2-\frac{1999}{2000}z+\frac{1801478203}{7744000000}\right),\\
+\chi_R(z)&=z^4-z^3+\frac{120448480659}{495616000000}z^2
+ -\frac{24478666840733}{5451776000000000}z
+ +\frac{15925486527909364633}{982540877824000000000000}.
+\end{aligned}
+\tag{10.13}
+$$
+
+The following disjoint rational intervals contain the complete spectra;
+nonpoint intervals have width at most $10^{-12}$ and contain one simple
+root. The point intervals have the displayed multiplicity two.
+
+| State | Multiplicity | Lower endpoint | Upper endpoint |
+| --- | --- | --- | --- |
+| $P$ | $2$ | $1/4000$ | $1/4000$ |
+| $P$ | $1$ | $7175/303619$ | $139854/5918095$ |
+| $P$ | $1$ | $2378851/2437676$ | $710683/728257$ |
+| $Q$ | $2$ | $1/4000$ | $1/4000$ |
+| $Q$ | $1$ | $749898/2032783$ | $618007/1675260$ |
+| $Q$ | $1$ | $1312300/2081041$ | $1582561/2509620$ |
+| $R$ | $1$ | $9167/1883940$ | $6979/1434277$ |
+| $R$ | $1$ | $24887/1670423$ | $27389/1838358$ |
+| $R$ | $1$ | $591191/1636990$ | $547279/1515399$ |
+| $R$ | $1$ | $224159/362078$ | $3418942/5522525$ |
+
+For a direct rational root count, divide (10.13) into squarefree factors
+and apply the Sturm recurrence $f_0=f$, $f_1=f'$, and
+$f_{j+1}=-\operatorname{rem}(f_{j-1},f_j)$. At each nonpoint interval
+the variation count at its lower endpoint exceeds that at its upper
+endpoint by one; neither endpoint is a root. The point $1/4000$ is
+checked by substitution and has multiplicity two for $P,Q$.
+The total multiplicity is four in every case, so no eigenvalue is
+omitted. All endpoints lie in $(0,1)$.
+
+For the marginal and pinching entropies put
+$\nu_A=p^{\mathsf T}Tq$ and
+$\eta_A=(\|T\|_F^2-\nu_A^2/(r^2s^2))/4$.
+The traces $p_i=\operatorname{tr}(A\sigma_iI)$,
+$q_j=\operatorname{tr}(AI\sigma_j)$ and
+$T_{ij}=\operatorname{tr}(A\sigma_i\sigma_j)$ in the fixed Pauli
+convention give the following rational invariants.
+
+| $A$ | $r^2$ | $s^2$ | $\nu_A$ | $\eta_A$ |
+| --- | --- | --- | --- | --- |
+| $P$ | $4669659/4840000$ | $141408117/154880000$ | $139910018931/154880000000$ | $61560834894981/33684719552000000$ |
+| $Q$ | $1342989/15488000$ | $9819837/77440000$ | $278623360737/4259200000000$ | $2797470550456389/21023266000000000$ |
+| $R$ | $3166497/38720000$ | $563919849/4956160000$ | $1615816365201/27258880000000$ | $19009662585939117/157560786944000000$ |
+
+In particular $0<r,s<1$, $c=\nu_A/(rs)$, and every $w_{uv}>0$.
+The latter also follows from $A\geq I_4/4000$ by taking its expectation
+in each pinching basis vector. Thus
+
+$$
+M(A)=\mathsf h(r)+\mathsf h(s),\qquad
+\mathsf V(A)=M(A)+\sum_{u,v}w_{uv}\log w_{uv}+\eta_A.
+\tag{10.14}
+$$
+
+The numerical bounds in (10.10) follow by the following finite rational
+inequalities. For rational $x\geq0$, take
+$k=\lfloor\sqrt{10^{28}x}\rfloor$; then
+$k/10^{14}\leq\sqrt x<(k+1)/10^{14}$, as verified by squaring.
+For a positive rational logarithm argument write $x=2^j y$,
+$1\leq y\leq2$, and $z=(y-1)/(y+1)$. The positive atanh series has
+
+$$
+\begin{aligned}
+L(y)&=2\sum_{k=0}^{23}\frac{z^{2k+1}}{2k+1},\\
+L(y)&\leq\log y\leq L(y)+\frac{2z^{49}}{49(1-z^2)}.
+\end{aligned}
+\tag{10.15}
+$$
+
+Indeed, replacing every omitted denominator by $49$ bounds the tail
+by the displayed geometric sum. Apply the same bounds to $\log2$ and
+use $\log x=\log y+j\log2$, reversing the endpoints when $j<0$.
+For an interval, monotonicity of the logarithm supplies its bounds from
+the two endpoints. Use four-corner rational interval multiplication
+for $-x\log x$, reciprocal bounds only for intervals excluding zero,
+and sum over each spectral root with its multiplicity.
+
+Substituting these bounds into (10.6), (10.12)--(10.14), and
+$\Delta=M(P)-S(P)+M(Q)-S(Q)+3g-2h$ yields, with outward rounding
+to multiples of $10^{-9}$, precisely (10.10). Every input and tail
+bound is rational; no floating point sign inference is needed.
+
+Finally, $w_a(t)\geq0$ and (3.12) give
+
+$$
+\mathcal L_{\rm vis}(\gamma)
+ \leq\mathcal B_{\rm vis}+\int_0^1w_a(t)(3G_{A_t}(H)-2s_t)\,dt
+ =\mathcal B_{\rm vis}+3g-2h=U<0.
+\tag{10.16}
+$$
+
+Each of the nine separate local-plus-Schur projections satisfies
+$\gamma_t\leq G_{A_t}(H)$ by (3.5); their maximum satisfies the same
+bound. Any enlarged orthogonal score projection also has squared norm
+at most the full score norm. This proves the asserted scope of failure.
+The independent positive bound for $\Delta$ in (10.10) proves that this
+state does not refute the original entropy inequality.
+
+**Open assertion 10.5 (Original universal sign).** For every actual
+complex PSD trace-one $\rho$ and independent $a,b\in[0,1]$, does
+$\Delta(\rho)\geq0$ hold? This is the open part of Assertion 9.1.
+Its witness-funding sufficient assertion is disproved by Proposition
+10.1; the visible-budget sufficient assertion (10.11) is disproved by
+Proposition 10.4. The actual-correlation bound (10.7), the supported BKM
+identities, the earlier lower bounds, and Proposition 9.2's exact
+pinching accounting remain valid. A sufficient argument retaining the
+visible endpoint budget cannot be repaired solely by adding path score
+observables, even all of them; it must use more endpoint information or
+a different combined inequality.

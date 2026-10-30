@@ -5,7 +5,7 @@ year: 2026
 doi: null
 url: https://github.com/the-omega-institute/trureturing/blob/dev/docs/develop/theory/PAULI_CHANNEL_ENTROPY_GEOMETRY.md
 title: "Pauli-channel entropy geometry: support rotation and support-aware covariance funding"
-claim: "Local full-complex-fiber rank-three optimization with strict diagonal restriction cost, and all-domain BKM covariance plus entropy-PSD funding bounds; the universal deficit sign remains unresolved."
+claim: "Local full-complex-fiber rank-three optimization with strict diagonal restriction cost, all-domain BKM covariance plus entropy-PSD lower bounds, and two obstructions to universal auxiliary funding; the original deficit sign remains unresolved."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -15,16 +15,20 @@ triage: anchor
 
 The canonical mathematical exposition is
 [Pauli-channel entropy geometry](../../docs/develop/theory/PAULI_CHANNEL_ENTROPY_GEOMETRY.md).
-It is `repo-derived` ordinary mathematics, reconstructed from the two
-supplied unpublished manuscripts below. Each manuscript's author line is
-“Ordinary mathematical implementation”; Codex CLI is responsible for this
-canonical conversion. The manuscripts remain substantive proof inputs,
+It is `repo-derived` ordinary mathematics, reconstructed from the
+supplied unpublished manuscripts below. The first two author lines are
+“Ordinary mathematical implementation”; the third is
+“Ordinary mathematical implementation; source-only continuation”, and
+the fourth is “Ordinary mathematical continuation”. Codex CLI is
+responsible for this canonical conversion. The manuscripts remain substantive proof inputs,
 not substitutes for the mathematical derivations retained in the volume.
 
 | Unpublished ordinary manuscript | Relative source locator | SHA256 |
 | --- | --- | --- |
 | *Rank-three support rotation in the full complex fixed-margin problem* | `nonaxis-rank-three-support-rotation-20261031/proof.tex` | `cade7353eb5c76c47d315c4496d59c8a0cc3ec1f2142599e2a7e3dfae6117cca` |
 | *Support-aware BKM funding for the mixed Pauli Zhang–Yeung deficit* | `support-aware-global-funding-20261031/ordinary-construction/proof.tex` | `6d1a996459db5ac1612e6575ae8e71614051276652153dd6b94d1af72129df08` |
+| *A uniform physical obstruction to the proposed funding certificate, and an all-domain budget for actual output correlations* | `global-funding-analytic-continuation-20261031/proof.tex` | `4f702af0fbf0baf8ecf696de784df5fa79e53b4bc9033402a27abf27e96372eb` |
+| *A full-rank obstruction to visible-correlation funding* | `global-funding-analytic-continuation-20261031/visible-funding-obstruction.tex` | `ff57f148a897d07ff826a8ecd228471705bd684a0fb6c13e5df5ed98e8ec3de7` |
 
 The relative locators identify the supplied private research collection
 `quantum-zhang-yeung-20261030`; they are descriptive provenance locators,
@@ -68,13 +72,20 @@ optimizer. Propositions 6.1–8.1 give the full transverse product-Z
 calculation, a strict entire-fiber entropy calibration, and the optional
 finite algebraic covariance form.
 
-Assertion 9.1 keeps the universal sign open. The positive-overlap integral
-on $\{\kappa_t>1/2\}$ has not been funded for every physical state by
-the entropy witness, Schur residual, and nonnegative overlap contribution.
-Proposition 9.2 retains the exact pinching identity and its remaining
-local penalty. Failure of a lower certificate is not a negative value of
-the actual deficit. Neither manuscript nor this exposition provides an
-all-margin nonnegative local-field certificate.
+Proposition 10.1 corrects the sufficient funding part of Assertion 9.1:
+a nonreal rank-two state with unequal biases makes every allowed
+PSD-witness and augmented-score certificate negative, even with all
+joint score observables. The original deficit there is at least
+$\tfrac32\log2>0$. Proposition 10.3 proves the actual-correlation endpoint
+lower bound, including singular states. Proposition 10.4 gives a separate
+full-rank state where even full BKM curvature cannot fund that smaller
+visible budget: $U<-0.024$, while the original deficit exceeds $0.307$.
+The volume contains exact input states, spectral polynomials and rational
+interval bounds with their tail estimates. These are ordinary mathematical
+arguments, not Lean/kernel certificates. The old lower bounds and
+Proposition 9.2's exact pinching identity remain valid. Open assertion
+10.5 retains only the original unrestricted sign question; the two
+refuted sufficient funding assertions are not future proof targets.
 
 The standard intermediate ingredients are literature-attested at their
 usual scope: finite-dimensional relative-entropy joint convexity and
@@ -92,7 +103,7 @@ finer theorem/page locator or new online literature verification is
 claimed. The volume uses the standard facts inside the substantive
 proofs and does not present them as new stand-alone theory results.
 
-The two supplied ordinary proofs are the attribution basis for this
+The supplied ordinary proofs are the attribution basis for this
 repo-derived exposition. There is no Lean or kernel verification claim,
 no formal module registration, no official challenge acceptance, and no
 unique-solution, priority, or novelty claim. `strata_touched: []` records
