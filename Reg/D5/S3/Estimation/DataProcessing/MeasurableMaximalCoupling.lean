@@ -26,7 +26,9 @@ def signature : Signature where
   finiteAnchor := inferInstance
 
 def coordinate (i : Bool) {X : Type v} (p : X × X) : X :=
-  if i then p.2 else p.1
+  match i with
+  | false => p.1
+  | true => p.2
 
 def FullLaw (r : Realization signature.{v}) : Prop :=
   ∀ {Z : Type u} {X : Type v} [MeasurableSpace Z] [MeasurableSpace X]
@@ -50,6 +52,14 @@ def changed (i : Bool × Bool) : Realization signature.{v} :=
 
 abbrev TargetZ := ULift.{u} Unit
 abbrev TargetX := ULift.{v} Bool
+
+instance : DiscreteMeasurableSpace TargetX.{v} := ⟨fun _ => trivial⟩
+
+instance : MeasurableSingletonClass TargetX.{v} :=
+  DiscreteMeasurableSpace.toMeasurableSingletonClass
+
+instance : StandardBorelSpace TargetX.{v} :=
+  standardBorelSpace_of_discreteMeasurableSpace
 
 def targetP : Kernel TargetZ.{u} TargetX.{v} :=
   Kernel.deterministic (fun _ => ⟨false⟩) measurable_const
@@ -165,20 +175,20 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,0,_,0,0}
     coordinates := #[1]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "fn", "arg", "fn", "arg", "arg"]
-      stateBinder := 0, functionOperand := true, stateOperand := none,
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "arg", "fn", "arg", "fn", "arg", "arg"]
-      stateBinder := 0, functionOperand := true, stateOperand := none,
+        "arg", "arg", "arg", "body", "fn", "arg", "arg", "arg", "body", "arg"]
+      stateBinder := 10, functionOperand := false, stateOperand := none,
       booleanPredicate := false }, {
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
         "arg", "arg", "arg", "body", "fn", "arg", "arg", "arg", "body", "fn", "arg"]
       stateBinder := 10, functionOperand := false, stateOperand := none,
       booleanPredicate := false }, {
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "arg", "arg", "body", "fn", "arg", "arg", "arg", "body", "arg"]
-      stateBinder := 10, functionOperand := false, stateOperand := none,
+        "arg", "arg", "fn", "arg", "fn", "arg", "arg"]
+      stateBinder := 0, functionOperand := true, stateOperand := none,
+      booleanPredicate := false }, {
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "fn", "arg", "fn", "arg", "arg"]
+      stateBinder := 0, functionOperand := true, stateOperand := none,
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

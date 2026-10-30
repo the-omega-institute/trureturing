@@ -1,5 +1,5 @@
 /- GID: D5/S3/Estimation/DataProcessing/MeasurableMaximalCoupling
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Estimation/DataProcessing/MeasurableMaximalCoupling
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Probability.Kernel.RadonNikodym]
@@ -7,6 +7,8 @@
    digest: Standard Borel state spaces admit measurable maximal coupling kernels. -/
 
 import D5.S3.Estimation.DataProcessing.MeasurablePostprocessingDefectContraction
+import D5.S3.Estimation.DataProcessing.DeclaredSourceInverseLimitMinimum
+import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalScheduledWitnessTables
 import Mathlib.Probability.Kernel.RadonNikodym
 import Mathlib.Probability.Kernel.Composition.Prod
 import Mathlib.MeasureTheory.Measure.Sub
@@ -39,6 +41,8 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Estimation.DataProcessing.MeasurableMaximalCoupling
 open D5.S3.Estimation.DataProcessing.MeasurablePostprocessingDefectContraction
+open D5.S3.Estimation.DataProcessing.DeclaredSourceInverseLimitMinimum
+open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalScheduledWitnessTables
 
 section PortedIndividualLaws
 variable {Ω : Type*} {mΩ : MeasurableSpace Ω} {μ ν : Measure Ω}
@@ -561,49 +565,21 @@ end KernelFamily
 private theorem event_tv_ofReal {X : Type*} [MeasurableSpace X]
     (μ ν : Measure X) [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] :
     measurableTotalVariation μ ν = ENNReal.ofReal (tvDist μ ν) := by
-  have gap (E : Set X) : max (μ E - ν E) (ν E - μ E) =
-      ENNReal.ofReal |μ.real E - ν.real E| := by
-    rw [abs_eq_max_neg, neg_sub, ENNReal.ofReal_max]
-    simp only [measureReal_def, ENNReal.ofReal_sub _ ENNReal.toReal_nonneg,
-      ENNReal.ofReal_toReal (measure_ne_top μ E),
-      ENNReal.ofReal_toReal (measure_ne_top ν E)]
-  have upper : measurableTotalVariation μ ν ≤ ENNReal.ofReal (tvDist μ ν) := by
-    refine iSup_le fun E => ?_
-    rw [gap]
-    exact ENNReal.ofReal_le_ofReal (abs_measureReal_sub_le_tvDist E.property)
-  apply le_antisymm upper
+  have hbound : measurableTotalVariation μ ν ≤ 1 :=
+    iSup_le fun _ => max_le (tsub_le_self.trans prob_le_one)
+      (tsub_le_self.trans prob_le_one)
   have hfin : measurableTotalVariation μ ν ≠ ∞ :=
-    ne_top_of_le_ne_top ENNReal.ofReal_ne_top upper
-  apply (ENNReal.ofReal_le_iff_le_toReal hfin).mpr
-  refine ciSup_le fun E => ?_
-  have h := ENNReal.toReal_mono hfin
-    (le_iSup (fun E : {E : Set X // MeasurableSet E} =>
-      max (μ E.val - ν E.val) (ν E.val - μ E.val)) E)
-  rw [gap, ENNReal.toReal_ofReal (abs_nonneg _)] at h
-  exact h
+    ne_top_of_le_ne_top (by simp) hbound
+  have h := (event_tv_normalization (⟨μ, inferInstance⟩ : ProbabilityMeasure X)
+      (⟨ν, inferInstance⟩ : ProbabilityMeasure X)).1
+  change (measurableTotalVariation μ ν).toReal = tvDist μ ν at h
+  rw [← h]
+  exact (ENNReal.ofReal_toReal hfin).symm
 
 private theorem event_tv_maps_le {A X : Type*} [MeasurableSpace A] [MeasurableSpace X]
     (π : Measure A) (f g : A → X) (hf : Measurable f) (hg : Measurable g) :
     measurableTotalVariation (π.map f) (π.map g) ≤ π {a | f a ≠ g a} := by
-  refine iSup_le fun E => ?_
-  rw [Measure.map_apply hf E.property, Measure.map_apply hg E.property]
-  apply max_le
-  · apply tsub_le_iff_right.mpr
-    have hi : f ⁻¹' E.val ⊆ g ⁻¹' E.val ∪ {a | f a ≠ g a} := by
-      intro a ha
-      by_cases h : f a = g a
-      · exact Or.inl (by simpa only [Set.mem_preimage, ← h] using ha)
-      · exact Or.inr h
-    exact (measure_mono hi).trans (by simpa only [add_comm] using
-      (measure_union_le (μ := π) (g ⁻¹' E.val) {a | f a ≠ g a}))
-  · apply tsub_le_iff_right.mpr
-    have hi : g ⁻¹' E.val ⊆ f ⁻¹' E.val ∪ {a | f a ≠ g a} := by
-      intro a ha
-      by_cases h : f a = g a
-      · exact Or.inl (by simpa only [Set.mem_preimage, h] using ha)
-      · exact Or.inr h
-    exact (measure_mono hi).trans (by simpa only [add_comm] using
-      (measure_union_le (μ := π) (f ⁻¹' E.val) {a | f a ≠ g a}))
+  exact gate_tv π {a | f a = g a} f g hf hg (fun _ ha => ha)
 
 private theorem overlapCoupling_offDiagonal {X : Type*} [MeasurableSpace X]
     [MeasurableEq X] (μ ν : Measure X) [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] :
