@@ -3,7 +3,7 @@
    mirror-B: D5/B/S1/Dynamics/PeriodicOrbits/SkewGroupHolonomy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: theory
+   utility: none
    digest: Noncommutative holonomy controls both lifted periods and orbit cosets. -/
 
 import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
