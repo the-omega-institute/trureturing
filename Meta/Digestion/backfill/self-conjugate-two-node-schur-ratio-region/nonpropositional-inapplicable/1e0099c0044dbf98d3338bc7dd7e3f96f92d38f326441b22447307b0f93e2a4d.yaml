@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1e0099c0044dbf98d3338bc7dd7e3f96f92d38f326441b22447307b0f93e2a4d
+  normalized_sha256: sha256:1e0099c0044dbf98d3338bc7dd7e3f96f92d38f326441b22447307b0f93e2a4d
+cas_ref: sha256:1e0099c0044dbf98d3338bc7dd7e3f96f92d38f326441b22447307b0f93e2a4d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Convention 2.1 fixing two-node notation Q_t = Q_{t,2,1} and the conjugate-pair parametrizations z = (-w, -conj w) and z = (u, conj u) (realized as defs negConjPair and conjPair in SelfConjugateTwoNodeSchurRatioRegion, with two-node selfConjugate characterization consumed inside largest_admissible_disk); nonpropositional notation convention.
+    previous_atom_id: c4417098624c6f8e89eed3f7636569cb871dbe7c94c9388bcca77a0b65c35508
+    next_atom_id: 8f5192b94d02baf2a3c34e02bbf66581dbdff6a1bb722d356d197b2a56ab20fc
