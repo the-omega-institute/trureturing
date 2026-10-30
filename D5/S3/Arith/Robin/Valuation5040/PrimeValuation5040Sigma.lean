@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Robin/PrimeValuation5040Sigma
+/- GID: D5/S3/Arith/Robin/Valuation5040/PrimeValuation5040Sigma
    generality: I
-   mirror-B: D5/B/S3/Arith/Robin/PrimeValuation5040Sigma
+   mirror-B: D5/B/S3/Arith/Robin/Valuation5040/PrimeValuation5040Sigma
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
@@ -15,7 +15,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-namespace D5.S3.Arith.Robin.PrimeValuation5040Sigma
+namespace D5.S3.Arith.Robin.Valuation5040.PrimeValuation5040Sigma
 
 open D5.S3.Arith.ExponentExchange.IntegerSwap
 open D5.S3.Arith.ExponentExchange.CoprimeNormalForm
@@ -93,4 +93,4 @@ theorem normalized_sigma_of_jointFiber5040_le_of_ordered_bound {W n : ℕ}
 #print axioms normalized_sigma_of_jointFiber5040
 #print axioms normalized_sigma_of_jointFiber5040_le_of_ordered_bound
 
-end D5.S3.Arith.Robin.PrimeValuation5040Sigma
+end D5.S3.Arith.Robin.Valuation5040.PrimeValuation5040Sigma
