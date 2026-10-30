@@ -302,4 +302,212 @@ private lemma gap_concave {p : ℝ} (hp : p ∈ Ioc (0 : ℝ) (1 / 2)) :
   dsimp only [gapCurvature]
   linarith
 
+private lemma mul_log_scale {a : ℝ} (ha : 0 < a) (x : ℝ) :
+    (a * x) * Real.log (a * x) = a * (x * Real.log x) + a * x * Real.log a := by
+  by_cases hx : x = 0
+  · simp [hx]
+  · rw [Real.log_mul ha.ne' hx]
+    ring
+
+private lemma bias_entropy_identity (r : ℝ) :
+    ((1 + r) * Real.log (1 + r) + (1 - r) * Real.log (1 - r)) / 2 =
+      Real.log 2 - Real.binEntropy ((1 + r) / 2) := by
+  have hp := mul_log_scale (a := 2) (by norm_num) ((1 + r) / 2)
+  have hm := mul_log_scale (a := 2) (by norm_num) ((1 - r) / 2)
+  rw [show 2 * ((1 + r) / 2) = 1 + r by ring] at hp
+  rw [show 2 * ((1 - r) / 2) = 1 - r by ring] at hm
+  rw [Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub,
+    show 1 - (1 + r) / 2 = (1 - r) / 2 by ring]
+  simp only [Real.negMulLog_def]
+  linarith
+
+private lemma gap_zero_nonneg {p : ℝ} (hp : p ∈ Ioc (0 : ℝ) (1 / 2)) :
+    0 ≤ normalizedGap p 0 := by
+  let d := 1 - 2 * p
+  have hd : 0 ≤ d := by dsimp [d]; linarith [hp.2]
+  have hd1 : d ≤ 1 := by dsimp [d]; linarith [hp.1]
+  have hsq : d ^ 2 ∈ Icc (0 : ℝ) 1 := ⟨sq_nonneg _, by nlinarith⟩
+  have hcomp : 1 - d ^ 2 ∈ Icc (0 : ℝ) 1 := ⟨by linarith [hsq.2], by nlinarith⟩
+  have hleft := entropy_linear_lower hcomp
+  have hright := entropy_linear_lower hsq
+  have hsqrt : Real.sqrt (1 - (1 - d ^ 2)) = d := by
+    rw [show 1 - (1 - d ^ 2) = d ^ 2 by ring, Real.sqrt_sq hd]
+  rw [hsqrt, show (1 + d) / 2 = 1 - p by dsimp [d]; ring,
+    Real.binEntropy_one_sub] at hleft
+  have he := bias_entropy_identity (Real.sqrt (1 - d ^ 2))
+  dsimp only [normalizedGap, pairLog]
+  simp only [mul_zero, sub_zero, Real.log_one, mul_one, zero_mul, add_zero,
+    one_pow]
+  change 0 ≤ Real.binEntropy p -
+    ((1 + Real.sqrt (1 - d ^ 2)) * Real.log (1 + Real.sqrt (1 - d ^ 2)) +
+      (1 - Real.sqrt (1 - d ^ 2)) * Real.log (1 - Real.sqrt (1 - d ^ 2))) / 2
+  linarith
+
+private lemma gap_endpoint_nonneg {p : ℝ} (hp : p ∈ Ioc (0 : ℝ) (1 / 2)) :
+    0 ≤ normalizedGap p p := by
+  let m := 1 - p
+  let d := 1 - 2 * p
+  have hm : 0 < m := by dsimp [m]; linarith [hp.2]
+  have hd : 0 ≤ d := by dsimp [d]; linarith [hp.2]
+  have hr : p / m ∈ Icc (0 : ℝ) 1 :=
+    ⟨div_nonneg hp.1.le hm.le, (div_le_one hm).mpr (by dsimp [m]; linarith [hp.2])⟩
+  have hscale1 := mul_log_scale hm (p / m)
+  have hscale2 := mul_log_scale hm (1 - p / m)
+  have he1 : m * (p / m) = p := by field_simp [hm.ne']
+  have he2 : m * (1 - p / m) = d := by dsimp [d, m] at *; field_simp [hm.ne']; ring
+  rw [he1] at hscale1
+  rw [he2] at hscale2
+  have hpair : pairLog d d = d * Real.log d := by
+    simp only [pairLog, sub_self, Real.sqrt_zero, add_zero, sub_zero]
+    ring
+  change 0 ≤ Real.binEntropy p + 2 * ((1 - p) * Real.log (1 - p)) - pairLog d d
+  rw [Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub]
+  simp only [Real.negMulLog_def]
+  rw [hpair]
+  have he : m * Real.binEntropy (p / m) =
+      -(p * Real.log p) + m * Real.log m - d * Real.log d := by
+    rw [Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub]
+    simp only [Real.negMulLog_def]
+    calc
+      _ = -(p * Real.log p) - d * Real.log d + (p + d) * Real.log m := by
+        nlinarith [hscale1, hscale2]
+      _ = _ := by dsimp [m, d]; ring
+  have hnonneg : 0 ≤ -(p * Real.log p) + m * Real.log m - d * Real.log d := by
+    rw [← he]
+    exact mul_nonneg hm.le (Real.binEntropy_nonneg hr.1 hr.2)
+  dsimp [m] at hnonneg
+  linarith
+
+private lemma gap_nonneg {p t : ℝ} (hp : p ∈ Ioc (0 : ℝ) (1 / 2))
+    (ht : t ∈ Icc (0 : ℝ) p) : 0 ≤ normalizedGap p t := by
+  have h := (gap_concave hp).min_le_of_mem_Icc
+    (show (0 : ℝ) ∈ Icc 0 p from ⟨le_rfl, hp.1.le⟩)
+    (show p ∈ Icc (0 : ℝ) p from ⟨hp.1.le, le_rfl⟩) ht
+  exact (le_min (gap_zero_nonneg hp) (gap_endpoint_nonneg hp)).trans h
+
+private lemma interior_moment_nonneg {u v : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1)
+    (hv : v ∈ Ioo (0 : ℝ) 1) (huv : u ≤ v) : 0 ≤ productLogMoment u v := by
+  let A := u + v
+  let B := u * v
+  let p := u / A
+  let t := B / A
+  let d := 1 - 2 * p
+  let s := 1 - 2 * t
+  let q := Real.sqrt (B * (1 - A + B))
+  let r := Real.sqrt (s ^ 2 - d ^ 2)
+  let L := A - B
+  let mp := A - 2 * B + 2 * q
+  let mm := A - 2 * B - 2 * q
+  have hA : 0 < A := add_pos hu.1 hv.1
+  have hB : 0 < B := mul_pos hu.1 hv.1
+  have hp : p ∈ Ioc (0 : ℝ) (1 / 2) := by
+    refine ⟨div_pos hu.1 hA, (div_le_iff₀ hA).mpr ?_⟩
+    dsimp [A]
+    linarith
+  have ht : t ∈ Icc (0 : ℝ) p := by
+    refine ⟨(div_pos hB hA).le, ?_⟩
+    apply (div_le_div_iff_of_pos_right hA).mpr
+    dsimp [B]
+    nlinarith [mul_pos hu.1 (sub_pos.mpr hv.2)]
+  have hd : 0 ≤ d := by dsimp [d]; linarith [hp.2]
+  have hds : d ≤ s := by dsimp [d, s]; linarith [ht.2]
+  have hs : 0 ≤ s := hd.trans hds
+  have hr : 0 ≤ r := Real.sqrt_nonneg _
+  have hr2 : r ^ 2 = s ^ 2 - d ^ 2 := Real.sq_sqrt (by nlinarith)
+  have hq : 0 ≤ q := Real.sqrt_nonneg _
+  have hq2 : q ^ 2 = B * (1 - A + B) := by
+    apply Real.sq_sqrt
+    apply mul_nonneg hB.le
+    have h := mul_nonneg (sub_nonneg.mpr hu.2) (sub_nonneg.mpr hv.2)
+    dsimp [A, B]
+    nlinarith
+  have hAr2 : (A * r) ^ 2 = (2 * q) ^ 2 := by
+    rw [mul_pow, hr2, mul_pow, hq2]
+    dsimp [s, d, p, t, A, B]
+    field_simp [hA.ne']
+    <;> ring
+  have hAr : A * r = 2 * q := by nlinarith [mul_nonneg hA.le hr]
+  have hAp : A * p = u := by dsimp [p]; field_simp [hA.ne']
+  have hAm : A * (1 - p) = v := by dsimp [p, A]; field_simp [hA.ne']; ring
+  have hAt : A * (1 - t) = L := by dsimp [t, L]; field_simp [hA.ne']; ring
+  have hAs : A * s = A - 2 * B := by dsimp [s, t]; field_simp [hA.ne']; ring
+  have hplus : A * (s + r) = mp := by dsimp [mp]; nlinarith
+  have hminus : A * (s - r) = mm := by dsimp [mm]; nlinarith
+  have hpLog := mul_log_scale hA p
+  have hmLog := mul_log_scale hA (1 - p)
+  have htLog := mul_log_scale hA (1 - t)
+  have hplusLog := mul_log_scale hA (s + r)
+  have hminusLog := mul_log_scale hA (s - r)
+  rw [hAp] at hpLog
+  rw [hAm] at hmLog
+  rw [hAt] at htLog
+  rw [hplus] at hplusLog
+  rw [hminus] at hminusLog
+  have he : productLogMoment u v = A * normalizedGap p t := by
+    change 2 * L * Real.log L - u * Real.log u - v * Real.log v -
+      (mp * Real.log mp + mm * Real.log mm) / 2 =
+      A * (Real.binEntropy p + 2 * ((1 - t) * Real.log (1 - t)) -
+        ((s + r) * Real.log (s + r) + (s - r) * Real.log (s - r)) / 2)
+    rw [Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub]
+    simp only [Real.negMulLog_def]
+    have hsum : u + v = A := rfl
+    have hcancel : -A + 2 * L - (mp + mm) / 2 = 0 := by dsimp [L, mp, mm]; ring
+    have hlogcancel : (u + v - 2 * L + (mp + mm) / 2) * Real.log A = 0 := by
+      rw [hsum]
+      have hcoeff : A - 2 * L + (mp + mm) / 2 = 0 := by linarith
+      rw [hcoeff, zero_mul]
+    nlinarith [hpLog, hmLog, htLog, hplusLog, hminusLog, hlogcancel]
+  rw [he]
+  exact mul_nonneg hA.le (gap_nonneg hp ht)
+
+private lemma moment_symm (u v : ℝ) : productLogMoment u v = productLogMoment v u := by
+  unfold productLogMoment
+  rw [show v + u = u + v by ring, show v * u = u * v by ring]
+  ring
+
+private lemma moment_zero_left (v : ℝ) : productLogMoment 0 v = 0 := by
+  simp only [productLogMoment, zero_add, zero_mul, Real.sqrt_zero, mul_zero,
+    add_zero, sub_zero]
+  ring
+
+private lemma moment_one_left (v : ℝ) : productLogMoment 1 v = Real.binEntropy v := by
+  simp only [productLogMoment, one_mul,
+    show v * (1 - (1 + v) + v) = 0 by ring,
+    Real.sqrt_zero, mul_zero, add_zero, sub_zero,
+    show 1 + v - v = 1 by ring, show 1 + v - 2 * v = 1 - v by ring,
+    Real.log_one, mul_one]
+  rw [Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub]
+  simp only [Real.negMulLog_def]
+  ring
+
+/-- The exact logarithmic first moment of the five-term product kernel is
+nonnegative on the entire closed parameter square. In particular, zero roots,
+coincident roots and all four edges are included without a rank assumption. -/
+theorem product_log_moment_nonneg {u v : ℝ} (hu : u ∈ Icc (0 : ℝ) 1)
+    (hv : v ∈ Icc (0 : ℝ) 1) : 0 ≤ productLogMoment u v := by
+  by_cases hu0 : u = 0
+  · subst u
+    rw [moment_zero_left]
+  by_cases hu1 : u = 1
+  · subst u
+    rw [moment_one_left]
+    exact Real.binEntropy_nonneg hv.1 hv.2
+  by_cases hv0 : v = 0
+  · subst v
+    rw [moment_symm, moment_zero_left]
+  by_cases hv1 : v = 1
+  · subst v
+    rw [moment_symm, moment_one_left]
+    exact Real.binEntropy_nonneg hu.1 hu.2
+  have hu' : u ∈ Ioo (0 : ℝ) 1 :=
+    ⟨lt_of_le_of_ne hu.1 hu0.symm, lt_of_le_of_ne hu.2 hu1⟩
+  have hv' : v ∈ Ioo (0 : ℝ) 1 :=
+    ⟨lt_of_le_of_ne hv.1 hv0.symm, lt_of_le_of_ne hv.2 hv1⟩
+  rcases le_total u v with huv | hvu
+  · exact interior_moment_nonneg hu' hv' huv
+  · rw [moment_symm]
+    exact interior_moment_nonneg hv' hu' hvu
+
+#print axioms product_log_moment_nonneg
+
 end D5.S3.Entropy.ProductAbsorptionLogMoment

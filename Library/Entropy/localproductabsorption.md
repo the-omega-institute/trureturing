@@ -9,6 +9,8 @@ strata_touched:
   - D5/S3/Entropy/ProductAbsorptionLogKernel
   - D5/S3/Entropy/ProductAbsorptionLogIntegral
   - D5/S3/Entropy/BinaryEntropyLogIntegral
+  - D5/S3/Entropy/ProductAbsorptionLogMoment
+  - D5/S3/Entropy/ProductAbsorptionScalar
 license: citation-only
 triage: anchor
 ---
@@ -73,3 +75,17 @@ at one unit parameter, together with symmetry.
 
 The original entangled-seed and mixed-seed quantum question is outside this
 product component. No numerical check is used as a universal proof.
+
+The first-moment module normalizes the two parameters by their sum and
+uses the root-pair logarithmic curvature estimate
+`g_d''(s)>=2/(3s)`. The normalized gap is concave between two explicitly
+nonnegative entropy endpoints. Exact scaling returns the original moment;
+symmetry and direct edge evaluations include the entire closed square.
+
+The scalar module combines the actual entropy integral, that nonnegative
+moment and the exact single-crossing theorem. The decreasing weight
+`1/sqrt(1+cs)` preserves the sign of the integral. The substitutions
+`u=1-z^2`, `v=1-w^2`, `c=1-b^2` return the precise binary-entropy inequality,
+with both root orderings and every closed-domain boundary. The sharp
+noise-record envelope and actual density-state endpoint are separate
+quantum obligations; no entangled- or mixed-seed extension is asserted.
