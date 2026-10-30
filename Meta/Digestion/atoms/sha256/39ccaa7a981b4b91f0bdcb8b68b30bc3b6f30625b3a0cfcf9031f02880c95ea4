@@ -1,0 +1,75 @@
+**Corollary 10.2 (Sequential two-point limit and singleton concentration).**
+Let $a_n\to\infty$, $h_n\ge1$ be integers with $a_n\ge4$ and
+$\rho_n=h_n/a_n^{3/2}\to\rho\in(0,\infty)$. Let
+$\epsilon_n\in[0,1]$ tend to zero, and let $x_n\in\mathcal X(a_n,h_n)$
+satisfy
+
+$$
+H(x_n)\le M(a_n,h_n)+\epsilon_n a_n^3.
+$$
+
+With $K_n,U_n$ computed from the actual law $x_n$ and its actual marginals,
+and $t=t(\rho)$, one has
+
+$$
+\frac{K_n}{a_n}\ \Rightarrow
+\left(1-\frac1t\right)\delta_0+\frac1t\delta_t,
+\qquad
+\mathbb P_{x_n}(K_n=1)\longrightarrow1-\frac1t.
+\tag{10.19}
+$$
+
+Moreover,
+
+$$
+\mathbb E_{x_n}\left[\left(\frac{U_n}{a_n^{3/2}}-2t^{5/2}\right)^2
+                       \mathbf1_{\{K_n=1\}}\right]\longrightarrow0,
+\tag{10.20}
+$$
+
+and, since $1-1/t>0$, also
+
+$$
+\mathbb E_{x_n}\left[\left(\frac{U_n}{a_n^{3/2}}-2t^{5/2}\right)^2
+                       \,\middle|\, K_n=1\right]\longrightarrow0.
+\tag{10.21}
+$$
+
+**Proof.** Choose a fixed compact $I\subset(0,\infty)$ containing $\rho_n$
+eventually. Continuity in Definition 8.3 gives $t_n=t(\rho_n)\to t$.
+Theorem 10.1 gives $q_n=\mathbb P_{x_n}(K_n=1)\to1-1/t$ and
+
+$$
+\mathbb E_{x_n}\left[\left(\frac{K_n}{a_n}-t\right)^2
+                       \mathbf1_{\{K_n\ge2\}}\right]\longrightarrow0,
+\tag{10.22}
+$$
+
+using $(u+v)^2\le2u^2+2v^2$ and $t_n\to t$ in (10.2). For a bounded
+continuous function $f$, the singleton contribution is
+$q_nf(1/a_n)\to(1-1/t)f(0)$. On $K_n\ge2$, (10.22) implies that the
+mass outside any fixed neighborhood of $t$ tends to zero. Continuity at
+$t$, boundedness of $f$, and $1-q_n\to1/t$ therefore give
+
+$$
+\mathbb E_{x_n}\left[f(K_n/a_n)\mathbf1_{\{K_n\ge2\}}\right]
+\longrightarrow\frac1t f(t).
+$$
+
+This proves weak convergence in (10.19), in addition to the separately
+proved singleton-event mass convergence. Applying the same square
+inequality to (10.4) and $2t_n^{5/2}\to2t^{5/2}$ proves (10.20).
+Division by $q_n$, which is eventually bounded away from zero, proves
+(10.21). ∎
+
+Theorem 10.1 is a repo-derived quantitative consequence of the actual-law
+certificate (8.8)--(8.15) and the value estimate in Theorem 8.4; those value
+and residual statements are reused here. The conclusion concerns only the
+three observables displayed in (10.2)--(10.4) on a fixed compact positive
+transition interval. It supplies neither a partition of the labels nor a
+total-variation reconstruction of the full subset law, and does not assert
+finite exact equality, infimum attainment or a graph realization. It does
+not cover intervals approaching $0$ or $\infty$, other scales, or the
+remaining classification questions in Open problem 8.6. No external
+priority assertion is attached to these deductions.
+
