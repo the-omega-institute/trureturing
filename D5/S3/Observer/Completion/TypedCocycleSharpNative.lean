@@ -242,7 +242,7 @@ private theorem quantum_bounds (h ε : ℝ) (hh : 0 < h) (hε : 0 ≤ ε) :
   have hlo := Nat.floor_le hn
   have hhi := Nat.lt_floor_add_one (2 * ε / h)
   constructor
-  · exact (le_div_iff₀ hh).mp hlo |>.trans_eq (mul_comm _ _)
+  · simpa only [mul_comm] using (le_div_iff₀ hh).mp hlo
   · have hb := (div_lt_iff₀ hh).mp hhi
     simpa [quantum, Nat.cast_add, Nat.cast_one, mul_comm] using hb
 

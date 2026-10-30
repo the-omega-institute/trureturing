@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The entire shared-name two-loop source has a faithful exhaustive ordered-word normal form. -/
+   digest: Exhaustive legal words and native totals on the shared-name two-loop source. -/
 
 import Mathlib.Tactic
 import Mathlib.Data.List.Count
@@ -14,8 +14,15 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Observer.Completion.TypedCocycleSource
 
-inductive Vertex | p | s | t deriving DecidableEq, Fintype
-inductive Name | a | c | e deriving DecidableEq, Fintype
+inductive Vertex | p | s | t deriving DecidableEq
+inductive Name | a | c | e deriving DecidableEq
+
+instance : Fintype Vertex where
+  elems := {.p, .s, .t}
+  complete x := by cases x <;> simp
+instance : Fintype Name where
+  elems := {.a, .c, .e}
+  complete x := by cases x <;> simp
 
 /-- Exactly the four legal edges, with one shared name a and no Stop edge. -/
 def transition : Vertex → Name → Option Vertex
@@ -184,7 +191,7 @@ private theorem accumulate_a (h : ℝ) (C E : Vector) (m : ℕ) :
     accumulate h C E .p (List.replicate m .a) = some (h * m, h * m) ∧
     accumulate h C E .s (List.replicate m .a) = some (h * m, 2 * h * m) := by
   induction m with
-  | zero => simp [accumulate]
+  | zero => constructor <;> simp [accumulate] <;> rfl
   | succ m ih =>
     simp only [List.replicate_succ, accumulate, transition, Option.bind_some, ih,
       Option.map_some, edgeVector, Prod.mk_add_mk, Nat.cast_add, Nat.cast_one]
@@ -194,7 +201,7 @@ private theorem totals_mid (h : ℝ) (C E : Vector) (m n : ℕ) :
     accumulate h C E .p (word (.mid m n)) = some (native h C E (.mid m n)) := by
   simp [word, native, accumulate_append h C E .p .p _ _ (execute_replicate_a m).1,
     accumulate_a, accumulate, transition, edgeVector, Prod.mk_add_mk]
-  congr 2 <;> ring
+  apply Prod.ext <;> dsimp <;> ring
 
 private theorem totals (h : ℝ) (C E : Vector) (u : History) :
     accumulate h C E .p (word u) = some (native h C E u) := by
@@ -202,12 +209,14 @@ private theorem totals (h : ℝ) (C E : Vector) (u : History) :
   | pre m => exact (accumulate_a h C E m).1
   | mid m n => exact totals_mid h C E m n
   | terminal m n =>
-    rw [word, accumulate_append h C E .p .s _ [.e] (executes (.mid m n))]
+    have hw : word (.terminal m n) = word (.mid m n) ++ [.e] := by
+      simp [word, List.append_assoc]
+    rw [hw, accumulate_append h C E .p .s _ [.e] (executes (.mid m n))]
     have hm := totals_mid h C E m n
     simp only [word] at hm
     rw [hm]
     simp [accumulate, transition, edgeVector, native, Prod.mk_add_mk]
-    congr 2 <;> ring
+    apply Prod.ext <;> dsimp <;> ring
 
 /-- Faithful ordered-word bijection with all legal root histories, together with
 native totals obtained from exactly the four source edges. This includes every
