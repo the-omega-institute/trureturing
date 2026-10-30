@@ -1,0 +1,1 @@
+WIP: add the consumed four-chain centered-source table for the eventual physical-J construction; endpoint scheduler, phase selector, Reg mirror, and Blueprint remain open.
