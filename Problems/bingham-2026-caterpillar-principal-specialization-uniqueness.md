@@ -91,10 +91,10 @@ graph isomorphisms. A finite witness negates this universal assertion for all si
 
 ## Triage
 
-- Kernel-unverified target of the designated result: the whole exhaustive-pairs assertion is false.
-- Kernel-unverified target on its source proof path: the witness polynomials have unequal second and equal
+- Compiled proof target (axiom closure outstanding) of the designated result: the whole exhaustive-pairs assertion is false.
+- Compiled proof target (axiom closure outstanding) on its source proof path: the witness polynomials have unequal second and equal
   third ordinary specializations over the source's complex coefficient ring.
-- Kernel-unverified target on its source proof path: A is not isomorphic to any base or positive-j family
+- Compiled proof target (axiom closure outstanding) on its source proof path: A is not isomorphic to any base or positive-j family
   member, so no listed unordered pair can represent this witness.
 - The earlier first-question result, that every positive-j listed pair exhibits the
   phenomenon, is compatible with this refutation and remains a separate theorem.
@@ -106,9 +106,9 @@ graph isomorphisms. A finite witness negates this universal assertion for all si
 
 ## ASSUMED-UNVERIFIED
 
-The second-question proof source has not passed its kernel check. Its polynomial identities,
-coefficient-extension bridge and universal isomorphism exclusion remain unverified formal
-targets. No formal settlement of the second question is asserted.
+The second-question proof source passes a guarded Lean build. Its accepted-axiom closure
+and compiled utility evidence remain unchecked. No fully verified or published settlement
+of the second question is asserted.
 
 The bounded source and literature screen supporting the named external question did
 not locate an earlier settlement. Citation and third-party code searches were incomplete.

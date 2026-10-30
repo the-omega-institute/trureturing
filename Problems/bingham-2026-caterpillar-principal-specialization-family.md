@@ -94,7 +94,7 @@ on j and no numerical specialization of X.
 - Proved on that result's live proof path: `ps2_alpha` and `ps2_beta` give the displayed exact
   two-color monomials, and `ps2_ne` separates their coefficients at degree j+5.
 - Separate proof source: `BinghamCaterpillarUniquenessRefutation.result` targets the
-  exhaustive-pairs assertion using an eighteen-vertex witness. Its kernel check remains
+  exhaustive-pairs assertion using an eighteen-vertex witness. Its accepted-axiom and compiled-utility checks remain
   outstanding; no second-question settlement is asserted here. The first-question family
   proof supplies no classification.
 - Open here: the source's four-color questions and any analogous t-refined statement. This
