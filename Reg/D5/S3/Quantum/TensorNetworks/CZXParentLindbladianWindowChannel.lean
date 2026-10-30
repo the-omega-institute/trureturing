@@ -635,56 +635,60 @@ end SuperoperatorAction
 
 namespace WindowIdempotence
 
-/-- Observe the source idempotence predicate on a matrix operand. -/
-abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature ℕ
-    (fun n => Matrix ((Fin n → Fin 2) × (Fin n → Fin 2))
-      ((Fin n → Fin 2) × (Fin n → Fin 2)) ℂ)
-    (fun _ => Bool)
+open private middleUpdate from D5.S3.Quantum.TensorNetworks.CZXParentLindbladianWindowChannel
 
-def actual : Realization signature := by
-  classical
-  exact realize signature (fun _ _ M => decide (IsIdempotentElem M)) (fun e => nomatch e)
+/-- Observe a row of the source window superoperator. -/
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature (Σ n : ℕ, Fin n)
+    (fun p => (Fin p.1 → Fin 2) × (Fin p.1 → Fin 2))
+    (fun p => ((Fin p.1 → Fin 2) × (Fin p.1 → Fin 2)) → ℂ)
+
+def actual : Realization signature :=
+  realize signature (fun _ p row => windowSuperoperator p.1 p.2 row) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ row => (2 : Matrix _ _ ℂ) row) (fun e => nomatch e)
 
 def arena : Arena where
   signature := signature
   Law R := ∀ (n : ℕ) (_hn : 4 ≤ n) (i : Fin n),
-    R.readout () n (windowSuperoperator n i) = true
+    IsIdempotentElem (show Matrix ((Fin n → Fin 2) × (Fin n → Fin 2))
+      ((Fin n → Fin 2) × (Fin n → Fin 2)) ℂ from fun row => R.readout () ⟨n, i⟩ row)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hbad := h 4 (by decide) 0
-  change false = true at hbad
-  contradiction
+  change IsIdempotentElem (2 : Matrix ((Fin 4 → Fin 2) × (Fin 4 → Fin 2))
+    ((Fin 4 → Fin 2) × (Fin 4 → Fin 2)) ℂ) at hbad
+  norm_num [IsIdempotentElem] at hbad
+  have hentry := congrArg (fun A => A (0, 0) (0, 0)) hbad
+  norm_num [Matrix.ofNat_apply] at hentry
 
 private theorem dependence : ObservationalDependence signature actual := by
-  classical
   intro i
-  refine ⟨0, 0, 2, ?_⟩
-  intro he
-  have hzero : actual.readout i 0 0 = true := by
-    change decide (IsIdempotentElem (0 : Matrix _ _ ℂ)) = true
-    exact decide_eq_true (zero_mul _)
-  have htwo : actual.readout i 0 2 = false := by
-    change decide (IsIdempotentElem (2 : Matrix _ _ ℂ)) = false
-    apply decide_eq_false_iff_not.mpr
-    intro hbad
-    change (2 : Matrix _ _ ℂ) * 2 = 2 at hbad
-    have hentry := congrArg (fun A => A (0, 0) (0, 0)) hbad
-    norm_num [Matrix.mul_apply, Matrix.ofNat_apply] at hentry
-  rw [hzero, htwo] at he
-  contradiction
+  let δ : Fin 5 → Fin 2 := fun k => if k = 4 then 1 else 0
+  have hg : goodWindow (0 : Fin 5) δ := by
+    intro k
+    fin_cases k <;> rfl
+  refine ⟨⟨5, 0⟩, (δ, 0), (0, 0), ?_⟩
+  intro h
+  have ha := congrArg
+    (fun row : ((Fin 5 → Fin 2) × (Fin 5 → Fin 2)) → ℂ =>
+      row ⬝ᵥ (fun p => gaugedUnit 5 δ 0 p.1 p.2)) h
+  change (windowSuperoperator 5 0).mulVec
+    (fun p => gaugedUnit 5 δ 0 p.1 p.2) (δ, 0) =
+      (windowSuperoperator 5 0).mulVec
+        (fun p => gaugedUnit 5 δ 0 p.1 p.2) (0, 0) at ha
+  simp only [window_superoperator_action] at ha
+  rw [gauged_window_sector 5 (by decide) 0 δ 0, ite_eq_left hg] at ha
+  norm_num [gaugedUnit, sectorGauge, middleUpdate, site, δ, Matrix.single_apply,
+    Matrix.smul_apply, Matrix.sum_apply, Fin.sum_univ_two, Fin.sum_univ_succ,
+    funext_iff, Fin.forall_fin_succ, Function.update_apply] at ha
 
 def source_registration : Registration arena (type_of% @window_idempotent) where
   actual := actual
-  bridge := by
-    simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by
-    simpa only [arena, actual, realize, decide_eq_true_eq] using @window_idempotent,
-    rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨@window_idempotent, rejected, rejected_law⟩
   sensitivity :=
     Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
@@ -703,9 +707,8 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (by
-    classical
-    exact realize signature (fun _ _ M => decide (IsIdempotentElem M)) (fun e => nomatch e))
+  readout := some
+    (realize signature (fun _ p row => windowSuperoperator p.1 p.2 row) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -713,13 +716,13 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.TensorNetworks.CZXParentLindbladianWindowChannel
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 2]
     readouts := #[{
-      path := #["body", "body", "body"]
+      path := #["body", "body", "body", "arg"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
