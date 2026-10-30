@@ -33,9 +33,8 @@ private theorem sigma_5040 : ArithmeticFunction.sigma 1 5040 = 19344 := by
 theorem sigma_5040_mul_of_coprime {n : ℕ} (hn : n.Coprime 210) :
     ArithmeticFunction.sigma 1 (5040 * n) =
       19344 * ArithmeticFunction.sigma 1 n := by
-  simpa [Nat.mul_comm, sigma_5040] using
-    (ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime
-      (coprime_5040_of_coprime_210 hn))
+  rw [ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime
+    (coprime_5040_of_coprime_210 hn), sigma_5040]
 
 /-- The normalized sigma ratio splits into the exact finite 5040 factor `403/105`
 and the unrestricted residual ratio. -/
@@ -49,9 +48,11 @@ theorem normalized_sigma_5040_mul_of_coprime {n : ℕ} (hn0 : n ≠ 0)
     norm_num [sigma_5040]
   calc
     (ArithmeticFunction.sigma 1 (5040 * n) : ℝ) / (5040 * n) =
-        ((ArithmeticFunction.sigma 1 n : ℝ) / n) *
+        ((ArithmeticFunction.sigma 1 5040 : ℝ) / 5040) *
+          ((ArithmeticFunction.sigma 1 n : ℝ) / n) := hnorm
+    _ = ((ArithmeticFunction.sigma 1 n : ℝ) / n) *
           ((ArithmeticFunction.sigma 1 5040 : ℝ) / 5040) := by
-      simpa [Nat.mul_comm] using hnorm
+      rw [mul_comm]
     _ = (403 / 105 : ℝ) * ((ArithmeticFunction.sigma 1 n : ℝ) / n) := by
       rw [h5040]
       ring
