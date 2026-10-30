@@ -98,9 +98,9 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "body", "arg", "arg"]
-      stateBinder := 2
+      stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg", "arg"]
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -115,13 +115,13 @@ abbrev arena : Arena where
   Law R := ∀ {A : Type u} [LinearOrder A] (fs gs : List (List A)),
     (∀ w ∈ fs, IsLyndon w) → fs.Pairwise (fun a b => b ≤ a) →
     (∀ w ∈ gs, IsLyndon w) → gs.Pairwise (fun a b => b ≤ a) →
-    R.readout () A fs = R.readout () A gs → fs = gs
+    R.readout () A fs = gs.flatten → fs = gs
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   let a : ULift.{u} Nat := ⟨0⟩
-  have hh := h ([] : List (List (ULift.{u} Nat))) [[a]] (by simp) (by simp)
-    (by simpa using singleton_lyndon a) (by simp) rfl
+  have hh := h ([[a]] : List (List (ULift.{u} Nat))) []
+    (by simpa using singleton_lyndon a) (by simp) (by simp) (by simp) rfl
   cases hh
 
 def family : Registration arena.{u}
@@ -165,11 +165,6 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "domain", "fn", "arg"]
       stateBinder := 2
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "domain", "arg"]
-      stateBinder := 3
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
