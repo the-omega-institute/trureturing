@@ -4,18 +4,19 @@
    mirror-E: none
    anchors: [D5/S3/Analytic/XuYangMillsRemainder/Result]
    utility: none
-   digest: Original Mills smoothness, origin asymptotic and signed exponential remainder multiplier orders.
+   digest: Original Mills regularity, strict remainder moment bounds and closed kernel ranges.
 
 This module is an unfrozen checkpoint for the general-parameter Mills
 classification.  It keeps the original normalization from `Result.D` and
 records both complete equivalence chains as a proposition.  The
-general-parameter coefficient representation, weighted-moment comparison,
+general-parameter coefficient representation, Laplace identity,
 infinity asymptotic and classification proof remain open here.
 -/
 
 import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
 import Mathlib.Analysis.Calculus.ContDiff.Deriv
 import D5.S3.Analytic.XuYangMillsRemainder.Result
+import D5.S3.Analytic.IncompleteBeta.Comparison
 
 /-! The original general-parameter target and its analytic proof obligations. -/
 
@@ -342,5 +343,210 @@ private theorem exp_remainder_ratio_strict_mono (r : ℕ) :
     (show IntervalIntegrable (fun q : ℝ => (1 - q / z) ^ r * exp (-q)) volume y z by
       apply Continuous.intervalIntegrable; fun_prop)
   linarith
+
+/-! Strict moment comparison for the original signed Taylor remainder. -/
+
+/-- The source remainder of order r+1. -/
+def E (r : ℕ) (y : ℝ) : ℝ :=
+  (-1 : ℝ) ^ (r + 1) * D5.S3.Analytic.ExpRemainderDifferences.R r (-y)
+
+def M0 (r : ℕ) (z : ℝ) : ℝ := ∫ v in (0 : ℝ)..1, E r (z * (1 + v ^ 2))
+
+def M2 (r : ℕ) (z : ℝ) : ℝ := ∫ v in (0 : ℝ)..1, v ^ 2 * E r (z * (1 + v ^ 2))
+
+private theorem e_continuous (r : ℕ) : Continuous (E r) := by
+  unfold E D5.S3.Analytic.ExpRemainderDifferences.R
+  fun_prop
+
+private theorem e_pos (r : ℕ) {y : ℝ} (hy : 0 < y) : 0 < E r y := by
+  have hi : 0 < ∫ s in (0 : ℝ)..1, (1 - s) ^ r * exp (-s * y) := by
+    apply intervalIntegral.intervalIntegral_pos_of_pos_on
+      (by apply Continuous.intervalIntegrable; fun_prop) _ (by norm_num)
+    intro s hs
+    exact mul_pos (pow_pos (sub_pos.mpr hs.2) _) (exp_pos _)
+  have h := normalized_exp_remainder r hy
+  change E r y / y ^ (r + 1) = _ at h
+  have hd : 0 < E r y / y ^ (r + 1) := by rw [h]; positivity
+  exact (div_pos_iff_of_pos_right (pow_pos hy (r + 1))).mp hd
+
+private theorem moments_pos (r : ℕ) {z : ℝ} (hz : 0 < z) :
+    0 < M0 r z ∧ 0 < M2 r z := by
+  have he (v : ℝ) : 0 < E r (z * (1 + v ^ 2)) := e_pos r (by positivity)
+  have hc : Continuous (fun v : ℝ => E r (z * (1 + v ^ 2))) :=
+    (e_continuous r).comp (by fun_prop)
+  constructor
+  · apply intervalIntegral.intervalIntegral_pos_of_pos_on
+      (hc.intervalIntegrable 0 1) _ (by norm_num)
+    intro v _
+    exact he v
+  · apply intervalIntegral.intervalIntegral_pos_of_pos_on
+      (((continuous_id.pow 2).mul hc).intervalIntegrable 0 1)
+      _ (by norm_num)
+    intro v hv
+    exact mul_pos (sq_pos_of_pos hv.1) (he v)
+
+private theorem moment_ratio_bounds (r : ℕ) {z : ℝ} (hz : 0 < z) :
+    B r / I r < M2 r z / M0 r z ∧
+      M2 r z / M0 r z < B (r + 1) / I (r + 1) := by
+  have hA (v : ℝ) : 0 < 1 + v ^ 2 := by positivity
+  have he (v : ℝ) : 0 < E r (z * (1 + v ^ 2)) := e_pos r (by positivity)
+  have hc : Continuous (fun v : ℝ => E r (z * (1 + v ^ 2))) :=
+    (e_continuous r).comp (by fun_prop)
+  have hW : StrictMonoOn (fun v : ℝ => v ^ 2) (Ioo 0 1) := by
+    intro v hv w hw hvw
+    exact sq_lt_sq₀ hv.1.le hw.1.le |>.mpr hvw
+  have harg {v w : ℝ} (hv : v ∈ Ioo (0 : ℝ) 1) (hw : w ∈ Ioo (0 : ℝ) 1)
+      (hvw : v < w) : z * (1 + v ^ 2) < z * (1 + w ^ 2) := by
+    exact mul_lt_mul_of_pos_left (add_lt_add_right (hW hv hw hvw) 1) hz
+  have hupper : StrictAntiOn
+      (fun v : ℝ => E r (z * (1 + v ^ 2)) / (1 + v ^ 2) ^ (r + 1)) (Ioo 0 1) := by
+    intro v hv w hw hvw
+    have h := exp_remainder_ratio_strict_anti r
+      (show z * (1 + v ^ 2) ∈ Ioi (0 : ℝ) by exact mul_pos hz (hA _))
+      (show z * (1 + w ^ 2) ∈ Ioi (0 : ℝ) by exact mul_pos hz (hA _)) (harg hv hw hvw)
+    change E r (z * (1 + w ^ 2)) / (z * (1 + w ^ 2)) ^ (r + 1) <
+      E r (z * (1 + v ^ 2)) / (z * (1 + v ^ 2)) ^ (r + 1) at h
+    simpa only [mul_pow, div_mul_eq_div_div_swap, div_lt_div_iff_of_pos_right (pow_pos hz _)] using h
+  have hlower : StrictMonoOn
+      (fun v : ℝ => E r (z * (1 + v ^ 2)) / (1 + v ^ 2) ^ r) (Ioo 0 1) := by
+    intro v hv w hw hvw
+    have h := exp_remainder_ratio_strict_mono r
+      (show z * (1 + v ^ 2) ∈ Ioi (0 : ℝ) by exact mul_pos hz (hA _))
+      (show z * (1 + w ^ 2) ∈ Ioi (0 : ℝ) by exact mul_pos hz (hA _)) (harg hv hw hvw)
+    change E r (z * (1 + v ^ 2)) / (z * (1 + v ^ 2)) ^ r <
+      E r (z * (1 + w ^ 2)) / (z * (1 + w ^ 2)) ^ r at h
+    simpa only [mul_pow, div_mul_eq_div_div_swap, div_lt_div_iff_of_pos_right (pow_pos hz _)] using h
+  have hinverse : StrictAntiOn
+      (fun v : ℝ => (1 + v ^ 2) ^ r / E r (z * (1 + v ^ 2))) (Ioo 0 1) := by
+    intro v hv w hw hvw
+    have h := hlower hv hw hvw
+    apply (div_lt_div_iff₀ (he w) (he v)).mpr
+    have H := (div_lt_div_iff₀ (pow_pos (hA v) r) (pow_pos (hA w) r)).mp h
+    nlinarith
+  constructor
+  · have h := D5.S3.Analytic.IncompleteBeta.Comparison.weighted_means_lt
+      (p := fun v => E r (z * (1 + v ^ 2)))
+      (q := fun v => (1 + v ^ 2) ^ r) (W := fun v => v ^ 2)
+      (by norm_num : (0 : ℝ) < 1) (hc.intervalIntegrable 0 1)
+      (by apply Continuous.intervalIntegrable; fun_prop)
+      ((hc.mul (continuous_id.pow 2)).intervalIntegrable 0 1)
+      (by apply Continuous.intervalIntegrable; fun_prop)
+      (fun v _ => he v) (fun v _ => pow_pos (hA v) r) hW hinverse
+    simpa only [M0, M2, I, B, mul_comm] using h
+  · have h := D5.S3.Analytic.IncompleteBeta.Comparison.weighted_means_lt
+      (p := fun v => (1 + v ^ 2) ^ (r + 1))
+      (q := fun v => E r (z * (1 + v ^ 2))) (W := fun v => v ^ 2)
+      (by norm_num : (0 : ℝ) < 1)
+      (by apply Continuous.intervalIntegrable; fun_prop) (hc.intervalIntegrable 0 1)
+      (by apply Continuous.intervalIntegrable; fun_prop)
+      ((hc.mul (continuous_id.pow 2)).intervalIntegrable 0 1)
+      (fun v _ => pow_pos (hA v) (r + 1)) (fun v _ => he v) hW hupper
+    simpa only [M0, M2, I, B, mul_comm] using h
+
+private theorem polynomial_moments_pos (j : ℕ) : 0 < I j ∧ 0 < B j := by
+  constructor
+  · apply intervalIntegral.intervalIntegral_pos_of_pos_on
+      (by apply Continuous.intervalIntegrable; fun_prop) _ (by norm_num)
+    intro v _
+    exact pow_pos (by positivity) _
+  · apply intervalIntegral.intervalIntegral_pos_of_pos_on
+      (by apply Continuous.intervalIntegrable; fun_prop) _ (by norm_num)
+    intro v hv
+    exact mul_pos (sq_pos_of_pos hv.1) (pow_pos (by positivity) _)
+
+def innerTheta (r : ℕ) (z : ℝ) : ℝ := (1 - M0 r z / M2 r z) / 2
+
+private theorem inner_threshold_bounds (r : ℕ) {z : ℝ} (hz : 0 < z) :
+    theta r < innerTheta r z ∧ innerTheta r z < theta (r + 1) := by
+  obtain ⟨hM0, hM2⟩ := moments_pos r hz
+  obtain ⟨hI0, hB0⟩ := polynomial_moments_pos r
+  obtain ⟨hI1, hB1⟩ := polynomial_moments_pos (r + 1)
+  obtain ⟨hl, hu⟩ := moment_ratio_bounds r hz
+  have hl' : M0 r z / M2 r z < I r / B r := by
+    apply (div_lt_div_iff₀ hM2 hB0).mpr
+    have H := (div_lt_div_iff₀ hI0 hM0).mp hl
+    nlinarith
+  have hu' : I (r + 1) / B (r + 1) < M0 r z / M2 r z := by
+    apply (div_lt_div_iff₀ hB1 hM2).mpr
+    have H := (div_lt_div_iff₀ hM0 hI1).mp hu
+    nlinarith
+  dsimp [theta, innerTheta]
+  constructor <;> linarith
+
+/-- The signed kernel in (2.5), with source remainder order r+1 and n=r+2. -/
+def L (r : ℕ) (a t : ℝ) : ℝ := t ^ 3 / 4 *
+  ∫ v in (0 : ℝ)..1, ((1 - 2 * a) * v ^ 2 - 1) * E r (t ^ 2 / 4 * (1 + v ^ 2))
+
+private theorem kernel_moment_identity (r : ℕ) (a t : ℝ) :
+    L r a t = t ^ 3 / 4 * (2 * M2 r (t ^ 2 / 4) *
+      (innerTheta r (t ^ 2 / 4) - a)) := by
+  by_cases ht : t = 0
+  · simp [L, ht]
+  have hz : 0 < t ^ 2 / 4 := by positivity
+  have hM2 := (moments_pos r hz).2
+  have hc : Continuous (fun v : ℝ => E r (t ^ 2 / 4 * (1 + v ^ 2))) :=
+    (e_continuous r).comp (by fun_prop)
+  have hi : (∫ v in (0 : ℝ)..1,
+      ((1 - 2 * a) * v ^ 2 - 1) * E r (t ^ 2 / 4 * (1 + v ^ 2))) =
+      (1 - 2 * a) * M2 r (t ^ 2 / 4) - M0 r (t ^ 2 / 4) := by
+    simp_rw [sub_mul, one_mul, mul_assoc]
+    rw [intervalIntegral.integral_sub
+      (show IntervalIntegrable (fun v : ℝ => (1 - 2 * a) * (v ^ 2 * E r (t ^ 2 / 4 * (1 + v ^ 2)))) volume 0 1 from
+        (continuous_const.mul ((continuous_id.pow 2).mul hc)).intervalIntegrable 0 1)
+      (hc.intervalIntegrable 0 1), intervalIntegral.integral_const_mul]
+    rfl
+  unfold L
+  rw [hi]
+  dsimp [innerTheta]
+  field_simp [ne_of_gt hM2]
+  <;> ring
+
+private theorem kernel_closed_ranges (r : ℕ) (a : ℝ) {t : ℝ} (ht : 0 < t) :
+    (a ≤ theta r → 0 < L r a t) ∧
+      (theta (r + 1) ≤ a → L r a t < 0) := by
+  have hz : 0 < t ^ 2 / 4 := by positivity
+  obtain ⟨hl, hu⟩ := inner_threshold_bounds r hz
+  have hm := (moments_pos r hz).2
+  rw [kernel_moment_identity]
+  constructor
+  · intro ha
+    exact mul_pos (by positivity) (mul_pos (by positivity) (sub_pos.mpr (ha.trans_lt hl)))
+  · intro ha
+    exact mul_neg_of_pos_of_neg (by positivity)
+      (mul_neg_of_pos_of_neg (by positivity) (sub_neg.mpr (hu.trans_le ha)))
+
+/-! The general-parameter Gaussian convolution kernel, before finite subtraction. -/
+
+def G (a t : ℝ) : ℝ :=
+  t * (∫ v in (0 : ℝ)..1,
+    (t ^ 2 / 4 * (1 - v ^ 2) + a) * exp (-(1 + v ^ 2) * t ^ 2 / 4)) -
+      a * t * exp (-t ^ 2 / 2)
+
+private theorem gaussian_kernel_identity (a t : ℝ) :
+    G a t = t ^ 3 / 4 * ∫ v in (0 : ℝ)..1,
+      (1 + (2 * a - 1) * v ^ 2) * exp (-(1 + v ^ 2) * t ^ 2 / 4) := by
+  have hd (v : ℝ) :
+      HasDerivAt (fun v : ℝ => v * exp (-(1 + v ^ 2) * t ^ 2 / 4))
+        ((1 - t ^ 2 / 2 * v ^ 2) * exp (-(1 + v ^ 2) * t ^ 2 / 4)) v := by
+    convert (hasDerivAt_id v).mul
+      (((((hasDerivAt_id v).pow 2).const_add 1).neg.mul_const (t ^ 2)).div_const 4).exp
+      using 1 <;> (try ext w) <;> dsimp <;> ring
+  have he := intervalIntegral.integral_eq_sub_of_hasDerivAt (fun v _ => hd v)
+    (show IntervalIntegrable (fun v : ℝ =>
+      (1 - t ^ 2 / 2 * v ^ 2) * exp (-(1 + v ^ 2) * t ^ 2 / 4)) volume 0 1 by
+      apply Continuous.intervalIntegrable; fun_prop)
+  have he' : (∫ v in (0 : ℝ)..1,
+      (1 - t ^ 2 / 2 * v ^ 2) * exp (-(1 + v ^ 2) * t ^ 2 / 4)) =
+      exp (-t ^ 2 / 2) := by
+    convert he using 1 <;> norm_num <;> congr 1 <;> ring
+  unfold G
+  rw [← he', ← intervalIntegral.integral_const_mul, ← intervalIntegral.integral_const_mul,
+    ← intervalIntegral.integral_sub
+      (by apply Continuous.intervalIntegrable; fun_prop)
+      (by apply Continuous.intervalIntegrable; fun_prop),
+    ← intervalIntegral.integral_const_mul]
+  apply intervalIntegral.integral_congr
+  intro v _
+  ring
 
 end D5.S3.Analytic.XuYangMillsRemainder.GeneralParameter
