@@ -84,7 +84,10 @@ internal sealed class CartesianControlAngleMatrixInvertibleDocument : IScribeDoc
                         + "obtained by reindexing its rows through b and its columns through g. "
                         + "Both maps are equivalences, so this independent reindexing preserves being a unit. "
                         + "This proves the assertion for all k,d,b,g, including empty index types and empty products."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("jiang-klco-di-matteo-2025-cartesian-control-angle-matrix-invertibility"),
+                    ResolutionKind.Proved)))));
 
     private static Formula AngleMatrixFormula()
     {
