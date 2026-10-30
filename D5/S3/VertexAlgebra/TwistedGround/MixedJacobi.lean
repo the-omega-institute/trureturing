@@ -914,4 +914,85 @@ theorem mixed_first_input_pairing (D : LatticeData) (hu : IsUnit D.G.det)
       ring
     _ = _ := by rw [expansion]
 
+/- The signed input mode is split by its actual output energy before the
+   nonnegative coefficient triangle is introduced.  This is deliberately a
+   disjunction: the negative branch is an actual zero, while the other branch
+   carries the Nat witness needed by `mixed_first_input_pairing`. -/
+theorem mixed_first_input_signed_support (D : LatticeData) (hu : IsUnit D.G.det)
+    (h24 : D.rank = 24) (H K : ℕ) (d k l E : ℤ) (a : fixedGrade D d)
+    (u v : paritySpace D hu (-1))
+    (huH : actualTensorL0 D hu u.val = (H : ℂ) • u.val)
+    (hvK : actualTensorL0 D hu v.val = (K : ℂ) • v.val)
+    (b : fixedGrade D E) :
+    let w : ℤ := (H : ℤ) + d - l - 1
+    let expanded (W : ℕ) : ℂ :=
+      ∑ p ∈ Finset.range (K-1), ∑ q ∈ Finset.range (W-1),
+        let s : ℤ := k+1-(p : ℤ)-2*(W : ℤ)+(q : ℤ)
+        (((-1 : ℂ)^((W : ℤ)+s))/(p.factorial : ℂ)) *
+        (∑ i ∈ Finset.range (q+1), ∑ ell ∈ Finset.range (q-i+1),
+          (Ring.choose (2*(d : ℂ)-(l : ℂ)-(ell : ℂ)-2) (q-i-ell) /
+            ((i.factorial : ℂ)*(ell.factorial : ℂ))) *
+          actualForm D hu ((T D hu ^ p) v.val)
+            ((correctedField D hu b.val).coeff (2*s)
+              ((correctedField D hu ((originalL1 D ^ ell) a.val)).coeff
+                (-2*l-2-2*((q-i : ℕ) : ℤ)+2*(ell : ℤ))
+                ((T D hu ^ i) u.val))))
+    w < 0 ∧
+        normalizedCoefficient D hu k
+          (((fixedParitySlice D hu (-1)
+            (⟨a.val,a.property.2⟩ : FixedCarrier D))[[l]]) u) v E b = 0 ∨
+      ∃ W : ℕ, (W : ℤ) = w ∧
+        normalizedCoefficient D hu k
+          (((fixedParitySlice D hu (-1)
+            (⟨a.val,a.property.2⟩ : FixedCarrier D))[[l]]) u) v E b = expanded W := by
+  dsimp
+  by_cases hw : (H : ℤ) + d - l - 1 < 0
+  · exact Or.inl ⟨hw, mixed_first_input_zero_of_negative D hu h24 H d k l a u v huH hw⟩
+  · right
+    have hnonneg : 0 ≤ (H : ℤ) + d - l - 1 := by omega
+    obtain ⟨W, hW⟩ := Int.eq_ofNat_of_zero_le hnonneg
+    refine ⟨W, hW, ?_⟩
+    simpa [hW] using
+      (mixed_first_input_pairing D hu h24 H K W d k l E a u v huH hvK hW b)
+
+/- The same signed split for the second input.  The output weight is derived
+   from the actual zero-mode covariance of the second twisted input, so this
+   branch also covers every signed mode and the ground/zero cases. -/
+theorem mixed_second_input_signed_support (D : LatticeData) (hu : IsUnit D.G.det)
+    (h24 : D.rank = 24) (H K : ℕ) (d k l E : ℤ) (a : fixedGrade D d)
+    (u v : paritySpace D hu (-1))
+    (huH : actualTensorL0 D hu u.val = (H : ℂ) • u.val)
+    (hvK : actualTensorL0 D hu v.val = (K : ℂ) • v.val)
+    (b : fixedGrade D E) :
+    let w : ℤ := (K : ℤ) + d - l - 1
+    let expanded (W : ℕ) : ℂ :=
+      ∑ p ∈ Finset.range (W-1), ∑ q ∈ Finset.range (H-1),
+        let s : ℤ := k+1-(p : ℤ)-2*(H : ℤ)+(q : ℤ)
+        (((-1 : ℂ)^((H : ℤ)+s))/(q.factorial : ℂ)) *
+        (∑ i ∈ Finset.range (p+1), ∑ ell ∈ Finset.range (p-i+1),
+          (Ring.choose (2*(d : ℂ)-(l : ℂ)-(ell : ℂ)-2) (p-i-ell) /
+            ((i.factorial : ℂ)*(ell.factorial : ℂ))) *
+          (∑ᶠ z : ℕ, (((-1 : ℂ)^(d-(ell : ℤ)))/(z.factorial : ℂ)) *
+            actualForm D hu ((T D hu ^ i) v.val)
+              ((correctedField D hu ((originalL1 D ^ (z+ell)) a.val)).coeff
+                (2*l+2-4*d+2*((p-i : ℕ) : ℤ)+2*((z+ell : ℕ) : ℤ))
+                ((correctedField D hu b.val).coeff (2*s) ((T D hu ^ q) u.val)))))
+    w < 0 ∧
+        normalizedCoefficient D hu k u
+          (((fixedParitySlice D hu (-1)
+            (⟨a.val,a.property.2⟩ : FixedCarrier D))[[l]]) v) E b = 0 ∨
+      ∃ W : ℕ, (W : ℤ) = w ∧
+        normalizedCoefficient D hu k u
+          (((fixedParitySlice D hu (-1)
+            (⟨a.val,a.property.2⟩ : FixedCarrier D))[[l]]) v) E b = expanded W := by
+  dsimp
+  by_cases hw : (K : ℤ) + d - l - 1 < 0
+  · exact Or.inl ⟨hw, mixed_second_input_zero_of_negative D hu h24 K d k l a u v hvK hw⟩
+  · right
+    have hnonneg : 0 ≤ (K : ℤ) + d - l - 1 := by omega
+    obtain ⟨W, hW⟩ := Int.eq_ofNat_of_zero_le hnonneg
+    refine ⟨W, hW, ?_⟩
+    simpa [hW] using
+      (mixed_second_input_pairing D hu h24 H K W d k l E a u v huH hvK hW b)
+
 end D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner
