@@ -36,7 +36,10 @@ internal sealed class CZXParentLindbladianSteadyStateDocument : IScribeDocumentD
                         "The gauge action turns each window word into an average over its two middle sites. The middle sites of the even-starting windows cover the ring, so the product projection sends every matrix to the sum of its identity and CZX-unitary components, weighted by the normalized trace tr(A) and the normalized pairing tr(U_CZX† A), where U_CZX = czxUnitary n.")),
                     Paragraph(Text(
                         "For the initial matrix ((2 : ℂ)^n)⁻¹ • (1 + tensorX n), the tensor-x diagonal trace is zero and the CZX-unitary trace is zero. The remaining coefficient is the transfer trace, identified with the trace of the n-th power of the two-by-two matrix [[1,1],[1,−1]]. Its square is 2 times the identity, so for even n the transfer trace is 2^(n/2+1). Combining this with the normalization gives 2^(1−n/2), and the evolution-limit identity then yields the displayed target. Nat.div denotes natural-number floor division and Nat.mod the remainder; Fin.divNat a b p and Fin.modNat a b p have values p.val / b and p.val % b, respectively."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("liu-et-al-2026-czx-parent-lindbladian-steady-state"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ClaimBody()
     {
