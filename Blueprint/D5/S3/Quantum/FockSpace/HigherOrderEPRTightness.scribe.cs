@@ -82,7 +82,10 @@ internal sealed class HigherOrderEPRTightnessDocument : IScribeDocumentDefinitio
                             + "Its lower norm bound permits normalization. The resulting ψ has squared norm one and output squared norm n/(HₘZ). "
                             + "Using Z ≥ 1/(n−1)! and n! = n(n−1)! gives n/(HₘZ) ≤ n!/Hₘ < ε. "
                             + "This establishes the stated approximation for every order and both signs."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("shchukin-van-loock-2016-higher-order-epr-tightness"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, AssessedProvenance provenance, string prose) =>
