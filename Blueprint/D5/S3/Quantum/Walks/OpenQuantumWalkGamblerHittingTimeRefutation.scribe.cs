@@ -96,7 +96,10 @@ internal sealed class OpenQuantumWalkGamblerHittingTimeRefutationDocument : IScr
                             + "The three entries used by the claimed affine expression agree for ρ and σ: both diagonal real entries are one half and the real part of the upper-right entry is zero.")),
                     Paragraph(Text(
                         "If the claim held, instantiate it with l, r, m = 3, and k = 1. The common three entries would force the two real mean values to be equal, while the explicit computation makes them 1 and 2. This contradiction proves ¬ claim."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("jacq-lardizabal-2017-oqw-gambler-mean-hitting-time-form"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula Local(string name) => Qualified(
         "D5", "S3", "Quantum", "Walks", "OpenQuantumWalkGamblerHittingTimeRefutation", name);
