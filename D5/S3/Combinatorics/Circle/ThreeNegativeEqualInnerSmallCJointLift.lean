@@ -32,14 +32,12 @@ private theorem floor_unique (Y d z : ℤ) (hd : 0<d)
 /-- Here r=4m and t=2n. The alternatives are exactly r/t=2,4, or at least 8. -/
 private theorem floor_selector (m n : ℤ) (hn : 4≤n) (hm : n≤m)
     (hdyad : m=n ∨ m=2*n ∨ 4*n≤m) :
-    let u := 1+4*m+16*m^2
     let d := 16*m*n+4*m+1
     let Y := 32*m^2*n-16*m^2-8*m*n-6*m-2
     let z := Y/d
     0≤z ∧ z<2*m ∧ (4*m+1)*z+2*m+1≤8*m^2 ∧
       Y-d*z<(4*m+1)*z+2*m+1 := by
   dsimp only
-  let u := 1+4*m+16*m^2
   let d := 16*m*n+4*m+1
   let Y := 32*m^2*n-16*m^2-8*m*n-6*m-2
   let z := Y/d
@@ -158,9 +156,9 @@ private theorem floor_certificate (m n q : ℤ) (hn : 4≤n) (hm : n≤m)
   have hBq : B*q=u+q-1 := by
     dsimp [B,u]
     nlinarith only [hrq,congrArg (fun x : ℤ => (4*m)*x) hrq]
+  have hBu : u*n-B=Ha := by dsimp [u,B,Ha,C]; ring
   have hx : u*(n-1)+B*(q-1)=Ha+q-1 := by
-    dsimp [Ha,C]
-    nlinarith only [hBq]
+    nlinarith only [hBq,hBu]
   have hxn : (2*u)*(n-1)+(2*B-1)*(q-1)=Ka+q-2 := by
     dsimp [Ka]
     nlinarith only [hx]
@@ -180,7 +178,7 @@ private theorem floor_certificate (m n q : ℤ) (hn : 4≤n) (hm : n≤m)
   have htail : d*z+u≤Kb := by dsimp [R] at hR; omega
   have hnewTail : Kg+Kb-(d*z+u)≤2*C+1 := by
     have he : Kb-(d*z+u)=R := by dsimp [R]; omega
-    dsimp [Kg,Hg] at *
+    change 2*(C-(4*m+1)*(2*m))+(4*m+1)*(2*m)+1+Kb-(d*z+u)≤2*C+1
     nlinarith only [he,hRupper]
   have hxcap : Ha+q-1≤C := by
     dsimp [Ha]
@@ -188,6 +186,17 @@ private theorem floor_certificate (m n q : ℤ) (hn : 4≤n) (hm : n≤m)
     nlinarith
   have hr2 : 4*m/2=2*m := by omega
   have ht2 : 2*n/2=n := by omega
+  have hseams : Ha≤u*(n-1)+B*(q-1) ∧ u*(n-1)+B*(q-1)≤C ∧
+      L*z≤Hb ∧ Hg+Hb-L*z≤C ∧
+      Ka≤(2*u)*(n-1)+(2*B-1)*(q-1) ∧
+      (2*u)*(n-1)+(2*B-1)*(q-1)≤2*C+1 ∧
+      d*z+u≤Kb ∧ Kg+Kb-(d*z+u)≤2*C+1 := by
+    rw [hx,hxn]
+    refine ⟨by omega,hxcap,by omega,?_,by omega,?_,htail,hnewTail⟩
+    · change C-(4*m+1)*(2*m)+Hb-L*z≤C
+      linarith only [hdeltaUpper]
+    · dsimp [Ka]
+      omega
   refine ⟨?_,?_,?_,?_⟩
   · dsimp [Bounded,makePlan]; rw [hr2,ht2]; omega
   · dsimp [Bounded,makePlan]; rw [hr2,ht2]; omega
@@ -195,17 +204,9 @@ private theorem floor_certificate (m n q : ℤ) (hn : 4≤n) (hm : n≤m)
   · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
       Order.first,Order.middle,Order.last,atNegative]
     simp only [hr2,ht2,reduceCtorEq,ite_false,ite_true,add_zero,zero_mul,mul_zero,zero_add]
-    change Ha≤u*(n-1)+B*(q-1) ∧ u*(n-1)+B*(q-1)≤C ∧
-      L*z≤Hb ∧ Hg+Hb-L*z≤C ∧
-      Ka≤(2*u)*(n-1)+(2*B-1)*(q-1) ∧
-      (2*u)*(n-1)+(2*B-1)*(q-1)≤2*C+1 ∧
-      d*z+u≤Kb ∧ Kg+Kb-(d*z+u)≤2*C+1
-    rw [hx,hxn]
-    refine ⟨by omega,hxcap,by omega,?_,by omega,?_,htail,hnewTail⟩
-    · dsimp [Hg] at *
-      omega
-    · dsimp [Ka]
-      omega
+    dsimp [Ha,Hb,Hg,Ka,Kb,Kg,u,B,L,C,d] at hseams
+    ring_nf at hseams ⊢
+    exact hseams
 
 /-- One physical joint order for the entire family 2<=c<a=b, in the original phase. -/
 theorem actualSource_three_negative_equal_inner_small_c_joint_lift (a b c : ℕ)
