@@ -583,7 +583,15 @@ structure LocalMemoAnswer where
 private initialize localMemoContext : IO.Ref String ← IO.mkRef ""
 private initialize certificateOnlyAnswers : IO.Ref (Std.HashMap String LocalResult) ← IO.mkRef {}
 private initialize localMemoAnswers : IO.Ref (Std.HashMap String LocalResult) ← IO.mkRef {}
-private initialize localMemoRegions : IO.Ref (Array CompactedRegion) ← IO.mkRef #[]
+
+/-- Validate the complete persistent identity before retaining the answer alone.
+The context bytes stay in their original disk record, outside retained memory. -/
+unsafe def readLocalMemoResult (path : System.FilePath) (identity : String) : IO LocalResult := do
+  let result ← readLookupPayload path fun (record : LocalMemoAnswer) => do
+    unless record.identity == identity do throw <| IO.userError "lookup.memo_input_mismatch"
+    return some record.result
+  let some result := result | throw <| IO.userError "lookup.memo_missing_result"
+  return result
 
 def localMemoEnabled : IO Bool := do
   return (← IO.getEnv "SEARCH_REDUCTION_MEMO") != some "0"
@@ -645,13 +653,11 @@ private unsafe def memoizedLocalRebuild (target : Expr) (types : List Expr)
   let path := (System.FilePath.mk directory) / s!"target-{hash context}" / s!"query-{hash identity}.pickle"
   if !directory.isEmpty && (← path.pathExists) then
     try
-      let (record, region) ← unpickle LocalMemoAnswer path
-      localMemoRegions.modify (·.push region)
-      unless record.identity == identity do throwError "lookup.memo_input_mismatch"
-      checkMemoProof target types record.result
-      localMemoAnswers.modify (·.insert key record.result)
+      let result ← readLocalMemoResult path identity
+      checkMemoProof target types result
+      localMemoAnswers.modify (·.insert key result)
       lookupPhase s!"lookup/memo hit=disk query={hash identity}"
-      return record.result
+      return result
     catch ex =>
       if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
       emitLookupRecord s!"LOOKUP_MEMO_REJECTED query={hash identity} reason={← ex.toMessageData.toString}"

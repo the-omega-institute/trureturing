@@ -379,31 +379,51 @@ private def checkpointIdentity : IO String := do
   lookupCheckpointIdentity.set (some identity)
   return identity
 
-private def ownedCheckpointTrace (t : LookupTrace) : LookupTrace :=
-  {t with
-    missing := t.missing.foldl (fun out n => out.push (ownedLookupName n)) #[],
-    failures := t.failures.foldl (fun out s => out.push (String.ofList s.toList)) #[],
-    faults := t.faults.foldl (fun out s => out.push (String.ofList s.toList)) #[],
-    capped := t.capped.foldl (fun out s => out.push (String.ofList s.toList)) #[],
-    source? := t.source?.map ownedLookupName}
+/-- Retain only the reachable result graph, independently of the input mapping.
+An empty dependency array in pickle forces a physical copy of every reachable
+object, including expression/name storage. Checked certificates may then keep
+this smaller region until compiler exit. -/
+initialize lookupPayloadRegions : IO.Ref (Array CompactedRegion) ← IO.mkRef #[]
 
-/-- Checkpoint regions live until process exit. Expression sharing can retain
-mapped query storage even when returned expressions are reconstructed. -/
-initialize lookupCheckpointRegions : IO.Ref (Array CompactedRegion) ← IO.mkRef #[]
+@[noinline] unsafe def retainLookupPayload {α : Type} (value : α) : IO α :=
+  IO.FS.withTempFile fun _ path => do
+    pickle path value
+    let (result, region) ← unpickle α path
+    lookupPayloadRegions.modify (·.push region)
+    lookupPhase s!"lookup/cache-payload retained_bytes={region.size}"
+    return result
 
-private unsafe def readLookupCheckpoint (path : System.FilePath) : IO LookupCheckpoint := do
-  let (r, region) ← unpickle LookupCheckpoint path
-  lookupCheckpointRegions.modify (·.push region)
-  let result : LookupCheckpoint := {r with
-    identity := String.ofList r.identity.toList,
-    query := detachLookupExpression r.query,
-    entry := {r.entry with
-      module := String.ofList r.entry.module.toList, name := String.ofList r.entry.name.toList,
-      route := String.ofList r.entry.route.toList,
-      parts := r.entry.parts.foldl (fun out (s,n) => out.push (String.ofList s.toList,n)) #[]},
-    trace := ownedCheckpointTrace r.trace,
-    proof? := r.proof?.map detachLookupExpression}
-  return result
+/-- Validate the full input, then independently compact only the selected payload.
+The original record leaves scope before its mapping is freed. -/
+@[noinline] unsafe def readLookupPayload {α β : Type} (path : System.FilePath)
+    (select : α → IO (Option β)) : IO (Option β) := do
+  let (result, region) ← do
+    let (record, region) ← unpickle α path
+    try
+      let selected ← select record
+      let result ← selected.mapM retainLookupPayload
+      pure (Except.ok result, region)
+    catch ex => pure (Except.error ex, region)
+  let bytes := region.size
+  region.free
+  lookupPhase s!"lookup/cache-input released_bytes={bytes}"
+  match result with
+  | .ok result => return result
+  | .error ex => throw ex
+
+structure LookupCheckpointResult where
+  trace : LookupTrace
+  proof? : Option Expr
+  search : Nat
+  preparation : Nat
+
+unsafe def readLookupCheckpoint (path : System.FilePath) (identity : String)
+    (query : Expr) (entry : DiskLookup.Entry) : IO (Option LookupCheckpointResult) :=
+  readLookupPayload path fun (r : LookupCheckpoint) => do
+    if r.identity != identity || r.query != query || r.entry != entry then return none
+    return some {
+      trace := r.trace, proof? := r.proof?,
+      search := r.search, preparation := r.preparation}
 
 /-- Every attempt starts from the same branch state and receives its own κ.
 An exceptional candidate contributes unknown and never stops its successors. -/
@@ -423,8 +443,8 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
   let startedReplay ← IO.getNumHeartbeats
   if let some path := checkpoint? then
     if ← path.pathExists then
-      let record ← readLookupCheckpoint path
-      if record.identity == ((← checkpointIdentity) ++ reprStr (table.disk?.map (fun d => (toJson d.header).compress ++ (toJson d.membership?).compress))) && record.query == query && record.entry == entry then
+      let identity := (← checkpointIdentity) ++ reprStr (table.disk?.map (fun d => (toJson d.header).compress ++ (toJson d.membership?).compress))
+      if let some record ← readLookupCheckpoint path identity query entry then
         let beforeReplay := (← table.budget?.mapM (·.get)).getD {}
         if let some proof := record.proof? then
           let arguments ← xs.filterM fun x => return !(← x.fvarId!.isLetVar)
