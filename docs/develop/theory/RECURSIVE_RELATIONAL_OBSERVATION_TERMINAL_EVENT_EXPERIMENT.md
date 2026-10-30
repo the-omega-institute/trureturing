@@ -629,7 +629,7 @@ $$
 $$
 \mathsf P_\nu
 =\left\{\sum_i\alpha_i\delta_{s_i}+r:
-  s_i\in\mathsf S,\ r\text{ 是 }\mathsf S\text{ 上总质量 }\alpha\text{ 的概率测度}\right\}.
+  s_i\in\mathsf S,\ r\text{ 是 }\mathsf S\text{ 上总质量 }\alpha\text{ 的有限测度}\right\}.
 \tag{RRO.42}
 $$
 
@@ -639,7 +639,7 @@ $$
 
 证明。全零回放给出从任意控制器到选择器的映射，定理 9.2 给同风险且不增实际均值的源内替换；反向对每个可测选择器逐片拼接其有限形状或无限等待路线。因此优化恰好在 (RRO.42) 的原始可行像上，不能扩大为先验外的混合类。
 
-每个有限概率空间至多有可数个正质量原子；把它们逐一取出，余部按“存在任意小正测度子集”反复二分即可得到非原子部分，并按同一切分构造任意给定的可数质量分配。这给出 (RRO.42)。把 $\mathsf S$ 赋予一点紧化拓扑：有限选择孤立，$h\to\infty$ 时两种偶形和奇形均收敛到 $\infty$。其上的风险值连续，因为 (RRO.39) 给出 $\mathcal R_L(c(s))\to w_L$；费用值在 $K_\infty<\infty$ 时连续，在 $K_\infty=\infty$ 时下半连续，因为 $K_h\uparrow K_\infty$。原子赋值空间 $\mathsf S^{\mathbb N}$ 与非原子余部的概率测度空间都是紧的，映射
+每个概率空间至多有可数个正质量原子；把它们逐一取出，余部按“存在任意小正测度子集”反复二分即可得到非原子部分，并按同一切分构造任意给定的可数质量分配。这给出 (RRO.42)。把 $\mathsf S$ 赋予一点紧化拓扑：有限选择孤立，$h\to\infty$ 时两种偶形和奇形均收敛到 $\infty$。其上的风险值连续，因为 (RRO.39) 给出 $\mathcal R_L(c(s))\to w_L$；费用值在 $K_\infty<\infty$ 时连续，在 $K_\infty=\infty$ 时下半连续，因为 $K_h\uparrow K_\infty$。原子赋值空间 $\mathsf S^{\mathbb N}$ 与非原子余部的概率测度空间都是紧的，映射
 $((s_i),r)\mapsto\sum_i\alpha_i\delta_{s_i}+r$ 连续（尾部质量由 $\sum_i\alpha_i$ 控制），故 $\mathsf P_\nu$ 紧。风险在其上连续，费用下水平集 $C\le B$ 闭，遂达到最小值。费用为 $+\infty$ 的无限端不能出现在这个下水平集中，故不存在丢失或少收费的无限质量。证毕。
 
 **定理 9.4（实际最优控制器与决策规则的充要条件）。** 设 $p^\star$ 是 (RRO.41) 的一个最小选择器分布。存在达到 $F_L^\nu(B)$ 的实际控制器及决策规则，当且仅当可以选取这样的 $p^\star$，使下列每个具有正 $p^\star$ 质量的叶都达到其动作下确界：
@@ -725,8 +725,8 @@ $$
  \mu=\tfrac12\delta_{1/5}+\tfrac12\delta_{4/5},
 $$
 
-并令 $D=\{\mathrm L,\mathrm H\}$，其中目标是判断 $Q=1/5$ 还是 $Q=4/5$。令 $g(1/5)=\mathrm L$、$g(4/5)=\mathrm H$，损失为
-$L(q,x,d)=\mathbf1\{d\ne g(q)\}$（只在这两个先验点上取值）。这是参数任务，不是根错误任务。
+并令 $D=\{\mathrm L,\mathrm H\}$，其中目标是判断 $Q=1/5$ 还是 $Q=4/5$。令 $g(q)=\mathrm L$ 当 $q\le1/2$、$g(q)=\mathrm H$ 当 $q>1/2$，损失为
+$L(q,x,d)=\mathbf1\{d\ne g(q)\}$。这是参数任务，不是根错误任务。
 
 对同一个正偶数帽 $2$，容量 $\mathsf A=(1,1)$ 与 $\mathsf B=(2,0)$ 的任务风险分别为
 
