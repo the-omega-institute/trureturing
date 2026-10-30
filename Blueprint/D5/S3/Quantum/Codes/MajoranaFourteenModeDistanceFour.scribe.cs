@@ -122,7 +122,10 @@ internal sealed class MajoranaFourteenModeDistanceFourDocument : IScribeDocument
                         + "between twice its dimension and its coordinate count. It remains self-orthogonal and contains parity, so induction gives a short vector "
                         + "orthogonal to d but outside d. Extension by zero gives the required vector for c. If there is no such pair in c, the preceding contradiction applies. "
                         + "Specializing the coordinate type to Fin n, whose cardinality is n, proves the stated assertion for every n at most fourteen."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hastings-2017-small-majorana-fourteen-mode-distance-four"),
+                    ResolutionKind.Proved))
         )));
 
     private static Formula SelfOrthogonalFormula() =>
