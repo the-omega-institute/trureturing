@@ -42,11 +42,13 @@ theorem dependence : ObservationalDependence signature actual := by
     rw [show (405 : ℝ) / 256 = 3 ^ 4 * 5 / 4 ^ 4 by norm_num,
       Real.log_div (by norm_num) (by norm_num),
       Real.log_mul (by norm_num) (by norm_num), Real.log_pow, Real.log_pow]
+    norm_num
   have hlog2 : Real.log ((2592 : ℝ) / 2401) =
       4 * Real.log (3 / 2) + Real.log 2 - 4 * Real.log (7 / 4) := by
     rw [show (2592 : ℝ) / 2401 = (3 / 2) ^ 4 * 2 / (7 / 4) ^ 4 by norm_num,
       Real.log_div (by norm_num) (by norm_num),
       Real.log_mul (by norm_num) (by norm_num), Real.log_pow, Real.log_pow]
+    norm_num
   have hlt : Real.log ((2592 : ℝ) / 2401) < Real.log ((405 : ℝ) / 256) :=
     Real.log_lt_log (by norm_num) (by norm_num)
   change productLogKernel (1 / 2) (1 / 2) (1 / 4) ≠ productLogKernel (1 / 2) (1 / 2) 1
@@ -96,4 +98,5 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[]
 
+end
 end Reg.D5.S3.Entropy.ProductAbsorptionLogKernel
