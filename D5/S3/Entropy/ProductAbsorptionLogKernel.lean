@@ -279,7 +279,7 @@ private lemma kernel_sign {u v s : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1)
     rw [Real.log_mul (by positivity) (by positivity), Real.log_pow, Real.log_pow]
   have hlog (x : ℝ) (hx : 0 ≤ x) :
       Real.log (1 + x / s) = Real.log (s + x) - Real.log s := by
-    rw [show 1 + x / s = (s + x) / s by field_simp; ring]
+    rw [show 1 + x / s = (s + x) / s by field_simp [hs.ne']; ring]
     exact Real.log_div (by positivity) hs.ne'
   have he : 2 * productLogKernel u v s = Real.log N - Real.log D := by
     rw [hN, hD]
