@@ -1174,3 +1174,301 @@ FLW 原论文 Theorem 0.1 的条件是：阶数至少五且不为六或十时，
 第 8 节的十三维、七地址编译与第 10 节的八十九维扩展须分清：后者沿用续卷 II 的指定 ready 嵌入、十一地址和完整旧终端。任意目标的有限字存在性、跨程序概率匹配、完整实际程序律供应，以及任意未知输入的取得，仍是正文分列的不同条件。
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 固定五概率表示的全部自治随机门
+
+**定义 12.1（同一五结果上的自治更新）。** 继续使用定义 3.1 的原效果、原增益 $\nu$ 和固定顺序 $S=(0,2,3,5,25)$。对全部 qubit 密度矩阵置
+
+$$
+p(\rho)=(\operatorname{Tr}\rho E_s)_{s\in S}\in\mathbb R^5.
+$$
+
+概率写为列向量。一个自治随机更新是满足 $T_{st}\ge0$、$\sum_sT_{st}=1$ 的实 $5\times5$ 矩阵，其中 $T_{st}$ 是输入标签 $t$ 到输出标签 $s$ 的条件概率。所问的精确存在性是
+
+$$
+\exists T\quad\forall\rho\succeq0,\ \operatorname{Tr}\rho=1:
+\qquad Tp(\rho)=p(U\rho U^*).
+\tag{12.1}
+$$
+
+$T$ 可以依赖已指定的 $U$，但不依赖 $\rho$、制备字、制备设置、既往记录或当次抽到的输入以外的信息。行概率约定下，同一式为 $p(\rho)^{\mathsf T}T^{\mathsf T}=p(U\rho U^*)^{\mathsf T}$，更新矩阵的行和才为一。这里没有假定 $T$ 可逆，也没有要求其逆仍随机。
+
+**定理 12.2（本编码的精确分类与全部可行核）。** 对定义 3.1 的五效果，$U\in U(2)$ 满足 (12.1) 当且仅当 $U=e^{i\gamma}I_2$。在此情形全部可行矩阵恰为
+
+$$
+T(t)=\begin{pmatrix}
+1-t&0&0&0&3t\\
+0&1&0&0&0\\
+0&0&1&0&0\\
+0&0&0&1&0\\
+t&0&0&0&1-3t
+\end{pmatrix},\qquad 0\le t\le\frac13.
+\tag{12.2}
+$$
+
+证明。式 (12.1) 等价于逐效果等式
+
+$$
+U^*E_sU=\sum_{t\in S}T_{st}E_t\qquad(s\in S).
+\tag{12.3}
+$$
+
+充分性由取迹得到。必要性中，两边之差是 Hermitian 矩阵；若其在全部纯态上的二次型为零，其谱分解即给差为零。因此不需要把输入扩充到非物理矩阵。
+
+使用秩一 POVM 随机后处理的标准支撑事实：若非零秩一正矩阵 $F$ 是 $\sum_jc_jF_j$，其中 $c_j\ge0$、$F_j\succeq0$，则每个 $c_j>0$ 的 $F_j$ 均支撑在 $\operatorname{ran}F$ 内。事实上，对 $z\perp\operatorname{ran}F$ 有 $0=\sum_jc_j\langle z,F_jz\rangle$；各项非负，所以所用 $F_j$ 都消灭这些 $z$，正性再给所述支撑包含。这是 [Haapasalo–Pellonpää，§2 (1b) 及脚注 7](https://arxiv.org/pdf/1705.03636v1) 所述 smearing 框架中的基本正性步骤；一般框架及秩一背景不作为新增结果。
+
+为处理本效果中的重复射线，把 $E_s=w_s(I+n_s\cdot\sigma)/2$ 的方向和迹列为
+
+$$
+\begin{array}{c|c|c}
+s&n_s&w_s=\operatorname{Tr}E_s\\ \hline
+0&n_A=(-1,-1,-1)/\sqrt3&3\nu\sqrt3\\
+2&n_B=(3,1,1)/\sqrt{11}&\nu\sqrt{11}\\
+3&n_C=(0,0,1)&2\nu\\
+5&n_D=(1,3,1)/\sqrt{11}&\nu\sqrt{11}\\
+25&n_A&\nu\sqrt3
+\end{array}
+\tag{12.4}
+$$
+
+四个方向互异。令 $R_U\in SO(3)$ 沿用推论 4.2，则 (12.3) 左侧的方向是 $R_U^{-1}n_s$。每行左侧非零，故右侧至少使用一项；支撑事实迫使其方向属于 $\{n_A,n_B,n_C,n_D\}$。这四个旋转后的方向仍互异，因而它们给这个四元集合的一个置换 $\pi$，满足 $R_U^{-1}n_g=n_{\pi(g)}$。
+
+每一输入列只能流向这个置换指定的唯一输出方向组。将同方向的所有输出行相加并取迹，再用每列和一，得到
+
+$$
+W_g=W_{\pi(g)},\qquad
+(W_A,W_B,W_C,W_D)=\nu(4\sqrt3,\sqrt{11},2,\sqrt{11}).
+\tag{12.5}
+$$
+
+这里必须合并 $0,25$ 后的总迹，不能把两个重复效果误当成五条不同射线。因为 $4\sqrt3>\sqrt{11}>2$，$A,C$ 两组各自固定。于是 $R_U$ 固定两个不共线的向量 $n_A,n_C$。一个正向三维旋转还固定它们的叉积，所以 $R_U=I_3$；交换 $B,D$ 而固定 $A,C$ 的反射不属于 $SO(3)$。最后 $U$ 与全部 Pauli 矩阵交换；先与 $\sigma_z$ 交换使它对角，再与 $\sigma_x$ 交换使两个对角元相同，故 $U=e^{i\gamma}I_2$。
+
+反向取 $T=I_5$ 即成立。若要求列出此时所有 $T$，支撑事实使 $2,3,5$ 三列各自固定，$0,25$ 两列只能在本组内流动。该 $2\times2$ 列随机块须固定权重列 $(3,1)^{\mathsf T}$。置 $T_{25,0}=t$，列归一及这项固定关系给 $T_{00}=1-t$、$T_{0,25}=3t$、$T_{25,25}=1-3t$，非负性恰为 $0\le t\le1/3$。代入 $p_0=3p_{25}$ 验证 (12.2)，包括两个端点。∎
+
+**推论 12.3（静态完备与正随机延拓的分离）。** 令 $\mathcal C=\{p(\rho):\rho\text{ 为 qubit 密度矩阵}\}$。每个 $U$ 在 $\mathcal C$ 上都有唯一的可逆仿射更新 $F_U(p(\rho))=p(U\rho U^*)$，但它可延拓为整个五结果单纯形上的列随机矩阵，当且仅当 $U$ 是标量相位。
+
+证明。定理 3.2 给反演
+
+$$
+\mathbf r=\nu^{-1}(p_2+p_{25}-a_\nu,\ p_5+p_{25}-a_\nu,\ p_3-\nu).
+\tag{12.6}
+$$
+
+将其旋转为 $R_U\mathbf r$ 再代回定义 3.1 就给 $F_U$；逆为 $F_{U^*}$。其随机线性延拓恰是 (12.1)，由定理 12.2 分类。故这里五个精确概率没有丢失 qubit 状态信息；失败发生在要求同一个非负核作用于五个标签这一额外条件。命题 4.3 排除测量通道的 CPTP 左逆，所问对象不同；其证明不承担本分类。∎
+
+## 13. 黄金相位门的三个已知纯目标与正误差下界
+
+**定义 13.1（固定门和三个目标）。** 使用 §7.2 未交换逻辑基时的投影 $P=|1\rangle\langle1|$，固定
+
+$$
+U_\star=K_P=\zeta[I+(\zeta-1)P]
+=\operatorname{diag}(\zeta,\zeta^2),\quad
+\theta=\frac{3\pi}{5},\quad c=\cos\theta=\frac{1-\sqrt5}{4},\quad s=\sin\theta>0.
+\tag{13.1}
+$$
+
+这是本卷的黄金相对相位门；整体因子 $\zeta$ 不改变密度矩阵共轭。其 Bloch 作用为绕 $z$ 轴旋转 $+\theta$。置
+
+$$
+m=R_{U_\star}^{-1}n_B
+=\frac{(3c+s,c-3s,1)}{\sqrt{11}},\qquad
+\rho_0=\frac{I+\sigma_z}{2},\quad
+\rho_1=\frac{I-\sigma_z}{2},\quad
+\rho_d=\frac{I-m\cdot\sigma}{2}.
+\tag{13.2}
+$$
+
+$|m|=1$，故三者均为指定的已知纯目标；下标 $d$ 表示黄金门后效果 $2$ 的暗态。它不表示一个额外探测器。以下只用这三个输入，不假定任意未知输入的实际接入，也不增加混态准备源。
+
+**定理 13.2（三目标的统一总变差阻碍）。** 对每个非负列归一 $5\times5$ 矩阵 $T$，记
+
+$$
+e_j(T)=\operatorname{TV}\bigl(Tp(\rho_j),p(U_\star\rho_jU_\star^*)\bigr),
+\qquad j\in\{0,1,d\}.
+$$
+
+则同时有
+
+$$
+\boxed{e_0(T)+e_1(T)+4e_d(T)\ge\nu\sqrt{11}},\qquad
+\boxed{\max_{j\in\{0,1,d\}}e_j(T)\ge
+\delta:=\frac{\nu\sqrt{11}}6
+=\frac{\sqrt{11}}{6(1+2\sqrt3+\sqrt{11})}>0.}
+\tag{13.3}
+$$
+
+特别地，$\inf_T\max_je_j(T)\ge\delta$；同一个 $T$ 必须同时作用于三个输入。此常数不声称最优。
+
+证明。由 $m=R_{U_\star}^{-1}n_B$，$U_\star^*E_2U_\star=\nu\sqrt{11}(I+m\cdot\sigma)/2$，故
+
+$$
+p_2(U_\star\rho_dU_\star^*)=0,\qquad
+p_2(U_\star\rho_0U_\star^*)+p_2(U_\star\rho_1U_\star^*)
+=\operatorname{Tr}E_2=\nu\sqrt{11}.
+\tag{13.4}
+$$
+
+第二式也可直接用 $U_\star\rho_iU_\star^*=\rho_i$ 与 $\rho_0+\rho_1=I$ 检验。下面证明逐坐标支配
+
+$$
+p_t(\rho_d)\ge\frac14\bigl(p_t(\rho_0)+p_t(\rho_1)\bigr)\qquad(t\in S).
+\tag{13.5}
+$$
+
+依 (12.4)，只需 $n_t\cdot m\le1/2$。四种内积为
+
+$$
+\begin{aligned}
+n_A\cdot m&=-\frac{4c-2s+1}{\sqrt{33}},&
+n_B\cdot m&=\frac{10c+1}{11},\\
+n_C\cdot m&=\frac1{\sqrt{11}},&
+n_D\cdot m&=\frac{6c-8s+1}{11}.
+\end{aligned}
+\tag{13.6}
+$$
+
+$-1/3<c<0$，因为 $1<\sqrt5<7/3$；又 $0<s<1$。因此第一项严格小于 $7/(3\sqrt{33})<1/2$，最后的不等式由 $196<297$ 给出；第二、四项严格小于 $1/11<1/2$，第三项也小于 $1/2$。由 $p_t(\rho_d)=w_t(1-n_t\cdot m)/2$ 和 $p_t(\rho_0)+p_t(\rho_1)=w_t$ 即得 (13.5)。这是对固定五效果逐项的检验，包括重复的 $0,25$，不从“信息完备”一词推测正性。
+
+对两个归一分布，单个事件的概率差至多其 TV。非负 $T$ 保持 (13.5)，故由输出坐标 $2$ 得
+
+$$
+\begin{aligned}
+e_d(T)&\ge (Tp(\rho_d))_2\\
+&\ge\frac14\bigl((Tp(\rho_0))_2+(Tp(\rho_1))_2\bigr)\\
+&\ge\frac14\bigl(\nu\sqrt{11}-e_0(T)-e_1(T)\bigr).
+\end{aligned}
+\tag{13.7}
+$$
+
+移项给第一界，再用 $e_0+e_1+4e_d\le6\max_je_j$ 给第二界。即使 (13.7) 最后一行的括号为负，移项后的不等式仍然有效。所有分母严格正且 $\nu>0$，故 $\delta>0$。证明只用三个纯态；$\rho_0+\rho_1=I$ 是纸面矩阵恒等式，不是免费执行随机混合的权限。∎
+
+## 14. 原七地址有限正向字及完整旧终端中的稳健转送
+
+**定义 14.1（原生来源和无条件比较律）。** 使用 §8 的同一个十站点、十三维 $\mathcal H$、七地址 $0,\ldots,6$、唯一 ready 种子 $v=e_{00100}$，以及 $V=LJ$。完整终端字母表仍为 $\Omega=\{0,1\}^{10}$，保留全部 $1024$ 个标签。五个理想支撑标签按原顺序为
+
+$$
+\begin{array}{c|ccccc}
+t&0&2&3&5&25\\ \hline
+\ell_t&1000000010&1010000010&1001000010&1000100010&1010100010.
+\end{array}
+\tag{14.1}
+$$
+
+以 $\mathsf I:\mathbb R^5\to\mathbb R^\Omega$ 表示将质量放到这五个标签、其它坐标置零的列随机嵌入。置 $p_j=p(\rho_j)$、$q_j=p(U_\star\rho_jU_\star^*)$。理想完整终端律分别为 $\mathsf I p_j,\mathsf I q_j$。不把其它标签删除后重新归一化。
+
+对每个目标选单位向量 $\psi_j$ 使 $\rho_j=|\psi_j\rangle\langle\psi_j|$，并选数学 $B_j\in U(2)$ 使 $B_j|0\rangle=\psi_j$。定理 8.2 对任意 $\alpha>0$ 给原七地址有限正向制备字 $a_j$，满足
+
+$$
+\|K_{a_j}v-V\psi_j\|<\alpha.
+\tag{14.2}
+$$
+
+定理 8.3 对 $\mathcal G_{U_\star}\in SU(13)$ 和任意 $\beta>0$ 给一个共同的有限正向门字 $g$，满足
+
+$$
+\|K_g-\mathcal G_{U_\star}\|_{\mathcal H}<\beta,\qquad
+\|K_gK_{a_j}v-VU_\star\psi_j\|<\alpha+\beta.
+\tag{14.3}
+$$
+
+第二界是酉性和三角不等式；实际中间态不必精确落在 $V$ 码。这里 $B_j,\mathcal G_{U_\star}$ 是编译目标，不是新增可调用控制；实际字仍只使用原地址。比较输入、输出律分别对应同一 ready 源上执行 $a_j$ 后终端读取、执行 $a_j$ 再接 $g$ 后终端读取的两种完整程序，不插入一次中途测量再继续演化。
+
+**定理 14.2（完整标签核、有限编译和实际误差）。** 设同一概率接口下的两组完整终端律 $P_j^{\rm in},P_j^{\rm out}$ 满足
+
+$$
+\operatorname{TV}(P_j^{\rm in},\mathsf I p_j)\le a_j^{\rm err},\qquad
+\operatorname{TV}(P_j^{\rm out},\mathsf I q_j)\le b_j^{\rm err}.
+\tag{14.4}
+$$
+
+这里 $a_j^{\rm err},b_j^{\rm err}\ge0$ 为误差界，与制备字 $a_j$ 区别。对每一个固定的非负列归一 $\Omega\times\Omega$ 矩阵 $\mathsf K$，令
+
+$$
+r_j(\mathsf K)=\operatorname{TV}(\mathsf KP_j^{\rm in},P_j^{\rm out}),\qquad
+d_j=a_j^{\rm err}+b_j^{\rm err}.
+$$
+
+则
+
+$$
+\begin{aligned}
+r_0(\mathsf K)+r_1(\mathsf K)+4r_d(\mathsf K)
+&\ge\nu\sqrt{11}-(d_0+d_1+4d_d),\\
+\max_jr_j(\mathsf K)&\ge\delta-\max_jd_j.
+\end{aligned}
+\tag{14.5}
+$$
+
+所以 $\max_jd_j<\delta$ 是一个明确的严格正误差区间。核甚至可以使用全部旧终端标签，结论仍成立；它仍须不依赖三种制备设置或其档案。
+
+证明。取任一固定确定性粗映射 $\mathsf D:\Omega\to S$，在五个 $\ell_t$ 上为其逆，在其余标签上例如全映到 $0$。这只用于证明，原记录仍完整保留。于是 $\mathsf D\mathsf I=I_5$，$T=\mathsf D\mathsf K\mathsf I$ 是定理 13.2 允许的同一个五阶列随机矩阵。随机映射收缩 TV，因为对任意实向量 $x$ 有
+
+$$
+\sum_s\left|\sum_tT_{st}x_t\right|
+\le\sum_{s,t}T_{st}|x_t|=\sum_t|x_t|.
+$$
+
+三角不等式和这项收缩性给
+
+$$
+\operatorname{TV}(Tp_j,q_j)
+\le a_j^{\rm err}+r_j(\mathsf K)+b_j^{\rm err}.
+\tag{14.6}
+$$
+
+应用 (13.3) 的加权界及最大值界即得 (14.5)。$\mathsf D$ 不按成功条件化，故从未除以小成功概率，也没有丢弃任何泄漏或失败质量。∎
+
+**推论 14.3（编译、执行、读出及统计的分层预算）。** 在明确采用本卷 Born/CP 接口时，精确执行 (14.2)–(14.3) 的有限字给 (14.4) 中
+
+$$
+a_j^{\rm err}\le\alpha,\qquad b_j^{\rm err}\le\alpha+\beta.
+\tag{14.7}
+$$
+
+若真实准备、控制和读出使完整律相对这些精确有限字的 Born 律另有 TV 偏差界 $\eta_j^{\rm in},\eta_j^{\rm out}$，则有效预算为
+
+$$
+d_j\le2\alpha+\beta+\eta_j^{\rm in}+\eta_j^{\rm out},\qquad
+\max_jr_j(\mathsf K)\ge
+\delta-2\alpha-\beta-\max_j(\eta_j^{\rm in}+\eta_j^{\rm out}).
+\tag{14.8}
+$$
+
+因此理想数学编译取 $\alpha<\delta/8$、$\beta<\delta/4$ 时，余量严格大于 $\delta/2$；真实偏差还须小于相应余量。有限字存在性本身不供应这些实际偏差界。
+
+证明。归一向量 $x,y$ 的纯态距离满足 $D(|x\rangle\langle x|,|y\rangle\langle y|)\le\|x-y\|$，随后完整终端测量不增加距离。代入 (14.2)–(14.3) 得 (14.7)，再两次使用三角不等式得 (14.8)。精确原门保留 $\mathcal H$，故十三路径之外的 $1011$ 个旧标签在精确模型中质量仍为零；五模式之外还有八条合法路径，其制备后与门后总质量分别至多 $\alpha^2$、$(\alpha+\beta)^2$。这些质量全部留在完整 TV 中，不能另删后声称同一个界。真实误差若产生其它旧标签的质量，也计入 $\eta$，不得将它们作为“无效样本”删除。
+
+原七地址来源没有中间随机仪器或可删失败分支，实际档案仍保留制备字 $a_j$、接续 $g$、调用顺序及原十位终端；这是[续卷 II 定义 77.1、83.1](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md) 的原域。字长若为 $\ell_j,m$，两种程序分别花费 $\ell_j$、$\ell_j+m$ 次原门调用，所有调用及档案保留；本推导不给字长上界或免费重置。三种已知目标可以逐精度由旧种子编译，不提供未知态、独立副本、随机混态源或新增测量。完整档案若被用来选择不同的核，便已超出同一个 $\mathsf K$ 的假设，并未被 (14.5) 排除。
+
+有限统计认证又是另一层：若某个已供应的统计方案在同一置信事件上给六个完整经验律 $\widehat P_j^{\rm in},\widehat P_j^{\rm out}$ 及其 TV 半径 $h_j^{\rm in},h_j^{\rm out}$，则在该事件上，同时对所有 $\mathsf K$ 有
+
+$$
+\max_j\operatorname{TV}(\mathsf K\widehat P_j^{\rm in},\widehat P_j^{\rm out})
+\ge\delta-\max_j(d_j+h_j^{\rm in}+h_j^{\rm out}).
+\tag{14.9}
+$$
+
+这是 (14.5) 再用两次三角不等式，故也允许在同一批数据后拟合候选核。严格正认证须右侧为正，并须真实具备所声称的共同置信事件。原生单次 ready／终端合同不自动供应独立重复、平稳抽样或这些置信半径；此处不声称已实际执行或获得统计认证。∎
+
+## 15. 本编码的决策后果、来源对应与起源边界
+
+**命题 15.1（五概率自治状态的准确决策范围）。** 本卷完整五概率可重建全部 qubit 密度矩阵，但作为五标签概率空间上的自治状态，它不能用固定非负归一核承载任何非平凡 $U(2)$ 共轭；黄金门还受到 (13.3) 与 (14.5) 的有限正误差约束。保留相干码、引入更大的连续配置空间或保留影响更新的历史／上下文，是与这项结论相容的不同状态合同。
+
+证明。前两句分别由推论 12.3、定理 13.2 和 14.2。定理 4.1 的 $J\rho J^*$ 与定理 8.3 的 $V\rho V^*$ 已给同一载体中的相干实现，并不需要经典随机核。另一方面，把精确 $p\in\mathcal C$ 本身作为一个连续经典配置，以 $p\mapsto F_U(p)$ 确定性更新，在纸面上完全可定义。此时状态空间是连续的 $\mathcal C$，不是从五标签中抽样的一个状态；(12.1) 没有排除这种模型，也未提供其有限精度取得或物理成本。
+
+若扩展只是在五标签前后接固定、与输入及制备无关的随机编码 $A$、扩展核 $M$ 与随机解码 $B$，则 $BMA$ 仍是同一个五阶随机核，故不能绕开定理 12.2。若扩展改为依赖制备的隐藏分布、完整档案、相干上下文或其它未由固定 $A$ 供应的状态，这个因子分解前提不成立，不能据此排除它们。[续卷 II 命题 83.3](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md) 的矩阵群点／射线点及档案模型正属后一范围。保存旧档案的义务没有被新的五概率判据撤销。
+
+因此下一步若要求五标签自治随机闭合，就须放弃本卷的非平凡相干门；若保留这些门，状态或更新合同就须超出该五阶随机核。这个源特定二选一增加了静态表示与相干动力学之间的约束，没有从该约束推导 Born 规则、复数标量或物理相位来源。全部概率比较仍以明确的 Born/CP 接口，或已取得同等完整律的接口为条件。§10 的跨程序同效果匹配仍是额外条件，不能由门的交换性或此处的正误差界推出。续卷 II §134 的实际历史 $7799$ 及其非匹配概率仍保持原值和原结论，本推导未给该历史安装 Born 律。∎
+
+**定义 15.2（外部先例与仓内接口的对应边界）。** 本增补的承重增量为 `repo-derived` 的固定效果分类 (12.2)、黄金门三个明确纯目标的界 (13.3)，以及对原菜单和完整终端的 (14.5)–(14.9) 对应；不主张全球文献优先权。所复用供应如下。
+
+| 供应 | 精确对应与保留边界 |
+| --- | --- |
+| E. Haapasalo、J.-P. Pellonpää，[*Optimal quantum observables*, 1705.03636v1](https://arxiv.org/pdf/1705.03636v1)，§2 (1b)、脚注 7 及 §5 | `literature-attested`：随机 smearing、秩一 POVM 与 post-processing clean 背景。其概率矩阵采用输入为行；本卷 $T$ 是该约定的转置。正组合的支撑约束用于 (12.3)，但固定方向、重复射线总权重、仅标量相位的分类及黄金门常数由本编码计算，不能归给一般 clean 性质。 |
+| T. Theurer、D. Egloff、L. Zhang、M. B. Plenio，[*Quantifying Operations with an Application to Coherence*, 1806.07332v2](https://arxiv.org/pdf/1806.07332v2)，Definition 3、(7)、补充 Proposition 15、(35) | `literature-attested`：给定基底退相干 $\Delta$ 时，detection-incoherent 条件为 $\Delta\Phi=\Delta\Phi\Delta$，相应输出对角系数为输入对角的随机后处理。本卷只要求在固定二维码的全部态上满足 (12.1)，不先要求整个 $M_5$ 上的该条件，也不把它与 creation-incoherence 混同。尤其 $U_\star$ 在逻辑计算基为对角门，并不意味着它在本五效果编码中存在随机更新。 |
+| V. I. Yashin、E. O. Kiktenko、A. S. Mastiukova、A. K. Fedorov，[*Minimal informationally complete measurements for probability representation of quantum dynamics*, 2006.13727v2](https://arxiv.org/pdf/2006.13727v2)，§II A、II D、(22)–(23) | `literature-attested`：信息完备概率表示中的通道一般由允许负系数的 pseudostochastic 矩阵描述。该文以 $d^2$ 个效果的 MIC 及其对偶基为前提；本卷五效果含一条重复射线，不能直接冒用其唯一 MIC 矩阵。一般“概率表示不保证随机动力学”是已有背景，本编码的全部可行酉门和三目标常数是这里处理的具体问题。 |
+| 本卷 §§3–4、7–8；续卷 II §§77、83 | 已有完整 Bloch 编码、黄金相位矩阵、七地址／十三维有限正向字、唯一 ready 种子、相位平衡表示、全 $1024$ 标签和保档案经典模型。它们分别供应 (12.4)、(13.1)、(14.1)–(14.3) 及命题 15.1 的范围；未新增控制、读口或来源。 |
+| [FiveModeMixedCoordinates 的静态共同律响应](../../../Blueprint/D5/S1/Words/AdmissibleWords/FiveModeMixedCoordinates.scribe.cs) | 对同一给定五模式律，$\{1,x,y,z,xy\}$ 完整表示任意实响应，且明确不据此声称动态充分性。本卷采用的实际量子像还有 $p_0=3p_{25}$；静态函数完备不供应 (12.1) 的非负核。 |
+| [自校准 VIII 定义 10.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VIII.md)；[RRO rooted history recovery §§15–19](RECURSIVE_RELATIONAL_OBSERVATION_ROOTED_BOUNDARY_HISTORY_RECOVERY.md) | 前者先给种子概率空间及共同律 $\mu$，后者给确定性读取、实际源像与历史恢复边界。它们均未在本七地址载体上供应未知记录概率、独立重复或 (14.9) 所需的统计置信事件，不用来填补本卷 §10 的实际律缺项。 |
+
+## 追加锚（本行以下为增补区）
