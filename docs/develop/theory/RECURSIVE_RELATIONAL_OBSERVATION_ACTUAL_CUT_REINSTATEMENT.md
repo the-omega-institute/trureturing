@@ -4228,3 +4228,329 @@ recovery program therefore retain their stated open boundaries.
 [ACR-BM]: https://arxiv.org/html/2008.08822v1
 
 ## 追加锚（本行以下为增补区）
+
+## 31. An invertible auxiliary order on genuine deficient-rank fibres
+
+**Definition 31.1 (a fixed verifier and auxiliary row convention).**
+Fix one total Boolean verifier $V_t(x,y)$ for $t\ge1$,
+$x\in\{0,1\}^t$, $y\in\{0,1\}^{t-1}$, implemented by one
+uniform finite program. All polynomials below are in $\mathbb F_2[E]$.
+For $d=3t>0$, split a $d$-bit ordinal, most significant bit first, as
+$b\Vert x\Vert w\Vert z$, with block lengths $1,t,t,t-1$. Put
+
+$$
+\begin{aligned}
+f_x&=\sum_{j<t}x_jE^j,&m_x&=E^{2t}+f_x,&
+q_w&=E^t+\sum_{j<t}w_jE^j,\\
+A_t(x,w)&=w_0V_t(x,(w_1,\ldots,w_{t-1})),&
+r_{b,x,w,z}&=(b\oplus1\oplus A_t(x,w))+
+                  \sum_{j=1}^{t-1}z_jE^j.
+\end{aligned}
+$$
+
+Define $\widehat\rho^V_{3t}([b\Vert x\Vert w\Vert z]_2)$ to be
+the lower $3t$ coefficients, in increasing exponent order, of
+$p=m_xq_w+r_{b,x,w,z}$. Thus $p=p_c$ in (ACR.78) for the returned
+row $c$. When $w_0=0$, compute $A_t=0$ without calling $V$.
+At positive dimensions not divisible by three, map the ordinal word
+directly to the coefficient word in that same left-to-right order.
+At $d=0$ map the unique empty word to the empty row.
+This is an auxiliary convention; $\rho_d$ in Definitions 9.1 and
+21.1 retains its original meaning. Neither an authentic prefix nor
+source-specific advice is an input to $\widehat\rho^V$.
+
+**Theorem 31.2 (bijection with paid polynomial access).** For every
+fixed $V$, Definition 31.1 is a bijection at every dimension, with a
+uniform computable inverse. If $V$ has polynomial serial work,
+cumulative writes and visited backing in $t$, both access directions
+have polynomial bounds in $d$. Nevertheless the first-row selection
+on the fibres of Theorem 31.3 computes the existential closure of $V$.
+
+Proof. For $d=3t$, the product $f_xq_w$ has degree below $2t$,
+and $r$ has degree below $t$. Consequently coefficients
+$2t,\ldots,3t-1$ of any returned $p$ are exactly $w$.
+Conversely, given any monic degree-$3t$ polynomial $p$, read this
+band to recover $q_w$, and form $a=p+E^{2t}q_w$, of degree below
+$2t$. Unique division by the monic degree-$t$ polynomial $q_w$ gives
+
+$$
+a=fq_w+r,\qquad \deg f<t,\quad\deg r<t.
+$$
+
+The coefficients of $f$ recover $x$, those of $r$ at exponents
+$1,\ldots,t-1$ recover $z$, and $b=r_0\oplus1\oplus A_t(x,w)$.
+These equations are inverse identities in both directions, proving
+surjectivity and injectivity without a nonzero constant-coefficient
+assumption. At $t=1$, both $z$ and the verifier witness are empty;
+the same division and constant-term formula apply. The remaining
+dimensions have the explicit direct inverse. In particular
+$\widehat\rho^V_{3t}(0)=(1,0,\ldots,0)$, since at ordinal zero
+$x=w=z=0$ and $p=E^{3t}+1$, independently of $V$.
+
+Use the sequential tape model of §21.4. Let $C_V(t),W_V(t),V_V(t)$
+bound the verifier on its own counted tapes, including its input and
+one-bit sequential output; its finite program is fixed. Multiplication
+and monic division take $O(d^2)$ binary updates on $O(d+1)$ data.
+With $\ell_d$ of §21.4, each array operation costs
+$O((d+1)\ell_d^2)$ by the paid scan construction. Parsing, allocating,
+copying verifier inputs, head returns, counter writes and emitting the
+row or inverse ordinal are included. Running that verifier directly
+as a subroutine adds at most one call in either direction. Thus
+
+$$
+\begin{aligned}
+C_{\rm access}&=O(C_V(t)+(d+1)^3\ell_d^2),\\
+W_{\rm access}&=O(W_V(t)+(d+1)^3\ell_d^2),\\
+V_{\rm access}&=O(V_V(t)+d+1+\ell_d).
+\end{aligned}
+$$
+
+Outside the $3t>0$ branch there is no verifier call. These are costs
+for one requested access, including all source-independent preparation;
+they give no polynomial bound for writing the entire $2^d$-row list.
+The claimed existential identity follows next. $\square$
+
+**Theorem 31.3 (nonzero authentic fibres, common seed and full firstness).**
+For each $t\ge1$ and every $x\in\{0,1\}^t$, generate $s^x$ by the
+all-index recurrence $m_x$ from initial word $0^{2t-1}1$. Put
+$d=3t$, $P_x=(s^x_0,\ldots,s^x_{6t-1})$, and
+$\sigma_t=0^{2t-1}1\,0^t$. Then $s^x\in\mathscr R_d$ is nonzero,
+has least all-index annihilator $m_x$, and
+
+$$
+\begin{aligned}
+s_d(P_x)&=\sigma_t,&\operatorname{rank}H(P_x)&=2t<d,\\
+\{p_c:H(P_x)c=y(P_x)\}&=\{m_xq_w:w\in\{0,1\}^t\}.
+\end{aligned}
+$$
+
+The complete set of passing ordinal words in the auxiliary convention is
+
+$$
+\{(1\oplus A_t(x,w))\Vert x\Vert w\Vert0^{t-1}:
+                                    w\in\{0,1\}^t\}.
+$$
+
+Let $w^\star=0^t$ if no $y$ accepts; otherwise let
+$w^\star=(1,y^\star)$, where $y^\star$ is the lexicographically least
+accepting $(t-1)$-bit witness. The first passing row is exactly the
+lower-$d$ coefficient word of $m_xq_{w^\star}$, and the full
+row-plus-authentic-seed output is exactly that row paired with
+$\sigma_t$. Its coefficient at exponent $2t$ is
+$\mathbf1_{\exists y\,V_t(x,y)=1}$. The known feasible polynomial
+$m_xE^t$ is first if and only if no witness accepts.
+
+Proof. A nonzero annihilator $h$ of degree $j<2t$ would satisfy
+$(h(E)s^x)_{2t-1-j}=1$: its leading term sees the initial one,
+and all its lower terms see initial zeros. This contradicts
+annihilation. Since $m_x$ itself annihilates $s^x$, it is least.
+For $0\le i<t$, the recurrence for $s^x_{2t+i}$ uses only
+$s^x_{i+j}$ with $j<t$, where $i+j\le2t-2$; these are zero.
+This proves the common authentic seed. Multiplying $m_x$ by $E^t$
+also exhibits an order-$d$ presentation of this same all-index stream.
+
+The leading $2t\times2t$ Hankel block, after reversing columns,
+has entries $s^x_{i+2t-1-j}$. Entries with $i<j$ are zero and
+diagonal entries are one, so it is triangular and nonsingular.
+The order-$2t$ recurrence expresses every subsequent Hankel row as
+a combination of preceding rows, giving the matching upper rank bound.
+Theorem 21.2, using GPO Lemma 29.2's all-index finite separation,
+identifies the passing polynomials with the monic degree-$3t$
+multiples of $m_x$. Their monic quotients have degree $t$, hence
+are exactly the $q_w$. This reuses that fibre supplier rather than
+assuming arbitrary affine sets are recurrence-realizable.
+
+The inverse of Theorem 31.2 on $m_xq_w$ recovers precisely $x$,
+$r=0$ and $z=0$, yielding the displayed complete ordinal set.
+Accepting witnesses, and only those, have first ordinal bit zero;
+each has $w_0=1$. If one exists, the least such word uses the least
+accepting $y$. Otherwise every passing word starts with one and the
+least $w$ is $0^t$. Coefficient $2t$ of $m_xq_w$ is $w_0$.
+The gate ensures $w=0^t$ always rejects, proving the feasible-row
+criterion. These arguments include the empty witness at $t=1$ and
+$x=0^t$, whose source is a single nonzero impulse, not the zero
+stream. No inverse state transition was used. $\square$
+
+## 32. Typed paid normalization and the fixed-verifier SAT reduction
+
+**Definition 32.1 (auxiliary local tasks and their input provenance).**
+Let $\mathcal A_d$ be the length-$2d$ prefixes realizable by
+$\mathscr R_d$, and retain $\mathcal M_d$ of Theorem 21.4.
+For $d>0$ define
+
+$$
+\begin{aligned}
+\widehat{\operatorname{FM}}^V_d &: \mathcal M_d\longrightarrow\mathbb F_2^d,
+&m&\longmapsto\widehat\rho^V_d
+ \left(\min\{i:m\mid p_{\widehat\rho^V_d(i)}\}\right),\\
+\widehat{\operatorname{EN}}^V_d &: \mathcal A_d\longrightarrow
+                      \mathbb F_2^d\times\mathbb F_2^d,
+&P&\longmapsto(\widehat\kappa^V_d(P),s_d(P)),\\
+\widehat\kappa^V_d(P)&=\widehat\rho^V_d
+ \left(\min\{i:H(P)\widehat\rho^V_d(i)=y(P)\}\right).
+\end{aligned}
+$$
+
+All minima range over $0\le i<2^d$. At $d=0$, the row task on
+$m=1$ returns the empty row and the descriptor is the empty pair.
+Inputs contain an explicit dimension and delimited coefficient words;
+$m$ is padded to $d+1$ coefficients with its degree recorded in binary.
+Both input encodings have length $O(d+1)$, and outputs have exactly
+$d$ or $2d$ data bits. There is no compressed exponential dimension.
+
+With $P_m,\sigma_{m,d}$ exactly as in Theorem 21.4, the typed
+one-call reductions are
+
+$$
+\begin{aligned}
+P&\longmapsto m_P\longmapsto
+ (\widehat{\operatorname{FM}}^V_d(m_P),s_d(P))
+       =\widehat{\operatorname{EN}}^V_d(P),\\
+m&\longmapsto P_m\longmapsto
+ \pi_1\widehat{\operatorname{EN}}^V_d(P_m)
+       =\widehat{\operatorname{FM}}^V_d(m),\\
+\widehat{\operatorname{EN}}^V_d(P_m)
+ &= (\widehat{\operatorname{FM}}^V_d(m),\sigma_{m,d}).
+\end{aligned}
+$$
+
+Theorem 21.4's synthesis, impulse realization and fibre proof apply
+unchanged to any fixed bijective order. In particular $P_m$ has least
+annihilator $m$, including $m=1$ and zero constant taps. Its seed is
+generated data; in the other direction $s_d(P)$ is copied from the
+given authentic prefix. Neither reduction acquires a physical prefix.
+
+For completeness, put $L(d)=O((d+1)^3\ell_d^2)$. The synthesis or
+prefix generation, polynomial/seed encoding, task-input copy and
+retained output copy cost at most $L(d)$ work and cumulative writes,
+with $O(d+1+\ell_d)$ local backing, by (ACR.85). If the called
+task $T$ has its own costs $(C_T,W_T,V_T)$, retain them in full.
+Exporting its $O(d+1)$ output bits to the caller uses §21.7's
+explicit transfer rule, costing additionally
+
+$$
+X_T(d)=O((d+1)(V_T+d+2)^2)
+$$
+
+work and cumulative writes and $O(V_T+d+1)$ transfer scratch.
+Its address operands are part of $V_T$, not free machine integers.
+Thus either reduction has $C\le C_T+L+X_T$,
+$W\le W_T+L+X_T$ and
+$V\le V_T+O(V_T+d+1+\ell_d)$. Sequential output permits a smaller
+transfer. These bounds include counters, markers, head moves,
+intermediate writes, row/seed projection and retention; they are
+polynomial when the called task's own three bounds are polynomial.
+No unit-cost normalization oracle or free output installation is assumed.
+
+**Theorem 32.2 (one fixed polynomial-access SAT embedding).** There
+is one fixed polynomial verifier $V^{\rm SAT}$ for which SAT reduces
+with polynomial local overhead to coefficient $2t$ of either
+$\widehat{\operatorname{FM}}^{\rm SAT}_{3t}(m_x)$ or
+$\pi_1\widehat{\operatorname{EN}}^{\rm SAT}_{3t}(P_x)$.
+The reduction is unconditional. Under $\mathrm P\ne\mathrm{NP}$,
+this auxiliary convention has polynomial forward and inverse access
+but no uniform deterministic polynomial exact local normalizer on
+all authentic inputs, even restricted to the nonzero rank-$2t$
+common-seed inputs of Theorem 31.3.
+
+Proof. Use the prefix Boolean syntax with constants $00,01$, variable
+$10\,1^j0$ for $j\ge1$, negation $110\,u$, and conjunction
+$111\,u\,v$. Parsing consumes exactly one formula. Relabel the
+variables of any input formula as $1,\ldots,k$ and encode it as a
+word $u$ of length $L$ in this syntax; disjunctions use De Morgan's
+identity. The resulting length is polynomial in the original formula
+length: there are polynomially many occurrences and every unary
+variable index is at most the number of distinct original variables.
+Set
+
+$$
+x=1^L0\,u\,0^{k+1},\qquad t=|x|=2L+k+2.
+$$
+
+One fixed verifier reads the unary length, then exactly $L$ syntax
+bits, requires every remaining padding bit to be zero, and rejects
+malformed formulas or variable indices exceeding $t-1$. Otherwise
+it evaluates the formula using the corresponding first witness bits.
+This is polynomial in $t$ on sequential tapes, including parsing,
+input scans, stack/counter writes and output. The constructed encoding
+always has enough witness bits, including for constant formulas.
+Consequently $\exists y\,V^{\rm SAT}_t(x,y)=1$ holds exactly for
+satisfiable input formulas; unused witness bits cause no change.
+
+Construct $m_x$ or generate the $6t$ bits of $P_x$ by its recurrence,
+without any verifier search. Prefix generation takes $O(d^2)$
+binary updates on $O(d+1)$ data, hence costs $L(d)$ work/writes
+and $O(d+1+\ell_d)$ backing. Theorem 31.3 gives the designated bit
+and the full descriptor, while Definition 32.1 charges the call and
+every output transfer. Reading the designated coefficient and copying
+the common seed are within those bounds. Thus a polynomial exact
+normalizer would decide SAT in polynomial time. Cook's primary proof
+of Theorem 1, printed p.152, constructs a polynomial-size conjunctive
+formula $A(w)$ satisfiable exactly when a polynomially bounded
+nondeterministic machine accepts [ACR-COOK]; this supplies the
+standard implication SAT in $\mathrm P\Rightarrow\mathrm P=\mathrm{NP}$.
+It supplies no recurrence-fibre or arbitrary-order selection theorem.
+
+If a local task additionally carries cut fields, choose $n=2d+2$.
+For $n\ge2$, Fibonacci induction gives $F_n\ge n-1$, so
+$F_n-1\ge2d$ and this cut is mature. Its $n$ and
+$B_n=F_{n+1}-1$ fields have $O(d+1)$ bits and are constructed and
+copied with the polynomial paid arithmetic of (ACR.91). The same
+reduction therefore applies to such extended local inputs with
+polynomial bounds in $d+n$. It supplies no physical cut acquisition.
+The always feasible row $m_xE^t$ is first exactly for unsatisfiable
+formulas, by the same identity, without assuming a complexity separation.
+
+As the standard search-to-decision consequence, $\mathrm P=\mathrm{NP}$
+is equivalent to the statement that every fixed uniformly
+polynomial-forward-evaluable bijective convention has its own uniform
+deterministic polynomial exact normalizer on authentic prefixes. The
+equivalence persists if the conventions are also required to have
+polynomial inverse access. Necessity uses this single SAT convention.
+For sufficiency, for each fixed convention the predicate
+$\exists v\ H(P)\rho_d([uv]_2)=y(P)$ is in NP: $v$ completes a
+$d$-bit ordinal, and forward evaluation and the Hankel test are
+polynomial. Under $\mathrm P=\mathrm{NP}$, test successive zero
+children and retain the first feasible child at each of $d$ levels,
+then evaluate the row and copy the authentic seed. Polynomial tape
+time also bounds cumulative writes and visited backing. The algorithm
+and polynomial may depend on the fixed convention; no common exponent
+or interpreter for arbitrary convention codes is asserted. This is a
+statement over all fixed conventions, not an iff for each individual
+convention: direct coefficient order already has polynomial Gaussian
+normalization via its affine ordinal cells as in Theorem 21.6. $\square$
+
+**Definition 32.3 (supplier correspondence and unchanged recovery task).**
+The inverse coordinate construction and its explicit nonzero
+common-seed embedding are repository-derived consequences. Monic
+division, the SAT implication just cited, and ordinal search-to-decision
+are classical intermediate methods, not independent novelty claims.
+The exact fibre, impulse realization and typed reductions reuse
+Theorems 21.2 and 21.4 and GPO Lemma 29.2. Massey's [MAS], §II
+and §III Theorem 3 and corollary, supplies shortest finite-prefix
+register synthesis, allowing untapped final stages; it supplies no
+first row under an arbitrary convention. These correspondences
+make no worldwide originality or fresh formal-verification claim.
+
+The auxiliary $P_x$ is source-realizable mathematical input, not an
+observation earned from the unknown actual source. The original
+$\rho_d$, $K_d(P)$ and $(P,K_d(P),n,B_n)$ of §§21 and 26 remain
+unchanged. No identity between the two conventions, no hardness of
+the original $\rho_d$, and no lower bound for general interactive
+acquisition follow from this local reduction. The original affine-prefix
+hypothesis and deficient-rank normalization efficiency retain their
+unresolved status. Actual Reads, archive visibility, source binding,
+grants, code supply, initialization, allocation, intermediate and retained
+physical writes, stationarity and completed handoff retain their full
+obligations; normalization is never discounted by a fallback probability.
+GPO Theorems 34.2--34.3 and 39.4 still require the installed authentic
+same-source tuple for four-view recovery and finite continuation;
+Proposition 39.5 retains request/output costs. The formal suppliers
+identified in §26 have their distinct navigation, recursive-code,
+bounded-support and richer-reply domains. Neither these suppliers nor
+the auxiliary embedding settle original polynomial-total acquisition,
+exact canonical installation, or the unbounded recovery program.
+
+[ACR-COOK]: https://www.cs.toronto.edu/~sacook/homepage/1971.pdf
+
+## 追加锚（本行以下为增补区）
