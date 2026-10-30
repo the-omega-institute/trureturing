@@ -1,0 +1,9 @@
+#### 定义 3.1：配置编码
+
+设  $\mathcal C$  为指定的合法带标签块或铺砌集合， $m:\mathcal C\to\mathcal C$  是双射且  $m^2=1$ 。
+取  $H_ {\mathcal C}=\ell^2(\mathcal C)$ ，以配置  $T$  对应的  $\lvert T\rangle$  为正交基。
+这是一个明确选择的量子编码；没有从几何标签自动推出配置必须正交。
+
+
+<a id="stmt-3-2"></a>
+
