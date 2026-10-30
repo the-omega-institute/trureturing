@@ -1,0 +1,51 @@
+#### 定理 10.1（固定八十九维载体中的有限前缀酉实现）
+
+<a id="thm:nativeprefix"></a>
+
+消费源 §100 的全 $\operatorname{PU}(89)$ 原生密度。
+对 $0\le N\le4$，取一个内部等距编码
+
+$$
+L:\mathbb{C}^{2^N}\otimes\mathbb{C}^2\otimes\mathbb{C}^2\hookrightarrow\mathcal K,
+ \qquad 2^{N+2}\le64<89.
+$$
+
+程序、数据、参考分别占这三个内部坐标。
+定义有限前缀联合目标
+
+$$
+\Gamma_N=\sum_{s\in\{0,1\}^N}\lvert s\rangle\langle s\rvert\otimes U_N(s)\otimes I_2,
+$$
+
+并在补空间取恒等。则对每个 $\varepsilon>0$，
+存在一个有限原生门字 $W_\varepsilon$ 及一个共同相位 $\alpha$，使
+
+$$
+\left\lVert W_\varepsilon-
+ \alpha[L\Gamma_NL^*+(I-LL^*)]\right\rVert\le\varepsilon.
+ \tag{48}
+$$
+
+该界对全部程序叠加、全部数据及保留内部参考同时有效。
+
+**证明。**
+
+所列维数保证等距编码存在；$\Gamma_N$ 由正交程序块上的酉组成，
+故其与补空间恒等的直和是整个 $\mathcal K$ 上的酉。
+全载体射影密度给任意精度的单个共同相位逼近，
+不能用分别为各程序分支选择的相位替代。
+
+∎
+
+定理 [10.1](#thm:nativeprefix) 是一个有明确维数范围的原生消费者。
+$L$ 是新编码，不是旧 $J$ 的二十六维记录接口；
+它不供应旧读者的响应转移、实际测量或保留记录合同。
+该定理
+没有把第 7 节无限程序空间塞入固定 $89$ 维载体。
+若需要从给定 ready 态取得指定程序与参考初态，还要另外支付制备逼近；
+较大前缀须另外供应足够内部载体及相应全载体控制定理。
+式 (48) 是有限精度存在性，不给最短字、编译算法复杂度或物理时间。
+原 §103 的完整代码奇次受控相位精确障碍仍有效。
+
+<a id="statement-10-2"></a>
+
