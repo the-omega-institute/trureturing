@@ -2291,3 +2291,542 @@ extremizers, reconstruct the complete neighborhood law, classify its
 label partition, or settle the other scales in Open problem 8.6.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Exact laws throughout the first fixed-width square-root strip
+
+**Definition 12.1 (The strip and the scalar comparison).** Fix $W>0$. The
+parameters in this section are integers
+
+$$
+a\ge4,\qquad h\ge1,\qquad |h^2-2a|\le W,\qquad r=a+1.
+\tag{12.1}
+$$
+
+The domain $\mathcal X(a,h)$, the actual positive marginals, $H$, $M(a,h)$
+and $B_0=ar^2$ are exactly those of Definition 1.1. In particular every
+nonempty subset of $[r+h]$ remains an allowed type, type masses may be zero,
+and there is no connectedness condition. Write $d=H-B_0$. Use the function
+$\Phi_{a,h}$ of [Incidence Definition 13.2](CDSO_INCIDENCE_MOMENTS_AND_CAPACITY_PHASES.md),
+which is also the function in (5.4), and put
+
+$$
+\begin{aligned}
+m_{a,h}&=\min_{0<u\le1/a}\Phi_{a,h}(u),\\
+S_{a,h}&=\Phi_{a,h}(1/a)
+       =\frac{ar^3}{a-1}+ah^2,\\
+\Gamma_a&=\frac{2a^3+2a^2+2a+1}{(a-1)^2},\qquad
+P_{a,h}=a^2\max\{h^2-\Gamma_a,0\}.
+\end{aligned}
+\tag{12.2}
+$$
+
+Proposition 5.2 proves existence and uniqueness of the scalar minimizer;
+denote it by $u_{a,h}$. Its statement concerns the specified actual family
+$\mathcal S(a,h)$, and does not supply a lower bound for other laws. The
+cap law in Definition 5.1 is an actual law also when its missing-one masses
+vanish. Every $O_W(\cdot)$ below is uniform over all pairs in (12.1), all
+laws on the indicated sublevel and all label choices. Thresholds depend
+only on $W$.
+
+The normalization inherited from Definition 1.1 uses the CDSO definition
+in A. M. Albalahi, S. Das, A. Ali, J. Barman and A. E. Hamza, *On the
+hyperbolic Sombor index and its counterpart*, Discrete Math. Lett. 16
+(2025), 108–115, DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176),
+p.109: the denominator is the maximum endpoint degree and the factor
+$1/\sqrt2$ is omitted. Its graph extremal assertions are not hypotheses
+of the actual-law problem here.
+
+**Lemma 12.2 (A uniformly separated core on the cap sublevel).** For every
+fixed $W>0$ there are $A_W,b_0,c_0>0$ such that all pairs (12.1) with
+$a\ge A_W$ and all $x\in\mathcal X(a,h)$ satisfying
+
+$$
+H(x)\le S_{a,h}
+\tag{12.3}
+$$
+
+have exactly $r$ marginals at least $b_0/a$. Each of these is at least
+$c_0$, and the other $h$ marginals are less than $b_0/a$. These define a
+unique partition $[r+h]=C\mathbin{\dot\cup}D$, with $|C|=r$ and $|D|=h$,
+into the largest and smallest marginals. Moreover
+
+$$
+S_{a,h}-B_0=2\sqrt2\,h a^{3/2}+O_W(a).
+\tag{12.4}
+$$
+
+**Proof.** Write $\zeta=h^2-2a$, so $|\zeta|\le W$. The exact cap value
+in (12.2) gives
+
+$$
+S_{a,h}-B_0
+=\frac{2ar^2}{a-1}+ah^2
+=4a^2+(\zeta+6)a+8+\frac8{a-1}.
+\tag{12.5}
+$$
+
+Taylor's formula for $\sqrt{1+\zeta/(2a)}$, with a remainder bounded
+uniformly for $|\zeta|\le W$ and sufficiently large $a$, gives
+
+$$
+2\sqrt2\,h a^{3/2}
+=4a^2\sqrt{1+\frac{\zeta}{2a}}
+=4a^2+\zeta a+O_W(1).
+$$
+
+This proves (12.4). In particular, taking $C_*=10$ and sufficiently large $a$ depending only
+on $W$, (12.3) implies $H\le a^3+C_*a^2$ and
+$1\le h/\sqrt a\le2$.
+
+Apply Lemma 7.1 with $(C,L,R)=(C_*,1,2)$. Use its partition, constructed
+in its proof by the threshold $b_0/a$, where $b_0=4C_*$. That proof gives
+the uniform floor $c_0=(8C_*+1)^{-1}$ on the threshold core. If its core
+has $a+j$ labels, its tail has $n=h+1-j$ labels, and with
+$v=a\mathbb P(T\text{ meets that tail})$ one has
+
+$$
+1\le j\le4C_*,\qquad v\ge\frac1{8C_*},\qquad
+\frac d{a^2}\ge\frac{(h+1-j)^2}{av}+2v+2j-2-O_W(a^{-1/2}).
+\tag{12.6}
+$$
+
+All of these are within the compact positive-ratio hypotheses of that
+lemma. In particular $n>0$ eventually. Arithmetic–geometric mean on the
+first two terms of its last bound gives
+
+$$
+\frac d{a^2}
+\ge\frac{2\sqrt2 h}{\sqrt a}+2j-2-O_W(a^{-1/2}),
+$$
+
+because $j$ is uniformly bounded and $n=h+1-j$. Equations (12.3)–(12.4)
+give the opposite upper bound $d/a^2\le2\sqrt2 h/\sqrt a+O_W(a^{-1})$.
+The integer $j$ must therefore equal one once $a$ is sufficiently large.
+Thus the threshold core has $r$ labels and its complement has $h$.
+Increasing the threshold so that $b_0/a<c_0$ proves the strict gap and
+uniqueness of the partition. ∎
+
+**Lemma 12.3 (Uniform marginal control and retained payment).** On the
+sublevel of Lemma 12.2 define, from its one actual law,
+
+$$
+\begin{gathered}
+t_j=y_j\ (j\in D),\quad u=\sum_{j\in D}t_j,\quad
+\delta=\max_{j\in D}t_j,\quad c=\min_{i\in C}y_i,\\
+B=|T\cap D|,\quad L=|T\cap C|,\quad K=L+B,\quad
+A=\{B>0\},\quad e=\mathbb E[(K-1);A],\\
+\alpha=a(a+1)(2a+1),\quad \beta=3a^2+3a+1,\quad
+\Lambda=\frac3{\delta^2}-\frac{\max\{\alpha,\beta\}}{c^2}.
+\end{gathered}
+\tag{12.7}
+$$
+
+Uniformly on that entire sublevel, for sufficiently large $a$,
+
+$$
+\begin{aligned}
+\mathbb P(A,K\ge2)&=O_W(a^{-2}),\\
+c&\ge1-O_W(a^{-1/2}),\\
+\delta&\le\frac{1+O_W(a^{-1/4})}{\sqrt2\,a^{3/2}},\\
+\Lambda&\ge a^3.
+\end{aligned}
+\tag{12.8}
+$$
+
+**Proof.** Lemma 12.2 gives $t_j<b_0/a$, $u\le b_0h/a=O_W(a^{-1/2})$,
+and every core marginal is at least $\delta\ge u/h$. Put
+
+$$
+\begin{aligned}
+Q(l)&=(r-l)(a-l)(2a+1+l)=\alpha-\beta l+l^3,\\
+\mathcal A_a(u)&=\frac{r^2(a^2+3a+1+au)}{(a-u)^2},\\
+f_u(y)&=\frac{a^2}{y}-\frac{(2a+1)u}{y^2},\qquad
+\bar y=\frac{a-u}{r},\\
+\mathcal S_f&=\sum_{i\in C}f_u(y_i)-r f_u(\bar y),\\
+H_D&=\mathbb E\!\left[K^2\sum_{j\in T\cap D}t_j^{-2}\right].
+\end{aligned}
+\tag{12.9}
+$$
+
+The polynomial is nonnegative for every integer $0\le l\le r$. The
+algebraic certificate of Incidence Lemma 13.4, valid whenever
+$a^2\ge3h(2a+1)$, reads
+
+$$
+d\ge H_D-u\mathcal A_a(u)+\mathbb E Q(L)+\mathcal S_f.
+\tag{12.10}
+$$
+
+Its hypotheses hold uniformly in (12.1), since $h=O_W(\sqrt a)$. In fact
+$a^2\ge6h(2a+1)$ eventually, and on $u/h\le y\le1$,
+
+$$
+f_u''(y)=\frac{2(a^2y-3(2a+1)u)}{y^4}\ge a^2.
+$$
+
+The actual $r$ core marginals have sum $a-u$, so strong Jensen yields
+
+$$
+\mathcal S_f\ge\frac{a^2}{2}\sum_{i\in C}(y_i-\bar y)^2\ge0.
+\tag{12.11}
+$$
+
+Only the algebraic certificate is used from that fixed-$h$ section; no
+fixed-$h$ limiting statement is applied to growing $h$.
+
+The bound on $u$ gives $\mathcal A_a(u)=O_W(a^2)$. Thus
+
+$$
+\eta=\sqrt{\alpha-\mathcal A_a(u)}>0,\qquad
+\eta=\sqrt2\,a^{3/2}+O_W(\sqrt a).
+\tag{12.12}
+$$
+
+For a realized type in $A$ set
+
+$$
+V_T=\sum_{j\in T\cap D}t_j^{-1},\qquad
+Z_T=K^2\sum_{j\in T\cap D}t_j^{-2},\qquad
+F_T=Z_T+Q(L)-\mathcal A_a(u)B-2\eta V_T.
+\tag{12.13}
+$$
+
+For a tail singleton $T=\{j\}$ the exact identity is
+$F_T=(t_j^{-1}-\eta)^2$. There is also $\kappa>0$, independent of the law
+and parameters after a threshold depending only on $W$, such that
+
+$$
+F_T\ge\kappa a^3\qquad\text{on }A\cap\{K\ge2\}.
+\tag{12.14}
+$$
+
+Indeed, when $2\le K\le\sqrt a$, completing each square gives
+
+$$
+Z_T-2\eta V_T\ge-\frac{B\eta^2}{K^2}\ge-\frac{\eta^2}{2},
+$$
+
+and therefore
+
+$$
+F_T\ge\alpha-(\beta+\mathcal A_a(u))\sqrt a-\frac{\eta^2}{2}
+\ge\frac{a^3}{2}
+$$
+
+eventually. If $K>\sqrt a$, every reciprocal $z=t_j^{-1}$ in the type
+satisfies $z>a/b_0$. Hence $K^2z\ge a^2/b_0>4\eta$ for large $a$, so
+$K^2z^2-2\eta z\ge K^2z^2/2$. It follows that
+
+$$
+F_T\ge\frac{Ba^3}{2b_0^2}-\mathcal A_a(u)B
+\ge\frac{Ba^3}{4b_0^2},
+$$
+
+using $Q(L)\ge0$. This proves (12.14) with
+$\kappa=\min\{1/2,1/(4b_0^2)\}$. These two ranges exhaust all actual
+nonsingleton types; no relation among their incidences has been relaxed.
+
+Since $\mathbb E V_T=h$ when $V_T$ is set to zero off $A$, and
+$\mathbb E B=u$, (12.10) becomes
+
+$$
+d\ge2\eta h+\mathbb E[F_T;A]+\mathbb E[Q(L);A^c]+\mathcal S_f.
+\tag{12.15}
+$$
+
+All three terms after $2\eta h$ are nonnegative. Equations
+(12.3)–(12.4) and (12.12), with $h=O_W(\sqrt a)$, show that their sum is
+$O_W(a)$. Thus (12.14) proves the first estimate in (12.8).
+Equation (12.11) gives $\sum_{i\in C}(y_i-\bar y)^2=O_W(a^{-1})$.
+Since $\bar y=1-O_W(a^{-1})$, this proves the estimate for $c$.
+
+To control the largest tail marginal, put $q=\mathbb P(A,K\ge2)$ and
+$x_j=x_{\{j\}}$. For every $j\in D$,
+
+$$
+0\le t_j-x_j\le q=O_W(a^{-2}),\qquad
+\eta q=O_W(a^{-1/2}).
+$$
+
+If $t_j\ge1/\eta$, then $x_j\ge t_j/2$ eventually. Set $w=\eta t_j\ge1$.
+The singleton square in (12.13) and the $O_W(a)$ bound in (12.15) give
+
+$$
+\frac\eta2\frac{(w-1)^2}{w}
+\le x_j(t_j^{-1}-\eta)^2\le O_W(a),\qquad
+\frac{(w-1)^2}{w}=O_W(a^{-1/2}).
+$$
+
+For $w\ge1$ this implies $w-1=O_W(a^{-1/4})$: writing $z=w-1\ge0$,
+$z^2/(1+z)\le\epsilon$ implies $z\le\epsilon+\sqrt\epsilon$.
+If $t_j<1/\eta$ the same upper bound is automatic. Taking the maximum
+and using (12.12) proves the estimate for $\delta$. Finally,
+
+$$
+\frac3{\delta^2}\ge(6-o_W(1))a^3,\qquad
+\frac{\max\{\alpha,\beta\}}{c^2}=(2+o_W(1))a^3.
+$$
+
+Their difference is at least $a^3$ for sufficiently large $a$, uniformly
+over the whole comparison sublevel. ∎
+
+**Lemma 12.4 (Finite cap payment on one actual law).** Let $a\ge4$ and
+$h\ge1$ be integers, let $x\in\mathcal X(a,h)$, and choose any partition
+$C\mathbin{\dot\cup}D=[a+1+h]$ with $|C|=a+1$ and $|D|=h$. Define
+$u,\delta,c,B,L,A,e,\alpha,\beta,\Lambda$ by (12.7) and $P_{a,h},m_{a,h}$
+by (12.2). If
+
+$$
+\Lambda>\frac{a+1}{a}P_{a,h},
+\tag{12.16}
+$$
+
+then
+
+$$
+H(x)\ge m_{a,h}
+ +\left(\Lambda-\frac{a+1}{a}P_{a,h}\right)e.
+\tag{12.17}
+$$
+
+In particular equality with $m_{a,h}$ forces all tail-containing types
+to be singletons and $u=u_{a,h}\le1/a$.
+
+**Proof.** The following refinement retains the surplus in the strict
+payment argument of Incidence Lemma 13.7:
+
+$$
+H(x)\ge\Phi_{a,h}(u)+\Lambda e.
+\tag{12.18}
+$$
+
+Here $0<u<a$ follows from positivity of all tail and core marginals and
+their common sum $a$. For completeness put $I_i=\mathbf1_{\{i\in T\}}$,
+$c_a=a(2a+1)$ and
+
+$$
+\begin{gathered}
+\rho_i=(1-I_i)(2a+1)(a-L)+I_i(r-L)(r-L-1),\\
+R_i=\mathbb E\rho_i,\qquad
+\Delta_i=\mathbb E[(K^2-L^2)I_i]\ge0,\\
+Z=\mathbb E\!\left[(K^2-1)\sum_{j\in T\cap D}t_j^{-2}\right],\qquad
+b_a=(a-1)(2a+1).
+\end{gathered}
+$$
+
+Each $\rho_i\ge0$: when $I_i=0$, $L\le a$; when $I_i=1$, its last two
+factors are consecutive integers with nonnegative product. Expanding
+and using $\mathbb E L=a-u$ gives the exact identity from Incidence (13.20),
+written with its nonnegative terms retained:
+
+$$
+H=\sum_{j\in D}\frac1{t_j}+Z
+ +\sum_{i\in C}\left(\frac{a^2}{y_i}
+ -\frac{(2a+1)u}{y_i^2}+\frac{R_i+\Delta_i}{y_i^2}\right).
+\tag{12.19}
+$$
+
+On $A$, all deficits $c_aB-\rho_i$ are nonnegative. For $I_i=0$ they are
+$(2a+1)[a(B-1)+L]$. For $I_i=1$ they are
+$c_a(B-1)+a^2+(2a+1)L-L^2\ge0$, since $L\le a+1\le2a+1$.
+Also $\sum_i\rho_i=Q(L)$, so on this same type
+
+$$
+\sum_{i\in C}(c_aB-\rho_i)
+=\alpha(B-1)+\beta L-L^3
+\le\max\{\alpha,\beta\}(K-1).
+\tag{12.20}
+$$
+
+Only after establishing these signs may one bound each weight by $c^{-2}$.
+Off $A$ the $\rho_i$ are nonnegative, and $\mathbb E B=u$, whence
+
+$$
+\sum_{i\in C}\frac{R_i-c_au}{y_i^2}
+\ge-\frac{\max\{\alpha,\beta\}}{c^2}e.
+$$
+
+On $A$, the integrand of $Z$ is at least
+$B(K^2-1)/\delta^2\ge3(K-1)/\delta^2$; it is zero off $A$.
+Substituting into (12.19) and discarding only the nonnegative $\Delta_i$
+proves
+
+$$
+H\ge\sum_{j\in D}\frac1{t_j}
+ +\sum_{i\in C}\left(\frac{a^2}{y_i}+\frac{b_au}{y_i^2}\right)
+ +\Lambda e.
+\tag{12.21}
+$$
+
+Cauchy on the actual $h$ tail marginals and strict Jensen for
+$g_u(y)=a^2/y+b_au/y^2$, on the actual $r$ core marginals of sum $a-u$,
+give (12.18). No marginal has been independently prescribed.
+
+The mean constraint provides the missing control of the cap. On $A^c$,
+$L\le r$, and therefore
+
+$$
+a=\mathbb E K\le r\mathbb P(A^c)+\mathbb E[L+B;A].
+$$
+
+Rearrangement, with $u=\mathbb E B$, gives
+
+$$
+au-1\le r\mathbb E[B-1;A]+\mathbb E[L;A]\le r e.
+\tag{12.22}
+$$
+
+The last inequality uses $K-1=(B-1)+L$ on $A$. Consequently
+$(u-1/a)_+\le(r/a)e$, where $z_+=\max\{z,0\}$.
+
+Strict convexity of $\Phi_{a,h}$ on $(0,a)$, and the exact cap derivative
+$\Phi_{a,h}'(1/a)=a^2(\Gamma_a-h^2)$ from Proposition 5.2, imply for every
+$0<u<a$ that
+
+$$
+\Phi_{a,h}(u)\ge m_{a,h}-P_{a,h}(u-1/a)_+.
+\tag{12.23}
+$$
+
+Indeed, if that derivative is nonnegative, its unique unconstrained
+minimizer is at or below the cap, so $P_{a,h}=0$ and the assertion is its
+global minimum property. If the derivative is negative, $m_{a,h}$ is the
+cap value. For $u\le1/a$ use the constrained minimum property; for
+$u>1/a$ use the supporting tangent at the cap, whose slope is $-P_{a,h}$.
+This proves (12.23) in all cases, including zero cap derivative.
+Combining (12.18), (12.22) and (12.23) proves (12.17).
+Under (12.16), equality forces $e=0$. Nonnegativity and integrality of
+$K-1$ on $A$ then force $K=1$ on every positive-mass tail-containing type.
+Equation (12.22) gives $u\le1/a$, and (12.18) and uniqueness of the scalar
+minimum give $u=u_{a,h}$. ∎
+
+**Theorem 12.5 (Unrestricted exact minimum and every equality law in the
+strip).** For every fixed $W>0$ there is an integer $A_W\ge14$ such that
+for every integer pair (12.1) with $a\ge A_W$,
+
+$$
+M(a,h)=\min_{0<u\le1/a}\Phi_{a,h}(u)=\Phi_{a,h}(u_{a,h}).
+\tag{12.24}
+$$
+
+The infimum is attained. Up to arbitrary permutations of all $s=a+1+h$
+labels, all equality laws, and only those laws, are
+
+$$
+\begin{gathered}
+|C|=a+1,\qquad D=[s]\setminus C,\qquad |D|=h,\\
+x_{\{j\}}=\frac{u_{a,h}}h\quad(j\in D),\qquad
+x_C=(a-1)u_{a,h},\qquad
+x_{C\setminus\{i\}}=\frac{1-au_{a,h}}{a+1}\quad(i\in C),\\
+x_T=0\quad\text{for every other nonempty }T.
+\end{gathered}
+\tag{12.25}
+$$
+
+These are precisely the actual laws of Incidence Definition 13.2. The
+scalar cap criterion of Proposition 5.2 is thus also the unrestricted
+criterion in this strip. More explicitly, for these integer pairs,
+
+$$
+\begin{cases}
+0<u_{a,h}<1/a,&h^2-2a\le6,\\
+u_{a,h}=1/a,&h^2-2a\ge7.
+\end{cases}
+\tag{12.26}
+$$
+
+In the second case every missing-one mass in (12.25) is zero and the
+exact value is $ar^3/(a-1)+ah^2$. All actual marginals remain positive.
+
+**Proof.** Increase one threshold depending only on $W$ so that Lemmas
+12.2–12.3 hold. Since
+
+$$
+\Gamma_a-2a=6+\frac{12a-5}{(a-1)^2}>0,
+$$
+
+(12.1) gives $0\le P_{a,h}\le Wa^2$. Hence on the entire sublevel
+$H\le S_{a,h}$, Lemma 12.3 gives
+
+$$
+\Lambda\ge a^3>\frac ra Wa^2\ge\frac ra P_{a,h}
+$$
+
+after increasing that threshold again. Lemma 12.4 therefore proves
+$H\ge m_{a,h}$ for every actual law in this sublevel. Every law above it
+has $H>S_{a,h}\ge m_{a,h}$. Thus every original law is bounded below by
+$m_{a,h}$, with no support or symmetry premise. Definition 5.1, equivalently
+Incidence Definition 13.2, supplies a law with energy $m_{a,h}$, proving
+(12.24) and attainment.
+
+Suppose an arbitrary law attains this value. It lies on the cap sublevel,
+so Lemma 12.4 forces $e=0$, only tail singletons, and $u=u_{a,h}\le1/a$.
+In (12.21) the tail Cauchy remainder and the core Jensen remainder are
+nonnegative and have sum zero. Hence
+
+$$
+t_j=\frac{u_{a,h}}h\quad(j\in D),\qquad
+y_i=\frac{a-u_{a,h}}r\quad(i\in C).
+\tag{12.27}
+$$
+
+For completeness, with only tail singletons, $Z=0$ and $\Delta_i=0$ in
+(12.19), and $\rho_i=c_a$ on every tail singleton. The exact remaining
+payment remainder is therefore
+
+$$
+H-\sum_{j\in D}t_j^{-1}-\sum_{i\in C}g_u(y_i)
+=\sum_{i\in C}\frac{\mathbb E[\rho_i;A^c]}{y_i^2}.
+\tag{12.28}
+$$
+
+It vanishes only if every $\rho_i$ vanishes on every positive-mass core-only
+type. Their sum is $Q(L)$. On $A^c$, $T$ is nonempty and $1\le L\le r$;
+the only integer zeros of $Q(L)$ are $a$ and $r$. Thus the only possible
+remaining types are $C$ and the $r$ types $C\setminus\{i\}$.
+Writing their masses as $z$ and $b_i$, normalization and the same mean give
+
+$$
+z+\sum_i b_i=1-u,\qquad rz+a\sum_i b_i=a-u,
+$$
+
+so $z=(a-1)u$ and $\sum_i b_i=1-au$. Equation (12.27) now gives
+$1-u-b_i=(a-u)/r$, hence $b_i=(1-au)/r$ for every $i$. This proves
+necessity of (12.25), including its zero-mass boundary. Conversely those
+nonnegative masses sum to one, have mean $a$ and induce the positive
+marginals in (12.27), by Definition 5.1. Their energy is $\Phi_{a,h}(u)$,
+so every displayed relabeling attains (12.24).
+
+Finally, for $a\ge14$,
+
+$$
+0<\frac{12a-5}{(a-1)^2}<1,
+$$
+
+because $(a-1)^2-(12a-5)=a^2-14a+6>0$. Thus
+$2a+6<\Gamma_a<2a+7$. Since $h^2-2a$ is an integer, Proposition 5.2
+gives exactly (12.26); there is no omitted equality case
+$h^2=\Gamma_a$ in this range. At the cap the core marginal is $(a-1)/a$
+and each tail marginal is $1/(ah)>0$, despite the vanished missing-one
+masses. Every estimate above is uniform over (12.1), so the one threshold
+covers every admissible integer pair, not merely a chosen sequence.
+
+This is a repo-derived unrestricted comparison and equality classification.
+The finite identities, scalar value and construction from Sections 5 and 7
+and Incidence Section 13 are reused; the extra cap payment is (12.22)–(12.23)
+combined with the uniform surplus in (12.8). The threshold $A_W$ is
+existential; its least value, exceptional small parameters, strips of
+unbounded width, other growing-surplus phases, and prescribed connected
+graph realizations remain undetermined by this theorem. N. Smirnov,
+*Bicyclic Graphs with Maximum Complementary Diminished Sombor Index*,
+Discrete Math. Lett. 18 (2026), 100–106, DOI
+[10.47443/dml.2026.164](https://doi.org/10.47443/dml.2026.164), Theorem 2.1,
+concerns maxima on finite simple connected bicyclic graphs; it is not a
+lower-bound premise for this actual-law minimum. The full text of K. Zhao
+and X. Zhao, *Extremal values with respect to vertex-degree-based topological
+indices in unicyclic and bicyclic graphs*, DOI
+[10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), is not
+an input and its possible overlap is unassessed. No literature-priority
+claim is attached to (12.24). ∎
+
+## 追加锚（本行以下为增补区）
