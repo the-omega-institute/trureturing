@@ -7,18 +7,9 @@
    digest: The CZX parent Lindbladian has the conjectured even-ring limit. -/
 
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
-import Mathlib.Algebra.Ring.Idempotent
-import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.Analysis.SpecialFunctions.Exponential
 import Mathlib.Analysis.SpecialFunctions.Sqrt
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.LinearAlgebra.Matrix.Permutation
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Module
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Data.Nat.ModEq
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -201,7 +192,7 @@ private lemma local_channel_formula (x : Matrix (Fin 16) (Fin 16) ℂ) :
     change (2 * l.val + z.val) % 2 = z.val
     omega
   simp only [hsector, hbit, Matrix.one_apply]
-  split_ifs <;> simp_all
+  split_ifs <;> simp_all only [hsector, hbit, mul_one, mul_zero, zero_mul]
 
 private lemma local_channel_add (x y : Matrix (Fin 16) (Fin 16) ℂ) :
     localChannel (x + y) = localChannel x + localChannel y := by
@@ -213,14 +204,16 @@ private lemma local_channel_add (x y : Matrix (Fin 16) (Fin 16) ℂ) :
   rw [local_channel_formula, local_channel_formula x, local_channel_formula y,
     mul_add, add_mul, hp, mul_add, add_mul]
 
+private lemma pinching_smul (c : ℂ) (a : Matrix (Fin 16) (Fin 16) ℂ) :
+    pinching (c • a) = c • pinching a := by
+  ext r s
+  simp only [pinching, Matrix.smul_apply, smul_eq_mul]
+  split_ifs <;> simp only [← Finset.mul_sum, mul_zero] <;> ring
+
 private lemma local_channel_smul (c : ℂ) (x : Matrix (Fin 16) (Fin 16) ℂ) :
     localChannel (c • x) = c • localChannel x := by
-  have hp (a : Matrix (Fin 16) (Fin 16) ℂ) : pinching (c • a) = c • pinching a := by
-    ext r s
-    simp only [pinching, Matrix.smul_apply, smul_eq_mul]
-    split_ifs <;> simp only [← Finset.mul_sum, mul_zero] <;> ring
   rw [local_channel_formula, local_channel_formula x,
-    Matrix.mul_smul, Matrix.smul_mul, hp, Matrix.mul_smul, Matrix.smul_mul]
+    Matrix.mul_smul, Matrix.smul_mul, pinching_smul, Matrix.mul_smul, Matrix.smul_mul]
 
 private lemma local_channel_expansion (x : Matrix (Fin 16) (Fin 16) ℂ) :
     localChannel x = ∑ p : Fin 16, ∑ q : Fin 16,
@@ -274,7 +267,7 @@ private def pack (v : Fin 4 → Fin 2) : Fin 16 :=
 private def pathPhase (v : Fin 4 → Fin 2) : ℕ :=
   (v 0).val * (v 1).val + (v 1).val * (v 2).val + (v 2).val * (v 3).val
 
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 2400000 in
 private lemma signed_permutation_action (v : Fin 4 → Fin 2) (r : Fin 16) :
     czxV r (pack v) =
       if r = pack ![v 0 + v 3, v 0 + v 1, v 0 + v 2, v 0] then
@@ -284,8 +277,8 @@ private lemma signed_permutation_action (v : Fin 4 → Fin 2) (r : Fin 16) :
       czxV s (pack ![a, b, c, d]) =
         if s = pack ![a + d, a + b, a + c, a] then
           (-1 : ℂ) ^ (a.val * (1 + c.val) * (b.val + d.val)) else 0 := by
-    fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases s <;>
-      norm_num [czxV, pack]
+    fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
+      norm_num [czxV, pack, Prod.mk.injEq, eq_comm]
   have hv : ![v 0, v 1, v 2, v 3] = v := by
     funext j
     fin_cases j <;> rfl
@@ -299,7 +292,7 @@ private lemma conjugate_matrix_unit (u v : Fin 4 → Fin 2) :
           (pack ![v 0 + v 3, v 0 + v 1, v 0 + v 2, v 0]) 1 := by
   ext r s
   simp [Matrix.mul_apply, Matrix.single_apply, Matrix.conjTranspose_apply,
-    signed_permutation_action, eq_comm, mul_ite, ite_mul]
+    signed_permutation_action, eq_comm, mul_ite, ite_mul, ite_and, Finset.sum_ite_irrel]
 
 private lemma block16_components (l : Fin 2) (m : Fin 4) (z : Fin 2) :
     sector16 (block16 l m z) = l ∧ multiplicity16 (block16 l m z) = m ∧
@@ -345,11 +338,13 @@ private lemma pinching_single (p q : Fin 16) :
   obtain ⟨lr, mr, zr, hr⟩ : ∃ l m z, r = block16 l m z := ⟨_, _, _, hd r⟩
   obtain ⟨ls, ms, zs, hs⟩ : ∃ l m z, s = block16 l m z := ⟨_, _, _, hd s⟩
   subst p q r s
+  clear hd
   simp only [pinching, (block16_components ..).1, (block16_components ..).2.1,
     (block16_components ..).2.2, Matrix.single_apply, Matrix.smul_apply, Matrix.sum_apply,
     block16_eq, smul_eq_mul]
   split_ifs <;> simp_all [ite_and, Finset.sum_ite_irrel, eq_comm]
 
+set_option maxHeartbeats 2400000 in
 private lemma local_matrix_unit (v d : Fin 4 → Fin 2) :
     localChannel (Matrix.single (pack (v + d)) (pack v) 1) =
       if h : ∀ j, d j = d 0 then
@@ -358,7 +353,36 @@ private lemma local_matrix_unit (v d : Fin 4 → Fin 2) :
           (-1 : ℂ) ^ ((d 0).val * (pathPhase v + pathPhase w)) •
             Matrix.single (pack (w + d)) (pack w) 1
       else 0 := by
-  sorry
+  let b : Matrix (Fin 16) (Fin 16) ℂ :=
+    if ∀ j, d j = d 0 then (4 : ℂ)⁻¹ • ∑ u : Fin 2, ∑ w : Fin 2,
+      let z := Function.update (Function.update v 1 u) 2 w
+      (-1 : ℂ) ^ ((d 0).val * (pathPhase v + pathPhase z)) •
+        Matrix.single (pack (z + d)) (pack z) 1 else 0
+  change localChannel (Matrix.single (pack (v + d)) (pack v) 1) = b
+  have hv : czxV * czxVᴴ = 1 := by
+    ext r s
+    fin_cases r <;> fin_cases s <;>
+      norm_num [czxV, Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_succ]
+  have hvb : czxVᴴ * czxV = 1 := mul_eq_one_comm.mp hv
+  suffices h : pinching (czxV * Matrix.single (pack (v + d)) (pack v) 1 * czxVᴴ) =
+      czxV * b * czxVᴴ by
+    rw [local_channel_formula, h]
+    calc
+      _ = (czxVᴴ * czxV) * b * (czxVᴴ * czxV) := by simp only [mul_assoc]
+      _ = b := by rw [hvb, one_mul, mul_one]
+  dsimp only [b]
+  rw [conjugate_matrix_unit, pinching_smul, pinching_single]
+  simp only [mul_ite, ite_mul, Matrix.mul_smul, Matrix.smul_mul,
+    Finset.mul_sum, Finset.sum_mul, conjugate_matrix_unit, mul_zero, zero_mul]
+  obtain ⟨a, c, e, f, hv⟩ : ∃ a c e f, v = ![a, c, e, f] :=
+    ⟨v 0, v 1, v 2, v 3, by funext j; fin_cases j <;> rfl⟩
+  obtain ⟨g, h, j, k, hd⟩ : ∃ g h j k, d = ![g, h, j, k] :=
+    ⟨d 0, d 1, d 2, d 3, by funext j; fin_cases j <;> rfl⟩
+  subst v d
+  fin_cases a <;> fin_cases c <;> fin_cases e <;> fin_cases f <;>
+    fin_cases g <;> fin_cases h <;> fin_cases j <;> fin_cases k <;>
+      norm_num [pack, pathPhase, sector16, multiplicity16, bit16, block16,
+        Fin.sum_univ_succ, Function.update_apply, Fin.forall_fin_succ] <;> try module
 
 private def gauge (n : ℕ) (e : Fin 2) (x : Fin n → Fin 2) : ℂ :=
   (-1 : ℂ) ^ (e.val * ∑ j : Fin n, (x j).val * (x (site j 1)).val)
@@ -484,7 +508,8 @@ private lemma window_superoperator_action (n : ℕ) (i : Fin n)
     conv_lhs => rw [Matrix.matrix_eq_sum_single a]
     simp only [map_sum, hs, map_smul]
   have hv := congrArg (fun z : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ => z x y) ha
-  change (∑ p, windowChannel n i (Matrix.single p.1 p.2 1) x y * a p.1 p.2) = _
+  change (∑ p, windowSuperoperator n i (x, y) p * a p.1 p.2) = _
+  simp only [windowSuperoperator]
   rw [Fintype.sum_prod_type]
   simpa only [Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, mul_comm] using hv.symm
 
@@ -636,7 +661,7 @@ private lemma tensor_x_unitary (n : ℕ) : tensorX n * (tensorX n)ᴴ = 1 := by
   have hf (x : Fin n → Fin 2) : (fun j => (x j + 1) + 1) = x := by
     funext j
     apply Fin.ext
-    change ((x j).val + 1) % 2 + 1 ≡ (x j).val [MOD 2]
+    change (((x j).val + 1) % 2 + 1) % 2 = (x j).val
     have := (x j).isLt
     omega
   let f : Equiv.Perm (Fin n → Fin 2) :=
@@ -656,7 +681,7 @@ private lemma tensor_x_unitary (n : ℕ) : tensorX n * (tensorX n)ᴴ = 1 := by
           _ = f y := congrArg f h
     change (if x = f y then (1 : ℂ) else 0) = f.toPEquiv.toMatrix x y
     rw [PEquiv.toMatrix_toPEquiv_apply]
-    simp only [Pi.single_apply, hi]
+    simp only [Pi.single_apply, hi, eq_comm]
   rw [hx, Matrix.conjTranspose_permMatrix, ← Matrix.permMatrix_mul, inv_mul_cancel,
     Matrix.permMatrix_one]
 
@@ -667,15 +692,69 @@ private lemma coefficient_partition (n : ℕ) :
   change Matrix.trace ((cz n * tensorX n)ᴴ * tensorX n) = _
   rw [Matrix.conjTranspose_mul, Matrix.trace_mul_comm, ← Matrix.mul_assoc,
     tensor_x_unitary, one_mul, Matrix.trace_conjTranspose]
-  change star (∑ x : Fin n → Fin 2, (-1 : ℂ) ^
-    ∑ j : Fin n, (x j).val * (x (site j 1)).val) = _
+  rw [show cz n = Matrix.diagonal (fun x => (-1 : ℂ) ^
+    ∑ j : Fin n, (x j).val * (x (site j 1)).val) from rfl, Matrix.trace_diagonal]
   simp only [map_sum, star_pow, star_neg, star_one]
+
+private lemma transfer_path (h : Matrix (Fin 2) (Fin 2) ℂ) (m : ℕ) (a b : Fin 2) :
+    (h ^ (m + 1)) a b = ∑ x : Fin m → Fin 2, ∏ j : Fin (m + 1),
+      h (Fin.cons a x j) (Fin.snoc x b j) := by
+  induction m generalizing b with
+  | zero => simp
+  | succ m ih =>
+    rw [pow_succ, Matrix.mul_apply]
+    simp_rw [ih, Finset.sum_mul]
+    rw [← Fintype.sum_prod_type]
+    apply Fintype.sum_equiv (Fin.snocEquiv (fun _ : Fin (m + 1) => Fin 2))
+    intro p
+    change (∏ j : Fin (m + 1), h (Fin.cons a p.2 j) (Fin.snoc p.2 p.1 j)) * h p.1 b =
+      ∏ j : Fin (m + 2), h (Fin.cons a (Fin.snoc p.2 p.1) j)
+        (Fin.snoc (Fin.snoc p.2 p.1) b j)
+    conv_rhs => rw [Fin.prod_univ_castSucc]
+    simp only [Fin.cons_snoc_eq_snoc_cons, Fin.snoc_castSucc, Fin.snoc_last]
 
 private lemma partition_transfer (n : ℕ) (hn : 0 < n) :
     (∑ x : Fin n → Fin 2, (-1 : ℂ) ^
       ∑ j : Fin n, (x j).val * (x (site j 1)).val) =
       Matrix.trace ((!![1, 1; 1, -1] : Matrix (Fin 2) (Fin 2) ℂ) ^ n) := by
-  sorry
+  let h : Matrix (Fin 2) (Fin 2) ℂ := !![1, 1; 1, -1]
+  have he (a b : Fin 2) : h a b = (-1 : ℂ) ^ (a.val * b.val) := by
+    fin_cases a <;> fin_cases b <;> norm_num [h]
+  obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hn)
+  symm
+  calc
+    Matrix.trace (h ^ (m + 1)) = ∑ a : Fin 2, ∑ x : Fin m → Fin 2,
+        ∏ j : Fin (m + 1), h (Fin.cons a x j) (Fin.snoc x a j) := by
+      change (∑ a, (h ^ (m + 1)) a a) = _
+      simp_rw [transfer_path]
+    _ = ∑ p : Fin 2 × (Fin m → Fin 2),
+        ∏ j : Fin (m + 1), h (Fin.cons p.1 p.2 j) (Fin.snoc p.2 p.1 j) := by
+      rw [Fintype.sum_prod_type]
+    _ = ∑ x : Fin (m + 1) → Fin 2, (-1 : ℂ) ^
+        ∑ j : Fin (m + 1), (x j).val * (x (site j 1)).val := by
+      apply Fintype.sum_equiv (Fin.consEquiv (fun _ : Fin (m + 1) => Fin 2))
+      intro p
+      change (∏ j : Fin (m + 1), h (Fin.cons p.1 p.2 j) (Fin.snoc p.2 p.1 j)) =
+        (-1 : ℂ) ^ ∑ j : Fin (m + 1), (Fin.cons p.1 p.2 j).val *
+          (Fin.cons p.1 p.2 (site j 1)).val
+      rw [← Finset.prod_pow_eq_pow_sum]
+      apply Finset.prod_congr rfl
+      intro j _
+      have hj : Fin.cons p.1 p.2 (site j 1) = Fin.snoc p.2 p.1 j := by
+        cases j using Fin.lastCases with
+        | last =>
+          have hs : site (Fin.last m) 1 = 0 := by
+            apply Fin.ext
+            change (m + 1) % (m + 1) = 0
+            exact Nat.mod_self _
+          rw [hs, Fin.cons_zero, Fin.snoc_last]
+        | cast j =>
+          have hs : site j.castSucc 1 = j.succ := by
+            apply Fin.ext
+            change (j.val + 1) % (m + 1) = j.val + 1
+            exact Nat.mod_eq_of_lt (by omega)
+          rw [hs, Fin.cons_succ, Fin.snoc_castSucc]
+      rw [hj, he]
 
 private lemma transfer_coefficient (n : ℕ) (hn : Even n) (hsize : 4 ≤ n) :
     Matrix.trace ((czxUnitary n)ᴴ * tensorX n) = (2 : ℂ) ^ (n / 2 + 1) := by
@@ -699,9 +778,11 @@ private lemma transfer_coefficient (n : ℕ) (hn : Even n) (hsize : 4 ≤ n) :
 
 private lemma projection_initial (n : ℕ) (hn : Even n) (hsize : 4 ≤ n) :
     (fun x y => (projection n).mulVec
-      (fun p => (((2 : ℂ) ^ n)⁻¹ • (1 + tensorX n)) p.1 p.2) (x, y)) =
+      (fun p => (((2 : ℂ) ^ n)⁻¹ •
+        ((1 : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) + tensorX n)) p.1 p.2) (x, y)) =
       ((2 : ℂ) ^ n)⁻¹ •
-        (1 + (2 : ℂ) ^ (1 - (n / 2 : ℕ) : ℤ) • czxUnitary n) := by
+        ((1 : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) +
+          (2 : ℂ) ^ (1 - (n / 2 : ℕ) : ℤ) • czxUnitary n) := by
   have hnpos : 0 < n := by omega
   have htx : Matrix.trace (tensorX n) = 0 := by
     change ∑ x, tensorX n x x = 0
