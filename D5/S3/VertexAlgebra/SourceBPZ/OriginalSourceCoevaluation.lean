@@ -166,8 +166,9 @@ private def projectGrade (D : LatticeData) (h : ℤ) :
         ((grade D h).add_mem x.property (theta_mem_grade D h x.val x.property))
     · change plusPart D x.val ∈ fixedSpace D
       rw [mem_fixedSpace]
-      simp only [plusPart, map_smul, map_add, theta_involutive]
-      rw [add_comm]⟩
+      have hi : theta D (theta D x.val) = x.val := theta_involutive D x.val
+      simp only [plusPart, map_smul, map_add]
+      rw [hi, add_comm]⟩
   map_add' x y := by
     apply Subtype.ext
     simp only [plusPart, Submodule.coe_add, map_add, smul_add]
@@ -199,33 +200,36 @@ private theorem gradeBasis_val (D : LatticeData) (h : ℤ) (a : EnergyFiber D h)
   rw [LinearEquiv.apply_symm_apply]
   exact Finsupp.supportedEquivFinsupp_symm_single _ a 1
 
-private theorem frame_expansion (D : LatticeData)
+private theorem frame_project_expansion (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h : ℤ)
-    (x : ↥(grade D h ⊓ fixedSpace D)) :
+    (x : grade D h) :
     (∑ᶠ a : EnergyFiber D h,
-      (carrierCoeffEquiv D x.val a.val) • fixedFrame D h a) = x := by
+      (carrierCoeffEquiv D x.val a.val) • fixedFrame D h a) = projectGrade D h x := by
   classical
   letI := energyFiber_finite D hD h
   letI := Fintype.ofFinite (EnergyFiber D h)
   rw [finsum_eq_sum_of_fintype]
-  have hx : projectGrade D h ⟨x.val, x.property.1⟩ = x := by
-    apply Subtype.ext
-    change (2 : ℂ)⁻¹ • (x.val + theta D x.val) = x.val
-    rw [(mem_fixedSpace D x.val).mp x.property.2, ← two_smul ℂ x.val,
-      smul_smul, inv_mul_cancel₀ (by norm_num : (2 : ℂ) ≠ 0), one_smul]
-  refine Eq.trans ?_ hx
-  have hs := congrArg (projectGrade D h)
-    ((gradeBasis D h).sum_repr (⟨x.val, x.property.1⟩ : grade D h))
+  have hs := congrArg (projectGrade D h) ((gradeBasis D h).sum_repr x)
   rw [map_sum] at hs
   simp only [map_smul] at hs
   convert hs using 1
   apply Finset.sum_congr rfl
   intro a ha
   congr 1
-  · rfl
-  · apply congrArg (projectGrade D h)
-    apply Subtype.ext
-    exact (gradeBasis_val D h a).symm
+  apply congrArg (projectGrade D h)
+  apply Subtype.ext
+  exact (gradeBasis_val D h a).symm
+
+private theorem frame_expansion (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h : ℤ)
+    (x : ↥(grade D h ⊓ fixedSpace D)) :
+    (∑ᶠ a : EnergyFiber D h,
+      (carrierCoeffEquiv D x.val a.val) • fixedFrame D h a) = x := by
+  rw [frame_project_expansion D hD h ⟨x.val, x.property.1⟩]
+  apply Subtype.ext
+  change (2 : ℂ)⁻¹ • (x.val + theta D x.val) = x.val
+  rw [(mem_fixedSpace D x.val).mp x.property.2, ← two_smul ℂ x.val,
+    smul_smul, inv_mul_cancel₀ (by norm_num : (2 : ℂ) ≠ 0), one_smul]
 
 private theorem projected_dual_pairing (D : LatticeData) (hu : IsUnit D.G.det)
     (h : ℤ) (a : EnergyFiber D h) (x : ↥(grade D h ⊓ fixedSpace D)) :
@@ -269,18 +273,9 @@ private theorem projection_basis (D : LatticeData) (h : ℤ) (a : Label D) :
   apply (carrierCoeffEquiv D).injective
   ext b
   rw [gradeProjection_coeff]
-  change (if energy D b = h then (carrierBasis D).repr (carrierBasis D a) b else 0) = _
-  rw [Module.Basis.repr_self]
-  split_ifs with ha
-  · rw [show carrierCoeffEquiv D (carrierBasis D a) = Finsupp.single a 1 from
-      (carrierBasis D).repr_self a]
-    by_cases hab : a = b
-    · subst b; simp [ha]
-    · simp [Finsupp.single_apply, hab]
-  · simp only [map_zero, Finsupp.zero_apply]
-    by_cases hab : a = b
-    · subst b; simp [ha]
-    · simp [Finsupp.single_apply, hab]
+  have hc : carrierCoeffEquiv D (carrierBasis D a) = Finsupp.single a 1 :=
+    (carrierBasis D).repr_self a
+  split_ifs <;> simp_all [hc, Finsupp.single_apply]
 
 private theorem theta_projection (D : LatticeData) (h : ℤ) (v : Carrier D) :
     theta D (gradeProjection D h v) = gradeProjection D h (theta D v) := by
@@ -294,7 +289,8 @@ private theorem theta_projection (D : LatticeData) (h : ℤ) (v : Carrier D) :
           carrierBasis D (-a.1, a.2) := by
       simp only [carrierBasis_apply, theta_single, sigma_monomial, Finsupp.smul_single]
     have he : energy D (-a.1, a.2) = energy D a := by
-      simp only [energy, chargeEnergy, bilinear_neg_neg]
+      unfold energy chargeEnergy
+      rw [bilinear_neg_neg]
     simp only [LinearMap.comp_apply, projection_basis, ht, map_smul, he]
     split_ifs <;> simp only [map_zero, smul_zero]
   exact LinearMap.congr_fun heq v
@@ -341,36 +337,69 @@ theorem inverse_contraction (D : LatticeData) (hu : IsUnit D.G.det)
     finsum_eq_sum_of_fintype, map_sum, finsum_eq_sum_of_fintype]
   simp only [map_smul, smul_eq_mul]
 
-private theorem coevaluation_half_average (D : LatticeData)
+open private left_grade_projection_pairing pairing_plusPart_right_of_fixed_left from
+  D5.S3.VertexAlgebra.Lattice.FixedGradedDuality
+
+private theorem coevaluation_unprojected (D : LatticeData) (hu : IsUnit D.G.det)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h : ℤ)
     (f : Module.Dual ℂ ↥(grade D h ⊓ fixedSpace D)) :
-    (coevaluation D h f).val = (2 : ℂ)⁻¹ •
-      ∑ᶠ a : EnergyFiber D h, f (fixedFrame D h a) •
-        (dualCarrierBasis D a.val + theta D (dualCarrierBasis D a.val)) := by
+    (coevaluation D h f).val =
+      ∑ᶠ a : EnergyFiber D h, f (fixedFrame D h a) • dualCarrierBasis D a.val := by
   classical
   letI := energyFiber_finite D hD h
   letI := Fintype.ofFinite (EnergyFiber D h)
-  simp only [coevaluation, finsum_eq_sum_of_fintype, Submodule.coe_sum,
-    Submodule.coe_smul, fixedDualFrame, projectGrade, LinearMap.coe_mk,
-    AddHom.coe_mk, plusPart, Finset.smul_sum, smul_smul]
+  apply sub_eq_zero.mp
+  apply (sourcePairing_nondegenerate D hu).1
+  intro v
+  let pv : grade D h := ⟨gradeProjection D h v, gradeProjection_mem D h v⟩
+  have hr := left_grade_projection_pairing D (sourcePairing D)
+    (fun m n u v hu hv hmn => sourcePairing_grade D m n hmn u v hu hv)
+    h (coevaluation D h f).val (coevaluation D h f).property.1 v
+  have hp := pairing_plusPart_right_of_fixed_left D (sourcePairing D)
+    (sourcePairing_theta D) (coevaluation D h f).val
+    (coevaluation D h f).property.2 pv.val
+  have he := coevaluation_pairing D hu hD h f (projectGrade D h pv)
+  have hv : sourcePairing D (coevaluation D h f).val v = f (projectGrade D h pv) := by
+    exact hr.symm.trans (hp.symm.trans he)
+  have hs := congrArg f (frame_project_expansion D hD h pv)
+  rw [finsum_eq_sum_of_fintype, map_sum] at hs
+  simp only [map_smul, smul_eq_mul] at hs
+  have hc (a : EnergyFiber D h) :
+      carrierCoeffEquiv D pv.val a.val = carrierCoeffEquiv D v a.val := by
+    exact (gradeProjection_coeff D h v a.val).trans (if_pos a.property)
+  simp only [hc] at hs
+  rw [map_sub, LinearMap.sub_apply, hv, finsum_eq_sum_of_fintype]
+  simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply,
+    smul_eq_mul, dualCarrierBasis_pairing D hu]
+  rw [← hs]
+  apply sub_eq_zero.mpr
   apply Finset.sum_congr rfl
   intro a ha
-  rw [mul_comm]
+  exact mul_comm _ _
 
-/-- The literal ambient scalar channel retains exactly one source half-average. -/
+/-- Single-half-average expansion of the original projected kernel.
+Both scalar tests are on the original carrier. The fixed-grade inverse can be
+supplied by the existing pairing equivalence through hx. -/
 theorem inverse_contraction_half_average (D : LatticeData) (hu : IsUnit D.G.det)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h : ℤ)
-    (f : Module.Dual ℂ ↥(grade D h ⊓ fixedSpace D))
-    (g : Module.Dual ℂ (Carrier D)) (x : ↥(grade D h ⊓ fixedSpace D))
-    (hx : ∀ y : ↥(grade D h ⊓ fixedSpace D), sourcePairing D x.val y.val = f y) :
+    (f g : Module.Dual ℂ (Carrier D)) (x : ↥(grade D h ⊓ fixedSpace D))
+    (hx : ∀ y : ↥(grade D h ⊓ fixedSpace D), sourcePairing D x.val y.val = f y.val) :
     g x.val = (2 : ℂ)⁻¹ * ∑ᶠ a : EnergyFiber D h,
-      f (fixedFrame D h a) *
-        (g (dualCarrierBasis D a.val) + g (theta D (dualCarrierBasis D a.val))) := by
+      (f (carrierBasis D a.val) + f (theta D (carrierBasis D a.val))) *
+        g (dualCarrierBasis D a.val) := by
   classical
   letI := energyFiber_finite D hD h
   letI := Fintype.ofFinite (EnergyFiber D h)
-  rw [coevaluation_eq_of_pairing D hu hD h f x hx, coevaluation_half_average D hD]
-  simp only [finsum_eq_sum_of_fintype, map_smul, map_sum, map_add, smul_eq_mul]
+  let F := f.comp (grade D h ⊓ fixedSpace D).subtype
+  rw [coevaluation_eq_of_pairing D hu hD h F x hx, coevaluation_unprojected D hu hD]
+  simp only [finsum_eq_sum_of_fintype, map_sum, map_smul, smul_eq_mul]
+  rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro a ha
+  change f (plusPart D (carrierBasis D a.val)) * g (dualCarrierBasis D a.val) = _
+  rw [plusPart, map_smul, map_add]
+  simp only [smul_eq_mul]
+  ring
 
 /-- Negative signed energies have no labels; no toNat truncation is used. -/
 theorem coevaluation_negative (D : LatticeData)
@@ -383,13 +412,14 @@ theorem coevaluation_negative (D : LatticeData)
     have he := a.property
     dsimp [energy] at he
     omega⟩
-  simp [coevaluation]
+  exact finsum_of_isEmpty _
 
 /-- The grade-zero frame is the genuine original vacuum. -/
 def gradeVacuum (D : LatticeData) : ↥(grade D 0 ⊓ fixedSpace D) :=
   ⟨vacuum D, by
     constructor
-    · simpa only [carrierBasis_apply, vacuum, monomial_zero_one] using
+    · change vacuum D ∈ grade D 0
+      simpa [carrierBasis_apply, vacuum] using
         basis_mem_grade D 0 ⟨(0,0), by simp [energy, oscillatorEnergy]⟩
     · exact (mem_fixedSpace D _).mpr (theta_vacuum D)⟩
 
@@ -410,8 +440,8 @@ theorem coevaluation_vacuum (D : LatticeData)
     norm_num
   have hf : fixedFrame D 0 a0 = gradeVacuum D := by
     apply Subtype.ext
-    simpa only [fixedFrame, projectGrade, LinearMap.coe_mk, AddHom.coe_mk,
-      carrierBasis_apply, a0, monomial_zero_one, ← vacuum] using hp
+    change plusPart D (carrierBasis D (0,0)) = vacuum D
+    simpa [carrierBasis_apply, vacuum] using hp
   have hd : fixedDualFrame D 0 a0 = gradeVacuum D := by
     apply Subtype.ext
     change plusPart D (dualCarrierBasis D (0,0)) = vacuum D
@@ -425,12 +455,37 @@ theorem coevaluation_vacuum (D : LatticeData)
     exact (hne (hall b)).elim
   · simp
 
+/-- The signed native contraction has an actual zero branch and an actual
+vacuum branch before its positive-energy finite-frame expansion. -/
+theorem inverse_contraction_signed (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h : ℤ)
+    (f : Module.Dual ℂ ↥(grade D h ⊓ fixedSpace D))
+    (g : Module.Dual ℂ (Carrier D)) (x : ↥(grade D h ⊓ fixedSpace D))
+    (hx : ∀ y : ↥(grade D h ⊓ fixedSpace D), sourcePairing D x.val y.val = f y) :
+    g x.val = if hh : h < 0 then 0 else if hz : h = 0 then
+      f (hz.symm ▸ gradeVacuum D) * g (vacuum D) else
+      ∑ᶠ a : EnergyFiber D h, f (fixedFrame D h a) * g (fixedDualFrame D h a).val := by
+  by_cases hh : h < 0
+  · rw [dif_pos hh, coevaluation_eq_of_pairing D hu hD h f x hx,
+      coevaluation_negative D hD h hh]
+    exact g.map_zero
+  · rw [dif_neg hh]
+    by_cases hz : h = 0
+    · subst h
+      rw [dif_pos rfl, coevaluation_eq_of_pairing D hu hD 0 f x hx,
+        coevaluation_vacuum D hD, Submodule.coe_smul, map_smul]
+      rfl
+    · rw [dif_neg hz]
+      exact inverse_contraction D hu hD h f
+        (g.comp (grade D h ⊓ fixedSpace D).subtype) x hx
+
 #print axioms dualCarrierBasis_pairing
 #print axioms dualCarrierBasis_mem_grade
 #print axioms coevaluation_pairing
 #print axioms inverse_contraction
 #print axioms inverse_contraction_half_average
 #print axioms coevaluation_negative
+#print axioms inverse_contraction_signed
 #print axioms coevaluation_vacuum
 
 end D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation
