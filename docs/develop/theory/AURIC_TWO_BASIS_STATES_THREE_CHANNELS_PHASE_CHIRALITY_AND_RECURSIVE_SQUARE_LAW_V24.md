@@ -9,7 +9,7 @@ v24.0 · 2026 年 10 月 30 日 · Asia/Singapore
 ## 摘要
 
 本文研究“两通道加归一化给出三通道”在 AURIC 五模式、量子比特及递归观察中的精确意义。原始三占位均值满足
-$X+Y+Z=1-p_0+p_{13}$，故一般不能据总归一化补第三项；两个归一化复振幅则确实通过 Hopf 商确定 Bloch 球面上的三个实二次关系坐标。两个固定均值仍通常留下法向正负分支。本文构造一个直接嵌入五模式的三元 Fourier 读口：三个概率为闭合复振幅三角的边长平方，隐藏 Bloch 法向恰为其有向面积的 $-4\sqrt3$ 倍。三边给出法向大小，态的实际手性给出符号。算符方面，反对易双读口以 $C=-iAB$ 闭合第三读口；三实对称反对易反射进一步产生相容复结构 $J=A_1A_2A_3$，最小非零载体为 $\mathbb{R}^4\simeq\mathbb{C}^2$。平方概率可由正交细分的统一非负标定推出，而仅有二结果归一化不足。结合项目新增 §§85--89，本文给出原生黄金门四时响应关系与二次终端律的条件刻画，并保留其全上下文、连续性、射线充分性与标定前提。最后证明归一化递归的中心、非结合边界及 Schur 有效度量：消去内部信息后，正确边界归一化为 $g^\dagger G(\lambda)g=1$，其中 $G=I-K'(\lambda)>0$。
+$X+Y+Z=1-p_0+p_{13}$，故一般不能据总归一化补第三项；两个归一化复振幅则确实通过 Hopf 商确定 Bloch 球面上的三个实二次关系坐标。两个固定均值仍通常留下法向正负分支。本文构造一个直接嵌入五模式的三元 Fourier 读口：三个概率为闭合复振幅三角的边长平方，隐藏 Bloch 法向恰为其有向面积的 $-4\sqrt3$ 倍。三边给出法向大小，态的实际手性给出符号。算符方面，反对易双读口以 $C=-iAB$ 闭合第三读口；三实对称反对易反射进一步产生相容复结构 $J=A_1A_2A_3$，最小非零载体为 $\mathbb{R}^4\simeq\mathbb{C}^2$。平方概率可由正交细分的统一非负标定推出，而仅有二结果归一化不足。结合项目新增 §§85–89，本文给出原生黄金门四时响应关系与二次终端律的条件刻画，并保留其全上下文、连续性、射线充分性与标定前提。最后证明归一化递归的中心、非结合边界及 Schur 有效度量：消去内部信息后，正确边界归一化为 $g^\dagger G(\lambda)g=1$，其中 $G=I-K'(\lambda)>0$。
 
 **结果身份。**
 经典 Bloch、Hopf、Clifford、POVM 和变分背景不主张原创优先权。三元测量的全朝向刻画及项目的原生响应刻画分别注明既有来源；本稿给出所用条件、连接计算、反例及证明。全部数学使用纸面推导，未运行数学数值、CAS、门字搜索、枚举或 Lean。排版编译与图形渲染只用于交付质量检查。
@@ -21,7 +21,7 @@ $X+Y+Z=1-p_0+p_{13}$，故一般不能据总归一化补第三项；两个归一
 
 本轮固定项目 `dev` 提交为
 `88a98cb974735eba23c7ece731a40ba9b48c19f5`。
-时间为 2026-10-30 14:08:36 新加坡时间。相对 v23 的 `ae864ac4`，比较接口返回 54 个提交、43 条变化路径，其中六份理论文档变化；该比较没有触及返回截断。最相关实质新增由 PR \#24073 引入：量子重构续卷 II 增加 §§85--89，共 266 行，将原生全上下文四时关系与二次终端响应联系起来。金字塔基础公式本轮未变。[快照](#ref-snapshot) [金字塔基础](#ref-pyramid) [续卷 II](#ref-continuation)
+时间为 2026-10-30 14:08:36 新加坡时间。相对 v23 的 `ae864ac4`，比较接口返回 54 个提交、43 条变化路径，其中六份理论文档变化；该比较没有触及返回截断。最相关实质新增由 PR \#24073 引入：量子重构续卷 II 增加 §§85–89，共 266 行，将原生全上下文四时关系与二次终端响应联系起来。金字塔基础公式本轮未变。[快照](#ref-snapshot) [金字塔基础](#ref-pyramid) [续卷 II](#ref-continuation)
 这是一份定向源码核对；不将新增收录的旧研究稿视为独立验证，也不把本轮阅读称为全仓形式化重验。
 
 
@@ -117,6 +117,8 @@ $$
 
 该区间非空恰等价于所列三均值不等式，反向按这些式子构造概率即实现。消去 $Z$ 或 $Y$ 便得各完整区间。
 
+**证明完。** ∎
+
 
 即使要求五模式为纯单位态也不够：$\lvert 0\rangle$ 与 $\lvert 2\rangle$ 的 $X=Y=0$ 相同，$Z$ 分别为零、一。对内部例子 $X=Y=1/4$，概率
 $(1/2,1/4,0,1/4,0)$ 与 $(0,1/4,1/2,1/4,0)$ 也给不同的 $Z$；取各概率平方根为振幅，就得到两份归一化纯态。总归一化已经用于定理中的可行体，不能再次计成三个均值之间的另一条等式。
@@ -138,10 +140,12 @@ $$
 
 **证明。**
 
-充分性直接代入。若不在该实线性包络中，取 $A_3$ 对该包络的 Hilbert--Schmidt 正交余量 $\Delta\ne0$。则
+充分性直接代入。若不在该实线性包络中，取 $A_3$ 对该包络的 Hilbert–Schmidt 正交余量 $\Delta\ne0$。则
 $\operatorname{Tr}\Delta=\operatorname{Tr}(\Delta A_1)=\operatorname{Tr}(\Delta A_2)=0$，且
 $\operatorname{Tr}(\Delta A_3)=\operatorname{Tr}(\Delta^2)>0$。令维数为 $d$，取足够小的 $\varepsilon>0$，则
 $\rho_\pm=I/d\pm\varepsilon\Delta$ 都正定、迹为一。二者前两读出相同，第三读出不同，矛盾。
+
+**证明完。** ∎
 
 原 AURIC 的 $I,\widehat X,\widehat Y,\widehat Z$ 线性独立：在空模式及三个单占位模式依次取值即可。因此任取两个都不满足这个全态补全判据。纯态球面是受限非线性域，不与本定理冲突。
 
@@ -162,6 +166,8 @@ $$
 **证明。**
 
 第一句由定理 [定理 2.2](#thm:auricfiber)。在 $H_{\rm one}$ 上三个效果分别是其三个基投影。固定非零概率后，各振幅只能写成 $\sqrt{q_j}e^{i\theta_j}$；商去一个共同相位，剩 $k-1$ 个独立圆相位。
+
+**证明完。** ∎
 
 仅有 $p_0=p_{13}$ 时隐藏的 $\kappa$ 仍可变化。几何三均值的平面 $X+Y+Z=1$ 是五点金字塔的一个截面；这里的 $H_{\rm one}$ 是另外明示的逻辑扇区，不能由该平面等式反推全部五模式支撑已经缩减。
 
@@ -232,6 +238,8 @@ $$
 
 直接代入得到归一化与原坐标。南极取 $(0,1)$。故满射且纤维恰为 $U(1)$。
 
+**证明完。** ∎
+
 这里的 Hopf 纤维是一整个圆，不是二重覆盖。二重覆盖是另一个映射 $SU(2)\to SO(3)$，其核为 $\{\pm I\}$。两个复振幅提供四个实参数，单位范数扣去一个，共同相位再扣去一个；剩下两个实自由度，但并不意味着任意两个固定读出能全球单值重构。
 
 
@@ -265,6 +273,8 @@ $r_3^2=2\mu-1-r_1^2-r_2^2$，仍须决定符号。
 Hermitian 迹一矩阵的 Pauli 展开唯一。由 $(r\cdot\sigma)^2=|r|^2I$，本征值为 $(1\pm|r|)/2$，得正性及纯态条件。再用
 $\operatorname{Tr}(\sigma_i\sigma_j)=2\delta_{ij}$ 平方取迹，得纯度式。其余均由球体或指定半径的球面截线得到。
 
+**证明完。** ∎
+
 手性规定哪侧叫正，不决定未知态位于哪侧。固定同一右手 Pauli 三元组后，$\lvert 0\rangle,\lvert 1\rangle$ 仍有相同 $r_1=r_2=0$ 和相反的 $r_3$。原项目的三轴几何文件也已明确给出同样的平方剩余量与符号边界。[三轴几何](#ref-axes)
 
 
@@ -278,6 +288,8 @@ $r_3=\sqrt{1-r_1^2-r_2^2}$ 在整个闭圆盘上也没有统一有限的 Lipschi
 
 在内盘其梯度为 $(-r_1/r_3,-r_2/r_3)$。更直接，比较 $(1,0,0)$ 与
 $(1-\varepsilon,0,\sqrt{2\varepsilon-\varepsilon^2})$，前两读出之差为 $\varepsilon$，第三差值除以它趋于无穷。
+
+**证明完。** ∎
 
 因此“稳定”若指误差传播，还须指定远离退化边界的区域，不能只靠参数计数。
 
@@ -298,7 +310,9 @@ $$
 
 **证明。**
 
-部分迹给约化矩阵 $(\begin{smallmatrix}a&\bar c\\c&b\end{smallmatrix})$。展开 $1-|r|^2$ 得所列式，非负性与等号由 Cauchy--Schwarz。
+部分迹给约化矩阵 $(\begin{smallmatrix}a&\bar c\\c&b\end{smallmatrix})$。展开 $1-|r|^2$ 得所列式，非负性与等号由 Cauchy–Schwarz。
+
+**证明完。** ∎
 
 这把局部“不满单位球面”解释为隐藏分支关系的 Gram 行列式。整体本体态为纯态，并不要求每个局部观察接口也纯。
 
@@ -335,6 +349,8 @@ $$
 $C^\dagger=iBA=-iAB$，$C^2=-ABAB=I$，其余乘积直接用反对易式化简。$B$ 等距交换 $A$ 的 $\pm1$ 本征空间，故二者同维。在正本征空间选正交基 $e_k$，用 $Be_k$ 作为负本征空间基，便有
 $A=\sigma_z\otimes I_m,B=\sigma_x\otimes I_m,C=\sigma_y\otimes I_m$。
 
+**证明完。** ∎
+
 所以两个算符连同乘法关系确定第三算符；两个*均值*没有自动保留这个乘法关系的读出。
 
 
@@ -370,7 +386,9 @@ $\operatorname{Var}(A)+\operatorname{Var}(B)+\operatorname{Var}(C)=3-x^2-y^2-z^2
 
 由 $AB=iC$ 得第一式。Gram 的各项是 $\operatorname{Tr}\rho\delta A_i^\dagger\delta A_j$，所以任意复线性组合的二次型为一个正算符的期望，非负。展开给显示矩阵及其行列式。由定理 [定理 4.1](#thm:pauli) 的逻辑 qubit 表示及定理 [定理 3.2](#thm:ball)，纯性恰对应 $|r|=1$。方差用 $A_i^2=I$ 相加即可。
 
-这就是此双读口的 Schrödinger--Robertson 不等式：
+**证明完。** ∎
+
+这就是此双读口的 Schrödinger–Robertson 不等式：
 $(1-x^2)(1-y^2)\ge x^2y^2+z^2$。第三分量位于两通道关联的虚部。普通先投影测 $A$ 再测 $B$ 并不读取该虚部：$P_a=(I+aA)/2$ 满足 $P_aBP_a=0$，所以其二值结果乘积的均值恒为零。相干相关读口或直接测 $C$ 必须另行给出。
 
 
@@ -416,6 +434,8 @@ $g(u,Jv)=-g(Ju,v)$ 给共轭对称性，而
 $h(v,v)=g(v,v)>0$。$A_i$ 与 $J$ 对易给复线性，其实自伴性给 $h$-自伴性。又
 $J A_1A_2=-A_3$，得第三算符公式。最后 $A_2$ 交换 $A_1$ 的两个*复*本征空间，故复维数为 $2m$，实维数为 $4m$。标准 Pauli 三元组实化即实现 $m=1$。
 
+**证明完。** ∎
+
 这一构造给“复结构来自关系”一个严格版本，但承重前件是**算符反对易代数**，比几何轴正交强。原 AURIC 三个占位算符彼此对易，不满足它。仅给两实反射时，$AB$ 虽可满足平方为 $-I$，却与 $A,B$ 反对易；以它作为复结构会使原两算符反线性，不能直接宣称已经得到同一复 Hilbert 空间上的线性读口。
 
 
@@ -438,6 +458,8 @@ $w>0$ 时等号恰对应压缩后条件态 $\Pi\rho\Pi/w$ 为纯态。
 **证明。**
 
 奇数维障碍由定理 [定理 4.1](#thm:pauli)。$w>0$ 时对条件态应用 Bloch 球体定理；$w=0$ 时正半定压缩块的迹为零，只能为零。总五模式为纯向量时，该压缩块秩至多一，但质量 $w$ 仍未必为一。
+
+**证明完。** ∎
 
 
 <a id="sec:trine"></a>
@@ -490,6 +512,8 @@ $1+\omega+\omega^2=0$。$V$ 的两列
 $(1,1,1)^T/\sqrt3$ 与 $(1,\omega^2,\omega)^T/\sqrt3$ 正交归一；补上 $(1,\omega,\omega^2)^T/\sqrt3$ 就是三阶 Fourier 酉矩阵。乘 $\omega^{-j}$ 后求和得隐藏线性关系。逐行外积给
 $E_j=\frac13(\begin{smallmatrix}1&\omega^{-j}\\\omega^j&1\end{smallmatrix})$，即显示 Pauli 式。
 
+**证明完。** ∎
+
 这是标准 trine POVM 的显式扩展实现。[Caves 等](#ref-caves) [Zhao 等](#ref-zhao) 三个*输出模式*在扩展空间正交；三个输入效果不正交，也不是 qubit 中三个正交基态。$F_3\oplus I_2$ 提供了数学上明确的五模式酉接口，其在原生黄金门菜单上的编译本稿未取得。
 
 
@@ -528,6 +552,8 @@ $r_3=\pm\sqrt{1-|r_\parallel|^2}$；边界两分支合并。
 
 展开 $|a_j|^2$，用 $\bar\alpha\beta=(r_1+ir_2)/2$ 得第一式。
 三向量满足 $\sum n_j=0$、$\sum n_jn_j^T=\frac32\Pi_\parallel$，得到逆式及平方和。任意总和为一的实三元组均由该二维线性关系恢复其 $r_\parallel$；平方和条件恰给 $|r_\parallel|\le1$，可补成球面点。该补全所得概率即原三元组，所以条件充分。最后用定理 [定理 3.2](#thm:ball)。
+
+**证明完。** ∎
 
 三概率并非整个单纯形：例如 $(1,0,0)$ 不在允许圆盘内。这里的“两个概率加归一化”补全了同一读口的三个概率，却一般没有补全态的法向分支。
 
@@ -589,29 +615,39 @@ $$
 
 再除以二得第三式。由三概率恢复 $r_\parallel$，由面积符号选择 $r_3$，然后用 Hopf 商的单射性恢复射线。
 
+**证明完。** ∎
 
-<div role="img" aria-label="两个同平面定向的闭合振幅三角：左支 ψ=(1,0), r₃=+1，右支 ψ=(0,1), r₃=−1；两者 O→B→C→O 的边分别标为 t₀,t₁,t₂。" style="display:flex;flex-wrap:wrap;gap:1.25rem;justify-content:center;align-items:flex-start;max-width:760px;margin:1.2rem auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;">
-<div style="position:relative;width:360px;height:280px;box-sizing:border-box;border:1px solid #b6c2d1;border-radius:6px;background:#f5f9ff;padding:8px;color:#173b63;">
-<strong style="position:absolute;left:12px;top:8px;">左支：ψ=(1,0), r₃=+1</strong>
-<span style="position:absolute;left:16px;top:155px;">O (0,0)</span><span style="position:absolute;left:248px;top:155px;">B (1/√3,0)</span><span style="position:absolute;left:122px;top:218px;">C (1/(2√3),−1/2)</span>
-<span style="position:absolute;left:46px;top:165px;width:210px;border-top:2px solid #245a9b;"></span><span style="position:absolute;left:145px;top:155px;">t₀</span><span style="position:absolute;left:248px;top:155px;">➤</span>
-<span style="position:absolute;left:266px;top:165px;width:125px;border-top:2px solid #245a9b;transform:rotate(156.5deg);transform-origin:left center;">➤</span><span style="position:absolute;left:230px;top:195px;">t₁</span>
-<span style="position:absolute;left:142px;top:225px;width:135px;border-top:2px solid #245a9b;transform:rotate(201.8deg);transform-origin:left center;">➤</span><span style="position:absolute;left:64px;top:213px;">t₂</span>
-<div style="position:absolute;left:79px;top:252px;font-family:serif;font-size:1rem;">𝒜 = −1/(4√3)</div>
-</div>
-<div style="position:relative;width:360px;height:280px;box-sizing:border-box;border:1px solid #d2b27c;border-radius:6px;background:#fff9ef;padding:8px;color:#714817;">
-<strong style="position:absolute;left:12px;top:8px;">右支：ψ=(0,1), r₃=−1</strong>
-<span style="position:absolute;left:16px;top:155px;">O (0,0)</span><span style="position:absolute;left:248px;top:155px;">B (1/√3,0)</span><span style="position:absolute;left:122px;top:32px;">C (1/(2√3),+1/2)</span>
-<span style="position:absolute;left:46px;top:165px;width:210px;border-top:2px solid #a83838;"></span><span style="position:absolute;left:145px;top:155px;">t₀</span><span style="position:absolute;left:248px;top:155px;">➤</span>
-<span style="position:absolute;left:266px;top:165px;width:166px;border-top:2px solid #a83838;transform:rotate(226.2deg);transform-origin:left center;">➤</span><span style="position:absolute;left:225px;top:102px;">t₁</span>
-<span style="position:absolute;left:142px;top:38px;width:135px;border-top:2px solid #a83838;transform:rotate(136.2deg);transform-origin:left center;">➤</span><span style="position:absolute;left:64px;top:82px;">t₂</span>
-<div style="position:absolute;left:79px;top:252px;font-family:serif;font-size:1rem;">𝒜 = +1/(4√3)</div>
-</div>
-</div>
+
+```mermaid
+---
+config:
+  themeVariables:
+    fontSize: 18px
+---
+block-beta
+  columns 11
+  space:8 CR(("C")) space:2
+  space:11
+  OL(("O")) space:3 BL(("B")) space OR(("O")) space:3 BR(("B"))
+  space:11
+  space:2 CL(("C")) space:8
+  SL["左支 ψ=(1,0), r₃=+1<br/>𝒜=−1/(4√3)"]:5 space SR["右支 ψ=(0,1), r₃=−1<br/>𝒜=+1/(4√3)"]:5
+  OL -- "t₀" --> BL
+  BL -- "t₁" --> CL
+  CL -- "t₂" --> OL
+  OR -- "t₀" --> BR
+  BR -- "t₁" --> CR
+  CR -- "t₂" --> OR
+  classDef default fill:#fff,stroke:#333,color:#222
+  style SL fill:none,stroke:none
+  style SR fill:none,stroke:none
+```
+
+两图均采用实轴向右、虚轴向上的同一复平面方向；有向边依次为 $t_0:O\to B$、$t_1:B\to C$、$t_2:C\to O$。精确局部坐标为 $O=(0,0)$、$B=(1/\sqrt3,0)$；左支 $C=(1/(2\sqrt3),-1/2)$，右支 $C=(1/(2\sqrt3),+1/2)$。两支在原图中的整体平移分别为 $-1.2\,\mathrm{cm}$ 与 $+1.2\,\mathrm{cm}$；面积记号 A 对应 $\mathcal A$。
 
 **图 1 原始 caption：** 固定同一复平面方向与边标记，两份态的三边长平方同为 $(1/3,1/3,1/3)$，但实际有向面积相反。选定坐标手性本身不能判定未知态属于哪一分支。图按解析坐标绘制。
 
-编辑说明：可见图使用固定字符网格、固定宽高比和近似蓝/橙色，仅用于浏览器中的几何方向与标签可读性；坐标、边向、面积符号和状态标签按原图保留。
+编辑说明：可见图采用 Mermaid 的共享顶点与有向边绘制两个闭合三角形，顶点圆圈和布局比例为示意，不是按解析坐标等比例绘制；黑白线条替代原图的蓝色、橙色边线及浅色填充。箭头和边标签附在对应边上，精确坐标、状态与有向面积在图旁明示；下列原始 TikZ 保留精确绘图定义。
 
 <details><summary>原始 TikZ 源码（逐字保留）</summary>
 
@@ -661,6 +697,8 @@ $$
 写 $E_j=c_jI+v_j\cdot\sigma$。完备性给 $\sum v_j=0$，所以三向量张成至多二维。取单位法向 $n$ 垂直于它们，则
 $\rho_\pm=(I\pm n\cdot\sigma)/2$ 均给概率 $\operatorname{Tr}\rho_\pm E_j=c_j$，而二者是正交纯态。
 
+**证明完。** ∎
+
 算符级的“两效果加归一化”确有精确公式 $E_3=I-E_1-E_2$，但须 $E_1+E_2\le I$。若 $E_1,E_2$ 是 qubit 上两个秩一锐投影，该条件迫使二者正交，继而 $E_3=0$：其和的本征值为 $1\pm|\langle u,v\rangle|$。因此三条非零锐正交通道不可能都装在一个 qubit 内。
 
 
@@ -695,6 +733,8 @@ $$
 $gg^\dagger=Q$，$\|g\|^2=x+x^2=1$。代入定理 [定理 3.1](#thm:hopf)，并用
 $4x^3+(x-x^2)^2=(x+x^2)^2=1$。
 
+**证明完。** ∎
+
 这个 $Q$ 来自同一个原生三站点门
 $K=\zeta[I+(\zeta-1)\mathcal P]$，
 $\mathcal P=n_Ln_R+(1-n_L)(1-n_R)Q_C$，
@@ -727,6 +767,8 @@ $(s,t,1-s-t)$ 与 $(s+t,0,1-s-t)$，得到
 $f(s+t)=f(s)+f(t)$。非负性给单调性。加法性先给
 $f(m/n)=m/n$，再用任意实数两侧的有理数夹逼得到 $f(s)=s$。
 
+**证明完。** ∎
+
 等价地，若模长权重 $w(r)=f(r^2)$ 对所有 $a,b\ge0$、$a^2+b^2\le1$ 在细分时满足
 
 $$
@@ -757,6 +799,8 @@ $p_0=|\alpha|^4/(|\alpha|^4+|\beta|^4)$。
 
 分母在 $[0,1]$ 上严格正，替换 $s\mapsto1-s$ 后相加为一。但
 $f(3/4)=9/10\ne3/4$。
+
+**证明完。** ∎
 
 甚至对任意纯态 Bloch 向量 $r$ 与方向 $n$，规则
 $p_r(n)=(1+(r\cdot n)^3)/2$ 也连续、旋转协变、满足
@@ -794,7 +838,9 @@ $(1,0,0),(-1/2,0,\sqrt3/2),(-1/2,0,-\sqrt3/2)$；
 调和多项式 $(n_x+in_y)^l$ 的三元和是
 $1+2(-1/2)^l$，仅在 $l=1$ 时为零。所以所有 $l\ge2$ 分量消失。调和多项式的稠密性与连续性给 $F=c+b\cdot n$；三元和固定 $c=1/3$，非负性给 $|b|\le1/3$。令 $r=3b$ 即得。反向代入显然成立。
 
-这是 Caves--Fuchs--Manne--Renes 对 trine frame functions 的既有刻画，本文采用其明确的连续性与全旋转条件。[Caves 等](#ref-caves)
+**证明完。** ∎
+
+这是 Caves–Fuchs–Manne–Renes 对 trine frame functions 的既有刻画，本文采用其明确的连续性与全旋转条件。[Caves 等](#ref-caves)
 一个固定 trine 的归一化远弱于这个全称原则；甚至只在同一平面内旋转时，
 $F(\theta)=1/3+\varepsilon\cos2\theta$、$0<\varepsilon\le1/3$ 也满足三元和，却保留二次角谐波。单个三角形的三边关系必须推广成*所有相关朝向之间的同一响应*，才能得到本定理。
 
@@ -805,7 +851,7 @@ $F(\theta)=1/3+\varepsilon\cos2\theta$、$0<\varepsilon\le1/3$ 也满足三元�
 ## 7. 项目最新进展：原生四时关系如何选择二次终端律
 
 
-### 同一来源、全部上下文及三个相对频率
+### 7.1 同一来源、全部上下文及三个相对频率
 
 
 #### 定义 7.1（固定原生终端来源）
@@ -826,7 +872,7 @@ $$
 $p=j_1\cdots j_\ell$ 按调用先后书写，$K_p=K_{j_\ell}\cdots K_{j_1}$。空字允许，全部字均为有限正向字。
 
 继承项目 §77.2 的同源表示与射影密度结论
-$\overline{\{[K_p]\}}=PU(13)$；它以明确 Jones--Wenzl 扇区对应与 Freedman--Larsen--Wang 密度定理为供应。本稿不把理想闭包酉当成新增可执行菜单，也不重复认证其整个上游表示证明。[续卷 II](#ref-continuation) [Freedman–Larsen–Wang](#ref-flw)
+$\overline{\{[K_p]\}}=PU(13)$；它以明确 Jones–Wenzl 扇区对应与 Freedman–Larsen–Wang 密度定理为供应。本稿不把理想闭包酉当成新增可执行菜单，也不重复认证其整个上游表示证明。[续卷 II](#ref-continuation) [Freedman–Larsen–Wang](#ref-flw)
 
 终端接口采用 §78.1：对全部 $1024$ 个标签 $w$，$P_w$ 是单位球上连续、共同相位不变、非负且总和一的函数；当前射线对这个条件终端任务充分。原程序档案仍保留。此时尚未假设 Born、混态仿射性或测后态仪器。
 
@@ -882,10 +928,12 @@ $$
 
 移位算符以 $1,\zeta,\zeta^{-1}$ 为上述三个序列的特征值，故 $R$ 消去它们。十项根和同样消去这三个频率相对于禁频 $2$ 的系数。
 
+**证明完。** ∎
+
 这个恒等式先从*已有二次读出*得到。把方向倒过来，要求未知预测在所有上下文都保持它，才是项目新增的强原则。
 
 
-### 全上下文刻画及其承重前提
+### 7.2 全上下文刻画及其承重前提
 
 
 设
@@ -948,8 +996,8 @@ L^2(X,\mu)=\widehat{\bigoplus}_{j\ge0}\mathcal H_j^\mathbb{C},
 
 $$
 
-每个 $\mathcal H_j^\mathbb{C}$ 有限维、不可约、彼此不等价，酉作用保持各分量。这里 $\mu$ 是酉不变全支撑测度；这些表示论性质是 Galley--Masanes 与 Masanes--Galley--Müller 的已知中间结果。[Galley–Masanes](#ref-galley) [Masanes 等](#ref-masanes)
-完备性也可按多项式代数说明：所有双齐次 $(j,j)$ 多项式在单位球上的限制，组成含常数、共轭封闭且分离射线的代数，Stone--Weierstrass 给一致稠密性，继而给 $L^2$ 完备性。
+每个 $\mathcal H_j^\mathbb{C}$ 有限维、不可约、彼此不等价，酉作用保持各分量。这里 $\mu$ 是酉不变全支撑测度；这些表示论性质是 Galley–Masanes 与 Masanes–Galley–Müller 的已知中间结果。[Galley–Masanes](#ref-galley) [Masanes 等](#ref-masanes)
+完备性也可按多项式代数说明：所有双齐次 $(j,j)$ 多项式在单位球上的限制，组成含常数、共轭封闭且分离射线的代数，Stone–Weierstrass 给一致稠密性，继而给 $L^2$ 完备性。
 
 对每个 $j\ge2$，选 $a\in\operatorname{im}\Pi$，及 $\ker\Pi$ 中两个不同坐标 $b,c$，令
 
@@ -976,6 +1024,8 @@ $R(C)Y_j=R(\zeta^2)Y_j\ne0$；本原十次根保证 $\zeta^2$ 不在 $R$ 的三�
 非负性给 $E_w\succeq0$，总概率归一化给 $\sum E_w=I_H$。反向由引理 [引理 7.2](#lem:fourtime) 对任意共同后接酉成立。
 最后若给基底标定，各 $E_w$ 的对角元只有相应的零或一。正性给
 $|(E_w)_{ab}|^2\le(E_w)_{aa}(E_w)_{bb}$，零对角元消去整行列，所以合法标签恰为基投影，非法标签为零。
+
+**证明完。** ∎
 
 
 与前轮先给有限预测秩上界的路线相比，这个刻画不先假设响应属于有限多项式空间，也不先假设预测秩有限。它依赖*所有*制备、所有后接及所有标签，不能简写成“任意四个实验数值相等就证明 Born”。同样，标定独立于时间关系：常数律 $P_w=1/1024$ 满足两关系，却不是指定基底 Born 律。
@@ -1057,6 +1107,8 @@ $$
 代入 $a_t=xd_t+\lambda x^3d_t^2$ 得第一式。第二式由 $d_t^2$ 的频率 $2$ 系数为 $c^2$，所以禁频为
 $\lambda x^3c^2=\lambda x^9\zeta^6$。
 
+**证明完。** ∎
+
 这正是项目 §87.1 的同源见证，本稿保留其输入字与全部输出。[续卷 II](#ref-continuation)
 因此，两谱门、单位范数、可逆性和校准没有独自强迫四时响应原则。
 
@@ -1081,6 +1133,8 @@ $$
 **证明。**
 
 分解 $\eta=\eta_0+\eta_1$ 为 $\ker\Pi$ 与 $\operatorname{im}\Pi$ 两部分，外积展开只含常数、$\zeta^t$、$\zeta^{-t}$，由 $R$ 的三个根得式。共同酉共轭保持矩阵等式。
+
+**证明完。** ∎
 
 这个形式矩阵等式不能单独迫使未知响应保持它；命题 [命题 7.4](#prop:quartic) 正好提供反例。若另给随机选择程序的操作，两边可解释为不同准备的终端边缘，但完整程序长度与选择记录仍能区分它们。故终端等价不能删除观察者的历史档案。有限带噪通过也不认证上述精确全称条件；项目 §89 明确保留这一边界。
 
@@ -1118,8 +1172,10 @@ $W-\lambda_{\max}(A)$，极小向量为最高本征空间中的单位向量。
 
 **证明。**
 
-第一个目标展开为所列常数减 $2\operatorname{Re}\langle z,s\rangle$，Cauchy--Schwarz 给值与等号。第二个目标为
+第一个目标展开为所列常数减 $2\operatorname{Re}\langle z,s\rangle$，Cauchy–Schwarz 给值与等号。第二个目标为
 $W-\langle z,Az\rangle$，谱分解给最大 Rayleigh 商及全部等号态。
+
+**证明完。** ∎
 
 对 qubit 射线中心，若输入 Bloch 向量为 $r_j$，则
 $A=(WI+b\cdot\sigma)/2$、$b=\sum w_jr_j$。$b\ne0$ 时极小射线方向为 $b/\|b\|$。这里相加的是射线的 Bloch 向量；第一个目标相加的是带相位的复振幅，两者不可混用。
@@ -1136,6 +1192,8 @@ $A=(WI+b\cdot\sigma)/2$、$b=\sum w_jr_j$。$b\ne0$ 时极小射线方向为 $b/
 取 $u=e_1,v=e_2,w=-e_1$。$(u\star v)\star w$ 的方向为
 $(1/\sqrt2-1,1/\sqrt2)$，而 $u\star(v\star w)$ 的方向为
 $(1-1/\sqrt2,1/\sqrt2)$。两者首坐标符号相反，所有分母均非零。
+
+**证明完。** ∎
 
 若保留完整和 $s$，或保留其方向与长度，则可结合地合并 $s_A+s_B$。要恢复完整星心目标，还要保留总权重与常数项；射线中心应保留矩阵 $A$，仅保留当前最高本征射线不够。这说明归一化删去的尺度可能在下一层重新成为必要信息。
 
@@ -1204,6 +1262,8 @@ $\frac{d}{d\lambda}(L_{II}-\lambda I)^{-1}=R_\lambda^2$
 给 $K_{\rm eff}'=-L_{BI}R_\lambda^2L_{IB}$。
 最后在 $L$ 的正交本征基展开单位向量，能量是各本征值的非负归一权重平均，故最小值及等号态如述。
 
+**证明完。** ∎
+
 
 这把“尺子也参与预测”写成精确式子：内部振幅消去后，正确边界约束一般为
 
@@ -1226,6 +1286,8 @@ $$
 每次消元是同一线性方程组的精确代入，故最终解集与直接代入相同。若两步重建为 $T_1,T_2$，完整向量为 $T_1T_2g$，其度量是
 $T_2^\dagger(T_1^\dagger T_1)T_2=(T_1T_2)^\dagger(T_1T_2)$。
 因此完整 Gram 度量也与分组无关。
+
+**证明完。** ∎
 
 观察者的递归增长在这个模型中可以指边界可区分信息及其重建记录的扩展。每层都能使用同一种相容规则，但不能因此丢掉扇区质量、相位、有效度量或完整值函数。
 
@@ -1285,7 +1347,7 @@ $$
 <a id="ref-pyramid"></a>
 
 **[金字塔基础]** [AURIC FIB ATOM 金字塔基础公式与关系](https://github.com/the-omega-institute/trureturing/blob/88a98cb974735eba23c7ece731a40ba9b48c19f5/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)，
-固定快照，尤其 §§2--4。五模式均值、概率纤维与合法凸体的原始来源。
+固定快照，尤其 §§2–4。五模式均值、概率纤维与合法凸体的原始来源。
 
 <a id="ref-axes"></a>
 
@@ -1295,13 +1357,13 @@ $$
 <a id="ref-continuation"></a>
 
 **[续卷 II]** [量子基本原则与相干重建续卷 II](https://github.com/the-omega-institute/trureturing/blob/88a98cb974735eba23c7ece731a40ba9b48c19f5/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md)，
-固定快照，§§77--89。原生来源、连续终端接口、独立基底标定、四次反例与新增全上下文四时刻画。
+固定快照，§§77–89。原生来源、连续终端接口、独立基底标定、四次反例与新增全上下文四时刻画。
 
 <a id="ref-preskill"></a>
 
 **[Preskill]** J. Preskill,
 [Lecture Notes for Ph219/CS219: Quantum Information, Chapter 2](https://www.preskill.caltech.edu/ph219/chap2_15.pdf),
-July 2015，§§2.2--2.3。作者讲义；Bloch 球体、纯态与约化态背景。
+July 2015，§§2.2–2.3。作者讲义；Bloch 球体、纯态与约化态背景。
 
 <a id="ref-busch"></a>
 
@@ -1315,7 +1377,7 @@ Physical Review Letters 91, 120403 (2003).
 
 **[Caves 等]** C. M. Caves, C. A. Fuchs, K. Manne, J. M. Renes,
 Gleason-Type Derivations of the Quantum Probability Rule for Generalized Measurements.
-[arXiv:quant-ph/0306179v1](https://arxiv.org/pdf/quant-ph/0306179) (2003)，尤其 §IV.A--IV.B.1。
+[arXiv:quant-ph/0306179v1](https://arxiv.org/pdf/quant-ph/0306179) (2003)，尤其 §IV.A–IV.B.1。
 连续 trine frame functions 的全旋转刻画。
 
 <a id="ref-zhao"></a>
