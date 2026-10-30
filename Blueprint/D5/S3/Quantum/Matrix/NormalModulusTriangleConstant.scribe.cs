@@ -18,7 +18,7 @@ internal sealed class NormalModulusTriangleConstantDocument : IScribeDocumentDef
             Entry("modulus", "IsModulus", "Positive modulus", Modulus(),
                 "For complex 2×2 matrices X and P, IsModulus X P requires P to be positive semidefinite "
                 + "and P²=X*X. Here X* is the conjugate transpose. The characterization “the positive square "
-                + "root is unique” is quoted, not proved or used: the proof checks both conditions for each explicit P.",
+                + "root is unique” is quoted; the fixed-pair proof checks both conditions for each explicit P.",
                 DescribeRole.Definition, true),
             Entry("normal", "IsNormalMatrix", "Normal matrices", Normal(),
                 "IsNormalMatrix X means X*X=XX*. The witness matrices are Hermitian and therefore normal.",
@@ -50,7 +50,7 @@ internal sealed class NormalModulusTriangleConstantDocument : IScribeDocumentDef
                 DescribeRole.Theorem, false),
             Paragraph(Text(
                 "For the arbitrary rank-one application, let n≥2 and retain the same ordered pair of nonzero "
-                + "normal matrices A,B in Mₙ(ℂ), the right modulus |X|=sqrt(X*X), and D=|A|+|B|. "
+                + "rank-one normal matrices A,B in Mₙ(ℂ), the right modulus |X|=sqrt(X*X), and D=|A|+|B|. "
                 + "Define S(A,B)={c≥0 : there is U∈U(n) with D+cUDU*−|A+B| positive semidefinite}. "
                 + "The group here is the full ambient unitary group, including transformations mixing the joint range "
                 + "with its orthogonal complement.")),
