@@ -198,9 +198,13 @@ class RemnantRecoveryTests(unittest.TestCase):
 
     def test_recovery_ref_change_during_fallback_cannot_authorize_deletion(self):
         target, _, archive = self.mixed_history()
+        changed = False
         def moving(root, arguments, options, git):
+            nonlocal changed
             result = git(root, *arguments, **options)
-            self.git(self.main, "update-ref", "-d", "refs/heads/z-archive", archive)
+            if not changed:
+                self.git(self.main, "update-ref", "-d", "refs/heads/z-archive", archive)
+                changed = True
             return result
         with self.observed_git([], moving):
             result = self.clean_remnant(target)

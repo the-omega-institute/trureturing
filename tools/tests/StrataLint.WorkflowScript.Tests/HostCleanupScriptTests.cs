@@ -81,6 +81,21 @@ public sealed class HostCleanupScriptTests
     }
 
     [Fact]
+    public void RemnantBlueprintHistoryBeyondTipAndCommitSamplesIsRecoverable()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorkflowScript.Tests/Fixtures/host_remnant_recovery_tests.py"),
+                root, "RemnantRecoveryTests.test_recovery_mixed_history_outside_tip_and_commit_samples"],
+            root, TimeSpan.FromSeconds(120), 1024 * 1024);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+        Assert.Contains("Ran 1 test", Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Fact]
     public void MissingChildDuringReclamationFailsSummary()
     {
         if (OperatingSystem.IsWindows()) return;
