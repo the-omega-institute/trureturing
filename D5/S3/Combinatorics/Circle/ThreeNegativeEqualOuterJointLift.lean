@@ -79,10 +79,10 @@ private theorem inventory (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
   simpa only [P, Q, U, V, List.append_assoc, List.singleton_append, List.cons_append, List.nil_append] using hx
 
 
-private def label (k : ℕ) (hk : 0 < k) (i : ℕ) : Fin k :=
+def label (k : ℕ) (hk : 0 < k) (i : ℕ) : Fin k :=
   ⟨i % k, Nat.mod_lt i hk⟩
 
-private theorem lift_order (k t : ℕ) (hk : 0 < k) (l : List ℕ)
+theorem lift_order (k t : ℕ) (hk : 0 < k) (l : List ℕ)
     (hp : l.Perm (List.range k))
     (hs : InStrip (fun i => centered (modulus k) ((2 : ℤ) ^ i * t))
       (modulus k / 2) 0 l)
@@ -114,7 +114,7 @@ private theorem lift_order (k t : ℕ) (hk : 0 < k) (l : List ℕ)
     simpa only [← List.map_take, List.map_map, Function.comp_def, hm', zero_add,
       Set.mem_Icc] using hn
 
-private theorem marked_word (k cut : ℕ) (hk : 0 < k) (P R : List ℕ)
+theorem marked_word (k cut : ℕ) (hk : 0 < k) (P R : List ℕ)
     (hlen : P.length = cut) (hp : (P ++ R).Perm (List.range k)) :
     earWord k ((P ++ R).map (label k hk)) cut =
       (P ++ k :: R).map (label (k + 1) (by omega)) := by
@@ -248,7 +248,7 @@ private theorem paired_chains (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
     rw [hhalf, Int.emod_eq_of_lt (by omega) (by omega)]
     omega
 
-private theorem schedule_from_tail (f : ℕ → ℤ) (labels P Q T : List ℕ)
+theorem schedule_from_tail (f : ℕ → ℤ) (labels P Q T : List ℕ)
     (gamma beta alpha : ℕ) (Hg Hb Ha C : ℤ)
     (hp : (P ++ gamma :: Q ++ beta :: T ++ [alpha]).Perm labels)
     (hg : f gamma = -Hg) (hb : f beta = -Hb) (ha : f alpha = -Ha)
