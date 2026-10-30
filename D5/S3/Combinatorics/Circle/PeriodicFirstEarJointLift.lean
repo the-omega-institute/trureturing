@@ -103,22 +103,34 @@ private theorem old_source (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m)
     actualSource (d * m) ((2 ^ (d * m) - 1) / (2 ^ d - 1)) i =
       (((2 ^ (d * m) - 1) / (2 ^ d - 1) : ℕ) : ℤ) *
         baseValue d (i.val % d) := by
-  have hrep := repeated_source d m 1 (by omega) (by omega)
-    (⟨i.val, by simpa [Nat.mul_comm] using i.isLt⟩ : Fin (m * d))
-  have hquot := multiplier_quotient d m (by omega)
-  have hlt : (2 ^ (d * m) - 1) / (2 ^ d - 1) < 2 ^ (d * m) - 1 := by
-    obtain ⟨_, hh, _⟩ := quotient_bounds d m hd hm
-    have hk : 1 ≤ d * m := by omega
-    have hp : 0 < (2 : ℕ) ^ (d * m - 1) := pow_pos (by decide) _
-    have hpow : 2 ^ (d * m) = 2 * 2 ^ (d * m - 1) := by
-      rw [show d * m = (d * m - 1) + 1 by omega, pow_succ]
-    omega
-  rw [hquot] at hrep
-  rw [Nat.mul_one, Nat.mod_eq_of_lt hlt] at hrep
-  have hbase := base_source d hd ⟨i.val % d, Nat.mod_lt _ (by omega)⟩
-  simpa [Nat.mul_comm] using hrep.trans
-    (congrArg (fun z : ℤ =>
-      (((2 ^ (d * m) - 1) / (2 ^ d - 1) : ℕ) : ℤ) * z) hbase)
+  by_cases h3 : 3 ≤ d
+  · have hs := DyadicResetSource.source_values d m h3 (by omega) i
+    have hheight : (DyadicResetSource.height d : ℤ) =
+        (2 : ℤ) ^ (d - 1) - 1 := by
+      dsimp [DyadicResetSource.height, DyadicResetSource.top]
+      rw [Nat.cast_sub (by have := Nat.one_le_two_pow (n := d - 2); omega)]
+      push_cast
+      rw [show d - 2 + 1 = d - 1 by omega, pow_succ]
+      ring
+    simpa [DyadicResetSource.unit, DyadicResetSource.value, baseValue, hheight]
+      using hs
+  · have hd2 : d = 2 := by omega
+    subst d
+    have hrep := repeated_source 2 m 1 (by omega) (by omega)
+      (⟨i.val, by simpa [Nat.mul_comm] using i.isLt⟩ : Fin (m * 2))
+    have hquot := multiplier_quotient 2 m (by omega)
+    have hlt : (2 ^ (2 * m) - 1) / (2 ^ 2 - 1) < 2 ^ (2 * m) - 1 := by
+      obtain ⟨_, hh, _⟩ := quotient_bounds 2 m (by omega) hm
+      have hp : 0 < (2 : ℕ) ^ (2 * m - 1) := pow_pos (by decide) _
+      have hpow : 2 ^ (2 * m) = 2 * 2 ^ (2 * m - 1) := by
+        rw [show 2 * m = (2 * m - 1) + 1 by omega, pow_succ]
+      omega
+    rw [hquot] at hrep
+    rw [Nat.mul_one, Nat.mod_eq_of_lt hlt] at hrep
+    have hbase := base_source 2 (by omega) ⟨i.val % 2, Nat.mod_lt _ (by omega)⟩
+    simpa [Nat.mul_comm] using hrep.trans
+      (congrArg (fun z : ℤ =>
+        (((2 ^ (2 * m) - 1) / (2 ^ 2 - 1) : ℕ) : ℤ) * z) hbase)
 
 private theorem sum_linear {α : Type*} (l : List α) (f g : α → ℤ) (u v : ℤ) :
     (l.map (fun x => u * f x + v * g x)).sum =
