@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Supported finite signed contractions on both actual ordered source products. -/
+   digest: All-source signed two-twisted-input mixed Jacobi in the actual restricted dual. -/
 import D5.S3.VertexAlgebra.TwistedGround.MixedJacobi
 import D5.S3.VertexAlgebra.GroundRightCurrentTransport.FirstSourceClosure
 
@@ -1128,5 +1128,660 @@ private theorem mixed_iterate_cancellation (D : LatticeData) (hu : IsUnit D.G.de
     mixed_first_contraction D hu h24 H d m n r a.val b.val a.property.1
       u v huH p q L N hNfirst] at law
   exact law
+
+private theorem original_negative_grade_zero (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (e : ℤ) (x : Carrier D) (hx : x ∈ grade D e) (he : e < 0) : x = 0 := by
+  apply (carrierCoeffEquiv D).injective
+  ext i
+  have nonneg : 0 ≤ energy D i := by
+    have hc := chargeEnergy_nonneg D hD i.1
+    change 0 ≤ chargeEnergy D i.1 + (oscillatorEnergy i.2 : ℤ)
+    omega
+  exact (mem_grade_iff D e x).mp hx i (by omega)
+
+private theorem mixed_iterate_finite (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (H K : ℕ) (d m n r E : ℤ) (a : fixedGrade D d) (b : fixedGrade D E)
+    (hE : E = (H : ℤ)+(K : ℤ)+d-m-n-r-2)
+    (u v : ActualTensor D hu) (p q L : ℕ) :
+    mixedIterate D hu H d m n r a.val b.val u v p q L =
+      ∑ j ∈ Finset.range (((H : ℤ)+(K : ℤ)-n).toNat+1),
+        Ring.choose (r : ℂ) j * actualForm D hu ((T D hu ^ p) v)
+          ((correctedField D hu
+            (((Y D ((originalL1 D ^ L) a.val))[[2*d-(L : ℤ)-m-r-2+(j : ℤ)]])
+              b.val)).coeff
+            (-2*(r+(2*(H : ℤ)-n-r-2+(p : ℤ)-(q : ℤ))-(j : ℤ))-2)
+            ((T D hu ^ q) u)) := by
+  classical
+  apply finsum_eq_sum_of_support_subset
+  intro j hj
+  by_contra outside
+  have grade := positive_actual_mode_grade D hD (d-(L : ℤ)) E
+    (2*d-(L : ℤ)-m-r-2+(j : ℤ)) ((originalL1 D ^ L) a.val) b.val
+    (original_l1_grade D hu d a.val a.property.1 L) b.property.1
+  have zero := original_negative_grade_zero D hD _ _ grade
+    (by have := Finset.mem_range.not.mp outside; omega)
+  apply hj
+  simp only [zero, map_zero, Pi.zero_apply, LinearMap.zero_apply, mul_zero]
+
+private theorem four_sum_reorder (I J K L : Finset ℕ) (f : ℕ → ℕ → ℕ → ℕ → ℂ) :
+    (∑ i ∈ I, ∑ j ∈ J, ∑ k ∈ K, ∑ l ∈ L, f i j k l) =
+      ∑ k ∈ K, ∑ l ∈ L, ∑ j ∈ J, ∑ i ∈ I, f i j k l := by
+  calc
+    _ = ∑ i ∈ I, ∑ k ∈ K, ∑ j ∈ J, ∑ l ∈ L, f i j k l := by
+      apply Finset.sum_congr rfl
+      intro i hi
+      exact Finset.sum_comm
+    _ = ∑ k ∈ K, ∑ i ∈ I, ∑ j ∈ J, ∑ l ∈ L, f i j k l := Finset.sum_comm
+    _ = ∑ k ∈ K, ∑ i ∈ I, ∑ l ∈ L, ∑ j ∈ J, f i j k l := by
+      apply Finset.sum_congr rfl
+      intro k hk
+      apply Finset.sum_congr rfl
+      intro i hi
+      exact Finset.sum_comm
+    _ = ∑ k ∈ K, ∑ l ∈ L, ∑ i ∈ I, ∑ j ∈ J, f i j k l := by
+      apply Finset.sum_congr rfl
+      intro k hk
+      exact Finset.sum_comm
+    _ = _ := by
+      apply Finset.sum_congr rfl
+      intro k hk
+      apply Finset.sum_congr rfl
+      intro l hl
+      exact Finset.sum_comm
+
+private theorem mixed_first_dual_common_cube (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h24 : D.rank = 24)
+    (H K : ℕ) (d m n r E : ℤ) (a : fixedGrade D d) (b : fixedGrade D E)
+    (u v : paritySpace D hu (-1))
+    (huH : actualTensorL0 D hu u.val = (H : ℂ) • u.val)
+    (hvK : actualTensorL0 D hu v.val = (K : ℂ) • v.val)
+    (hE : E = (H : ℤ)+(K : ℤ)+d-m-n-r-2)
+    (N : ℕ) (hK : K-1 ≤ N) (hH : H-1 ≤ N)
+    (hS : sourceLoweringCutoff D a.val ≤ N) :
+    (∑ᶠ j : ℕ, (((-1 : ℂ)^j)*Ring.choose (r : ℂ) j) •
+      oppositeAction D hu hD (m+r-(j : ℤ))
+        (⟨a.val,a.property.2⟩ : FixedCarrier D)
+        (normalizedCoefficient D hu (n+(j : ℤ)) u v)) E b =
+    ∑ p ∈ Finset.range N, ∑ q ∈ Finset.range N, ∑ L ∈ Finset.range N,
+      mixedCommonWeight H d n p q L *
+        mixedIterate D hu H d m n r a.val b.val u.val v.val p q L := by
+  classical
+  rw [mixed_first_branch_pairing D hu hD h24 H K d m n r E a u v huH hvK hE b]
+  let S := sourceLoweringCutoff D a.val
+  let J := ((H : ℤ)+(K : ℤ)-n).toNat+1
+  let f (p q L : ℕ) : ℂ := mixedCommonWeight H d n p q L *
+    mixedIterate D hu H d m n r a.val b.val u.val v.val p q L
+  have pZero (p q L : ℕ) (hp : K-1 ≤ p) : f p q L = 0 := by
+    have zero := lowering_integer_zero_after D hu h24 K v.val hvK p hp
+    simp only [f, mixedIterate, zero, map_zero, LinearMap.zero_apply, mul_zero,
+      finsum_zero]
+  have qZero (p q L : ℕ) (hq : H-1 ≤ q) : f p q L = 0 := by
+    have zero := lowering_integer_zero_after D hu h24 H u.val huH q hq
+    simp only [f, mixedIterate, zero, map_zero, mul_zero, finsum_zero]
+  have LZero (p q L : ℕ) (hL : S ≤ L) : f p q L = 0 := by
+    have zero := source_lowering_zero D hu a.val L hL
+    simp only [f, mixedIterate, zero, map_zero, Pi.zero_apply, LinearMap.zero_apply,
+      mul_zero, finsum_zero]
+  calc
+    _ = ∑ p ∈ Finset.range (K-1), ∑ q ∈ Finset.range (H-1),
+        ∑ L ∈ Finset.range S, f p q L := by
+      simp_rw [Finset.mul_sum]
+      rw [four_sum_reorder]
+      apply Finset.sum_congr rfl
+      intro p hp
+      apply Finset.sum_congr rfl
+      intro q hq
+      apply Finset.sum_congr rfl
+      intro L hL
+      dsimp only [f]
+      rw [mixed_iterate_finite D hu hD H K d m n r E a b hE u.val v.val p q L,
+        Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro j hj
+      have mode : 2*d-(L : ℤ)-m-r+(j : ℤ)-2 =
+          2*d-(L : ℤ)-m-r-2+(j : ℤ) := by ring
+      have exponent : 2*(n+(j : ℤ)+1-(p : ℤ)-2*(H : ℤ)+(q : ℤ)) =
+          -2*(r+(2*(H : ℤ)-n-r-2+(p : ℤ)-(q : ℤ))-(j : ℤ))-2 := by ring
+      have phase : (-1 : ℂ)^j * (-1 : ℂ)^d *
+          (-1 : ℂ)^((H : ℤ)+(n+(j : ℤ)+1-(p : ℤ)-2*(H : ℤ)+(q : ℤ))) =
+          (-1 : ℂ)^(n+1-(p : ℤ)-(H : ℤ)+(q : ℤ)+d) := by
+        rw [← zpow_natCast, ← zpow_add₀ (by norm_num : (-1 : ℂ) ≠ 0),
+          ← zpow_add₀ (by norm_num : (-1 : ℂ) ≠ 0)]
+        convert phase_even_shift (n+1-(p : ℤ)-(H : ℤ)+(q : ℤ)+d) (j : ℤ)
+          using 1 <;> congr 1 <;> ring
+      rw [mode, exponent]
+      dsimp only [mixedCommonWeight]
+      simp only [div_eq_mul_inv, mul_inv_rev]
+      linear_combination
+        ((p.factorial : ℂ)⁻¹*(q.factorial : ℂ)⁻¹*(L.factorial : ℂ)⁻¹*
+          Ring.choose (r : ℂ) j * actualForm D hu ((T D hu ^ p) v.val)
+            ((correctedField D hu
+              (((Y D ((originalL1 D ^ L) a.val))[[2*d-(L : ℤ)-m-r-2+(j : ℤ)]])
+                b.val)).coeff
+              (-2*(r+(2*(H : ℤ)-n-r-2+(p : ℤ)-(q : ℤ))-(j : ℤ))-2)
+              ((T D hu ^ q) u.val))) * phase
+    _ = ∑ p ∈ Finset.range N, ∑ q ∈ Finset.range (H-1),
+        ∑ L ∈ Finset.range S, f p q L := by
+      symm
+      apply Finset.sum_subset (Finset.range_mono hK)
+      intro p hp outside
+      apply Finset.sum_eq_zero
+      intro q hq
+      apply Finset.sum_eq_zero
+      intro L hL
+      exact pZero p q L (by simpa using outside)
+    _ = ∑ p ∈ Finset.range N, ∑ q ∈ Finset.range N,
+        ∑ L ∈ Finset.range S, f p q L := by
+      apply Finset.sum_congr rfl
+      intro p hp
+      symm
+      apply Finset.sum_subset (Finset.range_mono hH)
+      intro q hq outside
+      apply Finset.sum_eq_zero
+      intro L hL
+      exact qZero p q L (by simpa using outside)
+    _ = _ := by
+      apply Finset.sum_congr rfl
+      intro p hp
+      apply Finset.sum_congr rfl
+      intro q hq
+      symm
+      apply Finset.sum_subset (Finset.range_mono hS)
+      intro L hL outside
+      exact LZero p q L (by simpa using outside)
+
+private theorem mixed_homogeneous_grade_pairing (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h24 : D.rank = 24)
+    (H K : ℕ) (d m n r E : ℤ) (a : fixedGrade D d) (b : fixedGrade D E)
+    (u v : paritySpace D hu (-1))
+    (huH : actualTensorL0 D hu u.val = (H : ℂ) • u.val)
+    (hvK : actualTensorL0 D hu v.val = (K : ℂ) • v.val)
+    (hE : E = (H : ℤ)+(K : ℤ)+d-m-n-r-2) :
+    (∑ᶠ j : ℕ, Ring.choose (m : ℂ) j *
+      normalizedCoefficient D hu (m+n-(j : ℤ))
+        (((fixedParitySlice D hu (-1)
+          (⟨a.val,a.property.2⟩ : FixedCarrier D))[[r+(j : ℤ)]]) u) v E b) =
+    (∑ᶠ j : ℕ, (((-1 : ℂ)^j)*Ring.choose (r : ℂ) j) •
+      oppositeAction D hu hD (m+r-(j : ℤ))
+        (⟨a.val,a.property.2⟩ : FixedCarrier D)
+        (normalizedCoefficient D hu (n+(j : ℤ)) u v)) E b -
+    (-1 : ℂ)^r * (∑ᶠ j : ℕ, ((-1 : ℂ)^j * Ring.choose (r : ℂ) j) *
+      normalizedCoefficient D hu (n+r-(j : ℤ)) u
+        (((fixedParitySlice D hu (-1)
+          (⟨a.val,a.property.2⟩ : FixedCarrier D))[[m+(j : ℤ)]]) v) E b) := by
+  classical
+  let N := (H-1)+(K-1)+sourceLoweringCutoff D a.val+
+    ((H : ℤ)+d-r-2).toNat+((K : ℤ)+d-m-2).toNat
+  have hNfirst : ((H : ℤ)+d-r-2).toNat ≤ N := by dsimp [N]; omega
+  have hNsecond : ((K : ℤ)+d-m-2).toNat ≤ N := by dsimp [N]; omega
+  have hH : H-1 ≤ N := by dsimp [N]; omega
+  have hK : K-1 ≤ N := by dsimp [N]; omega
+  have hS : sourceLoweringCutoff D a.val ≤ N := by dsimp [N]; omega
+  rw [mixed_first_input_common_cube D hu h24 H K d m n r E a b u v huH hvK N hNfirst hK,
+    mixed_first_dual_common_cube D hu hD h24 H K d m n r E a b u v huH hvK hE
+      N hK hH hS,
+    mixed_second_input_common_cube D hu h24 H K d m n r E a b hE u v huH hvK
+      N hNsecond hS hH]
+  simp_rw [← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro p hp
+  apply Finset.sum_congr rfl
+  intro q hq
+  apply Finset.sum_congr rfl
+  intro L hL
+  rw [mixed_iterate_cancellation D hu h24 H K d m n r E a b hE u.val v.val huH
+    p q L N hNfirst hNsecond]
+  ring
+
+private def mixedMode (D : LatticeData) (hu : IsUnit D.G.det) (t : ℤ) :
+    FixedCarrier D →ₗ[ℂ] Module.End ℂ (paritySpace D hu (-1)) where
+  toFun a := (fixedParitySlice D hu (-1) a)[[t]]
+  map_add' a b := by
+    ext x
+    apply Subtype.ext
+    change (correctedField D hu (a.val+b.val)).coeff (2*(-t-1)) x.val = _
+    simp only [map_add, LinearMap.add_apply]
+    rfl
+  map_smul' z a := by
+    ext x
+    apply Subtype.ext
+    change (correctedField D hu (z • a.val)).coeff (2*(-t-1)) x.val = _
+    simp only [map_smul, LinearMap.smul_apply, RingHom.id_apply]
+    rfl
+
+private def mixedLeftTerm (D : LatticeData) (hu : IsUnit D.G.det)
+    (m n r : ℤ) (a : FixedCarrier D) (u v : paritySpace D hu (-1)) (j : ℕ) :
+    FixedRestrictedDual D :=
+  Ring.choose (m : ℂ) j • normalizedCoefficient D hu (m+n-(j : ℤ))
+    (mixedMode D hu (r+(j : ℤ)) a u) v
+
+private def mixedFirstTerm (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (m n r : ℤ) (a : FixedCarrier D) (u v : paritySpace D hu (-1)) (j : ℕ) :
+    FixedRestrictedDual D :=
+  ((-1 : ℂ)^j * Ring.choose (r : ℂ) j) •
+    oppositeAction D hu hD (m+r-(j : ℤ)) a
+      (normalizedCoefficient D hu (n+(j : ℤ)) u v)
+
+private def mixedSecondTerm (D : LatticeData) (hu : IsUnit D.G.det)
+    (m n r : ℤ) (a : FixedCarrier D) (u v : paritySpace D hu (-1)) (j : ℕ) :
+    FixedRestrictedDual D :=
+  (((-1 : ℂ)^j * Ring.choose (r : ℂ) j) * (-1 : ℂ)^r) •
+    normalizedCoefficient D hu (n+r-(j : ℤ)) u (mixedMode D hu (m+(j : ℤ)) a v)
+
+private theorem mixed_mode_tail (D : LatticeData) (hu : IsUnit D.G.det)
+    (t : ℤ) (a : FixedCarrier D) (u : paritySpace D hu (-1)) :
+    ∃ N : ℕ, ∀ j : ℕ, N ≤ j → mixedMode D hu (t+(j : ℤ)) a u = 0 := by
+  let A := fixedParitySlice D hu (-1) a
+  let b : ℤ := ((HahnModule.of ℂ).symm (A u)).order
+  refine ⟨(-t-1-b).toNat+1, ?_⟩
+  intro j hj
+  exact VertexOperator.ncoeff_eq_zero_of_lt_order A (t+(j : ℤ)) u
+    (by dsimp [b] at *; omega)
+
+private theorem mixed_families_finite (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (m n r : ℤ) (a : FixedCarrier D) (u v : paritySpace D hu (-1)) :
+    Function.HasFiniteSupport (mixedLeftTerm D hu m n r a u v) ∧
+    Function.HasFiniteSupport (mixedFirstTerm D hu hD m n r a u v) ∧
+    Function.HasFiniteSupport (mixedSecondTerm D hu m n r a u v) := by
+  classical
+  obtain ⟨L, hL⟩ := mixed_mode_tail D hu r a u
+  obtain ⟨R, hR⟩ := mixed_mode_tail D hu m a v
+  let J := ((ActualEnergyRestrictedDual.maxOddWeight D hu u.val : ℤ)+
+    (ActualEnergyRestrictedDual.maxOddWeight D hu v.val : ℤ)+4-n).toNat
+  refine ⟨(Finset.range L).finite_toSet.subset ?_,
+    (Finset.range J).finite_toSet.subset ?_, (Finset.range R).finite_toSet.subset ?_⟩
+  · intro j hj
+    by_contra outside
+    apply hj
+    simp only [mixedLeftTerm, hL j (by simpa using outside), map_zero,
+      LinearMap.zero_apply, smul_zero]
+  · intro j hj
+    by_contra outside
+    have zero := normalizedCoefficient_truncation D hu hD u v (n+(j : ℤ))
+      (by have := Finset.mem_range.not.mp outside; dsimp [J] at *; omega)
+    apply hj
+    simp only [mixedFirstTerm, zero, map_zero, smul_zero]
+  · intro j hj
+    by_contra outside
+    apply hj
+    simp only [mixedSecondTerm, hR j (by simpa using outside), map_zero, smul_zero]
+
+private def mixedTriples (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (m n r : ℤ) :
+    FixedCarrier D →ₗ[ℂ] paritySpace D hu (-1) →ₗ[ℂ]
+      paritySpace D hu (-1) →ₗ[ℂ]
+        (ℕ → FixedRestrictedDual D × FixedRestrictedDual D × FixedRestrictedDual D) where
+  toFun a := {
+    toFun u := {
+      toFun v := fun j => (mixedLeftTerm D hu m n r a u v j,
+        mixedFirstTerm D hu hD m n r a u v j, mixedSecondTerm D hu m n r a u v j)
+      map_add' v w := by
+        funext j
+        simp only [mixedLeftTerm, mixedFirstTerm, mixedSecondTerm, map_add,
+          LinearMap.add_apply, smul_add, Prod.mk_add_mk]
+      map_smul' z v := by
+        funext j
+        simp only [mixedLeftTerm, mixedFirstTerm, mixedSecondTerm, map_smul,
+          LinearMap.smul_apply, RingHom.id_apply, smul_smul, Prod.smul_mk]
+        module }
+    map_add' u w := by
+      ext v j
+      simp only [mixedLeftTerm, mixedFirstTerm, mixedSecondTerm, map_add,
+        LinearMap.add_apply, smul_add, Prod.mk_add_mk]
+    map_smul' z u := by
+      ext v j
+      simp only [mixedLeftTerm, mixedFirstTerm, mixedSecondTerm, map_smul,
+        LinearMap.smul_apply, RingHom.id_apply, smul_smul, Prod.smul_mk]
+      all_goals module }
+  map_add' a b := by
+    ext u v j
+    simp only [mixedLeftTerm, mixedFirstTerm, mixedSecondTerm, map_add,
+      LinearMap.add_apply, smul_add, Prod.mk_add_mk]
+  map_smul' z a := by
+    ext u v j
+    simp only [mixedLeftTerm, mixedFirstTerm, mixedSecondTerm, map_smul,
+      LinearMap.smul_apply, RingHom.id_apply, smul_smul, Prod.smul_mk]
+    all_goals module
+
+private theorem mixed_triples_finite (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (m n r : ℤ) (a : FixedCarrier D) (u v : paritySpace D hu (-1)) :
+    Function.HasFiniteSupport (mixedTriples D hu hD m n r a u v) := by
+  obtain ⟨hl, hf, hs⟩ := mixed_families_finite D hu hD m n r a u v
+  exact hl.prodMk (hf.prodMk hs)
+
+private def mixedBalance (D : LatticeData) :
+    (FixedRestrictedDual D × FixedRestrictedDual D × FixedRestrictedDual D) →ₗ[ℂ]
+      FixedRestrictedDual D where
+  toFun x := x.1-x.2.1+x.2.2
+  map_add' x y := by dsimp; abel
+  map_smul' z x := by simp only [Prod.smul_fst, Prod.smul_snd, smul_sub, smul_add]
+
+private def mixedResidual (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (m n r : ℤ) :
+    FixedCarrier D →ₗ[ℂ] paritySpace D hu (-1) →ₗ[ℂ]
+      paritySpace D hu (-1) →ₗ[ℂ] FixedRestrictedDual D where
+  toFun a := {
+    toFun u := {
+      toFun v := mixedBalance D (∑ᶠ j, mixedTriples D hu hD m n r a u v j)
+      map_add' v w := by
+        simp only [map_add, LinearMap.add_apply, Pi.add_apply]
+        rw [finsum_add_distrib (mixed_triples_finite D hu hD m n r a u v)
+          (mixed_triples_finite D hu hD m n r a u w), map_add]
+      map_smul' z v := by
+        simp only [map_smul, LinearMap.smul_apply, Pi.smul_apply, RingHom.id_apply]
+        rw [← smul_finsum, map_smul] }
+    map_add' u w := by
+      ext v
+      simp only [map_add, LinearMap.add_apply, Pi.add_apply]
+      rw [finsum_add_distrib (mixed_triples_finite D hu hD m n r a u v)
+        (mixed_triples_finite D hu hD m n r a w v), map_add]
+    map_smul' z u := by
+      ext v
+      simp only [map_smul, LinearMap.smul_apply, Pi.smul_apply, RingHom.id_apply]
+      rw [← smul_finsum, map_smul] }
+  map_add' a b := by
+    ext u v
+    simp only [map_add, LinearMap.add_apply, Pi.add_apply]
+    rw [finsum_add_distrib (mixed_triples_finite D hu hD m n r a u v)
+      (mixed_triples_finite D hu hD m n r b u v), map_add]
+  map_smul' z a := by
+    ext u v
+    simp only [map_smul, LinearMap.smul_apply, Pi.smul_apply, RingHom.id_apply]
+    rw [← smul_finsum, map_smul]
+
+private theorem mixed_residual_expansion (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (m n r : ℤ) (a : FixedCarrier D) (u v : paritySpace D hu (-1)) :
+    mixedResidual D hu hD m n r a u v =
+      (∑ᶠ j, mixedLeftTerm D hu m n r a u v j) -
+      (∑ᶠ j, mixedFirstTerm D hu hD m n r a u v j) +
+      (∑ᶠ j, mixedSecondTerm D hu m n r a u v j) := by
+  let F := mixedTriples D hu hD m n r a u v
+  have finite := mixed_triples_finite D hu hD m n r a u v
+  have fst := (LinearMap.fst ℂ (FixedRestrictedDual D)
+    (FixedRestrictedDual D × FixedRestrictedDual D)).map_finsum finite
+  have snd := (LinearMap.snd ℂ (FixedRestrictedDual D)
+    (FixedRestrictedDual D × FixedRestrictedDual D)).map_finsum finite
+  have finiteSnd : Function.HasFiniteSupport (fun j => (F j).2) := finite.snd
+  have sf := (LinearMap.fst ℂ (FixedRestrictedDual D) (FixedRestrictedDual D)).map_finsum finiteSnd
+  have ss := (LinearMap.snd ℂ (FixedRestrictedDual D) (FixedRestrictedDual D)).map_finsum finiteSnd
+  change (∑ᶠ j, F j).1-(∑ᶠ j, F j).2.1+(∑ᶠ j, F j).2.2 = _
+  change (∑ᶠ j, F j).1 = ∑ᶠ j, (F j).1 at fst
+  change (∑ᶠ j, F j).2 = ∑ᶠ j, (F j).2 at snd
+  change (∑ᶠ j, (F j).2).1 = ∑ᶠ j, (F j).2.1 at sf
+  change (∑ᶠ j, (F j).2).2 = ∑ᶠ j, (F j).2.2 at ss
+  rw [fst, snd, sf, ss]
+  rfl
+
+private def restrictedEvaluation (D : LatticeData) (E : ℤ) (b : fixedGrade D E) :
+    FixedRestrictedDual D →ₗ[ℂ] ℂ where
+  toFun f := f E b
+  map_add' f g := rfl
+  map_smul' z f := rfl
+
+open private homogeneous_coefficient ambientCoefficient liftGrade kernel
+  from D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner
+open private fixed_mode_energy_int from D5.S3.VertexAlgebra.TwistedGround.MixedJacobi
+
+private theorem normalized_off_grade (D : LatticeData) (hu : IsUnit D.G.det)
+    (h24 : D.rank = 24) (H K : ℕ) (t E : ℤ)
+    (u v : paritySpace D hu (-1))
+    (huH : actualTensorL0 D hu u.val = (H : ℂ) • u.val)
+    (hvK : actualTensorL0 D hu v.val = (K : ℂ) • v.val)
+    (b : fixedGrade D E) (outside : E ≠ (H : ℤ)+(K : ℤ)-t-1) :
+    normalizedCoefficient D hu t u v E b = 0 := by
+  change ambientCoefficient D hu t u.val v.val E b = 0
+  rw [homogeneous_coefficient D hu h24 H K t u.val v.val huH hvK]
+  simp [liftGrade, DirectSum.lof_eq_of, DirectSum.of_apply, outside, Ne.symm outside]
+
+private theorem mixed_input_off_grade (D : LatticeData) (hu : IsUnit D.G.det)
+    (h24 : D.rank = 24) (H K : ℕ) (d m n r E : ℤ)
+    (a : fixedGrade D d) (u v : paritySpace D hu (-1))
+    (huH : actualTensorL0 D hu u.val = (H : ℂ) • u.val)
+    (hvK : actualTensorL0 D hu v.val = (K : ℂ) • v.val)
+    (b : fixedGrade D E) (outside : E ≠ (H : ℤ)+(K : ℤ)+d-m-n-r-2)
+    (j : ℕ) :
+    normalizedCoefficient D hu (m+n-(j : ℤ))
+      (mixedMode D hu (r+(j : ℤ)) (⟨a.val,a.property.2⟩ : FixedCarrier D) u) v E b = 0 ∧
+    normalizedCoefficient D hu (n+r-(j : ℤ)) u
+      (mixedMode D hu (m+(j : ℤ)) (⟨a.val,a.property.2⟩ : FixedCarrier D) v) E b = 0 := by
+  have firstEnergy := fixed_mode_energy_int D hu H ((H : ℤ)+d-(r+(j : ℤ))-1)
+    d (r+(j : ℤ)) a u huH rfl
+  have secondEnergy := fixed_mode_energy_int D hu K ((K : ℤ)+d-(m+(j : ℤ))-1)
+    d (m+(j : ℤ)) a v hvK rfl
+  constructor
+  · by_cases negative : (H : ℤ)+d-(r+(j : ℤ))-1 < 0
+    · have zero := integer_energy_zero D hu h24 _ _ firstEnergy (by omega)
+      have input : mixedMode D hu (r+(j : ℤ))
+          (⟨a.val,a.property.2⟩ : FixedCarrier D) u = 0 := Subtype.ext zero
+      simp only [input, map_zero, LinearMap.zero_apply, DirectSum.zero_apply]
+    · let W := ((H : ℤ)+d-(r+(j : ℤ))-1).toNat
+      have hW : (W : ℤ) = (H : ℤ)+d-(r+(j : ℤ))-1 := Int.toNat_of_nonneg (by omega)
+      apply normalized_off_grade D hu h24 W K (m+n-(j : ℤ)) E _ v _ hvK b
+      · simpa only [hW] using firstEnergy
+      · omega
+  · by_cases negative : (K : ℤ)+d-(m+(j : ℤ))-1 < 0
+    · have zero := integer_energy_zero D hu h24 _ _ secondEnergy (by omega)
+      have input : mixedMode D hu (m+(j : ℤ))
+          (⟨a.val,a.property.2⟩ : FixedCarrier D) v = 0 := Subtype.ext zero
+      simp only [input, map_zero, LinearMap.zero_apply, DirectSum.zero_apply]
+    · let W := ((K : ℤ)+d-(m+(j : ℤ))-1).toNat
+      have hW : (W : ℤ) = (K : ℤ)+d-(m+(j : ℤ))-1 := Int.toNat_of_nonneg (by omega)
+      apply normalized_off_grade D hu h24 H W (n+r-(j : ℤ)) E u _ huH _ b
+      · simpa only [hW] using secondEnergy
+      · omega
+
+private theorem mixed_dual_off_grade (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h24 : D.rank = 24)
+    (H K : ℕ) (d m n r E : ℤ) (a : fixedGrade D d)
+    (u v : paritySpace D hu (-1))
+    (huH : actualTensorL0 D hu u.val = (H : ℂ) • u.val)
+    (hvK : actualTensorL0 D hu v.val = (K : ℂ) • v.val)
+    (b : fixedGrade D E) (outside : E ≠ (H : ℤ)+(K : ℤ)+d-m-n-r-2)
+    (j : ℕ) :
+    oppositeAction D hu hD (m+r-(j : ℤ))
+      (⟨a.val,a.property.2⟩ : FixedCarrier D)
+      (normalizedCoefficient D hu (n+(j : ℤ)) u v) E b = 0 := by
+  rw [oppositeAction_homogeneous]
+  change (oppositeHomogeneous D hu hD d (m+r-(j : ℤ)) a
+    (ambientCoefficient D hu (n+(j : ℤ)) u.val v.val)) E b = 0
+  rw [homogeneous_coefficient D hu h24 H K (n+(j : ℤ)) u.val v.val huH hvK]
+  change (oppositeHomogeneous D hu hD d (m+r-(j : ℤ)) a
+    (DirectSum.lof ℂ ℤ (fun f => Module.Dual ℂ (fixedGrade D f))
+      ((H : ℤ)+(K : ℤ)-(n+(j : ℤ))-1)
+      ((fixedGrade D ((H : ℤ)+(K : ℤ)-(n+(j : ℤ))-1)).dualRestrict
+        (kernel D hu H K (n+(j : ℤ)) u.val v.val)))) E b = 0
+  simp only [oppositeHomogeneous, DirectSum.toModule_lof, LinearMap.comp_apply]
+  have target : (H : ℤ)+(K : ℤ)-(n+(j : ℤ))-1+d-(m+r-(j : ℤ))-1 =
+      (H : ℤ)+(K : ℤ)+d-m-n-r-2 := by ring
+  simp [DirectSum.lof_eq_of, DirectSum.of_apply, target, outside, Ne.symm outside]
+
+private theorem mixed_residual_homogeneous (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h24 : D.rank = 24)
+    (H K : ℕ) (d m n r : ℤ) (a : fixedGrade D d)
+    (u v : paritySpace D hu (-1))
+    (huH : actualTensorL0 D hu u.val = (H : ℂ) • u.val)
+    (hvK : actualTensorL0 D hu v.val = (K : ℂ) • v.val) :
+    mixedResidual D hu hD m n r (⟨a.val,a.property.2⟩ : FixedCarrier D) u v = 0 := by
+  classical
+  let A : FixedCarrier D := ⟨a.val,a.property.2⟩
+  obtain ⟨hl, hf, hs⟩ := mixed_families_finite D hu hD m n r A u v
+  rw [mixed_residual_expansion]
+  apply DFinsupp.ext
+  intro E
+  apply LinearMap.ext
+  intro b
+  let ev := restrictedEvaluation D E b
+  change ev ((∑ᶠ j, mixedLeftTerm D hu m n r A u v j) -
+    (∑ᶠ j, mixedFirstTerm D hu hD m n r A u v j) +
+    (∑ᶠ j, mixedSecondTerm D hu m n r A u v j)) = 0
+  rw [map_add, map_sub, map_finsum ev hl, map_finsum ev hf, map_finsum ev hs]
+  by_cases hE : E = (H : ℤ)+(K : ℤ)+d-m-n-r-2
+  · have identity := mixed_homogeneous_grade_pairing D hu hD h24 H K d m n r E
+      a b u v huH hvK hE
+    have firstEval := ev.map_finsum hf
+    change (∑ᶠ j, mixedFirstTerm D hu hD m n r A u v j) E b = _ at firstEval
+    rw [firstEval] at identity
+    have signedSecond : (∑ᶠ j, ev (mixedSecondTerm D hu m n r A u v j)) =
+        (-1 : ℂ)^r * (∑ᶠ j : ℕ, ((-1 : ℂ)^j * Ring.choose (r : ℂ) j) *
+          normalizedCoefficient D hu (n+r-(j : ℤ)) u
+            (((fixedParitySlice D hu (-1)
+              (⟨a.val,a.property.2⟩ : FixedCarrier D))[[m+(j : ℤ)]]) v) E b) := by
+      rw [mul_finsum]
+      apply finsum_congr
+      intro j
+      change (((-1 : ℂ)^j * Ring.choose (r : ℂ) j) * (-1 : ℂ)^r) * _ = _
+      ring
+    rw [signedSecond]
+    change (∑ᶠ j : ℕ, Ring.choose (m : ℂ) j *
+      normalizedCoefficient D hu (m+n-(j : ℤ))
+        (((fixedParitySlice D hu (-1)
+          (⟨a.val,a.property.2⟩ : FixedCarrier D))[[r+(j : ℤ)]]) u) v E b) - _ + _ = 0
+    linear_combination identity
+  · have zl : ∀ j, ev (mixedLeftTerm D hu m n r A u v j) = 0 := by
+      intro j
+      have zero := (mixed_input_off_grade D hu h24 H K d m n r E a u v huH hvK b hE j).1
+      change Ring.choose (m : ℂ) j * _ = 0
+      rw [zero, mul_zero]
+    have zf : ∀ j, ev (mixedFirstTerm D hu hD m n r A u v j) = 0 := by
+      intro j
+      have zero := mixed_dual_off_grade D hu hD h24 H K d m n r E a u v huH hvK b hE j
+      change ((-1 : ℂ)^j * Ring.choose (r : ℂ) j) * _ = 0
+      rw [zero, mul_zero]
+    have zs : ∀ j, ev (mixedSecondTerm D hu m n r A u v j) = 0 := by
+      intro j
+      have zero := (mixed_input_off_grade D hu h24 H K d m n r E a u v huH hvK b hE j).2
+      change (((-1 : ℂ)^j * Ring.choose (r : ℂ) j) * (-1 : ℂ)^r) * _ = 0
+      rw [zero, mul_zero]
+    simp only [zl, zf, zs, finsum_zero, sub_zero, add_zero]
+
+open private basis_parity negative_support
+  from D5.S3.VertexAlgebra.TwistedGround.MixedTranslation
+open private fixedProjection from D5.S3.VertexAlgebra.TwistedGround.MixedOpposite
+
+private def actualInputBasis (D : LatticeData) (hu : IsUnit D.G.det)
+    (u : paritySpace D hu (-1))
+    (i : {i : OddMonomial D × LatticeTwistedGroundRealization.Half (groundRank D hu) //
+      i ∈ ((actualAmbientBasis D hu).repr u.val).support}) : paritySpace D hu (-1) :=
+  ⟨actualAmbientBasis D hu i.val, by
+    have odd := negative_support D hu u i.val i.property
+    simp only [paritySpace, LinearMap.mem_ker, LinearMap.sub_apply,
+      LinearMap.smul_apply, LinearMap.id_apply, sub_eq_zero]
+    rw [basis_parity, neg_one_pow_eq_pow_mod_two, odd]
+    norm_num⟩
+
+private theorem actual_input_basis_expansion (D : LatticeData) (hu : IsUnit D.G.det)
+    (u : paritySpace D hu (-1)) :
+    (∑ i ∈ ((actualAmbientBasis D hu).repr u.val).support.attach,
+      ((actualAmbientBasis D hu).repr u.val i.val) • actualInputBasis D hu u i) = u := by
+  classical
+  apply Subtype.ext
+  change (∑ i ∈ ((actualAmbientBasis D hu).repr u.val).support.attach,
+    ((actualAmbientBasis D hu).repr u.val i.val) • actualAmbientBasis D hu i.val) = u.val
+  rw [Finset.sum_attach]
+  exact (actualAmbientBasis D hu).linearCombination_repr u.val
+
+private theorem actual_input_basis_energy (D : LatticeData) (hu : IsUnit D.G.det)
+    (h24 : D.rank = 24) (u : paritySpace D hu (-1))
+    (i : {i : OddMonomial D × LatticeTwistedGroundRealization.Half (groundRank D hu) //
+      i ∈ ((actualAmbientBasis D hu).repr u.val).support}) :
+    actualTensorL0 D hu (actualInputBasis D hu u i).val =
+      (((oddWeight D i.val.1+3)/2 : ℕ) : ℂ) • (actualInputBasis D hu u i).val := by
+  have odd := negative_support D hu u i.val i.property
+  have energy := actual_basis_eigenvalue D hu i.val.1 i.val.2
+  change actualTensorL0 D hu (actualAmbientBasis D hu i.val) = _
+  rw [energy, h24]
+  congr 1
+  have h : oddWeight D i.val.1+3 = 2*((oddWeight D i.val.1+3)/2) := by omega
+  have hc : (oddWeight D i.val.1 : ℂ)+3 =
+      2*(((oddWeight D i.val.1+3)/2 : ℕ) : ℂ) := by exact_mod_cast h
+  linear_combination hc / 2
+
+private def fixedSourceInclusion (D : LatticeData) (d : ℤ) :
+    fixedGrade D d →ₗ[ℂ] FixedCarrier D where
+  toFun a := ⟨a.val,a.property.2⟩
+  map_add' a b := rfl
+  map_smul' z a := rfl
+
+private theorem fixed_source_expansion (D : LatticeData) (hu : IsUnit D.G.det)
+    (a : FixedCarrier D) :
+    (∑ d ∈ stateEnergies D a.val,
+      fixedSourceInclusion D d (fixedProjection D hu d a)) = a := by
+  classical
+  apply Subtype.ext
+  change (∑ d ∈ stateEnergies D a.val,
+    (2 : ℂ)⁻¹ • (gradeProjection D d a.val + theta D (gradeProjection D d a.val))) = a.val
+  rw [← Finset.smul_sum, Finset.sum_add_distrib]
+  change (2 : ℂ)⁻¹ • ((∑ d ∈ stateEnergies D a.val, gradeProjection D d a.val) +
+    ∑ d ∈ stateEnergies D a.val, thetaLinear D (gradeProjection D d a.val)) = a.val
+  rw [← map_sum, sum_gradeProjections, (mem_fixedSpace D a.val).mp a.property]
+  module
+
+private theorem mixed_residual_fixed_source (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h24 : D.rank = 24)
+    (d m n r : ℤ) (a : fixedGrade D d) (u v : paritySpace D hu (-1)) :
+    mixedResidual D hu hD m n r (⟨a.val,a.property.2⟩ : FixedCarrier D) u v = 0 := by
+  classical
+  rw [← actual_input_basis_expansion D hu u, ← actual_input_basis_expansion D hu v]
+  simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply,
+    RingHom.id_apply, Finset.smul_sum]
+  apply Finset.sum_eq_zero
+  intro i hi
+  apply Finset.sum_eq_zero
+  intro j hj
+  rw [mixed_residual_homogeneous D hu hD h24
+    ((oddWeight D i.val.1+3)/2) ((oddWeight D j.val.1+3)/2) d m n r a
+    (actualInputBasis D hu u i) (actualInputBasis D hu v j)
+    (actual_input_basis_energy D hu h24 u i) (actual_input_basis_energy D hu h24 v j)]
+  simp only [smul_zero]
+
+private theorem mixed_residual_zero (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h24 : D.rank = 24)
+    (m n r : ℤ) (a : FixedCarrier D) (u v : paritySpace D hu (-1)) :
+    mixedResidual D hu hD m n r a u v = 0 := by
+  classical
+  rw [← fixed_source_expansion D hu a]
+  simp only [map_sum, LinearMap.sum_apply]
+  apply Finset.sum_eq_zero
+  intro d hd
+  exact mixed_residual_fixed_source D hu hD h24 d m n r (fixedProjection D hu d a) u v
+
+/-- The complete signed two-twisted-input mixed Jacobi law, with the actual
+opposite action on the original fixed restricted dual. The three actual
+families have finite support before any interchange of sums. The source and
+both inputs are extended through their actual finite homogeneous expansions;
+no generating-source, sign-of-mode or selected target-grade restriction is
+present. This identity supplies no three-twisted crossing premise. -/
+theorem mixed_jacobi (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h24 : D.rank = 24)
+    (m n r : ℤ) (a : FixedCarrier D) (u v : paritySpace D hu (-1)) :
+    (∑ᶠ j : ℕ, Ring.choose (m : ℂ) j •
+      normalizedCoefficient D hu (m+n-(j : ℤ))
+        (((fixedParitySlice D hu (-1) a)[[r+(j : ℤ)]]) u) v) =
+    ∑ᶠ j : ℕ, ((-1 : ℂ)^j * Ring.choose (r : ℂ) j) •
+      (oppositeAction D hu hD (m+r-(j : ℤ)) a
+        (normalizedCoefficient D hu (n+(j : ℤ)) u v) -
+       (-1 : ℂ)^r • normalizedCoefficient D hu (n+r-(j : ℤ)) u
+         (((fixedParitySlice D hu (-1) a)[[m+(j : ℤ)]]) v)) := by
+  have zero := mixed_residual_zero D hu hD h24 m n r a u v
+  rw [mixed_residual_expansion] at zero
+  obtain ⟨hl, hf, hs⟩ := mixed_families_finite D hu hD m n r a u v
+  change (∑ᶠ j, mixedLeftTerm D hu m n r a u v j) = _
+  calc
+    _ = (∑ᶠ j, mixedFirstTerm D hu hD m n r a u v j) -
+        (∑ᶠ j, mixedSecondTerm D hu m n r a u v j) := by
+      apply eq_of_sub_eq_zero
+      convert zero using 1 <;> abel
+    _ = ∑ᶠ j, (mixedFirstTerm D hu hD m n r a u v j -
+        mixedSecondTerm D hu m n r a u v j) := (finsum_sub_distrib hf hs).symm
+    _ = _ := by
+      apply finsum_congr
+      intro j
+      simp only [mixedFirstTerm, mixedSecondTerm, mixedMode, smul_sub, smul_smul]
 
 end D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner
