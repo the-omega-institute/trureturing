@@ -18,11 +18,6 @@ triage: anchor
 
 # Equal-spectrum local-qubit product margins
 
-## Locator
-
-https://github.com/the-omega-institute/trureturing is the implementation locator only.
-The supplied manuscript is unpublished, local and fallible; this URL is not its publication locator.
-
 ## Scope
 
 The HTTPS locator identifies the repository implementation, not a public copy
@@ -71,3 +66,11 @@ sixteen-dimensional state, its spectral entropy identity and local
 information-processing estimates. Its nonnegative-gap statement concerns only
 the four-parameter product-margin construction. It does not assert the
 coordinate-free corollary or an inequality for arbitrary quantum states.
+
+## Verified locator
+
+URL: https://github.com/the-omega-institute/trureturing
+
+The repository URL identifies the Lean implementation and its accompanying
+source record for this local manuscript; the manuscript itself is unpublished
+and is not represented as a public external publication.
