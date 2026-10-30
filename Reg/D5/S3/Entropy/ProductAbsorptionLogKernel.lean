@@ -20,7 +20,7 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {u v : ℝ}, u ∈ Ioo (0 : ℝ) 1 → v ∈ Ioo (0 : ℝ) 1 →
+  Law R := ∀ {u v : ℝ}, u ∈ Icc (0 : ℝ) 1 → v ∈ Icc (0 : ℝ) 1 →
     (∀ s ∈ Ioi (0 : ℝ), 0 ≤ R.readout () ⟨u, v⟩ s) ∨
       ∃ r ∈ Ioi (0 : ℝ), R.readout () ⟨u, v⟩ r = 0 ∧
         (∀ s ∈ Ioo (0 : ℝ) r, 0 < R.readout () ⟨u, v⟩ s) ∧

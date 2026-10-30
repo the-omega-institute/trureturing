@@ -46,5 +46,11 @@ nonnegative logarithmic first moment. Those statements, the closed-domain
 scalar entropy inequality, and the actual density-channel absorption
 endpoint remain separate proof obligations.
 
+The kernel theorem includes the entire closed parameter square. Its
+boundary reduction uses the zero kernel at one zero parameter and the
+identity
+`(1+v/s)(1+(1-v)/s)-(1+1/s)=v(1-v)/s^2`
+at one unit parameter, together with symmetry.
+
 The original entangled-seed and mixed-seed quantum question is outside this
 product component. No numerical check is used as a universal proof.

@@ -324,10 +324,7 @@ private lemma kernel_sign {u v s : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1)
     · have hl := hm'.mpr (show N < D by linarith)
       linarith
 
-/-- On the whole open parameter square, the actual logarithmic kernel is either
-nonnegative everywhere or has exactly one positive zero, positive before it and
-negative after it. The diagonal `u = v`, where one root is zero, is included. -/
-theorem product_log_kernel_single_crossing {u v : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1)
+private theorem interior_single_crossing {u v : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1)
     (hv : v ∈ Ioo (0 : ℝ) 1) :
     (∀ s ∈ Ioi (0 : ℝ), 0 ≤ productLogKernel u v s) ∨
       ∃ r ∈ Ioi (0 : ℝ), productLogKernel u v r = 0 ∧
@@ -348,6 +345,71 @@ theorem product_log_kernel_single_crossing {u v : ℝ} (hu : u ∈ Ioo (0 : ℝ)
       exact (kernel_sign hu hv hs.1).2.1.mpr (hp s hs)
     · intro s hs
       exact (kernel_sign hu hv (hr.trans hs)).2.2.mpr (hn s hs)
+
+private lemma kernel_symm (u v s : ℝ) :
+    productLogKernel u v s = productLogKernel v u s := by
+  unfold productLogKernel
+  rw [show v + u = u + v by ring, show v * u = u * v by ring]
+  ring
+
+private lemma kernel_zero_left (v s : ℝ) : productLogKernel 0 v s = 0 := by
+  simp only [productLogKernel, zero_add, zero_mul, Real.sqrt_zero, mul_zero,
+    add_zero, sub_zero, zero_div, Real.log_one]
+  ring
+
+private lemma kernel_one_left (v s : ℝ) :
+    productLogKernel 1 v s = Real.log (1 + v / s) +
+      Real.log (1 + (1 - v) / s) - Real.log (1 + 1 / s) := by
+  simp only [productLogKernel, one_mul,
+    show v * (1 - (1 + v) + v) = 0 by ring,
+    Real.sqrt_zero, mul_zero, add_zero, sub_zero,
+    show 1 + v - v = 1 by ring, show 1 + v - 2 * v = 1 - v by ring]
+  ring
+
+private lemma log_partition_nonneg {v s : ℝ} (hv : v ∈ Icc (0 : ℝ) 1)
+    (hs : 0 < s) : 0 ≤ Real.log (1 + v / s) +
+      Real.log (1 + (1 - v) / s) - Real.log (1 + 1 / s) := by
+  have hv0 : 0 ≤ v := hv.1
+  have hv1 : 0 ≤ 1 - v := sub_nonneg.mpr hv.2
+  have hfirst : 0 < 1 + v / s := by positivity
+  have hsecond : 0 < 1 + (1 - v) / s := by positivity
+  have hbase : 0 < 1 + 1 / s := by positivity
+  have hid : (1 + v / s) * (1 + (1 - v) / s) - (1 + 1 / s) =
+      v * (1 - v) / s ^ 2 := by
+    field_simp [hs.ne']
+    <;> ring
+  have hprod : 1 + 1 / s ≤ (1 + v / s) * (1 + (1 - v) / s) := by
+    have hnonneg := div_nonneg (mul_nonneg hv0 hv1) (sq_nonneg s)
+    linarith
+  rw [← Real.log_mul hfirst.ne' hsecond.ne']
+  exact sub_nonneg.mpr (Real.log_le_log hbase hprod)
+
+/-- On the whole closed parameter square, the actual logarithmic kernel is either
+nonnegative everywhere or has exactly one positive zero, positive before it and
+negative after it. The diagonal and all zero-root boundary cases are included. -/
+theorem product_log_kernel_single_crossing {u v : ℝ} (hu : u ∈ Icc (0 : ℝ) 1)
+    (hv : v ∈ Icc (0 : ℝ) 1) :
+    (∀ s ∈ Ioi (0 : ℝ), 0 ≤ productLogKernel u v s) ∨
+      ∃ r ∈ Ioi (0 : ℝ), productLogKernel u v r = 0 ∧
+        (∀ s ∈ Ioo (0 : ℝ) r, 0 < productLogKernel u v s) ∧
+        (∀ s ∈ Ioi r, productLogKernel u v s < 0) := by
+  by_cases hu0 : u = 0
+  · subst u
+    exact Or.inl (fun s _ => by rw [kernel_zero_left])
+  by_cases hu1 : u = 1
+  · subst u
+    exact Or.inl (fun s hs => by rw [kernel_one_left]; exact log_partition_nonneg hv hs)
+  by_cases hv0 : v = 0
+  · subst v
+    exact Or.inl (fun s _ => by rw [kernel_symm, kernel_zero_left])
+  by_cases hv1 : v = 1
+  · subst v
+    exact Or.inl (fun s hs => by
+      rw [kernel_symm, kernel_one_left]
+      exact log_partition_nonneg hu hs)
+  exact interior_single_crossing
+    ⟨lt_of_le_of_ne hu.1 hu0.symm, lt_of_le_of_ne hu.2 hu1⟩
+    ⟨lt_of_le_of_ne hv.1 hv0.symm, lt_of_le_of_ne hv.2 hv1⟩
 
 #print axioms product_log_kernel_single_crossing
 end D5.S3.Entropy.ProductAbsorptionLogKernel
