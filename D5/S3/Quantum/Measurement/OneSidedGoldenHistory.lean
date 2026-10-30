@@ -170,7 +170,7 @@ private theorem native_port_identity (P : Matrix (Fin d) (Fin d) ℂ) (b : Bool)
       _ = -zeta⁻¹ := by rw [zeta_relations.2]; ring
   have hphase : zeta^2*phase = zeta⁻¹ := by
     change zeta^2*zeta^(-3 : ℤ) = zeta⁻¹
-    rw [_root_.zpow_neg,zpow_natCast]
+    rw [_root_.zpow_neg]
     field_simp [hz0] <;> ring
   have hzero : (x : ℂ)*(zeta⁻¹-1) = zeta^2 := by
     rw [hinv]
@@ -185,11 +185,10 @@ private theorem native_port_identity (P : Matrix (Fin d) (Fin d) ℂ) (b : Bool)
   cases b
   · calc
       nativePort P false = ((Real.sqrt x : ℂ)*(x : ℂ)*(zeta⁻¹-1)) • (1-P) := by
-        dsimp [nativePort,reader,preparation]
-        simp only [smul_add,smul_smul]
-        rw [show ((Real.sqrt x : ℂ)*zeta⁻¹*(x : ℂ))*zeta =
-          (Real.sqrt x : ℂ)*(x : ℂ) by field_simp [hz0] <;> ring]
-        module
+        ext i j
+        simp only [nativePort,reader,preparation,Matrix.add_apply,
+          Matrix.smul_apply,Matrix.sub_apply,smul_eq_mul]
+        field_simp [hz0] <;> ring
       _ = zeta^2 • kraus P false := by
         rw [mul_assoc,hzero]
         simp only [kraus,smul_smul,mul_comm]
