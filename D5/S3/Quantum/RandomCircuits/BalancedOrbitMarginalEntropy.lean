@@ -10,6 +10,8 @@ import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 
+/-! Haar symmetry exchanges the marginals of a balanced bipartite state. -/
+
 set_option autoImplicit false
 
 noncomputable section
@@ -45,7 +47,13 @@ private theorem swap_conjugate (n : ℕ)
       star (permutationUnitary (Equiv.prodComm (Fin n) (Fin n)) :
         Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ) =
       x.submatrix (Equiv.prodComm (Fin n) (Fin n)) (Equiv.prodComm (Fin n) (Fin n)) := by
-  sorry
+  change Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin n) (Fin n)) * x *
+    star (Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin n) (Fin n))) = _
+  rw [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_permMatrix]
+  change (Equiv.prodComm (Fin n) (Fin n)).toPEquiv.toMatrix * x *
+    (Equiv.prodComm (Fin n) (Fin n)).symm.toPEquiv.toMatrix = _
+  rw [PEquiv.toMatrix_toPEquiv_mul, PEquiv.mul_toMatrix_toPEquiv]
+  rfl
 
 private theorem partial_trace_swap (n : ℕ)
     (x : Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ) :
@@ -55,7 +63,7 @@ private theorem partial_trace_swap (n : ℕ)
         star (permutationUnitary (Equiv.prodComm (Fin n) (Fin n)) :
           Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ)) = partialTraceLeft x := by
   rw [swap_conjugate]
-  sorry
+  rfl
 
 private theorem marginal_swap_mul (n : ℕ) (ρ : DensityState (Fin n × Fin n))
     (u : Matrix.unitaryGroup (Fin n × Fin n) ℂ) :
@@ -66,7 +74,23 @@ private theorem marginal_swap_mul (n : ℕ) (ρ : DensityState (Fin n × Fin n))
       (permutationUnitary (Equiv.prodComm (Fin n) (Fin n)) * u).2 ρ) =
     marginalLeft (unitaryConjugateState
       (u : Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ) u.2 ρ) := by
-  sorry
+  apply Subtype.ext
+  apply congrArg CStarMatrix.ofMatrix
+  change partialTraceRight
+    (((permutationUnitary (Equiv.prodComm (Fin n) (Fin n)) :
+      Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ) *
+      (u : Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ)) *
+      CStarMatrix.ofMatrix.symm ρ.1 *
+      star ((permutationUnitary (Equiv.prodComm (Fin n) (Fin n)) :
+        Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ) *
+        (u : Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ))) =
+    partialTraceLeft
+      ((u : Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ) * CStarMatrix.ofMatrix.symm ρ.1 *
+        star (u : Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ))
+  rw [star_mul]
+  simpa only [Matrix.mul_assoc] using partial_trace_swap n
+    ((u : Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ) * CStarMatrix.ofMatrix.symm ρ.1 *
+      star (u : Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ))
 
 /-- The Zhang–Xiang balanced marginal entropy identity. -/
 theorem result : claim := by
