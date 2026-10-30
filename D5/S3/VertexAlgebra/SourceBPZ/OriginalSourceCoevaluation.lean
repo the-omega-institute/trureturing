@@ -157,7 +157,7 @@ private theorem theta_mem_grade (D : LatticeData) (h : ℤ) (v : Carrier D)
     obtain ⟨a, ha, rfl⟩ := hv
     have ha' : energy D a = h := ha
     have ht : theta D (carrierBasis D a) =
-        ((-1 : ℂ) ^ (occurrences D a.2).length) •
+        ((-1 : ℂ) ^ (LatticeAllStateField.occurrences D a.2).length) •
           carrierBasis D (-a.1, a.2) := by
       simp only [carrierBasis_apply]
       change thetaLinear D (Finsupp.single a.1 (monomial a.2 1)) = _
@@ -196,14 +196,13 @@ private theorem plusPart_self_adjoint (D : LatticeData) (u v : Carrier D) :
   simp only [plusPart, map_smul, map_add, LinearMap.smul_apply,
     LinearMap.add_apply, smul_eq_mul]
   rw [ht]
-  ring
 
 /-- A redundant projected frame in the full actual fixed grade. -/
 def fixedFrame (D : LatticeData) (h : ℤ) (a : EnergyFiber D h) :
     ↥(grade D h ⊓ fixedSpace D) :=
   ⟨plusPart D (carrierBasis D a.1),
     ⟨plusPart_mem_grade D h _ (by
-      rw [← a.2]; exact carrierBasis_mem_grade D a.1),
+      simpa only [a.property] using carrierBasis_mem_grade D a.val),
      FixedGradedDuality.plusPart_mem_fixedSpace D _⟩⟩
 
 /-- Project the explicit opposite-charge inverse vector, using the existing half. -/
@@ -211,7 +210,7 @@ def fixedDualFrame (D : LatticeData) (h : ℤ) (a : EnergyFiber D h) :
     ↥(grade D h ⊓ fixedSpace D) :=
   ⟨plusPart D (dualCarrierBasis D a.1),
     ⟨plusPart_mem_grade D h _ (by
-      rw [← a.2]; exact dualCarrierBasis_mem_grade D a.1),
+      simpa only [a.property] using dualCarrierBasis_mem_grade D a.val),
      FixedGradedDuality.plusPart_mem_fixedSpace D _⟩⟩
 
 private theorem fixedDualFrame_pairing (D : LatticeData) (hu : IsUnit D.G.det)
@@ -231,7 +230,7 @@ private theorem grade_expansion (D : LatticeData) (h : ℤ)
       Finsupp.single a 1 := (carrierBasis D).repr_self a
   apply (carrierCoeffEquiv D).injective
   ext b
-  simp only [map_sum, map_smul, Finset.sum_apply, Finsupp.smul_apply, hb,
+  simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, hb,
     Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero]
   by_cases he : energy D b = h
   · let a : EnergyFiber D h := ⟨b, he⟩
@@ -306,15 +305,21 @@ theorem representFixedGrade_pairing (D : LatticeData) (hu : IsUnit D.G.det)
   letI := Fintype.ofFinite (EnergyFiber D h)
   change sourcePairing D ((grade D h ⊓ fixedSpace D).subtype
     (∑ᶠ a : EnergyFiber D h, f (fixedFrame D h a) • fixedDualFrame D h a)) x.val = _
-  rw [finsum_eq_sum_of_fintype, map_sum, map_sum]
-  simp only [map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
-    fixedDualFrame_pairing D hu, smul_eq_mul]
+  rw [finsum_eq_sum_of_fintype, map_sum]
+  change ((sourcePairing D).flip x.val)
+    (∑ a : EnergyFiber D h,
+      f (fixedFrame D h a) • (fixedDualFrame D h a).val) = f x
+  rw [map_sum]
+  simp only [map_smul, LinearMap.flip_apply, smul_eq_mul]
   calc
-    _ = ∑ a : EnergyFiber D h,
+    (∑ a : EnergyFiber D h,
+        f (fixedFrame D h a) * sourcePairing D (fixedDualFrame D h a).val x.val) =
+      ∑ a : EnergyFiber D h,
         carrierCoeffEquiv D x.val a.1 * f (fixedFrame D h a) := by
       apply Finset.sum_congr rfl
       intro a ha
-      exact mul_comm _ _
+      rw [fixedDualFrame_pairing D hu]
+      exact mul_comm (f (fixedFrame D h a)) (carrierCoeffEquiv D x.val a.1)
     _ = f (∑ a : EnergyFiber D h,
         carrierCoeffEquiv D x.val a.1 • fixedFrame D h a) := by
       simp only [map_sum, map_smul, smul_eq_mul]
