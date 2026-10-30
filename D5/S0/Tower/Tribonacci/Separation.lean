@@ -206,6 +206,8 @@ private theorem resultant_three_embeddings {z : ℂ}
     ext n; simp
   rw [hcompR] at hreal
   rw [hcompC] at hconj
+  simp only [Complex.ofRealHom_eq_coe] at hreal
+  simp only [starRingEnd_apply] at hconj
   rw [← hreal, ← hconj]
 
 private theorem integer_norm_lower_bound {z : ℂ}

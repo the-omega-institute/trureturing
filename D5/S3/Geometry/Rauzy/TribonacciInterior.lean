@@ -25,7 +25,7 @@ namespace D5.S3.Geometry.Rauzy.TribonacciInterior
 open D5.S0.Tower.Tribonacci
 open Names Values ModelSet RauzyFractal
 open Set Metric Filter MeasureTheory
-open scoped Topology
+open scoped Topology Function
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -37,14 +37,19 @@ private theorem name_card_lower (Q : ℕ) :
   induction Q using Nat.strong_induction_on with
   | h Q ih =>
     match Q with
-    | 0 => norm_num [TribonacciName, TribonacciAdmissible]
+    | 0 =>
+      have hcard : Fintype.card (TribonacciName 0) = 1 := by decide
+      simp [hcard]
     | 1 =>
       have hcard : Fintype.card (TribonacciName 1) = 2 := by decide
       simpa [hcard] using tribonacciConstant_lt_two.le
     | 2 =>
       have hcard : Fintype.card (TribonacciName 2) = 4 := by decide
       rw [hcard]
-      nlinarith [tribonacciConstant_pos, tribonacciConstant_lt_two]
+      calc
+        β ^ 2 ≤ (2 : ℝ) ^ 2 :=
+          pow_le_pow_left₀ tribonacciConstant_pos.le tribonacciConstant_lt_two.le 2
+        _ = _ := by norm_num
     | n + 3 =>
       rw [tribonacci_name_card_add_three]
       push_cast
@@ -81,9 +86,11 @@ private theorem admissible_of_no_three (f : ℕ → Bool)
     | n + 3 =>
       rw [admissible_add_three_iff]
       constructor
-      · simpa using hf start
-      · simpa [Fin.tail, Nat.add_assoc, Nat.add_left_comm, Nat.add_comm] using
-          ih (n + 2) (by omega) (start + 1)
+      · simpa [Nat.mod_eq_of_lt (show 2 < n + 3 by omega)] using hf start
+      · convert ih (n + 2) (by omega) (start + 1) using 1
+        funext i
+        congr 1
+        simp [Fin.tail, Nat.add_assoc, Nat.add_left_comm, Nat.add_comm]
 
 private def sliceName {L : ℕ} (u : TribonacciName L) (start Q : ℕ) : TribonacciName Q :=
   ⟨fun i => paddedDigit u (start + i.1),
@@ -92,7 +99,8 @@ private def sliceName {L : ℕ} (u : TribonacciName L) (start Q : ℕ) : Tribona
 private theorem coordinate_slice {L : ℕ} (u : TribonacciName L) (z : ℂ) (start Q : ℕ) :
     conjugateCoordinate z (sliceName u start Q) =
       ∑ i ∈ Finset.range Q, if paddedDigit u (start + i) then z ^ i else 0 := by
-  simp only [conjugateCoordinate, sliceName, Fin.sum_univ_eq_sum_range]
+  exact Fin.sum_univ_eq_sum_range
+    (fun i => if paddedDigit u (start + i) then z ^ i else 0) Q
 
 private theorem coordinate_split {L : ℕ} (u : TribonacciName L) (z : ℂ) (Q : ℕ) :
     conjugateCoordinate z u =
@@ -100,12 +108,14 @@ private theorem coordinate_split {L : ℕ} (u : TribonacciName L) (z : ℂ) (Q :
         z ^ Q * conjugateCoordinate z (sliceName u Q L) := by
   let f : ℕ → ℂ := fun i => if paddedDigit u i then z ^ i else 0
   have hu : conjugateCoordinate z u = ∑ i ∈ Finset.range L, f i := by
-    rw [conjugateCoordinate, Fin.sum_univ_eq_sum_range]
-    apply Finset.sum_congr rfl
-    intro i hi
-    simp only [f, paddedDigit, dif_pos (Finset.mem_range.mp hi)]
+    rw [conjugateCoordinate]
+    calc
+      _ = ∑ i : Fin L, f i.1 := by
+        apply Finset.sum_congr rfl
+        intro i hi
+        simp only [f, paddedDigit, dif_pos i.2]
+      _ = _ := Fin.sum_univ_eq_sum_range f L
   have hpad : (∑ i ∈ Finset.range L, f i) = ∑ i ∈ Finset.range (Q + L), f i := by
-    symm
     apply Finset.sum_subset (Finset.range_mono (by omega))
     intro i hi hin
     have hnot : ¬ i < L := by simpa only [Finset.mem_range] using hin
@@ -177,9 +187,10 @@ private theorem positive_volume {z : ℂ}
       dsimp [ρ]
       linarith
     have hU : (⋃ u, B u) ⊆ cthickening (ρ Q) K := by
-      rintro w ⟨u, hw⟩
+      intro w hw
+      obtain ⟨u, hu⟩ := mem_iUnion.mp hw
       exact mem_cthickening_of_dist_le w (conjugateCoordinate z u) (ρ Q) K
-        (subset_closure ⟨Q, u, rfl⟩) (le_of_lt hw)
+        (subset_closure ⟨Q, u, rfl⟩) (le_of_lt hu)
     have harea : volume.real (⋃ u, B u) =
         (Fintype.card (TribonacciName Q) : ℝ) * ((ρ Q) ^ 2 * Real.pi) := by
       rw [measureReal_iUnion_fintype hdisj (fun _ => measurableSet_ball)]
@@ -224,7 +235,7 @@ noncomputable def tribonacciCylinderSystem {z : Complex}
     positive_volume := positive_volume hz hz_ne
     radius := (1 - ‖z‖)⁻¹
     separation := Real.sqrt (β - 1)
-    radius_nonneg := by positivity
+    radius_nonneg := le_of_lt (inv_pos.mpr (sub_pos.mpr hr1))
     separation_pos := Real.sqrt_pos.mpr (sub_pos.mpr one_lt_tribonacciConstant)
     bounded := rauzyFractal_subset_closedBall hz hz_ne
     contraction := z
@@ -242,7 +253,7 @@ nonempty interior at either characteristic root distinct from the Perron root. -
 theorem rauzyFractal_interior_nonempty {z : Complex}
     (hz : z ∈ Binet.tribonacciCharacteristicPolynomial.roots)
     (hz_ne : z ≠ (Values.tribonacciConstant : Complex)) :
-    (Set.interior (RauzyFractal.rauzyFractal z)).Nonempty := by
+    (interior (RauzyFractal.rauzyFractal z)).Nonempty := by
   exact Interior.interior_nonempty_of_separated_cylinders (tribonacciCylinderSystem hz hz_ne)
 
 end D5.S3.Geometry.Rauzy.TribonacciInterior
