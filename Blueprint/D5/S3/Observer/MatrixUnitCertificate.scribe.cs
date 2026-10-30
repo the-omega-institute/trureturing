@@ -88,16 +88,21 @@ internal sealed class MatrixUnitCertificateDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem
             ))));
 
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
     private static Formula ClockPhaseFormula() => Disp(Seq(
         Forall, Sp, F.Id("M"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Sp,
         OpenBracket, Operatorname, Grp(F.Id("NeZero")), Sp, F.Id("M"), CloseBracket, Comma, Sp,
         Forall, Sp, F.Id("r"), Comma, Sp, F.Id("k"), Sp, InMacro, Sp,
         Mathbb, Grp(F.Id("Z")), Slash, F.Id("M"), Mathbb, Grp(F.Id("Z")), Comma, Esc,
-        Open, Operatorname, Grp(F.Id("windowRoot")), Open, F.Id("M"), Close,
-        Caret, Grp(Operatorname, Grp(F.Id("val")), Open, F.Id("r"), Close), Close,
-        Caret, Grp(Operatorname, Grp(F.Id("val")), Open, F.Id("k"), Close), Sp, Eq, Sp,
-        Operatorname, Grp(F.Id("character")), Underscore, Grp(F.Id("M")),
-        Open, F.Id("k"), Comma, F.Id("r"), Close));
+        new Formula.Relation(
+            new Formula.Power(
+                Parenthesized(new Formula.Power(Call("windowRoot", F.Id("M")), Call("val", F.Id("r")))),
+                Call("val", F.Id("k"))),
+            FormulaRelationOperator.Equal,
+            new Formula.Apply(
+                new Formula.Subscript(Seq(Operatorname, Grp(F.Id("character"))), F.Id("M")),
+                [F.Id("k"), F.Id("r")]))));
 
     private static Formula ShiftPowerFormula() => Disp(Seq(
         Begin, Grp(F.Id("gathered")),
