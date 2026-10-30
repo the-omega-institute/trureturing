@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/ExponentExchange/PriceRecordPrimeBlockTail
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/ExponentExchange/PriceRecordPrimeBlockTail
    mirror-E: none(waiver:general-theorem-no-numerical-experiment)
    anchors: []
