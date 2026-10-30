@@ -179,6 +179,8 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
         (show i + 2 ≤ b by omega)
       simpa [r, pow_add, mul_comm] using h
     have ht0 : 0 < (2 : ℤ) ^ i := by positivity
+    have hs0 : 0 ≤ (q + 1) * (2 : ℤ) ^ i := by positivity
+    have hs20 : 0 ≤ 2 * (q + 1) * (2 : ℤ) ^ i := by positivity
     have hbnd : 2 * ((q + 1) * (2 : ℤ) ^ i) ≤ N - 1 := by
       have hm := mul_le_mul_of_nonneg_left ht (show 0 ≤ q + 1 by nlinarith)
       rw [hN]
@@ -196,6 +198,8 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
         (show i + 2 ≤ a by omega)
       simpa [q, pow_add, mul_comm] using h
     have ht0 : 0 < (2 : ℤ) ^ i := by positivity
+    have hs0 : 0 ≤ (r + 1) * (2 : ℤ) ^ i := by positivity
+    have hsA0 : 0 ≤ A * (2 : ℤ) ^ i := by dsimp [A]; positivity
     have hbnd : 2 * ((r + 1) * (2 : ℤ) ^ i) ≤ N - 1 ∧
         A * (2 : ℤ) ^ i ≤ N := by
       have hm := mul_le_mul_of_nonneg_left ht (show 0 ≤ r + 1 by omega)
