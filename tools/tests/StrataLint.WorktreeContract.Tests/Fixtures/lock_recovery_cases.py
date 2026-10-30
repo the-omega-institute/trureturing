@@ -130,11 +130,15 @@ class LockRecoveryCases:
                 state["destructive"] = True
             return observed("git", original_git)(path, *args, **kwargs)
 
+        # Intercept Path resolve/iterdir/is_dir/is_symlink/read_bytes/read_text/open;
+        # os walk/listdir/scandir/stat/lstat/open/fstat; DirEntry
+        # is_dir/is_file/is_symlink/stat/inode; both Git helpers; and Popen.
+        # Green proves ordering only for these entry points, not every observation.
         with ExitStack() as patches:
             patches.enter_context(patch.object(preservation, "native_removal_preflight", side_effect=preflight))
             for owner, name in ((Path, "resolve"), (Path, "iterdir"), (Path, "is_dir"),
                                 (Path, "is_symlink"), (Path, "read_bytes"),
-                                (Path, "read_text"), (Path, "open"), (os, "walk"),
+                                (Path, "read_text"), (Path, "open"), (os, "walk"), (os, "listdir"),
                                 (os, "scandir"), (os, "stat"), (os, "lstat"),
                                 (os, "open"), (os, "fstat"), (os.DirEntry, "is_dir"),
                                 (os.DirEntry, "is_file"), (os.DirEntry, "is_symlink"),
@@ -160,26 +164,7 @@ class LockRecoveryCases:
         self.assert_final_refusal_is_last_observation(True)
 
     def test_final_preflight_owns_initializer_scope_until_payload_and_unregistration(self):
-        import worktree_protocol as protocol
-        import worktree_preservation as preservation
-        original_preflight = preservation.native_removal_preflight
-        observations = []
-        def late_preflight(source, target, flags, stack=None):
-            self.g(self.main, "worktree", "lock", "--reason", "worktree-init:late", target)
-            try:
-                return original_preflight(source, target, flags, stack)
-            except preservation.Refused:
-                observations.append("preflight")
-                with ExitStack() as contender:
-                    with self.assertRaisesRegex(protocol.Refused, "busy_scope:tree:"):
-                        protocol.tree_scope(contender, self.main, target, True)
-                raise
-        options = self.removal_options()
-        with patch.object(preservation, "native_removal_preflight", side_effect=late_preflight):
-            result = preservation.remove(options)
-        self.assertEqual(["preflight"], observations)
-        self.assertEqual("refused", result["items"][0]["outcome"])
-        self.assertIn("native_locked:worktree-init:late", result["items"][0]["reason"])
+        self.assert_initializer_scope_until_removal(late=True)
 
     def test_removal_rechecks_gitlinks_after_nested_git_scan(self):
         import worktree_preservation as preservation
@@ -688,28 +673,54 @@ preservation.remove(argparse.Namespace(source=Path({str(self.main)!r}), names="t
         self.assertTrue(self.tree.exists())
 
     def test_native_clearance_keeps_dead_initializer_exclusive_until_removal(self):
+        self.assert_initializer_scope_until_removal(late=False)
+
+    def assert_initializer_scope_until_removal(self, late):
         import worktree_protocol as protocol
         import worktree_preservation as preservation
-        self.g(self.main, "worktree", "lock", "--reason", "worktree-init:dead", self.tree)
+        reason = "expired ordinary lock" if late else "worktree-init:dead"
+        self.g(self.main, "worktree", "lock", "--reason", reason, self.tree)
         metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
-        (metadata / "index.lock").write_text("residual\n")
+        if late:
+            os.utime(metadata / "locked", (1, 1))
+        else:
+            (metadata / "index.lock").write_text("residual\n")
         (self.tree / "owned").write_text("recover before removal\n")
-        original_git = preservation.git
+        original_git, original_preflight = preservation.git, preservation.native_removal_preflight
         checked = []
+        def preflight(source, target, flags, stack=None):
+            if late:
+                self.assertEqual(["--force", "--force"], flags)
+                self.g(self.main, "worktree", "unlock", target)
+                self.g(self.main, "worktree", "lock", "--reason", "worktree-init:dead", target)
+            return original_preflight(source, target, flags, stack)
+        def busy(boundary):
+            with ExitStack() as contender:
+                with self.assertRaisesRegex(protocol.Refused, "busy_scope:tree:"):
+                    protocol.tree_scope(contender, self.main, self.tree, True)
+            checked.append(boundary)
+        def guarded(operation, phase):
+            def invoke(*args, **kwargs):
+                busy(phase + "_entry")
+                result = operation(*args, **kwargs)
+                busy(phase + "_return")
+                return result
+            return invoke
         def guarded_git(path, *arguments, **options):
             if arguments[:2] == ("worktree", "remove"):
-                with ExitStack() as contender:
-                    with self.assertRaisesRegex(protocol.Refused, "busy_scope:tree:"):
-                        protocol.tree_scope(contender, self.main, self.tree)
-                checked.append(True)
+                return guarded(original_git, "native")(path, *arguments, **options)
             return original_git(path, *arguments, **options)
-        options = argparse.Namespace(source=self.main, names="tree", path=[], force=False,
-                                     preview=False, expected=[])
-        with patch.object(preservation, "git", side_effect=guarded_git):
-            result = preservation.remove(options)
+        with patch.object(preservation, "native_removal_preflight", side_effect=preflight), \
+                patch.object(preservation, "remove_payload", guarded(preservation.remove_payload, "payload")), \
+                patch.object(preservation, "git", side_effect=guarded_git):
+            result = preservation.remove(self.removal_options())
         self.assertEqual("succeeded", result["status"])
-        self.assertEqual([True], checked)
+        self.assertEqual("removed", result["items"][0]["outcome"])
+        self.assertEqual(["payload_entry", "payload_return", "native_entry", "native_return"], checked)
         self.assertFalse(self.tree.exists())
+        with ExitStack() as contender:
+            protocol.tree_scope(contender, self.main, self.tree, True)
+        self.note("initializer_scope_lifetime", late=late, boundaries=checked, reacquired=True)
 
     def owned_initialization(self, registered=True):
         import worktree_protocol as protocol

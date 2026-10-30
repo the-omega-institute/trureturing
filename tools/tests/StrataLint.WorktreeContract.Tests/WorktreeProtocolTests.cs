@@ -430,6 +430,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("removal_rechecks_lock_after_payload_planning")]
     [InlineData("final_refusal_evaluation_immediately_precedes_payload_action")]
     [InlineData("final_refusal_evaluation_immediately_precedes_empty_unregistration")]
+    [InlineData("final_preflight_owns_initializer_scope_until_payload_and_unregistration")]
     [InlineData("removal_rechecks_gitlinks_after_nested_git_scan")]
     [InlineData("removal_rechecks_target_identity_after_checkpoint_before_payload")]
     [InlineData("removal_resumes_after_worktree_ignore_is_deleted")]
