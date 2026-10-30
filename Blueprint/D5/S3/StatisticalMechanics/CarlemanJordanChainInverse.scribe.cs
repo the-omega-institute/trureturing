@@ -117,7 +117,10 @@ internal sealed class CarlemanJordanChainInverseDocument : IScribeDocumentDefini
                         + "If i ≥ j, strict upper triangularity makes the summand zero. "
                         + "The resulting sum is precisely the recurrence defining sigma. "
                         + "Substitution into w⁻¹ = q proves the claimed inverse entries for k ≤ j."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("grosjean-huillet-2016-carleman-jordan-chain-inverse"),
+                    ResolutionKind.Proved)))));
 
     private static Formula CarlemanFormula()
     {
