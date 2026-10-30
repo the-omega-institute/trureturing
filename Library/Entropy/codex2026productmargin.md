@@ -5,7 +5,7 @@ year: 2026
 doi: null
 url: https://github.com/the-omega-institute/trureturing
 title: A harmonic-mean certificate for the unequal-local-pair product-margin quantum Zhang–Yeung family
-claim: Six scalar entropy, qubit-state, common-lower-matrix and preparation-channel components for a four-parameter equal-spectrum local-qubit product-margin family.
+claim: Scalar entropy, qubit-state, common-lower-matrix and preparation-channel components for a four-parameter equal-spectrum local-qubit product-margin family.
 strata_touched:
   - D5/S3/Quantum/Information/ProductMarginEntropyCertificate
   - D5/S3/Quantum/Information/QubitNormalFormState
