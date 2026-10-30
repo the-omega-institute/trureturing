@@ -1,0 +1,75 @@
+**Theorem 12.2 (Whole-face maxima and labelled suppliers).** On the three
+entire faces,
+
+$$
+ X:=\max_{\mathcal D_{AB}}F=\beta_n(m)=B_{\rm bip},\qquad
+ Y:=\max_{\mathcal D_{AC}}F=\beta_n(b),\qquad
+ Z:=\max_{\mathcal D_{BC}}F=\beta_n(a).
+\tag{12.2}
+$$
+
+Each displayed value is attained by finite conductances positive on
+every retained edge. Explicit normalized suppliers are as follows.
+Map the smaller class onto a labelled set $S$ of size $k$, and the
+larger onto its complement $T$ of size $\ell=n-k$. Set the deleted
+original edge class to zero. If $k=2$, write $S=\{s_1,s_2\}$ and take
+
+$$
+ h_{s_1t}=\tfrac12\left(1+\epsilon\sqrt{\frac{n-4}{n}}\right),\qquad
+ h_{s_2t}=\tfrac12\left(1-\epsilon\sqrt{\frac{n-4}{n}}\right)
+ \quad(t\in T),\qquad \epsilon\in\{-1,1\}.
+\tag{12.3}
+$$
+
+If $k\ge3$, choose any $s_*\in S$ and take
+
+$$
+ h_{s_*t}=\frac{\ell-k+1}{\ell},\qquad
+ h_{st}=\frac1\ell\quad(s\in S\setminus\{s_*\},\ t\in T).
+\tag{12.4}
+$$
+
+In these formulas $(S,T)$ is respectively
+$(A\sqcup B,C)$, $(B,A\sqcup C)$ or $(A,B\sqcup C)$.
+In particular $M\ge\max\{X,Y,Z\}$; this is a lower comparison for
+$M$, not an assertion of equality with any face value.
+
+*Proof.* Each indicated map is an actual vertex bijection of the
+bipartite graph in (9.1). Its retained edges, ordinary Laplacian and all
+unordered original-pair resistances are identical; no vertices are
+identified. If $k=2$, the whole two-hub Theorem 2.1 applies with
+$\ell=n-2\ge3$. It gives (12.3) and product
+$n(n-2+1/(n-2))=\beta_n(2)$, using
+$n/(n-2)=1+2/(n-2)$.
+If $k=3$, the whole three-hub Theorems 2.2 and 3.1 apply with
+$\ell=n-3>3$. Their normalized rows are
+$(\ell-2)/\ell,1/\ell,1/\ell$, precisely (12.4), and their product is
+
+$$
+\ell n+\frac{\ell^2}{\ell-2}
+ =n(n-3)+n-1+\frac4{n-5}=\beta_n(3).
+$$
+
+For $k\ge4$, the whole general bipartite Theorems 3.1–4.1 apply
+with $4\le k<\ell$ and give (12.4). Their constant is
+
+$$
+ n(n-3)+\frac{\ell(\ell-k+3)}{\ell-k+1}
+ =n(n-3)+n-k+1+\frac{n-1}{n-2k+1}=\beta_n(k).
+$$
+
+These whole theorems optimize every independent positive retained
+coordinate, not just the displayed row-constant suppliers. Each
+supplier has actual $\lambda_2=1$ and connected support.
+For a face assignment with additional zero retained coordinates and
+connected support, add $\epsilon>0$ to every retained edge. This
+converges within the same face through strictly positive bipartite
+assignments, so continuity extends the whole upper comparison to that
+assignment. The displayed positive retained suppliers therefore attain
+the maximum on the entire connected nonnegative face. This extension
+does not assert that a positive-domain equality classification alone
+classifies all further-zero face equalities.
+Finally adding $\epsilon$ to the deleted original coordinates of any
+supplier gives strictly positive tripartite assignments whose products
+tend to its face value. This proves the lower comparison for $M$. ∎
+

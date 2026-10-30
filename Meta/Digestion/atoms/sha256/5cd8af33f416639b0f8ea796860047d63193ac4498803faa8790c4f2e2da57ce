@@ -1,0 +1,61 @@
+**Theorem 4.1 (three mature batches identify the original alignment).**
+Let $d\ge1$. Take two genuinely core-only normalized cones, possibly
+from different members of the original $\mathscr R_d$, with aligned
+cores $y,y'$ each of least recurrence order at most $d$. Compare their
+complete local supports at the same $T$. Set
+
+$$
+ s=\min\{j\ge1:F_j\ge2d\}.
+ \tag{PCR.8}
+$$
+
+If $T\ge s+3$ and $S_T=S'_T$, then $y=y'$ at their original aligned
+indices. Their least positive periods coincide, say $p$, and both clock
+seeds agree modulo $p$. Conversely those conclusions imply equality of
+all local forward behaviour. More generally the forward implication
+needs any three consecutive visible batches of at least $2d$ entries.
+At $d=0$, both cores are zero, $p=1$, and the conclusion holds at every
+common normalized cut, with the empty residue information.
+
+Proof. By Theorem 2.1, the batch words at $s,s+1,s+2$ agree. Their
+lengths are at least $2d$, and their last index $s+2$ is visible because
+$s+2\le T-1$. Let the least monic annihilators of the two cores have
+degrees $r,r'\le d$ and constant term one, taking the degree-zero
+polynomial one for zero. For each of the three batches the difference
+of the shifted streams
+
+$$
+ i\longmapsto y_{I_k-1+i}-y'_{I'_k-1+i}
+ \tag{PCR.9}
+$$
+
+is annihilated by their product, a monic polynomial of degree
+$r+r'\le2d$ with constant term one. This follows by commuting the two
+shift polynomials; each kills its corresponding summand. Its first
+$r+r'$ values vanish, so forward recurrence makes every subsequent
+value vanish, and the nonzero constant term gives every preceding value
+as well. Degree zero means the difference is already identically zero.
+This is precisely the classical product-annihilator argument of GPO
+Lemma 29.2, applied to periodic extensions and their shifts, with a
+justified backwards step. It uses order, not a bound on period.
+
+The first such identity shows that $y'$ is a shift of $y$, so their
+least periods agree. Choose the common phase $c$ modulo $p$ such that
+$y'_i=y_{i+c}$ for every integer $i$. Equation (PCR.9) then gives
+
+$$
+ I_k-I'_k\equiv c\pmod p\qquad(k=s,s+1,s+2),
+ \tag{PCR.10}
+$$
+
+by least-period rigidity. Subtracting the two clock recurrences shows
+that these differences themselves satisfy the Fibonacci recurrence.
+Thus $c\equiv c+c\pmod p$, forcing $c\equiv0$. It follows that the
+cores agree at **original** alignment, not merely as necklaces or up to
+a cyclic shift. The two consecutive zero differences and (PCR.6) give
+both seed congruences. For constants the same argument has $p=1$;
+equality of a nonempty batch forces their values to be the same. The
+converse is Theorem 3.1's sufficient direction. At $d=0$ the all-index
+order-zero promise forces both original streams, and therefore both
+cores, to be zero. $\square$
+

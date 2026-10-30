@@ -1,0 +1,84 @@
+**Lemma 17.3 (The fourth-weight certificate and its complete zero set).** Let $x$ be any actual law whose marginals belong to $\mathcal B$, and order labels so that $P$ consists of three largest marginals and $j$ is a fourth largest marginal, breaking ties arbitrarily. Put
+
+$$
+\alpha_i=y_i^{-2},\quad \beta=\alpha_j,\quad
+W=\sum_i\alpha_i,\quad W_T=\sum_{i\in T}\alpha_i,
+\quad Q_T=\sum_{i\in P}(\alpha_i-\beta)\mathbf1_{\{i\in J\}}\le0.
+\tag{17.9}
+$$
+
+For every nonempty subset $T\subseteq[s]$, with $k=|T|$, define
+
+$$
+R_y(T)=(k^2-r^2)W_T
+ +C(r-k)(W-2\beta)-C Q_T.
+\tag{17.10}
+$$
+
+Then $R_y(T)\ge0$. Its entire zero set is
+
+$$
+R_y(T)=0\quad\Longleftrightarrow\quad
+\begin{cases}
+k=r,\quad J=\{i\},\quad y_i\le y_j,\quad\text{or}\\
+k=a,\quad J=\{i,l\},\quad y_i,y_l\ge y_j.
+\end{cases}
+\tag{17.11}
+$$
+
+If this law also has mean $q$, its exact same-law decomposition is
+
+$$
+\boxed{\ H(x)=F_{P,j}(y)+\mathbb E_x R_y(T)\ }.
+\tag{17.12}
+$$
+
+**Proof.** The ordering gives $\alpha_i\le\beta$ on $P$ and $\alpha_i\ge\beta$ outside $P$. At $k=r$ the residual is $-C Q_T$ on a singleton omission, so it vanishes exactly as in the first case of (17.11). At $k=a$, $J$ is a pair and expansion gives
+
+$$
+R_y(T)=C\sum_{i\in J\setminus P}(\alpha_i-\beta)\ge0.
+\tag{17.13}
+$$
+
+Its zeros are exactly the second case of (17.11), including all ties. At $k=s$ the residual is $2W+2C\beta>0$.
+
+For every remaining cardinality $k<a$, put $z=r-k$, so $2\le z\le r-1$ and $|J|=z+1$. With $A_J=\sum_{i\in J}\alpha_i$, (17.10) becomes
+
+$$
+R_y(T)=z\big[(z-1)W+(2r-z)A_J-2C\beta\big]-C Q_T.
+\tag{17.14}
+$$
+
+Since $\alpha_i\ge1$ and $\beta\le100/81<5/4$, the bracket is strictly greater than
+
+$$
+\begin{aligned}
+(z-1)(r+1)+(2r-z)(z+1)-\frac52C
+ &=-z^2+3rz+r-1-\frac52C\\
+ &\ge7r-5-\frac52C
+ =2r-\frac52>0.
+\end{aligned}
+\tag{17.15}
+$$
+
+For the middle inequality the quadratic is concave on $[2,r-1]$; its endpoint values before subtracting $5C/2$ are $7r-5$ and $2r^2-2$, and the latter is no smaller for $r\ge3$. Thus (17.14) is strictly positive. This accounts for every allowed cardinality and proves the complete zero set.
+
+Taking expectations in (17.10), use only the identities of this actual law,
+
+$$
+\mathbb E(r-K)=\delta,\qquad
+\mathbb E W_T=\sum_i y_i^{-1},\qquad
+\mathbb E Q_T=\sum_{i\in P}(\alpha_i-\beta)(1-y_i).
+$$
+
+It follows that
+
+$$
+H(x)=r^2\sum_i y_i^{-1}-C\delta(W-2\beta)
+ +C\sum_{i\in P}(\alpha_i-\beta)(1-y_i)
+ +\mathbb E R_y(T).
+\tag{17.16}
+$$
+
+The non-residual part is exactly (17.3), because $r^2-C=a^2$. This proves (17.12). Integrating a pointwise bound is the weak-duality principle in Bertsimas and Popescu, *Optimal inequalities in probability theory: A convex optimization approach*, DOI [10.1137/S1052623401399903](https://doi.org/10.1137/S1052623401399903), Theorem 2.1, p.785. Here (17.10) supplies the pointwise certificate itself. No strong duality, independent attainment of moment coordinates, or convexity of $H$ in the law is used. ∎
+

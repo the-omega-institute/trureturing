@@ -1,0 +1,20 @@
+**Definition 10.1 (same-execution vector observation and names-only supplementation).** Retain the actual source, complete response quotient and legal-word lifting of Definitions 1.1–1.2, with the finite root-reachable convention of Definition 7.1. For an integer $r\ge2$, fix one native edge map $d:E\to\mathbb R_{>0}^r$, independently of the executed word. Its $j$th coordinate is a fixed, representative-independent positive additive readout on that same execution. Write
+
+$$
+T(u)=\sum_{e\text{ in }u}d(e),\qquad T(\varepsilon)=0.
+$$
+
+The sum counts occurrences. It obeys the vector version of Assumption 2.1's concatenation law. Fix $\epsilon>0$ and assume one final joint acquisition with possible observation set
+
+$$
+\mathcal O_\epsilon(u)
+ =\{z(u)\}\times\bigl(T(u)+[-\epsilon,\epsilon]^r\bigr).
+\tag{10.1}
+$$
+
+The endpoint, with its type, is acquired exactly. Every error vector $\eta\in[-\epsilon,\epsilon]^r$ is allowed for every legal finite root word. This is one closed box about the whole final vector: there is no probabilistic independence premise, independent acquisition of different executions, subdivision into segment errors, or inference of a total error bound from edge errors. The coordinates have their declared fixed origins, units and native calibrations.
+
+A static supplement $h:\mathcal P_p\to H$ and a complete finite online register $(M,m_0,U)$ have exactly the acquisition restrictions of Definition 9.1, with $y\in\mathbb R^r$ replacing its scalar observation. In particular, $U$ reads only its current complete state and the actually executed typed parameterized operation name. It receives no intermediate endpoint, edge identifier, one-step readout, response record, clock, archive, future, stop token or hidden source reply. All persistent phase and control belong to $M$. The final decoder receives exactly $(z(u),h(u),y)$, or $(z(u),\mu(u),y)$, and must return $u$ for every error permitted by (10.1). In state cardinalities, restrict $M$ to values reached by legal root histories; arbitrary extra unused states cannot improve a minimum. The exact final supplement value is an acquisition assumption too.
+
+The common-source requirement is the deterministic specialization of the joint-law distinction in [Process Geometry §29.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) and [Joint Relations Clocks §4.2](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_RELATIONS_CLOCKS.md). Marginal laws alone do not specify (10.1).
+

@@ -1,0 +1,40 @@
+**定理 16.3（五边形的尖锐全局界与全部等号）。** For every five-tuple of independent finite strictly positive conductances
+$c=(c_0,\ldots,c_4)$ on the labelled cycle $C_5$,
+
+$$
+\lambda_2(L(c))R(c)\le 25-5\sqrt5.
+\tag{16.11}
+$$
+
+The constant is attained by every constant conductance vector. Equality in (16.11)
+holds if and only if
+
+$$
+c=\gamma(1,1,1,1,1)\qquad(\gamma>0).
+\tag{16.12}
+$$
+
+Thus the equality set is the labelled ray (16.12), with no quotient by rotations or
+reflections.
+
+**证明。** By (5.5) and Lemma 16.2,
+
+$$
+\lambda_2(L(c))R(c)=5\frac{T}{\rho}\le\frac5\kappa
+=\frac{100}{5+\sqrt5}=25-5\sqrt5.
+$$
+
+The lemma also says that equality forces $p_i=1/5$. Since $p_i=r_i/s$ with
+$r_i=c_i^{-1}$, this is equivalent to $c_0=\cdots=c_4=\gamma$ for some
+$\gamma>0$. For the converse, the ordinary unit $C_5$ has nonzero spectrum
+
+$$
+2-2\cos\frac{2\pi k}{5}
+\quad(k=1,2,3,4),
+$$
+
+so $\lambda_2(L(\gamma\mathbf1))=\gamma(5-\sqrt5)/2$. The classical
+identity $R(c)=5\operatorname{tr}L(c)^+$ (the all-pairs pseudoinverse identity
+of Ghosh–Boyd–Saberi, §§2.4–2.5, equations (8), (13)–(15)) gives
+$R(\gamma\mathbf1)=10/\gamma$. Their product is $25-5\sqrt5$. ∎
+

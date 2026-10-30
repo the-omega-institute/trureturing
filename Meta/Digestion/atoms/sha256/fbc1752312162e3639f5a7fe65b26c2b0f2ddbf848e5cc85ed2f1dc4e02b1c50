@@ -1,0 +1,67 @@
+**Lemma 8.1 (A coercive threshold on the original coordinates).** Fix
+any integer triple $2\le a\le b\le c$. For every positive sequence
+$(g_j)$ with
+
+$$
+\liminf_{j\to\infty}F(g_j)>n(n-2),
+\tag{8.1}
+$$
+the sequence $h_j=g_j/\lambda_2(g_j)$ is bounded in every original
+edge coordinate. More precisely, if $0<\epsilon<1$ and
+$F(g_j)\ge n(n-2+\epsilon)$ eventually, then eventually
+
+$$
+S_j\le\frac{1-\epsilon}{\epsilon},\qquad
+\sum_{e\in E}(h_j)_e\le\frac12\left(n-2+\frac1\epsilon\right).
+\tag{8.2}
+$$
+Every cluster point $h$ belongs to $\mathcal C_{a,b,c}$ and has connected
+support. If in addition $F(g_j)\to\ell$, then every such point satisfies
+$R(h)=\ell$. Every $h\in\mathcal C_{a,b,c}$ satisfies
+$R(h)\le M_{a,b,c}$ and is a limit of normalized positive assignments.
+Thus if $\ell=M_{a,b,c}$, these cluster points are actual maximizers on
+the connected nonnegative original domain.
+
+*Proof.* For each $h_j$ let $q_{j,k},S_j,\Delta_j$ be as in the proof
+of Theorem 3.2. The same original all-pairs identity and (3.5) give
+
+$$
+\Delta_j=n-1-\frac{F(g_j)}n\ge\frac{S_j}{1+S_j},\qquad S_j\ge1.
+$$
+The assumed eventual lower bound gives $\Delta_j\le1-\epsilon<1$,
+so $S_j\le\Delta_j/(1-\Delta_j)\le(1-\epsilon)/\epsilon$.
+Since $\operatorname{tr}L(h_j)=n-1+S_j=2\sum_e(h_j)_e$, this proves
+(8.2). Such an $\epsilon$ exists under (8.1), and the finite preceding
+part of the sequence also has bounded coordinates. Nonnegative
+coordinates and the bound on their sum give boundedness individually.
+
+There are finitely many original edges, hence every subsequence has a
+further convergent subsequence. At its limit $h$, coordinate continuity
+preserves $h\ge0$ and $\lambda_2(h)=1$. A nonnegative weighted
+Laplacian has zero energy exactly on vectors constant on each component
+of its positive support, by (1.3). Thus two or more components would
+force $\lambda_2(h)=0$, which is impossible. The limit is connected.
+All its nonzero eigenvalues are positive, so (1.5) and continuity of
+the eigenvalues give $R(h)=\lim R(h_j)=\ell$ when that limit is assumed.
+No resistance is assigned to a disconnected limit.
+
+For completeness the bridge back to the positive domain is explicit.
+For any fixed $h\in\mathcal C$ put
+
+$$
+p^{(\varepsilon)}=h+\varepsilon\mathbf1_E,\qquad
+\widetilde p^{(\varepsilon)}
+ =\frac{p^{(\varepsilon)}}{\lambda_2(p^{(\varepsilon)})}
+ \quad(\varepsilon>0).
+\tag{8.3}
+$$
+All original coordinates of $p^{(\varepsilon)}$ are positive and finite.
+Continuity at the connected $h$ gives
+$\lambda_2(p^{(\varepsilon)})\to1$ and
+$\widetilde p^{(\varepsilon)}\to h$. Also
+$F(p^{(\varepsilon)})=R(\widetilde p^{(\varepsilon)})\to R(h)$.
+Each term is at most the positive-domain supremum $M$, proving
+$R(h)\le M$. This also verifies that a connected nonnegative maximizer
+with value $M$ is positively approximable on exactly the original
+vertices and edge coordinates. ∎
+
