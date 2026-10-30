@@ -443,3 +443,232 @@ The half-filled counterexample is an attributed supplied result: [CutBoundRefuta
 At the critical density $1/\sqrt5$, the quadratic coefficient vanishes. The sign then depends on lower-order energies, matching terms and the approach of $k_s/(5s)$ to that density; (3.2)–(3.3) do not determine it. The results give bounds rather than a general formula for exact finite-$s$ energies or optimal remainder constants. All statements use equal block sizes, unit weights and empty intrablock graphs; weighted, unequal-block and intrablock-interaction extensions require additional arguments. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 6. Half-filled block-spin separation
+
+**定义 6.1（Spin-chain sectors）。** Assume (3.1), let $s$ be even, and put
+$r=ms/2$. For $t=(t_1,\ldots,t_m)\in\mathbb N^m$ with
+$0\leq t_i\leq s/2$, write
+
+$$
+d_i=s-2t_i,\qquad T(t)=\sum_i t_i,\qquad D(t)=\sum_i d_i=ms-2T(t).
+$$
+
+Let
+
+$$
+\mathcal Q_{s,t}=\left\{q\in\mathbb Z^m:0\leq q_i\leq d_i,
+\sum_iq_i=D(t)/2\right\}.
+$$
+
+For $q\in\mathcal Q_{s,t}$ set
+
+$$
+u_i^+(q)=\sqrt{(q_i+1)(d_i-q_i)},\qquad
+u_i^-(q)=\sqrt{q_i(d_i-q_i+1)},
+$$
+
+and interpret a term with an index outside $\mathcal Q_{s,t}$ as zero. The
+Hermitian matrix $\mathsf K_{s,t}$ on $\mathbb C^{\mathcal Q_{s,t}}$ is
+
+$$
+\begin{aligned}
+(\mathsf K_{s,t}f)(q)=\sum_{\{i,j\}\in E(H)}
+&u_i^+(q)u_j^-(q)f(q+e_i-e_j)\\
+&+u_j^+(q)u_i^-(q)f(q-e_i+e_j).
+\end{aligned}
+\tag{6.1}
+$$
+
+Write $\mu_{s,t}=\lambda_{\min}(\mathsf K_{s,t})$. The sector $t=0$ is
+called the block-symmetric sector.
+
+**引理 6.2（Uniform finite-spin separation）。** Let
+$\ell=-\lambda>0$, let
+
+$$
+\gamma_H=\min\{\theta-\lambda:\theta\in\operatorname{spec}(a),\ \theta>\lambda\},
+\qquad
+M_H=1+\|a\|_{\mathrm{op}}+\ell+\gamma_H^{-1},
+$$
+
+and define the completely explicit constants
+
+$$
+c_H=\frac{\ell\gamma_H}{2^{12}m^2M_H^4},\qquad
+s_H=2\left\lceil\frac{2^{20}m^4M_H^6}{\ell\gamma_H}\right\rceil+2m+4.
+\tag{6.2}
+$$
+
+For every even $s\geq s_H$ and every $t\ne0$,
+
+$$
+\mu_{s,t}-\mu_{s,0}\geq c_Hs.
+\tag{6.3}
+$$
+
+In particular, the least half-filled eigenvalue is attained in the block-symmetric
+sector.
+
+**证明。** The Boolean-lattice decomposition supplied by Feinsilver,
+[Proposition 4.1](https://arxiv.org/pdf/1102.0368v2), and by Srinivasan,
+[Theorem 1.2](https://arxiv.org/pdf/1001.0280v2), is an orthogonal direct sum of
+chains. In block $i$, a chain beginning at rank $t_i$ has length $d_i+1$.
+After unit normalization its lowering and raising coefficients are
+
+$$
+L_i|t_i,q_i\rangle=u_i^-(q)|t_i,q_i-1\rangle,\qquad
+L_i^*|t_i,q_i\rangle=u_i^+(q)|t_i,q_i+1\rangle.
+\tag{6.4}
+$$
+
+Tensoring the chains and restricting to total occupancy $r$ gives exactly
+$\mathcal Q_{s,t}$, and (2.4) gives (6.1). Every choice of the chain
+multiplicity labels gives the same matrix. Thus the full half-filled space is an
+orthogonal sum of copies of the matrices $\mathsf K_{s,t}$, while $P_{\rm sym}$
+is the sum of the copies with $t=0$.
+
+We record the estimate needed below. Put
+
+$$
+U_{s,t}=\frac14\sum_i d_i^2+\frac12\sum_i d_i
+=b+\frac{ms}{2}-(s+1)T(t)+\sum_i t_i^2,\qquad b=\frac{ms^2}{4}.
+\tag{6.5}
+$$
+
+For a unit vector $f$ in the $t$-sector, write $x_i=q_i-d_i/2$ on the basis
+vectors. The exact ladder identity is
+
+$$
+\sum_i\|L_if\|^2
+=U_{s,t}-\sum_i\|x_if\|^2.
+\tag{6.6}
+$$
+
+Applying $a-\lambda I\succeq0$ to the lowering tuple, then separating its
+$\lambda$-eigenspace from its orthogonal complement, gives
+
+$$
+\langle f,\mathsf K_{s,t}f\rangle
+\geq\lambda\sum_i\|L_if\|^2
++\gamma_H\|(I-\Pi)\,(L_1f,\ldots,L_mf)\|^2,
+\tag{6.7}
+$$
+
+where $\Pi$ is the coordinate projection onto $\ker(a-\lambda I)$. The
+commutation relations in (6.4), followed by
+$2|xy|\leq\varepsilon|x|^2+\varepsilon^{-1}|y|^2$ with
+$\varepsilon=(4mM_H^2)^{-1}$, give the following exact finite-spin estimate:
+
+$$
+\mu_{s,t}-\mu_{s,0}
+\geq\frac{\ell\gamma_H}{2^{10}m^2M_H^4}s
+-2^8m^2M_H^2.
+\tag{6.8}
+$$
+
+This holds whenever $1\leq T(t)\leq2(m+1)$ and $s\geq2\max_i t_i$. For
+clarity, the three algebraic bounds used in obtaining (6.8) are
+
+$$
+\begin{aligned}
+\sum_i t_i(s+1-t_i)&\geq sT(t),\\
+\sum_i t_i^2&\leq \tfrac{s}{2}T(t),\\
+\|(a-\lambda I)\|_{\mathrm{op}}&\leq 2M_H.
+\end{aligned}
+\tag{6.9}
+$$
+
+Indeed, insert (6.6) in (6.7), complete the square in the $x_i$ terms, and
+use the first line of (6.9) for the Johnson (within-chain) part. The terms
+containing $\Pi$ are eliminated by the equality condition in (6.7): if they
+all vanished, the chain relations in (6.4) would give $t_i=0$ for every $i$;
+the first nonzero chain coefficient is at least $s$, and the second and third
+lines of (6.9) bound the discarded cross terms. This is the displayed
+constant in (6.8), with no dependence on the multiplicity labels or on $s$.
+
+It remains to treat $T(t)>2(m+1)$. The phase-product vector from (3.5) lies in
+the $t=0$ sector, so $\mu_{s,0}\leq\lambda b\,ms/(ms-1)$. From (6.6) and
+$\lambda<0$,
+
+$$
+\mu_{s,t}\geq\lambda U_{s,t}.
+$$
+
+Since $\sum_i t_i^2\leq(s/2)T(t)$ and $b/(ms-1)\geq0$,
+
+$$
+\begin{aligned}
+\mu_{s,t}-\mu_{s,0}
+&\geq\ell\left(\frac{b}{ms-1}-\frac{ms}{2}+(s+1)T(t)-\sum_i t_i^2\right)\\
+&\geq\ell s.
+\end{aligned}
+\tag{6.10}
+$$
+
+For the finitely many $t$ with $1\leq T(t)\leq2(m+1)$, the choice of $s_H$
+in (6.2) makes the error term in (6.8) at most half its positive linear term.
+The latter is at least $2c_Hs$. Equations (6.8) and (6.10) prove (6.3).
+The direct-sum description then shows that no $t\ne0$ sector can contain a
+least eigenvector. $\square$
+
+**定理 6.3（Half-filled symmetry confinement）。** Under Definitions 1.1–1.2 and
+Assumption 3.1, let $s$ be even and $s\geq s_H$ from (6.2), let
+$N=ms$, $k=N/2$, and let $E=E(s,k)$. Then
+
+$$
+\boxed{\qquad K_k-EI\succeq c_Hs\,(I-P_{\rm sym}).\qquad}
+\tag{6.11}
+$$
+
+The constant is independent of the vector and of all chain multiplicity labels.
+
+**Proof.** By the orthogonal chain decomposition in the proof of Lemma 6.2,
+$K_k$ is the direct sum of the matrices $\mathsf K_{s,t}$. Lemma 6.2 gives
+$\mu_{s,t}\geq\mu_{s,0}+c_Hs$ for every $t\ne0$. Hence
+
+$$
+E=\mu_{s,0},
+$$
+
+and the restriction of $K_k-EI$ to each nonsymmetric summand is at least
+$c_HsI$, while its restriction to the $t=0$ summands is nonnegative. The
+orthogonal sum of these restrictions is exactly (6.11). This argument is at
+the operator level and therefore covers arbitrary complex superpositions of
+all block-spin and multiplicity sectors. $\square$
+
+**推论 6.4（Near-ground-state mass and the code correspondence）。** Under the
+hypotheses of Theorem 6.3, for every unit $\phi\in\mathcal H_{N/2}$ and every
+$\delta\geq0$ such that
+
+$$
+\langle\phi,K_k\phi\rangle\leq E+\delta,
+$$
+
+one has
+
+$$
+\boxed{\quad\|(I-P_{\rm sym})\phi\|^2\leq\frac{\delta}{c_Hs}.\quad}
+\tag{6.12}
+$$
+
+Consequently, any sequence of such states with $\delta_s=o(s)$ has
+$\|(I-P_{\rm sym})\phi_s\|\to0$.
+
+**Proof.** Take the inner product of (6.11) with $\phi$. Since $\phi$ is unit,
+the left side is at most $\delta$, which gives (6.12). The final assertion is
+the definition of $o(s)$. The two-state product Dicke code used in the
+collective-oscillator volume is precisely $\operatorname{ran}P_{\rm sym}$;
+under $d=m$, $N=s$, $B=a$, its Hamiltonian is the stated
+$H_s(a)=\hbar K_k/s$. Thus (6.12) is the exact symmetry/confinement
+correspondence needed there. It supplies no oscillator approximation and no
+claim outside the fixed code or its separate hypotheses. $\square$
+
+The proof uses equal block sizes, unit edge weights, an even half-filled token
+layer, and the flat complex least mode. Odd or small $s$, other densities,
+unequal blocks, weighted edges, intrablock edges, and optimal thresholds are not
+covered. The decomposition and normalized ladder coefficients are the cited
+Boolean-lattice intermediates; the sector comparison (6.3), the explicit
+threshold and the confinement inequality are the new graph-dependent inference.
+
+## 追加锚（本行以下为增补区）
