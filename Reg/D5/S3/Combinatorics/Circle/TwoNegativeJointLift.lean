@@ -2,6 +2,9 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Circle.TwoNegativeJointLift
 import Reg.Support.DependentFamily
 
+/-! The two roles observe the native old and new order predicates. Both retain
+their physical words, zero totals and every prefix at the shared marked cut. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -16,70 +19,96 @@ open _root_.D5.S3.Combinatorics.Circle.RunFirstEarTransport
 open _root_.D5.S3.Combinatorics.Circle.TwoNegativeJointLift
 
 abbrev signature : Signature where
-  Params := ℕ
+  Params := Σ _ : ℕ, ℕ
   State _ := ℕ
-  Role := Unit
+  Role := Bool
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ k := Fin k → ℤ
+  Output role p := List (Fin (if role then p.1 + p.2 + 1 else p.1 + p.2)) → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ k t => actualSource k t)
+  realize signature (fun role p => OriginalOrder (if role then p.1 + p.2 + 1 else p.1 + p.2))
     (fun e => nomatch e)
 
-def rejected : Realization signature :=
-  realize signature (fun _ _ _ _ => -1) (fun e => nomatch e)
+def reject_old : Realization signature :=
+  realize signature (fun role p => match role with
+    | false => fun _ _ => False
+    | true => OriginalOrder (p.1 + p.2 + 1)) (fun e => nomatch e)
+
+def reject_new : Realization signature :=
+  realize signature (fun role p => match role with
+    | false => OriginalOrder (p.1 + p.2)
+    | true => fun _ _ => False) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ a b : ℕ, 2 ≤ a → 2 ≤ b → b < a →
     ∃ sigma : List (Fin (a + b)), ∃ j : ℕ, j ≤ a + b ∧
-      (sigma.Perm (List.finRange (a+b)) ∧
-        (sigma.map (R.readout () (a+b) (2^a+1))).sum = 0 ∧
-        ∀ n : ℕ, ((sigma.take n).map (R.readout () (a+b) (2^a+1))).sum ∈
-          Set.Icc (0:ℤ) (modulus (a+b)/2)) ∧
-      (let word := earWord (a+b) sigma j
-       word.Perm (List.finRange (a+b+1)) ∧
-        (word.map (R.readout () (a+b+1) (2*(2^a+1)))).sum = 0 ∧
-        ∀ n : ℕ, ((word.take n).map (R.readout () (a+b+1) (2*(2^a+1)))).sum ∈
-          Set.Icc (0:ℤ) (modulus (a+b+1)/2))
+      R.readout false ⟨a,b⟩ (2^a+1) sigma ∧
+      R.readout true ⟨a,b⟩ (2*(2^a+1)) (earWord (a+b) sigma j)
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem reject_old_law : ¬ arena.Law reject_old := by
   intro h
   obtain ⟨sigma, j, hj, hs, _⟩ := h 3 2 (by omega) (by omega) (by omega)
-  have hlen : sigma.length = 5 := by simpa using hs.1.length_eq
-  have hh := (hs.2.2 1).1
-  cases sigma with
-  | nil => simp at hlen
-  | cons x xs =>
-    change 0 ≤ ([-1] : List ℤ).sum at hh
-    norm_num at hh
+  exact hs
+
+private theorem reject_new_law : ¬ arena.Law reject_new := by
+  intro h
+  obtain ⟨sigma, j, hj, _, hn⟩ := h 3 2 (by omega) (by omega) (by omega)
+  exact hn
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
-  intro i
-  refine ⟨3, 0, 1, ?_⟩
-  intro he
-  have hh := congrFun he (0 : Fin 3)
-  norm_num [actual, realize, actualSource, centered, modulus] at hh
+  intro role
+  cases role with
+  | false =>
+    refine ⟨⟨3,0⟩, 0, 1, ?_⟩
+    intro he
+    have hz : OriginalOrder 3 0 [2,1,0] := by
+      refine ⟨by decide, ?_, ?_⟩
+      · norm_num [actualSource, centered, modulus]
+      · intro n; simp [actualSource, centered, modulus]
+    have hh : OriginalOrder 3 1 [2,1,0] := (congrFun he [2,1,0]).mp hz
+    have hp := (hh.2.2 1).1
+    norm_num [actualSource, centered, modulus] at hp
+  | true =>
+    refine ⟨⟨3,0⟩, 0, 1, ?_⟩
+    intro he
+    have hz : OriginalOrder 4 0 [3,2,1,0] := by
+      refine ⟨by decide, ?_, ?_⟩
+      · norm_num [actualSource, centered, modulus]
+      · intro n; simp [actualSource, centered, modulus]
+    have hh : OriginalOrder 4 1 [3,2,1,0] := (congrFun he [3,2,1,0]).mp hz
+    have hp := (hh.2.2 1).1
+    norm_num [actualSource, centered, modulus] at hp
 
 def source_registration : Registration arena
     (type_of% (@_root_.D5.S3.Combinatorics.Circle.TwoNegativeJointLift.actualSource_two_negative_joint_lift)) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨actualSource_two_negative_joint_lift, rejected, rejected_law⟩
+  variation := ⟨actualSource_two_negative_joint_lift, reject_old, reject_old_law⟩
   sensitivity := by
     constructor
     · intro i
-      refine ⟨rejected, ?_, rfl, rejected_law⟩
-      intro j hji
-      exact False.elim (hji (Subsingleton.elim _ _))
+      cases i with
+      | false =>
+        refine ⟨reject_old, ?_, rfl, reject_old_law⟩
+        intro j hji
+        cases j with
+        | false => exact False.elim (hji rfl)
+        | true => rfl
+      | true =>
+        refine ⟨reject_new, ?_, rfl, reject_new_law⟩
+        intro j hji
+        cases j with
+        | false => rfl
+        | true => exact False.elim (hji rfl)
     · intro e
       exact nomatch e
   dependence := actual_dependence
 
-def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,1,0,0}
     (@_root_.D5.S3.Combinatorics.Circle.TwoNegativeJointLift.actualSource_two_negative_joint_lift)
     (Realization signature) Nat Unit where
   unitName := `D5.S3.Combinatorics.Circle.TwoNegativeJointLift.actualSource_two_negative_joint_lift.__information_unit
@@ -93,12 +122,30 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature
+    (fun role p => OriginalOrder (if role then p.1 + p.2 + 1 else p.1 + p.2))
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Circle.TwoNegativeJointLift
+    definition := none
+    coordinates := #[0,1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "body", "arg", "body",
+        "arg", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }, {
+      path := #["body", "body", "body", "body", "body", "arg", "body", "arg", "body",
+        "arg", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
