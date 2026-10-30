@@ -47,7 +47,7 @@ private theorem inventory (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
   let P := List.range' (b - 1) a
   let Q := List.range' (a + b) (a - 1)
   have hU : U ++ [a - 1] = List.range a := by
-    simpa only [U, show a = (a - 1) + 1 by omega] using (List.range_succ (a - 1)).symm
+    simpa only [U, show (a - 1) + 1 = a by omega] using (List.range_succ (a - 1)).symm
   have hV : V ++ P = List.range' a (b - 1) := by
     dsimp [V, P]
     simpa only [show a + (b - a - 1) = b - 1 by omega,
@@ -59,14 +59,14 @@ private theorem inventory (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
     simpa only [Nat.zero_add, show a + (b - 1) = a + b - 1 by omega] using
       List.range'_append_1 (s := 0) (m := a) (n := b - 1)
   have hB : List.range (a + b - 1) ++ [a + b - 1] = List.range (a + b) := by
-    simpa only [show a + b = (a + b - 1) + 1 by omega] using (List.range_succ (a + b - 1)).symm
+    simpa only [show (a + b - 1) + 1 = a + b by omega] using (List.range_succ (a + b - 1)).symm
   have hQ : List.range (a + b) ++ Q = List.range (a + b + a - 1) := by
     dsimp [Q]
     simp only [List.range_eq_range']
     simpa only [Nat.zero_add, show a + b + (a - 1) = a + b + a - 1 by omega] using
       List.range'_append_1 (s := 0) (m := a + b) (n := a - 1)
   have hG : List.range (a + b + a - 1) ++ [a + b + a - 1] = List.range (a + b + a) := by
-    simpa only [show a + b + a = (a + b + a - 1) + 1 by omega] using (List.range_succ (a + b + a - 1)).symm
+    simpa only [show (a + b + a - 1) + 1 = a + b + a by omega] using (List.range_succ (a + b + a - 1)).symm
   have hall : (((U ++ [a - 1]) ++ (V ++ P)) ++ [a + b - 1]) ++ Q ++
       [a + b + a - 1] = List.range (a + b + a) := by
     rw [hUV, hB, hQ, hG]
@@ -358,7 +358,9 @@ theorem actualSource_three_negative_equal_outer_joint_lift (a b : ℕ)
   let pn := (r - 1) * tau * (2 * B - 1)
   let t := (q - 1) * v + (tau - 1) * B
   let tn := (q - 1) * (2 * v) + (tau - 1) * (2 * B - 1)
-  have hrho : 0 ≤ r ^ 2 - r - 1 := by nlinarith only [hr]
+  have hrho : 0 ≤ r ^ 2 - r - 1 := by
+    have hm := mul_le_mul_of_nonneg_right hr (show 0 ≤ r by omega)
+    nlinarith only [hm, hr]
   have hprod : 0 ≤ (r ^ 2 - r - 1) * tau := mul_nonneg hrho (by omega)
   have hpC : C - p = tau - 1 := by dsimp [C, p, B]; ring
   have hpG : p - Hg = (r ^ 2 - 1) * tau + q + 1 := by
@@ -374,7 +376,7 @@ theorem actualSource_three_negative_equal_outer_joint_lift (a b : ℕ)
   have hpn : 2 * p - pn = (r - 1) * tau := by dsimp [p, pn]; ring
   have htn : 2 * t - tn = tau - 1 := by dsimp [t, tn]; ring
   have hpfirst : Hg ≤ p ∧ p ≤ C := by
-    have hnon : 0 ≤ (r ^ 2 - 1) * tau := mul_nonneg (by nlinarith only [hr]) (by omega)
+    have hnon : 0 ≤ (r ^ 2 - 1) * tau := mul_nonneg (by nlinarith only [hrho, hr]) (by omega)
     constructor <;> omega
   have htlast : t ≤ Ha ∧ Hb + Ha - t ≤ C := by
     have hnon := mul_le_mul_of_nonneg_left htau (show 0 ≤ 2 * r + 1 by omega)
