@@ -19,7 +19,7 @@ open _root_.D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 noncomputable section
 
-abbrev Params := Σ a : ℕ, Σ b : ℕ, List (Fin (a + b + a))
+abbrev Params := Σ _ : ℕ, ℕ
 
 abbrev signature : Signature where
   Params := Params
@@ -27,38 +27,36 @@ abbrev signature : Signature where
   Role := Bool
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
+  Output side p := match side with
+    | false => List (Fin (p.1 + p.2 + p.1)) → Prop
+    | true => List (Fin (p.1 + p.2 + p.1 + 1)) → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
-private def orderPredicate (side : Bool) (p : Params) (seed : ℕ) : Prop :=
-  match side with
-  | false => OriginalOrder (p.1 + p.2.1 + p.1) seed p.2.2
-  | true => OriginalOrder (p.1 + p.2.1 + p.1 + 1) seed
-      (earWord (p.1 + p.2.1 + p.1) p.2.2 (p.1 + 1))
-
 def actual : Realization signature :=
-  realize signature (fun side p seed =>
-    @decide (orderPredicate side p seed) (Classical.propDecidable _)) (fun e => nomatch e)
+  realize signature (fun side p seed => match side with
+    | false => OriginalOrder (p.1 + p.2 + p.1) seed
+    | true => OriginalOrder (p.1 + p.2 + p.1 + 1) seed) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 
 def deleted (side : Bool) : Realization signature :=
-  realize signature (fun j p seed => if j = side then false else actual.readout j p seed)
+  realize signature (fun j p seed => if j = side then (fun _ => False) else actual.readout j p seed)
     (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (a b : ℕ) (_ha : 2 ≤ a) (_hab : a < b),
     ∃ sigma : List (Fin (a + b + a)),
-      R.readout false ⟨a, b, sigma⟩ (1 + 2 ^ a + 2 ^ (a + b)) = true ∧
-      R.readout true ⟨a, b, sigma⟩ (2 * (1 + 2 ^ a + 2 ^ (a + b))) = true
+      R.readout false ⟨a, b⟩ (1 + 2 ^ a + 2 ^ (a + b)) sigma ∧
+      R.readout true ⟨a, b⟩ (2 * (1 + 2 ^ a + 2 ^ (a + b)))
+        (earWord (a + b + a) sigma (a + 1))
 
 private theorem actual_law : arena.Law actual := by
   intro a b ha hab
   obtain ⟨sigma, hold, hnew⟩ := actualSource_three_negative_equal_outer_joint_lift a b ha hab
-  refine ⟨sigma, ?_, ?_⟩ <;> simp [actual, realize, orderPredicate, hold, hnew]
+  exact ⟨sigma, hold, hnew⟩
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -105,17 +103,22 @@ private theorem bad_new : ¬ OriginalOrder 8 1 (earWord 7 identityWord 3) := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro side
   cases side
-  · refine ⟨⟨2, 3, identityWord⟩, 0, 2, ?_⟩
-    simp [actual, realize, orderPredicate, zero_old, bad_old]
-  · refine ⟨⟨2, 3, identityWord⟩, 0, 1, ?_⟩
-    simp [actual, realize, orderPredicate, zero_new, bad_new]
+  · refine ⟨⟨2, 3⟩, 0, 2, ?_⟩
+    intro he
+    have hp := congrFun he identityWord
+    change OriginalOrder 7 0 identityWord = OriginalOrder 7 2 identityWord at hp
+    exact bad_old (hp.mp zero_old)
+  · refine ⟨⟨2, 3⟩, 0, 1, ?_⟩
+    intro he
+    have hp := congrFun he (earWord 7 identityWord 3)
+    change OriginalOrder 8 0 (earWord 7 identityWord 3) =
+      OriginalOrder 8 1 (earWord 7 identityWord 3) at hp
+    exact bad_new (hp.mp zero_new)
 
 def source_registration : Registration arena
     (type_of% (@actualSource_three_negative_equal_outer_joint_lift)) where
   actual := actual
-  bridge := by
-    classical
-    simp [actual, realize, orderPredicate]
+  bridge := Iff.rfl
   variation := ⟨actual_law, rejected, rejected_law⟩
   sensitivity := by
     constructor
@@ -129,8 +132,7 @@ def source_registration : Registration arena
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@_root_.D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift.actualSource_three_negative_equal_outer_joint_lift)
-    (type_of% (realize signature (fun side p seed =>
-      @decide (orderPredicate side p seed) (Classical.propDecidable _)) (fun e => nomatch e)))
+    (type_of% (realize signature actual.readout actual.anchor))
     Nat Unit := {
   unitName := `D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift.actualSource_three_negative_equal_outer_joint_lift.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift.source_registration
@@ -143,8 +145,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun side p seed =>
-    @decide (orderPredicate side p seed) (Classical.propDecidable _)) (fun e => nomatch e))
+  readout := some (realize signature actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -152,14 +153,14 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
     definition := none
-    coordinates := #[0, 1, 4]
+    coordinates := #[0, 1]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "arg", "body", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
       booleanPredicate := true }, {
-      path := #["body", "body", "body", "body", "arg", "body", "arg"]
+      path := #["body", "body", "body", "body", "arg", "body", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
