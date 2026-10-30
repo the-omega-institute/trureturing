@@ -40,7 +40,7 @@ internal sealed class PrimeSquareTailDocument : IScribeDocumentDefinition
                     + "log(p)<=log(C*y), so the weighted lower bound implies a "
                     + "normalized unweighted bound at least "
                     + "(1-4*eta)*log(y)/log(C*y). Requiring "
-                    + "Y>=exp(log(C)/eta) and Y>=2 makes this ratio at least 1-eta; "
+                    + "Y>=exp(log(C)/eta) and Y>=2 makes log(y)/log(C*y) at least 1-eta; "
                     + "hence the normalized sum is at least 1-5*eta. Nonnegative "
                     + "summands and floor monotonicity extend it to every z>=C*y. "
                     + "The upper bound is 1+3*eta, giving the stated strict tolerance.")),

@@ -58,7 +58,7 @@ def family : Registration arena (type_of% @prime_square_tail_uniform) where
   dependence := by
     intro i
     refine ⟨1, 1, 2, ?_⟩
-    norm_num [actual, realize, sum_Ioc_succ_top]
+    norm_num [actual, realize, sum_Ioc_succ_top, Finset.sum_filter]
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@prime_square_tail_uniform) (Realization signature) Type Unit where
