@@ -7,18 +7,9 @@
    digest: The unstable-eigenvalue count of a clamped Lennard-Jones chain is k-1 or k. -/
 
 import Mathlib.Analysis.Calculus.Deriv.ZPow
-import Mathlib.Analysis.Matrix.Spectrum
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.LinearAlgebra.Matrix.Nonsingular
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
 import D5.S3.Weil.ZetaLinear.Sylvester
+
+/-! The positive index of the clamped-chain Jacobian is bounded by the broken-bond count. -/
 
 noncomputable section
 open scoped BigOperators
@@ -83,7 +74,7 @@ private lemma curvature_formula (r : ℝ) (hr : 0 < r) :
   · rw [deriv_const_mul (-12 : ℝ), deriv_const_mul (12 : ℝ)]
     · rw [deriv_zpow, deriv_zpow]
       ring_nf
-      rw [zpow_neg, zpow_neg]
+      rw [_root_.zpow_neg, _root_.zpow_neg]
       field_simp
       ring
     · exact DifferentiableAt.zpow differentiableAt_id (Or.inl hr0)
@@ -141,7 +132,7 @@ private lemma jacobian_factorization {m : ℕ} (d : ℝ) (u : Fin (m + 2) → �
     have hb (j : Fin (m + 1)) : b j n =
         (if n.castSucc = j then 1 else 0) - (if n.succ = j then 1 else 0) := rfl
     simp_rw [hb, sub_mul, ite_mul, one_mul, zero_mul, Finset.sum_sub_distrib]
-    simp only [Finset.sum_ite_eq, Finset.mem_univ, if_true]
+    simp only [Finset.sum_ite_eq, Finset.mem_univ, ite_true]
   ext n q
   change (if n = q then -c n.castSucc - c n.succ
     else if n.val + 1 = q.val then c n.succ
@@ -166,7 +157,7 @@ private lemma jacobian_factorization {m : ℕ} (d : ℝ) (u : Fin (m + 2) → �
       constructor <;> intro heq
       · exact congrArg Fin.val heq
       · exact Fin.ext heq
-    simp only [if_neg hnq, Fin.castSucc_inj, Fin.succ_inj, if_neg hqn, hcross, hcross2]
+    simp only [ite_eq_right hnq, Fin.castSucc_inj, Fin.succ_inj, ite_eq_right hqn, hcross, hcross2]
     split_ifs with hright hleft hleft
     · omega
     · ring
@@ -207,7 +198,7 @@ private lemma bond_difference_injective {m : ℕ}
           · rfl
         · rfl
       rw [hsecond] at hrow
-      simpa only [Finset.sum_ite_eq', Finset.mem_univ, if_true, sub_zero] using hrow
+      simpa only [Finset.sum_ite_eq', Finset.mem_univ, ite_true, sub_zero] using hrow
   funext n
   exact he n.val n rfl
 
@@ -317,7 +308,7 @@ private lemma inertia_upper_bound {m : ℕ} (hm : 1 ≤ m) (d : ℝ)
       by_cases hj : inflectionPoint < bondLength d u j
       · have hz : (b *ᵥ (x : Fin m → ℝ)) j = 0 := congrFun hx ⟨j, hj⟩
         rw [hz]
-        positivity
+        simp only [zero_pow (by decide : (2 : ℕ) ≠ 0), mul_zero, le_refl]
       · have hnn : 0 ≤ c j := by
           rw [hc]
           exact not_lt.mp (fun hn => hj ((curvature_sign _ (hpos j)).mp hn))
