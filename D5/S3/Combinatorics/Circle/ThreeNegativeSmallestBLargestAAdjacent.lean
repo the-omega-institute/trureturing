@@ -50,7 +50,11 @@ private theorem adjacent_head (s q : ℤ) (hs : 8 ≤ s) (hq : 2 ≤ q)
   have hu : 0 < u := by dsimp [u,t]; positivity
   have hL : 0 < L := by dsimp [L,t]; positivity
   have ht : 2*s ≤ t := by dsimp [t]; nlinarith
-  have ht2 : 2*(t/2)=t := by dsimp [t]; omega
+  have ht2 : 2*(t/2)=t := by
+    have he : t=2*((s/2)*q) := by
+      dsimp [t]
+      nlinarith only [show q*(2*(s/2)-s)=0 by rw [hs2]; ring]
+    rw [he]; omega
   have hM2 : 2*M=(s-1)*q := by
     dsimp [M]
     nlinarith [show (s-1)*(2*(q/2)-q)=0 by rw [hq2]; ring]
@@ -189,12 +193,16 @@ private theorem adjacent_certificate (b d : ℕ) (hb : 3 ≤ b) (hd : 1 ≤ d) :
       · right; right; right
         have hp : (2:ℤ)^(b+2)≤q := by
           dsimp [q]; exact_mod_cast (Nat.pow_le_pow_right (by decide : 1≤(2:ℕ)) (show b+2≤d by omega))
-        dsimp [s]; simpa [pow_add] using hp
+        dsimp [s]; simpa [pow_add,mul_comm] using hp
   obtain ⟨p,w,hp0,hpt,hw0,hwq,hw2,hR,hbudget⟩ := adjacent_head s q hs hq hs2 hq2 region
   let h := if q=2 then 3 else q
   let z := t-h
   have ht : 2*s≤t := by dsimp [t]; nlinarith
-  have ht2 : 2*(t/2)=t := by dsimp [t]; omega
+  have ht2 : 2*(t/2)=t := by
+    have he : t=2*((s/2)*q) := by
+      dsimp [t]
+      nlinarith only [show q*(2*(s/2)-s)=0 by rw [hs2]; ring]
+    rw [he]; omega
   have hr2 : (2*t)/2=t := by omega
   have hz : 0≤z ∧ z<t := by
     dsimp [z,h,t]
@@ -249,6 +257,9 @@ private theorem adjacent_certificate (b d : ℕ) (hb : 3 ≤ b) (hd : 1 ≤ d) :
     have hLp : 0≤(1+s+s*t)*w := mul_nonneg (by positivity) hw0
     have hLz : 0≤(s+1)*z := mul_nonneg (by omega) hz.1
     have he : (2*t)*s*(t/2)-1=s*t*t-1 := by nlinarith [show s*t*(2*(t/2)-t)=0 by rw [ht2]; ring]
-    repeat' constructor <;> nlinarith
+    repeat' constructor <;> nlinarith [
+      show (t+1)*(2*(s/2)-s)=0 by rw [hs2]; ring,
+      show (2*t+1)*(2*(t/2)-t)=0 by rw [ht2]; ring,
+      show 0≤(s+1)*t by positivity]
 
 end D5.S3.Combinatorics.Circle.ThreeNegativeSmallestBLargestAJointLift
