@@ -59,6 +59,8 @@ All rows have this module's admission_basis; definitions are bind-only (definiti
   JDeriv | bind-only | F1 | none | q0Deriv,q1Deriv,JMomentIntegrable
   q0Deriv | bind-only | F1 | none | kernelLaplace
   q1Deriv | bind-only | F1 | none | kernelLaplace
+  kernelIntegralIdentities | bind-only | none | none | kernelIdentity,ParameterClassification.native_kernel_base
+  gaussianLaplaceDerivative | bind-only | none | none | kernelLaplace,ParameterClassification.native_kernel_base
   kernelIdentity | bind-only | none | none | kernelLaplace
   JBound | bind-only | none | none | JMomentIntegrable,JMomentTendsto
   JMomentIntegrable | bind-only | F1 | none | kernelLaplace
@@ -411,11 +413,11 @@ private lemma D_two (x : ℝ) :
 def J (p : ℝ → ℝ) (t : ℝ) : ℝ :=
   ∫ v in (0:ℝ)..1, p v * exp (-(1+v^2)*t^2/4)
 def q0 (t : ℝ) : ℝ := t * J (fun _ => 1) t
-def q1 (t : ℝ) : ℝ := J (fun _ => 1) t - t^2/2 * J (fun v => 1+v^2) t
-def q2 (t : ℝ) : ℝ := t^3/4 * J (fun v => (1+v^2)^2) t - 3*t/2 * J (fun v => 1+v^2) t
+private def q1 (t : ℝ) : ℝ := J (fun _ => 1) t - t^2/2 * J (fun v => 1+v^2) t
+private def q2 (t : ℝ) : ℝ := t^3/4 * J (fun v => (1+v^2)^2) t - 3*t/2 * J (fun v => 1+v^2) t
 def K (t : ℝ) : ℝ := t^5/8 * J (fun v => v^2*(1-v^2)) t
 
-lemma JDeriv (p : ℝ → ℝ) (hp : Continuous p) (t : ℝ) :
+private lemma JDeriv (p : ℝ → ℝ) (hp : Continuous p) (t : ℝ) :
     HasDerivAt (J p) (-(t/2) * J (fun v => p v*(1+v^2)) t) t := by
   have hd (y v : ℝ) : HasDerivAt (fun y => p v * exp (-(1+v^2)*y^2/4))
       (-(y/2) * (p v*(1+v^2)) * exp (-(1+v^2)*y^2/4)) y := by
@@ -432,17 +434,18 @@ lemma JDeriv (p : ℝ → ℝ) (hp : Continuous p) (t : ℝ) :
     congr 1; ext v; ring] at h
   exact h
 
-lemma q0Deriv (t : ℝ) : HasDerivAt q0 (q1 t) t := by
+private lemma q0Deriv (t : ℝ) : HasDerivAt q0 (q1 t) t := by
   have h := (hasDerivAt_id t).mul (JDeriv (fun _ => 1) continuous_const t)
   convert h using 1 <;> (try ext z) <;> dsimp [q0,q1] <;> simp only [one_mul] <;> ring
 
-lemma q1Deriv (t : ℝ) : HasDerivAt q1 (q2 t) t := by
+private lemma q1Deriv (t : ℝ) : HasDerivAt q1 (q2 t) t := by
   have h := (JDeriv (fun _ => 1) continuous_const t).sub
     (((hasDerivAt_id t).pow 2 |>.div_const 2).mul (JDeriv (fun v => 1+v^2) (by fun_prop) t))
   convert h using 1 <;> (try ext z) <;> dsimp [q1,q2] <;> simp only [one_mul, ← pow_two] <;> ring
 
-lemma kernelIdentity (t : ℝ) :
-    q2 t - q0 t + 3*t*exp (-t^2/2) = K t := by
+lemma kernelIntegralIdentities (t : ℝ) :
+    J (fun v => 1 - v ^ 2 * t ^ 2 / 2) t = exp (-t ^ 2 / 2) ∧
+      J (fun v => 1 - 3 * v ^ 2) t = t ^ 2 / 2 * J (fun v => v ^ 2 * (1 - v ^ 2)) t := by
   let e := fun v : ℝ => exp (-(1+v^2)*t^2/4)
   have hd0 (v : ℝ) : HasDerivAt (fun v : ℝ => v*e v) ((1-v^2*t^2/2)*e v) v := by
     dsimp [e]
@@ -463,8 +466,6 @@ lemma kernelIdentity (t : ℝ) :
   have he : J (fun v => 1-v^2*t^2/2) t = exp (-t^2/2) := by
     change (∫ v in (0:ℝ)..1, (1-v^2*t^2/2)*exp (-(1+v^2)*t^2/4)) = _
     convert h0 using 1 <;> congr 1 <;> ring
-  unfold q2 q0 K
-  rw [← he]
   have hh : J (fun v => 1-3*v^2) t = t^2/2 * J (fun v => v^2*(1-v^2)) t := by
     have h := hj
     unfold J at h ⊢
@@ -475,6 +476,24 @@ lemma kernelIdentity (t : ℝ) :
     congr 1
     ext v
     ring
+  exact ⟨he, hh⟩
+
+private lemma kernelIdentity (t : ℝ) :
+    q2 t - q0 t + 3*t*exp (-t^2/2) = K t := by
+  obtain ⟨he, hh⟩ := kernelIntegralIdentities t
+  have hj : J (fun v => 1-3*v^2-t^2/2*(v^2-v^4)) t = 0 := by
+    calc
+      _ = J (fun v => 1-3*v^2) t - t^2/2 * J (fun v => v^2*(1-v^2)) t := by
+        unfold J
+        rw [← intervalIntegral.integral_const_mul,
+          ← intervalIntegral.integral_sub (by apply Continuous.intervalIntegrable; fun_prop)
+            (by apply Continuous.intervalIntegrable; fun_prop)]
+        apply intervalIntegral.integral_congr
+        intro v _
+        ring
+      _ = 0 := by rw [hh]; ring
+  unfold q2 q0 K
+  rw [← he]
   have hx : t^3/4 * J (fun v => (1+v^2)^2) t - 3*t/2*J (fun v => 1+v^2) t -
       t*J (fun _ => 1) t + 3*t*J (fun v => 1-v^2*t^2/2) t =
       t^3/4*J (fun v => 1-3*v^2) t + t/2*J (fun v => 1-3*v^2-t^2/2*(v^2-v^4)) t := by
@@ -518,7 +537,7 @@ lemma JMomentIntegrable (p : ℝ → ℝ) (hp : Continuous p) (m : ℕ) {x : ℝ
   rw [norm_mul, Real.norm_of_nonneg (mul_nonneg (pow_nonneg ht.le _) (exp_nonneg _))]
   exact mul_le_mul_of_nonneg_left (hbound t) (mul_nonneg (pow_nonneg ht.le _) (exp_nonneg _))
 
-lemma JMomentTendsto (p : ℝ → ℝ) (hp : Continuous p) (m : ℕ) {x : ℝ} (hx : 0 < x) :
+private lemma JMomentTendsto (p : ℝ → ℝ) (hp : Continuous p) (m : ℕ) {x : ℝ} (hx : 0 < x) :
     Tendsto (fun t : ℝ => t^m*exp (-x*t)*J p t) atTop (𝓝 0) := by
   obtain ⟨C,hC,hbound⟩ := JBound p hp
   have hlim : Tendsto (fun t : ℝ => t^m*exp (-x*t)*C) atTop (𝓝 0) := by
@@ -543,6 +562,37 @@ lemma laplaceIBP {f g : ℝ → ℝ} {x : ℝ}
   rw [integral_sub hg (hf.const_mul x), integral_const_mul] at h
   simp only [mul_zero, exp_zero, one_mul, zero_sub] at h
   linarith
+lemma gaussianLaplaceDerivative {x : ℝ} (hx : 0 < x) :
+    IntegrableOn (fun t : ℝ => exp (-x * t) * (-t * exp (-t ^ 2 / 2))) (Ioi 0) ∧
+      (∫ t in Ioi (0 : ℝ), exp (-x * t) * (-t * exp (-t ^ 2 / 2))) =
+        x * (∫ t in Ioi (0 : ℝ), exp (-x * t) * exp (-t ^ 2 / 2)) - 1 := by
+  have hh : IntegrableOn (fun t : ℝ => exp (-x*t)*exp (-t^2/2)) (Ioi 0) := by
+    have he := (TwoScaleEndpointMoments.exponential_moment x hx 0).1
+    simp only [← neg_mul] at he
+    apply he.mono' (by fun_prop)
+    filter_upwards with t
+    simp only [pow_zero,one_mul,Real.norm_of_nonneg (mul_nonneg (exp_nonneg _) (exp_nonneg _))]
+    exact mul_le_of_le_one_right (exp_nonneg _) (exp_le_one_iff.mpr (by nlinarith [sq_nonneg t]))
+  have hth : IntegrableOn (fun t : ℝ => exp (-x*t)*(-t*exp (-t^2/2))) (Ioi 0) := by
+    have he := (TwoScaleEndpointMoments.exponential_moment x hx 1).1
+    simp only [← neg_mul] at he
+    apply he.mono' (by fun_prop)
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+    rw [norm_mul,norm_mul,Real.norm_of_nonneg (exp_nonneg _),norm_neg,
+      Real.norm_of_nonneg ht.le, Real.norm_of_nonneg (exp_nonneg _)]
+    simp only [pow_one]
+    nlinarith [mul_le_of_le_one_right (mul_nonneg (exp_nonneg (-x*t)) ht.le)
+      (exp_le_one_iff.mpr (by nlinarith [sq_nonneg t]) : exp (-t^2/2) ≤ 1)]
+  have lh : Tendsto (fun t : ℝ => exp (-x*t)*exp (-t^2/2)) atTop (𝓝 0) := by
+    apply squeeze_zero_norm (a := fun t : ℝ => exp (-x*t)) (fun t => ?_)
+      (by simpa only [rpow_zero, one_mul] using tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 0 x hx)
+    simp only [norm_mul,Real.norm_of_nonneg (exp_nonneg _)]
+    exact mul_le_of_le_one_right (exp_nonneg _) (exp_le_one_iff.mpr (by nlinarith [sq_nonneg t]))
+  have ibh := laplaceIBP (f := fun t : ℝ => exp (-t^2/2)) (g := fun t : ℝ => -t*exp (-t^2/2))
+    (fun t => by convert (((hasDerivAt_id t).pow 2).neg.div_const 2).exp using 1 <;> (try ext z) <;> dsimp <;> ring) hh hth lh
+  simp only [zero_pow (by decide : 2 ≠ 0), neg_zero, zero_div, exp_zero] at ibh
+  exact ⟨hth, ibh⟩
+
 lemma kernelLaplace {x : ℝ} (hx : 0 < x) (r : ℝ)
     (hr : r = ∫ t in Ioi (0:ℝ), exp (-x*t)*exp (-t^2/2))
     (hr2 : r^2 = ∫ t in Ioi (0:ℝ), exp (-x*t)*q0 t) :
@@ -574,31 +624,7 @@ lemma kernelLaplace {x : ℝ} (hx : 0 < x) (r : ℝ)
   have z1 : q1 0 = 1 := by norm_num [q1,J]
   rw [z0, sub_zero] at ib0
   rw [z1] at ib1
-  have hh : IntegrableOn (fun t : ℝ => exp (-x*t)*exp (-t^2/2)) (Ioi 0) := by
-    have he := (TwoScaleEndpointMoments.exponential_moment x hx 0).1
-    simp only [← neg_mul] at he
-    apply he.mono' (by fun_prop)
-    filter_upwards with t
-    simp only [pow_zero,one_mul,Real.norm_of_nonneg (mul_nonneg (exp_nonneg _) (exp_nonneg _))]
-    exact mul_le_of_le_one_right (exp_nonneg _) (exp_le_one_iff.mpr (by nlinarith [sq_nonneg t]))
-  have hth : IntegrableOn (fun t : ℝ => exp (-x*t)*(-t*exp (-t^2/2))) (Ioi 0) := by
-    have he := (TwoScaleEndpointMoments.exponential_moment x hx 1).1
-    simp only [← neg_mul] at he
-    apply he.mono' (by fun_prop)
-    filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
-    rw [norm_mul,norm_mul,Real.norm_of_nonneg (exp_nonneg _),norm_neg,
-      Real.norm_of_nonneg ht.le, Real.norm_of_nonneg (exp_nonneg _)]
-    simp only [pow_one]
-    nlinarith [mul_le_of_le_one_right (mul_nonneg (exp_nonneg (-x*t)) ht.le)
-      (exp_le_one_iff.mpr (by nlinarith [sq_nonneg t]) : exp (-t^2/2) ≤ 1)]
-  have lh : Tendsto (fun t : ℝ => exp (-x*t)*exp (-t^2/2)) atTop (𝓝 0) := by
-    apply squeeze_zero_norm (a := fun t : ℝ => exp (-x*t)) (fun t => ?_)
-      (by simpa only [rpow_zero, one_mul] using tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 0 x hx)
-    simp only [norm_mul,Real.norm_of_nonneg (exp_nonneg _)]
-    exact mul_le_of_le_one_right (exp_nonneg _) (exp_le_one_iff.mpr (by nlinarith [sq_nonneg t]))
-  have ibh := laplaceIBP (f := fun t : ℝ => exp (-t^2/2)) (g := fun t : ℝ => -t*exp (-t^2/2))
-    (fun t => by convert (((hasDerivAt_id t).pow 2).neg.div_const 2).exp using 1 <;> (try ext z) <;> dsimp <;> ring) hh hth lh
-  simp only [zero_pow (by decide : 2 ≠ 0), neg_zero, zero_div, exp_zero] at ibh
+  obtain ⟨hth, ibh⟩ := gaussianLaplaceDerivative hx
   have hk : (∫ t in Ioi (0:ℝ), exp (-x*t)*K t) =
       (∫ t in Ioi (0:ℝ), exp (-x*t)*q2 t) -
       (∫ t in Ioi (0:ℝ), exp (-x*t)*q0 t) -

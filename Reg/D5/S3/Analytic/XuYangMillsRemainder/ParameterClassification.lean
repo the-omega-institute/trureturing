@@ -55,6 +55,7 @@ def source_registration : Registration arena
     rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := by
+    change ObservationalDependence signature actual
     intro i
     exact ⟨(), 0, 1, by simp [actual, realize]⟩
 

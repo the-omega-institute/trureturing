@@ -118,5 +118,148 @@ def registration :
   familyRecord := none
   options := #[] }
 
+namespace kernelIntegralIdentities
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature ℝ (fun _ => ℝ → ℝ) (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ t p => J p t) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ t : ℝ,
+    R.readout () t (fun v => 1 - v ^ 2 * t ^ 2 / 2) = exp (-t ^ 2 / 2) ∧
+    R.readout () t (fun v => 1 - 3 * v ^ 2) =
+      t ^ 2 / 2 * R.readout () t (fun v => v ^ 2 * (1 - v ^ 2))
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have h0 := (h 0).1
+  norm_num [rejected, realize] at h0
+def family : Registration arena
+    (type_of% @_root_.D5.S3.Analytic.XuYangMillsRemainder.Result.kernelIntegralIdentities) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Analytic.XuYangMillsRemainder.Result.kernelIntegralIdentities,
+    rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := by
+    change ObservationalDependence signature actual
+    intro i
+    refine ⟨0, (fun _ => 0), (fun _ => 1), ?_⟩
+    norm_num [actual, realize, J]
+
+def audit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@_root_.D5.S3.Analytic.XuYangMillsRemainder.Result.kernelIntegralIdentities)
+    (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.XuYangMillsRemainder.Result.kernelIntegralIdentities.unit
+  realizationName := `Reg.D5.S3.Analytic.XuYangMillsRemainder.Result.kernelIntegralIdentities.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ t p => J p t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.XuYangMillsRemainder.Result
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }, {
+      path := #["body", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }, {
+      path := #["body", "arg", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end kernelIntegralIdentities
+
+namespace gaussianLaplaceDerivative
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ _ t => exp t) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (x : ℝ), 0 < x →
+    IntegrableOn (fun t : ℝ => R.readout () () (-x * t) *
+      (-t * R.readout () () (-t ^ 2 / 2))) (Ioi 0) ∧
+    (∫ t in Ioi (0 : ℝ), R.readout () () (-x * t) *
+      (-t * R.readout () () (-t ^ 2 / 2))) =
+      x * (∫ t in Ioi (0 : ℝ), R.readout () () (-x * t) *
+        R.readout () () (-t ^ 2 / 2)) - 1
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have h0 := (h 1 (by norm_num)).2
+  norm_num [rejected, realize] at h0
+def family : Registration arena
+    (type_of% @_root_.D5.S3.Analytic.XuYangMillsRemainder.Result.gaussianLaplaceDerivative) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Analytic.XuYangMillsRemainder.Result.gaussianLaplaceDerivative,
+    rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := by
+    change ObservationalDependence signature actual
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    change exp (0 : ℝ) ≠ exp 1
+    rw [exp_zero]
+    exact ne_of_lt (one_lt_exp_iff.mpr zero_lt_one)
+
+def audit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@_root_.D5.S3.Analytic.XuYangMillsRemainder.Result.gaussianLaplaceDerivative)
+    (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.XuYangMillsRemainder.Result.gaussianLaplaceDerivative.unit
+  realizationName := `Reg.D5.S3.Analytic.XuYangMillsRemainder.Result.gaussianLaplaceDerivative.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ t => exp t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.XuYangMillsRemainder.Result
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "fn", "arg", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end gaussianLaplaceDerivative
+
 end
 end Reg.D5.S3.Analytic.XuYangMillsRemainder.Result

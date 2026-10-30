@@ -395,34 +395,7 @@ private lemma native_kernel_base {x : ℝ} (hx : 0 < x) (a : ℝ) :
     filter_upwards with t
     rw [convolutionClosed]
     simp only [q0, J, one_mul]
-  have hh : IntegrableOn (fun t : ℝ => exp (-x * t) * exp (-t ^ 2 / 2)) (Ioi 0) := by
-    apply (millsLaplaceIntegrable hx.le).congr_fun _ measurableSet_Ioi
-    intro t _
-    dsimp only
-    rw [← exp_add]
-    congr 1
-    ring
-  have hth : IntegrableOn (fun t : ℝ => exp (-x * t) * (-t * exp (-t ^ 2 / 2))) (Ioi 0) := by
-    have he := (TwoScaleEndpointMoments.exponential_moment x hx 1).1
-    simp only [← neg_mul] at he
-    apply he.mono' (by fun_prop)
-    filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
-    rw [norm_mul, norm_mul, Real.norm_of_nonneg (exp_nonneg _), norm_neg,
-      Real.norm_of_nonneg ht.le, Real.norm_of_nonneg (exp_nonneg _)]
-    simp only [pow_one]
-    nlinarith [mul_le_of_le_one_right (mul_nonneg (exp_nonneg (-x * t)) ht.le)
-      (exp_le_one_iff.mpr (by nlinarith [sq_nonneg t]) : exp (-t ^ 2 / 2) ≤ 1)]
-  have lh : Tendsto (fun t : ℝ => exp (-x * t) * exp (-t ^ 2 / 2)) atTop (𝓝 0) := by
-    apply squeeze_zero_norm (a := fun t : ℝ => exp (-x * t)) (fun t => ?_)
-      (by simpa only [rpow_zero, one_mul] using tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 0 x hx)
-    simp only [norm_mul, Real.norm_of_nonneg (exp_nonneg _)]
-    exact mul_le_of_le_one_right (exp_nonneg _) (exp_le_one_iff.mpr (by nlinarith [sq_nonneg t]))
-  have ibh := laplaceIBP (f := fun t : ℝ => exp (-t ^ 2 / 2))
-    (g := fun t : ℝ => -t * exp (-t ^ 2 / 2))
-    (fun t => by
-      convert (((hasDerivAt_id t).pow 2).neg.div_const 2).exp using 1 <;>
-        (try ext z) <;> dsimp <;> ring) hh hth lh
-  simp only [zero_pow (by decide : 2 ≠ 0), neg_zero, zero_div, exp_zero] at ibh
+  obtain ⟨hth, ibh⟩ := gaussianLaplaceDerivative hx
   have hq : IntegrableOn (fun t : ℝ => exp (-x * t) * q0 t) (Ioi 0) := by
     convert JMomentIntegrable (fun _ => 1) continuous_const 1 hx using 1
     ext t
@@ -435,26 +408,8 @@ private lemma native_kernel_base {x : ℝ} (hx : 0 < x) (a : ℝ) :
     ring
   have hid (t : ℝ) : K t + (a + 1) * (q0 t - t * exp (-t ^ 2 / 2)) =
       t ^ 3 / 4 * J (fun v => 1 + (2 * a - 1) * v ^ 2) t := by
-    let e : ℝ → ℝ := fun v => exp (-(1 + v ^ 2) * t ^ 2 / 4)
-    have h0 := intervalIntegral.integral_eq_sub_of_hasDerivAt
-      (a := (0 : ℝ)) (b := 1)
-      (f := fun v => v * e v) (f' := fun v => (1 - v ^ 2 * t ^ 2 / 2) * e v)
-      (fun v _ => by
-        dsimp [e]
-        convert (hasDerivAt_id v).mul ((((hasDerivAt_id v).pow 2).const_add 1 |>.neg |>.mul_const (t ^ 2) |>.div_const 4).exp) using 1 <;>
-          (try ext z) <;> dsimp <;> ring)
-      (by apply Continuous.intervalIntegrable; dsimp [e]; fun_prop)
-    have h1 := intervalIntegral.integral_eq_sub_of_hasDerivAt
-      (a := (0 : ℝ)) (b := 1)
-      (f := fun v => v * (1 - v ^ 2) * e v)
-      (f' := fun v => ((1 - 3 * v ^ 2) - t ^ 2 / 2 * (v ^ 2 * (1 - v ^ 2))) * e v)
-      (fun v _ => by
-        dsimp [e]
-        convert ((hasDerivAt_id v).mul ((hasDerivAt_const v 1).sub ((hasDerivAt_id v).pow 2))).mul
-          ((((hasDerivAt_id v).pow 2).const_add 1 |>.neg |>.mul_const (t ^ 2) |>.div_const 4).exp) using 1 <;>
-          (try ext z) <;> dsimp <;> ring)
-      (by apply Continuous.intervalIntegrable; dsimp [e]; fun_prop)
-    have hc0 : (∫ v in (0 : ℝ)..1, (1 - v ^ 2 * t ^ 2 / 2) * e v) =
+    obtain ⟨h0, h1⟩ := kernelIntegralIdentities t
+    have hc0 : J (fun v => 1 - v ^ 2 * t ^ 2 / 2) t =
         J (fun _ => 1) t - t ^ 2 / 2 * J (fun v => v ^ 2) t := by
       unfold J
       rw [← intervalIntegral.integral_const_mul,
@@ -462,21 +417,15 @@ private lemma native_kernel_base {x : ℝ} (hx : 0 < x) (a : ℝ) :
           (by apply Continuous.intervalIntegrable; fun_prop)]
       apply intervalIntegral.integral_congr
       intro v _
-      dsimp [e]
       ring
-    have hc1 : (∫ v in (0 : ℝ)..1,
-        ((1 - 3 * v ^ 2) - t ^ 2 / 2 * (v ^ 2 * (1 - v ^ 2))) * e v) =
-        J (fun _ => 1) t - 3 * J (fun v => v ^ 2) t -
-          t ^ 2 / 2 * J (fun v => v ^ 2 * (1 - v ^ 2)) t := by
+    have hc1 : J (fun v => 1 - 3 * v ^ 2) t =
+        J (fun _ => 1) t - 3 * J (fun v => v ^ 2) t := by
       unfold J
-      repeat rw [← intervalIntegral.integral_const_mul]
-      rw [← intervalIntegral.integral_sub (by apply Continuous.intervalIntegrable; fun_prop)
-        (by apply Continuous.intervalIntegrable; fun_prop)]
-      rw [← intervalIntegral.integral_sub (by apply Continuous.intervalIntegrable; fun_prop)
-        (by apply Continuous.intervalIntegrable; fun_prop)]
+      rw [← intervalIntegral.integral_const_mul,
+        ← intervalIntegral.integral_sub (by apply Continuous.intervalIntegrable; fun_prop)
+          (by apply Continuous.intervalIntegrable; fun_prop)]
       apply intervalIntegral.integral_congr
       intro v _
-      dsimp [e]
       ring
     have hc2 : J (fun v => 1 + (2 * a - 1) * v ^ 2) t =
         J (fun _ => 1) t + (2 * a - 1) * J (fun v => v ^ 2) t := by
@@ -490,14 +439,9 @@ private lemma native_kernel_base {x : ℝ} (hx : 0 < x) (a : ℝ) :
       ring
     rw [hc0] at h0
     rw [hc1] at h1
-    dsimp [e] at h0 h1
-    norm_num only [one_pow, zero_pow (by decide : 2 ≠ 0), mul_zero, zero_mul,
-      one_mul, sub_self, sub_zero] at h0 h1
-    have h0' : J (fun _ => 1) t - t ^ 2 / 2 * J (fun v => v ^ 2) t = exp (-t ^ 2 / 2) := by
-      convert h0 using 1 <;> congr 1 <;> ring
     unfold K q0
     rw [hc2]
-    linear_combination (a + 1) * t * h0' - t ^ 3 / 4 * h1
+    linear_combination (a + 1) * t * h0 - t ^ 3 / 4 * h1
   have he : (∫ t in Ioi (0 : ℝ), exp (-x * t) *
       (t ^ 3 / 4 * J (fun v => 1 + (2 * a - 1) * v ^ 2) t)) =
       (∫ t in Ioi (0 : ℝ), exp (-x * t) * K t) +
@@ -699,7 +643,9 @@ private lemma kernel_signs (m : ℕ) (a : ℝ) {t : ℝ} (ht : 0 < t) :
     congr 1
     dsimp [N, M]
     rw [← intervalIntegral.integral_const_mul,
-      ← intervalIntegral.integral_sub (by apply Continuous.intervalIntegrable; exact (by fun_prop).mul hc)
+      ← intervalIntegral.integral_sub (by
+        apply Continuous.intervalIntegrable
+        exact ((continuous_id'.pow 2).mul hc).const_mul (1 - 2 * a))
         (hc.intervalIntegrable _ _)]
     apply intervalIntegral.integral_congr
     intro v _
