@@ -434,19 +434,23 @@ private theorem row_partition (a c : ℕ) (hc : 0 < c) (ha : 0 < a) :
     row 0 (c - 1) ++ [c - 1] ++ row c (a - 1) ++ [a + c - 1] ++
       row (a + c) (a - 1) ++ [K a c - 1] = List.range (K a c) := by
   have hblock (off len : ℕ) : row off len ++ [off + len] = row off (len + 1) := by
-    simpa only [row, Nat.mul_one] using (List.range'_1_concat (s := off) (n := len)).symm
-  have hjoin (off l r : ℕ) : row off l ++ row (off + l) r = row off (l + r) := by
-    simpa only [row, Nat.mul_one] using (List.range'_append_1 (s := off) (m := l) (n := r))
-  rw [show c - 1 = 0 + (c - 1) by omega, hblock]
-  rw [show c - 1 + 1 = c by omega]
-  rw [show a + c - 1 = c + (a - 1) by omega, List.append_assoc, hblock]
-  rw [show a - 1 + 1 = a by omega]
-  rw [show a + c = c + a by omega]
-  rw [show K a c - 1 = c + a + (a - 1) by dsimp [K]; omega,
-    List.append_assoc, List.append_assoc, hblock]
-  rw [show a - 1 + 1 = a by omega]
-  rw [hjoin, show c + a + a = K a c by dsimp [K]; omega]
-  simpa [row] using (List.range_eq_range' (n := K a c)).symm
+    exact (List.range'_1_concat (s := off) (n := len)).symm
+  have hu : row 0 (c - 1) ++ [c - 1] = row 0 c := by
+    simpa only [Nat.zero_add, show c - 1 + 1 = c by omega] using hblock 0 (c - 1)
+  have hv : row c (a - 1) ++ [a + c - 1] = row c a := by
+    simpa only [show c + (a - 1) = a + c - 1 by omega,
+      show a - 1 + 1 = a by omega] using hblock c (a - 1)
+  have hw : row (a + c) (a - 1) ++ [K a c - 1] = row (c + a) a := by
+    simpa only [show (a + c) + (a - 1) = K a c - 1 by dsimp [K]; omega,
+      show a - 1 + 1 = a by omega, Nat.add_comm a c] using hblock (a + c) (a - 1)
+  have he : row 0 (c - 1) ++ [c - 1] ++ row c (a - 1) ++ [a + c - 1] ++
+      row (a + c) (a - 1) ++ [K a c - 1] =
+      (row 0 (c - 1) ++ [c - 1]) ++ (row c (a - 1) ++ [a + c - 1]) ++
+        (row (a + c) (a - 1) ++ [K a c - 1]) := by simp only [List.append_assoc]
+  rw [he, hu, hv, hw]
+  rw [List.range'_append_1, List.range'_append_1]
+  rw [show c + a + a = K a c by dsimp [K]; omega]
+  exact (List.range_eq_range' (n := K a c)).symm
 
 private theorem joint_lift (k v j : ℕ) (hk : 0 < k) (l : List ℕ)
     (hl : l.Perm (List.range k)) (hj : j ≤ k)
@@ -730,7 +734,9 @@ private theorem assemble (a c : ℕ) (hc : 2 ≤ c) (hca : c < a)
     · omega
     · nlinarith [mul_nonneg (show 0 ≤ T a by omega) (show 0 ≤ U c - 1 by omega)]
   have hstrip : InStrip (S a c) (C a c) 0 l := by
-    change InStrip (S a c) (C a c) 0 (VL ++ [be] ++ E ++ [ga] ++ (F ++ UL) ++ [al])
+    have hlit : l = VL ++ [be] ++ E ++ [ga] ++ (F ++ UL) ++ [al] := by
+      simp only [l, List.append_assoc]
+    rw [hlit]
     apply three_seams (S a c) VL E (F ++ UL) be ga al (C a c) delta h
       hPs hQs hRs
     · rw [d.oldBeta]; linarith [d.caps.2.1.2]
