@@ -616,10 +616,12 @@ sign reversal; no positivity premise enters either theorem.
 
 ## 5. Exact failure boundaries and the additive source defect
 
-**反例 5.1（The extra unit in the cited additive lemma is false）。**
+**命题 5.1（The extra unit in the cited additive lemma is false）。**
 [AZ, Lemma 3.14] states that nonempty finite $P,Q$ in a group with
 $P,Q,P+Q\subseteq X\subseteq G\setminus\{0\}$ imply
-$|X|\ge |P|+|Q|+1$. Take $G=\mathbb Z$,
+$|X|\ge |P|+|Q|+1$. This implication is false.
+
+Proof. Take $G=\mathbb Z$,
 
 $$
 P=Q=\{1,2,3\},\qquad X=\{1,2,3,4,5,6\}.
@@ -646,11 +648,14 @@ Neither claim is an ingredient of the derivation of (U) in Theorem 2.1.
 This counterexample concerns those exact lemmas; it is not a claim
 that every theorem citing either paper is false.
 
-**反例 5.2（The auxiliary self-matching claim in the sequel）。**
+**命题 5.2（The auxiliary self-matching claim in the sequel）。**
 [AK, Claim 3.3] is used with a group matching $f$ on a ground set,
 a source basis $S$ and a nonbasis image $T=f(S)$. It asserts the
 existence of $x\in E\setminus T$ and $s\in S$ with $s+x\notin E$.
-In the $n=s=2$ member of the supplied interval family in Section 4, take
+This assertion is false under the loopless sparse paving, zero-excluding
+self-matching hypotheses.
+
+Proof. In the $n=s=2$ member of the supplied interval family in Section 4, take
 $E=\{1,2,3,4\}$, forbidden basis $H=\{3,4\}$,
 $S=\{1,2\}$, and the group matching
 
@@ -666,8 +671,11 @@ zero-excluding self-matching conditions in which it is used.
 This delimits that proof step and does not assert a separate
 classification for arbitrary paving targets.
 
-**反例 5.3（Dual paving cannot simply be dropped）。** Let
-$G=\mathbb Z$, $A=\{1,2,3,4\}$, and $M$ be uniform of rank two
+**命题 5.3（Dual paving cannot simply be dropped）。** The strict-gap
+conclusion of Theorem 2.1 can fail if dual paving is omitted, even over
+$\mathbb Z$ with a one-element gap.
+
+Proof. Let $G=\mathbb Z$, $A=\{1,2,3,4\}$, and $M$ be uniform of rank two
 on $A$. Put $B=\{1,2,3,4,5\}$ and define the target to be the
 rank-two partition matroid allowing at most one element from each
 of $\{1,2\}$ and $\{3,4,5\}$. It is loopless and paving.
@@ -678,9 +686,13 @@ its complement is a two-element circuit in the dual, whose rank
 is three. Thus the hyperplane-size bound used in Theorem 2.1 fails without
 dual paving.
 
-**反例 5.4（Torsion and the exclusion of zero）。** The strict-gap
-conclusion fails in general finite abelian groups. In
-$G=\mathbb Z/8\mathbb Z$, let
+**命题 5.4（Torsion and the exclusion of zero）。** The strict-gap
+conclusion fails in general finite abelian groups. Even over
+$\mathbb Z$, allowing zero in the target ground can invalidate the
+strict one-element-gap conclusion, and at equality failure can already
+occur in rank one on singleton grounds.
+
+Proof. In $G=\mathbb Z/8\mathbb Z$, let
 $A=\{0,2,4,6\}$, take the uniform rank-two source, and put
 $B=\{1,2,3,4,6\}$. Let $N$ have all two-element bases except
 $H=\{1,3\}$. The supplied construction in Section 4 verifies looplessness and sparse paving.
@@ -713,12 +725,12 @@ originality, priority, or exhaustive literature coverage.
 
 | Mathematical source | Exact use and parameter correspondence |
 | --- | --- |
-| [AZ] M. Aliabadi and S. Zerbib, *Matchings in matroids over abelian groups*, [arXiv:2202.07719v3](https://arxiv.org/pdf/2202.07719v3), [DOI](https://doi.org/10.1007/s10801-024-01308-z) | Definition 1.3, p. 2, supplies the matching convention: its rank $n$ is $r$, its ground sets are $A,B$, and exclusion is from $A$. Question 2.7, p. 5, has the one-element-gap and equality disjunction. Theorem 3.3, p. 8, gives sparse paving structure; Theorem 3.6, p. 9, states Rado's criterion; Theorem 3.8, p. 10, states orderability. Lemma 3.14, p. 12, has the exact defect in Counterexample 5.1 and supplies no inference here. Corollary 2.5 requires $|A|<|B|-1$; Theorem 2.1 includes the missing one-element gap. |
+| [AZ] M. Aliabadi and S. Zerbib, *Matchings in matroids over abelian groups*, [arXiv:2202.07719v3](https://arxiv.org/pdf/2202.07719v3), [DOI](https://doi.org/10.1007/s10801-024-01308-z) | Definition 1.3, p. 2, supplies the matching convention: its rank $n$ is $r$, its ground sets are $A,B$, and exclusion is from $A$. Question 2.7, p. 5, has the one-element-gap and equality disjunction. Theorem 3.3, p. 8, gives sparse paving structure; Theorem 3.6, p. 9, states Rado's criterion; Theorem 3.8, p. 10, states orderability. Lemma 3.14, p. 12, has the exact defect in Proposition 5.1 and supplies no inference here. Corollary 2.5 requires $|A|<|B|-1$; Theorem 2.1 includes the missing one-element gap. |
 | [Rado] R. Rado, *A theorem on independence relations*, [DOI](https://doi.org/10.1093/qmath/os-13.1.83); the finite matroid statement is reproduced in [AZ, Theorem 3.6] | The proof of Theorem 2.1 uses this classical criterion, with the index set $S$, the representative sets $C_s$, and matroid $N$. Its proof includes contraction and all finite induction cases. No linear-representability assumption is introduced. |
 | [Bonin] J. E. Bonin, *Sparse paving matroids, basis-exchange properties, and cyclic flats*, [arXiv:1011.1010v1](https://arxiv.org/pdf/1011.1010v1), Introduction and Lemma 2.1 | The Introduction states equivalence of dual paving with the rank-sized basis-or-circuit-hyperplane characterization; Lemma 2.1 gives the one-exchange property. The proof of Theorem 2.1 derives the rank facts used here directly from the dual rank identity and paving. The cardinality of a hyperplane, not a choice of linear realization, is decisive. |
 | [Family] [AliabadiZerbibMatroidMatching](../../../D5/S3/Combinatorics/Matroids/AliabadiZerbibMatroidMatching.lean) | The supplied predicates give the same paving and matching conventions. The supplied `allowed_exchange`, `extend_avoiding`, `punctured`, dual-basis and small-independence arguments give the one-deleted-base construction; `family_sparse_paving` and `family_not_matched` supply the all-parameter interval family. Its $n,s$ correspond to $r,m-r$; its initial basis has $a=d=1$, $j=0$. Section 4 recovers that supplied family. Theorems 2.1 and 3.3 are additional prose deductions, not additional assertions about the supplied declarations. |
 | [AWY] M. Aliabadi, Y. Wu and S. Yermolenko, *Matchings in matroids over abelian groups, II*, [arXiv:2412.04516v4](https://arxiv.org/html/2412.04516v4), Theorem 3.2 | That sufficient result assumes positive ground sets, cardinality $n+1$, and $\max E(M)\preceq n\min E(N)$. Those hypotheses are not imposed here. The cited theorem is not a supplier for either main proof. |
-| [AK] M. Aliabadi and E. Krop, *Matchings in Matroids over Abelian Groups, III*, [arXiv:2509.14339v2](https://arxiv.org/html/2509.14339v2), Lemma 2.8 and Claim 3.3 | Counterexamples 5.1 and 5.2 address these exact statement/condition pairs. Neither lemma nor claim supplies a main proof step. Theorem 3.9(1), and Theorem 3.10(1) at hyperplane-nullity parameter $t=1$, retain $|A|<|B|-1$. No inference about unrelated results is made from those defects. |
+| [AK] M. Aliabadi and E. Krop, *Matchings in Matroids over Abelian Groups, III*, [arXiv:2509.14339v2](https://arxiv.org/html/2509.14339v2), Lemma 2.8 and Claim 3.3 | Propositions 5.1 and 5.2 address these exact statement/condition pairs. Neither lemma nor claim supplies a main proof step. Theorem 3.9(1), and Theorem 3.10(1) at hyperplane-nullity parameter $t=1$, retain $|A|<|B|-1$. No inference about unrelated results is made from those defects. |
 
 The target in Theorems 2.1 and 3.3 is the independently specified
 matroid of Definition 1.3 with all of its actual bases. The results
@@ -733,14 +745,14 @@ $|A|\le |B|<p$ and $0\notin B$. The torsion-free ordered additive-growth
 argument in Theorem 2.1 cannot be transferred merely by treating cyclic indices as integers.
 The needed replacement is a sumset theorem with its exact equality
 and wraparound alternatives for $X+(U_X\cup\{0\})\subseteq A$.
-Counterexample 5.4 does not decide this prime-order problem.
+Proposition 5.4 does not decide this prime-order problem.
 
 **问题 6.2（Paving targets with larger hyperplanes）。** For
 arbitrary loopless paving $N$ without dual paving, give a structural
 classification of failures when $|A|\le |B|$ over torsion-free
 abelian groups. Criterion (R) and the target-union bound (U) remain exact necessary
 tools, but a deficient $C_S$ can lie in a hyperplane of size greater
-than $r$; Counterexample 5.3 exhibits this phenomenon even at a
+than $r$; Proposition 5.3 exhibits this phenomenon even at a
 one-element gap. The missing inference is a classification of
 possible blocked-translation sets jointly with those larger target
 hyperplanes, rather than the minimal sumset equality used in
