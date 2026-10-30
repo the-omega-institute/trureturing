@@ -42,9 +42,7 @@ private theorem a_two_far (q h : ℤ) (hq : 1≤q) (hh : 32*q≤h) :
   have hs2 : 2*h/2=h := by omega
   have ht8 : 8*q/8=q := by omega
   have hcon : constructor 4 (2*h) (8*q)=makePlan 11 .bga .q ⟨q,0,1⟩ ⟨0,v,0⟩ := by
-    unfold constructor
-    repeat' (split <;> try omega)
-    all_goals simp only [ht8] <;> rfl
+    simp (disch := omega) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, ht8]
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
   · dsimp [Bounded,makePlan]; rw [ht2,hs2]; omega
@@ -76,9 +74,7 @@ private theorem c_two_far_s (q h : ℤ) (hq : 1≤q) (hh : 64*q≤h) :
   have hs2 : 4*h/2=2*h := by omega
   have hw : 25*(64*q)/64=25*q := by omega
   have hcon : constructor (64*q) (4*h) 4=makePlan 29 .bga .q ⟨1,y,0⟩ ⟨0,0,25*q⟩ := by
-    unfold constructor
-    repeat' (split <;> try omega)
-    all_goals simp only [hw] <;> rfl
+    simp (disch := omega) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hw]
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
   · dsimp [Bounded,makePlan]; rw [hr2,hs2]; omega
@@ -137,9 +133,7 @@ private theorem c_two_far_r (e : ℕ) (h : ℤ)
     dsimp [m,n,d]
     congr 2 <;> ring
   have hcon : constructor (64*q) (4*h) 4=makePlan 28 .agb .q ⟨1,h-1,m⟩ ⟨0,0,25*q⟩ := by
-    unfold constructor
-    repeat' (split <;> try omega)
-    all_goals simp only [hmform,hsv,hw]
+    simp (disch := omega) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hmform,hsv,hw]
   change Certificate (64*q) (4*h) 4 (constructor (64*q) (4*h) 4)
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
@@ -180,9 +174,7 @@ private theorem b_two_diagonal (q : ℤ) (hq : 1≤q) :
     apply Int.ediv_lt_of_lt_mul (by rw [hd]; omega)
     rw [hn,hd]; nlinarith [sq_nonneg q]
   have hcon : constructor (16*q) 4 (16*q)=makePlan 13 .bag .p ⟨0,0,8*q-1⟩ ⟨v,0,0⟩ := by
-    unfold constructor
-    repeat' (split <;> try omega)
-    all_goals simp only [hr2] <;> rfl
+    simp (disch := omega) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hr2]
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
   · dsimp [Bounded,makePlan]; rw [hr2]; omega
@@ -212,9 +204,7 @@ private theorem b_two_tall (h w : ℤ) (hh : 4≤h) (hw : 4*h≤w) :
     apply Int.ediv_lt_of_lt_mul (by rw [hd]; omega)
     rw [hn,hd]; nlinarith
   have hcon : constructor (2*h) 4 (2*w)=makePlan 12 .bag .q ⟨v,0,0⟩ ⟨0,0,h-1⟩ := by
-    unfold constructor
-    repeat' (split <;> try omega)
-    all_goals simp only [hr2] <;> rfl
+    simp (disch := omega) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hr2]
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
   · dsimp [Bounded,makePlan]; rw [hr2,ht2]; omega
@@ -262,9 +252,7 @@ private theorem b_two_next_arithmetic (h : ℤ) (hh : 4≤h) (hnodiv : ¬(5:ℤ)
       (show 0≤8*h-5*z-1 by omega),
       mul_nonneg (show 0≤h by omega) (show 0≤4-(8*h-5*z) by omega)]
   have hcon : constructor (2*h) 4 (4*h)=makePlan 12 .bag .q ⟨v,0,0⟩ ⟨0,0,h-1⟩ := by
-    unfold constructor
-    repeat' (split <;> try omega)
-    all_goals simp only [hr2] <;> rfl
+    simp (disch := omega) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hr2]
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
   · dsimp [Bounded,makePlan]; rw [hr2,ht2]; omega
@@ -327,9 +315,7 @@ private theorem b_two_far (h q : ℤ) (hq : 1≤q) (hh : 16*q≤h)
     dsimp [z,n,d]
     congr 1 <;> ring
   have hcon : constructor (2*h) 4 (8*q)=makePlan 16 .agb .t ⟨3*q,0,0⟩ ⟨0,0,z⟩ := by
-    unfold constructor
-    repeat' (split <;> try omega)
-    all_goals simp only [hp,hzform]
+    simp (disch := omega) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hp,hzform]
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
   · dsimp [Bounded,makePlan]; rw [hr2,ht2]; omega
@@ -388,9 +374,7 @@ private theorem a_two_ordered (h q : ℤ) (hh : 8≤h) (hq : 1≤q) :
   have htq : 2*h*q/(2*h)=q := Int.ediv_eq_of_eq_mul_right (by omega) rfl
   have hcon : constructor 4 (2*h) (2*h*q)=chooseEar 4 (2*h) (2*h*q) 7
       ⟨q*(h-1),0,0⟩ ⟨0,v,1⟩ := by
-    unfold constructor
-    repeat' (split <;> try nlinarith)
-    all_goals simp only [hs2,htq]
+    simp (disch := nlinarith) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hs2,htq]
   rw [hcon]
   have htail : n-d*v≤h*(2*h*q+1) := by
     have hc := mul_nonneg (show 0≤h-8 by omega) (show 0≤h*q by nlinarith)

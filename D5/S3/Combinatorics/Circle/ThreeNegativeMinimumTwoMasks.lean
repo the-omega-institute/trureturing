@@ -6,6 +6,7 @@
    utility: none
    digest: Exact physical masks and dyadic rows for the minimum-two constructor. -/
 module
+import Mathlib.Data.Nat.Bitwise
 import D5.S3.Combinatorics.Circle.ThreeBitSource
 
 set_option autoImplicit false
@@ -572,9 +573,7 @@ private theorem c_two_equal (d : ℕ) :
   have hw' : 3*(64*q)/16=12*q := by omega
   have hcon : constructor (64*q) (64*q) 4 =
       makePlan 26 .agb .q ⟨1,16*q-1,0⟩ ⟨0,0,25*q⟩ := by
-    unfold constructor
-    repeat' (split <;> try omega)
-    all_goals simp only [hr2,hs2,hv,hw,hw']
+    simp (disch := omega) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hr2,hs2,hv,hw,hw']
   change Certificate (64*q) (64*q) 4 (constructor (64*q) (64*q) 4)
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
@@ -600,9 +599,7 @@ private theorem c_two_double_s (d : ℕ) :
   have hw' : 3*(64*q)/16=12*q := by omega
   have hcon : constructor (64*q) (128*q) 4 =
       makePlan 26 .agb .q ⟨1,32*q-1,0⟩ ⟨0,0,25*q⟩ := by
-    unfold constructor
-    repeat' (split <;> try omega)
-    all_goals simp only [hr2,hs2,hv,hw,hw']
+    simp (disch := omega) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hr2,hs2,hv,hw,hw']
   change Certificate (64*q) (128*q) 4 (constructor (64*q) (128*q) 4)
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
@@ -628,9 +625,7 @@ private theorem c_two_double_r (d : ℕ) :
   have hw' : 3*(64*q)/16=12*q := by omega
   have hcon : constructor (64*q) (32*q) 4 =
       makePlan 27 .gab .q ⟨1,0,12*q⟩ ⟨0,16*q-1,0⟩ := by
-    unfold constructor
-    repeat' (split <;> try omega)
-    all_goals simp only [hr2,hs2,hv,hw,hw']
+    simp (disch := omega) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hr2,hs2,hv,hw,hw']
   change Certificate (64*q) (32*q) 4 (constructor (64*q) (32*q) 4)
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
