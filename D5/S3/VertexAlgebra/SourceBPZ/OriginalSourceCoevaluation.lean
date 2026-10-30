@@ -154,6 +154,7 @@ private theorem theta_mem_grade (D : LatticeData) (h : ℤ) (v : Carrier D)
   induction hv using Submodule.span_induction with
   | mem v hv =>
     obtain ⟨a, ha, rfl⟩ := hv
+    have ha' : energy D a = h := ha
     have ht : theta D (carrierBasis D a) =
         ((-1 : ℂ) ^ (occurrences D a.2).length) •
           carrierBasis D (-a.1, a.2) := by
@@ -163,7 +164,7 @@ private theorem theta_mem_grade (D : LatticeData) (h : ℤ) (v : Carrier D)
     rw [ht]
     apply (grade D h).smul_mem
     have he : energy D (-a.1, a.2) = h := by
-      simpa only [energy, chargeEnergy_neg] using ha
+      simpa only [energy, chargeEnergy_neg] using ha'
     rw [← he]
     exact carrierBasis_mem_grade D _
   | zero => simpa using (grade D h).zero_mem
@@ -297,7 +298,7 @@ def representFixedGrade (D : LatticeData)
       map_smul' := by
         intro c f
         simp only [finsum_eq_sum_of_fintype, LinearMap.smul_apply,
-          smul_smul, Finset.smul_sum, RingHom.id_apply] }
+          smul_smul, Finset.smul_sum, RingHom.id_apply, smul_eq_mul] }
 
 /-- Every functional on the actual fixed integer grade has exactly this
 explicit Q representative; the two carriers remain distinct types. -/
