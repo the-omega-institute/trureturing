@@ -36,7 +36,7 @@ internal sealed class EaslickMinimalAdvantageDocument : IScribeDocumentDefinitio
     private static DocumentBlock Node(string id, string title, string declaration, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(StrataLint.Scribe.FormulaDsl.Disp(Statement(declaration))),
-            declaration is "IsDie" or "winCount" or "indexWinCount" or "winProbability" or "IsMinimum" or "Edge" or "HasCycle" or "S" or "ConjectureOne"
+            declaration is "IsDie" or "winCount" or "indexWinCount" or "winProbability" or "IsMinimum" or "Edge" or "HasCycle" or "S" or "ConjectureOne" or "threshold_attained" or "minimum_probability" or "edge_iff"
                 ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose)), Paragraph(Text("In the formulas, at selects a zero-based face or cycle position, sum sums every element of the displayed finite sequence, NatToRat is the natural-to-rational cast, NatSub is truncated natural subtraction, shift adds its displayed constant to each face, and head denotes head!; HasCycle separately requires a nonempty cycle. Boolean toNat sends false to zero and true to one. Rational division is total, with x divided by zero equal to zero; all graph applications use at least three faces. All finite face-index domains retain repeated-face multiplicities."))), role);
     private static Formula.BoundVariable B(string name, Formula type) => new(FormulaIdentifier.Create(name), type);

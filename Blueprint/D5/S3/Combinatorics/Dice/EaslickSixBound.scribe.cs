@@ -28,8 +28,9 @@ internal sealed class EaslickSixBoundDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.FromAuthor(F.Disp(Statement(declaration))), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose)), Paragraph(Text("In these formulas, at is zero-based list indexing, length and dedup are list length and duplicate removal, head is Lean head!, fst and snd are product projections, and List subset means membership inclusion. The names diceSix, rankSix, fiberSix and cutsSix denote exactly the private Lean inputs dice6, rank6, fiber6 and cuts6, respectively; decide converts the displayed decidable proposition to Bool. The checker definitions are characterized by equality to the Boolean value true, including empty-input behavior. All quantifiers include their full carrier types and anonymous instance dictionaries."))), declaration == "checkRank" ? DescribeRole.Definition : DescribeRole.Theorem);
+            H(title), StatementSource.FromAuthor(F.Disp(Statement(declaration))),
+            declaration is "six_cycle_bound" or "S_six" ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose)), Paragraph(Text("In these formulas, at is zero-based list indexing, length and dedup are list length and duplicate removal, head is Lean head!, fst and snd are product projections, and List subset means membership inclusion. dice6, rank6, fiber6 and cuts6 are the private Lean inputs; decide converts the displayed decidable proposition to Bool. The checker definitions are characterized by equality to the Boolean value true, including empty-input behavior. All quantifiers include their full carrier types and anonymous instance dictionaries."))), declaration == "checkRank" ? DescribeRole.Definition : DescribeRole.Theorem);
     private static Formula.BoundVariable B(string name, Formula type) => new(FormulaIdentifier.Create(name), type);
     private static Formula All(Formula body, params Formula.BoundVariable[] variables) => new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
     private static Formula And(params Formula[] xs) => xs.Aggregate((a,b) => new Formula.Logic(a, FormulaLogicOperator.And,b));
@@ -68,7 +69,7 @@ internal sealed class EaslickSixBoundDocument : IScribeDocumentDefinition
     {
         "checkRank" => RankStatement(false),
         "checkRank_sound" => RankStatement(true),
-        "sixRank_check" => Equal(Call("checkRank",Id("diceSix"),Fn("d",Call("List",N),Fn("e",Call("List",N),Call("decide",Equal(Call("winCount",Id("d"),Id("e")),Num(19))))),Id("rankSix"),Id("fiberSix"),Id("cutsSix"),Num(6)),Id("true")),
+        "sixRank_check" => Equal(Call("checkRank",Id("dice6"),Fn("d",Call("List",N),Fn("e",Call("List",N),Call("decide",Equal(Call("winCount",Id("d"),Id("e")),Num(19))))),Id("rank6"),Id("fiber6"),Id("cuts6"),Num(6)),Id("true")),
         "six_cycle_bound" => All(Imp(Call("HasCycle",Num(6),Id("k")),Le(Id("k"),Num(6))),B("k",N)),
         "S_six" => Call("S",Num(6)),
         "conjecture_one" => And(Call("S",Num(6)),All(Imp(Le(Num(7),Id("n")),Not(Call("S",Id("n")))),B("n",N))),
