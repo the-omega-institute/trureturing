@@ -1,0 +1,86 @@
+#### 定理 5.4（振幅三角的有向面积就是隐藏法向）
+
+沿用前一定理的归一化输入纯 qubit，定义复平面边向量
+
+$$
+
+t_j=\omega^{-j}a_j, t_0+t_1+t_2=0.
+
+$$
+
+其边长为 $\sqrt{q_j}$。以
+$\mathcal A=\frac12\operatorname{Im}(\overline{t_0}t_1)$ 为按 $t_0,t_1$ 顺序的有向面积，$\Delta=|\mathcal A|$ 为无向面积，则
+
+$$
+
+\boxed{
+ 16\Delta^2=1-2\sum_jq_j^2,
+ r_3^2=48\Delta^2,
+ r_3=-4\sqrt3\mathcal A.
+ }
+
+$$
+
+因此三概率连同非退化振幅三角的实际手性，确定完整纯 qubit 射线。
+
+
+**证明。**
+
+边闭合由定理 [定理 5.2](#thm:trineisometry)。三边平方的 Heron 恒等式给
+
+$$
+
+16\Delta^2
+ =2(q_0q_1+q_1q_2+q_2q_0)-(q_0^2+q_1^2+q_2^2)
+ =1-2\sum_jq_j^2.
+
+$$
+
+亦可由 $t_2=-t_0-t_1$ 消去 $\operatorname{Re}(\bar t_0t_1)$，直接用
+$4\Delta^2=|t_0|^2|t_1|^2-(\operatorname{Re}\bar t_0t_1)^2$ 得同式。
+再代入定理 [定理 5.3](#thm:trinedisk) 和纯态 $|r|=1$，得到第二式。
+
+最后 $t_0=(\alpha+\beta)/\sqrt3$、
+$t_1=(\omega^2\alpha+\omega\beta)/\sqrt3$。乘积的交叉项为
+$\omega\bar\alpha\beta+\omega^2\bar\beta\alpha$，是实数，所以
+
+$$
+
+\operatorname{Im}(\overline{t_0}t_1)
+ =\frac{-\sqrt3|\alpha|^2/2+\sqrt3|\beta|^2/2}{3}
+ =-\frac{\sqrt3}{6}r_3.
+
+$$
+
+再除以二得第三式。由三概率恢复 $r_\parallel$，由面积符号选择 $r_3$，然后用 Hopf 商的单射性恢复射线。
+
+**证明完。** ∎
+
+
+```mermaid
+---
+config:
+  themeVariables:
+    fontSize: 18px
+---
+block-beta
+  columns 11
+  space:8 CR(("C")) space:2
+  space:11
+  OL(("O")) space:3 BL(("B")) space OR(("O")) space:3 BR(("B"))
+  space:11
+  space:2 CL(("C")) space:8
+  SL["左支 ψ=(1,0), r₃=+1<br/>𝒜=−1/(4√3)"]:5 space SR["右支 ψ=(0,1), r₃=−1<br/>𝒜=+1/(4√3)"]:5
+  OL -- "t₀" --> BL
+  BL -- "t₁" --> CL
+  CL -- "t₂" --> OL
+  OR -- "t₀" --> BR
+  BR -- "t₁" --> CR
+  CR -- "t₂" --> OR
+  classDef default fill:#fff,stroke:#333,color:#222
+  style SL fill:none,stroke:none
+  style SR fill:none,stroke:none
+```
+
+两图均采用实轴向右、虚轴向上的同一复平面方向；有向边依次为 $t_0:O\to B$、$t_1:B\to C$、$t_2:C\to O$。精确局部坐标为 $O=(0,0)$、$B=(1/\sqrt3,0)$；左支 $C=(1/(2\sqrt3),-1/2)$，右支 $C=(1/(2\sqrt3),+1/2)$。两支在原图中的整体平移分别为 $-1.2\,\mathrm{cm}$ 与 $+1.2\,\mathrm{cm}$；面积记号 A 对应 $\mathcal A$。
+

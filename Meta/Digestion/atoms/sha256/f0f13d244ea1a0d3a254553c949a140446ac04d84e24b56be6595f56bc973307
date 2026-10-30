@@ -1,0 +1,92 @@
+**Lemma 9.3 (The full interval for imaginary-axis nodes).** For every $0<b\le1$, every entire complex-valued $g$, and every $x\in[-1,1]$,
+
+$$
+\left|g'(x)-\frac{g(ib)-g(-ib)}{2ib}\right|\le\|g''\|_{\mathbb D}.
+$$
+
+Stance: repo-derived.
+
+**Proof.** Write $h=g''$ and $H=g'-g'(0)$. The fundamental theorem of calculus along the vertical segment gives
+
+$$
+\frac{g(ib)-g(-ib)}{2ib}=g'(0)+\frac1{2b}\int_{-b}^b H(it)\,dt.
+$$
+
+For real $|t|<1$ let
+
+$$
+P_t(\theta)=\frac{1-t^2}{1-2t\cos\theta+t^2},\qquad
+A_x(\theta)=\int_0^xP_t(\theta)\,dt\quad(|x|<1).
+$$
+
+The classical disk Poisson identity is $h(t)=\int h(e^{i\theta})P_t(\theta)\,d\mu(\theta)$. In this setting it follows directly from
+
+$$
+P_t(\theta)=1+2\sum_{m\ge1}t^m\cos(m\theta)
+$$
+
+and the absolutely convergent Taylor series of $h$ on the circle: its $m$th analytic moment is $t^m$, including negative real $t$. Integrating on the compact segment between $0$ and $x$ is legitimate because $|t|\le|x|<1$. Together with Lemma 9.2 this gives the identity on the actual function $g$,
+
+$$
+g'(x)-\frac{g(ib)-g(-ib)}{2ib}
+=\int_0^{2\pi}h(e^{i\theta})K_{x,b}(\theta)\,d\mu(\theta),\qquad
+K_{x,b}=A_x-B_b.
+$$
+
+We prove $\int|K_{x,b}|\,d\mu\le1$ for every $|x|<1$. First let $0\le x<1$. Here $A_x\ge0$, and $\int A_x\,d\mu=x$ because each $P_t$ has mean one. By Lemma 9.2, $B_b\le0$ on the half-circle $\cos\theta\ge0$, so $K_{x,b}\ge0$ there.
+
+On the other half-circle put $c=-\cos\theta\ge0$ and define
+
+$$
+A_1(\theta)=\int_0^1\frac{1-t^2}{1+2ct+t^2}\,dt.
+$$
+
+This is finite on that half-circle. Its integrand is nonincreasing in $t$: direct differentiation for general $\theta$ gives
+
+$$
+\frac{\partial P_t(\theta)}{\partial t}
+=\frac{2[(1+t^2)\cos\theta-2t]}{(1-2t\cos\theta+t^2)^2}\le0
+\quad(0\le t<1,\ \cos\theta\le0).
+$$
+
+The average of a nonincreasing function over $[0,x]$ is at least its average over $[0,1]$, so $A_x\ge xA_1$, also at $x=0$. Moreover,
+
+$$
+A_1\ge\int_0^1\frac{1-t^2}{(1+t)^2}\,dt
+=2\log2-1\ge\frac{31}{81}>C\ge B_b\ge0.
+$$
+
+For the penultimate rational lower bound, the same logarithm series used in Lemma 9.2, now at $s=1/3$, gives $\log2\ge2(1/3+1/81)=56/81$. Therefore, writing $u_+=\max\{u,0\}$,
+
+$$
+(B_b-A_x)_+\le(1-x)B_b
+\quad\text{on }\cos\theta\le0.
+$$
+
+Since this half-circle has $\mu$-measure $1/2$ and $0\le B_b\le C$, while the negative part of $K_{x,b}$ vanishes on the other half-circle, we obtain
+
+$$
+\begin{aligned}
+\int|K_{x,b}|\,d\mu
+&=\int K_{x,b}\,d\mu+2\int(-K_{x,b})_+\,d\mu\\
+&\le x+2(1-x)\int_{\cos\theta\le0}B_b\,d\mu\\
+&\le x+(1-x)C\le1.
+\end{aligned}
+$$
+
+Here $\int K_{x,b}\,d\mu=x$ uses the zero mean of $B_b$. For $-1<x<0$, put $u=-x$. The identities $P_{-t}(\theta)=P_t(\pi-\theta)$ and $B_b(\pi-\theta)=-B_b(\theta)$ imply
+
+$$
+K_{-u,b}(\theta)=-K_{u,b}(\pi-\theta).
+$$
+
+The change of variable $\theta\mapsto\pi-\theta$ preserves circle measure, so the same integral bound follows. The integral representation and the triangle inequality now give, for every $|x|<1$,
+
+$$
+\left|g'(x)-\frac{g(ib)-g(-ib)}{2ib}\right|
+\le\sup_{|z|=1}|g''(z)|\int|K_{x,b}|\,d\mu
+\le\|g''\|_{\mathbb D}.
+$$
+
+Finally $g'$ is continuous on the closed interval, and the fixed slope is finite since $b>0$. Letting $x$ tend to either endpoint proves the assertion at $x=\pm1$. No boundary Poisson formula at $t=\pm1$ is required. The kernel of Lemma 9.2 already includes $b=1$, so this argument applies directly to the pair $(i,-i)$ as well. $\square$
+

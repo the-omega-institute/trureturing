@@ -1,0 +1,55 @@
+**Proposition 18.1 (the unchanged original-domain implication).** Retain the complete necessary region
+
+$$
+K_3=\left\{(\lambda,q):0\le q\le\tfrac12,\quad
+\lambda^2\le1-2q,\quad
+5\lambda^2\le(5-9q)(1-q),\quad
+2\lambda^2-\lambda\le1-q\right\}.
+$$
+
+For a parameter in $K_3$, full-complex Schwarz sufficiency is equivalent to the following joint requirement at every $t\in\Delta_3^\circ$: all $P_i(t)\ge0$, all $b_i(t)\in\operatorname{Ran}P_i(t)$, and their original finite Moore–Penrose coefficients satisfy
+
+$$
+\kappa_i(t)+\kappa_j(t)\ge0\quad(i<j),\qquad
+\kappa_1(t)\kappa_2(t)+\kappa_1(t)\kappa_3(t)
+ +\kappa_2(t)\kappa_3(t)\ge0.
+\tag{18.1}
+$$
+
+The entire probe-simplex boundary, including its singular faces and parameter equalities, remains supplied by Theorem 8.1. Individual inequalities $\kappa_i\ge0$ are not necessary for this joint condition. Whether every point of the whole positive top arc
+
+$$
+1/3<\lambda<1,\qquad
+q=\frac{7-\sqrt{4+45\lambda^2}}9
+\tag{18.2}
+$$
+
+satisfies the full-support condition remains the open implication of Question 12.2 on that arc. The sufficient interval and triangle above do not assert that implication.
+
+**Proof.** Corollary 8.2 and Theorem 3.2 already give the exact reduction, with the stated range conditions at singular blocks. On $z_1+z_2+z_3=0$, the minimized diagonal form is represented by
+
+$$
+H(t)=\begin{pmatrix}\kappa_1+\kappa_3&\kappa_3\\
+\kappa_3&\kappa_2+\kappa_3\end{pmatrix}.
+$$
+
+Its determinant is the last expression in (18.1). Nonnegativity of all pair sums and of this determinant implies $H\ge0$ by the Hermitian $2\times2$ criterion. Conversely a nonnegative form on the trace-zero hyperplane, tested on each $e_i-e_j$, gives all pair sums, and $H\ge0$ gives its determinant. Thus (18.1) is equivalent to the full joint trace-zero condition, with zero determinants and zero coefficients allowed.
+
+For an explicit distinction from individual nonnegativity, Theorem 14.1 supplies $\lambda=-2/5$, $q=7/25$ for every complex input and probe. At the full-support triple $t=(1/6,5/12,5/12)$, (14.3), with $r=2/5$, gives
+
+$$
+\kappa_1=\frac7{25}\cdot\frac15
+ \left(\frac{48}{5}\cdot\frac16-\frac{11}{5}\right)
+ =-\frac{21}{625}<0.
+$$
+
+The row blocks there are positive definite by (14.2), so these are the original coefficients. This Schwarz parameter satisfies the joint condition while violating the individual inequality. Hence imposing individual nonnegativity would change the target.
+
+Finally (18.2) is the positive top boundary of the original $K_3$. To see that the other necessary conditions are retained, put $\ell=\lambda\in(1/3,1)$. The third inequality is equality on (18.2); its residual as a function of $q\in[0,1/2]$ is strictly decreasing. At $q=(1-\ell^2)/2$ that residual is $(1-\ell^2)(1-9\ell^2)/4<0$, and at $q=(1-\ell)(1+2\ell)$ it is
+
+$$
+4\ell(\ell-1)(3\ell-1)(3\ell+1)<0.
+$$
+
+If the latter trial value exceeds $1/2$, the fourth inequality already follows from $q\le1/2$; otherwise strict decrease shows that (18.2) is below that trial value. The first trial value is in $[0,1/2]$ and gives the second inequality in the same way. Formula (18.2) itself gives $0<q<4/9$. Thus it retains all four original necessary conditions. None of these necessary inequalities proves (18.1) on every full-support triple. ∎
+

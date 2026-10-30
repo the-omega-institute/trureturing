@@ -1,0 +1,195 @@
+**Theorem 11.2 (Transition graph value and stability for all comparison
+graphs).** For every fixed $I=[\rho_-,\rho_+]\subset(0,\infty)$ there
+exist finite positive constants $A,C,D$, depending only on $I$, such that
+for every integer $a\ge A$, every integer $h\ge1$ with
+$\rho_a=h/a^{3/2}\in I$, and every integer $N\ge\lceil Da^6\rceil$,
+$\mathfrak G_N(a,h)$ is nonempty, its infimum $V_N(a,h)$ is a minimum,
+and, with $t=t(\rho_a)$,
+
+$$
+\left|\frac{V_N(a,h)}{a^3}-F(\rho_a)
+               +\frac{2\rho_a t}{\sqrt a}\right|\le\frac Ca.
+\tag{11.14}
+$$
+
+Furthermore, for every $G\in\mathfrak G_N(a,h)$ and every
+$\epsilon\in[0,1]$ satisfying
+
+$$
+W(G)\le V_N(a,h)+\epsilon a^3,
+\tag{11.15}
+$$
+
+choose a source $u$ uniformly from its $N$ actual sources, and put
+$K=k_u$, $y_i=d_i/N$, $U_u=\sum_{i\in N_G(u)}y_i^{-1}$. Then
+simultaneously
+
+$$
+\mathbb E\left[\left(\frac Ka-t\right)^2
+                      \mathbf1_{\{K\ge2\}}\right]
+\le C\left(\epsilon+\frac1a\right),
+\tag{11.16}
+$$
+
+$$
+\left|\mathbb P(K=1)-\left(1-\frac1t\right)\right|
+\le C\sqrt{\epsilon+\frac1a},
+\tag{11.17}
+$$
+
+$$
+\mathbb E\left[\left(\frac{U_u}{a^{3/2}}-2t^{5/2}\right)^2
+                      \mathbf1_{\{K=1\}}\right]
+\le C\left(\epsilon+\frac1a\right).
+\tag{11.18}
+$$
+
+The expectations, marginals, mean and energy in these assertions all
+belong to the same actual graph $G$. The comparison class has exactly the
+conditions of Definition 9.1; it has no extra marginal floor, symmetry,
+cardinality-support restriction or attainment assumption for the law
+infimum $M(a,h)$.
+
+**Proof.** Use Theorem 11.1 and Theorem 8.4 on the same compact interval,
+increasing $A,D$ when necessary. Their constants are uniform in the
+integer parameters. In the notation (11.1), the upper-bound calculation
+(8.16)--(8.17) gives
+
+$$
+\frac{H_j(a,h)}{a^3}
+=F(\rho_a)-\frac{2\rho_a t}{\sqrt a}+O_I(a^{-1}),
+\qquad 0\le H_j(a,h)-M(a,h)\le C_Ia^2.
+\tag{11.19}
+$$
+
+The second inequality uses both the admissibility of that exact law and
+the full-law value estimate (8.6). By (9.5) and (11.2),
+
+$$
+V_N(a,h)\le W(G_N)\le Q(G_N)
+\le H_j(a,h)+C_I\frac{a^{15/2}}N.
+\tag{11.20}
+$$
+
+In particular the graph class is nonempty. The finite number of labelled
+simple graphs on the two fixed sides implies attainment of $V_N$.
+
+We next give a lower bound on the entire graph class. Put
+$\gamma=2/(\sqrt2+1)>0$. For every actual edge ratio $0\le z<1$,
+
+$$
+2(\sqrt{1+z^2}-1)
+=\frac{2z^2}{\sqrt{1+z^2}+1}\ge\gamma z^2.
+$$
+
+Thus $W(G)\ge\gamma Q(G)$ for every comparison graph. Also, (9.5) and
+$\sum_e z_e^4\le(\sum_e z_e^2)^2$ give
+
+$$
+0\le Q(G)-W(G)\le\frac{Q(G)^2}{4N}.
+\tag{11.21}
+$$
+
+Choose $B_I\ge1$ so large that, for all parameters in the domain,
+$M(a,h)\le H_j(a,h)\le B_Ia^3$ and the right side of (11.20) is at most
+$B_Ia^3$. Such a constant exists by (11.19), compactness of $I$, and
+$a^{15/2}/N\le a^{3/2}/D\le a^3/D$.
+If $W(G)\ge B_Ia^3$, then $W(G)\ge M(a,h)$. Otherwise
+$Q(G)\le B_Ia^3/\gamma$, and (11.21) and Lemma 9.2 give
+
+$$
+W(G)\ge Q(G)-\frac{B_I^2a^6}{4\gamma^2N}
+\ge M(a,h)-C_I\frac{a^6}{N}.
+$$
+
+This proves, on the full class and hence for its minimum,
+
+$$
+M(a,h)-C_I\frac{a^6}{N}
+\le V_N(a,h)
+\le H_j(a,h)+C_I\frac{a^{15/2}}N.
+\tag{11.22}
+$$
+
+Combining (11.22), (11.19) and (8.6), before absorbing the budget errors,
+one obtains
+
+$$
+\left|\frac{V_N(a,h)}{a^3}-F(\rho_a)
+                +\frac{2\rho_a t}{\sqrt a}\right|
+\le C_I\left(\frac1a+\frac{a^{9/2}}N\right).
+\tag{11.23}
+$$
+
+Here $a^3/N\le a^{9/2}/N$ also absorbs the lower-bound error. Since
+$N\ge Da^6$, (11.23) implies (11.14). Neither the energy sublevel
+argument nor its complementary high-energy case used any construction
+property as a hypothesis on comparison graphs.
+
+Now let $G$ satisfy (11.15). Equations (11.20) and (11.19) show
+$W(G)\le(B_I+1)a^3$. Consequently $Q(G)\le(B_I+1)a^3/\gamma$, and
+(11.21), followed by (11.20), gives for its actual law $x_G$
+
+$$
+\begin{aligned}
+H(x_G)=Q(G)
+&\le W(G)+C_Ia^6/N\\
+&\le M(a,h)+\epsilon a^3
+       +C_I\left(a^2+\frac{a^{15/2}}N+\frac{a^6}N\right)\\
+&\le M(a,h)+\epsilon a^3+C_Ia^2.
+\end{aligned}
+\tag{11.24}
+$$
+
+The last line uses the stated budget. This is a same-law estimate:
+Lemma 9.2 identifies $x_G$, $y_i=d_i/N$, $K=k_u$ and $U_u$ and gives
+$\mathbb E K=a$ and $\mathbb E U_u=s$ exactly.
+
+Apply the residual argument already proved in Theorem 10.1. In its
+notation, (10.11)--(10.12) and (11.24) give
+
+$$
+0\le\frac{\mathbb E W_{at}(K,aU_u)}{a^5}
+\le\epsilon+\frac{C_I}{a}
+\le C'_I\left(\epsilon+\frac1a\right).
+\tag{11.25}
+$$
+
+The implication from the residual bound (10.13) to (10.2)--(10.4), proved
+in (10.14)--(10.18), applies directly to (11.25), with
+$\eta=\epsilon+a^{-1}$. Those steps use only this bound, the exact mean
+of this law, and the uniform singleton-contact estimate (10.17).
+In particular they impose no upper bound on the coefficient multiplying
+$\eta$; there is no need to insert $\epsilon+C_I/a$ as a parameter in
+$[0,1]$ into the statement of Theorem 10.1. They give precisely
+(11.16)--(11.18), after increasing one common $C$. Thus the three rates
+are applications of the established actual-law stability estimates to
+the actual graph law. ∎
+
+The new realization estimate (11.2) supplies the prescribed-budget bridge
+in the transition part of Open problem 8.6(4). The value and stability
+conclusions reuse the full-law value and first correction of Theorem 8.4,
+the same-law graph identity and quadratic bridge of Lemma 9.2, and the
+three-observable remainder estimates proved in Theorem 10.1. The balanced
+integer allocation and the single remainder source above are elementary
+incidence constructions. No fixed-$s$ graph limit or square-root-regime
+realization estimate is needed for this joint-growth conclusion.
+
+The CDSO normalization remains the one cited in Section 7 from
+Albalahi--Das--Ali--Barman--Hamza, DOI
+[10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176), p.109.
+The weak-duality input is only the expectation of the pointwise
+certificate already proved in Section 8, with the Bertsimas--Popescu
+source and its scope specified there. These deductions carry no global
+priority claim. Their relation to the full results of Zhao--Zhao, DOI
+[10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+and Smirnov, DOI
+[10.47443/dml.2026.164](https://doi.org/10.47443/dml.2026.164), remains
+undetermined; neither article is a premise here.
+
+The constants are uniform only for $\rho_a$ in a fixed compact positive
+interval. The budget $Da^6$ is sufficient; no least exponent or coefficient
+is asserted. These results do not determine finite exact values or
+extremizers, reconstruct the complete neighborhood law, classify its
+label partition, or settle the other scales in Open problem 8.6.
+

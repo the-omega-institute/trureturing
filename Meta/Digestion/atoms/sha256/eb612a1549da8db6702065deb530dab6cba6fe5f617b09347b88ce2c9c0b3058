@@ -1,0 +1,47 @@
+**Theorem 9.1 (The minimal relaxed row forces an ordinary fifth power).** Let $r\ge3$ and $(\eta,p)\in\mathcal L_r$. Suppose that $\eta(u)$ is rich, that its actual alphabet has exactly $r+1$ letters, and that its row is
+
+$$
+h_0=1,\qquad h_i=2\quad(1\le i\le r),\qquad
+h_{r+j}=3\cdot2^{j-1}\quad(1\le j\le r).
+\tag{34}
+$$
+
+Then $\eta(u)$ contains a one-letter fifth power, and hence $E(\eta(u))\ge5$.
+
+*Proof.* Since $1=h_0\ge|p|\ge1$, the marker is a single letter, say $p=a$, and $\eta(0)=a$. For $1\le i\le r$, the literal representation and $h_i=2$ give
+
+$$
+\eta(i)=a b_i
+$$
+
+for a letter $b_i$. The complete-return condition says that $ab_i a$ has exactly two occurrences of $a$, so $b_i\ne a$. Injectivity says that $b_1,\ldots,b_r$ are pairwise distinct. These $r+1$ letters already occur in the output by Definition 7.1. The actual-alphabet hypothesis therefore gives
+
+$$
+\operatorname{Alph}(\eta(u))=\{a,b_1,\ldots,b_r\}.
+\tag{35}
+$$
+
+Set $k=r+2\le2r$. Formula (34) gives $h_k=6$, so $\eta(k)=a q_k$ with $|q_k|=5$. Since $a q_k a$ is a complete return to $a$, the word $q_k$ contains no $a$. By (35), its letters are among $b_1,\ldots,b_r$.
+
+We locate a suitable occurrence in the original source. For $0\le n\le2r$, put $T_n=\varphi^n(0)$. Only the length-two rules are used before constructing $T_{2r}$, and induction on $n$ gives
+
+$$
+|T_n|=2^n,\qquad T_n[j]=\nu_2(j+1)\quad(0\le j<2^n),
+\tag{36}
+$$
+
+where $\nu_2$ is the exponent of $2$ in a positive integer. In the induction step, the even positions become $0$ and the odd positions increase the old letter by one; these are precisely the two corresponding valuation identities. Let $F_{r+1}$ be $T_{r+1}$ with its last letter $r+1$ removed. The last $2^{r+1}$ letters of $T_{r+2}$ are $F_{r+1}(r+2)$ by (36). The word $F_{r+1}$ uses only $0,\ldots,r$, contains every one of those letters, and ends in $0$.
+
+Thus an actual output factor is
+
+$$
+\eta(F_{r+1})a q_k.
+\tag{37}
+$$
+
+In the part $\eta(F_{r+1})a$, each $b_i$ occurs, and every occurrence of a $b_i$ is immediately followed by $a$. This follows from $\eta(0)=a$, $\eta(i)=ab_i$ for $1\le i\le r$, and the final appended $a$.
+
+Let $b$ be the first letter of $q_k$. Suppose that some different letter $d$ occurs in $q_k$, and take its first occurrence there. It is not the first position of $q_k$, and its preceding letter is different from $a$. Take the last occurrence of $d$ in $\eta(F_{r+1})a$. The factor from that occurrence to the chosen first $d$ in $q_k$ contains exactly two $d$'s. It starts with $da$ and ends with $ed$ for a letter $e\ne a$. It cannot be a palindrome, since its second and penultimate letters differ.
+
+But a single letter is a palindrome, and every complete return to a palindromic factor in a rich word is a palindrome. This is exactly Glen–Justin–Widmer–Zamboni, [*Palindromic richness*, arXiv:0801.1656v1, Theorem 2.14 and Remark 2.15](https://arxiv.org/pdf/0801.1656v1), [doi:10.1016/j.ejc.2008.04.006](https://doi.org/10.1016/j.ejc.2008.04.006). That criterion applies to finite and infinite words, without a recurrence or reversal-closure hypothesis. It contradicts the complete return just found. Hence every letter of $q_k$ is $b$, so $q_k=b^5$. This factor has least period one and exponent five, proving the claim. $\square$
+

@@ -1,0 +1,23 @@
+#### 命题 4.4（五模式中的有质量 Bloch 锥）
+
+全空间 $\mathbb{C}^5$ 不可能承载定理 [定理 4.1](#thm:pauli) 的两个 involutions。若在选定二维投影 $\Pi$ 上定义 Pauli $A,B,C$，在正交补上置零，则
+$A^2=B^2=C^2=\Pi$。对任意五模式态，令
+$w=\operatorname{Tr}\rho\Pi$、$r=(\operatorname{Tr}\rho A,\operatorname{Tr}\rho B,\operatorname{Tr}\rho C)$，则
+
+$$
+
+\boxed{|r|^2\le w^2.}
+
+$$
+
+$w>0$ 时等号恰对应压缩后条件态 $\Pi\rho\Pi/w$ 为纯态。
+
+
+**证明。**
+
+奇数维障碍由定理 [定理 4.1](#thm:pauli)。$w>0$ 时对条件态应用 Bloch 球体定理；$w=0$ 时正半定压缩块的迹为零，只能为零。总五模式为纯向量时，该压缩块秩至多一，但质量 $w$ 仍未必为一。
+
+**证明完。** ∎
+
+
+<a id="sec:trine"></a>

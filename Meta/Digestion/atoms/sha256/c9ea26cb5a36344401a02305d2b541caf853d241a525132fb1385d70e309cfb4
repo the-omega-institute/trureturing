@@ -1,0 +1,114 @@
+**Lemma 17.4 (A unique legal root for the marginal lower problem).** For every fixed $P,j$ of Definition 17.1, $F_{P,j}$ has exactly one minimizer on $\mathcal B_q$. Its coordinates are $u$ on $P$, $v$ at $j$ and $w$ elsewhere, where $(u,v,w)$ is the unique real triple in the region
+
+$$
+\begin{gathered}
+3u+v+n w=q,\qquad \frac9{10}<w<v<u<1,\\
+\max\{|u-\mu|,|v-\mu|,|w-\mu|\}<\frac{48}{a^2},\\
+h=1-u,\qquad \zeta=2\delta-3h,\qquad 0<\zeta<h,
+\end{gathered}
+\tag{17.17}
+$$
+
+satisfying
+
+$$
+\boxed{\quad
+\varphi'(u)+\frac C{v^2}
+=g'(v)-\frac{2C\zeta}{v^3}
+=g'(w).
+\quad}
+\tag{17.18}
+$$
+
+In fact (17.18) and the sum constraint have at most one root anywhere in $(9/10,1)^3$. Moreover $\min_{\mathcal B_q}F_{P,j}<H_d$.
+
+**Proof.** The compact convex slice $\mathcal B_q$ contains $\mu\mathbf1$. On the whole box $\mathcal B$, the only nonzero off-diagonal Hessian entries connect $j$ with a label in $P$ and equal $-2C/y_j^3$. Their absolute values are less than $12a$. For the diagonal entries, writing $D=\delta-3+\sum_{i\in P}y_i\ge-3/10$, one has
+
+$$
+\begin{aligned}
+(F_{P,j})_{ii}
+ &=\frac{2a^2}{y_i^3}+\frac{6C(1-\delta)}{y_i^4}
+ \ge2a^2 &&(i\in P),\\
+(F_{P,j})_{jj}
+ &=\frac{2r^2}{y_j^3}+\frac{6CD}{y_j^4}
+ \ge2a^2-11a,\\
+(F_{P,j})_{kk}
+ &=\frac{2r^2}{y_k^3}-\frac{6C\delta}{y_k^4}
+ \ge2a^2-72 &&(k\notin P\cup\{j\}).
+\end{aligned}
+\tag{17.19}
+$$
+
+For these bounds, $C\le3a$, $C\delta\le5$, $y_i^{-4}\le(10/9)^4<2$, and $a\ge100$ suffice: in particular $6CD/y_j^4\ge-(18/10)\cdot3a\cdot2>-11a$. Subtracting absolute off-diagonal row sums gives respectively $2a^2-12a$, $2a^2-47a$ and $2a^2-72$. Each is at least $a^2$ for $a\ge100$. Thus
+
+$$
+\nabla^2F_{P,j}\succeq a^2 I_s\quad\text{throughout }\mathcal B.
+\tag{17.20}
+$$
+
+The minimizer $y^*$ on $\mathcal B_q$ exists and is unique.
+
+Subtract the scalar $g'(\mu)$ from each entry of $\nabla F_{P,j}(\mu\mathbf1)$. The remaining vector has three entries $-2Ch_0/\mu^3$, one entry $-2Cd_0/\mu^3$, and all other entries zero, where
+
+$$
+h_0=1-\mu,\qquad
+ d_0=2\delta-3h_0
+ =\frac{2\lambda-3+\lambda/a}{a+2}.
+\tag{17.21}
+$$
+
+Here $0<h_0\le1/a$ by (17.5), and $0<d_0\le1/a$: the lower bound follows from $\lambda\ge3/2+\eta$, and the upper bound follows by substituting $\lambda\le2$. Using $C\le3a$ and $\mu\ge9/10$, the norm of this residual vector is less than $24$. Since $F_{P,j}(\mu\mathbf1)=H_d$, strong convexity and minimality give
+
+$$
+\frac{a^2}{2}\|y^*-\mu\mathbf1\|^2
+\le-\nabla F_{P,j}(\mu\mathbf1)\cdot(y^*-\mu\mathbf1)
+<24\|y^*-\mu\mathbf1\|
+\tag{17.22}
+$$
+
+when $y^*\ne\mu\mathbf1$. In fact this inequality is strict in the nonzero case because of the strict residual norm bound, and yields
+
+$$
+\|y^*-\mu\mathbf1\|<48/a^2.
+\tag{17.23}
+$$
+
+The same bound holds if the difference is zero. This places every coordinate strictly between $9/10$ and one: use $\mu\ge1-1/a$, $h_0>1/a-2/a^2$, and $a\ge100$. Hence $y^*$ is interior relative to its sum hyperplane.
+
+Permuting $P$, or permuting the other $n$ labels, leaves both the function and slice unchanged. Finite Jensen applied to the average over these permutations, with convexity on $\mathcal B_q$ supplied by (17.20), and uniqueness therefore give three equal coordinates $u$, one coordinate $v$, and $n$ equal coordinates $w$. This is the finite convex-combination inequality of Boyd and Vandenberghe, *Convex Optimization*, §3.1.8, pp.77–78, [author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf), used on an explicitly convex domain. The Lagrange equations for the interior minimum are (17.18).
+
+It remains to establish strict ordering and the capacity inequalities, rather than impose them on this minimization. From (17.5) and (17.23),
+
+$$
+\zeta=2\delta-3(1-u)
+\ge\frac{2\eta}{a}-\frac{144}{a^2}>0,
+\qquad
+h-\zeta=4h-2\delta
+>\frac{2\eta}{a}-\frac{200}{a^2}>0.
+\tag{17.24}
+$$
+
+Both signs follow from $a\eta\ge1024$.
+
+Hold $w$ fixed, and let $t=(3u+v)/4$. The point with all four of these coordinates equal to $t$ lies in the same slice and within $48/a^2$ of $\mu$ in each coordinate. At this point the difference of a top partial derivative and the fourth partial derivative is
+
+$$
+\frac{4C[\delta-2(1-t)]}{t^3}<0,
+\qquad
+\delta-2(1-t)\le-\frac\eta a+\frac{100}{a^2}<0.
+\tag{17.25}
+$$
+
+Along the line fixing $3u+v$ and $w$, the derivative in the direction increasing $u$ and decreasing $v$ is three times this difference at $u=v=t$. Strict convexity makes this one-variable derivative strictly increasing, while it vanishes at the interior minimizer. Therefore $u>t>v$.
+
+Next hold $u$ fixed and set $t=(v+n w)/(n+1)$. At $v=w=t$, the fourth partial derivative minus a lower partial derivative is
+
+$$
+-\frac{2C\zeta}{t^3}<0.
+\tag{17.26}
+$$
+
+Strict convexity along the line fixing $v+n w$ now gives $v>t>w$. This proves all of (17.17). Any triple in $(9/10,1)^3$ with the stated sum and (17.18) gives a stationary point of the same strictly convex function on $\mathcal B_q$, and hence must give its unique minimizer. This proves the stronger uniqueness assertion as well.
+
+Finally $\mu\mathbf1$ is not a minimum: increasing one coordinate in $P$ and decreasing one lower coordinate has derivative $-2Ch_0/\mu^3<0$ there, and is feasible for a sufficiently small displacement. Consequently the minimum is strictly below $H_d$. ∎
+

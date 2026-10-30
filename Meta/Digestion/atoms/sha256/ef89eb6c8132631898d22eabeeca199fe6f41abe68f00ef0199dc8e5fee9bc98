@@ -1,0 +1,18 @@
+**定义 1.2（Boolean lowering and block symmetrization）。** On $\mathcal B=\bigoplus_{q=0}^N\mathcal H_q$, set
+
+$$
+\begin{aligned}
+\sigma^-_u|S\rangle&=
+\begin{cases}|S\setminus\{u\}\rangle,&u\in S,\\0,&u\notin S,\end{cases}
+&\sigma^+_u&=(\sigma^-_u)^*,\\
+n_u|S\rangle&=\mathbf1_{u\in S}|S\rangle,
+&L_i&=\sum_{u\in B_i}\sigma^-_u,
+&n_i&=\sum_{u\in B_i}n_u.
+\end{aligned}
+\tag{1.3}
+$$
+
+Let $\tau_{uv}$ interchange the two Boolean coordinates $u,v$ in the same block. Let $P_i$ be the orthogonal projection onto the vectors invariant under all permutations of $B_i$, and put $P_{\mathrm{sym}}=\prod_iP_i$. These projections preserve total occupancy. At a fixed block occupancy $q$, $P_i$ projects onto the constant vector on the $q$-subsets of that block, with the other coordinates left intact. No invariance under $P_i$ is imposed on an input state.
+
+The lowering algebra and its symmetric Dicke vectors are classical intermediates: see Feinsilver, [*Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*, §§2–4, Proposition 4.1](https://arxiv.org/pdf/1102.0368v2), and Srinivasan, [*Symmetric chains, Gelfand–Tsetlin chains, and the Terwilliger algebra of the binary Hamming scheme*, Theorem 1.2](https://arxiv.org/pdf/1001.0280v2). The supplied [collective-oscillator theory, Definitions 1.1–1.2 and Theorem 2.1](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md), uses the same lowering algebra on a chosen two-state tensor code and its symmetric subspace. The space $\mathcal H_k$ here includes every Boolean state at occupancy $k$.
+

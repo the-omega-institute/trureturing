@@ -1,0 +1,22 @@
+**定义 1.3（Particle–hole convention）。** Fix $0\leq k\leq N$ and a unit vector $\varphi\in\mathcal H_k$. Set
+
+$$
+r=\min(k,N-k),\qquad b=\frac{k(N-k)}m=\frac{r(N-r)}m.
+\tag{1.4}
+$$
+
+The complement unitary is $C|S\rangle=|\Omega\setminus S\rangle$. Use $\psi=\varphi$ when $k\leq N/2$, and $\psi=C\varphi$ otherwise. Thus $\psi\in\mathcal H_r$. Write $Q=\langle\varphi,K_k\varphi\rangle$. For an operator $X$ on $\mathcal H_r$, write $\langle X\rangle_\psi=\langle\psi,X\psi\rangle$. Define
+
+$$
+\begin{aligned}
+F&=\sum_{i=1}^m e_i\otimes L_i\psi
+\in\mathbb C^m\otimes\mathcal H_{r-1},\\
+V&=\sum_{i=1}^m\left(n_i-\frac rm I\right)^2,\\
+D_i&=n_i(sI-n_i+I)-L_i^*L_i,\qquad
+T_\psi=\left\langle V+\sum_iD_i\right\rangle_\psi.
+\end{aligned}
+\tag{1.5}
+$$
+
+For $r=0$, the target $\mathcal H_{-1}$ means the zero Hilbert space, and $F=0$. Identity operators in polynomials in $n_i$ will also be suppressed. All defects refer to this same state $\psi$.
+

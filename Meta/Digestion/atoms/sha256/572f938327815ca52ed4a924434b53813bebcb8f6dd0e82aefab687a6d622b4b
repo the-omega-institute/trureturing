@@ -1,0 +1,58 @@
+**Proposition 33.4 (paid complete native construction and its bills).**
+After checking a supplied accepting root certificate, choose a trial bit at
+each next index and enumerate all $2^{t_j}$ suffixes under its proposed
+child. Stop with a positive witness if one appears; otherwise retain the
+complete zero certificate $\bot$ and authenticate the complementary bit.
+Reconstruct later parents using the bits thereby authenticated. For the
+first $m\le v_n$ bits this uses at most
+
+$$
+3+\sum_{j=1}^{m}2^{t_j}
+$$
+
+Reads, counting the supplied root certificate's verification. If
+$L_{\rm root}$ is its actual literal traffic, the total literal traffic is
+at most
+
+$$
+L_{\rm root}+\sum_{j=1}^{m}(|p_j|+1+t_j)2^{t_j}
+\le 3(n+1)+(n-1)\sum_{j=1}^{m}2^{t_j}.
+$$
+
+A supplied positive witness per authentic bit instead needs at most $m+3$
+verification Reads. Its construction costs are separate. Both bounds
+include the full parent addresses; $t_j$ alone is not the literal length.
+Every enumerated reply, zero certificate, local computation, scratch write,
+retained output and handoff remains paid in the original TOTAL model.
+
+Proof. Apply (ACRC.1) at each step. A positive reply authenticates the trial
+bit; exhausting all suffixes authenticates its complement. There is no
+free disagreement or bit query. The old tree has at most $2j-1$ nodes and
+$|p_j|\le\tau(j)-2$, hence each birth literal has length at most $n-1$.
+Root words have length at most $n$, including the $n=2$ endpoint. These
+give the stated bills. Sequential suffix enumeration and finite old-tree
+reconstruction use finite backing and work; no polynomial TOTAL bound is
+inferred from these exponential enumerations.
+
+For completeness without supplied root witnesses, one may try
+$\nu=2,3,\ldots$, search all $2^{\nu-1}$ possible positive $x$ words,
+then all parity-length $y$ words for the required absences. At a proposal
+with no positive $x$, skip the $y$ search. Soundness excludes an early
+acceptance and completeness guarantees termination at $\nu=n$. Discovery
+uses at most
+
+$$
+\sum_{\nu=2}^{n}\left(2^{\nu-1}+2^{\lfloor\nu/2\rfloor}\right)
+$$
+
+Reads: the odd $y$ search has one test per word, the even search at most
+two. Its traffic is at most $n$ times this bound and is additional to any
+subsequent verification bill. For a known public $d$ one may start at
+$n_0$ instead. At $d=0$ the empty prefix requires no birth tests and the
+zero descriptor is fixed; root recovery still has its own bill.
+
+Finally, for $i\ge1$, $i+2\le n$ and $B_{i+1}\le m$, the same procedure
+at $j=B_{i+1}$ authenticates the declared $b_i$, using suffix length
+$n-i-1$. It does not obtain that sample without the preceding authenticated
+prefix or the native witnesses. $\square$
+

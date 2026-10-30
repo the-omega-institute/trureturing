@@ -1,0 +1,102 @@
+**命题 139.2（实际两行简单根与半径）。** 定义 139.1 的两份完整记录对每个大小为 $q_n$ 的真实支持都有正概率。其质量满足
+
+$$
+a_0=\frac14+O(\kappa_n),\quad a_1=\frac12+O(\kappa_n),\quad
+ a_2=\frac14+O(\kappa_n),\quad
+\mu_n=1+O(\kappa_n),\quad p_n=\frac12+O(\kappa_n).
+\tag{139.5}
+$$
+
+对每个 $0\le R<\infty$ 和每个有限指标集 $K\subset\mathbb Z$，充分大的层级上，两个实际实验的原完整配分均有简单零点
+
+$$
+z_{(n,k)}(y)=1+\frac{(2k+1)\pi i}{\log2}+O_{R,K}(\varepsilon_n),\qquad k\in K,
+\tag{139.6}
+$$
+
+一致于每个 $|y|\le R$。若 $d=\pi/\log2$，则对 $b=y$ 及 $b=0$ 分别成立
+
+$$
+\operatorname{dist}(1,Z(G_{x,b}))=d+O_R(\varepsilon_n),\qquad
+\operatorname{dist}([1,2],Z(G_{x,b}))=d+O_R(\varepsilon_n).
+\tag{139.7}
+$$
+
+这两种距离的最近零点均为 (139.6) 中 $k=0,-1$ 的共轭简单根；不声称 $b=y$ 与 $b=0$ 的原始距离精确相等。每个对应 MGF 零点是 $1-z_{(n,k)}(b)$，重数为一；个别 $\log M_{x,b}$ 在 $s=0$ 的精确 Taylor 半径为 $d+O_R(\varepsilon_n)$，反射区间 $[-1,0]$ 的管半径也为该量。
+
+当 $y\notin E_\sigma$，同一个定理 137.3 的集合使这两个实际配分没有共零，故 (138.5)–(138.6) 的 generic 对数响应半径均为 $d+O_R(\varepsilon_n)$；$D_{x,y}$ 在 $s=0$ 的 Taylor 半径及在 $[-1,0]$ 的管半径与之相同，仿射项不改变奇点。当 $y=0$，响应完全消去，半径为 $+\infty$，而个别 MGF 的上述有限半径仍然成立。
+
+这些记录最终不属于任何固定原好纤维常数类，并且单记录概率满足
+
+$$
+\mathbb P_S^{\rm pair}\{x_n\}\le
+ \left(\frac{1+r}{4M_n^2}\right)^{\mathsf T_n},\qquad
+\mathbb P_S^{\rm path}\{x_n\}\le
+ \frac1{2M_n}\left(\frac{1+r}{2M_n}\right)^{\mathsf T_n}.
+\tag{139.8}
+$$
+
+两者均对所有真实支持一致趋零。不由此推断记录族的并集概率或典型数据上的障碍。
+
+**证明。** 每个标记路径块有 $k_0+2l_0$ 条边：其中恰 $k_0$ 条正到正的自环及 $l_0$ 条正到负的边以该标记行为起点，其余以 $v$ 为起点。两个块和末尾填充恰给 $\mathsf T$ 条边。pair 记录也恰有 $\mathsf T$ 个相邻对。所有核条目严格为正，均匀初态也严格为正，故两份记录在每个支持下均有正概率。
+
+由原取整，$\tau-z_0=O(q^{-1})$；对最终 $\epsilon_c<1/2$ 使用 $|\log(1\pm\epsilon_c)|\le2\epsilon_c$，得到 $|W_n-\tau|\le C(\lambda\epsilon_c+q^{-1})$。又 $W_n^*=\tau+\log(1-q/M)$，所以 $|W_n-W_n^*|\le C\kappa_n$。原尺度满足 $\log q=c_q\lambda+O(1)$、$\log(q/M)=-\phi\lambda+O(1)$、$0<c_q<\phi$，从而
+$\lambda\epsilon_c/w=\epsilon_c\sqrt{\lambda q}\to0$、$q^{-1}/w=(\lambda q)^{-1/2}\to0$。故 $|W_n-\tau|=o(w)$，两标记行严格位于原窗口内部；所有其他正行分数为 $0$，而 $\tau-w>0$，所以 $J$ 恰含这两行。补集的每个权重精确为 $1$，(121.6) 的 elementary-symmetric 因子因此精确是 $\binom{M-2}{q-m}$。最终 $2\le q\le M-2$，三质量均正且整个三点盒可行。
+
+二项式比值给精确恒等式
+
+$$
+\frac{A_1}{A_0}=2e^{W_n}\frac{q}{M-1-q},\qquad
+\frac{A_2}{A_1}=e^{W_n}\frac{q-1}{2(M-q)}.
+\tag{139.9}
+$$
+
+代入 $W_n=W_n^*+O(\kappa_n)$，两式分别为 $2(1+O(\kappa_n))$ 与 $\frac12(1+O(\kappa_n))$；归一化得到三个质量及 $\mu_n$ 的 (139.5)。校准方程严格递增，左右极限为 $0,M$，故其解唯一。由 $0<p_n<1$，$p_{c,n}=(q-2p_n)/(M-2)$，而最终 $q>2$，于是
+
+$$
+e^{W_n+h_n}=e^{W_n}\frac{q-2p_n}{M-q-2+2p_n}
+ =1+O(\kappa_n).
+$$
+
+这里用 $e^{W_n}=(M-q)q^{-1}(1+O(\kappa_n))$ 及分式余项 $O(q^{-1}+M^{-1})$，得 $p_n=1/2+O(\kappa_n)$。所有后续公式仍用其精确值。
+
+置 $a_n^\circ=1/(B_n^2\sqrt\delta_n)=Q_n^{11/4}/q_n$、$d_{n,m}=(m-\mu_n)^2-2p_n(1-p_n)$。实际 (121.8)–(121.9) 精确给出
+
+$$
+T_x(m)=a_n^\circ d_{n,m},\qquad
+\lambda_y(m)-\frac{y^2}{2\sigma_n^2}
+ =\frac{(a_n^\circ)^2d_{n,m}^2-2ya_n^\circ d_{n,m}}{2\sigma_n^2}.
+\tag{139.10}
+$$
+
+由于 $0\le\mu_n\le2$、$0<p_n<1$，三个 $d_{n,m}$ 有绝对常数界，且 $a_n^\circ\to0$。因此 (139.10) 的右端在所有 $m=0,1,2$、$|y|\le R$ 上为 $O_R(a_n^\circ/\sigma_n^2)$。严格噪声条件使存在固定 $l<c_q/2$ 满足最终 $\log(1/\sigma_n)\le lQ_n^3$，故
+$a_n^\circ/\sigma_n^2\le C Q_n^{11/4}e^{-(c_q-2l)Q_n^3}\to0$；其余 $\kappa_n$ 项也趋零，所以 $\varepsilon_n\to0$。
+
+从完整全质量配分只除去公共无零因子，定义
+
+$$
+\widetilde G_{n,y}(z)=e^{zy^2/(2\sigma_n^2)}
+ \sum_{m=0}^2a_m^{\,z}e^{-z\lambda_y(m)},\qquad
+\overline G(z)=4^{-z}(2+2^z).
+\tag{139.11}
+$$
+
+(137.6) 说明 $\widetilde G_{n,y}$ 与原 $G_{x,y}$ 的零点及重数精确相同。由 $a_m$ 的 (139.5)，各 $\log a_m$ 与 $\log(1/4),\log(1/2),\log(1/4)$ 的差为 $O(\kappa_n)$。结合 (139.10) 及 $|e^u-1|\le |u|e^{|u|}$，对每个固定复紧集 $C$ 有
+
+$$
+\sup_{|y|\le R,\,z\in C}
+ |\widetilde G_{n,y}(z)-\overline G(z)|\le C_{R,C}\varepsilon_n.
+\tag{139.12}
+$$
+
+比较函数的全部零点为 $\bar z_k=1+(2k+1)\pi i/\log2$，且
+$\overline G'(\bar z_k)=-2(\log2)4^{-\bar z_k}\ne0$。当 $K=\varnothing$ 时根断言为空；对非空有限 $K$，选互不相交的固定小闭圆盘 $D_k$，使 $\overline G$ 在每个盘内恰一个简单零点，并使
+$|\overline G(z)|\ge c_K|z-\bar z_k|$ 对 $z\in D_k$ 成立；这是连续无零因子 $\overline G(z)/(z-\bar z_k)$ 在小闭盘上的正最小值。先在固定盘的边界用 (139.12) 和 Rouché 定理，知每盘内实际零点总重数为 $1$。再取固定 $A>C_{R,\cup D_k}/c_K$，在半径 $A\varepsilon_n$ 的圆周上有严格的 Rouché 不等式。故这个小盘也恰有一个重数为 $1$ 的实际零点，从而给出 (139.6) 的定量位移，而不仅是零点计数。
+
+为排除一切更近根，取固定 $h>0$ 充分小，使 $d+2h<3d$，并使以 $\bar z_0,\bar z_{-1}$ 为中心的半径 $h$ 闭盘互不相交。它们是固定闭管
+$C_I=\{z:\operatorname{dist}(z,[1,2])\le d+2h\}$ 内仅有的两个比较零点，且两小盘均在该管内部。删去两小盘的内部后得到紧集，其上 $|\overline G|$ 有正下界；由 (139.12)，实际配分在这紧集无零。两小盘各恰含一个实际简单零点，位移为 $O_R(\varepsilon_n)$，且因实际指数为实数，两根共轭。故闭管中的全部实际零点恰为这两根，每个到 $1$ 及到 $[1,2]$ 的距离均为 $d+O_R(\varepsilon_n)$。闭管外任一点到区间的距离大于 $d+2h$，到 $1$ 的距离也大于该数，故不可能给出更近根。这证明 (139.7)，无需对无界复带作支配断言。
+
+(138.7) 保持这些零点的重数；反射是等距变换，把 $1,[1,2]$ 分别映为 $0,[-1,0]$，给出个别 MGF 对数半径。全盒条件已经验证，所以定理 137.3 同一个 $E_\sigma$ 及推论 138.3 给出 generic 响应的精确最小半径；(138.9) 的仿射项不改变这些奇点。
+
+最后 $N_J=2$，而每个固定的约定 123.1 好纤维类含至少 $c/\delta_n$ 个非平凡核心坐标，因而要求 $N_J\ge c/\delta_n\to\infty$。故这些记录最终不在任一这样的固定类中。最终 $\epsilon_c\le r$，每个转移条目至多 $(1+r)/(2M)$，每个完整独立对的质量至多 $(1+r)/(4M^2)$；均匀初态质量为 $(2M)^{-1}$。相乘即得 (139.8)，两上界与支持无关并趋零。证毕。
+

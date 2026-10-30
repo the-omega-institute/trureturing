@@ -1,0 +1,40 @@
+**Proposition 4.2 (Actual rows and recurrent conditional laws).** Suppose Definition 4.1 holds and $d(P)=c_\star$. Put $\nu_c=Q(C_0=c)$ and $C_+=\{c:\nu_c>0\}$. Every $c\in C_+$ has a normalized finite-mean row
+
+$$
+\begin{aligned}
+f_c(g)&=Q(G_0=g\mid C_0=c)=r_cM_0^{g-1}M_1\mathbf1
+\ge 2^{-(g+1)}/3\quad(g\ge2),\\
+Q(G_k=g,C_{k+1}=b\mid\mathcal H_k)
+&=f_{C_k}(g)\mathbf1_{\{b=\tau_g(C_k)\}}.
+\end{aligned}
+\tag{4.7}
+$$
+
+In particular, with $\alpha_c=r_cM_0$, $T_0=M_0$ and $b_0=M_1\mathbf1$,
+
+$$
+f_c(k+2)=\alpha_cT_0^kb_0,\qquad
+\alpha_c\mathbf1=1,\qquad T_0\mathbf1+b_0=\mathbf1.
+\tag{4.8}
+$$
+
+The positive contexts split into closed irreducible classes $D$ of
+
+$$
+K(c,b)=\sum_{g\ge2}f_c(g)\mathbf1_{\{b=\tau_g(c)\}},\qquad\nu K=\nu.
+\tag{4.9}
+$$
+
+Each class is closed under every $\tau_g$. Its label is spatially invariant and belongs to every strict-left half-line and every exterior field. Conditioning on a class preserves (4.7), (4.8), the original posterior versions and attainment.
+
+Proof. At a Palm anchor, past gaps recover every visible coordinate strictly to its left: their cumulative sums enumerate all preceding occupied sites. Conversely the strict-left decoder recovers every past mark from those coordinates. Thus $\mathcal H_0$ and the visible past at the known anchor agree modulo actual Palm null sets. The path Markov property of (4.2), followed by conditional expectation using (4.4), gives the conditional future cylinders $r_{C_0}M_w\mathbf1$. This proves (4.7) at zero; Palm event stationarity, obtained by the anchor-counting identity [R, (35.2)][R], transports it to all integer event indices. No negative-index stopping-time assertion is needed. Almost-sure next-anchor existence gives normalization. Since $\nu_c>0$ and $\mathbb E_QG_0<\infty$, each row mean is finite. The proof of Proposition 1.2 uses only (4.3) and the attained exterior comparison [U, Theorem 3.1][U], so its lower bound applies here. No11 gives $r_cM_1\mathbf1=0$, hence (4.8).
+
+Event stationarity gives (4.9). A stationary finite stochastic matrix gives zero mass to transient states; positivity of $\nu$ on $C_+$ and of every $f_c(g)$ proves the asserted closed-class decomposition. The class label is constant along anchors. It can be read from an anchor arbitrarily far to the left, so its event $E_D$ belongs to every exterior $\mathcal E_i$ and is invariant under site shifts. The actual conditional laws are stationary and their Palm laws are exactly $Q(\,\cdot\mid C_0\in D)$. Moreover $P(E_D)\ge\iota\nu(D)>0$ and $\mathbb E_{Q(\cdot\mid D)}G_0\le\mu/\nu(D)$. Conditional expectation on an $\mathcal E_i$-measurable component shows that the same $q_i$ is its posterior. Therefore
+
+$$
+d(P)=\sum_D P(E_D)d(P(\,\cdot\mid E_D)),
+\tag{4.10}
+$$
+
+and the upper bound $c_\star$ for each summand forces attainment in each positive component. The class event already belongs to $\mathcal H_k$, so the actual reset and full-history rule also survive conditioning. $\square$
+

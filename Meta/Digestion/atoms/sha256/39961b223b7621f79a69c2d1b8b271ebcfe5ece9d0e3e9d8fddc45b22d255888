@@ -1,0 +1,79 @@
+**定理 74.3（同一制备历史下每个完整物理字及参考条件态保持）。**
+在比较位初始为零时，对任意三块与未触动参考 $R$ 的密度算子 $\rho$，
+$\widehat V_\epsilon$ 与原 $V_{\epsilon,0}$ 的每个完整终端物理字概率相同，
+且该字对应的未归一参考条件态相同。
+特别，对 §§64–65 的全部实际源三元组，包括重复来源及 $D=0$，新读者给
+
+$$
+ \widehat p_{\mathbf s,\epsilon}^X(z,\mathbf x)
+ =\frac14\left|A_{\mathbf s}^X(\mathbf x)
+                 +(-1)^zA_{\mathbf s,\epsilon}^X(\mathbf x)\right|^2
+ =p_{\mathbf s,\epsilon,0}^X(z,\mathbf x).
+\tag{74.7}
+$$
+
+所有 $w=J_L(z,\mathbf x)$ 均按此式保留；全部码外字及原零系数字仍为零事件。
+取原保留记录中包含完整制备信息的任意可测历史 $\mathsf H$，设置固定 $o=0$，
+并记实际联合分量测度
+$\nu_{\mathbf s,\epsilon}^X(B)
+=\Pr_X\{\mathsf S=\mathbf s,\mathsf E=\epsilon,\mathsf H\in B\}$。
+在相同制备历史律及原条件制备合同下，对每个可测 $B$ 和每个物理字有
+
+$$
+ \Pr_X\{\mathsf H\in B,\mathsf E=\epsilon,
+                w=J_L(z,\mathbf x)\}
+ =\sum_{\mathbf s}\nu_{\mathbf s,\epsilon}^X(B)
+                       p_{\mathbf s,\epsilon,0}^X(z,\mathbf x).
+\tag{74.8}
+$$
+
+因此每个实际供应的历史条件输入都保持其完整字律；
+连续记录无需假设逐点条件概率存在，零质量历史不被条件化。
+
+证明。令 $I_0\psi=|0\rangle_c\otimes\psi$。
+由 (74.1) 及 $S_cI_0=I_0$，有
+
+$$
+ \widehat U_\epsilon I_0=S_c^\dagger U_{\epsilon,0}I_0,
+ \qquad
+ \widehat V_\epsilon J_LI_0
+ =e^{-i\chi_\epsilon}J_LS_c^\dagger J_L^\dagger
+                            V_{\epsilon,0}J_LI_0.
+\tag{74.9}
+$$
+
+右侧 $J_LS_c^\dagger J_L^\dagger$ 只在已知有码输出上使用。
+对 $w=J_L(z,\mathbf x)$，新终端振幅等于旧振幅乘以
+$e^{-i\chi_\epsilon}(-i)^z$；该因子模长一且与源、块字和参考无关。
+具体在 (65.5) 的同一原字典中，新振幅为
+
+$$
+ \frac{i^z}{2}\left[A_{\mathbf s}^X(\mathbf x)
+                   +(-1)^zA_{\mathbf s,\epsilon}^X(\mathbf x)\right].
+\tag{74.10}
+$$
+
+Born 合同立即给逐字等式 (74.7)，没有重新标号、粗粒化或仅比较一个边缘。
+更一般，使用 (65.6) 的 $o=0$ 行算子
+$B_{z,\mathbf x}=\langle\mathbf x|[I+(-1)^zT^\epsilon]/2$，
+新行算子恰为 $i^zB_{z,\mathbf x}$。
+因此新旧参考条件态均为
+
+$$
+ (B_{z,\mathbf x}\otimes I_R)\rho
+                         (B_{z,\mathbf x}^\dagger\otimes I_R).
+\tag{74.11}
+$$
+
+这包括块间纠缠和块与参考的纠缠，并不依赖源的系数表。
+(74.1) 也指定了比较位非零或与源纠缠时的完整作用；
+与原读者的逐字等价使用的是原比较任务的 $I_0$ 输入切片。
+
+最后按每个实际分量 $\nu^X$ 积分，得 (74.8)；
+参考条件态的等式同样逐分量积分。
+不假设三个选择者独立，不把共同随机性换成三个边缘的乘积，
+也不把不同 $X$ 的制备记录律宣告为相同。
+比较的共同历史是同一保留制备历史；新读取字本身有其已指定的不同控制表。
+若把控制表也作为输出记录，须保留相应读者标识，不能声称两个控制表逐字相同。
+完整物理字与同一制备历史的联合律则正是 (74.8)。∎
+

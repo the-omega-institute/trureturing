@@ -1,0 +1,35 @@
+**Proposition 116.7 (completeness and all selected cells).** The selector of Definition 116.6 is finite, initialized, causal, passive and complete on every length-$n$ binary marker word. For every actual seed and every nonterminal address, including rejected and zero-completion addresses,
+
+$$
+|\mathcal S_b|\le2.
+$$
+
+Both terminal Stop blocks are empty. More precisely $D_\theta=2$, $D_\rho=1$ for $\rho\ne\theta$, and $D=2$.
+
+Proof. Each prescribed decision uses only the actual seed and already acquired marker prefix. The only branch with a root selection is the corresponding off-target-seed branch. At the target seed, a path either selects at the gate or reaches one midpoint group. Each such group has at most $2^a$ members, hence at most $2^{a-1}$ blocks; the matching group has $W/2\le2^{a-1}$ edges. For every even $a\ge2$, $a\le2^{a-1}$, so every scheduled relative second-half position $j=a+g$ satisfies
+
+$$
+a+1\le j\le a+2^{a-1}\le2^a\le H<\ell.
+$$
+
+Thus every complete word is selected strictly before $n=2\ell$. Earlier first selections latch, later rules do not revise them, and every word has exactly one. Bounded marker-prefix control and finite tables give finitely many selector states for each fixed public $k$; arbitrary raw retries and return circles require no unbounded selector counter. These facts prove totality on all finite original event prefixes as well as completeness on full marker words. They do not force a noncompleting source path to finish.
+
+It remains to control all selected cells, rather than just the accepted target group. At an off-target seed the only selected past is the empty word, so every selected fiber is a singleton. Its root has positive completions: for example any first half $x$ followed by $1-x$ is balanced with zero fingerprint at that seed. Hence $D_\rho=1$ there.
+
+At seed $\theta$, the coefficients of the first $d$ positions are a basis by Lemma 116.3. Consequently the field coordinate at $c=d$ is injective on all $d$-bit prefixes. Every gate-rejected selected cell is therefore a singleton, whether or not it has a completion.
+
+Consider any gate survivor with midpoint prefix $u(t,r)$. Write $s=t\oplus r$, $S(X)=\sum_{i<a}s_iX^i$, $B_r(X)=\sum_{i<a}r_iX^i$, and let $p$ be its actual second-half prefix of length $j\le H$, with polynomial $P_j$ of degree less than $j$. Its current bare field and weight obey
+
+$$
+\begin{aligned}
+h-C_\theta&=(1+\theta^H)S(\theta)+P_j(\theta),\\
+\beta&=2|t|+|r|+|p|=\beta_0+|p|.
+\end{aligned}
+$$
+
+Indeed the midpoint evaluation is $T(\theta)+\theta^HT(\theta)+\theta^{2H}B_r(\theta)=(1+\theta^H)(T+B_r)(\theta)$. After this reduction, all displayed exponents are below $2H$: $\deg S<a<H$ and $\deg P_j<H$. In the basis $1,\theta,\ldots,\theta^{2H-1}$, coordinates $H,\ldots,H+a-1$ of $h-C_\theta$ give exactly $s$. Subtracting $(1+\theta^H)S(\theta)$ then recovers the whole actual word $p$, including its length from $c$. Finally $\beta_0=\beta-|p|$ recovers the group index. This determination uses no completion equation, weight restriction from acceptance or event pruning.
+
+Every scheduled selection lies in this range $j\le H$. Thus a bare address at such a selection determines one group and one actual second-half prefix, hence the key $q$ and, in $\mathcal A$, the matching round. The position determines $g=j-a$. Only the members of that one scheduled block can first select at this address. There are at most two, and appending the same $p$ does not identify distinct midpoint words. No gate cell, root cell or terminal cell shares its position. There are no other selected prefixes. This proves $|\mathcal S_b|\le2$ even when $N_b=0$, including all rejected group/key branches. As every complete word selects before $n$, both $\mathcal S_n^{\rho,0}$ and $\mathcal S_n^{\rho,1}$ are empty for every seed.
+
+Every member of $\mathcal A$ passes the gate and continues through the midpoint decision. Lemma 116.4 therefore gives $W_{b_*}=U_{b_*}=\mathcal A$. For attainment, choose an edge of a matching on $\mathcal A$ and choose $y\in\mathcal F_{b_*}$ whose first-$a$-bit key maps to that round; the map is onto. The edge's two endpoints, followed by this same $y$, are positive accepted histories by Lemma 116.4. They first select together at their edge's position, with the same bare fields. Their selected prefixes are distinct. The remaining part of this actual $y$ certifies $N_b>0$ there. This gives a positive selected cell of size 2, proving $D_\theta=2$ and $D=2$. The argument also applies to the single-edge case $W=2$. $\square$
+

@@ -1,0 +1,48 @@
+**命题 9.6（非根任务的偶容量分叉与较低等待阈值）。** 取
+
+$$
+ a=b=\tfrac12,\qquad
+ \mu=\tfrac12\delta_{1/5}+\tfrac12\delta_{4/5},
+$$
+
+并令 $D=\{\mathrm L,\mathrm H\}$，其中目标是判断 $Q=1/5$ 还是 $Q=4/5$。令 $g(q)=\mathrm L$ 当 $q\le1/2$、$g(q)=\mathrm H$ 当 $q>1/2$，损失为
+$L(q,x,d)=\mathbf1\{d\ne g(q)\}$。这是参数任务，不是根错误任务。
+
+对同一个正偶数帽 $2$，容量 $\mathsf A=(1,1)$ 与 $\mathsf B=(2,0)$ 的任务风险分别为
+
+$$
+\mathcal R_L(\mathsf A)=\tfrac15,\qquad
+\mathcal R_L(\mathsf B)=\tfrac7{20}.
+\tag{RRO.49}
+$$
+
+而标准根猜测损失 $L_{\rm root}(x,d)=\mathbf1\{d\ne x\}$ 在这两个容量上的风险分别为
+
+$$
+\mathcal R_{\rm root}(\mathsf A)=\tfrac14,\qquad
+\mathcal R_{\rm root}(\mathsf B)=\tfrac{17}{100}.
+\tag{RRO.50}
+$$
+
+所以根任务严格选择 $\mathsf B$，而该非根任务严格选择 $\mathsf A$；偶数容量不能被一个“根最优”类型替代。进一步，等待地板为
+
+$$
+w_L=\tfrac1{10}+\tfrac2{25}+\tfrac1{50}=\tfrac15,
+$$
+
+其中三项分别来自标记秩 $j=0$、$j=1$ 和 $j\ge2$。容量 $\mathsf A=(1,1)$ 的 $j=0$ 标记误差为 $1/10$，其截断尾整体选择 $\mathrm H$ 且误差为 $1/10$，故 $\Gamma_L(\mathsf A)=0$，地板在有限实际均值
+
+$$
+K_2=\tfrac74
+$$
+
+已经达到。另一方面
+$\int(1-q)^{-1}\,d\mu=25/8$，且所有 $v_j>0$，所以 Mean 定理 4.1 给出
+
+$$
+K_\infty=2\cdot\tfrac{25}{8}-\tfrac12=\tfrac{23}{4}>\tfrac74.
+$$
+
+较低的有限阈值来自任务的后验充分性，而不是恢复了隐藏参数本身。证明。$M_1=1/2,M_2=17/50$；代入有限容量叶值式 (RRO.35) 得 (RRO.49)，代入根任务的两容量叶比较得 (RRO.50)。等待时 $j=0$ 的低、高未归一化质量为 $2/5,1/10$，$j=1$ 相等为 $2/25$，$j\ge2$ 由低参数一侧取最小，几何级数为 $1/50$。在 $\mathsf A$ 的截断尾，低、高参数质量为 $1/10,2/5$，选高值动作给误差 $1/10$，与 $j=0$ 叶相加即为 $1/5$。$a=b$ 时
+$v_j=\tfrac12\int(1-q)^2q^{j-1}\,\mu(dq)>0$，且 $K_2,K_\infty$ 由 Mean 公式给出。证毕。
+

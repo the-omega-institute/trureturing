@@ -1,0 +1,56 @@
+#### 定理 9.4：任意维数的最优确定性近似共轭；已知定理的重证
+
+定义
+
+<a id="eq-eq:optimaltranspose"></a>
+
+```math
+\Phi_*(X)=\frac{X^{\mathsf T}+\operatorname{Tr}(X)I}{d+1}.\tag{28}
+```
+
+它是 CPTP 信道，对每个纯态  $\rho$  均有
+ $\operatorname{Tr}[\rho^{\mathsf T}\Phi_ *(\rho)]=2/(d+1)$ 。
+对任意 CPTP 信道  $\Phi$ ，
+
+<a id="eq-eq:optimalbound"></a>
+
+```math
+\mathbb E_\rho\,\operatorname{Tr}[\rho^{\mathsf T}\Phi(\rho)]
+ \le\frac2{d+1},
+ \qquad
+ \sup_\Phi\inf_{\rho\ {\rm pure}}\operatorname{Tr}[\rho^{\mathsf T}\Phi(\rho)]
+ =\frac2{d+1}.\tag{29}
+```
+
+这里没有先限制  $\Phi$  为协变或各向同性信道。
+
+
+**证明。**
+
+使用未归一 Choi 矩阵
+ $J_ \Phi=\sum_ {ij}\lvert i\rangle\langle j\rvert\otimes\Phi(\lvert i\rangle\langle j\rvert)$ 。
+标准 Choi 判据说  $\Phi$  完全正当且仅当  $J_ \Phi\succeq0$ ，
+保迹当且仅当对输出偏迹为  $I$ 。
+对式 [(28)](#eq-eq:optimaltranspose)，
+ $J_ *=(F+I)/(d+1)$  是对称子空间投影乘  $2/(d+1)$ ，所以正；
+又  $\operatorname{Tr}_ {\rm out}F=I$ 、 $\operatorname{Tr}_ {\rm out}I=dI$ ，故保迹。
+对纯态代入，目标保真度为  $(1+1)/(d+1)$ 。
+
+对于任一信道， $J=J_ \Phi\succeq0$ 、 $\operatorname{Tr} J=d$ ，并且
+ $\operatorname{Tr}[\sigma\Phi(\rho)]=\operatorname{Tr}[J(\rho^{\mathsf T}\otimes\sigma)]$ 。
+令  $\sigma=\rho^{\mathsf T}$ ，利用共轭不改变均匀测度及式 [(27)](#eq-eq:haar)，
+
+```math
+\mathbb E_\rho\,\operatorname{Tr}[\rho^{\mathsf T}\Phi(\rho)]
+ =\frac{\operatorname{Tr}[J(I+F)]}{d(d+1)}
+ \le\frac{2\operatorname{Tr} J}{d(d+1)}=\frac2{d+1}.
+```
+
+不等式来自  $I+F\preceq2I$  和  $J\succeq0$ 。
+任一信道的最坏值不大于其平均值； $\Phi_ *$  对每个纯态都达到该常数，故也达到最坏情形最优值。
+
+**证毕。**
+
+
+<a id="stmt-9-5"></a>
+

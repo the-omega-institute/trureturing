@@ -1,0 +1,42 @@
+**Definition 12.1 (The strip and the scalar comparison).** Fix $W>0$. The
+parameters in this section are integers
+
+$$
+a\ge4,\qquad h\ge1,\qquad |h^2-2a|\le W,\qquad r=a+1.
+\tag{12.1}
+$$
+
+The domain $\mathcal X(a,h)$, the actual positive marginals, $H$, $M(a,h)$
+and $B_0=ar^2$ are exactly those of Definition 1.1. In particular every
+nonempty subset of $[r+h]$ remains an allowed type, type masses may be zero,
+and there is no connectedness condition. Write $d=H-B_0$. Use the function
+$\Phi_{a,h}$ of [Incidence Definition 13.2](CDSO_INCIDENCE_MOMENTS_AND_CAPACITY_PHASES.md),
+which is also the function in (5.4), and put
+
+$$
+\begin{aligned}
+m_{a,h}&=\min_{0<u\le1/a}\Phi_{a,h}(u),\\
+S_{a,h}&=\Phi_{a,h}(1/a)
+       =\frac{ar^3}{a-1}+ah^2,\\
+\Gamma_a&=\frac{2a^3+2a^2+2a+1}{(a-1)^2},\qquad
+P_{a,h}=a^2\max\{h^2-\Gamma_a,0\}.
+\end{aligned}
+\tag{12.2}
+$$
+
+Proposition 5.2 proves existence and uniqueness of the scalar minimizer;
+denote it by $u_{a,h}$. Its statement concerns the specified actual family
+$\mathcal S(a,h)$, and does not supply a lower bound for other laws. The
+cap law in Definition 5.1 is an actual law also when its missing-one masses
+vanish. Every $O_W(\cdot)$ below is uniform over all pairs in (12.1), all
+laws on the indicated sublevel and all label choices. Thresholds depend
+only on $W$.
+
+The normalization inherited from Definition 1.1 uses the CDSO definition
+in A. M. Albalahi, S. Das, A. Ali, J. Barman and A. E. Hamza, *On the
+hyperbolic Sombor index and its counterpart*, Discrete Math. Lett. 16
+(2025), 108–115, DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176),
+p.109: the denominator is the maximum endpoint degree and the factor
+$1/\sqrt2$ is omitted. Its graph extremal assertions are not hypotheses
+of the actual-law problem here.
+

@@ -1,0 +1,83 @@
+**Theorem 10.3 (native joint supplementation criterion on the whole source).** Fix the entire source of Definition 10.2, its arbitrary positive vectors (10.3), and any $\epsilon>0$. The following conditions are equivalent:
+
+1. A finite admissible static supplement exists for (10.1) on all finite legal root histories.
+2. A complete finite names-only online register exists for the same contract.
+3. $A,B$ are linearly independent over $\mathbb R$.
+
+When condition 3 holds, the rank-two integer lattice in its real span has a positive attained shortest maximum-norm length
+
+$$
+\Lambda=\mathbb ZA+\mathbb ZB,\qquad
+\delta=\min_{(j,k)\in\mathbb Z^2\setminus\{(0,0)\}}
+                 \|jA+kB\|_\infty>0.
+\tag{10.4}
+$$
+
+The native endpoint-vector observation with no supplement recovers all histories if and only if $\delta>2\epsilon$. Moreover, with
+
+$$
+q=\left\lfloor\frac{2\epsilon}{\delta}\right\rfloor+1,
+\tag{10.5}
+$$
+
+there is a common names-only update on exactly $q^2$ reachable complete states that recovers all histories. In particular, both finite minima are at most $q^2$. This is an attained construction bound, not a minimum formula for arbitrary independent $A,B$.
+
+Proof. The vector form of Lemma 9.2 uses the same observation-intersection argument. Two closed boxes of radius $\epsilon$ about $v,w$ intersect exactly when $\|v-w\|_\infty\le2\epsilon$, since this is the interval-intersection condition in every coordinate. Their midpoint then belongs to both boxes. Consequently the necessary and sufficient condition for a static label is
+
+$$
+u\ne v,\quad z(u)=z(v),\quad h(u)=h(v)
+\quad\Longrightarrow\quad
+\|T(u)-T(v)\|_\infty>2\epsilon.
+\tag{10.6}
+$$
+
+Sufficiency defines the decoder by the unique compatible word, rejecting outside the union of the possible observation sets. This reuses the static-confusability mechanism of [Transport–Memory Completion §§8.1–8.2 and 11.2](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), with the specified box geometry. It does not replace the overlap graph by equality fibers of a deterministic scalar readout.
+
+Suppose $A,B$ are dependent. Positivity gives $B=\lambda A$ for a unique $\lambda>0$. The finite-bin obstruction in Theorem 9.3 applies on the $s$ row after scaling its scalar comparison by $\|A\|_\infty$. Explicitly, for a supplement with $Q$ values choose a positive integer $L$ with $\lambda\|A\|_\infty/L<2\epsilon$, and choose $N$ with $N+1>QL$. Put the $N+1$ fractional parts $\{m/\lambda\}$, $0\le m\le N$, into $L$ equal half-open bins. One bin contains $Q+1$ distinct indices $m_0,\ldots,m_Q$. Choose an integer $K\ge\max_i\lfloor m_i/\lambda\rfloor$, and put $n_i=K-\lfloor m_i/\lambda\rfloor\ge0$. The actual distinct words $a^{m_i}ca^{n_i}$ all end at $s$, and their totals are
+
+$$
+C+\lambda\left(K+\left\{\frac{m_i}{\lambda}\right\}\right)A.
+$$
+
+Every two have distance less than $\lambda\|A\|_\infty/L<2\epsilon$. Two must share the same label, contradicting (10.6). This covers both rational and irrational $\lambda$, uses legal nonnegative exponents, and is independent of $C,E$. Thus condition 1 implies condition 3. Every online register supplies a static label $h=\mu$, as in §9, so condition 2 implies condition 1 as well.
+
+Now suppose $A,B$ are independent. Select two coordinates $i,j$ with $D=A_iB_j-A_jB_i\ne0$. For $w=xA+yB$, inversion of this two-row matrix gives
+
+$$
+\max\{|x|,|y|\}\le K_0\|w\|_\infty,
+\qquad
+K_0=\frac{\max\{B_i+B_j,A_i+A_j\}}{|D|}>0.
+\tag{10.7}
+$$
+
+Thus a nonzero integer pair gives norm at least $1/K_0$. The set of integer pairs with $\|xA+yB\|_\infty\le\|A\|_\infty$ is finite by (10.7), nonempty since it contains $(1,0)$, and contains a global minimizing pair: outside this set the norm exceeds the value at $(1,0)$. Its least norm is positive and attained. These elementary lattice facts are used as a supplier inside the sourcewise proof, not as a separate new classification.
+
+For equal endpoints $s$ or $t$, all native differences are integer combinations of $A,B$. Conversely every nonzero pair $(j,k)\in\mathbb Z^2$ is realized as a difference of two actual histories ending at $s$: choose nonnegative $(m,n),(m',n')$ with $m-m'=j,n-n'=k$, by taking positive and negative parts in each coordinate. Such histories are distinct. At $p$ differences are nonzero integer multiples of $A$, already included in the lattice comparison. Therefore the least same-endpoint distance on the entire source is precisely the attained $\delta$. Equation (10.6) for a single label proves the unsupplemented criterion, including failure at equality by an attaining pair's midpoint. The translations $C$ and $C+E$ cancel within their endpoint rows; different rows are separated by the exact endpoint.
+
+For the online upper bound, take the entire persistent state space and unique initialization to be
+
+$$
+M=(\mathbb Z/q\mathbb Z)^2,\qquad m_0=(0,0).
+$$
+
+On this one space use the following total update for each operation name:
+
+$$
+U_a(x,y)=(x+1,y),\qquad
+U_c(x,y)=(0,x),\qquad
+U_e(x,y)=(x,y).
+\tag{10.8}
+$$
+
+All coordinates are residues modulo $q$. In particular, $U_a$ is literally the same function at $p$ and $s$. Induction along the exhaustive word table gives
+
+$$
+\mu(a^m)=(m,0),\qquad
+\mu(a^mca^n)=\mu(a^mca^ne)=(n,m)\pmod q.
+\tag{10.9}
+$$
+
+The second coordinate captures the pre-$c$ count when the executed $c$ arrives, and the first then counts post-$c$ occurrences. No update tests which source vertex is current, whether $c$ has happened, or whether the word will end. A separately stored phase, mode, event index or terminal flag is absent: $(x,y)$ is the complete state. Updates on source-illegal names impose no obligation and remain the same total functions (10.8).
+
+At endpoint $p$, equal register values for different words force a nonzero count difference divisible by $q$. At $s$ or $t$, they force both count differences divisible by $q$, and independence makes their underlying nonzero lattice vector nonzero. In every case the distance is at least $q\delta>2\epsilon$. Equation (10.6) therefore gives a decoder, simultaneously for all endpoint rows. Concretely, at $s$ subtract $C$ from $y$, at $t$ subtract $C+E$, and enumerate the nonnegative pairs satisfying $mA_1+nB_1\le y_1-b_1+\epsilon$, where $b$ is that endpoint offset. Positivity bounds both indices, so this is a finite candidate set whenever the right side is nonnegative; otherwise reject. Filter it by the final residues and all $r$ closed-box inequalities. At $p$ use the same procedure with $b=0$ and only $m$. The separation just proved gives exactly one surviving word on an allowed observation and none on an impossible one. This is a finite mathematical search with exact comparisons in the fixed real data, without a claim that unspecified real constants have an effective representation. Every pair $(x,y)\in M$ is reached at $s$ by choosing $n\equiv x,m\equiv y\pmod q$ with nonnegative representatives. Hence the construction has exactly $q^2$ reachable full states, including its initial, intermediate and terminal uses, without an extra control factor. Its induced static label has the same range, proving condition 3 implies both 1 and 2. $\square$
+

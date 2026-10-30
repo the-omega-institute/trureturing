@@ -1,0 +1,6 @@
+**Theorem 18.1 (arbitrary-graph joint-support criterion and static-to-online bridge).** Under Definition 16.1, for every prescribed finite $\epsilon>0$, the following conditions are equivalent:
+
+1. Finite static supplementation recovers every finite legal root history from (16.2).
+2. Complete fixed-initial finite names-only online supplementation does so.
+3. Every cyclic SCC is a single directed named cycle, and for every actual reduced path schema $P\in\mathcal S$,
+

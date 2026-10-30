@@ -1,0 +1,62 @@
+### 引理 21.2（实际严格正实现与规范数据）
+
+每个 $Q_{\varepsilon,s}$ 都属于 $\mathcal M_4$，普通初始秩恰为二。
+单位尺度的真实数据满足
+
+$$
+ \begin{aligned}
+ (a_0,a_1,a_2,a_3)(Q_s)&=(100,15,18,1),\\
+ b^{(0)}(Q_s)&=(2+\lambda_s)r_s+w_s,\\
+ b^{(1)}(Q_s)&=(1+\lambda_s)r_s+w_s,\\
+ b^{(2)}(Q_s)&=r_s+w_s=(c_s+1,L_s+2,M+2,9),\\
+ b^{(3)}(Q_s)&=r_s,\\
+ P_1(Q_s)&=[99,101]\times[14,16]\times[17,19]\times[0,2].
+ \end{aligned}
+\tag{21.7}
+$$
+
+此外有
+
+$$
+ M-D_s\rho_s=17,\qquad
+ 7+\frac{25}{2}\rho_s=\tau_s+1.
+\tag{21.8}
+$$
+
+**证明。** 直接由 (21.6) 得
+$31/2<d_s<19$、$70<c_s<80$、$5/2\le3-s\le3$、
+$1/2\le\lambda_s\le1$。取 $\alpha=1/1000$，则
+
+$$
+ Q_s=
+ \begin{pmatrix}1\\\alpha\\\lambda_s\\1\end{pmatrix}
+       \frac{r_s-\alpha w_s}{1-\alpha^2}
+ +\begin{pmatrix}\alpha\\1\\\alpha\lambda_s\\\alpha\end{pmatrix}
+       \frac{w_s-\alpha r_s}{1-\alpha^2}.
+\tag{21.9}
+$$
+
+展开四行分别为 $r_s,w_s,\lambda_sr_s,r_s$。
+两个列因子严格正；两个行因子分子的逐坐标下界可分别取为
+
+$$
+ \begin{aligned}
+ &(70-\alpha,\ 5/2-19\alpha,\ 10-23\alpha/2,\ 1-8\alpha)>0,\\
+ &(1-80\alpha,\ 31/2-3\alpha,\ 23/2-10\alpha,\ 8-\alpha)>0.
+ \end{aligned}
+\tag{21.10}
+$$
+
+分母也严格正，故这是真正的两项严格正外积分解。
+行 $0,1$、列 $2,3$ 的子式为
+$10\cdot8-23/2=137/2\ne0$；两项分解又给出秩至多二，故普通秩恰为二。
+正比例缩放只须把两个行因子同乘 $\varepsilon$。
+
+四个上对角和依次为
+$c_s+d_s+10\lambda_s+1=100$、
+$(3-s)+23/2+\lambda_s=15$、$10+8=18$ 和 $1$。
+前 $4-q$ 行之和给出全部 $b^{(q)}$。
+特别地，$3-s+d_s=L_s+2$，不是 $L_s$；这一差值参与下面的闭误差计算。
+最后 $D_s\rho_s=5/2$ 以及
+$(25/2)\rho_s=11+s/4$ 给出 (21.8)。∎
+

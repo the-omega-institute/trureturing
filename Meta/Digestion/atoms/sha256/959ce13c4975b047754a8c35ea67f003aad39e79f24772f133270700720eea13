@@ -1,0 +1,12 @@
+**Definition 1.3 (complete rows and repeated partners).** For a finite prefix-free cut $C$, replace each reached cut subtree of $t$ by its addressed occurrence hole. Retain every other exterior bracket and concrete leaf and the complete equality partition of reached whole subtrees. Different blocks assert disequality. An unreached cut has its concrete strict-prefix blocking leaf in the exterior. Sort reached holes lexicographically; name each block by the zero-based position of its first member. Names are recomputed upon restriction and need not be consecutive. This defines the whole canonical row $R_C(t)$.
+
+Fix $C=\{L,R\}^{3}$ and the perfect depth-three exterior $C_*$. The complete current row $R_*=(C_*,\pi_*)$ has six classes:
+
+| Class | All occurrence holes | Representative $p_d$ |
+| --- | --- | --- |
+| $a$ | $LLL,LRL$ | $LLL$ |
+| $c$ | $RLL,RRL$ | $RLL$ |
+| $b_1$ | $LLR$ | $LLR$ |
+| $b_2$ | $LRR$ | $LRR$ |
+| $b_3$ | $RLR$ | $RLR$ |
+| $b_4$ | $RRR$ | $RRR$ |

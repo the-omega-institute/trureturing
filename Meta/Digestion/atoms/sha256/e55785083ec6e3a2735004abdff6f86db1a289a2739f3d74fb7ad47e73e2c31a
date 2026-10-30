@@ -1,0 +1,26 @@
+**Proposition 7.1 (Saturated original-loss identities).** Under Definition 4.1 and $d(P)=c_\star$, put $\ell_i(x)=(x_i-q_i(x))^2$. There is one shift-invariant conull domain $\Omega$ saturated under all legal finite changes on which
+
+$$
+\sum_{i\in\mathbb Z}(\ell_i(x)-\ell_i(z))=0
+\tag{7.1}
+$$
+
+absolutely for every $x,z\in\Omega$ differing at finitely many sites. In a fixed component, preserve a complete guard $w$ before the changed interval, a second complete guard after it, and a third after the second. If $A$ is the first guard's starting anchor and $B$ the second guard's ending anchor, then
+
+$$
+\sum_{i=A}^{B}\left[(x_i-q_i(x))^2-(z_i-q_i(z))^2\right]=0.
+\tag{7.2}
+$$
+
+Both boundary anchors are included. Each posterior in (7.2) is expressible using finitely many row entries and the predictive state at an unchanged preceding anchor. These are necessary rational-function identities for all compatible finite guarded patterns and legal fillings having the same physical endpoint length.
+
+Proof. Proposition 6.2 proves $A_P<\infty$ for the same actual $P$. Hence [Strong-zero, Definition 1.4 and Theorem 1.5](FIB_LEGAL_EDGE_LOAD_ATTAINMENT_STRONG_ZERO_EQUIVALENCE_AND_FINITE_OPTIMIZER_COMPARISON.md) applies with the unchanged original versions $q_i$ and losses $\ell_i$. It supplies (7.1) on a saturated conull set.
+
+For completeness, one can choose this domain to carry all the preceding formulas simultaneously. Intersect the structural and formula conull sets over every integer shift, then with the strong-zero domain and with every preimage under a legal replacement of a finite word on a finite integer interval. There are countably many such maps and their finite compositions. They are nonsingular: the attained band gives positive conditional mass to every legal single-site alternative, and deleting to zero then inserting a compatible word connects every legal finite fiber; iterated exterior comparisons preserve null sets. Thus the intersection is still conull and is saturated. Past-decoded component and phase are unchanged by a finite modification, since they can be recovered arbitrarily far to its left. This defines one $\Omega$ carrying original posterior formulas at both $x$ and every modified $z$.
+
+Before $A$, the first intact guard lies wholly after a scored center. It merges the two competing-center predictive paths, so (5.9) cancels all future information beyond that guard. The intervening unchanged coordinates and original left state are the same for $x,z$; hence $q_i(x)=q_i(z)$ for $i<A$. After the changed interval, equal physical displacement gives equal phases at the start of the second guard, regardless of the possibly different predictive states there. That guard merges their actual states. For $i>B$ the same state at $B$ and the unchanged later coordinates give the same left predictive channel and the same entire future, hence equal posteriors. Since the visible bits also agree outside the changed interval, every loss difference outside $[A,B]$ vanishes. This proves (7.2) from (7.1).
+
+For a scored center in $[A,B]$, including an occupied boundary anchor, deleting that center may break either of the first two guards. The third guard is intact in both center completions and lies strictly after the scored interval. Starting from an unchanged anchor preceding $A$, propagate the two finite completions through that third guard and use (5.9); on a forced fiber use zero. This computes each original $q_i$ by finite positive likelihoods, even at $A$ and $B$, and proves that the summands are rational functions of finitely many $f_s(g)$ values.
+
+Finally choose any positive starting state and any compatible guarded finite word. Every required finite gap word has positive probability by (4.7); compatible equal-length fillings have mutually absolutely continuous future channels after the second guard, where their states agree. The preceding starting state and phase have positive actual mass. The scalar expression in (7.2) is constant on this finite pattern with that starting state, independently of the more distant exterior. Its almost-sure zero value therefore forces the same scalar identity for every such pattern and filling. This argument asserts neither unconditional locality on all legal configurations nor a Gibbs specification. $\square$
+

@@ -1,0 +1,5 @@
+**Definition 116.6 (the selector $\pi_k$).** Initialize a deterministic passive selector before seed acquisition, with no selected bookmark and empty marker-prefix control. It holds during seed extraction and parser non-marker events. Once the actual seed has been acquired, use the following rules.
+
+1. If $\rho\ne\theta$, select the empty payload prefix at the root. The payload still runs to its original Stop.
+2. At seed $\theta$, select nothing before $c=d=2H$. At that position continue exactly for prefixes
+
