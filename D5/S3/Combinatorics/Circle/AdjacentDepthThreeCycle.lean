@@ -123,6 +123,188 @@ private theorem physicalThreeCycle_roles {α : Type*} [DecidableEq α]
   · rw [physicalThreeCycle_inverse a b c hab hac hbc]
     simp [cycleBackward, hab, hac, hbc, hba, hca, hcb]
 
+/-! Physical offsets are manipulated modulo `k`; these two identities are used
+to move between a seed and its two preceding physical labels. -/
+
+def successor {k : ℕ} (hk : 0 < k) (i : Fin k) : Fin k := phase hk i 1
+
+def predecessor {k : ℕ} (hk : 0 < k) (i : Fin k) : Fin k := phase hk i (k - 1)
+
+private theorem successor_predecessor {k : ℕ} (hk : 0 < k) (i : Fin k) :
+    successor hk (predecessor hk i) = i := by
+  apply Fin.ext
+  dsimp [successor, predecessor, phase]
+  by_cases hi : i.val = 0
+  · rw [hi]
+    simp only [Nat.zero_add]
+    rw [Nat.mod_eq_of_lt (by omega : k - 1 < k),
+      Nat.sub_add_cancel (by omega : 1 ≤ k)]
+    simp
+  · have hi' : 1 ≤ i.val := by omega
+    have hsplit : i.val + (k - 1) = (i.val - 1) + k := by omega
+    rw [hsplit, Nat.add_mod_right, Nat.mod_eq_of_lt (by omega : i.val - 1 < k)]
+    rw [Nat.sub_add_cancel hi']
+    exact Nat.mod_eq_of_lt i.isLt
+
+private theorem predecessor_successor {k : ℕ} (hk : 0 < k) (i : Fin k) :
+    predecessor hk (successor hk i) = i := by
+  apply Fin.ext
+  dsimp [successor, predecessor, phase]
+  by_cases hi : i.val + 1 < k
+  · rw [Nat.mod_eq_of_lt hi]
+    have hsplit : i.val + 1 + (k - 1) = i.val + k := by omega
+    rw [hsplit, Nat.add_mod_right, Nat.mod_eq_of_lt i.isLt]
+  · have he : i.val + 1 = k := by omega
+    have hi_eq : i.val = k - 1 := by omega
+    rw [he]
+    simp [hi_eq, Nat.mod_eq_of_lt hk]
+
+private theorem phase_succ {k : ℕ} (hk : 0 < k) (i : Fin k) (m : ℕ) :
+    phase hk i (m + 1) = successor hk (phase hk i m) := by
+  apply Fin.ext
+  change (i.val + (m + 1)) % k = ((i.val + m) % k + 1) % k
+  rw [Nat.add_mod, Nat.add_mod]
+  rw [Nat.add_mod m 1 k, Nat.add_mod i.val m k]
+  simp [Nat.add_assoc, Nat.mod_mod]
+
+private theorem native_positive_bound {k t : ℕ} (hk : 3 ≤ k)
+    (hsmall : ∀ i : Fin k, |actualSource k t i| < quarter k →
+      0 < actualSource k t i) :
+    ∀ i : Fin k, 0 < actualSource k t i →
+      3 * actualSource k t i ≤ modulus k := by
+  classical
+  obtain ⟨hQ, hN, hC, hNpos, hodd⟩ := source_geometry hk
+  let w := actualSource k t
+  let σ := fun i : Fin k => phase (by omega : 0 < k) i 1
+  have hb (i : Fin k) : -(2 * quarter k - 1) ≤ w i ∧
+      w i ≤ 2 * quarter k - 1 := by
+    have h := centered_bounds hNpos hodd ((2 : ℤ) ^ i.val * (t : ℤ))
+    change -half k ≤ w i ∧ w i ≤ half k at h
+    rwa [hC] at h
+  have hs (i : Fin k) : w (σ i) = doubleStep (modulus k) (w i) := by
+    simpa [w, σ] using phase_step hk t i 0
+  have hnz (i : Fin k) : w i ≠ 0 := by
+    intro h
+    have hh := hsmall i (by change |w i| < quarter k; rw [h]; norm_num; omega)
+    change 0 < w i at hh
+    omega
+  have neg (i : Fin k) (hi : w i < 0) :
+      quarter k ≤ -w i ∧ w (σ i) = 2 * w i + modulus k ∧
+      0 < w (σ i) := by
+    have hl : quarter k ≤ -w i := by
+      by_contra hh
+      have hp := hsmall i (by change |w i| < quarter k; rw [abs_of_neg hi]; omega)
+      change 0 < w i at hp
+      omega
+    have ht := hs i
+    rw [doubleStep, ite_eq_right (by omega : ¬modulus k < 4 * w i),
+      ite_eq_left (by omega : 4 * w i < -modulus k)] at ht
+    have hbi := hb i
+    exact ⟨hl, ht, by omega⟩
+  have posStep (i : Fin k) (hi : quarter k ≤ w i) :
+      w (σ i) = 2 * w i - modulus k ∧ w (σ i) < 0 ∧
+      w (σ (σ i)) = 4 * w i - modulus k ∧ 0 < w (σ (σ i)) := by
+    have ht := hs i
+    rw [doubleStep, ite_eq_left (by omega : modulus k < 4 * w i)] at ht
+    have hbi := hb i
+    have hneg : w (σ i) < 0 := by omega
+    obtain ⟨_, ht2, hp2⟩ := neg (σ i) hneg
+    exact ⟨ht, hneg, by omega, hp2⟩
+  have existsPos : ∃ i, 0 < w i := by
+    let i : Fin k := ⟨0, by omega⟩
+    by_cases hi : 0 < w i
+    · exact ⟨i, hi⟩
+    · exact ⟨σ i, (neg i (by have := hnz i; omega)).2.2⟩
+  let P := Finset.univ.filter (fun i : Fin k => 0 < w i)
+  have memP (i : Fin k) : i ∈ P ↔ 0 < w i := by simp [P]
+  obtain ⟨i, hi⟩ := existsPos
+  obtain ⟨a, ha, hmax⟩ := P.exists_max_image w ⟨i, (memP i).2 hi⟩
+  have hapos := (memP a).1 ha
+  have haLarge : quarter k ≤ w a := by
+    by_contra hh
+    have ht := hs a
+    rw [doubleStep, ite_eq_right (by omega : ¬modulus k < 4 * w a),
+      ite_eq_right (by omega : ¬4 * w a < -modulus k)] at ht
+    have hm := hmax (σ a) ((memP _).2 (by omega))
+    omega
+  obtain ⟨_, _, ht, hp⟩ := posStep a haLarge
+  have hm := hmax (σ (σ a)) ((memP _).2 hp)
+  intro j hj
+  have hmj := hmax j ((memP _).2 hj)
+  change 3 * w j ≤ modulus k
+  omega
+
+private def longSeed {k : ℕ} (hk : 0 < k) (h : ℕ)
+    (w : Fin k → ℤ) (j : Fin k) : Prop :=
+  w (predecessor hk j) < 0 ∧ 0 < w j ∧
+    (2 : ℤ) ^ h * w j < quarter k
+
+private noncomputable instance longSeedDecidable {k : ℕ} (hk : 0 < k)
+    (h : ℕ) (w : Fin k → ℤ) : DecidablePred (longSeed hk h w) :=
+  fun _ => Classical.propDecidable _
+
+/-! This is the source-derived first-hit datum used by the adjacent-depth
+assumption.  The witness is a physical seed and its literal native dyadic
+path; no quotient by numerical values is involved. -/
+def nativeFirstHit {k t : ℕ}
+    (hk : 0 < k) (n : Fin k) (r : ℕ) : Prop :=
+  ∃ a : Fin k,
+    r + 2 ≤ k ∧ 0 < actualSource k t a ∧
+      (∀ q < r,
+        0 < actualSource k t (phase hk a q) ∧
+          actualSource k t (phase hk a q) < quarter k) ∧
+      actualSource k t (phase hk a r) =
+        (2 : ℤ) ^ r * actualSource k t a ∧
+      quarter k ≤ actualSource k t (phase hk a r) ∧
+      actualSource k t (phase hk a (r + 1)) < 0
+
+private theorem long_seed_successor_small {k t h : ℕ} (hk : 3 ≤ k)
+    (j : Fin k) (hj : longSeed (by omega) h (actualSource k t) j)
+    (hh : 1 ≤ h) :
+    0 < actualSource k t (successor (by omega) j) ∧
+      actualSource k t (successor (by omega) j) < quarter k := by
+  dsimp [longSeed] at hj
+  have hQ := (source_geometry hk).1
+  have hNform := (source_geometry hk).2.1
+  have hpow : (2 : ℤ) ^ h ≥ 2 := by
+    have hp := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hh
+    norm_num at hp ⊢
+    omega
+  have hstep := phase_step hk t j 0
+  simp only [phase_zero, zero_add] at hstep
+  change actualSource k t (successor (by omega) j) =
+    doubleStep (modulus k) (actualSource k t j) at hstep
+  have hbranch : 4 * actualSource k t j < modulus k := by
+    nlinarith [hj.2.2, hpow]
+  rw [doubleStep, ite_eq_right (by omega : ¬ modulus k < 4 * actualSource k t j),
+    ite_eq_right (by omega : ¬ 4 * actualSource k t j < -modulus k)] at hstep
+  constructor
+  · rw [hstep]
+    omega
+  · rw [hstep]
+    nlinarith [hj.2.2, hpow, hj.2.1]
+
+theorem native_adjacent_depth_first_hit {k t h : ℕ} (hk : 3 ≤ k)
+    (hsmall : ∀ i : Fin k, |actualSource k t i| < quarter k →
+      0 < actualSource k t i)
+    (hh : 1 ≤ h)
+    (hadj : ∀ (n : Fin k) (r : ℕ), actualSource k t n < 0 →
+      nativeFirstHit (k := k) (t := t) (by omega) n r → r = h ∨ r = h + 1)
+    (n : Fin k) (hn : actualSource k t n < 0) :
+    ∃ r : ℕ, (r = h ∨ r = h + 1) ∧
+      nativeFirstHit (k := k) (t := t) (by omega) n r := by
+  obtain ⟨r, hr, hnodup, ha, hamod, hpre, hdyadic, hroot,
+      hrootQ, hrootupper, hneg, hneglt, hnext, hnextpos, hnextmod,
+      hmass, hdebt, htransport⟩ := native_chain_extraction hk hsmall n hn
+  let a := phase (by omega : 0 < k) n 1
+  have hfirst : nativeFirstHit (k := k) (t := t) (by omega) n r := by
+    refine ⟨a, hr, ha, ?_, ?_, ?_, ?_⟩
+    · simpa [a] using hpre
+    · simpa [a] using hroot
+    · simpa [a] using hrootQ
+    · simpa [a] using hneglt
+  exact ⟨r, hadj n r hn hfirst, hfirst⟩
+
 private theorem phase_offset_injective {k : ℕ} (hk : 0 < k) (a : Fin k)
     {i j : ℕ} (hi : i < k) (hj : j < k)
     (hij : phase hk a i = phase hk a j) : i = j := by
