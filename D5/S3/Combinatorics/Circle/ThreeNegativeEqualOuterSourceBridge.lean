@@ -18,7 +18,7 @@ open SourceWidth
 
 public theorem source_zero (k t : ℕ) (hk : 3 ≤ k) :
     ((List.range k).map (fun i => centered (modulus k) ((2 : ℤ) ^ i * t))).sum = 0 :=
-  ThreeBitSource.source_zero
+  ThreeBitSource.source_zero k t hk
 
 public theorem actual_source_chains (x y z : ℕ)
     (hx : 0 < x) (hy : 0 < y) (hz : 2 ≤ z) :
@@ -35,7 +35,7 @@ public theorem actual_source_chains (x y z : ℕ)
       (∀ e < z, f e = if e + 1 < z then (2 : ℤ) ^ e * u else -(N - v) / 2) ∧
       (∀ e < y, f (z + e) = if e + 1 < y then (2 : ℤ) ^ e * v else -(N - w) / 2) ∧
       (∀ e < x, f (z + y + e) = if e + 1 < x then (2 : ℤ) ^ e * w else -(N - u) / 2) :=
-  ThreeBitSource.actual_source_chains
+  ThreeBitSource.actual_source_chains x y z hx hy hz
 
 public theorem physical_schedule {α : Type*} (f : α → ℤ) (labels F Q G : List α)
     (av aw au : α) (Av Aw Au C : ℤ)
@@ -49,6 +49,7 @@ public theorem physical_schedule {α : Type*} (f : α → ℤ) (labels F Q G : L
       (F.map f).sum - Av + (Q.map f).sum ≤ C)
     (htotal : (labels.map f).sum = 0) :
     InStrip f C 0 (F ++ av :: Q ++ aw :: G ++ [au]) :=
-  ThreeBitSource.physical_schedule
+  ThreeBitSource.physical_schedule f labels F Q G av aw au Av Aw Au C
+    hperm hAv hAw hAu hAv0 hAw0 hAuC hFpos hQpos hGpos hFmass hQmass htotal
 
 end D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterSourceBridge
