@@ -6,7 +6,8 @@
    utility: none
    digest: The CZX four-site window channel and gauge action. -/
 import D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging
-import D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction
+import Mathlib.Algebra.CharP.Basic
+import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 /-! Source: Liu et al., arXiv:2501.10552v2, Example VI.6 and Appendix F.
    The first site is the most significant bit of each four-site window.
    Evolution uses the matrix of the superoperator on pairs of configurations.
@@ -33,8 +34,6 @@ def czxV : Matrix (Fin 16) (Fin 16) ℂ := fun r c =>
 noncomputable def mu : ℝ := Real.sqrt 3 / 4
 /-- The scalar multiplying the four-dimensional multiplicity identity. -/
 noncomputable def nu : ℝ := Real.sqrt 3 / 16
-/-- The trace of a multiplicity block. -/
-noncomputable def mLambda : ℝ := mu
 private def block4 (l z : Fin 2) : Fin 4 := ⟨2 * l.val + z.val, by omega⟩
 private def block16 (l : Fin 2) (m : Fin 4) (z : Fin 2) : Fin 16 :=
   ⟨8 * l.val + 2 * m.val + z.val, by omega⟩
@@ -50,7 +49,7 @@ noncomputable def renormS (x : Matrix (Fin 16) (Fin 16) ℂ) :
 noncomputable def renormT (y : Matrix (Fin 4) (Fin 4) ℂ) :
     Matrix (Fin 16) (Fin 16) ℂ :=
   czxVᴴ * Matrix.of (fun r s => if @Fin.divNat 2 8 r = @Fin.divNat 2 8 s then
-    ((nu / mLambda : ℝ) : ℂ) * (1 : Matrix (Fin 4) (Fin 4) ℂ)
+    ((nu / mu : ℝ) : ℂ) * (1 : Matrix (Fin 4) (Fin 4) ℂ)
       ((@Fin.divNat 4 2 ∘ @Fin.modNat 2 8) r) ((@Fin.divNat 4 2 ∘ @Fin.modNat 2 8) s) *
       (czxU * y * czxUᴴ) (block4 (@Fin.divNat 2 8 r) (@Fin.modNat 8 2 r))
         (block4 (@Fin.divNat 2 8 s) (@Fin.modNat 8 2 s)) else 0) * czxV
@@ -129,7 +128,7 @@ private lemma local_channel_formula (x : Matrix (Fin 16) (Fin 16) ℂ) :
     calc
       _ = (czxU * czxUᴴ) * w * (czxU * czxUᴴ) := by simp only [mul_assoc]
       _ = w := by rw [hu, one_mul, mul_one]
-  have hr : ((nu / mLambda : ℝ) : ℂ) = (4 : ℂ)⁻¹ := by
+  have hr : ((nu / mu : ℝ) : ℂ) = (4 : ℂ)⁻¹ := by
     have hs : Real.sqrt 3 ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by norm_num))
     change (((Real.sqrt 3 / 16) / (Real.sqrt 3 / 4) : ℝ) : ℂ) = _
     have hreal : (Real.sqrt 3 / 16) / (Real.sqrt 3 / 4) = (1 / 4 : ℝ) := by
@@ -681,7 +680,7 @@ lemma sectorGauge_const (n : ℕ) (e : Fin 2) (x : Fin n → Fin 2) :
   simp only [Finset.mul_sum, mul_assoc]
 lemma sectorGauge_mul_self (n : ℕ) (δ x : Fin n → Fin 2) :
     sectorGauge n δ x * sectorGauge n δ x = 1 :=
-  D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Cycle.sign_square _
+  pow_mul_pow_eq_one _ (by norm_num : (-1 : ℂ) * (-1) = 1)
 private lemma site_add {n : ℕ} (i : Fin n) (a b : ℕ) :
     site (site i a) b = site i (a + b) := by
   apply Fin.ext
@@ -726,7 +725,7 @@ private lemma sectorGauge_phase_change (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
     change (-1 : ℂ) ^ _ * (-1 : ℂ) ^ ((δ j).val *
       (middleUpdate i x b c j).val * (middleUpdate i x b c (site j 1)).val) = 1
     rw [h1, h2]
-    exact D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Cycle.sign_square _
+    exact pow_mul_pow_eq_one _ (by norm_num : (-1 : ℂ) * (-1) = 1)
   have hp : (∏ j : Fin n, f j) = ∏ j ∈ ({i, site i 1, site i 2} : Finset (Fin n)), f j := by
     symm
     exact Finset.prod_subset (Finset.subset_univ _) (fun j _ hj => hout j hj)

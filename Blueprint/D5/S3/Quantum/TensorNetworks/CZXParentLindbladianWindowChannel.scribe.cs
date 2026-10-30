@@ -17,31 +17,29 @@ internal sealed class CZXParentLindbladianWindowChannelDocument : IScribeDocumen
             Node("czxU", "The two-site change of basis", CzxU(),
                 "The 4 by 4 permutation matrix is the two-site change of basis displayed in Appendix F, with the computational basis in source order (main.tex l. 4858–4863).", Literature),
             Node("czxV", "The signed four-site permutation", CzxV(),
-                "The 16 by 16 signed permutation has the sixteen positive entries and two negative entries listed in Appendix F (main.tex l. 4933–4937). Its row and column indices are the four-bit window words.", Literature),
+                "The 16 by 16 signed permutation has the fourteen positive entries and two negative entries listed in Appendix F (main.tex l. 4933–4937). Its row and column indices are the four-bit window words.", Literature),
             Node("mu", "The two-site block weight", MuFormula(),
                 "The common block weight is the positive real number square root of three divided by four (main.tex l. 4870).", Literature),
             Node("nu", "The four-site block weight", NuFormula(),
                 "The multiplicity block weight is square root of three divided by sixteen (main.tex l. 4930).", Literature),
-            Node("mLambda", "The multiplicity trace", MLambdaFormula(),
-                "The trace of a multiplicity block is the common two-site weight.", Literature),
             Node("renormS", "The four-to-two renormalization channel", RenormS(),
-                "RenormS conjugates by the signed permutation and the two-site basis change, pinches equal sector labels, and sums the four-dimensional multiplicity index, matching the source's S channel (main.tex l. 3149–3164).", Literature),
+                "RenormS conjugates by the signed permutation and the two-site basis change, pinches equal sector labels, and sums the four-dimensional multiplicity index, matching the source's S channel (main.tex l. 3149–3164). Nat.div denotes natural-number floor division and Nat.mod the remainder; Fin.divNat a b p and Fin.modNat a b p have values p.val / b and p.val % b, respectively.", Literature),
             Node("renormT", "The two-to-four renormalization channel", RenormT(),
-                "RenormT conjugates by the signed permutation, inserts the normalized multiplicity identity with scalar nu divided by mLambda, and restores the source tensor order, matching the source's T channel (main.tex l. 3132–3147).", Literature),
+                "RenormT conjugates by the signed permutation, inserts the normalized multiplicity identity with scalar nu divided by mu, and restores the source tensor order, matching the source's T channel (main.tex l. 3132–3147). The source multiplicity trace satisfies m_lambda = mu_lambda, so the common weight mu is used directly. Nat.div denotes natural-number floor division and Nat.mod the remainder; Fin.divNat a b p and Fin.modNat a b p have values p.val / b and p.val % b, respectively.", Literature),
             Node("localChannel", "The four-site channel", LocalChannel(),
-                "The local channel is the composition of the four-to-two channel after the two-to-four channel, as in the source's E = T composed with S (main.tex l. 4951–4952).", Literature),
+                "The local channel applies the four-to-two channel S, then the two-to-four channel T, as in the source's E = T composed with S (main.tex l. 4951–4952).", Literature),
             Node("site", "Cyclic site displacement", Site(),
-                "Site i k is the cyclic displacement of i by the natural offset k. The result is represented by the residue modulo n.", Literature),
+                "Site i k is the cyclic displacement of i by the natural offset k. The result is represented by the residue modulo n. Nat.div denotes natural-number floor division and Nat.mod the remainder; Fin.divNat a b p and Fin.modNat a b p have values p.val / b and p.val % b, respectively.", Literature),
             Node("windowCode", "The four-bit window code", WindowCode(),
-                "WindowCode reads four consecutive cyclic bits, with the first site as the most significant bit, and packs them into Fin 16.", Literature),
+                "WindowCode reads four consecutive cyclic bits, with the first site as the most significant bit, and packs them into Fin 16. Nat.div denotes natural-number floor division and Nat.mod the remainder; Fin.divNat a b p and Fin.modNat a b p have values p.val / b and p.val % b, respectively.", Literature),
             Node("windowUpdate", "Writing a window word", WindowUpdate(),
-                "WindowUpdate replaces the four cyclic window coordinates by the four binary digits of p, in most-significant-first order, and leaves all other coordinates unchanged.", Literature),
+                "WindowUpdate replaces the four cyclic window coordinates by the four binary digits of p, in most-significant-first order, and leaves all other coordinates unchanged. Nat.div denotes natural-number floor division and Nat.mod the remainder; Fin.divNat a b p and Fin.modNat a b p have values p.val / b and p.val % b, respectively.", Literature),
             Node("windowChannel", "The translated local channel", WindowChannel(),
                 "WindowChannel inserts the four-site local channel into a cyclic n-site matrix by summing over the input and output window words and updating the two matrix indices accordingly.", Literature),
             Node("windowSuperoperator", "The matrix of a window channel", WindowSuperoperator(),
                 "WindowSuperoperator is the matrix-unit representation of a translated window channel on pairs of binary configurations.", Literature),
             Node("parentLindbladian", "The parent Lindbladian", ParentLindbladian(),
-                "The parent Lindbladian is the sum of the translated channel minus the identity over zero-based even starting sites, corresponding to the source's odd-window sum after reindexing (main.tex l. 4951–4952).", Literature),
+                "The parent Lindbladian is the sum of the translated channel minus the identity over zero-based even starting sites, corresponding to the source's odd-window sum after reindexing (main.tex l. 4951–4952). Nat.div denotes natural-number floor division and Nat.mod the remainder; Fin.divNat a b p and Fin.modNat a b p have values p.val / b and p.val % b, respectively.", Literature),
             Node("tensorX", "The tensor product of bit flips", TensorX(),
                 "TensorX has one at the entry taking y to the configuration obtained by adding one in Fin 2 at every site, and zero elsewhere.", Literature),
             Node("cz", "The ring controlled-Z operator", Cz(),
@@ -53,7 +51,7 @@ internal sealed class CZXParentLindbladianWindowChannelDocument : IScribeDocumen
             Node("gauge", "The constant-sector gauge phase", Gauge(),
                 "Gauge assigns to a bit e and configuration x the phase minus one raised to e times the cyclic nearest-neighbour occupation sum.", Repo),
             Node("site_injective", "Distinct sites in a four-site window", SiteInjective(),
-                "When n is at least four, the four cyclic positions from a fixed starting site are pairwise distinct. The proof cancels the common cyclic displacement modulo n.", Repo),
+                "When n is at least four, the four cyclic positions from a fixed starting site are pairwise distinct. The proof cancels the common cyclic displacement modulo n.", Repo, DescribeRole.Theorem),
             Node("windowLM", "The window channel as a linear map", WindowLM(),
                 "WindowLM is the complex-linear endomorphism whose action on every matrix is windowChannel.", Repo),
             Node("goodWindow", "A constant gauge window", GoodWindow(),
@@ -63,30 +61,30 @@ internal sealed class CZXParentLindbladianWindowChannelDocument : IScribeDocumen
             Node("gaugedUnit", "A gauged matrix unit", GaugedUnit(),
                 "GaugedUnit is the sector phase times the matrix unit from x to x plus delta.", Repo),
             Node("sectorGauge_const", "Constant sectors recover the gauge", SectorGaugeConst(),
-                "For a constant difference, distributing the constant over the finite sum identifies sectorGauge with gauge.", Repo),
+                "For a constant difference, distributing the constant over the finite sum identifies sectorGauge with gauge.", Repo, DescribeRole.Theorem),
             Node("sectorGauge_mul_self", "The gauge phase is self-inverse", SectorGaugeMulSelf(),
-                "Every sector gauge phase squares to one because its exponent is an integer and the sign square identity applies.", Repo),
+                "Every sector gauge phase squares to one because its exponent is an integer and the sign square identity applies.", Repo, DescribeRole.Theorem),
             Node("site_succ_injective", "The successor site map is injective", SiteSuccInjective(),
-                "The cyclic successor map is injective for every nonempty Fin n. The proof uses the additive inverse in Fin n after establishing n is nonzero from an index.", Repo),
+                "The cyclic successor map is injective for every nonempty Fin n. The proof uses the additive inverse in Fin n after establishing n is nonzero from an index.", Repo, DescribeRole.Theorem),
             Node("gauged_window_sector", "The gauged window action", GaugedWindowSector(),
-                "On a good window, the gauge converts the local channel into the uniform average over the two middle bits; on a bad window the action is zero. The phase change on the three affected edges cancels using the self-inverse gauge phase.", Repo),
+                "On a good window, the gauge converts the local channel into the uniform average over the two middle bits; on a bad window the action is zero. The phase change on the three affected edges cancels using the self-inverse gauge phase.", Repo, DescribeRole.Theorem),
             Node("matrix_linearMap_ext_gauged", "Gauged units span the matrix space", MatrixLinearMapExtGauged(),
-                "Two complex-linear endomorphisms agreeing on every gauged unit agree everywhere. Each standard matrix unit is a self-product of a sector phase times one gauged unit, so the standard matrix basis extension applies.", Repo),
+                "Two complex-linear endomorphisms agreeing on every gauged unit agree everywhere. Each standard matrix unit is a self-product of a sector phase times one gauged unit, so the standard matrix basis extension applies.", Repo, DescribeRole.Theorem),
             Node("window_channels_commute", "Translated window channels commute", WindowChannelsCommute(),
-                "The gauged-unit action identifies each good window channel with an average over its two middle coordinates. The coordinate averages commute, and the four cases of good or bad windows give equality for every matrix.", Repo),
+                "The gauged-unit action identifies each good window channel with an average over its two middle coordinates. The coordinate averages commute, and the four cases of good or bad windows give equality for every matrix.", Repo, DescribeRole.Theorem),
             Node("window_superoperator_action", "The window superoperator action", WindowSuperoperatorAction(),
-                "Expanding an arbitrary matrix in matrix units and evaluating the resulting linear map shows that the matrix-vector action of windowSuperoperator equals windowChannel entrywise.", Repo),
+                "Expanding an arbitrary matrix in matrix units and evaluating the resulting linear map shows that the matrix-vector action of windowSuperoperator equals windowChannel entrywise.", Repo, DescribeRole.Theorem),
             Node("window_idempotent", "Idempotence of a window superoperator", WindowIdempotent(),
-                "The local channel is idempotent on matrix units; the window channel therefore composes with itself to itself. The preceding action formula transfers this identity to the window superoperator.", Repo)
+                "The local channel is idempotent on matrix units; the window channel therefore composes with itself to itself. The preceding action formula transfers this identity to the window superoperator.", Repo, DescribeRole.Theorem)
         ), []));
 
     private static AssessedProvenance Literature => AssessedProvenance.FromLiterature(Source);
     private static AssessedProvenance Repo => AssessedProvenance.FromRepo(Source);
 
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose, AssessedProvenance provenance) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
         Describe.Lean(DescribeId.Create("czx-window-" + name.ToLowerInvariant().Replace("_", "-")), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            Blocks(Paragraph(Text(prose))), role);
 
     private static Formula Q(string name)
     {
@@ -139,15 +137,15 @@ internal sealed class CZXParentLindbladianWindowChannelDocument : IScribeDocumen
     private static Formula Matrix4() => Matrix(Fin(D(4)), Fin(D(4)), Complex());
     private static Formula Config(Formula n) => Arrow(Fin(n), Fin(D(2)));
     private static Formula ConfigMatrix(Formula n) => Matrix(Config(n), Config(n), Complex());
-    private static Formula PairConfig(Formula n) => P(Seq(Config(n), Sp, Times, Sp, Config(n)));
+    private static Formula PairConfig(Formula n) => P(Seq(P(Config(n)), Sp, Times, Sp, P(Config(n))));
     private static Formula PairMatrix(Formula n) => Matrix(PairConfig(n), PairConfig(n), Complex());
     private static Formula Adj(Formula x) => Call("Matrix.conjTranspose", x);
     private static Formula Update(Formula x, Formula i, Formula value) => Call("Function.update", x, i, value);
     private static Formula Digit(Formula p, Formula k) => FinMk(NatMod(NatDiv(FinVal(p), Pow(D(2), k)), D(2)));
     private static Formula Block4(Formula l, Formula z) => FinMk(Add(Mul(D(2), FinVal(l)), FinVal(z)));
     private static Formula Block16(Formula l, Formula m, Formula z) => FinMk(Add(Add(Mul(D(8), FinVal(l)), Mul(D(2), FinVal(m))), FinVal(z)));
-    private static Formula MiddleUpdate(Formula i, Formula x, Formula b, Formula c) => Update(Update(x, At(Call("site"), i, D(1)), b), At(Call("site"), i, D(2)), c);
-    private static Formula SiteAt(Formula i, Formula k) => At(Call("site"), i, k);
+    private static Formula MiddleUpdate(Formula i, Formula x, Formula b, Formula c) => Update(Update(x, SiteAt(i, D(1)), b), SiteAt(i, D(2)), c);
+    private static Formula SiteAt(Formula i, Formula k) => Call("site", i, k);
     private static Formula SetList(params Formula[] values) => Seq(OpenBrace, Seq(values.SelectMany((v, i) => i == 0 ? new[] { v } : new Formula[] { Comma, Sp, v }).ToArray()), CloseBrace);
     private static Formula Filter(Formula predicate, Formula set) => Call("Finset.filter", predicate, set);
     private static Formula FinsetUniv(Formula type) => Call("Finset.univ", type);
@@ -169,7 +167,6 @@ internal sealed class CZXParentLindbladianWindowChannelDocument : IScribeDocumen
 
     private static Formula MuFormula() => Eqn(F.Id("mu"), Div(Call("Real.sqrt", D(3)), D(4)));
     private static Formula NuFormula() => Eqn(F.Id("nu"), Div(Call("Real.sqrt", D(3)), D(1,6)));
-    private static Formula MLambdaFormula() => Eqn(F.Id("mLambda"), F.Id("mu"));
 
     private static Formula RenormS()
     {
@@ -188,7 +185,7 @@ internal sealed class CZXParentLindbladianWindowChannelDocument : IScribeDocumen
         Formula row=CompFin(DivNatFn(D(4),D(2)),ModNatFn(D(2),D(8)),r);
         Formula col=CompFin(DivNatFn(D(4),D(2)),ModNatFn(D(2),D(8)),s);
         Formula block=If(Eqn(DivNat(D(2),D(8),r),DivNat(D(2),D(8),s)),
-            Mul(Mul(Cast(Div(F.Id("nu"),F.Id("mLambda")),Complex()),At(id4,row,col)),
+            Mul(Mul(Cast(Div(F.Id("nu"),F.Id("mu")),Complex()),At(id4,row,col)),
                 At(Mul(Mul(F.Id("czxU"),y),Adj(F.Id("czxU"))),Block4(DivNat(D(2),D(8),r),ModNat(D(8),D(2),r)),Block4(DivNat(D(2),D(8),s),ModNat(D(8),D(2),s)))),
             Cast(D(0),Complex()));
         Formula body=Mul(Mul(Adj(F.Id("czxV")),Call("Matrix.of",Lam("r",Fin(D(1,6)),Lam("s",Fin(D(1,6)),block)))),F.Id("czxV"));
@@ -235,7 +232,7 @@ internal sealed class CZXParentLindbladianWindowChannelDocument : IScribeDocumen
         Formula n=F.Id("n"),i=F.Id("i");
         Formula pred=Lam("i",Fin(n),Eqn(NatMod(FinVal(i),D(2)),D(0)));
         Formula domain=Filter(pred,FinsetUniv(Fin(n)));
-        return All("n",Nat(),Eqn(At(F.Id("parentLindbladian"),n),SumOver(i,domain,Sub(At(F.Id("windowSuperoperator"),n,i),Cast(D(1),PairMatrix(n))))));
+        return All("n",Nat(),Eqn(At(F.Id("parentLindbladian"),n),Seq(new Formula.Subscript(Sum,Mem(i,domain)),Sp,P(Sub(At(F.Id("windowSuperoperator"),n,i),Cast(D(1),PairMatrix(n)))))));
     }
 
     private static Formula TensorX() => All("n",Nat(),Eqn(At(F.Id("tensorX"),F.Id("n")),Lam("x",Config(F.Id("n")),Lam("y",Config(F.Id("n")),If(Eqn(F.Id("x"),Lam("j",Fin(F.Id("n")),Add(At(F.Id("y"),F.Id("j")),D(1)))),COne(),Cast(D(0),Complex()))))));

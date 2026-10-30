@@ -13,18 +13,18 @@ internal sealed class CZXParentLindbladianAveragingDocument : IScribeDocumentDef
         H("CZX coordinate averaging"),
         Blocks(
             Node("avg", "The coordinate average", Avg(), "Avg is the noncommutative product of the commuting binary-coordinate averaging endomorphisms over a finite set of sites.", Repo),
-            Node("avg_empty", "The empty average", AvgEmpty(), "The average over no coordinates is the identity endomorphism.", Repo),
-            Node("avg_mul", "Multiplication of averages", AvgMul(), "Multiplying the averages over two finite site sets gives the average over their union, using idempotence and commutation of the coordinate averages.", Repo),
-            Node("avg_commute", "Commutation of averages", AvgCommute(), "Averages over arbitrary finite site sets commute because every coordinate average commutes with every other one.", Repo),
-            Node("avg_pair_apply", "A two-coordinate average", AvgPairApply(), "For distinct sites k and l, applying the average over their pair gives the four equally weighted updates of the two coordinates.", Repo),
-            Node("avg_map", "Averages commute with linear maps", AvgMap(), "A complex-linear map can be moved through a coordinate average by map-additivity, map-scalar multiplication, and induction over the finite product.", Repo),
-            Node("avg_univ", "The full coordinate average", AvgUniv(), "Averaging over every site gives the uniform average over all binary configurations, with normalization two to the power n.", Repo)
+            Node("avg_empty", "The empty average", AvgEmpty(), "The average over no coordinates is the identity endomorphism.", Repo, DescribeRole.Theorem),
+            Node("avg_mul", "Multiplication of averages", AvgMul(), "Multiplying the averages over two finite site sets gives the average over their union, using idempotence and commutation of the coordinate averages.", Repo, DescribeRole.Theorem),
+            Node("avg_commute", "Commutation of averages", AvgCommute(), "Averages over arbitrary finite site sets commute because every coordinate average commutes with every other one.", Repo, DescribeRole.Theorem),
+            Node("avg_pair_apply", "A two-coordinate average", AvgPairApply(), "For distinct sites k and l, applying the average over their pair gives the four equally weighted updates of the two coordinates.", Repo, DescribeRole.Theorem),
+            Node("avg_map", "Averages commute with linear maps", AvgMap(), "A complex-linear map can be moved through a coordinate average by map-additivity, map-scalar multiplication, and induction over the finite product.", Repo, DescribeRole.Theorem),
+            Node("avg_univ", "The full coordinate average", AvgUniv(), "Averaging over every site gives the uniform average over all binary configurations, with normalization two to the power n.", Repo, DescribeRole.Theorem)
         ), []));
 
     private static AssessedProvenance Repo => AssessedProvenance.FromRepo();
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose, AssessedProvenance provenance) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
         Describe.Lean(DescribeId.Create("czx-avg-" + name.ToLowerInvariant().Replace("_", "-")), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
     private static Formula Q(string name)
     {
         var parts=name.Split('.'); var items=new List<Formula> { Operatorname, Grp(F.Id(parts[0])) };
@@ -70,7 +70,7 @@ internal sealed class CZXParentLindbladianAveragingDocument : IScribeDocumentDef
     private static Formula AvgPairApply()
     { var n=F.Id("n"); var k=F.Id("k"); var l=F.Id("l"); var f=F.Id("f"); var x=F.Id("x"); var set=Call("Finset.insert",k,Call("Finset.singleton",l)); var lhs=At(At(AvgCall(n,set),f),x); var updates=Update(Update(x,k,F.Id("b")),l,F.Id("c")); var inner=SumOver(F.Id("c"),Fin(D(2)),At(f,updates)); var sums=SumOver(F.Id("b"),Fin(D(2)),inner); var rhs=Smul(Inv(T(D(4),Complex())),sums); var eq=Eqn(lhs,rhs); var statement=All("n",Nat(),All("k",Fin(n),All("l",Fin(n),Imp(Ne(k,l),All("f",FunctionSpace(n,F.Id("V")),All("x",Config(n),eq)))))); return VBinders(statement); }
     private static Formula AvgMap()
-    { var n=F.Id("n"); var s=F.Id("s"); var l=F.Id("l"); var f=F.Id("f"); var x=F.Id("x"); var lhs=At(l,At(At(AvgCall(n,s),f),x)); var mapped=Lam("y",F.Id("V"),At(l,At(f,F.Id("y")))); var rhs=At(At(AvgCall(n,s),mapped),x); var eq=Eqn(lhs,rhs); var statement=All("n",Nat(),All("s",Finset(n),All("l",Call("LinearMap",Complex(),F.Id("V"),F.Id("W")),All("f",FunctionSpace(n,F.Id("V")),All("x",Config(n),eq))))); return WBinders(statement); }
+    { var n=F.Id("n"); var s=F.Id("s"); var l=F.Id("l"); var f=F.Id("f"); var x=F.Id("x"); var lhs=At(l,At(At(AvgCall(n,s),f),x)); var mapped=Lam("y",Config(n),At(l,At(f,F.Id("y")))); var rhs=At(At(AvgCall(n,s),mapped),x); var eq=Eqn(lhs,rhs); var statement=All("n",Nat(),All("s",Finset(n),All("l",Call("LinearMap",Complex(),F.Id("V"),F.Id("W")),All("f",FunctionSpace(n,F.Id("V")),All("x",Config(n),eq))))); return WBinders(statement); }
     private static Formula AvgUniv()
     { var n=F.Id("n"); var f=F.Id("f"); var x=F.Id("x"); var lhs=At(At(AvgCall(n,Call("Finset.univ")),f),x); var rhs=Smul(Inv(T(Pow(D(2),n),Complex())),SumOver(F.Id("y"),Config(n),At(f,F.Id("y")))); return VBinders(All("n",Nat(),All("f",FunctionSpace(n,F.Id("V")),All("x",Config(n),Eqn(lhs,rhs))))); }
     private static Formula CastOne() => T(D(1),Call("Module.End",Complex(),FunctionSpace(F.Id("n"),F.Id("V"))));
