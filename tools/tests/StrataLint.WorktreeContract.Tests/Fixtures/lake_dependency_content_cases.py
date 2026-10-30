@@ -85,6 +85,9 @@ class LakeDependencyContentCases:
         (boundary / "tracked").write_text("local committed bytes\n")
         self.g(boundary, "add", "tracked")
         self.g(boundary, "commit", "-m", "unpublished dependency work")
+        # Isolate history coverage from unrecognized commit-message metadata.
+        if (boundary / ".git").is_dir():
+            (boundary / ".git/COMMIT_EDITMSG").unlink()
         return self.g(boundary, "rev-parse", "HEAD").strip()
 
     def test_lake_dependency_retains_detached_local_commit(self):
@@ -99,7 +102,7 @@ class LakeDependencyContentCases:
         commit = self.local_dependency_commit(boundary)
         self.g(boundary, "branch", "local-work", commit)
         self.g(boundary, "checkout", "--detach", base)
-        self.assert_lake_content_retained(boundary, "lake_dependency_local_history:")
+        self.assert_lake_content_retained(boundary, "lake_dependency_unknown_shape:")
         self.assertEqual(commit, self.g(boundary, "rev-parse", "local-work").strip())
 
     def test_lake_dependency_retains_stash(self):
@@ -107,7 +110,7 @@ class LakeDependencyContentCases:
         (boundary / "tracked").write_text("stashed local bytes\n")
         self.g(boundary, "stash", "push", "-m", "dependency work")
         stash = self.g(boundary, "rev-parse", "refs/stash").strip()
-        self.assert_lake_content_retained(boundary, "lake_dependency_local_history:")
+        self.assert_lake_content_retained(boundary, "lake_dependency_unknown_shape:")
         self.assertEqual("stashed local bytes\n", self.g(boundary, "show", stash + ":tracked"))
 
     def test_lake_dependency_retains_failed_status_check(self):
@@ -180,4 +183,3 @@ class LakeDependencyContentCases:
         result = self.remove()
         self.assertEqual(0, result.returncode)
         self.assertFalse(self.tree.exists())
-

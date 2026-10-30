@@ -89,12 +89,54 @@ def _declared_lake_dependency(path, target):
         return None
 
 
+def _lake_git_shape_problem(path):
+    """Recognize only ordinary detached Lake clone metadata and visible indexes."""
+    metadata = path / ".git"
+    if not stat.S_ISDIR(metadata.lstat().st_mode):
+        return "git_directory"
+    files = {"HEAD", "config", "description", "index", "FETCH_HEAD", "packed-refs"}
+    directories = {"hooks", "info", "logs", "objects", "refs", "worktree-operations"}
+    for entry in metadata.iterdir():
+        mode = entry.lstat().st_mode
+        if entry.name in files and stat.S_ISREG(mode):
+            continue
+        if entry.name not in directories or not stat.S_ISDIR(mode):
+            return "git_entry:" + entry.name
+        if entry.name == "worktree-operations":
+            for lock in entry.iterdir():
+                info = lock.lstat()
+                if not (lock.name.endswith(".lock") and stat.S_ISREG(info.st_mode)
+                        and info.st_size == 0):
+                    return "scope_lock:" + lock.name
+    head = git(path, "symbolic-ref", "--quiet", "HEAD", check=False)
+    if head.returncode == 0:
+        return "attached_head"
+    if head.returncode != 1:
+        raise Refused("symbolic_ref_failed")
+    refs = git(path, "for-each-ref", "--format=%(refname)")
+    if refs.stderr:
+        raise Refused("reference_inspection:" + os.fsdecode(refs.stderr).strip())
+    if any(not ref.startswith((b"refs/tags/", b"refs/remotes/"))
+           for ref in refs.stdout.splitlines()):
+        return "reference_namespace"
+    for entry in git(path, "ls-files", "-v", "-z").stdout.split(b"\0"):
+        if entry and (entry[:1] == b"S" or entry[:1].islower()):
+            return "index_flags"
+    return None
+
+
 def reject_lake_local_content(path, target, package):
-    """Only recoverable dependency history and ignored build outputs may leave."""
+    """Exempt only recognized Lake clones with fully covered visible content."""
     relative = str(path.relative_to(target))
     revision = package.get("rev")
     if not isinstance(revision, str) or not re.fullmatch(r"[0-9a-fA-F]{40}|[0-9a-fA-F]{64}", revision):
         raise Refused("lake_dependency_check_failed:" + relative + ":manifest_revision")
+    try:
+        shape_problem = _lake_git_shape_problem(path)
+    except (Refused, OSError, subprocess.SubprocessError, UnicodeError) as error:
+        raise Refused("lake_dependency_check_failed:" + relative + ":" + str(error)) from error
+    if shape_problem:
+        raise Refused("lake_dependency_unknown_shape:" + relative + ":" + shape_problem)
     try:
         status = git(path, "status", "--porcelain=v1", "-z", "--untracked-files=all",
                      "--ignore-submodules=none").stdout
@@ -106,15 +148,15 @@ def reject_lake_local_content(path, target, package):
             manifest_commits = []
         else:
             raise Refused("manifest_revision_object")
-        # A metacharacter keeps Git from appending /* to the exact stash ref.
-        local_history = git(path, "rev-list", "--max-count=1", "HEAD", "--branches",
-                            "--glob=refs/stas[h]", "--not", "--remotes", "--tags",
-                            *manifest_commits, "--").stdout
+        history = git(path, "rev-list", "--max-count=1", "HEAD", "--all", "--reflog",
+                      "--not", "--remotes", "--tags", *manifest_commits, "--")
+        if history.stderr:
+            raise Refused("history_inspection:" + os.fsdecode(history.stderr).strip())
     except (Refused, OSError, subprocess.SubprocessError, UnicodeError) as error:
         raise Refused("lake_dependency_check_failed:" + relative + ":" + str(error)) from error
     if status:
         raise Refused("lake_dependency_dirty:" + relative)
-    if local_history.strip():
+    if history.stdout.strip():
         raise Refused("lake_dependency_local_history:" + relative)
 
 
