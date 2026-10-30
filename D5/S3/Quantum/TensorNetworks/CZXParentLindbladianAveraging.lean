@@ -14,7 +14,7 @@ import Mathlib.Data.Finset.Update
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState
+namespace D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging
 
 variable {V W : Type*} [AddCommGroup V] [Module ℂ V]
   [AddCommGroup W] [Module ℂ W]
@@ -189,4 +189,4 @@ lemma avg_univ (n : ℕ) (f : (Fin n → Fin 2) → V) (x : Fin n → Fin 2) :
   funext j
   (delta Function.updateFinset; simp [e])
 
-end D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState
+end D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging

@@ -16,7 +16,8 @@ import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
-namespace D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState
+namespace D5.S3.Quantum.TensorNetworks.CZXParentLindbladianWindowChannel
+open D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging
 open Matrix Filter
 attribute [local instance low] Classical.propDecidable
 open scoped Topology ComplexConjugate
@@ -176,14 +177,20 @@ private lemma local_channel_expansion (x : Matrix (Fin 16) (Fin 16) ℂ) :
     { toFun := localChannel
       map_add' := local_channel_add
       map_smul' := local_channel_smul }
-  change f x = _
-  have hs (p q : Fin 16) : Matrix.single p q (x p q) =
-      x p q • Matrix.single p q 1 := by
-    rw [Matrix.smul_single]
-    simp only [smul_eq_mul, mul_one]
-  conv_lhs => rw [Matrix.matrix_eq_sum_single x]
-  simp only [map_sum, hs, map_smul]
-  rfl
+  change f x = ∑ p : Fin 16, ∑ q : Fin 16, x p q • f (Matrix.single p q 1)
+  classical
+  let b := Matrix.stdBasis ℂ (Fin 16) (Fin 16)
+  have hr (a : Matrix (Fin 16) (Fin 16) ℂ) (p : Fin 16 × Fin 16) :
+      b.repr a p = a p.1 p.2 := by
+    simp [b, Matrix.stdBasis]
+  have hb (p : Fin 16 × Fin 16) : b p = Matrix.single p.1 p.2 1 :=
+    Matrix.stdBasis_eq_single ℂ p.1 p.2
+  ext r s
+  have h := congrArg (fun v => v (r, s))
+    (LinearMap.toMatrix_mulVec_repr b b f x)
+  simpa only [Matrix.mulVec, dotProduct, LinearMap.toMatrix_apply, hr, hb,
+    Fintype.sum_prod_type, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
+    mul_comm] using h.symm
 set_option maxHeartbeats 1600000 in
 -- The four-site matrix identity expands all finite indices.
 private lemma local_channel_idempotent (x : Matrix (Fin 16) (Fin 16) ℂ) :
@@ -866,27 +873,31 @@ private lemma window_channel_comp (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
   simp_rw [← mul_assoc, ← Finset.sum_mul, hk]
   rfl
 set_option maxHeartbeats 800000 in
--- Matrix-unit expansion and the two finite sums are normalized together.
+-- Standard-basis coordinates identify the superoperator action.
 lemma window_superoperator_action (n : ℕ) (i : Fin n)
     (a : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) (x y : Fin n → Fin 2) :
     (windowSuperoperator n i).mulVec (fun p => a p.1 p.2) (x, y) =
       windowChannel n i a x y := by
-  let f := windowLM n i
-  have hs (p q : Fin n → Fin 2) : Matrix.single p q (a p q) =
-      a p q • Matrix.single p q 1 := by
-    rw [Matrix.smul_single]
-    simp only [smul_eq_mul, mul_one]
-  have ha : f a = ∑ p, ∑ q, a p q • f (Matrix.single p q 1) := by
-    conv_lhs => rw [Matrix.matrix_eq_sum_single a]
-    simp only [map_sum, hs, map_smul]
-  have hv := congrArg (fun z : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ => z x y) ha
-  have hf (b : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :
-      f b = windowChannel n i b := rfl
-  simp only [hf] at hv
+  classical
+  let b := Matrix.stdBasis ℂ (Fin n → Fin 2) (Fin n → Fin 2)
+  have hr (M : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)
+      (p : (Fin n → Fin 2) × (Fin n → Fin 2)) : b.repr M p = M p.1 p.2 := by
+    simp [b, Matrix.stdBasis]
+  have hb : LinearMap.toMatrix b b (windowLM n i) = windowSuperoperator n i := by
+    ext p q
+    rw [LinearMap.toMatrix_apply, hr]
+    change windowChannel n i (b q) p.1 p.2 = _
+    rw [show b q = Matrix.single q.1 q.2 1 from Matrix.stdBasis_eq_single ℂ q.1 q.2]
+    rfl
+  have h := congrArg (fun v => v (x, y))
+    (LinearMap.toMatrix_mulVec_repr b b (windowLM n i) a)
+  rw [hb] at h
+  change (∑ p, windowSuperoperator n i (x, y) p * b.repr a p) =
+    b.repr ((windowLM n i) a) (x, y) at h
   change (∑ p, windowSuperoperator n i (x, y) p * a p.1 p.2) = _
-  (delta windowSuperoperator; simp only [])
-  rw [Fintype.sum_prod_type]
-  simpa only [Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, mul_comm] using hv.symm
+  change (∑ p, windowSuperoperator n i (x, y) p * b.repr a p) =
+    b.repr (windowChannel n i a) (x, y) at h
+  simpa only [hr] using h
 lemma window_idempotent (n : ℕ) (hn : 4 ≤ n) (i : Fin n) :
     IsIdempotentElem (windowSuperoperator n i) := by
   change windowSuperoperator n i * windowSuperoperator n i = windowSuperoperator n i
@@ -895,4 +906,4 @@ lemma window_idempotent (n : ℕ) (hn : 4 ≤ n) (i : Fin n) :
     (fun p => windowChannel n i (Matrix.single y.1 y.2 1) p.1 p.2) x = _
   rw [window_superoperator_action, window_channel_comp n hn]
   rfl
-end D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState
+end D5.S3.Quantum.TensorNetworks.CZXParentLindbladianWindowChannel
