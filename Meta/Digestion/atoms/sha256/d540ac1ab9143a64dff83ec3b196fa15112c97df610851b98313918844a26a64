@@ -1,0 +1,33 @@
+**Proposition 3.2 (quotient-ring correspondence and nonminimal padding).**
+For a nonzero core the preceding inverse is also expressed in
+$R=\mathbb F_2[X]/(g)$ by
+
+$$
+N_y=XN_uN_{v'}N_w^{-1}\pmod g,
+$$
+
+where $\sum_{i\ge0}x_iX^{-i-1}=N_x/g$, $\deg N_x<r$, for
+$x=y,u,v',w$. The inverse is justified even for reducible repeated-factor
+$g$. Replacing $g$ by a nonminimal annihilator need not permit this
+cancellation.
+
+**Proof.** Shoup Theorem 18.2 identifies the reduced reversed-Laurent
+denominator with the least forward annihilator. Each numerator is
+coprime to $g$, since a common factor would cancel to a smaller
+annihilator. Thus each $N_x$ is a unit modulo $g$, by Shoup Theorem
+16.18. Also $X$ is a unit because $g(0)=1$. The identity
+$L_{Ex}=XL_x-x_0$ implies $N_{Ex}=XN_x\pmod g$. Therefore
+
+$$
+N_u=X^AN_y,\quad N_{v'}=X^BN_y,\quad N_w=X^{A+B+1}N_y,
+$$
+
+which proves the formula after cancellation of the proved unit $N_w$.
+No quotient field is assumed. Its degree-less-than-$r$ representative
+is exactly the original numerator, not a phase class. For the all-one
+stream, the nonminimal choice $g'=(X+1)^2=X^2+1$ instead has numerator
+$X+1$, a nonunit modulo $g'$. Theorem 3.1 computes rank one and uses
+$g=X+1$, so this failure excludes no original source. The quotient
+identity is an alternative correspondence, not an additional input
+requirement of the Hankel procedure. $\square$
+
