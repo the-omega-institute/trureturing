@@ -53,7 +53,8 @@ internal sealed class RoughPrimeRobinSuffixBellmanDocument : IScribeDocumentDefi
                 + "This theorem gives a finite comparison, not a uniform numerical "
                 + "Robin threshold or a proof of RH."),
             Paragraph(Text(
-                "For the exact 5040 valuation fibre, write N = 5040 n. "
+                "Assume that 2,3,5,7 are coprime to the external modulus W. "
+                + "For the exact 5040 valuation fibre, write N = 5040 n. "
                 + "The existing jointFiber5040_mul_iff supplies n != 0 and "
                 + "coprimality to W times 210. Thus n is 7-rough, and N <= B "
                 + "gives n <= div(B,5040). Apply rough_robin_bound with C=5040, "
