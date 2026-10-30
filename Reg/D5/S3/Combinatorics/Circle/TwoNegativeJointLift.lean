@@ -13,6 +13,7 @@ namespace Reg.D5.S3.Combinatorics.Circle.TwoNegativeJointLift
 open _root_.D5.S3.Combinatorics.Circle.SourceWidth
 open _root_.D5.S3.Combinatorics.Circle.PeriodicShortening
 open _root_.D5.S3.Combinatorics.Circle.RunFirstEarTransport
+open _root_.D5.S3.Combinatorics.Circle.TwoNegativeJointLift
 
 abbrev signature : Signature where
   Params := ℕ

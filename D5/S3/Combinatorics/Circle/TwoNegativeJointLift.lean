@@ -52,6 +52,7 @@ private theorem split_perm {k : ℕ} (E : Finset (Fin k)) (x y : Fin k)
   classical
   let F := Finset.univ \ (E ∪ {x,y})
   have hEF : List.Disjoint E.toList F.toList := by
+    apply List.disjoint_left.mpr
     intro i hi hj
     have hh := (Finset.mem_sdiff.mp (Finset.mem_toList.mp hj)).2
     exact hh (Finset.mem_union_left _ (Finset.mem_toList.mp hi))
@@ -60,6 +61,7 @@ private theorem split_perm {k : ℕ} (E : Finset (Fin k)) (x y : Fin k)
     apply List.nodup_append.mpr
     refine ⟨List.nodup_append.mpr ⟨E.nodup_toList, F.nodup_toList, hEF⟩,
       by simp [hxy], ?_⟩
+    apply List.disjoint_left.mpr
     intro i hi hj
     simp only [List.mem_append, Finset.mem_toList] at hi
     simp only [List.mem_cons, List.mem_singleton] at hj
@@ -95,8 +97,8 @@ private theorem inserted_perm {k : ℕ} (l : List (Fin k)) (j : ℕ)
   exact h.trans (by simpa only [List.finRange_succ_last] using
     (hp.map Fin.castSucc).append_right [Fin.last k])
 
-/-- One literal V-mask gives both full actual-source orders at the same zero cut. -/
 set_option maxHeartbeats 2000000 in
+/-- One literal V-mask gives both full actual-source orders at the same zero cut. -/
 theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     (hba : b < a) :
     ∃ sigma : List (Fin (a + b)), ∃ j : ℕ, j ≤ a + b ∧
@@ -247,7 +249,8 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
   have hwQ : (w : ℤ) < Q := by
     have hh : N - (v : ℤ) < A * Q := by rw [hN, hvc, hq]; dsimp [A]; nlinarith
     exact (mul_lt_mul_left hA).mp (lt_of_le_of_lt hfloor.1 hh)
-  have hwbits : w < 2 ^ (a - 1) := by exact_mod_cast hwQ
+  have hwbits : w < 2 ^ (a - 1) := by
+    exact_mod_cast (show (w:ℤ) < (2:ℤ) ^ (a-1) from hwQ)
   let mask := DyadicPrefix.bitSubset (a - 1) w hwbits
   let label : Fin (a - 1) → Fin k := fun i => ⟨b + i.val, by dsimp [k]; omega⟩
   have hinj : Function.Injective label := by
@@ -460,11 +463,11 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
           simpa [q,r,pow_add,mul_comm] using h
         have hzl : N-q-2*r-1 ≤ z := by
           have hh := hfloor.2
-          change N-(v:ℤ) < z+A at hh
-          rw [hvc] at hh
+          have he : A * ((w:ℤ)+1) = z+A := by dsimp [z]; ring
+          rw [he,hvc] at hh
           dsimp [A] at hh
           omega
-        have hzu : z ≤ N-q-1 := by have hh := hfloor.1; rw [hvc] at hh; exact hh
+        have hzu : z ≤ N-q-1 := by have hh := hfloor.1; rw [hvc] at hh; omega
         have margin : 0 ≤ q*(r-1)-4*r^2-4*r-2 := by
           nlinarith [mul_nonneg (show 0 ≤ q-8*r by omega) (show 0 ≤ r-1 by omega),
             mul_nonneg (show 0 ≤ r-4 by omega) (show 0 ≤ 4*r+4 by omega)]
