@@ -4,8 +4,7 @@
    mirror-E: none(waiver:symbolic-structural-theorems)
    anchors: []
    utility: none
-   digest: The raw conjugacy seam is grouped by the conjugation orbit, with one centralizer multiplicity for each orbit element.
--/
+   digest: The raw conjugacy seam is grouped by the conjugation orbit, with one centralizer multiplicity for each orbit element. -/
 
 /- Orbit--centralizer refinement of the joint twisted coefficient count. -/
 
@@ -26,7 +25,9 @@ open D5.S3.ConceptDynamics.Coding.CountedGroupOverlap (GroupMat)
 universe u
 variable {H : Type u} [Group H] [Fintype H] {n : ℕ}
 
-private theorem weighted_orbit_sum
+/-- A finite group action decomposes a sum over the acting group into orbit
+weights, with one stabilizer-cardinality contribution for each orbit point. -/
+theorem orbit_sum_eq_stabilizer_nsmul_sum
     {G X A : Type*}
     [Group G] [Fintype G] [MulAction G X] [AddCommMonoid A]
     (x : X)
@@ -72,7 +73,7 @@ private theorem weighted_inv_conj_sum
       exact congrArg f (ConjAct.toConjAct_inv_smul z c).symm
     _ = _ := by
       simpa only [hcard, Nat.nsmul_eq_mul] using
-        (weighted_orbit_sum (G := ConjAct H) c f)
+        (orbit_sum_eq_stabilizer_nsmul_sum (G := ConjAct H) c f)
 
 /-- The joint coefficient count groups the raw conjugacy seam by orbit, with
 one centralizer multiplicity for every orbit element. -/
