@@ -6,7 +6,8 @@
    utility: none
    digest: The nonnegative higher-order EPR bound is tight at every positive order. -/
 
-import Mathlib.NumberTheory.Harmonic.Bounds
+import Mathlib.NumberTheory.Harmonic.Int
+import D5.S3.Weil.ZetaGamma.GammaSeries
 
 /-! Finite occupation-basis states for the tightness clause of (nS:2) in
 Shchukin and van Loock, arXiv:1511.08444v1. The harmonic taper gives arbitrarily
@@ -54,19 +55,14 @@ private lemma norm_sum (s : Finset ℕ) (i : ℕ → ℕ × ℕ)
     (hi : Function.Injective i) (c : ℕ → ℂ) :
     normSq (∑ k ∈ s, Finsupp.single (i k) (c k)) = ∑ k ∈ s, ‖c k‖ ^ 2 := by
   classical
-  let v : ℕ × ℕ →₀ ℂ := ∑ k ∈ s, Finsupp.single (i k) (c k)
-  have hs : v.support ⊆ s.image i := by
-    intro p hp
-    obtain ⟨k, hk, hkp⟩ := Finset.mem_biUnion.mp (Finsupp.support_finsetSum hp)
-    exact Finset.mem_image.mpr ⟨k, hk, (Finset.mem_singleton.mp
-      (Finsupp.support_single_subset hkp)).symm⟩
-  have hc (k : ℕ) (hk : k ∈ s) : v (i k) = c k := by
-    change (∑ j ∈ s, Finsupp.single (i j) (c j)) (i k) = c k
-    simp [Finsupp.finsetSum_apply, Finsupp.single_apply, hi.eq_iff, hk]
-  change v.sum (fun _ z => ‖z‖ ^ 2) = _
-  rw [Finsupp.sum_of_support_subset v hs _ (by simp),
-    Finset.sum_image (by intro a _ b _ h; exact hi h)]
-  exact Finset.sum_congr rfl fun k hk => congrArg (fun z : ℂ => ‖z‖ ^ 2) (hc k hk)
+  have he : (∑ k ∈ s, Finsupp.single (i k) (c k)) =
+      (Finsupp.indicator s (fun k _ => c k)).mapDomain i := by
+    rw [Finsupp.indicator_eq_sum_single, Finsupp.mapDomain_finsetSum]
+    simp only [Finsupp.mapDomain_single]
+  rw [he]
+  unfold normSq
+  rw [Finsupp.sum_mapDomain_index_inj hi]
+  exact Finsupp.sum_indicator_index c (by simp)
 
 private def taper (m k : ℕ) : ℝ := 1 - (harmonic k : ℝ) / harmonic m
 
@@ -85,9 +81,7 @@ private lemma sqrt_factorial (r t : ℕ) (hr : 1 ≤ r) :
   have ht : (t.factorial : ℝ) ≠ 0 := by positivity
   have hd : ((r - 1).factorial : ℝ) ≠ 0 := by positivity
   have hf : (r.factorial : ℝ) = r * ((r - 1).factorial : ℝ) := by
-    have h := Nat.factorial_succ (r - 1)
-    rw [Nat.sub_add_cancel hr] at h
-    exact_mod_cast h
+    exact_mod_cast (Nat.mul_factorial_pred (by omega : r ≠ 0)).symm
   rw [hf]
   field_simp (disch := positivity)
 
@@ -140,8 +134,8 @@ private lemma taper_image (n m : ℕ) (hn : 1 ≤ n) (hm : 1 ≤ m) (σ : ℂ) :
       ∑ k ∈ range m, Finsupp.single (n * (k + 1) - 1, n * (k + 1))
         ((-σ) ^ (k + 1) * (Real.sqrt (n * (k + 1) : ℝ) *
           (taper m (k + 1) - taper m k) : ℝ)) := by
-  have hh : 0 < (harmonic m : ℝ) :=
-    (Real.log_pos (by norm_cast; omega)).trans_le (log_add_one_le_harmonic m)
+  have hh : 0 < (harmonic m : ℝ) := by
+    exact_mod_cast harmonic_pos (by omega : m ≠ 0)
   have hv : vector n σ m = ∑ k ∈ range (m + 1),
       ((-σ) ^ k * (taper m k : ℂ)) •
         Finsupp.single (n * k + n - 1, n * k) (coefficient n k : ℂ) := by
@@ -196,8 +190,8 @@ private lemma taper_image (n m : ℕ) (hn : 1 ≤ n) (hm : 1 ≤ m) (σ : ℂ) :
 private lemma dirichlet_energy (n m : ℕ) (hm : 1 ≤ m) :
     (∑ k ∈ range m, (Real.sqrt (n * (k + 1) : ℝ) *
       (taper m (k + 1) - taper m k)) ^ 2) = (n : ℝ) / harmonic m := by
-  have hh : 0 < (harmonic m : ℝ) :=
-    (Real.log_pos (by norm_cast; omega)).trans_le (log_add_one_le_harmonic m)
+  have hh : 0 < (harmonic m : ℝ) := by
+    exact_mod_cast harmonic_pos (by omega : m ≠ 0)
   have hd (k : ℕ) : taper m (k + 1) - taper m k =
       -1 / (((k : ℝ) + 1) * (harmonic m : ℝ)) := by
     have hr : (harmonic (k + 1) : ℝ) = (harmonic k : ℝ) + ((k : ℝ) + 1)⁻¹ := by
@@ -220,11 +214,7 @@ private lemma dirichlet_energy (n m : ℕ) (hm : 1 ≤ m) :
     Finset.sum_congr rfl fun k _ => ht k
   rw [he, ← Finset.mul_sum]
   have hs : (harmonic m : ℝ) = ∑ k ∈ range m, ((k : ℝ) + 1)⁻¹ := by
-    change ((∑ k ∈ range m, ((k + 1 : ℕ) : ℚ)⁻¹ : ℚ) : ℝ) = _
-    rw [Rat.cast_sum]
-    apply Finset.sum_congr rfl
-    intro k _
-    rw [Rat.cast_inv, Rat.cast_natCast, Nat.cast_add, Nat.cast_one]
+    simpa only [one_div] using Zeta23.DigammaSeries.harmonic_cast_eq m
   rw [← hs]
   field_simp (disch := positivity)
 
@@ -269,14 +259,10 @@ private lemma taper_energy (n m : ℕ) (hn : 1 ≤ n) (hm : 1 ≤ m)
 
 private lemma harmonic_large (b : ℝ) :
     ∃ m : ℕ, 1 ≤ m ∧ b < (harmonic m : ℝ) := by
-  obtain ⟨m, hm⟩ := exists_nat_gt (Real.exp b)
-  have hmpos : 0 < (m : ℝ) := (Real.exp_pos b).trans hm
-  refine ⟨m, by exact_mod_cast hmpos, ?_⟩
-  have hl : b < Real.log (m + 1 : ℕ) := by
-    rw [← Real.log_exp b]
-    apply Real.log_lt_log (Real.exp_pos b)
-    exact hm.trans (by norm_cast; omega)
-  exact hl.trans_le (log_add_one_le_harmonic m)
+  obtain ⟨m, hm, hb⟩ := ((Filter.eventually_ge_atTop 1).and
+    (Real.tendsto_sum_range_one_div_nat_succ_atTop.eventually
+      (Filter.eventually_gt_atTop b))).exists
+  exact ⟨m, hm, by simpa only [Zeta23.DigammaSeries.harmonic_cast_eq] using hb⟩
 
 private lemma normalize (n : ℕ) (σ : ℂ) (v : ℕ × ℕ →₀ ℂ)
     (hv : 0 < normSq v) :
@@ -303,12 +289,9 @@ theorem result : claim := by
   refine ⟨ψ, hψ, ?_⟩
   rw [he, taper_energy n m hn hm σ hσ]
   have hfac : (n.factorial : ℝ) = n * ((n - 1).factorial : ℝ) := by
-    have h := Nat.factorial_succ (n - 1)
-    rw [Nat.sub_add_cancel hn] at h
-    exact_mod_cast h
+    exact_mod_cast (Nat.mul_factorial_pred (by omega : n ≠ 0)).symm
   have hh : 0 < (harmonic m : ℝ) := by
-    have : 0 < (n.factorial : ℝ) / ε := by positivity
-    linarith
+    exact_mod_cast harmonic_pos (by omega : m ≠ 0)
   have hbound : (n : ℝ) / harmonic m / normSq (vector n σ m) ≤
       n.factorial / (harmonic m : ℝ) := by
     apply (div_le_iff₀ hv).2
