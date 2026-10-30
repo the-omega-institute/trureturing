@@ -10,7 +10,7 @@
 
 > 原稿元数据：PDF 标题「AURIC：完整过程、内部记忆与秩边界稳定性」；作者「AURIC research continuation」；主题「Complete quantum processes, endogenous memory, native readout-compatible dilations and rank-conditioned statistical stability」。页眉「AURIC：完整过程、内部记忆与秩边界稳定性」；版本「v38 / 2026-10-31」。
 
-> 转写来源：所供 v38.0 XeLaTeX 原稿，SHA-256 `1476b65854510bc19e252d7064dc009a86569f8fcca099d0289fe9418c396748`。正文中的“本轮”“当前树”、文件盘点、源码阅读及未运行声明均保留作者原有叙述，指原稿的来源轮次。
+> 转写来源：所供 v38.0 XeLaTeX 原稿，SHA-256 <code>1476b658<wbr>54510bc1<wbr>9e252d70<wbr>64dc009a<wbr>86569f8f<wbr>cca099d0<wbr>289fe941<wbr>8c396748</code>。正文中的“本轮”“当前树”、文件盘点、源码阅读及未运行声明均保留作者原有叙述，指原稿的来源轮次。
 
 <a id="abstract"></a>
 
