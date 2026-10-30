@@ -8,6 +8,7 @@ claim: "The scalar input gives a logarithmic integral proof of the closed-domain
 strata_touched:
   - D5/S3/Entropy/ProductAbsorptionLogKernel
   - D5/S3/Entropy/ProductAbsorptionLogIntegral
+  - D5/S3/Entropy/BinaryEntropyLogIntegral
 license: citation-only
 triage: anchor
 ---
@@ -54,6 +55,15 @@ The first-order coefficient cancellation gives the exact moment as the
 improper integral. The single-crossing theorem supplies absolute
 integrability by separate nonnegative and nonpositive derivative FTC
 arguments. Nonnegativity of that moment is a separate obligation.
+
+The binary-entropy integral module uses the actual natural-logarithm
+`Real.binEntropy` and the exact integrand
+`log(1+x/s)/sqrt(1+s)`. Its closed-domain target includes `x=0,1`.
+The continuous primitive with `r=sqrt(1-x)` and `y=sqrt(1+s)` is
+`2ylog(s+x)-2slog(s)/(y+1)-4log(y+1)+2r(log(y+r)-log(y-r))`.
+Its limit at infinity is zero and its value at zero is minus four times
+the binary entropy. The nonnegative-derivative improper FTC gives the
+integral identity and absolute integrability together.
 
 The kernel theorem includes the entire closed parameter square. Its
 boundary reduction uses the zero kernel at one zero parameter and the
