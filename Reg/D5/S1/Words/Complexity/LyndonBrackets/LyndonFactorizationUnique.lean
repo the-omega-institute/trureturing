@@ -13,10 +13,10 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace Reg.D5.S1.Words.Complexity.LyndonBrackets.LyndonFactorizationUnique
-universe u
+universe u_1
 
 abbrev signature : Signature where
-  Params := Type u
+  Params := Type u_1
   State A := List (List A)
   Role := Unit
   finiteRole := inferInstance
@@ -25,13 +25,13 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u} :=
+def actual : Realization signature.{u_1} :=
   realize signature (fun _ _ fs => fs.flatten) (fun e => nomatch e)
 
-def rejected : Realization signature.{u} :=
+def rejected : Realization signature.{u_1} :=
   realize signature (fun _ _ _ => []) (fun e => nomatch e)
 
-private theorem singleton_lyndon {A : Type u} [LinearOrder A] (a : A) : IsLyndon [a] := by
+private theorem singleton_lyndon {A : Type u_1} [LinearOrder A] (a : A) : IsLyndon [a] := by
   refine ⟨by simp, ?_⟩
   intro x y hx hy hxy
   have hlen := congrArg List.length hxy
@@ -43,23 +43,23 @@ private theorem singleton_lyndon {A : Type u} [LinearOrder A] (a : A) : IsLyndon
 namespace minimum
 
 abbrev arena : Arena where
-  signature := signature.{u}
-  Law R := ∀ {A : Type u} [LinearOrder A] (fs : List (List A)) (m : List A),
+  signature := signature.{u_1}
+  Law R := ∀ {A : Type u_1} [LinearOrder A] (fs : List (List A)) (m : List A),
     (∀ w ∈ fs ++ [m], IsLyndon w) →
     (fs ++ [m]).Pairwise (fun a b => b ≤ a) →
     IsLeast {s : List A | s ≠ [] ∧ s <:+ R.readout () A (fs ++ [m])} m
 
-private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+private theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
   intro h
-  let a : ULift.{u} Nat := ⟨0⟩
+  let a : ULift.{u_1} Nat := ⟨0⟩
   have hm : IsLyndon [a] := singleton_lyndon a
   have hh := h [] [a] (by simpa using hm) (by simp)
   have hs := hh.1.2
-  change [a] <:+ ([] : List (ULift.{u} Nat)) at hs
+  change [a] <:+ ([] : List (ULift.{u_1} Nat)) at hs
   simpa using hs
 
-def family : Registration arena.{u}
-    (type_of% (@last_factor_is_min_nonempty_suffix.{u})) where
+def family : Registration arena.{u_1}
+    (type_of% (@last_factor_is_min_nonempty_suffix.{u_1})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@last_factor_is_min_nonempty_suffix, rejected, rejected_law⟩
@@ -68,14 +68,14 @@ def family : Registration arena.{u}
     fun e => nomatch e⟩
   dependence := by
     intro _
-    refine ⟨ULift.{u} Nat, [], [[⟨0⟩]], ?_⟩
+    refine ⟨ULift.{u_1} Nat, [[⟨0⟩]], [[⟨0⟩],[⟨0⟩]], ?_⟩
     intro h
     have hl := congrArg List.length h
-    change 0 = 1 at hl
+    change 1 = 2 at hl
     omega
 
 noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@last_factor_is_min_nonempty_suffix.{u}) (type_of% actual.{u}) Unit Unit where
+    (@last_factor_is_min_nonempty_suffix.{u_1}) (type_of% actual.{u_1}) Unit Unit where
   unitName := `D5.S1.Words.Complexity.LyndonBrackets.LyndonFactorizationUnique.last_factor_is_min_nonempty_suffix.__information_unit
   realizationName := `Reg.D5.S1.Words.Complexity.LyndonBrackets.LyndonFactorizationUnique.minimum.family
   realizationSource := none
@@ -111,21 +111,21 @@ end minimum
 namespace uniqueness
 
 abbrev arena : Arena where
-  signature := signature.{u}
-  Law R := ∀ {A : Type u} [LinearOrder A] (fs gs : List (List A)),
+  signature := signature.{u_1}
+  Law R := ∀ {A : Type u_1} [LinearOrder A] (fs gs : List (List A)),
     (∀ w ∈ fs, IsLyndon w) → fs.Pairwise (fun a b => b ≤ a) →
     (∀ w ∈ gs, IsLyndon w) → gs.Pairwise (fun a b => b ≤ a) →
     R.readout () A fs = gs.flatten → fs = gs
 
-private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+private theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
   intro h
-  let a : ULift.{u} Nat := ⟨0⟩
-  have hh := h ([[a]] : List (List (ULift.{u} Nat))) []
+  let a : ULift.{u_1} Nat := ⟨0⟩
+  have hh := h ([[a]] : List (List (ULift.{u_1} Nat))) []
     (by simpa using singleton_lyndon a) (by simp) (by simp) (by simp) rfl
   cases hh
 
-def family : Registration arena.{u}
-    (type_of% (@nonincreasing_lyndon_factorization_unique.{u})) where
+def family : Registration arena.{u_1}
+    (type_of% (@nonincreasing_lyndon_factorization_unique.{u_1})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@nonincreasing_lyndon_factorization_unique, rejected, rejected_law⟩
@@ -134,14 +134,14 @@ def family : Registration arena.{u}
     fun e => nomatch e⟩
   dependence := by
     intro _
-    refine ⟨ULift.{u} Nat, [], [[⟨0⟩]], ?_⟩
+    refine ⟨ULift.{u_1} Nat, [[⟨0⟩]], [[⟨0⟩],[⟨0⟩]], ?_⟩
     intro h
     have hl := congrArg List.length h
-    change 0 = 1 at hl
+    change 1 = 2 at hl
     omega
 
 noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@nonincreasing_lyndon_factorization_unique.{u}) (type_of% actual.{u}) Unit Unit where
+    (@nonincreasing_lyndon_factorization_unique.{u_1}) (type_of% actual.{u_1}) Unit Unit where
   unitName := `D5.S1.Words.Complexity.LyndonBrackets.LyndonFactorizationUnique.nonincreasing_lyndon_factorization_unique.__information_unit
   realizationName := `Reg.D5.S1.Words.Complexity.LyndonBrackets.LyndonFactorizationUnique.uniqueness.family
   realizationSource := none
