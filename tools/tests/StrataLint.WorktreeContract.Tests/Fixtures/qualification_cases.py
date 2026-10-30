@@ -468,7 +468,10 @@ class QualificationCases:
                             deferred.append(self.tree)
                         self.assertEqual("failed", result["status"])
                         self.assertEqual([older] if prior_eviction else [], removals)
-                        self.assertEqual(candidates[:candidates.index(failed) + 1], qualified)
+                        expected_qualified = candidates[:candidates.index(failed) + 1]
+                        if prior_eviction:
+                            expected_qualified.insert(1, older)
+                        self.assertEqual(expected_qualified, qualified)
                         rows = {row["path"]: row for row in result["items"]}
                         row = rows[str(failed)]
                         self.assertEqual("retained" if refused else "qualification_failed", row["outcome"])

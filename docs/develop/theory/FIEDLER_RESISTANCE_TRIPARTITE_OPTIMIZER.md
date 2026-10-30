@@ -2358,3 +2358,710 @@ sequence description is the implicit distance to the entire compact
 optimizer set, whose coordinates are still undetermined. ∎
 
 ## 追加锚（本行以下为增补区）
+## 16. Original-edge perturbations and necessary local geometry
+
+**Definition 16.1 (The semidefinite domain and its actual Fiedler space).**
+For the exterior parameters (10.1), retain every original vertex, edge,
+counting inner product and unordered-pair resistance. Define the convex set
+
+$$
+\Omega=\{h\in[0,\infty)^E:L(h)-P\succeq0\},\qquad
+P=I_n-\frac1n\mathbf1\mathbf1^{\mathsf T}.
+\tag{16.1}
+$$
+
+Every member has connected support and actual $\lambda_2\ge1$.
+The set $\mathcal C$ is its $\lambda_2=1$ subset, rather than all of
+$\Omega$. For $h\in\mathcal C$ write
+
+$$
+H=L(h)-P,\qquad
+W=\ker H\cap\mathbf1^\perp
+  =\{z\in\mathbf1^\perp:L(h)z=z\},\qquad k=\dim W.
+\tag{16.2}
+$$
+
+Thus $W$ is the entire actual Fiedler eigenspace, $k\ge1$, and
+$\operatorname{rank}H=n-1-k$. For a signed original-edge vector
+$\delta\in\mathbb R^E$, set
+
+$$
+D(\delta)=\sum_{e\in E}\delta_e b_e b_e^{\mathsf T},\qquad
+b_{\{x,y\}}=e_x-e_y,\qquad
+E_+(h)=\{e\in E:h_e>0\}.
+\tag{16.3}
+$$
+
+A normalized positive local maximum means a point of $\mathcal N$ that
+locally maximizes $R$ on $\mathcal N$, in the topology of all original
+edge coordinates. Normalization $g\mapsto g/\lambda_2(g)$ and (1.6)
+identify this with local maximality of $F$ on $\mathcal P$.
+
+The classical geometric input is the real support-perturbation criterion
+in Chiribella, [*Extreme quantum states and processes, and extreme points
+of general spectrahedra in finite dimensional algebras*,
+arXiv:2311.10929v1](https://arxiv.org/pdf/2311.10929v1), §2.3 and
+§3.1, Theorem 1, item 2, and Corollaries 1–2. Its real direct-sum
+algebra here is
+$M_{n-1}(\mathbb R)\oplus\bigoplus_{e\in E}\mathbb R$, not a complex
+matrix algebra. With $Q$ as in Definition 7.1, the affine embedding is
+
+$$
+h\longmapsto
+\bigl[Q^{\mathsf T}L(h)Q-I_{n-1}\bigr]\oplus
+                  \bigoplus_{e\in E}h_e.
+\tag{16.4}
+$$
+
+The scalar blocks impose exactly the nonnegativity of the original
+conductances. The matrix block has rank $\operatorname{rank}H$;
+its kernel is $Q^{\mathsf T}W$. The embedding is injective, and its
+image is the affine slice whose matrix block plus $I_{n-1}$ is
+$\sum_e h_e(Q^{\mathsf T}b_e)(Q^{\mathsf T}b_e)^{\mathsf T}$.
+There are $(n-1)n/2$ independent real scalar equality constraints,
+because the coefficient of the matrix block in these equations is
+identity. Pataki, [*On the Rank of Extreme Matrices in Semidefinite
+Programs and the Multiplicity of Optimal Eigenvalues*,
+Theorems 2.1–2.2](https://gaborpataki.web.unc.edu/wp-content/uploads/sites/14119/2018/07/rankmultpublished.pdf),
+supplies the corresponding real face-dimension count. The strict
+convexity input is for the **total** resistance: Ghosh–Boyd–Saberi,
+[*Minimizing Effective Resistance of a Graph*](https://web.stanford.edu/~boyd/papers/pdf/eff_res.pdf),
+§2.7. Their edge conductances are exactly $h_e$, their conductance
+matrix is $L(h)$, and their $R_{\rm tot}$ is the full original-pair
+sum $R(h)$. These geometric and convexity inputs are consumed in the
+original-tripartite deductions below.
+
+**Proposition 16.2 (Annihilators, improving directions and original support).**
+For any exterior triple and any $h\in\mathcal C$, the following are
+equivalent: $h$ is an extreme point of the full set $\Omega$; and
+
+$$
+\left.
+\begin{gathered}
+\delta_e=0\quad(e\notin E_+(h)),\\
+D(\delta)z=0\quad\text{for every }z\in W
+\end{gathered}
+\right\}
+\quad\Longrightarrow\quad\delta=0.
+\tag{16.5}
+$$
+
+If a nonzero $\delta$ satisfies the two conditions, then arbitrarily
+close to $h$ there are points $h'\in\mathcal C$, with the same positive
+support, for which $R(h')>R(h)$. In particular every normalized positive
+local maximum satisfies (16.5) and
+
+$$
+|E_+(h)|\le\frac{k(2n-k-1)}2.
+\tag{16.6}
+$$
+
+For every $R_0>0$, a positive point $g$ of resistance $R_0$ is a local
+maximum of $\lambda_2$ on that exact level if and only if
+$g/\lambda_2(g)$ is a normalized positive local maximum.
+
+*Proof.* Apply the support criterion cited in Definition 16.1 to (16.4).
+A direction in that affine slice has blocks
+$Q^{\mathsf T}D(\delta)Q$ and $\delta_e$. A scalar block supported on
+$h_e$ must vanish when $h_e=0$. A symmetric matrix is supported on
+$\operatorname{im}(Q^{\mathsf T}HQ)$ precisely when it annihilates its
+kernel. Since $D(\delta)\mathbf1=0$, this is exactly the second
+condition of (16.5). This gives the stated equivalence with extremality
+in the full domain, including every zero-coordinate constraint.
+
+Explicitly, these support conditions give, for all sufficiently small
+real $s$ of either sign,
+
+$$
+h+s\delta\ge0,\qquad H+sD(\delta)\succeq0.
+\tag{16.7}
+$$
+
+Indeed $H$ is positive definite on its image; a sufficiently small
+symmetric perturbation supported there preserves positivity there,
+and both matrices vanish on its kernel. Small $s$ also preserves the
+strict positivity of each of the finitely many coordinates in $E_+(h)$.
+Conversely a feasible two-sided segment has zero direction on a zero
+conductance, and its matrix direction annihilates $\ker H$:
+for $z\in\ker H$, positivity of $H\pm sD$ first gives zero quadratic
+forms at $z$, and then $(H\pm sD)z=0$. This also verifies the concrete
+support interpretation without any assumption about a selected basis
+of eigenvectors.
+
+The nonzero space $W$ remains in the eigenvalue-one space of
+$L(h+s\delta)$. Equation (16.7) therefore gives actual $\lambda_2=1$,
+so these perturbations are in $\mathcal C$. Their supports are connected,
+and the cited strict convexity of total resistance gives, for every
+sufficiently small $s>0$,
+
+$$
+R(h)<\frac{R(h+s\delta)+R(h-s\delta)}2.
+\tag{16.8}
+$$
+
+The endpoints are distinct: an original edge coordinate is the negative
+of its off-diagonal Laplacian entry, so $D(\delta)=0$ would imply
+$\delta=0$. At least one endpoint in (16.8) improves $R$, with
+arbitrarily small $s$. This excludes every such point from being a
+positive normalized local maximum, or indeed a local maximum on its
+fixed-support normalized domain.
+
+For the count, put $r=n-1-k$. In the real algebra (16.4), the supported
+symmetric matrix space has dimension $r(r+1)/2$, and the supported
+scalar blocks have dimension $|E_+(h)|$. The cited face-dimension
+inequality, or injectivity of the equality map on this supported space,
+gives
+
+$$
+\frac{r(r+1)}2+|E_+(h)|\le\frac{n(n-1)}2.
+$$
+
+Substitution of $r=n-1-k$ proves (16.6). This is a necessary support
+count, not a sufficient condition for extremality or maximality.
+
+Finally the maps (5.1) are continuous: $R$ and $\lambda_2$ are continuous
+and strictly positive on the connected positive domain. They are inverse
+homeomorphisms between $\mathcal N$ and the exact positive level. Under
+them the level objective is $R(h)/R_0$, by (5.2), so local maxima
+correspond. For the product objective, if $h$ is locally maximal on
+$\mathcal N$, all sufficiently near positive $g$ have normalizations near
+$h$, and $F(g)=R(g/\lambda_2(g))\le R(h)$. Restriction to $\mathcal N$
+proves the converse. ∎
+
+## 17. Uniform block symmetry cannot give an exterior local maximum
+
+**Theorem 17.1 (Every block-constant positive assignment is locally excluded).**
+For every integer $2\le a\le b$ and $c>a+b$, let all $AB$ edges have
+a common conductance $p>0$, all $AC$ edges a common $q>0$, and all
+$BC$ edges a common $r>0$. This assignment is not a local maximum of
+$F$ on the full positive original-edge domain $\mathcal P_{a,b,c}$.
+For every $R_0>0$, no assignment with these three separate block
+constancies and resistance exactly $R_0$ is a local maximum of
+$\lambda_2$ on that exact positive level. Both assertions include all
+coincidences and multiplicities of the actual Fiedler eigenvalue.
+
+*Proof.* Normalize by the actual $t=\lambda_2>0$. Scaling preserves
+the three block constancies and local maximality, so use $t=1$ and
+write $p,q,r$ for the normalized block values. The spaces $U_I$ of
+(2.3) are invariant for this assignment, with respective eigenvalues
+
+$$
+d_A=bp+cq,\qquad d_B=ap+cr,\qquad d_C=aq+br.
+\tag{17.1}
+$$
+
+Each part has at least two vertices. Since the actual minimum positive
+eigenvalue is $1$, all three degrees are at least $1$.
+Their orthogonal complement $T_0$ consists of the vectors constant on
+each original part. In its orthonormal basis
+$f_I=\mathbf1_I/\sqrt{|I|}$, the same original Laplacian has matrix
+
+$$
+T=\begin{pmatrix}
+d_A&-\sqrt{ab}\,p&-\sqrt{ac}\,q\\
+-\sqrt{ab}\,p&d_B&-\sqrt{bc}\,r\\
+-\sqrt{ac}\,q&-\sqrt{bc}\,r&d_C
+\end{pmatrix},\qquad
+T\xi=0,\qquad \xi=(\sqrt a,\sqrt b,\sqrt c)^{\mathsf T}.
+\tag{17.2}
+$$
+
+The support is connected, so $T$ has exactly one zero eigenvalue.
+Its eigenspace at $1$ has dimension at most one. Otherwise both its
+positive eigenvalues would be $1$, and symmetry would give
+$T=I_3-\xi\xi^{\mathsf T}/n$. Its diagonal entries would then be
+$1-|I|/n<1$, contrary to (17.1) and $d_I\ge1$.
+Consequently the entire actual Fiedler space is the orthogonal sum of
+those $U_I$ for which $d_I=1$ and a subspace of $T_0$ of dimension
+zero or one. This description includes every possible eigenvalue tie.
+
+At least one part $J$ has $d_J>1$. Indeed, if all three degrees were
+$1$, the original edge totals would give both
+
+$$
+D_A+D_B-D_C=a+b-c<0,\qquad
+D_A+D_B-D_C=2abp>0,
+\tag{17.3}
+$$
+
+a contradiction. Denote the other two parts by $I,K'$, of sizes
+$m_I,m_{K'}$. Choose a nonzero vector $(s_j)_{j\in J}$ of sum zero;
+this is possible even when $|J|=2$. Consider signed perturbations on
+all the original edges given by
+
+$$
+\delta_{\{x,j\}}=\alpha s_j\quad(x\in I,j\in J),\qquad
+\delta_{\{y,j\}}=\beta s_j\quad(y\in K',j\in J),\qquad
+\delta|_{E_{IK'}}=0.
+\tag{17.4}
+$$
+
+The two coefficients will be chosen not both zero. Every degree
+perturbation outside $J$ is zero, because $\sum_j s_j=0$.
+For $z\in U_I$ the only possible outside coordinates of $D(\delta)z$
+are multiples of $\sum_{x\in I}z_x=0$; all the other coordinates
+vanish as well. Thus $D(\delta)$ annihilates $U_I$, and the same
+calculation annihilates $U_{K'}$.
+
+For a vector $z\in T_0$ with original part-values
+$\gamma_I,\gamma_J,\gamma_{K'}$, the coordinates of $D(\delta)z$
+outside $J$ vanish and its $j$ coordinate is
+
+$$
+s_j\bigl[m_I\alpha(\gamma_J-\gamma_I)
+       +m_{K'}\beta(\gamma_J-\gamma_{K'})\bigr].
+\tag{17.5}
+$$
+
+If the quotient Fiedler space is zero, take any nonzero
+$(\alpha,\beta)$. If it is one-dimensional, apply (17.5) to a spanning
+vector: the vanishing bracket is one homogeneous real linear equation
+in two unknowns and has a nonzero solution, including when both its
+coefficients vanish. Thus $D(\delta)$ annihilates that entire space.
+The part $U_J$ is absent from the Fiedler space since $d_J>1$.
+We have therefore annihilated the entire $W$, not just one chosen
+Fiedler vector. The original perturbation is nonzero because $s\ne0$
+and $(\alpha,\beta)\ne(0,0)$.
+
+All original edges of $h$ are positive. Proposition 16.2 now gives
+arbitrarily close normalized positive assignments with strictly larger
+$R$, hence strictly larger $F$. These perturbations range in the full
+original-edge domain, with no imposed symmetry on competitors.
+The local homeomorphism to every exact resistance level in Proposition
+16.2 proves the second assertion. ∎
+
+## 18. Necessary degree branches for positive local maxima on K₂,₂,c
+
+**Theorem 18.1 (Fiedler multiplicity and every degree degeneracy).**
+For every integer $c\ge5$, put $n=c+4$. Let $h$ be any normalized
+positive local maximum on the original $K_{2,2,c}$, and use its actual
+$W,k,H$ from (16.2). Necessarily
+
+$$
+k\ge4,\qquad \operatorname{rank}H\le c-1.
+\tag{18.1}
+$$
+
+With $z_w=d_w(h)-1$ for every original label $w\in C$, exactly one
+of the following two necessary branches holds.
+
+(i) Every $z_w\ge0$, and the number $r_0$ of zero entries satisfies
+
+$$
+r_0\ge k-2\ge2.
+\tag{18.2}
+$$
+
+For any two zero labels $w,w'$, their entire outside conductance
+columns coincide:
+
+$$
+h_{\{x,w\}}=h_{\{x,w'\}}
+       \quad\text{for every }x\in A\sqcup B.
+\tag{18.3}
+$$
+
+(ii) Exactly one $z_w$ is negative, all the other entries are strictly
+positive, and
+
+$$
+\sum_{w\in C}\frac1{z_w}=-n,\qquad
+k=4,\qquad \operatorname{rank}H=c-1,
+\qquad
+\sum_{w\in C}\frac{h_{\{x,w\}}}{z_w}=-1
+       \quad\text{for each }x\in A\sqcup B.
+\tag{18.4}
+$$
+
+These statements are necessary conditions. They assert neither existence
+nor sufficiency of either branch, and do not classify the surviving
+original edge coordinates.
+
+*Proof.* By Proposition 16.2 the point is extreme in the full $\Omega$.
+All $4c+4=4n-12$ original edges are positive. The function
+$k(2n-k-1)/2$ is increasing for integers $0\le k\le n-1$.
+For $k\le3$, (16.6) would give
+
+$$
+4n-12\le3n-6,\quad\text{hence }n\le6,
+$$
+
+whereas $n=c+4\ge9$. Thus $k\ge4$ and
+$\operatorname{rank}H=n-1-k\le c-1$.
+
+The original independent $C$ block is
+
+$$
+H_{CC}=\operatorname{diag}(z_w)_{w\in C}
+                  +\frac1n\mathbf1_C\mathbf1_C^{\mathsf T}\succeq0.
+\tag{18.5}
+$$
+
+Two negative $z$ entries are impossible: the quadratic form of their
+coordinate difference would be their negative sum. If one is negative,
+a zero entry is also impossible, since the corresponding second-order
+principal minor of (18.5) would be $z_w/n<0$. Hence a negative entry
+is unique and all the others are strictly positive.
+
+First suppose there is no negative entry. If all entries were positive,
+(18.5) would have rank $c$, contradicting (18.1). With $r_0\ge1$,
+its kernel consists exactly of vectors supported on the zero entries
+whose coordinate sum is zero: its quadratic form is
+
+$$
+\sum_w z_w y_w^2+\frac1n\left(\sum_w y_w\right)^2.
+$$
+
+The kernel therefore has dimension $r_0-1$, including the case
+$r_0=c$. Thus
+
+$$
+c-r_0+1=\operatorname{rank}H_{CC}
+\le\operatorname{rank}H=c+3-k,
+$$
+
+which gives (18.2). For two zero labels, the full vector
+$e_w-e_{w'}$ has zero $H$ quadratic form. Positive semidefiniteness
+implies $H(e_w-e_{w'})=0$ on all original vertices. At an outside
+label $x$, its coordinate is
+$-h_{\{x,w\}}+h_{\{x,w'\}}$, proving (18.3).
+
+Now suppose one entry is negative. The diagonal matrix
+$\operatorname{diag}(z_w)$ is invertible. A rank-one update can lower
+its rank by at most one, so (18.5) has rank at least $c-1$.
+Together with (18.1) this forces
+$\operatorname{rank}H_{CC}=\operatorname{rank}H=c-1$ and $k=4$.
+Its determinant vanishes. The determinant identity for an invertible
+diagonal matrix plus a rank-one matrix gives
+
+$$
+0=\left(\prod_w z_w\right)
+       \left(1+\frac1n\sum_w\frac1{z_w}\right),
+$$
+
+so the first equality of (18.4) follows. Define a full vector $v$ by
+$v_w=1/z_w$ on $C$ and $v_x=0$ outside $C$.
+Equation (18.5) gives $H_{CC}v_C=0$; hence $v^{\mathsf T}Hv=0$
+and $Hv=0$ by positivity. At each actual outside label $x$ this says
+
+$$
+0=\sum_w\frac{1/n-h_{\{x,w\}}}{z_w}
+ =-1-\sum_w\frac{h_{\{x,w\}}}{z_w},
+$$
+
+which proves the last equality of (18.4) separately at all four labels.
+The preceding sign alternatives exhaust every list $z$, with zero
+entries, repeated values and all eigenvalue multiplicities retained. ∎
+
+## 19. A whole-deletion supplier extreme in the full domain
+
+**Proposition 19.1 (Boundary extremality does not suffice for maximality).**
+For every integer $c\ge5$ on the original $K_{2,2,c}$, choose any
+$x_*\in A\sqcup B$ and put
+
+$$
+h^\partial|_{E_{AB}}=0,\qquad
+h^\partial_{\{x_*,w\}}=\frac{c-3}{c},\qquad
+h^\partial_{\{x,w\}}=\frac1c
+ \quad(x\in(A\sqcup B)\setminus\{x_*\},\ w\in C).
+\tag{19.1}
+$$
+
+This point belongs to $\mathcal C$, is extreme in the **full** $\Omega$,
+and has
+
+$$
+k=c+1,\quad\operatorname{rank}(L(h^\partial)-P)=2,\qquad
+R(h^\partial)=B_{\rm bip}<T_n\le M_{2,2,c},
+\quad T_n=n\left(n-2+\frac1{n-2}\right).
+\tag{19.2}
+$$
+
+In particular it is not a member of the entire optimizer set $K$ of
+(11.3), despite being a whole-face optimizer and a full-domain extreme
+point.
+
+*Proof.* Use the complete [general bipartite Theorem 4.1](FIEDLER_RESISTANCE_GENERAL_BIPARTITE_OPTIMIZER.md)
+with its smaller class mapped bijectively to the four actual labels
+$A\sqcup B$ and its larger class mapped to the actual $C$ labels.
+Here its parameters are $a'=4$, $b'=c>4$, $d'=c-4$ and $\tau=1$.
+Formula (4.2) of that supplier is precisely (19.1) on retained edges;
+set the original $AB$ coordinates to zero. Its matrix is the same
+$n$ by $n$ counting Laplacian, and every unordered original pair,
+including all four original $AB$ pairs, remains in $R$.
+The supplier gives actual $\lambda_2=1$, spectrum $0$, $1$ with
+multiplicity $n-3=c+1$, and two eigenvalues strictly greater than $1$,
+as well as
+
+$$
+R(h^\partial)=n(n-3)+\frac{c(c-1)}{c-3}=B_{\rm bip}.
+\tag{19.3}
+$$
+
+These spectral and whole-face optimization conclusions are reused,
+rather than proved anew as bipartite results.
+
+To establish extremality in the larger tripartite set, take any $\delta$
+from (16.5). Its $AB$ coordinates vanish, since the corresponding
+coordinates of (19.1) are zero. The Fiedler space contains $U_C$.
+For $w\ne w'$ in $C$, the equality $D(\delta)(e_w-e_{w'})=0$
+forces every retained row to be constant:
+$\delta_{\{x,w\}}=t_x$ independently of $w$. Its $C$ coordinates
+also force $\sum_{x\in A\sqcup B}t_x=0$.
+
+Let $S=(A\sqcup B)\setminus\{x_*\}$, which has three labels.
+Differences $e_x-e_y$ for $x,y\in S$ are actual eigenvectors at $1$
+by the supplier's conductances: these degrees are $1$, their edges to
+$C$ are identical, and every edge inside $A\sqcup B$ is zero.
+Applying $D(\delta)$ to these differences shows $c t_x=0$ for
+all $x\in S$, since all the direction's coordinates inside
+$A\sqcup B$ are zero. Hence $t_x=0$ on $S$, and the zero column sum
+then gives $t_{x_*}=0$. Thus $\delta=0$. Criterion (16.5) proves
+extremality in the full $\Omega$, with all deleted-edge constraints
+included.
+
+The strict comparison uses existing whole suppliers. At $c=5$,
+$B_{\rm bip}=64$ and $T_n=450/7$, with difference $2/7>0$.
+For every $c\ge6$, direct subtraction from (19.3) gives
+
+$$
+B_{\rm bip}-n(n-2)=\frac{2(6-c)}{c-3}\le0,
+\qquad T_n>n(n-2).
+\tag{19.4}
+$$
+
+Finally $T_n\le M_{2,2,c}$ is exactly the two-hub deletion lower
+comparison in Proposition 9.3 (also Theorems 12.2–12.3): its hubs
+are the two original labels in $A$, its leaves are $B\sqcup C$, and
+its zero $BC$ coordinates have positive original-tripartite
+approximants. Thus the comparison uses the same original vertices,
+counting mass and resistance pairs throughout. ∎
+
+## 20. A strictly positive extreme point below the two-hub lower value
+
+**Theorem 20.1 (Positive extremality without optimality for every c).**
+For every integer $c\ge5$, on the original labels
+$A=\{u_1,u_2\}$, $B=\{v_1,v_2\}$ and $C=\{w_1,\ldots,w_c\}$,
+put $n=c+4$ and assign all original edges by
+
+$$
+h^+_{\{u_i,v_j\}}=\frac2n\quad(1\le i,j\le2),\qquad
+h^+_{\{u_i,w\}}=\frac1n\quad(1\le i\le2,\ w\in C),
+\qquad
+h^+_{\{v_1,w\}}=\frac1n,\quad
+h^+_{\{v_2,w\}}=\frac{c+1}{n}\quad(w\in C).
+\tag{20.1}
+$$
+
+Every original edge is finite and strictly positive. This point has
+actual $\lambda_2=1$, is extreme in the full $\Omega$, and satisfies
+
+$$
+\dim W=c+1,\qquad \operatorname{rank}(L(h^+)-P)=2,\qquad
+d_w(h^+)=1\quad\text{for every }w\in C.
+\tag{20.2}
+$$
+
+With
+
+$$
+S_+=\frac{c^2+c+4}{c+4},\qquad
+E_+=\frac{c(3c+4)}{(c+4)^2},
+\tag{20.3}
+$$
+
+its total original-pair resistance is exactly
+
+$$
+R(h^+)=n\left(n-3+\frac{2+S_+}{1+S_++E_+}\right)
+      <n(n-2)<T_n\le M_{2,2,c}.
+\tag{20.4}
+$$
+
+Thus full-domain extremality fails to be sufficient for global
+maximality even inside the original positive domain. The family (20.1)
+is a nonoptimizer witness.
+
+*Proof.* To verify all original coordinates and the normalization, define
+the following two-dimensional real Gram vectors, divided by $\sqrt n$:
+
+$$
+y_{u_1}=y_{u_2}=\frac{(0,1)}{\sqrt n},\qquad
+y_{v_1}=\frac{(0,-1)}{\sqrt n},\qquad
+y_{v_2}=\frac{(-c,-1)}{\sqrt n},\qquad
+y_w=\frac{(1,0)}{\sqrt n}\quad(w\in C).
+\tag{20.5}
+$$
+
+They sum to zero and span $\mathbb R^2$. Let $G$ be their full
+$n$ by $n$ Gram matrix. Then $G\succeq0$, $G\mathbf1=0$ and
+$\operatorname{rank}G=2$. On each same-part pair of distinct vertices
+its entry is $1/n$: the $A$ pair has dot product $1/n$, the $B$ pair
+also has dot product $1/n$, and so does every pair in $C$.
+For actual cross-part pairs the entries of $P+G$ are, respectively,
+$-2/n$ on $AB$, $-1/n$ on $AC$ and $v_1C$, and $-(c+1)/n$ on
+$v_2C$. Both $P+G$ and the Laplacian of (20.1) have zero row sums.
+Their equal off-diagonal entries therefore also force equal diagonal
+entries. Consequently
+
+$$
+L(h^+)=P+G,
+\tag{20.6}
+$$
+
+with exactly the original independent-edge Laplacian, without any
+vertex identification or altered vertex mass.
+
+On $\mathbf1^\perp$, $P$ is identity and $G$ is positive semidefinite
+of rank two. Since it vanishes on constants, the eigenvalue $1$ of
+$L(h^+)$ has actual multiplicity $n-3=c+1$, and its other two
+positive eigenvalues are strictly greater than $1$. This proves the
+actual normalization, the multiplicity and excess rank in (20.2).
+The original degrees can also be read directly from (20.1):
+
+$$
+d_{u_1}=d_{u_2}=d_{v_1}=1,\qquad
+d_{v_2}=1+\frac{c^2}{n},\qquad
+ d_w=\frac{2+1+(c+1)}n=1\quad(w\in C).
+\tag{20.7}
+$$
+
+It remains to prove full-domain extremality, rather than infer it from
+rank. Let $\delta$ satisfy $D(\delta)W=0$. From (20.5)–(20.6),
+$W$ contains $U_C$ and $e_{u_1}-e_{u_2}$. Annihilating $U_C$
+forces, exactly as in the original-coordinate calculation in
+Proposition 19.1,
+
+$$
+\delta_{\{x,w\}}=t_x\quad(x\in A\sqcup B,w\in C),\qquad
+ t_{u_1}+t_{u_2}+t_{v_1}+t_{v_2}=0.
+\tag{20.8}
+$$
+
+Annihilating $e_{u_1}-e_{u_2}$ forces
+$t_{u_1}=t_{u_2}=:s$, both $A$ degree perturbations to be zero,
+and
+
+$$
+\delta_{\{u_1,v_j\}}=\delta_{\{u_2,v_j\}}=:p_j
+       \quad(j=1,2),\qquad p_1+p_2+cs=0.
+\tag{20.9}
+$$
+
+There is a further kernel relation that uses the actual $AB$ edges.
+The Gram vectors satisfy $y_{u_1}+y_{v_1}=0$. Thus
+$G(e_{u_1}+e_{v_1})=0$, and
+$P(e_{u_1}+e_{v_1})\in W$, since $G\mathbf1=0$.
+Every edge Laplacian direction annihilates constants, so
+
+$$
+D(\delta)(e_{u_1}+e_{v_1})=0.
+\tag{20.10}
+$$
+
+Its $u_2$ coordinate is $-p_1$, because $u_1,u_2$ are nonadjacent;
+its $v_2$ coordinate is $-p_2$, because $v_1,v_2$ are nonadjacent.
+Hence both $p_j=0$, and (20.9) implies $s=0$. Its $w$ coordinate
+is $-t_{u_1}-t_{v_1}$, so $t_{v_1}=0$. Equation (20.8) then gives
+$t_{v_2}=0$. Every original coordinate of $\delta$ is zero.
+Criterion (16.5) proves that $h^+$ is extreme in the full $\Omega$.
+This uses all possible original-edge directions, with no restriction
+to the symmetries of (20.1).
+
+For the resistance, the two nonzero eigenvalues $q_1,q_2$ of $G$ are
+the eigenvalues of the two by two Gram covariance matrix
+
+$$
+\sum_{x\in V}y_xy_x^{\mathsf T}
+ =\frac1n\begin{pmatrix}c^2+c&c\\c&4\end{pmatrix}.
+\tag{20.11}
+$$
+
+Its trace is $S_+$ and its determinant is $E_+$ as in (20.3).
+Both eigenvalues are positive, since the Gram vectors span the plane;
+(20.6) gives the full original-vertex spectrum
+
+$$
+0\text{ once},\qquad
+1\text{ with multiplicity }c+1,\qquad 1+q_1,\quad1+q_2.
+\tag{20.12}
+$$
+
+All unordered original pairs are retained by (1.5), which now gives
+
+$$
+\frac{R(h^+)}n
+ =n-3+\frac1{1+q_1}+\frac1{1+q_2}
+ =n-3+\frac{2+S_+}{1+S_++E_+}.
+$$
+
+Finally
+
+$$
+E_+-1=\frac{2(c-4)(c+2)}{(c+4)^2}>0\qquad(c\ge5).
+\tag{20.13}
+$$
+
+It follows that $(2+S_+)/(1+S_++E_+)<1$, proving the first strict
+inequality of (20.4). The second strict inequality and the last lower
+comparison are the two-hub supplier (13.1) and Proposition 9.3, with
+exactly their original-vertex map. ∎
+
+## 21. Mathematical scope of the local exclusions
+
+**Definition 21.1 (The surviving exterior comparison).** The quantities
+$M_{a,b,c}$, the entire compact optimizer set $K$ of (11.3), and
+$K_{R_0}=(M/R_0)K$ retain their definitions on every exterior triple.
+Theorems 10.2–11.2 already supply escape control, existence and the
+implicit distance characterization of all normalized maximizing
+sequences. Theorems 12.2–12.3 already supply the entire deletion-face
+values; Theorem 13.1 supplies the complete rank-one classification;
+Theorem 15.1 supplies exact-level scaling and approximation.
+These results are inputs to, rather than additional conclusions of,
+the local comparisons in Sections 16–20.
+
+For $a=b=2$, $c\ge5$, the still required sharp comparison is an upper
+bound for **every** original positive assignment, matching feasible
+assignments or positive approximants, together with the necessity and
+sufficiency of every equality coordinate on the connected nonnegative
+domain. The local conditions (18.1)–(18.4) leave surviving realizations;
+they supply no such all-realization upper comparison. The nonempty
+compact set $K$ is not thereby identified, and whether
+$K\cap(0,\infty)^E$ is empty remains undetermined. The general exterior
+value, the explicit entire $K$, and positive attainment remain the
+same complementary problem. The counterexamples (19.1) and (20.1)
+exclude replacing this problem by full-domain extremality alone.
+
+The real semidefinite support and face-dimension geometry is classical,
+with the precise real direct-sum correspondence (16.4). Strict
+convexity of total resistance is the classical statement of
+Ghosh–Boyd–Saberi §2.7, under the connected original-support
+correspondence in Definition 16.1. The model-specific deductions are
+the full-eigenspace exclusion (17.1)–(17.5), the necessary original
+$C$-degree branches, and the full-domain non-sufficiency witnesses,
+including the positive construction (20.1). These are additional
+inferences on the stated tripartite model, without a priority claim.
+
+Cruz Ortega–Menéndez-Conde,
+[*Maximal Algebraic Connectivity for Paths with Fixed Effective
+Resistance*, arXiv:2306.08187v1](https://arxiv.org/pdf/2306.08187v1),
+§5, equation (3), supplies the fixed-resistance formulation consumed
+through Theorem 5.1. For the information-criterion correspondence,
+Rosa–Harman,
+[*Laplacian Network Optimization via Information Functions*,
+arXiv:2512.19279v1](https://arxiv.org/pdf/2512.19279v1), §§2.3–2.4,
+uses $\mathcal I=Q^{\mathsf T}LQ$ and
+$\Phi_E/\Phi_A=F/[n(n-1)]$, with its decreasing eigenvalue convention
+reversed here. Its individual-criterion and edge-selection objectives
+are not whole suppliers for maximizing this ratio. Niu,
+[*Conformal Rigidity of Graphs: Subdifferentials and Orbit-Isometries*,
+arXiv:2605.15017v1](https://arxiv.org/pdf/2605.15017v1),
+Theorems 3.4–3.5, characterizes extremality of a spectral objective at
+uniform weights under a fixed sum of weights by edge-isometric
+Fiedler embeddings. That characterization has a different objective
+and constraint from $F$ or the exact-$R_0$ level here; it is not a
+premise of the tripartite local exclusions. No global optimizer,
+improved global bound, or complete equality bridge for exterior
+triples follows from these local restrictions.
+
+## 追加锚（本行以下为增补区）
