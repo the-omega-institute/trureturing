@@ -1,0 +1,30 @@
+**定义 103.1（字面路径、完整代码与精确接口）。** 沿用 77.1–77.2、85.2、99.1 和 100.1 的同一个来源，记 $H=V_8^{\mathbf1}$、$\mathcal K=V_{12}^{\mathbf1}$，以及 (100.2) 的等距 $J$。路径标签仍用 $x_k\in\{\mathbf1,\tau\}$，黄金数仍用不带下标的 $x=\varphi^{-1}$；两者不混用。完整载体的全部基路径满足
+
+$$
+ x_0=x_{12}=\mathbf1,\quad x_1=x_{11}=\tau,\quad
+ x_{k+1}\in\mathsf N(x_k,\tau),\quad x_{13}=\tau,
+ \qquad b_j=1\ \Longleftrightarrow\ x_{j+1}=\mathbf1
+ \quad(-1\le j\le12).
+ \tag{103.1}
+$$
+
+其中 $x_{13}$ 只是原编码的固定旁观标签。所有且仅有这 $89$ 条合法路径都保留。对 $1\le i\le11$，中心地址 $i-1$ 的原生门 $K_{i-1}$ 只改变 $x_i$，三类合法块就是 77.2 与 v15 (6.1) 的块，包括两个边界。令 $W_w$ 为 $w\in\{0,\ldots,10\}^{<\infty}$ 按原调用约定得到的有限正向门字，包含空字。
+
+令 $\mathcal C=J(H\otimes\mathbb C^2)$。这是完整的 $x_8=\mathbf1$ 坐标子空间：前缀有 $13$ 种，后缀 $(x_9,x_{10},x_{11},x_{12})=(\tau,a_i,\tau,\mathbf1)$ 有 $2$ 种，$a_0=\tau,a_1=\mathbf1$。其 $63$ 维坐标补空间由 $x_8=\tau$ 的 $21$ 种前缀和 $3$ 种后缀组成。旧投影仍为
+
+$$
+ \Pi=n_{b_1}|_H,\qquad
+ \operatorname{rank}\Pi=5,\quad \dim\ker\Pi=8,
+ \qquad D=(I-\Pi)+\zeta\Pi.
+$$
+
+对任意整数 $m$，定义整个 $26$ 维域上的受控相位
+
+$$
+ U_m=(I-\Pi)\otimes I_2+
+       \Pi\otimes\begin{pmatrix}1&0\\0&\zeta^m\end{pmatrix}.
+ \tag{103.2}
+$$
+
+精确全码取得指 $W_wJ=\alpha JU_m$，其中 $\alpha\in\mathbb C$、$|\alpha|=1$ 是对全部系统输入和两个记录输入共同的一个相位。没有要求 $W_w$ 在 $\mathcal C^\perp$ 上为恒等、标量或预选完成。
+
