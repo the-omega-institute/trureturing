@@ -28,34 +28,33 @@ internal sealed class CharacteristicTwoNonFanoDocument : IScribeDocumentDefiniti
                     + "of this unrestricted declaration. The seven-subspace Phi elimination and the six-party physical bridge remain separate obligations."))),
                 DescribeRole.Theorem))));
 
-    private static Formula Statement() =>
-        All("F", Type, Inst(A(V("Field"), V("F")),
-            Inst(A(V("CharP"), V("F"), D(2)),
-                All("V", Type, Inst(A(V("AddCommGroup"), V("V")),
-                    Inst(A(V("Module"), V("F"), V("V")),
-                        Inst(A(V("FiniteDimensional"), V("F"), V("V")),
-                            All("A", Sub(V("F"), V("V")),
-                                All("B", Sub(V("F"), V("V")),
-                                    All("C", Sub(V("F"), V("V")),
-                                        All("Z", Sub(V("F"), V("V")),
-                                            Rel(
-                                                Call("finrank", V("F"),
-                                                    Call("sup",
-                                                        Call("sup",
-                                                            Call("inf", Call("sup", V("A"), V("B")), Call("sup", V("C"), V("Z"))),
-                                                            Call("inf", Call("sup", V("A"), V("C")), Call("sup", V("B"), V("Z")))),
-                                                        Call("inf", Call("sup", V("A"), V("Z")), Call("sup", V("B"), V("C"))))),
-                                                FormulaRelationOperator.LessThanOrEqual,
-                                                Call("mul", D(2), Seq(
-                                                    Call("finrank", V("F"), V("A")), Plus,
-                                                    Call("finrank", V("F"), V("B")), Plus,
-                                                    Call("finrank", V("F"), V("C")), Plus,
-                                                    Call("finrank", V("F"), V("Z")), Minus,
-                                                    Call("finrank", V("F"),
-                                                        Call("sup", Call("sup", Call("sup", V("A"), V("B")), V("C")), V("Z")))))))))))))));))
+    private static Formula Statement()
+    {
+        Formula Dim(Formula subspace) => Call("finrank", V("F"), subspace);
+        Formula Sup(Formula left, Formula right) => Call("sup", left, right);
+        Formula Inf(Formula left, Formula right) => Call("inf", left, right);
+        var a = V("A");
+        var b = V("B");
+        var c = V("C");
+        var z = V("Z");
+        var first = Inf(Sup(a, b), Sup(c, z));
+        var second = Inf(Sup(a, c), Sup(b, z));
+        var third = Inf(Sup(a, z), Sup(b, c));
+        var deficiency = Parenthesized(Seq(
+            Dim(a), Plus, Dim(b), Plus, Dim(c), Plus, Dim(z), Minus,
+            Dim(Sup(Sup(Sup(a, b), c), z))));
+        var bound = Rel(Dim(Sup(Sup(first, second), third)),
+            FormulaRelationOperator.LessThanOrEqual, Call("mul", D(2), deficiency));
+        var submodule = Sub(V("F"), V("V"));
+        var subspaces = All("A", submodule, All("B", submodule,
+            All("C", submodule, All("Z", submodule, bound))));
+        var space = All("V", Type, Inst(A(V("AddCommGroup"), V("V")),
+            Inst(A(V("Module"), V("F"), V("V")),
+                Inst(A(V("FiniteDimensional"), V("F"), V("V")), subspaces))));
+        return All("F", Type, Inst(A(V("Field"), V("F")),
+            Inst(A(V("CharP"), V("F"), D(2)), space)));
+    }
 
-    private static Formula Qualified(string owner, string name) =>
-        Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
     private static Formula Rel(Formula left, FormulaRelationOperator op, Formula right) =>
         new Formula.Relation(left, op, right);
     private static Formula A(Formula function, params Formula[] arguments) =>
