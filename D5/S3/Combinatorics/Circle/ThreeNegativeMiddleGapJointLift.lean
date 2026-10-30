@@ -5,11 +5,10 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: A floor-mask physical joint constructor for all strictly ordered middle-minimum gaps. -/
-module
 import all D5.S3.Combinatorics.Circle.ThreeBitSource
-public import Batteries.Tactic.OpenPrivate
-public import Mathlib.Data.Nat.Prime.Basic
-public import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+import Batteries.Tactic.OpenPrivate
+import Mathlib.Data.Nat.Prime.Basic
+import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -205,7 +204,7 @@ private theorem paired_chains (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 
 set_option maxHeartbeats 4000000 in
 /-- The complete middle-minimum chamber has one actual physical order and one
 literal natural ear cut, uniformly in all three exponents. -/
-public theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
+theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
     (hb : 2 ≤ b) (hba : b < a) (hac : a < c) :
     ∃ sigma : List (Fin (a + b + c)), ∃ j : ℕ,
       j ≤ a + b + c ∧
