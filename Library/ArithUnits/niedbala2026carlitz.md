@@ -746,3 +746,4 @@ arXiv:2607.15305v2 could contain related work; priority and external
 acceptance remain unconfirmed.
 
 
+[Return to the problem dossier](../../Problems/wall-sun-sun-golden-unit-lift.md).

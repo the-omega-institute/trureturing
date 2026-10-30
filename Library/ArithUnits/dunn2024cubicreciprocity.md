@@ -1798,3 +1798,4 @@ Fixed-P Thue finiteness does not imply finiteness as P varies. No WSS
 prime, new decided WSS prime family, complete exclusion of P^2 Q^3,
 global-priority result or Lean kernel certification is asserted.
 
+[Return to the problem dossier](../../Problems/wall-sun-sun-golden-unit-lift.md).

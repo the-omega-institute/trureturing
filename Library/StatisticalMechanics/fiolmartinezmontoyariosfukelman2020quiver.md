@@ -608,3 +608,4 @@ other trees, other $\tau$, the full coupling series, sums over trees
 here. The general assignment-summed physical tree conjecture remains open; no
 literature-priority or broader universal-conjecture resolution is claimed.
 
+[Return to the problem dossier](../../Problems/fiol-martinezmontoya-riosfukelman-2020-tree-lee-yang.md).

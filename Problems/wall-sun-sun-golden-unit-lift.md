@@ -203,4 +203,3 @@ This is bridge validation, not evidence that the global existential is false.
 ### GCR. Cubic reciprocity on the original golden depth vectors
 
 [Full argument, assumptions and unresolved boundaries](../Library/ArithUnits/dunn2024cubicreciprocity.md#wss-gcr).
-
