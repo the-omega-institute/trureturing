@@ -11,6 +11,12 @@ internal sealed class EaslickSixBoundDocument : IScribeDocumentDefinition
         "The complete dice conjecture follows from an exhaustive six-face upper bound and uniform longer cycles.",
         H("EaslickSixBound"),
         Blocks(
+            Node("easlick-check-rank", "Arbitrary finite graph rank certificate checker", "checkRank",
+                "Input consists of any finite vertex list, an executable Boolean edge function, a natural rank function, finite rank fibers, a collision triple for each rank, and a proposed bound b. For every input vertex the checker tests membership in its supplied fiber, absence of duplicates, capacity at most b+1, and weak rank decrease on every input edge. Each fiber must either have size at most b or supply two distinct member vertices whose every internal outgoing edge has the same target. These are executable checks, not assumed graph laws. The checker may reject certificates for graphs whose cycles nevertheless satisfy the bound; only soundness is asserted."),
+            Node("easlick-check-rank-sound", "General rank checker soundness", "checkRank_sound",
+                "For an arbitrary decidable inhabited vertex type and all checker inputs, a successful Boolean check bounds the length of every nonempty simple closed edge chain contained in the input vertex list by b. The proof derives constancy of rank around the cycle, containment in one rank fiber, and the capacity bound. If the capacity is b+1 and a longer cycle existed, it would exhaust that fiber and force equal successors at two distinct positions, contradicting successor injectivity. No law of the graph is a hypothesis beyond the executable check and the given cycle's defining conditions."),
+            Node("easlick-six-rank-check", "Actual first rank checker input", "sixRank_check",
+                "The complete recursive enumeration of six-face dice, exact score-19 Boolean edges, retained rank and fiber tables, and the two collision triples pass the arbitrary-input checker with bound six by kernel reduction. This is the actual computed first instance. Every numeric and checking premise is discharged. six_cycle_bound consumes checkRank_sound applied to this successful check, and S_six and conjecture_one consume that universal conclusion."),
             Node("easlick-six-cycle-bound", "The global six-face upper bound", "six_cycle_bound",
                 "For every natural k, HasCycle(6,k) implies k at most six. A complete recursive enumeration includes all 462 sorted six-face dice with labels from one through six, including repetitions and the standard die. Every score-19 edge weakly decreases the certified rank. A closed cycle therefore has one rank and lies in its entire rank fiber. All fibers have at most seven elements. In each seven-element fiber, two distinct vertices have the same unique internal successor. A seven-cycle would exhaust that fiber, contradicting injectivity of the cyclic successor operation on distinct vertices. The certificate is checked by Lean kernel reduction; its rank data are a witness, never an assumed law."),
             Node("easlick-s-six", "The attained six-face maximum", "S_six",
@@ -21,8 +27,8 @@ internal sealed class EaslickSixBoundDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), (declaration == "sourceSeed" ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(StrataLint.Scribe.FormulaDsl.Disp(Statement(declaration)))), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            H(title), (declaration.StartsWith("checkRank", StringComparison.Ordinal) || declaration == "sixRank_check" ? StatementSource.FromLean() : StatementSource.FromAuthor(StrataLint.Scribe.FormulaDsl.Disp(Statement(declaration)))), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), declaration == "checkRank" ? DescribeRole.Definition : DescribeRole.Theorem);
     private static Formula.BoundVariable B(string name, Formula type) => new(FormulaIdentifier.Create(name), type);
     private static Formula All(Formula body, params Formula.BoundVariable[] variables) => new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
     private static Formula And(params Formula[] xs) => xs.Aggregate((a,b) => new Formula.Logic(a, FormulaLogicOperator.And,b));
