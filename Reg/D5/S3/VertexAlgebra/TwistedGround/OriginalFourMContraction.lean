@@ -25,9 +25,12 @@ structure Params where
   hu : IsUnit D.G.det
   hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))
   h24 : D.rank = 24
-  H K : ℕ
-  k t : ℤ
-  u v : paritySpace D hu (-1)
+  H : ℕ
+  K : ℕ
+  k : ℤ
+  t : ℤ
+  u : paritySpace D hu (-1)
+  v : paritySpace D hu (-1)
   huH : actualTensorL0 D hu u.val = (H : ℂ) • u.val
   hvK : actualTensorL0 D hu v.val = (K : ℂ) • v.val
 

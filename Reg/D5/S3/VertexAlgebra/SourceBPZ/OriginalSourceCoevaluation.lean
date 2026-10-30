@@ -28,7 +28,7 @@ private theorem emptyPositive : Matrix.PosDef (emptyLattice.G.map (Int.cast : �
   · ext i j
     exact Fin.elim0 i
   · intro x hx
-    exact (hx (Subsingleton.elim x 0)).elim
+    exact (hx (by ext i; exact Fin.elim0 i)).elim
 
 private def vacuumTest (D : LatticeData) : Module.Dual ℂ (Carrier D) :=
   sourcePairing D (vacuum D)
@@ -216,7 +216,7 @@ private theorem dependence : ObservationalDependence signature actual := by
     0, gradeVacuum emptyLattice, ?_⟩
   change sourcePairing _ (coevaluation _ _ _).val (0 : Carrier _) ≠
     sourcePairing _ (coevaluation _ _ _).val (gradeVacuum _).val
-  rw [coevaluation_pairing _ emptyUnit emptyPositive, coevaluation_pairing _ emptyUnit emptyPositive]
+  rw [coevaluation_pairing _ emptyUnit emptyPositive]
   simp only [map_zero, fixedVacuumTest_one]
   exact zero_ne_one
 
@@ -517,7 +517,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨⟨emptyLattice, emptyPositive⟩, 0, fixedVacuumTest emptyLattice, ?_⟩
   change coevaluation _ 0 0 ≠ coevaluation _ 0 (fixedVacuumTest emptyLattice)
   rw [coevaluation_vacuum _ emptyPositive, coevaluation_vacuum _ emptyPositive,
-    map_zero, zero_smul, fixedVacuumTest_one, one_smul]
+    LinearMap.zero_apply, zero_smul, fixedVacuumTest_one, one_smul]
   intro he
   have hc := congrArg (fixedVacuumTest emptyLattice) he
   rw [map_zero, fixedVacuumTest_one] at hc
