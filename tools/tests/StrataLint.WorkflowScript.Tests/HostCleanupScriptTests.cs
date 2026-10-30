@@ -49,7 +49,8 @@ public sealed class HostCleanupScriptTests
         }
         var root = TestRepositoryLayout.FindRoot();
         foreach (var fixture in new[]
-                 { "host_reclaim_tests.py", "host_remnant_tests.py", "host_remnant_isolation_tests.py" })
+                 { "host_reclaim_tests.py", "host_remnant_tests.py", "host_remnant_isolation_tests.py",
+                     "host_remnant_recovery_tests.py" })
         {
             var result = TestProcessRunner.Run("python3",
                 ["-B", Path.Combine(root, "tools/tests/StrataLint.WorkflowScript.Tests/Fixtures", fixture),
