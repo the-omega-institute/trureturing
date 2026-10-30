@@ -32,8 +32,6 @@ class LakeDependencyContentCases:
         self.g(boundary, "fetch", "--tags", "origin")
         self.g(boundary, "checkout", "--detach", revision)
         self.g(boundary, "branch", "-D", "dev")
-        self.g(boundary, "config", "user.name", "Dependency Tests")
-        self.g(boundary, "config", "user.email", "dependency@example.invalid")
         (project / "lake-manifest.json").write_text(json.dumps(dict(packages=[
             dict(name=package, type="git", url=str(remote), rev=revision)])) + "\n")
         (project / ".gitignore").write_text(".lake/\n")
@@ -84,7 +82,8 @@ class LakeDependencyContentCases:
     def local_dependency_commit(self, boundary):
         (boundary / "tracked").write_text("local committed bytes\n")
         self.g(boundary, "add", "tracked")
-        self.g(boundary, "commit", "-m", "unpublished dependency work")
+        self.g(boundary, "-c", "user.name=Dependency Tests", "-c",
+               "user.email=dependency@example.invalid", "commit", "-m", "unpublished dependency work")
         # Isolate history coverage from unrecognized commit-message metadata.
         if (boundary / ".git").is_dir():
             (boundary / ".git/COMMIT_EDITMSG").unlink()
@@ -108,7 +107,8 @@ class LakeDependencyContentCases:
     def test_lake_dependency_retains_stash(self):
         boundary = self.clean_lake_clone(self.tree)
         (boundary / "tracked").write_text("stashed local bytes\n")
-        self.g(boundary, "stash", "push", "-m", "dependency work")
+        self.g(boundary, "-c", "user.name=Dependency Tests", "-c",
+               "user.email=dependency@example.invalid", "stash", "push", "-m", "dependency work")
         stash = self.g(boundary, "rev-parse", "refs/stash").strip()
         self.assert_lake_content_retained(boundary, "lake_dependency_unknown_shape:")
         self.assertEqual("stashed local bytes\n", self.g(boundary, "show", stash + ":tracked"))

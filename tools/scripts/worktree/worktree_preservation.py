@@ -89,6 +89,52 @@ def _declared_lake_dependency(path, target):
         return None
 
 
+LAKE_CONFIG_KEYS = frozenset({
+    "core.repositoryformatversion", "core.filemode", "core.bare", "core.logallrefupdates",
+    "core.ignorecase", "core.precomposeunicode", "core.symlinks", "remote.origin.url",
+    "remote.origin.fetch", "remote.origin.promisor", "remote.origin.partialclonefilter",
+    "extensions.partialclone", "extensions.objectformat",
+})
+GIT_DEFAULT_DESCRIPTION = b"Unnamed repository; edit this file 'description' to name the repository.\n"
+
+
+def _lake_git_directory_problem(directory):
+    """Inspect bounded metadata entries without traversing their payload trees."""
+    if directory.name == "hooks":
+        for entry in directory.iterdir():
+            if not (entry.name.endswith(".sample") and stat.S_ISREG(entry.lstat().st_mode)):
+                return "hooks_entry:" + entry.name
+    elif directory.name == "info":
+        for entry in directory.iterdir():
+            if entry.name != "exclude" or not stat.S_ISREG(entry.lstat().st_mode):
+                return "info_entry:" + entry.name
+            if any(line.strip() and not line.lstrip().startswith(b"#")
+                   for line in entry.read_bytes().splitlines()):
+                return "info_exclude"
+    elif directory.name == "objects":
+        for entry in directory.iterdir():
+            if (not stat.S_ISDIR(entry.lstat().st_mode)
+                    or not (entry.name in {"pack", "info"} or re.fullmatch(r"[0-9a-f]{2}", entry.name))):
+                return "objects_entry:" + entry.name
+            if entry.name == "info":
+                for child in entry.iterdir():
+                    mode = child.lstat().st_mode
+                    if child.name in {"packs", "commit-graph"} and stat.S_ISREG(mode):
+                        continue
+                    if child.name == "commit-graphs" and stat.S_ISDIR(mode):
+                        continue
+                    return "objects_info_entry:" + child.name
+    elif directory.name == "logs":
+        for entry in directory.iterdir():
+            mode = entry.lstat().st_mode
+            if entry.name == "HEAD" and stat.S_ISREG(mode):
+                continue
+            if entry.name == "refs" and stat.S_ISDIR(mode):
+                continue
+            return "logs_entry:" + entry.name
+    return None
+
+
 def _lake_git_shape_problem(path):
     """Recognize only ordinary detached Lake clone metadata and visible indexes."""
     metadata = path / ".git"
@@ -99,6 +145,8 @@ def _lake_git_shape_problem(path):
     for entry in metadata.iterdir():
         mode = entry.lstat().st_mode
         if entry.name in files and stat.S_ISREG(mode):
+            if entry.name == "description" and entry.read_bytes() != GIT_DEFAULT_DESCRIPTION:
+                return "description"
             continue
         if entry.name not in directories or not stat.S_ISDIR(mode):
             return "git_entry:" + entry.name
@@ -108,6 +156,15 @@ def _lake_git_shape_problem(path):
                 if not (lock.name.endswith(".lock") and stat.S_ISREG(info.st_mode)
                         and info.st_size == 0):
                     return "scope_lock:" + lock.name
+        problem = _lake_git_directory_problem(entry)
+        if problem:
+            return problem
+    config = git(path, "config", "--local", "--no-includes", "--null", "--name-only", "--list")
+    if config.stderr:
+        raise Refused("config_inspection:" + os.fsdecode(config.stderr).strip())
+    for key in config.stdout.split(b"\0"):
+        if key and os.fsdecode(key) not in LAKE_CONFIG_KEYS:
+            return "config_key:" + os.fsdecode(key)
     head = git(path, "symbolic-ref", "--quiet", "HEAD", check=False)
     if head.returncode == 0:
         return "attached_head"

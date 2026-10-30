@@ -6,11 +6,95 @@ from unittest.mock import patch
 
 
 class LakeDependencyAllowlistCases:
+    def assert_lake_metadata_retained(self, relative, content, detail):
+        boundary = self.clean_lake_clone(self.tree)
+        entry = boundary / ".git" / relative
+        entry.write_bytes(content)
+        if relative == "hooks/pre-commit":
+            entry.chmod(0o755)
+        self.assert_lake_content_retained(
+            boundary, "lake_dependency_unknown_shape:.lake/packages/mathlib:" + detail)
+        self.assertEqual(content, entry.read_bytes())
+
+    def test_lake_dependency_retains_custom_hook(self):
+        self.assert_lake_metadata_retained(
+            "hooks/pre-commit", b"#!/bin/sh\necho local-hook\n", "hooks_entry:pre-commit")
+
+    def test_lake_dependency_retains_info_attributes(self):
+        self.assert_lake_metadata_retained(
+            "info/attributes", b"tracked -diff\n", "info_entry:attributes")
+
+    def test_lake_dependency_retains_active_info_exclude(self):
+        self.assert_lake_metadata_retained(
+            "info/exclude", b"# local exclusion\nprivate-content\n", "info_exclude")
+
+    def test_lake_dependency_retains_unknown_config_key(self):
+        boundary = self.clean_lake_clone(self.tree)
+        self.g(boundary, "config", "alias.x", "status")
+        config = (boundary / ".git/config").read_bytes()
+        self.assert_lake_content_retained(
+            boundary, "lake_dependency_unknown_shape:.lake/packages/mathlib:config_key:alias.x")
+        self.assertEqual(config, (boundary / ".git/config").read_bytes())
+
+    def test_lake_dependency_retains_object_alternates(self):
+        self.assert_lake_metadata_retained(
+            "objects/info/alternates", b"", "objects_info_entry:alternates")
+
+    def test_lake_dependency_retains_changed_description(self):
+        self.assert_lake_metadata_retained(
+            "description", b"local dependency notes\n", "description")
+
+    def test_lake_dependency_retains_unknown_objects_entry(self):
+        self.assert_lake_metadata_retained(
+            "objects/local-notes", b"local object notes\n", "objects_entry:local-notes")
+
+    def test_lake_dependency_retains_unknown_logs_entry(self):
+        self.assert_lake_metadata_retained(
+            "logs/local-notes", b"local log notes\n", "logs_entry:local-notes")
+
+    def observed_lake_metadata(self, linux=False):
+        boundary = self.clean_lake_clone(self.tree)
+        metadata = boundary / ".git"
+        keys = self.g(boundary, "config", "--local", "--name-only", "--list").splitlines()
+        for key in ("core.ignorecase", "core.precomposeunicode", "core.symlinks"):
+            if key in keys:
+                self.g(boundary, "config", "--unset-all", key)
+        platform = {"core.symlinks": "false"} if linux else {
+            "core.ignorecase": "true", "core.precomposeunicode": "true"}
+        for key, setting in dict(platform, **{
+                "remote.origin.promisor": "true",
+                "remote.origin.partialclonefilter": "blob:none"}).items():
+            self.g(boundary, "config", key, setting)
+        for ref in self.g(boundary, "for-each-ref", "--format=%(refname)").splitlines():
+            self.g(boundary, "update-ref", "-d", ref)
+        (metadata / "packed-refs").unlink(missing_ok=True)
+        (metadata / "refs/tags").mkdir(exist_ok=True)
+        self.assertEqual([], list((metadata / "refs/heads").iterdir()))
+        self.assertEqual([], list((metadata / "refs/tags").iterdir()))
+        (metadata / "info/exclude").write_text("# clone exclusions\n\n   # comment\n")
+        self.assertTrue(all(entry.name.endswith(".sample") for entry in (metadata / "hooks").iterdir()))
+        self.assertEqual([], list((metadata / "objects/info").iterdir()))
+        self.assertEqual(["HEAD"], sorted(entry.name for entry in (metadata / "logs").iterdir()))
+        self.assertEqual("Unnamed repository; edit this file 'description' to name the repository.\n",
+                         (metadata / "description").read_text())
+        return boundary
+
+    def test_lake_dependency_allows_observed_partial_clone_metadata(self):
+        self.observed_lake_metadata()
+        self.remove()
+        self.assertFalse(self.tree.exists())
+
+    def test_lake_dependency_allows_linux_clone_metadata(self):
+        self.observed_lake_metadata(linux=True)
+        self.remove()
+        self.assertFalse(self.tree.exists())
+
     def test_lake_dependency_retains_deinitialized_submodule(self):
         boundary = self.clean_lake_clone(self.tree)
         remote = self.root / "dependency-remote.git"
         self.g(boundary, "-c", "protocol.file.allow=always", "submodule", "add", remote, "child")
-        self.g(boundary, "commit", "-am", "acquired submodule declaration")
+        self.g(boundary, "-c", "user.name=Dependency Tests", "-c",
+               "user.email=dependency@example.invalid", "commit", "-am", "acquired submodule declaration")
         self.g(boundary, "tag", "acquired-submodule")
         (boundary / ".git/COMMIT_EDITMSG").unlink()
         child = boundary / "child"
@@ -102,7 +186,7 @@ class LakeDependencyAllowlistCases:
         import worktree_preservation as preservation
         boundary = self.clean_lake_clone(self.tree)
         original = preservation.git
-        for operation in ("symbolic-ref", "for-each-ref", "ls-files"):
+        for operation in ("config", "symbolic-ref", "for-each-ref", "ls-files"):
             with self.subTest(operation=operation):
                 def fail(root, *args, **kwargs):
                     if Path(root) == boundary and args[0] == operation:
