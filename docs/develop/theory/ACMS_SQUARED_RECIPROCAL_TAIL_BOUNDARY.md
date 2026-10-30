@@ -10,7 +10,7 @@ U(s,t,0)=0,\qquad U(s,t,1)=1,\qquad
 U(s,t,j+2)=sU(s,t,j+1)+tU(s,t,j).
 $$
 
-Set $U_j^{(s)}=U(s,-1,j)$. This is the sequence denoted by
+Set $U_j^{(s)}=U(s,-1,j)$. The function $U(s,t,j)$ is denoted by
 $\{j\}_{s,t}$ in Amdeberhan, Chen, Moll and Sagan,
 [*Generalized Fibonacci polynomials and Fibonomial coefficients*,
 arXiv:1306.6511v1](https://arxiv.org/abs/1306.6511v1) and
