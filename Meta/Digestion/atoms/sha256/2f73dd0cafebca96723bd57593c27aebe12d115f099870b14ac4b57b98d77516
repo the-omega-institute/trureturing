@@ -1,0 +1,29 @@
+**推论 96.3（90.2 的指数锐性与无统一小阶模）。** 对 90.2 完全相同的固定来源和响应类，每个 $0<\varepsilon\le1$ 都有一个满足全部原条件的 $P$，使
+
+$$
+ \mathcal R(P)\le\varepsilon,\qquad
+ \mathcal D(P)\ge\frac{\sqrt\varepsilon}{16}.
+ \tag{96.14}
+$$
+
+不存在函数 $m:(0,\varepsilon_0]\to[0,\infty)$，满足 $m(\varepsilon)=o(\sqrt\varepsilon)$ 且对每个该类响应及每个充分小的 $\varepsilon$ 都有
+$\mathcal R(P)\le\varepsilon\Longrightarrow\mathcal D(P)\le m(\varepsilon)$。结合 90.2，平方根阶在这个响应类上一致锐。
+
+证明。在 96.2 中直接取 $\theta=\sqrt\varepsilon$，即得 (96.14)。若存在所述统一 $m$，对每个充分小的 $\varepsilon$ 应用同一个族会给
+
+$$
+ \frac1{16}\le\frac{\mathcal D(P^{\sqrt\varepsilon})}{\sqrt\varepsilon}
+ \le\frac{m(\varepsilon)}{\sqrt\varepsilon}\longrightarrow0,
+$$
+
+矛盾。另一方面，直接复用 90.2 的有限来源常数 $C_0$，在 $0<\varepsilon\le1$ 上有
+
+$$
+ \mathcal D(P)\le
+ \bigl(2C_0+12\sqrt{6C_0}\bigr)\sqrt\varepsilon
+ \qquad\text{当 }\mathcal R(P)\le\varepsilon.
+ \tag{96.15}
+$$
+
+故 (96.14) 与 (96.15) 给相同完整响应类的匹配指数，不要求求出最佳常数。下界构造本身只复用二次型消去，独立于上界证明中的紧算子估计。这里的锐性是普通条件数学中的统一估计结论，不是 Lean／内核证明、数值 $C_0$ 或有限认证；也不取得物理采集、仪器、混态仿射性或量子起源主张。∎
+
