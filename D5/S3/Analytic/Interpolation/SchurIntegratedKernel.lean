@@ -221,7 +221,7 @@ private theorem integrated_mean_pos {x : ℝ} (hx0 : 0 ≤ x) (hx1 : x < 1) :
       ∫ t in (0 : ℝ)..x, ∫ θ in (0 : ℝ)..(2 * Real.pi), poissonDensity t θ := by
     simpa only [integratedPoisson, intervalIntegral.integral_of_le hx0,
       intervalIntegral.integral_of_le Real.two_pi_pos.le] using
-      (integral_integral_swap hip).symm
+      (integral_integral_swap (f := fun t θ => F (t, θ)) hip).symm
   rw [hswap]
   calc
     _ = ∫ _ in (0 : ℝ)..x, (2 * Real.pi) := by
@@ -357,7 +357,7 @@ private theorem rectangle_swap (F : ℝ × ℝ → ℂ) (a c : ℝ) (hac : a ≤
     rw [Measure.prod_restrict]
     exact hi.mono_set (Set.prod_mono Ioc_subset_Icc_self Ioc_subset_Icc_self)
   simpa only [intervalIntegral.integral_of_le hac,
-    intervalIntegral.integral_of_le Real.two_pi_pos.le] using (integral_integral_swap hip).symm
+    intervalIntegral.integral_of_le Real.two_pi_pos.le] using (integral_integral_swap (f := fun t θ => F (t, θ)) hip).symm
 
 private theorem oriented_swap (F : ℝ × ℝ → ℂ) (x : ℝ)
     (hF : ContinuousOn F (uIcc (0 : ℝ) x ×ˢ Icc (0 : ℝ) (2 * Real.pi))) :
@@ -392,7 +392,7 @@ private theorem integrated_function_representation (h : ℂ → ℂ) (hh : Diffe
       simpa only [mem_ball, dist_zero_right, Complex.norm_real, Real.norm_eq_abs] using
         (ht t ht').trans_lt hx
     have he := hh.diffContOnCl.circleAverage_poissonKernel_smul hw
-    simpa only [Real.circleAverage_def, Pi.smul_apply, F, poissonDensity, Complex.real_smul] using he.symm
+    simpa only [Real.circleAverage_def, Pi.smul_apply, Pi.smul_apply', F, poissonDensity, Complex.real_smul] using he.symm
   calc
     _ = ∫ t in (0 : ℝ)..x, ((2 * Real.pi)⁻¹ : ℝ) •
         (∫ θ in (0 : ℝ)..(2 * Real.pi), F (t, θ)) :=
