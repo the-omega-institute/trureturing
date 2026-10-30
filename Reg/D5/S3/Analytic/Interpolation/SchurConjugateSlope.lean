@@ -153,7 +153,11 @@ abbrev supremaArena : Arena where
     ∃ g ∈ entireClass, g = (fun z => z ^ 2 / 2) ∧ diskNorm g = 1 ∧
       _root_.D5.S3.Analytic.Interpolation.SchurConjugateSlope.slope g a b = a ∧ (∀ x : ℝ,
         ‖deriv g x - deriv (interpolant g a b) x‖ = |x - a|) ∧
-      sSup (innerValues g a b) = 1 + |a|
+      sSup (innerValues g a b) = 1 + |a| ∧
+      nodalDerivativeNorm a b = 2 * (1 + |a|) ∧
+      (1 / 2) * nodalDerivativeNorm a b = 1 + |a| ∧
+      ∃ x ∈ Set.Icc (-1 : ℝ) 1,
+        nodalDerivativeNorm a b = ‖deriv (nodalPolynomial a b) x‖
 
 private theorem supremaRejected : ¬ supremaArena.Law normRejected := by
   intro h

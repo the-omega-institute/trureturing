@@ -47,6 +47,16 @@ internal sealed class SchurConjugateSlopeDocument : IScribeDocumentDefinition
                         Frac, Grp(Grp(A, Plus, B, F.Id("i")), Minus, Z), Grp(D(2), B, F.Id("i")),
                         Call("g", Seq(A, Minus, B, F.Id("i")))))))))),
                 "For b>0 the displayed affine polynomial interpolates g at the distinct conjugate nodes. The formula uses complex division.", DescribeRole.Definition),
+            Entry("nodal", "nodalPolynomial", "The actual nodal polynomial",
+                Disp(All("a", R, All("b", R, All("z", C,
+                    Eqn(Call("nodalPolynomial", A, B, Z), Seq(
+                        Grp(Z, Minus, Grp(A, Plus, B, F.Id("i"))),
+                        Grp(Z, Minus, Grp(A, Minus, B, F.Id("i"))))))))),
+                "The polynomial is the original product (z-(a+ib))(z-(a-ib)). Its derivative is 2(z-a), including for every nonreal unit-circle pair.", DescribeRole.Definition),
+            Entry("nodal-norm", "nodalDerivativeNorm", "The original nodal derivative norm",
+                Disp(All("a", R, All("b", R, Eqn(Call("nodalDerivativeNorm", A, B),
+                    Call("sSup", Call("nodalDerivativeNormValues", A, B)))))),
+                "The real supremum is over the norms of the actual complex derivative at real x in the closed interval [-1,1]. The value set is nonempty and bounded and its supremum is attained.", DescribeRole.Definition),
             Entry("derivative", "interpolant_deriv", "The Lagrange derivative",
                 Disp(All("g", Functions, All("a", R, All("b", R, All("z", C,
                     Eqn(Call("deriv", I(A), Z), S(A))))))),
@@ -92,8 +102,13 @@ internal sealed class SchurConjugateSlopeDocument : IScribeDocumentDefinition
                     Eqn(Call("M", G), D(1)), Sp, Land, Sp, Eqn(S(A), A), Sp, Land, Sp,
                     Open, All("x", R, Eqn(Call("actualError", G, A, B, F.Id("x")),
                         Call("abs", Seq(F.Id("x"), Minus, A)))), Close, Sp, Land, Sp,
-                    Call("sSup", Call("V", G, A, B)), Sp, Eq, Sp, D(1), Plus, Call("abs", A))))),
-                "For every admissible a,b both original value sets are nonempty and bounded. For every member, compactness gives an actual point attaining the disk norm and an actual real point attaining the inner supremum. The existential witness is explicitly the entire quadratic quadratic(z)=z squared divided by two. It has disk norm one, slope a, error |x-a| and inner supremum 1+|a|. This value is attained at -1 for a nonnegative and at 1 for a nonpositive, with both endpoints when a=0. A separate coarse estimate gives uniformError at most two. The sharp upper estimate uniformError at most 1+|a| remains unproved here; this theorem does not assert the full classification.", DescribeRole.Theorem))));
+                    Call("sSup", Call("V", G, A, B)), Sp, Eq, Sp, D(1), Plus, Call("abs", A), Sp, Land, Sp,
+                    Eqn(Call("nodalDerivativeNorm", A, B), Seq(D(2), Grp(D(1), Plus, Call("abs", A)))),
+                    Sp, Land, Sp, Eqn(Seq(Frac, Grp(D(1)), Grp(D(2)), Call("nodalDerivativeNorm", A, B)),
+                        Seq(D(1), Plus, Call("abs", A))), Sp, Land, Sp,
+                    Exists, Sp, F.Id("x"), Sp, InMacro, Sp, Call("Icc", Seq(Minus, D(1)), D(1)), Comma, Sp,
+                    Eqn(Call("nodalDerivativeNorm", A, B), Call("normNodalDerivative", A, B, F.Id("x"))))))),
+                "For every admissible a,b both original value sets are nonempty and bounded. For every member, compactness gives an actual point attaining the disk norm and an actual real point attaining the inner supremum. The existential witness is explicitly the entire quadratic quadratic(z)=z squared divided by two. It has disk norm one, slope a, error |x-a| and inner supremum 1+|a|. This value is attained at -1 for a nonnegative and at 1 for a nonpositive, with both endpoints when a=0. The actual nodal derivative norm is 2(1+|a|), so its half-norm is 1+|a|; a real endpoint attains the norm. The norm value set is nonempty and bounded. The coarse estimate uses the live horizontal transport theorem and the imaginary-axis bound sqrt(1+b squared) M(g), whose sum with |a| M(g) is at most 2 M(g). This gives uniformError at most two. The sharp upper estimate uniformError at most 1+|a| remains unproved here; this theorem does not assert the full classification.", DescribeRole.Theorem))));
 
     private static DocumentBlock Entry(string id, string declaration, string title,
         Formula formula, string prose, DescribeRole role) =>

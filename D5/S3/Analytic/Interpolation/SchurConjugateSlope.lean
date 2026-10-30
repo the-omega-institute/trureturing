@@ -33,6 +33,14 @@ def interpolant (g : ℂ → ℂ) (a b : ℝ) (z : ℂ) : ℂ :=
   (z - ((a : ℂ) - b * I)) / (2 * b * I) * g ((a : ℂ) + b * I) +
     (((a : ℂ) + b * I) - z) / (2 * b * I) * g ((a : ℂ) - b * I)
 
+/-- The actual nodal polynomial, as the product at the two original nodes. -/
+def nodalPolynomial (a b : ℝ) (z : ℂ) : ℂ :=
+  (z - ((a : ℂ) + b * I)) * (z - ((a : ℂ) - b * I))
+
+/-- The original derivative norm of the nodal polynomial on the closed real interval. -/
+def nodalDerivativeNorm (a b : ℝ) : ℝ :=
+  sSup ((fun x : ℝ => ‖deriv (nodalPolynomial a b) x‖) '' Icc (-1 : ℝ) 1)
+
 private theorem diskNorm_bdd (g : ℂ → ℂ) (hg : Differentiable ℂ g) :
     BddAbove ((fun z => ‖deriv (deriv g) z‖) '' closedBall (0 : ℂ) 1) :=
   (isCompact_closedBall (0 : ℂ) 1).bddAbove_image hg.deriv.deriv.continuous.norm.continuousOn
@@ -269,6 +277,42 @@ private theorem quadratic_norm : diskNorm quadratic = 1 := by
   refine ⟨0, by simp, ?_⟩
   simp [quadratic_second]
 
+private theorem nodal_derivative_norm (a b x : ℝ) :
+    ‖deriv (nodalPolynomial a b) x‖ = 2 * |x - a| := by
+  have hd := (((hasDerivAt_id (x : ℂ)).sub_const ((a : ℂ) + b * I)).mul
+    ((hasDerivAt_id (x : ℂ)).sub_const ((a : ℂ) - b * I)))
+  have he : deriv (nodalPolynomial a b) (x : ℂ) = (2 : ℂ) * ((x : ℂ) - a) := by
+    rw [hd.deriv]
+    ring
+  rw [he, norm_mul]
+  simp only [norm_ofNat, ← Complex.ofReal_sub, Complex.norm_real, Real.norm_eq_abs]
+
+private theorem nodal_sup (a b : ℝ) :
+    nodalDerivativeNorm a b = 2 * (1 + |a|) ∧
+    ∃ x ∈ Icc (-1 : ℝ) 1, nodalDerivativeNorm a b = ‖deriv (nodalPolynomial a b) x‖ := by
+  have hbound : ∀ v ∈ ((fun x : ℝ => ‖deriv (nodalPolynomial a b) x‖) '' Icc (-1 : ℝ) 1),
+      v ≤ 2 * (1 + |a|) := by
+    rintro v ⟨x, hx, rfl⟩
+    rw [nodal_derivative_norm]
+    have hh := (abs_sub x a).trans (show |x| + |a| ≤ 1 + |a| by linarith [abs_le.mpr hx])
+    linarith
+  have hatt : ∃ x ∈ Icc (-1 : ℝ) 1,
+      ‖deriv (nodalPolynomial a b) x‖ = 2 * (1 + |a|) := by
+    by_cases ha : 0 ≤ a
+    · refine ⟨-1, by norm_num, ?_⟩
+      rw [nodal_derivative_norm a b (-1), abs_of_nonneg ha, abs_of_nonpos (by linarith)]
+      ring
+    · refine ⟨1, by norm_num, ?_⟩
+      rw [nodal_derivative_norm a b 1, abs_of_nonpos (le_of_not_ge ha),
+        abs_of_nonneg (by linarith)]
+      ring
+  obtain ⟨x, hx, he⟩ := hatt
+  have hmem : 2 * (1 + |a|) ∈
+      ((fun x : ℝ => ‖deriv (nodalPolynomial a b) x‖) '' Icc (-1 : ℝ) 1) := ⟨x, hx, he⟩
+  have hn : nodalDerivativeNorm a b = 2 * (1 + |a|) :=
+    le_antisymm (csSup_le ⟨_, hmem⟩ hbound) (le_csSup ⟨_, hbound⟩ hmem)
+  exact ⟨hn, x, hx, hn.trans he.symm⟩
+
 /-- Both original supremum levels are nonempty and bounded; the actual quadratic supplies
     the sharp proposed lower value. The separate sharp upper estimate is not assumed. -/
 theorem original_suprema_bounded (a b : ℝ) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 ≤ 1) :
@@ -282,7 +326,11 @@ theorem original_suprema_bounded (a b : ℝ) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 �
     ∃ g ∈ entireClass, g = (fun z => z ^ 2 / 2) ∧ diskNorm g = 1 ∧
       slope g a b = a ∧ (∀ x : ℝ,
         ‖deriv g x - deriv (interpolant g a b) x‖ = |x - a|) ∧
-      sSup (innerValues g a b) = 1 + |a| := by
+      sSup (innerValues g a b) = 1 + |a| ∧
+      nodalDerivativeNorm a b = 2 * (1 + |a|) ∧
+      (1 / 2) * nodalDerivativeNorm a b = 1 + |a| ∧
+      ∃ x ∈ Icc (-1 : ℝ) 1,
+        nodalDerivativeNorm a b = ‖deriv (nodalPolynomial a b) x‖ := by
   have hinner (g : ℂ → ℂ) (hg : g ∈ entireClass) :
       (innerValues g a b).Nonempty ∧ BddAbove (innerValues g a b) ∧
       (∃ z ∈ closedBall (0 : ℂ) 1, diskNorm g = ‖deriv (deriv g) z‖) ∧
@@ -300,9 +348,10 @@ theorem original_suprema_bounded (a b : ℝ) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 �
     apply csSup_le (hinner g hg).1
     rintro w ⟨x, hx, rfl⟩
     exact (coarse_error_bound g hg.1 a b x hb hab hx).trans (by linarith [hg.2])
+  have hn := nodal_sup a b
   refine ⟨⟨quadratic, quadratic_member⟩, hinner, hout, hbout, ?_, ?_,
     quadratic, quadratic_member, rfl, quadratic_norm, quadratic_slope a b hb,
-    (fun x => quadratic_error a b x hb), quadratic_sup a b hb⟩
+    (fun x => quadratic_error a b x hb), quadratic_sup a b hb, hn.1, ?_, hn.2⟩
   · apply le_csSup hbout
     exact ⟨quadratic, quadratic_member, quadratic_sup a b hb⟩
   · apply csSup_le hout
@@ -310,6 +359,8 @@ theorem original_suprema_bounded (a b : ℝ) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 �
     apply csSup_le (hinner g hg).1
     rintro w ⟨x, hx, rfl⟩
     exact (coarse_error_bound g hg.1 a b x hb hab hx).trans (by linarith [hg.2])
+  · rw [hn.1]
+    ring
 
 #print axioms original_suprema_bounded
 
