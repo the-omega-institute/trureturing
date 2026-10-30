@@ -1,0 +1,33 @@
+**Proposition 6.1 (A strict estimate when the largest part exceeds the other two).**
+If $d=c-a-b>0$, every $g\in\mathcal P_{a,b,c}$ satisfies
+
+$$
+F(g)<n\left(n-2+\frac1{d+2}\right),
+\qquad
+M_{a,b,c}\le n\left(n-2+\frac1{d+2}\right)<U_n.
+\tag{6.1}
+$$
+
+This estimate does not assert sharpness.
+
+*Proof.* Normalize to $h=g/\lambda_2(g)$. Let $W_{IJ}$ be the sum
+of its original $IJ$ edge coordinates and $W=W_{AB}+W_{AC}+W_{BC}$.
+Lemma 2.1 gives
+
+$$
+D_C=W_{AC}+W_{BC}\ge c,\qquad
+W=D_C+W_{AB}>c,
+$$
+
+because all $ab$ original $AB$ conductances are strictly positive.
+Thus $S=2W-(n-1)>2c-n+1=d+1$.
+The comparison (3.5) is consequently strict at
+
+$$
+\Delta\ge\frac S{1+S}>\frac{d+1}{d+2}.
+$$
+
+Equation (3.6) gives the first inequality of (6.1).
+Taking the supremum gives its non-strict bound; since $d>0$,
+$1/(d+2)<1/2$, proving the last strict comparison. ∎
+
