@@ -13,6 +13,14 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
+/-- Decide parity by structural recursion on the particle number. -/
+private def evenDecision : (n : ℕ) → Decidable (Even n) :=
+  Nat.rec (motive := fun n => Decidable (Even n)) (isTrue ⟨0, rfl⟩)
+    (fun n ih =>
+      letI : Decidable (Even n) := ih
+      decidable_of_iff (¬ Even n)
+        (by simpa only [Nat.succ_eq_add_one] using (Nat.even_add_one (n := n)).symm))
+
 /-- Observe the evenness predicate at the particle-number coordinate. -/
 abbrev signature : Signature where
   Params := Unit
@@ -25,7 +33,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ n => decide (Even n))
+  realize signature (fun _ _ n => @decide (Even n) (evenDecision n))
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -45,7 +53,8 @@ theorem rejected_law : ¬ arena.Law rejected := by
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
-  change decide (Even (0 : ℕ)) ≠ decide (Even (1 : ℕ))
+  change @decide (Even (0 : ℕ)) (evenDecision 0) ≠
+    @decide (Even (1 : ℕ)) (evenDecision 1)
   decide
 
 def source_registration : Registration arena claim where
@@ -78,7 +87,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ _ n => decide (Even n))
+    (fun _ _ n => @decide (Even n) (evenDecision n))
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
