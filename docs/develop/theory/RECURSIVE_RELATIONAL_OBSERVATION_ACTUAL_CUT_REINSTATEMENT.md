@@ -4554,3 +4554,197 @@ exact canonical installation, or the unbounded recovery program.
 [ACR-COOK]: https://www.cs.toronto.edu/~sacook/homepage/1971.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 33. Sparse aligned cores and the two-clock quotient
+
+**Definition 33.1 (the sparse aligned-core class).** Let $s=y+t$ be the
+unique coprime decomposition supplied by Theorem 27.3: $g(E)y=0$ and
+$E^a t=0$, with $g$ the least annihilator of $y$. For a fixed integer
+$k\ge1$, write $\mathscr R^{\mathrm{sp}}_{d,k}$ for the members of the
+original class $\mathscr R_d$ for which, for some hidden $1\le p\le d$ and
+$W\subseteq\{0,\ldots,p-1\}$ with $|W|\le k$,
+
+$$
+y_i=\mathbf 1_{\{i\bmod p\in W\}}.
+\tag{ACR.125}
+$$
+
+The zero core is included. The values $a,p,W$, the core degree, the
+transient, the two clock integers and the cut are existential source data,
+not controller inputs. Membership in $\mathscr R_d$ keeps the original
+all-index condition $a+\deg(g)\le d$; no condition $a+p\le d$ is added.
+Thus every allowed transient prefix remains arbitrary, and the class is a
+resource subclass rather than a replacement for the original source class.
+
+For $b\ge0$, let
+
+$$
+Y_{d,b}=\{0\}\cup
+ \{(u,W):1\le u\le d,
+       W\subseteq\{0,\ldots,u-1\}, 1\le |W|\le b\}.
+\tag{ACR.126}
+$$
+
+A member of $Y_{d,b}$ is generated as a stream by modular counting; no
+word of length $u$ is stored. At a frontier of period $u$, replace the two
+external clock seeds in (ACR.115) by their residues
+$A_1,A_2\in\mathbb Z/u\mathbb Z$ and perform every Fibonacci, skipped-sibling
+and index addition in $mathbb Z/u\mathbb Z$. The orientation is then
+$\mathbf 1_{\{\bar J-1\in W\}}$, where $\bar J$ is the reduced index in
+(ACR.115). The zero member uses no clock residues.
+
+**Lemma 33.2 (exact quotient at a core-only frontier).** Suppose a frontier
+is at the depth covered by Theorem 27.3, and let its aligned core have
+period $u$ and support $W$. If two local trials use the same $(u,W)$ and
+have clock seeds congruent modulo $u$, then they produce the same local
+orientation at every relative node and the same finite local support.
+
+Proof. The two clock pairs agree at the initial two indices modulo $u$.
+The recurrence $A_{j+2}=A_{j+1}+A_j$ preserves this congruence. Induct on
+the relative path. Equal preceding orientations give equal physical
+creation descriptors and equal skipped-sibling terms; reducing (ACR.115)
+therefore gives congruent next indices. Equation (ACR.125) gives equal
+orientation bits. The induction also gives the same children and hence the
+same support and rank-witness paths. This is a quotient of the two integer
+coordinates only at the proved core-only frontier. It reconstructs neither
+integer clock, nor a global realization of an enumerated residue pair.
+\square$
+
+**Definition 33.3 (one uniform staged controller).** Keep the paid spine,
+$H=2h+1$, $S=d+H+2$, shallow presence exploration, rank certificates and
+the proper-candidate verifier of Definitions 28.1--28.3. Run a single
+controller with sparsity stages $b=0,1,\ldots,d$. At stage $b$, stream every
+member of $Y_{d,b}$, every pair of residues for its period, and every
+allowed rank $q$; use Lemma 33.2 for each core-only frontier. All starts,
+children, complete literals, failed descent, counters, discarded trials and
+stage data obey the original guards and are charged. Recombine heights and
+reconstruct early parents exactly as in Definition 28.3.
+
+After the final sparse stage, run the unchanged full-class controller of
+Definition 28.3. A sparse trial can return only after constructing the
+provisional $2d$-prefix, solving its Hankel equations and passing the actual
+proper-candidate verifier of Corollary 22.3. No period, support, phase,
+clock, law or sparsity promise is read by this controller. Rank certificates
+produce only provisional heights; the actual paid proper-candidate verifier is
+the sole return gate.
+
+**Theorem 33.4 (transient-preserving uniformity and its resource envelope).**
+The controller of Definition 33.3 terminates and returns the authentic
+$(P,n)$ on every original input in $\mathscr R_d$. On every fixed-$k$
+subclass $\mathscr R^{\mathrm{sp}}_{d,k}$ it accepts by stage $b=|W|$ and
+has polynomial every-execution local work, cumulative writes, paid Reads,
+literal traffic and owned backing in $(d,H)$, with one program independent
+of the hidden $k$.
+
+Proof. The fallback is Theorem 28.4, so every original source, including
+arbitrary finite transients and deficient-rank laws, remains in the
+correctness and termination theorem. Soundness of every earlier return is
+unchanged: rank certificates produce provisional heights only, and the
+actual paid proper-candidate verifier is the sole return gate.
+
+For $s\in\mathscr R^{\mathrm{sp}}_{d,k}$, take its hidden representation
+(ACR.125). At stage $b=|W|$, the actual $(p,W)$ is streamed. The genuine
+clock pair occurs among the residue pairs, and the genuine rank occurs in
+the original bounded rank loop. Theorem 27.3 removes $t$ from every
+frontier used by the local model; Lemma 33.2 then makes that trial's local
+support exactly the actual support. Theorem 28.2 gives exact frontier
+heights. The early-parent induction of Theorem 28.4 consequently recovers
+all $2d$ authentic bits and the actual root height $n$. The final verifier
+also makes any earlier acceptance exact, even when its sparse stage omits
+the actual core. The transient is learned only through the original paid
+shallow probes and parent certificates; it is never catalogued.
+
+Including all candidates at all failed stages, define the streamed model
+count
+
+$$
+ M_{d,b}=1+\sum_{u=1}^{d}u^2
+       \sum_{j=1}^{\min(b,u)}{u\choose j},qquad
+ \Sigma_{d,k}=\sum_{b=0}^{k}M_{d,b}.
+\tag{ACR.127}
+$$
+
+The factor $u^2$ charges both clock residues, including nonrealizable
+pairs. For fixed $k$, $\Sigma_{d,k}=O_k((d+1)^{k+3})$. Substituting this
+streamed count for the core-presentation factor in the proof of
+Theorem 29.1 gives, on the sparse subclass,
+
+$$
+\begin{aligned}
+ Q_{\rm sp}&\le C(d+1)^{19}(H+1)\Sigma_{d,k},
+ &M_{\rm sp}&\le H,
+ &J_{\rm sp}&\le H Q_{\rm sp},\\
+ C_{\rm sp},W_{\rm sp}&\le C S^{40}\Sigma_{d,k},
+ &V_{\rm sp}&\le CS^3,
+ &U_{\rm source}&=0.
+\end{aligned}
+\tag{ACR.128}
+$$
+
+These bounds charge candidate generation, modular arithmetic, all failed
+rank and clock trials, shallow scans, complete literal construction,
+sequential backing scans, counters, scratch initialization, cumulative
+writes and the retained acquisition output. On an arbitrary input, the
+same accounting through all $b\le d$ is added to the unchanged fallback
+bill (ACR.121); no polynomial bound for the unrestricted general-$d$
+problem is asserted. After authentic acquisition, add exactly the
+normalization, Fibonacci, binding, grants, physical writes, stationarity,
+tariffs, durations and completed-handoff bills of Theorem 29.2. \square$
+
+**Corollary 33.5 (unbounded full-rank one-hot cores with transients).**
+Let $p\ge1$, let $a\ge0$, and put $d=a+p$. Choose a phase
+$\phi\in\{0,\ldots,p-1\}$ and the one-hot core
+$y_i=\mathbf 1_{\{i\equiv\phi\pmod p\}}$. If $a>0$, choose any transient
+supported on $0,\ldots,a-1$ with $t_{a-1}=1$; if $a=0$, put $t=0$. Then
+$s=y+t$ belongs to the $k=1$ sparse subclass, has least annihilator
+
+$$
+m_s=E^a(E^p+1),
+\tag{ACR.129}
+$$
+
+and $\deg(m_s)=d$. Hence its Hankel matrix has rank $d$, and the original
+$K_d(P)$ is recovered with the polynomial full-rank normalization of
+(ACR.89), with the authentic first-$d$ seed and the original row convention. Theorem
+29.2 therefore installs the exact tuple $(P,K_d(P),n,F_{n+1}-1)$ with its
+separate physical and handoff charges. Both $p$ and $a$ may grow with $d$.
+
+Proof. The $p$ cyclic shifts of a one-hot period-$p$ word are the standard
+basis of its period space, so its least annihilator is $E^p+1$ and has
+degree $p$. The terminal nonzero transient has least annihilator $E^a$.
+These factors are coprime because $E^p+1$ has constant term one. The
+coprime-kernel argument already used in Theorem 27.3 shows that an
+annihilator of their sum must contain both factors; their product already
+annihilates the sum. Theorem 21.2 gives rank $d$ and uniqueness of the
+order-$d$ row. The auxiliary row used during acquisition is therefore
+replaced by the exact original $K_d(P)$, never by a convenient minimal
+presentation. \square$
+
+**Proposition 33.6 (period and deficient-rank boundaries).** Period cannot
+be substituted for minimal annihilator degree. The all-one stream has
+period $3$ (and every multiple of $3$) but least annihilator $E+1$. For
+$d=3$, its six-bit prefix has an all-one Hankel matrix of rank one, so its
+order-three fibre is non-singleton; the original first-passing
+$\rho_3$ enumeration and its costs remain necessary. Thus period alone
+neither proves full rank nor licenses a canonical deficient-rank row.
+
+The sparse one-hot family of Corollary 33.5 proves exact original output
+only when $a+p=d$. General sparse cores with $\deg(g)<d$, zero cores,
+nonminimal periods or shorter transients remain subject to the original
+deficient-rank bill (ACR.90). The unrestricted unknown-law/unknown-cut
+general-$d$ polynomial-TOTAL target, and the exact deficient-rank $K_d$
+normalization, remain open.
+
+**Definition 33.7 (supplier correspondence).** The recurrence and
+companion-power steps use Bostan--Mori [ACR-BM] only as a forward
+supplier for an explicitly presented finite recurrence; all binary indices,
+modular operations and scans are paid here. Massey [MAS] supplies the
+finite-prefix synthesis and the distinction between register length and a
+chosen denominator; it supplies neither physical acquisition nor the
+original $\rho_d$ ordering. Theorem 33.4 is the source-level composition
+of those suppliers with Theorems 27.2--29.2. It claims no arbitrary
+catalogue normalization, no hidden advice and no worldwide originality;
+the four-view recovery and physical output boundaries of §29 are
+unchanged.
+
+## 追加锚（本行以下为增补区）
