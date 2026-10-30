@@ -39,10 +39,12 @@ def actual : Realization signature :=
     | true => OriginalOrder (p.1 + p.2 + p.1 + 1) seed) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun side _ _ => match side with
+    | false => fun _ => False
+    | true => fun _ => False) (fun e => nomatch e)
 
 def deleted (side : Bool) : Realization signature :=
-  realize signature (fun j p seed => if j = side then (fun _ => False) else actual.readout j p seed)
+  realize signature (fun j p seed => if j = side then rejected.readout j p seed else actual.readout j p seed)
     (fun e => nomatch e)
 
 abbrev arena : Arena where
@@ -67,8 +69,8 @@ private theorem deleted_law (side : Bool) : ¬ arena.Law (deleted side) := by
   intro h
   obtain ⟨sigma, hold, hnew⟩ := h 2 3 (by decide) (by decide)
   cases side
-  · simp [deleted, realize] at hold
-  · simp [deleted, realize] at hnew
+  · simp [deleted, rejected, realize] at hold
+  · simp [deleted, rejected, realize] at hnew
 
 private def identityWord : List (Fin 7) := List.finRange 7
 
@@ -157,14 +159,14 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     readouts := #[{
       path := #["body", "body", "body", "body", "arg", "body", "fn", "arg", "fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "arg"]
-      booleanPredicate := true }, {
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }, {
       path := #["body", "body", "body", "body", "arg", "body", "arg", "fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "arg"]
-      booleanPredicate := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
