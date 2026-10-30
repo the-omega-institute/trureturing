@@ -1067,3 +1067,213 @@ $$
 本定理的来源特定推导为 `repo-derived`；Haar/Beta 几何、Arzelà–Ascoli、连续核的紧性及紧扰动估计只作已知中间供应，射影密度直接复用 77.2 对 Freedman–Larsen–Wang [math/0103200v1 Theorem 0.1](https://arxiv.org/html/math/0103200v1) 的原生对应。这里不提出新颖性或优先权结论。结果是具有全部原前提的普通条件数学命题，不是 Lean 内核结论、数值常数认证或有限字测试认证。全上下文残差是假设，不由有限通过取得；Haar 平均不增加随机准备、闭包酉、辅助系统或中间操作的执行权限。连续射线接口、正性、归一和十三基底精确标定仍为独立前提。本结论不取得混态仿射律、仪器后继、物理校准的实现或四时原则的物理来源，亦不解决 89.1 所列的量子起源接口。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 91. 完整校准四时稳定性的平方根锐性
+
+**定义 91.1（旋转探测器及全域阈值响应）。** 固定 77.1、90.1 的同一十三维复空间 $H$、十三个计算基向量 $e_\beta$、初态 $v$、七个原生酉 $K_0,\ldots,K_6$、$x=\varphi^{-1}$、全部有限正向字 $\mathsf W$（含空字）及全部原始标签 $\Omega_{10}$。记 $w_\beta=10\beta010$，取两个合法地址
+
+$$
+ a=00000,\qquad b=00100.
+$$
+
+对每个实数 $0<\theta\le1$，置
+
+$$
+ t=\frac{\theta}{16},\qquad d=\frac{t^2}{1+t^2},\qquad
+ u_a=\frac{e_a+t e_b}{\sqrt{1+t^2}},\qquad
+ u_b=\frac{-t e_a+e_b}{\sqrt{1+t^2}},\qquad
+ u_\beta=e_\beta\quad(\beta\notin\{a,b\}).
+ \tag{91.1}
+$$
+
+这是 $H$ 的一个数学正交归一探测器基：两个变化的向量各自范数为一，内积为零，并与其余十一个向量正交。它只用于定义响应，不是一个新增的原生门或准备操作。对整个单位球面上的每个 $\psi$，定义
+
+$$
+ \begin{aligned}
+ Q_\beta(\psi)&=|\langle u_\beta,\psi\rangle|^2,\qquad
+ r_\beta(\psi)=(Q_\beta(\psi)-d)_+,\qquad (s)_+=\max\{s,0\},\\
+ S(\psi)&=\sum_{\gamma\in\mathcal B}r_\gamma(\psi),\\
+ P^\theta_w(\psi)&=
+ \begin{cases}
+ r_\beta(\psi)/S(\psi),&w=w_\beta,\ \beta\in\mathcal B,\\
+ 0,&w\notin\{w_\beta:\beta\in\mathcal B\}.
+ \end{cases}
+ \end{aligned}
+ \tag{91.2}
+$$
+
+**定理 91.2（原响应类的全域、全上下文平方根下界）。** (91.2) 对每个 $0<\theta\le1$ 在整个 $S(H)$ 上有定义，且给出满足 78.1 的响应 $P^\theta:S(H)\to\Delta(\Omega_{10})$：全部 $1024$ 个坐标连续、相位不变、非负且和为一；当前射线条件终端充分性精确成立，并且对全部十三个基底射线和全部原始标签有
+
+$$
+ P^\theta_w(e_\beta)=\mathbf1_{\{w=w_\beta\}}
+ \qquad(\beta\in\mathcal B,\ w\in\Omega_{10}).
+ \tag{91.3}
+$$
+
+沿用 90.1 的 $\mathcal R,\mathcal D$，则同时有
+
+$$
+ \mathcal R(P^\theta)\le\frac{52}{243}\theta^2<\theta^2,
+ \qquad
+ \mathcal D(P^\theta)\ge\frac{\theta}{16}.
+ \tag{91.4}
+$$
+
+这里残差的量词是每个 $p,f\in\mathsf W$ 和每个 $w\in\Omega_{10}$，误差的量词是整个单位球面和每个原始标签。常数 $c=1/16>0$、$\theta_0=1$ 对所有 $0<\theta\le\theta_0$ 统一。不加字长、预测秩、调和次数或共同连续模、Lipschitz 界，也不需要参数 $\theta$ 上的连续性假设。
+
+证明。先证明定义在整个球面上成立。正交归一性给 $Q_\beta\ge0$ 和 $\sum_\beta Q_\beta=1$。令
+
+$$
+ b_\beta(\psi)=\min\{Q_\beta(\psi),d\},\qquad
+ A(\psi)=\sum_{\beta\in\mathcal B}b_\beta(\psi).
+$$
+
+于是 $r_\beta=Q_\beta-b_\beta$、$S=1-A$。因为恰有十三个合法坐标，且 $0<t\le1/16$，对所有 $\psi\in S(H)$ 有
+
+$$
+ 0\le A(\psi)\le13d\le\frac{13\theta^2}{256}\le\frac{13}{256},
+ \qquad
+ S(\psi)\ge\frac{243}{256}>0.
+ \tag{91.5}
+$$
+
+二次坐标 $Q_\beta$ 连续且相位不变，取正部与有限求和保持这些性质，分母的严格统一下界又保证商连续。合法坐标非负且和为一，另外 $1011$ 个坐标恒为零。因此全体原始标签上的概率、连续性和相位不变性同时成立，包括任何坐标振幅为零的球面点。
+
+再验证精确标定。在 $\psi=e_a$ 处，$(Q_a,Q_b)=(1-d,d)$，其余坐标为零；取阈值后 $(r_a,r_b)=(1-2d,0)$。在 $\psi=e_b$ 处，两者交换，得到 $(r_a,r_b)=(0,1-2d)$。因 $d\le1/256$，$1-2d>0$，归一化恰给相应点质量。在其余十一个 $e_\beta$ 处，唯一非零的 $Q$ 坐标为 $Q_\beta=1$，故唯一非零的 $r$ 坐标为 $r_\beta=1-d>0$，同样归一化为该标签的点质量。所有非法标签在这些点也恒为零；相位不变性把结论同时给到相应的全部基底射线。这证明每个 $\beta,w$ 的 (91.3)，即原 79.1 的全部标定条件。
+
+为明确 78.1 的条件终端接口，对每个原始制备／控制记录及实际接续字 $f$，指定其条件终端概率为
+
+$$
+ H_{P^\theta}(p;(f,w))=P^\theta_w(K_fK_pv).
+ \tag{91.6}
+$$
+
+原始记录仍保留。若两条记录产生同一当前射线，即 $K_{p'}v=e^{i\alpha}K_pv$，则同一个 $K_f$ 将两者送至仍只差该相位的向量；由相位不变性，(91.6) 给相同的每个终端概率。插入 $k$ 次原地址调用时，条件概率相应为 $P^\theta_w(K_fK_0^kK_pv)$，同一论证适用。因此不存在对同射线其它历史的额外依赖，精确满足 78.1。这里指定的是其允许的条件终端响应，不要求中间测量或测后状态规则，也不以此取得物理采集或仪器实现。
+
+下面估计全上下文残差。将 $Q$ 扩展到全部原始标签：$Q_{w_\beta}=Q_\beta$，其余 $Q_w=0$。这些全是 Hermitian 二次型，因而直接复用 85.2、(86.6) 的二次型四时消去关系。具体对应为 $Q_{w_\beta}(\psi)=\langle\psi,E_\beta\psi\rangle$，其中 $E_\beta$ 是投影 $|u_\beta\rangle\langle u_\beta|$，非法标签取零算子。为核对原字与该关系的参数对应，对任意实际 $p,f$ 置
+
+$$
+ \eta=K_pv,\quad \eta_0=(I-\Pi)\eta,\quad \eta_1=\Pi\eta,
+ \qquad \Pi=\mathcal P_0|_H.
+$$
+
+由原地址的 (85.3)，对 $k\ge0$ 有
+
+$$
+ K_fK_0^k\eta
+   =\zeta^k\bigl(K_f\eta_0+\zeta^kK_f\eta_1\bigr).
+ \tag{91.7}
+$$
+
+整体相位在二次型中消失；故 $Q_w(K_fK_0^k\eta)$ 是三个序列 $1,\zeta^k,\zeta^{-k}$ 的线性组合，包括其中系数为零的情形。(86.6) 已给
+
+$$
+ \rho(z)=z^3-x^2z^2+x^2z-1
+        =(z-1)(z-\zeta)(z-\zeta^{-1}),
+$$
+
+所以精确得到
+
+$$
+ Q_w(K_fK_0^3K_pv)+x^2Q_w(K_fK_0K_pv)
+ -Q_w(K_fK_pv)-x^2Q_w(K_fK_0^2K_pv)=0.
+ \tag{91.8}
+$$
+
+这个应用对任意单位向量 $\eta$ 和任意酉 $K_f$ 已成立，特别包含每个原生 $p,f$（含空字）；没有用有限字样本或稠密极限替换全称量词，也没有将任何数学酉加入原生操作。
+
+接着统一估计阈值与归一化相对 $Q$ 的改变量。在每个合法坐标处，由 $S=1-A$ 有
+
+$$
+ P^\theta_{w_\beta}-Q_\beta
+    =\frac{Q_\beta A-b_\beta}{1-A}.
+$$
+
+因为 $0\le Q_\beta\le1$ 且 $0\le b_\beta\le A$，分子中的 $Q_\beta A$、$b_\beta$ 均在 $[0,A]$ 内。因此对整个球面和全部合法坐标，同时有
+
+$$
+ |P^\theta_{w_\beta}(\psi)-Q_\beta(\psi)|
+ \le\frac{A(\psi)}{1-A(\psi)}
+ \le\frac{13\theta^2}{243}.
+ \tag{91.9}
+$$
+
+非法标签的差为零，故同一界对全部 $1024$ 个标签成立。在任一固定实际 $(p,f,w)$ 的四个态上应用此界，再减去 (91.8)，四时系数的绝对值之和为 $L=2+2x^2<4$，给出
+
+$$
+ \begin{aligned}
+ &\left|a_3(p,f,w)+x^2a_1(p,f,w)-a_0(p,f,w)-x^2a_2(p,f,w)\right|\\
+ &\hspace{1cm}\le L\frac{13\theta^2}{243}
+ \le\frac{52\theta^2}{243}<\theta^2,
+ \qquad a_k(p,f,w)=P^\theta_w(K_fK_0^kK_pv).
+ \end{aligned}
+ \tag{91.10}
+$$
+
+常数不依赖 $p,f,w$，取全部原始上下文和标签的上确界即得 (91.4) 的残差界。
+
+最后在一个固定的球面点上给出误差下界，仍以原计算基底的 Born 坐标作比较。取
+
+$$
+ \psi_+=\frac{e_a+e_b}{\sqrt2},\qquad
+ Q_a(\psi_+)=\frac12+\frac{t}{1+t^2},\qquad
+ Q_b(\psi_+)=\frac12-\frac{t}{1+t^2}.
+$$
+
+其余十一个 $Q$ 坐标为零。较小坐标减去阈值仍严格为正，因为
+
+$$
+ Q_b(\psi_+)-d=\frac{1-2t-t^2}{2(1+t^2)},\qquad
+ 1-2t-t^2\ge\frac{223}{256}>0.
+ \tag{91.11}
+$$
+
+因此这两个坐标都只减去 $d$，其余坐标取正部后仍零，且
+
+$$
+ S(\psi_+)=1-2d=\frac{1-t^2}{1+t^2},\qquad
+ P^\theta_{w_a}(\psi_+)=\frac12+\frac{t}{1-t^2}.
+ \tag{91.12}
+$$
+
+原始 Born 坐标满足 $|(\psi_+)_{w_a}|^2=1/2$，所以
+
+$$
+ \mathcal D(P^\theta)
+ \ge\left|P^\theta_{w_a}(\psi_+)-|(\psi_+)_{w_a}|^2\right|
+ =\frac{t}{1-t^2}\ge t=\frac{\theta}{16}.
+ \tag{91.13}
+$$
+
+$\mathcal D$ 本来量化整个 $S(H)$，不要求以某个有限原生字精确制备这个见证射线。至此，对每个实数 $0<\theta\le1$ 的同一显式族，全部原边条件与两个统一界均已证明。旋转正交基、连续正部、归一化和三角不等式是标准中间工具；此处完整校准阈值族及其相对原四时残差的上下界属于来源特定的 `repo-derived` 条件数学推导，不提出新颖性或优先权结论。∎
+
+**推论 91.3（90.2 的指数锐性与无统一小阶模）。** 对 90.2 完全相同的固定来源和响应类，每个 $0<\varepsilon\le1$ 都有一个满足全部原条件的 $P$，使
+
+$$
+ \mathcal R(P)\le\varepsilon,\qquad
+ \mathcal D(P)\ge\frac{\sqrt\varepsilon}{16}.
+ \tag{91.14}
+$$
+
+不存在函数 $m:(0,\varepsilon_0]\to[0,\infty)$，满足 $m(\varepsilon)=o(\sqrt\varepsilon)$ 且对每个该类响应及每个充分小的 $\varepsilon$ 都有
+$\mathcal R(P)\le\varepsilon\Longrightarrow\mathcal D(P)\le m(\varepsilon)$。结合 90.2，平方根阶在这个响应类上一致锐。
+
+证明。在 91.2 中直接取 $\theta=\sqrt\varepsilon$，即得 (91.14)。若存在所述统一 $m$，对每个充分小的 $\varepsilon$ 应用同一个族会给
+
+$$
+ \frac1{16}\le\frac{\mathcal D(P^{\sqrt\varepsilon})}{\sqrt\varepsilon}
+ \le\frac{m(\varepsilon)}{\sqrt\varepsilon}\longrightarrow0,
+$$
+
+矛盾。另一方面，直接复用 90.2 的有限来源常数 $C_0$，在 $0<\varepsilon\le1$ 上有
+
+$$
+ \mathcal D(P)\le
+ \bigl(2C_0+12\sqrt{6C_0}\bigr)\sqrt\varepsilon
+ \qquad\text{当 }\mathcal R(P)\le\varepsilon.
+ \tag{91.15}
+$$
+
+故 (91.14) 与 (91.15) 给相同完整响应类的匹配指数，不要求求出最佳常数。下界构造本身只复用二次型消去，独立于上界证明中的紧算子估计。这里的锐性是普通条件数学中的统一估计结论，不是 Lean／内核证明、数值 $C_0$ 或有限认证；也不取得物理采集、仪器、混态仿射性或量子起源主张。∎
+
+## 追加锚（本行以下为增补区）
