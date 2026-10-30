@@ -135,43 +135,73 @@ private theorem coarse_error_bound (g : ℂ → ℂ) (hg : Differentiable ℂ g)
   have hx' : (x : ℂ) ∈ closedBall (0 : ℂ) 1 := by
     simpa only [mem_closedBall, dist_zero_right, Complex.norm_real, Real.norm_eq_abs] using
       abs_le.mpr hx
-  have hw := node_mem hab (le_refl |a|)
-  have hv : (a : ℂ) - b * I ∈ closedBall (0 : ℂ) 1 := by
-    simpa [sub_eq_add_neg] using node_mem (b := -b) (by nlinarith : a ^ 2 + (-b) ^ 2 ≤ 1) (le_refl |a|)
+  let R : ℝ := Real.sqrt (1 + b ^ 2)
+  have hR0 : 0 ≤ R := Real.sqrt_nonneg _
+  have hR2 : R ^ 2 = 1 + b ^ 2 := Real.sq_sqrt (by positivity)
+  let K : Set ℂ := closedBall (0 : ℂ) 1 ∩ closedBall (x : ℂ) R
+  have hcv : Convex ℝ K := (convex_closedBall (0 : ℂ) 1).inter (convex_closedBall (x : ℂ) R)
+  have hnode (c : ℝ) (hc : c ^ 2 = b ^ 2) : (c : ℂ) * I ∈ K := by
+    constructor
+    · have hh := node_mem (a := a) (b := c) (s := 0) (by nlinarith [hab])
+        (by simpa using abs_nonneg a)
+      simpa using hh
+    · rw [mem_closedBall, dist_eq_norm]
+      have hn : ‖(c : ℂ) * I - (x : ℂ)‖ ^ 2 = x ^ 2 + c ^ 2 := by
+        rw [Complex.sq_norm, Complex.normSq_apply]
+        simp
+        ring
+      apply (sq_le_sq₀ (norm_nonneg _) hR0).mp
+      rw [hn, hR2, hc]
+      have hxabs := abs_le.mpr hx
+      have hxs : x ^ 2 ≤ 1 := by nlinarith [sq_abs x, abs_nonneg x]
+      linarith
   let f : ℂ → ℂ := fun z => g z - deriv g x * z
   have hf (z : ℂ) := (hg z).hasDerivAt.sub
     ((hasDerivAt_id z).const_mul (deriv g x))
-  have hd (z : ℂ) (hz : z ∈ closedBall (0 : ℂ) 1) :
-      ‖deriv g z - deriv g x * 1‖ ≤ 2 * diskNorm g := by
+  have hd (z : ℂ) (hz : z ∈ K) :
+      ‖deriv g z - deriv g x * 1‖ ≤ R * diskNorm g := by
     rw [mul_one]
     have hh := (convex_closedBall (0 : ℂ) 1).norm_image_sub_le_of_norm_deriv_le
-      (fun t _ => hg.deriv t) (fun t ht => le_diskNorm hg ht) hx' hz
-    have hdist : ‖z - (x : ℂ)‖ ≤ 2 := by
-      have hz' : ‖z‖ ≤ 1 := by simpa using hz
-      have hx'' : ‖(x : ℂ)‖ ≤ 1 := by simpa using hx'
-      exact (norm_sub_le _ _).trans (by linarith)
+      (fun t _ => hg.deriv t) (fun t ht => le_diskNorm hg ht) hx' hz.1
+    have hdist : ‖z - (x : ℂ)‖ ≤ R := by simpa only [mem_closedBall, dist_eq_norm] using hz.2
     exact hh.trans (by nlinarith)
-  have hh : ‖f ((a : ℂ) + b * I) - f ((a : ℂ) - b * I)‖ ≤
-      2 * diskNorm g * ‖((a : ℂ) + b * I) - ((a : ℂ) - b * I)‖ := by
+  have hh : ‖f ((b : ℂ) * I) - f ((-b : ℝ) * I)‖ ≤
+      R * diskNorm g * ‖(b : ℂ) * I - ((-b : ℝ) * I)‖ := by
     simpa only [f, Pi.sub_apply, id_eq] using
-      (convex_closedBall (0 : ℂ) 1).norm_image_sub_le_of_norm_hasDerivWithin_le
-        (fun z _ => (hf z).hasDerivWithinAt) hd hv hw
-  have he : ((a : ℂ) + b * I) - ((a : ℂ) - b * I) = 2 * b * I := by ring
+      hcv.norm_image_sub_le_of_norm_hasDerivWithin_le
+        (fun z _ => (hf z).hasDerivWithinAt) hd
+        (hnode (-b) (by ring)) (hnode b rfl)
+  have he : (b : ℂ) * I - ((-b : ℝ) * I) = 2 * b * I := by push_cast; ring
   rw [he] at hh
   have hden : (2 * (b : ℂ) * I) ≠ 0 :=
     mul_ne_zero (mul_ne_zero (by norm_num) (Complex.ofReal_ne_zero.mpr hb.ne')) I_ne_zero
-  have hh' : ‖(f ((a : ℂ) + b * I) - f ((a : ℂ) - b * I)) / (2 * b * I)‖ ≤
-      2 * diskNorm g := by
+  have hh' : ‖(f ((b : ℂ) * I) - f ((-b : ℝ) * I)) / (2 * b * I)‖ ≤
+      R * diskNorm g := by
     rw [norm_div]
     exact (div_le_iff₀ (norm_pos_iff.mpr hden)).mpr hh
-  have hquot : (f ((a : ℂ) + b * I) - f ((a : ℂ) - b * I)) / (2 * b * I) =
-      slope g a b - deriv g x := by
+  have hquot : (f ((b : ℂ) * I) - f ((-b : ℝ) * I)) / (2 * b * I) =
+      slope g 0 b - deriv g x := by
     dsimp [f, slope]
     have hbC : (b : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hb.ne'
+    push_cast
     field_simp [hbC]
     <;> ring
-  rw [hquot, norm_sub_rev, ← interpolant_deriv g a b x] at hh'
-  exact hh'
+  rw [hquot, norm_sub_rev] at hh'
+  have htransport := slope_transport g hg a b hb hab
+  have hA : |a| ≤ 1 := by nlinarith [sq_abs a, abs_nonneg a, sq_nonneg b]
+  have hsum : R + |a| ≤ 2 := by
+    have hle : R ≤ 2 - |a| := by
+      apply (sq_le_sq₀ hR0 (by linarith : 0 ≤ 2 - |a|)).mp
+      nlinarith [sq_abs a, sq_nonneg (|a| - 1)]
+    linarith
+  rw [interpolant_deriv]
+  calc
+    ‖deriv g x - slope g a b‖ ≤ ‖deriv g x - slope g 0 b‖ +
+        ‖slope g 0 b - slope g a b‖ := norm_sub_le _ _ _
+    _ ≤ R * diskNorm g + |a| * diskNorm g := by
+      rw [norm_sub_rev (slope g 0 b)]
+      exact add_le_add hh' htransport
+    _ ≤ 2 * diskNorm g := by nlinarith
 
 private def quadratic : ℂ → ℂ := fun z => z ^ 2 / 2
 
