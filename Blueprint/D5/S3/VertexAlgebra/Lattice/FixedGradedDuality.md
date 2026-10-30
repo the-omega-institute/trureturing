@@ -216,7 +216,19 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedGradeDualEq
 
 The selected finite-grade dual equivalence evaluates to the restricted ambient form on every fixed grade.
 
-**Definition 1.18 (FixedRestrictedDual).**
+**Theorem 1.18 (fixedGradeDualEquiv_ambient_evaluation).**
+
+Lean statement: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedGradeDualEquiv_ambient_evaluation`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedGradeDualEquiv_ambient_evaluation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The selected finite-grade dual equivalence evaluates to the original ambient bilinear form on the original Carrier inclusions.
+
+**Definition 1.19 (FixedRestrictedDual).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.FixedRestrictedDual`
 
@@ -228,7 +240,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.FixedRestrictedD
 
 The dependent direct sum of the full algebraic duals of all actual fixed grades.
 
-**Definition 1.19 (fixedRestrictedDualEvaluation).**
+**Definition 1.20 (fixedRestrictedDualEvaluation).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedRestrictedDualEvaluation`
 
@@ -240,7 +252,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedRestrictedD
 
 Evaluation of an algebraic restricted-dual vector through the genuine fixed-energy decomposition.
 
-**Definition 1.20 (fixedRestrictedDualEquiv).**
+**Definition 1.21 (fixedRestrictedDualEquiv).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedRestrictedDualEquiv`
 
@@ -252,7 +264,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedRestrictedD
 
 The actual algebraic graded restricted-dual equivalence assembled from the finite-grade equivalences and the fixed-energy decomposition.
 
-**Theorem 1.21 (fixedGrade_dual_evaluation).**
+**Theorem 1.22 (fixedGrade_dual_evaluation).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedGrade_dual_evaluation`
 
@@ -270,6 +282,7 @@ The restricted form evaluates the inverse of toDual exactly as the given grade f
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.FixedRestrictedDual`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedEnergyDecomposition`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedGradeDualEquiv`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedGradeDualEquiv_ambient_evaluation`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedGradeDualEquiv_evaluation`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedGradeForm`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/FixedGradedDuality.fixedGradeForm_apply`

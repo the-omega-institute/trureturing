@@ -482,6 +482,22 @@ theorem fixedGradeDualEquiv_evaluation (D : LatticeData)
   simpa [fixedGradeDualEquiv] using fixedGrade_dual_evaluation D B h
     (fixedGradeNondegenerate D B hB hgrade htheta horth hD h) f x
 
+theorem fixedGradeDualEquiv_ambient_evaluation (D : LatticeData)
+    (B : LinearMap.BilinForm ℂ (Carrier D))
+    (hB : B.Nondegenerate)
+    (hgrade : ∀ (n : ℤ) (v : Carrier D),
+      theta D (gradeProjection D n v) = gradeProjection D n (theta D v))
+    (htheta : ∀ (x y : Carrier D), B (theta D x) (theta D y) = B x y)
+    (horth : ∀ (m n : ℤ) (x y : Carrier D), x ∈ grade D m → y ∈ grade D n →
+      m ≠ n → B x y = 0)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h : ℤ)
+    (f : Module.Dual ℂ (FixedGrade D h)) (x : FixedGrade D h) :
+    B (fixedGradeToCarrier D h
+        ((fixedGradeDualEquiv D B hB hgrade htheta horth hD h).symm f))
+      (fixedGradeToCarrier D h x) = f x := by
+  simpa only [fixedGradeForm_apply] using fixedGradeDualEquiv_evaluation D B
+    hB hgrade htheta horth hD h f x
+
 /-- The direct sum of the finite-grade dual equivalences, transported back to the
 original fixed carrier through its internal energy decomposition. -/
 noncomputable def fixedRestrictedDualEquiv (D : LatticeData)
