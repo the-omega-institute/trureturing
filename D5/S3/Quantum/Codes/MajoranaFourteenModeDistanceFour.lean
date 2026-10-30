@@ -7,7 +7,6 @@
    digest: Parity Majorana codes with a logical qubit need sixteen modes for distance four. -/
 
 import Mathlib.InformationTheory.Hamming
-import Mathlib.Algebra.Group.AddChar
 import Mathlib.Algebra.Field.ZMod
 import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
