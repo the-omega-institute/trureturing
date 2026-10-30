@@ -27,7 +27,7 @@ internal sealed class EaslickSixBoundDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), (declaration.StartsWith("checkRank", StringComparison.Ordinal) || declaration == "sixRank_check" ? StatementSource.FromLean() : StatementSource.FromAuthor(StrataLint.Scribe.FormulaDsl.Disp(Statement(declaration)))), AssessedProvenance.FromRepo(Source),
+            H(title), ((declaration == "checkRank" || declaration == "checkRank_sound") || declaration == "sixRank_check" ? StatementSource.FromLean() : StatementSource.FromAuthor(StrataLint.Scribe.FormulaDsl.Disp(Statement(declaration)))), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), declaration == "checkRank" ? DescribeRole.Definition : DescribeRole.Theorem);
     private static Formula.BoundVariable B(string name, Formula type) => new(FormulaIdentifier.Create(name), type);
     private static Formula All(Formula body, params Formula.BoundVariable[] variables) => new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
