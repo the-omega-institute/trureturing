@@ -3487,3 +3487,303 @@ $$
 这里支付公式、有限 Jensen 比较、零赤字端点、正见证与标号计数分别复用第 6 节、(7.11)、(6.2)、(6.15) 与 (9.2)，经典素数与根式输入按引理 11.3 的假设使用。承重的有限结论由 (11.7) 的份额增量、(11.9) 的实际支付系数及引理 11.5 的严格行比较组合得到，是针对本节实际支付的综合推导。上述引文均使用所列原始版本，不以期刊 DOI 断言版本等同。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 五顶点侧的有限最大赤字与全部最大联盟
+
+**定义 12.1（五顶点侧的实际有限分配）。** 对整数 \(m\ge5\)，取不交的有限标号集 \(A,B\)，满足 \(|A|=5\)、\(|B|=m\)，并令 \(G=K_{5,m}\)。沿用定义 1.1–1.2 的普通邻接能量及完整阶乘 Shapley 分配。记
+
+$$
+H_m=(m+1)(m+2)(m+3)(m+4)(m+5),\qquad d_r=\sqrt{r+1}-\sqrt r.
+$$
+
+对 \(0\le k\le m\)，置
+
+$$
+\begin{aligned}
+P_m(k)&=(m+4-k)(m+3-k)(m+2-k)(m+1-k)\\
+&\quad+4d_1(k+1)(m+3-k)(m+2-k)(m+1-k)\\
+&\quad+6d_2(k+1)(k+2)(m+2-k)(m+1-k)\\
+&\quad+4d_3(k+1)(k+2)(k+3)(m+1-k)\\
+&\quad+d_4(k+1)(k+2)(k+3)(k+4),
+\end{aligned}
+$$
+
+and
+
+$$
+ x_m=\frac2{H_m}\sum_{k=0}^m\sqrt k\,P_m(k),\qquad
+ y_m=\frac{2\sqrt{5m}-5x_m}{m}.
+\tag{12.1}
+$$
+
+Then \(x_m\) and \(y_m\) are respectively the payments of every \(A\)- and every \(B\)-vertex, and
+
+$$
+ x_m>0,\qquad y_m>0,\qquad 5x_m+my_m=2\sqrt{5m}.
+\tag{12.2}
+$$
+
+For every actual labelled coalition with counts \(i=|C\cap A|\), \(j=|C\cap B|\), write
+
+$$
+ d_m(i,j)=2\sqrt{ij}-ix_m-jy_m,\qquad
+ D_{5,m}=\max_{0\le i\le5,\ 0\le j\le m}d_m(i,j).
+\tag{12.3}
+$$
+
+Every integer pair in (12.3) is realised by exactly \(\binom5i\binom mj\) labelled coalitions.
+
+**证明。** For a predecessor set of a fixed \(A\)-vertex, let \(r\) be the number of the other four \(A\)-vertices and \(k\) the number of \(B\)-vertices. Its total factorial weight is
+
+$$
+\binom4r\binom mk\frac{(k+r)!(m+4-k-r)!}{(m+5)!}.
+$$
+
+After cancelling \(\binom mk k!(m-k)!=m!\), multiplication by \(H_m\) gives, for \(r=0,1,2,3,4\), respectively,
+
+$$
+\begin{gathered}
+(m+4-k)(m+3-k)(m+2-k)(m+1-k),\\
+4(k+1)(m+3-k)(m+2-k)(m+1-k),\\
+6(k+1)(k+2)(m+2-k)(m+1-k),\\
+4(k+1)(k+2)(k+3)(m+1-k),\\
+(k+1)(k+2)(k+3)(k+4).
+\end{gathered}
+$$
+
+The marginal value is \(2\sqrt k\,d_r\). Summing all five classes, including the zero marginal \(k=0\), is exactly (12.1). The spectrum calculation \(w(C)=2\sqrt{ij}\), same-side permutation symmetry, positivity of a one-opposite-side marginal, and efficiency are the arguments in (2.1)–(2.3), now with \(a=5\). The last assertion is the labelled form of (9.2). ∎
+
+Put
+
+$$
+ U_m=\frac{5x_m}{2\sqrt{5m}},\qquad
+ c_m=\sqrt m\,y_m=2\sqrt5(1-U_m),\qquad
+ \tau_m=\frac{1-U_m}{U_m}.
+\tag{12.4}
+$$
+
+The following bounds are uniform over the finite payments (12.1):
+
+$$
+\frac12<U_m<\frac35,\qquad
+U_m>\begin{cases}
+5561/11000,&m=6,\\
+509/1000,&m=7,\\
+513/1000,&m=8,\\
+517/1000,&m\ge9.
+\end{cases}
+\tag{12.5}
+$$
+
+**引理 12.2（五侧份额界与第四行正见证）。** For every \(m\ge6\), with
+\(j_0=\lfloor4m/5\rfloor+1\), one has \(d_m(4,j_0)>0\). Consequently \(U_m>1/2\), \(\tau_m<1\), and \(D_{5,m}>0\).
+
+**证明。** Give every vertex an independent uniform priority. The finite priority integral used in (3.3) gives
+
+$$
+ U_m=\sqrt5\int_0^1h_5(t)\mu_m(t)\,dt,\qquad
+ \mu_m(t)=\mathbb E\sqrt{\operatorname{Bin}(m,t)/m},
+$$
+
+where
+
+$$
+ h_5(t)=\sum_{r=0}^4\binom4r d_r t^r(1-t)^{4-r}>0.
+$$
+
+The deleted-sample Jensen inequality of Section 5 gives \(\mu_{n+1}\ge\mu_n\). At \(m=5\), Theorem 7.4 gives the balanced value \(U_5=1/2\). Retaining the \(r=0,1\) terms in the Jensen difference for \(n=5\), and using
+\(\sqrt5(\sqrt6-\sqrt5)>9/20\), \(\sqrt2-1>2/5\), gives
+
+$$
+ U_6-U_5>
+\frac9{20}\left(\frac1{110}+\frac8{2475}\right)=\frac{61}{11000}.
+\tag{12.6}
+$$
+
+For \(n\ge5\) the same two terms give
+
+$$
+ U_{n+1}-U_n>\sqrt5(\sqrt{n+1}-\sqrt n)
+ \left(\frac1{(n+5)(n+6)}+\frac{16}{5(n+4)(n+5)(n+6)}\right).
+\tag{12.7}
+$$
+
+The elementary square comparisons
+\(\sqrt5(\sqrt7-\sqrt6)>3/7\), \(\sqrt5(\sqrt8-\sqrt7)>2/5\), and
+\(\sqrt5(3-\sqrt8)>3/8\), inserted in (12.7), imply successively the four lower bounds in (12.5); for \(m\ge9\) the sum of the \(r=0,1,2,3,4\) terms for \(n=5,6,7,8\) is \(>17/1000\). All displayed inequalities follow by squaring positive rational endpoints.
+
+For the upper bound, Jensen gives \(\mu_m(t)\le\sqrt t\). The beta integrals
+
+$$
+\int_0^1t^{r+1/2}(1-t)^{4-r}\,dt
+=\frac{256}{3465},\frac{32}{1155},\frac{16}{693},\frac4{99},\frac2{11}
+$$
+
+for \(r=0,1,2,3,4\), respectively, and the bounds
+\(\sqrt5<9/4\), \(\sqrt2-1<3/7\), \(\sqrt3-\sqrt2<7/20\), \(2-\sqrt3<3/10\), \(\sqrt5-2<1/4\), give \(U_m<3/5\). The strict lower bound \(U_m>1/2\) also follows from (12.6) and monotonicity.
+
+For a mixed count, the factorisation (2.4), now with \(a=5,b=m\), is
+
+$$
+ d_m(i,j)=-2\sqrt{5m}\,\frac jm\,U_m(r-1)(r-\tau_m),\qquad
+ r=\sqrt{\frac{im}{5j}}.
+\tag{12.8}
+$$
+
+For \(i=4\), \(j_0>4m/5\), so \(r<1\). The four lower bounds in (12.5), according as \(m=6,7,8\) or \(m\ge9\), imply
+
+$$
+ U_m>\frac1{1+\sqrt{4m/(5j_0)}}.
+\tag{12.9}
+$$
+
+For \(m=6,7,8\) this is the three rational square comparisons with \(r^2=24/25,14/15,32/35\). For \(m\ge9\), \(4m/(5j_0)\ge36/41\) and
+\(\sqrt{36/41}>483/517\), so (12.9) follows from \(U_m>517/1000\). Thus \(r>\tau_m\) in (12.8), proving \(d_m(4,j_0)>0\). ∎
+
+**引理 12.3（可行第四行阈值无等号）。** For \(m\ge6\) and \(1\le r\le m\),
+
+$$
+ y_m\ne q_4(r),\qquad q_4(s)=\frac4{\sqrt s+\sqrt{s-1}}.
+\tag{12.10}
+$$
+
+**证明.** Choose by Bertrand–Chebyshev a prime \(p\) with \(m/2<p<m<2p\). In (12.1) expand all radicals by square-free part. Since the \(r=4\) predecessor class is present, the coefficient of \(\sqrt{5p}\) in \(y_m\) is exactly
+
+$$
+-\frac{10(p+1)(p+2)(p+3)(p+4)}{mH_m}\ne0.
+\tag{12.11}
+$$
+
+No other summand contributes this square-free part: \(k\le m<2p\) excludes the \(\sqrt k\) terms; factors \(2,3,6\) would require \(k\ge10p,15p,30p\); and the efficiency term \(\sqrt{5m}\) would require \(m=ps^2\), excluded by \(p<m<2p\). Carr–O’Sullivan, Theorem 1.1, applied over \(\mathbb Q\subset\mathbb R\), makes these square-free radical coefficients unique.
+
+If \(y_m=q_4(r)\), the right side contains only \(\sqrt r,\sqrt{r-1}\). Its \(\sqrt{5p}\)-coefficient is zero because \(r\le m<2p<5p\), contradicting (12.11). This proves (12.10) only on the feasible integer interval, with no assertion outside it. ∎
+
+**引理 12.4（五行的严格整数行序）。** For every \(m\ge6\), using the same actual \(x_m,y_m\) in every row, let
+
+$$
+ M_i(m)=\max_{0\le j\le m}d_m(i,j).
+$$
+
+Then
+
+$$
+ M_i(m)<M_4(m)\quad(i=0,1,2,3,5),\qquad M_4(m)>0.
+\tag{12.12}
+$$
+
+**证明.** The endpoint rows satisfy \(M_0=0\) and \(d_m(5,m)=0\), while every other pure-side or \(i=5,j<m\) value is negative by (12.2), (12.8), and \(0<\tau_m<1\). It remains to compare the positive portions of rows \(1,2,3\) with row \(4\).
+
+For \(i=1,2,3\), a positive value forces \(j>im/5\) by (12.8). Write
+
+$$
+ F_{i,j}(u)=\frac{d_m(i,j)}{\sqrt m}
+ =2\sqrt{\frac{ij}{m}}-\frac{2iu}{\sqrt5}-2\sqrt5(1-u)\frac jm.
+\tag{12.13}
+$$
+
+This is affine in \(u\), with positive slope on the positive part of row \(i\). If \(k=(4/i)j\) is an integer and \(k\le m\), homogeneity gives \(F_{4,k}=(4/i)F_{i,j}\), hence strict domination whenever \(F_{i,j}>0\). If \(k\) is not integral, choose the integer on the side of \(4j/i\) lying in the interval \((4m/5,4j/i)\). At the zero \(u_0=(1+\sqrt{im/(5j)})^{-1}\) of \(F_{i,j}\), (12.8) makes the chosen fourth-row value positive; the slope of \(F_{4,k}-F_{i,j}\) is
+
+$$
+\frac2{\sqrt5}\left(\frac{5(k-j)}m-(4-i)\right)>0.
+\tag{12.14}
+$$
+
+Thus the difference is positive at the actual \(U_m>u_0\). The interval is empty only at its lower integer boundary \(j=\lfloor im/5\rfloor+1\), or when \(j>im/4\). In the first case use the next integer \(k\) and substitute \(U_m\) from (12.5); in the second case use the integer fourth-row maximizer and complete the square in \(j\). The resulting three boundary inequalities are
+
+$$
+\begin{array}{c|c|c}
+ i&\text{boundary count}&\text{strict lower bound for }M_4-d_m(i,j)\\ \hline
+1&j=\lfloor m/5\rfloor+1&\displaystyle \frac{(200U_m-101)(5m-4)}{500\sqrt{5m}}\\[4pt]
+2&j=\lfloor2m/5\rfloor+1&\displaystyle \frac{(200U_m-101)(5m-8)}{500\sqrt{5m}}\\[4pt]
+3&j=\lfloor3m/5\rfloor+1&\displaystyle \frac{(200U_m-101)(5m-12)}{500\sqrt{5m}}.
+\end{array}
+\tag{12.15}
+$$
+
+For \(m=6,7,8\), replace \(200U_m-101\) in (12.15) by the corresponding positive numerators from (12.5); for \(m\ge9\), use \(200U_m-101>2/5\). In the upper boundary case, the completed-square remainder is
+
+$$
+\frac{(5-i)(2U_m-1)^2}{5(1-U_m)}
++\frac{(4j-im)^2}{20m(1-U_m)}>0.
+\tag{12.16}
+$$
+
+Equations (12.14)–(12.16) cover every integer \(j\), including \(j=0,m\); no limiting or genericity assumption is used. Therefore each positive value in rows \(1,2,3\) is strictly below some fourth-row value, while every nonpositive value is below the positive witness in Lemma 12.2. This proves (12.12). ∎
+
+**定理 12.5（\(K_{5,m}\) 的完整有限最大值与全部标号实现）。** For \(m=5\), Theorem 7.4 gives the balanced values \(x_5=y_5=1\) and
+
+$$
+ d_5(i,j)=-(\sqrt i-\sqrt j)^2.
+$$
+
+Thus the maximizing count pairs are exactly \((i,i)\), \(0\le i\le5\), and the number of labelled maximizing coalitions is
+
+$$
+\sum_{i=0}^5\binom5i^2=\binom{10}{5}=252.
+\tag{12.17}
+$$
+
+For every \(m\ge6\), put
+
+$$
+ T_m=\frac4{y_m^2}+\frac12+\frac{y_m^2}{64},\qquad
+ J_m=\min\{m,\lfloor T_m\rfloor\}.
+\tag{12.18}
+$$
+
+Then
+
+$$
+ \lfloor4m/5\rfloor+1\le J_m\le m,\qquad
+ J_m<T_m<J_m+1\quad(J_m<m),
+\tag{12.19}
+$$
+
+and
+
+$$
+ D_{5,m}=2\sqrt{4J_m}-4x_m-J_my_m>0.
+\tag{12.20}
+$$
+
+The unique maximizing count pair is \((4,J_m)\), and all maximizing labelled coalitions are
+
+$$
+ \{I\sqcup J:I\subseteq A,\ |I|=4,\ J\subseteq B,\ |J|=J_m\},
+$$
+
+so their number is \(5\binom m{J_m}\). For every \(1\le r\le m-1\),
+
+$$
+ J_m=r\iff q_4(r+1)<y_m<q_4(r),
+\tag{12.21}
+$$
+
+and
+
+$$
+ J_m=m\iff y_m<q_4(m)\iff T_m>m.
+\tag{12.22}
+$$
+
+No nonintegrality claim is made for \(T_m\) outside the feasible interval \(1,\ldots,m\).
+
+**证明.** The \(m=5\) assertion is exactly the balanced \(a=b=5\) case of Theorem 7.4, with labelled realization count supplied by (9.2). For \(m\ge6\), Lemma 12.4 reduces the full original domain, including all pure sides and endpoints, to the fourth row and proves strict positivity.
+
+For that row the literal finite difference is
+
+$$
+ d_m(4,j)-d_m(4,j-1)=q_4(j)-y_m,\qquad 1\le j\le m.
+\tag{12.23}
+$$
+
+The function \(q_4\) is strictly decreasing. Solving \(q_4(T)=y_m\) gives (12.18), because
+
+$$
+\sqrt T=\frac2{y_m}+\frac{y_m}{8},\qquad
+\sqrt{T-1}=\frac2{y_m}-\frac{y_m}{8}.
+$$
+
+Lemma 12.3 excludes \(T_m\in\{1,\ldots,m\}\), so there is no feasible adjacent tie: the row increases through \(J_m\) and decreases afterwards, with the endpoint case exactly \(T_m>m\). Lemma 12.2 gives \(d_m(4,\lfloor4m/5\rfloor+1)>0\), whereas the preceding count is nonpositive by (12.8); hence \(q_4(\lfloor4m/5\rfloor+1)>y_m\), and strict decrease of \(q_4\) yields the lower bound in (12.19). Finally (9.2) gives all and only the labelled realizations and their number. ∎
+
+## 追加锚（本行以下为增补区）
