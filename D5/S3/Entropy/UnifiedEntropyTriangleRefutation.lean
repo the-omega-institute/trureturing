@@ -277,21 +277,20 @@ private lemma measured_purities (u v : Matrix.unitaryGroup (Fin 2) ℂ) :
       hnz, hmz]
     ring
 
-private lemma measured_purity_bounds (u v : Matrix.unitaryGroup (Fin 2) ℂ) :
-    (1 / 4 ≤ (measureA u witness * measureA u witness).trace.re ∧
-      (measureA u witness * measureA u witness).trace.re ≤ 21 / 64) ∧
-    (1 / 4 ≤ (measureB v witness * measureB v witness).trace.re ∧
-      (measureB v witness * measureB v witness).trace.re ≤ 21 / 64) ∧
-    (1 / 4 ≤ (measureAB u v witness * measureAB u v witness).trace.re ∧
-      (measureAB u v witness * measureAB u v witness).trace.re ≤ 5 / 16) := by
-  obtain ⟨n, m, hn, hm, ha, hb, hab⟩ := measured_purities u v
+private lemma bloch_purity_bounds (n m : EuclideanSpace ℝ (Fin 3))
+    (hn : ‖n‖ = 1) (hm : ‖m‖ = 1) :
+    (1 / 4 ≤ (1 + 1 / 16 + (n 0)^2 / 16 + (n 2)^2 / 4) / 4 ∧
+      (1 + 1 / 16 + (n 0)^2 / 16 + (n 2)^2 / 4) / 4 ≤ 21 / 64) ∧
+    (1 / 4 ≤ (1 + 1 / 16 + (m 0)^2 / 16 + (m 2)^2 / 4) / 4 ∧
+      (1 + 1 / 16 + (m 0)^2 / 16 + (m 2)^2 / 4) / 4 ≤ 21 / 64) ∧
+    (1 / 4 ≤ (1 + ((n 0)^2 + (m 0)^2) / 16 + (n 2)^2 * (m 2)^2 / 4) / 4 ∧
+      (1 + ((n 0)^2 + (m 0)^2) / 16 + (n 2)^2 * (m 2)^2 / 4) / 4 ≤ 5 / 16) := by
   have hn2 : (n 0)^2 + (n 1)^2 + (n 2)^2 = 1 := by
     have h := EuclideanSpace.real_norm_sq_eq n
     simpa only [Fin.sum_univ_three, hn, one_pow] using h.symm
   have hm2 : (m 0)^2 + (m 1)^2 + (m 2)^2 = 1 := by
     have h := EuclideanSpace.real_norm_sq_eq m
     simpa only [Fin.sum_univ_three, hm, one_pow] using h.symm
-  rw [ha, hb, hab]
   have hnx : (n 0)^2 ≤ 1 := by nlinarith [sq_nonneg (n 1), sq_nonneg (n 2)]
   have hmx : (m 0)^2 ≤ 1 := by nlinarith [sq_nonneg (m 1), sq_nonneg (m 2)]
   have hnz : (n 2)^2 ≤ 1 - (n 0)^2 := by nlinarith [sq_nonneg (n 1)]
@@ -303,6 +302,19 @@ private lemma measured_purity_bounds (u v : Matrix.unitaryGroup (Fin 2) ℂ) :
     nlinarith [sq_nonneg (n 0), sq_nonneg (n 1), sq_nonneg (n 2),
       sq_nonneg (m 0), sq_nonneg (m 1), sq_nonneg (m 2),
       mul_nonneg (sq_nonneg (n 2)) (sq_nonneg (m 2))]
+
+private lemma measured_purity_bounds (u v : Matrix.unitaryGroup (Fin 2) ℂ) :
+    (1 / 4 ≤ (measureA u witness * measureA u witness).trace.re ∧
+      (measureA u witness * measureA u witness).trace.re ≤ 21 / 64) ∧
+    (1 / 4 ≤ (measureB v witness * measureB v witness).trace.re ∧
+      (measureB v witness * measureB v witness).trace.re ≤ 21 / 64) ∧
+    (1 / 4 ≤ (measureAB u v witness * measureAB u v witness).trace.re ∧
+      (measureAB u v witness * measureAB u v witness).trace.re ≤ 5 / 16) := by
+  obtain ⟨n, m, hn, hm, ha, hb, hab⟩ := measured_purities u v
+  obtain ⟨hpa, hpb, hpab⟩ := bloch_purity_bounds n m hn hm
+  exact ⟨Eq.mpr (congrArg (fun p : ℝ => 1 / 4 ≤ p ∧ p ≤ 21 / 64) ha) hpa,
+    Eq.mpr (congrArg (fun p : ℝ => 1 / 4 ≤ p ∧ p ≤ 21 / 64) hb) hpb,
+    Eq.mpr (congrArg (fun p : ℝ => 1 / 4 ≤ p ∧ p ≤ 5 / 16) hab) hpab⟩
 
 private lemma computational_purities :
     (measureA 1 witness * measureA 1 witness).trace.re = 21 / 64 ∧
@@ -328,23 +340,23 @@ private lemma correlations : correlationA 2 (-1) witness = 1 / 21 ∧
       1 / 21 ≤ disturbance 2 (-1) (measureA u witness) witness := by
     rw [hr _ (measured_hermitian u 1).1]
     obtain ⟨hl, hu⟩ := (measured_purity_bounds u 1).1
-    rw [le_sub_iff_add_le, le_div_iff₀ (by linarith :
-      0 < (measureA u witness * measureA u witness).trace.re)]
-    linarith
+    exact le_sub_iff_add_le.mpr ((le_div_iff₀
+      (lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1 / 4) hl)).mpr
+      (le_trans (mul_le_mul_of_nonneg_left hu (by norm_num)) (by norm_num)))
   have hb (v : Matrix.unitaryGroup (Fin 2) ℂ) :
       1 / 21 ≤ disturbance 2 (-1) (measureB v witness) witness := by
     rw [hr _ (measured_hermitian 1 v).2.1]
     obtain ⟨hl, hu⟩ := (measured_purity_bounds 1 v).2.1
-    rw [le_sub_iff_add_le, le_div_iff₀ (by linarith :
-      0 < (measureB v witness * measureB v witness).trace.re)]
-    linarith
+    exact le_sub_iff_add_le.mpr ((le_div_iff₀
+      (lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1 / 4) hl)).mpr
+      (le_trans (mul_le_mul_of_nonneg_left hu (by norm_num)) (by norm_num)))
   have hab (uv : Matrix.unitaryGroup (Fin 2) ℂ × Matrix.unitaryGroup (Fin 2) ℂ) :
       1 / 10 ≤ disturbance 2 (-1) (measureAB uv.1 uv.2 witness) witness := by
     rw [hr _ (measured_hermitian uv.1 uv.2).2.2]
     obtain ⟨hl, hu⟩ := (measured_purity_bounds uv.1 uv.2).2.2
-    rw [le_sub_iff_add_le, le_div_iff₀ (by linarith :
-      0 < (measureAB uv.1 uv.2 witness * measureAB uv.1 uv.2 witness).trace.re)]
-    linarith
+    exact le_sub_iff_add_le.mpr ((le_div_iff₀
+      (lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1 / 4) hl)).mpr
+      (le_trans (mul_le_mul_of_nonneg_left hu (by norm_num)) (by norm_num)))
   have hinf {ι : Type} (f : ι → ℝ) (a : ℝ) (i : ι)
       (hl : ∀ j, a ≤ f j) (he : f i = a) : sInf (Set.range f) = a := by
     apply le_antisymm
