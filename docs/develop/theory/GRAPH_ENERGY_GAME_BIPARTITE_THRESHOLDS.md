@@ -2898,6 +2898,13 @@ $$
 $(\sqrt3-\sqrt2)(r+1)(r+2)$ 项，因而恰为
 
 $$
+Y_m=\frac{2\sqrt{3m}}m-\frac6{mH_m}
+\sum_{r=1}^m\sqrt r\,P_m(r).
+$$
+
+在这个展开中，
+
+$$
 -\frac{6(p+1)(p+2)}{mH_m}\ne0.
 \tag{10.9}
 $$
