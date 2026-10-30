@@ -11,11 +11,11 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-universe u v
+universe u_1 u_2
 
 /-- Observe the source function at a binary configuration. -/
 abbrev evaluationSignature : Signature where
-  Params := Σ V : Type u, Σ n : ℕ, ((Fin n → Fin 2) → V)
+  Params := Σ V : Type u_1, Σ n : ℕ, ((Fin n → Fin 2) → V)
   State p := Fin p.2.1 → Fin 2
   Role := Unit
   finiteRole := inferInstance
@@ -31,18 +31,18 @@ def evaluationRejected : Realization evaluationSignature :=
   realize evaluationSignature (fun _ p _ => p.2.2 (fun _ => 0)) (fun e => Empty.elim e)
 
 theorem evaluationDependence :
-    ObservationalDependence evaluationSignature.{u} evaluationActual := by
+    ObservationalDependence evaluationSignature.{u_1} evaluationActual := by
   intro i
-  refine ⟨⟨ULift.{u} (Fin 2), ⟨1, fun x => ⟨x 0⟩⟩⟩,
+  refine ⟨⟨ULift.{u_1} (Fin 2), ⟨1, fun x => ⟨x 0⟩⟩⟩,
     (fun _ => 0), (fun _ => 1), ?_⟩
   intro h
-  have he := congrArg (fun z : ULift.{u} (Fin 2) => z.down.val) h
+  have he := congrArg (fun z : ULift.{u_1} (Fin 2) => z.down.val) h
   change (0 : ℕ) = 1 at he
   exact Nat.zero_ne_one he
 
 /-- The operator-valued readout retains the source algebra dictionaries. -/
 abbrev operatorSignature : Signature where
-  Params := Σ V : Type u, Σ g : AddCommGroup V, Σ _ : @Module ℂ V _ g.toAddCommMonoid, ℕ
+  Params := Σ V : Type u_1, Σ g : AddCommGroup V, Σ _ : @Module ℂ V _ g.toAddCommMonoid, ℕ
   State p := Finset (Fin p.2.2.2)
   Role := Unit
   finiteRole := inferInstance
@@ -66,14 +66,14 @@ def operatorRejected : Realization operatorSignature :=
     letI := p.2.2.1
     exact 0) (fun e => Empty.elim e)
 
-private abbrev ProbeSpace := ULift.{u} Unit → ℂ
+private abbrev ProbeSpace := ULift.{u_1} Unit → ℂ
 
-private def probe (x : Fin 2 → Fin 2) : ProbeSpace.{u} := fun _ => (x 0).val
+private def probe (x : Fin 2 → Fin 2) : ProbeSpace.{u_1} := fun _ => (x 0).val
 
 theorem operatorDependence :
-    ObservationalDependence operatorSignature.{u} operatorActual := by
+    ObservationalDependence operatorSignature.{u_1} operatorActual := by
   intro i
-  refine ⟨⟨ProbeSpace.{u}, ⟨inferInstance, ⟨inferInstance, 2⟩⟩⟩,
+  refine ⟨⟨ProbeSpace.{u_1}, ⟨inferInstance, ⟨inferInstance, 2⟩⟩⟩,
     ∅, {0, 1}, ?_⟩
   intro h
   have he := congrArg (fun T => T probe (fun _ => 0) ⟨()⟩) h
@@ -82,7 +82,7 @@ theorem operatorDependence :
   rw [avg_empty, avg_pair_apply 2 0 1 (by decide)] at he
   norm_num [probe, Fin.sum_univ_two, Function.update_apply] at he
 
-private def spike {V : Type u} [AddCommGroup V] [Module ℂ V] (n : ℕ) :
+private def spike {V : Type u_1} [AddCommGroup V] [Module ℂ V] (n : ℕ) :
     Module.End ℂ ((Fin n → Fin 2) → V) where
   toFun f x := if x = (fun _ => 0) then f x else 0
   map_add' := by
@@ -103,18 +103,18 @@ def commutationRejected : Realization operatorSignature :=
 namespace Empty
 
 abbrev arena : Arena where
-  signature := operatorSignature.{u}
-  Law r := ∀ {V : Type u} [AddCommGroup V] [Module ℂ V] (n : ℕ),
+  signature := operatorSignature.{u_1}
+  Law r := ∀ {V : Type u_1} [AddCommGroup V] [Module ℂ V] (n : ℕ),
     r.readout () ⟨V, ⟨inferInstance, ⟨inferInstance, n⟩⟩⟩ ∅ = 1
 
-theorem rejected_law : ¬ arena.{u}.Law operatorRejected := by
+theorem rejected_law : ¬ arena.{u_1}.Law operatorRejected := by
   intro h
-  have he := h (V := ProbeSpace.{u}) 0
+  have he := h (V := ProbeSpace.{u_1}) 0
   have hz := congrArg (fun T => T (fun _ _ => 1) (fun i => Fin.elim0 i) ⟨()⟩) he
   change (0 : ℂ) = 1 at hz
   exact zero_ne_one hz
 
-def source_registration : Registration arena.{u} (type_of% @avg_empty.{u}) where
+def source_registration : Registration arena.{u_1} (type_of% @avg_empty.{u_1}) where
   actual := operatorActual
   bridge := Iff.rfl
   variation := ⟨avg_empty, operatorRejected, rejected_law⟩
@@ -128,8 +128,8 @@ def source_registration : Registration arena.{u} (type_of% @avg_empty.{u}) where
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@avg_empty.{u})
-      (Realization operatorSignature.{u}) Unit Unit := {
+      (@avg_empty.{u_1})
+      (Realization operatorSignature.{u_1}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging.Empty.unit
   realizationName :=
     `Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging.Empty.source_registration
@@ -172,21 +172,21 @@ end Empty
 namespace Composition
 
 abbrev arena : Arena where
-  signature := operatorSignature.{u}
-  Law r := ∀ {V : Type u} [AddCommGroup V] [Module ℂ V]
+  signature := operatorSignature.{u_1}
+  Law r := ∀ {V : Type u_1} [AddCommGroup V] [Module ℂ V]
     (n : ℕ) (s t : Finset (Fin n)),
     avg (V := V) n s * avg n t =
       r.readout () ⟨V, ⟨inferInstance, ⟨inferInstance, n⟩⟩⟩ (s ∪ t)
 
-theorem rejected_law : ¬ arena.{u}.Law operatorRejected := by
+theorem rejected_law : ¬ arena.{u_1}.Law operatorRejected := by
   intro h
-  have he := h (V := ProbeSpace.{u}) 0 ∅ ∅
+  have he := h (V := ProbeSpace.{u_1}) 0 ∅ ∅
   rw [avg_empty, one_mul] at he
   have hz := congrArg (fun T => T (fun _ _ => 1) (fun i => Fin.elim0 i) ⟨()⟩) he
   change (1 : ℂ) = 0 at hz
   exact one_ne_zero hz
 
-def source_registration : Registration arena.{u} (type_of% @avg_mul.{u}) where
+def source_registration : Registration arena.{u_1} (type_of% @avg_mul.{u_1}) where
   actual := operatorActual
   bridge := Iff.rfl
   variation := ⟨avg_mul, operatorRejected, rejected_law⟩
@@ -200,8 +200,8 @@ def source_registration : Registration arena.{u} (type_of% @avg_mul.{u}) where
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@avg_mul.{u})
-      (Realization operatorSignature.{u}) Unit Unit := {
+      (@avg_mul.{u_1})
+      (Realization operatorSignature.{u_1}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging.Composition.unit
   realizationName :=
     `Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging.Composition.source_registration
@@ -244,24 +244,24 @@ end Composition
 namespace Commutation
 
 abbrev arena : Arena where
-  signature := operatorSignature.{u}
-  Law r := ∀ {V : Type u} [AddCommGroup V] [Module ℂ V]
+  signature := operatorSignature.{u_1}
+  Law r := ∀ {V : Type u_1} [AddCommGroup V] [Module ℂ V]
     (n : ℕ) (s t : Finset (Fin n)),
     Commute (r.readout () ⟨V, ⟨inferInstance, ⟨inferInstance, n⟩⟩⟩ s) (avg n t)
 
-theorem rejected_law : ¬ arena.{u}.Law commutationRejected := by
+theorem rejected_law : ¬ arena.{u_1}.Law commutationRejected := by
   intro h
-  have he := h (V := ProbeSpace.{u}) 2 ∅ {0, 1}
+  have he := h (V := ProbeSpace.{u_1}) 2 ∅ {0, 1}
   change spike 2 * avg 2 {0, 1} = avg 2 {0, 1} * spike 2 at he
   have hz := congrArg (fun T => T (fun _ _ => 1) (fun _ => 0) ⟨()⟩) he
-  change spike 2 (avg 2 {0, 1} (fun _ => (1 : ProbeSpace.{u}))) (fun _ => 0) ⟨()⟩ =
-    avg 2 {0, 1} (spike 2 (fun _ => (1 : ProbeSpace.{u}))) (fun _ => 0) ⟨()⟩ at hz
+  change spike 2 (avg 2 {0, 1} (fun _ => (1 : ProbeSpace.{u_1}))) (fun _ => 0) ⟨()⟩ =
+    avg 2 {0, 1} (spike 2 (fun _ => (1 : ProbeSpace.{u_1}))) (fun _ => 0) ⟨()⟩ at hz
   simp only [spike, LinearMap.coe_mk, AddHom.coe_mk] at hz
   rw [avg_pair_apply 2 0 1 (by decide), avg_pair_apply 2 0 1 (by decide)] at hz
   norm_num [spike, Fin.sum_univ_two, Function.update_apply, funext_iff, Fin.forall_fin_two] at hz
   norm_num [Finset.filter_eq'] at hz
 
-def source_registration : Registration arena.{u} (type_of% @avg_commute.{u}) where
+def source_registration : Registration arena.{u_1} (type_of% @avg_commute.{u_1}) where
   actual := operatorActual
   bridge := Iff.rfl
   variation := ⟨avg_commute, commutationRejected, rejected_law⟩
@@ -276,8 +276,8 @@ def source_registration : Registration arena.{u} (type_of% @avg_commute.{u}) whe
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@avg_commute.{u})
-      (Realization operatorSignature.{u}) Unit Unit := {
+      (@avg_commute.{u_1})
+      (Realization operatorSignature.{u_1}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging.Commutation.unit
   realizationName :=
     `Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging.Commutation.source_registration
@@ -320,25 +320,25 @@ end Commutation
 namespace Pair
 
 abbrev arena : Arena where
-  signature := evaluationSignature.{u}
-  Law r := ∀ {V : Type u} [AddCommGroup V] [Module ℂ V]
+  signature := evaluationSignature.{u_1}
+  Law r := ∀ {V : Type u_1} [AddCommGroup V] [Module ℂ V]
     (n : ℕ) (k l : Fin n) (_h : k ≠ l)
     (f : (Fin n → Fin 2) → V) (x : Fin n → Fin 2),
     avg n {k, l} f x = (4 : ℂ)⁻¹ • ∑ b : Fin 2, ∑ c : Fin 2,
       r.readout () ⟨V, ⟨n, f⟩⟩ (Function.update (Function.update x k b) l c)
 
-theorem rejected_law : ¬ arena.{u}.Law evaluationRejected := by
+theorem rejected_law : ¬ arena.{u_1}.Law evaluationRejected := by
   intro h
-  have he := h (V := ProbeSpace.{u}) 2 0 1 (by decide) probe (fun _ => 0)
+  have he := h (V := ProbeSpace.{u_1}) 2 0 1 (by decide) probe (fun _ => 0)
   rw [avg_pair_apply 2 0 1 (by decide)] at he
-  have hzero : probe (fun _ => 0) = (0 : ProbeSpace.{u}) := by
+  have hzero : probe (fun _ => 0) = (0 : ProbeSpace.{u_1}) := by
     funext z
     simp [probe]
   simp only [evaluationRejected, realize, hzero] at he
   have hz := congrFun he ⟨()⟩
   norm_num [probe, Fin.sum_univ_two, Function.update_apply] at hz
 
-def source_registration : Registration arena.{u} (type_of% @avg_pair_apply.{u}) where
+def source_registration : Registration arena.{u_1} (type_of% @avg_pair_apply.{u_1}) where
   actual := realize evaluationSignature
     (fun _ p x => p.2.2 x) (fun e => Empty.elim e)
   bridge := Iff.rfl
@@ -354,8 +354,8 @@ def source_registration : Registration arena.{u} (type_of% @avg_pair_apply.{u}) 
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@avg_pair_apply.{u})
-      (Realization evaluationSignature.{u}) Unit Unit := {
+      (@avg_pair_apply.{u_1})
+      (Realization evaluationSignature.{u_1}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging.Pair.unit
   realizationName :=
     `Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging.Pair.source_registration
@@ -397,16 +397,16 @@ end Pair
 namespace Naturality
 
 abbrev arena : Arena where
-  signature := evaluationSignature.{u}
-  Law r := ∀ {V : Type u} {W : Type v} [AddCommGroup V] [Module ℂ V]
+  signature := evaluationSignature.{u_1}
+  Law r := ∀ {V : Type u_1} {W : Type u_2} [AddCommGroup V] [Module ℂ V]
     [AddCommGroup W] [Module ℂ W] (n : ℕ) (s : Finset (Fin n)) (l : V →ₗ[ℂ] W)
     (f : (Fin n → Fin 2) → V) (x : Fin n → Fin 2),
     l (avg n s f x) = avg n s (fun y => l (r.readout () ⟨V, ⟨n, f⟩⟩ y)) x
 
-theorem rejected_law : ¬ arena.{u,v}.Law evaluationRejected := by
+theorem rejected_law : ¬ arena.{u_1,u_2}.Law evaluationRejected := by
   intro h
-  let f : (Fin 1 → Fin 2) → ProbeSpace.{u} := fun x _ => (x 0).val
-  let l : ProbeSpace.{u} →ₗ[ℂ] ProbeSpace.{v} :=
+  let f : (Fin 1 → Fin 2) → ProbeSpace.{u_1} := fun x _ => (x 0).val
+  let l : ProbeSpace.{u_1} →ₗ[ℂ] ProbeSpace.{u_2} :=
     { toFun := fun z _ => z ⟨()⟩
       map_add' := by intros; rfl
       map_smul' := by intros; rfl }
@@ -415,7 +415,7 @@ theorem rejected_law : ¬ arena.{u,v}.Law evaluationRejected := by
   have hz := congrFun he ⟨()⟩
   norm_num [l, f, evaluationRejected, realize] at hz
 
-def source_registration : Registration arena.{u,v} (type_of% @avg_map.{u,v}) where
+def source_registration : Registration arena.{u_1,u_2} (type_of% @avg_map.{u_1,u_2}) where
   actual := realize evaluationSignature
     (fun _ p x => p.2.2 x) (fun e => Empty.elim e)
   bridge := Iff.rfl
@@ -431,8 +431,8 @@ def source_registration : Registration arena.{u,v} (type_of% @avg_map.{u,v}) whe
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@avg_map.{u,v})
-      (Realization evaluationSignature.{u}) Unit Unit := {
+      (@avg_map.{u_1,u_2})
+      (Realization evaluationSignature.{u_1}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging.Naturality.unit
   realizationName :=
     `Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging.Naturality.source_registration
@@ -474,25 +474,25 @@ end Naturality
 namespace Full
 
 abbrev arena : Arena where
-  signature := evaluationSignature.{u}
-  Law r := ∀ {V : Type u} [AddCommGroup V] [Module ℂ V] (n : ℕ)
+  signature := evaluationSignature.{u_1}
+  Law r := ∀ {V : Type u_1} [AddCommGroup V] [Module ℂ V] (n : ℕ)
     (f : (Fin n → Fin 2) → V) (x : Fin n → Fin 2),
     avg n Finset.univ f x = ((2 : ℂ) ^ n)⁻¹ • ∑ y : Fin n → Fin 2,
       r.readout () ⟨V, ⟨n, f⟩⟩ y
 
-theorem rejected_law : ¬ arena.{u}.Law evaluationRejected := by
+theorem rejected_law : ¬ arena.{u_1}.Law evaluationRejected := by
   intro h
-  have he := h (V := ProbeSpace.{u}) 2 probe (fun _ => 0)
+  have he := h (V := ProbeSpace.{u_1}) 2 probe (fun _ => 0)
   have hs : (Finset.univ : Finset (Fin 2)) = {0, 1} := by decide
   rw [hs, avg_pair_apply 2 0 1 (by decide)] at he
-  have hzero : probe (fun _ => 0) = (0 : ProbeSpace.{u}) := by
+  have hzero : probe (fun _ => 0) = (0 : ProbeSpace.{u_1}) := by
     funext z
     simp [probe]
   simp only [evaluationRejected, realize, hzero] at he
   have hz := congrFun he ⟨()⟩
   norm_num [probe, Fin.sum_univ_two, Function.update_apply] at hz
 
-def source_registration : Registration arena.{u} (type_of% @avg_univ.{u}) where
+def source_registration : Registration arena.{u_1} (type_of% @avg_univ.{u_1}) where
   actual := realize evaluationSignature
     (fun _ p x => p.2.2 x) (fun e => Empty.elim e)
   bridge := Iff.rfl
@@ -508,8 +508,8 @@ def source_registration : Registration arena.{u} (type_of% @avg_univ.{u}) where
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@avg_univ.{u})
-      (Realization evaluationSignature.{u}) Unit Unit := {
+      (@avg_univ.{u_1})
+      (Realization evaluationSignature.{u_1}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging.Full.unit
   realizationName :=
     `Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging.Full.source_registration
