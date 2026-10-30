@@ -173,6 +173,32 @@ def native (h : ℝ) (C E : Vector) : History → Vector
   | .mid m n => (C.1 + h * (m + n), C.2 + h * (m + 2 * n))
   | .terminal m n => (C.1 + E.1 + h * (m + n), C.2 + E.2 + h * (m + 2 * n))
 
+/-- The declared current readouts and ordered successful edge records. An
+illegal attempt ends the response; stopping at a cut is not an executed edge. -/
+inductive Response
+  | stop (readout : Vertex)
+  | illegal (readout : Vertex) (attempt : Name)
+  | success (readout : Vertex) (name : Name) (successor : Vertex)
+      (vector : Vector) (tail : Response)
+
+def respond (h : ℝ) (C E : Vector) (z : Vertex) : List Name → Response
+  | [] => .stop z
+  | b :: w => match transition z b with
+    | none => .illegal z b
+    | some z' => .success z b z' (edgeVector h C E z b) (respond h C E z' w)
+
+/-- Equality of all complete declared continuation responses. -/
+def SameResponses (h : ℝ) (C E : Vector) (x y : Vertex) : Prop :=
+  ∀ w, respond h C E x w = respond h C E y w
+
+private theorem responses_iff (h : ℝ) (C E : Vector) (x y : Vertex) :
+    SameResponses h C E x y ↔ x = y := by
+  constructor
+  · intro hh
+    exact Response.stop.inj (hh [])
+  · rintro rfl
+    exact fun _ => rfl
+
 private theorem accumulate_append (h : ℝ) (C E : Vector) (z z' : Vertex)
     (u v : List Name) (hu : execute z u = some z') :
     accumulate h C E z (u ++ v) =
@@ -226,8 +252,10 @@ theorem source_correspondence (h : ℝ) (C E : Vector) :
     Function.Injective word ∧
     (∀ w z, execute .p w = some z ↔ ∃ u : History, word u = w ∧ endpoint u = z) ∧
     (∀ u, execute .p (word u) = some (endpoint u) ∧
-      accumulate h C E .p (word u) = some (native h C E u)) := by
-  refine ⟨word_injective, ?_, fun u => ⟨executes u, totals h C E u⟩⟩
+      accumulate h C E .p (word u) = some (native h C E u)) ∧
+    (∀ x y, SameResponses h C E x y ↔ x = y) := by
+  refine ⟨word_injective, ?_, (fun u => ⟨executes u, totals h C E u⟩),
+    responses_iff h C E⟩
   intro w z
   constructor
   · exact exhaustive w z

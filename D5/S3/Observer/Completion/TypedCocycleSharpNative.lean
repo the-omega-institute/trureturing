@@ -41,7 +41,7 @@ def value {M : Type*} (r : Register M) (u : History) : M :=
 /-- The ambient update is total. Only its complete legal reached range is
 charged; that range is NOT assumed closed under source-illegal names. -/
 def OnlineCost (h ε : ℝ) (C E : Vector) (n : ℕ) : Prop :=
-  ∃ (M : Type) (_ : Finite M) (r : Register M),
+  ∃ (M : Type) (r : Register M), (Set.range (value r)).Finite ∧
     Feasible h ε C E (value r) ∧ Nat.card (Set.range (value r)) = n
 
 /-- A least cost includes attainment and a bound for every feasible competitor. -/
@@ -256,7 +256,7 @@ private theorem cost_attained (h ε : ℝ) (hh : 0 < h) (hε : 0 ≤ ε) (C E : 
   have hc := reached_card q hq
   constructor
   · exact ⟨ZMod q × ZMod q, value (residueRegister q), Set.toFinite _, hv.symm ▸ hf, hc⟩
-  · exact ⟨ZMod q × ZMod q, inferInstance, residueRegister q, hv.symm ▸ hf, hc⟩
+  · exact ⟨ZMod q × ZMod q, residueRegister q, Set.toFinite _, hv.symm ▸ hf, hc⟩
 
 private theorem whole_minima (h ε : ℝ) (hh : 0 < h) (hε : 0 ≤ ε) (C E : Vector) :
     LeastCost (StaticCost h ε C E) ((quantum h ε) ^ 2) ∧
@@ -266,9 +266,8 @@ private theorem whole_minima (h ε : ℝ) (hh : 0 < h) (hε : 0 ≤ ε) (C E : V
     rintro n ⟨L, label, hf, hd, rfl⟩
     exact static_lower h ε hh.le C E _ (quantum_bounds h ε hh hε).1 label hf hd
   refine ⟨⟨att.1, hl⟩, att.2, ?_⟩
-  rintro n ⟨M, hM, r, hd, rfl⟩
-  letI : Finite M := hM
-  exact hl _ ⟨M, value r, Set.toFinite _, hd, rfl⟩
+  rintro n ⟨M, r, hf, hd, rfl⟩
+  exact hl _ ⟨M, value r, hf, hd, rfl⟩
 
 private theorem no_supplement (h ε : ℝ) (hh : 0 < h) (C E : Vector) :
     Feasible h ε C E (fun _ : History => ()) ↔ 2 * ε < h := by

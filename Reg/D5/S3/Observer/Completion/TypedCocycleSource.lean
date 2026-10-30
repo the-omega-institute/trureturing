@@ -30,7 +30,8 @@ abbrev arena : Arena where
     (∀ w z, execute .p w = some z ↔
       ∃ u : History, f.readout () () u = w ∧ endpoint u = z) ∧
     (∀ u, execute .p (f.readout () () u) = some (endpoint u) ∧
-      accumulate h C E .p (f.readout () () u) = some (native h C E u))
+      accumulate h C E .p (f.readout () () u) = some (native h C E u)) ∧
+    (∀ x y, SameResponses h C E x y ↔ x = y)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
