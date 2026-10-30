@@ -4,8 +4,9 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: One finite joint sensor readout approximates a finite signed family's variation masses. -/
+   digest: Finite joint sensor readouts recover variation uniformly on norm-compact regular signed families. -/
 
+import D5.S3.Topology.Measures.SignedRieszRepresentation
 import D5.S3.Topology.Measures.PositiveClopenMass
 import D5.S3.ConceptDynamics.CanonicalImage.FiniteObservationQuotientRange
 import Mathlib.MeasureTheory.VectorMeasure.Variation.SignedMeasure
@@ -19,7 +20,7 @@ import Mathlib.Data.Fintype.EquivFin
 A point-separating family of continuous finite discrete sensors on a compact
 zero-dimensional Hausdorff Borel space detects the whole variation mass of
 each regular signed measure to arbitrary accuracy. One budget suffices for
-any fixed finite family of signed measures. The budget depends on the family
+any fixed finite family, or any family with norm-compact range of signed integration functionals. The budget depends on the family
 and the accuracy; no bound uniform over measures or accuracies is asserted.
 -/
 
@@ -147,6 +148,98 @@ theorem exists_common_finite_readout_variation
       (VectorMeasure.variation_map_le (μ := s a) (φ := p) univ)
   exact ⟨by change (s a).totalVariation.real univ - ε <
               (SignedMeasure.totalVariation ((s a).map p)).real univ
+            linarith,
+    ENNReal.toReal_mono (measure_ne_top (s a).totalVariation univ) hcontract⟩
+
+open NormPreservingLifts SignedRieszRepresentation
+
+/-- Transfer the variation lost through one continuous readout between nearby
+regular signed functionals. The output regularity is needed for the exact
+Riesz norm identity; finite discrete readouts satisfy it automatically. -/
+private theorem variation_loss_transfer
+    [MeasurableSpace K] [BorelSpace K]
+    {L : Type w} [TopologicalSpace L] [CompactSpace L] [T2Space L]
+    [MeasurableSpace L] [BorelSpace L]
+    (p : C(K, L)) (s t : SignedMeasure K)
+    (hs : s.totalVariation.Regular) (ht : t.totalVariation.Regular)
+    (hsp : (SignedMeasure.totalVariation (s.map p)).Regular)
+    (htp : (SignedMeasure.totalVariation (t.map p)).Regular) :
+    s.totalVariation.real univ - (SignedMeasure.totalVariation (s.map p)).real univ ≤
+      t.totalVariation.real univ - (SignedMeasure.totalVariation (t.map p)).real univ +
+        2 * ‖signedFunctional s - signedFunctional t‖ := by
+  have hpull (g : C(L, ℝ)) : ‖g.comp p‖ ≤ ‖g‖ :=
+    (ContinuousMap.norm_le _ (norm_nonneg _)).mpr (fun x => g.norm_coe_le_norm (p x))
+  have hcontract : ‖signedFunctional (s.map p) - signedFunctional (t.map p)‖ ≤
+      ‖signedFunctional s - signedFunctional t‖ := by
+    apply ContinuousLinearMap.opNorm_le_bound _ (norm_nonneg _)
+    intro g
+    have h := (signedFunctional s - signedFunctional t).le_opNorm (g.comp p)
+    simp only [ContinuousLinearMap.sub_apply, functional_map] at *
+    exact h.trans (mul_le_mul_of_nonneg_left (hpull g) (norm_nonneg _))
+  have hsource := norm_sub_norm_le (signedFunctional s) (signedFunctional t)
+  have houtput := norm_sub_norm_le (signedFunctional (t.map p)) (signedFunctional (s.map p))
+  rw [norm_sub_rev] at houtput
+  rw [(signed_riesz_markov_kakutani (K := K)).2.1 s hs,
+    (signed_riesz_markov_kakutani (K := K)).2.1 t ht,
+    (signed_riesz_markov_kakutani (K := L)).2.1 (s.map p) hsp,
+    (signed_riesz_markov_kakutani (K := L)).2.1 (t.map p) htp]
+  linarith
+
+/-- One finite joint sensor readout recovers variation uniformly on an
+arbitrary family whose signed integration functionals have norm-compact range.
+Compactness is in the StrongDual operator-norm topology, and A carries no
+finiteness, countability, topology or nonemptiness requirement. -/
+theorem exists_uniform_finite_readout_variation
+    [ZeroDimensionalSpace K] [MeasurableSpace K] [BorelSpace K]
+    [∀ i, MeasurableSpace (O i)] [∀ i, BorelSpace (O i)]
+    {A : Type z}
+    (q : ∀ i, C(K, O i))
+    (hsep : Function.Injective (fun x : K => fun i => q i x))
+    (s : A → SignedMeasure K)
+    (hp : ∀ a, Measure.Regular (s a).toJordanDecomposition.posPart)
+    (hn : ∀ a, Measure.Regular (s a).toJordanDecomposition.negPart)
+    (hcompact : IsCompact (Set.range (fun a => signedFunctional (s a))))
+    (ε : ℝ) (hε : 0 < ε) :
+    ∃ J : Finset I, ∀ a,
+      (s a).totalVariation.real univ - ε <
+        (SignedMeasure.totalVariation
+          ((s a).map (finiteObservationReadout (fun i x => q i x) J))).real univ ∧
+      (SignedMeasure.totalVariation
+          ((s a).map (finiteObservationReadout (fun i x => q i x) J))).real univ ≤
+        (s a).totalVariation.real univ := by
+  classical
+  have hreg (a : A) : (s a).totalVariation.Regular := by
+    letI := hp a
+    letI := hn a
+    exact RegularSignedLift.regular_add
+  obtain ⟨T, hT⟩ := hcompact.elim_finite_subcover
+    (fun a => Metric.ball (signedFunctional (s a)) (ε / 4))
+    (fun _ => Metric.isOpen_ball) (by
+      rintro _ ⟨a, rfl⟩
+      exact Set.mem_iUnion.mpr ⟨a, by simpa using (by linarith : (0 : ℝ) < ε / 4)⟩)
+  obtain ⟨J, hJ⟩ := exists_common_finite_readout_variation q hsep
+    (fun a : (T : Set A) => s a.val) (fun a => hp a.val) (fun a => hn a.val)
+    (ε / 2) (by linarith)
+  let p : C(K, FiniteObservationOutput O J) :=
+    ⟨finiteObservationReadout (fun i x => q i x) J,
+      continuous_pi (fun j => (q j.val).continuous)⟩
+  refine ⟨J, fun a => ?_⟩
+  have hmem := hT (Set.mem_range_self a)
+  obtain ⟨b, hb, hab⟩ := Set.mem_iUnion₂.mp hmem
+  have hdist : ‖signedFunctional (s a) - signedFunctional (s b)‖ < ε / 4 := by
+    simpa only [Metric.mem_ball, dist_eq_norm] using hab
+  have hloss := variation_loss_transfer p (s a) (s b) (hreg a) (hreg b)
+    (by infer_instance) (by infer_instance)
+  have hcenter := (hJ ⟨b, hb⟩).1
+  have hcontract : (SignedMeasure.totalVariation ((s a).map p)) univ ≤
+      (s a).totalVariation univ := by
+    simpa only [← SignedMeasure.totalVariation_eq_variation,
+      Measure.map_apply p.continuous.measurable MeasurableSet.univ, preimage_univ] using
+      (VectorMeasure.variation_map_le (μ := s a) (φ := p) univ)
+  exact ⟨by change (s a).totalVariation.real univ - ε <
+              (SignedMeasure.totalVariation ((s a).map p)).real univ
+            change (s b).totalVariation.real univ - ε / 2 <
+              (SignedMeasure.totalVariation ((s b).map p)).real univ at hcenter
             linarith,
     ENNReal.toReal_mono (measure_ne_top (s a).totalVariation univ) hcontract⟩
 

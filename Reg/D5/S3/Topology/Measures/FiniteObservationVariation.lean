@@ -30,4 +30,22 @@ abbrev sourceScope := type_of%
 theorem source_proof : sourceScope.{u,v,w,z} :=
   @_root_.D5.S3.Topology.Measures.FiniteObservationVariation.exists_common_finite_readout_variation.{u,v,w,z}
 
+/- The compact-family target has a different telescope from the finite-family
+source above: A is arbitrary and a StrongDual norm-compact range premise is
+present. A faithful dependent arena must retain all those dictionaries and
+premises. A candidate role is the joint finite readout, with the existential
+J remaining in the original conclusion, not chosen in advance or assumed
+injective. Exact binding below is only a partial same-delivery attempt.
+No law-equivalent realization, sourceSelection, whole-family intervention,
+role sensitivity, or actual observational dependence is certified. -/
+abbrev uniformScope := type_of%
+  (@_root_.D5.S3.Topology.Measures.FiniteObservationVariation.exists_uniform_finite_readout_variation.{u,v,w,z})
+
+theorem uniform_source_proof : uniformScope.{u,v,w,z} :=
+  @_root_.D5.S3.Topology.Measures.FiniteObservationVariation.exists_uniform_finite_readout_variation.{u,v,w,z}
+
+/- The new target(s) above have an unfinished four-slot audit tracked at
+https://github.com/the-omega-institute/trureturing/issues/24319.
+The older finite-family issue 24040 is not used to cover this extension. -/
+
 end Reg.D5.S3.Topology.Measures.FiniteObservationVariation
