@@ -62,6 +62,7 @@ private def equalPlan (R : ℤ) (p z : ℕ) (last : Bool) : Plan :=
     (Mask.mk p 0 0) (Mask.mk z 0 (R-1))
 
 -- These are the actual alpha-beta-gamma seams for the selected masks.
+set_option maxHeartbeats 800000 in
 private theorem equal_seams (R q d : ℤ) (p z : ℕ) (hR : 2 ≤ R) (hq : 2 ≤ q)
     (hp : (p:ℤ) = (R-1)*q+d)
     (he : 1 ≤ (1+2*R+4*R^2)*d+1-q)
@@ -72,6 +73,8 @@ private theorem equal_seams (R q d : ℤ) (p z : ℕ) (hR : 2 ≤ R) (hq : 2 ≤
       q=2 ∧ 4*R^2*(q-1)-(1+2*R+4*R^2)*z=4*R^2
       else 2*(4*R^2*(q-1)-(1+2*R+4*R^2)*z)+4*R^2 ≤ 4*q*R^2+R) :
     Seams (2*R) (2*R) (2*R*q) (equalPlan R p z last) := by
+  have hRp : 0<R := by omega
+  have hqp : 0<q := by omega
   have hr : (2*R)/2=R := by omega
   have ht : (2*R*q)/2=R*q := by
     rw [show 2*R*q=2*(R*q) by ring]
@@ -120,6 +123,10 @@ private theorem adaptive_arithmetic (R q h : ℤ) (hR : 2 ≤ R) (hq : 2 ≤ q)
     0≤4*R^2*(q-1)-u*z ∧
     (q=2 → z=0 ∧ 4*R^2*(q-1)-u*z=4*R^2) ∧
     (q≠2 → 2*(4*R^2*(q-1)-u*z)+4*R^2≤4*q*R^2+R)
+  have hRpos : 0<R := by omega
+  have hqpos : 0<q := by omega
+  have hhpos : 0<h := by omega
+  have hqm : 0≤q-1 := by omega
   have hu : 0<u := by dsimp [u]; positivity
   have huR : 4*R^2<u := by dsimp [u]; omega
   have hRp : 0<4*R^2 := by positivity
@@ -144,7 +151,9 @@ private theorem adaptive_arithmetic (R q h : ℤ) (hR : 2 ≤ R) (hq : 2 ≤ q)
     · have hsq : 16≤4*R^2 := by nlinarith
       have hm := mul_le_mul_of_nonneg_right hsq (show 0≤h by omega)
       nlinarith only [hs,hm,hh]
-  have hp0 : 0≤p := by dsimp [p]; positivity
+  have hp0 : 0≤p := by
+    dsimp [p]
+    exact add_nonneg (mul_nonneg (by omega) hqpos.le) (by omega)
   have hpq : p<R*q := by dsimp [p]; nlinarith only [hdh,hhq]
   have hz0 : 0≤z := by
     dsimp [z]
@@ -253,6 +262,10 @@ private theorem adaptive_certificate (a n : ℕ) (ha : 2≤a) (hn : 1≤n) :
     change (2:ℤ)^1≤2^n
     exact pow_le_pow_right₀ (by norm_num) hn
   have hh : 1≤h := by dsimp [h]; positivity
+  have hRpos : 0<R := by omega
+  have hqpos : 0<q := by omega
+  have hhpos : 0<h := by omega
+  have hqm : 0≤q-1 := by omega
   have hr : (2:ℤ)^a=2*R := by
     dsimp [R]
     rw [←pow_succ']
@@ -339,7 +352,7 @@ private theorem adaptive_certificate (a n : ℕ) (ha : 2≤a) (hn : 1≤n) :
   have hzBound : Bounded (2*R) (2*R) (2*R*q) (Mask.mk (z:ℤ) 0 (R-1)) := by
     dsimp [Bounded]
     rw [hrhalf,hthalf,hzcast]
-    have hmul : q≤R*q := by nlinarith [mul_nonneg (show 0≤R-1 by omega) hq.le]
+    have hmul : q≤R*q := by nlinarith [mul_nonneg (show 0≤R-1 by omega) hqpos.le]
     exact ⟨hz0,by omega,by omega,by omega,by omega,by omega⟩
   by_cases hq2 : q=2
   · refine ⟨equalPlan R p z true, ?_⟩
