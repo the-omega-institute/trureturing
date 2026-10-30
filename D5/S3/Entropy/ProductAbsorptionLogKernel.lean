@@ -56,6 +56,8 @@ private lemma coefficient_signs {u v : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1)
   have hw : 0 < w := Real.sqrt_pos.mpr hB
   have hw1 : w < 1 := (Real.sqrt_lt' (by norm_num)).mpr (by simpa using hB1)
   have hw2 : w ^ 2 = B := Real.sq_sqrt hB.le
+  have hw_square : w ^ 2 ≤ w := by
+    nlinarith [mul_nonneg hw.le (sub_nonneg.mpr hw1.le)]
   have hA : 2 * w ≤ A := by
     have hsq : 4 * B ≤ A ^ 2 := by dsimp [A, B]; nlinarith [sq_nonneg (u - v)]
     have hAp : 0 < A := add_pos hu.1 hv.1
@@ -79,9 +81,8 @@ private lemma coefficient_signs {u v : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1)
     exact add_pos_of_nonneg_of_pos hsum hstrict
   have htwo : 0 < c2 A B := by
     have hfactor : 0 < w ^ 2 * (1 - w) * (w ^ 3 - 7 * w ^ 2 + 17 * w + 1) := by
-      have hww : w ^ 2 ≤ w := by nlinarith
       have hlast : 0 < w ^ 3 - 7 * w ^ 2 + 17 * w + 1 := by
-        nlinarith [pow_pos hw 3]
+        nlinarith [hw_square, pow_pos hw 3]
       exact mul_pos (mul_pos (sq_pos_of_pos hw) (sub_pos.mpr hw1)) hlast
     have hdiff : 0 ≤ (A - 2 * w) *
         (4 * (A ^ 2 + 2 * A * w + 4 * w ^ 2) - 6 * B * (A + 2 * w) +
@@ -120,12 +121,12 @@ private lemma coefficient_signs {u v : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1)
     rw [hid]
     exact add_nonneg hlow hdiff
   · have hthird : 1 / 3 ≤ w := (lt_of_not_ge hsmall).le
-    have hlast : 0 ≤ -w ^ 2 + 5 * w - 1 := by nlinarith
+    have hlast : 0 ≤ -w ^ 2 + 5 * w - 1 := by nlinarith [hw_square]
     have hlow := mul_nonneg (mul_nonneg (by positivity : 0 ≤ 2 * w)
       (sub_nonneg.mpr hw1.le)) hlast
     have hdiff : 0 ≤ (A - 2 * w) * (4 * (A + 2 * w) - 6 * B - 1) := by
       apply mul_nonneg (sub_nonneg.mpr hA)
-      nlinarith
+      nlinarith [hw_square]
     have hid : 4 * A ^ 2 - 6 * A * B - A + 2 * B ^ 2 - 4 * B =
         2 * w * (1 - w) * (-w ^ 2 + 5 * w - 1) +
           (A - 2 * w) * (4 * (A + 2 * w) - 6 * B - 1) := by
