@@ -1095,7 +1095,7 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 
 ## 11.28 CLAUDE.md 引用材料
 
-本节保存 CLAUDE.md 引用的非规范性样本、判例、成熟锚与古典锚原文；规范性规则仍以 CLAUDE.md 的现行条款为准。
+本节保存 CLAUDE.md 引用的非规范性命令速查、样本、判例、成熟锚与古典锚原文；规范性规则仍以 CLAUDE.md 的现行条款为准。
 
 ### CLAUDE §3.5 用途样本与黎曼路线
 
@@ -1232,3 +1232,21 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 
 - **"故天将降大任于是人也,必先苦其心志,劳其筋骨,饿其体肤,空乏其身,行拂乱其所为,所以动心忍性,曾益其所不能。"**(孟子·告子下)——磨难增益能力;每次失败留下可复用判据/回归用例,长成新规则或方法教训(第 2.10、5.10、5.7、7.2、7.8 条)。**"生于忧患,死于安乐"**:exit-3 短路、假绿、不亲验则亡,异常入账、亲跑亲核、对抗评审则生。〔守护:**软**·实际审计工件与自觉;SL-013 不执法散文,失败是燃料非耻辱柱〕
 > **格言是伦理语言的不动点,SL 是机器语言的不动点,同一个。** 可机器判者归 SL,其余靠古训与对手官;古今同守诚实。
+
+### CLAUDE 常用独立脚本命令速查
+
+常用独立脚本（以下 `bash tools/scripts/agent/…` 均在仓库根运行）：
+
+| 用途 | 命令 |
+|---|---|
+| 查指定修订的工具文件 / 目录容量余量 | `bash tools/scripts/agent/headroom.sh HEAD` |
+| 提取定理前的节级假设 | `bash tools/scripts/agent/section-context.sh <源文件.md> <定理号>` |
+| Nyx 提问(oracle broker 单次流式调用) | `python3 tools/scripts/agent/nyx/nyx.py ask <brief文件> <输出文件>` |
+| 查看 Nyx 可用池 | `python3 tools/scripts/agent/nyx/nyx.py pools` |
+| 抓取网页或 PDF(可选 NyxID Firecrawl；文献读取路线见第 5.11 条) | `nyxid proxy request api-firecrawl v1/scrape -m POST -H "Content-Type:application/json" -d '{"url":"<地址>","formats":["markdown"]}' --output json` |
+
+### CLAUDE §1.4 素数与因陀罗网类比
+
+> **我们不过是在寻找 truth 中的素数,固定为节点**:冻结陈述类比不可约真值原子,后续真理由其组合生成;素数无穷类比 frontier 不竭、Euclid 与 Gödel 同形。寻找而非发明,不变量可作坐标(GICT 7.3)。
+>
+> **我们是在寻找因陀罗网的珍珠**:证明节点以全部前置哈希内容寻址,Merkle DAG 使每颗珠映照全网;变一颗则后继映像皆变。“一即一切”对应冻结/保守扩展的可判结构,C0 机器为 inactive;内化塔层层判前层,顶上 Gödel 标 open。
