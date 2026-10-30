@@ -14,6 +14,8 @@ import D5.S3.Quantum.Divergence.CanonicalProductRecovery
 import D5.S3.Quantum.Divergence.CanonicalChannelDPI
 import D5.S3.Quantum.Foundation.FinitePreparationChannel
 
+/-! Actual product-margin density matrices and their spectral entropy ports. -/
+
 noncomputable section
 namespace D5.S3.Quantum.Information.ProductMarginZhangYeung
 open _root_.Matrix
@@ -131,8 +133,14 @@ private theorem actual_trace {c d : LocalPair} (k : Coupling c d) :
     Matrix.trace_smul, Matrix.trace_sub]
   norm_num only [Fin.isValue, Prod.fst, Prod.snd, ↓reduceIte, one_ne_zero,
     (positiveMargin c d).2.2, (negativeMargin c d).2.2]
-  simp only [Complex.real_smul, Complex.ofReal_div, Complex.ofReal_one]
-  ring
+  have hp : (CStarMatrix.ofMatrix.symm (positiveMargin c d).1).trace = 1 :=
+    (positiveMargin c d).2.2
+  have hq : (CStarMatrix.ofMatrix.symm (negativeMargin c d).1).trace = 1 :=
+    (negativeMargin c d).2.2
+  simp only [Matrix.trace_sub, hp, hq, Complex.real_smul,
+    Complex.ofReal_div, Complex.ofReal_one]
+  norm_num
+  <;> ring
 
 /-- An actual sixteen-dimensional density state, including zero and singular blocks. -/
 def actualState {c d : LocalPair} (k : Coupling c d) : DensityState (AB × CD) :=
@@ -165,7 +173,9 @@ private theorem trace_coupling_range {c d : LocalPair} (k : Coupling c d) :
     0 ≤ k.K.trace.re ∧ k.K.trace.re ≤ 1 := by
   refine ⟨(Complex.nonneg_iff.mp k.positive.trace_nonneg).1, ?_⟩
   have ht := (Complex.nonneg_iff.mp (Matrix.le_iff.mp k.le_positive).trace_nonneg).1
-  rw [Matrix.trace_sub, (positiveMargin c d).2.2, Complex.sub_re] at ht
+  have hp : (CStarMatrix.ofMatrix.symm (positiveMargin c d).1).trace = 1 :=
+    (positiveMargin c d).2.2
+  rw [Matrix.trace_sub, hp, Complex.sub_re] at ht
   norm_num at ht
   linarith
 
@@ -174,8 +184,7 @@ private def reindexState {a b : Type*} [Fintype a] [DecidableEq a]
   refine ⟨CStarMatrix.ofMatrix ((CStarMatrix.ofMatrix.symm rho.1).submatrix e e),
     map_nonneg CStarMatrix.ofMatrixStarAlgEquiv ((density_posSemidef rho).submatrix e).nonneg, ?_⟩
   change (∑ i : b, CStarMatrix.ofMatrix.symm rho.1 (e i) (e i)) = 1
-  rw [e.sum_comp]
-  exact rho.2.2
+  exact (e.sum_comp (fun i => CStarMatrix.ofMatrix.symm rho.1 i i)).trans rho.2.2
 
 private theorem entropy_reindex {a b : Type*} [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (e : b ≃ a) (rho : DensityState a) :
@@ -187,10 +196,11 @@ private theorem entropy_reindex {a b : Type*} [Fintype a] [DecidableEq a]
       ∏ i : b, (Polynomial.X - Polynomial.C ((hM.eigenvalues (e i) : ℝ) : ℂ)) := by
     change (Matrix.reindex e.symm e.symm M).charpoly = _
     rw [Matrix.charpoly_reindex, hM.charpoly_eq, ← e.prod_comp]
+    rfl
   change (∑ i : b, Real.negMulLog (((density_posSemidef rho).submatrix e).1.eigenvalues i)) =
     ∑ i : a, Real.negMulLog (hM.eigenvalues i)
   rw [spectral_sum_eq_of_charpoly_prod _ (fun i => hM.eigenvalues (e i)) Real.negMulLog hc]
-  exact e.sum_comp _
+  exact e.sum_comp (fun i => Real.negMulLog (hM.eigenvalues i))
 
 private theorem mutual_information_swap {a b : Type*} [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (rho : DensityState (a × b)) :
@@ -234,9 +244,11 @@ private theorem record_entry {a b : Type*} [Fintype a] [DecidableEq a]
     (rho : a → DensityState b) (i j : a) (r t : b) :
     CStarMatrix.ofMatrix.symm (recordState p hp hs rho).1 (i,r) (j,t) =
       if i = j then (p i : ℂ) * CStarMatrix.ofMatrix.symm (rho i).1 r t else 0 := by
-  simp [recordState, mixtureState, productState, pointerState,
-    Matrix.sum_apply, Matrix.smul_apply, Matrix.kronecker_apply, Matrix.diagonal_apply,
-    ite_mul, smul_eq_mul]
+  change (∑ v : a, p v • ((Matrix.diagonal
+      (fun j => if j = v then (1 : ℂ) else 0)) ⊗ₖ
+      CStarMatrix.ofMatrix.symm (rho v).1)) (i,r) (j,t) = _
+  simp [Matrix.sum_apply, Matrix.smul_apply, Matrix.kronecker_apply,
+    Matrix.diagonal_apply, ite_mul, Complex.real_smul]
 
 private theorem actual_acd {c d : LocalPair} (k : Coupling c d) :
     actualACD k = rowMixture c d := by
@@ -295,7 +307,6 @@ private theorem uniform_entropy :
     D5.S3.Entropy.MaxEntropy.shannonEntropy (fun _ : Bit => (1 / 2 : ℝ)) = Real.log 2 := by
   simp [D5.S3.Entropy.MaxEntropy.shannonEntropy, Fin.sum_univ_two,
     Real.negMulLog, Real.log_div]
-  <;> ring
 
 private theorem local_equal_entropy (c : LocalPair) :
     vonNeumannEntropy c.minus = vonNeumannEntropy c.plus := by
@@ -352,6 +363,124 @@ def actualBC {c d : LocalPair} (k : Coupling c d) : DensityState (Bit × Bit) :=
 def actualBD {c d : LocalPair} (k : Coupling c d) : DensityState (Bit × Bit) :=
   marginalRight (reindexState adEquiv (actualBCD k))
 
+private def uniformBit : DensityState Bit :=
+  mixtureState (fun _ : Bit => (1 / 2 : ℝ)) (by intro; norm_num)
+    (by norm_num [Fin.sum_univ_two]) pointerState
+
+private theorem uniform_bit_entropy : vonNeumannEntropy uniformBit = Real.log 2 := by
+  rw [uniformBit, orthogonal_mixture_entropy _ _ _ _ pointerState_orthogonal]
+  simp only [entropy_pointerState, mul_zero, Finset.sum_const_zero, add_zero, uniform_entropy]
+
+private def localRecord (c : LocalPair) : DensityState (Bit × Bit) :=
+  recordState (fun _ : Bit => (1 / 2 : ℝ)) (by intro; norm_num)
+    (by norm_num [Fin.sum_univ_two]) (fun i => if i = 0 then c.plus else c.minus)
+
+private theorem local_record_entropy (c : LocalPair) :
+    vonNeumannEntropy (localRecord c) = Real.log 2 + vonNeumannEntropy c.plus := by
+  simp only [localRecord, record_entropy, uniform_entropy, Fin.sum_univ_two,
+    Fin.isValue, ↓reduceIte, one_ne_zero, local_equal_entropy]
+  ring
+
+private theorem row_a (c d : LocalPair) : marginalRight (rowMixture c d) = uniformBit := by
+  unfold rowMixture recordState
+  rw [marginalRight_mixture]
+  simp only [marginalRight_productState]
+  rfl
+
+private theorem row_ac (c d : LocalPair) :
+    marginalRight (reindexState acEquiv (rowMixture c d)) = localRecord c := by
+  apply Subtype.ext
+  apply CStarMatrix.ofMatrix.symm.injective
+  ext ⟨a,i⟩ ⟨b,j⟩
+  change (∑ t : Bit, CStarMatrix.ofMatrix.symm (rowMixture c d).1 (a,(i,t)) (b,(j,t))) =
+    CStarMatrix.ofMatrix.symm (localRecord c).1 (a,i) (b,j)
+  simp only [rowMixture, localRecord, record_entry, Fin.sum_univ_two]
+  fin_cases a <;> fin_cases b <;> fin_cases i <;> fin_cases j <;>
+    simp [positiveMargin, negativeMargin, productState, Matrix.kronecker_apply,
+      LocalPair.plus, LocalPair.minus, qubitState, qubitMatrix] <;> ring
+
+private theorem row_ad (c d : LocalPair) :
+    marginalRight (reindexState adEquiv (rowMixture c d)) = localRecord d := by
+  apply Subtype.ext
+  apply CStarMatrix.ofMatrix.symm.injective
+  ext ⟨a,i⟩ ⟨b,j⟩
+  change (∑ t : Bit, CStarMatrix.ofMatrix.symm (rowMixture c d).1 (a,(t,i)) (b,(t,j))) =
+    CStarMatrix.ofMatrix.symm (localRecord d).1 (a,i) (b,j)
+  simp only [rowMixture, localRecord, record_entry, Fin.sum_univ_two]
+  fin_cases a <;> fin_cases b <;> fin_cases i <;> fin_cases j <;>
+    simp [positiveMargin, negativeMargin, productState, Matrix.kronecker_apply,
+      LocalPair.plus, LocalPair.minus, qubitState, qubitMatrix] <;> ring
+
+private def abProbability {c d : LocalPair} (k : Coupling c d) (ab : AB) : ℝ :=
+  if ab.1 = ab.2 then (1 - k.K.trace.re) / 2 else k.K.trace.re / 2
+
+private theorem ab_probability_nonneg {c d : LocalPair} (k : Coupling c d) (ab : AB) :
+    0 ≤ abProbability k ab := by
+  have hk := trace_coupling_range k
+  unfold abProbability
+  split_ifs <;> linarith [hk.1, hk.2]
+
+private theorem ab_probability_sum {c d : LocalPair} (k : Coupling c d) :
+    ∑ ab : AB, abProbability k ab = 1 := by
+  simp [abProbability, Fintype.sum_prod_type, Fin.sum_univ_two]
+  ring
+
+private theorem actual_ab {c d : LocalPair} (k : Coupling c d) :
+    marginalRight (actualState k) =
+      mixtureState (abProbability k) (ab_probability_nonneg k) (ab_probability_sum k) pointerState := by
+  apply Subtype.ext
+  apply CStarMatrix.ofMatrix.symm.injective
+  ext a b
+  change (∑ i : CD, actualMatrix k (a,i) (b,i)) = _
+  simp only [actual_entry]
+  have hptr (i j : AB) : CStarMatrix.ofMatrix.symm
+      (mixtureState (abProbability k) (ab_probability_nonneg k) (ab_probability_sum k) pointerState).1 i j =
+      if i = j then (abProbability k i : ℂ) else 0 := by
+    change (∑ v : AB, abProbability k v • Matrix.diagonal
+      (fun j => if j = v then (1 : ℂ) else 0)) i j = _
+    simp [Matrix.sum_apply, Matrix.smul_apply, Matrix.diagonal_apply, ite_mul,
+      Complex.real_smul]
+  rw [hptr]
+  have hkreal : (k.K.trace.re : ℂ) = k.K.trace := by
+    apply Complex.ext
+    · simp
+    · simpa using (Complex.nonneg_iff.mp k.positive.trace_nonneg).2.symm
+  have hp : (CStarMatrix.ofMatrix.symm (positiveMargin c d).1).trace = 1 :=
+    (positiveMargin c d).2.2
+  have hq : (CStarMatrix.ofMatrix.symm (negativeMargin c d).1).trace = 1 :=
+    (negativeMargin c d).2.2
+  have hb (ab : AB) : (block k ab).trace = (abProbability k ab : ℂ) := by
+    rcases ab with ⟨a,b⟩
+    fin_cases a <;> fin_cases b <;>
+      simp [block, abProbability, Matrix.trace_smul, Matrix.trace_sub,
+        hp, hq, ← hkreal, Complex.real_smul] <;> ring
+  by_cases h : a = b
+  · subst b
+    simp only [↓reduceIte]
+    exact hb a
+  · simp [h]
+
+private theorem ab_entropy {c d : LocalPair} (k : Coupling c d) :
+    vonNeumannEntropy (marginalRight (actualState k)) = Real.log 2 + Real.binEntropy k.K.trace.re := by
+  rw [actual_ab, orthogonal_mixture_entropy _ _ _ _ pointerState_orthogonal]
+  simp only [entropy_pointerState, mul_zero, Finset.sum_const_zero, add_zero]
+  simp only [D5.S3.Entropy.MaxEntropy.shannonEntropy, Fintype.sum_prod_type,
+    Fin.sum_univ_two, abProbability]
+  norm_num only [Fin.isValue, Prod.fst, Prod.snd, ↓reduceIte, one_ne_zero, zero_ne_one]
+  rw [show (1 - k.K.trace.re) / 2 = (1 - k.K.trace.re) * (1 / 2) by ring,
+    show k.K.trace.re / 2 = k.K.trace.re * (1 / 2) by ring,
+    Real.negMulLog_mul, Real.negMulLog_mul,
+    Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub]
+  simp [Real.negMulLog, Real.log_div]
+  <;> ring
+
+private theorem holevo_value (c : LocalPair) :
+    qubitHolevo c.x c.z c.disk = vonNeumannEntropy c.average - vonNeumannEntropy c.plus := by
+  change vonNeumannEntropy c.average -
+    (vonNeumannEntropy c.plus + vonNeumannEntropy c.minus) / 2 = _
+  rw [local_equal_entropy]
+  ring
+
 /-- The original natural-log Zhang--Yeung convention, evaluated on actual partial traces. -/
 def zhangYeungGap {c d : LocalPair} (k : Coupling c d) : ℝ :=
   let a := vonNeumannEntropy (marginalRight (actualACD k))
@@ -368,5 +497,21 @@ def zhangYeungGap {c d : LocalPair} (k : Coupling c d) : ℝ :=
   let de := vonNeumannEntropy (marginalLeft (marginalLeft (actualState k)))
   2 * (ac + ad - a - acd) + (bc + bd - b - bcd) + (a + b - ab) +
     (ad + cd - de - acd) + (ac + cd - ce - acd) - (ce + de - cd)
+
+/-- The original spectral gap on the actual sixteen-dimensional density, with no
+information estimate or rank hypothesis supplied as an assumption. -/
+theorem actual_gap_identity (c d : LocalPair) (k : Coupling c d) :
+    zhangYeungGap k = Real.log 2 - Real.binEntropy k.K.trace.re +
+      qubitHolevo c.x c.z c.disk + qubitHolevo d.x d.z d.disk -
+      3 * quantumMutualInformation (productMixture c d) := by
+  simp only [zhangYeungGap, actualAC, actualAD, actualBC, actualBD,
+    actual_acd, actual_bcd, row_a, row_ac, row_ad, uniform_bit_entropy,
+    local_record_entropy, row_entropy, ab_entropy, actual_cd,
+    (product_marginals c d).1, (product_marginals c d).2,
+    holevo_value, quantumMutualInformation]
+  rw [(product_marginals c d).1, (product_marginals c d).2]
+  ring
+
+#print axioms actual_gap_identity
 
 end D5.S3.Quantum.Information.ProductMarginZhangYeung
