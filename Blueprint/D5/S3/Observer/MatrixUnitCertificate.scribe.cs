@@ -11,6 +11,18 @@ internal sealed class MatrixUnitCertificateDocument : IScribeDocumentDefinition
         H("Exact Matrix Units from a Finite Weyl Pair"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("clock-phase-powers-are-cyclic-characters"),
+                DeclarationHandle.Create(
+                    "D5/S3/Observer/MatrixUnitCertificate.clock_phase_pow_eq_character"),
+                H("Clock phase powers are cyclic characters"),
+                StatementSource.FromAuthor(ClockPhaseFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every nonzero window cardinality M and cyclic indices r and k, "
+                        + "raising the rth clock phase to the representative of k gives "
+                        + "the standard cyclic character with frequency k evaluated at r."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("cyclic-shift-power-entries"),
                 DeclarationHandle.Create(
                     "D5/S3/Observer/MatrixUnitCertificate.shift_matrix_pow_apply"),
@@ -75,6 +87,17 @@ internal sealed class MatrixUnitCertificateDocument : IScribeDocumentDefinition
                                     "relation for the same Weyl-generated family."))),
                 DescribeRole.Theorem
             ))));
+
+    private static Formula ClockPhaseFormula() => Disp(Seq(
+        Forall, Sp, F.Id("M"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Sp,
+        OpenBracket, Operatorname, Grp(F.Id("NeZero")), Sp, F.Id("M"), CloseBracket, Comma, Sp,
+        Forall, Sp, F.Id("r"), Comma, Sp, F.Id("k"), Sp, InMacro, Sp,
+        Mathbb, Grp(F.Id("Z")), Slash, F.Id("M"), Mathbb, Grp(F.Id("Z")), Comma, Esc,
+        Open, Operatorname, Grp(F.Id("windowRoot")), Open, F.Id("M"), Close,
+        Caret, Grp(Operatorname, Grp(F.Id("val")), Open, F.Id("r"), Close), Close,
+        Caret, Grp(Operatorname, Grp(F.Id("val")), Open, F.Id("k"), Close), Sp, Eq, Sp,
+        Operatorname, Grp(F.Id("character")), Underscore, Grp(F.Id("M")),
+        Open, F.Id("k"), Comma, F.Id("r"), Close));
 
     private static Formula ShiftPowerFormula() => Disp(Seq(
         Begin, Grp(F.Id("gathered")),

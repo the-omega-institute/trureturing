@@ -7,7 +7,10 @@
    digest: Sectorwise computational/Fourier projectors attain every n-partite partial bound. -/
 
 import D5.S3.Quantum.Information.SLDSpectralEnergy
-import D5.S3.Observer.WindowRegister
+import D5.S3.Observer.MatrixUnitCertificate
+import D5.S3.Quantum.Recovery.PurifiedLocalPath
+import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
+import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment
 
 /-! Partial tightness of the multipartite entangled-measurement bound. -/
 
@@ -30,22 +33,12 @@ abbrev jointIndex (n d : ℕ) := Fin n → ZMod d
 def winningOutcome {n d : ℕ} [NeZero n] (x y : jointIndex n d) : jointIndex n d :=
   fun k => if k = 0 then ∑ i, x i else y k - y 0
 
-private def tensorEntry {n d : ℕ}
-    (U : Fin n → ZMod d → ZMod d → Matrix (ZMod d) (ZMod d) ℂ)
-    (x : jointIndex n d) (y : jointIndex n d) (i j : jointIndex n d) : ℂ :=
-  ∏ k, U k (x k) (y k) (i k) (j k)
-
 private def tensorMatrix {n d : ℕ}
     (U : Fin n → ZMod d → ZMod d → Matrix (ZMod d) (ZMod d) ℂ)
     (x : jointIndex n d) (y : jointIndex n d) :
     Matrix (jointIndex n d) (jointIndex n d) ℂ :=
-  fun i j => tensorEntry U x y i j
-
-private def tensorAdjointMatrix {n d : ℕ}
-    (U : Fin n → ZMod d → ZMod d → Matrix (ZMod d) (ZMod d) ℂ)
-    (x : jointIndex n d) (y : jointIndex n d) :
-    Matrix (jointIndex n d) (jointIndex n d) ℂ :=
-  fun i j => star (tensorEntry U x y j i)
+  D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap (fun _ : Fin n => ZMod d)
+    (fun k => U k (x k) (y k))
 
 /-- The average winning score for local unitary encodings and a joint measurement. -/
 def score {n d : ℕ}
@@ -56,7 +49,7 @@ def score {n d : ℕ}
   ((d : ℝ) ^ (2 * n))⁻¹ *
     ∑ x, ∑ y,
       (Matrix.trace
-        (tensorMatrix u x y * ρ * tensorAdjointMatrix u x y *
+        (tensorMatrix u x y * ρ * (tensorMatrix u x y)ᴴ *
           p (winningOutcome x y))).re
 
 /-- A finite sum of positive product operators is fully separable. -/
@@ -69,10 +62,10 @@ def IsFullySeparable {n d : ℕ}
 def IsProjectiveMeasurement {n d : ℕ} [NeZero n] [NeZero d]
     [Fintype (jointIndex n d)] [DecidableEq (jointIndex n d)]
     (p : jointIndex n d → Matrix (jointIndex n d) (jointIndex n d) ℂ) : Prop :=
-  (∀ b, (p b).PosSemidef ∧ p b * p b = p b) ∧ ∑ b, p b = 1
+  (∀ b, IsStarProjection (p b)) ∧ ∑ b, p b = 1
 
 private theorem neZeroOfTwo (n : ℕ) (h : 2 ≤ n) : NeZero n :=
-  ⟨by omega⟩
+  NeZero.of_pos (lt_of_lt_of_le (by decide : 0 < (2 : ℕ)) h)
 
 def claim : Prop := by
   classical
@@ -91,16 +84,8 @@ def claim : Prop := by
 private def sectorPoint {n d : ℕ} (t : ZMod d) (r : jointIndex n d) : jointIndex n d :=
   fun k => t + r k
 
-private def sectorLabel {n d : ℕ} [NeZero n] (b : jointIndex n d) : jointIndex n d :=
-  fun k => if k = 0 then 0 else b k
-
 private def sectorCoordinate {n d : ℕ} [NeZero n] (i : jointIndex n d) : jointIndex n d :=
   fun k => i k - i 0
-
-private def computationalVector {n d : ℕ} (t : ZMod d) (r : jointIndex n d) :
-    jointIndex n d → ℂ := by
-  classical
-  exact fun i => if i = sectorPoint t r then 1 else 0
 
 private def fourierVector {n d : ℕ} [NeZero n] [NeZero d]
     (a : ZMod d) (r : jointIndex n d) : jointIndex n d → ℂ := by
@@ -111,28 +96,24 @@ private def fourierVector {n d : ℕ} [NeZero n] [NeZero d]
 private def selectedVector {n d : ℕ} [NeZero n] [NeZero d]
     (r : Finset (jointIndex n d)) (b : jointIndex n d) : jointIndex n d → ℂ := by
   classical
-  exact if sectorLabel b ∈ r then computationalVector (b 0) (sectorLabel b)
-    else fourierVector (b 0) (sectorLabel b)
+  exact if Function.update b 0 0 ∈ r then
+    Pi.single (sectorPoint (b 0) (Function.update b 0 0)) 1
+    else fourierVector (b 0) (Function.update b 0 0)
 
 private def selectedMeasurement {n d : ℕ} [NeZero n] [NeZero d]
     (r : Finset (jointIndex n d)) (b : jointIndex n d) :
     Matrix (jointIndex n d) (jointIndex n d) ℂ :=
-  Matrix.vecMulVec (selectedVector r b) (star (selectedVector r b))
+  D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity (selectedVector r b)
 
 private def ghzDensity (n d : ℕ) [NeZero n] [NeZero d] :
     Matrix (jointIndex n d) (jointIndex n d) ℂ :=
-  Matrix.vecMulVec (fourierVector 0 (0 : jointIndex n d))
-    (star (fourierVector 0 (0 : jointIndex n d)))
+  D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity
+    (fourierVector 0 (0 : jointIndex n d))
 
 private def localEncoding (n d : ℕ) [NeZero d] :
     Fin n → ZMod d → ZMod d → Matrix (ZMod d) (ZMod d) ℂ :=
   fun _ x y => D5.S3.Observer.WindowRegister.clockMatrix d ^ x.val *
     D5.S3.Observer.WindowRegister.shiftMatrix d ^ y.val
-
-private theorem sectorLabel_zero {n d : ℕ} [NeZero n] (b : jointIndex n d) :
-    sectorLabel b 0 = 0 := by
-  change (if (0 : Fin n) = 0 then (0 : ZMod d) else b 0) = 0
-  exact ite_eq_left rfl
 
 private theorem sector_coordinates {n d : ℕ} [NeZero n] (i : jointIndex n d) :
     sectorCoordinate i 0 = 0 ∧ sectorPoint (i 0) (sectorCoordinate i) = i := by
@@ -159,8 +140,8 @@ private theorem sectorPoint_injective {n d : ℕ} [NeZero n]
 
 private theorem computational_projector_separable {n d : ℕ} [NeZero d]
     (t : ZMod d) (r : jointIndex n d) :
-    IsFullySeparable (Matrix.vecMulVec (computationalVector t r)
-      (star (computationalVector t r))) := by
+    IsFullySeparable (Matrix.vecMulVec (Pi.single (sectorPoint t r) (1 : ℂ))
+      (star (Pi.single (sectorPoint t r) (1 : ℂ)))) := by
   classical
   let p : Fin n → Matrix (ZMod d) (ZMod d) ℂ := fun k =>
     Matrix.vecMulVec (Pi.single (t + r k) 1) (star (Pi.single (t + r k) 1))
@@ -168,9 +149,11 @@ private theorem computational_projector_separable {n d : ℕ} [NeZero d]
   · intro a k
     exact Matrix.posSemidef_vecMulVec_self_star _
   · intro i j
-    change computationalVector t r i * star (computationalVector t r j) =
+    change (Pi.single (sectorPoint t r) 1 : jointIndex n d → ℂ) i *
+      star ((Pi.single (sectorPoint t r) 1 : jointIndex n d → ℂ) j) =
       ∑ _ : Fin 1, ∏ k, p k (i k) (j k)
     rw [Fin.sum_univ_one]
+    simp only [Pi.single_apply]
     by_cases hi : i = sectorPoint t r
     · by_cases hj : j = sectorPoint t r
       · subst i
@@ -328,23 +311,15 @@ private theorem ghz_density (n d : ℕ) [NeZero n] [NeZero d]
   exact (dotProduct_comm _ _).trans h
 
 private theorem outcome_pair_injective {n d : ℕ} [NeZero n]
-    (b c : jointIndex n d) (hhead : b 0 = c 0) (hlabel : sectorLabel b = sectorLabel c) :
+    (b c : jointIndex n d) (hhead : b 0 = c 0)
+    (hlabel : Function.update b 0 0 = Function.update c 0 0) :
     b = c := by
   funext k
   by_cases hk : k = 0
   · subst k
     exact hhead
   · have h := congrFun hlabel k
-    change (if k = 0 then 0 else b k) = (if k = 0 then 0 else c k) at h
-    simpa only [ite_eq_right hk] using h
-
-private theorem computational_dot {n d : ℕ} [NeZero n] [NeZero d]
-    (t : ZMod d) (s : jointIndex n d) (v : jointIndex n d → ℂ) :
-    star (computationalVector t s) ⬝ᵥ v = v (sectorPoint t s) := by
-  classical
-  change (∑ i, star (if i = sectorPoint t s then (1 : ℂ) else 0) * v i) = _
-  simp only [apply_ite, star_one, star_zero, ite_mul, one_mul, zero_mul,
-    Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+    simpa only [Function.update_of_ne hk] using h
 
 private theorem fourier_other_sector {n d : ℕ} [NeZero n] [NeZero d]
     (a t : ZMod d) (r s : jointIndex n d) (hr : r 0 = 0) (hs : s 0 = 0)
@@ -362,44 +337,51 @@ private theorem selected_orthonormal (n d : ℕ) [NeZero n] [NeZero d]
     (b c : jointIndex n d) :
     star (selectedVector r b) ⬝ᵥ selectedVector r c = if b = c then 1 else 0 := by
   classical
-  have hcomp (b c : jointIndex n d) (hb : sectorLabel b ∈ r) :
+  have hcomp (b c : jointIndex n d) (hb : (Function.update b 0 0) ∈ r) :
       star (selectedVector r b) ⬝ᵥ selectedVector r c = if b = c then 1 else 0 := by
-    have hbvec : selectedVector r b = computationalVector (b 0) (sectorLabel b) := ite_eq_left hb
-    rw [hbvec, computational_dot]
-    by_cases hc : sectorLabel c ∈ r
-    · have hcvec : selectedVector r c = computationalVector (c 0) (sectorLabel c) := ite_eq_left hc
+    have hbvec : selectedVector r b =
+        Pi.single (sectorPoint (b 0) (Function.update b 0 0)) 1 := ite_eq_left hb
+    rw [hbvec, Pi.star_single, star_one, single_one_dotProduct]
+    by_cases hc : (Function.update c 0 0) ∈ r
+    · have hcvec : selectedVector r c =
+          Pi.single (sectorPoint (c 0) (Function.update c 0 0)) 1 := ite_eq_left hc
       rw [hcvec]
-      change (if sectorPoint (b 0) (sectorLabel b) = sectorPoint (c 0) (sectorLabel c)
+      simp only [Pi.single_apply]
+      change (if sectorPoint (b 0) (Function.update b 0 0) = sectorPoint (c 0) (Function.update c 0 0)
         then (1 : ℂ) else 0) = _
-      have heq : sectorPoint (b 0) (sectorLabel b) = sectorPoint (c 0) (sectorLabel c) ↔ b = c := by
+      have heq : sectorPoint (b 0) (Function.update b 0 0) =
+          sectorPoint (c 0) (Function.update c 0 0) ↔ b = c := by
         constructor
         · intro h
           obtain ⟨hh, hl⟩ := sectorPoint_injective _ _
-            (sectorLabel_zero b) (sectorLabel_zero c) _ _ h
+            (Function.update_self 0 0 b) (Function.update_self 0 0 c) _ _ h
           exact outcome_pair_injective b c hh hl
         · intro h
           subst c
           rfl
       exact ite_cond_congr (propext heq)
-    · have hcvec : selectedVector r c = fourierVector (c 0) (sectorLabel c) := ite_eq_right hc
+    · have hcvec : selectedVector r c = fourierVector (c 0) (Function.update c 0 0) := ite_eq_right hc
       rw [hcvec]
-      have hlabels : sectorLabel b ≠ sectorLabel c := by
+      have hlabels : (Function.update b 0 0) ≠ (Function.update c 0 0) := by
         intro h
         exact hc (h ▸ hb)
-      rw [fourier_other_sector _ _ _ _ (sectorLabel_zero b) (sectorLabel_zero c) hlabels]
-      exact (ite_eq_right (fun h : b = c => hlabels (congrArg sectorLabel h))).symm
-  by_cases hb : sectorLabel b ∈ r
+      rw [fourier_other_sector _ _ _ _
+        (Function.update_self 0 0 b) (Function.update_self 0 0 c) hlabels]
+      exact (ite_eq_right (fun h : b = c =>
+        hlabels (congrArg (fun b => Function.update b 0 0) h))).symm
+  by_cases hb : (Function.update b 0 0) ∈ r
   · exact hcomp b c hb
-  · by_cases hc : sectorLabel c ∈ r
+  · by_cases hc : (Function.update c 0 0) ∈ r
     · rw [star_dotProduct, hcomp c b hc]
       by_cases hbc : b = c
       · subst c
         exact (hb hc).elim
       · rw [ite_eq_right (Ne.symm hbc), ite_eq_right hbc, star_zero]
-    · have hbvec : selectedVector r b = fourierVector (b 0) (sectorLabel b) := ite_eq_right hb
-      have hcvec : selectedVector r c = fourierVector (c 0) (sectorLabel c) := ite_eq_right hc
-      rw [hbvec, hcvec, sector_basis n d hn hd _ _ _ _ (sectorLabel_zero b) (sectorLabel_zero c)]
-      have heq : b 0 = c 0 ∧ sectorLabel b = sectorLabel c ↔ b = c :=
+    · have hbvec : selectedVector r b = fourierVector (b 0) (Function.update b 0 0) := ite_eq_right hb
+      have hcvec : selectedVector r c = fourierVector (c 0) (Function.update c 0 0) := ite_eq_right hc
+      rw [hbvec, hcvec, sector_basis n d hn hd _ _ _ _
+        (Function.update_self 0 0 b) (Function.update_self 0 0 c)]
+      have heq : b 0 = c 0 ∧ (Function.update b 0 0) = (Function.update c 0 0) ↔ b = c :=
         ⟨fun h => outcome_pair_injective b c h.1 h.2, fun h => by subst c; exact ⟨rfl, rfl⟩⟩
       exact ite_cond_congr (propext heq)
 
@@ -408,18 +390,15 @@ private theorem sector_measurement (n d : ℕ) [NeZero n] [NeZero d]
     IsProjectiveMeasurement (selectedMeasurement r) := by
   classical
   have horth := selected_orthonormal n d hn hd r
-  change (∀ b, (selectedMeasurement r b).PosSemidef ∧
-    selectedMeasurement r b * selectedMeasurement r b = selectedMeasurement r b) ∧
+  change (∀ b, IsStarProjection (selectedMeasurement r b)) ∧
       ∑ b, selectedMeasurement r b = 1
   constructor
   · intro b
-    refine ⟨Matrix.posSemidef_vecMulVec_self_star _, ?_⟩
+    refine ⟨?_, (Matrix.posSemidef_vecMulVec_self_star _).isHermitian⟩
     have hnorm := horth b b
     rw [ite_eq_left rfl] at hnorm
-    change Matrix.vecMulVec (selectedVector r b) (star (selectedVector r b)) *
-      Matrix.vecMulVec (selectedVector r b) (star (selectedVector r b)) = _
-    rw [Matrix.vecMulVec_mul_vecMulVec, hnorm, one_smul]
-    rfl
+    exact (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake
+      (selectedVector r b) hnorm 1).1
   · let w : Matrix (jointIndex n d) (jointIndex n d) ℂ := fun i b => selectedVector r b i
     have hw : wᴴ * w = 1 := by
       ext b c
@@ -599,54 +578,43 @@ private theorem fourier_not_product (n d : ℕ) [NeZero n] [NeZero d]
 
 private theorem selected_separable_iff (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (r : Finset (jointIndex n d)) (b : jointIndex n d) :
-    IsFullySeparable (selectedMeasurement r b) ↔ sectorLabel b ∈ r := by
+    IsFullySeparable (selectedMeasurement r b) ↔ (Function.update b 0 0) ∈ r := by
   classical
-  by_cases hb : sectorLabel b ∈ r
+  by_cases hb : (Function.update b 0 0) ∈ r
   · refine ⟨fun _ => hb, fun _ => ?_⟩
     change IsFullySeparable (Matrix.vecMulVec (selectedVector r b) (star (selectedVector r b)))
-    have hvec : selectedVector r b = computationalVector (b 0) (sectorLabel b) :=
+    have hvec : selectedVector r b = (Pi.single (sectorPoint (b 0) (Function.update b 0 0)) 1) :=
       ite_eq_left hb
     rw [hvec]
     exact computational_projector_separable _ _
   · refine ⟨fun hsep => ?_, fun h => (hb h).elim⟩
-    have hvec : selectedVector r b = fourierVector (b 0) (sectorLabel b) := ite_eq_right hb
+    have hvec : selectedVector r b = fourierVector (b 0) (Function.update b 0 0) := ite_eq_right hb
     change IsFullySeparable (Matrix.vecMulVec (selectedVector r b) (star (selectedVector r b))) at hsep
     rw [hvec] at hsep
-    have hv := sector_basis n d hn hd (b 0) (b 0) (sectorLabel b) (sectorLabel b)
-      (sectorLabel_zero b) (sectorLabel_zero b)
+    have hv := sector_basis n d hn hd (b 0) (b 0) (Function.update b 0 0) (Function.update b 0 0)
+      (Function.update_self 0 0 b) (Function.update_self 0 0 b)
     rw [ite_eq_left ⟨rfl, rfl⟩] at hv
-    exact (fourier_not_product n d hn hd (b 0) (sectorLabel b) (sectorLabel_zero b)
+    exact (fourier_not_product n d hn hd (b 0) (Function.update b 0 0) (Function.update_self 0 0 b)
       (rankOne_separable_product n d _ hv hsep)).elim
 
 private theorem sectorLabel_replace {n d : ℕ} [NeZero n] (s : jointIndex n d)
-    (hs : s 0 = 0) (a : ZMod d) : sectorLabel (Function.update s 0 a) = s := by
+    (hs : s 0 = 0) (a : ZMod d) : (Function.update (Function.update s 0 a) 0 0) = s := by
   classical
-  funext k
-  by_cases hk : k = 0
-  · subst k
-    exact (sectorLabel_zero _).trans hs.symm
-  · change (if k = 0 then 0 else Function.update s 0 a k) = s k
-    rw [ite_eq_right hk, Function.update_of_ne hk]
+  rw [Function.update_idem, ← hs, Function.update_eq_self]
 
 private theorem replace_sectorLabel {n d : ℕ} [NeZero n] (b : jointIndex n d) :
-    Function.update (sectorLabel b) 0 (b 0) = b := by
+    Function.update (Function.update b 0 0) 0 (b 0) = b := by
   classical
-  funext k
-  by_cases hk : k = 0
-  · subst k
-    exact Function.update_self _ _ _
-  · rw [Function.update_of_ne hk]
-    change (if k = 0 then 0 else b k) = b k
-    exact ite_eq_right hk
+  rw [Function.update_idem, Function.update_eq_self]
 
 private theorem sector_count (n d : ℕ) [NeZero n] [NeZero d]
     (_hn : 2 ≤ n) (_hd : 2 ≤ d) (r : Finset (jointIndex n d))
     (hr : ∀ s ∈ r, s 0 = 0) :
-    (Finset.univ.filter (fun b => sectorLabel b ∈ r)).card = d * r.card := by
+    (Finset.univ.filter (fun b => (Function.update b 0 0) ∈ r)).card = d * r.card := by
   classical
-  let e : {b : jointIndex n d // b ∈ Finset.univ.filter (fun b => sectorLabel b ∈ r)} ≃
+  let e : {b : jointIndex n d // b ∈ Finset.univ.filter (fun b => (Function.update b 0 0) ∈ r)} ≃
       ZMod d × {s : jointIndex n d // s ∈ r} :=
-    { toFun := fun b => (b.1 0, ⟨sectorLabel b.1, (Finset.mem_filter.mp b.2).2⟩)
+    { toFun := fun b => (b.1 0, ⟨(Function.update b.1 0 0), (Finset.mem_filter.mp b.2).2⟩)
       invFun := fun q => ⟨Function.update q.2.1 0 q.1, by
         apply Finset.mem_filter.mpr
         refine ⟨Finset.mem_univ _, ?_⟩
@@ -670,7 +638,7 @@ private theorem sector_separability_count (n d : ℕ) [NeZero n] [NeZero d]
       (Finset.univ.filter (fun b => IsFullySeparable (selectedMeasurement r b))).card = d * r.card) := by
   classical
   have heq : (Finset.univ.filter (fun b => IsFullySeparable (selectedMeasurement r b))) =
-      Finset.univ.filter (fun b => sectorLabel b ∈ r) := by
+      Finset.univ.filter (fun b => (Function.update b 0 0) ∈ r) := by
     exact Finset.filter_congr (fun b _ => selected_separable_iff n d hn hd r b)
   rw [heq]
   exact sector_count n d hn hd r hr
@@ -680,23 +648,17 @@ private theorem choose_sectors (n d m : ℕ) [NeZero n] [NeZero d]
     ∃ r : Finset (jointIndex n d), r.card = m ∧ ∀ s ∈ r, s 0 = 0 := by
   classical
   let s : Finset (jointIndex n d) := Finset.univ.filter (fun r => r 0 = 0)
-  let e : {r : jointIndex n d // r ∈ s} ≃ ({k : Fin n // k ≠ 0} → ZMod d) :=
-    { toFun := fun r k => r.1 k.1
-      invFun := fun f => ⟨fun k => if h : k = 0 then 0 else f ⟨k, h⟩, by
-        apply Finset.mem_filter.mpr
-        exact ⟨Finset.mem_univ _, dite_eq_left rfl⟩⟩
-      left_inv := fun r => by
-        apply Subtype.ext
-        funext k
-        by_cases hk : k = 0
-        · subst k
-          change (if h : (0 : Fin n) = 0 then (0 : ZMod d) else r.1 0) = r.1 0
-          rw [dite_eq_left rfl]
-          exact (Finset.mem_filter.mp r.2).2.symm
-        · exact dite_eq_right hk
-      right_inv := fun f => by
-        funext k
-        exact dite_eq_right k.2 }
+  let e : {r : jointIndex n d // r ∈ s} ≃ ({k : Fin n // k ≠ 0} → ZMod d) := by
+    refine (Equiv.subtypeEquivRight ?_).trans
+      (Equiv.subtypePreimage (fun k : Fin n => k = 0) (fun _ => (0 : ZMod d)))
+    intro r
+    simp -congrConsts only [s, Finset.mem_filter, Finset.mem_univ, true_and]
+    constructor
+    · intro hr
+      funext k
+      simpa -congrConsts only [Function.comp_apply, k.property] using hr
+    · intro h
+      exact congrFun h ⟨0, rfl⟩
   have hc : Fintype.card {k : Fin n // k ≠ 0} = n - 1 := by
     simpa only [Fintype.card_fin, Fintype.card_subtype_eq] using
       Fintype.card_subtype_compl (fun k : Fin n => k = 0)
@@ -707,40 +669,21 @@ private theorem choose_sectors (n d m : ℕ) [NeZero n] [NeZero d]
   obtain ⟨r, hrs, hcard⟩ := Finset.exists_subset_card_eq (s := s) (hs.symm ▸ hm)
   exact ⟨r, hcard, fun t ht => (Finset.mem_filter.mp (hrs ht)).2⟩
 
-private theorem root_character (d : ℕ) [NeZero d] (i : ZMod d) :
-    windowRoot d ^ i.val = ZMod.stdAddChar i := by
-  have h : windowRoot d = ZMod.stdAddChar (1 : ZMod d) := by
-    change Complex.exp (2 * Real.pi * Complex.I / d) = _
-    simpa only [Int.cast_one, mul_one, Complex.ofReal_mul, Complex.ofReal_ofNat] using
-      (ZMod.stdAddChar_coe (N := d) (1 : ℤ)).symm
-  rw [h, ← AddChar.map_nsmul_eq_pow]
-  congr 1
-  simp only [nsmul_eq_mul, mul_one, ZMod.natCast_zmod_val]
-
 private theorem encoding_entry (n d : ℕ) [NeZero d] (k : Fin n) (x y i j : ZMod d) :
     localEncoding n d k x y i j =
       if j = i - y then ZMod.stdAddChar (x * i) else 0 := by
   classical
-  have hs (a : ℕ) : shiftMatrix d ^ a = (shiftPerm d ^ a).permMatrix ℂ := by
-    induction a with
-    | zero => rw [pow_zero, pow_zero, Matrix.permMatrix_one]
-    | succ a ih =>
-      rw [pow_succ, ih, shiftMatrix_eq_permMatrix, ← Matrix.permMatrix_mul, ← pow_succ']
-  have hc : clockMatrix d ^ x.val =
-      Matrix.diagonal (fun i : ZMod d => ZMod.stdAddChar (x * i)) := by
-    rw [clockMatrix, Matrix.diagonal_pow]
-    congr 1
-    funext i
-    change (windowRoot d ^ i.val) ^ x.val = _
-    rw [root_character, ← AddChar.map_nsmul_eq_pow]
-    congr 1
-    rw [nsmul_eq_mul, ZMod.natCast_zmod_val]
   change (clockMatrix d ^ x.val * shiftMatrix d ^ y.val) i j = _
-  rw [hc, hs, Matrix.diagonal_mul, Equiv.Perm.permMatrix, PEquiv.toMatrix_apply,
-    Equiv.toPEquiv_apply, shiftPerm_pow_apply, ZMod.natCast_zmod_val]
+  rw [clockMatrix, Matrix.diagonal_pow, Matrix.diagonal_mul,
+    D5.S3.Observer.MatrixUnitCertificate.shift_matrix_pow_apply]
+  have hphase : (windowRoot d ^ i.val) ^ x.val = ZMod.stdAddChar (x * i) := by
+    simpa only [D5.S3.Fourier.FinitePoisson.character_apply] using
+      D5.S3.Observer.MatrixUnitCertificate.clock_phase_pow_eq_character i x
+  simp only [Pi.pow_apply]
+  rw [hphase, ZMod.natCast_zmod_val]
   by_cases h : j = i - y
-  · rw [ite_eq_left h, ite_eq_left (Option.mem_some.mpr h.symm), mul_one]
-  · rw [ite_eq_right h, ite_eq_right (fun q => h (Option.mem_some.mp q).symm), mul_zero]
+  · rw [ite_eq_left h, ite_eq_left (by rw [h]; abel), mul_one]
+  · rw [ite_eq_right h, ite_eq_right (by intro q; apply h; linear_combination -q), mul_zero]
 
 private theorem encoded_ghz (n d : ℕ) [NeZero n] [NeZero d]
     (_hn : 2 ≤ n) (_hd : 2 ≤ d) (x y : jointIndex n d) :
@@ -821,7 +764,7 @@ private theorem winning_probability (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (r : Finset (jointIndex n d))
     (x y : jointIndex n d) :
     (Matrix.trace (tensorMatrix (localEncoding n d) x y * ghzDensity n d *
-      tensorAdjointMatrix (localEncoding n d) x y *
+      (tensorMatrix (localEncoding n d) x y)ᴴ *
       selectedMeasurement r (winningOutcome x y))).re =
         if sectorCoordinate y ∈ r then (d : ℝ)⁻¹ else 1 := by
   classical
@@ -836,15 +779,15 @@ private theorem winning_probability (n d : ℕ) [NeZero n] [NeZero d]
         exact mul_comm _ _
       _ = 1 := by rw [hz, Complex.ofReal_one]
   have hstate : tensorMatrix (localEncoding n d) x y * ghzDensity n d *
-      tensorAdjointMatrix (localEncoding n d) x y =
+      (tensorMatrix (localEncoding n d) x y)ᴴ =
       Matrix.vecMulVec (fourierVector (∑ k, x k) (sectorCoordinate y))
         (star (fourierVector (∑ k, x k) (sectorCoordinate y))) := by
     change tensorMatrix (localEncoding n d) x y *
       Matrix.vecMulVec (fourierVector 0 (0 : jointIndex n d))
         (star (fourierVector 0 (0 : jointIndex n d))) *
         (tensorMatrix (localEncoding n d) x y)ᴴ = _
-    rw [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.vecMul_conjTranspose,
-      star_star, hencoded]
+    rw [D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment.conjugate_outer,
+      hencoded]
     ext i j
     change (z * fourierVector (∑ k, x k) (sectorCoordinate y) i) *
       star (z * fourierVector (∑ k, x k) (sectorCoordinate y) j) = _
@@ -855,45 +798,52 @@ private theorem winning_probability (n d : ℕ) [NeZero n] [NeZero d]
       _ = _ := by rw [hzprod, one_mul]; rfl
   have hhead : winningOutcome x y 0 = ∑ k, x k := by
     exact ite_eq_left rfl
-  have hlabel : sectorLabel (winningOutcome x y) = sectorCoordinate y := by
+  have hlabel : (Function.update (winningOutcome x y) 0 0) = sectorCoordinate y := by
     funext k
     by_cases hk : k = 0
     · subst k
-      rw [sectorLabel_zero]
+      rw [Function.update_self]
       exact (sector_coordinates y).1.symm
-    · change (if k = 0 then 0 else
-        (if k = 0 then ∑ t, x t else y k - y 0)) = y k - y 0
-      rw [ite_eq_right hk, ite_eq_right hk]
+    · rw [Function.update_of_ne hk]
+      change (if k = 0 then ∑ t, x t else y k - y 0) = y k - y 0
+      exact ite_eq_right hk
   have htrace (v : jointIndex n d → ℂ) :
       Matrix.trace (Matrix.vecMulVec (fourierVector (∑ k, x k) (sectorCoordinate y))
         (star (fourierVector (∑ k, x k) (sectorCoordinate y))) *
           Matrix.vecMulVec v (star v)) =
       (star (fourierVector (∑ k, x k) (sectorCoordinate y)) ⬝ᵥ v) *
         (star v ⬝ᵥ fourierVector (∑ k, x k) (sectorCoordinate y)) := by
-    rw [Matrix.vecMulVec_mul_vecMulVec, Matrix.trace_vecMulVec, dotProduct_smul,
-      dotProduct_comm (fourierVector (∑ k, x k) (sectorCoordinate y)) (star v), smul_eq_mul]
+    rw [show Matrix.trace (Matrix.vecMulVec
+        (fourierVector (∑ k, x k) (sectorCoordinate y))
+        (star (fourierVector (∑ k, x k) (sectorCoordinate y))) *
+        Matrix.vecMulVec v (star v)) =
+        (Complex.normSq (star (fourierVector (∑ k, x k) (sectorCoordinate y)) ⬝ᵥ v) : ℂ) from
+      D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction.trace_projector_overlap
+        (fourierVector (∑ k, x k) (sectorCoordinate y)) v]
+    rw [Complex.normSq_eq_conj_mul_self]
+    change star (star (fourierVector (∑ k, x k) (sectorCoordinate y)) ⬝ᵥ v) *
+      (star (fourierVector (∑ k, x k) (sectorCoordinate y)) ⬝ᵥ v) = _
+    rw [← Matrix.star_dotProduct v _, mul_comm]
   rw [hstate]
   change (Matrix.trace (_ * Matrix.vecMulVec
     (selectedVector r (winningOutcome x y)) (star (selectedVector r (winningOutcome x y))))).re = _
   rw [htrace]
   have hvec : selectedVector r (winningOutcome x y) =
-      if sectorCoordinate y ∈ r then computationalVector (∑ k, x k) (sectorCoordinate y)
+      if sectorCoordinate y ∈ r then (Pi.single (sectorPoint (∑ k, x k) (sectorCoordinate y)) 1)
       else fourierVector (∑ k, x k) (sectorCoordinate y) := by
-    change (if sectorLabel (winningOutcome x y) ∈ r then
-      computationalVector (winningOutcome x y 0) (sectorLabel (winningOutcome x y))
-      else fourierVector (winningOutcome x y 0) (sectorLabel (winningOutcome x y))) = _
+    change (if (Function.update (winningOutcome x y) 0 0) ∈ r then
+      (Pi.single (sectorPoint (winningOutcome x y 0) ((Function.update (winningOutcome x y) 0 0))) 1)
+      else fourierVector (winningOutcome x y 0) ((Function.update (winningOutcome x y) 0 0))) = _
     rw [hhead, hlabel]
   rw [hvec]
   by_cases hy : sectorCoordinate y ∈ r
-  · rw [ite_eq_left hy, ite_eq_left hy, star_dotProduct, computational_dot,
+  · rw [ite_eq_left hy, ite_eq_left hy, star_dotProduct, Pi.star_single, star_one, single_one_dotProduct,
       fourier_at_point _ _ _ (sector_coordinates y).1]
     have hchar : star (ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k))) *
         ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k)) = 1 := by
-      have hneg : star (ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k))) =
-          ZMod.stdAddChar (-((∑ k, x k) * (∑ k, x k))) :=
-        (AddChar.map_neg_eq_conj (ZMod.stdAddChar (N := d)) _).symm
-      rw [hneg, ← AddChar.map_add_eq_mul, neg_add_cancel,
-        AddChar.map_zero_eq_one]
+      simpa -congrConsts only
+        [RCLike.star_def, AddChar.norm_apply, one_pow, Complex.ofReal_one] using
+        Complex.conj_mul' (ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k)))
     have hsstar : star (Real.sqrt d : ℂ) = (Real.sqrt d : ℂ) := Complex.conj_ofReal _
     have hsq : (Real.sqrt d : ℂ) * (Real.sqrt d : ℂ) = (d : ℂ) := by
       exact_mod_cast Real.mul_self_sqrt (Nat.cast_nonneg d : (0 : ℝ) ≤ d)
@@ -921,43 +871,40 @@ private theorem sector_score (n d : ℕ) [NeZero n] [NeZero d]
   have hprob := winning_probability n d hn hd r
   have hcount := sector_count n d hn hd r hr
   let e : jointIndex n d ≃ jointIndex n d :=
-    { toFun := fun b => sectorPoint (b 0) (sectorLabel b)
+    { toFun := fun b => sectorPoint (b 0) (Function.update b 0 0)
       invFun := fun i => Function.update (sectorCoordinate i) 0 (i 0)
       left_inv := fun b => by
         funext k
-        change Function.update (sectorCoordinate (sectorPoint (b 0) (sectorLabel b)))
-          0 (sectorPoint (b 0) (sectorLabel b) 0) k = b k
+        change Function.update (sectorCoordinate (sectorPoint (b 0) (Function.update b 0 0)))
+          0 (sectorPoint (b 0) (Function.update b 0 0) 0) k = b k
         by_cases hk : k = 0
         · subst k
           rw [Function.update_self]
-          change b 0 + sectorLabel b 0 = b 0
-          rw [sectorLabel_zero, add_zero]
+          change b 0 + (Function.update b 0 0) 0 = b 0
+          rw [Function.update_self, add_zero]
         · rw [Function.update_of_ne hk]
-          change (b 0 + sectorLabel b k) - (b 0 + sectorLabel b 0) = b k
-          rw [sectorLabel_zero, add_zero]
-          change (b 0 + (if k = 0 then 0 else b k)) - b 0 = b k
-          rw [ite_eq_right hk]
+          change (b 0 + (Function.update b 0 0) k) - (b 0 + (Function.update b 0 0) 0) = b k
+          rw [Function.update_self, add_zero]
+          rw [Function.update_of_ne hk]
           abel
       right_inv := fun i => by
         funext k
         change Function.update (sectorCoordinate i) 0 (i 0) 0 +
-          sectorLabel (Function.update (sectorCoordinate i) 0 (i 0)) k = i k
+          (Function.update (Function.update (sectorCoordinate i) 0 (i 0)) 0 0) k = i k
         rw [Function.update_self]
         by_cases hk : k = 0
         · subst k
-          rw [sectorLabel_zero, add_zero]
-        · change i 0 + (if k = 0 then 0 else
-            Function.update (sectorCoordinate i) 0 (i 0) k) = i k
-          rw [ite_eq_right hk, Function.update_of_ne hk]
+          rw [Function.update_self, add_zero]
+        · rw [Function.update_of_ne hk, Function.update_of_ne hk]
           change i 0 + (i k - i 0) = i k
           abel }
-  have hcoordinate (b : jointIndex n d) : sectorCoordinate (e b) = sectorLabel b := by
+  have hcoordinate (b : jointIndex n d) : sectorCoordinate (e b) = (Function.update b 0 0) := by
     funext k
-    change (b 0 + sectorLabel b k) - (b 0 + sectorLabel b 0) = sectorLabel b k
-    rw [sectorLabel_zero, add_zero]
+    change (b 0 + (Function.update b 0 0) k) - (b 0 + (Function.update b 0 0) 0) = (Function.update b 0 0) k
+    rw [Function.update_self, add_zero]
     abel
   have hreindex : (∑ y, if sectorCoordinate y ∈ r then (d : ℝ)⁻¹ else 1) =
-      ∑ b : jointIndex n d, if sectorLabel b ∈ r then (d : ℝ)⁻¹ else 1 := by
+      ∑ b : jointIndex n d, if (Function.update b 0 0) ∈ r then (d : ℝ)⁻¹ else 1 := by
     rw [← e.sum_comp (fun y => if sectorCoordinate y ∈ r then (d : ℝ)⁻¹ else 1)]
     apply Finset.sum_congr rfl
     intro b _
@@ -966,9 +913,9 @@ private theorem sector_score (n d : ℕ) [NeZero n] [NeZero d]
     simp only [Finset.card_univ, Fintype.card_fun, Fintype.card_fin, ZMod.card,
       Nat.cast_pow]
   have hcomplement := Finset.card_filter_add_card_filter_not
-    (s := (Finset.univ : Finset (jointIndex n d))) (fun b => sectorLabel b ∈ r)
+    (s := (Finset.univ : Finset (jointIndex n d))) (fun b => (Function.update b 0 0) ∈ r)
   have hcomplementReal :
-      ((Finset.univ.filter (fun b : jointIndex n d => sectorLabel b ∉ r)).card : ℝ) =
+      ((Finset.univ.filter (fun b : jointIndex n d => (Function.update b 0 0) ∉ r)).card : ℝ) =
         (d : ℝ) ^ n - d * r.card := by
     have h := congrArg (fun k : ℕ => (k : ℝ)) hcomplement
     rw [Nat.cast_add, hcount, Nat.cast_mul, hc] at h
