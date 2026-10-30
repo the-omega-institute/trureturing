@@ -6,9 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Walks/OpenQuantumWalkGamblerHittingTimeRefutation.claim; result=D5/S3/Quantum/Walks/OpenQuantumWalkGamblerHittingTimeRefutation.result; claim=D5/S3/Quantum/Walks/OpenQuantumWalkGamblerHittingTimeRefutation.claim
    digest: A complex reset pair separates states invisible to the proposed mean hitting time. -/
 
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Data.List.Sections
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 
 /-! The stopped-word expectation for the complex reset counterexample to Remark 5.3. -/
 
@@ -54,7 +52,7 @@ def claim : Prop :=
     ∀ m : ℕ, 3 ≤ m → ∃ h j : ℕ → ℕ → ℝ,
       (∀ k, 1 ≤ k → k ≤ m - 1 → j m k = -j m (m - k)) ∧
       ∀ k, 1 ≤ k → k ≤ m - 1 → ∀ ρ : Matrix (Fin 2) (Fin 2) ℂ,
-        ρ.PosSemidef → ρ.trace = 1 →
+        D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity ρ →
         meanHittingTime l r m k ρ ≠ ⊤ ∧
         (meanHittingTime l r m k ρ).toReal =
           1 + h m (m - k) * (ρ 0 0).re + h m k * (ρ 1 1).re + j m k * (ρ 0 1).re
@@ -200,12 +198,12 @@ theorem result : ¬ claim := by
     fin_cases i <;> fin_cases j <;>
       norm_num [l, r, u, v, Matrix.mul_apply, Fin.sum_univ_two, Matrix.vecMulVec,
         Complex.ext_iff]
-  have hρ : ρ.PosSemidef ∧ ρ.trace = 1 := by
+  have hρ : D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity ρ := by
     constructor
     · exact (Matrix.posSemidef_vecMulVec_self_star u).smul
         (by norm_num [Complex.nonneg_iff] : (0 : ℂ) ≤ 1 / 2)
     · norm_num [ρ, u, Matrix.trace, Matrix.diag, Fin.sum_univ_two, Matrix.vecMulVec]
-  have hσ : σ.PosSemidef ∧ σ.trace = 1 := by
+  have hσ : D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity σ := by
     constructor
     · exact (Matrix.posSemidef_vecMulVec_self_star v).smul
         (by norm_num [Complex.nonneg_iff] : (0 : ℂ) ≤ 1 / 2)
@@ -219,8 +217,8 @@ theorem result : ¬ claim := by
       Fin.sum_univ_two, Matrix.vecMulVec, Matrix.conjTranspose_apply, Complex.ext_iff]
   intro hc
   obtain ⟨h, j, _, he⟩ := hc l r hnorm 3 (by omega)
-  have hp := (he 1 (by omega) (by omega) ρ hρ.1 hρ.2).2
-  have hm := (he 1 (by omega) (by omega) σ hσ.1 hσ.2).2
+  have hp := (he 1 (by omega) (by omega) ρ hρ).2
+  have hm := (he 1 (by omega) (by omega) σ hσ).2
   rw [htimes.1] at hp
   rw [htimes.2] at hm
   rw [hentries.1, hentries.2.1, hentries.2.2] at hp
