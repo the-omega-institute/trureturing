@@ -127,11 +127,17 @@ private theorem cubic_resultant_ne_zero (p : ℤ[X])
     rintro ⟨a, ha⟩
     apply hp
     have he := congrArg (Polynomial.eval₂ (Rat.castHom ℝ) β) ha
-    simpa only [eval₂_mul, eval₂_map, RingHom.comp_intCast, cubic_at_perron,
+    have hcomp : (Rat.castHom ℝ).comp (Int.castRingHom ℚ) = Int.castRingHom ℝ := by
+      ext n; simp
+    simpa only [eval₂_mul, eval₂_map, hcomp, cubic_at_perron,
       zero_mul] using he
   have hc := cubic_irreducible.coprime_iff_not_dvd.mpr hn
   have hr := resultant_ne_zero _ _ hc
-  simpa only [resultant_map_map, natDegree_map] using hr
+  have hdc := natDegree_map_eq_of_injective (Int.castRingHom ℚ).injective_int cubic
+  have hdp := natDegree_map_eq_of_injective (Int.castRingHom ℚ).injective_int p
+  intro hzero
+  apply hr
+  simpa only [hdc, hdp, resultant_map_map, hzero, map_zero]
 
 private theorem secondary_root_relations {z : ℂ}
     (hz : z ∈ tribonacciCharacteristicPolynomial.roots)
@@ -173,9 +179,10 @@ private theorem secondary_root_relations {z : ℂ}
   have hre_eq : 2 * z.re + (β - 1) = 0 := by
     apply (mul_eq_zero.mp (show z.im * (2 * z.re + (β - 1)) = 0 by
       nlinarith [him])).resolve_left him_ne
+  have hre_mul := congrArg (fun x : ℝ => z.re * x) hre_eq
   have hn : Complex.normSq z = β⁻¹ := by
     rw [Complex.normSq_apply]
-    nlinarith [hre_eq, sq_nonneg (2 * z.re + (β - 1))]
+    nlinarith [hre, hre_mul]
   refine ⟨?_, ?_, ?_⟩
   · apply Complex.ext <;> simp <;> linarith
   · rw [mul_comm, ← Complex.normSq_eq_conj_mul_self, hn, hi]
@@ -227,9 +234,14 @@ private theorem resultant_three_embeddings {z : ℂ}
   rw [hd, cubic_factorization hz hz_ne] at hmap
   rw [← hmap, h123]
   simp only [pc, eval_map]
-  have hreal := hom_eval₂ p (Int.castRingHom ℝ) Complex.ofRealHom β
-  have hconj := hom_eval₂ p (Int.castRingHom ℂ) (starRingEnd ℂ) z
-  simp only [RingHom.comp_intCast] at hreal hconj
+  have hreal := hom_eval₂ (Int.castRingHom ℝ) Complex.ofRealHom p β
+  have hconj := hom_eval₂ (Int.castRingHom ℂ) (starRingEnd ℂ) p z
+  have hcompR : Complex.ofRealHom.comp (Int.castRingHom ℝ) = Int.castRingHom ℂ := by
+    ext n; simp
+  have hcompC : (starRingEnd ℂ).comp (Int.castRingHom ℂ) = Int.castRingHom ℂ := by
+    ext n; simp
+  rw [hcompR] at hreal
+  rw [hcompC] at hconj
   rw [← hreal, ← hconj]
   rfl
 
@@ -247,7 +259,7 @@ private theorem integer_norm_lower_bound {z : ℂ}
     rw [Complex.norm_intCast, ← Int.cast_abs]
     exact_mod_cast hi
   rw [resultant_three_embeddings hz hz_ne p, norm_mul, norm_mul,
-    norm_star, Complex.norm_real] at hc
+    norm_star, Complex.norm_real, Real.norm_eq_abs] at hc
   nlinarith only [hc]
 
 private theorem perron_difference_bound {Q : ℕ} (u v : TribonacciName Q) :
@@ -260,7 +272,8 @@ private theorem perron_difference_bound {Q : ℕ} (u v : TribonacciName Q) :
     apply Finset.sum_le_sum
     intro i _
     cases hu : u.1 i <;> cases hv : v.1 i <;>
-      simp [hu, hv, abs_of_nonneg (pow_nonneg tribonacciConstant_pos.le i.1)]
+      simp [hu, hv, abs_of_nonneg (pow_nonneg tribonacciConstant_pos.le i.1)] <;>
+      positivity
   have hg : (∑ i : Fin Q, β ^ i.1) * (β - 1) = β ^ Q - 1 := by
     rw [Fin.sum_univ_eq_sum_range, geom_sum_mul]
   have hm := mul_le_mul_of_nonneg_right hb (sub_nonneg.mpr one_lt_tribonacciConstant.le)
@@ -282,7 +295,8 @@ theorem conjugateCoordinate_separation {z : ℂ}
   have hscale := (secondary_root_relations hz hz_ne).2.2
   have hpow : β ^ Q * (‖z‖ ^ Q) ^ 2 = 1 := by
     calc
-      β ^ Q * (‖z‖ ^ Q) ^ 2 = (β * ‖z‖ ^ 2) ^ Q := by ring
+      β ^ Q * (‖z‖ ^ Q) ^ 2 = (β * ‖z‖ ^ 2) ^ Q := by
+        rw [mul_pow, ← pow_mul, ← pow_mul, Nat.mul_comm Q 2]
       _ = 1 := by rw [hscale, one_pow]
   have ha : 0 < β - 1 := sub_pos.mpr one_lt_tribonacciConstant
   have hcoord : p.eval₂ (Int.castRingHom ℂ) z =
@@ -308,6 +322,8 @@ theorem conjugateCoordinate_separation {z : ℂ}
       _ = _ := by rw [hpow, one_mul]
   have hs := Real.sq_sqrt ha.le
   have hnonneg : 0 ≤ Real.sqrt (β - 1) * ‖z‖ ^ Q := by positivity
+  have hsquare : (Real.sqrt (β - 1) * ‖z‖ ^ Q) ^ 2 =
+      (β - 1) * (‖z‖ ^ Q) ^ 2 := by rw [mul_pow, hs]
   nlinarith [norm_nonneg (conjugateCoordinate z u - conjugateCoordinate z v)]
 
 end D5.S0.Tower.Tribonacci.Separation
