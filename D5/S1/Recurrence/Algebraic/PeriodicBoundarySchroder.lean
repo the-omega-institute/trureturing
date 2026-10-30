@@ -6,15 +6,12 @@
    utility: none
    digest: Kurkov's two periodic boundary recurrences have the large Schroder diagonal. -/
 
-module
 
-public import D5.S1.Recurrence.Algebraic.SchroderIntegralEGF
-public import Mathlib.Tactic
+import D5.S1.Recurrence.Algebraic.SchroderIntegralEGF
+import Mathlib.Tactic
 
 /-! The two periodic source shifts are identified through a rational formal-series
 model and induction first on coefficient degree, then on the unbounded column. -/
-
-@[expose] public section
 
 set_option autoImplicit false
 
