@@ -1,0 +1,7 @@
+## Uniform linear-support entropy lemma
+If L is a d-dimensional linear subspace of K^A direct-sum K^B and the state is the positive uniform superposition on L, write a=dim pi_A L and b=dim pi_B L. Define U_A={a:(a,0) in L}, U_B={b:(0,b) in L}; their dimensions are d-b and d-a. The relation L pairs the cosets of U_A in pi_A L bijectively with the cosets of U_B in pi_B L. Each matched pair contributes a complete rectangle of coefficients, a rank-one block. There are q^(a+b-d) disjoint equal-size rectangles, hence precisely q^(a+b-d) equal Schmidt coefficients. Thus
+
+    S(A) = (a+b-d) log q.
+
+This proof uses identical coefficients, not merely equal absolute values. Here d=4 and a,b are the row ranks of the selected and complementary output matrices.
+
