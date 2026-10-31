@@ -8,8 +8,9 @@
 
 /-
 proof_shape: symmetric_nodal_kernel, common_root_nodal, rotated_block_cyclic,
-  rotated_evolution, nodal_fixed_state, common_root_trace_constraints: content.
-proof_shape: rotated_entries, cycle_recurrence, chebyshev_common_root_cos: bind-only.
+  nodal_fixed_state, common_root_trace_constraints: content.
+proof_shape: rotated_entries, cycle_recurrence, rotated_evolution,
+  chebyshev_common_root_cos: bind-only.
 admission_basis: escape-witness (candidate, independent assessment pending).
 escape_witness: zero extension and symmetry produce a nonzero nodal kernel
   vector; native cycle transport makes its rotated block state periodic;
@@ -34,7 +35,7 @@ set_option autoImplicit false
 open Matrix
 open scoped Fin.NatCast
 open D5.S3.Combinatorics.SpectralGraph.CyclicTridiagonalTransferTrace
-open private sl2_power discriminant_eval from D5.S3.Combinatorics.Graph.Walks.AndersonDefectFamily
+open private sl2_power discriminant_eval periodic_evolution from D5.S3.Combinatorics.Graph.Walks.AndersonDefectFamily
 
 namespace D5.S3.Combinatorics.Graph.Walks.AndersonDefectExactNodal
 
@@ -247,39 +248,43 @@ private lemma cycle_recurrence {K : Type*} [Field K] (L : ℕ) (hL : 3 ≤ L)
     SimpleGraph.cycleGraph_neighborFinset, Finset.sum_pair hne] at hrow
   linear_combination hrow
 
-private lemma rotated_evolution {K : Type*} [Ring K] (r m : ℕ) (hr : 3 ≤ r)
+private lemma rotated_evolution {K : Type*} [Field K] (r m : ℕ) (hr : 3 ≤ r)
     (a b : K) :
     evolution (fun i => if (i + 2) % r = 0 then b else a) (r * m) =
       (transfer a * transfer b * transfer a ^ (r - 2)) ^ m := by
+  let d₀ : ℕ → K := fun i => if i % r = 0 then b else a
   let d : ℕ → K := fun i => if (i + 2) % r = 0 then b else a
-  have prefixBlock : ∀ s, s ≤ r - 2 → evolution d s = transfer a ^ s := by
-    intro s
-    induction s with
-    | zero => intro _; simp [evolution]
-    | succ s ih =>
-      intro hs
-      have hmod : (s + 2) % r = s + 2 := Nat.mod_eq_of_lt (by omega)
-      rw [evolution, ih (by omega)]
-      simp [d, hmod, pow_succ']
-  have whole : evolution d r = transfer a * transfer b * transfer a ^ (r - 2) := by
-    have hrw : r = (r - 2) + 1 + 1 := by omega
-    conv_lhs => rw [hrw, evolution, evolution, prefixBlock (r - 2) le_rfl]
-    have hb : d (r - 2) = b := by simp [d, Nat.sub_add_cancel (by omega : 2 ≤ r)]
-    have ha : d (r - 2 + 1) = a := by
-      have he : r - 2 + 1 + 2 = r + 1 := by omega
-      change (if (r - 2 + 1 + 2) % r = 0 then b else a) = a
-      rw [he]
-      simp [Nat.mod_eq_of_lt (by omega : 1 < r)]
-    rw [hb, ha, mul_assoc]
-  change evolution d (r * m) = _
-  induction m with
-  | zero => simp [evolution]
-  | succ m ih =>
-    rw [Nat.mul_succ, evolution_add]
-    have shifted : (fun i => d (r * m + i)) = d := by
-      funext i
-      simp [d, Nat.add_mod]
-    rw [shifted, whole, ih, pow_succ']
+  let E := transfer a * transfer b
+  let C := transfer a * transfer b * transfer a ^ (r - 2)
+  have base : evolution d₀ (r * m) = block r a b ^ m :=
+    periodic_evolution r m (by omega) a b
+  have start : evolution d₀ 2 = E := by
+    simp [evolution, d₀, E, Nat.mod_eq_of_lt (by omega : 1 < r)]
+  have shift₂ : (fun i => d₀ (2 + i)) = d := by
+    funext i; simp only [d₀, d, Nat.add_comm]
+  have shiftL : (fun i => d₀ (r * m + i)) = d₀ := by
+    funext i; simp [d₀, Nat.add_mod]
+  have first := evolution_add d₀ 2 (r * m)
+  have last := evolution_add d₀ (r * m) 2
+  rw [shift₂, start] at first
+  rw [shiftL, start, base] at last
+  have whole : evolution d (r * m) * E = E * block r a b ^ m := by
+    calc
+      _ = evolution d₀ (2 + r * m) := first.symm
+      _ = evolution d₀ (r * m + 2) := by congr 1; omega
+      _ = _ := last
+  have intertwines : SemiconjBy E (block r a b) C := by
+    change (transfer a * transfer b) * (transfer a ^ (r - 1) * transfer b) =
+      (transfer a * transfer b * transfer a ^ (r - 2)) * (transfer a * transfer b)
+    rw [show r - 1 = (r - 2) + 1 by omega, pow_succ]
+    simp only [mul_assoc]
+  have heq : evolution d (r * m) * E = C ^ m * E :=
+    whole.trans (intertwines.pow_right m)
+  have hinv : E * E⁻¹ = 1 := Matrix.mul_nonsing_inv _ (by
+    simp [E, Matrix.det_mul, transfer_det])
+  have hh := congrArg (fun M : Matrix (Fin 2) (Fin 2) K => M * E⁻¹) heq
+  change evolution d (r * m) = C ^ m
+  simpa only [mul_assoc, hinv, mul_one] using hh
 
 /-- A nodal eigenvector of the actual cycle gives a fixed state for the rotated
 periodic block, without replacing the principal minor by a path Laplacian. -/
