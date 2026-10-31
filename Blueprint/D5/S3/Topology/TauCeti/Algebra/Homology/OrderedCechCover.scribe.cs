@@ -35,8 +35,9 @@ internal sealed class OrderedCechCoverDocument : IScribeDocumentDefinition
         .. Context(false, false),
         Seq(Call("freeFunctor", V("R"), V("P")), Colon, Sp,
             Call("Functor", Call("op", Call("Finset", V("iota"))), V("C"))),
-        Seq(Call("obj", Call("freeFunctor", V("R"), V("P")), V("s")), Sp, Eq, Sp,
-            Call("coproduct", Call("intersectionPoints", V("P"), V("s")), V("R")))
+        Seq(Forall, Sp, V("s"), Colon, Sp, Call("Finset", V("iota")), Comma, Sp,
+            Seq(Call("obj", Call("freeFunctor", V("R"), V("P")), Call("op", V("s"))), Sp, Eq, Sp,
+                Call("coproduct", Call("intersectionPoints", V("P"), V("s")), V("R"))))
     ]));
     private static Formula ComplexDefinition => Disp(new Formula.Aligned([
         .. Context(true, false), Seq(K, Colon, Sp, Call("ChainComplex", V("C"), V("Nat"))),
@@ -46,8 +47,10 @@ internal sealed class OrderedCechCoverDocument : IScribeDocumentDefinition
     ]));
     private static Formula AugmentationDefinition => Disp(new Formula.Aligned([
         .. Context(true, true), Seq(Epsilon, Colon, Sp, Call("Hom", K, Single)),
-        Seq(Call("degreeZeroPointImage", Epsilon, V("s"), V("a")), Sp, Eq, Sp,
-            Call("pointInclusion", V("a"), Free))
+        Seq(Forall, Sp, V("s"), Colon, Sp, Call("finsetsOfCard", V("iota"), D(1)), Comma, Sp,
+            Seq(Forall, Sp, V("a"), Colon, Sp, Call("intersectionPoints", V("P"), V("s")), Comma, Sp,
+                Seq(Call("degreeZeroPointImage", Epsilon, V("s"), V("a")), Sp, Eq, Sp,
+                    Call("pointInclusion", Call("val", V("a")), Free))))
     ]));
     private static Formula Equivalence => Disp(new Formula.Aligned([
         .. Context(true, true),
