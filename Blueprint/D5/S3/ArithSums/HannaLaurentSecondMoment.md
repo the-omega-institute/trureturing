@@ -18,6 +18,10 @@ $$\forall n \in \mathbb{N},\; 2 \le n \Rightarrow \sum_{k = 0}^{\left\lfloor\fra
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/HannaLaurentSecondMoment.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a391810-second-moment` (proved) by `D5/S3/ArithSums/HannaLaurentSecondMoment.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a391810-second-moment","declaration_gid":"D5/S3/ArithSums/HannaLaurentSecondMoment.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A391810, nonpositive Laurent coefficients and zero row sums*. URL: <https://oeis.org/A391810/internal>.
