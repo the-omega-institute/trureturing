@@ -3453,3 +3453,534 @@ this section concern the original deficit with its independent biases
 and unchanged endpoint terms.
 
 ## 追加锚（本行以下为增补区）
+
+## 16. Square-amplitude interpolation beyond small Bell covariance
+
+Retain the original complex physical states, independent biases,
+channels and deficit of Definitions 1.1--1.2. This section proves a
+pure-product source plane on a complete independent bias rectangle,
+and then a physical mixed-state neighborhood uniform on that rectangle.
+There is no hypothesis that the Bell-sign covariance is small.
+
+**Lemma 16.1 (Entropy concavity in a squared off-diagonal amplitude).**
+Let $M(q)=M_0+\sqrt q\,H$ be trace-one Hermitian positive semidefinite
+matrices for $0\leq q\leq q_{\max}$. Suppose a unitary involution $W$
+satisfies $WM_0W^*=M_0$ and $WHW^*=-H$. Then $q\mapsto S(M(q))$ is
+concave on the entire closed interval, including singular endpoints.
+
+Proof.
+For $s>0$, put $A=M_0+sI$ and $T=A^{-1/2}HA^{-1/2}$. Both
+$M_0\pm\sqrt qH$ are positive semidefinite, since the two signs are
+unitarily conjugate. Thus $I\pm\sqrt qT$ are positive definite.
+The traces of their corresponding resolvents agree by the same
+conjugation. Averaging them gives the exact identity
+$$
+ \operatorname{tr}(M(q)+sI)^{-1}
+ =\operatorname{tr}\!\left[A^{-1/2}(I-qT^2)^{-1}A^{-1/2}\right].
+\tag{16.1}
+$$
+Indeed,
+$$
+ \frac{(I+xT)^{-1}+(I-xT)^{-1}}2=(I-x^2T^2)^{-1}.
+$$
+Diagonalizing the fixed positive semidefinite $T^2$ expresses the
+right side of (16.1) as a sum of nonnegative weights times
+$(1-qt)^{-1}$, $t\geq0$, with positive denominators. It is convex
+in $q$. Consequently
+$$
+ \operatorname{tr}\!\left[M(q)(M(q)+sI)^{-1}\right]
+ =d-s\operatorname{tr}(M(q)+sI)^{-1}
+$$
+is concave in $q$, where $d$ is the matrix dimension. For every
+trace-one positive semidefinite $M$,
+$$
+ S(M)=\int_0^\infty\left[
+ \operatorname{tr}\bigl(M(M+sI)^{-1}\bigr)-\frac1{1+s}
+ \right]ds.
+\tag{16.2}
+$$
+This follows by summing the scalar integral for $-x\log x$; zero
+eigenvalues contribute zero. Integrate the pointwise concavity on
+any $[\epsilon,L]$ and then take the finite entropy limits
+$\epsilon\downarrow0$, $L\uparrow\infty$. This proves concavity
+without differentiating under the integral and with no nonsingularity
+assumption on $M$. The case $q_{\max}=0$ is immediate.
+
+**Theorem 16.2 (A product-source interpolation rectangle).**
+Let $\rho$ be an arbitrary complex pure product source with unit local
+Bloch vectors $(x_E,y_E,z_E)$. If $x_C=0$ or $x_D=0$, then
+$$
+ \boxed{\Delta(\rho;a,b)\geq I(P)\geq0}
+ \quad\text{for every independent }\quad
+ a\in[0,1],\quad b\in[0,2^{-1/4}].
+\tag{16.3}
+$$
+All signs of the coordinates and all singular output spectra are included.
+
+Proof.
+Exchange the physical qubits if necessary and assume $x_C=0$.
+Fix $y_C,z_C,z_D,a,b$, and parameterize the remaining source circle by
+$$
+ v=1-z_D^2,\qquad t=x_D^2\in[0,v],\qquad y_D^2=v-t.
+$$
+The signs of $x_D,y_D$ will not affect the entropy expressions below.
+Along this segment $\kappa=0$, $\lambda=z_Cz_D$ and
+$\mu=-y_Cy_D$. The spectra of $P,Q,P_C,P_D,Q_C,R_C$ are fixed,
+so in particular $I(P)$ is fixed. The actual pure-source Gram matrix
+of Lemma 15.3 takes the form
+$$
+ \begin{aligned}
+ G(\mu)&=G_0+\mu H,\\
+ G_0&=\tfrac14(I+aZ_A)\otimes
+       (I+bZ_B+\lambda\sqrt{1-b^2}X_B),\\
+ H&=\tfrac14\sqrt{1-a^2}\sqrt{1-b^2}\,X_A\otimes X_B.
+ \end{aligned}
+\tag{16.4}
+$$
+Conjugation by $Z_A$ fixes $G_0$ and negates $H$. Every
+$|\mu|\leq|y_C|\sqrt v$ is realized by the displayed pure-product
+segment, with either sign. Thus the whole symmetric interval is
+positive semidefinite, not merely its endpoints. Lemma 16.1 shows
+that $S(G)$ is concave in $\mu^2=y_C^2(v-t)$, hence in $t$.
+The actual Gram spectral identity $S(G)=S(R)$ from Lemma 15.3
+therefore proves concavity of $S(R)$ in $t$. If $y_C=0$ or $H=0$,
+this entropy is constant. This argument applies the spectral identity
+only to actual pure sources.
+
+Use the function $f$ from Theorem 15.4,
+$$
+ f(u)=H_2\!\left(\frac{1+\sqrt{1-u}}2\right),\qquad0\leq u\leq1.
+$$
+Its integral derivatives on $(0,1)$ give
+$$
+ f''(u)=-\frac12\int_0^1\frac{s^2\,ds}{[1-(1-u)s^2]^2}\leq0,
+ \qquad
+ f'''(u)=\int_0^1\frac{s^4\,ds}{[1-(1-u)s^2]^3}\geq0.
+$$
+Set $u=(1-a^2)(1-t)$, $c=1-a^2z_D^2$ and
+$r=b^2u+(1-b^2)c$. The actual local output spectra give
+$$
+ S(Q_D)=f(u),\qquad S(R_D)=f(r).
+\tag{16.5}
+$$
+Their squared Bloch radii are respectively
+$a^2+(1-a^2)t$ and $b^2t+a^2b^2(v-t)+a^2z_D^2$.
+Moreover
+$$
+ c-u=a^2(1-z_D^2)+(1-a^2)t\geq0,
+$$
+so $r\geq u$. Since $f''$ is nonpositive and increasing,
+$$
+ f''(u)-2b^4f''(r)
+ \leq(1-2b^4)f''(u)\leq0
+ \quad\text{when }2b^4\leq1.
+\tag{16.6}
+$$
+The second derivative in $t$ of $S(Q_D)-2S(R_D)$ is $(1-a^2)^2$
+times the left side. This combination is therefore concave in $t$.
+At $a=1$ it is constant; continuity includes all other boundary
+points without requiring a finite entropy derivative at $u=0$.
+Along the segment the original, unchanged deficit is
+$$
+ \Delta=\text{constant}+3S(R)+S(Q_D)-2S(R_D),
+$$
+so it is concave in $t$.
+
+At $t=0$, both local $X$ coordinates vanish. Corollary 14.3 gives
+$\Delta\geq I(P)$ there for all biases. At $t=v$, one has $y_D=0$,
+so $\kappa=\mu=\delta=0$ and Theorem 15.4 gives the same bound.
+Concavity on $[0,v]$, with $I(P)$ constant, proves (16.3).
+If $v=0$, there is only that endpoint. Zero control weights, $a=0,1$,
+$b=0$ and singular Gram matrices have all been included.
+
+**Proposition 16.3 (An exact large-covariance point in the old residual domain).**
+Take the unit local Bloch vectors and independent biases
+$$
+ n_C=(0,5/13,12/13),\qquad
+ n_D=(21/125,28/125,24/25),\qquad
+ a_0=999/1000,\quad b_0=0.
+\tag{16.7}
+$$
+Then
+$$
+ \kappa=0,\quad \lambda=288/325,\quad
+ \mu=\delta=-28/325,\quad \beta=37/325,\quad
+ |\delta|/\beta=28/37.
+$$
+The source-moment test of Theorem 14.2 fails: $\tau_\psi=0$ and
+$d_\psi=441/15625>0$, with $a_0<1$. The source condition (15.6)
+would require $84/37\leq1225/22681$, which is false. The
+entanglement-funded pure-source condition likewise fails, since
+$e_0=0$ and $|\delta|>0$. Nevertheless (16.3) gives
+$$
+ \Delta\geq I(P)>42/1000.
+$$
+Every strict old-residual requirement (12.10) holds at this point.
+
+Proof.
+The squared coordinates in (16.7) sum to one on each qubit.
+The displayed moments follow directly from Definition 15.1.
+The $z_C,z_D$ are exactly those in Proposition 14.5, so
+$$
+ M=\lambda_{\max}(P)=613/650>7/20,\qquad
+ 42646/10^6<I(P)<42649/10^6
+$$
+by its already proved rational entropy intervals. At $b_0=0$ the
+$R_C,R_D$ spectra also agree with that proposition. The smaller
+eigenvalue of $Q_C$ is $1/2000$, while $x_D^2>0$ makes the Bloch
+radius of $Q_D$ strictly greater than $a_0$. Therefore
+$$
+ S(Q_D)<H_2(1/2000),\qquad
+ \ell_C>160205/10^6,\quad \ell_D>95600/10^6.
+$$
+Thus $2I(P)<\ell_C,\ell_D$. Since
+$S(Q_E)\leq H_2(1/2000)<4301/10^6$ and $\log2>693/1000$,
+the remaining control-entropy requirements in (12.10) hold as well.
+Here $(1-z_C^2)(1-z_D^2)=49/4225$ and
+$\alpha=1225/22681$, which verifies the failed comparison for (15.6).
+
+The biases are outside the rectangle of Theorem 13.1. The half trace
+distance to the fixed center in Proposition 14.7 is at least
+$|x_D-0|/2=21/250>1/20000$, by the norm-one observable $IX$.
+No exclusion from every existential neighborhood with a different
+center is asserted. All the old-residual inequalities here are strict,
+so they persist for sufficiently small positive $b$ at fixed $a_0$,
+still inside the rectangle of Theorem 16.2.
+
+**Theorem 16.4 (A uniform physical complex mixed-state ball).**
+Let $\sigma$ be the exact product source (16.7). Every actual complex
+density matrix with $\tfrac12\|\rho-\sigma\|_1\leq10^{-7}$ satisfies
+$$
+ \boxed{\Delta(\rho;a,b)>452/10^6>0}
+ \quad\text{for every independent }\quad
+ a\in[0,1],\quad b\in[0,2^{-1/4}].
+\tag{16.8}
+$$
+This ball contains faithful states with negative partial transpose
+and a physical open subset of such states.
+
+Proof.
+For any pure product source in Theorem 16.2 with
+$u=1-z_C^2>0$ and $v=1-z_D^2>0$, choose the norm-one Pauli
+observable along each local transverse Bloch vector. Their connected
+correlation after $\Phi_b$ is exactly $(1-b^2)\sqrt{uv}$.
+Trace/operator norm duality and the standard natural-log quantum
+Pinsker inequality, already used in this volume (Watrous,
+*The Theory of Quantum Information*), give
+$$
+ I(P)=D(P\Vert P_C\otimes P_D)
+ \geq\tfrac12\|P-P_C\otimes P_D\|_1^2
+ \geq\tfrac12(1-b^2)^2uv.
+\tag{16.9}
+$$
+The relative entropy is finite: a joint density matrix is supported
+on the product of its two marginal supports. At (16.7), $uv=49/4225$.
+Hence Theorem 16.2 gives the bias-uniform bound
+$$
+ \Delta(\sigma;a,b)\geq m_*:=
+ \frac{49(3-2\sqrt2)}{16900}>\frac{49}{100000}.
+\tag{16.10}
+$$
+For the last inequality one may use $\sqrt2<283/200$, checked by
+squaring, and cross-multiply the resulting rational numbers.
+
+Put $t_0=10^{-7}$. Channel contractivity and the entropy-continuity
+bound of Theorem 13.1 give, uniformly in both biases,
+$$
+ |\Delta(\rho)-\Delta(\sigma)|\leq E(t_0)
+ :=8B_4(t_0)+12B_2(t_0),\qquad
+ B_d(t)=t\log d+(1+t)\log(1+t)-t\log t.
+$$
+Using $\log(1+t)\leq t$, $10^7<2^{24}$ and the already proved
+$\log2<694/1000$ gives
+$$
+ \begin{aligned}
+ E(t_0)&\leq t_0[8\log4+12\log2+20(1+t_0)+20\log(10^7)]\\
+ &<372.552002/10^7<38/10^6.
+ \end{aligned}
+$$
+Subtracting this from (16.10) proves (16.8). Only the pure-source
+margin was transported by continuity; no mixed-source Gram identity
+has been assumed.
+
+Write the product vector of $\sigma$ as $|c_0d_0\rangle$, choose
+orthogonal local complements, and put $\epsilon=t_0/4$,
+$\gamma=\epsilon^2$,
+$$
+ |\chi\rangle=\sqrt{1-\epsilon^2}|c_0d_0\rangle
+               +\epsilon|c_0^\perp d_0^\perp\rangle,\qquad
+ \rho_*=(1-\gamma)|\chi\rangle\langle\chi|+\gamma I_4/4.
+$$
+Its distance to $\sigma$ is at most $\epsilon+3\gamma/4<t_0$.
+It is faithful, and its least partial-transpose eigenvalue is
+$$
+ \gamma/4-(1-\gamma)\epsilon\sqrt{1-\epsilon^2}<0.
+$$
+Indeed $\epsilon<1/4$ makes each of $1-\epsilon^2$ and
+$\sqrt{1-\epsilon^2}$ greater than $1/2$, while
+$\gamma=\epsilon^2<\epsilon$. Faithfulness and negative partial
+transpose are open conditions. At the selected $a_0$ and sufficiently
+small positive $b$, the strict old-residual inequalities of Proposition
+16.3 also persist under sufficiently small physical state and bias
+perturbations. Source-test failures concern their respective pure or
+product source domains. There is no claim that every member lies in
+the old residual domain for every bias; $a=1$ already excludes that.
+
+The unrestricted pure-product, pure-source and mixed-source sign
+problems on the full original independent bias square remain open.
+
+## 追加锚（本行以下为增补区）
+
+## 17. Asymmetric Holevo losses and the full bias square
+
+Use the original states, independent $a,b\in[0,1]$, channels and
+deficit of Definitions 1.1--1.2. The exact asymmetric rearrangement
+below gives source criteria for actual mixed states and completes
+the entire bias square for the source plane of Theorem 16.2.
+
+**Theorem 17.1 (An asymmetric exact deficit identity).**
+For every physical source, retain $A_E,B_E,J_0$ from Theorem 15.2
+and put
+$$
+ T_C=g-h_C=I(U:D\mid C)_\Omega,\qquad
+ T_D=g-h_D=I(U:C\mid D)_\Omega.
+$$
+These are nonnegative for the actual controlled state (12.2), and
+$$
+ \begin{aligned}
+ \Delta&=I(P)+I(\rho)+A_D-B_C+2T_C+T_D,\\
+ \Delta&=I(P)+I(\rho)+A_C-B_D+2T_D+T_C.
+ \end{aligned}
+\tag{17.1}
+$$
+Consequently
+$$
+ \Delta\geq I(P)+I(\rho)+\max\{A_D-B_C,A_C-B_D\}.
+\tag{17.2}
+$$
+In particular $B_C=0$ gives
+$\Delta\geq I(P)+I(\rho)+A_D$, with the exchanged statement for
+$B_D=0$.
+
+Proof.
+Equation (12.6) identifies each $T_E$ with the displayed actual CMI.
+Equivalently it is the genuine loss of $U$-Holevo information under
+the corresponding partial trace. Its nonnegativity is strong
+subadditivity, not an assertion of CMI monotonicity under arbitrary
+changes to the conditioning system. The definitions give exactly
+$$
+ A_E-J_0=T_E-B_E.
+$$
+Substitute $A_C-J_0=T_C-B_C$ twice into (15.1), and then substitute
+$A_D-J_0=T_D-B_D$ once. This yields the first identity in (17.1);
+exchange $C,D$ for the second. Both identities retain the original
+deficit and all its coefficients. Theorem 15.2 supplies $A_E\geq0$,
+and dropping only the nonnegative $T_E$ gives (17.2). All are finite
+entropies of actual classical-quantum states. Singular states and
+zero control probabilities are included by omitting zero blocks.
+
+**Corollary 17.2 (Input-correlation and control-entropy regions).**
+Every actual complex source satisfies
+$$
+ \Delta(\rho;a,b)\geq I(P)+I(\rho)
+       -H_2\!\left(\frac{1-a}{2}\right).
+\tag{17.3}
+$$
+Thus $I(\rho)\geq H_2((1-a)/2)$ proves $\Delta\geq I(P)$ for
+every $b$. In particular the source-only condition
+$$
+ I(\rho)\geq\log2
+$$
+proves this bound for all independent $a,b\in[0,1]$. If the
+inequality is strict, then
+$$
+ \Delta\geq I(P)+m,\qquad m=I(\rho)-\log2>0
+\tag{17.4}
+$$
+uniformly on the complete closed bias square. This source region
+contains a nonempty open set of faithful NPT mixed states.
+
+Proof.
+Write $\chi_U(\rho)=S(Q)-S(\rho)$ and
+$\chi_U(\rho_C)=S(Q_C)-S(\rho_C)$ for the actual binary
+$U$-ensembles. Then
+$$
+ B_C=\chi_U(\rho)-\chi_U(\rho_C),\qquad
+ 0\leq B_C\leq\chi_U(\rho)\leq H_2((1-a)/2).
+$$
+The first inequality is relative-entropy data processing; the next
+uses nonnegative local Holevo information; the last is the standard
+entropy-of-mixture bound already used in Corollary 12.3 (Watrous,
+*The Theory of Quantum Information*). Equation (17.1), $A_D\geq0$
+and $T_E\geq0$ imply (17.3). The remaining inequalities use
+$H_2\leq\log2$.
+
+For nonemptiness, a maximally entangled pure state has
+$I(\rho)=2\log2$. Its mixtures
+$(1-\epsilon)|\Phi^+\rangle\langle\Phi^+|+\epsilon I_4/4$
+are faithful for $\epsilon>0$ and retain $I(\rho)>\log2$ for
+sufficiently small $\epsilon$ by finite-dimensional entropy
+continuity. The least partial-transpose eigenvalue is
+$-(1-\epsilon)/2+\epsilon/4<0$ when $\epsilon<2/3$.
+Faithfulness, strict input mutual information and NPT are open
+conditions, proving the asserted physical open set. This argument
+does not require a pure-source Gram representation for a mixed state.
+
+**Theorem 17.3 (Flagged mixed sources and the full product-source plane).**
+Choose any unit qubit vector $|c_0\rangle$ with
+$\langle c_0|X|c_0\rangle=0$, put $|c_1\rangle=X|c_0\rangle$,
+and let $\sigma_0$ be any actual complex qubit density matrix.
+For $p\in[0,1]$, define $\sigma_1=X\sigma_0X$ and
+$$
+ \rho_p=p|c_0\rangle\langle c_0|\otimes\sigma_0
+       +(1-p)|c_1\rangle\langle c_1|\otimes\sigma_1.
+\tag{17.5}
+$$
+For every independent $a,b\in[0,1]$,
+$$
+ B_C=0,\qquad
+ \boxed{\Delta(\rho_p;a,b)\geq I(P)+I(\rho_p)+A_D\geq0.}
+\tag{17.6}
+$$
+In particular this includes $|c_0\rangle\langle c_0|\otimes\sigma_0$
+for arbitrary mixed $\sigma_0$. Every complex pure product source
+with $x_C=0$ or $x_D=0$ therefore satisfies
+$$
+ \boxed{\Delta\geq I(P)+A_{\bar E}\geq0
+ \quad\text{whenever }x_E=0,\qquad
+ \text{for all independent }a,b\in[0,1].}
+\tag{17.7}
+$$
+This removes the $b\leq2^{-1/4}$ restriction from the source-plane
+conclusion of Theorem 16.2, without a Bell-covariance restriction.
+
+Proof.
+The two $C$ vectors are orthonormal. Conjugation by $K=XX$ swaps
+the two complete product blocks in (17.5), so $K\rho_pK=\rho_{1-p}$
+and $Q=\rho_q$, where
+$$
+ q=\frac{1+a(2p-1)}2.
+$$
+The two $D$ block entropies agree, since their states are unitarily
+conjugate. The actual block entropy formulas give
+$$
+ \begin{aligned}
+ S(\rho_p)&=H_2(p)+S(\sigma_0),&S((\rho_p)_C)&=H_2(p),\\
+ S(Q)&=H_2(q)+S(\sigma_0),&S(Q_C)&=H_2(q).
+ \end{aligned}
+$$
+Their substitution into the definition of $B_C$ gives zero for
+every $a$. This quantity depends only on $\rho_p,a$, not on $b$.
+Theorem 17.1 proves (17.6). Taking $p=1$ and $\sigma_0$ pure
+gives (17.7) for $E=C$; exchange the qubits for $E=D$.
+Zero probabilities, zero eigenvalues and both bias endpoints are
+included in these block formulas. If $\sigma_0$ is positive definite
+and $0<p<1$, the source is itself faithful. Moreover
+$$
+ I(\rho_p)=S(p\sigma_0+(1-p)\sigma_1)-S(\sigma_0),
+$$
+which is strictly positive for $0<p<1$ when $\sigma_0\ne\sigma_1$,
+by strict concavity of entropy. Such sources have a strictly positive
+margin uniform on the full bias square, even though no large input
+mutual-information hypothesis was imposed. The proof uses actual
+orthogonal flags and Holevo losses, not a general quantum Ingleton
+assertion.
+
+**Theorem 17.4 (A correlated mixed-state ball on the full bias square).**
+In (17.5), take $p=3/4$, let the unit vector $|c_0\rangle$ have
+Bloch vector $(0,1/\sqrt2,1/\sqrt2)$, and let the pure $\sigma_0$
+have Bloch vector $(1/3,2/3,2/3)$. Denote this exact correlated
+source by $\tau$. Every actual complex density matrix satisfying
+$\tfrac12\|\rho-\tau\|_1\leq10^{-4}$ obeys
+$$
+ \boxed{\Delta(\rho;a,b)>3/10
+ \quad\text{for all independent }a,b\in[0,1].}
+\tag{17.8}
+$$
+This ball contains a nonempty physical open set of faithful NPT
+mixed states. The center has $0<I(\tau)<\log2$, so the source-only
+large-input-correlation hypothesis of Corollary 17.2 does not apply
+to it. It is not invariant under conjugation by $K$.
+
+Proof.
+The $D$ margin has Bloch vector $(1/3,1/3,1/3)$, of radius
+$1/\sqrt3$. Since the two conditional $D$ blocks are pure,
+$$
+ I(\tau)=H_2\!\left(\frac{1+1/\sqrt3}{2}\right)\in(0,\log2).
+$$
+Put $\lambda=(1+1/\sqrt3)/2$. Then
+$\lambda(1-\lambda)=1/6$, and $-\log x>1-x$ for $0<x<1$ gives
+$$
+ I(\tau)>2\lambda(1-\lambda)=1/3.
+$$
+Theorem 17.3 thus gives a positive margin exceeding $1/3$ on the
+entire closed bias square. Conjugation by $K$ changes the two
+orthogonal $C$ block weights from $3/4,1/4$ to $1/4,3/4$, so
+$K\tau K\ne\tau$.
+
+Let $t_0=10^{-4}$. The actual channel contractivity and entropy
+continuity estimate already used in Theorem 16.4 give
+$$
+ |\Delta(\rho)-\Delta(\tau)|\leq E(t_0)
+ :=8B_4(t_0)+12B_2(t_0).
+$$
+Since $10^4<2^{14}$, $\log2<694/1000$ and
+$\log(1+t)\leq t$,
+$$
+ \begin{aligned}
+ E(t_0)&\leq t_0[28\log2+20(1+t_0)+20\log(10^4)]\\
+ &<233.754/10000<1/30.
+ \end{aligned}
+$$
+Subtracting proves (17.8), uniformly in the original independent
+biases. No Gram spectral equality has been applied to a mixed state.
+
+Write $\sigma_j=|d_j\rangle\langle d_j|$, choosing
+$|d_1\rangle=X|d_0\rangle$. Their Bloch vectors give
+$|\langle d_0|d_1\rangle|^2=1/9$. Put
+$\epsilon=t_0/4$, $\gamma=\epsilon^2$ and define
+$$
+ \begin{aligned}
+ \tau_\epsilon&=\tau+\epsilon|c_0d_0\rangle\langle c_1d_1|
+                    +\epsilon|c_1d_1\rangle\langle c_0d_0|,\\
+ \rho_*&=(1-\gamma)\tau_\epsilon+\gamma I_4/4.
+ \end{aligned}
+$$
+The two displayed product vectors are orthonormal because the $C$
+vectors are. On their span $\tau_\epsilon$ has matrix
+$\left(\begin{smallmatrix}3/4&\epsilon\\\epsilon&1/4\end{smallmatrix}\right)$,
+which is positive since $\epsilon^2<3/16$. It has trace one and
+half trace distance exactly $\epsilon$ from $\tau$.
+The density $\rho_*$ is faithful, and its distance to $\tau$ is at
+most $\epsilon+3\gamma/4<t_0$; the bound $3/4$ for distance to
+$I_4/4$ holds for every density matrix by convexity from pure states.
+
+Under partial transpose on $D$, compress to the orthonormal pair
+$|c_0\overline{d_0}^{\perp}\rangle$,
+$|c_1\overline{d_1}^{\perp}\rangle$. The compression of
+$\tau_\epsilon^{T_D}$ has zero diagonal and off-diagonal modulus
+$\epsilon(1-|\langle d_0|d_1\rangle|^2)=8\epsilon/9$.
+The corresponding compression of $\rho_*^{T_D}$ therefore has
+negative eigenvalue
+$$
+ \gamma/4-(1-\gamma)8\epsilon/9<0.
+$$
+It supplies a negative Rayleigh quotient for the full partial
+transpose. Thus $\rho_*$ is faithful NPT and lies strictly inside
+the ball. Faithfulness and NPT are open, proving the claimed
+physical open subset with the full-square bound (17.8).
+
+The product center (16.7), with $|\delta|/\beta=28/37$, now also
+satisfies the full-square pure bound (17.7); its previous strict
+old-residual facts remain valid. Combining (17.7) with (16.9)
+extends its positive uniform mixed neighborhoods to any compact
+$b\in[0,b_*]$ with $b_*<1$. This does not give a strictly positive
+uniform margin at its identity corner $a=b=1$, where that product
+center has $\Delta=0$.
+
+The unrestricted pure-product sign question when both local $X$
+coordinates are nonzero remains open, as do the unrestricted pure
+and mixed source problems. The sufficient mixed-source criteria in
+this section are not a claim about all sources.
+
+## 追加锚（本行以下为增补区）

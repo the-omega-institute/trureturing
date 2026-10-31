@@ -1,0 +1,19 @@
+**命题 10.3（保存旧标签时不能免费重置记录）。**
+
+若一个内部酉对正交输入记录满足
+
+$$
+U(\lvert h\rangle\otimes\lvert 0\rangle)=\lvert 0\rangle\otimes\lvert g_h\rangle,
+$$
+
+则 $\langle g_h,g_{h'}\rangle=\delta_{hh'}$。
+
+**证明。**
+
+酉保持内积。
+
+□
+
+旧记录可以搬到整体的另一个内部角色，不能在保持其区分能力时消失。
+这一结论无需本体外环境，也没有假设热浴或引入热力学耗散公式。
+
