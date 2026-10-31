@@ -4,9 +4,11 @@
 
 Original rectangular-word occurrence
 
+The displayed recordType lists every data and proof field of LabelledRoute; its field n is the Lean field length. MarkedPast(H) is Nat -> (H x Bool). minimum is the finite minimum over the indicated entire hidden type, sum is the corresponding finite sum, and measureApply(mu,S) is mu(S). productEntry is an entry of product. setOf, IsInfix, inter, preimage, subset, singleton, ofFn, readPrefix, castSucc, succ, last, get, subtype and val denote the corresponding Lean operations. In the nativeComponent formula, the two field equalities specify its data; its value has type Presentation(D), whose proof fields enforce the original normalization, nonnegativity, stationarity and scalar no11 conditions.
+
 **Definition 1.1 (Selected original labelled paths).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.LabelledRoute`
+$$\forall H:(Type), ([\operatorname{Fintype}(H)]\forall theta:(\operatorname{Presentation}(H)), (\forall h:(H), (\forall r:(H), (\operatorname{LabelledRoute}(theta, h, r)= \operatorname{recordType}(\operatorname{field}(n, Nat), \operatorname{field}(states, \operatorname{Fin}((n)+(1))\to H), \operatorname{field}(labels, \operatorname{Fin}(n)\to Bool), \operatorname{field}(first, \operatorname{apply}(states, 0)= h), \operatorname{field}(last, \operatorname{apply}(states, \operatorname{last}(n))= r), \operatorname{field}(positive, \forall i:(\operatorname{Fin}(n)), (0< \operatorname{matrix}(theta, \operatorname{apply}(labels, i), \operatorname{apply}(states, \operatorname{castSucc}(i)), \operatorname{apply}(states, \operatorname{succ}(i))))))))))$$
 
 *Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.LabelledRoute` (`✓ std3`).
 
@@ -18,7 +20,7 @@ For a finite hidden state type H, an original stationary binary edge presentatio
 
 **Definition 1.2 (One visible event for the whole original block).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.success`
+$$\forall w:(\operatorname{List}(Bool)), (\forall b:(Nat), (\operatorname{success}(w, b)= \operatorname{setOf}((x:Nat\to Bool\mapsto \operatorname{IsInfix}(w, \operatorname{ofFn}(\operatorname{readPrefix}(b, x)))))))$$
 
 *Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.success` (`✓ std3`).
 
@@ -30,7 +32,7 @@ For a binary list w and natural block length b, success is the set of future out
 
 **Definition 1.3 (The exact selected-path minimum).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.selectedEpsilon`
+$$\forall H:(Type), ([\operatorname{Fintype}(H)]\forall theta:(\operatorname{Presentation}(H)), (\forall w:(\operatorname{List}(Bool)), (\forall r:(H), (\forall a:(\forall h:(H), (\operatorname{LabelledRoute}(theta, h, r))), (\operatorname{selectedEpsilon}(theta, w, r, a)= \operatorname{minimum}((h:H\mapsto (\operatorname{pathMass}(\operatorname{matrix}(theta), \operatorname{length}(\operatorname{apply}(a, h)), \operatorname{states}(\operatorname{apply}(a, h)), \operatorname{labels}(\operatorname{apply}(a, h))))\cdot (\operatorname{sum}((j:H\mapsto \operatorname{productEntry}(theta, w, r, j)))))))))))$$
 
 *Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.selectedEpsilon` (`✓ std3`).
 
@@ -42,7 +44,7 @@ For theta, w, a target state r, and one selected labelled route from every h to 
 
 **Theorem 1.4 (The original visible event is paid against the complete marked past).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.original_rectangle_occurrence`
+$$\forall H:(Type), ([\operatorname{Fintype}(H)][\operatorname{MeasurableSpace}(H)][\operatorname{MeasurableSingletonClass}(H)]\forall theta:(\operatorname{Presentation}(H)), (\forall J:(\operatorname{Measure}(\operatorname{PathSpace}(H))), ([\operatorname{IsProbabilityMeasure}(J)](\operatorname{HasOriginalCylinders}(J, theta))\implies (\forall w:(\operatorname{List}(Bool)), (\forall R:(\operatorname{Rectangle}(\operatorname{product}(theta, w))), (\forall r:(H), ((r\in \operatorname{rows}(R))\implies (\forall a:(\forall h:(H), (\operatorname{LabelledRoute}(theta, h, r))), ((\forall h:(H), (\operatorname{length}(\operatorname{apply}(a, h))\le \operatorname{card}(H)))\implies (let epsilon:=\operatorname{selectedEpsilon}(theta, w, r, a); let b:=(\operatorname{length}(w))+(\operatorname{card}(H)); 0< epsilon\land (epsilon\le 1)\land (\forall t:(Int), (\forall h:(H), ((0< \operatorname{initial}(theta, h))\implies (\operatorname{ofReal}(epsilon)\le \operatorname{measureApply}(\operatorname{futureLaw}(J, t, h), \operatorname{success}(w, b))))))\land (\forall t:(Int), (\forall h:(H), (\forall A:(\operatorname{Set}(\operatorname{MarkedPast}(H))), ((\operatorname{MeasurableSet}(A))\implies ((\operatorname{ofReal}(epsilon))\cdot (\operatorname{measureApply}(J, \operatorname{inter}(\operatorname{preimage}(\operatorname{state}(t), \operatorname{singleton}(h)), \operatorname{preimage}(\operatorname{past}(t), A))))\le \operatorname{measureApply}(J, \operatorname{inter}(\operatorname{inter}(\operatorname{preimage}(\operatorname{state}(t), \operatorname{singleton}(h)), \operatorname{preimage}(\operatorname{past}(t), A)), \operatorname{preimage}(\operatorname{future}(t), \operatorname{success}(w, b)))))))))))))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.original_rectangle_occurrence` (`✓ std3`). ∎
 
@@ -50,11 +52,11 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/O
 
 *Commentary.*
 
-Let H be any finite hidden state type with measurable singletons, theta an original stationary nonnegative binary edge presentation satisfying its scalar no11 condition, and J any probability measure with exactly theta's original integer-time marked cylinder identities. Let w have a nonempty rectangular positive word-matrix support, let r belong to its support rows, and select one positive original labelled route from every h to r, each with at most card(H) edges. Set b to length(w) plus card(H), and epsilon to the exact selected-path minimum. Then epsilon is strictly positive and at most one. At every integer cut t and every state h with positive theta initial mass, the actual conditional future kernel futureLaw(J,t,h) assigns success(w,b) probability at least epsilon. For every h, including a null hidden fiber, and every measurable event A of the entire marked past, epsilon times J of state(t)=h and past(t) in A is at most J of that same event together with future(t) in success(w,b). Measures and the inequality use ENNReal.ofReal(epsilon). The path followed by w fits inside the original b-bit block and is a subset of this single visible success event; summing hidden paths gives its lower probability. The complete-past factor is the existing same-law future-screening theorem. A null state has zero past-event mass. No independence, aperiodicity, unifilarity, global matrix positivity, posterior band or conditioning on future data is imposed. This is the occurrence-probability prerequisite of source Theorem 4.2. It does not construct the source's bounded routes from irreducibility or prove adapted success-count payment, either complete-half-line erasure bound, or the root and squared tails. Those are still required before the original theorem or its Section 7 loss-cocycle and second-order localization consumers can be closed.
+Let H be any finite hidden state type with measurable singletons, theta an original stationary nonnegative binary edge presentation satisfying its scalar no11 condition, and J any probability measure with exactly theta's original integer-time marked cylinder identities. Let w have a nonempty rectangular positive word-matrix support, let r belong to its support rows, and select one positive original labelled route from every h to r, each with at most card(H) edges. Set b to length(w) plus card(H), and epsilon to the exact selected-path minimum. Then epsilon is strictly positive and at most one. At every integer cut t and every state h with positive theta initial mass, the actual conditional future kernel futureLaw(J,t,h) assigns success(w,b) probability at least epsilon. For every h, including a null hidden fiber, and every measurable event A of the entire marked past, epsilon times J of state(t)=h and past(t) in A is at most J of that same event together with future(t) in success(w,b). Measures and the inequality use ENNReal.ofReal(epsilon). The path followed by w fits inside the original b-bit block and is a subset of this single visible success event; summing hidden paths gives its lower probability. The complete-past factor is the existing same-law future-screening theorem. A null state has zero past-event mass. No independence, aperiodicity, unifilarity, global matrix positivity, posterior band or conditioning on future data is imposed. The route theorem supplies the bounded labelled paths from irreducibility. The chronological moment theorem uses this marked-past occurrence estimate to pay one squared contraction per block. The posterior and native-component theorems then combine these payments with the two complete opposite-half-line comparisons and the root and squared tail bounds.
 
 **Definition 1.5 (The prescribed original hidden path and word).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.routeWord`
+$$\forall H:(Type), ([\operatorname{Fintype}(H)]\forall theta:(\operatorname{Presentation}(H)), (\forall t:(Int), (\forall h:(H), (\forall r:(H), (\forall a:(\operatorname{LabelledRoute}(theta, h, r)), (\forall w:(\operatorname{List}(Bool)), (\operatorname{routeWord}(theta, t, a, w)= \operatorname{inter}(\operatorname{cylinder}(t, \operatorname{length}(a), \operatorname{states}(a), \operatorname{labels}(a)), \operatorname{preimage}(snd, \operatorname{visibleCylinder}((t)+(\operatorname{intCast}(\operatorname{length}(a))), \operatorname{length}(w), \operatorname{get}(w)))))))))))$$
 
 *Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.routeWord` (`✓ std3`).
 
@@ -66,7 +68,7 @@ For an original presentation theta, any integer cut t, states h and r, a given p
 
 **Theorem 1.6 (Exact prescribed-route probability against the entire marked past).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.route_word_past_factor`
+$$\forall H:(Type), ([\operatorname{Fintype}(H)][\operatorname{MeasurableSpace}(H)][\operatorname{MeasurableSingletonClass}(H)]\forall theta:(\operatorname{Presentation}(H)), (\forall J:(\operatorname{Measure}(\operatorname{PathSpace}(H))), ([\operatorname{IsProbabilityMeasure}(J)](\operatorname{HasOriginalCylinders}(J, theta))\implies (\forall t:(Int), (\forall h:(H), (\forall r:(H), (\forall a:(\operatorname{LabelledRoute}(theta, h, r)), (\forall w:(\operatorname{List}(Bool)), (\operatorname{MeasurableSet}(\operatorname{routeWord}(theta, t, a, w))\land (\forall b:(Nat), (((\operatorname{length}(a))+(\operatorname{length}(w))\le b)\implies (\operatorname{subset}(\operatorname{routeWord}(theta, t, a, w), \operatorname{preimage}(\operatorname{future}(t), \operatorname{success}(w, b))))))\land (\forall A:(\operatorname{Set}(\operatorname{MarkedPast}(H))), ((\operatorname{MeasurableSet}(A))\implies (\operatorname{measureApply}(J, \operatorname{inter}(\operatorname{preimage}(\operatorname{past}(t), A), \operatorname{routeWord}(theta, t, a, w)))= (\operatorname{measureApply}(J, \operatorname{inter}(\operatorname{preimage}(\operatorname{state}(t), \operatorname{singleton}(h)), \operatorname{preimage}(\operatorname{past}(t), A))))\cdot (\operatorname{ofReal}((\operatorname{pathMass}(\operatorname{matrix}(theta), \operatorname{length}(a), \operatorname{states}(a), \operatorname{labels}(a)))\cdot (\operatorname{sum}((j:H\mapsto \operatorname{productEntry}(theta, w, r, j))))))))))))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.route_word_past_factor` (`✓ std3`). ∎
 
@@ -78,7 +80,7 @@ For every finite measurable hidden type with measurable singletons, every origin
 
 **Definition 1.7 (The actual positive closed-class restriction).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.nativeComponent`
+$$\forall H:(Type), ([\operatorname{Fintype}(H)][\operatorname{MeasurableSpace}(H)][\operatorname{MeasurableSingletonClass}(H)]\forall theta:(\operatorname{Presentation}(H)), (\forall D:(\operatorname{ClosedClass}((\operatorname{matrix}(theta, false))+(\operatorname{matrix}(theta, true)))), (\forall hc:(0< \operatorname{sum}((i:\operatorname{val}(D)\mapsto \operatorname{initial}(theta, \operatorname{val}(i))))), (\forall i:(\operatorname{val}(D)), (\operatorname{initial}(\operatorname{nativeComponent}(theta, D, hc), i)= \frac{\operatorname{initial}(theta, \operatorname{val}(i))}{\operatorname{sum}((i:\operatorname{val}(D)\mapsto \operatorname{initial}(theta, \operatorname{val}(i))))})\land (\forall x:(Bool), (\forall i:(\operatorname{val}(D)), (\forall j:(\operatorname{val}(D)), (\operatorname{matrix}(\operatorname{nativeComponent}(theta, D, hc), x, i, j)= \operatorname{matrix}(theta, x, \operatorname{val}(i), \operatorname{val}(j))))))))))$$
 
 *Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.nativeComponent` (`✓ std3`).
 
@@ -90,7 +92,7 @@ For an actual closed communicating class C of the original sum matrix M0 plus M1
 
 **Definition 1.8 (Inclusion on the same original marked carrier).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.componentInclusion`
+$$\forall H:(Type), (\forall C:(\operatorname{Finset}(H)), (\forall z:(\operatorname{PathSpace}(\operatorname{subtype}(C))), (\operatorname{componentInclusion}(C, z)= \operatorname{pair}((t:Int\mapsto \operatorname{val}(\operatorname{apply}(\operatorname{fst}(z), t))), \operatorname{snd}(z)))))$$
 
 *Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.componentInclusion` (`✓ std3`).
 
@@ -102,7 +104,7 @@ A path on the actual state subtype C is included in the original path space by t
 
 **Theorem 1.9 (A native component law equals the actual class restriction).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.component_restriction`
+$$\forall H:(Type), ([\operatorname{Fintype}(H)][\operatorname{MeasurableSpace}(H)][\operatorname{MeasurableSingletonClass}(H)]\forall theta:(\operatorname{Presentation}(H)), (\forall D:(\operatorname{ClosedClass}((\operatorname{matrix}(theta, false))+(\operatorname{matrix}(theta, true)))), (\forall hc:(0< \operatorname{sum}((i:\operatorname{val}(D)\mapsto \operatorname{initial}(theta, \operatorname{val}(i))))), (\forall J:(\operatorname{Measure}(\operatorname{PathSpace}(H))), ([\operatorname{IsProbabilityMeasure}(J)](\operatorname{HasOriginalCylinders}(J, theta))\implies (\forall K:(\operatorname{Measure}(\operatorname{PathSpace}(\operatorname{val}(D)))), ([\operatorname{IsProbabilityMeasure}(K)](\operatorname{HasOriginalCylinders}(K, \operatorname{nativeComponent}(theta, D, hc)))\implies (\forall t:(Int), (\operatorname{smul}(\operatorname{ofReal}(\operatorname{sum}((i:\operatorname{val}(D)\mapsto \operatorname{initial}(theta, \operatorname{val}(i))))), \operatorname{map}(K, \operatorname{componentInclusion}(\operatorname{val}(D))))= \operatorname{restrict}(J, \operatorname{preimage}(\operatorname{state}(t), \operatorname{coeSet}(\operatorname{val}(D))))\land (\forall w:(\operatorname{List}(Bool)), (\forall i:(\operatorname{val}(D)), (\forall j:(\operatorname{val}(D)), (\operatorname{productEntry}(\operatorname{nativeComponent}(theta, D, hc), w, i, j)= \operatorname{productEntry}(theta, w, \operatorname{val}(i), \operatorname{val}(j)))))))))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.component_restriction` (`✓ std3`). ∎
 
@@ -116,7 +118,7 @@ To apply the occurrence estimate to a positive-weight source class, take H in or
 
 On the original H/output carrier let mu be K pushed forward by componentInclusion. For every integer d, component_restriction identifies mu exactly with the inverse of ENNReal.ofReal(c) times J restricted to H(d) in C. Lift the given a(h) only by taking each hidden subtype value; keep its length and emitted labels. The preimage of its original routeWord event under inclusion is precisely the native routeWord event. Inclusion also pulls every measurable event of the complete original marked past back to the corresponding native event, preserving H(d). Hence route_word_past_factor gives the same equality on mu for every original measurable marked-past event. Conditional-expectation uniqueness on the sigma-field generated by the pair (H(d),past(d)) identifies the conditional expectation of this particular event's indicator with its exact original path weight times the B_C row sum, multiplied by the indicator of H(d)=h. On that hidden fiber the conditional probability is therefore exactly d_h times (B_C one)(r), almost everywhere. This sigma-field contains every H(i) for i at most d and every X(i) for i below d; it is not a finite observation window. The original restricted word-product identity gives the very B_C in the source, and taking the minimum over the unchanged supplied family gives precisely its epsilon.
 
-Set b to length(w) plus card(C). For each given route the remaining length is b minus a.length minus length(w). Partitioning routeWord by all remaining original hidden-state tuples and output tuples gives its entire measure, also when the remaining length is zero. The arbitrary suffix thus contributes total conditional mass one; no suffix positivity or special continuation is imposed. The proved inclusion puts this hidden subevent inside the single source success(w,b) event, so its exact conditional probability is at least the unchanged selectedEpsilon. This establishes the source proof's prescribed-path payment paragraph. It does not establish the chronological product moment, either complete opposite-half-line posterior comparison, or the root and squared tail estimates.
+Set b to length(w) plus card(C). For each given route the remaining length is b minus a.length minus length(w). Partitioning routeWord by all remaining original hidden-state tuples and output tuples gives its entire measure, also when the remaining length is zero. The arbitrary suffix thus contributes total conditional mass one; no suffix positivity or special continuation is imposed. The proved inclusion puts this hidden subevent inside the single source success(w,b) event, so its exact conditional probability is at least the unchanged selectedEpsilon. The chronological product moment uses this prescribed-path payment through the conditional success probability given the complete marked past. The posterior theorem transfers the corresponding count bounds to both opposite infinite half-lines, and the native-component theorem sums the resulting original risks.
 
 ## References
 

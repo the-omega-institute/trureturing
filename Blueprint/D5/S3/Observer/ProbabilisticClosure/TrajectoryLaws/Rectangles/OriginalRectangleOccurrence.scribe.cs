@@ -1,18 +1,176 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.Rectangles;
 
 internal sealed class OriginalRectangleOccurrenceDocument : IScribeDocumentDefinition
 {
+    private static Formula Call(string name, params Formula[] args)
+    {
+        Formula f = F.Seq(Operatorname, Grp(F.Id(name)), Open);
+        for (int i = 0; i < args.Length; i++)
+            f = i == 0 ? F.Seq(f, args[i]) : F.Seq(f, Comma, Sp, args[i]);
+        return F.Seq(f, Close);
+    }
+    private static Formula Par(Formula f) => F.Seq(Open, f, Close);
+    private static Formula All(string name, Formula type, Formula body) =>
+        F.Seq(Forall, Sp, F.Id(name), Colon, Par(type), Comma, Sp, Par(body));
+    private static Formula Lam(string name, Formula type, Formula body) =>
+        F.Seq(Open, F.Id(name), Colon, type, Mapsto, Sp, body, Close);
+    private static Formula Let(string name, Formula value, Formula body) =>
+        F.Seq(F.Id("let"), Sp, F.Id(name), Colon, Eq, value, Semi, Sp, body);
+    private static Formula Rel(Formula a, Formula relation, Formula b) => F.Seq(a, relation, Sp, b);
+    private static Formula Imp(Formula a, Formula b) => F.Seq(Par(a), Implies, Sp, Par(b));
+    private static Formula PlusOf(Formula a, Formula b) => F.Seq(Par(a), Plus, Par(b));
+    private static Formula Mul(Formula a, Formula b) => F.Seq(Par(a), Cdot, Sp, Par(b));
+    private static Formula Div(Formula a, Formula b) => F.Seq(Frac, Grp(a), Grp(b));
+    private static Formula Ands(params Formula[] terms)
+    {
+        Formula f = terms[0];
+        for (int i = 1; i < terms.Length; i++) f = F.Seq(f, Land, Sp, Par(terms[i]));
+        return f;
+    }
+    private static Formula Instances(Formula h, Formula body) => F.Seq(
+        OpenBracket, Call("Fintype", h), CloseBracket,
+        OpenBracket, Call("MeasurableSpace", h), CloseBracket,
+        OpenBracket, Call("MeasurableSingletonClass", h), CloseBracket, body);
+
+    private static Formula OccurrenceFormula(string selector)
+    {
+        var htype=F.Id("H"); var theta=F.Id("theta"); var jlaw=F.Id("J");
+        var h=F.Id("h"); var r=F.Id("r"); var a=F.Id("a"); var w=F.Id("w");
+        var rectangle=F.Id("R"); var b=F.Id("b"); var t=F.Id("t"); var z=F.Id("z");
+        var nat=F.Id("Nat"); var integer=F.Id("Int"); var boolean=F.Id("Bool"); var real=F.Id("Real");
+        var path=Call("PathSpace", htype); var list=Call("List", boolean); var past=Call("MarkedPast", htype);
+        var card=Call("card", htype); var eps=F.Id("epsilon"); var eventA=F.Id("A");
+        Formula Wrap(Formula body, bool withLaw=false) {
+            if (withLaw) body=All("J", Call("Measure", path), F.Seq(
+                OpenBracket, Call("IsProbabilityMeasure", jlaw), CloseBracket,
+                Imp(Call("HasOriginalCylinders", jlaw, theta), body)));
+            body=All("theta", Call("Presentation", htype), body);
+            return All("H", F.Id("Type"), (withLaw || selector == "nativeComponent") ? Instances(htype, body) :
+                F.Seq(OpenBracket, Call("Fintype", htype), CloseBracket, body));
+        }
+        Formula StatePast(Formula state) => Call("inter",
+            Call("preimage", Call("state", t), Call("singleton", state)),
+            Call("preimage", Call("past", t), eventA));
+        Formula Weight(Formula route) => Mul(Call("pathMass", Call("matrix", theta),
+            Call("length", route), Call("states", route), Call("labels", route)),
+            Call("sum", Lam("j", htype, Call("productEntry", theta, w, r, F.Id("j")))));
+        Formula Paid() => Let("epsilon", Call("selectedEpsilon", theta, w, r, a),
+            Let("b", PlusOf(Call("length", w), card), Ands(
+                Rel(D(0), Lt, eps), Rel(eps, Le, D(1)),
+                All("t", integer, All("h", htype, Imp(Rel(D(0), Lt, Call("initial", theta, h)),
+                    Rel(Call("ofReal", eps), Le, Call("measureApply", Call("futureLaw", jlaw, t, h), Call("success", w, b)))))),
+                All("t", integer, All("h", htype, All("A", Call("Set", past), Imp(Call("MeasurableSet", eventA),
+                    Rel(Mul(Call("ofReal", eps), Call("measureApply", jlaw, StatePast(h))), Le,
+                        Call("measureApply", jlaw, Call("inter", StatePast(h),
+                            Call("preimage", Call("future", t), Call("success", w, b))))))))))));
+        if (selector == "LabelledRoute")
+        {
+            var n=F.Id("n"); var states=F.Id("states"); var labels=F.Id("labels"); var i=F.Id("i");
+            var record=Call("recordType",
+                Call("field", n, nat),
+                Call("field", states, F.Seq(Call("Fin", PlusOf(n,D(1))), To, Sp, htype)),
+                Call("field", labels, F.Seq(Call("Fin", n), To, Sp, boolean)),
+                Call("field", F.Id("first"), Rel(Call("apply", states, D(0)), Eq, h)),
+                Call("field", F.Id("last"), Rel(Call("apply", states, Call("last", n)), Eq, r)),
+                Call("field", F.Id("positive"), All("i", Call("Fin", n), Rel(D(0), Lt,
+                    Call("matrix", theta, Call("apply", labels, i),
+                        Call("apply", states, Call("castSucc", i)), Call("apply", states, Call("succ", i)))))));
+            return Wrap(All("h", htype, All("r", htype, Rel(Call("LabelledRoute",theta,h,r), Eq, record))));
+        }
+        if (selector == "success")
+        {
+            var x=F.Id("x"); var future=F.Seq(nat, To, Sp, boolean);
+            return All("w", list, All("b", nat, Rel(Call("success", w, b), Eq,
+                Call("setOf", Lam("x", future, Call("IsInfix", w, Call("ofFn", Call("readPrefix", b, x))))))));
+        }
+        if (selector == "selectedEpsilon")
+            return Wrap(All("w", list, All("r", htype,
+                All("a", All("h", htype, Call("LabelledRoute", theta, h, r)),
+                    Rel(Call("selectedEpsilon",theta,w,r,a), Eq,
+                        Call("minimum", Lam("h", htype, Weight(Call("apply",a,h)))))))));
+        if (selector == "original_rectangle_occurrence")
+        {
+            var result=Imp(All("h",htype,Rel(Call("length",Call("apply",a,h)),Le,card)), Paid());
+            result=All("a",All("h",htype,Call("LabelledRoute",theta,h,r)),result);
+            result=All("r",htype,Imp(Rel(r,InMacro,Call("rows",rectangle)),result));
+            return Wrap(All("w",list,All("R",Call("Rectangle",Call("product",theta,w)),result)),true);
+        }
+        if (selector == "routeWord")
+        {
+            var rw=Call("inter", Call("cylinder",t,Call("length",a),Call("states",a),Call("labels",a)),
+                Call("preimage",F.Id("snd"),Call("visibleCylinder",
+                    PlusOf(t,Call("intCast",Call("length",a))),Call("length",w),Call("get",w))));
+            return Wrap(All("t",integer,All("h",htype,All("r",htype,
+                All("a",Call("LabelledRoute",theta,h,r),All("w",list,
+                    Rel(Call("routeWord",theta,t,a,w),Eq,rw)))))));
+        }
+        if (selector == "route_word_past_factor")
+        {
+            var rw=Call("routeWord",theta,t,a,w);
+            var result=Ands(Call("MeasurableSet",rw),
+                All("b",nat,Imp(Rel(PlusOf(Call("length",a),Call("length",w)),Le,b),
+                    Call("subset",rw,Call("preimage",Call("future",t),Call("success",w,b))))),
+                All("A",Call("Set",past),Imp(Call("MeasurableSet",eventA),
+                    Rel(Call("measureApply",jlaw,Call("inter",Call("preimage",Call("past",t),eventA),rw)),Eq,
+                        Mul(Call("measureApply",jlaw,StatePast(h)),Call("ofReal",Weight(a)))))));
+            return Wrap(All("t",integer,All("h",htype,All("r",htype,
+                All("a",Call("LabelledRoute",theta,h,r),All("w",list,result))))),true);
+        }
+        if (selector == "componentInclusion")
+        {
+            var cls=F.Id("C");
+            return All("H",F.Id("Type"),All("C",Call("Finset",htype),All("z",Call("PathSpace",Call("subtype",cls)),
+                Rel(Call("componentInclusion",cls,z),Eq,Call("pair",
+                    Lam("t",integer,Call("val",Call("apply",Call("fst",z),t))),Call("snd",z))))));
+        }
+        var d=F.Id("D");var hc=F.Id("hc");var hidden=Call("val",d);
+        var mass=Call("sum",Lam("i",hidden,Call("initial",theta,Call("val",F.Id("i")))));
+        var native=Call("nativeComponent",theta,d,hc);
+        Formula ClassWrap(Formula result) => Wrap(All("D",Call("ClosedClass",
+            PlusOf(Call("matrix",theta,F.Id("false")),Call("matrix",theta,F.Id("true")))),
+            All("hc",Rel(D(0),Lt,mass),result)));
+        if (selector == "nativeComponent")
+        {
+            var i=F.Id("i"); var j=F.Id("j"); var x=F.Id("x");
+            return ClassWrap(Ands(
+                All("i",hidden,Rel(Call("initial",native,i),Eq,Div(Call("initial",theta,Call("val",i)),mass))),
+                All("x",boolean,All("i",hidden,All("j",hidden,
+                    Rel(Call("matrix",native,x,i,j),Eq,Call("matrix",theta,x,Call("val",i),Call("val",j))))))));
+        }
+        if (selector == "component_restriction")
+        {
+            var klaw=F.Id("K"); var i=F.Id("i"); var j=F.Id("j");
+            var result=All("t",integer,Ands(
+                Rel(Call("smul",Call("ofReal",mass),Call("map",klaw,Call("componentInclusion",hidden))),Eq,
+                    Call("restrict",jlaw,Call("preimage",Call("state",t),Call("coeSet",hidden)))),
+                All("w",list,All("i",hidden,All("j",hidden,
+                    Rel(Call("productEntry",native,w,i,j),Eq,Call("productEntry",theta,w,Call("val",i),Call("val",j))))))));
+            result=All("K",Call("Measure",Call("PathSpace",hidden)),F.Seq(
+                OpenBracket,Call("IsProbabilityMeasure",klaw),CloseBracket,
+                Imp(Call("HasOriginalCylinders",klaw,native),result)));
+            result=All("J",Call("Measure",path),F.Seq(OpenBracket,Call("IsProbabilityMeasure",jlaw),CloseBracket,
+                Imp(Call("HasOriginalCylinders",jlaw,theta),result)));
+            result=All("D",Call("ClosedClass",PlusOf(Call("matrix",theta,F.Id("false")),
+                Call("matrix",theta,F.Id("true")))),All("hc",Rel(D(0),Lt,mass),result));
+            return All("H",F.Id("Type"),Instances(htype,All("theta",Call("Presentation",htype),result)));
+        }
+        throw new System.ArgumentException("Unknown mathematical declaration",nameof(selector));
+    }
+
     private static DocumentBlock.Describe Entry(string id, string selector, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence." + selector),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            H(title), StatementSource.FromAuthor(Disp(OccurrenceFormula(selector))), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Original rectangular-word occurrence", H("Original rectangular-word occurrence"),
         Blocks(
+            Paragraph(Text("The displayed recordType lists every data and proof field of LabelledRoute; its field n is the Lean field length. MarkedPast(H) is Nat -> (H x Bool). minimum is the finite minimum over the indicated entire hidden type, sum is the corresponding finite sum, and measureApply(mu,S) is mu(S). productEntry is an entry of product. setOf, IsInfix, inter, preimage, subset, singleton, ofFn, readPrefix, castSucc, succ, last, get, subtype and val denote the corresponding Lean operations. In the nativeComponent formula, the two field equalities specify its data; its value has type Presentation(D), whose proof fields enforce the original normalization, nonnegativity, stationarity and scalar no11 conditions.")),
             Entry("labelled-route", "LabelledRoute", "Selected original labelled paths",
                 "For a finite hidden state type H, an original stationary binary edge presentation theta and states h and r, a labelled route consists of a natural edge count n, n plus one hidden states, n emitted Boolean labels, endpoint equalities to h and r, and strict positivity of every selected original matrix entry. Its probability weight is pathMass of these states and labels. The empty path has weight one. This structure contains no desired occurrence probability or erasure inequality.", DescribeRole.Definition),
             Entry("success", "success", "One visible event for the whole original block",
@@ -20,7 +178,7 @@ internal sealed class OriginalRectangleOccurrenceDocument : IScribeDocumentDefin
             Entry("selected-epsilon", "selectedEpsilon", "The exact selected-path minimum",
                 "For theta, w, a target state r, and one selected labelled route from every h to r, epsilon is the minimum over all h in H of the selected pathMass multiplied by the row sum at r of the original word matrix product. The index set is nonempty because it contains r. The minimum retains the particular selected labels and paths; it is not replaced by an optimized route, a power of the unlabelled transition matrix, or a positive surrogate.", DescribeRole.Definition),
             Entry("original-occurrence", "original_rectangle_occurrence", "The original visible event is paid against the complete marked past",
-                "Let H be any finite hidden state type with measurable singletons, theta an original stationary nonnegative binary edge presentation satisfying its scalar no11 condition, and J any probability measure with exactly theta's original integer-time marked cylinder identities. Let w have a nonempty rectangular positive word-matrix support, let r belong to its support rows, and select one positive original labelled route from every h to r, each with at most card(H) edges. Set b to length(w) plus card(H), and epsilon to the exact selected-path minimum. Then epsilon is strictly positive and at most one. At every integer cut t and every state h with positive theta initial mass, the actual conditional future kernel futureLaw(J,t,h) assigns success(w,b) probability at least epsilon. For every h, including a null hidden fiber, and every measurable event A of the entire marked past, epsilon times J of state(t)=h and past(t) in A is at most J of that same event together with future(t) in success(w,b). Measures and the inequality use ENNReal.ofReal(epsilon). The path followed by w fits inside the original b-bit block and is a subset of this single visible success event; summing hidden paths gives its lower probability. The complete-past factor is the existing same-law future-screening theorem. A null state has zero past-event mass. No independence, aperiodicity, unifilarity, global matrix positivity, posterior band or conditioning on future data is imposed. This is the occurrence-probability prerequisite of source Theorem 4.2. It does not construct the source's bounded routes from irreducibility or prove adapted success-count payment, either complete-half-line erasure bound, or the root and squared tails. Those are still required before the original theorem or its Section 7 loss-cocycle and second-order localization consumers can be closed.", DescribeRole.Theorem),
+                "Let H be any finite hidden state type with measurable singletons, theta an original stationary nonnegative binary edge presentation satisfying its scalar no11 condition, and J any probability measure with exactly theta's original integer-time marked cylinder identities. Let w have a nonempty rectangular positive word-matrix support, let r belong to its support rows, and select one positive original labelled route from every h to r, each with at most card(H) edges. Set b to length(w) plus card(H), and epsilon to the exact selected-path minimum. Then epsilon is strictly positive and at most one. At every integer cut t and every state h with positive theta initial mass, the actual conditional future kernel futureLaw(J,t,h) assigns success(w,b) probability at least epsilon. For every h, including a null hidden fiber, and every measurable event A of the entire marked past, epsilon times J of state(t)=h and past(t) in A is at most J of that same event together with future(t) in success(w,b). Measures and the inequality use ENNReal.ofReal(epsilon). The path followed by w fits inside the original b-bit block and is a subset of this single visible success event; summing hidden paths gives its lower probability. The complete-past factor is the existing same-law future-screening theorem. A null state has zero past-event mass. No independence, aperiodicity, unifilarity, global matrix positivity, posterior band or conditioning on future data is imposed. The route theorem supplies the bounded labelled paths from irreducibility. The chronological moment theorem uses this marked-past occurrence estimate to pay one squared contraction per block. The posterior and native-component theorems then combine these payments with the two complete opposite-half-line comparisons and the root and squared tail bounds.", DescribeRole.Theorem),
             Entry("route-word", "routeWord", "The prescribed original hidden path and word",
                 "For an original presentation theta, any integer cut t, states h and r, a given positive labelled route a from h to r, and a Boolean list w, routeWord is the intersection of the original marked cylinder prescribing exactly a's hidden states and labels with the visible w cylinder beginning at t plus a.length. It restricts no coordinate after that word. In particular, the selected family is supplied as data; this event does not choose a new route or change the source epsilon.", DescribeRole.Definition),
             Entry("route-word-past-factor", "route_word_past_factor", "Exact prescribed-route probability against the entire marked past",
@@ -33,5 +191,5 @@ internal sealed class OriginalRectangleOccurrenceDocument : IScribeDocumentDefin
                 "Let theta be the original stationary edge presentation on finite H. Let C be an actual closed communicating class of theta's sum matrix, let c be its positive original stationary mass, and let kappa be nativeComponent(theta,C,c-positive), with exactly the original subtype, normalized masses and unchanged matrix entries. Let J and K be probability measures with the original marked cylinders of theta and kappa respectively. For every integer t, c times the inclusion pushforward of K equals the restriction of J to the event H_t belongs to C. For every word, the product of the restricted matrices is also exactly the restriction of the original word product. Restricted stochasticity forces every omitted outgoing entry to be zero, and induction through matrix multiplication preserves each original entry. The assumptions themselves force c to be the actual stationary mass of C. The result holds for every such J and K, including reducible or periodic presentations and zero-mass states. It identifies measures on the original hidden/output carrier, rather than identifying only visible marginals or assigning an original-law name to an unrelated supplied measure. The proof first compares all original marked cylinders, extends the comparison to all measurable events by finite-window approximation, and then uses support in C and equality of total mass to obtain the restriction identity. For nativeComponent, the initial-mass and matrix equalities follow from its defining original entries, so the normalized restriction of J is precisely K's inclusion pushforward at every integer cut. Its output marginal is consequently the same actual class-conditioned visible law.", DescribeRole.Theorem),
             Paragraph(Text("To apply the occurrence estimate to a positive-weight source class, take H in original_rectangle_occurrence to be exactly C, theta to be nativeComponent of the original parameter and class, and K to be the original-cylinder law of that restricted presentation. The preceding measure identity identifies its inclusion with the normalized restriction of the original J; it is not a new probability model. Keep the source word w and support row r, and supply the very family a of original labelled paths selected in the statement. The source d_h is pathMass of a(h), its B_C row sum is the row sum of product(kappa,w), and the source epsilon is exactly selectedEpsilon(kappa,w,r,a). Thus b is exactly length(w) plus card(C), with the original emission coordinates. Applying original_rectangle_occurrence directly to these parameters gives the one common success event, every integer cut, and every measurable complete marked-past event. This application does not replace a by a bounded or optimized family. The adapted count moment, the complete opposite-half-line erasure risks, all count and tail endpoint cases, and the Section 7 consequences require their respective additional arguments.")),
             Paragraph(Text("On the original H/output carrier let mu be K pushed forward by componentInclusion. For every integer d, component_restriction identifies mu exactly with the inverse of ENNReal.ofReal(c) times J restricted to H(d) in C. Lift the given a(h) only by taking each hidden subtype value; keep its length and emitted labels. The preimage of its original routeWord event under inclusion is precisely the native routeWord event. Inclusion also pulls every measurable event of the complete original marked past back to the corresponding native event, preserving H(d). Hence route_word_past_factor gives the same equality on mu for every original measurable marked-past event. Conditional-expectation uniqueness on the sigma-field generated by the pair (H(d),past(d)) identifies the conditional expectation of this particular event's indicator with its exact original path weight times the B_C row sum, multiplied by the indicator of H(d)=h. On that hidden fiber the conditional probability is therefore exactly d_h times (B_C one)(r), almost everywhere. This sigma-field contains every H(i) for i at most d and every X(i) for i below d; it is not a finite observation window. The original restricted word-product identity gives the very B_C in the source, and taking the minimum over the unchanged supplied family gives precisely its epsilon.")),
-            Paragraph(Text("Set b to length(w) plus card(C). For each given route the remaining length is b minus a.length minus length(w). Partitioning routeWord by all remaining original hidden-state tuples and output tuples gives its entire measure, also when the remaining length is zero. The arbitrary suffix thus contributes total conditional mass one; no suffix positivity or special continuation is imposed. The proved inclusion puts this hidden subevent inside the single source success(w,b) event, so its exact conditional probability is at least the unchanged selectedEpsilon. This establishes the source proof's prescribed-path payment paragraph. It does not establish the chronological product moment, either complete opposite-half-line posterior comparison, or the root and squared tail estimates.")))));
+            Paragraph(Text("Set b to length(w) plus card(C). For each given route the remaining length is b minus a.length minus length(w). Partitioning routeWord by all remaining original hidden-state tuples and output tuples gives its entire measure, also when the remaining length is zero. The arbitrary suffix thus contributes total conditional mass one; no suffix positivity or special continuation is imposed. The proved inclusion puts this hidden subevent inside the single source success(w,b) event, so its exact conditional probability is at least the unchanged selectedEpsilon. The chronological product moment uses this prescribed-path payment through the conditional success probability given the complete marked past. The posterior theorem transfers the corresponding count bounds to both opposite infinite half-lines, and the native-component theorem sums the resulting original risks.")))));
 }
