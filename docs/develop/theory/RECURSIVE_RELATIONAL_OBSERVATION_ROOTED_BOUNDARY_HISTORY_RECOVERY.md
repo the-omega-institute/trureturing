@@ -1554,3 +1554,251 @@ The stopping obstruction of [Atomic Generation Acquisition III §§19–20](RECU
 The four-view transports remain exactly those of Theorem 6.2 and Theorem 17.3 on their original rational source. Acquiring an exact reduced rational permits finite construction of its original word, named incidence path and indexed prefix table. A rational's predictive thread may then be specified mathematically by its rational parameter, but no infinite list of reports has been read or emitted. Nothing here extends these original-source decoders to the ambient cyclic-anchor fibers of §§20–23, installs a certification service, or identifies actual probe histories with simulated histories. The resource contract counts every acquired report, scale encoding, operand width, computation, storage and finite output. The conclusions assert neither a physical spacetime interpretation nor new kernel verification of the ordinary proofs above.
 
 ## 追加锚（本行以下为增补区）
+
+## 28. Effective scale menus and the original acquisition problem
+
+**Assumption 28.1 (enumerated names and separately supplied services).** Keep precisely the original source $x=B(w)\in\mathbb Q_{>0}$, root $1$, chronological actions $L(x)=x/(1+x)$ and $R(x)=x+1$, and public original-target presentations $(P_\pi,\tau_\pi)$ of Assumption 24.1. A menu is specified by one public source-independent finite program $E$. On each input stage $n\in\mathbb N$, it finishes and emits a finite list of positive integers. Let $S$ be the union of its lists. Repetition, empty stages, finite menus and the empty menu are allowed. This is a staged effective enumeration, without a decision procedure for membership, boundedness or divisibility cofinality.
+
+Separately assume that each $D\in S$ names a reusable exact nondisturbing service $q_D(z)=\lfloor Dz\rfloor$ at every cut attained by the one actual source. Each requested service completes finitely and returns the complete integer in a fixed finite encoding. Giving $E$ does not install any of these ports. Source actions and services are performed serially; waiting for an enumerator stage or a service supplies no source-dependent timing report. Ordinary finite exact computation is permitted and charged. No source reset, copy, inverse action, unknown-history archive, exact unknown-source input, infinite observed thread or auxiliary oracle is supplied.
+
+**Definition 28.2 (task classes and the joint divisor set).** Write $\operatorname{Stat}(S)$ and $\operatorname{Fwd}(S)$ for the classes of these same public pairs $(P_\pi,\tau_\pi)$ acquired by one ordinary effective deterministic program that is correct and terminates on every promised original, respectively with no source actions and with actual forward actions allowed. Outputs remain $\tau_\pi(x)$ at the original cut. Programs and any auxiliary computations have finite source-independent descriptions. No effective presentation of all correct controllers or all homogeneous priors is assumed. Put
+
+$$
+\operatorname{Div}(S)=\{b\in\mathbb Z_{>0}:\exists D\in S,\ b\mid D\}.
+\tag{28.1}
+$$
+
+The divisor $1$ belongs to this set exactly when $S$ is nonempty. A legal read uses a name in $S$. Requiring an enumeration witness before using that name gives the same task class: before any legal request for $D$, run stages until $D$ appears. That extra search finishes and leaves the source unchanged. Such searches are part of the cost. The all-integer menu $\mathbb N_{>0}$ has its usual effective enumeration and the conditional services of Assumption 24.1. Comparisons of classes below vary the access menu while keeping the public presentation, actual source law, original target and endpoint convention fixed.
+
+## 29. Comparing original thresholds after every actual prefix
+
+**Theorem 29.1 (a repeatable comparison on one source).** Under Assumption 28.1, suppose $S$ is numerically unbounded. From $E$, any known already executed chronological probe prefix $u$, and a known positive rational threshold $r$, there is a finite effective continuation which reports exactly whether the original $x$ satisfies $x\ge r$. It executes only further forward actions and one supplied floor read. Its retained data permit another such comparison from the newly attained cut. More precisely, the controller can maintain the invariant
+
+$$
+A_u=\begin{pmatrix}\alpha&\beta\\c&d\end{pmatrix}\in\mathbb N^{2\times2},\qquad
+\alpha d-\beta c=1,\quad d\ge1,\qquad
+z=f_u(x)=\frac{\alpha x+\beta}{cx+d}.
+\tag{29.1}
+$$
+
+Initially $A_u$ is the identity. The construction transforms finite descriptions into a finite ordinary program under the unboundedness promise; it does not recognize that promise.
+
+Proof. Reduce the given threshold to $r=a/b>0$. From the known matrix, compute
+
+$$
+t=f_u(r)=p/q,\qquad p=\alpha a+\beta b,\quad q=ca+db.
+$$
+
+Both integers are positive and coprime. Indeed the integer inverse matrix carries $(p,q)$ back to $(a,b)$, so a common divisor of $p,q$ divides both $a,b$. Positivity also follows directly from the positive-domain action formulas. In particular the denominator is not zero. The derivative sign, or the determinant identity after cross multiplication, shows that every $f_u$ is strictly increasing on positive inputs.
+
+Run $E$ through successive stages until a listed $D>pq$ occurs. Unboundedness ensures a finite successful stage, including when earlier stages are empty. Equation (15.3), applied to the current rational threshold $t$, says it is a predictive cut at scale $D$. For actual repeatable acquisition we need a computable continuation attaining a grid threshold, not just its counterfactual existence. The constructive arithmetic in that equation gives it as follows. Search $j=1,\ldots,p$ for $qj\equiv D\pmod p$; when $p=1$ take $j=1$. Coprimality guarantees success, and $qj\le pq<D$. Thus
+
+$$
+h=(D-qj)/p>0,\quad ph+qj=D,\quad
+g=\gcd(h,j),\quad C=h/g,\quad F=j/g.
+$$
+
+Here $C,F\ge1$ and $\gcd(C,F)=1$. Search $A=1,\ldots,C$ for $AF\equiv1\pmod C$, taking $A=1$ when $C=1$, and put $B=(AF-1)/C$. This is an effective finite search, $B\ge0$, and the matrix
+
+$$
+H=\begin{pmatrix}A&B\\C&F\end{pmatrix},\qquad AF-BC=1
+$$
+
+has nonnegative integer entries. Neither $p=1$ nor $q=1$ has been excluded; the strict inequality $D>pq$ ensures the positive coefficients in all these cases. This is the positive-coefficient construction already used in (15.3), rather than an application of a two-generator Frobenius formula with extra nonunit assumptions.
+
+To obtain an executable chronological word for $H$, use the finite row descent underlying `unimodular_iff_wordMatrix`. Its arithmetic realization can be described without extracting executable code from an existential Lean proof. At a nonidentity nonnegative determinant-one matrix, its two rows are componentwise comparable. If its upper first entry exceeds the lower first entry while its lower second entry exceeds the upper second entry, the determinant is at least the sum of the two smaller entries plus one; determinant one forces those smaller entries to be zero and gives precisely the identity. The other strictly crossed order has negative determinant. Equal coordinates cause no additional incomparable case. Subtract the smaller row from the larger, recording $L$ when the lower row was reduced and $R$ when the upper row was reduced. Each row is nonzero, the new entries stay nonnegative, the determinant stays one, and the sum of the four entries strictly decreases. The procedure therefore terminates at the identity. If the recorded labels are $e_1,\ldots,e_\ell$ in peeling order, then $H=G_{e_1}\cdots G_{e_\ell}$; execute their reverse order to obtain a chronological word $v$ with matrix $H$. These are finite comparisons, subtractions and list operations on known integers. They supply an ordinary terminating procedure, not an additional source inverse. Descent is performed on the known matrix before any of the new actions are executed.
+
+The current threshold is now sent to an exact scale-$D$ grid point:
+
+$$
+D f_v(t)
+ =D\frac{Ap+Bq}{Cp+Fq}
+ =g(Ap+Bq)=:k\in\mathbb Z_{>0},
+\tag{29.2}
+$$
+
+because $Cp+Fq=D/g$. Actually execute $v$ on the attained source, obtain $Q=q_D(f_v(z))$, and return the bit $[Q\ge k]$. Strict monotonicity and the exact upper value of floor at an integer give
+
+$$
+Q\ge k
+\ \Longleftrightarrow\ f_v(f_u(x))\ge f_v(f_u(r))
+\ \Longleftrightarrow\ x\ge r.
+\tag{29.3}
+$$
+
+Equality belongs to the yes branch. This convention is essential for original rational endpoints. Update the retained matrix to $H A_u$ while recording the actions as executed; the actual state is $f_{uv}(x)$ and (29.1) holds with $uv$. The update only uses known actions and integer arithmetic, never an unknown original value. Thus any finite adaptive sequence of these comparisons is one actual experiment: the next comparison begins with this updated matrix and uses the image of its new original threshold. It does not restart from the original cut. All searches and the read finish finitely, so an induction over completed comparisons proves the assertion. $\square$
+
+**Theorem 29.2 (finite-code simulation of stationary integer reads).** If $S$ is numerically unbounded, every correct all-integer stationary controller for a public $(P_\pi,\tau_\pi)$ can be transformed, using its finite code and $E$, into a forward $S$-controller for the same original target. No test of correctness of the given controller, of membership in $P_\pi$, or of semantic homogeneity is required.
+
+Proof. Retain a simulation of the given program and one matrix satisfying (29.1) for the actual source. When the simulated program requests $q_m(x)$, compare the original $x$ successively with
+
+$$
+1/m,\ 2/m,\ 3/m,\ldots
+\tag{29.4}
+$$
+
+using Theorem 29.1 from the updated actual cut after each comparison. Stop at the first no answer, say at $J/m$, and return $J-1$ as the simulated report. If the true report is $K=\lfloor mx\rfloor$, exactly the first $K$ comparisons answer yes and the $(K+1)$st answers no. Hence $J=K+1<\infty$, and the return is exact, also when $K=0$ or $mx$ is an integer. All thresholds are positive known rationals. No numerical value of the unknown $x$ was input to the comparison program.
+
+Inductively the simulated program receives precisely the stationary reports it would have obtained from the original source. Its chosen scales, internal computation, stopping decision and finite output therefore agree with that original run. On each promised original the run has finitely many requests, each replaced by finitely many comparisons and actual continuations. The transformed run consequently terminates. The matrix persists across requests as well as across thresholds within one request. The finite code consists of the given controller, the menu enumerator, exact arithmetic and these loops. The construction is conditional on the stated promises and preserves the output, without identifying simulated and actual action archives, attained cuts or costs. $\square$
+
+## 30. The exact stationary preorder and the forward universality threshold
+
+**Theorem 30.1 (joint divisibility is the stationary invariant).** For any two effective supplied menus $S,T$ of Assumption 28.1,
+
+$$
+\operatorname{Stat}(S)\subseteq\operatorname{Stat}(T)
+\quad\Longleftrightarrow\quad
+\operatorname{Div}(S)\subseteq\operatorname{Div}(T).
+\tag{30.1}
+$$
+
+The forward implication is a necessary comparison of task classes. The reverse implication has a finite-code transformation from a correct $S$-controller and the enumerator of $T$, under the displayed inclusion promise.
+
+Proof. Suppose the divisor inclusion holds. When the simulated $S$-controller requests $q_D(x)$, search stages of $T$ for an $F$ with $D\mid F$. Such an $F$ exists since $D\in S$ implies $D\in\operatorname{Div}(S)$. Write $F=hD$, read its installed port with result $k$, and return $\lfloor k/h\rfloor$. For $y=Dx$ the identity $\lfloor\lfloor hy\rfloor/h\rfloor=\lfloor y\rfloor$ proves exactness. This uses one actual available port, not a port at the LCM of several separately read scales. Finite searches and finite integer division preserve every promised terminating run. The actual source is stationary throughout.
+
+For necessity take $b\in\operatorname{Div}(S)\setminus\operatorname{Div}(T)$, set $c=1/b$, and use the following public prior and binary original target:
+
+$$
+P_b=\{c\}\cup\{x_n=c-1/n:n\in\mathbb Z,\ n>b\},\qquad
+\sigma_b(c)=1,\quad \sigma_b(x_n)=0.
+\tag{30.2}
+$$
+
+The rational membership procedure accepts $c$, or accepts $y$ exactly when $0<y<c$ and $1/(c-y)$ is an integer greater than $b$. It terminates on every rational input. Thus the prior is decidable and has a source-independent finite presentation, including $b=1$. Choose $D\in S$ divisible by $b$. Then $q_D(y)\ge D/b$ if and only if $y\ge c$, so one stationary read acquires $\sigma_b$ on this prior. Such a $D$ is also found effectively by the enumerator of $S$.
+
+Suppose a stationary $T$-controller terminates correctly at $c$. It queries finitely many scales, forming a finite set $F_0$. If this set is nonempty, $b\nmid D$ for each $D\in F_0$ gives $\{D/b\}>0$. Choose an integer $n>b$ so large that
+
+$$
+1/n<\min_{D\in F_0}\frac{\{D/b\}}{D}.
+\tag{30.3}
+$$
+
+It follows that $q_D(x_n)=q_D(c)$ at every queried scale. If $F_0$ is empty choose any $n>b$. All enumeration and ordinary computations are source-independent, and induction replays exactly the same finite adaptive branch, stopping and output at $x_n$. This contradicts their different target values. When $b=1$, absence from $\operatorname{Div}(T)$ means $T$ is empty, so only the empty-query case is needed. Therefore $(P_b,\sigma_b)$ belongs to $\operatorname{Stat}(S)$ and not to $\operatorname{Stat}(T)$, proving necessity. $\square$
+
+**Theorem 30.2 (sharp acquisition classification).** Under Assumption 28.1,
+
+$$
+\operatorname{Stat}(S)\subseteq\operatorname{Fwd}(S)
+ \subseteq\operatorname{Stat}(\mathbb N_{>0}),
+\tag{30.4}
+$$
+
+and the exact universality criteria, for the same class of public original-target presentations, are
+
+$$
+\begin{aligned}
+\operatorname{Fwd}(S)=\operatorname{Stat}(\mathbb N_{>0})
+ &\quad\Longleftrightarrow\quad S\text{ is numerically unbounded},\\
+\operatorname{Stat}(S)=\operatorname{Stat}(\mathbb N_{>0})
+ &\quad\Longleftrightarrow\quad\operatorname{Div}(S)=\mathbb N_{>0}.
+\end{aligned}
+\tag{30.5}
+$$
+
+If $S$ is empty both its classes consist exactly of tasks whose target has at most one value on the promised prior. The statements quantify over pointwise finite controllers; none supplies a uniform resource budget or an algorithm deciding the right-hand arithmetic properties from arbitrary menu codes.
+
+Proof. A stationary program is a forward program using no actions. A forward $S$-program is a forward all-integer program that requests only names in $S$. The reverse simulation of Theorem 24.3, using a stationary $q_{\Lambda_D}$ to simulate each requested future $q_D$, therefore gives the second inclusion in (30.4). Every all-integer service used by that simulation is among the conditional services for the comparison class. This invokes the established exact simulation, without assuming $\Lambda_D\in S$.
+
+Unboundedness gives the first equality in (30.5) by Theorem 29.2 and (30.4). Conversely, if $S$ is bounded choose an integer $M\ge1$ with $D\le M$ for every $D\in S$. This bound is chosen in the impossibility proof; it need not be computable from $E$. Take the explicit finite original prior
+
+$$
+A_M=\{1/(3M),1/(2M)\}.
+\tag{30.6}
+$$
+
+For every available scale $D$, both points are below $1/M\le1/D$. Theorem 11.2 gives $1/D$ as the minimum predictive cut at scale $D$, so the two points have identical $q_D(f_u(\cdot))$ for every finite chronological $u$. A deterministic forward controller therefore obtains identical reports along every common actual branch: actions, enumeration and computations choose the same next step, and induction applies the preceding equality at each read. No terminating such controller can distinguish the two originals. This also covers $S=\varnothing$, with no reports. Yet the stationary all-integer port $q_{2M}$ returns respectively $0$ and $1$. The public list (30.6) consequently permits exact original rational recovery and hence original-word recovery with all-integer reads, but not forward $S$-recovery. Forward universality fails.
+
+Apply Theorem 30.1 with $T=\mathbb N_{>0}$ in both directions to obtain the stationary equality criterion, since $\operatorname{Div}(\mathbb N_{>0})=\mathbb N_{>0}$. Explicitly, divisor cofinality finds an actually listed multiple for each requested scale; if it fails, (30.2) separates an all-integer stationary task from every stationary $S$-controller. A menu with every positive divisor is necessarily unbounded, consistently with the first criterion.
+
+For an empty menu the entire evolution of an ordinary program, including any forward actions, is source-independent. A terminating output must therefore be identical on all promised sources. Every task with at most one target value has a constant-output finite program, including the vacuous empty-prior case. This proves the empty-menu statement without treating $1$ as an available divisor. The positive proofs use enumerator searches under supplied promises; the negative proofs do not turn boundedness or a missing divisor into decidable menu properties. $\square$
+
+## 31. Original four-view witnesses and the failure of marginal arithmetic
+
+**Theorem 31.1 (effective exact recovery on the endpoint priors).** For each $b\ge1$, the prior $P_b$ in (30.2) admits exact stationary all-integer acquisition of its original rational, original chronological word, rooted named-incidence path and indexed prefix table. If $b\notin\operatorname{Div}(S)$ no stationary $S$-controller acquires any of these four exact views on that same prior. If $S$ is unbounded all four are acquired by a forward $S$-controller. If $S$ is bounded the finite prior (30.6) witnesses failure of forward exact acquisition of each view.
+
+Proof. Here is an actual finite stopping decoder for $P_b$, rather than a semantic assertion of local isolation. Read $q_b$. Its value is $1$ exactly at $c$ and is $0$ at every $x_n$, because $0<bx_n=1-b/n<1$. If it is $1$, output $c$. Otherwise, start $j=b+1$ and compare $x$ with the known rational $x_{j+1}=1/b-1/(j+1)$. Writing this threshold in reduced form $a_j/d_j>0$, the stationary read $q_{d_j}$ decides $x\ge x_{j+1}$ by comparison with $a_j$. On a yes answer increment $j$; on a no answer output the known rational $x_j$.
+
+For an actual $x_n$, the sequence $x_j$ is strictly increasing. Every $j<n$ gives $x_n\ge x_{j+1}$, including equality at $j+1=n$, and $j=n$ gives $x_n<x_{n+1}$. The first no answer therefore occurs exactly at $j=n$. There are $n-b$ such comparisons and one initial read. All thresholds, scale names and outputs are computed from the fixed $b$ and finite loop index; the unknown exact source is never an input. The endpoint run has one read. Thus the rational decoder is correct and pointwise finite, with no common bound on $n$.
+
+Apply the explicit subtractive decoder of Definition 6.3 to the recovered reduced pair: each inverse calculation on this known output pair strictly decreases the sum of its positive coordinates, until $(1,1)$. Reverse the peeled labels to recover the original chronological word. Executing that known word mathematically from the root gives the named incidence path and its indexed prefix table as in Theorems 6.2 and 17.3. These are computations of the original finite views, not inverse actions on the disturbed source. Conversely each of the three other views computes the exact original rational by those same finite transports. Therefore failure to distinguish $c$ from all smaller prior points in Theorem 30.1 precludes acquisition of every exact view when $b$ is missing. Unboundedness transports the displayed all-integer decoder through Theorem 29.2 on this unchanged prior. The two distinct rationals of (30.6) have distinct original words and hence distinct other exact views, giving the final bounded-menu assertion.
+
+More generally, for any fixed promised prior the four exact-view tasks have equal acquisition membership for any one of the stationary or forward interfaces here, since their finite decoders can be composed after the same acquired output. In particular (30.5) is sharp even when its necessity witnesses are required to concern exact original four-view recovery: use $P_b$ for stationary necessity and (30.6) for forward necessity. This is a comparison with all-integer acquisition, not a claim that the full positive rational carrier is finitely acquirable. Theorem 18.3 excludes that full-carrier task from all these classes, and §24's effective stopping obstruction remains an additional requirement on every public presentation. $\square$
+
+**Proposition 31.2 (identical prime marginals, different acquisition).** Let
+
+$$
+S_{\mathrm{pp}}=\{1\}\cup\{p^e:p\text{ prime},\ e\ge1\},\qquad
+T=\mathbb N_{>0}.
+\tag{31.1}
+$$
+
+These have effective staged enumerators and identical complete prime-valuation marginals: for every prime $p$,
+
+$$
+\{v_p(D):D\in S_{\mathrm{pp}}\}
+ =\{v_p(D):D\in T\}=\mathbb N.
+\tag{31.2}
+$$
+
+Nevertheless $\operatorname{Stat}(S_{\mathrm{pp}})$ is a proper subclass of $\operatorname{Stat}(T)$, while their forward acquisition classes agree with the all-integer stationary class. The dyadic menu $S_2=\{2^n:n\ge0\}$ likewise has universal forward power in this task sense and strictly smaller stationary power.
+
+Proof. At stage $n$ one can list $1$ and all $p^e$ with prime $p\le n+2$ and $1\le e\le n+1$; trial division decides the finite primality tests. This enumerates $S_{\mathrm{pp}}$. Listing $n+1$ enumerates $T$, and listing $2^n$ enumerates $S_2$. For any fixed $p$, the value $0$ in (31.2) occurs at $1$, and every positive $e$ occurs at $p^e$. This proves equality of the full marginal sets, not merely equality of their suprema.
+
+But $\operatorname{Div}(S_{\mathrm{pp}})$ contains precisely $1$ and prime powers; in particular it misses $6$. The target $\sigma_6$ on $P_6$ is acquired by the single stationary integer port $q_6$, and Theorem 30.1 excludes every stationary $S_{\mathrm{pp}}$-controller. The exact four-view task on $P_6$ gives the stronger consumed witness of Theorem 31.1. Separate reads at scales $2$ and $3$, or at any finitely many available prime powers, do not synthesize a $q_6$ port: at $c=1/6$ and a sufficiently close $c-1/n$ their finite transcripts agree by (30.3). What is required is the joint condition $\exists D\in S,\ b\mid D$ for a requested denominator $b$. The separate assertions $\forall p\mid b\ \exists D_p\in S,\ v_p(D_p)\ge v_p(b)$ have different quantifiers and are insufficient.
+
+Both menus in (31.1) are unbounded, so Theorem 30.2 gives their identical universal forward power. The dyadic menu is unbounded with $\operatorname{Div}(S_2)=\{2^n:n\ge0\}$, missing $3$. Thus its forward universality and stationary failure follow from the same classification. The binary witness $P_3$ is exactly §26's prior after renaming its index; the one-$L$, one-$q_4$ controller there is a particularly short instance, while Theorem 29.2 handles every all-integer stationary task and arbitrarily many subsequent comparisons. The nested-chain raw-versus-predictive criterion of Theorem 16.4 is an antecedent about mathematical threads; (29.1)–(29.4) provide the actual sequential acquisition bridge needed for these menu conclusions. No LCM service is silently added to any restricted menu. $\square$
+
+## 32. Finite resource contracts and mathematical suppliers
+
+**Proposition 32.1 (per-run accounting for the transformations and decoders).** The constructions of §§29–31 have finite per-run action, read, encoding, enumeration, exact-computation, controller-memory, probe-memory and output costs under their stated promises. They imply no common budget, efficiency optimum, service implementation bound or equality of resource vectors between the compared controllers.
+
+Proof. Fix one promised terminating all-integer stationary run used in Theorem 29.2. Let its successive requested scales and true reports be $m_t,K_t$ for $1\le t\le R$. The forward simulation makes exactly
+
+$$
+J=\sum_{t=1}^{R}(K_t+1)
+\tag{32.1}
+$$
+
+actual floor reads. For comparison $i$, let $D_i$ be the enumerated scale chosen, $Q_i$ the actual report, $p_i/q_i$ the image of its original threshold under the current known matrix, and $\ell_i$ the length of its constructed continuation. The number of actual actions is exactly $H=\sum_{i=1}^{J}\ell_i$. All these integers are finite; a run with no virtual reads has $J=H=0$.
+
+For each comparison the menu search executes finitely many entire stages up to its first success. Charge their actual computation steps and peak work space, including construction and scanning of their finite output lists. These costs cannot be bounded merely by the successful scale: an arbitrary public enumerator can delay a name or use large temporary data. The search is ordinary serial computation on the one supplied enumerator, not a free parallel enumerating thread. It can restart that computation from stage zero for each comparison; this resets no source. The modular searches have at most $p_i$ and $C_i$ trials. Euclid computes $g_i$ finitely. The row-descent has at most $A_i+B_i+C_i+F_i-2$ steps. In the displayed construction all four entries are at most $D_i$, so in particular
+
+$$
+\ell_i\le4D_i-2.
+\tag{32.2}
+$$
+
+Store the peeled finite label list, then execute it in reverse and discard it. Charge each actual action and each local matrix update. Retaining four integer entries for the actual prefix is sufficient; no full unknown history or copy of the original source is stored.
+
+Use $\operatorname{bits}(n)=1+\lceil\log_2(n+1)\rceil$ as a conservative finite integer encoding length, together with finite delimiters. Charge at least the actual scale-name and report payload totals
+
+$$
+\sum_{i=1}^{J}\operatorname{bits}(D_i),\qquad
+\sum_{i=1}^{J}\operatorname{bits}(Q_i),
+\tag{32.3}
+$$
+
+and charge the encodings scanned during enumeration separately. Exact arithmetic is charged by bit operations, not by treating unbounded integers as unit-cost reals. After $h$ actual actions, every entry of the prefix matrix is at most $2^h$, since a generator only replaces one row by its sum with the other. For a reduced original threshold $a/b$, its computed image integers satisfy $p,q\le2^h(a+b)$. The known image threshold therefore has operand width bounded in terms of $h$ and $\operatorname{bits}(a+b)$, and the modular and descent operands have widths bounded in terms of these quantities and $\operatorname{bits}(D_i)$. The grid integer $k_i=g_i(A_ip_i+B_iq_i)$ is computed with these same finite product widths. The accumulated matrix after executing the new word has entries at most $2^{h+\ell_i}$.
+
+For a bound on actual report width, write the fixed original mathematically as $r/s$ in reduced positive form. Its attained positive numerator and denominator after $h$ actions are at most $2^h\max(r,s)$. Hence at comparison $i$ the returned integer is at most $D_i2^{h+\ell_i}\max(r,s)$. This is an analysis of a run's payload size, not exact $r/s$ supplied to its controller. Thus all report and comparison operands have finite explicit width bounds once the run's parameters are fixed. If $W_i$ is the maximum width of these operands, ordinary schoolbook integer addition, multiplication, division, remainder and comparison take finite bit work, with multiplication and division bounded by a constant times $W_i^2$ per operation. Euclid has finitely many such operations. The number of modular trials, row steps and matrix updates above therefore gives finite arithmetic work; the original simulated controller's computation and encoding work are charged as well.
+
+Probe storage can be bounded by a constant times $\ell_i+W_i$ bits for the pending label list, prefix and working matrices, rational threshold, counters, grid integer and current report, using elementary arithmetic with linear working space. Add the simulated controller's actual peak state, the enumerator's actual peak state and the finite output buffer. A chosen implementation can discard each completed report after the controller consumes it; retaining a complete actual action/report archive instead incurs its additional $H$ action symbols and the payloads in (32.3), with delimiters. Neither choice includes an archive of the unknown pre-probe word. These bounds also charge the threshold loop index and scale arithmetic in (29.4).
+
+For the stationary transformation in Theorem 30.1, each simulated read uses one actual read, zero source actions, a finite enumerator search for $F$, its encoded scale and complete report, and finite division by $F/D$. Charge that search's actual steps and work space exactly as above; an arbitrarily large listed multiple can enlarge both payload and memory. The reverse transformation used in (30.4) has the already declared cost of computing $\Lambda_D$, its scale and stationary report, the known simulated prefix and the exact rational arithmetic of (24.4). No equality of these costs is needed by the class inclusions.
+
+Finally the stationary endpoint-prior decoder makes one read at $c$, and $1+n-b$ reads at $x_n$. Each later comparison threshold has a reduced denominator dividing $b(j+1)$, so its scale and numerator are finitely computed from $b,j$. Once a rational $r/s$ has been recovered, the subtractive original-word decoder has at most $r+s-2$ steps, with ancestor coordinates bounded by $r+s$. The recovered word, path and prefix table all have finite encodings. A literal table of all word prefixes uses $N(N+1)/2$ action symbols for a word of length $N$, in addition to its indices and any explicitly emitted boundary coordinates. Charge the entire selected finite output, rather than only its last rational entry. Composing this decoder with the forward transformation incurs its charged comparison costs before this output computation. Finite service completion is an interface premise; the service's internal physical time and memory have no quantitative law here. The acquisition proof uses neither their timing nor a promised bound on them. $\square$
+
+**Definition 32.2 (supplier correspondence and the scope of the classification).** The new source-specific assertions are the repeated actual-prefix comparison (29.1)–(29.3), its use in simulating a whole all-integer stationary controller, and the consumed original-target menu classification (30.1)–(30.6), with the exact four-view witnesses in §31. They are `repo-derived` ordinary mathematical consequences, with no worldwide priority assertion. Their supplier contracts are:
+
+| Supplier | Exact use and boundary |
+| --- | --- |
+| Theorems 11.2 and 15.2, especially (15.3) | Minimum predictive cut supplies the bounded-menu counterexample. The constructive modular argument with $D>pq$ supplies positive coefficients at the attained threshold; it is consumed in an actually executed continuation. Merely having a family of counterfactual predictive cuts does not implement the comparison. |
+| [WordNodesAreReduced](../../../D5/S3/PrimeForms/SternBrocot/WordNodesAreReduced.lean), `leftStep`, `rightStep`, `wordMatrix`, `unimodular_wordMatrix`, `wordMatrix_lower_right_pos` | The generators are exactly the nonnegative matrices of these $L/R$ maps. Chronological $u$ uses `wordMatrix(reverse u)`. The determinant and positive lower-right entry give the positive-domain matrix invariant. Lower-row coprimality is not a different source-response formula. |
+| [UnimodularGeneration](../../../D5/S3/PrimeForms/SternBrocot/UnimodularGeneration.lean), `unimodular_iff_wordMatrix`, and its row-descent proof | Every natural determinant-one matrix is generated. The ordinary row algorithm in Theorem 29.1 establishes finite effective realization with the required chronological reversal; no executed code extraction is inferred merely from the existential declaration. The descent is classical supporting arithmetic, with its repository adaptation attributed in [the existing HJO source note](../../../Library/PrimeForms/axiom2026unimodulardescent.md). |
+| Assumption 24.1 and Theorem 24.3 | Public presentation, unchanged original target, effective stopping, and the all-integer reverse simulation are retained exactly. The positive transformations assume a correct supplied controller and appropriate menu property; they do not decide either, enumerate all homogeneous priors or cure the undecidable stopping examples of §25. |
+| Theorems 6.2 and 17.3 | These supply finite mutual decoders only for the original rational source and its finite orbit. The comparisons preserve that original target despite changing the actual probe endpoint. No ambient cyclic-anchor history decoder is added. |
+| Theorem 16.4 | Divisibility cofinality for nested raw and predictive towers is an antecedent. Here menus need not be chains, and both effective selection of names and execution along one actual source are required. Marginal prime valuations cannot replace the joint divisor set of an arbitrary menu. |
+
+Classical modular inverses, floor arithmetic, subtractive Euclid and finite deterministic branch replay are supporting mathematics within these source-specific proofs. The represented-space results cited in Definition 24.2 retain their stated roles: Pauly [version 3, §§3–4](https://arxiv.org/html/1204.3763v3) supplies realizers and Sierpiński-valued open-set names; Schröder [Proposition 2.4](https://arxiv.org/html/2004.09450v1) states computability-implies-continuity for partial maps on Baire-space names. Neither supplies the sequential physical $L/R$ actions or an installed floor service. The matrix correspondences concern the actual Lean supplier statements, not new kernel verification of the ordinary menu theorems. The exact, unclipped, noiseless, pointwise finite contract here is different from the congruence or noise contracts of the Effective Resolution and Atomic Generation Acquisition volumes. No physical spacetime interpretation, resource optimality, identical final physical endpoint or identical acquired action archive is asserted.
+
+## 追加锚（本行以下为增补区）
