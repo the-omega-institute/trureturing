@@ -6,10 +6,27 @@
    utility: none
    digest: Actual common roots satisfy the two periodic Chebyshev equations. -/
 
+/-
+proof_shape: symmetric_nodal_kernel, common_root_nodal, rotated_block_cyclic,
+  rotated_evolution, nodal_fixed_state, common_root_trace_constraints: content.
+proof_shape: rotated_entries, cycle_recurrence, chebyshev_common_root_cos: bind-only.
+admission_basis: escape-witness (candidate, independent assessment pending).
+escape_witness: zero extension and symmetry produce a nonzero nodal kernel
+  vector; native cycle transport makes its rotated block state periodic;
+  transcendence excludes a scalar block state. These facts are used in
+  common_root_trace_constraints.
+The bind-only helpers are used by rotated_block_cyclic, nodal_fixed_state
+  and common_root_trace_constraints, respectively.
+All declarations have utility kind none: they are general algebraic statements,
+not bounded enumerations, checkers, numerical reductions or certified instances.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/24624.
+-/
+
 import D5.S3.Combinatorics.Graph.Walks.AndersonDefectFamily
 import Mathlib.RingTheory.Algebraic.Integral
 import Mathlib.FieldTheory.RatFunc.AsPolynomial
 import Mathlib.LinearAlgebra.Eigenspace.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Chebyshev.RootsExtrema
 
 /-! Common roots at the designated defect site satisfy periodic trace constraints. -/
 
@@ -354,6 +371,105 @@ private theorem nodal_fixed_state {K : Type*} [Field K]
   simpa only [L, d, rotated_evolution r m hr, a, b] using hcancel
 
 
+
+private lemma chebyshev_common_root_cos {K : Type*} [Field K] [Algebra ℝ K]
+    (m : ℕ) (hm : 3 ≤ m) (x : K)
+    (h1 : (Polynomial.Chebyshev.S K ((m : ℤ) - 1)).eval x = 0)
+    (h2 : (Polynomial.Chebyshev.S K ((m : ℤ) - 2)).eval x + 1 = 0) :
+    ∃ k : ℕ, 0 < k ∧ 2 * k < m ∧
+      x = algebraMap ℝ K (2 * Real.cos (2 * Real.pi * k / m)) := by
+  classical
+  let φ := algebraMap ℝ K
+  letI : CharZero K := CharZero.of_addMonoidHom φ.toAddMonoidHom φ.map_one φ.injective
+  letI : Invertible (2 : K) := invertibleOfNonzero (by norm_num)
+  letI : Invertible (2 : ℝ) := invertibleOfNonzero (by norm_num)
+  let n := m - 1
+  have hn : n + 1 = m := Nat.sub_add_cancel (by omega)
+  have hi1 : (m : ℤ) - 1 = (n : ℤ) := by dsimp [n]; omega
+  have hSU (j : ℤ) : (Polynomial.Chebyshev.S K j).eval x =
+      (Polynomial.Chebyshev.U K j).eval (x / 2) := by
+    rw [Polynomial.Chebyshev.S_eq_U_comp_half_mul_X]
+    rw [Polynomial.eval_comp]
+    congr 1
+    simp only [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_X,
+      invOf_eq_inv, div_eq_mul_inv]
+    ring
+  let P := Polynomial.Chebyshev.U ℝ (n : ℤ)
+  have hcard : P.roots.card = P.natDegree := by
+    dsimp [P]
+    rw [Polynomial.Chebyshev.roots_U_real, ← Finset.card_def,
+      Finset.card_image_of_injOn ((Finset.range n).nodup_map_iff_injOn.mp
+        (Polynomial.Chebyshev.roots_U_real_nodup n)), Finset.card_range,
+      Polynomial.Chebyshev.natDegree_U_natCast]
+  have hmap : P.roots.map φ = (P.map φ).roots :=
+    Polynomial.roots_map_of_injective_of_card_eq_natDegree φ.injective hcard
+  have hP : P ≠ 0 := Polynomial.Chebyshev.U_ne_zero ℝ (n : ℤ) (by omega)
+  have hzero : (P.map φ).eval (x / 2) = 0 := by
+    simpa only [P, Polynomial.Chebyshev.map_U, ← hi1, ← hSU] using h1
+  have hmem : x / 2 ∈ (P.map φ).roots :=
+    (Polynomial.mem_roots ((Polynomial.map_ne_zero_iff φ.injective).mpr hP)).mpr hzero
+  rw [← hmap] at hmem
+  obtain ⟨y, hy, hxy⟩ := Multiset.mem_map.mp hmem
+  have hx : x = φ (2 * y) := by
+    rw [map_mul, map_ofNat, hxy]
+    field_simp
+  have h2r : (Polynomial.Chebyshev.S ℝ ((m : ℤ) - 2)).eval (2 * y) + 1 = 0 := by
+    apply φ.injective
+    simp only [map_add, map_one, map_zero]
+    change (algebraMap ℝ K)
+      ((Polynomial.Chebyshev.S ℝ ((m : ℤ) - 2)).eval (2 * y)) + 1 = 0
+    rw [Polynomial.Chebyshev.algebraMap_eval_S, ← hx]
+    exact h2
+  have hU1 : (Polynomial.Chebyshev.U ℝ ((m : ℤ) - 1)).eval y = 0 := by
+    rw [hi1]
+    exact (Polynomial.mem_roots hP).mp hy
+  have hU2 : (Polynomial.Chebyshev.U ℝ ((m : ℤ) - 2)).eval y + 1 = 0 := by
+    simpa [Polynomial.Chebyshev.S_eq_U_comp_half_mul_X,
+      Polynomial.eval_comp, invOf_eq_inv] using h2r
+  have hT : (Polynomial.Chebyshev.T ℝ (m : ℤ)).eval y = 1 := by
+    have hh := congrArg (Polynomial.eval y)
+      (Polynomial.Chebyshev.T_eq_X_mul_U_sub_U ℝ ((m : ℤ) - 2))
+    have hidx : (m : ℤ) - 2 + 2 = (m : ℤ) := by omega
+    have hidx' : (m : ℤ) - 2 + 1 = (m : ℤ) - 1 := by omega
+    rw [hidx, hidx'] at hh
+    simp only [Polynomial.eval_sub, Polynomial.eval_mul, Polynomial.eval_X, hU1,
+      mul_zero, zero_sub] at hh
+    linarith
+  obtain ⟨j, hj, hjeven, hyj⟩ :=
+    (Polynomial.Chebyshev.eval_T_real_eq_one_iff (by omega : m ≠ 0) y).mp hT
+  change y ∈ (Polynomial.Chebyshev.U ℝ (n : ℤ)).roots at hy
+  rw [Polynomial.Chebyshev.roots_U_real] at hy
+  obtain ⟨i, hi, hiy⟩ := Finset.mem_image.mp (show y ∈
+    (Finset.range n).image (fun k : ℕ => Real.cos ((k + 1) * Real.pi / (n + 1))) from hy)
+  have hi' : i + 1 < m := by have := Finset.mem_range.mp hi; omega
+  have hnR : (n : ℝ) + 1 = (m : ℝ) := by exact_mod_cast hn
+  rw [hnR] at hiy
+  have hθ : ((i : ℝ) + 1) * Real.pi / m = (j : ℝ) * Real.pi / m := by
+    apply Real.injOn_cos
+    · constructor
+      · positivity
+      · apply (div_le_iff₀ (by positivity : (0 : ℝ) < m)).mpr
+        have hle : (i : ℝ) + 1 ≤ m := by exact_mod_cast (by omega : i + 1 ≤ m)
+        nlinarith [Real.pi_pos]
+    · constructor
+      · positivity
+      · apply (div_le_iff₀ (by positivity : (0 : ℝ) < m)).mpr
+        have hle : (j : ℝ) ≤ m := by exact_mod_cast hj
+        nlinarith [Real.pi_pos]
+    · exact hiy.trans hyj
+  have hij : j = i + 1 := by
+    have hmpos : (0 : ℝ) < m := by positivity
+    have heq := (div_left_inj' (ne_of_gt hmpos)).mp hθ
+    have heq' : (i : ℝ) + 1 = (j : ℝ) := by nlinarith [Real.pi_pos]
+    exact_mod_cast heq'.symm
+  obtain ⟨k, hk⟩ := hjeven
+  refine ⟨k, by omega, by omega, ?_⟩
+  rw [hx, hyj, hk]
+  congr 2
+  push_cast
+  congr 1
+  ring
+
 /-- Every common root of the actual cycle characteristic polynomial and the
 actual principal minor obeys both periodic Chebyshev equations. -/
 theorem common_root_trace_constraints {K : Type*} [Field K] [Algebra ℝ K]
@@ -363,7 +479,8 @@ theorem common_root_trace_constraints {K : Type*} [Field K] [Algebra ℝ K]
     (hq : (deleted r m t ⟨defectSite r m,
       by have := defect_bounds r m hr (by omega); omega⟩).charpoly.IsRoot μ) :
     (Polynomial.Chebyshev.S K ((m : ℤ) - 1)).eval ((discriminant r t).eval μ) = 0 ∧
-    (Polynomial.Chebyshev.S K ((m : ℤ) - 2)).eval ((discriminant r t).eval μ) + 1 = 0 := by
+    (Polynomial.Chebyshev.S K ((m : ℤ) - 2)).eval ((discriminant r t).eval μ) + 1 = 0 ∧
+    (traceFactors r m t).IsRoot μ := by
   classical
   obtain ⟨z, hz, he, hnode⟩ := common_root_nodal r m hr hm t μ hp hq
   have hfix := nodal_fixed_state r m hr hm t μ z hz he hnode
@@ -392,6 +509,22 @@ theorem common_root_trace_constraints {K : Type*} [Field K] [Algebra ℝ K]
   simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two,
     Matrix.sub_apply, Matrix.smul_apply, hs] at hfirst
   rw [← htrace]
-  exact ⟨hs, by linear_combination -hfirst⟩
+  have hs2 : (Polynomial.Chebyshev.S K ((m : ℤ) - 2)).eval C.trace + 1 = 0 := by
+    linear_combination -hfirst
+  refine ⟨hs, hs2, ?_⟩
+  obtain ⟨k, hkpos, hkm, hk⟩ := chebyshev_common_root_cos m hm C.trace hs hs2
+  change (traceFactors r m t).eval μ = 0
+  change (Polynomial.evalRingHom μ)
+    (∏ k ∈ (Finset.range m).filter (fun k => 0 < k ∧ 2 * k < m),
+      (discriminant r t - Polynomial.C (algebraMap ℝ K
+        (2 * Real.cos (2 * Real.pi * k / m))))) = 0
+  rw [map_prod]
+  apply Finset.prod_eq_zero (i := k)
+  · simp only [Finset.mem_filter, Finset.mem_range]
+    exact ⟨by omega, hkpos, hkm⟩
+  · change (discriminant r t - Polynomial.C (algebraMap ℝ K
+      (2 * Real.cos (2 * Real.pi * k / m)))).eval μ = 0
+    simp only [Polynomial.eval_sub, Polynomial.eval_C]
+    rw [← htrace, hk, sub_self]
 
 end D5.S3.Combinatorics.Graph.Walks.AndersonDefectExactNodal
