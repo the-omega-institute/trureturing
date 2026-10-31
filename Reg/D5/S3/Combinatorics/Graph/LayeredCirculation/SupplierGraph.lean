@@ -88,7 +88,7 @@ def registration.{u, v} :
   realization := .source arena.{u, v} ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature
+  readout := some (realize signature.{u, v}
     (fun _ q edge => q.2.2.source edge) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -100,7 +100,8 @@ def registration.{u, v} :
     coordinates := #[0, 1, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "arg", "arg", "fn", "fn", "fn", "arg", "fn", "arg"]
+        "body", "body", "body", "body", "arg", "arg", "fn", "fn", "fn", "arg",
+        "fn", "arg"]
       stateBinder := 9
       functionOperand := false
       stateOperand := none

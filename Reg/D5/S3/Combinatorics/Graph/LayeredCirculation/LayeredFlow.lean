@@ -103,7 +103,7 @@ def registration.{u, v, w} :
   realization := .source arena.{u, v, w} ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ q weight => weight q.2) (fun e => nomatch e))
+  readout := some (realize signature.{w} (fun _ q weight => weight q.2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -115,9 +115,9 @@ def registration.{u, v, w} :
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "domain", "arg"]
-      stateBinder := 8
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
