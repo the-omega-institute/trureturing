@@ -18,7 +18,7 @@ For a partition p of n, each tuple t chooses s entries from the set of distinct 
 
 **Definition 1.2 (The transposition class).**
 
-$$\forall (n: \mathbb{N}), ((\operatorname{D5.S3.StatisticalMechanics.TensorHighTemperatureLeadingClasses.transpositionClass}\left(n\right): \operatorname{Nat.Partition}\left(n\right)) = \operatorname{dite}\left((2: \mathbb{N}) \le n, (\lambda (h: (2: \mathbb{N}) \le n) \mapsto (\operatorname{D5.S1.Recurrence.Partitions.GawronUlasFactorialSignConjecture.partition126}\left(n, 1, 0, h\right))), (\lambda (h: \neg ((2: \mathbb{N}) \le n)) \mapsto (\operatorname{Nat.Partition.indiscrete}\left(n\right)))\right))$$
+$$\forall (n: \mathbb{N}), ((\operatorname{D5.S3.StatisticalMechanics.TensorHighTemperatureLeadingClasses.transpositionClass}\left(n\right): \operatorname{Nat.Partition}\left(n\right)) = \operatorname{dite}\left((2: \mathbb{N}) \le n, (\lambda (h: (2: \mathbb{N}) \le n) \mapsto (\operatorname{D5.S1.Recurrence.Partitions.GawronUlasFactorialSignConjecture.partition126}\left(n, 1, 0, h\right))), (\operatorname{Function.const}\left(\neg ((2: \mathbb{N}) \le n), \operatorname{Nat.Partition.indiscrete}\left(n\right)\right))\right))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/TensorHighTemperatureLeadingClasses.transpositionClass` (`✓ std3`).
 
