@@ -27,8 +27,6 @@ namespace ConjectureMachines.Semantics.Riemann.WeightedStieltjes
 open Complex Finset Filter MeasureTheory Set Asymptotics Topology
 open scoped Real Topology Interval
 
-open scoped ArithmeticFunction.vonMangoldt LSeries.notation
-
 /-- If `g : ℂ → ℂ` is differentiable at `p`, then `(g s - g p) / (s - p)` tends to `deriv g p`
 on the punctured neighborhood `𝓝[≠] p`. -/
 theorem tendsto_sub_div_sub_of_differentiableAt {g : ℂ → ℂ} {p : ℂ}

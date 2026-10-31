@@ -27,8 +27,6 @@ namespace ConjectureMachines.Semantics.Riemann.WeightedStieltjes
 open Complex Finset Filter MeasureTheory Set Asymptotics Topology
 open scoped Real Topology Interval
 
-open scoped ArithmeticFunction.vonMangoldt LSeries.notation
-
 /-- Horizontal line integral of `1 / (σ + y * I - p)` when `y ≠ p.im`. -/
 theorem horizontal_integral_inv_sub_eq {y : ℝ} {p : ℂ} (hy : y ≠ p.im) (c₁ c₂ : ℝ) :
     (∫ σ : ℝ in c₁..c₂, 1 / ((σ : ℂ) + (y : ℂ) * I - p)) =

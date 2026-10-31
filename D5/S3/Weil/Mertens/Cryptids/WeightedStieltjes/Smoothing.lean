@@ -27,8 +27,6 @@ namespace ConjectureMachines.Semantics.Riemann.WeightedStieltjes
 open Complex Finset Filter MeasureTheory Set Asymptotics Topology
 open scoped Real Topology Interval
 
-open scoped ArithmeticFunction.vonMangoldt LSeries.notation
-
 /-- **High-Frequency Norm Bound for `smoothedZeroTerm` (`ρ.re = 1 / 2`)**:
 If `0 < x`, `0 < h`, `ρ.re = 1 / 2`, and `ρ.im ≠ 0`, then
 $$\|\text{smoothedZeroTerm}(x, h, \rho)\| \le \frac{2 (x + h)^{3/2}}{h |\rho.\text{im}|^2}.$$ -/

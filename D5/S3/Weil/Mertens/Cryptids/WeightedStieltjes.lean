@@ -27,8 +27,6 @@ namespace ConjectureMachines.Semantics.Riemann.WeightedStieltjes
 open Complex Finset Filter MeasureTheory Set Asymptotics Topology
 open scoped Real Topology Interval
 
-open scoped ArithmeticFunction.vonMangoldt LSeries.notation
-
 /-- **Uniform Multiplicity-Weighted High-Frequency Quadratic Zero-Tail Bound**:
 If `0 < T ≤ U`, `0 ≤ a`, `0 ≤ D`, and
 `(weightedZeroCountingFunction t : ℝ) ≤ a * t * Real.log t + C * t + D` for all `t ∈ Set.Icc T U`,
