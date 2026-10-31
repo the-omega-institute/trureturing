@@ -35,7 +35,9 @@ private theorem equal (s : ℕ) (hs : 2 ≤ s) :
   have hq : 4 ≤ q := by
     simpa [q] using pow_le_pow_right₀ (by norm_num : (1:ℤ) ≤ 2) hs
   have hr : 2 * r = q := by
-    dsimp [r, q];conv_rhs => rw [show s = s - 1 + 1 by omega, pow_succ];ring
+    dsimp [r, q]
+    conv_rhs => rw [show s = s - 1 + 1 by omega, pow_succ]
+    ring
   have bd (j : Fin 4) := block_data s s hs (by omega) j 0 (s - 1)
     (by fin_cases j <;> simp [length])
   have bp (j : Fin 4) :
