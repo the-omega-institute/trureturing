@@ -11,7 +11,6 @@ import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Constructor
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
-open private labels labels_mem labels_nodup from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Constructor
 open private chainMask chainMask_sum from D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventual
 open private mask_labels mask_labels_mem from D5.S3.Combinatorics.Circle.ThreeBitSource
 
