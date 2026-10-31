@@ -10,6 +10,8 @@ import D5.S3.ConceptDynamics.Experiment.KBonacciPrefixCompletion
 import D5.S1.Words.AdmissibleWords.KBonacciActualEndpointOperators
 import D5.S3.ConceptDynamics.Sufficiency.UniversalSufficiencyFactorization
 
+/-! # Complete fixed-acquisition KBonacci paid-record classification -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -96,6 +98,7 @@ private lemma sequential_readings {k : ℕ} {hk : 2 ≤ k} (ell x : Fin k → �
     rw [ih]
     apply List.map_congr_left
     intro word _
+    dsimp only [Function.comp_apply]
     rw [append_live, Matrix.mulVec_mulVec]
 
 /-- The label is extracted from the actual word operator, before selecting a world.
@@ -117,8 +120,8 @@ private lemma endpoint_action {k : ℕ} (c : Fin k → ℝ) (p t : Fin k) :
       cumulative]
     apply Finset.sum_congr rfl
     intro s _
-    congr 1
-    omega
+    have hs : s.val + p.val < k ↔ s.val < k - p.val := by omega
+    simp only [hs]
   · simp [Matrix.mulVec, dotProduct, endpoint, hi]
 
 private lemma actual_label {k : ℕ} (hk : 2 ≤ k) (word : List Bool)
@@ -128,22 +131,25 @@ private lemma actual_label {k : ℕ} (hk : 2 ≤ k) (word : List Bool)
     | some q => ∀ c : Fin k → ℝ, live hk word *ᵥ c =
         fun i => if i = q.2 then cumulative c (q.1.val+1) else 0 := by
   classical
-  have facts := D5.S1.Words.AdmissibleWords.KBonacciActualEndpointOperators.actual_endpoint_operators
-    (K := ℝ) k hk
+  have facts :=
+    D5.S1.Words.AdmissibleWords.KBonacciActualEndpointOperators.actual_endpoint_operators
+      (K := ℝ) k hk
   by_cases he : ∃ q : Fin k × Fin k, live hk word = endpoint q.1 q.2
-  · simp only [label, dif_pos he]
+  · simp only [label, dite_eq_left he]
     intro c
-    rw [Classical.choose_spec he, endpoint_action]
-    congr 1
-    funext i
-    congr 1
-    congr 1
-    have := (Classical.choose he).1.isLt
-    omega
-  · simp only [label, dif_neg he]
+    let q := Classical.choose he
+    have hq : live hk word = endpoint q.1 q.2 := Classical.choose_spec he
+    have idx : k - q.1.val = k - 1 - q.1.val + 1 := by
+      have := q.1.isLt
+      omega
+    calc
+      live hk word *ᵥ c = endpoint q.1 q.2 *ᵥ c := congrArg (fun M => M *ᵥ c) hq
+      _ = _ := by simpa only [idx] using endpoint_action c q.1 q.2
+  · simp only [label, dite_eq_right he]
     by_cases dead : (base k hk).evalFrom (base k hk).start word = none
     · funext i s
       have all := facts.2.2.2.2.2.1 word dead s
+      change (base k hk).evalFrom s word = none at all
       simp [live, all]
     · have zero := facts.2.2.2.2.2.2.1 word length dead
       obtain ⟨p,t,_,_,_,_,normal⟩ := facts.2.2.2.2.1 word zero dead
@@ -161,7 +167,7 @@ private lemma reading_label {k : ℕ} (hk : 2 ≤ k) (word : List Bool)
   | some q =>
     simp only [he] at shape
     rw [shape]
-    simp [dotProduct, mul_ite, mul_comm, he]
+    simp [dotProduct, mul_comm]
 
 /-- Distinct surviving object labels, regardless of whether the reader reports zero. -/
 def surviving {k : ℕ} {hk : 2 ≤ k} (A : Arrangement k hk) : Finset (Fin k × Fin k) :=
@@ -172,9 +178,11 @@ private lemma surviving_budget {k : ℕ} {hk : 2 ≤ k} (A : Arrangement k hk) :
   have first := List.toFinset_card_le ((A.flatMap wordPrefixes).filterMap (label hk))
   have second := List.length_filterMap_le (label hk) (A.flatMap wordPrefixes)
   have count : (A.flatMap wordPrefixes).length = windows A := by
-    induction A with
-    | nil => rfl
-    | cons run rest ih => simp [List.flatMap_cons, windows, (prefix_lengths run).1] at *; omega
+    simp only [List.length_flatMap, windows]
+    congr 1
+    apply List.map_congr_left
+    intro run _
+    exact (prefix_lengths run).1
   exact first.trans (second.trans count.le)
 
 private lemma record_bridge {k : ℕ} {hk : 2 ≤ k} (A : Arrangement k hk)
@@ -198,10 +206,11 @@ private lemma record_bridge {k : ℕ} {hk : 2 ≤ k} (A : Arrangement k hk)
       reading_label hk word (perword run word hw) v, hlabel] at value
     exact value
   · intro hd
-    apply Prod.ext rfl
+    unfold paidRecord
+    refine congrArg (Prod.mk A) ?_
     apply List.map_congr_left
     intro run hr
-    apply Prod.ext hd.1
+    refine congrArg₂ Prod.mk hd.1 ?_
     rw [sequential_readings, sequential_readings]
     apply List.map_congr_left
     intro word hw
@@ -219,7 +228,7 @@ actual windows identifies the initial relation from its full ordered paid record
 if and only if its surviving endpoint pattern is exactly the off-diagonal set.
 The decoder is an arbitrary function on complete records. -/
 theorem complete_source_12_2 (k : ℕ) (hk : 3 ≤ k)
-    (A : Arrangement k (by omega)) (budget : windows A = k*(k-1)) :
+    (A : Arrangement k (by omega)) (budget : windows A = k * (k - 1)) :
     (∃ decode : (Arrangement k (by omega) × List (ℝ × List ℝ)) →
         Matrix (Fin k) (Fin k) ℝ,
       ∀ w : World k, decode (paidRecord A w) = target w) ↔
@@ -229,12 +238,13 @@ theorem complete_source_12_2 (k : ℕ) (hk : 3 ≤ k)
     intro he
     simp [he, windows] at budget
     omega
-  letI : Nonempty (World k) := ⟨{
+  let : Nonempty (World k) := ⟨{
     c := fun _ => 1, ell := fun _ => 1, c_pos := by intro i; norm_num,
     ell_nonneg := by intro i; norm_num,
     ell_ne_zero := by intro he; have h := congrFun he ⟨0,by omega⟩; norm_num at h }⟩
-  have factor := (D5.S3.ConceptDynamics.Sufficiency.UniversalSufficiencyFactorization.universal_sufficiency_factorization
-    (paidRecord A) target).2
+  have factor :=
+    (D5.S3.ConceptDynamics.Sufficiency.UniversalSufficiencyFactorization.universal_sufficiency_factorization
+      (paidRecord A) target).2
   have fiber : (∃ decode : (Arrangement k (by omega) × List (ℝ × List ℝ)) →
         Matrix (Fin k) (Fin k) ℝ,
       ∀ w : World k, decode (paidRecord A w) = target w) ↔ Identifies (surviving A) := by
@@ -253,6 +263,5 @@ theorem complete_source_12_2 (k : ℕ) (hk : 3 ≤ k)
   exact endpoint_pattern_classification k hk (surviving A) (by
     simpa [budget] using surviving_budget A)
 
-#print axioms complete_source_12_2
 
 end D5.S3.ConceptDynamics.Experiment.KBonacciFixedPaidRecord

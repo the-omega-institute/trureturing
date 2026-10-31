@@ -12,6 +12,8 @@ import Mathlib.Tactic
 import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.LinearAlgebra.Matrix.ToLin
 
+/-! # Support-sensitive cumulative-product completion and pattern rigidity -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -193,7 +195,6 @@ theorem off_diagonal_identifies (k : ℕ) (hk : 3 ≤ k) : Identifies (offDiagon
     apply mul_right_cancel₀ (ne_of_gt hva)
     linear_combination v.ell t * ei + w.c i * et
 
-#print axioms off_diagonal_identifies
 
 private lemma no_perturbation {k : ℕ} (S : Finset (Fin k × Fin k))
     (ident : Identifies S) (ell h : Fin k → ℝ)
@@ -449,6 +450,5 @@ theorem endpoint_pattern_classification (k : ℕ) (hk : 3 ≤ k)
     subst S
     exact off_diagonal_identifies k hk
 
-#print axioms endpoint_pattern_classification
 
 end D5.S3.ConceptDynamics.Experiment.KBonacciPrefixCompletion
