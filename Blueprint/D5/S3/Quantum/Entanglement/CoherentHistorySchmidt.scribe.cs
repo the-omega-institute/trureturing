@@ -142,10 +142,11 @@ internal sealed class CoherentHistorySchmidtDocument : IScribeDocumentDefinition
     {
         get
         {
-            var feasible = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("b"), B,
+            var feasible = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("b"), Call("Boundary", a, t),
                 And(Eq(Call("occupation", u), Val(b)), Eq(Call("occupation", v), Complement(b))));
+            var appended = new Formula.Apply(Seq(Operatorname, Grp(Id("Fin"), Dot, Id("append"))), [u, v]);
             return DiscreteOccupation(All("t", N, All("s", N, All("u", Word(t), All("v", Word(s),
-                Iff(Eq(Call("occupation", Call("FinAppend", u, v)), a), feasible))))));
+                Iff(Eq(Call("occupation", appended), a), feasible))))));
         }
     }
 
