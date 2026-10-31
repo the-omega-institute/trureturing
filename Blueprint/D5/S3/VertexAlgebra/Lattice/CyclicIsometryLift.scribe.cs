@@ -92,4 +92,3 @@ internal sealed class CyclicIsometryLiftDocument : IScribeDocumentDefinition
                 + "The literal canonical lift may have order twice m. Choosing these corrections "
                 + "individually does not give a section for the whole isometry group.")))));
 }
-

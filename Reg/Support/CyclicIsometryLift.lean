@@ -132,4 +132,3 @@ def family : Registration arena (type_of% (@cyclic_lift)) where
   dependence := dependence
 end CyclicLift
 end Reg.Support.CyclicIsometryLift
-

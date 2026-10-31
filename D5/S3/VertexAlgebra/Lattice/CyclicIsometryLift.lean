@@ -490,4 +490,3 @@ theorem cyclic_lift (D : LatticeData) (g : Charge D ≃+ Charge D)
 
 end
 end D5.S3.VertexAlgebra.Lattice.CyclicIsometryLift
-

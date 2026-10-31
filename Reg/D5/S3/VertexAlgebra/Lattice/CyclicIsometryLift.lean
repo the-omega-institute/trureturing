@@ -73,4 +73,3 @@ def cyclicAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end Reg.D5.S3.VertexAlgebra.Lattice.CyclicIsometryLift
-
