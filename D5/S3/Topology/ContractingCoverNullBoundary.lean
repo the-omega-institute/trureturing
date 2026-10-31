@@ -154,7 +154,8 @@ theorem measure_frontier_eq_zero_of_contracting_cover
   have hsplit : c + A w₀ = 1 := by
     have he := Fintype.sum_subtype_add_sum_subtype (fun w : Fin N → I => w ≠ w₀) A
     have heq : (∑ w : {w : Fin N → I // ¬ w ≠ w₀}, A w.val) = A w₀ := by
-      apply Finset.sum_eq_single ⟨w₀, by simp⟩
+      apply Finset.sum_eq_single (s := Finset.univ)
+        (f := fun w : {w : Fin N → I // ¬ w ≠ w₀} => A w.val) ⟨w₀, by simp⟩
       · intro w _ hw
         exact False.elim (hw (Subtype.ext (not_ne_iff.mp w.property)))
       · simp

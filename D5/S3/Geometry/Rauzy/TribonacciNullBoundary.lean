@@ -12,6 +12,8 @@ import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
 import Mathlib.RingTheory.Complex
 import Mathlib.Analysis.Normed.MulAction
 
+/-! The finite interior-cylinder loss argument for the original Tribonacci Rauzy closure. -/
+
 namespace D5.S3.Geometry.Rauzy.TribonacciNullBoundary
 
 open D5.S0.Tower.Tribonacci
@@ -26,11 +28,11 @@ private theorem affine_volume (t b : Complex) (S : Set Complex) :
       (‖b‖₊ ^ 2 : NNReal) * volume S := by
   have he : (fun w : Complex => t + b * w) = (fun w => t + w) ∘ (fun w => b * w) := rfl
   rw [he, image_comp, image_add_left, measure_preimage_add]
-  have h := addHaar_image_linearMap volume (Algebra.lmul ℝ Complex b) S
+  have h := Measure.addHaar_image_linearMap volume (Algebra.lmul ℝ Complex b) S
   change volume ((fun w : Complex => b * w) '' S) = _ at h
   rw [← Algebra.norm_apply, Algebra.norm_complex_apply, Complex.normSq_eq_norm_sq,
     abs_of_nonneg (sq_nonneg ‖b‖)] at h
-  simpa only [ENNReal.coe_pow, ENNReal.coe_nnreal_eq, coe_nnnorm] using h
+  simpa only [ENNReal.coe_nnreal_eq, NNReal.coe_pow, coe_nnnorm] using h
 
 /-- The original closure of finite admissible sums has null frontier at either
 characteristic root distinct from the real Perron root. -/
@@ -58,7 +60,7 @@ theorem rauzyFractal_frontier_volume_zero {z : Complex}
     ![zeroPrefixMap z, oneZeroPrefixMap z, oneOneZeroPrefixMap z]
   let a : Fin 3 → NNReal := ![‖z‖₊ ^ 2, ‖z‖₊ ^ 4, ‖z‖₊ ^ 6]
   have hnorm : ‖z‖ ^ 2 = Values.tribonacciConstant⁻¹ := by
-    apply (eq_inv_iff_mul_eq_one₀ Values.tribonacciConstant_ne_zero).2
+    apply (mul_eq_one_iff_eq_inv₀ Values.tribonacciConstant_ne_zero).mp
     simpa [mul_comm] using hroot
   have hsum : ∑ i, a i = 1 := by
     apply NNReal.coe_injective
@@ -69,7 +71,7 @@ theorem rauzyFractal_frontier_volume_zero {z : Complex}
     norm_num only [zpow_neg, zpow_ofNat, pow_one] at hv
     rw [show ‖z‖ ^ 4 = (‖z‖ ^ 2) ^ 2 by ring,
       show ‖z‖ ^ 6 = (‖z‖ ^ 2) ^ 3 by ring, hnorm]
-    simpa only [inv_pow] using hv
+    simpa only [inv_pow, add_assoc] using hv
   apply D5.S3.Topology.ContractingCoverNullBoundary.measure_frontier_eq_zero_of_contracting_cover
     volume (rauzyFractal_isCompact hz hz_ne)
     (TribonacciInterior.rauzyFractal_interior_nonempty hz hz_ne)
@@ -80,9 +82,9 @@ theorem rauzyFractal_frontier_volume_zero {z : Complex}
       lipschitzWith_smul b
     fin_cases i
     · exact hmul z
-    · exact ((isometry_add_left (1 : Complex)).lipschitz.comp (hmul (z ^ 2))).weaken
+    · exact ((isometry_add_left (1 : Complex)).lipschitzWith.comp (hmul (z ^ 2))).weaken
         (by simpa using h2)
-    · exact ((isometry_add_left (1 + z)).lipschitz.comp (hmul (z ^ 3))).weaken
+    · exact ((isometry_add_left (1 + z)).lipschitzWith.comp (hmul (z ^ 3))).weaken
         (by simpa using h3)
   · intro i
     fin_cases i
@@ -110,8 +112,18 @@ theorem rauzyFractal_frontier_volume_zero {z : Complex}
   · exact hsum
   · intro i S _
     fin_cases i
-    · simpa [f, a, zeroPrefixMap] using affine_volume 0 z S
-    · simpa [f, a, oneZeroPrefixMap, nnnorm_pow, ← pow_mul] using affine_volume 1 (z ^ 2) S
-    · simpa [f, a, oneOneZeroPrefixMap, nnnorm_pow, ← pow_mul] using affine_volume (1 + z) (z ^ 3) S
+    · change volume ((fun w : Complex => z * w) '' S) =
+        ((‖z‖₊ ^ 2 : NNReal) : ENNReal) * volume S
+      simpa only [zero_add] using affine_volume 0 z S
+    · change volume ((fun w : Complex => 1 + z ^ 2 * w) '' S) =
+        ((‖z‖₊ ^ 4 : NNReal) : ENNReal) * volume S
+      have h := affine_volume 1 (z ^ 2) S
+      rw [nnnorm_pow, ← pow_mul] at h
+      exact h
+    · change volume ((fun w : Complex => 1 + z + z ^ 3 * w) '' S) =
+        ((‖z‖₊ ^ 6 : NNReal) : ENNReal) * volume S
+      have h := affine_volume (1 + z) (z ^ 3) S
+      rw [nnnorm_pow, ← pow_mul] at h
+      exact h
 
 end D5.S3.Geometry.Rauzy.TribonacciNullBoundary
