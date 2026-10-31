@@ -97,7 +97,7 @@ def evPartition {n : ℕ} (lam : n.Partition)
   parts_sum := by
     have h := (evTypes_spec lam.parts.toList
       (fun b hb => lam.parts_pos (by simpa using hb)) τ.property).1
-    simpa using h
+    simpa [lam.parts_sum] using h
 
 private theorem r3_antitone {m : ℕ} {a : Fin 3 → ℕ} (ha : a ∈ HemmerStraubWestrem.R3 m) :
     Antitone a := by
