@@ -1,0 +1,22 @@
+**Definition 1.3 (The fixed points and their spectral target).** For $m\ge3$, put $A_m=\{0,\ldots,m-1\}$ and define the monoid morphism $\varphi_m$ by
+
+$$
+\varphi_m(i)=0(i+1)\quad(0\le i<m-1),\qquad
+\varphi_m(m-1)=0(m-1)(m-1).
+$$
+
+Here every parenthesized integer denotes one letter. Let $u_m=\varphi_m^\omega(0)$. For $r\ge3$, let $\Lambda_r\in(2,3)$ satisfy
+
+$$
+\Lambda_r^r(\Lambda_r-2)=1,
+\qquad e_r=1+\frac{1}{3-\Lambda_r}.
+$$
+
+The function $t\mapsto t^r(t-2)$ is strictly increasing for $t>2$, so this specifies $\Lambda_r$ uniquely. The identity
+
+$$
+E^*(u_{2r+1})=e_r
+$$
+
+is literature-attested: [Dvořáková–Pelantová, §2, equation (4)](https://arxiv.org/html/2509.06104v1#S2.E4), recalling Dvořáková, Klouda and Pelantová, *The asymptotic repetition threshold of sequences rich in palindromes*, European Journal of Combinatorics 126 (2025), 104124. Their equation $t^{2r}(t-2)^2=1$ gives the displayed equation for $\Lambda_r$ because $\Lambda_r>2$.
+
