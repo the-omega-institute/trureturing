@@ -25,7 +25,7 @@ open D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
 
 abbrev H := lp (fun _ : ℕ => ℂ) 2
 
-private lemma weight_le_one (n : ℕ) : centralWeight n ≤ 1 := by
+lemma weight_le_one (n : ℕ) : centralWeight n ≤ 1 := by
   rw [centralWeight, div_le_one (by positivity)]
   exact_mod_cast Nat.centralBinom_le_four_pow n
 
@@ -42,7 +42,7 @@ private lemma rankOne_norm_le (n m : ℕ) : ‖rankOne n m‖ ≤ 1 := by
   simpa [basis, lp.norm_single (by norm_num : (0 : ℝ≥0∞) < 2)] using
     lp.norm_apply_le_norm (by norm_num : (2 : ℝ≥0∞) ≠ 0) x m
 
-private lemma entry_bound (z : ℂ) (s t : ℕ) (hs : 0 < s) (ht : 0 < t) :
+lemma entry_bound (z : ℂ) (s t : ℕ) (hs : 0 < s) (ht : 0 < t) :
     ‖matrixEntry z s t‖ ≤ ‖z‖ ^ (s + t) := by
   rw [matrixEntry_norm z s t hs ht]
   have hs0 : (0 : ℝ) ≤ s := Nat.cast_nonneg s
@@ -107,7 +107,7 @@ private lemma term_apply (z : ℂ) (i j n : ℕ) (x : H) :
   · subst i; simp
   · simp [hi]
 
-private lemma operator_apply {z : ℂ} (hz : ‖z‖ < 1) (x : H) (n : ℕ) :
+lemma operator_apply {z : ℂ} (hz : ‖z‖ < 1) (x : H) (n : ℕ) :
     operator z x n = ∑' m : ℕ, matrixEntry z (n + 1) (m + 1) * x m := by
   let ev : (H →L[ℂ] H) →L[ℂ] ℂ :=
     (lp.evalCLM ℂ (fun _ : ℕ => ℂ) 2 n).comp
@@ -228,7 +228,7 @@ private lemma sectionOp_norm_le (N : ℕ) {z : ℂ} (hz : ‖z‖ < 1) :
       · exact restriction_norm_le N
     _ = _ := by ring
 
-private lemma operator_norm_le {z : ℂ} (hz : ‖z‖ < 1) :
+lemma operator_norm_le {z : ℂ} (hz : ‖z‖ < 1) :
     ‖operator z‖ ≤ ‖z‖ ^ 2 := by
   exact le_of_tendsto ((sectionOp_tendsto hz).norm)
     (Filter.Eventually.of_forall (fun N => sectionOp_norm_le N hz))
@@ -309,7 +309,7 @@ private lemma shifted_convolution (s n : ℕ) (hs : 0 < s) :
     convert h using 1; push_cast; simp only [pow_add]; ring
   exact_mod_cast (mul_left_cancel₀ hp hc).symm
 
-private lemma weight_convolution (n : ℕ) :
+lemma weight_convolution (n : ℕ) :
     (∑ t ∈ Finset.range (n + 1), centralWeight t * centralWeight (n - t)) = 1 := by
   have hv := Ring.add_choose_eq (R := ℂ) (r := -1 / 2) (s := -1 / 2) n
     (Commute.all _ _)
@@ -372,7 +372,7 @@ private lemma period_summable {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
     Summable (fun k : ℕ => centralWeight k ^ 2 * r ^ k) := by
   simpa [pow_two] using shifted_summable hr hr1 0
 
-private lemma F_ge_one {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) : 1 ≤ F r := by
+lemma F_ge_one {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) : 1 ≤ F r := by
   rw [F_eq]
   have h := (period_summable hr hr1).le_tsum 0 (fun k hk => by positivity)
   simpa [centralWeight_zero] using h
@@ -394,7 +394,7 @@ private lemma L_le {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) (s : ℕ) :
           (centralWeight_nonneg _) zero_le_one) (pow_nonneg hr k)
     _ = _ := by ring
 
-private lemma pair_tsum_antidiagonal (f : ℕ × ℕ → ℝ) (hf : Summable f) :
+lemma pair_tsum_antidiagonal (f : ℕ × ℕ → ℝ) (hf : Summable f) :
     (∑' p : ℕ × ℕ, f p) =
       ∑' n : ℕ, ∑ p ∈ Finset.HasAntidiagonal.antidiagonal n, f p := by
   conv_rhs =>
@@ -520,7 +520,7 @@ private lemma sourceValue_bound (r : ℝ) (n : ℕ) :
     _ ≤ 1 * Real.sqrt r ^ (n + 1) := by gcongr; exact weight_le_one _
     _ ≤ _ := by nlinarith [sqrt_frequency_ge_one n, pow_nonneg (Real.sqrt_nonneg r) (n + 1)]
 
-private lemma columnValue_bound {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) (n : ℕ) :
+lemma columnValue_bound {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) (n : ℕ) :
     ‖columnValue r n‖ ≤ (1 - r)⁻¹ * Real.sqrt r ^ (n + 1) := by
   have hF := F_ge_one hr hr1
   have hL := L_nonneg hr (n + 1)
@@ -592,21 +592,21 @@ private lemma resolvent_mul {z : ℂ} (hz : ‖z‖ < 1) :
   apply geom_series_mul_neg
   exact (operator_norm_le hz).trans_lt (pow_lt_one₀ (norm_nonneg z) hz (by norm_num : (2 : ℕ) ≠ 0))
 
-private def B (r : ℝ) : ℝ := ∑' k : ℕ, centralWeight k * r ^ k
+def B (r : ℝ) : ℝ := ∑' k : ℕ, centralWeight k * r ^ k
 
-private lemma B_summable {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
+lemma B_summable {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
     Summable (fun k : ℕ => centralWeight k * r ^ k) := by
   apply Summable.of_nonneg_of_le
     (fun k => mul_nonneg (centralWeight_nonneg k) (pow_nonneg hr k))
     (fun k => ?_) (summable_geometric_of_lt_one hr hr1)
   simpa using mul_le_mul_of_nonneg_right (weight_le_one k) (pow_nonneg hr k)
 
-private lemma B_ge_one {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) : 1 ≤ B r := by
+lemma B_ge_one {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) : 1 ≤ B r := by
   have h := (B_summable hr hr1).le_tsum 0
     (fun k hk => mul_nonneg (centralWeight_nonneg k) (pow_nonneg hr k))
   simpa [B, centralWeight_zero] using h
 
-private lemma B_eq {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
+lemma B_eq {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
     B r = (Real.sqrt (1 - r))⁻¹ := by
   have hf := B_summable hr hr1
   have hn : Summable (fun k : ℕ => ‖centralWeight k * r ^ k‖) := by
@@ -631,7 +631,7 @@ private lemma B_eq {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
   apply (sq_eq_sq₀ (by linarith [B_ge_one hr hr1]) (by positivity)).mp
   rw [hsq, inv_pow, Real.sq_sqrt (by linarith : 0 ≤ 1 - r)]
 
-private def scalarTerm (r : ℝ) (p : ℕ × ℕ) : ℝ :=
+def scalarTerm (r : ℝ) (p : ℕ × ℕ) : ℝ :=
   centralWeight p.1 * centralWeight p.2 * centralWeight (p.1 + p.2) *
     r ^ (p.1 + p.2)
 
@@ -650,7 +650,7 @@ private lemma scalarTerm_summable {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
         (centralWeight_nonneg _) zero_le_one
     simpa [scalarTerm, pow_add] using mul_le_mul_of_nonneg_right hp' (pow_nonneg hr (p.1 + p.2))
 
-private lemma scalarTerm_row (r : ℝ) (t : ℕ) :
+lemma scalarTerm_row (r : ℝ) (t : ℕ) :
     (∑' k : ℕ, scalarTerm r (t, k)) = centralWeight t * r ^ t * L r t := by
   calc
     _ = ∑' k : ℕ, (centralWeight t * r ^ t) *
@@ -745,11 +745,11 @@ private lemma entry_column_product {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) (s t :
       push_cast
       ring
 
-private lemma radial_norm_lt_one {r : ℝ} (hr1 : r < 1) : ‖(Real.sqrt r : ℂ)‖ < 1 := by
+lemma radial_norm_lt_one {r : ℝ} (hr1 : r < 1) : ‖(Real.sqrt r : ℂ)‖ < 1 := by
   simpa [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg r)] using
     (Real.sqrt_lt' zero_lt_one).mpr (by simpa using hr1)
 
-private lemma column_equation {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
+lemma column_equation {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     (1 - operator (Real.sqrt r : ℂ)) (column r hr.le hr1) = source r hr.le hr1 := by
   ext n
   have ha : operator (Real.sqrt r : ℂ) (column r hr.le hr1) n =
@@ -791,7 +791,7 @@ theorem resolvent_column {r : ℝ} (hr : 0 < r) (hr1 : r < 1) (n : ℕ) :
           (resolvent_mul (radial_norm_lt_one hr1))
   exact congrArg (fun x : H => x n) he
 
-private lemma scalar_column_product {r : ℝ} (hr : 0 ≤ r) (n : ℕ) :
+lemma scalar_column_product {r : ℝ} (hr : 0 ≤ r) (n : ℕ) :
     (n + 1 : ℂ) * sourceValue r n * columnValue r n =
       ((centralWeight (n + 1) * r ^ (n + 1) * L r (n + 1) / F r : ℝ) : ℂ) := by
   have hs2 : (Real.sqrt (n + 1 : ℝ) : ℂ) ^ 2 = (n + 1 : ℂ) := by

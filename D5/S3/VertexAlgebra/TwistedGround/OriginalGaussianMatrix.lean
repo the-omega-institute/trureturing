@@ -57,7 +57,7 @@ private lemma centralWeight_pos (n : ℕ) : 0 < centralWeight n := by
 lemma centralWeight_nonneg (n : ℕ) : 0 ≤ centralWeight n :=
   (centralWeight_pos n).le
 
-private lemma centralWeight_step (n : ℕ) :
+lemma centralWeight_step (n : ℕ) :
     (2 * (n + 1) : ℝ) * centralWeight (n + 1) =
       (2 * n + 1) * centralWeight n := by
   have h := Nat.succ_mul_centralBinom_succ n
