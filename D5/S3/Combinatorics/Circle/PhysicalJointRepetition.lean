@@ -337,10 +337,17 @@ private theorem regular_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
       0 ≤ ((tau.take n).map (rowCharge d w j.val)).sum ∧
       ((tau.take n).map (rowCharge d w j.val)).sum ≤
         (w : ℤ) * ((2 : ℤ) ^ d) ^ j.val := by
-    apply prefix_nonneg_le tau (rowCharge d w j.val)
+    have hp := prefix_nonneg_le tau (rowCharge d w j.val)
       (fun i hi => hnonneg i) n
-    rw [← List.sum_toFinset _ (List.nodup_finRange _), List.toFinset_finRange,
-      hsumF]
+    have htotal :
+        (tau.map (rowCharge d w j.val)).sum =
+          (w : ℤ) * ((2 : ℤ) ^ d) ^ j.val := by
+      rw [(htau.1.map (rowCharge d w j.val)).sum_eq]
+      rw [← List.sum_toFinset _ (List.nodup_finRange _), List.toFinset_finRange]
+      exact hsumF
+    refine ⟨hp.1, ?_⟩
+    rw [← htotal]
+    exact hp.2
   have hprefix (n : ℕ) :
       ((block.take n).map f).sum =
         2 * G * ((tau.take n).map a).sum -
@@ -624,16 +631,29 @@ private theorem top_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
     · simp only [if_neg hnc]
       constructor <;> nlinarith [hn.1, hn.2, hsumh, ho.1, hcap]
   have hsum : (block.map f).sum = (w : ℤ) * H := by
-    rw [hformula]
-    have hnewtotal := hnew.2.1
-    have holdtotal := htau.2.1
-    have hfresh := base_fresh_value d w hd hw
-    have hfull : ¬ (d + 1 ≤ cut) := by omega
-    simp only [if_neg (by omega)]
-    have hnewsum : ((earWord d tau cut).map (actualSource (d + 1) (2 * w))).sum = 0 := hnewtotal
-    have holdsum : ((tau.take (d + 1 - 1)).map a).sum = 0 := by
-      simpa [show d + 1 - 1 = d by omega] using holdtotal
-    rw [hnewsum, holdsum]
+    have htop_len : top.length = d := by
+      simpa [top] using htau.1.length_eq
+    have hblock_len : block.length = d + 1 := by
+      simp only [block, earWord, List.length_append, List.length_map,
+        List.length_cons, List.length_nil, List.length_take, List.length_drop]
+      omega
+    have hear_len : (earWord d tau cut).length = d + 1 := by
+      have htau_len : tau.length = d := by simpa using htau.1.length_eq
+      simp only [earWord, List.length_append, List.length_map,
+        List.length_cons, List.length_nil, List.length_take, List.length_drop,
+        htau_len]
+      omega
+    have hf := hformula (d + 1)
+    have hformula_full :
+        (block.map f).sum =
+          R * ((earWord d tau cut).map g).sum +
+            H * ((tau.take d).map a).sum + H * (w : ℤ) := by
+      simpa [hblock_len, hear_len, List.take_length,
+        show ¬ d + 1 ≤ cut by omega] using hf
+    rw [hformula_full, hnew.2.1]
+    have holdsum : ((tau.take d).map a).sum = 0 := by
+      simpa [show tau.length = d by simpa using htau.1.length_eq] using htau.2.1
+    rw [holdsum]
     ring
   exact ⟨hstrip, hsum⟩
 
