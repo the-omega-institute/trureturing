@@ -1,0 +1,149 @@
+### 2.2. Exact base point and analytic rank-three continuation
+
+Let $v_0=|--\rangle_Y$. At (2.1), set
+
+$$
+ \omega_0=\frac14[I+r(YI+IY)+\tfrac45YY]
+     =\operatorname{diag}(r,\beta,\beta,0).
+$$
+
+Both $K$ and $L$ interchange the double-plus and double-minus
+probabilities and interchange the equal middle probabilities. Therefore
+
+$$
+P_0=Q_0=\operatorname{diag}(27/40,1/20,1/20,9/40),\quad
+ R_0=\operatorname{diag}(9/16,1/20,1/20,27/80).
+\tag{2.8}
+$$
+
+Write $p_+,p_-,p_0$ and $q_+,q_-,q_0$ for the respective large,
+last, and middle values in this equation. The coefficient of $YY$ in
+the diagonal logarithm is one fourth the log of the ratio of the product
+of its first and last probabilities to the product of its middle ones.
+Since the channels fix $YY$, the $YY$ coefficient of $M_0$ is
+
+$$
+m=\frac14[5\log(243/4)-3\log(1215/16)]
+       =\frac14\log(236196/125)>0.
+\tag{2.9}
+$$
+
+More explicitly, let
+
+$$
+ c_P=\tfrac14\log(p_+p_-p_0^2),\quad
+ c_R=\tfrac14\log(q_+q_-q_0^2),\quad g_0=5c_P-3c_R,
+$$
+
+$$
+ g_1=\tfrac58\log3-\tfrac3{16}\log(5/3).
+$$
+
+The logarithms have equal coefficients on $YI,IY$, and the channels
+multiply each such coefficient by $1/2$ and $1/4$, respectively.
+Thus the exact gradient is
+
+$$
+ M_0=g_0I+g_1(YI+IY)+mYY.
+$$
+
+As $4v_0v_0^*=I-YI-IY+YY$, it follows that
+
+$$
+M_0=(g_0-m)I+(g_1+m)(YI+IY)+4m v_0v_0^*.
+\tag{2.10}
+$$
+
+The last term is PSD and annihilates $\omega_0$. Equation
+(2.6) proves uniqueness over the full complex fiber directly.
+
+We now prove an analytic continuation with no omitted correlation
+coordinates. Parametrize all trace-one Hermitian matrices by (1.3).
+All fifteen coefficients in (1.3) are real; they parametrize the complete
+Hermitian space. Put $z=(T_{ij})_{(i,j)\ne(y,y)}$.
+At the base, $\operatorname{adj}\omega_0=r\beta^2v_0v_0^*$, so
+
+$$
+\frac{\partial\det\rho}{\partial T_{yy}}\bigg|_0
+    =\frac{r\beta^2}{4}>0.
+\tag{2.11}
+$$
+
+The real analytic implicit function theorem (S. G. Krantz and
+H. R. Parks, *The Implicit Function Theorem: History, Theory, and
+Applications*, 2002) gives a chart
+$T_{yy}=\theta(u,v,z)$ of $\det\rho=0$ on an open neighborhood.
+Its other three eigenvalues remain positive; its fourth is zero.
+Every point in this chart is therefore an actual rank-three PSD state.
+The margins remain positive and all three channel outputs remain positive
+after shrinking the neighborhood. This follows from the strictly positive
+base eigenvalues, and is valid also for independently perturbed $a,b$.
+
+The constrained Hessian must include the curvature of this chart.
+For a rank-three curve $\rho(s)$ through $\omega_0$ with tangent $H$,
+choose a unit kernel vector with $\langle v_0,v'_0\rangle=0$.
+Differentiating $\rho(s)v(s)=0$ yields
+
+$$
+ \langle v_0,Hv_0\rangle=0,\qquad
+ v'_0=-\omega_0^+Hv_0,\qquad
+ \langle v_0,\rho''(0)v_0\rangle
+    =2\langle Hv_0,\omega_0^+Hv_0\rangle,
+$$
+
+where $\omega_0^+$ is the inverse on the three-dimensional support
+and zero on the kernel. For curves whose margins are affine in $s$,
+the local part of (2.10) pairs to zero with $\rho''(0)$.
+Consequently their actual second derivative is
+
+$$
+\mathcal H(H)=F''_{\omega_0}[H,H]
+                  +8m\langle Hv_0,\omega_0^+Hv_0\rangle.
+\tag{2.12}
+$$
+
+In particular this is positive definite on the eight fixed-margin
+tangents $\partial_z\rho$ by (2.7). At the base
+$\partial_z\theta=0$, since all these correlation tensors have zero
+$v_0$ diagonal entry, so these are eight independent tangents.
+
+Apply analytic IFT to the eight equations
+$\partial_z F(\rho(u,v,z);a,b)=0$. Their derivative in $z$ is the
+invertible positive Hessian just proved. We obtain a real analytic
+$z=z_*(u,v,a,b)$ and hence an analytic rank-three source $\omega(p)$,
+where $p=(u,v,a,b)$ varies in a full open subset of $\mathbb R^8$.
+To prove that this stationary chart solution is the global optimizer,
+let $\Pi(p)$ be its kernel projection. It is analytic, for example by
+
+$$
+ \Pi(p)=\frac{\operatorname{adj}\omega(p)}
+                    {\operatorname{tr}\operatorname{adj}\omega(p)}.
+$$
+
+The fixed-margin tangent space has dimension nine; its rank-three
+subspace is the kernel of $H\mapsto\operatorname{tr}\Pi(p)H$ and has dimension
+eight. Stationarity implies
+
+$$
+M_{\omega(p)}-\lambda(p)\Pi(p)\quad\text{is local}.
+\tag{2.13}
+$$
+
+This is precisely the orthogonal complement statement for the full
+nine-dimensional correlation space in (1.3). An explicit analytic
+coefficient is
+
+$$
+ \lambda(p)=\frac{\operatorname{tr}(M_{\omega(p)}YY/4)}{\operatorname{tr}(\Pi(p)YY/4)}.
+$$
+
+The denominator equals $1/4$ at the base and stays nonzero; the numerator
+equals $m$ there. Hence $\lambda(p)\to4m>0$. Shrink the neighborhood
+so $\lambda>0$ and $0<a,b<1$. Now
+$N(p)=\lambda(p)\Pi(p)$ is an actual complementary PSD slack.
+Equation (2.6) proves global optimality and uniqueness against
+every physical competitor, with every rank and every complex correlation.
+We did not assume those competitors had positive outputs or lay in the
+chart. This proves all analytic and global hypotheses needed for the
+continuation assertion.
+

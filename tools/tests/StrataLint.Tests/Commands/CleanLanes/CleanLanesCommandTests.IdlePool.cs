@@ -67,9 +67,9 @@ public sealed partial class CleanLanesCommandTests
             rows[0] = rows[0].Split('\t')[0] + "\tworktree-idle:" + token;
             File.WriteAllLines(log, rows);
             var pressured = args.ToArray();
-            pressured[2] = pressured[2].Replace("sys.exit(sys.modules['worktree_protocol'].main())",
+            File.WriteAllText(pressured[2], File.ReadAllText(pressured[2]).Replace("sys.exit(sys.modules['worktree_protocol'].main())",
                 "sys.modules['worktree_pool'].available_fraction = lambda source: 0.04\n"
-                + "sys.exit(sys.modules['worktree_protocol'].main())", StringComparison.Ordinal);
+                + "sys.exit(sys.modules['worktree_protocol'].main())", StringComparison.Ordinal));
             return TestProcessRunner.Run("python3", pressured,
                 directory, TestBudgets.LongWorkflowProcessHangGuard, 1024 * 1024);
         });

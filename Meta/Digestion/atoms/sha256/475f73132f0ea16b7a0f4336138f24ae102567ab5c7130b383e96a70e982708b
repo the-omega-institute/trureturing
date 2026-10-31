@@ -1,0 +1,23 @@
+**Equation 5.1 (`eq:cores`).**
+
+$$
+\begin{array}{c|l|l}
+G&\text{edges }e_1,\ldots,e_9&\text{chords}\\\hline
+R&01,01,23,23,45,45,12,34,50&2,4,6,9\\
+S&01,01,45,45,23,02,13,24,35&2,4,7,9\\
+C&02,03,12,13,23,04,45,45,51&4,5,8,9\\
+P&01,12,20,34,45,53,03,14,25&3,6,8,9\\
+K&03,04,05,13,14,15,23,24,25&5,6,8,9\\
+B&02,03,12,13,23,04,41,45,55&4,5,7,9
+\end{array}
+$$
+
+An edge $ij$ is directed $i\to j$; $55$ has two distinct flags. The
+cycle at a vertex lists its incident edge indices increasingly, and
+the positive flag of a loop precedes its negative flag. Chords have
+fundamental-cycle coefficient $+1$, defining the basis $(a,b,c,d)$.
+The ordered cycle columns are explicitly
+
+<a id="eq-columns"></a>
+<a id="eq:columns"></a>
+

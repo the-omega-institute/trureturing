@@ -54,7 +54,7 @@ public sealed partial class CleanLanesCommandTests
                 preservation.qualify = injected_qualification
                 sys.exit(p.main())
                 """;
-            modified[2] = modified[2].Replace("sys.exit(sys.modules['worktree_protocol'].main())", program, StringComparison.Ordinal);
+            File.WriteAllText(modified[2], File.ReadAllText(modified[2]).Replace("sys.exit(sys.modules['worktree_protocol'].main())", program, StringComparison.Ordinal));
             return production.Run(file, modified, directory, TimeSpan.FromSeconds(60));
         });
         var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
