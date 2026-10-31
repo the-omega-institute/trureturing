@@ -17,7 +17,7 @@ open _root_.D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
 open _root_.D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.EqualGaps
 noncomputable section
 
-abbrev Params := ℕ × ℕ × ℕ × ℕ
+abbrev Params := Σ _a : ℕ, Σ _b : ℕ, Σ _c : ℕ, ℕ
 private def size (p : Params) : ℕ := p.1+p.2.1+p.2.2.1+p.2.2.2
 abbrev signature : Signature where
   Params := Params
@@ -49,8 +49,8 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (a b c d : ℕ) (_ha : 2 ≤ a) (_hb : 2 ≤ b) (_hc : 2 ≤ c) (_hd : 2 ≤ d),
     (∃ sigma : List (Fin (a+b+c+d)), ∃ j : ℕ, j ≤ a+b+c+d ∧
-      R.readout false (a,b,c,d) (1+2^a+2^(a+b)+2^(a+b+c)) sigma ∧
-      R.readout true (a,b,c,d) (2*(1+2^a+2^(a+b)+2^(a+b+c)))
+      R.readout false ⟨a,b,c,d⟩ (1+2^a+2^(a+b)+2^(a+b+c)) sigma ∧
+      R.readout true ⟨a,b,c,d⟩ (2*(1+2^a+2^(a+b)+2^(a+b+c)))
         (earWord (a+b+c+d) sigma j)) ↔ Nonempty (Certificate a b c d)
 
 private theorem actual_law : arena.Law actual := by
@@ -89,7 +89,7 @@ private theorem bad_new : ¬ OriginalOrder 11 2 (List.finRange 11) := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro side
   cases side
-  · refine ⟨(2,2,2,4),0,2,?_⟩
+  · refine ⟨⟨2,2,2,4⟩,0,2,?_⟩
     intro he
     have hp := congrFun he (List.finRange 10)
     change OriginalOrder 10 0 (List.finRange 10) = OriginalOrder 10 2 (List.finRange 10) at hp
@@ -100,7 +100,7 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
         rw [hf]; induction xs <;> simp_all
       exact ⟨List.Perm.refl _,hz _,fun n => by rw [hz]; norm_num [modulus]⟩
     exact bad_old (hp.mp hz)
-  · refine ⟨(2,2,2,4),0,2,?_⟩
+  · refine ⟨⟨2,2,2,4⟩,0,2,?_⟩
     intro he
     have hp := congrFun he (List.finRange 11)
     change OriginalOrder 11 0 (List.finRange 11) = OriginalOrder 11 2 (List.finRange 11) at hp
