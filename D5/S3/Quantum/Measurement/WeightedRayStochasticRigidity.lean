@@ -45,7 +45,7 @@ private theorem conjugate_projection {d : ℕ} (U : unitaryGroup (Fin d) ℂ)
       (star (U : Matrix (Fin d) (Fin d) ℂ) * P * U) =
       star (U : Matrix (Fin d) (Fin d) ℂ) * P * U ∧
     trace (star (U : Matrix (Fin d) (Fin d) ℂ) * P * U) = 1 := by
-  refine ⟨hP.conjTranspose_mul_mul_same _, ?_, ?_⟩
+  refine ⟨Matrix.isHermitian_conjTranspose_mul_mul _ hP, ?_, ?_⟩
   · calc
       _ = star (U : Matrix (Fin d) (Fin d) ℂ) * P *
           ((U : Matrix (Fin d) (Fin d) ℂ) * star U) * P * U := by noncomm_ring
