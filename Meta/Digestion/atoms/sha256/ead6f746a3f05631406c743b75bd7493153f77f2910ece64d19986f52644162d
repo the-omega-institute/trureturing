@@ -1,0 +1,39 @@
+**命题 B-11.3（同源耳面积预算消费上述谱）。** 在逆时针凸正 $`N\ge5`$ 边形上固定五个连续不同顶点，三个删耳及联合均合法；令 $`\alpha=2\pi/N`$，每个耳面积及占总面积比例为
+
+
+```math
+\tau_N=R^2\sin\alpha(1-\cos\alpha),\qquad
+\gamma_N=\frac{\tau_N}{A_N}=\frac{2(1-\cos\alpha)}N.
+```
+
+
+同一个 $`I\sim p`$ 给归一化损失 $`L_A=D/A_N=\gamma_N(x+z+y)`$。若 $`m_A=X+Y+Z`$，其完整推前律及预算事件为
+
+
+<table><tbody><tr><td>
+
+```math
+\begin{aligned}
+\Pr(L_A=0)&=1-m_A+\kappa,\\
+\Pr(L_A=\gamma_N)&=m_A-2\kappa,\\
+\Pr(L_A=2\gamma_N)&=\kappa,
+\end{aligned}
+\qquad
+\Pr(L_A\gt \gamma_N)=\kappa.
+```
+
+</td></tr></tbody></table>
+
+
+```math
+\mathbb{\text{𝔼}} L_A=\gamma_Nm_A,\qquad
+\mathbb{\text{𝔼}} L_A^2=\gamma_N^2(m_A+2\kappa).
+```
+
+
+对奇素数 $`p\ge5`$，$`\gamma_p=q_{p,(p-1)/2}/p`$；特别 $`\gamma_5=(5-\sqrt5)/10`$。
+
+证明。三个连续圆周点的三角面积，由鞋带式得到 $`R^2(2\sin\alpha-\sin2\alpha)/2`$，即所列 $`\tau_N`$。凸多边形的端点两耳只共中间顶点，内部不交；删除一或两个非相邻顶点后仍有至少三个顶点的凸多边形。模式 $`0`$ 给零，三个单动作给一份耳面积，$`13`$ 给两份；代入命题B-6.1得到推前律，再求矩。$`q_{p,(p-1)/2}=4\sin^2(\pi/p)=2(1-\cos(2\pi/p))`$，得谱对应；五边形取较小根 $`q_-=(5-\sqrt5)/2`$。
+
+固定标定后均值任务只读 $`m_A`$，超预算任务只读 $`\kappa`$，完整三点损失律读 $`(m_A,\kappa)`$；这是响应律的两个仿射参数，不是任意编码的存储位下界。命题B-7.2的两律在同一正多边形上均合法：一律损失 $`0,2\gamma_N`$ 各半，另一律恒为 $`\gamma_N`$，超预算概率分别为 $`1/2,0`$。给定三均值，二阶损失的范围宽度为 $`2\gamma_N^2w`$。合数 $`N`$ 也有相同五模式动作，素数不是动作合法性的来源。∎
+

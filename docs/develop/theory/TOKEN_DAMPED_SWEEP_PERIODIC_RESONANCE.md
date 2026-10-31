@@ -621,3 +621,685 @@ Taking the infimum proves the asserted all-time bound. The argument applies to e
 Finally, for $\alpha_*=b/(a+2b)$ positivity gives $0<\alpha_*<1$, and substitution into $\tau_\alpha$ gives $\tau_{\alpha_*}=1/2$. By (3.1), $\det N_{\alpha_*}=2\tau_{\alpha_*}-1=0$. Nevertheless the loss coefficient in (5.1) is then $(a+b)/(ab)>0$, the map is still nonexpansive in the same norm, and its equality $N_{\alpha_*}u_0=Mu_0$ still holds. Formulas (5.7) and (5.8) use no inverse of $N_\alpha$, so the entire proof includes this singular parameter. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 6. Exact decay and stable spaces for a prescribed schedule
+
+**Definition 6.1 (Angular energy and original-coordinate stable space).** Fix an arbitrary triple $a,b,c>0$, one parameter $\alpha\in(0,1)$, and one prescribed infinite binary sequence $\varepsilon=(\varepsilon_t)_{t\geq0}$. Retain the literal matrices
+
+$$
+A=\begin{pmatrix}1&0\\-2c&b+c\end{pmatrix},\qquad
+B=\begin{pmatrix}-1&\dfrac{2a}{a+b}\\0&-(b+c)\end{pmatrix},\qquad
+B_\alpha=\begin{pmatrix}
+\dfrac{b(1-2\alpha)-\alpha a}{b+\alpha a}&\dfrac{2\alpha a}{b+\alpha a}\\
+0&-(b+c)
+\end{pmatrix},\qquad M=A^{-1}B,\quad N_\alpha=A^{-1}B_\alpha,
+$$
+
+and the chronological recurrence $u_{t+1}=N_\alpha u_t$ when $\varepsilon_t=1$, and $u_{t+1}=Mu_t$ otherwise, for every $u_0\in\mathbb R^2$. Set
+
+$$
+\begin{gathered}
+Q(x,y)=\frac{x^2}{a}+\frac{(y-x)^2}{b}+\frac{y^2}{c},\qquad
+\|u\|_Q=\sqrt{Q(u)},\qquad
+\theta=\arccos\left(\frac{2ac}{(a+b)(b+c)}-1\right),\\
+\tau=\frac{\alpha(a+b)}{b+\alpha a},\qquad
+\lambda=2\tau-1\in(-1,1),\qquad
+S_{\varepsilon,\alpha}=\{u_0\in\mathbb R^2:u_t\longrightarrow0\}.
+\end{gathered}
+\tag{6.1}
+$$
+
+List the damped times as $t_0<t_1<\cdots$, allowing an empty list, a finite list of length $r\geq1$, or an infinite list. For each consecutive pair put $d_j=t_{j+1}-t_j\geq1$ and define
+
+$$
+\mathcal E_\varepsilon=\sum_j\sin^2(d_j\theta)\in[0,\infty].
+\tag{6.2}
+$$
+
+The sum is over exactly the consecutive event pairs and is zero if there are fewer than two events. A consecutive gap is resonant if $\sin(d_j\theta)=0$, and orthogonal if $\cos(d_j\theta)=0$. The schedule is held fixed when comparing different fixed values of $\alpha$.
+
+The positive definite inner product associated with $Q$ is
+
+$$
+\langle (x,y),(x',y')\rangle_Q
+=\frac{xx'}a+\frac{(y-x)(y'-x')}b+\frac{yy'}c.
+\tag{6.3}
+$$
+
+Write $H=\mathbb R(a,a+b)^T$, $h=(a,a+b)^T$, $e=h/\|h\|_Q$, and $Pz=e\langle e,z\rangle_Q$. Thus $P$ is the $Q$-orthogonal projection onto $H$. These are the parameters and equality line of Definition 3.1. In the [finite-path](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.lean) and [damped-sweep](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean) sources and their full [finite-path](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.scribe.cs) and [damped-sweep](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs) expositions, the correspondence is $m=2$, $(v_1,v_2,v_3)=(a,b,c)$, $(z_1,z_2)=(x,y)$, $z_0=z_3=0$, with indices reduced by one in the zero-based notation. Their first-event weight is $\tau$, and their transfer $M_\alpha$ is $N_\alpha$. The underlying odd/even rows, the entry $A_{21}=-2c$, and the Token-1 row are those of [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, Sections IV.A and IV.B.1](https://arxiv.org/html/2608.27085v1#S4), for positive velocities and zero centered endpoints in the rotational linear regime; the corresponding source locators are also given in the [source note](../../../Library/Dynamics/wallner2026passbucket.md).
+
+**Theorem 6.2 (Prescribed-schedule classification).** In the full domain of Definition 6.1, every initial state tends to zero if and only if the following appropriate condition holds:
+
+$$
+\begin{array}{ll}
+\lambda\ne0:&\text{there are infinitely many events and }\mathcal E_\varepsilon=\infty;\\[2pt]
+\lambda=0:&\text{an orthogonal consecutive gap exists, or there are infinitely many events and }\mathcal E_\varepsilon=\infty.
+\end{array}
+\tag{6.4}
+$$
+
+Here $\lambda=0$ is exactly $\alpha=b/(a+2b)\in(0,1)$. The exact stable spaces are as follows.
+
+1. In every case in (6.4), $S_{\varepsilon,\alpha}=\mathbb R^2$. At $\lambda=0$, an orthogonal gap from $t_j$ to $t_{j+1}$ makes every trajectory exactly zero from time $t_{j+1}+1$ onward.
+2. If there are infinitely many events, $\mathcal E_\varepsilon<\infty$, and no orthogonal-gap annihilation at $\lambda=0$, then $S_{\varepsilon,\alpha}$ is a line. The schedule-and-parameter functional $L_{\varepsilon,\alpha}$ given by (6.9) in the singular case and (6.20) in the nonsingular case is nonzero and satisfies
+
+$$
+S_{\varepsilon,\alpha}=\ker L_{\varepsilon,\alpha},\qquad
+\lim_{t\to\infty}\|u_t\|_Q=|L_{\varepsilon,\alpha}(u_0)|.
+\tag{6.5}
+$$
+
+3. With no events, $S_{\varepsilon,\alpha}=\{0\}$. With finitely many events and $\lambda\ne0$, it is also $\{0\}$.
+4. With $1\leq r<\infty$ events, $\lambda=0$, and no orthogonal gap, it is the line
+
+$$
+S_{\varepsilon,\alpha}
+=\{u:\langle M^{-t_0}e,u\rangle_Q=0\}.
+\tag{6.6}
+$$
+
+Every state outside the specified stable space has a strictly positive limiting $Q$-norm. The descriptions cover both rational and irrational $\theta/(2\pi)$ and bounded or unbounded gaps; in (6.20) the stable line may depend on the fixed value of $\alpha$.
+
+*Proof.* The weighted Dirichlet identities (3.1)–(3.4) provide the common norm and equality line. Their first-event ingredients are the full local energy decomposition, damped-event loss, reflection invariance, equality case and source factorization in the damped-sweep source cited in Definition 6.1. To identify the factors used here, put $\xi=a/(a+b)$, $\eta=c/(b+c)$ and use exactly
+
+$$
+R=\begin{pmatrix}-1&2\xi\\0&1\end{pmatrix},\qquad
+S=\begin{pmatrix}1&0\\2\eta&-1\end{pmatrix},\qquad
+D=(1-\tau)I+\tau R.
+$$
+
+Equations (3.1) and (3.2) say $M=SR$, $N_\alpha=SD$, $R^2=I$, and that $R$ is the $Q$-orthogonal reflection fixing $H$. Hence $R=2P-I$, and, with no change to the source transfers,
+
+$$
+K=RD=\tau I+(1-\tau)R=P+\lambda(I-P),\qquad N_\alpha=MK.
+\tag{6.7}
+$$
+
+In particular $M$ preserves $Q$, $K$ fixes $H$ and multiplies $H^{\perp_Q}$ by $\lambda$. The identity $0<\tau<1$ was proved in Definition 3.1. Solving $2\alpha(a+b)=b+\alpha a$ gives the asserted singular value. Also $\det M=1$ and $\det K=\lambda$, so the damped transfer is invertible exactly when $\lambda\ne0$.
+
+For an event index $j$, put
+
+$$
+e_j=M^{-t_j}e,\qquad
+P_jz=e_j\langle e_j,z\rangle_Q,\qquad
+K_j=P_j+\lambda(I-P_j).
+\tag{6.8}
+$$
+
+These are explicit maps in the original real coordinates. For example, if $G=\begin{pmatrix}1/a+1/b&-1/b\\-1/b&1/b+1/c\end{pmatrix}$, then $P_j=e_je_j^TG$ and $\langle z,w\rangle_Q=z^TGw$. The interaction vectors at the damped inputs are $v_j=M^{-t_j}u_{t_j}$. Before the first event there are $t_0$ undamped transfers, so $v_0=u_0$. The exact interval between consecutive damped inputs is
+
+$$
+u_{t_{j+1}}=M^{d_j-1}N_\alpha u_{t_j}=M^{d_j}Ku_{t_j},
+\qquad v_{j+1}=K_jv_j.
+$$
+
+At the event itself, $M^{-(t_j+1)}u_{t_j+1}=K_jv_j$; this interaction vector stays constant through all subsequent undamped steps until the next event. For a finite list of $r$ events define $v_r$ by this formula after the last event. Thus the limiting norm of the full chronological trajectory is exactly the limiting norm of these interaction vectors, or $\|v_r\|_Q$ for a finite list. Moreover $u_t\to0$ if and only if its $Q$-norm tends to zero: the defining sum for $Q$ gives $x_t^2\leq aQ(u_t)$ and $y_t^2\leq cQ(u_t)$, and the reverse implication follows by continuity. In particular this reduction includes every intermediate undamped phase.
+
+Each map $K_j$ in (6.8) fixes the range of $P_j$ and has a fixed strict contraction in its $Q$-orthogonal complementary direction. They are paracontractions for $\|\cdot\|_Q$ in the terminology of [Beyn and Elsner, *Infinite products and paracontracting matrices*, §2](https://doi.org/10.13001/1081-3810.1006): $K_jz\ne z$ implies $\|K_jz\|_Q<\|z\|_Q$. At $\lambda=0$ they are orthogonal projections. The classical cyclic projection theorem of von Neumann–Halperin fixes a finite family of closed subspaces; its hypotheses and angle conventions are recalled in [Badea, Grivaux and Müller, arXiv:1006.2047v1, §1A–B](https://arxiv.org/abs/1006.2047v1). The projections here are specified individually by (6.8); the subsequent argument proves the needed conclusions for this entire possibly infinite family.
+
+First consider $\lambda=0$. Each $K_j=P_j$ has rank one. Formula (3.5), the $Q$-isometry of $M$, and the rotation calculation below give $\langle e_{j+1},e_j\rangle_Q=\cos(d_j\theta)$. Consequently for $r\geq1$ events,
+
+$$
+\|v_r\|_Q
+=|\langle e_0,u_0\rangle_Q|
+  \prod_{j=0}^{r-2}|\cos(d_j\theta)|.
+$$
+
+Indeed $v_1=e_0\langle e_0,u_0\rangle_Q$, and projecting a multiple of $e_j$ onto $\mathbb Re_{j+1}$ multiplies its coefficient by the indicated inner product. This proves the formula by induction, including $r=1$ with its empty product. An orthogonal gap makes $P_{j+1}P_j=0$, so after the second of those events all interaction vectors, and therefore all actual states, are zero. With a finite list and no such gap the product is positive and proves (6.6).
+
+For an infinite list with no orthogonal gap, the same finite-product formula gives the exact functional, whenever $\mathcal E_\varepsilon<\infty$,
+
+$$
+L_{\varepsilon,\alpha}(u)
+=\left(\prod_{j=0}^{\infty}|\cos(d_j\theta)|\right)
+  \langle M^{-t_0}e,u\rangle_Q.
+\tag{6.9}
+$$
+
+To justify its nonzero scalar factor, put $z_j=\sin^2(d_j\theta)$. Every factor is $\sqrt{1-z_j}>0$. On $0\leq z\leq1/2$, integration of $1/(1-z)$ between $0$ and $z$ gives
+
+$$
+\frac z2\leq-\frac12\log(1-z)\leq z.
+$$
+
+Thus if $\sum_jz_j<\infty$, all sufficiently late $z_j$ are at most $1/2$ and the logarithmic series converges; the finitely many earlier factors are positive. The product in (6.9) is positive. If instead $\sum_jz_j=\infty$, the inequality $-\frac12\log(1-z)\geq z/2$ on $[0,1)$ forces the product to vanish. This proves all infinite-event assertions at the singular parameter directly, with orthogonal gaps treated separately.
+
+We now give an angular description that also treats every nonzero $\lambda\in(-1,1)$. Set $C=\cos\theta$ and
+
+$$
+J=\frac{M-CI}{\sin\theta}.
+$$
+
+Here $0<\theta<\pi$ ensures a positive denominator. The characteristic identity proved before (3.5) gives $J^2=-I$ and $M^{-1}=2CI-M$. If a star denotes the adjoint for (6.3), $M^*=M^{-1}$ by (3.3), so $J^*=-J$ and $J^*J=I$. It follows that $e,Je$ are $Q$-orthonormal. Formula (3.5) extends to negative powers by $M^{-1}=\cos\theta I-\sin\theta J$, hence
+
+$$
+e_{j+1}=\cos(d_j\theta)e_j-\sin(d_j\theta)Je_j.
+\tag{6.10}
+$$
+
+This also proves the inner product used in the singular case.
+
+Choose signs using only the gap angles. For $x\in\mathbb R$, let $\operatorname{sgn}_+(x)=1$ if $x\geq0$, and $-1$ otherwise. Define
+
+$$
+\begin{gathered}
+\sigma_0=1,\qquad
+\sigma_{j+1}=\sigma_j\operatorname{sgn}_+(\cos(d_j\theta)),\qquad
+p_j=\sigma_je_j,\quad q_j=Jp_j,\\
+c_j=|\cos(d_j\theta)|,\qquad
+s_j=-\operatorname{sgn}_+(\cos(d_j\theta))\sin(d_j\theta).
+\end{gathered}
+\tag{6.11}
+$$
+
+Then $c_j\geq0$, $c_j^2+s_j^2=1$, $s_j^2=\sin^2(d_j\theta)$, and (6.10) gives $p_{j+1}=c_jp_j+s_jq_j$, $q_{j+1}=-s_jp_j+c_jq_j$. The convention at a zero cosine makes these formulas valid there as well. Writing $v_j=A_jp_j+B_jq_j$ therefore gives the exact scalar relations
+
+$$
+A_{j+1}=c_jA_j+\lambda s_jB_j,\qquad
+B_{j+1}=-s_jA_j+\lambda c_jB_j,
+\tag{6.12}
+$$
+
+and the loss identity
+
+$$
+\|v_{j+1}\|_Q^2=\|v_j\|_Q^2-(1-\lambda^2)B_j^2.
+\tag{6.13}
+$$
+
+For an infinite list the norms are nonincreasing and have a limit $\ell\geq0$. Telescoping (6.13), using $1-\lambda^2>0$, shows $\sum_jB_j^2<\infty$ and hence $B_j\to0$. If $\ell>0$, then $A_j^2=\|v_j\|_Q^2-B_j^2\geq\ell^2/2$ for all sufficiently large $j$. The second relation in (6.12) implies
+
+$$
+s_j^2A_j^2=(\lambda c_jB_j-B_{j+1})^2
+\leq2\lambda^2B_j^2+2B_{j+1}^2.
+$$
+
+Summation proves $\sum_js_j^2<\infty$. Thus infinite angular energy forces $\ell=0$ for every initial vector. This argument uses one actual trajectory and its two consecutive event inputs throughout; it imposes no restriction on the gaps.
+
+For completeness, an explicit functional and its positivity will prove the converse for infinite lists with finite angular energy and $\lambda\ne0$. All the following coefficients are defined from the schedule, $a,b,c$ and the fixed $\alpha$, before choosing an initial state. Put
+
+$$
+\rho=|\lambda|\in(0,1),\qquad
+\delta=\frac{1-\rho}{8},\qquad
+\kappa=1-2\delta=\frac{3+\rho}{4},\qquad
+\omega=\frac{\rho}{\kappa^2}<1.
+\tag{6.14}
+$$
+
+The last inequality follows from $\kappa^2-\rho=(1-\rho)(9-\rho)/16>0$. Since $\sum_js_j^2<\infty$, there is a least integer
+
+$$
+J_0=\min\{j\geq0:|s_k|\leq\delta\text{ for every }k\geq j\}.
+$$
+
+For $j\geq J_0$ and $|r|\leq1$ define the real fractional linear function
+
+$$
+F_j(r)=\frac{\lambda(s_j+c_jr)}{c_j-s_jr}.
+\tag{6.15}
+$$
+
+There are no vanishing denominators on this interval. Indeed $c_j=\sqrt{1-s_j^2}\geq1-\delta$, whence $c_j-s_jr\geq\kappa>0$. Also
+
+$$
+|F_j(r)|\leq\frac{\rho(1+\delta)}\kappa<1,
+\qquad
+|F'_j(r)|=\frac{\rho}{(c_j-s_jr)^2}\leq\omega<1.
+$$
+
+For the strict first bound, $\kappa-\rho(1+\delta)=1-\rho-(2+\rho)\delta\geq1-\rho-3\delta>0$. The derivative formula uses $c_j^2+s_j^2=1$ and is valid also for negative $\lambda$.
+
+For each $n\geq J_0$ define the finite continued fraction by its terminal value $r_{n+1}^{[n]}=0$ and the backward recursion $r_j^{[n]}=F_j(r_{j+1}^{[n]})$, $j=n,n-1,\ldots,J_0$. Every entry lies in $[-1,1]$. For $m>n\geq j$, the common contractions at indices $j,\ldots,n$ give
+
+$$
+|r_j^{[m]}-r_j^{[n]}|\leq\omega^{n+1-j}.
+$$
+
+The right side tends to zero. Thus the following limits exist as ordinary real numbers, and continuity supplies their displayed recursion:
+
+$$
+r_j=\lim_{n\to\infty}r_j^{[n]}\in[-1,1],\qquad
+r_j=F_j(r_{j+1})\quad(j\geq J_0).
+\tag{6.16}
+$$
+
+This defines the coefficients by convergent scalar continued fractions rather than by any initial-state trajectory. To control their tails, the derivative bound and $|F_j(0)|=\rho|s_j|/c_j$ imply
+
+$$
+|r_j|\leq\frac{\rho}{1-\delta}|s_j|+\omega|r_{j+1}|
+\leq\frac{\rho}{1-\delta}\sum_{k=j}^{\infty}\omega^{k-j}|s_k|.
+\tag{6.17}
+$$
+
+The second inequality follows by iteration, since the bounded remainder tends to zero. Weighted Cauchy–Schwarz gives
+
+$$
+\left(\sum_{k=j}^{\infty}\omega^{k-j}|s_k|\right)^2
+\leq\frac1{1-\omega}\sum_{k=j}^{\infty}\omega^{k-j}s_k^2.
+$$
+
+Sum this nonnegative inequality over $j\geq J_0$ and interchange the sums; for each $k$ the sum of its weights is at most $1/(1-\omega)$. Consequently
+
+$$
+\sum_{j=J_0}^{\infty}r_j^2
+\leq\frac{\rho^2}{(1-\delta)^2(1-\omega)^2}
+     \sum_{j=J_0}^{\infty}s_j^2<\infty,
+$$
+
+so in particular $r_j\to0$.
+
+Define positive scalar factors and their infinite product by
+
+$$
+g_j=c_j-s_jr_{j+1}\geq\kappa,\qquad
+\Gamma=\prod_{j=J_0}^{\infty}g_j.
+\tag{6.18}
+$$
+
+This product converges to a strictly positive finite number. In fact $1-c_j=s_j^2/(1+c_j)\leq s_j^2$, and (6.17) and Cauchy–Schwarz yield
+
+$$
+\sum_{j=J_0}^{\infty}|g_j-1|
+\leq\sum_{j=J_0}^{\infty}s_j^2
+ +\left(\sum_{j=J_0}^{\infty}s_j^2\right)^{1/2}
+  \left(\sum_{j=J_0}^{\infty}r_{j+1}^2\right)^{1/2}<\infty.
+$$
+
+Eventually $|g_j-1|\leq1/2$. The mean value theorem for $\log$ on $[1/2,3/2]$ gives $|\log g_j|\leq2|g_j-1|$ there, and the finitely many earlier $g_j$ are positive. Exponentiating the convergent logarithmic series proves the assertion about $\Gamma$.
+
+Only a finite original-coordinate map is needed before this scalar construction. Set
+
+$$
+V=\begin{cases}I,&J_0=0,\\K_{J_0-1}\cdots K_1K_0,&J_0\geq1,\end{cases}
+\qquad
+w=\Gamma V^*(p_{J_0}+r_{J_0}q_{J_0}).
+\tag{6.19}
+$$
+
+Here $V^*$ is the adjoint for $Q$; every $K_j$ is self-adjoint, so the second expression uses the reverse finite product $K_0K_1\cdots K_{J_0-1}$. The promised functional is
+
+$$
+\boxed{\quad L_{\varepsilon,\alpha}(u)=\langle w,u\rangle_Q
+=\Gamma\langle p_{J_0}+r_{J_0}q_{J_0},Vu\rangle_Q.\quad}
+\tag{6.20}
+$$
+
+Equations (6.8), (6.10), (6.11) and (6.14)–(6.20) are its complete schedule-and-parameter description. In the original initial-state coordinates its row is $w^TG$. All powers in the finite prefix are of the given $M$, every projection is $e_je_j^TG$, the signs are specified in (6.11), and the remaining quantities are scalar continued fractions and an absolutely convergent logarithmic product. None of these definitions asks which initial vectors decay.
+
+To prove the formula for the norm limit, let $A_j,B_j$ now be the coefficients of an arbitrary actual trajectory in (6.12). The recursion (6.16) is precisely the identity
+
+$$
+A_{j+1}+r_{j+1}B_{j+1}
+=(c_j-s_jr_{j+1})A_j
+ +\lambda(s_j+c_jr_{j+1})B_j
+=g_j(A_j+r_jB_j).
+\tag{6.21}
+$$
+
+Iterating from $J_0$ to $n$ and using (6.18) shows
+
+$$
+\lim_{n\to\infty}(A_n+r_nB_n)
+=\Gamma(A_{J_0}+r_{J_0}B_{J_0})
+=L_{\varepsilon,\alpha}(u_0),
+$$
+
+because $v_{J_0}=Vu_0$. By (6.13), $B_n\to0$, and $r_n$ is bounded, so $A_n$ has that same limit. Since $\|v_n\|_Q^2=A_n^2+B_n^2$, this proves (6.5) for the full chronological trajectory. The functional is nonzero: each $K_j$ has eigenvalues $1,\lambda$ and is invertible, so $V^*$ is invertible; $p_{J_0}+r_{J_0}q_{J_0}\ne0$ by orthonormality, and $\Gamma>0$. Thus $w\ne0$ and its orthogonal kernel is a one-dimensional subspace of the original coordinate plane. This proves both necessity in (6.4) and the claimed exact stable line without requiring that the states themselves have a nonzero vector limit.
+
+It remains to include the finite-event nonsingular case and the empty list. With $r<\infty$ events and $\lambda\ne0$, the finite map $K_{r-1}\cdots K_0$ is invertible; its value at a nonzero $u_0$ has positive $Q$-norm. After the last event that norm stays constant, since all remaining transfers are $M$. Thus only zero decays. With no events every step preserves $Q$, for any allowed $\alpha$, and again only zero decays. The singular finite-event case was proved by the rank-one formula, including $r=1$ and every possible zero cosine. All cases of (6.4)–(6.6) and every positive-limit assertion now follow. $\square$
+
+**Corollary 6.3 (Angle arithmetic, subspaces and parameter quantifiers).** For a fixed positive triple and prescribed schedule, the following consequences hold.
+
+If $\theta/(2\pi)\in\mathbb Q$, finite angular energy is equivalent to having only finitely many nonresonant consecutive gaps. If $\theta/(2\pi)\notin\mathbb Q$, no positive integer gap is resonant or orthogonal. For every fixed interior $\alpha$ the universal-decay criterion is the same divergence condition in (6.4), subject exactly to its singular orthogonal-gap exception.
+
+For the exact space $S=S_{\varepsilon,\alpha}$ and every linear subspace $W\subseteq\mathbb R^2$,
+
+$$
+\begin{aligned}
+(\forall u_0\in W,\ u_t\to0)&\quad\Longleftrightarrow\quad W\subseteq S,\\
+(\forall u_0\in W\setminus\{0\},\ u_t\not\to0)
+&\quad\Longleftrightarrow\quad W\cap S=\{0\}.
+\end{aligned}
+\tag{6.22}
+$$
+
+The full set of nondecaying initial states is $\mathbb R^2\setminus S$.
+
+*Proof.* If $\theta/(2\pi)=k/r\in\mathbb Q$, the values $\sin^2(d\theta)$ for integers $d\geq1$ belong to a finite set. Its nonzero elements have a positive minimum. Infinitely many nonresonant gaps therefore force an infinite sum, whereas finitely many contribute a finite sum; the assertion also covers every finite event list. If the angle ratio is irrational, an equation $d\theta\in\pi\mathbb Z$ or $d\theta\in\pi/2+\pi\mathbb Z$ with $d\geq1$ would make the ratio rational, which proves both exclusions. These facts and (6.4) prove the parameter assertion, with the same fixed event times and gap angles on each comparison. The coefficients in (6.14)–(6.20) retain the fixed $\lambda$ and therefore describe each finite-energy stable line with its own parameter.
+
+Theorem 6.2 identifies $S$ as the whole plane, a kernel of a nonzero functional, or zero; in particular it is a linear subspace. An initial vector decays exactly when it belongs to that identified space. Restricting this equivalence to $W$ proves the first statement of (6.22); restricting to its nonzero vectors proves the second, and taking the complement gives the last assertion.
+
+For the specializations, $\varepsilon_t\equiv1$ has $d_j=1$ and $\sin\theta>0$, so its angular energy diverges, in agreement with the repeated fixed-map conclusion in [TokenDampedSweepContraction.result](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean), its finite-path power-decay intermediary, and the [source-bound fixed-map statement](../../../Problems/wallner-krupke-schmidt-fekete-2026-token-spectral-contraction.md). The periodic family of Theorem 3.2 has only resonant gaps and keeps its common nondecaying state. If the entire schedule has gap bound $L<\delta$ in Definition 4.1, the possible gaps form a finite set with positive minimum squared sine, so (6.2) diverges and gives the convergence in Theorem 4.2. The irrational schedule and common initial state in Theorem 5.1 remain covered by that theorem: (6.4) implies that its angular energy is finite, since the uniform lower bound in Theorem 5.1 gives a strictly positive norm limit. All statements concern the prescribed centered linear recurrence of Definition 6.1 with one fixed interior damping parameter. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 7. Variable damping with a uniform upper bound
+
+**Definition 7.1 (Prescribed variable event parameters).** Fix any $a,b,c>0$. Retain the original centered coordinates, zero exterior coordinates, and literal matrices of Definition 3.1:
+
+$$
+A=\begin{pmatrix}1&0\\-2c&b+c\end{pmatrix},\qquad
+B=\begin{pmatrix}-1&\dfrac{2a}{a+b}\\0&-(b+c)\end{pmatrix},\qquad
+B_\alpha=\begin{pmatrix}
+\dfrac{b(1-2\alpha)-\alpha a}{b+\alpha a}&\dfrac{2\alpha a}{b+\alpha a}\\
+0&-(b+c)
+\end{pmatrix},\qquad
+M=A^{-1}B,\quad N_\alpha=A^{-1}B_\alpha.
+\tag{7.1}
+$$
+
+Prescribe a binary schedule $(\varepsilon_t)_{t\geq0}$ and, for its increasingly listed event times $t_j$, parameters $\alpha_j\in(0,1)$. The event list may be empty, finite, or infinite. Both the schedule and all these parameters are fixed before the initial vector is chosen. For every $u_0\in\mathbb R^2$, with no restriction on its norm, define the entire chronological trajectory by
+
+$$
+u_{t+1}=\begin{cases}
+N_{\alpha_j}u_t,&t=t_j,\\
+Mu_t,&\varepsilon_t=0,
+\end{cases}\qquad t\in\mathbb Z_{\geq0}.
+\tag{7.2}
+$$
+
+Put
+
+$$
+\begin{gathered}
+Q(x,y)=\frac{x^2}{a}+\frac{(y-x)^2}{b}+\frac{y^2}{c},\qquad
+\|u\|_Q=\sqrt{Q(u)},\qquad
+G=\begin{pmatrix}1/a+1/b&-1/b\\-1/b&1/b+1/c\end{pmatrix},\\
+\langle z,w\rangle_Q=z^TGw,\qquad
+\theta=\arccos\left(\frac{2ac}{(a+b)(b+c)}-1\right)\in(0,\pi),\\
+\tau_j=\frac{\alpha_j(a+b)}{b+\alpha_j a},\qquad
+\lambda_j=2\tau_j-1=\frac{\alpha_j(a+2b)-b}{b+\alpha_j a}\in(-1,1),\\
+d_j=t_{j+1}-t_j\geq1,\qquad
+\mathcal E_\varepsilon=\sum_j\sin^2(d_j\theta),\qquad
+S_{\varepsilon,\boldsymbol\alpha}=\{u_0:u_t\longrightarrow0\}.
+\end{gathered}
+\tag{7.3}
+$$
+
+The sum has one term for each consecutive event pair, and is zero for fewer than two events. The uniform upper bound hypothesis is
+
+$$
+\mathrm{(U)}\qquad
+\text{there is a }\rho\in[0,1)\text{ such that }|\lambda_j|\leq\rho
+\text{ at every event.}
+\tag{7.4}
+$$
+
+This imposes no positive lower bound on $|\lambda_j|$. The singular parameter at an event is exactly $\alpha_j=b/(a+2b)$, or $\lambda_j=0$. No arithmetic condition on $\theta/(2\pi)$ and no upper bound on the positive integer gaps or on $t_0$ is part of these definitions.
+
+The matrices in (7.1) specialize [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, Sections IV.A and IV.B.1](https://arxiv.org/html/2608.27085v1#S4), with $m=2$, $(v_1,v_2,v_3)=(a,b,c)$, $(z_1,z_2)=(x,y)$ and $z_0=z_3=0$. In particular the even-row coefficient is $A_{21}=-2c$. The source's $M_\alpha$ is $N_\alpha$ here. In the [damped-sweep definitions and complete proof](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean) and its [Scribe](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs), indices are reduced by one and the local weight named `theta` is $\tau_j$, rather than the angle $\theta$. The weighted Dirichlet form is the same as in [FinitePathDynamics](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.lean) and its [Scribe](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.scribe.cs). The [source note](../../../Library/Dynamics/wallner2026passbucket.md) and [fixed-map statement](../../../Problems/wallner-krupke-schmidt-fekete-2026-token-spectral-contraction.md) retain one fixed interior parameter for all powers of $N_\alpha$. Equation (7.2) instead prescribes that parameter separately at each event in the same two-coordinate linear recurrence.
+
+**Theorem 7.2 (Angular divergence under a uniform upper bound).** In Definition 7.1, assume (U). If there are infinitely many events and $\mathcal E_\varepsilon=\infty$, then $u_t\to0$ as $t\to\infty$ for every real $u_0$. This includes arbitrary signs of $\lambda_j$, singular events, rational or irrational $\theta/(2\pi)$, consecutive events, and unbounded gaps.
+
+*Proof.* Use the equality line, projection and rotation from (6.3), (6.7) and (6.10):
+
+$$
+h=(a,a+b)^T,\qquad e=\frac{h}{\|h\|_Q},\qquad
+P=ee^TG,\qquad J=\frac{M-\cos\theta\,I}{\sin\theta}.
+$$
+
+The identities (3.1)–(3.4) and (6.7), applied separately to each $\alpha_j$, give
+
+$$
+N_{\alpha_j}=M K^{(j)},\qquad
+K^{(j)}=P+\lambda_j(I-P),\qquad
+Q(Mz)=Q(z).
+\tag{7.5}
+$$
+
+These use the original first-event loss and equality mechanism: `local_energy_decomposition`, `Q_dampedEvent_loss`, `Q_event`, `Q_sweepTheta_eq_iff`, `dampedEvent_eq_of_fixed`, `sweepTheta_of_fixed` and `source_factorization` in the damped-sweep source cited in Definition 7.1. In the notation of (3.1), $R=2P-I$, $M=SR$, $N_{\alpha_j}=S((1-\tau_j)I+\tau_jR)$ and $R^2=I$, so multiplication gives (7.5). The rotation identities already established in the proof of Theorem 6.2 give $J^2=-I$, $J$ skew-adjoint and isometric for $Q$, and $e,Je$ orthonormal. They also give $M^k=\cos(k\theta)I+\sin(k\theta)J$ for every integer $k$.
+
+For each event define, in the original real coordinates,
+
+$$
+\begin{gathered}
+e_j=M^{-t_j}e,\qquad P_j=e_je_j^TG,\qquad
+\mathcal K_j=P_j+\lambda_j(I-P_j),\\
+V_0=I,\qquad V_{j+1}=\mathcal K_jV_j,\qquad
+v_j=M^{-t_j}u_{t_j}.
+\end{gathered}
+\tag{7.6}
+$$
+
+There are exactly $t_0$ undamped transfers before the first event, hence $v_0=u_0$. Between consecutive event inputs the full chronological formula is
+
+$$
+\begin{gathered}
+u_{t_j+k}=M^{k-1}N_{\alpha_j}u_{t_j}\quad(1\leq k\leq d_j),\\
+u_{t_{j+1}}=M^{d_j}K^{(j)}u_{t_j},\qquad
+v_{j+1}=\mathcal K_jv_j=V_{j+1}u_0.
+\end{gathered}
+\tag{7.7}
+$$
+
+At time $t_j+1$, the interaction vector $M^{-(t_j+1)}u_{t_j+1}$ is $v_{j+1}$ and it stays equal to that vector through the following undamped transfers. For a finite list the first formula holds for every $k\geq1$ after its last event. More generally let $\nu(t)$ be the number of events strictly before $t$. This is finite at every integer time, and (7.5) proves by induction that
+
+$$
+u_t=M^tV_{\nu(t)}u_0,\qquad
+\|u_t\|_Q=\|V_{\nu(t)}u_0\|_Q.
+\tag{7.8}
+$$
+
+Use $V_0=I$ throughout if the event list is empty. Thus the norm limit along an infinite event list is the norm limit of the entire chronological trajectory, including every undamped phase; for $r<\infty$ events it is $\|V_ru_0\|_Q$.
+
+For the infinite list choose oriented representatives of the event lines exactly as in (6.11). Explicitly, put $\chi(x)=1$ for $x\geq0$ and $\chi(x)=-1$ for $x<0$, and define
+
+$$
+\begin{gathered}
+\sigma_0=1,\qquad \sigma_{j+1}=\sigma_j\chi(\cos(d_j\theta)),\qquad
+p_j=\sigma_je_j,\quad q_j=Jp_j,\\
+c_j=|\cos(d_j\theta)|,\qquad
+s_j=-\chi(\cos(d_j\theta))\sin(d_j\theta).
+\end{gathered}
+\tag{7.9}
+$$
+
+Then $(p_j,q_j)$ is $Q$-orthonormal, $c_j\geq0$, $c_j^2+s_j^2=1$ and $s_j^2=\sin^2(d_j\theta)$. Since $e_{j+1}=\cos(d_j\theta)e_j-\sin(d_j\theta)Je_j$, one has
+
+$$
+p_{j+1}=c_jp_j+s_jq_j,\qquad
+q_{j+1}=-s_jp_j+c_jq_j.
+$$
+
+In particular this convention includes zero cosines. Write $v_j=A_jp_j+B_jq_j$. The map $\mathcal K_j$ sends this vector to $A_jp_j+\lambda_jB_jq_j$; taking its coordinates in the next orthonormal frame gives the variable-parameter version of (6.12)–(6.13):
+
+$$
+\begin{aligned}
+A_{j+1}&=c_jA_j+\lambda_js_jB_j,\\
+B_{j+1}&=-s_jA_j+\lambda_jc_jB_j,\\
+\|v_{j+1}\|_Q^2&=\|v_j\|_Q^2-(1-\lambda_j^2)B_j^2.
+\end{aligned}
+\tag{7.10}
+$$
+
+Fix any actual initial vector and choose $\rho$ as in (U). The last identity gives a nonincreasing nonnegative norm sequence with a limit $\ell\geq0$, and telescoping gives
+
+$$
+(1-\rho^2)\sum_{j=0}^\infty B_j^2\leq\|u_0\|_Q^2.
+\tag{7.11}
+$$
+
+Therefore $B_j\to0$. If $\ell>0$, then $A_j^2=\|v_j\|_Q^2-B_j^2\geq\ell^2/2$ for all sufficiently large $j$. The second identity in (7.10) implies
+
+$$
+s_j^2A_j^2=(\lambda_jc_jB_j-B_{j+1})^2
+\leq2\rho^2B_j^2+2B_{j+1}^2.
+$$
+
+Summing on that tail and using (7.11) would give $\sum_js_j^2<\infty$, contradicting $\mathcal E_\varepsilon=\infty$. Hence $\ell=0$, and (7.8) gives $\|u_t\|_Q\to0$ at every chronological time. Since $x_t^2\leq aQ(u_t)$ and $y_t^2\leq cQ(u_t)$, it follows that $u_t\to0$. No inverse of an event factor was used, so zero $\lambda_j$ are included.
+
+For comparison with classical product results, the loss in (7.10) is the paracontraction inequality of [Beyn and Elsner, *Infinite products and paracontracting matrices*, §2](https://doi.org/10.13001/1081-3810.1006): $\mathcal K_jz\ne z$ implies $\|\mathcal K_jz\|_Q<\|z\|_Q$. Their Theorem 2.3 concerns a finite family of matrices. The cyclic projection statement (1.2) in [Badea, Grivaux and Müller, arXiv:1006.2047v1, §1A](https://arxiv.org/html/1006.2047v1#S1.SS1) concerns powers of one cyclic product of a fixed finite family of closed subspaces. Here the possibly infinite family (7.6) has the particular rotation relation (7.9); the conclusion follows from its actual consecutive-input identities (7.10)–(7.11). $\square$
+
+**Theorem 7.3 (Complete pointwise-nonsingular stable-space classification).** In Definition 7.1 assume (U) and $\lambda_j\ne0$ at every event, with no uniform positive lower bound. For an empty or finite event list,
+
+$$
+S_{\varepsilon,\boldsymbol\alpha}=\{0\}.
+$$
+
+For infinitely many events and $\mathcal E_\varepsilon=\infty$ this space is $\mathbb R^2$. For infinitely many events and $\mathcal E_\varepsilon<\infty$ it is the kernel of the following explicitly specified nonzero original-coordinate linear functional. Use (7.6) and (7.9), and define real rows and a row series by
+
+$$
+\begin{gathered}
+\mathfrak a_j=p_j^TGV_j,\qquad
+\mathfrak b_j=q_j^TGV_j,\\
+\Lambda=\mathfrak a_0+
+\sum_{j=0}^\infty\bigl((c_j-1)\mathfrak a_j+
+                              \lambda_js_j\mathfrak b_j\bigr),\qquad
+L_{\varepsilon,\boldsymbol\alpha}(u)=\Lambda u.
+\end{gathered}
+\tag{7.12}
+$$
+
+The row series converges absolutely. All its rows, matrices, signs and scalar coefficients depend solely on the prescribed positive triple, schedule and event parameters; in particular $p_0=M^{-t_0}e$ incorporates the arbitrary first event time. For every real initial vector, at its original norm scale,
+
+$$
+\lim_{t\to\infty}\|u_t\|_Q
+=|L_{\varepsilon,\boldsymbol\alpha}(u_0)|,\qquad
+S_{\varepsilon,\boldsymbol\alpha}=\ker L_{\varepsilon,\boldsymbol\alpha}.
+\tag{7.13}
+$$
+
+Consequently the stable space in this case is one real line, and every state outside it has a strictly positive limiting $Q$-norm. These assertions cover every finite prefix, both arithmetic types of the angle, every positive integer gap, variable signs, and nonzero event factors arbitrarily close to zero.
+
+*Proof.* The infinite-energy case is Theorem 7.2. Suppose the event list is infinite and its angular energy is finite. The identities (7.5)–(7.11) remain available, since their derivation did not require a constant parameter.
+
+For a real row $f$ use the dual norm $\|f\|_{Q,*}=\sup_{\|z\|_Q=1}|fz|$. Because $e,Je$ are $Q$-orthonormal,
+
+$$
+\|f\|_{Q,*}^2=|fe|^2+|fJe|^2.
+$$
+
+This follows by writing $z=xe+yJe$: the supremum over $x^2+y^2=1$ is the Euclidean length of $(fe,fJe)$. Every $\mathcal K_j$ is nonexpansive, so $\|V_jz\|_Q\leq\|z\|_Q$ and $\|\mathfrak a_j\|_{Q,*}\leq1$. Apply (7.11) to the two initial vectors $e$ and $Je$. Their $B_j$ coordinates are respectively $\mathfrak b_je$ and $\mathfrak b_jJe$, and both initial norms are one. Adding the resulting inequalities gives
+
+$$
+\sum_{j=0}^\infty\|\mathfrak b_j\|_{Q,*}^2
+\leq\frac{2}{1-\rho^2}.
+\tag{7.14}
+$$
+
+Also $1-c_j=s_j^2/(1+c_j)\leq s_j^2$. The triangle inequality and Cauchy–Schwarz therefore give
+
+$$
+\begin{aligned}
+\sum_{j=0}^\infty
+\|(c_j-1)\mathfrak a_j+\lambda_js_j\mathfrak b_j\|_{Q,*}
+&\leq\sum_{j=0}^\infty s_j^2+
+\rho\left(\sum_{j=0}^\infty s_j^2\right)^{1/2}
+\left(\sum_{j=0}^\infty\|\mathfrak b_j\|_{Q,*}^2\right)^{1/2}
+<\infty.
+\end{aligned}
+\tag{7.15}
+$$
+
+This proves absolute convergence in the two-dimensional row space, so (7.12) defines a real linear functional without referring to any unknown stable space. Since (7.10) holds for every initial vector, its first identity is the row identity
+
+$$
+\mathfrak a_{j+1}-\mathfrak a_j
+=(c_j-1)\mathfrak a_j+\lambda_js_j\mathfrak b_j.
+$$
+
+The series in (7.12) thus telescopes to $\Lambda=\lim_{n\to\infty}\mathfrak a_n$. For any $u_0$, it follows that $A_n=\mathfrak a_nu_0\to\Lambda u_0$, whereas (7.11) gives $B_n\to0$. Taking the norm in the orthonormal frame proves $\|v_n\|_Q\to|\Lambda u_0|$. Equation (7.8) now proves the full-time limit in (7.13), with no normalization of $u_0$.
+
+It remains to prove $\Lambda\ne0$ using only pointwise nonsingularity. Choose an integer $N\geq0$ for which
+
+$$
+E_N:=\sum_{j=N}^\infty s_j^2<\frac{(1-\rho)^2}{4}.
+\tag{7.16}
+$$
+
+Such an $N$ exists by convergence of the nonnegative series. Each $\mathcal K_j$ has eigenvalues $1,\lambda_j$, so the finite product $V_N$ is invertible. Select the real initial vector $u_*=V_N^{-1}p_N$. This is a legitimate vector in the stated unrestricted initial-state domain; there is no bound imposed on the norm of that finite inverse. Its interaction vector at index $N$ is exactly $v_N=p_N$, with $A_N=1$, $B_N=0$ and $\|v_N\|_Q=1$. Subsequent norms are at most one, and hence $|A_j|\leq1$ for $j\geq N$.
+
+For this trajectory, the second identity in (7.10) gives
+
+$$
+|B_{j+1}|\leq|s_j|+\rho|B_j|,\qquad
+|B_j|\leq\sum_{k=N}^{j-1}\rho^{j-1-k}|s_k|\quad(j>N).
+$$
+
+The second inequality follows by induction from $B_N=0$. Weighted Cauchy–Schwarz and the geometric sum give
+
+$$
+|B_j|^2\leq\frac1{1-\rho}
+\sum_{k=N}^{j-1}\rho^{j-1-k}s_k^2.
+$$
+
+Sum first over a finite range of $j$ and then increase that range. All summands are nonnegative, and for each fixed $k$ the weights sum to $1/(1-\rho)$. Consequently
+
+$$
+\sum_{j=N}^\infty B_j^2\leq\frac{E_N}{(1-\rho)^2}.
+$$
+
+Telescoping the exact norm loss (7.10), starting at the unit vector $v_N$, now yields
+
+$$
+\lim_{j\to\infty}\|v_j\|_Q^2
+=1-\sum_{j=N}^\infty(1-\lambda_j^2)B_j^2
+\geq1-\frac{E_N}{(1-\rho)^2}>\frac34.
+\tag{7.17}
+$$
+
+Thus $|L_{\varepsilon,\boldsymbol\alpha}(u_*)|>0$, proving that the row $\Lambda$ is nonzero. Only the finitely many nonzero numbers $\lambda_0,\ldots,\lambda_{N-1}$ were inverted. The tail estimates use (U) and do not divide by any tail $\lambda_j$. In particular no positive lower bound on the entire sequence has entered the proof.
+
+Positive definiteness and continuity of $Q$ imply $u_t\to0$ exactly when $\|u_t\|_Q\to0$. The limit formula therefore identifies the stable space as the kernel of this nonzero row, a one-dimensional subspace in the original coordinate plane, and gives a positive limit at each point outside it. The fixed-parameter functional (6.20) and (7.12) have the same absolute value on every vector when $\lambda_j$ is constant, since both give that same norm limit; either functional describes the same stable line.
+
+For a finite list of $r\geq1$ events, $V_r=\mathcal K_{r-1}\cdots\mathcal K_0$ is invertible for the same pointwise reason. Equation (7.8) gives the eventually constant norm $\|V_ru_0\|_Q$, which is positive exactly when $u_0\ne0$. With no events the norm is always $\|u_0\|_Q$. These observations prove the remaining cases. The arithmetic assertions in Corollary 6.3 concern only $d_j\theta$, so they apply unchanged: for a rational angle ratio, finite energy is equivalent to finitely many nonresonant gaps; an irrational angle ratio admits no resonant or orthogonal positive integer gap. Neither case changes any estimate above. $\square$
+
+**Proposition 7.4 (Every-state failure when damping approaches the undamped endpoint).** In the literal system $a=b=c=1$, prescribe $\varepsilon_t=1$ at every integer time, so $t_j=j$, and prescribe before choosing $u_0$ the nonconstant sequence
+
+$$
+\alpha_j=\frac{2^{j+3}-1}{2^{j+3}+1}\in(0,1)\qquad(j\geq0).
+\tag{7.18}
+$$
+
+Then $\alpha_j\uparrow1$, $\mathcal E_\varepsilon=\infty$, but every nonzero real initial state has a strictly positive limiting original $Q$-norm. More precisely, for the actual recurrence $u_{j+1}=N_{\alpha_j}u_j$,
+
+$$
+\frac12\|u_0\|_Q\leq\lim_{t\to\infty}\|u_t\|_Q\leq\|u_0\|_Q,
+\qquad S_{\varepsilon,\boldsymbol\alpha}=\{0\}.
+\tag{7.19}
+$$
+
+Thus the following unrestricted extension of the fixed-parameter angular-divergence implication is false: for every fixed positive triple, every prescribed binary schedule with infinitely many events, every prescribed interior event-parameter sequence and every real initial vector, $\mathcal E_\varepsilon=\infty$ implies $u_t\to0$.
+
+*Proof.* The original matrices from Theorem 2.1 are
+
+$$
+A=\begin{pmatrix}1&0\\-2&2\end{pmatrix},\qquad
+M=\begin{pmatrix}-1&1\\-1&0\end{pmatrix},\qquad
+N_{\alpha_j}=\frac1{1+\alpha_j}
+\begin{pmatrix}1-3\alpha_j&2\alpha_j\\1-3\alpha_j&\alpha_j-1\end{pmatrix},
+$$
+
+and the original quadratic form is $Q(x,y)=x^2+(y-x)^2+y^2$. The integers $2^{j+3}$ strictly increase to infinity, so $\alpha_j=1-2/(2^{j+3}+1)$ strictly increases to one while remaining strictly interior. Its event factor in (7.3) is exactly
+
+$$
+\lambda_j=\frac{3\alpha_j-1}{1+\alpha_j}
+=1-2^{-j-2}\in(0,1),\qquad
+\sum_{j=0}^\infty(1-\lambda_j)=\frac12.
+\tag{7.20}
+$$
+
+Use the original-coordinate factorization (7.5), which is valid at each of these interior parameters without (U). Decompose any actual input as $z=Pz+(I-P)z$, orthogonally for $Q$. Since $M$ is a $Q$-isometry and $0<\lambda_j<1$,
+
+$$
+\begin{aligned}
+\|N_{\alpha_j}z\|_Q^2
+&=\|Pz\|_Q^2+\lambda_j^2\|(I-P)z\|_Q^2,\\
+\lambda_j\|z\|_Q&\leq\|N_{\alpha_j}z\|_Q\leq\|z\|_Q.
+\end{aligned}
+$$
+
+Apply these inequalities successively to $z=u_j$ in the prescribed recurrence. For every integer $n\geq1$ this gives
+
+$$
+\left(\prod_{j=0}^{n-1}\lambda_j\right)\|u_0\|_Q
+\leq\|u_n\|_Q\leq\|u_0\|_Q.
+$$
+
+For nonnegative numbers $r_j\leq1$, induction using $(1-x)(1-y)\geq1-x-y$ proves $\prod_{j=0}^{n-1}(1-r_j)\geq1-\sum_{j=0}^{n-1}r_j$. With $r_j=2^{-j-2}$, the right side here is $1/2+2^{-n-1}>1/2$. Hence every chronological norm is at least $\|u_0\|_Q/2$. These are bounds on every actual trajectory, rather than a determinant assertion. The norms are also nonincreasing, so their limits exist and satisfy (7.19), including arbitrary initial scales. For $u_0\ne0$ positive definiteness gives a strictly positive limit; for $u_0=0$ the entire trajectory is zero. The elementary positive-product comparison used here is the same principle underlying (6.9) and (6.18), with its finite-product proof supplied above.
+
+Finally $\theta=\arccos(-1/2)=2\pi/3$ and every gap is one. Thus every term of $\mathcal E_\varepsilon$ is $\sin^2(2\pi/3)=3/4$, and the sum diverges. At the same time $\lambda_j\uparrow1$, so no $\rho<1$ bounds all of them. This verifies the failure of the stated unrestricted implication without contradicting Theorem 7.2 or the fixed-map statements. $\square$
+
+**Definition 7.5 (Unrestricted variable-parameter stable-space problem).** For (7.1)–(7.3) without (U), the unrestricted problem is to determine $S_{\varepsilon,\boldsymbol\alpha}$ for every fixed positive triple, every prescribed binary schedule and every prescribed sequence $\alpha_j\in(0,1)$. This domain permits approach to either endpoint, arbitrary signs of $\lambda_j$, and arbitrary interspersions of zero and nonzero $\lambda_j$. Theorem 7.2 gives angular-divergence sufficiency on the subdomain (U), including singular histories, while Theorem 7.3 gives the complete classification on the smaller subdomain (U) with pointwise nonvanishing. Proposition 7.4 specifies one history outside (U); it supplies no general classification on the unrestricted domain. The fixed-parameter singular classification and orthogonal-pair annihilation in Theorem 6.2 retain their stated constant-parameter hypotheses.
+
+## 追加锚（本行以下为增补区）

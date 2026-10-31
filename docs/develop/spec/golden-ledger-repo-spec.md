@@ -1234,9 +1234,25 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 **有界反例(#6164,2026-09-07)**:37 模块/74 文件一次由 `ledger-align --add ×37` 产生,`selectors_considered=3641 changed=0 added=37 unchanged=3604 conflicts=0`,零冲突五项全真。拆 6 PR 付 6 轮 CI、6 份相同 73 行正文,并 ff-merge 5 条落后 262–2078 提交的 lane;缓存重热成本未测(`ASSUMED-UNVERIFIED`)。其中 20 模块缺 `utility:`,单批会连坐其余 17,拆出头齐的 7 条可合,所以判词维有收益,却不验证当时按连通分量盲拆的方法。全仓无按文件数判红规则,超 p75 说明是软评审义务,非机器硬约束。
 **唤醒域结论**:该样本 36 个初落地未冻模块因 deposit 阻断(#6165)未触发当时首冻门,与 37 补冻/20 缺头/17 连坐/7 已合是不同口径。依赖“本应发生而被别处阻断”的动作唤醒门会静默漏审,分区规则不修此缺口。旧“冻结触发缺口仍 open”已 inactive;第 3.4 条现役 changed-unfrozen D5 Lean ∪ first-pin 已补输入域,正文变更/缺头也唤醒,judge-only 不扫未变历史。此硬保证不证明分类/源句映射语义,后者仍靠独立评审。
 
+### CLAUDE §7.1 保护开关读数
+
+2026-08-13/20 记录 `enforce_admins=false`,后者并见 `rulesets=0` 与 admin 权限;
+
+### CLAUDE §7.5 base 判官裁决原话
+
+历史裁决原话(其中判官/内容不得同 PR 的限制已由 2026-09-24 owner 裁决撤销):「彻底移除 base 判官,判官跟非判官不能在一个 PR,防止无休止的死锁,但为了防止为了让数据过顺手改判官,所以不能一起提交。」
+
+### CLAUDE §7.14 撤因反例读数
+
+#4305 的绿→红 transition 实由前笔 #4295 的 `ScribeTestSymbolBinder` 与滞后一拍 BaseSnapshot 造成;候选 edge 不等于根因,计划须读 BaseSnapshot、candidate 程序集及测试发现输入,不能由 base 独定(2026-08-31 GitHub checks/git 树记录)。该 dev 红已实证,“全部 open PR 同红”未逐一核实,`ASSUMED-UNVERIFIED`。
+
 ### CLAUDE §9.2 引用校验样本缺口
 
 **有界缺口**:2026-08-12 普查中 `Golden/values-kernels.toml` 的 `lean_gid/lean_statement_sha256` 仅验唯一/格式,writer 原样复制 values.json;spec SL-018 却要求候选 inspector 验 GID 唯一存在、kind=def、标准三公理闭包、statement SHA 与投影一致。此为该样本的规范/实现缺口,不冒称当前新测量;报现役须真执行,否则标延后。
+
+### CLAUDE §10.1 `STRATALINT_LEAN_MAX_CONCURRENCY` 旧默认值复核读数
+
+旧 1 的问题是无案而非数小。
 
 ### CLAUDE §10.2 配置比较读数
 
@@ -1250,6 +1266,10 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 | ③ 精确导入 | 19.2 s | 11.6 s | 1.5 GB |
 
 同批一个**负结果**一并入账:把证书展开成显式 `cons` 链,`checked` 72.1 s 对 68.0 s,**无改进,丢弃**。CI 侧该模块的构建由被杀变为 68 秒通过。**不冒领**:本地峰值内存由 22.7 GB 降到 1.5 GB **不证明**先前那次 SIGTERM 的成因就是内存耗尽 —— runner 侧证据未取,该归因记 `ASSUMED-UNVERIFIED`(第 2.9 条:不确定须带排除项)。已排除的替代解释在该案里是逐条有读数的:非 job timeout(限 45 min 而 job 只跑 7 min 22 s)、非并发取消(`concurrency.group` 为 `ci-<PR 号>`,不跨 PR,且该分支仅一个 run)、非该步自身 timeout(它没有 `timeout-minutes`)。
+
+### CLAUDE §10.4 缓存键两层反例读数
+
+**两层反例(2026-09-07,macOS ARM 隔离热树)**:`tools/scripts/worktree/lean-cache-input.sh` 的 config_sha256 哈希 lean-toolchain/lake-manifest.json/lakefile.toml 全字节,tag=(toolchain,os,arch,config_sha256,sources_sha256)。双 warm donor 树只改 lakefile keywords:cache key 变、精确及前缀均 miss;同树 make lean 的 Built=0(12392 jobs,10.30s),未改基线亦 Built=0(41.60s)。这是对产物无影响的 metadata 导致假失效,关联 #5994;不靠加缓存层/容量/重试或预种/tag/dispatch 绕行掩盖 key 范围错误。
 
 ### CLAUDE §11.5 古典引语
 
