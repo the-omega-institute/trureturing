@@ -1040,10 +1040,11 @@ theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
       hzero'
     let j := P.toList.length + 1
     have hj : j ≤ k := by
-      have hh := Finset.card_le_card hPsub
-      simp only [Finset.card_range] at hh
-      dsimp [j, k]
-      simpa only [Finset.length_toList] using (show P.card + 1 ≤ a + b + c by omega)
+      have hh := hp.length_eq
+      simp only [word, List.length_append, List.length_cons, List.length_singleton,
+        List.length_range] at hh
+      dsimp only [j]
+      omega
     have hk : 0 < k := by dsimp [k]; omega
     refine ⟨word.map (label k hk), j, hj, ?_, ?_⟩
     · refine lift_order k (1 + 2 ^ a + 2 ^ (a + b)) hk word hp ?_ ?_
@@ -1104,10 +1105,12 @@ theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
         (P.toList.map g).sum - Ka + (Q.toList.map g).sum ≤ N := by
       rw [hPsum.2]
       exact hNewQendT
-    change (P.toList ++ alpha :: Q.toList ++ beta :: T.toList ++ [k, gamma]).Perm
-        (List.range (k + 1)) at hplusT
-    have hnew := ordered_schedule g (List.range (k + 1)) P.toList
-      Q.toList (T.toList ++ [k]) alpha beta gamma Ka Kb Kg N hplusT hgA' hgB' hgG'
+    have hplusT' : (P.toList ++ alpha :: Q.toList ++
+        beta :: (T.toList ++ [k]) ++ [gamma]).Perm (List.range (k + 1)) := by
+      simpa only [plusT, List.append_assoc, List.cons_append,
+        List.singleton_append, List.nil_append] using hplusT
+    have hnew0 := ordered_schedule g (List.range (k + 1)) P.toList
+      Q.toList (T.toList ++ [k]) alpha beta gamma Ka Kb Kg N hplusT' hgA' hgB' hgG'
       hKa0 hKb0 ⟨hKg0, hKgN⟩ (fun i hi => (hPpos i hi).2) (fun i hi => (hQpos i hi).2)
       (by intro i hi; rcases List.mem_append.mp hi with hi | hi
           · exact (hTpos i hi).2
@@ -1116,6 +1119,9 @@ theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
             rw [hgear]
             omega)
       hPnewMass hNewAlpha hNewQendT' hNewBetaT' hzero'
+    have hnew : InStrip g N 0 plusT := by
+      simpa only [plusT, List.append_assoc, List.cons_append,
+        List.singleton_append, List.nil_append] using hnew0
     let pre := P.toList ++ alpha :: Q.toList ++ beta :: T.toList
     let j := pre.length
     have hj : j ≤ k := by
