@@ -3007,3 +3007,700 @@ and the examples and uniqueness results of §§7–8 retain exactly
 their stated hypotheses and conclusions.
 
 ## 追加锚（本行以下为增补区）
+## 13. A summable critical condition for each fixed source
+
+**Definition 13.1 (Critical weights and local minima).** Fix a strictly
+positive finite iid law $p$ on the ordered alphabet of Definition 6.1,
+with $q\geq2$, and assume origin-nonarithmeticity as in Definition 7.1.
+Retain the original distinct nonempty contiguous Lyndon-word
+expectation $E_p(n)$ and all the notation in (8.1) and (9.1). In
+particular $Y=-\log p_I$ has masses $\mathbb P(I=i)=p_i$ from this
+same law. Set
+
+$$
+\begin{aligned}
+ c&=\pi/2,& h&=\mathbb EY,& m_2&=\mathbb EY^2,\\
+ w(t)&=t^{-3/2}e^{-ct}\quad(t\geq1),&
+ r_0&=\min\left(\frac14,\frac{h}{4m_2}\right),\\
+ I_N&=[N-r_0,N+1+r_0],&
+ d_N&=\min_{t\in I_N}\delta_p(t)\quad(N\geq2),\\
+ S(p)&=\sum_{N=2}^{\infty}\frac{N^{-3/2}e^{-cN}}{d_N},&
+ W_p(t)&=\frac{t^{-3/2}e^{-ct}}{\delta_p(t)}\quad(t\geq1).
+\end{aligned}                                                       \tag{13.1}
+$$
+
+Each $d_N$ is positive: the interval is compact and avoids zero,
+and origin-nonarithmeticity excludes every other zero of $D_p(it)$
+by Definition 9.1. The minima and the series concern one fixed law;
+no probabilities or information masses vary with $N$, $t$, or $n$.
+
+**Theorem 13.2 (A critical summability sufficient condition).** For
+every law of Definition 13.1,
+
+$$
+ S(p)<\infty\quad\Longrightarrow\quad
+ R_n(p)\longrightarrow c_*\qquad(n\to\infty,\ n\in\mathbb N).
+                                                                    \tag{13.2}
+$$
+
+In particular the same conclusion holds if some $C>0$ and some
+$0\leq\theta<1/2$ satisfy
+
+$$
+ \delta_p(t)\geq C e^{-ct}(1+t)^{-\theta}\qquad(t\geq1).             \tag{13.3}
+$$
+
+These are sufficient conditions, with no converse asserted.
+
+*Proof.* Use the functions $J_p,J_0,H$, the complex function $A_0$,
+and the analytic logarithm $\ell$ in (9.5)–(9.7). Their precise
+transform identity is
+
+$$
+ \mathcal H(s)=\int_{\mathbb R}e^{-sx}H(x)\,dx
+   =-A_0(s)\ell(s),\qquad
+ A_0(s)=\frac{\Gamma(1-s)}{s(1+s)},\qquad
+ \ell(s)=\log D_p(s)-\log h-\log s,                                \tag{13.4}
+$$
+
+for $0<\operatorname{Re}s<1$. The branches have real values on the
+positive real axis. At zero $\ell$ is analytic and vanishes, so
+$A_0\ell$ has a removable singularity. These facts do not assume a
+bound on $\beta(p)$. The occurrence reduction is exactly (9.4),
+coming from (6.8) for the actual weighted word statistic; the
+comparison expansion is (9.6).
+
+We need the Gamma estimates with their polynomial factors retained.
+The estimates (9.8), with one logarithmic differentiation, give,
+uniformly for $0\leq\sigma\leq1/4$, $t\geq2$, and $r=0,1,2$,
+
+$$
+\begin{aligned}
+ |A_0(\sigma+it)|&\asymp w(t)t^{-\sigma},\\
+ |A_0^{(r)}(\sigma+it)|&\leq
+       C w(t)t^{-\sigma}\bigl(\log(2+t)\bigr)^r.                  \tag{13.5}
+\end{aligned}
+$$
+
+Here and below a prime on a complex function is its complex
+derivative. The cited classical inputs are precisely
+[NIST DLMF (5.11.1)–(5.11.2)](https://dlmf.nist.gov/5.11#E1)
+and [the series (5.15.1)](https://dlmf.nist.gov/5.15#E1), at
+$z=1-\sigma-it$ with real part in $[3/4,1]$. This stays in a fixed
+closed sector strictly inside $|\arg z|<\pi$. In fact
+
+$$
+ \frac{A_0'(s)}{A_0(s)}=-\psi(1-s)-\frac1s-\frac1{1+s},\qquad
+ \left(\frac{A_0'}{A_0}\right)'(s)
+       =\psi'(1-s)+\frac1{s^2}+\frac1{(1+s)^2}.
+$$
+
+The series for $\psi'$ is absolutely bounded there, since its term
+moduli are at most $((j+3/4)^2+t^2)^{-1}$. Thus the first logarithmic
+derivative is $O(\log(2+t))$, its derivative is bounded, and
+$A_0''/A_0=O((\log(2+t))^2)$. This proves the second line of
+(13.5) with the same exponential factor as the first.
+
+Write $D(t)=D_p(it)$ temporarily, and use dots for real derivatives
+in $t$. Positivity of the letter masses gives
+
+$$
+ \sum_i p_i|e^{-ity_i}-1|^2=2\operatorname{Re}D(t)
+       \leq2\delta_p(t),\qquad
+ |\dot D(t)-ih|\leq(2m_2\delta_p(t))^{1/2},\qquad
+ |\ddot D(t)|\leq m_2.                                           \tag{13.6}
+$$
+
+Choose $\varepsilon=\min(1,h^2/(32m_2))$. If
+$\delta_p(t_0)<\varepsilon$ and $|t-t_0|\leq r_0$, (13.6) and
+$m_2r_0\leq h/4$ imply
+
+$$
+ \frac{d}{dt}\operatorname{Im}D(t)\geq h/2.                        \tag{13.7}
+$$
+
+In $[N,N+1]$ take a maximal $r_0$-separated set of points with
+$\delta_p<\varepsilon$. It has at most $2+1/r_0$ members, and the
+intervals of radius $r_0$ about them cover this small-value set.
+All these intervals lie in $I_N$. On each such interval
+$u=\operatorname{Im}D(t)$ is an increasing coordinate with
+$dt\leq(2/h)du$. Also
+$|D(t)|\geq\max(d_N,|u|)$ and $|u|\leq2$. Consequently
+
+$$
+\begin{aligned}
+ \int_N^{N+1}\delta_p(t)^{-2}\,dt&\leq C_p(1+d_N^{-1}),\\
+ \int_N^{N+1}\delta_p(t)^{-1}\,dt&\leq
+                         C_p(1+\log^+(1/d_N)).                   \tag{13.8}
+\end{aligned}
+$$
+
+Indeed the corresponding integrals in $u$ are bounded by
+$\int_{\mathbb R}\max(d_N^2,u^2)^{-1}du=4/d_N$ and
+$\int_{-2}^2\max(d_N,|u|)^{-1}du\leq C(1+\log^+(1/d_N))$.
+On the portion with $\delta_p\geq\varepsilon$ use its fixed lower
+bound. Overlaps only increase these upper bounds. If the small-value
+set is empty that last bound handles the whole unit interval.
+
+Assume now $S(p)<\infty$. Put $u_N=\log^+(1/d_N)$. Each summand of
+$S(p)$ is at most $S(p)$, so
+
+$$
+ u_N\leq C_p+cN+\tfrac32\log N=O_p(N+1).                          \tag{13.9}
+$$
+
+Let $\Psi(t)=-A_0(it)\ell(it)$, with the continuous value at zero.
+For $t\ne0$ the logarithms are the boundary values from the right
+half-plane. Their imaginary parts are bounded because
+$\operatorname{Re}D_p(it)\geq0$ and $D_p(it)\ne0$; the argument
+of $it$ is $\pi/2$ or $-\pi/2$. On $[N,N+1]$ this gives
+
+$$
+\begin{aligned}
+ |\ell(it)|&\leq C_p+u_N+\log(2+N),\\
+ \left|\frac{d}{dt}\ell(it)\right|
+       &\leq C_p\delta_p(t)^{-1}+1/t,\\
+ \left|\frac{d^2}{dt^2}\ell(it)\right|
+       &\leq C_p\bigl(\delta_p(t)^{-1}+\delta_p(t)^{-2}\bigr)+1/t^2.
+                                                                    \tag{13.10}
+\end{aligned}
+$$
+
+Here the first two derivatives of $D(t)$ are bounded by fixed
+moments of the bounded positive variable $Y$. The product rule,
+(13.5), and (13.8) show
+
+$$
+ \int_N^{N+1}|\Psi''(t)|\,dt
+ \leq C_p\frac{w(N)}{d_N}
+                  +C_p(1+N)^C e^{-cN}.                           \tag{13.11}
+$$
+
+To check the only potentially critical term, the factor
+$A_0\,\ell''$ contributes at most $C_pw(N)/d_N$ plus an
+exponentially summable term. The factor $A_0'\,\ell'$ contributes
+at most $C_pw(N)\log(2+N)(1+u_N)$, by the second line of
+(13.8), rather than a logarithm times $w(N)/d_N$.
+The factor $A_0''\ell$ is at most
+$C_pw(N)(\log(2+N))^2(1+u_N+\log(2+N))$ after integration.
+Equation (13.9) makes both of these contributions summable.
+This proves (13.11) without an extra logarithmic hypothesis on $S$.
+
+The same bounds give $\Psi,\Psi'\in L^1$ on the positive half-line.
+For example the inverse-denominator part of $\Psi'$ is controlled
+by the logarithmic integral in (13.8). Moreover $\Psi(t)\to0$
+and $\Psi'(t)\to0$ as $t\to+\infty$: pointwise on the $N$-th
+unit interval the latter's inverse-denominator part is at most
+$C_pw(N)/d_N$, which tends to zero because its sum converges.
+The other terms tend to zero by (13.9). Conjugation gives all the
+same assertions on the negative half-line. At zero use the removable
+analytic expression in (13.4). We have therefore proved
+
+$$
+ \Psi,\Psi',\Psi''\in L^1(\mathbb R),\qquad
+ \Psi(t),\Psi'(t)\longrightarrow0\quad(|t|\to\infty).              \tag{13.12}
+$$
+
+For completeness the boundary inversion has the same hypotheses as
+in (9.14)–(9.16). Uniformly for $0\leq\sigma\leq1/4$,
+$|D_p(\sigma+it)|\geq c_p\delta_p(t)$ by (9.14).
+Thus (13.9), (13.5), and the bounded arguments of the logarithms
+dominate $\mathcal H(\sigma+it)$ on each large-frequency unit
+interval by an exponential times a fixed polynomial, independently
+of $\sigma$. On bounded intervals away from zero use compactness;
+near zero use the removable expression. Dominated convergence gives
+$\mathcal H(\sigma+i\,\cdot)\to\Psi$ in $L^1$.
+For every positive $\sigma<1/4$, $e^{-\sigma x}H(x)$ is continuous
+and integrable: at $-\infty$ it is $O_p(e^{(1-\sigma)x})$, and at
+$+\infty$ it has at most logarithmic growth before multiplication
+by $e^{-\sigma x}$. Fourier inversion, or its Gaussian-convolution
+proof in §9, consequently yields
+
+$$
+ H(x)=\frac1{2\pi}\int_{\mathbb R}e^{itx}\Psi(t)\,dt
+     =-\frac1{2\pi x^2}\int_{\mathbb R}e^{itx}\Psi''(t)\,dt
+     =o_p(x^{-2}).                                                 \tag{13.13}
+$$
+
+The first equality follows by letting $\sigma\downarrow0$ in the
+inversion of $e^{-\sigma x}H(x)$. The second uses the vanishing
+boundary terms in (13.12); the last is the Riemann–Lebesgue lemma
+for its integrable second derivative. This lemma follows here by
+$L^1$ approximation by step functions of compact support, as in
+(9.16). Combining (13.13) with (9.6) and (9.4) proves (13.2).
+In particular the occurrence error multiplied by $L^2$ tends to
+zero since the positive $\delta_0$ in (9.4) is fixed.
+
+Finally (13.3), throughout $I_N\subset(1,\infty)$, implies
+$d_N\geq C_p e^{-cN}N^{-\theta}$. Hence
+$S(p)\leq C_p\sum_{N\geq2}N^{\theta-3/2}<\infty$ when
+$\theta<1/2$, proving the final assertion. $\square$
+
+## 14. A necessary critical condition without an index restriction
+
+**Theorem 14.1 (Boundedness and finite limits of the original
+residual).** For every law of Definition 13.1, with no additional
+restriction on $\beta(p)$, eventual absolute boundedness of the
+original integer residual implies
+
+$$
+ \sup_{t\geq1}W_p(t)<\infty.                                      \tag{14.1}
+$$
+
+Every finite limit of $R_n(p)$ equals $c_*$, and existence of such a
+limit implies $W_p(t)\to0$ as real $t\to+\infty$. Consequently
+
+$$
+ \limsup_{t\to\infty}W_p(t)=+\infty
+ \quad\Longrightarrow\quad
+ \limsup_{\substack{n\to\infty\\n\in\mathbb N}}|R_n(p)|=+\infty.
+                                                                    \tag{14.2}
+$$
+
+*Proof.* First make the real/integer correspondence explicit without
+assuming any convergence rate. Define for real $x>1$
+
+$$
+ \mathscr R_p(x)=x^2\left[
+      \log x+\gamma-\log h-\frac\mu x-J_p(x)\right].                \tag{14.3}
+$$
+
+Equation (9.4) gives
+$R_n(p)-\mathscr R_p(\log n)\to0$ over all integers. More precisely
+the difference is $O_p(L^2 n^{-\delta_0}+L^3/n)$.
+The pathwise spacing of renewal sums by
+$a_0=\min_i(-\log p_i)>0$ bounds $U$, and thus $V\leq U$, on
+every unit interval. Since $k$ decays exponentially,
+$J_p'=k*V$ is uniformly bounded; this is the rate-free argument in
+(8.16) and (9.17). For $x\to\infty$ put
+$z=\log\lfloor e^x\rfloor$. Then $0\leq x-z=O(e^{-x})$.
+The derivative of $\log x+\gamma-\log h-\mu/x$ is bounded for
+large $x$, and $J_p(x)=O_p(1+\log x)$. These bounds give
+
+$$
+ \mathscr R_p(x)-\mathscr R_p(z)
+             =O_p(x^2(1+\log x)e^{-x})=o_p(1).
+$$
+
+The comparison expansion (9.6) also gives
+$\mathscr R_p(x)=c_*-x^2H(x)+O_p(x^{-1})$.
+It follows, over all real $x\to\infty$, that
+
+$$
+ R_{\lfloor e^x\rfloor}(p)=c_*-x^2H(x)+o_p(1).                    \tag{14.4}
+$$
+
+Thus eventual integer boundedness is equivalent to
+$H(x)=O_p(x^{-2})$ at $+\infty$. A finite integer limit $C$ is
+equivalent to $x^2H(x)\to c_*-C$. By Theorem 8.7, at exactly the
+present fixed positive nonarithmetic hypotheses, any such $C$
+equals $c_*$. In that case $H(x)=o_p(x^{-2})$.
+This uses the uniqueness result already proved there and imposes
+no polynomial or exponential denominator bound.
+
+We use the second complex derivative of (13.4). When
+$H(x)=O_p(x^{-2})$ at $+\infty$, its $O_p(e^x)$ bound at
+$-\infty$ and absolute differentiation under the transform give
+
+$$
+ \sup_{t\in\mathbb R}|\mathcal H''(\sigma+it)|
+ \leq\int_{\mathbb R}x^2e^{-\sigma x}|H(x)|\,dx
+ \leq C_p(1+\sigma^{-1})\quad(0<\sigma\leq1/4).                   \tag{14.5}
+$$
+
+If instead $H(x)=o_p(x^{-2})$ at $+\infty$, the stronger conclusion
+is
+
+$$
+ \sigma\sup_{t\in\mathbb R}|\mathcal H''(\sigma+it)|
+                               \longrightarrow0\quad(\sigma\downarrow0).
+                                                                    \tag{14.6}
+$$
+
+Indeed, for any $\eta>0$ the positive tail of $x^2|H(x)|$ is at
+most $\eta$ beyond some fixed threshold. Its Laplace integral is
+at most $\eta/\sigma$. The bounded region and the negative half-line
+contribute $O_{p,\eta}(1)$ uniformly as $\sigma\downarrow0$.
+Multiplication by $\sigma$ and then $\eta\downarrow0$ prove
+(14.6). Both estimates are uniform in the imaginary frequency.
+
+We next obtain a lower bound at every sequence where the proposed
+necessary condition could fail. Suppose $t_j\to\infty$ and
+$W_p(t_j)\geq\eta>0$. Put
+$\delta_j=\delta_p(t_j)$, $u_j=\log(1/\delta_j)$, and
+$s_j=\delta_j+it_j$. Then
+
+$$
+ 0<\delta_j\leq\eta^{-1}t_j^{-3/2}e^{-ct_j},\qquad
+ \delta_j\log t_j\to0,\qquad t_j=O_\eta(1+u_j).                   \tag{14.7}
+$$
+
+In particular eventually $0<\operatorname{Re}s_j\leq1/4$.
+The same-law moment estimates and (9.14) give
+
+$$
+\begin{aligned}
+ c_p\delta_j\leq|D_p(s_j)|&\leq(1+h)\delta_j,\\
+ |D_p'(s_j)-h|&\leq(2m_2\delta_j)^{1/2}+m_2\delta_j\to0,\\
+ |D_p''(s_j)|&\leq m_2,\qquad
+ |\ell(s_j)|\leq C_p+u_j+\log t_j.                               \tag{14.8}
+\end{aligned}
+$$
+
+For the first upper bound use
+$|D_p(\delta_j+it_j)-D_p(it_j)|\leq h\delta_j$.
+For the derivative bound apply Cauchy–Schwarz to
+$\sum_i p_i y_i(e^{-it_jy_i}-1)$ using (13.6), and bound the
+additional real shift by $m_2\delta_j$.
+
+Differentiating (13.4) twice gives the exact formula
+
+$$
+\begin{aligned}
+ \mathcal H''(s)={}&
+ A_0(s)\left(\frac{D_p'(s)}{D_p(s)}\right)^2
+ -A_0(s)\frac{D_p''(s)}{D_p(s)}-\frac{A_0(s)}{s^2}\\
+ &-2A_0'(s)\left(\frac{D_p'(s)}{D_p(s)}-\frac1s\right)
+ -A_0''(s)\ell(s).                                                \tag{14.9}
+\end{aligned}
+$$
+
+At $s_j$ the first term has modulus at least
+$c_p|A_0(s_j)|/\delta_j^2$. By (13.5) and (14.8), the sum of the
+moduli of all other terms, divided by
+$|A_0(s_j)|/\delta_j^2$, is bounded by
+
+$$
+ C_p\left[\delta_j(1+\log(2+t_j))+
+ \delta_j^2(\log(2+t_j))^2(1+u_j+\log(2+t_j))\right]=o_p(1).
+$$
+
+The equality follows from (14.7): $\delta_j=e^{-u_j}$ and
+$t_j=O_\eta(1+u_j)$, so the exponential beats every displayed
+polynomial or logarithm. Also (13.5) and
+$t_j^{-\delta_j}\to1$ imply $|A_0(s_j)|\asymp w(t_j)$.
+The triangle inequality in (14.9) therefore proves
+
+$$
+ |\mathcal H''(s_j)|\geq c_p\frac{w(t_j)}{\delta_j^2},\qquad
+ \delta_j|\mathcal H''(s_j)|\geq c_p W_p(t_j)                      \tag{14.10}
+$$
+
+for all sufficiently large $j$. This lower bound concerns the
+exact transform of the exact $H$ related to $R_n$ in (14.4).
+
+If $R_n$ is eventually absolutely bounded but (14.1) fails,
+continuity and positivity of $\delta_p$ on compact subsets of
+$[1,\infty)$ give a sequence $t_j\to\infty$ with
+$W_p(t_j)\to\infty$. Use (14.10) with, for example, $\eta=1$.
+Equation (14.5) bounds its left side by a fixed constant, a
+contradiction. This proves (14.1) on the full domain $t\geq1$.
+If $R_n$ has a finite limit, (14.4), Theorem 8.7, and (14.6)
+apply. Failure of $W_p(t)\to0$ would give a sequence as in
+(14.7) with fixed $\eta>0$, and (14.10) would contradict (14.6).
+This proves the asserted vanishing condition.
+
+Finally, the premise of (14.2) violates (14.1), so the original
+integer sequence cannot be eventually absolutely bounded.
+For a sequence of finite real numbers this is exactly
+$\limsup_{n\to\infty}|R_n|=+\infty$: for every bound and every
+integer threshold there is a later integer exceeding that bound.
+Equation (14.4) gives the exact accompanying real/integer
+correspondence. No sign or rate conclusion is used. $\square$
+
+## 15. An entire binary family at the exact critical index
+
+**Definition 15.1 (A fixed law for each real parameter).** For real
+$r\in[1,3/2]$ let $a(r)>0$ be the unique solution of
+
+$$
+ e^{-a(r)}+e^{-r a(r)}=1,qquad
+ \kappa(r)=\frac{\pi^2}{2a(r)}.                                   \tag{15.1}
+$$
+
+For each fixed real $\tau\geq0$ specify integers recursively by
+
+$$
+\begin{gathered}
+ b_0=1,\quad b_1=2,\quad
+ P_{-1}=1,\quad P_0=1,\quad P_1=3,\quad
+ Q_{-1}=0,\quad Q_0=1,\quad Q_1=2,\\
+ r_j=P_j/Q_j,\qquad
+ b_{j+1}=\max\left(2,
+       \left\lceil e^{\kappa(r_j)Q_j}Q_j^{\tau-1}\right\rceil\right),\\
+ P_{j+1}=b_{j+1}P_j+P_{j-1},\qquad
+ Q_{j+1}=b_{j+1}Q_j+Q_{j-1}\qquad(j\geq1),\\
+ \alpha_\tau=[1;2,b_2,b_3,\ldots],\qquad
+ a_\tau=a(\alpha_\tau),\qquad
+ p^{[\tau]}=(e^{-a_\tau},e^{-\alpha_\tau a_\tau}).
+\end{gathered}                                                       \tag{15.2}
+$$
+
+The letters have the fixed order $0<1$, with these probabilities
+in that order. The specification uses only scalar equations,
+positive integer recursions, and the continued-fraction limit;
+it contains no residual or expectation condition.
+
+**Theorem 15.2 (All parameters and the boundary).** For every fixed
+real $\tau\geq0$, (15.2) converges and defines a strictly positive
+binary origin-nonarithmetic law, fixed before $n$ varies, with
+
+$$
+ \beta(p^{[\tau]})=\pi/2.                                         \tag{15.3}
+$$
+
+For its original distinct contiguous Lyndon-word expectation, on
+all integers $n\to\infty$,
+
+$$
+\begin{array}{ll}
+ 0\leq\tau<3/4:& R_n(p^{[\tau]})\longrightarrow c_*,\\[2pt]
+ \tau=3/4:& R_n(p^{[\tau]})\text{ has no finite limit},\\[2pt]
+ \tau>3/4:& \displaystyle
+   \limsup_{\substack{n\to\infty\\ n\in\mathbb N}}
+                         |R_n(p^{[\tau]})|=+\infty.
+\end{array}                                                         \tag{15.4}
+$$
+
+Boundedness at $\tau=3/4$ is unresolved here. No assertion is made
+about separate signs, a divergence rate, an $O_p(n/L^3)$ remainder
+for the convergent part of this family, or uniformity in $\tau$.
+
+*Proof.* First verify convergence and the source-law constraint.
+For each $r\in[1,3/2]$, the left side of (15.1) is continuous and
+strictly decreasing in $a\geq0$, from $2$ to $0$. Thus $a(r)$
+exists and is unique. The implicit differentiation formula is
+
+$$
+ a'(r)=-\frac{a(r)e^{-r a(r)}}{e^{-a(r)}+r e^{-r a(r)}}.             \tag{15.5}
+$$
+
+Its denominator is strictly positive on this compact parameter
+interval. Hence $a$ and $\kappa$ are continuously differentiable,
+Lipschitz, and bounded above and below by positive constants there.
+This assertion also follows directly by the implicit function
+theorem at every point and compactness.
+
+Every $b_{j+1}\geq2$ is a finite positive integer. The recursions
+and determinant identity for continued fractions, used in §11,
+show that consecutive convergents enclose nested intervals of
+length $1/(Q_jQ_{j+1})$. The next convergent is a strict weighted
+mean of the preceding two. Starting with $1$ and $3/2$, all $r_j$
+therefore lie in $[1,3/2]$, so every evaluation of $\kappa(r_j)$
+in (15.2) is legal. Also $Q_{j+1}\geq2Q_j$, and the nested intervals
+have lengths tending to zero. They define a unique limit
+$\alpha=\alpha_\tau$ with
+
+$$
+ |\alpha-r_j|\leq\frac1{Q_jQ_{j+1}}.                              \tag{15.6}
+$$
+
+The limit is irrational by the same determinant argument as in
+Theorem 11.2: a rational limit $r/s$ would be at distance at least
+$1/(sQ_j)$ from each unequal reduced convergent, contradicting
+(15.6) when $Q_{j+1}>s$; infinitely many convergents are unequal
+by their determinant identity. Thus $1<\alpha<3/2$.
+Continuity of $a(r)$ proves that the positive normalized laws
+$(e^{-a(r_j)},e^{-r_j a(r_j)})$ converge to exactly the law in
+(15.2). Its information values are $a=a(\alpha)$ and $\alpha a$,
+with masses $w=e^{-a}$ and $z=e^{-\alpha a}$, respectively.
+They are the actual negative logarithms of its probabilities,
+not independently assigned information values. Their irrational
+ratio gives origin-nonarithmeticity by Proposition 7.4. All these
+objects now depend on the fixed $\tau$, not on $n$.
+
+Write $\kappa=\kappa(\alpha)$. For fixed $\tau$, the number
+$E_j=e^{\kappa(r_j)Q_j}Q_j^{\tau-1}$ tends to infinity because
+$\kappa(r_j)$ has a positive lower bound. Thus the maximum with
+$2$ in (15.2) is eventually inactive and $b_{j+1}=E_j+O(1)$.
+Using $Q_{j-1}\leq Q_j$, the exact denominator recurrence gives
+
+$$
+ Q_{j+1}=e^{\kappa(r_j)Q_j}Q_j^\tau(1+O(E_j^{-1})).
+$$
+
+Lipschitz continuity and (15.6) imply
+$Q_j|\kappa(r_j)-\kappa|\leq C/Q_{j+1}\to0$.
+It follows that
+
+$$
+ \frac{Q_{j+1}}{e^{\kappa Q_j}Q_j^\tau}\longrightarrow1,
+ \qquad
+ \frac{\log Q_{j+1}}{Q_j}\longrightarrow\kappa.                    \tag{15.7}
+$$
+
+The exact binary translation (10.1), at these very information
+values and masses, now gives
+$\beta(p^{[\tau]})=a\kappa/\pi=\pi/2$.
+Its classical continued-fraction input remains Sondow,
+[*Irrationality measures, irrationality bases, and a theorem of
+Jarník*, arXiv:math/0406300v1](https://arxiv.org/pdf/math/0406300v1),
+§3, Theorem 1, equation (3); no new identity for an irrationality
+base is required.
+
+To prove convergence for the entire range $\tau<3/4$, we must
+bound the minima on all the intervals $I_N$, not just selected
+frequencies. The convergent error inequalities in Sondow's
+§3, equation (5), with numerator $P_j$ and denominator $Q_j$,
+are
+
+$$
+ \frac1{2Q_{j+1}}<|\epsilon_j|<\frac1{Q_{j+1}},\qquad
+ \epsilon_j=Q_j\alpha-P_j.                                       \tag{15.8}
+$$
+
+We spell out the needed integer-denominator consequence. The
+signed errors of consecutive convergents have opposite signs,
+and their integer column vectors $(P_j,Q_j)$ and
+$(P_{j+1},Q_{j+1})$ have determinant $1$ or $-1$.
+For any integers $m,r$ with $0<m<Q_{j+1}$ there are therefore
+integers $A,B$ with
+
+$$
+ (r,m)=A(P_j,Q_j)+B(P_{j+1},Q_{j+1}),\qquad
+ m\alpha-r=A\epsilon_j+B\epsilon_{j+1}.
+$$
+
+If $B=0$, positivity of $m$ forces $A\geq1$. If $B\geq1$,
+$m<Q_{j+1}$ forces $A\leq-1$. If $B\leq-1$, positivity of $m$
+forces $A\geq1$. In the last two cases the two nonzero error
+terms have the same sign, because $\epsilon_j$ and
+$\epsilon_{j+1}$ have opposite signs. In every case
+$|m\alpha-r|\geq|\epsilon_j|$. Choosing a nearest integer $r$
+proves the classical best-approximation bound in the exact form
+needed here:
+
+$$
+ \|m\alpha\|\geq|\epsilon_j|>\frac1{2Q_{j+1}}
+                    \qquad(Q_j\leq m<Q_{j+1}).                   \tag{15.9}
+$$
+
+This is an intermediate consequence of the cited convergent
+facts; no assumption about the location of intermediate
+small divisors is made.
+
+For the present binary law put $u=at/(2\pi)$ and let $m$ be a
+nearest integer to $u$. The same elementary real-part estimate
+and circle-distance triangle inequality as (10.3)–(10.4) give,
+for every real $t$,
+
+$$
+ \delta_p(t)\geq8\min(w,z)
+            (\|u\|^2+\|\alpha u\|^2)
+             \geq c_p\|m\alpha\|^2.                              \tag{15.10}
+$$
+
+In fact $\|m\alpha\|\leq\alpha\|u\|+\|\alpha u\|$, and
+Cauchy–Schwarz proves the last bound. For sufficiently large
+$N$ let $\mathcal M_N$ be the set of positive integers $m$ for
+which $|m-at/(2\pi)|\leq1/2$ for some $t\in I_N$.
+Every nearest integer relevant to (15.10) belongs to this finite
+set. Its cardinality is bounded by a constant depending only on
+this law. For $m\in\mathcal M_N$,
+
+$$
+ |N-2\pi m/a|\leq C_p,
+$$
+
+so $N\asymp_p m$ and
+$N^{-3/2}e^{-cN}\leq C_p m^{-3/2}e^{-2\kappa m}$.
+Here $c(2\pi/a)=\pi^2/a=2\kappa$ exactly. Moreover each fixed
+$m$ belongs to at most $C_p$ of the sets $\mathcal M_N$, since
+the displayed bound confines the integer $N$ to an interval of
+fixed length. Taking minima in (15.10) and then summing therefore
+gives
+
+$$
+ S(p)\leq C_p+C_p\sum_{m\geq2}
+                     \frac{m^{-3/2}e^{-2\kappa m}}{\|m\alpha\|^2}.
+                                                                    \tag{15.11}
+$$
+
+Explicitly, $d_N^{-1}$ is at most
+$C_p\max_{m\in\mathcal M_N}\|m\alpha\|^{-2}$, which is at most
+the sum of these positive quantities. The finitely many remaining
+$N$ contribute a finite constant because their $d_N$ are positive.
+Thus (15.11) covers the whole continuous-frequency minima.
+
+Use (15.9) on each complete block
+$Q_j\leq m<Q_{j+1}$. The geometric exponential sum and (15.7)
+give, for all sufficiently large $j$,
+
+$$
+\begin{aligned}
+ \sum_{m=Q_j}^{Q_{j+1}-1}
+       \frac{m^{-3/2}e^{-2\kappa m}}{\|m\alpha\|^2}
+ &\leq4Q_{j+1}^2Q_j^{-3/2}
+                   \frac{e^{-2\kappa Q_j}}{1-e^{-2\kappa}}\\
+ &\leq C_p Q_j^{2\tau-3/2}.                                     \tag{15.12}
+\end{aligned}
+$$
+
+If $\tau<3/4$, the exponent is strictly negative and
+$Q_j\geq2^j$, so the sum of (15.12) over all $j$ converges.
+Equations (15.11)–(15.12) prove $S(p)<\infty$ throughout that
+whole parameter range. Theorem 13.2 proves its assertion in
+(15.4) for the original expectation on all integers.
+
+For the remaining parameters we need lower bounds on $W_p$,
+with the exact critical exponential factor. Use the frequencies
+from the elementary cancellation in (10.5), here with
+$m=Q_j$, $r=P_j$, and signed error $\epsilon_j$:
+
+$$
+ u_j=Q_j-\frac{z\epsilon_j}{w+z\alpha},\qquad
+ t_j=\frac{2\pi u_j}{a}.                                         \tag{15.13}
+$$
+
+They tend to infinity. Their centered phase errors are
+$-z\epsilon_j/(w+z\alpha)$ and
+$w\epsilon_j/(w+z\alpha)$; their weighted sum is zero.
+The elementary inequality
+$|e^{-iv}-1+iv|\leq v^2/2$ therefore gives
+
+$$
+ 0<\delta_p(t_j)\leq C_p\epsilon_j^2
+             \leq C_pQ_{j+1}^{-2},\qquad
+ t_j=2\pi Q_j/a+O_p(Q_{j+1}^{-1}).                               \tag{15.14}
+$$
+
+Strict positivity follows from origin-nonarithmeticity. The error
+in $t_j$ tends to zero, so both its exponential factor and its
+power factor have the following asymptotics:
+
+$$
+ w(t_j)\sim(2\pi/a)^{-3/2}Q_j^{-3/2}e^{-2\kappa Q_j}.
+$$
+
+Combining this with (15.7) and (15.14) proves, with a fixed
+positive constant for the given law,
+
+$$
+ W_p(t_j)\geq c_p Q_j^{2\tau-3/2}\qquad(j\text{ sufficiently large}).
+                                                                    \tag{15.15}
+$$
+
+At $\tau=3/4$ this prevents $W_p(t)\to0$, so Theorem 14.1
+excludes every finite limit of the original integer residual.
+For every $\tau>3/4$, (15.15) tends to infinity, and (14.2)
+proves the last line of (15.4). In both cases the actual residual
+conclusion uses (14.4), rather than identifying a small divisor
+with a divergence of a different statistic. $\square$
+
+The conditions $S(p)<\infty$ and the two necessary conditions on
+$W_p$ leave the full classification of individual laws with
+$\beta(p)=\pi/2$ unresolved. Divergence of $S(p)$ alone has no
+residual-divergence implication here; neither boundedness of $W_p$
+nor $W_p(t)\to0$ is asserted sufficient. In particular (15.15) at
+$\tau=3/4$ excludes convergence but does not decide boundedness.
+All statements retain the origin-lattice convention, the actual
+same-law information masses, and the original counting of distinct
+nonempty contiguous words, including letters and every legal
+length and window. The reused reductions (6.8)–(6.9), comparison
+and transform (9.4)–(9.8), uniqueness Theorem 8.7, and binary
+translation Theorem 10.1 have exactly their fixed-source domains.
+The additional inferences are the summability implication, the
+necessary critical weight conditions, and their entire-family
+consumers (15.3)–(15.4).
+
+## 追加锚（本行以下为增补区）
