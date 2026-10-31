@@ -113,4 +113,263 @@ private theorem flat_gram_log (m n : ℕ) (hm : 0 < m) (hn : 0 < n) :
       Real.log (n : ℝ) - Real.log (m : ℝ) by ring]
     rw [Real.exp_sub, Real.exp_log hn0, Real.exp_log hm0]
 
+/-- Push forward actual sector probabilities by summing over each fiber. -/
+def aggregate {A B : Type*} [Fintype A] [DecidableEq B]
+    (f : A → B) (p : A → ℝ) (b : B) : ℝ :=
+  ∑ a, if f a = b then p a else 0
+
+private theorem aggregate_sum {A B : Type*} [Fintype A] [Fintype B]
+    [DecidableEq B] (f : A → B) (p : A → ℝ) (g : B → ℝ) :
+    (∑ b, aggregate f p b * g b) = ∑ a, p a * g (f a) := by
+  classical
+  simp only [aggregate, Finset.sum_mul]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro a _
+  simp [ite_mul]
+
+private theorem aggregate_simplex {A B : Type*} [Fintype A] [Fintype B]
+    [DecidableEq B] (f : A → B) (p : A → ℝ) (hp : p ∈ stdSimplex ℝ A) :
+    aggregate f p ∈ stdSimplex ℝ B := by
+  constructor
+  · intro b
+    exact Finset.sum_nonneg fun a _ => by
+      dsimp [aggregate]
+      split_ifs <;> first | exact hp.1 a | exact le_rfl
+  · simpa using (aggregate_sum f p (fun _ => 1)).trans (by simpa using hp.2)
+
+private theorem aggregate_energy {A B : Type*} [Fintype A] [Fintype B]
+    [DecidableEq B] (f : A → B) (p : A → ℝ) (K : B → B → ℝ) :
+    (∑ b, ∑ c, aggregate f p b * aggregate f p c * K b c) =
+      ∑ a, ∑ a', p a * p a' * K (f a) (f a') := by
+  have hinner (b : B) :
+      (∑ c, aggregate f p c * K b c) = ∑ a, p a * K b (f a) :=
+    aggregate_sum f p (K b)
+  calc
+    _ = ∑ b, aggregate f p b * (∑ c, aggregate f p c * K b c) := by
+      simp only [Finset.mul_sum, mul_assoc]
+    _ = ∑ a, p a * (∑ c, aggregate f p c * K (f a) c) :=
+      aggregate_sum f p _
+    _ = _ := by
+      simp_rw [hinner, Finset.mul_sum, mul_assoc]
+
+private theorem aggregate_section {A B : Type*} [Fintype A] [Fintype B]
+    [DecidableEq A] [DecidableEq B] (f : A → B) (g : B → A)
+    (hg : Function.RightInverse g f) (q : B → ℝ) :
+    aggregate f (aggregate g q) = q := by
+  ext b
+  have hterm (a : A) :
+      (if f a = b then aggregate g q a else 0) =
+      ∑ c, if g c = a then (if f a = b then q c else 0) else 0 := by
+    by_cases h : f a = b <;> simp [aggregate, h]
+  simp only [aggregate, hterm]
+  rw [Finset.sum_comm]
+  have hcollapse (c : B) :
+      (∑ a, if g c = a then (if f a = b then q c else 0) else 0) =
+      if c = b then q c else 0 := by
+    simp [hg c]
+  simp_rw [hcollapse]
+  simp
+
+private theorem sorted_rank_quotient [Nonempty Sector] (m : Sector → ℕ) :
+    ∃ n : ℕ, ∃ a : Fin (n + 1) → ℕ, ∃ f : Sector → Fin (n + 1),
+      StrictMono a ∧ Function.Surjective f ∧ (∀ s, a (f s) = m s) := by
+  classical
+  let ranks : Finset ℕ := Finset.univ.image m
+  have hpos : 0 < ranks.card := by
+    apply Finset.card_pos.mpr
+    exact Finset.image_nonempty.mpr Finset.univ_nonempty
+  let n := ranks.card - 1
+  have hc : ranks.card = n + 1 := by dsimp [n]; omega
+  let e : Fin (n + 1) ≃o ranks := ranks.orderIsoOfFin hc
+  let a : Fin (n + 1) → ℕ := fun i => (e i).val
+  let f : Sector → Fin (n + 1) := fun s =>
+    e.symm ⟨m s, Finset.mem_image.mpr ⟨s, Finset.mem_univ s, rfl⟩⟩
+  have haf (s : Sector) : a (f s) = m s := by
+    exact congrArg Subtype.val (e.apply_symm_apply _)
+  have hf : Function.Surjective f := by
+    intro i
+    obtain ⟨s, _, hs⟩ := Finset.mem_image.mp (e i).property
+    refine ⟨s, e.injective ?_⟩
+    apply Subtype.ext
+    exact (haf s).trans hs
+  refine ⟨n, a, f, ?_, hf, haf⟩
+  intro i j hij
+  exact e.strictMono hij
+
+private theorem exponential_quotient_minimum [Nonempty Sector]
+    (m : Sector → ℕ) (hm : ∀ s, 0 < m s) :
+    ∃ n : ℕ, ∃ a : Fin (n + 1) → ℕ, ∃ f : Sector → Fin (n + 1),
+    ∃ loss : ℕ → ℝ,
+      StrictMono a ∧ Function.Surjective f ∧ (∀ s, a (f s) = m s) ∧
+      Monotone loss ∧ (∀ i : Fin (n + 1), loss i = Real.log (a i : ℝ)) ∧
+      (∃ p ∈ stdSimplex ℝ Sector,
+        (∑ s, ∑ t, p s * p t *
+          Real.exp (-|Real.log (m s : ℝ) - Real.log (m t : ℝ)| / 2)) =
+            1 / ExponentialSectorKernel.normalizer n loss) ∧
+      (∀ p ∈ stdSimplex ℝ Sector,
+        1 / ExponentialSectorKernel.normalizer n loss ≤
+          ∑ s, ∑ t, p s * p t *
+            Real.exp (-|Real.log (m s : ℝ) - Real.log (m t : ℝ)| / 2)) ∧
+      ExponentialSectorKernel.normalizer n loss = 1 +
+        ∑ i : Fin n, Real.tanh ((loss (i + 1) - loss i) / 4) := by
+  classical
+  obtain ⟨n, a, f, ha, hf, haf⟩ := sorted_rank_quotient m
+  have ha0 (i : Fin (n + 1)) : 0 < a i := by
+    obtain ⟨s, rfl⟩ := hf i
+    rw [haf]
+    exact hm s
+  let loss : ℕ → ℝ := fun i => Real.log (a ⟨min i n, by omega⟩ : ℝ)
+  have hloss (i : Fin (n + 1)) : loss i = Real.log (a i : ℝ) := by
+    congr 2
+    apply congrArg a
+    apply Fin.ext
+    exact min_eq_left (by omega)
+  have hmono : Monotone loss := by
+    intro i j hij
+    apply Real.log_le_log (by exact_mod_cast ha0 ⟨min i n, by omega⟩)
+    exact_mod_cast ha.monotone (show (⟨min i n, by omega⟩ : Fin (n + 1)) ≤
+      ⟨min j n, by omega⟩ from min_le_min_right n hij)
+  have hk (s t : Sector) :
+      ExponentialSectorKernel.kernel loss (f s) (f t) =
+        Real.exp (-|Real.log (m s : ℝ) - Real.log (m t : ℝ)| / 2) := by
+    simp only [ExponentialSectorKernel.kernel, hloss, haf]
+  obtain ⟨_, _, _, _, hZ, hq, henergy, hminimum, htotal, _⟩ :=
+    ExponentialSectorKernel.result loss hmono n
+  let q : Fin (n + 1) → ℝ := fun i =>
+    ExponentialSectorKernel.equilibriumWeight n loss i /
+      ExponentialSectorKernel.normalizer n loss
+  choose g hg using hf
+  let p := aggregate g q
+  have hp : p ∈ stdSimplex ℝ Sector := aggregate_simplex g q hq
+  have hpq : aggregate f p = q := aggregate_section f g hg q
+  refine ⟨n, a, f, loss, ha, hf, haf, hmono, hloss, ?_, ?_, htotal⟩
+  · refine ⟨p, hp, ?_⟩
+    rw [← henergy]
+    dsimp [ExponentialSectorKernel.energy]
+    rw [← hpq, aggregate_energy]
+    simp_rw [hk]
+  · intro p hp
+    have h := hminimum (aggregate f p) (aggregate_simplex f p hp)
+    dsimp [ExponentialSectorKernel.energy] at h
+    rw [aggregate_energy] at h
+    simpa only [hk] using h
+
+private def raw {A B : Type u} [Fintype A] [DecidableEq A]
+    [Fintype B] [DecidableEq B] (C : QuantumChannel A B) :
+    Matrix A A ℂ →ₗ[ℂ] Matrix B B ℂ :=
+  CStarMatrix.ofMatrixₗ.symm.toLinearMap.comp
+    (C.toCompletelyPositiveMap.toLinearMap.comp CStarMatrix.ofMatrixₗ.toLinearMap)
+
+private theorem raw_comp {A B C : Type u} [Fintype A] [DecidableEq A]
+    [Fintype B] [DecidableEq B] [Fintype C] [DecidableEq C]
+    (D : QuantumChannel B C) (E : QuantumChannel A B) (X : Matrix A A ℂ) :
+    raw (D.comp E) X = raw D (raw E X) := by
+  simp only [raw, LinearMap.comp_apply, QuantumChannel.comp_apply,
+    Equiv.apply_symm_apply]
+
+private theorem raw_expand {A B : Type u} [Fintype A] [DecidableEq A]
+    [Fintype B] [DecidableEq B] (C : QuantumChannel A B) (X : Matrix A A ℂ) :
+    raw C X = ∑ i, ∑ j, X i j • raw C (Matrix.single i j 1) := by
+  have hX : X = ∑ i, ∑ j, X i j • Matrix.single i j (1 : ℂ) := by
+    simpa only [Matrix.smul_single, smul_eq_mul, mul_one] using Matrix.matrix_eq_sum_single X
+  conv_lhs => rw [hX]
+  simp only [map_sum, map_smul]
+
+private def tensorMap {A B C D : Type u}
+    [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
+    [Fintype C] [DecidableEq C] [Fintype D] [DecidableEq D]
+    (L : QuantumChannel A C) (R : QuantumChannel B D) :
+    Matrix (A × B) (A × B) ℂ →ₗ[ℂ] Matrix (C × D) (C × D) ℂ where
+  toFun := tensorRawAction L R
+  map_add' X Y := by
+    ext p q
+    simp only [tensorRawAction, Matrix.add_apply, add_mul, Finset.sum_add_distrib]
+  map_smul' c X := by
+    ext p q
+    simp only [tensorRawAction, Matrix.smul_apply, smul_eq_mul, mul_assoc,
+      Finset.mul_sum]
+
+private theorem tensor_kronecker {A B C D : Type u}
+    [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
+    [Fintype C] [DecidableEq C] [Fintype D] [DecidableEq D]
+    (L : QuantumChannel A C) (R : QuantumChannel B D)
+    (X : Matrix A A ℂ) (Y : Matrix B B ℂ) :
+    tensorRawAction L R (X ⊗ₖ Y) = raw L X ⊗ₖ raw R Y := by
+  rw [raw_expand L X, raw_expand R Y]
+  ext p q
+  simp only [tensorRawAction, Matrix.kroneckerMap_apply, Matrix.sum_apply,
+    Matrix.smul_apply, smul_eq_mul, Finset.sum_mul, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro i _
+  apply Finset.sum_congr rfl
+  intro j _
+  apply Finset.sum_congr rfl
+  intro k _
+  apply Finset.sum_congr rfl
+  intro l _
+  change X i j * Y k l * raw L (Matrix.single i j 1) p.1 q.1 *
+      raw R (Matrix.single k l 1) p.2 q.2 = _
+  ring
+
+private theorem tensor_comp {A B C D E F : Type u}
+    [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
+    [Fintype C] [DecidableEq C] [Fintype D] [DecidableEq D]
+    [Fintype E] [DecidableEq E] [Fintype F] [DecidableEq F]
+    (L : QuantumChannel A C) (R : QuantumChannel B D)
+    (L' : QuantumChannel C E) (R' : QuantumChannel D F)
+    (X : Matrix (A × B) (A × B) ℂ) :
+    tensorRawAction (L'.comp L) (R'.comp R) X =
+      tensorRawAction L' R' (tensorRawAction L R X) := by
+  let P := tensorMap (L'.comp L) (R'.comp R)
+  let Q := (tensorMap L' R').comp (tensorMap L R)
+  have hsingle (i j : A × B) : P (Matrix.single i j 1) = Q (Matrix.single i j 1) := by
+    have hs : Matrix.single i j (1 : ℂ) =
+        Matrix.single i.1 j.1 (1 : ℂ) ⊗ₖ Matrix.single i.2 j.2 (1 : ℂ) := by
+      rw [Matrix.single_kronecker_single, one_mul]
+    change tensorRawAction (L'.comp L) (R'.comp R) _ =
+      tensorRawAction L' R' (tensorRawAction L R _)
+    rw [hs, tensor_kronecker, tensor_kronecker, tensor_kronecker,
+      raw_comp, raw_comp]
+  have hX : X = ∑ i, ∑ j, X i j • Matrix.single i j (1 : ℂ) := by
+    simpa only [Matrix.smul_single, smul_eq_mul, mul_one] using Matrix.matrix_eq_sum_single X
+  change P X = Q X
+  rw [hX]
+  simp only [map_sum, map_smul, hsingle]
+
+private theorem isometry_channel {A B : Type u} [Fintype A] [DecidableEq A]
+    [Fintype B] [DecidableEq B] (U : Matrix B A ℂ) (hU : Uᴴ * U = 1) :
+    ∃ E : QuantumChannel A B, ∀ X : Matrix A A ℂ, raw E X = U * X * Uᴴ := by
+  obtain ⟨E, hE⟩ := finite_kraus_quantum_channel (fun _ : Unit => U)
+    (by simpa only [Fintype.sum_unique] using hU)
+  exact ⟨E, fun X => by simpa only [Fintype.sum_unique] using hE X⟩
+
+private theorem isometry_retraction {A B : Type u} [Fintype A] [DecidableEq A]
+    [Fintype B] [DecidableEq B] [Nonempty A]
+    (U : Matrix B A ℂ) (hU : Uᴴ * U = 1) :
+    ∃ E : QuantumChannel A B, ∃ R : QuantumChannel B A,
+      (∀ X, raw E X = U * X * Uᴴ) ∧ (∀ X, raw R (raw E X) = X) := by
+  classical
+  let a₀ : A := Classical.choice inferInstance
+  let u : Unit → A → ℂ := fun _ a => if a = a₀ then 1 else 0
+  have hu : (∑ k, star (u k) ⬝ᵥ u k) = 1 := by
+    simp [u, dotProduct, Pi.star_apply]
+  obtain ⟨_, R, hR⟩ := D5.S3.Quantum.Reduction.CoherentFlagPort.padded_decoder_cptp
+    U 1 hU (by simp) (by simp) u hu
+  obtain ⟨E, hE⟩ := isometry_channel U hU
+  refine ⟨E, R, hE, ?_⟩
+  intro X
+  rw [hE]
+  change CStarMatrix.ofMatrix.symm
+    (R.toCompletelyPositiveMap (CStarMatrix.ofMatrix (U * X * Uᴴ))) = X
+  rw [hR]
+  have hzero : (1 - U * Uᴴ) * U = 0 := by
+    rw [Matrix.sub_mul, Matrix.one_mul, Matrix.mul_assoc, hU, Matrix.mul_one, sub_self]
+  have htrace : Matrix.trace ((1 - U * Uᴴ) * (U * X * Uᴴ)) = 0 := by
+    rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hzero, Matrix.zero_mul,
+      Matrix.zero_mul, Matrix.trace_zero]
+  rw [htrace, zero_smul, add_zero]
+  simp only [← Matrix.mul_assoc, hU, Matrix.one_mul]
+  simp only [Matrix.mul_assoc, hU, Matrix.mul_one]
+
 end D5.S3.Quantum.Entanglement.FiniteFlatSectorOptimum
