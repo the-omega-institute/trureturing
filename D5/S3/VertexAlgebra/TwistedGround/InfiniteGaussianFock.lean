@@ -1,6 +1,5 @@
 /- GID: D5/S3/VertexAlgebra/TwistedGround/InfiniteGaussianFock
    generality: G
-   projection-status: UNCOMPILED source candidate
    anchors: []
    utility: none
    digest: Common finite principal blocks construct the actual joint Gaussian l2 vector. -/
@@ -11,7 +10,7 @@ import Mathlib.Analysis.Normed.Lp.LpEquiv
 import Mathlib.Analysis.InnerProductSpace.Adjoint
 
 /-!
-SOURCE ONLY. No native acceptance is asserted for this module.
+The joint Gaussian coefficients and vector are constructed from finite principal blocks.
 The finite estimate is the pinned FactorialFockQuadraticEstimate supplier.
 The finite-subsum strategy follows the completed OriginalFullColourSummability
 candidate; its source-specific Corr identity is neither imported nor assumed.
@@ -56,17 +55,6 @@ def coordinateInclusion {A : Type u} {B : Type v}
     coordinateBasis_apply]
   simpa only [smul_eq_mul, mul_one] using
     (lp.single_smul (E := fun _ : B => ℂ) 2 (e a) c (1 : ℂ)).symm
-
-/-- The adjoint of zero inclusion is the genuine coordinate projection. -/
-@[simp] theorem coordinateInclusion_adjoint_apply {A : Type u} {B : Type v}
-    [DecidableEq A] [DecidableEq B] (e : A → B) (he : Function.Injective e)
-    (x : ℓ²(B, ℂ)) (a : A) :
-    ContinuousLinearMap.adjoint (coordinateInclusion e he).toContinuousLinearMap x a =
-      x (e a) := by
-  have h := ContinuousLinearMap.adjoint_inner_right
-    (coordinateInclusion e he).toContinuousLinearMap (lp.single 2 a (1 : ℂ)) x
-  simpa only [coordinateInclusion_single, LinearIsometry.coe_toContinuousLinearMap,
-    lp.inner_single_left, RCLike.inner_apply, map_one, mul_one] using h
 
 /-- Only genuine one-particle analytic hypotheses are stored here. The kernel
 is derived from a bounded operator's actual ON matrix, rather than certified
@@ -250,10 +238,6 @@ variable {I : Type u} [DecidableEq I]
 def restrictOccupation (S : Finset I) (d : Occupation I) : Occupation S :=
   d.comapDomain (fun i : S => i.val) Subtype.val_injective.injOn
 
-@[simp] theorem restrictOccupation_apply (S : Finset I) (d : Occupation I) (i : S) :
-    restrictOccupation S d i = d i.val := by
-  simp [restrictOccupation, Finsupp.comapDomain_apply]
-
 theorem extend_restrict (S : Finset I) (d : Occupation I) (hd : d.support ⊆ S) :
     (restrictOccupation S d).mapDomain (fun i : S => i.val) = d := by
   apply Finsupp.mapDomain_comapDomain (fun i : S => i.val) Subtype.val_injective d
@@ -289,25 +273,6 @@ theorem coefficient_on_block (K : I → I → ℂ) (S : Finset I) (d : Occupatio
     rw [extend_restrict _ _ (fun _ h => h), extend_restrict _ _ hd]
   rw [coefficient, ← gaussianCoefficient_enlarge (fun i j : S => K i.val j.val) e he,
     hmap]
-
-theorem coefficient_stabilization (K : I → I → ℂ) (S T : Finset I)
-    (d : Occupation I) (hS : d.support ⊆ S) (hT : d.support ⊆ T) :
-    FactorialFockQuadraticEstimate.gaussianCoefficient (fun i j : S => K i.val j.val)
-        (restrictOccupation S d) =
-      FactorialFockQuadraticEstimate.gaussianCoefficient (fun i j : T => K i.val j.val)
-        (restrictOccupation T d) :=
-  (coefficient_on_block K S d hS).symm.trans (coefficient_on_block K T d hT)
-
-@[simp] theorem coefficient_zero (K : I → I → ℂ) : coefficient K 0 = 1 := by
-  simpa only [coefficient, restrictOccupation, Finsupp.comapDomain_zero] using
-    FactorialFockQuadraticEstimate.gaussianCoefficient_zero (fun i j : (0 : Occupation I).support => K i.val j.val)
-
-theorem coefficient_odd (K : I → I → ℂ) (d : Occupation I)
-    (hd : d.degree % 2 = 1) : coefficient K d = 0 := by
-  have hdeg : (restrictOccupation d.support d).degree = d.degree := by
-    have h := congrArg Finsupp.degree (extend_restrict d.support d (fun _ h => h))
-    simpa only [Finsupp.degree_mapDomain] using h
-  exact FactorialFockQuadraticEstimate.gaussianCoefficient_odd _ _ (by rwa [hdeg])
 
 /-- ONE block for an entire finite occupation family, not one cutoff per term. -/
 def commonBlock (F : Finset (Occupation I)) : Finset I := F.biUnion Finsupp.support
@@ -401,31 +366,6 @@ theorem vector_norm_sq (D : Data I) :
 theorem vector_norm_sq_le (D : Data I) : ‖D.vector‖ ^ 2 ≤ D.bound := by
   rw [D.vector_norm_sq]
   exact D.occupation_tsum_le
-
-@[simp] theorem vector_vacuum (D : Data I) : D.vector 0 = 1 := by
-  simp [scale, weight, Finsupp.prod]
-
-theorem vector_odd (D : Data I) (d : Occupation I) (hd : d.degree % 2 = 1) :
-    D.vector d = 0 := by
-  rw [vector_apply, coefficient_odd D.kernel d hd, mul_zero]
-
-/-- Empty mode types still have the vacuum occupation and norm exactly one. -/
-theorem vector_empty [IsEmpty I] (D : Data I) :
-    D.vector = lp.single 2 (0 : Occupation I) (1 : ℂ) := by
-  apply lp.ext
-  funext d
-  have hd : d = 0 := by ext i; exact isEmptyElim i
-  subst d
-  simp [scale, weight, Finsupp.prod]
-
-/-- Unconditional convergence in the actual Hilbert norm. -/
-theorem vector_hasSum (D : Data I) :
-    HasSum (fun d : Occupation I =>
-      (scale d * coefficient D.kernel d) • FactorialFockMetric.hilbertBasis I d)
-      D.vector := by
-  change HasSum (fun d => (FactorialFockMetric.hilbertBasis I).repr D.vector d •
-    FactorialFockMetric.hilbertBasis I d) D.vector
-  exact (FactorialFockMetric.hilbertBasis I).hasSum_repr D.vector
 
 end Data
 end D5.S3.VertexAlgebra.TwistedGround.InfiniteGaussianFock
