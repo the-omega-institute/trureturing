@@ -66,11 +66,13 @@ private theorem packet_labels (a b c d : ℕ)
 private theorem negative_order (a b c d : ℕ)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d) (n : Fin 16) :
     ((packets a b c d n).map Prod.snd).Perm (negatives a b c d) := by
-  have he : ∀ r : Fin 4, negativeLabel a b c d r = (negatives a b c d)[r.val] := by
-    intro r; fin_cases r <;> simp [negativeLabel,chainStart,chainLength,negatives,size] <;> omega
   have hp : (order n).Perm [0,1,2,3] := by fin_cases n <;> decide
-  have hh := hp.map (negativeLabel a b c d)
-  simpa [packets,List.map_map,Function.comp_def,he,negatives] using hh
+  have he : ([0,1,2,3] : List (Fin 4)).map (negativeLabel a b c d) = negatives a b c d := by
+    change [0+(d-1),d+(c-1),d+c+(b-1),d+c+b+(a-1)] =
+      [d-1,d+c-1,d+c+b-1,a+b+c+d-1]
+    congr <;> omega
+  have hh := (hp.map (negativeLabel a b c d)).trans (List.Perm.of_eq he)
+  simpa [packets,List.map_map,Function.comp_def] using hh
 
 set_option maxRecDepth 4000 in
 set_option maxHeartbeats 1600000 in
@@ -94,7 +96,7 @@ private theorem physical_partition (a b c d : ℕ)
       Multiset.coe_append,Multiset.coe_cons,Multiset.coe_nil,Multiset.count_add,
       Multiset.count_cons,Multiset.count_zero,hcount] <;>
     simp only [assigned,transfer,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_succ,
-      Fin.isValue,Fin.reduceFinMk,ite_true,ite_false,Finset.mem_insert,Finset.mem_erase,
+      Fin.isValue,ite_true,ite_false,Finset.mem_insert,Finset.mem_erase,
       positivePacket,negativeLabel,chainStart,chainLength,Finset.mem_Ico,size] <;>
     split_ifs <;> omega
 

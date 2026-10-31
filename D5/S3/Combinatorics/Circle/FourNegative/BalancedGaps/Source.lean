@@ -17,7 +17,7 @@ open private correction transfer from D5.S3.Combinatorics.Circle.FourNegative.Ba
 open private positivePacket negativeLabel assigned native_labels assigned_labels
   from D5.S3.Combinatorics.Circle.FourNegative.BalancedGaps.Physical
 open private size chainStart chainLength negatives oldValue newValue base newBase sourceMod
-  nextBase nextNewBase chain_values packet_masses
+  nextBase nextNewBase charge chain_values packet_masses
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open private oldMass newMass from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 
@@ -126,8 +126,8 @@ private theorem assigned_masses (a b c d : ℕ)
       newValue a b c d (chainStart b c d r) = newBase a b c d r := by
     have hl := length_lower a b c d ha hb hc hd r
     constructor
-    · simpa using hv.2.1 r 0 (by omega)
-    · simpa using hv.2.2.1 r 0 (by omega)
+    · simpa [show 0+1<chainLength a b c d r by omega] using hv.2.1 r 0 (by omega)
+    · simpa [show 0+1<chainLength a b c d r by omega] using hv.2.2.1 r 0 (by omega)
   have hnative := native_mass a b c d ha hb hc hd
   have hnative' (r : Fin 4) := packet_masses a b c d ha hb hc hd
     (positivePacket a b c d r) (native_labels a b c d ha hb hc hd r).1
@@ -173,7 +173,7 @@ private theorem source_doubles (a b c d : ℕ)
     change oldValue a b c d (negativeLabel a b c d r) = _ at hf
     change newValue a b c d (negativeLabel a b c d r) = _ at hg
     rw [hf,hg]
-    fin_cases r <;> dsimp [nextBase,nextNewBase,newBase,PacketNormalForm.charge,base,sourceMod] <;>
+    fin_cases r <;> dsimp [nextBase,nextNewBase,newBase,charge,base,sourceMod] <;>
       rw [hx,hy,hz,ht] <;> ring_nf <;> constructor <;> omega
 
 end D5.S3.Combinatorics.Circle.FourNegative.BalancedGaps

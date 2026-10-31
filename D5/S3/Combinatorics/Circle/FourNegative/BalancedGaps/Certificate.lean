@@ -79,7 +79,7 @@ private theorem balanced_certificate (s : ℕ) (hs : 2≤s) (n : Fin 16) :
     rw [pow_add]; ring
   have hbase : bases n q = base a b c d := by
     funext r
-    fin_cases r <;> dsimp [bases,base] <;> rw [hp,hp,hp,hp]
+    fin_cases r <;> simp only [bases,base,hp]
   have hnewbase : newBases n q = newBase a b c d := by
     funext r
     fin_cases r <;> simp [newBases,newBase,charge,hbase,hp,a,b,c,d]
@@ -87,7 +87,7 @@ private theorem balanced_certificate (s : ℕ) (hs : 2≤s) (n : Fin 16) :
     dsimp [modulus,sourceMod]
     rw [hp,hp,hp,hp]
   have hlength (r : Fin 4) : lengths n q r = (2:ℤ)^(chainLength a b c d r) := by
-    fin_cases r <;> simpa [lengths,chainLength,a,b,c,d] using hp _
+    fin_cases r <;> simpa only [lengths,chainLength,a,b,c,d] using hp _
   have hm (r : Fin 4) := assigned_masses a b c d ha hb hc hd n r
   have hD := source_doubles a b c d ha hb hc hd
   have hmold (r : Fin 4) : masses n q (bases n q) r =
