@@ -62,6 +62,161 @@ REMOVAL_RECORD = "worktree-removal"
 _PAYLOAD_PLAN = ContextVar("worktree_removal_payload_plan", default=None)
 
 
+def _declared_lake_dependency(path, target):
+    """Recognize one manifest-declared checkout under a Lake project."""
+    packages = path.parent
+    lake = packages.parent
+    project = lake.parent
+    if (packages.name != "packages" or lake.name != ".lake" or not path.name
+            or not project.is_relative_to(target)):
+        return None
+    manifest = project / "lake-manifest.json"
+    try:
+        info = manifest.lstat()
+        if stat.S_ISLNK(info.st_mode) or not stat.S_ISREG(info.st_mode):
+            return None
+        document = json.loads(manifest.read_text(encoding="utf-8"))
+        entries = document.get("packages") if isinstance(document, dict) else None
+        if not isinstance(entries, list):
+            return None
+        names = []
+        for entry in entries:
+            if not isinstance(entry, dict) or not isinstance(entry.get("name"), str):
+                return None
+            names.append(entry["name"])
+        return entries[names.index(path.name)] if names.count(path.name) == 1 else None
+    except (OSError, UnicodeError, json.JSONDecodeError, TypeError):
+        return None
+
+
+LAKE_CONFIG_KEYS = frozenset({
+    "core.repositoryformatversion", "core.filemode", "core.bare", "core.logallrefupdates",
+    "core.ignorecase", "core.precomposeunicode", "core.symlinks", "remote.origin.url",
+    "remote.origin.fetch", "remote.origin.promisor", "remote.origin.partialclonefilter",
+    "extensions.partialclone", "extensions.objectformat",
+})
+GIT_DEFAULT_DESCRIPTION = b"Unnamed repository; edit this file 'description' to name the repository.\n"
+
+
+def _lake_git_directory_problem(directory):
+    """Inspect bounded metadata entries without traversing their payload trees."""
+    if directory.name == "hooks":
+        for entry in directory.iterdir():
+            if not (entry.name.endswith(".sample") and stat.S_ISREG(entry.lstat().st_mode)):
+                return "hooks_entry:" + entry.name
+    elif directory.name == "info":
+        for entry in directory.iterdir():
+            if entry.name != "exclude" or not stat.S_ISREG(entry.lstat().st_mode):
+                return "info_entry:" + entry.name
+            if any(line and not line.startswith(b"#")
+                   for line in entry.read_bytes().splitlines()):
+                return "info_exclude"
+    elif directory.name == "objects":
+        for entry in directory.iterdir():
+            if (not stat.S_ISDIR(entry.lstat().st_mode)
+                    or not (entry.name in {"pack", "info"} or re.fullmatch(r"[0-9a-f]{2}", entry.name))):
+                return "objects_entry:" + entry.name
+            if entry.name == "info":
+                for child in entry.iterdir():
+                    mode = child.lstat().st_mode
+                    if child.name in {"packs", "commit-graph"} and stat.S_ISREG(mode):
+                        continue
+                    if child.name == "commit-graphs" and stat.S_ISDIR(mode):
+                        continue
+                    return "objects_info_entry:" + child.name
+    elif directory.name == "logs":
+        for entry in directory.iterdir():
+            mode = entry.lstat().st_mode
+            if entry.name == "HEAD" and stat.S_ISREG(mode):
+                continue
+            if entry.name == "refs" and stat.S_ISDIR(mode):
+                continue
+            return "logs_entry:" + entry.name
+    return None
+
+
+def _lake_git_shape_problem(path):
+    """Recognize only ordinary detached Lake clone metadata and visible indexes."""
+    metadata = path / ".git"
+    if not stat.S_ISDIR(metadata.lstat().st_mode):
+        return "git_directory"
+    files = {"HEAD", "config", "description", "index", "FETCH_HEAD", "packed-refs"}
+    directories = {"hooks", "info", "logs", "objects", "refs", "worktree-operations"}
+    for entry in metadata.iterdir():
+        mode = entry.lstat().st_mode
+        if entry.name in files and stat.S_ISREG(mode):
+            if entry.name == "description" and entry.read_bytes() != GIT_DEFAULT_DESCRIPTION:
+                return "description"
+            continue
+        if entry.name not in directories or not stat.S_ISDIR(mode):
+            return "git_entry:" + entry.name
+        if entry.name == "worktree-operations":
+            for lock in entry.iterdir():
+                info = lock.lstat()
+                if not (lock.name.endswith(".lock") and stat.S_ISREG(info.st_mode)
+                        and info.st_size == 0):
+                    return "scope_lock:" + lock.name
+        problem = _lake_git_directory_problem(entry)
+        if problem:
+            return problem
+    config = git(path, "config", "--local", "--no-includes", "--null", "--name-only", "--list")
+    if config.stderr:
+        raise Refused("config_inspection:" + os.fsdecode(config.stderr).strip())
+    for key in config.stdout.split(b"\0"):
+        if key and os.fsdecode(key) not in LAKE_CONFIG_KEYS:
+            return "config_key:" + os.fsdecode(key)
+    head = git(path, "symbolic-ref", "--quiet", "HEAD", check=False)
+    if head.returncode == 0:
+        return "attached_head"
+    if head.returncode != 1:
+        raise Refused("symbolic_ref_failed")
+    refs = git(path, "for-each-ref", "--format=%(refname)")
+    if refs.stderr:
+        raise Refused("reference_inspection:" + os.fsdecode(refs.stderr).strip())
+    if any(not ref.startswith((b"refs/tags/", b"refs/remotes/"))
+           for ref in refs.stdout.splitlines()):
+        return "reference_namespace"
+    for entry in git(path, "ls-files", "-v", "-z").stdout.split(b"\0"):
+        if entry and (entry[:1] == b"S" or entry[:1].islower()):
+            return "index_flags"
+    return None
+
+
+def reject_lake_local_content(path, target, package):
+    """Exempt only recognized Lake clones with fully covered visible content."""
+    relative = str(path.relative_to(target))
+    revision = package.get("rev")
+    if not isinstance(revision, str) or not re.fullmatch(r"[0-9a-fA-F]{40}|[0-9a-fA-F]{64}", revision):
+        raise Refused("lake_dependency_check_failed:" + relative + ":manifest_revision")
+    try:
+        shape_problem = _lake_git_shape_problem(path)
+    except (Refused, OSError, subprocess.SubprocessError, UnicodeError) as error:
+        raise Refused("lake_dependency_check_failed:" + relative + ":" + str(error)) from error
+    if shape_problem:
+        raise Refused("lake_dependency_unknown_shape:" + relative + ":" + shape_problem)
+    try:
+        status = git(path, "status", "--porcelain=v1", "-z", "--untracked-files=all",
+                     "--ignore-submodules=none").stdout
+        manifest_type = git(path, "cat-file", "--batch-check=%(objecttype)",
+                            input=(revision + "\n").encode("ascii")).stdout.strip()
+        if manifest_type == b"commit":
+            manifest_commits = [revision]
+        elif manifest_type == revision.encode("ascii") + b" missing":
+            manifest_commits = []
+        else:
+            raise Refused("manifest_revision_object")
+        history = git(path, "rev-list", "--max-count=1", "HEAD", "--all", "--reflog",
+                      "--not", "--remotes", "--tags", *manifest_commits, "--")
+        if history.stderr:
+            raise Refused("history_inspection:" + os.fsdecode(history.stderr).strip())
+    except (Refused, OSError, subprocess.SubprocessError, UnicodeError) as error:
+        raise Refused("lake_dependency_check_failed:" + relative + ":" + str(error)) from error
+    if status:
+        raise Refused("lake_dependency_dirty:" + relative)
+    if history.stdout.strip():
+        raise Refused("lake_dependency_local_history:" + relative)
+
+
 def reject_nested_git(target):
     """Refuse owner, device and repository boundaries before payload mutation."""
     root_stat = target.lstat()
@@ -79,7 +234,11 @@ def reject_nested_git(target):
             if stat.S_ISDIR(info.st_mode) and info.st_dev != root_stat.st_dev:
                 raise Refused("device_boundary:" + str(child))
         if path != target and (".git" in folders or ".git" in files):
-            raise Refused("nested_git_boundary:" + str(path.relative_to(target)))
+            package = _declared_lake_dependency(path, target)
+            if package is None:
+                raise Refused("nested_git_boundary:" + str(path.relative_to(target)))
+            reject_lake_local_content(path, target, package)
+            folders[:] = [name for name in folders if name != ".git"]
         if "HEAD" in files and git(target, "rev-parse", "--resolve-git-dir", path,
                                    check=False).returncode == 0:
             raise Refused("nested_git_boundary:" + str(path.relative_to(target)))
