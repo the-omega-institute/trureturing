@@ -13,7 +13,8 @@ homology. The row premise belongs to the law, not to the state space.
 The exact source equivalence and positive law are supplied. Whole-family
 variation, sensitivity, actual observational dependence, enrolled source
 selection and raw occurrence reconstruction are unfinished. No completed
-four-slot registration is asserted.
+four-slot registration is asserted. The remaining obligations are described in
+https://github.com/the-omega-institute/trureturing/issues/24858.
 -/
 
 set_option autoImplicit false
@@ -34,8 +35,10 @@ structure Inputs.{v, u} where
   C : Type u
   category : Category.{v} C
   abelian : @Abelian C category
-  K : @HomologicalComplex₂ C category (ComplexShape.down ℕ) (ComplexShape.down ℕ)
-  L : @HomologicalComplex₂ C category (ComplexShape.down ℕ) (ComplexShape.down ℕ)
+  K : letI := category; letI := abelian
+      HomologicalComplex₂ C (ComplexShape.down ℕ) (ComplexShape.down ℕ)
+  L : letI := category; letI := abelian
+      HomologicalComplex₂ C (ComplexShape.down ℕ) (ComplexShape.down ℕ)
 
 attribute [instance] Inputs.category Inputs.abelian
 
@@ -57,8 +60,11 @@ def signature.{v, u} : DependentFamily.Signature where
 
 def actual.{v, u} : DependentFamily.Realization signature.{v, u} :=
   DependentFamily.realize signature
-    (fun _ p φ n ↦ IsIso (homologyMap (HomologicalComplex₂.total.map φ
-      (ComplexShape.down ℕ)) n)) (fun e ↦ nomatch e)
+    (fun _ (p : Inputs.{v, u}) (φ : State p) n ↦
+      letI := p.category
+      letI := p.abelian
+      IsIso (homologyMap (HomologicalComplex₂.total.map φ (ComplexShape.down ℕ)) n))
+    (fun e ↦ nomatch e)
 
 def arena.{v, u} : DependentFamily.Arena where
   signature := signature.{v, u}
@@ -67,6 +73,9 @@ def arena.{v, u} : DependentFamily.Arena where
 theorem source_bridge.{v, u} : sourceScope.{v, u} ↔ arena.{v, u}.Law actual := by
   constructor
   · intro h p φ hφ n
+    letI := p.category
+    letI := p.abelian
+    change IsIso (homologyMap (HomologicalComplex₂.total.map φ (ComplexShape.down ℕ)) n)
     have : QuasiIso (HomologicalComplex₂.total.map φ (ComplexShape.down ℕ)) :=
       h φ hφ
     infer_instance

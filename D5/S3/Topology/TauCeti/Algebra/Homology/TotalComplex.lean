@@ -125,15 +125,11 @@ private instance hasTotal_down_nat [HasFiniteCoproducts C]
 
 end HomologicalComplex₂
 namespace ComplexShape
-@[simp] private lemma pi_add {I : Type*} [AddMonoid I] (c : ComplexShape I) [c.TensorSigns]
-    (p q : I) : π c c c (p, q) = p + q := rfl
 private def embeddingDownNatSucc : (ComplexShape.down ℕ).Embedding (ComplexShape.down ℕ) :=
   embeddingDown'Add (1 : ℕ) 1
 @[simp] private lemma embeddingDownNatSucc_f (n : ℕ) : embeddingDownNatSucc.f n = n + 1 := rfl
 private instance : embeddingDownNatSucc.IsRelIff :=
   inferInstanceAs (embeddingDown'Add (1 : ℕ) 1).IsRelIff
-private instance : embeddingDownNatSucc.IsTruncLE :=
-  inferInstanceAs (embeddingDown'Add (1 : ℕ) 1).IsTruncLE
 end ComplexShape
 namespace HomologicalComplex₂
 
@@ -320,23 +316,6 @@ private lemma dropRowZero_f_succ (n : ℕ) :
   exact Category.id_comp _
 
 /-- The projection killing row `0` vanishes on the summands of row `0`. -/
-@[reassoc (attr := simp)]
-private lemma ιTotal_dropRowZero_f_zero (p n : ℕ) (h) :
-    K.ιTotal (ComplexShape.down ℕ) p 0 n h ≫ (dropRowZero K).f n = 0 := by
-  rcases n with _ | n
-  · exact (isZero_extend_X _ _ 0 fun _ ↦ by simp).eq_of_tgt _ _
-  · simp [dropRowZero_f_succ]
-
-/-- The projection killing row `0` sends the summand `(K.X p).X (q + 1)` of the total complex in
-degree `n + 1` to the same summand of the total complex of `rowsSucc K` in degree `n`. -/
-@[reassoc (attr := simp)]
-private lemma ιTotal_dropRowZero_f_succ (p q n : ℕ) (h) :
-    K.ιTotal (ComplexShape.down ℕ) p (q + 1) (n + 1) h ≫ (dropRowZero K).f (n + 1) =
-      (rowsSucc K).ιTotal (ComplexShape.down ℕ) p q n (by simp at h ⊢; omega) ≫
-        (((rowsSucc K).total (ComplexShape.down ℕ)).extendXIso embeddingDownNatSucc
-          (embeddingDownNatSucc_f n)).inv := by
-  simp [dropRowZero_f_succ]
-
 @[reassoc (attr := simp)]
 private lemma rowZeroι_dropRowZero : rowZeroι K ≫ dropRowZero K = 0 := by
   ext (_ | n)
