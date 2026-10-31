@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Partitions;
 
@@ -14,98 +16,116 @@ internal sealed class SpechtTabloidFormDocument : IScribeDocumentDefinition
             Paragraph(Text("The tabloid pairing makes distinct cosets orthogonal. A permutation preserves this pairing, and its inverse moves the action between the two arguments. Positivity over the rational numbers makes the restriction to each subspace nondegenerate, so the orthogonal subspace is an invariant complement.")),
             Describe.Lean(DescribeId.Create("permutationform"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtTabloidForm.permutationForm"),
-                H("permutationForm"), StatementSource.FromLean(),
+                H("permutationForm"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The statement is the selected structural result for the explicit permutation representation and polytabloid construction."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("permutationform-apply"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtTabloidForm.permutationForm_apply"),
-                H("permutationForm apply"), StatementSource.FromLean(),
+                H("permutationForm apply"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The statement is the selected structural result for the explicit permutation representation and polytabloid construction."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("permutationform-comm"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtTabloidForm.permutationForm_comm"),
-                H("permutationForm comm"), StatementSource.FromLean(),
+                H("permutationForm comm"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The statement is the selected structural result for the explicit permutation representation and polytabloid construction."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("permutationform-issymm"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtTabloidForm.permutationForm_isSymm"),
-                H("permutationForm isSymm"), StatementSource.FromLean(),
+                H("permutationForm isSymm"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The statement is the selected structural result for the explicit permutation representation and polytabloid construction."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("permutationform-isrefl"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtTabloidForm.permutationForm_isRefl"),
-                H("permutationForm isRefl"), StatementSource.FromLean(),
+                H("permutationForm isRefl"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The statement is the selected structural result for the explicit permutation representation and polytabloid construction."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("permutationform-self-pos"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtTabloidForm.permutationForm_self_pos"),
-                H("permutationForm self pos"), StatementSource.FromLean(),
+                H("permutationForm self pos"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The statement is the selected structural result for the explicit permutation representation and polytabloid construction."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("permutationform-self-eq-zero-iff"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtTabloidForm.permutationForm_self_eq_zero_iff"),
-                H("permutationForm self eq zero iff"), StatementSource.FromLean(),
+                H("permutationForm self eq zero iff"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The statement is the selected structural result for the explicit permutation representation and polytabloid construction."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("permutationform-restrict-nondegenerate"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtTabloidForm.permutationForm_restrict_nondegenerate"),
-                H("permutationForm restrict nondegenerate"), StatementSource.FromLean(),
+                H("permutationForm restrict nondegenerate"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The statement is the selected structural result for the explicit permutation representation and polytabloid construction."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("permutationform-ofmulaction-invariant"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtTabloidForm.permutationForm_ofMulAction_invariant"),
-                H("permutationForm ofMulAction invariant"), StatementSource.FromLean(),
+                H("permutationForm ofMulAction invariant"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The statement is the selected structural result for the explicit permutation representation and polytabloid construction."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("permutationform-ofmulaction-left"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtTabloidForm.permutationForm_ofMulAction_left"),
-                H("permutationForm ofMulAction left"), StatementSource.FromLean(),
+                H("permutationForm ofMulAction left"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The statement is the selected structural result for the explicit permutation representation and polytabloid construction."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("ofmulaction-mem-orthogonal"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtTabloidForm.ofMulAction_mem_orthogonal"),
-                H("ofMulAction mem orthogonal"), StatementSource.FromLean(),
+                H("ofMulAction mem orthogonal"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The statement is the selected structural result for the explicit permutation representation and polytabloid construction."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("orthogonalsubrepresentation"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtTabloidForm.orthogonalSubrepresentation"),
-                H("orthogonalSubrepresentation"), StatementSource.FromLean(),
+                H("orthogonalSubrepresentation"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The statement is the selected structural result for the explicit permutation representation and polytabloid construction."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("tosubmodule-orthogonalsubrepresentation"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtTabloidForm.toSubmodule_orthogonalSubrepresentation"),
-                H("toSubmodule orthogonalSubrepresentation"), StatementSource.FromLean(),
+                H("toSubmodule orthogonalSubrepresentation"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The statement is the selected structural result for the explicit permutation representation and polytabloid construction."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("iscompl-orthogonalsubrepresentation"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtTabloidForm.isCompl_orthogonalSubrepresentation"),
-                H("isCompl orthogonalSubrepresentation"), StatementSource.FromLean(),
+                H("isCompl orthogonalSubrepresentation"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The statement is the selected structural result for the explicit permutation representation and polytabloid construction."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("tabloidform"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtTabloidForm.tabloidForm"),
-                H("tabloidForm"), StatementSource.FromLean(),
+                H("tabloidForm"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The statement is the selected structural result for the explicit permutation representation and polytabloid construction."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("iscompl-orthogonalsubrepresentation-permutationmodule"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtTabloidForm.isCompl_orthogonalSubrepresentation_permutationModule"),
-                H("isCompl orthogonalSubrepresentation permutationModule"), StatementSource.FromLean(),
+                H("isCompl orthogonalSubrepresentation permutationModule"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The statement is the selected structural result for the explicit permutation representation and polytabloid construction."))),
                 DescribeRole.Theorem))));
+
+    private static Formula I(string name) => F.Id(name);
+    private static Formula C(string name, params Formula[] args) => args.Length == 0
+        ? Seq(Operatorname, Grp(I(name)))
+        : new Formula.Apply(Seq(Operatorname, Grp(I(name))), [.. args]);
+    private static Formula A(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula E(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula Q(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula N(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
+    private static Formula P(Formula a, Formula b) => new Formula.Logic(Seq(Open, a, Close), FormulaLogicOperator.Implies, Seq(Open, b, Close));
+    private static Formula B(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula V(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Or, b);
+    private static Formula L(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Shape(Formula body) => A("mu", C("YoungDiagram"), body);
+    private static Formula Tableau(Formula body) => Shape(A("t", C("YoungTableau", I("mu")), body));
+    private static Formula Part(Formula body) => A("n", C("Nat"), A("mu", C("Partition", I("n")), body));
 }
