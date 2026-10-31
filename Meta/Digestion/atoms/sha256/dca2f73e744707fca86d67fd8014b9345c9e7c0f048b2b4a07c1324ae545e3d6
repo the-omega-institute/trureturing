@@ -1,0 +1,26 @@
+**定义 B-41.1（全部条件完成与缺口）。** 本节固定 $n\ge15$，沿用定义B-32.1的标号严格凸多边形、实际耳及完整耳集。原四见证问题取假设B-37.1的每个两两不交叉六耳配置 $D$、每一组预先指定且满足 $\operatorname{Ear}(T_a)=S_a$ 的四个实际见证，以及包含它们、在完整实际耳集上两两相交的任一族 $\mathcal F$。记号 $M_i,Q_i,\Gamma,u_0,w_2,w_3,w_4,L,a_i,b_i,t_i,z_{ij},\eta,\ell_i,d_{ij}$ 均保持第33、37节的定义；特别是 $\Gamma(R)$ 为整个实际精确 $D$ 迹完成纤维。
+
+置
+
+$$
+\begin{gathered}
+c_r=C_{n-r-2}\quad(0\le r\le\lfloor n/2\rfloor),\qquad
+m=\lfloor n/2\rfloor-4,\\
+s=w_2+2w_3+w_4=c_2-2c_3+c_4,\qquad h_n=w_2-w_4,\\
+L=u_0+w_2+2w_4+6w_3,\\
+V_r=c_{r+2}-2c_{r+3}+c_{r+4}\quad(0\le r\le m),\\
+G_d(n)=\sum_{r=0}^d(-1)^r\binom dr V_r-V_d
+\quad(1\le d\le m).
+\end{gathered}
+\tag{41.1}
+$$
+
+对满足 $|P|=|Q|=2$、$P\cap Q=\varnothing$ 且 $K=P\cup Q$ 两两兼容的实际耳集 $P,Q$，使用定理B-37.2的全部条件完成
+
+$$
+\mathcal X(P\mid Q)=\{T\in\mathcal T_n:
+ P\subseteq\operatorname{Ear}(T),\quad Q\cap\operatorname{Ear}(T)=\varnothing\}.
+$$
+
+令 $E_K$ 为 $K$ 外兼容 $K$ 每条耳的全部实际耳，$m_K$ 为 $E_K$ 中两两兼容子集的最大大小。上述完成母族保留所有其他耳及每一种实际完成；所取子族仍可任意选取，不施加对称性、饱和性、包含极大性或指定完整双耳／三耳成员条件。
+

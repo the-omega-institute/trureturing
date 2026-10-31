@@ -1,0 +1,2 @@
+**定义 B-13.1（固定背景的取补）。** 对声明的来源域 $`\Omega`$ 与事件 $`E\subseteq\Omega`$，定义 $`\neg_\Omega E=\Omega\setminus E`$。位置配置取补 $`C_U(I)=U\setminus I`$ 则是 $`2^U`$ 上的点映射，不是 $`\Sigma`$ 的事件族补集。相对补集的原有区分归 [B-S2] §§42–48。
+
