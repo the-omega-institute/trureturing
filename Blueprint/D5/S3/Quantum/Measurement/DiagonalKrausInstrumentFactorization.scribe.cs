@@ -68,17 +68,10 @@ internal sealed class DiagonalKrausInstrumentFactorizationDocument : IScribeDocu
                         + "additional data; none is inferred from this factorization."))),
                 DescribeRole.Theorem))));
 
-    private static Formula Call(string name, params Formula[] args)
-    {
-        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
-        for (var j = 0; j < args.Length; j++)
-        {
-            if (j > 0) items.AddRange([Comma, Sp]);
-            items.Add(args[j]);
-        }
-        items.Add(Close);
-        return Seq([.. items]);
-    }
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
     private static Formula SumOver(Formula index, Formula type, Formula body) =>
         Seq(Sum, Underscore, Grp(index, Sp, InMacro, Sp, type), Sp, Grp(body));
@@ -128,7 +121,7 @@ internal sealed class DiagonalKrausInstrumentFactorizationDocument : IScribeDocu
             Forall, Sp, k, Colon, Sp, R, Sp, To, Sp, Call("Matrix", O, I, complex), Comma, Sp,
             Forall, Sp, p, Colon, Sp, I, Sp, To, Sp, complex, Comma, Sp,
             Forall, Sp, o, Comma, q, Colon, Sp, O, Comma, Sp,
-            Equal(channel, SumOver(i, I, Multiply(SumOver(r, R, gram), Call("p", i))))));
+            Equal(channel, SumOver(i, I, Multiply(Parenthesized(SumOver(r, R, gram)), Call("p", i))))));
     }
 
     private static Formula TheoremFormula()
@@ -154,8 +147,9 @@ internal sealed class DiagonalKrausInstrumentFactorizationDocument : IScribeDocu
             Call("Matrix", I, I, Seq(Mathbb, Grp(F.Id("C")))), Comma, Sp,
             Call("matrixAction", F.Id("C"), Rho), Sp, Eq, Sp,
             SumOver(b, B, Call("Phi", a, b, Rho)));
-        return Disp(Context(Seq(Grp(complete), Sp, Rightarrow, RowBreak, Grp(),
-            Grp(positive), Sp, Land, Sp, Grp(normalized), Sp, Land, RowBreak, Grp(),
-            Grp(Grp(gram), Sp, Iff, Sp, Grp(factor)), Sp, Land, RowBreak, Grp(), Grp(channel)), true));
+        return Disp(Context(Seq(Parenthesized(complete), Sp, Rightarrow, RowBreak, Grp(),
+            Parenthesized(positive), Sp, Land, Sp, Parenthesized(normalized), Sp, Land, RowBreak, Grp(),
+            Parenthesized(Seq(Parenthesized(gram), Sp, Iff, Sp, Parenthesized(factor))),
+            Sp, Land, RowBreak, Grp(), Parenthesized(channel)), true));
     }
 }
