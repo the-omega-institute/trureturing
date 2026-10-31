@@ -167,7 +167,7 @@ private theorem rejected_fails : ¬ arena.Law rejected := by
   intro h
   have hh := h (emptyLattice, 0) 0
   change sourceVacuum emptyLattice 0 0 = 1 at hh
-  simpa only [map_zero] using hh
+  simpa only [map_zero, zero_ne_one] using hh
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro role

@@ -50,7 +50,9 @@ The shift sum is reconstructed before the ordinary oscillator variables vanish. 
 theorem sourceVacuum_eq_evaluation (D : LatticeData) (z : ℂ) (p : Oscillator D) :
     sourceVacuum D z p = evaluateCorrection D z (correctionLift D 0 p) := by
   change (shiftCoefficients D (correctionPolynomial D 0 p)).sum _ = _
-  rw [shiftCoefficients, shift_reconstruction]
+  change ((correctionPolynomial D 0 p).toFinsupp.coeff.sum
+    (fun s p => z ^ s * constantCoeff p)) = _
+  rw [shift_reconstruction]
   symm
   simpa only [evaluateCorrection, optionEquivLeft_elim_eval, eval_zero',
     correctionPolynomial, correctionLift, LinearMap.comp_apply, AlgEquiv.toLinearMap_apply]
@@ -184,9 +186,14 @@ private theorem formContraction_linearForm (D : LatticeData) (z : ℂ)
     (c : I → Index D →₀ ℂ) (i j : I) :
     formContraction D z (c i) (linearForm D (c j)) =
       C (covarianceMatrix D z c i j) := by
-  simp only [formContraction, derivation_sum_apply, Derivation.smul_apply,
-    linearForm, map_sum, map_smul, sourceContraction, mkDerivation_X,
-    covarianceMatrix, Finset.smul_sum, smul_smul, smul_eq_C_mul, ← map_mul]
+  calc
+    _ = ∑ a ∈ (c i).support, ∑ b ∈ (c j).support,
+        (c i a * c j b) • C (covariance D z a b) := by
+      simp only [formContraction, derivation_sum_apply, Derivation.smul_apply]
+      simp only [linearForm, map_sum, map_smul, sourceContraction,
+        mkDerivation_X, Finset.smul_sum, smul_smul]
+    _ = _ := by
+      simp only [covarianceMatrix, map_sum, smul_eq_C_mul, ← map_mul]
 
 private def substitution (D : LatticeData) (c : I → Index D →₀ ℂ) :
     MvPolynomial I ℂ →ₐ[ℂ] Oscillator D := aeval (linearForm D ∘ c)
@@ -202,7 +209,7 @@ private theorem contraction_substitution (D : LatticeData) (z : ℂ)
     simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add, hp,
       mkDerivation_X]
     simp only [substitution, aeval_X, Function.comp_apply,
-      formContraction_linearForm, aeval_C]
+      formContraction_linearForm, aeval_C, algebraMap_eq]
 
 private def sourceMoment (D : LatticeData) (z : ℂ)
     (c : I → Index D →₀ ℂ) (d : I →₀ ℕ) : ℂ :=
@@ -219,20 +226,22 @@ private theorem sourceMoment_step (D : LatticeData) (z : ℂ)
       ∑ j, (r j : ℂ) * covarianceMatrix D z c i j *
         sourceMoment D z c (r - Finsupp.single j 1) := by
   have hm : (monomial (r + Finsupp.single i 1) 1 : MvPolynomial I ℂ) =
-      monomial r 1 * X i := by simp [X, monomial_mul]
+      monomial r 1 * X i := by simp [X]
   unfold sourceMoment
   rw [hm, map_mul]
-  change sourceVacuum D z (substitution D c (monomial r 1) * linearForm D (c i)) = _
+  rw [show substitution D c (X i) = linearForm D (c i) by
+    simp only [substitution, aeval_X, Function.comp_apply]]
   rw [sourceVacuum_form_mul, contraction_substitution, mkDerivation_monomial]
   simp only [one_smul, Finsupp.sum, map_sum, smul_eq_mul]
   rw [← Finset.sum_subset (Finset.subset_univ r.support)]
   · apply Finset.sum_congr rfl
     intro j hj
-    have hterm : monomial (r - Finsupp.single j 1) (r j : ℂ) •
+    have hterm : monomial (r - Finsupp.single j 1) (r j : ℂ) *
         (C (covarianceMatrix D z c i j) : MvPolynomial I ℂ) =
         ((r j : ℂ) * covarianceMatrix D z c i j) •
           (monomial (r - Finsupp.single j 1) 1 : MvPolynomial I ℂ) := by
-      simp [smul_eq_mul, smul_monomial, mul_comm, mul_assoc]
+      rw [mul_comm _ (C _), C_mul_monomial, smul_monomial]
+      simp [smul_eq_mul, mul_comm]
     rw [hterm, map_smul, map_smul]
     rfl
   · intro j hj hnot
@@ -375,7 +384,9 @@ theorem sourceVacuum_linearForms (D : LatticeData) (z : ℂ)
         gaussianCoefficient (covarianceMatrix D z c) d := by
   have h := sourceMoment_eq_nativeMoment D z c d
   have hp : substitution D c (monomial d 1) = ∏ i, linearForm D (c i) ^ d i := by
-    simp [substitution, aeval_monomial, Finsupp.prod_fintype]
+    change aeval (linearForm D ∘ c) (monomial d 1) = _
+    rw [aeval_monomial]
+    simp [Finsupp.prod_fintype]
   simpa only [sourceMoment, nativeMoment, hp] using h
 
 #print axioms sourceVacuum_eq_evaluation
