@@ -1,0 +1,44 @@
+#### 定理 7.3（黄金谱的最大熵变分身份）
+
+令 $h=(\rho,1)^{\mathsf T}$，定义
+
+$$
+P_{ij}=\frac{A_{ij}h_j}{\rho h_i},\qquad
+P=\begin{pmatrix}\rho^{-1}&\lambda\rho^{-2}\\1&0\end{pmatrix},
+\quad \pi=\frac{1}{2\rho-1}(\rho,\rho-1).
+$$
+
+对任意平稳合法 Markov 律 $(\nu,Q)$，熵率 $h(Q)=-\sum_{ij}\nu_iQ_{ij}\log Q_{ij}$ 满足
+
+$$
+\boxed{h(Q)+(\log\lambda)\nu_1
+=\log\rho-\sum_i\nu_iD(Q_i\Vert P_i).}
+$$
+
+等号 $h(Q)+(\log\lambda)\nu_1=\log\rho$ 唯一选出 $(\pi,P)$。该最优性也覆盖全部平稳合法过程；达到最优的过程必为上述一阶 Markov 过程。
+
+**证明。**
+
+$A_\lambda h=\rho h$ 保证 $P$ 行和为一，直接代入验证 $\pi P=\pi$。合法边上
+
+$$
+\log P_{ij}=\log A_{ij}+\log h_j-\log h_i-\log\rho.
+$$
+
+按 $\nu_iQ_{ij}$ 求和，平稳性抵消两项 $\log h$；只有 $0\to1$ 有 $\log A_{ij}=\log\lambda$，其平稳频率为 $\nu_1$。将行 KL 展开即得身份。等号强迫所有有质量行等于 $P$；该链不可约，平稳质量不能只停在某个真子集，故全部行及平稳律唯一。
+
+对任意平稳过程，熵率不超过 $H(X_1\mid X_0)$；这是条件熵随增加过去信息而不增及链式法则的结果。取相同一位、相邻位边缘的 $Q$，前述上界继续成立。若取等，所有有限过去上的额外条件互信息都为零，因而具有一阶 Markov 条件；再用行 KL 的等号条件得到唯一过程。
+
+∎
+
+特别在 $\lambda=1$，
+
+$$
+P_{00}=\varphi^{-1},\quad P_{01}=\varphi^{-2},\quad P_{10}=1,
+\qquad \sup h=\log\varphi.
+$$
+
+这里黄金比例同时是**合法完成数量的递归增长率、转移算子的 Perron 根和最大熵率的指数** 。这是标准 Parry 理论在本合法语言上的具体化 （[3](#ref-parry)），不是量子公理的无前提推导。
+
+<a id="statement-7-4"></a>
+

@@ -1,0 +1,41 @@
+**Lemma 2.1 (shape sequence and actual prefix cost).** At every odd depth
+$2m+1$, the zero-reply replay has one even and one odd arm. At every even
+depth $2m$, it has either two even arms or two odd arms. Let
+$\lambda_m\in[0,1]$ be the original-seed probability of the latter shape at
+depth $2m$; for a deterministic seed it is $0$ or $1$. Every prescribed
+finite sequence of even-depth shapes is realized by a lawful side schedule, and
+the schedule can be chosen independently of $(Q,X_0)$.
+
+Let $\tau$ be the marker time of any continued version of the replay route.
+For depths before the voluntary horizon, its integrated survival tails are
+$$
+\Pr(\tau>2m+1)=bM_m+aM_{m+1},
+$$
+and, for $m\ge1$,
+$$
+\Pr(\tau>2m)=M_m+\lambda_m v_m.
+$$
+Consequently $C_0=0$, $C_1=1$, and, for $N\ge1$,
+$$
+\begin{aligned}
+C_{2N}(\lambda)
+ &=2J_N-a+aM_N+\sum_{m=1}^{N-1}\lambda_m v_m,\\
+C_{2N+1}(\lambda)
+ &=2J_N-a+(1+a)M_N+\sum_{m=1}^{N}\lambda_m v_m.
+\end{aligned}
+$$
+
+**Proof.** A zero reply flips the selected arm’s parity. The conditional
+survival mass at an odd depth is $q^m(b+aq)$; at an even depth it is $q^m$
+for the even/even shape and $q^{m-1}(b+aq^2)$ for the odd/odd shape. Their
+difference is $(1-q)(b-aq)q^{m-1}$, whose $\mu$-integral is $v_m$. The
+original seed is independent of the source, so averaging the replay partition
+gives the displayed tails. Summing $\Pr(\tau>t)$ for $0\le t<n$ by Tonelli
+gives the two formulas. To realize a requested next even shape from an even
+depth, first query the
+left arm. On a zero reply the parities are mixed. Then query the arm whose
+current parity is $1$ when the target is even/even, and the arm whose parity
+is $0$ when the target is odd/odd. A marker interrupts either step.
+This is the lawful shape construction in PG27.17, with no extra clock or
+random source. $\square$
+

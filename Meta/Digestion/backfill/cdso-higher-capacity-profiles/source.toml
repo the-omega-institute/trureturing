@@ -1,0 +1,5 @@
+source_id = "cdso-higher-capacity-profiles"
+path = "docs/develop/theory/CDSO_HIGHER_CAPACITY_PROFILES.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

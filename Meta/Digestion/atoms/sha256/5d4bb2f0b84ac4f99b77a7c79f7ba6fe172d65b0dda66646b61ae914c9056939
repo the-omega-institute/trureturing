@@ -1,0 +1,37 @@
+## 文献与项目来源
+
+<a id="ref-bellman"></a>
+
+1. R. Bellman. *The Theory of Dynamic Programming*. Bulletin of the American Mathematical Society 60 (1954), 503–515. [DOI: 10.1090/S0002-9904-1954-09848-8](https://doi.org/10.1090/S0002-9904-1954-09848-8). 本文有限 DAG 结论已给自足证明；项目 KL 原卷亦已有有限势证书。
+
+<a id="ref-todorov"></a>
+
+2. E. Todorov. *Linearly-solvable Markov decision problems*. NIPS 2006. [原论文](https://papers.nips.cc/paper_files/paper/2006/file/d806ca13ca3449af72a1ea5aedbed26a-Paper.pdf)。KL 控制成本与指数变换的背景；本文不迁移其特定效率结论。
+
+<a id="ref-parry"></a>
+
+3. W. Parry. *Intrinsic Markov Chains*. Transactions of the American Mathematical Society 112 (1964), 55–66. [DOI: 10.1090/S0002-9947-1964-0161372-1](https://doi.org/10.1090/S0002-9947-1964-0161372-1). 本轮核对原论文全文转录；黄金二状态特例另附完整证明。
+
+<a id="ref-gneiting"></a>
+
+4. T. Gneiting and A. E. Raftery. *Strictly Proper Scoring Rules, Prediction, and Estimation*. JASA 102 (2007), 359–378. [作者提供的原论文](https://sites.stat.washington.edu/people/raftery/Research/PDF/Gneiting2007jasa.pdf)。
+
+<a id="ref-aharonov"></a>
+
+5. D. Aharonov, W. van Dam, J. Kempe, Z. Landau, S. Lloyd, O. Regev. *Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation*. [arXiv:quant-ph/0405098](https://arxiv.org/abs/quant-ph/0405098). 历史态及传播 Hamiltonian 的先行背景。
+
+<a id="ref-mielke"></a>
+
+6. A. Mielke, M. A. Peletier, D. R. M. Renger. *A generalization of Onsager's reciprocity relations to gradient flows with nonlinear mobility*. [arXiv:1510.06219](https://arxiv.org/abs/1510.06219). 局部速度变分及能量耗散结构的背景。
+
+<a id="ref-yuan"></a>
+
+7. X. Yuan, S. Endo, Q. Zhao, Y. Li, S. C. Benjamin. *Theory of variational quantum simulation*. Quantum 3, 191 (2019). [arXiv:1812.08767](https://arxiv.org/abs/1812.08767). 区分静态、实时间与虚时间变分。
+
+<a id="ref-repo"></a>
+
+8. *trureturing*, `dev` 快照 `f22ccafb22873bb5445053498b0f64f9ea111ede`. [不可变理论目录](https://github.com/the-omega-institute/trureturing/tree/f22ccafb22873bb5445053498b0f64f9ea111ede/docs/develop/theory)。本文各处的项目标题链接指向该快照；理论正文与形式证明身份分开。
+
+<a id="ref-v15"></a>
+
+9. *黄金门的 NAND 式普适性与精确实现的算术边界*, v15.0. [项目中的前稿转换正文](https://github.com/the-omega-institute/trureturing/blob/f22ccafb22873bb5445053498b0f64f9ea111ede/docs/develop/theory/AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md)。历史研究快照为 `52ce13dc…`；前稿回流不构成独立认证。

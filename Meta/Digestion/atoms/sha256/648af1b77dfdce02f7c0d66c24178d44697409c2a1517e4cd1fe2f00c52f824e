@@ -1,0 +1,20 @@
+**Lemma 2.2 (terminal risk at a fixed cap).** For $N\ge1$, the even-cap
+zero-replay risks of the two terminal shapes are
+$$
+E_N^{\mathrm{ee}}=\min(a,b)M_N,\qquad
+E_N^{\mathrm{oo}}=\min(aM_{N+1},bM_{N-1}).
+$$
+At an odd cap $2N+1$ with $N\ge0$, both possible zero-replay shapes have risk
+$\min(aM_{N+1},bM_N)$. Therefore the cap frontier supplied by finite-query spatial recovery is
+$$
+R_0^*=\min(a,b),\qquad R_1^*=\min(aM_1,b),\qquad
+R_{2N}^*=\min(aM_{N+1},bM_N),\qquad
+R_{2N+1}^*=\min(aM_{N+1},bM_N).
+$$
+
+**Proof.** A marker identifies a $00$ edge and hence the root and the whole
+connected exposed interval. On the only non-marker leaf, the two root masses
+are $aM_{k+s}$ and $bM_k$, so its Bayes error is their minimum. The displayed values and the fact that the even-cap minimum of the two lawful
+shapes equals the cap frontier are exactly the finite-query spatial
+recovery result. $\square$
+
