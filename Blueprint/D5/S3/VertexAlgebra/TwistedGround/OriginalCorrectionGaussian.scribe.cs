@@ -5,12 +5,15 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.TwistedGround;
 internal sealed class OriginalCorrectionGaussianDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.";
+    private static readonly LibraryNoteRef Background =
+        LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact finite Gaussian coefficients of the actual neutral lattice correction",
         H("Actual neutral correction and native Gaussian coefficients"),
         Blocks(
             Paragraph(Text("Let D be lattice data of arbitrary finite rank, with its symmetric integral Gram matrix. Its oscillator index is Fin(D.rank) times the natural numbers. The shift parameter z is any complex number. Every source polynomial and every chosen complex linear form has finite support. Rank zero, degenerate Gram matrices, zero forms, dependent forms and an empty finite family are included.")),
+            Paragraph(Text("Formal Gaussian/Wick moment calculus is classical: pair contractions determine centered moments, and factorial-weighted coefficients of the formal exponential of a quadratic encode repeated and mixed occupations. The twisted lattice correction background follows the imported LatticeHalfFockCurrentCorrection Scribe and its Frenkel-Lepowsky-Meurman, Vertex Operator Algebras and the Monster (1988), bibliographic note. The FLM full text was not inspected, and no exact theorem from it is quoted here. The repository-specific result proved here identifies the actual finite neutral Corr vacuum functional, after arbitrary finite linear substitution, with the existing native Gaussian coefficients through the derived Stein recurrence. No literature novelty is claimed.")),
             D("sourceVacuum", "Actual vacuum readout", "Apply the original neutral Corr(D,0) to the source polynomial. Sum z^s times the oscillator constant coefficient of its shift-s component. This is a finite linear functional; it is not asserted to preserve products."),
             D("covariance", "Evaluated pair covariance", "For indices a and b, the covariance is pairScalar(a.2+1,b.2+1) times D.G(a.1,b.1) times z^((a.2+1)+(b.2+1)). It is complex bilinear, without conjugation."),
             D("linearForm", "Arbitrary finite linear form", "A finitely supported coefficient family c gives the actual oscillator polynomial sum_a c(a) X_a."),
@@ -24,10 +27,10 @@ internal sealed class OriginalCorrectionGaussianDocument : IScribeDocumentDefini
     private static DocumentBlock D(string name, string title, string prose) =>
         Describe.Lean(DescribeId.Create("original-correction-gaussian-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            AssessedProvenance.FromRepo(Background), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static DocumentBlock N(string name, string title, string prose) =>
         Describe.Lean(DescribeId.Create("original-correction-gaussian-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            AssessedProvenance.FromRepo(Background), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 }
