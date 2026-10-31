@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:86f7315b8bbe49b49dac6c2e87a7f65d25a447b7100683baf253e06ff8c25efe
   normalized_sha256: sha256:86f7315b8bbe49b49dac6c2e87a7f65d25a447b7100683baf253e06ff8c25efe
 cas_ref: sha256:86f7315b8bbe49b49dac6c2e87a7f65d25a447b7100683baf253e06ff8c25efe
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/StatisticalMechanics/HardCore/ConfigurationCharge.defect_eq_expected_charge
+    target_statement_id: sha256:c813504f760b8d932d0c33633c9fd7ade1a9ee281cdcf0544c45615e6f8bcd3f
 receipts:
   unresolved_subitems: []
