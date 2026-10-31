@@ -992,7 +992,7 @@ Their span has rank two. Indeed their difference contains $D$; if $e\ne1$, the f
 The next two chronological actions are $MM$. Fix their absolute response forms by
 
 $$
-Y_4-A=uX+\frac v{16}D,qquad
+Y_4-A=uX+\frac v{16}D,\\qquad
 Y_{5M}-A=wX+\frac z{16}D.
 \tag{13.3}
 $$
@@ -1018,7 +1018,7 @@ $$
 Its complete source inverse is
 
 $$
-b=R-1,qquad c=t-R+1,qquad
+b=R-1,\\qquad c=t-R+1,\\qquad
  a=a_\pm=\frac{1\pm\sqrt{1-4q}}2.
 \tag{13.6}
 $$
@@ -1044,7 +1044,7 @@ $$
 Put
 
 $$
-C=(8-7t)R-t,qquad B_5=(25-24t)R+24t(1-t).
+C=(8-7t)R-t,\\qquad B_5=(25-24t)R+24t(1-t).
 \tag{13.8}
 $$
 
@@ -1160,7 +1160,7 @@ Every common curve with nonconstant $x$ is a rational graph
 
 $$
 t=h+\frac\alpha x+\frac\beta{x+1},
-\qquad Z(h)=0,qquad e=e_h.
+\qquad Z(h)=0,\\qquad e=e_h.
 \tag{15.2}
 $$
 
