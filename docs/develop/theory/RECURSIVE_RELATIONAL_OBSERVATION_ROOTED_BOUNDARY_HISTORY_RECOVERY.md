@@ -1802,3 +1802,297 @@ Finally the stationary endpoint-prior decoder makes one read at $c$, and $1+n-b$
 Classical modular inverses, floor arithmetic, subtractive Euclid and finite deterministic branch replay are supporting mathematics within these source-specific proofs. The represented-space results cited in Definition 24.2 retain their stated roles: Pauly [version 3, §§3–4](https://arxiv.org/html/1204.3763v3) supplies realizers and Sierpiński-valued open-set names; Schröder [Proposition 2.4](https://arxiv.org/html/2004.09450v1) states computability-implies-continuity for partial maps on Baire-space names. Neither supplies the sequential physical $L/R$ actions or an installed floor service. The matrix correspondences concern the actual Lean supplier statements, not new kernel verification of the ordinary menu theorems. The exact, unclipped, noiseless, pointwise finite contract here is different from the congruence or noise contracts of the Effective Resolution and Atomic Generation Acquisition volumes. No physical spacetime interpretation, resource optimality, identical final physical endpoint or identical acquired action archive is asserted.
 
 ## 追加锚（本行以下为增补区）
+
+## 33. Exact action depth at an original endpoint under dyadic reads
+
+**Definition 33.1 (the action coordinate and the unchanged tasks).** Retain exactly the positive-rational source, root, chronological actions and finite original-view encodings of §§6 and 17. The installed menu in this section is precisely
+
+$$
+S_2=\{2^s:s\in\mathbb N\},\qquad q_{2^s}(z)=\lfloor2^s z\rfloor.
+\tag{33.1}
+$$
+
+The services are the conditionally supplied exact, noiseless, unclipped, nondisturbing services of Assumption 28.1. There is one actually mutated source. A controller is an ordinary deterministic finite program; its only source-dependent input is its finite acquired transcript. Every promised run must finish its actions, reads, finite arithmetic and finite output. No uniform bound is imposed on read count, exponent or scale magnitude, encodings, computation, retained state or output length. These remain paid coordinates. In particular the unbounded menu supplies neither an acquired infinite thread nor a source-dependent timing observation. There is no reset, copy, inverse source action, unknown original archive, unknown exact rational supplied as input, source-dependent advice or auxiliary oracle.
+
+For public $b\ge1$, write the already defined prior (30.2) as
+
+$$
+c_b=1/b,\qquad x_{b,n}=1/b-1/n\quad(n>b),\qquad
+P_b=\{c_b\}\cup\{x_{b,n}:n>b\}.
+\tag{33.2}
+$$
+
+The binary target is the original endpoint bit $\sigma_b(c_b)=1$, $\sigma_b(x_{b,n})=0$. The other targets are separately the exact original rational boundary $B$, original chronological word $T$, original rooted named-incidence path $S$, original indexed prefix table $M$, and their joint tuple $(B,T,S,M)$. They are evaluated at the original cut, before any acquisition action. The mutual finite decoders of Theorems 6.2 and 17.3 are retained, including names, incidence orientation and prefix indices; none of these targets is replaced by a duration or a post-probe view.
+
+For any one of these targets, its uniform action minimum is the least $h\in\mathbb N$ for which a correct pointwise-finite controller on all of $P_b$ uses at most $h$ actual new source actions on every original. Its endpoint action minimum imposes that bound only on the run starting at $c_b$, while retaining correctness and finite stopping on every member of $P_b$. Other runs in this second definition may use arbitrarily many actions. Local calculations with known words or rational candidates are not source actions.
+
+**Lemma 33.2 (attained endpoint denominator and finite-branch obstruction).** For a chronological probe word $u$, put
+
+$$
+A_u=\operatorname{wordMatrix}(\operatorname{reverse}u)
+ =\begin{pmatrix}a&e\\c&d\end{pmatrix},\qquad
+f_u(x)=\frac{ax+e}{cx+d}.
+\tag{33.3}
+$$
+
+The numerator and denominator in
+
+$$
+f_u(c_b)=\frac{a+be}{c+bd}
+\tag{33.4}
+$$
+
+are positive and relatively prime. Hence this attained endpoint is on some dyadic floor grid if and only if $c+bd$ is a power of two, including $1$.
+
+Every correct controller for $\sigma_b$ that stops finitely at $c_b$ must actually make a read at a chronological prefix $u$ for which this condition holds. The same necessity holds for each exact original view and for their joint output. It remains necessary if any fixed finite initial segment of the lower sequence $x_{b,n}$ is omitted from the prior.
+
+Proof. The actual supplier `unimodular_wordMatrix` gives $ad-ec=1$, and `wordMatrix_lower_right_pos` gives $d\ge1$. The entries are nonnegative and $a\ge1$. Thus $P=a+be>0$, $Q=c+bd>0$, and
+
+$$
+dP-eQ=ad-ec=1.
+\tag{33.5}
+$$
+
+Any common divisor of $P,Q$ divides $1$. This proves reducedness of the attained column-action fraction, rather than substituting the supplier's coprime lower-row fraction for it. Since $P,Q$ are coprime, $2^sf_u(c_b)$ is an integer for some $s\ge0$ exactly when $Q\mid2^s$, equivalently $Q$ is a power of two.
+
+Fix the entire finite terminating run at $c_b$. List its reads as $(u_i,s_i)$, where $u_i$ is the actual chronological prefix already executed and $s_i$ is its chosen dyadic exponent. Suppose none of these reads is on an endpoint grid. Then the known rational numbers
+
+$$
+\theta_i=\{2^{s_i}f_{u_i}(c_b)\}
+\tag{33.6}
+$$
+
+are all strictly positive. Here braces mean fractional part. A nonnegative determinant-one matrix with $d\ge1$ satisfies, for $0<y<x$,
+
+$$
+0<f_u(x)-f_u(y)
+ =\frac{x-y}{(cx+d)(cy+d)}\le x-y.
+\tag{33.7}
+$$
+
+Choose an integer $n>b$ larger than every $2^{s_i}/\theta_i$ and larger than any omitted finite initial indices. If there are no reads, any such $n$ suffices. This is an effective choice from the completed endpoint branch and $b$: all its matrices, exponents and fractional parts are finite known arithmetic. Then
+
+$$
+0<2^{s_i}\bigl(f_{u_i}(c_b)-f_{u_i}(x_{b,n})\bigr)
+ \le 2^{s_i}/n<\theta_i,
+\qquad
+q_{2^{s_i}}(f_{u_i}(x_{b,n}))
+ =q_{2^{s_i}}(f_{u_i}(c_b)).
+\tag{33.8}
+$$
+
+Replay the program from $x_{b,n}$. Before any different report, deterministic local computations, requested scales and actions agree. At each listed read the prefix therefore really is $u_i$, and (33.8) gives the same report. Induction reproduces the whole finite branch, including its stopping choice and output. Name-only action labels give no additional distinction, and service timing is not an input. The endpoint bit differs, a contradiction. Thus some actual read must be on the endpoint grid. This argument uses a finite maximum only on the completed branch; no bound on the controller's other branches, read count, scales or arithmetic was assumed.
+
+Each exact original view determines the original rational, which decides $\sigma_b$ by comparison with the known $c_b$. Composing this finite calculation after a hypothetical view acquisition adds no source action, so the same obstruction applies. The proof's choice of arbitrarily large $n$ also proves the finite-omission assertion. $\square$
+
+**Definition 33.3 (a computable endpoint action number).** Define
+
+$$
+m(b)=\min\bigl\{|u|:u\in\{L,R\}^*,\quad
+ c_u+b d_u\text{ is a power of two}\bigr\},
+\tag{33.9}
+$$
+
+where $c_u,d_u$ are the lower entries of (33.3). This is a condition on an actually executable prefix for this same source, not on a combination of incompatible hypothetical continuations. A finite program computes both $m(b)$ and an attaining prefix as follows.
+
+Start at $N=1$ and double $N$ until $N\ge b$; put $U=N-b$. The chronological word $L^U$ has matrix $\left(\begin{smallmatrix}1&0\\U&1\end{smallmatrix}\right)$, hence endpoint denominator $b+U=N$. Therefore the set in (33.9) is nonempty and
+
+$$
+0\le m(b)\le U=2^{\lceil\log_2 b\rceil}-b,
+\tag{33.10}
+$$
+
+with $U=0$ at $b=1$. Enumerate chronological words in increasing length, breaking ties by a fixed $L<R$ order. Compute their matrices from the identity by left multiplication by the next generator. Test a positive integer $Q=c+bd$ for being a power of two by repeated division by $2$ until odd, accepting exactly when the remainder is $1$. The first accepted word has length $m(b)$, and the search finishes by length $U$. Given $b$ and a proposed cap $h\ge0$, enumerate only through $K=\min(h,U)$ to decide $m(b)\le h$, returning a shortest word on yes and no on exhaustion. This tests at most $2^{K+1}-1$ words, all by finite integer arithmetic. It is a genuinely finite decision, also on no instances; no unbounded existential matrix search is being used as the decision procedure.
+
+## 34. Attainment with a complete original-target decoder
+
+**Theorem 34.1 (one minimum for the bit and every exact original view).** For every public $b\ge1$, the uniform action minimum and the endpoint action minimum of Definition 33.1 both equal $m(b)$ for each of $\sigma_b,B,T,S,M$, and for $(B,T,S,M)$. A controller attaining the minimum uses exactly $m(b)$ source actions on every original of $P_b$, followed by reads and finite computations with no further source motion. Its endpoint run needs just one floor read. Thus the equality concerns actual acquisition of the original views, not merely separation by a potential test family.
+
+Proof. Compute a shortest word $u$ by Definition 33.3, with matrix $A_u$, and its reduced endpoint $t=P/2^k$ from (33.4). Here $k\ge0$ and $P=a+be$. Actually execute the chronological $u$ once on the one original source, retaining its known matrix or action list. The present unknown response is $z=f_u(x)$. Read the installed port $q_{2^k}$ and obtain its complete report $Q$. Strict increase in (33.7) and the endpoint convention give
+
+$$
+Q\ge P\quad\Longleftrightarrow\quad z\ge t
+ \quad\Longleftrightarrow\quad x=c_b\qquad(x\in P_b).
+\tag{34.1}
+$$
+
+Indeed the report is exactly $P$ at the endpoint and at most $P-1$ at every smaller prior member. This already acquires $\sigma_b$. For an exact-view request, on this yes branch output the known original rational $c_b$ and compute the requested original view as below.
+
+On the no branch the original is some $x_{b,n}$, with unknown finite $n>b$. Define known increasing rational thresholds at the current cut by
+
+$$
+t_j=f_u(x_{b,j}),\qquad
+r_j=(t_j+t_{j+1})/2\qquad(j\ge b+1).
+\tag{34.2}
+$$
+
+The actual $z=t_n$ never equals any $r_j$: $r_j$ lies strictly between two adjacent terms of the increasing sequence. There is an explicit stationary dyadic comparison with each such $r_j$. For $s=0,1,2,\ldots$, read $K_s=q_{2^s}(z)$, form the known rational endpoints
+
+$$
+\ell_s=K_s/2^s,\qquad v_s=(K_s+1)/2^s,
+\qquad z\in[\ell_s,v_s),
+\tag{34.3}
+$$
+
+and return below if $v_s\le r_j$, or above if $\ell_s>r_j$. Otherwise increase $s$. If $z<r_j$, eventually $v_s\le r_j$; if $z>r_j$, eventually $\ell_s>r_j$, because the interval width is $2^{-s}$ and $|z-r_j|>0$. Thus every comparison finishes finitely on the promised no branch. The program never inputs $z$ to an arithmetic operation: it computes only with the acquired integers, dyadic cells and known candidate thresholds. Nor does it require a uniform separation radius.
+
+Starting at $j=b+1$, use this actual read loop for $r_j$. On above, increment $j$; on below, output the known original $x_{b,j}$. If the actual index is $n$, every $j<n$ has $z=t_n\ge t_{j+1}>r_j$, while $j=n$ has $z=t_j<r_j$. The first below answer therefore occurs exactly at $j=n$. There are finitely many comparisons and each finishes, so the entire decoder terminates. All these reads are made at the one attained cut after $u$; no candidate test executes a separate motion or restarts a source. The construction is also valid with a public tail starting at any $n_0>b$, by starting this loop at $j=n_0$.
+
+Reduce the recovered original rational to its positive pair $(p,q)$. Use Definition 6.3's finite subtractive decoder: when $p<q$, peel $L$ and replace the known pair by $(p,q-p)$; when $p>q$, peel $R$ and replace it by $(p-q,q)$; equality forces $(1,1)$. The positive sum strictly decreases at each step. Reverse the peeled finite labels to obtain the original chronological word, then compute its named path and indexed prefix pairs from the root. These are ordinary calculations on the recovered original output, not inverse actions on the current source. They yield every requested exact original view and their joint tuple with no further source action. Their own arithmetic, storage and full finite output are charged.
+
+This proves a uniform upper bound $m(b)$, also an endpoint upper bound. Conversely, on the terminating endpoint run of any correct bit controller, Lemma 33.2 forces a read after an actual prefix whose length is at least $m(b)$. Its endpoint action count is therefore at least $m(b)$. This lower bound holds even when other originals are permitted unlimited finite motion. The same lemma transfers it to each exact view and the joint target. A uniform cap is a cap at the endpoint, so all the claimed minima follow. $\square$
+
+**Corollary 34.2 (an exact bounded-motion criterion).** For given $b,h$, acquisition on $P_b$ of any of these targets with at most $h$ actions everywhere is equivalent to acquisition with at most $h$ actions only at the endpoint, and both are equivalent to the finite arithmetic test
+
+$$
+\exists u\in\{L,R\}^{\le h}:\quad
+c_u+b d_u\in\{1,2,4,8,\ldots\}.
+\tag{34.4}
+$$
+
+The test and attaining original-target controller are those just constructed. The assertion does not infer acquisition from the existential test alone: (34.1)–(34.3) provide the actual one-source realization and its stopping proof. In particular $m(b)=0$ exactly when $b$ is a power of two. For such $b$ the empty prefix and $q_b$ already isolate the endpoint, after which the no-motion dyadic decoder recovers every exact original view pointwise finitely. This is not exact acquisition on the full rational carrier: the public sparse prior is essential.
+
+Proof. The equivalences follow from Theorem 34.1 and Definition 33.3's finite decision. At length zero the matrix is the identity, so its endpoint denominator is exactly $b$. $\square$
+
+## 35. Sharp witnesses at every action depth
+
+**Theorem 35.1 (an exact hierarchy on the same original-view tasks).** Put
+
+$$
+b_j=4^j-j\qquad(j\ge0).
+\tag{35.1}
+$$
+
+Then $m(b_j)=j$. Consequently, for each $h\ge0$, the original four-view task on the explicit decidable prior $P_{b_{h+1}}$ can be acquired with a uniform cap of $h+1$ actual source actions and cannot be acquired with a cap of $h$. This is a strict adjacent hierarchy for each of the four exact original views, their joint tuple, and the endpoint bit. Its lower bound holds even if the smaller cap is imposed only on the endpoint run. Arbitrarily fine dyadic reads, arbitrarily many finite reads and unbounded finite local computation do not remove it.
+
+Proof. The case $j=0$ is $b_0=1$, with empty prefix. For every $j$, actually executing $L^j$ sends the endpoint to
+
+$$
+f_{L^j}(1/b_j)=1/(b_j+j)=1/4^j.
+\tag{35.2}
+$$
+
+Thus $m(b_j)\le j$, with the full decoder of Theorem 34.1 available after these actions.
+
+To prove the opposite inequality uniformly over all shorter words, let $j\ge1$, $h<j$, and $A_u=\left(\begin{smallmatrix}a&e\\c&d\end{smallmatrix}\right)$ for any chronological $u$ of length $h$. Two elementary bounds are
+
+$$
+c\le h d,\qquad 1\le d\le2^h.
+\tag{35.3}
+$$
+
+For the first, evaluate the lower row arithmetically as $(0,1)$ multiplied on the right by the $h$ generators in the product for $A_u$. Right multiplication by $G_L$ changes its ratio $c/d$ to $c/d+1$; right multiplication by $G_R$ changes it to $(c/d)/(1+c/d)$. Starting at zero, the ratio after $h$ factors is at most $h$. This calculation uses the matrix product order, not a reversed actual source experiment. For the second bound, every matrix entry starts at most one, and left multiplication by a generator replaces one row by its sum with the other. The maximum entry at most doubles per step, and $d\ge1$ by the supplier invariant.
+
+Set $\delta=jd-c$. Then
+
+$$
+0<\delta\le jd\le j2^{j-1}<4^j,
+\qquad
+c+b_jd=4^j d-\delta.
+\tag{35.4}
+$$
+
+The strict positivity uses $c\le hd$ and $h<j$. The last strict inequality follows, for example, from $j\le2^j$. Also $b_j=4^j-j>4^j/2$ for $j\ge1$, so the candidate denominator is strictly above $4^j/2$. It is not divisible by $4^j$, since its remainder is $-\delta$ with $0<\delta<4^j$. But any power of two strictly above $4^j/2=2^{2j-1}$ is divisible by $4^j=2^{2j}$. Therefore no word of length $h<j$ gives a dyadic endpoint denominator. This is a proof for every shorter word, rather than a bounded enumeration extrapolated to all $j$.
+
+Thus $m(b_j)\ge j$ and equality holds. Theorem 34.1 gives the stated acquisition hierarchy on the unchanged original-view tasks; allowing an extra action trivially includes every controller with the smaller cap, while this prior separates adjacent caps. $\square$
+
+**Proposition 35.2 (the next-power all-left bound can be strictly nonoptimal).** At $b=9$, the exact value is $m(9)=4$, whereas (33.10) gives the convenient upper bound $16-9=7$.
+
+Proof. The actually executable chronological word $LRLL$ has
+
+$$
+A_{LRLL}=G_LG_LG_RG_L
+ =\begin{pmatrix}2&1\\5&3\end{pmatrix},\qquad
+f_{LRLL}(1/9)=11/32.
+\tag{35.5}
+$$
+
+Its denominator is dyadic. For completeness, the endpoint denominators for all shorter chronological words, with multiplicity removed separately at each length, are
+
+| Length | Values of $c+9d$ |
+| --- | --- |
+| $0$ | $9$ |
+| $1$ | $9,10$ |
+| $2$ | $9,10,11,19$ |
+| $3$ | $9,10,11,12,19,21,28,29$ |
+
+These rows follow by left-multiplying each preceding matrix by both generators; they exhaust $1+2+4+8=15$ words. None is a power of two. Equations (33.9) and (35.5) give the exact minimum four. The word and the finite exclusion certify this one parameter; they are not the universal proof of Theorem 35.1. The reducedness argument in Lemma 33.2 is needed here too: it is the denominator of $11/32$ at the attained endpoint, not the matrix's lower-row ratio. $\square$
+
+## 36. One decidable prior with no finite uniform action cap
+
+**Definition 36.1 (one fixed rational presentation).** Using just the integers $b_j=4^j-j$ for $j\ge1$, specify the single prior
+
+$$
+\begin{aligned}
+\mathcal Q_j&=\{1/b_j\}\cup
+ \{1/b_j-1/n:n\in\mathbb Z,\ n\ge2b_j\},\\
+\mathcal Q&=\bigcup_{j\ge1}\mathcal Q_j.
+\end{aligned}
+\tag{36.1}
+$$
+
+This is one finite source-independent code using exponentiation, rational arithmetic and integer tests. It supplies no unknown index or rational as input to the acquisition controller. Each member is the response of a unique finite original $L/R$ history by Theorem 6.2.
+
+Membership in $\mathcal Q$ is decidable on finite rational inputs. Reject nonpositive inputs. For a positive input $y$, iterate $j=1,2,\ldots$, computing $b_j$ and $c_j=1/b_j$. Accept $y=c_j$; when $0<y<c_j$, accept exactly if $1/(c_j-y)$ is an integer at least $2b_j$. If neither condition succeeds, continue, except that as soon as $c_j<y$ reject: all later endpoints and their lower sequences are smaller. The endpoints strictly decrease to zero, so this loop halts on every positive rational input. This input convention is for the public membership decider; the acquisition program below is given only reports from its unknown original.
+
+For effective identification of the band without source motion, use the disjoint open dyadic intervals
+
+$$
+J_j=(2^{-(2j+1)},2^{-(2j-1)})\qquad(j\ge1).
+\tag{36.2}
+$$
+
+Since $4^j/2<b_j<4^j$, every member of $\mathcal Q_j$ lies in $[1/(2b_j),1/b_j]\subset J_j$. Adjacent $J_j$ share just a boundary in their closures, and no such boundary belongs to a band. Hence the actual band is unique.
+
+**Theorem 36.2 (pointwise finite actual recovery without any uniform action bound).** On the single fixed prior $\mathcal Q$, each exact original view and their joint tuple is forward acquirable by an ordinary finite program with dyadic reads and pointwise finite stopping. No correct pointwise-finite program for any of these targets has a finite uniform bound on actual new source actions. In fact no single finite cap can bound just its action counts at all the original endpoints $1/b_j$.
+
+Proof. Here is one actual acquisition program, including effective band selection. For stages $s=0,1,2,\ldots$, read $K_s=q_{2^s}(x)$ at the still unchanged source and compute its cell $[K_s/2^s,(K_s+1)/2^s)$. Test the finitely many $j=1,\ldots,s+1$ for the rational inequalities
+
+$$
+2^{-(2j+1)}<K_s/2^s,
+\qquad
+(K_s+1)/2^s<2^{-(2j-1)}.
+\tag{36.3}
+$$
+
+When one succeeds, retain that $j$ and end the band loop. The entire nonempty observed cell is then inside $J_j$, so the promise forces the original into $\mathcal Q_j$. For an actual $x\in\mathcal Q_j$, its distances to both boundaries of $J_j$ are positive. Eventually the mesh is smaller than both distances and $s+1\ge j$, so (36.3) succeeds. Thus the loop stops finitely on every promised original, with no source action. Every read is a real service invocation, not a request for an unobserved exact input or an infinite list.
+
+Now actually execute $L^j$ on that same source, which has remained unchanged throughout band selection. Equation (35.2) sends its known endpoint threshold to $1/4^j$. Read $q_{4^j}$; its report is $1$ exactly at the original endpoint and $0$ at every smaller member of $\mathcal Q_j$. On report $1$ recover $1/b_j$. On report $0$ use precisely (34.2)–(34.3), with $u=L^j$ and starting index $n_0=2b_j$. The proof there gives finitely many stationary dyadic comparisons and returns the correct original rational $1/b_j-1/n$. Apply the same finite original-word, path and prefix-table decoders as in Theorem 34.1. This is one program, containing band arithmetic, two finite loops, the known action sequence and the original-view decoder. Each run makes exactly $j$ new source actions, with finitely many reads, arithmetic steps and storage cells and a completed finite output.
+
+For the lower bound, suppose a correct program has some uniform action cap $h$ on the endpoints, while still stopping correctly everywhere in $\mathcal Q$. Choose $j>h$ and consider its finite run at $1/b_j$. Its restriction to $\mathcal Q_j$ must distinguish this endpoint from every $1/b_j-1/n$ with $n\ge2b_j$, because exact original views distinguish unequal original rationals. Lemma 33.2 applies to this tail: a sufficiently large such $n$ replays any endpoint branch lacking an attained dyadic grid read. Theorem 35.1 excludes a dyadic endpoint after every prefix of length at most $h<j$. Thus the run cannot be correct on the tail, a contradiction. Equivalently, every correct program must use at least $j$ actions at this endpoint; the displayed program attains $j$ there. All originals in this argument belong to the same fixed prior, source law, menu and original target. $\square$
+
+This is stronger than choosing a different $P_b$ after a proposed cap is announced: one finitely presented decidable prior and one ordinary finite-code exact acquisition task already lie beyond every finite uniform action cap. It is consistent with Theorem 34.1: for each fixed $P_b$, $m(b)$ is finite, whereas $\mathcal Q$ contains infinitely many separated tails with endpoint requirements tending to infinity. The construction does not acquire a dense full-rational prior; its bands and endpoint promises supply the needed finite stopping information. Unrestricted actual motion means no common finite cap, with each individual run still finite.
+
+## 37. Resource boundaries and suppliers of the action theorem
+
+**Proposition 37.1 (what the action optimum measures).** The action minima above remain valid when there are no uniform bounds on finite read count, dyadic exponent, scale magnitude, exact arithmetic or retained storage. Equality of these action minima for the bit and the exact views asserts no equality of their output, memory, read, time or service costs.
+
+Proof. The lower bound uses only the finitely many completed reads on one terminating endpoint branch. An arbitrarily large exponent still gives a strictly positive rational fractional part in (33.6) whenever its attained endpoint is not dyadic; increasing the chosen $n$ in (33.8) defeats any finite list of such exponents. More finite computation on identical reports gives identical decisions. A hypothetical family of all dyadic tests, without a finite executed stopping certificate, is outside this argument's positive model. The attained grid read is precisely the extra distinction supplied by actual motion.
+
+In the attaining controller on $P_b$, the precomputed word search is finite, with the finite cap (33.10). Its candidate matrices, denominator tests and loop counters are paid exact arithmetic on encoded integers. It performs exactly $m(b)$ actual actions and one initial read. On a lower point $x_{b,n}$ it then makes one finite refinement loop for each $j=b+1,\ldots,n$. If loop $j$ stops at exponent $s_j$, it uses $s_j+1$ reads when started at zero, so this implementation's total read count is
+
+$$
+1+\sum_{j=b+1}^{n}(s_j+1).
+\tag{37.1}
+$$
+
+There is no common bound on these indices or read counts. Exponent $s$, its scale name $2^s$, and the complete report $K_s$ are distinct encoded quantities. For example a binary exponent name has length of order $\log(s+1)$, while explicitly writing the scale integer needs $s+1$ binary digits; whichever legal name encoding is chosen, charge the actual name and all scale construction work. Charge each full integer report, not just the final bit of a comparison. Service-internal time and workspace are paid coordinates whose quantities remain unspecified. Finite service completion is assumed; no quantitative bound on service-internal time, workspace or physical accuracy is derived.
+
+After $m$ actions matrix entries are at most $2^m$, so the first endpoint denominator and numerator are at most $(b+1)2^m$. Computing them and writing the first dyadic scale and report is finite, but not unit-cost arithmetic. The later rational thresholds, dyadic cells, local comparisons and counters have finite widths on each terminating run; all their bit operations and peak working memory are charged. One can retain the known prefix matrix, the current candidate index, threshold, exponent and report, rather than a permanent report archive. Retaining a complete actual action/read transcript incurs its additional finite encoding and storage. Neither implementation has an archive of the unknown original history.
+
+In the controller for $\mathcal Q$, add all band-selection reads, the band index and its arithmetic before the $j$ paid actions. Then charge the same decoder with starting index $2b_j$. Band selection has no source action, but its read count, exponents, reports and computation are not free. Finally, for a recovered reduced pair $(p,q)$ the original subtractive word decoder has at most $p+q-2$ inverse calculations on that known pair. Its word, all named incidences and all indexed prefix pairs are finite outputs whose lengths and storage must be charged in full. They can be much larger than the one-bit endpoint output even though no extra source motion is required. Thus optimizing one coordinate has not identified or optimized the whole resource vector. $\square$
+
+**Definition 37.2 (mathematical provenance and retained limits).** The source-specific additions are the exact attained-denominator/finite-branch criterion, the action-optimal original-target decoder, the sharp family $4^j-j$, and the single fixed decidable prior with unbounded action requirements. They are `repo-derived` ordinary mathematical results with proofs above, not a worldwide priority claim. Supporting arithmetic and its supplier boundaries are as follows.
+
+| Antecedent | Exact use and limit |
+| --- | --- |
+| §§6 and 17, especially Definition 6.3 and Theorems 6.2 and 17.3 | Finite decoders of the same original positive-rational boundary, literal chronology, named path and indexed prefix memory. Reconstructing these original outputs from a recovered rational adds local work but no source action. Ambient nonrational threads and the cyclic-anchor histories of §§20–23 do not acquire these decoders. |
+| §§24 and 28–32 | Public prior presentations, ordinary effective stopping, complete exact floor reports, sequential one-source operation and the pointwise finite menu results. Those results provide neither the optimum (33.9) nor a uniform action bound. Theorem 15.2's equation (15.3) is earlier fixed-scale saturation arithmetic; it is not the bounded-action minimum proved here. |
+| [WordNodesAreReduced](../../../D5/S3/PrimeForms/SternBrocot/WordNodesAreReduced.lean), `leftStep`, `rightStep`, `wordMatrix`, `unimodular_wordMatrix`, `wordMatrix_lower_right_pos`, `word_node_is_reduced` | Exact nonnegative generators, recursive word product, determinant one, positive lower-right entry and coprime lower row. Actual chronological actions multiply on the left, hence use `wordMatrix(reverse u)`. The lower-row rational is not the attained response; equation (33.5) supplies the additional transformed-endpoint reducedness argument. |
+| [UnimodularGeneration](../../../D5/S3/PrimeForms/SternBrocot/UnimodularGeneration.lean), `unimodular_iff_wordMatrix` and its descent | Natural determinant-one matrices are finite words. The source's arithmetic adaptation and attribution remain those in the module and [its HJO note](../../../Library/PrimeForms/axiom2026unimodulardescent.md). The finite bounded word enumeration here computes an optimum directly and does not infer a length bound or executable controller from that existential theorem. |
+| Gibbons–Lester–Bird, *Enumerating the Rationals*, [author manuscript, §§2 and 4](https://www.cs.ox.ac.uk/jeremy.gibbons/publications/rationals.pdf) | Positive-integer subtractive Euclid, execution-path inversion, rational trees and reversal of paths support the original decoder and orientation convention. These are classical arithmetic antecedents, not an acquisition theorem about this dyadic service or its action optimum. |
+| Han–Masuda–Singh–Thiel, *The $(u,v)$-Calkin–Wilf Forest*, [version 2, introduction and §5](https://arxiv.org/html/1411.1747v2) | At $u=v=1$, the root and children are exactly $1$, $z/(z+1)$ and $z+1$, with the stated column-action matrices. Its word convention reverses chronological path bits; its descendant/depth discussion concerns the rational trees. It supplies neither our installed floor ports nor original-target finite stopping or action optimality. |
+
+These correspondences concern the cited literature conditions and actual Lean source statements. They are not fresh compilation or new kernel verification of §§33–37. The exact noiseless unclipped floor interface remains a supplied mathematical assumption, with no physical implementation or noise robustness claim. The full-rational finite acquisition obstruction of Theorem 18.3, effective-presentation obstructions in §25, and all original-versus-disturbed distinctions remain in force. There is no acquired infinite observation thread, physical spacetime theorem or completion of the continuing RRO program.
+
+## 追加锚（本行以下为增补区）
