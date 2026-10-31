@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Mertens.Cryptids.HorizontalBounds.Integral;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Mertens.Cryptids.HorizontalBounds;
 
 internal sealed class HorizontalBoundsIntegralDocument : IScribeDocumentDefinition
 {

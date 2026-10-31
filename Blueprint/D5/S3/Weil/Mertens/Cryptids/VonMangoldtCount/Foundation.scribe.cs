@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Mertens.Cryptids.VonMangoldtCount.Foundation;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Mertens.Cryptids.VonMangoldtCount;
 
 internal sealed class VonMangoldtCountFoundationDocument : IScribeDocumentDefinition
 {
