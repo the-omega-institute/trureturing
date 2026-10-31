@@ -86,6 +86,10 @@ $$\neg \left(\operatorname{claim}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/AnticoherenceTraceDistanceRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/denis-lacaille-martin-serrano-ensastiga-2026-anticoherence-trace-distance` (refuted) by `D5/S3/Quantum/Measurement/AnticoherenceTraceDistanceRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"denis-lacaille-martin-serrano-ensastiga-2026-anticoherence-trace-distance","declaration_gid":"D5/S3/Quantum/Measurement/AnticoherenceTraceDistanceRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jérôme Denis, Tara Lacaille, John Martin and Eduardo Serrano-Ensástiga (2026). *Total, quantum, and classical measures of anticoherence for mixed spin states*. DOI: [10.48550/arXiv.2605.29436](https://doi.org/10.48550/arXiv.2605.29436). URL: <https://arxiv.org/abs/2605.29436v1>.
