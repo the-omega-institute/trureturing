@@ -361,9 +361,12 @@ def M0 (r : ℕ) (z : ℝ) : ℝ := ∫ v in (0 : ℝ)..1, E r (z * (1 + v ^ 2))
 
 def M2 (r : ℕ) (z : ℝ) : ℝ := ∫ v in (0 : ℝ)..1, v ^ 2 * E r (z * (1 + v ^ 2))
 
+private theorem e_original (r : ℕ) (y : ℝ) : E r y = expRemainder (r + 1) y := by
+  rw [expRemainder_eq]
+  rfl
+
 private theorem e_continuous (r : ℕ) : Continuous (E r) := by
-  unfold E D5.S3.Analytic.ExpRemainderDifferences.R
-  fun_prop
+  exact (expRemainderContinuous (r + 1)).congr (fun y => (e_original r y).symm)
 
 private theorem e_pos (r : ℕ) {y : ℝ} (hy : 0 < y) : 0 < E r y := by
   have hi : 0 < ∫ s in (0 : ℝ)..1, (1 - s) ^ r * exp (-s * y) := by
@@ -671,10 +674,6 @@ private theorem gaussian_kernel_identity (a t : ℝ) :
   ring
 
 /-! Absolute Laplace control and exact finite subtraction for every real parameter. -/
-
-private theorem e_original (r : ℕ) (y : ℝ) : E r y = expRemainder (r + 1) y := by
-  rw [expRemainder_eq]
-  rfl
 
 private theorem kernel_continuous (r : ℕ) (a : ℝ) : Continuous (L r a) := by
   have hc : Continuous (fun p : ℝ × ℝ =>

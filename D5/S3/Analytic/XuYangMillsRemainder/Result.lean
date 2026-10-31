@@ -664,7 +664,7 @@ lemma expRemainderBounds (r : ℕ) {v : ℝ} (hv : 0 ≤ v) :
     constructor
     · positivity
     · exact div_le_div_of_nonneg_right (mul_le_of_le_one_left (by positivity) hexp) (by positivity)
-private lemma expRemainderContinuous (r : ℕ) : Continuous (expRemainder r) := by
+lemma expRemainderContinuous (r : ℕ) : Continuous (expRemainder r) := by
   unfold expRemainder D5.S3.Analytic.ExpRemainderDifferences.R
   fun_prop
 lemma expRemainderRec (r : ℕ) (v : ℝ) :
