@@ -29,7 +29,9 @@ At either of these two lengths the distinct prefix uses all directed edges
 or all but one. This reduces the required comparison to ordered Euler walks
 and the location of one missing directed edge.
 
-## Formal result and delivery boundary
+## Gap
+
+The count and positive-denominator gaps are closed by the retained frozen result.
 
 CollisionPrefix.short_count gives T(n,n*n)=(2*n-1)E and long_count gives
 T(n,n*n+1)=nE on the source's literal ordered-edge carriers.
@@ -37,9 +39,11 @@ euler_nonempty constructs an Euler walk for each fixed start;
 long_count_positive proves the denominator positive, and collision_ratio
 states the exact rational identity for every n at least two.
 
-Independent source/form review, public-theorem audit completion or disclosed
-issue exceptions, canonical freeze, required CI and delivery to dev remain
-separate obligations. No delivered external-resolution count is asserted here.
+Canonical freeze is retained. Current source/form and retained-Reg validation,
+independent delivery review, required CI and merged delivery to dev remain
+unfinished. All eight public-theorem escape audits remain unfinished under the
+[linked-issue exception](https://github.com/the-omega-institute/trureturing/issues/24056#issuecomment-6516551237).
+No delivered external-resolution count is asserted here.
 
 ## Route
 
@@ -86,6 +90,12 @@ source obligations.
 
 The statement covers all n at least two, not a finite prefix. The separate
 factorial formula is not assumed. No worldwide openness, priority, novelty or
-model-diversity claim follows. The mathematical result has not yet completed
-the independent review, audit, freeze and merged-delivery boundary. No successor
+model-diversity claim follows. The mathematical result is proved and frozen;
+the delivery obligations and unfinished audits are stated above. No successor
 problem is selected.
+
+## ASSUMED-UNVERIFIED
+
+Worldwide openness, priority, novelty and model diversity are unverified.
+No current compile, required-CI success or merged delivery is asserted here.
+The linked-issue exception does not complete any of the eight escape audits.
