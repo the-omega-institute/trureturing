@@ -340,273 +340,147 @@ theorem finite_kr_attained {I : Type*} [Fintype I]
     exact finite_transport_weak a b c P hP hrow hcol g hg
 
 
-private theorem finiteRange_transportation_dual
-    {α : Type*} [MeasurableSpace α]
-    [MeasurableSingletonClass α]
-    (c : α → α → ℝ) (hc_nonneg : ∀ x y, 0 ≤ c x y)
+private theorem finiteRange_optimal_coupling
+    {α : Type*} [MeasurableSpace α] [MeasurableSingletonClass α]
+    (c : α → α → ℝ) (hc_nonneg : ∀ x y, 0 ≤ c x y) (hc_self : ∀ x, c x x = 0)
+    (hc_symm : ∀ x y, c x y = c y x) (hc_triangle : ∀ x y z, c x z ≤ c x y + c y z)
     (μ ν : Measure α) [IsProbabilityMeasure μ] [IsProbabilityMeasure ν]
     (T S : α → α) (hT : Measurable T) (hS : Measurable S)
-    (hTfin : (Set.range T).Finite) (hSfin : (Set.range S).Finite)
-    :
-    ∃ u v : α → ℝ, Measurable u ∧ Measurable v ∧
-      (∀ a ∈ Set.range T, ∀ b ∈ Set.range S, u a + v b ≤ c a b) ∧
-      wassersteinCostCoupling c (Measure.map T μ) (Measure.map S ν)
-        ≤ ENNReal.ofReal ((∫ x, u x ∂(Measure.map T μ)) + ∫ x, v x ∂(Measure.map S ν))
-          := by
+    (hTfin : (Set.range T).Finite) (hSfin : (Set.range S).Finite) :
+    ∃ (π : Measure (α × α)) (g : α → ℝ),
+      IsCoupling π (Measure.map T μ) (Measure.map S ν) ∧
+      (∀ x y, |g x - g y| ≤ c x y) ∧
+      (∫⁻ z, ENNReal.ofReal (c z.1 z.2) ∂π) =
+        ENNReal.ofReal (∫ x, g x ∂(Measure.map T μ) - ∫ x, g x ∂(Measure.map S ν)) := by
   classical
-  have hαne : Nonempty α := nonempty_of_isProbabilityMeasure μ
-  obtain ⟨t₀, ht₀⟩ := Set.range_nonempty T
-  obtain ⟨s₀, hs₀⟩ := Set.range_nonempty S
-  have : Nonempty (hTfin.toFinset) :=
-    ⟨⟨t₀, by rw [Set.Finite.mem_toFinset]; exact ht₀⟩⟩
-  have : Nonempty (hSfin.toFinset) :=
-    ⟨⟨s₀, by rw [Set.Finite.mem_toFinset]; exact hs₀⟩⟩
-  set a : hTfin.toFinset → ℝ := fun i => ((Measure.map T μ) {(i : α)}).toReal with ha_def
-  set b : hSfin.toFinset → ℝ := fun j => ((Measure.map S ν) {(j : α)}).toReal with hb_def
-  set Cost : hTfin.toFinset → hSfin.toFinset → ℝ := fun i j => c (i : α) (j : α) with hCost_def
-  have ha_nn : ∀ i, 0 ≤ a i := fun _ => ENNReal.toReal_nonneg
-  have hb_nn : ∀ j, 0 ≤ b j := fun _ => ENNReal.toReal_nonneg
-  have hμP : IsProbabilityMeasure (Measure.map T μ) :=
+  have : Nonempty α := nonempty_of_isProbabilityMeasure μ
+  let A := hTfin.toFinset ∪ hSfin.toFinset
+  have hTA : ∀ x, T x ∈ A := fun x => Finset.mem_union_left _ (by simp)
+  have hSA : ∀ x, S x ∈ A := fun x => Finset.mem_union_right _ (by simp)
+  have hA : A.Nonempty := ⟨T (Classical.arbitrary α), hTA _⟩
+  have : IsProbabilityMeasure (Measure.map T μ) :=
     (Measure.isProbabilityMeasure_map_iff hT.aemeasurable).mpr inferInstance
-  have hνP : IsProbabilityMeasure (Measure.map S ν) :=
+  have : IsProbabilityMeasure (Measure.map S ν) :=
     (Measure.isProbabilityMeasure_map_iff hS.aemeasurable).mpr inferInstance
-  have hμmap : Measure.map T μ
-      = ∑ x ∈ hTfin.toFinset, (Measure.map T μ {x}) • Measure.dirac x := by
-    refine (Measure.ae_mem_finset_iff (μ := Measure.map T μ) (s := hTfin.toFinset)).mp ?_
-    rw [ae_iff, show {a | ¬ (a ∈ hTfin.toFinset)} = (↑hTfin.toFinset : Set α)ᶜ from by ext a; simp,
-      Measure.map_apply hT (hTfin.toFinset.measurableSet.compl), Set.preimage_compl]
-    have huniv : T ⁻¹' (↑hTfin.toFinset : Set α) = Set.univ := by
-      ext y; simp only [Set.mem_preimage, Set.mem_univ, iff_true, Finset.mem_coe,
-        Set.Finite.mem_toFinset]; exact Set.mem_range_self y
+  have hμmap : Measure.map T μ = ∑ x ∈ A, (Measure.map T μ {x}) • Measure.dirac x := by
+    refine (Measure.ae_mem_finset_iff (μ := Measure.map T μ) (s := A)).mp ?_
+    rw [ae_iff, show {a | ¬ (a ∈ A)} = (↑A : Set α)ᶜ from by ext a; simp,
+      Measure.map_apply hT A.measurableSet.compl, Set.preimage_compl]
+    have huniv : T ⁻¹' (↑A : Set α) = Set.univ := by ext y; simp [hTA y]
     rw [huniv, Set.compl_univ, measure_empty]
-  have hνmap : Measure.map S ν
-      = ∑ y ∈ hSfin.toFinset, (Measure.map S ν {y}) • Measure.dirac y := by
-    refine (Measure.ae_mem_finset_iff (μ := Measure.map S ν) (s := hSfin.toFinset)).mp ?_
-    rw [ae_iff, show {a | ¬ (a ∈ hSfin.toFinset)} = (↑hSfin.toFinset : Set α)ᶜ from by ext a; simp,
-      Measure.map_apply hS (hSfin.toFinset.measurableSet.compl), Set.preimage_compl]
-    have huniv : S ⁻¹' (↑hSfin.toFinset : Set α) = Set.univ := by
-      ext y; simp only [Set.mem_preimage, Set.mem_univ, iff_true, Finset.mem_coe,
-        Set.Finite.mem_toFinset]; exact Set.mem_range_self y
+  have hνmap : Measure.map S ν = ∑ y ∈ A, (Measure.map S ν {y}) • Measure.dirac y := by
+    refine (Measure.ae_mem_finset_iff (μ := Measure.map S ν) (s := A)).mp ?_
+    rw [ae_iff, show {a | ¬ (a ∈ A)} = (↑A : Set α)ᶜ from by ext a; simp,
+      Measure.map_apply hS A.measurableSet.compl, Set.preimage_compl]
+    have huniv : S ⁻¹' (↑A : Set α) = Set.univ := by ext y; simp [hSA y]
     rw [huniv, Set.compl_univ, measure_empty]
-  have hμmass : (∑ x ∈ hTfin.toFinset, (Measure.map T μ {x})) = 1 := by
-    have h1 : (∑ x ∈ hTfin.toFinset, (Measure.map T μ {x}) • Measure.dirac x) Set.univ = 1 := by
+  let a : A → ℝ := fun i => ((Measure.map T μ) {(i : α)}).toReal
+  let b : A → ℝ := fun i => ((Measure.map S ν) {(i : α)}).toReal
+  have hμmass : (∑ x ∈ A, (Measure.map T μ {x})) = 1 := by
+    have h1 : (∑ x ∈ A, (Measure.map T μ {x}) • Measure.dirac x) Set.univ = 1 := by
       rw [← hμmap]; exact measure_univ
     simpa only [Measure.coe_finsetSum, Finset.sum_apply, Measure.smul_apply, smul_eq_mul,
       measure_univ, mul_one] using h1
-  have hνmass : (∑ y ∈ hSfin.toFinset, (Measure.map S ν {y})) = 1 := by
-    have h1 : (∑ y ∈ hSfin.toFinset, (Measure.map S ν {y}) • Measure.dirac y) Set.univ = 1 := by
+  have hνmass : (∑ x ∈ A, (Measure.map S ν {x})) = 1 := by
+    have h1 : (∑ x ∈ A, (Measure.map S ν {x}) • Measure.dirac x) Set.univ = 1 := by
       rw [← hνmap]; exact measure_univ
     simpa only [Measure.coe_finsetSum, Finset.sum_apply, Measure.smul_apply, smul_eq_mul,
       measure_univ, mul_one] using h1
-  have ha_sum : ∑ i, a i = 1 := by
-    have hcoe : (∑ i, a i) = ∑ x ∈ hTfin.toFinset, ((Measure.map T μ) {x}).toReal :=
-      Finset.sum_coe_sort hTfin.toFinset (fun x => ((Measure.map T μ) {x}).toReal)
-    rw [hcoe, ← ENNReal.toReal_sum (fun x _ => measure_ne_top _ _), hμmass, ENNReal.toReal_one]
-  have hb_sum : ∑ j, b j = 1 := by
-    have hcoe : (∑ j, b j) = ∑ y ∈ hSfin.toFinset, ((Measure.map S ν) {y}).toReal :=
-      Finset.sum_coe_sort hSfin.toFinset (fun y => ((Measure.map S ν) {y}).toReal)
-    rw [hcoe, ← ENNReal.toReal_sum (fun y _ => measure_ne_top _ _), hνmass, ENNReal.toReal_one]
-  obtain ⟨P, u, v, hPnn, hProw, hPcol, hfeas, hval⟩ :=
-    FiniteTransportInterface.finite_transport_attained a b Cost ha_nn hb_nn ha_sum hb_sum
-      (fun i j => hc_nonneg i j)
-  set ulift : α → ℝ := fun x => if h : x ∈ hTfin.toFinset then u ⟨x, h⟩ else 0 with hulift_def
-  set vlift : α → ℝ := fun y => if h : y ∈ hSfin.toFinset then v ⟨y, h⟩ else 0 with hvlift_def
-  have hulift_eq : ulift = fun x => ∑ i ∈ hTfin.toFinset.attach,
-      Set.indicator {(i : α)} (fun _ => u i) x := by
-    funext x
-    simp only [hulift_def, Set.indicator_apply, Set.mem_singleton_iff]
-    by_cases hx : x ∈ hTfin.toFinset
-    · rw [dite_eq_left hx, Finset.sum_eq_single (⟨x, hx⟩ : hTfin.toFinset)]
-      · simp
-      · intro i _ hi; rw [ite_eq_right (fun h => hi (Subtype.ext h.symm))]
-      · intro h; exact absurd (Finset.mem_attach _ _) h
-    · rw [dite_eq_right hx]
-      refine (Finset.sum_eq_zero fun i _ => ?_).symm
-      rw [ite_eq_right (fun (h : x = (↑i : α)) => hx (h.symm ▸ i.2))]
-  have hvlift_eq : vlift = fun y => ∑ j ∈ hSfin.toFinset.attach,
-      Set.indicator {(j : α)} (fun _ => v j) y := by
-    funext y
-    simp only [hvlift_def, Set.indicator_apply, Set.mem_singleton_iff]
-    by_cases hy : y ∈ hSfin.toFinset
-    · rw [dite_eq_left hy, Finset.sum_eq_single (⟨y, hy⟩ : hSfin.toFinset)]
-      · simp
-      · intro j _ hj; rw [ite_eq_right (fun h => hj (Subtype.ext h.symm))]
-      · intro h; exact absurd (Finset.mem_attach _ _) h
-    · rw [dite_eq_right hy]
-      refine (Finset.sum_eq_zero fun j _ => ?_).symm
-      rw [ite_eq_right (fun (h : y = (↑j : α)) => hy (h.symm ▸ j.2))]
-  have hulift_meas : Measurable ulift := by
-    rw [hulift_eq]
-    exact Finset.measurable_sum _ fun i _ =>
-      (measurable_const).indicator (measurableSet_singleton _)
-  have hvlift_meas : Measurable vlift := by
-    rw [hvlift_eq]
-    exact Finset.measurable_sum _ fun j _ =>
-      (measurable_const).indicator (measurableSet_singleton _)
-  refine ⟨ulift, vlift, hulift_meas, hvlift_meas, ?_, ?_⟩
-  · -- feasibility on supports
-    intro a' ha' b' hb'
-    have hia : a' ∈ hTfin.toFinset := by rw [Set.Finite.mem_toFinset]; exact ha'
-    have hjb : b' ∈ hSfin.toFinset := by rw [Set.Finite.mem_toFinset]; exact hb'
-    have hua : ulift a' = u ⟨a', hia⟩ := dite_eq_left hia
-    have hvb : vlift b' = v ⟨b', hjb⟩ := dite_eq_left hjb
-    rw [hua, hvb]
-    exact hfeas ⟨a', hia⟩ ⟨b', hjb⟩
-  · -- the matrix→measure bridge bound
-    have hint_u : ∫ x, ulift x ∂(Measure.map T μ) = ∑ i, a i * u i := by
-      rw [hulift_eq, integral_finsetSum _
-        (fun i _ => (integrable_const (u i)).indicator (measurableSet_singleton _))]
-      refine Finset.sum_congr rfl fun i _ => ?_
-      rw [integral_indicator_const _ (measurableSet_singleton _), smul_eq_mul]
-      simp only [ha_def, measureReal_def]
-    have hint_v : ∫ y, vlift y ∂(Measure.map S ν) = ∑ j, b j * v j := by
-      rw [hvlift_eq, integral_finsetSum _
-        (fun j _ => (integrable_const (v j)).indicator (measurableSet_singleton _))]
-      refine Finset.sum_congr rfl fun j _ => ?_
-      rw [integral_indicator_const _ (measurableSet_singleton _), smul_eq_mul]
-      simp only [hb_def, measureReal_def]
-    have hcoup : wassersteinCostCoupling c (Measure.map T μ) (Measure.map S ν)
-        ≤ ENNReal.ofReal (∑ i, ∑ j, Cost i j * P i j) := by
-      set π : Measure (α × α) := ∑ i, ∑ j,
-        ENNReal.ofReal (P i j) • Measure.dirac ((↑i : α), (↑j : α)) with hπ_def
-      have hofw : ∀ i : hTfin.toFinset, ENNReal.ofReal (a i) = Measure.map T μ {↑i} := fun i => by
-        rw [ha_def]; exact ENNReal.ofReal_toReal (measure_ne_top _ _)
-      have hofb : ∀ j : hSfin.toFinset, ENNReal.ofReal (b j) = Measure.map S ν {↑j} := fun j => by
-        rw [hb_def]; exact ENNReal.ofReal_toReal (measure_ne_top _ _)
-      have hfst : Measure.map Prod.fst π = Measure.map T μ := by
-        ext E hE
-        rw [Measure.map_apply measurable_fst hE, hπ_def, hμmap]
-        simp only [Measure.coe_finsetSum, Finset.sum_apply, Measure.smul_apply, smul_eq_mul,
-          Measure.dirac_apply]
-        rw [← Finset.sum_coe_sort hTfin.toFinset
-          (fun x => Measure.map T μ {x} * Set.indicator E 1 x)]
-        refine Finset.sum_congr rfl fun i _ => ?_
-        have hind : ∀ j : hSfin.toFinset,
-            Set.indicator (Prod.fst ⁻¹' E) (1 : α × α → ℝ≥0∞) (↑i, ↑j)
-              = Set.indicator E 1 (↑i : α) :=
-          fun j => by simp only [Set.indicator_apply, Set.mem_preimage, Pi.one_apply]
-        simp_rw [hind, ← Finset.sum_mul, ← ENNReal.ofReal_sum_of_nonneg (fun j _ => hPnn i j),
-          hProw, hofw]
-      have hsnd : Measure.map Prod.snd π = Measure.map S ν := by
-        ext E hE
-        rw [Measure.map_apply measurable_snd hE, hπ_def, hνmap]
-        simp only [Measure.coe_finsetSum, Finset.sum_apply, Measure.smul_apply, smul_eq_mul,
-          Measure.dirac_apply]
-        rw [Finset.sum_comm, ← Finset.sum_coe_sort hSfin.toFinset
-          (fun y => Measure.map S ν {y} * Set.indicator E 1 y)]
-        refine Finset.sum_congr rfl fun j _ => ?_
-        have hind : ∀ i : hTfin.toFinset,
-            Set.indicator (Prod.snd ⁻¹' E) (1 : α × α → ℝ≥0∞) (↑i, ↑j)
-              = Set.indicator E 1 (↑j : α) :=
-          fun i => by simp only [Set.indicator_apply, Set.mem_preimage, Pi.one_apply]
-        simp_rw [hind, ← Finset.sum_mul, ← ENNReal.ofReal_sum_of_nonneg (fun i _ => hPnn i j),
-          hPcol, hofb]
-      have hπ_cost : ∫⁻ z, ENNReal.ofReal (c z.1 z.2) ∂π
-          = ENNReal.ofReal (∑ i, ∑ j, Cost i j * P i j) := by
-        rw [hπ_def]
-        simp only [lintegral_finsetSum_measure, lintegral_smul_measure, lintegral_dirac,
-          smul_eq_mul, hCost_def]
-        rw [ENNReal.ofReal_sum_of_nonneg (fun i _ => Finset.sum_nonneg fun j _ =>
-          mul_nonneg (hc_nonneg _ _) (hPnn i j))]
-        refine Finset.sum_congr rfl fun i _ => ?_
-        rw [ENNReal.ofReal_sum_of_nonneg (fun j _ => mul_nonneg (hc_nonneg _ _) (hPnn i j))]
-        refine Finset.sum_congr rfl fun j _ => ?_
-        rw [← ENNReal.ofReal_mul (hPnn i j), mul_comm (P i j) (c (↑i) (↑j))]
-      unfold wassersteinCostCoupling
-      exact le_trans (iInf_le_of_le π (iInf_le _ ⟨hfst, hsnd⟩)) (le_of_eq hπ_cost)
-    rw [hint_u, hint_v]
-    exact hcoup.trans_eq (congrArg ENNReal.ofReal hval)
-
-private theorem cTransform_dual_witness
-    {α : Type*} [MeasurableSpace α]
-    (c : α → α → ℝ) (hc_self : ∀ x, c x x = 0)
-    (hc_symm : ∀ x y, c x y = c y x) (hc_triangle : ∀ x y z, c x z ≤ c x y + c y z)
-    (hc_meas : Measurable (fun p : α × α => c p.1 p.2))
-    (μ ν : Measure α) [IsProbabilityMeasure μ] [IsProbabilityMeasure ν]
-    (T S : α → α) (hT : Measurable T) (hS : Measurable S)
-    (hTfin : (Set.range T).Finite) (hSfin : (Set.range S).Finite)
-    (u v : α → ℝ) (hu : Measurable u) (hv : Measurable v)
-    (hdual : ∀ a ∈ Set.range T, ∀ b ∈ Set.range S, u a + v b ≤ c a b) :
-    ∃ g : α → ℝ, (∀ x y, |g x - g y| ≤ c x y) ∧
-      (∫ x, u x ∂(Measure.map T μ)) + (∫ x, v x ∂(Measure.map S ν))
-        ≤ ∫ x, g x ∂(Measure.map T μ) - ∫ x, g x ∂(Measure.map S ν) := by
-  classical
-  have : Nonempty α := nonempty_of_isProbabilityMeasure μ
-  set A : Finset α := hTfin.toFinset with hA_def
-  set B : Finset α := hSfin.toFinset with hB_def
-  have hmemA : ∀ a ∈ Set.range T, a ∈ A := fun a ha => by
-    rw [hA_def, Set.Finite.mem_toFinset]; exact ha
-  have hmemB : ∀ b ∈ Set.range S, b ∈ B := fun b hb => by
-    rw [hB_def, Set.Finite.mem_toFinset]; exact hb
-  have hAne : A.Nonempty := by
-    obtain ⟨a, ha⟩ := Set.range_nonempty T; exact ⟨a, hmemA a ha⟩
-  have hBne : B.Nonempty := by
-    obtain ⟨b, hb⟩ := Set.range_nonempty S; exact ⟨b, hmemB b hb⟩
-  set g : α → ℝ := finiteCTransform A hAne c u with hg_def
-  have hpair : ∀ a : α, Measurable (fun x : α => (x, a)) := fun a => by fun_prop
-  have hF_meas : ∀ a, Measurable (fun x => u a - c x a) := fun a =>
-    measurable_const.sub (hc_meas.comp (hpair a))
-  have hg_meas : Measurable g := by
-    have heq : g = A.sup' hAne (fun a x => u a - c x a) := by
-      funext x; exact (Finset.sup'_apply hAne (fun a x => u a - c x a) x).symm
-    rw [heq]; exact Finset.measurable_sup' hAne (fun a _ => hF_meas a)
-  obtain ⟨hg_adm, hgu, hgv⟩ :=
-    finiteCTransform_properties A hAne c hc_self hc_symm hc_triangle u v
-  have hg_ge_u : ∀ a ∈ Set.range T, u a ≤ g a :=
-    fun a ha => hgu a (hmemA a ha)
-  have hg_le_negv : ∀ b ∈ Set.range S, g b ≤ -v b := by
-    intro b hb
-    apply hgv b
-    intro a ha
-    exact hdual a (by rwa [hA_def, Set.Finite.mem_toFinset] at ha) b hb
-  have bdd_integ : ∀ (m : Measure α) [IsFiniteMeasure m] (f : α → ℝ) (C : ℝ),
-      Measurable f → (∀ y, |f y| ≤ C) → Integrable f m := by
-    intro m _ f C hf hC
-    exact (integrable_const C).mono' hf.aestronglyMeasurable
-      (ae_of_all m (fun y => by rw [Real.norm_eq_abs]; exact hC y))
-  have hu_int : Integrable (fun y => u (T y)) μ :=
-    bdd_integ μ _ (A.sup' hAne (fun a => |u a|)) (hu.comp hT)
-      (fun y => Finset.le_sup' (fun a => |u a|) (hmemA (T y) (Set.mem_range_self y)))
-  have hgT_int : Integrable (fun y => g (T y)) μ :=
-    bdd_integ μ _ (A.sup' hAne (fun a => |g a|)) (hg_meas.comp hT)
-      (fun y => Finset.le_sup' (fun a => |g a|) (hmemA (T y) (Set.mem_range_self y)))
-  have hv_int : Integrable (fun y => v (S y)) ν :=
-    bdd_integ ν _ (B.sup' hBne (fun b => |v b|)) (hv.comp hS)
-      (fun y => Finset.le_sup' (fun b => |v b|) (hmemB (S y) (Set.mem_range_self y)))
-  have hgnegS_int : Integrable (fun y => -(g (S y))) ν :=
-    (bdd_integ ν _ (B.sup' hBne (fun b => |g b|)) (hg_meas.comp hS)
-      (fun y => Finset.le_sup' (fun b => |g b|) (hmemB (S y) (Set.mem_range_self y)))).neg
-  refine ⟨g, hg_adm, ?_⟩
-  rw [integral_map hT.aemeasurable hu.aestronglyMeasurable,
-      integral_map hS.aemeasurable hv.aestronglyMeasurable,
-      integral_map hT.aemeasurable hg_meas.aestronglyMeasurable,
-      integral_map hS.aemeasurable hg_meas.aestronglyMeasurable]
-  have hmono1 : (∫ y, u (T y) ∂μ) ≤ ∫ y, g (T y) ∂μ :=
-    integral_mono hu_int hgT_int (fun y => hg_ge_u (T y) (Set.mem_range_self y))
-  have hmono2 : (∫ y, v (S y) ∂ν) ≤ ∫ y, -(g (S y)) ∂ν :=
-    integral_mono hv_int hgnegS_int
-      (fun y => by have := hg_le_negv (S y) (Set.mem_range_self y); linarith)
-  rw [integral_neg] at hmono2
-  linarith
+  have ha1 : ∑ i, a i = 1 := by
+    rw [show (∑ i, a i) = ∑ x ∈ A, ((Measure.map T μ) {x}).toReal from
+      Finset.sum_coe_sort A (fun x => ((Measure.map T μ) {x}).toReal),
+      ← ENNReal.toReal_sum (fun x _ => measure_ne_top _ _), hμmass, ENNReal.toReal_one]
+  have hb1 : ∑ i, b i = 1 := by
+    rw [show (∑ i, b i) = ∑ x ∈ A, ((Measure.map S ν) {x}).toReal from
+      Finset.sum_coe_sort A (fun x => ((Measure.map S ν) {x}).toReal),
+      ← ENNReal.toReal_sum (fun x _ => measure_ne_top _ _), hνmass, ENNReal.toReal_one]
+  obtain ⟨P, f, hP, hrow, hcol, hf, hval, _hmin, _hmax⟩ :=
+    finite_kr_attained a b (fun i j => c i j) (fun _ => ENNReal.toReal_nonneg)
+      (fun _ => ENNReal.toReal_nonneg) ha1 hb1 (fun i j => hc_nonneg i j)
+      (fun i => hc_self i) (fun i j => hc_symm i j) (fun i j k => hc_triangle i j k)
+  let u : α → ℝ := fun x => if hx : x ∈ A then f ⟨x, hx⟩ else 0
+  let g := finiteCTransform A hA c u
+  obtain ⟨hg, hgu, hgv⟩ := finiteCTransform_properties A hA c hc_self hc_symm hc_triangle u (-u)
+  have hgf : ∀ i : A, g i = f i := by
+    intro i
+    have hui : u i = f i := dif_pos i.2
+    apply le_antisymm
+    · have h := hgv i (fun j hj => ?_)
+      · simpa only [Pi.neg_apply, neg_neg, hui] using h
+      · have huj : u j = f ⟨j, hj⟩ := dif_pos hj
+        rw [Pi.neg_apply, huj, hui]
+        exact (le_abs_self _).trans (hf ⟨j, hj⟩ i)
+    · simpa only [hui] using hgu i i.2
+  have hint : ∀ (m : Measure α) [IsFiniteMeasure m],
+      m = ∑ x ∈ A, m {x} • Measure.dirac x →
+      (∫ x, g x ∂m) = ∑ i : A, (m {(i : α)}).toReal * f i := by
+    intro m _ hm
+    have hi : ∀ x ∈ A, Integrable g ((m {x}) • Measure.dirac x) := fun x _ =>
+      (integrable_dirac (by simp)).smul_measure (measure_ne_top _ _)
+    rw [hm, integral_finsetSum_measure hi]
+    simp_rw [integral_smul_measure, integral_dirac, smul_eq_mul]
+    rw [← Finset.sum_coe_sort A (fun x => (m {x}).toReal * g x)]
+    exact Finset.sum_congr rfl fun i _ => congrArg ((m {(i : α)}).toReal * ·) (hgf i)
+  let π : Measure (α × α) := ∑ i : A, ∑ j : A,
+    ENNReal.ofReal (P i j) • Measure.dirac ((↑i : α), (↑j : α))
+  have hofa : ∀ i : A, ENNReal.ofReal (a i) = Measure.map T μ {↑i} :=
+    fun i => ENNReal.ofReal_toReal (measure_ne_top _ _)
+  have hofb : ∀ i : A, ENNReal.ofReal (b i) = Measure.map S ν {↑i} :=
+    fun i => ENNReal.ofReal_toReal (measure_ne_top _ _)
+  have hfst : Measure.map Prod.fst π = Measure.map T μ := by
+    ext E hE
+    rw [Measure.map_apply measurable_fst hE, show π = _ from rfl, hμmap]
+    simp only [Measure.coe_finsetSum, Finset.sum_apply, Measure.smul_apply, smul_eq_mul,
+      Measure.dirac_apply]
+    rw [← Finset.sum_coe_sort A (fun x => Measure.map T μ {x} * Set.indicator E 1 x)]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    have hind : ∀ j : A,
+        Set.indicator (Prod.fst ⁻¹' E) (1 : α × α → ℝ≥0∞) (↑i, ↑j)
+          = Set.indicator E 1 (↑i : α) :=
+      fun j => by simp only [Set.indicator_apply, Set.mem_preimage, Pi.one_apply]
+    simp_rw [hind, ← Finset.sum_mul, ← ENNReal.ofReal_sum_of_nonneg (fun j _ => hP i j),
+      hrow, hofa]
+  have hsnd : Measure.map Prod.snd π = Measure.map S ν := by
+    ext E hE
+    rw [Measure.map_apply measurable_snd hE, show π = _ from rfl, hνmap]
+    simp only [Measure.coe_finsetSum, Finset.sum_apply, Measure.smul_apply, smul_eq_mul,
+      Measure.dirac_apply]
+    rw [Finset.sum_comm, ← Finset.sum_coe_sort A
+      (fun y => Measure.map S ν {y} * Set.indicator E 1 y)]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    have hind : ∀ i : A,
+        Set.indicator (Prod.snd ⁻¹' E) (1 : α × α → ℝ≥0∞) (↑i, ↑j)
+          = Set.indicator E 1 (↑j : α) :=
+      fun i => by simp only [Set.indicator_apply, Set.mem_preimage, Pi.one_apply]
+    simp_rw [hind, ← Finset.sum_mul, ← ENNReal.ofReal_sum_of_nonneg (fun i _ => hP i j),
+      hcol, hofb]
+  have hcost : ∫⁻ z, ENNReal.ofReal (c z.1 z.2) ∂π
+      = ENNReal.ofReal (∑ i : A, ∑ j : A, c i j * P i j) := by
+    simp only [π, lintegral_finsetSum_measure, lintegral_smul_measure, lintegral_dirac,
+      smul_eq_mul]
+    rw [ENNReal.ofReal_sum_of_nonneg (fun i _ => Finset.sum_nonneg fun j _ =>
+      mul_nonneg (hc_nonneg _ _) (hP i j))]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [ENNReal.ofReal_sum_of_nonneg (fun j _ => mul_nonneg (hc_nonneg _ _) (hP i j))]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    rw [← ENNReal.ofReal_mul (hP i j), mul_comm (P i j) (c (↑i) (↑j))]
+  refine ⟨π, g, ⟨hfst, hsnd⟩, hg, ?_⟩
+  rw [hcost, hint _ hμmap, hint _ hνmap]
+  exact congrArg ENNReal.ofReal hval
 
 private theorem wassersteinCostCoupling_le_dual_of_finiteRange
-    {α : Type*} [MeasurableSpace α]
-    [MeasurableSingletonClass α]
+    {α : Type*} [MeasurableSpace α] [MeasurableSingletonClass α]
     (c : α → α → ℝ) (hc_nonneg : ∀ x y, 0 ≤ c x y) (hc_self : ∀ x, c x x = 0)
     (hc_symm : ∀ x y, c x y = c y x) (hc_triangle : ∀ x y z, c x z ≤ c x y + c y z)
-    (hc_meas : Measurable (fun p : α × α => c p.1 p.2))
     (μ ν : Measure α) [IsProbabilityMeasure μ] [IsProbabilityMeasure ν]
     (T S : α → α) (hT : Measurable T) (hS : Measurable S)
     (hTfin : (Set.range T).Finite) (hSfin : (Set.range S).Finite) :
     wassersteinCostCoupling c (Measure.map T μ) (Measure.map S ν)
       ≤ wassersteinCost c (Measure.map T μ) (Measure.map S ν) := by
-  obtain ⟨u, v, hu, hv, hdual, hval⟩ :=
-    finiteRange_transportation_dual c hc_nonneg μ ν T S hT hS hTfin hSfin
-  obtain ⟨g, hg_adm, hg_val⟩ :=
-    cTransform_dual_witness c hc_self hc_symm hc_triangle hc_meas μ ν T S hT hS
-      hTfin hSfin u v hu hv hdual
-  refine hval.trans ((ENNReal.ofReal_le_ofReal hg_val).trans ?_)
-  exact le_iSup_of_le g (le_iSup_of_le hg_adm le_rfl)
+  obtain ⟨π, g, hπ, hg, hcost⟩ :=
+    finiteRange_optimal_coupling c hc_nonneg hc_self hc_symm hc_triangle μ ν T S hT hS hTfin hSfin
+  exact (iInf_le_of_le π (iInf_le _ hπ)).trans
+    (hcost.trans_le (le_iSup_of_le g (le_iSup_of_le hg le_rfl)))
 
 theorem wassersteinCostCoupling_le_dual
     {α : Type*} [MeasurableSpace α] [PseudoMetricSpace α] [BorelSpace α]
@@ -650,7 +524,7 @@ theorem wassersteinCostCoupling_le_dual
   have hmid : wassersteinCostCoupling c (Measure.map T μ) (Measure.map S ν)
       ≤ wassersteinCost c μ ν + q + q :=
     (wassersteinCostCoupling_le_dual_of_finiteRange c hc_nonneg hc_self hc_symm hc_triangle
-        hc_cont.measurable μ ν T S hT hS hTfin hSfin).trans
+        μ ν T S hT hS hTfin hSfin).trans
       ((wassersteinCost_dual_le_add_map c hc_nonneg hc_self hc_symm hc_cont μ ν T S hT hS
           x₀ hμ_cm hν_cm).trans
         (add_le_add (add_le_add le_rfl hTcost) hScost))
