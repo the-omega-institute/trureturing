@@ -302,7 +302,7 @@ print('finished without isolation', flush=True)
                                  "[FAIL] matching_tip_needs_no_history")
                 self.assertEqual(1, sum(call[-2:] == ["cat-file", "--batch"] for call in calls))
 
-    def test_recovery_unsampled_history_keeps_bytes_with_bounded_tree_reads(self):
+    def test_recovery_unsampled_history_uses_targeted_lookup_with_bounded_tree_reads(self):
         target = self.remnant()
         retained = self.git(self.main, "rev-parse", "HEAD")
         self.git(self.main, "rm", "Blueprint/Retained.md")
@@ -316,12 +316,13 @@ print('finished without isolation', flush=True)
         calls = []
         with self.bounded_recovery_calls(calls):
             result = self.clean_remnant(target, delete=False)
-        self.assertEqual(("kept", "blueprint_unrecoverable"), (result["action"], result["reason"]), result)
+        self.assertEqual("would_remove", result["action"], result)
         self.assertLessEqual(sum("ls-tree" in call for call in calls), 48,
                              "[FAIL] bounded_recovery_tree_reads")
+        self.assertEqual(1, sum("log" in call for call in calls), "[FAIL] targeted_history_lookup")
         self.assertTrue((target / "Blueprint/Retained.md").exists())
 
-    def test_recovery_seventeenth_distinct_tip_is_outside_the_sample(self):
+    def test_recovery_seventeenth_distinct_tip_is_recovered_outside_the_sample(self):
         baseline = self.git(self.main, "rev-parse", "HEAD")
         baseline_tree = self.git(self.main, "rev-parse", "HEAD^{tree}")
         target = self.remnant("tip-cap")
@@ -340,7 +341,8 @@ print('finished without isolation', flush=True)
         scanned = {call[call.index("ls-tree") + 4] for call in calls if "ls-tree" in call}
         self.assertEqual(16, len(scanned), "[FAIL] distinct_tip_tree_reads")
         self.assertNotIn(retained, scanned)
-        self.assertEqual(("kept", "blueprint_unrecoverable"), (result["action"], result["reason"]), result)
+        self.assertEqual("would_remove", result["action"], result)
+        self.assertEqual(1, sum("log" in call for call in calls), "[FAIL] targeted_history_lookup")
         self.assertEqual(b"retained blueprint\x00bytes\n", (target / "Blueprint/Retained.md").read_bytes())
 
     def test_recovery_sampled_parent_is_recoverable_without_a_tip_copy(self):

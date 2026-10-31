@@ -448,6 +448,7 @@ The new formation lower bound combines the determinant readout estimate with the
 - Dependency: [D5/S3/Quantum/Fibers/PhysicalFiber](../../Fibers/PhysicalFiber.md)
 - Dependency: [D5/S3/Quantum/Information/ActualPureQubitGeometry](../../Information/ActualPureQubitGeometry.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../../Information/PartialTraceMutualInformation.md)
+- Dependency: [D5/S3/Quantum/Information/QubitNormalFormState](../../Information/QubitNormalFormState.md)
 - Dependency: [D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction](../../Information/SeparableStateLocalUnitaryStabilizerObstruction.md)
 - Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../../PureState/PureStateHandshake.md)
 - Dependency: [D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation](../../../QuantumChannels/CoPRelativeQuantumnessRefutation.md)

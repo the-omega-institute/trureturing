@@ -20,12 +20,12 @@ public sealed partial class CleanLanesCommandTests
             if (file != "python3" || !IsQualification(args)) return null;
             qualified++;
             var modified = args.ToArray();
-            modified[2] = modified[2].Replace("sys.exit(sys.modules['worktree_protocol'].main())", """
+            File.WriteAllText(modified[2], File.ReadAllText(modified[2]).Replace("sys.exit(sys.modules['worktree_protocol'].main())", """
                 def refuse(*args, **kwargs):
                     raise sys.modules['worktree_protocol'].Refused('initialization_in_progress')
                 sys.modules['worktree_preservation'].qualify = refuse
                 sys.exit(sys.modules['worktree_protocol'].main())
-                """, StringComparison.Ordinal);
+                """, StringComparison.Ordinal));
             return production.Run(file, modified, directory, TimeSpan.FromSeconds(60));
         });
 
@@ -52,10 +52,10 @@ public sealed partial class CleanLanesCommandTests
             if (file != "python3" || !IsQualification(args)) return null;
             qualified++;
             var modified = args.ToArray();
-            modified[2] = modified[2].Replace("sys.exit(sys.modules['worktree_protocol'].main())", """
+            File.WriteAllText(modified[2], File.ReadAllText(modified[2]).Replace("sys.exit(sys.modules['worktree_protocol'].main())", """
                 sys.modules['worktree_preservation'].tree_scope = lambda *args, **kwargs: None
                 sys.exit(sys.modules['worktree_protocol'].main())
-                """, StringComparison.Ordinal);
+                """, StringComparison.Ordinal));
             return production.Run(file, modified, directory, TimeSpan.FromSeconds(60));
         });
 

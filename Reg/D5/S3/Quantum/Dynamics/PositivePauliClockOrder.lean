@@ -183,3 +183,88 @@ end SigmaPosDef
 
 end
 end Reg.D5.S3.Quantum.Dynamics.PositivePauliClockOrder
+
+namespace Reg.D5.S3.Quantum.Dynamics.PositivePauliClockOrder.PhaseUnit
+open _root_.D5.S3.Quantum.Dynamics.PositivePauliClockOrder (phase_unit)
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+
+/-- Observe the exponential at the second phase exponent in the source equality. -/
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ) (fun _ => ℂ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ z => Complex.exp z) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ θ : ℝ,
+    star (Complex.exp (-Complex.I * (θ : ℂ))) *
+      R.readout () () (-Complex.I * (θ : ℂ)) = 1
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hz := h 0
+  change star (Complex.exp (-Complex.I * (0 : ℂ))) * 0 = 1 at hz
+  simp at hz
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, (Real.pi : ℂ) * Complex.I, ?_⟩
+  change Complex.exp 0 ≠ Complex.exp ((Real.pi : ℂ) * Complex.I)
+  rw [Complex.exp_zero, Complex.exp_pi_mul_I]
+  norm_num
+
+def source_registration : Registration arena (type_of% @phase_unit) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨phase_unit, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@phase_unit) (Realization signature) Unit Unit := {
+  unitName := .str ``phase_unit "__information_unit"
+  realizationName := ``source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => Complex.exp z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Dynamics.PositivePauliClockOrder
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "fn", "arg", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print D5.S3.Quantum.Dynamics.PositivePauliClockOrder.phase_unit
+#print axioms source_registration
+#print axioms registration
+
+end
+end Reg.D5.S3.Quantum.Dynamics.PositivePauliClockOrder.PhaseUnit

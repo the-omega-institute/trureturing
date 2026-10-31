@@ -1,0 +1,5 @@
+source_id = "cfmp-geometric-realization-mixed-matching"
+path = "docs/develop/theory/CFMP_GEOMETRIC_REALIZATION_MIXED_MATCHING.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
