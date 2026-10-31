@@ -41,7 +41,7 @@ abbrev signature : DependentFamily.Signature where
   finiteAnchor := inferInstance
 
 def charge (P : Inputs.{u}) (J : Finset P.Carrier) : ℝ :=
-  @configurationCharge P.Carrier P.finiteCarrier P.equality P.graph P.adjacency P.lam J
+  @configurationCharge P.Carrier P.finiteCarrier P.graph P.adjacency P.lam J
 
 def actual : DependentFamily.Realization signature.{u} :=
   DependentFamily.realize signature (fun _ P J => charge P J) (fun a => nomatch a)
@@ -73,8 +73,8 @@ theorem actual_positive : arena.{u}.Law actual.{u} :=
 
 def star : SimpleGraph (ULift.{u} (Fin 3)) where
   Adj x y := (x.down = 0 ∧ y.down ≠ 0) ∨ (y.down = 0 ∧ x.down ≠ 0)
-  symm := by intro x y; tauto
-  loopless := by intro x; simp
+  symm := ⟨by intros; tauto⟩
+  loopless := ⟨by intro x; simp⟩
 
 instance starDecidable : DecidableRel star.{u}.Adj := fun x y =>
   inferInstanceAs (Decidable ((x.down = 0 ∧ y.down ≠ 0) ∨ (y.down = 0 ∧ x.down ≠ 0)))
@@ -104,9 +104,12 @@ theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
 
 theorem observation_dependence : DependentFamily.ObservationalDependence
     signature.{u} actual.{u} := by
+  classical
   intro i
-  refine ⟨sample, ∅, {ULift.up (1 : Fin 3), ULift.up (2 : Fin 3)}, ?_⟩
-  change charge sample ∅ ≠ charge sample {ULift.up (1 : Fin 3), ULift.up (2 : Fin 3)}
+  let J : Finset (ULift.{u} (Fin 3)) := {ULift.up 1, ULift.up 2}
+  refine ⟨sample.{u}, ∅, J, ?_⟩
+  change charge sample ∅ ≠ charge sample J
+  dsimp [J]
   have hU : (univ : Finset (ULift.{u} (Fin 3))) =
       {ULift.up 0, ULift.up 1, ULift.up 2} := by decide
   norm_num [charge, sample, configurationCharge, degreeWeight, occupiedNeighbors,
