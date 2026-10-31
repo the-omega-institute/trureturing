@@ -3950,7 +3950,6 @@ and sufficiency of $a^{5/2}$ for eventual exact source restriction
 undetermined. The threshold-core conclusion is weaker than such a
 source restriction. Moving $R$, changing the prescribed sink budget,
 and the unrestricted original connected-graph extremal problem are
-outside these theorems. All results in these sections are mathematical
-prose; no Lean verification or frozen or digestion state is asserted.
+outside these theorems.
 
 ## 追加锚（本行以下为增补区）
