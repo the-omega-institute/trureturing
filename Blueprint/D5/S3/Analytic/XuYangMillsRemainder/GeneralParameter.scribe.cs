@@ -37,9 +37,9 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                         "The proposition states two separate equivalences in each chain: "
                         + "global sign iff complete monotonicity, and complete monotonicity iff "
                         + "the sharp parameter bound. It is a target definition, not an asserted theorem. "
-                        + "The exact Laplace representation, "
-                        + "infinity asymptotic and both classification "
-                        + "chains remain open."))),
+                        + "the exact Laplace representation and the positive sufficiency branch "
+                        + "are now proved in the continuation; the infinity asymptotic, sharp negative "
+                        + "necessity and complete two-chain theorem remain open."))),
                 DescribeRole.Definition),
             Proof("regularity-and-origin", "regularity_and_origin",
                 "Gaussian regularity and the original origin asymptotic",
@@ -97,8 +97,8 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                 + "is strictly positive when a <= theta_r and strictly negative when a >= theta_(r+1). "
                 + "Its inner integral is exactly 2 M2 times the difference between the inner threshold "
                 + "and a. The strict inner bounds include both parameter endpoints. "
-                + "This proves the kernel sign ranges; equality of its Laplace integral with the original "
-                + "F, all derivative signs and the complete classification remain open."),
+                + "This proves the kernel sign ranges. The continuation below proves equality of its "
+                + "Laplace integral with the original F and uses it for both sufficiency branches."),
             Proof("original-coefficient-identity", "coefficient_identity",
                 "Exact general-parameter Gamma coefficient correspondence",
                 "For every r >= 0 and real a, the original u_(r+2)(a,a-2) equals "
@@ -153,9 +153,9 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                 + "F_(r+2,a) equals the signed-kernel moment plus the mth derivative of "
                 + "(-1)^(r+2) [Y_(a,a-2)-(a-1)-Laplace(G_a)]. "
                 + "The finite-subtraction identity and smoothness justify this equality on x>0. "
-                + "The outstanding Gaussian identity is Y_(a,a-2)-(a-1)=Laplace(G_a); "
-                + "this identity is not assumed or asserted as proved. Consequently the actual F "
-                + "derivative signs, its infinity asymptotic and the full classification remain open."),
+                + "The Gaussian identity is discharged in the continuation below. The remaining open "
+                + "obligations are the infinity asymptotic, sharp negative necessity and assembly of "
+                + "the complete two-chain classification."),
             Proof("gaussian-kernel-identity", "gaussian_kernel_identity",
                 "General-parameter Gaussian convolution kernel identity",
                 "For every real a and t, the source kernel G_a(t) equals "
@@ -164,8 +164,34 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                 + "Integrating the derivative of v exp(-(1+v^2)t^2/4) gives "
                 + "exp(-t^2/2) as the integral of (1-t^2 v^2/2) times the same exponential. "
                 + "Substitution in G and linearity of the integral give the stated identity. "
-                + "This is the source's pointwise identity (2.3); its Laplace relation with Y "
-                + "is not asserted here."))));
+                + "This is the source's pointwise identity (2.3)."),
+            Proof("gaussian-kernel-base", "gaussian_kernel_eq_K",
+                "The negative-parameter Gaussian kernel is the original K kernel",
+                "A second interval integration by parts gives G_(-1)(t)=K(t), preserving the "
+                + "original Gaussian convolution normalization and the exact K supplier."),
+            Proof("gaussian-laplace-identity", "gaussian_laplace_identity",
+                "The exact general-parameter Gaussian Laplace identity",
+                "The original Mills Laplace formula and square convolution are combined with the "
+                + "original kernelLaplace identity at parameter -1. A direct integration by parts gives "
+                + "the t times Gaussian integral, and linearity in a then yields "
+                + "Y_(a,a-2)(x)-(a-1)=integral exp(-xt) G_a(t) for every x>0."),
+            Proof("actual-f-laplace", "actual_f_laplace",
+                "The exact Laplace representation of the original F",
+                "Substitution of the Gaussian identity into the finite-subtraction defect removes the "
+                + "residual exactly, giving F_(r+2,a)(x)=integral exp(-xt)L_(r,a)(t)."),
+            Proof("actual-f-iterated-deriv", "actual_f_iterated_deriv",
+                "Every ordinary derivative of the original F",
+                "The exact Laplace representation and the signed-kernel iterated differentiation theorem "
+                + "give the integral of (-t)^m exp(-xt)L for every ordinary order m, including zero."),
+            Proof("positive-cm-sufficiency", "positive_cm_sufficiency",
+                "Positive complete-monotonicity sufficiency with the closed endpoint",
+                "The positive closed kernel range, exact F Laplace representation and all-order derivative "
+                + "formula prove complete monotonicity whenever a <= theta_(n-2), including equality."),
+            Proof("negative-cm-sufficiency", "negative_cm_sufficiency",
+                "Negative complete-monotonicity sufficiency with the closed endpoint",
+                "The negative closed kernel range, exact F Laplace representation and all-order derivative "
+                + "formula prove complete monotonicity of -F whenever a >= theta_(n-1), including equality. "
+                + "The converse still requires the infinity asymptotic."))));
 
     private static DocumentBlock Proof(string id, string name, string title, string narrative) =>
         Describe.Lean(
