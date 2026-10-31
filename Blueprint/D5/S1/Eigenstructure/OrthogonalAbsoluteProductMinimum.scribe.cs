@@ -47,8 +47,11 @@ internal sealed class OrthogonalAbsoluteProductMinimumDocument : IScribeDocument
     private static Formula Abs(Formula x) => Seq(Lvert, x, Rvert);
     private static Formula ObjectiveFormula()
     {
-        Formula p = F.Id("P"), q = F.Id("Q");
-        return Disp(Seq(Call("objective", p, q), Sp, Eq, Sp,
+        Formula k = F.Id("K"), p = F.Id("P"), q = F.Id("Q");
+        return Disp(Seq(Forall, Sp, k, Sp, InMacro, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp,
+            Forall, Sp, p, Comma, q, Sp, InMacro, Sp,
+            Seq(Mathbb, Grp(F.Id("R")), Caret, Grp(k, Times, k)), Comma, Esc,
+            Call("objective", p, q), Sp, Eq, Sp,
             Call("rho", Seq(Abs(Seq(p, q)), Sp,
                 Abs(Seq(q, Caret, Grp(F.Id("T")), Sp, p, Caret, Grp(Minus, D(1))))))));
     }
