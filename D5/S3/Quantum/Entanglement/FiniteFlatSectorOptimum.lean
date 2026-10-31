@@ -204,6 +204,7 @@ private theorem exponential_quotient_minimum [Nonempty Sector]
     ∃ loss : ℕ → ℝ,
       StrictMono a ∧ Function.Surjective f ∧ (∀ s, a (f s) = m s) ∧
       Monotone loss ∧ (∀ i : Fin (n + 1), loss i = Real.log (a i : ℝ)) ∧
+      0 < ExponentialSectorKernel.normalizer n loss ∧
       (∃ p ∈ stdSimplex ℝ Sector,
         (∑ s, ∑ t, p s * p t *
           Real.exp (-|Real.log (m s : ℝ) - Real.log (m t : ℝ)| / 2)) =
@@ -244,7 +245,7 @@ private theorem exponential_quotient_minimum [Nonempty Sector]
   let p := aggregate g q
   have hp : p ∈ stdSimplex ℝ Sector := aggregate_simplex g q hq
   have hpq : aggregate f p = q := aggregate_section f g hg q
-  refine ⟨n, a, f, loss, ha, hf, haf, hmono, hloss, ?_, ?_, htotal⟩
+  refine ⟨n, a, f, loss, ha, hf, haf, hmono, hloss, hZ, ?_, ?_, htotal⟩
   · refine ⟨p, hp, ?_⟩
     rw [← henergy]
     dsimp [ExponentialSectorKernel.energy]
@@ -435,7 +436,7 @@ private theorem placement_tensor {A B : Type u}
     [DecidableEq B] (f : A ↪ B) :
     placement f ⊗ₖ placement f = placement (f.prodMap f) := by
   ext b a
-  simp [placement, Matrix.kroneckerMap_apply, Prod.ext_iff, ite_and]
+  simp [placement, Matrix.kroneckerMap_apply, Prod.ext_iff, ite_and, ite_mul, mul_ite]
 
 private theorem placement_mul_image {A B C : Type u}
     [Fintype A] [DecidableEq B] (f : A ↪ B) (X : Matrix A C ℂ) (a : A) (c : C) :
@@ -490,5 +491,246 @@ private theorem compact_flat_encoding (r d m : Sector → ℕ) (J : ℕ)
         exact hy ⟨(a, a), Prod.ext ha (ha.trans hdiag)⟩
       simp [sourceEncoding, flatSpectrum, hout]
     · simp [sourceEncoding, hdiag]
+
+private def flatModel (d m : Sector → ℕ) (J : ℕ) (hd : ∀ s, 0 < d s)
+    (hm : ∀ s, 0 < m s) (hmJ : ∀ s, m s ≤ J) : Model Sector J where
+  d := d
+  positiveRank := hd
+  spectrum s := flatSpectrum J (m s)
+  spectrumNonneg s j := by
+    dsimp [flatSpectrum]
+    split_ifs <;> positivity
+  spectrumSum s := flat_spectrum_sum J (m s) (hm s) (hmJ s)
+  spectrumAntitone s := flat_spectrum_antitone J (m s)
+
+private theorem channel_ext_raw {A B : Type u}
+    [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
+    (C D : QuantumChannel A B) (h : ∀ X, raw C X = raw D X) : C = D := by
+  have hmap : C.toCompletelyPositiveMap = D.toCompletelyPositiveMap := by
+    ext rho
+    apply CStarMatrix.ofMatrix.symm.injective
+    simpa only [raw, LinearMap.comp_apply, Equiv.apply_symm_apply] using
+      h (CStarMatrix.ofMatrix.symm rho)
+  cases C with
+  | mk cf ct =>
+    cases D with
+    | mk df dt =>
+      have hm : cf = df := hmap
+      cases hm
+      rfl
+
+private theorem tensor_isometry_action {A B : Type u}
+    [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
+    (U : Matrix B A ℂ) (E : QuantumChannel A B)
+    (E₂ : QuantumChannel (A × A) (B × B))
+    (hE : ∀ X, raw E X = U * X * Uᴴ)
+    (hE₂ : ∀ X, raw E₂ X = (U ⊗ₖ U) * X * (U ⊗ₖ U)ᴴ) :
+    TensorRealization E E E₂ := by
+  let P := raw E₂
+  let Q := tensorMap E E
+  have hsingle (i j : A × A) : P (Matrix.single i j 1) = Q (Matrix.single i j 1) := by
+    have hs : Matrix.single i j (1 : ℂ) =
+        Matrix.single i.1 j.1 (1 : ℂ) ⊗ₖ Matrix.single i.2 j.2 (1 : ℂ) := by
+      rw [Matrix.single_kronecker_single, one_mul]
+    change raw E₂ _ = tensorRawAction E E _
+    simp only [hs, hE₂, tensor_kronecker, hE, Matrix.conjTranspose_kronecker,
+      ← Matrix.mul_kronecker_mul]
+  intro X
+  have hX : X = ∑ i, ∑ j, X i j • Matrix.single i j (1 : ℂ) := by
+    simpa only [Matrix.smul_single, smul_eq_mul, mul_one] using Matrix.matrix_eq_sum_single X
+  change P X = Q X
+  rw [hX]
+  simp only [map_sum, map_smul, hsingle]
+
+private theorem tensor_retraction {A B : Type u}
+    [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
+    (E : QuantumChannel A B) (R : QuantumChannel B A)
+    (hR : ∀ X, raw R (raw E X) = X) (X : Matrix (A × A) (A × A) ℂ) :
+    tensorRawAction R R (tensorRawAction E E X) = X := by
+  let P := (tensorMap R R).comp (tensorMap E E)
+  have hsingle (i j : A × A) : P (Matrix.single i j 1) = Matrix.single i j 1 := by
+    have hs : Matrix.single i j (1 : ℂ) =
+        Matrix.single i.1 j.1 (1 : ℂ) ⊗ₖ Matrix.single i.2 j.2 (1 : ℂ) := by
+      rw [Matrix.single_kronecker_single, one_mul]
+    change tensorRawAction R R (tensorRawAction E E _) = _
+    simp only [hs, tensor_kronecker, hR]
+  have hX : X = ∑ i, ∑ j, X i j • Matrix.single i j (1 : ℂ) := by
+    simpa only [Matrix.smul_single, smul_eq_mul, mul_one] using Matrix.matrix_eq_sum_single X
+  change P X = X
+  conv_lhs => rw [hX]
+  simp only [map_sum, map_smul, hsingle]
+  exact hX.symm
+
+/-- Errors of actual products on the original compact flat source carrier. -/
+private def compactProductErrors (r d : Sector → ℕ)
+    (source : QuantumChannel Sector (TargetLocal r × TargetLocal r))
+    (target : QuantumChannel Sector (TargetLocal d × TargetLocal d)) : Set ℝ :=
+  {x | ∃ left : QuantumChannel (TargetLocal r) (TargetLocal d),
+    ∃ right : QuantumChannel (TargetLocal r) (TargetLocal d),
+    ∃ joint : QuantumChannel (TargetLocal r × TargetLocal r) (TargetLocal d × TargetLocal d),
+      TensorRealization left right joint ∧ x = diamondDistance (joint.comp source) target}
+
+/-- Both directions use actual CPTP maps; the retraction resets the unused complement. -/
+private theorem compact_physical_transport [Nonempty Sector]
+    (r d m : Sector → ℕ) (J : ℕ) (hr : ∀ s, r s = d s * m s)
+    (hd : ∀ s, 0 < d s) (hm : ∀ s, 0 < m s) (hmJ : ∀ s, m s ≤ J)
+    (encoding : EncodingChannels (flatModel d m J hd hm hmJ))
+    (hProduct : ∀ left : QuantumChannel (SourceLocal (Coord := Fin J) d) (TargetLocal d),
+      ∀ right : QuantumChannel (SourceLocal (Coord := Fin J) d) (TargetLocal d),
+      ∃ joint : QuantumChannel
+        (SourceLocal (Coord := Fin J) d × SourceLocal (Coord := Fin J) d)
+        (TargetLocal d × TargetLocal d), TensorRealization left right joint) :
+    ∃ source : QuantumChannel Sector (TargetLocal r × TargetLocal r),
+    ∃ E : QuantumChannel (TargetLocal r) (SourceLocal (Coord := Fin J) d),
+    ∃ R : QuantumChannel (SourceLocal (Coord := Fin J) d) (TargetLocal r),
+    ∃ E₂ : QuantumChannel (TargetLocal r × TargetLocal r)
+        (SourceLocal (Coord := Fin J) d × SourceLocal (Coord := Fin J) d),
+      (∀ X, raw source X = targetEncoding r * X * (targetEncoding r)ᴴ) ∧
+      (∀ X, raw E X = placement (compactEmbedding r d m J hr hmJ) * X *
+        (placement (compactEmbedding r d m J hr hmJ))ᴴ) ∧
+      (∀ X, raw R (raw E X) = X) ∧ TensorRealization E E E₂ ∧
+      E₂.comp source = encoding.source ∧
+      (∀ left : QuantumChannel (TargetLocal r) (TargetLocal d),
+        ∀ right : QuantumChannel (TargetLocal r) (TargetLocal d),
+        ∃ joint : QuantumChannel (TargetLocal r × TargetLocal r) (TargetLocal d × TargetLocal d),
+          TensorRealization left right joint) ∧
+      compactProductErrors r d source encoding.target =
+        productErrors (flatModel d m J hd hm hmJ) encoding := by
+  classical
+  let s₀ : Sector := Classical.choice inferInstance
+  letI : Nonempty (TargetLocal r) :=
+    ⟨⟨s₀, ⟨0, by rw [hr]; exact Nat.mul_pos (hd s₀) (hm s₀)⟩⟩⟩
+  let U := placement (compactEmbedding r d m J hr hmJ)
+  have hU : Uᴴ * U = 1 := placement_isometry _
+  obtain ⟨E, R, hE, hR⟩ := isometry_retraction U hU
+  have hU₂ : (U ⊗ₖ U)ᴴ * (U ⊗ₖ U) = 1 := by
+    simp only [Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul,
+      hU, Matrix.one_kronecker_one]
+  obtain ⟨E₂, R₂, hE₂, hR₂⟩ := isometry_retraction (U ⊗ₖ U) hU₂
+  have hTensor : TensorRealization E E E₂ := tensor_isometry_action U E E₂ hE hE₂
+  have hpad (X : Matrix Sector Sector ℂ) :
+      raw encoding.source X = raw E₂ (targetEncoding r * X * (targetEncoding r)ᴴ) := by
+    rw [hE₂]
+    change raw encoding.source X = _
+    rw [show raw encoding.source X =
+      sourceEncoding d (fun s => flatSpectrum J (m s)) * X *
+        (sourceEncoding d (fun s => flatSpectrum J (m s)))ᴴ from encoding.sourceAction X]
+    rw [← compact_flat_encoding r d m J hr hmJ]
+    simp only [U, Matrix.conjTranspose_mul, Matrix.mul_assoc]
+  let source := R₂.comp encoding.source
+  have hsource (X : Matrix Sector Sector ℂ) :
+      raw source X = targetEncoding r * X * (targetEncoding r)ᴴ := by
+    change raw (R₂.comp encoding.source) X = _
+    rw [raw_comp, hpad, hR₂]
+  have hembed : E₂.comp source = encoding.source := by
+    apply channel_ext_raw
+    intro X
+    rw [raw_comp, hsource, ← hpad]
+  have hpull (L N : QuantumChannel (TargetLocal r) (TargetLocal d))
+      (X : Matrix (TargetLocal r × TargetLocal r) (TargetLocal r × TargetLocal r) ℂ) :
+      tensorRawAction (L.comp R) (N.comp R) (raw E₂ X) = tensorRawAction L N X := by
+    rw [hTensor, tensor_comp R R L N, tensor_retraction E R hR]
+  have hrestrict (L N : QuantumChannel (SourceLocal (Coord := Fin J) d) (TargetLocal d))
+      (Q : QuantumChannel
+        (SourceLocal (Coord := Fin J) d × SourceLocal (Coord := Fin J) d)
+        (TargetLocal d × TargetLocal d)) (hQ : TensorRealization L N Q) :
+      TensorRealization (L.comp E) (N.comp E) (Q.comp E₂) := by
+    intro X
+    change raw (Q.comp E₂) X = _
+    rw [raw_comp, hQ, hTensor, tensor_comp]
+  have hencoded (Q : QuantumChannel
+      (SourceLocal (Coord := Fin J) d × SourceLocal (Coord := Fin J) d)
+      (TargetLocal d × TargetLocal d)) :
+      (Q.comp E₂).comp source = Q.comp encoding.source := by
+    apply channel_ext_raw
+    intro X
+    simp only [raw_comp]
+    have he := congrArg (fun C => raw C X) hembed
+    simp only [raw_comp] at he
+    rw [he]
+  refine ⟨source, E, R, E₂, hsource, hE, hR, hTensor, hembed, ?_, ?_⟩
+  · intro L N
+    obtain ⟨Q, hQ⟩ := hProduct (L.comp R) (N.comp R)
+    refine ⟨Q.comp E₂, fun X => ?_⟩
+    change raw (Q.comp E₂) X = _
+    rw [raw_comp, hQ, hpull]
+  · ext x
+    constructor
+    · rintro ⟨L, N, C, hC, hx⟩
+      obtain ⟨Q, hQ⟩ := hProduct (L.comp R) (N.comp R)
+      have he : Q.comp encoding.source = C.comp source := by
+        apply channel_ext_raw
+        intro X
+        have he := congrArg (fun C => raw C X) hembed
+        simp only [raw_comp] at he
+        rw [raw_comp, raw_comp, ← he, hQ, hpull]
+        exact (hC _).symm
+      exact ⟨L.comp R, N.comp R, Q, hQ, by rw [he]; exact hx⟩
+    · rintro ⟨L, N, Q, hQ, hx⟩
+      exact ⟨L.comp E, N.comp E, Q.comp E₂, hrestrict L N Q hQ,
+        by rw [hencoded]; exact hx⟩
+
+private theorem flat_spectral_minimum [Nonempty Sector]
+    (d m : Sector → ℕ) (J : ℕ) (hd : ∀ s, 0 < d s)
+    (hm : ∀ s, 0 < m s) (hmJ : ∀ s, m s ≤ J) :
+    ∃ n : ℕ, ∃ a : Fin (n + 1) → ℕ, ∃ f : Sector → Fin (n + 1), ∃ loss : ℕ → ℝ,
+      StrictMono a ∧ Function.Surjective f ∧ (∀ s, a (f s) = m s) ∧
+      Monotone loss ∧ (∀ i : Fin (n + 1), loss i = Real.log (a i : ℝ)) ∧
+      0 < ExponentialSectorKernel.normalizer n loss ∧
+      (∀ s t, kernel (flatModel d m J hd hm hmJ) s t =
+        Real.sqrt ((min (m s) (m t) : ℕ) / (max (m s) (m t) : ℝ))) ∧
+      (∀ s t, kernel (flatModel d m J hd hm hmJ) s t =
+        Real.exp (-|Real.log (m s : ℝ) - Real.log (m t : ℝ)| / 2)) ∧
+      spectralMinimum (flatModel d m J hd hm hmJ) =
+        1 / ExponentialSectorKernel.normalizer n loss ∧
+      ExponentialSectorKernel.normalizer n loss = 1 +
+        ∑ i : Fin n, Real.tanh ((loss (i + 1) - loss i) / 4) := by
+  obtain ⟨n, a, f, loss, ha, hf, haf, hmono, hloss, hZ, hmin, hlower, htotal⟩ :=
+    exponential_quotient_minimum m hm
+  have hkernel (s t : Sector) : kernel (flatModel d m J hd hm hmJ) s t =
+      Real.sqrt ((min (m s) (m t) : ℕ) / (max (m s) (m t) : ℝ)) :=
+    flat_gram J (m s) (m t) (hm s) (hm t) (hmJ s) (hmJ t)
+  have hlog (s t : Sector) : kernel (flatModel d m J hd hm hmJ) s t =
+      Real.exp (-|Real.log (m s : ℝ) - Real.log (m t : ℝ)| / 2) :=
+    (hkernel s t).trans (flat_gram_log (m s) (m t) (hm s) (hm t))
+  have hleast : IsLeast {q : ℝ | ∃ p ∈ stdSimplex ℝ Sector,
+      q = ∑ s, ∑ t, p s * p t * kernel (flatModel d m J hd hm hmJ) s t}
+      (1 / ExponentialSectorKernel.normalizer n loss) := by
+    constructor
+    · obtain ⟨p, hp, he⟩ := hmin
+      refine ⟨p, hp, ?_⟩
+      simp_rw [hlog]
+      exact he.symm
+    · rintro q ⟨p, hp, rfl⟩
+      simp_rw [hlog]
+      exact hlower p hp
+  refine ⟨n, a, f, loss, ha, hf, haf, hmono, hloss, hZ, hkernel, hlog, ?_, htotal⟩
+  exact hleast.csInf_eq
+
+/-- Requiring exact basis outputs restricts the actual compact-carrier products. -/
+private def compactExactProductErrors (r d : Sector → ℕ)
+    (source : QuantumChannel Sector (TargetLocal r × TargetLocal r))
+    (target : QuantumChannel Sector (TargetLocal d × TargetLocal d)) : Set ℝ :=
+  {x | ∃ left : QuantumChannel (TargetLocal r) (TargetLocal d),
+    ∃ right : QuantumChannel (TargetLocal r) (TargetLocal d),
+    ∃ joint : QuantumChannel (TargetLocal r × TargetLocal r) (TargetLocal d × TargetLocal d),
+      TensorRealization left right joint ∧
+      (∀ s, (joint.comp source).toCompletelyPositiveMap
+          (CStarMatrix.ofMatrix (Matrix.single s s 1)) =
+        target.toCompletelyPositiveMap (CStarMatrix.ofMatrix (Matrix.single s s 1))) ∧
+      x = diamondDistance (joint.comp source) target}
+
+private theorem compact_error_bddBelow (r d : Sector → ℕ)
+    (source : QuantumChannel Sector (TargetLocal r × TargetLocal r))
+    (target : QuantumChannel Sector (TargetLocal d × TargetLocal d)) :
+    BddBelow (compactProductErrors r d source target) := by
+  refine ⟨0, ?_⟩
+  rintro x ⟨L, N, Q, hQ, rfl⟩
+  unfold diamondDistance
+  by_cases hb : BddAbove ({0} ∪ {x : ℝ | ∃ n : ℕ,
+      ∃ rho : DensityState (Fin n × Sector), x = referenceError (Q.comp source) target rho})
+  · exact le_csSup hb (Set.mem_union_left _ (Set.mem_singleton 0))
+  · rw [csSup_of_not_bddAbove hb]
+    simp
 
 end D5.S3.Quantum.Entanglement.FiniteFlatSectorOptimum
