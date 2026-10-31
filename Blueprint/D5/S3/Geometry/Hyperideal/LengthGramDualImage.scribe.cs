@@ -30,22 +30,8 @@ internal sealed class LengthGramDualImageDocument : IScribeDocumentDefinition
                     + "For the reverse direction, the inverse matrix recovers coefficients "
                     + "from an arbitrary lift; the negative unit quadratic and the two sign "
                     + "families are then precisely the hypotheses of the radial image theorem."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("length-gram-dual-image-strict-nonempty"),
-                DeclarationHandle.Create(Prefix + "strictDualCapRegion_nonempty"),
-                H("The strict dual/cap region is nonempty"),
-                StatementSource.FromAuthor(StrictStatement()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "At the coefficient barycenter, every dual pairing is strictly positive "
-                    + "and every Gram-row pairing is strictly negative. The radial lift and "
-                    + "the coordinate reconstruction transfer these strict signs to the "
-                    + "corresponding hyperbolic point."))),
                 DescribeRole.Theorem)
         )));
 
     private static Formula Statement() => F.Disp(F.Id("rangeEqDualCapRegion"));
-
-    private static Formula StrictStatement() => F.Disp(F.Id("strictDualCapRegionNonempty"));
 }
