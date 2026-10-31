@@ -188,7 +188,7 @@ private lemma claim_for_n (n : ℕ) (hn : 1 ≤ n) :
   have houtputs := even_output_count (2 * n) circuit hidentity hlabels
   have hbirths := birth_count (2 * n) circuit hidentity hlabels
   have hreturn := return_count (2 * n) circuit hidentity hlabels
-  sorry
+  exact hreturn
 
 theorem result : claim := by
   intro n hn
