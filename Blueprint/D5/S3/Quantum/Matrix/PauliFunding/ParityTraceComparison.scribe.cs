@@ -14,7 +14,6 @@ internal sealed class ParityTraceComparisonDocument : IScribeDocumentDefinition
     private static Formula All(string x, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), type, body);
     private static Formula Call(string s, params Formula[] xs) => new Formula.FunctionCall(FormulaIdentifier.Create(s), [.. xs]);
-    private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
