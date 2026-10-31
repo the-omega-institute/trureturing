@@ -316,7 +316,7 @@ private lemma dropRowZero_f_succ (n : ℕ) :
   exact Category.id_comp _
 
 /-- The projection killing row `0` vanishes on the summands of row `0`. -/
-@[reassoc (attr := simp)]
+@[simp]
 private lemma rowZeroι_dropRowZero : rowZeroι K ≫ dropRowZero K = 0 := by
   ext (_ | n)
   · exact (isZero_extend_X _ _ 0 fun _ ↦ by simp).eq_of_tgt _ _
