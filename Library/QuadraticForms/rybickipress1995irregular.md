@@ -46,7 +46,7 @@ variance to one. Then the source correlation matrix is
 \(r_i=\kappa_i\), and
 \(e_i=\kappa_i/(1-\kappa_i^2)\).
 
-For at least two sites, the tridiagonal coefficients in equation (2) become
+For at least two sites, the tridiagonal coefficients give
 
 \[
 T_{11}=\frac1{1-\kappa_1^2},\qquad
@@ -60,6 +60,12 @@ and, at an interior index,
 T_{ii}=\frac1{1-\kappa_{i-1}^2}
        +\frac{\kappa_i^2}{1-\kappa_i^2}.
 \]
+
+The off-diagonal index ranges printed in equation (2) exclude the boundary
+adjacent entries. The coefficients above apply to every adjacent pair; this
+full range follows from the explicit innovation factorization used in the
+Lean proof. The printed index inequalities are not adopted as the scope of
+the inverse identity.
 
 Expanding the squares on the right below gives precisely these diagonal and
 off-diagonal coefficients:
