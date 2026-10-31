@@ -102,21 +102,7 @@ $$\forall N \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall x \in \operato
 
 The fiber of a word at a local level has cardinality equal to that level's occupation count.
 
-**Theorem 1.9 (Equal occupations share a permutation orbit).**
-
-$$\forall N \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall x \in \operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(d\right),\; \forall y \in \operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(d\right),\; (\operatorname{D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation}\left(x\right) = \operatorname{D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation}\left(y\right)) \Rightarrow (\exists sigma \in \operatorname{Equiv.Perm}\left(\operatorname{Fin}\left(N\right)\right),\; \operatorname{Function.comp}\left(y, sigma\right) = x)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LouvetSymmetricAbsolutelyPPT.occupation_same_orbit` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* J. Louvet, E. Serrano-Ensástiga, T. Bastin, J. Martin (2025). *Nonequivalence between absolute separability and positive partial transposition in the symmetric subspace*. DOI: [10.1103/PhysRevA.111.042418](https://doi.org/10.1103/PhysRevA.111.042418). URL: <https://arxiv.org/abs/2411.16461v2>.
-
-*Commentary.*
-
-Words with equal occupations differ by a permutation of their sites.
-
-**Theorem 1.10 (Symmetric vectors are constant on occupation classes).**
+**Theorem 1.9 (Symmetric vectors are constant on occupation classes).**
 
 $$\forall N \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall v \in \left(\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(d\right)\right) \to \mathbb{C},\; (\operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPermutationFloor.IsSymmetricVector}\left(v\right)) \Rightarrow (\forall x \in \operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(d\right),\; \forall y \in \operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(d\right),\; (\operatorname{D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation}\left(x\right) = \operatorname{D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation}\left(y\right)) \Rightarrow (v\left(x\right) = v\left(y\right)))$$
 
@@ -130,7 +116,7 @@ $$\forall N \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall v \in \left(\o
 
 A vector invariant under site permutations has the same value on words with equal occupation multisets.
 
-**Theorem 1.11 (Conjecture 1 holds).**
+**Theorem 1.10 (Conjecture 1 holds).**
 
 $$\forall N \in \mathbb{N},\; \forall d \in \mathbb{N},\; (2 \le N) \Rightarrow ((2 \le d) \Rightarrow (\forall p \in \mathbb{R},\; (\operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT.pmin}\left(N, d\right) \le p) \Rightarrow ((p \le 1) \Rightarrow (\forall rho \in \operatorname{Matrix}\left(\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(d\right), \operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; (\operatorname{Matrix.PosSemidef}\left(rho\right)) \Rightarrow ((\operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT.IsSymmetricOperator}\left(rho\right)) \Rightarrow ((\operatorname{Matrix.charpoly}\left(rho\right) = (\operatorname{Polynomial.X} - \operatorname{Polynomial.C}\left((1 - \frac{\left((\operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT.D}\left(N, d\right): \mathbb{R}) - 1\right) \cdot p}{(\operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT.D}\left(N, d\right): \mathbb{R})}: \mathbb{C})\right)) \cdot ((\operatorname{Polynomial.X} - \operatorname{Polynomial.C}\left((\frac{p}{(\operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT.D}\left(N, d\right): \mathbb{R})}: \mathbb{C})\right)))^{\operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT.D}\left(N, d\right) - 1} \cdot (\operatorname{Polynomial.X})^{(d)^{N} - \operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT.D}\left(N, d\right)}) \Rightarrow (\operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT.IsSAPPT}\left(rho\right))))))))$$
 
@@ -157,7 +143,6 @@ The permutation symmetrizer retains a positive floor after partial transposition
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LouvetSymmetricAbsolutelyPPT.IsSymmetricUnitary`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LouvetSymmetricAbsolutelyPPT.claim`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LouvetSymmetricAbsolutelyPPT.occupation_fiber_card`
-- Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LouvetSymmetricAbsolutelyPPT.occupation_same_orbit`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LouvetSymmetricAbsolutelyPPT.pmin`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LouvetSymmetricAbsolutelyPPT.result`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LouvetSymmetricAbsolutelyPPT.symmetric_occupation_constant`
