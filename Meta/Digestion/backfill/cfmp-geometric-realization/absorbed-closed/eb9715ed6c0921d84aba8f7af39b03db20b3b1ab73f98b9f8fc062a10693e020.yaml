@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:eb9715ed6c0921d84aba8f7af39b03db20b3b1ab73f98b9f8fc062a10693e020
   normalized_sha256: sha256:eb9715ed6c0921d84aba8f7af39b03db20b3b1ab73f98b9f8fc062a10693e020
 cas_ref: sha256:eb9715ed6c0921d84aba8f7af39b03db20b3b1ab73f98b9f8fc062a10693e020
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/LorentzGramDeterminant.lorentz_gram_determinant
+    target_statement_id: sha256:8d0e8b4737963ab99d924bc64e8cfe80415bd7f39c2a8059cedc1bcfa98473a2
 receipts:
   unresolved_subitems: []
