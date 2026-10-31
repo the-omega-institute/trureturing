@@ -79,6 +79,7 @@ private theorem inventory (u c v : ℕ) (hu : 2 ≤ u) (hc : u < c)
   rw [h1,h2,h3]
   congr 1
   have hsum : u+1 ≤ c := by omega
+  have hsumZ : (u : ℤ) + 1 ≤ c := by exact_mod_cast hsum
   omega
 
 set_option maxHeartbeats 2400000 in
