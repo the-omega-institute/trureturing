@@ -38,7 +38,8 @@ private theorem first_ear (k t : ℕ) (hk : 2≤k)
   have hnonneg (i : Fin k) : 0≤charge k t i := (hcharge i).1
   have hsum : (sigma.map (charge k t)).sum=t := by
     rw [(hp.map (charge k t)).sum_eq]
-    simpa only [List.sum_ofFn,List.map_finRange] using charge_sum k t hk ht
+    rw [← List.sum_toFinset _ (List.nodup_finRange _),List.toFinset_finRange]
+    exact charge_sum k t hk ht
   have hsource (i : Fin k) : actualSource (k+1) (2*t) i.castSucc =
       2*actualSource k t i-charge k t i := by
     have he : actualSource (k+1) (2*t) i.castSucc =
@@ -60,12 +61,17 @@ private theorem first_ear (k t : ℕ) (hk : 2≤k)
   have hprefix (n : ℕ) : 0≤((sigma.take n).map (charge k t)).sum ∧
       ((sigma.take n).map (charge k t)).sum≤t := by
     simpa only [hsum] using prefix_nonneg_le sigma (charge k t) (fun i _ => hnonneg i) n
+  have linear (l : List (Fin k)) :
+      (l.map (fun i => 2*actualSource k t i-charge k t i)).sum=
+        2*(l.map (actualSource k t)).sum-(l.map (charge k t)).sum := by
+    simpa only [neg_one_mul,sub_eq_add_neg] using
+      sum_linear l (actualSource k t) (charge k t) 2 (-1)
   have hnewprefix (n : ℕ) :
       (((earWord k sigma 0).take n).map (actualSource (k+1) (2*t))).sum ∈
         Set.Icc (0 : ℤ) (modulus (k+1)/2) := by
     rw [ear_prefix k sigma 0 (by omega),hear]
     simp_rw [hsource]
-    rw [sum_linear]
+    rw [linear]
     by_cases hn : n≤0
     · simp [hn]
       exact (by omega : 0≤modulus (k+1)/2)
@@ -83,7 +89,7 @@ private theorem first_ear (k t : ℕ) (hk : 2≤k)
     have hlen : (earWord k sigma 0).length-1=sigma.length := by simp [earWord]
     rw [hlen,List.take_length]
     simp_rw [hsource]
-    rw [sum_linear,hz,hsum]
+    rw [linear,hz,hsum]
     ring
 
 set_option maxHeartbeats 1000000 in
