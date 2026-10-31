@@ -158,7 +158,8 @@ theorem integrable_line {α : ℝ} (hα : 0 < α) (β c : ℝ) (z : ℂ)
       continuous_const.div hsin (fun y => norm_pos_iff.mp (sine_pos hc y))
     exact ((hdiv.mul (hrecip.comp (by fun_prop))).mul (by fun_prop)).aestronglyMeasurable
   exact ((GammaVerticalReciprocalBounds.integrable_one_add_abs_pow_mul_exp_neg hz K).const_mul
-    C).mono' hm (Filter.Eventually.of_forall h)
+    C).mono' hm (Filter.Eventually.of_forall fun y => by
+      simpa only [mul_assoc] using h y)
 
 
 private theorem barnesRes_Gamma_add_nat_succ (w : ℂ) (n : ℕ) (h : ∀ j : ℕ, j ≤ n → w + j ≠ 0) :
