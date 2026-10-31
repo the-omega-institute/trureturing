@@ -10,7 +10,7 @@ internal sealed class HannaLaurentAlternatingJacobsthalDocument : IScribeDocumen
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/ArithSums/hanna2025a391810");
     private static readonly LibraryNoteRef JacobsthalSource =
-        LibraryNoteRef.Create("D5/L/ArithSums/oeis2026a001045");
+        LibraryNoteRef.Create("D5/L/RecurrenceComposition/oeis2026a001045");
     private static Formula N => Seq(Mathbb, new Formula.LatexGroup([F.Id("N")]));
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>
