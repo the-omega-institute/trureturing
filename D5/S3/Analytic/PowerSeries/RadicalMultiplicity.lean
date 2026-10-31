@@ -334,10 +334,9 @@ private theorem D_jet (S : ℝ⸨X⸩) (p A : ℝ[X])
     rw [hC]
     simp only [map_sub, map_div₀, map_one, map_ofNat, map_natCast, Int.cast_neg,
       Int.cast_natCast]
-    field_simp
-    <;> push_cast
-    <;> (set_option pp.all true in trace_state)
-    <;> norm_cast
+    push_cast
+    field_simp [hp]
+    <;> (set_option pp.notation false in trace_state)
     <;> ring
 
 private def wronskianPS {n : ℕ} (f : Fin n → ℝ⟦X⟧) :
@@ -435,7 +434,7 @@ private theorem jet_factorPS (S : ℝ⟦X⟧) (p A : ℝ[X])
   have he : polyLS p ^ N = polyLS p ^ v * polyLS p ^ (N - v) := by
     rw [← pow_add, Nat.add_sub_of_le hv]
   rw [he]
-  field_simp
+  field_simp [hp]
   <;> ring
 
 private theorem wronskian_order_bound {n d : ℕ} (hn : 0 < n)
@@ -463,6 +462,8 @@ private theorem wronskian_order_bound {n d : ℕ} (hn : 0 < n)
     funext i j
     exact jet_factorPS (S j) (p j) (A j) (hS0 j) (hs j) (n - 1) i.val (by omega)
   have hdet := congrArg Matrix.det he
+  change (Matrix.of (fun i j => (p j : ℝ⟦X⟧) ^ (n - 1) * W i j)).det =
+    (Matrix.of (fun i j => S j * ((Q i j : ℝ[X]) : ℝ⟦X⟧))).det at hdet
   rw [Matrix.det_mul_row, Matrix.det_mul_row] at hdet
   have hmap : Matrix.det (fun i j => ((Q i j : ℝ[X]) : ℝ⟦X⟧)) = (Q.det : ℝ⟦X⟧) := by
     exact (Polynomial.coeToPowerSeries.ringHom.map_det Q).symm
@@ -488,6 +489,105 @@ private theorem wronskian_order_bound {n d : ℕ} (hn : 0 < n)
     exact hW (PowerSeries.order_eq_top.mp this)
   exact hord.trans_le ((polynomial_order_le _ hQne).trans (by
     exact_mod_cast detPoly_degree Q _ hQ))
+
+private theorem jet_sum {n : ℕ} (f : Fin n → ℝ⟦X⟧) (c : Fin n → ℝ) (v : ℕ) :
+    PowerSeries.derivative^[v] (∑ j, c j • f j) =
+      ∑ j, c j • PowerSeries.derivative^[v] (f j) := by
+  have h := ((PowerSeries.derivative (R := ℝ)).toLinearMap ^ v).map_sum
+    (fun j : Fin n => c j • f j) Finset.univ
+  simpa only [Module.End.pow_apply, map_smul] using h
+
+private theorem independent_sum_zero {n d : ℕ} (hn : 0 < n)
+    (S : Fin n → ℝ⟦X⟧) (p A : Fin n → ℝ[X])
+    (hS0 : ∀ j, PowerSeries.constantCoeff (S j) ≠ 0)
+    (hs : ∀ j, S j ^ 2 = (p j : ℝ⟦X⟧))
+    (hp : ∀ j, (p j).natDegree ≤ 2) (hA : ∀ j, (A j).natDegree ≤ d)
+    (hi : LinearIndependent ℝ (fun j => (((A j : ℝ⟦X⟧) * S j) : ℝ⸨X⸩)))
+    (c : Fin n → ℝ)
+    (hcoeff : ∀ k ≤ n * (d + 2 * (n - 1)) + n - 1,
+      PowerSeries.coeff k (∑ j, c j • ((A j : ℝ⟦X⟧) * S j)) = 0) :
+    ∑ j, c j • ((A j : ℝ⟦X⟧) * S j) = 0 := by
+  classical
+  by_contra hz
+  obtain ⟨j, hj⟩ : ∃ j, c j ≠ 0 := by
+    by_contra h
+    push_neg at h
+    simp [h] at hz
+  let f : Fin n → ℝ⟦X⟧ := fun j => (A j : ℝ⟦X⟧) * S j
+  let Z := ∑ j, c j • f j
+  let W := wronskianPS f
+  let M := W.updateCol j (fun i => PowerSeries.derivative^[i.val] Z)
+  have he : M.det = PowerSeries.C (c j) * W.det := by
+    have hM : M = W.updateCol j (fun i => ∑ k, PowerSeries.C (c k) * W i k) := by
+      apply Matrix.ext
+      intro i k
+      by_cases hk : k = j
+      · subst k
+        simpa [M, Matrix.updateCol_apply, Z, W, wronskianPS,
+          PowerSeries.smul_eq_C_mul] using jet_sum f c i.val
+      · simp [M, Matrix.updateCol_apply, hk]
+    rw [hM]
+    exact Matrix.det_updateCol_sum W j (fun k => PowerSeries.C (c k))
+  let D := n * (d + 2 * (n - 1))
+  have hcol (i : Fin n) : (D + 1 : ℕ) ≤ (M i j).order := by
+    apply PowerSeries.nat_le_order_iff.mpr
+    intro k hk
+    simp only [M, Matrix.updateCol_apply, if_pos rfl,
+      PowerSeries.coeff_iterate_derivative]
+    rw [hcoeff (k + i.val) (by dsimp [D] at hk; omega), mul_zero]
+  have hlow := column_order M j (D + 1) hcol
+  have hunit : IsUnit (PowerSeries.C (c j) : ℝ⟦X⟧) :=
+    PowerSeries.isUnit_iff_constantCoeff.mpr (by simpa using isUnit_iff_ne_zero.mpr hj)
+  rw [he, PowerSeries.order_mul, PowerSeries.order_zero_of_isUnit hunit, zero_add] at hlow
+  have hupp := wronskian_order_bound hn S p A hS0 hs hp hA hi
+  have hbad := hlow.trans hupp
+  have hbadNat : D + 1 ≤ D := by exact_mod_cast hbad
+  omega
+
+/-- A quadratic finite-jet cutoff for polynomial radical sums; the original family may be
+linearly dependent and may contain identical or zero summands. -/
+theorem sum_eq_zero_of_coeff_eq_zero {ι : Type*} [Fintype ι]
+    (S : ι → ℝ⟦X⟧) (p A : ι → ℝ[X])
+    (hS0 : ∀ j, PowerSeries.constantCoeff (S j) ≠ 0)
+    (hs : ∀ j, S j ^ 2 = (p j : ℝ⟦X⟧))
+    (hp : ∀ j, (p j).natDegree ≤ 2)
+    (hA : ∀ j, (A j).natDegree ≤ Fintype.card ι)
+    (hcoeff : ∀ k ≤ 3 * (Fintype.card ι) ^ 2,
+      PowerSeries.coeff k (∑ j, (A j : ℝ⟦X⟧) * S j) = 0) :
+    ∑ j, (A j : ℝ⟦X⟧) * S j = 0 := by
+  classical
+  let f : ι → ℝ⟦X⟧ := fun j => (A j : ℝ⟦X⟧) * S j
+  obtain ⟨κ, a, ha, hspan, hi⟩ := exists_linearIndependent' ℝ f
+  letI : Fintype κ := Fintype.ofInjective a ha
+  let l := Fintype.card κ
+  let e : κ ≃ Fin l := Fintype.equivFin κ
+  let b : Fin l → ι := a ∘ e.symm
+  have hb : Function.Injective b := ha.comp e.symm.injective
+  have hl : l ≤ Fintype.card ι := Fintype.card_le_of_injective a ha
+  have hrange : Set.range (f ∘ b) = Set.range (f ∘ a) := by
+    exact e.symm.surjective.range_comp (f ∘ a)
+  have hZ : (∑ j, f j) ∈ Submodule.span ℝ (Set.range (f ∘ b)) := by
+    rw [hrange, hspan]
+    exact Submodule.sum_mem _ fun j _ => Submodule.subset_span ⟨j, rfl⟩
+  obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun ℝ).mp hZ
+  by_cases hl0 : l = 0
+  · simpa [hl0] using hc.symm
+  have hi' : LinearIndependent ℝ (fun j : Fin l => (f (b j) : ℝ⸨X⸩)) := by
+    have hli : LinearIndependent ℝ (f ∘ b) := hi.comp e.symm e.symm.injective
+    exact hli.map' (HahnSeries.ofPowerSeriesAlg ℤ ℝ ℝ).toLinearMap
+      (HahnSeries.ofPowerSeries_injective)
+  have hcut : l * (Fintype.card ι + 2 * (l - 1)) + l - 1 ≤
+      3 * (Fintype.card ι) ^ 2 := by
+    have hlpos : 0 < l := Nat.pos_of_ne_zero hl0
+    have hsub : l - 1 + 1 = l := by omega
+    nlinarith [Nat.mul_self_le_mul_self hl]
+  have hz := independent_sum_zero (Nat.pos_of_ne_zero hl0)
+    (S ∘ b) (p ∘ b) (A ∘ b)
+    (fun j => hS0 (b j)) (fun j => hs (b j))
+    (fun j => hp (b j)) (fun j => hA (b j)) hi' c
+    (fun k hk => by simpa only [Function.comp_apply, ← hc] using
+      hcoeff k (hk.trans hcut))
+  simpa only [Function.comp_apply, f, hc] using hz
 
 end
 end CdsoRadical
