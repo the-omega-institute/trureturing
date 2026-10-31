@@ -1016,23 +1016,33 @@ private theorem lower_aux (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
         have htailSum := htail.2
         simp only [List.map_map, Function.comp_def, Fin.val_castSucc] at htailSum
         simp only [List.map_map, Function.comp_def, Fin.val_last]
-        rw [hbSum, htailSum]
-        rw [hgeom]
+        have htailSum' :
+            (List.map (actualSource (d * r + 1) (2 * (w * geom d r)))
+              (List.flatMap
+                (fun a => List.map
+                  (fun x => (blockLabel d r a.castSucc.val (by omega) x).castSucc)
+                  tau)
+                (List.finRange (n + 1)).reverse)).sum =
+              -(w : ℤ) * geom d (n + 1) := by
+          simpa only [Fin.val_castSucc] using htailSum
+        rw [hbSum]
+        rw [htailSum', hgeom]
         ring
 
 private theorem repeat_split (d r : ℕ) (hr : 2 ≤ r) (tau : List (Fin d)) :
     repeatWord d r (by omega) tau =
       tau.map (blockLabel d r (r - 1) (by omega)) ++
         lowerBlocks d r hr tau := by
+  obtain ⟨s, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : r ≠ 0)
   unfold repeatWord lowerBlocks
-  have hfr : List.finRange r =
-      (List.finRange (r - 1)).map Fin.castSucc ++
-        [Fin.last (r - 1)] := by
-    simpa [show r = (r - 1) + 1 by omega] using
-      (List.finRange_succ_last (n := r - 1))
+  have hfr : List.finRange (s + 1) =
+      (List.finRange s).map Fin.castSucc ++
+        [Fin.last s] := List.finRange_succ_last
   rw [hfr, List.reverse_append]
-  simp [List.reverse_singleton, List.singleton_append, List.flatMap_cons,
-    List.flatMap_append, List.flatMap_singleton]
+  simp only [List.reverse_singleton, List.singleton_append, List.flatMap_cons,
+    List.flatMap_nil, List.map_nil, List.append_nil]
+  rw [← List.map_reverse, List.flatMap_map]
+  simp [Fin.val_castSucc]
 
 private theorem earWord_append (k : ℕ) (sigma rho : List (Fin k)) (cut : ℕ)
     (hcut : cut ≤ sigma.length) :
@@ -1069,10 +1079,10 @@ private theorem lower_blocks_result (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
       ((w : ℤ) * geom d (r - 1)) lower ∧
       (lower.map f).sum = -(w : ℤ) * geom d (r - 1) := by
   dsimp only
-  have hh := lower_aux d r w hd hr hw tau htau (r - 2) (by omega) (by omega)
-  have hrel : r - 2 + 1 = r - 1 := by omega
-  simpa [lowerBlocks, hrel, List.flatMap_map, List.map_map, Function.comp_def,
-    Fin.val_castSucc] using hh
+  obtain ⟨s, rfl⟩ : ∃ s, r = s + 2 := ⟨r - 2, by omega⟩
+  have hh := lower_aux d (s + 2) w hd (by omega) hw tau htau s (by omega) (by omega)
+  simpa [lowerBlocks, List.flatMap_map, List.map_flatMap, List.map_map,
+    Function.comp_def, Fin.val_castSucc] using hh
 
 /- The common descending block transport.  The base order and its literal ear
 are reused verbatim; only the source values are charged by the geometric row. -/
