@@ -170,7 +170,7 @@ $$(\forall iota: Type, [\operatorname{Fintype}(iota)] (\forall H: \operatorname{
 
 *Commentary.*
 
-StarDotMul(H,z) denotes star(z) dot (H times z). Equality of this value for every actual complex vector forces equality of H and K, with no Hermitian assumption. The proof turns both forms into paired-variable polynomials, uses faithful actual evaluation and compares their coefficients. The empty matrix case is included.
+StarDotMul(H,z) denotes star(z) dot (H times z). Equality of this value for every actual complex vector forces equality of H and K, with no Hermitian assumption. The proof identifies each matrix with its complex-linear map on the finite Euclidean space and directly applies Mathlib's ext_inner_map supplier to the normalized inner-product equality. The empty matrix case is included.
 
 **Theorem 1.15 (Unique Hermitian representation).**
 
