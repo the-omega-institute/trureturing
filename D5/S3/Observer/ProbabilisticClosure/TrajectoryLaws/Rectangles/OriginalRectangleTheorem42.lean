@@ -229,6 +229,7 @@ theorem native_component_rectangle_theorem42
               (1-(1-rectangleMinimum (product κ w) R /
               rectangleMaximum (product κ w) R)^2))))) := by
   classical
+  letI : DecidableEq D.val := fun i j => Classical.propDecidable (i = j)
   dsimp only
   let κ := nativeComponent θ D hc
   let K : ProbabilityMeasure (PathSpace D.val) := jointLaw κ
@@ -265,7 +266,7 @@ theorem native_component_rectangle_theorem42
     have hh := original_rectangle_erasure_bounds κ K hK w hw R r hr a hab j
     have hhL := hh.2.1
     have hhR := hh.2.2
-    simpa [leftRisk, rightRisk, fullMean, leftMean, rightMean, hvis, ρ, ε, η] using
+    simpa [leftRisk, rightRisk, fullMean, leftMean, rightMean, hvis, ρ, ε, η, b] using
       And.intro hhL hhR
   have hnonneg (j : ℕ) : 0 ≤ leftRisk κ j ∧ 0 ≤ rightRisk κ j := by
     exact ⟨integral_nonneg (fun z => sq_nonneg _), integral_nonneg (fun z => sq_nonneg _)⟩
@@ -276,29 +277,28 @@ theorem native_component_rectangle_theorem42
     (leftRisk κ) (rightRisk κ) hbound R₀
   have hsq (R₀ : ℕ) := geometric_square_tail b hb η hη.1 hη.2
     (leftRisk κ) (rightRisk κ) hnonneg hbound R₀
-  refine ⟨a, ha0, hab, hafalse, haseam, hainj, haincoming, ?_, ?_, hvis, ?_, ?_⟩
+  refine ⟨a, ha0, hab, hafalse, haseam, hainj, haincoming, ?_, ?_, hvis, ?_⟩
   · intro t
     exact (hclass t).1
   · intro w' i j
     exact (hclass 0).2 w' i j
   · intro j
     have hh := original_rectangle_erasure_bounds κ K hK w hw R r hr a hab j
-    have hρ' : ρ = 1 - rectangleMinimum (product κ w) R /
-        rectangleMaximum (product κ w) R := rfl
     refine ⟨⟨by simpa [ρ] using hρ.1, by simpa [ρ] using hρ.2⟩,
-      hε, hη, ?_, ?_, ?_⟩
-    · simpa [ρ, ε, η, hvis, bitPredictor, fullMean, leftMean, rightMean]
-        using hh.1
-    · simpa [ρ, ε, η, hvis, bitPredictor, fullMean, leftMean, rightMean]
-        using hh.2.1
-    · simpa [ρ, ε, η, hvis, bitPredictor, fullMean, leftMean, rightMean]
-        using hh.2.2
-  · intro R₀
-    have hroot0 := hroot R₀
-    have hsq0 := hsq R₀
-    refine ⟨hroot0.1, ?_, ?_, ?_⟩
-    · simpa [rootErasureTail, η, ε, ρ] using hroot0.2
-    · simpa [erasureTail, η, ε, ρ] using hsq0
-    · simpa [rootErasureTail, η, ε, ρ] using (hroot 0).2
+      hε, hη, ?_, ?_⟩
+    · refine ⟨?_, ?_, ?_⟩
+      · simpa [ρ, ε, η, b, hvis, bitPredictor, fullMean, leftMean, rightMean]
+          using hh.1
+      · simpa [ρ, ε, η, b, hvis, bitPredictor, fullMean, leftMean, rightMean]
+          using hh.2.1
+      · simpa [ρ, ε, η, b, hvis, bitPredictor, fullMean, leftMean, rightMean]
+          using hh.2.2
+    · intro R₀
+      have hroot0 := hroot R₀
+      have hsq0 := hsq R₀
+      refine ⟨hroot0.1, ?_, ?_, ?_⟩
+      · simpa [rootErasureTail, η, ε, ρ, b] using hroot0.2
+      · simpa [erasureTail, η, ε, ρ, b] using hsq0
+      · simpa [rootErasureTail, η, ε, ρ, b] using (hroot 0).2
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleTheorem42
