@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.Symbolic.PermutativeLifts;
 internal sealed class UniversalRefutationDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S1/Dynamics/Symbolic/PermutativeLifts/UniversalRefutation.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Dynamics/kang2026lifts");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Topology/kang2026lifts");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A single base refutes the general minimal branch.",
         H("A single base refutes the general minimal branch"),
