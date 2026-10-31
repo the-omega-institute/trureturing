@@ -100,7 +100,10 @@ internal sealed class ReflectionDiagonalCNOTLowerBoundDocument : IScribeDocument
                         + "The final identity rows are odd as well. Apply D5.S3.Quantum.Magic.ReflectionDiagonalParityCounting.count_bound to this list and the initial identity rows: "
                         + "the required even outputs number half of all Boolean vectors less one, and at least m minus one further updates are needed to restore odd rows. "
                         + "Substitution of m equal to twice n into that bound proves the assertion."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("huang-kosugi-nishi-matsushita-2024-reflection-diagonal-cnot-lower-bound"),
+                    ResolutionKind.Proved)))));
 
     private static Formula GateFormula() => All("m", Naturals(),
         Equal(Local("gate", X("m")), At(Qualified("Sum"), CnotPairs(X("m")), RotationPairs(X("m")))));
