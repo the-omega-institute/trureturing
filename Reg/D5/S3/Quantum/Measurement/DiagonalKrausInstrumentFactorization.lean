@@ -6,7 +6,6 @@ import Reg.Support.DependentFamily
 
 set_option linter.style.longLine false
 set_option linter.checkUnivs false
-set_option linter.flexible false
 
 noncomputable section
 open scoped BigOperators
@@ -59,6 +58,8 @@ abbrev arena : Arena where
           (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix rho)) =
           ∑ b, MatrixMap.of_kraus (K a b) (K a b) rho)
 
+-- The scalar normal form is used by the subsequent `change`.
+set_option linter.flexible false in
 private theorem rejected_law : ¬ arena.{u_1,u_2,u_3,u_4,u_5}.Law rejected := by
   intro h
   let K : ULift.{u_3} Unit → ULift.{u_4} Unit → ULift.{u_5} Unit →
