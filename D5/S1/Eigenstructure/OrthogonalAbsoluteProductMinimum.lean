@@ -1,5 +1,5 @@
 /- GID: D5/S1/Eigenstructure/OrthogonalAbsoluteProductMinimum
-   generality: G
+   generality: I
    mirror-B: D5/B/S1/Eigenstructure/OrthogonalAbsoluteProductMinimum
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -9,6 +9,8 @@
 import D5.S1.Digit.Infinite.ResetCodebookOrder
 import Mathlib.Analysis.InnerProductSpace.GramSchmidtOrtho
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
+
+/-! The exact spectral objective of MathOverflow 515549 and an attaining orthogonal basis. -/
 
 open scoped BigOperators Matrix Matrix.Norms.Operator
 
@@ -70,8 +72,10 @@ private theorem triangular_radius {K : ℕ} (hK : 0 < K)
   have hs : spectrum ℂ C = {1} := by
     ext z
     rw [Matrix.mem_spectrum_iff_isRoot_charpoly, hc]
-    simp [Polynomial.IsRoot, hK.ne']
-  simp [radius, C, spectralRadius_eq_of_unital, hs]
+    simp [Polynomial.IsRoot, hK.ne', sub_eq_zero]
+  change (spectralRadius ℂ C).toReal = 1
+  rw [spectralRadius_eq_of_unital, hs]
+  simp
 
 /-- The complete universal bound and an actual attaining orthogonal matrix. -/
 theorem result (K : ℕ) (hK : 0 < K) (P : Matrix (Fin K) (Fin K) ℝ)
@@ -101,25 +105,26 @@ theorem result (K : ℕ) (hK : 0 < K) (P : Matrix (Fin K) (Fin K) ℝ)
     let Q : Matrix (Fin K) (Fin K) ℝ := a.toBasis.toMatrix e
     have hQ : Orthogonal Q := by
       constructor
-      · simpa [Q, Matrix.conjTranspose] using
+      · simpa only [Matrix.conjTranspose_eq_transpose_of_trivial] using
           a.toMatrix_orthonormalBasis_conjTranspose_mul_self e
-      · simpa [Q, Matrix.conjTranspose] using
+      · simpa only [Matrix.conjTranspose_eq_transpose_of_trivial] using
           a.toMatrix_orthonormalBasis_self_mul_conjTranspose e
     have hQentry (i j : Fin K) : Q i j = e j i := by
-      simp [Q, Basis.toMatrix_apply, a, OrthonormalBasis.toBasis_repr]
+      simp [Q, Module.Basis.toMatrix_apply, a, OrthonormalBasis.coe_toBasis_repr_apply]
     have hT : (P * Q).IsLowerTriangular := by
       intro i j hij
       have hzero := InnerProductSpace.gramSchmidtOrthonormalBasis_inv_triangular
-        (by simp : Module.finrank ℝ (EuclideanSpace ℝ (Fin K)) = Fintype.card (Fin K)) f hij
+        (by simp : Module.finrank ℝ (EuclideanSpace ℝ (Fin K)) = Fintype.card (Fin K)) f (i := i) (j := j) (show i < j from hij)
       simpa only [Matrix.mul_apply, hQentry, PiLp.inner_apply, RCLike.inner_apply,
-        conj_trivial, f, WithLp.toLp_apply, mul_comm] using hzero
+        conj_trivial, f, e, PiLp.toLp_apply, mul_comm] using hzero
     let T := P * Q
+    have hT' : T.IsLowerTriangular := hT
     have hi : T⁻¹ = Qᵀ * P⁻¹ := Matrix.inv_eq_right_inv (hprod Q hQ)
     letI : Invertible T := (isUnit_iff_exists_inv.mpr ⟨Qᵀ * P⁻¹, hprod Q hQ⟩).invertible
-    have hTi : T⁻¹.IsLowerTriangular := Matrix.blockTriangular_inv_of_blockTriangular hT
+    have hTi : T⁻¹.IsLowerTriangular := Matrix.blockTriangular_inv_of_blockTriangular hT'
     have hAT : (entryAbs T).IsLowerTriangular := by
       intro i j hij
-      simp [entryAbs, hT hij]
+      simp only [entryAbs, hT' hij, abs_zero]
     have hATi : (entryAbs T⁻¹).IsLowerTriangular := by
       intro i j hij
       simp [entryAbs, hTi hij]
@@ -130,8 +135,10 @@ theorem result (K : ℕ) (hK : 0 < K) (P : Matrix (Fin K) (Fin K) ℝ)
     intro i
     rw [lower_mul_diag _ _ hAT hATi]
     change |T i i| * |T⁻¹ i i| = 1
-    rw [← abs_mul, ← lower_mul_diag _ _ hT hTi]
-    simp [Matrix.mul_inv_of_invertible]
+    rw [← abs_mul, ← lower_mul_diag _ _ hT' hTi]
+    have htprod : T * T⁻¹ = 1 := Matrix.mul_inv_of_invertible T
+    rw [htprod]
+    simp
 
 end
 end D5.S1.Eigenstructure.OrthogonalAbsoluteProductMinimum
