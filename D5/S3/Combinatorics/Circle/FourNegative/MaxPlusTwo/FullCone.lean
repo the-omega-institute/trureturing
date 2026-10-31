@@ -675,7 +675,6 @@ private theorem valley_rising_masks (a b c : ℕ) (hb : 2≤b)
   have hqi : (q:ℤ)=(P:ℤ)*L := by exact_mod_cast hq
   have hA : A=(R:ℤ)*T*Z+(1+R+R*T) := by
     dsimp [A,seedZ,R,T,Z]
-    simp only [Nat.cast_pow,Nat.cast_ofNat,Nat.cast_mul]
   have hrb:=valley_rising_bounds (T:ℤ) (L:ℤ) (P:ℤ)
     (by exact_mod_cast hT4) (by exact_mod_cast hL2) (by exact_mod_cast hP1)
   dsimp only at hrb
