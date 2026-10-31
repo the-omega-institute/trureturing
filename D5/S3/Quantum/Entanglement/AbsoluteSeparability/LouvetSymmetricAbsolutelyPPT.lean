@@ -112,7 +112,7 @@ lemma occupation_fiber_card (x : Fin N → Fin d) (a : Fin d) :
   rw [Fintype.subtype_card]
   simp only [occupation, ← Fin.univ_val_map, Multiset.count_map, ← Finset.filter_val,
     Finset.card_def, eq_comm]
-lemma occupation_same_orbit (x y : Fin N → Fin d) (h : occupation x = occupation y) :
+private lemma occupation_same_orbit (x y : Fin N → Fin d) (h : occupation x = occupation y) :
     ∃ σ : Equiv.Perm (Fin N), y ∘ σ = x := by
   have hc (a : Fin d) : Fintype.card {i // x i = a} = Fintype.card {i // y i = a} := by
     rw [occupation_fiber_card, occupation_fiber_card, h]
