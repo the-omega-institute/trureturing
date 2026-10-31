@@ -4162,3 +4162,476 @@ Nothing in Sections 31--32 supplies universal scalarized finite
 attainment or a coefficient outside $S$.
 
 ## 追加锚（本行以下为增补区）
+
+## 34. Finite certification with a critical reciprocal-square price tail
+
+**Definition 34.1 (A finite price prefix and its prescribed tail).**
+Fix $x,\ell>0$, an integer $K\ge1$, and real numbers
+
+$$
+u_1=x,\qquad 0<u_k\le x/k\quad(2\le k\le K),\qquad
+0<a\le x(K+1).
+\tag{34.1}
+$$
+
+Extend these finitely many prices by
+
+$$
+u_k=a/k^2\quad(k>K),\qquad v_1=0,\qquad
+v_k=\frac{x-ku_k}{k-1}\quad(k\ge2).
+\tag{34.2}
+$$
+
+Thus $u_k,v_k\ge0$ and $ku_k+(k-1)v_k=x$ for every $k\ge2$.
+For integers $d\ge3$ use the actual nonlinear cost and set
+
+$$
+\begin{gathered}
+g(t)=2(\sqrt{1+t^2}-1),\qquad
+b_d=\min_{1\le k<d}\{u_k+g(k/d)\},\\
+m_d=\min_{2\le j<d}\left\{\frac{x-u_j}{j-1}+g(j/d)\right\},
+\qquad \Phi_d=(d-1)b_d+m_d,\\
+\eta=\min_{1\le k\le K}u_k>0,\qquad Q=2\sqrt a,\qquad
+\gamma=\frac2{1+\sqrt2},\qquad
+\mu=3\left(\frac{\gamma x^2}{4}\right)^{1/3},\qquad
+C=Q+a/4.
+\end{gathered}
+\tag{34.3}
+$$
+
+The prescribed tail is a family of dual candidates, not an assumption
+about the form of every attained dual. Its finite data are
+$x,\ell,K,u_1,\ldots,u_K,a$.
+
+**Theorem 34.2 (Sharp tail threshold and an effective finite test).**
+For the prices in Definition 34.1,
+
+$$
+\lim_{d\to\infty}\Phi_d=Q.
+\tag{34.4}
+$$
+
+In particular, if $\ell>Q$, these prices cannot satisfy all-degree
+dual feasibility. If $0<\ell\le Q$, define the integer
+
+$$
+D=\max\left\{3,K+2,
+ 1+\left\lceil\frac\ell\eta\right\rceil,
+ 1+\left\lceil\left(\frac C\mu\right)^3\right\rceil\right\}.
+\tag{34.5}
+$$
+
+Then $\Phi_d>\ell$ for every integer $d\ge D$. Consequently
+
+$$
+\bigl[\ell\le\Phi_d\text{ for every integer }d\ge3\bigr]
+\quad\Longleftrightarrow\quad
+\bigl[\ell\le\Phi_d\text{ for }3\le d<D\bigr].
+\tag{34.6}
+$$
+
+Every quantity on the right is a finite minimum of explicitly given
+real numbers. The assertion includes the critical case $\ell=2\sqrt a$;
+no strict gap between the limiting tail value and $\ell$ is required.
+If $Q>\ell$, the alternative cutoff
+
+$$
+D_+=\max\left\{3,K+2,
+ 1+\left\lceil\frac\ell\eta\right\rceil,
+ 1+\left\lceil\frac{a}{4(Q-\ell)}\right\rceil\right\}
+\tag{34.7}
+$$
+
+also has $\Phi_d>\ell$ for every $d\ge D_+$ and may replace $D$
+in (34.6).
+
+**Proof.** For every marked row $j\ge2$, the row price bounds give
+
+$$
+\frac{x-u_j}{j-1}\ge\frac xj.
+\tag{34.8}
+$$
+
+For $j>K$ this uses $a\le x(K+1)\le xj$; thus the inequality
+holds on the entire prescribed tail as well as the prefix.
+Since $g(t)\ge\gamma t^2$ on $[0,1]$, minimize the following
+real function over $s>0$:
+
+$$
+\frac xs+\frac{\gamma s^2}{d^2}.
+$$
+
+Its derivative vanishes at $s=(xd^2/(2\gamma))^{1/3}$;
+it decreases before this point and increases afterwards. Its minimum
+is $\mu d^{-2/3}$. The admissible marked rows are a subset of these
+positive real arguments, so
+
+$$
+m_d\ge\mu d^{-2/3}>0.
+\tag{34.9}
+$$
+
+For a tail row $k>K$, reuse the scalar inequality (24.2), with
+$z=k^2/(d^2+k^2/4)>0$. It gives
+
+$$
+\begin{aligned}
+u_k+g(k/d)
+&\ge\frac a{k^2}+z
+ =\frac a{d^2z}+z-\frac a{4d^2}\\
+&\ge\frac{2\sqrt a}{d}-\frac a{4d^2}.
+\end{aligned}
+\tag{34.10}
+$$
+
+The final step is the arithmetic-geometric mean inequality. Every
+prefix row has unmarked price at least $\eta$. Therefore
+
+$$
+b_d\ge\min\left\{\eta,\frac Qd-\frac a{4d^2}\right\}.
+\tag{34.11}
+$$
+
+For $d\ge D$, the prefix alternative satisfies
+$(d-1)\eta\ge\ell$. With (34.9) its column contribution is
+strictly larger than $\ell$. In the tail alternative, (34.9) gives
+
+$$
+\begin{aligned}
+(d-1)\left(\frac Qd-\frac a{4d^2}\right)+m_d
+&\ge Q-\frac Cd+\frac a{4d^2}+\mu d^{-2/3}\\
+&>Q\ge\ell.
+\end{aligned}
+\tag{34.12}
+$$
+
+Indeed (34.5) makes $d>(C/\mu)^3$. Both alternatives in (34.11)
+thus give strict column slack. This proves (34.6), including equality
+at the tail threshold. The marked term in (34.9) is essential here:
+its order $d^{-2/3}$ dominates the negative correction of order $d^{-1}$.
+
+For (34.7), nonnegative $v_j$ imply $m_d\ge b_d$. Hence
+
+$$
+\Phi_d\ge d b_d
+ \ge\min\left\{d\eta,Q-\frac a{4d}\right\}>\ell
+ \qquad(d\ge D_+).
+\tag{34.13}
+$$
+
+It remains to prove the exact threshold (34.4). Equation (34.11)
+gives $\liminf_d(d-1)b_d\ge Q$. For sufficiently large $d$, the
+integer $k_d=\lfloor a^{1/4}\sqrt d\rfloor$ exceeds $K$ and lies
+strictly below $d$. It obeys $k_d^2/d\to\sqrt a$. Since
+$g(t)/t^2\to1$ as $t\downarrow0$,
+
+$$
+(d-1)\{a/k_d^2+g(k_d/d)\}\longrightarrow2\sqrt a=Q.
+\tag{34.14}
+$$
+
+Testing the unmarked minimum at $k_d$ proves
+$(d-1)b_d\to Q$. Similarly, for sufficiently large $d$, let
+$j_d=\lfloor d^{2/3}\rfloor$. This is an admissible marked row and
+
+$$
+0\le m_d\le\frac{x}{j_d-1}+g(j_d/d)\longrightarrow0.
+\tag{34.15}
+$$
+
+The bound uses $u_{j_d}\ge0$. Thus $\Phi_d\to Q$, and $\ell>Q$
+is incompatible with all-degree feasibility. Every tested pair of
+indices above has the original strict inequality $k,j<d$. ∎
+
+**Corollary 34.3 (Finite evidence for an actual row-one certificate).**
+Fix data in Definition 34.1 with $K\ge2$ and $\ell\le Q$.
+Suppose the finite inequalities on the right of (34.6) hold.
+Let $y$ be an actual finite flow in Definition 20.1, with
+
+$$
+\mathcal N(y)=1,\qquad b_k(y)\ge0\ (k\ge1),\qquad
+b_k(y)=0\ (k\ge2),\qquad
+x\mathcal R(y)+\mathcal C(y)=\ell.
+\tag{34.16}
+$$
+
+Here $b_k(y)=W_k-I_k$ is the flow injection, distinct from the
+column minimum $b_d$ in (34.3). Then $\Psi(x)=\ell$,
+$y$ is scalarized optimal, and (34.2) is an attained all-degree
+dual with $\lambda=0$ at every harmless cap in Lemma 27.2.
+In particular, with $\mathsf T_2$ from Definition 31.1,
+
+$$
+\ell\le\mathsf T_2(x),\qquad
+G_2=0\ \Longleftrightarrow\ \ell=\mathsf T_2(x).
+\tag{34.17}
+$$
+
+If the same finite evidence has $\ell<\mathsf T_2(x)$, it is a
+strict counterexample to (33.1), with
+$G_2\ge2\{\mathsf T_2(x)-\ell\}>0$.
+No existence of such strict evidence is asserted.
+
+More generally, whenever a feasible dual of Definition 34.1 has
+$\ell=\Psi(x)$, every countable optimum has $t_d=0$ for $d\ge D$.
+It therefore has finite incidence support. This last assertion does
+not require the injection to be at row one.
+
+**Proof.** Theorem 34.2 supplies every omitted column inequality.
+The row equalities and nonnegative prices are those of Theorem 15.3
+with $A=x$, $\beta=1$, $\lambda=0$. Its weak-duality summation
+(15.6) gives $\ell\le xr+c$ on every countable feasible array with
+finite $r,c$; the row-price sum is bounded by $xr$ and the cost sum
+by $c$. By Proposition 20.2, the single flow in (34.16) reconstructs
+an array satisfying every balance in (7.3), with exactly its stated
+normalization, resource and cost. Thus $\Psi(x)\le\ell$, proving
+equality and actual attainment. Lemma 27.2 places this optimum
+strictly inside every stated harmless cap. The candidate dual is
+therefore attained there. Theorem 31.3 and Corollary 31.4 now give
+(34.17) and the positive-gap bound.
+
+For the last assertion, choose any countable optimum and a harmless
+cap. Equality in the weak-duality sum forces
+$t_d(\Phi_d-\ell)=0$ for each $d$. Theorem 34.2 gives strict
+slack at every $d\ge D$, so all those $t_d$ vanish. Every remaining
+incidence index has $k<d<D$, and $q_k\le E_k$ excludes unused
+source rows. Thus the support is finite. This uses full row balances,
+not finite moments of an uncoupled tail. ∎
+
+## 35. Uniform finite tests and a critical certificate with explicit contacts
+
+**Corollary 35.1 (One omitted-degree cutoff for bounded price data).**
+Let $\xi$ range over an arbitrary set. For each $\xi$ suppose
+Definition 34.1 holds with a common $K$ and with
+
+$$
+\begin{gathered}
+x(\xi)\ge x_->0,\qquad 0<\ell(\xi)\le L<\infty,\\
+\min_{k\le K}u_k(\xi)\ge\eta_->0,\qquad
+0<a(\xi)\le a_+<\infty,\qquad
+\ell(\xi)\le2\sqrt{a(\xi)}.
+\end{gathered}
+\tag{35.1}
+$$
+
+Put $\mu_-=3(\gamma x_-^2/4)^{1/3}$ and
+$C_+=2\sqrt{a_+}+a_+/4$. Then
+
+$$
+D_* =\max\left\{3,K+2,
+1+\left\lceil L/\eta_-\right\rceil,
+1+\left\lceil(C_+/\mu_-)^3\right\rceil\right\}
+\tag{35.2}
+$$
+
+has $\Phi_d(\xi)>\ell(\xi)$ simultaneously for every $\xi$ and
+$d\ge D_*$. Thus feasibility of this entire family reduces exactly
+to its column inequalities $3\le d<D_*$. All equalities and ties
+in those finite tests are allowed; the parameter set need not be
+an interval and no continuity of the price data is assumed.
+
+**Proof.** In (34.9)--(34.12), use $\eta_-,\mu_-$ as lower bounds
+and $L,C_+$ as upper bounds. The two alternatives are strictly
+larger than $\ell(\xi)$ at (35.2), by the same inequalities.
+The finitely many remaining columns are necessary and sufficient
+for each $\xi$. ∎
+
+**Proposition 35.2 (An exact critical certificate at $x=1/4$).**
+Write
+
+$$
+\begin{gathered}
+A_0=g(1/3),\qquad B_0=g(2/3),\\
+p=\frac{1/2-4A_0+B_0}{5},\qquad
+\ell=\frac{13}{20}+\frac{14}{5}A_0+\frac45B_0,\qquad
+a=\ell^2/4.
+\end{gathered}
+\tag{35.3}
+$$
+
+At $x=1/4$, take $K=2$, $u_1=x$, $u_2=p$, and the tail (34.2).
+These prices are all-degree feasible at $\ell$, with critical
+value $Q=\ell$. The normalized pair flow $(d,e)=(3,6)$ is
+scalarized optimal, so $\Psi(1/4)=\ell=\mathsf T_2(1/4)$ and
+$G_2=0$. This is a specialization of the certification theorem;
+it does not impose a parameter restriction on Open boundary 33.1.
+
+**Proof.** The exact radicals $A_0=2\sqrt{10}/3-2$ and
+$B_0=2\sqrt{13}/3-2$ give
+
+$$
+\frac{9419}{10^5}<p<\frac{9420}{10^5},\qquad
+\frac{127587}{10^5}<\ell<\frac{127589}{10^5}.
+\tag{35.4}
+$$
+
+In particular $0<p<x/2$, $\eta=p$, $13<\ell/p<14$,
+and $0<a<3x$. Also $\gamma>41/50$ gives $\mu>7/10$,
+while $C=\ell+\ell^2/16<7/5$. Thus $(C/\mu)^3<8$ and
+(34.5) has exactly $D=15$.
+
+Here are all the remaining column minima. The entries $k_d,j_d$
+are respectively their unique unmarked and marked minimizing rows;
+the last column is a rational lower bound for $\Phi_d-\ell$.
+
+| $d$ | $k_d$ | $j_d$ | Column slack |
+| --- | --- | --- | --- |
+| 3 | 1 | 2 | $0$ |
+| 4 | 1 | 2 | $>50/1000$ |
+| 5 | 2 | 2 | $>27/1000$ |
+| 6 | 2 | 2 | $0$ |
+| 7 | 2 | 2 | $>5/1000$ |
+| 8 | 2 | 2 | $>31/1000$ |
+| 9 | 2 | 2 | $>72/1000$ |
+| 10 | 3 | 3 | $>114/1000$ |
+| 11 | 3 | 3 | $>82/1000$ |
+| 12 | 3 | 3 | $>62/1000$ |
+| 13 | 3 | 3 | $>52/1000$ |
+| 14 | 3 | 3 | $>49/1000$ |
+
+For completeness these finite radical comparisons have the following
+rational verification. Let $H=10^9$ and, for every $1\le k<d\le14$,
+put
+
+$$
+\begin{gathered}
+n_{kd}=\left\lfloor
+\sqrt{\left\lfloor H^2(d^2+k^2)/d^2\right\rfloor}\right\rfloor,\\
+G^-_{kd}=2n_{kd}/H-2,\qquad G^+_{kd}=G^-_{kd}+2/H.
+\end{gathered}
+\tag{35.5}
+$$
+
+The defining integer inequalities
+$n_{kd}^2d^2\le H^2(d^2+k^2)<(n_{kd}+1)^2d^2$ imply
+$G^-_{kd}\le g(k/d)<G^+_{kd}$. Substituting the bounds for
+$(k,d)=(1,3),(2,3)$ in (35.3) gives the enclosing intervals
+
+$$
+\begin{gathered}
+p_- =\frac{235480209}{2500000000},\qquad
+p_+ =\frac{117740107}{1250000000},\\
+L_- =\frac{1594848721}{1250000000},\qquad
+L_+ =\frac{159484873}{125000000},\qquad
+p_-\le p\le p_+,\quad L_-\le\ell\le L_+.
+\end{gathered}
+\tag{35.6}
+$$
+
+Define $U^-_1=U^+_1=1/4$, $U^-_2=p_-$, $U^+_2=p_+$, and
+$U^-_k=L_-^2/(4k^2)$, $U^+_k=L_+^2/(4k^2)$ for $k\ge3$.
+For each column set
+
+$$
+\begin{aligned}
+B^-_{kd}&=U^-_k+G^-_{kd},&
+B^+_{kd}&=U^+_k+G^+_{kd},\\
+M^-_{jd}&=\frac{1/4-U^+_j}{j-1}+G^-_{jd},&
+M^+_{jd}&=\frac{1/4-U^-_j}{j-1}+G^+_{jd}.
+\end{aligned}
+\tag{35.7}
+$$
+
+The finite rational inequalities, with $k_d,j_d$ from the table, are
+
+$$
+\begin{gathered}
+B^-_{kd}-B^+_{k_d,d}>1/2000
+ \quad(3\le d\le14,\ 1\le k<d,\ k\ne k_d),\\
+M^-_{jd}-M^+_{j_d,d}>1/250
+ \quad(3\le d\le14,\ 2\le j<d,\ j\ne j_d),\\
+(d-1)B^-_{k_d,d}+M^-_{j_d,d}-L_+>s_d/1000
+ \quad(d\in\{4,5,7,8,9,10,11,12,13,14\}),\\
+(s_4,s_5,s_7,s_8,s_9,s_{10},s_{11},s_{12},s_{13},s_{14})
+ =(50,27,5,31,72,114,82,62,52,49).
+\end{gathered}
+\tag{35.8}
+$$
+
+All their inputs are the displayed integers and rational operations;
+(35.5) specifies each integer by its two square inequalities.
+Thus (35.8) verifies both the stated minimizers and the strictly
+positive slack entries. The two zero entries instead follow exactly
+from (35.3):
+
+$$
+\Phi_3=3x+2A_0+B_0-p=\ell,\qquad
+\Phi_6=4p+x+6A_0=\ell.
+\tag{35.9}
+$$
+
+Theorem 34.2 now supplies every column $d\ge15$.
+
+Finally use the actual pair flow of Proposition 23.2:
+$y_{123}=8/5$, $y_{226}=1$, all other entries zero. Its
+normalization is $(8/5)/2+1/5=1$; $W_2=I_2=1$ and its only
+injection is $b_1=8/5$. The full correspondence of Proposition
+20.2 gives (7.3), resource $r=13/5$ and cost
+$c=14A_0/5+4B_0/5$. Thus $xr+c=\ell$, proving actual
+optimality by Corollary 34.3. As this is a pair flow,
+$\Psi(x)\le\mathsf T_2(x)\le xr+c=\Psi(x)$, proving the
+remaining equalities. ∎
+
+## 36. Mathematical scope of the finite certification theorem
+
+The reciprocal-square scalar lower estimate (34.10) reuses the
+calculation inside Proposition 24.1. The new conclusion is an exact
+finite test for arbitrary positive finite price prefixes and arbitrary
+$x>0$, with a free prescribed tail amplitude. Equations
+(34.9)--(34.12) close the critical threshold using the marked price,
+and (34.14)--(34.15) prove that the limiting threshold is necessary
+for this entire family. No such arbitrary-prefix, critical-tail
+certification is assumed in Sections 15--33. The uniform cutoff and
+the exact specialization in Section 35 are consequences for these
+same dual candidates. The minimization of $x/s+\gamma s^2/d^2$
+and the arithmetic-geometric mean inequality are elementary
+intermediate tools, not new general optimization principles.
+
+The CDSO convention remains that of Albalahi--Das--Ali--Barman--Hamza,
+[arXiv:2510.24809v1](https://arxiv.org/html/2510.24809v1),
+Section 1, equation (1) and the following definition, DOI
+[10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176):
+the denominator is the maximum endpoint degree and the factor
+$1/\sqrt2$ is dropped. The only reused finite affine LP duality
+input remains Boyd--Vandenberghe,
+[author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf),
+Sections 5.2.3--5.2.4, printed pp.226--227. The new tail estimates
+are repo-derived for the explicit nonlinear cost and marked balances;
+they invoke no countable strong-duality or finite-moment cubature
+theorem. Technical full-text overlap with Zhao--Zhao, DOI
+[10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+remains unassessed. No worldwide-priority assertion is made.
+
+**Open boundary 36.1 (Return and support questions after finite
+certification).** Open boundary 33.1 remains unresolved: no proof
+has been supplied that every coefficient admitting an actual
+row-one-only optimum has $\Psi(x)\ge\mathsf T_2(x)$, and no
+strict instance of Corollary 34.3 with $\ell<\mathsf T_2(x)$
+has been supplied. The theorem makes a proposed all-degree
+certificate finitely verifiable once its stated price family is
+specified. It does not show that every attained dual has that form,
+or produce a feasible prefix at $\ell=\mathsf T_2(x)$ for every
+coefficient in the original hypothesis. Those are additional
+mathematical obligations, not consequences of (34.6).
+
+In particular, the obstruction $\ell>2\sqrt a$ refutes only a
+prescribed price tail. Failure of its finite tests would likewise
+refute that candidate, not (33.1). Conversely, a certified strict
+return gap would still allow finite optimal flows on three or more
+rows. It would not establish $x\notin S$.
+
+Universal scalarized finite attainment in Open boundary 30.1 and
+the complete assertion or genuine refutation of Open problem 18.2
+remain unresolved. Their connection is exactly Theorem 29.2,
+using the exact resource-face replacement of Theorem 28.1 and the
+capped-face identity of Proposition 28.2. The one-injection
+reduction in Theorem 21.1, finite non-singleton components in
+Lemma 23.1 and harmless-cap lemma 27.2 retain their original
+hypotheses. Theorem 29.4 retains every positive compact rectangle,
+equal endpoints, winning-cap ties, strict incidence inequalities
+and the exact original integer sequences (29.7). No conclusion
+about all original minimizers, an exactly attaining connected
+rooted pattern, or universal original-graph finite sufficiency
+follows from the certificate at a single coefficient.
+
+## 追加锚（本行以下为增补区）
