@@ -48,6 +48,10 @@ $$\forall (n: \mathbb{N}), (((2: \mathbb{N}) \le n) \Rightarrow (\forall (s: \ma
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/TensorHighTemperatureLeadingClasses.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oconnor-ramgoolam-2025-tensor-high-temperature-leading-classes` (proved) by `D5/S3/StatisticalMechanics/TensorHighTemperatureLeadingClasses.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oconnor-ramgoolam-2025-tensor-high-temperature-leading-classes","declaration_gid":"D5/S3/StatisticalMechanics/TensorHighTemperatureLeadingClasses.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Denjoe O'Connor and Sanjaye Ramgoolam (2025). *Gauged permutation invariant tensor quantum mechanics, least common multiples and the inclusion-exclusion principle*. DOI: [10.48550/arXiv.2506.18813](https://doi.org/10.48550/arXiv.2506.18813). URL: <https://arxiv.org/abs/2506.18813v2>.

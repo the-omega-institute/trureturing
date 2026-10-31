@@ -103,7 +103,10 @@ internal sealed class TensorHighTemperatureLeadingClassesDocument : IScribeDocum
                         + "Strict monotonicity of a positive natural power, followed by the rational cast, gives f^s strictly less than (n-2)^s. "
                         + "Combining this with the half-weight bound puts its degree strictly below the exact transposition degree. "
                         + "The two exact values and the two strict comparisons give all four clauses for every n at least two and every s at least one."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oconnor-ramgoolam-2025-tensor-high-temperature-leading-classes"),
+                    ResolutionKind.Proved)))));
 
     private static Formula DegreeFormula()
     {
