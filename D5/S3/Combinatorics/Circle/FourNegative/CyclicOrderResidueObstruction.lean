@@ -255,7 +255,7 @@ private theorem u_mass (n : ℕ) (hn : 2 ≤ n) (S : Finset ℕ) :
 
 private theorem sublist_positions (s : List ℕ) (hnd : s.Nodup) (l : List ℕ)
     (hl : l.Sublist s) : l.Pairwise (fun a b => s.idxOf a < s.idxOf b) := by
-  apply List.Pairwise.sublist _ hl
+  apply List.Pairwise.sublist hl
   rw [List.pairwise_iff_getElem]
   intro i j hi hj hij
   simpa only [hnd.idxOf_getElem i hi, hnd.idxOf_getElem j hj] using hij
