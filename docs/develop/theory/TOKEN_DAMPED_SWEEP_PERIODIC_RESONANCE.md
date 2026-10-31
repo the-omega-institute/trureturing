@@ -1303,3 +1303,681 @@ Finally $\theta=\arccos(-1/2)=2\pi/3$ and every gap is one. Thus every term of $
 **Definition 7.5 (Unrestricted variable-parameter stable-space problem).** For (7.1)–(7.3) without (U), the unrestricted problem is to determine $S_{\varepsilon,\boldsymbol\alpha}$ for every fixed positive triple, every prescribed binary schedule and every prescribed sequence $\alpha_j\in(0,1)$. This domain permits approach to either endpoint, arbitrary signs of $\lambda_j$, and arbitrary interspersions of zero and nonzero $\lambda_j$. Theorem 7.2 gives angular-divergence sufficiency on the subdomain (U), including singular histories, while Theorem 7.3 gives the complete classification on the smaller subdomain (U) with pointwise nonvanishing. Proposition 7.4 specifies one history outside (U); it supplies no general classification on the unrestricted domain. The fixed-parameter singular classification and orthogonal-pair annihilation in Theorem 6.2 retain their stated constant-parameter hypotheses.
 
 ## 追加锚（本行以下为增补区）
+## 8. Unrestricted histories and finite total logarithmic loss
+
+**Definition 8.1 (Event products and tail inputs).** Use the entire domain of Definition 7.1, without (U). In particular the literal matrices are
+
+$$
+A=\begin{pmatrix}1&0\\-2c&b+c\end{pmatrix},\quad
+B=\begin{pmatrix}-1&2a/(a+b)\\0&-(b+c)\end{pmatrix},\quad
+B_\alpha=\begin{pmatrix}
+[b(1-2\alpha)-\alpha a]/(b+\alpha a)&2\alpha a/(b+\alpha a)\\
+0&-(b+c)
+\end{pmatrix},\quad M=A^{-1}B,\quad N_\alpha=A^{-1}B_\alpha,
+$$
+
+where $a,b,c>0$, and the binary schedule and its interior event parameters are prescribed before $u_0$. Retain the original $Q,G,\theta,t_j,d_j$ of (7.3), and set
+
+$$
+\lambda_j=\frac{\alpha_j(a+2b)-b}{b+\alpha_j a},\qquad
+\delta_j=1-\lambda_j^2\in(0,1],\qquad
+\alpha_j=\frac{b(1+\lambda_j)}{a+2b-a\lambda_j}.
+\tag{8.1}
+$$
+
+The last formula is an increasing bijection from $(-1,1)$ to $(0,1)$: its denominator is positive, its derivative is $2b(a+b)/(a+2b-a\lambda)^2>0$, and its endpoint values are $0,1$. Thus a prescribed sequence in $(-1,1)$ specifies actual original event parameters. Zero $\lambda_j$ means exactly the singular parameter $b/(a+2b)$.
+
+Let $e=h/\|h\|_Q$, $h=(a,a+b)^T$, and $J=(M-\cos\theta I)/\sin\theta$, as in Section 7. For each event set
+
+$$
+e_j=M^{-t_j}e,\quad q_j=Je_j,\quad
+P_j=e_je_j^TG,\quad K_j=P_j+\lambda_j(I-P_j).
+$$
+
+For event indices $s\leq n$ define only the finite products
+
+$$
+\Phi_{s,s}=I,\qquad
+\Phi_{s,n}=K_{n-1}\cdots K_s\quad(n>s),\qquad
+F_n=\Phi_{0,n}.
+\tag{8.2}
+$$
+
+These definitions are also used on a finite list, within its index range. The adjoint of a real matrix $T$ is $T^*=G^{-1}T^TG$. All norms and orthogonality below refer to $Q$. An infinite nonsingular tail starts at an index $s$ such that $\lambda_j\ne0$ for every $j\geq s$; put
+
+$$
+D_s=\sum_{j=s}^\infty-\log|\lambda_j|\in(0,\infty].
+\tag{8.3}
+$$
+
+Its input $z$ is in interaction coordinates. For an actual whole history this input is
+
+$$
+z=M^{-t_s}u_{t_s}=F_su_0.
+\tag{8.4}
+$$
+
+The finite products do not invert any event factor. The source correspondence is the one in Definition 7.1: source $m=2$, velocities $(a,b,c)$, centered coordinates $(x,y)$ and zero exterior coordinates; source indices are reduced by one in Lean. The source $M_\alpha$ is $N_\alpha$, and its private first-event weight `theta` is $\tau_j=\alpha_j(a+b)/(b+\alpha_ja)$, not the rotation angle $\theta$. The local energy decomposition, loss, reflection identities and literal factorization are the complete `local_energy_decomposition`, `Q_dampedEvent_loss`, `Q_event`, `Q_sweepTheta_eq_iff`, `dampedEvent_eq_of_fixed`, `sweepTheta_of_fixed` and `source_factorization` bodies in [TokenDampedSweepContraction](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean), with its complete [Scribe](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs). The same Dirichlet form, zero extension, rigidity, observability and fixed-map power implication occur in [FinitePathDynamics](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.lean) and its complete [Scribe](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.scribe.cs). The [source note](../../../Library/Dynamics/wallner2026passbucket.md) and [fixed-map statement](../../../Problems/wallner-krupke-schmidt-fekete-2026-token-spectral-contraction.md) concern repeated fixed $\alpha$. Their primary original is [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, Sections III and IV](https://arxiv.org/html/2608.27085v1#S3): the linear map has positive velocities and zero centered endpoints in the alternating, catch-up-free rotational regime. Arbitrarily prescribed variable histories remain the abstract linear domain (7.2); no collision realization is assumed.
+
+**Theorem 8.2 (Finite lists, chronology and finite annihilation).** For every allowed history let $\nu(t)$ count events strictly before time $t$. Then
+
+$$
+u_t=M^tF_{\nu(t)}u_0,\qquad
+\|u_t\|_Q=\|F_{\nu(t)}u_0\|_Q.
+\tag{8.5}
+$$
+
+For $r<\infty$ events the exact full-time limiting norm is $\|F_ru_0\|_Q$, and the stable space is $\ker F_r$. Its dimension is $2-\operatorname{rank}F_r$. In particular the empty list has $F_0=I$ and stable space $\{0\}$; so does every finite wholly nonsingular list. Every finite list containing a singular factor has rank zero or one, distinguishable by its finite matrix $F_r$.
+
+For any finite or infinite event list, an initial vector reaches zero in finite time exactly when $F_nu_0=0$ for some finite event prefix $n$, with $n=0$ allowed for $u_0=0$. A nonzero vector can first reach zero only just after a singular event $j$, and the exact condition at that event is
+
+$$
+F_ju_0\ne0,\qquad \lambda_j=0,\qquad e_j^TGF_ju_0=0.
+\tag{8.6}
+$$
+
+All initial states have been annihilated by the end of event $j$ exactly when $F_{j+1}=0$. If $F_j\ne0$, this is equivalent to $\lambda_j=0$ and the finite row $e_j^TGF_j=0$.
+
+*Proof.* The original factorization (7.5), with its actual event parameter at each occurrence, is $N_{\alpha_j}=M(P+\lambda_j(I-P))$. Conjugating its second factor by $M^{t_j}$ gives exactly $K_j$. Before the first event the interaction vector is $u_0$; an undamped transfer leaves it fixed and event $j$ multiplies it by $K_j$. Induction over chronological time proves (8.5). This is the identity (7.8) without any use of (U). Also
+
+$$
+\|K_jw\|_Q^2=\|w\|_Q^2-\delta_j|\langle q_j,w\rangle_Q|^2,
+\qquad |\lambda_j|\|w\|_Q\leq\|K_jw\|_Q\leq\|w\|_Q.
+\tag{8.7}
+$$
+
+After a finite list the norm therefore remains exactly $\|F_ru_0\|_Q$. Positive definiteness gives decay precisely on its kernel: $x_t^2\leq aQ(u_t)$ and $y_t^2\leq cQ(u_t)$, while continuity supplies the converse implication. Rank-nullity gives the dimension assertions. Each $K_j$ has eigenvalues $1,\lambda_j$, so finite nonsingular products are invertible; a singular factor has rank one and cannot subsequently increase rank.
+
+The map $M$ never kills a nonzero vector. A nonsingular $K_j$ cannot do so either. At a singular event $K_j=P_j=e_je_j^TG$, which kills exactly $e_j^{\perp_Q}$. This proves (8.6), including the actual first zero time $t_j+1$. Applied to every input, the same calculation proves the matrix and row conditions. Zero is preserved by every later transfer. These finite tests therefore cover every possible finite annihilation, also within an infinite history. $\square$
+
+**Theorem 8.3 (Exact positive-definite norm for a finite-loss nonsingular tail).** Suppose the event list is infinite, every $\lambda_j$ for $j\geq s$ is nonzero, and $D_s<\infty$. Define the prescribed real rows
+
+$$
+b_{s,j}=q_j^TG\Phi_{s,j}\quad(j\geq s),\qquad
+H_{s,n}=G-\sum_{j=s}^{n-1}\delta_j b_{s,j}^Tb_{s,j}.
+$$
+
+Then the following matrix series converges entrywise, with absolute convergence of every entry:
+
+$$
+H_s=G-\sum_{j=s}^\infty\delta_j b_{s,j}^Tb_{s,j}.
+\tag{8.8}
+$$
+
+It is positive definite and satisfies, for every $z\in\mathbb R^2$ and $n\geq s$,
+
+$$
+e^{-2D_s}Q(z)\leq z^TH_sz\leq Q(z),\qquad
+0\leq z^T(H_{s,n}-H_s)z\leq2D_nQ(z).
+\tag{8.9}
+$$
+
+The exact full chronological limiting norm for tail input $z$ is $\sqrt{z^TH_sz}$. Consequently no nonzero vector reaching this tail is erased, and its stable space is $\{0\}$. This plane norm is not the absolute value of one linear functional.
+
+*Proof.* Apply the exact loss (8.7) successively, starting with $z$ at index $s$. For every finite $n$ it gives
+
+$$
+\|\Phi_{s,n}z\|_Q^2
+=Q(z)-\sum_{j=s}^{n-1}\delta_j|b_{s,j}z|^2
+=z^TH_{s,n}z.
+\tag{8.10}
+$$
+
+The nonnegative loss sum is bounded by $Q(z)$. Applied to the two ordinary coordinate vectors this bounds the sums of both diagonal entries of the series in (8.8). Absolute summability of its off-diagonal entries follows from Cauchy--Schwarz:
+
+$$
+\sum_j\delta_j|(b_{s,j})_1(b_{s,j})_2|
+\leq\left(\sum_j\delta_j|(b_{s,j})_1|^2\right)^{1/2}
+     \left(\sum_j\delta_j|(b_{s,j})_2|^2\right)^{1/2}.
+$$
+
+Thus (8.8) exists with the asserted convergence. The lower inequality in (8.7) gives
+
+$$
+\|\Phi_{s,n}z\|_Q\geq
+\exp\left(-\sum_{j=s}^{n-1}-\log|\lambda_j|\right)\|z\|_Q
+\geq e^{-D_s}\|z\|_Q.
+$$
+
+Pass to the limit in (8.10) to obtain positive definiteness and the first two bounds of (8.9). For $0<r<1$, integrating $1/x$ on $[r,1]$ gives $1-r\leq-\log r$, so $1-r^2\leq2(-\log r)$. Since each $\Phi_{s,j}$ is nonexpansive, $|b_{s,j}z|^2\leq Q(z)$. The remaining loss after index $n$ is therefore at most
+
+$$
+Q(z)\sum_{j=n}^\infty\delta_j\leq2D_nQ(z),
+$$
+
+which proves the prescribed-data error bound. In particular it tends to zero independently of any unknown trajectory limit. Formula (8.5) transfers this limiting norm through every undamped phase: the interaction vector is constant between events and $M$ preserves its norm. Every nonzero $z$ has a positive limit. An absolute linear functional on a real plane vanishes on a nonzero vector, whereas this positive-definite norm does not; hence a single covector cannot represent it. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 9. A disjoint-block criterion for infinite logarithmic loss
+
+**Definition 9.1 (Prescribed loss blocks and their junctions).** Consider an infinite nonsingular tail starting at $s$, with $D_s=\infty$. Its block boundaries are the prescribed integers
+
+$$
+n_0=s,\qquad
+n_{k+1}=\min\left\{n>n_k:
+\sum_{j=n_k}^{n-1}-\log|\lambda_j|\geq\log2\right\}.
+\tag{9.1}
+$$
+
+Each defining set is nonempty, since removing a finite number of finite terms leaves an infinite sum. Thus every block is finite, $n_k\to\infty$, and the blocks are disjoint consecutive portions of the tail. Define
+
+$$
+T_k=\Phi_{n_k,n_{k+1}},\qquad \mathfrak d_k=\det T_k,
+\qquad R_k=T_k^*T_k,\qquad r_k=\operatorname{tr}R_k,
+$$
+
+$$
+\sigma_k=\left(\frac{r_k+\sqrt{r_k^2-4\mathfrak d_k^2}}2\right)^{1/2},\qquad
+\zeta_k^2=\frac{\mathfrak d_k^2}{\sigma_k^2},\qquad
+\mu_k=\frac{\mathfrak d_k}{\sigma_k^2}.
+\tag{9.2}
+$$
+
+All these are finite-block data. In particular $\mathfrak d_k=\prod_{j=n_k}^{n_{k+1}-1}\lambda_j\ne0$ and $|\mathfrak d_k|\leq1/2$. The two eigenvalues of $R_k$ are $\sigma_k^2\geq\zeta_k^2>0$. Let $E_k$ be the projection onto the larger eigenspace:
+
+$$
+E_k=\begin{cases}
+(R_k-\zeta_k^2I)/(\sigma_k^2-\zeta_k^2),&\sigma_k^2>\zeta_k^2,\\
+I,&\sigma_k^2=\zeta_k^2.
+\end{cases}
+$$
+
+Choose $\bar f_k$ by projecting the first of the ordered pair $e,Je$ with nonzero projection, and normalizing that projection to unit $Q$-norm. Starting with $f_0=\bar f_0$, specify signs and unit output vectors recursively by
+
+$$
+g_k=\sigma_k^{-1}T_kf_k,\qquad
+f_{k+1}=\chi(\langle\bar f_{k+1},g_k\rangle_Q)\bar f_{k+1},
+\qquad \chi(x)=\begin{cases}1,&x\geq0,\\-1,&x<0.\end{cases}
+$$
+
+Set
+
+$$
+c_k=\langle f_{k+1},g_k\rangle_Q\geq0,\qquad
+s_k=\langle f_{k+1},Jg_k\rangle_Q,\qquad
+\eta_k=s_k^2=1-\langle\bar f_{k+1},g_k\rangle_Q^2.
+\tag{9.3}
+$$
+
+The two prescribed nonnegative series are
+
+$$
+\mathcal B_s=\sum_{k=0}^\infty(1-\sigma_k),\qquad
+\mathcal A_s=\sum_{k=0}^\infty\eta_k.
+\tag{9.4}
+$$
+
+The loss-block criterion is $\mathcal B_s+\mathcal A_s=\infty$. It uses a contraction deficit from each disjoint finite block and the junction between that block's principal output line and the next block's principal input line. No block is the growing prefix from $s$ to $n_k$, except the first block. The boundaries use only $|\lambda_j|$, and neither series asks for the norm limit of growing prefix products or the fate of an initial vector.
+
+**Theorem 9.2 (Infinite-loss tail classification and exact functional).** On the entire domain of Definition 9.1, every tail input decays if and only if
+
+$$
+\boxed{\quad\mathcal B_s+\mathcal A_s=\infty.\quad}
+\tag{9.5}
+$$
+
+In this branch the stable space is $\mathbb R^2$ and every full chronological limiting norm is zero. In the complementary branch both series are finite; the stable space is one line and the exact full chronological limiting norm is $|\ell_s(z)|$, for the following nonzero prescribed-data functional.
+
+Let $K$ be the least nonnegative integer such that $\sigma_k\geq3/4$ for every $k\geq K$, and put $\rho=8/9$. Define real rows, starting at $K$, by
+
+$$
+a_K=f_K^TG,\qquad b_K=(Jf_K)^TG,
+$$
+
+$$
+a_{k+1}=c_ka_k+\mu_ks_kb_k,\qquad
+b_{k+1}=-s_ka_k+\mu_kc_kb_k\quad(k\geq K).
+\tag{9.6}
+$$
+
+The row series and scalar product
+
+$$
+\Lambda=a_K+\sum_{k=K}^\infty\big((c_k-1)a_k+\mu_ks_kb_k\big),
+\qquad \gamma=\prod_{k=K}^\infty\sigma_k
+\tag{9.7}
+$$
+
+converge, the row series absolutely and the product to a positive number. The functional is
+
+$$
+\boxed{\quad\ell_s(z)=\gamma\Lambda\Phi_{s,n_K}z.\quad}
+\tag{9.8}
+$$
+
+For $n\geq K$, write $S_n=\sum_{k=n}^\infty(1-\sigma_k)$ and $E_n=\sum_{k=n}^\infty s_k^2$. In dual $Q$-norm the independently specified truncations satisfy
+
+$$
+\left\|\ell_s-
+\left(\prod_{k=K}^{n-1}\sigma_k\right)a_n\Phi_{s,n_K}\right\|_{Q,*}
+\leq S_n+E_n+\rho\sqrt{\frac{2E_n}{1-\rho^2}}.
+\tag{9.9}
+$$
+
+Thus the limiting object has a prescribed-data error bound as well as exact original-model correspondence. There is no finite annihilation of a nonzero tail input in either branch.
+
+*Proof.* All finite-dimensional constructions in Definition 9.1 take place in the original plane with its fixed inner product $Q$. To verify them, represent a $Q$-self-adjoint matrix in the orthonormal basis $e,Je$. The matrix of $R_k$ then has the real symmetric form $\begin{pmatrix}x&y\\y&z\end{pmatrix}$. Its characteristic discriminant is $(x-z)^2+4y^2\geq0$. Its quadratic form is $\|T_kw\|_Q^2>0$ for $w\ne0$, so both characteristic roots are positive. The ordinary two-by-two characteristic identity gives exactly the roots (9.2) and, when they differ, the self-adjoint idempotent $E_k$ displayed above. When they agree, $x=z$ and $y=0$, so $R_k=\sigma_k^2I$. This also verifies that $E_k$ is nonzero and that projecting one of $e,Je$ must succeed. This is the real two-dimensional spectral decomposition, consumed here only to decompose the actual finite blocks.
+
+Nonexpansiveness of the factors gives $0<\sigma_k\leq1$. The orthonormal pair $f_k,Jf_k$ diagonalizes $R_k$, so $T_kf_k$ and $T_kJf_k$ are orthogonal, with lengths $\sigma_k,\zeta_k$. Orientation in the basis $e,Je$ gives
+
+$$
+T_kf_k=\sigma_kg_k,\qquad
+T_kJf_k=\sigma_k\mu_kJg_k,
+\qquad 0<|\mu_k|\leq1.
+\tag{9.10}
+$$
+
+Indeed the coefficient of $Jg_k$ has modulus $\zeta_k$ and sign $\operatorname{sgn}(\det T_k)$, and $\zeta_k=|\mathfrak d_k|/\sigma_k$. Since $J$ is an orthogonal quarter-turn, (9.3) yields
+
+$$
+g_k=c_kf_{k+1}-s_kJf_{k+1},\qquad
+Jg_k=s_kf_{k+1}+c_kJf_{k+1},\qquad c_k^2+s_k^2=1.
+$$
+
+Thus a block input with coordinates $(A,B)$ in $f_k,Jf_k$ has output coordinates
+
+$$
+\sigma_k(c_kA+\mu_ks_kB,\ -s_kA+\mu_kc_kB)
+\tag{9.11}
+$$
+
+in $f_{k+1},Jf_{k+1}$. This is an exact finite identity for the prescribed original block, with its sign of determinant retained.
+
+If $\mathcal B_s=\infty$, the original input at boundary $n_m$ has norm at most
+
+$$
+\left(\prod_{k=0}^{m-1}\sigma_k\right)\|z\|_Q
+\leq\exp\left(-\sum_{k=0}^{m-1}(1-\sigma_k)\right)\|z\|_Q\longrightarrow0.
+$$
+
+Only disjoint-block submultiplicativity is used in this bound. Monotonicity of every intermediate event norm proves full-time decay. This establishes (9.5) in the first branch without any angle assumption.
+
+Suppose henceforth $\mathcal B_s<\infty$. Then $\sigma_k\to1$, so the prescribed $K$ exists, and
+
+$$
+|\mu_k|\leq\frac{1/2}{(3/4)^2}=\rho=\frac89<1\quad(k\geq K).
+\tag{9.12}
+$$
+
+Also the product in (9.7) is positive: on $[3/4,1]$, integration of $1/x$ gives $0\leq-\log x\leq(4/3)(1-x)$, so its logarithmic sum is finite. The finitely many blocks before $K$ are nonsingular. This is the only reduction to a uniform contraction bound, and it concerns the normalized disjoint blocks, not the original $\lambda_j$.
+
+For an arbitrary input at boundary $n_K$, divide the actual input at boundary $n_k$ by $\prod_{i=K}^{k-1}\sigma_i$. Write the resulting vector as $A_kf_k+B_kJf_k$. By (9.11),
+
+$$
+A_{k+1}=c_kA_k+\mu_ks_kB_k,\qquad
+B_{k+1}=-s_kA_k+\mu_kc_kB_k,
+$$
+
+$$
+A_{k+1}^2+B_{k+1}^2
+=A_k^2+B_k^2-(1-\mu_k^2)B_k^2.
+\tag{9.13}
+$$
+
+These are exactly the scalar identities used in (7.10), with the block junctions supplying the angles. The proof uses these identities and the bound (9.12), rather than requiring the block angles to be integer multiples of $\theta$. In particular the normalized norms decrease to a limit $l\geq0$, and
+
+$$
+(1-\rho^2)\sum_{k=K}^\infty B_k^2\leq A_K^2+B_K^2.
+\tag{9.14}
+$$
+
+If $l>0$, eventually $A_k^2\geq l^2/2$, since $B_k\to0$. The second recurrence gives
+
+$$
+s_k^2A_k^2=(\mu_kc_kB_k-B_{k+1})^2
+\leq2\rho^2B_k^2+2B_{k+1}^2.
+$$
+
+It follows that $\sum s_k^2<\infty$. Thus $\mathcal A_s=\infty$ forces $l=0$ for every normalized input, and hence for every original input. Monotonicity between block boundaries again gives the full chronological conclusion.
+
+It remains to prove the complementary branch, its exact functional and its nonzero value on some input. Suppose $\mathcal A_s<\infty$. The rows in (9.6) give $A_k=a_kw$ and $B_k=b_kw$ for normalized input $w$ at $n_K$. The maps in (9.13) are nonexpansive, so $\|a_k\|_{Q,*}\leq1$. Apply (9.14) to the two unit inputs $e,Je$ and add. The dual norm identity $\|f\|_{Q,*}^2=|fe|^2+|fJe|^2$ gives
+
+$$
+\sum_{k=K}^\infty\|b_k\|_{Q,*}^2\leq\frac2{1-\rho^2}.
+\tag{9.15}
+$$
+
+Because $c_k\geq0$, one has $1-c_k=s_k^2/(1+c_k)\leq s_k^2$. Therefore, for every $n\geq K$,
+
+$$
+\begin{aligned}
+\sum_{k=n}^\infty
+\|(c_k-1)a_k+\mu_ks_kb_k\|_{Q,*}
+&\leq E_n+\rho\sqrt{E_n}
+\left(\sum_{k=n}^\infty\|b_k\|_{Q,*}^2\right)^{1/2}\\
+&\leq E_n+\rho\sqrt{\frac{2E_n}{1-\rho^2}}.
+\end{aligned}
+\tag{9.16}
+$$
+
+This proves absolute convergence of (9.7), including the displayed tail bound. Its summands are $a_{k+1}-a_k$, so $a_k\to\Lambda$ in the row space. For every $w$, (9.14) gives $B_k\to0$, and hence (9.13) gives the exact normalized norm limit $|\Lambda w|$. In particular $\|\Lambda\|_{Q,*}\leq1$.
+
+To show this row is nonzero, choose $N\geq K$ with
+
+$$
+\sum_{k=N}^\infty s_k^2<\frac{(1-\rho)^2}{4}.
+$$
+
+The finite normalized blocks from $K$ to $N$ are all invertible, so an input $w$ at $n_K$ can be chosen whose normalized vector at $n_N$ is $f_N$. Its subsequent coordinates satisfy $A_N=1,B_N=0$ and $|A_k|\leq1$. The second recurrence implies by induction
+
+$$
+|B_k|\leq\sum_{i=N}^{k-1}\rho^{k-1-i}|s_i|\quad(k>N).
+$$
+
+Weighted Cauchy--Schwarz gives
+
+$$
+|B_k|^2\leq\frac1{1-\rho}
+\sum_{i=N}^{k-1}\rho^{k-1-i}s_i^2,
+\qquad
+\sum_{k=N}^\infty B_k^2\leq
+\frac1{(1-\rho)^2}\sum_{i=N}^\infty s_i^2<\frac14.
+$$
+
+The second inequality follows by summing the nonnegative geometric weights, first over finite ranges and then taking their increasing limit. Telescoping (9.13) from this unit input yields $l^2\geq1-\sum_{k=N}^\infty B_k^2>3/4$. Consequently $\Lambda w\ne0$. This is the finite-prefix nonsingularity argument of (7.16)--(7.17), now applied to the explicitly normalized original blocks; it requires no uniform inverse.
+
+The actual tail input $z$ reaches $n_K$ as $\Phi_{s,n_K}z$. Restoring the divided scalar factors gives (9.8) and the exact limiting norm. Both $\gamma>0$ and invertibility of $\Phi_{s,n_K}$ preserve nonzeroness of the functional. Its kernel is therefore a line. At every intermediate time the actual norm lies between successive block-boundary norms, so this is the limit along the entire chronological history, including unbounded gaps and arbitrary first-event time.
+
+For completeness, $\gamma_n=\prod_{k=K}^{n-1}\sigma_k$ satisfies $0\leq\gamma_n-\gamma\leq S_n$: finite products of $1-r_i$ are at least $1-\sum r_i$, and passage to the limit gives this bound. Combine it with (9.16), $\|a_n\|_{Q,*}\leq1$, $\gamma\leq1$ and nonexpansiveness of $\Phi_{s,n_K}$ to obtain (9.9). Thus neither the scalar product nor the functional is an unspecified limiting remainder. All tail factors are nonsingular, so Theorem 8.2 excludes finite annihilation of a nonzero input. This completes both directions of (9.5) and all limiting-space assertions. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 10. Singular events and every finite-prefix composition
+
+**Theorem 10.1 (Infinitely many singular events).** Suppose the event list is infinite and its singular event indices, in increasing order, are $i_0<i_1<\cdots$. Define the prescribed nonzero row and finite-block coefficients
+
+$$
+\beta=e_{i_0}^TG\Phi_{0,i_0},\qquad
+\kappa_k=\left\langle e_{i_{k+1}},
+\Phi_{i_k+1,i_{k+1}}e_{i_k}\right\rangle_Q.
+\tag{10.1}
+$$
+
+Every $|\kappa_k|\leq1$. If any $\kappa_k=0$, every initial state is annihilated by time $t_{i_{k+1}}+1$. Otherwise put
+
+$$
+C=\sum_{k=0}^\infty-\log|\kappa_k|\in[0,\infty],\qquad
+p=e^{-C},\quad e^{-\infty}=0.
+\tag{10.2}
+$$
+
+The exact full chronological limit and stable space are
+
+$$
+\lim_{t\to\infty}\|u_t\|_Q=p|\beta u_0|,\qquad
+S_{\varepsilon,\boldsymbol\alpha}=
+\begin{cases}
+\ker\beta,&C<\infty,\\
+\mathbb R^2,&C=\infty.
+\end{cases}
+\tag{10.3}
+$$
+
+In the case of a zero $\kappa_k$ the limit is zero and the stable space is also $\mathbb R^2$. The row $\beta$ has one-dimensional kernel. A vector in that kernel is killed at the first singular event. If all $\kappa_k$ are nonzero, every vector outside that kernel remains nonzero at every finite time; when $C=\infty$, these surviving vectors decay only asymptotically. These alternatives are entirely prescribed finite-block and scalar-series conditions.
+
+*Proof.* Every factor preceding $i_0$ is nonsingular, so $\Phi_{0,i_0}$ is invertible. Since $e_{i_0}^TG\ne0$, the row $\beta$ is nonzero. Immediately after the first singular event the interaction vector is $e_{i_0}\beta u_0$. Each intervening factor up to the next singular event is one of the factors in the finite map $\Phi_{i_k+1,i_{k+1}}$; the singular event itself is projection onto $\mathbb Re_{i_{k+1}}$. Induction therefore gives the exact vectors immediately after the successive singular events:
+
+$$
+F_{i_m+1}u_0=e_{i_m}(\beta u_0)
+\prod_{k=0}^{m-1}\kappa_k\quad(m\geq0).
+\tag{10.4}
+$$
+
+Nonexpansiveness of the intervening finite map and Cauchy--Schwarz imply $|\kappa_k|\leq1$. A zero coefficient kills the whole already rank-one image. If all are nonzero, the absolute finite products in (10.4) converge to $e^{-C}$, simply by taking their logarithms. At the singular-event subsequence the norms thus have exactly the limit (10.3). All chronological norms are nonincreasing by (8.7), and this subsequence tends to infinite time, so the same limit holds at every time.
+
+For $\beta u_0=0$, (10.4) already vanishes at $m=0$. For $\beta u_0\ne0$ and all $\kappa_k\ne0$, its vectors never vanish. Nonsingular intervening factors cannot kill them either. Before $i_0$ all factors are invertible. This proves every finite-annihilation and survival assertion and distinguishes an infinite logarithmic sum from a zero finite factor. $\square$
+
+**Theorem 10.2 (Eventually nonsingular histories and exact prefix transport).** Suppose an infinite event list has only finitely many singular events. Take $s=0$ if there are none, and otherwise take $s$ to be one plus the last singular event index. Put $F=\Phi_{0,s}$. Apply the following alternatives to the wholly nonsingular tail beginning at $s$.
+
+1. If $D_s<\infty$, its prescribed matrix $H_s$ from Theorem 8.3 gives
+
+$$
+\lim_{t\to\infty}\|u_t\|_Q
+=\sqrt{u_0^TF^TH_sFu_0},\qquad
+S_{\varepsilon,\boldsymbol\alpha}=\ker F.
+\tag{10.5}
+$$
+
+The dimension is $2-\operatorname{rank}F$. Every nonzero prefix image persists with positive limiting norm.
+
+2. If $D_s=\infty$ and $\mathcal B_s+\mathcal A_s=\infty$, every limiting norm is zero and $S_{\varepsilon,\boldsymbol\alpha}=\mathbb R^2$.
+
+3. If $D_s=\infty$ and $\mathcal B_s+\mathcal A_s<\infty$, let $\ell_s$ be (9.8) and form the prescribed row $f=\ell_sF$. Then
+
+$$
+\lim_{t\to\infty}\|u_t\|_Q=|fu_0|,\qquad
+S_{\varepsilon,\boldsymbol\alpha}=
+\begin{cases}
+\ker f,&f\ne0,\\
+\mathbb R^2,&f=0.
+\end{cases}
+\tag{10.6}
+$$
+
+In every alternative an individual state is annihilated in finite time exactly when $Fu_0=0$. Thus $F=0$ means finite all-state annihilation. If $F\ne0$ and $f=0$ in alternative 3, the nonzero prefix image is asymptotically erased even though the tail functional is nonzero. The same distinction applies to alternative 2. If $F$ has rank one and $f\ne0$, then $\ker f=\ker F$; if $F$ has rank two, $f\ne0$ and its kernel is a line. These statements decide all stable-space dimensions, including the possible zero composed functional.
+
+*Proof.* The exact interaction input at index $s$ is $Fu_0$, by (8.4). All later event factors are nonsingular. Consequently a zero in the tail is equivalent to having reached it with zero input, and a vector killed anywhere in the prefix also has $Fu_0=0$. This proves the finite-annihilation assertion without inverting a singular factor.
+
+If $D_s<\infty$, apply Theorem 8.3 to $z=Fu_0$. Positive definiteness of $H_s$ makes its limiting quadratic form zero precisely on $\ker F$, proving (10.5) and its dimension. In particular a rank-one prefix image is not erased unless it was zero. In the second alternative Theorem 9.2 gives zero for every tail input. In the third it gives exactly the composition (10.6). The nonzero functional $\ell_s$ vanishes on a line, but a rank-one image of $F$ may be precisely that line, giving $f=0$ with $F\ne0$. If $F$ is invertible this cannot happen. If $\operatorname{rank}F=1$ and $\ell_s$ is nonzero on its image, both $f$ and $F$ vanish exactly on the same kernel. These facts prove all assertions in the original coordinate plane and at the original initial-state scale. $\square$
+
+**Corollary 10.3 (Whole-history decision and angle arithmetic).** For every prescribed history in Definition 8.1 the following disjoint cases give the complete stable space and exact full-time norm limit: a finite event list is Theorem 8.2; an infinite list with infinitely many singular indices is Theorem 10.1; an infinite list with finitely many singular indices is Theorem 10.2. In particular universal decay is decided as follows:
+
+$$
+\begin{array}{c|l}
+\text{history}&\text{necessary and sufficient condition for universal decay}\\ \hline
+r<\infty&F_r=0\\
+\text{infinitely many singular indices}&
+\text{some }\kappa_k=0\text{, or all nonzero and }C=\infty\\
+\text{eventually nonsingular, }D_s<\infty&F=0\\
+\text{eventually nonsingular, }D_s=\infty&
+\mathcal B_s+\mathcal A_s=\infty\text{, or }
+[\mathcal B_s+\mathcal A_s<\infty\text{ and }\ell_sF=0].
+\end{array}
+\tag{10.7}
+$$
+
+The stable-space dimensions in these cases are respectively the finite rank-nullity value, one or two, the rank-nullity value for $F$, and one or two. The stable space is zero-dimensional exactly in the finite nonsingular case or the finite-$D_s$ case with rank-two $F$. Every state outside the specified stable space has strictly positive limiting $Q$-norm. Finite annihilation remains the separate finite condition in Theorem 8.2.
+
+All block and series data are prescribed independently of the initial state. Convergent series determine the functionals and their kernels exactly; no uniform finite-time decision procedure for arbitrary real infinite histories is asserted. The cases allow arbitrary signs, arbitrarily small nonzero factors, approaches to either endpoint, every first-event time and all positive integer gaps. They impose no arithmetic restriction on the original angle.
+
+*Proof.* Every event list has exactly one of the three listed types. The corresponding theorems give (10.7), the exact limits and the stable subspaces, so rank-nullity and the kernels of the nonzero rows give the asserted dimensions. In particular, if an infinite list is wholly nonsingular and has infinite $D_s$, its stable space is either the whole plane or a line by Theorem 9.2, never $\{0\}$. Any singular prefix has rank at most one, so cannot produce another zero-dimensional case. The zero and nonzero composed rows in (10.6) are both included.
+
+For the arithmetic boundary, if $\theta/(2\pi)$ is rational, the possible event lines $\mathbb RM^{-t_j}e$ form a finite family. If it is irrational, $d\theta$ is neither an integer multiple of $\pi$ nor an odd multiple of $\pi/2$ for any positive integer $d$, since either equation would force the ratio to be rational. These are precisely the arithmetic observations of Corollary 6.3. None is needed to form the finite products, loss blocks, their principal lines or the singular coefficients (10.1). Consequently both arithmetic types, including exact resonances and orthogonal gaps whenever available, are already covered. Arbitrarily long blocks in (9.1) remain finite by divergence of their prescribed logarithmic loss; no compactness or uniform inverse assumption on the original event factors has been introduced. $\square$
+
+**Proposition 10.4 (A nonzero tail functional erased by a surviving prefix image).** There is an actual original history with just one singular event, a nonzero rank-one prefix image, and a nonzero infinite-loss tail functional whose composition with that prefix is zero. The entire history decays for every input, but no finite time annihilates the whole plane.
+
+Take $(a,b,c)=(2,1,3)$, events $t_j=j$, and
+
+$$
+\lambda_0=0,\qquad \lambda_{2k+1}=\frac12,\qquad
+\lambda_{2k+2}=1-2^{-k-3},\qquad
+\alpha_j=\frac{1+\lambda_j}{4-2\lambda_j}\quad(k\geq0).
+\tag{10.8}
+$$
+
+*Proof.* For this triple the literal transfer is $M=\begin{pmatrix}-1&4/3\\-3/2&1\end{pmatrix}$, the angle is $\pi/2$, and the unit vectors $e=(2,3)^T/\sqrt6$, $q=(2,0)^T/\sqrt6$ obey $Me=q$, $Mq=-e$ and $\langle e,q\rangle_Q=0$. Hence the interaction factors at even indices fix $e$ and those at odd indices fix $q$. The first factor is exactly $F_1=P_0=ee^TG$, which has a nonzero rank-one image. The tail starting at $s=1$ is nonsingular and has $D_1=\infty$, since every odd index contributes $\log2$.
+
+For an arbitrary tail input $z=xe+yq$, the odd tail factors multiply its $e$ coordinate by $1/2$, and the even tail factors multiply its $q$ coordinate by $1-2^{-k-3}$. Therefore its exact limiting norm is $p|y|$, where $p=\prod_{k\geq0}(1-2^{-k-3})\geq3/4$, by the finite-product inequality used above. One may take $\ell_1=pq^TG\ne0$, while $\ell_1F_1=0$. For an actual initial input $u_0$, write $\beta=e^TGu_0$. After $n\geq1$ events its interaction vector is
+
+$$
+F_nu_0=2^{-\#\{j<n:j\text{ odd}\}}\beta e.
+$$
+
+It tends to zero for every $u_0$. When $\beta\ne0$ it remains nonzero at every finite $n$, and when $\beta=0$ it is killed at the first event. In particular $F_n$ is never the zero map at a finite time. Identity (8.5) transfers these exact facts to the full original chronological trajectory. This realizes the zero-composition alternative in (10.6) without replacing asymptotic erasure by finite annihilation. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 11. Weighted sufficiency and actual original-matrix consumers
+
+**Theorem 11.1 (Adjacent-minimum weighted sufficiency).** For every infinite original history in Definition 8.1, including singular events, define
+
+$$
+W=\sum_{j=0}^\infty
+\min(\delta_j,\delta_{j+1})\sin^2(d_j\theta).
+\tag{11.1}
+$$
+
+If $W=\infty$, every original initial state tends to zero. No uniform bound on $|\lambda_j|$, inverse, sign, angle or gaps is required. This condition is sufficient and is not necessary.
+
+*Proof.* Use the prescribed frames (7.9) and the exact recurrences (7.10), whose algebra applies to every $\lambda_j\in(-1,1)$. For an arbitrary actual trajectory put
+
+$$
+L_j=\delta_jB_j^2,\qquad w_j=\min(\delta_j,\delta_{j+1}).
+$$
+
+The loss identity gives $\sum_jL_j\leq Q(u_0)$. The second coordinate recurrence yields
+
+$$
+s_j^2A_j^2=(\lambda_jc_jB_j-B_{j+1})^2
+\leq2\lambda_j^2c_j^2B_j^2+2B_{j+1}^2.
+$$
+
+Multiplying by $w_j$ and using both $w_j\leq\delta_j$ and $w_j\leq\delta_{j+1}$ gives
+
+$$
+w_js_j^2A_j^2\leq2L_j+2L_{j+1}.
+$$
+
+The other coordinate has $w_js_j^2B_j^2\leq L_j$. Hence
+
+$$
+w_js_j^2\|v_j\|_Q^2\leq3L_j+2L_{j+1}.
+\tag{11.2}
+$$
+
+The actual norms decrease to some $l\geq0$. If $l>0$, summing (11.2) would give $l^2W\leq5Q(u_0)<\infty$, a contradiction. Thus $l=0$, and (8.5) gives decay at every chronological time, with no restriction on $\|u_0\|_Q$. Zero factors cause no difficulty in these inequalities. Nonnecessity follows from Propositions 11.3 and 11.4 below. $\square$
+
+**Proposition 11.2 (Refutation of the asymmetric weight).** The proposed sufficient weight
+
+$$
+\omega_j=\begin{cases}
+\min\left(\delta_{j+1},
+\dfrac{\delta_j}{\lambda_j^2\cos^2(d_j\theta)}\right),
+&\lambda_j\cos(d_j\theta)\ne0,\\
+\delta_{j+1},&\lambda_j\cos(d_j\theta)=0
+\end{cases}
+\tag{11.3}
+$$
+
+is not sufficient for universal decay. There is an actual wholly nonsingular original history for which $\sum_j\omega_j\sin^2(d_j\theta)=\infty$ and a nonzero state has strictly positive full-time limiting $Q$-norm.
+
+Take the positive triple $(a,b,c)=(2,1,3)$, an event at every time $t_j=j$, and prescribe
+
+$$
+r_k=2^{-k-3},\qquad
+\lambda_{2k}=1-r_k,\qquad \lambda_{2k+1}=\frac12,\qquad
+\alpha_j=\frac{1+\lambda_j}{4-2\lambda_j}.
+\tag{11.4}
+$$
+
+Then the exact limit for $u_0=xe+yq$ is
+
+$$
+\lim_{t\to\infty}\|u_t\|_Q=p|y|,\qquad
+p=\prod_{k=0}^\infty(1-r_k)\geq\frac34,
+\tag{11.5}
+$$
+
+where $e=(2,3)^T/\sqrt6$ and $q=(2,0)^T/\sqrt6$. In particular the prescribed state $u_0=q$ has limit at least $3/4$.
+
+*Proof.* Direct specialization of the original matrices gives
+
+$$
+A=\begin{pmatrix}1&0\\-6&4\end{pmatrix},\quad
+B=\begin{pmatrix}-1&4/3\\0&-4\end{pmatrix},\quad
+M=\begin{pmatrix}-1&4/3\\-3/2&1\end{pmatrix},\quad
+Q(x,y)=\frac{x^2}{2}+(y-x)^2+\frac{y^2}{3}.
+\tag{11.6}
+$$
+
+Here $2ac/((a+b)(b+c))-1=0$, so the original angle is $\theta=\pi/2$, $M^2=-I$, and $J=M$. Calculation gives $Q(e)=Q(q)=1$, $\langle e,q\rangle_Q=0$, $Me=q$ and $Mq=-e$. Thus the actual event lines $\mathbb RM^{-j}e$ are alternately $\mathbb Re$ and $\mathbb Rq$. In interaction coordinates $K_{2k}$ fixes $e$ and multiplies $q$ by $\lambda_{2k}$, whereas $K_{2k+1}$ fixes $q$ and multiplies $e$ by $1/2$. These are the factors of the literal $N_{\alpha_j}=M(P+\lambda_j(I-P))$, with no replacement of the original maps. Equation (8.1) is exactly the last formula in (11.4), so all parameters are interior and every event determinant is nonzero.
+
+For $u_0=xe+yq$, the exact interaction vector after $n$ events is
+
+$$
+F_nu_0=
+2^{-\#\{j<n:j\text{ odd}\}}xe+
+\left(\prod_{\{k:2k<n\}}(1-r_k)\right)yq.
+\tag{11.7}
+$$
+
+Its first coefficient tends to zero. The second coefficient tends to the product $p$. Finite products satisfy $\prod(1-r_k)\geq1-\sum r_k$, by induction from $(1-x)(1-y)\geq1-x-y$. As $\sum_{k\geq0}r_k=1/4$, this gives $p\geq3/4$. Formula (8.5) now proves (11.5) for the entire chronological trajectory, not merely a selected subsequence.
+
+Every actual gap is one, so $\cos(d_j\theta)=0$ and $\sin^2(d_j\theta)=1$. The second branch of the stated candidate (11.3) therefore gives, for every $k$,
+
+$$
+\omega_{2k}\sin^2(d_{2k}\theta)=\delta_{2k+1}=\frac34.
+$$
+
+Its series diverges, despite (11.5). Both types of event factor remain nonsingular; the zero cosine is a legal orthogonal gap, not a singular transfer. For comparison the correct series is finite:
+
+$$
+W\leq2\sum_{k=0}^\infty\delta_{2k}
+=2\sum_{k=0}^\infty(2r_k-r_k^2)<4\sum_{k=0}^\infty r_k=1.
+$$
+
+The example isolates the failure of assigning the next large loss to a component that the next event fixes. It refutes the full proposed weight, including its explicitly stated zero-cosine endpoint. $\square$
+
+**Proposition 11.3 (Wholly nonsingular endpoint approach with $W<\infty$ and universal decay).** In the same actual original system $(a,b,c)=(2,1,3)$, with $t_j=j$, prescribe before choosing any initial vector
+
+$$
+\lambda_{3k}=\frac{k+1}{k+2},\qquad
+\lambda_{3k+1}=\lambda_{3k+2}=1-2^{-k-4},\qquad
+\alpha_j=\frac{1+\lambda_j}{4-2\lambda_j}\quad(k\geq0).
+\tag{11.8}
+$$
+
+Then $0<\lambda_j<1$, $\alpha_j\to1$, $W<1$, and every original initial state tends to zero. No nonzero initial state is annihilated at any finite time. Thus (11.1) is genuinely nonnecessary even for wholly nonsingular endpoint-approaching variable histories.
+
+*Proof.* The inverse parameter correspondence (8.1) gives actual $0<\alpha_j<1$ at each event, and $\lambda_j\to1$ along all three residue classes implies $\alpha_j\to1$. The geometry and matrices are exactly (11.6). For $u_0=xe+yq$ the interaction vector is
+
+$$
+F_nu_0=
+\left(\prod_{\substack{0\leq j<n\\j\text{ odd}}}\lambda_j\right)xe+
+\left(\prod_{\substack{0\leq j<n\\j\text{ even}}}\lambda_j\right)yq.
+\tag{11.9}
+$$
+
+This follows because each even event contracts only the $q$ coordinate and each odd event only the $e$ coordinate, exactly as in (11.7). Among the indices $3k$, parity agrees with the parity of $k$. The sums
+
+$$
+\sum_{\substack{k\geq0\\k\text{ even}}}(1-\lambda_{3k})
+=\sum_{r=0}^\infty\frac1{2r+2}=\infty,\qquad
+\sum_{\substack{k\geq0\\k\text{ odd}}}(1-\lambda_{3k})
+=\sum_{r=0}^\infty\frac1{2r+3}=\infty
+$$
+
+both diverge. For example the second is at least one half of $\sum_{r\geq0}1/(r+2)$, and grouping the latter in consecutive dyadic ranges gives a positive lower bound on each group. Since $-\log\lambda\geq1-\lambda$, both parity products in (11.9) tend to zero. It follows that $\|F_nu_0\|_Q\to0$ for every $x,y$, and (8.5) proves actual full-time decay at every initial scale.
+
+To bound $W$, call the indices $3k+1,3k+2$ weak indices. Every consecutive pair of indices contains a weak index, and its minimum loss is at most the sum of the losses of its weak members. Each weak index belongs to at most two such pairs. As every gap has squared sine one,
+
+$$
+W\leq2\sum_{j\text{ weak}}\delta_j
+=4\sum_{k=0}^\infty\left[1-(1-2^{-k-4})^2\right]
+<8\sum_{k=0}^\infty2^{-k-4}=1.
+$$
+
+Every finite event product is invertible since all its $\lambda_j$ are positive. The original $M$ is also invertible, so a nonzero input never becomes zero at a finite time. The decay just proved is therefore asymptotic and is not an annihilation artifact. The history and parameters depend on neither $x$ nor $y$. $\square$
+
+**Proposition 11.4 (Singular-history nonnecessity).** In the same system prescribe
+
+$$
+t_0=0,\qquad t_j=2j-1\quad(j\geq1),\qquad
+\alpha_j=\frac14\quad(j\geq0).
+\tag{11.10}
+$$
+
+Then every initial state is zero from time $2$ onward, while the infinite series (11.1) equals $1$.
+
+*Proof.* The singular parameter is $b/(a+2b)=1/4$, hence every $\lambda_j=0$ and every $\delta_j=1$. The literal first Token-1 row and the inverse of $A$ in (11.6) give
+
+$$
+B_{1/4}=\begin{pmatrix}0&2/3\\0&-4\end{pmatrix},\qquad
+N_{1/4}=A^{-1}B_{1/4}
+=\begin{pmatrix}0&2/3\\0&0\end{pmatrix},\qquad N_{1/4}^2=0.
+$$
+
+The first two events are consecutive at times $0,1$, so every actual state is annihilated by time $2$, and every later transfer preserves zero. This is also the orthogonal singular-projection mechanism of Theorem 6.2, used here as an original-history consumer. The first gap is $d_0=1$ and every later gap is $2$. Since $\theta=\pi/2$, their squared sines are respectively $1$ and $0$, giving $W=1$. This supplies singular nonnecessity with infinitely many events and infinitely many singular factors. $\square$
+
+## 追加锚（本行以下为增补区）
