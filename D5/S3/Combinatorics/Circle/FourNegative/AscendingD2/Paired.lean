@@ -98,46 +98,52 @@ private theorem paired_table (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2
   · intro i hi; simpa [B, show i+1<c by omega, add_comm, add_left_comm, add_assoc, mul_comm, mul_left_comm, mul_assoc] using hV i (by omega)
   · intro i hi; rw [hshift, show 2+i+1=3+i by omega]
     simpa [Bn, show i+1<c by omega, add_comm, add_left_comm, add_assoc, mul_comm, mul_left_comm, mul_assoc] using hVn i (by omega)
-  · intro i hi; simpa [W, show 2+c+i=c+2+i by omega, show i+1<b by omega, add_comm, add_left_comm, add_assoc, mul_comm, mul_left_comm, mul_assoc, add_mul] using hW i (by omega)
+  · intro i hi
+    rw [show c+2+i=2+c+i by omega,hW i (by omega),ite_eq_left (by omega)]
+    dsimp [W]; ring
   · intro i hi; rw [hshift, show c+2+i+1=3+c+i by omega]
-    simpa [Wn, show i+1<b by omega, add_comm, add_left_comm, add_assoc, mul_comm, mul_left_comm, mul_assoc, add_mul] using hWn i (by omega)
-  · intro i hi; simpa [X, show 2+c+b+i=c+b+2+i by omega, show i+1<a by omega, add_comm, add_left_comm, add_assoc, mul_comm, mul_left_comm, mul_assoc, add_mul] using hX i (by omega)
+    rw [hWn i (by omega),ite_eq_left (by omega)]
+    dsimp [Wn]; ring
+  · intro i hi
+    rw [show c+b+2+i=2+c+b+i by omega,hX i (by omega),ite_eq_left (by omega)]
+    dsimp [X]; ring
   · intro i hi; rw [hshift, show c+b+2+i+1=3+c+b+i by omega]
-    simpa [Xn, show i+1<a by omega, add_comm, add_left_comm, add_assoc, mul_comm, mul_left_comm, mul_assoc, add_mul] using hXn i (by omega)
+    rw [hXn i (by omega),ite_eq_left (by omega)]
+    dsimp [Xn]; ring
   · have h := hU 1 (by decide)
-    norm_num at h
+    rw [ite_eq_right (by decide)] at h
     rw [h, last_double N A B 2 (by decide) rU, hN]
     dsimp [B]; ring
   · rw [hshift]
     have h := hUn 2 (by decide)
-    norm_num at h
+    rw [ite_eq_right (by decide)] at h
     rw [h, last_double M A Bn 3 (by decide) rUn, hM, hN]
     dsimp [Bn]; ring
   · have h := hV (c-1) (by omega)
-    rw [if_neg (by omega)] at h
+    rw [ite_eq_right (by omega)] at h
     rw [show c+1=2+(c-1) by omega, h, last_double N B W c (by omega) rV, hN]
     dsimp [W]; ring
   · rw [hshift]
     have h := hVn (c-1) (by omega)
-    rw [if_neg (by omega)] at h
+    rw [ite_eq_right (by omega)] at h
     rw [show c+1+1=3+(c-1) by omega, h, last_double M Bn Wn c (by omega) rVn,hM,hN]
     dsimp [Wn]; ring
   · have h := hW (b-1) (by omega)
-    rw [if_neg (by omega)] at h
+    rw [ite_eq_right (by omega)] at h
     rw [show c+b+1=2+c+(b-1) by omega,h,last_double N W X b (by omega) rW,hN]
     dsimp [X]; ring
   · rw [hshift]
     have h := hWn (b-1) (by omega)
-    rw [if_neg (by omega)] at h
+    rw [ite_eq_right (by omega)] at h
     rw [show c+b+1+1=3+c+(b-1) by omega,h,last_double M Wn Xn b (by omega) rWn,hM,hN]
     dsimp [Xn]; ring
   · have h := hX (a-1) (by omega)
-    rw [if_neg (by omega)] at h
+    rw [ite_eq_right (by omega)] at h
     rw [show a+b+c+1=2+c+b+(a-1) by omega,h,last_double N X A a (by omega) rX,hN]
     dsimp [A]; ring
   · rw [hshift]
     have h := hXn (a-1) (by omega)
-    rw [if_neg (by omega)] at h
+    rw [ite_eq_right (by omega)] at h
     rw [show a+b+c+1+1=3+c+b+(a-1) by omega,h,last_double M Xn A a (by omega) rXn,hM,hN]
     dsimp [A]; ring
 

@@ -45,7 +45,7 @@ private theorem shifted_sum (a b c : ℕ) (m : Mask a b c) (f : ℕ → ℤ)
   have sum_toList (S : Finset ℕ) (v : ℕ → ℤ) : (S.toList.map v).sum = ∑ i ∈ S, v i := by
     change ((S.toList : Multiset ℕ).map v).sum = _
     rw [Finset.coe_toList]; rfl
-  rw [sum_toList,shiftedSupport,Finset.sum_image] <;> try omega
+  rw [sum_toList,shiftedSupport,Finset.sum_image (by intro i hi j hj he; exact Nat.add_left_cancel he)]
   simpa only [sum_toList] using hs
 
 private theorem shifted_disjoint (a b c : ℕ) (p q : Mask a b c)
@@ -56,28 +56,28 @@ private theorem shifted_disjoint (a b c : ℕ) (p q : Mask a b c)
   have hd := support_disjoint a b c p q hv hw hx
   apply Finset.disjoint_left.mpr
   intro i hi hj
-  obtain ⟨j,hj,rfl⟩ := Finset.mem_image.mp hi
+  obtain ⟨j,hjp,rfl⟩ := Finset.mem_image.mp hi
   obtain ⟨l,hl,he⟩ := Finset.mem_image.mp hj
   have : l=j := by omega
   subst l
-  exact Finset.disjoint_left.mp hd hj hl
+  exact Finset.disjoint_left.mp hd hjp hl
 
 private theorem table_positive (a b c : ℕ) (R T Z : ℤ) (f g : ℕ → ℤ)
     (hR : 0<R) (hT : 0<T) (hZ : 0<Z) (tab : Table a b c R T Z f g)
     (i : ℕ) (hi : i<a+b+c+2 ∧ i ≠ a+b+c+1 ∧ i ≠ c+b+1 ∧ i ≠ c+1 ∧ i ≠ 1) :
     0 ≤ f i ∧ 0 ≤ g i := by
   by_cases h0 : i=0
-  · subst i; rw [tab.u,tab.un]; constructor <;> positivity
+  · subst i; rw [(Table.u tab),(Table.un tab)]; constructor <;> positivity
   by_cases hv : i<c+1
   · have he : i=2+(i-2) := by omega
-    rw [he,tab.v _ (by omega),tab.vn _ (by omega)]
+    rw [he,(Table.v tab) _ (by omega),(Table.vn tab) _ (by omega)]
     constructor <;> positivity
   by_cases hw : i<c+b+1
   · have he : i=c+2+(i-(c+2)) := by omega
-    rw [he,tab.w _ (by omega),tab.wn _ (by omega)]
+    rw [he,(Table.w tab) _ (by omega),(Table.wn tab) _ (by omega)]
     constructor <;> positivity
   · have he : i=c+b+2+(i-(c+b+2)) := by omega
-    rw [he,tab.x _ (by omega),tab.xn _ (by omega)]
+    rw [he,(Table.x tab) _ (by omega),(Table.xn tab) _ (by omega)]
     constructor <;> positivity
 
 private theorem four_perm (k nx nw nv nu : ℕ) (P Q R : Finset ℕ)
@@ -92,25 +92,29 @@ private theorem four_perm (k nx nw nv nu : ℕ) (P Q R : Finset ℕ)
       (List.range k) := by
   classical
   let E : Finset ℕ := ⟨([nx,nw,nv,nu] : List ℕ), hn⟩
-  have he : E={nx,nw,nv,nu} := by ext i; simp [E]
-  have hsubE : E ⊆ Finset.range k := by intro i hi; exact Finset.mem_range.mpr (hb i (by simpa [E] using hi))
+  have hmem (i : ℕ) : i∈E ↔ i∈([nx,nw,nv,nu] : List ℕ) := Iff.rfl
+  have he : E={nx,nw,nv,nu} := by ext i; rw [hmem]; simp
+  have hsubE : E ⊆ Finset.range k := by intro i hi; exact Finset.mem_range.mpr (hb i ((hmem i).mp hi))
   have hPE : Disjoint P E := by
     apply Finset.disjoint_left.mpr
     intro i hi hj
     have hh := hp i hi
-    simp only [E,Finset.mem_mk,Multiset.mem_coe,List.mem_cons,List.mem_singleton] at hj
+    rw [he] at hj
+    simp only [Finset.mem_insert,Finset.mem_singleton] at hj
     tauto
   have hQE : Disjoint Q E := by
     apply Finset.disjoint_left.mpr
     intro i hi hj
     have hh := hq i hi
-    simp only [E,Finset.mem_mk,Multiset.mem_coe,List.mem_cons,List.mem_singleton] at hj
+    rw [he] at hj
+    simp only [Finset.mem_insert,Finset.mem_singleton] at hj
     tauto
   have hRE : Disjoint R E := by
     apply Finset.disjoint_left.mpr
     intro i hi hj
     have hh := hr i hi
-    simp only [E,Finset.mem_mk,Multiset.mem_coe,List.mem_cons,List.mem_singleton] at hj
+    rw [he] at hj
+    simp only [Finset.mem_insert,Finset.mem_singleton] at hj
     tauto
   let S := P ∪ Q ∪ R ∪ E
   have hsub : S ⊆ Finset.range k := by
@@ -126,19 +130,23 @@ private theorem four_perm (k nx nw nv nu : ℕ) (P Q R : Finset ℕ)
   have hPQ : Disjoint (P∪Q) R := Finset.disjoint_union_left.mpr ⟨hpr,hqr⟩
   have hE : Disjoint (P∪Q∪R) E := Finset.disjoint_union_left.mpr
     ⟨Finset.disjoint_union_left.mpr ⟨hPE,hQE⟩,hRE⟩
+  have valunion (F H : Finset ℕ) (hd : Disjoint F H) : (F∪H).val=F.val+H.val := by
+    rw [←Finset.disjUnion_eq_union F H hd]; rfl
   have hval : (Finset.range k).val = (Finset.range k \ S).val+P.val+Q.val+R.val+E.val := by
-    rw [←hfull,Finset.val_union hdis]
+    rw [←hfull,valunion _ _ hdis]
     dsimp [S]
-    rw [Finset.val_union hE,Finset.val_union hPQ,Finset.val_union hpq]
+    rw [valunion _ _ hE,valunion _ _ hPQ,valunion _ _ hpq]
     ac_rfl
   change (P.toList ++ nx :: Q.toList ++ nw :: R.toList ++ nv ::
     (Finset.range k \ (P∪Q∪R∪{nx,nw,nv,nu})).toList ++ [nu]).Perm _
   rw [←he]
   apply Multiset.coe_eq_coe.mp
+  simp only [←Multiset.coe_add,←Multiset.cons_coe,←Multiset.singleton_add,Multiset.coe_singleton,Finset.coe_toList]
   change P.val+({nx}+Q.val)+({nw}+R.val)+({nv}+(Finset.range k \ S).val)+{nu} = (Finset.range k).val
   rw [hval]
   dsimp [E]
   change _ = (Finset.range k \ S).val+P.val+Q.val+R.val+({nx}+{nw}+{nv}+{nu})
+  simp only [←Multiset.singleton_add]
   ac_rfl
 
 /-- Four positive blocks ending at four specified jumps; all natural takes are included. -/
@@ -156,14 +164,14 @@ private theorem four_strip (f : ℕ → ℤ) (P Q R G : List ℕ) (nx nw nv nu :
     (ht : h+((P++nx::Q++nw::R++nv::G++[nu]).map f).sum=0) :
     InStrip f C h (P++nx::Q++nw::R++nv::G++[nu]) := by
   simp only [List.map_append,List.sum_append,List.map_cons,List.sum_cons,
-    List.map_singleton,List.sum_singleton] at ht
+    List.map_nil,List.sum_nil,add_zero] at ht
   have endG : h+(P.map f).sum+f nx+(Q.map f).sum+f nw+(R.map f).sum+f nv+(G.map f).sum = -f nu := by omega
-  simp only [List.append_assoc]
-  apply inStrip_append (l := P) (r := nx::(Q++nw::R++nv::G++[nu]))
+  simp only [List.append_assoc,List.cons_append,List.nil_append]
+  apply inStrip_append (l := P) (r := nx::(Q++nw::(R++nv::(G++[nu]))))
     (positive_block_strip hp hh h1.1)
   change 0≤h+(P.map f).sum ∧ h+(P.map f).sum≤C ∧ _
   refine ⟨by have := inStrip_prefix (positive_block_strip hp hh h1.1) P.length; simpa using this.1, h1.1, ?_⟩
-  apply inStrip_append (l := Q) (r := nw::(R++nv::G++[nu]))
+  apply inStrip_append (l := Q) (r := nw::(R++nv::(G++[nu])))
     (positive_block_strip hq h1.2 h2.1)
   change 0≤h+(P.map f).sum+f nx+(Q.map f).sum ∧ _ ∧ _
   refine ⟨?_,h2.1,?_⟩
@@ -178,6 +186,6 @@ private theorem four_strip (f : ℕ → ℤ) (P Q R G : List ℕ) (nx nw nv nu :
   apply inStrip_append (l := G) (r := [nu])
     (positive_block_strip hg h3.2 (by omega))
   simp only [InStrip]
-  exact ⟨by omega,by omega,by simpa [endG] using h4.1,by simpa [endG] using h4.2⟩
+  exact ⟨by omega,by omega,by omega,by omega⟩
 
 end D5.S3.Combinatorics.Circle.FourNegative.AscendingD2
