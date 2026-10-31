@@ -32,7 +32,7 @@ instance finiteVertexOrbit {F : Type} [Finite F] (G : FlagGraph F) : Finite G.Ve
   rintro ⟨s, f, rfl⟩
   exact ⟨f, rfl⟩
 
-private theorem vertexOf_next {F : Type} (G : FlagGraph F) (f : F) :
+theorem vertexOf_next {F : Type} (G : FlagGraph F) (f : F) :
     G.vertexOf (G.next f) = G.vertexOf f := by
   apply Subtype.ext
   change G.orbitSet (G.next f) = G.orbitSet f
@@ -40,7 +40,7 @@ private theorem vertexOf_next {F : Type} (G : FlagGraph F) (f : F) :
   simp only [orbitSet, Set.mem_ofPred_eq, G.next_cube]
   tauto
 
-private theorem vertexOf_eq_iff {F : Type} (G : FlagGraph F) (f g : F) :
+theorem vertexOf_eq_iff {F : Type} (G : FlagGraph F) (f g : F) :
     G.vertexOf f = G.vertexOf g ↔
       g = f ∨ g = G.next f ∨ g = G.next (G.next f) := by
   constructor
