@@ -10,7 +10,7 @@ The natural-index enumeration is equivalent to the sigma family of Fin (actualDa
 
 **Theorem 1.1 (Complete Complex First Li Mass).**
 
-Lean statement: `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_complex_pairWeight_hasSum`
+$$\mathrm{HasSum}\left((\lambda \mathit{x0}:\mathrm{Nat}. \mathrm{cast}\left(\mathrm{ZeroDataMultiplicity}\left(\mathrm{actualData}, \mathit{x0}\right)\right) \cdot \frac{1}{\mathrm{ZeroDataZero}\left(\mathrm{actualData}, \mathit{x0}\right) \cdot \left(1 - \mathrm{ZeroDataZero}\left(\mathrm{actualData}, \mathit{x0}\right)\right)}), \mathrm{ofReal}\left(\mathrm{firstLiMass}\right), \mathrm{unconditional}\left(\mathrm{Nat}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_complex_pairWeight_hasSum` (`✓ std3`). ∎
 
@@ -22,7 +22,7 @@ The normalized xi resolvent gives the multiplicity-weighted complex first Li mas
 
 **Theorem 1.2 (First Li Mass Normalization).**
 
-Lean statement: `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.firstLiMass_split`
+$$\mathrm{firstLiMass} = 2 + \mathrm{eulerMascheroniConstant} - 2 \cdot \mathrm{log}\left(2\right) - \mathrm{log}\left(\mathrm{pi}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.firstLiMass_split` (`✓ std3`). ∎
 
@@ -34,7 +34,7 @@ The first Li mass equals 2 plus the Euler constant minus twice log 2 minus log p
 
 **Theorem 1.3 (Xi Logarithmic Derivative at Zero).**
 
-Lean statement: `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.zero_endpoint_logDeriv`
+$$\mathrm{logDeriv}\left(\mathrm{xiReading}, 0\right) = -\mathrm{ofReal}\left(\frac{\mathrm{firstLiMass}}{2}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.zero_endpoint_logDeriv` (`✓ std3`). ∎
 
