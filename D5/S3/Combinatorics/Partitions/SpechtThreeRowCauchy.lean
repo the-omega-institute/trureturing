@@ -40,7 +40,7 @@ private def deltaProduct {R : Type*} [CommRing R] (x : Fin 3 → R) : R :=
 
 /-- The cleared three-by-three Cauchy numerator, evaluated over any commutative ring. -/
 private theorem cauchy_numerator {R : Type*} [CommRing R] (x y : Fin 3 → R) :
-    Matrix.det (fun i : Fin 3 =>
+    Matrix.det (Matrix.of fun i : Fin 3 =>
       ![(1-x i*y 1)*(1-x i*y 2), (1-x i*y 0)*(1-x i*y 2),
         (1-x i*y 0)*(1-x i*y 1)]) = deltaProduct x * deltaProduct y := by
   rw [Matrix.det_fin_three]
@@ -123,7 +123,8 @@ private theorem edgeSeries_inverse (i j : Fin 3) :
         simp [edgeWeight, Finsupp.single_apply, ht, ht']
     by_cases hk : k = 0
     · subst k
-      simp [edgeSeries, edgeWeight, Finsupp.le_def]
+      simp [edgeSeries, edgeWeight]
+      exact ⟨0, by simp⟩
     · have hle : edgeWeight i j 1 ≤ edgeWeight i j k := by
         intro t
         rcases t with t | t
@@ -186,7 +187,8 @@ private theorem matching_product_coefficient (σ : Perm (Fin 3)) (u v : Fin 3 �
       rcases t with i | j
       · simp [L, edgeWeight, Finsupp.single_apply, d, doubleWeight]
       · rw [← σ.apply_symm_apply j]
-        simp [L, edgeWeight, Finsupp.single_apply, σ.injective.eq_iff, d, doubleWeight, hm]
+        simp [L, edgeWeight, Finsupp.single_apply, d, doubleWeight, hm]
+        simpa using (Equiv.sum_comp σ (fun x => if x = j then v x else 0))
     rw [Finset.sum_eq_single L]
     · simp [L, MvPowerSeries.coeff_apply, edgeSeries]
     · intro l hl hne
@@ -300,7 +302,7 @@ theorem cauchy_coefficient_delta (u v : Fin 3 → ℕ)
       if u = v then (1 : ℤ) else 0 := by
   classical
   have hid : doubleVandermonde * cauchyKernel =
-      Matrix.det (fun i j : Fin 3 => edgeSeries i j) := by
+      Matrix.det (Matrix.of fun i j : Fin 3 => edgeSeries i j) := by
     apply cauchy_inverse_identity
     intro i j
     have hm : (MvPowerSeries.X (Sum.inl i) : Series) * MvPowerSeries.X (Sum.inr j) =
@@ -447,7 +449,7 @@ private theorem signedContingencyGram_eq_kernelCoeff {n : ℕ} (r q : Fin 3 → 
         (doubleWeight (fun i => r i + staircase i) (fun j => q j + staircase j))
         (doubleVandermonde * cauchyKernel) := by
   rw [doubleVandermonde_expansion, sum_mul]
-  simp only [sum_mul, smul_mul_assoc, map_sum, map_smul, coeff_shifted_kernel r q hr,
+  simp only [sum_mul, smul_mul_assoc, map_sum, map_zsmul, coeff_shifted_kernel r q hr,
     smul_eq_mul, signedContingencyGram]
 
 /-- The finite signed contingency Gram is the Kronecker delta for decreasing
@@ -569,7 +571,7 @@ theorem evSpechtSums_eq_coefficients {n : ℕ} (lam : n.Partition) :
     spechtCharValue_eq_frobChar ![n,n,0] _ (by simp) (by simp) _ rfl
   constructor
   · simp only [signedEvSpechtSum, hrow]
-    simp
+    simp [Finset.sum_attach]
   · simp only [rectangleEvSpechtSum, hrect]
     simp
 
@@ -677,7 +679,7 @@ theorem ordinaryWeightedRectangleEv_evaluated (n : ℕ) (hn : 1 ≤ n) :
           simp
         rw [hc, Nat.cast_add, Nat.cast_one]
         exact cycle_term_cons p.val (e p) hk hp
-      _ = _ := by rw [A, Finset.mul_sum]
+      _ = _ := by dsimp only [A]; rw [Finset.mul_sum]
 
   have cycle_average_recursion (n : ℕ) :
       (n : ℚ) • A n =
@@ -706,7 +708,8 @@ theorem ordinaryWeightedRectangleEv_evaluated (n : ℕ) (hn : 1 ≤ n) :
     calc
       _ = ∑ p : Nat.Partition n, ∑ k ∈ Finset.Icc 1 n,
           ((k : ℚ) * p.parts.count k) • term p := by
-        rw [A, Finset.smul_sum]
+        dsimp only [A]
+        rw [Finset.smul_sum]
         apply Finset.sum_congr rfl
         intro p _
         rw [← Finset.sum_smul]
@@ -727,7 +730,8 @@ theorem ordinaryWeightedRectangleEv_evaluated (n : ℕ) (hn : 1 ≤ n) :
   have cycle_average_derivative :
       PowerSeries.derivative (PowerSeries.mk (A)) =
         (PowerSeries.mk fun k => cycleWeight (k + 1)) * PowerSeries.mk (A) := by
-    ext n
+    apply PowerSeries.ext
+    intro n
     rw [PowerSeries.coeff_derivative, PowerSeries.coeff_mk]
     rw [show A (n + 1) * (n + 1 : LaurentPolynomial ℚ) =
         ((n + 1 : ℕ) : ℚ) • A (n + 1) by simp [Algebra.smul_def, mul_comm]]
@@ -995,8 +999,8 @@ theorem ordinaryWeightedRectangleEv_evaluated (n : ℕ) (hn : 1 ≤ n) :
         (LaurentPolynomial.T (1 : ℤ)) (LaurentPolynomial.T (-1 : ℤ))
       simpa only [cycleWeight, one_pow, LaurentPolynomial.T_pow, mul_one, mul_neg_one,
         add_comm, add_left_comm, Nat.cast_add, Nat.cast_one] using h
-    · simp only [coeff_mk, cycle_average_zero, map_mul]
-      simp [← coeff_zero_eq_constantCoeff, invOneSubPow]
+    · simp only [coeff_mk, cycle_average_zero]
+      simp [coeff_mul, coeff_geometricSquare]
 
   have geometricSquare_one :
       (rescale (1 : (LaurentPolynomial ℚ)) (invOneSubPow _ 2).val) =
@@ -1127,7 +1131,8 @@ theorem ordinaryWeightedRectangleEv_evaluated (n : ℕ) (hn : 1 ≤ n) :
     simp only [A, Finset.mul_sum, map_sum]
     apply Finset.sum_congr rfl
     intro lam _
-    rw [term, mul_smul_comm, map_smul, character_constantTerm n hn lam]
+    dsimp only [term]
+    rw [mul_smul_comm, map_smul, character_constantTerm n hn lam]
     rfl
   rw [haverage]
   have he := congrArg (coeff n) weighted_constant_term_series
