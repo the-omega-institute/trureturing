@@ -164,9 +164,8 @@ private lemma even_signs_assignment {n : ℕ} (γ : Fin n → Bool) (hγ : ∑ i
         simpa only [Fin.eta] using finRotate_of_lt hi
       have hfilter : univ.filter (fun j : Fin (k + 1) => j.val < i.val + 1) =
           insert i (univ.filter (fun j : Fin (k + 1) => j.val < i.val)) := by
-        ext j
-        simp only [mem_filter, mem_univ, true_and, mem_insert, Fin.ext_iff]
-        omega
+        simpa only [Nat.lt_succ_iff, ← Fin.le_iff_val_le_val, ← Fin.lt_def,
+          filter_ge_eq_Iic, filter_gt_eq_Iio] using (Iio_insert i).symm
       have hnmem : i ∉ univ.filter (fun j : Fin (k + 1) => j.val < i.val) := by simp
       rw [hrot]
       change Bool.xor (s i) (∑ j ∈ univ.filter (fun j => j.val < i.val + 1), γ j) = γ i
@@ -178,17 +177,9 @@ private lemma even_signs_assignment {n : ℕ} (γ : Fin n → Bool) (hγ : ∑ i
       rw [finRotate_last]
       have hfilter : univ = insert (Fin.last k)
           (univ.filter (fun j : Fin (k + 1) => j.val < k)) := by
-        ext j
-        constructor
-        · intro _
-          by_cases hj : j.val = k
-          · exact mem_insert.mpr (Or.inl (Fin.ext hj))
-          · apply mem_insert.mpr
-            right
-            exact mem_filter.mpr ⟨mem_univ _, lt_of_le_of_ne
-              (Nat.le_of_lt_succ j.isLt) hj⟩
-        · intro _
-          exact mem_univ _
+        change univ = insert (Fin.last k) (univ.filter fun j => j < Fin.last k)
+        rw [filter_gt_eq_Iio, Iio_insert]
+        exact Iic_top.symm
       have hnmem : Fin.last k ∉ univ.filter (fun j : Fin (k + 1) => j.val < k) := by simp
       have ht := hγ
       rw [hfilter, sum_insert hnmem] at ht
@@ -254,22 +245,16 @@ private lemma midpoint_noncontextual {n : ℕ}
     cases he : (∑ i, δ i) with
     | false => rw [he] at h; norm_num at h
     | true => rfl
-  have hex : ∃ j, γ j ≠ η j := by
-    by_contra h
-    push Not at h
-    exact hne (funext h)
+  have hex : ∃ j, γ j ≠ η j := Function.ne_iff.mp hne
   obtain ⟨j, hj⟩ := hex
   let δ := Function.update γ j (!(γ j))
   let ε := Function.update η j (!(η j))
   have hflip (ζ : Fin n → Bool) (hζ : ∑ i, ζ i = true) :
       ∑ i, Function.update ζ j (!(ζ j)) i = false := by
-    have hold : (∑ i ∈ univ \ {j}, ζ i) + ζ j = true := by
-      simpa only [sum_singleton, hζ] using
-        (sum_sdiff (f := ζ) (by simp : ({j} : Finset (Fin n)) ⊆ univ))
-    rw [sum_update_of_mem (mem_univ j)]
-    cases h₁ : ζ j <;> cases h₂ : (∑ i ∈ univ \ {j}, ζ i) <;>
-      simp only [h₁, h₂, Bool.add_eq_xor, Bool.false_xor, Bool.true_xor,
-        Bool.not_true, Bool.not_false, Bool.false_eq_true, Bool.true_eq_false] at hold ⊢
+    apply Bool.eq_false_of_not_eq_true
+    rw [← hζ, sum_eq_sum_iff_single (mem_univ j)
+      (fun i _ hij => Function.update_of_ne hij _ _)]
+    simp
   have hδ := even_vertex_noncontextual δ (hflip γ (hsum γ hγ))
   have hε := even_vertex_noncontextual ε (hflip η (hsum η hη))
   have heq : (1 / 2 : ℝ) • vertex γ + (1 / 2 : ℝ) • vertex η =
@@ -420,9 +405,7 @@ private lemma slice_dominance {n : ℕ}
         change (∑ b, m⁻¹ * p x i a b c) = ∑ d, m⁻¹ * p x (finRotate n i) a c d
         rw [← mul_sum, ← mul_sum, hp.2.2.1 x i a c]
     obtain ⟨v, hv, hval, hdom⟩ := generator_dominance r (hgen r hr) t ht γ hmax hother
-    have hqr : q = m • r := by
-      dsimp only [r]
-      rw [smul_smul, mul_inv_cancel₀ hm0, one_smul]
+    have hqr : q = m • r := (smul_inv_smul₀ hm0 q).symm
     refine ⟨m * v, mul_nonneg hm hv, ?_, ?_⟩
     · change t.1 q + m * t.2 ≤ m * v
       rw [hqr, map_smul]

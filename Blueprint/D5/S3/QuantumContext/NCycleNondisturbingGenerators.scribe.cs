@@ -44,12 +44,16 @@ internal sealed class NCycleNondisturbingGeneratorsDocument : IScribeDocumentDef
                     Paragraph(Text(
                         "Decompose this circulation into a finite convex combination of normalized "
                             + "simple closed walks. For a positive-weight term, every reverse-edge "
-                            + "multiplicity is zero: the original reverse coefficient is zero and "
-                            + "each term of its nonnegative decomposition must vanish.")),
+                            + "multiplicity is zero by the positive_coefficient_forward theorem in LayeredFlow "
+                            + "and the edge-multiplicity membership criterion: the original reverse "
+                            + "coefficient is zero and every edge of a positive-weight circuit "
+                            + "has forward orientation.")),
                     Paragraph(Text(
                         "A simple closed walk has at most one departure from each vertex. To see "
                             + "this, count departures by counting occurrences of the vertex along "
-                            + "the walk, with the terminal occurrence removed. The list before "
+                            + "the walk, with the terminal occurrence removed, using the "
+                            + "outgoingMultiplicity_edgeMultiplicity_concat theorem in SupplierGraph. "
+                            + "The list before "
                             + "the terminal edge has no repeated vertex; a repetition would give "
                             + "a forbidden proper positive closed subwalk. Thus each row of the "
                             + "two-by-two edge-count table has sum at most one.")),
@@ -57,8 +61,9 @@ internal sealed class NCycleNondisturbingGeneratorsDocument : IScribeDocumentDef
                         "For a walk with no reverse edges, balance at (finRotate n i,c) equates "
                             + "the incoming column sum from layer i to the outgoing row sum in "
                             + "the next layer. The total edge multiplicity per layer is consequently "
-                            + "constant, say m, and the walk length is n m. The positive length "
-                            + "and the two row bounds imply that m is either one or two.")),
+                            + "constant, say m, and the walk length is n m. The supplier theorem "
+                            + "IsSimpleCycle.length_le_card bounds this length by 2n; together "
+                            + "with positive length, this implies that m is either one or two.")),
                     Paragraph(Text(
                         "When m = 1, exactly one outcome s(i) has a departure in each layer. "
                             + "The next layer's row sums fix the current layer's column sums, so "

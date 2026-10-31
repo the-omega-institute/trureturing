@@ -265,7 +265,7 @@ private theorem forwardWalk_multiplicity {V E : Type*} [DecidableEq E]
       Prod.mk.injEq, Bool.false_eq_true, Bool.true_eq_false, and_false,
       and_true, if_false, add_zero]
 
-private theorem positive_coefficient_forward {V E ι : Type*}
+theorem positive_coefficient_forward {V E ι : Type*}
     [Fintype E] [DecidableEq E] [Fintype ι]
     (G : EdgeGraph V E) (coefficient : SignedEdge E → ℝ)
     (weight : ι → ℝ) (base : ι → V)

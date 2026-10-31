@@ -6,7 +6,7 @@
    utility: none
    digest: Binary cyclic nondisturbing laws are mixtures of deterministic and parity laws. -/
 
-import D5.S3.Combinatorics.Graph.LayeredCirculation.PositiveCircuitSupplier
+import D5.S3.Combinatorics.Graph.LayeredCirculation.LayeredFlow
 
 /-! The normalized circulation supplier applied to the two-outcome layered cycle graph. -/
 
@@ -35,14 +35,14 @@ private lemma departures_visited {v e : Type} [Fintype e] [DecidableEq e] [Decid
       w.visited.count u := by
   induction w with
   | nil =>
-    dsimp only [EdgeGraph.Walk.visited]
-    simp [EdgeGraph.outgoingMultiplicity, EdgeGraph.Walk.edgeMultiplicity,
-      List.count_singleton]
+    change (∑ edge with g.source edge = u, 0) + (if a = u then 1 else 0) = [a].count u
+    simp [List.count_singleton, beq_iff_eq]
   | @concat b w e he ih =>
-    dsimp only [EdgeGraph.Walk.visited]
-    simp [EdgeGraph.outgoingMultiplicity, EdgeGraph.Walk.edgeMultiplicity,
-      sum_add_distrib, List.count_singleton] at ih ⊢
-    simp only [he] at *
+    rw [EdgeGraph.Walk.outgoingMultiplicity_edgeMultiplicity_concat]
+    change (g.outgoingMultiplicity w.edgeMultiplicity u + (if g.source e = u then 1 else 0)) +
+      (if g.target e = u then 1 else 0) = (w.visited ++ [g.target e]).count u
+    conv_rhs => simp only [List.count_append, List.count_singleton, beq_iff_eq]
+    rw [he]
     omega
 
 private lemma simple_departures_le_one {v e : Type} [Fintype e] [DecidableEq e]
@@ -61,10 +61,8 @@ private lemma simple_departures_le_one {v e : Type} [Fintype e] [DecidableEq e]
       · simp
     have hi := departures_visited initial u
     have hcount : initial.visited.count u ≤ 1 := (List.nodup_iff_count_le_one.mp hinit) u
-    simp [EdgeGraph.outgoingMultiplicity, EdgeGraph.Walk.edgeMultiplicity,
-      sum_add_distrib] at hi ⊢
-    rw [legal]
-    omega
+    rw [EdgeGraph.Walk.outgoingMultiplicity_edgeMultiplicity_concat, legal]
+    exact hi.le.trans hcount
 
 private lemma circuit_generator {n : ℕ} (hn : 0 < n) {a : Fin n × Bool}
     (w : (signedGraph (graph n)).Walk a a) (hw : IsSimpleCycle w)
@@ -81,7 +79,9 @@ private lemma circuit_generator {n : ℕ} (hn : 0 < n) {a : Fin n × Bool}
     have hout (i : Fin (k + 1)) (b : Bool) :
         (signedGraph (graph (k + 1))).outgoingMultiplicity w.edgeMultiplicity (i, b) =
           ∑ c, count i b c := by
-      simp only [EdgeGraph.outgoingMultiplicity, sum_filter, Fintype.sum_prod_type,
+      change (∑ e with (signedGraph (graph (k + 1))).source e = (i, b),
+        w.edgeMultiplicity e) = ∑ c, count i b c
+      simp only [sum_filter, Fintype.sum_prod_type,
         Fintype.sum_bool, hzero, ite_self, zero_add]
       dsimp only [signedGraph, graph]
       cases b <;> simp [Prod.mk.injEq, ite_and, count, sum_add_distrib] <;> rfl
@@ -118,10 +118,10 @@ private lemma circuit_generator {n : ℕ} (hn : 0 < n) {a : Fin n × Bool}
       simp_rw [hmass] at h
       simpa only [sum_const, card_univ, Fintype.card_fin, smul_eq_mul] using h.symm
     have hupper : mass 0 ≤ 2 := by
-      have h₀ := hrow 0 false
-      have h₁ := hrow 0 true
-      simp only [mass, Fintype.sum_bool] at h₀ h₁ ⊢
-      omega
+      have h := hw.length_le_card
+      rw [hlength] at h
+      simp only [Fintype.card_prod, Fintype.card_fin, Fintype.card_bool] at h
+      exact le_of_mul_le_mul_left h (Nat.succ_pos k)
     have hpositive : 0 < mass 0 := by
       have hp := hw.1
       rw [hlength] at hp
@@ -243,15 +243,13 @@ theorem decomposition (n : ℕ) (hn : 0 < n) (r : Fin n → Bool → Bool → �
   have hq (j : ι) : q j ∈ allGenerators n := by
     by_cases hj : 0 < weight j
     · have hz (e : Fin n × Bool × Bool) : (cycle j).edgeMultiplicity (e, true) = 0 := by
-        have hs : (∑ k, weight k * circuitCoefficient (cycle k) (e, true)) = 0 := by
-          simpa only [coefficient, if_true] using (hrep (e, true)).symm
-        have hterm := (sum_eq_zero_iff_of_nonneg (fun k _ => mul_nonneg (hweight k)
-          (div_nonneg (Nat.cast_nonneg _) (Nat.cast_nonneg _)))).mp hs j (mem_univ j)
-        have hc := (mul_eq_zero.mp hterm).resolve_left hj.ne'
-        have hlen : ((cycle j).length : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (hsimple j).1.ne'
-        have he := (div_eq_iff hlen).mp hc
-        exact_mod_cast (by simpa only [zero_mul] using he :
-          ((cycle j).edgeMultiplicity (e, true) : ℝ) = 0)
+        apply Nat.eq_zero_of_not_pos
+        intro he
+        have hforward :=
+          D5.S3.Combinatorics.Graph.LayeredCirculation.LocalOptimum.positive_coefficient_forward
+            (graph n) coefficient weight base cycle hweight hsimple hrep (fun _ => rfl) j hj
+            (e, true) (((cycle j).edgeMultiplicity_pos_iff_mem_edges _).mp he)
+        exact Bool.noConfusion hforward
       simpa only [q, if_pos hj] using circuit_generator hn (cycle j) (hsimple j) hz
     · change (if 0 < weight j then _ else _) ∈ _
       rw [if_neg hj]

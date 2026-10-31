@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.LayeredCirculation;
 
@@ -138,6 +140,17 @@ internal sealed class LayeredFlowDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("Exact source telescope, in the module declared generic contexts: theorem walk_law_score {n : ℕ} [NeZero n] (f : ZMod n → Fin 5 → ℝ) {a : ZMod n × Fin 3} (w : (layeredGraph n).Walk a a) : localScore f (walkLaw w) = Maths.MaxPlusPotential.walkWeight (fun e => f e.1 e.2) w / layerCount w 0"))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("positive-coefficient-forward"),
+                DeclarationHandle.Create(
+                    "D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.positive_coefficient_forward"),
+                H("Positive coefficients use only forward edges"),
+                StatementSource.FromAuthor(Disp(PositiveCoefficientForwardFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "In a nonnegative simple-circuit decomposition whose reverse coefficients vanish, "
+                        + "every edge of a positive-weight circuit has forward orientation."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("simple-cycle-winding"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.simple_cycle_winding"),
                 H("simple cycle winding"),
@@ -209,4 +222,77 @@ internal sealed class LayeredFlowDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Exact source telescope, in the module declared generic contexts: theorem local_law_compact {n : ℕ} [NeZero n] : IsCompact {p : ZMod n → Fin 5 → ℝ | IsLocalLaw p}"))),
                 DescribeRole.Theorem))));
+
+    private static Formula PositiveCoefficientForwardFormula()
+    {
+        Formula real = Seq(Mathbb, Grp(X("R")));
+        Formula signedEdge = At(Q("Maths", "AdditiveTransport", "SignedEdge"), X("E"));
+        Formula signedGraph = At(Q("Maths", "AdditiveTransport", "signedGraph"), X("G"));
+        Formula ci = At(X("cycle"), X("i"));
+        Formula edges = At(Q("Maths", "EdgeGraph", "Walk", "edges"), ci);
+        Formula forward = Equal(At(Q("Prod", "snd"), X("e")), Q("Bool", "false"));
+        Formula conclusion = All("e", signedEdge,
+            Imp(new Formula.Relation(X("e"), FormulaRelationOperator.MemberOf, edges), forward));
+        Formula positive = new Formula.Relation(Typed(D(0), real),
+            FormulaRelationOperator.LessThan, At(X("weight"), X("i")));
+        Formula zeroReverse = All("e", X("E"), Equal(
+            At(X("coefficient"), At(Q("Prod", "mk"), X("e"), Q("Bool", "true"))),
+            Typed(D(0), real)));
+        Formula summand = new Formula.Binary(At(X("weight"), X("j")),
+            FormulaBinaryOperator.Multiply,
+            At(Q("Maths", "AdditiveTransport", "circuitCoefficient"),
+                At(X("cycle"), X("j")), X("e")));
+        Formula sum = At(Q("Finset", "sum"),
+            Typed(Q("Finset", "univ"), At(Q("Finset"), X("J"))),
+            Seq(LambdaLower, Sp, Typed(X("j"), X("J")), Sp, Mapsto, Sp, Par(summand)));
+        Formula representation = All("e", signedEdge, Equal(At(X("coefficient"), X("e")), sum));
+        Formula simple = All("i", X("J"),
+            At(Q("Maths", "AdditiveTransport", "IsSimpleCycle"), ci));
+        Formula nonnegative = All("i", X("J"), new Formula.Relation(Typed(D(0), real),
+            FormulaRelationOperator.LessThanOrEqual, At(X("weight"), X("i"))));
+        Formula walks = All("i", X("J"), At(Q("Maths", "EdgeGraph", "Walk"),
+            signedGraph, At(X("base"), X("i")), At(X("base"), X("i"))));
+        Formula body = Imp(nonnegative, Imp(simple, Imp(representation,
+            Imp(zeroReverse, All("i", X("J"), Imp(positive, conclusion))))));
+        (string Name, Formula Type)[] binders =
+        [
+            ("V", Q("Type")), ("E", Q("Type")), ("J", Q("Type")),
+            ("", At(Q("Fintype"), X("E"))),
+            ("", At(Q("DecidableEq"), X("E"))),
+            ("", At(Q("Fintype"), X("J"))),
+            ("G", At(Q("Maths", "EdgeGraph"), X("V"), X("E"))),
+            ("coefficient", Arrow(signedEdge, real)),
+            ("weight", Arrow(X("J"), real)), ("base", Arrow(X("J"), X("V"))),
+            ("cycle", walks)
+        ];
+        for (int i = binders.Length - 1; i >= 0; i--)
+            body = binders[i].Name.Length == 0
+                ? Seq(OpenBracket, binders[i].Type, CloseBracket, Sp, body)
+                : All(binders[i].Name, binders[i].Type, body);
+        return body;
+    }
+
+    private static Formula X(string name) => F.Id(name);
+    private static Formula Q(params string[] names)
+    {
+        var parts = new System.Collections.Generic.List<Formula>();
+        foreach (string name in names)
+        {
+            if (parts.Count > 0) parts.Add(Dot);
+            parts.Add(X(name));
+        }
+        return Seq(Operatorname, Grp(Seq([.. parts])));
+    }
+    private static Formula At(Formula function, params Formula[] args) =>
+        new Formula.Apply(function, [.. args]);
+    private static Formula Par(Formula value) => Seq(Left, Open, value, Right, Close);
+    private static Formula Typed(Formula value, Formula type) => Par(Seq(value, Colon, Sp, type));
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Typed(X(name), type), Comma, Sp, Par(body));
+    private static Formula Arrow(Formula source, Formula target) =>
+        new Formula.TypeArrow(Par(source), Par(target));
+    private static Formula Equal(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula Imp(Formula left, Formula right) =>
+        new Formula.Logic(Par(left), FormulaLogicOperator.Implies, Par(right));
 }
