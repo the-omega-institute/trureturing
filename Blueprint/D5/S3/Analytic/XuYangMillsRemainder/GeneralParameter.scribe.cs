@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.XuYangMillsRemainder;
 internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The original general-parameter Mills target, regularity, Gamma coefficients, sharp origin obstruction, strict remainder moment bounds, closed kernel ranges and absolute Laplace control.",
+        "The original general-parameter Mills classification, including both sharp global-sign and complete-monotonicity equivalence chains with their closed endpoints.",
         H("General-parameter Mills remainder classification"),
         Blocks(
             Describe.Lean(
@@ -32,14 +32,14 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                         + "equivalent to complete monotonicity and to a <= theta (n-2); "
                         + "the negative global-sign predicate is equivalent to complete "
                         + "monotonicity of -F and to a >= theta (n-1), with both endpoints "
-                        + "included. The proposition is retained as the exact source target.")),
+                        + "included. The proposition is the exact original source target.")),
                     Paragraph(Text(
                         "The proposition states two separate equivalences in each chain: "
                         + "global sign iff complete monotonicity, and complete monotonicity iff "
-                        + "the sharp parameter bound. It is a target definition, not an asserted theorem. "
-                        + "the exact Laplace representation and the positive sufficiency branch "
-                        + "are now proved in the continuation; the infinity asymptotic, sharp negative "
-                        + "necessity and complete two-chain theorem remain open."))),
+                        + "the sharp parameter bound. The theorem result proves this entire proposition "
+                        + "using the original Gaussian Mills ratio, Gamma coefficients and finite subtraction. "
+                        + "Complete monotonicity includes C-infinity regularity and every ordinary "
+                        + "derivative order, including zero."))),
                 DescribeRole.Definition),
             Proof("regularity-and-origin", "regularity_and_origin",
                 "Gaussian regularity and the original origin asymptotic",
@@ -60,9 +60,8 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
             Proof("negative-origin-obstruction", "negative_cm_necessary",
                 "Origin obstruction for the negative branch",
                 "For every n >= 2 and real a, if -F n a is completely monotone, or merely globally nonnegative, "
-                + "then a >= theta (n-2). This is the obstruction at the origin; "
-                + "it does not establish the required infinity obstruction u (n+1) a (a-2) >= 0 "
-                + "or the sharp negative-branch threshold theta (n-1)."),
+                + "then a >= theta (n-2). The infinity limit supplies the sharper bound "
+                + "a >= theta (n-1) in negative_sign_sharp_necessary."),
             Proof("remainder-upper-multiplier", "exp_remainder_ratio_strict_anti",
                 "Strictly decreasing upper normalized remainder",
                 "Write E_k(y) = (-1)^k (exp(-y) - sum_{j<k} (-y)^j/j!). "
@@ -97,8 +96,8 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                 + "is strictly positive when a <= theta_r and strictly negative when a >= theta_(r+1). "
                 + "Its inner integral is exactly 2 M2 times the difference between the inner threshold "
                 + "and a. The strict inner bounds include both parameter endpoints. "
-                + "This proves the kernel sign ranges. The continuation below proves equality of its "
-                + "Laplace integral with the original F and uses it for both sufficiency branches."),
+                + "The exact equality of its Laplace integral with the original F "
+                + "gives both complete-monotonicity sufficiency branches."),
             Proof("original-coefficient-identity", "coefficient_identity",
                 "Exact general-parameter Gamma coefficient correspondence",
                 "For every r >= 0 and real a, the original u_(r+2)(a,a-2) equals "
@@ -153,9 +152,7 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                 + "F_(r+2,a) equals the signed-kernel moment plus the mth derivative of "
                 + "(-1)^(r+2) [Y_(a,a-2)-(a-1)-Laplace(G_a)]. "
                 + "The finite-subtraction identity and smoothness justify this equality on x>0. "
-                + "The Gaussian identity is discharged in the continuation below. The remaining open "
-                + "obligations are the infinity asymptotic, sharp negative necessity and assembly of "
-                + "the complete two-chain classification."),
+                + "The Gaussian identity removes this defect exactly, yielding actual_f_iterated_deriv."),
             Proof("gaussian-kernel-identity", "gaussian_kernel_identity",
                 "General-parameter Gaussian convolution kernel identity",
                 "For every real a and t, the source kernel G_a(t) equals "
@@ -190,8 +187,36 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
             Proof("negative-cm-sufficiency", "negative_cm_sufficiency",
                 "Negative complete-monotonicity sufficiency with the closed endpoint",
                 "The negative closed kernel range, exact F Laplace representation and all-order derivative "
-                + "formula prove complete monotonicity of -F whenever a >= theta_(n-1), including equality. "
-                + "The converse still requires the infinity asymptotic."))));
+                + "formula prove complete monotonicity of -F whenever a >= theta_(n-1), including equality."),
+            Proof("actual-f-bound", "actual_f_bound",
+                "A quantitative bound for every original remainder",
+                "For every r>=0, real a and x>0, the absolute value of F_(r+2,a)(x) is at most "
+                + "(abs(1-2a)+1) (2r+5)! / x^(2r+6). Integral norm comparison applies the "
+                + "signed-kernel polynomial bound and the exact original exponential moment. "
+                + "Consequently x^(2r+4) F_(r+2,a)(x) tends to zero at infinity, with an "
+                + "absolute bound equal to a fixed constant times x^(-2)."),
+            Proof("infinity-endpoint", "infinity_endpoint",
+                "The original infinity asymptotic with its exact Gamma coefficient",
+                "For every n>=2 and real a, x^(2n+2) F_(n,a)(x) tends to "
+                + "-u_(n+1)(a,a-2) at infinity. The exact finite Laplace recurrence gives "
+                + "F_(n+1,a)=-u_(n+1)/x^(2n+2)-F_(n,a). The quantitative next-remainder "
+                + "bound makes x^(2n+2) F_(n+1,a) tend to zero. This proves the source's "
+                + "limit (2.12) in the original normalization."),
+            Proof("negative-sharp-obstruction", "negative_sign_sharp_necessary",
+                "Sharp negative necessity already from the global sign",
+                "If -F_(n,a) is globally nonnegative on x>0, its rescaled infinity limit "
+                + "is nonnegative. Thus u_(n+1)(a,a-2)>=0, and the exact coefficient "
+                + "identity with positive B_(n-1) gives a>=theta_(n-1), including equality."),
+            Proof("complete-classification", "result",
+                "Complete original Theorem 2.1",
+                "For every integer n>=2 and every real a, global nonnegativity of the original "
+                + "F_(n,a) is equivalent to its complete monotonicity and to a<=theta_(n-2). "
+                + "Global nonnegativity of -F_(n,a) is equivalent to complete monotonicity of "
+                + "-F_(n,a) and to a>=theta_(n-1). Both endpoints are included. "
+                + "The positive necessity comes from the origin limit; the negative necessity "
+                + "comes from the infinity limit. The exact signed Laplace formula supplies "
+                + "both sufficient conditions and every ordinary derivative sign, including order zero. "
+                + "The original Mills ratio, Gamma coefficients, D_n and integral thresholds are retained."))));
 
     private static DocumentBlock Proof(string id, string name, string title, string narrative) =>
         Describe.Lean(

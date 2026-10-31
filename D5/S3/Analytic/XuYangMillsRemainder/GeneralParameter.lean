@@ -4,7 +4,7 @@
    mirror-E: none
    anchors: [D5/S3/Analytic/XuYangMillsRemainder/Result]
    utility: none
-   digest: Original Mills coefficients, signed Laplace moments and exact subtraction. -/
+   digest: Complete original Mills sign and complete-monotonicity classification. -/
 
 /-
 The general-parameter Mills definitions retain the original normalization from
@@ -12,7 +12,8 @@ The general-parameter Mills definitions retain the original normalization from
 The Gamma coefficient correspondence identifies the sharp positive-branch
 origin obstruction. Absolute signed-kernel moments and finite subtraction give
 an exact Gaussian defect in every derivative of the original F. The Gaussian
-Laplace identity, infinity asymptotic and complete classification remain open.
+Laplace identity and the original finite recurrence give the infinity
+asymptotic and both complete classification chains.
 -/
 
 import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
@@ -1372,5 +1373,101 @@ private theorem positive_chain (n : ℕ) (hn : 2 ≤ n) (a : ℝ) :
   · constructor
     · exact positive_cm_necessary n hn a
     · exact positive_cm_sufficiency n hn a
+
+/-! A quantitative next-remainder bound gives the original infinity limit. -/
+
+private theorem actual_f_bound (r : ℕ) (a : ℝ) {x : ℝ} (hx : 0 < x) :
+    ‖F (r + 2) a x‖ ≤
+      (|1 - 2 * a| + 1) * (2 * r + 5).factorial / x ^ (2 * r + 6) := by
+  have hm := TwoScaleEndpointMoments.exponential_moment x hx (2 * r + 5)
+  simp only [← neg_mul] at hm
+  rw [actual_f_laplace r a hx]
+  calc
+    _ ≤ ∫ t in Ioi (0 : ℝ),
+        (|1 - 2 * a| + 1) * (t ^ (2 * r + 5) * exp (-x * t)) := by
+      apply norm_integral_le_of_norm_le (hm.1.const_mul _)
+      filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+      rw [norm_mul, Real.norm_of_nonneg (exp_nonneg _)]
+      calc
+        _ ≤ exp (-x * t) * ((|1 - 2 * a| + 1) * t ^ (2 * r + 5)) :=
+          mul_le_mul_of_nonneg_left (kernel_polynomial_bound r a ht.le) (exp_nonneg _)
+        _ = _ := by ring
+    _ = _ := by
+      rw [integral_const_mul, hm.2]
+      simp only [show 2 * r + 5 + 1 = 2 * r + 6 by omega]
+      ring
+
+private theorem rescaled_f_vanishes_at_infinity (r : ℕ) (a : ℝ) :
+    Tendsto (fun x : ℝ => x ^ (2 * r + 4) * F (r + 2) a x) atTop (𝓝 0) := by
+  have hb : ∀ᶠ x : ℝ in atTop,
+      ‖x ^ (2 * r + 4) * F (r + 2) a x‖ ≤
+        ((|1 - 2 * a| + 1) * (2 * r + 5).factorial) * (x⁻¹) ^ 2 := by
+    filter_upwards [eventually_gt_atTop (0 : ℝ)] with x hx
+    rw [norm_mul, Real.norm_of_nonneg (pow_nonneg hx.le _)]
+    calc
+      _ ≤ x ^ (2 * r + 4) *
+          ((|1 - 2 * a| + 1) * (2 * r + 5).factorial / x ^ (2 * r + 6)) :=
+        mul_le_mul_of_nonneg_left (actual_f_bound r a hx) (pow_nonneg hx.le _)
+      _ = _ := by
+        rw [show 2 * r + 6 = (2 * r + 4) + 2 by omega, pow_add]
+        field_simp
+        simp only [pow_add]
+  apply squeeze_zero_norm' hb
+  simpa using (tendsto_const_nhds (x :=
+    (|1 - 2 * a| + 1) * ((2 * r + 5).factorial : ℝ))).mul
+      ((tendsto_inv_atTop_zero : Tendsto (fun x : ℝ => x⁻¹) atTop (𝓝 0)).pow 2)
+
+private theorem infinity_endpoint (n : ℕ) (hn : 2 ≤ n) (a : ℝ) :
+    Tendsto (fun x : ℝ => x ^ (2 * n + 2) * F n a x) atTop
+      (𝓝 (-u (n + 1) a (a - 2))) := by
+  let r := n - 2
+  have hnr : n = r + 2 := by dsimp [r]; omega
+  rw [hnr]
+  have hl := (tendsto_const_nhds (x := -u (r + 3) a (a - 2))).sub
+    (rescaled_f_vanishes_at_infinity (r + 1) a)
+  simp only [sub_zero] at hl
+  apply hl.congr'
+  filter_upwards [eventually_gt_atTop (0 : ℝ)] with x hx
+  have hr := kernel_laplace_rec r a hx
+  rw [← actual_f_laplace (r + 1) a hx, ← actual_f_laplace r a hx] at hr
+  have hp : x ^ (2 * r + 6) ≠ 0 := pow_ne_zero _ hx.ne'
+  have he : x ^ (2 * r + 6) * F (r + 2) a x =
+      -u (r + 3) a (a - 2) - x ^ (2 * r + 6) * F (r + 3) a x := by
+    have hh := (eq_div_iff hp).mp (show F (r + 2) a x + F (r + 3) a x =
+        -u (r + 3) a (a - 2) / x ^ (2 * r + 6) by
+      simpa only [show r + 1 + 2 = r + 3 by omega] using (by linarith :
+        F (r + 2) a x + F (r + 1 + 2) a x =
+          -u (r + 3) a (a - 2) / x ^ (2 * r + 6)))
+    nlinarith [hh]
+  simpa only [show 2 * (r + 2) + 2 = 2 * r + 6 by omega,
+    show 2 * (r + 1) + 4 = 2 * r + 6 by omega,
+    show r + 1 + 2 = r + 3 by omega, show r + 2 + 1 = r + 3 by omega] using he.symm
+
+private theorem negative_sign_sharp_necessary (n : ℕ) (hn : 2 ≤ n) (a : ℝ)
+    (h : globalNonpositive n a) : theta (n - 1) ≤ a := by
+  have hl := (infinity_endpoint n hn a).neg
+  have hev : ∀ᶠ x : ℝ in atTop, -(x ^ (2 * n + 2) * F n a x) ∈ Ici (0 : ℝ) := by
+    filter_upwards [eventually_gt_atTop (0 : ℝ)] with x hx
+    change 0 ≤ -(x ^ (2 * n + 2) * F n a x)
+    rw [neg_mul_eq_mul_neg]
+    exact mul_nonneg (pow_nonneg hx.le _) (h x hx)
+  have hu : 0 ≤ u (n + 1) a (a - 2) := by
+    simpa only [neg_neg, mem_Ici] using isClosed_Ici.mem_of_tendsto hl hev
+  have hs := (coefficient_threshold_signs (n - 1) a).2
+  rw [show n - 1 + 2 = n + 1 by omega] at hs
+  exact hs.mp hu
+
+private theorem negative_chain (n : ℕ) (hn : 2 ≤ n) (a : ℝ) :
+    (globalNonpositive n a ↔ CompletelyMonotoneOn (fun x => -F n a x)) ∧
+      (CompletelyMonotoneOn (fun x => -F n a x) ↔ theta (n - 1) ≤ a) := by
+  constructor
+  · exact ⟨fun h => negative_cm_sufficiency n hn a
+      (negative_sign_sharp_necessary n hn a h), neg_cm_sign_projection n a⟩
+  · exact ⟨fun h => negative_sign_sharp_necessary n hn a
+      (neg_cm_sign_projection n a h), negative_cm_sufficiency n hn a⟩
+
+theorem result : theorem21 := by
+  intro n hn a
+  exact ⟨positive_chain n hn a, negative_chain n hn a⟩
 
 end D5.S3.Analytic.XuYangMillsRemainder.GeneralParameter
