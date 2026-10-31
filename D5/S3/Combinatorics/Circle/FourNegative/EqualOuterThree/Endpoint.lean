@@ -9,6 +9,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.EqualOuterThree.Upper
 import D5.S3.Combinatorics.Circle.FourNegative.EqualOuterThree.Lower
 import D5.S3.Combinatorics.Circle.FourNegative.BalancedGaps.Endpoint
 
+/-! Upper, lower and balanced constructions exhaust every independent pair of gaps. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.EqualOuterThree
@@ -43,16 +44,12 @@ theorem actualSource_equal_outer_three_joint_lift (s b : ℕ) (hs : 2≤s) (hb :
     obtain ⟨sigma,hold,cut,hcut,hnew⟩ := hupper
     exact ⟨sigma,cut,hcut,hold,hnew⟩
   · by_cases hl : b+2≤s
-    · obtain ⟨sigma,hold,hnew⟩ := actual_lower s b hb hl
-      have he : s+s+b+s=3*s+b := by omega
-      exact (by simpa only [he] using
-        (show ∃ sigma : List (Fin (s+s+b+s)), ∃ cut : ℕ, cut≤s+s+b+s ∧
-          OriginalOrder (s+s+b+s) (1+2^s+2^(s+b)+2^(2*s+b)) sigma ∧
-          OriginalOrder (s+s+b+s+1) (2*(1+2^s+2^(s+b)+2^(2*s+b)))
-            (earWord (s+s+b+s) sigma cut) from ⟨sigma,0,by omega,hold,hnew⟩))
+    · rw [← show s+s+b+s=3*s+b by omega]
+      obtain ⟨sigma,hold,hnew⟩ := actual_lower s b hb hl
+      exact ⟨sigma,0,by omega,hold,hnew⟩
     · have hbal : max (max s b) (max s s) ≤ min (min s b) (min s s)+1 := by omega
-      simpa only [show s+b+s+s=3*s+b by omega, show s+b+s=2*s+b by omega] using
-        BalancedGaps.actualSource_balanced_gaps_joint_lift s b s s hs hb hs hs hbal
+      rw [← show s+b+s+s=3*s+b by omega, ← show s+b+s=2*s+b by omega]
+      exact BalancedGaps.actualSource_balanced_gaps_joint_lift s b s s hs hb hs hs hbal
 
 #print axioms actualSource_equal_outer_three_joint_lift
 end D5.S3.Combinatorics.Circle.FourNegative.EqualOuterThree
