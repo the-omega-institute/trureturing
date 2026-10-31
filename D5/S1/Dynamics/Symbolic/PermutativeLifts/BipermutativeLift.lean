@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual finite-prefix fibres of two-sided bipermutative block codes. -/
+   digest: Actual finite-sourcePrefix fibres of two-sided bipermutative block codes. -/
 
 import Mathlib.Algebra.Group.End
 import Mathlib.Data.Fin.Tuple.Basic
@@ -13,6 +13,8 @@ import Mathlib.Dynamics.SymbolicDynamics.Basic
 import Mathlib.Topology.Homeomorph.Lemmas
 import Mathlib.Topology.Instances.Int
 import Mathlib.Tactic
+
+/-! Actual finite-prefix permutations, two-sided reconstruction and full-lift conjugacy. -/
 
 set_option autoImplicit false
 
@@ -23,7 +25,7 @@ open SymbolicDynamics.FullShift
 
 variable {A : Type*} {k : ℕ}
 
-/-- The literal length-`k+1` prefix, rather than the group of its permutations. -/
+/-- The literal length-`k+1` sourcePrefix, rather than the group of its permutations. -/
 abbrev Prefix (A : Type*) (k : ℕ) := Fin (k + 1) → A
 
 /-- A block code of length `k+2` is bijective in either end letter. -/
@@ -40,30 +42,32 @@ noncomputable def rightEquiv (bh : Bipermutative h) (u : Prefix A k) : A ≃ A :
 noncomputable def rightLetter (bh : Bipermutative h) (a : A) (u : Prefix A k) : A :=
   (rightEquiv bh u).symm a
 
-@[simp] private theorem right_letter_spec (bh : Bipermutative h) (a : A) (u : Prefix A k) :
+private theorem right_letter_spec (bh : Bipermutative h) (a : A) (u : Prefix A k) :
     h (Fin.snoc u (rightLetter bh a u)) = a :=
   (rightEquiv bh u).apply_symm_apply a
 
-/-- Moving a prefix one step to the right in the actual fibre. -/
+/-- Moving a sourcePrefix one step to the right in the actual fibre. -/
 noncomputable def prefixStep (bh : Bipermutative h) (a : A) (u : Prefix A k) :
     Prefix A k :=
   Fin.snoc (Fin.tail u) (rightLetter bh a u)
 
 private theorem cons_prefix_step (bh : Bipermutative h) (a : A) (u : Prefix A k) :
-    Fin.cons (u 0) (prefixStep bh a u) = Fin.snoc u (rightLetter bh a u) := by
+    Fin.cons (α := fun _ => A) (u 0) (prefixStep bh a u) =
+      Fin.snoc (α := fun _ => A) u (rightLetter bh a u) := by
   simp only [prefixStep, Fin.cons_snoc_eq_snoc_cons, Fin.cons_self_tail]
 
-@[simp] private theorem code_prefix_step (bh : Bipermutative h) (a : A) (u : Prefix A k) :
+private theorem code_prefix_step (bh : Bipermutative h) (a : A) (u : Prefix A k) :
     h (Fin.cons (u 0) (prefixStep bh a u)) = a := by
-  rw [cons_prefix_step, right_letter_spec]
+  rw [cons_prefix_step bh a u, right_letter_spec bh a u]
 
 private theorem prefix_step_injective (bh : Bipermutative h) (a : A) :
     Injective (prefixStep bh a) := by
   intro u v huv
   have hzero : u 0 = v 0 := by
     apply (bh.left (prefixStep bh a v)).injective
-    rw [← huv, code_prefix_step]
-    rw [huv, code_prefix_step]
+    have hu : h (Fin.cons (u 0) (prefixStep bh a v)) = a := by
+      simpa only [huv] using code_prefix_step bh a u
+    exact hu.trans (code_prefix_step bh a v).symm
   have htail : Fin.tail u = Fin.tail v := by
     have hi := congrArg Fin.init huv
     simpa only [prefixStep, Fin.init_snoc] using hi
@@ -75,7 +79,7 @@ noncomputable def prefixPerm [Finite A] (bh : Bipermutative h) (a : A) :
   Equiv.ofBijective (prefixStep bh a)
     ⟨prefix_step_injective bh a, Finite.surjective_of_injective (prefix_step_injective bh a)⟩
 
-@[simp] private theorem prefix_perm_apply [Finite A] (bh : Bipermutative h) (a : A)
+private theorem prefix_perm_apply [Finite A] (bh : Bipermutative h) (a : A)
     (u : Prefix A k) : prefixPerm bh a u = prefixStep bh a u := rfl
 
 private theorem prefix_perm_overlap [Finite A] (bh : Bipermutative h) (a : A)
@@ -91,7 +95,7 @@ def window (x : ℤ → A) (i : ℤ) : Fin (k + 2) → A :=
 def code (h : (Fin (k + 2) → A) → A) (x : ℤ → A) : ℤ → A :=
   fun i => h (window x i)
 
-def prefix (x : ℤ → A) : Prefix A k := fun j => x (j : ℕ)
+def sourcePrefix (x : ℤ → A) : Prefix A k := fun j => x (j : ℕ)
 
 private theorem window_eq_snoc (x : ℤ → A) (i : ℤ) :
     window (k := k) x i =
@@ -102,22 +106,23 @@ private theorem window_eq_snoc (x : ℤ → A) (i : ℤ) :
 private theorem code_shift (x : ℤ → A) (i : ℤ) :
     code h (shift i x) = shift i (code h x) := by
   ext j
-  congr 1
-  ext t
-  simp [code, window, shift, add_assoc]
+  change h (window (shift i x) j) = h (window x (i + j))
+  apply congrArg h
+  funext t
+  simp only [window, shift_apply, add_assoc]
 
 private theorem prefix_step_code (bh : Bipermutative h) (x : ℤ → A) :
-    prefixStep bh (code h x 0) (prefix x) = prefix (shift 1 x) := by
-  have hlast : rightLetter bh (code h x 0) (prefix x) = x (k + 1 : ℕ) := by
-    apply (bh.right (prefix x)).injective
-    rw [right_letter_spec]
-    simp only [code, window_eq_snoc, zero_add, prefix]
+    prefixStep bh (code h x 0) (sourcePrefix x) = sourcePrefix (shift 1 x) := by
+  have hlast : rightLetter bh (code h x 0) (sourcePrefix x) = x (k + 1 : ℕ) := by
+    apply (bh.right (sourcePrefix x)).injective
+    rw [right_letter_spec bh (code h x 0) (sourcePrefix x)]
+    simp only [code, window_eq_snoc, zero_add, sourcePrefix]
   ext j
   cases j using Fin.lastCases with
-  | last => simp [prefixStep, hlast, prefix, shift, Nat.cast_add, add_comm]
-  | cast j => simp [prefixStep, prefix, shift, Fin.tail, Nat.cast_add, add_comm]
+  | last => simp [prefixStep, hlast, sourcePrefix, shift, Nat.cast_add, add_comm]
+  | cast j => simp [prefixStep, sourcePrefix, shift, Fin.tail, Nat.cast_add, add_comm]
 
-/-- The whole finite extension; its fibre is the prefix set. -/
+/-- The whole finite extension; its fibre is the sourcePrefix set. -/
 noncomputable def skewPerm [Finite A] (bh : Bipermutative h) :
     Equiv.Perm ((ℤ → A) × Prefix A k) where
   toFun z := (shift 1 z.1, prefixPerm bh (z.1 0) z.2)
@@ -134,12 +139,12 @@ noncomputable def skewPerm [Finite A] (bh : Bipermutative h) :
     · simp [shift]
 
 def coordinates (h : (Fin (k + 2) → A) → A) (x : ℤ → A) :
-    (ℤ → A) × Prefix A k := (code h x, prefix x)
+    (ℤ → A) × Prefix A k := (code h x, sourcePrefix x)
 
 private theorem coordinates_shift [Finite A] (bh : Bipermutative h) (x : ℤ → A) :
     coordinates h (shift 1 x) = skewPerm bh (coordinates h x) := by
   apply Prod.ext
-  · exact code_shift x 1
+  · exact code_shift (h := h) x 1
   · exact (prefix_step_code bh x).symm
 
 section Reconstruction
@@ -147,7 +152,7 @@ section Reconstruction
 variable [Finite A] (bh : Bipermutative h)
 
 /-- Integer iterates provide both future and past reconstruction, using only
-the actual prefix permutation. -/
+the actual sourcePrefix permutation. -/
 noncomputable def orbit (z : (ℤ → A) × Prefix A k) (i : ℤ) :
     (ℤ → A) × Prefix A k := (skewPerm bh ^ i) z
 
@@ -173,24 +178,20 @@ private theorem orbit_base (z : (ℤ → A) × Prefix A k) (i : ℤ) :
     change shift 1 (orbit bh z (n : ℤ)).1 = _
     rw [ih]
     ext j
-    simp only [shift_apply]
-    congr 1
-    omega
+    simp only [shift_apply, add_assoc, add_left_comm, add_comm]
   | pred n ih =>
     rw [orbit_pred]
     change shift (-1) (orbit bh z (-(n : ℤ))).1 = _
     rw [ih]
     ext j
-    simp only [shift_apply]
-    congr 1
-    omega
+    simp only [shift_apply, add_assoc, add_left_comm, add_comm]
 
 private theorem orbit_overlap (z : (ℤ → A) × Prefix A k) (i : ℤ) (j : Fin k) :
     (orbit bh z (i + 1)).2 j.castSucc = (orbit bh z i).2 j.succ := by
   rw [orbit_succ]
   exact prefix_perm_overlap bh _ _ j
 
-/-- Reading the first symbol of every reconstructed prefix gives a physical
+/-- Reading the first symbol of every reconstructed sourcePrefix gives a physical
 two-sided source sequence. -/
 noncomputable def reconstruct (z : (ℤ → A) × Prefix A k) : ℤ → A :=
   fun i => (orbit bh z i).2 0
@@ -238,14 +239,14 @@ private theorem code_reconstruct (z : (ℤ → A) × Prefix A k) :
   rw [reconstruct_window, orbit_succ]
   change h (Fin.cons ((orbit bh z i).2 0)
     (prefixStep bh ((orbit bh z i).1 0) (orbit bh z i).2)) = _
-  rw [code_prefix_step]
+  rw [code_prefix_step bh ((orbit bh z i).1 0) (orbit bh z i).2]
   simpa only [shift_apply, add_zero] using congrFun (orbit_base bh z i) 0
 
 private theorem coordinates_reconstruct (z : (ℤ → A) × Prefix A k) :
     coordinates h (reconstruct bh z) = z := by
   apply Prod.ext
   · exact code_reconstruct bh z
-  · simpa only [prefix, zero_add, orbit_zero] using reconstruct_prefix_at bh z 0
+  · simpa only [sourcePrefix, zero_add, orbit_zero] using reconstruct_prefix_at bh z 0
 
 private theorem coordinates_shift_back (x : ℤ → A) :
     coordinates h (shift (-1) x) = (skewPerm bh).symm (coordinates h x) := by
@@ -263,23 +264,19 @@ private theorem orbit_coordinates (x : ℤ → A) (i : ℤ) :
     rw [orbit_succ, ih, ← coordinates_shift]
     congr 1
     ext j
-    simp only [shift_apply]
-    congr 1
-    omega
+    simp only [shift_apply, add_assoc, add_left_comm, add_comm]
   | pred n ih =>
     rw [orbit_pred, ih, ← coordinates_shift_back]
     congr 1
     ext j
-    simp only [shift_apply]
-    congr 1
-    omega
+    simp only [shift_apply, add_assoc, add_left_comm, add_comm]
 
 private theorem reconstruct_coordinates (x : ℤ → A) :
     reconstruct bh (coordinates h x) = x := by
   ext i
-  simp only [reconstruct, orbit_coordinates, coordinates, prefix, shift_apply, add_zero]
+  simp only [reconstruct, orbit_coordinates, coordinates, sourcePrefix, shift_apply, add_zero]
 
-/-- Every output configuration and every literal prefix have exactly one
+/-- Every output configuration and every literal sourcePrefix have exactly one
 two-sided source. Both endpoint permutations are used in this equivalence. -/
 noncomputable def fullShiftEquiv : (ℤ → A) ≃ ((ℤ → A) × Prefix A k) where
   toFun := coordinates h
@@ -303,14 +300,14 @@ private theorem continuous_code (h : (Fin (k + 2) → A) → A) : Continuous (co
   exact (continuous_of_discreteTopology : Continuous h).comp
     (continuous_pi fun j => continuous_apply (i + (j : ℕ)))
 
-private theorem continuous_prefix : Continuous (prefix (A := A) (k := k)) := by
+private theorem continuous_prefix : Continuous (sourcePrefix (A := A) (k := k)) := by
   exact continuous_pi fun j => continuous_apply (j : ℕ)
 
 private theorem continuous_coordinates (h : (Fin (k + 2) → A) → A) :
     Continuous (coordinates h) :=
   (continuous_code h).prodMk continuous_prefix
 
-/-- A genuine homeomorphism on the entire full shift and its full prefix fibre. -/
+/-- A genuine homeomorphism on the entire full shift and its full sourcePrefix fibre. -/
 noncomputable def fullShiftHomeomorph (bh : Bipermutative h) :
     (ℤ → A) ≃ₜ ((ℤ → A) × Prefix A k) :=
   Continuous.homeoOfEquivCompactToT2 (f := fullShiftEquiv bh) (continuous_coordinates h)
@@ -321,7 +318,7 @@ abbrev LiftPoint (h : (Fin (k + 2) → A) → A) (Y : Subshift A ℤ) :=
 
 noncomputable def fullLiftEquiv (bh : Bipermutative h) (Y : Subshift A ℤ) :
     LiftPoint h Y ≃ (Y.carrier × Prefix A k) where
-  toFun x := (⟨code h x.1, x.2⟩, prefix x.1)
+  toFun x := (⟨code h x.1, x.2⟩, sourcePrefix x.1)
   invFun z := ⟨reconstruct bh (z.1.1, z.2), by
     rw [code_reconstruct]
     exact z.1.2⟩
@@ -338,15 +335,17 @@ noncomputable def fullLiftHomeomorph (bh : Bipermutative h) (Y : Subshift A ℤ)
     (((continuous_code h).comp continuous_subtype_val).subtype_mk _).prodMk
       (continuous_prefix.comp continuous_subtype_val)
   continuous_invFun :=
-    ((fullShiftHomeomorph bh).symm.continuous.comp
-      ((continuous_subtype_val.comp continuous_fst).prodMk continuous_snd)).subtype_mk _
+    by
+      have hc : Continuous (reconstruct bh) := (fullShiftHomeomorph bh).symm.continuous
+      exact (hc.comp
+        ((continuous_subtype_val.comp continuous_fst).prodMk continuous_snd)).subtype_mk _
 
 def baseShift (Y : Subshift A ℤ) (y : Y.carrier) : Y.carrier :=
   ⟨shift 1 y.1, Y.mapsTo 1 y.2⟩
 
 def liftShift (Y : Subshift A ℤ) (x : LiftPoint h Y) : LiftPoint h Y :=
   ⟨shift 1 x.1, by
-    rw [code_shift]
+    rw [code_shift (h := h) x.1 1]
     exact Y.mapsTo 1 x.2⟩
 
 noncomputable def skewStep (bh : Bipermutative h) (Y : Subshift A ℤ)
@@ -360,7 +359,7 @@ theorem full_lift_conjugacy (bh : Bipermutative h) (Y : Subshift A ℤ)
     fullLiftHomeomorph bh Y (liftShift Y x) =
       skewStep bh Y (fullLiftHomeomorph bh Y x) := by
   apply Prod.ext
-  · exact Subtype.ext (code_shift x.1 1)
+  · exact Subtype.ext (code_shift (h := h) x.1 1)
   · exact (prefix_step_code bh x.1).symm
 
 end Topology

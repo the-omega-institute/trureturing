@@ -9,8 +9,9 @@
 import Mathlib.Data.List.Infix
 import Mathlib.Data.Nat.Factorial.Basic
 import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.GroupTheory.Perm.Basic
 import Mathlib.Tactic
+
+/-! Actual factorial words and their block-recurrence and finite-action identities. -/
 
 set_option autoImplicit false
 
@@ -39,7 +40,7 @@ theorem repeatWord_add {α : Type*} (w : List α) (m k : ℕ) :
     (repeatWord w k).length = k * w.length := by
   induction k with
   | zero => simp
-  | succ k ih => simp [ih, Nat.succ_mul]
+  | succ k ih => simp [ih, Nat.succ_mul, Nat.add_comm]
 
 /-- Reading a repeated word uses the actual offset modulo its positive length. -/
 theorem repeatWord_getElem {α : Type*} (w : List α) {k i : ℕ}
@@ -49,18 +50,23 @@ theorem repeatWord_getElem {α : Type*} (w : List α) {k i : ℕ}
   induction k generalizing i with
   | zero => simp at hi
   | succ k ih =>
-      rw [repeatWord_succ]
-      by_cases hfirst : i < w.length
-      · rw [List.getElem_append_left hfirst, Nat.mod_eq_of_lt hfirst]
-      · have hge : w.length ≤ i := by omega
-        have hi' : i - w.length < k * w.length := by
-          simp only [Nat.add_mul, one_mul] at hi
-          omega
-        rw [List.getElem_append_right hge, ih hi']
-        have hm : (i - w.length) % w.length = i % w.length := by
-          conv_rhs => rw [← Nat.sub_add_cancel hge]
-          simp
-        simp only [hm]
+      have hip : i < (w ++ repeatWord w k).length := by
+        simp only [List.length_append, length_repeatWord]
+        simp only [Nat.succ_mul] at hi
+        omega
+      have hget : (w ++ repeatWord w k)[i]'hip =
+          w[i % w.length]'(Nat.mod_lt _ hw) := by
+        by_cases hfirst : i < w.length
+        · simp only [List.getElem_append_left hfirst, Nat.mod_eq_of_lt hfirst]
+        · have hge : w.length ≤ i := by omega
+          have hi' : i - w.length < k * w.length := by
+            simp only [Nat.succ_mul] at hi
+            omega
+          rw [List.getElem_append_right hge, ih hi']
+          have hm : (i - w.length) % w.length = i % w.length :=
+            (Nat.mod_eq_sub_mod hge).symm
+          simp only [hm]
+      simpa only [repeatWord_succ] using hget
 
 /-- The two substitutions at level n have the same zero-run and one or two
 copies of the same one-run. The index zero is used only for the initial letters. -/
@@ -139,11 +145,12 @@ theorem word_false_length_lt_true {n : ℕ} (hn : 0 < n) :
 private theorem prefix_repeatWord {α : Type*} (w : List α) {k : ℕ} (hk : 0 < k) :
     w <+: repeatWord w k := by
   obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hk)
-  simpa using (List.prefix_append w (repeatWord w k))
+  simp
 
 private theorem suffix_repeatWord {α : Type*} (w : List α) {k : ℕ} (hk : 0 < k) :
     w <:+ repeatWord w k := by
   obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hk)
+  change w <:+ repeatWord w (k + 1)
   rw [repeatWord_add, repeatWord_one]
   exact List.suffix_append _ _
 
@@ -164,7 +171,7 @@ private theorem repeatWord_pair_prefix {α : Type*} (w : List α) {k : ℕ}
     (hk : 2 ≤ k) : w ++ w <+: repeatWord w k := by
   have he : k = 2 + (k - 2) := by omega
   rw [he, repeatWord_add]
-  simpa using (List.prefix_append (repeatWord w 2) (repeatWord w (k - 2)))
+  simp
 
 private theorem suffix_prefix_infix {α : Type*} {u v U V : List α}
     (hu : u <:+ U) (hv : v <+: V) : u ++ v <:+: U ++ V := by
@@ -244,13 +251,5 @@ theorem word_holonomy_eq_one {G : Type*} [Group G] [Finite G] (π : Bool → G)
       have h1 := finite_group_pow_factorial (wordHolonomy π (word n true)) hn
       rw [Nat.mul_comm (if a then 2 else 1), pow_mul, h0, h1]
       simp
-
-/-- The fibre remains the original finite set Q. Only its transport takes
-values in the permutation group; no regular-action replacement is made. -/
-theorem permutation_word_holonomy_eq_one {Q : Type*} [Finite Q]
-    (π : Bool → Equiv.Perm Q) {n : ℕ} (hn0 : 0 < n)
-    (hn : Nat.card (Equiv.Perm Q) ≤ n) (a : Bool) :
-    wordHolonomy π (word n a) = Equiv.refl Q :=
-  word_holonomy_eq_one π hn0 hn a
 
 end D5.S1.Dynamics.Symbolic.PermutativeLifts

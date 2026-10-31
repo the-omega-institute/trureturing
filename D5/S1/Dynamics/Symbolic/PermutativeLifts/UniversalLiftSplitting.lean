@@ -69,9 +69,10 @@ def shiftLift {k : ℕ} {h : (Fin (k + 2) → Bool) → Bool} (g : ℤ)
   ⟨shift g x.1, by
     have he : code h (shift g x.1) = shift g (code h x.1) := by
       funext i
-      congr 1
+      change h (window (shift g x.1) i) = h (window x.1 (g + i))
+      apply congrArg h
       funext j
-      simp [code, window, shift, add_assoc]
+      simp only [window, shift_apply, add_assoc]
     rw [he]
     exact factorialSubshift.mapsTo g x.2⟩
 

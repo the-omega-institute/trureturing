@@ -160,7 +160,7 @@ theorem tiled_backwards (W : Bool → List Bool) {x : ℤ → TileState W}
     (x (i - (k : ℤ))).1 = (x i).1 ∧
       (x (i - (k : ℤ))).2.val = (x i).2.val - k := by
   induction k generalizing i with
-  | zero => simpa only [Nat.cast_zero, sub_zero, Nat.sub_zero] using
+  | zero => simpa only [Int.natCast_zero, sub_zero, Nat.sub_zero] using
       (And.intro (rfl : (x i).1 = (x i).1) (rfl : (x i).2.val = (x i).2.val))
   | succ k ih =>
     have hp := tiled_previous W hx i (by omega)
@@ -210,7 +210,7 @@ theorem tiled_forwards (W : Bool → List Bool) {x : ℤ → TileState W}
     (x (i + (k : ℤ))).1 = (x i).1 ∧
       (x (i + (k : ℤ))).2.val = (x i).2.val + k := by
   induction k with
-  | zero => simpa only [Nat.cast_zero, add_zero] using
+  | zero => simpa only [Int.natCast_zero, add_zero] using
       (And.intro (rfl : (x i).1 = (x i).1) (rfl : (x i).2.val = (x i).2.val))
   | succ k ih =>
     have hp := ih (by omega)
@@ -231,9 +231,11 @@ theorem tiled_boundary_ahead (W : Bool → List Bool) {x : ℤ → TileState W}
   let k : ℕ := (W (x i).1).length - (x i).2.val - 1
   have hk : (x i).2.val + k < (W (x i).1).length := by dsimp [k]; omega
   have hp := tiled_forwards W hx i k hk
+  have hsum : (x i).2.val + k + 1 = (W (x i).1).length := by
+    dsimp [k]
+    omega
   have hn := (tileNext_boundary_iff W (hx (i + (k : ℤ)))).2 (by
     have hlen := congrArg (fun a => (W a).length) hp.1
-    dsimp [k]
     omega)
   have heq : i + (k : ℤ) + 1 =
       i + (((W (x i).1).length - (x i).2.val : ℕ) : ℤ) := by dsimp [k]; omega
@@ -295,8 +297,15 @@ theorem tiled_eq_of_boundaries (W : Bool → List Bool)
   | mk a p =>
     cases hys : y i with
     | mk b q =>
-      simp only [hxs, hys] at htype hoff
-      subst b
-      exact congrArg (Sigma.mk a) (Fin.ext hoff)
+      have hxoff : (x i).2.val = p.val :=
+        congrArg (fun s : TileState W => s.2.val) hxs
+      have hyoff : (y i).2.val = q.val :=
+        congrArg (fun s : TileState W => s.2.val) hys
+      have hxt : (x i).1 = a := congrArg (fun s : TileState W => s.1) hxs
+      have hyt : (y i).1 = b := congrArg (fun s : TileState W => s.1) hys
+      have hab : a = b := hxt.symm.trans (htype.trans hyt)
+      have hpq : p.val = q.val := hxoff.symm.trans (hoff.trans hyoff)
+      cases hab
+      exact congrArg (Sigma.mk a) (Fin.ext hpq)
 
 end D5.S1.Dynamics.Symbolic.PermutativeLifts

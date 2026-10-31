@@ -3,7 +3,7 @@
    mirror-B: D5/B/S1/Dynamics/Symbolic/PermutativeLifts/UniversalRefutation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S1/Dynamics/Symbolic/PermutativeLifts/UniversalRefutation.claim; result=D5/S1/Dynamics/Symbolic/PermutativeLifts/UniversalRefutation.result; claim=D5/S1/Dynamics/Symbolic/PermutativeLifts/UniversalRefutation.claim
    digest: Exact general-minimal-branch refutation for all lengths and entire permutative lifts. -/
 
 import D5.S1.Dynamics.Symbolic.PermutativeLifts.UniversalLiftSplitting
@@ -24,9 +24,10 @@ def translateLift {A : Type*} [TopologicalSpace A] {k : ℕ}
   ⟨shift g x.1, by
     have he : code h (shift g x.1) = shift g (code h x.1) := by
       funext i
-      congr 1
+      change h (window (shift g x.1) i) = h (window x.1 (g + i))
+      apply congrArg h
       funext j
-      simp [code, window, shift, add_assoc]
+      simp only [window, shift_apply, add_assoc]
     rw [he]
     exact Y.mapsTo g x.2⟩
 
