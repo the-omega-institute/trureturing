@@ -1,0 +1,37 @@
+# An unbounded constraint on literal joint ears
+
+## Abstract
+
+Dyadic residues obstruct two physical cyclic orders
+
+**Theorem 1.1 (All multiples of eight and every physical insertion cut).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/FourNegative/CyclicOrderResidueObstruction.actual_source_cyclic_order_residue_obstruction`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FourNegative/CyclicOrderResidueObstruction.actual_source_cyclic_order_residue_obstruction` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let n>=2 satisfy n mod 8=0, put k=n+6 and A=85, and let sigma be any list of Fin(k) labels. If OriginalOrder(k,85,sigma) and OriginalOrder(k+1,170,earWord(k,sigma,cut)) both hold for a cut<=k, neither [n+1,n+3,n+5,n-1] nor [n+3,n+5,n-1,n+1] is a sublist of sigma.map(Fin.val). Each OriginalOrder retains the genuine permutation, exact total zero, and half-modulus bound for every natural take-prefix. The two forbidden sublists prescribe only the order of the four physical negative occurrences, leaving every positive interleaving unrestricted. The inserted fresh label may occur at every literal cut, including the empty and boundary cuts.
+
+Write x=2^n and N=64x-1. The four independent gaps are (2,2,2,n). The old physical U positives have labels 0<=i<=n-2 and values 85*2^i. The other positive atoms V+,W+,X+ have labels n,n+2,n+4 and values 21x+1,20x+5,16x+21. The negative labels U-,V-,W-,X- are n-1,n+1,n+3,n+5, with magnitudes 43x/2-1,22x-3,24x-11,32x-43. These values follow by specializing the four centered ladders to the actual source; they are not additional hypotheses.
+
+For the extended source, the old labels have new positive values 170*2^i,42x+1,40x+5,32x+21, and new negative magnitudes 43x-1,44x-3,48x-11,64x-43. Specializing the same centered ladders at fourth gap n+1 and shifting the literal exponent by one gives these values. The fresh label k has value 85 by the centered full-period identity. Thus the charge q_i=2f_i-g_i is zero on U positives, is 1,5,21 on V+,W+,X+, and is 1,3,11,43 on U-,V-,W-,X-. This is an additive comparison on the same physical occurrences.
+
+Consider the old prefix immediately after X-. Its height H lies in [0,42]: the preceding height is at most N/2 rounded down, namely 32x-1, and the X- increment is 43-32x. In the extended word take prefixes immediately before and after that same X- occurrence with a common ear-inclusion indicator e. If cut<=the position of X-, include the ear in both prefixes; otherwise exclude it from both. The new X- increment is 43-64x and the new capacity is 64x-1, so the resulting new height K also lies in [0,42]. This choice covers a cut immediately before or after X- without moving any physical label or normalizing any packet.
+
+Let m be the sum of 2^i over U positives in the prefix. The permutation has no repeated physical label, hence 0<=m and 2m<=x-2 by the complete geometric sum. Let v,w,z be the zero-or-one indicators of the three positive atoms. If the negative order is V-,W-,X-,U-, exactly V-,W-,X- lie in the prefix. Put E=57+v+5w+21z and c=78-21v-20w-16z. The actual source sums give H=85m-cx+E and K=2H-E+85e. If the order is W-,X-,U-,V-, exactly W-,X- lie in the prefix, giving the same equations with E=54+v+5w+21z and c=56-21v-20w-16z.
+
+Since 2^8=256 is congruent to 1 modulo 85, eight dividing n gives x congruent to 1 modulo 85. Therefore H is congruent to E-c modulo 85. In the first order, zero or one positive atom cannot meet the old negative demand even with all U mass. Three atoms would give residue 63, outside [0,42]. The three two-atom choices force (E,c,H)=(63,37,26),(79,41,38),(83,42,41). Their possible K values, according as the ear is excluded or included, are (-11,74),(-3,82),(-1,84), all outside [0,42].
+
+In the second order, the choices with no atom, with VW, with VX, with WX, and with all three have residues 83,45,57,60,82, respectively, outside [0,42]. A single V, W, or X forces (E,c,H)=(55,35,20),(59,36,23),(75,40,35). The corresponding possible K values are (-15,70),(-13,72),(-5,80), again outside the new height window. This exhausts the atom occurrences while keeping the U bit subset arbitrary.
+
+The group connection is the multiplicative action of dyadic powers modulo 85. The residue class of 2 has order eight: 2^8 is 1, while the powers for the proper divisors 1,2,4 are 2,4,16. Its orbit constrains the fibers of possible physical prefix sums, and the simultaneous old/new height windows exclude the two specified scheduling fibers along the unbounded progression 8|n. This is not an equivariance statement between old and new sources: the occurrence charges and the literal ear contribute essential corrections.
+
+The conclusion excludes only these two fixed cyclic negative orders. It does not refute unrestricted J, exclude every C4 order, exclude existential cyclic rerooting, or classify the cases outside 8|n. No external novelty claim is made. The physical circle setting is that of Damasdi, Frankl, Pach and Palvolgyi, Monochromatic configurations on a circle, arXiv:2504.10687v2.
+
+## References
+
+- Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/CyclicOrderResidueObstruction.actual_source_cyclic_order_residue_obstruction`
