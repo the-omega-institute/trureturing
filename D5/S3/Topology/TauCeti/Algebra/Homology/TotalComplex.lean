@@ -127,7 +127,7 @@ end HomologicalComplex₂
 namespace ComplexShape
 @[simp] private lemma pi_add {I : Type*} [AddMonoid I] (c : ComplexShape I) [c.TensorSigns]
     (p q : I) : π c c c (p, q) = p + q := rfl
-def embeddingDownNatSucc : (ComplexShape.down ℕ).Embedding (ComplexShape.down ℕ) :=
+private def embeddingDownNatSucc : (ComplexShape.down ℕ).Embedding (ComplexShape.down ℕ) :=
   embeddingDown'Add (1 : ℕ) 1
 @[simp] private lemma embeddingDownNatSucc_f (n : ℕ) : embeddingDownNatSucc.f n = n + 1 := rfl
 private instance : embeddingDownNatSucc.IsRelIff :=
@@ -345,7 +345,7 @@ private lemma rowZeroι_dropRowZero : rowZeroι K ≫ dropRowZero K = 0 := by
 
 /-- The short complex `row 0 ⟶ Tot K ⟶ extend(Tot (rowsSucc K), n ↦ n + 1)`. It is an abbreviation so that its
 objects are reducibly those of `K`. -/
-noncomputable abbrev rowZeroShortComplex :
+private noncomputable abbrev rowZeroShortComplex :
     ShortComplex (HomologicalComplex C (ComplexShape.down ℕ)) :=
   ShortComplex.mk (rowZeroι K) (dropRowZero K) (rowZeroι_dropRowZero K)
 
