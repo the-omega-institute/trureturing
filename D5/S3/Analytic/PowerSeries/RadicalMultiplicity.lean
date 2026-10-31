@@ -336,6 +336,8 @@ private theorem D_jet (S : ℝ⸨X⸩) (p A : ℝ[X])
       Int.cast_natCast]
     field_simp
     <;> push_cast
+    <;> (set_option pp.all true in trace_state)
+    <;> norm_cast
     <;> ring
 
 private def wronskianPS {n : ℕ} (f : Fin n → ℝ⟦X⟧) :
@@ -408,8 +410,84 @@ private theorem column_order {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ⟦X⟧)
 private theorem polynomial_order_le (p : ℝ[X]) (hp : p ≠ 0) :
     (p : ℝ⟦X⟧).order ≤ (p.natDegree : ℕ∞) := by
   apply PowerSeries.order_le
-  simpa only [Polynomial.coeff_coe, ← Polynomial.leadingCoeff] using
+  simpa only [Polynomial.coeff_coe, Polynomial.leadingCoeff] using
     (Polynomial.leadingCoeff_ne_zero.mpr hp)
+
+
+private theorem jet_factorPS (S : ℝ⟦X⟧) (p A : ℝ[X])
+    (hS0 : PowerSeries.constantCoeff S ≠ 0)
+    (hs : S ^ 2 = (p : ℝ⟦X⟧)) (N v : ℕ) (hv : v ≤ N) :
+    (p : ℝ⟦X⟧) ^ N * PowerSeries.derivative^[v] ((A : ℝ⟦X⟧) * S) =
+      S * ((p ^ (N - v) * polyJet p A v : ℝ[X]) : ℝ⟦X⟧) := by
+  have hS : S ≠ 0 := fun h => hS0 (by rw [h, map_zero])
+  have hSL : (S : ℝ⸨X⸩) ≠ 0 :=
+    (map_ne_zero_iff _ (HahnSeries.ofPowerSeries_injective)).mpr hS
+  have hsL : (S : ℝ⸨X⸩) ^ 2 = polyLS p := by
+    simpa [polyLS] using congrArg (HahnSeries.ofPowerSeries ℤ ℝ) hs
+  have hp : polyLS p ≠ 0 := by rw [← hsL]; exact pow_ne_zero _ hSL
+  apply HahnSeries.ofPowerSeries_injective
+  simp only [map_mul, map_pow, Polynomial.coe_mul, Polynomial.coe_pow]
+  rw [← iterate_coe]
+  change polyLS p ^ N * ((laurentD ℝ).toLinearMap ^ v) (polyLS A * (S : ℝ⸨X⸩)) = _
+  rw [D_jet _ p A hp hsL, zpow_neg, zpow_natCast]
+  change polyLS p ^ N * ((S : ℝ⸨X⸩) * (polyLS p ^ v)⁻¹ * polyLS (polyJet p A v)) =
+    (S : ℝ⸨X⸩) * (polyLS p ^ (N - v) * polyLS (polyJet p A v))
+  have he : polyLS p ^ N = polyLS p ^ v * polyLS p ^ (N - v) := by
+    rw [← pow_add, Nat.add_sub_of_le hv]
+  rw [he]
+  field_simp
+  <;> ring
+
+private theorem wronskian_order_bound {n d : ℕ} (hn : 0 < n)
+    (S : Fin n → ℝ⟦X⟧) (p A : Fin n → ℝ[X])
+    (hS0 : ∀ j, PowerSeries.constantCoeff (S j) ≠ 0)
+    (hs : ∀ j, S j ^ 2 = (p j : ℝ⟦X⟧))
+    (hp : ∀ j, (p j).natDegree ≤ 2) (hA : ∀ j, (A j).natDegree ≤ d)
+    (hi : LinearIndependent ℝ (fun j => (((A j : ℝ⟦X⟧) * S j) : ℝ⸨X⸩))) :
+    (wronskianPS (fun j => (A j : ℝ⟦X⟧) * S j)).det.order ≤
+      (n * (d + 2 * (n - 1)) : ℕ) := by
+  classical
+  let Q : Matrix (Fin n) (Fin n) ℝ[X] :=
+    fun i j => p j ^ (n - 1 - i.val) * polyJet (p j) (A j) i.val
+  let W := wronskianPS (fun j => (A j : ℝ⟦X⟧) * S j)
+  have hQ (i j : Fin n) : (Q i j).natDegree ≤ d + 2 * (n - 1) := by
+    have hiN : i.val ≤ n - 1 := by omega
+    have h1 := Polynomial.natDegree_mul_le
+      (p := p j ^ (n - 1 - i.val)) (q := polyJet (p j) (A j) i.val)
+    have h2 := Polynomial.natDegree_pow_le_of_le (n - 1 - i.val) (hp j)
+    have h3 := polyJet_degree (p j) (A j) (hp j) (hA j) i.val
+    dsimp [Q]
+    omega
+  have he : (fun i j => (p j : ℝ⟦X⟧) ^ (n - 1) * W i j) =
+      (fun i j => S j * ((Q i j : ℝ[X]) : ℝ⟦X⟧)) := by
+    funext i j
+    exact jet_factorPS (S j) (p j) (A j) (hS0 j) (hs j) (n - 1) i.val (by omega)
+  have hdet := congrArg Matrix.det he
+  rw [Matrix.det_mul_row, Matrix.det_mul_row] at hdet
+  have hmap : Matrix.det (fun i j => ((Q i j : ℝ[X]) : ℝ⟦X⟧)) = (Q.det : ℝ⟦X⟧) := by
+    exact (Polynomial.coeToPowerSeries.ringHom.map_det Q).symm
+  rw [hmap] at hdet
+  have hunitS : IsUnit (∏ j, S j) := by
+    apply isUnit_prod_of_isUnit
+    intro j _
+    exact PowerSeries.isUnit_iff_constantCoeff.mpr (isUnit_iff_ne_zero.mpr (hS0 j))
+  have hunitP : IsUnit (∏ j, (p j : ℝ⟦X⟧) ^ (n - 1)) := by
+    apply isUnit_prod_of_isUnit
+    intro j _
+    rw [← hs j]
+    exact (PowerSeries.isUnit_iff_constantCoeff.mpr
+      (isUnit_iff_ne_zero.mpr (hS0 j))).pow _ |>.pow _
+  have hord := congrArg PowerSeries.order hdet
+  simp only [PowerSeries.order_mul, PowerSeries.order_zero_of_isUnit hunitP,
+    PowerSeries.order_zero_of_isUnit hunitS, zero_add] at hord
+  have hW : W.det ≠ 0 := wronskianPS_ne_zero _ hi
+  have hQne : Q.det ≠ 0 := by
+    intro hz
+    have : (Q.det : ℝ⟦X⟧) = 0 := by simp [hz]
+    have := hord.trans (congrArg PowerSeries.order this)
+    exact hW (PowerSeries.order_eq_top.mp this)
+  exact hord.trans_le ((polynomial_order_le _ hQne).trans (by
+    exact_mod_cast detPoly_degree Q _ hQ))
 
 end
 end CdsoRadical
