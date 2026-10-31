@@ -18,9 +18,22 @@ $$rangeEqDualCapRegion$$
 
 The forward direction uses the exact lift of the coordinate witness. For the reverse direction, the inverse matrix recovers coefficients from an arbitrary lift; the negative unit quadratic and the two sign families are then precisely the hypotheses of the radial image theorem.
 
+**Theorem 1.2 (The strict dual/cap region is nonempty).**
+
+$$strictDualCapRegionNonempty$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Hyperideal/LengthGramDualImage.strictDualCapRegion_nonempty` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At the coefficient barycenter, every dual pairing is strictly positive and every Gram-row pairing is strictly negative. The radial lift and the coordinate reconstruction transfer these strict signs to the corresponding hyperbolic point.
+
 ## References
 
 - Truth anchor: `D5/S3/Geometry/Hyperideal/LengthGramDualImage.range_eq_dualCapRegion`
+- Truth anchor: `D5/S3/Geometry/Hyperideal/LengthGramDualImage.strictDualCapRegion_nonempty`
 - Dependency: [D5/S3/Geometry/Hyperideal/LengthGramDualPairing](LengthGramDualPairing.md)
 - Dependency: [D5/S3/Geometry/Hyperideal/LengthGramMetricSegments](LengthGramMetricSegments.md)
 - Dependency: [D5/S3/Geometry/Hyperideal/LengthGramRadialImage](LengthGramRadialImage.md)

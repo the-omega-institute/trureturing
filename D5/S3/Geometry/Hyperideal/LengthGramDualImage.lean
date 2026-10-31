@@ -43,6 +43,11 @@ def dualCapRegion (l : Fin 6 → ℝ) (M : Matrix (Fin 4) (Fin 4) ℝ) :
   {p | ∀ i, 0 ≤ lorentz (lift p) (dualVector (lengthGram l) M i) ∧
     lorentz (lift p) (M i) ≤ 0}
 
+def strictDualCapRegion (l : Fin 6 → ℝ) (M : Matrix (Fin 4) (Fin 4) ℝ) :
+    Set HyperbolicThreeSpace :=
+  {p | ∀ i, 0 < lorentz (lift p) (dualVector (lengthGram l) M i) ∧
+    lorentz (lift p) (M i) < 0}
+
 private lemma lorentz_symm (x y : V) : lorentz x y = lorentz y x := by
   unfold lorentz
   apply Finset.sum_congr rfl
@@ -245,5 +250,53 @@ theorem range_eq_dualCapRegion
         _ = lift p := hym
     exact ⟨vv, lift_injective hlf⟩
 
+theorem strictDualCapRegion_nonempty
+    (l : Fin 6 → ℝ) (hl : ∀ k, 0 < l k)
+    (M : Matrix (Fin 4) (Fin 4) ℝ)
+    (hM : ∀ i j, lorentz (M i) (M j) = lengthGram l i j)
+    (hdet : (lengthGram l).det < 0)
+    (hrows : ∀ i, 0 ≤ M i 3)
+    (f : cutBody l → HyperbolicThreeSpace)
+    (hcoord : ∀ v, (f v).coordinates.val =
+      WithLp.toLp 2
+        (Complex.mk ((radial l v.val ᵥ* M) 0 /
+          ((radial l v.val ᵥ* M) 3 - (radial l v.val ᵥ* M) 2))
+          ((radial l v.val ᵥ* M) 1 /
+          ((radial l v.val ᵥ* M) 3 - (radial l v.val ᵥ* M) 2)),
+         1 / ((radial l v.val ᵥ* M) 3 - (radial l v.val ᵥ* M) 2))) :
+    (strictDualCapRegion l M).Nonempty := by
+  obtain ⟨_, hb, hbcut, hnegative, _, _, _, _, _, _⟩ := shared_radial_body l hl
+  let b : cutBody l := ⟨fun _ => (1 / 4 : ℝ), hb⟩
+  let y : V := radial l b.val ᵥ* M
+  have hyunit : lorentz y y = -1 := radial_lift_unit l M hM hl b
+  have hyt : 0 < y 3 := radial_lift_time l M hM hl hrows b
+  have hlf : lift (f b) = y := by
+    apply lift_of_coordinates (f b) y hyunit hyt
+    simpa [y] using hcoord b
+  refine ⟨f b, ?_⟩
+  intro i
+  constructor
+  · rw [hlf]
+    have hpair := lorentz_vecMul_dual l M hM hdet (radial l b.val) i
+    rw [hpair]
+    exact div_pos (by norm_num) (Real.sqrt_pos.mpr (neg_pos.mpr (hnegative b.val b.property)))
+  · rw [hlf]
+    have hpair := lorentz_vecMul_cap l M hM (radial l b.val) i
+    rw [hpair]
+    change (∑ j, lengthGram l i j *
+      (b.val j / Real.sqrt (-gramQuadratic l b.val))) < 0
+    have hdiv : (∑ j, lengthGram l i j *
+        (b.val j / Real.sqrt (-gramQuadratic l b.val))) =
+        (∑ j, lengthGram l i j * b.val j) /
+          Real.sqrt (-gramQuadratic l b.val) := by
+      rw [Finset.sum_div]
+      apply Finset.sum_congr rfl
+      intro j hj
+      ring
+    rw [hdiv]
+    exact div_neg_of_neg_of_pos (by simpa [b] using hbcut i)
+      (Real.sqrt_pos.mpr (neg_pos.mpr (hnegative b.val b.property)))
+
 #print axioms range_eq_dualCapRegion
+#print axioms strictDualCapRegion_nonempty
 end D5.S3.Geometry.Hyperideal.LengthGramDualImage
