@@ -4,13 +4,13 @@
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
    utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/FiniteGroups/CFMPCoxeterIndexObstruction.claim; result=D5/S3/FiniteGroups/CFMPCoxeterIndexObstruction.result; claim=D5/S3/FiniteGroups/CFMPCoxeterIndexObstruction.claim
-   digest: Native torsionfree orientation quotients of the Coxeter group [4,9,3] cannot have index seventy-two. -/
+   digest: No normal torsionfree [4,9,3] cover has index seventy-two or twenty-four blocks. -/
 
 import D5.S3.FiniteGroups.CycleNineThreeObstruction
 import Mathlib.GroupTheory.Coxeter.Length
 import Mathlib.GroupTheory.QuotientGroup.Finite
 import Mathlib.GroupTheory.Perm.Fin
-import Mathlib.GroupTheory.DoubleCoset
+import Mathlib.Algebra.Group.Subgroup.Pointwise
 import Mathlib.Tactic.FinCases
 
 /-! # The native index-seventy-two Coxeter obstruction -/
@@ -18,7 +18,6 @@ import Mathlib.Tactic.FinCases
 namespace D5.S3.FiniteGroups.CFMPCoxeterIndexObstruction
 
 set_option maxRecDepth 4096
-set_option maxHeartbeats 1600000
 
 /-- The Coxeter matrix with string labels four, nine and three. -/
 def diagram : CoxeterMatrix (Fin 4) where
@@ -38,6 +37,7 @@ private def reflection (i : Fin 4) : Matrix (Fin 3) (Fin 3) (ZMod 19) :=
   else if i = 2 then !![1,0,0;12,-1,1;0,0,1]
   else !![1,0,0;0,1,0;0,1,-1]
 
+set_option maxHeartbeats 1600000 in
 private theorem reflection_relations : diagram.IsLiftable reflection := by
   intro i j
   fin_cases i <;> fin_cases j <;> decide
@@ -55,6 +55,7 @@ private theorem pair_order (i j : Fin 4) (n : ℕ)
   · have h := orderOf_map_dvd representation (canonical.simple i * canonical.simple j)
     simpa only [map_mul, representation, CoxeterSystem.lift_apply_simple, hsep] using h
 
+set_option maxHeartbeats 1600000 in
 private theorem native_orders :
     orderOf (canonical.simple 1 * canonical.simple 2) = 9 ∧
     orderOf (canonical.simple 2 * canonical.simple 3) = 3 ∧
@@ -114,6 +115,7 @@ private def normalWord (n : Fin 6) : blockGroup := ![1, C, D, C * D, D * C, C * 
 private def step (n : Fin 6) (j : Fin 2) : Fin 6 :=
   if j = 0 then ![1,0,4,5,2,3] n else ![2,3,0,1,5,4] n
 
+set_option maxHeartbeats 1600000 in
 private theorem normal_step (n : Fin 6) (j : Fin 2) :
     normalWord n * (if j = 0 then C else D) = normalWord (step n j) := by
   have hcc : C * C = 1 := Subtype.ext (canonical.simple_mul_simple_self 2)
@@ -127,7 +129,7 @@ private theorem normal_step (n : Fin 6) (j : Fin 2) :
   have hccr (x : blockGroup) : x * C * C = x := by rw [mul_assoc, hcc, mul_one]
   have hddr (x : blockGroup) : x * D * D = x := by rw [mul_assoc, hdd, mul_one]
   fin_cases n <;> fin_cases j <;>
-    simp [normalWord, step, ← mul_assoc, hcc, hdd, hccr, hddr]
+    simp [normalWord, step, -mul_assoc, hcc, hdd, hccr, hddr]
   all_goals simp only [hbraid, hddr]
 
 private theorem normalWord_surjective : Function.Surjective normalWord := by
@@ -161,6 +163,7 @@ private theorem normalWord_surjective : Function.Surjective normalWord := by
 private def permReflection (i : Fin 4) : Equiv.Perm (Fin 3) :=
   ![1, Equiv.swap 1 2, Equiv.swap 0 1, Equiv.swap 1 2] i
 
+set_option maxHeartbeats 1600000 in
 private theorem perm_relations : diagram.IsLiftable permReflection := by
   intro i j
   fin_cases i <;> fin_cases j <;> decide
@@ -179,6 +182,7 @@ private theorem map_normalWord (n : Fin 6) :
     canonical.lift_apply_simple perm_relations i
   fin_cases n <;> simp [normalWord, permWord, C, D, hm, permReflection]
 
+set_option maxHeartbeats 1600000 in
 private theorem permWord_bijective : Function.Bijective permWord := by decide
 
 /-- The two last native reflections generate a copy of the symmetric group on three letters. -/
@@ -220,7 +224,7 @@ private theorem orientation_index : orientation.index = 2 := by
 
 private theorem block_stabilizer (Γ : Subgroup orientation) [IsMulTorsionFree Γ]
     (q : Chambers Γ) : MulAction.stabilizer blockGroup q = ⊥ := by
-  letI : Finite blockGroup := Nat.finite_of_card_ne_zero (by rw [blockGroup_card]; decide)
+  haveI : Finite blockGroup := Nat.finite_of_card_ne_zero (by rw [blockGroup_card]; decide)
   apply (Subgroup.eq_bot_iff_forall _).mpr
   intro k hk
   induction q using Quotient.inductionOn' with
@@ -265,39 +269,49 @@ private theorem block_count (Γ : Subgroup orientation) [IsMulTorsionFree Γ] :
 def claim : Prop := ∃ Γ : Subgroup orientation,
   Γ.Normal ∧ IsMulTorsionFree Γ ∧ (Γ.index = 72 ∨ Nat.card (Blocks Γ) = 24)
 
-/-- The normal orientation quotient of order seventy-two is impossible. -/
+/-- Neither orientation index seventy-two nor twenty-four regular blocks can occur. -/
 theorem result : ¬ claim := by
   rintro ⟨Γ, hn, htf, hsize⟩
-  letI := hn
-  letI := htf
+  haveI := hn
+  haveI := htf
   have hidx : Γ.index = 72 := by
     rcases hsize with hi | hb
     · exact hi
     · rw [block_count Γ, hb]
-  letI : Γ.FiniteIndex := ⟨by omega⟩
+  haveI : Γ.FiniteIndex := ⟨by omega⟩
   let Q := orientation ⧸ Γ
   let q : orientation →* Q := QuotientGroup.mk' Γ
   let r : orientation := pair 1 2
   let s : orientation := pair 2 3
+  let t : orientation := pair 3 1
   have hr : orderOf r = 9 := by
     simpa only [r, pair, Subgroup.orderOf_mk] using native_orders.1
   have hs : orderOf s = 3 := by
     simpa only [s, pair, Subgroup.orderOf_mk] using native_orders.2.1
-  have hrs : orderOf (r * s) = 2 := by
-    have he : r * s = pair 1 3 := by
+  have htriangle : (r * s)⁻¹ = t := by
+    apply Subtype.ext
+    change ((canonical.simple 1 * canonical.simple 2) *
+      (canonical.simple 2 * canonical.simple 3))⁻¹ = canonical.simple 3 * canonical.simple 1
+    rw [mul_assoc, CoxeterSystem.simple_mul_simple_cancel_left,
+      mul_inv_rev, CoxeterSystem.inv_simple, CoxeterSystem.inv_simple]
+  have ht : orderOf t = 2 := by
+    have hti : t = (pair 1 3)⁻¹ := by
       apply Subtype.ext
-      change (canonical.simple 1 * canonical.simple 2) *
-        (canonical.simple 2 * canonical.simple 3) = canonical.simple 1 * canonical.simple 3
-      rw [mul_assoc, CoxeterSystem.simple_mul_simple_cancel_left]
-    rw [he]
+      change canonical.simple 3 * canonical.simple 1 =
+        (canonical.simple 1 * canonical.simple 3)⁻¹
+      rw [mul_inv_rev, CoxeterSystem.inv_simple, CoxeterSystem.inv_simple]
+    rw [hti, orderOf_inv]
     simpa only [pair, Subgroup.orderOf_mk] using native_orders.2.2
   have hqr : orderOf (q r) = 9 := (quotient_order Γ r (by
     rw [← orderOf_pos_iff, hr]; decide)).trans hr
   have hqs : orderOf (q s) = 3 := (quotient_order Γ s (by
     rw [← orderOf_pos_iff, hs]; decide)).trans hs
+  have hqt : orderOf (q t) = 2 := (quotient_order Γ t (by
+    rw [← orderOf_pos_iff, ht]; decide)).trans ht
   have hqrs : orderOf (q r * q s) = 2 := by
-    rw [← map_mul]
-    exact (quotient_order Γ (r * s) (by rw [← orderOf_pos_iff, hrs]; decide)).trans hrs
+    have hi : (q r * q s)⁻¹ = q t := by rw [← map_mul, ← map_inv, htriangle]
+    rw [← orderOf_inv, hi]
+    exact hqt
   let H : Subgroup Q := Subgroup.closure ({q r, q s} : Set Q)
   let R : H := ⟨q r, Subgroup.subset_closure (by simp)⟩
   let S : H := ⟨q s, Subgroup.subset_closure (by simp)⟩
