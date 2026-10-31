@@ -64,7 +64,8 @@ theorem tiled_offset_phase (W : Bool → List Bool) (L : ℕ)
       apply (tileNext_offset_eq_iff W L hW (x.2 (-(n : ℤ) - 1))
         (hy (-(n : ℤ) - 1))).2
       have hi : -(n : ℤ) - 1 + 1 = -(n : ℤ) := by omega
-      simpa only [hi] using ih
+      exact Eq.mpr (congrArg
+        (fun z : ℤ => (x.1 z).2.val = (y z).2.val) hi) ih
   have hm0 := Int.emod_nonneg (i + ((x.1 0).2.val : ℤ))
     (show (L : ℤ) ≠ 0 by omega)
   have hm := heq i
@@ -161,13 +162,15 @@ theorem tiled_common_column_periodic (W : Bool → List Bool) (L : ℕ)
     (tiled_offset_periodic W L hW hL x i k)
   have h₂ := readTile_eq_get W (x.1 i) (x.1 i).1 (x.1 i).2.val
     (by simpa only [hW] using hlt) rfl rfl
-  change readTile W (x.1 (i + k * (L : ℤ))) = readTile W (x.1 i)
-  rw [h₁, h₂]
-  cases (x.1 (i + k * (L : ℤ))).1 <;> cases (x.1 i).1
-  · rfl
-  · exact hc
-  · exact hc.symm
-  · rfl
+  have hcommon (a b : Bool) :
+      (W a).get ⟨(x.1 i).2.val, by simpa only [hW] using hlt⟩ =
+        (W b).get ⟨(x.1 i).2.val, by simpa only [hW] using hlt⟩ := by
+    cases a <;> cases b
+    · rfl
+    · exact hc
+    · exact hc.symm
+    · rfl
+  exact h₁.trans ((hcommon _ _).trans h₂.symm)
 
 -- Temporary exact applications, removed after the preliminary kernel check.
 example (x : MarkedTiling (fun _ => [false, true])) (i k : ℤ) :
