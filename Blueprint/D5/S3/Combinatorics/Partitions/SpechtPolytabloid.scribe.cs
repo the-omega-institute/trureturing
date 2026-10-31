@@ -443,14 +443,7 @@ internal sealed class SpechtPolytabloidDocument : IScribeDocumentDefinition
         : new Formula.Apply(Seq(Operatorname, Grp(I(name))), [.. args]);
     private static Formula A(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
-    private static Formula E(string name, Formula type, Formula body) =>
-        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
     private static Formula Q(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
-    private static Formula N(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
-    private static Formula P(Formula a, Formula b) => new Formula.Logic(Seq(Open, a, Close), FormulaLogicOperator.Implies, Seq(Open, b, Close));
-    private static Formula B(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
-    private static Formula V(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Or, b);
-    private static Formula L(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Shape(Formula body) => A("mu", C("YoungDiagram"), body);
     private static Formula Tableau(Formula body) => Shape(A("t", C("YoungTableau", I("mu")), body));
     private static Formula Part(Formula body) => A("n", C("Nat"), A("mu", C("Partition", I("n")), body));
