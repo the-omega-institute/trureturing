@@ -1,0 +1,48 @@
+#### 定理 3.4（项目既有关系公式及其尖锐误差推论）
+
+对五模式上的实目标 $f$，记
+
+$$
+J_f=f_{13}-f_1-f_3+f_N.
+$$
+
+则
+
+$$
+\begin{aligned}
+\mathbb E_pf={}&f_N+(f_1-f_N)X+(f_3-f_N)Y\\
+&+(f_2-f_N)Z+J_f\kappa.
+\end{aligned}
+$$
+
+固定三轴后，目标可识别恰当且仅当 $J_fw=0$；其最小最坏绝对预测误差为
+
+$$
+\boxed{\ \inf_{\widehat m}\sup_{\kappa\in[L,U]}
+|\widehat m-\mathbb E_{p_\kappa}f|=\frac{|J_f|w}{2}.\ }
+$$
+
+完整概率律满足
+
+$$
+\operatorname{TV}(p_\kappa,p_{\kappa'})=2|\kappa-\kappa'|,
+\qquad
+\inf_{\widehat p}\sup_{\kappa\in[L,U]}\operatorname{TV}(\widehat p,p_\kappa)=w.
+$$
+
+**证明。**
+
+代入概率反解得期望式。目标值域是长度 $|J_f|w$ 的闭区间；
+任一预测到至少一个端点的距离不小于半长度，中点达到。
+两概率律之差是 $(\kappa-\kappa')(1,-1,0,-1,1)$，给 TV 公式。
+两个端点概率的 TV 为 $2w$，三角不等式给最坏误差至少 $w$，
+中点概率律达到。
+
+∎
+
+例如项目数量读出 $q=2\xi+5\eta+3\zeta$ 满足 $J_q=0$，
+但 $J_{q^2}=20$。关系不影响该数量的均值，却影响二阶读出和完整回复律。
+这将“关系是信息”变成一项可检验的任务判据。[[3](#ref-correlation), [2](#ref-foundation)]
+
+<a id="section-4"></a>
+
