@@ -95,11 +95,6 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
-      booleanPredicate := false }, {
-      path := #["body", "body", "fn", "arg", "arg", "body", "body", "body", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
