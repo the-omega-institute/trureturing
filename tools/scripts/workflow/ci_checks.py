@@ -111,10 +111,16 @@ def current_phase(phase, data, plan, base, paths):
         if plan["capacity"]:
             if not base:
                 raise DetectError("selected artifact capacity requires a readable protected base")
-            capacity = execute("artifact-capacity", ["dotnet", CLI, "check-source",
-                               "--artifact-capacity", "--protected-base", base])
-            if capacity or not plan["hits"]["current"]:
-                return capacity
+            if not plan["hits"]["current"]:
+                return execute("artifact-capacity", ["dotnet", CLI, "check-source",
+                                  "--artifact-capacity", "--protected-base", base])
+            if plan["theory"]:
+                return execute("check-delta", ["dotnet", CLI, "check-delta",
+                                  "--artifact-capacity", "--protected-base", base], delta=True)
+            command = ["dotnet", CLI, "check-source", "--current", "--artifact-capacity"]
+            if plan["delta"]:
+                command += ["--protected-base", base]
+            return execute("source", command)
         if plan["theory"]:
             return current_phase("check-delta", data, plan, base, paths)
         if plan["delta"] and not base:

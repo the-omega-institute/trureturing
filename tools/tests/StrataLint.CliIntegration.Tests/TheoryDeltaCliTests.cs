@@ -28,6 +28,25 @@ public sealed class TheoryDeltaCliTests
         if (exitCode != 0) Assert.Contains("5001 lines (hard limit 5000)", result.Output);
     }
 
+    [Fact]
+    public void CombinedArtifactCapacityAndTheoryDeltaPrepareTheProtectedBaseOnce()
+    {
+        var fixture = new RuleFixture();
+        fixture.Files[Document] = string.Concat(Enumerable.Repeat("line\n", 5000));
+        var changes = RawChangeSet.Create([Document]);
+        static RawRepositorySnapshot Snapshot(Dictionary<string, string> files) =>
+            RawRepositorySnapshot.Create(files.Select(static pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
+        var gateway = new FakeRepositoryGateway(changes, Snapshot(fixture.Files), Snapshot(fixture.Baseline));
+        var environment = new ProductionCliEnvironment("/fixture", gateway, new FakeLeanReportSource(null));
+
+        var result = environment.CheckDelta(["--artifact-capacity", "--protected-base", new string('a', 40)]);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(1, gateway.PrepareCount);
+        Assert.Contains("SL-003", result.Output, StringComparison.Ordinal);
+        Assert.Contains("SL-015", result.Output, StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData("modified")]
     [InlineData("deleted")]

@@ -35,6 +35,26 @@ public sealed class SourcePrerequisiteCliTests
         Assert.Equal(expected, messages);
     }
 
+    [Fact]
+    public void CombinedSourceCapacityAndCurrentPrepareTheProtectedBaseOnce()
+    {
+        var fixture = new RuleFixture();
+        fixture.Baseline[RuleFixture.RingPath] = "base\n";
+        fixture.Files[RuleFixture.RingPath] = string.Concat(Enumerable.Repeat("line\n", 1001));
+        var changes = RawChangeSet.CreateWithKinds([(RuleFixture.RingPath, RawChangeKind.Modified)]);
+        static RawRepositorySnapshot Snapshot(Dictionary<string, string> files) =>
+            RawRepositorySnapshot.Create(files.Select(static pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
+        var gateway = new FakeRepositoryGateway(changes, Snapshot(fixture.Files), Snapshot(fixture.Baseline));
+        var environment = new ProductionCliEnvironment("/fixture", gateway, new FakeLeanReportSource(null));
+
+        var result = environment.CheckSource(["--current", "--artifact-capacity", "--protected-base", new string('a', 40)]);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Equal(1, gateway.PrepareCount);
+        Assert.Contains("SL-003", result.Output, StringComparison.Ordinal);
+        Assert.Contains("1001 lines (hard limit 1000)", result.Output, StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData(96, false, false, false)]
     [InlineData(97, true, true, false)]

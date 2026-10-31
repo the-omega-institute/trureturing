@@ -194,6 +194,33 @@ class CheckTests(unittest.TestCase):
                 self.assertEqual(delta, "--protected-base" in command)
                 self.assertNotIn("--candidate-lean-report", command)
 
+    def test_source_combines_capacity_with_current_when_current_reads_base(self):
+        data, _ = contract.load(ROOT)
+        plan = contract.selection(data, ["D5/changed.lean"], "pull-request")
+        self.assertTrue(plan["capacity"])
+        self.assertTrue(plan["hits"]["current"])
+        with patch.object(checks, "execute", return_value=0) as execute:
+            self.assertEqual(checks.current_phase("source", data, plan, "a" * 40, Path("changed")), 0)
+        execute.assert_called_once()
+        command = execute.call_args.args[1]
+        self.assertEqual(command[:3], ["dotnet", checks.CLI, "check-source"])
+        self.assertIn("--current", command)
+        self.assertIn("--artifact-capacity", command)
+        self.assertIn("--protected-base", command)
+
+    def test_source_combines_capacity_with_theory_delta_when_theory_fast_path_reads_base(self):
+        data, _ = contract.load(ROOT)
+        plan = contract.selection(data, ["docs/develop/theory/Note.md"], "pull-request")
+        self.assertTrue(plan["capacity"])
+        self.assertTrue(plan["theory"])
+        with patch.object(checks, "execute", return_value=0) as execute:
+            self.assertEqual(checks.current_phase("source", data, plan, "a" * 40, Path("changed")), 0)
+        execute.assert_called_once()
+        command = execute.call_args.args[1]
+        self.assertEqual(command[:3], ["dotnet", checks.CLI, "check-delta"])
+        self.assertIn("--artifact-capacity", command)
+        self.assertIn("--protected-base", command)
+
     def test_source_rejection_blocks_every_guarded_launch_in_executable_local_adapter(self):
         result, calls, plan = self.local_spies(source=1)
         self.assertEqual(1, result.returncode, result.stdout + result.stderr)

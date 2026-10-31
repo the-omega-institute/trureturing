@@ -12,7 +12,8 @@ internal sealed record FrozenRevisionIdentity(string Revision, string CommitOid,
 internal sealed record CheckArguments(
     string? ProtectedBase,
     string? CandidateLeanReport,
-    string? ScribePaths = null);
+    string? ScribePaths = null,
+    bool ArtifactCapacity = false);
 
 internal interface IRepositoryGateway
 {
@@ -383,11 +384,14 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         string? protectedBase = null;
         string? candidateLeanReport = null;
         string? scribePaths = null;
-        for (var index = 0; index < arguments.Count; index += 2)
+        var artifactCapacity = false;
+        for (var index = 0; index < arguments.Count; index++)
         {
-            if (index + 1 >= arguments.Count)
+            if (arguments[index] == "--artifact-capacity")
             {
-                throw CheckUsage();
+                if (artifactCapacity) throw CheckUsage();
+                artifactCapacity = true;
+                continue;
             }
 
             var target = arguments[index] switch
@@ -397,6 +401,8 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 "--scribe-paths-from" when scribePaths is null => 2,
                 _ => throw CheckUsage(),
             };
+            if (++index >= arguments.Count)
+                throw CheckUsage();
             switch (target)
             {
                 case 0:
@@ -411,7 +417,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             }
         }
 
-        return new CheckArguments(protectedBase, candidateLeanReport, scribePaths);
+        return new CheckArguments(protectedBase, candidateLeanReport, scribePaths, artifactCapacity);
     }
 
     private static InvalidOperationException CheckUsage() => new(

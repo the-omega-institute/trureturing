@@ -18,7 +18,7 @@ internal sealed partial class ProductionCliEnvironment
         try
         {
             var options = ParseCheckArguments(arguments);
-            if ((!delta && (options.CandidateLeanReport is null || options.ProtectedBase is not null))
+            if ((!delta && (options.CandidateLeanReport is null || options.ProtectedBase is not null || options.ArtifactCapacity))
                 || (delta && options.ProtectedBase is null))
                 throw new InvalidOperationException(delta
                     ? "check-delta requires --protected-base; non-theory changes also require --candidate-lean-report"
@@ -38,6 +38,16 @@ internal sealed partial class ProductionCliEnvironment
                 return new(2, RenderPlaneObservations(planeObservations), planeFailure.Message + "\n");
 
             var current = timing.Measure("snapshot-load", () => Decode(raw));
+            if (options.ArtifactCapacity)
+            {
+                var capacity = timing.Measure("artifact-capacity", () => RuleCatalog.Default.ExecuteArtifactCapacity(
+                    current, prepared!.Changes));
+                if (capacity is RuleExecutionOutcome.InfrastructureFailure failure)
+                    return RenderStage(capacity, planeObservations);
+                if (capacity is RuleExecutionOutcome.Completed completed
+                    && completed.Capability.Diagnostics.Any(static diagnostic => diagnostic.AdmissionEffect is AdmissionEffect.Block))
+                    return RenderStage(capacity, planeObservations);
+            }
             var report = options.CandidateLeanReport is null ? null
                 : timing.Measure("lean-report-load", () => RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, current, validateMaterials: true));
             var policy = timing.Measure("policy-load", () => RepositoryPolicyLoader.Load(current) switch
