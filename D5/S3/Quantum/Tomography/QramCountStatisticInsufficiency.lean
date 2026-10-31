@@ -90,8 +90,9 @@ private def witness : Matrix (Fin 2 → Fin 4) (Fin 2 → Fin 4) ℂ := 1 - reje
 
 private lemma walsh_orthogonal (y z : Fin 4) :
     (star (walsh y)) ⬝ᵥ walsh z = if y = z then 1 else 0 := by
+  change (star (u4 y)) ⬝ᵥ u4 z = if y = z then 1 else 0
   simpa only [Matrix.mul_apply, Matrix.star_eq_conjTranspose,
-    Matrix.conjTranspose_apply, Matrix.one_apply, walsh, dotProduct,
+    Matrix.conjTranspose_apply, Matrix.one_apply, dotProduct,
     Pi.star_apply, mul_comm, eq_comm] using
     congrArg (fun a : Matrix (Fin 4) (Fin 4) ℂ => a z y)
       (Matrix.mem_unitaryGroup_iff.mp u4_unitary)
@@ -100,8 +101,8 @@ private lemma plus_walsh : plusState 2 = walsh 0 := by
   have hs : Real.sqrt 4 = 2 := by
     rw [Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num)]; norm_num
   funext x
-  delta plusState addressState walsh
-  fin_cases x <;> norm_num [hs, u4, Matrix.smul_apply, smul_eq_mul]
+  delta plusState addressState walsh u4
+  fin_cases x <;> norm_num [hs, Matrix.smul_apply, smul_eq_mul]
 
 private lemma class_one : weightClass 2 1 =
     {![true, false, false, false], ![false, true, false, false],
@@ -157,8 +158,8 @@ private lemma one_overlap (f : Fin 4 → Bool) (hf : f ∈ weightClass 2 1) (y :
   rw [class_one] at hf
   simp only [Finset.mem_insert, Finset.mem_singleton] at hf
   rcases hf with rfl | rfl | rfl | rfl <;> fin_cases y <;>
-    delta addressState walsh <;>
-    norm_num [Fin.sum_univ_succ, hs, u4, Matrix.smul_apply, smul_eq_mul]
+    delta addressState walsh u4 <;>
+    norm_num [Fin.sum_univ_succ, hs, Matrix.smul_apply, smul_eq_mul]
 
 private lemma weight_one_law (y z : Fin 4) :
     Matrix.trace (copyState 2 2 1 *
@@ -199,7 +200,7 @@ private lemma class_two_states :
   have hs : Real.sqrt 4 = 2 := by
     rw [Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num)]; norm_num
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> funext x <;> fin_cases x <;>
-    delta addressState walsh <;> norm_num [hs, u4, Matrix.smul_apply, smul_eq_mul]
+    delta addressState walsh u4 <;> norm_num [hs, Matrix.smul_apply, smul_eq_mul]
 
 private lemma weight_two_state : copyState 2 2 2 = (1 / 3 : ℂ) • reject := by
   rw [copyState_rank, class_two]
