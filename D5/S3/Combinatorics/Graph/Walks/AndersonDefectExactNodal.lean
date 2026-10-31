@@ -9,6 +9,7 @@
 import D5.S3.Combinatorics.Graph.Walks.AndersonDefectFamily
 import Mathlib.RingTheory.Algebraic.Integral
 import Mathlib.FieldTheory.RatFunc.AsPolynomial
+import Mathlib.LinearAlgebra.Eigenspace.Basic
 
 set_option autoImplicit false
 open Matrix
@@ -16,6 +17,86 @@ open D5.S3.Combinatorics.SpectralGraph.CyclicTridiagonalTransferTrace
 open private sl2_power from D5.S3.Combinatorics.Graph.Walks.AndersonDefectFamily
 
 namespace D5.S3.Combinatorics.Graph.Walks.AndersonDefectExactNodal
+
+private theorem symmetric_nodal_kernel {K n : Type*} [Field K] [Fintype n]
+    [DecidableEq n] (S : Matrix n n K) (hS : S.IsSymm) (j : n)
+    (hd : S.det = 0)
+    (hm : (S.submatrix (Subtype.val : {i : n // i ≠ j} → n) Subtype.val).det = 0) :
+    ∃ z : n → K, z ≠ 0 ∧ S *ᵥ z = 0 ∧ z j = 0 := by
+  classical
+  obtain ⟨z, hz, he⟩ := Matrix.exists_mulVec_eq_zero_iff.mpr hd
+  by_cases hj : z j = 0
+  · exact ⟨z, hz, he, hj⟩
+  obtain ⟨w, hw, hminor⟩ := Matrix.exists_mulVec_eq_zero_iff.mpr hm
+  let y : n → K := fun i => if hi : i ≠ j then w ⟨i, hi⟩ else 0
+  have hyj : y j = 0 := by simp [y]
+  have hy : y ≠ 0 := by
+    intro h
+    apply hw
+    funext i
+    have hh := congrFun h i.val
+    simpa [y, i.property] using hh
+  have haway (i : n) (hi : i ≠ j) : (S *ᵥ y) i = 0 := by
+    have hh := congrFun hminor ⟨i, hi⟩
+    have hsum := Fintype.sum_subtype_add_sum_subtype (fun k : n => k ≠ j)
+      (fun k => S i k * y k)
+    have hzero : (∑ k : {k : n // ¬ k ≠ j}, S i k * y k) = 0 := by
+      apply Finset.sum_eq_zero
+      intro k _
+      have hk : k.val = j := by simpa using k.property
+      simp [hk, hyj]
+    rw [hzero, add_zero] at hsum
+    change (∑ k : n, S i k * y k) = 0
+    rw [← hsum]
+    have hyn (k : {k : n // k ≠ j}) : y k = w k := by simp [y, k.property]
+    simpa only [Matrix.mulVec, dotProduct, Matrix.submatrix_apply, hyn, Pi.zero_apply] using hh
+  have hsupport : S *ᵥ y = Pi.single j ((S *ᵥ y) j) := by
+    funext i
+    by_cases hi : i = j
+    · subst i; simp
+    · simp [hi, haway i hi]
+  have hdot : z j * (S *ᵥ y) j = 0 := by
+    have hcomm := hS.dotProduct_mulVec_comm (x := z) (y := y)
+    rw [he, dotProduct_zero, hsupport] at hcomm
+    simpa [dotProduct, Pi.single_apply] using hcomm
+  have hjzero : (S *ᵥ y) j = 0 := (mul_eq_zero.mp hdot).resolve_left hj
+  refine ⟨y, hy, ?_, hyj⟩
+  rw [hsupport, hjzero]
+  simp
+
+open D5.S3.Combinatorics.Graph.Walks.AndersonDefectSeed
+open D5.S3.Combinatorics.Graph.Walks.AndersonDefectFamily
+
+private theorem common_root_nodal {K : Type*} [Field K]
+    (r m : ℕ) (hr : 3 ≤ r) (hm : 3 ≤ m) (t μ : K)
+    (hp : (hamiltonian r m t).charpoly.IsRoot μ)
+    (hq : (deleted r m t ⟨defectSite r m,
+      by have := defect_bounds r m hr (by omega); omega⟩).charpoly.IsRoot μ) :
+    ∃ z : Fin (r * m) → K, z ≠ 0 ∧ hamiltonian r m t *ᵥ z = μ • z ∧
+      z ⟨defectSite r m, by have := defect_bounds r m hr (by omega); omega⟩ = 0 := by
+  classical
+  let j : Fin (r * m) := ⟨defectSite r m,
+    by have := defect_bounds r m hr (by omega); omega⟩
+  let H := hamiltonian r m t
+  let S := μ • (1 : Matrix (Fin (r * m)) (Fin (r * m)) K) - H
+  have hsym : S.IsSymm := (Matrix.isSymm_one.smul μ).sub
+    ((SimpleGraph.isSymm_lapMatrix K _).add ((Matrix.isSymm_diagonal _).smul t))
+  have hd : S.det = 0 := by
+    simpa only [Polynomial.IsRoot, Matrix.eval_charpoly, Matrix.scalar_apply, Matrix.smul_one_eq_diagonal, S, H] using hp
+  have hsub : S.submatrix (Subtype.val : {i : Fin (r * m) // i ≠ j} → Fin (r * m))
+      Subtype.val = μ • 1 - deleted r m t j := by
+    ext i k
+    simp [S, H, deleted, Matrix.submatrix_apply, Matrix.one_apply,
+      Subtype.ext_iff]
+  have hmnr : (S.submatrix (Subtype.val : {i : Fin (r * m) // i ≠ j} → Fin (r * m))
+      Subtype.val).det = 0 := by
+    rw [hsub]
+    simpa only [Polynomial.IsRoot, Matrix.eval_charpoly, Matrix.scalar_apply, Matrix.smul_one_eq_diagonal] using hq
+  obtain ⟨z, hz, he, hj⟩ := symmetric_nodal_kernel S hsym j hd hmnr
+  refine ⟨z, hz, ?_, hj⟩
+  change (μ • (1 : Matrix (Fin (r * m)) (Fin (r * m)) K) - H) *ᵥ z = 0 at he
+  rw [Matrix.sub_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec, sub_eq_zero] at he
+  exact he.symm
 
 private lemma rotated_entries {K : Type*} [Field K] (r : ℕ) (hr : 3 ≤ r) (a b : K) :
     let C := transfer a * transfer b * transfer a ^ (r - 2)
@@ -32,14 +113,16 @@ private lemma rotated_entries {K : Type*} [Field K] (r : ℕ) (hr : 3 ≤ r) (a 
   rw [hi] at hs
   simp only [Polynomial.eval_sub, Polynomial.eval_mul, Polynomial.eval_X] at hs
   rw [hp]
-  simp only [Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul, Matrix.mul_apply,
-    Fin.sum_univ_two, transfer, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val_fin_one, Matrix.trace_fin_two, Matrix.one_apply]
-  constructor <;> linear_combination hs
+  have hi3 : (r : ℤ) - 3 - 1 = (r : ℤ) - 4 := by omega
+  rw [hi3] at hs
+  simp [transfer, Matrix.mul_apply, Fin.sum_univ_two, Matrix.trace_fin_two]
+  constructor
+  · linear_combination -b * hs
+  · linear_combination (1 - a * b) * hs
 
 /-- At a transcendental coupling, a periodic state fixed after a whole number of
 blocks cannot be a scalar state for the block through the prescribed defect. -/
-theorem rotated_block_cyclic {K : Type*} [Field K] [Algebra ℝ K]
+private theorem rotated_block_cyclic {K : Type*} [Field K] [Algebra ℝ K]
     (r m : ℕ) (hr : 3 ≤ r) (hm : 3 ≤ m) (t μ : K)
     (ht : Transcendental ℝ t)
     (hfix : (transfer (2 + t - μ) * transfer (2 - t - μ) *
@@ -60,7 +143,7 @@ theorem rotated_block_cyclic {K : Type*} [Field K] [Algebra ℝ K]
   have he : C *ᵥ ![1, 0] = (-s) • ![1, 0] := by
     ext i
     fin_cases i <;> simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two, hc.1, hc.2, hbs]
-  have hvec : (C.toLin').HasEigenvector (-s) ![1, 0] := by
+  have hvec : Module.End.HasEigenvector C.toLin' (-s) ![1, 0] := by
     refine ⟨Module.End.mem_eigenspace_iff.mpr he, ?_⟩
     intro h
     have := congrFun h 0
@@ -87,7 +170,7 @@ theorem rotated_block_cyclic {K : Type*} [Field K] [Algebra ℝ K]
     simpa only [P, Polynomial.Chebyshev.aeval_S] using hsalg
   have alg_eval (Q : Polynomial ℝ) : IsAlgebraic ℝ (Polynomial.aeval a Q) :=
     (Algebra.isAlgebraic_adjoin_singleton_iff.mpr haalg) _
-      (Polynomial.aeval_mem_adjoin_singleton Q ℝ a)
+      (Q.aeval_mem_adjoin_singleton ℝ a)
   have hvalg : IsAlgebraic ℝ v := by
     simpa only [Polynomial.Chebyshev.aeval_S] using
       alg_eval (Polynomial.Chebyshev.S ℝ ((r : ℤ) - 3))
@@ -101,7 +184,13 @@ theorem rotated_block_cyclic {K : Type*} [Field K] [Algebra ℝ K]
     rw [hb]
     exact hvalg.mul (IsAlgebraic.inv_iff.mpr hsalg)
   apply ht
-  have hrel : t = (a - b) * (2 : K)⁻¹ := by dsimp [a, b]; ring
+  have htwo : (2 : K) ≠ 0 := by
+    have hh := (algebraMap ℝ K).injective.ne (by norm_num : (2 : ℝ) ≠ 0)
+    simpa only [map_ofNat, map_zero] using hh
+  have hrel : t = (a - b) * (2 : K)⁻¹ := by
+    dsimp [a, b]
+    field_simp [htwo]
+    <;> ring
   rw [hrel]
   exact (haalg.sub hbalg).mul (IsAlgebraic.inv_iff.mpr (isAlgebraic_natCast 2))
 
