@@ -4,6 +4,8 @@
 
 Conditional fixed-energy graded duality on the original Carrier
 
+plusPart_mem_fixedSpace is public at this owner for every lattice D and v:Carrier D, with no determinant or positivity premise. Its unchanged proof uses the literal theta involution to put the existing half-average in the actual fixedSpace. The existing fixedGradeWitness consumes this membership fact. The public membership API is available to concrete source constructions independently of the generic conditional dual equivalence.
+
 The construction uses the original Carrier D, its literal FixedCarrier D, and the existing grade D h. The fixed grade is the comap of grade D h along the FixedCarrier inclusion. No alternate carrier and no live P1 pairing are introduced.
 
 The ambient bilinear form B is an explicit parameter. The assumptions are ambient left and right nondegeneracy, theta isometry, commutation of theta with the existing grade projection, and orthogonality of distinct grades. The fixed-grade witness is plusPart D (gradeProjection h y): projection is recovered by the existing finite grade decomposition, then theta averaging supplies fixed-space membership.
