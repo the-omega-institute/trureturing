@@ -10,7 +10,7 @@ For a closed k-linear subspace U of H, P(U) denotes the actual orthogonal projec
 
 $$\forall (u: \operatorname{UniverseLevel}()), \forall (v: \operatorname{UniverseLevel}()), \forall (k: \operatorname{Type}_{u}), \forall (H: \operatorname{Type}_{v}), [\operatorname{RCLike}(k)] [\operatorname{NormedAddCommGroup}(H)] [\operatorname{InnerProductSpace}(k, H)] [\operatorname{CompleteSpace}(H)] \forall (U: \operatorname{ClosedSubmodule}(k, H)), \forall (V: \operatorname{ClosedSubmodule}(k, H)), \forall (x: H), \forall (epsilon: \mathbb{R}), (0 < epsilon) \Rightarrow \exists (N: \mathbb{N}), \forall (n: \mathbb{N}), (N \leq n) \Rightarrow \left\lVert (\operatorname{Comp}(\operatorname{P}(U), \operatorname{P}(V)))^{n}(x) - \operatorname{P}(\operatorname{Inf}(U, V))(x) \right\rVert < epsilon$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/HilbertOperators/AlternatingProjectionStrong.tendsto_alternatingProjection_pow` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/HilbertOperators/AlternatingProjectionStrong.tendsto_alternating_projection_pow` (`✓ std3`). ∎
 
 *Citation.* Heinz H. Bauschke, Frank Deutsch, Hein Hundal (2007). *Characterizing arbitrarily slow convergence in the method of alternating projections*. URL: <https://arxiv.org/pdf/0710.2387v1>.
 
@@ -30,4 +30,4 @@ The classical result is von Neumann's alternating-projection theorem, stated in 
 
 ## References
 
-- Truth anchor: `D5/S3/HilbertOperators/AlternatingProjectionStrong.tendsto_alternatingProjection_pow`
+- Truth anchor: `D5/S3/HilbertOperators/AlternatingProjectionStrong.tendsto_alternating_projection_pow`
