@@ -746,22 +746,43 @@ positive rows and zero padding. The rectangle is (n,n,0) for every n.
 | --- | --- |
 | `ordinaryCharacter_eq_trace` | `ordinaryCharacter_triple_eq_coefficient` |
 | `evTypes_spec` | `evPartition`, used in both ordinary terms |
-| `leftTerm_eq_frobenius` | `pointwise_identity`, `averages_eq_frobenius` |
-| `rightTerm_eq_frobenius` | `pointwise_identity`, `averages_eq_frobenius` |
+| `leftTerm_eq_frobenius` | `pointwise_identity` |
+| `rightTerm_eq_frobenius` | `pointwise_identity`, private `rightAverage_eq_frobenius` |
 | `pointwise_identity` | `weighted_identity` |
-| `averages_eq_frobenius` | `HemmerStraubWestremOrdinaryClosedForm.result` |
-| `weighted_identity` | `HemmerStraubWestremOrdinaryClosedForm.result` |
-| `HemmerStraubWestremOrdinaryClosedForm.result` | Exact external full-problem endpoint, without a standalone known-port claim |
+| `weighted_identity` | `HemmerStraubWestremOrdinary.result` |
+| `HemmerStraubWestremOrdinary.result` | Exact external full-problem endpoint; prospective individual `open-problem-resolution` basis #21960, conservative `bind-only` proof shape |
 
-The coefficient API is the canonical
-`HemmerStraubWestremWeightedAverage.result` published at
+The necessary weighted derivation components come from the exact published source
 https://github.com/the-omega-institute/trureturing/blob/69f68474a0566d6f465a14259b74f28b58e293f3/D5/S3/Combinatorics/Partitions/HemmerStraubWestremWeightedAverage.lean.
-The closed-form composition references that API through its original module
-path, rather than copying its implementation. Its supplier import must be
-available before native validation of this composition. The coefficient owner
-must reuse the strongest
-`LatticeHalfFockChargedCoefficients.solution_unique`; neither its implementation
-nor its formal ODE proof is reproduced in these ordinary-character consumers.
+They now live as private consumed helpers inside the actual ordinary consumer;
+the absent historical module is not imported or restored. The thin
+`HemmerStraubWestremOrdinaryClosedForm` Lean/Scribe pair is removed, as is the
+unused left-average transport packaging. There is no new standalone coefficient
+result, companion, claim or artificial consumer.
+
+`HemmerStraubWestrem.ev_right`, `triProd` and `right_coefficient`, and
+`LatticeHalfFockChargedCoefficients.solution_unique`, are made visible at their
+original definitions by removing only `private`; all four bodies and telescopes
+are unchanged. No protected implementation body is edited. The new ordinary
+consumer directly applies `solution_unique` with coefficient ring
+`LaurentPolynomial ℚ`, first series `mk (cycleAverage cycleInput)`, second series
+the three rescaled inverse-square factors, and driver
+`mk (fun k => cycleInput (k + 1))`. `HasUniqueDiv.of_module_rat` supplies additive
+torsion-freeness. The two derivative premises use `cycle_average_derivative`
+and `three_square_derivative`; the initial values use `cycle_average_zero` and
+`coeff_zero_eq_constantCoeff`. The historical `power_series_ode_unique`
+induction is omitted entirely.
+
+The source consumer path is:
+`result` → `rightAverage_eq_frobenius` and `rightCoefficientAverage_closed` →
+`rightCoefficientAverage_constantTerm` / `weighted_constant_term_series` →
+`character_constantTerm` / `cycle_generating_series` → the existing rectangular
+suppliers / stronger uniqueness theorem. The generic marked-cycle recurrence
+calls the existing C2 centralizer theorems and Mathlib partition deletion.
+Every retained historical helper is on this textual path; native liveness
+remains UNKNOWN. No new TauCeti selection, independent coefficient theory or
+ODE uniqueness proof is introduced. The matching ordinary Scribe gives the
+parameter correspondence and formal-series derivation.
 
 The full endpoint retains every n >= 1 and every input partition, independent
 per-occurrence Ev choices with duplicate outcomes, full positive cycle lists

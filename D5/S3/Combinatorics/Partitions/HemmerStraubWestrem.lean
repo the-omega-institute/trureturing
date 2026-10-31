@@ -293,7 +293,7 @@ private theorem ev_left (m : ℕ) (l : List ℕ) :
   rw [map_zsmul]
   simp [evenSum_apply, frobChar, exponent, ← Finset.mul_sum]
 
-private theorem ev_right (μ : Fin 3 → ℕ) (l : List ℕ) :
+theorem ev_right (μ : Fin 3 → ℕ) (l : List ℕ) :
     ((evTypes l).map fun τ => frobChar μ τ).sum = altCoeff μ (plusProd l) := by
   rw [← ev_plus]
   simp [map_list_sum, List.map_map, Function.comp_def, frobChar, altCoeff_apply, exponent]
@@ -343,7 +343,7 @@ private noncomputable def detector (m : ℕ) : MvPolynomial (Fin 3) ℤ →+ ℤ
     boundary (mono a b c) = if c=0 then Polynomial.X^a else 0 := by
   by_cases h : c=0 <;> simp [boundary,mono_eq,h]
 
-private noncomputable def triProd (l : List ℕ) : Polynomial ℤ :=
+noncomputable def triProd (l : List ℕ) : Polynomial ℤ :=
   (l.map fun a => Polynomial.X^(2*a) + Polynomial.X^a + 1).prod
 
 private theorem principal_minus_factor (a : ℕ) :
@@ -660,7 +660,7 @@ private theorem left_coefficient (l : List ℕ) : evenSum (2*l.sum) (minusProd l
   rw [coefficient_detector (2*l.sum) (by omega) (minusProd l)
     (minus_homogeneous l) (minus_symmetric l),detector_minus]
 
-private theorem right_coefficient (l : List ℕ) (hn : 1≤l.sum) (hl : ∀ a∈l, 0<a) :
+theorem right_coefficient (l : List ℕ) (hn : 1≤l.sum) (hl : ∀ a∈l, 0<a) :
     altCoeff ![l.sum,l.sum,0] (plusProd l) =
       (2:ℤ)^l.length * ((triProd l).coeff l.sum - (triProd l).coeff (l.sum+1)) := by
   rw [alt_boundary_homogeneous l.sum hn (plusProd l) (plus_homogeneous l),boundary_plus l hl]

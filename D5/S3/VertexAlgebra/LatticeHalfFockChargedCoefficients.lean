@@ -156,7 +156,7 @@ private theorem scaled_binomial_derivative {Ring : Type*} [CommRing Ring]
     simp only [pow_succ, Nat.cast_add, Nat.cast_one]
     linear_combination scale ^ (degree + 1) * scale * recurrence
 
-private theorem solution_unique {Ring : Type*} [CommRing Ring] [IsAddTorsionFree Ring]
+theorem solution_unique {Ring : Type*} [CommRing Ring] [IsAddTorsionFree Ring]
     (first second driver : PowerSeries Ring)
     (hfirst : PowerSeries.derivative (R := Ring) first = first * driver)
     (hsecond : PowerSeries.derivative (R := Ring) second = second * driver)
