@@ -97,15 +97,15 @@ private theorem arithmetic (a b : ℤ) (ha : 2 ≤ a) (hb : 4*a ≤ b) :
     have hb0 : 0 ≤ b := by omega
     nlinarith only [mul_nonneg (show 0 ≤ a-2 by omega) hb0]
   dsimp only [Gates]
-  have hCdiv : ((2*a)^2*(2*b)^2-1)/2 = 8*a^2*b^2 - 1 := by ring_nf; omega
-  have hd0 : -(((2*a)^2*(2*b)^2-1)-(1+2*b+(2*a)*(2*b)+(2*a)^2*(2*b)))/2 = -8*a^2*b^2 + 4*a^2*b + 2*a*b + b + 1 := by ring_nf; omega
-  have hd1 : -(((2*a)^2*(2*b)^2-1)-(1+2*b+(2*b)^2+(2*a)*(2*b)^2))/2 = -8*a^2*b^2 + 4*a*b^2 + 2*b^2 + b + 1 := by ring_nf; omega
-  have hd2 : -(((2*a)^2*(2*b)^2-1)-(1+2*a+(2*a)*(2*b)+(2*a)*(2*b)^2))/2 = -8*a^2*b^2 + 4*a*b^2 + 2*a*b + a + 1 := by ring_nf; omega
-  have hd3 : -(((2*a)^2*(2*b)^2-1)-(1+2*a+(2*a)^2+(2*a)^2*(2*b)))/2 = -8*a^2*b^2 + 4*a^2*b + 2*a^2 + a + 1 := by ring_nf; omega
-  have he0 : -((2*((2*a)^2*(2*b)^2-1)+1)-(2*(1+2*b+(2*a)*(2*b)+(2*a)^2*(2*b))-1))/2 = -16*a^2*b^2 + 8*a^2*b + 4*a*b + 2*b + 1 := by ring_nf; omega
-  have he1 : -((2*((2*a)^2*(2*b)^2-1)+1)-(2*(1+2*b+(2*b)^2+(2*a)*(2*b)^2)-1-2*b))/2 = -16*a^2*b^2 + 8*a*b^2 + 4*b^2 + b + 1 := by ring_nf; omega
-  have he2 : -((2*((2*a)^2*(2*b)^2-1)+1)-(2*(1+2*a+(2*a)*(2*b)+(2*a)*(2*b)^2)-(1+2*a+(2*a)*(2*b))))/2 = -16*a^2*b^2 + 8*a*b^2 + 2*a*b + a + 1 := by ring_nf; omega
-  have he3 : -((2*((2*a)^2*(2*b)^2-1)+1)-(1+2*a+(2*a)^2+(2*a)^2*(2*b)))/2 = -16*a^2*b^2 + 4*a^2*b + 2*a^2 + a + 1 := by ring_nf; omega
+  have hCdiv : ((2*a)^2*(2*b)^2-1)/2 = 8*a^2*b^2 - 1 := by clear * - a b; ring_nf; omega
+  have hd0 : -(((2*a)^2*(2*b)^2-1)-(1+2*b+(2*a)*(2*b)+(2*a)^2*(2*b)))/2 = -8*a^2*b^2 + 4*a^2*b + 2*a*b + b + 1 := by clear * - a b; ring_nf; omega
+  have hd1 : -(((2*a)^2*(2*b)^2-1)-(1+2*b+(2*b)^2+(2*a)*(2*b)^2))/2 = -8*a^2*b^2 + 4*a*b^2 + 2*b^2 + b + 1 := by clear * - a b; ring_nf; omega
+  have hd2 : -(((2*a)^2*(2*b)^2-1)-(1+2*a+(2*a)*(2*b)+(2*a)*(2*b)^2))/2 = -8*a^2*b^2 + 4*a*b^2 + 2*a*b + a + 1 := by clear * - a b; ring_nf; omega
+  have hd3 : -(((2*a)^2*(2*b)^2-1)-(1+2*a+(2*a)^2+(2*a)^2*(2*b)))/2 = -8*a^2*b^2 + 4*a^2*b + 2*a^2 + a + 1 := by clear * - a b; ring_nf; omega
+  have he0 : -((2*((2*a)^2*(2*b)^2-1)+1)-(2*(1+2*b+(2*a)*(2*b)+(2*a)^2*(2*b))-1))/2 = -16*a^2*b^2 + 8*a^2*b + 4*a*b + 2*b + 1 := by clear * - a b; ring_nf; omega
+  have he1 : -((2*((2*a)^2*(2*b)^2-1)+1)-(2*(1+2*b+(2*b)^2+(2*a)*(2*b)^2)-1-2*b))/2 = -16*a^2*b^2 + 8*a*b^2 + 4*b^2 + b + 1 := by clear * - a b; ring_nf; omega
+  have he2 : -((2*((2*a)^2*(2*b)^2-1)+1)-(2*(1+2*a+(2*a)*(2*b)+(2*a)*(2*b)^2)-(1+2*a+(2*a)*(2*b))))/2 = -16*a^2*b^2 + 8*a*b^2 + 2*a*b + a + 1 := by clear * - a b; ring_nf; omega
+  have he3 : -((2*((2*a)^2*(2*b)^2-1)+1)-(1+2*a+(2*a)^2+(2*a)^2*(2*b)))/2 = -16*a^2*b^2 + 4*a^2*b + 2*a^2 + a + 1 := by clear * - a b; ring_nf; omega
   simp only [hCdiv,hd0,hd1,hd2,hd3,he0,he1,he2,he3]
   ring_nf at hlow hhigh margins cA cB cL cM cGV cGW cGX hab ⊢
   clear hCdiv hd0 hd1 hd2 hd3 he0 he1 he2 he3 hR hT

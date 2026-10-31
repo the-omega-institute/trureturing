@@ -8,7 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentEqual
 import D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentReverse
 
-/-! A checkpoint on the full independent paired-gap endpoint, with the far branches open. -/
+/-! The three central branches consumed by the independent paired-gap endpoint. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
