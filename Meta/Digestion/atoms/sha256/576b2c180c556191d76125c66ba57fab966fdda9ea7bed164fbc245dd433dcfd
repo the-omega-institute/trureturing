@@ -1,0 +1,20 @@
+**定义 B-3.1（正多边形及局部转向）。** 对 $`N\ge3,R\gt 0`$，给已标定中心 $`O`$，按圆周次序连接
+
+
+```math
+v_j=O+R\left(\cos\frac{2\pi j}{N},\sin\frac{2\pi j}{N}\right),
+\quad 0\le j\lt N,
+```
+
+
+得到简单凸正多边形。规则性指等边、等角；定向指边界遍历次序；凸性指所有两点间的线段在区域内。对一般简单非退化多边形，记 $`p_N=p_0`$、$`e_i=p_{i+1}-p_i`$、
+
+
+```math
+\mathcal{\text{𝒜}}(P)=\frac12\sum_i\det(p_i,p_{i+1}),\qquad
+\sigma=\mathrm{sign}\mathcal{\text{𝒜}}(P).
+```
+
+
+在 $`p_i`$ 比较入边 $`e_{i-1}`$ 与出边 $`e_i`$。连续共线顶点另作退化，不以严格符号分类。
+

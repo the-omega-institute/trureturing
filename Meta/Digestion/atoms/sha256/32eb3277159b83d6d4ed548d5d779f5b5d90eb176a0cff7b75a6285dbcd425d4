@@ -1,0 +1,106 @@
+**定理 B-39.4（三活跃核的完整联合上界）。** 对假设B-39.1的每个固定标号配置、任意四个允许的完整星见证及任意这样的 $\mathcal F$，有
+
+$$
+A\le5005.
+\tag{39.11}
+$$
+
+证明。先列出将使用的条件包含事件。七条耳 $D\cup\{g\}$ 两两兼容，故对 $D\setminus M_i$ 的四耳作精确迹容斥，式(32.1)给
+
+$$
+|\mathcal G_i|\le\alpha:=c_3-4c_4+6c_5-4c_6+c_7=1230.
+\tag{39.12}
+$$
+
+这些包含事件至多强制七耳，留下至少七顶点的凸多边形，删耳与添回均非退化。
+
+以下 $\{i,j,k\}=\{1,2,3\}$。若 $d_k$ 存在，强制 $M_i,g,d_k$ 自动禁止 $M_k$，而 $M_j$ 的两耳与这四条强制耳兼容；禁止它们的容斥给
+
+$$
+|\{T\in\Gamma(M_i):g,d_k\in\operatorname{Ear}(T)\}|
+=\beta:=c_4-2c_5+c_6=704.
+\tag{39.13}
+$$
+
+若 $d_j,d_k$ 均存在，它们自动禁止 $M_j\cup M_k$。两耳及 $g$ 互相兼容，也兼容 $M_i$，所以
+
+$$
+\begin{aligned}
+|\{T\in\Gamma(M_i):g,d_j,d_k\in\operatorname{Ear}(T)\}|&=c_5,\\
+|\{T\in\Gamma(M_i):d_j,d_k\in\operatorname{Ear}(T),\ g\notin\operatorname{Ear}(T)\}|
+&=\rho:=c_4-c_5=1001.
+\end{aligned}
+\tag{39.14}
+$$
+
+还需保留一个击中载体的联合条件。若 $d_j,d_k$ 均存在，则
+
+$$
+\begin{split}
+|\{T\in\Gamma(M_i):\ &g\notin\operatorname{Ear}(T),\quad d_k\in\operatorname{Ear}(T),\\
+&\operatorname{Ear}(T)\cap E_j\ne\varnothing\}|
+\le\theta:=2c_4-3c_5=1573.
+\end{split}
+\tag{39.15}
+$$
+
+确实，由 $d_j$ 存在及引理B-39.2，$E_j$ 或为 $\{d_j\}$，或为 $\{d_j,h\}$，其中 $h$ 是长三间隙的一端外耳。单元素情形由(39.14)给 $\rho\le\theta$。二元情形中，含 $d_j$ 且不含 $g$ 的事件有 $c_4-c_5$ 个完成；含 $h$ 的事件也有 $c_4-c_5$ 个完成，因为 $h$ 自动禁止 $g$ 和 $M_j$ 中的一条耳，而另一个 $M_j$ 耳须由容斥禁止。强制集 $M_i\cup\{d_k,h\}$ 以及它与那个待禁止耳的并均兼容。两事件的交强制 $M_i,d_k,d_j,h$ 五条兼容耳，已经自动禁止 $g$ 及其余四条 $D$ 耳，所以有 $c_5$ 个完成。实际并集数遂为 $2(c_4-c_5)-c_5=\theta$。没有把与强制耳交叉的禁止事件计为正数。
+
+现在按非空残余子族 $\mathcal R_i$ 的个数 $m$ 分类。每次重命名核指标只用于陈述相应分支，不改变任何原顶点或耳标号。
+
+若 $m=0$，所有核均含 $g$，由(39.12)得
+
+$$
+A\le3\alpha=3690.
+\tag{39.16}
+$$
+
+若 $m=1$，记非空残余为 $\mathcal R_1$，则 $\mathcal A_2=\mathcal G_2$、$\mathcal A_3=\mathcal G_3$ 均非空。引理B-39.2分别迫使 $\mathcal R_1,\mathcal G_2$ 全含 $d_3$，$\mathcal R_1,\mathcal G_3$ 全含 $d_2$。由(39.12)–(39.14)，
+
+$$
+A\le\rho+\alpha+2\beta=3639.
+\tag{39.17}
+$$
+
+若 $m=2$，记非空残余为 $\mathcal R_1,\mathcal R_2$，于是 $\mathcal A_3=\mathcal G_3\ne\varnothing$。它分别迫使 $\mathcal R_1$ 全含 $d_2$、$\mathcal R_2$ 全含 $d_1$，且自身全含 $d_1,d_2$，故 $a_3\le c_5$。若 $\mathcal G_1$ 非空，由它与 $\mathcal R_2$ 的相交条件得其全含 $d_3$，故 $|\mathcal G_1|\le\beta$；$\mathcal G_2$ 同理，无论是否为空均有相同上界。
+
+两个残余在 $E_3$ 上交叉相交。应用引理B-39.3所用的二元投影分类，它们或者共同固定一条耳，或者一侧全含一个耳对而另一侧击中它。每侧已经分别强制本核匹配及 $d_2$ 或 $d_1$ 三耳。第一种给两个 $c_4$；第二种给 $c_5$ 与 $2c_4-c_5$。全部额外外耳非 $g$，互相兼容，且兼容相应本核匹配，所以这些实际包含事件的并集上界有效。因此
+
+$$
+|\mathcal R_1|+|\mathcal R_2|\le2c_4,\qquad
+A\le2c_4+c_5+2\beta=4697.
+\tag{39.18}
+$$
+
+最后设 $m=3$。若 $\mathcal G_i$ 非空，它与另两个非空残余相交，故自身全含 $d_j,d_k$，由(39.14)得 $|\mathcal G_i|\le c_5$。令 $p$ 为非空 $\mathcal G_i$ 的个数。若 $p=0$，引理B-39.3给 $A\le4565$；若 $p=1$，则 $A\le4565+c_5=4994$。
+
+若 $p=2$，记非空部分为 $\mathcal G_1,\mathcal G_2$。引理B-39.2给全部三个 $d_i$ 存在，并且
+
+$$
+\begin{array}{c|c}
+\text{子族}&\text{每个成员被迫包含的外耳}\\ \hline
+\mathcal R_1&d_3\\
+\mathcal R_2&d_3\\
+\mathcal R_3&d_1,d_2\\
+\mathcal G_1&d_2,d_3\\
+\mathcal G_2&d_1,d_3
+\end{array}
+\tag{39.19}
+$$
+
+又因 $\mathcal R_3\ne\varnothing$，每个 $\mathcal R_1$ 成员必须击中 $E_2$，每个 $\mathcal R_2$ 成员必须击中 $E_1$。分别把同一个子族的这些条件同时代入(39.15)，得 $|\mathcal R_1|,|\mathcal R_2|\le\theta$；(39.14)给 $|\mathcal R_3|\le\rho$，以及 $|\mathcal G_1|,|\mathcal G_2|\le c_5$。因此
+
+$$
+A\le2\theta+\rho+2c_5=5005.
+\tag{39.20}
+$$
+
+若 $p=3$，对任意 $i$，另两个含 $g$ 的核与 $\mathcal R_i$ 相交，迫使 $\mathcal R_i$ 同时含 $d_j,d_k$。于是
+
+$$
+A\le3\rho+3c_5=3c_4=4290.
+\tag{39.21}
+$$
+
+这穷尽 $m=0,1,2,3$ 以及最后一支的 $p=0,1,2,3$，所有上界均不超过5005，得到(39.11)。∎
+

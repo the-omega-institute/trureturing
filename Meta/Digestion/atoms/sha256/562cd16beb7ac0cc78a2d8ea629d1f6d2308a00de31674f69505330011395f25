@@ -1,0 +1,25 @@
+### 证明
+
+若两式成立，对任意 $\delta$，
+
+$$
+x^*(A,b+\delta)-x^*
+=
+R_A\delta
+=
+R_{\bar A}\delta
+=
+x^*(\bar A,\bar b+\delta)-\bar x^*,
+$$
+
+故所有线性效果相同。
+
+反之，取 $\delta=0$ 得 $x^*=\bar x^*$。延续等价再给出
+
+$$
+R_A\delta=R_{\bar A}\delta
+\quad\forall\delta\in\mathcal H.
+$$
+
+两个线性算子在全部向量上相同，故 $R_A=R_{\bar A}$。证毕。
+

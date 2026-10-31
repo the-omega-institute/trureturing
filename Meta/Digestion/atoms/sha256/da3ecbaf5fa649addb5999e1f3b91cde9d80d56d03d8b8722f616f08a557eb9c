@@ -1,0 +1,33 @@
+#### 定理 4.3（对数把唯一四角关系显式化）
+
+每份正五模式律都有唯一上述参数，且
+
+$$
+\theta_x=\log\frac{p_1}{p_0},\quad
+\theta_y=\log\frac{p_3}{p_0},\quad
+\theta_z=\log\frac{p_2}{p_0},\quad
+\boxed{\eta=\log\frac{p_0p_{13}}{p_1p_3}}.
+$$
+
+此外
+
+$$
+p_0p_{13}-p_1p_3=R\kappa-XY.
+$$
+
+故 $\eta=0$ 等价于在 $z=0$ 条件下两个端点独立。
+
+<a id="proof-4-3"></a>
+
+**证明。** 
+以 $p_0$ 为基准取比值，依次恢复三个单位置参数及交互参数；反代再归一化恢复全部概率。行列式式由 [(1)](#eq-fiber) 展开。底面条件概率表为
+
+$$
+\frac1R\begin{pmatrix}p_0&p_3\\p_1&p_{13}\end{pmatrix}.
+$$
+
+正二元表独立当且仅当秩一，也即行列式零。
+ ∎
+
+<a id="statement-4-4"></a>
+

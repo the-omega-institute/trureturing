@@ -1,0 +1,22 @@
+**定理 320.2（未来商的充分性与最小性）。** 商映射
+
+$$
+q_{\mathrm{fut}}:H\to H/\!\sim_{\mathrm{fut}}
+$$
+
+是所有有限未来词族的充分边界。若摘要 $q:H\to Q$ 也对所有这些未来词充分，即
+
+$$
+q(h)=q(h')
+\Longrightarrow
+K_\omega(\cdot\mid h)=K_\omega(\cdot\mid h')
+$$
+
+并保持相同合法后继，则存在唯一映射 $\overline q:Q\to H/\!\sim_{\mathrm{fut}}$ 使
+
+$$
+q_{\mathrm{fut}}=\overline q\circ q.
+$$
+
+因此任何充分摘要都至少区分未来等价类；未来商是最粗的充分边界。
+
