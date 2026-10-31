@@ -55,11 +55,7 @@ internal sealed class KageyKeehnRectangularTorusDocument : IScribeDocumentDefini
                         + "The four cases therefore give both coordinate periods n and m. Nat.gcd_eq_gcd_ab supplies the two "
                         + "gcd periods by integer combinations, and canonical ZMod representatives define H; the period subgroup "
                         + "proves representative independence and the exact plane-lift identity. No unequal finite quotient is given "
-                        + "a fictitious D8 action, and no color-triviality or extra source hypothesis is used. The source-to-Lean "
-                        + "search was completed after the proof over current D5 declarations, private machinery, pinned Mathlib, "
-                        + "and bounded external Lean sources; no exact whole supplier was found in that scope. The Nivat affine-period "
-                        + "helper is source-only and is not an adopted dependency. The public escape audit remains unfinished under "
-                        + "issue #23394; no declared_validated registration is claimed."))),
+                        + "a fictitious D8 action, and no color-triviality or extra source hypothesis is used."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("kagey-keehn-2023-rectangular-torus"),
