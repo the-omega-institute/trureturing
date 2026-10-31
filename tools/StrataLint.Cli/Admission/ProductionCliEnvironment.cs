@@ -413,7 +413,11 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
 
     private static InvalidOperationException CheckUsage() => new(
         "USAGE: StrataLint check [--protected-base REV] "
-        + "--candidate-lean-report FILE [--scribe-paths-from FILE]");
+        + "--candidate-lean-report FILE [--scribe-paths-from FILE] [--artifact-capacity]\n"
+        + "USAGE: StrataLint check-current --candidate-lean-report FILE [--scribe-paths-from FILE]\n"
+        + "USAGE: StrataLint check-delta --protected-base REV [--candidate-lean-report FILE] "
+        + "[--scribe-paths-from FILE] [--artifact-capacity]\n"
+        + "check-delta requires --candidate-lean-report FILE for non-theory changes");
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch
