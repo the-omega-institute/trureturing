@@ -225,6 +225,21 @@ theorem disagreementCount_scaled (n : ℕ) : 3 ^ n * disagreementCount n = heigh
             3 * (n + 1).factorial * (3 ^ n * disagreementCount n) := by ac_rfl
         _ = 3 * (n + 1).factorial * height n := by rw [ih]
 
+/-- The exact rational fraction of mismatching columns decays geometrically. -/
+theorem disagreement_fraction (n : ℕ) :
+    (disagreementCount n : ℚ) / (height n : ℚ) = (1 / 3 : ℚ) ^ n := by
+  have hh : (height n : ℚ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.ne_of_gt (height_pos n))
+  have hp : (3 : ℚ) ^ n ≠ 0 := pow_ne_zero n (by decide)
+  have hs : (3 : ℚ) ^ n * (disagreementCount n : ℚ) = (height n : ℚ) := by
+    have h := congrArg (fun k : ℕ => (k : ℚ)) (disagreementCount_scaled n)
+    simpa only [Nat.cast_mul, Nat.cast_pow, Nat.cast_ofNat] using h
+  rw [one_div_pow, one_div, div_eq_iff hh]
+  calc
+    (disagreementCount n : ℚ) =
+        ((3 : ℚ) ^ n)⁻¹ * ((3 : ℚ) ^ n * (disagreementCount n : ℚ)) := by
+      rw [← mul_assoc, inv_mul_cancel₀ hp, one_mul]
+    _ = ((3 : ℚ) ^ n)⁻¹ * (height n : ℚ) := by rw [hs]
+
 /-- Factorial exponents kill the two factors separately, without commuting them. -/
 theorem balancedWord_holonomy_eq_one {G : Type*} [Group G] [Finite G] (π : Bool → G)
     (n : ℕ) (hn : Nat.card G ≤ n + 1) (a : Bool) :
