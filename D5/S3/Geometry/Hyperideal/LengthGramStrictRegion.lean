@@ -6,6 +6,11 @@
    utility: none
    digest: The strict dual/cap Lorentz region contains the realizing barycenter. -/
 
+/-
+Escape audit unfinished: issue https://github.com/the-omega-institute/trureturing/issues/24947
+tracks the missing faithful four-slot Reg mirror.
+-/
+
 import D5.S3.Geometry.Hyperideal.LengthGramDualImage
 import D5.S3.Geometry.Hyperideal.LengthGramDualPairing
 import D5.S3.Geometry.Hyperideal.LengthGramMetricSegments
