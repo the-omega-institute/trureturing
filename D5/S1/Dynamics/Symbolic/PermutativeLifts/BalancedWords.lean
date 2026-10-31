@@ -47,7 +47,7 @@ theorem height_succ (n : ℕ) : height (n + 1) = 3 * (n + 1).factorial * height 
   induction n generalizing a with
   | zero => simp [height]
   | succ n ih =>
-      cases a <;> simp [balancedWord_succ, ih, height_succ] <;> omega
+      cases a <;> simp [balancedWord_succ, ih, height_succ] <;> nlinarith
 
 theorem height_pos (n : ℕ) : 0 < height n := by
   induction n with
@@ -116,6 +116,7 @@ theorem balancedWord_common_suffix (n : ℕ) (a : Bool) :
 theorem common_third_length (n : ℕ) (a : Bool) :
     (repeatWord (balancedWord n a) (n + 1).factorial).length = height (n + 1) / 3 := by
   rw [length_repeatWord, balancedWord_length, height_succ]
+  simp only [Nat.mul_assoc]
   omega
 
 theorem balancedWord_prefix_false (n : ℕ) (a : Bool) :
@@ -164,6 +165,65 @@ theorem balancedWord_pair_infix (n : ℕ) (hn : 1 ≤ n) (a b c : Bool) :
   · exact (suffix_prefix_infix (balancedWord_suffix_true n false)
       (balancedWord_prefix_false n true)).trans (zero_one_pair_next (n + 1) a)
   · exact (same_pair_next n hn false true).trans (balancedWord_block_infix (n + 1) a false)
+
+/-- Count mismatching aligned letters; the words used below always have equal length. -/
+def mismatchCount (u v : List Bool) : ℕ :=
+  (List.zipWith (fun a b => a != b) u v).count true
+
+private theorem mismatchCount_self (u : List Bool) : mismatchCount u u = 0 := by
+  induction u with
+  | nil => rfl
+  | cons a u ih => cases a <;> simpa [mismatchCount] using ih
+
+private theorem mismatchCount_append {u v u' v' : List Bool} (h : u.length = v.length) :
+    mismatchCount (u ++ u') (v ++ v') = mismatchCount u v + mismatchCount u' v' := by
+  simp only [mismatchCount, List.zipWith_append h, List.count_append]
+
+private theorem mismatchCount_repeat {u v : List Bool} (h : u.length = v.length) (k : ℕ) :
+    mismatchCount (repeatWord u k) (repeatWord v k) = k * mismatchCount u v := by
+  induction k with
+  | zero => simp [mismatchCount]
+  | succ k ih =>
+      rw [repeatWord_succ, repeatWord_succ, mismatchCount_append h, ih]
+      simp [Nat.succ_mul, Nat.add_comm]
+
+/-- The actual number of columns at which the two equal-height words disagree. -/
+def disagreementCount (n : ℕ) : ℕ := mismatchCount (balancedWord n false) (balancedWord n true)
+
+/-- Only the middle third can disagree, and it consists of N aligned child comparisons. -/
+theorem disagreementCount_succ (n : ℕ) :
+    disagreementCount (n + 1) = (n + 1).factorial * disagreementCount n := by
+  have he : 2 * (n + 1).factorial = (n + 1).factorial + (n + 1).factorial := by omega
+  have hf : balancedWord (n + 1) false =
+      repeatWord (balancedWord n false) (n + 1).factorial ++
+      (repeatWord (balancedWord n false) (n + 1).factorial ++
+      repeatWord (balancedWord n true) (n + 1).factorial) := by
+    simp only [balancedWord_succ, Bool.false_eq_true, reduceIte, one_mul, he,
+      repeatWord_add, List.append_assoc]
+  have ht : balancedWord (n + 1) true =
+      repeatWord (balancedWord n false) (n + 1).factorial ++
+      (repeatWord (balancedWord n true) (n + 1).factorial ++
+      repeatWord (balancedWord n true) (n + 1).factorial) := by
+    simp only [balancedWord_succ, reduceIte, one_mul, he, repeatWord_add]
+  have hl : (balancedWord n false).length = (balancedWord n true).length := by simp
+  have hr : (repeatWord (balancedWord n false) (n + 1).factorial).length =
+      (repeatWord (balancedWord n true) (n + 1).factorial).length :=
+    (common_third_length n false).trans (common_third_length n true).symm
+  unfold disagreementCount
+  rw [hf, ht, mismatchCount_append rfl, mismatchCount_append hr,
+    mismatchCount_self, mismatchCount_self, mismatchCount_repeat hl]
+  simp [disagreementCount]
+
+/-- Integral form of the exact normalized disagreement fraction 3^(-n). -/
+theorem disagreementCount_scaled (n : ℕ) : 3 ^ n * disagreementCount n = height n := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+      rw [disagreementCount_succ, height_succ, pow_succ]
+      calc
+        3 ^ n * 3 * ((n + 1).factorial * disagreementCount n) =
+            3 * (n + 1).factorial * (3 ^ n * disagreementCount n) := by ac_rfl
+        _ = 3 * (n + 1).factorial * height n := by rw [ih]
 
 /-- Factorial exponents kill the two factors separately, without commuting them. -/
 theorem balancedWord_holonomy_eq_one {G : Type*} [Group G] [Finite G] (π : Bool → G)
