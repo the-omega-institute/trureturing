@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/Adjacent/FourNegativeAdjacentEqual
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/Adjacent/FourNegativeAdjacentEqual
-   mirror-E: none(waiver:no-escape-mirror-specified)
+   mirror-E: none(waiver:no-public-declarations)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Physical repetition and a narrow old strip give the diagonal paired-gap joint order. -/
@@ -27,6 +27,7 @@ private theorem first_ear (k t : ℕ) (hk : 2≤k)
     (hcap : 2*H+t≤modulus k) :
     OriginalOrder k t sigma ∧ OriginalOrder (k+1) (2*t) (earWord k sigma 0) := by
   have htZ : (t : ℤ)≤(2 : ℤ)^(k-1)-1 := by
+    have hp : (1 : ℕ)≤2^(k-1) := Nat.one_le_two_pow
     have hh : t+1≤2^(k-1) := by omega
     have hhZ : (t : ℤ)+1≤(2 : ℤ)^(k-1) := by exact_mod_cast hh
     omega
@@ -86,8 +87,8 @@ private theorem first_ear (k t : ℕ) (hk : 2≤k)
   · intro n
     obtain ⟨hs0,hs1⟩ := hwidth n
     constructor <;> omega
-  · simp only [earWord,List.take_zero,List.drop_zero,List.nil_append,List.map_cons,
-      List.sum_cons,List.map_map,Function.comp_def]
+  · simp only [earWord,List.take_zero,List.drop_zero,List.map_nil,List.nil_append,
+      List.singleton_append,List.map_cons,List.sum_cons,List.map_map,Function.comp_def]
     simp_rw [hsource]
     rw [hear,linear,hz,hsum]
     ring
@@ -124,9 +125,9 @@ private theorem diagonal (n : ℕ) (hn : 2≤n) :
       rw [←he]
       nlinarith
     have hp : (1 : ℕ)≤2^(4*n) := Nat.one_le_two_pow
-    have hi' : (t : ℤ)+1≤(2 : ℤ)^(4*n) := by omega
-    have hiN : t+1≤2^(4*n) := by exact_mod_cast hi'
-    omega
+    have hi' : (t : ℤ)<((2^(4*n)-1 : ℕ) : ℤ) := by
+      simpa only [Nat.cast_sub hp,Nat.cast_pow,Nat.cast_ofNat,Nat.cast_one] using hi
+    exact_mod_cast hi'
   have htNk : t<2^k-1 := by simpa only [show 4*n=k by dsimp [k]; omega] using htN
   have hrep (i : ℕ) (hi : i<k) :
       f i=D*actualSource n 1 ⟨i%n,Nat.mod_lt _ (by omega)⟩ := by
@@ -152,7 +153,10 @@ private theorem diagonal (n : ℕ) (hn : 2≤n) :
     rw [hrep (j*n+i) (by dsimp [k]; omega)]
     have hm : (j*n+i)%n=i := by simp [Nat.add_mod,Nat.mod_eq_of_lt hi]
     simp only [hm,base i hi]
-    split_ifs <;> simp only [H] <;> ring
+    split_ifs
+    · ring
+    · change D * -(q-1) = -((q-1)*D)
+      ring
   have block (j : ℕ) (hj : j<4) : InStrip f H 0 (List.range' (j*n) n) ∧
       ((List.range' (j*n) n).map f).sum=0 := by
     let P := List.range' (j*n) (n-1)
@@ -212,7 +216,8 @@ private theorem diagonal (n : ℕ) (hn : 2≤n) :
     simpa only [sigma,List.take_map,List.map_map,hm,zero_add] using hh
   have zero : (sigma.map (actualSource k t)).sum=0 := by
     have hm : sigma.map (actualSource k t)=(List.range k).map f := by
-      rw [sigma,List.map_map]
+      dsimp only [sigma]
+      rw [List.map_map]
       exact List.map_congr_left hvalue
     rw [hm]
     simpa only [show 4*n=k by dsimp [k]; omega] using hs.2

@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/Adjacent/FourNegativeAdjacentReverse
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/Adjacent/FourNegativeAdjacentReverse
-   mirror-E: none(waiver:no-escape-mirror-specified)
+   mirror-E: none(waiver:no-public-declarations)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: The reverse adjacent dyadic ratio has a literal first-ear joint order. -/
@@ -73,6 +73,7 @@ private theorem inventory (n : ℕ) (hn : 3≤n) :
     have h2 := List.range'_append_1 (s:=0) (m:=2*n+2) (n:=n)
     have h3 := List.range'_append_1 (s:=0) (m:=3*n+2) (n:=n)
     simp only [Nat.zero_add,show n+1+(n+1)=2*n+2 by omega] at h1 h2 h3
+    rw [show 2*n+2+n=3*n+2 by omega] at h2
     calc
       _ = ((List.range' 0 (n+1)++List.range' (n+1) (n+1))++List.range' (2*n+2) n)++List.range' (3*n+2) n := by simp only [List.append_assoc]
       _ = List.range' 0 (3*n+2+n) := by rw [h1,h2,h3]
@@ -124,7 +125,7 @@ private theorem symbolic (n : ℕ) (hn : 3≤n) :
   have hM : 1+z+z*(2*z)+z*(2*z)^2=M := by dsimp [M]; ring
   have hE : 2*M-(1+z+z*(2*z))=GX := by dsimp [GX]; ring
   obtain ⟨hU,hV,hW,hX,hU',hV',hW',hX',hear⟩ := chains n (n+1) (by omega) (by omega)
-  simp only [hpw,hA,hB,hL,hM,hE] at hU hV hW hX hU' hV' hW' hX' hear
+  simp only [show (2 : ℤ)^n=z from rfl,hpw,hA,hB,hL,hM,hE] at hU hV hW hX hU' hV' hW' hX' hear
   change ∀ i<n+1, f i=if i+1<n+1 then 2^i*A else -(N-B)/2 at hU
   change ∀ i<n+1, f (n+1+i)=if i+1<n+1 then 2^i*B else -(N-L)/2 at hV
   change ∀ i<n, f (2*(n+1)+i)=if i+1<n then 2^i*L else -(N-M)/2 at hW
@@ -143,10 +144,10 @@ private theorem symbolic (n : ℕ) (hn : 3≤n) :
   let w := 3*n+1
   let x := 4*n+1
   have posU (i : ℕ) (hi : i<n-1) : f (1+i)=2^i*(2*A) ∧ g (1+i)=2^i*(4*A) := by
-    rw [show 1+i=i+1 by omega,hU (i+1) (by omega),hU' (i+1) (by omega),if_pos (by omega),if_pos (by omega),pow_succ]
+    rw [show 1+i=i+1 by omega,hU (i+1) (by omega),hU' (i+1) (by omega),ite_eq_left (by omega),ite_eq_left (by omega),pow_succ]
     constructor <;> ring
   have posV (i : ℕ) (hi : i<n-1) : f (n+2+i)=2^i*(2*B) ∧ g (n+2+i)=2^i*(2*GV) := by
-    rw [show n+2+i=n+1+(i+1) by omega,hV (i+1) (by omega),hV' (i+1) (by omega),if_pos (by omega),if_pos (by omega),pow_succ]
+    rw [show n+2+i=n+1+(i+1) by omega,hV (i+1) (by omega),hV' (i+1) (by omega),ite_eq_left (by omega),ite_eq_left (by omega),pow_succ]
     constructor <;> ring
   have posW (i : ℕ) (hi : i<n-1) : f (2*n+2+i)=2^i*L ∧ g (2*n+2+i)=2^i*GW := by
     rw [show 2*n+2+i=2*(n+1)+i by omega]
@@ -182,11 +183,11 @@ private theorem symbolic (n : ℕ) (hn : 3≤n) :
     ⟨ladder_sum f (2*n+2) (n-1) L (fun i hi => (posW i hi).1),ladder_sum g (2*n+2) (n-1) GW (fun i hi => (posW i hi).2)⟩
   have sumX : (X.map f).sum=(q-1)*M ∧ (X.map g).sum=(q-1)*GX :=
     ⟨ladder_sum f (3*n+2) (n-1) M (fun i hi => (posX i hi).1),ladder_sum g (3*n+2) (n-1) GX (fun i hi => (posX i hi).2)⟩
+  have hzpos : 0≤z := by omega
   have coeff : 0≤A ∧ 0≤B ∧ 0≤L ∧ 0≤M ∧ 0≤GV ∧ 0≤GW ∧ 0≤GX := by
     dsimp [A,B,L,M,GV,GW,GX]
     ring_nf
     refine ⟨by positivity,by positivity,by positivity,by positivity,by positivity,by positivity,?_⟩
-    change 0≤1+z+2*z^2+8*z^3
     positivity
   obtain ⟨hAp,hBp,hLp,hMp,hGVp,hGWp,hGXp⟩ := coeff
   have up : ∀ i∈U, 0≤f i ∧ 0≤g i := by
@@ -259,8 +260,13 @@ private theorem actualSource_four_negative_adjacent_reverse_joint_lift (r s : �
   subst s
   by_cases h : r=2
   · subst r
-    refine ⟨[0,8,9,3,1,7,6,2,4,5],?_,?_⟩
-    all_goals decide
+    refine ⟨[0,8,9,3,1,7,6,2,4,5],⟨by decide,by decide,?_⟩,⟨by decide,by decide,?_⟩⟩
+    all_goals
+      intro h
+      by_cases hh : h≤11
+      · interval_cases h <;> norm_num [earWord,actualSource,centered,modulus]
+      · rw [List.take_of_length_le (by simp [earWord]; omega)]
+        norm_num [earWord,actualSource,centered,modulus]
   · exact symbolic r (by omega)
 
 end D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentReverse
