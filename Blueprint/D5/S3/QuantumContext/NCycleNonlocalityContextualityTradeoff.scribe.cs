@@ -31,11 +31,6 @@ internal sealed class NCycleNonlocalityContextualityTradeoffDocument : IScribeDo
                 "An Alice response is a real table on her two settings and two outcomes. Such responses "
                     + "are the Alice factors in the generalized-local decomposition "
                     + "(final_version.tex, lines 213–219 and 225)."),
-            Definition("is-alice-response", "Probability responses for Alice", "IsAliceResponse",
-                IsAliceResponseFormula(), AssessedProvenance.FromLiterature(Source),
-                "Every entry is nonnegative and the probabilities of the two outcomes sum to one at "
-                    + "each setting. These are the probability responses used in the generalized-local "
-                    + "decomposition (final_version.tex, lines 213–219)."),
             Definition("is-nd", "Nondisturbing cycle probabilities", "IsND", IsNDFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 "Each context has a nonnegative probability distribution. Summing over the first outcome "
@@ -62,10 +57,12 @@ internal sealed class NCycleNonlocalityContextualityTradeoffDocument : IScribeDo
                 DeterministicFormula(), AssessedProvenance.FromLiterature(Source),
                 "A global Boolean assignment s gives probability one to its ordered pair of outcomes "
                     + "in each context and zero to every other pair. These are the deterministic "
-                    + "noncontextual behaviors (final_version.tex, lines 151–159 and 225)."),
+                    + "noncontextual behaviors (final_version.tex, lines 151–159 and 225). The curried "
+                    + "table applies the repository's deterministic postprocessing kernel to ordered outcome pairs."),
             Definition("is-generalized-local", "Generalized-local joint tables", "IsGeneralizedLocal",
                 IsGeneralizedLocalFormula(), AssessedProvenance.FromLiterature(Source),
-                "Take the real convex hull of independent products of a probability response for Alice "
+                "Alice responses satisfy the row-stochastic predicate: nonnegative entries and row sum one. "
+                    + "Take the real convex hull of independent products of such a response for Alice "
                     + "and a nondisturbing behavior for Bob. Bob's hidden response may itself be "
                     + "contextual, as allowed in the generalized-local definition "
                     + "(final_version.tex, lines 213–219)."),
@@ -186,16 +183,6 @@ internal sealed class NCycleNonlocalityContextualityTradeoffDocument : IScribeDo
     private static Formula AliceResponseFormula() => Equal(
         Typed(Local("AliceResponse"), X("Type")), Arrow(Fin(D(2)), Arrow(BoolType(), Reals())));
 
-    private static Formula IsAliceResponseFormula()
-    {
-        Formula positive = All("x", Fin(D(2)), All("a", BoolType(),
-            LE(Real(0), At(X("α"), X("x"), X("a")))));
-        Formula normalized = All("x", Fin(D(2)), Equal(
-            SumOf("a", At(X("α"), X("x"), X("a"))), Real(1)));
-        return All("α", Alice(), Equivalence(LocalCall("IsAliceResponse", X("α")),
-            And(positive, normalized)));
-    }
-
     private static Formula IsNDFormula()
     {
         Formula positive = All("i", Fin(X("n")), All("b", BoolType(), All("c", BoolType(),
@@ -262,7 +249,8 @@ internal sealed class NCycleNonlocalityContextualityTradeoffDocument : IScribeDo
     private static Formula IsGeneralizedLocalFormula()
     {
         Formula products = SetOf("q", Joint(), Some("α", Alice(), Some("r", Bob(),
-            And(LocalCall("IsAliceResponse", X("α")), And(LocalCall("IsND", X("r")),
+            And(At(Qualified("D5", "S3", "Estimation", "DecisionRisk",
+                "DescentDefectBounds", "IsRowStochastic"), X("α")), And(LocalCall("IsND", X("r")),
                 Equal(X("q"), LocalCall("productBehavior", X("α"), X("r"))))))));
         return All("n", Naturals(), All("p", Joint(), Equivalence(
             LocalCall("IsGeneralizedLocal", X("p")),

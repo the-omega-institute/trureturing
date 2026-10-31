@@ -151,6 +151,17 @@ internal sealed class LayeredFlowDocument : IScribeDocumentDefinition
                         + "every edge of a positive-weight circuit has forward orientation."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("cycle-initial-visited-nodup"),
+                DeclarationHandle.Create(
+                    "D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.cycle_initial_visited_nodup"),
+                H("No repeated vertex before the closing edge"),
+                StatementSource.FromAuthor(Disp(CycleInitialVisitedNodupFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A cycle that has no proper positive closed subwalk visits each vertex "
+                        + "at most once before its closing edge."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("simple-cycle-winding"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.simple_cycle_winding"),
                 H("simple cycle winding"),
@@ -222,6 +233,36 @@ internal sealed class LayeredFlowDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Exact source telescope, in the module declared generic contexts: theorem local_law_compact {n : ℕ} [NeZero n] : IsCompact {p : ZMod n → Fin 5 → ℝ | IsLocalLaw p}"))),
                 DescribeRole.Theorem))));
+
+    private static Formula CycleInitialVisitedNodupFormula()
+    {
+        Formula target = At(Q("Maths", "EdgeGraph", "target"), X("G"), X("edge"));
+        Formula source = At(Q("Maths", "EdgeGraph", "source"), X("G"), X("edge"));
+        Formula Walk(Formula start, Formula finish) =>
+            At(Q("Maths", "EdgeGraph", "Walk"), X("G"), start, finish);
+        Formula Edges(string walk) => At(Q("Maths", "EdgeGraph", "Walk", "edges"), X(walk));
+        Formula Length(string walk) => At(Q("Maths", "EdgeGraph", "Walk", "length"), X(walk));
+        Formula Positive(Formula value) =>
+            new Formula.Relation(D(0), FormulaRelationOperator.LessThan, value);
+        Formula concat = At(Q("Maths", "EdgeGraph", "Walk", "concat"),
+            X("initial"), X("edge"), X("legal"));
+        Formula split = Equal(At(Q("Maths", "EdgeGraph", "Walk", "edges"), concat),
+            At(Q("List", "append"), Edges("before"),
+                At(Q("List", "append"), Edges("inner"), Edges("after"))));
+        Formula outside = new Formula.Binary(Length("before"), FormulaBinaryOperator.Add,
+            Length("after"));
+        Formula minimal = All("v", X("V"),
+            All("before", Walk(target, X("v")),
+            All("inner", Walk(X("v"), X("v")),
+            All("after", Walk(X("v"), target),
+                Imp(split, Imp(Positive(Length("inner")), Imp(Positive(outside), Q("False"))))))));
+        Formula conclusion = At(Q("List", "Nodup"),
+            At(Q("Maths", "EdgeGraph", "Walk", "visited"), X("initial")));
+        return All("V", Q("Type"), All("E", Q("Type"),
+            All("G", At(Q("Maths", "EdgeGraph"), X("V"), X("E")),
+            All("a", X("V"), All("edge", X("E"), All("initial", Walk(target, X("a")),
+            All("legal", Equal(source, X("a")), Imp(minimal, conclusion))))))));
+    }
 
     private static Formula PositiveCoefficientForwardFormula()
     {

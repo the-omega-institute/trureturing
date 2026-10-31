@@ -7,7 +7,6 @@
    digest: Normalized Bell and contextuality inequalities obey the binary n-cycle trade-off. -/
 
 import D5.S3.QuantumContext.NCycleNondisturbingGenerators
-import Mathlib.Algebra.Ring.BooleanRing
 
 /-! The binary generalized Bell scenario of Porto–Ruffolo–Rabelo–Terra Cunha–Kurzyński,
 arXiv:2405.02964v2. Context `i` consists of measurements `i` and `finRotate n i`.
@@ -18,6 +17,7 @@ set_option autoImplicit false
 noncomputable section
 
 open Finset
+open D5.S3.Estimation.DecisionRisk.DescentDefectBounds (IsRowStochastic deterministicPostprocess)
 
 namespace D5.S3.QuantumContext.NCycleNonlocalityContextualityTradeoff
 
@@ -29,10 +29,6 @@ abbrev BobBehavior (n : ℕ) := Fin n → Bool → Bool → ℝ
 
 /-- Alice's probabilities, indexed by setting and outcome. -/
 abbrev AliceResponse := Fin 2 → Bool → ℝ
-
-/-- Nonnegative, normalized Alice responses. -/
-def IsAliceResponse (α : AliceResponse) : Prop :=
-  (∀ x a, 0 ≤ α x a) ∧ ∀ x, ∑ a, α x a = 1
 
 /-- Nondisturbance identifies the shared measurement in consecutive contexts. -/
 def IsND {n : ℕ} (r : BobBehavior n) : Prop :=
@@ -58,11 +54,11 @@ def productBehavior {n : ℕ} (α : AliceResponse) (r : BobBehavior n) : Behavio
 
 /-- The context probabilities induced by a global deterministic assignment. -/
 def deterministic {n : ℕ} (s : Fin n → Bool) : BobBehavior n :=
-  fun i b c => if s i = b ∧ s (finRotate n i) = c then 1 else 0
+  fun i b c => deterministicPostprocess (fun j => (s j, s (finRotate n j))) i (b, c)
 
 /-- Generalized locality permits arbitrary nondisturbing hidden Bob behaviors. -/
 def IsGeneralizedLocal {n : ℕ} (p : Behavior n) : Prop :=
-  p ∈ convexHull ℝ {q | ∃ α r, IsAliceResponse α ∧ IsND r ∧ q = productBehavior α r}
+  p ∈ convexHull ℝ {q | ∃ α r, IsRowStochastic α ∧ IsND r ∧ q = productBehavior α r}
 
 /-- Noncontextuality is the convex hull of global deterministic assignments. -/
 def IsNoncontextual {n : ℕ} (r : BobBehavior n) : Prop :=
@@ -110,7 +106,7 @@ private lemma bob_nd {n : ℕ} {p : Behavior n} (hp : IsNSND p) :
     exact sum_congr rfl fun a _ => hp.2.2.1 0 i a c
 
 private lemma product_nsnd {n : ℕ} {α : AliceResponse} {r : BobBehavior n}
-    (hα : IsAliceResponse α) (hr : IsND r) : IsNSND (productBehavior α r) := by
+    (hα : IsRowStochastic α) (hr : IsND r) : IsNSND (productBehavior α r) := by
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
   · intro x i a b c
     exact mul_nonneg (hα.1 x a) (hr.1 i b c)
@@ -131,7 +127,7 @@ private lemma product_nsnd {n : ℕ} {α : AliceResponse} {r : BobBehavior n}
 private lemma vertex_nd {n : ℕ} (γ : Fin n → Bool) : IsND (vertex γ) := by
   refine ⟨?_, ?_, ?_⟩
   · intro i b c
-    dsimp [vertex]
+    rw [vertex.eq_1]
     split_ifs <;> norm_num
   · intro i
     dsimp only [vertex]
@@ -199,7 +195,7 @@ private lemma even_vertex_noncontextual {n : ℕ} (γ : Fin n → Bool)
     ext i b c
     change vertex γ i b c = (1 / 2 : ℝ) * deterministic s i b c +
       (1 / 2 : ℝ) * deterministic (fun j => !(s j)) i b c
-    dsimp only [vertex, deterministic]
+    simp only [vertex, deterministic, deterministicPostprocess, Prod.mk.injEq]
     simp only [← hs i]
     have hbinary (u v b c : Bool) :
         (if Bool.xor b c = Bool.xor u v then (1 / 2 : ℝ) else 0) =
@@ -282,7 +278,7 @@ private lemma unique_positive_generator {n : ℕ}
   classical
   have hvertex (γ : Fin n → Bool) : t.1 (vertex γ) + t.2 ≤ 1 := by
     let α : AliceResponse := fun _ _ => 1 / 2
-    have hα : IsAliceResponse α := by
+    have hα : IsRowStochastic α := by
       constructor
       · intros; norm_num [α]
       · intro x; norm_num [α, Fintype.sum_bool]
@@ -333,7 +329,8 @@ private lemma generator_dominance {n : ℕ}
   have hznonneg (j : ι) (i : Fin n) (b c : Bool) : 0 ≤ z j i b c := by
     rcases hz j with ⟨s, hs⟩ | ⟨η, _, he⟩
     · rw [← hs]
-      dsimp [deterministic]
+      rw [deterministic.eq_1]
+      dsimp only [deterministicPostprocess]
       split_ifs <;> norm_num
     · rw [he]
       exact (vertex_nd η).1 i b c
@@ -425,7 +422,7 @@ private lemma common_local_part {n : ℕ} (hn : 3 ≤ n)
     (hc : 0 < t.1 (bobMarginal p) + t.2)
     (γ : Fin n → Bool) (hmax : t.1 (vertex γ) + t.2 = 1)
     (hother : ∀ η, oddSigns η → η ≠ γ → t.1 (vertex η) + t.2 ≤ 0) :
-    ∃ α : AliceResponse, IsAliceResponse α ∧
+    ∃ α : AliceResponse, IsRowStochastic α ∧
       ∀ x i a b c, (t.1 (bobMarginal p) + t.2) *
         (α x a * vertex γ i b c) ≤ p x i a b c := by
   classical
@@ -443,7 +440,7 @@ private lemma common_local_part {n : ℕ} (hn : 3 ≤ n)
     exact h
   have hpos (x : Fin 2) : 0 < total x := hc.trans_le (htotal x)
   let α : AliceResponse := fun x a => w x a / total x
-  have hα : IsAliceResponse α := by
+  have hα : IsRowStochastic α := by
     constructor
     · intro x a
       exact div_nonneg (hw x a) (hpos x).le

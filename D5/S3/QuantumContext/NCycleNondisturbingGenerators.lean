@@ -7,6 +7,7 @@
    digest: Binary cyclic nondisturbing laws are mixtures of deterministic and parity laws. -/
 
 import D5.S3.Combinatorics.Graph.LayeredCirculation.LayeredFlow
+import D5.S3.Estimation.DecisionRisk.DescentDefectBounds
 
 /-! The normalized circulation supplier applied to the two-outcome layered cycle graph. -/
 
@@ -15,6 +16,7 @@ set_option autoImplicit false
 noncomputable section
 
 open Finset Maths Maths.AdditiveTransport
+open D5.S3.Estimation.DecisionRisk.DescentDefectBounds (deterministicPostprocess)
 
 namespace D5.S3.QuantumContext.NCycleNondisturbingGenerators
 
@@ -25,7 +27,7 @@ private def graph (n : ℕ) : EdgeGraph (Fin n × Bool) (Fin n × Bool × Bool) 
 /-- Union of deterministic cycle laws and parity laws with mass 1/2 when `b xor c = γ i`. -/
 def allGenerators (n : ℕ) : Set (Fin n → Bool → Bool → ℝ) :=
   Set.range (fun s : Fin n → Bool => fun i b c =>
-    if s i = b ∧ s (finRotate n i) = c then (1 : ℝ) else 0) ∪
+    deterministicPostprocess (fun j => (s j, s (finRotate n j))) i (b, c)) ∪
   Set.range (fun γ : Fin n → Bool => fun i b c =>
     if Bool.xor b c = γ i then (1 / 2 : ℝ) else 0)
 
@@ -51,14 +53,9 @@ private lemma simple_departures_le_one {v e : Type} [Fintype e] [DecidableEq e]
   cases w with
   | nil => exact (Nat.not_lt_zero _ hw.1).elim
   | concat initial edge legal =>
-    have hinit : initial.visited.Nodup := by
-      by_contra h
-      obtain ⟨v, before, inner, after, hinner, hedges⟩ :=
-        initial.exists_closedSubwalk_of_not_nodup h
-      apply hw.2 v before inner (after.concat edge legal)
-      · simp only [EdgeGraph.Walk.edges_concat, hedges, List.append_assoc]
-      · exact hinner
-      · simp
+    have hinit :=
+      D5.S3.Combinatorics.Graph.LayeredCirculation.LocalOptimum.cycle_initial_visited_nodup
+        edge initial legal hw.2
     have hi := departures_visited initial u
     have hcount : initial.visited.count u ≤ 1 := (List.nodup_iff_count_le_one.mp hinit) u
     rw [EdgeGraph.Walk.outgoingMultiplicity_edgeMultiplicity_concat, legal]
@@ -109,7 +106,7 @@ private lemma circuit_generator {n : ℕ} (hn : 0 < n) {a : Fin n × Bool}
       | zero => rfl
       | succ i ih =>
         have hrot : finRotate (k + 1) i.castSucc = i.succ := by
-          convert finRotate_of_lt i.isLt using 1 <;> ext <;> rfl
+          exact finRotate_of_lt i.isLt
         rw [← hrot, hstep, ih]
     have hlength : w.length = (k + 1) * mass 0 := by
       have h := sum_edgeMultiplicity_eq_length w
@@ -154,6 +151,7 @@ private lemma circuit_generator {n : ℕ} (hn : 0 < n) {a : Fin n × Bool}
           (fun c => (hbalance i c).symm.trans (hrows _ c)) b c
       refine Or.inl ⟨s, ?_⟩
       ext i b c
+      simp only [deterministicPostprocess, Prod.mk.injEq]
       change (if s i = b ∧ s (finRotate (k + 1) i) = c then (1 : ℝ) else 0) =
         (k + 1 : ℕ) * ((count i b c : ℝ) / (w.length : ℝ))
       rw [hlength, hm, mul_one, hcounts]
@@ -253,7 +251,8 @@ theorem decomposition (n : ℕ) (hn : 0 < n) (r : Fin n → Bool → Bool → �
       simpa only [q, if_pos hj] using circuit_generator hn (cycle j) (hsimple j) hz
     · change (if 0 < weight j then _ else _) ∈ _
       rw [if_neg hj]
-      exact Or.inl ⟨fun _ => false, rfl⟩
+      exact Or.inl ⟨fun _ => false, by
+        simp only [deterministicPostprocess, Prod.mk.injEq]⟩
   apply mem_convexHull_of_exists_fintype weight q hweight hsum hq
   ext i b c
   simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
