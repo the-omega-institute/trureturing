@@ -61,7 +61,7 @@ theorem actualSource_descending_joint_lift (a b c d : ℕ)
     funext r; fin_cases r <;> dsimp [base,A,B,L,M,D,x,y,z,t] <;> ring
   have hnewbase : newBase a b c d = ![2*A,2*B-1,2*L-1-z,J] := by
     funext r; fin_cases r <;> dsimp [newBase,charge,J]
-    all_goals rw [hbase]; dsimp; ring
+    all_goals rw [hbase] <;> dsimp <;> ring
   have hseed : (s : ℤ) = A := by
     dsimp [s,A,D,x,y,z]
     push_cast
@@ -132,7 +132,8 @@ theorem actualSource_descending_joint_lift (a b c d : ℕ)
     (by simp [nx,nu,nv,nw,k]; omega)
     (by intro i hi; simp only [List.mem_cons,List.mem_nil_iff,or_false] at hi
         rcases hi with rfl|rfl|rfl|rfl <;> dsimp [nx,nu,nv,nw,k] <;> omega)
-  change word.Perm (List.range k) at hp
+  have hp : word.Perm (List.range k) := by
+    simpa only [word,post,G,List.append_assoc,List.cons_append,List.nil_append] using hp
   have allpos (i : ℕ) (hi : i < k) (hn : i ≠ nx ∧ i ≠ nu ∧ i ≠ nv ∧ i ≠ nw) :
       0 ≤ f i ∧ 0 ≤ g i := by
     have hs := source_signs a b c d (by omega) (by omega) (by omega) hd i hi
@@ -175,7 +176,7 @@ theorem actualSource_descending_joint_lift (a b c d : ℕ)
   have nt2 := terminal 1
   have nt3 := terminal 2
   simp only [chainStart,chainLength,nextBase,nextNewBase,hbase,hnewbase,
-    Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,zero_add] at nt0 nt1 nt2 nt3
+    Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,zero_add] at nt0 nt1 nt2 nt3
   have en0 : d+c+b+(a-1)=nx := by dsimp [nx,k]; omega
   have en1 : d+(c-1)=nv := by dsimp [nv]; omega
   have en2 : d+c+(b-1)=nw := by dsimp [nw]; omega
@@ -266,13 +267,13 @@ theorem actualSource_descending_joint_lift (a b c d : ℕ)
     exact hh.trans (by simpa [List.range_succ] using hp.append_right [k])
   refine ⟨word.map (label k (by dsimp [k]; omega)),?_,?_⟩
   · apply lift_order k s (by dsimp [k]; omega) word hp
-    · simpa only [f,oldValue,hbase,Matrix.cons_val_zero,hmod,hseed] using oldstrip
+    · simpa only [f,oldValue,hbase,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,hmod,hseed] using oldstrip
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero k s (by dsimp [k]; omega)
   · have marked := marked_word k d (by dsimp [k]; omega) P.toList post plen hp
     rw [marked]
     apply lift_order (k+1) (2*s) (by omega) (P.toList ++ k :: post) hpnew
     · have hseed' : ((2*s : ℕ) : ℤ)=2*A := by push_cast; rw [hseed]
-      simpa only [g,newValue,hbase,Matrix.cons_val_zero,hmod',hseed',show (2*N+1)/2=N by omega] using newstrip
+      simpa only [g,newValue,hbase,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,hmod',hseed',show (2*N+1)/2=N by omega] using newstrip
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero (k+1) (2*s) (by dsimp [k]; omega)
 
 end D5.S3.Combinatorics.Circle.FourNegative.Descending

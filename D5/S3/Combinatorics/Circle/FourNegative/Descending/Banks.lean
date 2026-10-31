@@ -4,7 +4,7 @@
    mirror-E: none(waiver:private-consumed-labels)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
-   digest: Labelled dyadic reserve banks retain empty middle banks and the exact first-bank cardinality. -/
+   digest: Dyadic reserve banks with empty middle intervals and literal first-bank length. -/
 import D5.S3.Combinatorics.Circle.FourNegative.Descending.Arithmetic
 import Mathlib.Algebra.Order.Interval.Finset.Basic
 
@@ -45,20 +45,68 @@ private theorem selected_good (a b c d : ℕ)
     (∀ r : Fin 3, ∀ i ∈ selected a b c d r,
       i < a+b+c+d ∧ i ≠ a+b+c+d-1 ∧ i ≠ d-1 ∧ i ≠ d+c-1 ∧ i ≠ d+c+b-1) ∧
     (∀ r s : Fin 3, r ≠ s → Disjoint (selected a b c d r) (selected a b c d s)) := by
-  have he : a-c-1 ≤ a-d-2 := by omega
-  have hf : a-b-1 ≤ a-c-1 := by omega
-  constructor
-  · intro r i hi
-    fin_cases r <;> simp only [selected,bank,Matrix.cons_val_zero,Matrix.cons_val_one,
-      Matrix.cons_val_two,mem_shift,Finset.mem_union,Finset.mem_singleton,
-      Finset.mem_Ico,Finset.mem_range] at hi <;> omega
-  · intro r s hrs
+  have g0 : ∀ i ∈ selected a b c d 0,
+      i < a+b+c+d ∧ i ≠ a+b+c+d-1 ∧ i ≠ d-1 ∧ i ≠ d+c-1 ∧ i ≠ d+c+b-1 := by
+    intro i hi
+    simp only [selected,bank,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,
+      Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,
+      Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,shift,
+      Finset.image_union,Finset.image_singleton,image_Ico,image_range,
+      Finset.mem_union,Finset.mem_insert,Finset.mem_singleton,Finset.mem_Ico,Finset.mem_range] at hi
+    omega
+  have g1 : ∀ i ∈ selected a b c d 1,
+      i < a+b+c+d ∧ i ≠ a+b+c+d-1 ∧ i ≠ d-1 ∧ i ≠ d+c-1 ∧ i ≠ d+c+b-1 := by
+    intro i hi
+    simp only [selected,bank,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,
+      Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,
+      Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,shift,
+      Finset.image_union,Finset.image_singleton,image_Ico,image_range,
+      Finset.mem_union,Finset.mem_insert,Finset.mem_singleton,Finset.mem_Ico,Finset.mem_range] at hi
+    omega
+  have g2 : ∀ i ∈ selected a b c d 2,
+      i < a+b+c+d ∧ i ≠ a+b+c+d-1 ∧ i ≠ d-1 ∧ i ≠ d+c-1 ∧ i ≠ d+c+b-1 := by
+    intro i hi
+    simp only [selected,bank,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,
+      Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,
+      Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,shift,
+      Finset.image_union,Finset.image_singleton,image_Ico,image_range,
+      Finset.mem_union,Finset.mem_insert,Finset.mem_singleton,Finset.mem_Ico,Finset.mem_range] at hi
+    omega
+  have d01 : Disjoint (selected a b c d 0) (selected a b c d 1) := by
     apply Finset.disjoint_left.mpr
     intro i hi hj
-    fin_cases r <;> fin_cases s <;>
-      simp only [selected,bank,Matrix.cons_val_zero,Matrix.cons_val_one,
-        Matrix.cons_val_two,mem_shift,Finset.mem_union,Finset.mem_singleton,
-        Finset.mem_Ico,Finset.mem_range] at hi hj <;> simp_all <;> omega
+    simp only [selected,bank,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,
+      Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,
+      Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,shift,
+      Finset.image_union,Finset.image_singleton,image_Ico,image_range,
+      Finset.mem_union,Finset.mem_insert,Finset.mem_singleton,Finset.mem_Ico,Finset.mem_range] at hi hj
+    omega
+  have d02 : Disjoint (selected a b c d 0) (selected a b c d 2) := by
+    apply Finset.disjoint_left.mpr
+    intro i hi hj
+    simp only [selected,bank,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,
+      Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,
+      Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,shift,
+      Finset.image_union,Finset.image_singleton,image_Ico,image_range,
+      Finset.mem_union,Finset.mem_insert,Finset.mem_singleton,Finset.mem_Ico,Finset.mem_range] at hi hj
+    omega
+  have d12 : Disjoint (selected a b c d 1) (selected a b c d 2) := by
+    apply Finset.disjoint_left.mpr
+    intro i hi hj
+    simp only [selected,bank,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,
+      Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,
+      Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,shift,
+      Finset.image_union,Finset.image_singleton,image_Ico,image_range,
+      Finset.mem_union,Finset.mem_insert,Finset.mem_singleton,Finset.mem_Ico,Finset.mem_range] at hi hj
+    omega
+  constructor
+  · intro r
+    fin_cases r
+    all_goals first | exact g0 | exact g1 | exact g2
+  · intro r s hrs
+    fin_cases r <;> fin_cases s
+    all_goals first | exact (hrs rfl).elim | exact d01 | exact d02 | exact d12 |
+      exact d01.symm | exact d02.symm | exact d12.symm
 
 private theorem remainder_eq (a b c d : ℕ)
     (hd : 2 ≤ d) (hdc : d < c) (hcb : c ≤ b) (hba : b < a) :
@@ -67,10 +115,10 @@ private theorem remainder_eq (a b c d : ℕ)
     shift (d+c) (Finset.range (b-1)) ∪
       shift (d+c+b) (bank a (a-d-2) (a-c-1) (a-b-1) 3) := by
   ext i
-  simp only [selected,bank,Matrix.cons_val_zero,Matrix.cons_val_one,
+  simp only [selected,bank,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,
     Matrix.cons_val_two,Matrix.cons_val_three,shift,Finset.image_union,
     Finset.image_singleton,image_Ico,image_range,Finset.mem_sdiff,
-    Finset.mem_union,Finset.mem_insert,Finset.mem_singleton,Finset.mem_Ico,
+    Finset.mem_union,Finset.mem_insert,Finset.mem_insert,Finset.mem_singleton,Finset.mem_Ico,
     Finset.mem_range]
   omega
 
@@ -78,8 +126,8 @@ private theorem first_card (a b c d : ℕ)
     (hd : 2 ≤ d) (hdc : d < c) (hcb : c ≤ b) (hba : b < a) :
     (selected a b c d 0).card = d := by
   have hdis : Disjoint ({a-d-2} : Finset ℕ) (Finset.Ico (a-d-2+2) (a-1)) := by
-    simp [Finset.disjoint_left]; omega
-  simp only [selected,bank,Matrix.cons_val_zero,shift]
+    simp [Finset.disjoint_left] <;> omega
+  simp only [selected,bank,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,shift]
   rw [Finset.card_image_of_injective _ (fun _ _ h => Nat.add_left_cancel h),
     Finset.card_union_of_disjoint hdis,Finset.card_singleton,Nat.card_Ico]
   omega
@@ -98,15 +146,14 @@ private theorem bank_masses (a H E F : ℕ) (hh : H+2 ≤ a-1)
     (∑ i ∈ bank a H E F 1, (2 : ℤ)^i) = 3*2^H-2^E ∧
     (∑ i ∈ bank a H E F 2, (2 : ℤ)^i) = 2^E-2^F := by
   have h0 : Disjoint ({H} : Finset ℕ) (Finset.Ico (H+2) (a-1)) := by
-    simp [Finset.disjoint_left]; omega
+    simp [Finset.disjoint_left] <;> omega
   have h1 : Disjoint ({H+1} : Finset ℕ) (Finset.Ico E H) := by
-    simp [Finset.disjoint_left]; omega
-  simp only [bank,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two]
+    simp [Finset.disjoint_left] <;> omega
+  simp only [bank,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two]
   rw [Finset.sum_union h0,Finset.sum_union h1,Finset.sum_singleton,
     Finset.sum_singleton,sum_Ico_two _ _ hh,sum_Ico_two _ _ he,sum_Ico_two _ _ hf]
   simp only [pow_add,pow_one]
-  norm_num
-  constructor <;> ring
+  norm_num <;> (repeat' constructor <;> ring)
 
 private theorem shift_sum (f : ℕ → ℤ) (s : ℕ) (P : Finset ℕ) (B : ℤ)
     (hf : ∀ j ∈ P, f (s+j) = (2 : ℤ)^j*B) :
@@ -125,9 +172,10 @@ private theorem selected_mass (a b c d : ℕ)
     (∑ i ∈ selected a b c d 1, f i) = (2^(d-1)-1)*U+(3*2^(a-d-2)-2^(a-c-1))*X ∧
     (∑ i ∈ selected a b c d 2, f i) = (2^(c-1)-1)*V+(2^(a-c-1)-2^(a-b-1))*X := by
   have hbnd (r : Fin 4) (i : ℕ) (hi : i ∈ bank a (a-d-2) (a-c-1) (a-b-1) r) : i < a-1 := by
-    fin_cases r <;> simp only [bank,Matrix.cons_val_zero,Matrix.cons_val_one,
-      Matrix.cons_val_two,Matrix.cons_val_three,Finset.mem_union,Finset.mem_singleton,
-      Finset.mem_Ico,Finset.mem_range] at hi <;> omega
+    fin_cases r <;> dsimp [bank] at hi
+    all_goals try simp only [Finset.mem_union,Finset.mem_insert,Finset.mem_singleton,
+      Finset.mem_Ico,Finset.mem_range] at hi
+    all_goals omega
   have hsum := bank_masses a (a-d-2) (a-c-1) (a-b-1) (by omega) (by omega) (by omega)
   have hs (r : Fin 4) := shift_sum f (d+c+b) (bank a (a-d-2) (a-c-1) (a-b-1) r) X
     (fun i hi => hX i (hbnd r i hi))
@@ -152,7 +200,7 @@ private theorem selected_mass (a b c d : ℕ)
     exact hU i (Finset.mem_range.mp hi)
   have hv := shift_sum f d (Finset.range (c-1)) V (fun i hi => hV i (Finset.mem_range.mp hi))
   rw [sum_range_two] at hv
-  simp only [selected,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two]
+  simp only [selected,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two]
   rw [Finset.sum_union hdis0,Finset.sum_union hdis1,hu,hv,hs 0,hs 1,hs 2,
     hsum.1,hsum.2.1,hsum.2.2]
   exact ⟨rfl,rfl,rfl⟩
