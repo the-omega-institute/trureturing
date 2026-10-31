@@ -14,7 +14,15 @@ Modified source: native Mathlib imports and names, explicit eRk.toNat and contra
 and the same-ground statement with its common-independent upper bound.
 The consumed source files are Matroid/Intersection.lean, Matroid/Minor/Rank.lean,
 Matroid/Rank/Nat.lean, Matroid/Rank/ENat.lean, Matroid/Loop.lean,
-and Matroid/ForMathlib/Matroid/Basic.lean. Their Apache-2.0 license is reproduced below.
+Matroid/ForMathlib/Matroid/Basic.lean, and Matroid/ForMathlib/Set.lean:139-140.
+Their Apache-2.0 license is reproduced below.
+Immutable source locations:
+https://github.com/apnelson1/Matroid/blob/8ece6307a54854484c9b5fa40b9ed3c5ccc8e42b/Matroid/Minor/Rank.lean
+https://github.com/apnelson1/Matroid/blob/8ece6307a54854484c9b5fa40b9ed3c5ccc8e42b/Matroid/Rank/Nat.lean
+https://github.com/apnelson1/Matroid/blob/8ece6307a54854484c9b5fa40b9ed3c5ccc8e42b/Matroid/Rank/ENat.lean
+https://github.com/apnelson1/Matroid/blob/8ece6307a54854484c9b5fa40b9ed3c5ccc8e42b/Matroid/Loop.lean
+https://github.com/apnelson1/Matroid/blob/8ece6307a54854484c9b5fa40b9ed3c5ccc8e42b/Matroid/ForMathlib/Matroid/Basic.lean
+https://github.com/apnelson1/Matroid/blob/8ece6307a54854484c9b5fa40b9ed3c5ccc8e42b/Matroid/ForMathlib/Set.lean#L139-L140
 Retire this port when this repository's actual pinned Mathlib supplies an equivalent full
 native finite-ground intersection theorem with the accepted standard axiom closure.
 -/
@@ -219,14 +227,14 @@ theorem finite_matroid_intersection (E : Set α) (hE : E.Finite) (M₁ M₂ : Ma
     (h₁ : M₁.E = E) (h₂ : M₂.E = E) :
     (∃ I X : Set α, I ⊆ E ∧ X ⊆ E ∧ M₁.Indep I ∧ M₂.Indep I ∧
       I.ncard = (M₁.eRk X).toNat + (M₂.eRk (E \ X)).toNat) ∧
-    (∀ J Y : Set α, M₁.Indep J → M₂.Indep J → Y ⊆ E →
+    (∀ J Y : Set α, M₁.Indep J → M₂.Indep J →
       J.ncard ≤ (M₁.eRk Y).toNat + (M₂.eRk (E \ Y)).toNat) := by
   have : M₁.Finite := ⟨h₁.symm ▸ hE⟩
   have : M₂.Finite := ⟨h₂.symm ▸ hE⟩
   constructor
   · obtain ⟨I, X, hX, hI₁, hI₂, hc⟩ := exists_common_ind_aux M₁ M₂ (h₁.trans h₂.symm)
     exact ⟨I, X, h₁ ▸ hI₁.subset_ground, h₁ ▸ hX, hI₁, hI₂, h₂ ▸ hc⟩
-  · intro J Y hJ₁ hJ₂ _
+  · intro J Y hJ₁ hJ₂
     simpa only [h₂] using common_indep_upper_bound hJ₁ hJ₂ Y
 
 #print axioms finite_matroid_intersection
