@@ -34,6 +34,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/MalkounJordanElementary.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/malkoun-2026-mo512579-jordan-elementary` (proved) by `D5/S3/Quantum/Matrix/MalkounJordanElementary.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"malkoun-2026-mo512579-jordan-elementary","declaration_gid":"D5/S3/Quantum/Matrix/MalkounJordanElementary.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Malkoun (2026). *Promoting polynomial equalities for nonnegative variables to elementary symmetric polynomial inequalities*. URL: <https://mathoverflow.net/questions/512579>.
