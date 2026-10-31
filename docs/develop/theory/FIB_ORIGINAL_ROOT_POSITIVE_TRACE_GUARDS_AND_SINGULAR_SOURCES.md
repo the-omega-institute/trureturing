@@ -1944,14 +1944,14 @@ positive signature
 
 $$
 h_c=\frac{25-2\sqrt{102}}{217},\qquad
-t_c=\frac1{1-h_c}=\frac{96-\sqrt{102}}{84},qquad
+t_c=\frac1{1-h_c}=\frac{96-\sqrt{102}}{84},\qquad
 R_c=\frac1{1-8h_c}=\frac{16\sqrt{102}-17}{119}.
 $$
 
 Put \(U_c=R_c+t_c\),
 
 $$
-b_c=R_c-1,qquad c_c=t_c-R_c+1,qquad
+b_c=R_c-1,\qquad c_c=t_c-R_c+1,\qquad
 a_\pm=\frac{1\pm\sqrt{1-4b_cc_c}}2.
 $$
 
@@ -2000,8 +2000,8 @@ $$
 $$
 
 Consequently no guarded simultaneous sixteen-slot assignment can lie entirely
-in this critical \(C=B_5=0\) chart, regardless of the two free fifth-\(J\)
-response forms.
+in this critical \(C=B_5=0\) chart, regardless of the free common fifth-\(J\)
+response form.
 
 **证明。** Suppose both terminal pairs are separated.  Since the critical
 source set has only \(a_+,a_-\), each pair uses both values.  The \(JJJMMJJ\)
