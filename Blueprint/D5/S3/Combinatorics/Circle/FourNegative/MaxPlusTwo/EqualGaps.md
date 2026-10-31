@@ -22,7 +22,7 @@ Write R=2^a, l=2^s and p=2^(a-1), so R=2p and 2^d=2Rl, with p,l>=2. SourceTable 
 
 The arithmetic connects to the group action through physical powers of two. In PeriodicShorteningArithmetic.digit_data, the same physical occurrence carries f and its charge q, and the enlarged value is g=2f-q. With remaining charge Q=A-consumed(q), the old height h=consumed(f) and shadow r=h+Q obey A+consumed(g)=h+r. Keeping the physical label rather than only its numerical value preserves charge and occurrence multiplicity under this lift.
 
-This is the equal-first-three-gap branch of the proposed complete max-plus-two cone. Independent unequal first-three gaps, including the monotone and strict middle-extremum mask constructions, remain formalization obligations. The unrestricted physical J and Circle C3.1 remain OPEN, including parameters below d=max(a,b,c)+2. The result is a repository construction within the circle problem of Damasdi, Frankl, Pach and Palvolgyi, arXiv:2504.10687v2; no external novelty, model-diverse review or official acceptance is asserted.
+This is the equal-first-three-gap branch of the proposed complete max-plus-two cone. Independent unequal first-three gaps, including the monotone and strict middle-extremum mask constructions, remain formalization obligations. The unrestricted physical J and Circle C3.1 remain OPEN, including parameters below d=max(a,b,c)+2. The result concerns the circle problem of Damasdi, Frankl, Pach and Palvolgyi, arXiv:2504.10687v2.
 
 ## References
 
