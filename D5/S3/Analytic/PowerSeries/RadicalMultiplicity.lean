@@ -153,6 +153,7 @@ open scoped LaurentSeries PowerSeries
 namespace CdsoRadical
 
 open HahnSeries Polynomial
+noncomputable section
 
 private theorem coe_derivative {R : Type*} [CommRing R] (f : R⟦X⟧) :
     ((PowerSeries.derivative f : R⟦X⟧) : R⸨X⸩) =
@@ -174,7 +175,7 @@ private theorem derivative_single_mul {R : Type*} [CommRing R]
       single (m - 1) (m * c) * f + single m c * LaurentSeries.derivative R f := by
   ext n
   simp only [LaurentSeries.derivative_apply, LaurentSeries.hasseDeriv_coeff,
-    coeff_add, coeff_single_mul, Ring.choose_one_right]
+    HahnSeries.coeff_add, coeff_single_mul, Ring.choose_one_right]
   have h₁ : n - (m - 1) = n + 1 - m := by omega
   have h₂ : n - m + (1 : ℕ) = n + 1 - m := by omega
   simp only [h₁, h₂, ← zsmul_eq_mul, smul_mul_assoc, mul_smul_comm, ← add_zsmul]
@@ -221,17 +222,25 @@ private theorem algebraMap_mul_eq_smul {R A : Type*} [CommSemiring R] [CommSemir
   rw [HahnSeries.algebraMap_apply', PowerSeries.algebraMap_apply, HahnSeries.ofPowerSeries_C,
     HahnSeries.C_mul_eq_smul, algebraMap_smul]
 
+local instance laurentModule (R : Type*) [CommRing R] : Module R (LaurentSeries R) :=
+  (inferInstance : Algebra R (LaurentSeries R)).toModule
+
+local instance laurentCharZero (R : Type*) [Field R] [CharZero R] :
+    CharZero (LaurentSeries R) := Algebra.charZero_of_charZero R (LaurentSeries R)
+
 private noncomputable def laurentD (R : Type*) [CommRing R] :
     Derivation R (LaurentSeries R) (LaurentSeries R) where
   toFun f := LaurentSeries.derivative R f
   map_add' f g := (LaurentSeries.derivative R).map_add f g
   map_smul' c f := by
-    rw [Algebra.smul_def, algebraMap_mul_eq_smul]
+    change LaurentSeries.derivative R (algebraMap R (LaurentSeries R) c * f) =
+      algebraMap R (LaurentSeries R) c * LaurentSeries.derivative R f
+    rw [algebraMap_mul_eq_smul, algebraMap_mul_eq_smul]
     exact map_smul (LaurentSeries.derivative R) c f
   map_one_eq_zero' := by
     ext n
     suffices n + 1 = 0 → (n : R) + 1 = 0 by
-      simpa [LaurentSeries.derivative_apply, coeff_one]
+      simpa [LaurentSeries.derivative_apply, HahnSeries.coeff_one]
     intro h
     simpa using congrArg (fun i : ℤ ↦ (i : R)) h
   leibniz' f g := by
@@ -269,11 +278,11 @@ private theorem polyJet_degree (p A : ℝ[X]) {d : ℕ}
     simp only [polyJet]
     apply (Polynomial.natDegree_add_le _ _).trans
     apply max_le
-    · have h := Polynomial.natDegree_mul_le p (polyJet p A v).derivative
+    · have h := Polynomial.natDegree_mul_le (p := p) (q := (polyJet p A v).derivative)
       have h' := (Polynomial.natDegree_derivative_le (polyJet p A v)).trans (Nat.sub_le _ _)
       omega
     · have h := Polynomial.natDegree_mul_le
-        (Polynomial.C ((1 : ℝ) / 2 - v) * p.derivative) (polyJet p A v)
+        (p := Polynomial.C ((1 : ℝ) / 2 - v) * p.derivative) (q := polyJet p A v)
       have h' := Polynomial.natDegree_C_mul_le ((1 : ℝ) / 2 - v) p.derivative
       have h'' := (Polynomial.natDegree_derivative_le p).trans (Nat.sub_le _ _)
       omega
@@ -352,4 +361,5 @@ private theorem wronskianPS_ne_zero {n : ℕ} (f : Fin n → ℝ⟦X⟧)
   rw [he, ← RingHom.map_det] at h
   exact fun hz => h (by rw [hz, map_zero])
 
+end
 end CdsoRadical
