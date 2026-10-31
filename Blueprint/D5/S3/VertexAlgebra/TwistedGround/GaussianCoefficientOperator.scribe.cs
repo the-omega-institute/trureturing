@@ -26,7 +26,7 @@ internal sealed class GaussianCoefficientOperatorDocument : IScribeDocumentDefin
         []));
 
     private static DocumentBlock N(string name, string title, string prose) =>
-        Describe.Lean(DescribeId.Create("gaussian-coefficient-operator-" + name.Replace("_", "-")),
+        Describe.Lean(DescribeId.Create("gaussian-coefficient-operator-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 }

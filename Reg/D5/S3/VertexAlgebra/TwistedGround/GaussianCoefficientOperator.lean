@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.VertexAlgebra.TwistedGround.GaussianCoefficientOperator
 
+/-! Source-bound exponential readout for the full heterogeneous operator norm law. -/
+
 set_option autoImplicit false
 noncomputable section
 open LeanInformationAudit
@@ -17,25 +19,25 @@ universe u v
 abbrev signature : Signature where
   Params := Unit
   State _ := ℝ
-  Role := ULift.{max u v} Unit
+  Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
   Output _ _ := ℝ
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u,v} :=
+def actual : Realization signature :=
   realize signature (fun _ _ x => Real.exp x) (fun a => nomatch a)
 
-def rejected : Realization signature.{u,v} :=
+def rejected : Realization signature :=
   realize signature (fun _ _ _ => -1) (fun a => nomatch a)
 
 /-- The entire original telescope is retained, including degenerate mode types. -/
 abbrev arena : Arena where
-  signature := signature.{u,v}
+  signature := signature
   Law R := ∀ {S : Type u} {T : Type v} [DecidableEq S] [DecidableEq T]
     (D : Data (S ⊕ T)),
-    ‖coefficientOperator D‖ ≤ R.readout ⟨()⟩ () (D.massBound / (4 * (1 - D.q ^ 2)))
+    ‖coefficientOperator D‖ ≤ R.readout () () (D.massBound / (4 * (1 - D.q ^ 2)))
 
 private def zeroData (I : Type*) [DecidableEq I] : Data I where
   oneParticle := 0
@@ -49,7 +51,7 @@ private def zeroData (I : Type*) [DecidableEq I] : Data I where
   square_sum_le := by simp
 
 private theorem actual_law : arena.{u,v}.Law actual := by
-  intro S T _ _ _ _ D
+  intro S T _ _ D
   exact coefficientOperator_norm_le D
 
 private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
@@ -61,11 +63,11 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
 def normFamily : Registration arena.{u,v} (type_of% (@coefficientOperator_norm_le.{u,v})) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨actual_law, rejected, rejected_law⟩
+  variation := ⟨actual_law.{u,v}, rejected, rejected_law.{u,v}⟩
   sensitivity := by
     constructor
     · intro i
-      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      refine ⟨rejected, ?_, rfl, rejected_law.{u,v}⟩
       intro j hj
       exact (hj (Subsingleton.elim _ _)).elim
     · intro a
@@ -77,16 +79,17 @@ def normFamily : Registration arena.{u,v} (type_of% (@coefficientOperator_norm_l
 
 def normRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@coefficientOperator_norm_le.{u,v})
-    (type_of% (realize signature.{u,v} actual.readout actual.anchor)) Unit Unit where
-  unitName := `D5.S3.VertexAlgebra.TwistedGround.GaussianCoefficientOperator.coefficientOperator_norm_le.__information_unit
+    (type_of% (realize signature actual.readout actual.anchor)) Unit Unit where
+  unitName :=
+    `D5.S3.VertexAlgebra.TwistedGround.GaussianCoefficientOperator.coefficientOperator_norm_le.__information_unit
   realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.GaussianCoefficientOperator.normFamily
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u,v}⟩
+  objectArena := .source ⟨arena.{u,v}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨normFamily⟩
+  realization := .source arena.{u,v} ⟨normFamily.{u,v}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature actual.readout actual.anchor)
