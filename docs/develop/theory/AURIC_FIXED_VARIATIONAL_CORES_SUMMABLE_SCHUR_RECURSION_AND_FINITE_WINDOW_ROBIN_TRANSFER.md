@@ -2,7 +2,7 @@
 
 # AURIC Fixed Variational Cores, Summable Schur Recursion, and Finite-Window Robin Transfer
 
-> **Reader-visible source and scope note.** The manuscript body below is the complete supplied source, retained in its original order, including every prose passage, formula, proof, URL, numbered tag, and ending. Only the portable Markdown math delimiters were changed so the canonical dollar-delimiter renderer can parse the source expressions.
+> **Reader-visible source and scope note.** The manuscript body below is the complete supplied source, retained in its original order, including every prose passage, formula, proof, URL, numbered tag, and ending. Portable Markdown math delimiters let the canonical dollar-delimiter renderer parse the source expressions. Each original equation number is a separate caption attached to its unchanged display, preserving the association without covering formula glyphs.
 >
 > **Source record.** The source is `source.md` at the supplied artifact, SHA-256 <code>6a3c83879b263073<wbr>5351e02a46f21fd<wbr>ca0f79f56978a776<wbr>dd16e884eeb658fd4</code>, 23,833 bytes and 1,312 logical lines. The intended project pin is `18ab178472d8c29eb90d5e5f4e6c8b4c89038e84`; the AURIC v37 link and every other source URL remain in the body.
 >
@@ -38,7 +38,7 @@
 >
 > - **Notation bridge.** In the pinned source, `J_lambda(n) = W(n) - lambda E(n)`, `P_0(lambda) = max_{n >= 1} J_lambda(n)`, and the minimal optimizer has `a_p^0(lambda) = #{k >= 1 : eta_(p,k) > lambda}`. At a threshold `eta_(p,k) = lambda`, either choice has the same pressure; the source chooses the minimal-exponent optimizer, so equality layers are excluded from the strict count. The boundary-restricted pressure is `P_5040`, and the source proves `P_5040 = P_0` only in the low-price range `0 < lambda < lambda_c`.
 > - **Strict inventory.** Put `lambda(u) = 1/(u log u)`. The exact strict law in the pinned Lean/source supplier is `U.factorization(q) = optimalLayerCount(lambda(u), q)` for every prime `q`; `optimalLayerCount` counts precisely the layers with strict inequality `lambda(u) < goldenLayerMarginal(q,k)`. Thus the manuscript symbol `A_inv(u)` can be read as `log U` for this strict inventory, and it agrees with the source's `E(lambda(u)) = log n_lambda` only after the additional bridge that this `U` is the same minimal low-price optimizer and that the 5040 boundary is inactive. EulerLayerRootCorrection proves, uniformly over such `U`, `(log U - psi(u))/sqrt(u) -> sqrt(2)-1`; it explicitly excludes equality layers and does not prove a signed-tail identity or optimizer attainment beyond the stated strict law.
-> - **What the source does and does not name.** The pinned source's nonnegative pressure object is `G(lambda) = H(lambda) - P_5040(lambda)`, with `H(lambda) = max_{E >= log 5184} [h(E) - lambda E]`; equations (26)–(28) express this pressure gap through `E(lambda(v)) - v` and `I_psi(T)`. It does not define the manuscript's `D(n)` or prove that a nonnegative pressure gap is an actual same-original-integer residual. Therefore the assertion `D(n) >= 0` in (29) still requires the specific bridge: define `D` for the same original `n`, prove its sign, and prove that its remainder is exactly the displayed `I_psi(T)` plus the displayed budget term. The pressure gap over an optimized state cannot substitute for that same-`n` identity.
+> - **What the source does and does not name.** The pinned source's pressure gap, whose sign remains unresolved here, is `G(lambda) = H(lambda) - P_5040(lambda)`, with `H(lambda) = max_{E >= log 5184} [h(E) - lambda E]`; equations (26)–(28) express this pressure gap through `E(lambda(v)) - v` and `I_psi(T)`. It does not define the manuscript's `D(n)` or prove that this pressure gap, with its sign conditional rather than established, is an actual same-original-integer residual. Theorem 4.1 states that strict positivity of `G(lambda)` for every positive `lambda` is equivalent to RH; it does not supply an unconditional nonnegative sign. Therefore the assertion `D(n) >= 0` in (29) still requires the specific bridge: define `D` for the same original `n`, prove its sign, and prove that its remainder is exactly the displayed `I_psi(T)` plus the displayed budget term. The pressure gap over an optimized state cannot substitute for that same-`n` identity.
 > - **Budget and the numbered implications.** The source's `I_psi(T)` is the integral in (27). The manuscript's `B(T)` additionally requires the bridge `A_inv(u) = E(lambda(u))` (with the strict/equality convention above), the same-integer decomposition (29), and an integrable uniform error allowing the root correction to be inserted under the weighted integral. EulerLayerRootCorrection alone supplies only the strict root asymptotic, so it does not establish (29) or the normalized limit (36). Conditional (38) therefore requires (29), `D(n) >= 0`, (31)–(35), (36), (37), and the stated unconditional PNT tail; conditional (39) additionally requires the posterior estimate (23). The remaining open bridges are exactly the same-`n` decomposition/sign, the `A_inv`–`E(lambda)` identification, and the weighted-error step for (36); no bridge is being claimed here.
 > - **Other inherited premises.** The short-window cusp/triangle premise used in (25)–(27) means: fixed `delta`, `r`, and `L_triangle` for the same kernel, all measures supported in `D <= delta`, followed by the displayed triangle-energy identity, fixed-fiber Jensen minimization, and strict matrix gap. Its upstream source path is not supplied in this batch, so (25)–(27) are conditional on that exact premise. The stable greedy premise in Section VIII means the pinned [A370630 permutation](https://github.com/the-omega-institute/trureturing/blob/9ceb721e13c64eb4b1c71a43238a2b2fc4770093/Blueprint/D5/S3/Combinatorics/Permutation/ZeckendorfGreedyPermutation.md), the stated `V_h` asymptotic and cusp estimate, finite preservation of every old `h_i`, and the row-sum/Riesz bounds; only the permutation has an exact upstream path here, so the analytic cusp and asymptotic claims remain conditional and apply only to the generated difference subspace. The reference-weight low-frequency coercivity is scoped to `q_P` on the fixed support interval and does not assert positivity of the full actual kernel. These conditions are the precise inherited scope; an unnamed previous-round label is not used as provenance.
 
@@ -164,14 +164,19 @@ $$
 
 上一轮已证明 $w(\xi)\to+\infty$。这里还需要一个明确的低端控制：
 
+<figure aria-labelledby="equation-number-1" style="margin: 1em 0;">
+
 $$
 \boxed{
 q_P(F)\ge\alpha_D\|F\|_2^2,
 \qquad
 \alpha_D=\frac12w\!\left(\frac{\pi}{2D}\right)>0.
 }
-\tag{1}
 $$
+
+<figcaption id="equation-number-1" style="text-align: right;">(1)</figcaption>
+
+</figure>
 
 **证明。** 因为 $F$ 支撑于长度为 $D$ 的区间，
 
@@ -183,14 +188,19 @@ $$
 
 现在用范数
 
+<figure aria-labelledby="equation-number-2" style="margin: 1em 0;">
+
 $$
 \boxed{
 \|\mu\|_{\mathcal H_D}^2
 =
 |a|^2+q_P(F)
 }
-\tag{2}
 $$
+
+<figcaption id="equation-number-2" style="text-align: right;">(2)</figcaption>
+
+</figure>
 
 完成这些实际原子读出。Fourier 加权范数的闭性及式 (1)，使这个完成空间仍可表示为 $(a,F)$，其中 $F\in L^2$ 且支撑于 $I$。
 
@@ -212,6 +222,8 @@ $$
 
 则
 
+<figure aria-labelledby="equation-number-3" style="margin: 1em 0;">
+
 $$
 \boxed{
 \begin{aligned}
@@ -223,8 +235,11 @@ Q_{\mathscr K}(\mu)
 &+q_P(F)-\langle R_D''*F,F\rangle .
 \end{aligned}
 }
-\tag{3}
 $$
+
+<figcaption id="equation-number-3" style="text-align: right;">(3)</figcaption>
+
+</figure>
 
 因为 $\mathscr K'$ 的原点奇性仅为对数型，所以
 
@@ -260,16 +275,23 @@ $$
 
 定义
 
+<figure aria-labelledby="equation-number-4" style="margin: 1em 0;">
+
 $$
 \boxed{
 C_i\mu=\int_I\varphi_i(t)\,d\mu(t),
 \qquad
 C\mu=(C_0\mu,\ldots,C_N\mu).
 }
-\tag{4}
 $$
 
+<figcaption id="equation-number-4" style="text-align: right;">(4)</figcaption>
+
+</figure>
+
 它有一个实际原子截面：
+
+<figure aria-labelledby="equation-number-5" style="margin: 1em 0;">
 
 $$
 \boxed{
@@ -277,8 +299,11 @@ $$
 \qquad
 C\mathcal J=I.
 }
-\tag{5}
 $$
+
+<figcaption id="equation-number-5" style="text-align: right;">(5)</figcaption>
+
+</figure>
 
 记
 
@@ -288,6 +313,8 @@ $$
 
 对 $\mu=a\delta_0+F'$，直接用帽函数的导数可得
 
+<figure aria-labelledby="equation-number-6" style="margin: 1em 0;">
+
 $$
 \boxed{
 \mu\in Z
@@ -296,8 +323,11 @@ a=0,\quad
 \int_{x_{j-1}}^{x_j}F(t)\,dt=0
 \ \text{对所有 }j.
 }
-\tag{6}
 $$
+
+<figcaption id="equation-number-6" style="text-align: right;">(6)</figcaption>
+
+</figure>
 
 所以 $Z$ 保存的是：**不改变任何已固定粗读口的全部细节变化。**
 
@@ -305,13 +335,18 @@ $$
 
 可以选取一个有限网格，使
 
+<figure aria-labelledby="equation-number-7" style="margin: 1em 0;">
+
 $$
 \boxed{
 B_D(z,z)\ge\frac12q_P(F_z)
 \qquad(z\in Z).
 }
-\tag{7}
 $$
+
+<figcaption id="equation-number-7" style="text-align: right;">(7)</figcaption>
+
+</figure>
 
 **证明。** 先取 $R_0$，使
 
@@ -384,12 +419,17 @@ $$
 
 定义固定矩阵
 
+<figure aria-labelledby="equation-number-8" style="margin: 1em 0;">
+
 $$
 \boxed{
 \mathcal S_D(i,j)=B_D(v_{e_i},v_{e_j}).
 }
-\tag{8}
 $$
+
+<figcaption id="equation-number-8" style="text-align: right;">(8)</figcaption>
+
+</figure>
 
 ### 定理 1：固定核心的精确分解
 
@@ -401,16 +441,23 @@ $$
 
 并且
 
+<figure aria-labelledby="equation-number-9" style="margin: 1em 0;">
+
 $$
 \boxed{
 Q_{\mathscr K}(\mu)
 =
 c^*\mathcal S_Dc+B_D(z,z).
 }
-\tag{9}
 $$
 
+<figcaption id="equation-number-9" style="text-align: right;">(9)</figcaption>
+
+</figure>
+
 因此
+
+<figure aria-labelledby="equation-number-10" style="margin: 1em 0;">
 
 $$
 \boxed{
@@ -418,10 +465,15 @@ c^*\mathcal S_Dc
 =
 \min_{C\mu=c}Q_{\mathscr K}(\mu).
 }
-\tag{10}
 $$
 
+<figcaption id="equation-number-10" style="text-align: right;">(10)</figcaption>
+
+</figure>
+
 进一步，
+
+<figure aria-labelledby="equation-number-11" style="margin: 1em 0;">
 
 $$
 \boxed{
@@ -429,8 +481,11 @@ $$
 \iff
 \mathcal S_D\succeq0.
 }
-\tag{11}
 $$
+
+<figcaption id="equation-number-11" style="text-align: right;">(11)</figcaption>
+
+</figure>
 
 ### 证明
 
@@ -468,13 +523,18 @@ $$
 
 初始阶段没有额外细方向，所以
 
+<figure aria-labelledby="equation-number-12" style="margin: 1em 0;">
+
 $$
 \boxed{
 \mathcal S_0=
 [\mathscr K(x_i-x_j)]_{i,j=0}^{N}.
 }
-\tag{12}
 $$
+
+<figcaption id="equation-number-12" style="text-align: right;">(12)</figcaption>
+
+</figure>
 
 这是实际网格关系矩阵。
 
@@ -491,6 +551,8 @@ $$
 
 所以
 
+<figure aria-labelledby="equation-number-13" style="margin: 1em 0;">
+
 $$
 \boxed{
 z_t=
@@ -499,8 +561,11 @@ z_t=
 -\frac{t-a}{b-a}\delta_b
 \in Z.
 }
-\tag{13}
 $$
+
+<figcaption id="equation-number-13" style="text-align: right;">(13)</figcaption>
+
+</figure>
 
 将它对已有细空间作 $B_D$-正交化，得到剩余方向 $u_k$。真正新增的节点保证 $u_k\ne0$，于是
 
@@ -516,14 +581,19 @@ $$
 
 ### 定理 2：核心的精确 Schur 递推
 
+<figure aria-labelledby="equation-number-14" style="margin: 1em 0;">
+
 $$
 \boxed{
 \mathcal S_{k+1}
 =
 \mathcal S_k-\frac{b_kb_k^*}{e_k}.
 }
-\tag{14}
 $$
+
+<figcaption id="equation-number-14" style="text-align: right;">(14)</figcaption>
+
+</figure>
 
 **证明。** 新的最小化读出为
 
@@ -561,14 +631,21 @@ $$
 
 如果取样并集稠密，则
 
+<figure aria-labelledby="equation-number-15" style="margin: 1em 0;">
+
 $$
 \boxed{
 \mathcal S_k\downarrow\mathcal S_D
 }
-\tag{15}
 $$
 
+<figcaption id="equation-number-15" style="text-align: right;">(15)</figcaption>
+
+</figure>
+
 并在算子范数中收敛。更精确地，
+
+<figure aria-labelledby="equation-number-16" style="margin: 1em 0;">
 
 $$
 \boxed{
@@ -577,10 +654,15 @@ $$
 \sum_{j\ge k}\frac{b_jb_j^*}{e_j}
 \succeq0,
 }
-\tag{16}
 $$
 
+<figcaption id="equation-number-16" style="text-align: right;">(16)</figcaption>
+
+</figure>
+
 且
+
+<figure aria-labelledby="equation-number-17" style="margin: 1em 0;">
 
 $$
 \boxed{
@@ -589,8 +671,11 @@ $$
 \operatorname{tr}(\mathcal S_0-\mathcal S_D)
 <\infty.
 }
-\tag{17}
 $$
+
+<figcaption id="equation-number-17" style="text-align: right;">(17)</figcaption>
+
+</figure>
 
 ### 证明
 
@@ -628,6 +713,8 @@ $$
 
 **在每个固定区间内，递归修正本身不会发散，并且有精确的总量分解**
 
+<figure aria-labelledby="equation-number-18" style="margin: 1em 0;">
+
 $$
 \boxed{
 \mathcal S_0
@@ -635,8 +722,11 @@ $$
 \mathcal S_D+
 \sum_{j\ge0}\frac{b_jb_j^*}{e_j}.
 }
-\tag{18}
 $$
+
+<figcaption id="equation-number-18" style="text-align: right;">(18)</figcaption>
+
+</figure>
 
 接下来仍需证明的是
 
@@ -671,6 +761,8 @@ $$
 
 定义残差算子 $R_k$：
 
+<figure aria-labelledby="equation-number-19" style="margin: 1em 0;">
+
 $$
 \boxed{
 \langle z,R_kc\rangle_P
@@ -678,12 +770,17 @@ $$
 B_D(z,v_{k,c}),
 \qquad z\in Z.
 }
-\tag{19}
 $$
+
+<figcaption id="equation-number-19" style="text-align: right;">(19)</figcaption>
+
+</figure>
 
 它检验的是当前有限最小化读出对**整个**细空间的剩余耦合。
 
 ### 定理 4：精确后验误差公式
+
+<figure aria-labelledby="equation-number-20" style="margin: 1em 0;">
 
 $$
 \boxed{
@@ -692,8 +789,11 @@ $$
 R_k^*A_Z^{-1}R_k
 \preceq2R_k^*R_k.
 }
-\tag{20}
 $$
+
+<figcaption id="equation-number-20" style="text-align: right;">(20)</figcaption>
+
+</figure>
 
 ### 证明
 
@@ -739,12 +839,17 @@ $$
 
 就得到
 
+<figure aria-labelledby="equation-number-21" style="margin: 1em 0;">
+
 $$
 \boxed{
 \mathcal S_D\succeq\mathcal S_k-2\eta^2I.
 }
-\tag{21}
 $$
+
+<figcaption id="equation-number-21" style="text-align: right;">(21)</figcaption>
+
+</figure>
 
 这已经是一个能证明全窗口正性的验收条件。
 
@@ -768,6 +873,8 @@ $$
 
 令 $\Pi_{\mathrm{cell}}$ 表示逐固定网格单元取平均的 $L^2$ 投影，并定义
 
+<figure aria-labelledby="equation-number-22" style="margin: 1em 0;">
+
 $$
 \boxed{
 \mathcal E_k(i,j)
@@ -776,8 +883,11 @@ $$
 \overline{(I-\Pi_{\mathrm{cell}})f_{k,i}(t)}
 \,(I-\Pi_{\mathrm{cell}})f_{k,j}(t)\,dt.
 }
-\tag{22}
 $$
+
+<figcaption id="equation-number-22" style="text-align: right;">(22)</figcaption>
+
+</figure>
 
 这个矩阵由实际核导数的有限线性组合构成，且 $\mathcal E_k\succeq0$。
 
@@ -798,16 +908,23 @@ $$
 
 于是
 
+<figure aria-labelledby="equation-number-23" style="margin: 1em 0;">
+
 $$
 \boxed{
 \mathcal S_D
 \succeq
 \mathcal S_k-\frac2{\alpha_D}\mathcal E_k.
 }
-\tag{23}
 $$
 
+<figcaption id="equation-number-23" style="text-align: right;">(23)</figcaption>
+
+</figure>
+
 最终的充分条件是
+
+<figure aria-labelledby="equation-number-24" style="margin: 1em 0;">
 
 $$
 \boxed{
@@ -815,8 +932,11 @@ $$
 \quad\Longrightarrow\quad
 \mathscr K\text{ 在整个 }[0,D]\text{ 上正半定}.
 }
-\tag{24}
 $$
+
+<figcaption id="equation-number-24" style="text-align: right;">(24)</figcaption>
+
+</figure>
 
 这里 $\mathcal E_k$ 是一个明确的一维积分矩阵，可以继续用解析不等式估计。它提供一个可靠上界；本轮没有证明这个较保守的积分上界会自动随所有细分方案趋于零。
 
@@ -845,6 +965,8 @@ $$
 
 若 $D\le\delta$，则对 $\mu=a\delta_0+F'$，
 
+<figure aria-labelledby="equation-number-25" style="margin: 1em 0;">
+
 $$
 \boxed{
 Q_\triangle(\mu)
@@ -853,12 +975,17 @@ Q_\triangle(\mu)
 +
 2\left\|F+\frac a2\right\|_2^2.
 }
-\tag{25}
 $$
+
+<figcaption id="equation-number-25" style="text-align: right;">(25)</figcaption>
+
+</figure>
 
 固定粗读出后，$a$ 与每格的 $\int F$ 都固定。Jensen 不等式说明：该能量在每格 $F$ 为常数时取得最小值，而这恰好对应实际网格截面 $\mathcal Jc$。
 
 因此
+
+<figure aria-labelledby="equation-number-26" style="margin: 1em 0;">
 
 $$
 \boxed{
@@ -868,10 +995,15 @@ r\bigl[(L_\triangle-|x_i-x_j|)_+\bigr]
 \succ0
 \qquad(D\le\delta).
 }
-\tag{26}
 $$
 
+<figcaption id="equation-number-26" style="text-align: right;">(26)</figcaption>
+
+</figure>
+
 若最小网格间距为 $h_{\min}$，还得到
+
+<figure aria-labelledby="equation-number-27" style="margin: 1em 0;">
 
 $$
 \boxed{
@@ -879,8 +1011,11 @@ $$
 \ge
 \frac r4\min\{h_{\min},L_\triangle-D\}>0.
 }
-\tag{27}
 $$
+
+<figcaption id="equation-number-27" style="text-align: right;">(27)</figcaption>
+
+</figure>
 
 所以这里已经控制了**完成全部无限细化之后的极限核心**，并非只证明某个有限阶段为正。
 
@@ -930,6 +1065,8 @@ $$
 
 因此，对任意有限复系数列 $z$，
 
+<figure aria-labelledby="equation-number-28" style="margin: 1em 0;">
+
 $$
 \boxed{
 \frac{31}{32}\sum_i|z_i|^2
@@ -938,8 +1075,11 @@ Q_{\mathscr K}\!\left(\sum_i z_ie_i\right)
 \le
 \frac{33}{32}\sum_i|z_i|^2.
 }
-\tag{28}
 $$
+
+<figcaption id="equation-number-28" style="text-align: right;">(28)</figcaption>
+
+</figure>
 
 ### 证明
 
@@ -1000,14 +1140,19 @@ $$
 
 沿用精确分解
 
+<figure aria-labelledby="equation-number-29" style="margin: 1em 0;">
+
 $$
 -\log R(n)
 =
 \mathcal D(n)+I_\psi(T)+\mathcal B(T),
 \qquad
 \mathcal D(n)\ge0,
-\tag{29}
 $$
+
+<figcaption id="equation-number-29" style="text-align: right;">(29)</figcaption>
+
+</figure>
 
 其中
 
@@ -1041,6 +1186,8 @@ $$
 
 从实际有限素数公式可直接整理出
 
+<figure aria-labelledby="equation-number-30" style="margin: 1em 0;">
+
 $$
 \boxed{
 J(T)
@@ -1048,10 +1195,15 @@ J(T)
 -\frac{\mathscr K(L)}{\sqrt T}
 +\frac{A_0(T)-\log(2\pi)}T.
 }
-\tag{30}
 $$
 
+<figcaption id="equation-number-30" style="text-align: right;">(30)</figcaption>
+
+</figure>
+
 ### 定理 6：核到 Robin 尾的精确传输
+
+<figure aria-labelledby="equation-number-31" style="margin: 1em 0;">
 
 $$
 \boxed{
@@ -1065,18 +1217,26 @@ L\int_0^\infty e^{-v/2}
 &+E_{\mathrm{arch}}(T),
 \end{aligned}
 }
-\tag{31}
 $$
 
+<figcaption id="equation-number-31" style="text-align: right;">(31)</figcaption>
+
+</figure>
+
 其中，对 $T\ge2$，
+
+<figure aria-labelledby="equation-number-32" style="margin: 1em 0;">
 
 $$
 \boxed{
 -\frac{\log(2\pi)}{\sqrt T}
 \le E_{\mathrm{arch}}(T)<0.
 }
-\tag{32}
 $$
+
+<figcaption id="equation-number-32" style="text-align: right;">(32)</figcaption>
+
+</figure>
 
 ### 证明
 
@@ -1149,6 +1309,8 @@ $$
 
 式 (31) 中区间外的积分绝对值不超过
 
+<figure aria-labelledby="equation-number-33" style="margin: 1em 0;">
+
 $$
 \boxed{
 \begin{aligned}
@@ -1161,8 +1323,11 @@ $$
 \right].
 \end{aligned}
 }
-\tag{33}
 $$
+
+<figcaption id="equation-number-33" style="text-align: right;">(33)</figcaption>
+
+</figure>
 
 现在取一个固定常数
 
@@ -1174,12 +1339,17 @@ $$
 
 那么
 
+<figure aria-labelledby="equation-number-34" style="margin: 1em 0;">
+
 $$
 \boxed{
 \mathfrak r(T,A(\log T)^2)=o(1).
 }
-\tag{34}
 $$
+
+<figcaption id="equation-number-34" style="text-align: right;">(34)</figcaption>
+
+</figure>
 
 因为其中的主要指数因子为
 
@@ -1225,6 +1395,8 @@ $$
 
 得到
 
+<figure aria-labelledby="equation-number-35" style="margin: 1em 0;">
+
 $$
 \boxed{
 Q(T)\ge
@@ -1232,8 +1404,11 @@ Q(T)\ge
 -\frac{\log(2\pi)}{\sqrt T}
 -\mathfrak r(T,D).
 }
-\tag{35}
 $$
+
+<figcaption id="equation-number-35" style="text-align: right;">(35)</figcaption>
+
+</figure>
 
 这是有限区间正性对原整数 Robin 尾的定量控制。
 
@@ -1262,15 +1437,22 @@ $$
 
 得到
 
+<figure aria-labelledby="equation-number-36" style="margin: 1em 0;">
+
 $$
 \boxed{
 \sqrt T\log T\,\mathcal B(T)
 \longrightarrow2(\sqrt2-1).
 }
-\tag{36}
 $$
 
+<figcaption id="equation-number-36" style="text-align: right;">(36)</figcaption>
+
+</figure>
+
 而
+
+<figure aria-labelledby="equation-number-37" style="margin: 1em 0;">
 
 $$
 \boxed{
@@ -1278,8 +1460,11 @@ $$
 =
 2\sqrt2-4-\gamma+\log(4\pi)>0.
 }
-\tag{37}
 $$
+
+<figcaption id="equation-number-37" style="text-align: right;">(37)</figcaption>
+
+</figure>
 
 这个正号可以用粗界直接证明：
 
@@ -1299,14 +1484,19 @@ $$
 
 存在固定常数 $A>0$ 和 $n_0$，使对每个原整数 $n\ge n_0$，
 
+<figure aria-labelledby="equation-number-38" style="margin: 1em 0;">
+
 $$
 \boxed{
 \mathcal S_{A(\log\log n)^2}\succeq0
 \quad\Longrightarrow\quad
 R(n)<1.
 }
-\tag{38}
 $$
+
+<figcaption id="equation-number-38" style="text-align: right;">(38)</figcaption>
+
+</figure>
 
 ### 证明
 
@@ -1331,6 +1521,8 @@ $$
 
 再接上后验下界 (23)，得到一个完整的证明入口：
 
+<figure aria-labelledby="equation-number-39" style="margin: 1em 0;">
+
 $$
 \boxed{
 \mathcal S_k-\frac2{\alpha_D}\mathcal E_k\succeq0,
@@ -1339,8 +1531,11 @@ D=A(\log\log n)^2
 \quad\Longrightarrow\quad
 R(n)<1
 }
-\tag{39}
 $$
+
+<figcaption id="equation-number-39" style="text-align: right;">(39)</figcaption>
+
+</figure>
 
 对充分大的 $n$ 成立。
 
