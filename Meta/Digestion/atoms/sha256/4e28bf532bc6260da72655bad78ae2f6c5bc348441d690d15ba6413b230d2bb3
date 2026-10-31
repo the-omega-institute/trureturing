@@ -1,0 +1,8 @@
+**Proposition 5.1 (First entry three).** For $n\ge5$ no admissible indecomposable permutation of $[n]$ has $\pi(1)=3$. Stance: suspected-novel (see §9).
+
+**Proof.** Let $\pi$ be one, with $p=\mathrm{pos}(n)$ and $t=\mathrm{pos}(2)$. By Lemma 3.2, $\pi(n)=1$, $q(n)=3$ and $p\in\{n-2,n-1\}$.
+
+If $p=n-1$, then $q(n-1)=1$. Let $q(i_2)=2$; then $i_2<n-1$. Since $q$ avoids $132$, the entries right of $i_2$ that exceed $2$ increase, and the last of them is $q(n)=3$; so no entry at a position strictly between $i_2$ and $n-1$ exists, and $i_2=n-2$. Thus $\pi(\pi(n-2))=2$, that is $\pi(n-2)=t$. As $t\le n-2$ and $t=n-2$ would give $\pi(n-2)=n-2$ with $\pi(t)=2$, that is $n=4$, we have $t\le n-3$. As a value, $t\notin\{1,2,3\}$: $t=2$ would give $\pi(2)=2$ and $\pi(n-2)=2$ at two positions, and $\pi(1)=3$. So $t\ge4$, the value $2$ sits at position $t$, and the value $t$ at the later position $n-2$. An entry $e>t$ left of position $t$ would form the occurrence $e,2,t$ of $312$, so the $t-1$ positions left of $t$ carry values smaller than $t$ and different from $1$ and $2$, of which there are $t-3$; impossible.
+
+If $p=n-2$, then $q(n-2)=1$ and $q(n-1)<q(n)=3$, so $q(n-1)=2$. Put $v=\pi(n-1)$, so $\pi(v)=2$. Here $v\ne2$ (else $q(n-1)=\pi(2)=2$, putting $2$ at two positions), $v\ne3=\pi(1)$, and $v\notin\{1,n\}$; so $v\ge4$, and the value $2$ sits at position $v\le n-3$ while the value $v$ sits at position $n-1$. An entry $e>v$ left of position $v$ would form the occurrence $e,2,v$ of $312$, so the $v-1$ positions left of $v$ carry values in $\{3,\dots,v-1\}$, of which there are $v-3$; impossible. ∎
+
