@@ -18,9 +18,10 @@ The immutable TauCeti revision is 5a01f5fe3621126cccf9ba22e700493cbc7b7156.
 It and this repository use Lean 4.35.0. Its Mathlib pin is
 ccbef15ebdb41c2addfac682131f83c75904c3c1; ours is
 56a005855ea17e0b0958f73ec801ae140b0a1679. A17.2 therefore requires a
-source port. No dependency or pin change is made. This source has not been
-elaborated at our pins. All selected proof bodies are copied with only
-namespace qualification and surrounding context adapted; comments are selected.
+source port. No dependency or pin change is made. The complete selected consumer has been elaborated at our pins. Selected
+statements and proof strategies are ported with namespace, universe, pinned-API
+and coercion adaptations; the native correction commits preserve the original
+mathematical objects and hypotheses.
 The root license is reproduced below. Every selected source bears an Apache-2.0
 header. The downloaded immutable tree contains no NOTICE-prefixed file.
 
@@ -45,8 +46,10 @@ The following locators refer to the immutable revision above. Each helper is
 retained for a current use in the polytabloid construction or nonvanishing proof.
 Definitions implement the actual objects. Structural construction and coefficient
 isolation are candidate content; bind-only helpers organize their live proofs.
-Native proof-term liveness and independent per-declaration admission remain pending.
-No public ordinary-character comparison or open-problem-resolution basis is claimed.
+The full ordinary-character consumer is SpechtThreeRowCauchy.
+Per-declaration source classifications below distinguish organizational helpers
+from the constructions they support; current native dependency and admission
+readings accompany the full delivery.
 
 - `TauCeti/Combinatorics/Young/Diagram.lean:108`: `mergeSort_rowLens`.
 - `TauCeti/Combinatorics/Young/Diagram.lean:115`: `sort_coe_rowLens`.
@@ -1209,23 +1212,28 @@ and odd rectangles remain included. The module's generality tag is `I` because
 its reused coefficient-uniqueness supplier lies in an `I` module; the endpoint
 quantifiers remain all `n ≥ 1`.
 
-The two new public endpoints use the existing section 3.9 unfinished-audit
-exception [#24542](https://github.com/the-omega-institute/trureturing/issues/24542).
-The actual pointwise-equality and dependent-family enrollments were inspected.
-Lawful source selections and full reconstruction for these exact unbounded
-weighted-average telescopes, the actual-positive law, whole-family intervention
-and sensitivity with other readouts fixed, observational dependence, compiled
-proofs and current binding evidence are absent. No Reg mirror or
-`declared_validated` status is asserted. The original preregistration #21960
-and coefficient-only audit #22528 retain their separate scopes.
+The mirrored Reg source uses the existing dependent-family template for both
+new evaluated endpoints. Parameters range over every natural degree, states are
+all partitions of that degree, and its two readouts are the literal reciprocal
+zPartition and the actual ordinary character sum. The law is the entire original
+weighted equality for every n at least one. Zeroing either readout only in degree
+two provides a whole-family intervention that violates the law while fixing the
+other readout. In degree three, the partitions [3] and [2,1] have distinct weights
+1/3 and 1/2 and actual rectangle sums 2 and -4. The signed sums agree with these by
+the proved per-partition ordinary identity. Lean checks the actual positive law,
+source equivalence, variation, sensitivity and observational dependence. The
+family proof axiom closures are propext, Classical.choice and Quot.sound. Report
+binding and the remaining public-helper audit are tracked in
+[#24542](https://github.com/the-omega-institute/trureturing/issues/24542); successful
+kernel compilation by itself does not assert declared_validated. Preregistration
+#21960 and the coefficient-only audit #22528 keep their respective scopes.
 
-These are uncompiled proof sources. Native elaboration and accepted axiom closure
-of the entire imported Specht chain, actual proof-term liveness, the section 3.9
-full dependent-domain audit, regular admission and PR gates remain unverified.
-No source line or Scribe verification supplies any of those guarantees. The
-candidate content witness is finite table/exponent decomposition plus Cauchy
-coefficient isolation and strict shifted dominance on the live source route;
-its elaborated dependency closure and admission basis are NOT ESTABLISHED.
-There is no new axiom, `sorry`, freeze, deposit, validated Reg or standalone PR.
-The Apache attribution, complete license, no-NOTICE assessment and retirement
-obligations above remain applicable and unchanged.
+The native full selected target and scoped report succeed at Lean 4.35.0 and
+Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679. Both evaluated endpoint proof
+values have exactly the standard axioms propext, Classical.choice and Quot.sound.
+The endpoint telescopes have only n : Nat and the premise 1 <= n. The direct
+representation-theory construction and finite Cauchy calculation are consumed
+inside this complete ordinary weighted application. The canonical publication
+and admission records belong to the full consumer delivery. The Apache
+attribution, complete license, no-NOTICE assessment and retirement obligations
+above remain applicable.

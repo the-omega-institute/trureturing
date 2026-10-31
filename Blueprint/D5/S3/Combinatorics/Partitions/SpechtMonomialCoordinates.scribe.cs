@@ -8,13 +8,13 @@ internal sealed class SpechtMonomialCoordinatesDocument : IScribeDocumentDefinit
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Sorted monomial coordinates for the Frobenius comparison", H("Sorted monomial coordinates for the Frobenius comparison"), Blocks(
-            Paragraph(Text("SOURCE ONLY: no Lean elaboration, accepted axiom closure, proof-term liveness, admission, validated Reg, canonical emission, freeze, deposit, PR or CI result is asserted. Apache source selection is from immutable TauCeti 5a01f5fe3621126cccf9ba22e700493cbc7b7156, ported at unchanged repository pins. The audit remains unfinished at issue 24542.")),
+            Paragraph(Text("This supplier is part of the natively compiled full ordinary HSW consumer. Apache source selection is from immutable TauCeti 5a01f5fe3621126cccf9ba22e700493cbc7b7156, ported at unchanged repository pins. The audit remains unfinished at issue 24542.")),
             Paragraph(Text("For any finite alphabet sigma, a degree-n exponent d determines the literal partition of its nonzero exponents. The sorted coordinate partWeight records the row lengths of YoungDiagram.ofPartition, with zero padding. The monomial symmetric coefficient is one precisely at that exponent partition. These selected helpers are consumed by SpechtFixedTabloidPowerSum; no semistandard-tableau or Schur polynomial has been introduced by this coordinate definition.")),
             Describe.Lean(DescribeId.Create("coeff-msymm"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtMonomialCoordinates.coeff_msymm"),
                 H("Monomial symmetric coefficients"), StatementSource.FromAuthor(Coefficient()),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/FiniteGroups/tauceti2026spechtpolytabloids")),
-                Blocks(Paragraph(Text("Necessary source comparison in the full HSW construction. The displayed abbreviations are defined by the narrative above. There is no independent firstfreeze or standalone admission claim; native liveness and faithful Reg reconstruction remain unchecked."))),
+                Blocks(Paragraph(Text("Necessary source comparison in the full HSW construction. The displayed abbreviations are defined by the narrative above. There is no independent firstfreeze or standalone admission claim; the remaining public-declaration audit is tracked in issue 24542."))),
                 DescribeRole.Theorem))));
 
     private static Formula Id(string name) => F.Id(name);

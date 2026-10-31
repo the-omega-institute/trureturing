@@ -34,7 +34,7 @@ abbrev signature : DependentFamily.Signature where
 
 def actual (f : ∀ n, Nat.Partition n → ℚ) : DependentFamily.Realization signature :=
   DependentFamily.realize signature
-    (fun role _n p => if role = true then f n p else (zPartition p : ℚ)⁻¹)
+    (fun role n p => if role = true then f n p else (zPartition p : ℚ)⁻¹)
     (fun e => nomatch e)
 
 abbrev arena : DependentFamily.Arena where
@@ -142,7 +142,7 @@ noncomputable def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨True.intro⟩ trivial
   readout := some (DependentFamily.realize signature
-    (fun role _n p => if role = true then (rectangleEvSpechtSum p : ℚ) else (zPartition p : ℚ)⁻¹)
+    (fun role n p => if role = true then (rectangleEvSpechtSum p : ℚ) else (zPartition p : ℚ)⁻¹)
     (fun e => nomatch e))
   variation := .evidence ⟨True.intro⟩ trivial
   sensitivity := .evidence ⟨True.intro⟩ trivial
@@ -197,7 +197,7 @@ noncomputable def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨True.intro⟩ trivial
   readout := some (DependentFamily.realize signature
-    (fun role _n p => if role = true then (signedEvSpechtSum p : ℚ) else (zPartition p : ℚ)⁻¹)
+    (fun role n p => if role = true then (signedEvSpechtSum p : ℚ) else (zPartition p : ℚ)⁻¹)
     (fun e => nomatch e))
   variation := .evidence ⟨True.intro⟩ trivial
   sensitivity := .evidence ⟨True.intro⟩ trivial

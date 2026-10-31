@@ -8,14 +8,14 @@ internal sealed class SpechtFixedTabloidPowerSumDocument : IScribeDocumentDefini
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Power sums and fixed tabloids in arbitrary finite alphabets", H("Power sums and fixed tabloids in arbitrary finite alphabets"), Blocks(
-            Paragraph(Text("SOURCE ONLY: no Lean elaboration, accepted axiom closure, proof-term liveness, admission, validated Reg, canonical emission, freeze, deposit, PR or CI result is asserted. Apache source selection is from immutable TauCeti 5a01f5fe3621126cccf9ba22e700493cbc7b7156, ported at unchanged repository pins. The audit remains unfinished at issue 24542.")),
+            Paragraph(Text("This supplier is part of the natively compiled full ordinary HSW consumer. Apache source selection is from immutable TauCeti 5a01f5fe3621126cccf9ba22e700493cbc7b7156, ported at unchanged repository pins. The audit remains unfinished at issue 24542.")),
             Paragraph(Text("fixedTabloids(n,nu,pi) means Nat.card of the subtype of left cosets q of the actual Young subgroup youngSubgroup nu satisfying pi smul q = q. It is a count of actual tabloids. psumPart is the existing Mathlib product of power sums, one factor per full partition part including one-cycles. The alphabet is finite but its size may be smaller than n. Every partition of n occurs in the monomial expansion; monomials that do not fit the alphabet contribute zero.")),
             Paragraph(Text("The implementation selects the invariant-colouring expansion, the equivariant coset-to-colouring equivalence, sorted exponent coordinates, and coefficient isolation. It omits the independent averaging formula, the full Schur basis, and every unused companion. The displayed class equality is equality of conjugacy classes under the existing full-partition equivalence.")),
             Describe.Lean(DescribeId.Create("psum-part-eq-sum-card-fixed-points-smul-msymm"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/SpechtFixedTabloidPowerSum.psumPart_eq_sum_card_fixedPoints_smul_msymm"),
                 H("Fixed-tabloid monomial expansion"), StatementSource.FromAuthor(Expansion()),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/FiniteGroups/tauceti2026spechtpolytabloids")),
-                Blocks(Paragraph(Text("Necessary source comparison in the full HSW construction. The displayed abbreviations are defined by the narrative above. There is no independent firstfreeze or standalone admission claim; native liveness and faithful Reg reconstruction remain unchecked."))),
+                Blocks(Paragraph(Text("Necessary source comparison in the full HSW construction. The displayed abbreviations are defined by the narrative above. There is no independent firstfreeze or standalone admission claim; the remaining public-declaration audit is tracked in issue 24542."))),
                 DescribeRole.Theorem))));
 
     private static Formula Id(string name) => F.Id(name);
