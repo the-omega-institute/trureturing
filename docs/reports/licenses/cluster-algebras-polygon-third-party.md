@@ -3,8 +3,12 @@
 This repository adapts the consumed `IsSegment`, `IsSide`, `IsDiagonal`, `Cross`, and
 `IsTriangulation` definitions from AxiomMath/ClusterAlgebras revision
 `a9174706bce3bcb0fa342b4614f98ef2acb7f91c`, authored by Ashvin A. Swaminathan and
-copyright Axiom Math. The adaptation is in
-`D5/S3/Geometry/Polygons/PolygonEarSlide.lean`; the ear-slide declarations are new.
+copyright Axiom Math. It also adapts the cyclic-order translation lemmas from
+`ClusterAlgebras/TypeA/Polygon.lean` (Alexey Sorokin) and
+`ClusterAlgebras/Plabic/CornerTriangulation.lean` (Colin Defant) at that revision.
+The consumed adaptations are in `D5/S3/Geometry/Polygons/PolygonEarSlide.lean`;
+the ear-slide declarations are new and the adapted source has been modified for
+this repository's carrier and pinned Mathlib.
 
 The adapted source is distributed under the Apache License, Version 2.0 below.
 
