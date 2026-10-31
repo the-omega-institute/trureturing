@@ -181,7 +181,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   simp
 
 def source_registration.{u, v, w} : Registration arena (type_of% (@_root_.D5.S3.Quantum.Measurement.DiagonalKrausInstrumentFactorization.diagonal_entry_expansion.{u, v, w})) where
-  actual := actual
+  actual := realize signature (fun _ _ x => (starRingEnd ℂ) x) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.Quantum.Measurement.DiagonalKrausInstrumentFactorization.diagonal_entry_expansion.{u, v, w}, rejected, rejected_law⟩
   sensitivity := by
@@ -218,8 +218,8 @@ def registration.{u, v, w} :
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "body", "fn", "arg", "arg", "body", "arg"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+      functionOperand := false
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

@@ -199,7 +199,7 @@ private theorem dependence.{u} : ObservationalDependence signature.{u} actual :=
   exact zero_ne_one he
 
 def source_registration.{u, v} : Registration arena (type_of% (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.orthogonal_sandwich.{u, v})) where
-  actual := actual
+  actual := realize signature.{u} (fun _ _ q => qᵀ) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.orthogonal_sandwich.{u, v}, rejected, rejected_law⟩
   sensitivity := by
@@ -482,7 +482,7 @@ end CollectiveTensorRotation
 namespace QuadraticRotation
 
 abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature (Fin 3 × Fin 3) (fun _ => ℂ) (fun _ => ℂ)
+  Reg.Support.SingleDependentReadout.signature (Σ _ : Fin 3, Fin 3) (fun _ => ℂ) (fun _ => ℂ)
 def actual : Realization signature :=
   realize signature (fun _ p κ => if p.1 = p.2 then κ else 0) (fun e => nomatch e)
 def rejected : Realization signature :=
@@ -496,7 +496,7 @@ abbrev arena.{u} : Arena where
     (_hj : ∀ a, d * j a * dᴴ = ∑ c : Fin 3, (r a c : ℂ) • j c)
     (κ : ℂ) (a b : Fin 3),
     d * ((1 / 2 : ℂ) • (j a * j b + j b * j a) -
-      R.readout () (a, b) κ • 1) * dᴴ =
+      R.readout () ⟨a, b⟩ κ • 1) * dᴴ =
       ∑ c : Fin 3, ∑ e : Fin 3, ((r a c : ℂ) * (r b e : ℂ)) •
         ((1 / 2 : ℂ) • (j c * j e + j e * j c) -
           (if c = e then κ else 0) • 1)
@@ -510,13 +510,13 @@ private theorem rejected_law.{u} : ¬ arena.{u}.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(0, 0), 0, 1, ?_⟩
+  refine ⟨⟨0, 0⟩, 0, 1, ?_⟩
   change (if (0 : Fin 3) = 0 then (0 : ℂ) else 0) ≠
     (if (0 : Fin 3) = 0 then (1 : ℂ) else 0)
   simp
 
 def source_registration.{u} : Registration arena (type_of% (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.quadratic_rotation.{u})) where
-  actual := actual
+  actual := realize signature (fun _ p κ => if p.1 = p.2 then κ else 0) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.quadratic_rotation.{u}, rejected, rejected_law⟩
   sensitivity := by
@@ -568,7 +568,7 @@ end QuadraticRotation
 namespace PartialTraceIsometries
 
 abbrev signature.{v, z} : Signature where
-  Params := Type v × Type z
+  Params := Σ _ : Type v, Type z
   State p := Matrix p.1 p.2 ℂ
   Role := Unit
   finiteRole := inferInstance
@@ -587,7 +587,7 @@ abbrev arena.{u, v, w, z} : Arena where
   Law R := ∀ {a : Type u} {b : Type v} {i : Type w} {j : Type z}
     [Fintype a] [Fintype b] [Fintype i] [Fintype j]
     [DecidableEq j] (v : Matrix a i ℂ) (w : Matrix b j ℂ)
-    (_hw : R.readout () (b, j) w * w = 1) (z : Matrix (i × j) (i × j) ℂ),
+    (_hw : R.readout () ⟨b, j⟩ w * w = 1) (z : Matrix (i × j) (i × j) ℂ),
     partialTraceRight (Matrix.kronecker v w * z * (Matrix.kronecker v w)ᴴ) =
       v * partialTraceRight z * vᴴ
 
@@ -609,14 +609,14 @@ private theorem rejected_law.{u, v, w, z} : ¬ arena.{u, v, w, z}.Law rejected :
 
 private theorem dependence.{v, z} : ObservationalDependence signature.{v, z} actual := by
   intro i
-  refine ⟨(ULift.{v} Unit, ULift.{z} Unit), 0, (fun _ _ => 1), ?_⟩
+  refine ⟨⟨ULift.{v} Unit, ULift.{z} Unit⟩, 0, (fun _ _ => 1), ?_⟩
   intro h
   have he := congrFun (congrFun h ⟨()⟩) ⟨()⟩
   change star (0 : ℂ) = star 1 at he
   simp at he
 
 def source_registration.{u, v, w, z} : Registration arena (type_of% (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.partialTrace_isometries.{u, v, w, z})) where
-  actual := actual
+  actual := realize signature.{v, z} (fun _ _ w => wᴴ) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.partialTrace_isometries.{u, v, w, z}, rejected, rejected_law⟩
   sensitivity := by
