@@ -2747,7 +2747,7 @@ $$
 \begin{gathered}
 \delta(\mathcal X,\mathcal Y)=0,\qquad
 N_{\mathcal Y}(\mathcal X)=\mathcal Y,\\
-|N_{\mathcal Y}(Z)|>|Z|quad
+|N_{\mathcal Y}(Z)|>|Z|\quad
 (\varnothing\ne Z\subsetneq\mathcal X).
 \end{gathered} \tag{34.15}
 $$
