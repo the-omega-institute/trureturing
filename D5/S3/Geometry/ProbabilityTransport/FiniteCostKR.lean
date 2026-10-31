@@ -317,7 +317,8 @@ theorem finite_kr_attained {I : Type*} [Fintype I]
   obtain ⟨P, u, v, hP, hrow, hcol, hfeas, hobj⟩ :=
     FiniteTransportInterface.finite_transport_attained a b c ha hb ha1 hb1 hc
   let f := finiteCTransform Finset.univ hne c u
-  obtain ⟨hf, hfu, hfv⟩ := finiteCTransform_properties Finset.univ hne c hc_self hc_symm hc_triangle u v
+  obtain ⟨hf, hfu, hfv⟩ :=
+    finiteCTransform_properties Finset.univ hne c hc_self hc_symm hc_triangle u v
   have hge : (∑ i, a i * u i) + ∑ j, b j * v j ≤
       (∑ i, a i * f i) - ∑ j, b j * f j := by
     have hu := Finset.sum_le_sum (s := Finset.univ) (fun i _ =>
@@ -403,11 +404,11 @@ private theorem finiteRange_optimal_coupling
   obtain ⟨hg, hgu, hgv⟩ := finiteCTransform_properties A hA c hc_self hc_symm hc_triangle u (-u)
   have hgf : ∀ i : A, g i = f i := by
     intro i
-    have hui : u i = f i := dif_pos i.2
+    have hui : u i = f i := dite_eq_left i.2
     apply le_antisymm
     · have h := hgv i (fun j hj => ?_)
       · simpa only [Pi.neg_apply, neg_neg, hui] using h
-      · have huj : u j = f ⟨j, hj⟩ := dif_pos hj
+      · have huj : u j = f ⟨j, hj⟩ := dite_eq_left hj
         rw [Pi.neg_apply, huj, hui]
         exact (le_abs_self _).trans (hf ⟨j, hj⟩ i)
     · simpa only [hui] using hgu i i.2
@@ -417,19 +418,20 @@ private theorem finiteRange_optimal_coupling
     intro m _ hm
     have hi : ∀ x ∈ A, Integrable g ((m {x}) • Measure.dirac x) := fun x _ =>
       (integrable_dirac (by simp)).smul_measure (measure_ne_top _ _)
-    rw [hm, integral_finsetSum_measure hi]
+    conv_lhs => rw [hm]
+    rw [integral_finsetSum_measure hi]
     simp_rw [integral_smul_measure, integral_dirac, smul_eq_mul]
     rw [← Finset.sum_coe_sort A (fun x => (m {x}).toReal * g x)]
     exact Finset.sum_congr rfl fun i _ => congrArg ((m {(i : α)}).toReal * ·) (hgf i)
-  let π : Measure (α × α) := ∑ i : A, ∑ j : A,
-    ENNReal.ofReal (P i j) • Measure.dirac ((↑i : α), (↑j : α))
+  set π : Measure (α × α) := ∑ i : A, ∑ j : A,
+    ENNReal.ofReal (P i j) • Measure.dirac ((↑i : α), (↑j : α)) with hπ_def
   have hofa : ∀ i : A, ENNReal.ofReal (a i) = Measure.map T μ {↑i} :=
     fun i => ENNReal.ofReal_toReal (measure_ne_top _ _)
   have hofb : ∀ i : A, ENNReal.ofReal (b i) = Measure.map S ν {↑i} :=
     fun i => ENNReal.ofReal_toReal (measure_ne_top _ _)
   have hfst : Measure.map Prod.fst π = Measure.map T μ := by
     ext E hE
-    rw [Measure.map_apply measurable_fst hE, show π = _ from rfl, hμmap]
+    rw [Measure.map_apply measurable_fst hE, hπ_def, hμmap]
     simp only [Measure.coe_finsetSum, Finset.sum_apply, Measure.smul_apply, smul_eq_mul,
       Measure.dirac_apply]
     rw [← Finset.sum_coe_sort A (fun x => Measure.map T μ {x} * Set.indicator E 1 x)]
@@ -442,7 +444,7 @@ private theorem finiteRange_optimal_coupling
       hrow, hofa]
   have hsnd : Measure.map Prod.snd π = Measure.map S ν := by
     ext E hE
-    rw [Measure.map_apply measurable_snd hE, show π = _ from rfl, hνmap]
+    rw [Measure.map_apply measurable_snd hE, hπ_def, hνmap]
     simp only [Measure.coe_finsetSum, Finset.sum_apply, Measure.smul_apply, smul_eq_mul,
       Measure.dirac_apply]
     rw [Finset.sum_comm, ← Finset.sum_coe_sort A
