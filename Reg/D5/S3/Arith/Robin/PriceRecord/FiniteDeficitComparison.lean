@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Robin.PriceRecord.FiniteDeficitComparison
 import Reg.Support.DependentFamily
 
+/-! Source-bound audit for the finite actual-record Euler deficit. -/
+
 open _root_.D5.S3.Arith.Robin.PriceRecord.FiniteDeficitComparison
 open _root_.D5.S3.Arith.Robin.OriginalEndpointPrimeTail (tail largestPrime layerTail)
 open _root_.D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity (layerPrime)
@@ -65,13 +67,19 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have htail : tail 3 = -Real.log (8 / 9 : ℝ) := by
     norm_num [tail, layerTail]
   have hsum : finitePrimeSquareSum 3 = (13 / 36 : ℝ) := by
-    norm_num [finitePrimeSquareSum, largestPrime, layerPrime]
-  rw [htail, hsum] at hbad
+    have hfilter : (Finset.Ioc 1 3).filter Nat.Prime = {2, 3} := by decide
+    simp only [finitePrimeSquareSum, largestPrime, layerPrime]
+    rw [hfilter]
+    norm_num
+  have hbad' :
+      0 ≤ tail 3 - finitePrimeSquareSum 3 := by
+    simpa [rejected, realize] using hbad.1
+  rw [htail, hsum] at hbad'
   have hneg : -Real.log (8 / 9 : ℝ) - (13 / 36 : ℝ) < 0 := by
     have hq : -Real.log (8 / 9 : ℝ) ≤ (1 / 9 : ℝ) + (1 / 9 : ℝ) ^ 2 := by
       convert hquad using 1 <;> norm_num
     linarith
-  exact (not_le_of_gt hneg) hbad.1
+  exact (not_le_of_gt hneg) hbad'
 
 def family : Registration arena (type_of% @actual_finite_euler_deficit) where
   actual := actual
