@@ -18,7 +18,7 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.FullCone
 
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
-open private mass_margin ceilpos from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Arithmetic
+open private mass_margin ceilpos rounded_reserve ceilpos_capacity from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Arithmetic
 open private source_shadow_charge two_power_pred from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Source
 open private seedZ modZ old enlarged charge shadow natural_lift_strips natural_lift_totals natural_lift_strong
   from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Lift
@@ -542,7 +542,7 @@ private theorem valley_falling_masks (a b c : ℕ) (hb : 2≤b)
     intro e he
     have he1 : e=1 := by
       have he' : ((2:ℕ)^1).testBit e=true := he
-      simpa only [Nat.testBit_two_pow,decide_eq_true_eq] using he'
+      simpa only [Nat.testBit_two_pow,decide_eq_true_eq,eq_comm] using he'
     subst e
     rw [hfull]
     simp only [Nat.testBit_two_pow_sub_one,decide_eq_true_eq]
@@ -583,8 +583,8 @@ private theorem valley_falling_masks (a b c : ℕ) (hb : 2≤b)
     have hj : J=2 := by nlinarith [hZ]
     have hbds:=hp.2.2.2.2.2.1 (by exact_mod_cast hj)
     refine ⟨hcap,h2cap,h1cap,htwo,(by intro e he; exact he),hp.1,hp.2.1,?_,?_,hp.2.2.2.1,hp.2.2.2.2.1⟩
-    · simpa only [Nat.cast_ofNat,mul_one] using hbds.1
-    · simpa only [Nat.cast_ofNat,mul_one] using hbds.2
+    · simpa only [Nat.cast_ofNat,Nat.cast_one,mul_one,mul_comm A 2] using hbds.1
+    · simpa only [Nat.cast_ofNat,Nat.cast_one,mul_one,mul_comm A 2] using hbds.2
   · simp only [if_neg he]
     have hJ4 : 4≤J := by
       have hbc2 : 2≤c-b := by

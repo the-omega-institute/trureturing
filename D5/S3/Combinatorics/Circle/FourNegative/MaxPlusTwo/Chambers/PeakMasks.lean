@@ -128,8 +128,9 @@ private theorem peak_first_masks (a b c s : ℕ)
     have hP2 : 2≤P:=Nat.pow_le_pow_right Nat.zero_lt_two (show 1≤c-1 by omega)
     have hZ : Z=2*P := by
       dsimp [Z,P]
-      rw [show c=c-1+1 by omega,pow_succ]
-      ring
+      calc
+        (2:ℕ)^c=2^((c-1)+1) := by congr 1; omega
+        _=2*2^(c-1) := by rw [pow_succ]; ring
     have hZi : (Z:ℤ)=2*(P:ℤ) := by exact_mod_cast hZ
     have hTi : (T:ℤ)=2*(Z:ℤ) := by exact_mod_cast hT
     have hAi : A=2*(R:ℤ)*(Z:ℤ)^2+(2*(R:ℤ)*Z+R+1) := by rw [hA,hTi]; ring
@@ -205,7 +206,10 @@ private theorem peak_last_masks (a b c s : ℕ)
     let P : ℕ:=2^(b-1)
     have hTP : (T:ℤ)=2*(P:ℤ) := by
       have ht : T=2*P := by
-        dsimp [T,P]; rw [show b=b-1+1 by omega,pow_succ]; ring
+        dsimp [T,P]
+        calc
+          (2:ℕ)^b=2^((b-1)+1) := by congr 1; omega
+          _=2*2^(b-1) := by rw [pow_succ]; ring
       exact_mod_cast ht
     have hcap0 : e3-(s:ℤ)*A≤2*e2*(P-1) := by
       have hRT : 0≤(R:ℤ)*T-2*((R:ℤ)+1) := by
