@@ -30,8 +30,8 @@ open LatticeSugawaraCurrents LatticeActualAnnihilation LatticeInvolution
 open LatticePositiveEnergy MvPolynomial OriginalSourcePairing
 open private wick_constant_left from
   D5.S3.VertexAlgebra.TwistedGround.SignedOscillatorWick
-open private FactorialBilinear.form FactorialBilinear.monomial_left
-  FactorialBilinear.symmetric modeMatrix from
+open SignedOscillatorWick
+open private FactorialBilinear.symmetric from
   D5.S3.VertexAlgebra.TwistedGround.SignedOscillatorWick
 
 private theorem sigma_constant (D : LatticeData) (p : Oscillator D) :
