@@ -63,12 +63,12 @@ private theorem actual_law : arena.Law actual := by
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨sigma, j, hj, hold, hnew⟩ := h 3 2 4 (by decide) (by decide) (by decide)
+  obtain ⟨sigma, j, hj, hold, hnew⟩ := h 2 3 3 (by decide) (by decide) (by decide)
   simp [rejected, realize] at hold
 
 private theorem deleted_law (side : Bool) : ¬ arena.Law (deleted side) := by
   intro h
-  obtain ⟨sigma, j, hj, hold, hnew⟩ := h 3 2 4 (by decide) (by decide) (by decide)
+  obtain ⟨sigma, j, hj, hold, hnew⟩ := h 2 3 3 (by decide) (by decide) (by decide)
   cases side
   · simp [deleted, rejected, realize] at hold
   · simp [deleted, rejected, realize] at hnew

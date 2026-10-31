@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Circle/ThreeNegativeOrderedConeJointLift
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/ThreeNegativeMiddleGapJointLift
+   mirror-B: D5/B/S3/Combinatorics/Circle/ThreeNegativeOrderedConeJointLift
    mirror-E: none(waiver:no-escape-mirror-specified)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
@@ -1084,12 +1084,15 @@ theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
             rw [hgear]
             omega)
       hPnewMass hNewAlpha hNewQendT' hNewBetaT hzero'
-    let j := P.toList.length + 1
+    let pre := P.toList ++ alpha :: Q.toList ++ beta :: T.toList
+    let j := pre.length
     have hj : j ≤ k := by
-      have hh := Finset.card_le_card hPsub
-      simp only [Finset.card_range] at hh
-      dsimp [j, k]
-      simpa only [Finset.length_toList] using (show P.card + 1 ≤ a + b + c by omega)
+      have hh := hp.length_eq
+      simp only [word, List.length_append, List.length_cons, List.length_singleton,
+        List.length_range] at hh
+      dsimp [j, pre]
+      simp only [List.length_append, List.length_cons]
+      omega
     have hk : 0 < k := by dsimp [k]; omega
     refine ⟨word.map (label k hk), j, hj, ?_, ?_⟩
     · refine lift_order k (1 + 2 ^ a + 2 ^ (a + b)) hk word hp ?_ ?_
@@ -1102,13 +1105,12 @@ theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
         simpa only [word, hseed, hhalf] using hold
       · simpa only [hseed] using hzero
     · have he : earWord k (word.map (label k hk)) j = plusT.map (label (k + 1) (by omega)) := by
-        have hpre : (P.toList ++ [alpha]).length = j := by simp [j]
-        have hw : (P.toList ++ [alpha]) ++ (Q.toList ++ beta :: T.toList ++ [gamma]) = word := by
-          simp only [word, List.append_assoc, List.singleton_append, List.cons_append, List.nil_append]
-        have hpw : (P.toList ++ [alpha]) ++ (Q.toList ++ beta :: T.toList ++ [k, gamma]) = plusT := by
-          simp only [plusT, List.append_assoc, List.singleton_append, List.cons_append, List.nil_append]
-        simpa only [hw, hpw] using marked_word k j hk (P.toList ++ [alpha])
-          (Q.toList ++ beta :: T.toList ++ [gamma]) hpre (by rw [hw]; exact hp)
+        have hw : pre ++ [gamma] = word := by
+          simp only [pre, word, List.append_assoc, List.cons_append]
+        have hpw : pre ++ k :: [gamma] = plusT := by
+          simp only [pre, plusT, List.append_assoc, List.cons_append]
+        simpa only [hw, hpw] using marked_word k j hk pre [gamma] rfl
+          (by rw [hw]; exact hp)
       rw [he]
       refine lift_order (k + 1) (2 * (1 + 2 ^ a + 2 ^ (a + b))) (by omega) plusT hplusT ?_ ?_
       · simpa only [plusT, Nat.cast_mul, Nat.cast_ofNat, hseed, hnewhalf] using hnew
