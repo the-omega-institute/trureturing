@@ -57,7 +57,7 @@ theorem integrable_resolvent {S : ℝ} (hS : 0 < S) (r : ℝ) {j : ℕ}
   have h1 := resolvent_le_one hS r hs0
   rw [Real.norm_eq_abs, abs_of_nonneg (pow_nonneg h0 _)]
   calc
-    resolvent S r s ^ j ≤ resolvent S r s := pow_le_self₀ h0 h1 (by omega)
+    resolvent S r s ^ j ≤ resolvent S r s := pow_le_of_le_one h0 h1 (by omega)
     _ ≤ (r ^ 2 + 1) * (1 + s ^ 2)⁻¹ := by
       rw [resolvent, ← div_eq_mul_inv, div_le_div_iff₀ hd hc]
       nlinarith [mul_nonneg (sq_nonneg r) (sq_nonneg r),
@@ -189,12 +189,13 @@ private lemma layercake_lintegral {S : ℝ} (hS : 0 < S) (r : ℝ) {j : ℕ}
   apply lintegral_congr
   intro t
   by_cases ht : 0 < t
-  · rw [indicator_of_mem ht, level_measure hS r ht]
+  · rw [indicator_of_mem (show t ∈ Ioi (0 : ℝ) from ht), level_measure hS r ht]
     by_cases ht1 : t < 1
     · rw [if_pos ht1, indicator_of_mem (show t ∈ Ioo 0 1 from ⟨ht, ht1⟩)]
       exact (ENNReal.ofReal_mul (length_nonneg hS.le ⟨ht, ht1⟩)).symm
     · rw [if_neg ht1, zero_mul, indicator_of_notMem (show t ∉ Ioo 0 1 from fun h => ht1 h.2)]
-  · rw [indicator_of_notMem ht, indicator_of_notMem (show t ∉ Ioo 0 1 from fun h => ht h.1)]
+  · rw [indicator_of_notMem (show t ∉ Ioi (0 : ℝ) from ht),
+      indicator_of_notMem (show t ∉ Ioo 0 1 from fun h => ht h.1)]
 
 private lemma integrable_density {S : ℝ} (hS : 0 < S) (r : ℝ) {j : ℕ}
     (hj : 1 ≤ j) : IntegrableOn (density S j r) (Ioo 0 1) := by
@@ -207,7 +208,8 @@ private lemma integrable_density {S : ℝ} (hS : 0 < S) (r : ℝ) {j : ℕ}
   have hfin := (integrable_resolvent hS r hj).lintegral_lt_top
   rw [layercake_lintegral hS r hj, he] at hfin
   have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
-  simp [ENNReal.ofReal_pos.mpr hj0 |>.ne'] at hfin
+  have hn : ENNReal.ofReal (j : ℝ) ≠ 0 := (ENNReal.ofReal_pos.mpr hj0).ne'
+  simp [ENNReal.mul_top, hn] at hfin
 
 private lemma layercake {S : ℝ} (hS : 0 < S) (r : ℝ) {j : ℕ}
     (hj : 1 ≤ j) : kernel S j r = ∫ t in Ioo 0 1, density S j r t := by
@@ -241,7 +243,7 @@ theorem convex_kernel {S : ℝ} (hS : 0 < S) {j : ℕ} (hj : 1 ≤ j) :
     (((integrable_density hS x hj).const_mul a).add
       ((integrable_density hS y hj).const_mul b)) measurableSet_Ioo
   intro t ht
-  have hh := (length_convex ht).2 hx hy ha hb hab
+  have hh := (length_convex (S := S) ht).2 hx hy ha hb hab
   simp only [smul_eq_mul] at hh
   have hm := mul_le_mul_of_nonneg_right hh (pow_nonneg ht.1.le (j - 1))
   dsimp only [density]
@@ -277,6 +279,7 @@ private lemma denominator_comparison {S P T : ℝ} (hS : 0 < S) (hP : 0 < P)
   apply div_le_div_of_nonneg_right _ (by positivity)
   apply setIntegral_mono_on (hint1.const_mul _) hint2 measurableSet_Ioi
   intro s hs
+  have hs0 : 0 < s := hs
   have hd : 0 < s ^ 2 + S * s + T ^ 2 := by positivity
   have hdp : 0 < s ^ 2 + S * s + P := by positivity
   have he : (T ^ 2 / P) * resolvent S (Real.sqrt P) s =

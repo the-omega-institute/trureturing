@@ -98,8 +98,9 @@ private lemma simultaneous_spectrum (A B : Matrix n n ℂ)
         linarith
     · simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul,
         Matrix.diagonal_apply_ne hik] at h hs ⊢
-      have hi : Complex.I * Complex.I = -1 := Complex.I_mul_I
-      linear_combination (-Complex.I / 2) * h + (Complex.I / 2) * hs
+      have hz : φ A i k = 0 := by rw [heA, Matrix.diagonal_apply_ne hik]
+      rw [hz, zero_add] at h
+      exact (mul_eq_zero.mp h).resolve_left Complex.I_ne_zero
   refine ⟨U, fun i => (d i).re, fun i => (d i).im, ?_, ?_, heA, heB⟩
   · have hp : (φ A).PosSemidef := nonneg_iff_posSemidef.mp (map_nonneg φ hA.nonneg)
     rw [heA] at hp
@@ -147,12 +148,15 @@ private lemma root_fidelity_spectral (A B : Matrix n n ℂ)
   have hsand : (CFC.sqrt A * B * CFC.sqrt A).PosSemidef := by
     simpa only [hroot.isHermitian.eq] using hB.mul_mul_conjTranspose_same (CFC.sqrt A)
   have he : φ (CFC.sqrt A * B * CFC.sqrt A) = diagonal (fun i => (a i * b i : ℝ)) := by
-    rw [map_mul, map_mul, map_sqrt U A hA, heA, heB, sqrt_diagonal a ha,
-      diagonal_mul_diagonal, diagonal_mul_diagonal]
+    simp only [map_mul, map_sqrt U A hA, heA, heB, sqrt_diagonal a ha,
+      diagonal_mul_diagonal]
     congr 1
     funext i
-    push_cast
-    rw [mul_right_comm, ← mul_assoc, ← Complex.ofReal_mul, Real.mul_self_sqrt (ha i)]
+    norm_cast
+    calc
+      Real.sqrt (a i) * b i * Real.sqrt (a i) =
+          (Real.sqrt (a i) * Real.sqrt (a i)) * b i := by ring
+      _ = a i * b i := by rw [Real.mul_self_sqrt (ha i)]
   unfold rootFidelity
   rw [← trace_conj U, map_sqrt U _ hsand, he,
     sqrt_diagonal (fun i => a i * b i) (fun i => mul_nonneg (ha i) (hb i)),
@@ -230,17 +234,18 @@ private lemma sandwich_spectral (A B : Matrix n n ℂ)
       diagonal (fun i => (a i * b i / ((s + a i) * (s + b i)) : ℝ)) := by
   have hq (i : n) : 0 ≤ a i / (s + a i) :=
     div_nonneg (ha i) (add_pos_of_pos_of_nonneg hs (ha i)).le
-  rw [sandwich, map_mul, map_mul,
+  simp only [sandwich, map_mul,
     map_sqrt U _ (response_posSemidef A U a ha heA hs),
     response_spectral A U a ha heA hs, response_spectral B U b hb heB hs,
-    sqrt_diagonal _ hq, diagonal_mul_diagonal, diagonal_mul_diagonal]
+    sqrt_diagonal _ hq, diagonal_mul_diagonal]
   congr 1
   funext i
-  have hroot := Real.mul_self_sqrt (hq i)
-  push_cast
-  rw [mul_right_comm, ← mul_assoc, ← Complex.ofReal_mul, hroot]
-  push_cast
-  exact (div_mul_div_comm _ _ _ _).symm
+  norm_cast
+  calc
+    Real.sqrt (a i / (s + a i)) * (b i / (s + b i)) * Real.sqrt (a i / (s + a i)) =
+        (Real.sqrt (a i / (s + a i)) * Real.sqrt (a i / (s + a i))) * (b i / (s + b i)) := by ring
+    _ = (a i / (s + a i)) * (b i / (s + b i)) := by rw [Real.mul_self_sqrt (hq i)]
+    _ = _ := div_mul_div_comm _ _ _ _
 
 private lemma moment_spectral (A B : Matrix n n ℂ)
     (U : unitary (Matrix n n ℂ)) (a b : n → ℝ)
@@ -307,7 +312,7 @@ private lemma normalized_fidelity_spectral (A B : Matrix n n ℂ)
       Real.sqrt (a i * b i) / Real.sqrt (α * β) := by
     rw [div_mul_div_comm, Real.sqrt_div (mul_nonneg (ha i) (hb i))]
   simp_rw [he] at hroot
-  rw [Finset.sum_div] at hroot
+  rw [← Finset.sum_div] at hroot
   unfold squaredNormalizedFidelity
   rw [hroot, div_pow, Real.sq_sqrt (mul_pos hα hβ).le]
 
@@ -334,8 +339,8 @@ theorem commuting_fidelity_moment (A B : Matrix n n ℂ)
     apply hB.trace_eq_zero_iff.mp
     exact Complex.ext hz.symm (Complex.nonneg_iff.mp hB.trace_nonneg).2.symm
   rw [gamma_spectral A B (star U) a b ha hb heA heB hj,
-    normalized_fidelity_spectral A B hA hB (star U) a b ha hb heA heB hα hβ,
-    trace_spectral A (star U) a heA, trace_spectral B (star U) b heB]
+    normalized_fidelity_spectral A B hA hB (star U) a b ha hb heA heB hα hβ]
+  simp only [trace_spectral A (star U) a heA, trace_spectral B (star U) b heB]
   exact scalar_fidelity_moment a b ha hb
     (by rwa [← trace_spectral A (star U) a heA])
     (by rwa [← trace_spectral B (star U) b heB]) hj
