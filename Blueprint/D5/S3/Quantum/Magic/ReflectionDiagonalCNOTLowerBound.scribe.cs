@@ -31,6 +31,7 @@ internal sealed class ReflectionDiagonalCNOTLowerBoundDocument : IScribeDocument
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "Qubits m denotes the Boolean functions on Fin m, as in D5.S3.Quantum.Entanglement.RandomizedGraphNegativityRefutation.Qubits. "
+                    + "Sum.elim selects the CNOT or rotation matrix from the gate's disjoint-sum tag. "
                     + "The CNOT matrix reindexes the columns of the identity by replacing the target bit with its exclusive-or with the control bit. "
                     + "Subtype.val explicitly extracts the ordered wire pair. The rotation matrix is diagonal: a false bit receives the exponential of minus half the angle times the imaginary unit, and a true bit receives the positive half-angle exponential. "
                     + "Complex.ofReal explicitly includes each real half-angle into the complex numbers. These are the CNOT and z-rotation gates used by the source's circuit model at lines 170 and 194."))),
@@ -51,7 +52,7 @@ internal sealed class ReflectionDiagonalCNOTLowerBoundDocument : IScribeDocument
                 StatementSource.FromAuthor(Disp(CnotCountFormula())),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
-                    "Filter the circuit by its disjoint-sum tag and take the length of the retained list. "
+                    "Filter the circuit with Sum.elim on its disjoint-sum tag and take the length of the retained list. "
                     + "The predicate is constantly true on CNOT pairs and constantly false on rotations; Function.const displays both constant branches. "
                     + "This is the CNOT gate count used at lines 229 and 434, independently of the number of rotations."))),
                 DescribeRole.Definition),

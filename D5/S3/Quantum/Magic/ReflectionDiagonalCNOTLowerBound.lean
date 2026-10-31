@@ -33,15 +33,14 @@ private def rzMatrix {m : ℕ} (q : Fin m) (φ : ℝ) : Matrix (Qubits m) (Qubit
     if x q = false then Complex.exp (((-φ / 2 : ℝ) : ℂ) * Complex.I)
     else Complex.exp (((φ / 2 : ℝ) : ℂ) * Complex.I))
 
-def gateMatrix {m : ℕ} : gate m → Matrix (Qubits m) (Qubits m) ℂ
-  | Sum.inl p => cnotMatrix p.1.1 p.1.2 p.2
-  | Sum.inr p => rzMatrix p.1 p.2
+def gateMatrix {m : ℕ} : gate m → Matrix (Qubits m) (Qubits m) ℂ :=
+  Sum.elim (fun p => cnotMatrix p.1.1 p.1.2 p.2) (fun p => rzMatrix p.1 p.2)
 
 def circuitMatrix {m : ℕ} (circuit : List (gate m)) : Matrix (Qubits m) (Qubits m) ℂ :=
   circuit.foldr (fun g acc => gateMatrix g * acc) 1
 
 def cnotCount {m : ℕ} (circuit : List (gate m)) : ℕ :=
-  (circuit.filter (fun g => match g with | Sum.inl _ => true | Sum.inr _ => false)).length
+  (circuit.filter (Sum.elim (fun _ => true) (fun _ => false))).length
 
 private def character {m : ℕ} (v : Qubits m) (f : Qubits m → ℂ) : ℂ :=
   ∏ x : Qubits m, f x ^ (if dotProduct v x then (-1 : ℤ) else 1)
