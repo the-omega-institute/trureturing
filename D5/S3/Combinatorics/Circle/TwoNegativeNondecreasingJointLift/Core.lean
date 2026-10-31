@@ -96,13 +96,13 @@ private theorem realize (a b u v : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     apply centered_unique hNpos hNodd (centered_bounds hNpos hNodd _) hx
     change centered N _ % N = x % N
     rw [centered_mod, he]
-    simp [Int.add_emod, Int.mul_emod]
+    simp [Int.add_emod]
   have new_value (i : Fin (k + 1)) (x m : ℤ) (hx : -N ≤ x ∧ x ≤ N)
       (he : (2 : ℤ) ^ i.val * ((2 * w : ℕ) : ℤ) =
         x + m * modulus (k + 1)) : actualSource (k + 1) (2 * w) i = x := by
     apply centered_unique hMP hMO (centered_bounds hMP hMO _) (by simpa [hMH] using hx)
     rw [centered_mod, he]
-    simp [Int.add_emod, Int.mul_emod]
+    simp [Int.add_emod]
   have U (i : ℕ) (hi : i < b - 1) :
       f ⟨i, by dsimp [k]; omega⟩ = (q + 1) * 2 ^ i ∧
       g ⟨i, by dsimp [k]; omega⟩ = 2 * (q + 1) * 2 ^ i := by
@@ -119,9 +119,9 @@ private theorem realize (a b u v : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
       nlinarith
     constructor
     · apply old_value _ _ 0 (by constructor <;> nlinarith)
-      simp only [Fin.val_mk, hvc]; ring
+      simp only [hvc]; ring
     · apply new_value _ _ 0 (by constructor <;> nlinarith)
-      simp only [Fin.val_castSucc, Fin.val_mk, Nat.cast_mul, Nat.cast_ofNat, hvc]; ring
+      simp only [Fin.val_castSucc, Nat.cast_mul, Nat.cast_ofNat, hvc]; ring
   have V (i : ℕ) (hi : i < a - 1) :
       f ⟨b + i, by dsimp [k]; omega⟩ = (r + 1) * 2 ^ i ∧
       g ⟨b + i, by dsimp [k]; omega⟩ = A * 2 ^ i := by
@@ -141,11 +141,11 @@ private theorem realize (a b u v : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
       constructor <;> nlinarith
     constructor
     · apply old_value _ _ ((2 : ℤ) ^ i) (by constructor <;> nlinarith)
-      simp only [Fin.val_mk, pow_add, hvc]
+      simp only [pow_add, hvc]
       change r * 2 ^ i * (q + 1) = _
       rw [hN]; ring
     · apply new_value _ _ ((2 : ℤ) ^ i) (by dsimp [A] at *; constructor <;> nlinarith)
-      simp only [Fin.val_castSucc, Fin.val_mk, pow_add, Nat.cast_mul, Nat.cast_ofNat, hvc]
+      simp only [Fin.val_castSucc, pow_add, Nat.cast_mul, Nat.cast_ofNat, hvc]
       change r * 2 ^ i * (2 * (q + 1)) = _
       rw [hM, hN]; dsimp [A]; ring
   have hAlpha : f alpha = -C + R := by
@@ -327,7 +327,7 @@ private theorem realize (a b u v : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     omega
   have hear : earWord k sigma E.length =
       (EN ++ [fresh]) ++ [alpha.castSucc] ++ FN ++ [beta.castSucc] := by
-    change earWord k (E ++ ([alpha] ++ F ++ [beta])) E.length = _
+    simp only [sigma, List.append_assoc]
     unfold earWord
     rw [List.take_left, List.drop_left]
     simp only [EN, FN, fresh, List.map_append, List.map_cons, List.map_nil,
@@ -336,9 +336,11 @@ private theorem realize (a b u v : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     apply two_blocks f C E F alpha beta (fun i hi => (Epos i hi).1)
       (fun i hi => (Fpos i hi).1)
     · rw [hEold,hOldMass,hAlpha,hBeta]; change p + (-C+R) + (2*C-R-Q-p) + (-C+Q) = 0; ring
-    · change 0 ≤ p ∧ p ≤ C
+    · rw [hEold]
+      change 0 ≤ p ∧ p ≤ C
       rw [hseamOld.1]; omega
-    · change 0 ≤ p + f alpha
+    · rw [hEold]
+      change 0 ≤ p + f alpha
       rw [hseamOld.2]; omega
     · rw [hBeta]; constructor <;> nlinarith [hC2]
   have hn : InStrip gn N 0 (earWord k sigma E.length) := by
@@ -364,7 +366,7 @@ private theorem realize (a b u v : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
       rw [hBetaNew]; constructor <;> nlinarith [hN]
   have hnp := inserted_perm sigma E.length hsperm
   refine ⟨sigma, E.length, hcut,
-    ⟨hsperm, source_total (by dsimp [k]; omega) _ hsperm, ?_⟩,
+    ⟨hsperm, source_total (show 0 < k by dsimp [k]; omega) _ hsperm, ?_⟩,
     ⟨hnp, source_total (by omega) _ hnp, ?_⟩⟩
   · intro n
     change 0 ≤ ((sigma.take n).map f).sum ∧ ((sigma.take n).map f).sum ≤ C
