@@ -110,12 +110,22 @@ theorem observation_dependence : DependentFamily.ObservationalDependence
   refine ⟨sample.{u}, ∅, J, ?_⟩
   change charge sample ∅ ≠ charge sample J
   dsimp [J]
+  have h0 : charge sample.{u} ∅ = 0 := by
+    change configurationCharge star.{u} 1 ∅ = 0
+    unfold configurationCharge
+    apply sum_eq_zero
+    intro v _
+    rw [occupiedNeighbors, Finset.filter_empty]
+    norm_num
+  rw [h0]
   have hU : (univ : Finset (ULift.{u} (Fin 3))) =
       {ULift.up 0, ULift.up 1, ULift.up 2} := by decide
   dsimp [charge, sample, configurationCharge]
   rw [hU]
   norm_num [degreeWeight, occupiedNeighbors, SimpleGraph.degree,
-    SimpleGraph.neighborFinset_eq_filter, hU, star, filter_insert, filter_empty]
+    SimpleGraph.neighborFinset_eq_filter, hU, star, Finset.filter_insert,
+    Finset.filter_singleton, Finset.filter_empty] <;>
+    norm_num [Finset.filter_insert, Finset.filter_singleton, Finset.filter_empty]
 
 def familyRegistration : DependentFamily.Registration arena.{u} sourceScope.{u} where
   actual := actual

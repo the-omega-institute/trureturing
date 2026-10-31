@@ -77,7 +77,7 @@ internal sealed class ConfigurationChargeDocument : IScribeDocumentDefinition
                 SumOver(Mem(j, Call("configurations", g, Call("univ", v))),
                     Mul(new Formula.Fraction(new Formula.Power(F.Id("lambda"), Call("card", j)),
                         Call("Z", g, F.Id("lambda"))), Call("C", g, F.Id("lambda"), j))))));
-        return F.Disp(All("V", Call("Type"), F.Seq(
+        return F.Disp(All("V", F.Id("Type"), F.Seq(
             F.OpenBracket, Call("Fintype", v), F.CloseBracket, F.Sp,
             F.OpenBracket, Call("DecidableEq", v), F.CloseBracket, F.Comma, F.Sp,
             All("G", Call("SimpleGraph", v), F.Seq(
