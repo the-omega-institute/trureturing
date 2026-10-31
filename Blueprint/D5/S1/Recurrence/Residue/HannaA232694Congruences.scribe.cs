@@ -23,7 +23,9 @@ internal sealed class HannaA232694CongruencesDocument : IScribeDocumentDefinitio
             Node("result", "The congruences hold at every index", ClaimBody(),
                 "An integral triangular recurrence transfers the residues of an approximate solution to every exact solution. "
                 + "The finite polynomial residual has divisible exponential coefficients in every degree. "
-                + "The exponential approximate solution supplies the constant residue where used.",
+                + "The exponential approximate solution supplies the constant residue where used."
+                + " HannaA232694Congruences.result settles the two nominated conjectures preregistered in issue #21485 "
+                + "(https://github.com/the-omega-institute/trureturing/issues/21485), recorded in Problems/hefg-a232694.md.",
                 AssessedProvenance.FromRepo(Source()), DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("hefg-a232694"), ResolutionKind.Proved)))));
 
