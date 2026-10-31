@@ -37,13 +37,49 @@ internal sealed class MittagLefflerBarnesKernelDocument : IScribeDocumentDefinit
             ExtraEntry("gamma-line-majorant", "norm_line_le_recip_gamma", "The growing Gamma denominator", GammaLineBound(), "When beta-alpha*c is at least one half, the squared reciprocal-Gamma estimate retains Gamma(beta-alpha*c) in the denominator. Reflection and the actual angular margin give this estimate without a bounded-strip replacement constant.", DescribeRole.Theorem),
             ExtraEntry("half-line-sine", "abs_sin_leftLine", "The half-integer sine factor", All("n",N,Equal(Abs(Call("sin",Mul(Seq(Pi,Sp),Call("leftLine",V("n"))))),Num(1))), "Moving the line left by one changes the sine sign, so its absolute value remains one. This is used by the integral estimate and the actual contour integrability proof.", DescribeRole.Theorem),
             ExtraEntry("left-integral-bound", "norm_integral_leftLine_le", "The moving-line integral bound", IntegralLineBound(), "The entire vertical integral is bounded by its retained real-Gamma radial factor times the fixed integral of exp(-margin*abs(y)). This bound is used in the literal coefficient summability argument.", DescribeRole.Theorem),
-            ExtraEntry("horizontal-limits", "horizontal_tendsto_zero", "Both horizontal limits", HorizontalLimits(), "On each finite real strip, the reciprocal-Gamma strip estimate and the far-horizontal sine lower bound give one polynomial-exponential majorant independent of the real coordinate. The interval integral is bounded by the strip width times that majorant. The positive angular margin forces both limits to zero.", DescribeRole.Theorem))));
+            ExtraEntry("horizontal-limits", "horizontal_tendsto_zero", "Both horizontal limits", HorizontalLimits(), "On each finite real strip, the reciprocal-Gamma strip estimate and the far-horizontal sine lower bound give one polynomial-exponential majorant independent of the real coordinate. The interval integral is bounded by the strip width times that majorant. The positive angular margin forces both limits to zero.", DescribeRole.Theorem),
+            ExtraEntry("right-line", "rightLine", "The right contour sequence", RightFormula("rightLine"), "The line indexed by n has real part n plus one half.", DescribeRole.Definition),
+            ExtraEntry("right-numerator", "rightNumerator", "The right-strip numerator", RightFormula("rightNumerator"), "The minus sign accounts for 1-s+n being the negative of s-(n+1). The finite product removes the earlier poles.", DescribeRole.Definition),
+            ExtraEntry("right-holomorphy", "differentiableOn_rightNumerator", "Holomorphy on each right strip", RightFormula("holomorphic"), "Both ordinary Gamma arguments have positive real part on the strip. The earlier finite factors never vanish there, and reciprocal Gamma is entire.", DescribeRole.Theorem),
+            ExtraEntry("right-factorization", "kernel_eq_rightNumerator", "The actual right-strip factorization", RightFormula("factorization"), "Gamma recurrence gives the actual kernel divided by s-(n+1), away from the single pole.", DescribeRole.Theorem),
+            ExtraEntry("right-residue", "rightNumerator_residue", "The rightward reciprocal-Gamma residue", RightFormula("residue"), "At n+1 the factorial and sign cancel. The residue is the inverse z power times reciprocal Gamma, including its zeros.", DescribeRole.Theorem),
+            ExtraEntry("right-sine", "abs_sin_rightLine", "The right half-integer sine factor", RightFormula("sine"), "Advancing by one changes the sine sign and preserves its absolute value.", DescribeRole.Theorem),
+            ExtraEntry("right-step", "integral_right_step", "The actual rightward shift in dy", RightFormula("step"), "The right line integral minus the left line integral is two pi times the actual residue. Holomorphy, integrability and both horizontal limits are supplied by the literal kernel.", DescribeRole.Theorem),
+            ExtraEntry("radial-margin", "margin_pos_scale", "The margin under positive radial scaling", RightFormula("margin"), "Positive real scaling preserves the principal argument of minus w.", DescribeRole.Theorem),
+            ExtraEntry("radial-kernel", "norm_kernel_pos_scale", "The exact radial norm factor", RightFormula("radial"), "The principal logarithm of r times minus w is log r plus log of minus w. Its exponential has norm r to the power minus c.", DescribeRole.Theorem),
+            ExtraEntry("radial-integral", "norm_integral_pos_scale_le", "The fixed-line radial integral bound", RightFormula("integral"), "The actual integrable kernel at w supplies a constant independent of r. The vertical integral at r times w has norm at most that constant times r to the power minus c.", DescribeRole.Theorem))));
 
 
     private static DocumentBlock ExtraEntry(string id, string name, string title, Formula statement, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("mittaglefflerbarneskernel-"+id),
             DeclarationHandle.Create("D5/S3/Analytic/Asymptotics/MittagLefflerBarnesKernel."+name),
             H(title),StatementSource.FromAuthor(Disp(statement)),AssessedProvenance.FromRepo(Source),Blocks(Paragraph(Text(prose))),role);
+
+    private static Formula RightFormula(string kind)
+    {
+        Formula a=V("alpha"), b=V("beta"), z=V("z"), n=V("n"), s=V("s"), r=V("r"), w=V("w"), c=V("c"), y=V("y");
+        Formula half=Div(Num(1),Num(2)), pole=Add(n,Num(1)), lo=Call("rightLine",n), hi=Call("rightLine",pole);
+        Formula rn(Formula x) => Call("rightNumerator",a,b,z,n,x);
+        Formula strip=Call("mem",Call("re",s),Call("Icc",lo,hi));
+        Formula integral(Formula x, Formula line, bool norm=false) => Call("integral",Map("y",R,norm ? Norm(Call("kernel",a,b,x,Add(line,Mul(y,Imaginary)))) : Call("kernel",a,b,x,Add(line,Mul(y,Imaginary)))));
+        Formula scale=Mul(r,w), margin=Call("margin",a,w), radial=Call("rpow",r,Negate(c));
+        Formula residue=Div(Div(Num(1),Pow(z,pole)),Call("RealGamma",Sub(b,Mul(a,pole))));
+        Formula f;
+        if(kind=="rightLine") return All("n",N,Equal(lo,Add(n,half)));
+        if(kind=="sine") return All("n",N,Equal(Abs(Call("sin",Mul(Seq(Pi,Sp),lo))),Num(1)));
+        if(kind=="rightNumerator") {
+            Formula numerator=Mul(Mul(Mul(Call("ComplexGamma",s),Div(Num(1),Call("ComplexGamma",Sub(b,Mul(a,s))))),Call("exp",Mul(Negate(s),Call("log",Negate(z))))),Call("ComplexGamma",Add(Add(Sub(Num(1),s),n),Num(1))));
+            f=All("n",N,All("s",Cx,Equal(rn(s),Negate(Div(numerator,Call("product",Call("range",n),Map("j",N,Add(Sub(Num(1),s),V("j")))))))));
+        } else if(kind=="holomorphic") f=All("n",N,Call("DifferentiableOn",Cx,Map("s",Cx,rn(s)),Call("preimage",V("re"),Call("Icc",lo,hi))));
+        else if(kind=="factorization") f=All("n",N,All("s",Cx,Imp(And(strip,Seq(s,Neq,Sp,pole)),Equal(KAt(s),Div(rn(s),Sub(s,pole))))));
+        else if(kind=="residue") f=Imp(Nonzero(z),All("n",N,Equal(rn(pole),residue)));
+        else if(kind=="step") f=Imp(And(Lt(Num(0),a),And(Nonzero(z),Lt(Num(0),Call("margin",a,z)))),All("n",N,Equal(Sub(integral(z,hi),integral(z,lo)),Mul(Mul(Num(2),Seq(Pi,Sp)),residue))));
+        else if(kind=="margin") return All("alpha",R,All("r",R,All("w",Cx,Imp(Lt(Num(0),r),Equal(Call("margin",a,scale),margin)))));
+        else if(kind=="radial") return All("alpha",R,All("beta",R,All("c",R,All("y",R,All("r",R,All("w",Cx,Imp(And(Lt(Num(0),r),Nonzero(w)),Equal(Norm(Call("kernel",a,b,scale,Add(c,Mul(y,Imaginary)))),Mul(radial,Norm(Call("kernel",a,b,w,Add(c,Mul(y,Imaginary)))))))))))));
+        else return All("alpha",R,All("beta",R,All("c",R,All("w",Cx,All("r",R,Imp(And(Lt(Num(0),a),And(Nonzero(Call("sin",Mul(Seq(Pi,Sp),c))),And(Nonzero(w),And(Lt(Num(0),margin),Lt(Num(0),r))))),Leq(Norm(integral(scale,c)),Mul(radial,integral(w,c,true)))))))));
+        return Parameters(f);
+    }
+
     private static Formula KAt(Formula s) => Call("kernel",V("alpha"),V("beta"),V("z"),s);
     private static Formula NAt(Formula s) => Call("leftNumerator",V("alpha"),V("beta"),V("z"),V("n"),s);
     private static Formula Line(Formula c) => Map("y",R,KAt(Add(c,Mul(V("y"),Imaginary))));

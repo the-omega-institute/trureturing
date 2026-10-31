@@ -25,6 +25,9 @@ equivalent declaration, replacing the actual consumers with direct calls.
 
 import D5.S3.Analytic.Asymptotics.GammaVerticalReciprocalBounds
 import D5.S3.Analytic.Asymptotics.BarnesSineBounds
+import D5.S3.Analytic.Asymptotics.BarnesResidue
+import Mathlib.Analysis.SpecialFunctions.Complex.Log
+import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 
 open Complex Filter Set MeasureTheory
@@ -550,5 +553,220 @@ theorem horizontal_tendsto_zero {α : ℝ} (hα : 0 < α) (β a b : ℝ) (z : �
     exact tendsto_neg_atBot_atTop.congr' (by
       filter_upwards [eventually_le_atBot (0 : ℝ)] with T hT
       exact (abs_of_nonpos hT).symm)
+
+/-- The rightward half-integer contour sequence. -/
+def rightLine (n : ℕ) : ℝ := n + 1 / 2
+
+/-- The actual numerator at the pole `n+1`. The minus sign comes from
+`1-s+n = -(s-(n+1))`; it is essential for rightward contour shifts. -/
+def rightNumerator (α β : ℝ) (z : ℂ) (n : ℕ) (s : ℂ) : ℂ :=
+  -(Complex.Gamma s * (Complex.Gamma ((β : ℂ) - α * s))⁻¹ *
+    Complex.exp (-s * Complex.log (-z)) * Complex.Gamma (1 - s + n + 1) /
+      ∏ j ∈ Finset.range n, (1 - s + j))
+
+private theorem right_factor_ne_zero (n j : ℕ) (hj : j < n) {s : ℂ}
+    (hs : s.re ∈ Icc (rightLine n) (rightLine (n + 1))) :
+    1 - s + (j : ℂ) ≠ 0 := by
+  intro he
+  have hre := congrArg Complex.re he
+  simp only [Complex.add_re, Complex.sub_re, Complex.one_re,
+    Complex.natCast_re, Complex.zero_re] at hre
+  have hj' : (j : ℝ) + 1 ≤ n := by exact_mod_cast Nat.succ_le_of_lt hj
+  dsimp [rightLine] at hs
+  nlinarith [hs.1]
+
+/-- Holomorphy of the right-strip numerator uses entire reciprocal Gamma. -/
+theorem differentiableOn_rightNumerator (α β : ℝ) (z : ℂ) (n : ℕ) :
+    DifferentiableOn ℂ (rightNumerator α β z n)
+      (Complex.re ⁻¹' Icc (rightLine n) (rightLine (n + 1))) := by
+  intro s hs
+  have hs' : s.re ∈ Icc (rightLine n) (rightLine (n + 1)) := hs
+  have hpos : 0 < s.re := by
+    dsimp [rightLine] at hs'
+    nlinarith [hs'.1, Nat.cast_nonneg (R := ℝ) n]
+  have hshift : 0 < (1 - s + (n : ℂ) + 1).re := by
+    simp only [Complex.add_re, Complex.sub_re, Complex.one_re, Complex.natCast_re]
+    dsimp [rightLine] at hs'
+    push_cast at hs'
+    linarith [hs'.2]
+  have hGamma {w : ℂ} (hw : 0 < w.re) : DifferentiableAt ℂ Complex.Gamma w := by
+    apply Complex.differentiableAt_Gamma
+    intro m he
+    have := congrArg Complex.re he
+    simp only [Complex.neg_re, Complex.natCast_re] at this
+    nlinarith [Nat.cast_nonneg (R := ℝ) m]
+  have h1 := hGamma hpos
+  have h2 : DifferentiableAt ℂ
+      (fun s : ℂ => (Complex.Gamma ((β : ℂ) - α * s))⁻¹) s :=
+    (Complex.differentiable_one_div_Gamma _).comp s (by fun_prop)
+  have h3 : DifferentiableAt ℂ
+      (fun s : ℂ => Complex.exp (-s * Complex.log (-z))) s := by fun_prop
+  have h4 : DifferentiableAt ℂ (fun s : ℂ => Complex.Gamma (1 - s + n + 1)) s :=
+    (hGamma hshift).comp s (by fun_prop)
+  have h5 : DifferentiableAt ℂ (fun s : ℂ => ∏ j ∈ Finset.range n, (1 - s + j)) s := by
+    fun_prop
+  exact (((((h1.mul h2).mul h3).mul h4).div h5
+    (Finset.prod_ne_zero_iff.mpr fun j hj =>
+      right_factor_ne_zero n j (Finset.mem_range.mp hj) hs')).neg).differentiableWithinAt
+
+/-- Factorization on a right strip, away from its unique possible pole. -/
+theorem kernel_eq_rightNumerator (α β : ℝ) (z : ℂ) (n : ℕ) {s : ℂ}
+    (hs : s.re ∈ Icc (rightLine n) (rightLine (n + 1)))
+    (hne : s ≠ (n : ℂ) + 1) :
+    kernel α β z s = rightNumerator α β z n s / (s - ((n : ℂ) + 1)) := by
+  have hf : ∀ j : ℕ, j ≤ n → (1 - s) + j ≠ 0 := by
+    intro j hj
+    rcases lt_or_eq_of_le hj with hj | rfl
+    · exact right_factor_ne_zero n j hj hs
+    · intro he
+      apply hne
+      linear_combination -he
+  have hG := barnesRes_Gamma_add_nat_succ (1 - s) n hf
+  have hprod : (∏ j ∈ Finset.range n, (1 - s + (j : ℂ))) ≠ 0 :=
+    Finset.prod_ne_zero_iff.mpr fun j hj => hf j (Finset.mem_range.mp hj).le
+  rw [kernel, rightNumerator, hG, Finset.prod_range_succ]
+  have hp : s - ((n : ℂ) + 1) ≠ 0 := sub_ne_zero.mpr hne
+  simp only [div_eq_mul_inv]
+  generalize (Complex.Gamma ((β : ℂ) - α * s))⁻¹ = G
+  field_simp [hprod, hp, hf n le_rfl] <;> ring
+
+/-- The residue includes reciprocal-Gamma zeros without cancelling Gamma. -/
+theorem rightNumerator_residue (α β : ℝ) {z : ℂ} (hz : z ≠ 0) (n : ℕ) :
+    rightNumerator α β z n ((n : ℂ) + 1) =
+      (z ^ (n + 1))⁻¹ / (Real.Gamma (β - α * ((n : ℝ) + 1)) : ℂ) := by
+  have hfac : Complex.Gamma ((n : ℂ) + 1) = (n.factorial : ℂ) :=
+    Complex.Gamma_nat_eq_factorial n
+  have hshift : 1 - ((n : ℂ) + 1) + n + 1 = 1 := by ring
+  have hprod : (∏ j ∈ Finset.range n, (1 - ((n : ℂ) + 1) + (j : ℂ))) =
+      (-1 : ℂ) ^ n * n.factorial := by
+    rw [← barnesRes_prod_sub_nat]
+    exact Finset.prod_congr rfl fun j _ => by ring
+  have he : Complex.exp (-((n : ℂ) + 1) * Complex.log (-z)) =
+      ((-z) ^ (n + 1))⁻¹ := by
+    rw [neg_mul, Complex.exp_neg]
+    congr 1
+    convert Complex.exp_nat_mul (Complex.log (-z)) (n + 1) using 1 <;>
+      simp [Complex.exp_log (neg_ne_zero.mpr hz)]
+  have harg : (β : ℂ) - α * ((n : ℂ) + 1) =
+      ((β - α * ((n : ℝ) + 1) : ℝ) : ℂ) := by push_cast; ring
+  rw [rightNumerator, hfac, hshift, Complex.Gamma_one, mul_one, hprod,
+    he, harg, Complex.Gamma_ofReal, neg_pow]
+  have hfac0 : (n.factorial : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero n)
+  have hzpow : z ^ (n + 1) ≠ 0 := pow_ne_zero _ hz
+  have hsign : (-1 : ℂ) ^ (n + 1) = -((-1 : ℂ) ^ n) := by rw [pow_succ]; ring
+  rw [hsign]
+  simp only [div_eq_mul_inv]
+  generalize (Real.Gamma (β - α * ((n : ℝ) + 1)) : ℂ)⁻¹ = G
+  have hsign0 : (-1 : ℂ) ^ n ≠ 0 := pow_ne_zero _ (by norm_num)
+  field_simp [hfac0, hzpow, hsign0] <;> ring
+
+/-- The sine on each right half-integer line has absolute value one. -/
+theorem abs_sin_rightLine (n : ℕ) : |Real.sin (Real.pi * rightLine n)| = 1 := by
+  induction n with
+  | zero => norm_num [rightLine, mul_div_assoc, Real.sin_pi_div_two]
+  | succ n ih =>
+    have hstep : Real.pi * rightLine (n + 1) = Real.pi * rightLine n + Real.pi := by
+      dsimp [rightLine]
+      push_cast
+      ring
+    rw [hstep, Real.sin_add, Real.sin_pi, Real.cos_pi]
+    simpa using ih
+
+/-- The actual rightward shift, with integration in `dy` and its residue sign. -/
+theorem integral_right_step {α : ℝ} (hα : 0 < α) (β : ℝ) {z : ℂ} (hz0 : z ≠ 0)
+    (hz : 0 < margin α z) (n : ℕ) :
+    (∫ y : ℝ, kernel α β z (rightLine (n + 1) + y * I)) -
+      (∫ y : ℝ, kernel α β z (rightLine n + y * I)) =
+        2 * (Real.pi : ℂ) * ((z ^ (n + 1))⁻¹ /
+          (Real.Gamma (β - α * ((n : ℝ) + 1)) : ℂ)) := by
+  have hrewrite {s : ℂ} (hs : s.re ∈ Icc (rightLine n) (rightLine (n + 1)))
+      (hne : s ≠ (n : ℂ) + 1) := kernel_eq_rightNumerator α β z n hs hne
+  have hv (j : ℕ) (hj : j = n ∨ j = n + 1) (y : ℝ) :
+      kernel α β z (rightLine j + y * I) =
+        rightNumerator α β z n (rightLine j + y * I) /
+          (rightLine j + y * I - ((n : ℂ) + 1)) := by
+    apply hrewrite
+    · rcases hj with rfl | rfl <;> simp [rightLine] <;> push_cast <;> constructor <;> linarith
+    · intro he
+      have := congrArg Complex.re he
+      rcases hj with rfl | rfl <;> simp [rightLine] at this <;> push_cast at this <;> linarith
+  have hi (j : ℕ) : Integrable fun y : ℝ => kernel α β z (rightLine j + y * I) := by
+    apply integrable_line hα β _ z _ hz
+    intro he
+    simpa [he] using abs_sin_rightLine j
+  have hh := horizontal_tendsto_zero hα β (rightLine n) (rightLine (n + 1)) z
+    (by dsimp [rightLine]; push_cast; linarith) hz
+  have htopEq : (fun T : ℝ => ∫ x in rightLine n..rightLine (n + 1),
+      rightNumerator α β z n (x + T * I) / (x + T * I - ((n : ℂ) + 1))) =ᶠ[atTop]
+      (fun T : ℝ => ∫ x in rightLine n..rightLine (n + 1), kernel α β z (x + T * I)) := by
+    filter_upwards [eventually_gt_atTop (0 : ℝ)] with T hT
+    apply intervalIntegral.integral_congr
+    intro x hx
+    apply (hrewrite _ _).symm
+    · rw [uIcc_of_le (by dsimp [rightLine]; push_cast; linarith)] at hx
+      simpa using hx
+    · intro he
+      have := congrArg Complex.im he
+      simp at this
+      linarith
+  have hbotEq : (fun T : ℝ => ∫ x in rightLine n..rightLine (n + 1),
+      rightNumerator α β z n (x + T * I) / (x + T * I - ((n : ℂ) + 1))) =ᶠ[atBot]
+      (fun T : ℝ => ∫ x in rightLine n..rightLine (n + 1), kernel α β z (x + T * I)) := by
+    filter_upwards [eventually_lt_atBot (0 : ℝ)] with T hT
+    apply intervalIntegral.integral_congr
+    intro x hx
+    apply (hrewrite _ _).symm
+    · rw [uIcc_of_le (by dsimp [rightLine]; push_cast; linarith)] at hx
+      simpa using hx
+    · intro he
+      have := congrArg Complex.im he
+      simp at this
+      linarith
+  have h := BarnesResidue.barnesRes_vertical_shift
+    (φ := rightNumerator α β z n) (p := (n : ℂ) + 1)
+    (by simp [rightLine]; linarith) (by simp [rightLine]; push_cast; linarith)
+    (differentiableOn_rightNumerator α β z n)
+    (by simpa only [← hv n (Or.inl rfl)] using hi n)
+    (by simpa only [← hv (n + 1) (Or.inr rfl)] using hi (n + 1))
+    (hh.1.congr' htopEq.symm) (hh.2.congr' hbotEq.symm)
+  simp_rw [← hv n (Or.inl rfl), ← hv (n + 1) (Or.inr rfl),
+    rightNumerator_residue α β hz0 n] at h
+  exact h
+
+/-- Positive radial scaling preserves the actual principal-logarithm margin. -/
+theorem margin_pos_scale (α : ℝ) {r : ℝ} (hr : 0 < r) (w : ℂ) :
+    margin α ((r : ℂ) * w) = margin α w := by
+  rw [margin, margin, ← mul_neg, Complex.arg_real_mul _ hr]
+
+/-- The principal logarithm gives an exact radial norm factor on each vertical line. -/
+theorem norm_kernel_pos_scale (α β c y : ℝ) {r : ℝ} (hr : 0 < r)
+    {w : ℂ} (hw : w ≠ 0) :
+    ‖kernel α β ((r : ℂ) * w) (c + y * I)‖ =
+      Real.rpow r (-c) * ‖kernel α β w (c + y * I)‖ := by
+  have hl : Complex.log (-((r : ℂ) * w)) =
+      (Real.log r : ℂ) + Complex.log (-w) := by
+    rw [← mul_neg, Complex.log_ofReal_mul hr (neg_ne_zero.mpr hw)]
+  have he : Complex.exp (-((c : ℂ) + y * I) * Complex.log (-((r : ℂ) * w))) =
+      Complex.exp (-((c : ℂ) + y * I) * (Real.log r : ℂ)) *
+        Complex.exp (-((c : ℂ) + y * I) * Complex.log (-w)) := by
+    rw [hl, mul_add, Complex.exp_add]
+  have hn : ‖Complex.exp (-((c : ℂ) + y * I) * (Real.log r : ℂ))‖ =
+      Real.rpow r (-c) := by
+    rw [Complex.norm_exp, Real.rpow_def_of_pos hr]
+    congr 1
+    simp <;> ring
+  simp only [kernel, he, norm_mul, hn]
+  ring
+
+/-- The actual contour integral has a radial power bound with a fixed integrable constant. -/
+theorem norm_integral_pos_scale_le {α : ℝ} (hα : 0 < α) (β c : ℝ)
+    (hc : Real.sin (Real.pi * c) ≠ 0) {w : ℂ} (hw : w ≠ 0)
+    (hmargin : 0 < margin α w) {r : ℝ} (hr : 0 < r) :
+    ‖∫ y : ℝ, kernel α β ((r : ℂ) * w) (c + y * I)‖ ≤
+      Real.rpow r (-c) * ∫ y : ℝ, ‖kernel α β w (c + y * I)‖ := by
+  have hi := (integrable_line hα β c w hc hmargin).norm.const_mul (Real.rpow r (-c))
+  have h := norm_integral_le_of_norm_le hi (Filter.Eventually.of_forall fun y =>
+    (norm_kernel_pos_scale α β c y hr hw).le)
+  simpa only [integral_const_mul] using h
 
 end D5.S3.Analytic.Asymptotics.MittagLefflerBarnesKernel

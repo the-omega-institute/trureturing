@@ -10,7 +10,7 @@ internal sealed class MittagLefflerModulusRefutationDocument : IScribeDocumentDe
         LibraryNoteRef.Create("D5/L/AnalyticClosure/garrappa2025mittagmodulus");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A finite complex witness refutes the reverse Mittag-Leffler characterization.",
+        "A closed beta interval of strict deficits exists for every alpha between one and two.",
         H("The reverse Mittag-Leffler modulus characterization fails"),
         Blocks(
             Entry("ggps-source-series", "IsSourceSeries", "The convergent two-parameter series",
@@ -43,10 +43,19 @@ internal sealed class MittagLefflerModulusRefutationDocument : IScribeDocumentDe
                     Equal(App(F.Id("E"),F.Id("alpha"),Subtract(F.Id("alpha"),Num(1)),F.Id("z")),
                         Multiply(new Formula.Fraction(Num(1),Multiply(Num(2),Seq(Pi,Sp))),EndpointIntegral(new Formula.Fraction(Num(1),Num(2)))))))),
                 AssessedProvenance.FromRepo(Source),
-                "For every literal source realization, alpha greater than one and nonzero exterior z, the endpoint beta=alpha-1 value is one over 2*pi times the integral in dy on Re(s)=1/2. The proof supplies the actual shifted-Gamma holomorphic numerator, single-pole factorization, all boundary-line integrability, both horizontal limits and moving-left limit. Its residues are exactly z^n/Gamma(alpha*n+beta). The residue HasSum and the original source HasSum agree by uniqueness. This identity alone does not supply the two rightward shifts or the all-alpha closed-beta family.", DescribeRole.Theorem),
+                "For every literal source realization, alpha greater than one and nonzero exterior z, the endpoint beta=alpha-1 value is one over 2*pi times the integral in dy on Re(s)=1/2. The proof supplies the actual shifted-Gamma holomorphic numerator, single-pole factorization, all boundary-line integrability, both horizontal limits and moving-left limit. Its residues are exactly z^n/Gamma(alpha*n+beta). The residue HasSum and the original source HasSum agree by uniqueness. The rightward shifts use this literal identity to obtain the endpoint inverse-square expansion.", DescribeRole.Theorem),
+            Entry("ggps-endpoint-coefficient", "endpointCoefficient", "The endpoint coefficient", EndpointFamilyFormula("coefficient"), AssessedProvenance.FromRepo(Source), "The first nonzero inverse-power coefficient is minus the reciprocal of Gamma at minus alpha minus one.", DescribeRole.Definition),
+            Entry("ggps-endpoint-coefficient-positive", "endpointCoefficient_formula", "The positive endpoint coefficient", EndpointFamilyFormula("coefficientFormula"), AssessedProvenance.FromRepo(Source), "Three Gamma recurrences identify the coefficient with alpha times alpha minus one times alpha plus one divided by Gamma at two minus alpha. It is strictly positive throughout the open alpha interval.", DescribeRole.Theorem),
+            Entry("ggps-endpoint-expansion", "source_endpoint_expansion", "The actual endpoint expansion", EndpointFamilyFormula("expansion"), AssessedProvenance.FromRepo(Source), "The shifts from one half to three halves and then five halves cross the poles at one and two. The first coefficient vanishes because reciprocal Gamma at minus one is zero. The remainder is the actual integral on the five-halves line, with integration in dy.", DescribeRole.Theorem),
+            Entry("ggps-endpoint-scaled-limit", "source_endpoint_scaled_limit", "The endpoint scaled limit", EndpointFamilyFormula("limit"), AssessedProvenance.FromRepo(Source), "Positive radial scaling gives a fixed constant times r to the power minus five halves for the remainder. After multiplication by r squared the error tends to zero. The limit is the endpoint coefficient divided by w squared.", DescribeRole.Theorem),
+            Entry("ggps-ray-tilt", "rayTilt", "The prescribed ray tilt", EndpointFamilyFormula("tilt"), AssessedProvenance.FromRepo(Source), "The angle is pi times two minus alpha divided by four.", DescribeRole.Definition),
+            Entry("ggps-ray-direction", "rayDirection", "The prescribed exterior direction", EndpointFamilyFormula("direction"), AssessedProvenance.FromRepo(Source), "The direction is minus one plus i times the prescribed positive tilt.", DescribeRole.Definition),
+            Entry("ggps-ray-parameters", "ray_parameters", "The ray geometry and angular margin", EndpointFamilyFormula("parameters"), AssessedProvenance.FromRepo(Source), "The argument of minus the direction is minus the prescribed angle. The principal argument follows by positive scaling of the unit-circle direction, and the angular margin is strictly positive.", DescribeRole.Theorem),
+            Entry("ggps-endpoint-failure", "source_endpoint_failure", "One finite endpoint deficit", EndpointFamilyFormula("failure"), AssessedProvenance.FromRepo(Source), "The scaled negative-axis real part tends to the positive endpoint coefficient. The scaled ray norm tends to that coefficient divided by one plus the squared tilt. Their strict limit gap gives one finite positive radius.", DescribeRole.Theorem),
+            Entry("ggps-closed-beta-family", "source_closed_beta_family", "The same point on a closed beta interval", EndpointFamilyFormula("family"), AssessedProvenance.FromRepo(Source), "For every alpha between one and two, choose the finite point on the prescribed ray first. Continuity in beta gives an open neighborhood of strict deficits. A positive epsilon smaller than one places the whole closed interval from alpha minus one to alpha minus one plus epsilon inside that neighborhood.", DescribeRole.Theorem),
             Entry("ggps-refutation", "result", "The characterization is false",
                 Seq(Neg, Sp, Parenthesized(ClaimBody())), AssessedProvenance.FromRepo(Source),
-                "At alpha = 3/2 and beta = 1/2, the interval condition holds. For z = −115+10i, the series instead satisfies norm(E(3/2,1/2,z)) < re(E(3/2,1/2,−115)). The 64-term sum on the real axis is greater than 3/100000, while the absolute real and imaginary parts at z are at most 1/1000000 and 1/100000. At either argument the omitted tail has norm at most 4/10^13. The series exists for every positive alpha and every real beta, including the reciprocal-Gamma pole values. The example refutes the implication from the parameter interval to the global reverse inequality. The all-alpha family, an interior-beta neighbourhood and a corrected universal region remain open here.",
+                "The literal source family exists for every positive alpha, every real beta and every complex argument. Apply the closed-beta family at alpha three halves and beta one half. The first original global equivalence would force the reverse modulus inequality at its chosen point, contradicting the strict deficit. The source definition and both original global equivalences retain their full quantifiers.",
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
@@ -58,6 +67,35 @@ internal sealed class MittagLefflerModulusRefutationDocument : IScribeDocumentDe
             openProblemResolutionClaim: name == "result"
                 ? new OpenProblemResolutionClaim(ProblemSlugRef.Create("ggps2025"), ResolutionKind.Refuted)
                 : null);
+
+
+    private static Formula Some(string n, Formula t, Formula f) => new Formula.Bind(FormulaQuantifier.Exists,FormulaIdentifier.Create(n),t,f);
+    private static Formula EndpointFamilyFormula(string kind)
+    {
+        Formula a=F.Id("alpha"), z=F.Id("z"), w=F.Id("w"), r=F.Id("r"), b=F.Id("beta"), eps=F.Id("epsilon"), e=F.Id("E"), real=F.Id("Real"), complex=F.Id("Complex");
+        Formula zero=Num(0), one=Num(1), two=Num(2), imag=Seq(Operatorname,Grp(F.Id("ComplexI")));
+        Formula coeff=Call("endpointCoefficient",a), tilt=Call("rayTilt",a), direction=Call("rayDirection",a), endpoint=Subtract(a,one);
+        Formula sq(Formula x) => new Formula.Power(x,two);
+        Formula div(Formula x,Formula y) => new Formula.Fraction(x,y);
+        Formula norm(Formula x) => new Formula.Norm(x);
+        Formula neg(Formula x) => Seq(Minus,Open,x,Close);
+        Formula nonzero(Formula x) => Seq(x,Neq,Sp,zero);
+        Formula strict(Formula beta,Formula point) => Lt(norm(App(e,a,beta,point)),Call("re",App(e,a,beta,Cast(Call("re",point),complex))));
+        Formula alphaRange(Formula f) => All("alpha",real,Implies(And(Lt(one,a),Lt(a,two)),f));
+        Formula source(Formula f) => All("E",FamilyType(),Implies(Call("IsSourceSeries",e),f));
+        if(kind=="coefficient") return All("alpha",real,Equal(coeff,div(neg(one),Call("RealGamma",Subtract(neg(a),one)))));
+        if(kind=="coefficientFormula") return alphaRange(And(Equal(coeff,div(Multiply(Multiply(a,Subtract(a,one)),Add(a,one)),Call("RealGamma",Subtract(two,a)))),Lt(zero,coeff)));
+        if(kind=="tilt") return All("alpha",real,Equal(tilt,Call("tan",div(Multiply(Seq(Pi,Sp),Subtract(two,a)),Num(4)))));
+        if(kind=="direction") return All("alpha",real,Equal(direction,Add(neg(one),Multiply(tilt,imag))));
+        if(kind=="parameters") return alphaRange(And(Lt(zero,tilt),And(nonzero(direction),And(Lt(zero,Call("margin",a,direction)),And(Equal(Call("re",direction),neg(one)),Equal(sq(norm(direction)),Add(one,sq(tilt))))))));
+        if(kind=="expansion") return source(EndpointParameters(Equal(App(e,a,endpoint,z),Add(div(coeff,sq(z)),Multiply(div(one,Multiply(two,Seq(Pi,Sp))),EndpointIntegral(div(Num(5),two)))))));
+        if(kind=="limit") return source(All("alpha",real,Implies(Lt(one,a),All("w",complex,Implies(And(nonzero(w),Lt(zero,Call("margin",a,w))),Call("Tendsto",MapVariable("r",real,Multiply(sq(r),App(e,a,endpoint,Multiply(r,w)))),F.Id("atTop"),Call("nhds",div(coeff,sq(w)))))))));
+        Formula point=Multiply(r,direction);
+        if(kind=="failure") return source(alphaRange(Some("r",real,And(Lt(zero,r),strict(endpoint,point)))));
+        Formula interval=And(Le(endpoint,b),Le(b,Add(endpoint,eps)));
+        Formula radius=Some("r",real,And(Lt(zero,r),Equal(z,point)));
+        return source(alphaRange(Some("z",complex,Some("epsilon",real,And(Lt(zero,eps),And(Lt(eps,one),And(Lt(zero,Call("im",z)),And(radius,All("beta",real,Implies(interval,strict(b,z)))))))))));
+    }
 
     private static Formula MapVariable(string n,Formula type,Formula f) => Seq(Open,F.Id(n),Colon,type,Sp,Mapsto,Sp,f,Close);
     private static Formula EndpointIntegral(Formula c)

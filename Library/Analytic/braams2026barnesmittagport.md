@@ -130,8 +130,8 @@ line integral to zero. `source_barnes_identity` supplies all fields of
 uniqueness. The normalization is one over 2*pi for integration in dy.
 
 These proof texts are uncompiled source. Native elaboration, axiom closure
-and admission are unestablished. The two rightward shifts, endpoint ray
-limits and all-alpha same-z closed-beta family remain absent. No
+and admission are unestablished. The rightward-shift, endpoint-limit and
+closed-beta family proof texts described below are also uncompiled. No
 representation or asymptotic is inserted as a new hypothesis or axiom.
 
 
@@ -150,7 +150,7 @@ standalone helper freeze.
 | BarnesResidue: `barnesRes_integral_recip` | BarnesResidue: `barnesRes_tendsto_integral_recip` |
 | BarnesResidue: `barnesRes_tendsto_integral_recip` | BarnesResidue: `barnesRes_vertical_shift` |
 | BarnesResidue: `barnesRes_norm_horizontal_recip_le` | BarnesResidue: `barnesRes_vertical_shift` |
-| BarnesResidue: `barnesRes_vertical_shift` | MellinBarnesSeries: `mbSeries_step` |
+| BarnesResidue: `barnesRes_vertical_shift` | MellinBarnesSeries: `mbSeries_step`; actual kernel `integral_right_step` |
 | BarnesResidue: `barnesRes_Gamma_add_nat_succ` | MittagLefflerBarnesKernel: `mbSeries_Gamma_mul_eq_div` |
 | BarnesResidue: `barnesRes_prod_nat_sub` | MittagLefflerBarnesKernel: `barnesRes_prod_sub_nat` |
 | BarnesResidue: `barnesRes_prod_sub_nat` | MittagLefflerBarnesKernel: `mbSeries_Gamma_residue` |
@@ -169,8 +169,37 @@ The three literal numerator properties, horizontal limits and integrability
 are used by the actual contour-data construction in `source_barnes_identity`.
 `norm_line_le_recip_gamma` feeds `norm_integral_leftLine_le`, which feeds
 `source_left_integral_tendsto_zero`, which is passed directly to the residue
-HasSum theorem. The existing final `result` still uses its finite certificate;
-the full-family path through that result has not been constructed.
+HasSum theorem.
+
+The right-strip numerator has the actual factorization at s=n+1 and residue
+`1/(z^(n+1)*Gamma(beta-alpha*(n+1)))`. Its holomorphy uses entire reciprocal
+Gamma, and no Gamma nonvanishing condition is added. The same horizontal
+limits and line integrability supply `integral_right_step`, with right minus
+left equal to two pi times the residue in dy normalization. The two steps
+through one and two feed `source_endpoint_expansion`. Reciprocal Gamma at
+minus one vanishes; the next coefficient is
+`c_alpha = alpha*(alpha-1)*(alpha+1)/Gamma(2-alpha) > 0` for 1<alpha<2.
+
+Principal-logarithm scaling gives `norm_kernel_pos_scale`, then the fixed-line
+bound `norm_integral_pos_scale_le`. On the five-halves line this is a fixed
+constant times r^(-5/2). Thus `source_endpoint_scaled_limit` gives
+`r^2 E(alpha,alpha-1,r*w) -> c_alpha/w^2`. For
+`eta=pi*(2-alpha)/4`, `t=tan(eta)` and `w=-1+i*t`, `ray_parameters`
+proves the actual exterior margin and principal argument. The scaled negative
+axis real part tends to c_alpha, while the ray norm tends to
+`c_alpha/(1+t^2)`. The strict gap gives one finite positive radius in
+`source_endpoint_failure`. The actual beta-continuity theorem then gives
+`source_closed_beta_family`: one point is selected before beta and works for
+every beta in the closed interval `[alpha-1,alpha-1+epsilon]`, with
+`0<epsilon<1`, for every alpha in `(1,2)`.
+
+The current source body of `result` consumes that family at alpha=3/2 and
+beta=1/2, together with the original all-positive-alpha source existence and
+unchanged complete `claim`. This is textual source consumption only; it does
+not establish compiled liveness, axiom closure or admission. The inherited
+finite certificate remains in the module but is no longer the result's source
+proof path. The public theorem audit remains unfinished under issue
+https://github.com/the-omega-institute/trureturing/issues/24571.
 
 ## Retirement at the repository pin
 
