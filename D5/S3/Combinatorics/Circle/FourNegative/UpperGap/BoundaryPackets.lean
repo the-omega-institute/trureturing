@@ -162,6 +162,7 @@ private theorem standard_certificate (a b c d u r p q w : ℕ)
     (P.third.map (newValue a b c d)).sum=_ ∧
     (P.fourth.map (newValue a b c d)).sum=_ at mn
   have ht := source_totals a b c d ha hb hc hd
+  have hear := ht.2.2
   have hto := ((hinv.map (oldValue a b c d)).sum_eq).trans ht.1
   have htn := ((hinv.map (newValue a b c d)).sum_eq).trans ht.2.1
   have hA := ((chain_values a b c d ha hb hc hd).1 0).1

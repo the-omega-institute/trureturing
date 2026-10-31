@@ -166,4 +166,131 @@ private theorem peak_middle_bounds (a b c : ℕ)
     obtain ⟨h0,h1,h2⟩ := h
     exact ⟨by nlinarith only [h0],by nlinarith only [h1],by nlinarith only [h2]⟩
 
+set_option maxHeartbeats 1800000 in
+private theorem first_right_bounds (a b c : ℕ)
+    (hc : 2≤c) (hcb : c≤b) (hba : b<a) :
+    let x : ℤ := 2^a
+    let y : ℤ := 2^b
+    let z : ℤ := 2^c
+    let H : ℤ := 2^(a-b)
+    let A := x*y*z+x*y+x+1
+    let C := x*y+x+1
+    let B := 2*x*C+1
+    let L := 2*x*z*(x+1)+z+1
+    let M := 2*x*y*z+y*z+y+1
+    let D := y*z+y+1
+    0≤A-2*C ∧ 0≤L-H*A ∧ 0≤(2*L-z-1)-2*H*A ∧
+    0≤2*H*A-L-1 ∧ 0≤M-A ∧ 0≤(2*M-D)-2*A ∧ 0≤2*A-M-1 ∧
+    0≤B-1-H*A ∧ (0≤B-1-2*H*A ∨ 0≤2*H*A-B-1) := by
+  dsimp only
+  by_cases he : c=b
+  · subst c
+    have h := first_equal_signs_int (2^b) (2^(a-b-1)) 0
+      (zpow_four b hc) (zpow_one _) (by norm_num)
+    dsimp only at h
+    have ex : (2:ℤ)^b*2*2^(a-b-1)=2^a := by
+      calc
+        _ = (2:ℤ)^(b+(a-b-1)+1) := by simp only [pow_add]; norm_num; ring
+        _ = _ := by congr 1; omega
+    have eh : (2:ℤ)^(a-b-1)*2=2^(a-b) := by
+      rw [show a-b=(a-b-1)+1 by omega,pow_succ]
+    rw [ex,eh] at h
+    obtain ⟨h0,h1,h2,h3,h4,h5,h6,_,_,h9,h10,_⟩ := h
+    exact ⟨by nlinarith only [h0],by nlinarith only [h1],by nlinarith only [h2],
+      by nlinarith only [h3],by nlinarith only [h4],by nlinarith only [h5],
+      by nlinarith only [h6],by nlinarith only [h10],Or.inr (by nlinarith only [h9])⟩
+  · have h := first_greater_signs_int (2^c) (2^(b-c-1)) (2^(a-b-1))
+      (zpow_four c hc) (zpow_one _) (zpow_one _)
+    dsimp only at h
+    have ey : (2:ℤ)^c*2*2^(b-c-1)=2^b := by
+      calc
+        _ = (2:ℤ)^(c+(b-c-1)+1) := by simp only [pow_add]; norm_num; ring
+        _ = _ := by congr 1; omega
+    have ex : (2:ℤ)^c*4*2^(b-c-1)*2^(a-b-1)=2^a := by
+      calc
+        _ = (2:ℤ)^(c+(b-c-1)+(a-b-1)+2) := by simp only [pow_add]; norm_num; ring
+        _ = _ := by congr 1; omega
+    have eh : (2:ℤ)^(a-b-1)*2=2^(a-b) := by
+      rw [show a-b=(a-b-1)+1 by omega,pow_succ]
+    rw [ex,ey,eh] at h
+    obtain ⟨h0,h1,h2,h3,h4,h5,h6,h7⟩ := h
+    have hH : (0:ℤ)≤2^(a-b) := by positivity
+    have hA : (0:ℤ)≤2^a*2^b*2^c+2^a*2^b+2^a+1 := by positivity
+    have hHA := mul_nonneg hH hA
+    exact ⟨by nlinarith only [h0],by nlinarith only [h1],by nlinarith only [h2],
+      by nlinarith only [h3],by nlinarith only [h4],by nlinarith only [h5],
+      by nlinarith only [h6],by nlinarith only [h7,hHA],Or.inl (by nlinarith only [h7])⟩
+
+set_option maxHeartbeats 1800000 in
+private theorem first_right_certificate (a b c : ℕ)
+    (hc : 2≤c) (hcb : c≤b) (hba : b<a) :
+    Nonempty (Certificate a b c (a+1)) := by
+  let x : ℤ := 2^a
+  let y : ℤ := 2^b
+  let z : ℤ := 2^c
+  let A := x*y*z+x*y+x+1
+  let C := x*y+x+1
+  let B := 2*x*C+1
+  let L := 2*x*z*(x+1)+z+1
+  let M := 2*x*y*z+y*z+y+1
+  let D := y*z+y+1
+  let H : ℕ := 2^(a-b)
+  let q : ℕ := ((B-1)/((H:ℤ)*A)).toNat
+  let n : ℕ := H*q
+  let u := n-1
+  let r := H-1
+  have hH : 1≤H := Nat.one_le_two_pow
+  have hHz : (0:ℤ)<H := by exact_mod_cast hH
+  have hA : 0<A := by dsimp [A]; positivity
+  have h := first_right_bounds a b c hc hcb hba
+  change 0≤A-2*C ∧ 0≤L-(H:ℤ)*A ∧ 0≤(2*L-z-1)-2*(H:ℤ)*A ∧
+    0≤2*(H:ℤ)*A-L-1 ∧ 0≤M-A ∧ 0≤(2*M-D)-2*A ∧ 0≤2*A-M-1 ∧
+    0≤B-1-(H:ℤ)*A ∧ (0≤B-1-2*(H:ℤ)*A ∨ 0≤2*(H:ℤ)*A-B-1) at h
+  obtain ⟨sep,sm,tm,pm,sl,tl,pl,lower,buffer⟩ := h
+  have hn := multiple_floor_nat A B H hA hH (by omega)
+  change 1≤q ∧ (n:ℤ)=(H:ℤ)*((B-1)/((H:ℤ)*A)) ∧
+    1≤B-(n:ℤ)*A ∧ B-(n:ℤ)*A≤(H:ℤ)*A at hn
+  have hnH : (H:ℤ)≤n := by
+    have hq : (1:ℤ)≤q := by exact_mod_cast hn.1
+    dsimp [n]
+    push_cast
+    nlinarith only [hq,hHz]
+  have peak : 0≤2*(n:ℤ)*A-B-1 := by
+    rcases buffer with hbuf|hbuf
+    · have hh := multiple_floor_peak A H B hA hHz (by nlinarith only [hbuf])
+      dsimp only at hh
+      rw [←hn.2.1] at hh
+      exact hh.2.2
+    · nlinarith only [hnH,hA,hbuf]
+  have hncap : (n:ℤ)<x := by
+    apply first_mask_capacity A C x n hA (by dsimp [x];positivity)
+      (head_separation x y z (zpow_four a (by omega)) (zpow_four b (by omega)) (zpow_four c hc))
+    have hh := hn.2.2.1
+    dsimp [B] at hh
+    nlinarith only [hh]
+  have hn1 : 1≤n := by exact_mod_cast (show (1:ℤ)≤n by omega)
+  have hu : (u:ℤ)=(n:ℤ)-1 := by dsimp [u];rw [Nat.cast_sub hn1];norm_num
+  have hr : (r:ℤ)=(H:ℤ)-1 := by dsimp [r];rw [Nat.cast_sub hH];norm_num
+  have hcU : u<2^a := by
+    have hnx : n<2^a := by exact_mod_cast hncap
+    dsimp [u];omega
+  have hcR : r<2^a := by
+    exact interval_capacity a (a-b) (by omega)
+  have hD : 0≤D := by dsimp [D];positivity
+  apply standard_certificate a b c (a+1) u r 0 0 0 (by omega) (by omega) hc (by omega)
+    (by simpa using hcU) (by simpa using hcR) (by positivity) (by positivity) (by positivity)
+  · intro e _ he
+    have he' : e<a-b := by simpa [r,H,Nat.testBit_two_pow_sub_one] using he
+    exact multiple_predecessor_bits (a-b) q hn.1 e he'
+  · intro e _ he;simp at he
+  · have hbase : base a b c (a+1)=![A,B,L,M] := by
+      funext r
+      fin_cases r <;> dsimp [base,A,B,C,L,M,x,y,z] <;> rw [pow_succ] <;> ring
+    dsimp only [standardMargins,newBase]
+    rw [hbase]
+    norm_num only [charge,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_succ,Fin.isValue]
+    rw [hu,hr]
+    refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,?_,?_,?_,?_⟩
+    all_goals nlinarith only [hn.2.2.1,peak,sm,tm,pm,sl,tl,pl,hD]
+
 end D5.S3.Combinatorics.Circle.FourNegative.UpperGap

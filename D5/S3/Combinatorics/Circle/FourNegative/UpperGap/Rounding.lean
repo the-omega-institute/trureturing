@@ -8,8 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.UpperGap.BoundaryAlgebra
 import Mathlib.Data.Nat.Bitwise
 
-/-! Uncompiled preparation source. All divisions in these lemmas are integer
-Euclidean divisions; no real rounding or favorable-subset premise is used. -/
+/-! Integer Euclidean floors and ceilings, with explicit mask capacities. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.UpperGap
@@ -21,7 +20,7 @@ private theorem multiple_floor_seam (A H B : ℤ) (hA : 0<A) (hH : 0<H) :
   have hden : 0<H*A := mul_pos hH hA
   have h0 := Int.emod_nonneg (B-1) (ne_of_gt hden)
   have h1 := Int.emod_lt_of_pos (B-1) hden
-  have he := Int.ediv_add_emod (B-1) (H*A)
+  have he := Int.ediv_mul_add_emod (B-1) (H*A)
   have hrem : B-n*A=(B-1)%(H*A)+1 := by
     dsimp [n]
     nlinarith only [he]
@@ -44,7 +43,7 @@ private theorem multiple_floor_positive (A H B : ℤ)
   have hden : 0<H*A := mul_pos hH hA
   have h0 := Int.emod_nonneg (B-1) (ne_of_gt hden)
   have h1 := Int.emod_lt_of_pos (B-1) hden
-  have he := Int.ediv_add_emod (B-1) (H*A)
+  have he := Int.ediv_mul_add_emod (B-1) (H*A)
   have hquot : 1 ≤ (B-1)/(H*A) := by
     by_contra hh
     have hq : (B-1)/(H*A) ≤ 0 := by omega
@@ -67,7 +66,7 @@ private theorem positive_ceiling (q K : ℤ) (hq : 1≤q) (hK : 1≤K) :
   let w := (q+K-1)/K
   have h0 := Int.emod_nonneg (q+K-1) (by omega : K≠0)
   have h1 := Int.emod_lt_of_pos (q+K-1) (by omega : 0<K)
-  have he := Int.ediv_add_emod (q+K-1) K
+  have he := Int.ediv_mul_add_emod (q+K-1) K
   have hrem : K*w+(q+K-1)%K=q+K-1 := by
     dsimp [w]
     nlinarith only [he]
@@ -129,8 +128,12 @@ private theorem multiple_predecessor_bits (k q : ℕ) (hq : 1 ≤ q)
   have hp : 0 < (2:ℕ)^k := by positivity
   have he : 2^k*q-1 = 2^k*(q-1)+(2^k-1) := by
     have hq' : q-1+1=q := by omega
-    have hp' : 2^k-1+1=2^k := by omega
-    nlinarith
+    have hm : 2^k*q=2^k*(q-1)+2^k := by
+      calc
+        _ = 2^k*((q-1)+1) := by rw [hq']
+        _ = _ := by ring
+    rw [hm]
+    omega
   have hm : (2^k*q-1) % 2^k = 2^k-1 := by
     rw [he, Nat.add_mod]
     simp [Nat.mod_eq_of_lt (by omega : 2^k-1 < 2^k)]
