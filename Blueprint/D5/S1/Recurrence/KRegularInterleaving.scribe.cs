@@ -18,6 +18,10 @@ internal sealed class KRegularInterleavingDocument : IScribeDocumentDefinition
                 + "Its full k-kernel K_k(s) consists of all sequences n ↦ s(k^e n+c), for natural e and c "
                 + "with c<k^e. Write Regular(k,s) when the integer span of this entire kernel is finitely "
                 + "generated. The values and the kernel may both be infinite.")),
+            Paragraph(Text("Affine-subsequence closure is supplied by "),
+                Ref("D5/S1/Recurrence/KRegularAffineSubsequence.is_k_regular_affine_subsequence"),
+                Text("; its literature statement is recorded in "),
+                Ref("D5/L/RecurrenceComposition/alloucheshallit1992regular"), Text(".")),
             Describe.Lean(DescribeId.Create("k-regular-interleaving-closure"),
                 DeclarationHandle.Create("D5/S1/Recurrence/KRegularInterleaving.is_k_regular_interleaving"),
                 H("Interleaving closure"), StatementSource.FromAuthor(Statement()),
