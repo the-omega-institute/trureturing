@@ -43,6 +43,12 @@ adapted to this repository. Unused declarations from the source files are omitte
 - `TauCeti/Combinatorics/Young/BetaNumbers.lean:110`: `strictAnti_betaNumber` (3 source lines).
 - `TauCeti/Combinatorics/Young/Partitions.lean:60`: `ofPartition_injective` (2 source lines).
 
+The selected slice contains 13 declarations from four source files, totaling 80 source
+lines including the adjacent explanatory comment. Those four complete files have a
+12-file TauCeti import closure totaling 2,144 lines. The retained declaration slice
+needs none of the other declarations from that whole-file closure. These are source
+measurements, not a compiled constant-dependency report.
+
 All selected private helpers are consumed by `partition_alternant_coefficient`.
 The new argument compares the sorted lists of beta-numbers carried into one another by
 a permutation, recovers equality of the Young diagrams, and then uses injectivity of
@@ -62,6 +68,39 @@ this repository's own lake-manifest.json contains an equivalent declaration with
 same hypotheses and conclusions, verified by a native build at that pin. The source file
 and declaration names above identify the comparison targets. Acceptance into some other
 upstream revision does not trigger retirement.
+
+## Remaining mathematical comparison
+
+The intended character comparison uses the same partition throughout:
+
+1. For a positive cycle list, identify the product of power sums with `psumPart` of
+   the full permutation partition. Fixed points contribute parts equal to one.
+2. Use `psumPart_eq_sum_spechtCharValue_smul_schurPoly` from
+   `TauCeti/RepresentationTheory/Symmetric/FrobeniusCharacteristic.lean:164`.
+   This theorem holds for an arbitrary finite alphabet and degree. The separate
+   basis equivalence with its degree bound is not the required input.
+3. Multiply by the descending staircase alternant. For shapes inside the alphabet
+   bound, use `diagramSchurPoly_mul_alternant` from
+   `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Bialternant.lean:254`.
+   Taller shapes vanish by `schurPoly_eq_zero_iff` from Schur/Basic. The coefficient
+   identity in this unit then selects the original partition, without relabeling.
+4. Match the three-variable descending determinant to the existing HSW
+   `vandermonde3`; its orientation is the descending staircase, not the ascending
+   Vandermonde convention.
+5. Use `spechtCharValue_eq_spechtChar` from
+   `TauCeti/RepresentationTheory/Symmetric/Specht/Character.lean:179`, and then
+   `character_spechtModuleℂ_intCast` from Specht/Complex.lean:111. The latter
+   compares the ordinary character of `spechtModuleℂ` with the integer character.
+   Its source definition is the complex scalar extension of the rational
+   polytabloid `spechtModule`, labeled by the same `YoungDiagram.ofPartition`.
+
+The whole-file import closure of FrobeniusCharacteristic, Specht/Complex and
+Schur/Bialternant has 145 TauCeti files and 33,681 lines at the cited revision.
+This is an upper bound; it is not a measured necessity for the selected declarations,
+and this unit does not vendor it. The repository's existing finite-character,
+induction and Mackey interfaces must be reused where their actual statements match;
+putting duplicate generic algebra under TauCeti namespaces would create a second
+source. The selected coefficient proof has no such character-algebra prerequisite.
 
 ## Copyright and NOTICE chain
 

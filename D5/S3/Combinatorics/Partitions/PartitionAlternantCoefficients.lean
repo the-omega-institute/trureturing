@@ -26,6 +26,11 @@ The sole public theorem has a proposed content witness: a permutation relating t
 strictly decreasing beta-number lists forces equality of the original partitions;
 thus every off-diagonal coefficient vanishes. The proof must be checked natively.
 All private upstream helpers are consumed along this theorem's proof path.
+Escape registration remains unfinished: the finite equality templates do not retain
+the full dependent telescope with an arbitrary coefficient ring and unbounded degree.
+DependentFamily requires an exact source reconstruction, lawful readout, variation,
+sensitivity and actual observational-dependence proofs that are not supplied here.
+Issue #22528 concerns a different weighted-result theorem and does not cover this one.
 utility: none because this is a universal coefficient identity, not enumeration,
 a checker, a numeric reduction or a certified instance.
 -/
@@ -35,7 +40,6 @@ import Mathlib.Data.List.FinRange
 import Mathlib.Data.List.Sort
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.RingTheory.MvPolynomial.Symmetric.Defs
-import Mathlib.Tactic.Omega
 
 set_option autoImplicit false
 
