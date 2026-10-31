@@ -1,0 +1,91 @@
+**Theorem 21.1 (All-order pure-Y funding, with exact equality cases).**
+In Definition 20.1 take $C=(0,y,0)$, $y^2=1$, and any real unit
+Bloch vector $D=(X,Y,Z)$. For every $a\in[0,1]$ and integer $j\geq1$,
+the actual matrix function $s\mapsto\operatorname{tr}(M_s^j)$ is
+integrable on $(0,\infty)$ and
+
+$$
+ d_j\geq0,\qquad
+ d_j>0\ \Longleftrightarrow\ a<1\ \text{and}\ |Y|<1,\qquad
+ d_j=0\ \Longleftrightarrow\ a=1\ \text{or}\ |Y|=1.
+$$
+
+Proof.
+Put $u=1-a^2$, $t=-yY\sqrt u$ and $h=u(1-Y^2)=1-a^2-t^2\geq0$.
+The actual complex blocks, written in their real coordinates, are
+
+$$
+ H_\pm=\frac14\begin{pmatrix}1+a&\pm t\\\pm t&1-a\end{pmatrix}.
+$$
+
+They are positive semidefinite, including $h=0$: their diagonal entries
+are nonnegative and their determinant is $h/16$. Every shift by $sI$
+with $s>0$ is positive definite, so the filters $P_\pm$ and their positive
+square roots are defined without inverting an unshifted singular block.
+Let $J=\operatorname{diag}(1,-1)$ and set
+
+$$
+ R=8s(1+2s)+h>0,\qquad \alpha=\frac{4sa}{R},\qquad\beta=\frac hR.
+$$
+
+Direct inversion of the shifted blocks gives
+
+$$
+ P_+=\frac1R\begin{pmatrix}4s+h+4sa&4st\\4st&4s+h-4sa\end{pmatrix},
+ \quad P_-=JP_+J,\quad
+ \operatorname{tr}(JP_+)=2\alpha,\quad\det(JP_+)=-\beta.
+$$
+
+Thus $P_-P_+=(JP_+)^2$. Cyclicity of matrix power traces and
+$(\sqrt{P_-})^2=P_-$ give
+$\operatorname{tr}(M_s^j)=\operatorname{tr}((JP_+)^{2j})$.
+The characteristic polynomial of $JP_+$ has the two real roots
+$r_\pm=\alpha\pm\sqrt{\alpha^2+\beta}$. Cayley--Hamilton, including
+repeated roots, therefore yields the exact identity
+
+$$
+ \operatorname{tr}(M_s^j)=r_+^{2j}+r_-^{2j}.
+$$
+
+Here $\alpha,\beta\geq0$. Put $c=a/(1+2s)$ and
+$Q(v)=v^2-2\alpha v-\beta$. Since $0\leq c<1$,
+
+$$
+ Q(c)=\beta(c^2-1)\leq0.
+$$
+
+Consequently $c\leq r_+$, strictly if $h>0$, and for every $j\geq1$
+$\operatorname{tr}(M_s^j)\geq a^{2j}/(1+2s)^{2j}$, strictly if $h>0$.
+For an integrable upper bound put $b=1/(1+2s)$. As $h\leq1-a^2$,
+
+$$
+ RQ(b)=\frac{4s}{(1+2s)^2}
+       [2(1+2s)(1-a)-(1+s)h]\geq0,
+$$
+
+because the bracket is at least $(1-a)[1-a+s(3-a)]$.
+Since $b>0$, $r_-\leq0\leq r_+$ and $Q(b)\geq0$, we obtain
+$|r_-|\leq r_+\leq b$. Hence
+
+$$
+ 0\leq\operatorname{tr}(M_s^j)\leq\frac2{(1+2s)^{2j}},\qquad
+ \int_0^\infty\frac{ds}{(1+2s)^{2j}}=\frac1{2(2j-1)}.
+$$
+
+This proves integrability and $g_j\geq a^{2j}/[2j(2j-1)]$.
+When $h>0$ the continuous difference is positive throughout $(0,\infty)$,
+so its integral is strictly positive. When $h=0$, $\beta=0$ and
+$2\alpha=a/(1+2s)$; thus $r_+=a/(1+2s)$ and $r_-=0$.
+The pointwise comparison and its integral are then equalities.
+Finally $h_j(0)=1/[2j(2j-1)]$ for $j\geq1$, and Definition 20.1 gives
+$L_j=(1-a^{2j})h_j(0)$ and $m_j=h_j(0)$, so
+$d_j=g_j-a^{2j}/[2j(2j-1)]$.
+The factorization $h=(1-a^2)(1-Y^2)$ proves all three assertions,
+including $a=0$, $a=1$ and both partner-axis endpoints.
+
+This is a repository-derived specialization of the blocks and coefficient
+series of Definition 20.1; Cayley--Hamilton and the inverse-power integral
+are classical ingredients. No literature novelty or external open-problem
+settlement is asserted. Coefficient signs for a general source, the full
+funding inequality and the original deficit $\Delta$ remain unresolved.
+
