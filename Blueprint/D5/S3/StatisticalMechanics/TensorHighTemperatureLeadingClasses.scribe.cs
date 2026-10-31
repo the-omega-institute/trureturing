@@ -11,7 +11,7 @@ internal sealed class TensorHighTemperatureLeadingClassesDocument : IScribeDocum
         LibraryNoteRef.Create("D5/L/StatisticalMechanics/oconnorramgoolam2025gaugedtensor");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "For every n at least two and every positive rank, the identity and transposition classes have the two largest tensor high-temperature degrees.",
+        "For every n at least two and every positive rank, the all-ones and transposition classes have the two largest tensor high-temperature degrees.",
         H("The two leading tensor high-temperature classes"),
         Blocks(
             Describe.Lean(
@@ -30,18 +30,6 @@ internal sealed class TensorHighTemperatureLeadingClassesDocument : IScribeDocum
                     + "The definition is total for all natural s and n, including zero."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("tensor-high-temperature-identity-class"),
-                DeclarationHandle.Create(Prefix + "identityClass"),
-                H("The identity class"),
-                StatementSource.FromAuthor(Disp(IdentityFormula())),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text(
-                    "The identity class is the partition with n parts equal to one, including the empty partition when n is zero. "
-                    + "It is the class [1^n] in the v2 TeX, lines 1089-1097. "
-                    + "The constructor Nat.Partition.ofSums takes a multiset summing to n and removes zero entries; "
-                    + "here every entry is one. Its sum-equality proof argument is suppressed in the formula."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("tensor-high-temperature-transposition-class"),
                 DeclarationHandle.Create(Prefix + "transpositionClass"),
                 H("The transposition class"),
@@ -50,8 +38,9 @@ internal sealed class TensorHighTemperatureLeadingClassesDocument : IScribeDocum
                 Blocks(Paragraph(Text(
                     "For n at least two, the transposition class has one part equal to two and n minus two parts equal to one. "
                     + "This is [2,1^(n-2)] in the v2 TeX, lines 1099-1116. "
-                    + "The subtraction n minus two is natural subtraction. The sum-equality proof argument of Nat.Partition.ofSums is suppressed. "
-                    + "Below that range the total definition returns Nat.Partition.indiscrete n, the partition obtained from the singleton multiset containing n by removing zeros. "
+                    + "The positive branch is the published partition126 n 1 0 constructor; its proof argument converts 2 ≤ n to the required 2·1 + 6·0 ≤ n. "
+                    + "The subtraction n minus two is natural subtraction. Below that range the total definition returns Nat.Partition.indiscrete n, "
+                    + "the partition obtained from the singleton multiset containing n by removing zeros. "
                     + "This last branch is a convention extending the class notation."))),
                 DescribeRole.Definition),
             Describe.Lean(
@@ -62,7 +51,7 @@ internal sealed class TensorHighTemperatureLeadingClassesDocument : IScribeDocum
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "For every n at least two and every positive rank s, the assertion gives the two exact degrees, "
-                    + "places the transposition degree strictly below the identity degree, and places every other partition strictly below the transposition degree. "
+                    + "places the transposition degree strictly below the all-ones degree, and places every other partition strictly below the transposition degree. "
                     + "It expresses the leading-class conjecture in the v2 TeX, line 1068, and the request for a proof in lines 1320-1322 as an ordering of rational pole orders. "
                     + "In the second exact value, n minus two is formed in the natural numbers before being cast to the rationals."))),
                 DescribeRole.Definition),
@@ -87,7 +76,7 @@ internal sealed class TensorHighTemperatureLeadingClassesDocument : IScribeDocum
                         + "The weights are nonnegative; hence this group contributes at most (n^s - f^s)/2. "
                         + "Consequently the degree of p is at most (n^s + f^s)/2.")),
                     Paragraph(Text(
-                        "For the identity class with n at least two, the only distinct part value is one, with multiplicity n. "
+                        "For the all-ones partition with n at least two, the only distinct part value is one, with multiplicity n. "
                         + "The unique tuple has denominator one and weight n^s, giving the first exact value. "
                         + "For the transposition class every available value is one or two, with respective multiplicities n minus two and one. "
                         + "Every all-ones tuple has denominator one. Any other tuple contains two, so its least common multiple is divisible by two; "
@@ -97,10 +86,10 @@ internal sealed class TensorHighTemperatureLeadingClassesDocument : IScribeDocum
                     Paragraph(Text(
                         "Natural subtraction gives n minus two strictly less than n. "
                         + "Raising to the positive power s preserves that strict inequality, and casting to the rationals preserves it again. "
-                        + "The two exact values then put the transposition degree strictly below the identity degree.")),
+                        + "The two exact values then put the transposition degree strictly below the all-ones degree.")),
                     Paragraph(Text(
                         "Next split the multiset of parts into its ones and its parts different from one. "
-                        + "The ones form a replicate multiset with cardinality f. If p differs from the identity class, the other multiset is nonempty; "
+                        + "The ones form a replicate multiset with cardinality f. If p differs from the all-ones partition, the other multiset is nonempty; "
                         + "each of its parts is at least two, so its sum is at least two. Since the two sums add to n, this proves f at most n minus two.")),
                     Paragraph(Text(
                         "Equality f = n minus two characterizes the transposition class. "
@@ -132,39 +121,34 @@ internal sealed class TensorHighTemperatureLeadingClassesDocument : IScribeDocum
                 SumOver("t", tuples, new Formula.Fraction(weight, NatToRat(lcm)))))));
     }
 
-    private static Formula IdentityFormula() => All("n", Naturals(),
-        Equal(Typed(LocalCall("identityClass", X("n")), PartitionOf(X("n"))),
-            At(Qualified("Nat", "Partition", "ofSums"), X("n"),
-                At(Qualified("Multiset", "replicate"), X("n"), Typed(D(1), Naturals())))));
-
     private static Formula TranspositionFormula()
     {
         Formula condition = LE(Typed(D(2), Naturals()), X("n"));
-        Formula parts = At(Qualified("Multiset", "cons"), Typed(D(2), Naturals()),
-            At(Qualified("Multiset", "replicate"), NatSubTwo(), Typed(D(1), Naturals())));
         Formula value = Typed(LocalCall("transpositionClass", X("n")), PartitionOf(X("n")));
-        return All("n", Naturals(), Conjunction(
-            Implication(condition, Equal(value, At(Qualified("Nat", "Partition", "ofSums"), X("n"), parts))),
-            Implication(new Formula.Not(Parenthesized(condition)),
-                Equal(value, At(Qualified("Nat", "Partition", "indiscrete"), X("n"))))));
+        Formula positive = At(Partition126(), X("n"), D(1), D(0), X("h"));
+        Formula negative = At(Qualified("Nat", "Partition", "indiscrete"), X("n"));
+        Formula branch = Call("dite", condition,
+            Parenthesized(LambdaOf("h", condition, positive)),
+            Parenthesized(LambdaOf("h", new Formula.Not(Parenthesized(condition)), negative)));
+        return All("n", Naturals(), Equal(value, branch));
     }
 
     private static Formula ClaimBody()
     {
-        Formula identity = LocalCall("identityClass", X("n"));
+        Formula ones = At(OnesPartition(), X("n"));
         Formula transposition = LocalCall("transpositionClass", X("n"));
-        Formula identityDegree = LocalCall("degree", X("s"), identity);
+        Formula onesDegree = LocalCall("degree", X("s"), ones);
         Formula transpositionDegree = LocalCall("degree", X("s"), transposition);
-        Formula first = Equal(identityDegree, Pow(NatToRat(X("n")), X("s")));
+        Formula first = Equal(onesDegree, Pow(NatToRat(X("n")), X("s")));
         Formula second = Equal(transpositionDegree,
             new Formula.Fraction(Add(Pow(NatToRat(X("n")), X("s")),
                 Pow(NatToRat(NatSubTwo()), X("s"))), Typed(D(2), Rationals())));
         Formula others = All("p", PartitionOf(X("n")),
-            Implication(NotEqual(X("p"), identity), Implication(NotEqual(X("p"), transposition),
+            Implication(NotEqual(X("p"), ones), Implication(NotEqual(X("p"), transposition),
                 Less(LocalCall("degree", X("s"), X("p")), transpositionDegree))));
         return All("n", Naturals(), Implication(LE(Typed(D(2), Naturals()), X("n")),
             All("s", Naturals(), Implication(LE(Typed(D(1), Naturals()), X("s")),
-                Conjunction(first, Conjunction(second, Conjunction(Less(transpositionDegree, identityDegree), others)))))));
+                Conjunction(first, Conjunction(second, Conjunction(Less(transpositionDegree, onesDegree), others)))))));
     }
 
     private static Formula Parts() => At(Qualified("Nat", "Partition", "parts"), X("p"));
@@ -174,6 +158,10 @@ internal sealed class TensorHighTemperatureLeadingClassesDocument : IScribeDocum
     private static Formula NatSubTwo() => Typed(Subtract(X("n"), Typed(D(2), Naturals())), Naturals());
     private static Formula NatToRat(Formula value) => Typed(At(Qualified("Nat", "cast"), value), Rationals());
     private static Formula PartitionOf(Formula n) => At(Qualified("Nat", "Partition"), n);
+    private static Formula OnesPartition() => Qualified("D5", "S3", "Combinatorics", "Partitions",
+        "ColouredOddMultiplicity", "onesPartition");
+    private static Formula Partition126() => Qualified("D5", "S1", "Recurrence", "Partitions",
+        "GawronUlasFactorialSignConjecture", "partition126");
     private static Formula FinOf(Formula n) => At(Qualified("Fin"), n);
     private static Formula Naturals() => Seq(Mathbb, Grp(X("N")));
     private static Formula Rationals() => Seq(Mathbb, Grp(X("Q")));
