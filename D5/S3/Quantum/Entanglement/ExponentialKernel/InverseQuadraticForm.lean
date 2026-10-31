@@ -128,7 +128,7 @@ theorem inverse_quadratic_form (n : ℕ) (loss : ℕ → ℝ)
       A * (K * (Aᵀ * D)) = (A * K * Aᵀ) * D := by simp only [Matrix.mul_assoc]
       _ = 1 := by rw [hfactor, hD]
   have hKQ : K * (Aᵀ * D * A) = 1 := by
-    simpa only [Matrix.mul_assoc] using Matrix.mul_eq_one_comm.mp hAK
+    simpa only [Matrix.mul_assoc] using mul_eq_one_comm.mp hAK
   have hinv : K⁻¹ = Aᵀ * D * A := Matrix.inv_eq_right_inv hKQ
   refine ⟨Matrix.det_ne_zero_of_right_inverse hKQ, ?_, ?_⟩
   · rw [hinv]
