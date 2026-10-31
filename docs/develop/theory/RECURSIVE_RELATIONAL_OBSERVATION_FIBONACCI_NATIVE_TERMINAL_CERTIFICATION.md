@@ -1356,3 +1356,317 @@ III §§152–156 是另一套明确支付的读器历史结果：四个新载�
 [RROIII15718]: https://github.com/the-omega-institute/trureturing/blob/5469ab1edbdc9bc6a66e428c866554fa4ff8f2f0/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_III.md#157-原生分量守恒在完整相干四次密度类中的刚性
 
 ## 追加锚（本行以下为增补区）
+
+## 24. 正则原生源方向的归一化闭包锥
+
+以下只讨论记录零的原生前缀。令 $\mathsf A_{\rm reg}$ 为所有原地址字
+$a\in\{0,\ldots,8\}^{<\infty}$ 的子集，使其 ready 后继 $u_a$ 满足
+
+$$
+ m_0(a)=t_0(a)=1,\qquad
+ \frac14<t_{000}(u_a),t_{010}(u_a),t_{100}(u_a)<\frac12,\qquad
+ \delta_{u_a}\ge\frac12 .
+ \tag{24.1}
+$$
+
+这里的 $m_0,t_0,t_s,\delta_u$ 都沿用 §§12、15、18、20 的定义；特别地，
+$m_0=t_0=1$ 是原记录零支撑和因果归一化的结论，不是一般 Born 记录律。
+对 $a\in\mathsf A_{\rm reg}$ 和 $d\in D_{u_a}$，写
+
+$$
+ \Gamma_a(d)=(B_a(d),D_a(d))\in
+ \operatorname{Herm}_{21}\oplus\operatorname{Herm}_{13}
+ \tag{24.2}
+$$
+
+为 §18 的同步合并块差，并置
+
+$$
+ \widehat{\Gamma}_a(d)=\frac{\Gamma_a(d)}
+ {\bigl(\|B_a(d)\|_F^2+\|D_a(d)\|_F^2\bigr)^{1/2}}
+ \quad(\Gamma_a(d)\ne0).
+ \tag{24.3}
+$$
+
+定义归一化低秩锥截面
+
+$$
+ \mathcal C_1=\left\{(B,D):\begin{array}{l}
+ B=B^*,\ D=D^*,\ \operatorname{rank}B\le2,\ \operatorname{rank}D\le1,\\
+ \operatorname{Tr}B+\operatorname{Tr}D=0,\quad
+ \|B\|_F^2+\|D\|_F^2=1
+ \end{array}\right\}.
+ \tag{24.4}
+$$
+
+**定理 24.1（正则原生源与低秩锥的精确对应）。** 有
+
+$$
+ \overline{\{\widehat{\Gamma}_a(d):a\in\mathsf A_{\rm reg},\ d\in D_{u_a},\ \Gamma_a(d)\ne0\}}
+ =\mathcal C_1 .
+ \tag{24.5}
+$$
+
+闭包在 $\operatorname{Herm}_{21}\oplus\operatorname{Herm}_{13}$ 的 Frobenius 拓扑中取。
+等式的右侧是数学方向的闭包；它不把闭包中的点说成某个可数原生轨道上的精确点。
+
+**证明。** 对任意 $a$ 和 $d$，每个 $21$ 维合并块是至多两个秩一投影的实线性组合，
+每个 $13$ 维块是至多一个秩一投影的实线性组合。因此
+
+$$
+ \operatorname{rank}B_a(d)\le2,\qquad \operatorname{rank}D_a(d)\le1 .
+ \tag{24.6}
+$$
+
+每个占据尾投影的迹为一，而 $d\in D_{u_a}$ 给 $\sum_sd_s=0$，所以
+$\operatorname{Tr}B_a(d)+\operatorname{Tr}D_a(d)=0$。这些条件在归一化和取极限下闭，得到左侧包含于 $\mathcal C_1$。
+
+反之，取 $(B,D)\in\mathcal C_1$。谱分解可写成
+
+$$
+ B=\alpha P_p+\beta P_q,\qquad D=\gamma P_r,\qquad
+ p\perp q,\qquad \alpha+\beta+\gamma=0,
+ \tag{24.7}
+$$
+
+其中零特征值用任意正交射线补足；若 $D=0$，取 $\gamma=0$ 和任意 $r$。把这些射线分别嵌入记录零的 $000,010,100$ 尾块，置
+
+$$
+ v=\frac1{\sqrt3}\bigl(\iota_{000}p+\iota_{010}q+\iota_{100}r\bigr).
+ \tag{24.8}
+$$
+
+这是原 $55$ 维记录零载体中的单位向量。它的三个尾质量都为 $1/3$，且前两条 $21$ 维射线正交，故 $\delta(v)=1$。III (139.7)、(144.9) 以及 §§15、20 已给出的原 $0,\ldots,8$ 正向前缀闭像，给出有限原生前缀 $a_n$，使其 ready 射线 $u_{a_n}$ 射影收敛于 $v$。尾投影、尾质量和两条 $21$ 射线的内积连续，故充分大的 $n$ 满足 (24.1)。这一步只选取实际有限前缀，未加入连续控制或新的准备。
+
+取 $\lambda>0$ 足够小，使
+
+$$
+ \frac13\pm\frac{\lambda}{2}\alpha,\quad
+ \frac13\pm\frac{\lambda}{2}\beta,\quad
+ \frac13\pm\frac{\lambda}{2}\gamma
+ \tag{24.9}
+$$
+
+在所有充分大的 $n$ 上均为正。令 $d_n=\lambda(\alpha,\beta,\gamma)$，坐标次序为 $(000,010,100)$。则 $d_n\in D_{u_{a_n}}$，两个面内点 $t(u_{a_n})\pm d_n/2$ 都可行，并且
+
+$$
+ \Gamma_{a_n}(d_n)\longrightarrow\lambda(B,D).
+ \tag{24.10}
+$$
+
+归一化 (24.10) 即得 $\widehat{\Gamma}_{a_n}(d_n)\to(B,D)$。因此 $\mathcal C_1$ 也包含于左侧闭包，证明 (24.5)。∎
+
+## 25. 八十一字的源一致稳定菜单
+
+对一个非空有限原生字集 $H\subset\mathsf W$，记
+
+$$
+ n_{u,H}(d)=\max_{h\in H}\left|\operatorname{Tr}(B_dX_h)+\operatorname{Tr}(D_dY_h)\right|,
+ \tag{25.1}
+$$
+
+沿用 (21.4) 的 $N_u(d)$。定义源一致稳定菜单数
+
+$$
+ m_{\rm stable}=\min\left\{|H|:\exists\kappa_H>0,\quad
+ \kappa_HN_u(d)\le n_{u,H}(d)\le N_u(d)\right\},
+ \tag{25.2}
+$$
+
+其中量词覆盖两个记录的每个实际纯源面及其全部 $d\in D_u$；相同菜单只作同一固定源面内的比较，不提供未知源的解码器。
+
+**引理 25.1（一个标量足以消去 $13$ 维秩一块）。** 令 $\mathcal G_8$ 为 $\operatorname{Herm}_{21}$ 中的秩八正交投影流形，令
+
+$$
+ \mathcal S=\{(B,z):B=B^*,\ \operatorname{rank}B\le2,\ \|B\|_F^2+z^2=1\}.
+ \tag{25.3}
+$$
+
+存在 $P_1,\ldots,P_{81}\in\mathcal G_8$ 和 $\alpha>0$，使
+
+$$
+ \min_{(B,z)\in\mathcal S}\max_{1\le j\le81}\left|\operatorname{Tr}(BP_j)+z\right|=\alpha>0 .
+ \tag{25.4}
+$$
+
+**证明。** 秩至多二的 Hermitian 锥的实维数为 $2\cdot21\cdot2-2^2=80$，故 $\mathcal S$ 的实半代数维数至多为 $80$。$\mathcal G_8$ 是复 Grassmann 流形，维数为 $2\cdot8(21-8)=208$，且连通。对非零 $(B,z)\in\mathcal S$，函数
+
+$$
+ P\longmapsto\operatorname{Tr}(BP)+z
+ \tag{25.5}
+$$
+
+不可能在 $\mathcal G_8$ 上恒为零：若 $\operatorname{Tr}(BP)$ 在所有秩八投影上恒定，则交换投影中一个一维方向的标准论证给 $B=\mu I_{21}$；秩约束迫使 $\mu=0$，随后常数项也给 $z=0$，与 (25.3) 矛盾。因此每个单方程零集的半代数维数至多为 $207$。其 $81$ 重 incidence 集的维数至多为
+
+$$
+ 80+81\cdot207=16847<16848=81\cdot208 .
+ \tag{25.6}
+$$
+
+投影到 $\mathcal G_8^{81}$ 后仍是闭半代数集，且由 (25.6) 没有内点。取其补集中的投影组 $(P_1,\ldots,P_{81})$，紧性给出 (25.4) 的正最小值 $\alpha$。秩层维数和半代数 incidence 的这一步使用 Kech–Wolf [KW] 的秩簇与紧归一化方法；这里的投影流形仍是本源的数学闭包。∎
+
+**定理 25.2（至多八十一字的源一致正敏感性）。** 存在一个原生事件 $A$ 的有限字集 $H\subset\mathsf W$，满足 $|H|\le81$，以及一个只依赖固定原生矩阵和事件的 $\kappa_H>0$，使
+
+$$
+ \kappa_HN_u(d)\le n_{u,H}(d)\le N_u(d)
+ \tag{25.7}
+$$
+
+对 (25.2) 的全部记录、实际纯源面和方向成立。
+
+**证明。** 固定一个秩五投影 $Y_0$ 于 $\operatorname{Herm}_{13}$ 的未来轨道。引理 25.1 给出 $P_1,\ldots,P_{81}$。由 (24.4)，任一方向 $C=(B,D)$ 满足 $\operatorname{rank}B\le2$、$\operatorname{rank}D\le1$ 和 $\operatorname{Tr}D=-\operatorname{Tr}B$。故置
+
+$$
+ N(C)=\frac{\|B\|_1+\|D\|_1}{2}
+       =\frac{\|B\|_1+|\operatorname{Tr}B|}{2},
+ \qquad N(C)\le\sqrt2\,\|B\|_F.
+ \tag{25.8}
+$$
+
+置 $z=\operatorname{Tr}(DY_0)$。若 $C\ne0$，则
+
+$$
+ \bigl(\|B\|_F^2+z^2\bigr)^{1/2}\ge\|B\|_F\ge\frac{N(C)}{\sqrt2}.
+ \tag{25.9}
+$$
+
+将 $(B,z)$ 归一化并应用 (25.4)，得到
+
+$$
+ \max_j|\operatorname{Tr}(BP_j)+\operatorname{Tr}(DY_0)|\ge\frac{\alpha}{\sqrt2}N(C).
+ \tag{25.10}
+$$
+
+III (151.3) 给原七地址未来字在 $PU(21)\times PU(13)$ 上的联合稠密性。因此可分别选择原生字 $h_j$，使
+
+$$
+ \|X_{h_j}-P_j\|<\varepsilon,
+ \qquad \|Y_{h_j}-Y_0\|<\varepsilon .
+ \tag{25.11}
+$$
+
+取 $\varepsilon<\alpha/(4\sqrt2)$。由迹范数对偶和 (25.8)，每个 $j$ 的替换误差不超过
+
+$$
+ \varepsilon(\|B\|_1+\|D\|_1)=2\varepsilon N(C).
+ \tag{25.12}
+$$
+
+所以
+
+$$
+ n_{u,H}(d)\ge\frac{\alpha}{2\sqrt2}N_u(d)
+ \quad\text{当 }N_u(d)>0,
+ \tag{25.13}
+$$
+
+零方向两侧都为零。上界是 §18.2 的定义性上界 $n_{u,H}\le N_u$。取 $\kappa_H=\alpha/(2\sqrt2)$ 即得 (25.7)。记录一的方向是同一锥的子类；记录零的重合射线、零尾和商方向若 $N=0$ 仍满足平凡等式。这个菜单只使用原七地址和原事件 $A$，没有把闭包投影当成新的仪器。∎
+
+## 26. 七十八字以下的正则原生不稳定性
+
+**定理 26.1（七十八字菜单的实际正则序列障碍）。** 对每个固定原生字集 $H\subset\mathsf W$ 且 $|H|\le78$，存在实际前缀 $a_n\in\{0,\ldots,8\}^{<\infty}$、记录零源 $u_n=u_{a_n}$ 和 $d_n\in D_{u_n}$，使
+
+$$
+\begin{gathered}
+ m_0(a_n)=t_0(a_n)=1,\qquad
+ t_{000}(u_n),t_{010}(u_n),t_{100}(u_n)\longrightarrow\frac13,\qquad
+ \delta_{u_n}\longrightarrow1,\\
+ K_{u_n}=\{0\},\qquad
+ N_{u_n}(d_n)\longrightarrow N_*>0,\qquad
+ \frac{n_{u_n,H}(d_n)}{N_{u_n}(d_n)}\longrightarrow0 .
+ \tag{26.1}
+\end{gathered}
+$$
+
+特别地，任何至多七十八字的固定菜单都没有 (25.7) 所需的正源一致系数；这是一列实际 ready 前缀上的稳定性失败，不是可数原生轨道上的精确碰撞。
+
+**证明。** 固定一个单位 $13$ 维射线 $r$，写 $P_r=|r\rangle\langle r|$，并对 $h\in H$ 置
+
+$$
+ A_h=X_h-\operatorname{Tr}(P_rY_h)I_{21}.
+ \tag{26.2}
+$$
+
+Wang–Xu [WX] 的复广义相位恢复定义和 Theorem 5.2 对任意 Hermitian 测量矩阵都适用。由于
+
+$$
+ \alpha(20)=2,\qquad \epsilon_\alpha=1,\qquad
+ m_{\mathbb C}(21)\ge4\cdot21-2-2\cdot2+1=79,
+ \tag{26.3}
+$$
+
+至多七十八个 $A_h$ 不具有相位恢复性质。于是存在不相差单位相位的 $x,y\in\mathbb C^{21}$，使 $x^*A_hx=y^*A_hy$ 对每个 $h\in H$ 成立。令
+
+$$
+ B=xx^*-yy^*,\qquad c=-\operatorname{Tr}B,\qquad D=cP_r .
+ \tag{26.4}
+$$
+
+则 $B\ne0$、$\operatorname{rank}B\le2$、$\operatorname{rank}D\le1$、
+$\operatorname{Tr}B+\operatorname{Tr}D=0$，并且
+
+$$
+ \operatorname{Tr}(BX_h)+\operatorname{Tr}(DY_h)
+ =\operatorname{Tr}(B A_h)=0\qquad(h\in H).
+ \tag{26.5}
+$$
+
+取 $B=\alpha P_p+\beta P_q$ 的正交谱分解，零特征值仍用正交 $q$ 补足；若 $D=0$，令 $c=0$ 并保留任意 $r$。定理 24.1 的反向构造，以
+
+$$
+ v_* =\frac1{\sqrt3}\bigl(\iota_{000}p+\iota_{010}q+\iota_{100}r\bigr)
+ \tag{26.6}
+$$
+
+为目标，给出实际正向前缀 $a_n$，其三个尾质量趋于 $1/3$、$\delta_{u_n}\to1$，并最终满足 (24.1)。取固定足够小的 $\lambda>0$，置 $d_n=\lambda(\alpha,\beta,c)$。由 $\alpha+\beta+c=0$ 和正则尾质量，充分大的 $n$ 上两个面内点 $t(u_n)\pm d_n/2$ 都可行。由射线投影连续性，
+
+$$
+ \Gamma_{a_n}(d_n)\longrightarrow\lambda(B,D).
+ \tag{26.7}
+$$
+
+式 (26.5) 和固定菜单的有限性给
+
+$$
+ n_{u_n,H}(d_n)\longrightarrow0.
+ \tag{26.8}
+$$
+
+另一方面迹范数连续，且 $(B,D)\ne0$，所以
+
+$$
+ N_{u_n}(d_n)\longrightarrow
+ \lambda\frac{\|B\|_1+|c|}{2}=N_*>0 .
+ \tag{26.9}
+$$
+
+于是 (26.1) 成立。$\delta_{u_n}>0$ 与 (14.2) 给 $K_{u_n}=\{0\}$；每个有限 $n$ 的完整原菜单仍按其实际射线判定，证明没有调用任何精确碰撞。矩阵 $A_h$ 只是把未知 $13$ 维秩一块的迹吸收到标量中的证明装置，不是新增的测量字、控制或读出。∎
+
+**推论 26.2（稳定菜单数的窄区间）。** 由定理 25.2 和定理 26.1，
+
+$$
+ \boxed{79\le m_{\rm stable}\le81.}
+ \tag{26.10}
+$$
+
+这个区间不决定 $79,80,81$ 中的最小值。它也不把 §16.2 的源依赖至多两个字提升成固定源一致菜单；后者的量词不同。
+
+## 27. 文献对应、来源闭包与精度边界
+
+本增补的新增内容是 (24.5) 的实际正则原生源方向闭包、(25.7) 的八十一字源一致正敏感性和 (26.1) 的七十八字以下正则序列障碍。有限维迹范数、秩簇维数、Grassmann 流形维数及半代数 incidence 的一般事实属于既有数学；它们在这里的承重使用与本源矩阵、同步合并和实际前缀闭包绑定。
+
+| 来源 | 在本增补中的精确作用与条件 |
+| --- | --- |
+| [III] (139.7)、(144.8)–(144.9)、(151.3)；本卷 §§15、20 | 前缀 $0,\ldots,8$ 的记录零 $55$ 维射影密度、未来 $PU(21)\times PU(13)$ 联合密度、共同标量和逆字母的九次正向替换。只允许原生有限字；不引入连续目标门、独立制备或分别拼接两个块。 |
+| Wang–Xu，*Generalized Phase Retrieval: Measurement Number, Matrix Recovery and Beyond*，[arXiv:1605.08034v3][WX]，Definition 1.1、Theorem 5.2 | 其测量矩阵是任意 Hermitian 矩阵，复维数 $21$ 的下界按 (26.3) 为 $79$。本文先作 (26.2) 的标量平移，再把相位恢复失败转成合并锥方向；没有把该文的测量向量或相位恢复算法当作原生字。 |
+| Kech–Wolf，*Quantum tomography of semi-algebraic sets with constrained measurements*，[arXiv:1507.00903v2][KW]，Lemma II.1、Corollary II.2、Lemma IV.1、Theorem V.2 | 提供 Hermitian 秩簇的维数、归一化闭集合和半代数 incidence 的维数/稳定性框架。本文重新核对 $\operatorname{rank}\le2$ 的 $80$ 维、秩八 Grassmann 的 $208$ 维以及 (25.6)，并把投影轨道替换为本卷的原生闭包；没有借用其 POVM、随机测量或额外读出。 |
+| 本卷 §§13、18、19、21；`FiniteTraceDistance.lean`、`FiniteWordReachability.lean` | §§13、18 给同步 $21/21/13$ 合并、$N=(\|B\|_1+\|D\|_1)/2$ 和纯面秩约束；§21 的有限容限菜单仍保留。两个 Lean 供应者的声明只作为既有矩阵张成、迹范数和字长边界的来源阅读；本增补没有写入或声称新的 Lean 核验。 |
+
+定理 24.1 的闭包点是数学极限，不是实际可数轨道上的点；定理 26.1 的分母由 $N_{u_n}(d_n)\to N_*>0$ 保证，不把相对间隙趋零误写成精确原生碰撞。所有面值仍是数学后验权重；称为实际条件字段还需假设 151.5 的共同切口、可测性、占据支撑和重心条件。零尾与相同射线继续按 §§14、18、22 的商约定处理。
+
+八十一字菜单只证明一个正的、源独立的语义灵敏度 $\kappa_H$，没有给出字清单、最大字长、合成复杂度、执行精度、重复样本数或统计置信界。原 $609$ 字、长度 $\le608$ 的代数张成界继续只承担精确检测；它与 (25.7) 的稳定菜单是不同资源。这里没有增加准备、复制、复位、参考读出、样本 oracle、额外控制或 III §§158–163 的付费读者前件，也没有推出空间、时间、边界和记忆的全面互相恢复。
+
+[WX]: https://arxiv.org/html/1605.08034v3
+[KW]: https://arxiv.org/html/1507.00903v2
+
+## 追加锚（本行以下为增补区）
