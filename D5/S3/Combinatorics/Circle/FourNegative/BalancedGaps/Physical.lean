@@ -96,9 +96,9 @@ private theorem physical_partition (a b c d : ℕ)
   rw [hrange]
   fin_cases n <;>
     simp only [packets,order,Matrix.cons_val_zero',Matrix.cons_val_succ',List.map_cons,List.map_nil,orderedPackets,blocksWord,
-      Multiset.coe_append,Multiset.coe_cons,Multiset.coe_nil,Multiset.count_add,
+      ← Multiset.coe_add,← Multiset.cons_coe,Multiset.coe_nil,Multiset.count_add,
       Multiset.count_cons,Multiset.count_zero,hcount] <;>
-    simp only [assigned,transfer,Matrix.cons_val_zero',Matrix.cons_val_succ',
+    norm_num [assigned,transfer,Matrix.cons_val_zero',Matrix.cons_val_succ',
       Fin.isValue,ite_true,ite_false,Finset.mem_insert,Finset.mem_erase,
       positivePacket,negativeLabel,chainStart,chainLength,Finset.mem_Ico,size] <;>
     split_ifs <;> omega
