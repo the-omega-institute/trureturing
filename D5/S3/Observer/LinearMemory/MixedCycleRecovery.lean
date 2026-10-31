@@ -6,6 +6,7 @@
    utility: none
    digest: Mixed cycles expose exactly their coordinate window and determine recovery. -/
 
+import D5.S3.ConceptDynamics.Restoration.TargetRecoveryCriterion
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
 import Mathlib.GroupTheory.Perm.List
@@ -321,7 +322,7 @@ private theorem full_window (b : OrthonormalBasis (Axis k) ℝ V) : window b k =
 
 /-- For every finite hidden dimension and every prefix cycle, the complete
 observation family has exactly the stated row space, ranks, escape pairs and
-linear reconstructions. Scalar rank is separate from the number of vector readouts. -/
+reconstructions, including unrestricted full-state recovery. Scalar rank is separate from the number of vector readouts. -/
 theorem mixed_cycle_recovery (b : OrthonormalBasis (Axis k) ℝ V)
     (r : ℕ) (hr : r ≤ k) :
     mixedCycle b 0 (Nat.zero_le k) = 1 ∧
@@ -336,7 +337,9 @@ theorem mixed_cycle_recovery (b : OrthonormalBasis (Axis k) ℝ V)
       (a ≠ 0 → x + a • b (.inr ⟨r, h⟩) ≠ x)) ∧
     (LinearlyRecoverable b r hr (LinearMap.id : V →ₗ[ℝ] V) ↔ r = k) ∧
     Module.finrank ℝ (window b r).orthogonalProjectionOnto.toLinearMap.range = 3 + r ∧
-    LinearlyRecoverable b r hr (window b r).orthogonalProjectionOnto.toLinearMap := by
+    LinearlyRecoverable b r hr (window b r).orthogonalProjectionOnto.toLinearMap ∧
+    ((∃ recover : (generated b r hr → visible b) → V,
+      (id : V → V) = recover ∘ (observations b r hr)) ↔ r = k) := by
   have hrow := pullback_rows_eq_window b r hr
   have hker := observations_kernel b r hr
   have he : window b 0 ≤ window b r := by
@@ -351,8 +354,22 @@ theorem mixed_cycle_recovery (b : OrthonormalBasis (Axis k) ℝ V)
     apply (recovery_iff_kernel b r hr _).mpr
     rw [hker]
     exact le_of_eq (Submodule.ker_orthogonalProjectionOnto (K := window b r)).symm
-  refine ⟨?_, hrow, by rw [hrow, window_finrank b r hr], ?_, ?_, ?_, ?_, ?_, ?_,
-    projection_rank b r hr, recoverW⟩
+  have hfull : LinearlyRecoverable b r hr (LinearMap.id : V →ₗ[ℝ] V) ↔ r = k := by
+    constructor
+    · intro hrec
+      by_contra hne
+      have hlt : r < k := lt_of_le_of_ne hr hne
+      have hf : b (.inr ⟨r, hlt⟩) ∈ (observations b r hr).ker := by
+        rw [hker]
+        exact hidden_orthogonal_window b r ⟨r, hlt⟩ le_rfl
+      have hz := (recovery_iff_kernel b r hr _).mp hrec hf
+      exact b.toBasis.ne_zero _ (LinearMap.mem_ker.mp hz)
+    · intro heq
+      apply (recovery_iff_kernel b r hr _).mpr
+      rw [hker, heq, full_window, Submodule.top_orthogonal_eq_bot]
+      exact bot_le
+  refine ⟨?_, hrow, by rw [hrow, window_finrank b r hr], ?_, ?_, ?_, ?_, ?_, hfull,
+    projection_rank b r hr, recoverW, ?_⟩
   · apply b.toBasis.ext_linearIsometryEquiv
     intro i
     simp [mixedCycle, cycleNodes, OrthonormalBasis.equiv_apply_basis]
@@ -375,19 +392,20 @@ theorem mixed_cycle_recovery (b : OrthonormalBasis (Axis k) ℝ V)
     · intro ha heq
       have hs : a • b (.inr ⟨r, h⟩) = 0 := add_left_cancel (heq.trans (add_zero x).symm)
       exact (smul_eq_zero.mp hs).elim ha (b.toBasis.ne_zero _)
-  · constructor
-    · intro hrec
-      by_contra hne
-      have hlt : r < k := lt_of_le_of_ne hr hne
-      have hf : b (.inr ⟨r, hlt⟩) ∈ (observations b r hr).ker := by
-        rw [hker]
-        exact hidden_orthogonal_window b r ⟨r, hlt⟩ le_rfl
-      have hz := (recovery_iff_kernel b r hr _).mp hrec hf
-      exact b.toBasis.ne_zero _ (LinearMap.mem_ker.mp hz)
-    · intro heq
-      apply (recovery_iff_kernel b r hr _).mpr
-      rw [hker, heq, full_window, Submodule.top_orthogonal_eq_bot]
-      exact bot_le
+  · have hrecovery :
+        (∃ recover : (generated b r hr → visible b) → V,
+          (id : V → V) = recover ∘ (observations b r hr)) ↔
+        LinearlyRecoverable b r hr (LinearMap.id : V →ₗ[ℝ] V) := by
+      calc
+        (∃ recover : (generated b r hr → visible b) → V,
+            (id : V → V) = recover ∘ (observations b r hr))
+            ↔ Function.Injective (observations b r hr) :=
+          (D5.S3.ConceptDynamics.Restoration.TargetRecoveryCriterion.target_recovery_criterion
+            (observations b r hr) (id : V → V)).1
+        _ ↔ (observations b r hr).ker = ⊥ := LinearMap.ker_eq_bot.symm
+        _ ↔ LinearlyRecoverable b r hr (LinearMap.id : V →ₗ[ℝ] V) := by
+          rw [recovery_iff_kernel, LinearMap.ker_id, le_bot_iff]
+    exact hrecovery.trans hfull
 
 #print axioms mixed_cycle_recovery
 

@@ -65,7 +65,9 @@ abbrev arena : Arena where
           (a ≠ 0 → x + a • b (.inr ⟨r, h⟩) ≠ x)) ∧
         (LinearlyRecoverable b r hr (LinearMap.id : V →ₗ[ℝ] V) ↔ r = k) ∧
         Module.finrank ℝ (window b r).orthogonalProjectionOnto.toLinearMap.range = 3 + r ∧
-        LinearlyRecoverable b r hr (window b r).orthogonalProjectionOnto.toLinearMap
+        LinearlyRecoverable b r hr (window b r).orthogonalProjectionOnto.toLinearMap ∧
+        ((∃ recover : (generated b r hr → visible b) → V,
+          (id : V → V) = recover ∘ (observations b r hr)) ↔ r = k)
 
 private def testBasis : OrthonormalBasis (Axis 1) ℝ
     (EuclideanSpace ℝ (ULift.{u} (Axis 1))) :=

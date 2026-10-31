@@ -27,7 +27,8 @@ internal sealed class MixedCycleRecoveryDocument : IScribeDocumentDefinition
                 + "of these vector readouts. The row space R_r is the supremum of g inverse applied "
                 + "to E. For a linear target T, Rec(T) means a linear map from the range of M_r to "
                 + "the target space whose composition with M_r is T. All reconstruction claims "
-                + "therefore concern exactly the jointly attainable observations.")),
+                + "concern exactly the jointly attainable observations. Full(T) instead permits "
+                + "an arbitrary function on the entire readout space whose composition with M_r is T.")),
             Describe.Lean(DescribeId.Create("mixed-cycle-recovery"),
                 DeclarationHandle.Create(Root + "mixed_cycle_recovery"),
                 H("Exact row space, four target cases, and escape pairs"),
@@ -49,7 +50,10 @@ internal sealed class MixedCycleRecoveryDocument : IScribeDocumentDefinition
                         + "It gives P_E and P_W_r. If r < k, the nonzero vector f_r lies in the "
                         + "common kernel, so x and x+a f_r have identical observations for every "
                         + "real a and distinct states whenever a is nonzero. If r = k, W_r is V "
-                        + "and the common kernel vanishes, giving full reconstruction.")),
+                        + "and the common kernel vanishes, giving full reconstruction. The native "
+                        + "target_recovery_criterion identifies arbitrary-function recovery of the "
+                        + "identity target with injectivity, so the same equivalence holds without "
+                        + "assuming a linear reconstruction function.")),
                     Paragraph(Text("On source E with identity target, the identity group element "
                         + "already reads the entire source and the target rank is three. On source "
                         + "V with target P_E the target rank remains three. On source V with identity "
@@ -111,7 +115,8 @@ internal sealed class MixedCycleRecoveryDocument : IScribeDocumentDefinition
             Eqn(Rank(pe), D(3)), Rec(pe),
             Seq(r, Sp, Lt, Sp, k, Sp, Rightarrow, Sp, Open, escape, Close),
             Seq(Rec(idV), Sp, Leftrightarrow, Sp, r, Sp, Eq, Sp, k),
-            Eqn(Rank(pw), threePlusR), Rec(pw)
+            Eqn(Rank(pw), threePlusR), Rec(pw),
+            Seq(Call("Full", idV), Sp, Leftrightarrow, Sp, r, Sp, Eq, Sp, k)
         ];
         var body = new List<Formula> {
             Begin, Grp(F.Id("gathered")), Forall, Sp, k, Comma, Sp, r, Colon, Sp,
