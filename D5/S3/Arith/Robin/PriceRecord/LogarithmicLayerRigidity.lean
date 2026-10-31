@@ -7,7 +7,6 @@
    digest: Shrinking prime windows and logarithmic finite exchanges. -/
 
 import D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 /-! Prime supply for growing finite exchanges in shrinking relative windows. -/
 
@@ -37,7 +36,7 @@ private theorem theta_error_eight :
     simp only [Function.comp_def]
     rw [← Real.rpow_mul hlog]
     norm_num only [show (1 / 10 : ℝ) * 80 = 8 by norm_num]
-    rw [Real.rpow_natCast]
+    norm_num only [← Real.rpow_natCast]
   have hmodel : (fun x : ℝ => x * Real.exp (-c * Real.log x ^ (1 / 10 : ℝ)))
       =o[atTop] (fun x : ℝ => x / Real.log x ^ 8) := by
     apply isLittleO_of_tendsto'
@@ -49,7 +48,7 @@ private theorem theta_error_eight :
     field_simp [show x ≠ 0 by linarith]
   have hlog : Tendsto (fun x : ℝ => Real.log x ^ 8 / Real.sqrt x) atTop (𝓝 0) := by
     simpa only [Real.rpow_natCast, Real.sqrt_eq_rpow] using
-      (isLittleO_log_rpow_rpow_atTop 8 (by norm_num : (0 : ℝ) < 1 / 2)).tendsto_div_nhds_zero
+      (isLittleO_log_rpow_rpow_atTop (8 : ℕ) (by norm_num : (0 : ℝ) < 1 / 2)).tendsto_div_nhds_zero
   have hsqrt : Real.sqrt =o[atTop] (fun x : ℝ => x / Real.log x ^ 8) := by
     apply isLittleO_of_tendsto'
       ((eventually_gt_atTop (1 : ℝ)).mono fun x hx => by
@@ -127,10 +126,11 @@ theorem shrinking_prime_windows (C : ℝ) (hC : 0 < C) :
   have hcapacity : ∀ᶠ x : ℝ in atTop,
       4 * Real.log x ^ 4 * (C * Real.log x ^ 3 + 1) ≤ x := by
     have hlim := ((hpoly 7).const_mul (4 * C)).add ((hpoly 4).const_mul 4)
+    simp only [mul_zero, add_zero] at hlim
     have hevent := hlim.eventually_lt_const (by norm_num : (0 : ℝ) < 1)
     filter_upwards [hevent, eventually_gt_atTop (0 : ℝ)] with x hx hx0
     have hh : (4 * Real.log x ^ 4 * (C * Real.log x ^ 3 + 1)) / x < 1 := by
-      convert hx using 1 <;> ring
+      convert hx using 1; ring
     exact ((div_lt_one hx0).mp hh).le
   have hevent : ∀ᶠ x : ℝ in atTop, 4 ≤ x ∧ 2 * Y ≤ x ∧
       8 ≤ Real.log x ∧
@@ -168,7 +168,7 @@ theorem shrinking_prime_windows (C : ℝ) (hC : 0 < C) :
     apply hbnd.trans
     calc
       y / Real.log y ^ 8 ≤ (2 * x) / (L / 2) ^ 8 :=
-        div_le_div₀ (pow_pos (by positivity : 0 < L / 2) 8) hy0.le hyx
+        div_le_div₀ (by positivity : 0 ≤ 2 * x) hyx (pow_pos (by positivity : 0 < L / 2) 8)
           (pow_le_pow_left₀ (by positivity) hlogy 8)
       _ = _ := by ring
   have herr : 1024 * x / L ^ 8 ≤ x / (2 * L ^ 3) := by
@@ -193,7 +193,9 @@ theorem shrinking_prime_windows (C : ℝ) (hC : 0 < C) :
     have hbe := abs_le.mp (hlocal b (ha.trans hab) hb)
     have htheta : x / (2 * L ^ 3) ≤ Chebyshev.theta b - Chebyshev.theta a := by
       have heq : x / L ^ 3 = 2 * (x / (2 * L ^ 3)) := by ring
-      linarith [hae.2, hbe.1]
+      have herr' : 2 * (512 * x / L ^ 8) ≤ x / (2 * L ^ 3) := by
+        convert herr using 1; ring
+      linarith only [hae.2, hbe.1, hwidth, heq, herr']
     have hlogb : Real.log b ≤ 2 * L := by
       have h := Real.log_le_log (by linarith : 0 < b) hb
       have hlog2 : Real.log (2 : ℝ) ≤ L := Real.log_le_log (by norm_num) (by linarith)
@@ -206,7 +208,7 @@ theorem shrinking_prime_windows (C : ℝ) (hC : 0 < C) :
         mul_le_mul_of_nonneg_left hlogb (Nat.cast_nonneg N)
       _ ≤ x / (2 * L ^ 3) := by
         apply (le_div_iff₀ (by positivity : 0 < 2 * L ^ 3)).mpr
-        convert hNm using 1 <;> ring
+        convert hNm using 1; ring
       _ ≤ _ := htheta
   obtain ⟨D, hDcard, hD⟩ := choose (x * (1 - 1 / L ^ 3)) x
     (by nlinarith [mul_le_mul_of_nonneg_left hdelta hx0.le])
