@@ -49,7 +49,7 @@ private theorem old_legal : OriginalOrder 14 85 oldWord := by
   refine ⟨by decide, ?_, ?_⟩
   · norm_num [oldWord, actualSource, centered, modulus]
   · intro r
-    simpa only [zero_add] using inStrip_prefix hs r
+    simpa only [zero_add, Set.mem_Icc] using inStrip_prefix hs r
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
