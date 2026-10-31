@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/Circle/Orbit/ZeroIncidence
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/Orbit/ZeroIncidence
    mirror-E: none(waiver:unregistered-new-circle-orbit)
-   anchors: [mathlib/module/Mathlib.Logic.Equiv.Fin.Rotate, mathlib/module/Mathlib.Data.Finset.Basic]
+   anchors: [mathlib/module/Mathlib.Logic.Equiv.Fin.Rotate, mathlib/module/Mathlib.Data.Finset.Powerset]
    utility: none
    digest: All cyclic physical translates of an actual centered source subset vanish exactly at balanced negative incidence, with an exact covering law and coprime obstruction. -/
 
