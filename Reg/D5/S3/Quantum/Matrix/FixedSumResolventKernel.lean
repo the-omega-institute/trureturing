@@ -13,7 +13,7 @@ abbrev integrandSignature :=
   _root_.Reg.Support.SingleDependentReadout.signature (ℝ × ℝ × ℕ) (fun _ => ℝ) (fun _ => ℝ)
 
 def resolventActual : Realization integrandSignature := realize integrandSignature
-  (fun _ p s => resolvent p.1 p.2.1 s ^ p.2.2) (fun e => nomatch e)
+  (fun _ p s => _root_.D5.S3.Quantum.Matrix.FixedSumResolventKernel.resolvent p.1 p.2.1 s ^ p.2.2) (fun e => nomatch e)
 
 def scalarActual : Realization integrandSignature := realize integrandSignature
   (fun _ p s => (p.1 * p.2.1 / ((s + p.1) * (s + p.2.1))) ^ p.2.2)
@@ -47,7 +47,7 @@ private theorem scalar_rejected : ¬ scalarArena.Law integrandRejected := by
 private theorem resolvent_dependence : ObservationalDependence integrandSignature resolventActual := by
   intro i
   refine ⟨(2,1,1), 0, 1, ?_⟩
-  norm_num [resolventActual, realize, resolvent]
+  norm_num [resolventActual, realize, _root_.D5.S3.Quantum.Matrix.FixedSumResolventKernel.resolvent]
 
 private theorem scalar_dependence : ObservationalDependence integrandSignature scalarActual := by
   intro i
@@ -86,33 +86,35 @@ abbrev convexArena : Arena where
 
 private theorem convex_rejected : ¬ convexArena.Law convexRejected := by
   intro h
-  have hh := (h (S := 1) (by norm_num) (j := 1) (by norm_num)).2
-    (x := 0) (by norm_num) (y := 2) (by norm_num)
-    (a := 1/2) (b := 1/2) (by norm_num) (by norm_num) (by norm_num)
+  have hc := h (S := 1) (by norm_num) (j := 1) (by norm_num)
+  have hh := hc.2 (show (0 : ℝ) ∈ Ici 0 by norm_num)
+    (show (2 : ℝ) ∈ Ici 0 by norm_num)
+    (show (0 : ℝ) ≤ 1/2 by norm_num) (show (0 : ℝ) ≤ 1/2 by norm_num)
+    (show (1/2 : ℝ) + 1/2 = 1 by norm_num)
   norm_num [convexRejected, realize] at hh
 
 private theorem convex_dependence : ObservationalDependence convexSignature convexActual := by
   intro i
   refine ⟨(2,1), 0, 1, ?_⟩
   change kernel 2 1 0 ≠ kernel 2 1 1
-  have hz : kernel 2 1 0 = 0 := by simp [kernel, resolvent]
-  have hi : IntegrableOn (fun s => resolvent 2 1 s) (Ioi 0) := by
+  have hz : kernel 2 1 0 = 0 := by simp [kernel, _root_.D5.S3.Quantum.Matrix.FixedSumResolventKernel.resolvent]
+  have hi : IntegrableOn (fun s => _root_.D5.S3.Quantum.Matrix.FixedSumResolventKernel.resolvent 2 1 s) (Ioi 0) := by
     simpa using integrable_resolvent (S := 2) (by norm_num) 1 (j := 1) (by norm_num)
-  have hn : 0 ≤ᵐ[volume.restrict (Ioi (0 : ℝ))] resolvent 2 1 := by
+  have hn : 0 ≤ᵐ[volume.restrict (Ioi (0 : ℝ))] _root_.D5.S3.Quantum.Matrix.FixedSumResolventKernel.resolvent 2 1 := by
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with s hs
     have hs0 : 0 < s := hs
-    dsimp [resolvent]
+    dsimp [_root_.D5.S3.Quantum.Matrix.FixedSumResolventKernel.resolvent]
     positivity
-  have hp : 0 < ∫ s in Ioi 0, resolvent 2 1 s := by
+  have hp : 0 < ∫ s in Ioi 0, _root_.D5.S3.Quantum.Matrix.FixedSumResolventKernel.resolvent 2 1 s := by
     apply (integral_pos_iff_support_of_nonneg_ae hn hi).mpr
     calc
       0 < (volume.restrict (Ioi (0 : ℝ))) (Ioi 0) := by simp
-      _ ≤ (volume.restrict (Ioi (0 : ℝ))) (Function.support (resolvent 2 1)) := by
+      _ ≤ (volume.restrict (Ioi (0 : ℝ))) (Function.support (_root_.D5.S3.Quantum.Matrix.FixedSumResolventKernel.resolvent 2 1)) := by
         apply measure_mono
         intro s hs
         have hs0 : 0 < s := hs
-        change resolvent 2 1 s ≠ 0
-        dsimp [resolvent]
+        change _root_.D5.S3.Quantum.Matrix.FixedSumResolventKernel.resolvent 2 1 s ≠ 0
+        dsimp [_root_.D5.S3.Quantum.Matrix.FixedSumResolventKernel.resolvent]
         exact ne_of_gt (by positivity)
   rw [hz]
   exact ne_of_lt (by simpa [kernel] using hp)
@@ -154,7 +156,7 @@ private theorem order_dependence : ObservationalDependence orderSignature orderA
   refine ⟨(), 0, 1, ?_⟩
   intro h
   have he := congrFun h 0
-  simp [orderActual, realize] at he
+  norm_num [orderActual, realize] at he
 
 def orderFamily : Registration orderArena.{u} (type_of% @scalar_fidelity_moment.{u}) where
   actual := orderActual
@@ -186,8 +188,12 @@ def resolventAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     owner := `D5.S3.Quantum.Matrix.FixedSumResolventKernel
     definition := none
     coordinates := #[0, 2, 3]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "fn", "arg"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -216,8 +222,12 @@ def scalarAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     owner := `D5.S3.Quantum.Matrix.FixedSumResolventKernel
     definition := none
     coordinates := #[0, 1, 4]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "fn", "arg"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -246,8 +256,12 @@ def convexAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     owner := `D5.S3.Quantum.Matrix.FixedSumResolventKernel
     definition := none
     coordinates := #[0, 2]
-    readouts := #[{ path := #["body", "body", "body", "body", "arg"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -276,8 +290,12 @@ def orderAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     owner := `D5.S3.Quantum.Matrix.FixedSumResolventKernel
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

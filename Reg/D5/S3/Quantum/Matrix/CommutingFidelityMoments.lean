@@ -112,7 +112,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨(), 0, 1, ?_⟩
   intro h
   have he := congrFun h 0
-  simp [actual, realize] at he
+  norm_num [actual, realize] at he
 
 def family : Registration arena.{u} (type_of% @commuting_fidelity_moment.{u}) where
   actual := actual
