@@ -24,6 +24,7 @@ private def charge (a b c d i : ℕ) : ℤ := 2*old a b c d i-enlarged a b c d i
 private def shadow (a b c d i : ℕ) : ℤ := enlarged a b c d i-old a b c d i
 
 set_option maxHeartbeats 1000000 in
+-- Both actual-source tables are expanded over the four physical intervals.
 private theorem inherited_source_lift (a b c d t i : ℕ)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 3≤d) (hi : i<a+b+c+d) :
     charge a b c (d+t) (t+i)=charge a b c d i ∧
@@ -42,9 +43,9 @@ private theorem inherited_source_lift (a b c d t i : ℕ)
     have hs1 := u1 (t+i) (by omega)
     rw [hs0.1,hs1.1,hs0.2,hs1.2]
     by_cases hp : i+1<d
-    · simp only [if_pos hp,if_pos (show t+i+1<d+t by omega),pow_add]
+    · simp only [ite_eq_left hp,ite_eq_left (show t+i+1<d+t by omega),pow_add]
       constructor <;> first | trivial | ring
-    · simp only [if_neg hp,if_neg (show ¬t+i+1<d+t by omega),ht,pow_add]
+    · simp only [ite_eq_right hp,ite_eq_right (show ¬t+i+1<d+t by omega),ht,pow_add]
       constructor <;> first | trivial | ring
   · by_cases hv : i<d+c
     · let j:=i-d
@@ -92,7 +93,7 @@ private theorem new_low_source (a b c d t i : ℕ)
     charge a b c (d+t) i=0 ∧ old a b c (d+t) i=2^i*seedZ a b c := by
   have hu := (source_shadow_charge a b c (d+t) ha hb hc (by omega)).1 i (by omega)
   dsimp only at hu
-  rw [ite_eq_left (show i+1<d+t by omega)] at hu
+  simp only [ite_eq_left (show i+1<d+t by omega)] at hu
   change 2*old a b c (d+t) i-enlarged a b c (d+t) i=0 ∧
     enlarged a b c (d+t) i-old a b c (d+t) i=2^i*seedZ a b c at hu
   exact ⟨hu.1,by linarith only [hu.1,hu.2]⟩
@@ -105,7 +106,8 @@ private theorem new_low_mass (a b c d t : ℕ)
     ((List.range t).map (old a b c (d+t))).sum=(2^t-1)*seedZ a b c := by
   simpa only [Nat.zero_add,←List.range_eq_range'] using
     ladder_sum (old a b c (d+t)) 0 t (seedZ a b c)
-      (fun i hi => (new_low_source a b c d t i ha hb hc hd hi).2)
+      (fun i hi => by simpa only [Nat.zero_add] using
+        (new_low_source a b c d t i ha hb hc hd hi).2)
 
 /-- Summing inherited source compatibility recovers the stated remaining-charge lift. -/
 private theorem lifted_prefix_height (a b c d t : ℕ) (xs : List ℕ)
