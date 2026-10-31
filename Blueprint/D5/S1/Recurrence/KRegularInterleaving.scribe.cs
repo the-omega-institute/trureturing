@@ -48,10 +48,10 @@ internal sealed class KRegularInterleavingDocument : IScribeDocumentDefinition
                         + "attained g, d<u_g, and r<N_g. Linear images and finite sums preserve finite generation.")),
                     Paragraph(Text(
                         "To contain the whole kernel, take arbitrary e and c<k^e. With K=k^e and "
-                        + "g=gcd(K,a), either T_i(Kn+c) vanishes for every n, or its support is one residue "
+                        + "g=gcd(K,a), either the mask is never active and T_i(Kn+c) vanishes for every n, or the mask is active on exactly one residue "
                         + "class r modulo N_g. Indeed, canceling K in a congruence modulo a divides the "
                         + "modulus by gcd(K,a). Choose the least nonnegative representative r<N_g of an "
-                        + "actual supported index. Then Kr+c=am_0+i with m_0<K/g, and for every n the "
+                        + "index satisfying Kn+c ≡ i modulo a. Then Kr+c=am_0+i with m_0<K/g, and for every n the "
                         + "masked sample is exactly E(N_g,r) applied to ℓ ↦ f_i((K/g)ℓ+m_0). Write "
                         + "m_0=u_g q+d by Euclidean division. The strict bound is q<k^(e−t_g), while d<u_g. "
                         + "Thus this inner sequence is a genuine member of the k-kernel of "

@@ -35,7 +35,8 @@ kernel is contained in one finite sum of insertion-map images of the kernel
 spans of f_i(u_g n+d), for d<u_g and insertion residues r<N_g. This finite sum
 is independent of the exponent of a kernel member.
 
-For a supported kernel member, the least support representative r satisfies
+When the mask is active at some index, the least nonnegative representative r
+of its active residue class satisfies
 Kr+c=am_0+i and m_0<K/g. The division m_0=u_g q+d gives d<u_g and
 q<k^(e-t_g). This last inequality is the strict bound required for membership
 in the full k-kernel. The printed inequality q<m_0/u_g is not used.
