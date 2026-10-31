@@ -7,19 +7,13 @@
    digest: A three-qubit state refutes the Shannon branch-and-bound entropy lower bound. -/
 
 import D5.S3.Entropy.MaxEntropy
-import Mathlib.Analysis.Complex.Norm
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Linarith
 
 /-! The full-support stabilizer standard form in Section V.C of Tarabunga et al.,
 arXiv:2411.05766v1, specialized to k = N and R = I. The conjecture following (69)
 asserts the Shannon inequality below. Entropy is measured in nats. -/
 
 set_option autoImplicit false
+set_option linter.style.longLine false
 
 noncomputable section
 
@@ -87,16 +81,61 @@ private lemma witness_unit : (∑ x, Complex.normSq (witness x)) = 1 := by
   norm_num [witness, coeff, Complex.normSq_div, Complex.normSq_ofReal,
     Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 8)]
 
+private lemma normalization : (Real.sqrt 8)⁻¹ * (Real.sqrt 8)⁻¹ = (1 / 8 : ℝ) := by
+  rw [← mul_inv, Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 8)]
+  norm_num
+
+private lemma overlap_term (d x : Bits 3) :
+    star (stabAmp (diagMatrix d) 0 x) * witness x =
+      (-1 : ℂ) ^ (quadForm (diagMatrix d) x).val * (coeff x : ℂ) / 8 := by
+  calc
+    _ = (((Real.sqrt 8)⁻¹ * (Real.sqrt 8)⁻¹ : ℝ) : ℂ) *
+        ((-1 : ℂ) ^ (quadForm (diagMatrix d) x).val * (coeff x : ℂ)) := by
+      simp [stabAmp, witness]
+      push_cast
+      ring
+    _ = _ := by rw [normalization]; push_cast; ring
+
+private lemma abs_term (d x : Bits 3) :
+    star (stabAmp (diagMatrix d) 0 x) * (‖witness x‖ : ℂ) =
+      (-1 : ℂ) ^ (quadForm (diagMatrix d) x).val * ((|coeff x| : ℝ) : ℂ) / 8 := by
+  calc
+    _ = (((Real.sqrt 8)⁻¹ * (Real.sqrt 8)⁻¹ : ℝ) : ℂ) *
+        ((-1 : ℂ) ^ (quadForm (diagMatrix d) x).val * ((|coeff x| : ℝ) : ℂ)) := by
+      simp [stabAmp, witness,
+        abs_of_nonneg (Real.sqrt_nonneg 8)]
+      push_cast
+      ring
+    _ = _ := by rw [normalization]; push_cast; ring
+
 private lemma overlap_distribution (d : Bits 3) :
     overlapProb 0 0 witness d =
       if d 0 = 0 then (if d 1 = 0 then 1 / 4 else 0)
       else (if d 2 = 0 then 0 else 1 / 4) := by
-  sorry
+  simp only [overlapProb, add_zero, overlap_term, ← Finset.sum_div]
+  rcases (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
+      ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 0) with h0 | h0 <;>
+    rcases (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
+      ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 1) with h1 | h1 <;>
+    rcases (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
+      ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 2) with h2 | h2 <;>
+    norm_num [sum_bits, quadForm, diagMatrix, Fin.sum_univ_three, coeff,
+      h0, h1, h2, ZMod.val_add, ZMod.val_mul, ZMod.val_one_eq_one_mod,
+      Complex.normSq_apply]
 
 private lemma abs_distribution (d : Bits 3) :
     absProb witness d =
       if d 0 = 0 ∧ d 1 = 0 ∧ d 2 = 0 then 9 / 16 else 1 / 16 := by
-  sorry
+  simp only [absProb, abs_term, ← Finset.sum_div]
+  rcases (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
+      ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 0) with h0 | h0 <;>
+    rcases (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
+      ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 1) with h1 | h1 <;>
+    rcases (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
+      ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 2) with h2 | h2 <;>
+    norm_num [sum_bits, quadForm, diagMatrix, Fin.sum_univ_three, coeff,
+      h0, h1, h2, ZMod.val_add, ZMod.val_mul, ZMod.val_one_eq_one_mod,
+      Complex.normSq_apply]
 
 private lemma overlap_entropy :
     shannonEntropy (overlapProb 0 0 witness) = 2 * Real.log 2 := by
