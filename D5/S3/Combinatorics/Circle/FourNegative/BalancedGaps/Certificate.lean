@@ -115,7 +115,9 @@ private theorem balanced_certificate (s : ℕ) (hs : 2≤s) (n : Fin 16) :
     (ear n) (packet_labels a b c d ha hb hc hd n)
     (physical_partition a b c d ha hb hc hd n) ?_ ?_⟩
   · apply halve_checks (oldMass a b c d) (oldValue a b c d) (sourceMod a b c d/2) 0
-    simpa only [mul_zero,hD.1,← hmod,hmapped] using hpoly.1
+    simp only [mul_zero]
+    rw [hD.1,← hmod]
+    simpa only [hmapped] using hpoly.1
   · apply halve_ear_checks (newMass a b c d) (newValue a b c d) (sourceMod a b c d)
       (base a b c d 0) 0 (ear n).val
     simpa only [mul_zero,← hmod,← hbase,hmappednew] using hpoly.2
