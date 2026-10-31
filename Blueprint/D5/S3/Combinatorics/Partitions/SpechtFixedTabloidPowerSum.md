@@ -1,20 +1,18 @@
-# Power sums and fixed tabloids in arbitrary finite alphabets
+# Power-sum coefficients count actual fixed tabloids
 
 ## Abstract
 
-Power sums and fixed tabloids in arbitrary finite alphabets
+Power-sum coefficients count actual fixed tabloids
 
 This supplier is part of the natively compiled full ordinary HSW consumer. Apache source selection is from immutable TauCeti 5a01f5fe3621126cccf9ba22e700493cbc7b7156, ported at unchanged repository pins. The audit remains unfinished at issue 24542.
 
-fixedTabloids(n,nu,pi) means Nat.card of the subtype of left cosets q of the actual Young subgroup youngSubgroup nu satisfying pi smul q = q. It is a count of actual tabloids. psumPart is the existing Mathlib product of power sums, one factor per full partition part including one-cycles. The alphabet is finite but its size may be smaller than n. Every partition of n occurs in the monomial expansion; monomials that do not fit the alphabet contribute zero.
+For every finite alphabet sigma and every degree-n exponent d, the coefficient of the full-cycle product psumPart sigma R rho is the count of fixed cosets of the actual Young subgroup of weightPartition d h. Equality of conjugacy classes identifies rho with the full cycle partition of pi, including one-cycles. The coefficient count is cast from the natural numbers into the commutative semiring R. The alphabet size is unrestricted. The invariant-colouring expansion and the equivariant coset-to-colouring equivalence prove this coefficient identity; the full HSW mixed pairing consumes it directly. The unused full monomial-symmetric expansion is omitted.
 
-The implementation selects the invariant-colouring expansion, the equivariant coset-to-colouring equivalence, sorted exponent coordinates, and coefficient isolation. It omits the independent averaging formula, the full Schur basis, and every unused companion. The displayed class equality is equality of conjugacy classes under the existing full-partition equivalence.
+**Theorem 1.1 (Power-sum coefficients count actual fixed tabloids).**
 
-**Theorem 1.1 (Fixed-tabloid monomial expansion).**
+$$\forall sigma \in \operatorname{Type}*,\; [\operatorname{Fintype}\left(sigma\right)], \forall R \in \operatorname{Type}*,\; [\operatorname{CommSemiring}\left(R\right)], \forall n \in \operatorname{Nat},\; \forall rho \in \operatorname{Partition}\left(n\right),\; \forall pi \in \operatorname{Perm}\left(\operatorname{Fin}\left(n\right)\right),\; \forall hpi \in \operatorname{ConjClassesMk}\left(pi\right) = \operatorname{partitionEquivConjClasses}\left(n, rho\right),\; \forall d \in \operatorname{Finsupp}\left(sigma, \operatorname{Nat}\right),\; \forall h \in \operatorname{degree}\left(d\right) = n,\; \operatorname{coeff}\left(\operatorname{psumPart}\left(sigma, R, rho\right), d\right) = \operatorname{natCast}\left(\operatorname{fixedTabloids}\left(n, \operatorname{weightPartition}\left(d, h\right), pi\right), R\right)$$
 
-$$\forall sigma \in \operatorname{Type}*,\; [\operatorname{Fintype}\left(sigma\right)], \forall R \in \operatorname{Type}*,\; [\operatorname{CommSemiring}\left(R\right)], \forall n \in \operatorname{Nat},\; \forall rho \in \operatorname{Partition}\left(n\right),\; \forall pi \in \operatorname{Perm}\left(\operatorname{Fin}\left(n\right)\right),\; (\operatorname{ConjClassesMk}\left(pi\right) = \operatorname{partitionEquivConjClasses}\left(n, rho\right)) \Rightarrow (\operatorname{psumPart}\left(sigma, R, rho\right) = \sum_{nu: \operatorname{Partition}\left(n\right)} (\operatorname{smul}\left(\operatorname{natCast}\left(\operatorname{fixedTabloids}\left(n, nu, pi\right), R\right), \operatorname{msymm}\left(sigma, R, nu\right)\right)))$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/SpechtFixedTabloidPowerSum.psumPart_eq_sum_card_fixedPoints_smul_msymm` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/SpechtFixedTabloidPowerSum.coeff_psumPart_eq_card_fixedPoints` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,10 +20,10 @@ $$\forall sigma \in \operatorname{Type}*,\; [\operatorname{Fintype}\left(sigma\r
 
 *Commentary.*
 
-Necessary source comparison in the full HSW construction. The displayed abbreviations are defined by the narrative above. There is no independent firstfreeze or standalone admission claim; the remaining public-declaration audit is tracked in issue 24542.
+This coefficient lemma is consumed in the compiled full ordinary-character HSW proof. There is no independent firstfreeze or standalone admission claim; the remaining public-declaration audit is tracked in issue 24542.
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Partitions/SpechtFixedTabloidPowerSum.psumPart_eq_sum_card_fixedPoints_smul_msymm`
+- Truth anchor: `D5/S3/Combinatorics/Partitions/SpechtFixedTabloidPowerSum.coeff_psumPart_eq_card_fixedPoints`
 - Dependency: [D5/S3/Combinatorics/Partitions/SpechtMonomialCoordinates](SpechtMonomialCoordinates.md)
 - Dependency: [D5/S3/Combinatorics/Partitions/SpechtOrdinaryTrace](SpechtOrdinaryTrace.md)
