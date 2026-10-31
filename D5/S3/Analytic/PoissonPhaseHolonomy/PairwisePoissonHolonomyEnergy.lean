@@ -3,7 +3,6 @@
    mirror-B: D5/B/S3/Analytic/PoissonPhaseHolonomy/PairwisePoissonHolonomyEnergy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
    digest: Poisson phase energy is nonnegative, detects equal heights, and is shift invariant. -/
 
 /- Ported in part from TauCetiProject/TauCeti commit
