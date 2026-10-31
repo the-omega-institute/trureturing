@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-implementation-described-at-endpoint)
    mirror-E: none(waiver:private-weak-peak-physical-construction)
-   anchors: [mathlib/module/Mathlib.Data.Int.DivMod.Lemmas]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Bitwise]
    utility: none
    digest: Complete rounded physical masks for every weak middle maximum. -/
 import D5.S3.Combinatorics.Circle.FourNegative.UpperGap.BoundaryRounded
