@@ -1,0 +1,59 @@
+**定理 6.2（近守恒等距的精确守恒近似）。**
+
+<a id="thm:shadow"></a>
+
+若 $\delta<1$，则
+
+$$
+\delta^2\le\lambda\le\delta,
+ \qquad\|QV-VP\|_{\rm op}=\sqrt\lambda.
+$$
+
+存在同一输入与记录载体上的等距 $W$，满足 $QW=WP$，且
+
+<a id="eq:shadow"></a>
+
+$$
+\boxed{\|V-W\|_{\rm op}
+ \le\sqrt\lambda+1-\sqrt{1-\lambda}
+ \le\sqrt\delta+1-\sqrt{1-\delta}.}
+ \tag{14}
+$$
+
+测量相同记录后，两完整旗标仪器的半 diamond 距离至多该界。
+
+**证明。**
+
+算符 $QV-VP=QV E-(I-Q)VP$ 的两个块有正交输入和正交输出，
+所以范数平方为 $\lambda$。
+左乘收缩 $V^*$ 得 $\delta\le\sqrt\lambda$。
+另一方面，$V^*QV-P$ 的 $E$ 对角块为 $(QV E)^*(QV E)$，
+$P$ 对角块为 $-((I-Q)VP)^*((I-Q)VP)$，故两者范数都至多 $\delta$。
+
+取块对角截断
+
+$$
+V_d=QVP+(I-Q)V E.
+$$
+
+则 $QV_d=V_dP$，$\|V-V_d\|=\sqrt\lambda$，且
+
+$$
+(1-\lambda)I\le G:=V_d^*V_d\le I.
+$$
+
+因此 $G$ 可逆且与 $P$ 对易，令 $W=V_dG^{-1/2}$。
+有 $W^*W=I$、$QW=WP$。
+由 $V_d=WG^{1/2}$，
+
+$$
+\|W-V_d\|=\|I-G^{1/2}\|\le1-\sqrt{1-\lambda}.
+$$
+
+三角不等式给第一界，单调性给第二界。
+对含任意参考坐标的纯输入，两个等距输出的向量距离至多 $\|V-W\|$；
+其纯态半迹距离不超过该距离。
+混态用纯化，随后相同记录测量及部分迹均收缩，得到完整半 diamond 界。
+
+□
+
