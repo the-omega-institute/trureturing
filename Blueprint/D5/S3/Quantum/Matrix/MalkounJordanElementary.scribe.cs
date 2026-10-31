@@ -48,8 +48,27 @@ internal sealed class MalkounJordanElementaryDocument : IScribeDocumentDefinitio
             provenance, Blocks(Paragraph(Text(prose))), role);
 
     private static Formula I(string name) => F.Id(name);
+    private static Formula Part(string name)
+    {
+        var parts = name.Split('_');
+        Formula value = I(parts[^1]);
+        for (var index = parts.Length - 2; index >= 0; --index)
+            value = Seq(I(parts[index]), Underscore, Grp(value));
+        return value;
+    }
+    private static Formula Name(string name)
+    {
+        if (!name.Contains('.')) return Part(name);
+        var items = new System.Collections.Generic.List<Formula>();
+        foreach (var part in name.Split('.'))
+        {
+            if (items.Count > 0) items.Add(Dot);
+            items.Add(Part(part));
+        }
+        return Seq(Operatorname, Grp(Seq([.. items])));
+    }
     private static Formula Par(Formula f) => Seq(Open, f, Close);
-    private static Formula App(string name, params Formula[] args) => new Formula.Apply(I(name), [.. args]);
+    private static Formula App(string name, params Formula[] args) => new Formula.Apply(Name(name), [.. args]);
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, Par(Seq(I(name), Colon, Sp, type)), Comma, Sp, body);
     private static Formula Imp(Formula premise, Formula body) =>
@@ -74,7 +93,7 @@ internal sealed class MalkounJordanElementaryDocument : IScribeDocumentDefinitio
         "claim" => Disp(Equal(I("claim"), Par(Body()))),
         "result" => Disp(I("claim")),
         _ => Disp(Equal(App("elementarySymmetric", I("t"), I("k")),
-            Seq(Sum, Underscore, Grp(Seq(I("S"), InMacro, App("Finset.powersetCard", I("k"), I("Finset.univ")))),
+            Seq(Sum, Underscore, Grp(Seq(I("S"), InMacro, App("Finset.powersetCard", I("k"), Name("Finset.univ")))),
                 Prod, Underscore, Grp(Seq(I("i"), InMacro, I("S"))), App("t", I("i")))))
     };
 }
