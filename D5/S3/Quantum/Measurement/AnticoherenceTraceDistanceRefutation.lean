@@ -459,9 +459,8 @@ private lemma dicke_split_factor (t s : ℕ) :
         push_cast
         ring
       · intro c _ hcb
-        have hxc : occupation x ≠ c.val := by
-          intro he
-          exact hcb (Subtype.ext (he.symm.trans hxb))
+        have hxc : occupation x ≠ c.val :=
+          ne_of_eq_of_ne hxb (Subtype.val_injective.ne hcb).symm
         simp [sectorVector, sectorWords, hxc]
       · simp
     · simp [dickeIsometry, hw, h]
