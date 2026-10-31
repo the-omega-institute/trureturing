@@ -34,7 +34,7 @@ $Q(k,t)$ mean that there exist a packing $f$ as in 1.1 and one map
 $c:\mathbb Z\to\{1,\ldots,k\}$ satisfying
 
 $$
-\forall z\in\mathbb Z\ \forall i\in\{1,\ldots,k\}\
+\forall z\in\mathbb Z\ \forall i\in\{1,\ldots,k\}
 \exists a\in\mathbb Z:\quad c(a)=i,\quad |z-a|\le f(a).
 $$
 
@@ -477,10 +477,6 @@ All conclusions concern one actual whole-line packing, and, when needed,
 one common class map. The count limits are conditional on a specified
 common subsequence; existence of ordinary densities is not asserted.
 Neither equality of limiting averages nor a vanishing limiting slack is
-used to infer a pointwise identity. The mixed relation and its consumed
-incidence and budget consequences are the mathematical deductions of
-this source; Chinese remaindering, single-colour spacing, finite incidence
-counting and nonnegative dual-slack algebra are the attributed
-intermediates. No assertion of external originality is required.
+used to infer a pointwise identity.
 
 ## 追加锚（本行以下为增补区）
