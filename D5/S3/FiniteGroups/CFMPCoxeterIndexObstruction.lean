@@ -9,7 +9,6 @@
 import D5.S3.FiniteGroups.CycleNineThreeObstruction
 import Mathlib.GroupTheory.Coxeter.Length
 import Mathlib.GroupTheory.QuotientGroup.Finite
-import Mathlib.Data.Matrix.Notation
 import Mathlib.Tactic.FinCases
 
 namespace D5.S3.FiniteGroups.CFMPCoxeterIndexObstruction
@@ -22,7 +21,7 @@ def diagram : CoxeterMatrix (Fin 4) where
   M := !![1, 4, 2, 2; 4, 1, 9, 2; 2, 9, 1, 3; 2, 2, 3, 1]
   isSymm := by decide
   diagonal := by decide
-  off_diagonal := by decide
+  off_diagonal i j h := by fin_cases i <;> fin_cases j <;> norm_num at *
 
 abbrev W := diagram.Group
 abbrev canonical := diagram.toCoxeterSystem
@@ -62,9 +61,79 @@ private theorem native_orders :
     orderOf (canonical.simple 1 * canonical.simple 3) = 2 := by
   refine ⟨pair_order 1 2 9 rfl ?_, pair_order 2 3 3 rfl ?_, pair_order 1 3 2 rfl ?_⟩
   all_goals
-    apply orderOf_eq_of_pow_and_pow_div_prime
-    · decide
-    · intro p hp hd
-      interval_cases p <;> norm_num at hp hd ⊢ <;> decide
+    apply orderOf_eq_of_pow_and_pow_div_prime (by decide) (by decide)
+    intro p hp hd
+    have hp_le := Nat.le_of_dvd (by positivity) hd
+    interval_cases p <;> (try norm_num at hp) <;> (try norm_num at hd) <;> decide
+
+private theorem quotient_order {G : Type*} [Group G]
+    (Γ : Subgroup G) [Γ.Normal] [IsMulTorsionFree Γ] (x : G) (hx : IsOfFinOrder x) :
+    orderOf (QuotientGroup.mk' Γ x) = orderOf x := by
+  apply orderOf_eq_orderOf_iff.mpr
+  intro n
+  constructor
+  · intro h
+    have hxmem : x ^ n ∈ Γ := (QuotientGroup.eq_one_iff (x ^ n)).mp (by
+      simpa only [map_pow, QuotientGroup.mk'_apply] using h)
+    let y : Γ := ⟨x ^ n, hxmem⟩
+    have hy : IsOfFinOrder y := by
+      obtain ⟨k, hk, he⟩ := (hx.pow (n := n)).exists_pow_eq_one
+      exact isOfFinOrder_iff_pow_eq_one.mpr ⟨k, hk, Subtype.ext he⟩
+    exact congrArg Subtype.val (IsOfFinOrder.eq_one' hy)
+  · intro h
+    rw [← map_pow, h, map_one]
+
+private def pair (i j : Fin 4) : orientation :=
+  ⟨canonical.simple i * canonical.simple j, by
+    change canonical.lengthParity _ = 1
+    rw [map_mul, CoxeterSystem.lengthParity_simple, CoxeterSystem.lengthParity_simple]
+    decide⟩
+
+/-- The normal orientation quotient of order seventy-two is impossible. -/
+theorem result : ¬ claim := by
+  rintro ⟨Γ, hn, htf, hidx⟩
+  letI := hn
+  letI := htf
+  letI : Γ.FiniteIndex := ⟨by omega⟩
+  let Q := orientation ⧸ Γ
+  let q : orientation →* Q := QuotientGroup.mk' Γ
+  let r : orientation := pair 1 2
+  let s : orientation := pair 2 3
+  have hr : orderOf r = 9 := by
+    simpa only [r, pair, Subgroup.orderOf_mk] using native_orders.1
+  have hs : orderOf s = 3 := by
+    simpa only [s, pair, Subgroup.orderOf_mk] using native_orders.2.1
+  have hrs : orderOf (r * s) = 2 := by
+    have he : r * s = pair 1 3 := by
+      apply Subtype.ext
+      simp only [r, s, pair, Subgroup.coe_mul]
+      simp [mul_assoc]
+    rw [he]
+    simpa only [pair, Subgroup.orderOf_mk] using native_orders.2.2
+  have hqr : orderOf (q r) = 9 := (quotient_order Γ r (by
+    rw [← orderOf_pos_iff, hr]; decide)).trans hr
+  have hqs : orderOf (q s) = 3 := (quotient_order Γ s (by
+    rw [← orderOf_pos_iff, hs]; decide)).trans hs
+  have hqrs : orderOf (q r * q s) = 2 := by
+    rw [← map_mul]
+    exact (quotient_order Γ (r * s) (by rw [← orderOf_pos_iff, hrs]; decide)).trans hrs
+  let H : Subgroup Q := Subgroup.closure ({q r, q s} : Set Q)
+  let R : H := ⟨q r, Subgroup.subset_closure (by simp)⟩
+  let S : H := ⟨q s, Subgroup.subset_closure (by simp)⟩
+  have hgen : Subgroup.closure ({R, S} : Set H) = ⊤ := by
+    apply Subgroup.map_injective (f := H.subtype) Subtype.val_injective
+    simp only [Subgroup.map_closure, Set.image_insert_eq, Set.image_singleton,
+      Subgroup.map_top, Subgroup.range_subtype]
+    rfl
+  have hcard : Nat.card H ∣ 72 := by
+    have hh : Nat.card Q = 72 := hidx
+    rw [← hh]
+    exact H.card_subgroup_dvd_card
+  exact CycleNineThreeObstruction.result R S hgen hcard
+    (by simpa only [R, Subgroup.orderOf_mk] using hqr)
+    (by simpa only [S, Subgroup.orderOf_mk] using hqs)
+    (by simpa only [Subgroup.orderOf_coe, Subgroup.coe_mul] using hqrs)
+
+#print axioms result
 
 end D5.S3.FiniteGroups.CFMPCoxeterIndexObstruction
