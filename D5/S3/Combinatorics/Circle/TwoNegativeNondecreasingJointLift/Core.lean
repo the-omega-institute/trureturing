@@ -5,7 +5,10 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange, mathlib/module/Mathlib.Data.Int.ModEq]
    utility: none
    digest: Physical two-bank binary-mask construction with a literal common ear cut. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.TwoNegativeJointLift
+
+/-! Independent binary masks realized as two full physical orders at one literal cut. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -171,7 +174,8 @@ private theorem realize (a b u v : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
   let labelU : Fin (b - 1) → Fin k := fun i => ⟨i.val, by dsimp [k]; omega⟩
   let labelV : Fin (a - 1) → Fin k := fun i => ⟨b + i.val, by dsimp [k]; omega⟩
   have injU : Function.Injective labelU := by
-    intro i j hij; exact Fin.ext (congrArg Fin.val hij)
+    intro i j hij; apply Fin.ext
+    exact congrArg (fun x : Fin k => x.val) hij
   have injV : Function.Injective labelV := by
     intro i j hij; apply Fin.ext
     have he := congrArg Fin.val hij
@@ -370,5 +374,7 @@ private theorem realize (a b u v : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
       (((earWord k sigma E.length).take n).map gn).sum ≤ modulus (k + 1) / 2
     rw [hMH]
     simpa only [zero_add] using inStrip_prefix hn n
+
+#print axioms realize
 
 end D5.S3.Combinatorics.Circle.TwoNegativeNondecreasingJointLift
