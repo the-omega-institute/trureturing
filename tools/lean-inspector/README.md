@@ -490,3 +490,27 @@ proper subexpressions retain their identity checks.
 Downstream projection tools do not issue registration verdicts. Utility refutations
 compare the raw claim type `Prop` and result type `Not claim` literally; Lean checks
 the theorem proof term during compilation. Aliases and expanded negations fail this literal relation.
+
+`make search-reduction-sensitivity-v1 REQUESTS=<Lean-file>` runs the separate
+`R_lookup-sensitivity/v1/4kappa-4G/consumed-budget-prices` diagnostic. Build
+`LeanInformationAuditRegAnalysis.SearchReduction.Sensitivity` through `make lean`
+first. The request file imports that module and calls
+`executeSensitivityV1 request owners` from `run_cmd`, using the same typed
+`Request` and owner modules as its production request.
+
+The entry recomputes the original reading at frozen production allocations.
+For a `reduction_R` with `basis=budget`, it selects the baseline-root and author-edge
+queries consumed by `budgetBasis`, checks their executed records, and deduplicates
+identical target/premise expressions. Each selected query runs once at candidate
+κ=800000 and G=1360000000; preparation=8000000 and local closure=200000 remain
+fixed. Unexpected paired negative records fail explicitly. Guard-only queries
+are excluded. Per-query JSON reports the old/new terminal and price, with
+`price_flipped_to_hit=null` for Fault/NotRun. These records are diagnostics;
+they neither classify a replacement production graph nor authorize admission.
+
+The runner disables probe, query-answer and checkpoint cache reads/writes.
+Fresh diagnostic lookup tables cannot alter the production reading, query
+records, checkpoint ordinal or certificate nomination pools. Production tables
+use the frozen default allocation without reading a budget override variable.
+`make search-reduction-sensitivity-test` checks consumed-query selection,
+κ/G boundary flips, kernel-checked hits and production behavior after diagnosis.
