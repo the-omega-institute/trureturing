@@ -63,7 +63,7 @@ theorem dependence : ObservationalDependence signature actual := by
     intro hh
     have hh0 := congrFun hh 0
     simp at hh0
-  rw [if_neg hne] at he
+  rw [ite_eq_right hne] at he
   exact one_ne_zero he
 
 def source_registration : Registration arena claim where
