@@ -11,6 +11,11 @@ import D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField
 import D5.S3.Quantum.Analysis.TraceClass.ColumnSynthesis
 import Mathlib.Data.Nat.Choose.Bounds
 import Mathlib.Data.Nat.Factorial.BigOperators
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+/-! The native pair/jet suppliers retain their original provenance. The
+same-space Hilbert-Schmidt completion uses ColumnSynthesis and its attributed
+Physlib suppliers. No full corrected-field coefficient identity is asserted. -/
 
 noncomputable section
 open scoped BigOperators ComplexConjugate ENNReal
@@ -96,6 +101,10 @@ private lemma jet_square_majorant (n k : ℕ) (a root q : ℂ) (m : ℤ)
     nlinarith [pow_le_pow_left₀ (norm_nonneg a) ha 2]
   have hsmallQ : 8 * ‖q‖^2 ≤ (1/2 : ℝ) := by
     nlinarith [pow_le_pow_left₀ (norm_nonneg q) hq 2]
+  have h4 : (4 : ℝ)^n = ((2 : ℝ)^n)^2 := by
+    rw [show (4 : ℝ) = 2^2 by norm_num, pow_right_comm]
+  have h8 : (8 : ℝ)^k = ((2 : ℝ)^k)^3 := by
+    rw [show (8 : ℝ) = 2^3 by norm_num, pow_right_comm]
   simp only [norm_mul, norm_pow, Complex.norm_real, Real.norm_eq_abs,
     abs_of_nonneg (Real.sqrt_nonneg _), mul_pow]
   rw [Real.sq_sqrt (by positivity), hroot]
@@ -103,7 +112,8 @@ private lemma jet_square_majorant (n k : ℕ) (a root q : ℂ) (m : ℤ)
     _ ≤ (‖a‖^(n+1))^2 * ‖q‖ * (‖q‖^k)^2 *
         ((2 : ℝ)^k) * ((2 : ℝ)^(k+n+1))^2 := by gcongr; exact hmu.trans hk
     _ = 4 * ‖a‖^2 * ‖q‖ * (4*‖a‖^2)^n * (8*‖q‖^2)^k := by
-      simp only [pow_add, mul_pow, pow_mul, pow_succ]
+      simp only [pow_add, mul_pow, h4, h8, pow_right_comm ‖a‖ 2 n,
+        pow_right_comm ‖q‖ 2 k]
       ring
     _ ≤ _ := by gcongr
 
@@ -173,6 +183,11 @@ theorem damping_nonempty (N : ℕ) (T : ℂ) (hT : T ≠ 0) :
 namespace Damping
 variable {N : ℕ} (d : Damping N)
 
+private lemma attenuation_factor (x : ℝ) (hx : 0 < x) (k : ℕ) :
+    x ^ ((k : ℝ)+1/2) = Real.sqrt x * x^k := by
+  rw [Real.rpow_add hx, Real.rpow_natCast, ← Real.sqrt_eq_rpow]
+  ring
+
 def sourceRatio : ℂ := (d.alpha : ℂ) / d.T^2
 def inputRatio : ℂ := (d.beta : ℂ) / d.T^2
 def outputRatio : ℂ := (d.gamma : ℂ) * d.T^2
@@ -209,13 +224,13 @@ def SS (n m : ℕ) : ℂ :=
 
 /-- The native annihilation jet, with its doubled integer Hahn powers factored. -/
 def SI (n k : ℕ) : ℂ :=
-  (d.alpha : ℂ)^(n+1) * (Real.sqrt d.beta : ℂ) * (d.beta : ℂ)^k *
+  (d.alpha : ℂ)^(n+1) * (d.beta ^ ((k : ℝ)+1/2) : ℝ) *
     (Real.sqrt (((k : ℝ)+1/2)/(n+1)) : ℂ) * jetScalar n (k : ℤ) *
     d.T ^ (-2*(k : ℤ)-2*(n+1)-1)
 
 /-- The native creation jet; the output block is holomorphic, without conjugation. -/
 def SO (n k : ℕ) : ℂ :=
-  (d.alpha : ℂ)^(n+1) * (Real.sqrt d.gamma : ℂ) * (d.gamma : ℂ)^k *
+  (d.alpha : ℂ)^(n+1) * (d.gamma ^ ((k : ℝ)+1/2) : ℝ) *
     (Real.sqrt (((k : ℝ)+1/2)/(n+1)) : ℂ) * jetScalar n (-(k : ℤ)-1) *
     d.T ^ (2*(k : ℤ)-2*(n+1)+1)
 
@@ -232,7 +247,8 @@ private lemma si_factored (n k : ℕ) : d.SI n k =
       (Real.sqrt (((k : ℝ)+1/2)/(n+1)) : ℂ) * jetScalar n (k : ℤ) := by
   have he : -2*(k : ℤ)-2*(n+1)-1 =
       -((2*(n+1) : ℕ) : ℤ) + -((2*k : ℕ) : ℤ) + (-1) := by push_cast; ring
-  simp only [SI, he, zpow_add₀ d.T_ne, zpow_neg, zpow_natCast,
+  simp only [SI, attenuation_factor d.beta d.beta_pos k, Complex.ofReal_mul,
+    Complex.ofReal_pow, he, zpow_add₀ d.T_ne, zpow_neg, zpow_natCast,
     zpow_one, sourceRatio, inputRoot, inputRatio, div_pow, pow_mul]
   ring
 
@@ -241,12 +257,13 @@ private lemma so_factored (n k : ℕ) : d.SO n k =
       (Real.sqrt (((k : ℝ)+1/2)/(n+1)) : ℂ) * jetScalar n (-(k : ℤ)-1) := by
   have he : 2*(k : ℤ)-2*(n+1)+1 =
       -((2*(n+1) : ℕ) : ℤ) + ((2*k : ℕ) : ℤ) + 1 := by push_cast; ring
-  simp only [SO, he, zpow_add₀ d.T_ne, zpow_neg, zpow_natCast,
+  simp only [SO, attenuation_factor d.gamma d.gamma_pos k, Complex.ofReal_mul,
+    Complex.ofReal_pow, he, zpow_add₀ d.T_ne, zpow_neg, zpow_natCast,
     zpow_one, sourceRatio, outputRoot, outputRatio, div_pow, mul_pow, pow_mul]
   ring
 
 def IO (k l : ℕ) : ℂ :=
-  if k = l then (Real.sqrt (d.beta*d.gamma) : ℂ) * ((d.beta*d.gamma : ℝ) : ℂ)^k else 0
+  if k = l then ((d.beta*d.gamma) ^ ((k : ℝ)+1/2) : ℝ) else 0
 
 /-- Three infinite mode legs; all colors, including the empty rank-zero carrier. -/
 abbrev Index (N : ℕ) := Fin N × (Fin 3 × ℕ)
@@ -278,7 +295,8 @@ private lemma ss_square_bound (n m : ℕ) :
       gcongr
     _ = ‖d.sourceRatio‖^4 / 4 * (‖d.sourceRatio‖^2)^n *
         (‖d.sourceRatio‖^2)^m := by
-      simp only [mul_pow, pow_add, pow_succ, pow_mul]; ring
+      simp only [mul_pow, pow_add, pow_right_comm ‖d.sourceRatio‖ 2 n,
+        pow_right_comm ‖d.sourceRatio‖ 2 m]; ring
     _ ≤ _ := by gcongr
 
 private lemma si_square_bound (n k : ℕ) :
@@ -324,13 +342,16 @@ private lemma io_square_bound (n m : ℕ) :
     nlinarith [pow_le_pow_left₀ he.1.le he.2 2]
   by_cases h : n = m
   · subst m
-    simp only [IO, if_pos rfl, norm_mul, norm_pow, Complex.norm_real,
+    simp only [IO, if_pos rfl, attenuation_factor (d.beta*d.gamma)
+      (mul_pos d.beta_pos d.gamma_pos) n, Complex.ofReal_mul, Complex.ofReal_pow,
+      norm_mul, norm_pow, Complex.norm_real,
       Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg _), abs_of_pos (mul_pos d.beta_pos d.gamma_pos), mul_pow]
     rw [Real.sq_sqrt (mul_pos d.beta_pos d.gamma_pos).le]
     calc
-      _ = (d.beta*d.gamma) * ((d.beta*d.gamma)^2)^n := by ring
+      _ = (d.beta*d.gamma) * ((d.beta*d.gamma)^2)^n := by
+        rw [pow_right_comm (d.beta*d.gamma) 2 n]
       _ ≤ (eta N)^2 * ((1/2 : ℝ)^2)^n := by gcongr
-      _ = _ := by ring
+      _ = _ := by rw [pow_right_comm (1/2 : ℝ) 2 n]; ring
   · simp only [IO, if_neg h, norm_zero, zero_pow (by decide : 2 ≠ 0)]
     positivity
 
