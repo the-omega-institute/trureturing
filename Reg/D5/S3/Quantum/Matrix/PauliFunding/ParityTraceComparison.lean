@@ -20,8 +20,9 @@ def rejected : Realization signature :=
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(2 : ℝ) • (1 : Mat), 0, 1, ?_⟩
-  intro he
-  norm_num [actual, realize, _root_.smul_pow, _root_.Matrix.trace_fin_two] at he
+  change _root_.Matrix.trace (((2 : ℝ) • (1 : Mat)) ^ (2 * 0)) ≠
+    _root_.Matrix.trace (((2 : ℝ) • (1 : Mat)) ^ (2 * 1))
+  norm_num [smul_pow, _root_.Matrix.trace_fin_two]
 
 namespace Formula
 
