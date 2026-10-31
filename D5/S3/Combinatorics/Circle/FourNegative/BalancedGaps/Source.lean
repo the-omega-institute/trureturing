@@ -38,8 +38,9 @@ private theorem geometric_mass (a b c d : ℕ)
     unfold positivePacket
     rw [show chainStart b c d r+(chainLength a b c d r-1) =
       (chainLength a b c d r-1)+chainStart b c d r by omega]
-    rw [← Finset.sum_Ico_add f 0 (chainLength a b c d r-1) (chainStart b c d r)]
-    simp only [Nat.Ico_zero_eq_range]
+    have hshift := Finset.sum_Ico_add f 0 (chainLength a b c d r-1) (chainStart b c d r)
+    simp only [zero_add,Nat.Ico_zero_eq_range] at hshift
+    rw [← hshift]
     rw [Finset.sum_mul]
     apply Finset.sum_congr rfl
     intro i hi
@@ -103,7 +104,7 @@ private theorem assigned_sum (a b c d : ℕ)
     · subst r
       have hs := Finset.sum_erase_add (positivePacket a b c d src) f
         (native_labels a b c d ha hb hc hd src).2
-      simp only [assigned,correction,he,if_pos rfl,if_neg hne]
+      simp only [assigned,correction,he,ite_eq_left rfl,ite_eq_right hne,ite_true,ite_false]
       rw [hf] at hs
       linarith [hm src]
     · by_cases hrd : r=dst
@@ -111,7 +112,7 @@ private theorem assigned_sum (a b c d : ℕ)
         rw [show assigned a b c d n dst = insert (chainStart b c d src)
           (positivePacket a b c d dst) by simp [assigned,he,Ne.symm hne]]
         rw [Finset.sum_insert (start_not_mem a b c d ha hb hc hd src dst hne),hf]
-        simp only [correction,he,if_pos rfl,if_neg (Ne.symm hne)]
+        simp only [correction,he,ite_eq_left rfl,ite_eq_right (Ne.symm hne),ite_true,ite_false]
         linarith [hm dst]
       · simpa [assigned,correction,he,hrs,hrd] using hm r
 
