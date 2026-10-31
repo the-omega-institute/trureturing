@@ -98,7 +98,7 @@ private lemma car_coordinates (x : Matrix (Fin 4) (Fin 4) ℂ) :
     fin_cases i <;> fin_cases j <;> (dsimp only [form]; simp)
   dsimp only [carAlgebra]
   simp only [hu, hv, form_product]
-  norm_num only [mul_one, zero_mul, one_mul, zero_sub] 
+  norm_num only [mul_one, zero_mul, one_mul, zero_sub]
   rw [hn, Submodule.mem_span_triple]
   simp only [smul_neg, ← neg_smul, form_linear]
   constructor
