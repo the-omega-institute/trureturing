@@ -3,7 +3,7 @@
 <details>
 <summary>原始 XeLaTeX 文档设置（逐字保留）</summary>
 
-```tex
+<textarea readonly cols="32" rows="66" wrap="off" aria-label="原始 XeLaTeX 文档设置">
 % !TeX program = xelatex
 % Compile twice with XeLaTeX. Optional font directory: \def\AURICFontPath{/absolute/path/}
 % Paper mathematics only; no mathematical program, CAS, numerical test or enumeration was run.
@@ -62,7 +62,7 @@ pdfsubject={Approximate multiplicative weights, coherent return calibration, ori
 \newcommand{\diag}{\operatorname{diag}}
 \newcommand{\logit}{\operatorname{logit}}
 \newcommand{\TV}{d_{\mathrm{TV}}}
-```
+</textarea>
 </details>
 
 # 近似关系的刚性、平方标定
@@ -90,6 +90,8 @@ AURIC 量子起源研究  定义、定理与纸面证明  v64.0
 > 没有从裸二元逻辑、唯一性或有限观测无条件推出全部量子公理。
 
 ## 固定项目进展与本轮问题
+
+> **编者归属说明（原稿写作轮次）。** 本节及摘要中“本轮”“上一轮”的项目取得、变化计数、目录树、核读范围和 V14 链接勘误，均为 V64 原作者对原稿所载写作轮次的历史报告。包括取得时刻、提交时刻、26 个提交、39 个路径、1125 项及各来源的核读陈述；这些报告不表示 Markdown 整理者重新实施或独立认证了相同行为。
 
 本轮唯一活动 HEAD 取得固定为
 `5cf95e1ae01f7ed86735c04ad8d752cb19b1a58b`。
@@ -580,6 +582,8 @@ $A=D(\omega J_0)D^{-1}$。
 但 $\|A+A^\dagger\|=|\omega|[(1+\xi)-(1+\xi)^{-1}]$ 可无界。
 这是一般响应反例，不声称满足原根钟与全部原生门前件。
 
+> **编者限定（带宽反例的参数域）。** 上段相似变换反例取实数 ξ>0、实数 ω。固定任意足够小的正 ξ，再让 |ω| 无界；在此域内 D 可逆，所写缺陷上界与范数等式的右端非负。该限定只补足本段反例的参数域。
+
 ## 由实际相干轨道取得稳定正性
 
 V59 的链条是：关系一致性给 Hermitian 迹一候选，
@@ -690,8 +694,7 @@ $$
 \le\zeta_w+(d-1)\frac{\zeta_*+\theta}{1-d\theta}+\xi_w.}
 $$
 同一实载体上的形式回拉差满足
-$\|\mathsf K_w^\dagger E\mathsf K_w-U_w^\dagger EU_w\|
-\le(\kappa^L+1)Q_L$；
+$\|\mathsf K_w^\dagger E\mathsf K_w-U_w^\dagger EU_w\| \le(\kappa^L+1)Q_L$；
 它通常不是复效果。只有另行取得实际复效果及其与该实形式回拉的误差桥时，
 才能把此预算连同桥误差并入 $\xi_w$。
 
@@ -945,6 +948,8 @@ Hamiltonian 内容或钟率与引力的关系。
 
 ## 固定来源与文献
 
+> **编者归属说明（来源报告）。** 以下文献条目中的“本轮”“上轮”“此前核读”、取得时刻、固定身份、公开扫描及审查范围，均保留为 V64 原作者在原稿写作轮次的报告；它们不转化为 Markdown 整理者的取得、阅读或全来源认证声明。
+
 <a id="bib-head"></a>
 ### 来源 `head`
 The Omega Institute, *trureturing*,
@@ -1011,7 +1016,7 @@ H. Barnum and A. Wilce,
 
 <a id="bib-bell"></a>
 ### 来源 `bell`
-D. D\"urr, S. Goldstein, R. Tumulka, N. Zangh\`i,
+D. Dürr, S. Goldstein, R. Tumulka, N. Zanghì,
 *Bell-Type Quantum Field Theories*,
 Journal of Physics A **38**, R1--R43 (2005),
 [doi:10.1088/0305-4470/38/4/R01](https://doi.org/10.1088/0305-4470/38/4/R01).
@@ -1023,3 +1028,5 @@ Journal of Physics A **38**, R1--R43 (2005),
 Lean 或门搜索。程序仅用于来源取得、文本及身份核对、文档编译和版面检查。
 本轮未修改项目仓库、PR 或外部消息；
 表示存在、有限证书、实际取得与自然界适用性分别陈述。
+
+> **编者归属说明（方法报告）。** 上述未运行数学程序、未修改项目仓库、PR 或外部消息等陈述，归属于 V64 原作者的原稿写作轮次；它们不是 Markdown 整理工作的行为报告。
