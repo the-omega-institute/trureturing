@@ -49,33 +49,6 @@ def evidence : Registration arena.{u} (arena.{u}.Law actual) where
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ bad_law
   dependence := dependent actual rfl
 
-noncomputable def registration : Contract.Registration
-    (@_root_.D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum.exact_prediction_impossible.{0})
-    (type_of% (realize signature (fun _ p n => p n) (fun e => nomatch e))) Unit Unit := {
-  unitName := `Reg.D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum.Exact.unit
-  realizationName := `Reg.D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum.Exact.evidence
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena.{0}⟩
-  objectArena := .source ⟨arena.{0}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena.{0} ⟨evidence.{0}⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ p n => p n) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum
-    definition := none
-    coordinates := #[1]
-    readouts := #[{path := #["body","body","domain","body","arg"],stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false}] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
 end Exact
 
 namespace Sharp
@@ -126,33 +99,6 @@ def evidence : Registration arena.{u} (arena.{u}.Law actual) where
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ bad_law
   dependence := dependent actual rfl
 
-noncomputable def registration : Contract.Registration
-    (@_root_.D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum.sharp_predictor_minimum.{0})
-    (type_of% (realize signature (fun _ p n => p n) (fun e => nomatch e))) Unit Unit := {
-  unitName := `Reg.D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum.Sharp.unit
-  realizationName := `Reg.D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum.Sharp.evidence
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena.{0}⟩
-  objectArena := .source ⟨arena.{0}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena.{0} ⟨evidence.{0}⟩
-  correspondence := {stage := .evidence,objectStage := .evidence}
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ p n => p n) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum
-    definition := none
-    coordinates := #[2]
-    readouts := #[{path := #["body","body","body","body","body","body","body","body","domain","body","fn","arg"],stateBinder := 8, functionOperand := false, stateOperand := none, booleanPredicate := false}] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
 end Sharp
 
 #print axioms Exact.evidence
