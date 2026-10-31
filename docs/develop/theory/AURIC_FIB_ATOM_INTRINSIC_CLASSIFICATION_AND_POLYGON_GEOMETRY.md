@@ -2837,7 +2837,7 @@ $$
 \begin{aligned}
 \mathcal X_i&=\Gamma(M_i)\quad(1\le i\le3),\\
 \mathcal U&=\Gamma[\mathscr U_0],\qquad
-u=|\mathcal U|=4w_3+12w_4+6w_5+w_6,\\
+\nu=|\mathcal U|=4w_3+12w_4+6w_5+w_6,\\
 \mathcal P_{AB}&=\{T\in\mathcal H:\tau(T)\cap A\ne\varnothing,
 \ \tau(T)\cap B\ne\varnothing\},\\
 \mathcal H_g&=\{T\in\mathcal H:g\in\operatorname{Ear}(T)\}.
