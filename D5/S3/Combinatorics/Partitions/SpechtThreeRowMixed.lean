@@ -89,9 +89,15 @@ private theorem fixedColourings_eq_youngFixed {n : ℕ} (r : Fin 3 → ℕ)
       @weightPartition (Fin 3) _ n dec d hd = tripleShape r hr := by
     apply congrArg (fun dec => @weightPartition (Fin 3) _ n dec d hd)
     exact Subsingleton.elim _ _
-  simp only [hshape] at hc
+  have hcard (dec : DecidableEq (Fin 3)) :
+      Nat.card {q : Perm (Fin n) ⧸ youngSubgroup
+          (@weightPartition (Fin 3) _ n dec d hd) // π • q = q} =
+        Nat.card {q : Perm (Fin n) ⧸ youngSubgroup (tripleShape r hr) // π • q = q} :=
+    congrArg (fun ν : n.Partition =>
+      Nat.card {q : Perm (Fin n) ⧸ youngSubgroup ν // π • q = q}) (hshape dec)
+  have hc' := (Int.natCast_inj.mp hc).trans (hcard _)
   rw [he]
-  convert (Int.natCast_inj.mp hc) using 1
+  convert hc' using 1
   congr 1
   ext f
   simp only [mem_filter, mem_univ, true_and]
