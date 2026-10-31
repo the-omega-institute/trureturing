@@ -1,0 +1,20 @@
+#### 推论 8.4（保全内部参考恢复固定支持族）
+
+设 $\rho$ 的秩为 $r$，取满 Schmidt 秩纯化
+
+$$
+\Omega_\rho=\sum_{i=1}^r\sqrt{\lambda_i}\lvert i\rangle_A\lvert i\rangle_R,
+\qquad\lambda_i>0.
+$$
+
+若 $((\mathcal R\mathcal E)\otimes\mathrm{id})(P_{\Omega_\rho})=P_{\Omega_\rho}$，
+则 $m\ge r$。
+
+**证明。**
+
+比较参考因子上的每个矩阵单位系数，得到
+$\mathcal R\mathcal E(\lvert i\rangle\langle j\rvert)=\lvert i\rangle\langle j\rvert$ 对全部 $i,j\le r$ 成立。
+所以它恢复全部支持族，使用定理 [8.2](#thm:support-compress) 即可。
+
+□
+

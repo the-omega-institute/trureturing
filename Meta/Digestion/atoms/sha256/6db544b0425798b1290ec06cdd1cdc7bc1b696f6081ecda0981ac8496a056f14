@@ -1,0 +1,9 @@
+#### 定义 8.1（可恢复压缩）
+
+设 $\mathcal E:\mathcal{D}(\mathcal{H})\to\mathcal{D}(\mathbb{C}^m)$ 与
+$\mathcal R:\mathcal{D}(\mathbb{C}^m)\to\mathcal{D}(\mathcal{H})$ 为固定 CPTP 映射。
+若 $\mathcal R\mathcal E(\rho)=\rho$ 对目标族中全部态成立，称其可恢复地压缩到 $m$ 维。
+未计入编码载体的、依赖输入的标签不能再交给解码器；若保留它们，须一并计入载体。
+
+<a id="thm:support-compress"></a>
+

@@ -1,0 +1,24 @@
+**编者注（Markdown 编者）：非零支持。** 本定理的可达到最小载体按 $1\le r<\infty$ 理解，压缩载体维数为正整数。零维支持没有密度态，不能在补全 CPTP 编码时选取其中的固定态；该退化情形不由下面的达到性构造覆盖。
+
+对 $\dim K=r$，若要恢复全部 $\mathcal{D}(K)$，则 $m\ge r$，且可达到。
+
+**证明。**
+
+密度矩阵实线性张成支持 $K$ 上全部 Hermitian 矩阵，维数 $r^2$。
+恢复恒等式延伸到此线性包络，使编码在其中单射；目标 Hermitian 空间维数为 $m^2$，
+故 $r^2\le m^2$。
+
+取 $V:\mathbb{C}^r\to\mathcal{H}$ 等距且 $VV^\dagger=P_K$。
+在支持族上，$\mathcal E(\rho)=V^\dagger\rho V$、$\mathcal R(\sigma)=V\sigma V^\dagger$
+互逆。全空间上的 CPTP 编码可补为
+
+$$
+\mathcal E(\rho)=V^\dagger\rho V+\operatorname{Tr}((I-P_K)\rho)\tau_0
+$$
+
+其中 $\tau_0$ 为固定压缩态。
+
+□
+
+<a id="thm:pure-family"></a>
+

@@ -1,0 +1,12 @@
+#### 定义 2.1（保尺度的二元 Hopf 坐标）
+
+对非零 $z=(a,b)\in\mathbb{C}^2$，定义
+
+$$
+S=|a|^2+|b|^2,\qquad
+Q(z)=(2\operatorname{Re}(\overline a b),\,
+2\operatorname{Im}(\overline a b),\,|a|^2-|b|^2).
+$$
+
+<a id="thm:hopf"></a>
+

@@ -1,0 +1,36 @@
+### 每个标量接口接入同一个原生 AURIC 编码
+
+V37 给出固定等距 $J:\mathbb{C}^2\to\mathbb{C}^5$，$J^\dagger J=I$，
+使二元态的原占据均值满足
+
+$$
+u(\rho)=u_0+\nu r,\qquad
+\nu=(1+2\sqrt3+\sqrt{11})^{-1},
+$$
+
+$$
+u_0=\left(\tfrac\nu2(\sqrt3+\sqrt{11}),
+\tfrac\nu2(\sqrt3+\sqrt{11}),\nu\right).
+$$
+
+因而纯节点落在 $\|u-u_0\|=\nu$ 的球面，一般二元节点落在球内。
+这使上述每个二元图表都能接回原五模式。
+V44 对全部二元主块也已有相干等距 $W_d=(I_{\mathrm{label}}\otimes J)V_d$。
+[4](#ref-v37)、[5](#ref-v44)
+归一的 null 模式仍是一个事件；单位元的期望或完整分支总质量承担归一化。
+三均值在指定编码族上统计完备，并不意味着单次经典结果可以恢复未知量子态。
+
+对于任意数学酉 $U\in U(2)$，同一个编码还给出
+
+$$
+\widetilde U=JUJ^\dagger+(I_5-JJ^\dagger).
+$$
+
+编码子空间与其正交补互不相交，故交叉项为零，
+$\widetilde U^\dagger\widetilde U=JJ^\dagger+I_5-JJ^\dagger=I_5$，且
+$\widetilde UJ=JU$。
+这说明全部二元数学酉门都能在该子空间相干提升；
+给定物理门菜单能否实现该酉及代价多少，仍须另给实现证明。[4](#ref-v37)
+
+<a id="section-8"></a>
+
