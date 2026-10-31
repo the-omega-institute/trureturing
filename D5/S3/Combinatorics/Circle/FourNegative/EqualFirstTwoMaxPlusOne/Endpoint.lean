@@ -354,9 +354,12 @@ theorem actualSource_equal_first_two_max_plus_one_joint_lift (u c : ℕ)
     let p : ℤ := 2^w
     let R := R0.erase (c+1+w)
     have hw : w<v := by dsimp [w,v];omega
+    have hcu : 2*u ≤ c := by omega
     have hwm : c+1+w ∈ R0 := by
       apply (List.mem_erase_of_ne (by omega : c+1+w≠c+1+v)).mpr
-      simp only [V,List.mem_range'];omega
+      simp only [V,List.mem_range']
+      dsimp [w]
+      omega
     have hs : 2≤s := by
       simpa [s] using pow_le_pow_right₀ (by decide : (1:ℤ)≤2) (show 1≤u-1 by omega)
     have hp : 1≤p := one_le_pow₀ (by decide)
@@ -377,7 +380,9 @@ theorem actualSource_equal_first_two_max_plus_one_joint_lift (u c : ℕ)
     · exact ((List.perm_append_comm.trans (List.perm_cons_erase hwm).symm).append_right [c+1+v]).trans hsplit0
     · intro h H hh
       simpa only [List.map_singleton,List.sum_singleton] using hh w (by omega)
-    · rw [hx,hz,hr,hqp]
+    · rw [hx,hz,hr]
+      change Bounds (2*s) ((2*s)^2*p) s (2*s^2*p) p q
+      rw [hqp]
       exact large_chart s p hs hp
 
 #print axioms actualSource_equal_first_two_max_plus_one_joint_lift
