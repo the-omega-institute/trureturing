@@ -14,7 +14,7 @@ import uuid
 from worktree_protocol import (GitFailure, Refused, acquire, common, git, git_environment, git_scope,
                                identity, inventory, remote_endpoint, scope_fds, tree_scope, value)
 from worktree_publication import commit_snapshot, confirm
-from worktree_preservation import qualify, remove
+from worktree_preservation import REMOVAL_RECORD, interrupted_removal, qualify, remove
 
 IDLE_PREFIX = "refs/heads/lane/governance/idle-"
 IDLE_CAPACITY = 4
@@ -26,15 +26,19 @@ def idle_reference(reference):
     return reference.startswith(IDLE_PREFIX) and len(reference) > len(IDLE_PREFIX)
 
 
-def clean(path, metadata):
+def finished_operations(metadata):
     for marker in OPERATIONS:
         if (metadata / marker).exists():
             raise Refused("unfinished_operation:" + marker)
+
+
+def clean(path, metadata):
+    finished_operations(metadata)
     if git(path, "status", "--porcelain=v1", "-z", "--untracked-files=all", "--ignore-submodules=none").stdout:
         raise Refused("idle_dirty")
 
 
-def idle_state(source, path, dev):
+def idle_state(source, path, dev, removal_stack=None):
     item = qualify(source, path)
     _, metadata = identity(source, path)
     if "locked" in item:
@@ -46,13 +50,22 @@ def idle_state(source, path, dev):
     if item.get("HEAD") != head or value(path, "rev-parse", "--verify", reference) != head:
         raise Refused("idle_identity_changed")
     created = idle_creation(source, reference, head)
-    clean(path, metadata)
+    pending = False
+    if (metadata / REMOVAL_RECORD).exists():
+        if removal_stack is None:
+            raise Refused("idle_removal_pending")
+        finished_operations(metadata)
+        pending = interrupted_removal(path, metadata, removal_stack, source, reference,
+                                      reconverge=False) is not None
+    if not pending:
+        clean(path, metadata)
     ancestry = git(path, "merge-base", "--is-ancestor", head, dev, check=False).returncode
     if ancestry == 1:
         dev = confirm(path, "origin", "dev", head)["observed_tip"]
     elif ancestry:
         raise Refused("idle_dev_ancestry_unknown")
-    return dict(path=str(Path(path).resolve()), branch=reference, head=head, created=created, dev_commit=dev)
+    return dict(path=str(Path(path).resolve()), branch=reference, head=head, created=created,
+                dev_commit=dev, removal_pending=pending)
 
 
 def idle_creation(source, reference, head):
@@ -108,18 +121,19 @@ def sweep_locked(source, dev, force=False):
                 with ExitStack() as stack:
                     tree_scope(stack, source, path, True)
                     git_scope(stack, source, path)
-                    candidates.append(idle_state(source, path, dev))
+                    candidates.append(idle_state(source, path, dev, stack))
             except GitFailure:
                 raise
             except Refused as error:
                 outcomes.append(dict(observed, outcome="not_idle" if str(error) == "not_idle" else "retained",
                                      reason=str(error)))
         candidates.sort(key=lambda row: (row["created"], row["path"]))
-        remaining = len(candidates)
+        remaining = sum(not row["removal_pending"] for row in candidates)
         for observed in candidates:
             stage = "disk_pressure"
             pressure = available_fraction(source) < 0.05
-            reason = "idle_disk_pressure" if pressure else "idle_capacity" if remaining > IDLE_CAPACITY else "idle_pool"
+            reason = ("idle_interrupted_removal" if observed["removal_pending"] else
+                      "idle_disk_pressure" if pressure else "idle_capacity" if remaining > IDLE_CAPACITY else "idle_pool")
             if reason == "idle_pool":
                 outcomes.append(dict(observed, outcome="retained", reason=reason))
                 continue
@@ -127,7 +141,9 @@ def sweep_locked(source, dev, force=False):
             stage = "revalidate"
             with ExitStack() as stack:
                 tree_scope(stack, source, path, True)
-                current = idle_state(source, path, dev)
+                with ExitStack() as inspection:
+                    git_scope(inspection, source, path)
+                    current = idle_state(source, path, dev, inspection)
                 if current != observed:
                     raise Refused("idle_identity_changed")
                 # Common removal owns the index/ref scopes and snapshot rules.
@@ -146,7 +162,7 @@ def sweep_locked(source, dev, force=False):
                         receipt["status"] = "failed"
                     outcomes.append(row)
                     if removal["outcome"] in ("removed", "would_remove"):
-                        remaining -= 1
+                        remaining -= not observed["removal_pending"]
                 if result["status"] in ("failed", "refused"):
                     receipt["status"] = "failed"
                     break
