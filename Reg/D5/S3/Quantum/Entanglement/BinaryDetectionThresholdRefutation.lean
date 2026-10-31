@@ -14,7 +14,7 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 abbrev signature : Signature where
-  Params := Bool × Bool
+  Params := Σ _a : Bool, Bool
   State _ := Bool → Bool → ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -35,7 +35,7 @@ abbrev arena : Arena where
     (∑ a : Bool, ∑ b : Bool, f a b) = (∑ a : Bool, ∑ b : Bool, g a b) →
     (∑ b : Bool, f ma b) = (∑ b : Bool, g ma b) →
     (∑ a : Bool, f a mb) = (∑ a : Bool, g a mb) →
-    R.readout () (ma, mb) f = g ma mb → f = g
+    R.readout () ⟨ma, mb⟩ f = g ma mb → f = g
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -51,7 +51,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(false, false), (fun _ _ => 0), (fun _ _ => 1), ?_⟩
+  refine ⟨⟨false, false⟩, (fun _ _ => 0), (fun _ _ => 1), ?_⟩
   norm_num [actual, realize]
 
 def source_registration : Registration arena (type_of% @binary_eq) where
