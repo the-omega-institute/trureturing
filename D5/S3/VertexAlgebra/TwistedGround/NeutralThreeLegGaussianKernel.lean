@@ -42,7 +42,7 @@ private lemma rising_product (n k : ℕ) :
 theorem jet_binomial_bound (n k : ℕ) (m : ℤ)
     (hm : m = (k : ℤ) ∨ m = -(k : ℤ) - 1) :
     ‖jetScalar n m‖ ≤ ((k + n + 1).choose n : ℝ) := by
-  have hk0 : (0 : ℝ) ≤ k := Nat.cast_nonneg k
+  have hk0 : (0 : ℝ) ≤ k := (show (0 : ℝ) ≤ k from Nat.cast_nonneg k)
   have hfactor (j : ℕ) : ‖-(m : ℂ) - 3 / 2 - j‖ ≤ (k : ℝ) + 2 + j := by
     have hj0 : (0 : ℝ) ≤ j := Nat.cast_nonneg j
     rcases hm with rfl | rfl
@@ -77,6 +77,7 @@ private lemma pair_half_bound (q : ℂ) (s t : ℕ) (hs : 0 < s) (ht : 0 < t) :
   have hw : centralWeight s * centralWeight t ≤ 1 := by
     simpa using mul_le_mul (weight_le_one s) (weight_le_one t)
       (centralWeight_nonneg t) zero_le_one
+  have hw0 := mul_nonneg (centralWeight_nonneg s) (centralWeight_nonneg t)
   apply (div_le_iff₀ hst).mpr
   calc
     _ = (Real.sqrt (s : ℝ) * Real.sqrt (t : ℝ)) *
@@ -93,7 +94,7 @@ private lemma jet_square_majorant (n k : ℕ) (a root q : ℂ) (m : ℤ)
       4 * ‖a‖^2 * ‖q‖ * (1/2 : ℝ)^n * (1/2 : ℝ)^k := by
   have hmu : ((k : ℝ)+1/2)/(n+1) ≤ (k : ℝ)+1 := by
     apply (div_le_iff₀ (by positivity : (0 : ℝ) < (n : ℝ)+1)).mpr
-    nlinarith [Nat.cast_nonneg n, Nat.cast_nonneg k]
+    nlinarith [(show (0 : ℝ) ≤ n from Nat.cast_nonneg n), (show (0 : ℝ) ≤ k from Nat.cast_nonneg k)]
   have hk : (k : ℝ)+1 ≤ (2 : ℝ)^k := by
     have h : k+1 ≤ 2^k := k.lt_two_pow_self
     exact_mod_cast h
@@ -139,7 +140,7 @@ private lemma eta_bounds (N : ℕ) : 0 < eta N ∧ eta N ≤ 1 / 16 := by
   · unfold eta; positivity
   · unfold eta
     apply (div_le_iff₀ (by positivity : (0 : ℝ) < 16 * ((N : ℝ)+1))).mpr
-    nlinarith [Nat.cast_nonneg N]
+    nlinarith [(show (0 : ℝ) ≤ N from Nat.cast_nonneg N)]
 
 /-- The damping region is nonempty for every rank and every nonzero T. -/
 theorem damping_nonempty (N : ℕ) (T : ℂ) (hT : T ≠ 0) :
@@ -243,7 +244,7 @@ private lemma ss_factored (n m : ℕ) : d.SS n m =
       -((2*((n+1)+(m+1)) : ℕ) : ℤ) := by push_cast; ring
   unfold SS
   rw [he, zpow_neg, zpow_natCast]
-  simp only [matrixEntry, sourceRatio, div_pow, pow_mul, inv_pow]
+  simp only [matrixEntry, sourceRatio, div_pow, pow_mul, Nat.cast_add, Nat.cast_one]
   ring
 
 private lemma si_factored (n k : ℕ) : d.SI n k =
@@ -342,11 +343,12 @@ private lemma io_square_bound (n m : ℕ) :
     rw [hr, pow_two]
     exact mul_le_mul d.ratio_bounds.2.1 d.ratio_bounds.2.2
       (norm_nonneg d.outputRatio) he.1.le
+  have ht0 : 0 ≤ d.beta*d.gamma := (mul_pos d.beta_pos d.gamma_pos).le
   have ht' : d.beta*d.gamma ≤ (1/2 : ℝ) := by
     nlinarith [pow_le_pow_left₀ he.1.le he.2 2]
   by_cases h : n = m
   · subst m
-    rw [IO, if_pos rfl]
+    rw [IO, ite_eq_left rfl]
     rw [attenuation_factor (d.beta*d.gamma) (mul_pos d.beta_pos d.gamma_pos) n]
     rw [Complex.norm_real, Real.norm_eq_abs,
       abs_of_pos (mul_pos (Real.sqrt_pos.mpr (mul_pos d.beta_pos d.gamma_pos))
@@ -357,7 +359,7 @@ private lemma io_square_bound (n m : ℕ) :
         rw [pow_right_comm (d.beta*d.gamma) 2 n]
       _ ≤ (eta N)^2 * ((1/2 : ℝ)^2)^n := by gcongr
       _ = _ := by rw [pow_right_comm (1/2 : ℝ) 2 n]; ring
-  · simp only [IO, if_neg h, norm_zero, zero_pow (by decide : 2 ≠ 0)]
+  · simp only [IO, ite_eq_right h, norm_zero, zero_pow (by decide : 2 ≠ 0)]
     positivity
 
 def blockMajorant (a b : Fin 3) : ℝ :=
@@ -367,7 +369,7 @@ def blockMajorant (a b : Fin 3) : ℝ :=
 
 private lemma block_nonneg (a b : Fin 3) : 0 ≤ blockMajorant (N := N) a b := by
   have he := (eta_bounds N).1
-  fin_cases a <;> fin_cases b <;> simp [blockMajorant] <;> positivity
+  fin_cases a <;> fin_cases b <;> dsimp [blockMajorant] <;> positivity
 
 private lemma scalar_bound (a b : Fin 3) (n m : ℕ) :
     ‖d.scalar a b n m‖^2 ≤ blockMajorant (N := N) a b *
@@ -388,7 +390,7 @@ theorem entry_symmetric (i j : Index N) : d.entry i j = d.entry j i := by
   rcases j with ⟨c', b, m⟩
   by_cases h : c = c'
   · subst c'
-    simp only [entry, if_pos rfl]
+    simp only [entry, ite_eq_left rfl]
     fin_cases a <;> fin_cases b <;> simp [scalar, ss_symm]
   · simp [entry, h, Ne.symm h]
 
@@ -454,15 +456,14 @@ private lemma envelope_mass :
   rw [hs.tsum_prod]
   simp_rw [hinner]
   rw [hrows.tsum_prod]
-  have hleg (c : Fin N) :
-      (∑' j : Fin 3 × ℕ, (2 * ∑ b : Fin 3, blockMajorant (N := N) j.1 b) * (1/2 : ℝ)^j.2) =
-        ∑' a : Fin 3, ∑' n : ℕ,
-          (2 * ∑ b : Fin 3, blockMajorant (N := N) a b) * (1/2 : ℝ)^n :=
-    (hrows.prod_factor c).tsum_prod
-  rw [hleg]
-  simp only [tsum_mul_left, hg, tsum_fintype]
-  simp [blockMajorant, Fin.sum_univ_succ]
-  ring
+  trans ∑' (_c : Fin N) (a : Fin 3) (n : ℕ),
+    (2 * ∑ b : Fin 3, blockMajorant (N := N) a b) * (1/2 : ℝ)^n
+  · apply tsum_congr
+    intro c
+    exact (hrows.prod_factor c).tsum_prod
+  · simp only [tsum_mul_left, hg, tsum_fintype]
+    simp [blockMajorant, Fin.sum_univ_succ]
+    ring
 
 def massBound (N : ℕ) : ℝ := 13 * N * (eta N)^2
 
@@ -471,7 +472,7 @@ private lemma massBound_lt (N : ℕ) : massBound N < 1/4 := by
   rw [show 13 * (N : ℝ) * (1/(16*((N : ℝ)+1)))^2 =
     13 * N / (256 * ((N : ℝ)+1)^2) by rw [div_pow]; norm_num; ring]
   apply (div_lt_iff₀ (by positivity : (0 : ℝ) < 256*((N : ℝ)+1)^2)).mpr
-  nlinarith [sq_nonneg (N : ℝ), Nat.cast_nonneg N]
+  nlinarith [sq_nonneg (N : ℝ), (show (0 : ℝ) ≤ N from Nat.cast_nonneg N)]
 
 /-- All colors and all frequencies have finite matrix square mass; the two
 orientations of every mixed block are both included in the estimate. -/
@@ -493,7 +494,7 @@ theorem matrix_square_mass :
   unfold massBound
   calc
     _ ≤ (N : ℝ) * (13*(eta N)^2) := by
-      apply mul_le_mul_of_nonneg_left _ (Nat.cast_nonneg N)
+      apply mul_le_mul_of_nonneg_left _ ((show (0 : ℝ) ≤ N from Nat.cast_nonneg N))
       nlinarith [sq_nonneg (eta N), mul_le_mul_of_nonneg_right he2 (sq_nonneg (eta N))]
     _ = _ := by ring
 
@@ -526,6 +527,7 @@ private lemma setBasis_apply (j : Index N) :
   change coordinateBasis j = _
   exact coordinateBasis.repr_self j
 
+set_option maxHeartbeats 800000 in
 private theorem synthesized :
     ∃ A : Space N →L[ℂ] Space N,
       (∀ i j, A (lp.single 2 j (1 : ℂ)) i = d.entry i j) ∧
