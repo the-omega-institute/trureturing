@@ -44,7 +44,7 @@ private theorem positive_then_step (f : ℕ → ℤ) (C h : ℤ) (P R : List ℕ
     (hrest : InStrip f C (h + (P.map f).sum + f v) R) :
     InStrip f C h (P ++ v :: R) := by
   apply inStrip_append (positive_block_strip hp hh hpeak)
-  have hs : 0 ≤ (P.map f).sum := by simpa using List.sum_nonneg hp
+  have hs : 0 ≤ (P.map f).sum := by simpa using List.sum_le_sum hp
   exact ⟨by omega, hpeak, hrest⟩
 
 private theorem four_strip_of_masses (f : ℕ → ℤ) (C t1 t2 t3 : ℤ)
@@ -449,9 +449,8 @@ theorem actualSource_four_negative_eventual_joint_lift (a b c d : ℕ)
     omega
   have hpnew : (Pre ++ k :: Post).Perm (List.range (k + 1)) := by
     have hreorder : (Pre ++ k :: Post).Perm (l ++ [k]) := by
-      apply Multiset.coe_eq_coe.mp
-      simp only [l, ← Multiset.coe_add, Multiset.coe_cons, Multiset.coe_singleton]
-      ac_rfl
+      simpa only [l, List.append_assoc] using
+        (List.perm_append_singleton k Post).symm.append_left Pre
     have hrange : List.range k ++ [k] = List.range (k + 1) := by
       simpa only [Nat.succ_eq_add_one] using (List.range_succ (n := k)).symm
     exact hreorder.trans ((hpold.append (List.Perm.refl [k])).trans (List.Perm.of_eq hrange))

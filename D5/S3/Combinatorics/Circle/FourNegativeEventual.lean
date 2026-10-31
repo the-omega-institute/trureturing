@@ -880,7 +880,6 @@ private theorem four_mask_inventory (a b c d q nB nL nM : ℕ)
     have hdcba : List.range' 0 (d + c + b) ++ List.range' (d + c + b) a =
         List.range' 0 (d + c + b + a) := by
       simpa only [Nat.zero_add] using (List.range'_append_1 (s := 0) (m := d + c + b) (n := a))
-    simp only [← List.append_assoc]
     rw [hdc, hdcb, hdcba]
     simp [← List.range_eq_range', show d + c + b + a = a + b + c + d by omega]
   exact hreorder.trans (by simpa only [← List.append_assoc, hrange] using hu.append (hv.append (hw.append hx)))
