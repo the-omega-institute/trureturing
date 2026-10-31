@@ -52,12 +52,13 @@ theorem trivializing_conjugacy {Q : Type*} [Finite Q]
     (y : FactorialPoint) (q : Q) :
     trivializingHomeomorph π (shiftFactorial 1 y, π (y.1 0) q) =
       (shiftFactorial 1 y, (trivializingHomeomorph π (y, q)).2) := by
-  apply Prod.ext rfl
-  change (permutationTransfer π (shiftFactorial 1 y)).symm (π (y.1 0) q) =
-    (permutationTransfer π y).symm q
-  apply (permutationTransfer π (shiftFactorial 1 y)).injective
-  rw [Equiv.apply_symm_apply, permutationTransfer_shift, Equiv.Perm.mul_apply,
-    Equiv.apply_symm_apply]
+  apply Prod.ext
+  · rfl
+  · change (permutationTransfer π (shiftFactorial 1 y)).symm (π (y.1 0) q) =
+      (permutationTransfer π y).symm q
+    apply (permutationTransfer π (shiftFactorial 1 y)).injective
+    rw [Equiv.apply_symm_apply, permutationTransfer_shift, Equiv.Perm.mul_apply,
+      Equiv.apply_symm_apply]
 
 namespace UniversalLift
 
@@ -118,11 +119,14 @@ private theorem splitting_fibre_invariant {k : ℕ} {h : (Fin (k + 2) → Bool) 
     (splitting bh (shiftLift g x)).2 = (splitting bh x).2 := by
   have hstep (z : LiftPoint h factorialSubshift) :
       (splitting bh (shiftLift 1 z)).2 = (splitting bh z).2 := by
-    exact congrArg Prod.snd (splitting_conjugacy bh z)
+    have he := congrArg (fun p : FactorialPoint × Prefix Bool k => p.2)
+      (splitting_conjugacy bh z)
+    exact he
   have hnat (n : ℕ) (z : LiftPoint h factorialSubshift) :
       (splitting bh (shiftLift (n : ℤ) z)).2 = (splitting bh z).2 := by
     induction n with
     | zero =>
+      change (splitting bh (shiftLift (0 : ℤ) z)).2 = (splitting bh z).2
       have hz : shiftLift 0 z = z := zero_vadd ℤ z
       rw [hz]
     | succ n ih =>
