@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Circle/LatticeChargePrecedence
+/- GID: D5/S3/Combinatorics/Circle/Lattice/LatticeChargePrecedence
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/LatticeChargePrecedence
+   mirror-B: D5/B/S3/Combinatorics/Circle/Lattice/LatticeChargePrecedence
    mirror-E: none(waiver:no-escape-mirror-specified)
    anchors: [mathlib/module/Mathlib.Data.List.Basic]
    utility: none
@@ -12,7 +12,7 @@ import Batteries.Tactic.OpenPrivate
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Combinatorics.Circle.LatticeChargePrecedence
+namespace D5.S3.Combinatorics.Circle.Lattice.LatticeChargePrecedence
 open SourceWidth RunFirstEarTransport
 open private ear_prefix from D5.S3.Combinatorics.Circle.RunFirstEarTransport
 open private sum_linear prefix_nonneg_le from D5.S3.Combinatorics.Circle.PeriodicShortening
@@ -115,4 +115,4 @@ theorem lattice_saturation_suffix_precedence
   linarith
 
 #print axioms lattice_saturation_suffix_precedence
-end D5.S3.Combinatorics.Circle.LatticeChargePrecedence
+end D5.S3.Combinatorics.Circle.Lattice.LatticeChargePrecedence

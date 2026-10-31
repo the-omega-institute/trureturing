@@ -1,4 +1,4 @@
-import D5.S3.Combinatorics.Circle.LatticeChargePrecedence
+import D5.S3.Combinatorics.Circle.Lattice.LatticeChargePrecedence
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
@@ -7,10 +7,10 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-namespace Reg.D5.S3.Combinatorics.Circle.LatticeChargePrecedence
+namespace Reg.D5.S3.Combinatorics.Circle.Lattice.LatticeChargePrecedence
 open _root_.D5.S3.Combinatorics.Circle.SourceWidth
 open _root_.D5.S3.Combinatorics.Circle.RunFirstEarTransport
-open _root_.D5.S3.Combinatorics.Circle.LatticeChargePrecedence
+open _root_.D5.S3.Combinatorics.Circle.Lattice.LatticeChargePrecedence
 
 abbrev signature : Signature where
   Params := Σ m : ℕ, List (Fin m)
@@ -94,10 +94,10 @@ def source_registration : Registration arena (type_of% (@lattice_saturation_suff
   dependence := actual_dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
-    (@_root_.D5.S3.Combinatorics.Circle.LatticeChargePrecedence.lattice_saturation_suffix_precedence)
+    (@_root_.D5.S3.Combinatorics.Circle.Lattice.LatticeChargePrecedence.lattice_saturation_suffix_precedence)
     (type_of% (realize signature actual.readout actual.anchor)) Nat Unit := {
-  unitName := `D5.S3.Combinatorics.Circle.LatticeChargePrecedence.lattice_saturation_suffix_precedence.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Circle.LatticeChargePrecedence.source_registration
+  unitName := `D5.S3.Combinatorics.Circle.Lattice.LatticeChargePrecedence.lattice_saturation_suffix_precedence.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Circle.Lattice.LatticeChargePrecedence.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -113,7 +113,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.LatticeChargePrecedence
+    owner := `D5.S3.Combinatorics.Circle.Lattice.LatticeChargePrecedence
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
@@ -131,4 +131,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   options := #[] }
 #print axioms source_registration
 #print axioms audit
-end Reg.D5.S3.Combinatorics.Circle.LatticeChargePrecedence
+end Reg.D5.S3.Combinatorics.Circle.Lattice.LatticeChargePrecedence

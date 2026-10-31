@@ -6,9 +6,9 @@ Lattice saturation and the physical suffix charge
 
 **Theorem 1.1 (One occurrence, one return, one suffix budget).**
 
-Lean statement: `D5/S3/Combinatorics/Circle/LatticeChargePrecedence.lattice_saturation_suffix_precedence`
+Lean statement: `D5/S3/Combinatorics/Circle/Lattice/LatticeChargePrecedence.lattice_saturation_suffix_precedence`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/LatticeChargePrecedence.lattice_saturation_suffix_precedence` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/Lattice/LatticeChargePrecedence.lattice_saturation_suffix_precedence` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,5 +24,5 @@ Strict saturation C<H+G and strict charge dominance are retained. The complete z
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Circle/LatticeChargePrecedence.lattice_saturation_suffix_precedence`
-- Dependency: [D5/S3/Combinatorics/Circle/RunFirstEarTransport](RunFirstEarTransport.md)
+- Truth anchor: `D5/S3/Combinatorics/Circle/Lattice/LatticeChargePrecedence.lattice_saturation_suffix_precedence`
+- Dependency: [D5/S3/Combinatorics/Circle/RunFirstEarTransport](../RunFirstEarTransport.md)

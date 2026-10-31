@@ -1,17 +1,17 @@
-/- GID: D5/S3/Combinatorics/Circle/FourNegativeLatticePrecedence
+/- GID: D5/S3/Combinatorics/Circle/Lattice/FourNegativeLatticePrecedence
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegativeLatticePrecedence
+   mirror-B: D5/B/S3/Combinatorics/Circle/Lattice/FourNegativeLatticePrecedence
    mirror-E: none(waiver:no-escape-mirror-specified)
    anchors: [mathlib/module/Mathlib.Data.List.Basic]
    utility: none
    digest: Necessary delta precedence for every actual four-gap source with t=4n+2. -/
-import D5.S3.Combinatorics.Circle.LatticeChargePrecedence
+import D5.S3.Combinatorics.Circle.Lattice.LatticeChargePrecedence
 
 /-! The unrestricted joint-permutation existence problem remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Combinatorics.Circle.FourNegativeLatticePrecedence
+namespace D5.S3.Combinatorics.Circle.Lattice.FourNegativeLatticePrecedence
 open SourceWidth PeriodicShorteningArithmetic PeriodicShortening RunFirstEarTransport
 open LatticeChargePrecedence
 open scoped BigOperators
@@ -331,4 +331,4 @@ theorem actualSource_four_gap_lattice_precedence
   exact Fin.ext ((honly i hi.1 hi.2).trans (honly l hl.1 hl.2).symm)
 
 #print axioms actualSource_four_gap_lattice_precedence
-end D5.S3.Combinatorics.Circle.FourNegativeLatticePrecedence
+end D5.S3.Combinatorics.Circle.Lattice.FourNegativeLatticePrecedence

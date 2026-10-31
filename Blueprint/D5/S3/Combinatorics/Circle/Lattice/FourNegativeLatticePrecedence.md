@@ -6,9 +6,9 @@ Necessary physical order for the unbounded four-gap lattice family
 
 **Theorem 1.1 (Delta is the first or second negative).**
 
-Lean statement: `D5/S3/Combinatorics/Circle/FourNegativeLatticePrecedence.actualSource_four_gap_lattice_precedence`
+Lean statement: `D5/S3/Combinatorics/Circle/Lattice/FourNegativeLatticePrecedence.actualSource_four_gap_lattice_precedence`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FourNegativeLatticePrecedence.actualSource_four_gap_lattice_precedence` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/Lattice/FourNegativeLatticePrecedence.actualSource_four_gap_lattice_precedence` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -26,5 +26,5 @@ This uniform n>=1 theorem excludes a universal constructor that keeps delta thir
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Circle/FourNegativeLatticePrecedence.actualSource_four_gap_lattice_precedence`
-- Dependency: [D5/S3/Combinatorics/Circle/LatticeChargePrecedence](LatticeChargePrecedence.md)
+- Truth anchor: `D5/S3/Combinatorics/Circle/Lattice/FourNegativeLatticePrecedence.actualSource_four_gap_lattice_precedence`
+- Dependency: [D5/S3/Combinatorics/Circle/Lattice/LatticeChargePrecedence](LatticeChargePrecedence.md)

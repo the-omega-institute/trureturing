@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.Lattice;
 
 internal sealed class LatticeChargePrecedenceDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class LatticeChargePrecedenceDocument : IScribeDocumentDefinitio
         H("Lattice saturation and the physical suffix charge"),
         Blocks(
             Describe.Lean(DescribeId.Create("lattice-saturation-suffix-precedence"),
-                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/LatticeChargePrecedence.lattice_saturation_suffix_precedence"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/Lattice/LatticeChargePrecedence.lattice_saturation_suffix_precedence"),
                 H("One occurrence, one return, one suffix budget"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Let G>0 and H>0. Supply a permutation of all m physical labels, old values f in G times the integers, nonnegative charges q of positive total A, and new old-label values g=2f-q. The fresh label m has value A and is literally inserted at cut j. Retain both complete zero totals, every old prefix in [0,C], and every new prefix in [0,N]. Let nu have old value -H, positive charge, H in the same lattice, and H<=C<H+G.")),

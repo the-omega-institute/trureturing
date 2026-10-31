@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.Lattice;
 
 internal sealed class FourNegativeLatticePrecedenceDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class FourNegativeLatticePrecedenceDocument : IScribeDocumentDef
         H("Necessary physical order for the unbounded four-gap lattice family"),
         Blocks(
             Describe.Lean(DescribeId.Create("actual-four-gap-lattice-precedence"),
-                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FourNegativeLatticePrecedence.actualSource_four_gap_lattice_precedence"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/Lattice/FourNegativeLatticePrecedence.actualSource_four_gap_lattice_precedence"),
                 H("Delta is the first or second negative"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For every n>=1 set t=4n+2, k=2t+4, x=2^t, A=1+2^t+2^(t+2)+2^(2t+2), and N=2^k-1. Assume precisely an OriginalOrder at (k,A) and an OriginalOrder at (k+1,2A) obtained by one literal earWord insertion at j<=k. There is no assumed lattice or charge table at this endpoint. The physical labels alpha=1, beta=t+1, gamma=t+3, delta=k-1 remain separate even when their old values coincide.")),

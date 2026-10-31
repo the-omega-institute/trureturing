@@ -1,4 +1,4 @@
-import D5.S3.Combinatorics.Circle.FourNegativeLatticePrecedence
+import D5.S3.Combinatorics.Circle.Lattice.FourNegativeLatticePrecedence
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
@@ -7,11 +7,11 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-namespace Reg.D5.S3.Combinatorics.Circle.FourNegativeLatticePrecedence
+namespace Reg.D5.S3.Combinatorics.Circle.Lattice.FourNegativeLatticePrecedence
 open _root_.D5.S3.Combinatorics.Circle.SourceWidth
 open _root_.D5.S3.Combinatorics.Circle.PeriodicShortening
 open _root_.D5.S3.Combinatorics.Circle.RunFirstEarTransport
-open _root_.D5.S3.Combinatorics.Circle.FourNegativeLatticePrecedence
+open _root_.D5.S3.Combinatorics.Circle.Lattice.FourNegativeLatticePrecedence
 
 abbrev signature : Signature where
   Params := Σ n : ℕ, List (Fin (2 * (4 * n + 2) + 4))
@@ -95,10 +95,10 @@ def source_registration : Registration arena (type_of% (@actualSource_four_gap_l
   dependence := actual_dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
-    (@_root_.D5.S3.Combinatorics.Circle.FourNegativeLatticePrecedence.actualSource_four_gap_lattice_precedence)
+    (@_root_.D5.S3.Combinatorics.Circle.Lattice.FourNegativeLatticePrecedence.actualSource_four_gap_lattice_precedence)
     (type_of% (realize signature actual.readout actual.anchor)) Nat Unit := {
-  unitName := `D5.S3.Combinatorics.Circle.FourNegativeLatticePrecedence.actualSource_four_gap_lattice_precedence.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Circle.FourNegativeLatticePrecedence.source_registration
+  unitName := `D5.S3.Combinatorics.Circle.Lattice.FourNegativeLatticePrecedence.actualSource_four_gap_lattice_precedence.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Circle.Lattice.FourNegativeLatticePrecedence.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -114,7 +114,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.FourNegativeLatticePrecedence
+    owner := `D5.S3.Combinatorics.Circle.Lattice.FourNegativeLatticePrecedence
     definition := none
     coordinates := #[0, 2]
     readouts := #[{
@@ -131,4 +131,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   options := #[] }
 #print axioms source_registration
 #print axioms audit
-end Reg.D5.S3.Combinatorics.Circle.FourNegativeLatticePrecedence
+end Reg.D5.S3.Combinatorics.Circle.Lattice.FourNegativeLatticePrecedence
