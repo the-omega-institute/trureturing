@@ -194,7 +194,7 @@ private theorem first_right_bounds (a b c : ℕ)
         _ = (2:ℤ)^(b+(a-b-1)+1) := by simp only [pow_add]; norm_num; ring
         _ = _ := by congr 1; omega
     have eh : (2:ℤ)^(a-b-1)*2=2^(a-b) := by
-      rw [show a-b=(a-b-1)+1 by omega,pow_succ]
+      rw [←pow_succ,Nat.sub_add_cancel (by omega : 1≤a-b)]
     rw [ex,eh] at h
     obtain ⟨h0,h1,h2,h3,h4,h5,h6,_,_,h9,h10,_⟩ := h
     exact ⟨by nlinarith only [h0],by nlinarith only [h1],by nlinarith only [h2],
@@ -212,7 +212,7 @@ private theorem first_right_bounds (a b c : ℕ)
         _ = (2:ℤ)^(c+(b-c-1)+(a-b-1)+2) := by simp only [pow_add]; norm_num; ring
         _ = _ := by congr 1; omega
     have eh : (2:ℤ)^(a-b-1)*2=2^(a-b) := by
-      rw [show a-b=(a-b-1)+1 by omega,pow_succ]
+      rw [←pow_succ,Nat.sub_add_cancel (by omega : 1≤a-b)]
     rw [ex,ey,eh] at h
     obtain ⟨h0,h1,h2,h3,h4,h5,h6,h7⟩ := h
     have hH : (0:ℤ)≤2^(a-b) := by positivity

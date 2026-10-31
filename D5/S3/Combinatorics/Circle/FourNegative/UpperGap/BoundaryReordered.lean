@@ -22,7 +22,7 @@ open private masked_inventory
 open private paired_terminal masked_source_masses
   from D5.S3.Combinatorics.Circle.FourNegative.UpperGap.SourceMasses
 open private certificate_of_checks
-  from D5.S3.Combinatorics.Circle.FourNegative.UpperGap.BoundaryPackets
+  from D5.S3.Combinatorics.Circle.FourNegative.UpperGap.PacketBridge
 
 open private decoded_label_good native_masses four_packet_checks
   from D5.S3.Combinatorics.Circle.FourNegative.UpperGap.BoundaryPackets
@@ -67,18 +67,19 @@ private theorem reordered_certificate (a b c d p q : ℕ)
       (by intro e _ he;simpa using he) hqp (by simp)
     have he : (blocksWord bs).Perm (chamberMaskedWord a b c d 1 1 0 0 (p+q) q 0) := by
       apply Multiset.coe_eq_coe.mp
-      simp only [blocksWord,bs,P,nu,nv,nw,nx,chamberMaskedWord,Blocks.word,
-        ←Multiset.coe_add]
+      simp only [blocksWord,bs,P,nu,nv,nw,nx,chamberMaskedWord,Blocks.word,maskedBlocks,
+        ←List.singleton_append,←Multiset.coe_add,Multiset.coe_nil]
       ac_rfl
     simpa [size] using he.trans h
   have hneg : (bs.map Prod.snd).Perm (negatives a b c d) := by
     apply Multiset.coe_eq_coe.mp
     simp only [bs,List.map_cons,List.map_nil,nu,nv,nw,nx,negatives,size,
-      Nat.add_assoc,Nat.add_comm,Nat.add_left_comm,Multiset.coe_cons,Multiset.coe_nil]
+      Nat.add_assoc,Nat.add_comm,Nat.add_left_comm,←List.singleton_append,
+      ←Multiset.coe_add,Multiset.coe_nil]
     ac_rfl
   have hpos : ∀ block∈bs, ∀ i∈block.1, i<size a b c d ∧ i∉negatives a b c d := by
     intro block hblock i hi
-    simp only [bs,List.mem_cons,List.mem_singleton] at hblock
+    simp only [bs,List.mem_cons,List.mem_singleton,List.mem_nil_iff,or_false] at hblock
     rcases hblock with rfl|rfl|rfl|rfl
     all_goals dsimp [P,maskedBlocks] at hi
     all_goals simp only [List.mem_append] at hi
@@ -92,17 +93,18 @@ private theorem reordered_certificate (a b c d p q : ℕ)
   have h1 := native_masses a b c d ha hb hc hd 1
   have h2 := native_masses a b c d ha hb hc hd 2
   have h3 := native_masses a b c d ha hb hc hd 3
-  norm_num only [chainLength,chainStart,nextBase,nextNewBase,Matrix.cons_val_zero,
-    Matrix.cons_val_one,Matrix.cons_val_succ,Fin.isValue,Nat.zero_add] at h0 h1 h2 h3
+  dsimp [chainLength,chainStart,nextBase,nextNewBase] at h0 h1 h2 h3
   rw [show d+(c-1)=nv by dsimp [nv];omega] at h1
   rw [show d+c+(b-1)=nw by dsimp [nw];omega] at h2
   rw [show d+c+b+(a-1)=nx by dsimp [nx];omega] at h3
+  simp only [Nat.zero_add] at h0
   change _+oldValue a b c d nu=_ ∧ _+newValue a b c d nu=_ ∧ _ ∧ _ at h0
   have mass := masked_source_masses a b c d 1 1 (p+q) q 0 ha hb hc hd
     hu hu hp hq (by positivity) (by intro e _ he;exact he) hqp
   have mo := mass false
   have mn := mass true
   dsimp only at mo mn
+  simp only [Bool.false_eq_true,↓reduceIte] at mo mn
   change (P.first.map (oldValue a b c d)).sum=_ ∧
     (P.second.map (oldValue a b c d)).sum=_ ∧
     (P.third.map (oldValue a b c d)).sum=_ ∧
@@ -117,6 +119,7 @@ private theorem reordered_certificate (a b c d p q : ℕ)
   have htn := ((hinv.map (newValue a b c d)).sum_eq).trans ht.2.1
   have hA := ((chain_values a b c d ha hb hc hd).1 0).1
   have hnA : newBase a b c d 0=2*base a b c d 0 := by simp [newBase,charge]
+  rw [hnA] at mn h0
   dsimp only [reorderedMargins] at hm
   obtain ⟨s1,t1,p1,z1,s2,t2,p2,z2,s3,t3,p3,z3⟩ := hm
   have os1 : (P.first.map (oldValue a b c d)).sum+oldValue a b c d nu=
@@ -141,9 +144,21 @@ private theorem reordered_certificate (a b c d p q : ℕ)
   · apply four_packet_checks (oldValue a b c d) (sourceMod a b c d/2)
       P.first P.third P.second P.fourth nu nw nv nx
     · simpa only [blocksWord,bs,List.append_assoc,List.cons_append,List.nil_append] using hto
-    · exact ⟨by omega,by omega⟩
-    · exact ⟨by omega,by omega⟩
-    · exact ⟨by omega,by omega⟩
+    · constructor
+      · rw [os1];exact s1
+      · have hdoubled : 2*((P.first.map (oldValue a b c d)).sum)≤sourceMod a b c d-1 := by
+          nlinarith only [os1,p1,h0.2.2.1]
+        omega
+    · constructor
+      · rw [os2];exact s2
+      · have hdoubled : 2*((P.first.map (oldValue a b c d)).sum+oldValue a b c d nu+(P.third.map (oldValue a b c d)).sum)≤sourceMod a b c d-1 := by
+          nlinarith only [os2,p2,h2.2.2.1]
+        omega
+    · constructor
+      · rw [os3];exact s3
+      · have hdoubled : 2*((P.first.map (oldValue a b c d)).sum+oldValue a b c d nu+(P.third.map (oldValue a b c d)).sum+oldValue a b c d nw+(P.second.map (oldValue a b c d)).sum)≤sourceMod a b c d-1 := by
+          nlinarith only [os3,p3,h1.2.2.1]
+        omega
     · omega
   · change packetChecks (newValue a b c d) (sourceMod a b c d) 0
       [(P.first,nu),(P.third,nw),(P.second,nv),
@@ -152,9 +167,21 @@ private theorem reordered_certificate (a b c d p q : ℕ)
     · simp only [blocksWord,bs,List.map_append,List.sum_append,List.map_cons,List.sum_cons,
         List.map_singleton,List.sum_singleton,List.map_nil,List.sum_nil,add_zero] at htn ⊢
       omega
-    · exact ⟨by omega,by omega⟩
-    · exact ⟨by omega,by omega⟩
-    · exact ⟨by omega,by omega⟩
+    · constructor
+      · rw [ns1];exact t1
+      · have hdoubled : 2*((P.first.map (newValue a b c d)).sum)≤2*sourceMod a b c d := by
+          nlinarith only [ns1,z1,h0.2.2.2]
+        omega
+    · constructor
+      · rw [ns2];exact t2
+      · have hdoubled : 2*((P.first.map (newValue a b c d)).sum+newValue a b c d nu+(P.third.map (newValue a b c d)).sum)≤2*sourceMod a b c d := by
+          nlinarith only [ns2,z2,h2.2.2.2]
+        omega
+    · constructor
+      · rw [ns3];exact t3
+      · have hdoubled : 2*((P.first.map (newValue a b c d)).sum+newValue a b c d nu+(P.third.map (newValue a b c d)).sum+newValue a b c d nw+(P.second.map (newValue a b c d)).sum)≤2*sourceMod a b c d := by
+          nlinarith only [ns3,z3,h1.2.2.2]
+        omega
     · omega
 
 end D5.S3.Combinatorics.Circle.FourNegative.UpperGap

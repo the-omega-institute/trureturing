@@ -19,7 +19,9 @@ open private rising_endpoints swapped_endpoints tied_ac_endpoints all_equal_endp
   from D5.S3.Combinatorics.Circle.FourNegative.UpperGap.BoundaryAlgebra
 
 private theorem qpow_four (n : ℕ) (hn : 2≤n) : (4:ℚ)≤2^n := by
-  simpa using pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) hn
+  have h := pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) hn
+  norm_num at h
+  exact h
 private theorem qpow_two (n : ℕ) (hn : 1≤n) : (2:ℚ)≤2^n := by
   simpa using pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) hn
 private theorem qpow_one (n : ℕ) : (1:ℚ)≤2^n := by
@@ -28,7 +30,8 @@ private theorem qpow_split (n k : ℕ) (hk : k≤n) :
     (2:ℚ)^k*2^(n-k)=2^n := by rw [←pow_add,Nat.add_sub_of_le hk]
 private theorem qpow_half (n : ℕ) (hn : 1≤n) :
     (2:ℚ)^n/2=2^(n-1) := by
-  rw [show n=(n-1)+1 by omega,pow_succ]
+  have h : (2:ℚ)^(n-1)*2=2^n := by rw [←pow_succ,Nat.sub_add_cancel hn]
+  rw [←h]
   ring
 
 set_option maxHeartbeats 1600000 in
@@ -38,7 +41,7 @@ private theorem rising_margins (a b c : ℕ) (ha : 2≤a) (hab : a<b) (hbc : b<c
   dsimp only at h
   rw [qpow_split b a (by omega),qpow_split c b (by omega)] at h
   rw [qpow_half (b-a) (by omega)] at h
-  dsimp only [standardMargins,base,newBase,charge]
+  dsimp [standardMargins,base,newBase,charge]
   norm_num only [Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_succ,Fin.isValue]
   qify [Nat.one_le_two_pow]
   simp only [pow_succ] at h ⊢
@@ -66,7 +69,7 @@ private theorem swapped_margins (a b c : ℕ) (hb : 2≤b) (hba : b<a) (hac : a<
   have ep : (2:ℚ)^(a-b)*2^(c-a)/2=2^(c-b-1) := by
     rw [←pow_add,show a-b+(c-a)=c-b by omega,qpow_half (c-b) (by omega)]
   rw [ep,qpow_half (c-a) (by omega)] at h
-  dsimp only [standardMargins,base,newBase,charge]
+  dsimp [standardMargins,base,newBase,charge]
   norm_num only [Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_succ,Fin.isValue]
   qify [Nat.one_le_two_pow]
   simp only [pow_succ] at h ⊢
@@ -91,7 +94,7 @@ private theorem tied_margins (a b : ℕ) (hb : 2≤b) (hba : b<a) :
   have h := tied_ac_endpoints (2^b) (2^(a-b)) 0 (qpow_four b hb) (qpow_two _ (by omega)) (by norm_num)
   dsimp only at h
   rw [qpow_split a b (by omega),qpow_half (a-b) (by omega)] at h
-  dsimp only [standardMargins,base,newBase,charge]
+  dsimp [standardMargins,base,newBase,charge]
   norm_num only [Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_succ,Fin.isValue]
   qify [Nat.one_le_two_pow]
   simp only [pow_succ] at h ⊢
@@ -115,7 +118,7 @@ private theorem all_equal_margins (a : ℕ) (ha : 2≤a) :
     standardMargins a a a (a+1) 0 0 0 0 0 := by
   have h := all_equal_endpoints (2^a) 0 0 (qpow_four a ha) (by norm_num) (by norm_num)
   dsimp only at h
-  dsimp only [standardMargins,base,newBase,charge]
+  dsimp [standardMargins,base,newBase,charge]
   norm_num only [Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_succ,Fin.isValue]
   qify [Nat.one_le_two_pow]
   simp only [pow_succ] at h ⊢

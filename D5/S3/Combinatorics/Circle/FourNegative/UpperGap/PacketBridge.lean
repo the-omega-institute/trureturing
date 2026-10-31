@@ -44,7 +44,7 @@ private theorem certificate_of_checks (a b c d : ℕ)
       oldValue a b c d n≤0 ∧ newValue a b c d n≤0 := by
     have hn' := hneg.mem_iff.mp hn
     have hk : n<size a b c d := by
-      simp only [negatives,List.mem_cons,List.mem_singleton] at hn'
+      simp only [negatives,size,List.mem_cons,List.mem_singleton,List.mem_nil_iff,or_false] at hn'
       dsimp [size]
       omega
     have hs := source_signs a b c d ha hb hc hd n hk

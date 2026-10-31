@@ -131,7 +131,7 @@ private theorem peak_last_bounds (a b c : ℕ)
   let M := 2*y*y*z+y*z+y+1
   let D := y*z+y+1
   have ey : 2*(2:ℤ)^(b-1)=y := by
-    dsimp [y];rw [show b=(b-1)+1 by omega,pow_succ];ring
+    dsimp [y];rw [mul_comm 2 (2^(b-1)),←pow_succ,Nat.sub_add_cancel (by omega : 1≤b)]
   by_cases he : a=b
   · have h := peak_last_equal_int (2^c) (2^(a-c)) 0
       (zpow_four c hc) (zpow_one _) (by norm_num)
