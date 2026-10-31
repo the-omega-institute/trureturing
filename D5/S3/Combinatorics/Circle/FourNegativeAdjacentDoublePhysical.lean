@@ -7,6 +7,8 @@
    digest: An unbounded adjacent paired-gap physical joint witness at r=s+1. -/
 import D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoubleSchedule
 
+/-! A common physical permutation for the r=s+1 paired-gap branch. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -18,6 +20,7 @@ open private chains from D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoubleJo
 open private Gates four_strip arithmetic inventory
   from D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoubleSchedule
 
+-- The physical source, block masses and both full prefix strips are elaborated together.
 set_option maxHeartbeats 1600000 in
 /-- The complete r=s+1 branch of the adjacent paired-gap family, with the literal
 numeric cut 2s+r and the same physical old labels in the marked new word. -/
@@ -41,7 +44,7 @@ theorem actualSource_four_negative_adjacent_double_joint_lift
   let GV := 2*B-1
   let GW := 2*L-1-z
   let GX := 2*M-1-2*z-2*z^2
-  let t := 1+2^(n+1)+2^(2*(n+1))+2^(2*(n+1)+n)
+  let t : ℕ := 1+2^(n+1)+2^(2*(n+1))+2^(2*(n+1)+n)
   let f := fun i : ℕ => centered N ((2 : ℤ)^i*A)
   let g := fun i : ℕ => centered (modulus (k+1)) ((2 : ℤ)^i*(2*A))
   have hn : 2 ≤ n := hs
@@ -121,10 +124,11 @@ theorem actualSource_four_negative_adjacent_double_joint_lift
     change (X.map g).sum=(q-1)*(2*GX) at h2
     rw [h1,h2,hzq]; constructor <;> ring
   have coefficients : 0 ≤ A ∧ 0 ≤ B ∧ 0 ≤ L ∧ 0 ≤ M ∧ 0 ≤ GV ∧ 0 ≤ GW ∧ 0 ≤ GX := by
-    rw [hzq]
     dsimp [A,B,L,M,GV,GW,GX]
-    repeat' constructor
+    rw [hzq]
+    refine ⟨?_,?_,?_,?_,?_,?_,?_⟩
     all_goals nlinarith [sq_nonneg q,show 0 ≤ q^3 by positivity]
+  obtain ⟨hA,hB,hL,hM,hGV,hGW,hGX⟩ := coefficients
   have up : ∀ i∈U, 0≤f i ∧ 0≤g i := by
     intro i hi; rw [(posU i hi).1,(posU i hi).2]; constructor <;> positivity
   have vp : ∀ i∈V, 0≤f i ∧ 0≤g i := by
@@ -142,7 +146,7 @@ theorem actualSource_four_negative_adjacent_double_joint_lift
     obtain ⟨j,hj,rfl⟩ := List.mem_range'.mp hi
     simpa only [Nat.one_mul] using (show 0≤f (3*n+2+j) ∧ 0≤g (3*n+2+j) from by
       rw [(posX j hj).1,(posX j hj).2]; constructor <;> positivity)
-  have x0p : 0≤f x0 ∧ 0≤g x0 := by rw [hx0.1,hx0.2]; exact ⟨coefficients.2.2.2.1,coefficients.2.2.2.2.2.2⟩
+  have x0p : 0≤f x0 ∧ 0≤g x0 := by rw [hx0.1,hx0.2]; exact ⟨hM,hGX⟩
   let F1 := [x0]++V
   let P := F1++[v]++W++[w]++U
   let R := [u]++X++[x]
@@ -174,7 +178,7 @@ theorem actualSource_four_negative_adjacent_double_joint_lift
         (fun i hi => (wp i hi).2)
         (by intro i hi; rcases List.mem_append.mp hi with hi|hi
             · exact (up i hi).2
-            · rw [List.mem_singleton.mp hi,hear]; exact coefficients.1)
+            · rw [List.mem_singleton.mp hi,hear]; exact hA)
         (fun i hi => (xp i hi).2) hnewG
   have hcut : P.length=2*n+(n+1) := by
     dsimp [P,F1,U,V,W]; simp only [List.length_append,List.length_singleton,List.length_range',List.length_range]; omega
