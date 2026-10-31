@@ -8,6 +8,10 @@
 
 import D5.S3.Quantum.Subentropy.UniformIntegrals
 import D5.S3.Quantum.Matrix.PauliFunding.PureYAxisResolvent
+import Mathlib.Data.Nat.Choose.Basic
+
+/-! The actual pure-Y matrix integral coefficients, including their scalar-series
+terms, their integrability, and the complete strict and equality alternatives. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -36,8 +40,17 @@ private theorem baseline_integral (j : ℕ) (hj : 1 ≤ j) :
     (fun t : ℝ => 1 / (t + 1) ^ (2 * (k + 1))) 0 (b := 2) (by norm_num)
   simp only [mul_zero, smul_eq_mul] at hs
   rw [hv] at hs
-  convert hs using 1 <;> simp only [Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat, Nat.cast_one,
-    one_pow, mul_one, add_comm] <;> ring
+  calc
+    (∫ s in Ioi (0 : ℝ), 1 / (1 + 2 * s) ^ (2 * k.succ)) =
+        2⁻¹ * (1 / (2 * (k : ℝ) + 1)) := by
+      simpa only [Nat.succ_eq_add_one, Nat.cast_mul, Nat.cast_ofNat, one_pow,
+        mul_one, add_comm] using hs
+    _ = 1 / (2 * (2 * (k.succ : ℝ) - 1)) := by
+      rw [Nat.cast_succ]
+      have he' : 2 * ((k : ℝ) + 1) - 1 = 2 * k + 1 := by ring
+      rw [he']
+      simp only [one_div, mul_inv_rev]
+      ring
 
 private theorem strict_integral_of_strict_on {f g : ℝ → ℝ}
     (hf : IntegrableOn f (Ioi 0)) (hg : IntegrableOn g (Ioi 0))
@@ -56,7 +69,7 @@ private theorem strict_integral_of_strict_on {f g : ℝ → ℝ}
   rw [integral_sub hf hg] at hp
   exact sub_pos.mp hp
 
-private theorem evenMoment_upper {α β c : ℝ} (hα : 0 ≤ α) (hc : 0 ≤ c)
+private theorem even_moment_upper {α β c : ℝ} (hα : 0 ≤ α) (_hc : 0 ≤ c)
     (hαc : α ≤ c) (hp : 0 ≤ c ^ 2 - 2 * α * c - β) (j : ℕ) :
     evenMoment α β j ≤ 2 * c ^ (2 * j) := by
   have hs : Real.sqrt (α ^ 2 + β) ≤ c - α :=
@@ -72,7 +85,7 @@ private theorem evenMoment_upper {α β c : ℝ} (hα : 0 ≤ α) (hc : 0 ≤ c)
   rw [(even_two_mul j).pow_abs] at hminus
   linarith
 
-private theorem resolvent_evenMoment_upper {a h s : ℝ} (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
+private theorem resolvent_even_moment_upper {a h s : ℝ} (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
     (hh0 : 0 ≤ h) (hh : h ≤ 1 - a ^ 2) (hs : 0 < s) (j : ℕ) :
     evenMoment (4 * s * a / (8 * s * (1 + 2 * s) + h))
       (h / (8 * s * (1 + 2 * s) + h)) j ≤ 2 / (1 + 2 * s) ^ (2 * j) := by
@@ -105,7 +118,7 @@ private theorem resolvent_evenMoment_upper {a h s : ℝ} (ha0 : 0 ≤ a) (ha1 : 
   have hp : 0 ≤ (1 / q) ^ 2 - 2 * (4 * s * a / R) * (1 / q) - h / R := by
     rw [hid]
     positivity
-  have hb := evenMoment_upper hα hc hαc hp j
+  have hb := even_moment_upper hα hc hαc hp j
   simpa only [one_div_pow, mul_one_div] using hb
 
 private theorem semidisk_integrable {a t : ℝ} (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
@@ -125,14 +138,15 @@ private theorem semidisk_integrable {a t : ℝ} (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
   have hC : ContinuousOn (fun s => evenMoment (alpha a t s) (beta a t s) j) (Ioi 0) := by
     unfold evenMoment
     fun_prop
-  have hi := ((baseline_integral j hj).1.const_mul 2).mono_nonneg
+  have hi : IntegrableOn (fun s => evenMoment (alpha a t s) (beta a t s) j) (Ioi 0) :=
+    ((baseline_integral j hj).1.const_mul 2).mono_nonneg
     (hC.aestronglyMeasurable measurableSet_Ioi)
     (ae_of_all _ fun s => add_nonneg
       ((even_two_mul j).pow_nonneg (alpha a t s + Real.sqrt (alpha a t s ^ 2 + beta a t s)))
       ((even_two_mul j).pow_nonneg (alpha a t s - Real.sqrt (alpha a t s ^ 2 + beta a t s))))
     ((ae_restrict_mem measurableSet_Ioi).mono fun s hs => by
-      simpa [alpha, beta, denom, mul_div_assoc] using
-        resolvent_evenMoment_upper ha0 ha1 hh0 hh hs j)
+      simpa [alpha, beta, denom, div_eq_mul_inv, mul_assoc] using
+        resolvent_even_moment_upper ha0 ha1 hh0 hh hs j)
   exact hi.congr_fun (fun s hs => (moment_eq_evenMoment ha0 ha1 ht hs j).symm)
     measurableSet_Ioi
 
@@ -140,12 +154,27 @@ private theorem semidisk_integrable {a t : ℝ} (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
 def resolventCoefficient (a t : ℝ) (j : ℕ) : ℝ :=
   (1 / (j : ℝ)) * ∫ s in Ioi (0 : ℝ), complexMoment a t j s
 
+private def zeroArgumentSeries (j : ℕ) : ℝ :=
+  ∑' n : ℕ, if j ≤ n then
+    (n.choose j : ℝ) * (0 : ℝ) ^ (2 * (n - j)) /
+      (2 * (n : ℝ) * (2 * (n : ℝ) - 1)) else 0
+
+private theorem zero_argument_series_value (j : ℕ) :
+    zeroArgumentSeries j = 1 / (2 * (j : ℝ) * (2 * (j : ℝ) - 1)) := by
+  unfold zeroArgumentSeries
+  rw [tsum_eq_single j]
+  · simp
+  · intro n hn
+    split_ifs with hnj
+    · have hp : 2 * (n - j) ≠ 0 := by omega
+      simp [zero_pow hp]
+    · rfl
+
 /-- The section-20 funding coefficient in the pure-Y family. The last two summands
 are respectively the local coefficient and the marginal coefficient. -/
 def fundingCoefficient (a t : ℝ) (j : ℕ) : ℝ :=
-  resolventCoefficient a t j +
-    (1 - a ^ (2 * j)) / (2 * (j : ℝ) * (2 * (j : ℝ) - 1)) -
-    1 / (2 * (j : ℝ) * (2 * (j : ℝ) - 1))
+  resolventCoefficient a t j + (1 - a ^ (2 * j)) * zeroArgumentSeries j -
+    zeroArgumentSeries j
 
 private theorem reference_integral (a : ℝ) (j : ℕ) (hj : 1 ≤ j) :
     IntegrableOn (fun s : ℝ => a ^ (2 * j) / (1 + 2 * s) ^ (2 * j)) (Ioi 0) ∧
@@ -174,6 +203,7 @@ private theorem semidisk_funding {a t : ℝ} (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
         ((∫ s in Ioi (0 : ℝ), complexMoment a t j s) -
           a ^ (2 * j) / (2 * (2 * (j : ℝ) - 1))) := by
     unfold fundingCoefficient resolventCoefficient
+    rw [zero_argument_series_value]
     simp only [div_eq_mul_inv, mul_inv_rev]
     ring
   have hmono : a ^ (2 * j) / (2 * (2 * (j : ℝ) - 1)) ≤

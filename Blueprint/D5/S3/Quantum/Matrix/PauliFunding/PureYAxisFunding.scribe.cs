@@ -17,7 +17,7 @@ internal sealed class PureYAxisFundingDocument : IScribeDocumentDefinition
                 "For every real a,t and natural j, g is defined using Lebesgue integration on s>0. In the physical domain the shifted inverses exist, the filters are positive semidefinite, and the integrability asserted below makes this the finite section-20 resolvent integral.", true),
             Item("funding-coefficient", "The actual local funding coefficient", "fundingCoefficient",
                 FundingStatement(),
-                "For a pure-Y first factor, the scalar terms of section 20 are L=(1-a^(2j))/c and m=1/c, where c=2j(2j-1). Hence d=g+L-m. This definition retains these two terms and does not assume their difference has a sign.", true),
+                "Here h(j,0) is the actual section-20 series: sum over natural n at least j of binomial(n,j) times zero to the power 2(n-j), divided by 2n(2n-1). Every term except n=j vanishes, so h(j,0)=1/[2j(2j-1)]. For a pure-Y first factor, z=x=0 and y squared equals one. The scalar terms are therefore L=(1-a^(2j))h(j,0) and m=h(j,0), and d=g+L-m. The definition retains the original zero-argument scalar series; its evaluation supplies the rational normalization.", true),
             Item("all-orders", "Nonnegativity, strictness and every equality case", "pure_y_axis_funding",
                 TheoremStatement(),
                 "For every a in [0,1], y squared equal to one, real unit partner (X,Y,Z), and natural j at least one, the actual complex matrix moment is integrable and d is nonnegative. It is strictly positive exactly when a<1 and abs(Y)<1, and is zero exactly when a=1 or abs(Y)=1. The quantifier includes every finite positive order, a=0, singular unshifted blocks, and both partner-axis endpoints. Applying the same result after exchanging the two source labels gives the corresponding local coefficients for a pure-Y second factor.", false,
@@ -53,7 +53,6 @@ internal sealed class PureYAxisFundingDocument : IScribeDocumentDefinition
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
-    private static Formula C(Formula j) => Mul(Mul(D(2), j), Sub(Mul(D(2), j), D(1)));
     private static Formula Integral(Formula body) => Seq(Int, Underscore,
         Grp(Lt(D(0), V("s"))), Sp, body, Sp, Mathrm, Grp(V("d")), Sp, V("s"));
     private static Formula Integrable(Formula a, Formula t, Formula j) => Call("IntegrableOn",
@@ -72,7 +71,7 @@ internal sealed class PureYAxisFundingDocument : IScribeDocumentDefinition
         Formula a = V("a"), t = V("t"), j = V("j");
         return All("a", Real, All("t", Real, All("j", Nat,
             Eq(Call("d", a, t, j), Sub(Add(Call("g", a, t, j),
-                Div(Sub(D(1), Pow(a, Mul(D(2), j))), C(j))), Div(D(1), C(j)))))));
+                Mul(Sub(D(1), Pow(a, Mul(D(2), j))), Call("h", j, D(0)))), Call("h", j, D(0)))))));
     }
 
     private static Formula TheoremStatement()
