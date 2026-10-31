@@ -7,7 +7,7 @@
    digest: Normalized Bell and contextuality inequalities obey the binary n-cycle trade-off. -/
 
 import D5.S3.QuantumContext.NCycleNondisturbingGenerators
-import D5.S3.QuantumBounds.MerminMeasurementDependence.Model
+import D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates
 
 /-! The binary generalized Bell scenario of Porto–Ruffolo–Rabelo–Terra Cunha–Kurzyński,
 arXiv:2405.02964v2. Context `i` consists of measurements `i` and `finRotate n i`.
@@ -142,15 +142,19 @@ private lemma vertex_nd {n : ℕ} (γ : Fin n → Bool) : IsND (vertex γ) := by
 
 private lemma bool_sign_sum {ι : Type} (s : Finset ι) (γ : ι → Bool) :
     (∏ i ∈ s, if γ i then (-1 : ℝ) else 1) = if ∑ i ∈ s, γ i then -1 else 1 := by
-  let χ : Bool →+ Additive ℝ :=
-    { toFun := fun b => Additive.ofMul (D5.S3.QuantumBounds.MerminMeasurementDependence.boolSign b)
+  classical
+  let φ : Bool →+ ZMod 2 :=
+    { toFun := fun b => (b.toNat : ZMod 2)
       map_zero' := rfl
       map_add' := by
         intro a b
-        change (if a + b then (-1 : ℝ) else 1) =
-          (if a then (-1 : ℝ) else 1) * (if b then -1 else 1)
-        cases a <;> cases b <;> norm_num [Bool.add_eq_xor] }
-  exact (congrArg Additive.toMul (map_sum χ γ s)).symm
+        cases a <;> cases b <;> decide }
+  change (∏ i ∈ s, D5.S3.QuantumBounds.MerminMeasurementDependence.boolSign (γ i)) =
+    D5.S3.QuantumBounds.MerminMeasurementDependence.boolSign (∑ i ∈ s, γ i)
+  rw [D5.S3.QuantumBounds.MerminMeasurementDependence.prod_boolSign]
+  change D5.S3.QuantumBounds.MerminMeasurementDependence.bitSign (∑ i ∈ s, φ (γ i)) = _
+  rw [← map_sum φ γ s]
+  exact D5.S3.QuantumBounds.MerminMeasurementDependence.bitSign_boolBit _
 
 private lemma even_signs_assignment {n : ℕ} (γ : Fin n → Bool) (hγ : ∑ i, γ i = false) :
     ∃ s : Fin n → Bool, ∀ i, Bool.xor (s i) (s (finRotate n i)) = γ i := by
