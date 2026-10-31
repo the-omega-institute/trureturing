@@ -1,5 +1,7 @@
 /- GID: D5/S3/VertexAlgebra/TwistedGround/InfiniteGaussianFock
    generality: G
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/InfiniteGaussianFock
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Common finite principal blocks construct the actual joint Gaussian l2 vector. -/
