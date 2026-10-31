@@ -3,7 +3,7 @@ bibkey: denisetal2026anticoherencemixed
 authors: Jérôme Denis, Tara Lacaille, John Martin and Eduardo Serrano-Ensástiga
 year: 2026
 title: "Total, quantum, and classical measures of anticoherence for mixed spin states"
-doi: null
+doi: 10.48550/arXiv.2605.29436
 url: "https://arxiv.org/abs/2605.29436v1"
 claim: "The paper axiomatizes total t-anticoherence measures for mixed spin-j states, including monotonicity (T4) under SU(2)-covariant channels, proves (T4) for the Hilbert–Schmidt distance-based measure, and leaves open whether (T4) holds for the trace-distance-based measure."
 strata_touched:
@@ -27,7 +27,7 @@ The distance-based candidates are $\mathcal A^{T,d}_t(\rho)=1-d(\rho_t,\mathbb 1
 ## Verified locator
 
 Source: https://arxiv.org/abs/2605.29436v1
-- DOI: none registered (arXiv preprint; the abstract page lists v1 only).
+- DOI: https://doi.org/10.48550/arXiv.2605.29436 (the arXiv-issued DataCite DOI; title, authors and year from DataCite; the abstract page lists v1 only).
 - URL: https://arxiv.org/abs/2605.29436v1. The e-print member `arxiv.tex` has 1647 lines and md5 `cc8e7241680606ee66e21581554aa985`. Locations:
   - the symmetric-subspace identification and $\rho_t$, l. 150–161;
   - the range of $t$, footnote at l. 178;
