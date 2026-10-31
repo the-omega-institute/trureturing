@@ -2,7 +2,6 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.SetFamily.CrossIntersectingLayerGap
 import Reg.Support.DependentFamily
 import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.FinCases
 
 /-! The full weighted-family telescope with its two layer cardinalities observed. -/
 
@@ -19,7 +18,7 @@ set_option relaxedAutoImplicit false
 abbrev signature : Signature where
   Params := Type u
   State α := Finset (Finset α)
-  Role := Fin 2
+  Role := Bool
   finiteRole := inferInstance
   nonemptyRole := inferInstance
   Output _ _ := ℕ
@@ -42,7 +41,7 @@ abbrev arena : Arena where
     (∀ s ∈ C, ∀ t ∈ D, (s ∩ t).Nonempty) →
     ω (Fintype.card α - 1) + ω (Fintype.card α) < weightedMass ω C →
     ω (Fintype.card α - 1) + ω (Fintype.card α) < weightedMass ω D →
-    R.readout 0 α (C.slice 1) + 2 ≤ R.readout 1 α (C.slice (Fintype.card α - 1))
+    R.readout false α (C.slice 1) + 2 ≤ R.readout true α (C.slice (Fintype.card α - 1))
 
 private def largeFamily : Finset (Finset (ULift.{u} (Fin 4))) :=
   univ.filter (fun s => 3 ≤ s.card)
@@ -69,11 +68,11 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   omega
 
 /-- Change only one of the two source observations. -/
-def intervention (i : Fin 2) : Realization signature.{u} :=
-  realize signature (fun j _ F => if j = i then (if i = 0 then 4 else 0) else F.card)
+def intervention (i : Bool) : Realization signature.{u} :=
+  realize signature (fun j _ F => if j = i then (if i = false then 4 else 0) else F.card)
     (fun e => nomatch e)
 
-private theorem intervention_law (i : Fin 2) : ¬ arena.{u}.Law (intervention i) := by
+private theorem intervention_law (i : Bool) : ¬ arena.{u}.Law (intervention i) := by
   intro h
   have hh := h (α := ULift.{u} (Fin 4)) (fun _ => 1) largeFamily largeFamily
     (by decide) (fun _ => by norm_num) large_upper large_upper large_cross
@@ -81,7 +80,7 @@ private theorem intervention_law (i : Fin 2) : ¬ arena.{u}.Law (intervention i)
   have hl : (largeFamily.{u}.slice 1).card = 0 := by decide
   have hr : (largeFamily.{u}.slice 3).card = 4 :=
     by decide
-  fin_cases i <;> norm_num [intervention, realize, hl, hr] at hh
+  cases i <;> norm_num [intervention, realize, hl, hr] at hh
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
@@ -105,7 +104,7 @@ def source_registration :
   dependence := dependence
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@weighted_cross_intersecting_layer_gap.{u}) (Realization signature.{u}) (Fin 2) Unit := {
+    (@weighted_cross_intersecting_layer_gap.{u}) (Realization signature.{u}) (Bool) Unit := {
   unitName := `Reg.D5.S3.Combinatorics.SetFamily.CrossIntersectingLayerGap.unit
   realizationName :=
     `Reg.D5.S3.Combinatorics.SetFamily.CrossIntersectingLayerGap.source_registration
