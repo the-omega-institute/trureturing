@@ -84,7 +84,8 @@ internal sealed class AnticoherenceTraceDistanceRefutationDocument : IScribeDocu
                 + "The Dicke projector therefore fixes this image, so the tensor action intertwines with spinAction. "
                 + "Splitting a weight-r Dicke column between t and n minus t sites gives, at weights k and l with k plus l equal to r, "
                 + "the coefficient sqrt(Nat.choose t k times Nat.choose (n minus t) l) divided by sqrt(Nat.choose n r), and zero otherwise. "
-                + "Factor the qubit embedding through these coefficients and the two smaller Dicke embeddings. "
+                + "Apply CoherentHistorySchmidt.normalized_coefficient_factorization to the binary occupation multiset and identify its sector vectors with the Dicke columns. "
+                + "The sector multiplicities become binomial coefficients by sector_words_card_multinomial and Nat.binomial_eq_choose, giving the factorization through the two smaller Dicke embeddings. "
                 + "The partial-trace identity for product embeddings removes the isometry on the traced factor; compression by the remaining isometry gives exactly reducedState.")),
         Paragraph(Text(
             "The ladder identity J+ J+ adjoint plus J+ adjoint J+ = 40 I minus 2 Jz squared implies that the sum of Jx squared, Jy squared and Jz squared is 20 I. "

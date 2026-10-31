@@ -291,28 +291,33 @@ private lemma dicke_count (n k : ℕ) :
   simpa only [hw] using hc
 
 
+private lemma binary_multiplicity (n : ℕ) (a : Multiset (Fin 2)) (ha : a.card = n) :
+    multiplicity n a = n.choose (a.count 1) := by
+  rw [D5.S3.Quantum.Entanglement.OccupancyWordSectors.multiplicity, sector_words_card_multinomial a ha,
+    show (Finset.univ : Finset (Fin 2)) = {1, 0} by decide,
+    Nat.binomial_eq_choose (by decide : (1 : Fin 2) ≠ 0)]
+  congr 1
+  simpa only [Fin.sum_univ_two, ha, add_comm] using
+    (Multiset.sum_count_eq_card (s := Finset.univ) (m := a)
+      (fun _ _ => Finset.mem_univ _))
+
+
+private lemma dicke_sector (n : ℕ) (a : Multiset (Fin 2)) (ha : a.card = n)
+    (r : Fin (n + 1)) (hr : a.count 1 = r.val) (x : Fin n → Fin 2) :
+    dickeIsometry n x r = sectorVector n a x := by
+  simp only [dickeIsometry.eq_1, sectorVector, sectorWords, Finset.mem_filter,
+    Finset.mem_univ, true_and, occupation_eq_iff_weight n x a ha,
+    binary_multiplicity n a ha, hr]
+
 private lemma dicke_isometry (n : ℕ) : (dickeIsometry n)ᴴ * dickeIsometry n = 1 := by
   let a (r : Fin (n + 1)) : Multiset (Fin 2) :=
     Multiset.replicate (n - r.val) 0 + Multiset.replicate r.val 1
   have ha (r : Fin (n + 1)) : (a r).card = n := by
     simp [a]; omega
   have hcount (r : Fin (n + 1)) : (a r).count 1 = r.val := by simp [a, Multiset.count_replicate]
-  have he (r : Fin (n + 1)) (x : Fin n → Fin 2) :
-      occupation x = a r ↔ (∑ i, (x i).val) = r.val := by
-    rw [occupation_eq_iff_weight n x (a r) (ha r), hcount]
-  have hm (r : Fin (n + 1)) : D5.S3.Quantum.Entanglement.OccupancyWordSectors.multiplicity n (a r) = n.choose r.val := by
-    have h := dicke_count n r.val
-    simp only [D5.S3.Quantum.Entanglement.OccupancyWordSectors.multiplicity, sectorWords]
-    rw [show (Finset.univ.filter (fun w : Fin n → Fin 2 => occupation w = a r)) =
-      Finset.univ.filter (fun w => (∑ i, (w i).val) = r.val) by ext w; simp [he]]
-    exact_mod_cast (by simpa only [← Finset.sum_filter, Finset.sum_const,
-      nsmul_eq_mul, mul_one] using h :
-      ((Finset.univ.filter (fun w : Fin n → Fin 2 => (∑ i, (w i).val) = r.val)).card : ℂ) =
-        (n.choose r.val : ℂ))
   have hv (r : Fin (n + 1)) (x : Fin n → Fin 2) :
-      dickeIsometry n x r = sectorVector n (a r) x := by
-    simp only [dickeIsometry.eq_1, sectorVector, sectorWords, Finset.mem_filter,
-      Finset.mem_univ, true_and, he, hm]
+      dickeIsometry n x r = sectorVector n (a r) x :=
+    dicke_sector n (a r) (ha r) r (hcount r) x
   have hi (r s : Fin (n + 1)) : a r = a s ↔ r = s := by
     constructor
     · intro h
@@ -425,22 +430,41 @@ private lemma dicke_split_factor (t s : ℕ) :
     rw [Fin.sum_univ_add]
     simp [k, l]
   rw [Matrix.mul_apply, Finset.sum_eq_single (k, l)]
-  · rw [dickeSplitSum, dickeSplit]
-    dsimp only [Matrix.kronecker, Matrix.kroneckerMap]
-    simp only [Matrix.submatrix_apply, id_eq,
-      Matrix.of_apply, dickeIsometry,
-      hw, show (∑ i, (x i).val) = k.val from rfl,
-      show (∑ i, (y i).val) = l.val from rfl, ite_true, dickeSplitSum, dickeSplit,
-      Nat.add_sub_cancel_left]
+  · dsimp only [Matrix.submatrix_apply, id_eq, Matrix.kronecker, Matrix.kroneckerMap,
+      Matrix.of_apply, dickeSplitSum, dickeSplit]
+    simp only [Nat.add_sub_cancel_left]
     by_cases h : k.val + l.val = r.val
-    · rw [if_pos h, if_pos h, Real.sqrt_mul (by positivity)]
-      have hk : Real.sqrt (t.choose k.val : ℝ) ≠ 0 :=
-        (Real.sqrt_pos.2 (by exact_mod_cast Nat.choose_pos (by omega : k.val ≤ t))).ne'
-      have hl : Real.sqrt (s.choose l.val : ℝ) ≠ 0 :=
-        (Real.sqrt_pos.2 (by exact_mod_cast Nat.choose_pos (by omega : l.val ≤ s))).ne'
-      push_cast
-      field_simp (disch := first | exact_mod_cast hk | exact_mod_cast hl | norm_num | (norm_cast <;> positivity))
-    · simp [h]
+    · rw [if_pos h]
+      let a : Multiset (Fin 2) :=
+        Multiset.replicate (t + s - r.val) 0 + Multiset.replicate r.val 1
+      have ha : a.card = t + s := by simp [a]; omega
+      have har : a.count 1 = r.val := by simp [a, Multiset.count_replicate]
+      have hxy : occupation (Fin.append x y) = a :=
+        (occupation_eq_iff_weight (t + s) (Fin.append x y) a ha).2 (by rw [hw, har]; exact h)
+      obtain ⟨b, hxb, hyb⟩ :=
+        (D5.S3.Quantum.Entanglement.CoherentHistorySchmidt.legal_iff x y).mp hxy
+      have hb : b.val.count 1 = k.val := by rw [← hxb]; exact weight_count t x
+      have hc : (a - b.val).count 1 = l.val := by rw [← hyb]; exact weight_count s y
+      have hf := D5.S3.Quantum.Entanglement.CoherentHistorySchmidt.normalized_coefficient_factorization
+        ha x y
+      rw [D5.S3.Quantum.Entanglement.CoherentHistorySchmidt.coefficient_eq_uniform_word,
+        ← dicke_sector (t + s) a ha r har, Finset.sum_eq_single b] at hf
+      · rw [D5.S3.Quantum.Entanglement.CoherentHistorySchmidt.schmidtCoefficient,
+          binary_multiplicity t b.val (boundary_spec a t b).2,
+          binary_multiplicity s (a - b.val) (complement_card ha b),
+          binary_multiplicity (t + s) a ha, hb, hc, har,
+          ← dicke_sector t b.val (boundary_spec a t b).2 k hb,
+          ← dicke_sector s (a - b.val) (complement_card ha b) l hc] at hf
+        rw [hf, Real.sqrt_mul (by positivity)]
+        push_cast
+        ring
+      · intro c _ hcb
+        have hxc : occupation x ≠ c.val := by
+          intro he
+          exact hcb (Subtype.ext (he.symm.trans hxb))
+        simp [sectorVector, sectorWords, hxc]
+      · simp
+    · simp [dickeIsometry, hw, h]
   · rintro ⟨a, b⟩ _ hab
     by_cases ha : a = k
     · have hb : (∑ i, (y i).val) ≠ b.val := by
@@ -519,7 +543,8 @@ private lemma reducedState_eq_dickeSplit (n t : ℕ) (ht : t ≤ n)
             Real.sqrt ((t + s).choose r.val : ℝ) : ℝ) : ℂ) else 0
       have hv : dickeSplitSum t s = v s := by
         ext kl r
-        simp only [dickeSplitSum, dickeSplit, v, Nat.add_sub_cancel_left]
+        rw [dickeSplitSum.eq_1]
+        simp only [dickeSplit, v, Nat.add_sub_cancel_left]
       rw [hv]
       change partialTraceRight (v s * ρ * (v s)ᴴ) =
         partialTraceRight (v (t + s - t) * ρ * (v (t + s - t))ᴴ)

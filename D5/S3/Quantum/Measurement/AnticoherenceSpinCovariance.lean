@@ -6,6 +6,7 @@
    utility: none
    digest: Pauli conjugation supplies the orthogonal rotation of collective spin axes. -/
 
+import D5.S3.Quantum.Dynamics.SpinCoupledEvenHypercubeGroverFixedPoint
 import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
 import D5.S3.QuantumChannels.ChannelTimeReversalNoGo
 import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
@@ -298,16 +299,24 @@ def dickeCoefficient (n w r : ℕ) : ℂ :=
 private lemma two_value_sum (n : ℕ) (x : Fin n → Fin 2) (f : Fin 2 → ℂ) :
     (∑ k, f (x k)) = ((n : ℂ) - (∑ k, (x k).val : ℕ)) * f 0 +
       (∑ k, (x k).val : ℕ) * f 1 := by
-  have he (b : Fin 2) : f b = f 0 + (b.val : ℂ) * (f 1 - f 0) := by
-    fin_cases b <;> norm_num
+  let σ := Finset.univ.filter (fun k : Fin n => x k = 1)
+  have h := D5.S3.Quantum.Dynamics.SpinCoupledEvenHypercubeGroverFixedPoint.sum_two_values
+    σ (f 1) (f 0)
+  rw [Nat.cast_sub (card_finset_fin_le σ)] at h
+  have he (b : Fin 2) : b.val = if b = 1 then 1 else 0 := by
+    fin_cases b <;> simp
+  simp_rw [he]
+  rw [Finset.sum_boole]
   calc
-    _ = ∑ k : Fin n, (f 0 + ((x k).val : ℂ) * (f 1 - f 0)) :=
-      Finset.sum_congr rfl (fun k _ => he (x k))
-    _ = _ := ?_
-  rw [Finset.sum_add_distrib, ← Finset.sum_mul]
-  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
-  push_cast
-  ring
+    _ = ∑ k : Fin n, if k ∈ σ then f 1 else f 0 := by
+      apply Finset.sum_congr rfl
+      intro k _
+      generalize hx : x k = b
+      fin_cases b <;> simp [σ, hx]
+    _ = _ := by
+      rw [h]
+      simp only [Nat.cast_id, σ]
+      ring
 
 theorem dicke_site_sum (n : ℕ) (a : Matrix (Fin 2) (Fin 2) ℂ)
     (x : Fin n → Fin 2) (r : Fin (n + 1)) :
