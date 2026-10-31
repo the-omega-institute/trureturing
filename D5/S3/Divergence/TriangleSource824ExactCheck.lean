@@ -32,4 +32,4 @@ run_elab do
   for ax in axs.toArray do
     unless #[``propext, ``Classical.choice, ``Quot.sound].contains ax do
       throwError "unaccepted exact-application axiom: {ax}"
-  logInfo m!"EXACT_KERNEL_ACCEPTED axioms={axs.toArray}"
+  Lean.logInfo m!"EXACT_KERNEL_ACCEPTED axioms={axs.toArray}"

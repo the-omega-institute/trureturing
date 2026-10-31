@@ -4,7 +4,7 @@ import Mathlib.Probability.Kernel.Basic
 import Mathlib.MeasureTheory.Integral.Lebesgue.Countable
 
 open MeasureTheory ProbabilityTheory
-open scoped BigOperators
+open scoped BigOperators ENNReal
 open D5.S3.ConceptDynamics.PartialIdentification.CanonicalResponseSignature
 open D5.S3.ConceptDynamics.PartialIdentification.MarkovianResponseLawFactorization
 open D5.S3.ConceptDynamics.PartialIdentification.ConditionalMarkovianBenefitBoundary
@@ -163,4 +163,4 @@ run_elab do
   for ax in axs.toArray do
     unless #[``propext, ``Classical.choice, ``Quot.sound].contains ax do
       throwError "unaccepted exact-application axiom: {ax}"
-  logInfo m!"EXACT_KERNEL_ACCEPTED axioms={axs.toArray}"
+  Lean.logInfo m!"EXACT_KERNEL_ACCEPTED axioms={axs.toArray}"
