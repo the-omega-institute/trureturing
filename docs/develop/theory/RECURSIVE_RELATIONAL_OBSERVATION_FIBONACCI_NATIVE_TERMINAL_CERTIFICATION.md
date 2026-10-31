@@ -2672,14 +2672,14 @@ $$
 \tag{40.7}
 $$
 
-其中 $\exp(-\infty)=0$。在 $t=1$ 时两种纤维都为 $\{0\}$。在 $t=0$ 时条件系数本身不定义；其保留图的闭包纤维分别为
+其中 $\exp(-\infty)=0$。在 $t=1$ 时两种纤维都为 $\{0\}$。在 $t=0$ 时条件系数本身不定义；忘记父源、仅保留质量、后射线和系数的图闭包纤维分别为
 
 $$
 \left[0,\varepsilon L_i(\phi)\right]\quad\text{和}\quad\{0\}.
 \tag{40.8}
 $$
 
-因此每个显示的上端为零时，整个纤维确实塌缩为零，而 (40.8) 的第一项只表示趋近零记录质量的图极限。
+因此每个显示的上端为零时，整个纤维确实塌缩为零，而 (40.8) 的第一项只表示趋近零记录质量的图极限；其中的后射线在 $t=0$ 是虚拟极限坐标，不是零投影的射线。完整父源保留时的纤维见定理 41.2–41.3。
 
 **证明。** 正交扇区分解给
 
@@ -2730,9 +2730,16 @@ $$
 
 **证明。** (40.6) 在足够小但正的 $t$ 下可达到 $\varepsilon L_i(\phi)$，因为 $a_j>0$；故 (41.1) 是最大值而非仅为上确界。对 (40.7) 取对数并求导，唯一临界点满足 (41.2)。其右端严格递增，从零趋于无穷；端点处函数趋于零，所以该临界点是唯一最大值。若 $\phi$ 趋近 $V_i$ 的边界，则某个 $u_s$ 趋于零，故 $F_i\to+\infty$，由 (41.2)–(41.3) 得上端趋于零。于是 (41.3) 在 $\mathbb P_i\setminus V_i$ 上以零连续延拓。射影空间紧，(41.4) 是连续函数的闭下图，因而紧。达到性来自 (40.6)–(40.7) 中的等号向量与相应的 $t$。∎
 
-**定理 41.2（保留父源的零记录边界）。** 令 $q\in\mathbb P_j$ 为被保留的父源零质量端点，$\phi\in\mathbb P_i$ 为虚拟的后射线。令 $t_n\downarrow0$、$\phi_n\to\phi$、$\psi_n\to q$，并取由 (40.5) 产生的系数。对 $h$，所有可能的极限系数恰为
+**定理 41.2（保留完整父源的零记录边界）。** 记 $\mathbb P=\mathbb P(\mathcal K)$，将 $\mathbb P_i,\mathbb P_j$ 视为它的闭子空间。令 $q\in\mathbb P_j$ 为完整父源的零记录端点，$\phi\in\mathbb P_i$ 为虚拟的后射线。取 $0<t_n<1$、$t_n\to0$、$\phi_n\to\phi$、$\psi_n\to q$，为两条射线各选单位代表，并令
 
 $$
+z_n=\sqrt{t_n}\,\phi_n+\sqrt{1-t_n}\,\psi_n.
+$$
+
+允许代表的相对相位任意变化；总有 $[z_n]\to q$。定义 $\Lambda_i^H(q,\phi)$ 为所有这种序列的可能极限系数之集。对 $h$，
+
+$$
+\Lambda_i^h(q,\phi)=
 \begin{cases}
 \{\varepsilon L_i(\phi)\},&q\in V_j,\\
 [0,\varepsilon L_i(\phi)],&q\in Z_j\setminus V_j,\\
@@ -2741,11 +2748,21 @@ $$
 \tag{41.5}
 $$
 
-对 $h_{\rm sm}$，无论 $q$ 属于 $V_j$、$Z_j\setminus V_j$ 还是 $\mathbb P_j\setminus Z_j$，极限系数都为 $0$。忘记父源后，$t=0$ 的 $h$ 图纤维是 $[0,\varepsilon L_i(\phi)]$，$h_{\rm sm}$ 图纤维是 $\{0\}$；$t=1$ 两者均为 $\{0\}$。因此 (41.5) 给出零记录边界的全部内、边界、外三种情形，而不是单个反例。
+对 $h_{\rm sm}$，每个 $q,\phi$ 都满足 $\Lambda_i^{h_{\rm sm}}(q,\phi)=\{0\}$；此消失对两个移动射线一致成立。忘记完整父源后，$t=0$ 的 $h$ 图纤维是 $[0,\varepsilon L_i(\phi)]$，$h_{\rm sm}$ 图纤维是 $\{0\}$。在 $t=1$，两种系数都只有零极限，完整父源等于后射线；另一投影方向并不由该父源定义。
 
-**证明。** $q\in V_j$ 时 $L_j(\psi_n)$ 有正下界，(40.6) 的第二个上限趋于无穷，极限只能是 $\varepsilon L_i(\phi)$。若 $q\notin Z_j$，某个 $d_s(q)<0$，连续性使该负号在邻域内保持，故 $L_j(\psi_n)=0$，极限为零。
+**证明。** 对选定的同一个源，(40.9) 给出逐点恒等式
 
-若 $q\in Z_j\setminus V_j$，对每个 $s\in S_j$ 取与 $a_s(q)$ 对齐的相位 $\theta_s$，置
+$$
+\gamma_i^h(z_n)=
+\varepsilon\min\left\{
+L_i(\phi_n),\frac{1-t_n}{t_n}L_j(\psi_n)
+\right\}.
+\tag{41.5a}
+$$
+
+若 $q\in V_j$，连续性使 $L_j(\psi_n)$ 有正下界；(41.5a) 的第二项趋于无穷，第一项不超过 $a_i$，故最终选中第一项，极限为 $\varepsilon L_i(\phi)$。若 $q\notin Z_j$，某个 $d_s(q)<0$，连续性使该负号在邻域内保持，故 $L_j(\psi_n)=0$，选定系数最终为零。
+
+若 $q\in Z_j\setminus V_j$，(41.5a) 先给出每个可能极限都在 $[0,\varepsilon L_i(\phi)]$ 内。为取得其中各值，固定 $q$ 的单位代表，对每个 $s\in S_j$ 取与 $a_s(q)$ 对齐的相位 $\theta_s$；$a_s(q)=0$ 时相位任取。置
 
 $$
 \widetilde q_\delta
@@ -2754,44 +2771,120 @@ $$
 \psi_\delta=\frac{\widetilde q_\delta}{\|\widetilde q_\delta\|}.
 $$
 
-在每个扇区中 $v_s$ 不变而 $\kappa_s|a_s|$ 增加 $\delta$；归一化只乘以同一个因子。因此 $\psi_\delta\in V_j$，并且因为 $q$ 至少有一个 gap 为零，
+在每个扇区中 $v_s$ 不变而 $\kappa_s|a_s|$ 增加 $\delta$；归一化只乘以同一个因子。因此 $\delta>0$ 时 $\psi_\delta\in V_j$，并且因为 $q$ 至少有一个 gap 为零，
 
 $$
 d_s(\psi_\delta)
 =\frac{d_s(q)+\delta}{\|\widetilde q_\delta\|},
 \qquad
-L_j(\psi_\delta)=\frac{\delta^2}{\|\widetilde q_\delta\|^2}.
+L_j(\psi_\delta)=\frac{\delta^2}{\|\widetilde q_\delta\|^2},
+\qquad
+\|\widetilde q_\delta\|\longrightarrow1.
 $$
 
-令 $\delta$ 与 $\sqrt{t_n}$ 同阶并调节其常数，$(1-t_n)L_j(\psi_{\delta})/t_n$ 可趋于任意 $\lambda\in[0,\infty]$。代入 (40.6)，得到恰为 $[0,\varepsilon L_i(\phi)]$ 的极限集合。这里 $Z_j=\overline{V_j}$ 也由同一扰动得到。
+给定 $0<\lambda<\infty$，取 $\delta_n=\sqrt{\lambda t_n}$，则 $(1-t_n)L_j(\psi_{\delta_n})/t_n\to\lambda$。取 $\delta_n=t_n$ 得到零极限，且各项仍在 $V_j$；也可直接保持 $\psi_n=q$。取 $\delta_n=t_n^{1/4}$ 则得到无穷极限，同时 $\delta_n\to0$。固定 $\phi_n=\phi$，把这些选定的父向量代入 (41.5a)，令有限 $\lambda$ 遍历 $[0,L_i(\phi)]$，便取得整个所需区间；$L_i(\phi)=0$ 时任取上述一路即可。这里 $Z_j=\overline{V_j}$ 也由同一扰动及 gap 的连续性得到。每条构造都有 $[z_n]\to q$，所以保留的是指定的完整父源端点。
 
-对光滑场，$F_i(\phi)\ge D_i>0$ 时
+对光滑场，在每个 $n$ 上，若 $F_i(\phi_n)$ 或 $F_j(\psi_n)$ 为无穷，则该项系数为零；其余各项用 $F_i(\phi_n)\ge D_i>0$。统一得到
 
 $$
 0\le\gamma_i^{h_{\rm sm}}(z_n)
-\le\frac{\varepsilon}{2t_n}e^{-D_i/t_n^2}\longrightarrow0;
+\le\frac{\varepsilon}{2t_n}e^{-D_i/t_n^2}
+\longrightarrow0.
+\tag{41.5b}
 $$
 
-若 $F_i(\phi)=+\infty$，它恒为零。最后对父源取并集，$V_j$ 给端点，边界或外部给全区间，故忘记父源的结论成立。∎
+此界与 $\phi_n,\psi_n$ 无关，包括 $\phi_n\in V_i$ 而 $F_i(\phi_n)\to\infty$ 的序列；这些正项不必为零。任取固定的 $\phi,q$ 并令 $t_n\to0$ 就能取得零极限。对父源取并集时，边界 $Z_j\setminus V_j$ 非空，例如任一 $[w_s]$、$s\in S_j$；它供应全区间，内部供应上端，外部只供应零。
 
-**定理 41.3（数学图与实际有限 ready 前缀图的闭包相等）。** 令 $\mathscr G_{i,+}^H$ 为所有非零数学 $z$ 的三元组
+最后，当 $t_n\to1$ 时，对所有移动方向均有
 
 $$
-\left(t_i(z),[M_i z],\frac{\varepsilon H(z)}{t_i(z)}\right),\qquad t_i(z)>0,
+0\le\gamma_i^h(z_n)\le
+\varepsilon a_j\frac{1-t_n}{t_n}\longrightarrow0,\qquad
+0\le\gamma_i^{h_{\rm sm}}(z_n)\le
+\frac{\varepsilon}{2t_n}e^{-D_j/(1-t_n)^2}\longrightarrow0.
+\tag{41.5c}
+$$
+
+完整父源此时趋于其后射线，而消失的 $j$ 投影不产生一个已定义的射线。∎
+
+**定理 41.3（完整父源图、方向图与实际有限 ready 前缀图的闭包）。** 对 $r=[z]\in\mathbb P$，只在 $t_k(r)>0$ 时定义 $p_k(r)=[M_kz]$，只在 $t_i(r)>0$ 时定义 $\gamma_i^H(r)=\varepsilon H(z)/t_i(r)$。置
+
+$$
+\mathcal U_{i,+}=\{r\in\mathbb P:t_i(r)>0\},
+\qquad
+\mathcal U_\circ=\{r\in\mathbb P:0<t_i(r)<1\}.
+$$
+
+原节点上界 $0\le H(z)\le b_s(z)$（$s\in S_i$）保证 $0\le\gamma_i^H\le\varepsilon$。在以下各自的紧环境空间中定义三个图，取乘积的自然拓扑：
+
+$$
+\begin{aligned}
+\mathscr R_{i,+}^H
+&=\{(r,t_i(r),p_i(r),\gamma_i^H(r)):r\in\mathcal U_{i,+}\}
+ \subseteq\mathbb P\times[0,1]\times\mathbb P_i\times[0,\varepsilon],\\
+\mathscr G_{i,+}^H
+&=\{(t_i(r),p_i(r),\gamma_i^H(r)):r\in\mathcal U_{i,+}\}
+ \subseteq[0,1]\times\mathbb P_i\times[0,\varepsilon],\\
+\mathscr T_{i,\circ}^H
+&=\{(r,t_i(r),p_i(r),p_j(r),\gamma_i^H(r)):r\in\mathcal U_\circ\}
+ \subseteq\mathbb P\times[0,1]\times\mathbb P_i\times\mathbb P_j
+             \times[0,\varepsilon].
+\end{aligned}
 \tag{41.6}
 $$
 
-并在 $t=0,1$ 处加入定理 41.1–41.2 的图极限。令 $\mathscr G_{i,\mathrm{act}}^H$ 为 (41.6) 中 $z=\chi_a$、$a\in\mathsf W_{11}$ 的子集。以 $[0,1]\times\mathbb P_i\times[0,\varepsilon]$ 的自然拓扑取闭包，则
+$\mathscr R$ 保留完整父源，$\mathscr G$ 忘记它，$\mathscr T$ 还记录两个非零投影的方向。两个投影射线连同质量仍不等于完整父源：对固定单位 $\phi,\psi$ 及 $0<t<1$，$[\sqrt t\,\phi+e^{i\alpha}\sqrt{1-t}\,\psi]$ 随相对相位变化，而两个投影射线不变。这些场的系数不依赖该相对相位。
+
+令 $\mathscr R_{i,\mathrm{act}}^H,\mathscr G_{i,\mathrm{act}}^H,\mathscr T_{i,\mathrm{act}}^H$ 分别为 (41.6) 限制到 $r=[\chi_a]$、$a\in\mathsf W_{11}$ 且满足相应域条件的图。则在各自环境空间中，
 
 $$
+\overline{\mathscr R_{i,\mathrm{act}}^H}
+=\overline{\mathscr R_{i,+}^H},\qquad
 \overline{\mathscr G_{i,\mathrm{act}}^H}
- =\overline{\mathscr G_{i,+}^H}.
+=\overline{\mathscr G_{i,+}^H},\qquad
+\overline{\mathscr T_{i,\mathrm{act}}^H}
+=\overline{\mathscr T_{i,\circ}^H}.
 \tag{41.7}
 $$
 
-若保留另一个父射线，则在同样的声明中加入 $[M_jz]$ 的射影坐标，所得实际图闭包仍等于数学图闭包，其 $t=0$ 纤维正是 (41.5)。
+完整父源图的闭包在 $0<t<1$ 正是 (41.6) 的逐点图，其两个端点纤维为
 
-**证明。** 包含关系的一边显然。反向地，给数学点 (41.6)，取同一射线的原有限 ready 前缀序列，使用 [III] (144.12) 的全载体射线稠密性。由于 $t_i(z)>0$，投影射线、质量和系数在该点连续，故可逐点逼近。对端点图先取一列正质量数学点，再对每一点选择足够近的实际前缀，作对角序列；投影趋零时使用节点连续延拓。保留父射线的情形只是在同一个 $89$ 维射线收敛下同时应用两个正交投影，故同样成立。这个证明没有要求实际集合含有任何精确碰撞，也没有要求实际系数填满区间、给出合成速率、有限字长率或达到数学最大值的实际字。∎
+$$
+\begin{aligned}
+\left.\overline{\mathscr R_{i,+}^H}\right|_{t=0}
+ &=\{(q,0,\phi,\gamma):
+       q\in\mathbb P_j,\ \phi\in\mathbb P_i,
+       \gamma\in\Lambda_i^H(q,\phi)\},\\
+\left.\overline{\mathscr R_{i,+}^H}\right|_{t=1}
+ &=\{(\phi,1,\phi,0):\phi\in\mathbb P_i\}.
+\end{aligned}
+\tag{41.8}
+$$
+
+忘记完整父源后的闭包在 $0<t<1$ 的纤维是 (40.6)–(40.7)，在 $t=0$ 是 (40.8)，在 $t=1$ 是 $\{(1,\phi,0):\phi\in\mathbb P_i\}$。其质量也忘记后正是 (41.4)。双方向图的闭包在 $0<t<1$ 仍是其逐点图，端点纤维则为
+
+$$
+\begin{aligned}
+\left.\overline{\mathscr T_{i,\circ}^H}\right|_{t=0}
+ &=\{(q,0,\phi,q,\gamma):
+       q\in\mathbb P_j,\ \phi\in\mathbb P_i,
+       \gamma\in\Lambda_i^H(q,\phi)\},\\
+\left.\overline{\mathscr T_{i,\circ}^H}\right|_{t=1}
+ &=\{(\phi,1,\phi,\psi,0):
+       \phi\in\mathbb P_i,\ \psi\in\mathbb P_j\}.
+\end{aligned}
+\tag{41.9}
+$$
+
+(41.8) 中 $t=0$ 的 $\phi$、(41.9) 中 $t=0$ 的 $\phi$ 与 $t=1$ 的 $\psi$ 都是所选序列的虚拟极限方向。它们不把 $[0]$ 加入任何射影空间，也不给端点父源定义一个消失投影的方向。
+
+**证明。** $t_i,H$ 在 $\mathbb P$ 连续，$p_k$ 在非零投影域连续，故 (41.6) 的各图映射在各自域上连续。若一个图序列收敛而 $0<t<1$，其完整父源的极限仍在 $\mathcal U_\circ$，两条投影射线和系数均由该父源唯一给出；若只保留 $\mathscr G$ 的坐标，紧性允许先选出完整父源的收敛子列，再得 (40.6)–(40.7)。
+
+当 $t\to0$，完整父源必趋于某个 $q\in\mathbb P_j$，且 $p_j(r_n)\to q$；对单位代表作正交分解便得到定理 41.2 的全部序列情形。这给 (41.8)–(41.9) 在 $t=0$ 的必要性，而该定理逐一构造的源序列给充分性。若序列中后射线也移动，只需沿其收敛子列应用同一定理。当 $t\to1$，$p_i(r_n)$ 趋于完整父源 $\phi\in\mathbb P_i$；恰有 $t_i(r_n)=1$ 的项因缺失整个 $j$ 扇区而有 $H=0$，其余项由 (41.5c) 得零系数极限。对每个 $\psi\in\mathbb P_j$，取固定单位代表的 $\sqrt t\,\phi+\sqrt{1-t}\,\psi$ 并令 $t\to1$，得到 (41.9) 中每一个虚拟方向。这也逼近 (41.8) 的整个 $t=1$ 纤维。$t=1$ 本身已在 $\mathscr R_{i,+}^H,\mathscr G_{i,+}^H$ 的定义域内，只有 $\mathscr T_{i,\circ}^H$ 需要在此取极限。
+
+忘记完整父源是紧环境空间间的连续坐标投影，因此图闭包的投影等于投影图的闭包；(41.8) 的零端点取并集给 (40.8)。再忘记质量，所有正质量点的像已是 (41.4)，而两个端点的系数仍在同一闭下图内，故像仍恰为 (41.4)。对 $\mathscr T$ 忘记完整父源也同样合法，但所得双射线图仍不保留相对相位，不能称为完整父源图。
+
+最后证明 (41.7)。实际图各自包含于数学图。反向地，固定任何数学图定义域内的一点，使用 [III] (144.12) 的同一 $89$ 维原有限 ready 射线稠密性取 $[\chi_{a_n}]$ 趋于它。定义域开，故序列最终在该域内；图映射在这个固定点连续，因而实际图趋于其数学图点。对任一端点图极限，先取上述域内数学图序列，再对第 $n$ 个非零投影点选择在相应图环境中距离小于 $1/n$ 的实际前缀，作对角序列。逼近精度逐点选择，不断言源射线的任意收敛序列都保留一个消失投影的方向。由此取得 (41.8)–(41.9) 的全部实际图闭包点，包括给定完整父源的每个允许纤维。这个证明没有要求实际集合含有任何精确碰撞，也没有要求实际系数填满区间、给出合成速率、有限字长率或达到数学最大值的实际字。∎
 
 ## 42. 连续后射线恢复的尖锐风险与零条件行
 
@@ -2883,7 +2976,7 @@ $$
 
 ## 43. 来源对应、条件边界与未移入的前提
 
-本组的源特定承重是把 [III] (164.2)–(164.10)、(165.1)–(165.6) 的原 $89$ 维扇区分解接到本卷 (28.1)–(32.9) 的字面保留切口。扇区枚举给 (40.2)–(40.3)，正交分解与 Holder 给 (40.4)，连续像给 (40.6)–(40.8)，对数导数给 (41.2)，原 ready 射线稠密性给 (41.7)，而 RRO32 的实际域下界与 (42.1) 的十六单元符号行共同给 (42.2)。这些是同一来源、同一 $M_i$、同一 $H=h$ 或 $h_{\rm sm}$ 的参数对应；没有把已有的无关 $\Gamma_i$ 记号移作本组包络。
+本组的源特定承重是把 [III] (164.2)–(164.10)、(165.1)–(165.6) 的原 $89$ 维扇区分解接到本卷 (28.1)–(32.9) 的字面保留切口。扇区枚举给 (40.2)–(40.3)，正交分解与 Holder 给 (40.4)，连续像给 (40.6)–(40.7)，对数导数给 (41.2)，逐点源公式与一致端点界给 (40.8)、(41.5)、(41.8)–(41.9)，原 ready 射线稠密性给三个指定域上的 (41.7)，而 RRO32 的实际域下界与 (42.1) 的十六单元符号行共同给 (42.2)。这些是同一来源、同一 $M_i$、同一 $H=h$ 或 $h_{\rm sm}$ 的参数对应；没有把已有的无关 $\Gamma_i$ 记号移作本组包络。
 
 | 来源 | 本组实际使用与保留的条件 |
 | --- | --- |
