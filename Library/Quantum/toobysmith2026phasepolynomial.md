@@ -1,5 +1,5 @@
 ---
-bibkey: physlibphasepolynomial2026
+bibkey: toobysmith2026phasepolynomial
 authors: Joseph Tooby-Smith
 year: 2026
 title: "Physlib charge balance and infinite-order unitary phase"

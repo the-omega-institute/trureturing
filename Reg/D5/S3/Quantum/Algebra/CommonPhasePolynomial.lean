@@ -2,6 +2,9 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Algebra.CommonPhasePolynomial
 import Reg.Support.DependentFamily
 
+/-! Dependent-family audit of arbitrary-dimensional balanced-monomial generation. -/
+
+open scoped Classical
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Algebra.PhasePolynomial
