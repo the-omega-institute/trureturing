@@ -421,7 +421,8 @@ theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
   have hzero' : ((List.range (k + 1)).map g).sum = 0 := by
     change ((List.range (k + 1)).map
       (fun i => centered (modulus (k + 1)) ((2 : ℤ) ^ i * (2 * u)))).sum = 0
-    have hknew : 3 ≤ k + 1 := by dsimp [k]; omega
+    have hknew : 3 ≤ k + 1 := by
+      simpa only [k] using cone_length_new a b c ha hab hbc
     exact doubled_source_zero_cast (k + 1) (1 + 2 ^ a + 2 ^ (a + b)) u hknew hseed
   obtain ⟨hu, hB, hL, hU, hV, hW, hfA, hfB, hfG, hgA, hgB, hgG, hgear⟩ :=
     paired_chains a b c (by omega) (by omega) (by omega)
