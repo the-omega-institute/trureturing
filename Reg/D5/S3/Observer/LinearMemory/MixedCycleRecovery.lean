@@ -85,8 +85,13 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have hh := congrFun hs.1 ⟨1, (generated testBasis 0 (Nat.zero_le 1)).one_mem⟩
   have hid := (mixed_cycle_recovery testBasis 0 (Nat.zero_le 1)).2.2.2.2.1
     ⟨testBasis (.inl 0), test_visible⟩
-  have hz : (⟨testBasis (.inl 0), test_visible⟩ : visible testBasis) = 0 := by
-    simpa [rejected, realize, zero_smul, add_zero, hid] using hh
+  have hobs : observations testBasis 0 (Nat.zero_le 1) (testBasis (.inl 0))
+      ⟨1, (generated testBasis 0 (Nat.zero_le 1)).one_mem⟩ = 0 := by
+    change observations testBasis 0 (Nat.zero_le 1)
+      (testBasis (.inl 0) + 0 • testBasis (.inr ⟨0, by decide⟩)) _ = 0 at hh
+    simpa only [zero_smul, add_zero] using hh
+  have hz : (⟨testBasis (.inl 0), test_visible⟩ : visible testBasis) = 0 :=
+    hid.symm.trans hobs
   exact testBasis.toBasis.ne_zero (.inl 0) (congrArg Subtype.val hz)
 
 def source_registration : Registration arena.{u} (type_of% (@mixed_cycle_recovery.{u})) where
@@ -108,8 +113,14 @@ def source_registration : Registration arena.{u} (type_of% (@mixed_cycle_recover
     have hh := congrFun he ⟨1, (generated testBasis 0 (Nat.zero_le 1)).one_mem⟩
     have hid := (mixed_cycle_recovery testBasis 0 (Nat.zero_le 1)).2.2.2.2.1
       ⟨testBasis (.inl 0), test_visible⟩
-    have hz : (0 : visible testBasis) = ⟨testBasis (.inl 0), test_visible⟩ := by
-      simpa [actual, realize, testParameters, map_zero, hid] using hh
+    change observations testBasis 0 (Nat.zero_le 1) 0 _ =
+      observations testBasis 0 (Nat.zero_le 1) (testBasis (.inl 0)) _ at hh
+    have hzero : observations testBasis 0 (Nat.zero_le 1) 0
+        ⟨1, (generated testBasis 0 (Nat.zero_le 1)).one_mem⟩ = 0 := by
+      rw [map_zero]
+      rfl
+    have hz : (0 : visible testBasis) = ⟨testBasis (.inl 0), test_visible⟩ :=
+      hzero.symm.trans (hh.trans hid)
     exact testBasis.toBasis.ne_zero (.inl 0) (congrArg Subtype.val hz.symm)
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
