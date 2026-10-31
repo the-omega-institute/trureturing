@@ -1,0 +1,21 @@
+#### 定理 7.2（递归与谱增长）
+
+$$
+Z_0=1,\quad Z_1=1+\lambda,\quad Z_n=Z_{n-1}+\lambda Z_{n-2},
+$$
+
+$$
+Z_n=\frac{\rho^{n+2}-s^{n+2}}{\rho-s},\qquad
+\lim_{n\to\infty}\frac{\log Z_n}{n}=\log\rho.
+$$
+
+当 $\lambda=1$，$\rho=\varphi=(1+\sqrt5)/2$。
+
+**证明。**
+
+以首位为零或以 $10$ 开头分解合法串，得到递归；初值单独计数。两根满足 $z^2=z+\lambda$，所列显式式满足同一递归和初值。因 $\rho>1$ 且 $|s|=\rho-1<\rho$，对数增长率成立。
+
+∎
+
+<a id="statement-7-3"></a>
+
