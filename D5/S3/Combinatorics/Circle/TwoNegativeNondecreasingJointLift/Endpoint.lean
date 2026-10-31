@@ -7,6 +7,8 @@
    digest: Unconditional complementary two-negative physical joint insertion. -/
 import D5.S3.Combinatorics.Circle.TwoNegativeNondecreasingJointLift.Core
 
+/-! Explicit bounded masks and the physical exception complete the complementary range. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -98,7 +100,9 @@ theorem actualSource_two_negative_nondec_joint_lift (a b : ℕ) (ha : 2 ≤ a)
         have hh : C - Q < (q + 1) * R := by dsimp [C]; nlinarith
         exact (Int.mul_lt_mul_left (show 0 < q + 1 by omega)).mp
           (lt_of_le_of_lt hfloor.1 hh)
-      have hu : u < 2 ^ (b - 1) := by exact_mod_cast huR
+      have hu : u < 2 ^ (b - 1) := by
+        dsimp [R] at huR
+        exact_mod_cast huR
       have hlow : Q ≤ C - (q + 1) * (u : ℤ) := by omega
       have hhigh : C - (q + 1) * (u : ℤ) ≤ Q + q := by nlinarith [hfloor.2]
       apply assemble u 0 hu (by positivity)
