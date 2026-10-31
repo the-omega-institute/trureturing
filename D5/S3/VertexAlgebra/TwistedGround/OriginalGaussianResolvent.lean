@@ -1098,18 +1098,6 @@ private lemma weightedB_summable {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
       exact weight_le_one n
     _ = _ := by ring
 
-private lemma weightedB_coefficient_step (n : ℕ) :
-    2 * (n + 1 : ℝ) * centralWeight (n + 1) =
-      (2 * (n : ℝ) + 1) * centralWeight n := by
-  have h := Nat.succ_mul_centralBinom_succ n
-  have hcR : (n + 1 : ℝ) * (Nat.centralBinom (n + 1) : ℝ) =
-      2 * (2 * (n : ℝ) + 1) * (Nat.centralBinom n : ℝ) := by
-    exact_mod_cast h
-  simp only [centralWeight, pow_succ, Nat.cast_add, Nat.cast_one,
-    Nat.cast_mul, Nat.cast_ofNat]
-  field_simp
-  nlinarith [hcR]
-
 private lemma weightedB_eq {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
     (∑' n : ℕ, (n : ℝ) * centralWeight n * r ^ n) =
       r * B r / (2 * (1 - r)) := by
@@ -1129,7 +1117,7 @@ private lemma weightedB_eq {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
           centralWeight n * r ^ n) := by
         apply tsum_congr
         intro n
-        have hrec := weightedB_coefficient_step n
+        have hrec := OriginalGaussianMatrix.centralWeight_step n
         rw [pow_succ]
         linear_combination (r ^ n * r) * hrec
       _ = _ := by
