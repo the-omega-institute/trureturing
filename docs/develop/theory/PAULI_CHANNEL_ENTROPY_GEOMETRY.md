@@ -3984,3 +3984,292 @@ and mixed source problems. The sufficient mixed-source criteria in
 this section are not a claim about all sources.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 追加锚（本行以下为增补区）
+
+## 18. A stationary entropy kernel and funding on the bias boundary
+
+Retain the original channels, independent $a,b\in[0,1]$, and deficit.
+For a pure product source write its unit local Bloch vectors as
+$(x_E,y_E,z_E)$, and retain $A_E,B_E,J=J_0$ from §15. Thus
+$$
+ A_E=S(P_E)+S(Q_E)-S(R_E),\qquad J=S(P)+S(Q)-S(R).
+$$
+Put $e(r)=H_2((1+r)/2)$, evenly extended to $[-1,1]$, and
+$c_n=2n(2n-1)$ for $n\geq1$.
+
+**Theorem 18.1 (Zero-product-moment funding on the closed bias boundary).**
+Suppose $\rho$ is a complex pure product source and
+$\mu=-y_Cy_D=0$. If at least one of $a,b$ belongs to $\{0,1\}$, then
+$$
+ \boxed{J\leq\min\{A_C,A_D\},\qquad
+ \Delta\geq I(P)+B_C+B_D+J\geq0.}
+\tag{18.1}
+$$
+Only one source factor is required to have $y_E=0$. Coordinate signs,
+zero control weights and singular output spectra are included.
+
+Proof.
+We use four steps. Binomial convolution and the Chebyshev covariance
+identity enter as classical intermediate identities.
+
+First, for $s,t\geq0$, $s+t\leq1$, $n\geq2$, and $1\leq j<n$,
+$$
+ \binom{2n}{2j}s^jt^{n-j}\leq\binom nj.
+\tag{18.2}
+$$
+By homogeneity it suffices to maximize $s^j(1-s)^{n-j}$, whose maximum
+is at $p=j/n$. Let $b_r=\binom nrp^r(1-p)^{n-r}$ on $0\leq r\leq n$,
+extended by zero to the integers. The successive-mass ratio shows that
+$b_j$ is its maximum. Vandermonde convolution therefore gives
+$$
+ \binom{2n}{2j}p^{2j}(1-p)^{2n-2j}
+ =\sum_r b_rb_{2j-r}\leq b_j\sum_r b_{2j-r}=b_j.
+$$
+Divide by the positive $p^j(1-p)^{n-j}$ to prove (18.2).
+
+The entropy series
+$$
+ g(r):=\log2-e(r)=\sum_{n\geq1}\frac{r^{2n}}{c_n}
+\tag{18.3}
+$$
+follows by integrating the series of $\operatorname{atanh}r$.
+Its coefficients sum to $\log2$, by taking $r\uparrow1$ and using
+monotone convergence. Hence it converges uniformly on $[-1,1]$,
+including zero binary probabilities.
+For any real pairs $(X,Z),(U,V)$ of norm at most one, put
+$\kappa=XU$, $\lambda=ZV$ and $p_{kl}=(1+k\kappa+l\lambda)/4$.
+These are probabilities because $|\kappa|+|\lambda|\leq1$.
+Pairing the positive and negative signs in (18.3) gives
+$$
+ I(K:L)_p=\sum_{n\geq2}\sum_{j=1}^{n-1}
+   \frac{\binom{2n}{2j}\kappa^{2j}\lambda^{2n-2j}}{c_n}.
+$$
+Apply (18.2) with $s=U^2,t=V^2$. The resulting nonnegative series is
+exactly the binomial expansion of
+$$
+ I(K:L)_p\leq\mathcal A(X,Z)
+ :=e(X)+e(Z)-\log2-e\!\left(\sqrt{X^2+Z^2}\right).
+\tag{18.4}
+$$
+Indeed its numerator in degree $n$ is
+$(X^2+Z^2)^n-X^{2n}-Z^{2n}$. Uniform convergence of (18.3) and
+nonnegative summands include $|\kappa\pm\lambda|=1$. Equation
+(18.4) is a probability inequality; it assumes no pure-source Gram
+identity for a mixed quantum input.
+
+Second, put $u=1-a^2$ and $\phi_a(s)=e(\sqrt{a^2+us^2})$.
+For $0\leq a<1$, define the probability measure
+$$
+ d\nu_a(t)=u\,d\delta_1(t)
+      +\frac{ua^2}{(u+a^2t^2)^{3/2}}\,dt,\qquad0\leq t\leq1.
+$$
+The density is $a^2$ times the derivative of
+$t/\sqrt{u+a^2t^2}$, so its mass is $a^2$.
+Set $\nu_1=\delta_0$. Expansion of (18.3) gives
+$$
+ \phi_a(s)=e(a)-\sum_{m\geq1}\frac{\alpha_m(a)s^{2m}}{c_m},
+ \quad
+ \alpha_m(a)=(2m-1)u^m\int_0^1
+       \frac{r^{2m-2}}{(1-a^2r^2)^m}\,dr.
+$$
+All coefficients are nonnegative, and their sum weighted by $1/c_m$
+is $e(a)$, because $\phi_a(1)=0$. Substitution
+$t=\sqrt u\,r/\sqrt{1-a^2r^2}$ and integration by parts give
+$$
+ \alpha_m(a)=\int t^{2m}\,d\nu_a(t),\qquad
+ \phi_a(s)=\int[e(ts)-e(t)]\,d\nu_a(t).
+\tag{18.5}
+$$
+At $a=0$, $\nu_0=\delta_1$ and $\alpha_m(0)=1$; at $a=1$,
+$\nu_1=\delta_0$, $\alpha_m(1)=0$ and both sides of the second
+identity vanish. Thus (18.5) includes both control endpoints.
+
+Third, the following scalar consequence of (18.5) is essential:
+$$
+ \sum_{m\geq1}\frac{\alpha_m(a)\alpha_m(z)}{c_m}
+ \leq e(a)+e(z)-e(az),\qquad0\leq a,z\leq1.
+\tag{18.6}
+$$
+Here is a positive stationary-kernel proof. In the integral for
+$\alpha_m(\sqrt q)$, substitute
+$t=(1-r^2)/(1-qr^2)$ to obtain
+$$
+ \alpha_m(\sqrt q)
+ =(m-\tfrac12)(1-q)\int_0^1
+      \frac{(1-t)^{m-3/2}}{\sqrt{1-qt}}\,dt,
+ \qquad0\leq q<1.
+$$
+Expand $(1-qt)^{-1/2}$ in its nonnegative series. Repeated integration
+by parts of the beta integrals gives
+$$
+ \alpha_m(\sqrt q)=(1-q)\sum_{j\geq0}b_{mj}q^j,
+ \quad b_{m0}=1,\quad
+ b_{mj}=\prod_{r=0}^{j-1}\frac{r+1/2}{m+r+1/2}.
+$$
+For clarity, the successive ratio of the integral of
+$t^j(1-t)^{m-3/2}$ is $j/(m+j-1/2)$; combined with the binomial
+coefficient $(1/2)_j/j!$, this is precisely the displayed product.
+The numbers $b_{mj}$ decrease to zero: the logarithms of their
+factors are at most $-m/(m+r+1/2)$, with divergent negative sum.
+Consequently $w_{mj}=b_{m,j-1}-b_{mj}>0$ satisfies
+$$
+ \sum_{j\geq1}w_{mj}=1,\qquad
+ \alpha_m(\sqrt q)=1-\sum_{j\geq1}w_{mj}q^j,
+ \qquad
+ \sum_{m\geq1}\frac{w_{mj}}{c_m}=\frac1{c_j}.
+\tag{18.7}
+$$
+The last identity follows by subtracting
+$\sum_m\alpha_m(\sqrt q)/c_m=e(\sqrt q)$ from
+$\sum_m1/c_m=\log2$ and comparing coefficients in (18.3).
+All exchanges are of nonnegative sums. The first two identities
+also hold at $q=0,1$ by the stated row sums and endpoint moments.
+
+Put $q=a^2,r=z^2$ and $\beta_m(q)=\sum_jw_{mj}q^j$.
+Since $q^j$ and $r^j$ have the same order, the Chebyshev covariance
+identity gives
+$$
+ \begin{aligned}
+ \sum_jw_{mj}(qr)^j-\beta_m(q)\beta_m(r)
+ &=\frac12\sum_{j,k}w_{mj}w_{mk}
+       (q^j-q^k)(r^j-r^k)\geq0.
+ \end{aligned}
+$$
+The sums are absolutely convergent, since the weights are probabilities
+and all powers lie in $[0,1]$. Sum with weights $1/c_m$ and use
+(18.7), obtaining $\sum_m\beta_m(q)\beta_m(r)/c_m\leq g(az)$.
+Expand $\alpha_m(a)\alpha_m(z)=(1-\beta_m(q))(1-\beta_m(r))$
+to prove (18.6), also at $a,z=0,1$.
+
+Fourth, assume initially that both source vectors are real and $b=0$.
+The actual Gram state of Lemma 15.3 is
+$$
+ G=\tfrac14\bigl[(I+aZ_A)\otimes(I+bZ_B)
+ +\kappa\sqrt uX_A\otimes(I+bZ_B)
+ +\lambda\sqrt v(I+aZ_A)\otimes X_B\bigr],
+ \qquad v=1-b^2,
+\tag{18.8}
+$$
+where $\mu=0$. Its margins are
+$(I+aZ_A+\kappa\sqrt uX_A)/2$ and
+$(I+bZ_B+\lambda\sqrt vX_B)/2$, and $J=I(A:B)_G$.
+At $b=0$ the $B$ control states are orthogonal. Thus for
+$|\lambda|<1$ its actual conditional qubit states give
+$$
+ \begin{aligned}
+ J&=\phi_a(\kappa)-\sum_{l=\pm1}\frac{1+l\lambda}2
+             \phi_a\!\left(\frac\kappa{1+l\lambda}\right)\\
+  &=\int I(K:L)_{p(t\kappa,\lambda,0)}\,d\nu_a(t).
+ \end{aligned}
+\tag{18.9}
+$$
+The second equality is exactly (18.5). If $|\lambda|=1$, then
+$\kappa=0$ and $J=0$; this also follows by entropy continuity.
+No measurement interpretation of the measure $\nu_a$ is required.
+
+Write $x=x_C,z=|z_C|$, so $x^2+z^2=1$. Apply (18.4) inside
+(18.9) to $(tx,z)$ and the unchanged real $D$ vector. The true
+local entropy is $A_C=e(z)+\phi_a(x)-e(az)$, and exact subtraction
+gives
+$$
+ \begin{aligned}
+ A_C-\int\mathcal A(tx,z)\,d\nu_a(t)
+ &=e(a)+e(z)-e(az)
+       -\sum_{m\geq1}\frac{\alpha_m(a)\alpha_m(z)}{c_m}\geq0.
+ \end{aligned}
+$$
+To check the subtraction, use $\int e(tx)\,d\nu_a
+=\phi_a(x)+\log2-e(a)$ and
+$\int e(\sqrt{z^2+t^2x^2})\,d\nu_a
+=e(z)-\sum_m\alpha_m(a)\alpha_m(z)/c_m$.
+This proves $J\leq A_C$; exchange the physical qubits to prove
+$J\leq A_D$. The direct endpoint identities for $\nu_a$ and (18.6)
+include $a=0,1$ and $z=0,1$.
+
+It remains to permit the other source factor to be complex.
+For $\mu=0$, local $Z_A$ dephasing of (18.8) attenuates only
+$\kappa$, and local $Z_B$ dephasing attenuates only $\lambda$.
+Hence mutual-information data processing makes $J$ nondecreasing
+in each of $|\kappa|,|\lambda|$ at every fixed $a,b$.
+For a local pure Bloch vector fix $X^2+Z^2=1$ and write
+$x^2=tX^2,z^2=tZ^2,y^2=1-t$. With the function $f$ of §15, the
+exact local gap is $A(t)=f(p)+f(q)-f(r)$, where
+$$
+ p=v(1-tZ^2),\quad q=u(1-tX^2),\quad
+ r=p+q-uv(1-t)\geq p,q.
+$$
+Since $f'$ is nonnegative and decreasing, differentiation gives
+$$
+ A'(t)\leq[-vZ^2-uX^2+v(1-u)Z^2+u(1-v)X^2]f'(r)
+        =-uvf'(r)\leq0.
+$$
+This holds wherever derivatives are finite; continuity supplies
+all singular endpoints, and $u=0$ or $v=0$ gives $A=0$ directly.
+One source factor is already real because $\mu=0$. Normalize the
+other factor's nonzero $XZ$ projection to a real unit vector.
+This increases both global moment magnitudes and decreases that
+factor's $A$, while leaving the first factor's $A$ fixed. The proved
+real-real comparison therefore gives both original comparisons.
+If that projection vanishes, $\kappa=\lambda=\mu=0$ and $G$ is a
+product, so $J=0\leq A_E$ by the actual control CMI of Theorem 15.2.
+
+Hadamard conjugation on each physical qubit exchanges $X,Z$ and
+$a,b$, sends $Y$ to $-Y$, and preserves $\mu=0$. It exchanges
+$P,Q$ and preserves $R$ and each $A_E$. Thus the $b=0$ result gives
+every $a=0$ case. If $a=1$ or $b=1$, one channel is the identity
+and $J=A_C=A_D=0$. This proves the entire closed bias boundary.
+Finally, insert $A_C,A_D\geq J$ in (15.1), with $I(\rho)=0$, to
+obtain the deficit inequality in (18.1).
+
+**Proposition 18.2 (A strict full-dephasing funding margin).**
+Under the same pure-product and $\mu=0$ assumptions, at $a=b=0$,
+$$
+ A_E-J\geq\frac{y_E^2}{2}+\frac{x_E^2z_E^2}{24},\qquad E=C,D.
+\tag{18.10}
+$$
+Proof.
+The actual local gap is $e(x_E)+e(z_E)-\log2$.
+Its $n=1$ entropy-series term is $y_E^2/2$; $J$ has no such term.
+For $E=C$, the $n=2$ difference is
+$$
+ \frac{1-(x_C^2+z_C^2)^2
+       +(2-6x_D^2z_D^2)x_C^2z_C^2}{12}.
+$$
+Use $x_D^2z_D^2\leq1/4$ and nonnegativity of every higher-degree
+difference by (18.2). Exchange $C,D$. If neither source is an $X$
+or $Z$ eigenstate, both funding gaps are strict; entropy continuity
+then preserves them on a pure-product neighborhood allowing
+$\mu\ne0$ and sufficiently small nonnegative $a,b$.
+
+**Proposition 18.3 (The one-bias measure does not tensorize).**
+The identity $J=\iint I(p(t\kappa,s\lambda,0))\,d\nu_a(t)d\nu_b(s)$
+does not hold for all pure product sources with $\mu=0$.
+
+Proof.
+Take $a=b=1/\sqrt2$, and write
+$L=\operatorname{atanh}(a)/a=\sum_{n\geq0}2^{-n}/(2n+1)$.
+The actual difference
+$G-G_A\otimes G_B=-\kappa\lambda X_A\otimes X_B/8$
+has, at the faithful reference $(I+aZ_A)\otimes(I+aZ_B)/4$,
+relative-entropy quadratic coefficient $(2+L)/16$ in
+$\kappa^2\lambda^2$; the two linked eigenvalue pairs are
+$00,11$ and $01,10$, so the logarithmic divided differences give
+$\tfrac1{16}(L+2)$. The double integral instead has coefficient
+$\alpha_1(a)^2/2=L^2/8$ by (18.3) and (18.5).
+Choose the actual real unit vectors
+$(\sqrt{1-\epsilon^2},0,\epsilon)$ and
+$(\epsilon,0,\sqrt{1-\epsilon^2})$. Then
+$\kappa=\lambda=\epsilon\sqrt{1-\epsilon^2}$, $\mu=0$, and the
+difference is $(2+L-2L^2)\epsilon^4/16+O(\epsilon^6)>0$.
+Indeed $1<L<5/4$: the first four series terms sum to $1037/840$,
+and the tail is at most $1/72$, giving $1573/1260<5/4$.
+Thus $2+L-2L^2>1/8$. This disproves the double-integral identity;
+it asserts no negative funding gap.
+
+Theorem 18.1 is a stronger intermediate entropy comparison on its
+stated source and bias domain. The general funding comparison at
+$a,b\in(0,1)$, the unrestricted pure-product sign, and the general
+pure-source and mixed-source sign remain unresolved outside the
+previously proved regions.
