@@ -34,7 +34,7 @@ private theorem descending_polynomials (Z L P : ℤ)
     rcases hL with hl|hl
     · subst L
       dsimp only
-      simp only [if_pos rfl]
+      simp only [if_true,if_false,if_pos rfl]
       have hz : 0≤Z-4 := by omega
       generalize hz0 : Z-4=z at hz
       have heZ : Z=z+4 := by omega
@@ -42,7 +42,7 @@ private theorem descending_polynomials (Z L P : ℤ)
       refine ⟨?_,?_,?_,?_,?_,?_⟩
       all_goals apply sub_nonneg.mp; ring_nf; positivity
     · dsimp only
-      simp only [if_pos rfl,if_neg (show ¬L=1 by omega)]
+      simp only [if_true,if_false,if_pos rfl,if_neg (show ¬L=1 by omega)]
       have hz : 0≤Z-4 := by omega
       have hl' : 0≤L-2 := by omega
       generalize hz0 : Z-4=z at hz
@@ -58,7 +58,7 @@ private theorem descending_polynomials (Z L P : ℤ)
     · rcases hL with hl|hl
       · subst L
         dsimp only
-        simp only [if_neg hnot,if_pos rfl]
+        simp only [if_true,if_false,if_neg hnot,if_pos rfl]
         have hz : 0≤Z-8 := by omega
         have hp' : 0≤P-2 := by omega
         generalize hz0 : Z-8=z at hz
@@ -69,7 +69,7 @@ private theorem descending_polynomials (Z L P : ℤ)
         refine ⟨?_,?_,?_,?_,?_,?_⟩
         all_goals apply sub_nonneg.mp; ring_nf; positivity
       · dsimp only
-        simp only [if_neg hnot,if_neg (show ¬L=1 by omega)]
+        simp only [if_true,if_false,if_neg hnot,if_neg (show ¬L=1 by omega)]
         have hz : 0≤Z-8 := by omega
         have hl' : 0≤L-2 := by omega
         have hp' : 0≤P-2 := by omega
@@ -85,7 +85,7 @@ private theorem descending_polynomials (Z L P : ℤ)
     · rcases hL with hl|hl
       · subst L
         dsimp only
-        simp only [if_neg hnot,if_pos rfl]
+        simp only [if_true,if_false,if_neg hnot,if_pos rfl]
         have hz : 0≤Z-4 := by omega
         have hp' : 0≤P-4 := by omega
         generalize hz0 : Z-4=z at hz
@@ -96,7 +96,7 @@ private theorem descending_polynomials (Z L P : ℤ)
         refine ⟨?_,?_,?_,?_,?_,?_⟩
         all_goals apply sub_nonneg.mp; ring_nf; positivity
       · dsimp only
-        simp only [if_neg hnot,if_neg (show ¬L=1 by omega)]
+        simp only [if_true,if_false,if_neg hnot,if_neg (show ¬L=1 by omega)]
         have hz : 0≤Z-4 := by omega
         have hl' : 0≤L-2 := by omega
         have hp' : 0≤P-4 := by omega
@@ -148,26 +148,28 @@ private theorem descending_mask_values (p l : ℕ) :
   have hH1 : 2*P*L=2^(p+l+1) := by dsimp [P,L]; rw [pow_succ,pow_add]; ring
   have hlow : (2*P ||| 2)=if p=0 then 2 else 2*P+2 := by
     by_cases hp : p=0
-    · simp only [hp,P,pow_zero,mul_one,Nat.or_self,if_pos rfl]
-    · rw [if_neg hp,Nat.or_comm,hH2,Nat.or_two_pow_eq_add_of_lt]
-      · omega
-      · exact Nat.pow_lt_pow_right (by decide) (show 1<p+1 by omega)
+    · simp only [if_true,if_false,hp,P,pow_zero,mul_one,Nat.or_self,if_pos rfl]
+    · have hlt : 2<(2:ℕ)^(p+1) :=
+        Nat.pow_lt_pow_right (show 1<(2:ℕ) by decide) (show 1<p+1 by omega)
+      rw [if_neg hp,Nat.or_comm,hH2,Nat.or_two_pow_eq_add_of_lt hlt]
+      omega
   refine ⟨hlow,?_⟩
   change (2*P*L ||| 2*P ||| 2)=_
   rw [Nat.or_assoc,hlow]
   by_cases hp : p=0
-  · simp only [if_pos hp]
+  · simp only [if_true,if_false,if_pos hp]
     have hPe : P=1 := by dsimp [P]; rw [hp,pow_zero]
     rw [hPe]
-    simp only [mul_one]
+    simp only [if_true,if_false,mul_one]
     by_cases hl : l=0
-    · simp only [hl,L,pow_zero,mul_one,Nat.or_self,if_pos rfl]
+    · simp only [if_true,if_false,hl,L,pow_zero,mul_one,Nat.or_self,if_pos rfl]
     · rw [if_neg hl,Nat.or_comm]
       have hZ : 2*L=2^(l+1) := by dsimp [L]; rw [pow_succ]; ring
-      rw [hZ,Nat.or_two_pow_eq_add_of_lt]
-      · omega
-      · exact Nat.pow_lt_pow_right (by decide) (show 1<l+1 by omega)
-  · simp only [if_neg hp]
+      have hlt : 2<(2:ℕ)^(l+1) :=
+        Nat.pow_lt_pow_right (show 1<(2:ℕ) by decide) (show 1<l+1 by omega)
+      rw [hZ,Nat.or_two_pow_eq_add_of_lt hlt]
+      omega
+  · simp only [if_true,if_false,if_neg hp]
     have hP2 : 2≤P:=Nat.pow_le_pow_right Nat.zero_lt_two (show 1≤p by omega)
     by_cases hl : l=0
     · have hLe : L=1 := by dsimp [L]; rw [hl,pow_zero]

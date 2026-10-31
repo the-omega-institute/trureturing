@@ -98,10 +98,10 @@ private theorem remaining_charge_bounds (A : ℤ) (b c v0 v2 v3 w : ℕ)
     Nat.pow_le_pow_right Nat.zero_lt_two (Nat.sub_le c 1)
   have hwcap : (2:ℕ)^(b-1)≤2^b :=
     Nat.pow_le_pow_right Nat.zero_lt_two (Nat.sub_le b 1)
-  have hv2i : (v2:ℤ)<Z := by exact_mod_cast lt_of_lt_of_le hv2 hvcap
-  have hv3i : (v3:ℤ)≤Z := by exact_mod_cast le_of_lt (lt_of_lt_of_le hv3 hvcap)
+  have hv2i : (v2:ℤ)<Z := by dsimp [Z]; exact_mod_cast lt_of_lt_of_le hv2 hvcap
+  have hv3i : (v3:ℤ)≤Z := by dsimp [Z]; exact_mod_cast le_of_lt (lt_of_lt_of_le hv3 hvcap)
   have hwi : (w:ℤ)≤T-1 := by
-    have hh : (w:ℤ)<T := by exact_mod_cast lt_of_lt_of_le hw hwcap
+    have hh : (w:ℤ)<T := by dsimp [T]; exact_mod_cast lt_of_lt_of_le hw hwcap
     omega
   have hmult:=mul_le_mul_of_nonneg_left hwi (show 0≤Z+1 by dsimp [Z]; positivity)
   change A-1-v0≤A ∧ A-Z-1+v2≤A ∧ A-(T*Z+T+1)+v3+(Z+1)*w≤A
