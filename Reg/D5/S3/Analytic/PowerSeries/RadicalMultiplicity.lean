@@ -63,7 +63,10 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
     (by intro i; simp [p]) (by intro i; simp [A])
     (by intro k hk; rw [hZ]; simp)
   norm_num [rejected, realize, A, I] at he
-  have hc := congrArg PowerSeries.constantCoeff he
+  have he' : (1 : ℝ⟦X⟧) + 1 = 0 := by
+    simpa only [one_add_one_eq_two] using he
+  have hc := congrArg (fun f : ℝ⟦X⟧ => PowerSeries.constantCoeff (R := ℝ) f) he'
+  simp only [map_add, map_one, map_zero] at hc
   norm_num at hc
 
 private theorem sensitivity : Sensitivity arena actual := by
