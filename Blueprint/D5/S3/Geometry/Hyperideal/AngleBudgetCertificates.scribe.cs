@@ -45,8 +45,8 @@ internal sealed class AngleBudgetCertificatesDocument : IScribeDocumentDefinitio
         return And(
             Gt(Mul(F.D(8), betaTwo), Mul(F.D(2), pi)),
             Gt(AndTerm(Mul(F.D(6), betaThree), betaTwo), Mul(F.D(2), pi)),
-            Gt(Mul(F.D(18), thetaZero), Mul(F.D(2), pi)),
-            Gt(AndTerm(Mul(F.D(11), thetaOne), Mul(F.D(6), thetaZero)), Mul(F.D(2), pi)),
+            Gt(Mul(F.D(1, 8), thetaZero), Mul(F.D(2), pi)),
+            Gt(AndTerm(Mul(F.D(1, 1), thetaOne), Mul(F.D(6), thetaZero)), Mul(F.D(2), pi)),
             Gt(AndTerm(Mul(F.D(9), thetaTwo), Mul(F.D(7), thetaOne)), Mul(F.D(2), pi)));
     }
 
