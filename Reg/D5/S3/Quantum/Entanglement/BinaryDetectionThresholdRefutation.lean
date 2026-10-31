@@ -97,7 +97,7 @@ def registration :
     readouts := #[{
       path := #[]
       stateBinder := 0
-      functionOperand := true
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown

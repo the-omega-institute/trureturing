@@ -264,7 +264,7 @@ def allEqualRegistration :
     readouts := #[{
       path := #["body", "body", "body", "body"]
       stateBinder := 2
-      functionOperand := true
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
