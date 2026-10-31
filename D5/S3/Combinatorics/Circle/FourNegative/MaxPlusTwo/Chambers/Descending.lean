@@ -156,7 +156,7 @@ private theorem descending_mask_values (p l : ℕ) :
   change (2*P*L ||| 2*P ||| 2)=_
   rw [Nat.or_assoc,hlow]
   by_cases hp : p=0
-  · rw [if_pos hp,if_pos hp]
+  · simp only [if_pos hp]
     have hPe : P=1 := by dsimp [P]; rw [hp,pow_zero]
     rw [hPe]
     simp only [mul_one]
@@ -167,12 +167,13 @@ private theorem descending_mask_values (p l : ℕ) :
       rw [hZ,Nat.or_two_pow_eq_add_of_lt]
       · omega
       · exact Nat.pow_lt_pow_right (by decide) (show 1<l+1 by omega)
-  · rw [if_neg hp,if_neg hp]
+  · simp only [if_neg hp]
     have hP2 : 2≤P:=Nat.pow_le_pow_right Nat.zero_lt_two (show 1≤p by omega)
     by_cases hl : l=0
     · have hLe : L=1 := by dsimp [L]; rw [hl,pow_zero]
       rw [if_pos hl,hLe,mul_one]
-      rw [←hlow,if_neg hp,Nat.or_assoc,Nat.or_self]
+      have hlow' : (2*P ||| 2)=2*P+2 := by simpa only [if_neg hp] using hlow
+      rw [←hlow',←Nat.or_assoc,Nat.or_self]
     · rw [if_neg hl]
       have hL2 : 2≤L:=Nat.pow_le_pow_right Nat.zero_lt_two (show 1≤l by omega)
       have hlt : 2*P+2<2*P*L := by nlinarith
