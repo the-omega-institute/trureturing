@@ -170,10 +170,10 @@ private lemma apply_update {m : ℕ} (labels : Fin m → basis m) (t c : Fin m)
   funext j
   by_cases hj : j = t
   · subst j
-    simp only [applyLabels, updateLabels, Function.update_self]
+    simp only [applyLabels.eq_1, updateLabels.eq_1, Function.update_self]
     change dot (labels t + labels c) x = dot (labels t) x + dot (labels c) x
     exact dot_add_left _ _ _
-  · simp [applyLabels, updateLabels, Function.update_apply, hj]
+  · simp [applyLabels.eq_1, updateLabels.eq_1, Function.update_apply, hj]
 
 private lemma toggle_involutive {m : ℕ} (t c : Fin m) (h : t ≠ c) :
     Function.Involutive (fun x : basis m => Function.update x t (x t ^^ x c)) := by
@@ -213,7 +213,7 @@ private def phaseAux {m : ℕ} : List (gate m) → (Fin m → basis m) → basis
 private lemma phase_ne_zero {m : ℕ} (gs : List (gate m))
     (labels : Fin m → basis m) (x : basis m) : phaseAux gs labels x ≠ 0 := by
   induction gs generalizing labels with
-  | nil => simp [phaseAux]
+  | nil => simp [phaseAux.eq_1, phaseAux.eq_2, phaseAux.eq_3]
   | cons g gs ih =>
     cases g with
     | inl p => exact ih _
@@ -245,7 +245,7 @@ private lemma matrix_normal {m : ℕ} (gs : List (gate m))
       unfold rzMatrix
       rw [Matrix.diagonal_mul]
       rw [ih]
-      simp only [phaseAux, List.foldl_cons, mul_assoc, applyLabels] <;> rfl
+      simp only [phaseAux.eq_1, phaseAux.eq_2, phaseAux.eq_3, List.foldl_cons, mul_assoc, applyLabels.eq_1] <;> rfl
 
 private lemma normal_form (m : ℕ) (circuit : List (gate m)) :
     ∃ a : basis m → basis m, Function.Bijective a ∧
@@ -292,13 +292,13 @@ private lemma diagonal_forces_identity (m : ℕ) (circuit : List (gate m)) (c : 
   have hi := congrFun (hfix (initialLabel i)) j
   change dot (wireLabels circuit j) (initialLabel i) = initialLabel i j at hi
   rw [dot_initial] at hi
-  simpa [initialLabels, initialLabel, eq_comm] using hi
+  simpa [initialLabels.eq_1, initialLabel.eq_1, eq_comm] using hi
 
 private lemma character_mul (m : ℕ) (v : basis m) (f g : basis m → ℂ)
-    (hf : ∀ x, f x ≠ 0) (hg : ∀ x, g x ≠ 0) :
+    :
     character v (fun x => f x * g x) = character v f * character v g := by
   classical
-  simp only [character, mul_zpow, Finset.prod_mul_distrib]
+  simp only [character.eq_1, mul_zpow, Finset.prod_mul_distrib]
 
 private lemma exists_dot_true {m : ℕ} (v : basis m) (hv : v ≠ zeroLabel) :
     ∃ i, v i = true := by
@@ -306,7 +306,7 @@ private lemma exists_dot_true {m : ℕ} (v : basis m) (hv : v ≠ zeroLabel) :
   apply hv
   funext i
   have hi : v i ≠ true := by simpa using fun hi => h ⟨i, hi⟩
-  cases hvi : v i <;> simp_all [zeroLabel]
+  cases hvi : v i <;> simp_all [zeroLabel.eq_1]
 
 private lemma character_cancel {m : ℕ} (v u : basis m) (f : basis m → ℂ)
     (hu : dot v u = true) (hf : ∀ x, f x ≠ 0)
@@ -328,7 +328,7 @@ private lemma character_cancel {m : ℕ} (v u : basis m) (f : basis m → ℂ)
     change (x i + u i) + u i = x i
     cases x i <;> cases u i <;> rfl
 
-private lemma character_global (m : ℕ) (hm : 0 < m) (v : basis m)
+private lemma character_global (m : ℕ) (v : basis m)
     (hv : v ≠ zeroLabel) (c : ℂ) (hc : c ≠ 0) :
     character v (fun _ : basis m => c) = 1 := by
   obtain ⟨i, hi⟩ := exists_dot_true v hv
@@ -340,24 +340,32 @@ private lemma character_factor (m : ℕ) (v w : basis m) (f : Bool → ℂ)
     (hw : w ≠ fun _ : Fin m => false) (hf : ∀ b, f b ≠ 0) :
     character v (fun x => f (dot w x)) = 1 := by
   classical
-  obtain ⟨i, hi⟩ := exists_dot_true v hv
+  obtain ⟨j, hj⟩ := exists_dot_true w hw
   have hsep : ∃ u : basis m, dot v u = true ∧ dot w u = false := by
-    cases hwi : w i with
-    | false => exact ⟨initialLabel i, by simpa [dot_initial] using hi, dot_initial w i |>.trans hwi⟩
+    cases hvj : v j with
+    | false =>
+      obtain ⟨i, hi⟩ := exists_dot_true v hv
+      cases hwi : w i with
+      | false => exact ⟨initialLabel i, by simpa [dot_initial] using hi,
+          (dot_initial w i).trans hwi⟩
+      | true =>
+        refine ⟨initialLabel i + initialLabel j, ?_, ?_⟩ <;>
+          simp [dot_add_right, dot_initial, hi, hwi, hvj, hj, Bool.add_eq_xor]
     | true =>
-      have hdiff : ∃ j, v j ≠ w j := by
+      have hdiff : ∃ i, v i ≠ w i := by
         by_contra hn
         apply hvw
-        funext j
-        by_contra hj
-        exact hn ⟨j, hj⟩
-      obtain ⟨j, hj⟩ := hdiff
-      cases hvj : v j <;> cases hwj : w j
-      · exact (hj (hvj.trans hwj.symm)).elim
-      · refine ⟨initialLabel i + initialLabel j, ?_, ?_⟩ <;>
-          simp [dot_add_right, dot_initial, hi, hwi, hvj, hwj, Bool.add_eq_xor, Bool.zero_eq_false]
-      · exact ⟨initialLabel j, by simpa [dot_initial] using hvj, dot_initial w j |>.trans hwj⟩
-      · exact (hj (hvj.trans hwj.symm)).elim
+        funext i
+        by_contra hi
+        exact hn ⟨i, hi⟩
+      obtain ⟨i, hi⟩ := hdiff
+      cases hvi : v i <;> cases hwi : w i
+      · exact (hi (hvi.trans hwi.symm)).elim
+      · refine ⟨initialLabel j + initialLabel i, ?_, ?_⟩ <;>
+          simp [dot_add_right, dot_initial, hvj, hj, hvi, hwi, Bool.add_eq_xor]
+      · exact ⟨initialLabel i, by simpa [dot_initial] using hvi,
+          (dot_initial w i).trans hwi⟩
+      · exact (hi (hvi.trans hwi.symm)).elim
   obtain ⟨u, hvu, hwu⟩ := hsep
   apply character_cancel v u _ hvu (fun x => hf (dot w x))
   intro x
@@ -370,7 +378,7 @@ private lemma phase_character {m : ℕ} (gs : List (gate m))
     character v (phaseAux gs labels) = 1 := by
   classical
   induction gs generalizing labels with
-  | nil => simp [phaseAux, character]
+  | nil => simp [phaseAux.eq_1, phaseAux.eq_2, phaseAux.eq_3, character.eq_1]
   | cons g gs ih =>
     cases g with
     | inl p =>
@@ -380,11 +388,11 @@ private lemma phase_character {m : ℕ} (gs : List (gate m))
         intro hz
         obtain ⟨x, hx⟩ := ha.2 (fun _ => true)
         have hh := congrFun hx p.1
-        simp [applyLabels, hz, dot, zeroLabel, Bool.mul_eq_and] at hh
+        simp [applyLabels.eq_1, hz, dot.eq_1, zeroLabel.eq_1, Bool.mul_eq_and] at hh
       have hvw : v ≠ labels p.1 := by
         intro heq
         apply hmiss
-        simp [rotationLabelsAux, heq]
+        simp [rotationLabelsAux.eq_1, rotationLabelsAux.eq_2, rotationLabelsAux.eq_3, heq]
       have htail : v ∉ rotationLabelsAux gs labels := by
         intro hh
         exact hmiss (Finset.mem_insert_of_mem hh)
@@ -395,7 +403,7 @@ private lemma phase_character {m : ℕ} (gs : List (gate m))
         dsimp [f]
         split <;> exact Complex.exp_ne_zero _
       change character v (fun x => f (dot (labels p.1) x) * phaseAux gs labels x) = 1
-      rw [character_mul m v _ _ (fun x => hf _) (phase_ne_zero gs labels),
+      rw [character_mul m v _ _,
         character_factor m v (labels p.1) f hv hvw hw hf, ih labels ha htail, mul_one]
 
 private lemma hard_character (m : ℕ) (hm : 0 < m) (v : basis m) (he : evenLabel v) :
@@ -408,22 +416,19 @@ private lemma hard_character (m : ℕ) (hm : 0 < m) (v : basis m) (he : evenLabe
   have hzo : z ≠ o := by
     intro h
     have hi := congrFun h ⟨0, hm⟩
-    simpa [z, o, zeroLabel] using hi
+    simpa [z, o, zeroLabel.eq_1] using hi
   have hzθ : hardTheta z = Real.pi / 2 := by
     change (if (∀ i, z i = false) ∨ (∀ i, z i = true) then Real.pi / 2 else 0) = _
-    rw [if_pos (Or.inl (by intro i; simp [z, zeroLabel]))]
+    rw [if_pos (Or.inl (by intro i; simp [z, zeroLabel.eq_1]))]
   have hoθ : hardTheta o = Real.pi / 2 := by
     change (if (∀ i, o i = false) ∨ (∀ i, o i = true) then Real.pi / 2 else 0) = _
     rw [if_pos (Or.inr (by intro i; simp [o]))]
   have hzdot : dot v z = false := by
-    simp [dot, z, zeroLabel, Bool.mul_eq_and]
+    simp [dot.eq_1, z, zeroLabel.eq_1, Bool.mul_eq_and]
   have hodot : dot v o = false := by
-    simpa [dot, o, evenLabel, Bool.mul_eq_and] using he
-  have hphase : Complex.exp (((Real.pi / 2 : ℝ) : ℂ) * Complex.I) = Complex.I := by
-    rw [Complex.exp_ofReal_mul_I, cos_pi_div_two, sin_pi_div_two]
-    simp
-  have hfz : f z = Complex.I := by simp [f, hzdot, hzθ, hphase]
-  have hfo : f o = Complex.I := by simp [f, hodot, hoθ, hphase]
+    simpa [dot.eq_1, o, evenLabel.eq_1, Bool.mul_eq_and] using he
+  have hfz : f z = Complex.I := by simp [f, hzdot, hzθ]
+  have hfo : f o = Complex.I := by simp [f, hodot, hoθ]
   have hrest (x : basis m) (hx : x ∈ (Finset.univ \ {z}) \ {o}) : f x = 1 := by
     have hxz : x ≠ z := by
       intro h
@@ -435,13 +440,13 @@ private lemma hard_character (m : ℕ) (hm : 0 < m) (v : basis m) (he : evenLabe
       intro hzero
       apply hxz
       funext i
-      simp [z, zeroLabel, hzero i]
+      simp [z, zeroLabel.eq_1, hzero i]
     have hxone : ¬∀ i, x i = true := by
       intro hone
       apply hxo
       funext i
       simp [o, hone i]
-    simp [f, hardTheta, zeroLabel, hxzero, hxone]
+    simp [f, hardTheta.eq_1, zeroLabel.eq_1, hxzero, hxone]
   change ∏ x : basis m, f x = -1
   rw [Finset.prod_eq_mul_prod_diff_singleton z f (by simp)]
   have hnotmem : o ∉ (Finset.univ : Finset (basis m)) \ {z} → f o = 1 := by
@@ -483,12 +488,12 @@ private lemma rotation_labels (m : ℕ) (circuit : List (gate m))
     exact phase_ne_zero circuit (initialLabels m) zeroLabel hh
   have hi : Function.Bijective (applyLabels (initialLabels m)) := by
     obtain ⟨a, ha, heq⟩ := normal_form m []
-    simpa [heq, wireLabels] using ha
+    simpa [heq, wireLabels.eq_1] using ha
   intro v he hv
   by_contra hmiss
   have hp := phase_character circuit (initialLabels m) v hi hv hmiss
   have hh := congrArg (character v) (funext heval)
-  rw [character_mul m v _ _ (fun _ => hc) (fun x => Complex.exp_ne_zero _),
+  rw [character_mul m v _ _,
     hglobal v c hv hc, hchars v he hv, one_mul, hp] at hh
   norm_num at hh
 
@@ -513,15 +518,15 @@ private lemma pairs_count {m : ℕ} (gs : List (gate m)) :
   | nil => rfl
   | cons g gs ih =>
     cases g with
-    | inl p => simpa [cnotPairs, cnotCount] using congrArg Nat.succ ih
-    | inr p => simpa [cnotPairs, cnotCount] using ih
+    | inl p => simpa [cnotPairs.eq_1, cnotCount.eq_1] using congrArg Nat.succ ih
+    | inr p => simpa [cnotPairs.eq_1, cnotCount.eq_1] using ih
 
 private lemma rotation_outputs {m : ℕ} (gs : List (gate m))
     (ls : Fin m → basis m) (v : basis m) (hv : v ∈ rotationLabelsAux gs ls) :
     (∃ j, ls j = v) ∨ v ∈ ReflectionDiagonalParityCounting.outputs (cnotPairs gs) ls := by
   classical
   induction gs generalizing ls with
-  | nil => simp [rotationLabelsAux] at hv
+  | nil => simp [rotationLabelsAux.eq_1, rotationLabelsAux.eq_2, rotationLabelsAux.eq_3] at hv
   | cons g gs ih =>
     cases g with
     | inl p =>
@@ -533,9 +538,9 @@ private lemma rotation_outputs {m : ℕ} (gs : List (gate m))
           apply Or.inl
           refine hj.symm.trans ?_
           funext i
-          simp only [updateLabels, Function.update_self, Pi.add_apply, Bool.add_eq_xor]
+          simp only [updateLabels.eq_1, Function.update_self, Pi.add_apply, Bool.add_eq_xor]
         · left
-          exact ⟨j, by simpa [updateLabels, Function.update_apply, hjt] using hj⟩
+          exact ⟨j, by simpa [updateLabels.eq_1, Function.update_apply, hjt] using hj⟩
       · right
         exact List.mem_cons_of_mem _ hh
     | inr p =>
@@ -545,7 +550,7 @@ private lemma rotation_outputs {m : ℕ} (gs : List (gate m))
 
 private lemma initial_odd {m : ℕ} (j : Fin m) :
     (∑ i, initialLabels m j i) = true := by
-  simpa [dot, initialLabels, Bool.mul_eq_and] using dot_initial (fun _ => true) j
+  simpa [dot.eq_1, initialLabels.eq_1, Bool.mul_eq_and] using dot_initial (fun _ => true) j
 
 private lemma return_count (m : ℕ) (hm : 0 < m) (circuit : List (gate m))
     (hnf : wireLabels circuit = initialLabels m)
@@ -581,7 +586,7 @@ private lemma claim_for_n (n : ℕ) (hn : 1 ≤ n) :
   have hglobal : ∀ (v : basis (2 * n)) (d : ℂ), v ≠ zeroLabel → d ≠ 0 →
       character v (fun _ : basis (2 * n) => d) = 1 := by
     intro v d hv hd
-    exact character_global (2 * n) (Nat.mul_pos (by decide) hn) v hv d hd
+    exact character_global (2 * n) v hv d hd
   have hchars : ∀ v : basis (2 * n), evenLabel v → v ≠ zeroLabel →
       character v (fun x => Complex.exp ((hardTheta x : ℂ) * Complex.I)) = -1 := by
     intro v he _
