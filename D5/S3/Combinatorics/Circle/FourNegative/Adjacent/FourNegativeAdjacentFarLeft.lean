@@ -54,9 +54,12 @@ private theorem small_arithmetic (c b : ℤ) (hc : 2 ≤ c) (hb : c ≤ b) :
   have ec : c=u+2 := by dsimp [u]; ring
   have eb : b=u+2+v := by dsimp [u,v]; ring
   simp only [ec,eb]
-  ring_nf
   repeat' constructor
-  all_goals first | positivity | rfl | omega
+  all_goals first
+    | ring
+    | apply le_of_sub_nonneg
+      ring_nf
+      positivity
 
 set_option maxHeartbeats 1600000 in
 private theorem large_arithmetic (p b : ℤ) (hp : 1 ≤ p) (hb : 2 ≤ b) :
@@ -94,9 +97,12 @@ private theorem large_arithmetic (p b : ℤ) (hp : 1 ≤ p) (hb : 2 ≤ b) :
   have ep : p=u+1 := by dsimp [u]; ring
   have eb : b=v+2 := by dsimp [v]; ring
   simp only [ep,eb]
-  ring_nf
   repeat' constructor
-  all_goals first | positivity | rfl | omega
+  all_goals first
+    | ring
+    | apply le_of_sub_nonneg
+      ring_nf
+      positivity
 
 set_option maxHeartbeats 2400000 in
 private theorem symbolic (r s : ℕ) (hs : 2 ≤ s) (hr : s+2 ≤ r) :
@@ -169,7 +175,9 @@ private theorem symbolic (r s : ℕ) (hs : 2 ≤ s) (hr : s+2 ≤ r) :
       have hp : p=1 := by dsimp [p]; rw [show r-2*s=0 by omega]; norm_num
       rw [hp]
       simpa only [hcx,hcT,hhalf,one_mul] using small_arithmetic c b hc hcb
-    · have hp : 1 ≤ p := by dsimp [p]; positivity
+    · have hp : 1 ≤ p := by
+        dsimp [p]
+        exact_mod_cast (Nat.one_le_two_pow : 1 ≤ 2^(r-2*s))
       have hpx : 4*p*b^2=x := by
         dsimp only [p,b]
         rw [←hx]
@@ -231,7 +239,7 @@ private theorem symbolic (r s : ℕ) (hs : 2 ≤ s) (hr : s+2 ≤ r) :
     apply List.mem_range'.mpr
     exact ⟨r-2*s,by omega,by omega⟩
   have split : (Xone++Xrest).Perm Xlow := by
-    simpa only [Xone,List.singleton_append] using List.perm_cons_erase hmem
+    simpa only [Xone,List.singleton_append] using (List.perm_cons_erase hmem).symm
   have sumU : (U.map f).sum=(b-1)*A ∧ (U.map g).sum=(b-1)*(2*A) := by
     constructor
     · simpa only [U,List.range_eq_range',Nat.zero_add,b] using ladder_sum f 0 (s-1) A (fun i hi => by simpa using (posU i hi).1)
@@ -378,14 +386,15 @@ private theorem symbolic (r s : ℕ) (hs : 2 ≤ s) (hr : s+2 ≤ r) :
     have he : ((2*t : ℕ) : ℤ)=2*A := by push_cast; rw [ht]
     simpa only [g,←he] using ThreeNegativeEqualOuterSourceBridge.source_zero (k+1) (2*t) (by dsimp [k]; omega)
   have cut : pre.length=r+2*s := by simp only [pre,F2,W,Xone,U,Xhigh,List.length_append,List.length_singleton,List.length_range,List.length_range']; omega
-  refine ⟨word.map (label k (by dsimp [k]; omega)),r+2*s,by dsimp [k]; omega,?_,?_⟩
+  refine ⟨word.map (label k (by dsimp [k]; omega)),r+2*s,by omega,?_,?_⟩
   · exact lift_order k t (by dsimp [k]; omega) word hp
       (by simpa only [f,N,←ht] using oldstrip) (by simpa only [f,N,←ht] using hz)
   · rw [marked_word k (r+2*s) (by dsimp [k]; omega) pre post cut (by simpa only [word] using hp)]
     have he : ((2*t : ℕ) : ℤ)=2*A := by push_cast; rw [ht]
-    exact lift_order (k+1) (2*t) (by dsimp [k]; omega) (pre++[k]++post) hp'
+    simpa only [List.append_assoc,List.singleton_append] using
+      (lift_order (k+1) (2*t) (by dsimp [k]; omega) (pre++[k]++post) hp'
       (by have hh : modulus (k+1)/2=N := by omega
           simpa only [g,he,hh] using newstrip)
-      (by simpa only [g,he] using hz')
+      (by simpa only [g,he] using hz'))
 
 end D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentFarLeft

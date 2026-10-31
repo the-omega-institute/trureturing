@@ -372,9 +372,10 @@ private theorem far_right (r s : ℕ) (hr : 2 ≤ r) (hs : r+2 ≤ s) :
       (by simpa only [f,N,←ht] using oldstrip) (by simpa only [f,N,←ht] using hz)
   · rw [marked_word k pre.length (by dsimp [k]; omega) pre [z] rfl (by simpa only [word] using hp)]
     have he : ((2*t : ℕ) : ℤ)=2*A := by push_cast; rw [ht]
-    exact lift_order (k+1) (2*t) (by dsimp [k]; omega) (pre++[k]++[z]) hp'
+    simpa only [List.append_assoc,List.singleton_append] using
+      (lift_order (k+1) (2*t) (by dsimp [k]; omega) (pre++[k]++[z]) hp'
       (by have hh : modulus (k+1)/2=N := by omega
           simpa only [g,he,hh] using newstrip)
-      (by simpa only [g,he] using hz')
+      (by simpa only [g,he] using hz'))
 
 end D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentFarRight
