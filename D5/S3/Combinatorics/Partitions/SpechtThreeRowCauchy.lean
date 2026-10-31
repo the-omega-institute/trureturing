@@ -44,7 +44,7 @@ private theorem cauchy_numerator {R : Type*} [CommRing R] (x y : Fin 3 → R) :
       ![(1-x i*y 1)*(1-x i*y 2), (1-x i*y 0)*(1-x i*y 2),
         (1-x i*y 0)*(1-x i*y 1)]) = deltaProduct x * deltaProduct y := by
   rw [Matrix.det_fin_three]
-  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val, deltaProduct]
+  simp only [Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val, deltaProduct]
   ring
 
 /-- Cauchy's identity with specified inverses. No field, convergence or character
@@ -311,13 +311,14 @@ theorem cauchy_coefficient_delta (u v : Fin 3 → ℕ)
     rw [hm]
     exact edgeSeries_inverse i j
   rw [hid, Matrix.det_apply, map_sum]
+  simp only [Matrix.of_apply]
   have hterm (σ : Perm (Fin 3)) :
       MvPowerSeries.coeff (doubleWeight u v)
         (sign σ • ∏ i, edgeSeries (σ i) i) =
         if σ = 1 ∧ u = v then (1 : ℤ) else 0 := by
     have hp : (∏ i, edgeSeries (σ i) i) = ∏ i, edgeSeries i (σ⁻¹ i) := by
-      simpa only [Equiv.symm_apply_apply] using
-        (Equiv.prod_comp σ (fun i => edgeSeries i (σ⁻¹ i))).symm
+      simpa only [Equiv.Perm.inv_def, Equiv.symm_apply_apply] using
+        (Equiv.prod_comp σ (fun i => edgeSeries i (σ⁻¹ i)))
     simp only [Units.smul_def]
     rw [hp, map_smul, matching_product_coefficient]
     by_cases hm : ∀ i, u i = v (σ⁻¹ i)
@@ -325,6 +326,7 @@ theorem cauchy_coefficient_delta (u v : Fin 3 → ℕ)
       have hs' : σ = 1 := by simpa using congrArg Inv.inv hs
       simp [hm, hs', he]
     · have hn : ¬ (σ = 1 ∧ u = v) := by rintro ⟨rfl, rfl⟩; exact hm (by simp)
+      simp only [Equiv.Perm.inv_def] at hm
       simp [hm, hn]
   simp_rw [hterm]
   by_cases he : u = v <;> simp [he]
@@ -571,7 +573,13 @@ theorem evSpechtSums_eq_coefficients {n : ℕ} (lam : n.Partition) :
     spechtCharValue_eq_frobChar ![n,n,0] _ (by simp) (by simp) _ rfl
   constructor
   · simp only [signedEvSpechtSum, hrow]
-    simp [Finset.sum_attach]
+    simp
+    congr 1
+    apply List.map_congr_left
+    intro τ hτ
+    exact Finset.sum_attach _ (fun r =>
+      (-1 : ℤ)^τ.length *
+        D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.frobChar r τ)
   · simp only [rectangleEvSpechtSum, hrect]
     simp
 
@@ -1000,7 +1008,7 @@ theorem ordinaryWeightedRectangleEv_evaluated (n : ℕ) (hn : 1 ≤ n) :
       simpa only [cycleWeight, one_pow, LaurentPolynomial.T_pow, mul_one, mul_neg_one,
         add_comm, add_left_comm, Nat.cast_add, Nat.cast_one] using h
     · simp only [coeff_mk, cycle_average_zero]
-      simp [coeff_mul, coeff_geometricSquare]
+      simp [coeff_mul, coeff_geometricSquare, invOneSubPow]
 
   have geometricSquare_one :
       (rescale (1 : (LaurentPolynomial ℚ)) (invOneSubPow _ 2).val) =
