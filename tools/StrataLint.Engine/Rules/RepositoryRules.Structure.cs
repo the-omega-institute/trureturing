@@ -224,6 +224,19 @@ internal static partial class RepositoryRules
         RepositorySnapshot current, RepositorySnapshot baseline, RawChangeSet changes)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        foreach (var change in changes.Entries.Where(static change =>
+            change.Kind is RawChangeKind.Added or RawChangeKind.Modified
+            && !IsArtifactLineCapacityExcluded(change.Path.Value)))
+        {
+            if (!current.Files.TryGetValue(change.Path, out var file))
+                continue;
+
+            var lines = CountArtifactLines(file.Text);
+            if (lines > ArtifactHardLineLimit)
+                findings.Add(new(change.Path.Value,
+                    $"artifact spans {lines} lines (hard limit {ArtifactHardLineLimit})"));
+        }
+
         findings.AddRange(TheoryCapacity(current, changes));
         findings.AddRange(LibraryCapacity(current, changes));
         var directories = CapacityPathsByDirectory(current.Files.Keys);
