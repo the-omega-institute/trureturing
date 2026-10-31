@@ -7,6 +7,7 @@
    digest: Continuous finite-action coboundaries from the actual recognizable factorial tilings. -/
 
 import D5.S1.Dynamics.Symbolic.PermutativeLifts.FactorialSubshift
+import Mathlib.Data.Fintype.Perm
 import Mathlib.Topology.Algebra.Group.Basic
 
 set_option autoImplicit false
@@ -29,7 +30,10 @@ private theorem stateTransfer_next {G : Type*} [Monoid G] (π : Bool → G)
     stateTransfer π W t = π (readTile W s) * stateTransfer π W s := by
   rcases hst with ⟨htype, hoff⟩ | ⟨hlast, hstart⟩
   · unfold stateTransfer
-    rw [← htype, hoff, holonomy_take_succ π (W s.1) s.2.isLt]
+    have hprefix : (W t.1).take t.2.val = (W s.1).take (s.2.val + 1) :=
+      congrArg₂ (fun (w : List Bool) (p : ℕ) => w.take p)
+        (congrArg W htype.symm) hoff
+    rw [hprefix, holonomy_take_succ π (W s.1) s.2.isLt]
     rfl
   · have hstep := holonomy_take_succ π (W s.1) s.2.isLt
     rw [hlast, List.take_length, hW] at hstep

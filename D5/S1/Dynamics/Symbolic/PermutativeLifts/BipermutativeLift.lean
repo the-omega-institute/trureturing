@@ -119,7 +119,8 @@ private theorem prefix_step_code (bh : Bipermutative h) (x : ℤ → A) :
     unfold rightLetter
     apply (rightEquiv bh (sourcePrefix x)).symm_apply_eq.mpr
     change code h x 0 = h (Fin.snoc (sourcePrefix x) (x (k + 1 : ℕ)))
-    simp only [code, window_eq_snoc, zero_add, sourcePrefix]
+    simp only [code, window_eq_snoc, zero_add]
+    rfl
   ext j
   cases j using Fin.lastCases with
   | last => simp [prefixStep, hlast, sourcePrefix, shift, Nat.cast_add, add_comm]

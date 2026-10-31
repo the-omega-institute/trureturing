@@ -9,6 +9,8 @@
 import D5.S1.Dynamics.Symbolic.PermutativeLifts.FactorialWords
 import D5.S1.Dynamics.Symbolic.PermutativeLifts.MarkedTiling
 
+/-! Literal refinement, recognizability and the simultaneous factorial subshift. -/
+
 set_option autoImplicit false
 
 namespace D5.S1.Dynamics.Symbolic.PermutativeLifts
@@ -49,6 +51,20 @@ def refineState (n : ℕ) (s : TileState (word (n + 1))) : TileState (word n) :=
     ⟨true, ⟨((s.2 : ℕ) - (n + 1).factorial * (word n false).length) %
       (word n true).length, Nat.mod_lt _ (word_length_pos n true)⟩⟩
 
+private theorem refineState_of_lt (n : ℕ) (s : TileState (word (n + 1)))
+    (h : (s.2 : ℕ) < (n + 1).factorial * (word n false).length) :
+    refineState n s =
+      ⟨false, ⟨(s.2 : ℕ) % (word n false).length,
+        Nat.mod_lt _ (word_length_pos n false)⟩⟩ := by
+  simp only [refineState, ite_eq_left h]
+
+private theorem refineState_of_not_lt (n : ℕ) (s : TileState (word (n + 1)))
+    (h : ¬ (s.2 : ℕ) < (n + 1).factorial * (word n false).length) :
+    refineState n s =
+      ⟨true, ⟨((s.2 : ℕ) - (n + 1).factorial * (word n false).length) %
+        (word n true).length, Nat.mod_lt _ (word_length_pos n true)⟩⟩ := by
+  simp only [refineState, ite_eq_right h]
+
 theorem refineState_type_false_iff (n : ℕ) (s : TileState (word (n + 1))) :
     (refineState n s).1 = false ↔
       (s.2 : ℕ) < (n + 1).factorial * (word n false).length := by
@@ -88,30 +104,37 @@ theorem refineState_next (n : ℕ) {s t : TileState (word (n + 1))}
   · by_cases hs : (s.2 : ℕ) < c
     · by_cases ht : (t.2 : ℕ) < c
       · have he := cyclicState_next (word n) false h₀pos (s.2 : ℕ)
-        simpa [refineState, cyclicState, hs, ht, ← hoff, c, h₀, f] using he
+        rw [refineState_of_lt n s hs, refineState_of_lt n t ht]
+        simpa only [cyclicState, hoff] using he
       · have hcross : (t.2 : ℕ) = c := by omega
         have hmod : ((s.2 : ℕ) + 1) % h₀ = 0 := by
           rw [← hoff, hcross]
           simp [c]
         have hbefore := mod_before_multiple h₀pos hmod
+        rw [refineState_of_lt n s hs, refineState_of_not_lt n t ht]
         right
-        simpa [refineState, hs, ht, hcross, c, h₀, h₁, f, TileNext] using
-          (show (s.2 : ℕ) % h₀ + 1 = h₀ ∧ (c - c) % h₁ = 0 from
-            ⟨hbefore, by simp⟩)
+        change (s.2 : ℕ) % h₀ + 1 = h₀ ∧ ((t.2 : ℕ) - c) % h₁ = 0
+        exact ⟨hbefore, by rw [hcross]; simp⟩
     · have ht : ¬ (t.2 : ℕ) < c := by omega
       have hdiff : (t.2 : ℕ) - c = (s.2 : ℕ) - c + 1 := by omega
       have he := cyclicState_next (word n) true h₁pos ((s.2 : ℕ) - c)
-      simpa [refineState, cyclicState, hs, ht, hdiff, c, h₁, f] using he
+      rw [refineState_of_not_lt n s hs, refineState_of_not_lt n t ht]
+      change TileNext (word n)
+        (cyclicState (word n) true h₁pos ((s.2 : ℕ) - c))
+        (cyclicState (word n) true h₁pos ((t.2 : ℕ) - c))
+      simpa only [hdiff] using he
   · have hs : ¬ (s.2 : ℕ) < c := by omega
     have ht : (t.2 : ℕ) < c := by omega
     have hdiff : (s.2 : ℕ) - c + 1 = ((if s.1 then 2 else 1) * f) * h₁ := by
       omega
-    have hmod : ((s.2 : ℕ) - c + 1) % h₁ = 0 := by rw [hdiff]; simp
+    have hmod : ((s.2 : ℕ) - c + 1) % h₁ = 0 := by
+      rw [hdiff]
+      exact Nat.mul_mod_left _ _
     have hbefore := mod_before_multiple h₁pos hmod
+    rw [refineState_of_not_lt n s hs, refineState_of_lt n t ht]
     right
-    simpa [refineState, hs, ht, hstart, c, h₀, h₁, f, TileNext] using
-      (show ((s.2 : ℕ) - c) % h₁ + 1 = h₁ ∧ (0 : ℕ) % h₀ = 0 from
-        ⟨hbefore, by simp⟩)
+    change ((s.2 : ℕ) - c) % h₁ + 1 = h₁ ∧ (t.2 : ℕ) % h₀ = 0
+    exact ⟨hbefore, by rw [hstart]; simp⟩
 
 /-- The refinement is an actual map of compact marked tiling spaces. -/
 def refineTiling (n : ℕ) (x : MarkedTiling (word (n + 1))) :
@@ -151,20 +174,22 @@ theorem word_length_injective {n : ℕ} (hn : 0 < n) :
 /-- Refinement preserves the binary symbol at every physical coordinate. -/
 theorem readTile_refineState (n : ℕ) (s : TileState (word (n + 1))) :
     readTile (word n) (refineState n s) = readTile (word (n + 1)) s := by
-  by_cases hs : (s.2 : ℕ) < (n + 1).factorial * (word n false).length
-  · have hi : (s.2 : ℕ) <
+  rcases s with ⟨a, ⟨i, hiBound⟩⟩
+  by_cases hs : i < (n + 1).factorial * (word n false).length
+  · have hi : i <
         (repeatWord (word n false) (n + 1).factorial).length := by simpa using hs
-    simp only [readTile, refineState, if_pos hs, List.get_eq_getElem]
-    rw [word_succ, List.getElem_append_left hi]
+    rw [refineState_of_lt n ⟨a, ⟨i, hiBound⟩⟩ hs]
+    simp only [readTile, List.get_eq_getElem, word_succ, List.getElem_append_left hi]
     exact (repeatWord_getElem (word n false) (word_length_pos n false) hs).symm
   · have hi : (repeatWord (word n false) (n + 1).factorial).length ≤
-        (s.2 : ℕ) := by simpa using Nat.le_of_not_gt hs
-    have hlt := s.2.isLt
-    rw [word_length_succ] at hlt
-    have hj : (s.2 : ℕ) - (n + 1).factorial * (word n false).length <
-        ((if s.1 then 2 else 1) * (n + 1).factorial) * (word n true).length := by omega
-    simp only [readTile, refineState, if_neg hs, List.get_eq_getElem]
-    rw [word_succ, List.getElem_append_right hi]
+        i := by simpa using Nat.le_of_not_gt hs
+    have hlt : i < (n + 1).factorial * (word n false).length +
+        ((if a then 2 else 1) * (n + 1).factorial) * (word n true).length := by
+      simpa only [word_length_succ] using hiBound
+    have hj : i - (n + 1).factorial * (word n false).length <
+        ((if a then 2 else 1) * (n + 1).factorial) * (word n true).length := by omega
+    rw [refineState_of_not_lt n ⟨a, ⟨i, hiBound⟩⟩ hs]
+    simp only [readTile, List.get_eq_getElem, word_succ, List.getElem_append_right hi]
     simpa only [length_repeatWord] using
       (repeatWord_getElem (word n true) (word_length_pos n true) hj).symm
 
@@ -182,16 +207,19 @@ theorem readTiling_injective (n : ℕ) : Function.Injective (readTiling (word n)
     funext i
     have hs := congrFun hxy i
     change readTile (word 0) (x.1 i) = readTile (word 0) (y.1 i) at hs
-    cases hx : x.1 i with
-    | mk a p =>
-      cases hy : y.1 i with
-      | mk b q =>
-        simp only [hx, hy, readTile, word_zero] at hs
-        have hp : p.val = 0 := by have := p.isLt; simp only [word_zero, List.length_singleton] at this; omega
-        have hq : q.val = 0 := by have := q.isLt; simp only [word_zero, List.length_singleton] at this; omega
-        have hab : a = b := by simpa using hs
-        subst b
-        exact congrArg (Sigma.mk a) (Fin.ext (hp.trans hq.symm))
+    have hab : (x.1 i).1 = (y.1 i).1 := by
+      simpa [readTile, word_zero] using hs
+    have hp : (x.1 i).2.val = 0 := by
+      have := (x.1 i).2.isLt
+      simp only [word_zero, List.length_singleton] at this
+      omega
+    have hq : (y.1 i).2.val = 0 := by
+      have := (y.1 i).2.isLt
+      simp only [word_zero, List.length_singleton] at this
+      omega
+    apply Sigma.ext hab
+    apply (Fin.heq_ext_iff (by simp only [word_zero, List.length_singleton])).mpr
+    exact hp.trans hq.symm
   | succ n ih =>
     intro x y hxy
     have hr : refineTiling n x = refineTiling n y := by
