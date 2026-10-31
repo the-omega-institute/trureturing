@@ -17,6 +17,8 @@ import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Tactic
 
+/-! A positive triangle representation of the literal complete arithmetic kernel on one window. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -465,11 +467,11 @@ private lemma interval_overlap (s a b : ℝ) :
     Complex.real_smul, mul_one]
   congr 2
   by_cases hab : a ≤ b
-  · rw [min_eq_left (add_le_add_right hab s), max_eq_right hab,
+  · rw [min_eq_left (show a + s ≤ b + s by linarith), max_eq_right hab,
       abs_of_nonpos (sub_nonpos.mpr hab)]
     ring
   · have hba := le_of_not_ge hab
-    rw [min_eq_right (add_le_add_right hba s), max_eq_left hba,
+    rw [min_eq_right (show b + s ≤ a + s by linarith), max_eq_left hba,
       abs_of_nonneg (sub_nonneg.mpr hba)]
     ring
 
@@ -516,7 +518,7 @@ private lemma triangle_posSemidef {n : ℕ} (s : ℝ) (x : Fin n → ℝ) :
     Matrix.PosSemidef (fun i j => ((max (s - |x i - x j|) 0 : ℝ) : ℂ)) := by
   apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg (triangle_hermitian s x)
   intro c
-  rw [← (triangle_quadratic s x c).2, integral_ofReal]
+  rw [← (triangle_quadratic s x c).2, integral_complex_ofReal]
   exact_mod_cast (integral_nonneg (fun u => Complex.normSq_nonneg _))
 
 private lemma triangle_posDef {n : ℕ} {s : ℝ} (hs : 0 < s) (x : Fin n → ℝ)
@@ -569,7 +571,7 @@ private lemma triangle_posDef {n : ℕ} {s : ℝ} (hs : 0 < s) (x : Fin n → �
   have hq : 0 < ∫ u : ℝ, Complex.normSq (∑ i, intervalVector s (x i) u * c i) :=
     (integral_pos_iff_support_of_nonneg (fun u => Complex.normSq_nonneg _)
       (triangle_quadratic s x c).1).mpr (hvol.trans_le (measure_mono hsub))
-  rw [← (triangle_quadratic s x c).2, integral_ofReal]
+  rw [← (triangle_quadratic s x c).2, integral_complex_ofReal]
   exact_mod_cast hq
 
 /-- One arithmetic window works for every finite family of distinct real nodes and complex coefficients. -/
@@ -586,29 +588,31 @@ theorem exists_window_posDef : ∃ δ : ℝ, 0 < δ ∧ δ < Real.log 2 ∧
     apply D5.S3.Analytic.Fourier.PositiveDefinite.Closure.integral
     · filter_upwards [ae_restrict_mem measurableSet_Ioc] with s hs
       intro m y
-      convert (triangle_posSemidef s y).smul (hpos s hs).le using 1
-      ext i j
-      simp only [Pi.smul_apply, smul_eq_mul, Complex.ofReal_mul, abs_sub_comm]
-      ring
+      have heq : (fun i j : Fin m => ((max (s - |y j - y i|) 0 * D2 s : ℝ) : ℂ)) =
+          D2 s • (fun i j : Fin m => ((max (s - |y i - y j|) 0 : ℝ) : ℂ)) := by
+        ext i j
+        simp only [Pi.smul_apply, Complex.real_smul, Complex.ofReal_mul, abs_sub_comm]
+        ring
+      rw [heq]
+      exact (triangle_posSemidef s y).smul (hpos s hs).le
     · intro t
       exact (triangle_integrable (abs_nonneg t) hpos hi).ofReal
   have hmix : Matrix.PosSemidef (fun i j =>
       ((∫ s : ℝ in Ioc 0 δ, max (s - |x i - x j|) 0 * D2 s : ℝ) : ℂ)) := by
-    convert hPD n x using 1
-    ext i j
-    rw [integral_ofReal, abs_sub_comm]
+    simpa only [integral_complex_ofReal, abs_sub_comm] using hPD n x
   have hwide := (triangle_posDef (hδ.trans hL) x hx).smul hr
-  convert hwide.add_posSemidef hmix using 1
-  ext i j
-  rw [(hrep (x i - x j) (hdiam i j)).2]
-  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, Complex.ofReal_add,
-    Complex.ofReal_mul]
-  ring
+  have heq : (fun i j : Fin n => (K (x i - x j) : ℂ)) =
+      r • (fun i j : Fin n => ((max (L - |x i - x j|) 0 : ℝ) : ℂ)) +
+        (fun i j : Fin n =>
+          ((∫ s : ℝ in Ioc 0 δ, max (s - |x i - x j|) 0 * D2 s : ℝ) : ℂ)) := by
+    ext i j
+    rw [(hrep (x i - x j) (hdiam i j)).2]
+    simp only [Pi.add_apply, Pi.smul_apply, Complex.real_smul, Complex.ofReal_add,
+      Complex.ofReal_mul]
+    ring
+  rw [heq]
+  exact hwide.add_posSemidef hmix
 
 #print axioms exists_window_posDef
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
-
-
-
-
