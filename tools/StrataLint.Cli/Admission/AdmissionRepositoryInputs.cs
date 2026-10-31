@@ -12,10 +12,17 @@ internal static class AdmissionRepositoryInputs
 
     internal static RawRepositorySnapshot ReadDeltaInputs(
         IRepositoryGateway repository, RawRepositorySnapshot currentRaw,
-        RawRepositorySnapshot baselineRaw, RawChangeSet changes)
+        RawRepositorySnapshot baselineRaw, RawChangeSet changes) =>
+        ReadDeltaInputs(repository, currentRaw, baselineRaw, changes, out _, out _);
+
+    internal static RawRepositorySnapshot ReadDeltaInputs(
+        IRepositoryGateway repository, RawRepositorySnapshot currentRaw,
+        RawRepositorySnapshot baselineRaw, RawChangeSet changes,
+        out RepositorySnapshot selectedCurrent, out RepositorySnapshot baselineSnapshot)
     {
         var current = Decode(currentRaw);
         var baseline = Decode(baselineRaw);
+        var original = currentRaw;
         var theoryPaths = changes.Paths.Where(path =>
             DigestionOpaquePathPolicy.IsTheoryDocument(path) && current.Files.ContainsKey(path))
             .Select(static path => DigestionQuerySelection.Literal(path.Value)).ToArray();
@@ -45,6 +52,8 @@ internal static class AdmissionRepositoryInputs
             if (selected.Length > 0)
                 currentRaw = AddInputs(currentRaw, repository.ReadCurrent(selected));
         }
+        selectedCurrent = ReferenceEquals(original, currentRaw) ? current : Decode(currentRaw);
+        baselineSnapshot = baseline;
         return currentRaw;
     }
 

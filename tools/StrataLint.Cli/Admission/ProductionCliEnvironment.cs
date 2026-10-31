@@ -215,7 +215,8 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                     Current: AdmissionRepositoryInputs.ReadCurrent(repository),
                     Baseline: AdmissionRepositoryInputs.ReadBaseline(repository, prepared.Revision)));
             var currentRaw = AdmissionRepositoryInputs.ReadDeltaInputs(
-                repository, rawSnapshots.Current, rawSnapshots.Baseline, prepared.Changes);
+                repository, rawSnapshots.Current, rawSnapshots.Baseline, prepared.Changes,
+                out var current, out var baseline);
             var baselineRaw = rawSnapshots.Baseline;
             var admissionPlane = timing.Measure(
                 "admission-plane",
@@ -226,16 +227,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 return admissionPlane;
             }
 
-            var snapshots = timing.Measure(
-                "snapshot-load",
-                () =>
-                {
-                    var current = Decode(currentRaw);
-                    var baseline = Decode(baselineRaw);
-                    return (Current: current, Baseline: baseline);
-                });
-            var current = snapshots.Current;
-            var baseline = snapshots.Baseline;
             var candidateLeanReport = timing.Measure(
                 "lean-report-load",
                 () => RawLeanReportArtifact.ReadFile(

@@ -28,13 +28,16 @@ internal sealed partial class ProductionCliEnvironment
             var prepared = delta ? timing.Measure("repository-prepare", () => repository.Prepare(options.ProtectedBase)) : null;
             var baselineRaw = prepared is null ? null : timing.Measure("repository-read-base",
                 () => AdmissionRepositoryInputs.ReadBaseline(repository, prepared.Revision));
+            RepositorySnapshot current;
+            RepositorySnapshot? baseline = null;
             if (prepared is not null)
-                raw = AdmissionRepositoryInputs.ReadDeltaInputs(repository, raw, baselineRaw!, prepared.Changes);
+                raw = AdmissionRepositoryInputs.ReadDeltaInputs(repository, raw, baselineRaw!, prepared.Changes,
+                    out current, out baseline);
+            else current = timing.Measure("snapshot-load", () => Decode(raw));
             if (options.ArtifactCapacity)
             {
-                var capacityCurrent = timing.Measure("snapshot-load", () => Decode(raw));
                 var capacity = timing.Measure("artifact-capacity", () => RuleCatalog.Default.ExecuteArtifactCapacity(
-                    capacityCurrent, prepared!.Changes));
+                    current, prepared!.Changes));
                 if (capacity is RuleExecutionOutcome.InfrastructureFailure
                     || capacity is RuleExecutionOutcome.Completed completed
                     && completed.Capability.Diagnostics.Any(static diagnostic => diagnostic.AdmissionEffect is AdmissionEffect.Block))
@@ -47,7 +50,6 @@ internal sealed partial class ProductionCliEnvironment
             if (planeFailure is not null)
                 return new(2, RenderPlaneObservations(planeObservations), planeFailure.Message + "\n");
 
-            var current = timing.Measure("snapshot-load", () => Decode(raw));
             var report = options.CandidateLeanReport is null ? null
                 : timing.Measure("lean-report-load", () => RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, current, validateMaterials: true));
             var policy = timing.Measure("policy-load", () => RepositoryPolicyLoader.Load(current) switch
@@ -67,8 +69,7 @@ internal sealed partial class ProductionCliEnvironment
             RuleExecutionOutcome result;
             if (prepared is not null)
             {
-                var baseline = timing.Measure("snapshot-load-base", () => Decode(baselineRaw!));
-                var topology = timing.Measure("test-topology", () => RepositoryRules.EvaluateSnapshots(baseline, current), static outcome => !outcome.IsAccepted);
+                var topology = timing.Measure("test-topology", () => RepositoryRules.EvaluateSnapshots(baseline!, current), static outcome => !outcome.IsAccepted);
                 if (!topology.IsAccepted)
                     return new(1, RenderPlaneObservations(planeObservations) + "TEST_PROJECT_TOPOLOGY " + topology.Message + "\n", "");
                 var meta = BootstrapGate.Evaluate(prepared.Changes) switch
@@ -78,7 +79,7 @@ internal sealed partial class ProductionCliEnvironment
                     BootstrapOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
                 };
                 result = timing.Measure("rule-passes", () => AdmissionPipeline.CheckDelta(
-                    DeltaRuleContext.Create(current, baseline, policy, lean, prepared.Changes, meta, null), MeasureRule), Blocked);
+                    DeltaRuleContext.Create(current, baseline!, policy, lean, prepared.Changes, meta, null), MeasureRule), Blocked);
             }
             else
             {
