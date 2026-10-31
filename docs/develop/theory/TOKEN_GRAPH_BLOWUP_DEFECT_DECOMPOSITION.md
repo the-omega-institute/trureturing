@@ -1670,3 +1670,270 @@ extension to weights, unequal blocks, other fillings, odd-order
 rounded filling or a broader graph class. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Odd-scale confinement under a vertexwise alternative
+
+**定义 9.1（Odd degree or a bipartite open neighborhood）。** Let $H$
+be a finite simple unit-weight graph of even order $m\geq2$, with no
+isolated vertices, such that
+
+$$
+\text{for every }p\in[m],\qquad
+\deg_H(p)\text{ is odd}\quad\text{or}\quad H[N_H(p)]\text{ is bipartite}.
+\tag{9.1}
+$$
+
+There is no neighborhood condition at an odd-degree vertex. Induced
+neighborhoods may have isolates, be edgeless, or be disconnected.
+Let $s\geq3$ be any odd integer, $S=s/2$, and $k=mS$. Use the original
+$B_i,\Omega,H[\overline{K_s}],\mathcal H_k,K=K_k$ and
+$P_{\mathrm{sym}}$ of Definitions 1.1–1.2. In particular $\mathcal H_k$
+is the complete complex Boolean $k$-token space, and $K$ is ordinary
+positive adjacency. Put
+
+$$
+E=\lambda_{\min}(K),\qquad
+\mathcal N=\ker P_{\mathrm{sym}},\qquad
+g=\lambda_{\min}(K|_{\mathcal N})-E.
+\tag{9.2}
+$$
+
+The existence of the last minimum is part of the following theorem.
+
+**定理 9.2（Full-space confinement for the vertexwise alternative）。**
+For every $H,s$ of Definition 9.1, $\mathcal N$ is nonzero and reduces
+$K$, and
+
+$$
+\ker(K-EI)\subseteq\operatorname{ran}P_{\mathrm{sym}},\qquad
+g>0,\qquad
+K-EI\succeq g(I-P_{\mathrm{sym}}).
+\tag{9.3}
+$$
+
+Every normalized complex $\phi\in\mathcal H_{mS}$ consequently satisfies
+
+$$
+\|(I-P_{\mathrm{sym}})\phi\|^2
+\leq\frac{\langle\phi,K\phi\rangle-E}{g}.
+\tag{9.4}
+$$
+
+Proof. We use the supplied chain decomposition (6.6)–(6.10), (8.4),
+the half-integer nonstrict comparison proved before (8.6), and the
+bipartite neighborhood obstruction (8.6)–(8.8), including its edgeless
+case. Their respective hypotheses are important: the decomposition
+and nonstrict comparison require no bipartiteness, whereas that local
+obstruction concerns a nonempty even-order bipartite graph with the
+same spin $S\geq3/2$ at all its vertices. We apply the local obstruction
+only to such a graph, not to $H$ itself.
+
+Explicitly, every block has spins $J_i=S-t_i$, with integer
+$0\leq t_i\leq\lfloor S\rfloor$ and multiplicity
+$r_s(t_i)=\binom{s}{t_i}-\binom{s}{t_i-1}$. In every tensor of chains
+retain the entire zero-total-weight slice $\mathcal X_t$ of (8.4).
+The operator on it is
+
+$$
+K_{\boldsymbol J}=\sum_{\{i,j\}\in E(H)}
+(J_i^+J_j^-+J_i^-J_j^+),\qquad
+Z_i|x_i\rangle=x_i|x_i\rangle,
+\tag{9.5}
+$$
+
+with all the endpoint coefficients of (6.10). The source maps for
+these classical representations remain Srinivasan,
+[Theorem 1.2 and pp. 4–5](https://arxiv.org/pdf/1001.0280v2),
+$n=s$, starting rank $t_i$, raising operator $L_i^*=J_i^+$; and
+Feinsilver, [§§3–4, (16), Proposition 4.3 and §4.2.2](https://arxiv.org/pdf/1102.0368v2),
+principal number $s-2t_i=2J_i$. These supply orthogonality and every
+multiplicity, as used in §§6–8. Equation (2.4) identifies (9.5) with
+$K$; each edge is $2(X_iX_j+Y_iY_j)$. In the conventions of
+Apte–Parekh–Sud, [v3, Definition 1, §3.2 and Fact 2](https://arxiv.org/pdf/2506.03441v3),
+this is adjacency $A(F_k(H[\overline{K_s}]))$, rather than their
+shifted XY block $WI/2-A(F_k(H[\overline{K_s}]))$.
+
+Each slice is nonempty: take $m/2$ weights $1/2$ and $m/2$ weights
+$-1/2$, since every $J_i\geq1/2$. The unique chains with all $t_i=0$
+are exactly $\operatorname{ran}P_{\mathrm{sym}}$. Taking $t_1=1$
+and the other $t_i=0$ gives a nonzero orthogonal sector, because
+$S-1\geq1/2$ and $r_s(1)=s-1>0$. Block permutations commute with
+$K$, so $P_{\mathrm{sym}}$ and its orthogonal complement reduce $K$.
+Thus $\mathcal N$ is nonzero and its finite-dimensional minimum exists.
+
+For the nonstrict comparison the exact primary parameters are
+Ghassemi Tabrizi–Henderson–Kühne–Scuseria,
+[Appendix A4, (A34)–(A54) and its final fixed-magnetization paragraph](https://pmc.ncbi.nlm.nih.gov/articles/PMC12613319/#app1-sec4),
+DOI [10.1021/acs.jctc.5c01412](https://doi.org/10.1021/acs.jctc.5c01412):
+maximal spin $s_p=S$, variable spin $t_p=J_p$, total magnetization
+$M=0$, and $D_{ij}=\operatorname{diag}(2a_{ij},2a_{ij},0)$.
+The fixed-$M$ conclusion we consume is only that increasing one local
+spin by one does not increase the slice minimum, with all other spins
+fixed. Its proof in §8 uses the zero-weight triplet $|1,0\rangle$,
+not a polarized triplet: it preserves $M$ and has zero Cartesian
+expectations. The upper-spin projection (8.5) is positive at every
+weight, including endpoints, so projection and induction work also
+for entangled vectors, starting at $J_p=1/2$. No exclusion of equality
+is imported from this comparison.
+
+Suppose a nonsymmetric sector has minimum $E$, and choose $p$ with
+$J_p<S$. Increase all other spins to $S$ using that comparison.
+Each resulting sector occurs in the same original $\mathcal H_{mS}$,
+so its minimum cannot fall below $E$. We obtain a normalized ground
+vector with spin $J_p$ at $p$ and $S$ elsewhere. Realize the spin at
+$p$ by the symmetric $2J_p$ auxiliaries and $S-J_p$ fixed singlet
+pairs, as in the proof of Theorem 8.2. This is an intertwining isometry
+into the original $s$ Boolean coordinates at $p$, preserving magnetic
+weight and the energy. Choose one pair and write the vector as
+$\Psi=|0,0\rangle\otimes f$, retaining all other pairs in $f$.
+The remaining auxiliaries may be arbitrarily entangled with other sites.
+Set
+
+$$
+A=N_H(p),\qquad R=[m]\setminus(\{p\}\cup A),\qquad
+B^\pm=\sum_{i\in A}J_i^\pm,\qquad Z_A=\sum_{i\in A}Z_i.
+\tag{9.6}
+$$
+
+Here $A\ne\varnothing$. Release just the chosen singlet into
+$|1,0\rangle$, giving $\Theta=|1,0\rangle\otimes f$ in the same
+$\mathcal H_{mS}$. Both pair states have zero weight and zero spin
+expectations. There are no intrablock edges, so
+$\langle\Theta,K\Theta\rangle=E$. Equality in the Rayleigh bound at
+the actual full-space minimum implies $K\Theta=E\Theta$.
+The operator $K^{\mathrm{rem}}$ with this pair omitted satisfies
+$K^{\mathrm{rem}}f=Ef$, since the pair ladders annihilate the singlet.
+Consequently the same original operator gives
+
+$$
+0=(K-EI)\Theta
+=\sqrt2\,|1,1\rangle\otimes B^-f
+ +\sqrt2\,|1,-1\rangle\otimes B^+f.
+\tag{9.7}
+$$
+
+Orthogonality yields $B^-f=B^+f=0$. Their commutator
+$[B^+,B^-]=2Z_A$ gives $Z_Af=0$. Since all sites of $A$ carry the
+half-integer spin $S$, every weight of $Z_A$ is in
+$|A|/2+\mathbb Z$. If $\deg_H(p)=|A|$ is odd, zero is absent and
+$f=0$, a contradiction. This branch uses no edges of $H[A]$.
+
+It remains that $|A|$ is even. Condition (9.1) now implies that
+$H[A]$ is bipartite. The common kernel of the total ladders on $A$
+is its total-singlet space $\mathcal S_A$, as used in §8: on a spin-$q$
+irreducible both ladder norms vanish only for $q=0$. Thus $f$ is
+supported on $\mathcal S_A\otimes\mathcal H_{pR,0}$, where the second
+factor comprises the actual remaining auxiliaries at $p$ and all
+sites of $R$, jointly at weight zero. Sandwiching any single-site spin
+component on $A$ between singlet projections gives zero: simultaneous
+rotations fix both singlets, while those three matrix elements transform
+as a vector, whose only rotation-invariant value is zero.
+All crossing interactions therefore have zero expectation in $f$.
+There are no edges from $p$ to $R$, and hence
+
+$$
+E=\langle f,K_Af\rangle+\langle f,K_Rf\rangle.
+\tag{9.8}
+$$
+
+Here $K_A,K_R$ are the induced operators. The remaining factors at
+$p$ are retained even if $R$ is empty.
+
+Apply precisely the local conclusion proved in §8 around (8.6)–(8.8):
+a nonempty even-order bipartite graph, with uniform half-integer
+spin $S\geq3/2$, has a normalized zero-weight ground vector $u_A$
+not killed by both total ladders. Write its energy as $e_A$.
+For an edged graph, the supplied proof excludes any singlet ground
+vector, using a connected-component slice of weight $0$ or $1/2$
+according to its parity and the finite difference (8.8). Thus it
+includes odd components and isolates. For an edgeless graph the
+balanced product of weights $\pm1/2$ has positive total raising
+norm, so it supplies the same choice. These are the existing local
+obstruction and endpoint argument, used here with $G=H[A]$; no new
+local-spin assertion is needed.
+
+Let $\rho_{pR}$ be the reduced density of this same $f$ on the
+remaining factors. It is supported on $\mathcal H_{pR,0}$. In the
+original carrier form
+
+$$
+\rho=|0,0\rangle\langle0,0|\otimes
+ |u_A\rangle\langle u_A|\otimes\rho_{pR}.
+\tag{9.9}
+$$
+
+The other fixed pairs at $p$ remain in $\rho_{pR}$. Definite zero
+weight gives $\langle u_A,J_i^\pm u_A\rangle=0$ for every $i\in A$,
+so every crossing edge has zero expectation in this product density.
+Using the minimum $e_A$ on $Z_A=0$ and (9.8),
+
+$$
+\operatorname{tr}(K\rho)
+=e_A+\langle f,K_Rf\rangle
+\leq\langle f,K_Af\rangle+\langle f,K_Rf\rangle=E.
+\tag{9.10}
+$$
+
+The full-space minimum gives the reverse inequality. Decompose
+$\rho_{pR}$ spectrally into unit vectors $h$ with positive weights,
+all in its actual zero-weight support. Each
+$|0,0\rangle\otimes u_A\otimes h$ has energy at least $E$, and their
+average is $E$, so each is a ground vector. Releasing its same pair
+and applying (9.7) forces $B^-u_A=B^+u_A=0$, contradicting its choice.
+For $R=\varnothing$, $K_R=0$ on its one-dimensional factor; the
+remaining auxiliaries at $p$ still belong to $h$. If the required
+joint zero-weight space were empty, the original nonzero $f$ would
+already be impossible. No componentwise half-filling was imposed.
+
+We have excluded $E$ from every nonsymmetric sector, retaining every
+multiplicity copy. The orthogonal decomposition (8.4) therefore puts
+every complex ground vector in $t=0$, including arbitrary entangled
+superpositions. Finite dimension and $\mathcal N\ne0$ now give $g>0$.
+On $\operatorname{ran}P_{\mathrm{sym}}$, $K-EI\succeq0$; on
+$\mathcal N$, $K-EI\succeq gI$. Their reducing decomposition has no
+cross terms, proving (9.3). Taking its quadratic form on a unit
+$\phi$ gives (9.4), using this same $E$ and this same $g$.
+
+The added `repo-derived` inference relative to §8 is the graph
+hypothesis (9.1): the published odd-neighborhood exclusion already
+dispenses with bipartiteness at odd-degree vertices. The representations,
+nonstrict comparison, parity exclusion, local obstruction and strict
+replacement all retain their roles from §§6–8. None of these steps
+requires $H$ connected or a flat least mode. The universal assertion
+for arbitrary even-order $H$ without isolates at every scale $s\geq2$
+remains unresolved here. This theorem adds no even-scale assertion;
+at odd scales, an even-degree vertex with a nonbipartite neighborhood
+is outside its sufficient condition. Failure of that condition is not
+a counterexample to confinement. The finite-spectrum argument gives
+no quantitative gap or rate. $\square$
+
+**命题 9.3（Complete graph and odd-rim wheels outside the locally
+bipartite class）。** All conclusions of Theorem 9.2 hold for $H=K_4$
+and for the wheel obtained by joining one hub to every vertex of
+$C_{2r+1}$, for every integer $r\geq2$, at every odd $s\geq3$.
+These graphs satisfy (9.1) and have even order and no isolates, but
+are outside the graph class of Definition 7.1 and Theorem 8.2.
+
+Proof. In $K_4$, $m=4$ and every vertex has degree $3$, so the first
+alternative in (9.1) holds everywhere. Every induced open neighborhood
+is $K_3$, whose three-cycle is not bipartite. Thus the locally
+bipartite condition fails at every vertex.
+
+For the wheel, label the rim cyclically by $v_i$, $i\in\mathbb Z/(2r+1)$,
+and denote the hub by $c$. Its order is $2r+2$, which is even.
+The hub has odd degree $2r+1$, and every rim vertex has degree $3$;
+there are no isolates, and (9.1) again holds everywhere without any
+neighborhood restriction. The induced neighborhood of $c$ is exactly
+$C_{2r+1}$, which is not bipartite because colors would alternate and
+fail to close after an odd number of edges. At a rim vertex $v_i$,
+the neighborhood is $\{c,v_{i-1},v_{i+1}\}$. Since $2r+1\geq5$,
+the two rim neighbors are distinct and nonadjacent, so this induced
+graph is the bipartite path $v_{i-1}-c-v_{i+1}$. The hub's
+neighborhood suffices to exclude the wheel from the locally bipartite
+class. Applying Theorem 9.2 on the complete original carrier gives
+all asserted ground-vector, gap, operator and mass conclusions for
+each of these graphs, including $s=3$. These applications do not
+impose a neighborhood restriction at the hub or at any other
+odd-degree vertex. $\square$
+
+## 追加锚（本行以下为增补区）
