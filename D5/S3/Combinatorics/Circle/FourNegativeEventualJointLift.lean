@@ -60,6 +60,7 @@ private theorem four_strip_of_masses (f : ℕ → ℤ) (C t1 t2 t3 : ℤ)
     (hb1 : (P1.map f).sum ≤ C) (hb2 : t1 + (P2.map f).sum ≤ C)
     (hb3 : t2 + (P3.map f).sum ≤ C) (hb4 : t3 + (P4.map f).sum ≤ C) :
     InStrip f C 0 (P1 ++ alpha :: P2 ++ beta :: P3 ++ gamma :: P4 ++ [delta]) := by
+  simp only [List.append_assoc, List.cons_append]
   apply positive_then_step f C 0 P1 (P2 ++ beta :: P3 ++ gamma :: P4 ++ [delta]) alpha
     hp1 (by omega) (by omega)
   rw [zero_add, hs1]

@@ -69,6 +69,7 @@ private theorem centered_ladder (N u v : ℤ) (z e : ℕ)
     · rw [centered_mod, Int.sub_emod_right]
 
 set_option maxHeartbeats 1000000 in
+-- The paired ladders carry eight centered reductions and their arithmetic bounds.
 private theorem four_chain_table (a b c d : ℕ)
     (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c)
     (hd : a + b + c + 3 ≤ d) :
@@ -778,7 +779,7 @@ private theorem four_mask_parameters (a b c d : ℕ)
   · simpa [A, P, DB, DL, mul_add, add_assoc] using hseamL
   · simpa [A, P, DB, DM, add_assoc] using hseamM
 
-private def chainMask (len off m : ℕ) : List ℕ :=
+private noncomputable def chainMask (len off m : ℕ) : List ℕ :=
   if h : m < 2 ^ len then (mask_labels len off m h).toList else []
 
 private theorem chainMask_partition (len off m n : ℕ) (hs : m + n = 2 ^ len - 1) :
@@ -871,13 +872,20 @@ private theorem four_mask_inventory (a b c d q nB nL nM : ℕ)
     ac_rfl
   have hrange : List.range' 0 d ++ List.range' d c ++ List.range' (d + c) b ++
       List.range' (d + c + b) a = List.range (a + b + c + d) := by
-    rw [List.range'_append_1 (s := 0) (m := d) (n := c)]
-    rw [List.range'_append_1 (s := 0) (m := d + c) (n := b)]
-    rw [List.range'_append_1 (s := 0) (m := d + c + b) (n := a)]
+    have hdc : List.range' 0 d ++ List.range' d c = List.range' 0 (d + c) := by
+      simpa only [Nat.zero_add] using (List.range'_append_1 (s := 0) (m := d) (n := c))
+    have hdcb : List.range' 0 (d + c) ++ List.range' (d + c) b =
+        List.range' 0 (d + c + b) := by
+      simpa only [Nat.zero_add] using (List.range'_append_1 (s := 0) (m := d + c) (n := b))
+    have hdcba : List.range' 0 (d + c + b) ++ List.range' (d + c + b) a =
+        List.range' 0 (d + c + b + a) := by
+      simpa only [Nat.zero_add] using (List.range'_append_1 (s := 0) (m := d + c + b) (n := a))
+    simp only [← List.append_assoc]
+    rw [hdc, hdcb, hdcba]
     simp [← List.range_eq_range', show d + c + b + a = a + b + c + d by omega]
   exact hreorder.trans (by simpa only [← List.append_assoc, hrange] using hu.append (hv.append (hw.append hx)))
 
-private def maskWord (a b c d q nB nL nM : ℕ) : List ℕ :=
+private noncomputable def maskWord (a b c d q nB nL nM : ℕ) : List ℕ :=
   chainMask (d - 1) 0 (2 ^ (d - 1) - q) ++
   chainMask (c - 1) d (nB - 1) ++ [d - 1] ++
   chainMask (c - 1) d (2 ^ (c - 1) - nB) ++
