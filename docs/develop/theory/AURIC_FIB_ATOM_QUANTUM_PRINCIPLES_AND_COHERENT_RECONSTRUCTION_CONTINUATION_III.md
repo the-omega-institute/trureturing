@@ -1686,3 +1686,274 @@ $$
 [K151]: https://arxiv.org/html/1710.01599v1
 
 ## 追加锚（本行以下为增补区）
+
+## 152. 原生分量守恒在完整相干四次密度类中的刚性
+
+**定义 152.1（原载体上的密度类与原生分量方程）。** 取定义 138.1、145.1 的同一个路径空间。将内部路径写成独立集，记
+
+$$
+E=\{q\subseteq\{1,\ldots,9\}:\{k,k+1\}\nsubseteq q\ (1\le k\le8)\},
+\qquad \mathcal K=\mathbb C^E,
+\qquad |E|=89.
+\tag{152.1}
+$$
+
+其中每个相邻二元集都不包含于 $q$，内部位记为 $q_k=b_k(q)=\mathbf1_{k\in q}$；固定外部位仍为 $b_{-1}b_0=10$、$b_{10}b_{11}b_{12}=010$。坐标记为 $z_q=\langle q|z\rangle$，置 $p_q=|z_q|^2$、$N=\sum_{q\in E}p_q=\|z\|^2$。地址 $j=0,\ldots,10$ 的矩阵严格取
+
+$$
+\begin{gathered}
+\varphi=(1+\sqrt5)/2,\qquad x=\varphi^{-1},\qquad y=\sqrt{x},\qquad
+x+x^2=1,\qquad \alpha=\frac{3\pi}{5},\\
+\mathcal P_j=n_{j-1}n_{j+1}
+ +(1-n_{j-1})(1-n_{j+1})
+ \begin{pmatrix}x&xy\\xy&x^2\end{pmatrix}_{b_j},\\
+H_j=-\alpha(I+\mathcal P_j),\qquad U_j(t)=e^{-itH_j}.
+\end{gathered}
+\tag{152.2}
+$$
+
+这里 $n_j|q\rangle=b_j(q)|q\rangle$，固定边界位也按其字面值使用；二维矩阵按中心位 $0,1$ 排列，整体在同一个 $E$ 上限制。令 $\mathscr B_j$ 为支撑图的全部连通分量：顶点为 $E$，不同顶点 $q,r$ 在 $(H_j)_{qr}\ne0$ 时相邻。单点分量也计入。对密度 $\Pi=(\Pi_q)_{q\in E}$，原生分量方程是
+
+$$
+\sum_{q\in B}\Pi_q(U_j(t)z)
+ =\sum_{q\in B}\Pi_q(z)
+\quad\left(
+\begin{array}{l}
+j=0,\ldots,10,\quad B\in\mathscr B_j,\\
+z\in\mathcal K\setminus\{0\},\quad t\in[0,1]
+\end{array}\right).
+\tag{152.3}
+$$
+
+记 $\mathscr C_{\rm nat}$ 为满足 (152.3) 的全部连续密度：每个 $\Pi_q$ 是 $\mathcal K\setminus\{0\}$ 上的非负实连续函数，$\sum_q\Pi_q=1$，且 $z_q=0$ 时 $\Pi_q(z)=0$。后一个条件称为节点条件。
+
+完整归一相干四次类 $\mathscr Q_2$ 定义如下。只作为多项式坐标空间，取 $W=\operatorname{Sym}^2\mathcal K$ 及其诱导内积。为每个 $q\in E$ 取 Hermitian 矩阵 $A_q\in\operatorname{End}(W)$，要求
+
+$$
+\begin{gathered}
+\sum_{q\in E}A_q=I_W,\qquad
+F_q(z)=\langle z\otimes z,A_q(z\otimes z)\rangle,\\
+F_q(z)\ge0\quad(z\in\mathcal K),\qquad
+z_q=0\ \Longrightarrow\ F_q(z)=0,\qquad
+\Pi_q(z)=\frac{F_q(z)}{N^2}\quad(z\ne0).
+\end{gathered}
+\tag{152.4}
+$$
+
+不要求 $A_q$ 是正算子，不要求逐坐标可分、径向形式、边比率局域性或全支撑上的严格正性。式 (152.4) 只在相干平方 $z\otimes z$ 上要求非负；该式自动给连续密度及 $\Pi_q(\lambda z)=\Pi_q(z)$（$\lambda\ne0$），这些性质不作为更大连续类的附加条件。$W$ 既不是另一个物理载体，也不供应双份准备、复制、辅助来源或张量仪器。所有非零 $z$ 与内部 $t$ 的量词是 (152.3) 的数学量词；内部时间仍按定义 145.1 解释为一次固定脉冲的描述，不能作为可执行的连续旋钮。
+
+原程序仍只有唯一 ready $R_0v$、十一地址前读字、七地址后读字及原 $\mathsf T(a),\mathsf R(a,f)$。全部 $1024$ 标签、真实调用历史、细档案、失败结果、供应者合同与取得及认证成本均保留定义 138.1、假设 138.2、145.2 的原范围和原有费用；全射线量词不赋予新的来源、查询、复位或控制。
+
+**定理 152.2（完整相干四次类的原生刚性）。** 对定义 152.1 的完整 $89$ 路径及所有原生分量方程，有
+
+$$
+\mathscr C_{\rm nat}\cap\mathscr Q_2
+ =\left\{\Pi^{\rm B}\right\},\qquad
+\Pi^{\rm B}_q(z)=\frac{|z_q|^2}{\|z\|^2}.
+\tag{152.5}
+$$
+
+等价地，满足 (152.4) 与 (152.3) 的任意 Hermitian 系数族都满足
+
+$$
+F_q(z)=p_qN\quad(q\in E,\ z\in\mathcal K),\qquad
+A_q=\left.
+\frac{P_q\otimes I+I\otimes P_q}{2}\right|_W,
+\qquad P_q=|q\rangle\langle q|.
+\tag{152.6}
+$$
+
+这是在给定复路径空间及精确 $H_j$ 下对未知配置密度的分类；没有把 $\Pi_q$ 预先定义成平方密度。
+
+证明。首先说明相干多项式的系数可被唯一识别。给 $E$ 任取一个全序，$W$ 的标准正交基由 $|q\rangle\otimes|q\rangle$ 和 $q<r$ 时的 $(|q\rangle\otimes|r\rangle+|r\rangle\otimes|q\rangle)/\sqrt2$ 组成。$z\otimes z$ 在此基中的坐标分别为 $z_q^2$ 与 $\sqrt2z_qz_r$。因此任意矩阵 $A$ 的相干二次型的每个矩阵元，对应一个唯一的双次数 $(2,2)$ 单项式；这里双次数分别计算 $z$ 与 $\overline z$ 的次数。这些单项式在复坐标的实多项式环中线性独立，因为代换 $z_q=a_q+ib_q$、$\overline z_q=a_q-ib_q$ 是可逆复线性代换。故
+
+$$
+\langle z\otimes z,A(z\otimes z)\rangle=0\quad\text{对所有 }z
+\quad\Longrightarrow\quad A=0.
+\tag{152.7}
+$$
+
+反之，每个实值双次数 $(2,2)$ 多项式都唯一对应一个 Hermitian 矩阵。特别地，(152.4) 的归一化等价于 $\sum_qF_q=N^2$。这也说明本类覆盖全部这样的多项式密度，而非仅覆盖其某种正矩阵表示。对称幂形式的成熟先例是 Galley–Masanes，[Any modification of the Born rule leads to a violation of the purification and local tomography principles，§2，式 (11)](https://arxiv.org/html/1801.06414v4#S2)，取其中次数 $n=2$。其由有限性与全酉作用条件得到表示的定理不是这里的前提；这里直接规定整个四次类，再证明原生分类，也不采用其 §4 玩具模型更强的算子正性与组合规则。
+
+下面从节点非负性与归一化推导完整系数形。固定输出 $q$，在 $z_q=0$ 上，$F_q=0$。因此所有不含 $q$ 的单项式系数为零。固定其余坐标，$F_q$ 作为 $(\operatorname{Re}z_q,\operatorname{Im}z_q)$ 的实多项式，在原点取非负最小值零，所以两个一阶偏导均为零。对其余坐标再用多项式恒等性，得只含一次 $q$ 的单项式系数也为零。故在 $F_q$ 的每个非零单项式中，$q$ 在全体四个指标中至少出现两次。
+
+由此，一个单项式只能分配给出现至少两次的输出指标。若恰有一个这样的指标，它只可能出现在该输出；归一化 $\sum_qF_q=N^2$ 便固定其系数。具体地，$p_q^2$ 的系数为一，其余这类单项式的系数全为零，包括所有三指标项与三次重复同一指标的项。两个不同指标各出现两次时，双次数 $(2,2)$ 只留下 $p_qp_r$ 和互为共轭的 $z_q^2\overline z_r^{\,2}$、$z_r^2\overline z_q^{\,2}$。比较 $N^2$ 的系数，得到唯一的实数 $d_{qr}$ 与复数 $c_{qr}$，使
+
+$$
+\begin{aligned}
+F_q&=p_qN+\sum_{r\ne q}
+ \left[d_{qr}p_qp_r+
+ \operatorname{Re}\!\left(c_{qr}z_q^2\overline z_r^{\,2}\right)\right],\\
+d_{qr}&=-d_{rq},\qquad c_{rq}=-\overline{c_{qr}}.
+\end{aligned}
+\tag{152.8}
+$$
+
+这不是预设的两坐标形式，而是整个四次类在归一化与节点非负性下的结论。其相干非负性的精确条件是
+
+$$
+|d_{qr}|+|c_{qr}|\le1\qquad(q\ne r).
+\tag{152.9}
+$$
+
+为证必要性，仅保留 $q,r$ 两个非零坐标，并任意改变相对相位。将 $F_q\ge0$ 除以 $p_qp_r$，再令 $p_q/p_r\downarrow0$，得 $1+d_{qr}\ge|c_{qr}|$；对 $F_r$ 同理得 $1-d_{qr}\ge|c_{qr}|$。反之，在这两个不等式下，
+
+$$
+F_q=p_q^2+\sum_{r\ne q}
+ \left[(1+d_{qr})p_qp_r+
+ \operatorname{Re}\!\left(c_{qr}z_q^2\overline z_r^{\,2}\right)\right]\ge0,
+\tag{152.10}
+$$
+
+因为每个方括号不小于 $(1+d_{qr}-|c_{qr}|)p_qp_r$。实值性、归一化和节点条件也由 (152.8) 直接成立。
+
+相干非负性确实容许非正的系数矩阵。例如只取一对 $q\ne r$，令全部 $d=0$、$c_{qr}=\varepsilon$、$c_{rq}=-\varepsilon$，其余 $c=0$，其中 $0<\varepsilon\le1$。(152.9) 保证所有 $F$ 非负，但 $A_q$ 在正交二维子空间 $\operatorname{span}\{|q\rangle^{\otimes2},|r\rangle^{\otimes2}\}$ 上的压缩为
+
+$$
+\begin{pmatrix}1&\varepsilon/2\\\varepsilon/2&0\end{pmatrix},
+\qquad \det=-\varepsilon^2/4<0.
+\tag{152.11}
+$$
+
+所以不能用 $A_q\ge0$ 提前消去 (152.8) 的相位项。
+
+现在使用精确原生方程。由 (152.2)，固定除 $b_j$ 外的所有位后，$j=1,\ldots,9$ 的支撑分量如下：两邻位均为零时，中心位的两个合法值构成一对，$\mathcal P_j$ 的块为 $\left(\begin{smallmatrix}x&xy\\xy&x^2\end{smallmatrix}\right)$，按中心位 $0,1$ 排列；至少一个邻位占据时，中心只能为零，给单点分量。两邻位均占据的单点对角值为一，恰有一个占据的单点对角值为零。边界代入同一公式，得
+
+$$
+\mathcal P_0=n_1,\qquad \mathcal P_{10}=n_9.
+\tag{152.12}
+$$
+
+故两个端点地址都只有全部 $89$ 个单点分量。内部的可能对角值为 $x,x^2,0,1$，四者互异；每条二维分量边的 Hamiltonian 元为 $-\alpha xy\ne0$。全部地址支撑图的并图 $G$ 恰是 $E$ 上全部合法单比特翻转图，没有离开 $E$ 的边。长度 $m$ 的独立集数满足 $c_0=1,c_1=2,c_m=c_{m-1}+c_{m-2}$，按末位是否占据分解即可得到；故 $c_9=89$，所用图确为完整路径图。
+
+因 $U_j$ 保持 $N$，(152.3) 等价于每个 $F_B=\sum_{q\in B}F_q$ 的不变性。只对这些多项式求导，记
+
+$$
+D_jF(z)=\left.\frac{d}{dt}F(U_j(t)z)\right|_{t=0}.
+\tag{152.13}
+$$
+
+(152.3) 给 $D_jF_B=0$，它在所有坐标上是多项式恒等式。在 $t=0$ 处取右导数已足以取得这个等式；多项式本身没有正则性缺口。
+
+先消去相位系数。若 $q,r$ 属于地址 $j$ 的不同分量，取含 $q$ 的分量 $B$，记 $h_j(q)=(H_j)_{qq}$。(152.8) 中 $F_B$ 的 $z_q^2\overline z_r^{\,2}$ 系数为 $c_{qr}/2$。对角部分求导将该单项式乘以 $2i(h_j(r)-h_j(q))$。非对角部分一次只替换一个全纯或反全纯指标，不能从 (152.8) 的任何其他单项式得到这个平方单项式：从 $p_ap_b$ 至少须替换两个指标，从另一项 $z_a^2\overline z_b^{\,2}$ 也至少须替换两个。没有三指标项可提供一次替换的来源。因此系数比较给
+
+$$
+(h_j(q)-h_j(r))c_{qr}=0
+\qquad(q,r\text{ 属于不同 }j\text{ 分量}).
+\tag{152.14}
+$$
+
+若两条路径至少相差两位，选一个相异位 $k$，交换 $q,r$ 的名称使 $q_k=1,r_k=0$。它们属于不同 $k$ 分量，因为同一分量的其他位全部固定。$q$ 的两邻位均为零，故 $(\mathcal P_k)_{qq}=x^2$；$r$ 的对角值则是 $x,0,1$ 中之一。它们不同，(152.14) 给 $c_{qr}=0$。
+
+若只差一位，则写 $q=r\cup\{k\}$。当 $k=1$，用地址零的 (152.12)，它在两个不同单点上取一和零。当 $k\ge2$，用地址 $j=k-1$；两条路径在中心位 $k-1$ 都为零，$q$ 因邻位 $k$ 占据而是单点。若位 $k-2$ 占据，$q,r$ 的对角值依次为一和零；若位 $k-2$ 为零，则依次为零和 $x$，此时 $r$ 在二维分量中。固定边界 $b_0=0$ 也包括在后一情形中。两个分量不同，对角值不同，再由 (152.14) 得 $c_{qr}=0$。这覆盖每个不同路径对，故全部相位系数为零。
+
+余下的密度分子为 $F_q=p_qN+\sum_{r\ne q}d_{qr}p_qp_r$。任取一条原地址 $j$ 的边 $B=\{u,v\}$，内部 $d_{uv}$ 项因反对称而相消，故
+
+$$
+F_B=(p_u+p_v)N+
+ \sum_{r\notin\{u,v\}}(d_{ur}p_u+d_{vr}p_v)p_r.
+\tag{152.15}
+$$
+
+第一项由块酉性精确不变。对第二项用 $D_j$，比较 $z_v\overline z_u p_r$ 的系数。由 $D_jz_a=-i\sum_b(H_j)_{ab}z_b$，这个系数恰为
+
+$$
+i(H_j)_{uv}(d_{vr}-d_{ur}).
+\tag{152.16}
+$$
+
+这里矩阵实对称，且 $r$ 不在 $\{u,v\}$ 的支撑分量中。对外部坐标求导不能产生该单项式；对任意其他 $p_s$ 求导也不能留下所需的 $p_r$ 与 $z_v\overline z_u$。因而 $D_jF_B=0$ 与 $(H_j)_{uv}\ne0$ 给
+
+$$
+d_{ur}=d_{vr}\qquad(r\notin\{u,v\}).
+\tag{152.17}
+$$
+
+对固定 $r$，函数 $q\mapsto d_{qr}$ 遂在删点图 $G\setminus\{r\}$ 的每个连通分量上恒定。
+
+所需删点连通性可在全部 $E$ 上直接证明。若被删的独立集 $r$ 非空，对任意 $s\ne r$，从 $s$ 逐点删除即可到空集且避开 $r$：当 $|s|\ge2$，其至少两个不同的立即删除邻点至多一个等于 $r$，任选另一个并归纳；当 $|s|=1$，删除到空集不会命中非空 $r$。故 $G\setminus\{r\}$ 连通。若删的是空集，每个非空独立集都能逐点删除到某个单点集。对 $|i-k|\ge2$，单点集 $\{i\},\{k\}$ 经合法的 $\{i,k\}$ 相连。站点一连接所有站点 $3,\ldots,9$，站点二经站点四连接站点一，所以全部单点集仍相连。因此
+
+$$
+G\setminus\{r\}\text{ 连通}\qquad\text{对每个 }r\in E.
+\tag{152.18}
+$$
+
+结合 (152.17)，存在实数 $a_r$ 使 $d_{qr}=a_r$ 对所有 $q\ne r$ 成立。反对称性给 $a_r=-a_q$。取任意三个不同顶点，前两对关系给两个数相等，第三对关系使其又互为相反数，故三者全为零；再与任意其他顶点配对，得全部 $a_r=0$。于是 (152.8) 变成 $F_q=p_qN$。与 (152.7) 比较即得唯一的 (152.6)。
+
+最后验证反向的全部方程。矩阵 (152.6) 的相干值为 $p_qN$，和为 $N^2$，且满足非负与节点条件。每个原生支撑分量 $B$ 的坐标投影 $P_B$ 与 $H_j$ 对易，所以 $\sum_{q\in B}p_q=\|P_Bz\|^2$ 在 $U_j(t)$ 下恒定；$N$ 也恒定。这对 $j=0,\ldots,10$、全部单点及二维分量、每个非零 $z$ 和每个 $t\in[0,1]$ 都成立，给完整 (152.3)。商 $p_q/N$ 在非零空间上连续，证明 (152.5)。∎
+
+**命题 152.3（一个归一节点变形的精确原生违例）。** 令 $e=\varnothing$、$r=\{1\}$、$s=\{2\}$ 为 $E$ 中的三条路径，固定 $0<\varepsilon\le1$，取
+
+$$
+\begin{aligned}
+\widetilde\Pi_e&=\frac{p_e}{N}+\varepsilon\frac{p_ep_r}{N^2},&
+\widetilde\Pi_r&=\frac{p_r}{N}-\varepsilon\frac{p_ep_r}{N^2},\\
+\widetilde\Pi_q&=\frac{p_q}{N}\qquad(q\notin\{e,r\}).
+\end{aligned}
+\tag{152.19}
+$$
+
+该族属于完整类 $\mathscr Q_2$，连续、归一、非负且满足节点条件，但不是 Born。对原地址 $j=2$ 的分量 $B=\{e,s\}$ 和数学向量 $z=(|e\rangle+|r\rangle)/\sqrt2$，有
+
+$$
+\sum_{q\in B}\widetilde\Pi_q(U_2(t)z)
+ -\sum_{q\in B}\widetilde\Pi_q(z)
+ =-\varepsilon x^3\sin^2\!\left(\frac{3\pi t}{10}\right)<0
+\quad(0<t\le1).
+\tag{152.20}
+$$
+
+证明。两个修正相消，给归一化。对 $r$，$\widetilde\Pi_r=(p_r/N)(1-\varepsilon p_e/N)\ge0$；其余项非负。所有分子都有相应节点因子，且为实值双次数 $(2,2)$ 多项式；(152.7) 的系数对应给 Hermitian 表示和 $\sum_qA_q=I_W$，所以确属 $\mathscr Q_2$。在所列 $z$ 上，$\widetilde\Pi_e=1/2+\varepsilon/4$，与 Born 不同。
+
+地址二将 $e,s$ 组成 (146.2) 的原块，$r$ 因邻位一占据而为单点。由 (152.2) 的投影指数式，置
+
+$$
+a(t)=\left|1+(e^{i\alpha t}-1)x\right|^2
+ =1-4x^3\sin^2(\alpha t/2),
+\tag{152.21}
+$$
+
+则演化后的三个质量依次为 $p_e=a(t)/2$、$p_s=(1-a(t))/2$、$p_r=1/2$，其他坐标仍为零。总范数为一，$B$ 上的 Born 总质量恒为 $1/2$；修正量从 $\varepsilon/4$ 变为 $\varepsilon a(t)/4$，给 (152.20)。此处 $0<\alpha t/2\le3\pi/10<\pi$，故不等号严格。所用 $z$ 是定理全射线量词内的向量，不是另一个已获准的 ready 或准备程序。∎
+
+**定义 152.4（高次类与连续密度问题）。** 对整数 $k\ge1$，令 $\mathscr Q_k$ 为所有 $F_q/N^k$，其中 $F_q$ 是实值双次数 $(k,k)$ 多项式，满足 $F_q\ge0$、$F_q|_{z_q=0}=0$、$\sum_qF_q=N^k$。等价的 $\operatorname{Sym}^k\mathcal K$ Hermitian 坐标表示仍只要求相干非负。任意连续密度的原生唯一性问题是
+
+$$
+\mathscr C_{\rm nat}\stackrel{?}{=}\{\Pi^{\rm B}\},
+\tag{152.22}
+$$
+
+其域是定义 152.1 的全部非零波、全部原地址和全部支撑分量，不限于任意固定多项式次数。式 (152.22) 保留为待定问题。
+
+**推论 152.5（下一次数的精确方程与四次结论的边界）。** 若 $\Pi\in\mathscr C_{\rm nat}\cap\mathscr Q_k$ 且 $\Pi\ne\Pi^{\rm B}$，则 $k\ge3$。在 $k=3$ 时，非 Born 解的存在等价于存在不全为零的实值双次数 $(3,3)$ 多项式族 $(G_q)_{q\in E}$，同时满足
+
+$$
+\begin{gathered}
+\sum_qG_q=0,\qquad G_q|_{z_q=0}=0,\qquad
+p_qN^2+G_q\ge0\quad\text{对每个 }q\text{ 及所有 }z,\\
+D_j\!\left(\sum_{q\in B}G_q\right)=0
+\quad(j=0,\ldots,10,\ B\in\mathscr B_j).
+\end{gathered}
+\tag{152.23}
+$$
+
+定理 152.2 的两输出反对称系数形不由六次的节点条件与归一化重复得到：对不同 $a,b,c\in E$，单项式 $p_ap_bp_c$ 及 $z_a^2\overline z_b^{\,2}p_c$ 各有三个可能的节点输出归属。
+
+证明。$k=1$ 的分子乘以 $N$ 即成为 $k=2$ 的分子，密度及全部原生方程不变；两者均由定理 152.2 排除非 Born 解。对 $k=3$，令 $F_q=p_qN^2+G_q$。归一、节点与非负条件逐项等价于 (152.23) 的第一行。Born 分量 $\sum_{q\in B}p_qN^2$ 在 $U_j$ 下不变，因此原生方程等价于 $D_j\sum_{q\in B}G_q=0$。这个多项式恒等式在 $U_j(t)z$ 上也成立，沿轨道积分即可返回每个 $t\in[0,1]$ 的精确守恒；这一步没有把内部时间变成可用操作。$G$ 不全为零等价于某个密度不同于 Born。
+
+六次时，节点最小值论证仍只迫使一个输出指标至少出现两次。所列两个单项式中，$a,b,c$ 都满足此计数，故归一化只约束三个输出系数之和，而不直接给 (152.8) 的两输出反对称形式。这不构造 (152.23) 的非零解，也不排除它；(152.23) 是否只有零族仍为待定问题。任意连续类还需要另外的论证，不能仅由多项式逼近取得，因为逼近本身不保持所有精确分量方程、节点及非负条件。∎
+
+**定义 152.6（数学来源与配置、记录的不同接口）。** 定理 152.2 的分类结合了 (138.2a)、(145.1)、(146.2) 的原生矩阵、归一节点四次多项式的系数比较及原合法翻转图的删点连通性。它与[续卷 §§69–71](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md#69-黄金模长取样的非幂律余量与额外原生设置) 的共同径向逐坐标响应类不同：这里不预设 $f(|z_q|)$ 的坐标可分性，(152.8) 的非可分系数和相位系数由原生方程消去。续卷 §72 的一般联合响应余量没有满足这里所有 (152.3) 的义务，不能直接作为本类的反例。
+
+已有 [BornReduction](../../../Blueprint/D5/S3/Observer/BornReduction.md) 从给定迹记录权重约化为平方模；[EffectProbabilityExtension](../../../Blueprint/D5/S3/Quantum/Foundation/EffectProbabilityExtension.md) 从全效果上的同一非负有限可加概率推导密度表示，其中的实齐次、正锥与线性扩张步骤也保留这些前件。它们均不选择这里未知的配置 $\Pi$。[AllFutureStatisticsSufficiency](../../../Blueprint/D5/S3/Quantum/Fibers/AllFutureStatisticsSufficiency.md) 比较已有线性迹期望的预测投影；[SelectiveRecordConditioning](../../../Blueprint/D5/S3/Observer/Conditioning/SelectiveRecordConditioning.md) 消去给定非零 Born 分支权重，均不供应配置条件律。[QuarticContextWitness](../../../Blueprint/D5/S3/QuantumContext/QuarticContextWitness.md) 对已有 Born 权重取平方并比较两个三维上下文的总量，与 (152.4) 的归一节点配置密度不同。上述结果与 Galley–Masanes 的对称幂表示是各自前件下的数学供应；定理 152.2 的承重内容是这里全部原生分量上的系数分类。
+
+配置密度、配置过程、记录与档案响应分别是不同的数学对象。即使密度满足 (152.6)，仍未指定配置跳率或同一概率空间上的配置过程，未取得
+
+$$
+\Pr(Q_t=q\mid\mathcal G_t)
+ =\Pi_q(\psi_t)
+\tag{152.24}
+$$
+
+在全部实际可读过去上的成立；字面读出、保留配置、实际纯更新及 (145.4) 的档案发射条件也仍是各自的联合来源前件。(152.5) 因而不供应 (150.19) 的真实档案桥，不替代 §151 的条件中心权重问题，也不构成满足全部原合同的非 Born 反模型。复载体、欧氏范数、相位约定与复 Hamiltonian 始终是这里的输入；原生分量分类没有给出复相位、非交换、组合和动力学的来源。式 (152.22)、实际配置与档案接口以及这些结构的来源，均不被四次类的唯一性替代。
+
+## 追加锚（本行以下为增补区）
