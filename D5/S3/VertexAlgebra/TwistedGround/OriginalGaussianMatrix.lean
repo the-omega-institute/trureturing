@@ -49,7 +49,7 @@ lemma centralWeight_zero : centralWeight 0 = 1 := by
 private lemma centralWeight_one : centralWeight 1 = (1 / 2 : ℝ) := by
   norm_num [centralWeight, Nat.centralBinom]
 
-lemma centralWeight_pos (n : ℕ) : 0 < centralWeight n := by
+private lemma centralWeight_pos (n : ℕ) : 0 < centralWeight n := by
   apply div_pos
   · exact_mod_cast Nat.centralBinom_pos n
   · positivity

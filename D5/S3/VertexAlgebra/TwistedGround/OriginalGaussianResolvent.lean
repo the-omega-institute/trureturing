@@ -95,21 +95,7 @@ private lemma sectionOp_tendsto {z : ℂ} (hz : ‖z‖ < 1) :
   have hp := tendsto_finset_range.prodMk tendsto_finset_range
   rw [prod_atTop_atTop_eq] at hp
   have ht := tendsto_finsetProd_atTop.comp hp
-  simpa [sectionOp, operator, Finset.sum_product] using h.comp ht
-
-private lemma row_summable {z : ℂ} (hz : ‖z‖ < 1) (x : H) (n : ℕ) :
-    Summable (fun m => matrixEntry z (n + 1) (m + 1) * x m) := by
-  apply Summable.of_norm_bounded
-    (((summable_nat_add_iff 1).mpr
-      (summable_geometric_of_lt_one (norm_nonneg z) hz)).mul_left
-        (‖z‖ ^ (n + 1) * ‖x‖))
-  intro m
-  rw [norm_mul]
-  calc
-    _ ≤ ‖z‖ ^ ((n + 1) + (m + 1)) * ‖x‖ :=
-      mul_le_mul (entry_bound z _ _ (by omega) (by omega))
-        (lp.norm_apply_le_norm (by norm_num) x m) (norm_nonneg _) (by positivity)
-    _ = _ := by rw [pow_add]; ring
+  simpa [sectionOp, operator, Function.comp_def, Finset.sum_product] using h.comp ht
 
 private lemma term_apply (z : ℂ) (i j n : ℕ) (x : H) :
     term z (i, j) x n =
@@ -119,7 +105,7 @@ private lemma term_apply (z : ℂ) (i j n : ℕ) (x : H) :
   rw [lp.single_apply]
   by_cases hi : i = n
   · subst i; simp
-  · simp [hi, Pi.single_eq_of_ne (Ne.symm hi)]
+  · simp [hi]
 
 private lemma operator_apply {z : ℂ} (hz : ‖z‖ < 1) (x : H) (n : ℕ) :
     operator z x n = ∑' m : ℕ, matrixEntry z (n + 1) (m + 1) * x m := by
@@ -150,7 +136,7 @@ private def zeroExtend (N : ℕ) (x : EuclideanSpace ℂ (Fin N)) : H :=
 private lemma zeroExtend_apply (N : ℕ) (x : EuclideanSpace ℂ (Fin N)) (n : ℕ) :
     zeroExtend N x n = if hn : n < N then x ⟨n, hn⟩ else 0 := by
   classical
-  simp only [zeroExtend, lp.coeFn_sum, lp.coeFn_single, Finset.sum_pi_single]
+  simp only [zeroExtend, lp.coeFn_sum, lp.coeFn_single]
   by_cases hn : n < N <;> simp [Finset.mem_range, hn]
 
 private lemma zeroExtend_norm (N : ℕ) (x : EuclideanSpace ℂ (Fin N)) :
@@ -271,7 +257,7 @@ private lemma half_shifted_convolution (s n : ℕ) (hs : 0 < s) :
   have hKc : K * c = d := by
     ext k
     simp only [K, c, d, PowerSeries.coeff_mul, PowerSeries.coeff_mk]
-    change (∑ p ∈ Finset.Nat.antidiagonal k,
+    change (∑ p ∈ Finset.HasAntidiagonal.antidiagonal k,
       halfBinomial (s + p.1) * Ring.choose (1 / 2 : ℂ) p.2) = _
     rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
     exact halfBinomial_positive_convolution s k hs
@@ -279,7 +265,7 @@ private lemma half_shifted_convolution (s n : ℕ) (hs : 0 < s) :
   have he := congrArg (PowerSeries.coeff n) hK
   simp only [K, d, h, PowerSeries.coeff_mk, PowerSeries.coeff_mul] at he
   change halfBinomial (s + n) =
-    ∑ p ∈ Finset.Nat.antidiagonal n,
+    ∑ p ∈ Finset.HasAntidiagonal.antidiagonal n,
       ((s : ℂ) * halfBinomial s * halfBinomial p.1 / ((s : ℂ) + p.1)) *
         halfBinomial p.2 at he
   rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk] at he
@@ -320,7 +306,7 @@ private lemma shifted_convolution (s n : ℕ) (hs : 0 < s) :
         (((s : ℝ) * centralWeight s *
           ∑ t ∈ Finset.range (n + 1),
             centralWeight t * centralWeight (n - t) / ((s : ℝ) + t) : ℝ) : ℂ) := by
-    convert h using 1 <;> push_cast <;> simp only [pow_add] <;> ring
+    convert h using 1; push_cast; simp only [pow_add]; ring
   exact_mod_cast (mul_left_cancel₀ hp hc).symm
 
 private lemma weight_convolution (n : ℕ) :
@@ -330,14 +316,11 @@ private lemma weight_convolution (n : ℕ) :
   have hneg : Ring.choose (-1 : ℂ) n = (-1 : ℂ) ^ n := by
     simpa [Ring.multichoose_one, Units.smul_def, zsmul_eq_mul,
       Int.cast_negOnePow_natCast] using Ring.choose_neg' (1 : ℂ) n
-  norm_num only [show (-1 / 2 : ℂ) + (-1 / 2) = -1 by ring] at hv
-  rw [hneg] at hv
-  change (-1 : ℂ) ^ n = ∑ p ∈ Finset.Nat.antidiagonal n,
-    Ring.choose (-1 / 2 : ℂ) p.1 * Ring.choose (-1 / 2 : ℂ) p.2 at hv
+  rw [show (-1 / 2 : ℂ) + (-1 / 2) = -1 by ring, hneg] at hv
   rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk] at hv
   have he : (-1 : ℂ) ^ n = (-1 : ℂ) ^ n *
       ((∑ t ∈ Finset.range (n + 1), centralWeight t * centralWeight (n - t) : ℝ) : ℂ) := by
-    rw [hv]
+    conv_lhs => rw [hv]
     rw [Complex.ofReal_sum, Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro t ht
@@ -413,7 +396,7 @@ private lemma L_le {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) (s : ℕ) :
 
 private lemma pair_tsum_antidiagonal (f : ℕ × ℕ → ℝ) (hf : Summable f) :
     (∑' p : ℕ × ℕ, f p) =
-      ∑' n : ℕ, ∑ p ∈ Finset.Nat.antidiagonal n, f p := by
+      ∑' n : ℕ, ∑ p ∈ Finset.HasAntidiagonal.antidiagonal n, f p := by
   conv_rhs =>
     congr
     ext n
@@ -528,7 +511,7 @@ private lemma sqrt_frequency_ge_one (n : ℕ) : 1 ≤ Real.sqrt (n + 1 : ℝ) :=
   apply Real.one_le_sqrt.mpr
   norm_num
 
-private lemma sourceValue_bound {r : ℝ} (hr : 0 ≤ r) (n : ℕ) :
+private lemma sourceValue_bound (r : ℝ) (n : ℕ) :
     ‖sourceValue r n‖ ≤ Real.sqrt r ^ (n + 1) := by
   simp only [sourceValue, norm_div, norm_mul, norm_pow, half_norm,
     Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg _)]
@@ -555,7 +538,7 @@ private lemma columnValue_bound {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) (n : ℕ)
       nlinarith
 
 private lemma geometric_mem_l2 {f : ℕ → ℂ} {r C : ℝ}
-    (hr : 0 ≤ r) (hr1 : r < 1) (hC : 0 ≤ C)
+    (hr : 0 ≤ r) (hr1 : r < 1)
     (hf : ∀ n, ‖f n‖ ≤ C * Real.sqrt r ^ (n + 1)) : Memℓp f 2 := by
   apply memℓp_gen
   norm_num only [ENNReal.toReal_ofNat, Real.rpow_two]
@@ -569,11 +552,11 @@ private lemma geometric_mem_l2 {f : ℕ → ℂ} {r C : ℝ}
 
 private lemma source_mem {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
     Memℓp (sourceValue r) 2 :=
-  geometric_mem_l2 hr hr1 zero_le_one (by simpa using sourceValue_bound hr)
+  geometric_mem_l2 (C := 1) hr hr1 (by simpa using sourceValue_bound r)
 
 private lemma column_mem {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
     Memℓp (columnValue r) 2 :=
-  geometric_mem_l2 hr hr1 (by positivity) (columnValue_bound hr hr1)
+  geometric_mem_l2 (C := (1 - r)⁻¹) hr hr1 (columnValue_bound hr hr1)
 
 def source (r : ℝ) (hr : 0 ≤ r) (hr1 : r < 1) : H := ⟨sourceValue r, source_mem hr hr1⟩
 
@@ -593,7 +576,7 @@ private lemma weighted_mem {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
   calc
     _ ≤ ((n + 1 : ℝ) * Real.sqrt r ^ (n + 1)) ^ 2 := by
       gcongr
-      exact sourceValue_bound hr n
+      exact sourceValue_bound r n
     _ = _ := by
       rw [mul_pow, ← pow_mul, mul_comm (n + 1) 2, pow_mul, Real.sq_sqrt hr]
       norm_cast
@@ -607,7 +590,7 @@ def resolvent (z : ℂ) : H →L[ℂ] H := ∑' k : ℕ, operator z ^ k
 private lemma resolvent_mul {z : ℂ} (hz : ‖z‖ < 1) :
     resolvent z * (1 - operator z) = 1 := by
   apply geom_series_mul_neg
-  exact (operator_norm_le hz).trans (pow_lt_one₀ (norm_nonneg z) hz (by norm_num : 0 < (2 : ℕ)))
+  exact (operator_norm_le hz).trans_lt (pow_lt_one₀ (norm_nonneg z) hz (by norm_num : (2 : ℕ) ≠ 0))
 
 private def B (r : ℝ) : ℝ := ∑' k : ℕ, centralWeight k * r ^ k
 
@@ -713,12 +696,13 @@ private lemma entry_sqrt (z : ℂ) (s t : ℕ) (hs : 0 < s) (ht : 0 < t) :
     exact_mod_cast Real.sq_sqrt (by positivity : (0 : ℝ) ≤ s)
   have ht2 : (Real.sqrt (t : ℝ) : ℂ) ^ 2 = (t : ℂ) := by
     exact_mod_cast Real.sq_sqrt (by positivity : (0 : ℝ) ≤ t)
-  have hs0 : (Real.sqrt (s : ℝ) : ℂ) ≠ 0 := by exact_mod_cast (by positivity : Real.sqrt (s : ℝ) ≠ 0)
-  have ht0 : (Real.sqrt (t : ℝ) : ℂ) ≠ 0 := by exact_mod_cast (by positivity : Real.sqrt (t : ℝ) ≠ 0)
+  have hs0 : (Real.sqrt (s : ℝ) : ℂ) ≠ 0 := by
+    exact_mod_cast (by positivity : Real.sqrt (s : ℝ) ≠ 0)
+  have ht0 : (Real.sqrt (t : ℝ) : ℂ) ≠ 0 := by
+    exact_mod_cast (by positivity : Real.sqrt (t : ℝ) ≠ 0)
   simp only [matrixEntry, pairScalar]
   rw [← hs2, ← ht2]
   field_simp
-  <;> ring
 
 private lemma entry_column_product {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) (s t : ℕ)
     (hs : 0 < s) :
@@ -756,7 +740,6 @@ private lemma entry_column_product {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) (s t :
       simp only [columnValue, pow_add (Real.sqrt r : ℂ) s (t + 1)]
       push_cast
       field_simp [hs0, ht0, hF]
-      <;> ring
     _ = _ := by
       rw [hs2, hsign, hq]
       push_cast
@@ -782,7 +765,7 @@ private lemma column_equation {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     push_cast
     rfl
   have hres := shifted_residual hr.le hr1 (n + 1) (by omega)
-  simp only [Nat.cast_add, Nat.cast_one] at hres
+  simp only [Nat.cast_add, Nat.cast_one] at hres ha
   rw [hres] at ha
   change columnValue r n - operator (Real.sqrt r : ℂ) (column r hr.le hr1) n = sourceValue r n
   rw [ha]
@@ -791,7 +774,7 @@ private lemma column_equation {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
   have hF : (F r : ℂ) ≠ 0 := by
     exact_mod_cast (ne_of_gt (lt_of_lt_of_le zero_lt_one (F_ge_one hr.le hr1)))
   field_simp [hF]
-  <;> ring
+  ring
 
 /-- The shifted column solves the actual signed original infinite resolvent. -/
 theorem resolvent_column {r : ℝ} (hr : 0 < r) (hr1 : r < 1) (n : ℕ) :
@@ -808,7 +791,7 @@ theorem resolvent_column {r : ℝ} (hr : 0 < r) (hr1 : r < 1) (n : ℕ) :
           (resolvent_mul (radial_norm_lt_one hr1))
   exact congrArg (fun x : H => x n) he
 
-private lemma scalar_column_product {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) (n : ℕ) :
+private lemma scalar_column_product {r : ℝ} (hr : 0 ≤ r) (n : ℕ) :
     (n + 1 : ℂ) * sourceValue r n * columnValue r n =
       ((centralWeight (n + 1) * r ^ (n + 1) * L r (n + 1) / F r : ℝ) : ℂ) := by
   have hs2 : (Real.sqrt (n + 1 : ℝ) : ℂ) ^ 2 = (n + 1 : ℂ) := by
@@ -833,7 +816,6 @@ private lemma scalar_column_product {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) (n : 
       rw [hs2, hsign, hq]
       push_cast
       field_simp
-      <;> ring
 
 /-- An absolutely convergent bilinear scalar contraction, with the original signs. -/
 theorem bilinear_resolvent_scalar {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
@@ -854,13 +836,13 @@ theorem bilinear_resolvent_scalar {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
         (((B r - F r) / F r : ℝ) : ℂ) := by
       simp_rw [resolvent_column hr hr1]
       change (∑' n : ℕ, (n + 1 : ℂ) * sourceValue r n * columnValue r n) = _
-      simp_rw [scalar_column_product hr.le hr1]
+      simp_rw [scalar_column_product hr.le]
       rw [← Complex.ofReal_tsum, tsum_div_const, scalar_shifted_sum hr.le hr1]
     rw [he, B_eq hr.le hr1]
     push_cast
     have hF : (F r : ℂ) ≠ 0 := by
       exact_mod_cast (ne_of_gt (lt_of_lt_of_le zero_lt_one (F_ge_one hr.le hr1)))
     field_simp [hF]
-    <;> ring
+    ring
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent
