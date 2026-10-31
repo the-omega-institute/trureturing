@@ -104,7 +104,10 @@ private theorem arithmetic (a b : ℤ) (ha : 2 ≤ a) (hb : 4*a ≤ b) :
   have he3 : -((2*((2*a)^2*(2*b)^2-1)+1)-(1+2*a+(2*a)^2+(2*a)^2*(2*b)))/2 = -16*a^2*b^2 + 4*a^2*b + 2*a^2 + a + 1 := by ring_nf; omega
   simp only [hCdiv,hd0,hd1,hd2,hd3,he0,he1,he2,he3]
   ring_nf at hlow hhigh margins cA cB cL cM cGV cGW cGX ⊢
-  omega
+  clear hCdiv hd0 hd1 hd2 hd3 he0 he1 he2 he3 hR hT
+  clear hu hv ea eb u v
+  repeat' constructor
+  all_goals omega
 
 set_option maxHeartbeats 1600000 in
 private theorem far_right (r s : ℕ) (hr : 2 ≤ r) (hs : r+2 ≤ s) :
