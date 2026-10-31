@@ -127,7 +127,8 @@ theorem indecomposable_shape_and_prefix_iff : b 0 = 0 ∧ (∀ n : ℕ, 1 ≤ n 
     (∀ (n : ℕ) (p : List ℕ), 1 ≤ n → p.Perm (List.range' 1 n) → p.getLast? = some 1 → sumIndecomposable p) ∧ (∀ n : ℕ, 2 ≤ n → ∀ p ∈ indecomposableAvoiders n, let m := p.getD 0 0; let posN := p.idxOf n + 1; let q := square p;
       (p.getD (n - 1) 0 = 1 ∧ p.getLast? = some 1) ∧ (2 ≤ m ∧ m ≤ 4 ∧ ∀ u v : ℕ, 2 ≤ u → u < v → v ≤ m - 1 → 1 < p.idxOf v + 1 ∧ p.idxOf v + 1 < p.idxOf u + 1) ∧
       (q.getD (posN - 1) 0 = 1 ∧ q.getD (n - 1) 0 = m ∧ (∀ i j : ℕ, posN + 1 ≤ i → i < j → j ≤ n → q.getD (i - 1) 0 < q.getD (j - 1) 0) ∧ n + 1 ≤ posN + m ∧ n - m + 1 ≤ posN ∧ (m = 2 → posN = n - 1)) ∧
-      (∀ i j : ℕ, posN + 1 ≤ i → i < j → j ≤ n → p.getD (j - 1) 0 < p.getD (i - 1) 0)) := by
+      (∀ i j : ℕ, posN + 1 ≤ i → i < j → j ≤ n → p.getD (j - 1) 0 < p.getD (i - 1) 0) ∧
+      (∀ u : ℕ, 2 ≤ u → u ≤ m - 1 → 1 < p.idxOf u + 1) ∧ n - 3 ≤ posN ∧ posN ≤ n - 1) := by
   refine ⟨?_, ?_, prefix_image_iff, ending_in_one_indecomposable, ?_⟩
   · have hemp : indecomposableAvoiders 0 = ∅ := by
       ext p; refine ⟨fun ⟨hp, ⟨hperm, _⟩, _⟩ => hp (List.perm_nil.mp (by simpa using hperm)), ?_⟩; intro h; cases h
@@ -163,8 +164,11 @@ theorem indecomposable_shape_and_prefix_iff : b 0 = 0 ∧ (∀ n : ℕ, 1 ≤ n 
         p.getD (j - 1) 0 < p.getD (i - 1) 0 := by
       intro i j hi hij hj; have hbj := perm_getD_bounds hperm (by omega : j - 1 < n); have hne : p.getD (i - 1) 0 ≠ p.getD (j - 1) 0 := fun heq => (by have := perm_getD_inj hperm (by omega) (by omega) heq; omega)
       have hnen := ne_val_of_getD hperm (by omega) hsn.1 (by omega : j - 1 ≠ p.idxOf n) hsn.2; by_contra hnot; exact hav312 ((occurs_312_iff p).mpr ⟨p.idxOf n, i - 1, j - 1, by omega, by omega, by omega, by omega, by rw [hsn.2]; omega⟩)
+    have hright_small : ∀ u : ℕ, 2 ≤ u → u ≤ p.getD 0 0 - 1 → 1 < p.idxOf u + 1 := fun u hu hum => by
+      have hu0 := idxOf_ne_of_getD hperm u 0 (by omega) (by omega) (by omega); omega
     exact ⟨⟨hend, hlast⟩, ⟨hm_ge2, hm_le4, hdec_small⟩,
-      ⟨hqp, hqn, hq_inc, hpos_bound, by omega, fun hm2 => by have := hsn.1; omega⟩, hp_dec⟩
+      ⟨hqp, hqn, hq_inc, hpos_bound, by omega, fun hm2 => by have := hsn.1; omega⟩, hp_dec,
+      hright_small, by omega, by have := hsn.1; omega⟩
 private theorem getD_app_left {a c : List ℕ} {i : ℕ} (h : i < a.length) : (a ++ c).getD i 0 = a.getD i 0 := List.getD_append a c 0 i h
 private theorem getD_app_right {a c : List ℕ} {i : ℕ} (h : a.length ≤ i) : (a ++ c).getD i 0 = c.getD (i - a.length) 0 := List.getD_append_right a c 0 i h
 private theorem flatMap_pair_length (m a c : ℕ) : ((List.range m).flatMap fun r => [2 * r + a, 2 * r + c]).length = 2 * m := by

@@ -40,7 +40,12 @@ abbrev arena : Arena where
     (∀ n : ℕ, 6 ≤ n →
       (a n = a (n - 1) + a (n - 2) + a (n - 3) + a (n - 4) + (n - 1) ↔ n ≤ 10)) ∧
     (∀ n : ℕ, 11 ≤ n →
-      a n < a (n - 1) + a (n - 2) + a (n - 3) + a (n - 4) + (n - 1))
+      a n < a (n - 1) + a (n - 2) + a (n - 3) + a (n - 4) + (n - 1)) ∧
+    (∀ n : ℕ, 5 ≤ n → a n = a (n - 1) + a (n - 2) + a (n - 3) + a (n - 4) + b n) ∧
+    (∀ n : ℕ, 6 ≤ n →
+      (a n = a (n - 1) + a (n - 2) + a (n - 3) + a (n - 4) + (n - 1) ↔ b n = n - 1)) ∧
+    (∀ n : ℕ, 6 ≤ n → n ≤ 10 → b n = n - 1) ∧
+    (∀ n : ℕ, 11 ≤ n → b n < n - 1)
 
 theorem rejected_law : ¬ arena.Law rejected := by
   classical
@@ -124,7 +129,7 @@ abbrev arena : Arena where
     let denA : PowerSeries ℤ := denB * denC
     PowerSeries.constantCoeff seriesB = 0 ∧ PowerSeries.constantCoeff seriesA = 0 ∧
     IsUnit denB ∧ IsUnit denC ∧ IsUnit denA ∧
-    seriesA * denC = seriesB ∧
+    seriesA * denC = seriesB ∧ seriesA = seriesB * Ring.inverse denC ∧
     seriesB * denB = num ∧ seriesB = num * Ring.inverse denB ∧
     seriesA * denA = num ∧ seriesA = num * Ring.inverse denA ∧
     denA = (1 - 2 * PowerSeries.X - PowerSeries.X ^ 2 + 2 * PowerSeries.X ^ 3 +
@@ -135,8 +140,8 @@ abbrev arena : Arena where
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hbad := h.2.2.2.2.2.2.2.2.2.2.2 12 (by omega)
-  have hgood := generating_series_and_order_seven_recurrence.2.2.2.2.2.2.2.2.2.2.2 12 (by omega)
+  have hbad := h.2.2.2.2.2.2.2.2.2.2.2.2 12 (by omega)
+  have hgood := generating_series_and_order_seven_recurrence.2.2.2.2.2.2.2.2.2.2.2.2 12 (by omega)
   have hbd := indecomposable_count_and_recurrence_boundary
   have ha1 : a 1 = 1 := by
     rw [hbd.2.2.2.2.2.2.2.2.2.2.2.1 1 (by omega)]
@@ -190,7 +195,7 @@ def registration :
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg",
-        "arg", "arg", "arg", "arg", "arg", "body", "body", "fn", "arg", "arg", "arg"]
+        "arg", "arg", "arg", "arg", "arg", "arg", "body", "body", "fn", "arg", "arg", "arg"]
       stateBinder := 4
       functionOperand := false
       stateOperand := none

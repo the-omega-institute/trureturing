@@ -552,7 +552,12 @@ theorem indecomposable_count_and_recurrence_boundary :
     (∀ n : ℕ, 6 ≤ n →
       (a n = a (n - 1) + a (n - 2) + a (n - 3) + a (n - 4) + (n - 1) ↔ n ≤ 10)) ∧
     (∀ n : ℕ, 11 ≤ n →
-      a n < a (n - 1) + a (n - 2) + a (n - 3) + a (n - 4) + (n - 1)) := by
+      a n < a (n - 1) + a (n - 2) + a (n - 3) + a (n - 4) + (n - 1)) ∧
+    (∀ n : ℕ, 5 ≤ n → a n = a (n - 1) + a (n - 2) + a (n - 3) + a (n - 4) + b n) ∧
+    (∀ n : ℕ, 6 ≤ n →
+      (a n = a (n - 1) + a (n - 2) + a (n - 3) + a (n - 4) + (n - 1) ↔ b n = n - 1)) ∧
+    (∀ n : ℕ, 6 ≤ n → n ≤ 10 → b n = n - 1) ∧
+    (∀ n : ℕ, 11 ≤ n → b n < n - 1) := by
   classical
   have hb5 : b 5 = 3 := by rw [b_formula]; norm_num
   have hb6 : b 6 = 5 := by rw [b_formula]; norm_num
@@ -568,7 +573,7 @@ theorem indecomposable_count_and_recurrence_boundary :
     intro n hn
     rw [count_recurrence n hn, ← (indecomposable_shape_and_prefix_iff.2.1 n (by omega)).2]
   refine ⟨fun n => by rw [b_formula n]; split_ifs <;> rfl, b_one, b_two, b_three, b_four, hb5,
-    hb6, hb7, hb8, hb9, c_zero, a_convolution, ?_, ?_⟩
+    hb6, hb7, hb8, hb9, c_zero, a_convolution, ?_, ?_, hrec_b, ?_, ?_, ?_⟩
   · intro n hn
     rw [hrec_b n (by omega)]
     by_cases h9 : 9 ≤ n
@@ -577,6 +582,17 @@ theorem indecomposable_count_and_recurrence_boundary :
         simp [hb6, hb7, hb8]
   · intro n hn
     rw [hrec_b n (by omega), hb9 n (by omega)]
+    omega
+  · intro n hn
+    rw [hrec_b n (by omega)]
+    omega
+  · intro n hn6 hn10
+    by_cases h9 : 9 ≤ n
+    · rw [hb9 n h9]; omega
+    · rcases (by omega : n = 6 ∨ n = 7 ∨ n = 8) with rfl | rfl | rfl <;>
+        simp [hb6, hb7, hb8]
+  · intro n hn
+    rw [hb9 n (by omega)]
     omega
 
 end CountBoundary
@@ -597,7 +613,7 @@ theorem generating_series_and_order_seven_recurrence :
     let denA : PowerSeries ℤ := denB * denC
     PowerSeries.constantCoeff seriesB = 0 ∧ PowerSeries.constantCoeff seriesA = 0 ∧
     IsUnit denB ∧ IsUnit denC ∧ IsUnit denA ∧
-    seriesA * denC = seriesB ∧
+    seriesA * denC = seriesB ∧ seriesA = seriesB * Ring.inverse denC ∧
     seriesB * denB = num ∧ seriesB = num * Ring.inverse denB ∧
     seriesA * denA = num ∧ seriesA = num * Ring.inverse denA ∧
     denA = (1 - 2 * PowerSeries.X - PowerSeries.X ^ 2 + 2 * PowerSeries.X ^ 3 +
@@ -671,6 +687,8 @@ theorem generating_series_and_order_seven_recurrence :
     simp only [num, map_add, map_sub, coeff_mul_X_eq, PowerSeries.coeff_mul_X_pow',
       PowerSeries.coeff_X, PowerSeries.coeff_X_pow, seriesA, PowerSeries.coeff_mk] at hc
     omega
-  exact ⟨hcB, hcA, huB, huC, huA, hAC, hBB, hBinv, hAA, hAinv, hdenA, hrec7⟩
+  have hACinv : seriesA = seriesB * Ring.inverse denC := by
+    rw [← hAC, mul_assoc, Ring.mul_inverse_cancel _ huC, mul_one]
+  exact ⟨hcB, hcA, huB, huC, huA, hAC, hACinv, hBB, hBinv, hAA, hAinv, hdenA, hrec7⟩
 
 end D5.S3.Combinatorics.PermutationSquare.PermutationSquareEnumeration

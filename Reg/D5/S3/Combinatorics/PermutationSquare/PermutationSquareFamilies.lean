@@ -47,7 +47,8 @@ abbrev arena : Arena where
       (q.getD (posN - 1) 0 = 1 ∧ q.getD (n - 1) 0 = m ∧
         (∀ i j : ℕ, posN + 1 ≤ i → i < j → j ≤ n → q.getD (i - 1) 0 < q.getD (j - 1) 0) ∧
         n + 1 ≤ posN + m ∧ n - m + 1 ≤ posN ∧ (m = 2 → posN = n - 1)) ∧
-      (∀ i j : ℕ, posN + 1 ≤ i → i < j → j ≤ n → p.getD (j - 1) 0 < p.getD (i - 1) 0))
+      (∀ i j : ℕ, posN + 1 ≤ i → i < j → j ≤ n → p.getD (j - 1) 0 < p.getD (i - 1) 0) ∧
+      (∀ u : ℕ, 2 ≤ u → u ≤ m - 1 → 1 < p.idxOf u + 1) ∧ n - 3 ≤ posN ∧ posN ≤ n - 1)
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
