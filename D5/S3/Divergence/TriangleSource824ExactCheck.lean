@@ -13,7 +13,11 @@ run_elab do
       InformationTheory.klDiv μ (μ.fst.prod (μ.snd.fst.prod μ.snd.snd)) = 0
     from by
       intro α β γ _ _ _ a b c _ _ _
-      dsimp
+      dsimp only
+      haveI : IsProbabilityMeasure (b.prod c) := inferInstance
+      haveI : IsProbabilityMeasure (a.prod (b.prod c)) := inferInstance
+      haveI : IsFiniteMeasure (a.prod (b.prod c)) := inferInstance
+      haveI : SigmaFinite (a.prod (b.prod c)) := inferInstance
       have ha : (a.prod (b.prod c)).fst = a := Measure.fst_prod
       have hb : (a.prod (b.prod c)).snd.fst = b := by
         rw [Measure.snd_prod, Measure.fst_prod]
