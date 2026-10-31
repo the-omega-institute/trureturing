@@ -1916,3 +1916,158 @@ The five executable seat certificates are fallible mathematical input for the
 finite reductions in Lemma 21.2.  Their scope is exactly the ten rows above;
 they do not replace the original \(B\)-equations, the full-\(V\) factorization,
 or the guard interface of Definitions 2.1--2.2 and Theorem 37.1.
+
+## 22. 临界 \(C=B_5=0\) 图的四槽原守卫障碍
+
+本节处理 Definition 38.1 中一个更窄的来源图。它不把“兼容临界父历史”
+误当成所有后代都必须临界；后者允许 regular source，仍属于未决问题。
+
+**定义 22.1（四个临界后代）。** Fix the original legal \(256\)-source
+tuple, its full \(1538\times1024\) matrix \(B\), and the same original
+
+$$
+V=\ker B.
+$$
+
+Assume the directed rank-two factorization of Theorem 37.1, so the two
+independent forms \(X,\Delta\) are forms on this entire \(V\).  Require the
+four slots below the literal prefix \(JJJMMJ\), namely the two slots at
+
+$$
+w_1=JJJMMJJ,
+\qquad
+w_2=JJJMMJM,
+$$
+
+to use the critical signature \(C=B_5=0\).  Theorem 16.1 gives the unique
+positive signature
+
+$$
+h_c=\frac{25-2\sqrt{102}}{217},\qquad
+t_c=\frac1{1-h_c}=\frac{96-\sqrt{102}}{84},\qquad
+R_c=\frac1{1-8h_c}=\frac{16\sqrt{102}-17}{119}.
+$$
+
+Put \(U_c=R_c+t_c\),
+
+$$
+b_c=R_c-1,\qquad c_c=t_c-R_c+1,\qquad
+a_\pm=\frac{1\pm\sqrt{1-4b_cc_c}}2.
+$$
+
+The strict positivity and rank-one trace-one conditions give
+
+$$
+0<b_cc_c<\frac14,
+$$
+
+so \(a_+\ne a_-\).  For a critical slot \(q\), write its entire gain form as
+\(Q_q\).  Equations (38.2)--(38.6) give, on the same \(V\),
+
+$$
+g_q(6)=\alpha _6Q_q+L_6,
+\qquad
+g_q(7)=\alpha _7Q_q+L_7,
+$$
+
+where
+
+$$
+\begin{aligned}
+\alpha _6&=1-56h_c,&
+L_6&=\frac{5e+4}{4}X+\left(\frac34+8h_c\right)\Delta,\\
+\alpha _7&=1-105h_c,&
+L_7&=\left(e+\frac{16}{5}\right)X
+      +\left(\frac34+\frac{35}{2}h_c\right)\Delta.
+\end{aligned}
+$$
+
+The absolute response at clock \(i\) is \(A+\tau_i g_q(i)-Q_q\), with the
+same constant drift form \(A-Q_q\) as in Definition 38.1.
+
+**定理 22.2（critical chart forces an original guard failure）。** Under
+Definition 22.1, at least one of the two terminal pairs (w_1,w_2) has
+identical fixed sources.  For that same literal pair,
+
+$$
+D_{w_j}|_V=0
+$$
+
+in all four coordinates, and therefore
+
+$$
+\operatorname{rank}[B;D_{w_j}]=\operatorname{rank}B.
+$$
+
+Consequently no guarded simultaneous sixteen-slot assignment can lie entirely
+in this critical \(C=B_5=0\) chart, regardless of the free common fifth-\(J\)
+response form.
+
+**证明。** Suppose both terminal pairs are separated.  Since the critical
+source set has only \(a_+,a_-\), each pair uses both values.  The \(JJJMMJJ\)
+trace is \(U_c\) for either value of \(a\).  Equality of its two actual seventh
+\(J\) responses gives
+
+$$
+\bigl(U_c\alpha _7-1\bigr)(Q_{w_1,0}-Q_{w_1,1})=0.
+$$
+
+Now \(U_c(1-25h_c)=1\), hence
+
+$$
+U_c\alpha _7-1=-80U_ch_c\ne0,
+$$
+
+so the two whole forms \(Q_{w_1,0},Q_{w_1,1}\) coincide.  Their sixth traces
+are \(1+t_c+a_+\) and \(1+t_c+a_-\); subtracting the two sixth responses of
+this same pair gives \(g_{w_1}(6)=0\).  Its common sixth response is therefore
+\(A-Q_*\), for their common form \(Q_*\).
+
+The two \(JJJMMJM\) slots share the literal sixth prefix \(JJJMMJ\), so their
+sixth response is also \(A-Q_*\).  For either critical source, with
+
+$$
+\tau _6(a)=1+t_c+a>0,
+$$
+
+the equality to this response is
+
+$$
+\bigl(\tau _6(a)\alpha _6-1\bigr)(Q_q-Q_*)=0.
+$$
+
+Because \(h_c>1/56\), \(\alpha _6<0\), and the coefficient is strictly
+negative.  Thus both \(JJJMMJM\) forms also equal \(Q_*\).  If this second
+pair is separated, its seventh-\(M\) traces \(2R_c+t_c-a_+\) and
+\(2R_c+t_c-a_-\) differ, so its own seventh-response equality forces
+\(g_{w_2}(7)=0\).
+
+The two zero forms cannot coexist.  Direct expansion gives
+
+$$
+\alpha _6g_{w_2}(7)-\alpha _7g_{w_2}(6)
+=\frac{44-5e+(1505e-1484)h_c}{20}X
+ +\frac{5h_c(37-112h_c)}4\,\Delta.
+$$
+
+The coefficient of \(\Delta\) is strictly positive because
+\(0<h_c<1/25\).  Since \(X,\Delta\) are independent on the original \(V\),
+the right side is not the zero form, contradicting the two zero equations.
+Therefore at least one of \(w_1,w_2\) has identical sources.  Lemma 36.2
+then applies to that same fixed pair and yields \(D_{w_j}|_V=0\) in all four
+coordinates, proving the rank statement.  No equality from a different
+terminal pair, gain sample, carrier coordinate, or selected subspace was used.
+∎
+
+**定义 22.3（本节边界）。** The theorem is an ordinary exact algebraic
+obstruction, not a Lean verification or a literature novelty claim.  It keeps
+signed nonzero gains of degree at most three, degree drops and repeated roots,
+constant drift, absolute clocks \(0,\ldots,7\), billed initial and atomic
+readings, both actions, early stopping, strict source positivity, both
+diagonal sheets, the original \(V=\ker B\), and the full four-coordinate
+same-source guard.  It does not exclude a compatible critical parent whose
+descendant slots mix critical and regular sources; that mixed incidence still
+requires the complete Definition 38.1 equations and all original guards.
+The earlier \(JJJJ\) sibling, the remaining finite-pool parents, the complete
+fixed-\(256\)-source/full-\(G\)/full-\(D\) problem, and the global
+eight-versus-nine and nine-read questions remain open.
