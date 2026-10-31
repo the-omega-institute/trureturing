@@ -70,8 +70,8 @@ private theorem coeff_shifted (n : ℕ) (μ : Fin 3 → ℕ) (σ : Perm (Fin 3))
   · rw [if_pos h, one_mul, coeff_psumPart_partition]
     congr 1
     apply congrArg Finset.card
-    apply filter_congr
-    intro f _
+    ext f
+    simp only [mem_filter, mem_univ, true_and]
     apply and_congr_right'
     apply forall_congr'
     intro i
