@@ -9,6 +9,48 @@ namespace StrataLint.CliIntegration.Tests;
 public sealed class SourcePrerequisiteCliTests
 {
     [Theory]
+    [InlineData("README.md", RawChangeKind.Modified, false)]
+    [InlineData("Problems/fixture.md", RawChangeKind.Added, false)]
+    [InlineData("tools/fixture.cs", RawChangeKind.Modified, false)]
+    [InlineData("Blueprint/D5/S0/Carrier/Fixture.scribe.cs", RawChangeKind.Added, false)]
+    [InlineData("docs/develop/theory/Fixture.md", RawChangeKind.Modified, true)]
+    [InlineData("lake-manifest.json", RawChangeKind.Modified, true)]
+    public void ArtifactOnlySourceReadsSelectedBodiesWithoutWholeTreeOrBaseline(
+        string path, RawChangeKind kind, bool excluded)
+    {
+        var changes = RawChangeSet.CreateWithKinds([
+            (path, kind), ("docs/reports/deleted.md", RawChangeKind.Deleted),
+            ("docs/reports/copied.md", RawChangeKind.Copied)]);
+        var snapshot = RawRepositorySnapshot.Create(new[] { path, "untouched.md",
+            "docs/reports/deleted.md", "docs/reports/copied.md" }.Select(file =>
+                RawRepositoryEntry.FromText(file, new string('\n', 1001))));
+        var gateway = new FakeRepositoryGateway(changes, snapshot, snapshot);
+        var environment = new ProductionCliEnvironment("/fixture", gateway, new FakeLeanReportSource(null));
+
+        var result = environment.CheckSource(["--artifact-capacity", "--protected-base", new string('a', 40)]);
+
+        Assert.Equal(1, gateway.PrepareCount);
+        Assert.Equal(0, gateway.WholeTreeReadCount);
+        Assert.Empty(gateway.ReadRevisionCalls);
+        Assert.Empty(gateway.ScopedRevisionReads);
+        Assert.Equal(excluded ? 0 : 1, gateway.ReadCurrentCount);
+        if (excluded) Assert.Empty(gateway.ScopedCurrentReads);
+        else Assert.Equal([":(literal)" + path], Assert.Single(gateway.ScopedCurrentReads));
+        Assert.Equal(excluded ? 0 : 1, result.ExitCode);
+        Assert.Empty(result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Equal("SL-003", Assert.Single(json.RootElement.GetProperty("executed").EnumerateArray()).GetString());
+        var diagnostics = json.RootElement.GetProperty("diagnostics").EnumerateArray().ToArray();
+        if (excluded) Assert.Empty(diagnostics);
+        else
+        {
+            Assert.Single(diagnostics);
+            Assert.Contains("1001 lines (hard limit 1000)", result.Output, StringComparison.Ordinal);
+            Assert.Contains(path, result.Output, StringComparison.Ordinal);
+        }
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void SourceCapacityMatchesNormalOwnerIncludingMaterialsAndExclusions(bool delta)
