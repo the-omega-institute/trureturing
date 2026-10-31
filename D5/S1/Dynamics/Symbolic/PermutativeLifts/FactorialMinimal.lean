@@ -59,9 +59,11 @@ private theorem occurs_of_infix {u v : List Bool} {y : ℤ → Bool} {t : ℤ}
       omega
     have hread := hv (pre.length + j) hij
     have hletter : (pre ++ u ++ post)[pre.length + j]'hij = u[j] := by
-      rw [List.getElem_append_right (by omega)]
+      have hpre : pre.length + j < (pre ++ u).length := by
+        simp only [List.length_append]
+        omega
+      rw [List.getElem_append_left hpre, List.getElem_append_right (by omega)]
       simp only [Nat.add_sub_cancel_left]
-      exact List.getElem_append_left hj
     simpa only [Int.natCast_add, add_assoc] using hread.trans hletter
 
 private theorem infix_of_coordinates {u v : List Bool} {p : ℕ}
