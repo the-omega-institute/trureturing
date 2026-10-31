@@ -79,7 +79,20 @@ private theorem degree_le_from_one_count (s : ℕ) {n : ℕ} (p : Nat.Partition 
 
 private theorem identity_degree (s n : ℕ) (hn : 2 ≤ n) :
     degree s (identityClass n) = (n : ℚ) ^ s := by
-  sorry
+  have hparts : (identityClass n).parts = Multiset.replicate n 1 := by
+    by_cases hn0 : n = 0
+    · subst n
+      simp [identityClass]
+    · simp [identityClass, Nat.Partition.ofSums, Multiset.mem_replicate, hn0]
+  have hn0 : n ≠ 0 := by omega
+  have hset : (Multiset.replicate n 1).toFinset = {1} := by
+    simp [Multiset.toFinset_replicate, hn0]
+  rw [degree, hparts, hset]
+  simp [Multiset.count_replicate]
+  have hne : (Finset.univ : Finset (Fin s)).Nonempty := by
+    exact ⟨⟨0, by omega⟩, by simp⟩
+  rw [Finset.image_const hne]
+  simp
 
 private theorem transposition_degree (s n : ℕ) (hn : 2 ≤ n) :
     degree s (transpositionClass n) =
