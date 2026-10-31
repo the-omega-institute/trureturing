@@ -67,10 +67,13 @@ private theorem tripleShape_rows {n : ℕ} (r : Fin 3 → ℕ) (hr : ∑ i, r i 
 
 /-- The ordered-colouring character is the character of the actual Young module at
 its sort/delete-zero partition. There is no quotient by permutations of equal rows. -/
+set_option pp.explicit true in
+set_option pp.fullNames true in
 private theorem fixedColourings_eq_youngFixed {n : ℕ} (r : Fin 3 → ℕ)
     (hr : ∑ i, r i = n) (π : Perm (Fin n)) :
     fixedColourings (fun i => (r i : ℤ)) π =
       Nat.card {q : Perm (Fin n) ⧸ youngSubgroup (tripleShape r hr) // π • q = q} := by
+  classical
   let d : Fin 3 →₀ ℕ := Finsupp.equivFunOnFinite.symm r
   have hd : d.degree = n := by simpa only [d, Finsupp.degree_eq_sum, Finsupp.coe_equivFunOnFinite_symm] using hr
   let ρ := (partitionEquivConjClasses n).symm (ConjClasses.mk π)
@@ -84,15 +87,12 @@ private theorem fixedColourings_eq_youngFixed {n : ℕ} (r : Fin 3 → ℕ)
     congr 1
     ext f
     simp [d]
-  have hshape : weightPartition d hd = tripleShape r hr := rfl
-  rw [hshape] at hc
   rw [he]
   convert (Int.natCast_inj.mp hc) using 1
-  all_goals
-    first
-    | rfl
-    | (congr 1; ext f; simp [d])
-    | congr 3
+  · congr 1
+    ext f
+    simp [d]
+  · congr 3
 
 private theorem sum_spechtChar_mul_fixedColourings {n : ℕ} (μ : n.Partition)
     (r : Fin 3 → ℕ) (hr : ∑ i, r i = n) :
