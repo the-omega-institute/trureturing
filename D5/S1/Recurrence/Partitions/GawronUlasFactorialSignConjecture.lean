@@ -124,7 +124,7 @@ def partition126 (n y z : ℕ) (h : 2*y+6*z ≤ n) : Nat.Partition n :=
   Nat.Partition.ofSums n (Multiset.replicate (n - 2*y - 6*z) 1 +
     Multiset.replicate y 2 + Multiset.replicate z 6) (by simp; omega)
 
-private lemma partition126_parts (n y z : ℕ) (h : 2*y+6*z ≤ n) :
+lemma partition126_parts (n y z : ℕ) (h : 2*y+6*z ≤ n) :
     (partition126 n y z h).parts = Multiset.replicate (n - 2*y - 6*z) 1 +
       Multiset.replicate y 2 + Multiset.replicate z 6 := by
   dsimp only [partition126, Nat.Partition.ofSums]
