@@ -11,6 +11,8 @@ import Mathlib.GroupTheory.Coxeter.Length
 import Mathlib.GroupTheory.QuotientGroup.Finite
 import Mathlib.Tactic.FinCases
 
+/-! # The native index-seventy-two Coxeter obstruction -/
+
 namespace D5.S3.FiniteGroups.CFMPCoxeterIndexObstruction
 
 set_option maxRecDepth 4096
@@ -60,11 +62,22 @@ private theorem native_orders :
     orderOf (canonical.simple 2 * canonical.simple 3) = 3 ∧
     orderOf (canonical.simple 1 * canonical.simple 3) = 2 := by
   refine ⟨pair_order 1 2 9 rfl ?_, pair_order 2 3 3 rfl ?_, pair_order 1 3 2 rfl ?_⟩
-  all_goals
-    apply orderOf_eq_of_pow_and_pow_div_prime (by decide) (by decide)
+  · apply orderOf_eq_of_pow_and_pow_div_prime (by decide) (by decide)
     intro p hp hd
-    have hp_le := Nat.le_of_dvd (by positivity) hd
-    interval_cases p <;> (try norm_num at hp) <;> (try norm_num at hd) <;> decide
+    have hd3 : p ∣ 3 := hp.dvd_of_dvd_pow (m := 3) (n := 2) (by simpa using hd)
+    have he : p = 3 := (Nat.prime_dvd_prime_iff_eq hp (by decide)).mp hd3
+    subst p
+    decide
+  · apply orderOf_eq_of_pow_and_pow_div_prime (by decide) (by decide)
+    intro p hp hd
+    have he : p = 3 := (Nat.prime_dvd_prime_iff_eq hp (by decide)).mp hd
+    subst p
+    decide
+  · apply orderOf_eq_of_pow_and_pow_div_prime (by decide) (by decide)
+    intro p hp hd
+    have he : p = 2 := (Nat.prime_dvd_prime_iff_eq hp (by decide)).mp hd
+    subst p
+    decide
 
 private theorem quotient_order {G : Type*} [Group G]
     (Γ : Subgroup G) [Γ.Normal] [IsMulTorsionFree Γ] (x : G) (hx : IsOfFinOrder x) :
@@ -74,7 +87,9 @@ private theorem quotient_order {G : Type*} [Group G]
   constructor
   · intro h
     have hxmem : x ^ n ∈ Γ := (QuotientGroup.eq_one_iff (x ^ n)).mp (by
-      simpa only [map_pow, QuotientGroup.mk'_apply] using h)
+      change (QuotientGroup.mk' Γ) (x ^ n) = 1
+      rw [map_pow]
+      exact h)
     let y : Γ := ⟨x ^ n, hxmem⟩
     have hy : IsOfFinOrder y := by
       obtain ⟨k, hk, he⟩ := (hx.pow (n := n)).exists_pow_eq_one
@@ -106,8 +121,9 @@ theorem result : ¬ claim := by
   have hrs : orderOf (r * s) = 2 := by
     have he : r * s = pair 1 3 := by
       apply Subtype.ext
-      simp only [r, s, pair, Subgroup.coe_mul]
-      simp [mul_assoc]
+      change (canonical.simple 1 * canonical.simple 2) *
+        (canonical.simple 2 * canonical.simple 3) = canonical.simple 1 * canonical.simple 3
+      rw [mul_assoc, CoxeterSystem.simple_mul_simple_cancel_left]
     rw [he]
     simpa only [pair, Subgroup.orderOf_mk] using native_orders.2.2
   have hqr : orderOf (q r) = 9 := (quotient_order Γ r (by
@@ -122,7 +138,7 @@ theorem result : ¬ claim := by
   let S : H := ⟨q s, Subgroup.subset_closure (by simp)⟩
   have hgen : Subgroup.closure ({R, S} : Set H) = ⊤ := by
     apply Subgroup.map_injective (f := H.subtype) Subtype.val_injective
-    simp only [Subgroup.map_closure, Set.image_insert_eq, Set.image_singleton,
+    simp only [MonoidHom.map_closure, Set.image_insert_eq, Set.image_singleton,
       Subgroup.map_top, Subgroup.range_subtype]
     rfl
   have hcard : Nat.card H ∣ 72 := by
@@ -132,7 +148,7 @@ theorem result : ¬ claim := by
   exact CycleNineThreeObstruction.result R S hgen hcard
     (by simpa only [R, Subgroup.orderOf_mk] using hqr)
     (by simpa only [S, Subgroup.orderOf_mk] using hqs)
-    (by simpa only [Subgroup.orderOf_coe, Subgroup.coe_mul] using hqrs)
+    ((Subgroup.orderOf_coe (R * S)).symm.trans hqrs)
 
 #print axioms result
 
