@@ -3367,3 +3367,378 @@ $$
 This one-leaf obstruction supplies neither a complete guarded $256$-source realization nor a universal decoder or a global nine-reading bound. The conditions (23.2) delimit its quantifiers. ∎
 
 ## 追加锚（本行以下为增补区）
+
+## 28. 有理对角交换的 JJJMJJJ 实际响应核
+
+**定义 28.1（对角交换局部问题）。** Fix a legal pair
+
+$$
+P_0=\begin{pmatrix}a&b\\c&1-a\end{pmatrix},\qquad
+P_1=\begin{pmatrix}1-a&b\\c&a\end{pmatrix},\qquad
+0<a<1,\quad b,c>0,\quad bc=a(1-a),\quad a\ne\frac12 .
+\tag{28.1}
+$$
+
+Put
+
+$$
+t=b+c,\qquad R=1+b,\qquad S_0=t+a,\qquad S_1=t+1-a.
+\tag{28.2}
+$$
+
+The matrices are distinct, strictly positive, trace one and ordinary rank one. For the
+word $w=JJJMJJJ$, let $g_0,g_1\in\mathbb R[T]_{\le3}$ and
+$\delta_e=-g_e(0)$. The normalized actual response is
+
+$$
+y_{e,i}=\operatorname{tr}(A_iP_e)g_e(i)-g_e(0),
+\qquad 0\le i\le7,
+\tag{28.3}
+$$
+
+where $A_i$ is the actual left product of the first $i$ actions. The local response
+kernel means the solutions of $y_{0,i}=y_{1,i}$ for all eight clocks for this fixed
+pair and this fixed word. It is a finite response kernel; it is not the original
+$V=\ker B$.
+
+**定理 28.2（整个合法对角交换核）。** For every pair (28.1), the complete local
+kernel is
+
+$$
+g_0=g_1=g,\qquad
+g(T)=(T-5)(T-7)(rT+z),\qquad (r,z)\in\mathbb R^2,
+\tag{28.4}
+$$
+
+with the common drift $\delta=-35z$. Conversely every $(r,z)$ in (28.4) satisfies
+all eight local equalities.
+
+**证明。** The trace factors for $w$ are
+
+$$
+(1,t,1,t,R,S_e,R,S_e),\qquad e=0,1.
+\tag{28.5}
+$$
+
+Let $h=g_0-g_1$ and $k=h(0)$. The common factors at clocks $1,2,3,4,6$ give
+
+$$
+t h(1)=k,\quad h(2)=k,\quad t h(3)=k,\quad Rh(4)=k,\quad Rh(6)=k.
+\tag{28.6}
+$$
+
+Set
+
+$$
+L(T)=\frac{T(T-2)(2T-5)}3.
+\tag{28.7}
+$$
+
+Its values at $0,1,2,3,4,6$ are $0,1,0,1,8,56$. The values at $0,1,2,3$, including $h(0)=k$, therefore force
+
+$$
+h(T)=k\left[1-\left(1-\frac1t\right)L(T)\right].
+\tag{28.8}
+$$
+
+Subtracting the clock-six and clock-four equations gives
+
+$$
+-48R\left(1-\frac1t\right)k=0.
+\tag{28.9}
+$$
+
+If $t\ne1$, then $k=0$, and (28.8) gives $h=0$. If $t=1$, (28.8) gives the
+constant polynomial $h=k$ and the clock-four equation gives $(R-1)k=bk=0$;
+$b>0$ again gives $k=0$. Thus $g_0=g_1$ without division by a gain value or by
+any response. At clocks $5$ and $7$, (28.5) now gives
+
+$$
+(S_0-S_1)g(5)=0,\qquad (S_0-S_1)g(7)=0.
+\tag{28.10}
+$$
+
+Since $S_1-S_0=1-2a\ne0$, $g(5)=g(7)=0$, and the cubic factorization (28.4)
+follows. The converse follows by inserting (28.4) into (28.5). This proof includes
+$t=1$, all signs of $r,z$, zero sampled values, degree drops, repeated roots and the
+zero carrier $(r,z)=(0,0)$; the latter is excluded only when one asks for a legal
+nonzero gain. The degenerate value $a=1/2$ is exactly the case in which the displayed
+pair collapses to one source and is outside the distinct-pair statement. ∎
+
+**引理 28.3（单位 J 七步历史的完整增益图）。** For the $t=7/4$ member of (28.4), let
+$U=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix}$. The unique cubic with zero
+constant term whose first three J responses equal those of (28.4) is
+
+$$
+p(T)=(13r+10z)T^3-(66r+47z)T^2+(95r+44z)T.
+\tag{28.11}
+$$
+
+For every $c\in\mathbb R$, the unit source with gain $p+c$ and drift $-c$ has
+the complete J-seven response vector
+
+$$
+\begin{aligned}
+(p(0),\ldots,p(7))={}&(0,\ 42r+7z,\ 30r-20z,\ 42r-21z,\ 156r+64z,\\
+&450r+295z,\ 1002r+732z,\ 1890r+1435z).
+\end{aligned}
+\tag{28.12}
+$$
+
+In particular its clocks $1,2,3$ agree with both sources in (28.1) equipped with
+(28.4). The additive constant $c$ changes the gain and drift but cancels from every
+unit-source J response.
+
+**证明。** For $U$, every J and I trace is one, so the response of $(U,p+c,-c)$
+is $p(i)$. Direct evaluation of (28.4) at $i=1,2,3$ with the common factor $t=7/4$
+below gives the first three entries of (28.12); interpolation with $p(0)=0$ gives
+(28.11), and evaluation gives the remaining entries. ∎
+
+**推论 28.4（整个对角交换类的有向交点）。** Apply the unit-history definitions
+
+$$
+A=\frac{p(1)+p(3)}2,\quad \Delta=p(3)-p(1),\quad
+E=3p(4)-2p(2),\quad F=A+E,\quad
+\kappa=p(6)-p(5),\quad \lambda=p(7)-p(5).
+\tag{28.13}
+$$
+
+For a general $t>0$, the polynomial in (28.11) is replaced by
+
+$$
+\begin{aligned}
+p_t(T)={}&\left((16t-15)r+\frac{40(t-1)}3z\right)T^3\\
+&+\left((60-72t)r+(65-64t)z\right)T^2\\
+&+\left((80t-45)r+\frac{224t-260}3z\right)T,
+\end{aligned}
+\tag{28.14}
+$$
+
+because its values at $1,2,3$ are respectively $tg(1)-35z$, $g(2)-35z$ and
+$tg(3)-35z$. Substitution in (28.13) gives
+
+$$
+\begin{aligned}
+A&=24tr+(16t-35)z,& \Delta&=-16tz,\\
+E&=8(72tr-75r+48tz-55z),\\
+F&=25(24tr-24r+16tz-19z),\\
+\kappa&=(744t-750)r+(584t-585)z,\\
+\lambda&=80(24r+19z)(t-1).
+\end{aligned}
+\tag{28.15}
+$$
+
+The coefficient determinant of $(F,\Delta)$ in $(r,z)$ is
+
+$$
+\det\begin{pmatrix}600(t-1)&400t-475\\0&-16t\end{pmatrix}
+=-9600t(t-1).
+\tag{28.16}
+$$
+
+Thus $t=1$ is handled separately and has rank at most one; for $t\ne1$ the unique
+coordinates $E=e_tF+f_t\Delta$ are
+
+$$
+e_t=\frac{24t-25}{25(t-1)},\qquad
+f_t=\frac{35-32t}{16t(t-1)}.
+\tag{28.17}
+$$
+
+They meet the remaining directed family $75e+16f=52$, $e>-4$, exactly when
+
+$$
+75e_t+16f_t-52=\frac{5(4t-7)}t=0.
+\tag{28.18}
+$$
+
+Consequently the entire legal diagonal-exchange class intersects that directed
+family only at $t=7/4$, where
+
+$$
+(e,f)=\left(\frac{68}{75},-1\right),\qquad
+\lambda=\frac{60}{23}\kappa
+=\frac{64}{5(4+e)}\kappa.
+\tag{28.19}
+$$
+
+All divisions in (28.17) occur only after $t>0$ and $t\ne1$ have been stated. The
+case $t=1$ is not silently discarded; it simply has no rank-two $(F,\Delta)$ image.
+
+At $t=7/4$, the two coefficient vectors of $p$ are $(13,-66,95)$ and
+$(10,-47,44)$, whose first two-coordinate minor is $49$; hence the history
+map on this two-parameter local carrier has rank $2$. Equation (28.16) gives simultaneously
+$\operatorname{rank}(F,\Delta)=2$.
+
+## 29. 一个有理实际响应与 JJJMJ 八槽同历史延拓
+
+**命题 29.1（有理来源与全部绝对响应）。** Choose the rational member
+
+$$
+P_0=\begin{pmatrix}1/6&5/3\\[1mm]1/12&5/6\end{pmatrix},\qquad
+P_1=\begin{pmatrix}5/6&5/3\\[1mm]1/12&1/6\end{pmatrix}.
+\tag{29.1}
+$$
+
+Both matrices are entrywise positive, have trace one, and satisfy
+$bc=(5/3)(1/12)=5/36=a(1-a)$ for the corresponding diagonal. They are distinct,
+and $t=7/4$, $R=8/3$, $S_0=23/12$, $S_1=31/12$. The history forms are
+
+$$
+\begin{aligned}
+A&=42r-7z,& \Delta&=-28z,& E&=408r+232z,\\
+F&=450r+225z,& \kappa&=552r+437z,& \lambda&=1440r+1140z.
+\end{aligned}
+\tag{29.2a}
+$$
+
+In particular $\det(F,\Delta)=-12600$, consistent with the rank-two
+history calculation above. With the same gain (28.4) and drift $-35z$, both
+sources give the following absolute response vectors:
+
+$$
+\begin{array}{c|c}
+\text{word}&(y_0,y_1,\ldots,y_7)\\ \hline
+JJJMJJJ,\ JJJMJJM
+ &(0,\ 42r+7z,\ 30r-20z,\ 42r-21z,\ 32r-27z,\
+ -35z,\ -16r-113z/3,\ -35z)\\[1mm]
+JJJMJMJ,\ JJJMJMM
+ &(0,\ 42r+7z,\ 30r-20z,\ 42r-21z,\ 32r-27z,\
+ -35z,\ -26r-118z/3,\ -35z).
+\end{array}
+\tag{29.2}
+$$
+
+The two rows differ only at clock six. For example, at $r=z=1$,
+
+$$
+g(T)=T^3-11T^2+23T+35,\qquad \delta=-35,\qquad
+p(T)=23T^3-113T^2+139T,
+\tag{29.3}
+$$
+
+and the two rows of (29.2) are respectively
+
+$$
+(0,49,10,21,5,-35,-161/3,-35),\qquad
+(0,49,10,21,5,-35,-196/3,-35).
+\tag{29.4}
+$$
+
+**证明。** The cumulative traces at clocks $0,1,2,3,4,5,6,7$ for
+$JJJMJJJ$ are $1,7/4,1,7/4,8/3,S_e,8/3,S_e$. For $JJJMJMJ$, the sixth
+trace is $1+2b=13/3$ for both sources. Substituting
+$g(4)=3(4r+z)$, $g(5)=g(7)=0$ and $g(6)=-(6r+z)$ into (28.3) gives (29.2).
+The final response is $-35z$ because the seventh gain value is zero, regardless of
+the final trace. The rank-one and positivity assertions follow directly from (29.1),
+so this is an actual source pair rather than a lifted low-rank difference. ∎
+
+**定理 29.2（同一 JJJMJ 历史的八槽延拓与提前停止）。** At $r=z=1$, the common
+history through the fifth action $J$ is
+
+$$
+H_5=(0,J,49,J,10,J,21,M,5,J,-35).
+\tag{29.5}
+$$
+
+From this same history, the four words
+
+$$
+JJJMJJJ,\quad JJJMJJM,\quad JJJMJMJ,\quad JJJMJMM
+\tag{29.6}
+$$
+
+each have the two fixed legal targets $(P_0,g,-35)$ and $(P_1,g,-35)$, with
+responses (29.4). Hence (29.6), times the two source choices, is an eight-slot
+same-history subtree. After the sixth action the common responses are $-161/3$ for
+$J$ and $-196/3$ for $M$; after either final action the response is $-35$. Stopping
+at $H_5$, after the sixth response, or after the seventh response cannot separate
+the two targets, since their sources remain $P_0\ne P_1$. Thus the subtree includes
+the early-stopping alternatives in the sense of (1.5), while each leaf still has
+two distinct legal complete targets and a nonzero gain.
+
+**证明。** The response identities are (29.4). The two source matrices are distinct,
+and (29.3) is nonzero, so every leaf pair is separated by its source coordinate even
+though its gain and drift coordinates coincide. The same pair is retained after each
+of the two sixth-action choices and after each of the two seventh-action choices;
+therefore no permitted stop on any displayed history removes the pair. ∎
+
+## 30. 缺失的 JJJMM 兄弟与非零重用余量
+
+The opposite fifth action from the common prefix $JJJM$ is the sibling $JJJMM$.
+Its eight required descendants are $JJJMMXY$ with $X,Y\in\{J,M\}$, and they
+must share the same first-three-$J$ responses, the same clock-four response $32r-27z$,
+and one common actual clock-five response $Y_M$. This response is not determined by
+the local $JJJMJJJ$ kernel when the sibling uses another source pair; it is a new
+same-history obligation. In particular, $Y_M$ may not be borrowed from an unrelated
+terminal pair or assigned independently at the eight leaves.
+
+There is an exact obstruction to the most tempting reuse. If the pair (29.1) and
+the gain (28.4) are reused at $JJJMM$, then
+
+$$
+A_5=M^2J=\begin{pmatrix}1&1\\2&1\end{pmatrix},\qquad
+\operatorname{tr}(A_5P_0)=\operatorname{tr}(A_5P_1)=\frac{53}{12},
+\tag{30.1}
+$$
+
+so $g(5)=0$ gives the common fifth response $-35z$. After a sixth $J$,
+
+$$
+A_6=JM^2J=\begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad
+\operatorname{tr}(A_6P_0)=\frac{35}{12},\quad
+\operatorname{tr}(A_6P_1)=\frac{43}{12}.
+\tag{30.2}
+$$
+
+Since $g(6)=-(6r+z)$, the response difference in the order $P_0-P_1$ is
+
+$$
+\left(\frac{35}{12}-\frac{43}{12}\right)\bigl(-(6r+z)\bigr)
+=\frac23(6r+z).
+\tag{30.3}
+$$
+
+It is $14/3$ for the concrete carrier $r=z=1$. Therefore a nonzero value of
+(30.3) excludes reuse of this displayed pair through the $JJJMMJ$ child. It does
+not exclude the line $6r+z=0$, another source pair, another gain map, or the
+existence of the missing sibling itself. The exact eight-slot $JJJMMXY$ incidence
+remains open.
+
+## 31. 原完整核的边界、文献对应与未决量词
+
+The kernel in Theorem 28.2 is the solution space of the paired actual equations for
+two fixed sources. It is not $V=\ker B$ from Definition 3.1. A complete original
+tuple would still have the same $1538\times1024$ matrix, all $256$ source slots and
+all $254$ nonempty prefixes. Its hidden coefficient directions are governed by the
+whole $V$, and the original consumers remain the full maps $G_q|_V$ and
+$D_w|_V\colon V\to\mathbb R^4$ in (3.9). Equality of the two local gains in
+(28.4) is one response-kernel fact; because $P_0\ne P_1$, it is not an assertion
+that an original equal-source leaf has $D_w|_V=0$. Conversely, a local pair does
+not provide any nonzero $G_q|_V$, any hidden-direction control, or a legal extension
+to the other $254$ sources.
+
+The calculation therefore supplies an exact rational actual-response falsifier for
+leaf-only source forcing at the directed-family point $(e,f)=(68/75,-1)$ and a
+same-history $JJJMJ$ eight-slot extension. It does not exclude the remaining
+$e>-4$ family, construct a legal $256$-source tuple or one simultaneous full
+coefficient vector, prove a whole-family guard failure, or resolve the global
+eight-versus-nine reading problem. All source and gain degeneracies listed in
+Theorem 28.2 remain in the local statement; the unresolved sibling and full-$V$
+guards are separate obligations.
+
+The overlap with bilinear identifiability is only conditional. Li--Lee--Bresler,
+[Definition 2.7 and Theorem 2.8](https://arxiv.org/html/1501.06120v1), require
+first-factor orbit identification followed by conditional second-factor
+identification for the same constrained bilinear observation map. Here the two
+sources are explicitly realizable and the common actual equations are written out,
+but that theorem supplies neither adaptive-tree incidence nor the missing $JJMM$
+extension. Choudhary--Mitra, [Proposition 1 and Remark 5](https://arxiv.org/abs/1402.2637),
+likewise retain realizable factor products and observations; no arbitrary lifted
+secant or generic sample count is used here. The reusable root factorization and
+fixed-source response ideas are already present in Sections 3, 4, 10, 11 and 27;
+the new content is the complete diagonal-exchange local class, its exact directed
+intersection, the absolute rational response table, and the coupled history
+boundary (30.3). ∎
+
+## 追加锚（本行以下为增补区）
