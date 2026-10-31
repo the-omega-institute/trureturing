@@ -1,6 +1,6 @@
 /- GID: D5/S3/VertexAlgebra/SourceBPZ/ThetaGradeIntertwiner
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/SourceBPZ/ThetaGradeIntertwiner
+   mirror-B: none(waiver:no-B-plane-mirror-for-source-module)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.Dimension.Constructions]
    utility: none

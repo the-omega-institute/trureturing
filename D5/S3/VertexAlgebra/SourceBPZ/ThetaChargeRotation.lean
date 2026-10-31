@@ -1,6 +1,6 @@
 /- GID: D5/S3/VertexAlgebra/SourceBPZ/ThetaChargeRotation
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/SourceBPZ/ThetaChargeRotation
+   mirror-B: none(waiver:no-B-plane-mirror-for-source-module)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
