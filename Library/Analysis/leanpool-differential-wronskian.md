@@ -1,14 +1,15 @@
 ---
 bibkey: leanpool-differential-wronskian
-authors: [Yuma Mizuno]
+authors: Yuma Mizuno
 year: 2026
 title: Ordinary Wronskians over differential fields
 doi: null
 url: https://github.com/LeanPool/lean-pool/blob/edbe5bd56f476cc2965564676b66199f281ab714/LeanPool/MarkoffModP/BGS/Algebra/DifferentialWronskian.lean
 claim: Differential-field Wronskian criterion over the exact constant field.
-strata_touched: [S3]
+strata_touched:
+  - D5/S3/Analytic/PowerSeries/RadicalMultiplicity
 license: Apache-2.0
-triage: reuse
+triage: anchor
 ---
 
 ## Verified locator

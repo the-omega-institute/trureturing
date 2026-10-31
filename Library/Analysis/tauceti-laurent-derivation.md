@@ -1,14 +1,15 @@
 ---
 bibkey: tauceti-laurent-derivation
-authors: [The Tau Ceti contributors]
+authors: The Tau Ceti contributors
 year: 2026
 title: Differentiation of Laurent series
 doi: null
 url: https://github.com/TauCetiProject/TauCeti/blob/93af5b549b7d9ed44291d6ceb093a8013dda00f8/TauCeti/RingTheory/LaurentSeries/Derivative.lean
 claim: Laurent formal derivative product rule and exact constant field.
-strata_touched: [S3]
+strata_touched:
+  - D5/S3/Analytic/PowerSeries/RadicalMultiplicity
 license: Apache-2.0
-triage: reuse
+triage: anchor
 ---
 
 ## Verified locator

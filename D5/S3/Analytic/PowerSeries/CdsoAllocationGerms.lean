@@ -1,6 +1,6 @@
 /- GID: D5/S3/Analytic/PowerSeries/CdsoAllocationGerms
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/Analytic/PowerSeries/CdsoAllocationGerms
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -153,7 +153,7 @@ private theorem taylor_sum {ι : Type*} (s : Finset ι) (f : ι → ℝ → ℝ)
   | @insert i s hi ih =>
     simp only [Finset.sum_insert hi]
     rw [taylor_add (hf i (by simp)) (by
-      exact analyticAt_finset_sum _ fun j hj => hf j (by simp [hj])),
+      exact Finset.analyticAt_fun_sum _ fun j hj => hf j (by simp [hj])),
       ih (fun j hj => hf j (by simp [hj]))]
 
 private theorem taylor_neg {f : ℝ → ℝ} (hf : AnalyticAt ℝ f 0) :
@@ -267,14 +267,14 @@ private theorem clearedCoefficient_degree {ι : Type*} [Fintype ι] [DecidableEq
 private theorem familyExtension_analytic {ι : Type*} [Fintype ι] (q : ι → RadicalTerm) :
     AnalyticAt ℝ (familyExtension q) 0 := by
   apply AnalyticAt.const_mul
-  apply analyticAt_finset_sum
+  apply Finset.analyticAt_fun_sum
   intro i _
   exact (by fun_prop : AnalyticAt ℝ (q i).weight.eval 0).mul
     (analytic_radicalExtension _ _ _ (q i).base_pos)
 
 private theorem cleared_analytic {ι : Type*} [Fintype ι] [DecidableEq ι]
     (q : ι → RadicalTerm) : AnalyticAt ℝ (clearedFunction q) 0 := by
-  apply analyticAt_finset_sum
+  apply Finset.analyticAt_fun_sum
   intro i _
   apply AnalyticAt.mul (by fun_prop)
   cases i with
@@ -290,7 +290,7 @@ private theorem cleared_identity {ι : Type*} [Fintype ι] [DecidableEq ι]
     apply Filter.Eventually.all_finite
     intro i
     exact (by fun_prop : ContinuousAt (fun u : ℝ => (q i).base + (q i).offset*u) 0)
-      |>.eventually_pos (by simpa using (q i).base_pos)
+      |>.eventually (Ioi_mem_nhds (by simpa using (q i).base_pos))
   filter_upwards [hpos] with u hu
   have hR (i : ι) := radical_rationalization (q i).base (q i).offset (q i).frequency u (hu i)
   have hdiv (i : ι) :
@@ -477,6 +477,150 @@ private theorem analytic_extension (b : AllocationData a h) (ha : 2 ≤ a) :
   unfold extension combination
   fun_prop
 
+private abbrev TermIndex (b : AllocationData a h) :=
+  (Fin b.m × Fin 3) ⊕ (Fin 2 ⊕ ((Fin (b.n-b.t) ⊕ Fin b.t) × Fin 2))
+
+private def term (b : AllocationData a h) (ha : 2 ≤ a) : b.TermIndex → RadicalTerm
+  | .inl (i,k) =>
+    { base := b.alpha, offset := b.delta i,
+      frequency := if k = 0 then b.m else if k = 1 then b.r else 2
+      weight0 := if k = 0 then b.alpha else 0
+      weight1 := if k = 0 then b.phi else if k = 1 then (b.d : ℝ)-b.zminus i else b.zplus i
+      base_pos := b.alpha_pos ha }
+  | .inr (.inl k) =>
+    { base := b.alpha, offset := b.delta0,
+      frequency := if k = 0 then 2 else b.r
+      weight0 := 0
+      weight1 := if k = 0 then b.L else -b.L
+      base_pos := b.alpha_pos ha }
+  | .inr (.inr (side,k)) =>
+    let v := Sum.elim (fun _ => b.vminus) (fun _ => b.vplus) side
+    { base := b.beta, offset := v,
+      frequency := if k = 0 then 1 else 2
+      weight0 := if k = 0 then b.beta else 0
+      weight1 := if k = 0 then v-1 else 1
+      base_pos := b.beta_pos ha }
+
+private theorem term_card (b : AllocationData a h) :
+    Fintype.card b.TermIndex ≤ 3*(a+1+h)+2 := by
+  have ht : b.t ≤ b.n := Nat.le_of_lt b.t_lt
+  have hmn : b.m+b.n = a+1+h := by
+    unfold m n
+    have := b.j_le
+    omega
+  simp only [TermIndex, Fintype.card_sum, Fintype.card_prod, Fintype.card_fin]
+  omega
+
+private theorem extension_as_family (b : AllocationData a h) (ha : 2 ≤ a) :
+    b.extension = familyExtension (b.term ha) := by
+  funext u
+  have ht : b.t ≤ b.n := Nat.le_of_lt b.t_lt
+  simp only [familyExtension, Fintype.sum_sum_type, Fintype.sum_prod_type,
+    Fin.sum_univ_two, Fin.sum_univ_three, term, RadicalTerm.eval_weight]
+  norm_num only [↓reduceIte, Sum.elim_inl, Sum.elim_inr, zero_add, zero_mul, one_mul]
+  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
+    Nat.cast_sub ht]
+  unfold extension combination
+  congr 1
+  simp_rw [Finset.sum_add_distrib, Finset.sum_mul, Finset.mul_sum]
+  ring_nf
+
+private theorem actual_extension (b : AllocationData a h) (ha : 2 ≤ a) :
+    b.actual =ᶠ[𝓝[>] 0] b.extension := by
+  have hpos (δ : ℝ) : ∀ᶠ u in 𝓝 (0:ℝ), 0 < b.alpha + δ*u :=
+    (by fun_prop : ContinuousAt (fun u : ℝ => b.alpha + δ*u) 0).eventually
+      (Ioi_mem_nhds (by simpa using b.alpha_pos ha))
+  have hpos' (δ : ℝ) : ∀ᶠ u in 𝓝 (0:ℝ), 0 < b.beta + δ*u :=
+    (by fun_prop : ContinuousAt (fun u : ℝ => b.beta + δ*u) 0).eventually
+      (Ioi_mem_nhds (by simpa using b.beta_pos ha))
+  have hall : ∀ᶠ u in 𝓝 (0:ℝ), ∀ i : Fin b.m, 0 < b.alpha+b.delta i*u :=
+    Filter.Eventually.all_finite fun i => hpos (b.delta i)
+  filter_upwards [hall.filter_mono nhdsWithin_le_nhds,
+    (hpos b.delta0).filter_mono nhdsWithin_le_nhds,
+    (hpos' b.vminus).filter_mono nhdsWithin_le_nhds,
+    (hpos' b.vplus).filter_mono nhdsWithin_le_nhds, self_mem_nhdsWithin] with u hi h0 hm hp hu
+  have hR (i : Fin b.m) (k : ℝ) := radical_rationalization b.alpha (b.delta i) k u (hi i)
+  have h0R (k : ℝ) := radical_rationalization b.alpha b.delta0 k u h0
+  have hmR (k : ℝ) := radical_rationalization b.beta b.vminus k u hm
+  have hpR (k : ℝ) := radical_rationalization b.beta b.vplus k u hp
+  unfold actual extension combination
+  simp_rw [hR, h0R, hmR, hpR]
+  have hun : u ≠ 0 := ne_of_gt hu
+  field_simp
+  simp_rw [Finset.mul_sum, Finset.sum_mul]
+  ring
+
 end AllocationData
+
+private def pairTerms {a h : ℕ} (b c : AllocationData a h) (ha : 2 ≤ a) :
+    b.TermIndex ⊕ c.TermIndex → RadicalTerm
+  | .inl i => b.term ha i
+  | .inr i => { c.term ha i with
+      weight0 := -(c.term ha i).weight0
+      weight1 := -(c.term ha i).weight1 }
+
+private theorem pair_family {a h : ℕ} (b c : AllocationData a h) (ha : 2 ≤ a) :
+    familyExtension (pairTerms b c ha) = fun u => b.extension u-c.extension u := by
+  rw [b.extension_as_family ha, c.extension_as_family ha]
+  funext u
+  simp only [familyExtension, Fintype.sum_sum_type, pairTerms, RadicalTerm.eval_weight]
+  simp_rw [neg_mul, ← neg_add, neg_mul, Finset.sum_neg_distrib]
+  ring
+
+private theorem positive_germ_eq_iff {f g : ℝ → ℝ}
+    (hf : AnalyticAt ℝ f 0) (hg : AnalyticAt ℝ g 0) :
+    f =ᶠ[𝓝[>] 0] g ↔ f =ᶠ[𝓝 0] g := by
+  constructor
+  · intro h
+    rcases hf.eventually_eq_or_eventually_ne hg with heq | hne
+    · exact heq
+    · have hle : 𝓝[>] (0:ℝ) ≤ 𝓝[≠] 0 := nhdsWithin_mono _ (by
+        intro x hx
+        exact ne_of_gt hx)
+      have hfals : ∀ᶠ u in 𝓝[>] (0:ℝ), False :=
+        (h.and (hne.filter_mono hle)).mono fun u hu => hu.2 hu.1
+      exact False.elim (Filter.Eventually.exists hfals |>.choose_spec)
+  · exact fun h => h.filter_mono nhdsWithin_le_nhds
+
+/-- For every fixed source branch/residue/allocation data, (8.4) has its rationalized
+removable analytic extension, and two actual positive-near-zero functions have the same germ
+exactly when their genuine Taylor coefficients from zero through `3*(6*s+5)^2` agree.
+Here `s=a+1+h`. The theorem applies to all integer vectors, hence to every source-admissible one. -/
+theorem allocation_germ_iff_taylor {a h : ℕ} (ha : 2 ≤ a)
+    (b c : AllocationData a h) :
+    AnalyticAt ℝ b.extension 0 ∧ AnalyticAt ℝ c.extension 0 ∧
+    b.actual =ᶠ[𝓝[>] 0] b.extension ∧ c.actual =ᶠ[𝓝[>] 0] c.extension ∧
+    (b.actual =ᶠ[𝓝[>] 0] c.actual ↔
+      ∀ k ≤ 3*(6*(a+1+h)+5)^2,
+        iteratedDeriv k b.extension 0 / k.factorial =
+          iteratedDeriv k c.extension 0 / k.factorial) := by
+  have hb := b.analytic_extension ha
+  have hc := c.analytic_extension ha
+  have hbe := b.actual_extension ha
+  have hce := c.actual_extension ha
+  refine ⟨hb, hc, hbe, hce, ?_⟩
+  have heq : b.actual =ᶠ[𝓝[>] 0] c.actual ↔ b.extension =ᶠ[𝓝 0] c.extension := by
+    rw [← positive_germ_eq_iff hb hc]
+    exact ⟨fun h => hbe.symm.trans (h.trans hce), fun h => hbe.trans (h.trans hce.symm)⟩
+  rw [heq]
+  constructor
+  · intro he k hk
+    have ht := congrArg (PowerSeries.coeff k) (taylor_congr he)
+    simpa [taylor] using ht
+  · intro hcoeff
+    let q := pairTerms b c ha
+    have hsize : Fintype.card (Option (b.TermIndex ⊕ c.TermIndex)) ≤ 6*(a+1+h)+5 := by
+      have h1 := b.term_card
+      have h2 := c.term_card
+      simp only [Fintype.card_option, Fintype.card_sum]
+      omega
+    have hbound : 3 * (Fintype.card (Option (b.TermIndex ⊕ c.TermIndex)))^2 ≤
+        3*(6*(a+1+h)+5)^2 := by nlinarith
+    have hz := familyExtension_zero_of_coeff q (fun k hk => by
+      rw [pair_family, taylor_sub hb hc]
+      simp only [map_sub, sub_eq_zero]
+      exact hcoeff k (hk.trans hbound))
+    rw [pair_family] at hz
+    exact hz.mono fun u hu => sub_eq_zero.mp hu
 
 end CdsoPeriodic
