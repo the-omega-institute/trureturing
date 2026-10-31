@@ -1741,9 +1741,12 @@ $$
 
 Growing Lemma 15.3, with the same explicit denominator bounds, places
 the law in one of the cap neighborhoods; Growing Theorem 15.5 identifies
-the corresponding sublevel minimum with \(M(a,h)\), and the residual
-bootstrap plus the integer masses bounds its exceptional mass
-by \(K_Ra^{3/2}/N\). The Taylor estimate (3.2), whose second
+the corresponding sublevel minimum with \(M(a,h)\). On that neighborhood,
+the quantitative form of (3.2), together with the price bound
+\(P(x)\ge(a^2/K_R)\varepsilon\) from Lemma 9.1, gives
+\(\varepsilon\le K_Ra^{3/2}/N\): indeed the upper construction gives
+\(H(x_G)-M\le K_Ra^{7/2}/N+K_Ra^{17}/N^2\), and the second term is
+absorbed by \(N\ge K_Ra^{20}\). The Taylor estimate (3.2), whose second
 derivatives are bounded by \(K_Ra^{9/2}\) on these neighborhoods, then
 gives
 
