@@ -275,7 +275,7 @@ private theorem physical (u c v : ℕ) (p : ℤ) (T R : List ℕ)
     rw [hmassU.1,hmassU.2,hmass2.1,hmass2.2,hmassR.1,hmassR.2,
       hmass4.1,hmass4.2,negU.1,negU.2,negW.1,negW.2,negV.1,negV.2,negX.1,negX.2,hhalf]
     dsimp only [Bounds] at hend
-    convert hend using 3 <;> dsimp [N,A,B,L,M,Bp,Lp,Mp] <;> rw [ht] <;> ring
+    convert hend using 3 <;> dsimp [N,A,B,L,M,Bp,Lp,Mp] <;> (try rw [ht]) <;> ring
   let pre := P1++[d-1]++P2++[d+c+u-1]++P3++[d+c-1]++P4
   let last := d+c+u+u-1
   have hold : InStrip f (N/2) 0 (pre++[last]) := by
