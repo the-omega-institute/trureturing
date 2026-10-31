@@ -9,6 +9,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.SourceTable
 import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.EqualGapsArithmetic
 import D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
 
+/-! One withheld physical U occurrence gives both complete prefix strips. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.EqualGaps
@@ -17,7 +18,8 @@ open private source_table from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTw
 open private endpoints from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.EqualGapsArithmetic
 open private Gates four_strip
   from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
-open private negative_step from D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
+open private negative_step
+  from D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
 open private label lift_order marked_word ladder_sum
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
@@ -48,11 +50,10 @@ private theorem reserve_inventory (a d s : ℕ) (ha : 2 ≤ a) (hd : a+2 ≤ d)
       (List.range' d (a-1) ++ [d+a-1]) ++
       (List.range' (d+a) (a-1) ++ [d+a+a-1]) ++
       (List.range' (d+a+a) (a-1) ++ [d+a+a+a-1]) = List.range (a+a+a+d) := by
-    rw [← List.range_succ, show d-1+1=d by omega,
+    rw [← List.range_succ, show (d-1).succ=d by omega,
       merge d a (by omega), merge (d+a) a (by omega), merge (d+a+a) a (by omega)]
     simp only [List.range_eq_range']
-    rw [show d=d+0 by omega]
-    have h1 := List.range'_append_1 (s:=0) (m:=d) (n:=a)
+        have h1 := List.range'_append_1 (s:=0) (m:=d) (n:=a)
     have h2 := List.range'_append_1 (s:=0) (m:=d+a) (n:=a)
     have h3 := List.range'_append_1 (s:=0) (m:=d+a+a) (n:=a)
     simp only [Nat.zero_add] at h1 h2 h3
@@ -99,8 +100,16 @@ theorem actualSource_equal_gaps_first_ear (a d : ℕ) (ha : 2 ≤ a) (hd : a+2 �
   let g := fun i : ℕ => centered (2*N+1) ((2 : ℤ)^i*(2*A))
   have hp : 2 ≤ p := by simpa [p] using pow_le_pow_right₀ (by decide : (1:ℤ)≤2) (show 1≤a-1 by omega)
   have hl : 2 ≤ l := by simpa [l] using pow_le_pow_right₀ (by decide : (1:ℤ)≤2) (show 1≤s by dsimp [s]; omega)
-  have hR : R=2*p := by dsimp [R,p]; rw [show a=(a-1)+1 by omega,pow_succ]; ring
-  have hT : T=2*u := by dsimp [T,u]; rw [show d=(d-1)+1 by omega,pow_succ]; ring
+  have hR : R=2*p := by
+    dsimp [R,p]
+    calc
+      (2:ℤ)^a=2^((a-1)+1) := by congr 1; omega
+      _=2*2^(a-1) := by rw [pow_succ]; ring
+  have hT : T=2*u := by
+    dsimp [T,u]
+    calc
+      (2:ℤ)^d=2^((d-1)+1) := by congr 1; omega
+      _=2*2^(d-1) := by rw [pow_succ]; ring
   have hu : u=R*l := by dsimp [u,R,l]; rw [←pow_add]; congr 1; dsimp [s]; omega
   have hN : N=2*(R^4*l)-1 := by dsimp [N]; rw [hT,hu]; ring
   have hhalf : N/2=R^4*l-1 := by omega
@@ -158,7 +167,8 @@ theorem actualSource_equal_gaps_first_ear (a d : ℕ) (ha : 2 ≤ a) (hd : a+2 �
   let P4 := [s] ++ List.range' (d+a+a) (a-1)
   have hUp : (P1++[s]).Perm (List.range (d-1)) := by
     have he : List.range s ++ [s] ++ List.range' (s+1) (a-1)=List.range (d-1) := by
-      rw [←List.range_succ,List.range_eq_range']
+      rw [←List.range_succ]
+      simp only [Nat.succ_eq_add_one,List.range_eq_range']
       simpa only [Nat.zero_add,show s+1+(a-1)=d-1 by dsimp [s]; omega] using
         List.range'_append_1 (s:=0) (m:=s+1) (n:=a-1)
     rw [←he]
@@ -170,8 +180,8 @@ theorem actualSource_equal_gaps_first_ear (a d : ℕ) (ha : 2 ≤ a) (hd : a+2 �
     have hs:=posU s (by dsimp [s]; omega)
     have hsf:=ladder_sum f 0 (d-1) A (by intro i hi; simpa using (posU i hi).1)
     have hsg:=ladder_sum g 0 (d-1) (2*A) (by intro i hi; simpa using (posU i hi).2)
-    simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,hs.1,hs.2] at hf hg
-    rw [List.range'_zero] at hsf hsg
+    simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton] at hf hg
+    rw [←List.range_eq_range'] at hsf hsg
     change _=(u-1)*A at hsf
     change _=(u-1)*(2*A) at hsg
     change f s=l*A ∧ g s=l*(2*A) at hs
@@ -190,7 +200,7 @@ theorem actualSource_equal_gaps_first_ear (a d : ℕ) (ha : 2 ≤ a) (hd : a+2 �
     simp only [P4,List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,hs.1,hs.2,hf,hg]
     exact ⟨rfl,by ring⟩
   have hpositive : 0≤A ∧ 0≤B ∧ 0≤V ∧ 0≤W ∧ 0≤GV ∧ 0≤GW ∧ 0≤GX := by
-    dsimp [A,B,V,W,C,GV,GW,GX]; rw [hR,hT]; refine ⟨?_,?_,?_,?_,?_,?_,?_⟩ <;> positivity
+    dsimp [A,B,V,W,C,GV,GW,GX]; rw [hR,hT]; refine ⟨?_,?_,?_,?_,?_,?_,?_⟩ <;> ring_nf <;> positivity
   have pos1 (h : ℕ→ℤ) (H : ℤ) (hH : 0≤H)
       (hh : ∀ i<d-1, h i=2^i*H) : ∀ i∈P1, 0≤h i := by
     intro i hi
@@ -215,7 +225,7 @@ theorem actualSource_equal_gaps_first_ear (a d : ℕ) (ha : 2 ≤ a) (hd : a+2 �
     rw [hmassU.1,hmassV.1,hmassW.1,hmassX.1,negU.1,negV.1,negW.1,negX.1,
       List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,hear,
       hmassU.2,hmassV.2,hmassW.2,hmassX.2,negU.2,negV.2,negW.2,negX.2,hhalf,hN]
-    convert endpoints p l hp hl using 3 <;> dsimp [A,B,V,W,C,GV,GW,GX] <;> rw [hu,hT,hR] <;> ring
+    convert endpoints p l hp hl using 3 <;> simp only [A,B,V,W,C,GV,GW,GX,hu,hT,hR] <;> ring
   let word := P1++[d-1]++P2++[d+a-1]++P3++[d+a+a-1]++P4++[d+a+a+a-1]
   have hold : InStrip f (N/2) 0 word := by
     exact four_strip f (N/2) P1 P2 P3 P4 (d-1) (d+a-1) (d+a+a-1) (d+a+a+a-1)
@@ -236,9 +246,9 @@ theorem actualSource_equal_gaps_first_ear (a d : ℕ) (ha : 2 ≤ a) (hd : a+2 �
         (pos4 g GX hpositive.2.2.2.2.2.2 (by rw [(posU s (by dsimp [s];omega)).2]; positivity)
           (by intro i hi;exact (posX i hi).2)) hgates.2
   have hperm : word.Perm (List.range k) := reserve_inventory a d s ha hd rfl
-  have hmod : modulus k=N := by dsimp [modulus,k,N,R,T]; simp only [pow_add]; ring
+  have hmod : modulus k=N := by dsimp [modulus,k,N,R,T]; simp only [pow_add] <;> ring
   have hmod' : modulus (k+1)=2*N+1 := by dsimp [modulus]; rw [pow_succ]; rw [←hmod]; dsimp [modulus]; ring
-  have hseed : (seed:ℤ)=A := by dsimp [seed,A,C,R]; push_cast; simp only [pow_add]; ring
+  have hseed : (seed:ℤ)=A := by dsimp [seed,A,C,R]; push_cast; simp only [pow_add] <;> ring
   have hk : 0<k := by dsimp [k];omega
   have old : OriginalOrder k seed (word.map (label k hk)) := by
     apply lift_order k seed hk word hperm
