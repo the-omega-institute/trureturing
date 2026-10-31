@@ -79,7 +79,7 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Analytic.XuYangMillsRemainder.GeneralParameter
     definition := some {
-      owner := `D5.S3.Analytic.XuYangMillsRemainder.GeneralParameterFoundation
+      owner := `D5.S3.Analytic.XuYangMillsRemainder.GeneralParameter
       name := `D5.S3.Analytic.XuYangMillsRemainder.GeneralParameter.theorem21
       path := #[] }
     coordinates := #[]
