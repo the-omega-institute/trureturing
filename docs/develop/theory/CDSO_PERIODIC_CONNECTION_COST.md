@@ -1590,3 +1590,263 @@ that quantifier order, and they make no extremal assertion for
 graphs outside the prescribed bipartite orientation and budgets.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 9. A polynomially uniform first-connection window
+
+The fixed-parameter estimates above leave one quantifier gap in Open
+problem 8.3. This section closes a deliberately deep part of that gap.
+The sink number remains the prescribed value \(s=a+1+h\), and every graph
+below is still finite, simple, connected, bipartite with independent source
+and sink parts, has exactly \(N\) sources and \(aN\) edges, and satisfies the
+strict edge inequality (1.3). No support condition, marginal floor, or phase
+separation is added.
+
+### 9.1 Uniform bookkeeping for the high-ratio window
+
+Fix a finite \(R\ge4\), and put
+
+$$
+J_R=\left\lceil4(R^2+10)\right\rceil,\qquad
+K_R=2^{40}(R+J_R+10)^{40}.
+\tag{9.1}
+$$
+
+Let \(A_R^{\mathrm{cap}}\) be a threshold for the already proved uniform
+cap localization in Growing Lemmas 15.2--15.3, with every \(O_R(\cdot)\)
+there replaced by the displayed rational bounds in those lemmas. Thus
+\(A_R^{\mathrm{cap}}\) depends on \(R\) alone and does not depend on a fixed
+pair \((a,h)\). Define
+
+$$
+A_R=\max\{A_R^{\mathrm{cap}},(8K_R)^2,8K_R\},\qquad
+C_R=K_R,\qquad D_R=2K_R^2.
+\tag{9.2}
+$$
+
+The following estimates are the uniform numerical ledger used below.
+
+**Lemma 9.1 (Polynomial cap and price bounds).** If
+
+$$
+a\ge A_R,\qquad \frac72\sqrt a\le h\le R\sqrt a,
+\tag{9.3}
+$$
+
+then every winning index \(j\in J_*\) satisfies \(2\le j\le J_R\), and,
+with \(m,r,n,\alpha,\beta\) as in (1.6),
+
+$$
+\begin{gathered}
+a\le m\le2a,\qquad a\le r\le2a,\qquad
+\frac12\le\alpha\le1,\\
+2\sqrt a\le n\le(R+2)\sqrt a,\qquad
+\frac1{K_Ra^{3/2}}\le\beta\le\frac{K_R}{a^{3/2}},\qquad
+\frac1{K_R}a^{3/2}\le\eta\le K_Ra^{3/2},\\
+M(a,h)\le K_Ra^3,\qquad |\chi_{j,N}|\le K_Ra^{7/2},
+\end{gathered}
+\tag{9.4}
+$$
+
+and every exceptional type price in (2.1) is either zero on the cap
+support or at least \(a^2/K_R\). If \(D_*(a,h)\) is a common positive
+integer denominator for all the rational prices \(\rho_j(L,B)\), all
+\(\chi_{j,N}\), and \(\chi_N\), it may be chosen with
+
+$$
+D_*(a,h)\le K_Ra^6.
+\tag{9.5}
+$$
+
+**Proof.** Growing Lemma 15.2 gives the finite index range and the strict
+margin \(n^2/(j^2a)>5/2\) after increasing \(A_R^{\mathrm{cap}}\). The
+bounds on \(m,r,n,\alpha,\beta,\eta\) then follow directly from (1.6),
+\(h\le R\sqrt a\), and \(a\ge(8K_R)^2\). Substitution in (1.8) and
+(2.1), using \(n^2/(j^2a)>5/2\), gives
+
+$$
+rc_j\ge a^3/K_R,\qquad b_j\ge a^3/K_R,
+\tag{9.6}
+$$
+
+after the same threshold increase; (2.3)--(2.5) then give the stated
+lower bound for every nonzero price. The formula (1.5) gives
+\(M=S_j\le K_Ra^3\), while (1.8) gives the bound for \(\chi_{j,N}\)
+because \(n=O_R(\sqrt a)\), \(b_j=O_R(a^3)\), \(d_{j,N}<r=O(a)\),
+and \(c_j=O_R(a^2)\). Finally, clear the denominators in (1.6),
+(1.8), and (2.1). Their factors are among \(j\), \(r\), \(n\), and
+\(a-1\), each bounded by \(K_Ra\); multiplying the displayed factors
+gives the safe bound (9.5). No enumeration of labelled subsets is used.
+\(\square\)
+
+**Lemma 9.2 (Uniform realization and full-class lower estimate).** Under
+(9.3), for every integer \(N\ge K_Ra^{20}\) there is an actual graph in
+\(\mathfrak G_N(a,h)\) with a winning \(j\) satisfying
+\(\chi_{j,N}=\chi_N\) and
+
+$$
+W(G)\le M+\frac{\chi_N}{N}+\frac{K_Ra^{17}}{N^2}.
+\tag{9.7}
+$$
+
+For every graph \(G\in\mathfrak G_N(a,h)\),
+
+$$
+W(G)\ge M+\frac{\chi_N}{N}-\frac{K_Ra^{17}}{N^2}.
+\tag{9.8}
+$$
+
+The lower estimate is over the full original graph class.
+
+**Proof.** Choose \(j\) with \(\chi_{j,N}=\chi_N\), set \(d=d_{j,N}\), and
+use the construction of Lemma 4.2: \(n\) distinct degree-two
+core--tail connectors, \(d\) missing-one core sources, full-core sources
+and balanced tail singletons. The residue definition of \(d\) makes
+
+$$
+F=\frac{(a-1)N-n-(r-1)d}{r},\qquad
+T=N-F-n-d
+\tag{9.9}
+$$
+
+integers. From (9.4) and \(N\ge K_Ra^{20}\), \(F>\alpha N/2\) and
+every tail degree is \(>\beta N/2\); since \(s\le K_Ra\), all source
+degrees are strictly smaller than their adjacent sink degrees. The
+construction therefore lies in the original class for every integer
+residue, with no congruence restriction on \(N\).
+
+For this graph the degree-ratio expansion (9.4)--(9.5) and (9.9) give
+the fixed formulas (4.8) with an error bounded by \(K_Ra^{12}/N^2\).
+For example, the fourth-order remainder is bounded by
+
+$$
+N(aN)\left(\frac{2K_Ra}{\beta N}\right)^6
+\le K_Ra^{17}N^{-4}
+\le K_Ra^{17}N^{-2},
+\tag{9.10}
+$$
+
+and the rational denominator expansions in (7.6) are smaller than the
+same envelope. This proves (9.7) after enlarging \(K_R\).
+
+For the lower bound, first consider a graph with value no larger than the
+right side of (9.7). By (9.4), this is a sublevel \(W\le2K_Ra^3\).
+The bridge (3.10) therefore gives \(y_i\ge K_R^{-1}a^{-3}\). Inserting
+this bound and \(s\le K_Ra\) into (3.11) yields
+
+$$
+0\le H(x_G)-W(G)\le K_Ra^{17}N^{-2}.
+\tag{9.11}
+$$
+
+Growing Lemma 15.3, with the same explicit denominator bounds, places
+the law in one of the cap neighborhoods; Growing Theorem 15.5 identifies
+the corresponding sublevel minimum with \(M(a,h)\), and the residual
+bootstrap plus the integer masses bounds its exceptional mass
+by \(K_Ra^{3/2}/N\). The Taylor estimate (3.2), whose second
+derivatives are bounded by \(K_Ra^{9/2}\) on these neighborhoods, then
+gives
+
+$$
+W(G)\ge M+\frac{\mathcal P_j(G)}N-\frac{K_Ra^{17}}{N^2}.
+\tag{9.12}
+$$
+
+Here \(j\) is the actual winning cap of that neighborhood. Lemma 4.1
+applies to every source type, without a support restriction, and gives
+\(\mathcal P_j(G)\ge\chi_{j,N}\ge\chi_N\). A graph above the sublevel
+already exceeds (9.8), while a graph in it satisfies (9.12), proving
+(9.8) over the whole class. The powers in (9.10)--(9.12) are enlarged
+to \(17\) only to use one envelope for all core and tail denominators.
+\(\square\)
+
+### 9.2 The uniform theorem and source exclusion
+
+**Theorem 9.3 (Polynomially uniform first connection correction).** Let
+\(R\ge4\) be finite and use (9.1)--(9.2). Put
+
+$$
+p=50,\qquad q=40.
+\tag{9.13}
+$$
+
+For every pair in (9.3) and every integer
+
+$$
+N\ge\left\lceil D_Ra^p\right\rceil,
+\tag{9.14}
+$$
+
+the original class is nonempty and
+
+$$
+\left|V_N(a,h)-M(a,h)-\frac{\chi_N(a,h)}N\right|
+\le\frac{C_Ra^q}{N^2}.
+\tag{9.15}
+$$
+
+Moreover every exact minimizer \(G\) has a cap partition and a law-winning
+index \(j\in J_*\) with \(\chi_{j,N}=\chi_N\), and its source
+neighborhoods are exactly the three types in Theorem 1.3:
+
+1. one two-element core--tail connector for each of the \(n=h+1-j\)
+   labelled tails;
+2. exactly \(d_{j,N}\) missing-one core sources \(C\setminus\{i\}\);
+3. full-core sources \(C\) and singleton tail sources for every remaining
+   source.
+
+All ties between winning laws, all price ties, every integer residue of
+\(d_{j,N}\), and every feasible endpoint, omission, and balanced-tail
+allocation remain in the statement. The theorem does not choose a least
+threshold or least period and does not optimize over a variable sink count.
+
+**Proof.** Since \(a\ge1\), (9.7)--(9.8) imply (9.15) with \(q=40\)
+whenever (9.14) holds, after the harmless enlargement in (9.2). In
+particular the explicit construction in Lemma 9.2 proves nonemptiness.
+
+It remains to prove the source assertion. Let \(G\) be an exact minimizer
+and use the cap \(j\) supplied by (9.12). Combining (9.7), (9.12), and
+\(\mathcal P_j(G)\ge\chi_{j,N}\ge\chi_N\) gives
+
+$$
+0\le\mathcal P_j(G)-\chi_N
+\le\frac{2K_Ra^{17}}N.
+\tag{9.16}
+$$
+
+By (9.5), a strict inequality on the left is at least
+\(D_*^{-1}\ge K_R^{-1}a^{-6}\). The threshold (9.14), with
+\(D_R=2K_R^2\), makes the right side of (9.16) smaller than this gap.
+Therefore \(\mathcal P_j(G)=\chi_N\), and both inequalities
+\(\mathcal P_j(G)\ge\chi_{j,N}\ge\chi_N\) are equalities. Lemma 4.1
+now gives exactly the three source types listed above. Its equality proof
+also gives one connector for each tail and the residue count
+\(d_{j,N}\), so no source support or phase assumption has entered. The
+argument treats the finite set of law ties and every residue separately
+inside one common bound; it never replaces a joint realization by
+independent marginal optima. \(\square\)
+
+The explicit exponents \(p=50\) and \(q=40\) are intentionally wasteful.
+They are chosen so that the polynomial denominator, localization, and
+degree-ratio estimates are all dominated by one threshold. The result is
+therefore a genuine common-growth theorem in the original graph domain,
+but it does not assert that \(50\) is least, that the threshold in (9.14)
+is least, or that the bound remains valid near \(N\asymp a^2\). Open
+problem 8.3 still contains the least-threshold and least-period questions,
+the smaller transition scales, the exact later analytic template choice,
+and the extremum when the number of sinks varies.
+
+The cap formulas and all graph constructions used here come from Growing
+Definition 9.1, Lemma 9.2, Lemmas 15.2--15.3 and Theorem 15.5. The
+nonlinear normalization is the maximum-endpoint normalization in (1.4),
+with no \(1/\sqrt2\) factor. The original index source is
+Albalahi--Das--Ali--Barman--Hamza, *On the hyperbolic Sombor index and its
+counterpart*, Discrete Math. Lett. 16 (2025), 108--115,
+[DOI 10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176),
+§1 and §4. The proof above is a repository derivation from those
+definitions and the cited Growing results; it makes no worldwide novelty
+claim. Possible full-text overlap with Zhao--Zhao, *Extremal values with
+respect to vertex-degree-based topological indices in unicyclic and
+bicyclic graphs*, DOI
+[10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+remains unassessed.
