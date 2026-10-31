@@ -6,6 +6,7 @@
    utility: none
    digest: Pauli conjugation supplies the orthogonal rotation of collective spin axes. -/
 
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
 import D5.S3.QuantumChannels.ChannelTimeReversalNoGo
 import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
@@ -13,12 +14,14 @@ import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 /-! The real orthogonal Pauli action used by the spin-four witness channel. -/
 
 set_option autoImplicit false
+set_option linter.style.longLine false
 
 noncomputable section
 
 namespace D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
 
 open _root_.Matrix
+open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
 open scoped BigOperators
 open D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction (pauli)
 open D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings (pauli_hermitian)
@@ -237,5 +240,113 @@ theorem quadratic_rotation {n : Type*} [Fintype n] [DecidableEq n]
   simp only [Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul, Matrix.mul_smul,
     smul_add, smul_sub, smul_smul]
   module
+
+/-- The normalized Dicke embedding; the spin index counts qubits in state one. -/
+def dickeIsometry (n : ℕ) : Matrix (Fin n → Fin 2) (Fin (n + 1)) ℂ :=
+  fun x r => if (∑ k, (x k).val) = r.val then
+    (Real.sqrt (n.choose r.val : ℝ) : ℂ)⁻¹ else 0
+
+set_option backward.isDefEq.respectTransparency false in
+theorem partialTrace_isometries {a b i j : Type*}
+    [Fintype a] [Fintype b] [Fintype i] [Fintype j]
+    [DecidableEq j] (v : Matrix a i ℂ) (w : Matrix b j ℂ)
+    (hw : wᴴ * w = 1) (z : Matrix (i × j) (i × j) ℂ) :
+    partialTraceRight (Matrix.kronecker v w * z * (Matrix.kronecker v w)ᴴ) =
+      v * partialTraceRight z * vᴴ := by
+  have hb (k l : j) : (∑ d : b, w d k * star (w d l)) = if k = l then 1 else 0 := by
+    have h := congrFun (congrFun hw l) k
+    simpa [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply,
+      mul_comm, eq_comm] using h
+  ext x y
+  dsimp only [Matrix.kronecker, Matrix.kroneckerMap]
+  simp only [partialTraceRight, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    Matrix.of_apply, Fintype.sum_prod_type, star_mul]
+  simp_rw [Finset.sum_mul]
+  conv_lhs =>
+    rw [Finset.sum_comm]
+    arg 2
+    ext k
+    rw [Finset.sum_comm]
+    arg 2
+    ext l
+    rw [Finset.sum_comm]
+    arg 2
+    ext m
+    rw [Finset.sum_comm]
+  have he (k m : i) (l n : j) :
+      (∑ d : b, v x m * w d n * z (m, n) (k, l) *
+        (star (w d l) * star (v y k))) =
+      v x m * z (m, l) (k, l) * star (v y k) * (if n = l then 1 else 0) := by
+    calc
+      _ = (v x m * z (m, n) (k, l) * star (v y k)) *
+          (∑ d : b, w d n * star (w d l)) := by
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro d _
+        ring
+      _ = _ := by rw [hb]; split_ifs with h <;> simp_all
+  simp_rw [he]
+  simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
+    ite_true]
+  simp only [Finset.mul_sum, Finset.sum_mul, mul_assoc]
+  apply Finset.sum_congr rfl
+  intro k _
+  rw [Finset.sum_comm]
+
+def dickeCoefficient (n w r : ℕ) : ℂ :=
+  if w = r then (Real.sqrt (n.choose r : ℝ) : ℂ)⁻¹ else 0
+
+private lemma two_value_sum (n : ℕ) (x : Fin n → Fin 2) (f : Fin 2 → ℂ) :
+    (∑ k, f (x k)) = ((n : ℂ) - (∑ k, (x k).val : ℕ)) * f 0 +
+      (∑ k, (x k).val : ℕ) * f 1 := by
+  have he (b : Fin 2) : f b = f 0 + (b.val : ℂ) * (f 1 - f 0) := by
+    fin_cases b <;> norm_num
+  calc
+    _ = ∑ k : Fin n, (f 0 + ((x k).val : ℂ) * (f 1 - f 0)) :=
+      Finset.sum_congr rfl (fun k _ => he (x k))
+    _ = _ := ?_
+  rw [Finset.sum_add_distrib, ← Finset.sum_mul]
+  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+  push_cast
+  ring
+
+theorem dicke_site_sum (n : ℕ) (a : Matrix (Fin 2) (Fin 2) ℂ)
+    (x : Fin n → Fin 2) (r : Fin (n + 1)) :
+    (∑ k : Fin n, ∑ b : Fin 2, a (x k) b *
+      dickeIsometry n (Function.update x k b) r) =
+      ((n : ℂ) - (∑ k, (x k).val : ℕ)) *
+        (a 0 0 * dickeCoefficient n (∑ k, (x k).val) r.val +
+          a 0 1 * dickeCoefficient n ((∑ k, (x k).val) + 1) r.val) +
+      (∑ k, (x k).val : ℕ) *
+        (a 1 0 * dickeCoefficient n ((∑ k, (x k).val) - 1) r.val +
+          a 1 1 * dickeCoefficient n (∑ k, (x k).val) r.val) := by
+  let w := ∑ k, (x k).val
+  have hu (k : Fin n) (b : Fin 2) :
+      (∑ i, (Function.update x k b i).val) + (x k).val = w + b.val := by
+    have he : (fun i => (Function.update x k b i).val) =
+        Function.update (fun i => (x i).val) k b.val := by
+      exact Function.comp_update Fin.val x k b
+    rw [he, Finset.sum_update_of_mem (Finset.mem_univ k)]
+    simp only [Finset.sdiff_singleton_eq_erase]
+    have h := Finset.add_sum_erase Finset.univ (fun i => (x i).val) (Finset.mem_univ k)
+    dsimp only [w]
+    omega
+  let f : Fin 2 → ℂ :=
+    ![a 0 0 * dickeCoefficient n w r.val + a 0 1 * dickeCoefficient n (w + 1) r.val,
+      a 1 0 * dickeCoefficient n (w - 1) r.val + a 1 1 * dickeCoefficient n w r.val]
+  have hf (k : Fin n) : (∑ b : Fin 2, a (x k) b *
+      dickeIsometry n (Function.update x k b) r) = f (x k) := by
+    have h0 := hu k 0
+    have h1 := hu k 1
+    by_cases hk : x k = 0
+    · have hz : (∑ i, (Function.update x k 0 i).val) = w := by simp [hk] at h0; omega
+      have ho : (∑ i, (Function.update x k 1 i).val) = w + 1 := by simp [hk] at h1; omega
+      simp [Fin.sum_univ_two, dickeIsometry, hz, ho, f, hk, dickeCoefficient]
+    · have hk1 : x k = 1 := Fin.ext (by have hh := (x k).isLt; omega)
+      have hz : (∑ i, (Function.update x k 0 i).val) = w - 1 := by simp [hk1] at h0; omega
+      have ho : (∑ i, (Function.update x k 1 i).val) = w := by simp [hk1] at h1; omega
+      simp [Fin.sum_univ_two, dickeIsometry, hz, ho, f, hk1, dickeCoefficient]
+  simp_rw [hf]
+  simpa only [f, Matrix.cons_val_zero, Matrix.cons_val_one] using two_value_sum n x f
 
 end D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance

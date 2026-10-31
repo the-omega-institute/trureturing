@@ -7,7 +7,6 @@
    digest: A spin-four covariant channel lowers order-seven trace-distance anticoherence. -/
 
 import D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation
-import D5.S3.Quantum.Measurement.AnticoherenceCovariantChannel
 import D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT
 import D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
@@ -28,25 +27,159 @@ namespace D5.S3.Quantum.Measurement.AnticoherenceTraceDistanceRefutation
 
 open scoped BigOperators ComplexOrder MatrixOrder
 open _root_.Matrix
-open D5.S3.Quantum.Measurement.AnticoherenceCovariantChannel
-  (witnessState witnessKraus witnessChannel quadrupole witnessOutput
-    kraus_complete witness_state witness_output)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
 open D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm)
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf (MatrixMap)
 open D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound (Jplus Jx Jy Jz)
 open D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
   (pauli_rotation tensor_unitary quadratic_rotation orthogonal_sandwich
-    local_action collectiveSpin collective_tensor_rotation)
+    local_action collectiveSpin collective_tensor_rotation
+    dickeIsometry partialTrace_isometries dickeCoefficient dicke_site_sum)
 
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (tensorOp)
 open D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction (pauli)
 open D5.S3.Quantum.Entanglement.OccupancyWordSectors
 
-/-- The normalized Dicke embedding; the spin index counts qubits in state one. -/
-def dickeIsometry (n : ℕ) : Matrix (Fin n → Fin 2) (Fin (n + 1)) ℂ :=
-  fun x r => if (∑ k, (x k).val) = r.val then
-    (Real.sqrt (n.choose r.val : ℝ) : ℂ)⁻¹ else 0
+private def witnessState : Matrix (Fin 9) (Fin 9) ℂ :=
+  diagonal (fun r => (![209, 92, 560, 0, 441, 0, 294, 168, 0] r : ℂ) / 1764)
+
+private def witnessKraus : Fin 5 → Matrix (Fin 9) (Fin 9) ℂ :=
+  let z : Matrix (Fin 9) (Fin 9) ℂ := Jz 8
+  let p : Matrix (Fin 9) (Fin 9) ℂ := Jplus 8
+  ![(1 / (Real.sqrt 1540 : ℂ)) • ((3 : ℂ) • (z * z) - (20 : ℂ) • 1),
+    (-(Real.sqrt (3 / 3080) : ℂ)) • (z * p + p * z),
+    (Real.sqrt (3 / 3080) : ℂ) • (z * pᴴ + pᴴ * z),
+    (Real.sqrt (3 / 3080) : ℂ) • (p * p),
+    (Real.sqrt (3 / 3080) : ℂ) • (pᴴ * pᴴ)]
+
+private def witnessChannel : MatrixMap (Fin 9) (Fin 9) ℂ :=
+  MatrixMap.of_kraus witnessKraus witnessKraus
+
+private def quadrupole (a b : Fin 3) : Matrix (Fin 9) (Fin 9) ℂ :=
+  let j : Fin 3 → Matrix (Fin 9) (Fin 9) ℂ := ![Jx 8, Jy 8, Jz 8]
+  (1 / 2 : ℂ) • (j a * j b + j b * j a) -
+    (if a = b then (20 / 3 : ℂ) else 0) • 1
+
+private def witnessOutput : Matrix (Fin 9) (Fin 9) ℂ :=
+  diagonal (fun r =>
+    (![22288, 30100, 25528, 13149, 45540, 10584, 24654, 11613, 10584] r : ℂ) / 194040)
+
+
+private def krausShift : Fin 5 → ℤ := ![0, -1, 1, -2, 2]
+
+private def krausAmplitude (q : Fin 5) (r : Fin 9) : ℝ :=
+  let z : ℝ := 4 - r.val
+  let c := Real.sqrt (3 / 3080)
+  ![(3 * z ^ 2 - 20) / Real.sqrt 1540,
+    -c * (2 * z + 1) * Real.sqrt (20 - z * (z + 1)),
+    c * (2 * z - 1) * Real.sqrt (20 - (z - 1) * z),
+    c * Real.sqrt (20 - z * (z + 1)) * Real.sqrt (20 - (z + 1) * (z + 2)),
+    c * Real.sqrt (20 - (z - 1) * z) * Real.sqrt (20 - (z - 2) * (z - 1))] q
+
+private def krausWeight (q : Fin 5) (r : Fin 9) : ℝ :=
+  let z : ℝ := 4 - r.val
+  ![(3 * z ^ 2 - 20) ^ 2 / 1540,
+    3 / 3080 * (2 * z + 1) ^ 2 * (20 - z * (z + 1)),
+    3 / 3080 * (2 * z - 1) ^ 2 * (20 - (z - 1) * z),
+    3 / 3080 * (20 - z * (z + 1)) * (20 - (z + 1) * (z + 2)),
+    3 / 3080 * (20 - (z - 1) * z) * (20 - (z - 2) * (z - 1))] q
+
+set_option maxHeartbeats 4000000 in
+-- The five sparse matrices have nine input and output indices.
+private lemma kraus_entry (q : Fin 5) (i r : Fin 9) :
+    witnessKraus q i r =
+      if (i.val : ℤ) = (r.val : ℤ) + krausShift q then (krausAmplitude q r : ℂ)
+      else 0 := by
+  rw [witnessKraus, krausShift, krausAmplitude]
+  dsimp only [Jz]
+  fin_cases q <;> fin_cases i <;> fin_cases r <;>
+    norm_num [witnessKraus, krausShift, krausAmplitude, Jplus, Matrix.mul_apply,
+      Fin.sum_univ_succ, Matrix.conjTranspose_apply, Complex.star_def,
+      Complex.conj_ofReal] <;> ring
+
+private lemma kraus_amplitude_sq (q : Fin 5) (r : Fin 9) :
+    krausAmplitude q r ^ 2 = krausWeight q r := by
+  rw [krausWeight]
+  fin_cases q <;> fin_cases r <;>
+    norm_num [krausAmplitude, krausWeight, mul_pow, div_pow, Real.sq_sqrt]
+
+private lemma kraus_column_product (q : Fin 5) (i : Fin 9) (r s : Fin 9) :
+    star (witnessKraus q i r) * witnessKraus q i s =
+      if r = s ∧ (i.val : ℤ) = (r.val : ℤ) + krausShift q then
+        (krausWeight q r : ℂ) else 0 := by
+  rw [kraus_entry, kraus_entry]
+  by_cases hr : (i.val : ℤ) = (r.val : ℤ) + krausShift q
+  · by_cases hs : (i.val : ℤ) = (s.val : ℤ) + krausShift q
+    · have hrs : r = s := Fin.ext (by omega)
+      subst s
+      simp only [hr, ite_true, true_and, Complex.star_def, Complex.conj_ofReal]
+      rw [← Complex.ofReal_mul, ← sq, kraus_amplitude_sq]
+    · have hrs : r ≠ s := by intro he; subst s; exact hs hr
+      have hnot : ¬ (r = s ∧ (i.val : ℤ) = (r.val : ℤ) + krausShift q) :=
+        fun h => hrs h.1
+      rw [if_pos hr, if_neg hs, if_neg hnot, mul_zero]
+  · simp [hr]
+
+private theorem kraus_complete : ∑ q, (witnessKraus q)ᴴ * witnessKraus q = 1 := by
+  ext r s
+  simp only [Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply]
+  simp_rw [kraus_column_product]
+  fin_cases r <;> fin_cases s <;>
+    norm_num [Fin.sum_univ_succ, krausShift, krausWeight, Matrix.one_apply]
+
+
+private theorem witness_state : witnessState.PosSemidef ∧ witnessState.trace = 1 := by
+  rw [witnessState]
+  constructor
+  · apply posSemidef_diagonal_iff.mpr
+    intro i
+    fin_cases i <;> norm_num [Complex.nonneg_iff, Complex.div_re, Complex.div_im]
+  · norm_num [witnessState, trace_diagonal, Fin.sum_univ_succ]
+
+private lemma kraus_row_product (q : Fin 5) (i j r : Fin 9) :
+    witnessKraus q i r * star (witnessKraus q j r) =
+      if i = j ∧ (i.val : ℤ) = (r.val : ℤ) + krausShift q then
+        (krausWeight q r : ℂ) else 0 := by
+  rw [kraus_entry, kraus_entry]
+  by_cases hi : (i.val : ℤ) = (r.val : ℤ) + krausShift q
+  · by_cases hj : (j.val : ℤ) = (r.val : ℤ) + krausShift q
+    · have hij : i = j := Fin.ext (by omega)
+      subst j
+      simp only [hi, ite_true, true_and, Complex.star_def, Complex.conj_ofReal]
+      rw [← Complex.ofReal_mul, ← sq, kraus_amplitude_sq]
+    · have hij : i ≠ j := by intro he; subst j; exact hj hi
+      simp [hi, hj, hij]
+  · simp [hi]
+
+private lemma channel_diagonal_entry (p : Fin 9 → ℂ) (i j : Fin 9) :
+    witnessChannel (diagonal p) i j = ∑ q : Fin 5, ∑ r : Fin 9,
+      p r * (witnessKraus q i r * star (witnessKraus q j r)) := by
+  rw [witnessChannel]
+  simp only [witnessChannel, MatrixMap.of_kraus, LinearMap.coe_sum,
+    LinearMap.coe_mk, AddHom.coe_mk, Finset.sum_apply, Matrix.sum_apply]
+  apply Finset.sum_congr rfl
+  intro q _
+  rw [Matrix.mul_apply]
+  simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply]
+  apply Finset.sum_congr rfl
+  intro r _
+  ring
+
+set_option maxHeartbeats 1000000 in
+-- Nine diagonal entries each sum the five Kraus contributions.
+private theorem witness_output : witnessChannel witnessState = witnessOutput := by
+  rw [witnessOutput]
+  ext i j
+  change witnessChannel (diagonal (fun r =>
+    (![209, 92, 560, 0, 441, 0, 294, 168, 0] r : ℂ) / 1764)) i j = witnessOutput i j
+  rw [channel_diagonal_entry]
+  simp_rw [kraus_row_product]
+  by_cases hij : i = j
+  · subst j
+    fin_cases i <;>
+      norm_num [Fin.sum_univ_succ, krausShift, krausWeight, witnessOutput]
+  · simp [hij, witnessOutput]
+
 
 /-- The spin-`n/2` representation obtained by restricting the qubit tensor power. -/
 def spinAction (n : ℕ) (u : Matrix.specialUnitaryGroup (Fin 2) ℂ) :
@@ -331,53 +464,6 @@ private lemma dicke_split_factor (t s : ℕ) :
   · simp
 
 set_option backward.isDefEq.respectTransparency false in
-private lemma partialTrace_isometries {a b i j : Type*}
-    [Fintype a] [Fintype b] [Fintype i] [Fintype j]
-    [DecidableEq j] (v : Matrix a i ℂ) (w : Matrix b j ℂ)
-    (hw : wᴴ * w = 1) (z : Matrix (i × j) (i × j) ℂ) :
-    partialTraceRight (Matrix.kronecker v w * z * (Matrix.kronecker v w)ᴴ) =
-      v * partialTraceRight z * vᴴ := by
-  have hb (k l : j) : (∑ d : b, w d k * star (w d l)) = if k = l then 1 else 0 := by
-    have h := congrFun (congrFun hw l) k
-    simpa [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply,
-      mul_comm, eq_comm] using h
-  ext x y
-  dsimp only [Matrix.kronecker, Matrix.kroneckerMap]
-  simp only [partialTraceRight, Matrix.mul_apply, Matrix.conjTranspose_apply,
-    Matrix.of_apply, Fintype.sum_prod_type, star_mul]
-  simp_rw [Finset.sum_mul]
-  conv_lhs =>
-    rw [Finset.sum_comm]
-    arg 2
-    ext k
-    rw [Finset.sum_comm]
-    arg 2
-    ext l
-    rw [Finset.sum_comm]
-    arg 2
-    ext m
-    rw [Finset.sum_comm]
-  have he (k m : i) (l n : j) :
-      (∑ d : b, v x m * w d n * z (m, n) (k, l) *
-        (star (w d l) * star (v y k))) =
-      v x m * z (m, l) (k, l) * star (v y k) * (if n = l then 1 else 0) := by
-    calc
-      _ = (v x m * z (m, n) (k, l) * star (v y k)) *
-          (∑ d : b, w d n * star (w d l)) := by
-        rw [Finset.mul_sum]
-        apply Finset.sum_congr rfl
-        intro d _
-        ring
-      _ = _ := by rw [hb]; split_ifs with h <;> simp_all
-  simp_rw [he]
-  simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
-    ite_true]
-  simp only [Finset.mul_sum, Finset.sum_mul, mul_assoc]
-  apply Finset.sum_congr rfl
-  intro k _
-  rw [Finset.sum_comm]
-
-set_option backward.isDefEq.respectTransparency false in
 private lemma dicke_split_partialTrace (t s : ℕ)
     (ρ : Matrix (Fin (t + s + 1)) (Fin (t + s + 1)) ℂ) :
     let v := dickeIsometry (t + s)
@@ -541,62 +627,6 @@ private lemma spin_action_unitary (n : ℕ)
     _ = (dickeIsometry n)ᴴ * ((tensorOp (fun _ : Fin n => u.val))ᴴ * tensorOp (fun _ : Fin n => u.val)) *
         dickeIsometry n := by simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
     _ = 1 := by rw [ht, Matrix.mul_one, dicke_isometry]
-
-private def dickeCoefficient (n w r : ℕ) : ℂ :=
-  if w = r then (Real.sqrt (n.choose r : ℝ) : ℂ)⁻¹ else 0
-
-private lemma two_value_sum (n : ℕ) (x : Fin n → Fin 2) (f : Fin 2 → ℂ) :
-    (∑ k, f (x k)) = ((n : ℂ) - (∑ k, (x k).val : ℕ)) * f 0 +
-      (∑ k, (x k).val : ℕ) * f 1 := by
-  have he (b : Fin 2) : f b = f 0 + (b.val : ℂ) * (f 1 - f 0) := by
-    fin_cases b <;> norm_num
-  calc
-    _ = ∑ k : Fin n, (f 0 + ((x k).val : ℂ) * (f 1 - f 0)) :=
-      Finset.sum_congr rfl (fun k _ => he (x k))
-    _ = _ := ?_
-  rw [Finset.sum_add_distrib, ← Finset.sum_mul]
-  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
-  push_cast
-  ring
-
-private lemma dicke_site_sum (n : ℕ) (a : Matrix (Fin 2) (Fin 2) ℂ)
-    (x : Fin n → Fin 2) (r : Fin (n + 1)) :
-    (∑ k : Fin n, ∑ b : Fin 2, a (x k) b *
-      dickeIsometry n (Function.update x k b) r) =
-      ((n : ℂ) - (∑ k, (x k).val : ℕ)) *
-        (a 0 0 * dickeCoefficient n (∑ k, (x k).val) r.val +
-          a 0 1 * dickeCoefficient n ((∑ k, (x k).val) + 1) r.val) +
-      (∑ k, (x k).val : ℕ) *
-        (a 1 0 * dickeCoefficient n ((∑ k, (x k).val) - 1) r.val +
-          a 1 1 * dickeCoefficient n (∑ k, (x k).val) r.val) := by
-  let w := ∑ k, (x k).val
-  have hu (k : Fin n) (b : Fin 2) :
-      (∑ i, (Function.update x k b i).val) + (x k).val = w + b.val := by
-    have he : (fun i => (Function.update x k b i).val) =
-        Function.update (fun i => (x i).val) k b.val := by
-      exact Function.comp_update Fin.val x k b
-    rw [he, Finset.sum_update_of_mem (Finset.mem_univ k)]
-    simp only [Finset.sdiff_singleton_eq_erase]
-    have h := Finset.add_sum_erase Finset.univ (fun i => (x i).val) (Finset.mem_univ k)
-    dsimp only [w]
-    omega
-  let f : Fin 2 → ℂ :=
-    ![a 0 0 * dickeCoefficient n w r.val + a 0 1 * dickeCoefficient n (w + 1) r.val,
-      a 1 0 * dickeCoefficient n (w - 1) r.val + a 1 1 * dickeCoefficient n w r.val]
-  have hf (k : Fin n) : (∑ b : Fin 2, a (x k) b *
-      dickeIsometry n (Function.update x k b) r) = f (x k) := by
-    have h0 := hu k 0
-    have h1 := hu k 1
-    by_cases hk : x k = 0
-    · have hz : (∑ i, (Function.update x k 0 i).val) = w := by simp [hk] at h0; omega
-      have ho : (∑ i, (Function.update x k 1 i).val) = w + 1 := by simp [hk] at h1; omega
-      simp [Fin.sum_univ_two, dickeIsometry, hz, ho, f, hk, dickeCoefficient]
-    · have hk1 : x k = 1 := Fin.ext (by have hh := (x k).isLt; omega)
-      have hz : (∑ i, (Function.update x k 0 i).val) = w - 1 := by simp [hk1] at h0; omega
-      have ho : (∑ i, (Function.update x k 1 i).val) = w := by simp [hk1] at h1; omega
-      simp [Fin.sum_univ_two, dickeIsometry, hz, ho, f, hk1, dickeCoefficient]
-  simp_rw [hf]
-  simpa only [f, Matrix.cons_val_zero, Matrix.cons_val_one] using two_value_sum n x f
 
 set_option maxHeartbeats 2000000 in
 -- The three axes are checked on nine Dicke weights and nine input coordinates.
