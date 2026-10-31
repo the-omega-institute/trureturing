@@ -73,5 +73,8 @@ internal sealed class HannaLaurentSecondMomentDocument : IScribeDocumentDefiniti
                     + "the finite polynomial identity to the original series. This settles "
                     + "the second moment in the stated expansion convention; it asserts "
                     + "no other moment formula or analytic convergence at one."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a391810-second-moment"),
+                    ResolutionKind.Proved)))));
 }

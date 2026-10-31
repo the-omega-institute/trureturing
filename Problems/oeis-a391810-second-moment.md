@@ -79,7 +79,7 @@ integer-to-rational cast yield the original Laurent statement.
   (-(2 * (n : ℤ) - 5) : ℤ)
 ```
 
-The declaration is conservatively `proof_shape: bind-only`, with prospective
+The declaration is conservatively `proof_shape: bind-only`, with
 `admission_basis: open-problem-resolution` for the exact external question.
 Its consumed private helpers organize polynomial differentiation,
 coefficient weighting and the boundary calculation; they make no separate
@@ -97,9 +97,9 @@ substitution into the bilateral series at one would change this question.
 
 The result addresses formula (4) for every natural n>=2 in the formal
 Laurent expansion at zero. It claims neither optimality of the support
-bound nor another OEIS formula. The exact source resolution requires its
-canonical frozen declaration and typed resolution link; those are separate
-from the mathematical statement. There is no justified successor claim here.
+bound nor another OEIS formula. Its canonical frozen declaration and typed
+resolution link identify this exact source statement. There is no justified
+successor claim here.
 
 ### What the settlement shows
 
@@ -129,6 +129,6 @@ with no certificate. The current diagnostic is `IE-C050 ClosedTruthReadout`,
 also depends on the positivity proof derived from binder hn. Missing evidence
 is an accepted exact source-coordinate binding of this proof-dependent
 coefficient observation. Assessment beyond that first boundary is unverified.
-The registration exception requires a concrete linked audit issue before
-publication; that issue link remains pending. No `declared_validated`, frozen
-delivery, CI success, merge or dev publication is asserted here.
+The unfinished registration is disclosed in
+[audit issue 24562](https://github.com/the-omega-institute/trureturing/issues/24562).
+No `declared_validated`, CI success, merge or dev publication is asserted here.
