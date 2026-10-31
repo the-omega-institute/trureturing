@@ -13,6 +13,8 @@ import Mathlib.Topology.Algebra.Group.Basic
 import Mathlib.Topology.Instances.ZMod
 import Mathlib.Topology.LocallyConstant.Basic
 
+/-! # Continuous coboundaries on finite phase towers -/
+
 set_option autoImplicit false
 
 namespace D5.S1.Dynamics.FinitePhaseCoboundary
@@ -53,10 +55,17 @@ private theorem continuous_leftHolonomy
     (c : X → G) (hc : Continuous c) (n : ℕ) :
     Continuous (leftHolonomy (fun y => (1 : ℤ) +ᵥ y) c n) := by
   induction n with
-  | zero => simpa [leftHolonomy, groupHolonomy] using (continuous_const (y := (1 : G)))
+  | zero =>
+    change Continuous (fun _ : X => (1 : G))
+    exact continuous_const
   | succ n ih =>
-    simpa only [leftHolonomy_succ, iterate_unit_vadd] using
-      (hc.comp (hact (n : ℤ))).mul ih
+    have he : leftHolonomy (fun y : X => (1 : ℤ) +ᵥ y) c (n + 1) =
+        fun x => c ((n : ℤ) +ᵥ x) *
+          leftHolonomy (fun y => (1 : ℤ) +ᵥ y) c n x := by
+      funext x
+      rw [leftHolonomy_succ, iterate_unit_vadd]
+    rw [he]
+    exact (hc.comp (hact (n : ℤ))).mul ih
 
 private theorem continuous_phaseTransfer {h : ℕ}
     (hact : ∀ g : ℤ, Continuous (fun x : X => g +ᵥ x))
@@ -86,11 +95,11 @@ theorem exists_continuous_transfer_of_phase_return
       leftHolonomy (fun x => (1 : ℤ) +ᵥ x) c h z = 1) :
     ∃ b : X → G, Continuous b ∧ (∀ z, p z = 0 → b z = 1) ∧
       ∀ x, b ((1 : ℤ) +ᵥ x) = c x * b x := by
-  letI : NeZero h := ⟨Nat.ne_of_gt hh⟩
+  let : NeZero h := ⟨Nat.ne_of_gt hh⟩
   let b := phaseTransfer p c
   have hbzero : ∀ z, p z = 0 → b z = 1 := by
     intro z hz
-    simp [b, phaseTransfer, hz, leftHolonomy, groupHolonomy]
+    simp [b, phaseTransfer, hz, leftHolonomy]
   refine ⟨b, continuous_phaseTransfer hact p hp c hc, hbzero, ?_⟩
   intro x
   let r := (p x).val
@@ -113,7 +122,7 @@ theorem exists_continuous_transfer_of_phase_return
       omega
     change leftHolonomy _ c (p ((1 : ℤ) +ᵥ x)).val
       ((-((p ((1 : ℤ) +ᵥ x)).val : ℤ)) +ᵥ ((1 : ℤ) +ᵥ x)) = _
-    rw [hv, hbase, leftHolonomy_succ, hx]
+    rw [hbase, hv, leftHolonomy_succ, hx]
     rfl
   · have he : r + 1 = h := by omega
     have hpzero : p ((1 : ℤ) +ᵥ x) = 0 := by
