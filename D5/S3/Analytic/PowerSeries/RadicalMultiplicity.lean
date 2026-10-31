@@ -332,11 +332,10 @@ private theorem D_jet (S : ℝ⸨X⸩) (p A : ℝ[X])
       simp [polyLS, Polynomial.coe_C, HahnSeries.algebraMap_apply',
         PowerSeries.algebraMap_apply]
     rw [hC]
-    simp only [map_sub, map_div₀, map_one, map_ofNat, map_natCast, Int.cast_neg,
-      Int.cast_natCast]
+    simp only [map_sub, map_div₀, map_one, map_ofNat, map_natCast, zsmul_eq_mul,
+      Int.cast_neg, Int.cast_natCast]
     push_cast
     field_simp [hp]
-    <;> (set_option pp.notation false in trace_state)
     <;> ring
 
 private def wronskianPS {n : ℕ} (f : Fin n → ℝ⟦X⟧) :
@@ -424,9 +423,9 @@ private theorem jet_factorPS (S : ℝ⟦X⟧) (p A : ℝ[X])
   have hsL : (S : ℝ⸨X⸩) ^ 2 = polyLS p := by
     simpa [polyLS] using congrArg (HahnSeries.ofPowerSeries ℤ ℝ) hs
   have hp : polyLS p ≠ 0 := by rw [← hsL]; exact pow_ne_zero _ hSL
-  apply HahnSeries.ofPowerSeries_injective
+  apply (HahnSeries.ofPowerSeries_injective (Γ := ℤ) (R := ℝ))
   simp only [map_mul, map_pow, Polynomial.coe_mul, Polynomial.coe_pow]
-  rw [← iterate_coe]
+  rw [← iterate_coe, map_mul]
   change polyLS p ^ N * ((laurentD ℝ).toLinearMap ^ v) (polyLS A * (S : ℝ⸨X⸩)) = _
   rw [D_jet _ p A hp hsL, zpow_neg, zpow_natCast]
   change polyLS p ^ N * ((S : ℝ⸨X⸩) * (polyLS p ^ v)⁻¹ * polyLS (polyJet p A v)) =
@@ -464,16 +463,19 @@ private theorem wronskian_order_bound {n d : ℕ} (hn : 0 < n)
   have hdet := congrArg Matrix.det he
   change (Matrix.of (fun i j => (p j : ℝ⟦X⟧) ^ (n - 1) * W i j)).det =
     (Matrix.of (fun i j => S j * ((Q i j : ℝ[X]) : ℝ⟦X⟧))).det at hdet
-  rw [Matrix.det_mul_row, Matrix.det_mul_row] at hdet
+  rw [Matrix.det_mul_row (fun j => (p j : ℝ⟦X⟧) ^ (n - 1)) W] at hdet
+  have hscale := Matrix.det_mul_row S
+    (fun (i j : Fin n) => ((Q i j : ℝ[X]) : ℝ⟦X⟧))
+  rw [hscale] at hdet
   have hmap : Matrix.det (fun i j => ((Q i j : ℝ[X]) : ℝ⟦X⟧)) = (Q.det : ℝ⟦X⟧) := by
     exact (Polynomial.coeToPowerSeries.ringHom.map_det Q).symm
   rw [hmap] at hdet
   have hunitS : IsUnit (∏ j, S j) := by
-    apply isUnit_prod_of_isUnit
+    apply IsUnit.prod_iff.mpr
     intro j _
     exact PowerSeries.isUnit_iff_constantCoeff.mpr (isUnit_iff_ne_zero.mpr (hS0 j))
   have hunitP : IsUnit (∏ j, (p j : ℝ⟦X⟧) ^ (n - 1)) := by
-    apply isUnit_prod_of_isUnit
+    apply IsUnit.prod_iff.mpr
     intro j _
     rw [← hs j]
     exact (PowerSeries.isUnit_iff_constantCoeff.mpr
@@ -481,21 +483,25 @@ private theorem wronskian_order_bound {n d : ℕ} (hn : 0 < n)
   have hord := congrArg PowerSeries.order hdet
   simp only [PowerSeries.order_mul, PowerSeries.order_zero_of_isUnit hunitP,
     PowerSeries.order_zero_of_isUnit hunitS, zero_add] at hord
-  have hW : W.det ≠ 0 := wronskianPS_ne_zero _ hi
+  have hW : W.det ≠ 0 := wronskianPS_ne_zero _ (by simpa only [map_mul] using hi)
   have hQne : Q.det ≠ 0 := by
     intro hz
     have : (Q.det : ℝ⟦X⟧) = 0 := by simp [hz]
     have := hord.trans (congrArg PowerSeries.order this)
-    exact hW (PowerSeries.order_eq_top.mp this)
+    exact hW (PowerSeries.order_eq_top.mp (by simpa using this))
   exact hord.trans_le ((polynomial_order_le _ hQne).trans (by
     exact_mod_cast detPoly_degree Q _ hQ))
 
 private theorem jet_sum {n : ℕ} (f : Fin n → ℝ⟦X⟧) (c : Fin n → ℝ) (v : ℕ) :
     PowerSeries.derivative^[v] (∑ j, c j • f j) =
       ∑ j, c j • PowerSeries.derivative^[v] (f j) := by
-  have h := ((PowerSeries.derivative (R := ℝ)).toLinearMap ^ v).map_sum
-    (fun j : Fin n => c j • f j) Finset.univ
-  simpa only [Module.End.pow_apply, map_smul] using h
+  induction v with
+  | zero => rfl
+  | succ v ih =>
+    rw [Function.iterate_succ_apply', ih, map_sum]
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [map_smul, Function.iterate_succ_apply']
 
 private theorem independent_sum_zero {n d : ℕ} (hn : 0 < n)
     (S : Fin n → ℝ⟦X⟧) (p A : Fin n → ℝ[X])
@@ -532,8 +538,10 @@ private theorem independent_sum_zero {n d : ℕ} (hn : 0 < n)
   have hcol (i : Fin n) : (D + 1 : ℕ) ≤ (M i j).order := by
     apply PowerSeries.nat_le_order_iff.mpr
     intro k hk
-    simp only [M, Matrix.updateCol_apply, if_pos rfl,
+    simp only [M, Matrix.updateCol_apply, ite_true,
       PowerSeries.coeff_iterate_derivative]
+    change (k+1).ascFactorial i.val * PowerSeries.coeff (k+i.val)
+      (∑ j, c j • ((A j : ℝ⟦X⟧) * S j)) = 0
     rw [hcoeff (k + i.val) (by dsimp [D] at hk; omega), mul_zero]
   have hlow := column_order M j (D + 1) hcol
   have hunit : IsUnit (PowerSeries.C (c j) : ℝ⟦X⟧) :=
@@ -574,8 +582,20 @@ theorem sum_eq_zero_of_coeff_eq_zero {ι : Type*} [Fintype ι]
   · simpa [hl0] using hc.symm
   have hi' : LinearIndependent ℝ (fun j : Fin l => (f (b j) : ℝ⸨X⸩)) := by
     have hli : LinearIndependent ℝ (f ∘ b) := hi.comp e.symm e.symm.injective
-    exact hli.map' (HahnSeries.ofPowerSeriesAlg ℤ ℝ ℝ).toLinearMap
-      (HahnSeries.ofPowerSeries_injective)
+    apply Fintype.linearIndependent_iff.mpr
+    intro r hr
+    apply Fintype.linearIndependent_iff.mp hli r
+    apply (HahnSeries.ofPowerSeries_injective (Γ := ℤ) (R := ℝ))
+    rw [map_sum, map_zero]
+    convert hr using 1
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [PowerSeries.smul_eq_C_mul, map_mul]
+    change (HahnSeries.ofPowerSeries ℤ ℝ) (PowerSeries.C (r j)) *
+      (f (b j) : ℝ⸨X⸩) = algebraMap ℝ ℝ⸨X⸩ (r j) * (f (b j) : ℝ⸨X⸩)
+    congr 1
+    simp [HahnSeries.algebraMap_apply', PowerSeries.algebraMap_apply]
+
   have hcut : l * (Fintype.card ι + 2 * (l - 1)) + l - 1 ≤
       3 * (Fintype.card ι) ^ 2 := by
     have hlpos : 0 < l := Nat.pos_of_ne_zero hl0
