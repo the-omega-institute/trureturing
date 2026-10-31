@@ -10,7 +10,6 @@ import Mathlib.Analysis.CStarAlgebra.Matrix
 import Mathlib.LinearAlgebra.UnitaryGroup
 import Mathlib.Algebra.Star.UnitaryStarAlgAut
 import Mathlib.LinearAlgebra.Span.Defs
-import Mathlib.Data.Matrix.Notation
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
@@ -19,6 +18,7 @@ import Mathlib.Tactic.Ring
 Example 5.2 and its unitary-uniqueness conjecture; preregistration #24898. -/
 
 set_option autoImplicit false
+set_option linter.style.longLine false
 
 noncomputable section
 namespace D5.S3.HilbertOperators.ReversibleFourByFourNonuniqueness
@@ -73,32 +73,71 @@ private def witness : Submodule ℂ (Matrix (Fin 4) (Fin 4) ℂ) :=
 
 private lemma form_linear (t a b c : ℂ) :
     a • form t 1 0 0 + b • form t 0 1 0 + c • form t 0 0 1 = form t a b c := by
-  sorry
+  ext i j
+  fin_cases i <;> fin_cases j <;> simp [form, Matrix.add_apply, mul_comm]
 
 private lemma witness_coordinates (x : Matrix (Fin 4) (Fin 4) ℂ) :
     x ∈ witness ↔ ∃ a b c : ℂ, form 2 a b c = x := by
-  sorry
-
-private lemma car_coordinates (x : Matrix (Fin 4) (Fin 4) ℂ) :
-    x ∈ carAlgebra ↔ ∃ a b c : ℂ, form 1 a b c = x := by
-  sorry
+  simp only [witness, Submodule.mem_span_triple, form_linear]
 
 private lemma form_product (t a b c d e f : ℂ) :
     form t a b c * form t d e f = form t 0 0 (t * (b * d - a * e)) := by
-  sorry
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [form, Matrix.mul_apply, Fin.sum_univ_succ] <;> ring
+
+private lemma car_coordinates (x : Matrix (Fin 4) (Fin 4) ℂ) :
+    x ∈ carAlgebra ↔ ∃ a b c : ℂ, form 1 a b c = x := by
+  have hu : (Matrix.single 0 2 1 + Matrix.single 1 3 1 : Matrix (Fin 4) (Fin 4) ℂ) =
+      form 1 1 0 0 := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [form, Matrix.single_apply]
+  have hv : (Matrix.single 0 1 1 - Matrix.single 2 3 1 : Matrix (Fin 4) (Fin 4) ℂ) =
+      form 1 0 1 0 := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [form, Matrix.single_apply]
+  have hn : form 1 0 0 (-1) = -(form 1 0 0 1) := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [form]
+  simp only [carAlgebra, hu, hv, form_product]
+  norm_num only [mul_one, zero_mul, one_mul, zero_sub] 
+  rw [hn, Submodule.mem_span_triple]
+  simp only [smul_neg, ← neg_smul, form_linear]
+  constructor
+  · rintro ⟨a, b, c, hc⟩
+    exact ⟨a, b, -c, hc⟩
+  · rintro ⟨a, b, c, hc⟩
+    exact ⟨a, b, -c, by simpa only [neg_neg] using hc⟩
 
 private lemma witness_algebra : IsMatrixAlgebra witness := by
-  sorry
+  intro x hx y hy
+  obtain ⟨a, b, c, rfl⟩ := (witness_coordinates x).mp hx
+  obtain ⟨d, e, f, rfl⟩ := (witness_coordinates y).mp hy
+  exact (witness_coordinates _).mpr ⟨0, 0, _, (form_product _ _ _ _ _ _ _).symm⟩
 
 private lemma witness_anticommutes (x : Matrix (Fin 4) (Fin 4) ℂ) (hx : x ∈ witness)
     (y : Matrix (Fin 4) (Fin 4) ℂ) (hy : y ∈ witness) : x * y = -(y * x) := by
-  sorry
+  obtain ⟨a, b, c, rfl⟩ := (witness_coordinates x).mp hx
+  obtain ⟨d, e, f, rfl⟩ := (witness_coordinates y).mp hy
+  rw [form_product, form_product]
+  ext i j
+  fin_cases i <;> fin_cases j <;> simp [form] <;> ring
 
 private lemma witness_noncommutative : IsNoncommutative witness := by
-  sorry
+  refine ⟨form 2 1 0 0, (witness_coordinates _).mpr ⟨1, 0, 0, rfl⟩,
+    form 2 0 1 0, (witness_coordinates _).mpr ⟨0, 1, 0, rfl⟩, ?_⟩
+  intro h
+  have he := congrArg (fun x : Matrix (Fin 4) (Fin 4) ℂ => x 0 3) h
+  norm_num [form_product, form] at he
 
 private lemma witness_reversible : IsReversible witness := by
-  sorry
+  refine ⟨4, by decide, -LinearMap.id, ?_, ?_⟩
+  · intro x hx y hy
+    change -(y * x) = (-x) * (-y)
+    rw [neg_mul_neg, witness_anticommutes x hx y hy]
+  · intro n x hx
+    change ‖blockMatrix (fun i j => -(x i j))‖ = ‖blockMatrix x‖
+    exact norm_neg (blockMatrix x)
 
 private def conjugate (q : Matrix.unitaryGroup (Fin 4) ℂ) :
     Matrix (Fin 4) (Fin 4) ℂ ≃⋆ₐ[ℂ] Matrix (Fin 4) (Fin 4) ℂ :=
@@ -106,20 +145,27 @@ private def conjugate (q : Matrix.unitaryGroup (Fin 4) ℂ) :
 
 private lemma conjugate_trace (q : Matrix.unitaryGroup (Fin 4) ℂ)
     (x : Matrix (Fin 4) (Fin 4) ℂ) : Matrix.trace (conjugate q x) = Matrix.trace x := by
-  sorry
+  simp only [conjugate, Unitary.conjStarAlgAut_star_apply]
+  exact Matrix.trace_units_conj' (Unitary.toUnits q) x
 
 private def delta (x : Matrix (Fin 4) (Fin 4) ℂ) : ℂ :=
   2 * Matrix.trace ((x * star x) ^ 2) - Matrix.trace (x * star x) ^ 2
 
 private lemma delta_conjugate (q : Matrix.unitaryGroup (Fin 4) ℂ)
     (x : Matrix (Fin 4) (Fin 4) ℂ) : delta (conjugate q x) = delta x := by
-  sorry
+  unfold delta
+  rw [← map_star, ← map_mul, ← map_pow, conjugate_trace, conjugate_trace]
 
 private lemma car_delta (a b : ℂ) : delta (form 1 a b 0) = 0 := by
-  sorry
+  simp only [delta, pow_two, Matrix.trace, Matrix.diag, Matrix.mul_apply,
+    Matrix.star_apply, Fin.sum_univ_succ]
+  simp [form]
+  ring
 
 private lemma witness_delta : delta (form 2 1 0 0) = 9 := by
-  sorry
+  simp only [delta, pow_two, Matrix.trace, Matrix.diag, Matrix.mul_apply,
+    Matrix.star_apply, Fin.sum_univ_succ]
+  norm_num [form]
 
 private lemma conjugate_product_line (q : Matrix.unitaryGroup (Fin 4) ℂ)
     (h : ∀ x ∈ witness, conjugate q x ∈ carAlgebra) :
@@ -132,7 +178,14 @@ private lemma conjugate_complement (q : Matrix.unitaryGroup (Fin 4) ℂ)
   sorry
 
 private lemma witness_not_equivalent : ¬ UnitarilyEquivalent witness carAlgebra := by
-  sorry
+  rintro ⟨q, hq⟩
+  have h : ∀ x ∈ witness, conjugate q x ∈ carAlgebra := by
+    intro x hx
+    simpa only [conjugate, Unitary.conjStarAlgAut_star_apply] using (hq x).mp hx
+  obtain ⟨a, b, hab⟩ := conjugate_complement q h
+  have hd := delta_conjugate q (form 2 1 0 0)
+  rw [hab, car_delta, witness_delta] at hd
+  norm_num at hd
 
 /-- A second noncommutative reversible matrix algebra refutes unitary uniqueness. -/
 theorem result : ¬ claim := by
