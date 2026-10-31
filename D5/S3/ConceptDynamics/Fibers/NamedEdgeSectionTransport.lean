@@ -112,14 +112,16 @@ def incidenceTransport : EdgeTransport (incidenceGraph s t) (fun a => F (endpoin
 /-- Project an incidence step to an actual signed original edge or the empty path. -/
 def projectStep : ∀ {a b : IncidenceVertex V E},
     incidenceAdj s t a b → NamedPath s t (endpoint s t a) (endpoint s t b)
-  | .vertex a, .source e, h => by cases h; exact .nil
-  | .source e, .vertex a, h => by cases h; exact .nil
-  | .target e, .vertex a, h => by cases h; exact .nil
-  | .vertex a, .target e, h => by cases h; exact .nil
-  | .source e, .target f, h => by
-      cases h; exact Quiver.Path.cons .nil (Sum.inl ⟨e, rfl, rfl⟩)
-  | .target e, .source f, h => by
-      cases h; exact Quiver.Path.cons .nil (Sum.inr ⟨e, rfl, rfl⟩)
+  | .vertex a, .source e, h => Eq.ndrec (motive := fun b => NamedPath s t a b) .nil h
+  | .source e, .vertex a, h => Eq.ndrec (motive := fun b => NamedPath s t (s e) b) .nil h
+  | .target e, .vertex a, h => Eq.ndrec (motive := fun b => NamedPath s t (t e) b) .nil h
+  | .vertex a, .target e, h => Eq.ndrec (motive := fun b => NamedPath s t a b) .nil h
+  | .source e, .target f, h => Eq.ndrec
+      (motive := fun f => NamedPath s t (s e) (t f))
+      (Quiver.Path.cons .nil (Sum.inl ⟨e, rfl, rfl⟩)) h
+  | .target e, .source f, h => Eq.ndrec
+      (motive := fun f => NamedPath s t (t e) (s f))
+      (Quiver.Path.cons .nil (Sum.inr ⟨e, rfl, rfl⟩)) h
   | .vertex _, .vertex _, h => False.elim h
   | .source _, .source _, h => False.elim h
   | .target _, .target _, h => False.elim h
@@ -177,7 +179,8 @@ private theorem project_lift {a b : V} (p : NamedPath s t a b) :
     rw [projectWalk_append, ih]
     rcases e with ⟨e, rfl, rfl⟩ | ⟨e, rfl, rfl⟩ <;>
       simp [liftStep, positiveLift, projectWalk, projectStep, Walk.reverse, Walk.append,
-        Quiver.Hom.toPath]
+        Quiver.Hom.toPath, endpoint]
+    all_goals rfl
 
 /-- Projection and lifting preserve the actual composite of every named edge occurrence. -/
 theorem incidence_path_transport :

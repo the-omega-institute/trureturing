@@ -15,7 +15,7 @@ internal sealed class NamedEdgeSectionTransportDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create("D5/S3/ConceptDynamics/Fibers/NamedEdgeSectionTransport.incidence_path_transport"),
                 H("Transport on every actual finite path"),
                 StatementSource.FromLean(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("An outer segment projects to an empty path. A middle segment projects to its signed original generator. Concatenation projects every finite incidence walk, including walks beginning at ports. Each signed original generator lifts to its three-segment path or its reverse. The projection and lift preserve the actual dependent-fibre composite.")))),
+                Blocks(Paragraph(Text("An outer segment projects to an empty path. A middle segment projects to its signed original generator. Concatenation projects every finite incidence walk, including walks beginning at ports. Each signed original generator lifts to its three-segment path or its reverse. The projection and lift preserve the actual dependent-fibre composite. Projecting a lifted path returns its literal signed original path, retaining the named generators even when their transport operators happen to agree.")))),
             Describe.Lean(
                 DescribeId.Create("named-unitary-root-classification"),
                 DeclarationHandle.Create("D5/S3/ConceptDynamics/Fibers/NamedEdgeSectionTransport.named_unitary_root_classification"),
