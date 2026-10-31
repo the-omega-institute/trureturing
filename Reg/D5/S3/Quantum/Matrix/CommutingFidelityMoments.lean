@@ -8,8 +8,81 @@ namespace Reg.D5.S3.Quantum.Matrix.CommutingFidelityMoments
 open _root_.D5.S3.Quantum.Matrix.CommutingFidelityMoments
 open _root_.D5.S3.Quantum.Matrix.FixedSumResolventKernel
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open LeanInformationAudit
+open LeanInformationAudit Set MeasureTheory
 open scoped ComplexOrder MatrixOrder
+
+abbrev realPartSignature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ) (fun _ => ℝ)
+
+def realPartActual : Realization realPartSignature := realize realPartSignature
+  (fun _ _ z => z.re) (fun e => nomatch e)
+
+def realPartRejected : Realization realPartSignature := realize realPartSignature
+  (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev integrableArena : Arena where
+  signature := realPartSignature
+  Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n] (A B : Matrix n n ℂ),
+    A.PosSemidef → B.PosSemidef → Commute A B → ∀ {j : ℕ}, 1 ≤ j →
+    IntegrableOn (fun s => R.readout () () (Matrix.trace (sandwich A B s ^ j))) (Ioi 0)
+
+private theorem not_integrable_one : ¬ IntegrableOn (fun _ : ℝ => (1 : ℝ)) (Ioi 0) := by
+  simp [integrableOn_const_iff]
+
+private theorem integrable_rejected : ¬ integrableArena.{u}.Law realPartRejected := by
+  intro h
+  exact not_integrable_one (h (n := ULift.{u} Unit) 0 0
+    Matrix.PosSemidef.zero Matrix.PosSemidef.zero (Commute.refl 0)
+    (j := 1) (by norm_num))
+
+private theorem realPart_dependence : ObservationalDependence realPartSignature realPartActual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  norm_num [realPartActual, realize]
+
+def integrabilityFamily : Registration integrableArena.{u} (type_of% @integrable_moment.{u}) where
+  actual := realPartActual
+  bridge := Iff.rfl
+  variation := ⟨@integrable_moment, realPartRejected, integrable_rejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    integrableArena.Law realPartActual realPartRejected integrable_rejected
+  dependence := realPart_dependence
+
+def integrabilityRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@integrable_moment.{u}) (Realization realPartSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Matrix.CommutingFidelityMoments.integrabilityUnit
+  realizationName := `Reg.D5.S3.Quantum.Matrix.CommutingFidelityMoments.integrabilityFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨integrableArena⟩
+  objectArena := .source ⟨integrableArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source integrableArena ⟨integrabilityFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize realPartSignature (fun _ _ z => z.re) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Matrix.CommutingFidelityMoments
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "fn", "fn", "arg", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms integrabilityFamily
+#print axioms integrabilityRegistration
 
 abbrev signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)

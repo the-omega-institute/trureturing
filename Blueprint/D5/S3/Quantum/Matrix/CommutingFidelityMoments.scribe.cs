@@ -33,6 +33,8 @@ internal sealed class CommutingFidelityMomentsDocument : IScribeDocumentDefiniti
                 "For every finite index type n, complex n by n matrices A,B, and natural j, gamma(j,A,B)=(1/j)∫_(s>0) Re tr(sandwich(A,B,s)^j) ds. For nonzero commuting positive semidefinite A,B and j≥1, integrability is derived by a common unitary spectral reduction and the zero-safe scalar resolvent integrability theorem.", true),
             Item("squaredNormalizedFidelity", "matrix-squared-normalized-uhlmann-fidelity", "Squared normalized Uhlmann fidelity",
                 "For all finite complex square matrices A,B, put α=Re tr(A) and β=Re tr(B). squaredNormalizedFidelity(A,B)=[Re tr sqrt(sqrt(α⁻¹A)(β⁻¹B)sqrt(α⁻¹A))]². For nonzero positive semidefinite inputs, α and β are strictly positive, so these are their independently normalized trace-one states. The definition reuses CommutingMidpoint.rootFidelity and squares it; it is not the unsquared root-fidelity convention.", true),
+            Item("integrable_moment", "matrix-resolvent-moment-integrability", "Derived matrix integrability",
+                "For every finite index type n, all commuting positive semidefinite complex matrices A,B, and every natural j≥1, s↦Re tr(sandwich(A,B,s)^j) is integrable on s>0. Zero matrices and zero eigenvalues are allowed. Simultaneous diagonalization identifies the integrand with a finite sum of the integrable scalar resolvent moments; no integrability assumption is imposed.", false),
             Describe.Lean(DescribeId.Create("complete-commuting-fidelity-moment"),
                 DeclarationHandle.Create(Prefix + "commuting_fidelity_moment"),
                 H("Every finite dimension and every positive integer order"),

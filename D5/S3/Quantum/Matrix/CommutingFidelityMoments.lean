@@ -33,7 +33,7 @@ private lemma simultaneous_spectrum (A B : Matrix n n ℂ)
   let X := A + Complex.I • B
   have hAs : star A = A := hA.isHermitian.eq
   have hBs : star B = B := hB.isHermitian.eq
-  letI : IsStarNormal X := ⟨by
+  let : IsStarNormal X := ⟨by
     change star X * X = X * star X
     simp only [X, star_add, star_smul, hAs, hBs, Complex.star_def, Complex.conj_I,
       add_mul, mul_add, Matrix.smul_mul, Matrix.mul_smul, smul_smul]
@@ -46,8 +46,8 @@ private lemma simultaneous_spectrum (A B : Matrix n n ℂ)
   have hφBs : star (φ B) = φ B := by rw [← map_star, hBs]
   have he : φ A + Complex.I • φ B = diagonal d := by
     rw [← map_smul, ← map_add]
-    exact hd
-  have hes : φ A - Complex.I • φ B = diagonal (fun i => star (d i)) := by
+    simpa [φ, U, X, Unitary.conjStarAlgAut_star_apply] using hd
+  have hes : φ A - Complex.I • φ B = diagonal (star d) := by
     simpa only [star_add, star_smul, hφAs, hφBs, Complex.star_def, Complex.conj_I,
       neg_smul, ← sub_eq_add_neg, Matrix.star_eq_conjTranspose,
       Matrix.diagonal_conjTranspose, Pi.star_apply] using congrArg star he
@@ -58,7 +58,7 @@ private lemma simultaneous_spectrum (A B : Matrix n n ℂ)
     by_cases hik : i = k
     · subst k
       simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul,
-        Matrix.diagonal_apply_eq] at h hs ⊢
+        Matrix.diagonal_apply_eq, Pi.star_apply] at h hs ⊢
       apply Complex.ext
       · have h1 := congrArg Complex.re h
         have h2 := congrArg Complex.re hs
@@ -73,7 +73,7 @@ private lemma simultaneous_spectrum (A B : Matrix n n ℂ)
           Complex.ofReal_im] at h1 h2 ⊢
         linarith
     · simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul,
-        Matrix.diagonal_apply_ne hik] at h hs ⊢
+        Matrix.diagonal_apply_ne _ hik] at h hs ⊢
       linear_combination (1 / 2 : ℂ) * h + (1 / 2 : ℂ) * hs
   have heB : φ B = diagonal (fun i => ((d i).im : ℂ)) := by
     ext i k
@@ -82,7 +82,7 @@ private lemma simultaneous_spectrum (A B : Matrix n n ℂ)
     by_cases hik : i = k
     · subst k
       simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul,
-        Matrix.diagonal_apply_eq] at h hs ⊢
+        Matrix.diagonal_apply_eq, Pi.star_apply] at h hs ⊢
       apply Complex.ext
       · have h1 := congrArg Complex.im h
         have h2 := congrArg Complex.im hs
@@ -97,8 +97,8 @@ private lemma simultaneous_spectrum (A B : Matrix n n ℂ)
           Complex.ofReal_im] at h1 h2 ⊢
         linarith
     · simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul,
-        Matrix.diagonal_apply_ne hik] at h hs ⊢
-      have hz : φ A i k = 0 := by rw [heA, Matrix.diagonal_apply_ne hik]
+        Matrix.diagonal_apply_ne _ hik] at h hs ⊢
+      have hz : φ A i k = 0 := by rw [heA, Matrix.diagonal_apply_ne _ hik]
       rw [hz, zero_add] at h
       exact (mul_eq_zero.mp h).resolve_left Complex.I_ne_zero
   refine ⟨U, fun i => (d i).re, fun i => (d i).im, ?_, ?_, heA, heB⟩
@@ -133,7 +133,7 @@ private lemma map_sqrt (U : unitary (Matrix n n ℂ)) (X : Matrix n n ℂ)
       CFC.sqrt ((Unitary.conjStarAlgAut ℂ _ U) X) := by
   let φ := Unitary.conjStarAlgAut ℂ (Matrix n n ℂ) U
   simpa only [CFC.sqrt] using
-    (NonUnitalStarAlgHomClass.map_cfcₙ (R := ℝ≥0) φ NNReal.sqrt X
+    (NonUnitalStarAlgHomClass.map_cfcₙ (R := NNReal) φ NNReal.sqrt X
       (ha := hX.nonneg) (hφa := map_nonneg φ hX.nonneg))
 
 private lemma root_fidelity_spectral (A B : Matrix n n ℂ)
@@ -147,7 +147,8 @@ private lemma root_fidelity_spectral (A B : Matrix n n ℂ)
   have hroot := (CFC.sqrt_nonneg A).posSemidef
   have hsand : (CFC.sqrt A * B * CFC.sqrt A).PosSemidef := by
     simpa only [hroot.isHermitian.eq] using hB.mul_mul_conjTranspose_same (CFC.sqrt A)
-  have he : φ (CFC.sqrt A * B * CFC.sqrt A) = diagonal (fun i => (a i * b i : ℝ)) := by
+  have he : φ (CFC.sqrt A * B * CFC.sqrt A) = diagonal (fun i => ((a i * b i : ℝ) : ℂ)) := by
+    dsimp only [φ]
     simp only [map_mul, map_sqrt U A hA, heA, heB, sqrt_diagonal a ha,
       diagonal_mul_diagonal]
     congr 1
@@ -188,14 +189,14 @@ private lemma response_spectral (A : Matrix n n ℂ)
     (heA : (Unitary.conjStarAlgAut ℂ _ U) A = diagonal (fun i => (a i : ℂ)))
     {s : ℝ} (hs : 0 < s) :
     (Unitary.conjStarAlgAut ℂ _ U) (response A s) =
-      diagonal (fun i => (a i / (s + a i) : ℝ)) := by
+      diagonal (fun i => ((a i / (s + a i) : ℝ) : ℂ)) := by
   let φ := Unitary.conjStarAlgAut ℂ (Matrix n n ℂ) U
-  have hshift : φ ((s : ℂ) • 1 + A) = diagonal (fun i => (s + a i : ℝ)) := by
+  have hshift : φ ((s : ℂ) • 1 + A) = diagonal (fun i => ((s + a i : ℝ) : ℂ)) := by
     rw [map_add, map_smul, map_one, heA]
     ext i k
     by_cases h : i = k <;> simp [h, Matrix.diagonal_apply, Matrix.one_apply]
-  have hinv : (diagonal (fun i => (s + a i : ℝ)) : Matrix n n ℂ)⁻¹ =
-      diagonal (fun i => ((s + a i)⁻¹ : ℝ)) := by
+  have hinv : (diagonal (fun i => ((s + a i : ℝ) : ℂ)) : Matrix n n ℂ)⁻¹ =
+      diagonal (fun i => (((s + a i)⁻¹ : ℝ) : ℂ)) := by
     apply Matrix.inv_eq_left_inv
     rw [diagonal_mul_diagonal]
     ext i k
@@ -205,7 +206,7 @@ private lemma response_spectral (A : Matrix n n ℂ)
       push_cast
       have hn : (s + a i : ℂ) ≠ 0 := by exact_mod_cast (add_pos_of_pos_of_nonneg hs (ha i)).ne'
       exact inv_mul_cancel₀ hn
-    · simp [Matrix.diagonal_apply_ne h, Matrix.one_apply_ne h]
+    · simp [Matrix.diagonal_apply_ne _ h, Matrix.one_apply_ne h]
   rw [response, map_mul, map_inv, hshift, hinv, heA, diagonal_mul_diagonal]
   congr 1
   funext i
@@ -231,7 +232,7 @@ private lemma sandwich_spectral (A B : Matrix n n ℂ)
     (heB : (Unitary.conjStarAlgAut ℂ _ U) B = diagonal (fun i => (b i : ℂ)))
     {s : ℝ} (hs : 0 < s) :
     (Unitary.conjStarAlgAut ℂ _ U) (sandwich A B s) =
-      diagonal (fun i => (a i * b i / ((s + a i) * (s + b i)) : ℝ)) := by
+      diagonal (fun i => ((a i * b i / ((s + a i) * (s + b i)) : ℝ) : ℂ)) := by
   have hq (i : n) : 0 ≤ a i / (s + a i) :=
     div_nonneg (ha i) (add_pos_of_pos_of_nonneg hs (ha i)).le
   simp only [sandwich, map_mul,
@@ -257,7 +258,20 @@ private lemma moment_spectral (A B : Matrix n n ℂ)
       ∑ i, (a i * b i / ((s + a i) * (s + b i))) ^ j := by
   rw [← trace_conj U, map_pow, sandwich_spectral A B U a b ha hb heA heB hs,
     diagonal_pow, trace_diagonal, Complex.re_sum]
-  simp
+  simp only [← Complex.ofReal_pow, Complex.ofReal_re]
+
+/-- Actual matrix trace moments are integrable, including singular and zero inputs. -/
+theorem integrable_moment (A B : Matrix n n ℂ)
+    (hA : A.PosSemidef) (hB : B.PosSemidef) (hAB : Commute A B)
+    {j : ℕ} (hj : 1 ≤ j) :
+    IntegrableOn (fun s => (trace (sandwich A B s ^ j)).re) (Ioi 0) := by
+  obtain ⟨U, a, b, ha, hb, heA, heB⟩ := simultaneous_spectrum A B hA hB hAB
+  have hi : IntegrableOn
+      (fun s => ∑ i, (a i * b i / ((s + a i) * (s + b i))) ^ j) (Ioi 0) :=
+    integrable_finsetSum _ (fun i _ => integrable_scalar (ha i) (hb i) hj)
+  apply hi.congr
+  filter_upwards [ae_restrict_mem measurableSet_Ioi] with s hs
+  exact (moment_spectral A B (star U) a b ha hb heA heB j hs).symm
 
 private lemma gamma_spectral (A B : Matrix n n ℂ)
     (U : unitary (Matrix n n ℂ)) (a b : n → ℝ)
@@ -294,13 +308,21 @@ private lemma normalized_fidelity_spectral (A B : Matrix n n ℂ)
   let α := (trace A).re
   let β := (trace B).re
   let φ := Unitary.conjStarAlgAut ℂ (Matrix n n ℂ) U
-  have hAn : φ (α⁻¹ • A) = diagonal (fun i => (a i / α : ℝ)) := by
-    rw [φ.toAlgEquiv.toLinearMap.map_smul_of_tower α⁻¹ A, heA, ← diagonal_smul]
+  have hAn : φ (α⁻¹ • A) = diagonal (fun i => ((a i / α : ℝ) : ℂ)) := by
+    have hm : φ (α⁻¹ • A) = α⁻¹ • φ A :=
+      φ.toAlgEquiv.toLinearMap.map_smul_of_tower α⁻¹ A
+    rw [hm]
+    dsimp only [φ]
+    rw [heA, ← diagonal_smul]
     congr 1
     funext i
     simp [div_eq_mul_inv, mul_comm]
-  have hBn : φ (β⁻¹ • B) = diagonal (fun i => (b i / β : ℝ)) := by
-    rw [φ.toAlgEquiv.toLinearMap.map_smul_of_tower β⁻¹ B, heB, ← diagonal_smul]
+  have hBn : φ (β⁻¹ • B) = diagonal (fun i => ((b i / β : ℝ) : ℂ)) := by
+    have hm : φ (β⁻¹ • B) = β⁻¹ • φ B :=
+      φ.toAlgEquiv.toLinearMap.map_smul_of_tower β⁻¹ B
+    rw [hm]
+    dsimp only [φ]
+    rw [heB, ← diagonal_smul]
     congr 1
     funext i
     simp [div_eq_mul_inv, mul_comm]
