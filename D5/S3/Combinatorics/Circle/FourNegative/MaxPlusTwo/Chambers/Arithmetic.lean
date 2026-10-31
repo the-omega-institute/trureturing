@@ -8,7 +8,7 @@
 import Mathlib.Data.Int.DivMod
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Omega
+import Lean.Elab.Tactic.Omega
 
 /-! Integer rounding and uniform margins for physical chamber reserves. -/
 
@@ -42,7 +42,8 @@ private theorem ceilpos_capacity (n d : ℤ) (cap : ℕ) (hd : 0 < d)
   have h := ceilpos_bounds n d hd
   by_contra hh
   have hn : 0 < ceilpos n d := by omega
-  have hle : (cap:ℤ) ≤ (ceilpos n d:ℤ)-1 := by exact_mod_cast (show cap+1≤ceilpos n d by omega)
+  have hn' : (cap:ℤ)+1 ≤ (ceilpos n d:ℤ) := by exact_mod_cast (show cap+1≤ceilpos n d by omega)
+  have hle : (cap:ℤ) ≤ (ceilpos n d:ℤ)-1 := by omega
   have hm := mul_le_mul_of_nonneg_left hle hd.le
   nlinarith [h.2 hn]
 

@@ -19,8 +19,9 @@ open private negative_step from D5.S3.Combinatorics.Circle.FourNegative.FourNega
 
 private theorem two_power_pred (n : ℕ) (hn : 1 ≤ n) :
     (2:ℤ)^n = 2*2^(n-1) := by
-  rw [show n=(n-1)+1 by omega, pow_succ]
-  ring
+  calc
+    (2:ℤ)^n = 2^((n-1)+1) := by congr 1; omega
+    _ = 2*2^(n-1) := by rw [pow_succ]; ring
 
 set_option maxHeartbeats 1000000 in
 /-- Charge and shadow are differences of the two actual centered sources. -/
@@ -97,10 +98,20 @@ private theorem source_shadow_charge (a b c d : ℕ)
     (by rw [←hT]; exact grel.2.2.1)
   have ngx := negative_step (2*N+1) (2*X-1-T-T*Z) A ((2:ℤ)^(a-1))
     (by rw [←hR]; exact grel.2.2.2)
-  change (∀ i<d, 2*f i-g i=_ ∧ g i-f i=_) ∧
-    (∀ i<c, 2*f (d+i)-g (d+i)=_ ∧ g (d+i)-f (d+i)=_) ∧
-    (∀ i<b, 2*f (d+c+i)-g (d+c+i)=_ ∧ g (d+c+i)-f (d+c+i)=_) ∧
-    (∀ i<a, 2*f (d+c+b+i)-g (d+c+b+i)=_ ∧ g (d+c+b+i)-f (d+c+b+i)=_) ∧ _
+  change (∀ i<d, 2*f i-g i=(if i+1<d then 0 else 1) ∧
+      g i-f i=(if i+1<d then 2^i*A else -(2^(d-1)*R*T*Z)+2^(d-1)*C)) ∧
+    (∀ i<c, 2*f (d+i)-g (d+i)=(if i+1<c then 2^i else 2^(c-1)+1) ∧
+      g (d+i)-f (d+i)=(if i+1<c then 2^i*(2*(2^(d-1)*C))
+        else -(2^(d-1)*R*T*Z)+2^(d-1)*(R+1)*Z)) ∧
+    (∀ i<b, 2*f (d+c+i)-g (d+c+i)=
+        (if i+1<b then 2^i*(Z+1) else 2^(b-1)*(Z+1)+1) ∧
+      g (d+c+i)-f (d+c+i)=(if i+1<b then 2^i*(2*(2^(d-1)*(R+1)*Z))
+        else -(2^(d-1)*R*T*Z)+2^(d-1)*T*Z)) ∧
+    (∀ i<a, 2*f (d+c+b+i)-g (d+c+b+i)=
+        (if i+1<a then 2^i*(T*Z+T+1) else 2^(a-1)*(T*Z+T+1)+1) ∧
+      g (d+c+b+i)-f (d+c+b+i)=
+        (if i+1<a then 2^i*(2*(2^(d-1)*T*Z)) else -(2^(d-1)*R*T*Z))) ∧
+    g (d+c+b+a)=A
   refine ⟨?_,?_,?_,?_,?_⟩
   · intro i hi
     rw [uf i hi,ug i hi]
@@ -127,7 +138,7 @@ private theorem source_shadow_charge (a b c d : ℕ)
   · intro i hi
     rw [xf i hi,xg i hi]
     split_ifs with h
-    · dsimp [X]; constructor <;> ring
+    · dsimp [X]; rw [hD]; constructor <;> ring
     · rw [nx,ngx]
       dsimp [A,X,C]; rw [hD,hR]
       constructor <;> ring
