@@ -18,7 +18,19 @@ For encoded_response the sole parameter is C:Coordinates; StrictParent C is not 
 
 The bounded-response estimate is for the actual drift d and all four ordinary coefficients, not only for gain samples. The fixed coefficient transform gives the explicit bound 10 max(G,0) from a bound G on the samples, while |d|≤24+max(D,0) follows from |ε|≤D. The map includes zero drift, zero gain samples, lower degrees and repeated roots; only the identically zero gain is excluded by the literal history.
 
-**Theorem 1.1 (originalParentHomeomorph).**
+**Theorem 1.1 (Four ordinary coefficients have degree at most three).**
+
+Lean statement: `D5/S3/Observer/CubicGain/OriginalWorld.coefficient_degree`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/OriginalWorld.coefficient_degree` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Polynomial.ofFn 4 c has degree at most three for every real coefficient vector c. Leading coefficients may vanish, and the zero polynomial is included in this degree statement.
+
+**Theorem 1.2 (originalParentHomeomorph).**
 
 Lean statement: `D5/S3/Observer/CubicGain/OriginalWorld.originalParentHomeomorph`
 
@@ -30,7 +42,7 @@ Lean statement: `D5/S3/Observer/CubicGain/OriginalWorld.originalParentHomeomorph
 
 The map originalParentHomeomorph is a homeomorphism from ParentOverOpen to OriginalOverOpen in ordinary polynomial coefficient topology. It preserves the source, drift, whole polynomial and actual response in both directions.
 
-**Theorem 1.2 (original coordinates).**
+**Theorem 1.3 (original coordinates).**
 
 Lean statement: `D5/S3/Observer/CubicGain/OriginalWorld.original_coordinates`
 
