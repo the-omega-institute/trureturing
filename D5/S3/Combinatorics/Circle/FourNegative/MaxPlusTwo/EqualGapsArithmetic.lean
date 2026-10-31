@@ -34,5 +34,5 @@ private theorem endpoints (p l : ℤ) (hp : 2 ≤ p) (hl : 2 ≤ l) :
   obtain ⟨v, hv, rfl⟩ : ∃ v : ℤ, 0 ≤ v ∧ l=v+2 := ⟨l-2, by omega, by ring⟩
   dsimp only [Gates]
   refine ⟨⟨?_,?_,?_,?_,?_,?_,?_,?_,?_⟩,⟨?_,?_,?_,?_,?_,?_,?_,?_,?_⟩⟩
-  all_goals first | ring | (apply sub_nonneg.mp; ring_nf; positivity)
+  all_goals first | (apply sub_nonneg.mp; ring_nf; positivity) | ring
 end D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.EqualGapsArithmetic

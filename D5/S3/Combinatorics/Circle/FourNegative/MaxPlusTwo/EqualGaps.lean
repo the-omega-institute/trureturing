@@ -190,7 +190,7 @@ theorem actualSource_equal_gaps_first_ear (a d : ℕ) (ha : 2 ≤ a) (hd : a+2 �
     simp only [P4,List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,hs.1,hs.2,hf,hg]
     exact ⟨rfl,by ring⟩
   have hpositive : 0≤A ∧ 0≤B ∧ 0≤V ∧ 0≤W ∧ 0≤GV ∧ 0≤GW ∧ 0≤GX := by
-    dsimp [A,B,V,W,C,GV,GW,GX]; rw [hR,hT]; constructor <;> positivity
+    dsimp [A,B,V,W,C,GV,GW,GX]; rw [hR,hT]; refine ⟨?_,?_,?_,?_,?_,?_,?_⟩ <;> positivity
   have pos1 (h : ℕ→ℤ) (H : ℤ) (hH : 0≤H)
       (hh : ∀ i<d-1, h i=2^i*H) : ∀ i∈P1, 0≤h i := by
     intro i hi
