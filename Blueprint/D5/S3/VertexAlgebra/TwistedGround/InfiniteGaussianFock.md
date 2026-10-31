@@ -4,7 +4,7 @@
 
 Actual infinite joint Gaussian coefficients from common finite principal blocks.
 
-This is uncompiled mathematical source. The pinned finite occupation estimate has scoped native/kernel and Scribe evidence; this continuation has none yet. It does not establish the full field or scientific programme. The normalization is the classical factorial Bargmann/Fock normalization, with weight(d)=product_i d(i)! and scale(d)=sqrt(weight(d)). No literature novelty is claimed.
+This module has current scoped native/kernel and Scribe evidence for the infinite-mode Gaussian Fock construction. It does not establish the full field or scientific programme. The normalization is the classical factorial Bargmann/Fock normalization, with weight(d)=product_i d(i)! and scale(d)=sqrt(weight(d)). No literature novelty is claimed.
 
 The input is a genuine bounded complex-linear one-particle operator L on l2(I). Its actual coordinate matrix K(i,j)=(L e_j)(i) is symmetric in the holomorphic sense K(i,j)=K(j,i), without conjugation. Assume 0<=q<1, norm(L)<=q, summability of the nonnegative pair-indexed series sum_(i,j) abs(K(i,j))^2, and its total <=M. No Gaussian coefficient, norm or summability certificate is a premise.
 
@@ -92,7 +92,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/InfiniteGaussianFock.vector_n
 
 After proving summability, form the actual l2 element with coordinate scale(d)*g(d). Parseval identifies its squared norm with the full weighted occupation sum. Its vacuum coefficient is one, its odd-degree coefficients vanish, and for empty mode types it is exactly the vacuum unit vector. HilbertBasis.hasSum_repr supplies unconditional convergence of its ON expansion. The next module consumes this actual vector to construct the coefficient operator.
 
-Still external: identify the abstract K and its Gaussian polynomial with full native normal+Corr inputs, Gram whitening, positive-frequency damping and same-term exponent regrouping. All new Lean bodies, API elaboration, axiom closure, faithful Reg audit, official checks, freeze and delivery remain pending under the source-only authorization.
+Still external: identify the abstract K and its Gaussian polynomial with full native normal+Corr inputs, Gram whitening, positive-frequency damping and same-term exponent regrouping. Official checks, freeze and delivery remain pending; the faithful dependent-family Reg registration remains open under linked issue 24524.
 
 ## References
 
