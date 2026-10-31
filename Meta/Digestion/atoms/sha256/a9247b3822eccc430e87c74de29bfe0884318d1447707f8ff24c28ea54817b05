@@ -1,0 +1,41 @@
+### 引理 1
+
+当 $t\downarrow0$ 时，
+
+<a id="eq-5"></a>
+
+$$
+\boxed{
+\begin{aligned}
+\mathscr K'(t)&=\frac12\log t+O(1),\\
+\mathscr K''(t)&=\frac1{2t}+O(1),\\
+\mathscr K(t)
+&=
+S+\frac12t\log t
++\frac{\gamma-1+\log(2\pi)}2\,t
++O(t^2|\log t|).
+\end{aligned}
+}
+\tag{5}
+$$
+
+因此存在一个固定的
+
+$$
+0<\delta<\log2
+$$
+
+使得
+
+<a id="eq-6"></a>
+
+$$
+\boxed{
+\mathscr K(t)>0,\qquad
+\mathscr K'(t)<0,\qquad
+\mathscr K''(t)>0
+\quad(0<t\le\delta).
+}
+\tag{6}
+$$
+

@@ -1,0 +1,16 @@
+**Definition 5.3 (mathematical range of the optimization).**
+Theorem 3.1 optimizes all triples inside each specified interval of
+rank difference two. It does not specify the supremum over the full
+subspace lattice when $n>2$. Throughout, $\rho>0$, $n<\infty$ and
+$c<\infty$; no singular-state or infinite-dimensional extension is
+included. Formula (1.2) uses the original meet and join. No arbitrary-lattice
+symmetric-difference distance is defined or classified here.
+
+The spectral theorem, two-line projection spectrum (2.5), the scalar
+valuation inputs (1.4), and the Boolean measure interpretation are classical
+or supplied intermediate results. The retained additional deduction is
+the exact compression-dependent optimization (2.2), the exhaustive
+interval optimization (3.1), its attainment dichotomy, and the
+coincident-line boundary (3.7). Corollaries 4.1–4.2 and Propositions
+5.1–5.2 are applications and parameter correspondences for those inputs.
+

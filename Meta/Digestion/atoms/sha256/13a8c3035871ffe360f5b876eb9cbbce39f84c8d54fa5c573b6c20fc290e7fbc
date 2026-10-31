@@ -1,0 +1,62 @@
+**Proposition 7.1 (Strict full-fiber calibration).** Take
+
+$$
+ a=b=\frac12,\qquad u=v=(0,7/10,0),\qquad
+ N=|--\rangle_Y\langle--|.
+$$
+
+Here $T^0_{yy}=c_0=49/400$,
+
+$$
+ d=2(7/10)-1-c_0=111/400,\qquad
+ v_0=0,\qquad \mu=-d/4,\qquad q_N=1/32,\qquad
+ \theta_0=4d.
+$$
+
+The two references coincide and commute with $YY$, and
+
+$$
+ W_P=W_Q=\frac18YY,\qquad
+ \Lambda_\pi(xYY)=\log(\cosh x+c_0\sinh x)-c_0x.
+$$
+
+Its first derivative vanishes at zero and its second derivative is a
+variance of a $\{\pm1\}$-valued variable, hence is at most one.  With
+$x=\theta_0/8=d/2$, equation (4.9) gives
+
+$$
+I_P+I_Q\geq\frac34d^2.
+\tag{7.1}
+$$
+
+For comparison, the two local entropy gains are equal to
+
+$$
+ h_0=\int_{7/40}^{7/20}\operatorname{atanh}x\,dx,
+ \qquad \frac{147}{3200}\leq h_0\leq\frac{49}{936},
+$$
+
+using $x\leq\operatorname{atanh}x\leq x/(1-x^2)$.  For the actual classical–quantum $K$-record state
+
+$$
+ \Omega_{UCD}=\frac{1+a}{2}|0\rangle\langle0|\otimes P
+ +\frac{1-a}{2}|1\rangle\langle1|\otimes KPK,
+$$
+
+unitary invariance of the conditional entropies gives
+$I(U:CD)=g$ and $I(U:E)=h_E$. The conditional-information chain rule
+and data processing therefore give
+$I(U:D\mid C)+I(U:C\mid D)=2g-h_C-h_D\geq0$.
+Here $h_C=h_D=h_0$, so $2g-2h_0\geq0$ and
+$3g-4h_0\geq-h_0$.  Thus the elementary quadratic-plus-PSD estimate
+alone has the upper estimate
+$d^2/2-h_0\leq d^2/2-147/3200=-2379/320000<0$, while
+
+$$
+ \Delta\geq\frac34d^2-\frac{49}{936}
+ =\frac{404671}{74880000}>0
+$$
+
+for every physical state with these margins.  This is an analytic
+fiber statement; no commutativity of an arbitrary source is assumed.
+

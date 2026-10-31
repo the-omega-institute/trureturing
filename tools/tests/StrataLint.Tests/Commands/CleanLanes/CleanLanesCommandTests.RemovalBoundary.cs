@@ -21,7 +21,7 @@ public sealed partial class CleanLanesCommandTests
         {
             if (file != "python3" || !IsProtocol(args, "remove") || args.Contains("--preview")) return null;
             var modified = args.ToArray();
-            modified[2] = modified[2].Replace("sys.exit(sys.modules['worktree_protocol'].main())", """
+            File.WriteAllText(modified[2], File.ReadAllText(modified[2]).Replace("sys.exit(sys.modules['worktree_protocol'].main())", """
                 import threading
                 p = sys.modules['worktree_preservation']
                 native_git = p.git
@@ -33,7 +33,7 @@ public sealed partial class CleanLanesCommandTests
                     return result
                 p.git = delete_then_wait
                 sys.exit(sys.modules['worktree_protocol'].main())
-                """, StringComparison.Ordinal);
+                """, StringComparison.Ordinal));
             new ProductionWorktreeProcessRunner().RunStreaming<int>(file, modified, directory,
                 TimeSpan.FromSeconds(600), async (stream, cancellation) =>
                 {

@@ -15,6 +15,9 @@ internal sealed class SpinCoupledEvenHypercubeGroverFixedPointDocument : IScribe
         "For every even dimension d at least four, the all-plus spin-coupled Grover operator has a nonzero fixed vector with nonconstant position weights. A product of signed coordinate-pair indicators supplies an explicit vector on three adjacent Hamming layers.",
         H("A nonuniform fixed point on every even hypercube"),
         Blocks(
+            Node("flip-card-not-mem", "Adding an absent hypercube coordinate", FlipCardNotMemFormula(),
+                "Toggling a coordinate absent from a finite hypercube vertex increases its cardinality by one.",
+                "flip_card_not_mem", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("sign", "The paired sign function", SignFormula(),
                 "The equivalence finProdFinEquiv followed by finCongr (Nat.mul_comm m 2) sends (j, b) to coordinate 2j + b. Finsets are coerced to sets in Set.indicator. The function (1 : Fin (2*m) -> Complex) is the constant function one, so each factor is the indicator of coordinate 2j minus that of coordinate 2j+1. The product is zero unless the vertex contains exactly one coordinate from each pair.",
                 "f", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
@@ -93,6 +96,14 @@ internal sealed class SpinCoupledEvenHypercubeGroverFixedPointDocument : IScribe
         Seq(new Formula.Subscript(Sum, Seq(F.Id(variable), Colon, Sp, type)), Sp, body);
     private static Formula Mass(Formula v, Formula s, Formula d) =>
         SumOver("k", Fin(d), Pow(new Formula.Norm(Apply(v, s, F.Id("k"))), D(2)));
+
+    private static Formula FlipCardNotMemFormula()
+    {
+        Formula d = F.Id("d"), s = F.Id("s"), k = F.Id("k");
+        return Disp(All("d", BbN, All("s", Vertices(d), All("k", Fin(d),
+            Imp(new Formula.Not(Parenthesized(Member(k, s))),
+                Eq(Card(Toggle(s, k)), Add(Card(s), D(1))))))));
+    }
 
     private static Formula SignFormula()
     {

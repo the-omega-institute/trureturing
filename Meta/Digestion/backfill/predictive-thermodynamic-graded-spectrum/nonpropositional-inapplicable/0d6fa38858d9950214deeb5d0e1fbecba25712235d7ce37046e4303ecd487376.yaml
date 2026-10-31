@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0d6fa38858d9950214deeb5d0e1fbecba25712235d7ce37046e4303ecd487376
+  normalized_sha256: sha256:0d6fa38858d9950214deeb5d0e1fbecba25712235d7ce37046e4303ecd487376
+cas_ref: sha256:0d6fa38858d9950214deeb5d0e1fbecba25712235d7ce37046e4303ecd487376
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: provenance/API scope row; records source and compiled-use boundary, with no new proposition.'
+    previous_atom_id: 98f277baf3e8334c2a59b73fd9eb4f709a21f5fde37d8af9b5deb52735989640
+    next_atom_id: bb66dbc16758eb39262a398ce55d9c2492713d26e66cbf9229eddcb34ab1b159

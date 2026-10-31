@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a36985d3a8f8f4dbfa7453bb4c55861d75081a3119c63e93fc39026dd2c7728a
+  normalized_sha256: sha256:a36985d3a8f8f4dbfa7453bb4c55861d75081a3119c63e93fc39026dd2c7728a
+cas_ref: sha256:a36985d3a8f8f4dbfa7453bb4c55861d75081a3119c63e93fc39026dd2c7728a
+coverage_gids:
+  - gid: D5/S1/Words/EvilOdious/HigherArityMonotonicity.evil_odious_pair_convolution_and_bound
+    target_statement_id: sha256:cf091c8b9d980e37c7652de5b60d98ce6b60a03dfc5943342d11b1ee9308db0a
+receipts:
+  unresolved_subitems: []

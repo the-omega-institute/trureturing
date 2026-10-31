@@ -553,7 +553,7 @@ theorem original_endpoint_prime_tail_supply {q : ℝ} (hq : 0 < q) {N : ℕ}
   rw [robinLogMargin, hW, hE]
   ring
 
-private theorem layer_tail_nonneg (m : ℕ) {p : ℕ} (hp : p.Prime) :
+theorem layer_tail_nonneg (m : ℕ) {p : ℕ} (hp : p.Prime) :
     0 ≤ layerTail m p := by
   have hp0 : (0 : ℝ) < p := by exact_mod_cast hp.pos
   have hi0 : 0 < (p : ℝ)⁻¹ := inv_pos.mpr hp0

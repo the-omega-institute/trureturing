@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1ab476bdfb036babab25dd8dd6d19eb8ba32612be7e8486ebbdb20f0c5378209
+  normalized_sha256: sha256:1ab476bdfb036babab25dd8dd6d19eb8ba32612be7e8486ebbdb20f0c5378209
+cas_ref: sha256:1ab476bdfb036babab25dd8dd6d19eb8ba32612be7e8486ebbdb20f0c5378209
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/BornJaccardTracialClassification.tracial_classification
+    target_statement_id: sha256:939704f126de0ed3e171de6cf9eb51e47038cf436eb029882b419d98bf7f6c0e
+receipts:
+  unresolved_subitems: []

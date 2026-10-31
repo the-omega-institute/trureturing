@@ -1,0 +1,15 @@
+**定理 283.2（校准单调性）。** 对任意 $J,r,r_c$，
+
+$$
+\boxed{
+F_{J,c}(r,r_c)\subseteq F_J(r).
+}
+\tag{283.1}
+$$
+
+特别地，若原记录冲突使 $F_J(r)=\varnothing$，则任何确定性校准记录仍有
+
+$$
+F_{J,c}(r,r_c)=\varnothing.
+$$
+

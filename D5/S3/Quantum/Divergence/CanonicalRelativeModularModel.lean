@@ -48,6 +48,27 @@ theorem diagonal_quadratic_form {n : Type u} [Fintype n] [DecidableEq n]
       using RCLike.conj_mul (y i)
   rw [term, eqnorm, ← Complex.ofReal_mul, RCLike.re_to_complex, Complex.ofReal_re]
 
+/-- The original support argument for a zero reference mode against a positive
+input eigenvector, exposed for reuse outside the Kraus-model construction. -/
+theorem kernel_eigenvector_overlap_zero {n : Type*} [Fintype n] [DecidableEq n]
+    (A B : Matrix n n ℂ) (hA : A.IsHermitian) (hB : B.IsHermitian)
+    (support : ∀ v, B *ᵥ v = 0 → A *ᵥ v = 0)
+    (j : n) (hj : hB.eigenvalues j = 0) (i : n) (hi : 0 < hA.eigenvalues i) :
+    star (fun x => hB.eigenvectorBasis j x) ⬝ᵥ (fun x => hA.eigenvectorBasis i x) = 0 := by
+  let v : n → ℂ := fun x => hB.eigenvectorBasis j x
+  let u : n → ℂ := fun x => hA.eigenvectorBasis i x
+  have hbv : B *ᵥ v = 0 := by
+    simpa only [hj, zero_smul] using hB.mulVec_eigenvectorBasis j
+  have hav : A *ᵥ v = 0 := support v hbv
+  have hv : star v ᵥ* A = star (A *ᵥ v) := by
+    simpa only [hA.eq, star_star] using Matrix.vecMul_conjTranspose A (star v)
+  have hz : star v ⬝ᵥ (A *ᵥ u) = 0 := by
+    rw [dotProduct_mulVec, hv, hav]
+    simp
+  rw [hA.mulVec_eigenvectorBasis i, dotProduct_smul] at hz
+  change (hA.eigenvalues i : ℂ) * (star v ⬝ᵥ u) = 0 at hz
+  exact (mul_eq_zero.mp hz).resolve_left (Complex.ofReal_ne_zero.mpr (ne_of_gt hi))
+
 /-- One normalized Kraus representation of the actual physical channel. -/
 structure ActualKrausRepresentation (Φ : QuantumChannel a b) where
   kraus : Fin (Fintype.card b) × Fin (Fintype.card a) → Matrix b a ℂ
@@ -299,14 +320,7 @@ def supported_relative_modular_model (Φ : QuantumChannel a b) (ρ σ : DensityS
     (Real.sqrt (ri ji.2) / Real.sqrt (pk lk.2) : ℂ) * ∑ c, (star (v ji.1) ⬝ᵥ ((kraus c)ᴴ *ᵥ w lk.1)) * (star (z lk.2) ⬝ᵥ (kraus c *ᵥ u ji.2))
   have htrR : R.trace = 1 := ρ.2.2; have htrT : T.trace = 1 := (Φ.mapState ρ).2.2; have zeroCoordinatesR (j : a) (hj : hS.1.eigenvalues j = 0) (i : a) (hi : 0 < hR.1.eigenvalues i) :
       star (fun x => hS.1.eigenvectorBasis j x) ⬝ᵥ (fun x => hR.1.eigenvectorBasis i x) = 0 := by
-    let v : a → ℂ := fun x => hS.1.eigenvectorBasis j x; let u : a → ℂ := fun x => hR.1.eigenvectorBasis i x; have hsv : S *ᵥ v = 0 := by
-      simpa only [hj, zero_smul] using hS.1.mulVec_eigenvectorBasis j
-    have hrv : R *ᵥ v = 0 := support hsv; have hv : star v ᵥ* R = star (R *ᵥ v) := by
-      simpa only [hR.1.eq, star_star] using Matrix.vecMul_conjTranspose R (star v)
-    have hz : star v ⬝ᵥ (R *ᵥ u) = 0 := by
-      rw [dotProduct_mulVec, hv, hrv]; simp
-    rw [hR.1.mulVec_eigenvectorBasis i, dotProduct_smul] at hz; change (hR.1.eigenvalues i : ℂ) * (star v ⬝ᵥ u) = 0 at hz; exact (mul_eq_zero.mp hz).resolve_left
-      (Complex.ofReal_ne_zero.mpr (ne_of_gt hi))
+    exact kernel_eigenvector_overlap_zero R S hR.1 hS.1 (fun _ hv => support hv) j hj i hi
   have positiveCoordinatesR : ∀ i : {i : a // 0 < hR.1.eigenvalues i}, ∑ j : {j : a // 0 < hS.1.eigenvalues j}, ‖star (fun x => hS.1.eigenvectorBasis j.1 x) ⬝ᵥ
             (fun x => hR.1.eigenvectorBasis i.1 x)‖ ^ 2 = 1 := by
     classical

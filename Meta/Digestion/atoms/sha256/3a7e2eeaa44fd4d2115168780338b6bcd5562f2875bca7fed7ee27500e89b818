@@ -1,0 +1,118 @@
+### 2.3. Full tangent and its coefficients
+
+Specialize the analytic optimizer to the signed family
+$u=v=(\varepsilon,r,0)$, $a=b=1/2$. Its uniqueness implies covariance
+under swap, transpose in the displayed $Y$ representation, and $U=YY$.
+Both $K=XX$ and $L=ZZ$ are real in this representation, so transpose
+really does intertwine the channels and preserve the entropy objective.
+Swap and transpose preserve these margins, while $U$ sends their
+$\varepsilon$ to $-\varepsilon$. It follows that
+
+$$
+ \omega_{-\varepsilon}=U\omega_\varepsilon U^*.
+$$
+
+At first order, the odd tensors under $U$ have exactly one transverse
+factor $X$ or $Z$. Transpose removes the single-$Z$ tensors, and swap
+equates the remaining two correlation coefficients. The prescribed
+margins fix the two local $X$ coefficients. Thus, as a consequence of
+uniqueness in the full problem,
+
+$$
+\omega_\varepsilon=\omega_0+\varepsilon H(t_*)+O(\varepsilon^2),
+ \qquad H(t)=\tfrac14[XI+IX+t(XY+YX)].
+\tag{2.14}
+$$
+
+No symmetry subspace was imposed during optimization.
+
+For a diagonal matrix with probabilities $(p_+,\beta,\beta,p_-)$,
+the only nonzero upper-triangular entries of
+$H(x,y)=[x(XI+IX)+y(XY+YX)]/4$ are
+
+$$
+ H_{12}=H_{13}=(x+y)/4,\qquad
+ H_{24}=H_{34}=(x-y)/4.
+$$
+
+Counting also their transposes in (2.4) gives exactly
+
+$$
+G_P(H(x,y))=\mathcal G_h(x,y)
+ =\tfrac14[(x+y)^2h_++(x-y)^2h_-],
+\tag{2.15}
+$$
+
+where
+
+$$
+ h_+=\tfrac85\log(27/2),\quad h_-=\tfrac{40}7\log(9/2),\qquad
+ j_+=\tfrac{80}{41}\log(45/4),\quad
+ j_-=\tfrac{80}{23}\log(27/4)
+$$
+
+are respectively the divided differences for $(P_0,R_0)$ against $\beta$.
+For instance $p_+-\beta=5/8$ and $q_+-\beta=41/80$.
+The actual channel actions on this tangent are
+
+$$
+ \Phi H(t)=H(1/2,t),\quad \Psi H(t)=H(1,t/2),\quad
+ \Gamma H(t)=H(1/2,t/2).
+$$
+
+Indeed $\Phi$ multiplies the local $X$ by $b$ and fixes $XY,YX$;
+$\Psi$ fixes local $X$ and multiplies these correlations by $a$.
+Substitution gives, with a constant $C_0$ independent of $t$,
+
+$$
+\begin{aligned}
+F''[H(t),H(t)]
+ &=4\mathcal G_h(1/2,t)+\mathcal G_h(1,t/2)
+                                      -3\mathcal G_j(1/2,t/2)\\
+ &=C_0+4At+2Bt^2,
+\end{aligned}
+\tag{2.16}
+$$
+
+where explicitly
+
+$$
+A=\tfrac18[\tfrac52(h_+-h_-)-\tfrac34(j_+-j_-)],\qquad
+ B=\tfrac18[\tfrac{17}4(h_++h_-)-\tfrac34(j_++j_-)].
+\tag{2.17}
+$$
+
+Here $C_0=(h_++h_-)/2-3(j_++j_-)/16$.
+The coefficient $2B$ is $F''[E,E]$ for $E=(XY+YX)/4$, so
+$B>0$ follows independently from (2.7).
+
+Since $H(t)v_0=(1-t)(|+-\rangle+|-+\rangle)/4$ and the two
+support eigenvalues concerned are $\beta=1/20$, the curvature term is
+
+$$
+ 8m\langle H(t)v_0,\omega_0^+H(t)v_0\rangle=20m(1-t)^2.
+$$
+
+The true second-derivative polynomial is therefore
+
+$$
+J(t)=C_0+4At+2Bt^2+20m(1-t)^2.
+\tag{2.18}
+$$
+
+Differentiating the chart stationarity equations along the moving
+margins says that their first-order tangent minimizes this quadratic
+form over the affine space of allowed tangents. Equivalently the
+bilinear form associated to (2.12) pairs its tangent to
+zero with every fixed-margin tangent. In particular $J'(t_*)=0$.
+Since $B+10m>0$, this yields
+
+$$
+t_* =\frac{10m-A}{B+10m},\qquad
+ J(t)-J(t_*)=2(B+10m)(t-t_*)^2.
+\tag{2.19}
+$$
+
+This derivation accounts for the analytic PSD constraint, rather than
+minimizing the ambient quadratic alone.
+

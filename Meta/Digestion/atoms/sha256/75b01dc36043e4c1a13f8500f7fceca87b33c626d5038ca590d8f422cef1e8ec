@@ -1,0 +1,40 @@
+**Theorem 35.1 (an exact hierarchy on the same original-view tasks).** Put
+
+$$
+b_j=4^j-j\qquad(j\ge0).
+\tag{35.1}
+$$
+
+Then $m(b_j)=j$. Consequently, for each $h\ge0$, the original four-view task on the explicit decidable prior $P_{b_{h+1}}$ can be acquired with a uniform cap of $h+1$ actual source actions and cannot be acquired with a cap of $h$. This is a strict adjacent hierarchy for each of the four exact original views, their joint tuple, and the endpoint bit. Its lower bound holds even if the smaller cap is imposed only on the endpoint run. Arbitrarily fine dyadic reads, arbitrarily many finite reads and unbounded finite local computation do not remove it.
+
+Proof. The case $j=0$ is $b_0=1$, with empty prefix. For every $j$, actually executing $L^j$ sends the endpoint to
+
+$$
+f_{L^j}(1/b_j)=1/(b_j+j)=1/4^j.
+\tag{35.2}
+$$
+
+Thus $m(b_j)\le j$, with the full decoder of Theorem 34.1 available after these actions.
+
+To prove the opposite inequality uniformly over all shorter words, let $j\ge1$, $h<j$, and $A_u=\left(\begin{smallmatrix}a&e\\c&d\end{smallmatrix}\right)$ for any chronological $u$ of length $h$. Two elementary bounds are
+
+$$
+c\le h d,\qquad 1\le d\le2^h.
+\tag{35.3}
+$$
+
+For the first, evaluate the lower row arithmetically as $(0,1)$ multiplied on the right by the $h$ generators in the product for $A_u$. Right multiplication by $G_L$ changes its ratio $c/d$ to $c/d+1$; right multiplication by $G_R$ changes it to $(c/d)/(1+c/d)$. Starting at zero, the ratio after $h$ factors is at most $h$. This calculation uses the matrix product order, not a reversed actual source experiment. For the second bound, every matrix entry starts at most one, and left multiplication by a generator replaces one row by its sum with the other. The maximum entry at most doubles per step, and $d\ge1$ by the supplier invariant.
+
+Set $\delta=jd-c$. Then
+
+$$
+0<\delta\le jd\le j2^{j-1}<4^j,
+\qquad
+c+b_jd=4^j d-\delta.
+\tag{35.4}
+$$
+
+The strict positivity uses $c\le hd$ and $h<j$. The last strict inequality follows, for example, from $j\le2^j$. Also $b_j=4^j-j>4^j/2$ for $j\ge1$, so the candidate denominator is strictly above $4^j/2$. It is not divisible by $4^j$, since its remainder is $-\delta$ with $0<\delta<4^j$. But any power of two strictly above $4^j/2=2^{2j-1}$ is divisible by $4^j=2^{2j}$. Therefore no word of length $h<j$ gives a dyadic endpoint denominator. This is a proof for every shorter word, rather than a bounded enumeration extrapolated to all $j$.
+
+Thus $m(b_j)\ge j$ and equality holds. Theorem 34.1 gives the stated acquisition hierarchy on the unchanged original-view tasks; allowing an extra action trivially includes every controller with the smaller cap, while this prior separates adjacent caps. $\square$
+

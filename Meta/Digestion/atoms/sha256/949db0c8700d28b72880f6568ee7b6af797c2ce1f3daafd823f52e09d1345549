@@ -1,0 +1,121 @@
+**Theorem 4.2 (Exact four-hub minimum at the specified finite orders).** For every integer pair $(n,\ell)$ in the range above, $H^{(4)}_{n,\ell}$ is the unique minimizing isomorphism class in $\mathcal G(n,\ell)$. Its exact minimum excess is
+
+$$
+E^\ast(n,\ell)
+=(4-r)M_c(N-q)+rM_c(N-q-1),
+$$
+
+and the exact minimum CDSO index is
+
+$$
+\Phi^\ast(n,\ell)=n-1+\ell+E^\ast(n,\ell).
+$$
+
+**Proof.** Let $G$ minimize $E$ and compare it with $H^{(4)}_{n,\ell}$. Lemma 4.1 gives $E(G)<34/n$. The sink-incidence reduction in *CDSO sink incidences and density limits*, Theorem 3.1, with $C=34$, applies because its explicit sufficient threshold is
+
+$$
+36\cdot34^2\cdot69=2{,}871{,}504<3{,}000{,}000.
+$$
+
+Thus $G$ is two-layer, has at most nine hubs, and every hub degree is at least $n/102$. A two-layer graph with $s\le3$ hubs has at most $s(n-s)\le3n-9$ edges, while the present graphs have
+$m\ge3n-8$; hence $s\ge4$.
+
+Suppose $s\ge5$. Put $N_s=n-s$ and $a_s=(\ell+s-1)/N_s$. The scalar incidence bound in the proof of Theorem 2.4 is valid for this $a_s$ as well, and the edge remainder gives
+
+$$
+E(G)\ge \frac{J_s}{N_s}-\frac{B}{n^3},
+\qquad
+B=\frac{9^4 102^4}{2}=355091870088.
+$$
+
+Because $s\ge5$, $a_s\ge a_4$, and the certificate is increasing in $s$ and $a$, so
+
+$$
+E(G)\ge\frac{40+\frac{32}{3}(a_4-3)}{N}-\frac{B}{n^3}
+>\frac{F_4(a_4)+4}{N}-\frac{B}{n^3}.
+$$
+
+The last expression is larger than the upper bound in Lemma 4.1: indeed
+
+$$
+\frac{B}{n^2}+\frac{204}{N^2}<4
+$$
+
+at $n\ge3{,}000{,}000$. This contradiction leaves $s=4$.
+
+For four hubs, Lemma 2.1 gives, for every hub $i$,
+
+$$
+\sum_{T\ni i}|T|^2N_T\ge9D_i.
+$$
+
+Every edge cost is at most $34/n$, so the edge inequality
+$g(r)\ge r^2/(2+34/n)$ and the preceding display imply
+
+$$
+E(G)\ge\frac9{(2+34/n)D_i}.
+$$
+
+Since $E(G)<34/n$ and $n\ge3{,}000{,}000$, this gives $D_i\ge n/8$ for every hub. The remainder bound now improves to
+
+$$
+E(G)\ge\frac{J_4}{N}-\frac{B_0}{n^3},
+\qquad
+B_0=\frac{4^4 8^4}{2}=524288.
+$$
+
+Let $p_k=\sum_{|T|=k}x_T$. Summing the residuals in Lemma 2.1 for $s=4$ gives
+
+$$
+\sum_iR_i=48p_1+18p_2.
+$$
+
+Because $y_i\le1$, the exact decomposition in that lemma yields
+
+$$
+J_4\ge F_4(a_4)+24p_1+9p_2.
+$$
+
+If $p_1+p_2>0$, integrality gives $24p_1+9p_2\ge9/N$, and therefore
+
+$$
+E(G)\ge\frac{F_4(a_4)}N+\frac9{N^2}-\frac{B_0}{n^3}
+>\frac{F_4(a_4)}N+\frac{204}{N^3}\ge E(H^{(4)}_{n,\ell}),
+$$
+
+where the strict inequality follows from
+$B_0/n+204/N<9$. Hence $p_1=p_2=0$.
+
+It follows that exactly $c$ sources have degree four and exactly $b$ have degree three. If $b_i$ is the number of degree-three sources missing hub $i$, then
+
+$$
+\sum_i b_i=b,\qquad D_i=N-b_i,\qquad
+E(G)=\sum_{i=1}^4M_c(D_i).
+$$
+
+For $f_k(D)=g(k/D)$,
+
+$$
+ f_k''(D)=\frac{k^2(3D^2+2k^2)}{D^3(D^2+k^2)^{3/2}}.
+$$
+
+Writing
+
+$$
+Q_D(t)=\frac{t(3D^2+2t)}{(D^2+t)^{3/2}},
+$$
+
+we have
+
+$$
+Q_D'(t)=\frac{6D^4+5D^2t+2t^2}{2(D^2+t)^{5/2}}>0.
+$$
+
+Also
+
+$$
+M_c''(D)=\frac9{(D^2+9)^{3/2}}+c\bigl(f_4''(D)-f_3''(D)\bigr)>0.
+$$
+
+If $D_j\ge D_i+2$, then $b_i\ge b_j+2$, so choose a degree-three source $v$ missing $i$. It is adjacent to $j$. Delete $vj$ and add $vi$, making $v$ a source missing $j$. Since $vi$ was absent, no repeated edge or loop is introduced. The $c\ge4$ full-neighborhood sources are unchanged and connect all four hubs; every other source still has three or four hub neighbors. Thus the graph remains simple and connected, with the same $n,m,\ell$, the same numbers of hubs and sources, and the same source-degree counts $b,c$. Only $(D_i,D_j)$ changes, to $(D_i+1,D_j-1)$, and strict convexity of $M_c$ strictly lowers the energy. Repeating the exchange proves that every minimizer has the four $b_i$ differing by at most one. The resulting multiset is uniquely $q+1$ repeated $r$ times and $q$ repeated $4-r$ times. The full and missing-one neighborhoods then determine the graph up to hub and source relabelling, giving the stated unique isomorphism class and exact value. ∎
+

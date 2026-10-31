@@ -1,0 +1,24 @@
+**Proposition 31.2 (identical prime marginals, different acquisition).** Let
+
+$$
+S_{\mathrm{pp}}=\{1\}\cup\{p^e:p\text{ prime},\ e\ge1\},\qquad
+T=\mathbb N_{>0}.
+\tag{31.1}
+$$
+
+These have effective staged enumerators and identical complete prime-valuation marginals: for every prime $p$,
+
+$$
+\{v_p(D):D\in S_{\mathrm{pp}}\}
+ =\{v_p(D):D\in T\}=\mathbb N.
+\tag{31.2}
+$$
+
+Nevertheless $\operatorname{Stat}(S_{\mathrm{pp}})$ is a proper subclass of $\operatorname{Stat}(T)$, while their forward acquisition classes agree with the all-integer stationary class. The dyadic menu $S_2=\{2^n:n\ge0\}$ likewise has universal forward power in this task sense and strictly smaller stationary power.
+
+Proof. At stage $n$ one can list $1$ and all $p^e$ with prime $p\le n+2$ and $1\le e\le n+1$; trial division decides the finite primality tests. This enumerates $S_{\mathrm{pp}}$. Listing $n+1$ enumerates $T$, and listing $2^n$ enumerates $S_2$. For any fixed $p$, the value $0$ in (31.2) occurs at $1$, and every positive $e$ occurs at $p^e$. This proves equality of the full marginal sets, not merely equality of their suprema.
+
+But $\operatorname{Div}(S_{\mathrm{pp}})$ contains precisely $1$ and prime powers; in particular it misses $6$. The target $\sigma_6$ on $P_6$ is acquired by the single stationary integer port $q_6$, and Theorem 30.1 excludes every stationary $S_{\mathrm{pp}}$-controller. The exact four-view task on $P_6$ gives the stronger consumed witness of Theorem 31.1. Separate reads at scales $2$ and $3$, or at any finitely many available prime powers, do not synthesize a $q_6$ port: at $c=1/6$ and a sufficiently close $c-1/n$ their finite transcripts agree by (30.3). What is required is the joint condition $\exists D\in S,\ b\mid D$ for a requested denominator $b$. The separate assertions $\forall p\mid b\ \exists D_p\in S,\ v_p(D_p)\ge v_p(b)$ have different quantifiers and are insufficient.
+
+Both menus in (31.1) are unbounded, so Theorem 30.2 gives their identical universal forward power. The dyadic menu is unbounded with $\operatorname{Div}(S_2)=\{2^n:n\ge0\}$, missing $3$. Thus its forward universality and stationary failure follow from the same classification. The binary witness $P_3$ is exactly §26's prior after renaming its index; the one-$L$, one-$q_4$ controller there is a particularly short instance, while Theorem 29.2 handles every all-integer stationary task and arbitrarily many subsequent comparisons. The nested-chain raw-versus-predictive criterion of Theorem 16.4 is an antecedent about mathematical threads; (29.1)–(29.4) provide the actual sequential acquisition bridge needed for these menu conclusions. No LCM service is silently added to any restricted menu. $\square$
+
