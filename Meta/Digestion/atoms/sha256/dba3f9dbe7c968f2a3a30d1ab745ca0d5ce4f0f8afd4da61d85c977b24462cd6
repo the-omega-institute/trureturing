@@ -1,0 +1,39 @@
+**Theorem 13.4 (three distinct original classes with no one-path acquisition at scale sixteen).** At $M=16$ take the three original sources
+
+$$
+(x_1,x_2,x_3)=(1/4,2/7,3/10),\qquad
+(w_1,w_2,w_3)=(LLL,RLLL,RRLLL).
+\tag{13.4}
+$$
+
+Their original predictive classes are pairwise distinct. Nevertheless no deterministic policy under Assumption 11.1 can recover their original predictive class, or their original word, for every member of this three-source prior. This obstruction allows arbitrarily many reads, arbitrary finite computation and an unbounded number of forward actions. The physical maps remain injective.
+
+Proof. Direct chronological execution from $1$ gives (13.4). The exact candidate responses for two possible test words are
+
+$$
+\begin{array}{c|ccc|ccc}
+ u&f_u(x_1)&f_u(x_2)&f_u(x_3)&q_{16}(f_u(x_1))&q_{16}(f_u(x_2))&q_{16}(f_u(x_3))\\ \hline
+ \varepsilon&1/4&2/7&3/10&4&4&4\\
+ LL&1/6&2/11&3/16&2&2&3\\
+ RL&5/9&9/16&13/23&8&9&9
+\end{array}
+\tag{13.5}
+$$
+
+The $RL$ test separates the first original from the second; the $LL$ test separates the third from each of the first two. Hence all three original classes are different. These are two counterfactual tests starting at the same original cut. Their combined rows are not a transcript obtainable by performing both tests successively.
+
+For an exact all-continuation analysis of the first action, (11.5) gives the following complete nongrid core. Each row lists the allowed reduced numerators for its denominator:
+
+| $b$ | $a$ with $a/b\in\mathcal K_{16}$ |
+| --- | --- |
+| $3$ | $1,2,4,5,7,10,13$ |
+| $5$ | $1,2,3,6,11$ |
+| $6$ | $1,5$ |
+| $7$ | $1,2,3,9$ |
+| $9$ | $1,7$ |
+| $10$ | $1,3$ |
+| $11$ | $1,5$ |
+| $12$ | $1$ |
+| $13$ | $1,3$ |
+| $14$ | $1$ |
+| $15$ | $1$ |
