@@ -8,6 +8,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 namespace Reg.D5.S3.Combinatorics.Circle.PhysicalJointRepetition
 
 open _root_.D5.S3.Combinatorics.Circle.SourceWidth
+open _root_.D5.S3.Combinatorics.Circle.PeriodicShorteningArithmetic
 open _root_.D5.S3.Combinatorics.Circle.PeriodicShortening
 open _root_.D5.S3.Combinatorics.Circle.RunFirstEarTransport
 open _root_.D5.S3.Combinatorics.Circle.PhysicalJointRepetition
@@ -37,9 +38,10 @@ def actual : Realization signature :=
   realize signature
     (fun _ p tau =>
       OriginalOrder (p.d * p.r) (p.w * geom p.d p.r)
-          (repeatWord p.d p.r (by omega) tau) ∧
+          (repeatWord p.d p.r (Nat.zero_lt_of_lt p.hr) tau) ∧
         OriginalOrder (p.d * p.r + 1) (2 * (p.w * geom p.d p.r))
-          (earWord (p.d * p.r) (repeatWord p.d p.r (by omega) tau) p.cut))
+          (earWord (p.d * p.r)
+            (repeatWord p.d p.r (Nat.zero_lt_of_lt p.hr) tau) p.cut))
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -54,8 +56,9 @@ abbrev arena : Arena where
 
 private theorem actual_law : arena.Law actual := by
   intro p tau hold hnew
-  exact physical_joint_repetition p.d p.w p.r p.cut p.hd p.hw0 p.hw p.hr p.hcut
-    tau hold hnew
+  simpa [actual, realize] using
+    (physical_joint_repetition p.d p.w p.r p.cut p.hd p.hw0 p.hw p.hr p.hcut
+      tau hold hnew)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -65,40 +68,87 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hold : OriginalOrder p.d p.w [0, 1] := by
     refine ⟨by decide, by decide, ?_⟩
     intro n
-    norm_num [OriginalOrder, actualSource, centered, modulus]
+    cases n with
+    | zero => norm_num [OriginalOrder, actualSource, centered, modulus]
+    | succ n =>
+        cases n <;> norm_num [OriginalOrder, actualSource, centered, modulus]
   have hnew : OriginalOrder (p.d + 1) (2 * p.w) (earWord p.d [0, 1] p.cut) := by
     refine ⟨by decide, by decide, ?_⟩
     intro n
-    norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
-  exact (h p [0, 1] hold hnew)
+    cases n with
+    | zero => norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
+    | succ n =>
+        cases n with
+        | zero => norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
+        | succ n =>
+            cases n with
+            | zero => norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
+            | succ n => norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
+  simpa [rejected, realize] using (h p [0, 1] hold hnew)
 
 private theorem source_bridge :
     (type_of% (@physical_joint_repetition)) ↔ arena.Law actual := by
   constructor
   · intro h p tau hold hnew
-    exact h p.d p.w p.r p.cut p.hd p.hw0 p.hw p.hr p.hcut tau hold hnew
+    simpa [actual, realize] using
+      (h p.d p.w p.r p.cut p.hd p.hw0 p.hw p.hr p.hcut tau hold hnew)
   · intro h d w r cut hd hw0 hw hr hcut tau hold hnew
-    let p : Input := { d := d, w := w, r := r, cut := cut,
-      hd := hd, hw0 := hw0, hw := hw, hr := hr, hcut := hcut }
-    exact h p tau hold hnew
+    let p : Input := {
+      d := d
+      w := w
+      r := r
+      cut := cut
+      hd := hd
+      hw0 := hw0
+      hw := hw
+      hr := hr
+      hcut := hcut }
+    simpa [actual, realize] using (h p tau hold hnew)
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro _
-  let p : Input := { d := 2, w := 1, r := 2, cut := 0,
-    hd := by omega, hw0 := by omega, hw := by omega, hr := by omega, hcut := by omega }
+  let p : Input := {
+    d := 2
+    w := 1
+    r := 2
+    cut := 0
+    hd := by omega
+    hw0 := by omega
+    hw := by omega
+    hr := by omega
+    hcut := by omega }
   refine ⟨p, [0, 1], [1, 0], ?_⟩
   have hgood := actual_law p [0, 1] (by
     refine ⟨by decide, by decide, ?_⟩
-    intro n; norm_num [OriginalOrder, actualSource, centered, modulus]) (by
+    intro n
+    cases n with
+    | zero => norm_num [OriginalOrder, actualSource, centered, modulus]
+    | succ n =>
+        cases n <;> norm_num [OriginalOrder, actualSource, centered, modulus]) (by
     refine ⟨by decide, by decide, ?_⟩
-    intro n; norm_num [OriginalOrder, earWord, actualSource, centered, modulus])
-  have hbad : ¬ OriginalOrder p.d p.w
-      (repeatWord p.d p.r (by omega) [1, 0]) := by
+    intro n
+    cases n with
+    | zero => norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
+    | succ n =>
+        cases n with
+        | zero => norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
+        | succ n =>
+            cases n with
+            | zero => norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
+            | succ n => norm_num [OriginalOrder, earWord, actualSource, centered, modulus])
+  have hbad : ¬ OriginalOrder (p.d * p.r) (p.w * geom p.d p.r)
+      (repeatWord p.d p.r (Nat.zero_lt_of_lt p.hr) [1, 0]) := by
     intro h
     have hh := h.2.2 1
-    norm_num [OriginalOrder, repeatWord, blockLabel, actualSource, centered, modulus] at hh
+    norm_num [OriginalOrder, repeatWord, blockLabel, actualSource, centered, modulus,
+      geom, List.finRange] at hh
   intro he
-  exact hbad (by simpa [actual, realize] using (he ▸ hgood).1)
+  apply hbad
+  have htransport : actual.readout () p [1, 0] := by
+    rw [← he]
+    exact hgood
+  have hbadInput := htransport.1
+  exact (by simpa [actual, realize] using hbadInput)
 
 def source_registration : Registration arena (type_of% (@physical_joint_repetition)) where
   actual := actual
