@@ -15,7 +15,7 @@ noncomputable section
 
 /-- Observe the published partition parts coordinate over its admissible parameters. -/
 abbrev signature : Signature where
-  Params := ℕ × ℕ
+  Params := Σ _ : ℕ, ℕ
   State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
@@ -37,7 +37,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ (n y z : ℕ) (h : 2 * y + 6 * z ≤ n),
-    (partition126 n y z h).parts = r.readout () (n, y) z
+    (partition126 n y z h).parts = r.readout () ⟨n, y⟩ z
 
 private theorem actual_law : arena.Law actual := by
   intro n y z h
@@ -52,7 +52,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(2, 1), 0, 1, ?_⟩
+  refine ⟨⟨2, 1⟩, 0, 1, ?_⟩
   change
     (Multiset.replicate (2 - 2 * 1 - 6 * 0) 1 +
       Multiset.replicate 1 2 + Multiset.replicate 0 6) ≠
