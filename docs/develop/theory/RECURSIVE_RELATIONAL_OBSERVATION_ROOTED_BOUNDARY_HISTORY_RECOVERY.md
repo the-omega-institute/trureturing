@@ -1313,3 +1313,244 @@ The following supplier statements are cited at their source-inspection scope onl
 No fresh kernel verification of §§20–23 is asserted. The mathematical inverses, including occurrence selection and the cardinalities of supplementary ranges, preserve the common-source, action, exactness and resource contracts stated above. They do not provide a code-space topological equivalence, an acquisition interface, physical memory bounds or a metric or physical spacetime interpretation.
 
 ## 追加锚（本行以下为增补区）
+
+## 24. Effective stopping presentations at the unchanged original cut
+
+**Assumption 24.1 (public prior, finite target and effective controller).** Retain the original positive rational $x=B(w)$, the root $1$, chronological $L(x)=x/(1+x)$ and $R(x)=x+1$, and the exact nondisturbing ports of Assumption 18.2. Every requested positive integer scale is conditionally supplied, each reached service finishes, and its complete integer report is finitely encoded. A public presentation $\pi$, fixed independently of the unknown $x$, specifies a promised domain $P_\pi\subseteq\mathbb Q_{>0}$ and a single-valued original target $\tau_\pi:P_\pi\to\{0,1\}^*$. Distinct target values have specified distinct finite encodings. The presentation need not decide membership in $P_\pi$ or supply a procedure deciding which observations certify a target.
+
+Acquisition means the existence, for this fixed presentation, of one effective deterministic finite program that terminates with $\tau_\pi(x)$ for every $x\in P_\pi$. Each individual run uses finitely many services, actions, computation steps and storage cells and finishes its finite output. There is no common bound on these quantities, scales or operand widths. A stationary controller performs no source action; a forward controller may perform the actual chronological actions. The target in both cases remains $\tau_\pi$ of the original $x$, not a target at the attained cut. Initial data, program and any declared auxiliary access are independent of $x$. There is no free exact original input, source-dependent advice, timing observation, inverse action, reset, copy, archive, or infinite-thread port. Mathematical simulation using a known rational in a reduction below is not an additional source interface.
+
+For comparison only, fix an arbitrary set $O\subseteq\mathbb N$ independently of $x$. An $O$-controller is a finite oracle program with membership access to this same fixed $O$; every terminating run makes finitely many such queries. All definitions below have this explicitly conditional relativization. The actual ordinary model has $O=\varnothing$ and is granted no oracle. The assertion $H\le_T O$ means that one finite $O$-program decides membership in $H$ on every integer input, with pointwise finite computation.
+
+**Definition 24.2 (labeled observation cells and their presentation).** A finite observation description is a list $s=((D_1,k_1),\ldots,(D_r,k_r))$ with $D_i\ge1$ and $k_i\ge0$. Its ambient and relative cells are
+
+$$
+\begin{aligned}
+C(s)&=\{y\in\mathbb Q_{>0}:q_{D_i}(y)=k_i\text{ for all }i\},\\
+C_\pi(s)&=P_\pi\cap C(s).
+\end{aligned}
+\tag{24.1}
+$$
+
+A single ambient cell is $[k/D,(k+1)/D)\cap\mathbb Q_{>0}$; for $k=0$ its lower endpoint is excluded by positivity. The empty list describes all positive rationals. Contradictory lists and lists missing the prior may describe empty relative cells. An $O$-computably enumerable family $\mathcal E_\pi$ of pairs $(s,\ell)$ is **sound** if
+
+$$
+(s,\ell)\in\mathcal E_\pi\ \Longrightarrow\
+\forall y\in C_\pi(s),\quad \tau_\pi(y)=\ell,
+\tag{24.2}
+$$
+
+and **complete** if every $x\in P_\pi$ belongs to at least one $C_\pi(s)$ with $(s,\tau_\pi(x))\in\mathcal E_\pi$. Enumeration means an effective staged listing, possibly with repetitions, relative to the declared $O$. Soundness on an empty relative cell is vacuous; completeness obtains no coverage from that cell. Neither condition requires recognizing emptiness.
+
+The general realizer and effective-open-set principles behind such listings are supporting mathematics: Pauly, *On the topological aspects of the theory of represented spaces*, [version 3, §§3–4](https://arxiv.org/html/1204.3763v3), defines computability through realizers and open-set names through Sierpiński-valued maps. Schröder, *Admissibly Represented Spaces and Qcb-Spaces*, [Proposition 2.4](https://arxiv.org/html/2004.09450v1), gives computability-implies-continuity on Baire-space names. Here a mathematical name can list $q_D(x)$ for $D=1,2,\ldots$, with domain restricted to names of promised originals. This representation is used to explain finite information, not supplied as an infinite observed input. The exact floor specialization and the effective forward simulation are established next and consumed by the rational prior in §25; the general realizer principle is not a separate new result.
+
+**Theorem 24.3 (source-specific stationary replacement and usable stopping).** Under Assumption 24.1, for each fixed public $(P_\pi,\tau_\pi)$ and fixed conditional $O$, the following are equivalent:
+
+1. A stationary $O$-controller acquires the original target pointwise finitely.
+2. A forward $O$-controller acquires that same original target pointwise finitely.
+3. There is an $O$-computably enumerable sound complete family of labeled cells as in Definition 24.2.
+
+The correspondence between controllers and enumerators is effective from their finite codes and the declared interfaces. Without the effectiveness requirement, existence of a sound complete family of cells is equivalent to the semantic condition
+
+$$
+\forall x\in P_\pi\ \exists\epsilon>0\ \forall y\in P_\pi:\quad
+x\le y<x+\epsilon\ \Longrightarrow\ \tau_\pi(y)=\tau_\pi(x).
+\tag{24.3}
+$$
+
+Condition (24.3) alone does not assert an enumerable family or an executable stopping rule. No equality of actual action archives, final physical cuts, durations or resource vectors is implied by the stationary/forward output equivalence.
+
+Proof. First turn a forward program into a stationary one, retaining its computation, oracle access and known chronological probe prefix $u$ in simulated memory. When the simulated program requests $q_M$ at that attained cut, compute $D=\Lambda_M$ and obtain the stationary report $k=q_D(x)$ at the original cut. Set
+
+$$
+r=\frac{2k+1}{2D}>0,
+\qquad
+\text{return to the simulation }\lfloor M f_u(r)\rfloor.
+\tag{24.4}
+$$
+
+The rational $r$ belongs to the same raw $D$-cell as $x$, including the $k=0$ cell. Theorem 15.2, applied at the original cut, says precisely that $q_D$ determines the whole scale-$M$ future profile. Consequently (24.4) is exactly $q_M(f_u(x))$. This uses that theorem's already established sharp divisibility result, without rederiving its cut or LCM classification. It also makes its factor effective: the midpoint, $\Lambda_M$, the fractional map and its floor are computed by finite integer and rational arithmetic. The matrix for chronological $u$ is `wordMatrix` of $\operatorname{reverse}u$, as in Definition 6.3; alternatively append an action by left-multiplying the current column-action matrix by its generator. No source inverse is executed.
+
+Each simulated action updates this finite known word or matrix and leaves the actual stationary source unchanged. Identical returned reports and the same fixed oracle preserve the original program's choices inductively. A promised terminating run has finitely many actions, reads and computations; replacing each read by the finite calculation above still terminates and returns the identical original-target string. Conversely a stationary program is a forward program that chooses no actions. Thus 1 and 2 are equivalent effectively. The construction may request much larger scales and use different arithmetic and memory; it is a termination and output correspondence.
+
+For 1 implies 3 use the standard halting-branch enumeration, spelling out its interface here. Dovetail bounded simulations of the stationary program on all finite lists of guessed nonnegative integer replies. Supply a guessed reply whenever it asks for a floor report, and resolve its ordinary computation and oracle queries relative to the fixed $O$. For every simulation that terminates using its available guessed replies and emits a complete label $\ell$, list the actually requested scale/reply pairs as $s$ and emit $(s,\ell)$. This is an $O$-enumeration: the guessed lists and step bounds have effective finite encodings. If an original $y$ belongs to $C_\pi(s)$, induction on requests reproduces that very terminating computation on $y$, so correctness of the controller implies (24.2). A guessed list with no promised realization causes no exception. Conversely each promised actual run has a finite reply list and a finite termination bound, and its labeled cell is eventually listed. This proves completeness.
+
+For 3 implies 1 run the enumerator, and test each emitted $s$ by its finitely many stationary exact reports. Output its label when every reported integer agrees. Every such test is finite, the source is unchanged, and soundness gives correctness. For a promised $x$, some matching cell is emitted after finitely many enumeration steps and earlier tests, so the program stops. One may cache reports, but caching is not required for this proof. These two constructions are the elementary finite-realizer argument cited in Definition 24.2, with exact finite service semantics supplied here.
+
+A finite cell containing $x$ contains a relative right neighborhood of $x$: each of its upper endpoints $(k_i+1)/D_i$ is strictly greater than $x$, so take a positive number smaller than all their distances from $x$. Its lower endpoints are at most $x$. A sound complete family therefore implies (24.3). Conversely write $x=p/q$ in reduced positive form. Given the radius in (24.3), choose a positive multiple $D$ of $q$ with $1/D<\epsilon$. Then $Dx$ is an integer and its exact cell is $[x,x+1/D)\cap\mathbb Q$, homogeneous relative to $P_\pi$. Taking all semantically sound labeled cells covers the prior. This collection is countable but need not be computably enumerable. The proof chooses $D$ from the exact mathematical $x$ and a semantic radius; it gives no controller either datum. Section 25 supplies the strict failure of the effective implication.
+
+A universal procedure deciding semantic soundness for every candidate cell and label is a stronger demand than these constructions use. A decidable acceptance test for a sound complete subfamily is sufficient, but an enumerable subfamily already suffices; neither all homogeneous cells nor a decision of their universal property is needed. If an enumeration-stage witness is added to a certificate, its bounded generation can of course be checked decidably. Thus the criterion does not posit a strict separation between enumerable proof systems and checkers with such witnesses. It distinguishes a usable sound complete enumeration from semantic homogeneity and from a universal decision of homogeneity. $\square$
+
+## 25. Decidable sparse rational priors with exact acquisition degree
+
+**Definition 25.1 (a public unique-pulse prior and original-history bit).** Fix a public finite program for a total computable function $b:\mathbb N^2\to\{0,1\}$ satisfying
+
+$$
+\forall e,s,t,\qquad b(e,s)=b(e,t)=1\ \Longrightarrow\ s=t.
+\tag{25.1}
+$$
+
+The program and the uniqueness promise are independent of the unknown original. Put
+
+$$
+\begin{aligned}
+H_b&=\{e:\exists t,\ b(e,t)=1\},& a_e&=e+1,\\
+P_b&=\{a_e:e\ge0\}\ \cup\
+ \{a_e+2^{-(t+2)}:b(e,t)=1\},\\
+\tau_b(x)&=\begin{cases}0,&x\text{ is an integer},\\1,&x\text{ is not an integer}.\end{cases}
+\end{aligned}
+\tag{25.2}
+$$
+
+The target is a single encoded bit of the original $x$. Under the original chronological source it is equivalently the bit that $L$ occurred somewhere in the original word, not the bit that a probing controller performed $L$. Integers $n\ge1$ have the word $R^{n-1}$, and these are exactly the words with no $L$: Theorem 6.2 gives the unique word at each rational, while executing only $R$ gives exactly those integers. The original exact rational has its reduced positive pair as encoding. The other finite targets are precisely the original literal word, its rooted oriented path with named edges, and its finite indexed prefix-memory table of §§5–6. Their encoding and decoding retain the same source, root and original cut.
+
+An exhaustive cutoff is a total function $N:\mathbb N\to\mathbb N$ such that
+
+$$
+\forall e,\quad
+\bigl[\forall t\le N(e),\ b(e,t)=0\bigr]
+ \ \Longrightarrow\ \forall t,\ b(e,t)=0.
+\tag{25.3}
+$$
+
+This is the inclusive cutoff convention of `UniformFirstHitMemory.ExhaustiveZeroPrefix`, with the Boolean values written $0,1$.
+
+**Theorem 25.2 (rational acquisition realizes the unique-pulse hit degree).** The prior $P_b$ has decidable membership for finitely encoded rationals, is locally finite in the ordinary real metric, and has at most two members in every band $[n,n+1)$, $n\in\mathbb Z_{\ge0}$. Every member is isolated and hence semantically admits a finite relative singleton observation cell with all integer-scale ports. Nevertheless, for every fixed, explicitly conditional source-independent $O$, the following are equivalent:
+
+1. $H_b\le_T O$.
+2. There is an $O$-computable exhaustive cutoff satisfying (25.3).
+3. The original bit $\tau_b$ is pointwise-finitely acquired by an $O$-controller.
+4. The exact original rational is pointwise-finitely acquired by an $O$-controller.
+5. Any one, equivalently every one, of the exact original four finite views in Definition 25.1 is pointwise-finitely acquired by an $O$-controller.
+6. There is an $O$-computably enumerable sound complete labeled-cell family for $(P_b,\tau_b)$.
+
+In 3–5, stationary and forward acquisition have the same meaning of existence, by Theorem 24.3. From a supplied reduction in 1 one obtains a stationary exact-rational controller using at most two floor reads on each original. From a correct bit controller one obtains a total $O$-computable cutoff and a decision procedure for $H_b$. These constructions use the stated public program; they are uniform in such supplied codes and correctness promises, not an algorithm deciding whether an arbitrary presentation has those properties.
+
+Proof. Membership does not require deciding whether a row ever hits. Given an encoded rational $z$, reject $z<1$ and accept every integer $z\ge1$. Otherwise let $n=\lfloor z\rfloor\ge1$ and reduce $z-n$ to a positive fraction. Decide whether it is exactly $2^{-k}$ for an integer $k\ge2$, by testing that its reduced numerator is $1$ and its denominator is a power of two of that exponent. If not, reject. If so, accept exactly when the single terminating computation $b(n-1,k-2)$ returns $1$. This covers all and only (25.2). In band $[n,n+1)$, $n\ge1$, the integer $n$ and at most its one pulse occur; band zero is empty. A bounded real interval meets finitely many such bands and thus finitely many members. Every member has a positive ordinary isolation radius. Taking a sufficiently fine scale divisible by its reduced denominator gives a right cell containing no other member, as in the last part of Theorem 24.3. These singleton cells exist without an effective list of them.
+
+Suppose 1 holds. A total $O$-decision for $H_b$ yields a cutoff by returning $N(e)=0$ if the answer is no and, if the answer is yes, searching $b(e,0),b(e,1),\ldots$ until its hit $t$ and returning $N(e)=t$. The yes branch terminates by its premise and (25.3) follows. Conversely, given 2, evaluate $b(e,t)$ for the finite range $0\le t\le N(e)$. A hit proves membership in $H_b$; all zeros prove nonmembership by (25.3). Thus 1 and 2 are equivalent. This cutoff/hit equivalence is the classical first-occurrence principle, used here as a supplier rather than as a new computability theorem.
+
+For the acquisition upper bound, first read $q_1(x)=n$. On $P_b$ this identifies $e=n-1$ and its band, not which of its possible two members is present. Decide $e\in H_b$ by the supplied $O$-reduction. If the answer is no, the original is $n$ and return its reduced pair. If the answer is yes, search for the unique hit $t$ and put $D=2^{t+2}$. The only two promised possibilities and their reports are
+
+$$
+\begin{array}{c|c}
+\text{original }x& q_D(x)\\ \hline
+n&Dn\\
+n+2^{-(t+2)}&Dn+1.
+\end{array}
+\tag{25.4}
+$$
+
+The second exact read selects the correct original rational. All arithmetic, the search, and the finite reduction computation terminate on the selected branch. The known program $b$ does not initialize the controller with the unknown row or its hit time: the first report identifies the row and the declared reduction supplies its hit decision. Thus 1 implies 4, with the claimed read bound. Theorem 6.2's finite Euclidean decoder then constructs the original word and the other original finite views, giving 5. Each such view determines the original rational and therefore the integer bit, so 4 or 5 implies 3. These are output computations, not access to a stored original archive.
+
+For the matching lower bound, take a bit controller as in 3 and first replace it effectively by a stationary one using Theorem 24.3. On integer input $e$ to a reduction, simulate this program against the computably specified original $a_e=e+1$, computing each requested floor reply exactly and answering its oracle queries from the same fixed $O$. This integer is in $P_b$ for every $e$, so the simulation terminates and its correct output is $0$. Let
+
+$$
+D_*(e)=\max\bigl(\{1\}\cup\{D_i:\text{scales read in this simulation}\}\bigr),
+\qquad
+N(e)=\min\{N\ge0:2^{N+2}>D_*(e)\}.
+\tag{25.5}
+$$
+
+Both are total $O$-computable functions of $e$ and the controller code. The maximum also handles a run with no reads. If $t>N(e)$ were a hit in row $e$, the promised rational $y=a_e+2^{-(t+2)}$ would satisfy, for every one of the finitely many simulated reads,
+
+$$
+0<D_i2^{-(t+2)}<1,
+\qquad
+q_{D_i}(y)=D_i a_e=q_{D_i}(a_e).
+\tag{25.6}
+$$
+
+Replay induction gives the same complete finite computation and output on $y$: equal previous reports select the same next scale and the same oracle queries, since $O$ is fixed independently of the source. That output would be $0$ whereas $\tau_b(y)=1$. Correctness excludes every such hit. In fact every hit in row $e$ lies at most $N(e)$, which implies (25.3). Thus 3 implies 2, and the finite search through this computed cutoff decides $H_b$. The exact value $a_e$ is used only in this reduction's simulation; no acquisition program is handed its actual unknown rational. Conditions 3 and 6 are equivalent by Theorem 24.3, completing the equivalence and both reductions. $\square$
+
+**Theorem 25.3 (strictness with a completely specified finite prior program).** There is a total computable unique-pulse program $b$ for which $H_b$ is undecidable. Its rational prior has all the decidability, sparsity and local-isolation properties of Theorem 25.2, and $\tau_b$ is decidable when an exact rational is supplied. Yet no ordinary effective stationary or forward controller acquires even that bit pointwise finitely from the specified floor ports. In particular ordinary-metric isolation and semantic right-local homogeneity do not supply an enumerable sound complete stopping family, even for this decidable prior and binary target.
+
+More generally every computably enumerable set occurs as $H_b$ for a public total computable first-hit program satisfying (25.1). Hence Theorem 25.2 realizes every such hit degree as the conditional acquisition degree of this rational prior construction; it does not introduce an oracle into the actual model.
+
+Proof. For a fixed computable enumerator of a set $A$, let $A(e,t)$ be the decidable predicate that $e$ has appeared during its first $t$ computation steps. Define $b(e,t)=1$ exactly when $A(e,t)$ holds and $A(e,s)$ fails for every $s<t$. This is a finite bounded test for each $(e,t)$, has at most one hit per row, and has a hit exactly for $e\in A$. The first-occurrence construction is classical; the consequence for rational acquisition is Theorem 25.2.
+
+One explicit finite presentation of an undecidable instance uses the pinned partial-recursive code evaluator. Let $c_e=\operatorname{ofNatCode}(e)$ and
+
+$$
+A(e,t)\ \Longleftrightarrow\
+\operatorname{evaln}(t,c_e,0)\ne\mathrm{none},
+\qquad
+b(e,t)=1\ \Longleftrightarrow\ A(e,t)\land\forall s<t,\neg A(e,s).
+\tag{25.7}
+$$
+
+Here `Nat.Partrec.Code.ofNatCode` and `Nat.Partrec.Code.evaln` have exactly the definitions in [PartrecCode.lean at the pinned revision](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Computability/PartrecCode.lean). The code decoder is a terminating recursion on its integer argument, and `evaln` is the finite resource-bounded evaluator; `primrec_evaln` supplies its primitive recursiveness. Thus (25.7), including its bounded earlier-stage test, is a public total finite-program specification independent of the unknown $x$. `evaln_complete` and `evaln_sound` identify existence of a successful finite evaluation with termination of $c_e$ on $0$. The code numbering represents every code effectively. If this $H_b$ were decidable, composing its decision with code encoding would decide code termination at $0$, contrary to `ComputablePred.halting_problem 0` in [Halting.lean at the same revision](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Computability/Halting.lean). The corresponding recursively enumerable termination predicate is `halting_problem_re 0`. These are mature computability suppliers with their exact fixed-input domain, not claims that the new rational bridge is already a kernel theorem.
+
+Apply Theorem 25.2 with $O=\varnothing$. Conditions 1–6 all fail for this instance, while the membership and isolation conclusions still hold. The bit as a function of an exact encoded rational is computed simply by testing integrality. Its failure of acquisition is therefore a failure of obtaining a usable finite stopping distinction from the allowed reports, not a failure to compute the bit after exact input has been acquired. A source-dependent program that already selected the row's hit status would change Assumption 24.1 and is excluded. $\square$
+
+**Definition 25.4 (quantifier and resource boundaries of the degree correspondence).** Theorem 25.2 concerns one fixed public $b$ and one program valid for all originals in its $P_b$. Its uniform constructions take, respectively, a code for an $H_b$-decision relative to $O$, or a code for a correct terminating controller, as supplied mathematical inputs. They do not decide totality, uniqueness or correctness of arbitrary program codes, and do not uniformly synthesize a decision for $H_b$ from $b$ alone. A separate program or advice string selected by the unknown $x$ is forbidden. Decidable rational membership in $P_b$ cannot substitute for deciding whether an entire integer band has a second member: that band-existence question is exactly $e\in H_b$.
+
+The upper bound is two floor reads, not two bounded-cost operations. Reading $q_1$ already has unbounded report width as $e$ varies. A yes branch must execute the supplied hit-decision reduction, locate $t$, construct a scale of bit length $t+3$, read its complete payload and perform exact arithmetic. A word output may be long: the integer original $n$ has word $R^{n-1}$. All these finite costs and storage remain paid. If the set of hit times is unbounded, no single bound on stationary scales can suffice even for the bit: for any such bound $D_0$, a row with $2^{t+2}>D_0$ makes its two originals agree at every allowed scale $D\le D_0$, hence on every adaptive run restricted to those scales. This is separate from the stronger undecidable-instance obstruction, which permits arbitrary finite scales and still excludes an ordinary controller.
+
+A fixed decidable hit set may admit the two-read controller with unbounded search, payload and scale costs. An undecidable hit set admits no ordinary controller regardless of how much pointwise finite computation or how many finite reads it is allowed. The conditional equivalence $H_b\le_T O$ records exactly what additional source-independent decision access would suffice; none is supplied to remove that obstruction. These statements do not assert a common total resource bound or an optimal resource vector.
+
+## 26. Endpoint separation and an unbounded menu that forward actions strengthen
+
+**Theorem 26.1 (the same original target under dyadic and integer ports).** Let
+
+$$
+c=\frac13,\qquad
+P^- =\{c\}\cup\{c-1/m:m\in\mathbb Z,\ m\ge4\},\qquad
+\sigma(c)=1,\quad \sigma(c-1/m)=0.
+\tag{26.1}
+$$
+
+All are originals from the same rational chronological source. With all integer ports, the stationary read $q_3$ acquires $\sigma$ exactly, although $\sigma$ is not locally constant at $c$ in the relative ordinary two-sided metric. With the restricted, numerically unbounded menu $\{q_{2^n}:n\ge0\}$, no pointwise-finite stationary controller acquires $\sigma$ on this same prior, whereas one actual $L$ followed by $q_4$ does. These comparisons preserve the original target and the menu within each stationary/forward comparison. They make no assertion that every integer port is necessary for a particular prior or task.
+
+Proof. The prior has a finite rational presentation and decidable membership: accept $c$; otherwise require $0<x<c$ and that $1/(c-x)$ is an integer at least four. At $c$, the sequence $c-1/m$ approaches from below with the other target value, so no two-sided relative metric neighborhood has constant $\sigma$. Yet the exact floor convention gives
+
+$$
+q_3(c)=1,\qquad q_3(c-1/m)=0\quad(m\ge4).
+\tag{26.2}
+$$
+
+This is a valid one-read stationary algorithm. At $c$ its cell includes the endpoint on the right, with no smaller point, and so (24.3) holds there. Every smaller member of the prior is isolated. Ordinary two-sided metric locality is therefore not a necessary replacement for the exact floor-cell condition, even with an effective one-read certificate.
+
+Now suppose a stationary controller with just the dyadic menu terminates correctly at $c$. Its finite run queries finitely many exponents; let $N$ be their maximum, taking $N=0$ if there are no queries. Since $3$ never divides $2^n$, the fractional part of $2^nc$ is either $1/3$ or $2/3$. Choose an integer $m>\max(4,3\cdot2^N)$. For every queried exponent,
+
+$$
+0<\frac{2^n}{m}<\frac13\le\{2^nc\},
+\qquad
+q_{2^n}(c-1/m)=q_{2^n}(c).
+\tag{26.3}
+$$
+
+Replay of that finite adaptive branch gives identical decisions and output on the smaller promised original, contradicting its target $0$. This argument also covers a fixed source-independent auxiliary oracle: its answers are the same on the replay. It places no common bound on the controller's query exponents or stopping times, only a finite maximum on the one completed run at $c$.
+
+On the other hand monotonicity and the endpoint identity give
+
+$$
+L(c)=\frac14,\qquad
+0<L(c-1/m)<\frac14,
+\qquad
+q_4(L(c))=1,\quad q_4(L(c-1/m))=0.
+\tag{26.4}
+$$
+
+Thus actually perform $L$ and read the available dyadic port $q_4$; its report is the exact value of $\sigma$ of the original. It is not a task distinguishing the final values under a changed prior. Both this forward algorithm and the impossible stationary dyadic algorithm start with (26.1) and aim at that same $\sigma(x)$. The stationary all-integer algorithm (26.2) uses only $q_3$, so the counterexample does not require all integer scales for its positive stationary solution. Theorem 24.3's general simulation of a $q_4$ request instead calls for $q_{\Lambda_4}=q_{12}$, absent from the dyadic menu. The menu's numerical unboundedness provides neither that port nor a replacement for its relevant endpoint: (26.3) rules out every finite combination of stationary dyadic reports on this task. $\square$
+
+## 27. Supplier correspondence and the scope of original four-view acquisition
+
+**Definition 27.1 (mathematical antecedents and source-specific increment).** The source-specific increment is the matching rational-prior/acquisition reductions (25.4)–(25.6), including decidable locally finite membership, the binary original-history task and its exact acquisition degree. The effective use of Theorem 15.2 in (24.4) connects that degree to actual forward access under the same original target. The endpoint construction (26.1)–(26.4) identifies a failure of that replacement when the supplied menu is only numerically unbounded. These are `repo-derived` ordinary mathematical consequences with the complete proofs above, without a worldwide priority assertion. First-hit coding, oracle reducibility, halting undecidability and finite-realizer enumeration are literature-attested supporting mathematics; the generic realizer principle in Theorem 24.3 is included as an intermediate supplier for this application.
+
+The source statements have the following precise correspondences and limits:
+
+| Supplier | Correspondence and hypothesis boundary |
+| --- | --- |
+| [ActualFirstTerminationMemory](../../../D5/S3/ObserverMemory/Prediction/ActualFirstTerminationMemory.lean), `Oldest8330Proposal.UniformFirstHitMemory.ExhaustiveZeroPrefix`, `uniform_single_pulse_obstruction` | The cutoff convention is exactly (25.3). The theorem assumes `Computable₂ b`, uniqueness of a true value in each row, and noncomputability of the existential hit predicate; its final conjunct excludes a computable exhaustive cutoff. The rational prior is not a supplier hypothesis or conclusion: (25.5)–(25.6) provide the additional acquisition-to-cutoff bridge. Its unary-state minima are not being used as apparatus-memory costs here. |
+| The same module, `Oldest8330Proposal.OperationalFirstTermination.original_section_6_4` | This supplies an existential universal native first-termination pulse with total computability and the cutoff obstruction. It is not an executed extraction of a particular public program. Definition 25.1 requires the actual finite program as part of its public presentation; (25.7) instead specifies an explicit evaluator-based instance and does not purport to extract the existential native code. |
+| [WordNodesAreReduced](../../../D5/S3/PrimeForms/SternBrocot/WordNodesAreReduced.lean), `wordMatrix`, `unimodular_wordMatrix`, `wordMatrix_lower_right_pos`; [UnimodularGeneration](../../../D5/S3/PrimeForms/SternBrocot/UnimodularGeneration.lean), `unimodular_iff_wordMatrix` | The generators are precisely $G_L,G_R$, with `false`, `true`. Chronological $u$ uses `wordMatrix(reverse u)`. The natural determinant-one and positive-denominator contracts support the fractional maps already used by Theorem 15.2; they do not by themselves provide a finite stopping certificate. Matrix generation supplies no extra port or exact original input. |
+| [FinitePrefixLocalConstancy](../../../D5/S3/Observer/SymbolicStability/FinitePrefixLocalConstancy.lean), `finite_prefix_locally_constant_off_boundary` | This assumes a pseudo-metric space, a finite family of locally constant symbols away from their specified boundaries, and a point outside their union. It supplies an existential common metric radius. On-wall exact floors in (26.2) and (26.4) do not satisfy the stated off-boundary premise, and the statement provides no effective stopping radius. It therefore cannot replace the one-sided condition or enumerable family used here. |
+| [FiniteDistinguishingCertificate](../../../D5/S3/ObserverMemory/PredictionCertificates/FiniteDistinguishingCertificate.lean), `finite_distinguishing_certificate` | Its finite class is a surjective classification exact for equality of every available evaluation. A binary target alone does not give that hypothesis. In $P_b$, different bands already have different $q_1$ reports, and the full behavioral classification is infinite. The theorem neither turns those infinitely many behaviors into two exact classes nor selects and executes a stopping policy for (25.2). |
+| Pinned mathlib `PartrecCode` and `Halting`, cited in Theorem 25.3 | The finite evaluator, its soundness/completeness, effective code numbering and fixed-input halting obstruction support (25.7). Reading their source statements is distinct from a new kernel check of the rational acquisition theorem. |
+
+The stopping obstruction of [Atomic Generation Acquisition III §§19–20](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_III.md) concerns its noisy complete post-clock digital service; its metric necessary condition and supplied-denominator decoder are not an effective sufficiency theorem for this deterministic floor interface. [Finite Unit Catalogue Identifiability §§2–3](RECURSIVE_RELATIONAL_OBSERVATION_FINITE_UNIT_CATALOGUE_IDENTIFIABILITY.md) supplies explicit finite catalogue values and exact comparisons for its different scale law. Here only two candidates per band are present, but knowing whether the second exists is exactly the undecidable question in Theorem 25.3. The delayed-constraint construction in [Effective Resolution §§2.2.5–2.2.8](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md#225-按事件逐条加入的实际-lcm-塔) already distinguishes existence of compatible infinite threads from computable thread selection; the rational membership and matching acquisition-degree construction are the added correspondence, not a relabeling of that general distinction.
+
+The four-view transports remain exactly those of Theorem 6.2 and Theorem 17.3 on their original rational source. Acquiring an exact reduced rational permits finite construction of its original word, named incidence path and indexed prefix table. A rational's predictive thread may then be specified mathematically by its rational parameter, but no infinite list of reports has been read or emitted. Nothing here extends these original-source decoders to the ambient cyclic-anchor fibers of §§20–23, installs a certification service, or identifies actual probe histories with simulated histories. The resource contract counts every acquired report, scale encoding, operand width, computation, storage and finite output. The conclusions assert neither a physical spacetime interpretation nor new kernel verification of the ordinary proofs above.
+
+## 追加锚（本行以下为增补区）
