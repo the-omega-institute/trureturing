@@ -67,8 +67,6 @@ private theorem tripleShape_rows {n : ℕ} (r : Fin 3 → ℕ) (hr : ∑ i, r i 
 
 /-- The ordered-colouring character is the character of the actual Young module at
 its sort/delete-zero partition. There is no quotient by permutations of equal rows. -/
-set_option pp.explicit true in
-set_option pp.fullNames true in
 private theorem fixedColourings_eq_youngFixed {n : ℕ} (r : Fin 3 → ℕ)
     (hr : ∑ i, r i = n) (π : Perm (Fin n)) :
     fixedColourings (fun i => (r i : ℤ)) π =
@@ -87,12 +85,17 @@ private theorem fixedColourings_eq_youngFixed {n : ℕ} (r : Fin 3 → ℕ)
     congr 1
     ext f
     simp [d]
+  have hshape (dec : DecidableEq (Fin 3)) :
+      @weightPartition (Fin 3) _ n dec d hd = tripleShape r hr := by
+    apply congrArg (fun dec => @weightPartition (Fin 3) _ n dec d hd)
+    exact Subsingleton.elim _ _
+  simp only [hshape] at hc
   rw [he]
   convert (Int.natCast_inj.mp hc) using 1
-  · congr 1
-    ext f
-    simp [d]
-  · congr 3
+  congr 1
+  ext f
+  simp only [mem_filter, mem_univ, true_and]
+  exact and_congr_right' (forall_congr' fun i => by convert Iff.rfl)
 
 private theorem sum_spechtChar_mul_fixedColourings {n : ℕ} (μ : n.Partition)
     (r : Fin 3 → ℕ) (hr : ∑ i, r i = n) :
