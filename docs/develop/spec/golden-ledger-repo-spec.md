@@ -1238,6 +1238,10 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 
 2026-08-13/20 记录 `enforce_admins=false`,后者并见 `rulesets=0` 与 admin 权限;
 
+### CLAUDE §7.5 base 判官裁决原话
+
+历史裁决原话(其中判官/内容不得同 PR 的限制已由 2026-09-24 owner 裁决撤销):「彻底移除 base 判官,判官跟非判官不能在一个 PR,防止无休止的死锁,但为了防止为了让数据过顺手改判官,所以不能一起提交。」
+
 ### CLAUDE §7.14 撤因反例读数
 
 #4305 的绿→红 transition 实由前笔 #4295 的 `ScribeTestSymbolBinder` 与滞后一拍 BaseSnapshot 造成;候选 edge 不等于根因,计划须读 BaseSnapshot、candidate 程序集及测试发现输入,不能由 base 独定(2026-08-31 GitHub checks/git 树记录)。该 dev 红已实证,“全部 open PR 同红”未逐一核实,`ASSUMED-UNVERIFIED`。
@@ -1246,7 +1250,7 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 
 **有界缺口**:2026-08-12 普查中 `Golden/values-kernels.toml` 的 `lean_gid/lean_statement_sha256` 仅验唯一/格式,writer 原样复制 values.json;spec SL-018 却要求候选 inspector 验 GID 唯一存在、kind=def、标准三公理闭包、statement SHA 与投影一致。此为该样本的规范/实现缺口,不冒称当前新测量;报现役须真执行,否则标延后。
 
-### CLAUDE §10.1 容量 override 复核读数
+### CLAUDE §10.1 `STRATALINT_LEAN_MAX_CONCURRENCY` 旧默认值复核读数
 
 旧 1 的问题是无案而非数小。
 

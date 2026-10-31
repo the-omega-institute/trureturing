@@ -552,7 +552,7 @@ owner 原话:「只要是独立的部分就跑独立的CI, 不要混在一起了
 
 ### 7.5 base 判官永久禁令与 SL-030 边界
 
-**base 判官永久禁止(τ=0 owner 裁决)**。历史裁决原话(其中判官/内容不得同 PR 的限制已由 2026-09-24 owner 裁决撤销):「彻底移除 base 判官,判官跟非判官不能在一个 PR,防止无休止的死锁,但为了防止为了让数据过顺手改判官,所以不能一起提交。」
+**base 判官永久禁止(τ=0 owner 裁决)**。裁决原话及撤销说明见 SPEC §11.28（CLAUDE.md §7.5）。
 **定义**:为判候选而 checkout/restore/编译/执行 protected base 或任何非受审 HEAD 修订的代码,即 base 判官;含 base worktree/checkout、`git show <base>:<脚本> | bash|python|dotnet`、指向非候选自身内容寻址构建的 `--judge-root/--judge-dll`,以及 base 拥有的 derive/verify/classify/floor。**执行 base 代码禁,读 base 数据许**:可读 `HEAD^1` SHA 做对象 diff,以 `RevisionSnapshot`/`git show` 取 FILEMAP/账本/拓扑/workflow 哈希等字节喂候选判官。
 workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/地板/过渡/防篡改复建。独立检查入口只运行候选判官。owner 接受候选可削弱自审判官的残余逃逸(`38b865a59c`,#5285),以 SL-029 按端点分树分类(仅快照证成的删除端按 protected-base FILEMAP,其余端按 candidate FILEMAP)给出非阻断警告,并保留 SL-022 标注、dev push 检测与独立评审,不另造 base 判官。
 **SL-029 现役语义(τ=0 owner 2026-09-24 裁决)**:允许判官与内容以一个完整 PR 交付。合法混面 delta 恰报一条 `ADMISSION-PLANE-MIXED`,显示为 `Warning`,准入效果为 `Observe`,随后继续全部普通验证;警告随完整 `check` 和 `check-delta` 的结果输出,其它 Block 仍拒绝,SL-022 标注不变。缺失、畸形、歧义、不安全的 FILEMAP、错误的策略文件分类或无有效 base 登记的删除端仍是基础设施失败。混面不削减适用的 engineering 义务;生产 CI 按 workflow 内的单元白名单选择测试/检查。警告不强制分面,不能防止同一 PR 同时修改判官和内容;候选自审的残余边界仍在,不得把警告、标注、后续检测或评审冒充准入时点的独立保证。
