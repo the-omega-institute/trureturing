@@ -2222,10 +2222,10 @@ result for the positive adjacency used here.
 
 To finish, block permutations commute with $K$, so $P_{\mathrm{sym}}$
 and $I-P_{\mathrm{sym}}$ reduce it. The latter has nonzero range:
-take a nonconstant one-particle vector in one block, occupancy $2S-1$
-in a second block, and occupancy $S$ in each remaining block.
-This is a nonzero vector in $\mathcal N$ of total occupancy $mS$,
-including $S=1$. The finite orthogonal decomposition (6.12), with
+take a nonzero one-particle vector orthogonal to constants in one
+block, occupancy $2S-1$ in a second block, and occupancy $S$ in each
+remaining block. Their tensor product lies in $\mathcal N$ and has
+total occupancy $mS$, including $S=1$. The finite orthogonal decomposition (6.12), with
 all multiplicities retained, has excluded $E$ from every summand of
 $\mathcal N$. Therefore its spectral minimum is strictly above $E$,
 which proves (10.3) and the ground-vector statement in (10.4), also
