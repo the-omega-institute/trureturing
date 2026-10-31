@@ -59,7 +59,7 @@ noncomputable abbrev permutationModuleℂ (ν : n.Partition) :
   _root_.FDRep.of (Representation.ofMulAction ℂ (Perm (Fin n))
     (Perm (Fin n) ⧸ youngSubgroup ν))
 
-private theorem char_permutationModuleℂ (ν : n.Partition) (π : Perm (Fin n)) :
+theorem char_permutationModuleℂ (ν : n.Partition) (π : Perm (Fin n)) :
     (permutationModuleℂ ν).character π =
       (Nat.card {q : Perm (Fin n) ⧸ youngSubgroup ν // π • q = q} : ℂ) := by
   change (Representation.ofMulAction ℂ (Perm (Fin n))

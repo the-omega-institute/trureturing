@@ -998,15 +998,17 @@ validated Reg, canonical emission, freeze, deposit, PR, CI or merge is asserted.
 | `SpechtYoungTrace.lean:finrank_hom_spechtModuleℂ_permutationModuleℂ_eq_zero` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtYoungTrace.lean:spechtModuleℂ_iso_iff` |
 | `SpechtYoungTrace.lean:finrank_hom_spechtModuleℂ_permutationModuleℂ_self` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtYoungTrace.lean:spechtModuleℂ_iso_iff` |
 | `SpechtYoungTrace.lean:spechtModuleℂ_iso_iff` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtYoungTrace.lean:sum_spechtTrace_mul_spechtTrace_inv` |
-| `SpechtYoungTrace.lean:sum_spechtTrace_mul_spechtTrace_inv` | Local composition of the existing representation and pinned interfaces; no independent admission | **Terminal WIP: Young Gram/completeness and Frobenius consumer missing** |
+| `SpechtYoungTrace.lean:sum_spechtTrace_mul_spechtTrace_inv` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtYoungCompleteness.lean:spechtClassFunction_pairing` |
 
 ### Exact remaining target and retirement
 
 The actual Hom dimensions still need identification with Kostka numbers. The
-selected public YoungRule proof requires the permutation-character Gram identity
-from the complete-homogeneous/Schur/Kostka expansion, plus completeness of the
-Specht characters. Row orthogonality alone supplies neither completeness nor
-Young rule. The selected endpoints do not assume either fact. The arbitrary-degree
+representation side now has source completeness and its Young permutation Gram
+identity, as detailed below. The polynomial averaging argument identifies this
+Gram matrix with complete homogeneous coefficients. The remaining combinatorial
+identity is that these coefficients are the Gram entries of the Kostka matrix;
+the selected public YoungRule argument then uses unitriangular uniqueness.
+No Young/Kostka equality is assumed. The arbitrary-degree
 finite-alphabet psumPart_eq_sum_spechtCharValue_smul_schurPoly remains unported
 and unproved here; the degree-at-most-alphabet equivalence is not substituted.
 
@@ -1032,3 +1034,125 @@ and DependentFamily support sources were inspected. Full dependent-domain source
 reconstruction and lawful readout, whole-family intervention/sensitivity, actual
 observational dependence, native elaboration and binding evidence remain absent.
 No Reg mirror or declared_validated claim is supplied.
+
+
+## Actual trace completeness and the complete homogeneous Gram comparison
+
+`SpechtYoungCompleteness.lean` constructs a basis from the actual complex Specht
+traces. The existing `sum_spechtTrace_mul_spechtTrace_inv` supplies orthogonality;
+OUR pinned `LinearMap.BilinForm.linearIndependent_of_iIsOrtho` supplies linear
+independence. The existing D5 `ClassFunction.toConjClasses` and its actual quotient
+lift are used to identify the dimension, and the existing literal
+`partitionEquivConjClasses n` supplies the equal cardinality. Thus the proof needs
+neither a new generic character enumeration nor Wedderburn's theorem.
+
+The basis coordinates use the existing D5
+`ClassFunction.characterPairing_ofFDRep_eq_finrank` and
+`ClassFunction.characterPairing_symm`, with the exact Hom orientation
+`SComplex(mu) -> MComplex(nu)`. The character expansion is consumed by the
+permutation-character Gram identity, which is consumed in
+`SpechtYoungPolynomialGram.lean`. No coefficient is used to define a trace,
+no arbitrary relabelling of irreducibles is introduced, and simplicity of the
+preserved modules enters through the existing actual row-orthogonality source.
+
+The polynomial argument averages over invariant colourings by pairs. Fibre
+stabilizers of a fixed distribution contribute exactly n factorial. This gives
+`sum_card_fixedPoints_smul_psumPart_partition` for every commutative semiring and
+finite alphabet, with arbitrary degree. Extracting a sorted monomial coefficient
+and using the actual representation Gram identity gives
+`coeff_hsymmPart_partWeight_eq_sum_multiplicity_mul`:
+
+`coeff(h_nu, partWeight(xi)) = sum_mu m(mu,nu) m(mu,xi)`.
+
+Here `m(mu,nu)` is the actual complex Hom dimension, read in Complex. The only
+alphabet condition is `xi.parts.card <= Fintype.card sigma`; it records the column
+monomial and places no bound on degree. In particular no `n <= alphabet` basis
+equivalence has replaced the arbitrary-degree Frobenius target.
+
+### Immutable selection and adaptations
+
+The six selected bodies below are copied from TauCeti
+5a01f5fe3621126cccf9ba22e700493cbc7b7156; five have private visibility in the port.
+Their proof bodies are unchanged. Surrounding namespaces and section parameters
+reuse the existing D5 fibre and Young constructions. The complete Apache terms,
+copyrights and no-NOTICE assessment above apply to this selection.
+
+| Supplier locator | Selected declaration | Actual source consumer |
+| --- | --- | --- |
+| `TauCeti/GroupTheory/Perm/FiberSubgroup.lean:347` | `natCard_fiberSubgroup` | `sum_natCard_fiberSubgroup_smul` |
+| `TauCeti/GroupTheory/Perm/FiberSubgroup.lean:359` | `exists_forall_card_filter_eq` | `sum_natCard_fiberSubgroup_smul` |
+| `TauCeti/GroupTheory/Perm/FiberSubgroup.lean:373` | `sum_natCard_fiberSubgroup_smul` | `sum_card_smul_psumPart_partition` |
+| `TauCeti/RingTheory/MvPolynomial/Symmetric/Complete.lean:76` | `hsymm_eq_sum_piAntidiag` | `sum_card_smul_psumPart_partition` |
+| `TauCeti/RingTheory/MvPolynomial/Symmetric/PowerSum.lean:160` | `sum_card_smul_psumPart_partition` | `sum_card_fixedPoints_smul_psumPart_partition` |
+| `TauCeti/RepresentationTheory/Symmetric/PermutationModule/PowerSum.lean:150` | `sum_card_fixedPoints_smul_psumPart_partition` | `coeff_hsymmPart_partWeight_eq_sum_multiplicity_mul` |
+
+`classFunctionEquivConjClasses` adapts only the required equivalence from
+`CharacterTable/ClassFunction.lean:218`; its inverse and inverse laws are inlined,
+and the forward map directly reuses D5's existing quotient lift. The basis
+construction adapts `CharacterTable/Completeness.lean:91` and
+`Symmetric/Specht/Basis.lean:43`, replacing their generic irreducible enumeration
+with the already available actual row orthogonality and partition/class count.
+The coordinate proof adapts `Symmetric/Specht/Basis.lean:61` using the exact D5
+pairing and the actual trace delta. These are A17.2PORT source adaptations at OUR
+unchanged Mathlib pin, not standalone new-content qualifications.
+
+### Per-declaration consumers and admission boundary
+
+Every entry is UNCOMPILED. Native axiom closure and proof-term liveness are UNKNOWN.
+Source references below describe textual proof dependencies, not native liveness.
+Known supplier ports and local binding/composition helpers have no independent
+firstfreeze or admission claim. The final polynomial coefficient comparison is a
+necessary unfinished comparison endpoint with no original HSW theorem consumer.
+
+| Declaration in SpechtYoungCompleteness | Source classification | Source consumers |
+| --- | --- | --- |
+| `classFunctionEquivConjClasses` | adapted supplier, bind-only organization | `spechtCharacterBasis` |
+| `spechtClassFunction_pairing` | local binding/normalization of actual orthogonality | `linearIndependent_spechtClassFunction`; `spechtCharacterBasis_repr` |
+| `linearIndependent_spechtClassFunction` | direct pinned supplier application | `spechtCharacterBasis` |
+| `spechtCharacterBasis` | adapted supplier construction | `spechtCharacterBasis_apply`; `spechtCharacterBasis_repr`; `eq_sum_spechtTrace` |
+| `spechtCharacterBasis_apply` | definitional basis equation | `spechtCharacterBasis_repr`; `eq_sum_spechtTrace` |
+| `spechtCharacterBasis_repr` | adapted supplier coordinate calculation | `eq_sum_spechtTrace` |
+| `eq_sum_spechtTrace` | local basis expansion | `char_permutationModuleℂ_eq_sum_multiplicity_mul_spechtTrace` |
+| `youngClassFunction` | existing character organization | `youngClassFunction_coordinate`; `char_permutationModuleℂ_eq_sum_multiplicity_mul_spechtTrace` |
+| `youngClassFunction_coordinate` | exact existing D5 Hom pairing application | `char_permutationModuleℂ_eq_sum_multiplicity_mul_spechtTrace` |
+| `char_permutationModuleℂ_eq_sum_multiplicity_mul_spechtTrace` | local character decomposition | `sum_char_permutationModuleℂ_mul_char_permutationModuleℂ` |
+| `sum_char_permutationModuleℂ_mul_char_permutationModuleℂ` | local finite-sum Gram calculation | `SpechtYoungPolynomialGram.coeff_hsymmPart_partWeight_eq_sum_multiplicity_mul` |
+
+The five private selected counting/averaging helpers in
+`SpechtYoungPolynomialGram` have exactly the consumers in the immutable selection
+table. `sum_card_fixedPoints_smul_psumPart_partition` is consumed by
+`coeff_hsymmPart_partWeight_eq_sum_multiplicity_mul`. The latter is the terminal
+WIP endpoint: its future consumer is the actual Young/Kostka Gram comparison, still
+absent. It is not a standalone admission or a theorem of the original HSW scope.
+The existing `SpechtFrobeniusPairing.char_permutationModuleℂ` loses only `private`;
+its proof body is unchanged and is used in both new Gram comparisons.
+
+### Full remaining mathematical and validation boundary
+
+The complete homogeneous coefficient must still be proved equal to
+`sum_mu K(mu,nu) K(mu,xi)` for actual semistandard-tableau Kostka numbers. The
+necessary public supplier chain is Kostka triangularity, the tableau-defined
+Schur monomial expansion, and the complete-homogeneous expansion via Pieri.
+Unitriangular Gram uniqueness then identifies the actual Hom dimensions with
+Kostka numbers. These declarations have been inspected but are not claimed here.
+The unrestricted `psumPart_eq_sum_spechtCharValue_smul_schurPoly` remains missing.
+
+The literal positive-parts triple shape and zero padding, height vanishing above
+three, division-free bialternant with staircase (2,1,0), Vandermonde coefficient
+isolation, exact same-partition trace = HSW.frobChar, and BOTH original weighted
+sums remain missing. All original quantifiers, full positive cycle partitions
+including ones, independent per-occurrence Ev replacements and duplicates,
+reciprocal centralizer product and casts, length sign, even-part three-row shapes,
+rectangle (n,n,0) also at odd n, and the even-binomial/odd-zero values remain due.
+Existing HSW coefficient results and the strongest solution_unique must be reused.
+
+The unfinished audit is issue 24542. The actual PointwiseEqualityRegistrations,
+DependentFamily enrollment and dependent-family Registration definition were
+inspected. A faithful audit over every degree, partition, class function, Young
+module and finite alphabet still lacks complete source reconstruction, lawful
+readout, whole-family intervention and sensitivity, actual observational
+dependence, compiled proofs and binding evidence. No Reg mirror or
+`declared_validated` claim is supplied. No native elaboration, emission, freeze,
+deposit, PR, CI or merge has occurred. These source endpoints require caller-owned
+native validation, axiom/liveness evidence and full consumer construction before
+publication/admission. Issue 21960 is unchanged; 22528 remains coefficient-only.
