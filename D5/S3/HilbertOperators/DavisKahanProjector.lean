@@ -4,8 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Full arbitrary-RCLike complete-Hilbert common-gap Davis--Kahan projector norm bound.
--/
+   digest: Full arbitrary-RCLike complete-Hilbert common-gap Davis--Kahan projector norm bound. -/
 
 /-
 Copyright (c) 2026 Kitware, Inc. All rights reserved.
