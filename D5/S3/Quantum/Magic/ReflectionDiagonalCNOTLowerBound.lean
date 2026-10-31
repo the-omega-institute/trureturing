@@ -17,6 +17,7 @@ set_option autoImplicit false
 noncomputable section
 open scoped BigOperators
 open Matrix
+open Real
 
 namespace D5.S3.Quantum.Magic.ReflectionDiagonalCNOTLowerBound
 
@@ -151,7 +152,72 @@ private lemma character_factor (m : ℕ) (v w : basis m) (f : Bool → ℂ) (hvw
 
 private lemma hard_character (m : ℕ) (hm : 0 < m) (v : basis m) (he : evenLabel v)
     (hv : v ≠ fun _ => false) :
-    character v (fun x => Complex.exp ((hardTheta x : ℂ) * Complex.I)) = -1 := by sorry
+    character v (fun x => Complex.exp ((hardTheta x : ℂ) * Complex.I)) = -1 := by
+  classical
+  let z : basis m := zeroLabel
+  let o : basis m := fun _ => true
+  let f : basis m → ℂ := fun x =>
+    Complex.exp ((hardTheta x : ℂ) * Complex.I) ^ (if dot v x then (-1 : ℤ) else 1)
+  have hzo : z ≠ o := by
+    intro h
+    have hi := congrFun h ⟨0, hm⟩
+    simpa [z, o, zeroLabel] using hi
+  have hzθ : hardTheta z = Real.pi / 2 := by
+    change (if (∀ i, z i = false) ∨ (∀ i, z i = true) then Real.pi / 2 else 0) = _
+    rw [if_pos (Or.inl (by intro i; simp [z, zeroLabel]))]
+  have hoθ : hardTheta o = Real.pi / 2 := by
+    change (if (∀ i, o i = false) ∨ (∀ i, o i = true) then Real.pi / 2 else 0) = _
+    rw [if_pos (Or.inr (by intro i; simp [o]))]
+  have hzdot : dot v z = false := by
+    simp [dot, z, zeroLabel]
+  have hodot : dot v o = false := by
+    unfold dot
+    have hs : Finset.univ.filter (fun i => v i = true ∧ o i = true) =
+        Finset.univ.filter (fun i => v i = true) := by
+      ext i
+      simp [o]
+    rw [hs]
+    have hnot : ¬((Finset.univ.filter (fun i => v i = true)).card % 2 = 1) := by
+      simpa [evenLabel] using he
+    simp [hnot]
+  have hphase : Complex.exp (((Real.pi / 2 : ℝ) : ℂ) * Complex.I) = Complex.I := by
+    rw [Complex.exp_ofReal_mul_I, cos_pi_div_two, sin_pi_div_two]
+    simp
+  have hfz : f z = Complex.I := by simp [f, hzdot, hzθ, hphase]
+  have hfo : f o = Complex.I := by simp [f, hodot, hoθ, hphase]
+  have hrest (x : basis m) (hx : x ∈ (Finset.univ \ {z}) \ {o}) : f x = 1 := by
+    have hxz : x ≠ z := by
+      intro h
+      exact (Finset.mem_sdiff.mp (Finset.mem_sdiff.mp hx).1).2 (by simpa [h])
+    have hxo : x ≠ o := by
+      intro h
+      exact (Finset.mem_sdiff.mp hx).2 (by simpa [h])
+    have hxzero : ¬∀ i, x i = false := by
+      intro hzero
+      apply hxz
+      funext i
+      simp [z, zeroLabel, hzero i]
+    have hxone : ¬∀ i, x i = true := by
+      intro hone
+      apply hxo
+      funext i
+      simp [o, hone i]
+    simp [f, hardTheta, zeroLabel, hxzero, hxone]
+  change ∏ x : basis m, f x = -1
+  rw [Finset.prod_eq_mul_prod_diff_singleton z f (by simp)]
+  have hnotmem : o ∉ (Finset.univ : Finset (basis m)) \ {z} → f o = 1 := by
+    intro ho
+    have hmem : o ∈ ({z} : Finset (basis m)) := by
+      by_contra hnmem
+      exact ho (Finset.mem_sdiff.mpr ⟨Finset.mem_univ _, hnmem⟩)
+    exact (hzo (Finset.mem_singleton.mp hmem).symm).elim
+  rw [Finset.prod_eq_mul_prod_diff_singleton o f hnotmem]
+  have hprod : ∏ x ∈ ((Finset.univ \ {z}) \ {o}), f x = 1 := by
+    apply Finset.prod_eq_one
+    intro x hx
+    exact hrest x hx
+  rw [hprod, hfz, hfo]
+  simp [Complex.I_mul_I]
 
 private lemma rotation_labels (m : ℕ) (circuit : List (gate m))
     (θ : basis m → ℝ) (c : ℂ)
