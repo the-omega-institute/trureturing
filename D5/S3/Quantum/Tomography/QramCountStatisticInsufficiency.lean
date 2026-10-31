@@ -94,14 +94,16 @@ private def witness : Matrix (Fin 2 → Fin 4) (Fin 2 → Fin 4) ℂ := 1 - reje
 
 private lemma walsh_orthogonal (y z : Fin 4) :
     (star (walsh y)) ⬝ᵥ walsh z = if y = z then 1 else 0 := by
+  delta walsh
   fin_cases y <;> fin_cases z <;>
-    norm_num [dotProduct, walsh, Fin.sum_univ_succ]
+    norm_num [dotProduct, Fin.sum_univ_succ]
 
 private lemma plus_walsh : plusState 2 = walsh 0 := by
   have hs : Real.sqrt 4 = 2 := by
-    rw [Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num)] <;> norm_num
+    rw [Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num)]; norm_num
   funext x
-  fin_cases x <;> norm_num [plusState, addressState, walsh, hs]
+  delta plusState addressState walsh
+  fin_cases x <;> norm_num [hs]
 
 private lemma class_one : weightClass 2 1 =
     {![true, false, false, false], ![false, true, false, false],
@@ -148,13 +150,13 @@ private lemma one_overlap (f : Fin 4 → Bool) (hf : f ∈ weightClass 2 1) (y :
     (star (addressState 2 f) ⬝ᵥ walsh y) *
       (star (walsh y) ⬝ᵥ addressState 2 f) = (1 / 4 : ℂ) := by
   have hs : Real.sqrt 4 = 2 := by
-    rw [Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num)] <;> norm_num
+    rw [Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num)]; norm_num
   change (∑ x : Fin 4, star (addressState 2 f x) * walsh y x) *
     (∑ x : Fin 4, star (walsh y x) * addressState 2 f x) = _
   rw [class_one] at hf
   simp only [Finset.mem_insert, Finset.mem_singleton] at hf
   rcases hf with rfl | rfl | rfl | rfl <;> fin_cases y <;>
-    norm_num [dotProduct, addressState, walsh, Fin.sum_univ_succ, hs]
+    delta addressState walsh <;> norm_num [Fin.sum_univ_succ, hs]
 
 private lemma weight_one_law (y z : Fin 4) :
     Matrix.trace (copyState 2 2 1 *
@@ -193,19 +195,21 @@ private lemma class_two_states :
     addressState 2 ![false, true, false, true] = walsh 1 ∧
     addressState 2 ![false, false, true, true] = walsh 2 := by
   have hs : Real.sqrt 4 = 2 := by
-    rw [Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num)] <;> norm_num
+    rw [Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num)]; norm_num
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> funext x <;> fin_cases x <;>
-    norm_num [addressState, walsh, hs]
+    delta addressState walsh <;> norm_num [hs]
 
 private lemma weight_two_state : copyState 2 2 2 = (1 / 3 : ℂ) • reject := by
   rw [copyState_rank, class_two]
   norm_num [Finset.sum_insert, Finset.sum_singleton, Fin.prod_univ_two]
   rw [class_two_states.1, class_two_states.2.1, class_two_states.2.2.1,
     class_two_states.2.2.2.1, class_two_states.2.2.2.2.1, class_two_states.2.2.2.2.2]
-  norm_num [reject, walshPair, Fin.sum_univ_succ, Finset.sum_insert,
+  delta reject
+  norm_num [Fin.sum_univ_succ, Finset.sum_insert,
     Finset.sum_singleton, Finset.card_insert_of_notMem]
   ext x y
-  simp [Matrix.vecMulVec_apply, walshPair]
+  delta walshPair
+  simp [Matrix.vecMulVec_apply]
   ring
 
 private lemma pair_orthogonal (y z u v : Fin 4) :
@@ -217,7 +221,8 @@ private lemma pair_orthogonal (y z u v : Fin 4) :
 
 private lemma reject_projector : rejectᴴ = reject ∧ reject * reject = reject := by
   constructor
-  · simp [reject, Matrix.conjTranspose_sum]
+  · delta reject
+    simp [Matrix.conjTranspose_sum]
   · unfold reject
     simp only [Finset.sum_mul, Finset.mul_sum, Matrix.vecMulVec_mul_vecMulVec,
       pair_orthogonal, Fin.succ_inj, and_self]
@@ -225,7 +230,8 @@ private lemma reject_projector : rejectᴴ = reject ∧ reject * reject = reject
 
 private lemma witness_valid : witness.PosSemidef ∧ (1 - witness).PosSemidef := by
   have he : witnessᴴ * witness = witness := by
-    simp only [witness, Matrix.conjTranspose_sub, Matrix.conjTranspose_one,
+    delta witness
+    simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_one,
       reject_projector.1, sub_mul, mul_sub, one_mul, mul_one, reject_projector.2]
     abel
   constructor
@@ -242,7 +248,7 @@ private lemma address_norm (f : Fin 4 → Bool) :
     rw [Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num)]; norm_num
   change (∑ x : Fin 4, star (addressState 2 f x) * addressState 2 f x) = 1
   have h (x : Fin 4) : star (addressState 2 f x) * addressState 2 f x = (1 / 4 : ℂ) := by
-    cases hb : f x <;> norm_num [addressState, hb, hs]
+    cases hb : f x <;> delta addressState <;> norm_num [hb, hs]
   simp_rw [h]
   norm_num
 
@@ -285,7 +291,8 @@ private lemma witness_success : successProb 2 2 1 2 witness = 29 / 32 := by
     rw [weight_two_state, Matrix.smul_mul, reject_projector.2,
       Matrix.trace_smul, reject_trace]
     norm_num
-  simp only [successProb, witness, sub_sub_cancel]
+  delta successProb witness
+  simp only [sub_sub_cancel]
   rw [Matrix.mul_sub, Matrix.mul_one, Matrix.trace_sub, weight_one_trace, h₁, h₂]
   norm_num
 
@@ -303,8 +310,9 @@ private lemma complement_walsh : 1 - plusProj 2 =
     ∑ y : Fin 3, Matrix.vecMulVec (walsh y.succ) (star (walsh y.succ)) := by
   rw [plusProj, plus_walsh]
   ext x y
+  delta walsh
   fin_cases x <;> fin_cases y <;>
-    norm_num [Matrix.vecMulVec_apply, Fin.sum_univ_succ, walsh, Matrix.one_apply]
+    norm_num [Matrix.vecMulVec_apply, Fin.sum_univ_succ, Matrix.one_apply]
 
 private lemma count_walsh (k : Fin 3) : countProj 2 2 k =
     ∑ y : Fin 4, ∑ z : Fin 4,
@@ -317,9 +325,10 @@ private lemma count_walsh (k : Fin 3) : countProj 2 2 k =
     rw [plusProj, plus_walsh]
   unfold countProj
   simp_rw [complement_walsh]
+  delta walshPair
   fin_cases k <;> ext x y <;>
     simp [h₀, h₁, h₂, hp, Fin.prod_univ_two,
-      Fin.sum_univ_succ, Matrix.vecMulVec_apply, walshPair, Finset.sum_mul, Finset.mul_sum] <;>
+      Fin.sum_univ_succ, Matrix.vecMulVec_apply] <;>
     ring
 
 private lemma count_laws (k : Fin 3) :
@@ -347,9 +356,10 @@ private lemma count_bound (g : Fin 3 → Bool) :
   have h₂₀ : Matrix.trace (copyState 2 2 2 * countProj 2 2 0) = 1 := (count_laws 0).2
   have h₂₁ : Matrix.trace (copyState 2 2 2 * countProj 2 2 1) = 0 := (count_laws 1).2
   have h₂₂ : Matrix.trace (copyState 2 2 2 * countProj 2 2 2) = 0 := (count_laws 2).2
-  simp only [successProb, Matrix.mul_sub, Matrix.mul_one, Matrix.trace_sub, weight_two_trace]
+  delta successProb countTest
+  simp only [Matrix.mul_sub, Matrix.mul_one, Matrix.trace_sub, weight_two_trace]
   cases h₀ : g 0 <;> cases h₁ : g 1 <;> cases h₂ : g 2 <;>
-    norm_num [countTest, Fin.sum_univ_succ, h₀, h₁, h₂, Matrix.mul_add,
+    norm_num [Fin.sum_univ_succ, h₀, h₁, h₂, Matrix.mul_add,
       Matrix.trace_add, h₁₀, h₁₁, h₁₂, h₂₀, h₂₁, h₂₂]
 
 /-- The count statistic is insufficient, already for two copies and four addresses. -/
