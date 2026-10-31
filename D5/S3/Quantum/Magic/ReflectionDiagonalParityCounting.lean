@@ -8,10 +8,6 @@
 
 import Mathlib.Algebra.Ring.BooleanRing
 import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Data.Fin.Tuple.Basic
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Algebra.Order.Monoid.Unbundled.Pow
 
 /-! Counting parity-network outputs, births, and returns. -/
 
@@ -109,6 +105,7 @@ private lemma span_add {m : ℕ} (vs : List (Fin m → Bool)) :
   | nil => simp [listSpan.eq_1, listSpan.eq_2]
   | cons v vs ih =>
     intro a ha b hb
+    rw [listSpan.eq_def] at ha hb ⊢
     rcases Finset.mem_union.mp ha with ha | ha <;>
       rcases Finset.mem_union.mp hb with hb | hb
     · exact Finset.mem_union_left _ (ih a ha b hb)
@@ -152,7 +149,7 @@ private lemma span_card {m : ℕ} (vs : List (Fin m → Bool)) :
   | cons v vs ih =>
     have hc := Finset.card_union_le (listSpan vs) ((listSpan vs).image (fun w => v + w))
     have hi := Finset.card_image_le (s := listSpan vs) (f := fun w => v + w)
-    change (listSpan vs ∪ (listSpan vs).image (fun w => v + w)).card ≤ _
+    rw [listSpan.eq_2]
     rw [List.length_cons, pow_succ]
     omega
 
@@ -162,8 +159,10 @@ private lemma even_mem_outputs {m : ℕ} (gs : List (Fin m × Fin m))
   induction gs generalizing ls with
   | nil => simp [evenOutputs.eq_1, evenOutputs.eq_2, outputs.eq_1, outputs.eq_2]
   | cons p gs ih =>
+    rw [evenOutputs.eq_def, outputs.eq_def]
     by_cases he : parity (ls p.1 + ls p.2) = false
-    · simp only [evenOutputs.eq_1, evenOutputs.eq_2, if_pos he, outputs.eq_1, outputs.eq_2, List.mem_cons, ih]
+    · simp only [evenOutputs.eq_1, evenOutputs.eq_2, ite_eq_left he,
+        outputs.eq_1, outputs.eq_2, List.mem_cons, ih]
       constructor
       · rintro (rfl | ⟨hv, he⟩)
         · exact ⟨Or.inl rfl, he⟩
@@ -171,7 +170,8 @@ private lemma even_mem_outputs {m : ℕ} (gs : List (Fin m × Fin m))
       · rintro ⟨rfl | hv, hvp⟩
         · exact Or.inl rfl
         · exact Or.inr ⟨hv, hvp⟩
-    · simp only [evenOutputs.eq_1, evenOutputs.eq_2, if_neg he, outputs.eq_1, outputs.eq_2, List.mem_cons, ih]
+    · simp only [evenOutputs.eq_1, evenOutputs.eq_2, ite_eq_right he,
+        outputs.eq_1, outputs.eq_2, List.mem_cons, ih]
       constructor
       · rintro ⟨hv, he⟩
         exact ⟨Or.inr hv, he⟩
@@ -230,6 +230,7 @@ private lemma span_outputs {m : ℕ} (gs : List (Fin m × Fin m))
     have hbt : ∀ v ∈ births gs (update ls p), v ∈ s := by
       intro v hv
       apply hb
+      rw [births.eq_def]
       by_cases hh : parity (ls p.1) = true ∧ parity (ls p.2) = true <;>
         simp [births.eq_1, births.eq_2, hh, hv]
     intro v hv he
@@ -284,6 +285,7 @@ private lemma return_balance {m : ℕ} (gs : List (Fin m × Fin m))
   | cons p gs ih =>
     have hi := ih (update ls p)
     have hs := wire_update_count ls p
+    rw [returns.eq_def]
     change evenWires (labels gs (update ls p)) +
       ((if _ then 1 else 0) + returns gs (update ls p)) =
       evenWires ls + (if _ then _ :: births gs (update ls p) else births gs (update ls p)).length
