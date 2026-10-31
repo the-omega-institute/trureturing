@@ -19,7 +19,7 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.EqualOuterThree
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
 open private UpperBounds chart_s_ge_three chart_s_two_large chart_corner
-  from D5.S3.Combinatorics.Circle.FourNegative.EqualOuterThree
+  from D5.S3.Combinatorics.Circle.FourNegative.EqualOuterThree.UpperArithmetic
 open private source_table
   from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.SourceTable
 open private base newBase sourceMod new_base_bounds
@@ -55,13 +55,12 @@ private theorem inventory (s b : ℕ) (R T : List ℕ)
     have hc : List.range' (2*s) (b-1) ++ [2*s+b-1] = List.range' (2*s) b := by
       simpa only [show 2*s+(b-1)=2*s+b-1 by omega, show (b-1)+1=b by omega]
         using (List.range'_1_concat (s:=2*s) (n:=b-1)).symm
-    rw [← hc] at h
-    apply h.trans
-    apply List.Perm.of_eq
-    simp only [List.append_assoc]
-    apply Multiset.coe_eq_coe.mp
-    simp only [← Multiset.coe_add]
-    ac_rfl
+    rw [hc] at h
+    have hswap : (R ++ [2*s+b-1] ++ T).Perm ((R++T)++[2*s+b-1]) := by
+      apply Multiset.coe_eq_coe.mp
+      simp only [← Multiset.coe_add]
+      ac_rfl
+    exact hswap.trans h
   have hU : List.range (s-1) ++ [s-1] = List.range s := by
     simpa only [show s-1+1=s by omega] using (List.range_succ (n:=s-1)).symm
   have hX : List.range' (2*s+b) (s-1) ++ [size s b-1] =
@@ -75,7 +74,7 @@ private theorem inventory (s b : ℕ) (R T : List ℕ)
     rw [List.range_eq_range']
     have h1 := List.range'_append_1 (s:=0) (m:=s) (n:=s-1)
     have h0 : List.range' 0 (2*s-1) ++ [2*s-1] = List.range' 0 (2*s) := by
-      simpa only [Nat.zero_add] using
+      simpa only [Nat.zero_add, show 2*s-1+1=2*s by omega] using
         (List.range'_1_concat (s:=0) (n:=2*s-1)).symm
     have h2 := List.range'_append_1 (s:=0) (m:=2*s) (n:=b)
     have h3 := List.range'_append_1 (s:=0) (m:=2*s+b) (n:=s)
@@ -279,8 +278,8 @@ private theorem physical (s b : ℕ) (v : ℤ) (R T : List ℕ)
     rw [ite_eq_right (by omega), negative_step (2*N+1) Bn Ln (2^(s-1))
       (by rw [← hpowq]; exact grels.2.1)] at hg
     simpa only [show s+(s-1)=vneg by dsimp [vneg]; omega] using And.intro hf hg
-  have hhalf : N/2=(2:ℤ)^(3*s)*2^(b-1)-1 := by
-    have hn : N=2*((2:ℤ)^(3*s)*2^(b-1))-1 := by
+  have hhalf : N/2=((2:ℤ)^s)^3*2^(b-1)-1 := by
+    have hn : N=2*(((2:ℤ)^s)^3*2^(b-1))-1 := by
       dsimp [N,sourceMod]
       rw [hpowy]
       simp only [pow_mul]
@@ -367,11 +366,11 @@ private theorem physical (s b : ℕ) (v : ℤ) (R T : List ℕ)
   have hinsert : insertAt k oldWord j = newWord := by
     let pre := P1++[wneg]++P2++[uneg]
     let post := P3++[xneg]++P4++[vneg]
-    have he : oldWord = pre ++ post := by rfl
+    have he : oldWord = pre ++ post := by simp only [oldWord,pre,post,List.append_assoc]
     have hj' : pre.length = j := by simp [pre,j]
     have hj0 : j = pre.length + 0 := by simp [hj']
     rw [he, hj0, insertAt_add]
-    simp [pre,post,insertAt]
+    simp [pre,post,insertAt,newWord,List.append_assoc]
   refine ⟨oldWord,hperm,?_,j,hj,?_⟩
   · simpa [f,N,A] using hold
   · simpa [g,N,A,hinsert] using hnew
@@ -417,27 +416,28 @@ private theorem actual_of_physical (s b : ℕ) (hs : 2≤s) (l : List ℕ) (j : 
     simpa using hp.length_eq
   have hprelen : pre.length = j := by
     dsimp [pre]
-    rw [List.length_take, Nat.min_eq_left]
-    exact hj
+    rw [List.length_take, Nat.min_eq_left (by omega)]
   have hnewperm : (pre ++ k :: post).Perm (List.range (k+1)) := by
     have he : pre ++ post = l := List.take_append_drop j l
     have h1 : (pre ++ k :: post).Perm (l ++ [k]) := by
-      rw [← he]
+      rw [← he, ← List.singleton_append]
       apply Multiset.coe_eq_coe.mp
       simp only [← Multiset.coe_add]
       ac_rfl
-    exact h1.trans (by simpa [List.range_succ] using hp.append_right [k])
+    exact h1.trans (by simpa only [List.range_succ] using hp.append_right [k])
   have new : OriginalOrder (k+1) (2*seed s b)
       ((pre ++ k :: post).map (label (k+1) (by omega))) := by
     apply lift_order (k+1) (2*seed s b) (by omega) (pre ++ k :: post) hnewperm
-    · simpa [hmod',hseed,insertAt,pre,post] using hnew
+    · have hhalf' : (2*N+1)/2=N := by omega
+      simpa only [hmod',Nat.cast_mul,Nat.cast_ofNat,hseed,hhalf',insertAt,pre,post] using hnew
     · simpa [hmod',hseed] using
         (ThreeNegativeEqualOuterSourceBridge.source_zero (k+1) (2*seed s b) (by dsimp [k,size]; omega))
   have hpr : (pre ++ post).Perm (List.range k) := by
     rw [List.take_append_drop]
     exact hp
   refine ⟨old, ?_⟩
-  rw [marked_word k j hk pre post hprelen hpr]
+  have he : l=pre++post := (List.take_append_drop j l).symm
+  rw [he,marked_word k j hk pre post hprelen hpr]
   exact new
 
 private def wMask (s b : ℕ) : List ℕ :=
@@ -464,9 +464,11 @@ private theorem mask_partition_s_ge_three (s b : ℕ) (hs : 3 ≤ s)
       (List.range'_1_concat (s:=2*s) (n:=h+1)).symm
   have h2 : List.range' (2*s) (h+2) ++ List.range' (2*s+h+2) (s-1) =
       List.range' (2*s) (h+s+1) := by
-    simpa using (List.range'_append_1 (s:=2*s) (m:=h+2) (n:=s-1)).symm
+    simpa only [show h+2+(s-1)=h+s+1 by omega, show 2*s+(h+2)=2*s+h+2 by omega] using
+      (List.range'_append_1 (s:=2*s) (m:=h+2) (n:=s-1))
   have hlen : h+s+1=b-1 := by dsimp [h]; omega
   rw [← hlen, ← h2, ← h1, ← h0]
+  simp only [List.range'_one]
   apply Multiset.coe_eq_coe.mp
   simp only [← Multiset.coe_add]
   ac_rfl
@@ -480,13 +482,14 @@ private theorem mask_partition_two (b : ℕ) (hb : 5 ≤ b) :
   let h := b-5
   have h0 : List.range' 4 h ++ List.range' (4+h) 2 =
       List.range' 4 (h+2) := by
-    simpa using (List.range'_append_1 (s:=4) (m:=h) (n:=2)).symm
+    simpa using (List.range'_append_1 (s:=4) (m:=h) (n:=2))
   have h1 : List.range' 4 (h+2) ++ [4+h+2] = List.range' 4 (h+3) := by
-    simpa using (List.range'_1_concat (s:=4) (n:=h+2)).symm
+    simpa only [show h+2+1=h+3 by omega] using (List.range'_1_concat (s:=4) (n:=h+2)).symm
   have h2 : List.range' 4 (h+3) ++ [4+h+3] = List.range' 4 (h+4) := by
-    simpa using (List.range'_1_concat (s:=4) (n:=h+3)).symm
+    simpa only [show h+3+1=h+4 by omega] using (List.range'_1_concat (s:=4) (n:=h+3)).symm
   have hlen : h+4=b-1 := by dsimp [h]; omega
   rw [← hlen, ← h2, ← h1, ← h0]
+  simp only [List.range'_one]
   apply Multiset.coe_eq_coe.mp
   simp only [← Multiset.coe_add]
   ac_rfl
@@ -499,14 +502,14 @@ private theorem weight_s_ge_three (s b : ℕ) (hs : 3 ≤ s) (hb : s+2 ≤ b)
   rw [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton]
   rw [ladder_sum h (2*s) (b-s-2) H (by intro i hi; exact hh i (by omega))]
   rw [hh (b-s-2+1) (by omega)]
-  have : (2:ℤ)^(b-s-2+1) = 2*2^(b-s-2) := by rw [pow_succ]
+  have : (2:ℤ)^(b-s-2+1) = 2*2^(b-s-2) := by rw [pow_succ]; ring
   rw [this]
   ring
 
 private theorem weight_corner (h : ℕ → ℤ) (H : ℤ)
     (hh : ∀ i < 3, h (4+i)=2^i*H) :
     ((wMaskCorner.map h).sum) = 2*H := by
-  simp [wMaskCorner,hh]
+  simpa only [wMaskCorner,List.map_singleton,List.sum_singleton] using hh 1 (by omega)
 
 private theorem weight_two (b : ℕ) (hb : 5 ≤ b)
     (h : ℕ → ℤ) (H : ℤ)
@@ -540,7 +543,8 @@ private theorem upper_s_ge_three (s b : ℕ) (hs : 3 ≤ s) (hb : s+2 ≤ b) :
     ring
   have hbnd : UpperBounds (2^s) (2^b) (2^(s-1)) (2^(b-1)) v := by
     have hc := chart_s_ge_three (2^(s-1):ℤ) (2^h:ℤ) (by
-      have : (8:ℤ) ≤ 2^s := by exact pow_le_pow_right₀ (by norm_num) (by omega)
+      have : (8:ℤ) ≤ 2^s := by
+        simpa using pow_le_pow_right₀ (by norm_num : (1:ℤ)≤2) (show 3≤s by omega)
       nlinarith [hq]) (by positivity)
     simpa only [v,m,show (2:ℤ)^s=2*(2:ℤ)^(s-1) by exact hq,
       show (2:ℤ)^b=8*(2:ℤ)^(s-1)*(2:ℤ)^h by exact hy,
@@ -578,7 +582,7 @@ private theorem upper_s_two_large (b : ℕ) (hb : 5 ≤ b) :
   have hh : 0 ≤ h := by dsimp [h]; omega
   have hm : 1 ≤ m := by dsimp [m]; positivity
   have hy : (2:ℤ)^b = 32*(2:ℤ)^h := by
-    dsimp [h]; rw [show b=5+h by omega, pow_add]; norm_num; ring
+    rw [show b=5+h by dsimp [h]; omega, pow_add]; norm_num; ring
   have hbnd : UpperBounds (2^2) (2^b) (2^(2-1)) (2^(b-1)) v := by
     have hc := chart_s_two_large (2^h:ℤ) (by positivity)
     simpa only [v,m,hy,show (2:ℤ)^2=4 by norm_num,

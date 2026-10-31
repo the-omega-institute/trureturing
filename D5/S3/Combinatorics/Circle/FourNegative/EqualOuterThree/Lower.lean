@@ -249,9 +249,7 @@ private theorem actual_lower (s b : ℕ) (hb : 2 ≤ b) (hs : b+2 ≤ s) :
     have hwg0 := ladder_sum g (2*s) (b-1) Ln (by intro i hi; exact (posWchain i hi).2)
     simp only [PW,List.map_append,List.sum_append,hmassT.1,hmassT.2]
     rw [show (2:ℤ)^(b-1)=r by rfl] at hwf0 hwg0
-    constructor
-    · simpa [show r-1=(2:ℤ)^(b-1)-1 by rfl] using hwf0
-    · simpa [show r-1=(2:ℤ)^(b-1)-1 by rfl] using hwg0
+    constructor <;> linarith only [hwf0,hwg0]
   have hpositive : 0≤A ∧ 0≤B ∧ 0≤L ∧ 0≤M ∧ 0≤Bn ∧ 0≤Ln ∧ 0≤Mn := by
     have h := (show 1≤A ∧ A<N from hA)
     exact ⟨by omega,by omega,by omega,by omega,hBn,hLn,hMn⟩
@@ -287,12 +285,14 @@ private theorem actual_lower (s b : ℕ) (hb : 2 ≤ b) (hs : b+2 ≤ s) :
     intro i hi; rcases List.mem_append.mp hi with hi|hi
     · exact posblock f L (2*s) (b-1) hpositive.2.2.1 (by intro j hj; exact (posWchain j hj).1) i hi
     · have hi' := List.mem_range'_1.mp hi
+      rw [show i=s+(i-s) by dsimp [T] at hi'; omega]
       rw [(posV (i-s) (by dsimp [T] at hi'; omega)).1]
       positivity
   have posWbankn : ∀ i∈PW++T,0≤g i := by
     intro i hi; rcases List.mem_append.mp hi with hi|hi
     · exact posblock g Ln (2*s) (b-1) hpositive.2.2.2.2.1 (by intro j hj; exact (posWchain j hj).2) i hi
     · have hi' := List.mem_range'_1.mp hi
+      rw [show i=s+(i-s) by dsimp [T] at hi'; omega]
       rw [(posV (i-s) (by dsimp [T] at hi'; omega)).2]
       positivity
   have hgates : Gates (N/2) (PX.map f).sum (f (3*s+b-1))
@@ -307,7 +307,7 @@ private theorem actual_lower (s b : ℕ) (hb : 2 ≤ b) (hs : b+2 ≤ s) :
       hmassX.2,hmassU.2,hmassVR.2,hmassW.2,
       negX.2,negU.2,negV.2,negW.2,hhalf]
     convert endpoints r m hr hm using 3 <;>
-      simp only [A,B,L,M,Bn,Ln,Mn,p,N,k] <;> ring
+      simp only [A,B,L,M,Bn,Ln,Mn,p,N,k,hq,hy] <;> ring
   let word := PX++[3*s+b-1]++PU++[s-1]++R++[2*s-1]++(PW++T)++[2*s+b-1]
   have hold : InStrip f (N/2) 0 word := by
     exact four_strip f (N/2) PX PU R (PW++T)
@@ -323,7 +323,7 @@ private theorem actual_lower (s b : ℕ) (hb : 2 ≤ b) (hs : b+2 ≤ s) :
         (3*s+b-1) (s-1) (2*s-1) (2*s+b-1)
         hfirst posPUn posRn posWbankn hgates.2
   have hperm : word.Perm (List.range k) := by
-    simpa only [word] using inventory s b h hb hs rfl
+    simpa only [word,show 3*s+b=k by dsimp [k]; omega] using inventory s b h hb hs rfl
   have hmod : modulus k=N := by
     dsimp [modulus,k,N,q,y]
     simp only [pow_add]
