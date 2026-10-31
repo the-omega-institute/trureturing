@@ -1592,264 +1592,749 @@ graphs outside the prescribed bipartite orientation and budgets.
 ## 追加锚（本行以下为增补区）
 
 
-## 9. A polynomially uniform first-connection window
+## 9. Polynomial uniformity on a positive-excess sublevel
 
-The fixed-parameter estimates above leave one quantifier gap in Open
-problem 8.3. This section closes a deliberately deep part of that gap.
-The sink number remains the prescribed value \(s=a+1+h\), and every graph
-below is still finite, simple, connected, bipartite with independent source
-and sink parts, has exactly \(N\) sources and \(aN\) edges, and satisfies the
-strict edge inequality (1.3). No support condition, marginal floor, or phase
-separation is added.
-
-### 9.1 Uniform bookkeeping for the high-ratio window
-
-Fix a finite \(R\ge4\), and put
+All laws and graphs in this section have exactly the domains of
+Definition 1.1. In particular every nonempty source neighborhood remains
+allowed. Fix a finite $R\ge4$, put
 
 $$
-J_R=\left\lceil4(R^2+10)\right\rceil,\qquad
-K_R=2^{40}(R+J_R+10)^{40}.
+C_0=R^2+10,\qquad J=\lceil4C_0\rceil,\qquad
+\kappa=h/\sqrt a\in[7/2,R],
 \tag{9.1}
 $$
 
-Let \(A_R^{\mathrm{cap}}\) be a threshold for the already proved uniform
-cap localization in Growing Lemmas 15.2--15.3, with every \(O_R(\cdot)\)
-there replaced by the displayed rational bounds in those lemmas. Thus
-\(A_R^{\mathrm{cap}}\) depends on \(R\) alone and does not depend on a fixed
-pair \((a,h)\). Define
+and increase an $R$-only lower threshold for $a$ when specified below.
+All constants with subscript $R$ are positive and finite and depend only
+on this fixed $R$. Every $O_R$ estimate is uniform in $h$, the law, its
+labels and the bounded indices under discussion. We may assume
+$s\le2a$ and $h\ge J$. A branch index selected from an approximate law
+is not assumed to belong to $J_*$.
 
-$$
-A_R=\max\{A_R^{\mathrm{cap}},(8K_R)^2,8K_R\},\qquad
-C_R=K_R^9,\qquad D_R=2K_R^{20}.
-\tag{9.2}
-$$
-
-The following estimates are the uniform numerical ledger used below.
-
-**Lemma 9.1 (Polynomial cap and price bounds).** If
-
-$$
-a\ge A_R,\qquad \frac72\sqrt a\le h\le R\sqrt a,
-\tag{9.3}
-$$
-
-then every winning index \(j\in J_*\) satisfies \(2\le j\le J_R\), and,
-with \(m,r,n,\alpha,\beta\) as in (1.6),
+**Lemma 9.1 (The relaxed-sublevel bootstrap).** For every sufficiently
+large $a$ depending only on $R$, every law with $H(x)\le M+1$ has a
+partition $C\dot\cup D=[s]$ with the following properties. Write
 
 $$
 \begin{gathered}
-a\le m\le2a,\qquad a\le r\le2a,\qquad
-\frac12\le\alpha\le1,\\
-2\sqrt a\le n\le(R+2)\sqrt a,\qquad
-\frac1{K_Ra^{3/2}}\le\beta\le\frac{K_R}{a^{3/2}},\qquad
-\frac1{K_R}a^{3/2}\le\eta\le K_Ra^{3/2},\\
-M(a,h)\le K_Ra^3,\qquad |\chi_{j,N}|\le K_Ra^{7/2},
+|C|=m=a+j,\quad r=m-1,\quad |D|=n=h+1-j,\\
+u_c=j/r,\quad \alpha=(a-1)/r,\quad
+\beta=j/(rn),\quad \eta=\beta^{-1},\\
+t_k=y_k\ (k\in D),\quad u=\sum_{k\in D}t_k,\quad
+c=\min_{i\in C}y_i,\quad \delta=\max_{k\in D}t_k.
+\end{gathered}
+\tag{9.2}
+$$
+
+Then $2\le j\le J$, $\kappa^2/j^2>5/2$,
+$u>\ell_j=(j-1)/(m-2)$, and
+
+$$
+u=O_R(a^{-1/2}),\qquad
+c\ge1-O_R(a^{-1/2}),\qquad
+\delta\le\beta(1+O_R(a^{-1/4})).
+\tag{9.3}
+$$
+
+The partition is the threshold partition determined by the actual
+marginals. There is no hypothesis on the positive support of $x$.
+
+**Proof.** Growing Lemma 7.1 applies on the enlarged sublevel: the
+comparison $S_1$ gives
+$M+1\le S_1+1\le a^3+C_0a^2$ eventually, uniformly in (9.1).
+Its threshold is $b/a$, with $b=4C_0$, and its core floor is
+$c_0=(8C_0+1)^{-1}$. In particular it gives $1\le j\le J$,
+$t_k<b/a$, $y_i\ge c_0$ on $C$, $u=O_R(a^{-1/2})$, and, for
+$v=a\mathbb P(T\cap D\ne\varnothing)$,
+
+$$
+\begin{gathered}
+v\ge c_R>0,\qquad v\le j+O_R(a^{-1/2}),\\
+\frac{H-B_0(a)}{a^2}
+\ge\kappa^2/v+2v+2j-2-O_R(a^{-1/2}).
 \end{gathered}
 \tag{9.4}
 $$
 
-and every exceptional type price in (2.1) is either zero on the cap
-support or at least \(a^2/K_R\). If \(D_*(a,h)\) is a common positive
-integer denominator for all the rational prices \(\rho_j(L,B)\), all
-\(\chi_{j,N}\), and \(\chi_N\), it may be chosen with
+This invocation uses the stated $a^3+C_0a^2$ sublevel of Growing
+Lemma 7.1, rather than the exact-minimum sublevel of Growing Lemma 15.2.
+For $1\le k\le J$, direct expansion of $S_k$ gives
 
 $$
-D_*(a,h)\le K_Ra^6.
+\frac{S_k-B_0(a)}{a^2}=g_k(\kappa)+O_R(a^{-1/2}),\qquad
+g_k(\kappa)=\kappa^2/k+4k-2.
 \tag{9.5}
 $$
 
-**Proof.** Growing Lemma 15.2 gives the finite index range and the strict
-margin \(n^2/(j^2a)>5/2\) after increasing \(A_R^{\mathrm{cap}}\). The
-bounds on \(m,r,n,\alpha,\beta,\eta\) then follow directly from (1.6),
-\(h\le R\sqrt a\), and \(a\ge(8K_R)^2\). Substitution in (1.8) and
-(2.1), using \(n^2/(j^2a)>5/2\), gives
+Let $\mathcal U(\kappa)=\min_{k\le J}g_k(\kappa)$ and
+$\phi_j(\kappa)=\min_{0<w\le j}
+(\kappa^2/w+2w+2j-2)$. Growing Theorem 7.2's scalar evaluation
+identifies $\min_j\phi_j=\mathcal U$ on this interval. Clipping
+$v$ to $w=\min(v,j)$ in (9.4), and using
+$H\le M+1\le\min_{k\le J}S_k+1$, gives
 
 $$
-rc_j\ge a^3/K_R,\qquad b_j\ge a^3/K_R,
+0\le\phi_j(\kappa)-\mathcal U(\kappa)
+\le O_R(a^{-1/2})+a^{-2}.
 \tag{9.6}
 $$
 
-after the same threshold increase; (2.3)--(2.5) then give the stated
-lower bound for every nonzero price. The formula (1.5) gives
-\(M=S_j\le K_Ra^3\), while (1.8) gives the bound for \(\chi_{j,N}\)
-because \(n=O_R(\sqrt a)\), \(b_j=O_R(a^3)\), \(d_{j,N}<r=O(a)\),
-and \(c_j=O_R(a^2)\). Finally, clear the denominators in (1.6),
-(1.8), and (2.1). Their factors are among \(j\), \(r\), \(n\), and
-\(a-1\), each bounded by \(K_Ra\); multiplying the displayed factors
-gives the safe bound (9.5). No enumeration of labelled subsets is used.
-\(\square\)
-
-**Lemma 9.2 (Uniform realization and full-class lower estimate).** Under
-(9.3), for every integer \(N\ge K_R^{20}a^{20}\) there is an actual graph in
-\(\mathfrak G_N(a,h)\) with a winning \(j\) satisfying
-\(\chi_{j,N}=\chi_N\) and
+At a zero of this difference in $[7/2,R]$, the scalar phase formula
+excludes $j=1$. For $j=2$ it gives $\kappa^2/j^2\ge49/16$;
+for $j\ge3$ it gives $\kappa^2/j^2\ge4(j-1)/j\ge8/3$.
+Consequently the minimum of $\phi_j-\mathcal U$ on the finite union
 
 $$
-W(G)\le M+\frac{\chi_N}{N}+\frac{K_R^9a^{17}}{N^2}.
+\{(\kappa,1):7/2\le\kappa\le R\}
+\ \cup\!
+\bigcup_{j=2}^J
+\{(\kappa,j):7/2\le\kappa\le R,\ \kappa^2/j^2\le5/2\}
 \tag{9.7}
 $$
 
-For every graph \(G\in\mathfrak G_N(a,h)\),
+is a positive $R$-only number. The functions are explicit continuous
+functions on these compact sets; empty sets are omitted. Choosing $a$
+so that the right side of (9.6) is smaller than this number proves the
+index and margin assertions. This compactness concerns a fixed ratio
+interval and a bounded finite index set, not laws at fixed $a,h$.
+
+For this same actual $j$, use $H\le S_j+1$ in (9.4)--(9.5).
+On $0<w\le j$, the derivative of $\kappa^2/w+2w$ is at most
+$-1/2$. Hence $j-w=O_R(a^{-1/2})$, and
+$v=j+O_R(a^{-1/2})$. Since $au\ge v$ and
+$a\ell_j=j-1+O_R(a^{-1})$, this proves $u>\ell_j$.
+
+We give the residual bootstrap on this enlarged sublevel explicitly.
+For the same law set
 
 $$
-W(G)\ge M+\frac{\chi_N}{N}-\frac{K_R^9a^{17}}{N^2}.
+\begin{gathered}
+B=|T\cap D|,\quad L=|T\cap C|,\quad K=L+B,\quad A=\{B>0\},\\
+\mathfrak a=mr(2m-1),\quad \mathfrak b=3m^2-3m+1,\quad d=2m-1,\\
+Q(l)=(m-l)(r-l)(2m-1+l)=\mathfrak a-\mathfrak b l+l^3,\\
+f_u(y)=r^2/y-d(j-1+u)/y^2,\quad \bar y=(a-u)/m,\\
+\mathcal S_f=\sum_{i\in C}f_u(y_i)-m f_u(\bar y),\\
+\mathcal B(w)=\frac{r^2m^2}{a-w}
+             -\frac{dm^3(j-1+w)}{(a-w)^2},\qquad
+\mathcal A(u)=\frac{\mathcal B(0)-\mathcal B(u)}u,\\
+\gamma=\eta^2-\mathfrak a+\mathcal A(u).
+\end{gathered}
 \tag{9.8}
 $$
 
-The lower estimate is over the full original graph class.
-
-**Proof.** Choose \(j\) with \(\chi_{j,N}=\chi_N\), set \(d=d_{j,N}\), and
-use the construction of Lemma 4.2: \(n\) distinct degree-two
-core--tail connectors, \(d\) missing-one core sources, full-core sources
-and balanced tail singletons. The residue definition of \(d\) makes
+On $c_0\le y\le1$, differentiation gives $f_u''(y)\ge a^2$
+eventually. Also, uniformly on $0\le w\le u$,
 
 $$
-F=\frac{(a-1)N-n-(r-1)d}{r},\qquad
-T=N-F-n-d
+\begin{gathered}
+\mathcal B'(w)=-a^2+O_R(a),\qquad
+\mathcal A(u)=a^2+O_R(a),\\
+z_*:=\frac{n^2}{j^2a}=\frac{\kappa^2}{j^2}+O_R(a^{-1/2}),\qquad
+\eta^2/a^3=z_*+O_R(a^{-1}),\\
+(\mathfrak a-\mathcal A(u))/a^3=2+O_R(a^{-1}),\qquad
+\gamma\ge a^3/4,\quad \gamma=O_R(a^3).
+\end{gathered}
 \tag{9.9}
 $$
 
-integers. From (9.4) and \(N\ge K_Ra^{20}\), \(F>\alpha N/2\) and
-every tail degree is \(>\beta N/2\); since \(s\le K_Ra\), all source
-degrees are strictly smaller than their adjacent sink degrees. The
-construction therefore lies in the original class for every integer
-residue, with no congruence restriction on \(N\).
-
-For this graph the degree-ratio expansion (9.4)--(9.5) and (9.9) give
-the fixed formulas (4.8) with an error bounded by \(K_R^3a^{12}/N^2\).
-For example, the fourth-order remainder is bounded by
+The incidence identities (Growing (15.12)--(15.14)) are algebraic
+identities and inequalities for this actual law. With
+$I_i=\mathbf1_{i\in T}$ and
 
 $$
-N(aN)\left(\frac{2K_Ra}{\beta N}\right)^6
-\le K_R^9a^{17}N^{-4}
-\le K_R^9a^{17}N^{-2},
+\rho_i=(1-I_i)d(r-L)+I_i(m-L)(m-L-1)\ge0,
 \tag{9.10}
 $$
 
-and the rational denominator expansions in (7.6) are smaller than the
-same \(K_R^9a^{17}N^{-2}\) envelope. This proves (9.7).
-
-For the lower bound, first consider a graph with value no larger than the
-right side of (9.7). By (9.4), this is a sublevel \(W\le2K_Ra^3\).
-The bridge (3.10) therefore gives \(y_i\ge K_R^{-1}a^{-3}\). Inserting
-this bound and \(s\le K_Ra\) into (3.11) yields
+they read
 
 $$
-0\le H(x_G)-W(G)\le K_R^9a^{17}N^{-2}.
+\begin{gathered}
+\sum_{i\in C}\rho_i=Q(L),\qquad
+\mathbb E\rho_i=\mathbb E[L^2I_i]-r^2y_i+d(j-1+u),\\
+H\ge H_D+\mathcal B(u)+\mathbb E Q(L)+\mathcal S_f,\\
+ru-j\le m\mathbb E[B-1;A]+\mathbb E[L;A].
+\end{gathered}
 \tag{9.11}
 $$
 
-Growing Lemma 15.3, with the same explicit denominator bounds, places
-the law in one of the cap neighborhoods; Growing Theorem 15.5 identifies
-the corresponding sublevel minimum with \(M(a,h)\). On that neighborhood,
-the quantitative form of (3.2), together with the price bound
-\(P(x)\ge(a^2/K_R)\varepsilon\) from Lemma 9.1, gives
-\(\varepsilon\le K_R^3a^{3/2}/N\): indeed the upper construction gives
-\(H(x_G)-M\le K_R^3a^{7/2}/N+K_R^9a^{17}/N^2\), and the second term is
-absorbed by \(N\ge K_R^{20}a^{20}\). The Taylor estimate (3.2), whose second
-derivatives are bounded by \(K_Ra^{9/2}\) on these neighborhoods, then
-gives
+Here $H_D=\mathbb E[K^2\sum_{k\in T\cap D}t_k^{-2};A]$.
+Nonnegativity in (9.10) follows from the consecutive integer factors,
+including $L=m$. For $K\ge L$, dropping the nonnegative difference
+$K^2-L^2$ and using $y_i^{-2}\ge1$ proves the middle line of
+(9.11). Strong Jensen gives
+$\mathcal S_f\ge(a^2/2)\sum_{i\in C}(y_i-\bar y)^2$.
+
+For $B>0$ define
 
 $$
-W(G)\ge M+\frac{\mathcal P_j(G)}N-\frac{K_R^9a^{17}}{N^2}.
+\begin{aligned}
+V_T&=\sum_{k\in T\cap D}t_k^{-1},\\
+\mathcal G_T
+&=K^2\sum_{k\in T\cap D}t_k^{-2}+Q(L)-\mathcal A(u)B
+  -2\eta V_T+\gamma B-\frac\gamma r\{m(B-1)+L\}.
+\end{aligned}
 \tag{9.12}
 $$
 
-Here \(j\) is the actual winning cap of that neighborhood. Lemma 4.1
-applies to every source type, without a support restriction, and gives
-\(\mathcal P_j(G)\ge\chi_{j,N}\ge\chi_N\). A graph above the sublevel
-already exceeds (9.8), while a graph in it satisfies (9.12), proving
-(9.8) over the whole class. The powers in (9.10)--(9.12) are enlarged
-to \(17\) only to use one envelope for all core and tail denominators.
-\(\square\)
-
-### 9.2 The uniform theorem and source exclusion
-
-**Theorem 9.3 (Polynomially uniform first connection correction).** Let
-\(R\ge4\) be finite and use (9.1)--(9.2). Put
+The actual marginal identity gives $\mathbb E[V_T;A]=n$.
+Substitution in (9.11), using $\gamma\ge0$, yields
 
 $$
-p=50,\qquad q=40.
+\begin{gathered}
+H\ge E_j+\mathbb E[\mathcal G_T;A]
+              +\mathbb E[Q(L);A^c]+\mathcal S_f,\\
+E_j=\mathcal B(0)+2\eta n-j\gamma/r=S_j+O_R(a).
+\end{gathered}
 \tag{9.13}
 $$
 
-For every pair in (9.3) and every integer
+The last equality follows from
+$\mathcal B(0)=a^3+2ja^2+O_R(a)$,
+$j(\mathfrak a-\mathcal A(u))/r=2ja^2+O_R(a)$ and
+$m^3r/(a-1)=a^3+4ja^2+O_R(a)$.
+For a tail singleton, $\mathcal G_{\{k\}}=(t_k^{-1}-\eta)^2$.
+For every other type with $B>0$, completing reciprocal squares gives
 
 $$
-N\ge\left\lceil D_Ra^p\right\rceil,
+\mathcal G_T\ge
+\eta^2(1-B/K^2)-\mathcal A(u)(B-1)
+-\mathfrak b L+L^3-\frac\gamma r(K-1).
 \tag{9.14}
 $$
 
-the original class is nonempty and
+If $2\le K\le\sqrt a$, then $B/K^2\le1/2$ and all negative
+terms after the first are $O_R(a^{5/2})$. Thus (9.14) is at least
+$a^3/4$ eventually. If $K>\sqrt a$, the actual threshold
+$t_k<b/a$ gives $K^2t_k^{-1}>4\eta$ eventually. Using $Q(L)\ge0$
+in (9.12) instead gives
 
 $$
-\left|V_N(a,h)-M(a,h)-\frac{\chi_N(a,h)}N\right|
-\le\frac{C_Ra^q}{N^2}.
+\mathcal G_T\ge\frac{BK^2a^2}{2b^2}-\mathcal A(u)B
+            +\gamma\left(1-\frac{K-1}r\right).
 \tag{9.15}
 $$
 
-Moreover every exact minimizer \(G\) has a cap partition and a law-winning
-index \(j\in J_*\) with \(\chi_{j,N}=\chi_N\), and its source
-neighborhoods are exactly the three types in Theorem 1.3:
+For $K\le m$ the last term is nonnegative; for $K>m$ its negative
+part is at most $\gamma n/r=O_R(a^{5/2})$, whereas the first
+term then has order at least $a^4$. In both cases (9.15) is at
+least $a^3/(4b^2)$ eventually. This covers every $K\le s$.
 
-1. one two-element core--tail connector for each of the \(n=h+1-j\)
-   labelled tails;
-2. exactly \(d_{j,N}\) missing-one core sources \(C\setminus\{i\}\);
-3. full-core sources \(C\) and singleton tail sources for every remaining
-   source.
-
-All ties between winning laws, all price ties, every integer residue of
-\(d_{j,N}\), and every feasible endpoint, omission, and balanced-tail
-allocation remain in the statement. The theorem does not choose a least
-threshold or least period and does not optimize over a variable sink count.
-
-**Proof.** Since \(a\ge1\), (9.7)--(9.8) imply (9.15) with \(q=40\)
-whenever (9.14) holds, after the harmless enlargement in (9.2). In
-particular the explicit construction in Lemma 9.2 proves nonemptiness.
-
-It remains to prove the source assertion. Let \(G\) be an exact minimizer
-and use the cap \(j\) supplied by (9.12). Combining (9.7), (9.12), and
-\(\mathcal P_j(G)\ge\chi_{j,N}\ge\chi_N\) gives
+All three residuals in (9.13) are therefore nonnegative. Since
+$H\le M+1\le S_j+1$, their sum is $O_R(a)$; the added constant
+one has been retained in this comparison. It follows that
 
 $$
-0\le\mathcal P_j(G)-\chi_N
-\le\frac{2K_R^9a^{17}}N.
+p_2:=\mathbb P(A,K\ge2)=O_R(a^{-2}),\qquad
+\sum_{i\in C}(y_i-\bar y)^2=O_R(a^{-1}).
 \tag{9.16}
 $$
 
-By (9.5), a strict inequality on the left is at least
-\(D_*^{-1}\ge K_R^{-1}a^{-6}\). The threshold (9.14), with
-\(D_R=2K_R^{20}\), makes the right side of (9.16) smaller than this gap.
-Therefore \(\mathcal P_j(G)=\chi_N\), and both inequalities
-\(\mathcal P_j(G)\ge\chi_{j,N}\ge\chi_N\) are equalities. Lemma 4.1
-now gives exactly the three source types listed above. Its equality proof
-also gives one connector for each tail and the residue count
-\(d_{j,N}\), so no source support or phase assumption has entered. The
-argument treats the finite set of law ties and every residue separately
-inside one common bound; it never replaces a joint realization by
-independent marginal optima. \(\square\)
+As $\bar y=1-O_R(a^{-1})$, this gives the core bound in (9.3).
+Put $x_k=x_{\{k\}}$. Then $0\le t_k-x_k\le p_2$.
+If $w=\eta t_k\ge1$, we have $x_k\ge t_k/2$ eventually,
+since $\eta p_2=O_R(a^{-1/2})$. Its singleton square implies
 
-The explicit exponents \(p=50\) and \(q=40\) are intentionally wasteful.
-They are chosen so that the polynomial denominator, localization, and
-degree-ratio estimates are all dominated by one threshold. The result is
-therefore a genuine common-growth theorem in the original graph domain,
-but it does not assert that \(50\) is least, that the threshold in (9.14)
-is least, or that the bound remains valid near \(N\asymp a^2\). Open
-problem 8.3 still contains the least-threshold and least-period questions,
-the smaller transition scales, the exact later analytic template choice,
-and the extremum when the number of sinks varies.
+$$
+\frac\eta2\frac{(w-1)^2}{w}
+\le x_k(t_k^{-1}-\eta)^2\le O_R(a).
+\tag{9.17}
+$$
 
-The cap formulas and all graph constructions used here come from Growing
-Definition 9.1, Lemma 9.2, Lemmas 15.2--15.3 and Theorem 15.5. The
-nonlinear normalization is the maximum-endpoint normalization in (1.4),
-with no \(1/\sqrt2\) factor. The original index source is
-Albalahi--Das--Ali--Barman--Hamza, *On the hyperbolic Sombor index and its
-counterpart*, Discrete Math. Lett. 16 (2025), 108--115,
-[DOI 10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176),
-§1 and §4. The proof above is a repository derivation from those
-definitions and the cited Growing results; it makes no worldwide novelty
-claim. Possible full-text overlap with Zhao--Zhao, *Extremal values with
-respect to vertex-degree-based topological indices in unicyclic and
-bicyclic graphs*, DOI
+Thus $(w-1)^2/w=O_R(a^{-1/2})$, so $w-1=O_R(a^{-1/4})$.
+Labels with $t_k<\beta$ already obey the asserted upper bound.
+This proves (9.3) for the positive-excess sublevel. ∎
+
+**Theorem 9.2 (Full-law polynomial cap stability, including near
+branches).** There are $A_R,B_R$ such that for every integer pair in
+(9.1) with $a\ge A_R$ and every original law with
+
+$$
+0\le\tau:=H(x)-M\le1,
+\tag{9.18}
+$$
+
+the actual partition of Lemma 9.1 has an index $2\le j\le J$ and
+satisfies $0\le S_j-M\le\tau$. For its notation (9.2), let
+$\varepsilon=\sum_{T\text{ exceptional}}x_T$, with exceptional
+meaning every type except $C$ and the singletons in $D$. Then
+
+$$
+\begin{gathered}
+e:=\mathbb E[K-1;A]\le\tau/a^3,\qquad
+|u-u_c|\le4\tau/a^3,\qquad
+\varepsilon\le16\tau/a^2,\\
+|y_i-\alpha|\le3\varepsilon\quad(i\in C),\\
+\sum_{k\in D}(t_k-u/n)^2\le8\beta^3\tau,\qquad
+\max_{k\in D}|t_k-\beta|
+\le\sqrt{8\beta^3\tau}+\frac{4\tau}{na^3},\\
+\|x-x^{j,*}\|_1\le B_R a^{-2}\sqrt\tau.
+\end{gathered}
+\tag{9.19}
+$$
+
+Here $x^{j,*}$ is the actual cap law on this partition, even when
+$j$ is a nonwinning index. In particular every tail marginal is
+between $\beta/2$ and $3\beta/2$ after increasing $A_R$.
+There is a quantitative winning-index implication:
+
+$$
+\tau\le\frac1{2J^2a}\quad\Longrightarrow\quad j\in J_*.
+\tag{9.20}
+$$
+
+**Proof.** We retain the Jensen losses in the strict-payment argument.
+Use $\mathfrak a,\mathfrak b,d,\rho_i$ from (9.8)--(9.10), and put
+
+$$
+\begin{gathered}
+\mathfrak c=rd,\qquad
+b(u)=d((m-2)u-(j-1))>0,\\
+F_j(u)=\frac{n^2}{u}+\frac{r^2m^2}{a-u}
+                    +\frac{m^3b(u)}{(a-u)^2},\\
+P_j=-F_j'(u_c),\qquad
+\Lambda=3/\delta^2-\max\{\mathfrak a,\mathfrak b\}/c^2.
+\end{gathered}
+\tag{9.21}
+$$
+
+On $A$, each $\mathfrak c B-\rho_i\ge0$, and
+
+$$
+\sum_{i\in C}(\mathfrak c B-\rho_i)
+=\mathfrak a(B-1)+\mathfrak b L-L^3
+\le\max\{\mathfrak a,\mathfrak b\}(K-1).
+\tag{9.22}
+$$
+
+Indeed for $I_i=0$ the left summand is
+$d\{r(B-1)+L\}$; for $I_i=1$ it is
+$\mathfrak c(B-1)+r^2+dL-L^2\ge0$ for $1\le L\le m$.
+Off $A$ every $\rho_i\ge0$. Weight these signed inequalities
+by $y_i^{-2}\le c^{-2}$, and use
+$B(K^2-1)\ge3(K-1)$ on $A$. The exact incidence identity for
+$H$ then gives
+
+$$
+H\ge\sum_{k\in D}t_k^{-1}
+       +\sum_{i\in C}\{r^2/y_i+b(u)/y_i^2\}+\Lambda e.
+\tag{9.23}
+$$
+
+For example this identity follows directly by substituting
+$\mathbb E\rho_i=\mathbb E[L^2I_i]-r^2y_i+d(j-1+u)$,
+and keeping the nonnegative core term from $K^2-L^2$.
+
+Let $\bar t=u/n$. The two Jensen losses in (9.23) can be
+retained as
+
+$$
+\begin{gathered}
+H\ge F_j(u)+\Lambda e+\mathcal J_D
+                   +a^2\sum_{i\in C}(y_i-\bar y)^2,\\
+\mathcal J_D=\sum_{k\in D}t_k^{-1}-n^2/u
+=\sum_{k\in D}\frac{(t_k-\bar t)^2}{\bar t^2t_k}
+\ge\frac1{8\beta^3}\sum_{k\in D}(t_k-\bar t)^2.
+\end{gathered}
+\tag{9.24}
+$$
+
+The last bound uses $\bar t\le\delta\le2\beta$ from Lemma 9.1.
+For the core loss, the second derivative of
+$r^2/y+b(u)/y^2$ is at least $2a^2$ on $0<y\le1$.
+
+The scalar function in (9.21) is strictly convex on
+$\ell_j<u<a$: differentiation gives Growing (15.22), with all
+four displayed terms positive. At $u_c$ its exact derivative is
+
+$$
+F_j'(u_c)=-\frac{n^2r^2}{j^2}
+ +\frac{r^2(2mr^2+2m-1)}{(a-1)^2}.
+\tag{9.25}
+$$
+
+By (9.9), $P_j/a^3=z_*-2+O_R(a^{-1})$.
+The bounds (9.3) therefore give, uniformly over all surviving indices,
+
+$$
+P_j\ge a^3/4,\qquad
+\frac{\Lambda-(m/r)P_j}{a^3}
+\ge2z_*-O_R(a^{-1/4})\ge1.
+\tag{9.26}
+$$
+
+The original mean also gives $(u-u_c)_+\le(m/r)e$ by
+(9.11), since $m(B-1)+L\le m(K-1)$ on $A$.
+Apply the supporting tangent of $F_j$ at $u_c$, where $F_j(u_c)=S_j$.
+If $u\le u_c$, keep $P_j(u_c-u)$; if $u>u_c$, pay this
+negative tangent term using $(m/r)P_je$. Equations (9.24)--(9.26)
+prove the quantitative inequality
+
+$$
+H-S_j\ge a^3 e+\frac{a^3}{4}(u_c-u)_+
+       +\mathcal J_D+a^2\sum_{i\in C}(y_i-\bar y)^2.
+\tag{9.27}
+$$
+
+In particular $S_j\le H$ and $S_j\ge M$, because its cap is an
+admissible law. Thus every term on the right is at most $\tau$.
+This proves the assertions about $e,u$ and the tail variance.
+The supporting-tangent inequality used here has precisely the
+one-dimensional convexity hypotheses verified in (9.25)--(9.26);
+see Boyd--Vandenberghe, *Convex Optimization*, §3.1.3, printed p.69.
+
+To obtain exceptional mass, retain the exact common-mean identity
+
+$$
+\zeta:=\mathbb E[m-L;A^c]
+=j-ru+r\mathbb E[B-1;A]+e
+\le r(u_c-u)_++me.
+\tag{9.28}
+$$
+
+On $A^c$ every type other than $C$ has $m-L\ge1$; on $A$ every
+exceptional type has $K-1\ge1$. Hence
+$\varepsilon\le\zeta+e\le(4r+m+1)\tau/a^3
+\le16\tau/a^2$, using $m,r\le2a$.
+Normalization and the original mean give (3.4), so
+
+$$
+x_C-\alpha=-\frac1r\sum_{T\text{ exceptional}}(K-1)x_T,
+\qquad |x_C-\alpha|\le2\varepsilon.
+\tag{9.29}
+$$
+
+Every core marginal is $x_C$ plus at most $\varepsilon$, proving
+its bound. The tail bound in (9.19) follows from (9.24) and
+$|\bar t-\beta|=|u-u_c|/n$.
+Here $n\asymp_R\sqrt a$ and $\beta\asymp_R a^{-3/2}$.
+Consequently that tail bound divided by $\beta$ tends uniformly
+to zero for $\tau\le1$; this proves its asserted neighborhood.
+Also
+
+$$
+\sum_{k\in D}(t_k-x_{\{k\}})
+=\mathbb E[B;A,K\ge2]\le2e.
+\tag{9.30}
+$$
+
+Combining (9.29)--(9.30) with Cauchy for the tail deviations gives
+
+$$
+\|x-x^{j,*}\|_1
+\le3\varepsilon+2e+\sqrt{8n\beta^3\tau}
+                          +4\tau/a^3
+\le B_R a^{-2}\sqrt\tau.
+\tag{9.31}
+$$
+
+Finally $S_j$ has denominator dividing $j(a-1)$. If $k\in J_*$,
+a positive $S_j-S_k$ is at least $1/(jk(a-1))\ge1/(J^2(a-1))$.
+The bound $S_j-M\le\tau$ therefore proves (9.20).
+No separation assumption on the real phase parameter has been imposed;
+nonwinning branches remain in (9.19) until this rational test excludes
+them. All exact ties remain. ∎
+
+**Lemma 9.3 (All-cardinality local remainder bounds).** There are
+$A_R,L_R$ such that, for every winning cap and original law satisfying
+
+$$
+\varepsilon\le1/16,\qquad
+|y_k-\beta|\le\beta/2\quad(k\in D),
+\tag{9.32}
+$$
+
+one has, with $P(x)$ as in (3.1) and $\nu_k=y_k-\beta$,
+
+$$
+H(x)\ge S_j+P(x)+\frac1{3\beta^3}\sum_{k\in D}\nu_k^2
+                         -L_Ra^{11}\varepsilon^2.
+\tag{9.33}
+$$
+
+In addition, along any probability-law segment with marginals at least
+$\delta_0>0$, a direction $v$ satisfies
+
+$$
+|D^2H(x)[v,v]|\le10s^3\delta_0^{-3}\|v\|_1^2.
+\tag{9.34}
+$$
+
+The constants cover every source cardinality up to $s$.
+
+**Proof.** Put $z=x_C$ and use (9.29). For each core label set
+$e_i=\sum_{T\text{ exceptional},\,i\in T}x_T$ and
+$f_i=\sum_{T\text{ exceptional},\,i\in T}K^2x_T$.
+Then $0\le e_i\le\varepsilon$, $0\le f_i\le s^2\varepsilon$,
+and its energy is $(m^2z+f_i)/(z+e_i)^2$. The marginal displacement
+has magnitude at most $3\varepsilon$ and the numerator displacement
+at most $2m^2\varepsilon+s^2\varepsilon$.
+Since $\alpha\ge1/2$, the segment joining these arguments to their
+cap arguments has marginal at least $1/4$. Direct differentiation of
+$A/y^2$ bounds the sum of the core Taylor remainders by
+$O_R(a^3\varepsilon^2)$.
+
+For each tail label set
+
+$$
+q_k=\sum_{T\text{ exceptional},\,k\in T}(K^2-1)x_T\ge0.
+\tag{9.35}
+$$
+
+The exact tail energy is $\sum_k(1/y_k+q_k/y_k^2)$, and
+$\|q\|_2\le\sum_kq_k\le s^3\varepsilon$.
+On (9.32), the exact reciprocal identity and the derivative of $y^{-2}$
+give
+
+$$
+\begin{aligned}
+\sum_k\frac1{y_k}
+&\ge\frac n\beta-\beta^{-2}\sum_k\nu_k
+                           +\frac2{3\beta^3}\|\nu\|_2^2,\\
+\sum_k\frac{q_k}{y_k^2}
+&\ge\beta^{-2}\sum_kq_k
+                      -16\beta^{-3}\|q\|_2\|\nu\|_2.
+\end{aligned}
+\tag{9.36}
+$$
+
+The first line uses
+$1/y=1/\beta-(y-\beta)/\beta^2+(y-\beta)^2/(\beta^2y)$.
+The inequality $16QV\le V^2/3+192Q^2$ retains
+$\|\nu\|_2^2/(3\beta^3)$ and pays at most
+$192\beta^{-3}s^6\varepsilon^2$.
+Since $\beta^{-3}=O_R(a^{9/2})$ and $s\le2a$, this payment is
+$O_R(a^{21/2}\varepsilon^2)\le O_R(a^{11}\varepsilon^2)$.
+The core and tail linear terms, including $\beta^{-2}\sum q_k$,
+are exactly $DH(x^{j,*})[x-x^{j,*}]=P(x)$ by Lemma 2.3.
+This proves (9.33).
+
+For (9.34), write $A_i(x)=\sum_{T\ni i}K^2x_T$.
+On a probability-law segment, $0\le A_i\le s^2y_i$, while
+$|D A_i[v]|\le s^2\|v\|_1$ and $|D y_i[v]|\le\|v\|_1$.
+The exact second derivative is
+
+$$
+D^2(A_i/y_i^2)[v,v]
+=6A_i(Dy_i[v])^2/y_i^4-4DA_i[v]Dy_i[v]/y_i^3.
+\tag{9.37}
+$$
+
+Its absolute value is at most $10s^2\delta_0^{-3}\|v\|_1^2$.
+Summing over $s$ labels proves (9.34), without counting or
+restricting the exceptional types. ∎
+
+**Lemma 9.4 (Uniform graph realization and near-minimum comparison).**
+There are $A_R,U_R,E_R,T_R$ such that, whenever (9.1) holds,
+$a\ge A_R$ and $N\ge a^{24}$, the original graph class is
+nonempty and contains a graph with
+
+$$
+W(G)\le M+\chi_N/N+U_Ra^{10}/N^2.
+\tag{9.38}
+$$
+
+Every original graph with value at most the right side of (9.38)
+satisfies the same-law bounds
+
+$$
+0\le H(x_G)-W(G)\le T_Ra^{17}/N^2,\qquad
+0\le H(x_G)-M\le E_Ra^{7/2}/N.
+\tag{9.39}
+$$
+
+**Proof.** Uniformly for the bounded winning indices,
+$m,r\in[a,2a]$, $n\asymp_R\sqrt a$, $\alpha\ge1/2$ and
+$\beta\asymp_R a^{-3/2}$. The displayed price formulas give
+$b_j=O_R(a^3)$, $c_j=O_R(a^2)$, hence
+$0<\chi_{j,N}=O_R(a^{7/2})$ and $M=O_R(a^3)$.
+
+Choose a winning $j$ with $\chi_{j,N}=\chi_N$. Reuse Lemma 4.2's
+single joint construction: $n$ connectors, $d=d_{j,N}<r$
+missing-one core sources, and
+
+$$
+F=\frac{(a-1)N-n-(r-1)d}{r},\qquad T=N-F-n-d.
+\tag{9.40}
+$$
+
+The residue makes $F,T$ integers. The exact shared budgets are
+$F+T+n+d=N$ and $mF+rd+2n+T=aN$. Write
+$f_0=(n+(r-1)d)/r=O_R(a)$, so $F=\alpha N-f_0$ and
+$T=n\beta N-n+(n-d)/r$. Give the $T$ singleton sources to
+the $n$ tails with counts differing by at most one. Each tail degree
+then differs from $\beta N+1/r-d/(rn)$ by less than one.
+A core degree is $F+d-o_i+e_i$, where $o_i$ and $e_i$ count its
+omissions and connector endpoints. Thus the law satisfies
+
+$$
+\|x_G-x^{j,*}\|_1=O_R(a/N),\qquad
+\min_i y_i\ge\beta/2
+\tag{9.41}
+$$
+
+for the stated threshold, after increasing $A_R$.
+Here $F,T>0$. A full-core source connects all core sinks, and the
+one connector per tail connects every tail. Repeated neighborhoods
+belong to different sources, so the graph is simple and bipartite.
+All sink degrees exceed $s$ once $N\ge a^{24}$ and $a\ge A_R$;
+indeed $\beta N/2\gg_R s$. This proves strict orientation for
+the same graph, including every integer residue.
+
+On the segment to its cap the least marginal is at least $\beta/2$.
+Equation (9.34) and (9.41) bound the absolute Taylor remainder by
+$O_R(a^{15/2}(a/N)^2)=O_R(a^{19/2}/N^2)$.
+Its linear term is exactly $(nb_j+dc_j)/N=\chi_N/N$.
+As $W\le H$, this proves (9.38) with the stated $a^{10}$ envelope.
+
+For every competitor on this upper sublevel, $W\le L_Ra^3$ for
+an $R$-only $L_R$: use $M=O_R(a^3)$, the price bound and (9.38).
+The edge inequality in the original domain gives
+$\vartheta H\le W\le H$, with $\vartheta=2/(1+\sqrt2)$, and
+$H\ge\sum_i y_i^{-1}$ as in (3.10). Therefore the actual
+marginals obey $y_i\ge\vartheta/(L_Ra^3)$.
+Applying (3.11) with $s\le2a$ gives the first bound of (9.39),
+with, for example, $T_R=4(L_R/\vartheta)^4$.
+Together with (9.38) and $\chi_N=O_R(a^{7/2})$ it gives
+
+$$
+H-M\le O_R(a^{7/2}/N)+U_Ra^{10}/N^2+T_Ra^{17}/N^2
+\le E_Ra^{7/2}/N,
+\tag{9.42}
+$$
+
+since $N\ge a^{24}$. Nonnegativity is the definition of $M$.
+All these bounds concern the same actual law and graph; no independent
+choice of marginal data has entered. ∎
+
+**Theorem 9.5 (A common-growth first-connection theorem in the
+original graph class).** There are absolute integers
+
+$$
+p=24,\qquad q=17
+\tag{9.43}
+$$
+
+with $q\ge1$ and $p>q+2$ such that the following holds. For each
+fixed finite $R\ge4$ there are positive finite $R$-only constants
+$A_R,C_R,D_R$ such that every integer $a\ge A_R$,
+$(7/2)\sqrt a\le h\le R\sqrt a$, and
+$N\ge\lceil D_Ra^p\rceil$ has a nonempty original class and
+
+$$
+\left|V_N-M-\frac{\chi_N}{N}\right|
+\le\frac{C_Ra^q}{N^2}.
+\tag{9.44}
+$$
+
+Every exact minimizer has exactly the source types of Theorem 1.3
+for a law-winning $j\in J_*$ with $\chi_{j,N}=\chi_N$.
+All law ties, price ties and integer residues are included.
+
+**Proof.** Choose one threshold for Lemmas 9.1--9.4. By Growing
+Proposition 15.6, there are at most two winning indices, adjacent
+when distinct. Each price in (2.1), and each $b_j,c_j$, has denominator
+dividing $j^2(a-1)^2$. This follows by substituting
+$\eta=rn/j$ and $\alpha^{-1}=r/(a-1)$ in (1.8) and (2.1);
+the division by $r$ in $\lambda_j$ and $c_j$ cancels one numerator
+factor $r$. Thus a common positive integer denominator for every
+winning price, $\chi_{j,N}$ and $\chi_N$ can be chosen as
+
+$$
+D_*=(a-1)^2\prod_{j\in J_*}j^2\le J^4a^2.
+\tag{9.45}
+$$
+
+Take $L_R$ from (9.33), $U_R,E_R,T_R$ from Lemma 9.4, and put
+
+$$
+\begin{gathered}
+F_R=T_R+256L_RE_R^2,\qquad
+C_R=1+U_R+F_R,\\
+D_R=1+2J^2E_R+2J^4C_R.
+\end{gathered}
+\tag{9.46}
+$$
+
+These are explicit choices in terms of the proved $R$-only estimates;
+none depends on a fixed pair $a,h$ or on $N$.
+
+Consider any graph whose value is at most the upper comparison
+(9.38). Its actual excess $\tau$ is at most $E_Ra^{7/2}/N$ by
+(9.39), and the threshold makes this at most $1/(2J^2a)$.
+Theorem 9.2 therefore supplies a genuinely winning cap partition,
+with $\varepsilon\le16E_Ra^{3/2}/N$ and the tail neighborhood
+in (9.32). Its core neighborhood follows from (9.29).
+After the fixed threshold increase $\varepsilon\le1/16$ as well.
+Equations (9.33) and (9.39) give
+
+$$
+\begin{aligned}
+W(G)
+&\ge M+\frac{\mathcal P_j(G)}N
+        -\frac{256L_RE_R^2a^{14}+T_Ra^{17}}{N^2}\\
+&\ge M+\frac{\mathcal P_j(G)}N-\frac{F_Ra^{17}}{N^2}\\
+&\ge M+\frac{\chi_N}N-\frac{F_Ra^{17}}{N^2}.
+\end{aligned}
+\tag{9.47}
+$$
+
+The last line is Lemma 4.1, which applies to every connected
+source neighborhood type once this winning partition is supplied.
+A graph above (9.38) already exceeds the last line of (9.47).
+Consequently this is a lower bound over the entire original class.
+Combining it with its one actual upper graph proves (9.44).
+
+The finite labelled graph class has an exact minimizer. For any
+such minimizer, (9.38) and (9.47) imply
+
+$$
+0\le\mathcal P_j(G)-\chi_N
+\le\frac{U_Ra^{10}+F_Ra^{17}}N
+\le\frac{C_Ra^{17}}N
+<\frac1{J^4a^2}\le\frac1{D_*}.
+\tag{9.48}
+$$
+
+Both prices have denominator dividing $D_*$. Hence their difference
+is zero. The inequalities
+$\mathcal P_j(G)\ge\chi_{j,N}\ge\chi_N$ are both equalities.
+Lemma 4.1's equality characterization now gives one two-element
+core--tail connector per tail, exactly $d_{j,N}$ missing-one core
+sources, and only full cores and singleton tails for the rest.
+It also gives $\chi_{j,N}=\chi_N$. No source restriction was
+assumed to obtain this conclusion. ∎
+
+The stability and graph deductions in this section are repo-derived.
+They reuse Growing Lemma 7.1's coarse sublevel certificate, Theorem
+7.2's scalar phase evaluation, Theorem 15.5's exact law value and
+Proposition 15.6's finite branch competition. Equations (9.8)--(9.17)
+retain the incidence residuals of Growing (15.7)--(15.18) on the stated
+positive-excess sublevel. The price and exact-budget consumers are
+Lemmas 2.3, 4.1 and 4.2 of this volume. The later allocation, secondary
+energy and refined-periodic selection of Sections 6--8 retain their
+fixed-parameter quantifiers.
+
+The scalar supporting-tangent principle is the intermediate
+literature-attested input of Boyd--Vandenberghe,
+[*Convex Optimization*](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf),
+§3.1.3, printed p.69; the second derivatives above verify its hypotheses.
+The original CDSO definition is Albalahi--Das--Ali--Barman--Hamza,
+[*On the hyperbolic Sombor index and its counterpart*](https://arxiv.org/html/2510.24809v1),
+§1, DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176):
+maximum endpoint degree in the denominator, with the factor
+$1/\sqrt2$ dropped. Its general connected-graph conjecture is not
+a premise of this prescribed bipartite-budget theorem. Full-text
+technical overlap with Zhao--Zhao, DOI
 [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
-remains unassessed.
+is not determined here; no worldwide-priority claim is made.
+
+Theorem 9.5 supplies a sufficient deep polynomial window for the
+common-growth part of Open problem 8.3. It does not determine least
+thresholds or least refined periods, uniform later template selection,
+the scale $N\asymp a^2$, varying $R$, or the extremum when the sink
+number is allowed to vary. The sink budget throughout is exactly
+$s=a+1+h$, with the original nonlinear objective and all the graph
+conditions of Definition 1.1.
+
+## 追加锚（本行以下为增补区）
