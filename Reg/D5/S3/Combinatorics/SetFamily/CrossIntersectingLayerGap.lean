@@ -15,7 +15,7 @@ universe u
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-/-- One cardinality observation, on arbitrary finite families over any carrier. -/
+/-- Two layer-cardinality observations on finite families over arbitrary carriers. -/
 abbrev signature : Signature where
   Params := Type u
   State α := Finset (Finset α)
@@ -79,7 +79,7 @@ private theorem intervention_law (i : Fin 2) : ¬ arena.{u}.Law (intervention i)
     (by decide) (fun _ => by norm_num) large_upper large_upper large_cross
     (by simpa using large_mass.{u}) (by simpa using large_mass.{u})
   have hl : (largeFamily.{u}.slice 1).card = 0 := by decide
-  have hr : (largeFamily.{u}.slice (Fintype.card (ULift.{u} (Fin 4)) - 1)).card = 4 :=
+  have hr : (largeFamily.{u}.slice 3).card = 4 :=
     by decide
   fin_cases i <;> norm_num [intervention, realize, hl, hr] at hh
 
