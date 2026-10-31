@@ -85,7 +85,7 @@ internal sealed class KRegularAffineSubsequenceDocument : IScribeDocumentDefinit
 
     private static Formula Naturals() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
     private static Formula Integers() => new Formula.Integers();
-    private static Formula SequenceType() => Seq(Naturals(), Sp, To, Sp, Integers());
+    private static Formula SequenceType() => Seq(Open, Naturals(), Sp, To, Sp, Integers(), Close);
     private static Formula Span(Formula set) => Seq(
         Operatorname, Grp(F.Id("span")), Underscore, Grp(Integers()), Open, set, Close);
     private static Formula Kernel(Formula k, Formula s) => Seq(
@@ -106,5 +106,5 @@ internal sealed class KRegularAffineSubsequenceDocument : IScribeDocumentDefinit
     private static Formula Some(string variable, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(variable), domain, body);
     private static Formula LambdaIn(string variable, Formula domain, Formula body) => Seq(
-        F.Id(variable), Colon, Sp, domain, Sp, Mapsto, Sp, Open, body, Close);
+        Open, F.Id(variable), Colon, Sp, domain, Sp, Mapsto, Sp, body, Close);
 }

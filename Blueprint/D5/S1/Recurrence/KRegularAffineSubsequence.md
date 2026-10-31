@@ -8,7 +8,7 @@ Sequences have domain the natural numbers, including zero, and values in the int
 
 **Theorem 1.1 (Uniform transport of kernel spans).**
 
-$$\forall k \in \mathrm{Nat},\; \forall a \in \mathrm{Nat},\; \forall b \in \mathrm{Nat},\; \forall s \in \mathrm{Nat} \to \mathbb{Z},\; 2 \le k \Rightarrow \left(1 \le a \Rightarrow \left(\forall G \in \operatorname{Finset}\left(\mathrm{Nat} \to \mathbb{Z}\right),\; \operatorname{span}_{\mathbb{Z}}(G) = \operatorname{span}_{\mathbb{Z}}(K_{k}(s)) \Rightarrow \operatorname{span}_{\mathbb{Z}}(K_{k}(n: \mathrm{Nat} \mapsto (\operatorname{s}\left(a \cdot n + b\right)))) \subseteq \operatorname{span}_{\mathbb{Z}}(\{f: \mathrm{Nat} \to \mathbb{Z} \mid \exists g \in \mathrm{Nat} \to \mathbb{Z},\; g \in G \land \left(\exists c \in \mathrm{Nat},\; c < a + b \land f = n: \mathrm{Nat} \mapsto (\operatorname{g}\left(a \cdot n + c\right))\right) \})\right)\right)$$
+$$\forall k \in \mathrm{Nat},\; \forall a \in \mathrm{Nat},\; \forall b \in \mathrm{Nat},\; \forall s \in (\mathrm{Nat} \to \mathbb{Z}),\; 2 \le k \Rightarrow \left(1 \le a \Rightarrow \left(\forall G \in \operatorname{Finset}\left((\mathrm{Nat} \to \mathbb{Z})\right),\; \operatorname{span}_{\mathbb{Z}}(G) = \operatorname{span}_{\mathbb{Z}}(K_{k}(s)) \Rightarrow \operatorname{span}_{\mathbb{Z}}(K_{k}((n: \mathrm{Nat} \mapsto \operatorname{s}\left(a \cdot n + b\right)))) \subseteq \operatorname{span}_{\mathbb{Z}}(\{f: (\mathrm{Nat} \to \mathbb{Z}) \mid \exists g \in (\mathrm{Nat} \to \mathbb{Z}),\; g \in G \land \left(\exists c \in \mathrm{Nat},\; c < a + b \land f = (n: \mathrm{Nat} \mapsto \operatorname{g}\left(a \cdot n + c\right))\right) \})\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/KRegularAffineSubsequence.affine_kernel_span_le` (`✓ std3`). ∎
 
@@ -20,7 +20,7 @@ For every base k≥2, positive natural step a, natural offset b, and finite fami
 
 **Theorem 1.2 (Affine-subsequence closure).**
 
-$$\forall k \in \mathrm{Nat},\; \forall a \in \mathrm{Nat},\; \forall b \in \mathrm{Nat},\; \forall s \in \mathrm{Nat} \to \mathbb{Z},\; 2 \le k \Rightarrow \left(1 \le a \Rightarrow \left(\operatorname{Regular}\left(k, s\right) \Rightarrow \operatorname{Regular}\left(k, n: \mathrm{Nat} \mapsto (\operatorname{s}\left(a \cdot n + b\right))\right)\right)\right)$$
+$$\forall k \in \mathrm{Nat},\; \forall a \in \mathrm{Nat},\; \forall b \in \mathrm{Nat},\; \forall s \in (\mathrm{Nat} \to \mathbb{Z}),\; 2 \le k \Rightarrow \left(1 \le a \Rightarrow \left(\operatorname{Regular}\left(k, s\right) \Rightarrow \operatorname{Regular}\left(k, (n: \mathrm{Nat} \mapsto \operatorname{s}\left(a \cdot n + b\right))\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/KRegularAffineSubsequence.is_k_regular_affine_subsequence` (`✓ std3`). ∎
 
