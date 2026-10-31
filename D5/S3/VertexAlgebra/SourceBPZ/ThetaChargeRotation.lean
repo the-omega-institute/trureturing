@@ -7,6 +7,7 @@
    digest: A finite charge character produces a genuine ZMod-three representation on every energy grade and is inverted by the lattice reflection. -/
 
 import D5.S3.VertexAlgebra.SourceBPZ.ThetaGradeRepresentation
+import Mathlib.Algebra.Group.AddChar
 import Mathlib.GroupTheory.SpecificGroups.Dihedral
 import Mathlib.Tactic
 
@@ -433,6 +434,33 @@ theorem chargePhaseScalar_eq_one_iff (phase : ChargePhase)
   · intro hz
     simpa [hz]
 
+theorem chargePhaseScalar_sum_mul (phase : ChargePhase)
+    (hphase : phase (Multiplicative.ofAdd (1 : ZMod 3)) ≠ 1)
+    (z : ZMod 3) :
+    (∑ i : ZMod 3, chargePhaseScalar phase (i * z)) =
+      if z = 0 then (3 : ℂ) else 0 := by
+  classical
+  let ψ : AddChar (ZMod 3) ℂ := {
+    toFun := fun i => chargePhaseScalar phase (i * z)
+    map_zero_eq_one' := by simp
+    map_add_eq_mul' := by
+      intro i j
+      rw [add_mul, chargePhaseScalar_add] }
+  have hψ : ψ = 0 ↔ z = 0 := by
+    constructor
+    · intro h
+      have h1 := congrArg (fun f : AddChar (ZMod 3) ℂ => f 1) h
+      have hs : chargePhaseScalar phase z = 1 := by
+        simpa [ψ] using h1
+      exact (chargePhaseScalar_eq_one_iff phase hphase z).mp hs
+    · intro hz
+      subst z
+      ext i
+      simp [ψ]
+  rw [show (∑ i : ZMod 3, chargePhaseScalar phase (i * z)) = ∑ i, ψ i by rfl,
+    AddChar.sum_eq_ite]
+  simp [hψ]
+
 def gradeChargeResidue (D : LatticeData) (ell : Charge D →+ ZMod 3)
     (n : ℤ) (r : ZMod 3) : Submodule ℂ (grade D n) :=
   (Finsupp.supported ℂ ℂ {a : EnergyFiber D n | ell a.1.1 = r}).comap
@@ -587,6 +615,47 @@ theorem gradeChargeSector_eq_gradeChargeResidue (D : LatticeData)
         by_contra hzero
         exact has (Finsupp.mem_support_iff.mpr hzero)
       simp [hzero]
+
+theorem gradeChargeRotation_trace_sum (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (phase : ChargePhase)
+    (hphase : phase (Multiplicative.ofAdd (1 : ZMod 3)) ≠ 1)
+    (n : ℤ) (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) :
+    (∑ i : ZMod 3, LinearMap.trace ℂ (grade D n)
+      (gradeChargeRotation D ell phase n (Multiplicative.ofAdd i))) =
+      (3 : ℂ) * (Nat.card (ChargeEnergyFiber D ell n 0) : ℂ) := by
+  classical
+  letI := energyFiber_finite D hD n
+  letI := Fintype.ofFinite (EnergyFiber D n)
+  have htrace (i : ZMod 3) :
+      LinearMap.trace ℂ (grade D n)
+          (gradeChargeRotation D ell phase n (Multiplicative.ofAdd i)) =
+        ∑ a : EnergyFiber D n, chargePhaseScalar phase (i * ell a.1.1) := by
+    rw [LinearMap.trace_eq_matrix_trace ℂ (gradeBasis D n)]
+    unfold Matrix.trace
+    apply Finset.sum_congr rfl
+    intro a ha
+    change (LinearMap.toMatrix (gradeBasis D n) (gradeBasis D n)
+      (gradeChargeRotation D ell phase n (Multiplicative.ofAdd i))) a a = _
+    rw [LinearMap.toMatrix_apply]
+    change gradeCoeffEquiv D n
+      (gradeChargeRotation D ell phase n (Multiplicative.ofAdd i) (gradeBasis D n a)) a = _
+    rw [gradeChargeRotation_coeff]
+    have h : gradeCoeffEquiv D n (gradeBasis D n a) = Finsupp.single a 1 :=
+      (gradeBasis D n).repr_self a
+    simp [h]
+  simp_rw [htrace]
+  rw [Finset.sum_comm]
+  simp_rw [chargePhaseScalar_sum_mul phase hphase]
+  have hcount : (∑ a : EnergyFiber D n, if ell a.1.1 = 0 then (1 : ℂ) else 0) =
+      (Nat.card (ChargeEnergyFiber D ell n 0) : ℂ) := by
+    rw [Finset.sum_boole, Nat.card_eq_fintype_card, Fintype.card_subtype]
+  calc
+    _ = (3 : ℂ) * ∑ a : EnergyFiber D n, if ell a.1.1 = 0 then (1 : ℂ) else 0 := by
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro a ha
+      split_ifs <;> simp
+    _ = _ := by rw [hcount]
 
 theorem gradeTheta_mem_gradeChargeSector_neg (D : LatticeData)
     (ell : Charge D →+ ZMod 3) (n : ℤ) (j : ZMod 3)
@@ -768,5 +837,43 @@ theorem gradeChargeDihedral_character_average_finrank (D : LatticeData)
   letI : Invertible (Nat.card (DihedralGroup 3) : ℂ) :=
     invertibleOfNonzero (Nat.cast_ne_zero.mpr Nat.card_pos.ne')
   rw [Representation.card_inv_mul_sum_char_eq_finrank]
+
+/-- The dihedral average counts neutral-charge states and the signed reflection trace. -/
+theorem gradeChargeDihedral_character_average_sharp (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (phase : ChargePhase)
+    (hphase : phase (Multiplicative.ofAdd (1 : ZMod 3)) ≠ 1)
+    (n : ℤ) (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) :
+    (Nat.card (DihedralGroup 3) : ℂ)⁻¹ *
+        ∑ g : DihedralGroup 3,
+          Representation.character (k := ℂ) (V := grade D n)
+            (gradeChargeDihedralRepresentation D ell phase n) g =
+      ((Nat.card (ChargeEnergyFiber D ell n 0) : ℂ) +
+        LinearMap.trace ℂ (grade D n) (gradeTheta D n)) / 2 := by
+  let χ := Representation.character (k := ℂ) (V := grade D n)
+    (gradeChargeDihedralRepresentation D ell phase n)
+  have hsum : (∑ g : DihedralGroup 3, χ g) =
+      (3 : ℂ) * (Nat.card (ChargeEnergyFiber D ell n 0) : ℂ) +
+        3 * LinearMap.trace ℂ (grade D n) (gradeTheta D n) := by
+    rw [← (DihedralGroup.equivSum (n := 3)).symm.sum_comp χ, Fintype.sum_sum_type]
+    change (∑ i : ZMod 3, LinearMap.trace ℂ (grade D n)
+        (gradeChargeRotation D ell phase n (Multiplicative.ofAdd i))) +
+      (∑ i : ZMod 3, χ (DihedralGroup.sr i)) = _
+    rw [gradeChargeRotation_trace_sum D ell phase hphase n hD]
+    simp only [χ, gradeChargeDihedral_character_reflection, Finset.sum_const,
+      Finset.card_univ, ZMod.card, nsmul_eq_mul, Nat.cast_ofNat]
+  change (Nat.card (DihedralGroup 3) : ℂ)⁻¹ * ∑ g, χ g = _
+  rw [hsum, DihedralGroup.nat_card]
+  norm_num
+  ring
+
+theorem gradeChargeDihedral_invariants_finrank_sharp (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (phase : ChargePhase)
+    (hphase : phase (Multiplicative.ofAdd (1 : ZMod 3)) ≠ 1)
+    (n : ℤ) (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) :
+    (Module.finrank ℂ (gradeChargeDihedralInvariants D ell phase n) : ℂ) =
+      ((Nat.card (ChargeEnergyFiber D ell n 0) : ℂ) +
+        LinearMap.trace ℂ (grade D n) (gradeTheta D n)) / 2 := by
+  rw [← gradeChargeDihedral_character_average_finrank D ell phase n hD]
+  exact gradeChargeDihedral_character_average_sharp D ell phase hphase n hD
 
 end D5.S3.VertexAlgebra.SourceBPZ.ThetaChargeRotation
