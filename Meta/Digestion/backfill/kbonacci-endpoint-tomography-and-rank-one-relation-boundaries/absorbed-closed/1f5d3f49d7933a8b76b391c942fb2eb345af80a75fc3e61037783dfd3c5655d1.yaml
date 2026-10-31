@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:1f5d3f49d7933a8b76b391c942fb2eb345af80a75fc3e61037783dfd3c5655d1
   normalized_sha256: sha256:1f5d3f49d7933a8b76b391c942fb2eb345af80a75fc3e61037783dfd3c5655d1
 cas_ref: sha256:1f5d3f49d7933a8b76b391c942fb2eb345af80a75fc3e61037783dfd3c5655d1
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Experiment/KBonacciNonnegativeReader.complete_source_8_2
+    target_statement_id: sha256:82d6b1a910c9e4850d1e2971de8578916365bcffeda2a923a0d7cade2a46bdfc
 receipts:
   unresolved_subitems: []
