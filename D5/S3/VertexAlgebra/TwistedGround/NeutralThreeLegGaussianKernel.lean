@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The native pair and jet coefficients give a damped symmetric three-leg one-particle contraction. -/
+   digest: Native pair and jet coefficients give a strict one-particle contraction. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent
 import D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField
@@ -23,7 +23,6 @@ namespace D5.S3.VertexAlgebra.TwistedGround.NeutralThreeLegGaussianKernel
 open LatticeHalfFockFiniteCorrection LatticeHalfFockFockNormalField
 open OriginalGaussianMatrix OriginalGaussianResolvent
 
-set_option maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
 private lemma rising_product (n k : ℕ) :
@@ -31,34 +30,36 @@ private lemma rising_product (n k : ℕ) :
       (n.factorial : ℝ) * ((k + n + 1).choose n : ℝ) := by
   have h := Nat.ascFactorial_eq_factorial_mul_choose (k + 1) n
   rw [Nat.ascFactorial_eq_prod_range] at h
+  rw [show k + 1 + n = k + n + 1 by omega] at h
   have hc := congrArg (fun a : ℕ => (a : ℝ)) h
   push_cast at hc
   convert hc using 1
   · apply Finset.prod_congr rfl
     intro j hj
     ring
-  · congr 2
-    omega
 
 /-- Both literal jet products obey the same binomial majorant, at every order. -/
 theorem jet_binomial_bound (n k : ℕ) (m : ℤ)
     (hm : m = (k : ℤ) ∨ m = -(k : ℤ) - 1) :
     ‖jetScalar n m‖ ≤ ((k + n + 1).choose n : ℝ) := by
+  have hk0 : (0 : ℝ) ≤ k := Nat.cast_nonneg k
   have hfactor (j : ℕ) : ‖-(m : ℂ) - 3 / 2 - j‖ ≤ (k : ℝ) + 2 + j := by
+    have hj0 : (0 : ℝ) ≤ j := Nat.cast_nonneg j
     rcases hm with rfl | rfl
-    · have he : -(k : ℂ) - 3 / 2 - j = (((-(k : ℝ) - 3 / 2 - j) : ℝ) : ℂ) := by push_cast; rfl
-      rw [he, Complex.norm_real, Real.norm_eq_abs, abs_of_nonpos (by positivity)]
+    · push_cast
+      have he : -(k : ℂ) - 3 / 2 - j = (((-(k : ℝ) - 3 / 2 - j) : ℝ) : ℂ) := by push_cast; rfl
+      rw [he, Complex.norm_real, Real.norm_eq_abs, abs_of_nonpos (by linarith)]
       linarith
     · have he : -((-(k : ℤ) - 1 : ℤ) : ℂ) - 3 / 2 - j =
           (((k : ℝ) - 1 / 2 - j : ℝ) : ℂ) := by push_cast; ring
       rw [he, Complex.norm_real, Real.norm_eq_abs]
-      exact (abs_le.mpr ⟨by linarith [Nat.cast_nonneg k], by linarith [Nat.cast_nonneg j]⟩)
+      exact (abs_le.mpr ⟨by linarith, by linarith⟩)
   rw [jetScalar, norm_div, norm_prod]
   have hf : ‖(n.factorial : ℂ)‖ = (n.factorial : ℝ) := by simp
   rw [hf, div_le_iff₀ (by positivity)]
   calc
     _ ≤ ∏ j ∈ Finset.range n, ((k : ℝ) + 2 + j) :=
-      Finset.prod_le_prod (fun _ _ => norm_nonneg _) (fun j _ => hfactor j)
+      Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) (fun j _ => hfactor j)
     _ = _ := by rw [rising_product]; ring
 
 private lemma jet_power_bound (n k : ℕ) (m : ℤ)
@@ -73,8 +74,8 @@ private lemma pair_half_bound (q : ℂ) (s t : ℕ) (hs : 0 < s) (ht : 0 < t) :
   have hroot : 2 * (Real.sqrt (s : ℝ) * Real.sqrt (t : ℝ)) ≤ (s : ℝ) + t := by
     nlinarith [sq_nonneg (Real.sqrt (s : ℝ) - Real.sqrt (t : ℝ)),
       Real.sq_sqrt (Nat.cast_nonneg s), Real.sq_sqrt (Nat.cast_nonneg t)]
-  have hw : centralWeight s * centralWeight t ≤ 1 :=
-    by simpa using mul_le_mul (weight_le_one s) (weight_le_one t)
+  have hw : centralWeight s * centralWeight t ≤ 1 := by
+    simpa using mul_le_mul (weight_le_one s) (weight_le_one t)
       (centralWeight_nonneg t) zero_le_one
   apply (div_le_iff₀ hst).mpr
   calc
@@ -91,7 +92,7 @@ private lemma jet_square_majorant (n k : ℕ) (a root q : ℂ) (m : ℤ)
       (Real.sqrt (((k : ℝ)+1/2)/(n+1)) : ℂ) * jetScalar n m‖^2 ≤
       4 * ‖a‖^2 * ‖q‖ * (1/2 : ℝ)^n * (1/2 : ℝ)^k := by
   have hmu : ((k : ℝ)+1/2)/(n+1) ≤ (k : ℝ)+1 := by
-    apply (div_le_iff₀ (by positivity : (0 : ℝ) < n+1)).mpr
+    apply (div_le_iff₀ (by positivity : (0 : ℝ) < (n : ℝ)+1)).mpr
     nlinarith [Nat.cast_nonneg n, Nat.cast_nonneg k]
   have hk : (k : ℝ)+1 ≤ (2 : ℝ)^k := by
     have h : k+1 ≤ 2^k := k.lt_two_pow_self
@@ -137,13 +138,14 @@ private lemma eta_bounds (N : ℕ) : 0 < eta N ∧ eta N ≤ 1 / 16 := by
   constructor
   · unfold eta; positivity
   · unfold eta
-    apply (div_le_iff₀ (by positivity : (0 : ℝ) < 16 * (N+1))).mpr
+    apply (div_le_iff₀ (by positivity : (0 : ℝ) < 16 * ((N : ℝ)+1))).mpr
     nlinarith [Nat.cast_nonneg N]
 
 /-- The damping region is nonempty for every rank and every nonzero T. -/
 theorem damping_nonempty (N : ℕ) (T : ℂ) (hT : T ≠ 0) :
     ∃ d : Damping N, d.T = T := by
   have hr : 0 < ‖T‖^2 := pow_pos (norm_pos_iff.mpr hT) _
+  obtain ⟨hepos, hele⟩ := eta_bounds N
   have he := eta_bounds N
   have hm : 0 < min 1 (‖T‖^2) := lt_min (by norm_num) hr
   have hm' : 0 < min 1 (1 / ‖T‖^2) := lt_min (by norm_num) (by positivity)
@@ -176,9 +178,11 @@ theorem damping_nonempty (N : ℕ) (T : ℂ) (hT : T ≠ 0) :
     · nlinarith [mul_pos he.1 hr]
   · apply lt_min
     · nlinarith
-    · have := min_le_right (1 : ℝ) (1 / ‖T‖^2)
-      rw [div_eq_mul_inv]
-      nlinarith [mul_pos he.1 (inv_pos.mpr hr)]
+    · apply hrad'.trans_lt
+      have hp : 0 < eta N / ‖T‖^2 := div_pos hepos hr
+      calc
+        eta N / 2 * (1 / ‖T‖^2) = (eta N / ‖T‖^2) / 2 := by ring
+        _ < _ := by linarith
 
 namespace Damping
 variable {N : ℕ} (d : Damping N)
@@ -209,12 +213,11 @@ private lemma ratio_bounds :
 private lemma root_norms :
     ‖d.inputRoot‖^2 = ‖d.inputRatio‖ ∧
       ‖d.outputRoot‖^2 = ‖d.outputRatio‖ := by
-  simp only [inputRoot, outputRoot, inputRatio, outputRatio, norm_div, norm_mul,
+  simp [inputRoot, outputRoot, inputRatio, outputRatio, norm_div, norm_mul,
     norm_pow, Complex.norm_real, Real.norm_eq_abs,
     abs_of_nonneg (Real.sqrt_nonneg _), abs_of_pos d.beta_pos,
     abs_of_pos d.gamma_pos, div_pow, mul_pow,
     Real.sq_sqrt d.beta_pos.le, Real.sq_sqrt d.gamma_pos.le]
-  exact ⟨rfl, rfl⟩
 
 /-- Source n is the original positive source frequency n+1. -/
 def SS (n m : ℕ) : ℂ :=
@@ -238,8 +241,9 @@ private lemma ss_factored (n m : ℕ) : d.SS n m =
     matrixEntry d.sourceRatio (n+1) (m+1) := by
   have he : -(2 * ((((n+1)+(m+1) : ℕ) : ℤ))) =
       -((2*((n+1)+(m+1)) : ℕ) : ℤ) := by push_cast; ring
-  simp only [SS, he, matrixEntry, sourceRatio, div_pow, zpow_neg, zpow_natCast,
-    pow_mul, Nat.cast_add, Nat.cast_one]
+  unfold SS
+  rw [he, zpow_neg, zpow_natCast]
+  simp only [matrixEntry, sourceRatio, div_pow, pow_mul, inv_pow]
   ring
 
 private lemma si_factored (n k : ℕ) : d.SI n k =
@@ -342,11 +346,12 @@ private lemma io_square_bound (n m : ℕ) :
     nlinarith [pow_le_pow_left₀ he.1.le he.2 2]
   by_cases h : n = m
   · subst m
-    simp only [IO, if_pos rfl, attenuation_factor (d.beta*d.gamma)
-      (mul_pos d.beta_pos d.gamma_pos) n, Complex.ofReal_mul, Complex.ofReal_pow,
-      norm_mul, norm_pow, Complex.norm_real,
-      Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg _), abs_of_pos (mul_pos d.beta_pos d.gamma_pos), mul_pow]
-    rw [Real.sq_sqrt (mul_pos d.beta_pos d.gamma_pos).le]
+    rw [IO, if_pos rfl]
+    rw [attenuation_factor (d.beta*d.gamma) (mul_pos d.beta_pos d.gamma_pos) n]
+    rw [Complex.norm_real, Real.norm_eq_abs,
+      abs_of_pos (mul_pos (Real.sqrt_pos.mpr (mul_pos d.beta_pos d.gamma_pos))
+        (pow_pos (mul_pos d.beta_pos d.gamma_pos) n)), mul_pow,
+      Real.sq_sqrt (mul_pos d.beta_pos d.gamma_pos).le]
     calc
       _ = (d.beta*d.gamma) * ((d.beta*d.gamma)^2)^n := by
         rw [pow_right_comm (d.beta*d.gamma) 2 n]
@@ -361,6 +366,7 @@ def blockMajorant (a b : Fin 3) : ℝ :=
     ![4*(eta N)^3, (eta N)^2, 0]] a b
 
 private lemma block_nonneg (a b : Fin 3) : 0 ≤ blockMajorant (N := N) a b := by
+  have he := (eta_bounds N).1
   fin_cases a <;> fin_cases b <;> simp [blockMajorant] <;> positivity
 
 private lemma scalar_bound (a b : Fin 3) (n m : ℕ) :
@@ -400,15 +406,17 @@ private lemma envelope_summable : Summable (envelope (N := N)) := by
   have hg : Summable (fun n : ℕ => (1/2 : ℝ)^n) :=
     summable_geometric_of_lt_one (by norm_num) (by norm_num)
   have hi : Summable (fun i : Index N => (1/2 : ℝ)^i.2.2) := by
-    simpa using (summable_fintype (fun _ : Fin N => (1 : ℝ))).mul_of_nonneg
-      ((summable_fintype (fun _ : Fin 3 => (1 : ℝ))).mul_of_nonneg hg
+    simpa using ((hasSum_fintype (fun _ : Fin N => (1 : ℝ))).summable).mul_of_nonneg
+      (((hasSum_fintype (fun _ : Fin 3 => (1 : ℝ))).summable).mul_of_nonneg hg
         (fun _ => by positivity) (fun _ => by positivity))
       (fun _ => by positivity) (fun _ => by positivity)
+  have he := (eta_bounds N).1
   let C : ℝ := (eta N)^4/4 + 4*(eta N)^3 + (eta N)^2
   have hc : ∀ a b, blockMajorant (N := N) a b ≤ C := by
     intro a b
     fin_cases a <;> fin_cases b <;> simp [blockMajorant, C] <;>
-      nlinarith [eta_bounds N |>.1]
+      nlinarith [(eta_bounds N).1, pow_nonneg (eta_bounds N).1.le 3,
+        pow_nonneg (eta_bounds N).1.le 4]
   apply Summable.of_nonneg_of_le envelope_nonneg _
     ((hi.mul_of_nonneg hi (fun _ => by positivity) (fun _ => by positivity)).mul_left C)
   intro p
@@ -426,6 +434,9 @@ private lemma envelope_mass :
   have hg : (∑' n : ℕ, (1/2 : ℝ)^n) = 2 := by
     rw [tsum_geometric_of_lt_one (by norm_num) (by norm_num)]; norm_num
   have hs := envelope_summable (N := N)
+  have hcond (P : Prop) [Decidable P] (f : ℕ → ℝ) :
+      (∑' n : ℕ, if P then f n else 0) = if P then ∑' n : ℕ, f n else 0 := by
+    by_cases h : P <;> simp [h]
   have hinner (i : Index N) :
       (∑' j : Index N, envelope (i,j)) =
         (2 * ∑ b : Fin 3, blockMajorant (N := N) i.2.1 b) * (1/2 : ℝ)^i.2.2 := by
@@ -435,8 +446,8 @@ private lemma envelope_mass :
       ((hs.prod_factor i).prod_factor c).tsum_prod
     simp_rw [hleg]
     simp only [envelope]
-    simp_rw [tsum_ite_const, tsum_mul_left, hg, tsum_fintype]
-    simp [Finset.sum_mul, mul_assoc, mul_comm, mul_left_comm]
+    simp_rw [hcond, tsum_mul_left, hg, tsum_fintype]
+    simp [Finset.mul_sum, mul_assoc, mul_comm, mul_left_comm]
   have hrows : Summable (fun i : Index N =>
       (2 * ∑ b : Fin 3, blockMajorant (N := N) i.2.1 b) * (1/2 : ℝ)^i.2.2) :=
     hs.prod.congr hinner
@@ -448,7 +459,8 @@ private lemma envelope_mass :
         ∑' a : Fin 3, ∑' n : ℕ,
           (2 * ∑ b : Fin 3, blockMajorant (N := N) a b) * (1/2 : ℝ)^n :=
     (hrows.prod_factor c).tsum_prod
-  simp_rw [hleg, tsum_mul_left, hg, tsum_fintype]
+  rw [hleg]
+  simp only [tsum_mul_left, hg, tsum_fintype]
   simp [blockMajorant, Fin.sum_univ_succ]
   ring
 
@@ -457,9 +469,9 @@ def massBound (N : ℕ) : ℝ := 13 * N * (eta N)^2
 private lemma massBound_lt (N : ℕ) : massBound N < 1/4 := by
   unfold massBound eta
   rw [show 13 * (N : ℝ) * (1/(16*((N : ℝ)+1)))^2 =
-    13 * N / (256 * ((N : ℝ)+1)^2) by ring]
+    13 * N / (256 * ((N : ℝ)+1)^2) by rw [div_pow]; norm_num; ring]
   apply (div_lt_iff₀ (by positivity : (0 : ℝ) < 256*((N : ℝ)+1)^2)).mpr
-  nlinarith [sq_nonneg (N : ℝ)]
+  nlinarith [sq_nonneg (N : ℝ), Nat.cast_nonneg N]
 
 /-- All colors and all frequencies have finite matrix square mass; the two
 orientations of every mixed block are both included in the estimate. -/
@@ -479,8 +491,11 @@ theorem matrix_square_mass :
   have he3 : 64*(eta N)^3 ≤ 4*(eta N)^2 := by
     nlinarith [mul_le_mul_of_nonneg_right he.2 (sq_nonneg (eta N))]
   unfold massBound
-  gcongr
-  nlinarith [sq_nonneg (eta N), mul_le_mul_of_nonneg_right he2 (sq_nonneg (eta N))]
+  calc
+    _ ≤ (N : ℝ) * (13*(eta N)^2) := by
+      apply mul_le_mul_of_nonneg_left _ (Nat.cast_nonneg N)
+      nlinarith [sq_nonneg (eta N), mul_le_mul_of_nonneg_right he2 (sq_nonneg (eta N))]
+    _ = _ := by ring
 
 private def column (j : Index N) : Space N :=
   ⟨fun i => d.entry i j, (memℓp_gen_iff (by norm_num : 0 < (2 : ℝ≥0∞).toReal)).mpr
@@ -508,7 +523,8 @@ private lemma setBasis_apply (j : Index N) :
     setBasis (basisEquiv j) = lp.single 2 j (1 : ℂ) := by
   change (HilbertBasis.mk _ _) (basisEquiv j) = _
   rw [HilbertBasis.coe_mk]
-  rfl
+  change coordinateBasis j = _
+  exact coordinateBasis.repr_self j
 
 private theorem synthesized :
     ∃ A : Space N →L[ℂ] Space N,
@@ -516,7 +532,7 @@ private theorem synthesized :
       HilbertSchmidt.IsHilbertSchmidt A ∧ ‖A‖ ≤ Real.sqrt (massBound N) := by
   let e := basisEquiv (N := N)
   have hc : Summable (fun j : Index N => ‖d.column j‖^2) := by
-    simpa only [d.column_norm] using d.matrix_square_mass.1.prod_symm.prod
+    simpa only [d.column_norm, Prod.swap_prod_mk] using d.matrix_square_mass.1.prod_symm.prod
   have hv : Summable (fun j : basisSet (N := N) => ‖d.column (e.symm j)‖^2) :=
     e.symm.summable_iff.mpr hc
   obtain ⟨A, hcol, hhs, hsum, hnorm⟩ :=
@@ -528,7 +544,7 @@ private theorem synthesized :
     rw [e.symm_apply_apply, setBasis_apply] at h
     exact congrArg (fun x : Space N => x i) h
   · apply Real.sqrt_le_sqrt
-    rw [e.symm.tsum_eq]
+    rw [e.symm.tsum_eq (fun j => ‖d.column j‖^2)]
     simp_rw [d.column_norm]
     rw [d.matrix_square_mass.1.tsum_comm, ← d.matrix_square_mass.1.tsum_prod]
     exact d.matrix_square_mass.2
