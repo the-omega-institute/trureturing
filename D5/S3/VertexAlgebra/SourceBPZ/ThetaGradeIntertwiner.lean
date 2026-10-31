@@ -204,4 +204,203 @@ def thetaIntertwinerToBlocks (D : LatticeData) (m n : ℤ) :
         (minusGrade D m →ₗ[ℂ] minusGrade D n) :=
   (plusBlock D m n).prod (minusBlock D m n)
 
+private theorem plusGradeMap_plusIn (D : LatticeData) (n : ℤ) (x : plusGrade D n) :
+    plusGradeMap D n (plusIn D n x) = x := by
+  apply Subtype.ext
+  change plusPart D x.1 = x.1
+  rw [plusPart, (mem_fixedSpace D x.1).mp x.2.2, ← two_smul ℂ x.1,
+    smul_smul, inv_mul_cancel₀ (by norm_num : (2 : ℂ) ≠ 0), one_smul]
+
+private theorem minusGradeMap_plusIn (D : LatticeData) (n : ℤ) (x : plusGrade D n) :
+    minusGradeMap D n (plusIn D n x) = 0 := by
+  apply Subtype.ext
+  change minusPart D x.1 = 0
+  rw [minusPart, (mem_fixedSpace D x.1).mp x.2.2, sub_self, smul_zero]
+
+private theorem plusGradeMap_minusIn (D : LatticeData) (n : ℤ) (x : minusGrade D n) :
+    plusGradeMap D n (minusIn D n x) = 0 := by
+  apply Subtype.ext
+  change plusPart D x.1 = 0
+  have he : theta D x.1 = (-1 : ℂ) • x.1 :=
+    (mem_eigenspace D (-1) x.1).mp x.2.2
+  rw [plusPart, he, smul_add]
+  simp
+
+private theorem minusGradeMap_minusIn (D : LatticeData) (n : ℤ) (x : minusGrade D n) :
+    minusGradeMap D n (minusIn D n x) = x := by
+  apply Subtype.ext
+  change minusPart D x.1 = x.1
+  have he : theta D x.1 = (-1 : ℂ) • x.1 :=
+    (mem_eigenspace D (-1) x.1).mp x.2.2
+  rw [minusPart, he]
+  module
+
+def blockMap (D : LatticeData) (m n : ℤ) :
+    ((plusGrade D m →ₗ[ℂ] plusGrade D n) ×
+      (minusGrade D m →ₗ[ℂ] minusGrade D n)) →ₗ[ℂ]
+        (grade D m →ₗ[ℂ] grade D n) where
+  toFun p :=
+    { toFun := fun x =>
+        plusIn D n (p.1 (plusGradeMap D m x)) +
+          minusIn D n (p.2 (minusGradeMap D m x))
+      map_add' := by
+        intro x y
+        simp only [map_add, LinearMap.add_apply]
+        module
+      map_smul' := by
+        intro c x
+        simp only [map_smul, LinearMap.smul_apply, RingHom.id_apply]
+        module
+    }
+  map_add' p q := by
+    apply LinearMap.ext
+    intro x
+    change
+      plusIn D n ((p.1 + q.1) (plusGradeMap D m x)) +
+          minusIn D n ((p.2 + q.2) (minusGradeMap D m x)) =
+        (plusIn D n (p.1 (plusGradeMap D m x)) +
+          minusIn D n (p.2 (minusGradeMap D m x))) +
+            (plusIn D n (q.1 (plusGradeMap D m x)) +
+              minusIn D n (q.2 (minusGradeMap D m x)))
+    simp only [LinearMap.add_apply, map_add]
+    abel
+  map_smul' c p := by
+    apply LinearMap.ext
+    intro x
+    change
+      plusIn D n ((c • p.1) (plusGradeMap D m x)) +
+          minusIn D n ((c • p.2) (minusGradeMap D m x)) =
+        c • (plusIn D n (p.1 (plusGradeMap D m x)) +
+          minusIn D n (p.2 (minusGradeMap D m x)))
+    simp only [LinearMap.smul_apply, map_smul, RingHom.id_apply]
+    module
+
+@[simp] theorem blockMap_apply (D : LatticeData) (m n : ℤ)
+    (p : (plusGrade D m →ₗ[ℂ] plusGrade D n) ×
+      (minusGrade D m →ₗ[ℂ] minusGrade D n)) (x : grade D m) :
+    blockMap D m n p x =
+      plusIn D n (p.1 (plusGradeMap D m x)) +
+        minusIn D n (p.2 (minusGradeMap D m x)) := by
+  rfl
+
+private theorem blockMap_intertwines (D : LatticeData) (m n : ℤ)
+    (p : (plusGrade D m →ₗ[ℂ] plusGrade D n) ×
+      (minusGrade D m →ₗ[ℂ] minusGrade D n)) :
+    (gradeTheta D n).comp (blockMap D m n p) =
+      (blockMap D m n p).comp (gradeTheta D m) := by
+  apply LinearMap.ext
+  intro x
+  change gradeTheta D n
+      (plusIn D n (p.1 (plusGradeMap D m x)) +
+        minusIn D n (p.2 (minusGradeMap D m x))) =
+    plusIn D n (p.1 (plusGradeMap D m (gradeTheta D m x))) +
+      minusIn D n (p.2 (minusGradeMap D m (gradeTheta D m x)))
+  rw [map_add, plusIn_theta, minusIn_theta,
+    plusGradeMap_theta, minusGradeMap_theta]
+  simp only [map_neg]
+
+def thetaIntertwinerFromBlocks (D : LatticeData) (m n : ℤ) :
+    ((plusGrade D m →ₗ[ℂ] plusGrade D n) ×
+      (minusGrade D m →ₗ[ℂ] minusGrade D n)) →ₗ[ℂ]
+        thetaIntertwiner D m n :=
+  (blockMap D m n).codRestrict (thetaIntertwiner D m n)
+    (fun p => blockMap_intertwines D m n p)
+
+@[simp] theorem thetaIntertwinerFromBlocks_val (D : LatticeData) (m n : ℤ)
+    (p : (plusGrade D m →ₗ[ℂ] plusGrade D n) ×
+      (minusGrade D m →ₗ[ℂ] minusGrade D n)) :
+    (thetaIntertwinerFromBlocks D m n p).1 = blockMap D m n p := by
+  rfl
+
+@[simp] theorem plusBlock_val (D : LatticeData) (m n : ℤ)
+    (F : thetaIntertwiner D m n) (x : plusGrade D m) :
+    ((plusBlock D m n F) x).1 = (F.1 (plusIn D m x)).1 := by
+  rfl
+
+@[simp] theorem minusBlock_val (D : LatticeData) (m n : ℤ)
+    (F : thetaIntertwiner D m n) (x : minusGrade D m) :
+    ((minusBlock D m n F) x).1 = (F.1 (minusIn D m x)).1 := by
+  rfl
+
+private theorem grade_decomp (D : LatticeData) (m : ℤ) (x : grade D m) :
+    x = plusIn D m (plusGradeMap D m x) +
+      minusIn D m (minusGradeMap D m x) := by
+  apply Subtype.ext
+  change x.1 = plusPart D x.1 + minusPart D x.1
+  exact (thetaRep_grade_plus_minus_decomposition D m x).1
+
+theorem thetaIntertwinerFromBlocks_toBlocks (D : LatticeData) (m n : ℤ)
+    (p : (plusGrade D m →ₗ[ℂ] plusGrade D n) ×
+      (minusGrade D m →ₗ[ℂ] minusGrade D n)) :
+    thetaIntertwinerToBlocks D m n (thetaIntertwinerFromBlocks D m n p) = p := by
+  apply Prod.ext
+  · apply LinearMap.ext
+    intro x
+    apply Subtype.ext
+    change
+      ((plusBlock D m n (thetaIntertwinerFromBlocks D m n p)) x).1 =
+        (p.1 x).1
+    rw [plusBlock_val, thetaIntertwinerFromBlocks_val]
+    change ((blockMap D m n p) (plusIn D m x)).1 = (p.1 x).1
+    rw [blockMap_apply, plusGradeMap_plusIn, minusGradeMap_plusIn]
+    rw [map_zero]
+    change (p.1 x).1 + 0 = (p.1 x).1
+    simp
+  · apply LinearMap.ext
+    intro x
+    apply Subtype.ext
+    change
+      ((minusBlock D m n (thetaIntertwinerFromBlocks D m n p)) x).1 =
+        (p.2 x).1
+    rw [minusBlock_val, thetaIntertwinerFromBlocks_val]
+    change ((blockMap D m n p) (minusIn D m x)).1 = (p.2 x).1
+    rw [blockMap_apply, plusGradeMap_minusIn, minusGradeMap_minusIn]
+    rw [map_zero]
+    change 0 + (p.2 x).1 = (p.2 x).1
+    simp
+
+theorem thetaIntertwinerFromBlocks_leftInverse (D : LatticeData) (m n : ℤ)
+    (F : thetaIntertwiner D m n) :
+    thetaIntertwinerFromBlocks D m n (thetaIntertwinerToBlocks D m n F) = F := by
+  apply Subtype.ext
+  apply LinearMap.ext
+  intro x
+  have h := grade_decomp D m x
+  change
+    (blockMap D m n (thetaIntertwinerToBlocks D m n F)) x = F.1 x
+  rw [blockMap_apply]
+  change
+    plusIn D n ((plusBlock D m n F) (plusGradeMap D m x)) +
+        minusIn D n ((minusBlock D m n F) (minusGradeMap D m x)) = F.1 x
+  calc
+    _ = F.1 (plusIn D m (plusGradeMap D m x) +
+        minusIn D m (minusGradeMap D m x)) := by
+      apply Subtype.ext
+      change
+        ((plusBlock D m n F (plusGradeMap D m x)).1) +
+            ((minusBlock D m n F (minusGradeMap D m x)).1) =
+          (F.1 (plusIn D m (plusGradeMap D m x) +
+            minusIn D m (minusGradeMap D m x))).1
+      rw [plusBlock_val, minusBlock_val]
+      exact congrArg Subtype.val (F.1.map_add _ _).symm
+    _ = F.1 x := (congrArg F.1 h).symm
+
+def thetaIntertwinerEquiv (D : LatticeData) (m n : ℤ) :
+    thetaIntertwiner D m n ≃ₗ[ℂ]
+      (plusGrade D m →ₗ[ℂ] plusGrade D n) ×
+        (minusGrade D m →ₗ[ℂ] minusGrade D n) :=
+  LinearEquiv.ofLinearMap
+    (thetaIntertwinerToBlocks D m n)
+    (thetaIntertwinerFromBlocks D m n)
+    (by
+      apply LinearMap.ext
+      intro p
+      simpa only [LinearMap.comp_apply, LinearMap.id_apply] using
+        thetaIntertwinerFromBlocks_toBlocks D m n p)
+    (by
+      apply LinearMap.ext
+      intro F
+      simpa only [LinearMap.comp_apply, LinearMap.id_apply] using
+        thetaIntertwinerFromBlocks_leftInverse D m n F)
+
 end D5.S3.VertexAlgebra.SourceBPZ.ThetaGradeIntertwiner
