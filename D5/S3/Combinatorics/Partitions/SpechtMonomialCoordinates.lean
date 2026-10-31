@@ -109,8 +109,9 @@ theorem coe_weightSym (d : σ →₀ ℕ) (h : d.degree = n) :
     (weightSym d h : Multiset σ) = d.toMultiset :=
   (rfl)
 
-noncomputable def weightPartition (d : σ →₀ ℕ) (h : d.degree = n) : n.Partition :=
-  Nat.Partition.ofSym (weightSym d h)
+noncomputable def weightPartition (d : σ →₀ ℕ) (h : d.degree = n) : n.Partition := by
+  classical
+  exact Nat.Partition.ofSym (weightSym d h)
 
 variable [DecidableEq σ]
 
