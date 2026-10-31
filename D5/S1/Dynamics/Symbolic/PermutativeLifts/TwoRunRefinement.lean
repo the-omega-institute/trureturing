@@ -182,4 +182,39 @@ theorem refineTiling_aligned_zero (W : Bool → List Bool)
   rw [refineState_of_lt W hW l r (x.1 0) (by omega)]
   simp [cyclicState, hx]
 
+/-- Every upper tiled configuration has an actual lower tiling with the same readout. -/
+theorem tiledSubshift_subset (W : Bool → List Bool) (hW : ∀ a, 0 < (W a).length)
+    (l r : Bool → ℕ) (hl : ∀ a, 0 < l a) (hr : ∀ a, 0 < r a) :
+    (tiledSubshift (word W l r)).carrier ⊆ (tiledSubshift W).carrier := by
+  rintro y ⟨x, rfl⟩
+  exact ⟨refineTiling W hW l r hl hr x, readTiling_refineTiling W hW l r hl hr x⟩
+
+/-- Visible configurations admitting an actual tile boundary at physical zero. -/
+def alignedConfigurations (W : Bool → List Bool) : Set (ℤ → Bool) :=
+  readTiling W '' {x : MarkedTiling W | (x.1 0).2.val = 0}
+
+/-- The origin constraint has a nonempty compact visible image, without recognizability. -/
+theorem alignedConfigurations_compact_nonempty (W : Bool → List Bool)
+    (hW : ∀ a, 0 < (W a).length) :
+    IsCompact (alignedConfigurations W) ∧ (alignedConfigurations W).Nonempty := by
+  have hc : Continuous (fun x : MarkedTiling W => (x.1 0).2.val) :=
+    (continuous_of_discreteTopology : Continuous (fun s : TileState W => s.2.val)).comp
+      ((continuous_apply (0 : ℤ)).comp continuous_subtype_val)
+  refine ⟨(isClosed_eq hc continuous_const).isCompact.image (continuous_readTiling W), ?_⟩
+  let x : MarkedTiling W :=
+    ⟨periodicTile W false (hW false), periodicTile_tiled W false (hW false)⟩
+  refine ⟨readTiling W x, x, ?_, rfl⟩
+  change (periodicTile W false (hW false) (0 : ℤ)).2.val = 0
+  simp [periodicTile]
+
+/-- Refinement preserves the compact origin constraint as well as the visible configuration. -/
+theorem alignedConfigurations_subset (W : Bool → List Bool)
+    (hW : ∀ a, 0 < (W a).length) (l r : Bool → ℕ)
+    (hl : ∀ a, 0 < l a) (hr : ∀ a, 0 < r a) :
+    alignedConfigurations (word W l r) ⊆ alignedConfigurations W := by
+  rintro y ⟨x, hx, rfl⟩
+  exact ⟨refineTiling W hW l r hl hr x,
+    refineTiling_aligned_zero W hW l r hl hr x hx,
+    readTiling_refineTiling W hW l r hl hr x⟩
+
 end D5.S1.Dynamics.Symbolic.PermutativeLifts.TwoRunRefinement
