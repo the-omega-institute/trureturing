@@ -51,7 +51,8 @@ def wordDisagreements (W : Bool → List Bool) (L : ℕ) [NeZero L]
     (W false)[j.val]'(by rw [hW]; exact j.val_lt) ≠
       (W true)[j.val]'(by rw [hW]; exact j.val_lt)
 
-private theorem offset_cast (W : Bool → List Bool) (L : ℕ) [NeZero L]
+/-- Physical offsets evolve by addition in the common finite cyclic phase group. -/
+theorem offset_cast (W : Bool → List Bool) (L : ℕ) [NeZero L]
     (hW : ∀ a, (W a).length = L) (x : MarkedTiling W) (i : ℤ) :
     (((x.1 i).2.val : ℕ) : ZMod L) =
       (i : ZMod L) + (((x.1 0).2.val : ℕ) : ZMod L) := by
