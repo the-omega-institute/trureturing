@@ -1,0 +1,42 @@
+**Theorem 12.1 (finite test horizon and stronger single-path stabilization).** Under Assumption 11.1 set
+
+$$
+H_M=\max(0,M-2).
+\tag{12.1}
+$$
+
+First, for every positive rational $x,y$,
+
+$$
+x\equiv_M y
+\quad\Longleftrightarrow\quad
+q_M(f_u(x))=q_M(f_u(y))\text{ for all }|u|\le H_M.
+\tag{12.2}
+$$
+
+Second, fix any chronological path $u_1\cdots u_t$ with $t\ge H_M$, and read at its initial cut and after every action. If two original candidates have the same reports through action $H_M$, they have the same reports through action $t$. More generally they remain indistinguishable under every further common continuation, with a read at every cut, and under every deterministic continuation policy using only that transcript. Thus after $H_M$ actual actions a fully read path cannot gain any new distinctions between original candidates. No optimality of $H_M$ is asserted.
+
+Proof. Write $\delta(p/q)$ for the unique chronological depth of a reduced positive rational. Each parent decreases $\max(p,q)$ by at least one until it becomes $1$. Therefore
+
+$$
+\delta(p/q)\le\max(p,q)-1.
+\tag{12.3}
+$$
+
+In particular $\delta(r/M)\le M-1$ for $1\le r<M$, after reduction. A nongrid ancestor $P^i(r/M)$ cannot be the final root $1$, since $1\in\mathcal G_M$. Thus $i\le\delta(r/M)-1\le M-2$. Every nongrid cut has a witnessing word of length at most $M-2$, and every grid cut is witnessed by the empty word. For $M=1,2$ there are no nongrid cuts: (11.5) would require $a+b\le M$ and $b\nmid M$, which is impossible. Theorem 11.2 now proves (12.2) in all cases. This establishes a hypothetical finite test family; the following argument additionally concerns a single acquired path.
+
+Consider a prefix $v$ of length $n>H_M$ ending in $L$. Since its final image lies in $(0,1)$, a threshold preimage must satisfy $f_v(z)=r/M$ for some $1\le r<M$. Forced parent peeling then gives
+
+$$
+P^n(r/M)=z,\qquad n\le\delta(r/M)\le M-1.
+$$
+
+For $M\ge2$, the simultaneous inequalities $n>H_M$ and $n\le M-1$ force $n=M-1=\delta(r/M)$, hence $z=1$. For $M=1$ there is no such $r$. Thus every threshold cut of $q_M\circ f_v$ lies in $\{1\}$. The initial report $q_M(x)$ already separates $x<1$ from $x\ge1$, so equality of initial reports implies equality of this later $L$ report. Endpoint equality at $1$ is included in this conclusion. If instead a prefix ends in $R$, then
+
+$$
+q_M(R(z))=q_M(z)+M,
+\tag{12.4}
+$$
+
+so its report is determined by the preceding report. Inductively, no prefix after length $H_M$ refines the transcript partition already obtained. The same induction covers arbitrarily long common continuations. For an adaptive controller, identical reports and known actions give identical next choices; another induction therefore preserves the same reports, local computations and stopping decisions. Repeated nondisturbing reads do not change this argument. $\square$
+

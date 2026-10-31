@@ -1,0 +1,9 @@
+**Theorem 25.2 (rational acquisition realizes the unique-pulse hit degree).** The prior $P_b$ has decidable membership for finitely encoded rationals, is locally finite in the ordinary real metric, and has at most two members in every band $[n,n+1)$, $n\in\mathbb Z_{\ge0}$. Every member is isolated and hence semantically admits a finite relative singleton observation cell with all integer-scale ports. Nevertheless, for every fixed, explicitly conditional source-independent $O$, the following are equivalent:
+
+1. $H_b\le_T O$.
+2. There is an $O$-computable exhaustive cutoff satisfying (25.3).
+3. The original bit $\tau_b$ is pointwise-finitely acquired by an $O$-controller.
+4. The exact original rational is pointwise-finitely acquired by an $O$-controller.
+5. Any one, equivalently every one, of the exact original four finite views in Definition 25.1 is pointwise-finitely acquired by an $O$-controller.
+6. There is an $O$-computably enumerable sound complete labeled-cell family for $(P_b,\tau_b)$.
+
