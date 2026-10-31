@@ -3368,10 +3368,385 @@ This one-leaf obstruction supplies neither a complete guarded $256$-source reali
 
 ## 追加锚（本行以下为增补区）
 
+## 28. 有理对角交换的 JJJMJJJ 实际响应核
 
-## 28. 四次 J 后 M 分支的完整增益共同核
+**定义 28.1（对角交换局部问题）。** Fix a legal pair
 
-**定义 28.1（单位来源与原核上的零历史方向）。** 固定定义 3.1 的任意完整合法 $256$ 来源元组，保留全部 $254$ 个非空前缀、原 $1538\times1024$ 矩阵及其整个核 $V=\ker B$。只要求两个 $j_e=(J^7,e)$ 来源满足 $\sigma(P_{j_e})=1$。令 $H$ 为 (10.1) 的共同非常数增益映射，置
+$$
+P_0=\begin{pmatrix}a&b\\c&1-a\end{pmatrix},\qquad
+P_1=\begin{pmatrix}1-a&b\\c&a\end{pmatrix},\qquad
+0<a<1,\quad b,c>0,\quad bc=a(1-a),\quad a\ne\frac12 .
+\tag{28.1}
+$$
+
+Put
+
+$$
+t=b+c,\qquad R=1+b,\qquad S_0=t+a,\qquad S_1=t+1-a.
+\tag{28.2}
+$$
+
+The matrices are distinct, strictly positive, trace one and ordinary rank one. For the
+word $w=JJJMJJJ$, let $g_0,g_1\in\mathbb R[T]_{\le3}$ and
+$\delta_e=-g_e(0)$. The normalized actual response is
+
+$$
+y_{e,i}=\operatorname{tr}(A_iP_e)g_e(i)-g_e(0),
+\qquad 0\le i\le7,
+\tag{28.3}
+$$
+
+where $A_i$ is the actual left product of the first $i$ actions. The local response
+kernel means the solutions of $y_{0,i}=y_{1,i}$ for all eight clocks for this fixed
+pair and this fixed word. It is a finite response kernel; it is not the original
+$V=\ker B$.
+
+**定理 28.2（整个合法对角交换核）。** For every pair (28.1), the complete local
+kernel is
+
+$$
+g_0=g_1=g,\qquad
+g(T)=(T-5)(T-7)(rT+z),\qquad (r,z)\in\mathbb R^2,
+\tag{28.4}
+$$
+
+with the common drift $\delta=-35z$. Conversely every $(r,z)$ in (28.4) satisfies
+all eight local equalities.
+
+**证明。** The trace factors for $w$ are
+
+$$
+(1,t,1,t,R,S_e,R,S_e),\qquad e=0,1.
+\tag{28.5}
+$$
+
+Let $h=g_0-g_1$ and $k=h(0)$. The common factors at clocks $1,2,3,4,6$ give
+
+$$
+t h(1)=k,\quad h(2)=k,\quad t h(3)=k,\quad Rh(4)=k,\quad Rh(6)=k.
+\tag{28.6}
+$$
+
+Set
+
+$$
+L(T)=\frac{T(T-2)(2T-5)}3.
+\tag{28.7}
+$$
+
+Its values at $0,1,2,3,4,6$ are $0,1,0,1,8,56$. The values at $0,1,2,3$, including $h(0)=k$, therefore force
+
+$$
+h(T)=k\left[1-\left(1-\frac1t\right)L(T)\right].
+\tag{28.8}
+$$
+
+Subtracting the clock-six and clock-four equations gives
+
+$$
+-48R\left(1-\frac1t\right)k=0.
+\tag{28.9}
+$$
+
+If $t\ne1$, then $k=0$, and (28.8) gives $h=0$. If $t=1$, (28.8) gives the
+constant polynomial $h=k$ and the clock-four equation gives $(R-1)k=bk=0$;
+$b>0$ again gives $k=0$. Thus $g_0=g_1$ without division by a gain value or by
+any response. At clocks $5$ and $7$, (28.5) now gives
+
+$$
+(S_0-S_1)g(5)=0,\qquad (S_0-S_1)g(7)=0.
+\tag{28.10}
+$$
+
+Since $S_1-S_0=1-2a\ne0$, $g(5)=g(7)=0$, and the cubic factorization (28.4)
+follows. The converse follows by inserting (28.4) into (28.5). This proof includes
+$t=1$, all signs of $r,z$, zero sampled values, degree drops, repeated roots and the
+zero carrier $(r,z)=(0,0)$; the latter is excluded only when one asks for a legal
+nonzero gain. The degenerate value $a=1/2$ is exactly the case in which the displayed
+pair collapses to one source and is outside the distinct-pair statement. ∎
+
+**引理 28.3（单位 J 七步历史的完整增益图）。** For the $t=7/4$ member of (28.4), let
+$U=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix}$. The unique cubic with zero
+constant term whose first three J responses equal those of (28.4) is
+
+$$
+p(T)=(13r+10z)T^3-(66r+47z)T^2+(95r+44z)T.
+\tag{28.11}
+$$
+
+For every $c\in\mathbb R$, the unit source with gain $p+c$ and drift $-c$ has
+the complete J-seven response vector
+
+$$
+\begin{aligned}
+(p(0),\ldots,p(7))={}&(0,\ 42r+7z,\ 30r-20z,\ 42r-21z,\ 156r+64z,\\
+&450r+295z,\ 1002r+732z,\ 1890r+1435z).
+\end{aligned}
+\tag{28.12}
+$$
+
+In particular its clocks $1,2,3$ agree with both sources in (28.1) equipped with
+(28.4). The additive constant $c$ changes the gain and drift but cancels from every
+unit-source J response.
+
+**证明。** For $U$, every J and I trace is one, so the response of $(U,p+c,-c)$
+is $p(i)$. Direct evaluation of (28.4) at $i=1,2,3$ with the common factor $t=7/4$
+below gives the first three entries of (28.12); interpolation with $p(0)=0$ gives
+(28.11), and evaluation gives the remaining entries. ∎
+
+**推论 28.4（整个对角交换类的有向交点）。** Apply the unit-history definitions
+
+$$
+A=\frac{p(1)+p(3)}2,\quad \Delta=p(3)-p(1),\quad
+E=3p(4)-2p(2),\quad F=A+E,\quad
+\kappa=p(6)-p(5),\quad \lambda=p(7)-p(5).
+\tag{28.13}
+$$
+
+For a general $t>0$, the polynomial in (28.11) is replaced by
+
+$$
+\begin{aligned}
+p_t(T)={}&\left((16t-15)r+\frac{40(t-1)}3z\right)T^3\\
+&+\left((60-72t)r+(65-64t)z\right)T^2\\
+&+\left((80t-45)r+\frac{224t-260}3z\right)T,
+\end{aligned}
+\tag{28.14}
+$$
+
+because its values at $1,2,3$ are respectively $tg(1)-35z$, $g(2)-35z$ and
+$tg(3)-35z$. Substitution in (28.13) gives
+
+$$
+\begin{aligned}
+A&=24tr+(16t-35)z,& \Delta&=-16tz,\\
+E&=8(72tr-75r+48tz-55z),\\
+F&=25(24tr-24r+16tz-19z),\\
+\kappa&=(744t-750)r+(584t-585)z,\\
+\lambda&=80(24r+19z)(t-1).
+\end{aligned}
+\tag{28.15}
+$$
+
+The coefficient determinant of $(F,\Delta)$ in $(r,z)$ is
+
+$$
+\det\begin{pmatrix}600(t-1)&400t-475\\0&-16t\end{pmatrix}
+=-9600t(t-1).
+\tag{28.16}
+$$
+
+Thus $t=1$ is handled separately and has rank at most one; for $t\ne1$ the unique
+coordinates $E=e_tF+f_t\Delta$ are
+
+$$
+e_t=\frac{24t-25}{25(t-1)},\qquad
+f_t=\frac{35-32t}{16t(t-1)}.
+\tag{28.17}
+$$
+
+They meet the remaining directed family $75e+16f=52$, $e>-4$, exactly when
+
+$$
+75e_t+16f_t-52=\frac{5(4t-7)}t=0.
+\tag{28.18}
+$$
+
+Consequently the entire legal diagonal-exchange class intersects that directed
+family only at $t=7/4$, where
+
+$$
+(e,f)=\left(\frac{68}{75},-1\right),\qquad
+\lambda=\frac{60}{23}\kappa
+=\frac{64}{5(4+e)}\kappa.
+\tag{28.19}
+$$
+
+All divisions in (28.17) occur only after $t>0$ and $t\ne1$ have been stated. The
+case $t=1$ is not silently discarded; it simply has no rank-two $(F,\Delta)$ image.
+
+At $t=7/4$, the two coefficient vectors of $p$ are $(13,-66,95)$ and
+$(10,-47,44)$, whose first two-coordinate minor is $49$; hence the history
+map on this two-parameter local carrier has rank $2$. Equation (28.16) gives simultaneously
+$\operatorname{rank}(F,\Delta)=2$.
+
+## 29. 一个有理实际响应与 JJJMJ 八槽同历史延拓
+
+**命题 29.1（有理来源与全部绝对响应）。** Choose the rational member
+
+$$
+P_0=\begin{pmatrix}1/6&5/3\\[1mm]1/12&5/6\end{pmatrix},\qquad
+P_1=\begin{pmatrix}5/6&5/3\\[1mm]1/12&1/6\end{pmatrix}.
+\tag{29.1}
+$$
+
+Both matrices are entrywise positive, have trace one, and satisfy
+$bc=(5/3)(1/12)=5/36=a(1-a)$ for the corresponding diagonal. They are distinct,
+and $t=7/4$, $R=8/3$, $S_0=23/12$, $S_1=31/12$. The history forms are
+
+$$
+\begin{aligned}
+A&=42r-7z,& \Delta&=-28z,& E&=408r+232z,\\
+F&=450r+225z,& \kappa&=552r+437z,& \lambda&=1440r+1140z.
+\end{aligned}
+\tag{29.2a}
+$$
+
+In particular $\det(F,\Delta)=-12600$, consistent with the rank-two
+history calculation above. With the same gain (28.4) and drift $-35z$, both
+sources give the following absolute response vectors:
+
+$$
+\begin{array}{c|c}
+\text{word}&(y_0,y_1,\ldots,y_7)\\ \hline
+JJJMJJJ,\ JJJMJJM
+ &(0,\ 42r+7z,\ 30r-20z,\ 42r-21z,\ 32r-27z,\
+ -35z,\ -16r-113z/3,\ -35z)\\[1mm]
+JJJMJMJ,\ JJJMJMM
+ &(0,\ 42r+7z,\ 30r-20z,\ 42r-21z,\ 32r-27z,\
+ -35z,\ -26r-118z/3,\ -35z).
+\end{array}
+\tag{29.2}
+$$
+
+The two rows differ only at clock six. For example, at $r=z=1$,
+
+$$
+g(T)=T^3-11T^2+23T+35,\qquad \delta=-35,\qquad
+p(T)=23T^3-113T^2+139T,
+\tag{29.3}
+$$
+
+and the two rows of (29.2) are respectively
+
+$$
+(0,49,10,21,5,-35,-161/3,-35),\qquad
+(0,49,10,21,5,-35,-196/3,-35).
+\tag{29.4}
+$$
+
+**证明。** The cumulative traces at clocks $0,1,2,3,4,5,6,7$ for
+$JJJMJJJ$ are $1,7/4,1,7/4,8/3,S_e,8/3,S_e$. For $JJJMJMJ$, the sixth
+trace is $1+2b=13/3$ for both sources. Substituting
+$g(4)=3(4r+z)$, $g(5)=g(7)=0$ and $g(6)=-(6r+z)$ into (28.3) gives (29.2).
+The final response is $-35z$ because the seventh gain value is zero, regardless of
+the final trace. The rank-one and positivity assertions follow directly from (29.1),
+so this is an actual source pair rather than a lifted low-rank difference. ∎
+
+**定理 29.2（同一 JJJMJ 历史的八槽延拓与提前停止）。** At $r=z=1$, the common
+history through the fifth action $J$ is
+
+$$
+H_5=(0,J,49,J,10,J,21,M,5,J,-35).
+\tag{29.5}
+$$
+
+From this same history, the four words
+
+$$
+JJJMJJJ,\quad JJJMJJM,\quad JJJMJMJ,\quad JJJMJMM
+\tag{29.6}
+$$
+
+each have the two fixed legal targets $(P_0,g,-35)$ and $(P_1,g,-35)$, with
+responses (29.4). Hence (29.6), times the two source choices, is an eight-slot
+same-history subtree. After the sixth action the common responses are $-161/3$ for
+$J$ and $-196/3$ for $M$; after either final action the response is $-35$. Stopping
+at $H_5$, after the sixth response, or after the seventh response cannot separate
+the two targets, since their sources remain $P_0\ne P_1$. Thus the subtree includes
+the early-stopping alternatives in the sense of (1.5), while each leaf still has
+two distinct legal complete targets and a nonzero gain.
+
+**证明。** The response identities are (29.4). The two source matrices are distinct,
+and (29.3) is nonzero, so every leaf pair is separated by its source coordinate even
+though its gain and drift coordinates coincide. The same pair is retained after each
+of the two sixth-action choices and after each of the two seventh-action choices;
+therefore no permitted stop on any displayed history removes the pair. ∎
+
+## 30. 缺失的 JJJMM 兄弟与非零重用余量
+
+The opposite fifth action from the common prefix $JJJM$ is the sibling $JJJMM$.
+Its eight required descendants are $JJJMMXY$ with $X,Y\in\{J,M\}$, and they
+must share the same first-three-$J$ responses, the same clock-four response $32r-27z$,
+and one common actual clock-five response $Y_M$. This response is not determined by
+the local $JJJMJJJ$ kernel when the sibling uses another source pair; it is a new
+same-history obligation. In particular, $Y_M$ may not be borrowed from an unrelated
+terminal pair or assigned independently at the eight leaves.
+
+There is an exact obstruction to the most tempting reuse. If the pair (29.1) and
+the gain (28.4) are reused at $JJJMM$, then
+
+$$
+A_5=M^2J=\begin{pmatrix}1&1\\2&1\end{pmatrix},\qquad
+\operatorname{tr}(A_5P_0)=\operatorname{tr}(A_5P_1)=\frac{53}{12},
+\tag{30.1}
+$$
+
+so $g(5)=0$ gives the common fifth response $-35z$. After a sixth $J$,
+
+$$
+A_6=JM^2J=\begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad
+\operatorname{tr}(A_6P_0)=\frac{35}{12},\quad
+\operatorname{tr}(A_6P_1)=\frac{43}{12}.
+\tag{30.2}
+$$
+
+Since $g(6)=-(6r+z)$, the response difference in the order $P_0-P_1$ is
+
+$$
+\left(\frac{35}{12}-\frac{43}{12}\right)\bigl(-(6r+z)\bigr)
+=\frac23(6r+z).
+\tag{30.3}
+$$
+
+It is $14/3$ for the concrete carrier $r=z=1$. Therefore a nonzero value of
+(30.3) excludes reuse of this displayed pair through the $JJJMMJ$ child. It does
+not exclude the line $6r+z=0$, another source pair, another gain map, or the
+existence of the missing sibling itself. The exact eight-slot $JJJMMXY$ incidence
+remains open.
+
+## 31. 原完整核的边界、文献对应与未决量词
+
+The kernel in Theorem 28.2 is the solution space of the paired actual equations for
+two fixed sources. It is not $V=\ker B$ from Definition 3.1. A complete original
+tuple would still have the same $1538\times1024$ matrix, all $256$ source slots and
+all $254$ nonempty prefixes. Its hidden coefficient directions are governed by the
+whole $V$, and the original consumers remain the full maps $G_q|_V$ and
+$D_w|_V\colon V\to\mathbb R^4$ in (3.9). Equality of the two local gains in
+(28.4) is one response-kernel fact; because $P_0\ne P_1$, it is not an assertion
+that an original equal-source leaf has $D_w|_V=0$. Conversely, a local pair does
+not provide any nonzero $G_q|_V$, any hidden-direction control, or a legal extension
+to the other $254$ sources.
+
+The calculation therefore supplies an exact rational actual-response falsifier for
+leaf-only source forcing at the directed-family point $(e,f)=(68/75,-1)$ and a
+same-history $JJJMJ$ eight-slot extension. It does not exclude the remaining
+$e>-4$ family, construct a legal $256$-source tuple or one simultaneous full
+coefficient vector, prove a whole-family guard failure, or resolve the global
+eight-versus-nine reading problem. All source and gain degeneracies listed in
+Theorem 28.2 remain in the local statement; the unresolved sibling and full-$V$
+guards are separate obligations.
+
+The overlap with bilinear identifiability is only conditional. Li--Lee--Bresler,
+[Definition 2.7 and Theorem 2.8](https://arxiv.org/html/1501.06120v1), require
+first-factor orbit identification followed by conditional second-factor
+identification for the same constrained bilinear observation map. Here the two
+sources are explicitly realizable and the common actual equations are written out,
+but that theorem supplies neither adaptive-tree incidence nor the missing $JJMM$
+extension. Choudhary--Mitra, [Proposition 1 and Remark 5](https://arxiv.org/abs/1402.2637),
+likewise retain realizable factor products and observations; no arbitrary lifted
+secant or generic sample count is used here. The reusable root factorization and
+fixed-source response ideas are already present in Sections 3, 4, 10, 11 and 27;
+the new content is the complete diagonal-exchange local class, its exact directed
+intersection, the absolute rational response table, and the coupled history
+boundary (30.3). ∎
+
+## 追加锚（本行以下为增补区）
+
+
+## 32. 四次 J 后 M 分支的完整增益共同核
+
+**定义 32.1（单位来源与原核上的零历史方向）。** 固定定义 3.1 的任意完整合法 $256$ 来源元组，保留全部 $254$ 个非空前缀、原 $1538\times1024$ 矩阵及其整个核 $V=\ker B$。只要求两个 $j_e=(J^7,e)$ 来源满足 $\sigma(P_{j_e})=1$。令 $H$ 为 (10.1) 的共同非常数增益映射，置
 
 $$
 \begin{gathered}
@@ -3379,12 +3754,12 @@ Z=\ker H,\qquad v=J^4M,\\
 w_A=J^4MJJ,\quad w_B=J^4MMJ,\quad
 w_C=J^4MJM,\quad w_D=J^4MMM.
 \end{gathered}
-\tag{28.1}
+\tag{32.1}
 $$
 
 $\mathcal D_v$ 是这四个字面叶的全部八个原槽，$R_v$ 是 (3.8) 的共同第五响应。此定义不要求 $E,\Delta$ 为零、非零或独立，也不要求 $\dim V=\operatorname{rank}H$。
 
-**定理 28.2（一个固定来源对决定八个完整投影的共同核）。** 在定义 28.1 下有以下穷尽二分。若 $P_{(w_B,0)}=P_{(w_B,1)}$，则完整 $D_{w_B}|_V=0$。若这两个固定来源不同，则对全部八个 $q\in\mathcal D_v$ 同时有
+**定理 32.2（一个固定来源对决定八个完整投影的共同核）。** 在定义 32.1 下有以下穷尽二分。若 $P_{(w_B,0)}=P_{(w_B,1)}$，则完整 $D_{w_B}|_V=0$。若这两个固定来源不同，则对全部八个 $q\in\mathcal D_v$ 同时有
 
 $$
 \begin{aligned}
@@ -3392,7 +3767,7 @@ $$
 \operatorname{rank}(G_q|_V)&=\operatorname{rank}H,\\
 \operatorname{rank}[B;G_q]&=\operatorname{rank}B+\operatorname{rank}H.
 \end{aligned}
-\tag{28.2}
+\tag{32.2}
 $$
 
 特别地，后一分支中每个完整增益和 $R_v$ 都经同一个 $H(V)$ 线性分解，包含各槽原有的常数系数与漂移。
@@ -3404,55 +3779,55 @@ $$
 $$
 g_{q,x}(T)=k_q,\qquad (\sigma(P_q)-1)k_q=0
 \quad(q\in\mathcal D_{J^4}).
-\tag{28.3}
+\tag{32.3}
 $$
 
 这里 $k_q$ 是这个同一 $x$ 的常数系数，并未要求其非零。在 $w_B$ 的两个槽上，实际第五、第六累计矩阵为 $M,M^2$。利用 $M^2=I+M$，各自第六响应减第五响应正是 $k_q$。共同祖先响应因此给出两个相等的常数 $k_0=k_1=k$。
 
-若 $k\ne0$，(28.3) 先给两个单位签名。共同第五和第七响应又分别给出相同的 $\tau$ 和 $\eta$，因为这两个响应是 $k(\tau-1)$ 和 $k\eta$。定义 2.1 的精确逆遂给两个固定来源相同，矛盾。故 $k=0$，特别是这个 $x$ 的共同第五响应 $R_v(x)=0$。现在对任意 $q\in\mathcal D_v$，前四个响应与第五响应均零；上述逐固定来源五步单射性给出 $G_qx=0$。这对每个 $x\in Z$ 成立，证明 $Z\subseteq\ker(G_q|_V)$。
+若 $k\ne0$，(32.3) 先给两个单位签名。共同第五和第七响应又分别给出相同的 $\tau$ 和 $\eta$，因为这两个响应是 $k(\tau-1)$ 和 $k\eta$。定义 2.1 的精确逆遂给两个固定来源相同，矛盾。故 $k=0$，特别是这个 $x$ 的共同第五响应 $R_v(x)=0$。现在对任意 $q\in\mathcal D_v$，前四个响应与第五响应均零；上述逐固定来源五步单射性给出 $G_qx=0$。这对每个 $x\in Z$ 成立，证明 $Z\subseteq\ker(G_q|_V)$。
 
 反向，若任意 $x\in V$ 满足 $G_qx=0$，该槽的前四个祖先响应都零。共同祖先与单位 $J^7$ 来源于是使 $Hx$ 在 $1,2,3,4$ 处均零。$Hx$ 次数至多三，故恒零，得到 $\ker(G_q|_V)\subseteq Z$。这里使用的是 $Hx$ 这个固定多项式的根计数，没有把随时钟变化的迹因子作多项式系数插值。
 
 两个核相等给出共同商空间 $V/Z\simeq H(V)$ 上的线性分解及第一项秩等式；(3.10) 给出第二项秩等式。$R_v=\ell_v(P_q)G_q$ 也经同一商空间分解。每一步均作用于原整个 $V$；在 $Z$ 上选向量只用于证明映射的核，未把 $Z$ 的限制非零误作原守卫。∎
 
-**推论 28.3（秩一层八槽守卫的精确缩减）。** 在定义 28.1 下，若 $\operatorname{rank}H=1$，则 $\mathcal D_v$ 的全部八个原 $G$ 守卫及其四个叶的所有适用完整 $D$ 守卫同时成立，当且仅当四个叶的固定来源对均不同。此时取任意非零生成元 $p\in H(V)$，存在同一个非零线性形式 $L\in V^*$ 及八个固定非零多项式 $f_q$，使
+**推论 32.3（秩一层八槽守卫的精确缩减）。** 在定义 32.1 下，若 $\operatorname{rank}H=1$，则 $\mathcal D_v$ 的全部八个原 $G$ 守卫及其四个叶的所有适用完整 $D$ 守卫同时成立，当且仅当四个叶的固定来源对均不同。此时取任意非零生成元 $p\in H(V)$，存在同一个非零线性形式 $L\in V^*$ 及八个固定非零多项式 $f_q$，使
 
 $$
 Hx=L(x)p,\qquad
 g_{q,x}(T)=L(x)f_q(T),\qquad
 \delta_{q,x}=-L(x)f_q(0),
 \qquad q\in\mathcal D_v.
-\tag{28.4}
+\tag{32.4}
 $$
 
-证明。若有一个同源叶，定理 28.2 证明开头的逐源单射性使其完整 $D$ 在整个 $V$ 上为零。若四对均不同，特别是 $w_B$ 来源不同，(28.2) 使八个 $G$ 的秩全为一；这四叶没有适用的同源 $D$。最后用同一个一维商 $V/Z$ 写出 (28.4)；各 $f_q$ 非零来自其完整 $G$ 的秩为一。$L$ 取零时允许零块，且没有把 $\dim V$ 改为一。∎
+证明。若有一个同源叶，定理 32.2 证明开头的逐源单射性使其完整 $D$ 在整个 $V$ 上为零。若四对均不同，特别是 $w_B$ 来源不同，(32.2) 使八个 $G$ 的秩全为一；这四叶没有适用的同源 $D$。最后用同一个一维商 $V/Z$ 写出 (32.4)；各 $f_q$ 非零来自其完整 $G$ 的秩为一。$L$ 取零时允许零块，且没有把 $\dim V$ 改为一。∎
 
-## 29. E 与 Delta 同零的秩一来源二分
+## 33. E 与 Delta 同零的秩一来源二分
 
-**定义 29.1（整个原核上的零 E、零 Delta 直线）。** 在定义 28.1 的完整合同下，另设整个 $V$ 上 $\operatorname{rank}H=1$ 且 $E=\Delta=0$，并要求完整来源元组满足全部原守卫 (3.9)。令
+**定义 33.1（整个原核上的零 E、零 Delta 直线）。** 在定义 32.1 的完整合同下，另设整个 $V$ 上 $\operatorname{rank}H=1$ 且 $E=\Delta=0$，并要求完整来源元组满足全部原守卫 (3.9)。令
 
 $$
 A=\frac{(H\,\cdot)(1)+(H\,\cdot)(3)}2,\qquad
 u(T)=\frac{T^3-9T^2+23T}{15}.
-\tag{29.1}
+\tag{33.1}
 $$
 
-由 (11.6)，$Hx=A(x)u$，其中 $A$ 是非零线性形式。推论 28.3 给出唯一实数 $\rho$，使 $R_{J^4M}=\rho A$。对来源写 $d_q=1-a_q\in(0,1)$、$t_q=b_q+c_q>0$、$S_q=t_q+d_q=\tau(P_q)$，并沿用 IV 定义 19.4 的两个全部单位来源
+由 (11.6)，$Hx=A(x)u$，其中 $A$ 是非零线性形式。推论 32.3 给出唯一实数 $\rho$，使 $R_{J^4M}=\rho A$。对来源写 $d_q=1-a_q\in(0,1)$、$t_q=b_q+c_q>0$、$S_q=t_q+d_q=\tau(P_q)$，并沿用 IV 定义 19.4 的两个全部单位来源
 
 $$
 Q_0(d)=\begin{pmatrix}1-d&1-d\\d&d\end{pmatrix},\qquad
 Q_1(d)=\begin{pmatrix}1-d&d\\1-d&d\end{pmatrix}.
-\tag{29.2}
+\tag{33.2}
 $$
 
-**定理 29.2（非单位共同增益支与单位两组根支）。** 在定义 29.1 下，$J^4M$ 以下八个原槽必恰落入下列两类之一。
+**定理 33.2（非单位共同增益支与单位两组根支）。** 在定义 33.1 下，$J^4M$ 以下八个原槽必恰落入下列两类之一。
 
 第一类为 $\rho=1$。八个完整增益均为
 
 $$
 g_{q,x}(T)=A(x)(u(T)-1)
 =\frac{A(x)}{15}(T-1)(T-3)(T-5).
-\tag{29.3}
+\tag{33.3}
 $$
 
 $w_A$ 的两个来源中至少一个非单位。$J^4MJ$ 以下四个来源有共同的左下元素 $c_q=C$，且 $0<C<1/2$；其两个叶分别满足
@@ -3460,14 +3835,14 @@ $w_A$ 的两个来源中至少一个非单位。$J^4MJ$ 以下四个来源有共
 $$
 d_{(w_A,0)}+d_{(w_A,1)}=1+C,\qquad
 d_{(w_C,0)}+d_{(w_C,1)}=1+2C.
-\tag{29.4}
+\tag{33.4}
 $$
 
 $J^4MM$ 以下四个来源有共同的 $S_q=S$，且
 
 $$
 1<S<2.
-\tag{29.5}
+\tag{33.5}
 $$
 
 第二类为全部八个来源均单位。存在唯一 $d_*\in(0,1)\setminus\{1/2\}$，使 $\rho=1-d_*$，并有以下无序来源对与完整增益：
@@ -3478,46 +3853,46 @@ $$
 w_A,w_C&\{Q_0(d_*),Q_1(d_*)\}&A(x)(u(T)-2)\\
 w_B,w_D&\{Q_0(5d_*/16),Q_1(5d_*/16)\}&A(x)(u(T)-21/5).
 \end{array}
-\tag{29.6}
+\tag{33.6}
 $$
 
 因此第二类的两组增益分别在原时钟六与七为零；第一类的三个根则为原时钟一、三、五。所有式子的归一化漂移仍是相应常数系数的相反数。这里给的是完整元组的必要来源二分，不是任一类向其余 $248$ 槽的延拓存在性。
 
-证明。全部原守卫与推论 28.3 先使四个叶的固定来源对均不同。由 (28.4)，可写每个 $q\in\mathcal D_v$ 的完整增益为 $A(x)f_q(T)$。四个 J 祖先的传播 (11.8) 在 $E=\Delta=0$ 时化为
+证明。全部原守卫与推论 32.3 先使四个叶的固定来源对均不同。由 (32.4)，可写每个 $q\in\mathcal D_v$ 的完整增益为 $A(x)f_q(T)$。四个 J 祖先的传播 (11.8) 在 $E=\Delta=0$ 时化为
 
 $$
 f_q(T)=k_q+u(T),\qquad
 (t_q-1)(k_q+1)=0,\qquad
 \rho=S_q(k_q+1)-k_q.
-\tag{29.7}
+\tag{33.7}
 $$
 
 最后一式是原第五响应，因为 $u(5)=1$。特别地，一个非单位来源强制 $k_q=-1$，从而 $\rho=1$；单位来源则满足
 
 $$
 k_q=\frac{\rho-1}{d_q}-1.
-\tag{29.8}
+\tag{33.8}
 $$
 
 这些等式含完整常数项，分母只是固定正来源参数。
 
-先设 $\rho=1$。(29.7)–(29.8) 使八个 $k_q$ 全为 $-1$，得到 (29.3)。其第六与第七增益分别为 $A$ 与 $(16/5)A$。实际第六动作为 J 时累计矩阵为 $JM$，迹为 $1+c_q$，所以共同响应为 $(2+c_q)A$。$A\ne0$ 给 $J^4MJ$ 以下共同的 $c_q=C>0$。合法来源满足 $b_q=d_q(1-d_q)/C$。实际末动作为 J 或 M 的迹分别为 $t_q+d_q$ 与 $t_q+2d_q$。两个叶的末响应相等，分别给
+先设 $\rho=1$。(33.7)–(33.8) 使八个 $k_q$ 全为 $-1$，得到 (33.3)。其第六与第七增益分别为 $A$ 与 $(16/5)A$。实际第六动作为 J 时累计矩阵为 $JM$，迹为 $1+c_q$，所以共同响应为 $(2+c_q)A$。$A\ne0$ 给 $J^4MJ$ 以下共同的 $c_q=C>0$。合法来源满足 $b_q=d_q(1-d_q)/C$。实际末动作为 J 或 M 的迹分别为 $t_q+d_q$ 与 $t_q+2d_q$。两个叶的末响应相等，分别给
 
 $$
 \begin{aligned}
 0&=(d_0-d_1)\left(1+\frac{1-d_0-d_1}{C}\right)&&\text{在 }w_A,\\
 0&=(d_0-d_1)\left(2+\frac{1-d_0-d_1}{C}\right)&&\text{在 }w_C.
 \end{aligned}
-\tag{29.9}
+\tag{33.9}
 $$
 
-同一叶若 $d_0=d_1$，共同的 $C$ 与来源秩一方程即给来源相等，已被原守卫排除。因此两式分别给 (29.4)。第二式再与 $d_0,d_1<1$ 给出 $C<1/2$。若 $w_A$ 两来源都单位，其共同 $c$ 及共同末迹 $S=1+d$ 会给相同的 $d,b,a$，又与来源不同矛盾。因此该叶至少一个来源非单位。
+同一叶若 $d_0=d_1$，共同的 $C$ 与来源秩一方程即给来源相等，已被原守卫排除。因此两式分别给 (33.4)。第二式再与 $d_0,d_1<1$ 给出 $C<1/2$。若 $w_A$ 两来源都单位，其共同 $c$ 及共同末迹 $S=1+d$ 会给相同的 $d,b,a$，又与来源不同矛盾。因此该叶至少一个来源非单位。
 
 实际第六动作为 M 时累计矩阵为 $M^2$，共同响应是 $(2+S_q)A$；故 $J^4MM$ 以下有共同 $S_q=S$。在 $w_B$，末累计矩阵为 $JM^2$，迹为 $1+b_q+2c_q$；共同第七响应及 $A\ne0$ 给两个来源共同的 $\eta=b_q+2c_q$。令 $\zeta=S-\eta=d_q-c_q$。两个来源不同，故 $c_0\ne c_1$，且
 
 $$
 d_e=c_e+\zeta,\qquad b_e=S-\zeta-2c_e.
-\tag{29.10}
+\tag{33.10}
 $$
 
 把这些式子代入两个来源各自的 $b_ec_e=d_e(1-d_e)$，得到 $c_0,c_1$ 是同一二次式的两个不同根，具体为
@@ -3528,72 +3903,72 @@ c_0+c_1=S+\zeta-1,\qquad c_0c_1=\zeta(1-\zeta),\\
 b_0+b_1=2(1-2\zeta),\qquad
 b_0b_1=1-(S+\zeta-1)^2.
 \end{gathered}
-\tag{29.11}
+\tag{33.11}
 $$
 
 $c_e,b_e>0$ 先给 $0<\zeta<1/2$，再给 $0<S+\zeta-1<1$，所以 $S<2$。若 $S\le1$，则 $0<c_0+c_1\le\zeta$；但
 
 $$
 (c_0+c_1)^2\ge4c_0c_1=4\zeta(1-\zeta)>\zeta^2
-\tag{29.12}
+\tag{33.12}
 $$
 
 与之矛盾，最后的严格不等式来自 $0<\zeta<1/2$。于是 $S>1$，证明第一类的全部结论。
 
-再设 $\rho\ne1$。由 (29.7)，八个来源都单位。在 $w_A$，第七减第五响应为 $(16/5)(1+d_q)A$，所以两槽有共同 $d=d_*\in(0,1)$；(29.8) 使两个完整增益也相同。两个不同单位来源在这个共同 $d$ 下必有不同的 $c$，共享的第六响应因此强制第六增益为零。因 $u(6)=2$，得到
+再设 $\rho\ne1$。由 (33.7)，八个来源都单位。在 $w_A$，第七减第五响应为 $(16/5)(1+d_q)A$，所以两槽有共同 $d=d_*\in(0,1)$；(33.8) 使两个完整增益也相同。两个不同单位来源在这个共同 $d$ 下必有不同的 $c$，共享的第六响应因此强制第六增益为零。因 $u(6)=2$，得到
 
 $$
 k=-2,\qquad \rho=1-d_*.
-\tag{29.13}
+\tag{33.13}
 $$
 
-单位合法来源的 $b+c=1$ 与 $bc=d(1-d)$ 给出 $\{b,c\}=\{d,1-d\}$，所以其全部来源恰为 (29.2)。此叶两来源不同还要求 $d_*\ne1/2$。
+单位合法来源的 $b+c=1$ 与 $bc=d(1-d)$ 给出 $\{b,c\}=\{d,1-d\}$，所以其全部来源恰为 (33.2)。此叶两来源不同还要求 $d_*\ne1/2$。
 
-对其余任意单位后代，(29.8) 现在给 $k_q=-1-d_*/d_q$。在 $w_A$，第六共同响应已为 $2A$。对 $J^4MJ$ 的任何后代，第六响应的直接展开是
+对其余任意单位后代，(33.8) 现在给 $k_q=-1-d_*/d_q$。在 $w_A$，第六共同响应已为 $2A$。对 $J^4MJ$ 的任何后代，第六响应的直接展开是
 
 $$
 \left[2+c_q\left(1-\frac{d_*}{d_q}\right)\right]A.
-\tag{29.14}
+\tag{33.14}
 $$
 
-$c_q>0$ 与 $A\ne0$ 使这四个槽全有 $d_q=d_*$，故 $k_q=-2$。各叶来源不同，于是 $w_A,w_C$ 各自恰取 (29.6) 第一行的两个来源，允许跨叶重复。
+$c_q>0$ 与 $A\ne0$ 使这四个槽全有 $d_q=d_*$，故 $k_q=-2$。各叶来源不同，于是 $w_A,w_C$ 各自恰取 (33.6) 第一行的两个来源，允许跨叶重复。
 
 在 $w_B$，两个槽的第六响应差为
 
 $$
 (d_0-d_1)\left(1+\frac{d_*}{d_0d_1}\right)A.
-\tag{29.15}
+\tag{33.15}
 $$
 
-括号严格正，故共同 $d_0=d_1=d$，两完整增益相同。来源不同使两个 $c$ 不同；末 J 的迹为 $2+c$，所以共同第七响应强制第七增益为零。这给 $k=-u(7)=-21/5$，进而由 (29.8) 得
+括号严格正，故共同 $d_0=d_1=d$，两完整增益相同。来源不同使两个 $c$ 不同；末 J 的迹为 $2+c$，所以共同第七响应强制第七增益为零。这给 $k=-u(7)=-21/5$，进而由 (33.8) 得
 
 $$
 d=\frac5{16}d_*.
-\tag{29.16}
+\tag{33.16}
 $$
 
 对 $J^4MM$ 的任何后代，第六响应为 $[3+d_q-d_*-d_*/d_q]A$。与 $w_B$ 的共同第六响应相减，所得系数为
 
 $$
 (d_q-d)\left(1+\frac{d_*}{d_qd}\right).
-\tag{29.17}
+\tag{33.17}
 $$
 
-正性使全部这四个槽都取 (29.16) 的 $d$ 和 $k=-21/5$；来源不同便使 $w_B,w_D$ 各自恰为 (29.6) 第二行的来源对。因 $0<5d_*/16<5/16$，该来源对不会退化为同一个矩阵。$\rho$ 唯一给出 $d_*=1-\rho$，证明唯一性。
+正性使全部这四个槽都取 (33.16) 的 $d$ 和 $k=-21/5$；来源不同便使 $w_B,w_D$ 各自恰为 (33.6) 第二行的来源对。因 $0<5d_*/16<5/16$，该来源对不会退化为同一个矩阵。$\rho$ 唯一给出 $d_*=1-\rho$，证明唯一性。
 
 两类已按 $\rho=1$ 与 $\rho\ne1$ 穷尽。第一类中已证明 $w_A$ 含非单位来源；第二类全部单位，故也可按八槽中是否存在非单位来源来区分。证明没有除以 $A(x)$ 或任何向量的样本增益，只比较整个原 $V$ 上非零形式 $A$ 的固定系数。∎
 
-**定义 29.3（供应、消费者与剩余数学范围）。** 定理 28.2 直接使用本卷定理 4.1、5.1、5.3、定义 2.1 的仿射逆及定理 10.1 证明中的五步单射性。其新增关系是：$w_B$ 的固定来源不同已足以消去整个 $\ker H$ 在八个原增益中的像，且反向由四个共同祖先得到精确核，而不要求任何秩二独立性。推论 28.3 与定理 29.2 消费此关系于本卷定理 3.3 的原完整 $G,D$ 守卫。定理 29.2 还使用 (11.6)、(11.8) 的实际四祖先传播及 IV 定义 19.4 的单位来源分类。IV 定理 19.5 已给出特定单位来源的局部两步失败；这里的 (29.6) 是全部原守卫下该切片的必要来源分类，(29.3)–(29.5) 则约束非单位支，均不把局部八槽赋值当作完整原根。
+**定义 33.3（供应、消费者与剩余数学范围）。** 定理 32.2 直接使用本卷定理 4.1、5.1、5.3、定义 2.1 的仿射逆及定理 10.1 证明中的五步单射性。其新增关系是：$w_B$ 的固定来源不同已足以消去整个 $\ker H$ 在八个原增益中的像，且反向由四个共同祖先得到精确核，而不要求任何秩二独立性。推论 32.3 与定理 33.2 消费此关系于本卷定理 3.3 的原完整 $G,D$ 守卫。定理 33.2 还使用 (11.6)、(11.8) 的实际四祖先传播及 IV 定义 19.4 的单位来源分类。IV 定理 19.5 已给出特定单位来源的局部两步失败；这里的 (33.6) 是全部原守卫下该切片的必要来源分类，(33.3)–(33.5) 则约束非单位支，均不把局部八槽赋值当作完整原根。
 
 上述供应结果取数学版本 `07d3329a682d006ae011c04266e9158072f5fb1e`，新增推导为相对于这些结果的 repo-derived 普通数学内容。[Li–Lee–Bresler，*A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with Applications to Subspace and Sparsity Models*，定义 2.7、定理 2.8，arXiv:1501.06120v1](https://arxiv.org/html/1501.06120v1) 的受约束非零因子识别须先识别来源轨道，再识别剩余因子；本节逐固定来源单射性也只在来源已经相等后作用。未建立把完整自适应树映入该一般定理的对应，不以一般秩零度、根计数、二次式根和或有限维商空间本身作为新增成果，也不作外部优先性断言。
 
-定理 28.2–28.3 保留全部 $E,\Delta$ 情形；定理 29.2 的额外 $E=\Delta=0$ 只界定其来源分类的适用切片。整个单位秩一原事件仍要求对每个完整合法元组，在同一个整个 $V$ 上证明某个原完整 $G$ 或适用完整 $D$ 消失，或给出全部 $256$ 来源及全部原守卫同时非零的一个完整元组。这里没有证明两种来源支能否与更早兄弟分支及其余原槽同时相容，没有排除全部秩一元组，也没有给出一个完整反例。任意实常数漂移、各槽常数差、零块的线性作用、任意非零实三次或更低增益、符号、次数下降、采样根、重根、重复与非对称无界来源，以及原时钟、两个动作与提前停止均保持定义 1.1、3.1 的范围。
+定理 32.2–32.3 保留全部 $E,\Delta$ 情形；定理 33.2 的额外 $E=\Delta=0$ 只界定其来源分类的适用切片。整个单位秩一原事件仍要求对每个完整合法元组，在同一个整个 $V$ 上证明某个原完整 $G$ 或适用完整 $D$ 消失，或给出全部 $256$ 来源及全部原守卫同时非零的一个完整元组。这里没有证明两种来源支能否与更早兄弟分支及其余原槽同时相容，没有排除全部秩一元组，也没有给出一个完整反例。任意实常数漂移、各槽常数差、零块的线性作用、任意非零实三次或更低增益、符号、次数下降、采样根、重根、重复与非对称无界来源，以及原时钟、两个动作与提前停止均保持定义 1.1、3.1 的范围。
 
 ## 追加锚（本行以下为增补区）
 
-## 30. 更早兄弟分支的零历史来源刚性与联合共同核
+## 34. 更早兄弟分支的零历史来源刚性与联合共同核
 
-**定义 30.1（前三个共同 J 祖先与早分支）。** 固定定义 3.1 的任意完整合法来源元组及原整个 $V=\ker B$；两个 $J^7$ 来源均满足 $\sigma=1$。沿用 $p=H$、$Z=\ker H$，并设 $H\ne0$。不对 $E,\Delta$ 或 $\dim V$ 加条件。置
+**定义 34.1（前三个共同 J 祖先与早分支）。** 固定定义 3.1 的任意完整合法来源元组及原整个 $V=\ker B$；两个 $J^7$ 来源均满足 $\sigma=1$。沿用 $p=H$、$Z=\ker H$，并设 $H\ne0$。不对 $E,\Delta$ 或 $\dim V$ 加条件。置
 
 $$
 \begin{gathered}
@@ -3602,29 +3977,29 @@ L(T)=\frac{T(T-2)(2T-5)}3,\qquad
 L(1)=L(3)=1,\quad L(2)=0,\\
 (L(4),L(5),L(6),L(7))=(8,25,56,105).
 \end{gathered}
-\tag{30.1}
+\tag{34.1}
 $$
 
 $\mathcal D_v$ 仍指这些字面前缀以下的原槽。对任意 $x\in Z$，所有 $JJJ$ 后代的前三个响应为零。对每个固定来源写 $t=b+c>0$、$h=1-1/t$、$k=g(0)$，四点插值给出该向量上的整个增益
 
 $$
 g(T)=k[1-hL(T)].
-\tag{30.2}
+\tag{34.2}
 $$
 
-此处允许 $k=0$ 和零增益；其漂移仍为 $-k$。(30.2) 只由时钟 $0,1,2,3$ 的值确定，不借用未执行的第四个 J。
+此处允许 $k=0$ 和零增益；其漂移仍为 $-k$。(34.2) 只由时钟 $0,1,2,3$ 的值确定，不借用未执行的第四个 J。
 
-**引理 30.2（零三祖先下早叶的完整来源二分）。** 取两个固定合法来源 $P_e$，其三次或更低增益沿实际词 $w_*$ 实现相同的全部归一化响应，且前三个响应为零。若 $P_0\ne P_1$，则恰有以下两个可能：两增益均零；或两来源均为
+**引理 34.2（零三祖先下早叶的完整来源二分）。** 取两个固定合法来源 $P_e$，其三次或更低增益沿实际词 $w_*$ 实现相同的全部归一化响应，且前三个响应为零。若 $P_0\ne P_1$，则恰有以下两个可能：两增益均零；或两来源均为
 
 $$
 P_e=\begin{pmatrix}a_e&a_e\\1-a_e&1-a_e\end{pmatrix},
 \qquad 0<a_e<1,\quad a_0\ne a_1,
-\tag{30.3}
+\tag{34.3}
 $$
 
-两增益为非零常数 $k_e$，且 $a_0k_0=a_1k_1$。后一情形的时钟四至七共同响应均等于这个非零数。反之，(30.3) 及这个常数等式确实给出所述相同完整历史。
+两增益为非零常数 $k_e$，且 $a_0k_0=a_1k_1$。后一情形的时钟四至七共同响应均等于这个非零数。反之，(34.3) 及这个常数等式确实给出所述相同完整历史。
 
-证明。按 (30.2) 写两增益。置 $R_e=1+b_e>1$、$S_e=t_e+a_e>0$。实际时钟四至七的累计矩阵依次为 $MJ,JMJ,MJ,JMJ$，因此该槽的四个响应为
+证明。按 (34.2) 写两增益。置 $R_e=1+b_e>1$、$S_e=t_e+a_e>0$。实际时钟四至七的累计矩阵依次为 $MJ,JMJ,MJ,JMJ$，因此该槽的四个响应为
 
 $$
 \begin{aligned}
@@ -3633,7 +4008,7 @@ r_{5,e}&=k_e[S_e(1-25h_e)-1],\\
 r_{6,e}&=k_e[R_e(1-56h_e)-1],&
 r_{7,e}&=k_e[S_e(1-105h_e)-1].
 \end{aligned}
-\tag{30.4}
+\tag{34.4}
 $$
 
 若一个 $k_e=0$，该槽的所有响应为零。另一槽由 $r_6-r_4=-48Rh k=0$ 先得 $hk=0$，再由 $r_4=bk=0$ 及 $b>0$ 得 $k=0$，所以另一增益也零。以下两 $k_e$ 均非零。
@@ -3643,7 +4018,7 @@ $$
 $$
 U=R_0h_0k_0=R_1h_1k_1\ne0,\qquad
 \theta=\frac{S_0}{R_0}=\frac{S_1}{R_1}>0.
-\tag{30.5}
+\tag{34.5}
 $$
 
 现在使用第四、第五响应本身。将各自等式除以同一个非零 $U$，分别加回 $8$、$25\theta$，得到
@@ -3651,7 +4026,7 @@ $$
 $$
 \frac{1-1/R_0}{h_0}=\frac{1-1/R_1}{h_1},\qquad
 \frac{\theta-1/R_0}{h_0}=\frac{\theta-1/R_1}{h_1}.
-\tag{30.6}
+\tag{34.6}
 $$
 
 若 $\theta\ne1$，相减给 $h_0=h_1$。第一式再给 $R_0=R_1$，故 $t_0=t_1$、$S_0=S_1$，依次恢复相同的 $a,b,c$，与来源不同矛盾。若 $\theta=1$，则每个来源有 $S=R$，即 $c=1-a$；原秩一等式与 $1-a>0$ 给 $b=a$，从而 $t=1$、$h=0$，也矛盾。这穷尽两个非单位来源，包括其 $h$ 的任意符号。
@@ -3661,12 +4036,12 @@ $$
 $$
 b_e(1-b_e)=a_e(1-a_e),\qquad
 (b_e-a_e)(1-a_e-b_e)=0.
-\tag{30.7}
+\tag{34.7}
 $$
 
-若 $r\ne1$，必有 $a_e+b_e=1$，故 $b_e=1/(1+r)$、$a_e=r/(1+r)$，两来源又相同。于是 $r=1$，两来源恰为 (30.3)，且 $b_e=a_e$。来源不同等价于 $a_0\ne a_1$；共同响应 $a_ek_e$ 非零。直接代入原各祖先迹验证反向：前三个单位 J 响应为零，后四个迹均为 $1+a_e$，读数均为 $a_ek_e$。所有除法只发生在已明确非零的 $k_e,h_e,U,b_e$ 或固定正来源参数处。∎
+若 $r\ne1$，必有 $a_e+b_e=1$，故 $b_e=1/(1+r)$、$a_e=r/(1+r)$，两来源又相同。于是 $r=1$，两来源恰为 (34.3)，且 $b_e=a_e$。来源不同等价于 $a_0\ne a_1$；共同响应 $a_ek_e$ 非零。直接代入原各祖先迹验证反向：前三个单位 J 响应为零，后四个迹均为 $1+a_e$，读数均为 $a_ek_e$。所有除法只发生在已明确非零的 $k_e,h_e,U,b_e$ 或固定正来源参数处。∎
 
-**定理 30.3（非零 H 消去早叶隐藏方向并连接其 M 兄弟）。** 在定义 30.1 下，若 $w_*$ 的两个固定来源相同，则完整 $D_{w_*}|_V=0$。若它们不同，则
+**定理 34.3（非零 H 消去早叶隐藏方向并连接其 M 兄弟）。** 在定义 34.1 下，若 $w_*$ 的两个固定来源相同，则完整 $D_{w_*}|_V=0$。若它们不同，则
 
 $$
 \begin{gathered}
@@ -3674,14 +4049,14 @@ G_{(w_*,e)}|_Z=0\quad(e=0,1),\\
 R_{JJJM}|_Z=R_v|_Z=R_{v_J}|_Z=0,\\
 \ker(G_q|_V)=Z\quad(q\in\mathcal D_{v_J}).
 \end{gathered}
-\tag{30.8}
+\tag{34.8}
 $$
 
 在后一分支，若 $R_{v_M}|_Z\ne0$，则 $\mathcal D_{v_M}$ 的四个固定来源全部为引理 14.2 的 $P_\dagger$，且
 
 $$
 D_{JJJMJMJ}|_V=D_{JJJMJMM}|_V=0.
-\tag{30.9}
+\tag{34.9}
 $$
 
 因此，若全部原守卫 (3.9) 成立，则对早前缀 $v=JJJMJ$ 以下全部八个原槽同时有
@@ -3690,19 +4065,19 @@ $$
 \ker(G_q|_V)=\ker H,\qquad
 \operatorname{rank}(G_q|_V)=\operatorname{rank}H,
 \qquad q\in\mathcal D_v.
-\tag{30.10}
+\tag{34.10}
 $$
 
 证明。同源时，两块之差在实际前缀 $v_J$ 的六个祖先响应全零，引理 14.3 的逐固定来源单射性给完整 $D_{w_*}|_V=0$。
 
-以下两来源不同。若存在一个 $x\in Z$ 使其中一个早叶增益非零，引理 30.2 便识别这两个已经固定的来源为 (30.3)。现在回到任意 $y\in V$。因这两个固定来源单位，其前三个 J 祖先给出
+以下两来源不同。若存在一个 $x\in Z$ 使其中一个早叶增益非零，引理 34.2 便识别这两个已经固定的来源为 (34.3)。现在回到任意 $y\in V$。因这两个固定来源单位，其前三个 J 祖先给出
 
 $$
 g_{(w_*,e),y}(T)=k_e(y)+(Hy)(T).
-\tag{30.11}
+\tag{34.11}
 $$
 
-两端之差次数至多三，在 $0,1,2,3$ 均零，所以此式包含全部四个系数；这里没有把在 $Z$ 上的结论外推到别的向量。记整个 $V$ 上的非零固定来源差为 $a_0-a_1$。两槽第六减第四、 第七减第五、第五减第四的响应分别相等，(30.3)、(30.11) 给出整个 $V$ 上的三个映射恒等式
+两端之差次数至多三，在 $0,1,2,3$ 均零，所以此式包含全部四个系数；这里没有把在 $Z$ 上的结论外推到别的向量。记整个 $V$ 上的非零固定来源差为 $a_0-a_1$。两槽第六减第四、 第七减第五、第五减第四的响应分别相等，(34.3)、(34.11) 给出整个 $V$ 上的三个映射恒等式
 
 $$
 \begin{aligned}
@@ -3710,22 +4085,22 @@ $$
 (a_0-a_1)[p(7)-p(5)]&=0,\\
 (a_0-a_1)[p(5)-p(4)]&=0.
 \end{aligned}
-\tag{30.12}
+\tag{34.12}
 $$
 
 故每个 $Hy$ 在 $4,5,6,7$ 有同一个值。$Hy-(Hy)(4)$ 次数至多三而有四个不同根，必恒零；又 $(Hy)(0)=0$，所以 $Hy=0$。这对全部 $y\in V$ 成立，与 $H\ne0$ 矛盾。因此早叶两块在整个 $Z$ 上均零，三个共同实际祖先响应也在 $Z$ 上零。
 
-对 $q\in\mathcal D_{v_J}$，任意 $x\in Z$ 的六个实际祖先响应现在全零，引理 14.3 给 $G_qx=0$。反向，对任意 $JJJ$ 后代槽，只要 $G_qx=0$，共同祖先便使 $Hx$ 在 $1,2,3$ 为零，加上其在零的值也是零，根计数给 $Hx=0$。这证明 (30.8) 的精确核等式。
+对 $q\in\mathcal D_{v_J}$，任意 $x\in Z$ 的六个实际祖先响应现在全零，引理 14.3 给 $G_qx=0$。反向，对任意 $JJJ$ 后代槽，只要 $G_qx=0$，共同祖先便使 $Hx$ 在 $1,2,3$ 为零，加上其在零的值也是零，根计数给 $Hx=0$。这证明 (34.8) 的精确核等式。
 
-若 $R_{v_M}|_Z\ne0$，取同一个 $x_*\in Z$ 使这个实际第六响应非零。(30.8) 使该前缀以下四槽的前五个响应全零，而第六响应非零使四个增益块各自非零。引理 14.2 逐槽识别这四个固定来源均为 $P_\dagger$。再对任意 $y\in V$，每个叶内两块之差在共同六步前缀 $v_M$ 的响应全零，引理 14.3 的单射性给 (30.9)。这复用零五祖先的来源唯一性和六步单射性，不需要定义 14.1 的秩二或 $E=(13/4)\Delta$ 条件。
+若 $R_{v_M}|_Z\ne0$，取同一个 $x_*\in Z$ 使这个实际第六响应非零。(34.8) 使该前缀以下四槽的前五个响应全零，而第六响应非零使四个增益块各自非零。引理 14.2 逐槽识别这四个固定来源均为 $P_\dagger$。再对任意 $y\in V$，每个叶内两块之差在共同六步前缀 $v_M$ 的响应全零，引理 14.3 的单射性给 (34.9)。这复用零五祖先的来源唯一性和六步单射性，不需要定义 14.1 的秩二或 $E=(13/4)\Delta$ 条件。
 
-全部原守卫排除同源早叶以及 (30.9)，故只能有 $R_{v_M}|_Z=0$。对 $\mathcal D_{v_M}$ 四槽的任意 $x\in Z$，六个祖先响应遂全零；同一个引理 14.3 给这四个完整块也零。反向仍用前三个共同 J 祖先的四根论证。这与 $\mathcal D_{v_J}$ 合在一起证明 (30.10)；秩等式由精确核得到。全过程保留原整个 $V$，没有要求任一个原守卫在 $Z$ 上非零。∎
+全部原守卫排除同源早叶以及 (34.9)，故只能有 $R_{v_M}|_Z=0$。对 $\mathcal D_{v_M}$ 四槽的任意 $x\in Z$，六个祖先响应遂全零；同一个引理 14.3 给这四个完整块也零。反向仍用前三个共同 J 祖先的四根论证。这与 $\mathcal D_{v_J}$ 合在一起证明 (34.10)；秩等式由精确核得到。全过程保留原整个 $V$，没有要求任一个原守卫在 $Z$ 上非零。∎
 
-**推论 30.4（两条不同实际分支的十六槽联合秩一）。** 保留定义 3.1 的全部来源、前缀、矩阵及原守卫。若两个 $J^7$ 来源单位、$\operatorname{rank}H=1$ 且全部 (3.9) 成立，则对两个不相交原槽集
+**推论 34.4（两条不同实际分支的十六槽联合秩一）。** 保留定义 3.1 的全部来源、前缀、矩阵及原守卫。若两个 $J^7$ 来源单位、$\operatorname{rank}H=1$ 且全部 (3.9) 成立，则对两个不相交原槽集
 
 $$
 \mathcal Q=\mathcal D_{J^4M}\ \cup\ \mathcal D_{JJJMJ},\qquad |\mathcal Q|=16,
-\tag{30.13}
+\tag{34.13}
 $$
 
 同时有
@@ -3737,7 +4112,7 @@ $$
 \operatorname{rank}[B;G_q]&=\operatorname{rank}B+1
 \quad(q\in\mathcal Q).
 \end{aligned}
-\tag{30.14}
+\tag{34.14}
 $$
 
 特别地，若固定同一个非零 $\phi\in H(V)$ 并写 $Hx=\Lambda(x)\phi$，则存在十六个固定非零多项式 $f_q$，使
@@ -3746,13 +4121,13 @@ $$
 g_{q,x}(T)=\Lambda(x)f_q(T),\qquad
 \delta_{q,x}=-\Lambda(x)f_q(0)
 \quad(q\in\mathcal Q).
-\tag{30.15}
+\tag{34.15}
 $$
 
-证明。定理 28.2、推论 28.3 控制第一条分支，定理 30.3 控制第二条分支。两者的供应者都是原同一个 $H$，精确核也都是原同一个 $\ker H$；因此它们经同一商空间及同一形式 $\Lambda$ 分解，而非分别选择一维子核。(3.10) 给增广秩等式，秩为一保证各 $f_q$ 非零。第一条分支在第四步执行 J、第五步执行 M，第二条在第四步执行 M、第五步执行 J，故两个八槽集不相交。∎
+证明。定理 32.2、推论 32.3 控制第一条分支，定理 34.3 控制第二条分支。两者的供应者都是原同一个 $H$，精确核也都是原同一个 $\ker H$；因此它们经同一商空间及同一形式 $\Lambda$ 分解，而非分别选择一维子核。(3.10) 给增广秩等式，秩为一保证各 $f_q$ 非零。第一条分支在第四步执行 J、第五步执行 M，第二条在第四步执行 M、第五步执行 J，故两个八槽集不相交。∎
 
-**约定 30.5（供应、用途与完整延拓边界）。** 引理 30.2 的来源二分使用原正性、来源秩一方程、前三个共同 J 祖先和实际早叶的四个末响应；定理 30.3 以它排除早分支在 $\ker H$ 上的非零增益，再直接消费引理 14.2–14.3 于原完整 $D$ 守卫。推论 30.4 将此与定理 28.2 的不同分支连接，不以一般插值、商空间或秩零度本身作为新增内容。它不依赖定理 29.2 的 $E=\Delta=0$ 切片。新增关系是相对于这些供应结果的 repo-derived 普通数学推导，不作外部优先性断言。[Li–Lee–Bresler，定义 2.7、定理 2.8](https://arxiv.org/html/1501.06120v1) 的受约束因子识别提供先来源、后剩余因子的相关框架；它本身不供应 (30.5)–(30.12) 的实际零历史来源分类及跨兄弟完整核推论。
+**约定 34.5（供应、用途与完整延拓边界）。** 引理 34.2 的来源二分使用原正性、来源秩一方程、前三个共同 J 祖先和实际早叶的四个末响应；定理 34.3 以它排除早分支在 $\ker H$ 上的非零增益，再直接消费引理 14.2–14.3 于原完整 $D$ 守卫。推论 34.4 将此与定理 32.2 的不同分支连接，不以一般插值、商空间或秩零度本身作为新增内容。它不依赖定理 33.2 的 $E=\Delta=0$ 切片。新增关系是相对于这些供应结果的 repo-derived 普通数学推导，不作外部优先性断言。[Li–Lee–Bresler，定义 2.7、定理 2.8](https://arxiv.org/html/1501.06120v1) 的受约束因子识别提供先来源、后剩余因子的相关框架；它本身不供应 (34.5)–(34.12) 的实际零历史来源分类及跨兄弟完整核推论。
 
-(30.14) 是完整合法来源元组的必要条件，不是十六槽局部赋值的延拓充分性。仍须在同一个整个 $V$ 上处理另外 $240$ 槽及全部共同前缀的联合相容性，才能决定单位秩一原事件：对每个完整元组证明某个原完整 $G$ 或适用完整 $D$ 恒零，或者构造一个满足全部原守卫的完整合法 $256$ 来源元组。本节未完成这个全称排除，也未给出这样的反例。没有改变 $\ell_v(P)x=g(i)\operatorname{tr}(A_vP)-g(0)$，没有限制 $E,\Delta$、任意常数漂移、来源重合、来源非对称或无界、增益符号、次数下降、采样根、重根及零块的线性作用；原时钟、两个实际动作、提前停止和单条不能重置或复制的轨迹仍按定义 1.1。
+(34.14) 是完整合法来源元组的必要条件，不是十六槽局部赋值的延拓充分性。仍须在同一个整个 $V$ 上处理另外 $240$ 槽及全部共同前缀的联合相容性，才能决定单位秩一原事件：对每个完整元组证明某个原完整 $G$ 或适用完整 $D$ 恒零，或者构造一个满足全部原守卫的完整合法 $256$ 来源元组。本节未完成这个全称排除，也未给出这样的反例。没有改变 $\ell_v(P)x=g(i)\operatorname{tr}(A_vP)-g(0)$，没有限制 $E,\Delta$、任意常数漂移、来源重合、来源非对称或无界、增益符号、次数下降、采样根、重根及零块的线性作用；原时钟、两个实际动作、提前停止和单条不能重置或复制的轨迹仍按定义 1.1。
 
 ## 追加锚（本行以下为增补区）
