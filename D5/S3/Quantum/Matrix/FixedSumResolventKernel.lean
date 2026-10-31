@@ -271,11 +271,6 @@ private lemma kernel_scale {S c : ℝ} (hS : 0 < S) (hc : 0 < c)
   rw [he, Real.sqrt_mul (sq_nonneg c), Real.sqrt_sq hc.le]
   ring
 
-private lemma kernel_zero (S : ℝ) (j : ℕ) : kernel S j 0 = 0 := by
-  by_cases hj : j = 0
-  · simp [kernel, hj]
-  · simp [kernel, resolvent, zero_pow hj]
-
 private lemma denominator_comparison {S P T : ℝ} (hS : 0 < S) (hP : 0 < P)
     (hT : T ^ 2 ≤ P) {j : ℕ} (hj : 1 ≤ j) :
     (T ^ 2 / P) ^ j * kernel S j (Real.sqrt P) ≤ kernel S j T := by

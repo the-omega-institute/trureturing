@@ -179,7 +179,9 @@ def resolventAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source resolventArena ⟨resolventFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize integrandSignature resolventActual.readout resolventActual.anchor)
+  readout := some (realize integrandSignature
+    (fun _ p s => _root_.D5.S3.Quantum.Matrix.FixedSumResolventKernel.resolvent
+      p.1 p.2.1 s ^ p.2.2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -213,7 +215,9 @@ def scalarAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source scalarArena ⟨scalarFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize integrandSignature scalarActual.readout scalarActual.anchor)
+  readout := some (realize integrandSignature
+    (fun _ p s => (p.1 * p.2.1 / ((s + p.1) * (s + p.2.1))) ^ p.2.2)
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -247,7 +251,8 @@ def convexAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source convexArena ⟨convexFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize convexSignature convexActual.readout convexActual.anchor)
+  readout := some (realize convexSignature (fun _ p r => kernel p.1 p.2 r)
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
