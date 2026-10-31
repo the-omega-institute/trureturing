@@ -70,6 +70,10 @@ $$(\forall m \in \mathbb{N},\; \operatorname{a}\left(2 \cdot (m + 1)\right) = 3 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Pressure/HardinBarkerA209723EdgeDifferences.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin-barker-a209723-edge-differences` (proved) by `D5/S3/Combinatorics/Graph/Pressure/HardinBarkerA209723EdgeDifferences.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin-barker-a209723-edge-differences","declaration_gid":"D5/S3/Combinatorics/Graph/Pressure/HardinBarkerA209723EdgeDifferences.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; Colin Barker (2012). *OEIS A209723: five-column arrays with distinct clockwise edge differences*. URL: <https://oeis.org/A209723/internal>.
