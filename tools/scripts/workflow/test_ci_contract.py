@@ -16,6 +16,22 @@ ROOT = Path(__file__).resolve().parents[3]
 
 
 class ContractTests(unittest.TestCase):
+    def test_capacity_source_selection_is_independent_of_original_units_and_delta(self):
+        data, _ = contract.load(ROOT)
+        for path in ("CLAUDE.md", "Blueprint/D5/S0/Carrier/Ring.scribe.cs", "Problems/fixture.md",
+                     "README.md", "docs/reports/fixture.md", "tools/TestSupport/StrataLint.RuleTestSupport/Fixture.cs"):
+            with self.subTest(path=path):
+                plan = contract.selection(data, [path], "pull-request")
+                self.assertTrue(plan.get("capacity", False))
+                self.assertTrue(plan.get("source", False))
+                pushed = contract.selection(data, [path], "push")
+                self.assertFalse(pushed.get("capacity", False))
+                self.assertEqual(pushed.get("source", False), pushed["hits"]["current"])
+        # Selection belongs to the declaration, not a second path classifier.
+        data["current"]["capacity_paths"] = "selected/*\n"
+        self.assertFalse(contract.selection(data, ["README.md"], "pull-request").get("capacity", True))
+        self.assertTrue(contract.selection(data, ["selected/data.json"], "pull-request").get("capacity", False))
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix="ci parity ")
         self.addCleanup(self.temp.cleanup)

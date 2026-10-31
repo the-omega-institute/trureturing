@@ -18,6 +18,17 @@ def needs(detect="success", hits=None, **results):
 
 
 class CiRequiredTests(unittest.TestCase):
+    def test_capacity_source_is_required_when_current_is_unselected(self):
+        hits = {"current": False, "alpha": True}
+        value = needs(current="skipped", alpha="success", source="skipped")
+        value["detect"]["outputs"]["source"] = "true"
+        self.assert_red(self.verdict(value, hits), "prerequisite source")
+        value["source"] = {"result": "success", "outputs": {"source_status": "accepted", "continuation": "true"}}
+        self.assertEqual(0, self.verdict(value, hits).returncode)
+        for state in ("failure", "cancelled", "skipped"):
+            value["source"]["result"] = state
+            self.assert_red(self.verdict(value, hits), "prerequisite source")
+
     def test_fib_ack_cannot_pass_without_successful_identified_current(self):
         hits = {"current": True, "tests-fib": True}
         value = needs(current="success", **{"tests-fib": "success"})
