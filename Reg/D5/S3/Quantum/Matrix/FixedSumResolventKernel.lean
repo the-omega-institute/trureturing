@@ -100,6 +100,7 @@ private theorem convex_dependence : ObservationalDependence convexSignature conv
     simpa using integrable_resolvent (S := 2) (by norm_num) 1 (j := 1) (by norm_num)
   have hn : 0 ≤ᵐ[volume.restrict (Ioi (0 : ℝ))] resolvent 2 1 := by
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with s hs
+    have hs0 : 0 < s := hs
     dsimp [resolvent]
     positivity
   have hp : 0 < ∫ s in Ioi 0, resolvent 2 1 s := by
@@ -109,6 +110,7 @@ private theorem convex_dependence : ObservationalDependence convexSignature conv
       _ ≤ (volume.restrict (Ioi (0 : ℝ))) (Function.support (resolvent 2 1)) := by
         apply measure_mono
         intro s hs
+        have hs0 : 0 < s := hs
         change resolvent 2 1 s ≠ 0
         dsimp [resolvent]
         exact ne_of_gt (by positivity)

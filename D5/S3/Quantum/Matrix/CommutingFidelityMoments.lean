@@ -258,7 +258,11 @@ private lemma moment_spectral (A B : Matrix n n ℂ)
       ∑ i, (a i * b i / ((s + a i) * (s + b i))) ^ j := by
   rw [← trace_conj U, map_pow, sandwich_spectral A B U a b ha hb heA heB hs,
     diagonal_pow, trace_diagonal, Complex.re_sum]
-  simp only [← Complex.ofReal_pow, Complex.ofReal_re]
+  apply Finset.sum_congr rfl
+  intro i _
+  change ((((a i * b i / ((s + a i) * (s + b i)) : ℝ) : ℂ) ^ j).re) = _
+  rw [← Complex.ofReal_pow]
+  rfl
 
 /-- Actual matrix trace moments are integrable, including singular and zero inputs. -/
 theorem integrable_moment (A B : Matrix n n ℂ)
