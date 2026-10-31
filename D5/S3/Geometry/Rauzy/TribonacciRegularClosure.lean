@@ -56,9 +56,9 @@ theorem rauzyFractal_closure_interior {z : Complex}
     (q := ‖z‖₊) (show ‖z‖₊ < 1 from hr) f
   · intro i
     fin_cases i
-    · simpa [f, zeroPrefixMap] using affine_lipschitz 0 z (le_refl ‖z‖)
-    · exact affine_lipschitz 1 (z ^ 2) h2
-    · exact affine_lipschitz (1 + z) (z ^ 3) h3
+    · simpa [f, zeroPrefixMap] using affine_lipschitz 0 z (q := ‖z‖₊) (le_refl ‖z‖)
+    · exact affine_lipschitz 1 (z ^ 2) (q := ‖z‖₊) h2
+    · exact affine_lipschitz (1 + z) (z ^ 3) (q := ‖z‖₊) h3
   · intro i
     fin_cases i
     · simpa [f, zeroPrefixMap] using affine_open 0 z hz0

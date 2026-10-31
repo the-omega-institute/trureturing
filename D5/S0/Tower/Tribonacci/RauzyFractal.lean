@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-cover)
    anchors: []
    utility: none
-   digest: The compact Tribonacci Rauzy closure is exactly covered by its three admissible prefix images. -/
+   digest: The compact Rauzy closure is exactly covered by its three admissible prefix images. -/
 
 import D5.S0.Tower.Tribonacci.ModelSet
 import Mathlib.Topology.MetricSpace.Bounded
@@ -188,8 +188,14 @@ private theorem window_prefix_cover (z : Complex) :
     exact Or.inl (Or.inl ⟨0, hzero, by simp [zeroPrefixMap, conjugateCoordinate]⟩)
   | 1 =>
     cases h : name.1 0
-    · exact Or.inl (Or.inl ⟨0, hzero, by simp [conjugateCoordinate, zeroPrefixMap, h]⟩)
-    · exact Or.inl (Or.inr ⟨0, hzero, by simp [conjugateCoordinate, oneZeroPrefixMap, h]⟩)
+    · exact Or.inl (Or.inl ⟨0, hzero, by
+        simp only [zeroPrefixMap, mul_zero, conjugateCoordinate]
+        rw [Fin.sum_univ_succ]
+        simp [h]⟩)
+    · exact Or.inl (Or.inr ⟨0, hzero, by
+        simp only [oneZeroPrefixMap, mul_zero, add_zero, conjugateCoordinate]
+        rw [Fin.sum_univ_succ]
+        simp [h]⟩)
   | 2 =>
     cases h0 : name.1 0 <;> cases h1 : name.1 1
     · exact Or.inl (Or.inl ⟨0, hzero, by

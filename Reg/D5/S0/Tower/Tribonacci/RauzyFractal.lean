@@ -3,7 +3,7 @@ import Reg.Support.DependentFamily
 import D5.S0.Tower.Tribonacci.RauzyFractal
 import Reg.D5.S3.Geometry.Rauzy.Interior
 
-/-! Registration mirrors for the seven public Rauzy-fractal results. -/
+/-! Source mirrors for the public Rauzy-fractal results. -/
 
 set_option autoImplicit false
 noncomputable section
