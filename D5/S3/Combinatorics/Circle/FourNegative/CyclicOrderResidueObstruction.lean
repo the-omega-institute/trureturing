@@ -72,7 +72,6 @@ private theorem source_chains (n : ℕ) (hn : 2 ≤ n) :
   have nkn : 2 + 2 + 2 + (n + 1) = n + 7 := by omega
   rw [nk] at hU hV hW hX
   rw [nkn] at hUn hVn hWn hXn
-  norm_num only [show (1 : ℤ) + 4 + 4 * 4 + 4 * 4 * 4 = 85 by norm_num] at hU hV hW hX hUn hVn hWn hXn
   have hshift (i : ℕ) : g i = F (i + 1) := by
     dsimp [g, F]; rw [pow_succ]; congr 1; ring
   change (∀ i, i + 1 < n → f i = 85 * 2 ^ i ∧ g i = 170 * 2 ^ i) ∧ _
@@ -104,7 +103,8 @@ private theorem source_chains (n : ℕ) (hn : 2 ≤ n) :
     simp only [show ¬ n - 1 + 1 < n by omega, show ¬ n + 1 < n + 1 by omega,
       ite_false] at u un
     norm_num only [pow_zero, pow_one, zero_add, add_zero, show 0 + 1 < 2 by decide,
-      show ¬ 1 + 1 < 2 by decide, ite_true, ite_false, one_mul] at v vn nv nvn w wn nw nwn z zn nz nzn
+      show ¬ 1 + 1 < 2 by decide, ite_true, ite_false, one_mul]
+        at v vn nv nvn w wn nw nwn z zn nz nzn
     change f (n - 1) = _ at u
     change F n = _ at un
     have gnu : g (n - 1) = F n := by rw [hshift, show n - 1 + 1 = n by omega]
@@ -424,13 +424,13 @@ theorem actual_source_cyclic_order_residue_obstruction
       ho.rel_getElem_of_lt (i := 1) (j := 2) (by simp) (by simp) (by decide)
     have hXU : s.idxOf (n + 5) < s.idxOf (n - 1) :=
       ho.rel_getElem_of_lt (i := 2) (j := 3) (by simp) (by simp) (by decide)
-    apply finish true
-    · rw [smem (n - 1) (by omega)]
+    have hu : n - 1 ∉ S := by
+      rw [smem (n - 1) (by omega)]
       dsimp [p]
       omega
-    · have hv : n + 1 ∈ S := (smem (n + 1) (by omega)).mpr (by dsimp [p]; omega)
-      exact ⟨fun _ => rfl, fun _ => hv⟩
-    · exact (smem (n + 3) (by omega)).mpr (by dsimp [p]; omega)
+    have hv : n + 1 ∈ S := (smem (n + 1) (by omega)).mpr (by dsimp [p]; omega)
+    have hw : n + 3 ∈ S := (smem (n + 3) (by omega)).mpr (by dsimp [p]; omega)
+    exact finish true hu ⟨fun _ => rfl, fun _ => hv⟩ hw
   · have ho := sublist_positions s hnd _ hord
     have hWX : s.idxOf (n + 3) < s.idxOf (n + 5) :=
       ho.rel_getElem_of_lt (i := 0) (j := 1) (by simp) (by simp) (by decide)
@@ -438,18 +438,16 @@ theorem actual_source_cyclic_order_residue_obstruction
       ho.rel_getElem_of_lt (i := 1) (j := 2) (by simp) (by simp) (by decide)
     have hXV : s.idxOf (n + 5) < s.idxOf (n + 1) :=
       ho.rel_getElem_of_lt (i := 1) (j := 3) (by simp) (by simp) (by decide)
-    apply finish false
-    · rw [smem (n - 1) (by omega)]
+    have hu : n - 1 ∉ S := by
+      rw [smem (n - 1) (by omega)]
       dsimp [p]
       omega
-    · have hv : n + 1 ∉ S := by
-        rw [smem (n + 1) (by omega)]
-        dsimp [p]
-        omega
-      constructor
-      · intro h; exact (hv h).elim
-      · intro h; cases h
-    · exact (smem (n + 3) (by omega)).mpr (by dsimp [p]; omega)
+    have hv : n + 1 ∉ S := by
+      rw [smem (n + 1) (by omega)]
+      dsimp [p]
+      omega
+    have hw : n + 3 ∈ S := (smem (n + 3) (by omega)).mpr (by dsimp [p]; omega)
+    exact finish false hu ⟨fun h => (hv h).elim, fun h => by cases h⟩ hw
 
 #print axioms actual_source_cyclic_order_residue_obstruction
 
