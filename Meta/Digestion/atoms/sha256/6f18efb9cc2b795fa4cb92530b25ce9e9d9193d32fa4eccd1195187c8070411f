@@ -1,0 +1,29 @@
+**定理 6.2（算子值三轴的完整重建）。**
+
+上述变换是可逆的，其逆为
+
+$$
+\boxed{\rho=\frac12
+\bigl(I\otimes S+\sigma_x\otimes X+\sigma_y\otimes Y+\sigma_z\otimes Z\bigr).}
+$$
+
+完整相容条件是右侧整块正半定及 $\operatorname{Tr} S=1$。 当 $\dim\mathcal K=1$ 时，它准确退化为定理 [2.2](#thm:gram) 的标量 Bloch 球。
+
+**证明。**
+
+对角块给 $A=(S+Z)/2$、$B=(S-Z)/2$； 非对角块给 $C=(X+iY)/2$、$C^*=(X-iY)/2$。 因此所有块被唯一恢复，正性和迹条件也按同一矩阵逐字保留。
+
+∎
+
+这个线性分块恒等式也适用于任意 Hermitian 算子。 递归中的 $X,Y,Z$ 不必分别正半定或归一；状态的正性与归一化施加于完整重组矩阵。
+
+不能在非交换上下文中直接把标量条件换成
+$X^2+Y^2+Z^2\preceq S^2$。例如
+$|\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2$ 的密度矩阵给
+
+$$
+S=I/2,\qquad X=\sigma_x/2,\qquad Y=-\sigma_y/2,\qquad Z=\sigma_z/2.
+$$
+
+整块是合法纯态，但左侧为 $3I/4$，右侧为 $I/4$。 同样，$|\Phi^\pm\rangle$ 的每个单比特约化态都为 $I/2$， 而 $\langle\sigma_x\otimes\sigma_x\rangle$ 分别为 $1,-1$； 只存 $\operatorname{Tr} X,\operatorname{Tr} Y,\operatorname{Tr} Z$ 会丢掉这项内部关系。
+
