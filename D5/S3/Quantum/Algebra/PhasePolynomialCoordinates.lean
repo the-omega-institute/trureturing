@@ -11,7 +11,7 @@ import Mathlib.RingTheory.MvPolynomial.Homogeneous
 import Mathlib.Basic.Complex.Basic
 import Mathlib.Tactic
 
-set_option maxHeartbeats 800000
+/-! Inverse linear polynomial substitutions and their actual evaluations. -/
 
 noncomputable section
 open MvPolynomial Complex
@@ -46,9 +46,10 @@ private theorem cartesian_inverse_left (p : Poly ι) : fromCartesian (toCartesia
     intro v
     have hI : (C I : Poly ι)^2 = -1 := by rw [← map_pow]; norm_num
     have htwo : (2 : Poly ι) * C (1/2 : ℂ) = 1 := by
-      calc
-        _ = C ((2 : ℂ) * (1/2)) := by simp
-        _ = 1 := by norm_num
+      have hh : (C (2 : ℂ) : Poly ι) * C (1/2 : ℂ) = 1 := by
+        rw [← map_mul]
+        norm_num
+      simpa only [map_ofNat] using hh
     cases v with
     | inl i =>
       simp [toCartesian, fromCartesian, AlgHom.comp_apply]
@@ -68,9 +69,10 @@ private theorem cartesian_inverse_right (p : Poly ι) : toCartesian (fromCartesi
     intro v
     have hI : (C I : Poly ι)^2 = -1 := by rw [← map_pow]; norm_num
     have htwo : (2 : Poly ι) * C (1/2 : ℂ) = 1 := by
-      calc
-        _ = C ((2 : ℂ) * (1/2)) := by simp
-        _ = 1 := by norm_num
+      have hh : (C (2 : ℂ) : Poly ι) * C (1/2 : ℂ) = 1 := by
+        rw [← map_mul]
+        norm_num
+      simpa only [map_ofNat] using hh
     cases v with
     | inl i =>
       simp [toCartesian, fromCartesian, AlgHom.comp_apply]
@@ -86,8 +88,8 @@ private theorem cartesian_inverse_right (p : Poly ι) : toCartesian (fromCartesi
 /-- The unique change of polynomial coordinates; coefficients may be arbitrary complex numbers. -/
 def cartesianEquiv : Poly ι ≃ₐ[ℂ] Poly ι :=
   AlgEquiv.ofAlgHom toCartesian fromCartesian
-    (by ext p; exact cartesian_inverse_right p)
-    (by ext p; exact cartesian_inverse_left p)
+    (by apply DFunLike.ext; intro p; exact cartesian_inverse_right p)
+    (by apply DFunLike.ext; intro p; exact cartesian_inverse_left p)
 
 private theorem eval_toCartesian (p : Poly ι) (x : ι ⊕ ι → ℂ) :
     eval x (toCartesian p) =
@@ -107,8 +109,8 @@ theorem actual_cartesian (p : Poly ι) (z : ι → ℂ) :
   apply congrArg (fun f : ι ⊕ ι → ℂ => eval f p)
   funext v
   cases v with
-  | inl i => exact Complex.re_add_im (z i)
-  | inr i => simp [cartesian, Complex.conj_eq_re_sub_im]
+  | inl i => simpa [cartesian, mul_comm] using Complex.re_add_im (z i)
+  | inr i => apply Complex.ext <;> simp [cartesian]
 
 /-- No polynomial information is lost by restricting paired variables to actual conjugates. -/
 theorem actual_injective : Function.Injective (actual : Poly ι → (ι → ℂ) → ℂ) := by
@@ -160,9 +162,43 @@ theorem cartesian_totalDegree (p : Poly ι) : (toCartesian p).totalDegree = p.to
     intro v
     cases v with
     | inl i => exact (totalDegree_mul _ _).trans (by
+        rw [totalDegree_C, zero_add]
         simpa using (totalDegree_add (X (Sum.inl i) : Poly ι) (X (Sum.inr i))))
     | inr i => exact (totalDegree_mul _ _).trans (by
+        rw [totalDegree_C, zero_add]
         simpa using (totalDegree_sub (X (Sum.inl i) : Poly ι) (X (Sum.inr i))))
   exact le_antisymm (hto p) (by simpa [cartesian_inverse_left] using hfrom (toCartesian p))
+
+/-- Every polynomial in real coordinates has one faithful expansion in z and its conjugate. -/
+theorem real_coordinates_unique (q : Poly ι) :
+    ∃! p : Poly ι, ∀ z, actual p z = eval (cartesian z) q := by
+  have he (z) : actual (fromCartesian q) z = eval (cartesian z) q := by
+    rw [← actual_cartesian, cartesian_inverse_right]
+  refine ⟨fromCartesian q, he, ?_⟩
+  intro p hp
+  apply actual_injective
+  funext z
+  exact (hp z).trans (he z).symm
+
+/-- Homogeneous degree is preserved by the two inverse linear substitutions. -/
+theorem cartesian_homogeneous (p : Poly ι) (n : ℕ) :
+    (toCartesian p).IsHomogeneous n ↔ p.IsHomogeneous n := by
+  have hto (p : Poly ι) (hp : p.IsHomogeneous n) : (toCartesian p).IsHomogeneous n := by
+    have hg (v : ι ⊕ ι) :
+        (Sum.elim (fun i => X (Sum.inl i) + C I * X (Sum.inr i))
+          (fun i => X (Sum.inl i) - C I * X (Sum.inr i)) v : Poly ι).IsHomogeneous 1 := by
+      cases v
+      · exact (isHomogeneous_X ℂ _).add ((isHomogeneous_X ℂ _).C_mul I)
+      · exact (isHomogeneous_X ℂ _).sub ((isHomogeneous_X ℂ _).C_mul I)
+    simpa [toCartesian] using hp.aeval _ hg
+  have hfrom (p : Poly ι) (hp : p.IsHomogeneous n) : (fromCartesian p).IsHomogeneous n := by
+    have hg (v : ι ⊕ ι) :
+        (Sum.elim (fun i => C (1/2) * (X (Sum.inl i) + X (Sum.inr i)))
+          (fun i => C (1/(2*I)) * (X (Sum.inl i) - X (Sum.inr i))) v : Poly ι).IsHomogeneous 1 := by
+      cases v
+      · exact ((isHomogeneous_X ℂ _).add (isHomogeneous_X ℂ _)).C_mul _
+      · exact ((isHomogeneous_X ℂ _).sub (isHomogeneous_X ℂ _)).C_mul _
+    simpa [fromCartesian] using hp.aeval _ hg
+  exact ⟨fun hp => by simpa [cartesian_inverse_left] using hfrom _ hp, hto p⟩
 
 end D5.S3.Quantum.Algebra.PhasePolynomial

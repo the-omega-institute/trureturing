@@ -10,6 +10,8 @@ import D5.S3.Quantum.Algebra.PhasePolynomialCoordinates
 import D5.S3.Quantum.Algebra.PhasePolynomialChargeBalance
 import Mathlib.Analysis.SpecialFunctions.Complex.Arg
 
+/-! Balanced support and constructive quadratic generation for actual phase invariants. -/
+
 noncomputable section
 open MvPolynomial Complex
 namespace D5.S3.Quantum.Algebra.PhasePolynomial
@@ -75,8 +77,8 @@ theorem balanced_monomial_mem_quadratic_adjoin (m : (ι ⊕ ι) →₀ ℕ)
       have hr : monomial r (1 : ℂ) ∈ quadraticAlgebra (ι := ι) :=
         ih (holo r) (by omega) r (by omega) rfl
       have ha : monomial a (1 : ℂ) = quadraticGenerator (i,j) := by
-        simp [a, quadraticGenerator, X, monomial_mul]
-      rw [← hsplit, ← one_mul (1 : ℂ), ← monomial_mul, ha]
+        simp [a, quadraticGenerator, X, monomial_mul_monomial]
+      rw [← hsplit, ← one_mul (1 : ℂ), ← monomial_mul_monomial, ha]
       exact (quadraticAlgebra (ι := ι)).mul_mem hr (Algebra.subset_adjoin ⟨(i,j), rfl⟩)
 
 private theorem balanced_mem (p : Poly ι) (hp : Balanced p) : p ∈ quadraticAlgebra (ι := ι) := by
@@ -85,7 +87,8 @@ private theorem balanced_mem (p : Poly ι) (hp : Balanced p) : p ∈ quadraticAl
   apply Subalgebra.sum_mem
   intro m hm
   have hb := balanced_monomial_mem_quadratic_adjoin m (hp m (mem_support_iff.mp hm))
-  have he : monomial m (p.coeff m) = C (p.coeff m) * monomial m (1 : ℂ) := by simp
+  have he : monomial m (p.coeff m) = C (p.coeff m) * monomial m (1 : ℂ) := by
+    rw [C_mul_monomial, mul_one]
   rw [he]
   exact (quadraticAlgebra (ι := ι)).mul_mem (Subalgebra.algebraMap_mem _ _) hb
 
@@ -98,7 +101,7 @@ private theorem actual_diagonal (p : Poly ι) (c : ℂ) (z : ι → ℂ) :
       (diagonal c : Poly ι →ₐ[ℂ] Poly ι) =
       aeval (Sum.elim (fun i => c*z i) (fun i => star (c*z i))) := by
     apply MvPolynomial.algHom_ext
-    intro v; cases v <;> simp [diagonal, star_mul]
+    intro v; cases v <;> simp [diagonal, star_mul, mul_comm]
   exact DFunLike.congr_fun h p
 
 private theorem formal_invariant (p : Poly ι) (hp : Invariant p) (c : unitary ℂ) :
@@ -108,7 +111,7 @@ private theorem formal_invariant (p : Poly ι) (hp : Invariant p) (c : unitary �
   rw [actual_diagonal]
   have hc : exp ((c : ℂ).arg * I) = (c : ℂ) := by
     have hn : ‖(c : ℂ)‖ = 1 := by
-      have h := congrArg norm (unitary.coe_star_mul_self c)
+      have h := congrArg norm (Unitary.coe_star_mul_self c)
       simp only [norm_mul, norm_star, norm_one] at h
       nlinarith [norm_nonneg (c : ℂ)]
     simpa [hn] using Complex.norm_mul_exp_arg_mul_I (c : ℂ)
@@ -117,18 +120,20 @@ private theorem formal_invariant (p : Poly ι) (hp : Invariant p) (c : unitary �
 private theorem invariant_balanced (p : Poly ι) (hp : Invariant p) : Balanced p := by
   classical
   obtain ⟨c, hc⟩ := TwoHiggsDoublet.EffectivePotential.exists_infiniteOrder_unitary
-  have hc0 : (c : ℂ) ≠ 0 := (unitary.isUnit_coe c).ne_zero
+  have hc0 : (c : ℂ) ≠ 0 := (Unitary.isUnit_coe c).ne_zero
   let w : ι ⊕ ι → ℤ := Sum.elim (fun _ => 1) (fun _ => -1)
   have hsubst : (fun v => C ((c : ℂ) ^ w v) * X v) =
       Sum.elim (fun i => C (c : ℂ) * X (.inl i))
         (fun i => C (star (c : ℂ)) * X (.inr i)) := by
     funext v
-    cases v <;> simp [w, ← unitary.coe_inv, unitary.star_eq_inv]
+    cases v <;> simp [w, ← Unitary.coe_inv, Unitary.star_eq_inv]
   intro m hm
   by_contra hb
   have hcharge : ∑ v ∈ m.support, (m v : ℤ) * w v ≠ 0 := by
-    rw [← Finsupp.sum, Finsupp.sum_fintype _ _ (by simp), Fintype.sum_sum_type]
-    simpa [w, holo, anti, ← Int.natCast_sum, sub_eq_zero] using hb
+    change m.sum (fun v n => (n : ℤ) * w v) ≠ 0
+    rw [Finsupp.sum_fintype _ _ (by simp), Fintype.sum_sum_type]
+    simpa [w, holo, anti, ← Int.natCast_sum, ← Finset.sum_sub_distrib,
+      sub_eq_zero, Int.natCast_inj] using hb
   exact hm (MvPolynomial.coeff_eq_zero_of_charge_ne_zero w (c : ℂ) hc0 hc
     (by rw [hsubst]; exact formal_invariant p hp c) hcharge)
 
@@ -179,7 +184,7 @@ theorem invariant_minimum_degree (p : Poly ι) (hp : Invariant p)
 theorem invariant_degree_two (i : ι) : Invariant (quadraticGenerator (i,i)) ∧
     (quadraticGenerator (i,i) : Poly ι).totalDegree = 2 := by
   refine ⟨generator_invariant _, ?_⟩
-  rw [quadraticGenerator, X, X, monomial_mul]
+  rw [quadraticGenerator, X, X, monomial_mul_monomial]
   simp [totalDegree_monomial, Finsupp.sum_add_index']
 
 end D5.S3.Quantum.Algebra.PhasePolynomial
