@@ -133,6 +133,8 @@ private lemma normal_form (m : ℕ) (circuit : List (gate m)) :
 
 private lemma diagonal_forces_identity (m : ℕ) (circuit : List (gate m)) (c : ℂ)
     (θ : basis m → ℝ)
+    (hnorm : ∃ a : basis m → basis m, Function.Bijective a ∧
+      a = applyLabels (wireLabels circuit))
     (h : circuitMatrix circuit = c • Matrix.diagonal (fun x => Complex.exp ((θ x : ℂ) * Complex.I))) :
     wireLabels circuit = initialLabels m := by sorry
 
@@ -259,8 +261,8 @@ private lemma claim_for_n (n : ℕ) (hn : 1 ≤ n) :
           2 ^ (2 * n - 1) + 2 * n - 2 ≤ cnotCount circuit := by
   refine ⟨hardTheta, hardTheta_reflection (2 * n), ?_⟩
   intro circuit c h
-  obtain ⟨a, ha, hnf⟩ := normal_form (2 * n) circuit
-  have hidentity := diagonal_forces_identity (2 * n) circuit c hardTheta h
+  have hnorm := normal_form (2 * n) circuit
+  have hidentity := diagonal_forces_identity (2 * n) circuit c hardTheta hnorm h
   have hmul : ∀ (v : basis (2 * n)) (f g : basis (2 * n) → ℂ),
       (∀ x, f x ≠ 0) → (∀ x, g x ≠ 0) →
         character v (fun x => f x * g x) = character v f * character v g := by
