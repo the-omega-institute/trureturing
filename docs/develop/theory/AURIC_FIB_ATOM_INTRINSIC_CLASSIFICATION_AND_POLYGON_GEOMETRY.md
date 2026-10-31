@@ -2193,3 +2193,122 @@ $$
 定理B-32.6给上界 $W_q-1$，未给此上界的可达性或最大族分类。对于不含四见证的族，还须另外分析其完整耳集结构，才能从推论B-32.8推进至全耳相交问题。
 
 ## 追加锚（本行以下为增补区）
+
+## 33. 单交叉四见证的六耳极值与完整耳图归约
+
+**定义 B-33.1（固定配置、两侧实际剖分与两种极值）。** 对每个整数 $n\ge11$，固定同一个严格凸循环 $n$ 边形及定义B-32.1的六条不同实际耳 $D=\{f_{ab}:1\le a<b\le4\}$。固定该多边形上的四个剖分 $T_1,T_2,T_3,T_4$，要求其完整耳集满足
+
+$$
+\operatorname{Ear}(T_a)=S_a=\{f_{ab}:b\ne a\}\quad(1\le a\le4),\qquad q=1.
+$$
+
+每个剖分自身的对角线互不交叉，不要求不同剖分的对角线合起来也互不交叉。把 $f_{ab}$ 标识为抽象 $K_4$ 的边 $ab$；由定理B-32.3，唯一交叉耳对是三个完美匹配之一，记为 $P=\{p,p'\}$，另两个记为 $M,N$。于是 $D=P\sqcup M\sqcup N$；除 $p,p'$ 外，$D$ 内没有交叉对。沿用定义B-32.1的实际容许族，即
+
+$$
+\mathcal H=\{T\in\mathcal T_n:\operatorname{Ear}(T)\cap S_a\ne\varnothing\ (1\le a\le4)\},
+\qquad A(T)=\operatorname{Ear}(T)\cap D.
+$$
+
+定义
+
+$$
+\begin{aligned}
+L&=\{T\in\mathcal H:M\subseteq\operatorname{Ear}(T),\ \operatorname{Ear}(T)\cap N=\varnothing\},\\
+R&=\{T\in\mathcal H:N\subseteq\operatorname{Ear}(T),\ \operatorname{Ear}(T)\cap M=\varnothing\},\\
+C&=\mathcal H\setminus(L\cup R).
+\end{aligned}
+$$
+
+这里所有集合的元素都是实际剖分，$D$ 外的耳不受禁止。令 $G$ 为顶点两侧分别为 $L,R$ 的有限二分图，其边精确规定为
+
+$$
+UV\in E(G)\quad\Longleftrightarrow\quad
+U\in L,\ V\in R,\ \operatorname{Ear}(U)\cap\operatorname{Ear}(V)=\varnothing.
+$$
+
+因此边由完整耳集决定；同一 $D$ 迹的不同剖分仍是不同顶点。对 $X\subseteq L$，记 $N_G(X)=\{V\in R:\exists U\in X,\ UV\in E(G)\}$；记 $\alpha(G)$ 为 $G$ 的最大独立集大小。沿用约定B-32.2的 $c_r=C_{n-r-2}$，其中 $C_j=\frac1{j+1}\binom{2j}{j}$，并设
+
+$$
+B=c_2-2c_3+c_4.
+$$
+
+称 $\mathcal A\subseteq\mathcal H$ 为 $D$ 耳相交族，若任意两个不同成员 $U,V$ 满足 $A(U)\cap A(V)\ne\varnothing$。完整耳相交仍指 $\operatorname{Ear}(U)\cap\operatorname{Ear}(V)\ne\varnothing$。两种极值均要求包含同一组固定见证：
+
+$$
+\begin{aligned}
+\nu_D&=\max\{|\mathcal A|:\{T_1,T_2,T_3,T_4\}\subseteq\mathcal A\subseteq\mathcal H,\ \mathcal A\text{ 为 }D\text{ 耳相交族}\},\\
+\nu&=\max\{|\mathcal A|:\{T_1,T_2,T_3,T_4\}\subseteq\mathcal A\subseteq\mathcal H,\ \mathcal A\text{ 为完整耳相交族}\}.
+\end{aligned}
+$$
+
+**命题 B-33.2（单交叉实际配置的基准极值与 Hall 等价）。** 对定义B-33.1中的每个固定实际配置，有 $|L|=|R|=B$，并且
+
+$$
+A(U)\cap A(V)\ne\varnothing\quad(U\in C,\ V\in\mathcal H),\qquad
+\{T_1,T_2,T_3,T_4\}\subseteq C. \tag{33.1}
+$$
+
+六耳极值及完整耳极值分别为
+
+$$
+\begin{aligned}
+\nu_D&=|C|+B=W_1-B=c_2+6c_3-10c_4+4c_5,\\
+\nu&=|C|+\alpha(G),
+\end{aligned} \tag{33.2}
+$$
+
+其中 $W_1$ 是定理B-32.4中的 $|\mathcal H|$。特别地，对这个实际配置有等价关系
+
+$$
+\nu=\nu_D
+\quad\Longleftrightarrow\quad G\text{ 有完美匹配}
+\quad\Longleftrightarrow\quad
+|N_G(X)|\ge|X|\quad\text{对每个 }X\subseteq L. \tag{33.3}
+$$
+
+若 $X\subseteq L$ 满足 $|N_G(X)|<|X|$，则由实际剖分组成的族
+
+$$
+\mathcal A_X=C\cup X\cup\bigl(R\setminus N_G(X)\bigr) \tag{33.4}
+$$
+
+包含四个固定见证，是完整耳相交族，且
+
+$$
+|\mathcal A_X|=\nu_D+|X|-|N_G(X)|>\nu_D. \tag{33.5}
+$$
+
+式(33.3)对全部上述循环布局逐一成立；它保留了每个实际图的 Hall 条件作为等号的判据，未断言该条件对全部布局成立，也未给出违反它的 $X$。$q=0$ 的极值及问题B-32.10中的最大族分类仍不由本命题确定。
+
+证明。先使用定理B-32.4证明中的极小边覆盖分类：$K_4$ 的极小边覆盖恰为四颗星 $S_a$ 与三个完美匹配。每个 $A(T)$ 是边覆盖，且不含交叉对 $P$，所以包含某颗星或 $M,N$ 中的一个。若一个覆盖迹含星 $S_a$，任何与它不交的边集都无法覆盖顶点 $a$，因而不可能是另一个覆盖迹。
+
+设两个可行覆盖迹 $A(U),A(V)$ 不交。由上一段，它们都不含星，故各含 $M$ 或 $N$；它们不能含同一个匹配。不妨 $M\subseteq A(U)$、$N\subseteq A(V)$，不交性进一步给出 $A(U)\cap N=\varnothing$、$A(V)\cap M=\varnothing$，即 $U\in L,V\in R$。这也排除了含两个匹配的迹，或含一个匹配及另一个匹配中一条边的迹，参与任何不交覆盖迹对的可能性。于是全部 $D$ 迹不交对只发生在 $L,R$ 之间，证明 $C$ 中每个成员与 $\mathcal H$ 中每个成员都在 $D$ 内相交。各星 $S_a$ 与 $M,N$ 各含一条公共边，故四个完整星见证均不在 $L\cup R$，而在 $C$，得到式(33.1)。
+
+$L$ 中可能的 $D$ 迹精确为
+
+$$
+M,\quad M\cup\{p\},\quad M\cup\{p'\},
+$$
+
+$R$ 中对应为 $N,N\cup\{p\},N\cup\{p'\}$；不能同时取 $p,p'$。含有 $M$ 已保证属于 $\mathcal H$。在含 $M$ 的实际剖分中排除 $N$ 的两条耳，使用约定B-32.2的含耳计数(32.1)与容斥，得到
+
+$$
+|L|=c_2-2c_3+c_4=B.
+$$
+
+这里 $M\cup N$ 的四耳互不交叉，所以两次单耳补入和双耳补入分别供应 $c_3,c_4$。交换 $M,N$ 得到 $|R|=B$。所用计数与 [B32-LT] Lemma6 的参数对应为 $c_r=T_{n-r}=C_{n-r-2}$，计的是包含指定耳的实际剖分，保留了其他耳。
+
+再置 $t=c_3-2c_4+c_5$。精确迹 $M\cup\{p\}$ 的剖分数等于 $t$：先强制这三条耳，$p'$ 因与 $p$ 交叉而自动缺席，再容斥排除 $N$ 的两条耳；涉及的三耳、四耳与五耳集合都不交叉。因此上述三个含耳计数分别为 $c_3,c_4,c_5$。对 $M\cup\{p'\}$、$N\cup\{p\}$、$N\cup\{p'\}$ 完全相同。这四个精确迹纤维各有 $t$ 个实际剖分，而精确迹 $M$ 与精确迹 $N$ 的纤维各有 $B-2t\ge0$。特别地，$2t\le B$。
+
+考察 $L\cup R$ 中的任意 $D$ 耳相交选择。若只用一侧，其大小至多 $B$。若两侧都有成员，精确迹 $M$ 与所有 $R$ 迹不交，精确迹 $N$ 与所有 $L$ 迹不交，故两种精确匹配迹都不能使用。剩下的两侧成员若分别携带 $p,p'$，其迹仍不交；要跨侧相交，两侧必须携带同一个 $P$ 元素。只要两侧均非空，这一要求使全部所选迹共同携带固定的 $p$ 或共同携带固定的 $p'$，大小至多两个纤维的总数 $2t\le B$。所以总上界为 $|C|+B$。由式(33.1)，$C\cup L$ 本身是含四见证的 $D$ 耳相交族，达到该界。定理B-32.4给出 $|\mathcal H|=W_1$，且 $L,R,C$ 两两不交，故
+
+$$
+|C|=W_1-2B,\qquad
+\nu_D=W_1-B=c_2+6c_3-10c_4+4c_5.
+$$
+
+对于完整耳相交性，同一侧内的任何两个成员都共享强制匹配的耳；两侧间的失败对精确为 $G$ 的边。于是 $I\subseteq L\cup R$ 是完整耳相交族，当且仅当 $I$ 是 $G$ 的独立集。式(33.1)使任意这样的 $I$ 都能添入全部 $C$，并自动包含固定见证；反过来，任意完整耳相交子族在 $L\cup R$ 上的部分必为独立集。因此 $\nu=|C|+\alpha(G)$。此论证始终使用实际顶点和完整耳集，没有将同迹剖分合并。
+
+最后在有限二分图 $G$ 上使用 Hall 定理（Hall，*On Representatives of Subsets*，J. London Math. Soc. 10 (1935), 26–30）作为中间工具。由于两侧大小同为 $B$，Hall 条件等价于完美匹配存在。若有完美匹配，每个独立集在其 $B$ 条匹配边上各至多取一个端点，故 $\alpha(G)\le B$；整侧 $L$ 是大小为 $B$ 的独立集，故等号成立。若无完美匹配，Hall 定理给出 $X\subseteq L$ 满足 $|N_G(X)|<|X|$。$X$ 与 $R\setminus N_G(X)$ 之间没有边，各侧内部也没有边，所以其并是独立集，大小为 $B+|X|-|N_G(X)|>B$。添入 $C$ 后，由式(33.1)保留完整耳相交性和四个固定见证，得到式(33.4)及(33.5)。这同时证明式(33.3)的两个方向。∎
+
+## 追加锚（本行以下为增补区）
