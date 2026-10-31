@@ -23,18 +23,12 @@ internal sealed class ReversibleFourByFourNonuniquenessDocument : IScribeDocumen
                 NoncommutativeFormula(), AssessedProvenance.FromLiterature(Source),
                 "Noncommutativity means that b contains two matrices x and y for which xy differs from yx. "
                     + "The same criterion appears for the CAR example in 3commfarx.tex, line 661."),
-            Definition("block-matrix", "blockMatrix", "Assembly of a matrix of blocks",
-                BlockMatrixFormula(), AssessedProvenance.FromRepo(Source),
-                "The family x has n rows and n columns of k-by-k complex blocks. Its assembled matrix is indexed "
-                    + "by pairs in Fin n × Fin k: p supplies the block row and the row within that block, while q supplies "
-                    + "the corresponding columns. Prod.fst and Prod.snd select the two coordinates. "
-                    + "The norm of the assembled matrix is its operator norm on the finite complex Euclidean space. "
-                    + "Both n and k may be zero."),
             Definition("is-reversible", "IsReversible", "Reversed multiplication with all matrix norms preserved",
                 ReversibleFormula(), AssessedProvenance.FromLiterature(Source),
                 "There must be a positive natural m and a complex-linear map ρ from the whole ambient four-by-four "
                     + "matrix space to the m-by-m matrices. On b the map reverses multiplication, and entrywise application "
-                    + "preserves the Euclidean operator norm of every assembled n-by-n block matrix, for every natural n. "
+                    + "preserves the Euclidean operator norm of every Matrix.comp assembly of an n-by-n family of "
+                    + "four-by-four blocks, for every natural n. "
                     + "DFunLike.coe explicitly treats ρ as a function. The condition on block entries is an implication. "
                     + "Reversibility in 3commfarx.tex, line 145, means that reversed multiplication with the same matrix "
                     + "norms is again an abstract operator algebra. The displayed finite-matrix representation is a "
@@ -90,9 +84,9 @@ internal sealed class ReversibleFourByFourNonuniquenessDocument : IScribeDocumen
                             + "Applying ρ to every block negates the assembled matrix, so its norm is unchanged "
                             + "at every natural block size.")),
                     Paragraph(Text(
-                        "For a unitary q let T(X) = qᴴXq, where Xᴴ denotes the adjoint. This is a complex star-algebra automorphism. "
-                            + "The trace identity for conjugation gives tr(T(X)) = tr(X). Preservation of products, "
-                            + "adjoints and squares then shows that Δ(X) = 2tr((XXᴴ)²) − tr(XXᴴ)² is invariant under T. "
+                        "For a unitary q let T(X) = qᴴXq, where Xᴴ denotes the adjoint. The current proof expresses T "
+                            + "as Unitary.conjStarAlgAut and applies Matrix.trace_units_conj' after transporting products, "
+                            + "adjoints and squares. Thus Δ(X) = 2tr((XXᴴ)²) − tr(XXᴴ)² is invariant under T. "
                             + "Direct expansion gives Δ(F(1,a,b,0)) = 0 for all complex a and b, "
                             + "whereas Δ(U₂) = 9.")),
                     Paragraph(Text(
@@ -127,15 +121,6 @@ internal sealed class ReversibleFourByFourNonuniquenessDocument : IScribeDocumen
             Some("y", FourMatrix(), Conjunction(Member(X("y"), X("b")),
                 NotEqual(Multiply(X("x"), X("y")), Multiply(X("y"), X("x")))))))));
 
-    private static Formula BlockMatrixFormula()
-    {
-        Formula pairType = Product(FinOf(X("n")), FinOf(X("k")));
-        Formula entries = LambdaOf("p", pairType, LambdaOf("q", pairType,
-            At(X("x"), First(X("p")), First(X("q")), Second(X("p")), Second(X("q")))));
-        return All("n", Naturals(), All("k", Naturals(), All("x", BlocksType(X("n"), X("k")),
-            Equal(Typed(LocalCall("blockMatrix", X("x")), MatrixType(pairType)), At(Qualified("Matrix", "of"), entries)))));
-    }
-
     private static Formula ReversibleFormula()
     {
         Formula map = Typed(At(Qualified("DFunLike", "coe"), X("ρ")),
@@ -147,8 +132,12 @@ internal sealed class ReversibleFourByFourNonuniquenessDocument : IScribeDocumen
             Member(At(X("x"), X("i"), X("j")), X("b"))));
         Formula mapped = LambdaOf("i", FinOf(X("n")), LambdaOf("j", FinOf(X("n")),
             At(map, At(X("x"), X("i"), X("j")))));
+        Formula mappedMatrix = At(Qualified("Matrix", "comp"), FinOf(X("n")), FinOf(X("n")),
+            FinOf(X("m")), FinOf(X("m")), Complexes(), mapped);
+        Formula originalMatrix = At(Qualified("Matrix", "comp"), FinOf(X("n")), FinOf(X("n")),
+            FinOf(Nat(4)), FinOf(Nat(4)), Complexes(), X("x"));
         Formula isometric = All("n", Naturals(), All("x", BlocksType(X("n"), Nat(4)), Arrow(entries,
-            Equal(new Formula.Norm(LocalCall("blockMatrix", mapped)), new Formula.Norm(LocalCall("blockMatrix", X("x")))))));
+            Equal(new Formula.Norm(mappedMatrix), new Formula.Norm(originalMatrix)))));
         return All("b", Subspace(), Equivalence(LocalCall("IsReversible", X("b")), Some("m", Naturals(),
             Conjunction(Less(Nat(0), X("m")), Some("ρ", LinearMapType(FourMatrix(), MatrixType(FinOf(X("m")))),
                 Conjunction(multiplicative, isometric))))));
@@ -191,9 +180,6 @@ internal sealed class ReversibleFourByFourNonuniquenessDocument : IScribeDocumen
         new Formula.Subscript(To, F.Id("l")), OpenBracket, Complexes(), CloseBracket, Sp, Parenthesized(codomain));
     private static Formula Single(byte i, byte j) => At(Qualified("Matrix", "single"),
         Typed(D(i), FinOf(Nat(4))), Typed(D(j), FinOf(Nat(4))), Typed(D(1), Complexes()));
-    private static Formula Product(Formula a, Formula b) => Parenthesized(Seq(a, Sp, Times, Sp, b));
-    private static Formula First(Formula p) => At(Qualified("Prod", "fst"), p);
-    private static Formula Second(Formula p) => At(Qualified("Prod", "snd"), p);
     private static Formula X(string name) => name == "ρ" ? Rho : F.Id(name);
     private static Formula Local(string name) => Qualified("D5", "S3", "HilbertOperators", "ReversibleFourByFourNonuniqueness", name);
     private static Formula LocalCall(string name, params Formula[] args) => At(Local(name), args);
