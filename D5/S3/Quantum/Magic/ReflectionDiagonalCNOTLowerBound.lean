@@ -51,6 +51,32 @@ private def character {m : ℕ} (v : basis m) (f : basis m → ℂ) : ℂ :=
 private def evenLabel {m : ℕ} (v : basis m) : Prop :=
   (Finset.univ.filter (fun i => v i = true)).card % 2 = 0
 
+private def zeroLabel {m : ℕ} : basis m := fun _ => false
+
+private def initialLabel {m : ℕ} (j : Fin m) : basis m := fun i => decide (i = j)
+
+private def initialLabels (m : ℕ) : Fin m → basis m := initialLabel
+
+private def updateLabels {m : ℕ} (labels : Fin m → basis m) (t c : Fin m) :
+    Fin m → basis m :=
+  Function.update labels t (fun i => Bool.xor (labels t i) (labels c i))
+
+private def wireLabels {m : ℕ} (circuit : List (gate m)) : Fin m → basis m :=
+  circuit.foldl (fun labels g =>
+    match g with
+    | Sum.inl p => updateLabels labels p.1.1 p.1.2
+    | Sum.inr _ => labels) (initialLabels m)
+
+private def rotationLabelsAux {m : ℕ} : List (gate m) → (Fin m → basis m) → Finset (basis m)
+  | [], _ => ∅
+  | g :: circuit, labels =>
+      match g with
+      | Sum.inl p => rotationLabelsAux circuit (updateLabels labels p.1.1 p.1.2)
+      | Sum.inr p => insert (labels p.1) (rotationLabelsAux circuit labels)
+
+private def rotationLabels {m : ℕ} (circuit : List (gate m)) : Finset (basis m) :=
+  rotationLabelsAux circuit (initialLabels m)
+
 private def hardTheta {m : ℕ} (x : basis m) : ℝ :=
   if (∀ i, x i = false) ∨ (∀ i, x i = true) then Real.pi / 2 else 0
 
@@ -63,24 +89,55 @@ def claim : Prop :=
           2 ^ (2 * n - 1) + 2 * n - 2 ≤ cnotCount circuit
 
 private lemma hardTheta_reflection (m : ℕ) (x : basis m) :
-    hardTheta (fun j => !(x j)) = hardTheta x := by sorry
+    hardTheta (fun j => !(x j)) = hardTheta x := by
+  unfold hardTheta
+  let p : Prop := (∀ i, x i = false) ∨ (∀ i, x i = true)
+  let q : Prop := (∀ i, (!x i) = false) ∨ (∀ i, (!x i) = true)
+  have hiff : p ↔ q := by
+    constructor
+    · intro h
+      rcases h with h | h
+      · right
+        intro i
+        simp [h i]
+      · left
+        intro i
+        simp [h i]
+    · intro h
+      rcases h with h | h
+      · right
+        intro i
+        have hi := h i
+        cases hx : x i <;> simp_all
+      · left
+        intro i
+        have hi := h i
+        cases hx : x i <;> simp_all
+  by_cases hp : p
+  · have hq : q := hiff.mp hp
+    change (if q then Real.pi / 2 else 0) = if p then Real.pi / 2 else 0
+    rw [if_pos hq, if_pos hp]
+  · have hq : ¬q := fun hq => hp (hiff.mpr hq)
+    change (if q then Real.pi / 2 else 0) = if p then Real.pi / 2 else 0
+    rw [if_neg hq, if_neg hp]
 
 private lemma normal_form (m : ℕ) (circuit : List (gate m)) :
-    ∃ a : basis m → basis m, Function.Bijective a := by sorry
+    Function.Bijective (fun x : basis m => x) := by
+  exact Function.bijective_id
 
 private lemma diagonal_forces_identity (m : ℕ) (circuit : List (gate m)) (c : ℂ)
     (θ : basis m → ℝ)
     (h : circuitMatrix circuit = c • Matrix.diagonal (fun x => Complex.exp ((θ x : ℂ) * Complex.I))) :
-    ∀ x : basis m, x = x := by sorry
+    wireLabels circuit = initialLabels m := by sorry
 
 private lemma character_mul (m : ℕ) (v : basis m) (f g : basis m → ℂ) :
     character v (fun x => f x * g x) = character v f * character v g := by sorry
 
 private lemma character_global (m : ℕ) (v : basis m) (c : ℂ) :
-    character v (fun _ : basis m => c) = 1 := by sorry
+    c ≠ 0 → character v (fun _ : basis m => c) = 1 := by sorry
 
 private lemma character_factor (m : ℕ) (v w : basis m) (f : Bool → ℂ) (hvw : v ≠ w)
-    (hw : w ≠ fun _ => false) :
+    (hw : w ≠ fun _ : Fin m => false) (hf : ∀ b, f b ≠ 0) :
     character v (fun x => f (dot w x)) = 1 := by sorry
 
 private lemma hard_character (m : ℕ) (hm : 0 < m) (v : basis m) (he : evenLabel v)
@@ -88,17 +145,22 @@ private lemma hard_character (m : ℕ) (hm : 0 < m) (v : basis m) (he : evenLabe
     character v (fun x => Complex.exp ((hardTheta x : ℂ) * Complex.I)) = -1 := by sorry
 
 private lemma rotation_labels (m : ℕ) (circuit : List (gate m))
-    (θ : basis m → ℝ)
-    (h : circuitMatrix circuit = (1 : ℂ) • Matrix.diagonal (fun x => Complex.exp ((θ x : ℂ) * Complex.I))) :
-    ∀ v, evenLabel v → v ≠ (fun _ : Fin m => false) → True := by sorry
+    (θ : basis m → ℝ) (c : ℂ)
+    (h : circuitMatrix circuit = c • Matrix.diagonal (fun x => Complex.exp ((θ x : ℂ) * Complex.I)))
+    (hnf : wireLabels circuit = initialLabels m) :
+    ∀ v, evenLabel v → v ≠ zeroLabel → v ∈ rotationLabels circuit := by sorry
 
-private lemma even_output_count (m : ℕ) (circuit : List (gate m)) :
+private lemma even_output_count (m : ℕ) (circuit : List (gate m))
+    (hlabels : ∀ v, evenLabel v → v ≠ zeroLabel → v ∈ rotationLabels circuit) :
     2 ^ (m - 1) - 1 ≤ cnotCount circuit := by sorry
 
-private lemma birth_count (m : ℕ) (circuit : List (gate m)) :
+private lemma birth_count (m : ℕ) (circuit : List (gate m))
+    (hlabels : ∀ v, evenLabel v → v ≠ zeroLabel → v ∈ rotationLabels circuit) :
     m - 1 ≤ cnotCount circuit := by sorry
 
-private lemma return_count (m : ℕ) (circuit : List (gate m)) :
+private lemma return_count (m : ℕ) (circuit : List (gate m))
+    (hnf : wireLabels circuit = initialLabels m)
+    (hlabels : ∀ v, evenLabel v → v ≠ zeroLabel → v ∈ rotationLabels circuit) :
     2 ^ (m - 1) + m - 2 ≤ cnotCount circuit := by sorry
 
 private lemma claim_for_n (n : ℕ) (hn : 1 ≤ n) :
@@ -106,7 +168,16 @@ private lemma claim_for_n (n : ℕ) (hn : 1 ≤ n) :
       (∀ x, θ (fun j => !(x j)) = θ x) ∧
       ∀ (circuit : List (gate (2 * n))) (c : ℂ),
         circuitMatrix circuit = c • Matrix.diagonal (fun x => Complex.exp ((θ x : ℂ) * Complex.I)) →
-          2 ^ (2 * n - 1) + 2 * n - 2 ≤ cnotCount circuit := by sorry
+          2 ^ (2 * n - 1) + 2 * n - 2 ≤ cnotCount circuit := by
+  refine ⟨hardTheta, hardTheta_reflection (2 * n), ?_⟩
+  intro circuit c h
+  have hnf := normal_form (2 * n) circuit
+  have hidentity := diagonal_forces_identity (2 * n) circuit c hardTheta h
+  have hlabels := rotation_labels (2 * n) circuit hardTheta c h hidentity
+  have houtputs := even_output_count (2 * n) circuit hlabels
+  have hbirths := birth_count (2 * n) circuit hlabels
+  have hreturn := return_count (2 * n) circuit hidentity hlabels
+  sorry
 
 theorem result : claim := by
   intro n hn
