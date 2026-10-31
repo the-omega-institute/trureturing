@@ -22,9 +22,7 @@ isometry implements the ordinary qubit partial trace in these coordinates.
 
 set_option autoImplicit false
 set_option linter.style.longLine false
-
 noncomputable section
-
 namespace D5.S3.Quantum.Measurement.AnticoherenceTraceDistanceRefutation
 
 open scoped BigOperators ComplexOrder MatrixOrder
@@ -66,7 +64,6 @@ private def quadrupole (a b : Fin 3) : Matrix (Fin 9) (Fin 9) ℂ :=
 private def witnessOutput : Matrix (Fin 9) (Fin 9) ℂ :=
   diagonal (fun r =>
     (![22288, 30100, 25528, 13149, 45540, 10584, 24654, 11613, 10584] r : ℂ) / 194040)
-
 
 private def krausShift : Fin 5 → ℤ := ![0, -1, 1, -2, 2]
 
@@ -130,7 +127,6 @@ private theorem kraus_complete : ∑ q, (witnessKraus q)ᴴ * witnessKraus q = 1
   fin_cases r <;> fin_cases s <;>
     norm_num [Fin.sum_univ_succ, krausShift, krausWeight, Matrix.one_apply]
 
-
 private theorem witness_state : witnessState.PosSemidef ∧ witnessState.trace = 1 := by
   rw [witnessState]
   constructor
@@ -181,7 +177,6 @@ private theorem witness_output : witnessChannel witnessState = witnessOutput := 
     fin_cases i <;>
       norm_num [Fin.sum_univ_succ, krausShift, krausWeight, witnessOutput]
   · simp [hij, witnessOutput]
-
 
 /-- The spin-`n/2` representation obtained by restricting the qubit tensor power. -/
 def spinAction (n : ℕ) (u : Matrix.specialUnitaryGroup (Fin 2) ℂ) :
@@ -246,7 +241,6 @@ private lemma weight_card (n : ℕ) (x : Fin n → Fin 2) :
       fin_cases b <;> simp
     _ = _ := by simpa using (Finset.sum_boole (Finset.univ : Finset (Fin n)) (fun i => x i = 1))
 
-
 private lemma weight_count (n : ℕ) (x : Fin n → Fin 2) :
     (occupation x).count 1 = ∑ i, (x i).val := by
   rw [← D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT.occupation_fiber_card x 1, Fintype.subtype_card, weight_card]
@@ -272,7 +266,6 @@ private lemma occupation_eq_iff_weight (n : ℕ) (x : Fin n → Fin 2)
     fin_cases b <;> simp_all
     omega
 
-
 private lemma dicke_count (n k : ℕ) :
     (∑ x : Fin n → Fin 2, if (∑ i, (x i).val) = k then (1 : ℂ) else 0) =
       (n.choose k : ℂ) := by
@@ -290,7 +283,6 @@ private lemma dicke_count (n k : ℕ) :
   rw [← e.sum_comp] at hc
   simpa only [hw] using hc
 
-
 private lemma binary_multiplicity (n : ℕ) (a : Multiset (Fin 2)) (ha : a.card = n) :
     multiplicity n a = n.choose (a.count 1) := by
   rw [D5.S3.Quantum.Entanglement.OccupancyWordSectors.multiplicity, sector_words_card_multinomial a ha,
@@ -300,7 +292,6 @@ private lemma binary_multiplicity (n : ℕ) (a : Multiset (Fin 2)) (ha : a.card 
   simpa only [Fin.sum_univ_two, ha, add_comm] using
     (Multiset.sum_count_eq_card (s := Finset.univ) (m := a)
       (fun _ _ => Finset.mem_univ _))
-
 
 private lemma dicke_sector (n : ℕ) (a : Multiset (Fin 2)) (ha : a.card = n)
     (r : Fin (n + 1)) (hr : a.count 1 = r.val) (x : Fin n → Fin 2) :
@@ -1001,5 +992,4 @@ theorem result : ¬ claim := by
   have hlt : (19 / 84 : ℝ) / normalizer 7 < (3933 / 17248 : ℝ) / normalizer 7 :=
     (div_lt_div_iff_of_pos_right normalizer_positive).2 (by norm_num)
   linarith
-
 end D5.S3.Quantum.Measurement.AnticoherenceTraceDistanceRefutation
