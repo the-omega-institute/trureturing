@@ -160,12 +160,14 @@ private def d (p : ℕ) : X R P (p + 1) ⟶ X R P p :=
   Sigma.desc fun s ↦ ∑ i ∈ s.1, ((-1 : ℤ) ^ #{j ∈ s.1 | j < i}) •
     (if hs : #(s.1.erase i) = p + 1 then
       (freeFunctor R P).map (homOfLE (s.1.erase_subset i)).op ≫
-        Sigma.ι (fun t : {t : Finset ι // #t = p + 1} ↦ (freeFunctor R P).obj (op t.1)) ⟨s.1.erase i, hs⟩
+        Sigma.ι (fun t : {t : Finset ι // #t = p + 1} ↦ (freeFunctor R P).obj (op t.1))
+          ⟨s.1.erase i, hs⟩
      else 0)
 
 private def epsilon0 : X R P 0 ⟶ ∐ fun _ : A ↦ R :=
   Sigma.desc fun _ ↦ Sigma.desc fun a ↦ Sigma.ι (fun _ : A ↦ R) a.1
 
+omit [LinearOrder ι] in
 @[reassoc (attr := simp)]
 private lemma single_epsilon0 {s : Finset ι} (hs : #s = 0 + 1) (a : A)
     (ha : ∀ i ∈ s, a ∈ P i) :
@@ -179,12 +181,14 @@ private lemma single_epsilon0 {s : Finset ι} (hs : #s = 0 + 1) (a : A)
 private def vertex (hP : ⋃ i, P i = Set.univ) (a : A) : ι :=
   (Set.mem_iUnion.1 (hP ▸ Set.mem_univ a)).choose
 
+omit [LinearOrder ι] in
 private lemma mem_vertex (hP : ⋃ i, P i = Set.univ) (a : A) : a ∈ P (vertex P hP a) :=
   (Set.mem_iUnion.1 (hP ▸ Set.mem_univ a)).choose_spec
 
 private def section0 (hP : ⋃ i, P i = Set.univ) : (∐ fun _ : A ↦ R) ⟶ X R P 0 :=
   Sigma.desc fun a ↦ single R P 0 {vertex P hP a} a (by simpa using mem_vertex P hP a)
 
+omit [LinearOrder ι] in
 private lemma section0_epsilon0 (hP : ⋃ i, P i = Set.univ) :
     section0 R P hP ≫ epsilon0 R P = 𝟙 _ := by
   apply Sigma.hom_ext
@@ -219,6 +223,7 @@ private lemma single_H_of_mem (hP : ⋃ i, P i = Set.univ) {p : ℕ}
   simp [single, hcard]
 
 
+omit [LinearOrder ι] in
 private lemma single_congr {p : ℕ} {s t : Finset ι} (a : A)
     (ha : ∀ i ∈ s, a ∈ P i) (e : s = t) :
     single R P p s a ha = single R P p t a (e ▸ ha) := by
@@ -262,6 +267,7 @@ private lemma single_H_d_of_notMem (hP : ⋃ i, P i = Set.univ) {p : ℕ} {s : F
     single_congr R P a _ (erase_insert_of_ne hck)]
 
 
+omit [LinearOrder ι] in
 private lemma hom_ext {p : ℕ} {Y : C} {f g : X R P p ⟶ Y}
     (h : ∀ (s : Finset ι) (_ : #s = p + 1) (a : A) (ha : ∀ i ∈ s, a ∈ P i),
       single R P p s a ha ≫ f = single R P p s a ha ≫ g) : f = g := by
@@ -304,5 +310,136 @@ private lemma d_squared (n : ℕ) : d R P (n + 1) ≫ d R P n = 0 := by
   apply TauCeti.sum_neg_one_pow_smul_sum_neg_one_pow_smul_eq_zero
   intro i j hij
   exact single_congr R P a _ (double_deletion hs i j hij)
+
+
+private lemma single_d_H (hP : ⋃ i, P i = Set.univ) {p : ℕ} {s : Finset ι}
+    (hs : #s = p + 1 + 1) (a : A) (ha : ∀ i ∈ s, a ∈ P i) :
+    single R P (p + 1) s a ha ≫ d R P p ≫ H R P hP p (p + 1) =
+      coneFace R P hP (p + 1) s a ha := by
+  rw [← Category.assoc, single_d R P hs, Preadditive.sum_comp, coneFace]
+  refine Finset.sum_congr rfl fun k hk ↦ ?_
+  rw [Preadditive.zsmul_comp,
+    single_H R P hP _ (by rw [card_erase_of_mem hk, hs]; rfl), smul_smul]
+
+private lemma coneFace_of_mem (hP : ⋃ i, P i = Set.univ) {p : ℕ} {s : Finset ι}
+    (hs : #s = p + 1) (a : A) (ha : ∀ i ∈ s, a ∈ P i) (hc : vertex P hP a ∈ s) :
+    coneFace R P hP p s a ha = single R P p s a ha := by
+  rw [coneFace, sum_eq_single (vertex P hP a)]
+  · rw [single_congr R P a _ (insert_erase hc), filter_erase,
+      erase_eq_of_notMem (by simp), ← pow_add, ← two_mul, pow_mul,
+      neg_one_sq, one_pow, one_smul]
+  · intro k hk hkc
+    have hcard : #(insert (vertex P hP a) (s.erase k)) ≠ p + 1 := by
+      rw [insert_eq_of_mem (mem_erase.2 ⟨Ne.symm hkc, hc⟩), card_erase_of_mem hk, hs]
+      omega
+    simp [single, hcard]
+  · exact fun h ↦ (h hc).elim
+
+private lemma coneFace_zero (hP : ⋃ i, P i = Set.univ) {s : Finset ι}
+    (hs : #s = 0 + 1) (a : A) (ha : ∀ i ∈ s, a ∈ P i) :
+    coneFace R P hP 0 s a ha =
+      single R P 0 {vertex P hP a} a (by simpa using mem_vertex P hP a) := by
+  obtain ⟨i, rfl⟩ := card_eq_one.1 hs
+  simp [coneFace, filter_singleton]
+
+/-- The ordered free Čech complex, with its actual intersection-inclusion differential. -/
+abbrev complex : ChainComplex C ℕ := ChainComplex.of (X R P) (d R P) (d_squared R P)
+
+private lemma boundary_epsilon0 : d R P 0 ≫ epsilon0 R P = 0 := by
+  apply hom_ext R P
+  intro s hs a ha
+  rw [← Category.assoc, single_d R P hs, Preadditive.sum_comp]
+  simp_rw [Preadditive.zsmul_comp]
+  rw [← sum_coe_sort]
+  have heq : (∑ i : s, ((-1 : ℤ) ^ #{j ∈ s | j < i.1}) •
+      (single R P 0 (s.erase i.1) a (fun j hj ↦ ha j (mem_of_mem_erase hj)) ≫ epsilon0 R P)) =
+      ∑ i : s, ((-1 : ℤ) ^ #{j ∈ s | j < i.1}) • Sigma.ι (fun _ : A ↦ R) a := by
+    apply Finset.sum_congr rfl
+    intro i hi
+    rw [single_epsilon0 R P (by rw [card_erase_of_mem i.2, hs])]
+  rw [heq, signed_sum_reindex hs (fun _ ↦ Sigma.ι (fun _ : A ↦ R) a)]
+  simp [Fin.sum_univ_succ]
+
+variable [HasZeroObject C]
+
+/-- The augmentation is independently defined by sending each degree-zero point to itself. -/
+def augmentation : complex R P ⟶ (ChainComplex.single₀ C).obj (∐ fun _ : A ↦ R) :=
+  (ChainComplex.toSingle₀Equiv _ _).symm ⟨epsilon0 R P, by
+    change ChainComplex.of.d (X R P) (d R P) 1 0 ≫ epsilon0 R P = 0
+    exact (congrArg (fun f ↦ f ≫ epsilon0 R P)
+      (ChainComplex.of_d (X R P) (d R P) (0 : ℕ))).trans (boundary_epsilon0 R P)⟩
+
+private def section_ (hP : ⋃ i, P i = Set.univ) :
+    (ChainComplex.single₀ C).obj (∐ fun _ : A ↦ R) ⟶ complex R P :=
+  (ChainComplex.fromSingle₀Equiv _ _).symm (section0 R P hP)
+
+private lemma augmentation_f_zero : (augmentation R P).f 0 = epsilon0 R P :=
+  ChainComplex.toSingle₀Equiv_symm_apply_f_zero _ _
+
+private lemma section_f_zero (hP : ⋃ i, P i = Set.univ) :
+    (section_ R P hP).f 0 = section0 R P hP :=
+  ChainComplex.fromSingle₀Equiv_symm_apply_f_zero _
+
+private lemma section_f_succ (hP : ⋃ i, P i = Set.univ) (n : ℕ) :
+    (section_ R P hP).f (n + 1) = 0 :=
+  ChainComplex.fromSingle₀Equiv_symm_apply_f_succ _ _
+
+private lemma section_augmentation (hP : ⋃ i, P i = Set.univ) :
+    section_ R P hP ≫ augmentation R P = 𝟙 _ := by
+  apply HomologicalComplex.to_single_hom_ext
+  simp only [HomologicalComplex.comp_f, HomologicalComplex.id_f,
+    augmentation_f_zero, section_f_zero]
+  exact section0_epsilon0 R P hP
+
+private lemma id_sub_augmentation_section (hP : ⋃ i, P i = Set.univ) :
+    𝟙 _ - augmentation R P ≫ section_ R P hP =
+      Homotopy.nullHomotopicMap' (C := complex R P) (D := complex R P)
+        (fun i j (_ : (ComplexShape.down ℕ).Rel j i) ↦ H R P hP i j) := by
+  ext (_ | p) : 1
+  · rw [Homotopy.nullHomotopicMap'_f_of_not_rel_left (ComplexShape.down_mk 1 0 rfl)
+      (fun l h ↦ by simp at h)]
+    change (𝟙 _ - augmentation R P ≫ section_ R P hP).f 0 =
+      H R P hP 0 1 ≫ ChainComplex.of.d (X R P) (d R P) 1 0
+    erw [ChainComplex.of_d (X R P) (d R P) 0]
+    apply hom_ext R P
+    intro s hs a ha
+    simp only [HomologicalComplex.sub_f_apply, HomologicalComplex.id_f,
+      HomologicalComplex.comp_f, Preadditive.comp_sub, Category.comp_id,
+      augmentation_f_zero, section_f_zero]
+    rw [← Category.assoc, single_epsilon0 R P hs, section0, Sigma.ι_comp_desc,
+      ← coneFace_zero R P hP hs a ha]
+    by_cases hc : vertex P hP a ∈ s
+    · rw [coneFace_of_mem R P hP hs a ha hc, sub_self, ← Category.assoc,
+        single_H_of_mem R P hP hs a ha hc, zero_comp]
+    · rw [single_H_d_of_notMem R P hP hs a ha hc]
+  · rw [Homotopy.nullHomotopicMap'_f (ComplexShape.down_mk (p + 2) (p + 1) rfl)
+      (ComplexShape.down_mk (p + 1) p rfl)]
+    change (𝟙 _ - augmentation R P ≫ section_ R P hP).f (p + 1) =
+      ChainComplex.of.d (X R P) (d R P) (p + 1) p ≫ H R P hP p (p + 1) +
+        H R P hP (p + 1) (p + 2) ≫
+          ChainComplex.of.d (X R P) (d R P) (p + 2) (p + 1)
+    erw [ChainComplex.of_d (X R P) (d R P) p,
+      ChainComplex.of_d (X R P) (d R P) (p + 1)]
+    apply hom_ext R P
+    intro s hs a ha
+    simp only [HomologicalComplex.sub_f_apply, HomologicalComplex.id_f,
+      HomologicalComplex.comp_f, section_f_succ,
+      comp_zero, sub_zero, Category.comp_id, Preadditive.comp_add, single_d_H R P hP hs a ha]
+    by_cases hc : vertex P hP a ∈ s
+    · rw [coneFace_of_mem R P hP hs a ha hc, ← Category.assoc,
+        single_H_of_mem R P hP hs a ha hc, zero_comp, add_zero]
+    · rw [single_H_d_of_notMem R P hP hs a ha hc, add_sub_cancel]
+
+/-- The same actual augmentation has the explicit chosen-vertex chain-homotopy inverse. -/
+theorem augmentation_homotopy_equiv (hP : ⋃ i, P i = Set.univ) :
+    ∃ E : HomotopyEquiv (complex R P) ((ChainComplex.single₀ C).obj (∐ fun _ : A ↦ R)),
+      E.hom = augmentation R P := by
+  refine ⟨{
+    hom := augmentation R P
+    inv := section_ R P hP
+    homotopyHomInvId := (Homotopy.equivSubZero.symm
+      ((Homotopy.ofEq (id_sub_augmentation_section R P hP)).trans
+        (Homotopy.nullHomotopy' _))).symm
+    homotopyInvHomId := Homotopy.ofEq (section_augmentation R P hP) }, rfl⟩
 
 end TauCeti.OrderedCover
