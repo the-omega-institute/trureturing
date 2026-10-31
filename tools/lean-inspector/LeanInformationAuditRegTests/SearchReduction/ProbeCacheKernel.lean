@@ -3,6 +3,27 @@ import LeanInformationAuditRegAnalysis.SearchReduction.Commands
 /-! Reused probe evidence must cross both kernel checks in the live path. -/
 open Lean Meta Elab Command LeanInformationAudit.SearchReduction
 
+run_cmd do
+  let result : Observation := {
+    target := `cacheFaultRegression, base := .exhausted, paired := .found,
+    verdict := .insufficient }
+  unless probeCacheable result do throwError "complete probe was not cacheable"
+  for failure in [Failure.missing, .execution, .heartbeat, .timeout, .cancelled] do
+    if probeCacheable {result with base := .incomplete failure} then
+      throwError "fault was cacheable: {repr failure}"
+  for terminal in [RQuery.fault "preparation", .fault "resource-guard", .notRun] do
+    if probeCacheable {result with graph? := some {queryRecords := [{
+        role := "requested", target := 0, premises := [], terminal}]}} then
+      throwError "requested fault/not-run was cacheable"
+  if probeCacheable {result with graph? := some {queryRecords := [{
+      role := "requested", target := 0, premises := [], terminal := .miss .exhaustive,
+      encounteredFaults := #["preparation"]}]}} then
+    throwError "absorbed fault was cached"
+  match certificateSourceDependencies (← getEnv) #[mkConst `missingSource] #[] with
+  | .error (.unresolved `missingSource) => pure ()
+  | _ => throwError "unresolved source was classified as a semantic rejection"
+  logInfo "probe cache: faults and requested NotRun excluded; unresolved source remains a fault"
+
 run_cmd liftTermElabM do
   let result : Observation := {
     target := `cacheRegression

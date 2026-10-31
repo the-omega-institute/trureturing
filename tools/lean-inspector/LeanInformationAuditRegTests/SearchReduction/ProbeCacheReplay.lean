@@ -38,6 +38,56 @@ run_cmd withCacheFixture fun f => do
     throwError "live cache replay did not read a saved record"
   logInfo "live probe replay: saved data loaded and kernel publication completed"
 
+/- Rejected records repeat the actual source guard, preserve its dependency,
+and never publish a graph or verdict. An edited rejection is not evidence. -/
+run_cmd withCacheFixture fun f => do
+  let request := {f.request with additions := #[`cacheFixtureAux]}
+  let result := {f.result with graph? := some {
+    graph := {edges := [{conclusion := 0, zeroProof := some (mkConst `cacheFixtureAux)}]} }}
+  let rejection : ProbeRejection := {arm := .baseline, dependency := `cacheFixtureAux}
+  unless (← auditProbeCertificates (← getEnv) request result) == some rejection do
+    -- The replay environment has not installed the dependency yet. The guard
+    -- rejects its forbidden name before attempting to resolve its body.
+    throwError "source guard did not produce the exact typed rejection"
+  f.write result (some rejection)
+  let name := `cacheReplaySourceRejection
+  let message ← try
+    discard <| replayProbeCache f.directory f.identity request #[] name false
+    pure "accepted"
+    catch ex => ex.toMessageData.toString
+  unless message == rejection.message do
+    throwError "cached rejection changed: {message}"
+  if (← getEnv).contains name || (← getEnv).contains (name ++ `graphReading) then
+    throwError "source rejection published a verdict"
+  for changed in [none, some {rejection with dependency := `differentDependency},
+      some {rejection with arm := .paired}] do
+    f.write result changed
+    let message ← try
+      discard <| replayProbeCache f.directory f.identity request #[] name false
+      pure "accepted"
+      catch ex => ex.toMessageData.toString
+    unless message == "search.probe_cache_rejection_mismatch" do
+      throwError "altered rejection was not rejected: {message}"
+  logInfo "probe cache: typed source rejection replayed, dependency rechecked, no publication"
+
+run_cmd withCacheFixture fun f => do
+  let rejected ← try
+    discard <| replayProbeCache f.directory (f.identity ++ "-other-version") f.request #[]
+      `cacheReplayOtherIdentity
+    pure false
+    catch _ => pure true
+  -- A different identity selects a different path, so it is a miss.
+  if rejected then throwError "different identity should miss before deserialization"
+  let wrongPath := f.directory / s!"probe-{hash (f.identity ++ "-other-version")}.pickle"
+  IO.FS.writeBinFile wrongPath
+    (← IO.FS.readBinFile (f.directory / s!"probe-{hash f.identity}.pickle"))
+  let rejected ← try
+    discard <| replayProbeCache f.directory (f.identity ++ "-other-version") f.request #[]
+      `cacheReplayOtherIdentity
+    pure false
+    catch _ => pure true
+  unless rejected do throwError "mismatched typed identity was accepted"
+
 /- Imported dependency modules remove repeated dependency kernel work while
 leaving certificate checks and fresh classifier publication on the live path. -/
 run_cmd do

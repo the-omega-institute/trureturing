@@ -18,7 +18,16 @@ import tempfile
 import time
 
 
-VERSION = "probe-cache-v9"
+VERSION = "probe-cache-v10"
+# Lean reserves this status only for its typed, terminal source rejection.
+# All other nonzero statuses, including continuations, remain non-cacheable.
+REJECTION_EXIT = 76
+
+
+def public_exit(result):
+    return 1 if result == REJECTION_EXIT else result
+
+
 # Explicit procedure identity, checked against Lean's configuration by tests.
 R_VERSION = "R_lookup/v19/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v3/N-memo-2000000/checkpoint-v6/views-kappa/isolation-independent-units/analytic-cut-k2/200000"
 
@@ -288,9 +297,9 @@ def emit(message):
 def replay_command(command, directory):
     """Replay a complete single-probe request through its authenticated Lean entry.
 
-    The original request must have completed successfully before the runner
-    signs the directory. Multi-probe or incomplete records keep the original
-    wrapper, so a partial cache cannot omit a probe. The entry invokes the same
+    Lean must have completed the request or terminated with a typed rejection
+    before the runner signs the directory. Multi-probe or incomplete records
+    keep the original wrapper, so a partial cache cannot omit a probe. The entry invokes the same
     live Lean kernel, leakage audit and GraphReading publication path.
     """
     entries = sorted(directory.glob("entry-*.lean"))
@@ -307,7 +316,7 @@ def run(command):
     wall_phase("cache/runner-start")
     request = os.environ["SEARCH_REDUCTION_REQUESTS"]
     if os.environ.get("SEARCH_REDUCTION_PROBE_CACHE") == "0":
-        return subprocess.call(command)
+        return public_exit(subprocess.call(command))
     root = Path(os.environ.get("SEARCH_REDUCTION_PROBE_CACHE",
                               "build/lean-inspector/search-reduction-probe-cache"))
     root.mkdir(parents=True, exist_ok=True)
@@ -345,8 +354,8 @@ def run(command):
             wall_phase("lean/hot-start")
             result = subprocess.call(hot_command, env=hot_env)
             wall_phase("lean/hot-end")
-            if result == 0:
-                return 0
+            if result in (0, REJECTION_EXIT):
+                return public_exit(result)
             if result == 75:
                 return result
             emit(f"PROBE_CACHE_REJECTED kernel_exit={result}; recomputing cold")
@@ -356,25 +365,25 @@ def run(command):
     wall_phase("lean/cold-start")
     result = subprocess.call(command, env=env)
     wall_phase("lean/cold-end")
-    if result != 0:
+    if result not in (0, REJECTION_EXIT):
         return result
     files = record_files(stage)
     if any(name.endswith(".pickle") for name in files):
         # Refuse to cache a result if any input changed during the computation.
         if input_identity(request, root, key) != identity:
             emit("PROBE_CACHE_NOT_STORED reason=inputs_changed_during_run")
-            return 0
+            return public_exit(result)
         try:
             validate_source_data(stage, key)
         except (OSError, ValueError, TypeError, KeyError) as error:
             emit(f"PROBE_CACHE_NOT_STORED reason={error}")
-            return 0
+            return public_exit(result)
         write_signed(stage / "manifest.json", {"identity": identity, "files": files}, key)
         if directory.exists():
             directory.rename(root / (identity + ".rejected-" + secrets.token_hex(8)))
         stage.rename(directory)
         emit(f"PROBE_CACHE_STORED identity={identity} files={len(files)}")
-    return 0
+    return public_exit(result)
 
 
 if __name__ == "__main__":

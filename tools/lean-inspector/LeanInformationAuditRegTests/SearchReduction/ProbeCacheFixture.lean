@@ -11,12 +11,13 @@ structure CacheFixture where
   result : Observation
   dependencies : Array Declaration
 
-def CacheFixture.write (f : CacheFixture) (result : Observation) : IO Unit :=
+def CacheFixture.write (f : CacheFixture) (result : Observation)
+    (rejection? : Option ProbeRejection := none) : IO Unit :=
   pickle (f.directory / s!"probe-{hash f.identity}.pickle")
     ({
       identity := f.identity
       targetHeader := ([], mkConst ``True)
-      result
+      result, rejection?
       dependencies := f.dependencies} : ProbeCacheRecord)
 
 /-- Each replay case owns a compiler process, which releases imported regions on exit. -/

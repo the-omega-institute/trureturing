@@ -217,6 +217,89 @@ class ProbeCacheTests(unittest.TestCase):
         local = re.search(r'abbrev localConfiguration : String := lookupVersion \+\+ "([^"]+)"',
                           (sources / "Local.lean").read_text()).group(1)
         self.assertEqual(cache.R_VERSION, lookup + local)
+        commands = (sources / "Commands.lean").read_text()
+        status = re.search(r'abbrev probeRejectionExit : UInt32 := (\d+)', commands)
+        self.assertEqual(cache.REJECTION_EXIT, int(status.group(1)))
+        self.assertIn('"probe-record-v10"', commands)
+        self.assertEqual(cache.VERSION, "probe-cache-v10")
+
+    def cold_terminal(self, status):
+        """Model only the Lean transport, never inspect diagnostic contents."""
+        calls = []
+
+        def compiler(command, env=None):
+            calls.append(dict(env or {}))
+            if "SEARCH_REDUCTION_PROBE_WRITE" in env:
+                stage = Path(env["SEARCH_REDUCTION_PROBE_WRITE"])
+                (stage / "probe.pickle").write_bytes(b"typed terminal")
+                (stage / "entry-plan").write_bytes(b"probe\n")
+                (stage / "entry-probe.lean").write_text("checked entry")
+                (stage / "entry-probe.olean").write_bytes(b"request payload")
+                cache.write_signed(stage / "source-data.json", {}, self.key)
+                # Diagnostics can say anything; the exit status is the typed
+                # Lean protocol, and the runner must never parse these bytes.
+                (stage / "diagnostics.txt").write_text("timeout source_certificate_leak")
+            return status
+
+        return calls, compiler
+
+    def test_typed_rejection_is_stored_and_replayed_with_the_same_nonzero_exit(self):
+        calls, compiler = self.cold_terminal(cache.REJECTION_EXIT)
+        with patch.dict(os.environ, {"SEARCH_REDUCTION_REQUESTS": "request.lean",
+                                    "SEARCH_REDUCTION_PROBE_CACHE": str(self.directory)}), \
+                patch.object(cache, "auth_key", return_value=self.key), \
+                patch.object(cache, "input_identity", return_value="input"), \
+                patch.object(cache.subprocess, "call", side_effect=compiler):
+            self.assertEqual(cache.run(["lean", "request.lean"]), 1)
+            cache.valid_record(self.directory / "input", "input", self.key)
+            self.assertEqual(cache.run(["lean", "request.lean"]), 1)
+        self.assertEqual(len(calls), 2)
+        self.assertIn("SEARCH_REDUCTION_PROBE_WRITE", calls[0])
+        self.assertIn("SEARCH_REDUCTION_PROBE_READ", calls[1])
+        self.assertNotIn("SEARCH_REDUCTION_PROBE_WRITE", calls[1])
+
+    def test_faults_never_sign_even_a_partially_written_typed_record(self):
+        for status in [1, 2, 23, 75, 124, 137, -9, -15]:
+            with self.subTest(status=status):
+                calls, compiler = self.cold_terminal(status)
+                with patch.dict(os.environ, {"SEARCH_REDUCTION_REQUESTS": "request.lean",
+                                            "SEARCH_REDUCTION_PROBE_CACHE": str(self.directory)}), \
+                        patch.object(cache, "auth_key", return_value=self.key), \
+                        patch.object(cache, "input_identity", return_value="input"), \
+                        patch.object(cache.subprocess, "call", side_effect=compiler):
+                    self.assertEqual(cache.run(["lean", "request.lean"]), status)
+                    self.assertEqual(cache.run(["lean", "request.lean"]), status)
+                self.assertEqual(len(calls), 2)
+                self.assertTrue(all("SEARCH_REDUCTION_PROBE_WRITE" in c for c in calls))
+                self.assertFalse((self.directory / "input").exists())
+
+    def test_rejection_rechecks_identity_before_signing(self):
+        calls, compiler = self.cold_terminal(cache.REJECTION_EXIT)
+        with patch.dict(os.environ, {"SEARCH_REDUCTION_REQUESTS": "request.lean",
+                                    "SEARCH_REDUCTION_PROBE_CACHE": str(self.directory)}), \
+                patch.object(cache, "auth_key", return_value=self.key), \
+                patch.object(cache, "input_identity", side_effect=["input", "changed"]), \
+                patch.object(cache.subprocess, "call", side_effect=compiler):
+            self.assertEqual(cache.run(["lean", "request.lean"]), 1)
+        self.assertFalse((self.directory / "input").exists())
+
+    def test_rejected_cache_tampering_forces_cold_without_upgrading_rejection(self):
+        calls, compiler = self.cold_terminal(cache.REJECTION_EXIT)
+        with patch.dict(os.environ, {"SEARCH_REDUCTION_REQUESTS": "request.lean",
+                                    "SEARCH_REDUCTION_PROBE_CACHE": str(self.directory)}), \
+                patch.object(cache, "auth_key", return_value=self.key), \
+                patch.object(cache, "input_identity", return_value="input"), \
+                patch.object(cache.subprocess, "call", side_effect=compiler):
+            self.assertEqual(cache.run(["lean", "request.lean"]), 1)
+            (self.directory / "input/probe.pickle").write_bytes(b"forged rejection")
+            self.assertEqual(cache.run(["lean", "request.lean"]), 1)
+        self.assertTrue(all("SEARCH_REDUCTION_PROBE_WRITE" in c for c in calls))
+
+    def test_disabled_cache_keeps_the_rejection_nonzero(self):
+        with patch.dict(os.environ, {"SEARCH_REDUCTION_REQUESTS": "request.lean",
+                                    "SEARCH_REDUCTION_PROBE_CACHE": "0"}), \
+                patch.object(cache.subprocess, "call", return_value=cache.REJECTION_EXIT):
+            self.assertEqual(cache.run(["lean", "request.lean"]), 1)
 
     def make_record(self):
         path = self.directory / "record"

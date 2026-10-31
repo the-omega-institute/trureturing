@@ -616,9 +616,49 @@ private def writeRequest (path : System.FilePath) (request : Request)
     getEnv
   writeModule env path (writeIR := false)
 
+inductive SourceCertificateFailure where
+  | leak (dependency : Name)
+  | unresolved (dependency : Name)
+  deriving BEq, Repr
+
+def SourceCertificateFailure.message : SourceCertificateFailure → String
+  | .leak dependency => s!"search.source_certificate_leak:{dependency}"
+  | .unresolved dependency => s!"search.source_certificate_unresolved:{dependency}"
+
+inductive SourceAuditArm where
+  | baseline | paired
+  deriving BEq, Repr
+
+def SourceAuditArm.label : SourceAuditArm → String
+  | .baseline => "baseline"
+  | .paired => "paired"
+
+/-- Only an actual forbidden dependency supplies a deterministic rejection.
+Missing dependencies and execution failures never inhabit this result. -/
+structure ProbeRejection where
+  arm : SourceAuditArm
+  dependency : Name
+  deriving BEq, Repr
+
+def ProbeRejection.message (r : ProbeRejection) : String :=
+  s!"{r.arm.label}: {(SourceCertificateFailure.leak r.dependency).message}"
+
+abbrev probeTerminalVersion : String := "probe-terminal-v2/source-audit"
+
+/-- A typed rejection is a terminal compiler result, distinct from every fault.
+The transport runner maps this reserved status to Lean's ordinary error exit. -/
+abbrev probeRejectionExit : UInt32 := 76
+
+private def finishProbeRejection (rejection : ProbeRejection)
+    (terminate : Bool := true) : CommandElabM Unit := do
+  if (← get).messages.hasErrors then throwError "{rejection.message}"
+  if !terminate then throwError "{rejection.message}"
+  IO.eprintln s!"error: {rejection.message}"
+  IO.Process.exit probeRejectionExit.toUInt8
+
 /-- Inspect the actual transitive source closure of checked terms. -/
 def certificateSourceDependencies (source : Environment) (proofs : Array Expr)
-    (forbidden : Array Name) : Except String Nat := do
+    (forbidden : Array Name) : Except SourceCertificateFailure Nat := do
   let mut todo := proofs.foldl (fun names proof => names ++ proof.getUsedConstants) #[]
   let mut seen : NameSet := {}
   while !todo.isEmpty do
@@ -627,33 +667,35 @@ def certificateSourceDependencies (source : Environment) (proofs : Array Expr)
     if seen.contains constant then continue
     seen := seen.insert constant
     if forbidden.contains constant then
-      throw s!"search.source_certificate_leak:{constant}"
+      throw (.leak constant)
     let some info := (source.setExporting false).find? constant
-      | throw s!"search.source_certificate_unresolved:{constant}"
+      | throw (.unresolved constant)
     for dependency in info.getUsedConstantsAsSet do todo := todo.push dependency
   return seen.size
 
 /-- Mandatory source audit reuses checked terms without repeating graph
 evaluation or certificate assembly. -/
-private def auditProbeCertificates (source : Environment) (request : Request)
-    (result : Observation) : CommandElabM Unit := do
-  let some reading := result.graph? | return
+def auditProbeCertificates (source : Environment) (request : Request)
+    (result : Observation) : CommandElabM (Option ProbeRejection) := do
+  let some reading := result.graph? | return none
   let baselineProofs := reading.graph.edges.toArray.filterMap (·.zeroProof) ++
     reading.baselineProbe.proof?.toArray ++ reading.baselineProof?.toArray
   let paired := reading.graph.edges.toArray.filterMap (·.pairedZeroProof) ++
     reading.pairedProbe.proof?.toArray ++ reading.pairedProof?.toArray
-  for (arm, proofs, forbidden) in #[("baseline", baselineProofs, #[request.target] ++ request.additions),
-      ("paired", paired, #[request.target])] do
+  for (arm, proofs, forbidden) in #[(SourceAuditArm.baseline, baselineProofs, #[request.target] ++ request.additions),
+      (.paired, paired, #[request.target])] do
     let count ← match certificateSourceDependencies source proofs forbidden with
       | .ok count => pure count
-      | .error error => throwError "{arm}: {error}"
+      | .error (.leak dependency) => return some {arm, dependency}
+      | .error error => throwError "{arm.label}: {error.message}"
     emitLookupRecord s!"PRODUCTION_SOURCE_AUDIT {Json.mkObj [
-      ("target", toJson request.target.toString), ("arm", toJson arm),
+      ("target", toJson request.target.toString), ("arm", toJson arm.label),
       ("certificates", toJson proofs.size), ("transitive_constants", toJson count),
       ("forbidden", toJson (forbidden.map Name.toString)),
       ("no_forbidden_dependency", toJson true),
-      ("assembled_zero", toJson (if arm == "baseline" then reading.baselineProof?.isSome
+      ("assembled_zero", toJson (if arm == .baseline then reading.baselineProof?.isSome
         else reading.pairedProof?.isSome))] |>.compress}"
+  return none
 
 /-- Complete typed probe data; the runner authenticates the bytes before Lean
 deserializes them. JSON projections are never accepted as probe evidence. -/
@@ -661,6 +703,7 @@ structure ProbeCacheRecord where
   identity : String
   targetHeader : List Name × Expr
   result : Observation
+  rejection? : Option ProbeRejection := none
   dependencies : Array Declaration := #[]
   dependencyModule? : Option Name := none
 
@@ -742,7 +785,7 @@ private def snapshotProbeSourceData (directory : System.FilePath)
 private def probeIdentity (request : Request) (owners : Array Name) (name : Name)
     (fixture : Bool) : IO String := do
   return reprStr (localConfiguration, certificateLanguageVersion, transportVersion,
-    "probe-record-v9", ← IO.getEnv "SEARCH_REDUCTION_PROBE_ID", request.target,
+    "probe-record-v10", probeTerminalVersion, ← IO.getEnv "SEARCH_REDUCTION_PROBE_ID", request.target,
     request.baseline, request.additions, request.baselineCommit, request.informationApplication,
     request.certificates.map CertificateNomination.encode,
     request.edgeCertificates.map (fun (n, c) => (n, c.encode)), owners, name, fixture)
@@ -805,12 +848,31 @@ def writeCacheDependencyModule (directory : System.FilePath) (identity : String)
       (directory / (module.toString ++ ".olean")) (writeIR := false)
   return module
 
-/-- Typed dependency declarations are either imported from a kernel-checked
-module or replayed through the kernel before current certificate checks. -/
+/-- Faults and explicitly requested but unscheduled queries are not reusable.
+Intentionally deferred graph queries remain unknown and are not upgraded. -/
+def probeCacheable (result : Observation) : Bool := Id.run do
+  let reusableRun : Run → Bool
+    | .incomplete .undecided => true
+    | .incomplete _ => false
+    | _ => true
+  unless #[result.base, result.paired, result.presentation].all reusableRun &&
+      (result.attempts ++ result.pairAttempts).all (fun a => reusableRun a.outcome) do
+    return false
+  if let some reading := result.graph? then
+    for query in reading.queryRecords do
+      unless query.encounteredFaults.isEmpty do return false
+      match query.terminal with
+      | .fault _ | .notRun => return false
+      | _ => pure ()
+  return true
+
 unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
     (source : Environment) (request : Request) (result : Observation)
     (base? : Option Environment := none) (importDependencies : Bool := false)
-    (moduleMinDependencies : Nat := 0) : CommandElabM Unit := do
+    (moduleMinDependencies : Nat := 0)
+    (rejection? : Option ProbeRejection := none) : CommandElabM Unit := do
+  unless probeCacheable result && !(← get).messages.hasErrors do
+    throwError "search.cache_fault_not_reusable"
   let some info := (source.setExporting false).find? request.target
     | throwError "search.cache_missing_target"
   let path := directory / s!"probe-{hash identity}.pickle"
@@ -826,7 +888,10 @@ unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
     if let some evidence := result.presentationEvidence? then
       roots := roots ++ evidence.conversionType.getUsedConstants
     pure roots
-  let mut dependencies ← match captureCacheDependencies source base request.target roots with
+  -- Rejected records never publish a target. Its body, if implicated in the
+  -- leak, is ordinary checked input needed to repeat the same source audit.
+  let excludedTarget := if rejection?.isSome then Name.anonymous else request.target
+  let mut dependencies ← match captureCacheDependencies source base excludedTarget roots with
     | .ok declarations => pure declarations
     | .error error => throwError "{error}"
   let useModule := importDependencies && dependencies.size >= moduleMinDependencies
@@ -838,7 +903,7 @@ unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
     base ← withImporting <| importModules
       #[{module := `LeanInformationAuditRegAnalysis.SearchReduction.Commands}]
       options 0 (leakEnv := false) (loadExts := false)
-    dependencies ← match captureCacheDependencies source base request.target roots with
+    dependencies ← match captureCacheDependencies source base excludedTarget roots with
       | .ok declarations => pure declarations
       | .error error => throwError "{error}"
   let dependencyModule? ← if useModule then
@@ -847,12 +912,34 @@ unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
   IO.FS.createDirAll directory
   let temporary := path.addExtension "tmp"
   pickle temporary ({
-    identity, targetHeader := (info.levelParams, info.type), result, dependencies,
+    identity, targetHeader := (info.levelParams, info.type), result, rejection?, dependencies,
     dependencyModule?} : ProbeCacheRecord)
   IO.FS.rename temporary path
 
+private unsafe def saveProbeCacheEntry (directory : System.FilePath) (identity : String)
+    (source : Environment) (request : Request) (result : Observation)
+    (cacheBase : Environment) (auditPayload : System.FilePath)
+    (rejection? : Option ProbeRejection := none) : CommandElabM Unit := do
+  saveProbeCache directory identity source request result (some cacheBase)
+    (importDependencies := true) (moduleMinDependencies := 4096) (rejection? := rejection?)
+  let entry := s!"entry-{hash identity}"
+  let payloadName := entry ++ ".olean"
+  IO.FS.writeBinFile (directory / payloadName) (← IO.FS.readBinFile auditPayload)
+  let dependencyModule := s!"SearchReductionDependencies_{hash identity}"
+  let moduleExists ← (directory / (dependencyModule ++ ".olean")).pathExists
+  let entryImport := if moduleExists then dependencyModule
+    else "LeanInformationAuditRegAnalysis.SearchReduction.Commands"
+  IO.FS.writeFile (directory / (entry ++ ".lean"))
+    (s!"import {entryImport}\n" ++
+      "set_option Elab.async false\nset_option maxHeartbeats 0\n" ++
+      "run_cmd do\n" ++
+      "  let some directory ← IO.getEnv \"SEARCH_REDUCTION_PROBE_READ\"\n" ++
+      "    | throwError \"search.cache_entry_without_authenticated_record\"\n" ++
+      s!"  LeanInformationAudit.SearchReduction.executeProbeFile (System.FilePath.mk directory / {repr payloadName})\n")
+
 unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
-    (request : Request) (owners : Array Name) (name : Name) : CommandElabM Bool := do
+    (request : Request) (owners : Array Name) (name : Name)
+    (terminateOnRejection : Bool := true) : CommandElabM Bool := do
   let path := directory / s!"probe-{hash identity}.pickle"
   unless ← path.pathExists do return false
   profilePhase "probe/cache-load-start"
@@ -861,6 +948,7 @@ unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
   probeRegions.modify (·.push region)
   unless record.identity == identity && record.result.target == request.target do
     throwError "search.probe_cache_identity_mismatch"
+  unless probeCacheable record.result do throwError "search.cache_fault_not_reusable"
   if let some module := record.dependencyModule? then
     let imported ← getEnv
     unless imported.allImportedModuleNames.contains module &&
@@ -877,7 +965,12 @@ unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
   profilePhase "probe/cache-kernel-start"
   liftTermElabM <| withPublicationContext <| checkCachedProbeCertificates record.result
   profilePhase "probe/cache-kernel-end"
-  auditProbeCertificates source request record.result
+  let rejection? ← auditProbeCertificates source request record.result
+  unless rejection? == record.rejection? do throwError "search.probe_cache_rejection_mismatch"
+  if let some rejection := rejection? then
+    emitLookupRecord "PROBE_CACHE hit=authenticated kernel_recomputed=true terminal=rejected"
+    finishProbeRejection rejection terminateOnRejection
+    return true
   profilePhase "probe/publication-start"
   liftTermElabM <| publish name record.result (some source) (some record.targetHeader)
   emitLookupRecord "PROBE_CACHE_CURRENT_CLASSIFIER checked=true input_versions=explicit"
@@ -966,8 +1059,18 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name)
     else pure none
   profilePhase "probe/negative-guard-end"
   profilePhase "probe/source-audit-start"
-  auditProbeCertificates source request result
+  let rejection? ← auditProbeCertificates source request result
   profilePhase "probe/source-audit-end"
+  if let some rejection := rejection? then
+    if cacheInputsReady then
+      if let some directory ← IO.getEnv "SEARCH_REDUCTION_PROBE_WRITE" then
+        profilePhase "probe/cache-save-start"
+        try
+          saveProbeCacheEntry directory identity source request result cacheBase auditPayload rejection?
+        catch ex => emitLookupRecord s!"PROBE_CACHE save_rejected={← ex.toMessageData.toString}"
+        profilePhase "probe/cache-save-end"
+    finishProbeRejection rejection
+    return
   -- Source metadata belongs to its own environment. R has already used a
   -- separately imported baseline, without source attributes or instances.
   let mainModule := (← getEnv).header.mainModule
@@ -990,28 +1093,7 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name)
       return
     profilePhase "probe/cache-save-start"
     try
-      saveProbeCache directory identity source request result (some cacheBase)
-        (importDependencies := true) (moduleMinDependencies := 4096)
-      -- The runner authenticates this entry only after the entire original
-      -- request succeeds. Hot execution retains executeProbe's source audit,
-      -- certificate kernel checks and fresh GraphReading publication, while
-      -- reusing the successful request wrapper's imports and diagnostics.
-      let entry := s!"entry-{hash identity}"
-      let payloadName := entry ++ ".olean"
-      -- Reuse the checked payload emitted before importing the source.
-      -- Its small environment predates any newly initialized source extensions.
-      IO.FS.writeBinFile (directory / payloadName) (← IO.FS.readBinFile auditPayload)
-      let dependencyModule := s!"SearchReductionDependencies_{hash identity}"
-      let moduleExists ← (System.FilePath.mk directory / (dependencyModule ++ ".olean")).pathExists
-      let entryImport := if moduleExists then dependencyModule
-        else "LeanInformationAuditRegAnalysis.SearchReduction.Commands"
-      IO.FS.writeFile (directory / (entry ++ ".lean"))
-        (s!"import {entryImport}\n" ++
-          "set_option Elab.async false\nset_option maxHeartbeats 0\n" ++
-          "run_cmd do\n" ++
-          "  let some directory ← IO.getEnv \"SEARCH_REDUCTION_PROBE_READ\"\n" ++
-          "    | throwError \"search.cache_entry_without_authenticated_record\"\n" ++
-          s!"  LeanInformationAudit.SearchReduction.executeProbeFile (System.FilePath.mk directory / {repr payloadName})\n")
+      saveProbeCacheEntry directory identity source request result cacheBase auditPayload
     catch ex => emitLookupRecord s!"PROBE_CACHE save_rejected={← ex.toMessageData.toString}"
     profilePhase "probe/cache-save-end"
   logInfo (observationJson result request.baselineCommit).compress
@@ -1176,6 +1258,11 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
       env := #[("SEARCH_REDUCTION_PROBE_PLANNED", some "1")]}
     profilePhase "request/child-end"
     if child.exitCode == 75 then IO.Process.exit 75
+    if child.exitCode == probeRejectionExit then
+      IO.print child.stdout
+      IO.eprint child.stderr
+      if (← get).messages.hasErrors then IO.Process.exit 1
+      IO.Process.exit probeRejectionExit.toUInt8
     if child.exitCode != 0 then
       unless fixture do
         throwError "search.probe_compile_failed: exit {child.exitCode}\n{child.stdout}\n{child.stderr}"
