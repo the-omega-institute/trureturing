@@ -21,6 +21,7 @@ internal sealed class FixedGradedDualityDocument : IScribeDocumentDefinition
         "Conditional fixed-energy graded duality on the original Carrier",
         H("Fixed-grade nondegeneracy and the algebraic restricted dual"),
         Blocks(
+            Paragraph(Text("plusPart_mem_fixedSpace is public at this owner for every lattice D and v:Carrier D, with no determinant or positivity premise. Its unchanged proof uses the literal theta involution to put the existing half-average in the actual fixedSpace. The existing fixedGradeWitness consumes this membership fact. The public membership API is available to concrete source constructions independently of the generic conditional dual equivalence.")),
             Paragraph(Text("The construction uses the original Carrier D, its literal FixedCarrier D, and the existing grade D h. "
                 + "The fixed grade is the comap of grade D h along the FixedCarrier inclusion. No alternate carrier and no live P1 pairing are introduced.")),
             Paragraph(Text("The ambient bilinear form B is an explicit parameter. The assumptions are ambient left and right nondegeneracy, "
