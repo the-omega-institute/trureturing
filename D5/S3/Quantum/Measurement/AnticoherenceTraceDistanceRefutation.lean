@@ -437,6 +437,7 @@ private lemma ladder_casimir :
 
 private lemma quadrupole_tracefree :
     quadrupole 0 0 + quadrupole 1 1 = -quadrupole 2 2 := by
+  rw [quadrupole]
   dsimp only [quadrupole, Jx, Jy]
   simp only [Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.cons_val, Matrix.head_cons, Fin.isValue, ite_true]
