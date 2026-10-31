@@ -103,7 +103,7 @@ def normRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "arg", "fn"]
-      stateBinder := 4
+      stateBinder := 0
       functionOperand := true
       stateOperand := none
       booleanPredicate := false }] }
