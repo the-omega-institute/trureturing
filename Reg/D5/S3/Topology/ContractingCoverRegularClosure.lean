@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Topology.ContractingCoverRegularClosure
 
+/-! Source-bound regular-interior observations retain both metric and index universes. -/
+
 set_option autoImplicit false
 noncomputable section
 
@@ -64,7 +66,7 @@ theorem erased_fails : ¬ arena.{u,v}.Law erased := by
       apply LipschitzWith.of_dist_le_mul
       intro x y
       simp [Subsingleton.elim x y])
-    (fun _ => isOpenMap_id) (by ext x; simp)
+    (fun _ => (Homeomorph.refl _).isOpenMap) (by ext x; simp)
   change (∅ : Set PUnit.{u+1}) = univ at he
   exact Set.empty_ne_univ he
 
@@ -93,11 +95,11 @@ def registration :
   realizationName := `Reg.D5.S3.Topology.ContractingCoverRegularClosure.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u,v}⟩
+  objectArena := .source ⟨arena.{u,v}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u,v} ⟨family.{u,v}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ s => closure (interior s)) (fun e => nomatch e))
@@ -113,7 +115,7 @@ def registration :
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := some #["arg", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

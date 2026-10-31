@@ -9,6 +9,8 @@
 import D5.S3.Geometry.Rauzy.TribonacciInterior
 import D5.S3.Topology.ContractingCoverRegularClosure
 
+/-! The exact three-prefix cover supplies regular closure of the original Rauzy set. -/
+
 namespace D5.S3.Geometry.Rauzy.TribonacciRegularClosure
 
 open D5.S0.Tower.Tribonacci
@@ -56,14 +58,28 @@ theorem rauzyFractal_closure_interior {z : Complex}
     (q := ‖z‖₊) (show ‖z‖₊ < 1 from hr) f
   · intro i
     fin_cases i
-    · simpa [f, zeroPrefixMap] using affine_lipschitz 0 z (q := ‖z‖₊) (le_refl ‖z‖)
+    · change LipschitzWith ‖z‖₊ (fun w : Complex => z * w)
+      convert affine_lipschitz 0 z (q := ‖z‖₊) (le_refl ‖z‖) using 1 <;> simp
     · exact affine_lipschitz 1 (z ^ 2) (q := ‖z‖₊) h2
     · exact affine_lipschitz (1 + z) (z ^ 3) (q := ‖z‖₊) h3
   · intro i
     fin_cases i
-    · simpa [f, zeroPrefixMap] using affine_open 0 z hz0
+    · change IsOpenMap (fun w : Complex => z * w)
+      exact (Homeomorph.mulLeft₀ z hz0).isOpenMap
     · exact affine_open 1 (z ^ 2) (pow_ne_zero _ hz0)
     · exact affine_open (1 + z) (z ^ 3) (pow_ne_zero _ hz0)
-  · simpa [f, Fin.iUnion_univ_succ, union_assoc] using rauzyFractal_prefix_cover hz hz_ne
+  · apply Eq.trans ?_ (rauzyFractal_prefix_cover hz hz_ne)
+    ext x
+    constructor
+    · intro hx
+      obtain ⟨i, hi⟩ := mem_iUnion.mp hx
+      fin_cases i
+      · exact Or.inl (Or.inl hi)
+      · exact Or.inl (Or.inr hi)
+      · exact Or.inr hi
+    · rintro ((hx | hx) | hx)
+      · exact mem_iUnion.mpr ⟨0, hx⟩
+      · exact mem_iUnion.mpr ⟨1, hx⟩
+      · exact mem_iUnion.mpr ⟨2, hx⟩
 
 end D5.S3.Geometry.Rauzy.TribonacciRegularClosure

@@ -1,6 +1,8 @@
 import Reg.D5.S3.Geometry.Rauzy.Interior
 import D5.S3.Geometry.Rauzy.TribonacciRegularClosure
 
+/-! Regular-interior observations retain the original two root hypotheses. -/
+
 set_option autoImplicit false
 noncomputable section
 
@@ -92,7 +94,7 @@ def registration :
       path := #["body", "body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := some #["arg", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
