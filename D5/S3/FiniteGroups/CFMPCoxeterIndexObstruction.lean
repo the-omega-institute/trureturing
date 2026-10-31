@@ -215,13 +215,13 @@ private theorem orientation_index : orientation.index = 2 := by
     · exact ⟨1, map_one _⟩
     · exact ⟨canonical.simple 0, canonical.lengthParity_simple 0⟩
   rw [orientation, Subgroup.index_ker,
-    MonoidHom.range_eq_top.mpr hsurj, Subgroup.card_top]
+    MonoidHom.range_eq_top.mpr hsurj, Subgroup.card_top, Nat.card_eq_fintype_card]
   decide
 
 private theorem block_stabilizer (Γ : Subgroup orientation) [IsMulTorsionFree Γ]
     (q : Chambers Γ) : MulAction.stabilizer blockGroup q = ⊥ := by
   letI : Finite blockGroup := Nat.finite_of_card_ne_zero (by rw [blockGroup_card]; decide)
-  apply Subgroup.eq_bot_iff_forall.mpr
+  apply (Subgroup.eq_bot_iff_forall _).mpr
   intro k hk
   induction q using Quotient.inductionOn' with
   | _ w =>
@@ -232,12 +232,11 @@ private theorem block_stabilizer (Γ : Subgroup orientation) [IsMulTorsionFree �
     obtain ⟨y, hy, hval⟩ := hm
     let z : Γ := ⟨y, hy⟩
     have hkfin : IsOfFinOrder (k : W) :=
-      (Function.Injective.isOfFinOrder_iff (f := blockGroup.subtype)
-        Subtype.val_injective).mpr (isOfFinOrder_of_finite k)
+      blockGroup.subtype.isOfFinOrder (isOfFinOrder_of_finite k)
     have hyfin : IsOfFinOrder (y : W) := by
-      apply IsConj.isOfFinOrder (a := (k : W)) ?_ hkfin
-      apply isConj_iff.mpr
-      exact ⟨w⁻¹, by simpa only [inv_inv, mul_assoc] using hval.symm⟩
+      have hconj : IsConj (k : W) (y : W) := isConj_iff.mpr
+        ⟨w⁻¹, by simpa only [inv_inv, mul_assoc, Subgroup.subtype_apply] using hval.symm⟩
+      exact hconj.isOfFinOrder hkfin
     have hzfin : IsOfFinOrder z :=
       (Function.Injective.isOfFinOrder_iff
         (f := orientation.subtype.comp Γ.subtype)
@@ -245,6 +244,7 @@ private theorem block_stabilizer (Γ : Subgroup orientation) [IsMulTorsionFree �
     have hyone : (y : W) = 1 :=
       congrArg (fun t : Γ => ((t : orientation) : W)) (IsOfFinOrder.eq_one' hzfin)
     apply Subtype.ext
+    change (k : W) = 1
     have hconj : w⁻¹ * ((k : W) * w) = 1 := hval.symm.trans hyone
     have hh := congrArg (fun t : W => w * t * w⁻¹) hconj
     simpa only [mul_assoc, mul_inv_cancel_left, inv_mul_cancel_right,
@@ -252,9 +252,10 @@ private theorem block_stabilizer (Γ : Subgroup orientation) [IsMulTorsionFree �
 
 private theorem block_count (Γ : Subgroup orientation) [IsMulTorsionFree Γ] :
     Γ.index = 3 * Nat.card (Blocks Γ) := by
-  have hc := Nat.card_congr (MulAction.selfEquivOrbitsQuotientProd blockGroup (Chambers Γ)
-    (block_stabilizer Γ))
+  have hc := Nat.card_congr (MulAction.selfEquivOrbitsQuotientProd
+    (G := blockGroup) (X := Chambers Γ) (block_stabilizer Γ))
   rw [Nat.card_prod, blockGroup_card] at hc
+  change Nat.card (Chambers Γ) = Nat.card (Blocks Γ) * 6 at hc
   have hi : Nat.card (Chambers Γ) = Γ.index * 2 := by
     change (Γ.map orientation.subtype).index = Γ.index * 2
     rw [Subgroup.index_map_subtype, orientation_index]
