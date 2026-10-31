@@ -847,7 +847,6 @@ theorem bilinear_resolvent_scalar {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
 
 private lemma weightedColumn_mem {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
     Memℓp (fun n : ℕ => (n + 1 : ℂ) * columnValue r n) 2 := by
-  have hC : 0 ≤ (1 - r)⁻¹ := inv_nonneg.mpr (by linarith)
   have hg := summable_pow_mul_geometric_of_norm_lt_one 2 (r := r)
     (by simpa [Real.norm_eq_abs, abs_of_nonneg hr] using hr1)
   apply memℓp_gen
@@ -915,9 +914,16 @@ private lemma column_pair_normalization {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
   ring
 
 /-- The weighted equation is paid by the actual coordinate anticommutator. -/
-private theorem weightedColumn_equation {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
+theorem weightedColumn_equation {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     (1 + operator (Real.sqrt r : ℂ)) (weightedColumn r hr.le hr1) =
-      ((B r / F r : ℝ) : ℂ) • weightedSource r hr.le hr1 := by
+      (1 / ((Real.sqrt (1 - r) : ℂ) * (F r : ℂ))) • weightedSource r hr.le hr1 := by
+  have hcoef : 1 / ((Real.sqrt (1 - r) : ℂ) * (F r : ℂ)) =
+      ((B r / F r : ℝ) : ℂ) := by
+    rw [B_eq hr.le hr1]
+    push_cast
+    simp only [div_eq_mul_inv, mul_inv_rev, one_mul]
+    ring
+  rw [hcoef]
   let z : ℂ := (Real.sqrt r : ℂ)
   let c : H := column r hr.le hr1
   let d : H := weightedColumn r hr.le hr1
@@ -979,31 +985,48 @@ private theorem oppositeResolvent_summable {z : ℂ} (hz : ‖z‖ < 1) :
 private theorem oppositeResolvent_mul {z : ℂ} (hz : ‖z‖ < 1) :
     oppositeResolvent z * (1 + operator z) = 1 := by
   simpa only [oppositeResolvent, sub_neg_eq_add] using
-    geom_series_mul_neg (-operator z) (by simpa using operator_norm_lt_one hz)
+    (oppositeResolvent_summable hz).tsum_pow_mul_one_sub
 
 private theorem mul_oppositeResolvent {z : ℂ} (hz : ‖z‖ < 1) :
     (1 + operator z) * oppositeResolvent z = 1 := by
   simpa only [oppositeResolvent, sub_neg_eq_add] using
-    mul_neg_geom_series (-operator z) (by simpa using operator_norm_lt_one hz)
+    (oppositeResolvent_summable hz).one_sub_mul_tsum_pow
 
 /-- The opposite inverse acts on the prescribed weighted original source. -/
-private theorem opposite_resolvent_weighted_source {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
+theorem opposite_resolvent_weighted_source {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     oppositeResolvent (Real.sqrt r : ℂ) (weightedSource r hr.le hr1) =
-      ((F r / B r : ℝ) : ℂ) • weightedColumn r hr.le hr1 := by
+      ((Real.sqrt (1 - r) * F r : ℝ) : ℂ) • weightedColumn r hr.le hr1 := by
   have hF : F r ≠ 0 := ne_of_gt (lt_of_lt_of_le zero_lt_one (F_ge_one hr.le hr1))
   have hB : B r ≠ 0 := ne_of_gt (lt_of_lt_of_le zero_lt_one (B_ge_one hr.le hr1))
+  have hz := radial_norm_lt_one hr1
+  have hcoef : 1 / ((Real.sqrt (1 - r) : ℂ) * (F r : ℂ)) =
+      ((B r / F r : ℝ) : ℂ) := by
+    rw [B_eq hr.le hr1]
+    push_cast
+    simp only [div_eq_mul_inv, mul_inv_rev, one_mul]
+    ring
+  have heq := weightedColumn_equation hr hr1
+  rw [hcoef] at heq
+  have hinj : Function.Injective (1 + operator (Real.sqrt r : ℂ) : H →L[ℂ] H) := by
+    intro x y he
+    calc
+      x = oppositeResolvent (Real.sqrt r : ℂ)
+          ((1 + operator (Real.sqrt r : ℂ)) x) :=
+        (congrArg (fun T : H →L[ℂ] H => T x) (oppositeResolvent_mul hz)).symm
+      _ = oppositeResolvent (Real.sqrt r : ℂ)
+          ((1 + operator (Real.sqrt r : ℂ)) y) := congrArg _ he
+      _ = y := congrArg (fun T : H →L[ℂ] H => T y) (oppositeResolvent_mul hz)
+  have hright : (1 + operator (Real.sqrt r : ℂ))
+      (oppositeResolvent (Real.sqrt r : ℂ) (weightedSource r hr.le hr1)) =
+        weightedSource r hr.le hr1 :=
+    congrArg (fun T : H →L[ℂ] H => T (weightedSource r hr.le hr1))
+      (mul_oppositeResolvent hz)
   have ha : ((B r / F r : ℝ) : ℂ) •
       oppositeResolvent (Real.sqrt r : ℂ) (weightedSource r hr.le hr1) =
         weightedColumn r hr.le hr1 := by
-    calc
-      _ = oppositeResolvent (Real.sqrt r : ℂ)
-          (((B r / F r : ℝ) : ℂ) • weightedSource r hr.le hr1) := by
-        rw [map_smul]
-      _ = oppositeResolvent (Real.sqrt r : ℂ)
-          ((1 + operator (Real.sqrt r : ℂ)) (weightedColumn r hr.le hr1)) := by
-        rw [weightedColumn_equation hr hr1]
-      _ = _ := congrArg (fun T : H →L[ℂ] H => T (weightedColumn r hr.le hr1))
-        (oppositeResolvent_mul (radial_norm_lt_one hr1))
+    apply hinj
+    rw [map_smul, hright]
+    exact heq.symm
   have hcancel : ((F r / B r : ℝ) : ℂ) * ((B r / F r : ℝ) : ℂ) = 1 := by
     norm_cast
     field_simp [hF, hB]
@@ -1014,7 +1037,8 @@ private theorem opposite_resolvent_weighted_source {r : ℝ} (hr : 0 < r) (hr1 :
     _ = ((F r / B r : ℝ) : ℂ) • (((B r / F r : ℝ) : ℂ) •
         oppositeResolvent (Real.sqrt r : ℂ) (weightedSource r hr.le hr1)) := by
       rw [smul_smul]
-    _ = _ := by rw [ha]
+    _ = ((F r / B r : ℝ) : ℂ) • weightedColumn r hr.le hr1 := by rw [ha]
+    _ = _ := by rw [B_eq hr.le hr1]; simp [div_eq_mul_inv, mul_comm]
 
 /- The next finite identity is the only additional convolution coefficient.
    Its proof is finite symmetry, not differentiation of an assumed endpoint. -/
@@ -1077,8 +1101,6 @@ private lemma weightedB_summable {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
 private lemma weightedB_coefficient_step (n : ℕ) :
     2 * (n + 1 : ℝ) * centralWeight (n + 1) =
       (2 * (n : ℝ) + 1) * centralWeight n := by
-  -- The private matrix-file recurrence is not accessed across file boundaries.
-  -- This is its short algebraic consequence of the same public binomial lemma.
   have h := Nat.succ_mul_centralBinom_succ n
   have hcR : (n + 1 : ℝ) * (Nat.centralBinom (n + 1) : ℝ) =
       2 * (2 * (n : ℝ) + 1) * (Nat.centralBinom n : ℝ) := by
@@ -1218,23 +1240,24 @@ theorem bilinear_opposite_resolvent_scalar {r : ℝ} (hr : 0 < r) (hr1 : r < 1) 
     simpa only [norm_mul] using h
   · rw [opposite_resolvent_weighted_source hr hr1]
     have ht : (∑' n : ℕ, weightedSource r hr.le hr1 n *
-        (((F r / B r : ℝ) : ℂ) • weightedColumn r hr.le hr1) n) =
-        ((F r / B r : ℝ) : ℂ) *
+        (((Real.sqrt (1 - r) * F r : ℝ) : ℂ) • weightedColumn r hr.le hr1) n) =
+        ((Real.sqrt (1 - r) * F r : ℝ) : ℂ) *
           (∑' n : ℕ, weightedSource r hr.le hr1 n * weightedColumn r hr.le hr1 n) := by
       calc
-        _ = ∑' n : ℕ, ((F r / B r : ℝ) : ℂ) *
+        _ = ∑' n : ℕ, ((Real.sqrt (1 - r) * F r : ℝ) : ℂ) *
             (weightedSource r hr.le hr1 n * weightedColumn r hr.le hr1 n) := by
           apply tsum_congr
           intro n
-          change _ * (((F r / B r : ℝ) : ℂ) * _) = _
+          change _ * (((Real.sqrt (1 - r) * F r : ℝ) : ℂ) * _) = _
           ring
         _ = _ := tsum_mul_left
     rw [ht, weighted_column_pair hr hr1]
     have hF : F r ≠ 0 := ne_of_gt (lt_of_lt_of_le zero_lt_one (F_ge_one hr.le hr1))
-    have hB : B r ≠ 0 := ne_of_gt (lt_of_lt_of_le zero_lt_one (B_ge_one hr.le hr1))
     have hr0 : 1 - r ≠ 0 := by linarith
+    rw [B_eq hr.le hr1]
+    have hs : Real.sqrt (1 - r) ≠ 0 := by positivity
     norm_cast
-    field_simp [hF, hB, hr0]
+    field_simp [hF, hs, hr0]
     <;> ring
 
 
