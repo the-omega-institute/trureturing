@@ -54,16 +54,27 @@ def spinAction (n : ℕ) (u : Matrix.specialUnitaryGroup (Fin 2) ℂ) :
   (dickeIsometry n)ᴴ * qubitPower n u.val * dickeIsometry n
 
 /-- The Dicke splitting coefficients for the first `t` and last `n-t` qubits. -/
-def dickeSplit (n t : ℕ) :
+private def dickeSplit (n t : ℕ) :
     Matrix (Fin (t + 1) × Fin (n - t + 1)) (Fin (n + 1)) ℂ :=
   fun kl r => if kl.1.val + kl.2.val = r.val then
     ((Real.sqrt ((t.choose kl.1.val : ℝ) * ((n - t).choose kl.2.val : ℝ)) /
       Real.sqrt (n.choose r.val : ℝ) : ℝ) : ℂ) else 0
 
-/-- The qubit partial trace, expressed in the normalized `t`-qubit Dicke basis. -/
+/-- For `t ≤ n`, form the symmetric qubit operator `ρ_S = V_n * ρ * V_nᴴ`,
+reindex its computational basis by the explicit equivalence appending the first `t`
+and last `n - t` qubits, take the partial trace over the latter, and return
+`V_tᴴ * Tr_{n-t}(ρ_S) * V_t` in the normalized `t`-qubit Dicke basis.
+For `n < t`, the value is zero. -/
 def reducedState {n : ℕ} (t : ℕ) (ρ : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) :
     Matrix (Fin (t + 1)) (Fin (t + 1)) ℂ :=
-  partialTraceRight (dickeSplit n t * ρ * (dickeSplit n t)ᴴ)
+  if ht : t ≤ n then
+    let e : (Fin t → Fin 2) × (Fin (n - t) → Fin 2) ≃ (Fin n → Fin 2) :=
+      (Fin.appendEquiv t (n - t)).trans
+        (Equiv.cast (congrArg (fun m => Fin m → Fin 2) (Nat.add_sub_of_le ht)))
+    (dickeIsometry t)ᴴ *
+      partialTraceRight ((dickeIsometry n * ρ * (dickeIsometry n)ᴴ).submatrix e e) *
+        dickeIsometry t
+  else 0
 
 /-- The maximally mixed state on the symmetric `t`-qubit subspace. -/
 def mixedState (t : ℕ) : Matrix (Fin (t + 1)) (Fin (t + 1)) ℂ :=
@@ -348,7 +359,9 @@ private lemma dicke_split_partialTrace (t s : ℕ)
     let w := fun xy : (Fin t → Fin 2) × (Fin s → Fin 2) =>
       Fin.append xy.1 xy.2
     partialTraceRight ((v * ρ * vᴴ).submatrix w w) =
-      dickeIsometry t * reducedState t ρ * (dickeIsometry t)ᴴ := by
+      dickeIsometry t *
+        partialTraceRight (dickeSplitSum t s * ρ * (dickeSplitSum t s)ᴴ) *
+          (dickeIsometry t)ᴴ := by
   dsimp only
   have hf := dicke_split_factor t s
   have he : ((dickeIsometry (t + s) * ρ * (dickeIsometry (t + s))ᴴ).submatrix
@@ -364,17 +377,47 @@ private lemma dicke_split_partialTrace (t s : ℕ)
     rw [hf, Matrix.conjTranspose_mul]
     simp only [Matrix.mul_assoc]
   rw [he, partialTrace_isometries _ _ (dicke_isometry s)]
-  have hd : partialTraceRight (dickeSplitSum t s * ρ * (dickeSplitSum t s)ᴴ) =
-      reducedState t ρ := by
-    let v (m : ℕ) : Matrix (Fin (t + 1) × Fin (m + 1)) (Fin (t + s + 1)) ℂ :=
-      fun kl r => if kl.1.val + kl.2.val = r.val then
-        ((Real.sqrt ((t.choose kl.1.val : ℝ) * (m.choose kl.2.val : ℝ)) /
-          Real.sqrt ((t + s).choose r.val : ℝ) : ℝ) : ℂ) else 0
-    change partialTraceRight (v s * ρ * (v s)ᴴ) =
-      partialTraceRight (v (t + s - t) * ρ * (v (t + s - t))ᴴ)
-    exact congrArg (fun m => partialTraceRight (v m * ρ * (v m)ᴴ))
-      (Nat.add_sub_cancel_left t s).symm
-  rw [hd]
+
+private lemma reducedState_eq_dickeSplit (n t : ℕ) (ht : t ≤ n)
+    (ρ : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) :
+    reducedState t ρ = partialTraceRight (dickeSplit n t * ρ * (dickeSplit n t)ᴴ) := by
+  obtain ⟨s, rfl⟩ := Nat.exists_eq_add_of_le ht
+  have hr : reducedState t ρ = (dickeIsometry t)ᴴ *
+      partialTraceRight ((dickeIsometry (t + s) * ρ * (dickeIsometry (t + s))ᴴ).submatrix
+        (fun xy : (Fin t → Fin 2) × (Fin s → Fin 2) => Fin.append xy.1 xy.2)
+        (fun xy : (Fin t → Fin 2) × (Fin s → Fin 2) => Fin.append xy.1 xy.2)) *
+          dickeIsometry t := by
+    unfold reducedState
+    rw [dite_eq_left (show t ≤ t + s by omega)]
+    let p (m : ℕ) : Prop := ∀ h : t + m = t + s,
+      let e := (Fin.appendEquiv t m).trans
+        (Equiv.cast (congrArg (fun a => Fin a → Fin 2) h))
+      (dickeIsometry t)ᴴ *
+        partialTraceRight
+          ((dickeIsometry (t + s) * ρ * (dickeIsometry (t + s))ᴴ).submatrix e e) * dickeIsometry t =
+        (dickeIsometry t)ᴴ *
+          partialTraceRight
+            ((dickeIsometry (t + s) * ρ * (dickeIsometry (t + s))ᴴ).submatrix
+              (Fin.appendEquiv t s) (Fin.appendEquiv t s)) * dickeIsometry t
+    have hp : p s := by intro h; rfl
+    have hm : p (t + s - t) := (congrArg p (Nat.add_sub_cancel_left t s)).mpr hp
+    exact hm (Nat.add_sub_of_le (show t ≤ t + s by omega))
+  rw [hr, dicke_split_partialTrace]
+  have hi := dicke_isometry t
+  calc
+    _ = partialTraceRight (dickeSplitSum t s * ρ * (dickeSplitSum t s)ᴴ) := by
+      simp only [Matrix.mul_assoc]
+      rw [← Matrix.mul_assoc (dickeIsometry t)ᴴ (dickeIsometry t), hi,
+        Matrix.one_mul, Matrix.mul_one]
+    _ = _ := by
+      let v (m : ℕ) : Matrix (Fin (t + 1) × Fin (m + 1)) (Fin (t + s + 1)) ℂ :=
+        fun kl r => if kl.1.val + kl.2.val = r.val then
+          ((Real.sqrt ((t.choose kl.1.val : ℝ) * (m.choose kl.2.val : ℝ)) /
+            Real.sqrt ((t + s).choose r.val : ℝ) : ℝ) : ℂ) else 0
+      change partialTraceRight (v s * ρ * (v s)ᴴ) =
+        partialTraceRight (v (t + s - t) * ρ * (v (t + s - t))ᴴ)
+      exact congrArg (fun m => partialTraceRight (v m * ρ * (v m)ᴴ))
+        (Nat.add_sub_cancel_left t s).symm
 
 set_option maxHeartbeats 1000000 in
 -- The ladder Casimir identity is diagonal on nine coordinates.
@@ -726,6 +769,7 @@ private lemma diagonal_reduction (n t : ℕ) (ht : t ≤ n) (p : Fin (n + 1) →
       reducedState t (diagonal (fun r => (p r : ℂ))) k m =
         ∑ l : Fin (n - t + 1), ∑ r : Fin (n + 1),
           (p r : ℂ) * (dickeSplit n t (k, l) r * star (dickeSplit n t (m, l) r)) := by
+    rw [reducedState_eq_dickeSplit n t ht]
     change (∑ l : Fin (n - t + 1),
       (dickeSplit n t * diagonal (fun r => (p r : ℂ)) * (dickeSplit n t)ᴴ)
         (k, l) (m, l)) = _
@@ -790,20 +834,6 @@ private lemma output_reduction : reducedState 7 witnessOutput =
 
 private lemma input_distance :
     traceNorm (reducedState 7 witnessState - mixedState 7) = 19 / 84 := by
-  let v := dickeIsometry 7
-  let w := fun xy : (Fin 7 → Fin 2) × (Fin 1 → Fin 2) => Fin.append xy.1 xy.2
-  let p := partialTraceRight
-    ((dickeIsometry 8 * witnessState * (dickeIsometry 8)ᴴ).submatrix w w)
-  have hp : p = v * reducedState 7 witnessState * vᴴ :=
-    dicke_split_partialTrace 7 1 witnessState
-  suffices h : traceNorm (p - v * mixedState 7 * vᴴ) = 19 / 84 by
-    rw [hp, ← Matrix.sub_mul, ← Matrix.mul_sub,
-      D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.traceNorm_isometry
-        v (dicke_isometry 7)] at h
-    exact h
-  rw [hp, ← Matrix.sub_mul, ← Matrix.mul_sub,
-    D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.traceNorm_isometry
-      v (dicke_isometry 7)]
   rw [input_reduction]
   have he : diagonal (fun k => (![21, 21, 40, 21, 21, 21, 21, 2] k : ℂ) / 168) -
       mixedState 7 = diagonal (fun k : Fin 8 =>
