@@ -1,0 +1,32 @@
+**Definition 25.1 (a public unique-pulse prior and original-history bit).** Fix a public finite program for a total computable function $b:\mathbb N^2\to\{0,1\}$ satisfying
+
+$$
+\forall e,s,t,\qquad b(e,s)=b(e,t)=1\ \Longrightarrow\ s=t.
+\tag{25.1}
+$$
+
+The program and the uniqueness promise are independent of the unknown original. Put
+
+$$
+\begin{aligned}
+H_b&=\{e:\exists t,\ b(e,t)=1\},& a_e&=e+1,\\
+P_b&=\{a_e:e\ge0\}\ \cup\
+ \{a_e+2^{-(t+2)}:b(e,t)=1\},\\
+\tau_b(x)&=\begin{cases}0,&x\text{ is an integer},\\1,&x\text{ is not an integer}.\end{cases}
+\end{aligned}
+\tag{25.2}
+$$
+
+The target is a single encoded bit of the original $x$. Under the original chronological source it is equivalently the bit that $L$ occurred somewhere in the original word, not the bit that a probing controller performed $L$. Integers $n\ge1$ have the word $R^{n-1}$, and these are exactly the words with no $L$: Theorem 6.2 gives the unique word at each rational, while executing only $R$ gives exactly those integers. The original exact rational has its reduced positive pair as encoding. The other finite targets are precisely the original literal word, its rooted oriented path with named edges, and its finite indexed prefix-memory table of §§5–6. Their encoding and decoding retain the same source, root and original cut.
+
+An exhaustive cutoff is a total function $N:\mathbb N\to\mathbb N$ such that
+
+$$
+\forall e,\quad
+\bigl[\forall t\le N(e),\ b(e,t)=0\bigr]
+ \ \Longrightarrow\ \forall t,\ b(e,t)=0.
+\tag{25.3}
+$$
+
+This is the inclusive cutoff convention of `UniformFirstHitMemory.ExhaustiveZeroPrefix`, with the Boolean values written $0,1$.
+

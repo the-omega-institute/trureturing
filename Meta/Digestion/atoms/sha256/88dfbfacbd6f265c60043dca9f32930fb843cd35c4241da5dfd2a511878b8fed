@@ -1,0 +1,20 @@
+**Proposition 22.1 (exact finite-horizon and unrestricted label requirements).** Supply an exact anchor $a$, an exact endpoint $z$, and a horizon $N\in\mathbb N$, with the promise that a finite history of length at most $N$ from $a$ ended at $z$. Count only the range of a supplementary deterministic label $Q$ accompanying those supplied inputs. For a reachable $z$ with $d_{a,z}\le N$, the sharp number of labels required on that endpoint fiber is
+
+$$
+m_N(a,z)=
+\begin{cases}
+1,&a\text{ free},\\
+1+\left\lfloor\dfrac{N-d_{a,z}}{p_a}\right\rfloor,
+ &a\text{ cyclic}.
+\end{cases}
+\tag{22.1}
+$$
+
+The fiber is empty when $z$ is unreachable or $d_{a,z}>N$. A single label alphabet reused across all endpoints for a fixed supplied anchor has sharp size $1$ for a free anchor, and $1+\lfloor N/p_a\rfloor$ for a cyclic anchor. Uniformly over all ambient anchors the sharp size is $N+1$, attained at $a=z=0^+$. If anchors are restricted to positive irrational points, it is $1+\lfloor N/2\rfloor$, attained at $a=z=\phi$. These are range cardinalities; a fixed-length binary label needs the ceiling of their base-two logarithms.
+
+Without a finite horizon, no finite supplementary range recovers all finite histories from even one fixed cyclic anchor, even with exact $a,z$ supplied. A countably infinite range suffices there, by the lap number. A free anchor needs just the single constant label for every finite history.
+
+Proof. Intersect (20.5) with $|w|\le N$. In the cyclic case its distinct words have lengths $d_{a,z}+kp_a$, so the permitted integers are exactly $0\le k\le\lfloor(N-d_{a,z})/p_a\rfloor$. The free case has just its one word. Recovery needs distinct supplementary labels on this fiber by Theorem 21.3 and the pigeonhole principle; assigning those $k$ values is sufficient. For a fixed cyclic anchor the largest fiber occurs at $z=a$, where $d_{a,a}=0$, and the same $k$ alphabet works at all other endpoints. For free anchors the unique label works everywhere. Since every $p_a\ge1$, the all-anchor maximum is at most $N+1$, with equality at the $0^+$ loop. For positive irrational cyclic anchors $p_a\ge2$, and the period-two anchor $\phi$ gives equality in that restricted maximum; free anchors do not increase it. Arbitrarily many laps at $z=a$ give an infinite fiber when the horizon is removed, excluding every fixed finite label range, while $k\in\mathbb N$ still suffices. $\square$
+
+The counting mechanism is the classical lap ambiguity and finite-range obstruction already used in [Typed residual cocycles](RECURSIVE_RELATIONAL_OBSERVATION_TYPED_RESIDUAL_COCYCLE_RECONSTRUCTION.md), §§7.2–7.5. Its parameters here are the marked anchor, its actual primitive return length and the endpoint's shortest reaching depth in the split action graph. These counts include neither the information in the exact anchor and endpoint nor computation, representation or acquisition of them. In particular a one-label supplement at a free irrational anchor does not assert that an exact irrational endpoint occupies finite apparatus memory or that its finite history can be acquired from finitely many predictive coordinates.
+
