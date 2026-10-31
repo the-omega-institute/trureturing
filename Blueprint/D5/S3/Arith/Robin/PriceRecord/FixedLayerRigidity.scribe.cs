@@ -84,5 +84,29 @@ internal sealed class FixedLayerRigidityDocument : IScribeDocumentDefinition
                         + "with no claim of literature novelty. The paper-only exponent "
                         + "envelope and leading Robin correction are not part of the Lean "
                         + "theorem claim."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("valuation-below-layer-prime"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity.valuation_below_layer_prime"),
+                H("Valuation below a fixed layer cutoff"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Under the antitone prime valuations of one actual record, every prime q "
+                    + "at or below layerPrime(m,j) has valuation at least j. The proof and "
+                    + "cutoff definition are the original owner source."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
+                DescribeId.Create("valuation-above-layer-prime"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity.valuation_above_layer_prime"),
+                H("Valuation above a fixed layer cutoff"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a positive actual integer, a prime q strictly above layerPrime(m,j) "
+                    + "has valuation below j. This handles empty cutoffs because layerPrime is "
+                    + "defined with the max-one convention."))),
+                DescribeRole.Lemma))));
 }

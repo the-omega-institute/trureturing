@@ -95,5 +95,16 @@ internal sealed class OriginalEndpointPrimeTailDocument : IScribeDocumentDefinit
                         + "The support and theta hypotheses are finite theorem premises only; "
                         + "they do not assert actual-record structure, 5040 divisibility, RH, "
                         + "or control of the remaining signed pure-prime quantity."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-layer-tail-nonneg"),
+                DeclarationHandle.Create(Prefix + "layer_tail_nonneg"),
+                H("Nonnegativity of every actual prime layer tail"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every natural m and every prime p, layerTail(m,p) is nonnegative. "
+                    + "This is the original pointwise logarithmic fact used by the complete-tail "
+                    + "identity and by the finite actual-record deficit."))),
+                DescribeRole.Lemma))));
 }
