@@ -1,0 +1,75 @@
+**Theorem 20.2 (source-specific anchored recovery and complete ambiguity).** Define
+
+$$
+\mathscr C=\{0^+\}\ \sqcup\
+\{t>0:t\text{ is a quadratic irrational and its algebraic conjugate }t'<0\}.
+\tag{20.3}
+$$
+
+For every declared anchor $a$, the following are equivalent: $a\notin\mathscr C$; $a$ is free; the endpoint map on $\mathcal H_a$ is injective; and $E,T,S,M_*$ restricted to $\mathcal H_a$ are pairwise mutually recoverable. Thus both rational sides, including $1^-$ and the original $1^+$, permit finite-word recovery; the remaining free anchors are the positive nonquadratic irrationals and the positive quadratic irrationals with positive conjugate.
+
+For a cyclic anchor let $c_a$ be its shortest nonempty chronological return word and $p_a=|c_a|$. This word is unique, every return word is a power of $c_a$, and $p_{0^+}=1$, with $c_{0^+}=L$. Every positive irrational cyclic anchor has $p_a\ge2$. For every $z\in\widehat X$, put
+
+$$
+\mathcal F_a(z)=\{w:U_w(a)=z\}.
+\tag{20.4}
+$$
+
+An unreachable endpoint has empty fiber. At a reachable endpoint let $v_{a,z}$ be the unique shortest reaching word and $d_{a,z}=|v_{a,z}|$. The entire fiber, including endpoints reached after leaving a cycle, is
+
+$$
+\mathcal F_a(z)=
+\begin{cases}
+\{v_{a,z}\},&a\text{ free},\\
+\{c_a^k v_{a,z}:k\in\mathbb N\},&a\text{ cyclic}.
+\end{cases}
+\tag{20.5}
+$$
+
+Equivalently the possible starting occurrences in the endpoint's predecessor record are
+
+$$
+\{n:P^n z\text{ is defined and equals }a\}
+ =\{d_{a,z}\}\quad\text{or}\quad
+ \{d_{a,z}+kp_a:k\in\mathbb N\},
+\tag{20.6}
+$$
+
+respectively. In particular a cyclic anchor loses finite-history information at every reachable endpoint, and a free anchor loses none, even when its component contains a directed cycle.
+
+Proof. First apply the unique incoming named-edge statement of Theorem 17.2. If $U_u(a)=U_v(a)$, peel the last incoming edge from both sides as long as both words remain nonempty. The names and predecessor states must agree at each step. Equal lengths force $u=v$. Otherwise, say $|u|>|v|$, one obtains $u=rv$ with a nonempty return $U_r(a)=a$. Conversely any return gives a collision between $\varepsilon$ and $r$, and between $v$ and $rv$ for every $v$. This proves the recovery iff the anchor is free. The other three views are injective on $\mathcal H_a$ by Definition 20.1, so it also proves their asserted equivalence with $E$. In §5's terminology PREDECESSOR always holds on this orbit, and ROOT fails exactly when the anchor itself has a return within that orbit. An incoming edge from outside it does not violate the restricted ROOT condition.
+
+We identify those returns using the classical quadratic-surd recurrence as an antecedent, not as a new periodicity theorem. On finite numerical coordinates a pure $R^m$ acts by $t\mapsto t+m$ and has no fixed point, while a pure $L^m$ acts by $t\mapsto t/(mt+1)$ and fixes only $0$. A word containing both letters has a matrix
+
+$$
+A_w=G_{a_n}\cdots G_{a_1}
+ =\begin{pmatrix}\alpha&\beta\\\gamma&\delta\end{pmatrix},
+\quad \alpha,\beta,\gamma,\delta>0,\quad
+\alpha\delta-\beta\gamma=1.
+\tag{20.7}
+$$
+
+Indeed the product containing the first occurrence of both generators has all four entries positive, and subsequent multiplication preserves positivity. A fixed positive coordinate solves
+
+$$
+\gamma t^2+(\delta-\alpha)t-\beta=0.
+\tag{20.8}
+$$
+
+Its roots have product $-\beta/\gamma<0$. The discriminant is $(\alpha+\delta)^2-4$. The integral trace $h=\alpha+\delta$ is at least three: trace two would force $\alpha=\delta=1$ and contradict the positive off-diagonal product in the determinant equation. For $h\ge3$ one has $(h-1)^2<h^2-4<h^2$, so the discriminant is not a square. Thus the positive root is quadratic irrational with negative conjugate. No positive rational coordinate, on either split side, can be fixed. Zero itself has just its $L$ loop. This proves necessity in (20.3), without inferring evaluation freeness from any matrix-generation or matrix-freeness assertion.
+
+For sufficiency take a positive quadratic irrational $t$ with $t'<0$, and an integral irreducible quadratic $Ax^2+Bx+C$ for it, normalized with $A>0$. Then $C<0$, and
+
+$$
+\Delta=B^2-4AC,\qquad
+ t=\frac{\sqrt\Delta-B}{2A},\qquad
+ (N,p,q)=(\Delta,-B,2A).
+\tag{20.9}
+$$
+
+Here $\Delta$ is a positive nonsquare integer, $p^2<N$, $q>0$, and $q\mid N-p^2$ because $N-p^2=-4AC$. These are precisely the standing hypotheses in §3 of Lionel Ponton, *The Calkin-Wilf tree of a quadratic surd*, [arXiv:1709.00473v2](https://arxiv.org/html/1709.00473v2). Its Definition 1 selects the left-positive path in the tree with children $x/(x+1)$ and $x+1$. Its §4, Proposition 3 says that this path is purely periodic, so a positive-length path from its root returns to $t$ itself. The path letters $\ell,r$ are our chronological $L,R$, with the same child functions, not the reversed Stern–Brocot chart. At an irrational coordinate the split carrier has only one point, so this is a return in $\widehat X$. No assertion for arbitrary positive quadratics is being imported: (20.9) verifies the negative-conjugate hypotheses, and (20.8) excludes the positive-conjugate case. This proves (20.3) and the classification of free anchors. Neither $L$ nor $R$ alone fixes a positive irrational, which also proves $p_a\ge2$.
+
+For completeness prove the fiber formula, using the elementary lap-count mechanism already present for finite graphs in [Typed residual cocycles](RECURSIVE_RELATIONAL_OBSERVATION_TYPED_RESIDUAL_COCYCLE_RECONSTRUCTION.md), §§7.2–7.5. Here the ambient graph is infinite, but uniqueness of the incoming edge makes the normal form more restrictive. At each fixed length there is at most one word reaching $z$, since peeling determines that entire word. A reachable endpoint therefore has a unique least-length word $v=v_{a,z}$. Comparing any longer reaching word with $v$ by peeling gives $w=rv$ with $r$ a return. For a cyclic anchor choose a least positive return length $p$ and its unique word $c$. Comparing any return $r$ of length at least $p$ with $c$ gives $r=sc$, where $s$ is another return or empty. Repeating removes blocks of length $p$; a remaining positive return of length less than $p$ would contradict minimality. Thus $r=c^k$, which proves (20.5); conversely all its listed words reach $z$. Peeling $n$ steps from an endpoint is exactly reversing a reaching word of length $n$, so (20.6) follows, including halting predecessor chains.
+
+The cycle visited by $c$ has no repeated vertex before its return to $a$: a shorter internal repetition and unique predecessors would force a return of $a$ of smaller length. Every cycle vertex has its incoming edge occupied by that cycle. Therefore no path from outside a cycle can enter it. In particular a free anchor cannot reach a directed cycle, although it can lie on a branch leaving a cycle. An endpoint reached by leaving a cycle cannot reenter it; its repetitions in (20.5) are laps made at the anchor before the exit. This establishes the component distinction without a classification of all irrational components. $\square$
+

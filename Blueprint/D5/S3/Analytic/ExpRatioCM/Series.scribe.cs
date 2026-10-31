@@ -7,6 +7,18 @@ internal sealed class SeriesDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exponential moments and their quotient coefficients.",
         H("Series and signed derivatives"), Blocks(
+            Describe.Lean(DescribeId.Create("exp-ratio-weighted-series"),
+                DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Series.weightedSeries"),
+                H("Weighted exponential series"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The weighted series at order k is the sum of b(n)*n^k*exp(-n*t) over all natural n."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("exp-ratio-weighted-summability"),
+                DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Series.summable_weighted"),
+                H("Absolute convergence of weighted exponential series"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("If B>0 and abs(b(n))<=B^n for every natural n, then for every natural k and real t>log(B) the norms of b(n)*n^k*exp(-n*t) form a summable series."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("exp-ratio-weighted-derivative"),
+                DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Series.hasDerivAt_weighted"),
+                H("The derivative of a weighted exponential series"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Under the same exponential coefficient bound, the order-k weighted series has derivative minus the order-(k+1) weighted series at every t>log(B). A summable uniform bound on a smaller half-line justifies differentiating the full series."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("exp-ratio-reciprocal-identity"),
                 DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Series.reciprocal_eq"),
                 H("The reciprocal identity"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

@@ -1,0 +1,21 @@
+### 定义 3：对数尺度分类
+
+把正整数分入以下有限块：
+
+<a id="eq-27"></a>
+
+$$
+\boxed{
+\mathcal C_k
+=
+\left\{
+m\ge1:
+\frac{k\delta}{2}
+\le\log m<
+\frac{(k+1)\delta}{2}
+\right\},
+\qquad k\ge0.
+}
+\tag{27}
+$$
+

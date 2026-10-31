@@ -1,0 +1,13 @@
+**Theorem 29.2 (finite-code simulation of stationary integer reads).** If $S$ is numerically unbounded, every correct all-integer stationary controller for a public $(P_\pi,\tau_\pi)$ can be transformed, using its finite code and $E$, into a forward $S$-controller for the same original target. No test of correctness of the given controller, of membership in $P_\pi$, or of semantic homogeneity is required.
+
+Proof. Retain a simulation of the given program and one matrix satisfying (29.1) for the actual source. When the simulated program requests $q_m(x)$, compare the original $x$ successively with
+
+$$
+1/m,\ 2/m,\ 3/m,\ldots
+\tag{29.4}
+$$
+
+using Theorem 29.1 from the updated actual cut after each comparison. Stop at the first no answer, say at $J/m$, and return $J-1$ as the simulated report. If the true report is $K=\lfloor mx\rfloor$, exactly the first $K$ comparisons answer yes and the $(K+1)$st answers no. Hence $J=K+1<\infty$, and the return is exact, also when $K=0$ or $mx$ is an integer. All thresholds are positive known rationals. No numerical value of the unknown $x$ was input to the comparison program.
+
+Inductively the simulated program receives precisely the stationary reports it would have obtained from the original source. Its chosen scales, internal computation, stopping decision and finite output therefore agree with that original run. On each promised original the run has finitely many requests, each replaced by finitely many comparisons and actual continuations. The transformed run consequently terminates. The matrix persists across requests as well as across thresholds within one request. The finite code consists of the given controller, the menu enumerator, exact arithmetic and these loops. The construction is conditional on the stated promises and preserves the output, without identifying simulated and actual action archives, attained cuts or costs. $\square$
+

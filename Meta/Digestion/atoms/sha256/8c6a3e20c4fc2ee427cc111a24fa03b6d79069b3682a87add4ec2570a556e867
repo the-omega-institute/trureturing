@@ -1,0 +1,4 @@
+**Proposition 9.2 (unbounded histories require unbounded distinguishable records).** At depth $n$ in the binary rational process there are $2^n$ different literal histories and therefore $2^n$ different values of any record satisfying Theorem 5.2. An encoding into fixed-length binary records requires at least $n$ bits at that depth. The subtractive decoder need not use a number of steps bounded by a constant multiple of the bit length of its rational input.
+
+Proof. Every binary word of length $n$ is legal and Theorem 6.2 separates them. An injective encoding of these words needs at least $2^n$ code values, whereas $b$ bits have only $2^b$ values, giving $b\ge n$. The pair $(1,N)$ has an input of $O(\log N)$ bits but the stated subtractive decoder performs $N-1$ subtractions and outputs the word $L^{N-1}$. This does not exclude an efficient compressed decoder with a different output contract. $\square$
+
