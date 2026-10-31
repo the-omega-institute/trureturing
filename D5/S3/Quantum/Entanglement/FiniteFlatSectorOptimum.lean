@@ -10,6 +10,7 @@ import D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality
 import D5.S3.Quantum.Entanglement.ExponentialSectorKernel
 import D5.S3.Quantum.Reduction.CoherentFlagPort
 import Mathlib.Data.Finset.Sort
+import Mathlib.Logic.Equiv.Fin.Basic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -371,5 +372,123 @@ private theorem isometry_retraction {A B : Type u} [Fintype A] [DecidableEq A]
   rw [htrace, zero_smul, add_zero]
   simp only [← Matrix.mul_assoc, hU, Matrix.one_mul]
   simp only [Matrix.mul_assoc, hU, Matrix.mul_one]
+
+/-- The compact coordinate `a + d s * b` is split before the residual is padded. -/
+private def compactSplit (r d m : Sector → ℕ) (hr : ∀ s, r s = d s * m s) :
+    TargetLocal r ≃ (Σ s, Fin (d s) × Fin (m s)) :=
+  Equiv.sigmaCongrRight fun s =>
+    ((finCongr ((hr s).trans (Nat.mul_comm _ _))).trans finProdFinEquiv.symm).trans
+      (Equiv.prodComm _ _)
+
+private def residualInclusion (d m : Sector → ℕ) (J : ℕ) (hmJ : ∀ s, m s ≤ J) :
+    (Σ s, Fin (d s) × Fin (m s)) ↪ SourceLocal (Coord := Fin J) d where
+  toFun x := ⟨x.1, (x.2.1, ⟨x.2.2.val, x.2.2.isLt.trans_le (hmJ x.1)⟩)⟩
+  inj' := by
+    rintro ⟨s, a, b⟩ ⟨t, c, e⟩ h
+    have hst : s = t := congrArg Sigma.fst h
+    subst t
+    have hp : (a, (⟨b.val, b.isLt.trans_le (hmJ s)⟩ : Fin J)) =
+        (c, (⟨e.val, e.isLt.trans_le (hmJ s)⟩ : Fin J)) := by
+      simpa only [Sigma.mk.inj_iff, heq_eq_eq, true_and] using h
+    have ha : a = c := congrArg Prod.fst hp
+    have hb : b = e := Fin.ext (congrArg (fun z => z.2.val) hp)
+    subst c
+    subst e
+    rfl
+
+private def compactEmbedding (r d m : Sector → ℕ) (J : ℕ)
+    (hr : ∀ s, r s = d s * m s) (hmJ : ∀ s, m s ≤ J) :
+    TargetLocal r ↪ SourceLocal (Coord := Fin J) d :=
+  (compactSplit r d m hr).toEmbedding.trans (residualInclusion d m J hmJ)
+
+private theorem compact_embedding_sector (r d m : Sector → ℕ) (J : ℕ)
+    (hr : ∀ s, r s = d s * m s) (hmJ : ∀ s, m s ≤ J) (x : TargetLocal r) :
+    (compactEmbedding r d m J hr hmJ x).1 = x.1 := rfl
+
+private theorem compact_embedding_range (r d m : Sector → ℕ) (J : ℕ)
+    (hr : ∀ s, r s = d s * m s) (hmJ : ∀ s, m s ≤ J)
+    (y : SourceLocal (Coord := Fin J) d) :
+    (∃ x, compactEmbedding r d m J hr hmJ x = y) ↔ y.2.2.val < m y.1 := by
+  constructor
+  · rintro ⟨x, rfl⟩
+    exact (compactSplit r d m hr x).2.2.isLt
+  · intro hy
+    let z : Σ s, Fin (d s) × Fin (m s) := ⟨y.1, (y.2.1, ⟨y.2.2.val, hy⟩)⟩
+    refine ⟨(compactSplit r d m hr).symm z, ?_⟩
+    change residualInclusion d m J hmJ
+      (compactSplit r d m hr ((compactSplit r d m hr).symm z)) = y
+    rw [Equiv.apply_symm_apply]
+    rfl
+
+/-- A zero-one placement matrix preserves all coherences, including between sectors. -/
+private def placement {A B : Type u} [DecidableEq B] (f : A ↪ B) : Matrix B A ℂ :=
+  fun b a => if f a = b then 1 else 0
+
+private theorem placement_isometry {A B : Type u}
+    [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B] (f : A ↪ B) :
+    (placement f)ᴴ * placement f = 1 := by
+  ext a c
+  simp [placement, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply,
+    ite_mul, mul_ite, f.injective.eq_iff, eq_comm]
+
+private theorem placement_tensor {A B : Type u}
+    [DecidableEq B] (f : A ↪ B) :
+    placement f ⊗ₖ placement f = placement (f.prodMap f) := by
+  ext b a
+  simp [placement, Matrix.kroneckerMap_apply, Prod.ext_iff, ite_and]
+
+private theorem placement_mul_image {A B C : Type u}
+    [Fintype A] [DecidableEq B] (f : A ↪ B) (X : Matrix A C ℂ) (a : A) (c : C) :
+    (placement f * X) (f a) c = X a c := by
+  classical
+  simp [placement, Matrix.mul_apply, f.injective.eq_iff, ite_mul]
+
+private theorem placement_mul_outside {A B C : Type u}
+    [Fintype A] [DecidableEq B] (f : A ↪ B) (X : Matrix A C ℂ) (b : B) (c : C)
+    (hb : ¬ ∃ a, f a = b) : (placement f * X) b c = 0 := by
+  have hne (a : A) : f a ≠ b := fun h => hb ⟨a, h⟩
+  simp [placement, Matrix.mul_apply, hne]
+
+private theorem compact_flat_coefficient (r d m : Sector → ℕ) (J : ℕ)
+    (hr : ∀ s, r s = d s * m s) (hmJ : ∀ s, m s ≤ J)
+    (x y : TargetLocal r) (s : Sector) :
+    sourceEncoding d (fun s => flatSpectrum J (m s))
+        (compactEmbedding r d m J hr hmJ x, compactEmbedding r d m J hr hmJ y) s =
+      targetEncoding r (x, y) s := by
+  let f := compactEmbedding r d m J hr hmJ
+  have hsupport : (f x).2.2.val < m x.1 :=
+    (compact_embedding_range r d m J hr hmJ (f x)).mp ⟨x, rfl⟩
+  have hscalar : (m x.1 : ℝ)⁻¹ / (d x.1 : ℝ) = (r x.1 : ℝ)⁻¹ := by
+    simp [hr, div_eq_mul_inv, mul_comm]
+  change (if f x = f y ∧ x.1 = s then
+      (Real.sqrt (flatSpectrum J (m x.1) (f x).2.2 / (d x.1 : ℝ)) : ℂ)
+    else 0) = targetEncoding r (x, y) s
+  simp only [f.injective.eq_iff, targetEncoding]
+  by_cases h : x = y ∧ x.1 = s
+  · simp only [if_pos h, flatSpectrum, if_pos hsupport, hscalar]
+  · simp only [if_neg h]
+
+/-- This is equality of the full source isometries, rather than only their basis densities. -/
+private theorem compact_flat_encoding (r d m : Sector → ℕ) (J : ℕ)
+    (hr : ∀ s, r s = d s * m s) (hmJ : ∀ s, m s ≤ J) :
+    (placement (compactEmbedding r d m J hr hmJ) ⊗ₖ
+      placement (compactEmbedding r d m J hr hmJ)) * targetEncoding r =
+      sourceEncoding d (fun s => flatSpectrum J (m s)) := by
+  let f := compactEmbedding r d m J hr hmJ
+  rw [placement_tensor]
+  ext y s
+  by_cases hy : ∃ x, (f.prodMap f) x = y
+  · obtain ⟨x, rfl⟩ := hy
+    rw [placement_mul_image]
+    exact (compact_flat_coefficient r d m J hr hmJ x.1 x.2 s).symm
+  · rw [placement_mul_outside _ _ _ _ hy]
+    symm
+    by_cases hdiag : y.1 = y.2
+    · have hout : ¬ y.1.2.2.val < m y.1.1 := by
+        intro hin
+        obtain ⟨a, ha⟩ := (compact_embedding_range r d m J hr hmJ y.1).mpr hin
+        exact hy ⟨(a, a), Prod.ext ha (ha.trans hdiag)⟩
+      simp [sourceEncoding, flatSpectrum, hout]
+    · simp [sourceEncoding, hdiag]
 
 end D5.S3.Quantum.Entanglement.FiniteFlatSectorOptimum
