@@ -14,8 +14,8 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 abbrev signature : Signature where
-  Params := Unit
-  State _ := (Bool → Bool → ℝ) × (Bool → Bool → ℝ)
+  Params := Bool → Bool → ℝ
+  State _ := Bool → Bool → ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -24,7 +24,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ p => p.1 = p.2) (fun e => nomatch e)
+  realize signature (fun _ g f => f = g) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => False) (fun e => nomatch e)
@@ -36,21 +36,21 @@ abbrev arena : Arena where
     (∑ b : Bool, f ma b) = (∑ b : Bool, g ma b) →
     (∑ a : Bool, f a mb) = (∑ a : Bool, g a mb) →
     f ma mb = g ma mb →
-    R.readout () () (f, g)
+    R.readout () g f
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hbad := h (fun _ _ => 0) (fun _ _ => 0) false false (by rfl) (by rfl) (by rfl) (by rfl)
+  have hbad := h (fun _ _ => 1) (fun _ _ => 1) false false (by rfl) (by rfl) (by rfl) (by rfl)
   exact hbad
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), (fun _ _ => 0, fun _ _ => 0), (fun _ _ => 0, fun _ _ => 1), ?_⟩
+  refine ⟨(fun _ _ => 0), (fun _ _ => 0), (fun _ _ => 1), ?_⟩
   intro h
   change
     ((fun _ _ : Bool => 0) = (fun _ _ : Bool => 0)) =
-      ((fun _ _ : Bool => 0) = (fun _ _ : Bool => 1)) at h
-  have hfun : (fun _ _ : Bool => (0 : ℝ)) = (fun _ _ : Bool => (1 : ℝ)) := by
+      ((fun _ _ : Bool => 1) = (fun _ _ : Bool => 0)) at h
+  have hfun : (fun _ _ : Bool => (1 : ℝ)) = (fun _ _ : Bool => (0 : ℝ)) := by
     have htrue : (fun _ _ : Bool => (0 : ℝ)) = (fun _ _ : Bool => (0 : ℝ)) := rfl
     rw [h] at htrue
     exact htrue
@@ -85,7 +85,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ p => p.1 = p.2) (fun e => nomatch e))
+  readout := some (realize signature (fun _ g f => f = g) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -97,7 +97,7 @@ def registration :
     readouts := #[{
       path := #[]
       stateBinder := 0
-      functionOperand := false
+      functionOperand := true
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown

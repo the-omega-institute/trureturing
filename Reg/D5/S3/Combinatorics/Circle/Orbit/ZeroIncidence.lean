@@ -260,11 +260,11 @@ def allEqualRegistration :
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
-      path := #[]
-      stateBinder := 0
-      functionOperand := false
+      path := #["body", "body", "body", "body"]
+      stateBinder := 2
+      functionOperand := true
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
