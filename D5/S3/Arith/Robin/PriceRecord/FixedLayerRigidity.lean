@@ -63,7 +63,7 @@ theorem layer_prime_mem {m j : ℕ} (hQ : 1 < layerPrime m j) :
   rw [hmax]
   exact Finset.mem_filter.mp hq
 
-private theorem valuation_below_layer_prime {m j q : ℕ} (hq : q.Prime)
+theorem valuation_below_layer_prime {m j q : ℕ} (hq : q.Prime)
     (hanti : ∀ p r : ℕ, p.Prime → r.Prime → p < r →
       m.factorization r ≤ m.factorization p)
     (hqQ : q ≤ layerPrime m j) : j ≤ m.factorization q := by
@@ -74,7 +74,7 @@ private theorem valuation_below_layer_prime {m j q : ℕ} (hq : q.Prime)
   · exact hjQ.trans (hanti q (layerPrime m j) hq
       (Nat.prime_of_mem_primeFactors hmem) (lt_of_le_of_ne hqQ heq))
 
-private theorem valuation_above_layer_prime {m j q : ℕ} (hm : 0 < m)
+theorem valuation_above_layer_prime {m j q : ℕ} (hm : 0 < m)
     (hj : 1 ≤ j) (hq : q.Prime) (hQq : layerPrime m j < q) : m.factorization q < j := by
   classical
   by_contra! hval
@@ -188,12 +188,12 @@ private theorem fixed_cardinality_prime_window {A B : ℝ}
         · obtain ⟨hpprime, hpA, hpC⟩ := hS p hp
           exact ⟨hpprime, hpA, hpC.trans (mul_le_mul_of_nonneg_right hCB.le hx0.le)⟩
 
-private abbrev gain (p a : ℕ) : ℝ := goldenLayerMarginal p a * Real.log p
+abbrev gain (p a : ℕ) : ℝ := goldenLayerMarginal p a * Real.log p
 
-private def LowerGainSupply : Prop := ∀ p a : ℕ, p.Prime → 1 ≤ a →
+def LowerGainSupply : Prop := ∀ p a : ℕ, p.Prime → 1 ≤ a →
     (1 - (p : ℝ)⁻¹) * (p : ℝ)⁻¹ ^ a ≤ gain p a
 
-private def ExchangeSupply (m : ℕ) (lambda : ℝ) : Prop := ∀ D U : Finset ℕ, Disjoint D U →
+def ExchangeSupply (m : ℕ) (lambda : ℝ) : Prop := ∀ D U : Finset ℕ, Disjoint D U →
     (∀ p ∈ D, p.Prime ∧ p ∣ m) → (∀ q ∈ U, q.Prime) →
     (∏ q ∈ U, q) < (∏ p ∈ D, p) →
     (∑ q ∈ U, gain q (m.factorization q + 1)) +
@@ -201,7 +201,7 @@ private def ExchangeSupply (m : ℕ) (lambda : ℝ) : Prop := ∀ D U : Finset �
         Real.log ((∏ q ∈ U, q : ℕ) : ℝ)) <
         ∑ p ∈ D, gain p (m.factorization p)
 
-private theorem gain_lower_window (hlower : LowerGainSupply)
+theorem gain_lower_window (hlower : LowerGainSupply)
     {p a k : ℕ} (hp : p.Prime) (ha : 1 ≤ a) (hak : a ≤ k)
     {Z W : ℝ} (hZ : 1 < Z) (hZp : Z ≤ p) (hpW : (p : ℝ) ≤ W) : (1 - Z⁻¹) * W⁻¹ ^ k ≤ gain p a := by
   have hp0 : (0 : ℝ) < p := by exact_mod_cast hp.pos
@@ -217,7 +217,7 @@ private theorem gain_lower_window (hlower : LowerGainSupply)
   exact hproduct.trans ((hlower p k hp (ha.trans hak)).trans
     (layer_gain_antitone hp ha hak))
 
-private theorem gain_upper_window {p a k : ℕ} (hp : p.Prime)
+theorem gain_upper_window {p a k : ℕ} (hp : p.Prime)
     (hk : 1 ≤ k) (hka : k ≤ a) {Z : ℝ} (hZ : 0 < Z) (hZp : Z ≤ p) : gain p a ≤ Z⁻¹ ^ k := by
   have hp0 : (0 : ℝ) < p := by exact_mod_cast hp.pos
   exact (layer_gain_antitone hp hk hka).trans ((layer_gain_upper hp hk).trans
@@ -229,7 +229,7 @@ private theorem scaled_inverse_power {P C R : ℝ} {j : ℕ}
   rw [inv_pow, mul_pow, hR]
   field_simp [hP.ne', (pow_pos hC j).ne']
 
-private theorem finite_products_lt {D U : Finset ℕ} {r s : ℕ} {L W : ℝ}
+theorem finite_products_lt {D U : Finset ℕ} {r s : ℕ} {L W : ℝ}
     (hDcard : D.card = r) (hUcard : U.card = s) (hL : 0 < L)
     (hD : ∀ p ∈ D, L ≤ (p : ℝ)) (hU : ∀ q ∈ U, (q : ℝ) ≤ W)
     (hratio : W ^ s / L ^ r < 1) : (∏ q ∈ U, q) < (∏ p ∈ D, p) := by
@@ -246,7 +246,7 @@ private theorem finite_products_lt {D U : Finset ℕ} {r s : ℕ} {L W : ℝ}
   have hcast : ((∏ q ∈ U, q : ℕ) : ℝ) < ((∏ p ∈ D, p : ℕ) : ℝ) := by simpa only [Nat.cast_prod] using hlt
   exact_mod_cast hcast
 
-private theorem exchange_forbids_scaled_gain_bounds {m : ℕ} {lambda P l u : ℝ}
+theorem exchange_forbids_scaled_gain_bounds {m : ℕ} {lambda P l u : ℝ}
     (hcert : ExchangeSupply m lambda) (hlambda : 0 < lambda) (hP : 0 < P)
     (D U : Finset ℕ) (hdis : Disjoint D U)
     (hD : ∀ p ∈ D, p.Prime ∧ p ∣ m) (hU : ∀ q ∈ U, q.Prime)
@@ -494,7 +494,7 @@ private theorem fixed_window_upper_barrier (hlower : LowerGainSupply)
   exact hT (largestPrime m : ℝ) ((le_max_right 1 T).trans hP)
     m hm lambda hlambda hcert hanti hsupport rfl
 
-private theorem golden_layer_gain_lower {p a : ℕ} (hp : p.Prime) (ha : 1 ≤ a) :
+theorem golden_layer_gain_lower {p a : ℕ} (hp : p.Prime) (ha : 1 ≤ a) :
     (1 - (p : ℝ)⁻¹) * (p : ℝ)⁻¹ ^ a ≤
       goldenLayerMarginal p a * Real.log p := by
   have hpPos : (0 : ℝ) < p := by exact_mod_cast hp.pos
@@ -707,7 +707,7 @@ private theorem objective_exchange_delta (lambda : ℝ) {m : ℕ}
   rw [hDlin, hUlin]
   ring
 
-private theorem signed_exchange_certificate (lambda : ℝ) {m : ℕ}
+theorem signed_exchange_certificate (lambda : ℝ) {m : ℕ}
     (hm : 0 < m)
     (hrecord : ∀ n : ℕ, 0 < n → n < m →
       goldenResourceObjective lambda n < goldenResourceObjective lambda m)

@@ -1,0 +1,23 @@
+**Lemma 4.3 (Reduction to bridgeless cores and the core B; `lem:bridgeB`).**
+For an odd two-color population at four loops, every diagram is a sum
+of diagrams with a bridgeless skeleton or with skeleton $B$, a
+tetrahedron joined by a bridge to a loop.
+
+**Proof.**
+Apply the local normal form and discard legs on skeleton bridges. For
+a remaining bridge, cut and attach a fresh ordinary socket color on
+each component. Both genera are positive by the degree argument above,
+and sum to four. The sum of the two factors' leg counts is $p+q+2$,
+so one factor is odd. If its genus is one or two, it is zero by Lemma
+[4.2](#lem-small). If its genus is three, the other factor has genus one.
+The odd factor is a linear combination of tetrahedron-supported
+diagrams by that lemma, and the one-loop factor is represented on a
+circle. These equalities may be glued by [Lemma 4.1](#lem-glue). Normal
+insertion representatives have sockets on their respective core edges;
+gluing the socket of the tetrahedron to that of the circle has skeleton
+$B$. All other ordinary colors and populations are retained. This proves
+the claim without any $\mathrm{SL}_3$ classification, without a nonzero
+gluing premise, and also when the original graph had repeated bridges
+or a Y-shaped bridge configuration.
+$\square$
+

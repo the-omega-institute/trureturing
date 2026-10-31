@@ -191,6 +191,36 @@ theorem thetaRep_gradeProjection_commute (D : LatticeData) (n : ℤ)
     rw [hzero, gradeProjection_zero_of_not_mem D n v hn]
     simp
 
+theorem thetaRep_grade_plus_minus_decomposition (D : LatticeData) (n : ℤ)
+    (v : grade D n) :
+    v.val = plusPart D v.val + minusPart D v.val ∧
+      plusPart D v.val ∈ grade D n ∧
+      minusPart D v.val ∈ grade D n ∧
+      plusPart D v.val ∈ fixedSpace D ∧
+      minusPart D v.val ∈ minusSpace D := by
+  have htheta : theta D v.val ∈ grade D n :=
+    thetaRep_preserves_energy_grade D n v.val v.property
+  have hplus_grade : plusPart D v.val ∈ grade D n := by
+    exact (grade D n).smul_mem _ ((grade D n).add_mem v.property htheta)
+  have hminus_grade : minusPart D v.val ∈ grade D n := by
+    exact (grade D n).smul_mem _ ((grade D n).sub_mem v.property htheta)
+  have hplus_fixed : plusPart D v.val ∈ fixedSpace D := by
+    rw [mem_fixedSpace]
+    have hi : theta D (theta D v.val) = v.val := theta_involutive D v.val
+    simp only [plusPart, map_smul, map_add]
+    rw [hi]
+    rw [add_comm]
+  have hminus_minus : minusPart D v.val ∈ minusSpace D := by
+    change minusPart D v.val ∈ eigenspace D (-1)
+    rw [mem_eigenspace]
+    have hi : theta D (theta D v.val) = v.val := theta_involutive D v.val
+    simp only [minusPart, map_smul, map_sub]
+    rw [hi]
+    module
+  refine ⟨?_, hplus_grade, hminus_grade, hplus_fixed, hminus_minus⟩
+  simp only [plusPart, minusPart, smul_add, smul_sub]
+  module
+
 theorem thetaRep_pairing (D : LatticeData) (g : ReflectionGroup)
     (u v : Carrier D) :
     sourcePairing D (thetaRep D g u) (thetaRep D g v) = sourcePairing D u v := by

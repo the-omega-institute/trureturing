@@ -1,0 +1,15 @@
+**Definition 3.1 (Relative cycle coordinates).** We give the direction of every coefficient map explicitly. Chains have
+boundary $\partial e=t(e)-s(e)$. Relative cycles are
+
+$$
+Z_{G,A}=\{z\in\mathbb{Q}^E:(\partial z)_v=0\ (v\notin A)\}.
+$$
+
+The coordinate pairing gives a perfect pairing between $H^1(G,A)$ and
+$Z_{G,A}$. Indeed the annihilator of the kernel of a finite matrix is
+the image of its transpose: a functional killing the kernel factors
+through the image, extends linearly to the target, and is then a row
+functional of that matrix. This also proves surjectivity onto the kernel's
+dual by extension. These are generic finite-dimensional algebra facts,
+not additional Jacobi relations.
+
