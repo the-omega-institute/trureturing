@@ -60,6 +60,10 @@ $$\forall K \in \mathbb{N}, K > 0,\ \forall P \in \mathbb{R}^{K \times K}, \oper
 
 *Proof.* Machine-checked in Lean as `D5/S1/Eigenstructure/OrthogonalAbsoluteProductMinimum.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/user3-2026-orthogonal-absolute-product-minimum` (proved) by `D5/S1/Eigenstructure/OrthogonalAbsoluteProductMinimum.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"user3-2026-orthogonal-absolute-product-minimum","declaration_gid":"D5/S1/Eigenstructure/OrthogonalAbsoluteProductMinimum.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
