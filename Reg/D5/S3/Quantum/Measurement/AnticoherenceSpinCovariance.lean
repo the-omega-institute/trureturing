@@ -173,7 +173,7 @@ private theorem dependence.{v} : ObservationalDependence matrixSignature.{v} mat
   exact matrix_dependence
 
 def source_registration.{u, v} : Registration arena.{u, v} (type_of% (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.orthogonal_sandwich.{u, v})) where
-  actual := matrixActual
+  actual := realize matrixSignature.{v} (fun _ _ X Y => X = Y) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.orthogonal_sandwich.{u, v}, matrixRejected, rejected_law⟩
   sensitivity := by
@@ -478,7 +478,7 @@ private theorem dependence.{u} : ObservationalDependence matrixSignature.{u} mat
   exact matrix_dependence
 
 def source_registration.{u} : Registration arena.{u} (type_of% (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.quadratic_rotation.{u})) where
-  actual := matrixActual
+  actual := realize matrixSignature.{u} (fun _ _ X Y => X = Y) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.quadratic_rotation.{u}, matrixRejected, rejected_law⟩
   sensitivity := by
@@ -553,7 +553,7 @@ private theorem dependence.{u} : ObservationalDependence matrixSignature.{u} mat
   exact matrix_dependence
 
 def source_registration.{u, v, w, z} : Registration arena.{u, v, w, z} (type_of% (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.partialTrace_isometries.{u, v, w, z})) where
-  actual := matrixActual
+  actual := realize matrixSignature.{u} (fun _ _ X Y => X = Y) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.partialTrace_isometries.{u, v, w, z}, matrixRejected, rejected_law⟩
   sensitivity := by
