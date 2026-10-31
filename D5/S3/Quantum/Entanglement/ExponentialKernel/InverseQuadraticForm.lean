@@ -72,19 +72,21 @@ theorem inverse_quadratic_form (n : ℕ) (loss : ℕ → ℝ)
     simpa only [d, Fin.cases_succ] using ne_of_gt this
   have hleft0 (M : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ) (j) :
       (A * M) 0 j = M 0 j := by
-    simp [Matrix.mul_apply, A]
+    simp [Matrix.mul_apply, A, ite_mul, Finset.sum_ite_eq']
   have hleft (M : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ)
       (i : Fin n) (j) :
       (A * M) i.succ j = M i.succ j - edge loss i * M i.castSucc j := by
-    simp [Matrix.mul_apply, A, sub_mul, Finset.sum_sub_distrib,
+    simp [Matrix.mul_apply, A, sub_mul, ite_mul, mul_ite, Finset.sum_ite_eq',
+      Finset.sum_sub_distrib,
       mul_assoc, ← Finset.mul_sum]
   have hright0 (M : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ) (i) :
       (M * Aᵀ) i 0 = M i 0 := by
-    simp [Matrix.mul_apply, A]
+    simp [Matrix.mul_apply, A, mul_ite, Finset.sum_ite_eq']
   have hright (M : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ)
       (i) (j : Fin n) :
       (M * Aᵀ) i j.succ = M i j.succ - edge loss j * M i j.castSucc := by
-    simp [Matrix.mul_apply, A, mul_sub, Finset.sum_sub_distrib,
+    simp [Matrix.mul_apply, A, mul_sub, ite_mul, mul_ite, Finset.sum_ite_eq',
+      Finset.sum_sub_distrib,
       mul_comm, mul_left_comm, mul_assoc, ← Finset.mul_sum]
   have hfactor : A * K * Aᵀ = Matrix.diagonal d := by
     ext i j
@@ -134,10 +136,12 @@ theorem inverse_quadratic_form (n : ℕ) (loss : ℕ → ℝ)
   · rw [hinv]
     exact hKQ
   · intro x
-    have hAx0 : (A *ᵥ x) 0 = x 0 := by simp [Matrix.mulVec, dotProduct, A]
+    have hAx0 : (A *ᵥ x) 0 = x 0 := by
+      simp [Matrix.mulVec, dotProduct, A, ite_mul, Finset.sum_ite_eq']
     have hAx (i : Fin n) :
         (A *ᵥ x) i.succ = x i.succ - edge loss i * x i.castSucc := by
-      simp [Matrix.mulVec, dotProduct, A, sub_mul, Finset.sum_sub_distrib,
+      simp [Matrix.mulVec, dotProduct, A, sub_mul, ite_mul, mul_ite, Finset.sum_ite_eq',
+        Finset.sum_sub_distrib,
         mul_assoc, ← Finset.mul_sum]
     rw [hinv, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec,
       Matrix.dotProduct_transpose_mulVec]
