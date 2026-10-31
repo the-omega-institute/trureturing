@@ -17,11 +17,13 @@ The certified instance is the equal mixture of levels zero and one in dimension 
 
 set_option autoImplicit false
 set_option linter.style.longLine false
+set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
 
 open Matrix Finset
 open scoped ComplexOrder MatrixOrder BigOperators Kronecker
+open scoped Matrix.Norms.L2Operator
 open D5.S3.Observer.WindowRegister
 open D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
 open D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
@@ -89,17 +91,39 @@ private def rhoWeights (i : ZMod 7) : ℝ := if i = 0 ∨ i = 1 then 1 / 2 else 
 private def tauWeights (i : ZMod 7) : ℝ :=
   if i = 0 ∨ i = 4 then 1 / 4 else if i = 2 then 1 / 2 else 0
 
+private lemma sum_seven {a : Type*} [AddCommMonoid a] (f : ZMod 7 → a) :
+    ∑ i, f i = f 0 + f 1 + f 2 + f 3 + f 4 + f 5 + f 6 := by
+  rw [show (univ : Finset (ZMod 7)) = {0, 1, 2, 3, 4, 5, 6} from by decide]
+  simp +decide [sum_insert, sum_singleton] <;> ac_rfl
+
 private lemma rho_density :
     0 ≤ CStarMatrix.ofMatrix (diagonal fun i => (rhoWeights i : ℂ)) ∧
-      trace (diagonal fun i => (rhoWeights i : ℂ)) = 1 := by sorry
+      trace (diagonal fun i => (rhoWeights i : ℂ)) = 1 := by
+  constructor
+  · apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+    exact (Matrix.PosSemidef.diagonal (fun i => by
+      simp only [rhoWeights]; split_ifs <;> norm_num [Complex.le_def])).nonneg
+  · simp +decide [trace_diagonal, sum_seven, rhoWeights]
+    <;> norm_num
 
 private lemma sigma_density :
     0 ≤ CStarMatrix.ofMatrix ((7 : ℂ)⁻¹ • (1 : Matrix (ZMod 7) (ZMod 7) ℂ)) ∧
-      trace ((7 : ℂ)⁻¹ • (1 : Matrix (ZMod 7) (ZMod 7) ℂ)) = 1 := by sorry
+      trace ((7 : ℂ)⁻¹ • (1 : Matrix (ZMod 7) (ZMod 7) ℂ)) = 1 := by
+  constructor
+  · apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+    rw [← diagonal_one, ← diagonal_smul]
+    exact (Matrix.PosSemidef.diagonal (fun _ => by norm_num [Complex.le_def])).nonneg
+  · norm_num [trace_smul, trace_one]
 
 private lemma tau_density :
     0 ≤ CStarMatrix.ofMatrix (diagonal fun i => (tauWeights i : ℂ)) ∧
-      trace (diagonal fun i => (tauWeights i : ℂ)) = 1 := by sorry
+      trace (diagonal fun i => (tauWeights i : ℂ)) = 1 := by
+  constructor
+  · apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+    exact (Matrix.PosSemidef.diagonal (fun i => by
+      simp only [tauWeights]; split_ifs <;> norm_num [Complex.le_def])).nonneg
+  · simp +decide [trace_diagonal, sum_seven, tauWeights]
+    <;> norm_num
 
 private def rho : DensityState (ZMod 7) :=
   ⟨CStarMatrix.ofMatrix (diagonal fun i => (rhoWeights i : ℂ)), rho_density⟩
@@ -108,42 +132,204 @@ private def sigma : DensityState (ZMod 7) :=
 private def tau : DensityState (ZMod 7) :=
   ⟨CStarMatrix.ofMatrix (diagonal fun i => (tauWeights i : ℂ)), tau_density⟩
 
-private lemma convolution_eq : convolution (2 : ZMod 7) 2 rho.1 rho.1 = tau.1 := by sorry
+private lemma convolution_eq : convolution (2 : ZMod 7) 2 rho.1 rho.1 = tau.1 := by
+  let u : Matrix (ZMod 7 × ZMod 7) (ZMod 7 × ZMod 7) ℂ := fun a b =>
+    if a = (2 * b.1 + 2 * b.2, -2 * b.1 + 2 * b.2) then 1 else 0
+  change partialTraceRight
+    (u *
+      ((diagonal fun i => (rhoWeights i : ℂ)) ⊗ₖ
+        (diagonal fun i => (rhoWeights i : ℂ))) * uᴴ) =
+    diagonal (fun i => (tauWeights i : ℂ))
+  rw [diagonal_kronecker_diagonal]
+  ext a c
+  simp +decide [partialTraceRight, Matrix.mul_apply, Matrix.mul_diagonal,
+    conjTranspose_apply, Fintype.sum_prod_type, sum_seven, rhoWeights, tauWeights,
+    diagonal_apply, u]
+  <;> (fin_cases a <;> fin_cases c <;>
+    norm_num [← (ZMod.val_injective 7).eq_iff, ZMod.val_add, ZMod.val_ofNat,
+      ZMod.val_zero, ZMod.val_one_eq_one_mod, ZMod.val])
 
-private lemma rho_entropy : vonNeumannEntropy rho = Real.log 2 := by sorry
-private lemma tau_entropy : vonNeumannEntropy tau = 3 / 2 * Real.log 2 := by sorry
+private lemma rho_entropy : vonNeumannEntropy rho = Real.log 2 := by
+  unfold vonNeumannEntropy
+  change -(trace ((diagonal fun i => (rhoWeights i : ℂ)) *
+    CFC.log (diagonal fun i => (rhoWeights i : ℂ)))).re = _
+  rw [D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.cfc_log_diagonal,
+    diagonal_mul_diagonal, trace_diagonal, sum_seven]
+  simp +decide [rhoWeights, Complex.log_re]
+  <;> ring
+
+private lemma tau_entropy : vonNeumannEntropy tau = 3 / 2 * Real.log 2 := by
+  unfold vonNeumannEntropy
+  change -(trace ((diagonal fun i => (tauWeights i : ℂ)) *
+    CFC.log (diagonal fun i => (tauWeights i : ℂ)))).re = _
+  rw [D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.cfc_log_diagonal,
+    diagonal_mul_diagonal, trace_diagonal, sum_seven]
+  simp +decide [tauWeights, Complex.log_re]
+  rw [show (4 : ℝ) = 2 ^ 2 from by norm_num, Real.log_pow]
+  ring
+
+private lemma shift_power_entry {d : ℕ} [NeZero d] (q : ZMod d) (i j : ZMod d) :
+    (shiftMatrix d ^ q.val) i j = if i - q = j then 1 else 0 := by
+  have hm := (Matrix.permMatrixHom (n := ZMod d) (R := ℂ)).map_pow
+    ((shiftPerm d)⁻¹) q.val
+  change (((shiftPerm d)⁻¹ ^ q.val)⁻¹).permMatrix ℂ =
+    (((shiftPerm d)⁻¹)⁻¹).permMatrix ℂ ^ q.val at hm
+  simp only [inv_pow, inv_inv] at hm
+  rw [shiftMatrix_eq_permMatrix, ← hm]
+  simp only [Equiv.Perm.permMatrix, PEquiv.toMatrix_apply, Equiv.toPEquiv_apply,
+    Option.mem_def, Option.some.injEq, shiftPerm_pow_apply, ZMod.natCast_zmod_val]
+
+private lemma weyl_diagonal (p q i : ZMod 7) :
+    weyl 7 p q i i = if q = 0 then windowRoot 7 ^ (i.val * p.val) else 0 := by
+  simp only [weyl, clockMatrix, diagonal_pow, Matrix.smul_apply, diagonal_mul,
+    Pi.pow_apply, shift_power_entry, smul_eq_mul]
+  by_cases hq : q = 0
+  · subst q
+    simp [pow_mul]
+  · have h : i - q ≠ i := by simpa using hq
+    simp [hq, h]
 
 private lemma characteristic_off_axis (p q : ZMod 7) (hq : q ≠ 0) :
-    charFun rho.1 (p, q) = 0 := by sorry
+    charFun rho.1 (p, q) = 0 := by
+  change trace ((diagonal fun i => (rhoWeights i : ℂ)) * weyl 7 (-p) (-q)) = 0
+  simp [trace, diagonal_mul, weyl_diagonal, hq]
 
 private lemma characteristic_axis (p : ZMod 7) :
-    charFun rho.1 (p, 0) = (1 + windowRoot 7 ^ (-p).val) / 2 := by sorry
+    charFun rho.1 (p, 0) = (1 + windowRoot 7 ^ (-p).val) / 2 := by
+  change trace ((diagonal fun i => (rhoWeights i : ℂ)) * weyl 7 (-p) (-(0 : ZMod 7))) = _
+  simp +decide [trace, diagonal_mul, weyl_diagonal, sum_seven, rhoWeights,
+    show (1 : ZMod 7).val = 1 from rfl]
+  <;> ring
 
 private lemma characteristic_norm_one (x : ZMod 7 × ZMod 7) :
-    ‖charFun rho.1 x‖ = 1 ↔ x = (0, 0) := by sorry
+    ‖charFun rho.1 x‖ = 1 ↔ x = (0, 0) := by
+  rcases x with ⟨p, q⟩
+  by_cases hq : q = 0
+  · subst q
+    rw [characteristic_axis]
+    have hz : ‖windowRoot 7 ^ (-p).val‖ = 1 := by
+      rw [norm_pow, (windowRoot_isPrimitiveRoot 7).norm'_eq_one (by decide), one_pow]
+    constructor
+    · intro h
+      have he : ‖(1 : ℂ) + windowRoot 7 ^ (-p).val‖ = 2 := by
+        rw [norm_div] at h
+        norm_num at h
+        linarith
+      have heq := norm_add_eq_iff_real.mp
+        (show ‖(1 : ℂ) + windowRoot 7 ^ (-p).val‖ = ‖(1 : ℂ)‖ +
+          ‖windowRoot 7 ^ (-p).val‖ by rw [norm_one, hz]; convert he using 1 <;> norm_num)
+      have heqone : windowRoot 7 ^ (-p).val = 1 := by simpa [hz] using heq.symm
+      have hval := (windowRoot_isPrimitiveRoot 7).pow_inj (ZMod.val_lt (-p))
+        (by norm_num : 0 < 7) (by simpa using heqone)
+      have hp : p = 0 := neg_eq_zero.mp ((ZMod.val_eq_zero (-p)).mp hval)
+      simp [hp]
+    · intro hp
+      have hpzero : p = 0 := congrArg Prod.fst hp
+      simp [hpzero]
+  · simp [characteristic_off_axis p q hq, hq]
 
 private lemma characteristic_bound (x : ZMod 7 × ZMod 7) :
-    ‖charFun rho.1 x‖ ≤ 1 := by sorry
+    ‖charFun rho.1 x‖ ≤ 1 := by
+  rcases x with ⟨p, q⟩
+  by_cases hq : q = 0
+  · subst q
+    rw [characteristic_axis, norm_div]
+    have hz : ‖windowRoot 7 ^ (-p).val‖ = 1 := by
+      rw [norm_pow, (windowRoot_isPrimitiveRoot 7).norm'_eq_one (by decide), one_pow]
+    have ht := norm_add_le (1 : ℂ) (windowRoot 7 ^ (-p).val)
+    norm_num [hz] at ht ⊢
+    linarith
+  · simp [characteristic_off_axis p q hq]
 
-private lemma mean_eq : meanState rho.1 = sigma.1 := by sorry
-private lemma rank_eq : meanRank rho.1 = 7 := by sorry
-private lemma gap_bounds : 0 ≤ gapFactor rho.1 ∧ gapFactor rho.1 ≤ 1 := by sorry
-private lemma purity_eq : purity rho.1 = 1 / 2 := by sorry
-private lemma divergence_eq : quantumRelativeEntropy rho sigma = Real.log 7 - Real.log 2 := by sorry
+private lemma mean_eq : meanState rho.1 = sigma.1 := by
+  change meanState rho.1 = (7 : ℂ)⁻¹ • (1 : Matrix (ZMod 7) (ZMod 7) ℂ)
+  unfold meanState
+  have hf : univ.filter (fun x => ‖charFun rho.1 x‖ = 1) = {(0, 0)} := by
+    ext x
+    simp only [mem_filter, mem_univ, true_and, characteristic_norm_one, mem_singleton]
+  rw [hf, sum_singleton, characteristic_axis]
+  simp [weyl]
+private lemma rank_eq : meanRank rho.1 = 7 := by
+  change (meanState rho.1).rank = 7
+  rw [mean_eq]
+  change ((7 : ℂ)⁻¹ • (1 : Matrix (ZMod 7) (ZMod 7) ℂ)).rank = 7
+  rw [← diagonal_one, ← diagonal_smul, rank_diagonal]
+  simp
+
+private lemma gap_bounds : 0 ≤ gapFactor rho.1 ∧ gapFactor rho.1 ≤ 1 := by
+  classical
+  unfold gapFactor magicGap
+  dsimp only
+  split_ifs with h
+  · have hu := Finset.sup'_le h (fun x => ‖charFun rho.1 x‖)
+      (fun x _ => characteristic_bound x)
+    obtain ⟨x, hx⟩ := h
+    have hl := (norm_nonneg (charFun rho.1 x)).trans
+      (Finset.le_sup' (fun x => ‖charFun rho.1 x‖) hx)
+    constructor
+    · positivity
+    · nlinarith
+  · norm_num
+
+private lemma purity_eq : purity rho.1 = 1 / 2 := by
+  change (trace ((diagonal fun i => (rhoWeights i : ℂ)) *
+    (diagonal fun i => (rhoWeights i : ℂ)))).re = _
+  simp +decide [diagonal_mul_diagonal, trace_diagonal, sum_seven, rhoWeights]
+  <;> norm_num
+private lemma divergence_eq : quantumRelativeEntropy rho sigma = Real.log 7 - Real.log 2 := by
+  rw [quantum_relative_entropy_eq_neg_entropy_sub_cross, rho_entropy]
+  change -Real.log 2 - (trace ((diagonal fun i => (rhoWeights i : ℂ)) *
+    CFC.log ((7 : ℂ)⁻¹ • (1 : Matrix (ZMod 7) (ZMod 7) ℂ)))).re = _
+  have hd : (7 : ℂ)⁻¹ • (1 : Matrix (ZMod 7) (ZMod 7) ℂ) =
+      diagonal (fun _ : ZMod 7 => ((1 / 7 : ℝ) : ℂ)) := by
+    rw [← diagonal_one, ← diagonal_smul]
+    congr 1
+    ext i
+    norm_num
+  rw [hd, D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.cfc_log_diagonal,
+    diagonal_mul_diagonal, trace_diagonal, sum_seven]
+  simp +decide [rhoWeights, Complex.log_re]
+  <;> ring
 
 private lemma doubling_eq :
     Real.exp (vonNeumannEntropy tau - vonNeumannEntropy rho) =
-      Real.exp (1 / 2 * Real.log 2) := by sorry
+      Real.exp (1 / 2 * Real.log 2) := by
+  rw [rho_entropy, tau_entropy]
+  congr 1
+  ring
 
-private lemma doubling_gt_one : 1 < Real.exp (1 / 2 * Real.log 2) := by sorry
+private lemma doubling_gt_one : 1 < Real.exp (1 / 2 * Real.log 2) := by
+  apply Real.one_lt_exp_iff.mpr
+  positivity
 
 private lemma numerical_bound (l : ℝ) (hl : 0 ≤ l ∧ l ≤ 1) :
     0 < 1 + l * (7 * (1 / 2) - 1) ∧
     0 < Real.log 7 - Real.log (1 + l * (7 * (1 / 2) - 1)) ∧
     Real.log 7 / (Real.log 7 - Real.log (1 + l * (7 * (1 / 2) - 1))) *
-      Real.log (Real.exp (1 / 2 * Real.log 2)) ≤ 1 / 2 * Real.log 7 := by sorry
+      Real.log (Real.exp (1 / 2 * Real.log 2)) ≤ 1 / 2 * Real.log 7 := by
+  have htwo : 0 < Real.log 2 := Real.log_pos (by norm_num)
+  have hseven : 0 < Real.log 7 := Real.log_pos (by norm_num)
+  have hlo : 1 ≤ 1 + l * (7 * (1 / 2) - 1) := by nlinarith [hl.1]
+  have hhi : 1 + l * (7 * (1 / 2) - 1) ≤ 7 / 2 := by nlinarith [hl.2]
+  have hpos : 0 < 1 + l * (7 * (1 / 2) - 1) := lt_of_lt_of_le zero_lt_one hlo
+  have hlog := Real.log_le_log hpos hhi
+  rw [Real.log_div (by norm_num : (7 : ℝ) ≠ 0) (by norm_num : (2 : ℝ) ≠ 0)] at hlog
+  have hden : Real.log 2 ≤ Real.log 7 - Real.log (1 + l * (7 * (1 / 2) - 1)) := by
+    linarith
+  refine ⟨hpos, htwo.trans_le hden, ?_⟩
+  rw [Real.log_exp]
+  calc
+    _ ≤ (Real.log 7 / Real.log 2) * (1 / 2 * Real.log 2) :=
+      mul_le_mul_of_nonneg_right (div_le_div_of_nonneg_left hseven.le htwo hden)
+        (by positivity)
+    _ = 1 / 2 * Real.log 7 := by field_simp
 
-private lemma strict_violation : 1 / 2 * Real.log 7 < Real.log 7 - Real.log 2 := by sorry
+private lemma strict_violation : 1 / 2 * Real.log 7 < Real.log 7 - Real.log 2 := by
+  have h : Real.log ((2 : ℝ) ^ 2) < Real.log 7 :=
+    Real.log_lt_log (by norm_num) (by norm_num)
+  rw [Real.log_pow] at h
+  norm_num at h
+  linarith
 
 /-- The registered seven-dimensional mixed state violates equation (58). -/
 theorem result : ¬ claim := by
