@@ -14,38 +14,33 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-/-- Observe membership in the stated convex hull at each cycle size. -/
+/-- Observe each context probability occurring in the nonnegativity hypothesis. -/
 abbrev signature : Signature where
-  Params := ℕ
-  State n := Fin n → Bool → Bool → ℝ
+  Params := Σ n : ℕ, Σ _ : Fin n, Σ _ : Bool, Bool
+  State q := Fin q.1 → Bool → Bool → ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
+  Output _ _ := ℝ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature
-    (fun _ n r => @decide (r ∈ convexHull ℝ (allGenerators n)) (Classical.propDecidable _))
+  realize signature (fun _ q r => r q.2.1 q.2.2.1 q.2.2.2)
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (n : ℕ), 0 < n → ∀ r : Fin n → Bool → Bool → ℝ,
-    (∀ i b c, 0 ≤ r i b c) → (∀ i, ∑ b, ∑ c, r i b c = 1) →
+    (∀ i b c, 0 ≤ R.readout () ⟨n, i, b, c⟩ r) → (∀ i, ∑ b, ∑ c, r i b c = 1) →
     (∀ i c, ∑ b, r i b c = ∑ d, r (finRotate n i) c d) →
-    R.readout () n r = true
+    r ∈ convexHull ℝ (allGenerators n)
 
 private def diagonal : Fin 1 → Bool → Bool → ℝ :=
-  fun _ b c => if b = false ∧ c = false then 1 else 0
-
-private theorem diagonal_nonneg (i : Fin 1) (b c : Bool) : 0 ≤ diagonal i b c := by
-  simp only [diagonal]
-  split_ifs <;> norm_num
+  fun _ b c => if b = c then if b then -1 else 2 else 0
 
 private theorem diagonal_normalized (i : Fin 1) : ∑ b, ∑ c, diagonal i b c = 1 := by
   simp only [Fintype.sum_bool]
@@ -54,13 +49,6 @@ private theorem diagonal_normalized (i : Fin 1) : ∑ b, ∑ c, diagonal i b c =
 private theorem diagonal_consistent (i : Fin 1) (c : Bool) :
     ∑ b, diagonal i b c = ∑ d, diagonal (finRotate 1 i) c d := by
   cases c <;> norm_num [diagonal, Fintype.sum_bool]
-
-theorem rejected_law : ¬ arena.Law rejected := by
-  intro h
-  have hbad := h 1 (by norm_num) diagonal diagonal_nonneg diagonal_normalized
-    diagonal_consistent
-  change false = true at hbad
-  contradiction
 
 private theorem hull_nonneg {n : ℕ} {r : Fin n → Bool → Bool → ℝ}
     (hr : r ∈ convexHull ℝ (allGenerators n)) (i : Fin n) (b c : Bool) :
@@ -72,22 +60,22 @@ private theorem hull_nonneg {n : ℕ} {r : Fin n → Bool → Bool → ℝ}
   intro x hx y hy u v hu hv _
   exact add_nonneg (mul_nonneg hu hx) (mul_nonneg hv hy)
 
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hbad := h 1 (by norm_num) diagonal (fun _ _ _ => le_rfl) diagonal_normalized
+    diagonal_consistent
+  have hb := hull_nonneg hbad 0 true true
+  norm_num [diagonal] at hb
+
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨1, diagonal, (fun _ _ _ => -1), ?_⟩
-  have hyes : diagonal ∈ convexHull ℝ (allGenerators 1) :=
-    decomposition 1 (by norm_num) diagonal diagonal_nonneg diagonal_normalized
-      diagonal_consistent
-  have hno : (fun _ _ _ => (-1 : ℝ)) ∉ convexHull ℝ (allGenerators 1) := by
-    intro h
-    have hb := hull_nonneg h 0 false false
-    norm_num at hb
-  simp [actual, realize, hyes, hno]
+  refine ⟨⟨1, 0, false, false⟩, (fun _ _ _ => 0), (fun _ _ _ => 1), ?_⟩
+  exact zero_ne_one
 
 def source_registration : Registration arena (type_of% @decomposition) where
   actual := actual
-  bridge := by simp [actual, realize]
-  variation := ⟨by simpa [actual, realize, arena] using decomposition, rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨decomposition, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -112,7 +100,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ n r => @decide (r ∈ convexHull ℝ (allGenerators n)) (Classical.propDecidable _))
+    (fun _ q r => r q.2.1 q.2.2.1 q.2.2.2)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -121,13 +109,13 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.QuantumContext.NCycleNondisturbingGenerators
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 3, 4, 5]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body"]
+      path := #["body", "body", "body", "domain", "body", "body", "body", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      stateOperand := some #["fn", "fn", "fn"]
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
