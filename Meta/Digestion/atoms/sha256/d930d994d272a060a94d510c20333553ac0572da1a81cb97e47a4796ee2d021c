@@ -1,0 +1,42 @@
+#### 命题 4.6（共同经典预测的不相容代价）
+
+<a id="prop:jointloss"></a>
+
+记 $X_0=Q_{\mathcal{D}}(A)$、$Y_0=Q_{\mathcal{D}}(B)$，
+$\varepsilon_A=\left\lVert A-X_0\right\rVert_\rho$、$\varepsilon_B=\left\lVert B-Y_0\right\rVert_\rho$，
+$\sigma_A^2=\operatorname{Var}_\rho(A)$、$\sigma_B^2=\operatorname{Var}_\rho(B)$。则
+
+$$
+\sigma_B\varepsilon_A+\sigma_A\varepsilon_B
+ \ge \frac12|\operatorname{Tr}\rho[A,B]|.
+ \tag{12}
+$$
+
+**证明。**
+
+减去均值不改变误差与交换子。正交投影收缩给
+$\left\lVert X_0\right\rVert_\rho\le\sigma_A$。
+因 $X_0,Y_0$ 对易，
+$[A,B]=[A-X_0,B]+[X_0,B-Y_0]$。
+逐项用正态 Cauchy--Schwarz 的
+$|\operatorname{Tr}\rho[C,D]|\le2\left\lVert C\right\rVert_\rho\left\lVert D\right\rVert_\rho$ 即得。
+
+∎
+
+作为三轴例子，若内部 qubit 的限制态为 $\rho=I/2$，
+非平凡交换记录为
+$\mathcal{D}=\operatorname{span}\{I,\mathbf n\cdot\boldsymbol\sigma\}$、
+$|\mathbf n|=1$，则
+
+$$
+Q_{\mathcal{D}}(\sigma_j)=n_j\,\mathbf n\cdot\boldsymbol\sigma,\qquad
+ \sum_{j=x,y,z}R_\rho(\sigma_j,Q_{\mathcal{D}}\sigma_j)=2.
+ \tag{13}
+$$
+
+证明只用 $\operatorname{Tr}\sigma_i\sigma_j=2\delta_{ij}$ 及 $\sum_jn_j^2=1$。
+该式讨论同一记录情境下的算符重建，不否定三个统计读出或分别选基的合法性；
+三轴坐标、一次结果和同时保留全部量子关系必须各有定义。
+
+<a id="sec-5"></a>
+

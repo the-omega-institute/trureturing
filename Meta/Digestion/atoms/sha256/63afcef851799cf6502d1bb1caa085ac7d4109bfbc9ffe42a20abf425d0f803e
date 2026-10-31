@@ -1,0 +1,27 @@
+**Equation 2.4 (`eq:move`).**
+
+$$
+\begin{array}{c|cc|c}
+I&(k^+,b,c)&(k^-,a,\lambda)&L_a\\
+H&(k^+,b,a)&(k^-,c,\lambda)&-L_c\\
+X&(k^+,b,\lambda)&(k^-,c,a)&L_b
+\end{array}
+\qquad L_a+L_b+L_c=0.
+$$
+
+In the middle row the retained vertex has reversed cycle; the insertion
+vertex does not. For arbitrary auxiliary edge directions, the outward
+branch is positive at a tail flag and negative at a head flag. Thus
+[(2.4)](#eq-move) is $-r_{v,c}=0$. When two flags form a loop they contribute
+with opposite signs, rather than one of them being discarded. Other
+legs can be sorted and placed outside the little central neighborhood.
+This realizes every monomial multiple of every $r_{v,c}$ as actual
+local IHX; consequently $N_G$ descends through [(2.3)](#eq-poly).
+
+Define $\Lambda_G$ on an actual diagram to be zero if it has a branching
+ordinary tree. Otherwise associate every ordinary leg with its suppressed
+edge and output
+
+<a id="eq-lambda"></a>
+<a id="eq:lambda"></a>
+

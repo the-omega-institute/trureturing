@@ -1,0 +1,36 @@
+### 定义 2：实际 Schur 余量
+
+设旧节点的实际矩阵为 $H\succ0$，新节点为 $x$。定义真实新旧关系列
+
+$$
+\mathbf b=
+\bigl(\mathscr K(t_1-x),\ldots,
+\mathscr K(t_m-x)\bigr)^{\mathsf T}.
+$$
+
+新增矩阵为
+
+$$
+H_+
+=
+\begin{pmatrix}
+H&\mathbf b\\
+\mathbf b^*&S
+\end{pmatrix}.
+$$
+
+其 Schur 余量为
+
+<a id="eq-12"></a>
+
+$$
+\boxed{
+\mathcal E(x\mid t_1,\ldots,t_m)
+=
+S-\mathbf b^*H^{-1}\mathbf b.
+}
+\tag{12}
+$$
+
+它的意义是：新向量的总平方范数为 $S$，已有空间能够解释的部分为 $\mathbf b^*H^{-1}\mathbf b$，剩余部分为 $\mathcal E$。
+

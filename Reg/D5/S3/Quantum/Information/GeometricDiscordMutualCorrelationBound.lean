@@ -321,3 +321,107 @@ end MarginalBasis
 
 end
 end Reg.D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound
+
+namespace Reg.D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound.DensityExpectation
+
+open _root_.D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open Matrix
+open scoped ComplexOrder Matrix.Norms.L2Operator
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+universe u
+
+/-- Observe the complex norm at the density expectation. -/
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ z => ‖z‖) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+/-- Retain every finite index type, both matrices, and both density hypotheses. -/
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
+    (ρ X : Matrix n n ℂ), ρ.PosSemidef → trace ρ = 1 →
+      R.readout () () (trace (ρ * X)) ≤ ‖X‖
+
+theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hbad := h (n := ULift.{u} Unit) 1 0 Matrix.PosSemidef.one (by simp)
+  change (1 : ℝ) ≤ ‖(0 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)‖ at hbad
+  norm_num only [norm_zero] at hbad
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  change ‖(0 : ℂ)‖ ≠ ‖(1 : ℂ)‖
+  norm_num
+
+def source_registration :
+    Registration arena.{u} (type_of% @density_expectation_bound.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨density_expectation_bound, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@density_expectation_bound.{u}) (Realization signature) Unit Unit := {
+  unitName :=
+    `Reg.D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound.DensityExpectation.unit
+  realizationName := Lean.Name.str
+    `Reg.D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound.DensityExpectation
+    "source_registration"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => ‖z‖) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print density_expectation_bound
+#print axioms source_registration
+#print axioms registration
+
+end
+end Reg.D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound.DensityExpectation

@@ -1,0 +1,17 @@
+**定理 300.2（模型束包含的鲁棒单调性）。** 若两个束满足
+
+$$
+\mathcal B_1\subseteq\mathcal B_2,
+$$
+
+则
+
+$$
+\boxed{
+R_{\mathrm{rob}}(\mathcal B_1)\le
+R_{\mathrm{rob}}(\mathcal B_2).
+}
+$$
+
+对任意固定有限续接协议，协议的最坏期望终端损失也具有同样的包含单调性。
+

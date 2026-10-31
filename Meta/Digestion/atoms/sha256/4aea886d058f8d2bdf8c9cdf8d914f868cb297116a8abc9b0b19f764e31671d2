@@ -1,0 +1,35 @@
+**Theorem 2.1 (Local support rotation and the diagonal restriction cost).**
+There is $\varepsilon_0>0$ such that for every
+$0<|\varepsilon|<\varepsilon_0$ the entire fiber
+$\mathcal F_{\sigma_\varepsilon,\sigma_\varepsilon}$ has a unique
+minimizer of $F$, equivalently of $\Delta$, denoted by
+$\omega_\varepsilon$. It has rank three and positive
+$P,Q,R$. Its complementary positive slack, in the sense
+
+$$
+M_{\omega_\varepsilon}=H_C I+I H_D+N_\varepsilon,
+ \qquad N_\varepsilon\geq0,\quad
+ N_\varepsilon\omega_\varepsilon=0,
+\tag{2.2}
+$$
+
+is unique and nonzero; neither $N_\varepsilon$ nor
+$\omega_\varepsilon$ commutes with either local marginal operator
+$\sigma_\varepsilon I$ or $I\sigma_\varepsilon$.
+Here $M$ is the trace-one gradient representative defined in
+(2.5). The optimal source $C_\varepsilon$ diagonal in the
+product marginal eigenbasis satisfies
+
+$$
+\Delta(C_\varepsilon)-\Delta(\omega_\varepsilon)
+     =\gamma\varepsilon^2+O(\varepsilon^4),\qquad
+ \gamma=\frac{D^2}{B+10m}>0.
+\tag{2.3}
+$$
+
+All constants are specified exactly in (2.9), (2.17), and
+(2.21). These properties, including strict loss from the diagonal
+restriction, hold on a nonempty open subset of the eight real parameters
+$(u,v,a,b)$, where the margins are $(I+u\cdot\boldsymbol\sigma)/2$ and
+$(I+v\cdot\boldsymbol\sigma)/2$. This subset contains independently unequal biases.
+

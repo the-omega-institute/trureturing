@@ -1,0 +1,43 @@
+#### 命题 8.6（两个相对方向不能同时取得各自全部局部信息）
+
+<a id="prop:twoparam"></a>
+
+在 qubit 图表的一个点选择局部坐标，使
+$\psi=\lvert 0\rangle$、
+$\partial_x\psi=\lvert 1\rangle/2$、
+$\partial_y\psi=i\lvert 1\rangle/2$。
+两方向的量子 Fisher 矩阵为 $I_2$。
+对同一个固定 POVM 的正支持点态 Fisher 矩阵，
+
+$$
+\mathcal I_{xx}+\mathcal I_{yy}\le1.
+ \tag{42}
+$$
+
+**证明。**
+
+写
+$E_w=\begin{pmatrix}a_w&z_w\\\bar z_w&b_w\end{pmatrix}$。
+概率为 $a_w$，两个导数为 $\operatorname{Re}z_w$、
+$-\operatorname{Im}z_w$。
+正性给 $|z_w|^2\le a_wb_w$，故
+
+$$
+\mathcal I_{xx}+\mathcal I_{yy}
+ =\sum_{a_w>0}\frac{|z_w|^2}{a_w}
+ \le\sum_wb_w=1.
+$$
+
+当 $a_w=0$ 时 $z_w=0$，其点态导数无贡献。
+若需要统计渐近结论，另要求共同支持和相应正则性；
+此处只证明所列局部信息界。
+
+∎
+
+这是多参数量子估计权衡的基本 qubit 版本；
+相关一般理论由 Gill--Massar 给出。（[9](#ref-gillmassar)）
+两个方向分别可达到信息一，不等于一个共同读口可以同时在两方向达到一。
+因此“正交坐标存在”与“全部坐标可同时无损读取”不同。
+
+<a id="statement-8-7"></a>
+

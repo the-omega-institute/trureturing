@@ -1,0 +1,23 @@
+**定义 104.1（完整旧源、两记录响应和新时间对）。** 固定 77.1–77.2 的全部对象：$H=V_8^{\mathbf1}$、$\dim H=13$、$v=e_{00100}$、七门 $K_0,\ldots,K_6$、含空字的全部有限正向字 $\mathsf W$，以及全部 $\Omega_{10}=\{0,1\}^{10}$ 标签。沿用 $x=(\sqrt5-1)/2$、$y=\sqrt x$、$\zeta=e^{3\pi i/5}$、$\Pi=\mathcal P_0|_H$ 和 $D=(I-\Pi)+\zeta\Pi=\zeta^{-1}K_0|_H$，其中 $\operatorname{rank}\Pi=5$、$\dim\ker\Pi=8$。定义完整旧坐标律
+
+$$
+ q_w(\psi)=|\psi_w|^2,\qquad
+ w_\beta=10\beta010,\qquad
+ q_{w_\beta}(\psi)=|\langle e_\beta,\psi\rangle|^2.
+ \tag{104.1}
+$$
+
+不属于十三个 $w_\beta$ 的 $1011$ 个坐标也在定义内，取零。扩大载体、等距及原读者均取 100.1：$\mathcal K=V_{12}^{\mathbf1}$、$\dim\mathcal K=89$、$J(e_\beta,i)=|10\beta010i010\rangle$、$\mathcal C=J(H\otimes\mathbb C^2)$、$\dim\mathcal C=26$，并保留其 $63$ 维正交补。
+
+设一个固定、连续、相位不变的完整终端响应为 $\mathfrak P:S(\mathcal K)\to\Delta(\Omega_{10})$，令
+
+$$
+ F(\psi)=\mathfrak P(J(\psi,0))=P(\psi),\qquad
+ G(\psi)=\mathfrak P(J(\psi,1)),
+ \qquad
+ (t_{00},t_{01})=(0,1),\quad(t_{10},t_{11})=(4,3).
+ \tag{104.2}
+$$
+
+这里 $P$ 是 78.1 的同一个旧未知律，只锚定记录 $0$；$G$ 没有旧律转移或基底校准前提。独立完整旧基底标定仍是 79.1，即 $F_w(e_\beta)=\mathbf1_{\{w=w_\beta\}}$，量化全部十三个基射线及全部 $1024$ 标签。它不宣称这些射线均可精确有限制备。本节的 $a_s,a$ 表示未知实际记录质量，不表示 99.1 中已经指定的数值权重。
+

@@ -1,0 +1,12 @@
+#### 定义 12.1（明确供应的 Fibonacci 融合规则）
+
+给定两个简单标签 $\mathbf1,\tau$，其融合满足
+
+$$
+\tau\otimes\tau=\mathbf1\oplus\tau.
+$$
+
+设正重量 $d$ 对 $\oplus$ 相加、对 $\otimes$ 相乘，且 $d(\mathbf1)=1$。
+
+<a id="statement-12-2"></a>
+

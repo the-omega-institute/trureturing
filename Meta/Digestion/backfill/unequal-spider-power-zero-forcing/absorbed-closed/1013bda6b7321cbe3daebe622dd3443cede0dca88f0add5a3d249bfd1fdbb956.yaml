@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1013bda6b7321cbe3daebe622dd3443cede0dca88f0add5a3d249bfd1fdbb956
+  normalized_sha256: sha256:1013bda6b7321cbe3daebe622dd3443cede0dca88f0add5a3d249bfd1fdbb956
+cas_ref: sha256:1013bda6b7321cbe3daebe622dd3443cede0dca88f0add5a3d249bfd1fdbb956
+coverage_gids:
+  - gid: D5/S3/Combinatorics/SpectralGraph/UnequalSpiderPowerZeroForcing.sliding_window_kernel_and_band_support
+    target_statement_id: sha256:0bb71ddcb9f0b0ff054b1c1ba1fb7d0bce0761fd208970e48e3b9a93917f5065
+receipts:
+  unresolved_subitems: []

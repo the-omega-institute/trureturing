@@ -1,0 +1,7 @@
+Fix $u\in V$, $0<\varepsilon<1$ and $q=1-\varepsilon$. On an arbitrary probability space $(\Omega,\mathcal F,\mathbb P)$, let the following entire family of measurable random variables be mutually independent:
+
+- initial opinions $I_v\sim\operatorname{Bernoulli}(1/2)$, for $v\in V$;
+- fresh opinions $F_{n,v}\sim\operatorname{Bernoulli}(1/2)$, for $n\geq1$ and $v\in V$;
+- refresh controls $R_{n,v}\sim\operatorname{Bernoulli}(\varepsilon)$, for $n\geq1$ and $v\in V$;
+- neighbour choices $J_{n,v}$, uniform on the actual finite set $N(v)$, for $n\geq1$ and $v\in V$.
+

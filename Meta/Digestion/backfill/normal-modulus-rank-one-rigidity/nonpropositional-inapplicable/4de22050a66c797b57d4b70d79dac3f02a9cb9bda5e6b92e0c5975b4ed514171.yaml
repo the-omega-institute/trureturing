@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4de22050a66c797b57d4b70d79dac3f02a9cb9bda5e6b92e0c5975b4ed514171
+  normalized_sha256: sha256:4de22050a66c797b57d4b70d79dac3f02a9cb9bda5e6b92e0c5975b4ed514171
+cas_ref: sha256:4de22050a66c797b57d4b70d79dac3f02a9cb9bda5e6b92e0c5975b4ed514171
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This leaf defines the auxiliary symbols C_0, d^2, and epsilon and names the extremal parameter locus; its final sentence only explains the intended meaning of extremality for the still-unresolved c_* and introduces no independent proposition to cover. The primary coefficient and its attainment remain open in the preceding theorem atom.
+    previous_atom_id: 5926947e1772dbbbf75760990141b9bc1967db588f539710c529c59f50f9ee7d
+    next_atom_id: 413a037318f459272f702dc26b9adfe71afe1fe93412601ecc71192191a93b40

@@ -1,0 +1,77 @@
+#### 定理 6.3（经典稳定化的精确信息缺口）
+
+<a id="thm:missing"></a>
+
+设同一内部模型中有持久二元目标 $Z$，
+
+$$
+\Pr_\lambda(Z=1)=\pi(\lambda)\in(0,1).
+$$
+
+给定 $Z$ 的完整记录核 $Q_n(h\mid Z)$ 为同一嵌套记录族的相容边缘，
+不依赖 $\lambda$，
+但可依赖记录历史且相互相关。
+令 $q_n(h)=\Pr_\lambda(Z=1\mid H_n=h)$。则
+
+$$
+\boxed{
+ \mathcal I_n
+ =
+ \frac{\pi'^2}{\pi(1-\pi)}
+ -
+ \frac{\pi'^2}{\pi^2(1-\pi)^2}
+ \mathbb{E}_\lambda[q_n(1-q_n)].
+ }                                                       \tag{25}
+$$
+
+特别地，若完整记录最终辨识 $Z$，则
+
+$$
+\mathcal I_n\longrightarrow
+ \mathcal I_Z=\frac{\pi'^2}{\pi(1-\pi)}.
+$$
+
+在 $\pi'\ne0$ 处，达到该极限等价于完整记录辨识 $Z$。
+
+**证明。**
+
+联合律为
+$p_\lambda(z,h)=\pi_z(\lambda)Q_n(h\mid z)$。
+由于条件核参数无关，其联合得分只依赖 $Z$：
+
+$$
+s_1=\frac{\pi'}{\pi},\qquad
+ s_0=-\frac{\pi'}{1-\pi}.
+$$
+
+对 $z$ 求和给 $S_n=\mathbb{E}_\lambda[s_Z\mid H_n]$。
+所以
+$\mathcal I_Z-\mathcal I_n=\mathbb{E}_\lambda\operatorname{Var}(s_Z\mid H_n)$。
+二值变量的条件方差为
+$(s_1-s_0)^2q_n(1-q_n)$，即得式 (25)。
+嵌套记录下 $q_n$ 是有界鞅；
+v30 的条件期望证明给
+$q_n\to q_\infty=\mathbb{E}[Z\mid\mathcal D_\infty]$，
+且
+$\mathbb{E}(Z-q_n)^2=\mathbb{E}q_n(1-q_n)$。
+支配收敛和该恒等式给最后两项。
+
+∎
+
+因此无限多的记录可以最终确定一个指针标签，
+却不因此从这个标签取得无限多的参数信息。
+若读尺的条件核也含未知参数，即 $Q_n=Q_{n,\lambda}$，
+其导数必须加入联合得分；式 (25) 的假设不再满足。
+这恰好将量的不确定与关系、校准参数的不确定分别记入信息收支，
+并未预设尺子总是准确。
+
+例如内部 qubit 条件态
+$\psi_\lambda=\cos(\lambda/2)\lvert 0\rangle+\sin(\lambda/2)\lvert 1\rangle$，
+$0<\lambda<\pi$，以 $Z$ 基标签为持久目标，
+有 $\pi=\sin^2(\lambda/2)$，故
+$\pi'^2/[\pi(1-\pi)]=1$。
+再多的参数无关 QND 记录也只将该目标的信息预算推进到一；
+它们可以辨认本次标签，而不能从本次标签精确求出未知 $\lambda$。
+
+<a id="sec-7"></a>
+

@@ -1,0 +1,13 @@
+## 10. 黄金门的静态历史、切面与消元
+
+固定黄金门满足
+
+$$
+K=\zeta[I+(\zeta-1)P],\quad P=P^\dagger=P^2,
+\quad \zeta=e^{3\pi i/5},\quad K^{10}=I.
+$$
+
+其谱分解为 $K=\zeta(I-P)+\zeta^2P$。对有限电路 $U_1,\ldots,U_L$，每个 $U_j$ 可以是某地址的 $K$。令 $W_0=I,W_j=U_j\cdots U_1$。
+
+<a id="statement-10-1"></a>
+

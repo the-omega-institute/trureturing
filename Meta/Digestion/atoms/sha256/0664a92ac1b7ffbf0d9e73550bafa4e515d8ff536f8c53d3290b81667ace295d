@@ -1,0 +1,5 @@
+Every attached ordinary tree with
+at least two leaves has a terminal cherry. The stem of that cherry
+ends at another trivalent vertex, except in the entire unstable
+one-anchor Y already excluded. Hence [(2.2)](#eq-cherry) applies inside
+the full graph and kills it. No induction on a degree bound is involved.

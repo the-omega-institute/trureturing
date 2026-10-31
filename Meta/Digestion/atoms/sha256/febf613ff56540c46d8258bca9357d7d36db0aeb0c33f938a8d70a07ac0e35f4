@@ -1,0 +1,19 @@
+**Theorem 36.2 (pointwise finite actual recovery without any uniform action bound).** On the single fixed prior $\mathcal Q$, each exact original view and their joint tuple is forward acquirable by an ordinary finite program with dyadic reads and pointwise finite stopping. No correct pointwise-finite program for any of these targets has a finite uniform bound on actual new source actions. In fact no single finite cap can bound just its action counts at all the original endpoints $1/b_j$.
+
+Proof. Here is one actual acquisition program, including effective band selection. For stages $s=0,1,2,\ldots$, read $K_s=q_{2^s}(x)$ at the still unchanged source and compute its cell $[K_s/2^s,(K_s+1)/2^s)$. Test the finitely many $j=1,\ldots,s+1$ for the rational inequalities
+
+$$
+2^{-(2j+1)}<K_s/2^s,
+\qquad
+(K_s+1)/2^s<2^{-(2j-1)}.
+\tag{36.3}
+$$
+
+When one succeeds, retain that $j$ and end the band loop. The entire nonempty observed cell is then inside $J_j$, so the promise forces the original into $\mathcal Q_j$. For an actual $x\in\mathcal Q_j$, its distances to both boundaries of $J_j$ are positive. Eventually the mesh is smaller than both distances and $s+1\ge j$, so (36.3) succeeds. Thus the loop stops finitely on every promised original, with no source action. Every read is a real service invocation, not a request for an unobserved exact input or an infinite list.
+
+Now actually execute $L^j$ on that same source, which has remained unchanged throughout band selection. Equation (35.2) sends its known endpoint threshold to $1/4^j$. Read $q_{4^j}$; its report is $1$ exactly at the original endpoint and $0$ at every smaller member of $\mathcal Q_j$. On report $1$ recover $1/b_j$. On report $0$ use precisely (34.2)–(34.3), with $u=L^j$ and starting index $n_0=2b_j$. The proof there gives finitely many stationary dyadic comparisons and returns the correct original rational $1/b_j-1/n$. Apply the same finite original-word, path and prefix-table decoders as in Theorem 34.1. This is one program, containing band arithmetic, two finite loops, the known action sequence and the original-view decoder. Each run makes exactly $j$ new source actions, with finitely many reads, arithmetic steps and storage cells and a completed finite output.
+
+For the lower bound, suppose a correct program has some uniform action cap $h$ on the endpoints, while still stopping correctly everywhere in $\mathcal Q$. Choose $j>h$ and consider its finite run at $1/b_j$. Its restriction to $\mathcal Q_j$ must distinguish this endpoint from every $1/b_j-1/n$ with $n\ge2b_j$, because exact original views distinguish unequal original rationals. Lemma 33.2 applies to this tail: a sufficiently large such $n$ replays any endpoint branch lacking an attained dyadic grid read. Theorem 35.1 excludes a dyadic endpoint after every prefix of length at most $h<j$. Thus the run cannot be correct on the tail, a contradiction. Equivalently, every correct program must use at least $j$ actions at this endpoint; the displayed program attains $j$ there. All originals in this argument belong to the same fixed prior, source law, menu and original target. $\square$
+
+This is stronger than choosing a different $P_b$ after a proposed cap is announced: one finitely presented decidable prior and one ordinary finite-code exact acquisition task already lie beyond every finite uniform action cap. It is consistent with Theorem 34.1: for each fixed $P_b$, $m(b)$ is finite, whereas $\mathcal Q$ contains infinitely many separated tails with endpoint requirements tending to infinity. The construction does not acquire a dense full-rational prior; its bands and endpoint promises supply the needed finite stopping information. Unrestricted actual motion means no common finite cap, with each individual run still finite.
+

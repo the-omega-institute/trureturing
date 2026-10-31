@@ -1,0 +1,15 @@
+**Theorem 4.2 (tower refinement and depth-relative recovery).** The profiles $p_n$ and $R_n$ determine each other on their actual images. Truncation gives
+
+$$
+\ker(p_{n+1}\circ\eta)\subseteq\ker(p_n\circ\eta),\qquad
+\ker(R_\infty\circ\eta)=\bigcap_{n\ge0}\ker(p_n\circ\eta),
+$$
+
+where $R_\infty$ contains all finite-word responses. For any target $V:H\to Y$, exact depth-$n$ recovery is equivalent to
+
+$$
+\ker(p_n\circ\eta)\subseteq\ker V.
+$$
+
+Proof. At depth zero only type and current readout occur. Split a nonempty word at its first operation. Absence determines its unavailable response; presence supplies the event and the recursively required suffix response. Conversely the one-step responses give legality and labels, and responses to all prefixed suffixes give the successor profile. Induction proves the equivalence. Forgetting deepest suffixes gives truncation. Every finite word has some finite length, proving the intersection formula. The last assertion is Theorem 2.2 applied to this actual history fiber. The recurrence and kernel identification reuse the mathematical content supplied by `typed_finite_view_kernel` in [TypedFiniteViewKernel](../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean); source inspection is not a fresh compilation of this presentation. $\square$
+

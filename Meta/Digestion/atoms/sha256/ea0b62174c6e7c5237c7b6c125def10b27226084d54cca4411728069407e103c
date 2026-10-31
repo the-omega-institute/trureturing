@@ -1,0 +1,95 @@
+**定理 112.1（无需新记录正性或预定数值的条件闭合）。** 在 111.1、111.3 下，全部 $\psi\in S(H)$ 和全部原 $w\in\Omega_{10}$ 满足
+
+$$
+ F_w(\psi)=G_w(\psi)=q_w(\psi),\qquad
+ c=1,\quad d_w=0,\quad a=x,\quad b=x^3.
+ \tag{112.1}
+$$
+
+因此只对 $p_*$ 的三个指定设置，记录质量分别是 $(x,x^2)$、$(x,x^2)$、$(x^3,1-x^3)$。更精确地，在 104.3 的整个残余族
+
+$$
+ a=\frac{c}{x+c},\quad 0<c\le1,\quad F=q,\quad G=cq+d,
+ \quad d_w\ge0,\quad\sum_wd_w=1-c,
+ \tag{112.2}
+$$
+
+内，111.3 的五个新等式等价于 $c=1,d=0,b=x^3$。每个 $0<c<1$ 幸存者、每个允许的 $d$ 和每个尝试的 $b\in[0,1]$ 都至少违反其中一个等式。此处五个字和事件均不随 $c,d,b$ 改变。
+
+证明。首先直接消费 104.3，得到整个旧球面、全部旧标签上的 (112.2)；这里并未用五个新等式代替其全原生上下文假设或旧全基底校准。由实际记录的普通全概率公式以及因果固定的 $b$，五个新增等式恰为
+
+$$
+ \begin{aligned}
+ bq_{w_*}(K_f\theta_0)+(1-b)[cq_{w_*}(K_f\theta_1)+d_{w_*}]\\
+ =a q_{w_*}(K_f\eta)+(1-a)[cq_{w_*}(K_fD\eta)+d_{w_*}],
+ \qquad f\in\mathcal F.
+ \end{aligned}
+ \tag{112.3}
+$$
+
+质量为零的记录项为零，故不需要为零分支指定实际条件概率。
+
+记 $\delta=(a-b)d_{w_*}$，并在 $H$ 上定义支撑于 $L$ 的 Hermitian 矩阵
+
+$$
+ A=bP_{\theta_0}+c(1-b)P_{\theta_1}
+        -aP_\eta-c(1-a)P_{D\eta}.
+ \tag{112.4}
+$$
+
+则 (112.3) 正是五个 $\langle e_*,K_f(A+\delta I_H)K_f^*e_*\rangle=0$。下面的原生矩阵计算证明这五个泛函在固定实空间 $\operatorname{Herm}(L)\oplus\mathbb RI_H$ 上单射；这一步不使用任意酉控制、密度闭包或数值挑字。
+
+因为 $e_*\perp L$，空字先给 $\delta=0$。直接由 77.1 的中心块，在有序基 $(e_L,e_R)$ 上有行限制
+
+$$
+ \begin{gathered}
+ \langle e_*|K_3\big|_L=\lambda(1,0),\\
+ \langle e_*|K_{0^k13}\big|_L
+       =\lambda\zeta^k(\alpha,\lambda\zeta^k),
+       \qquad k=0,1,2.
+ \end{gathered}
+ \tag{112.5}
+$$
+
+第一式中 $K_3e_L$ 的 $e_*$ 系数为 $\lambda$，$K_3e_R$ 仅能到 $e_R,e_{10000}$，故没有 $e_*$ 分量。第二式中 $K_1$ 保留 $L$ 并在其上使用同一块 $B_R$；$K_0|_L=\operatorname{diag}(\zeta,\zeta^2)$。这逐项给 (112.5)，没有忽略路径或相对相位。
+
+$\lambda\ne0$，字 $3$ 因而给 $A_{LL}=0$。另外三个字的方程除以 $|\lambda|^2$ 后是
+
+$$
+ h+z\zeta^{-k}+\overline z\zeta^k=0\quad(k=0,1,2),
+ \qquad h=|\lambda|^2A_{RR},\quad
+ z=\alpha\overline\lambda A_{LR}.
+ \tag{112.6}
+$$
+
+乘以 $\zeta^k$，二次多项式 $z+ht+\overline zt^2$ 在互异的 $1,\zeta,\zeta^2$ 上为零，故其全部系数为零。由于 $\alpha,\lambda\ne0$，得到 $A_{RR}=A_{LR}=0$，即 $A=0$。这也说明所需五个实际字的存在与充分性，而非以连续控制替代有限字。
+
+由 $(1-a)c=ax$，以及各 $P$ 的迹为一，$A=0$ 给
+
+$$
+ 0=\operatorname{tr}A
+   =b+c(1-b)-a(1+x)=(1-c)(b-a).
+ \tag{112.7}
+$$
+
+若 $c<1$，必有 $b=a$。然而 $|\langle e_R,\theta_1\rangle|^2=1/(2x)$，而
+$|\langle e_R,\eta\rangle|^2=|\langle e_R,D\eta\rangle|^2=x$，所以此时
+
+$$
+ A_{RR}=\frac{c(1-a)}{2x}-a(1+x)x
+       =\frac a2-a=-\frac a2\ne0.
+ \tag{112.8}
+$$
+
+这里 $a>0$ 来自继承的旧记录前提，不是新记录 $b$ 的正性。矛盾排除了全部 $c<1$。故 $c=1$，非负性和 $\sum_wd_w=0$ 迫使全部 $1024$ 个 $d_w=0$，包括所有非法旧标签。再由 (112.2) 得 $a=x$；$A_{RR}=0$ 变为 $(1-b)/(2x)-x=0$，于是 $b=1-2x^2=x^3$。
+
+反向也精确成立。由 (111.1)、(111.4) 及 $B_R$ 酉性，普通矩阵的列外积之和满足
+
+$$
+ xP_\eta+x^2P_{D\eta}
+       =x^3P_{\theta_0}+(1-x^3)P_{\theta_1}.
+ \tag{112.9}
+$$
+
+例如，把联合向量的两个记录列排成一个 $13\times2$ 矩阵，右乘酉矩阵保持其与伴随的乘积，便得此式；它不是先验的实际概率混合公理。取 $c=1,d=0,a=x,b=x^3$ 后，任意 $K_f$ 共轭、任意原坐标的矩阵元都相等，故五个所需等式成立。整个充分性只为所述残余族和指定制备，不分类其它输入的记录质量。∎
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:195492a792e2fbe90c58bcb54ccd2b358c36b34d3be2c8563ffd38f475b7f416
+  normalized_sha256: sha256:195492a792e2fbe90c58bcb54ccd2b358c36b34d3be2c8563ffd38f475b7f416
+cas_ref: sha256:195492a792e2fbe90c58bcb54ccd2b358c36b34d3be2c8563ffd38f475b7f416
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "nonpropositional: interface-scope explanation; fixes the theorem's input/output boundary and omits construction or model claims."
+    previous_atom_id: 67aac9695e2a581366e9163f7d5491e7b90a773bd3dbd09b0e49fa7add51575c
+    next_atom_id: 1f40ac007d7ad5b4eb2f4c4dc388e58d91f43084131a0357fcdc1aafa143c334
