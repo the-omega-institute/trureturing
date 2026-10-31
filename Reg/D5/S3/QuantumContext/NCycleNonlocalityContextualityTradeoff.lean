@@ -9,6 +9,8 @@ namespace Reg.D5.S3.QuantumContext.NCycleNonlocalityContextualityTradeoff
 open _root_.D5.S3.QuantumContext.NCycleNonlocalityContextualityTradeoff
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open Finset
+open _root_.D5.S3.Estimation.DecisionRisk.DescentDefectBounds
+  (IsRowStochastic deterministicPostprocess)
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -67,7 +69,8 @@ private theorem triangle_nsnd : IsNSND triangle := by
 private theorem antiCount_deterministic (s : Fin 3 → Bool) :
     antiCount (deterministic s) ≤ 2 := by
   cases h₀ : s 0 <;> cases h₁ : s 1 <;> cases h₂ : s 2 <;>
-    norm_num [antiCount, deterministic, Fin.sum_univ_succ, finRotate_apply, h₀, h₁, h₂]
+    norm_num [antiCount, deterministic, deterministicPostprocess, Prod.mk.injEq,
+      Fin.sum_univ_succ, finRotate_apply, h₀, h₁, h₂]
 
 private theorem triangle_normalized : IsNormalizedNC (antiCount, -2) := by
   refine ⟨?_, ?_, triangle, triangle_nsnd, ?_⟩
@@ -155,7 +158,7 @@ private theorem parityBox_nsnd : IsNSND parityBox := by
       cases k : (decide (x = 1) && decide (j = 1)) <;> cases a <;> norm_num
 
 private theorem wins_product (α : AliceResponse) (r : BobBehavior 3)
-    (hα : IsAliceResponse α) (hr : IsND r) : wins (productBehavior α r) ≤ 3 := by
+    (hα : IsRowStochastic α) (hr : IsND r) : wins (productBehavior α r) ≤ 3 := by
   have ha₀ := hα.2 0
   have ha₁ := hα.2 1
   have hr₀ := hr.2.1 0
@@ -201,7 +204,7 @@ private theorem oddScore_bound {p : Behavior 3} (hp : IsNSND p) (x : Fin 2) (i :
 private theorem wins_normalized : IsNormalizedGBell (wins, -3) := by
   refine ⟨?_, ?_, parityBox, parityBox_nsnd, ?_⟩
   · intro p hp
-    have hsub : {q : Behavior 3 | ∃ α r, IsAliceResponse α ∧ IsND r ∧
+    have hsub : {q : Behavior 3 | ∃ α r, IsRowStochastic α ∧ IsND r ∧
         q = productBehavior α r} ⊆ {q | wins q ≤ 3} := by
       rintro q ⟨α, r, hα, hr, rfl⟩
       exact wins_product α r hα hr

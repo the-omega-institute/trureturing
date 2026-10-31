@@ -9,6 +9,7 @@ namespace Reg.D5.S3.QuantumContext.NCycleNondisturbingGenerators
 open _root_.D5.S3.QuantumContext.NCycleNondisturbingGenerators
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open Finset
+open _root_.D5.S3.Estimation.DecisionRisk.DescentDefectBounds (deterministicPostprocess)
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -54,8 +55,10 @@ private theorem hull_nonneg {n : ℕ} {r : Fin n → Bool → Bool → ℝ}
     (hr : r ∈ convexHull ℝ (allGenerators n)) (i : Fin n) (b c : Bool) :
     0 ≤ r i b c := by
   have hsub : allGenerators n ⊆ {r : Fin n → Bool → Bool → ℝ | 0 ≤ r i b c} := by
-    rintro r (⟨s, rfl⟩ | ⟨γ, rfl⟩) <;> simp only [Set.mem_ofPred_eq] <;>
+    rintro r (⟨s, rfl⟩ | ⟨γ, rfl⟩) <;> simp only [Set.mem_ofPred_eq]
+    · dsimp only [deterministicPostprocess]
       split_ifs <;> norm_num
+    · split_ifs <;> norm_num
   apply convexHull_min hsub ?_ hr
   intro x hx y hy u v hu hv _
   exact add_nonneg (mul_nonneg hu hx) (mul_nonneg hv hy)
