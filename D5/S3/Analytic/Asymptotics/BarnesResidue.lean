@@ -17,7 +17,7 @@ Adapted source port, 2026-10-31, from bjbraams/lean-DLMF revision
 560b9475f35bbc6e4f5296631298859825091f7f. Imports, namespace and visibility
 are adapted for this repository. The reciprocal primitive retains its TauCeti
 Perron.Basic provenance; the immutable source chain and complete-license and
-NOTICE assessment are in Library/Analytic/braams2026barnesmittagport.md.
+NOTICE assessment are in Library/Asymptotics/braams2026barnesmittagport.md.
 Retire each port when this repository's pinned Mathlib supplies an equivalent
 declaration and replace its actual consumers with direct Mathlib calls.
 -/

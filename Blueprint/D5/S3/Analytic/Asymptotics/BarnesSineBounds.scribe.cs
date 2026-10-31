@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Asymptotics;
 
 internal sealed class BarnesSineBoundsDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Analytic/braams2026barnesmittagport");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Asymptotics/braams2026barnesmittagport");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Complex sine grows exponentially on every vertical line away from its real zeros.", H("Sine bounds for Barnes contours"), Blocks(
             Describe.Lean(DescribeId.Create("barnessinebounds-barnesres-sin-lower-line"),

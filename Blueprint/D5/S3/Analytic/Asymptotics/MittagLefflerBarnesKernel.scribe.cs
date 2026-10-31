@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Asymptotics;
 
 internal sealed class MittagLefflerBarnesKernelDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Analytic/braams2026barnesmittagport");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Asymptotics/braams2026barnesmittagport");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The literal Barnes kernel is integrable on exterior vertical contours.", H("The Mittag-Leffler Barnes kernel"), Blocks(
             Describe.Lean(DescribeId.Create("mittaglefflerbarneskernel-kernel"),

@@ -16,7 +16,7 @@ Adapted source port from bjbraams/lean-DLMF at
 560b9475f35bbc6e4f5296631298859825091f7f. The selected declarations retain
 their mathematical statements; imports, namespace and local integrability
 ownership are adapted for this repository. Source slices and consumers are
-identified in Library/Analytic/braams2026barnesmittagport.md.
+identified in Library/Asymptotics/braams2026barnesmittagport.md.
 Retire each port when this repository's pinned Mathlib supplies an equivalent
 declaration, replacing its consumers with direct Mathlib calls.
 -/

@@ -4,7 +4,7 @@ using F = StrataLint.Scribe.FormulaDsl;
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Asymptotics;
 internal sealed class MellinBarnesSeriesDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source=LibraryNoteRef.Create("D5/L/Analytic/braams2026barnesmittagport");
+    private static readonly LibraryNoteRef Source=LibraryNoteRef.Create("D5/L/Asymptotics/braams2026barnesmittagport");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Closing a contour sequence identifies its integral with the summable residue series.", H("A Mellin-Barnes residue series"), Blocks(
             Describe.Lean(DescribeId.Create("mellinbarnesseries-mbseries-hassum"),

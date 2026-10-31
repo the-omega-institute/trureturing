@@ -18,7 +18,7 @@ residue declarations below are selected from bjbraams/lean-DLMF revision
 MellinBarnesSeries.lean. Namespace, imports and visibility are adapted;
 the literal-kernel consumers and strip construction are local additions.
 The complete license, source-chain assessment and per-declaration consumers
-are recorded in Library/Analytic/braams2026barnesmittagport.md.
+are recorded in Library/Asymptotics/braams2026barnesmittagport.md.
 Retire each selected port when this repository's pinned Mathlib supplies an
 equivalent declaration, replacing the actual consumers with direct calls.
 -/

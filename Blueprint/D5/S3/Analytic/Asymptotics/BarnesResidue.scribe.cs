@@ -4,7 +4,7 @@ using F = StrataLint.Scribe.FormulaDsl;
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Asymptotics;
 internal sealed class BarnesResidueDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source=LibraryNoteRef.Create("D5/L/Analytic/braams2026barnesmittagport");
+    private static readonly LibraryNoteRef Source=LibraryNoteRef.Create("D5/L/Asymptotics/braams2026barnesmittagport");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A single-pole contour shift has the dy normalization 2*pi.", H("A Barnes contour shift"), Blocks(
             Describe.Lean(DescribeId.Create("barnesresidue-barnesres-vertical-shift"),
