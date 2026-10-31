@@ -6,8 +6,9 @@
    utility: none
    digest: Pauli conjugation supplies the orthogonal rotation of collective spin axes. -/
 
-import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
-import D5.S3.Quantum.Codes.StabilizerGenuineEntanglementCommutationRank
+import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
+import D5.S3.QuantumChannels.ChannelTimeReversalNoGo
+import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 
 /-! The real orthogonal Pauli action used by the spin-four witness channel. -/
 
@@ -17,71 +18,52 @@ noncomputable section
 
 namespace D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
 
-open Matrix
+open _root_.Matrix
 open scoped BigOperators
-open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
+open D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction (pauli)
+open D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings (pauli_hermitian)
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
   (Pauli pauliMatrix tensorOp tensor_mul localOp)
 
-def pauliAxes : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ :=
-  ![pauliMatrix Pauli.X, pauliMatrix Pauli.Y, pauliMatrix Pauli.Z]
-
-private lemma pauli_hermitian (a : Fin 3) : (pauliAxes a).IsHermitian := by
-  rw [pauliAxes]
-  apply Matrix.IsHermitian.ext
-  intro i j
-  fin_cases a <;> fin_cases i <;> fin_cases j <;>
-    norm_num [pauliAxes, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply,
-      Fin.sum_univ_two]
-
-private lemma pauli_trace (a : Fin 3) : (pauliAxes a).trace = 0 := by
-  fin_cases a <;> norm_num [pauliAxes, pauliMatrix, qubitX, qubitZ, Matrix.trace,
-    Fin.sum_univ_two, Matrix.mul_apply]
-
 private lemma pauli_gram (a b : Fin 3) :
-    ((pauliAxes a) * pauliAxes b).trace = if a = b then 2 else 0 := by
-  fin_cases a <;> fin_cases b <;>
-    norm_num [pauliAxes, pauliMatrix, qubitX, qubitZ, Matrix.trace,
-      Fin.sum_univ_two, Matrix.mul_apply]
+    ((pauli a) * pauli b).trace = if a = b then 2 else 0 := by
+  have h := D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.pauli_trace_pair
+    (![Pauli.X, Pauli.Y, Pauli.Z] a) (![Pauli.X, Pauli.Y, Pauli.Z] b)
+  simpa only [pauli, show (![Pauli.X, Pauli.Y, Pauli.Z] a =
+    ![Pauli.X, Pauli.Y, Pauli.Z] b) ↔ a = b by fin_cases a <;> fin_cases b <;> decide] using h
 
 private lemma pauli_expansion (x : Matrix (Fin 2) (Fin 2) ℂ)
     (hx : x.IsHermitian) (ht : x.trace = 0) :
-    x = ∑ c : Fin 3, ((((x * pauliAxes c).trace.re / 2 : ℝ) : ℂ)) • pauliAxes c := by
-  have h0 := congrArg Complex.im (hx.apply 0 0)
-  have h1 := congrArg Complex.im (hx.apply 1 1)
-  have h2 := congrArg Complex.re (hx.apply 0 1)
-  have h3 := congrArg Complex.im (hx.apply 0 1)
-  have h4 := congrArg Complex.re ht
-  simp only [Complex.star_def, Complex.conj_im] at h0 h1 h3
-  simp only [Complex.star_def, Complex.conj_re] at h2
-  norm_num [Matrix.trace, Fin.sum_univ_two] at h4
-  ext i j
-  fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-    norm_num [pauliAxes, pauliMatrix, qubitX, qubitZ, Matrix.trace,
-      Matrix.mul_apply, Fin.sum_univ_two, Fin.sum_univ_succ, Complex.mul_re,
-      Complex.mul_im] <;> linarith
+    x = ∑ c : Fin 3, ((((x * pauli c).trace.re / 2 : ℝ) : ℂ)) • pauli c := by
+  have h := D5.S3.QuantumChannels.ChannelTimeReversalNoGo.Qubit.pauli_expansion x
+  rw [ht, zero_div, zero_smul, zero_add] at h
+  convert h using 1
+  apply Finset.sum_congr rfl
+  intro c _
+  rw [Matrix.trace_mul_comm (pauli c) x,
+    D5.S3.Quantum.Tomography.PurityPythagorasDecomposition.trace_mul_real_of_hermitian
+      x (pauli c) hx (pauli_hermitian c)]
+  simp
 
 set_option backward.isDefEq.respectTransparency false in
 theorem pauli_rotation (u : Matrix.specialUnitaryGroup (Fin 2) ℂ) :
     ∃ r : Matrix (Fin 3) (Fin 3) ℝ, rᵀ * r = 1 ∧
-      ∀ a : Fin 3, u.val * pauliAxes a * u.valᴴ =
-        ∑ c : Fin 3, (r a c : ℂ) • pauliAxes c := by
+      ∀ a : Fin 3, u.val * pauli a * u.valᴴ =
+        ∑ c : Fin 3, (r a c : ℂ) • pauli c := by
   have hu : u.valᴴ * u.val = 1 :=
     Matrix.mem_unitaryGroup_iff'.mp u.property.1
   let r : Matrix (Fin 3) (Fin 3) ℝ :=
-    fun a c => ((u.val * pauliAxes a * u.valᴴ * pauliAxes c).trace.re / 2)
-  have he (a : Fin 3) : u.val * pauliAxes a * u.valᴴ =
-      ∑ c : Fin 3, (r a c : ℂ) • pauliAxes c := by
+    fun a c => ((u.val * pauli a * u.valᴴ * pauli c).trace.re / 2)
+  have he (a : Fin 3) : u.val * pauli a * u.valᴴ =
+      ∑ c : Fin 3, (r a c : ℂ) • pauli c := by
     apply pauli_expansion
-    · change (u.val * pauliAxes a * u.valᴴ)ᴴ = _
-      simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
-        (pauli_hermitian a).eq, Matrix.mul_assoc]
-    · rw [Matrix.trace_mul_cycle, hu, Matrix.one_mul, pauli_trace]
+    · exact Matrix.isHermitian_mul_mul_conjTranspose u.val (pauli_hermitian a)
+    · rw [Matrix.trace_mul_cycle, hu, Matrix.one_mul, D5.S3.QuantumChannels.ChannelTimeReversalNoGo.PauliChannels.sigma_trace]
   have hg (a b : Fin 3) :
-      ((u.val * pauliAxes a * u.valᴴ) *
-        (u.val * pauliAxes b * u.valᴴ)).trace = if a = b then 2 else 0 := by
+      ((u.val * pauli a * u.valᴴ) *
+        (u.val * pauli b * u.valᴴ)).trace = if a = b then 2 else 0 := by
     calc
-      _ = (u.val * (pauliAxes a * pauliAxes b) * u.valᴴ).trace := by
+      _ = (u.val * (pauli a * pauli b) * u.valᴴ).trace := by
         congr 1
         simp only [Matrix.mul_assoc]
         rw [← Matrix.mul_assoc u.valᴴ u.val, hu, Matrix.one_mul]
@@ -130,15 +112,10 @@ theorem orthogonal_sandwich {k n : Type*} [Fintype k] [Fintype n]
     ite_true]
 
 theorem tensor_unitary (n : ℕ) (u : Matrix.specialUnitaryGroup (Fin 2) ℂ) :
-    (tensorOp (fun _ : Fin n => u.val))ᴴ * tensorOp (fun _ : Fin n => u.val) = 1 := by
-  have ht : (tensorOp (fun _ : Fin n => u.val))ᴴ =
-      tensorOp (fun _ : Fin n => u.valᴴ) := by
-    ext x y
-    simp [tensorOp, Matrix.conjTranspose_apply, map_prod]
-  rw [ht, tensor_mul]
-  have hu : u.valᴴ * u.val = 1 := Matrix.mem_unitaryGroup_iff'.mp u.property.1
-  simp_rw [hu]
-  exact D5.S3.Quantum.Codes.StabilizerGenuineEntanglementCommutationRank.coordinate_product_one
+    (tensorOp (fun _ : Fin n => u.val))ᴴ * tensorOp (fun _ : Fin n => u.val) = 1 :=
+  Matrix.mem_unitaryGroup_iff'.mp
+    (D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.tensor_unitary _
+      (fun _ => u.property.1))
 
 theorem local_action {n : ℕ} (k : Fin n) (a : Matrix (Fin 2) (Fin 2) ℂ)
     (f : (Fin n → Fin 2) → ℂ) (x : Fin n → Fin 2) :
@@ -147,15 +124,14 @@ theorem local_action {n : ℕ} (k : Fin n) (a : Matrix (Fin 2) (Fin 2) ℂ)
   have he (b : Fin 2) : e.symm (b, fun i => x i.val) = Function.update x k b := by
     funext i
     by_cases hi : i = k <;>
-      dsimp only [e, Equiv.funSplitAt, Equiv.piSplitAt] <;> simp [hi]
+      simp [e, Equiv.funSplitAt_symm_apply, hi]
   have hk (b : Fin 2) (z : {i : Fin n // i ≠ k} → Fin 2) :
       localOp k a x (e.symm (b, z)) =
         a (x k) b * (if (fun i : {i : Fin n // i ≠ k} => x i.val) = z then 1 else 0) := by
     unfold localOp tensorOp
     rw [Matrix.of_apply, Fintype.prod_eq_mul_prod_subtype_ne _ k]
     have hy (i : {i : Fin n // i ≠ k}) : e.symm (b, z) i.val = z i := by
-      dsimp only [e, Equiv.funSplitAt, Equiv.piSplitAt]
-      simp [i.property]
+      simp only [e, Equiv.funSplitAt_symm_apply, dite_eq_right i.property]
     have hp : (∏ i : {i : Fin n // i ≠ k},
         Function.update (fun _ : Fin n => (1 : Matrix (Fin 2) (Fin 2) ℂ)) k a i.val
           (x i.val) (e.symm (b, z) i.val)) =
@@ -178,12 +154,12 @@ theorem local_action {n : ℕ} (k : Fin n) (a : Matrix (Fin 2) (Fin 2) ℂ)
 
 def collectiveSpin (n : ℕ) (a : Fin 3) :
     Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ :=
-  (1 / 2 : ℂ) • ∑ k : Fin n, localOp k (pauliAxes a)
+  (1 / 2 : ℂ) • ∑ k : Fin n, localOp k (pauli a)
 
 theorem collective_tensor_rotation (n : ℕ)
     (u : Matrix.specialUnitaryGroup (Fin 2) ℂ) (r : Matrix (Fin 3) (Fin 3) ℝ)
-    (hr : ∀ a, u.val * pauliAxes a * u.valᴴ =
-      ∑ c : Fin 3, (r a c : ℂ) • pauliAxes c) (a : Fin 3) :
+    (hr : ∀ a, u.val * pauli a * u.valᴴ =
+      ∑ c : Fin 3, (r a c : ℂ) • pauli c) (a : Fin 3) :
     tensorOp (fun _ : Fin n => u.val) * collectiveSpin n a *
       (tensorOp (fun _ : Fin n => u.val))ᴴ =
         ∑ c : Fin 3, (r a c : ℂ) • collectiveSpin n c := by
@@ -191,11 +167,10 @@ theorem collective_tensor_rotation (n : ℕ)
   have hu : u.val * u.valᴴ = 1 := Matrix.mem_unitaryGroup_iff.mp u.property.1
   have ht : (tensorOp (fun _ : Fin n => u.val))ᴴ =
       tensorOp (fun _ : Fin n => u.valᴴ) := by
-    ext x y
-    simp [tensorOp, Matrix.conjTranspose_apply]
+    exact D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.tensor_adj _
   have hc (k : Fin n) : tensorOp (fun _ : Fin n => u.val) *
-      localOp k (pauliAxes a) * (tensorOp (fun _ : Fin n => u.val))ᴴ =
-        localOp k (u.val * pauliAxes a * u.valᴴ) := by
+      localOp k (pauli a) * (tensorOp (fun _ : Fin n => u.val))ᴴ =
+        localOp k (u.val * pauli a * u.valᴴ) := by
     unfold localOp
     rw [ht, tensor_mul, tensor_mul]
     congr 1

@@ -9,7 +9,8 @@
 import D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation
 import D5.S3.Quantum.Measurement.AnticoherenceCovariantChannel
 import D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
-import D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability
+import D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT
+import D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
 
 /-!
 The mixed-state reading of axiom (T4) in Denis–Lacaille–Martin–Serrano-Ensástiga,
@@ -26,7 +27,7 @@ noncomputable section
 namespace D5.S3.Quantum.Measurement.AnticoherenceTraceDistanceRefutation
 
 open scoped BigOperators ComplexOrder MatrixOrder
-open Matrix
+open _root_.Matrix
 open D5.S3.Quantum.Measurement.AnticoherenceCovariantChannel
   (witnessState witnessKraus witnessChannel quadrupole witnessOutput
     kraus_complete witness_state witness_output)
@@ -35,13 +36,12 @@ open D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm)
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf (MatrixMap)
 open D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound (Jplus Jx Jy Jz)
 open D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
-  (pauliAxes pauli_rotation tensor_unitary quadratic_rotation orthogonal_sandwich
+  (pauli_rotation tensor_unitary quadratic_rotation orthogonal_sandwich
     local_action collectiveSpin collective_tensor_rotation)
 
-/-- The tensor power in the computational basis of `n` qubits. -/
-def qubitPower (n : ℕ) (u : Matrix (Fin 2) (Fin 2) ℂ) :
-    Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ :=
-  fun x y => ∏ k, u (x k) (y k)
+open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (tensorOp)
+open D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction (pauli)
+open D5.S3.Quantum.Entanglement.OccupancyWordSectors
 
 /-- The normalized Dicke embedding; the spin index counts qubits in state one. -/
 def dickeIsometry (n : ℕ) : Matrix (Fin n → Fin 2) (Fin (n + 1)) ℂ :=
@@ -51,7 +51,7 @@ def dickeIsometry (n : ℕ) : Matrix (Fin n → Fin 2) (Fin (n + 1)) ℂ :=
 /-- The spin-`n/2` representation obtained by restricting the qubit tensor power. -/
 def spinAction (n : ℕ) (u : Matrix.specialUnitaryGroup (Fin 2) ℂ) :
     Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ :=
-  (dickeIsometry n)ᴴ * qubitPower n u.val * dickeIsometry n
+  (dickeIsometry n)ᴴ * tensorOp (fun _ : Fin n => u.val) * dickeIsometry n
 
 /-- The Dicke splitting coefficients for the first `t` and last `n-t` qubits. -/
 private def dickeSplit (n t : ℕ) :
@@ -105,51 +105,6 @@ def claim : Prop :=
     ∀ ρ : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ,
       ρ.PosSemidef → ρ.trace = 1 → anticoherence t ρ ≤ anticoherence t (φ ρ)
 
-private lemma dicke_count (n k : ℕ) :
-    (∑ x : Fin n → Fin 2, if (∑ i, (x i).val) = k then (1 : ℂ) else 0) =
-      (n.choose k : ℂ) := by
-  have hp : (∏ _i : Fin n, ∑ b : Fin 2, (Polynomial.X : Polynomial ℂ) ^ b.val) =
-      (1 + Polynomial.X) ^ n := by simp [Fin.sum_univ_two]
-  rw [Fintype.prod_sum] at hp
-  simp_rw [Finset.prod_pow_eq_pow_sum] at hp
-  have h := congrArg (fun p : Polynomial ℂ => p.coeff k) hp
-  simpa [Polynomial.finsetSum_coeff, Polynomial.coeff_X_pow, eq_comm,
-    Polynomial.coeff_one_add_X_pow] using h
-
-private lemma dicke_isometry (n : ℕ) : (dickeIsometry n)ᴴ * dickeIsometry n = 1 := by
-  ext r s
-  rw [Matrix.mul_apply]
-  simp only [Matrix.conjTranspose_apply]
-  by_cases hrs : r = s
-  · subst s
-    have hs : (Real.sqrt (n.choose r.val : ℝ) : ℂ) ^ 2 = (n.choose r.val : ℂ) := by
-      exact_mod_cast Real.sq_sqrt (Nat.cast_nonneg (n.choose r.val))
-    have hn : (n.choose r.val : ℂ) ≠ 0 := by
-      exact_mod_cast (Nat.choose_pos (by omega : r.val ≤ n)).ne'
-    have he (x : Fin n → Fin 2) :
-        star (dickeIsometry n x r) * dickeIsometry n x r =
-          (if (∑ i, (x i).val) = r.val then (1 : ℂ) else 0) /
-            (n.choose r.val : ℂ) := by
-      rw [dickeIsometry]
-      by_cases hx : (∑ i, (x i).val) = r.val
-      · simp only [dickeIsometry, hx, ite_true, Complex.star_def, map_inv₀,
-          Complex.conj_ofReal]
-        rw [← mul_inv, ← sq, hs, one_div]
-      · simp [dickeIsometry, hx]
-    simp_rw [he]
-    rw [← Finset.sum_div, dicke_count, div_self hn]
-    simp
-  · rw [Matrix.one_apply_ne hrs]
-    apply Finset.sum_eq_zero
-    intro x _
-    by_cases hr : (∑ i, (x i).val) = r.val
-    · have hs : (∑ i, (x i).val) ≠ s.val := by
-        intro hs
-        exact hrs (Fin.ext (hr.symm.trans hs))
-      have hrsval : r.val ≠ s.val := fun he => hrs (Fin.ext he)
-      simp [dickeIsometry, hr, hrsval]
-    · simp only [dickeIsometry, hr, ite_false, star_zero, zero_mul]
-
 private lemma weight_card (n : ℕ) (x : Fin n → Fin 2) :
     (∑ i, (x i).val) = (Finset.univ.filter (fun i => x i = 1)).card := by
   calc
@@ -160,48 +115,115 @@ private lemma weight_card (n : ℕ) (x : Fin n → Fin 2) :
       fin_cases b <;> simp
     _ = _ := by simpa using (Finset.sum_boole (Finset.univ : Finset (Fin n)) (fun i => x i = 1))
 
+
+private lemma weight_count (n : ℕ) (x : Fin n → Fin 2) :
+    (occupation x).count 1 = ∑ i, (x i).val := by
+  rw [← D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT.occupation_fiber_card x 1, Fintype.subtype_card, weight_card]
+
+private lemma occupation_eq_iff_weight (n : ℕ) (x : Fin n → Fin 2)
+    (a : Multiset (Fin 2)) (ha : a.card = n) :
+    occupation x = a ↔ (∑ i, (x i).val) = a.count 1 := by
+  constructor
+  · intro h
+    rw [← weight_count n x, h]
+  · intro h
+    have hx : (occupation x).count 0 + (occupation x).count 1 = n := by
+      simpa only [Fin.sum_univ_two, occupation_card] using
+        (Multiset.sum_count_eq_card (s := Finset.univ) (m := occupation x)
+          (fun _ _ => Finset.mem_univ _))
+    have ha' : a.count 0 + a.count 1 = n := by
+      simpa only [Fin.sum_univ_two, ha] using
+        (Multiset.sum_count_eq_card (s := Finset.univ) (m := a)
+          (fun _ _ => Finset.mem_univ _))
+    rw [← weight_count n x] at h
+    apply Multiset.ext.mpr
+    intro b
+    fin_cases b <;> simp_all
+    omega
+
+
+private lemma dicke_count (n k : ℕ) :
+    (∑ x : Fin n → Fin 2, if (∑ i, (x i).val) = k then (1 : ℂ) else 0) =
+      (n.choose k : ℂ) := by
+  let e : (Fin n → Fin 2) ≃ (Fin n → Bool) :=
+    Equiv.arrowCongr (Equiv.refl (Fin n)) finTwoEquiv
+  have hw (x : Fin n → Fin 2) :
+      (Finset.univ.filter (fun j => e x j = true)).card = ∑ i, (x i).val := by
+    rw [weight_card]
+    congr 1
+  have hc : (∑ y : Fin n → Bool,
+      if (Finset.univ.filter (fun j => y j = true)).card = k then (1 : ℂ) else 0) =
+      (n.choose k : ℂ) := by
+    rw [← Finset.sum_filter]
+    simp [D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.weight_class_card]
+  rw [← e.sum_comp] at hc
+  simpa only [hw] using hc
+
+
+private lemma dicke_isometry (n : ℕ) : (dickeIsometry n)ᴴ * dickeIsometry n = 1 := by
+  let a (r : Fin (n + 1)) : Multiset (Fin 2) :=
+    Multiset.replicate (n - r.val) 0 + Multiset.replicate r.val 1
+  have ha (r : Fin (n + 1)) : (a r).card = n := by
+    simp [a]; omega
+  have hcount (r : Fin (n + 1)) : (a r).count 1 = r.val := by simp [a, Multiset.count_replicate]
+  have he (r : Fin (n + 1)) (x : Fin n → Fin 2) :
+      occupation x = a r ↔ (∑ i, (x i).val) = r.val := by
+    rw [occupation_eq_iff_weight n x (a r) (ha r), hcount]
+  have hm (r : Fin (n + 1)) : D5.S3.Quantum.Entanglement.OccupancyWordSectors.multiplicity n (a r) = n.choose r.val := by
+    have h := dicke_count n r.val
+    simp only [D5.S3.Quantum.Entanglement.OccupancyWordSectors.multiplicity, sectorWords]
+    rw [show (Finset.univ.filter (fun w : Fin n → Fin 2 => occupation w = a r)) =
+      Finset.univ.filter (fun w => (∑ i, (w i).val) = r.val) by ext w; simp [he]]
+    exact_mod_cast (by simpa only [← Finset.sum_filter, Finset.sum_const,
+      nsmul_eq_mul, mul_one] using h :
+      ((Finset.univ.filter (fun w : Fin n → Fin 2 => (∑ i, (w i).val) = r.val)).card : ℂ) =
+        (n.choose r.val : ℂ))
+  have hv (r : Fin (n + 1)) (x : Fin n → Fin 2) :
+      dickeIsometry n x r = sectorVector n (a r) x := by
+    simp only [dickeIsometry.eq_1, sectorVector, sectorWords, Finset.mem_filter,
+      Finset.mem_univ, true_and, he, hm]
+  have hi (r s : Fin (n + 1)) : a r = a s ↔ r = s := by
+    constructor
+    · intro h
+      apply Fin.ext
+      simpa only [hcount] using congrArg (fun z : Multiset (Fin 2) => z.count 1) h
+    · exact congrArg a
+  ext r s
+  simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, hv]
+  rw [sector_gram _ _ (ha r)]
+  simp only [hi, Matrix.one_apply]
+
 private lemma weight_le (n : ℕ) (x : Fin n → Fin 2) : (∑ i, (x i).val) ≤ n := by
   rw [weight_card]
-  exact (Finset.card_filter_le _ _).trans_eq (by simp)
+  exact card_finset_fin_le _
 
 private lemma same_weight_permutation (n : ℕ) (x y : Fin n → Fin 2)
     (h : (∑ i, (x i).val) = ∑ i, (y i).val) :
     ∃ σ : Equiv.Perm (Fin n), y ∘ σ = x := by
-  have hc : (Finset.univ.filter (fun i => x i = 1)).card =
-      (Finset.univ.filter (fun i => y i = 1)).card := by
-    rw [← weight_card, ← weight_card, h]
-  obtain ⟨σ, hσ⟩ := Equiv.Perm.exists_map_finset_eq _ _ hc
-  refine ⟨σ, ?_⟩
-  funext i
-  have hm : y (σ i) = 1 ↔ x i = 1 := by
-    have he : σ i ∈ Finset.univ.filter (fun i => y i = 1) ↔
-        i ∈ Finset.univ.filter (fun i => x i = 1) := by rw [← hσ]; simp
-    simpa using he
-  change y (σ i) = x i
-  generalize hx : x i = b at *
-  generalize hy : y (σ i) = c at *
-  fin_cases b <;> fin_cases c <;> simp_all
+  apply D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT.occupation_same_orbit
+  apply (occupation_eq_iff_weight n x (occupation y) (occupation_card y)).2
+  rw [weight_count, h]
 
 private lemma tensor_weight_constant (n : ℕ) (u : Matrix (Fin 2) (Fin 2) ℂ)
     (x y : Fin n → Fin 2) (r : Fin (n + 1))
     (h : (∑ i, (x i).val) = ∑ i, (y i).val) :
-    (qubitPower n u * dickeIsometry n) x r =
-      (qubitPower n u * dickeIsometry n) y r := by
+    (tensorOp (fun _ : Fin n => u) * dickeIsometry n) x r =
+      (tensorOp (fun _ : Fin n => u) * dickeIsometry n) y r := by
   have hp (σ : Equiv.Perm (Fin n)) (x : Fin n → Fin 2) :
-      (qubitPower n u * dickeIsometry n) (x ∘ σ) r =
-        (qubitPower n u * dickeIsometry n) x r := by
+      (tensorOp (fun _ : Fin n => u) * dickeIsometry n) (x ∘ σ) r =
+        (tensorOp (fun _ : Fin n => u) * dickeIsometry n) x r := by
     let e := Equiv.arrowCongr σ.symm (Equiv.refl (Fin 2))
     rw [Matrix.mul_apply, Matrix.mul_apply]
     calc
       _ = ∑ z : Fin n → Fin 2,
-          qubitPower n u (x ∘ σ) (z ∘ σ) * dickeIsometry n (z ∘ σ) r :=
-        (e.sum_comp (fun z => qubitPower n u (x ∘ σ) z * dickeIsometry n z r)).symm
+          tensorOp (fun _ : Fin n => u) (x ∘ σ) (z ∘ σ) * dickeIsometry n (z ∘ σ) r :=
+        (e.sum_comp (fun z => tensorOp (fun _ : Fin n => u) (x ∘ σ) z * dickeIsometry n z r)).symm
       _ = _ := by
         apply Finset.sum_congr rfl
         intro z _
         have hw : (∑ i, (z (σ i)).val) = ∑ i, (z i).val :=
           Equiv.sum_comp σ (fun i => (z i).val)
-        have hu : qubitPower n u (x ∘ σ) (z ∘ σ) = qubitPower n u x z :=
+        have hu : tensorOp (fun _ : Fin n => u) (x ∘ σ) (z ∘ σ) = tensorOp (fun _ : Fin n => u) x z :=
           Equiv.prod_comp σ (fun i => u (x i) (z i))
         simp only [hu, dickeIsometry, Function.comp_apply, hw]
   obtain ⟨σ, hσ⟩ := same_weight_permutation n x y h
@@ -237,19 +259,19 @@ private lemma dicke_projector_entry (n : ℕ) (x y : Fin n → Fin 2) :
 
 private lemma tensor_preserves_symmetric (n : ℕ)
     (u : Matrix.specialUnitaryGroup (Fin 2) ℂ) :
-    qubitPower n u.val * dickeIsometry n = dickeIsometry n * spinAction n u := by
+    tensorOp (fun _ : Fin n => u.val) * dickeIsometry n = dickeIsometry n * spinAction n u := by
   have hp : (dickeIsometry n * (dickeIsometry n)ᴴ) *
-      (qubitPower n u.val * dickeIsometry n) = qubitPower n u.val * dickeIsometry n := by
+      (tensorOp (fun _ : Fin n => u.val) * dickeIsometry n) = tensorOp (fun _ : Fin n => u.val) * dickeIsometry n := by
     ext x r
     rw [Matrix.mul_apply]
     simp_rw [dicke_projector_entry]
     have he (y : Fin n → Fin 2) :
         (if (∑ i, (x i).val) = ∑ i, (y i).val then
           (n.choose (∑ i, (x i).val) : ℂ)⁻¹ else 0) *
-            (qubitPower n u.val * dickeIsometry n) y r =
+            (tensorOp (fun _ : Fin n => u.val) * dickeIsometry n) y r =
         (if (∑ i, (y i).val) = ∑ i, (x i).val then (1 : ℂ) else 0) *
           ((n.choose (∑ i, (x i).val) : ℂ)⁻¹ *
-            (qubitPower n u.val * dickeIsometry n) x r) := by
+            (tensorOp (fun _ : Fin n => u.val) * dickeIsometry n) x r) := by
       by_cases hxy : (∑ i, (x i).val) = ∑ i, (y i).val
       · rw [if_pos hxy, if_pos hxy.symm, one_mul,
           tensor_weight_constant n u.val y x r hxy.symm]
@@ -264,9 +286,8 @@ private lemma tensor_preserves_symmetric (n : ℕ)
 
 private def dickeSplitSum (t s : ℕ) :
     Matrix (Fin (t + 1) × Fin (s + 1)) (Fin (t + s + 1)) ℂ :=
-  fun kl r => if kl.1.val + kl.2.val = r.val then
-    ((Real.sqrt ((t.choose kl.1.val : ℝ) * (s.choose kl.2.val : ℝ)) /
-      Real.sqrt ((t + s).choose r.val : ℝ) : ℝ) : ℂ) else 0
+  fun kl r => dickeSplit (t + s) t
+    (kl.1, ⟨kl.2.val, by have := kl.2.isLt; omega⟩) r
 
 private lemma dicke_split_factor (t s : ℕ) :
     (dickeIsometry (t + s)).submatrix
@@ -279,12 +300,12 @@ private lemma dicke_split_factor (t s : ℕ) :
     rw [Fin.sum_univ_add]
     simp [k, l]
   rw [Matrix.mul_apply, Finset.sum_eq_single (k, l)]
-  · rw [dickeSplitSum]
+  · rw [dickeSplitSum, dickeSplit]
     dsimp only [Matrix.kronecker, Matrix.kroneckerMap]
     simp only [Matrix.submatrix_apply, id_eq,
       Matrix.of_apply, dickeIsometry,
       hw, show (∑ i, (x i).val) = k.val from rfl,
-      show (∑ i, (y i).val) = l.val from rfl, ite_true, dickeSplitSum,
+      show (∑ i, (y i).val) = l.val from rfl, ite_true, dickeSplitSum, dickeSplit,
       Nat.add_sub_cancel_left]
     by_cases h : k.val + l.val = r.val
     · rw [if_pos h, if_pos h, Real.sqrt_mul (by positivity)]
@@ -418,6 +439,10 @@ private lemma reducedState_eq_dickeSplit (n t : ℕ) (ht : t ≤ n)
         fun kl r => if kl.1.val + kl.2.val = r.val then
           ((Real.sqrt ((t.choose kl.1.val : ℝ) * (m.choose kl.2.val : ℝ)) /
             Real.sqrt ((t + s).choose r.val : ℝ) : ℝ) : ℂ) else 0
+      have hv : dickeSplitSum t s = v s := by
+        ext kl r
+        simp only [dickeSplitSum, dickeSplit, v, Nat.add_sub_cancel_left]
+      rw [hv]
       change partialTraceRight (v s * ρ * (v s)ᴴ) =
         partialTraceRight (v (t + s - t) * ρ * (v (t + s - t))ᴴ)
       exact congrArg (fun m => partialTraceRight (v m * ρ * (v m)ᴴ))
@@ -503,17 +528,17 @@ private lemma cartesian_channel (x : Matrix (Fin 9) (Fin 9) ℂ) :
 private lemma spin_action_unitary (n : ℕ)
     (u : Matrix.specialUnitaryGroup (Fin 2) ℂ) :
     (spinAction n u)ᴴ * spinAction n u = 1 := by
-  have ht : (qubitPower n u.val)ᴴ * qubitPower n u.val = 1 := tensor_unitary n u
+  have ht : (tensorOp (fun _ : Fin n => u.val))ᴴ * tensorOp (fun _ : Fin n => u.val) = 1 := tensor_unitary n u
   calc
     _ = (dickeIsometry n * spinAction n u)ᴴ *
         (dickeIsometry n * spinAction n u) := by
       simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
       rw [← Matrix.mul_assoc (dickeIsometry n)ᴴ (dickeIsometry n), dicke_isometry,
         Matrix.one_mul]
-    _ = (qubitPower n u.val * dickeIsometry n)ᴴ *
-        (qubitPower n u.val * dickeIsometry n) := by
+    _ = (tensorOp (fun _ : Fin n => u.val) * dickeIsometry n)ᴴ *
+        (tensorOp (fun _ : Fin n => u.val) * dickeIsometry n) := by
       rw [tensor_preserves_symmetric]
-    _ = (dickeIsometry n)ᴴ * ((qubitPower n u.val)ᴴ * qubitPower n u.val) *
+    _ = (dickeIsometry n)ᴴ * ((tensorOp (fun _ : Fin n => u.val))ᴴ * tensorOp (fun _ : Fin n => u.val)) *
         dickeIsometry n := by simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
     _ = 1 := by rw [ht, Matrix.mul_one, dicke_isometry]
 
@@ -549,8 +574,7 @@ private lemma dicke_site_sum (n : ℕ) (a : Matrix (Fin 2) (Fin 2) ℂ)
       (∑ i, (Function.update x k b i).val) + (x k).val = w + b.val := by
     have he : (fun i => (Function.update x k b i).val) =
         Function.update (fun i => (x i).val) k b.val := by
-      funext i
-      by_cases hi : i = k <;> simp [Function.update_apply, hi]
+      exact Function.comp_update Fin.val x k b
     rw [he, Finset.sum_update_of_mem (Finset.mem_univ k)]
     simp only [Finset.sdiff_singleton_eq_erase]
     have h := Finset.add_sum_erase Finset.univ (fun i => (x i).val) (Finset.mem_univ k)
@@ -599,9 +623,9 @@ private lemma dicke_collective (a : Fin 3) :
   ext x r
   have he (k : Fin 8) :
       (D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.localOp k
-        (pauliAxes a) * dickeIsometry 8) x r =
-      ∑ b : Fin 2, pauliAxes a (x k) b * dickeIsometry 8 (Function.update x k b) r :=
-    local_action k (pauliAxes a) (fun y => dickeIsometry 8 y r) x
+        (pauli a) * dickeIsometry 8) x r =
+      ∑ b : Fin 2, pauli a (x k) b * dickeIsometry 8 (Function.update x k b) r :=
+    local_action k (pauli a) (fun y => dickeIsometry 8 y r) x
   simp only [collectiveSpin, Matrix.smul_mul, Matrix.sum_mul, Matrix.smul_apply,
     Matrix.sum_apply, smul_eq_mul]
   simp_rw [he]
@@ -611,7 +635,7 @@ private lemma dicke_collective (a : Fin 3) :
   generalize hw : (∑ k, (x k).val) = w at *
   dsimp only [Jx, Jy, Jz]
   fin_cases a <;> fin_cases r <;> interval_cases w <;>
-    norm_num [pauliAxes,
+    norm_num [pauli,
       D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
       D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
       dickeCoefficient, dickeIsometry, hw, Matrix.mul_apply, Fin.sum_univ_succ, Nat.choose,
@@ -628,15 +652,15 @@ private lemma collective_rotation (u : Matrix.specialUnitaryGroup (Fin 2) ℂ) :
           ∑ c : Fin 3, (r a c : ℂ) • (![Jx 8, Jy 8, Jz 8] c) := by
   obtain ⟨r, hr, hpauli⟩ := pauli_rotation u
   refine ⟨r, hr, ?_⟩
-  have ht : (qubitPower 8 u.val)ᴴ * qubitPower 8 u.val = 1 := tensor_unitary 8 u
+  have ht : (tensorOp (fun _ : Fin 8 => u.val))ᴴ * tensorOp (fun _ : Fin 8 => u.val) = 1 := tensor_unitary 8 u
   have hd : spinAction 8 u * (spinAction 8 u)ᴴ = 1 :=
     mul_eq_one_comm.mp (spin_action_unitary 8 u)
-  have hi : (qubitPower 8 u.val)ᴴ * dickeIsometry 8 =
+  have hi : (tensorOp (fun _ : Fin 8 => u.val))ᴴ * dickeIsometry 8 =
       dickeIsometry 8 * (spinAction 8 u)ᴴ := by
     calc
-      _ = (qubitPower 8 u.val)ᴴ * (dickeIsometry 8 * spinAction 8 u) *
+      _ = (tensorOp (fun _ : Fin 8 => u.val))ᴴ * (dickeIsometry 8 * spinAction 8 u) *
           (spinAction 8 u)ᴴ := by simp only [Matrix.mul_assoc, hd, Matrix.mul_one]
-      _ = (qubitPower 8 u.val)ᴴ * (qubitPower 8 u.val * dickeIsometry 8) *
+      _ = (tensorOp (fun _ : Fin 8 => u.val))ᴴ * (tensorOp (fun _ : Fin 8 => u.val) * dickeIsometry 8) *
           (spinAction 8 u)ᴴ := by rw [tensor_preserves_symmetric]
       _ = _ := by rw [← Matrix.mul_assoc _ _ (dickeIsometry 8), ht, Matrix.one_mul]
   have hc (a : Fin 3) : (dickeIsometry 8)ᴴ * collectiveSpin 8 a *
@@ -644,16 +668,16 @@ private lemma collective_rotation (u : Matrix.specialUnitaryGroup (Fin 2) ℂ) :
     rw [Matrix.mul_assoc, dicke_collective, ← Matrix.mul_assoc,
       dicke_isometry, Matrix.one_mul]
   intro a
-  have hrot : qubitPower 8 u.val * collectiveSpin 8 a * (qubitPower 8 u.val)ᴴ =
+  have hrot : tensorOp (fun _ : Fin 8 => u.val) * collectiveSpin 8 a * (tensorOp (fun _ : Fin 8 => u.val))ᴴ =
       ∑ c : Fin 3, (r a c : ℂ) • collectiveSpin 8 c :=
     collective_tensor_rotation 8 u r hpauli a
   calc
-    _ = (dickeIsometry 8)ᴴ * qubitPower 8 u.val *
+    _ = (dickeIsometry 8)ᴴ * tensorOp (fun _ : Fin 8 => u.val) *
         (dickeIsometry 8 * (![Jx 8, Jy 8, Jz 8] a)) * (spinAction 8 u)ᴴ := by
-      change ((dickeIsometry 8)ᴴ * qubitPower 8 u.val * dickeIsometry 8) * _ * _ = _
+      change ((dickeIsometry 8)ᴴ * tensorOp (fun _ : Fin 8 => u.val) * dickeIsometry 8) * _ * _ = _
       simp only [Matrix.mul_assoc]
     _ = (dickeIsometry 8)ᴴ *
-        (qubitPower 8 u.val * collectiveSpin 8 a * (qubitPower 8 u.val)ᴴ) *
+        (tensorOp (fun _ : Fin 8 => u.val) * collectiveSpin 8 a * (tensorOp (fun _ : Fin 8 => u.val))ᴴ) *
           dickeIsometry 8 := by
       rw [← dicke_collective]
       simp only [Matrix.mul_assoc]
