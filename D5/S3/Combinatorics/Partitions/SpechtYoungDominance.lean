@@ -250,9 +250,9 @@ theorem card_filter_youngBlock_lt {n : ℕ} (μ : n.Partition) (k : ℕ) :
 private theorem stabilizer_quotientGroup_mk_youngSubgroup {n : ℕ}
     (μ : n.Partition) (g : Equiv.Perm (Fin n)) :
     MulAction.stabilizer (Equiv.Perm (Fin n)) (g : Equiv.Perm (Fin n) ⧸ youngSubgroup μ) =
-      fiberSubgroup (youngBlock μ ∘ g⁻¹) := by
+      fiberSubgroup (youngBlock μ ∘ ⇑(g⁻¹)) := by
   have hs : (g : Equiv.Perm (Fin n) ⧸ youngSubgroup μ) =
-      g • (1 : Equiv.Perm (Fin n) ⧸ youngSubgroup μ) := by
+      g • ((1 : Equiv.Perm (Fin n)) : Equiv.Perm (Fin n) ⧸ youngSubgroup μ) := by
     rw [MulAction.Quotient.smul_coe, smul_eq_mul, mul_one]
   rw [hs, MulAction.stabilizer_smul_eq_stabilizer_map_conj,
     MulAction.stabilizer_quotient, youngSubgroup_eq_fiberSubgroup]

@@ -119,6 +119,7 @@ theorem sum_spechtTrace_mul_card_fixedPoints (μ ν : n.Partition) :
 the fixed-tabloid power-sum expansion. The remaining coefficients are genuine dimensions of
 Hom spaces into Young permutation modules. They have NOT been identified with Kostka numbers;
 therefore the right side is NOT asserted to be the Schur polynomial of μ. -/
+open scoped Classical in
 theorem sum_spechtTrace_smul_psumPart_eq_multiplicities {σ : Type*} [Fintype σ]
     (μ : n.Partition) :
     (∑ π : Perm (Fin n), LinearMap.trace ℂ _ ((spechtModuleℂ μ).ρ π) •
@@ -167,6 +168,7 @@ theorem hsw_frobChar_eq_fixedTabloid_coefficients (μ : Fin 3 → ℕ)
   apply Finset.sum_congr rfl
   intro ν _
   rw [mul_smul_comm, coeff_smul, smul_eq_mul]
+  rfl
 
 end TauCeti
 
