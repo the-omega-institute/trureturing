@@ -6,6 +6,7 @@
    utility: none
    digest: Uniform doubled seam and peak inequalities on the entire upper cone. -/
 import D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Source
+/-! Doubled endpoint checks for strict and equal parameters. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper

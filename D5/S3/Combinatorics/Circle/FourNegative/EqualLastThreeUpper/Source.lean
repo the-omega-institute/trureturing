@@ -8,6 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 import D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Source
 
+/-! Exact physical chains with their doubled terminal values. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper
@@ -57,11 +58,9 @@ private theorem source (a s : ℕ) (hs : 2≤s) (ha : s≤a) :
   have el (r : Fin 4) : chainLength a s s s r = length a s r := by
     fin_cases r <;> rfl
   have en (r : Fin 4) : nextBase a s s s r = successor (heads ((2:ℤ)^a) (2^s)) r := by
-    fin_cases r <;> simp only [nextBase,successor] <;> exact eb _
+    fin_cases r <;> simp [nextBase,successor,eb]
   have enn (r : Fin 4) : nextNewBase a s s s r = newSuccessor ((2:ℤ)^a) (2^s) r := by
-    fin_cases r
-    all_goals simp only [nextNewBase,newSuccessor]
-    all_goals first | exact eg _ | exact eb _
+    fin_cases r <;> simp [nextNewBase,newSuccessor,eg,eb]
   have hr (r : Fin 4) : 1≤length a s r := by fin_cases r <;> simp [length] <;> omega
   have rel (r : Fin 4) :
       (2:ℤ)^(chainLength a s s s r)*base a s s s r =
@@ -80,13 +79,14 @@ private theorem source (a s : ℕ) (hs : 2≤s) (ha : s≤a) :
   · intro r i hi
     have hh := hf r i (by rw [el]; omega)
     have hhn := hg r i (by rw [el]; omega)
-    rw [el,if_pos (by omega),eb,es] at hh
-    rw [el,if_pos (by omega),eg,es] at hhn
+    rw [el,ite_eq_left (by omega),eb,es] at hh
+    rw [el,ite_eq_left (by omega),eg,es] at hhn
     exact ⟨hh,hhn⟩
   · intro r
+    have hr' := hr r
     have hh := hf r (length a s r-1) (by rw [el]; omega)
     have hhn := hg r (length a s r-1) (by rw [el]; omega)
-    rw [el,if_neg (by omega),es] at hh hhn
+    rw [el,ite_eq_right (by omega),es] at hh hhn
     rw [show start s r+length a s r-1 = start s r+(length a s r-1) by omega]
     dsimp [f,g,N]
     rw [hh,hhn]
@@ -107,13 +107,13 @@ private theorem source_numeric (a s : ℕ) :
   · dsimp [N,sourceMod]; ring
   · dsimp [modulus,rank,N,sourceMod]
     rw [show a+3*s=a+s+s+s by omega]
-    simp only [pow_add]; ring
+    simp only [pow_add] <;> ring
   · dsimp [modulus,rank,N,sourceMod]
     rw [show a+3*s+1=a+s+s+s+1 by omega]
-    simp only [pow_add,pow_one]; ring
+    simp only [pow_add,pow_one] <;> ring
   · simp only [amplitude,Nat.cast_add,Nat.cast_one,Nat.cast_pow,Nat.cast_ofNat]
     rw [show a+2*s=a+s+s by omega]
-    dsimp [heads,delta]; simp only [pow_add]; ring
+    dsimp [heads,delta]; simp only [pow_add] <;> ring
 
 private theorem totals (a s : ℕ) (hs : 2≤s) (ha : s≤a) :
     ((List.range (rank a s)).map (f a s)).sum=0 ∧
@@ -121,7 +121,7 @@ private theorem totals (a s : ℕ) (hs : 2≤s) (ha : s≤a) :
   have ht := source_totals a s s s (by omega) hs hs hs
   have eb : base a s s s 0 = heads ((2:ℤ)^a) (2^s) 0 := by
     dsimp [base,heads,delta]; ring
-  simpa only [size,show a+s+s+s=rank a s by dsimp [rank]; omega,eb] using
+  simpa only [f,g,size,show a+s+s+s=rank a s by dsimp [rank]; omega,eb] using
     And.intro ht.1 ht.2.1
 
 end D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper
