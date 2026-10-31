@@ -98,8 +98,8 @@ private theorem equal (s : ℕ) (hs : 2 ≤ s) :
       simp only [bsn, List.mem_cons, List.mem_nil_iff, or_false] at hj
       rcases hj with rfl|rfl|rfl|rfl
       all_goals exact (ns _).2
-    · simpa [bsn, List.map_cons, List.map_nil, gem, gm, (nm 0).2, (nm 1).2, (nm 2).2, (nm 3).2, 
-        newSuccessor] using cert.2
+    · simpa only [bsn, List.map_cons, List.map_nil, gem, gm, (nm 0).2, (nm 1).2, (nm 2).2, (nm 3).2, 
+        newSuccessor, Matrix.cons_val_zero, Matrix.cons_val_succ] using cert.2
   have bend (j : Fin 4) : b j++[n j]=List.range' (start s j) s := by
     have hl : length s s j = s := by fin_cases j <;> rfl
     simpa only [b, n, hl, show start s j + (s - 1) = start s j + s - 1 by omega, 

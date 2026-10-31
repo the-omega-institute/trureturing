@@ -121,7 +121,7 @@ private theorem strict (a s : ℕ) (hs : 2 ≤ s) (ha : s < a) :
   have nU := tab.2.2.2.1 0
   have nV := tab.2.2.2.1 1
   have nW := tab.2.2.2.1 2
-  have ix : start s 3 + length a s 3 - 1 = nx := by dsimp[start, length, nx];omega
+  have ix : start s 3 + length a s 3 - 1 = nx := by dsimp[start, length, nx] <;> omega
   have iu : start s 0 + length a s 0 - 1 = nu := by dsimp[start, length, nu];omega
   have iv : start s 1 + length a s 1 - 1 = nv := by dsimp[start, length, nv];omega
   have iw : start s 2 + length a s 2 - 1 = nw := by dsimp[start, length, nw];omega
