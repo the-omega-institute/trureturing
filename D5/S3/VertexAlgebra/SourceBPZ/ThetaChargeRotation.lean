@@ -1,0 +1,340 @@
+/- GID: D5/S3/VertexAlgebra/SourceBPZ/ThetaChargeRotation
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/SourceBPZ/ThetaChargeRotation
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/group_theory/representation_theory]
+   utility: none
+   digest: A finite charge character produces a genuine ZMod-three representation on every energy grade and is inverted by the lattice reflection. -/
+
+import D5.S3.VertexAlgebra.SourceBPZ.ThetaGradeRepresentation
+import Mathlib.GroupTheory.SpecificGroups.Dihedral
+import Mathlib.Tactic
+
+set_option autoImplicit false
+set_option maxRecDepth 4096
+set_option maxHeartbeats 1200000
+set_option backward.isDefEq.respectTransparency false
+
+noncomputable section
+open scoped BigOperators
+
+namespace D5.S3.VertexAlgebra.SourceBPZ.ThetaChargeRotation
+
+open D5.S3.VertexAlgebra.SourceBPZ
+open LatticeGeneratingFieldLocality LatticePositiveEnergy LatticeInvolution
+open LatticeAllStateField
+open ThetaReflectionAction
+open ThetaGradeTraceSplit
+open ThetaGradeIntertwiner
+open ThetaGradeRepresentation
+open Representation
+
+/-- A multiplicative realization of the additive third roots of unity. -/
+abbrev ChargePhase := Multiplicative (ZMod 3) →* ℂˣ
+
+/-- The scalar by which a charge character acts on a lattice basis vector. -/
+def chargePhaseScalar (phase : ChargePhase) (z : ZMod 3) : ℂ :=
+  (phase (Multiplicative.ofAdd z) : ℂ)
+
+@[simp] theorem chargePhaseScalar_zero (phase : ChargePhase) :
+    chargePhaseScalar phase 0 = 1 := by
+  simp [chargePhaseScalar]
+
+theorem chargePhaseScalar_add (phase : ChargePhase) (x y : ZMod 3) :
+    chargePhaseScalar phase (x + y) =
+      chargePhaseScalar phase x * chargePhaseScalar phase y := by
+  simp only [chargePhaseScalar, ← Units.val_mul]
+  rw [← phase.map_mul]
+  rfl
+
+theorem chargePhaseScalar_neg (phase : ChargePhase) (x : ZMod 3) :
+    chargePhaseScalar phase (-x) = (chargePhaseScalar phase x)⁻¹ := by
+  simp only [chargePhaseScalar]
+  rw [show Multiplicative.ofAdd (-x) = (Multiplicative.ofAdd x)⁻¹ by rfl,
+    phase.map_inv]
+  exact Units.val_inv_eq_inv_val _
+
+/-- The charge rotation on the full lattice carrier. -/
+def chargeRotation (D : LatticeData) (ell : Charge D →+ ZMod 3)
+    (phase : ChargePhase) (g : Multiplicative (ZMod 3)) : Module.End ℂ (Carrier D) :=
+  (carrierBasis D).constr ℂ (fun a =>
+    chargePhaseScalar phase (g.toAdd * ell a.1) • carrierBasis D a)
+
+@[simp] theorem chargeRotation_on_basis (D : LatticeData) (ell : Charge D →+ ZMod 3)
+    (phase : ChargePhase) (g : Multiplicative (ZMod 3)) (a : Label D) :
+    chargeRotation D ell phase g (carrierBasis D a) =
+      chargePhaseScalar phase (g.toAdd * ell a.1) • carrierBasis D a := by
+  exact Module.Basis.constr_basis (carrierBasis D) ℂ _ a
+
+/-- Charge rotation preserves every energy grade. -/
+theorem chargeRotation_preserves_grade (D : LatticeData) (ell : Charge D →+ ZMod 3)
+    (phase : ChargePhase) (g : Multiplicative (ZMod 3)) (n : ℤ)
+    (v : Carrier D) (hv : v ∈ grade D n) :
+    chargeRotation D ell phase g v ∈ grade D n := by
+  rw [grade_eq_span] at hv
+  refine Submodule.span_induction ?_ ?_ ?_ ?_ hv
+  · rintro x ⟨a, ha, rfl⟩
+    rw [chargeRotation_on_basis]
+    have ha' : carrierBasis D a ∈ grade D n := by
+      rw [grade_eq_span]
+      exact Submodule.subset_span ⟨a, ha, rfl⟩
+    exact (grade D n).smul_mem _ ha'
+  · exact Submodule.zero_mem _
+  · intro x y _ _ hx hy
+    simpa only [map_add] using (grade D n).add_mem hx hy
+  · intro c x _ hx
+    simpa only [map_smul] using (grade D n).smul_mem c hx
+
+private theorem chargeRotation_one (D : LatticeData) (ell : Charge D →+ ZMod 3)
+    (phase : ChargePhase) :
+    chargeRotation D ell phase 1 = LinearMap.id := by
+  apply (carrierBasis D).ext
+  intro a
+  rw [chargeRotation_on_basis]
+  simp [chargePhaseScalar]
+
+private theorem chargeRotation_mul (D : LatticeData) (ell : Charge D →+ ZMod 3)
+    (phase : ChargePhase) (g h : Multiplicative (ZMod 3)) :
+    chargeRotation D ell phase (g * h) =
+      (chargeRotation D ell phase g).comp (chargeRotation D ell phase h) := by
+  apply (carrierBasis D).ext
+  intro a
+  simp only [chargeRotation_on_basis, LinearMap.comp_apply, map_smul,
+    smul_smul]
+  congr 1
+  change chargePhaseScalar phase ((g.toAdd + h.toAdd) * ell a.1) = _
+  rw [← chargePhaseScalar_add]
+  congr 1
+  simp [add_mul, add_comm]
+
+private theorem theta_on_basis (D : LatticeData) (a : Label D) :
+    theta D (carrierBasis D a) =
+      ((-1 : ℂ) ^ (occurrences D a.2).length) •
+        carrierBasis D (-a.1, a.2) := by
+  change thetaLinear D (carrierBasis D a) = _
+  rw [carrierBasis_apply, theta_single, sigma_monomial, carrierBasis_apply,
+    ← Finsupp.smul_single]
+
+theorem chargeRotation_theta_conj (D : LatticeData) (ell : Charge D →+ ZMod 3)
+    (phase : ChargePhase) (g : Multiplicative (ZMod 3)) :
+    ((theta D).toLinearMap.comp (chargeRotation D ell phase g)).comp
+        (theta D).toLinearMap =
+      chargeRotation D ell phase g⁻¹ := by
+  apply (carrierBasis D).ext
+  intro a
+  change theta D (chargeRotation D ell phase g (theta D (carrierBasis D a))) = _
+  rw [theta_on_basis, (chargeRotation D ell phase g).map_smul,
+    chargeRotation_on_basis, (theta D).map_smul, (theta D).map_smul,
+    theta_on_basis]
+  rw [smul_smul, smul_smul]
+  have hocc : (occurrences D a.2).length =
+      (occurrences D a.2).length := rfl
+  have hphase :
+      chargePhaseScalar phase (g.toAdd * ell a.1 * -1) =
+        (chargePhaseScalar phase (g.toAdd * ell a.1))⁻¹ := by
+    simpa using (chargePhaseScalar_neg phase (g.toAdd * ell a.1))
+  have harg :
+      (g⁻¹).toAdd * ell a.1 = g.toAdd * ell a.1 * -1 := by
+    simp [mul_neg, neg_mul, mul_comm]
+  rw [chargeRotation_on_basis]
+  simp only [Prod.fst, Prod.snd, neg_neg]
+  rw [map_neg]
+  simp only [mul_neg]
+  rw [harg]
+  have hphase' :
+      chargePhaseScalar phase (-(g.toAdd * ell a.1)) =
+        (chargePhaseScalar phase (g.toAdd * ell a.1))⁻¹ := by
+    simpa using hphase
+  rw [hphase']
+  have hs : ((-1 : ℂ) ^ (occurrences D a.2).length) *
+      ((-1 : ℂ) ^ (occurrences D a.2).length) = 1 := by
+    rw [← mul_pow]
+    simp
+  congr 1
+  calc
+    (-1 : ℂ) ^ (occurrences D a.2).length *
+        (chargePhaseScalar phase (g.toAdd * ell a.1))⁻¹ *
+          (-1 : ℂ) ^ (occurrences D a.2).length =
+      (chargePhaseScalar phase (g.toAdd * ell a.1))⁻¹ *
+        (((-1 : ℂ) ^ (occurrences D a.2).length) *
+          ((-1 : ℂ) ^ (occurrences D a.2).length)) := by ring
+    _ = (chargePhaseScalar phase (g.toAdd * ell a.1))⁻¹ := by rw [hs, mul_one]
+    _ = chargePhaseScalar phase (g.toAdd * ell a.1 * -1) := hphase.symm
+
+/-- The charge rotation restricted to one finite energy grade. -/
+def gradeChargeRotation (D : LatticeData) (ell : Charge D →+ ZMod 3)
+    (phase : ChargePhase) (n : ℤ) (g : Multiplicative (ZMod 3)) :
+    Module.End ℂ (grade D n) :=
+  (chargeRotation D ell phase g).domRestrict (grade D n) |>.codRestrict
+    (grade D n) (fun v => chargeRotation_preserves_grade D ell phase g n v.1 v.2)
+
+@[simp] theorem gradeChargeRotation_val (D : LatticeData) (ell : Charge D →+ ZMod 3)
+    (phase : ChargePhase) (n : ℤ) (g : Multiplicative (ZMod 3)) (v : grade D n) :
+    (gradeChargeRotation D ell phase n g v).1 =
+      chargeRotation D ell phase g v.1 := rfl
+
+theorem gradeChargeRotation_theta_conj (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ)
+    (g : Multiplicative (ZMod 3)) :
+    ((gradeTheta D n).comp (gradeChargeRotation D ell phase n g)).comp
+        (gradeTheta D n) =
+      gradeChargeRotation D ell phase n g⁻¹ := by
+  apply LinearMap.ext
+  intro v
+  apply Subtype.ext
+  change theta D (chargeRotation D ell phase g
+      (theta D v.1)) = chargeRotation D ell phase g⁻¹ v.1
+  exact congrArg (fun f : Carrier D →ₗ[ℂ] Carrier D => f v.1)
+    (chargeRotation_theta_conj D ell phase g)
+
+
+/-- The charge rotations form a representation of the third-root group. -/
+def gradeChargeRotationRepresentation (D : LatticeData) (ell : Charge D →+ ZMod 3)
+    (phase : ChargePhase) (n : ℤ) :
+    Representation ℂ (Multiplicative (ZMod 3)) (grade D n) where
+  toFun g := gradeChargeRotation D ell phase n g
+  map_one' := by
+    apply LinearMap.ext
+    intro v
+    apply Subtype.ext
+    change chargeRotation D ell phase 1 v.1 = v.1
+    rw [chargeRotation_one]
+    rfl
+  map_mul' g h := by
+    apply LinearMap.ext
+    intro v
+    apply Subtype.ext
+    change chargeRotation D ell phase (g * h) v.1 =
+      ((chargeRotation D ell phase g).comp
+        (chargeRotation D ell phase h)) v.1
+    rw [chargeRotation_mul]
+
+private theorem gradeChargeRotation_add (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ)
+    (i j : ZMod 3) :
+    gradeChargeRotation D ell phase n (Multiplicative.ofAdd (i + j)) =
+      (gradeChargeRotation D ell phase n (Multiplicative.ofAdd i)).comp
+        (gradeChargeRotation D ell phase n (Multiplicative.ofAdd j)) := by
+  change gradeChargeRotation D ell phase n
+      (Multiplicative.ofAdd i * Multiplicative.ofAdd j) = _
+  exact (gradeChargeRotationRepresentation D ell phase n).map_mul _ _
+
+private theorem gradeChargeRotation_zero (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ) :
+    gradeChargeRotation D ell phase n (Multiplicative.ofAdd 0) = LinearMap.id := by
+  change gradeChargeRotation D ell phase n 1 = LinearMap.id
+  exact (gradeChargeRotationRepresentation D ell phase n).map_one
+
+private theorem gradeChargeRotation_theta_move (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ)
+    (i : ZMod 3) :
+    (gradeTheta D n).comp
+        (gradeChargeRotation D ell phase n (Multiplicative.ofAdd i)) =
+      (gradeChargeRotation D ell phase n (Multiplicative.ofAdd (-i))).comp
+        (gradeTheta D n) := by
+  apply LinearMap.ext
+  intro v
+  have h := congrArg
+    (fun q : grade D n →ₗ[ℂ] grade D n => q (gradeTheta D n v))
+    (gradeChargeRotation_theta_conj D ell phase n
+      (Multiplicative.ofAdd i))
+  simpa [LinearMap.comp_apply, gradeTheta_sq] using h
+
+private theorem gradeChargeRotation_apply_add (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ)
+    (i j : ZMod 3) (v : grade D n) :
+    gradeChargeRotation D ell phase n (Multiplicative.ofAdd (i + j)) v =
+      gradeChargeRotation D ell phase n (Multiplicative.ofAdd i)
+        (gradeChargeRotation D ell phase n (Multiplicative.ofAdd j) v) := by
+  have h := congrArg (fun f : grade D n →ₗ[ℂ] grade D n => f v)
+    (gradeChargeRotation_add D ell phase n i j)
+  simpa [LinearMap.comp_apply] using h
+
+private theorem gradeChargeRotation_theta_move_apply (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ)
+    (i : ZMod 3) (v : grade D n) :
+    gradeTheta D n
+        (gradeChargeRotation D ell phase n (Multiplicative.ofAdd i) v) =
+      gradeChargeRotation D ell phase n (Multiplicative.ofAdd (-i))
+        (gradeTheta D n v) := by
+  have h := congrArg (fun f : grade D n →ₗ[ℂ] grade D n => f v)
+    (gradeChargeRotation_theta_move D ell phase n i)
+  simpa [LinearMap.comp_apply] using h
+
+/-- The charge rotation and the lattice reflection assemble into a D₆-action. -/
+def gradeChargeDihedralRepresentation (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ) :
+    @Representation ℂ (DihedralGroup 3) (grade D n)
+      CommRing.toCommSemiring.toSemiring
+        (@DivInvMonoid.toMonoid (DihedralGroup 3)
+          (@Group.toDivInvMonoid (DihedralGroup 3) DihedralGroup.instGroup))
+      (@AddCommGroup.toAddCommMonoid (grade D n)
+        (Submodule.addCommGroup (grade D n))) _ where
+  toFun
+  | DihedralGroup.r i =>
+      gradeChargeRotation D ell phase n (Multiplicative.ofAdd i)
+  | DihedralGroup.sr i =>
+      (gradeChargeRotation D ell phase n (Multiplicative.ofAdd (-i))).comp
+        (gradeTheta D n)
+  map_one' := by
+    rw [← DihedralGroup.r_zero]
+    exact gradeChargeRotation_zero D ell phase n
+  map_mul' g h := by
+    cases g with
+    | r i =>
+      cases h with
+      | r j =>
+        simpa only [DihedralGroup.r_mul_r, Module.End.mul_eq_comp] using
+          (gradeChargeRotation_add D ell phase n i j)
+      | sr j =>
+        apply LinearMap.ext
+        intro v
+        simp only [Module.End.mul_eq_comp]
+        simp only [DihedralGroup.r_mul_sr, LinearMap.comp_apply]
+        have hrot := gradeChargeRotation_apply_add D ell phase n i (-j)
+          (gradeTheta D n v)
+        rw [← hrot]
+        have hidx : -(j - i) = i + (-j) := by ring
+        rw [hidx]
+    | sr i =>
+      cases h with
+      | r j =>
+        apply LinearMap.ext
+        intro v
+        simp only [Module.End.mul_eq_comp]
+        simp only [DihedralGroup.sr_mul_r, LinearMap.comp_apply]
+        rw [gradeChargeRotation_theta_move_apply]
+        have hrot := gradeChargeRotation_apply_add D ell phase n (-i) (-j)
+          (gradeTheta D n v)
+        rw [← hrot]
+        have hidx : -(i + j) = (-i) + (-j) := by ring
+        rw [hidx]
+      | sr j =>
+        apply LinearMap.ext
+        intro v
+        simp only [Module.End.mul_eq_comp]
+        simp only [DihedralGroup.sr_mul_sr, LinearMap.comp_apply]
+        rw [gradeChargeRotation_theta_move_apply]
+        rw [gradeTheta_sq]
+        simp only [neg_neg]
+        have hrot := gradeChargeRotation_apply_add D ell phase n (-i) j v
+        rw [← hrot]
+        have hidx : j - i = (-i) + j := by ring
+        rw [hidx]
+
+theorem gradeChargeDihedral_character_average_finrank (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) :
+    (Nat.card (DihedralGroup 3) : ℂ)⁻¹ *
+        ∑ g : DihedralGroup 3,
+          (gradeChargeDihedralRepresentation D ell phase n).character g =
+      (Module.finrank ℂ
+        (@Representation.invariants ℂ (DihedralGroup 3) (grade D n)
+          inferInstance inferInstance inferInstance inferInstance
+          (gradeChargeDihedralRepresentation D ell phase n)) : ℂ) := by
+  letI : FiniteDimensional ℂ (grade D n) := grade_finiteDimensional D hD n
+  letI : Invertible (Nat.card (DihedralGroup 3) : ℂ) :=
+    invertibleOfNonzero (Nat.cast_ne_zero.mpr Nat.card_pos.ne')
+  rw [Representation.card_inv_mul_sum_char_eq_finrank]
+
+end D5.S3.VertexAlgebra.SourceBPZ.ThetaChargeRotation
