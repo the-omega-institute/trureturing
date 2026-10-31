@@ -130,8 +130,8 @@ private theorem triple_line (u v : point) (hu : u ≠ 0) (hv : v ≠ 0)
   · intro a ha b hbmem hab
     simp only [triple, Finset.mem_insert, Finset.mem_singleton] at ha hbmem
     rcases ha with rfl | rfl | rfl <;> rcases hbmem with rfl | rfl | rfl <;>
-      simp_all [triple, B_add_left, B_add_right, B_self, B_comm,
-        CharTwo.add_cancel_left, CharTwo.add_cancel_right, add_comm]
+      simp_all [triple, B_add_right, B_self, B_comm, add_comm]
+    all_goals rw [add_comm _ (_ + _), CharTwo.add_cancel_right]
 
 private theorem phase_exponent (u v : point) :
     phase u v = AddChar.zmodChar 4 Complex.I_pow_four (exponent u v) := by
@@ -141,8 +141,18 @@ private theorem phase_exponent (u v : point) :
 
 private theorem char_negative (a : ZMod 4) :
     AddChar.zmodChar 4 Complex.I_pow_four a = -1 ↔ a = 2 := by
-  rw [AddChar.zmodChar_apply]
-  fin_cases a <;> norm_num [pow_succ, Complex.I_sq, Complex.ext_iff]
+  fin_cases a
+  · change (Complex.I ^ 0 = -1 ↔ (0 : ZMod 4) = 2)
+    norm_num [Complex.ext_iff]
+    decide
+  · change (Complex.I ^ 1 = -1 ↔ (1 : ZMod 4) = 2)
+    norm_num [Complex.ext_iff]
+    decide
+  · change (Complex.I ^ 2 = -1 ↔ (2 : ZMod 4) = 2)
+    norm_num [Complex.I_sq]
+  · change (Complex.I ^ 3 = -1 ↔ (3 : ZMod 4) = 2)
+    norm_num [pow_succ, Complex.I_sq, Complex.ext_iff]
+    decide
 
 private theorem triple_negative (u v : point) (hu : u ≠ 0) (hv : v ≠ 0)
     (hne : u ≠ v) (hb : B u v = 0) :
@@ -172,6 +182,25 @@ private theorem negative_cover (l : Finset point) (hl : l ∈ counterexample)
     exact ⟨⟨hv, hlp v hvm⟩, hne, hb,
       (triple_negative u v hu hv hne hb).mp (he ▸ hn)⟩
 
+private theorem negative_certificate_exact :
+    (counterexample.filter fun l => lineProduct l = -1) = negativeCertificate := by
+  classical
+  ext l
+  constructor
+  · intro hl
+    obtain ⟨hc, hn⟩ := Finset.mem_filter.mp hl
+    exact negative_cover l hc hn
+  · intro hl
+    obtain ⟨u, hu, hrest⟩ := Finset.mem_biUnion.mp hl
+    obtain ⟨v, hv, rfl⟩ := Finset.mem_image.mp hrest
+    obtain ⟨hvp, hne, hb, he⟩ := Finset.mem_filter.mp hv
+    have hup := (Finset.mem_filter.mp hu).2
+    have hvp := (Finset.mem_filter.mp hvp).2
+    refine Finset.mem_filter.mpr ⟨?_,
+      (triple_negative u v hup.1 hvp.1 hne hb).mpr he⟩
+    refine Finset.mem_filter.mpr ⟨triple_line u v hup.1 hvp.1 hne hb, ?_⟩
+    simp [triple, B_add_right, hup.2, hvp.2]
+
 private theorem incidence_swap (h : Finset (Finset point)) (s : Finset point) :
     (∑ l ∈ h, (l ∩ s).card) = ∑ q ∈ s, (h.filter fun l => q ∈ l).card := by
   classical
@@ -180,6 +209,8 @@ private theorem incidence_swap (h : Finset (Finset point)) (s : Finset point) :
     simp only [Finset.card_eq_sum_ones, Finset.sum_filter]
   simp_rw [he, Finset.card_eq_sum_ones, Finset.sum_filter]
   exact Finset.sum_comm
+
+private theorem binary_cases : ∀ x : ZMod 2, x = 0 ∨ x = 1 := by decide
 
 private theorem line_perp_profile (l : Finset point) (hl : l ∈ lines w) :
     (l ∩ perpPoints).card = if l ∈ counterexample then 3 else 1 := by
@@ -201,14 +232,16 @@ private theorem line_perp_profile (l : Finset point) (hl : l ∈ lines w) :
       rcases hq with rfl | rfl | rfl <;> assumption
   have hm : triple u v ∈ counterexample ↔ B pole u = 0 ∧ B pole v = 0 := by
     simp only [counterexample, Finset.mem_filter, hl, true_and]
-    simp [triple, B_add_right, and_assoc]
+    simp [triple, B_add_right]
+    intro hpu hpv
+    rw [hpu, hpv, zero_add]
   rw [he]
   simp only [hm]
-  have hadd := B_add_right pole u v
-  generalize hx : B pole u = x at hadd ⊢
-  generalize hy : B pole v = y at hadd ⊢
-  fin_cases x <;> fin_cases y <;>
-    norm_num [triple, hx, hy, hadd, hne, Ne.symm hsu, Ne.symm hsv]
+  rcases binary_cases (B pole u) with hx | hx <;>
+    rcases binary_cases (B pole v) with hy | hy <;>
+    simp [triple, Finset.filter_insert, Finset.filter_singleton, B_add_right,
+      hx, hy, hne, Ne.symm hsu, Ne.symm hsv, CharTwo.add_self_eq_zero]
+
 
 
 private theorem hexagon_card (h : Finset (Finset point)) (hh : IsClassicalHexagon h) :
@@ -305,15 +338,14 @@ private theorem counterexample_degree_le : contextualityDegree counterexample �
   classical
   have hmin : contextualityDegree counterexample ≤ violations counterexample (fun _ => 0) :=
     csInf_le (OrderBot.bddBelow _) ⟨_, rfl⟩
-  have hbound : violations counterexample (fun _ => 0) ≤ negativeCertificate.card := by
-    apply Finset.card_le_card
-    intro l hl
-    obtain ⟨hc, hn⟩ := Finset.mem_filter.mp hl
-    apply negative_cover l hc
-    by_contra he
-    simp [lineSign, he] at hn
-  rw [certificate_count] at hbound
-  omega
+  have he : violations counterexample (fun _ => 0) =
+      (counterexample.filter fun l => lineProduct l = -1).card := by
+    unfold violations
+    congr 1
+    ext l
+    by_cases hn : lineProduct l = -1 <;> simp [lineSign, hn]
+  rw [he, negative_certificate_exact, certificate_count] at hmin
+  exact hmin
 
 private theorem hexagon_intersection_ge (h : Finset (Finset point))
     (hh : IsClassicalHexagon h) : 15 ≤ (counterexample ∩ h).card := by
@@ -336,7 +368,7 @@ private theorem hexagon_intersection_ge (h : Finset (Finset point))
         intro l hl
         rw [line_perp_profile l (hh.1 hl)]
         split_ifs <;> rfl
-      _ = _ := by simp [Finset.sum_add_distrib, ← Finset.sum_filter, mul_comm]
+      _ = _ := by simp [Finset.sum_add_distrib, Finset.filter_mem_eq_inter, mul_comm]
   rw [he, hexagon_card h hh] at hi
   have hf : h.filter (fun l => l ∈ counterexample) = counterexample ∩ h := by
     ext l
