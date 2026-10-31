@@ -79,6 +79,16 @@ private def operatorDerivativeTerm (z : ℂ) (p : ℕ × ℕ) : H →L[ℂ] H :=
 def operatorDerivative (z : ℂ) : H →L[ℂ] H :=
   ∑' p : ℕ × ℕ, operatorDerivativeTerm z p
 
+attribute [-instance] ContinuousLinearMap.addCommGroup
+attribute [-instance] ContinuousLinearMap.ring
+attribute [-instance] ContinuousLinearMap.toNormedRing
+attribute [-instance] ContinuousLinearMap.toNormedAddCommGroup
+attribute [-instance] ContinuousLinearMap.toNormedSpace
+attribute [-instance] ContinuousLinearMap.toPseudoMetricSpace
+attribute [-instance] ContinuousLinearMap.module
+attribute [-instance] ContinuousLinearMap.topologicalSpace
+attribute [-instance] CStarAlgebra.toNonUnitalCStarAlgebra
+
 private lemma operatorDerivativeTerm_hasDerivAt (p : ℕ × ℕ) (z : ℂ) :
     HasDerivAt (fun ζ : ℂ => term ζ p) (operatorDerivativeTerm z p) z := by
   have he : (p.1 + 1) + (p.2 + 1) - 1 = p.1 + p.2 + 1 := by omega
@@ -200,8 +210,12 @@ private lemma sourceFamilyTerm_hasDerivAt (j n : ℕ) (z : ℂ) :
       (sourceFamilyDerivativeTerm j z n) z := by
   have hd := ((hasDerivAt_pow (n + 1) z).const_mul ((n + 1 : ℂ) ^ j)).smul_const
     (sourceCoefficient n)
-  simpa only [sourceFamilyTerm, sourceFamilyDerivativeTerm, Nat.add_sub_cancel,
-    pow_succ, mul_assoc] using hd
+  convert hd using 1
+  · simp only [sourceFamilyTerm, pow_succ]
+  · simp only [sourceFamilyDerivativeTerm, pow_succ, Nat.add_sub_cancel]
+    congr 1
+    norm_num [Nat.cast_add, Nat.cast_one]
+    ring
 
 /-- All coordinate weights needed for v, w, and Dw have genuine norm derivatives. -/
 theorem hasDerivAt_sourceFamily (j : ℕ) {z : ℂ} (hz : ‖z‖ < 1) :
@@ -226,7 +240,7 @@ private lemma sourceFamily_apply (j : ℕ) {z : ℂ} (hz : ‖z‖ < 1) (n : ℕ
     (sourceFamily_summable j hz).of_norm]
   rw [tsum_eq_single n]
   · change ((n + 1 : ℂ) ^ j * z ^ (n + 1)) * sourceCoefficient n n = _
-    simp only [sourceCoefficient, lp.single_apply, if_pos rfl]
+    rw [sourceCoefficient, lp.single_apply_self]
     ring
   · intro i hi
     change ((i + 1 : ℂ) ^ j * z ^ (i + 1)) * sourceCoefficient i n = 0
@@ -242,7 +256,7 @@ private lemma sourceFamilyDerivative_apply (j : ℕ) {z : ℂ} (hz : ‖z‖ < 1
     (sourceFamilyDerivative_summable j hz).of_norm]
   rw [tsum_eq_single n]
   · change ((n + 1 : ℂ) ^ (j + 1) * z ^ n) * sourceCoefficient n n = _
-    simp only [sourceCoefficient, lp.single_apply, if_pos rfl]
+    rw [sourceCoefficient, lp.single_apply_self]
     ring
   · intro i hi
     change ((i + 1 : ℂ) ^ (j + 1) * z ^ i) * sourceCoefficient i n = 0
@@ -284,15 +298,22 @@ theorem hasDerivAt_resolvent {z : ℂ} (hz : ‖z‖ < 1) :
   have hui : ((u⁻¹ : (H →L[ℂ] H)ˣ) : H →L[ℂ] H) = resolvent z := by
     exact (NormedRing.inverse_one_sub (operator z) (operator_norm_lt_one hz)).symm.trans
       (resolvent_eq_ringInverse hz).symm
-  have hI := hasFDerivAt_ringInverse (𝕜 := ℂ) u
+  have hI :
+      HasFDerivAt (Ring.inverse : (H →L[ℂ] H) → H →L[ℂ] H)
+        (-ContinuousLinearMap.mulLeftRight ℂ (H →L[ℂ] H)
+          (↑(u⁻¹) : H →L[ℂ] H) (↑(u⁻¹) : H →L[ℂ] H)) u :=
+    @hasFDerivAt_ringInverse ℂ inferInstance (H →L[ℂ] H)
+      CStarAlgebra.toNormedRing inferInstance CStarAlgebra.toNormedAlgebra u
   rw [hu, hui] at hI
   have hd : HasDerivAt (fun ζ : ℂ => Ring.inverse (1 - operator ζ))
       (resolvent z * operatorDerivative z * resolvent z) z := by
-    simpa only [Function.comp_def, sub_zero, zero_sub,
-      ContinuousLinearMap.neg_apply, ContinuousLinearMap.mulLeftRight_apply,
-      mul_neg, neg_mul, neg_neg] using
-      hI.comp_hasDerivAt z ((hasDerivAt_const z (1 : H →L[ℂ] H)).sub
-        (hasDerivAt_operator hz))
+    have hc := hI.comp_hasDerivAt z ((hasDerivAt_const z (1 : H →L[ℂ] H)).sub
+      (hasDerivAt_operator hz))
+    convert hc using 1
+    · rfl
+    · ext w
+      simp only [ContinuousLinearMap.neg_apply, ContinuousLinearMap.mulLeftRight_apply,
+        Function.comp_apply, sub_zero, zero_sub, mul_neg, neg_mul, neg_neg]
   apply hd.congr_of_eventuallyEq
   have hU : {ζ : ℂ | ‖ζ‖ < 1} ∈ 𝓝 z :=
     (isOpen_lt continuous_norm continuous_const).mem_nhds hz
@@ -531,6 +552,8 @@ private lemma radialNormalization_hasDerivAt {r : ℝ} (hr : 0 < r) (hr1 : r < 1
   have hprod := hsd.mul (originalF_differentiableAt hr hr1).hasDerivAt
   have hd := (hasDerivAt_const r (1 : ℝ)).div hprod (mul_ne_zero hs0 hF)
   convert hd using 1
+  · funext x
+    rfl
   change (1 / (s * F r)) * (1 / (2 * (1 - r)) - deriv F r / F r) =
     (0 * (s * F r) - 1 * ((1 / (2 * s) * (-1)) * F r + s * deriv F r)) /
       (s * F r) ^ 2
@@ -626,23 +649,21 @@ theorem bilinear_negative_resolvent_weighted_scalar {r : ℝ} (hr : 0 < r) (hr1 
     have hw : radialSourceFamily 1 r = w := sourceFamily_one_eq_weightedSource hr.le hr1
     rw [hw] at hd
     push_cast at hd
-    change P + (1 / (2 * (r : ℂ))) * T =
-      κ * (1 / (2 * (1 - (r : ℂ))) - (deriv F r : ℂ) / (F r : ℂ)) at hd
     have hiso : (κ / 2) * Q =
         (r : ℂ) * (κ * (1 / (2 * (1 - (r : ℂ))) -
-          (deriv F r : ℂ) / (F r : ℂ))) - T / 2 := by
+          ((deriv F r : ℝ) : ℂ) / (F r : ℂ))) - T / 2 := by
       rw [← hCP, ← hd]
       field_simp [hr0]
       <;> ring
     have hQ : Q = 3 * (r : ℂ) / (4 * (1 - (r : ℂ))) -
-        2 * (r : ℂ) * (deriv F r : ℂ) / (F r : ℂ) := by
+        2 * (r : ℂ) * ((deriv F r : ℝ) : ℂ) / (F r : ℂ) := by
       apply mul_left_cancel₀ hκ
       calc
         κ * Q = 2 * ((κ / 2) * Q) := by ring
         _ = 2 * ((r : ℂ) * (κ * (1 / (2 * (1 - (r : ℂ))) -
-            (deriv F r : ℂ) / (F r : ℂ))) - T / 2) := by rw [hiso]
+            ((deriv F r : ℝ) : ℂ) / (F r : ℂ))) - T / 2) := by rw [hiso]
         _ = κ * (3 * (r : ℂ) / (4 * (1 - (r : ℂ))) -
-            2 * (r : ℂ) * (deriv F r : ℂ) / (F r : ℂ)) := by
+            2 * (r : ℂ) * ((deriv F r : ℝ) : ℂ) / (F r : ℂ)) := by
           rw [hT]
           field_simp [hb, hF]
           <;> ring
@@ -650,6 +671,4 @@ theorem bilinear_negative_resolvent_weighted_scalar {r : ℝ} (hr : 0 < r) (hr1 
     push_cast
     exact hQ
 
-/-- The scalar required after a faithful finite-section trace-log derivative
-    exchange. This theorem makes no trace or determinant identification. -/
 end D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianDifferentiation
