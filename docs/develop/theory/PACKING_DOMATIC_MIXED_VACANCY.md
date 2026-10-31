@@ -1647,7 +1647,7 @@ $z$ and $i$ were arbitrary, the common covering condition in Definition
 1.2 follows. Every even $k\ge8$ is $2m$ for an integer $m\ge4$, proving
 the assertion. The source parameter map is
 $u_a\leftrightarrow a$, $d_{P_\infty}(u_a,u_b)=|a-b|$, ordinary packing
-sequence $S=(1,2,3,\ldots)$, palette $t=2m=k-1$, and partition classes
+sequence $S=(1,2,3,\ldots)$, palette $t=2m-1=k-1$, and partition classes
 $c_m^{-1}(i)=(i-1)+k\mathbb Z$, exactly as in the source definition.
 \square$
 
