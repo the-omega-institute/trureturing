@@ -52,18 +52,27 @@ private theorem reserve_bounds (x y z t h u v : ℤ)
     have h1 : 0 ≤ t-3 := by omega
     have h2 : 0 ≤ 4*t-3 := by omega
     positivity
-  have s0 : 0 ≤ A-3*h*M := by nlinarith only [s0id,s0rhs,ht]
+  have s0 : 0 ≤ A-3*h*M := by
+    apply (mul_nonneg_iff_of_pos_left (by omega : 0 < 4*t)).mp
+    rw [s0id]
+    exact s0rhs
   have s1id : 2*z*(B-u*M) = x*((t-1)*y*z+2*t*z-y-1)+2*z*(t+1) := by
     dsimp [B,M,D]; rw [←eu]; ring
   have s1rhs : 0 ≤ x*((t-1)*y*z+2*t*z-y-1)+2*z*(t+1) := by
     have hp := mul_nonneg ht0 hz0
     have hb : 0 ≤ (t-1)*y*z+2*t*z-y-1 := by nlinarith only [hc,hp]
     positivity
-  have s1 : 0 ≤ B-u*M := by nlinarith only [s1id,s1rhs,hz,ht]
+  have s1 : 0 ≤ B-u*M := by
+    apply (mul_nonneg_iff_of_pos_left (by omega : 0 < 2*z)).mp
+    rw [s1id]
+    exact s1rhs
   have s2id : 2*y*(L-v*M) = x*((t-1)*y*z-y-1)+2*y*(t*z+z+1) := by
     dsimp [L,M,D]; rw [←ev]; ring
   have s2rhs : 0 ≤ x*((t-1)*y*z-y-1)+2*y*(t*z+z+1) := by positivity
-  have s2 : 0 ≤ L-v*M := by nlinarith only [s2id,s2rhs,hy,hz,ht]
+  have s2 : 0 ≤ L-v*M := by
+    apply (mul_nonneg_iff_of_pos_left (by omega : 0 < 2*y)).mp
+    rw [s2id]
+    exact s2rhs
   have t0id : 2*(3*h)*J-3*A-1 = 6*h*(y*(z-2*t)+y-2*t+1)-4 := by
     dsimp [J,M,A,D]; rw [←ex]; ring
   have t0 : 0 ≤ 2*(3*h)*J-3*A-1 := by
@@ -78,7 +87,10 @@ private theorem reserve_bounds (x y z t h u v : ℤ)
     have h2 : 0 ≤ y-z := by omega
     have h3 : 0 ≤ x-2*t-2 := by omega
     positivity
-  have t1 : 0 ≤ u*J-B := by nlinarith only [t1id,t1rhs,hz,ht]
+  have t1 : 0 ≤ u*J-B := by
+    apply (mul_nonneg_iff_of_pos_left (by omega : 0 < 2*z)).mp
+    rw [t1id]
+    exact t1rhs
   have t2id : 2*y*(2*v*J-(2*L-1-z)-1) =
       2*(y*z*(x-2*t-1)+y*(x-2)+x) := by
     dsimp [J,M,L,D]; rw [←ev]; ring
@@ -86,7 +98,10 @@ private theorem reserve_bounds (x y z t h u v : ℤ)
     have h1 : 0 ≤ x-2*t-1 := by omega
     have h2 : 0 ≤ x-2 := by omega
     positivity
-  have t2 : 0 ≤ 2*v*J-(2*L-1-z)-1 := by nlinarith only [t2id,t2rhs,hy,hz,ht]
+  have t2 : 0 ≤ 2*v*J-(2*L-1-z)-1 := by
+    apply (mul_nonneg_iff_of_pos_left (by omega : 0 < 2*y)).mp
+    rw [t2id]
+    exact t2rhs
   have hD : z+2 ≤ D := by dsimp [D]; nlinarith [mul_nonneg (by omega : 0 ≤ y-1) hz0]
   have huD : D ≤ u*D := by nlinarith [mul_nonneg (by omega : 0 ≤ u-1) (by omega : 0 ≤ D)]
   have hvD : D ≤ v*D := by nlinarith [mul_nonneg (by omega : 0 ≤ v-1) (by omega : 0 ≤ D)]

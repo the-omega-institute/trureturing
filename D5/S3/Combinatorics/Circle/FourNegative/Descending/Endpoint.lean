@@ -259,13 +259,13 @@ theorem actualSource_descending_joint_lift (a b c d : ℕ)
     exact hh.trans (by simpa [List.range_succ] using hp.append_right [k])
   refine ⟨word.map (label k (by dsimp [k]; omega)),?_,?_⟩
   · apply lift_order k s (by dsimp [k]; omega) word hp
-    · simpa only [hmod,hseed] using oldstrip
+    · simpa only [f,oldValue,hbase,Matrix.cons_val_zero,hmod,hseed] using oldstrip
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero k s (by dsimp [k]; omega)
   · have marked := marked_word k d (by dsimp [k]; omega) P.toList post plen hp
     rw [marked]
     apply lift_order (k+1) (2*s) (by omega) (P.toList ++ k :: post) hpnew
     · have hseed' : ((2*s : ℕ) : ℤ)=2*A := by push_cast; rw [hseed]
-      simpa only [hmod',hseed',show (2*N+1)/2=N by omega] using newstrip
+      simpa only [g,newValue,hbase,Matrix.cons_val_zero,hmod',hseed',show (2*N+1)/2=N by omega] using newstrip
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero (k+1) (2*s) (by dsimp [k]; omega)
 
 end D5.S3.Combinatorics.Circle.FourNegative.Descending
