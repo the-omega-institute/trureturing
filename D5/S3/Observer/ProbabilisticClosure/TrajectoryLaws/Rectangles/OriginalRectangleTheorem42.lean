@@ -289,10 +289,8 @@ theorem native_component_rectangle_theorem42
     · refine ⟨?_, ?_, ?_⟩
       · simpa [ρ, ε, η, b, hvis, bitPredictor, fullMean, leftMean, rightMean]
           using hh.1
-      · simpa [ρ, ε, η, b, hvis, bitPredictor, fullMean, leftMean, rightMean]
-          using hh.2.1
-      · simpa [ρ, ε, η, b, hvis, bitPredictor, fullMean, leftMean, rightMean]
-          using hh.2.2
+      · simpa [κ, ρ, ε, η, b] using (hbound j).1
+      · simpa [κ, ρ, ε, η, b] using (hbound j).2
     · intro R₀
       have hroot0 := hroot R₀
       have hsq0 := hsq R₀
