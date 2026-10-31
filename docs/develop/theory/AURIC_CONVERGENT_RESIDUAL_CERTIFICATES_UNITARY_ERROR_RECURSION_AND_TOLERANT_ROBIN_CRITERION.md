@@ -2,7 +2,7 @@
 
 # AURIC Convergent Residual Certificates, Unitary Error Recursion, and Tolerant Robin Criterion
 
-> **Reader-visible source and scope note.** The manuscript body below is the complete user-supplied source, retained in its original order, including all opening prose, eight ordered numbered sections, the final section, every proof and derivation, all 35 original equation tags, and all six literal URL targets. The only body adaptation is conversion of the supplied backslash math delimiters to portable dollar delimiters; no formula content or author sentence is silently repaired.
+> **Reader-visible source and scope note.** The manuscript body below is the complete user-supplied source, retained in its original order, including all opening prose, eight ordered numbered sections, the final section, every proof and derivation, all 35 original equation tags, and all six literal URL targets. The body adaptations are conversion of the supplied backslash math delimiters to portable dollar delimiters and relocation of each original equation number into its immediately following ordinary-flow caption. Mathematical expressions, the two internal row-spacing commands, and author sentences are preserved; necessary qualifications are separate adjacent editorial notes.
 >
 > **Source and provenance.** The input is an AI/user-supplied continuation manuscript. The title above is descriptive editorial metadata; no author, version, or date is invented. Source SHA-256: <code style="overflow-wrap:anywhere">2de87858a3a093afd9abecdb49ece42789610e0eebb9b7683663e79b49cb7a5a</code>; source size 23,219 bytes and 1,350 logical lines. Inventory: 210 math regions (84 inline, 126 display), 35 numbered displays, and nine main units (eight numbered sections plus the final section).
 >
@@ -25,7 +25,7 @@
 > - `ASSUMED-UNVERIFIED — inherited Robin premises:` the same-n decomposition (28), $\mathcal D(n)\ge0$, strict optimizer/equality-layer and 5040 boundary bridge, complete $\mathcal B(T)$, and weighted root-correction passage (32) remain open as recorded by the merged predecessor.
 > - `CHECKED WITH SCOPE — PNT tail and margin:` the cited Kedlaya chapter is an unconditional PNT-error source, while the rational inequalities for $\varepsilon_*=1/8$ are a separate paper calculation; neither discharges the inherited Robin bridge.
 > - `CHECKED WITH SCOPE — Zeckendorf:` the exact pin is <code style="overflow-wrap:anywhere">9ceb721e13c64eb4b1c71a43238a2b2fc4770093</code>; it supplies ordering/permutation only. Density, node skipping, nested inclusion, and window-uniform bounds remain separate obligations.
-> - `ASSUMED-UNVERIFIED — RH reverse bridge:` (35) additionally needs normal zero expansion, meromorphic Laplace continuation, multiplicity/noncancellation, and identity-theorem steps. No RH proof or global all-window inequality is claimed.
+> - `ASSUMED-UNVERIFIED — RH forward and reverse bridges:` (35) requires an actual-zero expansion and its normal convergence that imply global positivity of $K$ under RH and hence $\mathcal S_D\succeq0$; separately, its reverse direction needs meromorphic Laplace continuation, multiplicity/noncancellation, and identity-theorem steps. No RH proof or global all-window inequality is claimed.
 >
 > **External-source scope.** The Lacey–Petermichl–Reguera paper was read as the cited $A_2$ Hilbert-transform theorem; the Kedlaya page was read for the unconditional PNT-error setting; the Ramanujan–Robin paper was read as historical/criterion context. These reads establish source scope, not the missing manuscript-specific compositions.
 
@@ -125,7 +125,6 @@ m(\xi)=
 c_j\lambda_j
 \frac{\xi^2}{\lambda_j^2+\xi^2}.
 }
-\tag{1}
 $$
 <a id="eq-1"></a>
 <div class="equation-caption">Equation (1).</div>
@@ -144,7 +143,6 @@ $$
 \boxed{
 1+m(\xi)\asymp \log(e+|\xi|).
 }
-\tag{2}
 $$
 <a id="eq-2"></a>
 <div class="equation-caption">Equation (2).</div>
@@ -158,7 +156,7 @@ $$
 <a id="section-2-strict-detail-positivity"></a>
 ## 二、先把细节空间的严格正性固定下来
 
-> **Editorial note — completion and coercivity scope.** The displayed Fourier estimate is retained as supplied. Its conclusion is conditional on the completed energy space, Fourier normalization, and the precise bounded self-adjoint realization of the truncated remainder (R_D) on the full detail space (Z=\ker C). The bound (M_D=\|R_D''\|_{\mathrm{TV}}) alone is not a cited operator-norm computation; any missing realization or constant is `ASSUMED-UNVERIFIED`. Later finite node spaces must be nested, must contain the fixed coarse grid, and must be dense in that same completed (Z). Those requirements are not replaced by the statement that a node set merely becomes dense.
+> **Editorial note — completion and coercivity scope.** The displayed Fourier estimate is retained as supplied. Its conclusion is conditional on the completed energy space, Fourier normalization, and the precise bounded self-adjoint realization of the truncated remainder $R_D$ on the full detail space $Z=\ker C$. The bound $M_D=\|R_D''\|_{\mathrm{TV}}$ alone is not a cited operator-norm computation; any missing realization or constant is `ASSUMED-UNVERIFIED`. Later finite node spaces must be nested, must contain the fixed coarse grid, and must be dense in that same completed $Z$. Those requirements are not replaced by the statement that a node set merely becomes dense.
 
 取一个足够细的固定粗网格
 
@@ -183,7 +181,6 @@ $$
 $$
 \int_{x_{i-1}}^{x_i}F(t)\,dt=0
 \qquad(1\leq i\leq N).
-\tag{3}
 $$
 <a id="eq-3"></a>
 <div class="equation-caption">Equation (3).</div>
@@ -205,7 +202,6 @@ $$
 Q_P(F')\geq\beta\|F\|_2^2
 \qquad(F'\in Z).
 }
-\tag{4}
 $$
 <a id="eq-4"></a>
 <div class="equation-caption">Equation (4).</div>
@@ -265,7 +261,6 @@ $$
 \preceq\mathcal A
 \preceq(1+\theta)I.
 }
-\tag{5}
 $$
 <a id="eq-5"></a>
 <div class="equation-caption">Equation (5).</div>
@@ -346,7 +341,6 @@ $$
 1+m(\xi)
 }\,d\xi.
 }
-\tag{6}
 $$
 <a id="eq-6"></a>
 <div class="equation-caption">Equation (6).</div>
@@ -365,7 +359,6 @@ $$
 \preceq
 \mathcal S_k,
 }
-\tag{7}
 $$
 <a id="eq-7"></a>
 <div class="equation-caption">Equation (7).</div>
@@ -376,7 +369,6 @@ $$
 \boxed{
 c_D=\frac{1+\beta^{-1}}{1-\theta}.
 }
-\tag{8}
 $$
 <a id="eq-8"></a>
 <div class="equation-caption">Equation (8).</div>
@@ -385,7 +377,6 @@ $$
 
 $$
 \boxed{\mathcal E_k\longrightarrow0.}
-\tag{9}
 $$
 <a id="eq-9"></a>
 <div class="equation-caption">Equation (9).</div>
@@ -411,7 +402,6 @@ $$
 =
 \mathcal R_k^*\mathcal A^{-1}\mathcal R_k.
 }
-\tag{10}
 $$
 <a id="eq-10"></a>
 <div class="equation-caption">Equation (10).</div>
@@ -467,7 +457,7 @@ $$
 
 ### 证明第二步：为什么这个误差确实趋于零
 
-> **Editorial note — equation (11) remains a qualified bridge.** The cited Lacey–Petermichl–Reguera paper supplies a weighted Hilbert-transform theorem for (A_2) weights, but (W(\xi)\asymp\log(e+|\xi|)) by itself does not instantiate the (A_2) test or the exact interval-truncation/finite-cell-mean composition used here. A complete proof must show the Fourier-side truncation identity, boundedness of the finite-rank cell-mean correction on the chosen (H_W) completion, and the duality map into the (P)-energy space. The density sentence also needs a fixed smooth target, approximation in the completed norm, and a diagonal passage through the nested atomic/step spaces; an arbitrary uniform bounded-variation assertion is insufficient. The signs and conjugations in the integration-by-parts residual identity require the distributional (K'), endpoint terms, and the zero-cell constraints to be checked together. Accordingly, \(\mathcal E_k\to0\), (11), and the downstream lower bound are retained as author claims but remain `ASSUMED-UNVERIFIED` pending those bridges.
+> **Editorial note — equation (11) remains a qualified bridge.** The cited Lacey–Petermichl–Reguera paper supplies a weighted Hilbert-transform theorem for $A_2$ weights, but $W(\xi)\asymp\log(e+|\xi|)$ by itself does not instantiate the $A_2$ test or the exact interval-truncation/finite-cell-mean composition used here. A complete proof must show the Fourier-side truncation identity, boundedness of the finite-rank cell-mean correction on the chosen $H_W$ completion, and the duality map into the $P$-energy space. The density sentence also needs a fixed smooth target, approximation in the completed norm, and a diagonal passage through the nested atomic/step spaces; an arbitrary uniform bounded-variation assertion is insufficient. The signs and conjugations in the integration-by-parts residual identity require the distributional $K'$, endpoint terms, and the zero-cell constraints to be checked together. Accordingly, $\mathcal E_k\to0$, (11), and the downstream lower bound are retained as author claims but remain `ASSUMED-UNVERIFIED` pending those bridges.
 
 这里需要区分两个命题：
 
@@ -523,7 +513,6 @@ $$
 \preceq
 C_{\mathcal T_0}^2\mathcal R_k^*\mathcal R_k.
 }
-\tag{11}
 $$
 <a id="eq-11"></a>
 <div class="equation-caption">Equation (11).</div>
@@ -541,7 +530,7 @@ $$
 <a id="section-4-finite-frequency-envelope"></a>
 ## 四、把无限频率积分进一步换成有限积分上界
 
-> **Editorial note — finite envelope versus finite certification.** Equation (14) is a pointwise/Loewner estimate only after the denominator replacement and tail comparison are proved with the stated Fourier convention. Choosing (J_k,\Omega_k) requires a diagonal argument that uses the actual finite value of \(\mathcal E_k^{(0)}\) at each (k), even if those values grow without bound. Thus (16) is a conditional finite-envelope statement. A finite interval integral and a finite sum are mathematical finite objects; they are not, by themselves, a finite certified arithmetic computation or an algorithmic sign check.
+> **Editorial note — finite envelope versus finite certification.** Equation (14) is a pointwise/Loewner estimate only after the denominator replacement and tail comparison are proved with the stated Fourier convention. Choosing $J_k,\Omega_k$ requires a diagonal argument that uses the actual finite value of $\mathcal E_k^{(0)}$ at each $k$, even if those values grow without bound. Thus (16) is a conditional finite-envelope statement. A finite interval integral and a finite sum are mathematical finite objects; they are not, by themselves, a finite certified arithmetic computation or an algorithmic sign check.
 
 式 (6) 仍有一个全频率积分。这个无穷尾也可以严格控制。
 
@@ -562,7 +551,6 @@ $$
 0\leq m(\xi)-m_J(\xi)
 \leq\frac{\xi^2}{8J^2}.
 }
-\tag{12}
 $$
 <a id="eq-12"></a>
 <div class="equation-caption">Equation (12).</div>
@@ -594,7 +582,6 @@ $$
 \frac{\mathcal E_k^{(0)}(i,j)}
 {1+m_J(\Omega)}.
 \end{aligned}
-\tag{13}
 $$
 <a id="eq-13"></a>
 <div class="equation-caption">Equation (13).</div>
@@ -623,7 +610,6 @@ $$
 \frac1{1+m_J(\Omega)}
 \right)\mathcal E_k^{(0)}.
 }
-\tag{14}
 $$
 <a id="eq-14"></a>
 <div class="equation-caption">Equation (14).</div>
@@ -639,7 +625,6 @@ $$
 \mathcal S_k-c_D\mathcal U_{k,J,\Omega}
 \preceq\mathcal S_D.
 }
-\tag{15}
 $$
 <a id="eq-15"></a>
 <div class="equation-caption">Equation (15).</div>
@@ -662,7 +647,6 @@ $$
 \preceq
 \mathcal S_k.
 }
-\tag{16}
 $$
 <a id="eq-16"></a>
 <div class="equation-caption">Equation (16).</div>
@@ -702,7 +686,6 @@ $$
 \qquad
 \rho=\frac{2\theta}{1+\theta}<1,
 }
-\tag{17}
 $$
 <a id="eq-17"></a>
 <div class="equation-caption">Equation (17).</div>
@@ -721,7 +704,6 @@ $$
 =
 \frac1{1+\theta}\sum_{j=0}^{\infty}\mathcal T^j.
 }
-\tag{18}
 $$
 <a id="eq-18"></a>
 <div class="equation-caption">Equation (18).</div>
@@ -748,7 +730,6 @@ $$
 \sum_{j=0}^{\infty}
 \mathcal R_0^*\mathcal T^j\mathcal R_0.
 }
-\tag{19}
 $$
 <a id="eq-19"></a>
 <div class="equation-caption">Equation (19).</div>
@@ -776,7 +757,6 @@ X_j^*X_j
 =
 Y_j^*Y_j+X_{j+1}^*X_{j+1}.
 }
-\tag{20}
 $$
 <a id="eq-20"></a>
 <div class="equation-caption">Equation (20).</div>
@@ -793,7 +773,6 @@ $$
 \qquad
 \mathcal U^*\mathcal U=I.
 }
-\tag{21}
 $$
 <a id="eq-21"></a>
 <div class="equation-caption">Equation (21).</div>
@@ -836,7 +815,6 @@ X_{j+1}^*X_{j+1}
 \frac{\rho^{j+1}}{1-\theta}
 \mathcal R_0^*\mathcal R_0.
 }
-\tag{22}
 $$
 <a id="eq-22"></a>
 <div class="equation-caption">Equation (22).</div>
@@ -845,7 +823,7 @@ $$
 
 ### 对应的 AURIC 三轴
 
-> **Editorial note — block convention and physical boundary.** In AURIC v37 §6 the block convention is \(\rho=\begin{pmatrix}A&C^*\\ C&B\end{pmatrix}\), so \(C\) is the **lower-left** block. For the displayed \(\mathbb G_j\), the matching choice is \(A=Y_j^*Y_j\), \(B=X_{j+1}^*X_{j+1}\), and \(C=X_{j+1}^*Y_j\); with that choice the stated (X=C+C^*\) and (Y=i(C^*-C)\) signs agree with v37. The block matrix \(\mathcal U\) is an abstract unitary on a completed Hilbert-space direct sum. Its existence does not grant native AURIC control, a free physical gate, state preparation, measurement access, or an implementation/resource certificate.
+> **Editorial note — block convention and physical boundary.** In AURIC v37 §6 the block convention is $\rho=\begin{pmatrix}A&C^*\\ C&B\end{pmatrix}$, so $C$ is the **lower-left** block. For the displayed $\mathbb G_j$, the matching choice is $A=Y_j^*Y_j$, $B=X_{j+1}^*X_{j+1}$, and $C=X_{j+1}^*Y_j$; with that choice the stated $X=C+C^*$ and $Y=i(C^*-C)$ signs agree with v37. The block matrix $\mathcal U$ is an abstract unitary on a completed Hilbert-space direct sum. Its existence does not grant native AURIC control, a free physical gate, state preparation, measurement access, or an implementation/resource certificate.
 
 把两个输出的完整关系保留为
 
@@ -895,7 +873,7 @@ $$
 <a id="section-6-relative-tolerance"></a>
 ## 六、给“允许多大负误差”一个明确的归一尺度
 
-> **Editorial note — tolerance domain.** Equations (23), (27), and the strict-completeness paragraph require \(\varepsilon\ge0\), with the eventual strict passage using a fixed \(\varepsilon>0\) and a fixed window (D). This is pointwise in (D); it supplies no uniform choice of (k,J,\Omega) as (D\to\infty), and it does not establish the \(\varepsilon=0\) case. The positive-definiteness of (M) and the endpoint exponential extension used in (24)–(26) also remain conditional on the stated completion and Fourier/RKHS identification.
+> **Editorial note — tolerance domain.** Equations (23), (27), and the strict-completeness paragraph require $\varepsilon\ge0$, with the eventual strict passage using a fixed $\varepsilon>0$ and a fixed window $D$. This is pointwise in $D$; it supplies no uniform choice of $k,J,\Omega$ as $D\to\infty$, and it does not establish the $\varepsilon=0$ case. The positive-definiteness of $M$ and the endpoint exponential extension used in (24)–(26) also remain conditional on the stated completion and Fourier/RKHS identification.
 
 接下来不必要求有限核心每一步都已经精确正定。我们可以允许一个由实际正核度量的负误差。
 
@@ -907,7 +885,6 @@ Q_K(\mu)\geq-\varepsilon Q_P(\mu)
 \qquad
 (\operatorname{supp}\mu\subset[0,D]).
 }
-\tag{23}
 $$
 <a id="eq-23"></a>
 <div class="equation-caption">Equation (23).</div>
@@ -940,7 +917,6 @@ M_{ij}
 +\varphi_i(D)\varphi_j(D)
 \right].
 \end{aligned}
-\tag{24}
 $$
 <a id="eq-24"></a>
 <div class="equation-caption">Equation (24).</div>
@@ -949,7 +925,6 @@ $$
 
 $$
 \boxed{G_*=\frac16M^{-1}.}
-\tag{25}
 $$
 <a id="eq-25"></a>
 <div class="equation-caption">Equation (25).</div>
@@ -962,7 +937,6 @@ $$
 \boxed{
 Q_P(\mu)\geq(C\mu)^*G_*(C\mu).
 }
-\tag{26}
 $$
 <a id="eq-26"></a>
 <div class="equation-caption">Equation (26).</div>
@@ -1016,7 +990,6 @@ $$
 +\varepsilon G_*
 \succeq0,
 }
-\tag{27}
 $$
 <a id="eq-27"></a>
 <div class="equation-caption">Equation (27).</div>
@@ -1064,7 +1037,9 @@ $$
 <a id="section-7-robin-transfer"></a>
 ## 七、把这个容差直接接到 Robin 不等式
 
-> **Editorial note — inherited Robin bridges remain open.** The author text preserves the same-(n) decomposition (28), the assertion \(\mathcal D(n)\ge0\), and the complete budget term \(\mathcal B(T)\). The merged predecessor <code style="overflow-wrap:anywhere">AURIC_FIXED_VARIATIONAL_CORES_SUMMABLE_SCHUR_RECURSION_AND_FINITE_WINDOW_ROBIN_TRANSFER.md</code> records these as `ASSUMED-UNVERIFIED`: the strict optimizer/equality-layer convention, the inactive 5040 boundary, identification of the strict inventory with the same original integer, the full definition of \(\mathcal B\), and the weighted insertion of the root correction into the integral are not supplied by `EulerLayerRootCorrection` alone. The exact same-n identity, its sign, and the weighted error needed for (32) must therefore be supplied before (30)–(34) can be read as unconditional Robin conclusions. The PNT-tail estimate and the rational margin calculation are separate conditional components.
+> **Editorial note — inherited Robin bridges remain open.** The author text preserves the same-$n$ decomposition (28), the assertion $\mathcal D(n)\ge0$, and the complete budget term $\mathcal B(T)$. The merged predecessor <code style="overflow-wrap:anywhere">AURIC_FIXED_VARIATIONAL_CORES_SUMMABLE_SCHUR_RECURSION_AND_FINITE_WINDOW_ROBIN_TRANSFER.md</code>, at exact commit <code style="overflow-wrap:anywhere">3919f1b0fbb64e472f77a130b5c422b7d242a56d</code>, records these as `ASSUMED-UNVERIFIED`: the strict optimizer/equality-layer convention, the inactive 5040 boundary, identification of the strict inventory with the same original integer, the full definition of $\mathcal B$, and the weighted insertion of the root correction into the integral are not supplied by `EulerLayerRootCorrection` alone. The exact same-$n$ identity, its sign, and the weighted error needed for (32) must therefore be supplied before (30)–(34) can be read as unconditional Robin conclusions. The PNT-tail estimate and the rational margin calculation are separate conditional components.
+
+> **Editorial note — transfer and tail applicability.** Equations (29)–(34) are restricted to the same original integer $n$ sufficiently large, with $T=\log n>1$, $L=\log T>0$, and $D\ge L$. This restriction applies to Theorem 5 as well as to its asymptotic use: without it, the displayed integral can cross $u=1$ and diverge. Fix positive constants $c,C$ and a cutoff $u_0>1$ for which the cited unconditional PNT estimate holds for every $u\ge u_0$. The bound (31) additionally requires $e^D\ge u_0$; an extension below that cutoff would require separate evidence and is not supplied here. In the choice $D=A(\log T)^2$, fix $A>1/(4c^2)$ independently of $n$, and take the original $n$ sufficiently large that all these domain and cutoff conditions hold. These conditions do not discharge the inherited same-$n$ identity or weighted budget (32); the Robin conclusions (30)–(34) remain conditional on those `ASSUMED-UNVERIFIED` bridges.
 
 保持原整数 $n$，令
 
@@ -1082,7 +1057,6 @@ $$
 -\log R(n)
 =
 \mathcal D(n)+I_\psi(T)+\mathcal B(T),
-\tag{28}
 $$
 <a id="eq-28"></a>
 <div class="equation-caption">Equation (28).</div>
@@ -1118,7 +1092,6 @@ e^{-v/2}
 K(L+v)\,dv
 +E_{\mathrm{arch}}(T),
 \end{aligned}
-\tag{29}
 $$
 <a id="eq-29"></a>
 <div class="equation-caption">Equation (29).</div>
@@ -1142,7 +1115,6 @@ Q(T)\geq
 -\frac{\log(2\pi)}{\sqrt T}
 -\mathfrak r(T,D),
 }
-\tag{30}
 $$
 <a id="eq-30"></a>
 <div class="equation-caption">Equation (30).</div>
@@ -1222,7 +1194,6 @@ L\sqrt T\left(\frac1D+\frac1{D^2}\right)\\
 +\log(2\pi)e^{-D}
 \right].
 \end{aligned}
-\tag{31}
 $$
 <a id="eq-31"></a>
 <div class="equation-caption">Equation (31).</div>
@@ -1247,7 +1218,6 @@ $$
 \longrightarrow
 C_{\mathrm{inv}}
 :=2(\sqrt2-1).
-\tag{32}
 $$
 <a id="eq-32"></a>
 <div class="equation-caption">Equation (32).</div>
@@ -1260,7 +1230,6 @@ $$
 <
 2\sqrt2-4-\gamma+\log(4\pi),
 }
-\tag{33}
 $$
 <a id="eq-33"></a>
 <div class="equation-caption">Equation (33).</div>
@@ -1323,7 +1292,6 @@ D=A(\log\log n)^2,\\[2mm]
 \qquad(n\text{ 充分大}).
 \end{gathered}
 }
-\tag{34}
 $$
 <a id="eq-34"></a>
 <div class="equation-caption">Equation (34).</div>
@@ -1335,7 +1303,7 @@ $$
 <a id="section-8-zeckendorf-ordering"></a>
 ## 八、A370630 怎样真正参与递归，以及全局还差什么
 
-> **Editorial note — ordering only.** The exact Zeckendorf source pin is <code style="overflow-wrap:anywhere">9ceb721e13c64eb4b1c71a43238a2b2fc4770093</code> (the full hash is retained in the author URL). Its theorem supplies a permutation/order. To use it for refinement, the fixed dyadic rational list must be explicitly dense, omit already-used nodes, and be inserted into nested finite spaces that contain the coarse grid. This ordering does not provide a uniform bound in (k) or (D), nor does it establish the sign condition (27).
+> **Editorial note — ordering only.** The exact Zeckendorf source pin is <code style="overflow-wrap:anywhere">9ceb721e13c64eb4b1c71a43238a2b2fc4770093</code> (the full hash is retained in the author URL). Its theorem supplies a permutation/order. To use it for refinement, the fixed dyadic rational list must be explicitly dense, omit already-used nodes, and be inserted into nested finite spaces that contain the coarse grid. This ordering does not provide a uniform bound in $k$ or $D$, nor does it establish the sign condition (27).
 
 项目的 [Zeckendorf 贪心排列定理](https://github.com/the-omega-institute/trureturing/blob/9ceb721e13c64eb4b1c71a43238a2b2fc4770093/Blueprint/D5/S3/Combinatorics/Permutation/ZeckendorfGreedyPermutation.md)证明，该实际贪心序列遍历每个正整数恰好一次。
 
@@ -1367,7 +1335,9 @@ $$
 
 ### 定理 6：得到一个有限步条件形式的 RH 等价命题
 
-> **Editorial note — RH criterion boundary.** The reverse implication in the supplied proof needs more than the boundedness sentence: it requires a normally convergent actual-zero expansion for (K) in the relevant half-plane, a meromorphic Laplace-transform continuation, the exact pole locations, nonzero residues after multiplicity (no cancellation), and an identity-theorem argument linking the transform of the bounded kernel to that continuation. Those analytic suppliers are separate from the inherited Robin decomposition (28) and budget limit (32), and they are not established by the six source links in this manuscript. Consequently (35) is retained as a proposed finite-window criterion with the stated hypotheses; it does not prove RH, and the all-window matrix inequality remains unproved.
+> **Editorial note — RH criterion boundary.** For the reverse implication, the supplied proof requires a normally convergent actual-zero expansion for $K$ in the relevant domain, a meromorphic Laplace-transform continuation, the exact pole locations, nonzero residues after multiplicity (no cancellation), and an identity-theorem argument linking the transform of the bounded kernel to that continuation. These reverse-direction analytic suppliers remain `ASSUMED-UNVERIFIED` and separate from the forward-direction premise below and from the inherited Robin decomposition (28) and budget limit (32). The cited six links do not establish these manuscript-specific bridges. Consequently (35) is retained as the author's proposed equivalence, conditional on both directions' premises; it does not prove RH, and the all-window matrix inequality remains unproved.
+
+> **Editorial note — forward RH premise.** The forward direction $\mathrm{RH}\Rightarrow K\text{ positive semidefinite}\Rightarrow\mathcal S_D\succeq0$ requires an actual-zero expansion equal to this arithmetic $K$, with normal convergence in the domain needed to pass to finite Gram forms and with the coefficients/signs that make RH imply positivity. Neither v37's block algebra nor the predecessor's finite-core discussion supplies that analytic identification. This actual-zero-expansion/normal-convergence and RH-to-positive-core premise remains `ASSUMED-UNVERIFIED`; the fixed-window convergence and strict tolerance argument use it conditionally. It is distinct from the reverse Laplace/pole/multiplicity/noncancellation premises in the adjacent note.
 
 固定
 
@@ -1387,7 +1357,6 @@ $$
 \mathcal S_k-c_D\mathcal U_{k,J,\Omega}
 +\frac18G_*\succeq0.
 }
-\tag{35}
 $$
 <a id="eq-35"></a>
 <div class="equation-caption">Equation (35).</div>
