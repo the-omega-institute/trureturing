@@ -14,20 +14,20 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 abbrev signature : Signature where
-  Params := Bool → Bool → ℝ
+  Params := Bool × Bool
   State _ := Bool → Bool → ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℝ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ g f => f = g) (fun e => nomatch e)
+  realize signature (fun _ p f => f p.1 p.2) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ p f => f p.1 p.2 + 1) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
@@ -35,27 +35,24 @@ abbrev arena : Arena where
     (∑ a : Bool, ∑ b : Bool, f a b) = (∑ a : Bool, ∑ b : Bool, g a b) →
     (∑ b : Bool, f ma b) = (∑ b : Bool, g ma b) →
     (∑ a : Bool, f a mb) = (∑ a : Bool, g a mb) →
-    f ma mb = g ma mb →
-    R.readout () g f
+    R.readout () (ma, mb) f = g ma mb → f = g
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hbad := h (fun _ _ => 1) (fun _ _ => 1) false false (by rfl) (by rfl) (by rfl) (by rfl)
-  exact hbad
+  let f : Bool → Bool → ℝ := fun _ _ => 0
+  let g : Bool → Bool → ℝ := fun a b => if a = b then 1 else -1
+  have hbad := h f g false false
+    (by norm_num [f, g, Fintype.sum_bool])
+    (by norm_num [f, g, Fintype.sum_bool])
+    (by norm_num [f, g, Fintype.sum_bool])
+    (by norm_num [rejected, realize, f, g])
+  have hpoint := congrFun (congrFun hbad false) false
+  norm_num [f, g] at hpoint
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(fun _ _ => 0), (fun _ _ => 0), (fun _ _ => 1), ?_⟩
-  intro h
-  change
-    ((fun _ _ : Bool => 0) = (fun _ _ : Bool => 0)) =
-      ((fun _ _ : Bool => 1) = (fun _ _ : Bool => 0)) at h
-  have hfun : (fun _ _ : Bool => (1 : ℝ)) = (fun _ _ : Bool => (0 : ℝ)) := by
-    have htrue : (fun _ _ : Bool => (0 : ℝ)) = (fun _ _ : Bool => (0 : ℝ)) := rfl
-    rw [h] at htrue
-    exact htrue
-  have hbad := congrFun (congrFun hfun false) false
-  norm_num at hbad
+  refine ⟨(false, false), (fun _ _ => 0), (fun _ _ => 1), ?_⟩
+  norm_num [actual, realize]
 
 def source_registration : Registration arena (type_of% @binary_eq) where
   actual := actual
@@ -85,7 +82,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ g f => f = g) (fun e => nomatch e))
+  readout := some (realize signature (fun _ p f => f p.1 p.2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -93,12 +90,13 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Entanglement.BinaryDetectionThresholdRefutation
     definition := none
-    coordinates := #[]
+    coordinates := #[2, 3]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "domain", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn", "fn"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

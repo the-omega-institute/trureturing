@@ -174,51 +174,38 @@ namespace Reg.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence
 open _root_.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence
 
 abbrev allEqualSignature : Signature where
-  Params := {k : ℕ // 0 < k}
-  State k := Fin k.val → ℕ
+  Params := Σ k : ℕ, Fin k
+  State p := Fin p.1 → ℕ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℕ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def allEqualActual : Realization allEqualSignature :=
-  realize allEqualSignature (fun _ k g => ∀ h, g h = g ⟨0, k.property⟩)
+  realize allEqualSignature (fun _ p g => g p.2)
     (fun e => nomatch e)
 
 def allEqualRejected : Realization allEqualSignature :=
-  realize allEqualSignature (fun _ _ _ => False) (fun e => nomatch e)
+  realize allEqualSignature (fun _ p g => g p.2 + 1) (fun e => nomatch e)
 
 abbrev allEqualArena : Arena where
   signature := allEqualSignature
   Law R := ∀ {k : ℕ} (hk : 0 < k) (g : Fin k → ℕ),
-    (∀ h, g h = g (finRotate k h)) → R.readout () ⟨k, hk⟩ g
+    (∀ h, g h = g (finRotate k h)) →
+      ∀ h, R.readout () ⟨k, h⟩ g = g ⟨0, by omega⟩
 
 private theorem allEqualRejectedLaw : ¬ allEqualArena.Law allEqualRejected := by
   intro h
-  have hbad := h (k := 1) (by decide) (fun _ => 0) (by intro; rfl)
-  exact hbad
+  have hbad := h (k := 1) (by decide) (fun _ => 0) (by intro; rfl) (0 : Fin 1)
+  norm_num [allEqualRejected, realize] at hbad
 
 private theorem allEqualDependence :
     ObservationalDependence allEqualSignature allEqualActual := by
   intro i
-  refine ⟨⟨2, by decide⟩, (fun _ => 0), (fun x => x.val), ?_⟩
-  intro h
-  have hright :
-      ∀ h : Fin 2, (fun x : Fin 2 => x.val) h = (fun x : Fin 2 => x.val) ⟨0, by decide⟩ := by
-    have hzero :
-        ∀ h : Fin 2, (fun _ : Fin 2 => 0) h = (fun _ : Fin 2 => 0) ⟨0, by decide⟩ := by
-      intro
-      rfl
-    change
-      (∀ h : Fin 2, (fun _ : Fin 2 => 0) h = (fun _ : Fin 2 => 0) ⟨0, by decide⟩) =
-        (∀ h : Fin 2, (fun x : Fin 2 => x.val) h =
-          (fun x : Fin 2 => x.val) ⟨0, by decide⟩) at h
-    rw [h] at hzero
-    exact hzero
-  have hbad := hright (⟨1, by decide⟩ : Fin 2)
-  norm_num at hbad
+  refine ⟨⟨2, 0⟩, (fun _ => 0), (fun _ => 1), ?_⟩
+  norm_num [allEqualActual, realize]
 
 def allEqualSourceRegistration :
     Registration allEqualArena (type_of% @all_equal_of_adjacent) where
@@ -251,7 +238,7 @@ def allEqualRegistration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some
-    (realize allEqualSignature (fun _ k g => ∀ h, g h = g ⟨0, k.property⟩)
+    (realize allEqualSignature (fun _ p g => g p.2)
       (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -260,12 +247,12 @@ def allEqualRegistration :
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 4]
     readouts := #[{
-      path := #["body", "body", "body", "body"]
-      stateBinder := 2
+      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
