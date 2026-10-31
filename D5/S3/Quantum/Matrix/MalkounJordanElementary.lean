@@ -16,7 +16,7 @@ All auxiliary theorems are consumed on its proof path.
 
 /-
 result: proof_shape: bind-only; escape_witness: none.
-admission_basis: open-problem-resolution (#24902), pending pre-freeze review.
+admission_basis: open-problem-resolution; exact external source assertion.
 jordan_hermitian: bind-only; consumers: claim, result.
 gram_det_le: bind-only; consumer: principal_det_le.
 principal_det_le: bind-only; consumer: result.
