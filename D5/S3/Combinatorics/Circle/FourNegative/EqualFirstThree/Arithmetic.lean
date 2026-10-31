@@ -237,9 +237,11 @@ private theorem hard_floor (s d : ℕ) (hd : 2 ≤ d) (hhard : 2*d ≤ s) :
     have hRH : D*H=R := by
       dsimp [R,D,H]; rw [←pow_add,show d+(s-d)=s by omega]
     have hr : 2*r=R := by
-      dsimp [r,R]; conv_rhs => rw [show s=s-1+1 by omega,pow_succ]; ring
+      dsimp [r,R]; conv_rhs => rw [show s=s-1+1 by omega,pow_succ]
+    ring
     have he : 2*e=D := by
-      dsimp [e,D]; conv_rhs => rw [show d=d-1+1 by omega,pow_succ]; ring
+      dsimp [e,D]; conv_rhs => rw [show d=d-1+1 by omega,pow_succ]
+    ring
     have hHU : 2*HU=N-vcoef R D := by
       have hp : N-vcoef R D=2*(e*(R*R*R-R*R-R-1)-1) := by
         dsimp [N,vcoef]; rw [←he]; ring
@@ -252,9 +254,11 @@ private theorem hard_floor (s d : ℕ) (hd : 2 ≤ d) (hhard : 2*d ≤ s) :
         dsimp [seed,eta]; rw [←hr]; ring
       dsimp [L]; omega
     have h := uniform_floor_bound R D HU w L hD hR (Or.inl hD8) hHU hw hL
-    dsimp only at h
+    dsimp only [R,D,H,r,e,N,HU,w,L] at h
+    dsimp only [r,R] at hr
     refine ⟨h.2.2.1,?_,h.2.2.2.2.1,h.2.2.2.2.2.1,?_⟩
     · change _ < r
+      dsimp only [r]
       omega
     · exact h.2.2.2.2.2.2
   · have hd2 : d=2 := by omega
@@ -269,7 +273,8 @@ private theorem hard_floor (s d : ℕ) (hd : 2 ≤ d) (hhard : 2*d ≤ s) :
       have hR64 : (64 : ℤ) ≤ R := by
         simpa [R] using pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hs6
       have hr : 2*r=R := by
-        dsimp [r,R]; conv_rhs => rw [show s=s-1+1 by omega,pow_succ]; ring
+        dsimp [r,R]; conv_rhs => rw [show s=s-1+1 by omega,pow_succ]
+    ring
       have hH : 4*H=R := by
         dsimp [H,R]
         conv_rhs => rw [show s=(s-2)+2 by omega,pow_add]
@@ -283,9 +288,11 @@ private theorem hard_floor (s d : ℕ) (hd : 2 ≤ d) (hhard : 2*d ≤ s) :
         dsimp [L]; omega
       have h := uniform_floor_bound R 4 HU w L (by omega) (by nlinarith) (Or.inr ⟨rfl,hR64⟩) hHU hw hL
       norm_num only [show (2 : ℤ)^2=4 by norm_num] at *
-      dsimp only at h
+      dsimp only [R,r,H,HU,w,L] at h
+      dsimp only [r,R] at hr
       refine ⟨h.2.2.1,?_,h.2.2.2.2.1,h.2.2.2.2.2.1,?_⟩
       · change _ < r
+        dsimp only [r]
         omega
       · exact h.2.2.2.2.2.2
     · have cases : s=4 ∨ s=5 := by omega

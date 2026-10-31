@@ -12,7 +12,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open private seed eta vcoef wcoef xcoef Table
+open private seed eta vcoef wcoef xcoef Table Table.u Table.un Table.v Table.vn Table.w Table.wn Table.x Table.xn Table.nu Table.nun Table.nv Table.nvn Table.nw Table.nwn Table.nx Table.nxn
   from D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Source
 open private rank amplitude oldRow newRow source_data coeff_positive range_positive
   old_total inserted_perm new_total finish
@@ -56,13 +56,13 @@ private theorem natural_inventory (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d) :
       (List.range' d (s - 1) ++ [d + s - 1]) ++
       (List.range' (d + s) (s - 1) ++ [d + s + s - 1]) ++
       (List.range' (d + s + s) (s - 1) ++ [d + s + s + s - 1]) := by
-    simp only [List.append_assoc, List.singleton_append]
+    simp only [List.append_assoc, List.singleton_append, List.cons_append, List.nil_append]
   rw [he, h1, h2, h3, h4]
   have h12 := List.range'_append_1 (s := 0) (m := d) (n := s)
   have h123 := List.range'_append_1 (s := 0) (m := d + s) (n := s)
   have h1234 := List.range'_append_1 (s := 0) (m := d + s + s) (n := s)
   simp only [Nat.zero_add] at h12 h123 h1234
-  rw [← List.append_assoc, ← List.append_assoc, h12, h123, h1234]
+  rw [h12, h123, h1234]
   simpa only [← List.range_eq_range', rank, show d + s + s + s = 3 * s + d by omega]
 
 private theorem three_peak_strip (f : ℕ → ℤ) (P Q S G : List ℕ)
