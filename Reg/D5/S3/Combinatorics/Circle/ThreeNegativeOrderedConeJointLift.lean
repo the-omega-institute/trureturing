@@ -1,6 +1,6 @@
 import D5.S3.Combinatorics.Circle.ThreeNegativeOrderedConeJointLift
 import Batteries.Tactic.OpenPrivate
-import Reg.D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+import Reg.D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
@@ -74,7 +74,7 @@ private theorem deleted_law (side : Bool) : ¬ arena.Law (deleted side) := by
   · simp [deleted, rejected, realize] at hnew
 
 open private identityWord zero_old zero_new bad_old bad_new from
-  Reg.D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+  Reg.D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro side

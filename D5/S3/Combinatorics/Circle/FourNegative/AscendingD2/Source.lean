@@ -7,7 +7,7 @@
    digest: Exact four-chain centered sources for strict ascending gaps and a first ear. -/
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.ThreeBitSource
-import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+import D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 
 /-! Four exact physical ladders, with no period or coprimality assumption. -/
 

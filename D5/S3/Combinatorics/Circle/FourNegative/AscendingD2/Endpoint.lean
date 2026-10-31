@@ -20,7 +20,7 @@ open private shiftedSupport shifted_good shifted_sum table_positive four_perm fo
 open private Choice Choice.p Choice.q Choice.r Choice.pq Choice.pr Choice.qr Choice.good coeff
   from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 open private Coeff oldMass newMass margins from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
-open private label lift_order marked_word from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open private label lift_order marked_word from D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 
 set_option maxHeartbeats 1600000 in
 private theorem realize (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c)

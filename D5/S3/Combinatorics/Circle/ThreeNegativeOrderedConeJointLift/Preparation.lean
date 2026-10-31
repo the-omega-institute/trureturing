@@ -7,7 +7,7 @@
    digest: Private chain, schedule and charge preparation for the ordered-cone joint lift. -/
 import D5.S3.Combinatorics.Circle.ThreeBitSource
 import Batteries.Tactic.OpenPrivate
-import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+import D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -16,7 +16,7 @@ namespace D5.S3.Combinatorics.Circle.ThreeNegativeOrderedConeJointLift
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
 open private label lift_order marked_word from
-  D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+  D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 open private mask_labels mask_labels_bound mask_labels_sum labelled_permutation from
   D5.S3.Combinatorics.Circle.ThreeBitSource
 

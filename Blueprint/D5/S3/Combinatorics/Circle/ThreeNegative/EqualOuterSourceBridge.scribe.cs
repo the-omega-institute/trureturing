@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle;
 
 internal sealed class ThreeNegativeEqualOuterSourceBridgeDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterSourceBridge.";
+    private const string Prefix = "D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterSourceBridge.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Consumed publication of three existing ThreeBitSource facts across the module boundary.",

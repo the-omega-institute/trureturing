@@ -1,4 +1,4 @@
-import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+import D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 

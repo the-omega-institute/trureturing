@@ -16,7 +16,7 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentD
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private positive_block_strip from D5.S3.Combinatorics.Circle.ThreeBitSource
 open private label lift_order marked_word ladder_sum
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+  from D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 open private chains from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleJointLift
 
 private def Gates (C m1 d1 m2 d2 m3 d3 m4 d4 : ℤ) : Prop :=

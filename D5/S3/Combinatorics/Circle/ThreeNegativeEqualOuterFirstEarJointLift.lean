@@ -9,8 +9,8 @@ import Mathlib.Data.Nat.Bitwise
 import Mathlib.Combinatorics.Colex
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.ThreeBitSource
-import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
-import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterSourceBridge
+import D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
+import D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterSourceBridge
 import D5.S3.Combinatorics.Circle.RunFirstEarTransport
 
 /-! One common permutation for the two actual centered source tables. -/
@@ -22,7 +22,7 @@ namespace D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterFirstEarJointLift
 
 open private mask_complement mask_labels mask_labels_bound mask_labels_disjoint
   mask_labels_sum labelled_permutation from D5.S3.Combinatorics.Circle.ThreeBitSource
-open private label lift_order marked_word from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open private label lift_order marked_word from D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
