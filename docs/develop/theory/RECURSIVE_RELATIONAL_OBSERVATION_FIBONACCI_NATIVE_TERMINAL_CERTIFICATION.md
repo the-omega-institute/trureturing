@@ -3348,3 +3348,517 @@ $$
 [RROV4948]: AURIC_SUM_PRODUCT_POWERS_QUADRATIC_RELATION_CLOSURE_AND_NORMALIZED_LIFTING_V49.md#section-9
 
 ## 追加锚（本行以下为增补区）
+
+## 49. 原光滑场的记录块压缩与完整分量方程
+
+**定义 49.1（同源静态变换族）。** 固定定义 34.1 的原 $\mathscr C_{\rm nat}$、所选记录 $i$、$j=1-i$ 和 $0<\varepsilon<1$。所有 $89$ 个复坐标、固定外位、十一组 $H_k,U_k(s)$、单点及二点支撑分量和 $s\in[0,1]$ 均保持原义。令 $N(z)=\|z\|^2$，复用 [III] (165.1) 的 $h_{\rm sm}$，置
+
+$$
+\begin{gathered}
+F(z)=N(z)h_{\rm sm}(z)\quad(z\ne0),\qquad F(0)=0,\\
+\lambda\ge1,\qquad S_\lambda=\sqrt\lambda M_i+M_j,\\
+H_\lambda(z)=\frac{F(S_\lambda z)}{\lambda N(z)},\qquad
+\Pi_{\lambda,q}(z)=b_q(z)+\varepsilon c_qH_\lambda(z).
+\end{gathered}
+\tag{49.1}
+$$
+
+$S_\lambda$ 只是同一个复向量空间上的数学自变量变换，不是原操作菜单中的门、滤波器、制备或可调用装置。$\lambda$ 不计作调用数。以下微分始终在固定的实 Euclidean 空间 $\mathcal K\simeq\mathbb R^{178}$ 中进行。
+
+**定理 49.2（压缩族的完整原生可容许性）。** 对每个有限 $\lambda\ge1$，$\Pi_\lambda$ 是整个复射影空间上的 $C^\infty$ 密度，属于原 $\mathscr C_{\rm nat}$，不同于 Born，并且
+
+$$
+\begin{gathered}
+0\le H_\lambda(z)\le b_s(z)\quad(s\in S),\qquad
+H_\lambda(z)\le\frac{t_j(z)}\lambda,\\
+\Pi_{\lambda,q}(z)\ge(1-\varepsilon)b_q(z),\qquad
+\Pi_{\lambda,q}(z)>0\ \Longleftrightarrow\ z_q\ne0,\\
+m_{\lambda,k}(z)=t_k(z)\quad(k=0,1),\\
+H_\lambda(M_kz)=0,\qquad \Pi_\lambda(M_kz)=b(M_kz)
+\quad\text{当 }M_kz\ne0.
+\end{gathered}
+\tag{49.2}
+$$
+
+这些断言包括所有部分支撑和节点，不以全支撑为定义域。
+
+证明。[III] (165.5) 给 $0\le F(w)\le|w_s|^2$，对每个 $s\in S$ 及非零 $w$ 成立。$S_\lambda$ 可逆，故对 $z\ne0$，若 $s\in S_i$，则
+
+$$
+H_\lambda(z)\le\frac{\lambda|z_s|^2}{\lambda N(z)}=b_s(z);
+$$
+
+若 $s\in S_j$，则 $H_\lambda(z)\le b_s(z)/\lambda\le b_s(z)$。后一式还给 $H_\lambda\le t_j/\lambda$。$c$ 的非零坐标恰在 $S$；负号坐标的节点上界、正号坐标的非负修正，以及 $S$ 外的原平方坐标共同给严格正性与下界。某个 $S$ 坐标为零时 $H_\lambda=0$；$S$ 外节点的修正本来为零。$\sum_qc_q=0$ 给归一化。
+
+$F(az)=|a|^2F(z)$ 对每个非零复数 $a$ 成立，且 $S_\lambda$ 复线性，故 $H_\lambda(az)=H_\lambda(z)$。$S_\lambda z\ne0$，所以 (49.1) 在非零域光滑，下降为射影空间上的光滑函数；这一步不要求 $F$ 在零向量处二阶可微。
+
+现逐类核对原十一分量方程。偶地址 $k\in\{0,2,4,6,8,10\}$ 不改变奇位 $b_9$，所以 $[S_\lambda,H_k]=0$。其酉轨道保持 $N$；[III] 引理 164.2 及 (165.1) 给 $F(U_k(s)w)=F(w)$，于是
+
+$$
+H_\lambda(U_k(s)z)
+ =\frac{F(U_k(s)S_\lambda z)}{\lambda N(z)}=H_\lambda(z).
+\tag{49.3}
+$$
+
+因此对该地址的每个支撑分量 $B$，修正和 $\varepsilon H_\lambda\sum_{q\in B}c_q$ 沿整个内部轨道不变。这里包括两种阻塞单点，以及原端点 $\mathcal P_0=n_1$、$\mathcal P_{10}=n_9$ 的全部单点。
+
+奇地址 $k\in\{1,3,5,7,9\}$ 的分量若交 $S$，恰为 $\{s,s\mathbin\triangle\{k\}\}\subset S$，两个符号相反；两端奇位的外邻位仍是 $b_0=b_{10}=0$。其余分量不交 $S$，包括受偶邻位阻塞的单点。因此每个奇地址的每个分量均有 $\sum_{q\in B}c_q=0$，修正和恒为零，无须假定 $S_\lambda$ 与奇地址对易。Born 参考分量和由 $P_B$ 与 $H_k$ 对易而守恒。两类合起来证明 (34.2)，量化全部 $z\ne0$ 和 $s\in[0,1]$，不遗漏地址九的质量变化。
+
+在任一 $E_k$ 内翻转一个未固定的奇位，使 $c$ 变号，故 $\sum_{E_k}c_q=0$，得到 $m_{\lambda,k}=t_k$。纯记录块使另一块所有扇区消失，节点上界给 $H_\lambda=0$。若投影为零，不评价该密度或后射线。最后，(165.6) 的 $z_*$ 有 $h_{\rm sm}(z_*)>0$；$S_\lambda^{-1}z_*$ 保留全部 $89$ 个非零坐标并使 $H_\lambda>0$，故新密度确实非 Born。∎
+
+## 50. 固定实范数中的一阶收敛与二阶有界
+
+**定义 50.1（不随族变化的范数）。** 对 $0<r<R<\infty$，记闭环域 $A_{r,R}=\{z:r\le\|z\|\le R\}$。值域 $\mathbb R^E$ 使用 $\ell^1$ 范数，导数使用由固定 Euclidean 范数诱导的实算子范数。$C^{1,\alpha}$ 半范数是环域内两点的导数差除以其 Euclidean 距离的 $\alpha$ 次幂；$C^{1,1}$ 使用 Lipschitz 半范数。$C^2$ 范数另包括二阶导数的上确界。所有环域、坐标和范数均独立于 $\lambda$，不把收缩坐标中的范数当作原范数。
+
+**定理 50.2（光滑族的一阶强收敛不消去条件风险）。** 对每个固定 $A_{r,R}$ 及 $0<\alpha<1$，存在独立于 $\lambda\ge1$ 的有限常数，使 $f_\lambda=\Pi_\lambda-b$ 满足
+
+$$
+\begin{aligned}
+\|f_\lambda\|_{C^0(A_{r,R})}&\le C_{r,R}\lambda^{-1},\\
+\|Df_\lambda\|_{C^0(A_{r,R})}&\le C_{r,R}\lambda^{-1/2},\\
+\|f_\lambda\|_{C^2(A_{r,R})}&\le C_{r,R},\\
+\|f_\lambda\|_{C^{1,\alpha}(A_{r,R})}
+ &\le C_{r,R,\alpha}\lambda^{-(1-\alpha)/2}.
+\end{aligned}
+\tag{50.1}
+$$
+
+特别地 $\Pi_\lambda\to b$ 于每个固定环域的 $C^1$，并于每个 $C^{1,\alpha}$、$0<\alpha<1$ 收敛；$\alpha=0$ 按 $C^1$ 理解。每个有限 $\lambda$ 的误差在两个非零纯记录面上所有阶导数均为零。尽管如此，§51 的所选记录连续恢复风险保持严格正的常数。
+
+证明。$F$ 在非零域光滑，正实二次齐次性给
+
+$$
+D^aF(\rho z)=\rho^{2-a}D^aF(z)\quad(\rho>0).
+\tag{50.2}
+$$
+
+单位球面紧，故 $D^2F$ 在整个非零域有一个统一界 $L$，而 $F(z)=O(\|z\|^2)$、$DF(z)=O(\|z\|)$。令 $DF(0)=0$，则 $F$ 在零点可微且导数连续。沿任意线段积分二阶导数；若线段通过零点，在该点分成两段再取极限。由此 $DF$ 在整个实空间是 $L$-Lipschitz，$F$ 的零延拓属于 $C^{1,1}$。
+
+$F$ 在 $\mathcal K_i$ 和 $\mathcal K_j$ 上均为零，且非负，所以在这些面的非零点 $DF=0$，在零点亦然。因此
+
+$$
+\|DF(S_\lambda z)\|
+ \le L\|S_\lambda z-\sqrt\lambda M_i z\|
+ =L\|M_jz\|.
+\tag{50.3}
+$$
+
+写 $A_\lambda(z)=F(S_\lambda z)/\lambda$。节点界、(50.3) 和 $\|S_\lambda\|=\sqrt\lambda$ 分别给
+
+$$
+|A_\lambda(z)|\le\frac{\|M_jz\|^2}{\lambda},\qquad
+\|DA_\lambda(z)\|\le\frac{L\|M_jz\|}{\sqrt\lambda},\qquad
+\|D^2A_\lambda(z)\|\le L.
+\tag{50.4}
+$$
+
+在固定环域上乘以 $N^{-1}$，其至二阶导数都有固定界，便得到 (50.1) 的前三式，乘以固定向量 $\varepsilon c$ 只改变常数。
+
+对距离 $d\le r/2$ 的环域内两点，其线段留在更大固定环域内。前三式同时给导数差至多 $C d$ 及 $C\lambda^{-1/2}$。所以导数差除以 $d^\alpha$ 至多 $C\lambda^{-(1-\alpha)/2}$：分别在 $d\le\lambda^{-1/2}$ 和 $d\ge\lambda^{-1/2}$ 使用这两个界。对 $d>r/2$ 直接用导数上确界。补上函数及导数范数得到最后一式。
+
+在非零纯记录面上，另一记录块的每个 $u_s$ 均为零；$\eta$ 在零处所有导数为零。复合、有限乘积和非零分母保持这一性质，故每个有限 $\lambda$ 的 $f_\lambda$ 所有面上 jets 均为零。它们不控制离面距离随 $\lambda$ 收缩的二阶变化。∎
+
+**命题 50.3（零向量处的准确光滑边界）。** $F$ 及 $A_\lambda$ 的零延拓属于 $C^{1,1}$，但均不在零点二阶可微；$H_\lambda$ 和密度仍只在非零向量域或射影域上评价。
+
+证明。前一性质由上证及可逆线性复合得到。若一个二次齐次函数在零点二阶可微，则二阶 Taylor 式沿每条正实射线迫使它处处等于同一个二次型。这里 $F$ 在某个 $u_s<0$ 的非空实开锥上恒为零，却在 $z_*$ 上严格为正；非零二次型不能在非空开集上恒为零。$A_\lambda$ 的可逆复合保持这一矛盾。不能把非零纯面上的平坦性改写成零向量处的 $C^2$ 光滑性。∎
+
+## 51. 压缩后两记录的精确纤维与实际域风险
+
+**定义 51.1（同一个保留读任务）。** 对每个固定 $\lambda$，仅采用 RRO30.1 的单切口前件：给定实际可读过去 $\mathcal G_-$，读取前配置条件律为 $\Pi_\lambda(z)$；读取字面报告 $I=b_9(Q_-)$、保留 $Q_+=Q_-$，并使用原正分支纯后继。后切口恰在记录已保留、未来调用为空之处。由 (49.2)，实际质量为 $t_k(z)$；只在它正时定义
+
+$$
+\gamma_{k,\lambda}(z)=\frac{\varepsilon H_\lambda(z)}{t_k(z)},\qquad
+K_{k,\lambda}(z)=B_k(p_k(z))+\gamma_{k,\lambda}(z)C_k.
+\tag{51.1}
+$$
+
+$B_k,C_k,W$ 和全部 $1024$ 个旧标签逐字沿用 (30.4)。固定零质量失败、拒绝、停止和泄漏坐标一并保留。不另假定读取后配置律等于 $\Pi_\lambda(M_kz)$。
+
+**定理 51.2（两个记录的精确纤维传输）。** 置 $a_{i,\lambda}=1$、$a_{j,\lambda}=\lambda^{-1}$，并定义质量的双射
+
+$$
+\sigma_{i,\lambda}(v)=\frac{\lambda v}{1+(\lambda-1)v},\qquad
+\sigma_{j,\lambda}(v)=\frac{v}{\lambda(1-v)+v}
+\quad(0<v<1).
+\tag{51.2}
+$$
+
+固定记录 $k$、它的正质量 $v\in(0,1)$ 及后射线 $p\in\mathbb P_k$。令 $l=1-k$，当另一块单位射线及相对相位任意变化时，完整系数像是
+
+$$
+\left[0,
+\frac{a_{k,\lambda}\varepsilon}{2\sigma}
+ \exp\left\{-\frac{F_k(p)}{\sigma^2}
+              -\frac{D_l}{(1-\sigma)^2}\right\}\right],
+\qquad \sigma=\sigma_{k,\lambda}(v).
+\tag{51.3}
+$$
+
+$F_k(p)=+\infty$ 时该像为 $\{0\}$。质量为一时像也为 $\{0\}$，质量为零时不定义条件系数。忘记正质量后，精确像为
+
+$$
+[0,a_{k,\lambda}G_k^{h_{\rm sm}}(p)].
+\tag{51.4}
+$$
+
+特别地，所选记录的整个包络与旧光滑场完全相同；另一记录的包络恰缩小 $\lambda$ 倍。两个正记录同时存在时始终满足
+
+$$
+t_i(z)\gamma_{i,\lambda}(z)
+ =t_j(z)\gamma_{j,\lambda}(z)=\varepsilon H_\lambda(z).
+\tag{51.5}
+$$
+
+证明。对单位父源 $z=\sqrt t\,p+\sqrt{1-t}\,q$，其中 $p\in\mathbb P_i,q\in\mathbb P_j$ 取单位代表，记 $d=1+(\lambda-1)t$、$\tau=\lambda t/d$。则
+
+$$
+\frac{S_\lambda z}{\|S_\lambda z\|}
+ =\sqrt\tau\,p+\sqrt{1-\tau}\,q,
+\qquad H_\lambda(z)=\frac d\lambda
+ h_{\rm sm}(\sqrt\tau\,p+\sqrt{1-\tau}\,q).
+\tag{51.6}
+$$
+
+于是有逐点恒等式，而非极限交换：
+
+$$
+\gamma_{i,\lambda}(z)
+ =\frac{\varepsilon h_{\rm sm}(S_\lambda z)}\tau,
+\qquad
+\gamma_{j,\lambda}(z)
+ =\frac1\lambda\frac{\varepsilon h_{\rm sm}(S_\lambda z)}{1-\tau}.
+\tag{51.7}
+$$
+
+变换不改变两块射线或相对相位。固定原质量 $v$ 后，变换质量正是 (51.2)；RRO40.2 的完整光滑纤维 (40.7) 因而逐点给 (51.3)，其中所有有限值与两个端点均达到，不仅给上界。该供应者已包括全部扇区支撑情形；在 $F_k=+\infty$ 的层上原 $\eta$ 乘积及新场均为零，不作无穷量相除。两个 $\sigma_{k,\lambda}$ 都把 $(0,1)$ 双射到自身，且保持固定后射线，所以 RRO41.1 的质量遗忘精确像给 (51.4)。纯块由 (49.2) 完成，(51.5) 由共同分子完成。∎
+
+**定理 51.3（恰在原实际后射线集合上的两条尖锐风险）。** 对每个记录 $k$，实际集合仍恰为 (47.1) 的 $\mathcal A_k,\mathcal X_k$，因为新族的实际质量等于原 $t_k$。定义
+
+$$
+E_{k,\lambda}(R)=\sup_{\ell\in\mathcal A_k}
+ \operatorname{TV}\bigl(R(p_k(\chi_\ell)),K_{k,\lambda}(\chi_\ell)\bigr),
+\quad R:\mathcal X_k\to\Delta(\Omega_{10})\ \text{连续}.
+\tag{51.8}
+$$
+
+记 $\tau_k\in(0,1)$ 为 (42.5) 中的唯一解，令
+
+$$
+\rho_k^{\rm sm}=4\max_{p\in\mathbb P_k}G_k^{h_{\rm sm}}(p)
+ =\frac{2\varepsilon}{\tau_k}
+ \exp\left\{-\frac{D_k}{\tau_k^2}
+              -\frac{D_{1-k}}{(1-\tau_k)^2}\right\}>0.
+\tag{51.9}
+$$
+
+则每个有限 $\lambda\ge1$ 都有
+
+$$
+\boxed{\inf_{R\,\mathrm{continuous}}E_{i,\lambda}(R)=\rho_i^{\rm sm},
+\qquad
+\inf_{R\,\mathrm{continuous}}E_{j,\lambda}(R)=\lambda^{-1}\rho_j^{\rm sm}.}
+\tag{51.10}
+$$
+
+两个下确界均由
+
+$$
+R_{k,\lambda}^*(p)=B_k(p)
+ +\tfrac12a_{k,\lambda}G_k^{h_{\rm sm}}(p)C_k
+\tag{51.11}
+$$
+
+在 $\mathcal X_k$ 上的限制达到。
+
+证明。固定 $\lambda,k,R$，先在真实定义域内证明下界。对任一实际正分支 $\ell$，$p=p_k(\chi_\ell)$ 属于 $\mathcal X_k$。把此纯块射线嵌入整个原射影空间；同一个 ready 的有限正向字稠密性 (III144.12) 给字列 $\ell_r$，使 $[\chi_{\ell_r}]\to p$。其 $t_k\to1$，最终分支为正；新场连续且在纯块为零，故
+
+$$
+p_k(\chi_{\ell_r})\to p,\qquad
+\gamma_{k,\lambda}(\chi_{\ell_r})\to0,\qquad
+K_{k,\lambda}(\chi_{\ell_r})\to B_k(p).
+\tag{51.12}
+$$
+
+序列和极限的后射线全在 $\mathcal X_k$ 内，$R$ 在该域的连续性给 $\operatorname{TV}(R(p),B_k(p))\le E_{k,\lambda}(R)$。同一实际字 $\ell$ 的误差也至多 $E_{k,\lambda}(R)$。由于 $C_k$ 恰有八正八负单元，三角不等式给
+
+$$
+8\gamma_{k,\lambda}(\chi_\ell)\le2E_{k,\lambda}(R).
+\tag{51.13}
+$$
+
+其次，(51.4) 的包络最大值在一个数学正质量父源达到。可逆的 $S_\lambda$ 给其原父源；仍是原 $\mathbb C^{89}$ 内的正质量点。对这个固定 $\lambda$，再以实际 ready 字列逼近它。系数在正投影域连续，因而
+
+$$
+\sup_{\ell\in\mathcal A_k}\gamma_{k,\lambda}(\chi_\ell)
+ =a_{k,\lambda}\max G_k^{h_{\rm sm}}.
+\tag{51.14}
+$$
+
+(51.13) 给相应下界。这里不要求 $S_\lambda$ 把实际字变成实际字，也不把 $R$ 延拓到域外；未假定任何两个实际字发生精确碰撞。两次逼近都先固定 $\lambda$，没有把趋近字列和 $\lambda\to\infty$ 交换。
+
+最后，(51.4) 的两个端点确实是同一任务上的数学条件概率行。它们的中点 (51.11) 是连续合法概率行；任一实际系数位于该线段中，TV 误差至多 $4a_{k,\lambda}G_k^{h_{\rm sm}}(p)$。限制到实际域给同值上界。(51.9) 的严格正性来自有限正数 $D_0,D_1$ 和内部极值质量。∎
+
+**推论 51.4（光滑收敛与原任务的精确分离）。** 令 $\delta_\lambda$ 为 (34.4) 的同源语义残差，则
+
+$$
+\delta_\lambda=\varepsilon\max H_\lambda\le\frac\varepsilon\lambda,
+\qquad
+\sup_{z\ne0}\operatorname{TV}(\Pi_\lambda(z),b(z))
+ =16\delta_\lambda\longrightarrow0.
+\tag{51.15}
+$$
+
+这些收敛与 (50.1) 同时成立，而所选记录的 (51.10) 保持原光滑场的严格正精确风险。
+
+证明。$m_{\lambda,k}=t_k$ 及纯块 Born 性给每个正分支的乘积残差恰为 $\varepsilon c_qH_\lambda$；零分支按节点以零延拓。$H_\lambda$ 连续，同源实际字稠密性使残差上确界等于数学最大值。$c$ 的 $32$ 个非零单元给完整 TV 等式；(49.2) 给上界。∎
+
+## 52. 度二误差提升的法向小曲率充分条件
+
+**定义 52.1（任意光滑原密度的误差及法向常数）。** 现在 $\Pi$ 是任意光滑 $\mathscr C_{\rm nat}$ 密度，不预设 $m_k=t_k$。令
+
+$$
+f_q(z)=\Pi_q(z)-b_q(z),\qquad
+\mathcal F_q(z)=N(z)f_q(z)\quad(z\ne0),\qquad \mathcal F_q(0)=0,
+\tag{52.1}
+$$
+
+并定义仅沿记录块法向的常数
+
+$$
+\kappa_k(\Pi)=\frac12\sup_{\substack{z\ne0,\ v\in\mathcal K_k\\\|v\|=1}}
+ \sum_{q\in E_k}|D^2\mathcal F_q(z)[v,v]|,
+\qquad k=0,1.
+\tag{52.2}
+$$
+
+微分只在 $z\ne0$ 处进行。$\mathcal F$ 正实二次齐次，二阶导数为零次齐次；光滑性和单位球面紧性使常数有限。此处的“小”指 $\kappa_k$ 本身或一列这样的常数趋零，不指仅有某个不趋零的共同上界。
+
+**定理 52.2（相对行误差、相对实际质量及无质量底的恢复）。** 若 $\kappa_k(\Pi)\le\theta<1$，$\theta\ge0$，则全部 $z\ne0$ 同时有
+
+$$
+\sum_{q\in E_k}|\Pi_q(z)-b_q(z)|\le\theta t_k(z),
+\qquad |m_k(z)-t_k(z)|\le\theta t_k(z).
+\tag{52.3}
+$$
+
+因而 $t_k>0$ 时 $(1-\theta)t_k\le m_k\le(1+\theta)t_k$，两个质量同时严格为正。在 RRO30.1 的同源前律、字面报告及配置保留前件下，用实际质量 $m_k$ 归一化的条件旧标签行满足
+
+$$
+\boxed{\operatorname{TV}\left(
+ W_*\left(\frac{\mathbf1_{E_k}\Pi(z)}{m_k(z)}\right),
+ B_k(p_k(z))\right)\le\theta.}
+\tag{52.4}
+$$
+
+它覆盖全部实际正前缀，Born 后射线解码器在原 $\mathcal X_k$ 上连续，故相应连续 minimax 风险至多 $\theta$，无须共同正记录质量下界。$t_k=0$ 时节点给 $m_k=0$，不定义归一化行。
+
+证明。写 $z=x+y$，$x=M_kz$、$y=M_{1-k}z$。先设 $y\ne0$。对 $q\in E_k$，$\Pi_q(y)=b_q(y)=0$；这两个光滑非负函数都在 $y$ 取得最小值，故其所有实方向一阶导数均为零。因此 $\mathcal F_q(y)=D\mathcal F_q(y)=0$。沿法向线段 $y+sx$ 的积分 Taylor 式给
+
+$$
+\mathcal F_q(y+x)
+ =\int_0^1(1-s)D^2\mathcal F_q(y+sx)[x,x]\,ds.
+\tag{52.5}
+$$
+
+对 $q\in E_k$ 求绝对值和，(52.2) 给至多 $\theta\|x\|^2$。除以 $N(z)$ 得第一式；若 $y=0,x\ne0$，从 $y_r\ne0,y_r\to0$ 取连续极限，结论仍成立，未在零向量评价二阶导数。对有符号误差求和给质量式。
+
+为保留未知实际质量，记块行 $a=(b_q(z))_{E_k}$、$r=(\Pi_q(z))_{E_k}$，它们非负，质量分别为 $t,m$，并令 $e=\|r-a\|_1$。当 $m\ge t>0$，在分母 $m$ 上加减 $a/m$；当 $t\ge m>0$，在分母 $t$ 上加减 $r/t$。两种情况都给
+
+$$
+\operatorname{TV}(r/m,a/t)
+ \le\frac{e+|m-t|}{2\max(m,t)}
+ \le\frac e{\max(m,t)}\le\frac e t\le\theta.
+\tag{52.6}
+$$
+
+质量正性由 (52.3) 和 $\theta<1$ 保证。$W$ 在 $E_k$ 单射，故推前保持这个 TV；更一般的确定推前也只会减小它。$W_*(a/t)=B_k(p_k(z))$，证明 (52.4)。特别不把未知的 $m$ 偷换成 $t$，也不额外损失因子 $(1-\theta)^{-1}$。∎
+
+**推论 52.3（$C^{1,1}$ 收敛充分，二阶有界和平坦 jets 不充分）。** 若一列光滑原密度满足 $\Pi_n-b\to0$ 于固定环域 $A_{1/2,2}$ 的 $C^{1,1}$ 范数，则 $\kappa_k(\Pi_n)\to0$，两个记录均有一致条件恢复。因此 $C^2$ 收敛也充分。相反，统一 $C^2$ 有界、$C^{1,\alpha}$ 对每个 $\alpha<1$ 收敛，以及非零纯面上的所有误差 jets 消失，三者即使同时成立也不充分。
+
+证明。在单位球面上，对单位实向量 $v$，乘积法则给
+
+$$
+\|D^2\mathcal F(z)[v,v]\|_1
+ \le 2\|f(z)\|_1+4\|Df(z)\|+\|D^2f(z)\|.
+\tag{52.7}
+$$
+
+光滑 $f$ 的最后一项不超过环域上的 $Df$ Lipschitz 半范数；球面在环域内部，可取局部差商。二阶齐次性遂给
+
+$$
+\kappa_k(\Pi)\le
+ \|f\|_\infty+2\|Df\|_\infty+\tfrac12[Df]_{\rm Lip}.
+\tag{52.8}
+$$
+
+各项趋零，应用定理 52.2 即得恢复。$C^2$ 收敛给该环域上的 $C^{1,1}$ 收敛：相近两点沿留在环域的径向与球面短弧连接，路径长度至多固定倍数的 Euclidean 距离；远点用导数上确界。故二阶导数和一阶范数同时趋零足够。
+
+反向断言由 (50.1)、平坦 jets 及 (51.10) 的正风险给出。也可直接由 (51.14) 和 $16$ 个块内符号坐标看出
+
+$$
+\kappa_i(\Pi_\lambda)
+ \ge\sup_{t_i(z)>0}
+ \frac{\sum_{q\in E_i}|\Pi_{\lambda,q}(z)-b_q(z)|}{t_i(z)}
+ =16\max G_i^{h_{\rm sm}}=4\rho_i^{\rm sm}>0.
+\tag{52.9}
+$$
+
+第一步使用 (52.5) 所给的不含 $\theta<1$ 限制的行估计。统一有界没有令这个数趋零；面上 jets 为零也没有给离面的共同连续模。∎
+
+## 53. 共同法向二阶模把全律误差接到条件恢复
+
+**定义 53.1（只需的法向二阶模）。** 对一列光滑 $\Pi_n\in\mathscr C_{\rm nat}$，令 $\mathcal F_n$ 如 (52.1)。假定存在同一个非减函数 $\omega:[0,1]\to[0,\infty)$，满足 $\omega(0)=0$、$\lim_{r\downarrow0}\omega(r)=0$，且对每个 $n$、每个 $k\in\{0,1\}$、每个单位 $y\in\mathcal K_{1-k}$、每个单位 $v\in\mathcal K_k$ 及每个 $s\in[0,1]$，均有
+
+$$
+\sum_{q\in E_k}\left|
+ D^2\mathcal F_{n,q}(y+sv)[v,v]
+ -D^2\mathcal F_{n,q}(y)[v,v]\right|\le\omega(s).
+\tag{53.1}
+$$
+
+这是在固定实法线上的二阶导数与面上二阶导数的共同模，只要求上述方向和管段；没有要求切向、混合方向或不同 $y$ 间的共同模。这里 $y+sv$ 的范数介于一与 $\sqrt2$，从不经过零向量。条件量化所有所列 $n,k,y,v,s$，不是只量化一个已观察有限集合。
+
+**定理 53.2（原密度的法向插值恢复）。** 记
+
+$$
+e_n=\sup_{z\ne0}\operatorname{TV}(\Pi_n(z),b(z)),\qquad
+\Theta(e;\omega)=\inf_{0<r\le1}
+ \left\{\frac{2e(1+r^2)}{r^2}+\omega(r)\right\}.
+\tag{53.2}
+$$
+
+在 (53.1) 下，全部 $n,k,z\ne0$ 有
+
+$$
+\sum_{q\in E_k}|\Pi_{n,q}(z)-b_q(z)|
+ \le\Theta(e_n;\omega)t_k(z),\qquad
+|m_{n,k}(z)-t_k(z)|\le\Theta(e_n;\omega)t_k(z).
+\tag{53.3}
+$$
+
+若 $e_n\to0$，则 $\Theta(e_n;\omega)\to0$。充分大的 $n$ 在全部原正分支上均有实际正质量，并在同一个保留读／空未来任务上满足 (52.4)，其中 $\theta=\Theta(e_n;\omega)$。若进一步 $\omega(r)\le Lr^\beta$、$L\ge0,\beta>0$，则对 $0<e\le1$ 有明确但不主张最优的界
+
+$$
+\Theta(e;\omega)\le(4+L)e^{\beta/(\beta+2)}.
+\tag{53.4}
+$$
+
+证明。固定 $n,k$ 和试探尺度 $0<r\le1$。对单位 $y\in\mathcal K_{1-k}$、单位 $v\in\mathcal K_k$，以 $\mathcal F_{n,E_k}$ 表示块向量。面上函数值与一阶导数仍为零。沿 $y+sv$ 积分 (53.1)，得到
+
+$$
+\left\|\mathcal F_{n,E_k}(y+rv)
+ -\frac{r^2}{2}D^2\mathcal F_{n,E_k}(y)[v,v]\right\|_1
+ \le\frac{r^2}{2}\omega(r).
+\tag{53.5}
+$$
+
+全律误差给 $\|\mathcal F_n(y+rv)\|_1\le2e_n(1+r^2)$，所以
+
+$$
+\|D^2\mathcal F_{n,E_k}(y)[v,v]\|_1
+ \le\frac{4e_n(1+r^2)}{r^2}+\omega(r).
+\tag{53.6}
+$$
+
+任取 $z=x+y_0$，$x\in\mathcal K_k,y_0\in\mathcal K_{1-k}$。若 $y_0\ne0$ 且 $u=\|x\|/\|y_0\|\le r$，$x\ne0$ 时以 $\widehat y=y_0/\|y_0\|$、$v=x/\|x\|$ 再用 (53.1)、(53.6) 及积分 Taylor 式，得
+
+$$
+\|\mathcal F_{n,E_k}(\widehat y+uv)\|_1
+ \le u^2\left\{\frac{2e_n(1+r^2)}{r^2}+\omega(r)\right\}.
+\tag{53.7}
+$$
+
+二次齐次性乘回 $\|y_0\|^2$，再除以 $N(z)$，便给 (53.3) 右端的试探尺度版本。$x=0$ 时节点直接给零。若 $u>r$，则 $t_k(z)>r^2/(1+r^2)$；直接用块误差至多 $2e_n$，得到相同界中不含 $\omega$ 的部分。纯 $k$ 块 $y_0=0$ 亦属此后一种估计。于是所有支撑层都有同一个界，对每个 $r$ 成立；取下确界得到行式，求和得到质量式。
+
+先给任意容限 $a>0$，选固定 $r$ 使 $\omega(r)<a/2$，再选 $n$ 使 $2e_n(1+r^2)/r^2<a/2$，证明 $\Theta\to0$。一旦 $\Theta<1$，(52.6) 仅用 (53.3) 就给条件 TV 界，不要求全域曲率常数 $\kappa_k$ 也趋零。最后令 $r=e^{1/(\beta+2)}\le1$，则第一项至多 $4e^{\beta/(\beta+2)}$，第二项至多 $Le^{\beta/(\beta+2)}$，得到 (53.4)。∎
+
+**推论 53.3（接回原全实际前缀的语义残差）。** 对同一列原密度，令 $\delta_n$ 严格取 (34.4) 的全实际有限 ready 前缀上确界。保留 (53.1)，并令
+
+$$
+\Phi(\delta)=\min\left\{1,\frac{89}{2}\mathcal E(171\delta)\right\},
+\qquad
+\theta_n=\Theta(\Phi(\delta_n);\omega).
+\tag{53.8}
+$$
+
+则 (53.3) 及其条件 TV 后果可用 $\theta_n$ 作上界；特别 $\delta_n\to0$ 蕴含两个记录的一致条件恢复。
+
+证明。RRO38.2 在不预设 $m=t$ 的原类上给 $e_n\le\Phi(\delta_n)$，且 $\Phi(\delta)\to0$。$\Theta$ 对第一参数非减，把此界代入定理 53.2 即得结论。这里的残差上确界是语义量；有限采样或有限前缀菜单的最大残差不等于它，也不自行给出 (53.1)。∎
+
+## 54. 条件恢复不要求法向曲率趋零
+
+**命题 54.1（原生振荡族的充分性与必要性分离）。** 固定同一个所选 $i$ 和 $h_{\rm sm}$，对整数 $n\ge1$ 置
+
+$$
+g_n(t)=\frac{1+\cos(4\pi nt)}2,\qquad
+\widetilde H_n(z)=\frac1n h_{\rm sm}(z)g_n(t_i(z)),\qquad
+\widetilde\Pi_{n,q}(z)=b_q(z)+\varepsilon c_q\widetilde H_n(z).
+\tag{54.1}
+$$
+
+这些光滑密度均在原 $\mathscr C_{\rm nat}$ 内，保留全部十一地址分量方程、节点外严格正性、两个 $m_{n,k}=t_k$ 和纯块 Born 性。它们在保留读／空未来任务上的两个记录条件误差都一致趋零，但其度二误差提升的 $\kappa_i(\widetilde\Pi_n)$ 趋于无穷。
+
+证明。$0\le g_n\le1$ 给 $0\le\widetilde H_n\le h_{\rm sm}$，故原节点上界和严格正性保持。每个偶地址保持 $t_i$ 及 $h_{\rm sm}$，所以新场在该地址下不变；每个奇地址的分量符号和仍为零。因此定理 49.2 的逐类分量论证原样适用于 (54.1)，包括端点和单点。符号块和为零及纯面节点给质量与纯块结论。
+
+由同一个前律和字面保留规则，条件 TV 为 $8\varepsilon\widetilde H_n/t_k$。RRO41.1 的固定光滑包络有限，故对两个 $k$ 均有
+
+$$
+\sup_{t_k(z)>0}\operatorname{TV}(\widetilde K_{k,n}(z),B_k(p_k(z)))
+ \le\frac8n\max G_k^{h_{\rm sm}}\longrightarrow0.
+\tag{54.2}
+$$
+
+这是全域上界，因而也控制原实际域及连续 minimax 风险。
+
+为证曲率增长，用 [III] (164.17) 的同一个全支撑单位 $z_*$；每块有十六个等模扇区，故 $t_i(z_*)=1/2$。令 $h_*=h_{\rm sm}(z_*)>0$、$v=\sqrt2M_i z_*$，则 $v$ 是实微分使用的单位法向。沿 $z_*+sv$ 有
+
+$$
+\left.\frac d{ds}t_i(z_*+sv)\right|_{s=0}=\frac1{\sqrt2},\qquad
+ g_n(1/2)=1,\quad g_n'(1/2)=0,\quad g_n''(1/2)=-8\pi^2n^2.
+\tag{54.3}
+$$
+
+记固定实数 $B=D^2F(z_*)[v,v]$。对任一 $q\in S_i$，新误差提升的二阶导数恰为
+
+$$
+D^2\widetilde{\mathcal F}_{n,q}(z_*)[v,v]
+ =\varepsilon c_q\left(\frac Bn-4\pi^2nh_*\right).
+\tag{54.4}
+$$
+
+$h_*>0$，故其绝对值趋于无穷，(52.2) 的上确界至少是该单项绝对值的一半。另取单位 $y=\sqrt2M_jz_*$，则 $y+v=\sqrt2z_*$；二阶导数的零次齐次性保留 (54.4)，而在纯面 $y$ 上它为零。因此 (53.1) 在 $s=1$ 也不可能有对全部 $n$ 有限的同一个 $\omega(1)$。这个见证只在非零点微分。振荡曲率没有阻止条件误差趋零，所以定理 52.2 的曲率小条件与定理 53.2 的共同模均是充分控制，不是原任务可恢复性的必要条件或完整刻画。∎
+
+## 55. 数学供应、来源关系与恢复边界
+
+**定义 55.1（源特定增量及条件对应）。** 本组的 `repo-derived` 内容是 (49.1) 在原完整复载体上的可容许性、固定实范数收敛与精确两记录纤维传输，及其与实际域尖锐风险、法向控制和语义残差的接合。Taylor 余项、导数插值和有限非负行的归一化估计是证明中的标准工具，不单列为新发现，也不作全球原创主张。
+
+| 数学来源 | 在这里承担的精确内容与保留的前件 |
+| --- | --- |
+| [III] 定义 157.1、引理 164.2、(164.3)–(164.16)、(165.1)–(165.6) | 原 $89$ 坐标、原边界、奇偶分量、扇区特征向量、光滑标量及节点界。$S_\lambda$ 的偶地址对易和奇地址逐分量相消由 §49 另证，没有更换 Hamiltonian 或删去内部时间。 |
+| 本卷 RRO30–33、40–43、44–48 | 固定保留读与空未来、原光滑场的完整纤维和包络、原实际域及 ready 稠密桥。§51 证明新族的传输及恰在实际域上的下界；旧连续截断族本身没有供应 (50.1) 的光滑收敛。 |
+| 本卷 RRO34–39，尤其定理 38.2 | 在未知 $m_k$ 的原全连续类上提供全律的语义残差模；§53 另付共同法向二阶模，才得到无质量底的相对行估计。 |
+| [ConditionalProbabilityProfileMinimality][RROCond55] 的 `conditional_probability_profile_is_minimal` | 其有限状态 $X$、PMF 完整预测核和已给因子化 $\mathrm{kernel}=\mathrm{predictor}\circ\mathrm{interface}$，供应已充分接口到完整预测像的唯一因子。它不证明本源射线接口充分，也不把实际可数域改成有限源域。 |
+| [PositiveConditioningPredictionStability][RROPositive55] 的 `predictive_equivalence_preserved_by_positive_conditioning` | 要求完整联合律相等、边缘相容、历史扩展实现条件律和严格正的观察质量；结论是正条件化后的预测相等。原任务未供应这些跨历史合同，故它不替代 §51 的纤维或 §52 的质量估计。 |
+| [RareBranchConditionalErrorSharpness][RRORare34] 的 `rare_branch_conditional_error_sharpness` | 在三维密度态与同一投影上给全局迹距离任意小而条件距离为一，并否定一般无质量底的模。这里仍需完整原生可容许性、光滑范数和实际域证明。 |
+| [TreeMarkovStability][RROTree55] 的 `actual_tree_stability` | 输入有限图树、至少两个顶点及两个 `Family`；每个族已有非负归一节点律、边律及精确端点边缘。其 Markov 联合律满足带节点预算的 TV 界，共同节点时只剩边预算；正质量条件因子固定，零质量行不影响联合律。此为已有共同联合来源的供应，未提供原配置律的可容许性、法向正则性或取得权限。 |
+| [Sprungk, arXiv:1906.07120v3][RROSprungk55]，Theorem 8、Remark 9 | 在完整可分度量空间的 Borel 概率域上，第一部分以共同概率先验 $\mu$、实 $L^1_\mu$ 势及 $\operatorname{ess\,inf}_\mu\Phi=0$ 为前件，比较已定义的归一后验；第二部分以两概率先验和非负可测势比较后验。界保留逆归一常数，Remark 9 讨论其敏感性，不供应本源的无质量底恢复。 |
+| [Ackerman–Freer–Roy, arXiv:1005.3014v4][RROAFR55]，Lemmas 3.4–3.5 | 前者要求同一条件概率的两个版本、共同连续点及原边缘律的 support；后者要求 Polish 域和值域、同一测度下几乎处处相等及满测集上的连续性。它们不把零质量标签选成 canonical 后验，也不为本任务构造共同过程。 |
+| [Cvetković–Lie, arXiv:2505.23541v2][RROCL55]，Proposition 3.5(i) | 对同一先验上的两个有限实可测势、已定义概率后验及两个势的 essential infimum 均为零，给指数密度 $L^1$ 差与质量差除以两归一常数最大值的 TV 界。原行允许零单元，§52 直接证明其有限非负行版本，不以实势条件覆盖这些零单元。 |
+| [IV][RROIV55] §§195–200；[V51][RROV5155] 命题 7.7、定理 10.2、11.1–11.2 | 前者另供共同实际切口、全菜单非负归一核及实关系一致性；后者的坐标逆界保留锚和幅度范围，历史能量恢复保留正谱隙，无限局部历史例没有该隙。它们各自的控制关系不提供 (53.1) 或原条件行。 |
+
+**定义 55.2（条件概率与有限取得的边界）。** 本组每条条件行均以同一切口的读取前配置律、字面 $I=b_9(Q_-)$、$Q_+=Q_-$、原纯后继、已保留记录和空未来为前件。一般密度的实际分母始终为 $m_k$，仅在明证的两个构造族中等于 $t_k$。零质量处分母不取值，图极限不选取条件版本。
+
+[III] 173.2、174.2 已证明：若另在全部实际前缀上供应读取前后同一个 $\Pi$ 的充分性，则它选择 Born；这里不把这一已排除的非 Born 共同过程当成未决候选。静态族和各单切口数学条件赋值不构造满足全部报告、档案、未来动力学及旧合同的共同非 Born 过程。非空未来的更新关系、原配置过程和载体的物理来源仍需独立前件。
+
+(50.1) 是固定数学范数的收敛，(52.2)、(53.1) 是全域导数条件，(34.4) 是全实际有限前缀的语义上确界。它们均不提供有限样本认证、误差估计权限、置信度、取得速率或有限字长界。实际字的稠密性只在每个固定密度上用于取上确界，连续解码器的下界只用其真实 $\mathcal X_k$ 域内的连续性；任意不连续实际域解码器的精确纤维仍未由此分类。上述有限结果保持空间、时间、边界和记忆之完整过程恢复问题的原范围。
+
+[RROCond55]: ../../../D5/S3/ObserverMemory/PredictionFactors/ConditionalProbabilityProfileMinimality.lean
+[RROPositive55]: ../../../D5/S3/ObserverMemory/PredictionFactors/PositiveConditioningPredictionStability.lean
+[RROTree55]: ../../../D5/S3/TotalVariation/TreeMarkovStability.lean
+[RROSprungk55]: https://arxiv.org/html/1906.07120v3
+[RROAFR55]: https://arxiv.org/html/1005.3014v4
+[RROCL55]: https://arxiv.org/html/2505.23541v2
+[RROIV55]: AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md
+[RROV5155]: AURIC_CONSTRAINT_RECURSION_PURE_STATE_DUALITY_AND_ENDOGENOUS_STATIC_HISTORY_V51.md
+
+## 追加锚（本行以下为增补区）
