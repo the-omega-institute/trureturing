@@ -173,7 +173,10 @@ internal sealed class NCycleNonlocalityContextualityTradeoffDocument : IScribeDo
                             + "argument yields F(p) ≤ 1 − c. Adding c proves the stated inequality. "
                             + "The statement concerns binary cyclic NSND probability tables with "
                             + "two Alice settings; it assumes no quantum realization."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("porto-et-al-2024-n-cycle-nonlocality-contextuality-tradeoff"),
+                    ResolutionKind.Proved)))));
 
     private static Formula BehaviorFormula() => All("n", Naturals(), Equal(
         Typed(LocalCall("Behavior", X("n")), X("Type")),
