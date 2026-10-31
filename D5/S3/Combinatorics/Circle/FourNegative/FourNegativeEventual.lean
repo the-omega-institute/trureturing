@@ -7,7 +7,7 @@
    digest: Eventual physical four-chain joint lift with a literal ear. -/
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.ThreeBitSource
-import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+import D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 
 /-! Eventual physical four-chain source table and joint lift. -/
 

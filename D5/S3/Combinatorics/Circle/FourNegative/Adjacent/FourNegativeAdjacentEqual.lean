@@ -17,7 +17,7 @@ open SourceWidth PeriodicShortening RunFirstEarTransport PeriodicShorteningArith
 open private ear_prefix ear_perm from D5.S3.Combinatorics.Circle.RunFirstEarTransport
 open private prefix_nonneg_le sum_linear from D5.S3.Combinatorics.Circle.PeriodicShortening
 open private centered_ladder positive_block_strip from D5.S3.Combinatorics.Circle.ThreeBitSource
-open private ladder_sum label lift_order from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open private ladder_sum label lift_order from D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 
 private theorem first_ear (k t : ℕ) (hk : 2 ≤ k)
     (ht : t ≤ 2 ^ (k - 1) - 1) (sigma : List (Fin k))

@@ -14,7 +14,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentReverse
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private label lift_order marked_word ladder_sum
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+  from D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 open private Gates four_strip from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
 open private chains from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentSource
 

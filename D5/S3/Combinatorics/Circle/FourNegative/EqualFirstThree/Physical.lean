@@ -18,7 +18,7 @@ open private seed_bounds from D5.S3.Combinatorics.Circle.FourNegative.AscendingD
 open private seed eta vcoef wcoef xcoef Table paired_table
   from D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Source
 open private label lift_order marked_word ladder_sum
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+  from D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 open private four_strip from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 open private chainMask chainMask_sum chainMask_partition four_mask_inventory
   from D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventual

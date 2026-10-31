@@ -21,7 +21,7 @@ open private Gates four_strip
 open private negative_step
   from D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
 open private label lift_order marked_word ladder_sum
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+  from D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 
 private theorem reserve_inventory (a d s : ℕ) (ha : 2 ≤ a) (hd : a + 2 ≤ d)
     (hs : s=d-a-1) :

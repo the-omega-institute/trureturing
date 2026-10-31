@@ -9,7 +9,7 @@ internal sealed class ThreeNegativeEqualOuterJointLiftDocument : IScribeDocument
         H("A common zero cut for equal outer gaps"),
         Blocks(
             Describe.Lean(DescribeId.Create("actual-source-three-negative-equal-outer-joint-lift"),
-                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterJointLift.actualSource_three_negative_equal_outer_joint_lift"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterJointLift.actualSource_three_negative_equal_outer_joint_lift"),
                 H("The complete marked joint order"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For every pair of natural numbers a,b with 2<=a<b, put k=a+b+a and v=1+2^a+2^(a+b). There is one list sigma of Fin(k) physical labels such that OriginalOrder(k,v,sigma) and OriginalOrder(k+1,2v,earWord(k,sigma,a+1)). OriginalOrder includes permutation of all labels, integer total zero, and the closed half-modulus bounds for every natural take-prefix, including empty and saturated takes. The new word retains the identical old physical labels in the identical order and inserts the fresh label k at the literal cut a+1.")),

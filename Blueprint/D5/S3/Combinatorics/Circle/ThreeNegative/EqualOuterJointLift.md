@@ -6,9 +6,9 @@ A common physical order and a marked ear for equal outer gaps
 
 **Theorem 1.1 (The complete marked joint order).**
 
-Lean statement: `D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterJointLift.actualSource_three_negative_equal_outer_joint_lift`
+Lean statement: `D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterJointLift.actualSource_three_negative_equal_outer_joint_lift`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterJointLift.actualSource_three_negative_equal_outer_joint_lift` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterJointLift.actualSource_three_negative_equal_outer_joint_lift` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -28,6 +28,6 @@ This is the equal-outer three-negative marked family of the Circle Conjecture 3.
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterJointLift.actualSource_three_negative_equal_outer_joint_lift`
-- Dependency: [D5/S3/Combinatorics/Circle/RunFirstEarTransport](RunFirstEarTransport.md)
-- Dependency: [D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterSourceBridge](ThreeNegativeEqualOuterSourceBridge.md)
+- Truth anchor: `D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterJointLift.actualSource_three_negative_equal_outer_joint_lift`
+- Dependency: [D5/S3/Combinatorics/Circle/RunFirstEarTransport](../RunFirstEarTransport.md)
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterSourceBridge](EqualOuterSourceBridge.md)

@@ -5,7 +5,7 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Literal four-chain joint order with adjacent gap ratio two. -/
-import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+import D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.ThreeBitSource
 
@@ -19,7 +19,7 @@ open SourceWidth PeriodicShortening RunFirstEarTransport
 open private centered_ladder positive_block_strip
   from D5.S3.Combinatorics.Circle.ThreeBitSource
 open private label lift_order marked_word ladder_sum
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+  from D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 
 private theorem shift (N u v : ℤ) (len i : ℕ)
     (h : (2 : ℤ)^len * u = N + v) :
