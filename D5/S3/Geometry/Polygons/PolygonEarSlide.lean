@@ -1913,12 +1913,6 @@ def shift_condition_fibre_equiv (a : ZMod n)
 
 def condition_fibre_equiv (hn : 14 ≤ n)
     {P Q J R : Finset (ZMod n)}
-    (hcard : (P.card = 2 ∧ Q.card = 2) ∨
-      (P.card = 3 ∧ Q.card = 3) ∨
-      (P.card = 2 ∧ Q.card = 4) ∨
-      (P.card = 4 ∧ Q.card = 2))
-    (hPQ : Disjoint P Q)
-    (hcompat : ∀ i ∈ P ∪ Q, ∀ j ∈ P ∪ Q, ¬Cross (ear i) (ear j))
     (hJ : J ⊆ E_K (P ∪ Q))
     (hJ0 : (0 : ZMod n) ∉ J) (hJ1 : (1 : ZMod n) ∈ J)
     (hJ2 : (2 : ZMod n) ∈ J)
@@ -2018,12 +2012,6 @@ def condition_fibre_equiv (hn : 14 ≤ n)
 
 def condition_fibre_equiv_at (hn : 14 ≤ n) (a : ZMod n)
     {P Q J R : Finset (ZMod n)}
-    (hcard : (P.card = 2 ∧ Q.card = 2) ∨
-      (P.card = 3 ∧ Q.card = 3) ∨
-      (P.card = 2 ∧ Q.card = 4) ∨
-      (P.card = 4 ∧ Q.card = 2))
-    (hPQ : Disjoint P Q)
-    (hcompat : ∀ i ∈ P ∪ Q, ∀ j ∈ P ∪ Q, ¬Cross (ear i) (ear j))
     (hJ : J ⊆ E_K (P ∪ Q))
     (ha0 : a ∉ J) (ha1 : a + 1 ∈ J) (ha2 : a + 2 ∈ J)
     (hR : R ⊆ ((J.erase (a + 1)).erase (a + 2)).erase (a + 3)) :
@@ -2033,33 +2021,6 @@ def condition_fibre_equiv_at (hn : 14 ≤ n) (a : ZMod n)
   let Q0 := shiftSet Q (-a)
   let J0 := shiftSet J (-a)
   let R0 := shiftSet R (-a)
-  have hcard0 : (P0.card = 2 ∧ Q0.card = 2) ∨
-      (P0.card = 3 ∧ Q0.card = 3) ∨
-      (P0.card = 2 ∧ Q0.card = 4) ∨
-      (P0.card = 4 ∧ Q0.card = 2) := by
-    simpa [P0, Q0, shiftSet_card] using hcard
-  have hPQ0 : Disjoint P0 Q0 := by
-    simpa [P0, Q0] using shiftSet_disjoint_shiftSet hPQ (a := -a)
-  have hcompat0 : ∀ i ∈ P0 ∪ Q0, ∀ j ∈ P0 ∪ Q0,
-      ¬Cross (ear i) (ear j) := by
-    intro i hi j hj hcross
-    rcases mem_union.mp hi with hiP | hiQ
-    · obtain ⟨i0, hi0, rfl⟩ := mem_image.mp hiP
-      rcases mem_union.mp hj with hjP | hjQ
-      · obtain ⟨j0, hj0, rfl⟩ := mem_image.mp hjP
-        exact hcompat i0 (mem_union_left Q hi0) j0 (mem_union_left Q hj0)
-          ((cross_ear_shift_iff (i := i0) (j := j0) (a := -a)).mp hcross)
-      · obtain ⟨j0, hj0, rfl⟩ := mem_image.mp hjQ
-        exact hcompat i0 (mem_union_left Q hi0) j0 (mem_union_right P hj0)
-          ((cross_ear_shift_iff (i := i0) (j := j0) (a := -a)).mp hcross)
-    · obtain ⟨i0, hi0, rfl⟩ := mem_image.mp hiQ
-      rcases mem_union.mp hj with hjP | hjQ
-      · obtain ⟨j0, hj0, rfl⟩ := mem_image.mp hjP
-        exact hcompat i0 (mem_union_right P hi0) j0 (mem_union_left Q hj0)
-          ((cross_ear_shift_iff (i := i0) (j := j0) (a := -a)).mp hcross)
-      · obtain ⟨j0, hj0, rfl⟩ := mem_image.mp hjQ
-        exact hcompat i0 (mem_union_right P hi0) j0 (mem_union_right P hj0)
-          ((cross_ear_shift_iff (i := i0) (j := j0) (a := -a)).mp hcross)
   have hJ0sub : J0 ⊆ E_K (P0 ∪ Q0) := by
     intro i hi
     obtain ⟨i0, hi0, rfl⟩ := mem_image.mp hi
@@ -2088,7 +2049,7 @@ def condition_fibre_equiv_at (hn : 14 ≤ n) (a : ZMod n)
     exact mem_image.mpr ⟨i0, hi0', rfl⟩
   let e0 := shift_condition_fibre_equiv (n := n) (-a)
     (P := P) (Q := Q) (J := J) (X := insert (a + 2) R)
-  let ef := condition_fibre_equiv (n := n) hn hcard0 hPQ0 hcompat0 hJ0sub
+  let ef := condition_fibre_equiv (n := n) hn hJ0sub
     hJ00 hJ01 hJ02 hR0
   let e1 := shift_condition_fibre_equiv (n := n) a
     (P := P0) (Q := Q0) (J := (J0.erase 2).erase 3) (X := insert 1 R0)
