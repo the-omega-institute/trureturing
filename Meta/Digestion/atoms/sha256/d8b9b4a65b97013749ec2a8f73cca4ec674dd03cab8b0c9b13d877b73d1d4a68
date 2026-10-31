@@ -1,0 +1,60 @@
+**定理 3.3（五残差的定量闭合）。**
+
+<a id="thm:finiteclosure"></a>
+
+在上述已分类族和正质量裕量下，令 $t=1-c$，则
+
+<a id="eq:tbound"></a>
+
+$$
+\boxed{t\le\frac{4\varepsilon}{hx^2}.}
+ \tag{9}
+$$
+
+因此
+
+$$
+\sup_{\psi}\operatorname{TV}(G(\psi),F(\psi))
+ \le\min\left\{1,\frac{4\varepsilon}{hx^2}\right\},
+ \qquad 0\le x-a\le xt,
+$$
+
+<a id="eq:bbound"></a>
+
+$$
+\boxed{|b-x^3|\le(1+2x^2)t+\frac{4\varepsilon}{x}.}
+ \tag{10}
+$$
+
+**证明。**
+
+由 [(6)](#eq:A) 及 $c(1-a)=ax$，直接得到
+
+$$
+\operatorname{Tr} A=t(b-a),\qquad
+ A_{RR}=\frac{c(1-b)}{2x}-a
+       =-\frac a2-\frac{c(b-a)}{2x}.
+$$
+
+所以 $ta=-(c/x)\operatorname{Tr} A-2tA_{RR}$。
+用 [(8)](#eq:tracebounds) 及 $c+t=1$，
+
+$$
+ta\le\frac{4c\varepsilon}{x^2}
+       +\frac{4t\varepsilon}{x^2}=\frac{4\varepsilon}{x^2}.
+$$
+
+除以 $a\ge h$ 得主界。
+$G-F=d-tq$ 的总变差至多 $t$。
+由 $a=c/(x+c)$，还有
+$x-a=x^3t/(1-xt)\le xt$。
+最后 $1-x^3=2x^2$ 与 $c(1-b)=2x(a+A_{RR})$ 给
+
+$$
+b-x^3=2x(x-a)-2xA_{RR}-t(1-b).
+$$
+
+利用 $b\in[0,1]$ 和前述界即可。
+
+□
+

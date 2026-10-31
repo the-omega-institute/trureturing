@@ -1,0 +1,104 @@
+**Proposition 10.4 (Full-rank obstruction to visible funding).**
+In the computational basis of Definition 1.1, take
+
+$$
+v=(-1+3i,-2,12,2+6i)^{\mathsf T},\qquad
+\rho=\frac{999}{1000}\frac{vv^*}{198}+\frac{I_4}{4000},\qquad
+ a=\frac14,\quad b=\frac{15}{16}.
+\tag{10.9}
+$$
+
+This is a nonreal positive definite trace-one state with unequal valid
+biases. With $g,h$ from Definition 1.2, set
+$U=\mathcal B_{\rm vis}+3g-2h$. Then
+
+$$
+-\frac{24077097}{10^9}\leq U\leq-\frac{24077096}{10^9}
+ <-\frac{24}{1000},\qquad
+\frac{307125175}{10^9}\leq\Delta\leq\frac{307125176}{10^9}.
+\tag{10.10}
+$$
+
+Consequently $\mathcal L_{\rm vis}(\gamma)<0$ for every score estimate
+in Proposition 10.3. In particular the universal visible funding
+assertion
+
+$$
+\int_0^1w_a(t)(2s_t-3\gamma_t)\,dt\leq\mathcal B_{\rm vis}
+\tag{10.11}
+$$
+
+is false for the local score augmented by the maximum of the nine
+separate Pauli Schur residuals from (3.4), for any genuine larger score
+projection, and even for the full score $\gamma_t=G_{A_t}(H)$.
+
+Proof.
+First $v^*v=10+4+144+40=198$, so the spectrum of $\rho$ is
+$(3997,1,1,1)/4000$. Every path state is at least $I_4/4000$:
+all channels and all path points are convex mixtures of unitary
+conjugations of $\rho$. There are therefore no singular endpoint
+logarithms at this example. The exact output matrices are
+
+$$
+P=\frac{31\rho+L\rho L}{32},\qquad
+Q=\frac{5\rho+3K\rho K}{8},\qquad
+R=\frac{5P+3KPK}{8}.
+\tag{10.12}
+$$
+
+Here is rational spectral and Pauli data sufficient to evaluate every
+entropy in (10.10). Write $\chi_A(z)=\det(zI_4-A)$. Direct determinant
+expansion gives
+
+$$
+\begin{aligned}
+\chi_P(z)&=(z-1/4000)^2
+ \left(z^2-\frac{1999}{2000}z+\frac{357173771}{15488000000}\right),\\
+\chi_Q(z)&=(z-1/4000)^2
+ \left(z^2-\frac{1999}{2000}z+\frac{1801478203}{7744000000}\right),\\
+\chi_R(z)&=z^4-z^3+\frac{120448480659}{495616000000}z^2
+ -\frac{24478666840733}{5451776000000000}z
+ +\frac{15925486527909364633}{982540877824000000000000}.
+\end{aligned}
+\tag{10.13}
+$$
+
+The following disjoint rational intervals contain the complete spectra;
+nonpoint intervals have width at most $10^{-12}$ and contain one simple
+root. The point intervals have the displayed multiplicity two.
+
+| State | Multiplicity | Lower endpoint | Upper endpoint |
+| --- | --- | --- | --- |
+| $P$ | $2$ | $1/4000$ | $1/4000$ |
+| $P$ | $1$ | $7175/303619$ | $139854/5918095$ |
+| $P$ | $1$ | $2378851/2437676$ | $710683/728257$ |
+| $Q$ | $2$ | $1/4000$ | $1/4000$ |
+| $Q$ | $1$ | $749898/2032783$ | $618007/1675260$ |
+| $Q$ | $1$ | $1312300/2081041$ | $1582561/2509620$ |
+| $R$ | $1$ | $9167/1883940$ | $6979/1434277$ |
+| $R$ | $1$ | $24887/1670423$ | $27389/1838358$ |
+| $R$ | $1$ | $591191/1636990$ | $547279/1515399$ |
+| $R$ | $1$ | $224159/362078$ | $3418942/5522525$ |
+
+For a direct rational root count, divide (10.13) into squarefree factors
+and apply the Sturm recurrence $f_0=f$, $f_1=f'$, and
+$f_{j+1}=-\operatorname{rem}(f_{j-1},f_j)$. At each nonpoint interval
+the variation count at its lower endpoint exceeds that at its upper
+endpoint by one; neither endpoint is a root. The point $1/4000$ is
+checked by substitution and has multiplicity two for $P,Q$.
+The total multiplicity is four in every case, so no eigenvalue is
+omitted. All endpoints lie in $(0,1)$.
+
+For the marginal and pinching entropies put
+$\nu_A=p^{\mathsf T}Tq$ and
+$\eta_A=(\|T\|_F^2-\nu_A^2/(r^2s^2))/4$.
+The traces $p_i=\operatorname{tr}(A\sigma_iI)$,
+$q_j=\operatorname{tr}(AI\sigma_j)$ and
+$T_{ij}=\operatorname{tr}(A\sigma_i\sigma_j)$ in the fixed Pauli
+convention give the following rational invariants.
+
+| $A$ | $r^2$ | $s^2$ | $\nu_A$ | $\eta_A$ |
+| --- | --- | --- | --- | --- |
+| $P$ | $4669659/4840000$ | $141408117/154880000$ | $139910018931/154880000000$ | $61560834894981/33684719552000000$ |
+| $Q$ | $1342989/15488000$ | $9819837/77440000$ | $278623360737/4259200000000$ | $2797470550456389/21023266000000000$ |
+| $R$ | $3166497/38720000$ | $563919849/4956160000$ | $1615816365201/27258880000000$ | $19009662585939117/157560786944000000$ |

@@ -76,7 +76,7 @@ private lemma coeff_sq_sum (n : ℕ) (r : ℝ) :
   rw [← pow_mul, ← pow_mul]
   ring
 
-private lemma ladder_pair (n k : ℕ) (hk : k < n) :
+lemma ladder_pair (n k : ℕ) (hk : k < n) :
     Real.sqrt ((k + 1 : ℝ) * (n - k : ℝ)) * Real.sqrt (n.choose (k + 1) : ℝ) =
       (n - k : ℝ) * Real.sqrt (n.choose k : ℝ) ∧
     Real.sqrt ((k + 1 : ℝ) * (n - k : ℝ)) * Real.sqrt (n.choose k : ℝ) =
@@ -98,7 +98,7 @@ private lemma ladder_pair (n k : ℕ) (hk : k < n) :
 private def binomVector (n : ℕ) (r : ℝ) : Fin (n + 1) → ℂ :=
   fun k => (coeff n r k : ℂ)
 
-private lemma raising_entry (n : ℕ) (i j : Fin (n + 1)) :
+lemma raising_entry (n : ℕ) (i j : Fin (n + 1)) :
     Jplus n i j = if i.val + 1 = j.val then
       (Real.sqrt ((j.val : ℝ) * ((n : ℝ) + 1 - j.val)) : ℂ) else 0 := by
   unfold Jplus

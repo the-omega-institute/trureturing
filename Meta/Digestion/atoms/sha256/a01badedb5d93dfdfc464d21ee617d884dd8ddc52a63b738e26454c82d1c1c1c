@@ -1,0 +1,21 @@
+**Definition 11.1 (Spectral data and the exact budget).** Let $\rho$ be any complex positive semidefinite trace-one matrix on two
+qubits $C,D$. Write $K=X\otimes X$, $L=Z\otimes Z$ and, independently for
+$a,b\in[0,1]$,
+$$
+ \Psi_a(A)=\frac{1+a}{2}A+\frac{1-a}{2}KAK,
+ \qquad
+ \Phi_b(A)=\frac{1+b}{2}A+\frac{1-b}{2}LAL.
+$$
+Set $P=\Phi_b\rho$, $Q=\Psi_a\rho$, $R=\Psi_a P$,
+$S(A)=-\operatorname{tr} A\log A$ with natural logarithms and $0\log0=0$, and
+$$
+ I_A=S(A_C)+S(A_D)-S(A),\qquad
+ g=S(R)-S(P),\quad h=\sum_{E=C,D}[S(R_E)-S(P_E)].
+$$
+The original deficit is
+$$
+ \Delta=3S(R)-4S(P)-S(Q)
+ +\sum_{E=C,D}[3S(P_E)+S(Q_E)-2S(R_E)]
+ =I_P+I_Q+3g-2h.
+$$
+

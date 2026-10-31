@@ -1,0 +1,23 @@
+## 2. Rank-three optimization on full complex fixed-margin fibers
+
+Fix
+
+$$
+r=\frac9{10},\quad \beta=\frac1{20},\quad a=b=\frac12,
+ \qquad \sigma_\varepsilon=\frac{I+rY+\varepsilon X}{2}.
+\tag{2.1}
+$$
+
+In the product $Y$ eigenbasis choose phases so that
+
+$$
+ Y=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad
+ X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+ Z=\begin{pmatrix}0&i\\-i&0\end{pmatrix}.
+$$
+
+This is a representation change of the actual channel matrices, not a
+change of the channel axes. All nine real Pauli correlation coefficients
+remain available; in particular tensors involving $Z$ encode imaginary
+entries in this representation.
+
