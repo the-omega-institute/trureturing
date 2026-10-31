@@ -78,7 +78,8 @@ private lemma sum_bits {α : Type*} [AddCommMonoid α] (f : Bits 3 → α) :
 
 private lemma witness_unit : (∑ x, Complex.normSq (witness x)) = 1 := by
   rw [sum_bits]
-  norm_num [witness, coeff, Complex.normSq_div, Complex.normSq_ofReal,
+  delta witness coeff
+  norm_num [Complex.normSq_div, Complex.normSq_ofReal,
     Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 8)]
 
 private lemma normalization : (Real.sqrt 8)⁻¹ * (Real.sqrt 8)⁻¹ = (1 / 8 : ℝ) := by
@@ -91,9 +92,9 @@ private lemma overlap_term (d x : Bits 3) :
   calc
     _ = (((Real.sqrt 8)⁻¹ * (Real.sqrt 8)⁻¹ : ℝ) : ℂ) *
         ((-1 : ℂ) ^ (quadForm (diagMatrix d) x).val * (coeff x : ℂ)) := by
-      simp [stabAmp, witness]
-      push_cast
-      ring
+      delta stabAmp witness
+      simp
+      ring_nf
     _ = _ := by rw [normalization]; push_cast; ring
 
 private lemma abs_term (d x : Bits 3) :
@@ -102,38 +103,41 @@ private lemma abs_term (d x : Bits 3) :
   calc
     _ = (((Real.sqrt 8)⁻¹ * (Real.sqrt 8)⁻¹ : ℝ) : ℂ) *
         ((-1 : ℂ) ^ (quadForm (diagMatrix d) x).val * ((|coeff x| : ℝ) : ℂ)) := by
-      simp [stabAmp, witness,
-        abs_of_nonneg (Real.sqrt_nonneg 8)]
-      push_cast
-      ring
+      delta stabAmp witness
+      simp [abs_of_nonneg (Real.sqrt_nonneg 8)]
+      ring_nf
     _ = _ := by rw [normalization]; push_cast; ring
 
 private lemma overlap_distribution (d : Bits 3) :
     overlapProb 0 0 witness d =
       if d 0 = 0 then (if d 1 = 0 then 1 / 4 else 0)
       else (if d 2 = 0 then 0 else 1 / 4) := by
-  simp only [overlapProb, add_zero, overlap_term, ← Finset.sum_div]
+  delta overlapProb
+  simp only [add_zero, overlap_term, ← Finset.sum_div]
   rcases (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
       ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 0) with h0 | h0 <;>
     rcases (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
       ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 1) with h1 | h1 <;>
     rcases (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
       ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 2) with h2 | h2 <;>
-    norm_num [sum_bits, quadForm, diagMatrix, Fin.sum_univ_three, coeff,
+    delta quadForm diagMatrix coeff <;>
+    norm_num [sum_bits, Fin.sum_univ_three,
       h0, h1, h2, ZMod.val_add, ZMod.val_mul, ZMod.val_one_eq_one_mod,
       Complex.normSq_apply]
 
 private lemma abs_distribution (d : Bits 3) :
     absProb witness d =
       if d 0 = 0 ∧ d 1 = 0 ∧ d 2 = 0 then 9 / 16 else 1 / 16 := by
-  simp only [absProb, abs_term, ← Finset.sum_div]
+  delta absProb
+  simp only [abs_term, ← Finset.sum_div]
   rcases (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
       ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 0) with h0 | h0 <;>
     rcases (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
       ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 1) with h1 | h1 <;>
     rcases (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
       ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 2) with h2 | h2 <;>
-    norm_num [sum_bits, quadForm, diagMatrix, Fin.sum_univ_three, coeff,
+    delta quadForm diagMatrix coeff <;>
+    norm_num [sum_bits, Fin.sum_univ_three,
       h0, h1, h2, ZMod.val_add, ZMod.val_mul, ZMod.val_one_eq_one_mod,
       Complex.normSq_apply]
 
