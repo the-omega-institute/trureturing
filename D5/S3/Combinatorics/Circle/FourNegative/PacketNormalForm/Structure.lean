@@ -7,10 +7,14 @@
    digest: Decomposition at negative physical labels without a positive tail. -/
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Transport
 
+/-! Physical decomposition and literal packet-end insertion. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
+open SourceWidth
+open private slide_ear_right from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Transport
 
 private def blocksWord (bs : List (List ℕ × ℕ)) : List ℕ :=
   bs.flatMap (fun b => b.1 ++ [b.2])
@@ -65,5 +69,50 @@ private theorem insertAt_add (ear : ℕ) (pre post : List ℕ) (j : ℕ) :
   | cons x xs ih =>
     simpa [insertAt, Nat.add_assoc, List.take_succ_cons, List.drop_succ_cons] using
       congrArg (x :: ·) ih
+
+private theorem slide_packet (f : ℕ → ℤ) (B h : ℤ) (ear : ℕ)
+    (pre P post : List ℕ) (j : ℕ) (hj : j ≤ P.length)
+    (he : 0 ≤ f ear) (hp : ∀ i ∈ P, 0 ≤ f i)
+    (hw : InStrip f B h (insertAt ear (pre ++ P ++ post) (pre.length+j))) :
+    InStrip f B h (insertAt ear (pre ++ P ++ post) (pre.length+P.length)) := by
+  have hleft : insertAt ear (pre ++ P ++ post) (pre.length+j) =
+      (pre ++ P.take j) ++ ear :: (P.drop j ++ post) := by
+    rw [List.append_assoc, insertAt_add]
+    simp only [insertAt, List.take_append_of_le_length hj,
+      List.drop_append_of_le_length hj, List.append_assoc]
+  have hright : insertAt ear (pre ++ P ++ post) (pre.length+P.length) =
+      pre ++ P ++ ear :: post := by
+    rw [List.append_assoc, insertAt_add]
+    simp [insertAt, List.take_append_of_le_length (le_refl P.length),
+      List.drop_append_of_le_length (le_refl P.length), List.append_assoc]
+  rw [hleft] at hw
+  rw [hright]
+  have hpos : ∀ i ∈ P.drop j, 0 ≤ f i :=
+    fun i hi => hp i (List.mem_of_mem_drop hi)
+  have hh := slide_ear_right f B h ear (pre ++ P.take j) (P.drop j) post he hpos hw
+  simpa only [List.append_assoc pre (P.take j) (P.drop j), List.take_append_drop] using hh
+
+private theorem find_next_negative (bad : ℕ → Prop) [DecidablePred bad]
+    (l : List ℕ) (hne : l ≠ [])
+    (hlast : ∀ pre x, l = pre ++ [x] → bad x) :
+    ∃ P n R, l = P ++ n :: R ∧ (∀ x ∈ P, ¬ bad x) ∧ bad n := by
+  induction l with
+  | nil => exact (hne rfl).elim
+  | cons x xs ih =>
+    by_cases hx : bad x
+    · exact ⟨[],x,xs,rfl,by simp,hx⟩
+    · have hxs : xs ≠ [] := by
+        intro he
+        subst xs
+        exact hx (hlast [] x rfl)
+      have ht : ∀ pre y, xs = pre ++ [y] → bad y := by
+        intro pre y he
+        exact hlast (x :: pre) y (by simp [he])
+      obtain ⟨P,n,R,he,hP,hn⟩ := ih hxs ht
+      refine ⟨x :: P,n,R,by simp [he],?_,hn⟩
+      intro y hy
+      rcases List.mem_cons.mp hy with h | h
+      · simpa [h] using hx
+      · exact hP y h
 
 end D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm

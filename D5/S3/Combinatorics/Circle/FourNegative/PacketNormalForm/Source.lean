@@ -7,6 +7,8 @@
    digest: Physical signs and geometric weights for four independent gaps. -/
 import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.SourceTable
 
+/-! Exact centered formulas, physical signs and geometric packet masses. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -100,7 +102,7 @@ private theorem new_base_bounds (a b c d : ℕ)
   have hη : 0 ≤ charge b c r := by fin_cases r <;> simp [charge] <;> positivity
   have hD : 0 < base a b c d r - charge b c r := by
     fin_cases r <;> dsimp [base, charge]
-    · positivity
+    · simp only [sub_zero]; positivity
     · ring_nf; positivity
     · ring_nf; positivity
     · ring_nf; positivity
@@ -130,7 +132,7 @@ private theorem chain_signs (a b c d : ℕ)
       · simpa [nextNewBase] using (hE 3).2
       · have hh := hF 0
         have hN : 0 < sourceMod a b c d := lt_of_lt_of_le (by omega) hh.2.le
-        simp only [nextNewBase, Matrix.cons_val_succ, Matrix.cons_val_zero]
+        change base a b c d 0 < 2 * sourceMod a b c d + 1
         omega
     constructor <;> omega
 
@@ -141,34 +143,34 @@ private theorem source_signs (a b c d : ℕ)
     else 0 < oldValue a b c d i ∧ 0 < newValue a b c d i := by
   by_cases h0 : i < d
   · have h := chain_signs a b c d ha hb hc hd 0 i (by simpa [chainLength])
-    simp only [chainLength, chainStart, Matrix.cons_val_zero, zero_add] at h
+    dsimp [chainLength, chainStart] at h
     have he : i ∈ negatives a b c d ↔ ¬ i+1 < d := by
-      simp only [negatives, List.mem_cons, List.mem_singleton, size]
+      simp only [negatives, List.mem_cons, List.mem_singleton, List.mem_nil_iff, or_false, size]
       omega
     by_cases hp : i+1 < d <;> simpa [he, hp] using h
   · by_cases h1 : i < d+c
     · have h := chain_signs a b c d ha hb hc hd 1 (i-d) (by simp [chainLength]; omega)
-      simp only [chainLength, chainStart, Matrix.cons_val_succ, Matrix.cons_val_zero] at h
+      dsimp [chainLength, chainStart] at h
       rw [show d + (i-d) = i by omega] at h
       have he : i ∈ negatives a b c d ↔ ¬ i-d+1 < c := by
-        simp only [negatives, List.mem_cons, List.mem_singleton, size]
+        simp only [negatives, List.mem_cons, List.mem_singleton, List.mem_nil_iff, or_false, size]
         omega
       by_cases hp : i-d+1 < c <;> simpa [he, hp] using h
     · by_cases h2 : i < d+c+b
       · have h := chain_signs a b c d ha hb hc hd 2 (i-(d+c))
           (by simp [chainLength]; omega)
-        simp only [chainLength, chainStart, Matrix.cons_val_succ, Matrix.cons_val_zero] at h
+        dsimp [chainLength, chainStart] at h
         rw [show d+c+(i-(d+c))=i by omega] at h
         have he : i ∈ negatives a b c d ↔ ¬ i-(d+c)+1 < b := by
-          simp only [negatives, List.mem_cons, List.mem_singleton, size]
+          simp only [negatives, List.mem_cons, List.mem_singleton, List.mem_nil_iff, or_false, size]
           omega
         by_cases hp : i-(d+c)+1 < b <;> simpa [he, hp] using h
       · have h := chain_signs a b c d ha hb hc hd 3 (i-(d+c+b))
           (by simp [chainLength, size] at *; omega)
-        simp only [chainLength, chainStart, Matrix.cons_val_succ, Matrix.cons_val_zero] at h
+        dsimp [chainLength, chainStart] at h
         rw [show d+c+b+(i-(d+c+b))=i by dsimp [size] at hi; omega] at h
         have he : i ∈ negatives a b c d ↔ ¬ i-(d+c+b)+1 < a := by
-          simp only [negatives, List.mem_cons, List.mem_singleton, size]
+          simp only [negatives, List.mem_cons, List.mem_singleton, List.mem_nil_iff, or_false, size]
           dsimp [size] at hi
           omega
         by_cases hp : i-(d+c+b)+1 < a <;> simpa [he, hp] using h
@@ -176,9 +178,7 @@ private theorem source_signs (a b c d : ℕ)
 private theorem negatives_nodup (a b c d : ℕ)
     (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d) :
     (negatives a b c d).Nodup := by
-  simp only [negatives, List.nodup_cons, List.mem_cons, List.mem_singleton,
-    List.not_mem_nil, not_false_eq_true, and_true, size]
-  omega
+  simp [negatives, size] <;> omega
 
 private theorem source_totals (a b c d : ℕ)
     (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d) :
@@ -196,11 +196,67 @@ private theorem source_totals (a b c d : ℕ)
     (size a b c d) (seed a b c) (by dsimp [size]; omega)
   have hg := ThreeNegativeEqualOuterSourceBridge.source_zero
     (size a b c d + 1) (2 * seed a b c) (by dsimp [size]; omega)
-  simp only [hN, hA, ← oldValue] at hf
-  simp only [hN', Nat.cast_mul, Nat.cast_ofNat, hA, ← newValue] at hg
+  simp only [hN, hA] at hf
+  change ((List.range (size a b c d)).map (oldValue a b c d)).sum = 0 at hf
+  simp only [hN', Nat.cast_mul, Nat.cast_ofNat, hA] at hg
+  change ((List.range (size a b c d + 1)).map (newValue a b c d)).sum = 0 at hg
   have he := (chain_values a b c d ha hb hc hd).2.2.2
   rw [List.range_succ, List.map_append, List.sum_append, List.map_singleton,
     List.sum_singleton, he] at hg
   exact ⟨hf, by omega, he⟩
+
+private def chainOf (b c d i : ℕ) : Fin 4 :=
+  if i < d then 0 else if i < d+c then 1 else if i < d+c+b then 2 else 3
+
+private theorem chain_index (a b c d i : ℕ)
+    (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d)
+    (hi : i < size a b c d) :
+    chainStart b c d (chainOf b c d i) + (i-chainStart b c d (chainOf b c d i)) = i ∧
+    i-chainStart b c d (chainOf b c d i) < chainLength a b c d (chainOf b c d i) ∧
+    (i ∉ negatives a b c d → i-chainStart b c d (chainOf b c d i)+1 <
+      chainLength a b c d (chainOf b c d i)) := by
+  dsimp [chainOf]
+  split_ifs <;> simp only [chainStart, chainLength, Matrix.cons_val_succ,
+    Matrix.cons_val_zero, Nat.zero_add, Nat.sub_zero] <;>
+    simp only [negatives, List.mem_cons, List.mem_singleton, List.mem_nil_iff, or_false, size] at * <;> omega
+
+private theorem positive_values (a b c d : ℕ)
+    (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d)
+    (i : ℕ) (hi : i < size a b c d) (hn : i ∉ negatives a b c d) :
+    oldValue a b c d i = (2 : ℤ)^(i-chainStart b c d (chainOf b c d i)) *
+      base a b c d (chainOf b c d i) ∧
+    newValue a b c d i = (2 : ℤ)^(i-chainStart b c d (chainOf b c d i)) *
+      newBase a b c d (chainOf b c d i) := by
+  obtain ⟨he, hi', hp⟩ := chain_index a b c d i ha hb hc hd hi
+  have hv := chain_values a b c d ha hb hc hd
+  have hf := hv.2.1 (chainOf b c d i) (i-chainStart b c d (chainOf b c d i)) hi'
+  have hg := hv.2.2.1 (chainOf b c d i) (i-chainStart b c d (chainOf b c d i)) hi'
+  rw [he, if_pos (hp hn)] at hf hg
+  exact ⟨hf,hg⟩
+
+private def weightedMask (b c d : ℕ) (P : Finset ℕ) (r : Fin 4) : ℤ :=
+  ∑ i ∈ P, if chainOf b c d i = r then
+    (2 : ℤ)^(i-chainStart b c d (chainOf b c d i)) else 0
+
+private theorem packet_masses (a b c d : ℕ)
+    (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d)
+    (P : Finset ℕ) (hp : ∀ i ∈ P, i < size a b c d ∧ i ∉ negatives a b c d) :
+    (∑ i ∈ P, oldValue a b c d i) =
+      ∑ r : Fin 4, base a b c d r * weightedMask b c d P r ∧
+    (∑ i ∈ P, newValue a b c d i) =
+      ∑ r : Fin 4, newBase a b c d r * weightedMask b c d P r := by
+  constructor
+  · simp only [weightedMask, Finset.mul_sum]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro i hi
+    rw [(positive_values a b c d ha hb hc hd i (hp i hi).1 (hp i hi).2).1]
+    simp [mul_ite, mul_comm]
+  · simp only [weightedMask, Finset.mul_sum]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro i hi
+    rw [(positive_values a b c d ha hb hc hd i (hp i hi).1 (hp i hi).2).2]
+    simp [mul_ite, mul_comm]
 
 end D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm

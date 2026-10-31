@@ -7,6 +7,8 @@
    digest: Positive packet symmetry and rightward transport of a literal ear. -/
 import D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
 
+/-! Endpoint-controlled transport along positive packets. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -45,7 +47,7 @@ private theorem strip_of_prefix {α : Type*} (f : α → ℤ) (B h : ℤ)
   induction l generalizing h with
   | nil => simpa [InStrip] using hp 0
   | cons x xs ih =>
-    refine ⟨by simpa using (hp 0).1, by simpa using (hp 0).2, ih ?_⟩
+    refine ⟨by simpa using (hp 0).1, by simpa using (hp 0).2, ih (h + f x) ?_⟩
     intro n
     simpa [List.take_succ_cons, add_assoc] using hp (n + 1)
 
@@ -72,12 +74,14 @@ private theorem slide_ear_right {α : Type*} (f : α → ℤ) (B h : ℤ)
   obtain ⟨hpos, hpost⟩ := (strip_append_iff f B (H + f ear) pos post).mp htail.2.2
   have hend := inStrip_prefix hpos pos.length
   simp only [List.take_length] at hend
+  have hH : 0 ≤ H := htail.1
   have hs : 0 ≤ (pos.map f).sum := by simpa using List.sum_le_sum hp
   have hpos' : InStrip f B H pos :=
     positive_block_strip hp htail.1 (by omega)
   have hear : InStrip f B (H + (pos.map f).sum) (ear :: post) := by
     refine ⟨by omega, by omega, ?_⟩
     convert hpost using 1 <;> ring
+  rw [List.append_assoc]
   apply (strip_append_iff f B h pre _).mpr
   refine ⟨hpre, ?_⟩
   exact inStrip_append hpos' hear
