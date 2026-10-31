@@ -8,7 +8,7 @@ The carrier is an arbitrary finite type, including the empty type. The graph is 
 
 **Definition 1.1 (Occupied neighbors).**
 
-$$\operatorname{O}\left(G, J, v\right) = \{u \in J\mid\operatorname{Adj}\left(G, v, u\right)\}$$
+$$\forall V \in Type,\; \forall G \in \operatorname{SimpleGraph}\left(V\right),\; [\operatorname{DecidableRel}\left(\operatorname{Adj}\left(G\right)\right)], \forall J \in \operatorname{Finset}\left(V\right),\; \forall v \in V,\; \operatorname{O}\left(G, J, v\right) = \{u \in J\mid\operatorname{Adj}\left(G, v, u\right)\}$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/HardCore/ConfigurationCharge.occupiedNeighbors` (`✓ std3`).
 
@@ -20,7 +20,7 @@ The occupied neighbors of v are precisely the members of J adjacent to v, so the
 
 **Definition 1.2 (Common-activity degree weight).**
 
-$$\operatorname{q}\left(G, \lambda, v\right) = \frac{\lambda}{1 + \left(\operatorname{degree}\left(G, v\right) + 1\right) \cdot \lambda}$$
+$$\forall V \in Type,\; [\operatorname{Fintype}\left(V\right)] \forall G \in \operatorname{SimpleGraph}\left(V\right),\; [\operatorname{DecidableRel}\left(\operatorname{Adj}\left(G\right)\right)], \forall lambda \in \mathbb{R},\; \forall v \in V,\; \operatorname{q}\left(G, lambda, v\right) = \frac{lambda}{1 + \left(\operatorname{degree}\left(G, v\right) + 1\right) \cdot lambda}$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/HardCore/ConfigurationCharge.degreeWeight` (`✓ std3`).
 
@@ -32,7 +32,7 @@ The weight q_v is lambda divided by 1 plus (degree(v) plus 1) times lambda; for 
 
 **Definition 1.3 (Exact signed configuration charge).**
 
-$$\operatorname{C}\left(G, \lambda, J\right) = \sum_{v \in V,2 \le \operatorname{card}\left(\operatorname{O}\left(G, J, v\right)\right)} (\sum_{u \in \operatorname{O}\left(G, J, v\right)} (\operatorname{q}\left(G, \lambda, u\right)) - \operatorname{q}\left(G, \lambda, v\right))$$
+$$\forall V \in Type,\; [\operatorname{Fintype}\left(V\right)] \forall G \in \operatorname{SimpleGraph}\left(V\right),\; [\operatorname{DecidableRel}\left(\operatorname{Adj}\left(G\right)\right)], \forall lambda \in \mathbb{R},\; \forall J \in \operatorname{Finset}\left(V\right),\; \operatorname{C}\left(G, lambda, J\right) = \sum_{v \in V,2 \le \operatorname{card}\left(\operatorname{O}\left(G, J, v\right)\right)} (\sum_{u \in \operatorname{O}\left(G, J, v\right)} (\operatorname{q}\left(G, lambda, u\right)) - \operatorname{q}\left(G, lambda, v\right))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/HardCore/ConfigurationCharge.configurationCharge` (`✓ std3`).
 
@@ -44,7 +44,7 @@ Sum over all v with at least two occupied neighbors of the sum of q_u over those
 
 **Definition 1.4 (Actual occupation defect).**
 
-$$\operatorname{D}\left(G, \lambda\right) = \operatorname{M}\left(G, \lambda\right) - \sum_{v \in V} (\operatorname{q}\left(G, \lambda, v\right))$$
+$$\forall V \in Type,\; [\operatorname{Fintype}\left(V\right)] [\operatorname{DecidableEq}\left(V\right)] \forall G \in \operatorname{SimpleGraph}\left(V\right),\; [\operatorname{DecidableRel}\left(\operatorname{Adj}\left(G\right)\right)], \forall lambda \in \mathbb{R},\; \operatorname{D}\left(G, lambda\right) = \operatorname{M}\left(G, lambda\right) - \sum_{v \in V} (\operatorname{q}\left(G, lambda, v\right))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/HardCore/ConfigurationCharge.occupationDefect` (`✓ std3`).
 

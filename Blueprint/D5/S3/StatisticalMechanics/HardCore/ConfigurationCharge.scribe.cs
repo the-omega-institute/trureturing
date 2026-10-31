@@ -48,25 +48,43 @@ internal sealed class ConfigurationChargeDocument : IScribeDocumentDefinition
     private static Formula All(string variable, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(variable), domain, body);
     private static Formula Real() => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
-    private static Formula Q(Formula v) => Call("q", F.Id("G"), F.LambdaLower, v);
+    private static Formula Parameters(Formula body, bool finite = false, bool equality = false)
+    {
+        Formula v = F.Id("V"), g = F.Id("G");
+        body = All("G", Call("SimpleGraph", v), F.Seq(
+            F.OpenBracket, Call("DecidableRel", Call("Adj", g)), F.CloseBracket,
+            F.Comma, F.Sp, body));
+        if (equality)
+            body = F.Seq(F.OpenBracket, Call("DecidableEq", v), F.CloseBracket, F.Sp, body);
+        if (finite)
+            body = F.Seq(F.OpenBracket, Call("Fintype", v), F.CloseBracket, F.Sp, body);
+        return All("V", F.Id("Type"), body);
+    }
+    private static Formula Q(Formula v) => Call("q", F.Id("G"), F.Id("lambda"), v);
     private static Formula O(Formula v) => Call("O", F.Id("G"), F.Id("J"), v);
-    private static Formula NeighborsFormula() => F.Disp(Eq(O(F.Id("v")),
+    private static Formula NeighborsFormula() => F.Disp(Parameters(
+        All("J", Call("Finset", F.Id("V")), All("v", F.Id("V"), Eq(O(F.Id("v")),
         F.Seq(F.OpenBrace, Mem(F.Id("u"), F.Id("J")), F.Mid,
-            Call("Adj", F.Id("G"), F.Id("v"), F.Id("u")), F.CloseBrace)));
-    private static Formula WeightFormula() => F.Disp(Eq(Q(F.Id("v")),
-        new Formula.Fraction(F.LambdaLower, Add(F.D(1), Mul(
-            Add(Call("degree", F.Id("G"), F.Id("v")), F.D(1)), F.LambdaLower)))));
+            Call("Adj", F.Id("G"), F.Id("v"), F.Id("u")), F.CloseBrace))))));
+    private static Formula WeightFormula() => F.Disp(Parameters(
+        All("lambda", Real(), All("v", F.Id("V"), Eq(Q(F.Id("v")),
+            new Formula.Fraction(F.Id("lambda"), Add(F.D(1), Mul(
+                Add(Call("degree", F.Id("G"), F.Id("v")), F.D(1)), F.Id("lambda"))))))),
+        finite: true));
     private static Formula ChargeFormula()
     {
         Formula v = F.Id("v"), u = F.Id("u");
         Formula index = F.Seq(Mem(v, F.Id("V")), F.Comma,
             Rel(F.D(2), FormulaRelationOperator.LessThanOrEqual, Call("card", O(v))));
-        return F.Disp(Eq(Call("C", F.Id("G"), F.LambdaLower, F.Id("J")),
-            SumOver(index, Sub(SumOver(Mem(u, O(v)), Q(u)), Q(v)))));
+        return F.Disp(Parameters(All("lambda", Real(), All("J", Call("Finset", F.Id("V")),
+            Eq(Call("C", F.Id("G"), F.Id("lambda"), F.Id("J")),
+                SumOver(index, Sub(SumOver(Mem(u, O(v)), Q(u)), Q(v)))))), finite: true));
     }
-    private static Formula DefectFormula() => F.Disp(Eq(Call("D", F.Id("G"), F.LambdaLower),
-        Sub(Call("M", F.Id("G"), F.LambdaLower),
-            SumOver(Mem(F.Id("v"), F.Id("V")), Q(F.Id("v"))))));
+    private static Formula DefectFormula() => F.Disp(Parameters(All("lambda", Real(),
+        Eq(Call("D", F.Id("G"), F.Id("lambda")),
+            Sub(Call("M", F.Id("G"), F.Id("lambda")),
+                SumOver(Mem(F.Id("v"), F.Id("V")), Q(F.Id("v")))))),
+        finite: true, equality: true));
     private static Formula IdentityFormula()
     {
         Formula g = F.Id("G"), j = F.Id("J"), v = F.Id("V");
