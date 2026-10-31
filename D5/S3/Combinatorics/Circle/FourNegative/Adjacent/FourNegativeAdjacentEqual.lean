@@ -213,10 +213,12 @@ private theorem diagonal (n : ℕ) (hn : 2 ≤ n) :
     intro m
     have hh := inStrip_prefix hs.1 m
     rw [show 4 * n = k by dsimp [k]; omega] at hh
-    have hm : ((List.range k).take m).map (fun i => actualSource k t (label k hNat i)) =
-        ((List.range k).take m).map f :=
-      List.map_congr_left (fun i hi => hvalue i (List.mem_of_mem_take hi))
-    simpa only [sigma,← List.map_take,List.map_map,hm,zero_add] using hh
+    have hm : (sigma.take m).map (actualSource k t) = ((List.range k).take m).map f := by
+      dsimp only [sigma]
+      rw [← List.map_take, List.map_map]
+      exact List.map_congr_left (fun i hi => hvalue i (List.mem_of_mem_take hi))
+    rw [hm]
+    exact ⟨by simpa only [zero_add] using hh.1, by simpa only [zero_add] using hh.2⟩
   have zero : (sigma.map (actualSource k t)).sum = 0 := by
     have hm : sigma.map (actualSource k t) = (List.range k).map f := by
       dsimp only [sigma]
