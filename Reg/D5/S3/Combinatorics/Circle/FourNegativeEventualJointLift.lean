@@ -15,7 +15,7 @@ open _root_.D5.S3.Combinatorics.Circle.RunFirstEarTransport
 open _root_.D5.S3.Combinatorics.Circle.FourNegativeEventualJointLift
 noncomputable section
 
-abbrev Params := ℕ × ℕ × ℕ × ℕ
+abbrev Params := Σ _a : ℕ, Σ _b : ℕ, Σ _c : ℕ, ℕ
 private def size (p : Params) : ℕ := p.1 + p.2.1 + p.2.2.1 + p.2.2.2
 abbrev signature : Signature where
   Params := Params
@@ -50,8 +50,8 @@ abbrev arena : Arena where
       (_hd : a + b + c + 3 ≤ d),
     ∃ sigma : List (Fin (a + b + c + d)), ∃ j : ℕ,
       j ≤ a + b + c + d ∧
-      R.readout false (a, b, c, d) (1 + 2 ^ a + 2 ^ (a + b) + 2 ^ (a + b + c)) sigma ∧
-      R.readout true (a, b, c, d) (2 * (1 + 2 ^ a + 2 ^ (a + b) + 2 ^ (a + b + c)))
+      R.readout false ⟨a, b, c, d⟩ (1 + 2 ^ a + 2 ^ (a + b) + 2 ^ (a + b + c)) sigma ∧
+      R.readout true ⟨a, b, c, d⟩ (2 * (1 + 2 ^ a + 2 ^ (a + b) + 2 ^ (a + b + c)))
         (earWord (a + b + c + d) sigma j)
 
 private theorem actual_law : arena.Law actual := by
@@ -107,12 +107,12 @@ private theorem bad_new : ¬ OriginalOrder 16 2 (List.finRange 16) := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro side
   cases side
-  · refine ⟨(2, 2, 2, 9), 0, 2, ?_⟩
+  · refine ⟨⟨2, 2, 2, 9⟩, 0, 2, ?_⟩
     intro he
     have hp := congrFun he (List.finRange 15)
     change OriginalOrder 15 0 (List.finRange 15) = OriginalOrder 15 2 (List.finRange 15) at hp
     exact bad_old (hp.mp zero_old)
-  · refine ⟨(2, 2, 2, 9), 0, 2, ?_⟩
+  · refine ⟨⟨2, 2, 2, 9⟩, 0, 2, ?_⟩
     intro he
     have hp := congrFun he (List.finRange 16)
     change OriginalOrder 16 0 (List.finRange 16) = OriginalOrder 16 2 (List.finRange 16) at hp
