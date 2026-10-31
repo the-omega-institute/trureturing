@@ -382,7 +382,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         CheckCommand command)
     {
         var allowProtectedBase = command is CheckCommand.Check or CheckCommand.CheckDelta;
-        var allowScribePaths = command is not CheckCommand.CheckDelta;
+        var allowScribePaths = command is CheckCommand.CheckCurrent;
         var allowArtifactCapacity = command is CheckCommand.CheckDelta;
         string? protectedBase = null;
         string? candidateLeanReport = null;
@@ -425,7 +425,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
 
     private static InvalidOperationException CheckUsage() => new(
         "USAGE: StrataLint check [--protected-base REV] "
-        + "--candidate-lean-report FILE [--scribe-paths-from FILE]\n"
+        + "--candidate-lean-report FILE\n"
         + "USAGE: StrataLint check-current --candidate-lean-report FILE [--scribe-paths-from FILE]\n"
         + "USAGE: StrataLint check-delta --protected-base REV [--candidate-lean-report FILE] "
         + "[--artifact-capacity]\n"

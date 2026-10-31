@@ -9,7 +9,8 @@ namespace StrataLint.CliIntegration.Tests;
 public sealed class CurrentDeltaCliContractTests
 {
     [Theory]
-    [InlineData("check", "--artifact-capacity", "USAGE: StrataLint check [--protected-base REV] --candidate-lean-report FILE [--scribe-paths-from FILE]")]
+    [InlineData("check", "--artifact-capacity", "USAGE: StrataLint check [--protected-base REV] --candidate-lean-report FILE")]
+    [InlineData("check", "--scribe-paths-from", "USAGE: StrataLint check [--protected-base REV] --candidate-lean-report FILE")]
     [InlineData("check-current", "--artifact-capacity", "USAGE: StrataLint check-current --candidate-lean-report FILE [--scribe-paths-from FILE]")]
     [InlineData("check-current", "--protected-base", "USAGE: StrataLint check-current --candidate-lean-report FILE [--scribe-paths-from FILE]")]
     [InlineData("check-delta", "--scribe-paths-from", "USAGE: StrataLint check-delta --protected-base REV [--candidate-lean-report FILE] [--artifact-capacity]")]
@@ -53,8 +54,7 @@ public sealed class CurrentDeltaCliContractTests
         {
             "check" => (IReadOnlyList<string>)[
                 "--protected-base", new string('a', 40),
-                "--candidate-lean-report", "missing-report.json",
-                "--scribe-paths-from", "missing-paths.txt"],
+                "--candidate-lean-report", "missing-report.json"],
             "check-current" => (IReadOnlyList<string>)[
                 "--candidate-lean-report", "missing-report.json",
                 "--scribe-paths-from", "missing-paths.txt"],
@@ -90,7 +90,7 @@ public sealed class CurrentDeltaCliContractTests
         RawRepositorySnapshot.Create([]));
 
     [Theory]
-    [InlineData("check", "USAGE: StrataLint check [--protected-base REV] --candidate-lean-report FILE [--scribe-paths-from FILE]")]
+    [InlineData("check", "USAGE: StrataLint check [--protected-base REV] --candidate-lean-report FILE")]
     [InlineData("check-current", "USAGE: StrataLint check-current --candidate-lean-report FILE [--scribe-paths-from FILE]")]
     public void StandaloneChecksRejectArtifactCapacityAsAnUnsupportedUsageOption(
         string command, string usage)
