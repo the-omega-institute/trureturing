@@ -3704,3 +3704,267 @@ necessary critical weight conditions, and their entire-family
 consumers (15.3)–(15.4).
 
 ## 追加锚（本行以下为增补区）
+
+## 16. Absolute boundedness at the fixed critical law
+
+**Definition 16.1 (Critical binary notation).** In this section fix exactly
+the law $p=p^{[3/4]}$ of Definition 15.1. Put
+
+$$
+\alpha=\alpha_{3/4},\qquad a=a(\alpha),\qquad
+w=e^{-a},\qquad z=e^{-\alpha a},\qquad
+\kappa=\frac{\pi^2}{2a},
+$$
+
+so that $w+z=1$, and define
+
+$$
+D(s)=1-we^{-as}-ze^{-\alpha as},\qquad
+\Delta(t)=D(it),\qquad
+\omega(t)=t^{-3/2}e^{-\pi t/2}\quad(t\geq1).
+$$
+
+Let $Q_j,P_j$ be the convergents in Definition 15.1 and write
+$T_j=2\pi Q_j/a$. Fix sufficiently small
+$\varepsilon_0>0$ and $r_0\in(0,1/4)$.
+Call $m$ resonant when $\|m\alpha\|<\varepsilon_0$. For a resonant
+$m$, let $\widehat t_m$ be the unique zero of
+$\operatorname {Im}\Delta$ in the fixed neighborhood
+$|at/(2\pi)-m|<r_0$; put
+$\eta_m=\operatorname {Re}\Delta(\widehat t_m)>0$.
+For nonresonant $m$ put $\widehat t_m=2\pi m/a$ and
+$\eta_m=\varepsilon_0$. After decreasing $\varepsilon_0,r_0$ once,
+compactness of the phase variables gives a uniform lower bound for
+$|\Delta|$ on every nonresonant interval. Finitely many small $m$ are
+absorbed into constants below.
+
+**Lemma 16.2 (Resonant geometry).** There are constants $c,C,r>0$ and
+$j_0$ depending only on $p$ such that, for $j\geq j_0$ and
+$Q_j\leq m<Q_{j+1}$,
+
+$$
+cQ_{j+1}^{-2}\leq\eta_m\leq C,\qquad
+cQ_{j+1}^{-2}\leq\eta_{Q_j}\leq C Q_{j+1}^{-2},                 \tag{16.1}
+$$
+
+and, whenever $|t-\widehat t_m|\leq r$,
+
+$$
+|\Delta(t)|\geq c\bigl(\eta_m+|t-\widehat t_m|\bigr).         \tag{16.2}
+$$
+
+Moreover $|\widehat t_m-2\pi m/a|\leq C$ and
+
+$$
+Q_{j+1}=e^{\kappa Q_j}Q_j^{3/4}(1+o(1)).                       \tag{16.3}
+$$
+
+*Proof.* Write $u=at/(2\pi)$ and, for $m$ in the indicated interval,
+write $\alpha m-r_m=\varepsilon_m$ with $r_m$ the nearest integer.
+The best-approximation estimate (15.9) gives
+
+$$
+|\varepsilon_m|\geq(2Q_{j+1})^{-1}.                            \tag{16.4}
+$$
+
+For a resonant $m$, put $u=m+v$. The two phases of $\Delta$ are
+$2\pi v$ and $2\pi(\varepsilon_m+\alpha v)$. Since
+$w+z=1$, the equation
+$\operatorname {Im}\Delta=0$ has one solution with $v=O(|\varepsilon_m|)$:
+the derivative of the imaginary part at $\varepsilon_m=v=0$ is
+$2\pi(w+z\alpha)>0$, and the implicit-function theorem applies on a
+fixed neighborhood. At that solution, Taylor's formula and
+$1-\cos y\geq c y^2$ for $|y|$ small give
+
+$$
+\eta_m=1-w\cos(2\pi v)-z\cos(2\pi(\varepsilon_m+\alpha v))
+      \asymp \varepsilon_m^2.                                  \tag{16.5}
+$$
+
+The two phase errors cannot both be $o(|\varepsilon_m|)$ because their
+linear combination has coefficient $w+z\alpha$; this proves the lower
+comparison in (16.5). Equations (16.4) and (16.5) give the first bound
+in (16.1). For $m=Q_j$, (15.8) gives
+$|\varepsilon_{Q_j}|\asymp Q_{j+1}^{-1}$, proving the second bound.
+
+Differentiating $D(it)$ shows that, on the same fixed neighborhood,
+the derivative of its imaginary part has modulus at least
+$a(w+z\alpha)/3$. Thus the imaginary part is a valid coordinate and
+the real part is at least a fixed multiple of $\eta_m$; consequently
+$|\Delta(t)|^2\geq c(\eta_m^2+|t-\widehat t_m|^2)$, which implies
+(16.2). For nonresonant $m$ the same estimate is unnecessary: the
+compactness lower bound makes the whole interval a uniformly smooth
+piece. The displacement estimate follows from $v=O(|\varepsilon_m|)$.
+Finally (16.3) is (15.7) with $\tau=3/4$. $\qed$
+
+**Lemma 16.3 (One resonant interval).** Let $A_0(s)=\Gamma(1-s)/(s(1+s))$
+and let $\ell$ be the boundary logarithm in (13.4), so that
+$\Psi(t)=-A_0(it)\ell(it)$. There are constants $c,C>0$ such that,
+for every $x\geq1$, every sufficiently large $m$, and the interval
+$I_m=[2\pi(m-1/2)/a,2\pi(m+1/2)/a]$,
+
+$$
+\left|\int_{I_m}e^{itx}\Psi(t)\,dt\right|
+\leq C\left(
+\frac{\omega(2\pi m/a)e^{-c\eta_m x}}x
++\frac{\omega(2\pi m/a)}{x^2}\right).                         \tag{16.6}
+$$
+
+*Proof.* Choose a fixed smooth cutoff equal to one on the smaller
+interval where (16.2) holds. On that interval Taylor's formula gives
+
+$$
+\Delta(t)=\eta_m+i\lambda_m(t-\widehat t_m)\,G_m(t),
+\qquad |\lambda_m|\asymp1,\qquad G_m(\widehat t_m)=1,
+$$
+
+where $G_m$ and its first two derivatives are uniformly bounded and
+bounded away from zero; the real part of the linear coefficient is
+$O(\eta_m)$. Hence, after changing the bounded smooth factor $G_m$,
+the difference between $\log\Delta(t)$ and
+$\log(\eta_m+i\lambda_m(t-\widehat t_m))$ has uniformly bounded two
+derivatives. The same is true after multiplying by $A_0(it)$, apart
+from the factor $|A_0(i\widehat t_m)|\asymp\omega(2\pi m/a)$, by the
+Gamma estimates (13.5). For nonresonant $m$, the whole logarithm and
+its first two derivatives are uniformly bounded and two integrations
+by parts give the second term in (16.6).
+
+For the model logarithm, differentiate once and use the elementary
+residue identity, valid for $x>0$,
+
+$$
+\int_{\mathbb R}\frac{e^{iux}}{\eta+i\lambda u}\,du
+=\frac{2\pi}{\lambda}e^{-\eta x/\lambda}
+$$
+
+with the sign chosen by the sign of $\lambda$. Integrating by parts
+once in the cutoff identity for $\log(\eta+i\lambda u)$ gives
+$O(x^{-1}e^{-c\eta x})+O(x^{-2})$; the cutoff derivatives and the
+uniformly smooth difference contribute $O(x^{-2})$. The tails of the
+interval are treated by two integrations by parts, using (13.5) and
+(16.2). Multiplication by the displayed Gamma factor proves (16.6).
+More explicitly, if $\chi$ is one near zero and supported in the
+fixed local interval, then
+
+$$
+\begin{aligned}
+ix\int e^{ixu}\chi(u)\log(\eta+i\lambda u)\,du
+ &=-\int e^{ixu}\chi(u)\frac{i\lambda}{\eta+i\lambda u}\,du\\
+ &\quad-\int e^{ixu}\chi'(u)\log(\eta+i\lambda u)\,du .
+\end{aligned}
+$$
+
+The second integral is $O(x^{-2})$ after one further integration by
+parts because $\chi'$ is supported away from zero. In the first
+integral replace $\chi$ by one; the difference is again smooth away
+from zero. Closing the contour in the half-plane selected by the sign
+of $\lambda x$ gives the displayed residue and
+$O(x^{-1}e^{-c\eta x})$. The quotient estimate
+$|\eta+i\lambda u|\asymp\eta+|u|$ and Taylor's remainder show that
+the two derivatives of the difference of the actual logarithm and
+the model are bounded uniformly; two integrations by parts therefore
+give $O(x^{-2})$. The factor $A_0(i(\widehat t_m+u))$ is its value at
+$u=0$ plus $u$ times a function with the same bounds, and the latter
+term is covered by the same two integrations. The negative-frequency
+estimate follows by conjugation. $\qed$
+
+**Lemma 16.4 (Critical block summation).** With
+
+$$
+\omega_j=Q_j^{-3/2}e^{-2\kappa Q_j},\qquad
+\eta_j=Q_{j+1}^{-2},
+$$
+
+there is a constant $C$ such that, for every $x\geq1$,
+
+$$
+\sum_{j\geq j_0}\omega_j e^{-c\eta_jx}\leq\frac Cx,
+\qquad
+\sum_{j\geq j_0}\omega_j<\infty.                               \tag{16.7}
+$$
+
+*Proof.* Equation (16.3) gives $\omega_j\asymp\eta_j$ and, after
+discarding finitely many terms, $\eta_{j+1}\leq\eta_j/2$. Split the
+sum at the last index with $\eta_jx\geq1$. Before that index, group
+the terms dyadically and use
+$\sum_{k\geq0}2^ke^{-c2^k}<\infty$; afterwards use the geometric
+tail $\sum_{j>J}\eta_j\leq2\eta_{J+1}\leq2/x$. The second assertion is
+the same geometric estimate with $x=1$. $\qed$
+
+**Theorem 16.5 (Bounded critical residual).** For the single fixed law
+$p=p^{[3/4]}$ of Definition 15.1, there is a finite constant $C_p$ such
+that
+
+$$
+|R_n(p)|\leq C_p\qquad\text{for every integer }n\geq2.            \tag{16.8}
+$$
+
+*Proof.* The transform identity (13.4), the comparison kernel (9.5),
+and the exact occurrence reduction (9.4) apply to this same ordered
+binary iid law and to the original statistic, including letters, every
+legal length and window, and the whole word when Lyndon. The estimates
+(15.9), (16.1), and (13.5) imply
+$\Psi\in L^1(\mathbb R)$: on the block $Q_j\leq m<Q_{j+1}$,
+$|\Delta(t)|\geq cQ_{j+1}^{-2}$ by (15.10), and hence
+$|\ell(it)|\leq C+Q_j+\log(2+m)$ and the Gamma factor is bounded by
+$C\omega(m)$. Abelian Fourier inversion in (13.4), followed by
+$\sigma\downarrow0$, therefore gives
+
+$$
+H(x):=J_p(x)-J_0(x)=\frac1{2\pi}\int_{\mathbb R}e^{itx}\Psi(t)\,dt.
+$$
+
+The finitely many low-frequency pieces are $O(x^{-2})$ by two
+integrations by parts. Apply Lemma 16.3 on each $I_m$ and sum first over
+$Q_j\leq m<Q_{j+1}$. Since $\omega(2\pi m/a)$ decreases geometrically
+with $m$ and (16.1) gives $\eta_m\geq c\eta_j$,
+
+$$
+\left|\int_{T_j}^{T_{j+1}}e^{itx}\Psi(t)\,dt\right|
+\leq C\left(\frac{\omega_j e^{-c\eta_jx}}x
+                        +\frac{\omega_j}{x^2}\right).            \tag{16.9}
+$$
+
+The same estimate holds on negative blocks. Equations (16.7) and
+(16.9) give $H(x)=O_p(x^{-2})$ for $x\geq1$.
+
+The comparison expansion (9.6) and (14.3) now yield
+
+$$
+\mathscr R_p(x)=c_*-x^2H(x)+O_p(x^{-1})=O_p(1).                 \tag{16.10}
+$$
+
+The real/integer interpolation in (14.4) gives
+$R_n(p)=O_p(1)$ for all sufficiently large integers. The finitely many
+values $2\leq n<n_0(p)$ have finite residuals, so enlarging the same
+constant proves (16.8). $\qed$
+
+**Theorem 16.6 (Original expectation and the inherited endpoint).** For
+the same fixed law $p=p^{[3/4]}$ and all integers $n\to\infty$,
+
+$$
+E_p(n)=M_p(n)+\frac{\mu n}{\log n}
+       +O_p\!\left(\frac n{(\log n)^2}\right).                  \tag{16.11}
+$$
+
+The residual in (16.8) has no finite limit. Consequently there is no
+real constant $C$ for which
+
+$$
+E_p(n)=M_p(n)+\frac{\mu n}{\log n}
+            +\frac{Cn}{(\log n)^2}
+            +o_p\!\left(\frac n{(\log n)^2}\right).             \tag{16.12}
+$$
+
+*Proof.* Equation (16.11) is exactly the definition of $R_n(p)$ in
+(8.1) together with the newly proved absolute bound (16.8). The
+nonconvergence statement is the $\tau=3/4$ line of Theorem 15.2,
+which concerns this same all-integer residual and this same original
+expectation. It is therefore inherited rather than reproved here.
+If (16.12) held, multiplying by $(\log n)^2/n$ would give
+$R_n(p)\to C$, contradicting that inherited conclusion. Thus the
+second-order term is bounded but cannot be replaced by a constant with
+an $o_p(n/(\log n)^2)$ remainder. No assertion about arbitrary critical
+laws, separate signs, rates, or parameter-uniform constants follows. $\qed$
+
+## 追加锚（本行以下为增补区）
