@@ -82,7 +82,7 @@ private theorem spechtTrace_inv (μ : n.Partition) (π : Perm (Fin n)) :
 /-- The Young-rule pairing before the missing identification of multiplicities with Kostka
 numbers. Both characters are traces of the actual independently constructed representations.
 This is a necessary precursor, not Young's rule or the Schur expansion. -/
-private theorem sum_spechtTrace_mul_card_fixedPoints (μ ν : n.Partition) :
+theorem sum_spechtTrace_mul_card_fixedPoints (μ ν : n.Partition) :
     ∑ π : Perm (Fin n), LinearMap.trace ℂ _ ((spechtModuleℂ μ).ρ π) *
         (Nat.card {q : Perm (Fin n) ⧸ youngSubgroup ν // π • q = q} : ℂ) =
       (n.factorial : ℂ) * (Module.finrank ℂ (spechtModuleℂ μ ⟶ permutationModuleℂ ν) : ℂ) := by

@@ -914,3 +914,121 @@ proofs have not been constructed and compiled. No Reg mirror or
 accepted axiom closure, proof-term liveness, canonical emission, freeze, deposit,
 PR, CI or merge result is asserted. Native validation remains with the caller's
 existing Mac task; this pass neither accesses nor starts another Mac job/tree.
+
+## Young dominance, diagonal multiplicity and actual-trace orthogonality continuation
+
+This continuation selects the necessary dominance/diagonal part of Young rule,
+not the full Young/Kostka identity. The rational Specht space remains the same
+polytabloid subrepresentation. Nonzero maps into a Young permutation module force
+dominance; the diagonal intertwiner space is identified with the rationals by
+scalar multiples of the actual inclusion. These facts are transported to the
+existing complex Hom dimensions by the actual trace pairing and exact rational
+to complex casts. Those dimensions distinguish the literal complex Specht shape
+labels. The existing complex simplicity instance is then used by OUR pinned
+Mathlib FDRep.char_orthonormal in a genuine ordinary-trace orthogonality proof.
+No separate representation model or assumed equivalence is introduced.
+
+The existing sum_spechtTrace_mul_card_fixedPoints declaration is exposed from
+private so the new source comparison can directly reuse its unchanged proof.
+The previously removed isIrreducible_spechtSubrepresentation application is
+selected only now that dominates_of_intertwiningMap_ne_zero actually uses it.
+The unused partition-indexed rational irreducibility wrapper remains omitted.
+
+Our pinned character orthogonality theorem has the normalized factor
+(Nat.card G : Complex) inverse. The source comparison explicitly multiplies it
+back by n factorial; it does not use an unnormalized supplier signature guessed
+from another pin. The shape-character proof explicitly unfolds the existing
+composition instead of relying on the convenience name
+character_spechtModule_apply. The stabilizer of a Young coset is obtained from
+the existing pinned stabilizer map-conjugation fact and the already selected
+fiberSubgroup_map_conj. These surrounding adaptations require native checking.
+
+All new modules use utility none: arbitrary partitions, finite representations
+and full spaces of intertwiners, with no certified finite instance or enumeration.
+Every helper has the source consumer below. Source references do not establish
+elaborated proof-term liveness. Every retained declaration remains an uncompiled
+necessary supplier or comparison with admission NOT ESTABLISHED; the selected
+ports provide no independent novelty or escape witness. The terminal orthogonality
+statement has no full Young/Frobenius/HSW consumer yet and is WIP, not standalone
+admissible firstfreeze content. No native Lean/Lake, accepted axiom closure,
+validated Reg, canonical emission, freeze, deposit, PR, CI or merge is asserted.
+
+### Selected declarations and actual source consumers
+
+| Module / declaration | Immutable source or adaptation | Actual source consumer |
+| --- | --- | --- |
+| `SpechtYoungDominance.lean:sum_list_range` | TauCeti/Combinatorics/Young/Diagram.lean:55; selected body unchanged | `SpechtYoungDominance.lean:sum_take_rowLens_eq_card_filter_fst` |
+| `SpechtYoungDominance.lean:sum_range_rowLen_eq_card_filter_fst` | TauCeti/Combinatorics/Young/Diagram.lean:121; selected body unchanged | `SpechtYoungDominance.lean:sum_take_rowLens_eq_card_filter_fst` |
+| `SpechtYoungDominance.lean:sum_take_rowLens_eq_card_filter_fst` | TauCeti/Combinatorics/Young/Diagram.lean:202; selected body unchanged | `SpechtYoungDominance.lean:card_filter_le_sum_take_rowLens` |
+| `SpechtYoungDominance.lean:card_filter_fst_lt_filter_snd_eq` | TauCeti/Combinatorics/Young/Diagram.lean:214; selected body unchanged | `SpechtYoungDominance.lean:card_filter_le_sum_take_rowLens` |
+| `SpechtYoungDominance.lean:card_filter_le_sum_take_rowLens` | TauCeti/Combinatorics/Young/Diagram.lean:239; selected body unchanged | `SpechtYoungDominance.lean:dominates_of_youngBlock_colIndex_injective` |
+| `SpechtYoungDominance.lean:Dominates` | TauCeti/Combinatorics/Enumerative/Partition/Dominance.lean:89; selected body unchanged | `SpechtYoungDominance.lean:dominates_iff`, `SpechtYoungDominance.lean:lex_lt_of_dominates_of_ne`, `SpechtYoungDominance.lean:Dominates.antisymm`, `SpechtYoungDominance.lean:dominates_of_youngBlock_colIndex_injective`, `SpechtYoungDominance.lean:dominates_of_forall_swap_smul_ne`, `SpechtYoungDominance.lean:dominates_of_asAlgebraHom_columnAntisymmetrizer_ne_zero`, `SpechtYoungDominance.lean:asAlgebraHom_columnAntisymmetrizer_apply_eq_zero_of_not_dominates`, `SpechtYoungDominance.lean:dominates_of_asAlgebraHom_columnAntisymmetrizer_apply_ne_zero`, `SpechtYoungDominance.lean:dominates_of_intertwiningMap_ne_zero`, `SpechtYoungDominance.lean:intertwiningMap_eq_zero_of_not_dominates`, `SpechtYoungMultiplicity.lean:spechtMultiplicity_eq_zero_of_not_dominates`, `SpechtYoungTrace.lean:sum_spechtChar_mul_char_permutationModule_eq_zero`, `SpechtYoungTrace.lean:finrank_hom_spechtModuleℂ_permutationModuleℂ_eq_zero`, `SpechtYoungTrace.lean:spechtModuleℂ_iso_iff` |
+| `SpechtYoungDominance.lean:dominates_iff` | TauCeti/Combinatorics/Enumerative/Partition/Dominance.lean:94; selected body unchanged | `SpechtYoungDominance.lean:dominates_of_youngBlock_colIndex_injective` |
+| `SpechtYoungDominance.lean:sortedParts` | TauCeti/Combinatorics/Enumerative/Partition/Dominance.lean:34; selected body unchanged | `SpechtYoungDominance.lean:sortedParts_sum`, `SpechtYoungDominance.lean:lex_lt_of_dominates_of_ne` |
+| `SpechtYoungDominance.lean:sortedParts_sum` | TauCeti/Combinatorics/Enumerative/Partition/Dominance.lean:37; selected body unchanged | `SpechtYoungDominance.lean:lex_lt_of_dominates_of_ne` |
+| `SpechtYoungDominance.lean:lex_lt_of_prefix_sum_le` | TauCeti/Combinatorics/Enumerative/Partition/Dominance.lean:130; selected body unchanged | `SpechtYoungDominance.lean:lex_lt_of_dominates_of_ne` |
+| `SpechtYoungDominance.lean:lex_lt_of_dominates_of_ne` | TauCeti/Combinatorics/Enumerative/Partition/Dominance.lean:167; selected body unchanged | `SpechtYoungDominance.lean:Dominates.antisymm` |
+| `SpechtYoungDominance.lean:Dominates.antisymm` | TauCeti/Combinatorics/Enumerative/Partition/Dominance.lean:185; selected body unchanged | `SpechtYoungTrace.lean:spechtModuleℂ_iso_iff` |
+| `SpechtYoungDominance.lean:card_filter_youngBlock_lt` | TauCeti/RepresentationTheory/Symmetric/YoungSubgroup.lean:116; selected body unchanged | `SpechtYoungDominance.lean:dominates_of_youngBlock_colIndex_injective` |
+| `SpechtYoungDominance.lean:stabilizer_quotientGroup_mk_youngSubgroup` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtYoungDominance.lean:dominates_of_forall_swap_smul_ne` |
+| `SpechtYoungDominance.lean:dominates_of_youngBlock_colIndex_injective` | TauCeti/RepresentationTheory/Symmetric/Dominance.lean:65; selected body unchanged | `SpechtYoungDominance.lean:dominates_of_forall_swap_smul_ne` |
+| `SpechtYoungDominance.lean:dominates_of_forall_swap_smul_ne` | TauCeti/RepresentationTheory/Symmetric/Dominance.lean:91; selected body unchanged | `SpechtYoungDominance.lean:dominates_of_asAlgebraHom_columnAntisymmetrizer_ne_zero` |
+| `SpechtYoungDominance.lean:dominates_of_asAlgebraHom_columnAntisymmetrizer_ne_zero` | TauCeti/RepresentationTheory/Symmetric/Dominance.lean:135; selected body unchanged | `SpechtYoungDominance.lean:asAlgebraHom_columnAntisymmetrizer_apply_eq_zero_of_not_dominates` |
+| `SpechtYoungDominance.lean:asAlgebraHom_columnAntisymmetrizer_apply_eq_zero_of_not_dominates` | TauCeti/RepresentationTheory/Symmetric/Dominance.lean:155; selected body unchanged | `SpechtYoungDominance.lean:dominates_of_asAlgebraHom_columnAntisymmetrizer_apply_ne_zero` |
+| `SpechtYoungDominance.lean:dominates_of_asAlgebraHom_columnAntisymmetrizer_apply_ne_zero` | TauCeti/RepresentationTheory/Symmetric/Dominance.lean:174; selected body unchanged | `SpechtYoungDominance.lean:dominates_of_intertwiningMap_ne_zero` |
+| `SpechtYoungDominance.lean:isIrreducible_spechtSubrepresentation` | TauCeti/RepresentationTheory/Symmetric/Specht/SubmoduleTheorem.lean:257; explicit D5/pinned interface adaptation | `SpechtYoungDominance.lean:dominates_of_intertwiningMap_ne_zero` |
+| `SpechtYoungDominance.lean:dominates_of_intertwiningMap_ne_zero` | TauCeti/RepresentationTheory/Symmetric/Specht/Dominance.lean:143; selected body unchanged | `SpechtYoungDominance.lean:intertwiningMap_eq_zero_of_not_dominates` |
+| `SpechtYoungDominance.lean:intertwiningMap_eq_zero_of_not_dominates` | TauCeti/RepresentationTheory/Symmetric/Specht/Dominance.lean:182; selected body unchanged | `SpechtYoungMultiplicity.lean:spechtMultiplicity_eq_zero_of_not_dominates` |
+| `SpechtYoungMultiplicity.lean:spechtMultiplicity` | TauCeti/RepresentationTheory/Symmetric/PermutationModule/Multiplicity.lean:61; selected body unchanged | `SpechtYoungMultiplicity.lean:spechtMultiplicity_eq_zero_of_not_dominates`, `SpechtYoungMultiplicity.lean:spechtMultiplicity_self`, `SpechtYoungTrace.lean:sum_spechtChar_shapePartition_mul_char_permutationModule` |
+| `SpechtYoungMultiplicity.lean:spechtMultiplicity_eq_zero_of_not_dominates` | TauCeti/RepresentationTheory/Symmetric/PermutationModule/Multiplicity.lean:75; selected body unchanged | `SpechtYoungTrace.lean:sum_spechtChar_mul_char_permutationModule_eq_zero` |
+| `SpechtYoungMultiplicity.lean:exists_intertwiningMap_eq_smul_subtype` | TauCeti/RepresentationTheory/Symmetric/PermutationModule/Multiplicity.lean:94; selected body unchanged | `SpechtYoungMultiplicity.lean:spechtSelfMultiplicityEquiv` |
+| `SpechtYoungMultiplicity.lean:scalarToSpechtIntertwiningMap` | TauCeti/RepresentationTheory/Symmetric/PermutationModule/Multiplicity.lean:155; selected body unchanged | `SpechtYoungMultiplicity.lean:scalarToSpechtIntertwiningMap_injective`, `SpechtYoungMultiplicity.lean:spechtSelfMultiplicityEquiv` |
+| `SpechtYoungMultiplicity.lean:scalarToSpechtIntertwiningMap_injective` | TauCeti/RepresentationTheory/Symmetric/PermutationModule/Multiplicity.lean:162; selected body unchanged | `SpechtYoungMultiplicity.lean:spechtSelfMultiplicityEquiv` |
+| `SpechtYoungMultiplicity.lean:spechtSelfMultiplicityEquiv` | TauCeti/RepresentationTheory/Symmetric/PermutationModule/Multiplicity.lean:183; selected body unchanged | `SpechtYoungMultiplicity.lean:spechtMultiplicity_self` |
+| `SpechtYoungMultiplicity.lean:spechtMultiplicity_self` | TauCeti/RepresentationTheory/Symmetric/PermutationModule/Multiplicity.lean:200; selected body unchanged | `SpechtYoungTrace.lean:sum_spechtChar_mul_char_permutationModule_self` |
+| `SpechtYoungTrace.lean:toPartition_eq_shapePartition` | TauCeti/Combinatorics/Young/Partitions.lean:109; selected body unchanged | `SpechtYoungTrace.lean:sum_spechtChar_mul_char_permutationModule_eq_zero`, `SpechtYoungTrace.lean:sum_spechtChar_mul_char_permutationModule_self` |
+| `SpechtYoungTrace.lean:ofPartition_shapePartition` | TauCeti/Combinatorics/Young/Partitions.lean:114; selected body unchanged | `SpechtYoungTrace.lean:spechtChar_shapePartition` |
+| `SpechtYoungTrace.lean:char_permutationModule` | TauCeti/RepresentationTheory/Symmetric/PermutationModule/Basic.lean:100; selected body unchanged | `SpechtYoungTrace.lean:ratCast_sum_spechtChar_mul_char_permutationModule` |
+| `SpechtYoungTrace.lean:spechtChar_eq_of_isConj` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtYoungTrace.lean:sum_spechtChar_shapePartition_mul_char_permutationModule` |
+| `SpechtYoungTrace.lean:spechtChar_shapePartition` | TauCeti/RepresentationTheory/Symmetric/Specht/Character.lean:140; explicit D5/pinned interface adaptation | `SpechtYoungTrace.lean:sum_spechtChar_shapePartition_mul_char_permutationModule` |
+| `SpechtYoungTrace.lean:sum_spechtChar_shapePartition_mul_char_permutationModule` | TauCeti/RepresentationTheory/Symmetric/PermutationModule/YoungRule.lean:95; explicit D5/pinned interface adaptation | `SpechtYoungTrace.lean:sum_spechtChar_mul_char_permutationModule_eq_zero`, `SpechtYoungTrace.lean:sum_spechtChar_mul_char_permutationModule_self` |
+| `SpechtYoungTrace.lean:sum_spechtChar_mul_char_permutationModule_eq_zero` | TauCeti/RepresentationTheory/Symmetric/PermutationModule/YoungRule.lean:111; selected body unchanged | `SpechtYoungTrace.lean:finrank_hom_spechtModuleℂ_permutationModuleℂ_eq_zero` |
+| `SpechtYoungTrace.lean:sum_spechtChar_mul_char_permutationModule_self` | TauCeti/RepresentationTheory/Symmetric/PermutationModule/YoungRule.lean:123; selected body unchanged | `SpechtYoungTrace.lean:finrank_hom_spechtModuleℂ_permutationModuleℂ_self` |
+| `SpechtYoungTrace.lean:ratCast_sum_spechtChar_mul_char_permutationModule` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtYoungTrace.lean:finrank_hom_spechtModuleℂ_permutationModuleℂ_eq_zero`, `SpechtYoungTrace.lean:finrank_hom_spechtModuleℂ_permutationModuleℂ_self` |
+| `SpechtYoungTrace.lean:finrank_hom_spechtModuleℂ_permutationModuleℂ_eq_zero` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtYoungTrace.lean:spechtModuleℂ_iso_iff` |
+| `SpechtYoungTrace.lean:finrank_hom_spechtModuleℂ_permutationModuleℂ_self` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtYoungTrace.lean:spechtModuleℂ_iso_iff` |
+| `SpechtYoungTrace.lean:spechtModuleℂ_iso_iff` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtYoungTrace.lean:sum_spechtTrace_mul_spechtTrace_inv` |
+| `SpechtYoungTrace.lean:sum_spechtTrace_mul_spechtTrace_inv` | Local composition of the existing representation and pinned interfaces; no independent admission | **Terminal WIP: Young Gram/completeness and Frobenius consumer missing** |
+
+### Exact remaining target and retirement
+
+The actual Hom dimensions still need identification with Kostka numbers. The
+selected public YoungRule proof requires the permutation-character Gram identity
+from the complete-homogeneous/Schur/Kostka expansion, plus completeness of the
+Specht characters. Row orthogonality alone supplies neither completeness nor
+Young rule. The selected endpoints do not assume either fact. The arbitrary-degree
+finite-alphabet psumPart_eq_sum_spechtCharValue_smul_schurPoly remains unported
+and unproved here; the degree-at-most-alphabet equivalence is not substituted.
+
+After those steps the literal positive-parts triple shape, zero padding, Schur
+height vanishing above three, division-free bialternant with descending staircase
+(2,1,0), exact Vandermonde coefficient isolation and the actual ordinary-trace
+equality with HSW.frobChar remain required. Both original weighted sums must
+then consume that bridge and the existing coefficient owner and solution_unique.
+All n at least one, every partition, fixed-point cycles, per-occurrence Ev
+duplicates, exact reciprocal z and sign, every even-part three-row shape,
+rectangle (n,n,0) also for odd n, and the even-binomial/odd-zero values are
+unchanged. No coefficient-only conclusion is presented as the original theorem.
+
+The complete Apache license and attributions above apply to this selection.
+Retirement is evaluated against OUR unchanged Mathlib pin
+56a005855ea17e0b0958f73ec801ae140b0a1679, not the supplier's different pin.
+No dependency/pin upgrade or whole-file library import is introduced. No complete
+prior-art or open-problem eligibility claim is made. Issue 21960 remains the
+original preregistration, unchanged; 22528 remains coefficient-only.
+
+The unfinished audit remains issue 24542. Actual PointwiseEqualityRegistrations
+and DependentFamily support sources were inspected. Full dependent-domain source
+reconstruction and lawful readout, whole-family intervention/sensitivity, actual
+observational dependence, native elaboration and binding evidence remain absent.
+No Reg mirror or declared_validated claim is supplied.
