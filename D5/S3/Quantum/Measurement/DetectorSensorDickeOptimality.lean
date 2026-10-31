@@ -260,7 +260,7 @@ private theorem invariant_constant_offDiagonal {n : ℕ} (hn : 2 ≤ n)     (B :
   rw [he i j hij]
   exact Complex.ext rfl him
 set_option backward.isDefEq.respectTransparency false in
-private theorem weight_class_card (n k : ℕ) :     (Finset.univ.filter (fun x : Fin n → Bool => (Finset.univ.filter (fun j => x j = true)).card = k)).card = n.choose k := by
+theorem weight_class_card (n k : ℕ) :     (Finset.univ.filter (fun x : Fin n → Bool => (Finset.univ.filter (fun j => x j = true)).card = k)).card = n.choose k := by
   classical
   have he : ∀ x : Fin n → Bool, (Finset.univ.filter (fun j => x j = true)).card = k ↔ ((((Equiv.arrowCongr (Equiv.refl (Fin n)) Equiv.propEquivBool.symm).trans (Equiv.ofBijective Set.ofPred Set.ofPred_bijective)).trans Fintype.finsetEquivSet.symm) x).card = k :=
     fun x => by

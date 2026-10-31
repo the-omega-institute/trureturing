@@ -1,0 +1,28 @@
+#### 定义 9.1（条件底面的纯态与四角复比）
+
+现在明确给定 $\mathcal H_5\subset(\mathbb{C}^2)^{\otimes3}$、计算基、Born 标定以及中位为零分支的两端张量分割。令
+
+$$
+|\Psi\rangle=\alpha_0|000\rangle+\alpha_1|100\rangle
++\alpha_2|010\rangle+\alpha_3|001\rangle+\alpha_{13}|101\rangle,
+\qquad \sum_s|\alpha_s|^2=1.
+$$
+
+令 $p_s=|\alpha_s|^2$、$R=1-p_2>0$，条件底面纯态的系数矩阵为 $M/\sqrt R$，其中
+
+$$
+M=\begin{pmatrix}\alpha_0&\alpha_3\\\alpha_1&\alpha_{13}\end{pmatrix}.
+$$
+
+当四底角非零时，定义
+
+$$
+\Omega=\frac{\alpha_0\alpha_{13}}{\alpha_1\alpha_3},\qquad
+\eta=\log\frac{p_0p_{13}}{p_1p_3},\qquad
+\Phi=\arg\Omega\pmod{2\pi}.
+$$
+
+于是 $\log\Omega=\eta/2+i\Phi\pmod{2\pi i}$。
+
+<a id="statement-9-2"></a>
+

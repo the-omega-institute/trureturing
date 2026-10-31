@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bb66dbc16758eb39262a398ce55d9c2492713d26e66cbf9229eddcb34ab1b159
+  normalized_sha256: sha256:bb66dbc16758eb39262a398ce55d9c2492713d26e66cbf9229eddcb34ab1b159
+cas_ref: sha256:bb66dbc16758eb39262a398ce55d9c2492713d26e66cbf9229eddcb34ab1b159
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: literature provenance row and usage boundary; no Lean theorem or independent conclusion.'
+    previous_atom_id: 0d6fa38858d9950214deeb5d0e1fbecba25712235d7ce37046e4303ecd487376
+    next_atom_id: 5bfd0275d9beebf6090db1d98648e371991d355dec71a9578996a2d099880590

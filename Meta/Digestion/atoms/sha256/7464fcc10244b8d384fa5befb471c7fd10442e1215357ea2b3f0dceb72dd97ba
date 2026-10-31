@@ -1,0 +1,17 @@
+**定理 339.2（访问—任务 Galois 连接）。** 对任意 \(\mathcal A\subseteq\mathfrak A\) 与 \(\Phi\subseteq\mathfrak T\)，有
+\[
+\boxed{
+\mathcal A\subseteq\Phi'
+\quad\Longleftrightarrow\quad
+\Phi\subseteq\mathcal A'.
+}
+\tag{339.1}
+\]
+因此
+\[
+\mathcal A\subseteq\mathcal A'',
+\qquad
+\Phi\subseteq\Phi'',
+\]
+且双重导出是单调、幂等的闭包算子。
+

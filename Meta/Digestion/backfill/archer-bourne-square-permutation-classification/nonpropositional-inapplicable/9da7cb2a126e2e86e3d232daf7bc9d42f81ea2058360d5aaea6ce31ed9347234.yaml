@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9da7cb2a126e2e86e3d232daf7bc9d42f81ea2058360d5aaea6ce31ed9347234
+  normalized_sha256: sha256:9da7cb2a126e2e86e3d232daf7bc9d42f81ea2058360d5aaea6ce31ed9347234
+cas_ref: sha256:9da7cb2a126e2e86e3d232daf7bc9d42f81ea2058360d5aaea6ce31ed9347234
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Scope boundary note recording that the results concern only the pattern chain (312, 54321 : 132) and that the order-seven recurrence of Corollary 7.4 is asserted only for n >= 12; asserts no new proposition.'
+    previous_atom_id: f80bdeff4e144ab1886b6286f1e2987f477f5c16b9e292ac619e55182087a754
+    next_atom_id: 2b2f7879422d403dd2b471d562eb65cf6183d212dd06377cda3f9d5d49b6dbb3

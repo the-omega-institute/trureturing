@@ -1,0 +1,75 @@
+#### 定理 10.1（三角循环的完整约束与精确修复）
+
+设 $A,B,C\in\{-1,1\}$，单点边缘均匀，
+指定 $u=\mathbb E(AB),v=\mathbb E(BC),w=\mathbb E(CA)$。
+各边分别合法等价于 $(u,v,w)\in[-1,1]^3$。
+存在共同全局律，当且仅当
+
+$$
+\boxed{
+1+u+v+w\ge0,\quad 1+u-v-w\ge0,\quad
+1-u+v-w\ge0,\quad 1-u-v+w\ge0.
+}
+$$
+
+记其可行四面体为 $\mathcal T$，并对
+$\sigma\in\{\pm1\}^3,\sigma_1\sigma_2\sigma_3=1$ 定义
+$h_\sigma(c)=1+\sigma\cdot c$，$c=(u,v,w)$。
+对任意局部合法的 $c$，
+
+$$
+\boxed{
+\operatorname{dist}_\infty(c,\mathcal T)
+=\frac13\max_\sigma[-h_\sigma(c)]_+.
+}
+$$
+
+**证明。**
+
+点态恒有 $(AB)(BC)(CA)=1$，所以乘积三元组只落在
+
+$$
+(1,1,1),\quad(1,-1,-1),\quad(-1,1,-1),\quad(-1,-1,1).
+$$
+
+期望必在其凸包，四个面条件即为显示不等式。
+反向取
+
+$$
+P(a,b,c)=\frac18(1+uab+vbc+wca).
+$$
+
+四个条件保证每项非负；求和得归一化、均匀边缘及指定关系。
+
+若无面约束违反，距离为零。否则不同面的系数满足
+$h_\sigma(c)+h_\tau(c)=2(1\pm c_j)\ge0$，所以至多一面为负。
+写 $h_{\sigma_{\ast}}(c)=-3d<0$，取 $c'=c+d\sigma_{\ast}$。
+则违反面变为零；其他 $\tau$ 满足
+$\tau\cdot\sigma_{\ast}=-1$，且 $h_\tau(c)\ge3d$，故
+$h_\tau(c')\ge2d$。于是 $c'\in\mathcal T$ 且距离为 $d$。
+任意相容 $c''$ 必须修复违反量 $3d$，
+而 $|\sigma_{\ast}\cdot(c''-c)|\le3\|c''-c\|_\infty$，
+故距离至少 $d$。
+
+∎
+
+三条完美反相关边 $u=v=w=-1$ 各自归一化且共享均匀边缘，
+却不能来自同一三变量来源；其最小逐边修复幅度为 $2/3$，
+由 $(-1/3,-1/3,-1/3)$ 达到。
+这把“关系约束关系”写成了全局可行域与尖锐误差证书。
+若允许每条边误差至多 $\varepsilon$，
+数据可以落入某个全局相容模型恰当且仅当上述距离不超过 $\varepsilon$。
+
+即使边关系已经相容，高阶关系也未必唯一：
+
+$$
+P_\tau(a,b,c)=\frac18(1+uab+vbc+wca+\tau abc)
+$$
+
+仍给相同三条边，且其完整可行条件是
+$|\tau|\le\min_\sigma h_\sigma(c)$。
+每个乘积模式有互为全局反号的两个实现，
+$abc$ 的符号在这两个实现中相反，故这个界直接来自非负性。
+
+<a id="section-11"></a>
+

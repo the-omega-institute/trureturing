@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8e5e76b192d524636313156ef5a6e5d91d1b31c6700295f03c1699466e43ef37
+  normalized_sha256: sha256:8e5e76b192d524636313156ef5a6e5d91d1b31c6700295f03c1699466e43ef37
+cas_ref: sha256:8e5e76b192d524636313156ef5a6e5d91d1b31c6700295f03c1699466e43ef37
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Definitional block introducing admissible permutations S_n(312, 54321 : 132), indecomposable admissible permutations I_n, and their cardinalities a_n and b_n; asserts no standalone proposition.'
+    previous_atom_id: 6bed98db14e137a3f62645eb8339f49c6bbd6e2225ab46e00bf7d9ca7faac229
+    next_atom_id: 878c929866a98449b548e9aee3b197e8a94838a671d55a75ab0410632ffa6298

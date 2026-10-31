@@ -1,0 +1,26 @@
+#### 命题 13.3（三个态的相位三角约束）
+
+对三个单位态 $u,v,w$，令 $a=\langle u,v\rangle$、$b=\langle v,w\rangle$、$c=\langle w,u\rangle$。它们的 Gram 正性要求
+
+$$
+\boxed{|a|^2+|b|^2+|c|^2\le1+2\operatorname{Re}(abc).}
+$$
+
+加上 $|a|,|b|,|c|\le1$，该条件也足以在某个复 Hilbert 空间实现这些重叠。若三态位于二维空间，则等号成立。
+
+<a id="proof-13-3"></a>
+
+**证明。** 
+Gram 矩阵为
+
+$$
+G=\begin{pmatrix}1&a&\bar c\\\bar a&1&b\\c&\bar b&1\end{pmatrix}.
+$$
+
+行列式展开得到不等式；三个二阶主子式给模长条件。全部主子式非负等价于 Hermitian 矩阵正半定，取矩阵平方根实现为 Gram。二维空间中 $\operatorname{rank} G\le2$，所以行列式为零。
+ ∎
+
+环积 $abc$ 在各态重定相位下不变。这又是一种三角关系，但其边是态的重叠；若三态真正两两正交，则三边重叠全零，环相位没有定义。它与五模式占位坐标中的直角三角形应按各自载体使用。
+
+<a id="sec-14"></a>
+
