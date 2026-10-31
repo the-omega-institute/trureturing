@@ -21,7 +21,7 @@ set_option linter.style.longLine false
 noncomputable section
 
 open Matrix Finset
-open scoped ComplexOrder MatrixOrder BigOperators
+open scoped ComplexOrder MatrixOrder BigOperators Kronecker
 open D5.S3.Observer.WindowRegister
 open D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
 open D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
@@ -79,11 +79,11 @@ def claim : Prop :=
       τ.1 = CStarMatrix.ofMatrix (convolution s t ρ.1 ρ.1) →
       let δ := Real.exp (vonNeumannEntropy τ - vonNeumannEntropy ρ)
       let r := (meanRank ρ.1 : ℝ)
-      let λ := gapFactor ρ.1
-      1 < δ → δ ≤ c → 0 < 1 + λ * (r * purity ρ.1 - 1) →
-      0 < Real.log r - Real.log (1 + λ * (r * purity ρ.1 - 1)) →
+      let l := gapFactor ρ.1
+      1 < δ → δ ≤ c → 0 < 1 + l * (r * purity ρ.1 - 1) →
+      0 < Real.log r - Real.log (1 + l * (r * purity ρ.1 - 1)) →
       quantumRelativeEntropy ρ σ ≤
-        Real.log r / (Real.log r - Real.log (1 + λ * (r * purity ρ.1 - 1))) * Real.log c
+        Real.log r / (Real.log r - Real.log (1 + l * (r * purity ρ.1 - 1))) * Real.log c
 
 private def rhoWeights (i : ZMod 7) : ℝ := if i = 0 ∨ i = 1 then 1 / 2 else 0
 private def tauWeights (i : ZMod 7) : ℝ :=
@@ -137,10 +137,10 @@ private lemma doubling_eq :
 
 private lemma doubling_gt_one : 1 < Real.exp (1 / 2 * Real.log 2) := by sorry
 
-private lemma numerical_bound (λ : ℝ) (hλ : 0 ≤ λ ∧ λ ≤ 1) :
-    0 < 1 + λ * (7 * (1 / 2) - 1) ∧
-    0 < Real.log 7 - Real.log (1 + λ * (7 * (1 / 2) - 1)) ∧
-    Real.log 7 / (Real.log 7 - Real.log (1 + λ * (7 * (1 / 2) - 1))) *
+private lemma numerical_bound (l : ℝ) (hl : 0 ≤ l ∧ l ≤ 1) :
+    0 < 1 + l * (7 * (1 / 2) - 1) ∧
+    0 < Real.log 7 - Real.log (1 + l * (7 * (1 / 2) - 1)) ∧
+    Real.log 7 / (Real.log 7 - Real.log (1 + l * (7 * (1 / 2) - 1))) *
       Real.log (Real.exp (1 / 2 * Real.log 2)) ≤ 1 / 2 * Real.log 7 := by sorry
 
 private lemma strict_violation : 1 / 2 * Real.log 7 < Real.log 7 - Real.log 2 := by sorry
