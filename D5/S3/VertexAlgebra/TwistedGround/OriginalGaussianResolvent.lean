@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/OriginalGaussianResolvent
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianMatrix, D5/S3/Analytic/OriginalHalfBinomialPeriod]
+   anchors: []
    utility: none
    digest: The original positive-frequency Gaussian on complex square-summable sequences. -/
 
