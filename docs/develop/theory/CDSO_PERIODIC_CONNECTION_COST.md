@@ -3953,3 +3953,505 @@ and the unrestricted original connected-graph extremal problem are
 outside these theorems.
 
 ## 追加锚（本行以下为增补区）
+
+## 17. Connected incidence floors and the sharper full-class envelope
+
+**Definition 17.1 (Tail incidence excess and price slack).** Fix finite
+$R\ge4$, $c>0$ and $B>0$, and use exactly the integer domain,
+original graphs, nonlinear objective and actual threshold partition of
+Definition 13.1. Thus $a$ is sufficiently large in terms of these
+constants, $(7/2)\sqrt a\le h\le R\sqrt a$,
+$N\ge ca^{5/2}$ and $W(G)\le M+BT_N$. All notation
+$m,r,n,j,\alpha,\beta,\eta,T_N$ belongs to this actual partition.
+For each tail let $q_k=q_k^D$ be (14.8), and put
+
+$$
+\begin{gathered}
+Q=\sum_{k\in D}q_k,\qquad
+I=NQ-3n,\\
+\mathcal P=\sum_{u\in S}\rho_j(L_u,B_u),\qquad
+\Pi=\mathcal P-\bar\chi_{j,N}.
+\end{gathered}
+\tag{17.1}
+$$
+
+Here $\mathcal P$ is the unnormalized price sum over actual source
+vertices, including repeated neighborhoods with their multiplicities.
+The algebraic prices are those of (1.8) and (2.1), even when this
+actual $j$ is not a law winner. No source neighborhood is excluded.
+
+**Lemma 17.2 (A connected floor and coercivity of the price slack).**
+On the domain of Definition 17.1, uniformly over every integer residue,
+
+$$
+\begin{gathered}
+q_k\ge3/N\quad(k\in D),\qquad I\in\mathbb Z_{\ge0},\\
+\Pi\ge\tfrac14\eta^2 I,\\
+\sum_{k\in D}q_k^2\le\frac{9n}{N^2}+\frac{3QI}{N}.
+\end{gathered}
+\tag{17.2}
+$$
+
+**Proof.** Lemma 13.2 gives $2\le j\le J_R$, $n\asymp_R\sqrt a$,
+$\alpha\ge1/2$, $\beta\asymp_R a^{-3/2}$ and the strict margin
+$n^2/(j^2a)>5/2-O_R(a^{-1/2})$. Thus (14.12) verifies the price
+hypotheses at this actual index. In addition, its uniform expansions
+and $\eta^2\asymp_R a^3$ imply, after increasing $a$,
+
+$$
+0<rc_j<\eta^2,\qquad b_j\ge2\eta^2,\qquad
+\eta^2\ge2A_c,\qquad A_c=\frac{2m^2+4}{\alpha^2}.
+\tag{17.3}
+$$
+
+These uses require only bounded $j$ and the displayed strict margin,
+not $S_j=M$. All identities (2.3), (2.7), (2.8) remain algebraic
+identities at this index.
+
+Every tail has an incident source of degree at least two. Otherwise
+that tail and all its incident singleton sources would be a component
+separate from the nonempty core. Such a source contributes at least
+$3/N$ to $q_k=N^{-1}\sum_{u:k\in T_u}(K_u^2-1)$.
+This proves the first assertion and integrality of $I$.
+
+For a source write $\tau_u=q(L_u,B_u)$ as in (4.2), and set
+
+$$
+D_u=B_u(K_u^2-1)-3\tau_u,\qquad
+\tau=\sum_u\tau_u.
+\tag{17.4}
+$$
+
+These are nonnegative integers. A tail singleton and a core--tail
+connector have $D_u=0$. A mixed source of size $K\ge3$ has
+$D_u=B(K^2-4)\ge5$. A tail-only source with $B\ge2$ has
+$D_u=B^3-4B+3\ge3$. A core-only source has $D_u=0$.
+Connectedness gives $\tau\ge n$ by precisely the contraction of
+(4.3), for the same actual graph, so
+
+$$
+I=3(\tau-n)+\sum_uD_u.
+\tag{17.5}
+$$
+
+Call a tail-touching source bad if it is neither a singleton nor a
+core--tail connector. Its price satisfies the quantitative strengthening
+
+$$
+\rho_j(L,B)-\tau_u b_j
+\ge rc_j+\tfrac14\eta^2D_u.
+\tag{17.6}
+$$
+
+To check every mixed bad type, the second line of (2.7) is at least
+$-A_cK$, and $1-(L-1)/r\ge0$. Subtracting the right side of
+(17.6) from (2.7), and using $rc_j<\eta^2$, leaves at least
+
+$$
+\eta^2\{B(3K^2/4-4)-1\}-A_cK\ge0.
+\tag{17.7}
+$$
+
+Indeed $B\ge1$, $K\ge3$ imply the expression in braces is at
+least $K/2$: the polynomial $3K^2/4-K/2-5$ is positive at
+$K=3$ and increasing thereafter. Equation (17.3) proves the last
+inequality. This argument covers all $3\le K\le s$.
+For a tail-only bad type, (2.8), $2m^2-4>0$ and $rc_j<\eta^2$
+leave at least
+
+$$
+\eta^2\{3B^3/4-4B+9/4\}>0
+\tag{17.8}
+$$
+
+after subtracting (17.6). The polynomial in braces is $1/4$ at
+$B=2$ and has positive derivative on $[2,\infty)$. This checks
+all tail-only types as well. Core-only prices are nonnegative by
+(2.3) and $c_j>0$.
+
+Write $d=d_{j,N}$, so $0\le d<r$. If there are $b_{\rm bad}\ge1$
+bad sources, summing (17.6) and the connector prices gives
+
+$$
+\begin{aligned}
+\Pi&\ge(\tau-n)b_j+(b_{\rm bad}r-d)c_j
+                   +\tfrac14\eta^2\sum_uD_u\\
+&\ge\tfrac14\eta^2\{3(\tau-n)+\sum_uD_u\}
+ =\tfrac14\eta^2I.
+\end{aligned}
+\tag{17.9}
+$$
+
+If there are none and $\tau\ge n+1$, the same conclusion follows
+from
+
+$$
+\Pi\ge(\tau-n)b_j-dc_j
+\ge(\tau-n)(b_j-rc_j)\ge(\tau-n)\eta^2,
+\tag{17.10}
+$$
+
+because now $I=3(\tau-n)$. If there are none and $\tau=n$,
+then $I=0$. The actual edge budget gives
+$D_0\equiv n-(a-1)N\pmod r$ by (4.7), where $D_0$ is the
+nonnegative total core-only omission count (4.5). Hence $D_0\ge d$,
+and (4.6) gives $\Pi\ge0$. This completes the price inequality
+without imposing any congruence restriction on $N$.
+
+Finally set $z_k=q_k-3/N\ge0$. Their sum is $I/N$, and
+$Q\ge3n/N\ge3/N$. Therefore
+
+$$
+\begin{aligned}
+\sum_kq_k^2
+&=9n/N^2+(6/N)\sum_kz_k+\sum_kz_k^2\\
+&\le9n/N^2+(6/N+\sum_kz_k)I/N
+ \le9n/N^2+3QI/N.
+\end{aligned}
+\tag{17.11}
+$$
+
+The last step uses $6/N\le2Q$ and $\sum z_k\le Q$.
+This is a coordinate incidence bound; it does not replace the vector
+$(q_k)$ by independently chosen marginal optimizers. ∎
+
+**Lemma 17.3 (Sharp nonlinear transfer and an absorbed remainder).**
+There is a constant $C_{R,c,B}$ such that every graph of Definition
+17.1 satisfies the following bounds, uniformly in its labels and all
+three integers:
+
+$$
+\begin{gathered}
+0\le H(x_G)-W(G)\le C_{R,c,B}a^5/N^2,\\
+W(G)\ge S_j+\bar\chi_{j,N}/N+\Pi/(2N)
+                           -C_{R,c,B}a^5/N^2.
+\end{gathered}
+\tag{17.12}
+$$
+
+**Proof.** All expectations are under the actual law $x_G$. Lemmas
+13.2--13.3 apply with the fixed $R,c,B$ in Definition 17.1. They
+give $y_i\ge1/2$ on the actual core, $\beta/2\le t_k\le3\beta/2$
+on its tail, $Z\le CT_N$, and $K^2\le C\sqrt a$ for every
+actual source touching the tail. These are conclusions of localization,
+not extra domain restrictions.
+
+Use the exact nonlinear inequality (11.6), equivalently
+
+$$
+0\le H-W\le\frac1{4N^2}
+\mathbb E\left[K^4\sum_{i\in T}y_i^{-4}\right].
+\tag{17.13}
+$$
+
+The core part of the expectation is at most
+$s^4\sum_{i\in C}y_i^{-3}\le Ca^5$. The tail singleton part
+is at most $\sum_kt_k^{-3}\le Cn\beta^{-3}\le Ca^5$.
+For the remaining tail incidences, retain their exceptional energy
+rather than charging the singleton baseline with their degree bound:
+
+$$
+\mathbb E\left[K^4\sum_{k\in T\cap D}t_k^{-4};A,K\ge2\right]
+\le C\sqrt a\,\beta^{-2}Z
+\le C\sqrt a\,\beta^{-2}T_N.
+\tag{17.14}
+$$
+
+Dividing this by $N^2$ gives $Ca^7/N^3\le C_{R,c,B}a^5/N^2$,
+since $a^2/N\le c^{-1}a^{-1/2}$. This proves the first line of
+(17.12) directly for the original nonlinear $W$.
+
+For the law expansion, the actual summed core defects (14.4)--(14.5)
+give the Taylor remainder (14.7) at $\alpha$, of absolute value
+at most $CT_N^2/a^2=Ca^5/N^2$. These estimates hold on the
+present sublevel with its actual bounded index; no winning-index
+hypothesis entered their proof. At a tail write $\omega_k=t_k-\beta$.
+The reciprocal identity and the derivative bound
+$|(t^{-2})'|\le16\beta^{-3}$ on $[\beta/2,3\beta/2]$ give,
+coordinate by coordinate,
+
+$$
+\begin{aligned}
+\frac1{t_k}+\frac{q_k}{t_k^2}
+\ge{}&\frac1\beta-\frac{\omega_k}{\beta^2}
+ +\frac{q_k}{\beta^2}
+ +\frac{2\omega_k^2}{3\beta^3}
+ -\frac{16q_k|\omega_k|}{\beta^3}\\
+\ge{}&\frac1\beta-\frac{\omega_k}{\beta^2}
+ +\frac{q_k}{\beta^2}
+ +\frac{\omega_k^2}{3\beta^3}
+ -\frac{192q_k^2}{\beta^3}.
+\end{aligned}
+\tag{17.15}
+$$
+
+For the first line use
+$1/t=1/\beta-\omega/\beta^2+\omega^2/(\beta^2t)$;
+the second is completion of a square. In particular the negative
+remainder is the sum of the coordinate squares $q_k^2$, rather
+than the square of their total.
+
+The constant and linear terms of this tail expansion and the core
+expansion are exactly $S_j+\mathcal P/N$. This follows from
+(2.9)--(2.10) because this same empirical law has total mass one and
+mean $a$, and the cap with these parameters has marginals
+$\alpha,\beta$. Differentiation and affine subtraction in that
+identity do not require the cap to minimize $H$. Thus
+
+$$
+H\ge S_j+\mathcal P/N-Ca^5/N^2
+                         -192\beta^{-3}\sum_kq_k^2.
+\tag{17.16}
+$$
+
+Here $Q\le\delta^2Z\le C\beta^2T_N$ by (14.9), with
+$\delta=\max t_k$. Apply both inequalities of Lemma 17.2:
+
+$$
+\begin{aligned}
+\beta^{-3}\sum_kq_k^2
+&\le9n\beta^{-3}/N^2+3\beta^{-3}QI/N\\
+&\le Ca^5/N^2+C\beta^{-1}T_NI/N\\
+&\le Ca^5/N^2+C\beta T_N\Pi/N\\
+&\le Ca^5/N^2+C(a^2/N)\Pi/N.
+\end{aligned}
+\tag{17.17}
+$$
+
+The first term is of the desired order because
+$n\asymp_R\sqrt a$ and $\beta\asymp_R a^{-3/2}$. The second
+term is paid by actual price slack. Since $a^2/N\le c^{-1}a^{-1/2}$,
+its coefficient is at most $1/2$ after increasing the uniform threshold
+for $a$. Substitute $\mathcal P=\bar\chi_{j,N}+\Pi$ into
+(17.16), and then use the first line of (17.12), already proved.
+The result is the second line of (17.12). No assertion of convexity
+of the full law energy or of exact source support is needed. ∎
+
+**Theorem 17.4 (The $a^5/N^2$ envelope over all prescribed graphs).**
+For every fixed finite $R\ge4$ and $c>0$ there are finite positive
+$A_{R,c},C_{R,c}$ such that, for every integer $a\ge A_{R,c}$,
+every integer $(7/2)\sqrt a\le h\le R\sqrt a$, and every integer
+$N\ge ca^{5/2}$, the original graph class of Definition 1.1 is
+nonempty and its minimum satisfies
+
+$$
+|V_N-L_N|\le C_{R,c}a^5/N^2.
+\tag{17.18}
+$$
+
+Here $L_N$ is exactly (14.13), with the same fixed $J_R$ and every
+actual residue $d_{j,N}$. Every exact minimizer, with its actual
+threshold core $C=\{i:y_i\ge b_R/a\}$, has $|C|=a+j$ for
+$2\le j\le J_R$ and satisfies
+
+$$
+S_j+\bar\chi_{j,N}/N\le L_N+C_{R,c}a^5/N^2.
+\tag{17.19}
+$$
+
+The domain retains simplicity, connectedness, bipartition, $N$ sources,
+$s=a+1+h$ sinks, exactly $aN$ edges and strict orientation (1.3).
+There is no restriction on its nonempty source neighborhoods or on
+integer remainders.
+
+**Proof.** Apply Lemma 11.2 with $J_0=J_R$, the fixed $R,c$ above,
+and $N\ge ca^{5/2}\ge ca^2$. Every branch in (14.13) has $n>0$
+for large $a$, and that lemma provides legal balanced suppliers for
+all its residues, including all graph conditions and strict orientation.
+It gives nonemptiness and
+
+$$
+V_N\le L_N+C_{R,c}a^5/N^2.
+\tag{17.20}
+$$
+
+The minimum exists in the finite labeled original graph class. As in
+the proof of Theorem 14.2, a winning law index is in $[2,J_R]$,
+and its supplier has $W\le M+B_RT_N$ for a fixed sufficiently
+large $B_R$. Indeed $|\bar\chi_{j,N}|\le C_Ra^{7/2}$ there and
+$a^5/N^2=o(T_N)$ uniformly over the present domain. Thus every
+exact minimizer lies on the comparison sublevel with $B=B_R$.
+Lemma 13.2 derives its actual partition and index, and Lemma 17.3,
+with precisely these fixed constants, gives
+
+$$
+V_N\ge S_j+\bar\chi_{j,N}/N-C_{R,c}a^5/N^2
+       \ge L_N-C_{R,c}a^5/N^2.
+\tag{17.21}
+$$
+
+Together with (17.20) this proves (17.18), and comparison of the two
+bounds proves (17.19) after enlarging $C_{R,c}$. The retained price
+slack in (17.12) is nonnegative. The lower argument concerns every
+actual minimizer in the full original class, without converting it into
+a template. ∎
+
+## 18. Actual core selection on the exact critical integer sequence
+
+**Theorem 18.1 (Critical residues and the eventual actual core).**
+Let $t$ range over positive integers and set
+
+$$
+a=6t^2,\qquad h=12t-1,\qquad N=120t^5.
+\tag{18.1}
+$$
+
+Use $R=5$ and the actual threshold $b_5/a$ of (13.3). For all
+sufficiently large $t$, every exact minimizer in the original graph
+class has $|C|=a+2$. With $k=[t]_3\in\{0,1,2\}$ and
+$E_{j,N}=S_j+\bar\chi_{j,N}/N$, the signed comparison is
+
+$$
+\begin{aligned}
+d_{2,N}&=\frac{k(6t^2+1)+56t-6}{3},\qquad
+ d_{3,N}=52t-3\quad(t\ge10),\\
+E_{3,N}-E_{2,N}
+ &=\frac{204-12k}{5}\,t+\frac{408+6k}{5}+R_k(t),\qquad
+ |R_k(t)|\le\frac{132}{t}\quad(t\ge10).
+\end{aligned}
+\tag{18.2}
+$$
+
+In particular the signed gap is at least $36t$ for $t\ge10$,
+whereas the full-class value error and actual-index allowance in
+Theorem 17.4 are bounded independently of $t$. Moreover
+$V_N=E_{2,N}+O(1)$. These conclusions concern the actual threshold
+core, and do not identify every source neighborhood of an optimizer.
+
+**Proof.** Here $h/\sqrt a=2\sqrt6-1/(\sqrt6t)$ lies in $[7/2,5]$
+eventually and
+
+$$
+N/a^{5/2}=5\sqrt6/9=:D_c,\qquad a^5/N^2=27/50.
+\tag{18.3}
+$$
+
+Take, for example, $c=1$ in Theorem 17.4, since $D_c>1$.
+Its uniform error and actual-index comparison are therefore $O(1)$.
+
+For the residue calculation, $a-1\equiv-j\pmod{a+j-1}$, so
+$d_{j,N}=[n+jN]_{a+j-1}$. The exact divisions are
+
+$$
+\begin{aligned}
+3(12t-2+240t^5)
+ &=(120t^3-20t)(6t^2+1)+56t-6,\\
+12t-3+360t^5
+ &=(60t^3-20t)(6t^2+2)+52t-3.
+\end{aligned}
+\tag{18.4}
+$$
+
+The fractional part of $(120t^3-20t)/3$ is $k/3$. For $t\ge10$,
+$0<56t-6<6t^2+1$ and $0<52t-3<6t^2+2$. Consequently the
+expressions for $d_{2,N},d_{3,N}$ in (18.2) are integers in their
+required residue intervals, not merely congruent real expressions.
+This includes all three congruence classes of the parameter $t$.
+
+For completeness the deciding rational remainder can be written without
+an asymptotic sign assumption. Define
+
+$$
+\begin{aligned}
+P_k(t)={}&(648k-72576)t^8+(864k+12960)t^7
+ +(1656k-1764)t^6\\
+&-(216k+77040)t^5+(246k+11928)t^4-15652t^3\\
+&+(20k+278)t^2+(2k-1280)t+k+72.
+\end{aligned}
+\tag{18.5}
+$$
+
+Substitution of the actual residues into the exact rational formula
+(11.11), together with $S_3-S_2$ in (11.10), gives the identity
+
+$$
+E_{3,N}-E_{2,N}
+=\frac{204-12k}{5}t+\frac{408+6k}{5}
+ +\frac{P_k(t)}{60t^5(6t^2-1)^2}.
+\tag{18.6}
+$$
+
+One can obtain the same identity directly from (1.8): on branch $j$
+insert $m=6t^2+j$, $r=6t^2+j-1$, $n=12t-j$,
+$\alpha=(6t^2-1)/r$, $\eta=rn/j$ into $S_j+(nb_j+d_{j,N}c_j)/N$.
+Clearing the denominator $60t^5(6t^2-1)^2$ after subtracting the
+two displayed polynomial terms yields exactly (18.5). Thus the sign
+uses the repair residues as well as the connection prices.
+
+For $k=0,1,2$ the sum of the absolute values of the coefficients of
+$P_k$ is bounded by
+
+$$
+72576+14688+1764+77472+12420+15652+318+1280+74
+=196244.
+\tag{18.7}
+$$
+
+For $t\ge1$ its numerator is consequently at most $196244t^8$
+in absolute value, while its denominator is at least $1500t^9$,
+since $6t^2-1\ge5t^2$. The quotient is less than $132/t$.
+The coefficient $(204-12k)/5$ is at least $36$, and
+$(408+6k)/5-132/t>0$ for $t\ge10$. This proves the explicit
+positive gap in (18.2).
+
+It remains to connect this comparison to every original minimizer.
+The finite-index argument (15.6) applies with the same fixed $R=5$:
+among $2\le j\le J_5$, the leading coefficients
+$24/j+4j-2$ have their only minima at $j=2,3$. For every other
+index there is a common positive order-$a^2$ gap from $S_2$,
+because this is a fixed finite index set. Formula (11.11), with
+$0\le d_{j,N}<r$ on each of these bounded branches, bounds every
+price correction by $O(a^{7/2}/N)=O(a)$. Thus all other $E_{j,N}$
+exceed $E_{2,N}$ by a positive multiple of $a^2$ eventually.
+Equation (18.2) then proves $L_N=E_{2,N}$ eventually.
+
+If an exact minimizer had actual index $j=3$, (17.19) would give
+$E_{3,N}-E_{2,N}\le(27/50)C_{5,1}$, contradicting the gap
+$36t$ once $t>(3/200)C_{5,1}$. The other bounded indices have
+already been excluded by their order-$a^2$ gap and the same bounded
+allowance. Every actual index therefore equals two for all sufficiently
+large $t$, proving $|C|=a+2$. Lemma 13.2 also gives
+$y_i\ge1-O(a^{-1/2})$ on this core and $y_k\asymp a^{-3/2}$
+outside it, so the stated fixed marginal threshold does distinguish the
+two parts of the actual graph. Finally (17.18) and (18.3) give
+$V_N=E_{2,N}+O(1)$. ∎
+
+## 19. Mathematical sources and the remaining finite structure
+
+The incidence floor, its quantitative price-slack bound (17.2), the
+coordinate-square absorption (17.17), and the critical residue sign
+(18.6) are repo-derived relations for the graph class of Definition
+1.1. Their prerequisites are the existing actual-graph localization in
+Lemmas 13.2--13.3, the core defect identities (14.3)--(14.7), the
+algebraic prices of Section 2, the connected contraction and edge
+congruence of Section 4, and the legal upper suppliers of Lemma 11.2.
+The nonlinear transfer separates the singleton baseline from exceptional
+tail incidences; the incidence floor then pays the remaining concentration
+error with price slack. Neither step assumes the desired finite envelope.
+The rational critical comparison uses the exact branch formulas already
+present in (11.10)--(11.11), with its own actual integer residues.
+
+The CDSO normalization and broader fixed-order, fixed-cyclomatic
+extremal question are those of Albalahi--Das--Ali--Barman--Hamza,
+[*On the hyperbolic Sombor index and its counterpart*](https://arxiv.org/html/2510.24809v1),
+§§1,4, DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176),
+with the repository's source note
+[here](../../../Library/GraphInvariants/albalahidasalibarmanhamza2025hyperbolicsombor.md).
+No external extremal theorem is a premise for (17.2) or (18.6), and
+no literature-priority claim is attached to them. The full-text technical
+overlap with Zhao--Zhao, DOI
+[10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+remains unassessed and supplies no premise.
+
+Theorem 17.4 strengthens the precision of Theorem 14.2 on its same
+full prescribed graph class. Theorem 18.1 decides the eventual actual
+core for the particular exact critical sequence (18.1). It does not
+determine a general finite critical transition curve. Complete source
+support, global optimality of a particular source template, sufficiency
+of $a^{5/2}$ for eventual law-winning exact source restriction, moving
+$R$, varying the sink budget and the unrestricted connected-graph
+extremal problem remain outside these conclusions. A bounded error
+in a value and an actual threshold-core conclusion do not supply those
+stronger assertions.
+
+## 追加锚（本行以下为增补区）
