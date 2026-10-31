@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:4aa7aa0646659855e0848caf8b9a6ed3b7f5edba6bbd5eb44cf8a0a45502b771
   normalized_sha256: sha256:4aa7aa0646659855e0848caf8b9a6ed3b7f5edba6bbd5eb44cf8a0a45502b771
 cas_ref: sha256:4aa7aa0646659855e0848caf8b9a6ed3b7f5edba6bbd5eb44cf8a0a45502b771
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/XuYangMillsRemainder/ParameterClassification.result
+    target_statement_id: sha256:7a172fc8269f385c9aa128c313dd951e78c95b326d45dd2d3b49e6490c35796d
 receipts:
   unresolved_subitems: []
