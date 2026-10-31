@@ -26,7 +26,10 @@ private theorem first_ear (k t : ℕ) (hk : 2≤k)
     (H : ℤ) (hwidth : ∀ n, ((sigma.take n).map (actualSource k t)).sum ∈ Set.Icc (0 : ℤ) H)
     (hcap : 2*H+t≤modulus k) :
     OriginalOrder k t sigma ∧ OriginalOrder (k+1) (2*t) (earWord k sigma 0) := by
-  have htZ : (t : ℤ)≤(2 : ℤ)^(k-1)-1 := by exact_mod_cast ht
+  have htZ : (t : ℤ)≤(2 : ℤ)^(k-1)-1 := by
+    have hh : t+1≤2^(k-1) := by omega
+    have hhZ : (t : ℤ)+1≤(2 : ℤ)^(k-1) := by exact_mod_cast hh
+    omega
   have hpow : (2 : ℤ)^k=2*2^(k-1) := by
     conv_lhs => rw [show k=(k-1)+1 by omega,pow_succ]
     ring
@@ -69,27 +72,24 @@ private theorem first_ear (k t : ℕ) (hk : 2≤k)
   have hnewprefix (n : ℕ) :
       (((earWord k sigma 0).take n).map (actualSource (k+1) (2*t))).sum ∈
         Set.Icc (0 : ℤ) (modulus (k+1)/2) := by
-    rw [ear_prefix k sigma 0 (by omega),hear]
-    simp_rw [hsource]
-    rw [linear]
-    by_cases hn : n≤0
-    · simp [hn]
-      exact (by omega : 0≤modulus (k+1)/2)
-    · simp only [hn,ite_false]
-      have hs := hwidth (n-1)
-      have hq := hprefix (n-1)
+    by_cases hn : n=0
+    · subst n
+      simp only [List.take_zero,List.map_nil,List.sum_nil,Set.mem_Icc]
+      constructor <;> omega
+    · rw [ear_prefix k sigma 0 (by omega),ite_eq_right (by omega : ¬n≤0),hear]
+      simp_rw [hsource]
+      rw [linear]
+      obtain ⟨hs0,hs1⟩ := hwidth (n-1)
+      obtain ⟨hq0,hq1⟩ := hprefix (n-1)
       constructor <;> omega
   refine ⟨⟨hp,hz,?_⟩,⟨ear_perm k sigma 0 hp,?_,hnewprefix⟩⟩
   · intro n
-    have hs := hwidth n
-    exact ⟨hs.1,by omega⟩
-  · rw [ear_prefix k sigma 0 (by omega) _ (earWord k sigma 0).length,hear]
-    have hn : ¬ (earWord k sigma 0).length≤0 := by simp [earWord]
-    simp only [hn,ite_false]
-    have hlen : (earWord k sigma 0).length-1=sigma.length := by simp [earWord]
-    rw [hlen,List.take_length]
+    obtain ⟨hs0,hs1⟩ := hwidth n
+    constructor <;> omega
+  · simp only [earWord,List.take_zero,List.drop_zero,List.nil_append,List.map_cons,
+      List.sum_cons,List.map_map,Function.comp_def]
     simp_rw [hsource]
-    rw [linear,hz,hsum]
+    rw [hear,linear,hz,hsum]
     ring
 
 set_option maxHeartbeats 1000000 in
@@ -120,17 +120,20 @@ private theorem diagonal (n : ℕ) (hn : 2≤n) :
     simpa only [hD,D,z,show 4*n=k by dsimp [k]; omega,modulus] using h
   have htN : t<2^(4*n)-1 := by
     have hi : (t : ℤ)<(2 : ℤ)^(4*n)-1 := by
-      have he : modulus k=(2 : ℤ)^(4*n)-1 := by dsimp [modulus,k]; congr 1; omega
+      have he : modulus k=(2 : ℤ)^(4*n)-1 := by rw [show 4*n=k by dsimp [k]; omega]; rfl
       rw [←he]
       nlinarith
     have hp : (1 : ℕ)≤2^(4*n) := Nat.one_le_two_pow
-    exact_mod_cast hi
+    have hi' : (t : ℤ)+1≤(2 : ℤ)^(4*n) := by omega
+    have hiN : t+1≤2^(4*n) := by exact_mod_cast hi'
+    omega
+  have htNk : t<2^k-1 := by simpa only [show 4*n=k by dsimp [k]; omega] using htN
   have hrep (i : ℕ) (hi : i<k) :
       f i=D*actualSource n 1 ⟨i%n,Nat.mod_lt _ (by omega)⟩ := by
     have h := ThreeRowSource.repeated_source n 4 1 (by omega) (by decide)
       ⟨i,by dsimp [k] at hi; omega⟩
-    simpa only [hD,mul_one,Nat.mod_eq_of_lt htN,actualSource,D,
-      show 4*n=k by dsimp [k]; omega] using h
+    simpa only [hD,mul_one,show 4*n=k by dsimp [k]; omega,
+      Nat.mod_eq_of_lt htNk,actualSource,D,f,Nat.cast_one] using h
   have base (i : ℕ) (hi : i<n) :
       actualSource n 1 ⟨i,hi⟩ = if i+1<n then (2 : ℤ)^i else -(q-1) := by
     have hb := centered_ladder (modulus n) 1 1 n i
@@ -145,26 +148,27 @@ private theorem diagonal (n : ℕ) (hn : 2≤n) :
     simpa only [actualSource,Nat.cast_one,mul_one,he] using hb
   have row (j i : ℕ) (hj : j<4) (hi : i<n) :
       f (j*n+i)=if i+1<n then (2 : ℤ)^i*D else -H := by
+    have hmul : j*n≤3*n := Nat.mul_le_mul_right n (by omega)
     rw [hrep (j*n+i) (by dsimp [k]; omega)]
-    have hm : (j*n+i)%n=i := by omega
+    have hm : (j*n+i)%n=i := by simp [Nat.add_mod,Nat.mod_eq_of_lt hi]
     simp only [hm,base i hi]
-    split_ifs <;> dsimp [H] <;> ring
+    split_ifs <;> simp only [H] <;> ring
   have block (j : ℕ) (hj : j<4) : InStrip f H 0 (List.range' (j*n) n) ∧
       ((List.range' (j*n) n).map f).sum=0 := by
     let P := List.range' (j*n) (n-1)
     have hmass : (P.map f).sum=H := by
-      have hh := ladder_sum f (j*n) (n-1) D (fun i hi => by rw [row j i hj (by omega),if_pos (by omega)])
+      have hh := ladder_sum f (j*n) (n-1) D (fun i hi => by rw [row j i hj (by omega),ite_eq_left (by omega)])
       simpa only [P,q,H] using hh
     have hpos : ∀ i∈P, 0≤f i := by
       intro i hi
       obtain ⟨a,ha,rfl⟩ := List.mem_range'.mp hi
       simp only [Nat.one_mul]
-      rw [row j a hj (by omega),if_pos (by omega)]
+      rw [row j a hj (by omega),ite_eq_left (by omega)]
       positivity
-    have hneg : f (j*n+(n-1))=-H := by rw [row j (n-1) hj (by omega),if_neg (by omega)]
+    have hneg : f (j*n+(n-1))=-H := by rw [row j (n-1) hj (by omega),ite_eq_right (by omega)]
     have he : P++[j*n+(n-1)]=List.range' (j*n) n := by
       simpa only [show n-1+1=n by omega] using (List.range'_1_concat (s:=j*n) (n:=n-1)).symm
-    have hH : 0≤H := by dsimp [H]; positivity
+    have hH : 0≤H := mul_nonneg (by omega : 0≤q-1) hDi.le
     have hp : InStrip f H 0 P := positive_block_strip hpos (by omega) (by rw [hmass]; omega)
     have hs : InStrip f H (0+(P.map f).sum) [j*n+(n-1)] := by simp [InStrip,hmass,hneg,hH]
     constructor
@@ -173,7 +177,9 @@ private theorem diagonal (n : ℕ) (hn : 2≤n) :
   have all_rows (m : ℕ) (hm : m≤4) : InStrip f H 0 (List.range (m*n)) ∧
       ((List.range (m*n)).map f).sum=0 := by
     induction m with
-    | zero => simp [InStrip,H]; positivity
+    | zero =>
+      have hH : 0≤H := mul_nonneg (by omega : 0≤q-1) hDi.le
+      simpa [InStrip] using hH
     | succ m ih =>
       obtain ⟨hpre,hzero⟩ := ih (by omega)
       obtain ⟨hb,hbz⟩ := block m (by omega)
@@ -205,8 +211,11 @@ private theorem diagonal (n : ℕ) (hn : 2≤n) :
     have hm := List.map_congr_left (fun i hi => hvalue i (List.mem_of_mem_take hi))
     simpa only [sigma,List.take_map,List.map_map,hm,zero_add] using hh
   have zero : (sigma.map (actualSource k t)).sum=0 := by
-    have hm := List.map_congr_left hvalue
-    simpa only [sigma,List.map_map,hm,show 4*n=k by dsimp [k]; omega] using hs.2
+    have hm : sigma.map (actualSource k t)=(List.range k).map f := by
+      rw [sigma,List.map_map]
+      exact List.map_congr_left hvalue
+    rw [hm]
+    simpa only [show 4*n=k by dsimp [k]; omega] using hs.2
   have ht : t≤2^(k-1)-1 := by
     have he : (2 : ℤ)^k=2*2^(k-1) := by
       conv_lhs => rw [show k=(k-1)+1 by omega,pow_succ]
@@ -222,7 +231,7 @@ private theorem diagonal (n : ℕ) (hn : 2≤n) :
   nlinarith
 
 /-- The diagonal paired-gap family has a common physical order and an ear at cut zero. -/
-theorem actualSource_four_negative_adjacent_equal_joint_lift (r s : ℕ)
+private theorem actualSource_four_negative_adjacent_equal_joint_lift (r s : ℕ)
     (hs : 2≤s) (hr : r=s) :
     ∃ sigma : List (Fin (2*r+2*s)),
       OriginalOrder (2*r+2*s) (1+2^r+2^(2*r)+2^(2*r+s)) sigma ∧
