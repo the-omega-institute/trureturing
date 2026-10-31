@@ -39,16 +39,15 @@ private theorem low_split (e off r : ℕ) (hr : 1 ≤ r) (hrn : r ≤ 2 ^ e) :
   · intro i
     simp only [List.mem_append,chamberLabels_mem,List.mem_range']
     constructor
-    · rintro (⟨j,hj,_,hji⟩|⟨j,hj,_,hji⟩) <;> omega
-    · intro hi
-      let j := i-off
-      have hj : j<e := by dsimp [j]; omega
+    · rintro (⟨j,hj,_,hji⟩|⟨j,hj,_,hji⟩)
+      all_goals exact ⟨j,hj,by omega⟩
+    · rintro ⟨j,hj,hij⟩
       have hmem : j∈(2 ^ e-r).bitIndices.toFinset ∪ (r-1).bitIndices.toFinset := by
         rw [hd.2.2]
         exact Finset.mem_range.mpr hj
       rcases Finset.mem_union.mp hmem with hp|hq
-      · exact Or.inl ⟨j,hj,(mem_bit _ _).mp hp,by dsimp [j]; omega⟩
-      · exact Or.inr ⟨j,hj,(mem_bit _ _).mp hq,by dsimp [j]; omega⟩
+      · exact Or.inl ⟨j,hj,(mem_bit _ _).mp hp,by omega⟩
+      · exact Or.inr ⟨j,hj,(mem_bit _ _).mp hq,by omega⟩
   · apply List.nodup_append.mpr
     refine ⟨chamberLabels_nodup _ _ _,chamberLabels_nodup _ _ _,?_⟩
     intro i hi j hj hij
@@ -100,7 +99,7 @@ private theorem bank_inventory (a b c d r v w : ℕ)
       dsimp [hi]
       rw [List.range'_append_1,he]
     simpa only [List.append_assoc] using hh.trans
-      ((List.Perm.append_comm).trans (List.Perm.of_eq hjoin))
+      ((List.perm_append_comm).trans (List.Perm.of_eq hjoin))
   have merge (o len : ℕ) (hlen : 1 ≤ len) :
       List.range' o (len-1) ++ [o + len-1]=List.range' o len := by
     simpa only [show o + (len-1)=o + len-1 by omega,show len-1 + 1=len by omega] using
@@ -116,7 +115,13 @@ private theorem bank_inventory (a b c d r v w : ℕ)
     have ht : a + b + c + d-1=off + a-1 := by dsimp [off]; omega
     rw [ht,merge off a (by omega)]
     dsimp [off]
-    rw [List.range'_append_1,List.range'_append_1,List.range'_append_1]
+    have hdc : List.range' 0 d ++ List.range' d c = List.range' 0 (d+c) := by
+      simpa only [Nat.zero_add] using (List.range'_append_1 (s:=0) (m:=d) (n:=c))
+    have hdcb : List.range' 0 (d+c) ++ List.range' (d+c) b = List.range' 0 (d+c+b) := by
+      simpa only [Nat.zero_add] using (List.range'_append_1 (s:=0) (m:=d+c) (n:=b))
+    have hdcba : List.range' 0 (d+c+b) ++ List.range' (d+c+b) a = List.range' 0 (d+c+b+a) := by
+      simpa only [Nat.zero_add] using (List.range'_append_1 (s:=0) (m:=d+c+b) (n:=a))
+    rw [hdc,hdcb,hdcba]
     simp only [Nat.zero_add,←List.range_eq_range']
     congr 1
     omega
@@ -218,8 +223,12 @@ private theorem bank_masses (a b c d r v w : ℕ)
     (by intro i hi _; simp [Nat.testBit_two_pow_sub_one,hi])).map f).sum_eq
   rw [chamberLabels_full] at hu hv'
   simp only [List.map_append,List.sum_append] at hu hv'
-  rw [su,full 0] at hu
-  rw [sv,full 1] at hv'
+  have f0 := full 0
+  change ((List.range' 0 (d-1)).map f).sum = C 0 at f0
+  rw [su,f0] at hu
+  have f1 := full 1
+  change ((List.range' d (c-1)).map f).sum = C 1 at f1
+  rw [sv,f1] at hv'
   have uc : ((chamberLabels (d-1) 0 ((2 ^ (d-1)-1) ^^^ v)).map f).sum=C 0-(v:ℤ) * F 0 := by
     omega
   have vc : ((chamberLabels (c-1) d ((2 ^ (c-1)-1) ^^^ w)).map f).sum=C 1-(w:ℤ) * F 1 := by

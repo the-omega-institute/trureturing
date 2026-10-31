@@ -151,10 +151,10 @@ private theorem grid_allocate (n y z t R : ℤ)
     refine ⟨⟨first.1,first.2.1⟩,⟨?_,?_⟩⟩
     all_goals nlinarith only [first.2.2.1,first.2.2.2]
   · dsimp [oldSeam,newSeam,oldNext,newNext]
-    refine ⟨⟨hs1,?_⟩,⟨hk1,hp1⟩⟩
+    refine ⟨⟨hs1,?_⟩,⟨hk1,by dsimp [r,v] at hp1; omega⟩⟩
     nlinarith only [hp1,hrD,hz]
   · dsimp [oldSeam,newSeam,oldNext,newNext]
-    exact ⟨⟨hs2,by nlinarith only [hrM,hsep]⟩,⟨hk2,hp2⟩⟩
+    exact ⟨⟨hs2,by nlinarith only [hrM,hsep]⟩,⟨hk2,by dsimp [r] at hp2; omega⟩⟩
   · dsimp [oldSeam,newSeam,oldNext,newNext]
     exact ⟨⟨le_rfl,by omega⟩,⟨le_rfl,by omega⟩⟩
 
@@ -219,21 +219,37 @@ private theorem corner_2 (z u : ℤ) (hz : 4 ≤ z) (hu : 1 ≤ u) :
     have op := cert_corner_2_old_peak_slack_0 z u hz hu
     have ns := cert_corner_2_new_seam_0 z u hz hu
     have np := cert_corner_2_new_peak_slack_0 z u hz hu
+    change (0 ≤ oldSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 0 ∧
+      2 * oldSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 0 ≤ oldNext true 2 (2 * z * u) z (2 * z * u) 0 - 1) ∧
+      (0 ≤ newSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 0 ∧
+      2 * newSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 0 ≤ newNext true 2 (2 * z * u) z (2 * z * u) 0 - 1)
     exact ⟨⟨by omega,by omega⟩,⟨by omega,by omega⟩⟩
   · have os := cert_corner_2_old_seam_1 z u hz hu
     have op := cert_corner_2_old_peak_slack_1 z u hz hu
     have ns := cert_corner_2_new_seam_1 z u hz hu
     have np := cert_corner_2_new_peak_slack_1 z u hz hu
+    change (0 ≤ oldSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 1 ∧
+      2 * oldSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 1 ≤ oldNext true 2 (2 * z * u) z (2 * z * u) 1 - 1) ∧
+      (0 ≤ newSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 1 ∧
+      2 * newSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 1 ≤ newNext true 2 (2 * z * u) z (2 * z * u) 1 - 1)
     exact ⟨⟨by omega,by omega⟩,⟨by omega,by omega⟩⟩
   · have os := cert_corner_2_old_seam_2 z u hz hu
     have op := cert_corner_2_old_peak_slack_2 z u hz hu
     have ns := cert_corner_2_new_seam_2 z u hz hu
     have np := cert_corner_2_new_peak_slack_2 z u hz hu
+    change (0 ≤ oldSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 2 ∧
+      2 * oldSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 2 ≤ oldNext true 2 (2 * z * u) z (2 * z * u) 2 - 1) ∧
+      (0 ≤ newSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 2 ∧
+      2 * newSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 2 ≤ newNext true 2 (2 * z * u) z (2 * z * u) 2 - 1)
     exact ⟨⟨by omega,by omega⟩,⟨by omega,by omega⟩⟩
   · have os := cert_corner_2_old_seam_3 z u hz hu
     have op := cert_corner_2_old_peak_slack_3 z u hz hu
     have ns := cert_corner_2_new_seam_3 z u hz hu
     have np := cert_corner_2_new_peak_slack_3 z u hz hu
+    change (0 ≤ oldSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 3 ∧
+      2 * oldSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 3 ≤ oldNext true 2 (2 * z * u) z (2 * z * u) 3 - 1) ∧
+      (0 ≤ newSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 3 ∧
+      2 * newSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 3 ≤ newNext true 2 (2 * z * u) z (2 * z * u) 3 - 1)
     exact ⟨⟨by omega,by omega⟩,⟨by omega,by omega⟩⟩
 
 private theorem corner_4 (z u : ℤ) (hz : 4 ≤ z) (hu : 1 ≤ u) :
@@ -244,21 +260,37 @@ private theorem corner_4 (z u : ℤ) (hz : 4 ≤ z) (hu : 1 ≤ u) :
     have op := cert_corner_4_old_peak_slack_0 z u hz hu
     have ns := cert_corner_4_new_seam_0 z u hz hu
     have np := cert_corner_4_new_peak_slack_0 z u hz hu
+    change (0 ≤ oldSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 0 ∧
+      2 * oldSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 0 ≤ oldNext true 4 (2 * z * u) z (2 * z * u) 0 - 1) ∧
+      (0 ≤ newSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 0 ∧
+      2 * newSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 0 ≤ newNext true 4 (2 * z * u) z (2 * z * u) 0 - 1)
     exact ⟨⟨by omega,by omega⟩,⟨by omega,by omega⟩⟩
   · have os := cert_corner_4_old_seam_1 z u hz hu
     have op := cert_corner_4_old_peak_slack_1 z u hz hu
     have ns := cert_corner_4_new_seam_1 z u hz hu
     have np := cert_corner_4_new_peak_slack_1 z u hz hu
+    change (0 ≤ oldSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 1 ∧
+      2 * oldSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 1 ≤ oldNext true 4 (2 * z * u) z (2 * z * u) 1 - 1) ∧
+      (0 ≤ newSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 1 ∧
+      2 * newSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 1 ≤ newNext true 4 (2 * z * u) z (2 * z * u) 1 - 1)
     exact ⟨⟨by omega,by omega⟩,⟨by omega,by omega⟩⟩
   · have os := cert_corner_4_old_seam_2 z u hz hu
     have op := cert_corner_4_old_peak_slack_2 z u hz hu
     have ns := cert_corner_4_new_seam_2 z u hz hu
     have np := cert_corner_4_new_peak_slack_2 z u hz hu
+    change (0 ≤ oldSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 2 ∧
+      2 * oldSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 2 ≤ oldNext true 4 (2 * z * u) z (2 * z * u) 2 - 1) ∧
+      (0 ≤ newSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 2 ∧
+      2 * newSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 2 ≤ newNext true 4 (2 * z * u) z (2 * z * u) 2 - 1)
     exact ⟨⟨by omega,by omega⟩,⟨by omega,by omega⟩⟩
   · have os := cert_corner_4_old_seam_3 z u hz hu
     have op := cert_corner_4_old_peak_slack_3 z u hz hu
     have ns := cert_corner_4_new_seam_3 z u hz hu
     have np := cert_corner_4_new_peak_slack_3 z u hz hu
+    change (0 ≤ oldSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 3 ∧
+      2 * oldSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 3 ≤ oldNext true 4 (2 * z * u) z (2 * z * u) 3 - 1) ∧
+      (0 ≤ newSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 3 ∧
+      2 * newSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 3 ≤ newNext true 4 (2 * z * u) z (2 * z * u) 3 - 1)
     exact ⟨⟨by omega,by omega⟩,⟨by omega,by omega⟩⟩
 
 /- The ONLY parameter assumptions; dyadic exhaustion includes both unbounded corners. -/
