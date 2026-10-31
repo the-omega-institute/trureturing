@@ -268,16 +268,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 9
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }, {
+      stateOperand := some #["arg", "arg"]
+      booleanPredicate := true }, {
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "arg"]
-      stateBinder := 9
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
+      stateOperand := some #["arg", "fn", "arg", "arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
