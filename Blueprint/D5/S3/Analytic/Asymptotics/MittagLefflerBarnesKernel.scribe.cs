@@ -8,15 +8,15 @@ internal sealed class MittagLefflerBarnesKernelDocument : IScribeDocumentDefinit
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Analytic/braams2026barnesmittagport");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The literal Barnes kernel is integrable on exterior vertical contours.", H("MittagLefflerBarnesKernel"), Blocks(
+        "The literal Barnes kernel is integrable on exterior vertical contours.", H("The Mittag-Leffler Barnes kernel"), Blocks(
             Describe.Lean(DescribeId.Create("mittaglefflerbarneskernel-kernel"),
                 DeclarationHandle.Create("D5/S3/Analytic/Asymptotics/MittagLefflerBarnesKernel.kernel"),
                 H("The literal Barnes kernel"), StatementSource.FromAuthor(Disp(KernelFormula())),
-                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("G is complex Gamma, log is the principal complex logarithm, and all real scalars are embedded into Complex. The formula uses the entire reciprocal Gamma, including its zeros."))),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("ComplexGamma is complex Gamma, log is the principal complex logarithm, and all real scalars are embedded into Complex. The formula uses the entire reciprocal Gamma, including its zeros."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("mittaglefflerbarneskernel-margin"),
                 DeclarationHandle.Create("D5/S3/Analytic/Asymptotics/MittagLefflerBarnesKernel.margin"),
-                H("The angular margin"), StatementSource.FromAuthor(Disp(All("alpha", R, All("z", Cx, Equal(Call("margin", V("alpha"), V("z")), Sub(Mul(V("pi"), Sub(Num(1), Div(V("alpha"), Num(2)))), Abs(Call("arg", Negate(V("z")))))))))),
+                H("The angular margin"), StatementSource.FromAuthor(Disp(All("alpha", R, All("z", Cx, Equal(Call("margin", V("alpha"), V("z")), Sub(Mul(Seq(Pi, Sp), Sub(Num(1), Div(V("alpha"), Num(2)))), Abs(Call("arg", Negate(V("z")))))))))),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The strict exterior sector is exactly the set where margin(alpha,z) is positive."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("mittaglefflerbarneskernel-exists-line-majorant"),
@@ -32,18 +32,18 @@ internal sealed class MittagLefflerBarnesKernelDocument : IScribeDocumentDefinit
 
     private static Formula KernelFormula() => All("alpha", R, All("beta", R, All("z", Cx,
         All("s", Cx, Equal(Call("kernel", V("alpha"), V("beta"), V("z"), V("s")),
-        Mul(Mul(Mul(Call("G", V("s")), Call("G", Sub(Num(1), V("s")))),
-            Div(Num(1), Call("G", Sub(V("beta"), Mul(V("alpha"), V("s")))))),
+        Mul(Mul(Mul(Call("ComplexGamma", V("s")), Call("ComplexGamma", Sub(Num(1), V("s")))),
+            Div(Num(1), Call("ComplexGamma", Sub(V("beta"), Mul(V("alpha"), V("s")))))),
             Call("exp", Mul(Negate(V("s")), Call("log", Negate(V("z")))))))))));
     private static Formula Params(Formula conclusion) => All("alpha", R,
         Imp(Lt(Num(0), V("alpha")), All("beta", R, All("c", R, All("z", Cx,
-            Imp(Seq(Call("sin", Mul(V("pi"), V("c"))), Neq, Sp, Num(0)), conclusion))))));
+            Imp(Seq(Call("sin", Mul(Seq(Pi, Sp), V("c"))), Neq, Sp, Num(0)), conclusion))))));
     private static Formula MajorantFormula() => Params(Some("C", R, Some("K", N,
-        All("y", R, Leq(Norm(Call("kernel", V("alpha"), V("beta"), V("z"), Add(V("c"), Mul(V("y"), V("i"))))),
+        All("y", R, Leq(Norm(Call("kernel", V("alpha"), V("beta"), V("z"), Add(V("c"), Mul(V("y"), Seq(Operatorname, Grp(F.Id("ComplexI"))))))),
             Mul(Mul(V("C"), Pow(Add(Num(1), Abs(V("y"))), V("K"))),
                 Call("exp", Negate(Mul(Call("margin", V("alpha"), V("z")), Abs(V("y")))))))))));
     private static Formula IntegrableFormula() => Params(Imp(Lt(Num(0), Call("margin", V("alpha"), V("z"))),
-        Call("Integrable", Map("y", R, Call("kernel", V("alpha"), V("beta"), V("z"), Add(V("c"), Mul(V("y"), V("i"))))))));
+        Call("Integrable", Map("y", R, Call("kernel", V("alpha"), V("beta"), V("z"), Add(V("c"), Mul(V("y"), Seq(Operatorname, Grp(F.Id("ComplexI"))))))))));
 
     private static Formula R => F.Id("Real");
     private static Formula Cx => F.Id("Complex");
@@ -68,5 +68,4 @@ internal sealed class MittagLefflerBarnesKernelDocument : IScribeDocumentDefinit
     private static Formula Leq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
-    private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
 }

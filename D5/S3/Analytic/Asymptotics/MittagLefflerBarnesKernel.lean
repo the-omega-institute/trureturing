@@ -94,9 +94,6 @@ theorem exists_line_majorant {α : ℝ} (hα : 0 < α) (β c : ℝ) (z : ℂ)
         ‖Complex.sin (Real.pi * ((c : ℂ) + y * I))‖ by ring]
   apply (div_le_iff₀ hspos).2
   have hden : 0 < |Real.sin (Real.pi * c)| := abs_pos.mpr hc
-  have hd : 0 < Real.exp (Real.pi * |y|) := Real.exp_pos _
-  have hg0 := norm_nonneg ((Complex.Gamma
-    (((β - α * c : ℝ) : ℂ) + I * ((-α * y : ℝ) : ℂ)))⁻¹)
   have hbase :
       Real.pi * ‖(Complex.Gamma
         (((β - α * c : ℝ) : ℂ) + I * ((-α * y : ℝ) : ℂ)))⁻¹‖ *
@@ -122,7 +119,7 @@ theorem exists_line_majorant {α : ℝ} (hα : 0 < α) (β c : ℝ) (z : ℂ)
         (by positivity : 0 ≤ (2 * Real.pi / |Real.sin (Real.pi * c)|) *
           Real.exp (-c * Real.log ‖z‖) * A * (1 + α) ^ K * (1 + |y|) ^ K *
           Real.exp (-(margin α z * |y|)))
-      convert hscaled using 1 <;> field_simp <;> ring
+      convert hscaled using 1 <;> field_simp [hden.ne'] <;> ring
 
 /-- All vertical lines avoiding the sine zeros are integrable in the strict exterior sector. -/
 theorem integrable_line {α : ℝ} (hα : 0 < α) (β c : ℝ) (z : ℂ)

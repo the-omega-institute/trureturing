@@ -350,11 +350,11 @@ private theorem source_norm_summable {α : ℝ} (hα : 0 < α) (β : ℝ) (z : �
   ring
 
 /-- For a fixed positive alpha and complex argument, the literal source family is
-continuous in beta throughout the positive half-line. Reciprocal Gamma is used
+continuous in beta on the whole real line. Reciprocal Gamma is used
 as an entire function, so each finite summand is continuous even at its zeros. -/
-theorem source_continuousOn_beta {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSourceSeries E)
+theorem source_continuous_beta {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSourceSeries E)
     {α : ℝ} (hα : 0 < α) (z : ℂ) :
-    ContinuousOn (fun β : ℝ => E α β z) (Set.Ioi 0) := by
+    Continuous (fun β : ℝ => E α β z) := by
   have heq (β : ℝ) : E α β z =
       ∑' n : ℕ, z ^ n / (Real.Gamma (α * n + β) : ℂ) :=
     (hE α hα β z).tsum_eq.symm
@@ -364,10 +364,9 @@ theorem source_continuousOn_beta {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSourc
     simp_rw [div_eq_mul_inv, ← Complex.Gamma_ofReal]
     exact continuous_const.mul
       (Complex.differentiable_one_div_Gamma.continuous.comp (by fun_prop))
-  intro b hb
-  have hb0 : 0 < b := hb
-  let a : ℝ := b / 2
-  have ha : 0 < a := half_pos hb0
+  rw [continuous_iff_continuousAt]
+  intro b
+  let a : ℝ := b - 1
   obtain ⟨N, hN⟩ := exists_nat_gt ((2 - a) / α)
   have hN' : 2 ≤ α * N + a := by
     have := (div_lt_iff₀ hα).mp hN
@@ -390,15 +389,14 @@ theorem source_continuousOn_beta {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSourc
     exact div_le_div_of_nonneg_left (pow_nonneg (norm_nonneg _) _)
       (Real.Gamma_pos_of_pos (by linarith)) hG
   have hU := tendstoUniformlyOn_tsum_nat_eventually
-    (source_norm_summable_positive hα ha z) hbound
+    (source_norm_summable hα a z) hbound
   have hC : ContinuousOn
       (fun β : ℝ => ∑' n : ℕ, z ^ n / (Real.Gamma (α * n + β) : ℂ))
       (Set.Icc a (b + 1)) := by
     apply hU.continuousOn
     exact Filter.Frequently.of_forall fun M =>
       continuousOn_finsetSum _ fun n _ => (hterm n).continuousOn
-  exact (hC.continuousAt (Icc_mem_nhds (by dsimp [a]; linarith) (by linarith))).
-    continuousWithinAt
+  exact hC.continuousAt (Icc_mem_nhds (by dsimp [a]; linarith) (by linarith))
 
 private theorem source_exists : ∃ E : ℝ → ℝ → ℂ → ℂ, IsSourceSeries E := by
   refine ⟨fun α β z => ∑' n : ℕ, z^n / (Real.Gamma (α*n+β) : ℂ), ?_⟩

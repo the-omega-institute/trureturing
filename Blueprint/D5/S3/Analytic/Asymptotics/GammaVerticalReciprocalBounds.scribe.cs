@@ -8,11 +8,11 @@ internal sealed class GammaVerticalReciprocalBoundsDocument : IScribeDocumentDef
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Analytic/braams2026barnesmittagport");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The reciprocal Gamma function has polynomial-exponential growth on bounded vertical strips.", H("GammaVerticalReciprocalBounds"), Blocks(
-            Describe.Lean(DescribeId.Create("gammaverticalreciprocalbounds-exists-norm-recip-Gamma-le"),
+        "The reciprocal Gamma function has polynomial-exponential growth on bounded vertical strips.", H("Reciprocal Gamma on vertical strips"), Blocks(
+            Describe.Lean(DescribeId.Create("gammaverticalreciprocalbounds-exists-norm-recip-gamma-le"),
                 DeclarationHandle.Create("D5/S3/Analytic/Asymptotics/GammaVerticalReciprocalBounds.exists_norm_recip_Gamma_le"),
                 H("Uniform reciprocal Gamma bound"), StatementSource.FromAuthor(Disp(StripFormula())),
-                AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text("For every real X there are a real constant C and a natural K such that the bound holds for all real x in [-X,X] and every real y. G denotes complex Gamma, pi the circle constant and i the imaginary unit. The inverse is totalized, so zeros of reciprocal Gamma are included. The proof compares the Gamma modulus product with its half-integer value cosh(pi*y), then uses the entire reciprocal-Gamma recurrence to cover the bounded strip."))),
+                AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text("For every real X there are a real constant C and a natural K such that the bound holds for all real x in [-X,X] and every real y. ComplexGamma denotes complex Gamma, pi the circle constant and i the imaginary unit. The inverse is totalized, so zeros of reciprocal Gamma are included. The proof compares the Gamma modulus product with its half-integer value cosh(pi*y), then uses the entire reciprocal-Gamma recurrence to cover the bounded strip."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("gammaverticalreciprocalbounds-integrable-one-add-abs-pow-mul-exp-neg"),
                 DeclarationHandle.Create("D5/S3/Analytic/Asymptotics/GammaVerticalReciprocalBounds.integrable_one_add_abs_pow_mul_exp_neg"),
@@ -20,14 +20,18 @@ internal sealed class GammaVerticalReciprocalBoundsDocument : IScribeDocumentDef
                 AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text("For every positive real c and natural K the displayed real function is Lebesgue integrable. Half of the exponential decay absorbs the polynomial; the remaining half is the two-sided exponential integral."))),
                 DescribeRole.Theorem))));
 
-    private static Formula StripFormula() => All("X", R, Some("C", R, Some("K", N,
-        All("x", R, Imp(And(Leq(Negate(V("X")), V("x")), Leq(V("x"), V("X"))),
-        All("y", R, Leq(Norm(Div(Num(1), Call("G", Add(V("x"), Mul(V("i"), V("y")))))),
-            Mul(Mul(V("C"), Pow(Add(Num(1), Abs(V("y"))), V("K"))),
-                Call("exp", Div(Mul(V("pi"), Abs(V("y"))), Num(2))))))))));
+    private static Formula StripFormula()
+    {
+        Formula point = Add(V("x"), Mul(Seq(Operatorname, Grp(F.Id("ComplexI"))), V("y")));
+        Formula bound = Mul(Mul(V("C"), Pow(Add(Num(1), Abs(V("y"))), V("K"))),
+            Call("exp", Div(Mul(Seq(Pi, Sp), Abs(V("y"))), Num(2))));
+        Formula line = All("y", R, Leq(Norm(Div(Num(1), Call("ComplexGamma", point))), bound));
+        Formula strip = All("x", R, Imp(And(Leq(Negate(V("X")), V("x")),
+            Leq(V("x"), V("X"))), line));
+        return All("X", R, Some("C", R, Some("K", N, strip)));
+    }
 
     private static Formula R => F.Id("Real");
-    private static Formula Cx => F.Id("Complex");
     private static Formula N => F.Id("Nat");
     private static Formula V(string name) => F.Id(name);
     private static Formula Num(byte digit) => D(digit);
@@ -39,7 +43,6 @@ internal sealed class GammaVerticalReciprocalBoundsDocument : IScribeDocumentDef
     private static Formula Map(string name, Formula type, Formula value) =>
         Seq(Open, F.Id(name), Colon, type, Sp, Mapsto, Sp, value, Close);
     private static Formula Add(Formula a, Formula b) => Seq(Open, a, Plus, b, Close);
-    private static Formula Sub(Formula a, Formula b) => Seq(Open, a, Minus, b, Close);
     private static Formula Mul(Formula a, Formula b) => Seq(Open, a, Star, b, Close);
     private static Formula Div(Formula a, Formula b) => new Formula.Fraction(a, b);
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);

@@ -102,7 +102,7 @@ is imposed. The logarithm is the principal complex logarithm throughout.
 
 The independent beta-continuity argument uses the original literal series and
 its existing norm summability. Eventual monotonicity of real Gamma on
-`[2,infinity)` gives a fixed summable majorant on each positive compact beta
+`[2,infinity)` gives a fixed summable majorant on every compact real beta
 interval. It requires neither a Barnes identity nor a sector asymptotic.
 
 These ingredients do not identify the Barnes integral with the literal series.
