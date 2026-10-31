@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/LatticeHalfFockGroundCompression
+/- GID: D5/S3/VertexAlgebra/HalfFock/GroundCompression
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeHalfFockGroundCompression
+   mirror-B: D5/B/S3/VertexAlgebra/HalfFock/GroundCompression
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

@@ -8,12 +8,12 @@ internal sealed class LatticeHalfFockGroundCompressionDocument : IScribeDocument
  H("Canonical Ground Compression of the Full Neutral Field"), Blocks(
  Paragraph(Text("Let D:LatticeData, hu:IsUnit D.G.det, R=Oscillator D, T=ActualGround D hu and M=ActualTensor D hu=R tensor_Complex T. The augmentation epsilon:R -> Complex is precisely the coefficient of the zero oscillator monomial. The canonical linear maps are iota(g)=1 tensor g and pi(r tensor g)=epsilon(r) smul g, using the tensor unit equivalence. No dual vector or scalar moment functional is chosen. All finite inhomogeneous polynomials, zero and one, repeated indices, coincident correction shifts and rank zero remain in scope; no positivity, radius, ground-vector choice or independence assumption is present.")),
  Describe.Lean(DescribeId.Create("canonical-ground-retraction"),
- DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockGroundCompression.ground_retraction"),
+ DeclarationHandle.Create("D5/S3/VertexAlgebra/HalfFock/GroundCompression.ground_retraction"),
  H("Canonical ground retraction"), StatementSource.WithoutFormula(),
  AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
  Blocks(Paragraph(Text("pi composed with iota equals the identity on every actual ground vector. This consumed helper supplies the empty-word case of polynomialField_ground_compression."))), DescribeRole.Theorem),
  Describe.Lean(DescribeId.Create("native-normal-field-ground-augmentation"),
- DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockGroundCompression.polynomialField_ground_compression"),
+ DeclarationHandle.Create("D5/S3/VertexAlgebra/HalfFock/GroundCompression.polynomialField_ground_compression"),
  H("The full normal field obeys augmentation"), StatementSource.WithoutFormula(),
  AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
  Blocks(
@@ -21,7 +21,7 @@ internal sealed class LatticeHalfFockGroundCompressionDocument : IScribeDocument
  Paragraph(Text("In the literal recursive flatCoefficient for index::tail, a negative head mode places jetCurrent on the left. For every tensor v, pi(jetCurrent(index,mode)(v))=0: tensor induction reduces this to epsilon(X_k*r)=0. A nonnegative head places jetCurrent on the right; the actual Gram-weighted annihilation derivation kills the oscillator constant 1. Thus every nonempty flatTerm compresses to zero for arbitrary seed fields, with the original composition order and jet scalars. The existing flatTerm_finite permits pi to pass through the vector-valued finsum. No operator-valued finsum, Wick multiplicativity or commutation of opposite-sign currents is used.")),
  Paragraph(Text("For the empty word, the existing actual zero-charge creation, translation and ground-representation calculation identifies chargedField D hu 0 with the identity field. The identity-field coefficient supplier and pi composed with iota=id give the only surviving monomial. Native polynomial induction and linearity extend this to arbitrary finite r, preserving all multiplicities."))), DescribeRole.Theorem),
  Describe.Lean(DescribeId.Create("full-corrected-neutral-ground-compression"),
- DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockGroundCompression.correctedField_ground_compression"),
+ DeclarationHandle.Create("D5/S3/VertexAlgebra/HalfFock/GroundCompression.correctedField_ground_compression"),
  H("Exact Corr vacuum Laurent coefficients of the actual corrected field"), StatementSource.WithoutFormula(),
  AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
  Blocks(

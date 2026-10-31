@@ -8,9 +8,9 @@ Let D:LatticeData, hu:IsUnit D.G.det, R=Oscillator D, T=ActualGround D hu and M=
 
 **Theorem 1.1 (Canonical ground retraction).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockGroundCompression.ground_retraction`
+Lean statement: `D5/S3/VertexAlgebra/HalfFock/GroundCompression.ground_retraction`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockGroundCompression.ground_retraction` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/GroundCompression.ground_retraction` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,9 +22,9 @@ pi composed with iota equals the identity on every actual ground vector. This co
 
 **Theorem 1.2 (The full normal field obeys augmentation).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockGroundCompression.polynomialField_ground_compression`
+Lean statement: `D5/S3/VertexAlgebra/HalfFock/GroundCompression.polynomialField_ground_compression`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockGroundCompression.polynomialField_ground_compression` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/GroundCompression.polynomialField_ground_compression` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -40,9 +40,9 @@ For the empty word, the existing actual zero-charge creation, translation and gr
 
 **Theorem 1.3 (Exact Corr vacuum Laurent coefficients of the actual corrected field).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockGroundCompression.correctedField_ground_compression`
+Lean statement: `D5/S3/VertexAlgebra/HalfFock/GroundCompression.correctedField_ground_compression`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockGroundCompression.correctedField_ground_compression` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/GroundCompression.correctedField_ground_compression` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -60,7 +60,7 @@ The theorem is coefficientwise and finite after compression. It does not analyti
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockGroundCompression.correctedField_ground_compression`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockGroundCompression.ground_retraction`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockGroundCompression.polynomialField_ground_compression`
-- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockCorrectedConformal](LatticeHalfFockCorrectedConformal.md)
+- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/GroundCompression.correctedField_ground_compression`
+- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/GroundCompression.ground_retraction`
+- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/GroundCompression.polynomialField_ground_compression`
+- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockCorrectedConformal](../LatticeHalfFockCorrectedConformal.md)

@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
-import D5.S3.VertexAlgebra.LatticeHalfFockGroundCompression
+import D5.S3.VertexAlgebra.HalfFock.GroundCompression
 
 /-! Exact source bridges for canonical augmentation; complete audits remain open. -/
 
