@@ -2100,3 +2100,464 @@ $$
 [RROSC28]: https://arxiv.org/html/cond-mat/9907176v2
 
 ## 追加锚（本行以下为增补区）
+
+
+## 34. 原全连续配置类的保留读残差
+
+**定义 34.1（同源全前缀残差与恢复尺度）。** 本节至 §39 的对象严格为 [III] 定义 157.1、173.1 的原始类 $\mathscr C_{\rm nat}$，不采用本卷定义 1.2 的事件替代类 $\mathcal R$。具体保留
+
+$$
+\begin{gathered}
+E=\{q\subseteq\{1,\ldots,9\}:\{k,k+1\}\nsubseteq q\ (1\le k\le8)\},
+\qquad \mathcal K=\mathbb C^E,\qquad |E|=89,\\
+b_{-1}b_0=10,\qquad b_{10}b_{11}b_{12}=010,\\
+x=(\sqrt5-1)/2,\quad y=\sqrt x,\quad \alpha=3\pi/5,\\
+\mathcal P_j=n_{j-1}n_{j+1}
+ +(1-n_{j-1})(1-n_{j+1})
+ \begin{pmatrix}x&xy\\xy&x^2\end{pmatrix}_{b_j},\\
+H_j=-\alpha(I+\mathcal P_j),\qquad U_j(s)=e^{-isH_j},\qquad K_j=U_j(1)
+\quad(0\le j\le10).
+\end{gathered}
+\tag{34.1}
+$$
+
+矩阵在同一个合法路径空间上限制，固定外位按字面值使用。$\Pi:\mathbb P(\mathcal K)\to\Delta(E)$ 连续、非负、归一，满足节点 $z_q=0\Rightarrow\Pi_q(z)=0$、全部非零复缩放不变性，以及每个 $H_j$ 支撑分量 $B$ 上的精确方程
+
+$$
+\sum_{q\in B}\Pi_q(U_j(s)z)=\sum_{q\in B}\Pi_q(z)
+\quad(z\ne0,\ s\in[0,1],\ j=0,\ldots,10).
+\tag{34.2}
+$$
+
+单点分量也在量词中，不删去任何相位、部分支撑、坐标节点或内部时间。没有次数、光滑性、算子正性或共同连续模的附加限制。唯一 ready、全部实际有限正向前缀、十一前读及七后读地址仍按原合同解释；记 $\chi_a=K_aR_0v$、$a\in\mathsf W_{11}$，并置
+
+$$
+\begin{gathered}
+E_i=\{q:b_9(q)=i\},\qquad M_i=\sum_{q\in E_i}|q\rangle\langle q|,\\
+m_i(z)=\sum_{q\in E_i}\Pi_q(z),\qquad
+ t_i(z)=\frac{\|M_i z\|^2}{\|z\|^2},\qquad
+ b_q(z)=\frac{|z_q|^2}{\|z\|^2}.
+\end{gathered}
+\tag{34.3}
+$$
+
+$m_i$ 起初只是未知密度的记录块质量，不预设 $m_i=t_i$。若 $M_i z=0$，下式乘积定义为零，始终不评价 $\Pi(0)$。定义语义残差
+
+$$
+\delta=\sup_{a\in\mathsf W_{11}}
+ \max_{\substack{i\in\{0,1\}\\q\in E_i}}
+ \left|\Pi_q(\chi_a)-m_i(\chi_a)\Pi_q(M_i\chi_a)\right|,
+\qquad 0\le\delta\le1,
+\tag{34.4}
+$$
+
+及显式尺度
+
+$$
+\eta=171\delta,\qquad
+P(\eta)=\inf_{n\in\mathbb Z,\ n\ge1}
+ \left(\frac1n+160\eta n^3\right),\qquad
+\mathcal E(\eta)=51\eta+4P(\eta).
+\tag{34.5}
+$$
+
+上确界遍历同一个 ready 的每个实际有限前缀，不是某个有限已观察套件的最大值。$P$ 的整数参数只是证明中的有限差分长度，不是门调用或样本预算。
+
+**引理 34.2（乘积残差在原零分支上的延拓）。** 对定义 34.1 的任意 $\Pi$，(34.4) 的上确界等于在全部 $z\ne0$ 上取同一最大值的上确界。因此所有 $i,q\in E_i,z\ne0$ 均满足
+
+$$
+\left|\Pi_q(z)-m_i(z)\Pi_q(M_i z)\right|\le\delta.
+\tag{34.6}
+$$
+
+证明。在非零投影域，乘积连续；当 $M_i z\to0$ 且 $z$ 趋于非零向量时，极限处的全部 $E_i$ 坐标为零，节点给 $m_i=0$。由 $0\le m_i\Pi_q(M_i z)\le m_i$，零延拓连续。差及其绝对值因而都是整个射影空间上的连续函数。直接消费 [III] (144.12) 的同源实际 ready 射线稠密性，对每个固定的 $\Pi,i,q$ 取极限便得 (34.6)，并得两个上确界相等。只有有限个坐标，最大值不引入新的极限问题。这里既不使用一族 $\Pi$ 的共同连续模，也不累加逼近字长的误差。∎
+
+## 35. 未知记录质量的源一致定量选择
+
+**引理 35.1（由残差推得记录质量）。** 对原类的每个 $\Pi$，在全部 $z\ne0$ 上有
+
+$$
+|m_i(z)-t_i(z)|\le170\delta\qquad(i=0,1).
+\tag{35.1}
+$$
+
+置 $\mathcal F_q(z)=\|z\|^2\Pi_q(z)$ 于 $z\ne0$，并令 $\mathcal F_q(0)=0$，则
+
+$$
+\begin{gathered}
+0\le\mathcal F_q(z)\le\|z\|^2,\qquad
+\mathcal F_q(\lambda z)=|\lambda|^2\mathcal F_q(z),\qquad
+\mathcal F_q(e_q)=1,\\
+\left|\mathcal F_q(z)-\mathcal F_q(M_i z)\right|
+ \le\eta\|z\|^2\quad(q\in E_i,\ z\in\mathcal K).
+\end{gathered}
+\tag{35.2}
+$$
+
+证明。令 $Q=n_1$，$q_A(z)=\sum_{b_1(q)=1}\Pi_q(z)$，$\varepsilon=34\delta$。原分量守恒给 $m_0(K_jz)=m_0(z)$ 于 $0\le j\le8$，以及 $q_A(K_jz)=q_A(z)$ 于 $2\le j\le10$。消费 [III] (144.9)、(144.11) 的同时特殊酉乘积闭像：前者保持 $M$ 切口，后者在 $Q$ 两块的固定质量纤维上传递，包含相对相位的匹配。因而存在连续 $G:[0,1]\to[0,1]$，使
+
+$$
+q_A(z)=G\left(\frac{\|Qz\|^2}{\|z\|^2}\right),\qquad
+G(0)=0,\quad G(1)=1.
+\tag{35.3}
+$$
+
+两个端点来自节点和归一化，不是新的准备标定。将 (34.6) 对 $b_1=1$ 的全部 $34$ 个坐标求和，得
+
+$$
+\left|q_A(z)-\sum_{i:M_i z\ne0}m_i(z)q_A(M_i z)\right|
+ \le\varepsilon.
+\tag{35.4}
+$$
+
+现在固定单位 $z$，$t=\|M_0z\|^2\in(0,1)$、$m=m_0(z)$。同一个 $M$ 块乘积群保持 $m,t$；[III] (144.16) 的四个交维数 $34,21,21,13$ 全部为正，故可以同时将两个条件向量的 $Q$ 质量逼近任意 $r,s\in[0,1]$。在这些共同作用后的向量上应用 (35.4)，由连续性取极限，得到
+
+$$
+|G(tr+(1-t)s)-mG(r)-(1-m)G(s)|\le\varepsilon
+\quad(r,s\in[0,1]).
+\tag{35.5}
+$$
+
+没有把两个分别可达的目标拼作一个字；这里正是同时闭像的用途。取 $(r,s)=(1,0),(0,1)$，给
+
+$$
+|G(t)-m|\le\varepsilon,\qquad
+|G(1-t)-(1-m)|\le\varepsilon.
+\tag{35.6}
+$$
+
+选一个 $t=1/2$ 的数学单位向量，记其质量为 $m_*$；两式相减给 $|m_*-1/2|\le\varepsilon$。再在这个同一个向量上使用 (35.5)，并用 $|G(r)-G(s)|\le1$，得
+
+$$
+\left|G\left(\frac{r+s}{2}\right)-\frac{G(r)+G(s)}2\right|
+ \le2\varepsilon.
+\tag{35.7}
+$$
+
+以下是有界区间上近似中点方程的直接估计。令 $D=\sup_{u\in[0,1]}|G(u)-u|$。当 $u\le1/2$ 时把 $u$ 写成 $0,2u$ 的中点；当 $u\ge1/2$ 时写成 $2u-1,1$ 的中点。端点值精确，(35.7) 在两种情形都给 $|G(u)-u|\le D/2+2\varepsilon$，所以
+
+$$
+D\le4\varepsilon,\qquad
+|m-t|\le5\varepsilon=170\delta.
+\tag{35.8}
+$$
+
+$t=0,1$ 由节点及归一化直接给 $m=t$；$m_1=1-m_0$ 给另一记录。此即 (35.1)，没有先假定 Born 记录权重。
+
+$\mathcal F_q$ 的非负性、界、复二齐次性及零点连续性由定义直接得到；基向量处只有该坐标可有质量，故 $\mathcal F_q(e_q)=1$。它也保留每个原支撑分量上的精确和守恒，因为 $U_j(s)$ 酉。若 $M_i z\ne0$，将 (34.6) 乘以 $N=\|z\|^2$，再用 (35.1) 得
+
+$$
+\begin{aligned}
+|\mathcal F_q(z)-\mathcal F_q(M_i z)|
+&=N|\Pi_q(z)-t_i(z)\Pi_q(M_i z)|\\
+&\le N\left(\delta+|m_i(z)-t_i(z)|\right)
+\le171\delta N.
+\end{aligned}
+\tag{35.9}
+$$
+
+$M_i z=0$ 时节点使两项都为零；$z=0$ 时按 $\mathcal F_q$ 的定义成立。故全部退化分支都包含在 (35.2) 内。∎
+
+## 36. 原地址九的平衡块与近似平行四边形
+
+**引理 36.1（六十八个配对坐标的共同辅助函数）。** 逐字使用 [III] (173.12) 的三块
+
+$$
+\begin{aligned}
+\mathsf A&=\{b_8=b_9=0\},&|\mathsf A|&=34,\\
+\mathsf B&=\{b_8=1,b_9=0\},&|\mathsf B|&=21,\\
+\mathsf C&=\{b_9=1\},&|\mathsf C|&=34.
+\end{aligned}
+\tag{36.1}
+$$
+
+以 $r\mapsto r^+=r\cup\{9\}$ 识别 $\mathsf A,\mathsf C$，写 $z=(u,w,v)$。对每个 $r\in\mathsf A$，定义
+
+$$
+f_{0,r}(u,w)=\mathcal F_r(u,w,0),\qquad
+f_r(v)=\mathcal F_{r^+}(0,0,v).
+\tag{36.2}
+$$
+
+它们满足
+
+$$
+|f_{0,r}(u,w)-f_r(u)|
+ \le8\eta\|u\|^2+4\eta\|w\|^2,
+\tag{36.3}
+$$
+
+以及对全部 $u,v\in\mathbb C^{\mathsf A}$ 成立的
+
+$$
+|f_r(u+v)+f_r(u-v)-2f_r(u)-2f_r(v)|
+ \le40\eta(\|u\|^2+\|v\|^2).
+\tag{36.4}
+$$
+
+$f_r$ 非负、复二齐次，$f_r(e_r)=1$，且 $u_r=0\Rightarrow f_r(u)=0$。
+
+证明。原地址九去掉共同相位后的作用严格为
+
+$$
+\begin{gathered}
+T_s=\begin{pmatrix}A_s&B_s\\B_s&D_s\end{pmatrix},\qquad
+A_s=1+(e^{i\alpha s}-1)x,\quad
+B_s=(e^{i\alpha s}-1)xy,\quad
+D_s=1+(e^{i\alpha s}-1)x^2,\\
+e^{-i\alpha s}U_9(s)(u,w,v)
+ =(A_su+B_sv,w,B_su+D_sv).
+\end{gathered}
+\tag{36.5}
+$$
+
+这是 [III] (173.13)–(173.14) 的同一个二维酉块；$\mathsf B$ 是该地址的全部单点分量。用 (35.2) 把支撑对 $\{r,r^+\}$ 守恒式中的四项分别替为投影项，置 $N=\|u\|^2+\|w\|^2+\|v\|^2$，得到
+
+$$
+\left|f_{0,r}(A_su+B_sv,w)+f_r(B_su+D_sv)
+ -f_{0,r}(u,w)-f_r(v)\right|\le4\eta N.
+\tag{36.6}
+$$
+
+由于 $x+x^2=1$，$|B_s|^2=4x^3\sin^2(3\pi s/10)$，在 $s=0,1$ 分别为 $0,x>1/2$。故存在原内部数学时间 $s_*\in(0,1)$，使 $|B_{s_*}|^2=1/2$。以下固定这个块，省去下标；酉性给 $|A|^2=|B|^2=|D|^2=1/2$。
+
+在 (36.6) 取 $u=0$。节点给 $f_{0,r}(0,w)=0$，齐次性及 $1-|D|^2=|B|^2$ 给
+
+$$
+|f_{0,r}(Bv,w)-f_r(Bv)|
+ \le4\eta(\|w\|^2+\|v\|^2).
+\tag{36.7}
+$$
+
+用 $v=u/B$ 即得 (36.3)。再在 (36.6) 取 $w=0$，对两个 $f_{0,r}$ 使用 (36.3)，得
+
+$$
+\begin{aligned}
+|f_r(Au+Bv)+f_r(Bu+Dv)-f_r(u)-f_r(v)|
+&\le4\eta(\|u\|^2+\|v\|^2)
+  +8\eta(\|Au+Bv\|^2+\|u\|^2)\\
+&\le20\eta(\|u\|^2+\|v\|^2).
+\end{aligned}
+\tag{36.8}
+$$
+
+最后一个界只用 $T$ 酉性。平衡二维酉矩阵的两列可各乘单位相位，使第一行变为 $(1,1)/\sqrt2$；第二行的正交性使其为一个单位相位乘 $(1,-1)/\sqrt2$。在 (36.8) 相应替换两个任意输入，$f_r$ 的复二齐次性消去输入及输出的整体相位，再乘二即得 (36.4)。辅助函数的其余性质全由 (35.2) 和原坐标节点得到。这里没有预设它是二次型，也未舍去相干交叉依赖。∎
+
+## 37. 有限差分对原坐标节点的定量消元
+
+**引理 37.1（配对坐标的显式恢复）。** 对引理 36.1 的同一族 $f_r$，全部 $u\in\mathbb C^{\mathsf A}$ 均满足
+
+$$
+|f_r(u)-|u_r|^2|\le P(\eta)\|u\|^2.
+\tag{37.1}
+$$
+
+从而令 $a_\eta=9\eta+P(\eta)$，对全部 $z\in\mathcal K$ 有
+
+$$
+|\mathcal F_q(z)-|z_q|^2|\le a_\eta\|z\|^2
+\qquad(q\in\mathsf A\cup\mathsf C).
+\tag{37.2}
+$$
+
+证明。固定 $r,u$，写 $u=a e_r+h$，$h_r=0$，并置 $R=\|u\|^2=|a|^2+\|h\|^2$、$\kappa=40\eta$。令
+
+$$
+g_k=f_r(a e_r+kh)\quad(k\in\mathbb Z),\qquad
+e_k=g_{k+1}+g_{k-1}-2g_k,\qquad d=g_1-g_0.
+$$
+
+节点给 $f_r(h)=0$，故 (36.4) 直接给
+
+$$
+g_k\ge0,\qquad g_0=|a|^2,\qquad
+|e_k|\le\kappa\left(|a|^2+(k^2+1)\|h\|^2\right).
+\tag{37.3}
+$$
+
+对任意整数 $n\ge1$，两次有限求和的恒等式为
+
+$$
+\begin{aligned}
+g_n&=g_0+nd+\sum_{k=1}^{n-1}(n-k)e_k,\\
+g_{-n}&=g_0-nd+\sum_{k=-n+1}^{0}(n+k)e_k.
+\end{aligned}
+\tag{37.4}
+$$
+
+这两式由 $g_{k+1}-g_k-(g_k-g_{k-1})=e_k$ 逐项求和，或对 $n$ 归纳即得；$n=1$ 时第一和为空，第二和是 $e_0$。所有出现的 $|k|\le n$，所以 $|e_k|\le\kappa(n^2+1)R$，两组系数和分别是 $n(n-1)/2,n(n+1)/2$。用 $g_n,g_{-n}\ge0$ 夹住 $d$，得到
+
+$$
+\begin{aligned}
+|d|&\le\frac{g_0}{n}
+ +\frac{\kappa(n+1)(n^2+1)}2R\\
+&\le\left(\frac1n+160\eta n^3\right)R.
+\end{aligned}
+\tag{37.5}
+$$
+
+最后一步用 $g_0\le R$、$(n+1)(n^2+1)/2\le2n^3\le4n^3$ 和 $\kappa=40\eta$，取了保守常数。左侧正是 $|f_r(u)-|u_r|^2|$。对每个有限 $n$ 均成立，取下确界给 (37.1)。$R=0$ 时所有项为零，不需相除。这个估计只使用有限差分和非负性；没有引用任何未匹配条件的二次泛函稳定性定理。
+
+若 $q=r\in\mathsf A$，先用 (35.2) 投影到 $(u,w,0)$，再用 (36.3)、(37.1)，得
+
+$$
+|\mathcal F_r(z)-|u_r|^2|
+ \le\eta\|z\|^2+8\eta\|u\|^2+4\eta\|w\|^2+P(\eta)\|u\|^2
+ \le a_\eta\|z\|^2.
+\tag{37.6}
+$$
+
+若 $q=r^+\in\mathsf C$，投影到 $(0,0,v)$ 直接给
+
+$$
+|\mathcal F_{r^+}(z)-|v_r|^2|
+ \le\eta\|z\|^2+P(\eta)\|v\|^2
+ \le a_\eta\|z\|^2.
+\tag{37.7}
+$$
+
+因而全部 $68$ 个配对输出都已覆盖。∎
+
+## 38. 阻塞坐标消元与完整配置律的统一模
+
+**引理 38.1（剩余二十一个坐标）。** 对定义 36.1 的每个 $q\in\mathsf B$ 及全部 $z\in\mathcal K$，有
+
+$$
+|\mathcal F_q(z)-|z_q|^2|
+ \le\left(51\eta+4P(\eta)\right)\|z\|^2.
+\tag{38.1}
+$$
+
+证明。置 $g_q(w)=\mathcal F_q(0,w,0)$。地址九在 $q$ 上是单点守恒，故对 (36.5) 的平衡块，$\mathcal F_q(U_9(s_*)z)=\mathcal F_q(z)$。将该等式用于 $z=(0,w,u/B)$，在两端各使用一次 (35.2) 投影到 $E_0$，共同相位由齐次性消去，得到
+
+$$
+|\mathcal F_q(u,w,0)-g_q(w)|
+ \le2\eta(\|w\|^2+2\|u\|^2)
+ \le4\eta(\|u\|^2+\|w\|^2).
+\tag{38.2}
+$$
+
+再对一般 $z=(u,w,v)$ 投影一次，便有
+
+$$
+|\mathcal F_q(z)-g_q(w)|\le5\eta\|z\|^2.
+\tag{38.3}
+$$
+
+不能把这 $21$ 个单点坐标删去；现在用另一个原地址消去它们。对每个 $q\in\mathsf B$，合法性强迫 $b_7=b_9=0$，故地址八把它与 $q^-=q\setminus\{8\}\in\mathsf A$ 配成同一个 $T_{s_*}$ 支撑对。映射 $q\mapsto q^-$ 是到 $\mathsf D=\{b_7=b_8=b_9=0\}\subset\mathsf A$ 的双射。给定 $w\in\mathbb C^{\mathsf B}$，取 $z_w$ 的 $\mathsf B$ 分量为 $w$，在对应的 $\mathsf D$ 坐标取 $-(D/B)w$，其余坐标全为零。由于 $|D/B|=1$，
+
+$$
+\|z_w\|^2=2\|w\|^2,\qquad
+\bigl(U_8(s_*)z_w\bigr)_{\mathsf B}=0.
+\tag{38.4}
+$$
+
+后一式逐对就是 $B(-(D/B)w)+Dw=0$，共同相位无影响。
+
+记 $\Delta_q(z)=\mathcal F_q(z)-|z_q|^2$。原分量和及平方范数的分量和都精确守恒，所以在 $\{q,q^-\}$ 上
+
+$$
+\Delta_q(z_w)+\Delta_{q^-}(z_w)
+ =\Delta_q(U_8(s_*)z_w)+\Delta_{q^-}(U_8(s_*)z_w).
+\tag{38.5}
+$$
+
+节点给右端第一项为零。对另两项用 (37.2)，酉性给
+
+$$
+|\Delta_q(z_w)|\le2a_\eta\|z_w\|^2
+ =4a_\eta\|w\|^2.
+\tag{38.6}
+$$
+
+结合 (38.3) 在 $z_w$ 处的界，得
+
+$$
+|g_q(w)-|w_q|^2|\le(10\eta+4a_\eta)\|w\|^2.
+\tag{38.7}
+$$
+
+最后对任意 $z=(u,w,v)$ 再用 (38.3)，以及 $|z_q|^2=|w_q|^2$、$\|w\|^2\le\|z\|^2$，得到常数 $5\eta+10\eta+4(9\eta+P)=51\eta+4P$。$w=0$ 或 $z=0$ 时同样成立。∎
+
+**定理 38.2（原全连续类的源一致完整恢复）。** 对定义 34.1 的每个 $\Pi\in\mathscr C_{\rm nat}$，仅以同源全实际有限 ready 前缀的残差 (34.4) 为误差参数，全部 $89$ 坐标、全部 $z\ne0$ 同时满足
+
+$$
+\begin{gathered}
+|m_i(z)-t_i(z)|\le170\delta\quad(i=0,1),\\
+\max_{q\in E}|\Pi_q(z)-b_q(z)|\le\mathcal E(171\delta),\\
+\boxed{\quad
+\sup_{z\ne0}\operatorname{TV}(\Pi(z),b(z))
+ \le\min\left\{1,\frac{89}{2}
+ \left[51(171\delta)+4P(171\delta)\right]\right\}.
+\quad}
+\end{gathered}
+\tag{38.8}
+$$
+
+其中 $\operatorname{TV}(p,p')=\frac12\sum_{q\in E}|p_q-p'_q|$。此模只依赖固定原来源及 $\delta$，在整个原类上一致；没有共同连续模、有限次数、额外准备、额外读器或完整配置过程前件。特别地 $\delta=0$ 给 [III] 173.2 的精确结论，而 $\delta\downarrow0$ 时上式为 $O(\delta^{1/4})$。
+
+证明。(35.1) 给第一式；(37.2)、(38.1) 覆盖互不相交且穷尽 $E$ 的三块，除以 $\|z\|^2$ 给第二式。对全部 $89$ 项求和再除二，得到 TV 界；两概率律的 TV 另至多一。所有步骤都在同一个 $z$ 和同一个密度上进行，未混合不同实现的最优值。
+
+$P(0)=\inf_{n\ge1}1/n=0$。若 $0<160\eta\le1$，取 $n=\lceil(160\eta)^{-1/4}\rceil$，则 $n\le2(160\eta)^{-1/4}$，故
+
+$$
+P(\eta)\le9(160\eta)^{1/4}.
+\tag{38.9}
+$$
+
+例如在 $0<\delta\le1/(160\cdot171)$ 时，(38.8) 的右端可进一步界为
+
+$$
+\min\left\{1,\frac{89}{2}
+ \left[8721\delta+36(27360\delta)^{1/4}\right]\right\}.
+\tag{38.10}
+$$
+
+这给出明示的四分之一次幂模；不声称指数或常数最优。精确零、任意大残差以及所有零投影均已包含在 (38.8) 中。∎
+
+## 39. 全配置恢复的来源映射与条件边界
+
+**定义 39.1（数学供应及假设对应）。** 定理 38.2 的 `repo-derived` 内容是原 $\mathscr C_{\rm nat}$ 上的定量全配置恢复，强于同类的精确零残差选择；标准的紧群轨道、近似中点估计、两次有限求和和非负性只作为证明内的工具，不作世界范围原创主张。其承重对应如下。
+
+| 供应或条件 | 本结论中的精确作用 |
+| --- | --- |
+| [III] 157.1、(157.1)–(157.3)、173.1 | 完整 $E,\mathcal K$、固定外位、全部非零复射线、节点、非负归一、连续性、十一组精确矩阵、含单点的全部分量及内部时间。只新增对原 R 乘积残差的定量读法；不把原类缩到四次、可分或径向密度。 |
+| [III] (144.9)、(144.11)、(144.12)、(144.16) | 同时 $SU(55)\times SU(34)$ 块闭像、反转后的同强度闭像、全 ready 射线密度及四交维数 $34,21,21,13$。分别用于 (34.6)、(35.3)、(35.5)；没有把有限字近似逐字累加，也没有取不同 $\Pi$ 的共同连续模。 |
+| [III] (173.12)–(173.23) | $34+21+34$ 块、同一个原地址九的平衡内部时间、地址八的阻塞坐标配对及消零向量。新增的是 (36.6)–(38.7) 的误差传播，而非重复精确证明或另造门。 |
+| [ParallelogramConstruction][RROPara34] 的 `TauCeti.QuadraticMap.ofParallelogram` | 输入是加法交换群上的精确平行四边形恒等式及值域倍增可消性，输出整数二次映射。本处只有 (36.4) 的带范数误差式，因此不用该精确定理替代有限差分估计，也不从它取得稳定性常数。 |
+| [TypedFiniteViewKernel][Lean] 的 `typed_finite_view_kernel`；[JointReadoutSupremum][RROJoint28] 的 `pair_readout_kernel`、`pair_readout_least_common_refinement` | 前者比较已给 typed partial paths 的有限视图与完整行为核，后者比较同一对象的配对读数与因子分解序；都不供应本处的概率残差、矩阵几何或范数恢复界。 |
+| [RareBranchConditionalErrorSharpness][RRORare34] 的 `rare_branch_conditional_error_sharpness` | 在其三维密度矩阵及同一个投影接口中，全局迹距离为任意小正数时，正分支条件距离仍可为一；不把这套矩阵反例直接声明为本源的可达过程。它提示归一化需要单独的质量条件，不能把 (38.8) 改读为任意稀有分支的后验界。 |
+| [AllFutureStatisticsSufficiency][RROFuture] 的 `all_future_statistics_sufficiency`；[SelectiveRecordConditioning][RROSelective28] 的 `selective_record_conditioning` | 前者以已给实线性 Heisenberg 演化及效果族为前件；后者以非零迹权重和未归一投影压缩等式为前件。它们均不从静态 $\Pi$ 供应同源配置过程、保留读条件充分性或这些前件的来源。 |
+
+(35.7)–(35.8) 和 (37.3)–(37.5) 已在证明中给出所需的完整初等估计，不调用题名相似的加性四次或二次稳定性文献，也不以书目元数据替代定理条件。此处复用的矩阵密度桥是 [III] §144 的具体结论，未另引入一般全酉可执行性或新的文献概率公理。
+
+**命题 39.2（全局语义、保留报告及取得的不同量词）。** 定理 38.2 具有以下精确解释。对同一个快照的任何已给确定读数 $L:E\to Y$，其数学推前满足
+
+$$
+\operatorname{TV}(L_*\Pi(z),L_*b(z))
+ \le\operatorname{TV}(\Pi(z),b(z)).
+\tag{39.1}
+$$
+
+这包括原全部 $1024$ 个旧标签的字面推前及保留记录的配对推前，空纤维保持零；它不自行赋予这些推前一个实际终端条件律。若另有 [III] 174.1 的同源读取前条件配置律及字面报告 $I=b_9(Q_-)$、配置保留，则实际记录质量等于 $m_i(z)$，故 (35.1) 给它到 $t_i(z)$ 的界。若 $m_i(z)>0$ 且 $q\in E_i$，仅在这个条件语义下，(34.6) 给
+
+$$
+\left|\frac{\Pi_q(z)}{m_i(z)}-\Pi_q(M_i z)\right|
+ \le\frac{\delta}{m_i(z)}.
+\tag{39.2}
+$$
+
+$m_i=0$ 时不承担后验义务；$M_i z=0$ 时节点给 $m_i=0$，没有后射线。非零投影而零实际质量的分支也不被赋予实际条件态。
+
+证明。(39.1) 对各读数纤维求和后用三角不等式即得，故覆盖所有旧输出及其零纤维。实际记录结论只是已给同源条件律在字面事件 $b_9=i$ 上的求和；在正质量时条件化给 $\Pi_q/m_i$，再除 (34.6) 得 (39.2)。这些推导都需要所列同源条件前件，不能由静态密度公理反推它们。∎
+
+(38.8) 控制的是全部数学快照上的无条件完整配置律，即使 $M_i z\ne0$ 的质量任意接近零也成立；它没有共同的正分支质量下界，(39.2) 因而不提供分支一致后验定理。全前缀上确界 (34.4) 是语义前件；有限套件上真实精确残差的最大值只是它的下界，不能代入 (38.8) 充作已认证上界。实际经验估计还须另计采样与读出误差，未校正的经验数值甚至不保证是该下界。定理没有给有限取得、有限认证、共同见证长度、样本数或置信度。
+
+本卷 §§8–11 的结果另以严格保留类 $\mathcal R$、已给 Born 记录质量、精确完整标签 D 及事件 $A$ 的 E 缺陷为域，只控制其事件响应。这里的域是原全连续 $\mathscr C_{\rm nat}$，误差是保留读逐配置乘积残差；记录质量在 §35 才被估计，全部 $89$ 输出在 §§36–38 才被恢复。两个定理的前件和误差对象不可互换。
+
+原 $\chi_a$ 始终来自同一个 ready 的有限正向字。$s_*$、同时酉块、有限差分向量和 $z_w$ 只是原全域方程已允许的数学代入，不是实际精确准备、分数脉冲、额外读口、复制或新反馈权限。全部原初始化、真实调用、保留记录、旧终端、细档案和失败合同及其资源范围仍须各守原义。静态定量选择没有构造路径过程、节点跳率、实际可读历史、条件充分性的来源或完整配置动力学，也没有完成空间、时间、边界与记忆的长期互相恢复目标。
+
+[RROPara34]: ../../../D5/S3/QuadraticForms/ParallelogramConstruction.lean
+[RRORare34]: ../../../D5/S3/Quantum/Measurement/RareBranchConditionalErrorSharpness.lean
+
+## 追加锚（本行以下为增补区）
