@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.XuYangMillsRemainder.GeneralParameter
 import Reg.Support.SingleDependentReadout
 
+/-! Whole-source registration for the complete original Mills classification. -/
+
 namespace Reg.D5.S3.Analytic.XuYangMillsRemainder.GeneralParameter
 
 open _root_.D5.S3.Analytic.XuYangMillsRemainder.GeneralParameter
@@ -90,5 +92,7 @@ def registration :
   continuation := .unknown
   familyRecord := none
   options := #[] }
+
+end
 
 end Reg.D5.S3.Analytic.XuYangMillsRemainder.GeneralParameter

@@ -1412,6 +1412,7 @@ private theorem rescaled_f_vanishes_at_infinity (r : ℕ) (a : ℝ) :
         rw [show 2 * r + 6 = (2 * r + 4) + 2 by omega, pow_add]
         field_simp
         simp only [pow_add]
+        ring
   apply squeeze_zero_norm' hb
   simpa using (tendsto_const_nhds (x :=
     (|1 - 2 * a| + 1) * ((2 * r + 5).factorial : ℝ))).mul
