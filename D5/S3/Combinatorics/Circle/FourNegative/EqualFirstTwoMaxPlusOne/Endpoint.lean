@@ -78,6 +78,7 @@ private theorem inventory (u c v : ℕ) (hu : 2 ≤ u) (hc : u < c)
   simp only [Nat.zero_add] at h1 h2 h3
   rw [h1,h2,h3]
   congr 1
+  have hsum : u+1 ≤ c := by omega
   omega
 
 set_option maxHeartbeats 2400000 in
@@ -186,7 +187,7 @@ private theorem physical (u c v : ℕ) (p : ℤ) (T R : List ℕ)
     apply List.perm_append_comm.trans
     apply List.Perm.of_eq
     simpa only [P1,d,List.range'_one,Nat.zero_add,
-      show 1+(c-1)=c by omega,List.range_eq_range'] using
+      show 1+(c-1)=c by omega, show c+1-1=c by omega, List.range_eq_range'] using
       (List.range'_append_1 (s:=0) (m:=1) (n:=c-1))
   have hmassU : (P1.map f).sum=(z-2)*A ∧ (P1.map g).sum=(z-2)*(2*A) := by
     have hf:=(hUp.map f).sum_eq; have hg:=(hUp.map g).sum_eq
@@ -275,7 +276,7 @@ private theorem physical (u c v : ℕ) (p : ℤ) (T R : List ℕ)
     rw [hmassU.1,hmassU.2,hmass2.1,hmass2.2,hmassR.1,hmassR.2,
       hmass4.1,hmass4.2,negU.1,negU.2,negW.1,negW.2,negV.1,negV.2,negX.1,negX.2,hhalf]
     dsimp only [Bounds] at hend
-    convert hend using 3 <;> dsimp [N,A,B,L,M,Bp,Lp,Mp] <;> (try rw [ht]) <;> ring
+    convert hend using 3 <;> (try dsimp [N,A,B,L,M,Bp,Lp,Mp]) <;> (try rw [ht]) <;> ring
   let pre := P1++[d-1]++P2++[d+c+u-1]++P3++[d+c-1]++P4
   let last := d+c+u+u-1
   have hold : InStrip f (N/2) 0 (pre++[last]) := by
@@ -301,7 +302,7 @@ private theorem physical (u c v : ℕ) (p : ℤ) (T R : List ℕ)
   have newperm : (pre++[k,last]).Perm (List.range (k+1)) := by
     have hp : (pre++[k,last]).Perm ((pre++[last])++[k]) := by
       apply Multiset.coe_eq_coe.mp
-      simp only [←Multiset.coe_add,Multiset.coe_cons,Multiset.coe_nil]
+      simp only [←Multiset.coe_add]
       ac_rfl
     exact hp.trans (by simpa only [List.range_succ] using hperm.append_right [k])
   have new : OriginalOrder (k+1) (2*seed) ((pre++[k,last]).map (label (k+1) (by omega))) := by
@@ -327,8 +328,11 @@ theorem actualSource_equal_first_two_max_plus_one_joint_lift (u c : ℕ)
   let R0 := V.erase (c+1+v)
   let s : ℤ := 2^(u-1)
   let q : ℤ := 2^v
-  have hv : v<c-1 := by dsimp [v];omega
-  have hmem : c+1+v ∈ V := by simp only [V,List.mem_range'];omega
+  have hvsum : v+(u+1)=c := by dsimp [v];omega
+  have hv : v<c-1 := by omega
+  have hmem : c+1+v ∈ V := by
+    simp only [V,List.mem_range']
+    constructor <;> omega
   have hsplit0 : (R0++[c+1+v]).Perm V :=
     List.perm_append_comm.trans (List.perm_cons_erase hmem).symm
   have hx : (2:ℤ)^u=2*s := pow_step u (by omega)
@@ -355,6 +359,7 @@ theorem actualSource_equal_first_two_max_plus_one_joint_lift (u c : ℕ)
     let R := R0.erase (c+1+w)
     have hw : w<v := by dsimp [w,v];omega
     have hcu : 2*u ≤ c := by omega
+    have hwsub : w+2*u=c := by dsimp [w]; exact Nat.sub_add_cancel hcu
     have hwm : c+1+w ∈ R0 := by
       apply (List.mem_erase_of_ne (by omega : c+1+w≠c+1+v)).mpr
       simp only [V,List.mem_range']
