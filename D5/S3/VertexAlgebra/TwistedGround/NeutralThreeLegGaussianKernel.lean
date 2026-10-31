@@ -86,9 +86,9 @@ private lemma pair_half_bound (q : ℂ) (s t : ℕ) (hs : 0 < s) (ht : 0 < t) :
     _ = _ := by ring
 
 private lemma jet_square_majorant (n k : ℕ) (a root q : ℂ) (m : ℤ)
-    (hm : m = (k : ℤ) ∨ m = -(k : ℤ)-1)
-    (ha : ‖a‖ ≤ 1/16) (hq : ‖q‖ ≤ 1/16)
-    (hroot : ‖root‖^2 = ‖q‖) :
+    (hm : m = (k : ℤ) ∨ m = -(k : ℤ) - 1)
+    (ha : ‖a‖ ≤ 1 / 16) (hq : ‖q‖ ≤ 1 / 16)
+    (hroot : ‖root‖ ^ 2 = ‖q‖) :
     ‖a^(n+1) * root * q^k *
       (Real.sqrt (((k : ℝ)+1/2)/(n+1)) : ℂ) * jetScalar n m‖^2 ≤
       4 * ‖a‖^2 * ‖q‖ * (1/2 : ℝ)^n * (1/2 : ℝ)^k := by
@@ -214,7 +214,7 @@ private lemma ratio_bounds :
 private lemma root_norms :
     ‖d.inputRoot‖^2 = ‖d.inputRatio‖ ∧
       ‖d.outputRoot‖^2 = ‖d.outputRatio‖ := by
-  simp [inputRoot, outputRoot, inputRatio, outputRatio, norm_div, norm_mul,
+  simp [inputRoot, outputRoot, inputRatio, outputRatio,
     norm_pow, Complex.norm_real, Real.norm_eq_abs,
     abs_of_nonneg (Real.sqrt_nonneg _), abs_of_pos d.beta_pos,
     abs_of_pos d.gamma_pos, div_pow, mul_pow,
@@ -369,7 +369,10 @@ def blockMajorant (a b : Fin 3) : ℝ :=
 
 private lemma block_nonneg (a b : Fin 3) : 0 ≤ blockMajorant (N := N) a b := by
   have he := (eta_bounds N).1
-  fin_cases a <;> fin_cases b <;> dsimp [blockMajorant] <;> positivity
+  have hc : 0 ≤ 4 * (eta N)^3 := by positivity
+  have hq : 0 ≤ (eta N)^4 / 4 := by positivity
+  have hs : 0 ≤ (eta N)^2 := sq_nonneg _
+  fin_cases a <;> fin_cases b <;> simp [blockMajorant, hc, hq, hs]
 
 private lemma scalar_bound (a b : Fin 3) (n m : ℕ) :
     ‖d.scalar a b n m‖^2 ≤ blockMajorant (N := N) a b *
@@ -385,12 +388,12 @@ private lemma scalar_bound (a b : Fin 3) (n m : ℕ) :
   · simpa [mul_assoc, mul_comm, mul_left_comm] using d.io_square_bound m n
   · simp
 
-theorem entry_symmetric (i j : Index N) : d.entry i j = d.entry j i := by
+private lemma entry_symmetric (i j : Index N) : d.entry i j = d.entry j i := by
   rcases i with ⟨c, a, n⟩
   rcases j with ⟨c', b, m⟩
   by_cases h : c = c'
   · subst c'
-    simp only [entry, ite_eq_left rfl]
+    simp only [entry]
     fin_cases a <;> fin_cases b <;> simp [scalar, ss_symm]
   · simp [entry, h, Ne.symm h]
 
@@ -449,7 +452,7 @@ private lemma envelope_mass :
     simp_rw [hleg]
     simp only [envelope]
     simp_rw [hcond, tsum_mul_left, hg, tsum_fintype]
-    simp [Finset.mul_sum, mul_assoc, mul_comm, mul_left_comm]
+    simp [Finset.mul_sum, mul_comm, mul_left_comm]
   have hrows : Summable (fun i : Index N =>
       (2 * ∑ b : Fin 3, blockMajorant (N := N) i.2.1 b) * (1/2 : ℝ)^i.2.2) :=
     hs.prod.congr hinner
@@ -528,6 +531,7 @@ private lemma setBasis_apply (j : Index N) :
   exact coordinateBasis.repr_self j
 
 set_option maxHeartbeats 800000 in
+-- Reindexing the concrete lp basis requires the full column-sum equivalence.
 private theorem synthesized :
     ∃ A : Space N →L[ℂ] Space N,
       (∀ i j, A (lp.single 2 j (1 : ℂ)) i = d.entry i j) ∧
@@ -566,6 +570,9 @@ theorem operator_realization :
   exact (Real.sqrt_lt' (by norm_num : (0 : ℝ) < 1/2)).mpr (by
     convert massBound_lt N using 1 <;> norm_num)
 
+#print axioms jet_binomial_bound
+#print axioms damping_nonempty
+#print axioms matrix_square_mass
 #print axioms operator_realization
 
 end Damping
