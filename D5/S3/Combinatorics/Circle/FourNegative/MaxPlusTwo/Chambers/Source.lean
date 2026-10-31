@@ -70,7 +70,7 @@ private theorem source_shadow_charge (a b c d : ℕ)
   have hT : T=2*(2:ℤ)^(b-1) := two_power_pred b (by omega)
   have hZ : Z=2*(2:ℤ)^(c-1) := two_power_pred c (by omega)
   obtain ⟨_,_,_,_,uf,vf,wf,xf,ug,vg,wg,xg,fresh⟩ :=
-    source_table a b c d ha hb hc hd
+    source_table a b c d ha hb hc (by omega)
   change ∀ i<d, f i=if i+1<d then 2^i*A else -(N-V)/2 at uf
   change ∀ i<c, f (d+i)=if i+1<c then 2^i*V else -(N-W)/2 at vf
   change ∀ i<b, f (d+c+i)=if i+1<b then 2^i*W else -(N-X)/2 at wf
