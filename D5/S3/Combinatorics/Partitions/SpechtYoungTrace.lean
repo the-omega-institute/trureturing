@@ -30,7 +30,7 @@ noncomputable section
 open scoped BigOperators
 
 namespace TauCeti
-open Equiv CategoryTheory
+open _root_.Equiv CategoryTheory
 variable {n : ℕ}
 @[simp]
 theorem toPartition_eq_shapePartition (μ : YoungDiagram) : μ.toPartition rfl = shapePartition μ :=
@@ -151,8 +151,8 @@ theorem spechtModuleℂ_iso_iff (μ ν : n.Partition) :
     Nonempty (spechtModuleℂ μ ≅ spechtModuleℂ ν) ↔ μ = ν := by
   constructor
   · rintro ⟨i⟩
-    have hd {λ κ : n.Partition} (j : spechtModuleℂ λ ≅ spechtModuleℂ κ) :
-        Dominates λ κ := by
+    have hd {ρ κ : n.Partition} (j : spechtModuleℂ ρ ≅ spechtModuleℂ κ) :
+        Dominates ρ κ := by
       by_contra h
       have he := (CategoryTheory.Linear.homCongr ℂ j (Iso.refl (permutationModuleℂ κ))).finrank_eq
       rw [finrank_hom_spechtModuleℂ_permutationModuleℂ_eq_zero h,
