@@ -52,7 +52,7 @@ def family : Registration arena.{u,v,w}
     fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩, fun e => nomatch e⟩
   dependence := executionFamily.dependence
 
-def registration : Contract.Registration
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@named_unitary_root_classification.{u,v,w})
     (type_of% (predicateActual.{w})) Unit Unit := {
   unitName := `D5.S3.ConceptDynamics.Fibers.NamedEdgeSectionTransport.named_unitary_root_classification.__information_unit
@@ -120,7 +120,7 @@ def family : Registration arena.{u,v,w} (type_of% (@incidence_path_transport.{u,
     fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩, fun e => nomatch e⟩
   dependence := executionFamily.dependence
 
-def registration : Contract.Registration (@incidence_path_transport.{u,v,w})
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0} (@incidence_path_transport.{u,v,w})
     (type_of% (predicateActual.{w})) Unit Unit := {
   unitName := `D5.S3.ConceptDynamics.Fibers.NamedEdgeSectionTransport.incidence_path_transport.__information_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Fibers.NamedEdgeSectionTransport.Incidence.family
