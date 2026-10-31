@@ -33,6 +33,8 @@ import Mathlib.NumberTheory.LSeries.RiemannZeta
 import Mathlib.NumberTheory.LSeries.SumCoeff
 import Mathlib.NumberTheory.LSeries.ZetaZeros
 
+/-! Original VonMangoldtCount analytic supplier for the RH Chebyshev estimate. -/
+
 namespace ConjectureMachines.Semantics.Riemann.VonMangoldtCount
 
 export RiemannSchmidt
@@ -791,7 +793,6 @@ noncomputable def nontrivialZetaZerosUpTo (T : ℝ) : Finset ℂ :=
   (finite_nontrivialZetaZeros_le T).toFinset
 
 @[simp]
-
 theorem mem_nontrivialZetaZerosUpTo {T : ℝ} {s : ℂ} :
     s ∈ nontrivialZetaZerosUpTo T ↔ IsNontrivialZetaZero s ∧ |s.im| ≤ T :=
   Set.Finite.mem_toFinset (finite_nontrivialZetaZeros_le T)

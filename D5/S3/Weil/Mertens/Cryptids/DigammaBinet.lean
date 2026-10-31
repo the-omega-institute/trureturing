@@ -20,6 +20,8 @@ and delete the transplanted declarations no longer in its live dependency closur
 
 import D5.S3.Weil.Mertens.Cryptids.DigammaBinet.Foundation
 
+/-! Original DigammaBinet analytic supplier for the RH Chebyshev estimate. -/
+
 namespace ConjectureMachines.Semantics.Riemann.DigammaBinet
 
 open Complex Finset Filter MeasureTheory Set

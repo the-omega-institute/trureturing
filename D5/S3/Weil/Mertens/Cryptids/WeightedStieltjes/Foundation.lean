@@ -50,6 +50,8 @@ import Mathlib.NumberTheory.LSeries.RiemannZetaLogDeriv
 import Mathlib.NumberTheory.LSeries.SumCoeff
 import Mathlib.NumberTheory.LSeries.ZetaZeros
 
+/-! Original WeightedStieltjes analytic supplier for the RH Chebyshev estimate. -/
+
 namespace ConjectureMachines.Semantics.Riemann.WeightedStieltjes
 
 export ConjectureMachines.Semantics.Riemann.VonMangoldtCount

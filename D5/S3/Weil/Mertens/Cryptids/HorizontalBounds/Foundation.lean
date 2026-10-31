@@ -36,6 +36,8 @@ import Mathlib.NumberTheory.LSeries.RiemannZetaLogDeriv
 import Mathlib.NumberTheory.LSeries.SumCoeff
 import Mathlib.NumberTheory.LSeries.ZetaZeros
 
+/-! Original HorizontalBounds analytic supplier for the RH Chebyshev estimate. -/
+
 namespace ConjectureMachines.Semantics.Riemann.HorizontalBounds
 
 export ConjectureMachines.Semantics.Riemann.DigammaBinet
@@ -234,7 +236,6 @@ noncomputable def logRiemannZeta₁Branch (t : ℝ) (w : ℂ) : ℂ :=
 
 /-- At the center `2 + t * I`, `logRiemannZeta₁Branch t (2 + t * I) = 0`. -/
 @[simp]
-
 theorem logRiemannZeta₁Branch_self (t : ℝ) :
     logRiemannZeta₁Branch t (2 + (t : ℂ) * I) = 0 := by
   simp [logRiemannZeta₁Branch, Complex.wedgeIntegral]

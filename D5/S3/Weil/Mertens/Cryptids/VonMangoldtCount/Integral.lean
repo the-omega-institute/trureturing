@@ -20,6 +20,8 @@ and delete the transplanted declarations no longer in its live dependency closur
 
 import D5.S3.Weil.Mertens.Cryptids.VonMangoldtCount.Foundation
 
+/-! Original VonMangoldtCount analytic supplier for the RH Chebyshev estimate. -/
+
 namespace ConjectureMachines.Semantics.Riemann.VonMangoldtCount
 
 open Complex Finset Filter MeasureTheory Set Asymptotics Metric MeromorphicOn
@@ -160,7 +162,6 @@ noncomputable def nontrivialZetaZerosBetween (T U : ℝ) : Finset ℂ :=
   (nontrivialZetaZerosUpTo U).filter (fun ρ ↦ T < |ρ.im|)
 
 @[simp]
-
 theorem mem_nontrivialZetaZerosBetween {T U : ℝ} {ρ : ℂ} :
     ρ ∈ nontrivialZetaZerosBetween T U ↔
       IsNontrivialZetaZero ρ ∧ |ρ.im| ≤ U ∧ T < |ρ.im| := by
@@ -621,7 +622,6 @@ noncomputable def nontrivialZetaZerosInFourWindow (y : ℝ) : Finset ℂ :=
   (nontrivialZetaZerosUpTo (|y| + 2)).filter (fun ρ ↦ y - 2 ≤ ρ.im ∧ ρ.im ≤ y + 2)
 
 @[simp]
-
 theorem mem_nontrivialZetaZerosInFourWindow {y : ℝ} {ρ : ℂ} :
     ρ ∈ nontrivialZetaZerosInFourWindow y ↔
       IsNontrivialZetaZero ρ ∧ y - 2 ≤ ρ.im ∧ ρ.im ≤ y + 2 := by

@@ -20,10 +20,14 @@ and delete the transplanted declarations no longer in its live dependency closur
 
 import D5.S3.Weil.Mertens.Cryptids.WeightedStieltjes.Integral
 
+/-! Original WeightedStieltjes analytic supplier for the RH Chebyshev estimate. -/
+
 namespace ConjectureMachines.Semantics.Riemann.WeightedStieltjes
 
 open Complex Finset Filter MeasureTheory Set Asymptotics Topology
 open scoped Real Topology Interval
+
+open scoped ArithmeticFunction.vonMangoldt LSeries.notation
 
 /-- If `g : ℂ → ℂ` is differentiable at `p`, then `(g s - g p) / (s - p)` tends to `deriv g p`
 on the punctured neighborhood `𝓝[≠] p`. -/
@@ -527,7 +531,6 @@ noncomputable def perronPolesUpTo (T : ℝ) : Finset ℂ :=
   insert (1 : ℂ) (insert (0 : ℂ) (nontrivialZetaZerosUpTo T))
 
 @[simp]
-
 theorem mem_perronPolesUpTo {T : ℝ} {s : ℂ} :
     s ∈ perronPolesUpTo T ↔ s = 1 ∨ s = 0 ∨ s ∈ nontrivialZetaZerosUpTo T := by
   simp [perronPolesUpTo]
@@ -546,12 +549,10 @@ noncomputable def perronLimVal (x : ℝ) (p : ℂ) : ℂ :=
   else limZeroRho x p
 
 @[simp]
-
 theorem perronResidue_one (x : ℝ) : perronResidue x 1 = resOne x := by
   simp [perronResidue]
 
 @[simp]
-
 theorem perronResidue_zero (x : ℝ) : perronResidue x 0 = resZero x := by
   simp [perronResidue]
 

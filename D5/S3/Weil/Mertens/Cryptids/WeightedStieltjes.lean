@@ -20,10 +20,14 @@ and delete the transplanted declarations no longer in its live dependency closur
 
 import D5.S3.Weil.Mertens.Cryptids.WeightedStieltjes.Smoothing
 
+/-! Original WeightedStieltjes analytic supplier for the RH Chebyshev estimate. -/
+
 namespace ConjectureMachines.Semantics.Riemann.WeightedStieltjes
 
 open Complex Finset Filter MeasureTheory Set Asymptotics Topology
 open scoped Real Topology Interval
+
+open scoped ArithmeticFunction.vonMangoldt LSeries.notation
 
 /-- **Uniform Multiplicity-Weighted High-Frequency Quadratic Zero-Tail Bound**:
 If `0 < T ≤ U`, `0 ≤ a`, `0 ≤ D`, and

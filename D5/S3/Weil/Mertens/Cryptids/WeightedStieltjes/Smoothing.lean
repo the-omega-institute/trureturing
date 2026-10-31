@@ -20,10 +20,14 @@ and delete the transplanted declarations no longer in its live dependency closur
 
 import D5.S3.Weil.Mertens.Cryptids.WeightedStieltjes.Contour
 
+/-! Original WeightedStieltjes analytic supplier for the RH Chebyshev estimate. -/
+
 namespace ConjectureMachines.Semantics.Riemann.WeightedStieltjes
 
 open Complex Finset Filter MeasureTheory Set Asymptotics Topology
 open scoped Real Topology Interval
+
+open scoped ArithmeticFunction.vonMangoldt LSeries.notation
 
 /-- **High-Frequency Norm Bound for `smoothedZeroTerm` (`ρ.re = 1 / 2`)**:
 If `0 < x`, `0 < h`, `ρ.re = 1 / 2`, and `ρ.im ≠ 0`, then

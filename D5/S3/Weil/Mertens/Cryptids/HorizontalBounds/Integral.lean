@@ -20,6 +20,8 @@ and delete the transplanted declarations no longer in its live dependency closur
 
 import D5.S3.Weil.Mertens.Cryptids.HorizontalBounds.Foundation
 
+/-! Original HorizontalBounds analytic supplier for the RH Chebyshev estimate. -/
+
 namespace ConjectureMachines.Semantics.Riemann.HorizontalBounds
 
 open Complex Filter MeasureTheory Set Asymptotics Metric MeromorphicOn ComplexConjugate
@@ -136,7 +138,6 @@ noncomputable def criticalLineZerosInStrip (T : ℝ) : Finset ℂ :=
   (finite_criticalLineZerosInStrip T).toFinset
 
 @[simp]
-
 theorem mem_criticalLineZerosInStrip {T : ℝ} {ρ : ℂ} :
     ρ ∈ criticalLineZerosInStrip T ↔
       riemannZeta ρ = 0 ∧ ρ.re = 1 / 2 ∧ ρ.im ∈ Set.Icc (T - 1 / 2) (T + 3 / 2) :=
@@ -159,6 +160,10 @@ noncomputable def symmetricCriticalLineZerosInStrip (T : ℝ) : Finset ℂ :=
   (finite_symmetricCriticalLineZerosInStrip T).toFinset
 
 @[simp]
+theorem mem_symmetricCriticalLineZerosInStrip {T : ℝ} {ρ : ℂ} :
+    ρ ∈ symmetricCriticalLineZerosInStrip T ↔
+      riemannZeta ρ = 0 ∧ ρ.re = 1 / 2 ∧ |ρ.im| ∈ Set.Icc (T - 1 / 2) (T + 3 / 2) :=
+  Set.Finite.mem_toFinset (finite_symmetricCriticalLineZerosInStrip T)
 
 /-- The finite set of absolute heights `|ρ.im|` of critical-line zeros in the local strip
 `[T - 1 / 2, T + 3 / 2]`. -/
@@ -166,7 +171,6 @@ noncomputable def localZeroHeights (T : ℝ) : Finset ℝ :=
   (symmetricCriticalLineZerosInStrip T).image (fun ρ ↦ |ρ.im|)
 
 @[simp]
-
 theorem mem_localZeroHeights {T : ℝ} {γ : ℝ} :
     γ ∈ localZeroHeights T ↔
       ∃ ρ : ℂ, (riemannZeta ρ = 0 ∧ ρ.re = 1 / 2 ∧ |ρ.im| ∈ Set.Icc (T - 1 / 2) (T + 3 / 2)) ∧

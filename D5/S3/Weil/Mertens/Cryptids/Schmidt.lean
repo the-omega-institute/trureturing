@@ -34,6 +34,8 @@ import Mathlib.NumberTheory.LSeries.RiemannZeta
 import Mathlib.NumberTheory.LSeries.SumCoeff
 import Mathlib.NumberTheory.LSeries.ZetaZeros
 
+/-! Original Schmidt analytic supplier for the RH Chebyshev estimate. -/
+
 namespace RiemannSchmidt
 
 

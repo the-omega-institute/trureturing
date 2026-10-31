@@ -20,12 +20,16 @@ and delete the transplanted declarations no longer in its live dependency closur
 
 import D5.S3.Weil.Mertens.Cryptids.WeightedStieltjes.Foundation
 
+/-! Original WeightedStieltjes analytic supplier for the RH Chebyshev estimate. -/
+
 namespace ConjectureMachines.Semantics.Riemann.WeightedStieltjes
 
 open Complex Finset Filter MeasureTheory Set Asymptotics Topology
 open scoped Real Topology Interval
 
 open Real
+
+open scoped ArithmeticFunction.vonMangoldt LSeries.notation
 
 /-- **Smoothed Perron Formula for `y ≥ 1`**:
 When `1 ≤ y` and `0 < c`, the vertical integral of `smoothedPerronKernel y` equals `2 * π * (y -

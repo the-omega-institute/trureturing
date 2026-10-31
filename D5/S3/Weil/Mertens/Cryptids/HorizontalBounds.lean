@@ -20,6 +20,8 @@ and delete the transplanted declarations no longer in its live dependency closur
 
 import D5.S3.Weil.Mertens.Cryptids.HorizontalBounds.Integral
 
+/-! Original HorizontalBounds analytic supplier for the RH Chebyshev estimate. -/
+
 namespace ConjectureMachines.Semantics.Riemann.HorizontalBounds
 
 open Complex Filter MeasureTheory Set Asymptotics Metric MeromorphicOn ComplexConjugate

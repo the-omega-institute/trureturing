@@ -20,10 +20,14 @@ and delete the transplanted declarations no longer in its live dependency closur
 
 import D5.S3.Weil.Mertens.Cryptids.WeightedStieltjes.Residues
 
+/-! Original WeightedStieltjes analytic supplier for the RH Chebyshev estimate. -/
+
 namespace ConjectureMachines.Semantics.Riemann.WeightedStieltjes
 
 open Complex Finset Filter MeasureTheory Set Asymptotics Topology
 open scoped Real Topology Interval
+
+open scoped ArithmeticFunction.vonMangoldt LSeries.notation
 
 /-- Horizontal line integral of `1 / (σ + y * I - p)` when `y ≠ p.im`. -/
 theorem horizontal_integral_inv_sub_eq {y : ℝ} {p : ℂ} (hy : y ≠ p.im) (c₁ c₂ : ℝ) :
@@ -129,13 +133,11 @@ def openRect (c₁ c₂ T : ℝ) : Set ℂ :=
   Set.Ioo c₁ c₂ ×ℂ Set.Ioo (-T) T
 
 @[simp]
-
 theorem mem_closedRect {c₁ c₂ T : ℝ} {s : ℂ} :
     s ∈ closedRect c₁ c₂ T ↔ (c₁ ≤ s.re ∧ s.re ≤ c₂) ∧ (-T ≤ s.im ∧ s.im ≤ T) :=
   Iff.rfl
 
 @[simp]
-
 theorem mem_openRect {c₁ c₂ T : ℝ} {s : ℂ} :
     s ∈ openRect c₁ c₂ T ↔ (c₁ < s.re ∧ s.re < c₂) ∧ (-T < s.im ∧ s.im < T) :=
   Iff.rfl

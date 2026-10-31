@@ -32,6 +32,8 @@ import Mathlib.NumberTheory.Harmonic.GammaDeriv
 import Mathlib.NumberTheory.LSeries.Dirichlet
 import Mathlib.NumberTheory.LSeries.RiemannZetaLogDeriv
 
+/-! Original DigammaBinet analytic supplier for the RH Chebyshev estimate. -/
+
 namespace ConjectureMachines.Semantics.Riemann.DigammaBinet
 
 
