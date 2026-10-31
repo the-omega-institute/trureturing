@@ -11,7 +11,7 @@ internal sealed class DigammaBinetDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/Cryptids/DigammaBinet.norm_logDeriv_riemannZeta_leftVertical_le_eighty_five"),
                 H("norm logDeriv riemannZeta leftVertical le eighty five"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Analytic/cryptids2026rhpsi")),
+                    LibraryNoteRef.Create("D5/L/Weil/cryptids2026rhpsi")),
                 Blocks(Paragraph(Text("The exact statement and hypotheses are those of the original declaration, checked on the current project pins."))),
                 DescribeRole.Theorem))));
 }

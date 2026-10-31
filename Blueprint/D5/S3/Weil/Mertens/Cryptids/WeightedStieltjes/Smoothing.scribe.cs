@@ -11,7 +11,7 @@ internal sealed class WeightedStieltjesSmoothingDocument : IScribeDocumentDefini
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/Cryptids/WeightedStieltjes/Smoothing.intervalIntegral_riemannVonMangoldt_div_cube"),
                 H("intervalIntegral riemannVonMangoldt div cube"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Analytic/cryptids2026rhpsi")),
+                    LibraryNoteRef.Create("D5/L/Weil/cryptids2026rhpsi")),
                 Blocks(Paragraph(Text("The exact statement and hypotheses are those of the original declaration, checked on the current project pins."))),
                 DescribeRole.Theorem))));
 }

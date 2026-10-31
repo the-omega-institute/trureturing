@@ -11,7 +11,7 @@ internal sealed class HorizontalBoundsIntegralDocument : IScribeDocumentDefiniti
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/Cryptids/HorizontalBounds/Integral.exists_zero_free_height_with_horizontal_bounds"),
                 H("exists zero free height with horizontal bounds"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Analytic/cryptids2026rhpsi")),
+                    LibraryNoteRef.Create("D5/L/Weil/cryptids2026rhpsi")),
                 Blocks(Paragraph(Text("The exact statement and hypotheses are those of the original declaration, checked on the current project pins."))),
                 DescribeRole.Theorem))));
 }

@@ -11,7 +11,7 @@ internal sealed class HorizontalBoundsFoundationDocument : IScribeDocumentDefini
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/Cryptids/HorizontalBounds/Foundation.norm_logDeriv_riemannZeta_le_on_Icc_of_gap"),
                 H("norm logDeriv riemannZeta le on Icc of gap"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Analytic/cryptids2026rhpsi")),
+                    LibraryNoteRef.Create("D5/L/Weil/cryptids2026rhpsi")),
                 Blocks(Paragraph(Text("The exact statement and hypotheses are those of the original declaration, checked on the current project pins."))),
                 DescribeRole.Theorem))));
 }

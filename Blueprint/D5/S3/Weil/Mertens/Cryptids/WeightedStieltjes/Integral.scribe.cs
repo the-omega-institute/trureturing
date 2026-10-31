@@ -11,7 +11,7 @@ internal sealed class WeightedStieltjesIntegralDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/Cryptids/WeightedStieltjes/Integral.norm_psi1_sub_truncated_smoothedPerron_two_le"),
                 H("norm psi1 sub truncated smoothedPerron two le"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Analytic/cryptids2026rhpsi")),
+                    LibraryNoteRef.Create("D5/L/Weil/cryptids2026rhpsi")),
                 Blocks(Paragraph(Text("The exact statement and hypotheses are those of the original declaration, checked on the current project pins."))),
                 DescribeRole.Theorem))));
 }

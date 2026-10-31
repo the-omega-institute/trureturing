@@ -11,7 +11,7 @@ internal sealed class WeightedStieltjesDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/Cryptids/WeightedStieltjes.abs_psi_sub_self_le_weighted_riemannVonMangoldt_six_neg_one_fourth"),
                 H("abs psi sub self le weighted riemannVonMangoldt six neg one fourth"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Analytic/cryptids2026rhpsi")),
+                    LibraryNoteRef.Create("D5/L/Weil/cryptids2026rhpsi")),
                 Blocks(Paragraph(Text("The exact statement and hypotheses are those of the original declaration, checked on the current project pins."))),
                 DescribeRole.Theorem))));
 }
