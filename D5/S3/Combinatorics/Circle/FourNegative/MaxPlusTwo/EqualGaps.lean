@@ -23,7 +23,7 @@ open private negative_step
 open private label lift_order marked_word ladder_sum
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
-private theorem reserve_inventory (a d s : ℕ) (ha : 2 ≤ a) (hd : a+2 ≤ d)
+private theorem reserve_inventory (a d s : ℕ) (ha : 2 ≤ a) (hd : a + 2 ≤ d)
     (hs : s=d-a-1) :
     let U := List.range s ++ List.range' (s+1) (a-1)
     (U ++ [d-1] ++ List.range' d (a-1) ++ [d+a-1] ++
@@ -53,7 +53,7 @@ private theorem reserve_inventory (a d s : ℕ) (ha : 2 ≤ a) (hd : a+2 ≤ d)
     rw [← List.range_succ, show (d-1).succ=d by omega,
       merge d a (by omega), merge (d+a) a (by omega), merge (d+a+a) a (by omega)]
     simp only [List.range_eq_range']
-        have h1 := List.range'_append_1 (s:=0) (m:=d) (n:=a)
+    have h1 := List.range'_append_1 (s:=0) (m:=d) (n:=a)
     have h2 := List.range'_append_1 (s:=0) (m:=d+a) (n:=a)
     have h3 := List.range'_append_1 (s:=0) (m:=d+a+a) (n:=a)
     simp only [Nat.zero_add] at h1 h2 h3
@@ -72,9 +72,10 @@ private theorem reserve_inventory (a d s : ℕ) (ha : 2 ≤ a) (hd : a+2 ≤ d)
   exact hreorder.trans (by rw [←hall]; exact (((hu.append_right [d-1]).append_right _).append_right _).append_right _)
 
 set_option maxHeartbeats 1600000 in
+-- The complete physical inventory, masses and both prefix strips are elaborated together.
 /-- An explicit physical single-bit reserve, with the literal ear at cut zero.
 The first three gaps coincide; the fourth gap is arbitrary above a+2. -/
-theorem actualSource_equal_gaps_first_ear (a d : ℕ) (ha : 2 ≤ a) (hd : a+2 ≤ d) :
+theorem actualSource_equal_gaps_first_ear (a d : ℕ) (ha : 2 ≤ a) (hd : a + 2 ≤ d) :
     ∃ sigma : List (Fin (a+a+a+d)),
       OriginalOrder (a+a+a+d) (1+2^a+2^(a+a)+2^(a+a+a)) sigma ∧
       OriginalOrder (a+a+a+d+1) (2*(1+2^a+2^(a+a)+2^(a+a+a)))
@@ -246,9 +247,13 @@ theorem actualSource_equal_gaps_first_ear (a d : ℕ) (ha : 2 ≤ a) (hd : a+2 �
         (pos4 g GX hpositive.2.2.2.2.2.2 (by rw [(posU s (by dsimp [s];omega)).2]; positivity)
           (by intro i hi;exact (posX i hi).2)) hgates.2
   have hperm : word.Perm (List.range k) := reserve_inventory a d s ha hd rfl
-  have hmod : modulus k=N := by dsimp [modulus,k,N,R,T]; simp only [pow_add] <;> ring
+  have hmod : modulus k=N := by
+    dsimp [modulus,k,N,R,T]
+    simp only [pow_add]
   have hmod' : modulus (k+1)=2*N+1 := by dsimp [modulus]; rw [pow_succ]; rw [←hmod]; dsimp [modulus]; ring
-  have hseed : (seed:ℤ)=A := by dsimp [seed,A,C,R]; push_cast; simp only [pow_add] <;> ring
+  have hseed : (seed:ℤ)=A := by
+    dsimp [seed,A,C,R]
+    simp only [pow_add]; ring
   have hk : 0<k := by dsimp [k];omega
   have old : OriginalOrder k seed (word.map (label k hk)) := by
     apply lift_order k seed hk word hperm
