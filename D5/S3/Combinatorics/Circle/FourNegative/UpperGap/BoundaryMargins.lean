@@ -16,10 +16,6 @@ open private base newBase charge
 open private standardMargins
   from D5.S3.Combinatorics.Circle.FourNegative.UpperGap.BoundaryPackets
 open private rising_endpoints swapped_endpoints tied_ac_endpoints all_equal_endpoints
-  equal_first_small_endpoints equal_first_large_endpoints
-  first_less_signs first_greater_signs first_equal_signs peak_middle_low peak_middle_high
-  peak_last_equal peak_last_adjacent peak_last_capacity peak_last_rounding
-  peak_first_lower peak_first_adjacent peak_first_far peak_tied_bc
   from D5.S3.Combinatorics.Circle.FourNegative.UpperGap.BoundaryAlgebra
 
 private theorem qpow_four (n : ℕ) (hn : 2≤n) : (4:ℚ)≤2^n := by

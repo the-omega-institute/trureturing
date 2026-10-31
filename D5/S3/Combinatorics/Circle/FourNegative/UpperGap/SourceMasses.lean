@@ -5,11 +5,10 @@
    anchors: [mathlib/module/Mathlib.Data.Nat.Bitwise]
    utility: none
    digest: Existing actual centered rows evaluated on the boundary physical masks. -/
-import D5.S3.Combinatorics.Circle.FourNegative.UpperGap.BoundaryWords
+import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.ActualBlocks
+import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 
-/-! Uncompiled preparation source. No centered-source recurrence is reproved.
-The source owner supplies every chain value; the existing mask theorem sums
-the same literal occurrences in both rows. -/
+/-! Exact source-owner chain values summed over literal occurrence masks. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.UpperGap
@@ -19,29 +18,6 @@ open private size sourceMod base newBase chainLength chainStart nextBase nextNew
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open private masked_weighted_masses
   from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.ActualBlocks
-
-private theorem paired_mask (a b c d : ℕ)
-    (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d)
-    (r : Fin 4) (m : ℕ) (hm : m<2^(chainLength a b c d r-1)) :
-    let xs := chamberLabels (chainLength a b c d r-1) (chainStart b c d r) m
-    (xs.map (oldValue a b c d)).sum = (m:ℤ)*base a b c d r ∧
-    (xs.map (newValue a b c d)).sum = (m:ℤ)*newBase a b c d r ∧
-    (∀ i∈xs, 0 ≤ oldValue a b c d i) ∧
-    (∀ i∈xs, 0 ≤ newValue a b c d i) := by
-  obtain ⟨hbase,hf,hg,_⟩ := chain_values a b c d ha hb hc hd
-  have hf' : ∀ e<chainLength a b c d r-1,
-      oldValue a b c d (chainStart b c d r+e)=2^e*base a b c d r := by
-    intro e he
-    rw [hf r e (by omega), if_pos (by omega)]
-  have hg' : ∀ e<chainLength a b c d r-1,
-      newValue a b c d (chainStart b c d r+e)=2^e*newBase a b c d r := by
-    intro e he
-    rw [hg r e (by omega), if_pos (by omega)]
-  refine ⟨chamberLabels_sum _ _ _ hm _ _ hf',
-    chamberLabels_sum _ _ _ hm _ _ hg', ?_, ?_⟩
-  · exact chamberLabels_positive _ _ _ _ _ (by have := (hbase r).1; omega) hf'
-  · exact chamberLabels_positive _ _ _ _ _
-      (by have := (new_base_bounds a b c d ha hb hc hd r).1; omega) hg'
 
 private theorem paired_terminal (a b c d : ℕ)
     (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d) (r : Fin 4) :

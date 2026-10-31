@@ -17,7 +17,7 @@ open private base newBase charge
 open private standardMargins standard_certificate
   from D5.S3.Combinatorics.Circle.FourNegative.UpperGap.BoundaryPackets
 open private multiple_floor_nat multiple_floor_peak first_mask_capacity
-  multiple_predecessor_bits multiple_predecessor_contains rounded_last_packet
+  multiple_predecessor_bits rounded_last_packet
   from D5.S3.Combinatorics.Circle.FourNegative.UpperGap.Rounding
 open private first_less_signs_int first_greater_signs_int first_equal_signs_int
   peak_middle_low_int peak_middle_high_int peak_last_equal_int peak_last_adjacent_int
@@ -111,6 +111,7 @@ private theorem first_less_certificate (a b c : ℕ)
   have hpz : (p:ℤ)≤z := by
     dsimp [p,z]
     exact_mod_cast Nat.pow_le_pow_right (by decide : 0<2) (by omega : c-b-1≤c)
+  have hzpos : (0:ℤ)≤z := by dsimp [z];positivity
   have hD : 0≤D := by dsimp [D];positivity
   apply standard_certificate a b c (a+1) u 0 p 0 0
     (by omega) hb (by omega) (by omega)
@@ -123,13 +124,13 @@ private theorem first_less_certificate (a b c : ℕ)
   · intro e _ he; simp at he
   · have hbase : base a b c (a+1)=![A,B,L,M] := by
       funext r
-      fin_cases r <;> dsimp [base,A,B,C,L,M,x,y,z] <;> rw [pow_succ] <;> ring
+      fin_cases r <;> dsimp [base,A,B,C,L,M,x,y,z] <;> simp only [pow_succ] <;> ring
     dsimp only [standardMargins,newBase]
     rw [hbase]
     norm_num only [charge,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_succ,Fin.isValue]
     rw [hu]
     refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,?_,?_,?_,?_⟩
-    all_goals nlinarith only [hpeak.1,hpeak.2.1,hpeak.2.2,sm,tm,pm,sl,tl,pl,hpz,hD]
+    all_goals nlinarith only [hpeak.1,hpeak.2.1,hpeak.2.2,sm,tm,pm,sl,tl,pl,hpz,hD,hzpos]
 
 set_option maxHeartbeats 1400000 in
 private theorem peak_middle_bounds (a b c : ℕ)
@@ -243,6 +244,8 @@ private theorem first_right_certificate (a b c : ℕ)
   have hHz : (0:ℤ)<H := by exact_mod_cast hH
   have hA : 0<A := by dsimp [A]; positivity
   have h := first_right_bounds a b c hc hcb hba
+  have hHcast : (H:ℤ)=(2:ℤ)^(a-b) := by simp [H]
+  rw [←hHcast] at h
   change 0≤A-2*C ∧ 0≤L-(H:ℤ)*A ∧ 0≤(2*L-z-1)-2*(H:ℤ)*A ∧
     0≤2*(H:ℤ)*A-L-1 ∧ 0≤M-A ∧ 0≤(2*M-D)-2*A ∧ 0≤2*A-M-1 ∧
     0≤B-1-(H:ℤ)*A ∧ (0≤B-1-2*(H:ℤ)*A ∨ 0≤2*(H:ℤ)*A-B-1) at h
@@ -276,6 +279,7 @@ private theorem first_right_certificate (a b c : ℕ)
     dsimp [u];omega
   have hcR : r<2^a := by
     exact interval_capacity a (a-b) (by omega)
+  have hzpos : (0:ℤ)≤z := by dsimp [z];positivity
   have hD : 0≤D := by dsimp [D];positivity
   apply standard_certificate a b c (a+1) u r 0 0 0 (by omega) (by omega) hc (by omega)
     (by simpa using hcU) (by simpa using hcR) (by positivity) (by positivity) (by positivity)
@@ -285,12 +289,12 @@ private theorem first_right_certificate (a b c : ℕ)
   · intro e _ he;simp at he
   · have hbase : base a b c (a+1)=![A,B,L,M] := by
       funext r
-      fin_cases r <;> dsimp [base,A,B,C,L,M,x,y,z] <;> rw [pow_succ] <;> ring
+      fin_cases r <;> dsimp [base,A,B,C,L,M,x,y,z] <;> simp only [pow_succ] <;> ring
     dsimp only [standardMargins,newBase]
     rw [hbase]
     norm_num only [charge,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_succ,Fin.isValue]
     rw [hu,hr]
     refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,?_,?_,?_,?_⟩
-    all_goals nlinarith only [hn.2.2.1,peak,sm,tm,pm,sl,tl,pl,hD]
+    all_goals nlinarith only [hn.2.2.1,peak,sm,tm,pm,sl,tl,pl,hD,hzpos]
 
 end D5.S3.Combinatorics.Circle.FourNegative.UpperGap

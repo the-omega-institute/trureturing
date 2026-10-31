@@ -37,20 +37,6 @@ private theorem multiple_floor_peak (A H B : ℤ)
   rcases h with ⟨hlo,hhi,_⟩
   refine ⟨by linarith, ?_, ?_⟩ <;> nlinarith
 
-private theorem multiple_floor_positive (A H B : ℤ)
-    (hA : 0<A) (hH : 0<H) (hlower : H*A ≤ B-1) :
-    H ≤ H*((B-1)/(H*A)) := by
-  have hden : 0<H*A := mul_pos hH hA
-  have h0 := Int.emod_nonneg (B-1) (ne_of_gt hden)
-  have h1 := Int.emod_lt_of_pos (B-1) hden
-  have he := Int.ediv_mul_add_emod (B-1) (H*A)
-  have hquot : 1 ≤ (B-1)/(H*A) := by
-    by_contra hh
-    have hq : (B-1)/(H*A) ≤ 0 := by omega
-    have hmul := mul_nonpos_of_nonpos_of_nonneg hq hden.le
-    nlinarith
-  nlinarith
-
 private theorem first_mask_capacity (A C Y n : ℤ)
     (hA : 0<A) (hY : 0<Y) (hsep : 2*C<A)
     (hbudget : n*A ≤ 2*Y*C) : n<Y := by
@@ -141,20 +127,6 @@ private theorem multiple_predecessor_bits (k q : ℕ) (hq : 1 ≤ q)
   rw [hm] at ht
   simpa [Nat.testBit_two_pow_sub_one,hi] using ht.symm
 
-private theorem multiple_predecessor_contains (k q : ℕ) (hq : 1 ≤ q) :
-    (2^k*q-1) &&& (2^k-1) = 2^k-1 := by
-  apply Nat.eq_of_testBit_eq
-  intro i
-  rw [Nat.testBit_and, Nat.testBit_two_pow_sub_one]
-  by_cases hi : i<k
-  · simp [hi,multiple_predecessor_bits k q hq i hi]
-  · simp [hi]
-
-private theorem interval_contains_singleton (k i : ℕ) (hi : i<k) :
-    (2^k-1) &&& 2^i = 2^i := by
-  rw [Nat.and_two_pow]
-  simp [Nat.testBit_two_pow_sub_one,hi]
-
 private theorem distinct_singletons_union (i j : ℕ) (hij : i≠j) :
     2^i ||| 2^j = 2^i+2^j := by
   rcases lt_or_gt_of_ne hij with hi|hj
@@ -168,7 +140,6 @@ private theorem multiple_floor_nat (A B : ℤ) (H : ℕ)
     1≤q ∧ ((H*q:ℕ):ℤ)=(H:ℤ)*((B-1)/((H:ℤ)*A)) ∧
     1≤B-((H*q:ℕ):ℤ)*A ∧ B-((H*q:ℕ):ℤ)*A≤(H:ℤ)*A := by
   have hHz : (0:ℤ)<H := by exact_mod_cast hH
-  have hn := multiple_floor_positive A H B hA hHz hlower
   have hq : 1≤(B-1)/((H:ℤ)*A) := by
     have hden : 0<(H:ℤ)*A := mul_pos hHz hA
     exact (Int.le_ediv_iff_mul_le hden).mpr (by simpa using hlower)

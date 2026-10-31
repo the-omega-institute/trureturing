@@ -216,6 +216,7 @@ private theorem peak_certificate (a b c : ℕ)
   let D := y*z+y+1
   obtain ⟨q,hq,hqcap,lo,ln,lp⟩ := peak_first_bounds a b c ha hc hab hcb he
   obtain ⟨w,hw,sl,tl,pl,ed⟩ := peak_last_bounds a b c ha hc hab hcb
+  have hzpos : (0:ℤ)≤z := by dsimp [z];positivity
   have hm := peak_middle_bounds a b c ha hc hab hcb
   let u := 2*q-1
   let r : ℕ := if a<c then 1 else 0
@@ -233,14 +234,16 @@ private theorem peak_certificate (a b c : ℕ)
     (by simpa using hrcap) (by positivity) (by positivity) (by exact hw)
   · intro e _ hre
     by_cases hac : a<c
-    · have he0 : e=0 := by simpa [r,hac,show (1:ℕ)=2^0 by norm_num,Nat.testBit_two_pow,eq_comm] using hre
+    · have he0 : e=0 := by
+        have he' : (2^0:ℕ).testBit e=true := by simpa [r,hac] using hre
+        simpa [Nat.testBit_two_pow,eq_comm] using he' 
       subst e
       exact multiple_predecessor_bits 1 q hq 0 (by omega)
     · simp [r,hac] at hre
   · intro e _ hre;simp at hre
   · have hbase : base a b c (b+1)=![A,B,L,M] := by
       funext r
-      fin_cases r <;> dsimp [base,A,B,L,M,x,y,z] <;> rw [pow_succ] <;> ring
+      fin_cases r <;> dsimp [base,A,B,L,M,x,y,z] <;> simp only [pow_succ] <;> ring
     dsimp only [standardMargins,newBase]
     rw [hbase]
     norm_num only [charge,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_succ,Fin.isValue]
@@ -256,6 +259,6 @@ private theorem peak_certificate (a b c : ℕ)
     change 0≤2*A+2*(w:ℤ)*L-M-1 at pl
     change 0≤D-(w:ℤ)*(z+1) at ed
     refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,?_,?_,?_,?_⟩
-    all_goals nlinarith only [lo,ln,lp,hm.1,hm.2.1,hm.2.2,sl,tl,pl,ed]
+    all_goals nlinarith only [lo,ln,lp,hm.1,hm.2.1,hm.2.2,sl,tl,pl,ed,hzpos]
 
 end D5.S3.Combinatorics.Circle.FourNegative.UpperGap

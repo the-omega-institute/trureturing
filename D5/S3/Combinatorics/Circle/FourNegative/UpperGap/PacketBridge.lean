@@ -8,10 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.UpperGap.Rounding
 import D5.S3.Combinatorics.Circle.FourNegative.UpperGap.SourceMasses
 
-/-! Uncompiled preparation source. This helper consumes explicit lists and their
-numeric packet checks. It assumes neither Certificate existence nor a feasible
-physical order. The two existing equivalences provide the actual-source and
-finite-certificate transport; no source model or permutation is substituted. -/
+/-! Exact physical transport of constructed packet checks in both centered rows. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.UpperGap
