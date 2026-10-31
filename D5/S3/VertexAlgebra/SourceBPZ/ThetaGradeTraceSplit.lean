@@ -51,27 +51,31 @@ private def minusPartLinear (D : LatticeData) : Carrier D →ₗ[ℂ] Carrier D 
     simp only [RingHom.id_apply]
     module
 
-private def plusGradeMap (D : LatticeData) (n : ℤ) :
+def plusGradeMap (D : LatticeData) (n : ℤ) :
     grade D n →ₗ[ℂ] plusGrade D n :=
   ((plusPartLinear D).domRestrict (grade D n)).codRestrict
     (plusGrade D n) (fun v => by
       have h := thetaRep_grade_plus_minus_decomposition D n v
       exact ⟨h.2.1, h.2.2.2.1⟩)
 
-private def minusGradeMap (D : LatticeData) (n : ℤ) :
+def minusGradeMap (D : LatticeData) (n : ℤ) :
     grade D n →ₗ[ℂ] minusGrade D n :=
   ((minusPartLinear D).domRestrict (grade D n)).codRestrict
     (minusGrade D n) (fun v => by
       have h := thetaRep_grade_plus_minus_decomposition D n v
       exact ⟨h.2.2.1, h.2.2.2.2⟩)
 
-private def gradeTheta (D : LatticeData) (n : ℤ) :
+def gradeTheta (D : LatticeData) (n : ℤ) :
     grade D n →ₗ[ℂ] grade D n :=
   (thetaLinear D).domRestrict (grade D n) |>.codRestrict
     (grade D n) (fun v => by
       change thetaLinear D v.1 ∈ grade D n
       simpa [thetaRep, theta] using
         thetaRep_preserves_energy_grade D n v.1 v.2)
+
+@[simp] theorem gradeTheta_val (D : LatticeData) (n : ℤ) (v : grade D n) :
+    (gradeTheta D n v).1 = theta D v.1 := by
+  rfl
 
 private theorem plusPart_fixed (D : LatticeData) (v : Carrier D)
     (hv : v ∈ fixedSpace D) : plusPart D v = v := by
@@ -94,7 +98,7 @@ private theorem minusPart_minus (D : LatticeData) (v : Carrier D)
   rw [minusPart, he]
   module
 
-private def gradeSplitEquiv (D : LatticeData) (n : ℤ) :
+def gradeSplitEquiv (D : LatticeData) (n : ℤ) :
     grade D n ≃ₗ[ℂ] plusGrade D n × minusGrade D n := by
   let e : grade D n →ₗ[ℂ] plusGrade D n × minusGrade D n :=
     (plusGradeMap D n).prod (minusGradeMap D n)
@@ -137,6 +141,59 @@ private theorem gradeSplitEquiv_fst (D : LatticeData) (n : ℤ) (v : grade D n) 
 private theorem gradeSplitEquiv_snd (D : LatticeData) (n : ℤ) (v : grade D n) :
     (gradeSplitEquiv D n v).2.1 = minusPart D v.1 := by
   rfl
+
+
+theorem grade_split_theta_conj (D : LatticeData) (n : ℤ) :
+    (gradeSplitEquiv D n).conj (gradeTheta D n) =
+      (LinearMap.id : plusGrade D n →ₗ[ℂ] plusGrade D n).prodMap
+        (-(LinearMap.id : minusGrade D n →ₗ[ℂ] minusGrade D n)) := by
+  let e := gradeSplitEquiv D n
+  have hplus_theta (v : grade D n) :
+      plusPart D (theta D v.1) = plusPart D v.1 := by
+    simp only [plusPart, map_add]
+    have hi : theta D (theta D v.1) = v.1 := theta_involutive D v.1
+    rw [hi]
+    rw [add_comm]
+  have hminus_theta (v : grade D n) :
+      minusPart D (theta D v.1) = -minusPart D v.1 := by
+    simp only [minusPart, map_sub]
+    have hi : theta D (theta D v.1) = v.1 := theta_involutive D v.1
+    rw [hi]
+    module
+  have hconj : e.conj (gradeTheta D n) =
+      (LinearMap.id : plusGrade D n →ₗ[ℂ] plusGrade D n).prodMap
+        (-(LinearMap.id : minusGrade D n →ₗ[ℂ] minusGrade D n)) := by
+    apply LinearMap.ext
+    intro p
+    obtain ⟨v, rfl⟩ := e.surjective p
+    rw [e.conj_apply]
+    simp only [LinearMap.comp_apply]
+    change e (gradeTheta D n (e.symm (e v))) = _
+    rw [e.symm_apply_apply]
+    apply Prod.ext
+    · apply Subtype.ext
+      change (e (gradeTheta D n v)).1.1 = (e v).1.1
+      calc
+        (e (gradeTheta D n v)).1.1 = plusPart D (theta D v.1) := by
+          change (gradeSplitEquiv D n (gradeTheta D n v)).1.1 = _
+          rw [gradeSplitEquiv_fst]
+          rfl
+        _ = plusPart D v.1 := hplus_theta v
+        _ = (e v).1.1 := by
+          change _ = (gradeSplitEquiv D n v).1.1
+          rw [gradeSplitEquiv_fst]
+    · apply Subtype.ext
+      change (e (gradeTheta D n v)).2.1 = -(e v).2.1
+      calc
+        (e (gradeTheta D n v)).2.1 = minusPart D (theta D v.1) := by
+          change (gradeSplitEquiv D n (gradeTheta D n v)).2.1 = _
+          rw [gradeSplitEquiv_snd]
+          rfl
+        _ = -minusPart D v.1 := hminus_theta v
+        _ = -(e v).2.1 := by
+          change _ = -(gradeSplitEquiv D n v).2.1
+          rw [gradeSplitEquiv_snd]
+  exact hconj
 
 set_option maxHeartbeats 800000 in
 theorem grade_theta_trace_eq_fixed_minus_anti (D : LatticeData) (n : ℤ)

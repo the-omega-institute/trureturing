@@ -4067,3 +4067,468 @@ $$
 计数接口是式(32.1)的实际耳删去／添回双射及第33节的精确迹容斥。对 Leader–Tan [B32-LT] §2、Lemma6 的参数，$T_m=C_{m-2}$、六条选中耳取其 $E=D$，于是 $T_{14-r-j}=c_{r+j}$；式(39.12)、(39.13)、(39.23)分别强制 $M_i\cup\{g\}$、$M_i\cup\{g,d_k\}$、$Q_i\cup\{g\}$，兼容的待禁止选中耳数分别为四、二、二。式(39.14)、(39.15)则保留双交叉外耳造成的自动禁止和端部外耳对 $g$ 的禁止。与第32–38节的已有计数、二元投影分类及原族分解相接的是引理B-39.2的唯一兼容外耳结构、引理B-39.3的避耳联合界及(39.15)、(39.19)–(39.20)的混合分支约束。所得结论仅覆盖这里 $n=14,E_0\ne\varnothing$ 的三活跃核域，不给一般 $n\ge15$ 的结论。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 40. Long-gap fourteen-gon: sharp three-core bound and exact fifteen-partition profile
+
+This appendix presents the supplied computer-assisted finite proof of the sharp three-core bound and its exact fifteen-partition profile. Published B-39.4 already gives $A\le5005$, and B-39.5 already gives the original-family strict bound $|\mathcal F|\le33258=L-126$. That original residual/classification consumer is supplied by §39. The distinct result here is the exact core objective: its uniform maximum is $4290$, matching the existing lower construction B-37.8, and the other fourteen normalized partitions have exact maximum $3690$. These are core counts, not maxima of total family size. The full reductions and table are given here; executable code and finite data belong to the private companion in §40.6.
+
+### 40.1. Fixed labelled domain and sharp core bound
+
+Let $P$ be any fixed strictly convex fourteen-gon with labelled vertices $v_0,\ldots,v_{13}$ in cyclic order. Write $e_i=v_{i-1}v_{i+1}$ for its original ear diagonal with centre $i$, with indices modulo $14$, and let $\mathcal T_{14}$ be all actual triangulations of this same polygon. Let $D$ be any six mutually noncrossing original ears whose successive cyclic gaps, counted in unselected centres, have multiset $(3,1,1,1,1,1)$. Partition $D$ into three pairs $M_1,M_2,M_3$. For $T\in\mathcal T_{14}$, $\operatorname{Ear}(T)$ is its complete set of original ears, and
+
+$$
+\Gamma(R)=\{T:\operatorname{Ear}(T)\cap D=R\}.
+$$
+
+**定理 B-40.1（supplied long-gap matching-core bound; computer-assisted）。** If F is any family of actual triangulations of this same polygon which is pairwise intersecting in complete ear sets, and
+
+$$
+a_i=|F\cap\Gamma(M_i)|>0\quad(i=1,2,3),
+$$
+
+then
+
+$$
+A=a_1+a_2+a_3\le4290<4344.
+$$
+
+For the original four-witness domain, the three pairs are
+
+$$
+M_1=\{f_{12},f_{34}\},\quad M_2=\{f_{13},f_{24}\},\quad M_3=\{f_{14},f_{23}\}.
+$$
+
+Here $D=\{f_{ab}:1\le a<b\le4\}$ has arbitrary $K_4$ labelling, with $f_{ab}=f_{ba}$, $S_a=\{f_{ab}:b\ne a\}$, and the four arbitrarily specified actual witnesses satisfy $\operatorname{Ear}(T_a)=S_a$. The original family contains all four witnesses and is pairwise intersecting in full ear sets. The proposed bound needs no witness hypothesis, so it applies to every such choice. The existing original-family consequence and the distinct sharpness statement are separated in §40.5. No maximality or saturation assumption is made.
+
+The proposed proof gives the geometric and combinatorial reductions explicitly and specifies the remaining finite arithmetic by a complete standard-library Python verifier in the private experiment companion. It is an ordinary computer-assisted finite proof, not a Lean/kernel proof. The two enumeration implementations are checks within the supplied source.
+
+### 40.2. Exact geometric reduction and full-ear weights
+
+Two original ears cross precisely when their centres are consecutive in the original cyclic order. Consequently any complete ear set is an independent set of the cycle C_14. The one long gap allows the cyclic indexing to start at the selected centre immediately following it. The selected centres then become
+
+$$
+D_*=\{0,2,4,6,8,10\}.
+$$
+
+This is a change of coordinates in a proof, not a geometric symmetry assumption. Cyclic order determines crossing and hence all triangulations in every strictly convex realization. The original labelled families and witnesses transport bijectively and preserve complete ears, exact D-traces, and cardinalities. All partitions of D_* into three unlabelled pairs are listed below; there are 5*3*1=15. Permuting the three core names preserves A and the condition that every core is nonempty. Every K4 labelling therefore appears in this list. We do not identify distinct physical completions under this coordinate change.
+
+Identify an ear set with its set of centres, and let $I$ be the independent subsets of $C_{14}$. The notation $\omega(S)$ below counts an exact full ear set, distinct from the earlier exact-$D$-trace weights $w_r$. If S is in I, deleting the ear centres in S and then attaching the fixed ear triangles back is a bijection between triangulations containing S and triangulations of the remaining (14-|S|)-gon. This remains valid when ears share an endpoint: the deleted centres are nonadjacent, so all required endpoints remain. Thus the containing count is
+
+$$
+h(S)=C_{12-|S|},\qquad C_k=\frac1{k+1}\binom{2k}{k}.
+$$
+
+Containing a nonindependent ear set is impossible. Finite inclusion-exclusion on all original ears gives the exact complete-ear-set weight
+
+$$
+\omega(S)=|\{T:\operatorname{Ear}(T)=S\}|
+=\sum_{\substack{U\in I\\S\subseteq U}}(-1)^{|U|-|S|}C_{12-|U|}.
+\tag{40.1}
+$$
+
+Equation (40.1) distinguishes all full ear sets individually. No equality of weights for same-cardinality full ear sets is assumed. For example the computed two-ear weights range from 1 to 252. There are 843 independent masks, of which precisely 828 have positive weight; their weights sum to C_12=208012. The verifier also independently reproduces every weight by enumerating the unique root triangle of every actual triangulation.
+
+### 40.3. The arbitrary-family bridge to a weighted clique
+
+For each of the fifteen pair partitions construct a graph $G$. Its vertices are pairs $(i,S)$ with $S\in I$, $\omega(S)>0$ and $S\cap D_*=M_i$. Distinct vertices $(i,S)$ and $(j,R)$ are adjacent exactly when $S\cap R\ne\varnothing$. Give $(i,S)$ weight $\omega(S)$. Within one core all vertices are adjacent because they share $M_i$.
+
+From the original F take the support of its members in the three matching cores. This support is a clique in G: adjacency tests the full original ear sets, including all ears outside D. It meets all three parts because each a_i>0. Moreover
+
+$$
+A\le\sum_{(i,S)\text{ in its support}}\omega(S).
+\tag{40.2}
+$$
+
+This inequality only counts the available distinct actual triangulations with each full ear set. It adds no completion to F and makes no saturation assumption. Every clique in the finite graph extends to an inclusion-maximal clique. Since weights are positive, (40.2) is bounded by the weight of a maximal clique still meeting all three parts. It therefore suffices to enumerate such spanning maximal cliques.
+
+### 40.4. Exhaustive finite recurrence and all fifteen rows
+
+The following recurrence proves the completeness of the enumeration, independently of implementation choices. Let K_j be the inclusion-maximal cliques on the first j vertices, with K_0={empty set}. On adding vertex v, form
+
+$$
+\mathscr C=K_j\ \cup\ \{\{v\}\cup(C\cap N(v)):C\in K_j\},
+\qquad
+K_{j+1}=\operatorname{Max}_{\subseteq}\mathscr C.
+\tag{40.3}
+$$
+
+Every candidate in (40.3) is a clique. Every clique avoiding v extends to a member of K_j. Every clique containing v, after v is removed, extends to some C in K_j and is therefore contained in the candidate {v} union (C intersect N(v)). Thus every clique is contained in a candidate. Taking the inclusion-maximal candidates gives exactly all maximal cliques, proving (40.3) by induction. This also covers maximal cliques confined to one or two parts; they are removed only when selecting the three-part spanning cliques for the final maximum.
+
+Apply (40.1) and (40.3) with vertices ordered first by core and then by their binary ear mask. The complete table is:
+
+| Pair partition of selected centres | Vertices per core | All maximal cliques | Spanning maximal cliques | Maximum spanning weight |
+|---|---:|---:|---:|---:|
+| (0,2) / (4,6) / (8,10) | 24,20,24 | 45 | 27 | 4290 |
+| (0,2) / (4,8) / (6,10) | 24,10,12 | 11 | 1 | 3690 |
+| (0,2) / (4,10) / (6,8) | 24,12,20 | 19 | 6 | 3690 |
+| (0,4) / (2,6) / (8,10) | 12,10,24 | 11 | 1 | 3690 |
+| (0,4) / (2,8) / (6,10) | 12,10,12 | 6 | 1 | 3690 |
+| (0,4) / (2,10) / (6,8) | 12,12,20 | 10 | 2 | 3690 |
+| (0,6) / (2,4) / (8,10) | 12,20,24 | 19 | 6 | 3690 |
+| (0,6) / (2,8) / (4,10) | 12,10,12 | 6 | 1 | 3690 |
+| (0,6) / (2,10) / (4,8) | 12,12,10 | 6 | 1 | 3690 |
+| (0,8) / (2,4) / (6,10) | 12,20,12 | 10 | 2 | 3690 |
+| (0,8) / (2,6) / (4,10) | 12,10,12 | 6 | 1 | 3690 |
+| (0,8) / (2,10) / (4,6) | 12,12,20 | 10 | 2 | 3690 |
+| (0,10) / (2,4) / (6,8) | 16,20,20 | 19 | 6 | 3690 |
+| (0,10) / (2,6) / (4,8) | 16,10,10 | 8 | 1 | 3690 |
+| (0,10) / (2,8) / (4,6) | 16,10,20 | 11 | 1 | 3690 |
+
+For additional explicit arithmetic, in the first row the multiset of spanning weights is
+
+$$
+\begin{gathered}
+2706,2838,2838,3025,3025,3135,3135,3135,3135,3300,3300,\\
+3432,3432,3639,3639,3639,3674,3690,3839,3839,3839,\\
+3861,3861,3861,3861,4136,4290.
+\end{gathered}
+$$
+
+All other rows have maximum 3690. The companion verifier evaluates the finite formulas using exact integers, computes the table by recurrence (40.3), and requires equality of the entire maximal-clique lists with a separate pivoted clique enumeration. Its triangulation recursion independently checks (40.1): each triangulation has one unique triangle adjacent to root side (a,b); its apex k separates two smaller intervals. An interior original ear i=1,...,12 is present exactly when triangle (i-1,i,i+1) appears. Ears 0 and 13 are detected in root triangles (0,1,13) and (0,12,13). Duplicate ear masks in this recursion represent different triangulations and are deliberately counted with multiplicity.
+
+The supplied finite results satisfy these assertions. The table and (40.2), with the exhaustive finite computation, give $A\le4290$ for every original family in this long-gap domain.
+
+### 40.5. Sharpness, realizing families and already supplied original-family results
+
+**命题 B-40.2（exact core maxima; reuse of B-37.8 for the first partition）。** In the witness-free domain of B-40.1, the first partition in the table has exact maximum $A=4290$, and each of the other fourteen partitions has exact maximum $A=3690$. The first-partition value is also realized in the original four-witness domain for every permitted choice of its four complete-star witnesses. This is sharpness of $A$ only.
+
+For the first partition, reuse B-37.8 and (37.24)–(37.25) at $n=14$. The cyclic coordinate map sending old centre $j$ to $j-1$ modulo $14$ sends its pairs
+
+$$
+\{1,3\}/\{5,7\}/\{9,11\}\quad\longmapsto\quad
+\{0,2\}/\{4,6\}/\{8,10\},
+$$
+
+and sends its auxiliary ears $e_2,e_6,e_{10}$ to $e_1,e_5,e_9$. Its three actual containing-event subfamilies therefore force, respectively, the centre sets
+
+$$
+\{0,2,5,9\},\qquad\{1,4,6,9\},\qquad\{1,5,8,10\}.
+$$
+
+These are exactly the relabelled subfamilies $\mathcal Y_i$ of the published construction. B-37.8 proves that each lies in its exact matching trace, has $c_4=C_8=1430$ members, and that its full family $\mathcal F_\ast$ is full-ear-intersecting and contains every prescribed choice of the four complete-star witnesses. Thus it supplies $A=3c_4=4290$ in this normalized placement. Together with B-40.1, this proves optimality of its core objective; it makes no optimality claim about $|\mathcal F_\ast|$.
+
+For each row, the supplied finite proof and its source also justify realization directly from an already computed maximizing spanning clique $C$. Define
+
+$$
+\mathcal F_C=\{T\in\mathcal T_{14}:\ (i,\operatorname{Ear}(T))\in C
+\text{ for some }i\}.
+\tag{40.4}
+$$
+
+Take every actual triangulation with one of these positive complete ear masks. Clique adjacency ensures that any two resulting full ear sets intersect. Within a single mask they also intersect, since that mask contains its matching pair. The exact traces are precisely the active parts represented in $C$, all three parts are nonempty, and the number of actual triangulations is exactly $\sum_{(i,S)\in C}\omega(S)$. Thus the computed maximum weights are attained in the stated witness-free domain: $4290$ in the first row, with core counts $(1430,1430,1430)$, and $3690$ in every other row, with core counts $(1230,1230,1230)$. All actual diagonal completions are included. This explicit realizing construction is separate from (40.2), which only bounds an arbitrary original family and never completes or saturates it. No claim that the other fourteen constructions contain arbitrary prescribed star witnesses follows, and no classification of all maximizing families is asserted. $\square$
+
+For source attribution, B-39.4 gives $A\le5005$ in the original four-witness domain; its occurrence of $4290$ in (39.21) treats only its $m=3,p=3$ branch. It does not state the uniform $4290$ upper bound or the fifteen exact partition maxima. B-39.5 already gives $|\mathcal F|\le33258=L-126$ in the full long-gap three-active-core domain, for arbitrary prescribed complete-star witnesses and every actual completion. It therefore already supplies the strict bound consumed by B-37.9. The residual/classification chain is not new content supplied first by this appendix.
+
+The additional inequality $A\le4290<w_2=4344$ rules out the premise $A>w_2$ in this domain. Here $c_r=C_{12-r}$ and
+
+$$
+w_2=c_2-4c_3+6c_4-4c_5+c_6=4344,\qquad
+L=c_2+6c_3-10c_4+4c_5=33384.
+\tag{40.5}
+$$
+
+This is emptiness of that residual, not its inhabitation or an attained residual optimum. B-37.5 handles the existing complementary branches, while B-39.5 supplies the long-gap strict consumer independently of this appendix. The literal equality families and their existence statements remain those of B-33.3/B-33.4. No stronger total-family bound or new full-family equality classification is asserted here.
+
+B-38.4 has the separate gap multiset $(2,2,1,1,1,1)$, equivalently $E_0=\varnothing$; this appendix has $(3,1,1,1,1,1)$, equivalently $E_0\ne\varnothing$. A gap of length at least three has a centre adjacent to no selected centre, and the six positive gaps sum to eight, as in B-38.2 and B-39.2. No B-38 inequality is applied outside its domain. There is no extension of this finite result to $n\ge15$.
+
+### 40.6. Sources, executable companion and limits
+
+The supplied mathematical source is artifact `6ae585c69b5dc1f88b8eccdc`, `mathematical-result.md`, SHA-256 `1ffc20ecba6f58312dc7c11a750145ac6a172e6d6dd925c676dd7d6ea1c3aaa0`. The complete executable companion is retained at [experiments/fib-fourteen-long-gap-24633](https://github.com/the-omega-institute/trureturing-experiments/tree/d39146cc8047e4969beb9296647d46c3d2d0689b/experiments/fib-fourteen-long-gap-24633) in the private experiments repository. It contains `verify.py` (SHA-256 `67ac0e3ab5a4eb0b10e3f294a2de4bcdbf23bbee472535f4210faedae5b80313`), `results.json` (SHA-256 `051fa1e452b13043f1340eb0754c21dbe710af7827b22151f44445a6828ef86c`) and reproduction instructions. The program preserves every supplied enumeration function, expected triple and assertion; its only additions serialize the finite result rows. It requires Python 3.12 or newer, exact integers and no third-party dependencies. The source/table correspondence includes every partition, vertex count, maximal-clique count and maximum; the 27 first-row spanning weights above are supplementary arithmetic. Attainment is justified separately in B-40.2 by the existing B-37.8 construction and by the supplied complete-ear-support realization, not by a bare numerical maximum.
+
+The project source correspondence is B-32 ear deletion, B-33 exact-trace counting and literal equality families, B-37's common-family interfaces and its explicit lower construction B-37.8, and the published long-gap bounds B-39.4/B-39.5. Their current published source is [the owner at commit `52fdc99080bdca5a4686482df82bad5a6f39f7c7`](https://github.com/the-omega-institute/trureturing/blob/52fdc99080bdca5a4686482df82bad5a6f39f7c7/docs/develop/theory/AURIC_FIB_ATOM_INTRINSIC_CLASSIFICATION_AND_POLYGON_GEOMETRY.md), published through [PR24647](https://github.com/the-omega-institute/trureturing/pull/24647). The supplied candidate's older source pin `3143b5b6d2dcd2c00a95c3fb99ba5db59f498f1d` supplies its B-32/B-33/B-37 parameter correspondence; it is not evidence that the original residual is currently unsupplied. B-38 retains its separate gap-pattern scope. The finite upper proof and table are supplied repository-derived mathematics.
+
+Leader–Tan, *Some results on intersecting families of triangulations*, [arXiv:2610.39116v1](https://arxiv.org/html/2610.39116v1), §§2–4, uses $T_m=C_{m-2}$. Its ear-deletion count $T_{14-r}=C_{12-r}$ is the containing count $h(S)$ in (40.1). Its noncrossing-$D$ intersection theorem does not permit replacing full-ear adjacency in $G$ by $D$-only intersection, and its all-ear additive bound does not supply this finite matching-core bound. Talbot, *Intersecting Families of Separated Sets*, [arXiv:math/0211314v1](https://arxiv.org/html/math/0211314v1), Theorem 4, uses fixed $r,k$, $n\ge2(k+1)r$ and gap-binomial-product weights; those are not the exact full-ear completion weights (40.1). These are the supplied source's scoped comparisons, not a new exhaustive literature search or a global novelty/priority claim.
+
+There is no Lean/kernel verification, formal admission, digestion coverage, physical-realization claim or numerical $C_{\rm src}$ claim. No saturation, placement symmetry or selected small-complete-ear restriction is assumed for an arbitrary family. There is no residual-inhabitation, sharp total-family bound, all-maximizer classification or $n\ge15$ assertion. Only the core attainments specified in B-40.2 are claimed.
+
+## 追加锚（本行以下为增补区）
+
+## 41. 条件完成和的定量缺口与十五至十九边形的严格剩余界
+
+**定义 B-41.1（全部条件完成与缺口）。** 本节固定 $n\ge15$，沿用定义B-32.1的标号严格凸多边形、实际耳及完整耳集。原四见证问题取假设B-37.1的每个两两不交叉六耳配置 $D$、每一组预先指定且满足 $\operatorname{Ear}(T_a)=S_a$ 的四个实际见证，以及包含它们、在完整实际耳集上两两相交的任一族 $\mathcal F$。记号 $M_i,Q_i,\Gamma,u_0,w_2,w_3,w_4,L,a_i,b_i,t_i,z_{ij},\eta,\ell_i,d_{ij}$ 均保持第33、37节的定义；特别是 $\Gamma(R)$ 为整个实际精确 $D$ 迹完成纤维。
+
+置
+
+$$
+\begin{gathered}
+c_r=C_{n-r-2}\quad(0\le r\le\lfloor n/2\rfloor),\qquad
+m=\lfloor n/2\rfloor-4,\\
+s=w_2+2w_3+w_4=c_2-2c_3+c_4,\qquad h_n=w_2-w_4,\\
+L=u_0+w_2+2w_4+6w_3,\\
+V_r=c_{r+2}-2c_{r+3}+c_{r+4}\quad(0\le r\le m),\\
+G_d(n)=\sum_{r=0}^d(-1)^r\binom dr V_r-V_d
+\quad(1\le d\le m).
+\end{gathered}
+\tag{41.1}
+$$
+
+对满足 $|P|=|Q|=2$、$P\cap Q=\varnothing$ 且 $K=P\cup Q$ 两两兼容的实际耳集 $P,Q$，使用定理B-37.2的全部条件完成
+
+$$
+\mathcal X(P\mid Q)=\{T\in\mathcal T_n:
+ P\subseteq\operatorname{Ear}(T),\quad Q\cap\operatorname{Ear}(T)=\varnothing\}.
+$$
+
+令 $E_K$ 为 $K$ 外兼容 $K$ 每条耳的全部实际耳，$m_K$ 为 $E_K$ 中两两兼容子集的最大大小。上述完成母族保留所有其他耳及每一种实际完成；所取子族仍可任意选取，不施加对称性、饱和性、包含极大性或指定完整双耳／三耳成员条件。
+
+**定理 B-41.2（缺口的正性与单调性）。** 对式(41.1)的每个合法指标，
+
+$$
+G_d(n)>0\quad(1\le d\le m),\qquad
+G_{d+1}(n)\le G_d(n)\quad(1\le d<m),
+\qquad G_1(n)=G_2(n)=h_n.
+\tag{41.2}
+$$
+
+证明。先消费定理B-37.2证明中的实际条件权重。对兼容的 $K=P\cup Q$ 及非空两两兼容的 $J\subseteq E_K$，写 $d=|J|$。式(37.6)取 $p=q=2$，含有任一指定 $r$ 元 $J$ 子集的条件完成数正是 $V_r$；式(37.9)遂给每个 $r$ 元精确 $J$ 迹的权重
+
+$$
+\omega_r^{(d)}=\sum_{j=0}^{d-r}(-1)^j\binom{d-r}{j}V_{r+j},
+\qquad
+\sum_{r=0}^d\binom dr\omega_r^{(d)}=V_0=s.
+\tag{41.3}
+$$
+
+这是原多边形上的精确迹计数；未观察耳仍自由，重复的迹所对应的不同剖分逐一计数。反侧交换 $P,Q$ 后仍是同一个(41.3)。由(37.10)的保条件翻转注入及严格扇形见证，
+
+$$
+\omega_0^{(d)}>\omega_1^{(d)}\ge\cdots\ge\omega_d^{(d)}\ge0,
+\qquad G_d(n)=\omega_0^{(d)}-\omega_d^{(d)}>0.
+\tag{41.4}
+$$
+
+这些数值结论对每个 $1\le d\le m$ 均有实际实现：原循环上可选中心为 $0,2,\ldots,2(d+3)$ 的 $d+4$ 条兼容耳，分成两对 $P,Q$ 和余下的 $J$。最后一个中心至多为 $n-2$，两端的循环间距也至少二；故定义B-32.1的耳兼容判据适用。这里并未要求任一预先指定的 $K$ 都能扩充到这个大小，只用一次实际实现证明仅依赖 $n,d$ 的数值性质。
+
+若 $d<m$，在大小 $d+1$ 的这种实际载体上略去一个观察坐标。其空迹纤维与满迹纤维分别分成该坐标不取／取的两个完整纤维，所以
+
+$$
+\omega_0^{(d)}=\omega_0^{(d+1)}+\omega_1^{(d+1)},\qquad
+\omega_d^{(d)}=\omega_d^{(d+1)}+\omega_{d+1}^{(d+1)}.
+$$
+
+因此
+
+$$
+G_d-G_{d+1}=\omega_1^{(d+1)}-\omega_d^{(d+1)}\ge0.
+\tag{41.5}
+$$
+
+$d=1$ 时右边为零，包含了 $G_1=G_2$ 的端点。式(33.10)的精确六耳权重给
+
+$$
+h_n=c_2-4c_3+5c_4-2c_5=V_0-2V_1=G_1=G_2.
+\tag{41.6}
+$$
+
+全部使用的最大下标是 $d+4\le\lfloor n/2\rfloor$，奇偶两类均留下至少 $\lceil n/2\rceil$ 个顶点；没有退化多边形计数。∎
+
+**定理 B-41.3（实际条件完成的定量交叉和界）。** 对定义B-41.1的 $P,Q,K$，若非空子族
+$\mathcal C\subseteq\mathcal X(P\mid Q)$、$\mathcal D'\subseteq\mathcal X(Q\mid P)$ 在完整实际耳集上交叉相交，且 $m_K\ge1$，则
+
+$$
+|\mathcal C|+|\mathcal D'|
+\le s-G_{m_K}(n)\le s-G_m(n).
+\tag{41.7}
+$$
+
+证明。式(37.5)准确识别跨侧全部共同耳为 $E_K$ 中的共同耳。消费定理B-37.2证明中(37.7)–(37.9)的双族降交叉：它将两原族送到同一个实际兼容 $J\subseteq E_K$ 上的非空交叉相交向上族 $\mathscr C,\mathscr D\subseteq2^J$，各侧条件权重不减。原族本身无须极大；扩大与投影只用于该上界。局部删耳对应保留强制 $P$、禁止 $Q$，反侧保留强制 $Q$、禁止 $P$；这里只因两者大小均为二，最后的两侧权重才同为(41.3)。
+
+写 $d=|J|$，则 $1\le d\le m_K\le m$：两非空交叉相交族不能落在空载体上，而 $J\cup K$ 的全部 $d+4$ 条实际耳兼容。令
+
+$$
+\mu(\mathscr V)=\sum_{R\in\mathscr V}\omega_{|R|}^{(d)},\qquad
+\overline{\mathscr C}=\{J\setminus R:R\in\mathscr C\}.
+$$
+
+交叉相交给 $\overline{\mathscr C}\cap\mathscr D=\varnothing$，故由全部权重非负及(41.3)，
+
+$$
+|\mathcal C|+|\mathcal D'|
+\le\mu(\mathscr C)+\mu(\mathscr D)
+\le s-\bigl(\mu(\overline{\mathscr C})-\mu(\mathscr C)\bigr).
+\tag{41.8}
+$$
+
+对 $0\le r\le d$，令 $\alpha_r=|\mathscr C^{(r)}|/\binom dr$。向上性使每个入选 $r$ 元集的全部 $d-r$ 条向上包含边都指向入选集；每个 $(r+1)$ 元集至多承接 $r+1$ 条边，故 $\alpha_r\le\alpha_{r+1}$。非空性给 $\alpha_d=1$，与另一非空族交叉相交给 $\alpha_0=0$。补集交换 $r$ 层与 $d-r$ 层，将两个相对层配对便得到准确恒等式
+
+$$
+\begin{aligned}
+\mu(\overline{\mathscr C})-\mu(\mathscr C)
+&=\sum_{0\le r<d/2}\binom dr
+ (\omega_r^{(d)}-\omega_{d-r}^{(d)})(\alpha_{d-r}-\alpha_r)\\
+&\ge\omega_0^{(d)}-\omega_d^{(d)}=G_d(n).
+\end{aligned}
+\tag{41.9}
+$$
+
+偶数 $d$ 的中间层差为零；所有所列项非负，而 $r=0$ 项恰为所保留的缺口。代回(41.8)，再按(41.2)的方向使用 $d\le m_K\le m$，即得(41.7)。压缩前后均使用整个条件完成的权重，未将抽象迹个数替代实际剖分个数。∎
+
+**定理 B-41.4（同一原族的三个缺口）。** 在定义B-41.1的原问题中，置
+$K_{ij}=M_i\cup M_j$、$m_{ij}=m_{K_{ij}}$。则 $2\le m_{ij}\le m$。每个三个核均活跃的同一原族 $\mathcal F$ 满足
+
+$$
+2(|\mathcal F|-L)
+\le h_n-6-\sum_{i<j}G_{m_{ij}}(n)
+\le h_n-6-3G_m(n).
+\tag{41.10}
+$$
+
+证明。第三匹配的两条耳 $M_k$ 均在 $E_{K_{ij}}$ 内且互相兼容，所以 $m_{ij}\ge2$；兼容 $K_{ij}$ 的任何兼容子集与它合并共有 $4+m_{ij}$ 条兼容耳，故 $m_{ij}\le m$。
+
+固定 $i<j$，取原族自身的两个子族
+
+$$
+\mathcal C_{ij}=\mathcal F\cap\mathcal X(M_i\mid M_j),\qquad
+\mathcal D_{ij}=\mathcal F\cap\mathcal X(M_j\mid M_i).
+$$
+
+$a_i,a_j>0$ 保证两侧非空；原完整耳相交性保证它们交叉相交。引理B-37.4证明中对全部 $D$ 迹的分类准确给
+$|\mathcal C_{ij}|+|\mathcal D_{ij}|=z_{ij}$，因此(41.7)给
+
+$$
+d_{ij}=s-z_{ij}\ge G_{m_{ij}}(n).
+\tag{41.11}
+$$
+
+使用同一个 $\mathcal F$ 的(37.21)、(37.23)，得到
+
+$$
+\begin{aligned}
+2(|\mathcal F|-L)
+&=h_n-2\eta-\sum_i\ell_i-\sum_{i<j}d_{ij}\\
+&\le h_n-6-\sum_{i<j}G_{m_{ij}}(n).
+\end{aligned}
+$$
+
+再用(41.2)即得第二界。这里 $\eta\ge0$、每个 $\ell_i\ge2$ 以及三个(41.11)同时属于原族；没有合并分别可达的边缘极值，也没有使用 $A>w_2$。∎
+
+**定理 B-41.5（兼容载体至多五元的严格界）。** 在定义B-41.1的原问题中，若每个 $m_{ij}\le5$，则每个三个核均活跃的实际族满足
+
+$$
+|\mathcal F|\le L-4.
+\tag{41.12}
+$$
+
+证明。先证明对所有合法的 $1\le d\le\min(5,m)$ 均有
+
+$$
+3G_d(n)>h_n.
+\tag{41.13}
+$$
+
+$d=1,2$ 时由(41.2)、(41.6)成立。对其余 $d$，使用(41.3)的实际权重，暂记 $\omega_r=\omega_r^{(d)}$。在同一载体上计所有完成与含一个指定坐标的完成，分别有
+
+$$
+V_0=\sum_{r=0}^d\binom dr\omega_r,\qquad
+V_1=\sum_{r=1}^d\binom{d-1}{r-1}\omega_r.
+\tag{41.14}
+$$
+
+由 $h_n=V_0-2V_1$ 与 $G_d=\omega_0-\omega_d$，在 $d=3,4$ 时分别得到
+
+$$
+\begin{aligned}
+3G_3-h_n
+ &=(\omega_0-\omega_1)+(\omega_0-\omega_3)+(\omega_2-\omega_3)>0,\\
+3G_4-h_n
+ &=2\bigl((\omega_0-\omega_1)+(\omega_3-\omega_4)\bigr)>0.
+\end{aligned}
+\tag{41.15}
+$$
+
+每一行使用其自己的维数权重；严格性来自(41.4)。
+
+$d=5$ 合法时必有 $n\ge18$。令 $N=n-4\ge14$，并在有理形式幂级数中置
+
+$$
+B_t=[z^t](1-z)^6C(z),\qquad C(z)=\sum_{j\ge0}C_jz^j.
+$$
+
+对 $t\ge6$，即 $B_t=\sum_{j=0}^6(-1)^j\binom6jC_{t-j}$。将(41.3)的容斥与 $V_r$ 的二阶差分合并，得到
+
+$$
+\omega_0=B_N-B_{N-1},\qquad \omega_1=B_{N-1}.
+\tag{41.16}
+$$
+
+以下仅将既有 Catalan 生成式用于比较这两个权重。[B32-CL] 的 `catalanUnit_equation` 给 $C=1+zC^2$ 及 $C(0)=1$，因而令 $S=1-2zC$ 就有 $S^2=1-4z$、$S(0)=1$。设 $R=(1-z)^6S$，形式微分给
+
+$$
+(1-5z+4z^2)R'=(-8+26z)R,
+\qquad R=(1-z)^6-2z(1-z)^6C.
+\tag{41.17}
+$$
+
+确切地，$S^2=1-4z$ 给 $(1-4z)S'=-2S$，再对 $(1-z)^6S$ 用乘法法则便得第一式。若 $R_j=[z^j]R$，对第一式比较 $z^k$ 系数，有
+
+$$
+(k+1)R_{k+1}=(5k-8)R_k-(4k-30)R_{k-1}.
+$$
+
+第二式在 $j>6$ 给 $R_j=-2B_{j-1}$。取 $k=t+1$，消去共同因子，得到所需范围内的递推
+
+$$
+(t+2)B_{t+1}=(5t-3)B_t-(4t-26)B_{t-1}\quad(t\ge14).
+\tag{41.18}
+$$
+
+初始两项直接由约定B-32.2的 $C_j=\binom{2j}{j}/(j+1)$ 给
+
+$$
+\begin{aligned}
+B_{13}
+ &=742900-6\cdot208012+15\cdot58786-20\cdot16796
+   +15\cdot4862-6\cdot1430+429=105477,\\
+B_{14}
+ &=2674440-6\cdot742900+15\cdot208012-20\cdot58786
+   +15\cdot16796-6\cdot4862+1430=385698,\\
+2B_{14}-7B_{13}&=33057>0.
+\end{aligned}
+\tag{41.19}
+$$
+
+归纳证明 $B_t>\tfrac72B_{t-1}>0$ 对全部 $t\ge14$ 成立。初值由(41.19)给出；若在 $t\ge14$ 已成立，则 $4t-26>0$，由(41.18)有
+
+$$
+\frac{B_{t+1}}{B_t}
+=\frac{5t-3-(4t-26)B_{t-1}/B_t}{t+2}
+>\frac{27t+31}{7(t+2)}>\frac72.
+\tag{41.20}
+$$
+
+最后一严格比较的分子差为
+$2(27t+31)-49(t+2)=5t-36>0$，并且(41.20)也给下一项正性。因此(41.16)给
+$2\omega_0-5\omega_1=2B_N-7B_{N-1}>0$。在五元载体上由(41.14)展开，
+
+$$
+\begin{aligned}
+h_n&=\omega_0+3\omega_1+2\omega_2-2\omega_3-3\omega_4-\omega_5,\\
+3G_5-h_n
+ &=(2\omega_0-5\omega_1)+2(\omega_1-\omega_2)
+   +2(\omega_3-\omega_5)+3\omega_4>0.
+\end{aligned}
+\tag{41.21}
+$$
+
+其余项由(41.4)非负，完成(41.13)。这一步只在 $d=5$ 实际合法的 $n\ge18$ 使用五元权重。
+
+现在对原配置的三个 $m_{ij}$ 分别应用(41.13)，得
+$\sum_{i<j}G_{m_{ij}}>h_n$。这些量全为整数，所以(41.10)给
+$2(|\mathcal F|-L)\le-7$。左边为偶整数，故至多为 $-8$，即(41.12)。∎
+
+**推论 B-41.6（十五至十九边形的原最大值与全部等号族）。** 对每个 $15\le n\le19$，定义B-41.1的每个固定配置与任意四个指定完整星见证均有
+
+$$
+K_{\rm res}<L,\qquad K_0=L.
+\tag{41.22}
+$$
+
+原最大族准确为式(33.5)中已有的十二个标号实际族，取尽其中规定的整个完成纤维。每个三个核均活跃的族均满足 $|\mathcal F|\le L-4$，包括原剩余域中 $A>w_2$ 的全部族。
+
+证明。该范围内 $3\le m=\lfloor n/2\rfloor-4\le5$，所以 $m_{ij}\le m\le5$，定理B-41.5适用。定义B-37.9的非空剩余域是三核均活跃域的子域，故其最大值至多为 $L-4<L$；剩余域为空时其定义值为 $0$，仍小于已有的 $L>0$。由命题B-37.9的等价判据，立即得到原最大值与全部等号分类。定理B-33.3及推论B-37.3已有的实际构造保证这十二族包含任意指定四见证、保留全部完成并达到 $L$；此处直接消费它们的达到性与字面区别。
+
+本节使用的实际计数接口是式(32.1)、(37.6)–(37.10)：Leader–Tan [B32-LT] §2、Lemma6 的 $T_{n-r-2},T_{n-r-3},T_{n-r-4}$ 分别为 $c_{r+2},c_{r+3},c_{r+4}$，强制／禁止集合大小在本节均为二。其 Theorem2 的缺失前邻耳局部对应通过定理B-37.2证明中的双族保条件版本使用；不把全耳相交原族误作选中六耳内相交族。式(41.9)保留了这一完整权重律的端层差，再由(41.13)与同族(37.23)连接到严格剩余判据。
+
+一般 $n\ge20$ 的原不等式 $K_{\rm res}<L$ 仍未在此得到证明；定理B-41.5只对另满足全部 $m_{ij}\le5$ 的放置给界。这里不判断剩余域是否有实际成员，不断言缺口或 $L-4$ 界尖锐、可达，也不以某个估计失效作为原问题反例。∎
+
+## 追加锚（本行以下为增补区）

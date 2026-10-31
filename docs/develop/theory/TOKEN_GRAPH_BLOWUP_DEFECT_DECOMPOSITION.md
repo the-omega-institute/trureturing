@@ -2275,3 +2275,361 @@ the even-scale result just proved; the odd-scale statements of §9
 retain their own hypotheses and conclusions. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Every even scale for unbalanced complete multipartite graphs
+
+**定义 11.1（A dominant part and the unchanged full carrier）。** Let
+$[m]=C_0\sqcup C_1\sqcup\cdots\sqcup C_r$ be a labelled partition,
+$p_a=|C_a|\geq1$, and $H=K_{p_0,p_1,\ldots,p_r}$. Assume
+
+$$
+r\geq3,\qquad m=\sum_{a=0}^r p_a\text{ is even},\qquad
+P=p_0>R=\sum_{a=1}^r p_a.
+\tag{11.1}
+$$
+
+For every integer $S\geq1$, put $s=2S$, $N=ms$, $k=mS$, and use
+exactly the complete complex Boolean space $\mathcal H_{mS}$, ordinary
+positive token adjacency $K=K_{mS}$, original blocks $B_i$ of size
+$2S$, and within-block permutation projection $P_{\mathrm{sym}}$ of
+Definitions 1.1–1.2. Write
+
+$$
+E=\lambda_{\min}(K),\qquad \mathcal N=\ker P_{\mathrm{sym}},\qquad
+L_a=p_aS,\qquad W=\sum_{a=1}^rL_a=RS.
+\tag{11.2}
+$$
+
+A graph part $C_a$ consists of $p_a$ original Boolean blocks; none of
+those blocks is replaced by a block of size $2L_a$.
+
+**定理 11.2（Strict full-space separation with a dominant part）。**
+Under Definition 11.1, $\mathcal N$ is nonzero and reduces $K$, and
+
+$$
+\begin{aligned}
+\ker(K-EI)&\subseteq\operatorname{ran}P_{\mathrm{sym}},\\
+g:=\lambda_{\min}(K|_{\mathcal N})-E&>0,\\
+K-EI&\succeq g(I-P_{\mathrm{sym}}).
+\end{aligned}
+\tag{11.3}
+$$
+
+Every normalized complex $\phi\in\mathcal H_{mS}$ satisfies
+
+$$
+\|(I-P_{\mathrm{sym}})\phi\|^2
+\leq\frac{\langle\phi,K\phi\rangle-E}{g}.
+\tag{11.4}
+$$
+
+These conclusions hold at every integer $S\geq1$, with all local-spin
+sectors, multiplicity copies and their arbitrary superpositions retained.
+
+Proof. Use the complete Boolean-chain decomposition (6.6)–(6.12).
+It requires no flat least mode: its integer local spins are
+$J_i=S-t_i$, $0\leq t_i\leq S$, with every multiplicity
+$r_{2S}(t_i)=\binom{2S}{t_i}-\binom{2S}{t_i-1}$. In each copy retain
+all weights $x_i\in\{-J_i,\ldots,J_i\}$ with $\sum_i x_i=0$ and
+all coefficients of (6.10), including their endpoint zeros. Each slice
+is nonempty because every integer spin contains weight zero. On it,
+
+$$
+K_{\boldsymbol J}
+=\sum_{\{i,j\}\in E(H)}(J_i^+J_j^-+J_i^-J_j^+)
+=2\sum_{\{i,j\}\in E(H)}(X_iX_j+Y_iY_j),
+\tag{11.5}
+$$
+
+where $Z_i|x_i\rangle=x_i|x_i\rangle$ and
+$X_i=(J_i^++J_i^-)/2$, $Y_i=(J_i^+-J_i^-)/(2i)$.
+The all-$J_i=S$ summand is precisely
+$\operatorname{ran}P_{\mathrm{sym}}$. The classical representation
+parameters are Srinivasan, [Theorem 1.2 and pp. 4–5](https://arxiv.org/pdf/1001.0280v2),
+$n=2S$, starting rank $t_i$, up operator $L_i^*=J_i^+$; and
+Feinsilver, [§§3–4, Proposition 4.3 and §4.2.2](https://arxiv.org/pdf/1102.0368v2),
+principal number $2S-2t_i=2J_i$. The identification with the original
+positive adjacency is (2.4). In Apte–Parekh–Sud,
+[v3, Definition 1, §3.2 and Fact 2](https://arxiv.org/pdf/2506.03441v3),
+our $K$ is $A(F_k(H[\overline{K_s}]))$; their shifted XY operator
+$W(G_s)I/2-K$, with $W(G_s)$ their total edge weight, is a
+different operator.
+
+First construct a trial in the actual all-$S$ summand. On that summand
+let $\boldsymbol T_a=\sum_{i\in C_a}(X_i,Y_i,Z_i)$ and
+$\boldsymbol T=\sum_a\boldsymbol T_a$. We use the classical coupling
+rule and its full integer interval (10.8), proved within Theorem 10.2.
+Its two-factor normalization, triangle range and orthogonality are
+[NIST DLMF, (34.1.1), (34.2.1), (34.3.16)–(34.3.17)](https://dlmf.nist.gov/34.1).
+For the $P$ spin-$S$ factors in $C_0$, that interval is
+$[\max\{0,2S-PS\},PS]=[0,PS]$, since $P>R\geq3$.
+Thus $C_0$ has an actual collective spin-$W$ subspace, because
+$W=RS<PS$. This choice leaves every individual block at spin $S$.
+For each $a\geq1$, choose its maximal collective spin $L_a$,
+as constructed in (10.7). The list of part spins
+$W,L_1,\ldots,L_r$ has sum $2W$ and maximum $W$. Applying (10.8)
+to these very subspaces supplies a unit total singlet $v$. Its
+intertwining embedding into the Boolean space has total $Z=0$;
+therefore $v\in\mathcal H_{mS}$ with the original filling.
+
+Rotations of this singlet equate the three same-axis cross-part
+expectations, as in (10.9). On this particular $v$ the part Casimirs
+are $W(W+1)$ for $C_0$ and $L_a(L_a+1)$ for $a\geq1$.
+Consequently, writing $C=\sum_{a=1}^rL_a(L_a+1)$,
+
+$$
+\begin{aligned}
+\langle v,Kv\rangle
+&=\frac23\left\langle v,
+ \left(\boldsymbol T^2-\sum_{a=0}^r\boldsymbol T_a^2\right)v\right\rangle
+=-\frac23\bigl(W(W+1)+C\bigr)=:U,\\
+E&\leq U.
+\end{aligned}
+\tag{11.6}
+$$
+
+Only the Rayleigh upper bound is used. No claim that $v$ is a ground
+vector, or even an eigenvector of $K$, is made.
+
+Suppose a nonsymmetric summand has minimum $E$, and choose a vertex
+$p\in C_a$ with $J_p<S$. Apply the nonstrict fixed-$M=0$ comparison
+(7.4)–(7.5) to increase every other local spin to $S$. It applies to
+arbitrary other integer spins, including zero. Each intermediate
+summand is present in the same full Boolean space, so its minimum
+cannot fall below $E$; it remains $E$. We obtain a unit ground vector
+with spin $J_p$ at $p$ and spin $S$ everywhere else.
+
+The primary comparison is Ghassemi Tabrizi–Henderson–Kühne–Scuseria,
+[Appendix A4, (A34)–(A54) and its final fixed-magnetization paragraph](https://pmc.ncbi.nlm.nih.gov/articles/PMC12613319/#app1-sec4),
+DOI [10.1021/acs.jctc.5c01412](https://doi.org/10.1021/acs.jctc.5c01412).
+Its maximal on-site spin $s_p$ is $S$, variable spin $t_p$ is $J_p$,
+$M=0$, and $D_{ij}=\operatorname{diag}(2a_{ij},2a_{ij},0)$.
+The fixed-$M$ construction in §7 uses the triplet $|1,0\rangle$,
+whose Cartesian expectations vanish. Its spin-$(j+1)$ projection has
+squared coefficient $((j+1)^2-x^2)/((j+1)(2j+1))>0$ at every
+$-j\leq x\leq j$, including endpoints. Orthogonal weight images
+make it nonzero also for entangled inputs. The projection-and-induction
+argument in (7.4)–(7.5) supplies precisely the nonstrict inequality
+used here, not an exclusion of equality.
+
+Realize the spin at $p$ by the symmetric space of $2J_p$ of its
+original $2S$ Boolean coordinates and $S-J_p$ fixed singlet pairs,
+as in §7 and (10.11)–(10.12). This is an intertwining isometry,
+preserving magnetic weight and energy: at weight $x_p$ its occupancy
+is $(J_p+x_p)+(S-J_p)=S+x_p$. All multiplicity copies carry
+the same operator. Choose one pair and write the resulting ground
+vector as $\Psi=|0,0\rangle\otimes f$, $\|f\|=1$, retaining the
+other pairs and every remaining tensor factor in $f$. Put
+
+$$
+A=[m]\setminus C_a=N_H(p),\qquad
+B_A^\pm=\sum_{i\in A}J_i^\pm,\qquad Z_A=\sum_{i\in A}Z_i.
+\tag{11.7}
+$$
+
+Replace only this pair by $|1,0\rangle$, giving
+$\Theta=|1,0\rangle\otimes f$. Both pair states have weight zero
+and zero spin expectations, and there is no intrablock interaction.
+Thus $\Theta$ remains in the same $\mathcal H_{mS}$ and has Rayleigh
+quotient $E$. Equality at the minimum of a finite Hermitian operator
+implies its ground-vector equation, by summing
+$(\lambda-E)|c_\lambda|^2$ in an orthonormal eigenbasis.
+The operator with the pair omitted satisfies $K^{\mathrm{rem}}f=Ef$,
+because the pair operators annihilate the singlet. Therefore
+
+$$
+0=(K-EI)\Theta
+=\sqrt2\,|1,1\rangle\otimes B_A^-f
+ +\sqrt2\,|1,-1\rangle\otimes B_A^+f.
+\tag{11.8}
+$$
+
+Orthogonality gives $B_A^-f=B_A^+f=0$, and their commutator gives
+$Z_Af=0$. In the finite spin decomposition this is exactly the
+total-singlet subspace on $A$: in a spin-$j$ irreducible both total
+ladder norms vanish only at $j=0$. Hence all simultaneous rotations
+on $A$ fix this same $f$, even when it is entangled with $C_a$.
+
+For $b\ne a$, $\boldsymbol T_b$ acts on the unchanged spin-$S$
+factors in $C_b$. The interaction of $C_a$ with $A$, after omitting
+the chosen pair, is $T_{a,\mathrm{rem}}^+B_A^-+
+T_{a,\mathrm{rem}}^-B_A^+$, which annihilates $f$. There are no
+edges inside $C_a$. Thus, with $K_A$ the induced operator,
+$K_Af=Ef$. Singlet rotation invariance on $A$ and
+$\sum_{b\ne a}\boldsymbol T_bf=0$ give the same-state identity
+
+$$
+E=\langle f,K_Af\rangle
+=-\frac23\sum_{b\ne a}\langle f,\boldsymbol T_b^2f\rangle.
+\tag{11.9}
+$$
+
+On every part $b\ne a$, the maximal-spin bound of (10.7) is
+$\boldsymbol T_b^2\preceq L_b(L_b+1)I$, on all its irreducibles
+and multiplicities. If $a=0$, (11.9) immediately yields
+
+$$
+E\geq-\frac23C=U+\frac23W(W+1)>U,
+\tag{11.10}
+$$
+
+contradicting (11.6).
+
+If $a\geq1$, the singlet on $A$ imposes a stronger bound on the
+unchanged dominant part. Set
+$\boldsymbol Q_a=\sum_{1\leq b\leq r,\ b\ne a}\boldsymbol T_b$.
+It is the collective spin of $(R-p_a)$ spin-$S$ sites, so every
+irreducible has spin at most $W-L_a$ and
+$\boldsymbol Q_a^2\preceq(W-L_a)(W-L_a+1)I$. This follows from
+the same classical maximal-weight bound as (10.7), with all
+multiplicity spaces retained. On the actual $f$ the singlet equation
+is $(T_0^\alpha+Q_a^\alpha)f=0$ for $\alpha=x,y,z$. Hence
+
+$$
+\langle f,\boldsymbol T_0^2f\rangle
+=\sum_{\alpha=x,y,z}\|T_0^\alpha f\|^2
+=\sum_{\alpha=x,y,z}\|Q_a^\alpha f\|^2
+\leq(W-L_a)(W-L_a+1).
+\tag{11.11}
+$$
+
+This bound and every other part bound apply to the same entangled
+vector. Substitution in (11.9), with its negative coefficient, gives
+
+$$
+\begin{aligned}
+E&\geq-\frac23\left((W-L_a)(W-L_a+1)+C-L_a(L_a+1)\right)\\
+ &=U+\frac43L_a(W+1)>U.
+\end{aligned}
+\tag{11.12}
+$$
+
+The equality uses
+$W(W+1)-(W-L_a)(W-L_a+1)+L_a(L_a+1)=2L_a(W+1)$.
+Strictness holds since $L_a\geq S\geq1$. This again contradicts
+(11.6). The two cases exhaust every possible deficient vertex.
+Neither the size of $P-R$ nor equality among minority part sizes is
+used; in particular the proof includes $S=1$, singleton minority
+parts, the smallest positive imbalance allowed by even $m$, and
+arbitrarily large $P$.
+
+Block permutations commute with the original $K$, so
+$\operatorname{ran}P_{\mathrm{sym}}$ and $\mathcal N$ reduce it.
+The latter is nonzero: in one block take a nonzero one-particle vector
+orthogonal to constants, in a second take occupancy $2S-1$, and in
+each other block take occupancy $S$. Their tensor has total occupancy
+$1+(2S-1)+(m-2)S=mS$ and is in $\mathcal N$, also at $S=1$.
+The orthogonal decomposition (6.12) excludes $E$ from every summand
+of $\mathcal N$, with every copy included. Its nonempty finite
+spectrum therefore has minimum strictly greater than $E$. This proves
+$g>0$ and confines every complex ground vector, including arbitrary
+superpositions, to $\operatorname{ran}P_{\mathrm{sym}}$.
+On that range $K-EI\succeq0$ by the full-space definition of $E$;
+on $\mathcal N$, $K-EI\succeq gI$. Adding the quadratic forms on
+these orthogonal reducing subspaces proves (11.3), and its quadratic
+form on a unit $\phi$ proves (11.4).
+
+The added inference is the dominant-part trial (11.6) together with
+the same-state bound (11.11), which makes both forced-singlet energies
+strictly exceed a full-carrier upper bound. The Boolean representations,
+classical spin coupling and Casimir bounds, fixed-magnetization
+nonstrict comparison and original-pair release are consumed
+intermediates from §§6–10 and the cited originals. For the two-auxiliary
+construction also see Benassi–Lees–Ueltschi,
+[v3, §4.3, Lemma 9 and (4.12)–(4.17)](https://arxiv.org/pdf/1510.03215v3),
+DOI [10.1007/s10955-016-1580-2](https://doi.org/10.1007/s10955-016-1580-2):
+their $R^i$ is the spin-one sum of a pair, and their negative
+Hamiltonian with nonnegative product couplings in directions 1 and 3
+has different hypotheses from the positive adjacency here. The
+unbalanced inference is a `repo-derived` consequence of the supplied
+intermediates, without a priority assertion. $\square$
+
+**推论 11.3（All positive part sizes at every even scale）。** Let
+$H=K_{p_1,\ldots,p_q}$ be any labelled finite simple unit-weight
+complete multipartite graph, with $q\geq2$, every $p_a\geq1$, and
+even $m=\sum_a p_a$. For every even $s=2S\geq2$, on the original
+complete complex Boolean $k=mS$-token space, set
+$K=K_k$, $E=\lambda_{\min}(K)$ and
+$\mathcal N=\ker P_{\mathrm{sym}}$. Then $\mathcal N$ is nonzero
+and reducing, $g=\lambda_{\min}(K|_{\mathcal N})-E>0$, and
+
+$$
+\begin{aligned}
+\ker(K-EI)&\subseteq\operatorname{ran}P_{\mathrm{sym}},&
+K-EI&\succeq g(I-P_{\mathrm{sym}}),\\
+\|(I-P_{\mathrm{sym}})\phi\|^2
+&\leq\frac{\langle\phi,K\phi\rangle-E}{g}
+&& (\phi\in\mathcal H_{mS},\ \|\phi\|=1).
+\end{aligned}
+\tag{11.13}
+$$
+
+Proof. If $q=2$, every induced open neighborhood is independent.
+If $q=3$, the neighborhood of a vertex consists of the other two
+parts with all cross edges and no within-part edges, so it is complete
+bipartite. In either case $H$ has no isolates, and Theorem 7.2 and
+Corollary 7.3 apply at every integer $S\geq1$, with exactly this
+$E$, $K$ and $P_{\mathrm{sym}}$ and no flat-mode assumption.
+For $q\geq4$, if $2\max p_a\leq m$, Definition 10.1 and Theorem
+10.2 give all statements, including the weak-balance endpoint.
+Otherwise exactly one part has size greater than the sum of the
+others: two such parts would have sizes summing to more than $m$.
+Name that existing labelled part $C_0$ and the others $C_1,\ldots,C_r$,
+where $r=q-1\geq3$. This is a naming of the given parts, with no
+quotient of vertices or Boolean blocks. Definition 11.1 holds, and
+Theorem 11.2 proves (11.13). These cases are exhaustive.
+
+Corollary 11.3
+concerns unit weights, equal even Boolean block sizes and exact global
+half filling only. The case $q=1$ has no edges and is excluded by the
+original no-isolates domain. The arbitrary finite simple no-isolate
+base of even order, including unrestricted disconnected bases under
+only global half filling, remains unresolved. No exact formula for
+$E$, numerical value or rate for $g$, odd-scale extension for arbitrary
+multipartite bases, or extension to weights, unequal blocks or other
+fillings is asserted. The separate sufficient statements of §§6–10
+retain their hypotheses; the corollary combines §7, §10 and Theorem
+11.2 without changing those statements. $\square$
+
+**命题 11.4（The labelled $K_{7,1,1,1}$ application）。** For every
+labelled realization of $H=K_{7,1,1,1}$, all conclusions of Corollary
+11.3 hold on its original complete complex $k=5s$-token carrier at
+every even $s\geq2$. Every induced open neighborhood is nonbipartite,
+and $H$ has no modulus-one least adjacency eigenvector. Thus it lies
+outside both the locally bipartite-neighborhood class of §7 and the
+flat-least-mode class of Assumption 3.1.
+
+Proof. Its four nonempty parts have even total size $m=10$, and its
+dominant part has $P=7>3=R$. There are no isolates. Theorem 11.2
+applies with $k=mS=10S=5s$ at every $S\geq1$, retaining all ten
+original blocks. The open neighborhood of any vertex contains one
+vertex from each of three other parts. These three vertices form a
+triangle, which rules out bipartiteness at every vertex.
+
+For the flat-mode assertion write $a=A(H)$. Vectors supported on the
+seven-vertex part with coordinate sum zero form a six-dimensional
+zero eigenspace. Vectors supported on the three singleton vertices
+with coordinate sum zero form a two-dimensional eigenspace of
+eigenvalue $-1$. The orthogonal complement consists of vectors
+constant on the seven-vertex part and constant on the three
+singletons. In the orthonormal basis given by the normalized indicators
+of those two sets, the adjacency matrix on that complement is
+
+$$
+\begin{pmatrix}0&\sqrt{21}\\\sqrt{21}&2\end{pmatrix},
+\qquad \operatorname{spec}(a)
+=\{0\ (6\text{ times}),\ -1\ (2\text{ times}),\ 1-\sqrt{22},\ 1+\sqrt{22}\}.
+\tag{11.14}
+$$
+
+The two eigenvalues of the displayed matrix are the roots of
+$\theta^2-2\theta-21=0$. Since $\sqrt{22}>2$, the least eigenvalue
+is $\lambda=1-\sqrt{22}<-1$, with a one-dimensional eigenspace in
+that complement. A complex least eigenvector therefore has a common
+coordinate $c$ on the seven-vertex part and $d$ on each singleton,
+satisfying $\lambda c=3d$. If every coordinate had modulus one, this
+would force $|\lambda|=3$, hence $\sqrt{22}=4$, contrary to
+$22\ne16$. Thus Assumption 3.1 fails as well. $\square$
+
+
+## 追加锚（本行以下为增补区）

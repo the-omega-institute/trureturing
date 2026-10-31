@@ -34,6 +34,18 @@ $$\forall X \in FiniteType,\; \forall Omega \in NonemptyFiniteType,\; \forall s 
 
 Band surgery proves that a state's regular indicator equals the good indicator of its image under tau. Reindexing the finite sum gives equality of the two means. The statement makes the state-space and actual matching-transport assumptions explicit. It does not identify an unspecified distribution on unlabelled embeddings, prove surface realization, or imply exact thirds for any category.
 
+## Application to Independent Signed Rotations
+
+Let G be a finite simple cubic graph, with vertex set V, edge set E, and dart set D consisting of ordered adjacent vertex pairs. At each vertex choose a labelling of its three neighbours. The forward and inverse 3-cycles are its two cyclic orders; among the six shuffled neighbour lists, each cyclic order has three representatives. Thus independent uniform cyclic orders and independent fair edge signs have the uniform state space Omega = Bool^V times Bool^E, of size 2^(card(V)+card(E)). This is the full labelled signed-rotation law, with every rotation and sign retained.
+
+For a sampled rotation rho, write R(d) for the dart obtained by rotating the neighbour at the initial vertex of d. On X = D times Bool define P(d,1) = (R(d),0), P(d,0) = (R^(-1)(d),1), and L(d,b) = (reverse(d), b xor lambda(edge(d))). Here lambda is the sign bit in the neighbour-list sampler: zero preserves side across a band and one reverses it. P and L are involutions. P has no fixed points because it reverses side; L has none because the adjacent vertices of a simple graph are distinct. The P/L components are the physical facial boundaries, and each has the two disjoint oriented P*L orbits given by the matching-component decomposition.
+
+Fix an edge and choose either of its darts d. Put a=(d,0) and b=(d,1). The four flags a,b,L(a),L(b) are distinct, independently of its sign. GoodAt(P,L,a,b) says the two edge sides occur in one oriented boundary orbit, so their directed traversals agree. BadAt uses the opposite oriented orbit, represented by P(a), so the traversals oppose. PhysicalRegularAt says the sides lie in different P/L components. The disjoint two-orbit decomposition makes these three categories mutually exclusive and exhaustive, including singleton product orbits.
+
+Toggle only the chosen edge sign. On the same flag carrier and with the same corner matching this changes L to u*L*u, where u swaps L(a) and L(b). Every other band pair is unchanged. The actual cut and its two reattachments therefore satisfy band_switch, which exchanges good and regular and preserves bad. In particular the third endpoint pairing is bad under both signs; components missing the four flags remain present. For each fixed rotation, apply twist_invariant_uniform_expectation to the whole sign-vector space and its one-coordinate toggle. Summing this equality over all rotation vectors gives equal good and regular probabilities for every edge under the full uniform law.
+
+Let G_count, B_count and R_count count edges in the three physical categories. For each state their sum is card(E). Interchanging the finite state and edge sums in the per-edge equality gives E[G_count]=E[R_count]. Averaging the partition identity then gives E[G_count]=E[R_count]=(card(E)-E[B_count])/2. These finite averages are exactly the expectations under the stated uniform law. There is no connectedness, bridgelessness, orientability or edge-transitivity premise. The empty graph has vacuous edge assertions and all three counts zero. The conclusion imposes no exact-thirds identity.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/PerfectMatchings/FiniteBandSwitch.band_switch`
