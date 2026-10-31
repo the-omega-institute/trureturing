@@ -634,6 +634,29 @@ theorem gradeTheta_mem_gradeChargeResidue_neg (D : LatticeData)
   rw [gradeChargeSector_eq_gradeChargeResidue D ell n r hD]
   exact hv
 
+theorem gradeChargeDihedral_character_reflection (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ) (i : ZMod 3) :
+    Representation.character (k := ℂ) (V := grade D n)
+        (gradeChargeDihedralRepresentation D ell phase n) (DihedralGroup.sr i) =
+      LinearMap.trace ℂ (grade D n) (gradeTheta D n) := by
+  let ρ := gradeChargeDihedralRepresentation D ell phase n
+  have hzero : ρ (DihedralGroup.sr 0) = gradeTheta D n := by
+    apply LinearMap.ext
+    intro v
+    change gradeChargeRotation D ell phase n
+      (Multiplicative.ofAdd (-0)) (gradeTheta D n v) = gradeTheta D n v
+    rw [show (-0 : ZMod 3) = 0 by simp, gradeChargeRotation_zero]
+    rfl
+  have hc : (DihedralGroup.r i) * DihedralGroup.sr 0 *
+      (DihedralGroup.r i)⁻¹ = DihedralGroup.sr i := by
+    rw [DihedralGroup.r_mul_sr, DihedralGroup.inv_r, DihedralGroup.sr_mul_r]
+    congr 1
+    fin_cases i <;> decide
+  have h := Representation.char_conj (k := ℂ) (V := grade D n) ρ
+    (DihedralGroup.sr 0) (DihedralGroup.r i)
+  rw [hc] at h
+  simpa only [Representation.character, hzero] using h
+
 /-- The fixed vectors of the dihedral action on a grade. -/
 abbrev gradeChargeDihedralInvariants (D : LatticeData)
     (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ) :
