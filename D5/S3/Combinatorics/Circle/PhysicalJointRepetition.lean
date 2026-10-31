@@ -65,7 +65,7 @@ private theorem prefix_nonneg_le {α : Type*} (l : List α) (f : α → ℤ)
   simp only [List.map_append, List.sum_append] at hsplit
   exact ⟨hleft, by omega⟩
 
-private theorem block_perm (d r : ℕ) (hr : 0 < r) (tau : List (Fin d))
+private theorem block_perm (d r : ℕ) (hd : 0 < d) (hr : 0 < r) (tau : List (Fin d))
     (htau : tau.Perm (List.finRange d)) :
     (repeatWord d r hr tau).Perm (List.finRange (d * r)) := by
   classical
@@ -90,7 +90,7 @@ private theorem block_perm (d r : ℕ) (hr : 0 < r) (tau : List (Fin d))
     intro x
     simp only [List.mem_finRange, iff_true]
     let j : Fin r := ⟨x.val / d, by omega⟩
-    let i : Fin d := ⟨x.val % d, Nat.mod_lt _ (by omega)⟩
+    let i : Fin d := ⟨x.val % d, Nat.mod_lt _ hd⟩
     have hdiv := Nat.mod_add_div x.val d
     have hv : θ (j, i) = x := by
       apply Fin.ext
@@ -107,8 +107,7 @@ private theorem block_perm (d r : ℕ) (hr : 0 < r) (tau : List (Fin d))
 private theorem multiplier_eq_geom (d r : ℕ) (hd : 0 < d) :
     ThreeRowSource.multiplier d r = geom d r := by
   rw [ThreeRowSource.multiplier_quotient d r hd]
-  simp only [geom, pow_mul]
-  rfl
+  simp [geom, pow_mul, Nat.mul_comm]
 
 private theorem old_value (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
     (hw : w ≤ 2 ^ (d - 1) - 1) (j : Fin r) (i : Fin d) :
@@ -515,6 +514,7 @@ private theorem top_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
   let R : ℤ := ((2 : ℤ) ^ d) ^ (r - 1)
   let H : ℤ := geom d (r - 1)
   let G : ℤ := geom d r
+  have htau_len : tau.length = d := by simpa using htau.1.length_eq
   have htop (i : Fin d) :
       f (blockLabel d r (r - 1) (by omega) i).castSucc = R * g i.castSucc + H * a i := by
     simpa [R, H, G] using new_top_value d r w hd hr hw i
@@ -555,10 +555,10 @@ private theorem top_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
         R * (((earWord d tau cut).take n).map (actualSource (d + 1) (2 * w))).sum +
         H * ((tau.take (if n ≤ cut then n else n - 1)).map a).sum +
         (if n ≤ cut then 0 else H * (w : ℤ)) := by
-    rw [ear_prefix_formula (d * r) top cut (by simpa [top] using hcut) f n]
+    rw [ear_prefix_formula (d * r) top cut (by simpa [top, htau_len] using hcut) f n]
     simp only [List.map_map, Function.comp_def]
     rw [htopfresh]
-    rw [ear_prefix_formula d tau cut (by simpa using hcut) g n]
+    rw [ear_prefix_formula d tau cut (by simpa [htau_len] using hcut) g n]
     rw [base_fresh_value d w hd hw]
     rw [← List.map_take, List.map_map]
     have hmap :
@@ -638,18 +638,21 @@ private theorem top_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
         List.length_cons, List.length_nil, List.length_take, List.length_drop]
       omega
     have hear_len : (earWord d tau cut).length = d + 1 := by
-      have htau_len : tau.length = d := by simpa using htau.1.length_eq
       simp only [earWord, List.length_append, List.length_map,
         List.length_cons, List.length_nil, List.length_take, List.length_drop,
         htau_len]
       omega
+    have htake_block : block.take (d + 1) = block := by
+      rw [← hblock_len, List.take_length]
+    have htake_ear : (earWord d tau cut).take (d + 1) = earWord d tau cut := by
+      rw [← hear_len, List.take_length]
     have hf := hformula (d + 1)
     have hformula_full :
         (block.map f).sum =
           R * ((earWord d tau cut).map g).sum +
             H * ((tau.take d).map a).sum + H * (w : ℤ) := by
-      simpa [hblock_len, hear_len, List.take_length,
-        show ¬ d + 1 ≤ cut by omega] using hf
+      simpa [htake_block, htake_ear, show ¬ d + 1 ≤ cut by omega,
+        show d + 1 - 1 = d by omega] using hf
     rw [hformula_full, hnew.2.1]
     have holdsum : ((tau.take d).map a).sum = 0 := by
       simpa [show tau.length = d by simpa using htau.1.length_eq] using htau.2.1
@@ -794,7 +797,7 @@ public theorem physical_joint_repetition
   have hold_sum : ((rows.flatMap oldBlock).map oldf).sum = 0 := by
     exact blocks_sum oldf rows oldBlock (fun j hj => (hold_block j).2)
   have hperm_old : (repeatWord d r (by omega) tau).Perm (List.finRange (d * r)) := by
-    exact block_perm d r (by omega) tau hold.1
+    exact block_perm d r (by omega) (by omega) tau hold.1
   have hold_order : OriginalOrder (d * r) (w * geom d r)
       (repeatWord d r (by omega) tau) := by
     refine ⟨hperm_old, ?_, ?_⟩
@@ -804,19 +807,20 @@ public theorem physical_joint_repetition
   let top := tau.map (blockLabel d r (r - 1) (by omega))
   let topEar := earWord (d * r) top cut
   let lower := (lowerBlocks d r (by omega) tau (r - 1)).map Fin.castSucc
+  have htau_len : tau.length = d := by simpa using hold.1.length_eq
   have hsplit_new :
       earWord (d * r) (repeatWord d r (by omega) tau) cut = topEar ++ lower := by
     rw [hsplit, earWord_append (d * r) top
       (lowerBlocks d r (by omega) tau (r - 1)) cut]
     · rfl
-    · simpa [top] using hcut
+    · simpa [top, htau_len] using hcut
   have htop := top_block d r w hd hr hw tau cut hold hnew hcut
   have hlower := lower_blocks_result d r w hd hr hw tau hold
   have hnew_strip : InStrip newf (modulus (d * r + 1) / 2)
       0 (earWord (d * r) (repeatWord d r (by omega) tau) cut) := by
     rw [hsplit_new]
     apply inStrip_append htop.1
-    simpa [topEar, hlower.2] using hlower.1
+    simpa [topEar, htop.2, hlower.2] using hlower.1
   have hnew_perm :
       (earWord (d * r) (repeatWord d r (by omega) tau) cut).Perm
         (List.finRange (d * r + 1)) := by

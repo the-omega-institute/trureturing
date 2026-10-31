@@ -109,7 +109,7 @@ def source_registration : Registration arena (type_of% (@physical_joint_repetiti
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hji
-      exact nomatch i
+      exact (hji (Subsingleton.elim j i)).elim
     · intro e
       exact nomatch e
   dependence := actual_dependence
