@@ -76,3 +76,125 @@ theorem selected_source_has_no_registration :
   exact selected_source_has_no_observational_dependence (he ▸ R.dependence)
 
 end Reg.D5.S3.Combinatorics.Graph.Jacobi.FlagPruning
+
+-- The following two helpers are exposed only because the exact connected
+-- source-grade comparison consumes them. Both attempts keep their complete
+-- original telescopes; the selected truth readout is constant on that source.
+namespace Reg.D5.S3.Combinatorics.Graph.Jacobi.FlagPruning
+
+open _root_.D5.S3.Combinatorics.Graph.Jacobi
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+namespace VertexOfNext
+
+structure Source where
+  Flag : Type
+  graph : FlagGraph Flag
+  flag : Flag
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+noncomputable def actual : Realization signature :=
+  realize signature (fun _ _ s =>
+    s.graph.vertexOf (s.graph.next s.flag) = s.graph.vertexOf s.flag) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ s : Source, R.readout () () s
+
+def originalStatement : Prop :=
+  ∀ (F : Type) (G : FlagGraph F) (f : F), G.vertexOf (G.next f) = G.vertexOf f
+
+theorem exact_source_bridge : originalStatement ↔ arena.Law actual := by
+  constructor
+  · intro h s
+    exact h s.Flag s.graph s.flag
+  · intro h F G f
+    exact h ⟨F, G, f⟩
+
+theorem actual_law : arena.Law actual := by
+  intro s
+  exact s.graph.vertexOf_next s.flag
+
+theorem selected_source_has_no_observational_dependence :
+    ¬ ObservationalDependence signature actual := by
+  intro h
+  obtain ⟨p, x, y, hxy⟩ := h ()
+  cases p
+  apply hxy
+  exact propext ⟨fun _ => actual_law y, fun _ => actual_law x⟩
+
+theorem selected_source_has_no_registration :
+    ¬ ∃ R : Registration arena originalStatement, R.actual = actual := by
+  rintro ⟨R, he⟩
+  exact selected_source_has_no_observational_dependence (he ▸ R.dependence)
+
+end VertexOfNext
+
+namespace VertexOfEqIff
+
+structure Source where
+  Flag : Type
+  graph : FlagGraph Flag
+  left : Flag
+  right : Flag
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+noncomputable def actual : Realization signature :=
+  realize signature (fun _ _ s =>
+    s.graph.vertexOf s.left = s.graph.vertexOf s.right ↔
+      s.right = s.left ∨ s.right = s.graph.next s.left ∨
+        s.right = s.graph.next (s.graph.next s.left)) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ s : Source, R.readout () () s
+
+def originalStatement : Prop :=
+  ∀ (F : Type) (G : FlagGraph F) (f g : F),
+    G.vertexOf f = G.vertexOf g ↔ g = f ∨ g = G.next f ∨ g = G.next (G.next f)
+
+theorem exact_source_bridge : originalStatement ↔ arena.Law actual := by
+  constructor
+  · intro h s
+    exact h s.Flag s.graph s.left s.right
+  · intro h F G f g
+    exact h ⟨F, G, f, g⟩
+
+theorem actual_law : arena.Law actual := by
+  intro s
+  exact s.graph.vertexOf_eq_iff s.left s.right
+
+theorem selected_source_has_no_observational_dependence :
+    ¬ ObservationalDependence signature actual := by
+  intro h
+  obtain ⟨p, x, y, hxy⟩ := h ()
+  cases p
+  apply hxy
+  exact propext ⟨fun _ => actual_law y, fun _ => actual_law x⟩
+
+theorem selected_source_has_no_registration :
+    ¬ ∃ R : Registration arena originalStatement, R.actual = actual := by
+  rintro ⟨R, he⟩
+  exact selected_source_has_no_observational_dependence (he ▸ R.dependence)
+
+end VertexOfEqIff
+
+end Reg.D5.S3.Combinatorics.Graph.Jacobi.FlagPruning

@@ -9,6 +9,14 @@ internal sealed class FlagPruningDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual leaf pruning extracts singly attached ordinary hair trees", H("Actual leaf pruning extracts singly attached ordinary hair trees"),
         Blocks(
+            Describe.Lean(DescribeId.Create("actual-rotor-step-owner"),
+                DeclarationHandle.Create(Prefix + "vertexOf_next"), H("A rotor step keeps its actual owner orbit"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every finite or infinite flag carrier, applying its cubic vertex rotor leaves the actual owner-orbit vertex unchanged. This existing orbit helper is exposed for the connected fixed-genus source-quotient comparison, where actual incidence reachability must be transferred through the local AS and IHX tables."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-owner-orbit-equality"),
+                DeclarationHandle.Create(Prefix + "vertexOf_eq_iff"), H("Owner equality is exactly one of the three literal rotor positions"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Two flags have the same actual owner orbit exactly when the second is the first flag, its next rotor flag, or its second rotor flag. The statement includes univalent fixed rotor flags. The connected source-grade comparison consumes this existing helper to transfer paths without adding an assumed graph isomorphism."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-leaf-pruning"),
                 DeclarationHandle.Create(Prefix + "LeafPruning"), H("Chronological deletion with literal residual flag degree"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

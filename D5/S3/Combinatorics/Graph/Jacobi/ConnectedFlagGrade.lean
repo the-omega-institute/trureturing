@@ -15,6 +15,8 @@ import Mathlib.LinearAlgebra.Finsupp.Defs
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
+open scoped Classical
+
 namespace D5.S3.Combinatorics.Graph.Jacobi
 
 namespace FlagGraph
@@ -134,7 +136,7 @@ private theorem patch_connected_iff {F : Type} {G : FlagGraph F} {n : ℕ}
         rw [P.next_flag]
         exact hnew i (P.rotor i)
       · have hh : H.next f = G.next f := FlagGraph.patchNext_outside P r hf
-        simpa only [hh] using H.flagReach_next f
+        simpa only [hh, id_eq] using H.flagReach_next f
 
 private theorem reverseVertex_connected {F : Type} {G : FlagGraph F} (v : G.Vertex) :
     (FlagGraph.reverseVertex v).incidence.Connected ↔ G.incidence.Connected := by
@@ -199,7 +201,14 @@ private theorem iso_connected {F K : Type} {G : FlagGraph F} {H : FlagGraph K}
       simpa only [I.next_eq] using H.flagReach_next (I.flagEquiv f)
 
 private theorem cl_connected {F : Type} {G : FlagGraph F} (L : G.AdjacentLegs) :
-    (FlagGraph.exchangeColors L).incidence.Connected ↔ G.incidence.Connected := Iff.rfl
+    (FlagGraph.exchangeColors L).incidence.Connected ↔ G.incidence.Connected := by
+  constructor
+  · apply (FlagGraph.exchangeColors L).connected_transfer G id Function.surjective_id
+    · exact G.flagReach_edge
+    · exact G.flagReach_next
+  · apply G.connected_transfer (FlagGraph.exchangeColors L) id Function.surjective_id
+    · exact (FlagGraph.exchangeColors L).flagReach_edge
+    · exact (FlagGraph.exchangeColors L).flagReach_next
 
 
 private theorem orbit_image {F K : Type} (G : FlagGraph F) (H : FlagGraph K)
@@ -266,16 +275,19 @@ private def socketPermH : Equiv.Perm (Fin 6) := Equiv.swap 4 5
 private theorem reverseVertex_euler_genus {F : Type} [Finite F] {G : FlagGraph F}
     (v : G.Vertex) : (FlagGraph.reverseVertex v).eulerGenus = G.eulerGenus := by
   apply patch_euler_genus _ _ _ _ reversePerm
+  change ∀ i : Fin 3, (finRotate 3).symm (reversePerm i) = reversePerm (finRotate 3 i)
   decide
 
 private theorem socketI_euler_genus {F : Type} [Finite F] {G : FlagGraph F}
     (S : G.Socket) : S.branchI.eulerGenus = G.eulerGenus := by
   apply patch_euler_genus _ _ _ _ socketPermI
+  change ∀ i : Fin 6, socketI (socketPermI i) = socketPermI (socketX i)
   decide
 
 private theorem socketH_euler_genus {F : Type} [Finite F] {G : FlagGraph F}
     (S : G.Socket) : S.branchH.eulerGenus = G.eulerGenus := by
   apply patch_euler_genus _ _ _ _ socketPermH
+  change ∀ i : Fin 6, socketH (socketPermH i) = socketPermH (socketX i)
   decide
 
 private theorem iso_euler_genus {F K : Type} [Finite F] [Finite K]
@@ -339,22 +351,26 @@ private theorem exchange_swap {F : Type} {G : FlagGraph F} (L : G.AdjacentLegs)
   classical
   by_cases hl : f = L.leftLeaf
   · subst f
-    simp [FlagGraph.exchangeColors, L.leaf_ne]
+    simp [FlagGraph.exchangeColors, L.leaf_ne, Ne.symm L.leaf_ne]
   · by_cases hr : f = L.rightLeaf
     · subst f
-      simp [FlagGraph.exchangeColors, L.leaf_ne]
+      simp [FlagGraph.exchangeColors, L.leaf_ne, Ne.symm L.leaf_ne]
     · rw [Equiv.swap_apply_of_ne_of_ne hl hr]
       simp only [FlagGraph.exchangeColors, ite_eq_right hl, ite_eq_right hr]
 
 private theorem flagGrade_cl {F : Type} [Finite F] {G : FlagGraph F}
     (L : G.AdjacentLegs) : flagGrade (pack (FlagGraph.exchangeColors L)) = flagGrade (pack G) := by
   classical
-  apply Prod.ext rfl
-  apply Prod.ext rfl
-  funext label
-  symm
-  apply Nat.card_congr
-  exact Equiv.subtypeEquiv (Equiv.swap L.leftLeaf L.rightLeaf) (fun f => by rw [exchange_swap L f])
+  apply Prod.ext (Bool.decide_congr (FlagGraph.cl_connected L))
+  apply Prod.ext
+  · change (FlagGraph.exchangeColors L).eulerGenus = G.eulerGenus
+    dsimp only [FlagGraph.eulerGenus, FlagGraph.edgePairGraph, FlagGraph.VertexOrbit,
+      FlagGraph.orbitSet, FlagGraph.exchangeColors]
+    rfl
+  · funext label
+    symm
+    apply Nat.card_congr
+    exact Equiv.subtypeEquiv (Equiv.swap L.leftLeaf L.rightLeaf) (fun f => by rw [exchange_swap L f])
 
 
 abbrev GradeFiber (k : FlagGrade) := {D : Diagram // flagGrade D = k}
@@ -454,7 +470,7 @@ private theorem gradeProject_relations (k : FlagGrade) :
   change gradeProject k r ∈ gradeRelationSpace k
   rcases gradeCut_actual k hr with hz | ha
   · have hzero : gradeProject k r = 0 := (gradeInclude_injective k) (by
-      simpa only [map_zero] using hz)
+      simpa only [gradeCut, LinearMap.comp_apply, map_zero] using hz)
     rw [hzero]
     exact Submodule.zero_mem _
   · exact Submodule.subset_span ha
