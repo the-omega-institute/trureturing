@@ -438,6 +438,31 @@ def gradeChargeResidue (D : LatticeData) (ell : Charge D →+ ZMod 3)
   (Finsupp.supported ℂ ℂ {a : EnergyFiber D n | ell a.1.1 = r}).comap
     (gradeCoeffEquiv D n).toLinearMap
 
+/-- The residue sector has the expected coordinate description on the energy fiber. -/
+def gradeChargeResidueEquiv (D : LatticeData) (ell : Charge D →+ ZMod 3)
+    (n : ℤ) (r : ZMod 3) :
+    gradeChargeResidue D ell n r ≃ₗ[ℂ] (ChargeEnergyFiber D ell n r →₀ ℂ) := by
+  let S : Set (EnergyFiber D n) := {a : EnergyFiber D n | ell a.1.1 = r}
+  let e : gradeChargeResidue D ell n r ≃ₗ[ℂ]
+      (Finsupp.supported ℂ ℂ S).comap (gradeCoeffEquiv D n).toLinearMap :=
+    LinearEquiv.ofEq _ _ rfl
+  let e' := (LinearEquiv.ofSubmodule' (gradeCoeffEquiv D n)
+    (Finsupp.supported ℂ ℂ S)).trans (Finsupp.supportedEquivFinsupp S)
+  change gradeChargeResidue D ell n r ≃ₗ[ℂ] (S →₀ ℂ)
+  exact e.trans e'
+
+theorem gradeChargeResidue_finrank (D : LatticeData) (ell : Charge D →+ ZMod 3)
+    (n : ℤ) (r : ZMod 3)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) :
+    Module.finrank ℂ (gradeChargeResidue D ell n r) =
+      Nat.card (ChargeEnergyFiber D ell n r) := by
+  letI := grade_finiteDimensional D hD n
+  letI := energyFiber_finite D hD n
+  letI := Fintype.ofFinite (EnergyFiber D n)
+  rw [(gradeChargeResidueEquiv D ell n r).finrank_eq]
+  simpa using (Module.finrank_finsupp ℂ ℂ
+    (ι := ChargeEnergyFiber D ell n r))
+
 theorem gradeChargeRotation_fixed_iff_gradeChargeResidue_zero
     (D : LatticeData) (ell : Charge D →+ ZMod 3) (phase : ChargePhase)
     (hphase : phase (Multiplicative.ofAdd (1 : ZMod 3)) ≠ 1)
