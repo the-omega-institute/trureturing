@@ -41,5 +41,6 @@ SmallerEdgeCoefficient is the closed claim that there exists a real c<1 such tha
 - Truth anchor: `D5/S3/TotalVariation/TreeMarkovStability.actual_tree_stability`
 - Truth anchor: `D5/S3/TotalVariation/TreeMarkovStability.edge_coefficient_one_sharp`
 - Dependency: [D5/S3/Divergence/ChainRule](../Divergence/ChainRule.md)
+- Dependency: [D5/S3/Entropy/Forgetting/CompletionEntropyMinimality](../Entropy/Forgetting/CompletionEntropyMinimality.md)
 - Dependency: [D5/S3/Entropy/Forgetting/PushforwardComposition](../Entropy/Forgetting/PushforwardComposition.md)
 - Dependency: [D5/S3/TotalVariation/Metric](Metric.md)

@@ -13,6 +13,7 @@ import Mathlib.Tactic.Ring
 import Mathlib.Tactic.FinCases
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
 import D5.S3.Entropy.Forgetting.PushforwardComposition
+import D5.S3.Entropy.Forgetting.CompletionEntropyMinimality
 import D5.S3.Divergence.ChainRule
 
 /-! Finite normalized tree replacement stability and sharpness. -/
@@ -146,7 +147,7 @@ private theorem leaf_extension_bound {Ω A B : Type*} [Fintype Ω] [Fintype A] [
   rw [h3, total_variation_comm (marginal χ) (marginal π)] at h2
   exact le_trans h1 (by dsimp [νK] at h2; linarith)
 
-private theorem extend_marginals {Ω A B : Type*} [Fintype Ω] [Fintype A] [Fintype B]
+private theorem extend_marginals {Ω A B : Type*} [Fintype Ω] [Fintype B]
     (p : Ω → ℝ) (f : Ω → A) (K : A → B → ℝ)
     (hK : ∀ a, ∑ b, K a b = 1) :
     pushforward Prod.fst (extend p f K) = p ∧
@@ -296,17 +297,14 @@ private theorem pushforward_equiv {Ω Ξ A : Type*} [Fintype Ω] [Fintype Ξ]
 
 private theorem pushforward_fst {A B : Type*} [Fintype A] [Fintype B]
     (π : A × B → ℝ) : pushforward Prod.fst π = marginal π := by
-  funext a
-  simp only [pushforward, marginal, Fintype.sum_prod_type]
-  rw [Finset.sum_comm]
-  simp
+  exact (D5.S3.Entropy.Forgetting.CompletionEntropyMinimality.marginal_eq_pushforward_fst π).symm
 
 private theorem pushforward_snd {A B : Type*} [Fintype A] [Fintype B]
     (π : A × B → ℝ) : pushforward Prod.snd π = fun b => ∑ a, π (a,b) := by
   funext b
   simp [pushforward, Fintype.sum_prod_type]
 
-private theorem extend_old_readout {Ω A B C : Type*} [Fintype Ω] [Fintype A] [Fintype B]
+private theorem extend_old_readout {Ω A B C : Type*} [Fintype Ω] [Fintype B]
     (p : Ω → ℝ) (f : Ω → A) (K : A → B → ℝ) (hK : ∀ a, ∑ b, K a b = 1)
     (g : Ω → C) :
     pushforward (fun z : Ω × B => g z.1) (extend p f K) = pushforward g p := by
@@ -504,12 +502,7 @@ private theorem tv_equiv {Ω Ξ : Type*} [Fintype Ω] [Fintype Ξ]
 
 private theorem sum_split {V : Type} [Fintype V] (v : V) (f : V → ℝ) :
     (∑ w, f w) = f v + ∑ w : {w : V // w ≠ v}, f w := by
-  have hs := Finset.sum_subtype (F := inferInstance) (p := fun w : V => w ≠ v) (Finset.univ.erase v)
-    (by intro w; simp) f
-  calc
-    _ = f v + ∑ w ∈ Finset.univ.erase v, f w :=
-      (Finset.add_sum_erase Finset.univ f (Finset.mem_univ v)).symm
-    _ = _ := by rw [hs]
+  exact Fintype.sum_eq_add_sum_subtype_ne f v
 
 private theorem sum_pair {V : Type} [Fintype V] (r s : V) (hne : r ≠ s)
     (cover : ∀ v, v = r ∨ v = s) (f : V → ℝ) :
@@ -740,12 +733,7 @@ private theorem quotient_reconstruction {V : Type} {G : SimpleGraph V} {X : V �
 
 private theorem prod_split {V : Type} [Fintype V] (v : V) (f : V → ℝ) :
     (∏ w, f w) = f v * ∏ w : {w : V // w ≠ v}, f w := by
-  have hs := Finset.prod_subtype (F := inferInstance) (p := fun w : V => w ≠ v) (Finset.univ.erase v)
-    (by intro w; simp) f
-  calc
-    _ = f v * ∏ w ∈ Finset.univ.erase v, f w :=
-      (Finset.mul_prod_erase Finset.univ f (Finset.mem_univ v)).symm
-    _ = _ := by rw [hs]
+  exact Fintype.prod_eq_mul_prod_subtype_ne f v
 
 private theorem prod_pair {V : Type} [Fintype V] (r s : V) (hne : r ≠ s)
     (cover : ∀ v, v = r ∨ v = s) (f : V → ℝ) :
