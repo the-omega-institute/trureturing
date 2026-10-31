@@ -54,6 +54,13 @@ internal sealed class FiniteIntersectionPolytopeDocument : IScribeDocumentDefini
         return All("E", new Formula.Subscript(V("Type"), V("u")), result);
     }
 
+    private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
+    private static Formula And(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
+    private static Formula Or(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Or, Parenthesized(b));
+    private static Formula Imp(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
     private static Formula Reals => Seq(Mathbb, Grp(V("R")));
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>
@@ -66,5 +73,5 @@ internal sealed class FiniteIntersectionPolytopeDocument : IScribeDocumentDefini
         new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Rank(Formula m, Formula u) => Call("toNat", Call("eRk", m, u));
     private static Formula SubsetSum(Formula x, Formula u) =>
-        Seq(Sub(Sum, Rel(V("a"), InMacro, u)), Sp, App(x, V("a")));
+        Seq(new Formula.Subscript(Sum, Rel(V("a"), InMacro, u)), Sp, App(x, V("a")));
 }
