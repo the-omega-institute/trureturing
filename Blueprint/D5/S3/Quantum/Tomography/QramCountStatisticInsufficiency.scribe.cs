@@ -123,7 +123,10 @@ internal sealed class QramCountStatisticInsufficiencyDocument : IScribeDocumentD
                             + "The bound 23/32 contradicts this inequality. Hence claim is false. "
                             + "This strict gap establishes insufficiency of the plus count; it does not determine "
                             + "the optimal collective success or the error exponent asked for in the same remark."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bohac-2025-qram-count-statistic-insufficiency"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title, Formula formula,
         AssessedProvenance provenance, string prose) => Describe.Lean(

@@ -138,6 +138,10 @@ $$\neg (\operatorname{D5.S3.Quantum.Tomography.QramCountStatisticInsufficiency.c
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Tomography/QramCountStatisticInsufficiency.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bohac-2025-qram-count-statistic-insufficiency` (refuted) by `D5/S3/Quantum/Tomography/QramCountStatisticInsufficiency.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bohac-2025-qram-count-statistic-insufficiency","declaration_gid":"D5/S3/Quantum/Tomography/QramCountStatisticInsufficiency.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Leonardo Bohac (2025). *Bias-Class Discrimination of Universal QRAM Boolean Memories*. DOI: [10.48550/arXiv.2512.17503](https://doi.org/10.48550/arXiv.2512.17503). URL: <https://arxiv.org/abs/2512.17503v1>.
@@ -170,3 +174,4 @@ If claim held, its specialization to these parameters and the valid effect E wou
 - Truth anchor: `D5/S3/Quantum/Tomography/QramCountStatisticInsufficiency.weight`
 - Truth anchor: `D5/S3/Quantum/Tomography/QramCountStatisticInsufficiency.weightClass`
 - Dependency: [D5/S3/Observer/BornReduction](../../Observer/BornReduction.md)
+- Dependency: [D5/S3/Quantum/Thermal/MetrotropyHalfErgotropyRefutation](../Thermal/MetrotropyHalfErgotropyRefutation.md)
