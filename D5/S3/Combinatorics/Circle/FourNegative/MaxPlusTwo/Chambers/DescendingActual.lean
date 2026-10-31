@@ -63,6 +63,7 @@ private theorem descending_actual (a b c : ℕ) (hc : 2≤c) (hcb : c≤b) (hba 
         rw [show a+2-1=a+1 by omega,pow_succ]; ring
       rw [he]
       simp only [Nat.cast_zero,Nat.cast_ofNat,mul_zero,sub_zero,add_zero,zero_add]
+      dsimp only [u1,u2,R,T,Z]
       simp only [Nat.cast_pow,Nat.cast_ofNat] at hs
       ring_nf at hs ⊢
       exact hs

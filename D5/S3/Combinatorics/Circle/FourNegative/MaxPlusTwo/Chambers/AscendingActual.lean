@@ -64,9 +64,9 @@ private theorem ascending_actual (a b c : ℕ) (ha : 2≤a)
   have hd : max (max a b) c+2=c+2 := by rw [max_eq_right hab,max_eq_right hbc]
   have hmono : min a c≤b ∧ b≤max a c := by rw [min_eq_left hac.le,max_eq_right hac.le]; exact ⟨hab,hbc⟩
   have hnot : ¬(c≤b ∧ b≤a) := by omega
-  have hneq : ¬(R=T ∧ T=Z) := by
+  have hneq : ¬((2:ℕ)^a=2^b ∧ (2:ℕ)^b=2^c) := by
     intro he
-    have hpow : R<Z:=Nat.pow_lt_pow_right (show 1<(2:ℕ) by decide) hac
+    have hpow : (2:ℕ)^a<2^c:=Nat.pow_lt_pow_right (show 1<(2:ℕ) by decide) hac
     omega
   have hD : (2:ℤ)^(c+2)=4*(Z:ℤ) := by dsimp [Z]; push_cast; rw [pow_add]; norm_num; ring
   have hseed : (R:ℤ)*T*Z+(R:ℤ)*T+R+1=A := by dsimp [A,seedZ,R,T,Z]; push_cast; ring

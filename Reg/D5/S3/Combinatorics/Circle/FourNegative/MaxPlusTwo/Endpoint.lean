@@ -2,7 +2,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Endpoint
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
-/-! The complete equal-gap source telescope and both literal first-ear readouts. -/
+/-! The complete four-gap source telescope and both literal first-ear readouts. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 open LeanInformationAudit

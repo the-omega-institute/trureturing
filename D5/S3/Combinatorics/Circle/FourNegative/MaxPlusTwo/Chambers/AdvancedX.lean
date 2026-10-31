@@ -253,7 +253,7 @@ private theorem actual_advanced_strong_exact
       linarith only [hh]
   have inv0:=masked_inventory a b c d u1 u2 u3 v0 v2 v3 w
     (by omega) (by omega) (by omega) (by omega) hU12 hU23
-    (by intro e _ he; simp at he)
+    (by intro e he _; simp [Nat.testBit_two_pow_sub_one,he])
     (by intro e _ he; simp only [Nat.testBit_or,he,Bool.or_true]) hV23 hVxor
   have hpword:=advanced_permutation a b c d u1 u2 u3 v0 v2 v3 w xt
   have inv:=hpword.trans inv0
@@ -408,7 +408,8 @@ private theorem descending_edge_actual (b : ℕ) (hb : 2≤b) :
     have hR : (2:ℤ)^(b+1)=2*(T:ℤ) := by rw [pow_succ]; dsimp [T]; push_cast; ring
     rw [hH,hR]
     norm_num only [Nat.cast_zero,Nat.cast_one,Nat.cast_ofNat,pow_succ] at *
-    dsimp only [e1,e2,e3,A,T] at hp
+    dsimp only [e1,e2,e3,A,T] at hp ⊢
+    simp only [Nat.cast_pow,Nat.cast_ofNat] at hp ⊢
     ring_nf at hp ⊢
     exact hp
 
