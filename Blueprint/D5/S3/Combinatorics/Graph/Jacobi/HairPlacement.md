@@ -1,8 +1,8 @@
-# Ordinary branching hair trees vanish in the actual Jacobi quotient
+# Binary hair-tree grafts vanish in the actual Jacobi quotient
 
 ## Abstract
 
-Ordinary branching hair trees vanish in the actual Jacobi quotient
+Binary hair-tree grafts vanish in the actual Jacobi quotient
 
 **Definition 1.1 (Geometric placement with a trivalent parent).**
 

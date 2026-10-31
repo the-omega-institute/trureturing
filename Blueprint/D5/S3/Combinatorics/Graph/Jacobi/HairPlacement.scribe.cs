@@ -7,7 +7,7 @@ internal sealed class HairPlacementDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Combinatorics/Graph/Jacobi/HairPlacement.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Ordinary branching hair trees vanish in the actual Jacobi quotient", H("Ordinary branching hair trees vanish in the actual Jacobi quotient"),
+        "Binary hair-tree grafts vanish in the actual Jacobi quotient", H("Binary hair-tree grafts vanish in the actual Jacobi quotient"),
         Blocks(
             Describe.Lean(DescribeId.Create("actual-tree-placement"),
                 DeclarationHandle.Create(Prefix + "HairPlacement"), H("Geometric placement with a trivalent parent"),
