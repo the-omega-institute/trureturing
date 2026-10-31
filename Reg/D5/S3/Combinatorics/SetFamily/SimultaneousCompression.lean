@@ -75,7 +75,9 @@ private theorem intervention_law (i : Bool) : ¬ arena.{u}.Law (intervention i) 
     (by simp) (by simp) (by simp) (by simp) (by simp [CrossIntersecting])
   have hCe : C = ∅ := by simpa using hC
   have hDe : D = ∅ := by simpa using hD
-  cases i <;> norm_num [intervention, realize, hCe, hDe, mass] at hw hv
+  cases i with
+  | false => norm_num [intervention, realize, hCe, hDe, mass] at hw
+  | true => norm_num [intervention, realize, hCe, hDe, mass] at hv
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
@@ -188,7 +190,9 @@ private theorem iteration_intervention_law (i : Bool) :
   obtain ⟨K, C, D, _, _, _, _, _, _, _, hw, hv, _⟩ :=
     h ∅ empty_system ∅ ∅ (by simp [empty_system]) (by simp [empty_system])
       (by simp [CrossIntersecting])
-  cases i <;> norm_num [intervention, realize, empty_system, mass] at hw hv
+  cases i with
+  | false => norm_num [intervention, realize, empty_system, mass] at hw
+  | true => norm_num [intervention, realize, empty_system, mass] at hv
 
 private theorem iteration_rejected_law : ¬ iteration_arena.{u}.Law rejected := by
   intro h
@@ -216,7 +220,8 @@ def iteration_source_registration :
 def iteration_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@exists_terminal_compression.{u}) (Realization signature.{u}) Bool Unit := {
   unitName := `Reg.D5.S3.Combinatorics.SetFamily.SimultaneousCompression.iteration_unit
-  realizationName := `Reg.D5.S3.Combinatorics.SetFamily.SimultaneousCompression.iteration_source_registration
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.SetFamily.SimultaneousCompression.iteration_source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨iteration_arena⟩
