@@ -28,9 +28,23 @@ internal sealed class PrimeValuation5040SigmaDocument : IScribeDocumentDefinitio
                 H("Normalized 5040 factorization"),
                 StatementSource.FromAuthor(Disp(F.Id("normalizedSigma5040MulOfCoprime"))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For a nonzero residual n coprime to 210, the normalized ratio splits as "
-                        + "sigma(5040 n)/(5040 n) = (403/105) sigma(n)/n."))),
+                Blocks(
+                    Paragraph(Text(
+                        "For a nonzero residual n coprime to 210, the normalized ratio splits as "
+                        + "sigma(5040 n)/(5040 n) = (403/105) sigma(n)/n.")),
+                    Paragraph(Text(
+                        "Under exactly these hypotheses, put r = sigma(n)/n. Since 403/105 "
+                        + "is positive, the factorization gives sigma(5040 n)/(5040 n) > 2 "
+                        + "if and only if r > 2*(105/403) = 210/403. This is an application "
+                        + "of normalized_sigma_5040_mul_of_coprime and ordered-field arithmetic; "
+                        + "it preserves the nonzero and coprime-to-210 assumptions.")),
+                    Paragraph(Text(
+                        "The strict threshold equivalence is an exact rescaling and supplies "
+                        + "no upper bound for the residual ratio. The conditional ordered bound "
+                        + "below still requires its separate bound B for every positive residual "
+                        + "m coprime to 210 satisfying AllowedOrdered 210 m. Neither the "
+                        + "threshold equivalence nor the finite factor supplies that bound, "
+                        + "a Robin inequality, or an RH implication."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("normalized-sigma-5040-fibre"),
