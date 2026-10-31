@@ -57,6 +57,7 @@ private theorem shared_column (V W : Bool → List Bool) (l L : ℕ)
   | ofNat m =>
     have hm : m < l := hi
     have hmL : (m : ℤ) < (L : ℤ) := by omega
+    simp only [Int.ofNat_eq_natCast] at hphase ⊢
     rw [Int.emod_eq_of_lt (by omega) hmL] at hphase
     have hoff : (x.1 (m : ℤ)).2.val = m := by omega
     have hf := (hprefix false).getElem (show m < (V false).length by rw [hV]; exact hm)
@@ -118,12 +119,9 @@ not part of this type and must be supplied independently for a Toeplitz point. -
 noncomputable def alignedPeriodicPoint :
     {y : ℤ → Bool // (∀ n, y ∈ TwoRunRefinement.alignedConfigurations (balancedWord n)) ∧
       HasPeriodicCoordinates y} := by
-  apply Classical.choice (show Nonempty _ from ?_)
-  obtain ⟨y, hy⟩ := AlignedTowerLimit.exists_aligned_periodic_point balancedWord height
-    balancedWord_length height_pos ?_ balancedWord_prefix_false balancedWord_suffix_true
-    (fun r => ⟨r, height_lower_bound r⟩)
-  · exact ⟨⟨y, hy⟩⟩
-  · intro n
+  have hnest : ∀ n, TwoRunRefinement.alignedConfigurations (balancedWord (n + 1)) ⊆
+      TwoRunRefinement.alignedConfigurations (balancedWord n) := by
+    intro n
     have hword : balancedWord (n + 1) = TwoRunRefinement.word (balancedWord n)
         (fun a => (if a then 1 else 2) * (n + 1).factorial)
         (fun a => (if a then 2 else 1) * (n + 1).factorial) := by
@@ -134,6 +132,10 @@ noncomputable def alignedPeriodicPoint :
       (fun a => by rw [balancedWord_length]; exact height_pos n) _ _
       (fun a => by cases a <;> simp [Nat.factorial_pos])
       (fun a => by cases a <;> simp [Nat.factorial_pos])
+  have h := AlignedTowerLimit.exists_aligned_periodic_point balancedWord height
+    balancedWord_length height_pos hnest balancedWord_prefix_false balancedWord_suffix_true
+    (fun r => ⟨r, height_lower_bound r⟩)
+  exact ⟨Classical.choose h, Classical.choose_spec h⟩
 
 end Balanced
 
