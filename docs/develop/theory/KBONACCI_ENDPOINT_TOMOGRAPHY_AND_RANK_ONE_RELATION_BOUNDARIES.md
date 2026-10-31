@@ -218,7 +218,7 @@ $$
 
 因此“边界状态够不够”必须相对于目标类与允许操作同时判定，不能从线性维数直接推出目标不可识别，也不能从秩一识别推出对象与量具各自绝对唯一。
 
-**开放边界 5.2（从 KBonacci 到 FIB 的类型桥）。** 现有 KBonacci 端点算子是 $\operatorname{Mat}_k(K)$ 中的布尔支持外积，现有 FIB 自校准来源则是带正性、秩一和迹归一条件的实 $2\times2$ 矩阵，且操作族还包含 Fibonacci 推进与标签交换。要把本卷的抽象观察合同变成 FIB 的物理或来源级协议，至少需要一个显式的载体映射，证明它保持来源合法性、操作词、读数和目标等价关系。共享“端点”“秩一”等名称不足以构成桥；本卷不宣称该桥已经成立。
+**开放边界 5.2（从 KBonacci 到 FIB 的类型桥）。** 现有 KBonacci 端点算子是 $\operatorname{Mat}_k(K)$ 中的布尔支持外积，现有 FIB 自校准来源则是带正性与秩一条件的实 $2\times2$ 矩阵；某些 FIB 合同另加迹归一，但本卷的类型桥不把该归一前提外推到全部 FIB 结果。FIB 操作族还包含 Fibonacci 推进与标签交换。要把本卷的抽象观察合同变成 FIB 的物理或来源级协议，至少需要一个显式的载体映射，证明它保持来源合法性、操作词、读数和目标等价关系。共享“端点”“秩一”等名称不足以构成桥；本卷不宣称该桥已经成立。
 
 **命题 5.3（同名算子不是同一操作）。** 当 $k=2$ 时，KBonacci 单窗口端点包括
 
@@ -240,7 +240,7 @@ $$
 | `D5/S1/Words/AdmissibleWords/KBonacciActualEndpointOperators.actual_endpoint_operators` | `repo-derived` 供应实际窗口、端点外积、串接律、全端点闭包、计数与非零秩至多一；不供应本卷的迹观察张成/核分类。 |
 | `KBONACCI_SELF_CALIBRATING_BOUNDARIES.md` 第 3–4 节 | `repo-derived` 供应边界状态、端点命题、单窗口非闭合与 Hankel 秩；不把这些结果解释成关系矩阵的标量迹核。 |
 | `FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_SYNTHESIS.md` | `repo-derived` 供应关系读数、目标相对框架与开放的类型边界；不供应 KBonacci 载体映射。 |
-| 有限维线性代数与非退化迹配对 | `literature-attested` 的标准数学工具；本卷的具体端点计算是其在上述合同中的推导。 |
+| R. A. Horn and C. R. Johnson, *Matrix Analysis*, 2nd ed., Cambridge University Press, 2013, Chapters 0–1, [DOI](https://doi.org/10.1017/CBO9780511810817) | `literature-attested`：矩阵单位、秩、迹与有限维线性代数的标准工具；不供应本卷的 KBonacci 端点合同或正秩一识别应用。 |
 | 本卷的定理 2.2–4.2 | `repo-derived` 的综合推导；从上述端点合同计算张成、标量观察核与严格逐元正秩一识别，不主张文献新颖性或优先权。 |
 
 **适用边界。** 严格逐元正秩一类允许非对称，也包含其对称子类；结论不覆盖一般半正定矩阵。迹合同固定为 $\operatorname{tr}(EA)$；改变配对、允许窗口、来源域或输出合同都需要重新计算。KBonacci 到 FIB 的载体、操作、读数与目标等价关系的类型桥保持开放。
