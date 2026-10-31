@@ -134,8 +134,8 @@ private theorem aggregate_simplex {A B : Type*} [Fintype A] [Fintype B]
     aggregate f p ∈ stdSimplex ℝ B := by
   constructor
   · intro b
+    change 0 ≤ ∑ a, if f a = b then p a else 0
     exact Finset.sum_nonneg fun a _ => by
-      dsimp [aggregate]
       split_ifs <;> first | exact hp.1 a | exact le_rfl
   · simpa using (aggregate_sum f p (fun _ => 1)).trans (by simpa using hp.2)
 
@@ -163,7 +163,8 @@ private theorem aggregate_section {A B : Type*} [Fintype A] [Fintype B]
       (if f a = b then aggregate g q a else 0) =
       ∑ c, if g c = a then (if f a = b then q c else 0) else 0 := by
     by_cases h : f a = b <;> simp [aggregate, h]
-  simp only [aggregate, hterm]
+  change (∑ a, if f a = b then aggregate g q a else 0) = q b
+  simp_rw [hterm]
   rw [Finset.sum_comm]
   have hcollapse (c : B) :
       (∑ a, if g c = a then (if f a = b then q c else 0) else 0) =
@@ -331,8 +332,7 @@ private theorem tensor_comp {A B C D E F : Type u}
       rw [Matrix.single_kronecker_single, one_mul]
     change tensorRawAction (L'.comp L) (R'.comp R) _ =
       tensorRawAction L' R' (tensorRawAction L R _)
-    rw [hs, tensor_kronecker, tensor_kronecker, tensor_kronecker,
-      raw_comp, raw_comp]
+    simp only [hs, tensor_kronecker, raw_comp]
   have hX : X = ∑ i, ∑ j, X i j • Matrix.single i j (1 : ℂ) := by
     simpa only [Matrix.smul_single, smul_eq_mul, mul_one] using Matrix.matrix_eq_sum_single X
   change P X = Q X
@@ -401,10 +401,6 @@ private def compactEmbedding (r d m : Sector → ℕ) (J : ℕ)
     (hr : ∀ s, r s = d s * m s) (hmJ : ∀ s, m s ≤ J) :
     TargetLocal r ↪ SourceLocal (Coord := Fin J) d :=
   (compactSplit r d m hr).toEmbedding.trans (residualInclusion d m J hmJ)
-
-private theorem compact_embedding_sector (r d m : Sector → ℕ) (J : ℕ)
-    (hr : ∀ s, r s = d s * m s) (hmJ : ∀ s, m s ≤ J) (x : TargetLocal r) :
-    (compactEmbedding r d m J hr hmJ x).1 = x.1 := rfl
 
 private theorem compact_embedding_range (r d m : Sector → ℕ) (J : ℕ)
     (hr : ∀ s, r s = d s * m s) (hmJ : ∀ s, m s ≤ J)
@@ -732,5 +728,160 @@ private theorem compact_error_bddBelow (r d : Sector → ℕ)
   · exact le_csSup hb (Set.mem_union_left _ (Set.mem_singleton 0))
   · rw [csSup_of_not_bddAbove hb]
     simp
+
+private def lossTotal (n : ℕ) (loss : ℕ → ℝ) : ℝ :=
+  ∑ i : Fin n, Real.tanh ((loss (i + 1) - loss i) / 4)
+
+/-- Compact flat encodings, actual local splitting, and the ordered distinct-rank value.
+The operation sets are defined on the original source carrier, including their exact basis condition. -/
+private theorem compact_flat_optimality [Nonempty Sector]
+    (r d m : Sector → ℕ) (hr : ∀ s, r s = d s * m s)
+    (hd : ∀ s, 0 < d s) (hm : ∀ s, 0 < m s) :
+    FlatFeasibilityClaim (Sector := Sector) ∧
+    ∃ J : ℕ, ∃ hmJ : ∀ s, m s ≤ J,
+    ∃ n : ℕ, ∃ a : Fin (n + 1) → ℕ, ∃ f : Sector → Fin (n + 1), ∃ loss : ℕ → ℝ,
+    ∃ source : QuantumChannel Sector (TargetLocal r × TargetLocal r),
+    ∃ target : QuantumChannel Sector (TargetLocal d × TargetLocal d),
+    ∃ E : QuantumChannel (TargetLocal r) (SourceLocal (Coord := Fin J) d),
+    ∃ splitting : QuantumChannel (TargetLocal r) (TargetLocal d),
+    ∃ joint : QuantumChannel (TargetLocal r × TargetLocal r) (TargetLocal d × TargetLocal d),
+      StrictMono a ∧ Function.Surjective f ∧ (∀ s, a (f s) = m s) ∧
+      (∀ i : Fin (n + 1), loss i = Real.log (a i : ℝ)) ∧
+      StrictMono (fun i : Fin (n + 1) => loss i) ∧
+      (∀ X, raw source X = targetEncoding r * X * (targetEncoding r)ᴴ) ∧
+      (∀ X, raw target X = targetEncoding d * X * (targetEncoding d)ᴴ) ∧
+      (∀ X, raw E X = placement (compactEmbedding r d m J hr hmJ) * X *
+        (placement (compactEmbedding r d m J hr hmJ))ᴴ) ∧
+      (∀ s (a : Fin (d s)) (b : Fin (m s)),
+        ((compactSplit r d m hr).symm ⟨s, (a, b)⟩).2.val = a.val + d s * b.val) ∧
+      (∀ X b c, raw splitting X b c = ∑ j : Fin J,
+        (placement (compactEmbedding r d m J hr hmJ) * X *
+          (placement (compactEmbedding r d m J hr hmJ))ᴴ)
+            ⟨b.1, (b.2, j)⟩ ⟨c.1, (c.2, j)⟩) ∧
+      TensorRealization splitting splitting joint ∧
+      (∀ s t, Real.sqrt ((min (m s) (m t) : ℕ) / (max (m s) (m t) : ℝ)) =
+        Real.exp (-|Real.log (m s : ℝ) - Real.log (m t : ℝ)| / 2)) ∧
+      (∀ X, raw (joint.comp source) X = targetEncoding d *
+        (Matrix.of fun s t =>
+          (Real.exp (-|Real.log (m s : ℝ) - Real.log (m t : ℝ)| / 2) : ℂ) * X s t) *
+          (targetEncoding d)ᴴ) ∧
+      (∀ s, (joint.comp source).toCompletelyPositiveMap
+          (CStarMatrix.ofMatrix (Matrix.single s s 1)) =
+        target.toCompletelyPositiveMap (CStarMatrix.ofMatrix (Matrix.single s s 1))) ∧
+      diamondDistance (joint.comp source) target = 2 * lossTotal n loss / (1 + lossTotal n loss) ∧
+      IsLeast (compactProductErrors r d source target)
+        (2 * lossTotal n loss / (1 + lossTotal n loss)) ∧
+      IsLeast (compactExactProductErrors r d source target)
+        (2 * lossTotal n loss / (1 + lossTotal n loss)) ∧
+      sInf (compactExactProductErrors r d source target) =
+        2 * lossTotal n loss / (1 + lossTotal n loss) ∧
+      (n = 0 → diamondDistance (joint.comp source) target = 0) ∧
+      ((∀ s t, m s = m t) → diamondDistance (joint.comp source) target = 0) := by
+  classical
+  let J := Finset.univ.sup m
+  have hmJ (s : Sector) : m s ≤ J := Finset.le_sup (Finset.mem_univ s)
+  let M := flatModel d m J hd hm hmJ
+  obtain ⟨hFull, hConstructive, hFeasible⟩ := FiniteSectorChannelOptimality.result M
+  obtain ⟨_, hProduct, _, _, _, _⟩ := hFull
+  obtain ⟨encoding, S, Q, hQ, hAction, hSchur, hBasis, hDiamond, hInf, _⟩ := hConstructive
+  obtain ⟨source, E, R, E₂, hsource, hE, hR, hTensor, hembed, _, hErrors⟩ :=
+    compact_physical_transport r d m J hr hd hm hmJ encoding hProduct
+  obtain ⟨n, a, f, loss, ha, hf, haf, hmono, hloss, hZ, hkernel, hlog, hminimum, htotal⟩ :=
+    flat_spectral_minimum d m J hd hm hmJ
+  have hden : 1 + lossTotal n loss ≠ 0 := by
+    change 1 + (∑ i : Fin n, Real.tanh ((loss (i + 1) - loss i) / 4)) ≠ 0
+    rw [← htotal]
+    exact ne_of_gt hZ
+  have hvalue : 2 * (1 - spectralMinimum M) =
+      2 * lossTotal n loss / (1 + lossTotal n loss) := by
+    rw [hminimum, htotal]
+    dsimp [lossTotal] at hden ⊢
+    field_simp [hden]
+    ring
+  have hstrict : StrictMono (fun i : Fin (n + 1) => loss i) := by
+    intro i j hij
+    rw [hloss, hloss]
+    have ha0 : 0 < a i := by
+      obtain ⟨s, rfl⟩ := hf i
+      rw [haf]
+      exact hm s
+    exact Real.log_lt_log (by exact_mod_cast ha0) (by exact_mod_cast ha hij)
+  let splitting := S.comp E
+  let joint := Q.comp E₂
+  have hJoint : TensorRealization splitting splitting joint := by
+    intro X
+    change raw (Q.comp E₂) X = tensorRawAction (S.comp E) (S.comp E) X
+    rw [raw_comp, hQ, hTensor, tensor_comp]
+  have hencoded : joint.comp source = Q.comp encoding.source := by
+    apply channel_ext_raw
+    intro X
+    change raw ((Q.comp E₂).comp source) X = _
+    simp only [raw_comp]
+    have he := congrArg (fun C => raw C X) hembed
+    simp only [raw_comp] at he
+    rw [he]
+  have hBasisCompact (s : Sector) :
+      (joint.comp source).toCompletelyPositiveMap
+          (CStarMatrix.ofMatrix (Matrix.single s s 1)) =
+        encoding.target.toCompletelyPositiveMap (CStarMatrix.ofMatrix (Matrix.single s s 1)) := by
+    rw [hencoded]
+    exact hBasis s
+  have hError : diamondDistance (joint.comp source) encoding.target =
+      2 * lossTotal n loss / (1 + lossTotal n loss) := by
+    rw [hencoded, hDiamond, hvalue]
+  have hInfCompact : sInf (compactProductErrors r d source encoding.target) =
+      2 * lossTotal n loss / (1 + lossTotal n loss) := by
+    rw [hErrors, hInf, hvalue]
+  have hLower (x : ℝ) (hx : x ∈ compactProductErrors r d source encoding.target) :
+      2 * lossTotal n loss / (1 + lossTotal n loss) ≤ x := by
+    rw [← hInfCompact]
+    exact csInf_le (compact_error_bddBelow r d source encoding.target) hx
+  have hLeast : IsLeast (compactProductErrors r d source encoding.target)
+      (2 * lossTotal n loss / (1 + lossTotal n loss)) :=
+    ⟨⟨splitting, splitting, joint, hJoint, hError.symm⟩, hLower⟩
+  have hExactLeast : IsLeast (compactExactProductErrors r d source encoding.target)
+      (2 * lossTotal n loss / (1 + lossTotal n loss)) := by
+    constructor
+    · exact ⟨splitting, splitting, joint, hJoint, hBasisCompact, hError.symm⟩
+    · rintro x ⟨L, N, C, hC, hBasisC, hx⟩
+      exact hLower x ⟨L, N, C, hC, hx⟩
+  refine ⟨hFeasible, J, hmJ, n, a, f, loss, source, encoding.target, E,
+    splitting, joint, ha, hf, haf, hloss, hstrict, hsource, encoding.targetAction,
+    hE, ?_, ?_, hJoint, ?_, ?_, hBasisCompact, hError, hLeast, hExactLeast,
+    hExactLeast.csInf_eq, ?_, ?_⟩
+  · intro s a b
+    rfl
+  · intro X b c
+    change raw (S.comp E) X b c = _
+    rw [raw_comp]
+    have hs : raw S (raw E X) =
+        (fun b c => ∑ j : Fin J, (raw E X) ⟨b.1, (b.2, j)⟩ ⟨c.1, (c.2, j)⟩) :=
+      hAction (raw E X)
+    rw [hs, hE]
+  · intro s t
+    exact flat_gram_log (m s) (m t) (hm s) (hm t)
+  · intro X
+    rw [hencoded]
+    have h := hSchur X
+    simp_rw [hlog] at h
+    exact h
+  · intro hn
+    subst n
+    simpa [lossTotal] using hError
+  · intro hconstant
+    have hn : n = 0 := by
+      by_contra hn
+      have hnpos : 0 < n := Nat.pos_of_ne_zero hn
+      let i : Fin (n + 1) := ⟨0, by omega⟩
+      let j : Fin (n + 1) := ⟨1, by omega⟩
+      obtain ⟨s, hs⟩ := hf i
+      obtain ⟨t, ht⟩ := hf j
+      have hlt : a i < a j := ha (show i < j by change (0 : ℕ) < 1; omega)
+      have heq : a i = a j := by
+        rw [← hs, ← ht, haf, haf]
+        exact hconstant s t
+      exact (ne_of_lt hlt) heq
+    subst n
+    simpa [lossTotal] using hError
 
 end D5.S3.Quantum.Entanglement.FiniteFlatSectorOptimum
