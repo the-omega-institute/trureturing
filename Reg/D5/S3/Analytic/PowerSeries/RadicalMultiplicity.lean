@@ -40,7 +40,7 @@ abbrev arena : Arena.{u+1,u,0,u,0} where
       PowerSeries.coeff k (∑ j, (A j : ℝ⟦X⟧) * S j) = 0),
     ∑ j, (A j : ℝ⟦X⟧) * R.readout () ι S j = 0
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
   intro h
   let I := ULift.{u} (Fin 2)
   let S : I → ℝ⟦X⟧ := fun i => if i.down = 0 then 1 else -1
@@ -53,12 +53,18 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     intro i
     by_cases hi : i.down = 0 <;> simp [S, p, hi]
   have hZ : (∑ i : I, (A i : ℝ⟦X⟧) * S i) = 0 := by
-    simp [I, A, S, Fin.sum_univ_two]
+    calc
+      _ = ∑ i : Fin 2, if i = 0 then (1 : ℝ⟦X⟧) else -1 := by
+        apply Fintype.sum_equiv (Equiv.ulift : I ≃ Fin 2)
+        intro i
+        simp [A, S]
+      _ = 0 := by simp [Fin.sum_univ_two]
   have he := @h I inferInstance S p A hS0 hs
     (by intro i; simp [p]) (by intro i; simp [A])
     (by intro k hk; rw [hZ]; simp)
-  change (∑ _i : I, (1 : ℝ⟦X⟧) * 1) = 0 at he
-  norm_num [I, Fin.sum_univ_two] at he
+  norm_num [rejected, realize, A, I] at he
+  have hc := congrArg PowerSeries.constantCoeff he
+  norm_num at hc
 
 private theorem sensitivity : Sensitivity arena actual := by
   constructor
