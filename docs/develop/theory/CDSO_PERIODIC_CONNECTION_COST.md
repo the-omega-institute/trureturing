@@ -1037,7 +1037,7 @@ reconstruction).** Under exactly Definition 1.1, for every fixed
 admissible $a,h$ and every sufficiently large integer $N$,
 
 $$
-V_N=\min_{j\in\mathcal J_N}\ 
+V_N=\min_{j\in\mathcal J_N}\
           \min_{z\in\mathcal Z_{m,n,d_{j,N}}}
                                       \mathcal A_{j,N}(z).
 \tag{6.12}
@@ -1128,7 +1128,7 @@ $$
  &+\frac{U_{j,N}}{\beta^3}
        -\frac14\left(\frac{m^5}{\alpha^3}
                                       +\frac n{\beta^3}\right),\\
-\Psi_N={}&\min_{j\in\mathcal J_N}\ 
+\Psi_N={}&\min_{j\in\mathcal J_N}\
             \min_{z\in\mathcal Z_{m,n,d_{j,N}}}\Psi_{j,N}(z).
 \end{aligned}
 \tag{7.2}
@@ -1340,7 +1340,7 @@ $$
 
 All three have the same first coefficient and fourth-power
 correction. The uniform remainder therefore proves (7.11).
-Equivalently the two-variable quadratic matrix in (7.13) has
+Equivalently the matrix of the bracketed quadratic in (7.13) has
 negative determinant $-(r^2-4)^2$, but (7.12) additionally
 verifies an admissible integer direction and an actual-graph
 realization; the determinant alone would not establish those.
