@@ -1003,14 +1003,14 @@ Write the fixed source as
 
 $$
 P=\begin{pmatrix}a&b\\c&1-a\end{pmatrix},\qquad
- t=b+c,quad R=1+b,quad x=R/t.
+ t=b+c,\quad R=1+b,\quad x=R/t.
 \tag{13.4}
 $$
 
 The traces at clocks zero through five are exactly $(1,t,1,t,R,R+t)$: $J^3=J$, $MJ=\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ and $M^2J=\left(\begin{smallmatrix}1&1\\2&1\end{smallmatrix}\right)$. A signature $(R,t)$ is legal precisely when
 
 $$
-t>0,quad R>1,quad t-R+1>0,quad
+t>0,\quad R>1,\quad t-R+1>0,\quad
 0<q:=(R-1)(t-R+1)\le\frac14.
 \tag{13.5}
 $$
