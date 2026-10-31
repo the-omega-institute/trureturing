@@ -592,3 +592,306 @@ $$
 **来源与适用边界 5.5。** 第 2–3 节在未预设全局复结构亦未预设外部边同构的有限维实内积空间上给出跨投影手征黏合判据（定理 2.3）与共享二维分支图上的无基 $\mathbb{Z}_2$ 圈和乐判据（定理 3.3），严格区分于预先给定全局正交复结构 $J$ 后的实—复 Hilbert 等价（Baez 2012 定理 7）以及预先指定子空间间正交输运映射后的闭环判据（[`AURIC_SHARP_THREE_AXIS_READOUTS_ENDOGENOUS_COMPLEX_STRUCTURE_AND_COMMON_PHASE_COMPATIBILITY_V53.md`](AURIC_SHARP_THREE_AXIS_READOUTS_ENDOGENOUS_COMPLEX_STRUCTURE_AND_COMMON_PHASE_COMPATIBILITY_V53.md) 定理 8.2）。第 4 节直接以实转置与内生偏迹导出非交换算子块球面恒等式（定理 4.2），其中单态秩二实化密度归一化沿用 McKague–Mosca–Gisin 2009 附录 A.1，算子纯度亏格将 [`AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md`](AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md) 定理 5.2 从复载体下沉到纯实载体。第 5 节的初等切分分类与选型（引理 5.2、定理 5.3）以 Frobenius 1878 实可除代数分类、有限维不可约模的 Jacobson—Artin—Wedderburn 双中心化子定理、Dyson 1962 与 Baez 2012（定理 6、定理 12 证明及第 7 节）的实张量结构、Caves–Fuchs–Schack 2002 第 V 节与 Hardy 2001 的局部对称乘积层析计数，以及 Atiyah–Bott–Shapiro 1964 的实 Clifford 单性为中间代数工具；定理 5.3 的排除结论仅针对单切分不可约可观测量代数与完整局部对称正锥的标准实张量复合，不排除通过附加共享外部相位辅助比特并限制可访问子代数在更大实或四元数载体上构造的受限模拟（McKague–Mosca–Gisin 2009）。第 1–5 节尚未涉及跨窗口概率赋值的 Born 迹密度闭合、单本体参考切分下的完全正性仪器与有限精度守卫读出、以及离散晶格隐藏库消去下的红外共同光锥条件。
 
 ## 追加锚（本行以下为增补区）
+
+## 6. 重叠二元切分菜单的关系一致性秩判据与非正锥边界
+
+**定义 6.1（复载体上的二元切分效果菜单、声明框架关系与关系一致性）。** 设 $\mathcal{H}$ 为有限维复内积空间（$\dim_{\mathbb{C}}\mathcal{H}=d\ge2$），记厄米算子实向量空间为 $\operatorname{Herm}(\mathcal{H})$（$\dim_{\mathbb{R}}\operatorname{Herm}(\mathcal{H})=d^2$），效果集为 $\mathcal{E}(\mathcal{H})=\{E\in\operatorname{Herm}(\mathcal{H}):0\preceq E\preceq I_{\mathcal{H}}\}$。有限切分菜单是指三元组 $\mathfrak{M}=(\{E_j\}_{j=0}^N,\mathcal{R})$，其中 $N\in\mathbb{Z}_{\ge1}$，$E_0=I_{\mathcal{H}}$，$E_1,\ldots,E_N\in\mathcal{E}(\mathcal{H})\setminus\{0,I_{\mathcal{H}}\}$，定义算子求值实线性映射
+
+$$
+\mathsf{E}_{\mathfrak{M}}:\mathbb{R}^{N+1}\longrightarrow\operatorname{Herm}(\mathcal{H}),\qquad
+\mathsf{E}_{\mathfrak{M}}(c)=\sum_{j=0}^{N}c_jE_j,
+$$
+
+而 $\mathcal{R}\subseteq\ker\mathsf{E}_{\mathfrak{M}}\subseteq\mathbb{R}^{N+1}$ 为一组由允许的内部正交或效果分解（例如二元互补关系 $e_0-e_a-e_b\in\mathcal{R}$ 对应 $E_a+E_b=I_{\mathcal{H}}$，以及细分树关系 $e_a-e_b-e_c\in\mathcal{R}$ 对应 $E_a=E_b+E_c$，其中 $\{e_0,\ldots,e_N\}$ 为 $\mathbb{R}^{N+1}$ 标准基）给出的已声明框架关系集，记其张成实子空间为 $L_{\mathfrak{M}}=\operatorname{span}_{\mathbb{R}}(\mathcal{R})\subseteq\ker\mathsf{E}_{\mathfrak{M}}$。
+
+菜单 $\mathfrak{M}$ 上的**框架概率赋值**是指向量 $k=(k_0,k_1,\ldots,k_N)^{\mathsf T}\in\mathbb{R}^{N+1}$，满足
+
+$$
+k_0=1,\qquad 0\le k_j\le1\quad(1\le j\le N),\qquad \langle r,k\rangle=0\quad(\forall r\in L_{\mathfrak{M}}).
+$$
+
+对非空有限切分菜单族 $\mathscr{M}=\{\mathfrak{M}_\gamma\}_{\gamma\in\Upsilon}$（其中 $\mathfrak{M}_\gamma=(\{E_{\gamma,j}\}_{j=0}^{N_\gamma},\mathcal{R}_\gamma)$，效果并集记为 $\mathcal{E}(\mathscr{M})=\bigcup_{\gamma\in\Upsilon}\{E_{\gamma,j}:0\le j\le N_\gamma\}$），$\mathscr{M}$ 上的**相容菜单族概率赋值**是指单值映射 $v:\mathcal{E}(\mathscr{M})\to[0,1]$，使得对每个 $\gamma\in\Upsilon$，其限制向量 $k_{v,\gamma}=(v(E_{\gamma,0}),\ldots,v(E_{\gamma,N_\gamma}))^{\mathsf T}\in\mathbb{R}^{N_\gamma+1}$ 均为 $\mathfrak{M}_\gamma$ 上的框架概率赋值（故在任意两子菜单交集上取值自动一致）。
+
+称菜单 $\mathfrak{M}$ 上的框架概率赋值 $k$ 满足 [`AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md`](AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md) 第 11 节意义下的**线性关系一致性（RC）**，若对一切算子线性依赖 $c\in\ker\mathsf{E}_{\mathfrak{M}}$ 均有 $\langle c,k\rangle=0$（等价地，存在实线性泛函 $\ell:\operatorname{Ran}\mathsf{E}_{\mathfrak{M}}\to\mathbb{R}$，使得 $k_j=\ell(E_j)$ 对一切 $0\le j\le N$ 成立，从而存在厄米代表元 $H\in\operatorname{Herm}(\mathcal{H})$ 使 $k_j=\operatorname{Tr}(HE_j)$）。
+
+**定理 6.2（有限切分菜单强制线性关系一致性的充要核空间秩判据）。** 对定义 6.1 中的任意有限切分菜单 $\mathfrak{M}=(\{E_j\}_{j=0}^N,\mathcal{R})$，下列三项条件彼此等价：
+
+1. $\mathfrak{M}$ 上的**每一个**框架概率赋值 $k$ 均满足线性关系一致性（RC）；
+2. 已声明框架关系张成全部算子线性依赖：
+
+$$
+L_{\mathfrak{M}}=\ker\mathsf{E}_{\mathfrak{M}};
+$$
+
+3. 关系维数恒等式成立：
+
+$$
+\dim_{\mathbb{R}}L_{\mathfrak{M}}=N+1-\operatorname{rank}_{\mathbb{R}}\mathsf{E}_{\mathfrak{M}}.
+$$
+
+此外，当上述等价条件成立且 $\operatorname{rank}_{\mathbb{R}}\mathsf{E}_{\mathfrak{M}}=d^2$（菜单完备层析）时，每个框架概率赋值 $k$ 唯一确定一个迹为一的厄米算子 $H_k\in\operatorname{Herm}(\mathcal{H})$（$\operatorname{Tr}H_k=1$）使得 $k_j=\operatorname{Tr}(H_kE_j)$（$0\le j\le N$）。若进一步在一族各自满足 $L_{\mathfrak{M}_\gamma}=\ker\mathsf{E}_{\mathfrak{M}_\gamma}$ 且各自包含同一完备层析基菜单 $\mathfrak{M}_{\gamma_0}$（$\gamma_0\in\Upsilon$，$\operatorname{rank}_{\mathbb{R}}\mathsf{E}_{\mathfrak{M}_{\gamma_0}}=d^2$，$\{E_{\gamma_0,j}\}_{j=0}^{N_{\gamma_0}}\subseteq\{E_{\gamma,j}\}_{j=0}^{N_\gamma}$）的切分菜单族 $\mathscr{M}=\{\mathfrak{M}_\gamma\}_{\gamma\in\Upsilon}$ 上给出相容菜单族概率赋值 $v:\mathcal{E}(\mathscr{M})\to[0,1]$，使得全体秩一正交投影位于 $\mathcal{E}(\mathscr{M})$ 的闭包中，则对一切 $d\ge2$ 存在唯一半正定迹一密度算子 $H_v\in\operatorname{Herm}(\mathcal{H})$（$H_v\succeq0,\operatorname{Tr}H_v=1$）使 $v(E)=\operatorname{Tr}(H_vE)$ 对一切 $E\in\mathcal{E}(\mathscr{M})$ 成立（将 [`AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md`](AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md) 定理 11.2 的可数归一划分全局 RC 判据推进至局部核完备子菜单族）；而在不预先假设跨标架线性关系一致性的设定下，若赋值定义在 $\dim_{\mathbb{C}}\mathcal{H}\ge3$ 的全部正交投影分解上满足框架可加性（Gleason 1957（定理 2.8 与第 3 节）），或定义在全体效果集 $\mathcal{E}(\mathcal{H})$（$d\ge2$）上对一切满足 $\sum_m E_m\preceq I_{\mathcal{H}}$ 的有限效果分解满足可加性（Busch 2003），则可同时导出线性关系一致性与半正定密度表示。
+
+**证明。** 由秩–零化度定理 $\dim_{\mathbb{R}}\ker\mathsf{E}_{\mathfrak{M}}=N+1-\operatorname{rank}_{\mathbb{R}}\mathsf{E}_{\mathfrak{M}}$ 及包含关系 $L_{\mathfrak{M}}\subseteq\ker\mathsf{E}_{\mathfrak{M}}$，条件 2 与条件 3 直接等价。若条件 2 成立，则任意框架概率赋值 $k\perp L_{\mathfrak{M}}=\ker\mathsf{E}_{\mathfrak{M}}$ 直接满足 RC，故 $2\Rightarrow1$。
+
+现证 $1\Rightarrow2$（逆否命题）。假设 $L_{\mathfrak{M}}\subsetneq\ker\mathsf{E}_{\mathfrak{M}}$，取 $r\in\ker\mathsf{E}_{\mathfrak{M}}\setminus L_{\mathfrak{M}}$。断言 $r\notin L_{\mathfrak{M}}+\mathbb{R}e_0$：若不然，设 $r=\ell+te_0$（$\ell\in L_{\mathfrak{M}}\subseteq\ker\mathsf{E}_{\mathfrak{M}}$，$t\in\mathbb{R}$），作用 $\mathsf{E}_{\mathfrak{M}}$ 得 $0=\mathsf{E}_{\mathfrak{M}}(r)=\mathsf{E}_{\mathfrak{M}}(\ell)+tE_0=tI_{\mathcal{H}}$，故 $t=0$、$r=\ell\in L_{\mathfrak{M}}$，矛盾。因此在欧氏内积下，$r$ 到子空间 $L_{\mathfrak{M}}+\mathbb{R}e_0$ 的正交补投影 $v=r-\operatorname{Proj}_{L_{\mathfrak{M}}+\mathbb{R}e_0}(r)\in\mathbb{R}^{N+1}$ 非零，满足 $v\perp L_{\mathfrak{M}}$、$v_0=\langle e_0,v\rangle=0$ 且 $\langle r,v\rangle=\|v\|^2>0$。考虑中心最大混合迹赋值 $k^*\in\mathbb{R}^{N+1}$，定义为
+
+$$
+k^*_j=\frac{1}{d}\operatorname{Tr}(E_j)\qquad(0\le j\le N).
+$$
+
+显然 $k^*_0=1$；对每个 $1\le j\le N$，因 $0\preceq E_j\preceq I_{\mathcal{H}}$ 且 $E_j\notin\{0,I_{\mathcal{H}}\}$，半正定算子迹的忠实性给出严格内部不等式 $0<k^*_j<1$；又因迹线性，$k^*\perp\ker\mathsf{E}_{\mathfrak{M}}\supseteq L_{\mathfrak{M}}$。取充分小的正数
+
+$$
+0<\epsilon\le\min_{1\le j\le N}\frac{\min(k^*_j,1-k^*_j)}{\|v\|_\infty},
+$$
+
+令 $k=k^*+\epsilon v$。则 $k_0=k^*_0+\epsilon\cdot0=1$，对一切 $1\le j\le N$ 有 $0\le k_j\le1$，且对一切 $\ell\in L_{\mathfrak{M}}$ 有 $\langle\ell,k\rangle=\langle\ell,k^*\rangle+\epsilon\langle\ell,v\rangle=0$，故 $k$ 是 $\mathfrak{M}$ 上的合法框架概率赋值；然而 $\langle r,k\rangle=\langle r,k^*\rangle+\epsilon\langle r,v\rangle=\epsilon\|v\|^2>0$，违反了 $r\in\ker\mathsf{E}_{\mathfrak{M}}$ 对应的 RC，矛盾。故 $L_{\mathfrak{M}}=\ker\mathsf{E}_{\mathfrak{M}}$。
+
+当 $L_{\mathfrak{M}}=\ker\mathsf{E}_{\mathfrak{M}}$ 且 $\operatorname{rank}_{\mathbb{R}}\mathsf{E}_{\mathfrak{M}}=d^2$ 时，$\mathsf{E}_{\mathfrak{M}}$ 满射到 $\operatorname{Herm}(\mathcal{H})$，$k\perp\ker\mathsf{E}_{\mathfrak{M}}$ 唯一诱导实线性泛函 $\ell_k:\operatorname{Herm}(\mathcal{H})\to\mathbb{R}$ 使 $\ell_k(E_j)=k_j$；关于非退化实内积 $(X,Y)\mapsto\operatorname{Tr}(XY)$ 的 Riesz 表示给出唯一 $H_k\in\operatorname{Herm}(\mathcal{H})$ 使 $\ell_k(X)=\operatorname{Tr}(H_kX)$，且 $\operatorname{Tr}H_k=\ell_k(E_0)=k_0=1$。对包含完备层析基菜单 $\mathfrak{M}_{\gamma_0}$ 且各自满足 $L_{\mathfrak{M}_\gamma}=\ker\mathsf{E}_{\mathfrak{M}_\gamma}$ 的菜单族 $\mathscr{M}=\{\mathfrak{M}_\gamma\}_{\gamma\in\Upsilon}$，因 $\{E_{\gamma_0,j}\}_{j=0}^{N_{\gamma_0}}\subseteq\{E_{\gamma,j}\}_{j=0}^{N_\gamma}$ 已张成全部 $\operatorname{Herm}(\mathcal{H})$，每个子菜单自动满足 $\operatorname{rank}_{\mathbb{R}}\mathsf{E}_{\mathfrak{M}_\gamma}=d^2$，其上限制 $k_{v,\gamma}$ 唯一确定的迹一厄米算子 $H_{v,\gamma}$ 在张成集 $\{E_{\gamma_0,j}\}_{j=0}^{N_{\gamma_0}}$ 上均满足 $\operatorname{Tr}(H_{v,\gamma}E_{\gamma_0,j})=v(E_{\gamma_0,j})=\operatorname{Tr}(H_{v,\gamma_0}E_{\gamma_0,j})$，故对一切 $\gamma\in\Upsilon$ 有 $H_{v,\gamma}=H_{v,\gamma_0}=:H_v$，从而对一切 $E\in\mathcal{E}(\mathscr{M})$ 有 $\operatorname{Tr}(H_vE)=v(E)\ge0$。对任意单位向量 $|\psi\rangle\in\mathcal{H}$，取序列 $\{E^{(m)}\}_{m\ge1}\subseteq\mathcal{E}(\mathscr{M})$ 收敛于秩一投影 $|\psi\rangle\langle\psi|$，由有限维线性泛函 $X\mapsto\operatorname{Tr}(H_vX)$ 的连续性立得 $\langle\psi,H_v\psi\rangle=\operatorname{Tr}(H_v|\psi\rangle\langle\psi|)=\lim_{m\to\infty}\operatorname{Tr}(H_vE^{(m)})=\lim_{m\to\infty}v(E^{(m)})\ge0$，故 $H_v\succeq0$（对比 [`AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md`](AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md) 定理 11.2）。∎
+
+**命题 6.3（跨切口缺乏三维桥时的光滑非迹球面赋值与完备稀疏菜单的非半正定反例）。**
+
+1. **缺乏跨参考槽交织时的光滑凸非 Born 球面赋值**：在 $\mathbb{C}^2$（或嵌入 $\mathbb{C}^2\otimes\mathbb{C}^m$，$m\ge2$，但仅允许单槽二元切分 $\{P_n\otimes I_m,P_{-n}\otimes I_m\}_{n\in S^2}$，其中 $P_n=\frac{1}{2}(I_2+n\cdot\sigma)$）上，光滑单参数函数族
+
+$$
+k_\eta(P_n\otimes I_m)=\frac{1}{2}(1+\eta n_z^3)\qquad(\eta\in[-1,1],\ n=(n_x,n_y,n_z)\in S^2)
+$$
+
+对一切 $n\in S^2$ 取值于 $[0,1]$ 且严格满足每个二元切分的框架归一化 $k_\eta(P_n\otimes I_m)+k_\eta(P_{-n}\otimes I_m)=1$（并关于 $\eta\in[-1,1]$ 构成凸集）；但对一切 $\eta\ne0$，它在四个共面勾股方向 $n_1=(0,0,1),n_2=(0,0,-1),n_3=(\frac{3}{5},0,\frac{4}{5}),n_4=(-\frac{3}{5},0,\frac{4}{5})$ 的算子恒等式 $P_{n_3}+P_{n_4}=\frac{9}{5}P_{n_1}+\frac{1}{5}P_{n_2}$ 上给出残差
+
+$$
+k_\eta(P_{n_3}\otimes I_m)+k_\eta(P_{n_4}\otimes I_m)-\frac{9}{5}k_\eta(P_{n_1}\otimes I_m)-\frac{1}{5}k_\eta(P_{n_2}\otimes I_m)=-\frac{36}{125}\eta\ne0,
+$$
+
+故违反 RC 且不存在任何密度算子迹表示；
+
+2. **强制 RC 且完备层析的稀疏菜单仍不蕴涵全锥半正定性**：在 $\mathcal{H}=\mathbb{C}^3$ 上，记 $\omega=e^{2\pi i/3}$，由标准正交基 $\{e_0,e_1,e_2\}$ 与三组二次相位基
+
+$$
+v_{s,k}=\frac{1}{\sqrt{3}}\sum_{j=0}^{2}\omega^{sj^2+kj}e_j\qquad(s,k\in\{0,1,2\})
+$$
+
+组成的四组相互无偏正交基（共 $12$ 个秩一投影 $P_{b,k}$，连同 $E_0=I_3$ 及每个三结果基编码为二元切分树的四个归一求和关系）构成有限菜单 $\mathfrak{M}_{12}$，满足 $\operatorname{rank}_{\mathbb{R}}\mathsf{E}_{\mathfrak{M}_{12}}=9=\dim_{\mathbb{R}}\operatorname{Herm}(\mathbb{C}^3)$ 与 $\dim_{\mathbb{R}}L_{\mathfrak{M}_{12}}=4=13-9$，故按定理 6.2 **强制一切框架概率赋值满足 RC 并唯一重构迹一厄米算子** $H=\sum_{b=0}^3\sum_{k=0}^2 k(P_{b,k})P_{b,k}-I_3$；然而取单位向量 $u=\frac{1}{\sqrt{21}}(1,2,4)^{\mathsf T}\in\mathbb{C}^3$ 与迹一厄米算子
+
+$$
+H_*=\frac{8}{15}I_3-\frac{3}{5}uu^\dagger,
+$$
+
+其诱导赋值 $k_*(P_{b,k})=\operatorname{Tr}(H_*P_{b,k})$ 满足全部二元切分树可加性、全体 RC 关系，且在全部 $12$ 个菜单秩一投影上严格正（$\min_{b,k}k_*(P_{b,k})=\frac{1}{15}>0$，$\max_{b,k}k_*(P_{b,k})=\frac{53}{105}<1$），但 $H_*$ 的谱为 $\{-\frac{1}{15},\frac{8}{15},\frac{8}{15}\}$，不半正定（$H_*\not\succeq0$）。
+
+**证明。** 对第 1 项，由 $(-n)_z^3=-n_z^3$ 与 $|n_z|\le1$ 知 $k_\eta(P_n\otimes I_m)\in[0,1]$ 且 $k_\eta(P_n\otimes I_m)+k_\eta(P_{-n}\otimes I_m)=1$。直接展开算子：
+
+$$
+P_{n_3}+P_{n_4}=\frac{1}{2}\!\left(I_2+\frac{3}{5}\sigma_x+\frac{4}{5}\sigma_z\right)+\frac{1}{2}\!\left(I_2-\frac{3}{5}\sigma_x+\frac{4}{5}\sigma_z\right)=I_2+\frac{4}{5}\sigma_z=\frac{9}{5}P_{n_1}+\frac{1}{5}P_{n_2}.
+$$
+
+代入 $n_{3,z}^3=n_{4,z}^3=\frac{64}{125}$、$n_{1,z}^3=1$、$n_{2,z}^3=-1$，左端值为 $1+\frac{64}{125}\eta$，右端值为 $\frac{9}{10}(1+\eta)+\frac{1}{10}(1-\eta)=1+\frac{4}{5}\eta=1+\frac{100}{125}\eta$，相减即得 $-\frac{36}{125}\eta\ne0$。
+
+对第 2 项，同基内由 $\langle v_{s,k},v_{s,k'}\rangle=\frac{1}{3}\sum_{j=0}^2\omega^{(k'-k)j}=\delta_{kk'}$ 知每组 $\{P_{b,k}\}_{k=0}^2$ 满足 $\sum_{k=0}^2P_{b,k}=I_3$；跨基上当 $a\not\equiv0\pmod3$ 时，高斯和模方 $|\sum_{j=0}^2\omega^{aj^2+bj}|^2=\sum_{r=0}^2\omega^{ar^2+br}\sum_{\ell=0}^2\omega^{2ar\ell}=3$（仅 $r=0$ 项存活），故标准基与三组 $\{v_{s,k}\}_{k=0}^2$（$s=0,1,2$）两两跨基内积模方均为 $\frac{1}{3}$。对不同基 $b\ne b'$，$\operatorname{Tr}((P_{b,k}-\frac{1}{3}I_3)(P_{b',k'}-\frac{1}{3}I_3))=\frac{1}{3}-\frac{1}{3}=0$，四个基各自的无迹二维子空间两两正交，维数之和为 $4\times2=8$，连同 $I_3$ 张成全部 $9$ 维 $\operatorname{Herm}(\mathbb{C}^3)$，且正交展开对一般 $H\in\operatorname{Herm}(\mathbb{C}^3)$ 给出 $H=\sum_{b=0}^3\sum_{k=0}^2\operatorname{Tr}(HP_{b,k})P_{b,k}-(\operatorname{Tr}H)I_3$，故对一切迹一厄米算子（$\operatorname{Tr}H=1$）直接化为重构公式 $H=\sum_{b=0}^3\sum_{k=0}^2\operatorname{Tr}(HP_{b,k})P_{b,k}-I_3$。四个基的归一关系 $e_0-\sum_{k=0}^2e_{b,k}$（$b=0,1,2,3$；若将每基写为两步二元切分树 $I_3=P_{b,0}+Q_b$、$Q_b=P_{b,1}+P_{b,2}$，则多 $4$ 个辅助算子与 $4$ 条独立定义关系，余维不变）线性无关（第 $b$ 条含独有变量 $e_{b,1},e_{b,2}$），故 $\dim_{\mathbb{R}}L_{\mathfrak{M}_{12}}=4=13-9$，满足定理 6.2。对 $u=\frac{1}{\sqrt{21}}(1,2,4)^{\mathsf T}$，$\|u\|^2=\frac{1+4+16}{21}=1$，故 $H_*=\frac{8}{15}I_3-\frac{3}{5}uu^\dagger$ 在 $u$ 上的特征值为 $\frac{8}{15}-\frac{3}{5}=-\frac{1}{15}<0$，在 $u^\perp$ 上为二重 $\frac{8}{15}$，迹为 $-\frac{1}{15}+\frac{16}{15}=1$。在标准基上 $|\langle u,e_k\rangle|^2\in\{\frac{1}{21},\frac{4}{21},\frac{16}{21}\}$，对应 $k_*$ 值为 $\{\frac{53}{105},\frac{44}{105},\frac{8}{105}\}$；在三组二次相位基上利用 $2^2\equiv1\pmod3$ 直接计算 $63|\langle u,v_{s,k}\rangle|^2=|1+2\omega^{s+k}+4\omega^{s+2k}|^2=21+4\operatorname{Re}(\omega^{s+k})+8\operatorname{Re}(\omega^{s+2k})+16\operatorname{Re}(\omega^k)$，在 $s=0$ 时取 $\{49,7,7\}$（在 $v_{0,0}=\frac{1}{\sqrt{3}}(1,1,1)^{\mathsf T}$ 处取最大值 $49$，即 $|\langle u,v_{0,0}\rangle|^2=\frac{7}{9}$）、在 $s\in\{1,2\}$ 时取 $\{31,19,13\}$，故 $k_*(P_{s+1,k})=\frac{56-63|\langle u,v_{s,k}\rangle|^2}{105}\in\{\frac{7}{105},\frac{25}{105},\frac{37}{105},\frac{43}{105},\frac{49}{105}\}$；合并四组基立得 $\min_{b,k}k_*(P_{b,k})=\frac{7}{105}=\frac{1}{15}>0$ 且 $\max_{b,k}k_*(P_{b,k})=\frac{53}{105}<1$（若显式并入二元树辅助秩二投影 $Q_b=I_3-P_{b,0}$，亦有 $k_*(Q_b)=1-k_*(P_{b,0})\in[\frac{52}{105},\frac{14}{15}]\subset(0,1)$）。这证明有限线性菜单不等式无法替代非多面体半正定锥的全方向（或算子纯度／对偶正锥）正性条件。∎
+
+## 7. 单本体参考切分下的完全正性、算子纯度亏格正交分类与 Lüders 更新判据
+
+**定义 7.1（单本体内部参考切分、算子三轴纯度亏格与二元仪器）。** 设单本体复载体分解为内部参考切分与待作用子系统的复张量扇区 $\mathcal{H}_{\mathrm{ref}}\otimes\mathcal{H}_S$，其中 $\mathcal{H}_{\mathrm{ref}}=\mathbb{C}^d$，$\mathcal{H}_S=\mathbb{C}^d$（$d\ge2$），固定标准正交基 $\{|j\rangle\}_{j=0}^{d-1}$ 下的最大纠缠纯参考态
+
+$$
+|\Phi_d^+\rangle=\frac{1}{\sqrt{d}}\sum_{j=0}^{d-1}|j\rangle\otimes|j\rangle,\qquad P_{\Phi_d^+}=|\Phi_d^+\rangle\langle\Phi_d^+|.
+$$
+
+对任意保持厄米性的复线性映射 $\Lambda:M_d(\mathbb{C})\to M_{d'}(\mathbb{C})$（等价地，实线性映射 $\Lambda:\operatorname{Herm}(\mathbb{C}^d)\to\operatorname{Herm}(\mathbb{C}^{d'})$ 的唯一复线性扩张），定义其在单本体参考切分上的联合输出算子为
+
+$$
+R_\Lambda=(I_d\otimes\Lambda)(P_{\Phi_d^+})\in\operatorname{Herm}(\mathbb{C}^d\otimes\mathbb{C}^{d'}).
+$$
+
+当 $d=d'=2$ 时，沿用 [`AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md`](AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md) 定义 5.1 与定理 5.2 在 $m=1$ 时的复算子三轴分块：将任意迹一厄米算子 $R=\frac{1}{2}(I_2\otimes S+\sigma_x\otimes X+\sigma_y\otimes Y+\sigma_z\otimes Z)\in\operatorname{Herm}(\mathbb{C}^2\otimes\mathbb{C}^2)$（其中 $\operatorname{Tr}_{\mathrm{ref}}$ 始终表示对第一张量因子 $\mathbb{C}^2$ 求偏迹，$S=\operatorname{Tr}_{\mathrm{ref}}(R)$）的算子三轴纯度亏格记为
+
+$$
+D_1(R)=2S-S^2-X^2-Y^2-Z^2=2\,\operatorname{Tr}_{\mathrm{ref}}(R-R^2)\in\operatorname{Herm}(\mathbb{C}^2).
+$$
+
+二元量子仪器是指一对保持厄米性的复线性映射 $\{\Lambda_0,\Lambda_1\}$（$\Lambda_b:M_d(\mathbb{C})\to M_d(\mathbb{C})$），其和 $\Lambda_0+\Lambda_1$ 保迹。
+
+**定理 7.2（参考切分联合正性、算子纯度亏格的 Bloch 正交分类与 Lüders 投影更新充要定理）。**
+
+1. **单本体参考切分联合正性与 Kraus 记录等距实现（文献先例桥接步骤：Choi 1975 定理 1–2；Kraus 1971）**：在定义 7.1 下，二元仪器 $\{\Lambda_0,\Lambda_1\}$ 的两个分支在单本体参考切分上保持联合半正定
+
+$$
+R_{\Lambda_b}=(I_d\otimes\Lambda_b)(P_{\Phi_d^+})\succeq0\qquad(b\in\{0,1\})
+$$
+
+当且仅当每个 $\Lambda_b$ 完全正（Choi 1975 定理 2），亦当且仅当存在有限 Kraus 算子族 $\{K_{b\alpha}\}_{\alpha=1}^{r_b}\subseteq M_d(\mathbb{C})$（Choi 1975 定理 1；Kraus 1971；$r_b=\operatorname{rank}R_{\Lambda_b}\le d^2$，$\sum_{b=0}^1\sum_{\alpha=1}^{r_b}K_{b\alpha}^\dagger K_{b\alpha}=I_d$），使得 $\Lambda_b(\rho)=\sum_{\alpha=1}^{r_b}K_{b\alpha}\rho K_{b\alpha}^\dagger$，即记 $r=\max\{1,r_0,r_1\}$（对 $r_b<\alpha\le r$ 置 $K_{b\alpha}=0$）后由单本体内部记录等距 $V:\mathbb{C}^d\to\mathbb{C}^2\otimes\mathbb{C}^r\otimes\mathbb{C}^d$，$V|\psi\rangle=\sum_{b=0}^1\sum_{\alpha=1}^r|b\rangle\otimes|\alpha\rangle\otimes K_{b\alpha}|\psi\rangle$（[`AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md`](AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md) 命题 4.3）按记录标签投影并对内部上下文偏迹实现；
+
+2. **二能级保迹映射的算子三轴纯度亏格显式公式与 $O(3)$ 正交二分**：设 $d=d'=2$，$\Lambda:M_2(\mathbb{C})\to M_2(\mathbb{C})$ 为任意保持厄米性且保迹的映射，其 Bloch 仿射作用由 $\Lambda(\frac{1}{2}(I_2+r\cdot\sigma))=\frac{1}{2}(I_2+(t+Mr)\cdot\sigma)$（$t\in\mathbb{R}^3$，$M\in M_3(\mathbb{R})$）唯一确定。则其参考切分联合算子 $R_\Lambda=(I_2\otimes\Lambda)(P_{\Phi_2^+})$ 与对称侧算子 $\widetilde{R}_\Lambda=(\Lambda\otimes I_2)(P_{\Phi_2^+})$ 的算子三轴纯度亏格精确为
+
+$$
+\begin{aligned}
+D_1(R_\Lambda)&=\frac{1}{4}\bigl(3-\|t\|^2-\|M\|_F^2\bigr)I_2+\frac{1}{2}(t\cdot\sigma),\\
+D_1(\widetilde{R}_\Lambda)&=\frac{1}{4}\bigl(3-\|t\|^2-\|M\|_F^2\bigr)I_2-\frac{1}{2}\bigl((CM^{\mathsf T}t)\cdot\sigma\bigr),\qquad C=\operatorname{diag}(1,-1,1),
+\end{aligned}
+$$
+
+其中 $\|M\|_F^2=\operatorname{Tr}(M^{\mathsf T}M)$。特别地，若 $\Lambda$ 是单系统正映射（即把 Bloch 球映入自身），则
+
+$$
+D_1(R_\Lambda)=0\iff D_1(\widetilde{R}_\Lambda)=0\iff t=0\text{ 且 }M\in O(3),
+$$
+
+此时恰分裂为两个连通分支：
+   - 当 $\det M=+1$（$M\in SO(3)$）时，$\Lambda(\rho)=U\rho U^\dagger$（$U\in SU(2)$）为酉完全正通道，$R_\Lambda\succeq0$ 为秩一纯态；
+   - 当 $\det M=-1$（$M\in O(3)\setminus SO(3)$）时，$\Lambda(\rho)=U\rho^{\mathsf T}U^\dagger$（$U\in SU(2)$），此时 $R_\Lambda=(I_2\otimes U)(\frac{1}{2}F)(I_2\otimes U^\dagger)$（其中 $F$ 为交换算子），满足 $D_1(R_\Lambda)=0$ 与一切乘积向量期望非负，但最小特征值恒为 $-\frac{1}{2}<0$（当 $U=I_2$ 时恰退化为 [`AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md`](AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md) 命题 7.1 的算子 $F/2$）；
+
+3. **锐二元 Lüders 投影更新的充要特征空间不扰动判据（文献先例桥接步骤：Lüders 1951；Busch–Lahti–Mittelstaedt 1991；Busch 2008 定理 5）**：设 $\{\Lambda_0,\Lambda_1\}$ 为满足第 1 项联合正性的二元 CP 仪器，其效果算子为一对互补正交投影 $E_b=\Lambda_b^\dagger(I_d)=P_b$（$P_0+P_1=I_d$，$P_b^2=P_b=P_b^\dagger$）。则该仪器对一切输入 $\rho\in M_d(\mathbb{C})$ 均具有 Lüders 形式（Lüders 1951）
+
+$$
+\Lambda_b(\rho)=P_b\rho P_b\qquad(b\in\{0,1\})
+$$
+
+当且仅当满足理想测量意义下的**本征纯态不扰动性**（Busch–Lahti–Mittelstaedt 1991；Busch 2008 定理 5）：对每个 $b\in\{0,1\}$ 及一切单位向量 $|\psi\rangle\in\operatorname{Ran}P_b$（$\|\psi\|=1$），有 $\Lambda_b(|\psi\rangle\langle\psi|)=|\psi\rangle\langle\psi|$。
+
+**证明。** 第 1 项中 $R_{\Lambda_b}\succeq0\iff\Lambda_b$ 完全正 $\iff$ Kraus 表示 $\Lambda_b(\rho)=\sum_{\alpha=1}^{r_b}K_{b\alpha}\rho K_{b\alpha}^\dagger$ 为 Choi 1975 定理 1 与定理 2 的标准结论；保迹条件 $(\Lambda_0+\Lambda_1)^\dagger(I_d)=I_d$ 即为 $\sum_{b,\alpha}K_{b\alpha}^\dagger K_{b\alpha}=I_d$，这使 $V|\psi\rangle=\sum_{b,\alpha}|b\rangle\otimes|\alpha\rangle\otimes K_{b\alpha}|\psi\rangle$ 精确满足 $V^\dagger V=I_d$ 且 $\operatorname{Tr}_{\mathbb{C}^r}\bigl((\langle b|\otimes I_r\otimes I_d)V\rho V^\dagger(|b\rangle\otimes I_r\otimes I_d)\bigr)=\Lambda_b(\rho)$。
+
+现证第 2 项。利用 $P_{\Phi_2^+}=\frac{1}{4}(I_2\otimes I_2+\sigma_x\otimes\sigma_x-\sigma_y\otimes\sigma_y+\sigma_z\otimes\sigma_z)$、$\Lambda(I_2)=I_2+t\cdot\sigma$ 与 $\Lambda(\sigma_j)=\sum_{a=1}^3 M_{aj}\sigma_a$（$j=1,2,3$），直接写出 $R_\Lambda=(I_2\otimes\Lambda)(P_{\Phi_2^+})$ 的四块系数：
+
+$$
+S=\frac{1}{2}(I_2+t\cdot\sigma),\quad
+X=\frac{1}{2}\sum_{a=1}^{3}M_{a1}\sigma_a,\quad
+Y=-\frac{1}{2}\sum_{a=1}^{3}M_{a2}\sigma_a,\quad
+Z=\frac{1}{2}\sum_{a=1}^{3}M_{a3}\sigma_a.
+$$
+
+由 $(v\cdot\sigma)^2=\|v\|^2I_2$（$v\in\mathbb{R}^3$）得 $X^2+Y^2+Z^2=\frac{1}{4}(\sum_{j=1}^3\sum_{a=1}^3 M_{aj}^2)I_2=\frac{1}{4}\|M\|_F^2I_2$，同时 $2S-S^2=(I_2+t\cdot\sigma)-\frac{1}{4}((1+\|t\|^2)I_2+2t\cdot\sigma)=\frac{1}{4}(3-\|t\|^2)I_2+\frac{1}{2}(t\cdot\sigma)$，相减即得 $D_1(R_\Lambda)$ 公式。同理对 $\widetilde{R}_\Lambda=(\Lambda\otimes I_2)(P_{\Phi_2^+})$，将第一因子按 $\{I_2,\sigma_x,\sigma_y,\sigma_z\}$ 重排，有
+
+$$
+\widetilde{S}=\frac{1}{2}I_2,\qquad
+\widetilde{B}_a=\frac{1}{2}\!\left(t_aI_2+\sum_{j=1}^{3}M_{aj}c_j\sigma_j\right)\quad(a=1,2,3;\ (c_1,c_2,c_3)=(1,-1,1)).
+$$
+
+平方求和：$\sum_{a=1}^3\widetilde{B}_a^2=\frac{1}{4}\sum_{a=1}^3\bigl[(t_a^2+\sum_{j=1}^3 M_{aj}^2)I_2+2t_a\sum_{j=1}^3 M_{aj}c_j\sigma_j\bigr]=\frac{1}{4}(\|t\|^2+\|M\|_F^2)I_2+\frac{1}{2}((CM^{\mathsf T}t)\cdot\sigma)$，从 $2\widetilde{S}-\widetilde{S}^2=\frac{3}{4}I_2$ 中减去即得 $D_1(\widetilde{R}_\Lambda)$ 公式。
+
+现设 $\Lambda$ 为正映射，故对一切单位向量 $n\in S^2$ 有 $\|t+Mn\|\le1$。首先，由 $\{I_2,\sigma_1,\sigma_2,\sigma_3\}$ 线性无关，$D_1(R_\Lambda)=0$ 直接当且仅当 $t=0$ 且 $\|M\|_F^2=3$。其次，对 $D_1(\widetilde{R}_\Lambda)=0$，在三个标准轴上对 $\|t+Me_j\|^2+\|t-Me_j\|^2=2\|t\|^2+2\|Me_j\|^2\le2$ 关于 $j=1,2,3$ 求和，得 $3\|t\|^2+\|M\|_F^2\le3$；若 $D_1(\widetilde{R}_\Lambda)=0$，其标量迹部分迫使 $\|t\|^2+\|M\|_F^2=3$，与前式相减得 $2\|t\|^2\le0$，同样迫使 $t=0$ 与 $\|M\|_F^2=3$。当 $t=0$ 时，$\Lambda$ 正等价于算子范数 $\|M\|_{\mathrm{op}}\le1$，即 $M$ 的三个奇异值满足 $0\le s_1,s_2,s_3\le1$；结合 $\sum_{j=1}^3 s_j^2=\|M\|_F^2=3$，当且仅当 $s_1=s_2=s_3=1$，即 $M\in O(3)$。由双覆盖同态 $SU(2)\to SO(3)$：当 $\det M=+1$ 时 $M$ 由某个 $U\in SU(2)$ 共轭实现，$\Lambda(\rho)=U\rho U^\dagger$；当 $\det M=-1$ 时 $MC\in SO(3)$（因 $\det C=-1$），而转置映射 $\rho\mapsto\rho^{\mathsf T}$ 的 Bloch 矩阵恰为 $C=\operatorname{diag}(1,-1,1)$，故 $\Lambda(\rho)=U\rho^{\mathsf T}U^\dagger$，且 $(I_2\otimes T)(P_{\Phi_2^+})=\frac{1}{4}(I_2\otimes I_2+\sigma_x\otimes\sigma_x+\sigma_y\otimes\sigma_y+\sigma_z\otimes\sigma_z)=\frac{1}{2}F$，酉共轭保持谱 $\{\frac{1}{2},\frac{1}{2},\frac{1}{2},-\frac{1}{2}\}$ 与乘积态非负性。
+
+最后证第 3 项。必要性显然（对 $|\psi\rangle\in\operatorname{Ran}P_b$ 有 $P_b|\psi\rangle=|\psi\rangle$）。反之，设 $\Lambda_b(\rho)=\sum_{\alpha=1}^{r_b}K_{b\alpha}\rho K_{b\alpha}^\dagger$ 满足 $\sum_{\alpha=1}^{r_b}K_{b\alpha}^\dagger K_{b\alpha}=P_b$ 且对一切单位 $|\psi\rangle\in\operatorname{Ran}P_b$ 有 $\Lambda_b(|\psi\rangle\langle\psi|)=|\psi\rangle\langle\psi|$。先对任意 $|\phi\rangle\in\ker P_b=\operatorname{Ran}(I_d-P_b)$，有 $\sum_{\alpha}\|K_{b\alpha}|\phi\rangle\|^2=\langle\phi,P_b\phi\rangle=0$，故 $K_{b\alpha}(I_d-P_b)=0$，即 $K_{b\alpha}=K_{b\alpha}P_b$ 对一切 $\alpha$ 成立。再对任意单位 $|\psi\rangle\in\operatorname{Ran}P_b$，取 $|\psi\rangle\langle\psi|=\sum_{\alpha=1}^{r_b}|K_{b\alpha}\psi\rangle\langle K_{b\alpha}\psi|$：对任意正交于 $|\psi\rangle$ 的 $|w\rangle\perp|\psi\rangle$，两边取 $\langle w,\cdot\,w\rangle$ 得 $\sum_\alpha|\langle w,K_{b\alpha}\psi\rangle|^2=0$，故对每个 $\alpha$ 存在复标量 $c_{b\alpha}(\psi)\in\mathbb{C}$ 使 $K_{b\alpha}|\psi\rangle=c_{b\alpha}(\psi)|\psi\rangle$。若 $\operatorname{Ran}P_b$ 中存在线性无关向量 $|\psi_1\rangle,|\psi_2\rangle$，由 $K_{b\alpha}(|\psi_1\rangle+|\psi_2\rangle)=c_{b\alpha}(\psi_1)|\psi_1\rangle+c_{b\alpha}(\psi_2)|\psi_2\rangle$ 同时必须平行于 $|\psi_1\rangle+|\psi_2\rangle$，迫使 $c_{b\alpha}(\psi_1)=c_{b\alpha}(\psi_2)=c_{b\alpha}$ 为与 $|\psi\rangle\in\operatorname{Ran}P_b$ 无关的常数（$\operatorname{rank}P_b\le1$ 时平凡成立）。于是 $K_{b\alpha}=K_{b\alpha}P_b=c_{b\alpha}P_b$；代入 $\sum_\alpha K_{b\alpha}^\dagger K_{b\alpha}=P_b$（当 $P_b\ne0$ 时）得 $\sum_\alpha|c_{b\alpha}|^2=1$（$P_b=0$ 时 $K_{b\alpha}=0$），从而对一切 $\rho\in M_d(\mathbb{C})$ 有 $\Lambda_b(\rho)=\sum_\alpha|c_{b\alpha}|^2 P_b\rho P_b=P_b\rho P_b$。∎
+
+**命题 7.3（非 CP 正映射不满足纯度亏格消失与可重复锐 CP 仪器偏离 Lüders 更新的双反例）。**
+
+1. **混噪转置正映射的纯度亏格非零性**：在 $d=d'=2$ 上，对参数 $t\in(\frac{1}{3},1)$ 定义保迹单系统正映射 $\Lambda_t(X)=tX^{\mathsf T}+(1-t)\frac{\operatorname{Tr}X}{2}I_2$（将 Bloch 球均匀收缩并反射为半径 $t<1$ 的球）。则其参考切分输出 $R_{\Lambda_t}=\frac{t}{2}F+\frac{1-t}{4}I_4$ 具有负特征值 $\frac{1-3t}{4}<0$（例如 $t=\frac{1}{2}$ 时为 $-\frac{1}{8}<0$），因而不是完全正映射；但其算子三轴纯度亏格为严格正标量倍数
+
+$$
+D_1(R_{\Lambda_t})=\frac{3(1-t^2)}{4}I_2\succ0\qquad\left(t=\frac{1}{2}\text{ 时 }D_1(R_{1/2})=\frac{9}{16}I_2\ne0\right),
+$$
+
+证明单系统正且非 CP 的映射一般不满足 $D_1(R_\Lambda)=0$（仅定理 7.2 第 2 项中的满球正交自同构分支满足 $D_1=0$）；
+
+2. **退化锐投影下可重复正交记录但非 Lüders 的 CP 仪器**：在 $\mathbb{C}^4$ 上令秩二互补正交投影为 $P_0=|0\rangle\langle0|+|1\rangle\langle1|$、$P_1=|2\rangle\langle2|+|3\rangle\langle3|$，令 $U_0=|0\rangle\langle1|+|1\rangle\langle0|+|2\rangle\langle2|+|3\rangle\langle3|$，定义单 Kraus 二元仪器 $\Lambda_0(\rho)=K_0\rho K_0^\dagger$、$\Lambda_1(\rho)=K_1\rho K_1^\dagger$，其中 $K_0=U_0P_0$、$K_1=P_1$。则 $\{\Lambda_0,\Lambda_1\}$ 完全正、由精确二元记录等距 $V|\psi\rangle=|0\rangle\otimes K_0|\psi\rangle+|1\rangle\otimes K_1|\psi\rangle$ 实现、效果算子恰为锐正交投影 $(P_0,P_1)$，且满足测量结果可重复性（$\operatorname{Tr}(P_{b'}\Lambda_b(\rho))=\delta_{bb'}\operatorname{Tr}(P_b\rho)$，即 $\Lambda_{b'}\circ\Lambda_b=0$ 对 $b'\ne b$），但 $\Lambda_0(|0\rangle\langle0|)=|1\rangle\langle1|\ne|0\rangle\langle0|=P_0|0\rangle\langle0|P_0$，证明删去定理 7.2 第 3 项的特征子空间内纯态不扰动前件后 Lüders 更新不唯一。
+
+**证明。** 对第 1 项，$\Lambda_t$ 的 Bloch 参数为平移向量 $0$ 与矩阵 $M_t=t\operatorname{diag}(1,-1,1)$，对 $\|r\|\le1$ 有 $\|M_tr\|=t\|r\|\le t<1$，故 $\Lambda_t$ 正且保迹。由 $F$ 在三重对称子空间上特征值为 $+1$、在一维反对称 Bell 态 $\frac{1}{\sqrt{2}}(|01\rangle-|10\rangle)$ 上特征值为 $-1$，知 $R_{\Lambda_t}=\frac{t}{2}F+\frac{1-t}{4}I_4$ 的特征值为三重 $\frac{1+t}{4}$ 与一重 $\frac{1-3t}{4}$；当 $t\in(\frac{1}{3},1)$ 时 $\frac{1-3t}{4}<0$。代入定理 7.2 第 2 项公式（$\|0\|^2=0$，$\|M_t\|_F^2=3t^2$），立得 $D_1(R_{\Lambda_t})=\frac{1}{4}(3-3t^2)I_2=\frac{3(1-t^2)}{4}I_2\succ0$。
+
+对第 2 项，$U_0^\dagger=U_0$、$U_0^2=I_4$ 且 $[U_0,P_0]=0$，故 $K_0^\dagger K_0=P_0U_0^2P_0=P_0$、$K_1^\dagger K_1=P_1$、$K_0^\dagger K_0+K_1^\dagger K_1=I_4$。对 $b'\ne b$，$P_1K_0=P_1U_0P_0=U_0P_1P_0=0$ 且 $P_0K_1=P_0P_1=0$，故 $\operatorname{Tr}(P_{b'}\Lambda_b(\rho))=0$ 且 $\operatorname{Tr}(P_b\Lambda_b(\rho))=\operatorname{Tr}(K_b^\dagger P_bK_b\rho)=\operatorname{Tr}(P_b\rho)$；然而 $K_0|0\rangle=U_0|0\rangle=|1\rangle$，故 $\Lambda_0(|0\rangle\langle0|)=|1\rangle\langle1|\ne|0\rangle\langle0|$。∎
+
+## 8. 有限比特量化正守卫读器的全历史测度同构稳定性与双侧失效边界
+
+**定义 8.1（静态闭下水平集有限精度量化器与量化正守卫配置律）。** 沿用 [`AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md`](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md) 定义 205.1、206.1–206.2 与假设 206.3 的全部固定读器对象：局部十五门轨迹 $\theta_i^\lambda(\tau)$（$i\in\{0,1\}$，$\tau\in[0,15]$），最小正块质量 $m_*\in(0,1]$，原正守卫阈值 $\vartheta=\frac{m_*}{16}\in(0,\frac{1}{16}]$，参数邻域 $|\lambda-\alpha|<\eta=\min\{\frac{\alpha}{2},\frac{2\pi-\alpha}{2},\frac{\sqrt{m_*}}{96}\}$，以及在 $D_q(\Psi)>0$ 纤维上的精确归一权重 $p_\Psi(q,z)=\frac{|\Psi(q,z)|^2}{D_q(\Psi)}\in[0,1]$。
+
+误差包络为 $\delta\ge0$ 的**静态有限精度量化器**是指值域有限的函数 $Q:[0,1]\to[0,1]$，满足一致误差界
+
+$$
+\sup_{x\in[0,1]}|Q(x)-x|\le\delta.
+$$
+
+称 $Q$ 对阈值 $\vartheta$ 具有**闭触发下水平集**，若集合 $S_{Q,\vartheta}=\{x\in[0,1]:Q(x)\le\vartheta\}$ 为 $[0,1]$ 的闭子集（例如任意单调不减左连续量化器，特别是分辨位数 $b\in\mathbb{Z}_{>0}$、步长 $2^{-b}$ 的向上网格比较量化器 $Q_{\uparrow,b}(0)=0$、$Q_{\uparrow,b}(x)=2^{-b}\lceil 2^bx\rceil$ 对 $x\in(0,1]$，其触发集精确为闭区间 $S_{Q_{\uparrow,b},\vartheta}=[0,2^{-b}\lfloor 2^b\vartheta\rfloor]$）。
+
+**量化正守卫配置律** $G_j^Q$ 是指将假设 206.3 式 (206.3) 中的两次精确权重比较统一替换为有限精度读数 $Q$ 的比较，其余接缝顺序、等待规则、源驱动与因果档案拉回类一字不改：在二点块 $\{z,z^{\leftrightarrow j}\}$ 上，
+
+$$
+G_j^Q(\Psi,q,z)=1\iff D_q(\Psi)>0,\quad Q\bigl(p_\Psi(q,z)\bigr)\le\vartheta,\quad Q\bigl(p_\Psi(q,z^{\leftrightarrow j})\bigr)\ge2\vartheta,
+$$
+
+单点块或 $D_q(\Psi)=0$ 时 $G_j^Q=0$；从上次检查后 $G_j^Q=0$ 的时刻 $s_0\in[0,1)$ 起，下一事件时刻仍取 $\{s \in (s_0, 1] : G_j^Q(\widehat{\Psi}_s, q, z) = 1\}$ 的首点。
+
+**定理 8.2（$\delta<\frac{3}{4}\vartheta$ 下的有限比特量化正守卫适定性、精确报告与全历史测度同构定理）。** 在定义 8.1 下，设静态有限精度量化器 $Q:[0,1]\to[0,1]$ 对 $\vartheta$ 具有闭触发下水平集 $S_{Q,\vartheta}$，且其一致量化误差满足严格上界
+
+$$
+0\le\delta<\frac{3}{4}\vartheta=\frac{3m_*}{64}
+$$
+
+（特别地，对向上 $b$ 比特网格量化器 $Q_{\uparrow,b}$，只要比特数满足 $b>\log_2\!\left(\frac{64}{3m_*}\right)$ 即有 $\delta=2^{-b}<\frac{3}{4}\vartheta$）。则在同一参数邻域 $|\lambda-\alpha|<\eta$ 内，对两个分支 $i\in\{0,1\}$、一切十一地址有限前缀 $a$ 后的正支撑入口 $(q,z_*)$（$q\in E_i$）及一切七地址外生未来 $f$，量化正守卫系统同时满足：
+
+1. **首点闭集取得、零入口误跳与有界跳数**：十五个单位调用生成唯一确定的右连续局部配置路径 $r_i^{\lambda,Q}:[0,15]\to S_i$，每次等待后的触发时刻集在 $(s_0,1]$ 内为闭集故首点必然取得；全部十五门的入口检查恒为 $G_{d_k}^Q=0$（零入口跳动）；每次跳动前精确权重满足 $p_i^\lambda(\tau^-,z)\in[\max(0,\vartheta-\delta),\vartheta+\delta]$，跳后精确权重满足
+
+$$
+p_i^\lambda(\tau^+,z^{\leftrightarrow j})>11\vartheta-\delta>\frac{41}{4}\vartheta,
+$$
+
+跳后量化读数满足 $Q(p_i^\lambda(\tau^+,z^{\leftrightarrow j}))>11\vartheta-2\delta>\frac{19}{2}\vartheta>\vartheta$（零同刻往返跳动）；同一单位门内相邻两次跳动的时间间隔严格大于
+
+$$
+\Delta s_{\min}(\delta)=\frac{10\vartheta-2\delta}{8\pi}>\frac{17\vartheta}{16\pi}>0,
+$$
+
+故每门跳动次数至多为 $N_Q(\delta)=1+\left\lfloor\frac{8\pi}{10\vartheta-2\delta}\right\rfloor<\infty$（十五门总跳数至多 $15N_Q(\delta)$）；
+
+2. **统一右值裕量与零差错精确报告 $J^{Q}=L$**：全区间右值满足 $Q(p_i^\lambda(\tau,r_i^{\lambda,Q}(\tau)))>\vartheta$ 及精确权重下界
+
+$$
+p_i^\lambda\bigl(\tau,r_i^{\lambda,Q}(\tau)\bigr)>\vartheta-\delta>\frac{\vartheta}{4}\qquad(0\le\tau\le15),
+$$
+
+从而终端配置 $z_i^{\lambda,Q}=r_i^{\lambda,Q}(15)$ 必满足 $(z_i^{\lambda,Q})_{13}=i$，在全部正质量源列上零差错输出精确逻辑切口位 $J^Q=L$；
+
+3. **十一地址前缀与七地址未来的全历史测度同构保持**：将 [`AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md`](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md) 定理 208.2 中的精确读器微历史映射替换为 $r_i^{\lambda,Q}$ 后，扩展程序在全部可数原程序对 $(a,f)$、全部 $1024$ 旧标签、原跳时、精确报告 $J^Q=L$ 与因果档案拉回类上与原理想比较过程保持完全相同的概率律与双射历史测度同构。
+
+**证明。** 直接消费 [`AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md`](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md) 定理 207.1 中仅依赖酉门脉冲、不依赖配置跳动规则且由酉传播范数扰动界 (207.3) 给出的三项波函数不等式 (207.5)、(207.7) 与 (207.8)：在 $|\lambda-\alpha|<\eta$ 上，各门守恒块质量满足 $m_{i,k,B}^0=0\Rightarrow m_B^\lambda<\frac{\vartheta}{4}$ 与 $m_{i,k,B}^0>0\Rightarrow m_B^\lambda>12\vartheta$；单脉冲内任一固定坐标权重导数满足 $|p'(s)|<8\pi$；且十五门终端相反报告子空间总质量满足 $\sum_{z:z_{13}\ne i}|\theta_i^\lambda(15,z)|^2<\frac{\vartheta}{4}$。
+
+先在单门 $k\in\{1,\ldots,15\}$ 上作归纳。在 $k=1$ 入口有 $p_i^\lambda(0,z_*)=1$，故 $Q(1)\ge1-\delta>1-\frac{3}{4}\vartheta>\vartheta$（因 $\vartheta\le\frac{1}{16}$），入口守卫 $G_{d_1}^Q=0$。一般地，设第 $k$ 门入口处当前配置 $z$ 满足 $Q(p_i^\lambda(k-1,z))>\vartheta$。则入口守卫立即为 $0$（零入口跳动），且入口精确权重满足 $p_i^\lambda(k-1,z)\ge Q(p_i^\lambda(k-1,z))-\delta>\vartheta-\delta>\frac{\vartheta}{4}$。因该块总质量 $m_B^\lambda\ge p_i^\lambda(k-1,z)>\frac{\vartheta}{4}$，由块质量二分式 (207.5) 知该块不可能是扰动零块，必属于正质量块：$m_B^\lambda>12\vartheta$ 在整段闭脉冲 $[k-1,k]$ 上恒定。
+
+若该块为单点块，则 $G_{d_k}^Q\equiv0$ 且 $p_i^\lambda(k-1+s,z)=m_B^\lambda>12\vartheta>\vartheta+\delta$，故整段满足 $Q(p_i^\lambda)\ge p_i^\lambda-\delta>11\vartheta>\vartheta$。若该块为二点块 $\{z,z^{\leftrightarrow j}\}$，记 $p(s)=p_i^\lambda(k-1+s,z)$，$p_{\leftrightarrow}(s)=m_B^\lambda-p(s)$。注意对任意满足 $p(s)\le\vartheta+\delta$ 的时刻 $s\in[0,1]$，伙伴坐标精确权重恒满足
+
+$$
+p_{\leftrightarrow}(s)=m_B^\lambda-p(s)>12\vartheta-(\vartheta+\delta)=11\vartheta-\delta,
+$$
+
+故其量化读数恒满足
+
+$$
+Q\bigl(p_{\leftrightarrow}(s)\bigr)\ge p_{\leftrightarrow}(s)-\delta>11\vartheta-2\delta>\left(11-\frac{3}{2}\right)\vartheta=\frac{19}{2}\vartheta>2\vartheta.
+$$
+
+由于 $Q(p(s))\le\vartheta\Rightarrow p(s)\le Q(p(s))+\delta\le\vartheta+\delta$，上述不等式表明：在正质量二点块上，只要第一条件 $p(s)\in S_{Q,\vartheta}$ 成立，第二目的地可用条件 $Q(p_{\leftrightarrow}(s))\ge2\vartheta$ 自动严格成立。因此从任意满足 $G_{d_k}^Q=0$（即 $p(s_0)\notin S_{Q,\vartheta}$）的时刻 $s_0\in[0,1)$ 出发，触发时刻集合精确化简为
+
+$$
+\bigl\{s\in(s_0,1]:G_{d_k}^Q(\widehat{\Psi}_s,q,z)=1\bigr\}=\bigl\{s\in[s_0,1]:p(s)\in S_{Q,\vartheta}\bigr\}.
+$$
+
+因 $s\mapsto p(s)$ 连续且 $S_{Q,\vartheta}$ 是 $[0,1]$ 的闭子集，右端原像是紧区间 $[s_0,1]$ 的闭子集（且不含 $s_0$）。若该集合非空，必有严格大于 $s_0$ 的最小元 $s_1\in(s_0,1]$（首点精确取得，无需横截性）。在 $s_1$ 处跳前权重满足 $p(s_1)\in S_{Q,\vartheta}\subseteq[0,\vartheta+\delta]$，且首点最小性进一步迫使 $p(s_1)\in[\vartheta-\delta,\vartheta+\delta]=[\max(0,\vartheta-\delta),\vartheta+\delta]$（因 $\delta<\frac{3}{4}\vartheta$ 故 $\vartheta-\delta>\frac{\vartheta}{4}>0$；由 $|Q(x)-x|\le\delta$ 知对一切 $x>\vartheta+\delta$ 恒有 $Q(x)>\vartheta$ 且 $[0,\vartheta-\delta]\subseteq S_{Q,\vartheta}$，又由 $p(s_0)\notin S_{Q,\vartheta}$ 知 $p(s_0)>\vartheta-\delta$，若 $p(s_1)<\vartheta-\delta$ 则连续函数 $p$ 在 $(s_0,s_1)$ 内由介值定理必先取到 $\vartheta-\delta\in S_{Q,\vartheta}$，与 $s_1$ 的最小性矛盾）；跳至 $z^{\leftrightarrow j}$ 后，新当前权重满足 $p_{\leftrightarrow}(s_1)>11\vartheta-\delta$ 且 $Q(p_{\leftrightarrow}(s_1))>\frac{19}{2}\vartheta>\vartheta$，故跳后同刻守卫为 $0$。若此后在同一门内于 $s_2\in(s_1,1]$ 再次触发跳动，则新坐标权重须从 $>11\vartheta-\delta$ 连续下降至 $\le\vartheta+\delta$，变化量至少为 $(11\vartheta-\delta)-(\vartheta+\delta)=10\vartheta-2\delta>\frac{17}{2}\vartheta>0$；除以导数上界 $|p'|<8\pi$ 即得 $s_2-s_1>\frac{10\vartheta-2\delta}{8\pi}=\Delta s_{\min}(\delta)$，故单门内跳数至多为 $1+\lfloor\frac{1}{\Delta s_{\min}(\delta)}\rfloor=N_Q(\delta)$。出门时刻（含 $s=1$ 恰触发并先完成出门跳动的情形）右值恒满足 $Q(p_i^\lambda(k,r_i^{\lambda,Q}(k)))>\vartheta$。因 $Q$ 是仅依赖归一化纤维坐标权重的静态函数，第 $k$ 门的出门量化读数与第 $k+1$ 门的入口量化读数完全相等，故第 $k+1$ 门入口自动满足 $Q(p_i^\lambda(k,r_i^{\lambda,Q}(k)))>\vartheta$，归纳覆盖全部十五门，证毕第 1 项。
+
+在 $\tau=15$ 处，由 $Q(p_i^\lambda(15,z_i^{\lambda,Q}))>\vartheta$ 得 $|\theta_i^\lambda(15,z_i^{\lambda,Q})|^2>\vartheta-\delta>\frac{\vartheta}{4}$；结合相反报告总质量上界 $\sum_{z:z_{13}\ne i}|\theta_i^\lambda(15,z)|^2<\frac{\vartheta}{4}$，若 $(z_i^{\lambda,Q})_{13}\ne i$ 则产生矛盾 $\frac{\vartheta}{4}<|\theta_i^\lambda(15,z_i^{\lambda,Q})|^2<\frac{\vartheta}{4}$，故必有 $(z_i^{\lambda,Q})_{13}=i$，即 $J^Q=L$，证毕第 2 项。
+
+最后，在 [`AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md`](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md) 定理 208.2 的证明中，全局波函数演化 $\widehat{\Psi}^{\lambda}$、未来源跳动率中的严格正终端标量因子 $|\theta_i^\lambda(15,z_i^{\lambda,Q})|^2>\frac{\vartheta}{4}>0$ 消去（式 (208.6)）及因果档案核 $\kappa$ 仅依赖三个读器输出性质：①读器期间不改变逻辑源坐标 $q$；②对每个 $(i,\lambda)$ 局部微历史路径 $r_i^{\lambda,Q}$ 是仅由 $(i,\lambda)$ 唯一确定的有限跳右连续确定性函数（与前缀波幅大小、相位及隐藏过去无关）；③输出报告精确等于 $J^Q=L$。第 1–2 项已全部提供这三条性质，原定理 208.2 的双射编码与测度相等逐字保持，证毕第 3 项。∎
+
+**命题 8.3（闭下水平集条件与量化步长界的双侧紧失效反例）。**
+
+1. **右连续向下取整量化器在十五门读器上破坏连续时间首点取得**：取任意满足 $2^{-b}<\frac{3}{4}\vartheta$ 的右连续向下 $b$ 比特网格量化器 $Q_{\downarrow,b}(x)=2^{-b}\lfloor 2^bx\rfloor$（$\|Q_{\downarrow,b}-\mathrm{id}\|_\infty\le 2^{-b}<\frac{3}{4}\vartheta$）。其触发下水平集为右半开区间
+
+$$
+S_{Q_{\downarrow,b},\vartheta}=\bigl\{x\in[0,1]:2^{-b}\lfloor 2^bx\rfloor\le\vartheta\bigr\}=\bigl[0,\ (\lfloor 2^b\vartheta\rfloor+1)2^{-b}\bigr).
+$$
+
+在定理 8.2 的整个参数邻域 $|\lambda-\alpha|<\eta$ 内，对分支 $i=1$（及任意产生正质量 $E_1$ 支撑的十一地址前缀，如 $a=(9)$），定义 8.1 的十五门读器在首次使精确权重低于 $\vartheta_{\mathrm{open}}=(\lfloor 2^b\vartheta\rfloor+1)2^{-b}$ 的单位门 $k\in\{1,\ldots,15\}$ 上，从 $s_0=0$ 出发的触发时刻集合 $U=\{s\in(0,1]:G_{d_k}^{Q_{\downarrow,b}}=1\}$ 非空，但其下确界 $s_*=\inf U\in[0,1)$ 处必有 $Q_{\downarrow,b}(p(s_*))=\vartheta_{\mathrm{open}}>\vartheta$（$s_*\notin U$），故**首事件时刻不存在（下确界不可取得）**，证明定理 8.2 中“闭触发下水平集”前件不可删除；
+
+2. **粗糙步长 $2^{-b}>\vartheta$ 使向上网格量化器精确退化为零幅失稳读器**：若向上 $b$ 比特网格量化器 $Q_{\uparrow,b}$（满足闭下水平集条件，$Q_{\uparrow,b}(0)=0$，对 $x>0$ 为 $2^{-b}\lceil 2^bx\rceil$）的量化步长超出阈值 $\delta=2^{-b}>\vartheta$，则对一切 $x\in(0,1]$ 均有 $Q_{\uparrow,b}(x)\ge 2^{-b}>\vartheta$，其闭触发下水平集坍缩为单点零集
+
+$$
+S_{Q_{\uparrow,b},\vartheta}=\{0\}.
+$$
+
+于是量化正守卫 $G_j^{Q_{\uparrow,b}}(\Psi,q,z)=1$ 逐点退化为 $p_\Psi(q,z)=0$（且 $Q_{\uparrow,b}(p_\Psi(q,z^{\leftrightarrow j}))\ge2\vartheta$），在定理 8.2 与 [`AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md`](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md) 定理 205.3 的交邻域 $0<|\lambda-\alpha|<\min(\eta,\eta_0)$ 内，全部十五门沿局部轨迹永不命中零点，配置恒停留在 $z_*$，实际报告恒坍缩为 $J_\lambda^{Q_{\uparrow,b}}\equiv0$；特别地，在定理 205.3 第 2 项的见证程序 $(a,f)=((9),\varepsilon)$ 上（此时 $\Pr(L=1)=x=\varphi^{-1}=\frac{\sqrt{5}-1}{2}>0$ 且条件错误率 $\Pr(J_\lambda^{Q_{\uparrow,b}}\ne L\mid L=1)=1$），产生不随 $|\lambda-\alpha|\to0$ 消失的固定总变差失配 $d_{\mathrm{TV}}(\mathcal{L}(J_\lambda^{Q_{\uparrow,b}}),\mathcal{L}(J_\alpha))=x=\varphi^{-1}>0$。
+
+**证明。** 对第 1 项，整数底函数不等式 $\lfloor 2^bx\rfloor\le\lfloor 2^b\vartheta\rfloor$ 等价于 $2^bx<\lfloor 2^b\vartheta\rfloor+1$，即 $x<\vartheta_{\mathrm{open}}=(\lfloor 2^b\vartheta\rfloor+1)2^{-b}$。因 $\vartheta\le\frac{1}{16}$ 且 $2^{-b}<\frac{3}{4}\vartheta$，有 $\frac{\vartheta}{4}<\vartheta<\vartheta_{\mathrm{open}}\le\vartheta+2^{-b}<\frac{7}{4}\vartheta\le\frac{7}{64}<1$。在 $|\lambda-\alpha|<\eta$ 与分支 $i=1$ 上，初始权重满足 $p_1^\lambda(0,z_*)=1>\vartheta_{\mathrm{open}}$，而因 $(z_*)_{13}=0\ne1$，定理 207.1 式 (207.8) 给出终端权重 $p_1^\lambda(15,z_*)<\frac{\vartheta}{4}<\vartheta_{\mathrm{open}}$。由 $\tau\mapsto p_1^\lambda(\tau,z_*)$ 在 $[0,15]$ 上连续，集合 $\{m\in\{1,\ldots,15\}:\min_{s\in[0,1]}p_1^\lambda(m-1+s,z_*)<\vartheta_{\mathrm{open}}\}$ 非空，取其最小门号 $k$。对一切 $1\le m<k$ 及 $s\in[0,1]$，均有 $p_1^\lambda(m-1+s,z_*)\ge\vartheta_{\mathrm{open}}$，即 $Q_{\downarrow,b}(p_1^\lambda(m-1+s,z_*))\ge\vartheta_{\mathrm{open}}>\vartheta$，故前 $k-1$ 门守卫恒为 $0$，配置在进入第 $k$ 门时仍停留在 $z_*$ 且入口满足 $p(0)=p_1^\lambda(k-1,z_*)\ge\vartheta_{\mathrm{open}}>\frac{\vartheta}{4}$（$s_0=0$ 处 $G_{d_k}^{Q_{\downarrow,b}}=0$）。由块质量二分式 (207.5) 知含 $z_*$ 的第 $k$ 门守恒块必满足 $m_B^\lambda>12\vartheta$，且因 $\min_{s\in[0,1]}p(s)<\vartheta_{\mathrm{open}}\le p(0)$（单点块上 $p$ 恒为常数 $m_B^\lambda$），该块必为二点块 $\{z_*,z_*^{\leftrightarrow d_k}\}$；在该块上只要 $p(s)<\vartheta_{\mathrm{open}}$，就有 $Q_{\downarrow,b}(p_{\leftrightarrow}(s))\ge m_B^\lambda-p(s)-2^{-b}>12\vartheta-\frac{7}{4}\vartheta-\frac{3}{4}\vartheta=\frac{19}{2}\vartheta>2\vartheta$，故从 $s_0=0$ 出发的触发集精确等于 $U=\{s\in(0,1]:p(s)<\vartheta_{\mathrm{open}}\}\ne\varnothing$。记 $s_*=\inf U\in[0,1)$：若 $s_*=0$ 则 $s_*\notin(0,1]\supseteq U$；若 $s_*>0$ 且 $s_*\in U$，则 $p(s_*)<\vartheta_{\mathrm{open}}$，连续性给出存在 $s'\in(0,s_*)$ 使 $p(s')<\vartheta_{\mathrm{open}}$（即 $s'\in U$），与 $s_*=\inf U$ 矛盾；又由 $U$ 的下确界极限知 $p(s_*)\le\vartheta_{\mathrm{open}}$ 且 $p(0)\ge\vartheta_{\mathrm{open}}$，故必有 $p(s_*)=\vartheta_{\mathrm{open}}$、$Q_{\downarrow,b}(p(s_*))=\vartheta_{\mathrm{open}}>\vartheta$ 且 $s_*\notin U$，即 $U$ 无最小元。
+
+对第 2 项，当 $2^{-b}>\vartheta$ 时，$\lfloor 2^b\vartheta\rfloor=0$；对任意 $x\in(0,1]$，$\lceil 2^bx\rceil\ge1$ 给出 $Q_{\uparrow,b}(x)\ge2^{-b}>\vartheta$，而 $Q_{\uparrow,b}(0)=0\le\vartheta$，故 $S_{Q_{\uparrow,b},\vartheta}=\{0\}$。在交邻域 $0<|\lambda-\alpha|<\min(\eta,\eta_0)$ 内，由 [`AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md`](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md) 定理 205.3，从 $z_*$ 出发的局部概率 $|\theta_i^\lambda(\tau,z_*)|^2$ 在全部十五段脉冲上严格大于 $0$，故 $p_\Psi(q,z_*)\notin\{0\}$ 恒成立，$G_j^{Q_{\uparrow,b}}\equiv0$，配置路径逐字等于假设 205.2 在该去心邻域内的恒定无跳路径 $r_i(\tau)\equiv z_*$（其中 $(z_*)_{13}=0$），对见证程序 $(a,f)=((9),\varepsilon)$ 直接触发定理 205.3 第 2 项式 (205.5) 的恒零报告与固定正总变差偏差 $x=\varphi^{-1}$。∎
+
+## 9. 第 6–8 节的来源、文献归属与适用边界
+
+**来源与适用边界 9.1。** 第 6–8 节在第 1–5 节已由重叠实三轴切分图册黏合出全局正交复结构 $J$ 与复 Hilbert 载体 $\mathcal{H}=(V,g,J)$ 的基础上，建立概率闭合、单本体仪器更新与有限精度守卫读出三组结构边界，且不修改第 1–5 节的任何既有条目。第 6 节将 [`AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md`](AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md) 定理 11.2 与命题 11.3 的前置条件推进到任意有限二元切分菜单：定理 6.2 给出框架概率赋值自动满足 RC 的充要核空间相等条件 $L_{\mathfrak{M}}=\ker\mathsf{E}_{\mathfrak{M}}$，并在包含同一完备层析基菜单且局部核完备的菜单族上由秩一投影闭包直接导出 $H_v\succeq0$（$d\ge2$）；不预先假设跨标架 RC 时的同时线性化与正锥闭合在 $\dim_{\mathbb{C}}\mathcal{H}\ge3$ 完整正交标架可加情形归属 Gleason 1957（定理 2.8 与第 3 节）、在全效果集 $\mathcal{E}(\mathcal{H})$ 子恒等可加分解情形归属 Busch 2003；命题 6.3 第 2 项以 $\mathbb{C}^3$ 四组相互无偏基菜单证明即使同时具备有限框架可加性、完整 RC、完备厄米层析与菜单投影严格正概率，仍不蕴涵重构算子半正定。第 7 节中定理 7.2 第 1 项与第 3 项作为承重推导两侧的文献先例桥接步骤：完全正性与 Choi 矩阵 $R_{\Lambda_b}\succeq0$ 及 Kraus 算子求和分解的等价严格归属 Choi 1975 定理 1–2（算子求和表示亦见 Kraus 1971，而单系统正性与二分算子在乘积向量上的块正性对偶归属 Jamiołkowski 1972），锐正交投影完全正仪器由本征纯态不扰动性（理想测量条件）唯一锁定为 Lüders 投影更新（Lüders 1951）的充要刻画归属 Busch–Lahti–Mittelstaedt 1991 与 Busch 2008 定理 5；定理 7.2 第 2 项针对 [`AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md`](AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md) 定理 5.2 的算子三轴纯度亏格给出一般保迹二能级映射下的显式公式与 $O(3)=SO(3)\sqcup(O(3)\setminus SO(3))$ 精确二分，将命题 7.1 的 $F/2$ 反例定位于 $\det M=-1$ 连通分支，并在命题 7.3 中证明混噪非 CP 正映射满足 $D_1\succ0$、退化锐投影可重复 CP 仪器删去本征纯态不扰动性后偏离 Lüders 更新（同时区分用于检验二能级 CP 的二维参考切分与实现秩四通道所需的四维或两位内部记录上下文）。第 8 节消费 [`AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md`](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md) 定理 205.3、207.1 与 208.2 的波函数扰动不等式和因果档案结构，证明闭下水平集与一致误差界 $\delta<\frac{3}{4}\vartheta=\frac{3m_*}{64}$ 保持连续时间首点取得、有限跳数界、精确报告与全历史测度同构；有限跳数仍本质依赖原十五门系统的有界相位导数 $|p'|<8\pi$ 与正质量二点块跳跃增益 $>10\vartheta-2\delta$，而非仅由抽象有限地址集推出。第 6–8 节尚未涉及离散晶格隐藏库消去下的多探针共同传播速度与有限体积涨落界。
+
+## 追加锚（本行以下为增补区）
