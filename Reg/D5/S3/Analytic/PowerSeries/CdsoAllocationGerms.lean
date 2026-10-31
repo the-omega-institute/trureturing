@@ -31,10 +31,21 @@ def arena : Arena where
         iteratedDeriv k b.extension 0 / k.factorial =
           iteratedDeriv k c.extension 0 / k.factorial)
 
-def b0 : AllocationData 2 2 :=
-  ⟨1, by decide, by decide, 0, by decide, 0, by decide, fun _ => 0⟩
+private def admissibleDatum (a h : ℕ) (hh : 0 < h) :
+    {b : AllocationData a h // b.Admissible} := by
+  let b : AllocationData a h :=
+    ⟨1, by decide, hh, 0, by omega, 0, by omega,
+      fun i => if i = 0 then (h : ℤ) else 0⟩
+  refine ⟨b, ?_⟩
+  simp [AllocationData.Admissible, AllocationData.n, b,
+    max_eq_left (Nat.cast_nonneg h : (0 : ℤ) ≤ h),
+    max_eq_right (neg_nonpos.mpr (Nat.cast_nonneg h : (0 : ℤ) ≤ h))]
+
+def b0 : AllocationData 2 2 := (admissibleDatum 2 2 (by decide)).val
+
 def b1 : AllocationData 2 2 :=
-  ⟨2, by decide, by decide, 0, by decide, 0, by decide, fun _ => 0⟩
+  ⟨2, by decide, by decide, 0, by decide, 0, by decide,
+    fun i => if i = 0 then 1 else 0⟩
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -48,16 +59,16 @@ private theorem dependence : ObservationalDependence signature actual := by
   have he0 := congrFun he 0
   norm_num [actual, realize, AllocationData.extension, AllocationData.combination,
     radicalExtension, AllocationData.alpha, AllocationData.beta, AllocationData.r,
-    AllocationData.m, AllocationData.n, b0, b1, Fin.sum_univ_succ] at he0
+    AllocationData.m, AllocationData.n, b0, b1, admissibleDatum, Fin.sum_univ_succ] at he0
 
-def family : Registration arena (type_of% allocation_germ_iff_taylor) where
+def family : Registration arena (type_of% @allocation_germ_iff_taylor) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨allocation_germ_iff_taylor, rejected, rejected_law⟩
+  variation := ⟨@allocation_germ_iff_taylor, rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 
-def audit : Contract.Registration allocation_germ_iff_taylor
+def audit : Contract.Registration (@allocation_germ_iff_taylor)
     (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.PowerSeries.CdsoAllocationGerms.allocation_unit
   realizationName := `Reg.D5.S3.Analytic.PowerSeries.CdsoAllocationGerms.family

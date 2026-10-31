@@ -20,8 +20,6 @@ noncomputable section
 open Filter Set Polynomial
 open scoped Topology PowerSeries
 
-set_option maxHeartbeats 800000
-
 namespace CdsoPeriodic
 
 /-- The genuine Taylor coefficients of a real function at zero. -/
@@ -285,15 +283,6 @@ private theorem familyExtension_analytic {ι : Type*} [Fintype ι] (q : ι → R
   exact (AnalyticOnNhd.eval_polynomial (q i).weight 0 (Set.mem_univ 0)).mul
     (analytic_radicalExtension _ _ _ (q i).base_pos)
 
-private theorem cleared_analytic {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (q : ι → RadicalTerm) : AnalyticAt ℝ (clearedFunction q) 0 := by
-  apply Finset.analyticAt_fun_sum
-  intro i _
-  apply AnalyticAt.mul (AnalyticOnNhd.eval_polynomial (clearedCoefficient q i) 0 (Set.mem_univ 0))
-  cases i with
-  | none => exact analyticAt_const
-  | some i => exact (q i).root_analytic
-
 private theorem cleared_identity {ι : Type*} [Fintype ι] [DecidableEq ι]
     (q : ι → RadicalTerm) :
     clearedFunction q =ᶠ[𝓝 0]
@@ -332,7 +321,7 @@ private theorem cleared_identity {ι : Type*} [Fintype ι] [DecidableEq ι]
     rw [← RadicalTerm.eval_radicand, ← RadicalTerm.eval_affine, ← hdiv]
     ring
   simp_rw [hterm, Finset.sum_sub_distrib, ← Finset.sum_mul]
-  rw [Polynomial.eval_finset_sum]
+  rw [Polynomial.eval_finsetSum]
   ring
 
 private theorem coeff_mul_zero {f g : ℝ⟦X⟧} {B : ℕ}
@@ -404,7 +393,7 @@ private theorem familyExtension_zero_of_coeff {ι : Type*} [Fintype ι] [Decidab
     exact coeff_mul_zero (coeff_mul_zero hcoeff)
   have hprod : (familyProduct q : ℝ⟦X⟧) ≠ 0 := by
     have h0 : PowerSeries.constantCoeff (familyProduct q : ℝ⟦X⟧) ≠ 0 := by
-      rw [Polynomial.constantCoeff_coe, ← Polynomial.eval_zero]
+      rw [Polynomial.constantCoeff_coe, Polynomial.coeff_zero_eq_eval_zero]
       simp only [familyProduct, Polynomial.eval_prod, RadicalTerm.eval_affine, mul_zero, add_zero]
       exact Finset.prod_ne_zero_iff.mpr (fun i _ => ne_of_gt (q i).base_pos)
     exact fun h => h0 (by rw [h, map_zero])
@@ -532,12 +521,11 @@ private theorem extension_as_family (b : AllocationData a h) (ha : 2 ≤ a) :
   have ht : b.t ≤ b.n := Nat.le_of_lt b.t_lt
   simp only [familyExtension, Fintype.sum_sum_type, Fintype.sum_prod_type,
     Fin.sum_univ_two, Fin.sum_univ_three, term, RadicalTerm.eval_weight]
-  norm_num only [↓reduceIte, Sum.elim_inl, Sum.elim_inr, zero_add, zero_mul, one_mul]
-  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
-    Nat.cast_sub ht]
+  norm_num [show (1 : Fin 3) ≠ 0 by decide, show (2 : Fin 3) ≠ 0 by decide,
+    show (2 : Fin 3) ≠ 1 by decide, show (1 : Fin 2) ≠ 0 by decide, Nat.cast_sub ht]
   unfold extension combination
   congr 1
-  simp_rw [Finset.sum_add_distrib, Finset.sum_mul, Finset.mul_sum]
+  simp only [Finset.sum_add_distrib, Finset.sum_mul, Finset.mul_sum]
   ring_nf
 
 private theorem analytic_extension (b : AllocationData a h) (ha : 2 ≤ a) :
@@ -563,12 +551,24 @@ private theorem actual_extension (b : AllocationData a h) (ha : 2 ≤ a) :
   have h0R (k : ℝ) := radical_rationalization b.alpha b.delta0 k u h0
   have hmR (k : ℝ) := radical_rationalization b.beta b.vminus k u hm
   have hpR (k : ℝ) := radical_rationalization b.beta b.vplus k u hp
+  have hsum :
+      (∑ i : Fin (a+b.j),
+        ((b.alpha+b.phi*u)*(u^2*radicalExtension b.alpha (b.delta i) b.m u) +
+          u*((b.d:ℝ)-b.zminus i)*(u^2*radicalExtension b.alpha (b.delta i) b.r u) +
+          u*b.zplus i*(u^2*radicalExtension b.alpha (b.delta i) 2 u))) =
+      u^2 * ∑ i : Fin (a+b.j),
+        ((b.alpha+b.phi*u)*radicalExtension b.alpha (b.delta i) b.m u +
+          u*((b.d:ℝ)-b.zminus i)*radicalExtension b.alpha (b.delta i) b.r u +
+          u*b.zplus i*radicalExtension b.alpha (b.delta i) 2 u) := by
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i _
+    ring
   unfold actual extension combination
   simp_rw [hR, h0R, hmR, hpR]
+  rw [hsum]
   have hun : u ≠ 0 := ne_of_gt hu
   field_simp
-  simp_rw [Finset.mul_sum, Finset.sum_mul]
-  ring
 
 end AllocationData
 

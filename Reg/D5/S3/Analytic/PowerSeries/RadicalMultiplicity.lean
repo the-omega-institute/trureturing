@@ -19,7 +19,7 @@ structure Parameters where
 
 attribute [instance] Parameters.finiteIndex
 
-def signature : Signature where
+abbrev signature : Signature where
   Params := Parameters.{u}
   State P := P.index → ℝ⟦X⟧
   Role := Unit
@@ -30,10 +30,10 @@ def signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature := realize signature
-  (fun _ P S => ∑ i, (P.coefficient i : ℝ⟦X⟧) * S i) (fun e => nomatch e)
+  (fun _ P S => letI := P.finiteIndex; ∑ i, (P.coefficient i : ℝ⟦X⟧) * S i) (fun e => nomatch e)
 
 def rejected : Realization signature := realize signature
-  (fun _ _ _ => 1) (fun e => nomatch e)
+  (fun _ _ _ => (1 : ℝ⟦X⟧)) (fun e => nomatch e)
 
 def arena : Arena where
   signature := signature
@@ -94,7 +94,7 @@ def audit : Contract.Registration
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ P S => ∑ i, (P.coefficient i : ℝ⟦X⟧) * S i) (fun e => nomatch e))
+    (fun _ P S => letI := P.finiteIndex; ∑ i, (P.coefficient i : ℝ⟦X⟧) * S i) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
