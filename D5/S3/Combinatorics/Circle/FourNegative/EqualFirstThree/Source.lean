@@ -70,7 +70,7 @@ private theorem paired_table (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d) :
   have hN : N = D * R * R * R - 1 := by
     dsimp [N, k, modulus, D, R]
     rw [show 3 * s + d = d + s + s + s by omega]
-    simp only [pow_add]; ring
+    simp only [pow_add] <;> ring
   have hM : M = 2 * N + 1 := by dsimp [M, N, modulus]; rw [pow_succ]; ring
   have old := chains s s s d hs hs hs hd
   have new := chains s s s (d + 1) hs hs hs (by omega)
@@ -80,6 +80,10 @@ private theorem paired_table (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d) :
   rw [hkn] at new
   obtain ⟨_, hU, hV, hW, hX⟩ := old
   obtain ⟨_, hUn, hVn, hWn, hXn⟩ := new
+  have eoV : 1 + D + D * R + D * R * R = V := by dsimp [V, vcoef]; ring
+  have eoW : 1 + R + R * D + R * D * R = W := by dsimp [W, wcoef]; ring
+  have eoX : 1 + R + R * R + R * R * D = X := by dsimp [X, xcoef]; ring
+  simp only [eoV, eoW, eoX] at hU hV hW hX
   change ∀ i < d, f i = if i + 1 < d then 2 ^ i * A else -(N - V)/2 at hU
   change ∀ i < s, f (d + i) = if i + 1 < s then 2 ^ i * V else -(N - W)/2 at hV
   change ∀ i < s, f (d + s + i) = if i + 1 < s then 2 ^ i * W else -(N - X)/2 at hW
