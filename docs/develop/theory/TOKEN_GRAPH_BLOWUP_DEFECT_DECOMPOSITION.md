@@ -444,154 +444,497 @@ At the critical density $1/\sqrt5$, the quadratic coefficient vanishes. The sign
 
 ## 追加锚（本行以下为增补区）
 
-## 6. Half-filled block-spin sectors and a separation obstruction
+## 6. Half-filled energy separation of all nonsymmetric sectors
 
-**定义 6.1（Spin-chain sectors）。** Assume (3.1), let $s$ be even, and put
-$r=ms/2$. For $t=(t_1,\ldots,t_m)\in\mathbb N^m$ with
-$0\leq t_i\leq s/2$, write
-
-$$
-d_i=s-2t_i,\qquad T(t)=\sum_i t_i,\qquad D(t)=\sum_i d_i=ms-2T(t).
-$$
-
-Let
+**定义 6.1（Half filling and graph constants）。** Assume Definition 1.1 and
+Assumption 3.1. Write
 
 $$
-\mathcal Q_{s,t}=\left\{q\in\mathbb Z^m:0\leq q_i\leq d_i,
-\sum_iq_i=D(t)/2\right\}.
-$$
-
-For $q\in\mathcal Q_{s,t}$ set
-
-$$
-u_i^+(q)=\sqrt{(q_i+1)(d_i-q_i)},\qquad
-u_i^-(q)=\sqrt{q_i(d_i-q_i+1)},
-$$
-
-and interpret a term with an index outside $\mathcal Q_{s,t}$ as zero. The
-Hermitian matrix $\mathsf K_{s,t}$ on $\mathbb C^{\mathcal Q_{s,t}}$ is
-
-$$
-\begin{aligned}
-(\mathsf K_{s,t}f)(q)=\sum_{\{i,j\}\in E(H)}
-&u_i^+(q)u_j^-(q)f(q+e_i-e_j)\\
-&+u_j^+(q)u_i^-(q)f(q-e_i+e_j).
-\end{aligned}
+\ell=-\lambda,\qquad \Delta=\max_i\deg_H(i),\qquad T=m+2,
+\qquad c_H=\frac\ell2,\qquad
+s_H=2\left\lceil 2^{18}(\Delta/\ell)^2T^3\right\rceil.
 \tag{6.1}
 $$
 
-Write $\mu_{s,t}=\lambda_{\min}(\mathsf K_{s,t})$. The sector $t=0$ is
-called the block-symmetric sector.
-
-**命题 6.2（The supplied identities do not prove the proposed separation）。**
-The chain decomposition in Feinsilver,
-[Proposition 4.1](https://arxiv.org/pdf/1102.0368v2), and Srinivasan,
-[Theorem 1.2](https://arxiv.org/pdf/1001.0280v2), does give (6.1): a chain
-starting at rank $t_i$ has length $d_i+1$, and in its unit basis
+For an even positive integer $s$, put $S=s/2$, $k=mS$,
+$K=K_k$ and $E=E(s,k)$. All operators and projections below act on the
+complete space $\mathcal H_{mS}$ of Definition 1.1. Define
 
 $$
-L_i|t_i,q_i\rangle=u_i^-(q)|t_i,q_i-1\rangle,
-\qquad
-L_i^*|t_i,q_i\rangle=u_i^+(q)|t_i,q_i+1\rangle.
+g_s=\lambda_{\min}\bigl(K|_{\operatorname{ran}(I-P_{\mathrm{sym}})}\bigr)-E.
 \tag{6.2}
 $$
 
-Tensoring the chains and imposing total occupancy $r$ gives an orthogonal sum
-of copies of $\mathsf K_{s,t}$ over the chain multiplicity labels. The
-following two calculations are obstructions to the claimed proof of a uniform
-positive separation.
-
-First, the estimate
+The restriction is well defined because $K$ commutes with all block
+permutations. Its space is nonzero for even $s\geq2$: in one block a
+nonconstant vector on the one-particle layer can be tensored with suitable
+occupancy vectors in the other blocks to reach $mS$. For example, take
+occupancy $s-1$ in a second block and occupancy $S$ in the remaining blocks.
+The edge test in the proof of Theorem 2.1 and the maximum-degree bound for
+adjacency give $1\leq\ell\leq\Delta$, so (6.1) specifies finite positive
+constants. Indeed, for a complex vector $v$,
 
 $$
-\sum_i t_i(s+1-t_i)\geq sT(t)
+|v^*av|\leq\sum_{\{i,j\}\in E(H)}2|v_i||v_j|
+\leq\sum_i\deg_H(i)|v_i|^2\leq\Delta\|v\|^2.
+$$
+
+**定理 6.2（Uniform half-filled gap and arbitrary-state confinement）。**
+With Definition 6.1, for every even integer $s\geq4T$,
+
+$$
+g_s\geq\ell s-64\Delta T^{3/2}\sqrt{s/2}-64\Delta T^2.
 \tag{6.3}
 $$
 
-is false on the stated domain. If $s\geq4$ and
-$t=(2,0,\ldots,0)$, its two sides are respectively $2(s-1)$ and $2s$.
-The valid uniform bound from $0\leq t_i\leq s/2$ is only
+For every even integer $s\geq s_H$, one has the operator inequality
 
 $$
-\sum_i t_i(s+1-t_i)\geq\left(\frac{s}{2}+1\right)T(t).
+\boxed{\quad K-EI\succeq c_Hs(I-P_{\mathrm{sym}}).\quad}
 \tag{6.4}
 $$
 
-Second, the asserted equality-condition step fails when the least eigenvalue
-is degenerate. Let $m=4$ and let $H$ be the disjoint union of the edges
-$\{1,2\}$ and $\{3,4\}$. Then
+Consequently, for every such $s$, every unit vector
+$\phi\in\mathcal H_{mS}$, and every real $\delta\geq0$ satisfying
+$\langle\phi,K\phi\rangle\leq E+\delta$,
 
 $$
-a=\begin{pmatrix}0&1&0&0\\1&0&0&0\\0&0&0&1\\0&0&1&0\end{pmatrix},
-\qquad \lambda=-1,
-\qquad z=(1,-1,1,-1),
-$$
-
-so (3.1) holds and
-$\ker(a-\lambda I)=\{(x,-x,y,-y):x,y\in\mathbb C\}$.
-For every even $s\geq2$, take $t=(1,1,0,0)$, so
-$d_1=d_2=s-2$ and $d_3=d_4=s$. For an integer $d\geq0$ define the unit
-vector in two equal chains
-
-$$
-\eta_d=\frac1{\sqrt{d+1}}\sum_{q=0}^d(-1)^q|q,d-q\rangle .
+\|(I-P_{\mathrm{sym}})\phi\|^2\leq\frac{\delta}{c_Hs}
+=\frac{2\delta}{\ell s}.
 \tag{6.5}
 $$
 
-The lowering coefficients in (6.2) give, by reindexing the first sum,
+In particular, along every sequence of these even integers tending to
+infinity, $\delta_s=o(s)$ implies
+$\|(I-P_{\mathrm{sym}})\phi_s\|\to0$. Every ground state belongs to
+$\operatorname{ran}P_{\mathrm{sym}}$ when $s\geq s_H$.
+Disconnected $H$ and arbitrary multiplicity of its least eigenvalue are
+included.
+
+Proof. We first express the full Boolean space as an orthogonal sum of
+finite spin chains. This is the classical Boolean representation used as an
+intermediate here: Srinivasan,
+[Theorem 1.2 and the representation derivation on pp. 3–5](https://arxiv.org/pdf/1001.0280v2),
+and Feinsilver,
+[§§3–4, particularly (8), (10), (16), Proposition 4.3 and §4.2.2](https://arxiv.org/pdf/1102.0368v2).
+Their parameters are respectively $n=s$, starting rank $t$, and principal
+number $s-2t$; their raising operator is our $L_i^*$ and their lowering
+operator is our $L_i$. The construction and normalization needed on every
+multiplicity space are as follows.
+
+On one block write $U=L_i^*$, $L=L_i$ and $n=n_i$. Directly on Boolean
+basis vectors,
 
 $$
-\begin{aligned}
-L_1\eta_d
- &=\frac1{\sqrt{d+1}}\sum_{r=0}^{d-1}(-1)^{r+1}
-   \sqrt{(r+1)(d-r)}\,|r,d-1-r\rangle,\\
-L_2\eta_d
- &=\frac1{\sqrt{d+1}}\sum_{r=0}^{d-1}(-1)^r
-   \sqrt{(r+1)(d-r)}\,|r,d-1-r\rangle .
-\end{aligned}
-$$
-
-Consequently $L_1\eta_d+L_2\eta_d=0$. Set
-
-$$
- f=\eta_{s-2}^{(1,2)}\otimes\eta_s^{(3,4)}.
-$$
-
-Each factor has total chain occupancy equal to its chain length, so $f$ lies
-in the $t$-sector at total occupancy
-$$(s-2)+s=2s-2=D(t)/2,$$
-which is the half-filled layer for $m=4$. If
-$y=(L_1f,L_2f,L_3f,L_4f)$, the two cancellation identities give
-$y_2=-y_1$ and $y_4=-y_3$. Therefore
-
-$$
-ay=-y,
-\qquad\text{hence}\qquad
-(I-\Pi)y=0,
+[L,U]=sI-2n,\qquad [n,U]=U,\qquad [n,L]=-L.
 \tag{6.6}
 $$
 
-where $\Pi$ is the coordinate projection onto
-$\ker(a-\lambda I)$. Here $t\neq0$. Thus vanishing of the projected leakage
-in the quadratic-form bound
+Choose an orthonormal basis of the space $\ker L$ at each rank $t$.
+There are no nonzero such vectors with $t>S$, since (6.6) gives
+$\|Uv\|^2=(s-2t)\|v\|^2$. For a unit vector $v$ in that space, put
+$d=s-2t\geq0$. Induction in (6.6) gives
 
 $$
-\langle f,\mathsf K_{s,t}f\rangle\geq
-\lambda\sum_i\|L_if\|^2+
-\gamma_H\|(I-\Pi)(L_1f,\ldots,L_mf)\|^2
+\begin{aligned}
+LU^qv&=q(s-2t-q+1)U^{q-1}v &&(1\leq q\leq s-2t+1),\\
+\|U^qv\|^2&=q!\frac{(s-2t)!}{(s-2t-q)!} &&(0\leq q\leq s-2t).
+\end{aligned}
+\tag{6.7}
 $$
 
-does not force the sector label to be $t=0$.
+$U^{d+1}v=0$: its squared norm is obtained by applying the first identity
+with $q=d+1$ and is zero. Normalize the vectors in (6.7).
+Vectors at different ranks are orthogonal. For two chains starting at
+different ranks $t<t'$, at a common rank $n$ move $U^{n-t}$ across the
+inner product; the resulting $L^{n-t}U^{n-t'}v'$ is zero. For two vacua at
+the same rank, (6.7) makes the inner product at every common rank a positive
+scalar times their original inner product. Thus these chains are mutually
+orthogonal and invariant under $L,U,n$.
 
-The requested constants $c_H>0$ and $s_H$ therefore do not follow from the
-published decomposition, the lowering identity, and the spectral projection
-bound alone. In particular, (6.3)–(6.12) are not asserted here: the additional
-coercive estimate controlling nonzero $t$ inside the least-eigenspace kernel is
-still an open mathematical obligation under Assumption 3.1. The existing
-full-state certificate (Theorem 2.1) and its near-minimal-state budget
-(Theorem 4.1) remain valid, but they do not imply the requested
-$\|(I-P_{\rm sym})\phi\|^2=O(\delta/s)$ confinement. Consequently no
-unconditional symmetry/confinement statement is transferred to the fixed-code
-oscillator result.
+They exhaust the block space: their orthogonal complement is invariant
+under all three operators; a nonzero vector of its smallest occupied rank
+would be in $\ker L$ and hence in the already included chains. The number
+of chains starting at $t$ is therefore
+
+$$
+r_s(t)=\binom st-\binom s{t-1},\qquad 0\leq t\leq S,
+\quad\binom s{-1}=0.
+\tag{6.8}
+$$
+
+To see the count, the rank-$t$ space, for $t\leq S$, has one vector from
+each chain starting at ranks $0,\ldots,t$ and dimension $\binom st$;
+subtract the rank-$t-1$ count. The chain starting at rank zero is unique
+and consists of the normalized constant vectors on the block's occupancy
+layers. These are exactly its permutation-invariant vectors. Formula
+(6.8) includes the length-one chains at $t=S$.
+
+For $t=(t_1,\ldots,t_m)\in\{0,\ldots,S\}^m$, put
+
+$$
+J_i=S-t_i,\qquad \tau=\sum_i t_i,\qquad
+\mathcal X_t=\{x\in\mathbb Z^m:|x_i|\leq J_i,\ \sum_i x_i=0\}.
+\tag{6.9}
+$$
+
+A tensor of block chains has occupancies
+$n_i=t_i+q_i=S+x_i$, where $q_i=J_i+x_i$. In its orthonormal basis,
+
+$$
+\begin{aligned}
+L_i|x\rangle&=b_{J_i}^-(x_i)|x-e_i\rangle,&
+b_J^-(x)&=\sqrt{(J+x)(J-x+1)},\\
+L_i^*|x\rangle&=b_{J_i}^+(x_i)|x+e_i\rangle,&
+b_J^+(x)&=\sqrt{(J-x)(J+x+1)}.
+\end{aligned}
+\tag{6.10}
+$$
+
+The first and second maps go to total centered occupancy $-1$ and $1$,
+respectively; zero coefficients at the endpoints mean zero vectors.
+By (2.4), the matrix $K_t$ on $\ell^2(\mathcal X_t)$ is specified on kets
+by
+
+$$
+K_t|x\rangle=\sum_{i,j}a_{ij}
+b_{J_i}^+(x_i)b_{J_j}^-(x_j)|x+e_i-e_j\rangle,
+\tag{6.11}
+$$
+
+omitting terms outside $\mathcal X_t$. Reverse moves have the same
+coefficient, so this matrix is Hermitian. Tensoring the entire block
+decompositions proves the exact orthogonal decomposition
+
+$$
+\mathcal H_{mS}\cong
+\bigoplus_{t\in\{0,\ldots,S\}^m}
+\ \bigoplus_{\alpha_i=1,\ldots,r_s(t_i)}
+\ell^2(\mathcal X_t),\qquad
+K\cong\bigoplus_{t,\alpha}K_t.
+\tag{6.12}
+$$
+
+Here the inner sum ranges over all tuples of multiplicity indices.
+$P_{\mathrm{sym}}$ is the projection onto precisely $t=0$; no other chain
+has permutation-invariant vectors. Every $\mathcal X_t$ contains $0$.
+All sector minima $\mu_t=\lambda_{\min}(K_t)$ consequently exist.
+
+For a unit vector $f$ in one such sector let
+
+$$
+\begin{aligned}
+F&=(L_1f,\ldots,L_mf),&
+A&=a+\ell I,& R&=\langle F,(A\otimes I)F\rangle,\\
+X_i&=\langle f,x_i^2f\rangle,&\nu_i&=\langle f,x_if\rangle,& X&=\sum_iX_i,\\
+d(t)&=\sum_i t_i(2S+1-t_i).
+\end{aligned}
+\tag{6.13}
+$$
+
+The symbols $x_i$ inside inner products denote diagonal multiplication
+operators. Thus $X_i\geq0$, $|\nu_i|\leq\sqrt{X_i}$ and
+$\sum_i\nu_i=0$. The norm identity in (6.10) gives
+
+$$
+\|L_if\|^2=J_i(J_i+1)-X_i+\nu_i,\qquad
+\langle f,K_tf\rangle
+=-\ell mS(S+1)+\ell d(t)+\ell X+R.
+\tag{6.14}
+$$
+
+This is the restriction of the full-state certificate (2.1): on this chain
+$D_i=t_i(2S+1-t_i)I$ and $V=\sum_i x_i^2$. In particular $R\geq0$.
+Neither (6.13) nor (6.14) projects onto a particular vector in the least
+eigenspace.
+
+The flat-phase trial (3.5)–(3.7), with $N=2mS$, $k=mS$ and $b=mS^2$,
+supplies the upper bound
+
+$$
+E\leq-\ell mS^2\frac{2mS}{2mS-1}\leq-\ell mS^2.
+\tag{6.15}
+$$
+
+The subset count and complex Rayleigh normalization used there are supplied
+also by `counting_identity`, `W_move`, `Test.token_energy`, `phi40_energy`,
+`phi40_norm` and `real_complex_rayleigh` in
+[CutBoundRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lean).
+Only their counting and Rayleigh mechanisms are used, not a pentagon-specific
+energy value. Ordinary adjacency is essential in (6.11) and (6.15): in
+[Apte–Parekh–Sud v3, Definition 1 and Fact 2](https://arxiv.org/html/2506.03441v3),
+the XY block is the different operator $W I/2-K$.
+
+We prove (6.3) sector by sector. Since $t_i\leq S$,
+$d(t)\geq(S+1)\tau$. If $\tau\geq T=m+2$, (6.14) and (6.15) immediately
+give
+
+$$
+\mu_t-E\geq\ell\bigl((S+1)\tau-mS\bigr)\geq2\ell S.
+\tag{6.16}
+$$
+
+This includes every sector with any zero local spin that meets this deficit
+condition; there is no restriction on its multiplicity indices.
+It remains to consider $1\leq\tau<T$ and $S\geq2T$. If
+$\mu_t\geq E+2\ell S$, (6.3) already follows. Otherwise choose a unit
+least eigenvector $f$ of $K_t$. By (6.14)–(6.15),
+
+$$
+R+\ell X+\ell d(t)
+=\mu_t+\ell mS(S+1)<\ell(m+2)S=\ell TS.
+$$
+
+In particular,
+
+$$
+X\leq TS,\qquad R\leq\ell TS,\qquad
+J_i\geq S-T\geq S/2.
+\tag{6.17}
+$$
+
+Embed this same vector isometrically into the $t=0$ sector by leaving its
+centered coordinates unchanged: $g(x)=f(x)$ on $\mathcal X_t$ and $g(x)=0$
+on $\mathcal X_0\setminus\mathcal X_t$. Then $\|g\|=1$, $g$ is still
+half filled, and $E\leq\langle g,K_0g\rangle$. We estimate this last
+quadratic form, including its boundary coefficients.
+
+Put
+
+$$
+p=S+\tfrac12,\qquad p_i=J_i+\tfrac12=p-t_i,\qquad
+h_i=p/p_i=1+\beta_i,\qquad \beta_i=t_i/p_i,
+\qquad B=\operatorname{diag}(\beta_1,\ldots,\beta_m).
+\tag{6.18}
+$$
+
+For either sign and every $|x|\leq J_i$, write
+
+$$
+b_S^\pm(x)=h_i b_{J_i}^\pm(x)+r_i^\pm(x).
+$$
+
+If $t_i=0$, this remainder is zero. If $t_i>0$, take
+$y=x\pm\tfrac12$ for $b^\pm$. Then $|y|\leq p_i$, and
+$b_S^\pm=\sqrt{p^2-y^2}$, $b_{J_i}^\pm=\sqrt{p_i^2-y^2}$. Rationalization
+gives
+
+$$
+\begin{aligned}
+0\leq r_i^\pm(x)
+&=\frac{(h_i^2-1)y^2}{\sqrt{p^2-y^2}+h_i\sqrt{p_i^2-y^2}}\\
+&\leq\frac{\sqrt{p^2-p_i^2}}{p_i^2}\,y^2
+\leq\frac{7\sqrt{t_i}}{S^{3/2}}\,y^2
+\leq\frac{14\sqrt{t_i}}{S^{3/2}}(x^2+1).
+\end{aligned}
+\tag{6.19}
+$$
+
+Indeed $p^2-p_i^2=t_i(2p-t_i)\leq3St_i$ and $p_i\geq S/2$; hence the
+penultimate coefficient is at most $4\sqrt3\sqrt{t_i}/S^{3/2}$.
+The denominator is positive even at $|y|=p_i$ when $t_i>0$.
+Thus the estimate includes both ladder endpoints, without division by a
+vanishing deficient-spin coefficient. Also
+$h_i b_{J_i}^\pm(x)\leq b_S^\pm(x)\leq p$.
+
+For a directed allowed move $x'=x+e_i-e_j$ with both endpoints in
+$\mathcal X_t$, its coefficient difference is
+
+$$
+\begin{aligned}
+\mathcal R_{ij}(x)
+&=b_S^+(x_i)b_S^-(x_j)
+-h_ih_jb_{J_i}^+(x_i)b_{J_j}^-(x_j)\\
+&=r_i^+(x_i)b_S^-(x_j)
++h_i b_{J_i}^+(x_i)r_j^-(x_j)\\
+&\geq0,\\
+\mathcal R_{ij}(x)
+&\leq\frac{24}{\sqrt S}
+\bigl[\sqrt{t_i}(x_i^2+1)+\sqrt{t_j}(x_j^2+1)\bigr].
+\end{aligned}
+\tag{6.20}
+$$
+
+Here (6.19) and $p\leq3S/2$ actually give the smaller coefficient $21$.
+The reverse move has exactly the same $\mathcal R$.
+Moves leaving $\mathcal X_t$ contribute zero to the quadratic form of
+$g$, since $g$ vanishes at their other endpoint. Therefore
+
+$$
+\langle g,K_0g\rangle
+=\langle F,((I+B)a(I+B)\otimes I)F\rangle+\varepsilon,
+\tag{6.21}
+$$
+
+where $\varepsilon$ is the sum of
+$a_{ij}\mathcal R_{ij}(x)\overline{f(x')}f(x)$ over directed allowed moves.
+All these formulas are valid for complex $f$. Taking absolute values,
+using $2|f(x')f(x)|\leq|f(x')|^2+|f(x)|^2$, and pairing reverse moves,
+we obtain
+
+$$
+\begin{aligned}
+|\varepsilon|
+&\leq\sum_{i,j,x}a_{ij}\mathcal R_{ij}(x)|f(x)|^2\\
+&\leq\frac{48\Delta}{\sqrt S}
+\left(\sum_i\sqrt{t_i}X_i+\sum_i\sqrt{t_i}\right)\\
+&\leq48\Delta T^{3/2}\sqrt S+\frac{48\Delta T}{\sqrt S}.
+\end{aligned}
+\tag{6.22}
+$$
+
+The first sum ranges only over allowed moves; enlarging the nonnegative
+upper bound to all $x$ gives the second line. For the last line,
+$\sqrt{t_i}\leq\sqrt\tau$, and $\sum_i\sqrt{t_i}\leq\tau$ because each
+$t_i$ is an integer. Apply (6.17) and $\tau<T$. This is a bound for the
+actual state and its boundary mass, not a pointwise small-occupancy
+assumption.
+
+For the scaled quadratic form in (6.21), use $a=-\ell I+A$. Since
+$\|A\|\leq2\Delta$, positivity and (6.17) give
+
+$$
+\|(A\otimes I)F\|^2\leq2\Delta R\leq2\Delta\ell TS.
+\tag{6.23}
+$$
+
+Furthermore $\|L_if\|\leq p_i$ by (6.10), so
+
+$$
+\|(B\otimes I)F\|^2
+=\sum_i\beta_i^2\|L_if\|^2\leq\sum_i t_i^2\leq\tau^2.
+\tag{6.24}
+$$
+
+We also need the sign of the first-order energy change. From (6.14),
+$\beta_i\leq2t_i/S$, and $|\nu_i|\leq\sqrt{X_i}$,
+
+$$
+\begin{aligned}
+\sum_i\beta_i\|L_if\|^2
+&=\sum_i\left[t_ip_i-\frac{t_i}{4p_i}
+-\beta_iX_i+\beta_i\nu_i\right]\\
+&\geq S\tau-\sum_i t_i^2
+-\frac{2\tau}{S}(X+\sqrt X)\\
+&\geq S\tau-5T^2.
+\end{aligned}
+\tag{6.25}
+$$
+
+For the second line, $t_ip_i-t_i/(4p_i)
+=St_i-t_i^2+t_i/2-t_i/(4p_i)\geq St_i-t_i^2$, since $p_i\geq1/2$.
+Also $\sum_i t_iX_i\leq\tau X$ and
+$\sum_i t_i\sqrt{X_i}\leq\tau\sqrt X$.
+For the third line, the total loss is at most
+$\tau^2+2\tau T+2\tau\sqrt{T/S}\leq5T^2$ for $S\geq2T$ and $\tau<T$.
+
+Expanding $(I+B)a(I+B)$, applying Cauchy–Schwarz to the term containing
+$A$, and using (6.23)–(6.25), we conclude
+
+$$
+\begin{aligned}
+&\langle F,((I+B)a(I+B)\otimes I)F\rangle-\mu_t\\
+&\quad=-2\ell\sum_i\beta_i\|L_if\|^2
++2\operatorname{Re}\langle(B\otimes I)F,(A\otimes I)F\rangle
++\langle(B\otimes I)F,(a\otimes I)(B\otimes I)F\rangle\\
+&\quad\leq-2\ell S\tau+10\ell T^2
++2\tau\sqrt{2\Delta\ell TS}+\Delta\tau^2\\
+&\quad\leq-2\ell S\tau+3\Delta T^{3/2}\sqrt S+11\Delta T^2.
+\end{aligned}
+\tag{6.26}
+$$
+
+In the last line we used $\ell\leq\Delta$, $\tau<T$, and $2\sqrt2<3$.
+Combining (6.21), (6.22) and (6.26), using
+$48\Delta T/\sqrt S\leq48\Delta T^2$, gives
+
+$$
+\begin{aligned}
+E\leq\langle g,K_0g\rangle
+&\leq\mu_t-2\ell S\tau
++51\Delta T^{3/2}\sqrt S+59\Delta T^2\\
+&\leq\mu_t-2\ell S\tau
++64\Delta T^{3/2}\sqrt S+64\Delta T^2.
+\end{aligned}
+\tag{6.27}
+$$
+
+Since $\tau\geq1$, this proves (6.3) for the remaining sectors.
+Together with (6.16) and the case $\mu_t\geq E+2\ell S$, it proves
+(6.3) simultaneously for every nonzero $t$, every multiplicity copy and
+all even $s\geq4T$. The comparison used the actual full-sector $E$
+through (6.15) and Rayleigh's inequality; a symmetric ground state was
+not an assumption.
+
+Finally let $q=\Delta/\ell\geq1$ and $s\geq s_H$ be even. Then
+$S\geq2^{18}q^2T^3\geq2T$ and
+
+$$
+\frac{64\Delta T^{3/2}\sqrt S}{\ell S}\leq\frac18,
+\qquad
+\frac{64\Delta T^2}{\ell S}\leq\frac1{4096qT}.
+\tag{6.28}
+$$
+
+The sum is less than one. Thus (6.3) gives $\mu_t-E\geq\ell S=c_Hs$
+for every $t\ne0$. On $t=0$, $K_0-EI\succeq0$ because $E$ is the least
+eigenvalue on the entire space. For an arbitrary vector, decompose it
+orthogonally as in (6.12). There are no cross terms for $K$ or for
+$P_{\mathrm{sym}}$. Sum these sector inequalities, multiplied by the
+squared norms of their components, to get (6.4) for arbitrary
+superpositions. Apply its quadratic form to a unit $\phi$ to obtain
+(6.5). Setting $\delta=0$ gives the ground-state assertion, and taking
+square roots in (6.5) proves the stated norm limit. $\square$
+
+**命题 6.3（Product Dicke code and its energy-confinement correspondence）。**
+In the notation of [the collective-oscillator theory, Definitions 1.1–1.2
+and Assumption 1.3](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md),
+take $d=m$, $N=s$, $B=a$ and $\hbar>0$. Identify the two single-cell
+states $g,e$ with Boolean occupations $0,1$. On this complete two-state
+tensor space,
+
+$$
+\mathcal D_s^{\otimes m}=\operatorname{ran}P_{\mathrm{sym}},\qquad
+H_s(a)|_{\mathcal H_{mS}}=\frac{\hbar}{s}K.
+\tag{6.29}
+$$
+
+For every even $s\geq s_H$, its actual half-filled least energy is
+$\mathcal E_s=\hbar E/s$, and every unit half-filled state $\phi$ with
+$\langle\phi,H_s(a)\phi\rangle\leq\mathcal E_s+\epsilon$, $\epsilon\geq0$,
+satisfies
+
+$$
+\|(I-P_{\mathrm{sym}})\phi\|^2\leq\frac{2\epsilon}{\hbar\ell}.
+\tag{6.30}
+$$
+
+The fixed-low-excitation oscillator comparison in that volume's Theorem
+2.1 retains its own hypotheses and fixed excitation cutoff $M$;
+(6.29)–(6.30) assert symmetry and energy confinement only.
+
+Proof. At occupancy $n$ in one block, a permutation-invariant vector has
+one common coefficient on the $n$-subsets. Its unit basis vector is
+$\binom sn^{-1/2}\sum_{|U|=n}|U\rangle=|D_n^{(s)}\rangle$.
+These vectors at all occupancies span precisely the invariant subspace.
+Their normalization and orthogonality are the two-letter specialization
+of `sector_words_card_multinomial` and `sector_gram` in
+[OccupancyWordSectors](../../../D5/S3/Quantum/Entanglement/OccupancyWordSectors.lean),
+with occupation counts $(s-n,n)$, including $n=0,s$.
+Taking the product over blocks gives the first equality in (6.29).
+At half filling it means the intersection with $\mathcal H_{mS}$.
+The consumer's operator $a_{i,s}$ is $L_i/\sqrt s$; its Hamiltonian with
+$B=a$ is therefore $\hbar\sum_{i,j}a_{ij}L_i^*L_j/s$, giving the second
+equality by (2.4). Apply (6.5) with $\delta=s\epsilon/\hbar$ to obtain
+(6.30).
+
+The oscillator comparison uses only the part with total excitation at
+most a fixed $M$, through its map $J_s$ to these same product Dicke
+vectors. Here the total excitation is $ms/2$, which grows with $s$.
+Membership in the product Dicke code does not put that sector in a fixed
+$M$ window, so the symmetry conclusion supplies no oscillator
+approximation on this growing window. Other densities, odd $s$, the
+even integers below $s_H$, and an optimal threshold are not assertions of
+Theorem 6.2. $\square$
 
 ## 追加锚（本行以下为增补区）
