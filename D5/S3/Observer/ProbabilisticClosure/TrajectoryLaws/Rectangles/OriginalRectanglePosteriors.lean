@@ -47,15 +47,19 @@ private theorem record_fiber (k n : ℕ) (a : Fin k → Bool) (c : Fin n → Boo
   · rintro ⟨ha,hc⟩
     constructor
     · funext i
-      simpa [leftWord,List.get_ofFn] using ha i
+      have hh := ha ⟨i.val, by simpa using i.isLt⟩
+      simpa [leftWord,List.get_ofFn] using hh
     · funext i
-      simpa [rightWord,List.get_ofFn,add_comm] using hc i
+      have hh := hc ⟨i.val, by simpa using i.isLt⟩
+      simpa [rightWord,List.get_ofFn,add_comm] using hh
   · rintro ⟨ha,hc⟩
     constructor
     · intro i
-      simpa [leftWord,List.get_ofFn] using congrFun ha i
+      have hh := congrFun ha ⟨i.val, by simpa using i.isLt⟩
+      simpa [leftWord,List.get_ofFn] using hh
     · intro i
-      simpa [rightWord,List.get_ofFn,add_comm] using congrFun hc i
+      have hh := congrFun hc ⟨i.val, by simpa using i.isLt⟩
+      simpa [rightWord,List.get_ofFn,add_comm] using hh
 
 /-- The union of all zero observation fibers is null, including empty words. -/
 private theorem positive_observed_record (P : Measure Visible) [IsProbabilityMeasure P]
@@ -71,7 +75,7 @@ private theorem positive_observed_record (P : Measure Visible) [IsProbabilityMea
     · exact Filter.Eventually.of_forall fun _ _ =>
         ENNReal.toReal_pos hh (measure_ne_top P _)
   filter_upwards [ae_all_iff.mpr he] with z hz
-  simpa only [leftList,rightList,record_fiber,o] using hz (o z) rfl
+  simpa only [leftList,rightList,record_fiber,o,observation] using hz (o z) rfl
 
 /-- On each positive observation fiber, disintegration is the original record ratio.
 The observation alphabet is finite; its zero fibers were removed above, not normalized. -/
@@ -79,7 +83,12 @@ private theorem record_condExp (P : Measure Visible) [IsProbabilityMeasure P]
     (k n : ℕ) : ∀ᵐ z ∂P,
       recordPosterior P (leftList k z) (rightList n z) = (P[erasedBit | recordField k n]) z := by
   let o := observation k n
-  have ho : Measurable o := by dsimp [o,observation,leftWord,rightWord]; fun_prop
+  have ho : Measurable o := by
+    have hl : Measurable (fun z : Visible => leftWord k z) :=
+      measurable_pi_lambda fun i => measurable_pi_apply _
+    have hr : Measurable (fun z : Visible => rightWord n z) :=
+      measurable_pi_lambda fun i => measurable_pi_apply _
+    exact hl.prodMk hr
   have hx : Measurable (fun z : Visible => z 0) := measurable_pi_apply 0
   have hc := bitPredictor_condExp P (fun z : Visible => z 0) o hx ho
   filter_upwards [positive_observed_record P k n,hc] with z hz hce
@@ -197,7 +206,7 @@ private theorem count_wordAt (w : List Bool) (b q n : ℕ) (d : ℤ)
           chronologicalCount w b (d+b) q z := by
       unfold chronologicalCount
       rw [Finset.sum_range_succ']
-      simp only [Nat.cast_add,Nat.cast_one,add_mul,one_mul]
+      simp only [Nat.cast_add,Nat.cast_one,Nat.cast_zero,add_mul,one_mul]
       have htime (i : ℕ) : d + ((i : ℤ)*b+b) = d+b+(i : ℤ)*b := by ring
       simp only [htime,zero_mul,add_zero]
       omega
@@ -212,10 +221,9 @@ private theorem left_count (w : List Bool) (b j : ℕ) (z : PathSpace H) :
     simpa only [Nat.mul_comm b] using Nat.mod_add_div j b
   have hn : j-j%b = (j/b)*b := by omega
   have hd : -(j : ℤ)+(j%b : ℕ) = -((j/b : ℕ) : ℤ)*b := by
-    have hdiv := Nat.mod_add_div j b
-    have hh := congrArg (fun a : ℕ => (a : ℤ)) hdiv
-    push_cast at hh
-    nlinarith
+    have hh : ((j%b : ℕ) : ℤ) + ((j/b : ℕ) : ℤ) * (b : ℤ) = (j : ℤ) := by
+      exact_mod_cast hdiv
+    linarith only [hh]
   rw [hn,hd]
   exact count_wordAt w b (j/b) _ _ le_rfl z
 
@@ -264,7 +272,7 @@ private theorem rectangle_rho_range (B : Matrix H H ℝ) (R : Rectangle B) :
     change 0 < S.min' hS
     rw [← he]
     exact R.positive ij.1 (Finset.mem_product.mp hij).1 ij.2 (Finset.mem_product.mp hij).2
-  have huv : rectangleMinimum B R ≤ rectangleMaximum B R := Finset.min'_le_max' hS
+  have huv : rectangleMinimum B R ≤ rectangleMaximum B R := Finset.min'_le_max' S hS
   have hv : 0 < rectangleMaximum B R := hu.trans_le huv
   exact ⟨sub_nonneg.mpr ((div_le_one hv).mpr huv),
     sub_lt_self _ (div_pos hu hv)⟩
@@ -292,7 +300,9 @@ private theorem count_payment_integrable (J : Measure (PathSpace H)) [IsProbabil
 
 private theorem erasedBit_memLp (P : Measure Visible) [IsProbabilityMeasure P] :
     MemLp erasedBit 2 P := by
-  have hm : Measurable erasedBit := by unfold erasedBit; fun_prop
+  have hm : Measurable erasedBit :=
+    (measurable_of_finite (fun b : Bool => if b then (1 : ℝ) else 0)).comp
+      (measurable_pi_apply 0)
   apply memLp_of_bounded (a := 0) (b := 1) _ hm.aestronglyMeasurable 2
   exact Filter.Eventually.of_forall fun z => by
     cases hz : z 0 <;> simp [erasedBit,hz]

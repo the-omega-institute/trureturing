@@ -20,6 +20,11 @@ open scoped BigOperators ENNReal Classical
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkedPredictiveQuotient
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalMarkedLaw
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalLawTrimming
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.PositiveSupportPresentation
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalFutureCylinders
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalFutureScreening
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.PositiveRectangleMessages
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.PositiveRectangleLaw
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalErasureComparison
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleOccurrence
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleRoutes
@@ -50,8 +55,8 @@ private theorem native_component_irreducible
     (D : FiniteClosedClasses.ClosedClass (θ.matrix false + θ.matrix true))
     (hc : 0 < ∑ i : D.val, θ.initial i.val) :
     ∀ i j : D.val, ∃ n : ℕ,
-      0 < ((nativeComponent θ D hc).matrix false +
-        (nativeComponent θ D hc).matrix true)^n i j := by
+      0 < (((nativeComponent θ D hc).matrix false +
+        (nativeComponent θ D hc).matrix true)^n) i j := by
   let T := θ.matrix false + θ.matrix true
   have hT : T ∈ rowStochastic ℝ H := Matrix.mem_rowStochastic_iff_sum.mpr
     ⟨fun i j => add_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _), θ.stochastic⟩
@@ -59,7 +64,12 @@ private theorem native_component_irreducible
     (FiniteClosedClasses.actual_structure T hT).class_irreducible D
   have hκ : IsIrreducible ((nativeComponent θ D hc).matrix false +
       (nativeComponent θ D hc).matrix true) := by
-    simpa [nativeComponent, FiniteClosedClasses.restriction, Matrix.add_apply] using hi
+    have he : (nativeComponent θ D hc).matrix false +
+        (nativeComponent θ D hc).matrix true = FiniteClosedClasses.restriction T D.val := by
+      ext i j
+      rfl
+    rw [he]
+    exact hi
   have hnonneg : ∀ i j : D.val,
       0 ≤ ((nativeComponent θ D hc).matrix false +
         (nativeComponent θ D hc).matrix true) i j := by
@@ -80,7 +90,7 @@ private theorem component_rho_range {S : Type u} [Fintype S]
     rw [← he]
     exact R.positive ij.1 (Finset.mem_product.mp hij).1 ij.2
       (Finset.mem_product.mp hij).2
-  have huv : rectangleMinimum B R ≤ rectangleMaximum B R := Finset.min'_le_max' hS
+  have huv : rectangleMinimum B R ≤ rectangleMaximum B R := Finset.min'_le_max' S hS
   have hv : 0 < rectangleMaximum B R := hu.trans_le huv
   exact ⟨sub_nonneg.mpr ((div_le_one hv).mpr huv),
     sub_lt_self _ (div_pos hu hv)⟩
@@ -90,7 +100,7 @@ private theorem geometric_root_tail
     (eL eR : ℕ → ℝ)
     (hbound : ∀ n, eL n ≤ η^(n/b) ∧ eR n ≤ η^(n/b)) (R : ℕ) :
     Summable (fun n => Real.sqrt (eL (R+n)) + Real.sqrt (eR (R+n))) ∧
-      (∑' n, Real.sqrt (eL (R+n)) + Real.sqrt (eR (R+n))) ≤
+      (∑' n : ℕ, (Real.sqrt (eL (R+n)) + Real.sqrt (eR (R+n)))) ≤
         2 * (b : ℝ) * (Real.sqrt η)^(R/b) / (1-Real.sqrt η) := by
   have hsη0 : 0 ≤ Real.sqrt η := Real.sqrt_nonneg _
   have hsη1 : Real.sqrt η < 1 :=
@@ -194,18 +204,18 @@ theorem native_component_rectangle_theorem42
       (w.head? = some true → ∀ s, κ.matrix true s r = 0) ∧
       (∀ t : ℤ,
         ENNReal.ofReal (∑ i : D.val, θ.initial i.val) •
-            K.map (componentInclusion D.val) =
+            (K : Measure (PathSpace D.val)).map (componentInclusion D.val) =
           J.restrict (state t ⁻¹' (D.val : Set H))) ∧
       (∀ w' (i j : D.val),
         product κ w' i j = product θ w' i.val j.val) ∧
-      K.map Prod.snd = (visibleLaw κ : Measure (ℤ → Bool)) ∧
+      (K : Measure (PathSpace D.val)).map Prod.snd = (visibleLaw κ : Measure (ℤ → Bool)) ∧
       (∀ j : ℕ,
         let ρ := 1 - rectangleMinimum (product κ w) R /
           rectangleMaximum (product κ w) R
         let ε := selectedEpsilon κ w r a
         let η := 1 - ε * (1-ρ^2)
         (0 ≤ ρ ∧ ρ < 1) ∧ (0 < ε ∧ ε ≤ 1) ∧ (0 ≤ η ∧ η < 1) ∧
-        ((∀ᵐ z ∂K,
+        ((∀ᵐ z ∂(K : Measure (PathSpace D.val)),
           |bitPredictor (visibleLaw κ : Measure _) (fun z => z 0) exterior
               (exterior z.2) -
             bitPredictor (visibleLaw κ : Measure _) (fun z => z 0)
@@ -251,7 +261,7 @@ theorem native_component_rectangle_theorem42
   obtain ⟨a, ha0, hab, hafalse, haseam, hainj, haincoming, hocc⟩ :=
     irreducible_rectangle_occurrence κ K hK hcomponent w R r hr
   have hclass := component_restriction θ D hc J hJ K hK
-  have hvis : K.map Prod.snd = (visibleLaw κ : Measure (ℤ → Bool)) :=
+  have hvis : (K : Measure (PathSpace D.val)).map Prod.snd = (visibleLaw κ : Measure (ℤ → Bool)) :=
     native_visible_pushforward κ K rfl
   have hρ := component_rho_range (product κ w) R
   let ρ := 1 - rectangleMinimum (product κ w) R /
