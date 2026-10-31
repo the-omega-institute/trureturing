@@ -32,7 +32,7 @@ Nat.Prime and Odd express exactly an odd prime. Matrix.permanent uses the sum of
 
 **Theorem 1.3 (alternating_sum).**
 
-$$\forall m \in \mathbb{N},\; \forall s \in \mathbb{Z},\; \sum_{r < 2 \cdot m + 1} (- 1)^{r} \cdot ((r:\mathbb{Z}) + s) = m + s$$
+$$\forall m \in \mathbb{N},\; \forall s \in \mathbb{Z},\; \sum_{r < 2 \cdot m + 1} (- 1)^{r} \cdot ((r:\mathbb{Z}) + s) = (m:\mathbb{Z}) + s$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permanental/SunAbsoluteDifferenceCongruences.alternating_sum` (`✓ std3`). ∎
 

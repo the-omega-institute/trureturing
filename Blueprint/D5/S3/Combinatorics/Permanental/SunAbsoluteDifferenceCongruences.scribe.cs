@@ -62,7 +62,7 @@ internal sealed class SunAbsoluteDifferenceCongruencesDocument : IScribeDocument
             Parenthesized(Add(Cast(r, Integers()), s)));
         return All("m", Naturals(), All("s", Integers(),
             Equal(Seq(Sum, Underscore, Grp(index), Sp, summand),
-                Add(m, s))));
+                Add(Cast(m, Integers()), s))));
     }
 
     private static DocumentBlock Node(string id, string declaration, Formula formula,
