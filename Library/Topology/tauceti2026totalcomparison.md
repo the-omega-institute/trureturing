@@ -75,4 +75,7 @@ and direct replacement checks discharge its mathematical consumers.
 
 ## Verified locator
 
+https://github.com/TauCetiProject/TauCeti/blob/580580ea8726c50dcf98e199fa0a7caef5a74302/TauCeti/Algebra/Homology/TotalComplex.lean
+
+The cutoff induction and comparison endpoint are at lines 539–586:
 https://github.com/TauCetiProject/TauCeti/blob/580580ea8726c50dcf98e199fa0a7caef5a74302/TauCeti/Algebra/Homology/TotalComplex.lean#L539-L586
