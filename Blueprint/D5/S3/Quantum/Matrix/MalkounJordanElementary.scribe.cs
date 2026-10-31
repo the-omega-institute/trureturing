@@ -45,7 +45,12 @@ internal sealed class MalkounJordanElementaryDocument : IScribeDocumentDefinitio
         DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
             DescribeId.Create("malkoun-jordan-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Presentation(name)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: name == "result"
+                ? new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("malkoun-2026-mo512579-jordan-elementary"),
+                    ResolutionKind.Proved)
+                : null);
 
     private static Formula I(string name) => F.Id(name);
     private static Formula Part(string name)
