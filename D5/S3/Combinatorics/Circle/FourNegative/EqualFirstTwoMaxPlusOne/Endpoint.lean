@@ -332,7 +332,8 @@ theorem actualSource_equal_first_two_max_plus_one_joint_lift (u c : ℕ)
   have hv : v<c-1 := by omega
   have hmem : c+1+v ∈ V := by
     simp only [V,List.mem_range']
-    constructor <;> omega
+    refine ⟨by omega, ?_⟩
+    exact Nat.add_lt_add_left hv _
   have hsplit0 : (R0++[c+1+v]).Perm V :=
     List.perm_append_comm.trans (List.perm_cons_erase hmem).symm
   have hx : (2:ℤ)^u=2*s := pow_step u (by omega)
@@ -363,7 +364,8 @@ theorem actualSource_equal_first_two_max_plus_one_joint_lift (u c : ℕ)
     have hwm : c+1+w ∈ R0 := by
       apply (List.mem_erase_of_ne (by omega : c+1+w≠c+1+v)).mpr
       simp only [V,List.mem_range']
-      dsimp [w]
+      refine ⟨by omega, ?_⟩
+      apply Nat.add_lt_add_left
       omega
     have hs : 2≤s := by
       simpa [s] using pow_le_pow_right₀ (by decide : (1:ℤ)≤2) (show 1≤u-1 by omega)
