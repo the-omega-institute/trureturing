@@ -2184,3 +2184,441 @@ The Zhao--Zhao full-text overlap in Section 6 remains unassessed;
 no worldwide priority assertion is made.
 
 ## 追加锚（本行以下为增补区）
+
+## 19. Finite total incidence on the countable optimal face
+
+**Theorem 19.1 (High-row marked saturation and finite incidence).**
+Fix $\alpha,\beta>0$, $R>1$, an attained dual from Theorem 15.3,
+and any countable optimum from Theorem 15.6. Retain $A,\ell,u,v$
+from (15.3), and put
+
+$$
+H_0=\left\lceil\max\left\{2,
+             \frac{4\ell^2}{A\beta\gamma}\right\}\right\rceil,
+\qquad W_k=\sum_{d>k}w_{kd}=E_k-Z_k.
+\tag{19.1}
+$$
+
+Every active row satisfies
+
+$$
+u_k\le\frac{4\ell^2}{\beta\gamma k^2}.
+\tag{19.2}
+$$
+
+Consequently, for $k>H_0$,
+
+$$
+v_k>0\quad\hbox{if }q_k>0,\qquad
+Z_k=(k-1)q_k,\qquad W_k=q_k.
+\tag{19.3}
+$$
+
+In particular the total incidence, rather than merely the tail
+mass, is finite:
+
+$$
+\sum_d d t_d=\sum_k kq_k\le H_0R+2,
+\qquad \sum_k W_k=\sum_d(d-1)t_d\le H_0R+1.
+\tag{19.4}
+$$
+
+For a positive compact rectangle $\mathcal K$ from Theorem 17.1,
+define, using exactly (17.1)--(17.2),
+
+$$
+H_{\mathcal K}
+=\left\lceil\max\left\{2,
+ \frac{4H_b^2}{\alpha_-\beta_-\gamma}\right\}\right\rceil.
+\tag{19.5}
+$$
+
+Every countable optimum of every winning branch at every point of
+$\mathcal K$ satisfies $\sum_d d t_d\le H_{\mathcal K}R_b+2$.
+This conclusion does not assume finite attainment of that branch.
+
+**Proof.** Saturation and Corollary 15.7 give $W_k\ge q_k>0$ in
+an active row. Choose $d$ with $w_{kd}>0$. Its unmarked contact,
+the nonnegativity of all marked prices, and $g(x)\ge\gamma x^2$
+give
+
+$$
+\ell\ge(d-1)\{u_k+\beta g(k/d)\},\qquad
+ d\ge\frac{\beta\gamma k^2}{2\ell}.
+\tag{19.6}
+$$
+
+Here $d\ge3$ and $d-1\ge d/2$. Therefore
+$u_k\le\ell/(d-1)\le2\ell/d$, proving (19.2).
+For active $k>H_0$ this is strictly less than $A/k$.
+The row equality $ku_k+(k-1)v_k=A$ implies $v_k>0$.
+The equality of the nonnegative sums in (15.13) gives
+
+$$
+v_k\{(k-1)q_k-Z_k\}=0.
+\tag{19.7}
+$$
+
+Thus the marked constraint is saturated at these rows; subtracting
+it from $E_k=kq_k$ proves (19.3). Inactive rows have $q_k=Z_k=W_k=0$.
+Since $\sum_kZ_k=1$, nonnegative summation now gives
+
+$$
+\begin{aligned}
+\sum_k kq_k
+&\le H_0\sum_{k\le H_0}q_k
+   +\sum_{k>H_0}\frac{k}{k-1}Z_k\\
+&\le H_0R+2.
+\end{aligned}
+$$
+
+Tonelli's identity and saturation identify this sum with
+$\sum_d d t_d$. Subtracting $\sum_dt_d=1$ gives the second
+bound in (19.4). For the uniform assertion choose the dual with
+(17.6) on the winning branch. Then $H_0\le H_{\mathcal K}$ and
+$r\le R\le R_b$, proving the stated bound. No unique branch,
+contact or strict inequality between competing caps is needed. ∎
+
+## 20. An exact flow and dual-gap identity for the marked constraints
+
+**Definition 20.1 (Incidence flow).** Let
+
+$$
+\mathcal A=\{(k,j,d):d\ge3,\ 1\le k<d,\ 2\le j<d\}.
+$$
+
+The index $k$ is unmarked and $j$ is marked; both refer to the
+same tail degree $d$. For nonnegative $y=(y_{kjd})_{\mathcal A}$
+with $\sum_{\mathcal A}y_{kjd}<\infty$, put
+
+$$
+\begin{gathered}
+W_k=\sum_{j,d}y_{kjd},\qquad
+I_1=0,\qquad
+I_j=\sum_{k,d}\frac{y_{kjd}}{(j-1)(d-1)}\quad(j\ge2),\\
+b_k=W_k-I_k,\qquad
+\mathcal N(y)=\sum_{\mathcal A}\frac{y_{kjd}}{d-1},\\
+\mathcal R(y)=\sum_k\left(I_k+\frac{b_k}{k}\right),\qquad
+\mathcal C(y)=\sum_{\mathcal A}y_{kjd}
+ \left\{g(k/d)+\frac{g(j/d)}{d-1}\right\}.
+\end{gathered}
+\tag{20.1}
+$$
+
+Only flows with $b_k\ge0$ are considered. The vector $b$ is the
+injection. It is not an additional source type or an extra
+constraint on either original domain.
+
+**Proposition 20.2 (Exact saturated-array correspondence and gap).**
+Saturated countable arrays satisfying (7.3), $E_k=kq_k$ and
+$\sum_ddt_d<\infty$ are exactly the images of the flows in
+Definition 20.1 with $\mathcal N(y)=1$. The correspondence preserves
+$r=\mathcal R(y)$ and $c=\mathcal C(y)$. In particular, imposing
+$\mathcal R(y)\le R$ preserves exactly the original cap on these
+arrays, including equality.
+
+For an attained dual from Theorem 15.3 define
+
+$$
+\begin{aligned}
+p_{jd}&=\frac1{(j-1)(d-1)},\\
+\Delta_{kjd}
+&=u_k-p_{jd}u_j+A p_{jd}
+ +\beta\left\{g(k/d)+\frac{g(j/d)}{d-1}\right\}
+ -\frac\ell{d-1}.
+\end{aligned}
+\tag{20.2}
+$$
+
+Every $\Delta_{kjd}$ is nonnegative. For every normalized flow
+with $\mathcal R(y)\le R$, the exact objective gap is
+
+$$
+\begin{aligned}
+\alpha\mathcal R(y)+\beta\mathcal C(y)-L
+={}&\sum_{\mathcal A}y_{kjd}\Delta_{kjd}
+ +\sum_k b_k(A/k-u_k)\\
+ &+\lambda\{R-\mathcal R(y)\}.
+\end{aligned}
+\tag{20.3}
+$$
+
+Hence such a flow gives an optimum if and only if all three
+nonnegative terms on the right vanish. Equivalently, its positive
+actions satisfy $\Delta_{kjd}=0$, its positive injection rows satisfy
+$u_k=A/k$, and $\lambda\{R-\mathcal R(y)\}=0$.
+Every countable optimum has a representing flow of this kind, with
+$b_k=0$ for $k>H_0$.
+
+**Proof.** Given a saturated array of finite total incidence, set
+
+$$
+y_{kjd}=\frac{w_{kd}z_{jd}}{t_d}\quad(t_d>0),
+\qquad y_{kjd}=0\quad(t_d=0).
+\tag{20.4}
+$$
+
+The column identities in (7.3) show
+
+$$
+\sum_jy_{kjd}=w_{kd},\qquad
+\sum_ky_{kjd}=(d-1)z_{jd}.
+\tag{20.5}
+$$
+
+Thus $\sum y=\sum W_k=\sum(d-1)t_d<\infty$ and
+$\mathcal N(y)=1$. For $k\ge2$, $I_k=Z_k/(k-1)$.
+The marked constraint and saturation imply $I_k\le W_k$, since
+$Z_k\le(k-1)(W_k+Z_k)/k$ is exactly this inequality.
+For source one, $Z_1=0$ and $q_1=W_1$. For every $k$,
+
+$$
+q_k=I_k+b_k/k.
+\tag{20.6}
+$$
+
+This proves nonnegative injection and preservation of $r$.
+Equation (20.5) proves preservation of $c$ as well. The product
+in (20.4) is a way to pair the two types of incidence at one
+column; it asserts no independence of original graph or law data.
+
+Conversely, given a flow as stated, define
+
+$$
+\begin{gathered}
+t_d=\frac1{d-1}\sum_{k,j}y_{kjd},\qquad
+w_{kd}=\sum_jy_{kjd},\qquad
+z_{jd}=\frac1{d-1}\sum_ky_{kjd},\\
+z_{1d}=0,\qquad q_k=I_k+b_k/k.
+\end{gathered}
+\tag{20.7}
+$$
+
+The two column identities hold and $\sum_dt_d=1$.
+For $k\ge2$, $Z_k=(k-1)I_k$ and
+$E_k=W_k+(k-1)I_k=kq_k$; for $k=1$, $E_1=q_1=W_1$.
+The assumption $b_k\ge0$ gives
+$Z_k\le(k-1)q_k$, and $q_k\le E_k$ follows from saturation.
+All incidence indices obey the actual strict inequality $k<d$.
+Also $\sum_ddt_d=1+\sum y<\infty$. This proves the exact image
+statement; different pairings $y$ can represent the same array.
+
+For the dual identity use
+$u_j+v_j=(A-u_j)/(j-1)$. The all-degree column inequality gives
+
+$$
+\ell\le u_j+v_j+\beta g(j/d)
+ +(d-1)\{u_k+\beta g(k/d)\},
+$$
+
+which is $\Delta_{kjd}\ge0$. Moreover $0\le u_k\le A/k$.
+Every series needed below is absolutely convergent: $\sum y<\infty$,
+$0\le I_k,b_k\le W_k$, $u_k\le A$, $p_{jd}\le1/2$, and $g$
+is bounded on $[0,1]$. Summing (20.2) therefore gives
+
+$$
+\sum y_{kjd}\Delta_{kjd}
+=\sum_k u_kb_k+A\sum_k I_k
+ +\beta\mathcal C(y)-\ell\mathcal N(y).
+\tag{20.8}
+$$
+
+Add $\sum_kb_k(A/k-u_k)$, use (20.6) and $\mathcal N(y)=1$,
+and finally use $A=\alpha+\lambda$, $\ell=L+\lambda R$.
+This proves (20.3) and its equality criterion.
+Theorem 19.1 permits (20.4) for every optimum. Equation (19.3)
+gives $W_k=I_k=q_k$ for $k>H_0$, hence $b_k=0$ there. ∎
+
+**Lemma 20.3 (Finite contact actions at a fixed source row).**
+For any attained dual, $u_k>0$ for every fixed $k\ge1$.
+If $\Delta_{kjd}=0$, then
+
+$$
+d\le1+\ell/u_k.
+\tag{20.9}
+$$
+
+Consequently the set of contact actions $(j,d)$ at each fixed
+unmarked row $k$ is finite, without any finite-attainment assumption.
+
+**Proof.** Source one has $u_1=A>0$. For fixed $k\ge2$ choose
+$m\ge2$ with $A/(m-1)<\ell/4$, and then choose an integer
+$d>\max\{k,m,2\}$ so large that
+$\beta m^2/d^2<\ell/4$ and $\beta k^2/d<\ell/4$.
+Testing the column inequality with marked row $m$ and unmarked
+row $k$, using $g(x)\le x^2$, gives
+$\ell<3\ell/4+(d-1)u_k$. Thus $u_k>0$.
+At a contact action the right side of the column test equals
+$\ell$ and all its terms are nonnegative. In particular
+$(d-1)u_k\le\ell$, which is (20.9). Both $j$ and $d$ are then
+in finite sets. ∎
+
+## 21. Two injection rows and the exact remaining support selection
+
+**Theorem 21.1 (Two-injection reduction on every optimal face).**
+Fix $\alpha,\beta>0$, $R>1$ and an attained dual.
+There is a countable optimum whose representing flow has injection
+on at most two rows, all at indices at most $H_0$ and satisfying
+$u_k=A/k$. If $\lambda=0$, one injection row suffices.
+The optimum can use only contact actions of any one prescribed
+countable optimum. This reduction preserves the cap and the exact
+objective; the initial optimum need not have finite support.
+
+More precisely, for its set $S$ of active unmarked rows there are
+probabilities $\pi_k(j,d)$ on the finite contact actions at $k\in S$,
+with all their positive targets $j$ in $S$. Define on $\ell^1(S)$
+
+$$
+(P_\pi f)_j
+=\sum_{k,d}p_{jd}\pi_k(j,d)f_k.
+\tag{21.1}
+$$
+
+The flow has the representation
+
+$$
+W=\sum_{n=0}^{\infty}P_\pi^n b,\qquad
+ y_{kjd}=W_k\pi_k(j,d),\qquad
+\|P_\pi\|_{1\to1}\le\frac12.
+\tag{21.2}
+$$
+
+**Proof.** Start with the flow (20.4) of the prescribed optimum.
+Let $S=\{k:W_k>0\}$ and set $\pi_k(j,d)=y_{kjd}/W_k$.
+Proposition 20.2 and Lemma 20.3 give the stated contact support
+and its local finiteness. If $y_{kjd}>0$, then $I_j>0$ and
+$W_j\ge I_j$, so $j\in S$. Each coefficient $p_{jd}$ is positive
+and at most $1/2$, proving the norm bound by nonnegative summation.
+The definitions give $I=P_\pi W$ and $W=b+P_\pi W$.
+Iteration has a remainder of norm at most $2^{-n}\|W\|_1$,
+proving (21.2). In particular there is no additional positive
+summable solution with zero injection. The injection is nonzero,
+as $W\ne0$ and $\|P_\pi\|<1$, and its support $B$ is a finite
+subset of $\{1,\ldots,H_0\}$ with $u_h=A/h$.
+
+For each $h\in B$, let $e_h$ be the unit vector at $h$, and put
+
+$$
+W^{h}=\sum_{n\ge0}P_\pi^ne_h,\qquad
+ y^{h}_{kjd}=W^{h}_k\pi_k(j,d),\qquad
+ n_h=\mathcal N(y^{h}).
+\tag{21.3}
+$$
+
+These are nonnegative summable flows with injection $e_h$.
+Here $0<n_h<\infty$: the term $W^{h}_h\ge1$ and the probability
+row $\pi_h$ give positive normalized tail mass, while
+$\|W^{h}\|_1\le2$ gives finiteness. Their normalized versions
+$\bar y^{h}=y^{h}/n_h$ satisfy all incidence constraints, but their
+ratios $\rho_h=\mathcal R(\bar y^{h})$ need not individually obey
+the cap. All their actions and injections are contacts, so (20.8)
+gives, without imposing a cap on each component,
+
+$$
+A\rho_h+\beta\mathcal C(\bar y^{h})=\ell.
+\tag{21.4}
+$$
+
+The original flow decomposes exactly as
+
+$$
+y=\sum_{h\in B}\theta_h\bar y^{h},\qquad
+\theta_h=b_h n_h>0,\qquad \sum_{h\in B}\theta_h=1.
+\tag{21.5}
+$$
+
+Indeed (21.2) is linear in $b$, and $\mathcal N(y)=1$ gives the
+last identity. In particular $r=\sum_h\theta_h\rho_h$.
+If $\lambda=0$, choose a component with $\rho_h\le r\le R$.
+Its objective is $\ell=L$ by (21.4), so it is a one-injection
+optimum. If $\lambda>0$, the original $r=R$ by (20.3).
+If some $\rho_h=R$, use that component. Otherwise choose one
+$\rho_h<R$ and one $\rho_{h'}>R$, and mix their normalized flows
+with the unique weights giving ratio $R$. Both normalization and
+(21.4) are preserved, so the mixture has objective
+$\ell-\lambda R=L$ and obeys the cap exactly. It has at most two
+injection rows. Its positive actions were already positive in the
+original flow. Individual components exceeding the cap have only
+been used inside this feasible mixture. ∎
+
+**Corollary 21.2 (Finite attainment as finite reachability with two
+injection rows).** For a fixed branch and any fixed attained dual,
+finite attainment of $\mathcal L(\alpha,\beta;R)$ is equivalent to
+the following selection statement. There exist a set $S$ of source
+indices, contact probabilities $\pi_k(j,d)$ as in Theorem 21.1,
+and nonzero $b\ge0$ supported on at most two rows in
+$\{1,\ldots,H_0\}$ with $u_k=A/k$, such that the flow (21.2)
+satisfies
+
+$$
+\mathcal N(y)=1,\qquad \mathcal R(y)\le R,\qquad
+\lambda\{R-\mathcal R(y)\}=0,
+\tag{21.6}
+$$
+
+and the set reachable from $\operatorname{supp}b$ through positive
+actions $k\longrightarrow j$ is finite. One injection row suffices
+in this equivalence when $\lambda=0$.
+
+**Proof.** For a finite attainer, choose its representing flow in
+Theorem 21.1. Its source set and action set are finite, and the
+reduction retains a subset of them. Conversely, for a selection as
+stated, positivity of $p_{jd}$ and the nonnegative series (21.2)
+show that $W_k>0$ exactly on the reachable set. If that set is
+finite, Lemma 20.3 bounds all its positive action degrees $d$ by
+a common finite integer. Thus $y$ has finite support. Proposition
+20.2 reconstructs an actual finite array satisfying every constraint
+in (7.3), and its gap (20.3) is zero. This is a finite attainer. ∎
+
+## 22. Scope of the optimal-face reduction
+
+Theorems 19.1 and 21.1 and Proposition 20.2 are repo-derived
+consequences of the marked incidence constraints, the attained
+primal and dual, and their nonnegative complementary-slackness sums.
+The geometric-series solution in (21.2) and the two-point interpolation
+in (21.5) are elementary occupation-flow tools. Their CDSO-specific
+coefficients, incidence reconstruction and cap identity are given
+explicitly above; no general finite-state approximation or
+finite-moment support theorem is applied. The finite LP duality
+input remains exactly the affine result attributed after Theorem
+15.3. No additional literature theorem is a premise of the support
+reduction, and no priority assertion is made. The Zhao--Zhao
+full-text overlap in Section 6 remains unassessed.
+
+For every $\kappa,D>0$, apply these statements with exactly
+$\alpha=2\kappa/D$, $\beta=D\kappa$, $R=R_j=Dj/\kappa$ and the
+admissible winning indices of (10.2). A countable optimal flow with
+at most two injection rows exists on every such branch. What is
+not established is the existence, on at least one winning branch,
+of a selection in Corollary 21.2 with finite reachable set.
+The norm bound $\|P_\pi\|\le1/2$, finitely supported injection,
+finite total incidence and finitely many actions at each fixed row
+do not in their proofs bound the union of rows reachable along
+arbitrarily long positive paths. A feasible mixture of components
+must still retain both normalization and (21.6); separately feasible
+or separately optimal resource choices cannot replace that mixture.
+
+Thus Open problem 18.2, including every positive compact rectangle,
+all winning-cap ties and equal-endpoint rectangles, remains open,
+as does its quantified negation. Corollary 21.2 gives an equivalent
+support-selection obligation, not a stronger sufficient condition
+substituted for the question. If that obligation holds on a winner
+at every positive pair, Theorem 17.1 supplies exactly the explicit
+endpoint-only cutoff (17.3), and Theorem 18.1 supplies the bounded
+tail recovery. Neither conclusion is asserted unconditionally here.
+A negative result still requires a fixed positive pair for which
+all winning branches fail finite attainment, or the equivalent
+fixed-compact/all-cutoff criterion of Open problem 18.2.
+
+The original graph and actual common-law domains remain Definition
+1.1. Independently of the unresolved finite-support selection,
+Theorems 8.1, 11.1, 13.1 and Proposition 12.2 still give eventual
+nonemptiness and the full original-graph limit on every integer
+sequence $a_n\to\infty$, $h_n/\sqrt{a_n}\to\kappa>0$,
+$N_n/a_n^{3/2}\to D>0$, with the prescribed exact counts and strict
+edge inequalities. This reduction supplies no new bound on all
+original minimizers and no single exactly attaining connected rooted
+pattern. It changes neither $\mathcal X(a,h)$ nor $M(a,h)$ and
+does not infer a sign for the gap in Corollary 13.2.
+
+## 追加锚（本行以下为增补区）
