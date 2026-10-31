@@ -426,7 +426,7 @@ theorem source_left_integral_tendsto_zero {α : ℝ} (hα : 1 < α) {z : ℂ} (h
     have hx : 1 / 2 ≤ α - 1 - α * MittagLefflerBarnesKernel.leftLine (n + 1) := by
       dsimp [MittagLefflerBarnesKernel.leftLine]
       push_cast
-      nlinarith [Nat.cast_nonneg (R := ℝ) n]
+      nlinarith [(Nat.cast_nonneg n : (0 : ℝ) ≤ (n : ℝ))]
     have harg : α - 1 - α * MittagLefflerBarnesKernel.leftLine (n + 1) =
         α * (n : ℝ) + b := by
       dsimp [MittagLefflerBarnesKernel.leftLine, b]
@@ -553,7 +553,8 @@ theorem source_endpoint_expansion {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSour
   have hzero : Real.Gamma (-1) = 0 := by
     simpa using Real.Gamma_neg_nat_eq_zero 1
   norm_num [rightLine, show α - 1 - α * (0 + 1) = -1 by ring, hzero] at hfirst
-  norm_num [rightLine, show α - 1 - α * (1 + 1) = -α - 1 by ring] at hsecond
+  norm_num [rightLine] at hsecond
+  rw [show α - 1 - α * 2 = -α - 1 by ring] at hsecond
   rw [source_barnes_identity hE hα hz0 hz]
   have hp : (2 * (Real.pi : ℂ)) ≠ 0 := by
     exact mul_ne_zero (by norm_num) (by exact_mod_cast Real.pi_ne_zero)
@@ -563,6 +564,7 @@ theorem source_endpoint_expansion {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSour
   have hid : (∫ y : ℝ, kernel α (α - 1) z ((1 / 2 : ℝ) + y * Complex.I)) =
       (∫ y : ℝ, kernel α (α - 1) z ((5 / 2 : ℝ) + y * Complex.I)) -
         2 * (Real.pi : ℂ) * ((z ^ 2)⁻¹ / (Real.Gamma (-α - 1) : ℂ)) := by
+    push_cast
     linear_combination -hfirst - hsecond
   have hcancel : (1 / (2 * (Real.pi : ℂ))) * (2 * (Real.pi : ℂ)) = 1 := by
     field_simp [hp]
@@ -588,21 +590,23 @@ theorem source_endpoint_scaled_limit {E : ℝ → ℝ → ℂ → ℂ} (hE : IsS
   have hb {r : ℝ} (hr : 0 < r) : ‖(r : ℂ) ^ 2 * A * J r‖ ≤
       B * Real.rpow r (-(1 / 2 : ℝ)) := by
     have h := norm_integral_pos_scale_le (by linarith : 0 < α) (α - 1) (5 / 2) hc hw hm hr
-    have hrad : r ^ 2 * Real.rpow r (-(5 / 2 : ℝ)) = Real.rpow r (-(1 / 2 : ℝ)) := by
-      rw [← Real.rpow_natCast, ← Real.rpow_add hr]
+    simp only [Real.rpow_eq_pow] at h ⊢
+    have hrad : r ^ 2 * r ^ (-(5 / 2 : ℝ)) = r ^ (-(1 / 2 : ℝ)) := by
+      rw [← Real.rpow_natCast r 2, ← Real.rpow_add hr]
       norm_num
     calc
       ‖(r : ℂ) ^ 2 * A * J r‖ = r ^ 2 * ‖A‖ * ‖J r‖ := by
         rw [norm_mul, norm_mul, norm_pow, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hr]
-      _ ≤ r ^ 2 * ‖A‖ * (Real.rpow r (-(5 / 2 : ℝ)) *
+      _ ≤ r ^ 2 * ‖A‖ * (r ^ (-(5 / 2 : ℝ)) *
           ∫ y : ℝ, ‖kernel α (α - 1) w ((5 / 2 : ℝ) + y * Complex.I)‖) := by
         exact mul_le_mul_of_nonneg_left h (by positivity)
-      _ = B * Real.rpow r (-(1 / 2 : ℝ)) := by dsimp [B]; rw [← hrad]; ring
+      _ = B * r ^ (-(1 / 2 : ℝ)) := by dsimp only [B]; rw [← hrad]; ring
   have herr : Tendsto (fun r : ℝ => (r : ℂ) ^ 2 * A * J r) atTop (𝓝 0) := by
-    apply squeeze_zero_norm' _
-      (by simpa using (Real.tendsto_rpow_neg_atTop (by norm_num : (0 : ℝ) < 1 / 2)).const_mul B)
-    filter_upwards [eventually_gt_atTop (0 : ℝ)] with r hr
-    exact hb hr
+    refine squeeze_zero_norm' (g := fun r : ℝ => B * Real.rpow r (-(1 / 2 : ℝ))) ?_ ?_
+    · filter_upwards [eventually_gt_atTop (0 : ℝ)] with r hr
+      exact hb hr
+    · simpa only [mul_zero, Real.rpow_eq_pow] using
+        (tendsto_rpow_neg_atTop (by norm_num : (0 : ℝ) < 1 / 2)).const_mul B
   have hlim : Tendsto (fun r : ℝ => (endpointCoefficient α : ℂ) / w ^ 2 +
       (r : ℂ) ^ 2 * A * J r) atTop (𝓝 ((endpointCoefficient α : ℂ) / w ^ 2)) := by
     simpa only [add_zero] using
@@ -611,10 +615,12 @@ theorem source_endpoint_scaled_limit {E : ℝ → ℝ → ℂ → ℂ} (hE : IsS
   apply hlim.congr'
   filter_upwards [eventually_gt_atTop (0 : ℝ)] with r hr
   have hr0 : (r : ℂ) ≠ 0 := by exact_mod_cast hr.ne'
-  rw [source_endpoint_expansion hE hα (mul_ne_zero hr0 hw)
-    (by simpa only [margin_pos_scale α hr w] using hm)]
-  dsimp [J, A]
-  field_simp [hr0, hw, Real.pi_ne_zero] <;> ring
+  have he : E α (α - 1) ((r : ℂ) * w) =
+      (endpointCoefficient α : ℂ) / ((r : ℂ) * w) ^ 2 + A * J r :=
+    source_endpoint_expansion hE hα (mul_ne_zero hr0 hw)
+      (by simpa only [margin_pos_scale α hr w] using hm)
+  rw [he]
+  field_simp [hr0, hw] <;> ring
 
 /-- The prescribed tilt is chosen before the radial scale and before beta. -/
 noncomputable def rayTilt (α : ℝ) : ℝ := Real.tan (Real.pi * (2 - α) / 4)
@@ -641,13 +647,21 @@ theorem ray_parameters {α : ℝ} (hα : 1 < α) (hα2 : α < 2) :
     norm_num [rayDirection] at this
   have hpolar : -(rayDirection α) = ((Real.cos η)⁻¹ : ℝ) *
       ((Real.cos (-η) : ℝ) + (Real.sin (-η) : ℝ) * Complex.I) := by
+    have ht' : rayTilt α = Real.tan η := rfl
     apply Complex.ext <;>
-      simp [rayDirection, rayTilt, η, Real.cos_neg, Real.sin_neg, Real.tan_eq_sin_div_cos] <;>
+      simp only [rayDirection, ht', Real.tan_eq_sin_div_cos,
+        Complex.neg_re, Complex.neg_im, Complex.add_re, Complex.add_im,
+        Complex.mul_re, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im,
+        Complex.one_re, Complex.one_im, Complex.I_re, Complex.I_im,
+        Real.cos_neg, Real.sin_neg, mul_zero, zero_mul, mul_one, one_mul,
+        zero_add, add_zero, sub_zero, zero_sub, neg_neg] <;>
       field_simp [hc.ne'] <;> ring
   have harg : Complex.arg (-(rayDirection α)) = -η := by
     rw [hpolar, Complex.arg_real_mul _ (inv_pos.mpr hc)]
-    apply Complex.arg_cos_add_sin_mul_I
-    constructor <;> linarith [Real.pi_pos]
+    have hp : -η ∈ Set.Ioc (-Real.pi) Real.pi := by
+      constructor <;> linarith [Real.pi_pos]
+    simpa only [← Complex.ofReal_cos, ← Complex.ofReal_sin] using
+      (Complex.arg_cos_add_sin_mul_I hp)
   refine ⟨ht, hw, ?_, by simp [rayDirection], ?_⟩
   · rw [margin, harg, abs_neg, abs_of_pos hη.1]
     dsimp [η]
@@ -666,12 +680,12 @@ theorem source_endpoint_failure {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSource
   have haxisMargin : 0 < margin α (-1 : ℂ) := by
     simp only [margin, neg_neg, Complex.arg_one, abs_zero, sub_zero]
     exact mul_pos Real.pi_pos (by linarith)
-  have haxis := (source_endpoint_scaled_limit hE hα (by norm_num : (-1 : ℂ) ≠ 0)
-    haxisMargin).re
+  have haxis := (Complex.continuous_re.tendsto _).comp
+    (source_endpoint_scaled_limit hE hα (by norm_num : (-1 : ℂ) ≠ 0) haxisMargin)
   have hray := (source_endpoint_scaled_limit hE hα hw hm).norm
   have haxis' : Tendsto (fun r : ℝ => r ^ 2 * (E α (α - 1) (-r : ℂ)).re) atTop
       (𝓝 (endpointCoefficient α)) := by
-    simpa using haxis
+    simpa [Complex.mul_re, ← Complex.ofReal_pow] using haxis
   have hray' : Tendsto (fun r : ℝ => r ^ 2 * ‖E α (α - 1) ((r : ℂ) * rayDirection α)‖)
       atTop (𝓝 (endpointCoefficient α / (1 + rayTilt α ^ 2))) := by
     convert hray using 1
@@ -702,7 +716,7 @@ theorem source_closed_beta_family {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSour
   have hα0 : 0 < α := by linarith
   have hopen : IsOpen {β : ℝ | ‖E α β z‖ < (E α β (z.re : ℂ)).re} :=
     isOpen_lt (source_continuous_beta hE hα0 z).norm
-      ((source_continuous_beta hE hα0 (z.re : ℂ)).re)
+      (Complex.continuous_re.comp (source_continuous_beta hE hα0 (z.re : ℂ)))
   obtain ⟨δ, hδ, hball⟩ := Metric.mem_nhds_iff.mp (hopen.mem_nhds hfail)
   let ε : ℝ := min (δ / 2) (1 / 2)
   have hε : 0 < ε := lt_min (by positivity) (by norm_num)
