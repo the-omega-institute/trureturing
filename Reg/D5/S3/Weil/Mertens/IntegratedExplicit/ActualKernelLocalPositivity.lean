@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
 import Reg.Support.SingleDependentReadout
 
+/-! The original existential-window law observed through the entire literal kernel matrix. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -36,12 +38,9 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   rintro ⟨δ, hδ, _, h⟩
   have hp := h 1 le_rfl (fun _ => 0) (Function.injective_of_subsingleton _)
     (by intros; simpa using hδ.le)
-  have hc : (fun _ : Fin 1 => (1 : ℂ)) ≠ 0 := by
-    intro he
-    have := congrFun he 0
-    norm_num at this
-  have hq := hp.dotProduct_mulVec_pos hc
-  simpa [rejected, realize, Matrix.mulVec, dotProduct] using hq
+  change Matrix.PosDef (0 : Matrix (Fin 1) (Fin 1) ℂ) at hp
+  have hz := hp.diag_pos (i := (0 : Fin 1))
+  simpa only [Matrix.zero_apply, lt_self_iff_false] using hz
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro _
