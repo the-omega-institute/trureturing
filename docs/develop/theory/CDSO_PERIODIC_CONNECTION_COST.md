@@ -814,3 +814,779 @@ $V_N$, or an extremum with a variable number of sinks. None
 of these follows by exchanging the quantifiers in (1.10). ∎
 
 ## 追加锚（本行以下为增补区）
+
+## 6. Exact finite allocation and all graph preimages
+
+**Definition 6.1 (Integer allocation data).** All parameters, the
+orientation, the graph class and the normalization remain exactly
+those of Definition 1.1. Fix a winning $j\in J_*$ and an integer
+$N$, and use its $m,r,n,\alpha,\beta$. Write
+
+$$
+\begin{gathered}
+d=d_{j,N},\qquad
+F=\frac{(a-1)N-n-(r-1)d}{r},\qquad
+Q=N-F-d,\\
+b=\left\lfloor\frac Qn\right\rfloor,\qquad
+t=Q-nb\in\{0,\ldots,n-1\},\qquad
+\mathcal J_N=\{j\in J_*:\chi_{j,N}=\chi_N\}.
+\end{gathered}
+\tag{6.1}
+$$
+
+Thus $Q$ is the sum of the actual tail degrees, and the number of
+tail-singleton sources is $Q-n$. All assertions using graphs below
+are for sufficiently large integer $N$, with $a,h$ fixed. In
+particular $F>0$ and $b> s$. The letters $b,t$ in this section
+are integer quotient and remainder, not the price $b_j$.
+
+For a labelled partition $C\dot\cup D=[s]$ of sizes $m,n$, let
+$e_i$ count connectors ending at $i\in C$, and let $o_i$ count
+missing-one sources omitting $i$. Their constraints and the actual
+sink degrees are
+
+$$
+\begin{gathered}
+e_i,o_i\in\mathbb Z_{\ge0},\qquad
+\sum_{i\in C}e_i=n,\qquad \sum_{i\in C}o_i=d,\\
+D_i=F+d-o_i+e_i\quad(i\in C),\qquad
+q_k=1+\#\{\text{singleton sources at }k\}\quad(k\in D),\\
+q_k\in\mathbb Z_{\ge1},\qquad \sum_{k\in D}q_k=Q.
+\end{gathered}
+\tag{6.2}
+$$
+
+For $k>0$ and $x>0$ put
+
+$$
+f_k(x)=\sqrt{1+k^2/x^2}-1,\qquad
+g(x)=(x-1)f_1(x)+f_2(x).
+\tag{6.3}
+$$
+
+Define the finite set, indexed by the core labels,
+
+$$
+\mathcal Z_{m,n,d}=\left\{z\in\mathbb Z^C:
+ \sum_i z_i=n-d,\quad
+ \sum_i z_i^+\le n,\quad \sum_i z_i^-\le d\right\},
+\qquad z_i^+=\max(z_i,0),\quad z_i^-=\max(-z_i,0).
+\tag{6.4}
+$$
+
+Every coordinate lies in $[-d,n]$. For $z$ in this set put
+
+$$
+\begin{gathered}
+L(z)=n-\sum_i z_i^+=d-\sum_i z_i^-\ge0,\qquad
+z_0=\min_i z_i,\qquad I_0(z)=\{i:z_i=z_0\},\\
+D_i(z)=F+d+z_i,\qquad D_0(z)=F+d+z_0,\\
+\mathcal C_{j,N}(z)=
+ \sum_{i\in C}\left\{
+ Ff_m(D_i(z))+(d-z_i^-)f_r(D_i(z))
+                      +z_i^+f_2(D_i(z))\right\}\\
+\hspace{35mm}
+ +L(z)\bigl(f_2(D_0(z))-f_r(D_0(z))\bigr),\\
+\mathcal T_{j,N}=(n-t)g(b)+t g(b+1),\qquad
+\mathcal A_{j,N}(z)=2N\bigl(\mathcal C_{j,N}(z)
+                                      +\mathcal T_{j,N}\bigr).
+\end{gathered}
+\tag{6.5}
+$$
+
+When $L=0$ the last term is zero. When $d=0$, (6.4) forces
+$z_i\ge0$, $\sum_i z_i=n$ and $L=0$. When $t=0$ the $g(b+1)$
+term is absent. These conventions include all zero multiplicities.
+
+**Lemma 6.2 (Exact tail balancing in actual graphs).** For all
+sufficiently large $N$, every minimizer of the original class
+$\mathfrak G_N(a,h)$ has tail degrees consisting of $n-t$ copies
+of $b$ and $t$ copies of $b+1$, for its partition in Theorem 1.3.
+All assignments of these degrees to the tail labels are feasible
+with any feasible endpoint and omission counts in (6.2).
+
+**Proof.** Theorem 1.3 supplies the source types and (4.9) fixes
+$F$, independently of the allocations. At a tail of degree $q$,
+there are $q-1$ degree-one sources and one degree-two connector.
+Its exact contribution to $E(G)$ is $g(q)$. The objective of a
+source-type graph is therefore exactly
+
+$$
+W(G)=2N\left[
+ \sum_{i\in C}\{Ff_m(D_i)+(d-o_i)f_r(D_i)+e_i f_2(D_i)\}
+                    +\sum_{k\in D}g(q_k)\right].
+\tag{6.6}
+$$
+
+These are the actual degrees in that same graph. No marginal
+relaxation has been made.
+
+A minimizer has bounded $W$ by Theorem 1.3, so Lemma 3.2 bounds
+all its sink degrees below by a positive multiple of $N$. In
+particular its tail degrees exceed $4$ eventually. Direct
+scalar differentiation gives
+
+$$
+g''(x)=
+ \frac{x^3-3x^2-2}{x^3(x^2+1)^{3/2}}
+ +\frac{4(3x^2+8)}{x^3(x^2+4)^{3/2}}>0\qquad(x\ge4).
+\tag{6.7}
+$$
+
+For the displayed sign, $x^3-3x^2-2$ is positive at $4$ and
+increasing thereafter. The scalar second-derivative criterion
+is the standard one in Boyd--Vandenberghe, *Convex Optimization*,
+§3.1.4, [author text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).
+Only this one-variable function is being asserted strictly convex.
+
+If $q_k\ge q_l+2$, move one singleton source from $k$ to $l$.
+This preserves its degree, both original budgets and simplicity.
+The connector at each tail remains, and a full-core source remains,
+so connectedness is preserved. The decreased tail degree is still
+at least $4$, every connector still has degree two, and all core
+degrees are unchanged; hence the strict orientation is preserved.
+Integrating the strictly increasing derivative of $g$ over the
+unit intervals gives
+
+$$
+g(q_k)+g(q_l)>g(q_k-1)+g(q_l+1).
+\tag{6.8}
+$$
+
+This contradicts minimality. Thus the degrees differ by at most
+one, and their sum $Q$ gives exactly (6.1). For $n=1$ this
+conclusion follows from the sum alone.
+
+Conversely, choose any endpoint assignment of the $n$ connectors,
+one for each tail, with histogram $e$, and choose the $d$ omissions
+with histogram $o$. Give tail $k$ exactly $q_k-1$ singletons,
+where its $q_k$ is either $b$ or $b+1$ and exactly $t$ are the
+latter. Together with $F$ full cores these are actual source
+neighborhoods. Lemma 4.2's counting and connectivity argument
+applies unchanged. All sink degrees are a positive multiple of
+$N$ plus a bounded constant, uniformly over these finitely many
+choices; they exceed $s$ for large $N$. This verifies the original
+orientation for every assignment, including any choice of the
+$t$ tail labels. ∎
+
+**Lemma 6.3 (Coupled core allocation and its exact equality
+conditions).** Fix $j,N$ and a partition as above. Among the
+allocations in (6.2) with prescribed $z_i=e_i-o_i$, the least
+core contribution to $E$ is exactly $\mathcal C_{j,N}(z)$.
+All allocations attaining it are precisely
+
+$$
+e_i=z_i^++\ell_i,\qquad o_i=z_i^-+\ell_i,\qquad
+\ell_i\in\mathbb Z_{\ge0},\quad
+\sum_i\ell_i=L(z),\quad
+\ell_i=0\text{ for }i\notin I_0(z).
+\tag{6.9}
+$$
+
+Every $z\in\mathcal Z_{m,n,d}$ has such an allocation, and every
+feasible pair $(e,o)$ has a unique expression of the first two
+forms with $\ell_i=\min(e_i,o_i)$, before imposing the last
+condition in (6.9).
+
+**Proof.** Subtracting $e_i-o_i=z_i$ gives the claimed unique
+expression. Summing it gives exactly $\sum_i\ell_i=L(z)$ and
+(6.4). Conversely any nonnegative allocation of this integer $L$
+gives a feasible pair, so (6.4) is also sufficient.
+
+For fixed $z$ the actual core degrees $D_i=F+d+z_i$ do not
+change when $\ell$ changes. Substitution in (6.6) leaves a base
+sum, the sum in (6.5), plus
+
+$$
+\sum_i\ell_i\Delta(D_i),\qquad
+\Delta(x)=f_2(x)-f_r(x).
+\tag{6.10}
+$$
+
+Here $r>2$ in the inherited domain. For $x>0$,
+
+$$
+\Delta'(x)=\frac1{x^2}
+ \left(\frac{r^2}{\sqrt{x^2+r^2}}
+              -\frac4{\sqrt{x^2+4}}\right)>0,
+\tag{6.11}
+$$
+
+because $k^2/\sqrt{x^2+k^2}$ is strictly increasing in $k>0$.
+Consequently the least coefficient in (6.10) occurs exactly at
+$I_0(z)$.
+
+The corresponding strict improvement is a legal graph change.
+If $\ell_i>0$, select a connector ending at $i$ and a missing-one
+source omitting $i$. To move one unit of $\ell$ from $i$ to $l$,
+move that connector's core endpoint to $l$ and make that
+missing-one source omit $l$ instead. All source degrees, all
+sink degrees, and both budgets stay fixed. Simplicity is retained:
+the connector's other endpoint is a tail, and the modified
+missing-one neighborhood is exactly $C\setminus\{l\}$. Full-core
+sources and the tail connectors still ensure connectedness. The
+orientation is unchanged since every degree is unchanged. The
+change in $E$ is exactly $\Delta(D_l)-\Delta(D_i)$.
+Thus every unit outside $I_0$ is strictly improvable, and all
+placements inside $I_0$ have the same exact value. This proves
+both the minimum and every equality condition, including $L=0$
+and all ties among the minimum-degree core labels. ∎
+
+**Theorem 6.4 (Full-domain exact value and exhaustive
+reconstruction).** Under exactly Definition 1.1, for every fixed
+admissible $a,h$ and every sufficiently large integer $N$,
+
+$$
+V_N=\min_{j\in\mathcal J_N}\
+          \min_{z\in\mathcal Z_{m,n,d_{j,N}}}
+                                      \mathcal A_{j,N}(z).
+\tag{6.12}
+$$
+
+This is a finite relation with explicit radical summands (6.3)--(6.5).
+For fixed parameters and a residue determining $d$, its allocation
+set does not grow with $N$. It contains no residual optimization
+over graphs.
+
+Every minimizer, with arbitrary source labels, is obtained by the
+following reconstruction, and every graph so obtained is a minimizer:
+choose a pair $(j,z)$ attaining (6.12), a core--tail partition of
+sizes $m,n$, and a choice (6.9); assign the $n$ labelled tails to
+core endpoints with histogram $e$; take $d$ missing-one sources
+with omission histogram $o$ and $F$ full-core sources; choose any
+$t$ tails to have $b$ singleton sources each, and give each other
+tail $b-1$ singleton sources. Permute the source labels arbitrarily.
+All assignments with these data are included. Repeated descriptions
+of one graph are allowed; uniqueness of the description is not
+asserted.
+
+**Proof.** The number of choices of $j$ and partitions is finite.
+For each $j$, $0\le d<r$ and $-d\le z_i\le n$, so the sets in
+(6.12) are finite uniformly in $N$. Equations (6.1) give
+$F=\alpha N+O_{a,h}(1)$ and
+$b=\beta N+O_{a,h}(1)$. Thus every proposed reconstruction is
+legal for one common sufficiently large threshold. Its source
+count and edge count are, respectively,
+
+$$
+F+d+n+(Q-n)=N,\qquad
+mF+rd+2n+(Q-n)=N+rF+(r-1)d+n=aN.
+\tag{6.13}
+$$
+
+It is simple and connected, and all sink degrees eventually
+exceed $s$, by the proofs of Lemmas 6.2--6.3. Hence it belongs
+to the full original class, with the prescribed orientation and
+cyclomatic number. Formulas (6.6) and (6.9) show that its value
+is exactly $\mathcal A_{j,N}(z)$. This gives the upper bound in
+(6.12), with every proposed equality graph genuinely realized.
+
+For the reverse bound, the finite nonempty original graph class
+has a minimizer. Theorem 1.3, whose lower bound was over that
+whole class, places this minimizer at some $j\in\mathcal J_N$
+with precisely its source types. Lemma 6.2 forces the displayed
+tail allocation. Lemma 6.3 forces (6.9), since otherwise a legal
+strict improvement would contradict global minimality. The
+minimizer's value is therefore one of the entries of (6.12),
+which proves the reverse inequality. In particular this reasoning
+is a lower bound for the full class, not an assumption that other
+graphs were excluded from the domain.
+
+The same argument sends every original minimizer into the
+reconstruction. Conversely, each minimizing entry is realized
+by every assignment specified above, and (6.6) shows that its
+value is independent of the particular endpoint map with that
+histogram, the ordering of omissions, the choice of high-degree
+tails, and the source labels. This proves the exhaustive preimage
+assertion, including all price ties, law ties, zero counts and
+quotient--remainder endpoints. ∎
+
+## 7. The complete second coefficient and a joint-allocation obstruction
+
+**Definition 7.1 (Secondary allocation energy).** For the data of
+Definition 6.1 put
+
+$$
+\begin{gathered}
+\varphi=F-\alpha N=-\frac{n+(r-1)d}{r},\qquad
+\sigma=\varphi+d=\frac{d-n}{r},\qquad
+\gamma=-\frac{\sigma}{n}=\frac{n-d}{rn},\\
+\delta_i=\sigma+z_i,\qquad \delta_0=\sigma+z_0,\qquad
+B_i^0=m^2\varphi+r^2(d-z_i^-)+4z_i^+,\\
+U_{j,N}=n\gamma^2+\frac{t(n-t)}n-6n\gamma.
+\end{gathered}
+\tag{7.1}
+$$
+
+Define the rational number
+
+$$
+\begin{aligned}
+\Psi_{j,N}(z)={}&\frac1{\alpha^3}
+ \left[\sum_i\{3m^2\delta_i^2-2B_i^0\delta_i\}
+                +2(r^2-4)L(z)\delta_0\right]\\
+ &+\frac{U_{j,N}}{\beta^3}
+       -\frac14\left(\frac{m^5}{\alpha^3}
+                                      +\frac n{\beta^3}\right),\\
+\Psi_N={}&\min_{j\in\mathcal J_N}\
+            \min_{z\in\mathcal Z_{m,n,d_{j,N}}}\Psi_{j,N}(z).
+\end{aligned}
+\tag{7.2}
+$$
+
+The last term in the first formula is the fourth-power correction
+from the original graph objective. All quantities use the same
+actual cap and allocation; no independent optimization of
+numerators or marginal degrees is implicit.
+
+**Theorem 7.2 (Uniform fixed-parameter second-order relation).**
+For fixed admissible $a,h$, uniformly over all the allocation
+entries in (6.12),
+
+$$
+\begin{aligned}
+\mathcal A_{j,N}(z)
+ &=M+\frac{\chi_{j,N}}N+\frac{\Psi_{j,N}(z)}{N^2}
+                                      +O_{a,h}(N^{-3}),\\
+V_N&=M+\frac{\chi_N}N+\frac{\Psi_N}{N^2}
+                                      +O_{a,h}(N^{-3}).
+\end{aligned}
+\tag{7.3}
+$$
+
+Every sufficiently large exact minimizer has, in addition,
+$\Psi_{j,N}(z)=\Psi_N$. Equality of these second coefficients
+alone is not asserted to suffice for exact minimality.
+
+**Proof.** First allow arbitrary $e,o$ in (6.2), keeping balanced
+tails. Put $z=e-o$ and $\delta_i=\sigma+z_i$ as before, but use
+
+$$
+B_i=m^2\varphi+r^2(d-o_i)+4e_i.
+\tag{7.4}
+$$
+
+The squared-source-degree numerator at core $i$ is exactly
+$\alpha m^2N+B_i$, and its degree is exactly
+$\alpha N+\delta_i$. At a tail write
+$q_k=\beta N+\nu_k$. Its squared-degree numerator is $q_k+3$.
+Thus the law energy in (1.2) is exactly
+
+$$
+H(x_G)=N\sum_i
+ \frac{\alpha m^2N+B_i}{(\alpha N+\delta_i)^2}
+                   +N\sum_k\frac{\beta N+\nu_k+3}
+                                          {(\beta N+\nu_k)^2}.
+\tag{7.5}
+$$
+
+The offsets $\varphi,\delta_i,B_i,\nu_k$ are bounded in terms
+of fixed $a,h$ alone. Expanding each positive denominator gives
+
+$$
+\begin{aligned}
+N\frac{\alpha m^2N+B_i}{(\alpha N+\delta_i)^2}
+={}&\frac{m^2}{\alpha}
+ +\frac{B_i-2m^2\delta_i}{\alpha^2N}
+ +\frac{3m^2\delta_i^2-2B_i\delta_i}{\alpha^3N^2}
+ +O_{a,h}(N^{-3}),\\
+N\frac{\beta N+\nu_k+3}{(\beta N+\nu_k)^2}
+={}&\frac1\beta+\frac{3-\nu_k}{\beta^2N}
+ +\frac{\nu_k^2-6\nu_k}{\beta^3N^2}
+ +O_{a,h}(N^{-3}).
+\end{aligned}
+\tag{7.6}
+$$
+
+The constant sum is $m^3/\alpha+n/\beta=S_j=M$. The coefficient
+of $N^{-1}$ is $nb_j+dc_j$: this follows either by summing (7.6)
+and using $\sum e_i=n$, $\sum o_i=d$, $\sum\nu_k=-\sigma$,
+or from the exact first variation in Lemma 2.3. In the latter
+calculation the exceptional counts are $n$ connectors and $d$
+missing-one sources and all ordinary prices vanish.
+
+For balanced tails, their offsets consist of $n-t$ copies of
+$\gamma-t/n$ and $t$ copies of $\gamma+1-t/n$. Consequently
+
+$$
+\sum_k\nu_k=n\gamma,\qquad
+\sum_k\nu_k^2=n\gamma^2+\frac{t(n-t)}n,
+\tag{7.7}
+$$
+
+including $t=0$. This proves the tail term $U_{j,N}/\beta^3$.
+
+It is essential to expand the actual square root as well.
+For the actual edge ratios, all of which are $O_{a,h}(N^{-1})$,
+Taylor's theorem gives, uniformly,
+
+$$
+W(G)=H(x_G)-\frac N4
+       \sum_{ui\in E}\frac{d_G(u)^4}{d_G(i)^4}
+                                      +O_{a,h}(N^{-4}).
+\tag{7.8}
+$$
+
+Indeed the remainder per edge after the fourth power is
+$O(N^{-6})$, there are $aN$ edges, and the exterior factor is
+$N$. At core $i$ the fourth-power numerator is
+$Fm^4+(d-o_i)r^4+16e_i=\alpha m^4N+O_{a,h}(1)$.
+At tail $k$ it is $q_k+15=\beta N+O_{a,h}(1)$. Hence
+
+$$
+\frac N4\sum_{ui\in E}\frac{d_G(u)^4}{d_G(i)^4}
+ =\frac1{4N^2}\left(\frac{m^5}{\alpha^3}
+                               +\frac n{\beta^3}\right)
+                                      +O_{a,h}(N^{-3}).
+\tag{7.9}
+$$
+
+For a core-optimal allocation (6.9),
+$B_i=B_i^0+(4-r^2)\ell_i$ and
+$\sum_i\ell_i\delta_i=L(z)\delta_0$. Substitution in (7.6)
+and (7.8)--(7.9) gives exactly (7.2), proving the first line of
+(7.3).
+
+There are finitely many $j$, values of $d$, and $z$. The tail
+remainders $t$ also lie in a fixed finite set. All denominators
+stay bounded below by a positive multiple of $N$ for one common
+threshold. Taylor's remainders can therefore be bounded by one
+constant on all these entries, including all actual minimizing
+allocations and all their label assignments. Taking the finite
+minimum in the exact identity (6.12) proves the second line of
+(7.3).
+
+The rational numbers in (7.2) range over a finite set as $N$
+varies: $d$ and $t$ each range over a finite set, and the rest
+of the formula is fixed on that data. A positive difference
+$\Psi_{j,N}(z)-\Psi_N$ therefore has a positive lower bound
+independent of $N$. In (7.3) this strict $N^{-2}$ difference
+exceeds the uniform $O(N^{-3})$ error eventually. Thus no such
+entry is an exact minimizer. This proves the necessary secondary
+selection, without replacing the exact comparison (6.12) by its
+second-order truncation. ∎
+
+**Proposition 7.3 (Reachable nonconvex core allocation).** Suppose
+$r\ge8$, $n\ge2$, and put $g_0=\gcd(a-1,r)=\gcd(a-1,j)$.
+Choose the largest $d<r$ congruent to $n$ modulo $g_0$ and suppose
+$d\ge4$. There are infinitely many integer budgets with
+$d_{j,N}=d$. At every sufficiently large such budget there are
+three actual graphs $G_-,G_0,G_+$ in the original class, with
+this same cap, balanced tails and source types, whose endpoint
+and omission arrays have the midpoint relation
+
+$$
+(e^{(0)},o^{(0)})=
+ \tfrac12\bigl((e^{(-)},o^{(-)})+(e^{(+)},o^{(+)})\bigr)
+\tag{7.10}
+$$
+
+but whose original objectives satisfy
+
+$$
+W(G_-)+W(G_+)-2W(G_0)
+ =\frac{4(-r^2+6r+11)}{\alpha^3N^2}
+                                      +O_{a,h}(N^{-3})<0.
+\tag{7.11}
+$$
+
+Thus joint convexity in endpoint and omission allocations fails
+even on reachable original graph budgets. The stated conditions
+hold for every winning cap after a sufficient choice of the
+threshold $A_R$ permitted in Definition 1.1. No assertion that
+these three graphs are minimizers is needed.
+
+**Proof.** The congruence
+$(a-1)N\equiv n-d\pmod r$ is solvable because $g_0$ divides
+$n-d$; its solutions form a cofinal residue class modulo $r/g_0$.
+On that class take three distinct core labels $1,2,3$ and set
+
+$$
+\begin{gathered}
+e^{(0)}_1=e^{(0)}_2=1,\quad e^{(0)}_3=n-2,\qquad
+o^{(0)}_1=o^{(0)}_2=2,\quad o^{(0)}_3=d-4,\\
+e^{(\pm)}=e^{(0)}\pm(1,-1,0,\ldots,0),\qquad
+o^{(\pm)}=o^{(0)}\pm(2,-2,0,\ldots,0),
+\end{gathered}
+\tag{7.12}
+$$
+
+with all other entries zero. These are nonnegative integer arrays
+of sums $n,d$. Realize each by the construction in Lemma 6.2,
+with the same balanced tails. This preserves $N,aN,s$, simplicity,
+connectedness and the strict orientation for all sufficiently
+large $N$ in that residue.
+
+The calculation (7.4)--(7.9) applies before imposing core
+optimality. The part of its second coefficient homogeneous
+quadratic in $e_i,o_i$ is
+
+$$
+\frac1{\alpha^3}\sum_i
+ \left[(3m^2-8)e_i^2
+ -2(3m^2-r^2-4)e_io_i+(3m^2-2r^2)o_i^2\right].
+\tag{7.13}
+$$
+
+For the two changing coordinates in (7.12), evaluating the
+midpoint second difference cancels every constant and linear
+term. It leaves $4/\alpha^3$ times
+
+$$
+(3m^2-8)-4(3m^2-r^2-4)+4(3m^2-2r^2)
+ =3m^2-4r^2+8=-r^2+6r+11<0.
+\tag{7.14}
+$$
+
+All three have the same first coefficient and fourth-power
+correction. The uniform remainder therefore proves (7.11).
+Equivalently the matrix of the bracketed quadratic in (7.13) has
+negative determinant $-(r^2-4)^2$, but (7.12) additionally
+verifies an admissible integer direction and an actual-graph
+realization; the determinant alone would not establish those.
+
+Finally $g_0\le j$, so this largest reachable $d$ satisfies
+$d\ge r-g_0\ge a-1$. The bounds on winning indices used in
+Lemma 2.2 give $j=O_R(1)$, whereas $h\ge(7/2)\sqrt a$.
+Thus $r\ge8$, $n=h+1-j\ge2$, and $d\ge4$ all hold after a
+sufficient inherited threshold. The obstruction concerns the
+coupled allocation problem; it neither invalidates the scalar
+tail convexity nor presupposes global convexity of $H$. ∎
+
+## 8. Refined periodic templates and exact ties
+
+**Definition 8.1 (A sufficient refined period and analytic
+allocation functions).** Set
+
+$$
+P=\operatorname{lcm}_{j\in J_*}(r_j n_j),
+\qquad r_j=a+j-1,\quad n_j=h+1-j.
+\tag{8.1}
+$$
+
+This is a sufficient period, with no claim of leastness. It is a
+multiple of $P_*$ in (5.5), and $\alpha_jP,\beta_jP$ are
+integers. Fix $\rho\in\{0,\ldots,P-1\}$. For each
+$j\in\mathcal J_\rho$, the integers $d=d_{j,N}$ and $t$ in
+(6.1) are constant on $N\equiv\rho\pmod P$. Here
+$\mathcal J_\rho$ denotes the common set $\mathcal J_N$ on that
+residue, not a graph assertion at a small budget $N=\rho$.
+Define the rational offsets
+
+$$
+v_- =\gamma-\frac tn,\qquad v_+=\gamma+1-\frac tn,
+\quad
+a_k(u)=\alpha+\delta_k u,\quad a_0(u)=\alpha+\delta_0u,
+\quad c_\pm(u)=\beta+v_\pm u.
+\tag{8.2}
+$$
+
+For $p>0$ and $a(0)>0$ use the analytic germ
+
+$$
+R_p(a,u)=\frac{\sqrt{a(u)^2+p^2u^2}}{a(u)}-1,
+\tag{8.3}
+$$
+
+where the square root is the positive one near $u=0$. For
+$z\in\mathcal Z_{m,n,d}$ define
+
+$$
+\begin{aligned}
+\mathscr A_{\rho,j,z}(u)=\frac2{u^2}\Bigg[&
+ \sum_{i\in C}\left\{
+ (\alpha+\varphi u)R_m(a_i,u)
+   +u(d-z_i^-)R_r(a_i,u)+u z_i^+R_2(a_i,u)\right\}\\
+ &+u L(z)\{R_2(a_0,u)-R_r(a_0,u)\}\\
+ &+(n-t)\{(\beta+(v_--1)u)R_1(c_-,u)
+                                         +uR_2(c_-,u)\}\\
+ &+t\{(\beta+(v_+-1)u)R_1(c_+,u)
+                                         +uR_2(c_+,u)\}\Bigg].
+\end{aligned}
+\tag{8.4}
+$$
+
+The apparent singularity at $u=0$ is removable because every
+$R_p$ vanishes to order at least two. This is a real analytic
+algebraic function near zero, with rational Taylor coefficients.
+For the integers in this residue and sufficiently large $N$,
+
+$$
+\mathscr A_{\rho,j,z}(1/N)=\mathcal A_{j,N}(z).
+\tag{8.5}
+$$
+
+Define $B_s=(6s+5)2^{6s+4}$ and the finite Taylor vector
+
+$$
+\mathbf c_{\rho,j,z}
+ =\left([u^k]\mathscr A_{\rho,j,z}(u)\right)_{k=0}^{B_s}.
+\tag{8.6}
+$$
+
+Order these rational vectors lexicographically from the constant
+coefficient upward. Let $\mathcal W_\rho$ be all pairs $(j,z)$
+whose vector is least among the finite set for that residue.
+The first three entries are $M,\chi_\rho,\Psi_{j,\rho}(z)$
+by Theorem 7.2. Formula (8.6) also retains every later coefficient
+needed for exact selection, rather than declaring all secondary
+ties to be exact ties.
+
+**Theorem 8.2 (Eventual refined-periodic exact optimizer
+templates).** For every fixed admissible $a,h$ there is a finite
+threshold such that, on each integer residue $\rho$ modulo $P$
+and above that threshold, the pairs attaining (6.12) are exactly
+$\mathcal W_\rho$. Consequently every exact optimizer is given
+by Theorem 6.4's reconstruction using these pairs, and every
+such reconstruction is an exact optimizer.
+
+All members of $\mathcal W_\rho$ have identical exact value
+functions near $u=0$. They remain tied at every sufficiently
+large budget in that residue. The finite data consisting of the
+partition, $z$, the choices (6.9), endpoint assignments and the
+$t$ high-degree tail labels give all optimizer templates; only
+$F$ and the tail-singleton multiplicities grow with $N$, affinely
+on that residue. Source-label permutations give all labelled
+preimages. No least threshold, least period, or uniform
+joint-growth estimate is asserted.
+
+**Proof.** A shift of $N$ by $P$ leaves $d$ fixed. It increases
+$F$ by $\alpha P$, $Q$ by $n\beta P$, and $b$ by $\beta P$,
+so it leaves $t$ fixed as well. This proves all the residue
+statements in Definition 8.1. Substituting $u=1/N$ in (8.3)
+and (8.4) proves (8.5) directly from (6.5). Analyticity follows
+since $\alpha,\beta>0$, and the expansion of the positive square
+root about a positive rational square has rational coefficients.
+
+For completeness, a finite algebraic bound justifies detecting
+exact ties by (8.6). For any pair of the functions (8.4), expand
+their last core term into its two summands and omit every
+zero-coefficient term. Each function has at most
+$3m+2n+2\le3s+2$ radical terms. If their difference is $D(u)$,
+it has the form
+
+$$
+D(u)=\frac2{u^2}\sum_{l=1}^{K}w_l(u)
+ \left(\frac{\sqrt{p_l(u)}}{a_l(u)}-1\right),
+\quad K\le6s+4,
+\tag{8.7}
+$$
+
+where $w_l,a_l$ are polynomials of degree at most one with
+rational coefficients, $a_l(0)>0$, and
+$p_l=a_l^2+k_l^2u^2$ has degree at most two. Negative coefficients
+of $w_l$ are allowed. If $K=0$ the difference is identically
+zero. Otherwise put
+
+$$
+\begin{aligned}
+Z(u)&=\frac{u^2D(u)}2\prod_{l=1}^K a_l(u)
+       =A_0(u)+\sum_{l=1}^K A_l(u)\sqrt{p_l(u)},\\
+\deg A_0&\le K+1,\qquad \deg A_l\le K.
+\end{aligned}
+\tag{8.8}
+$$
+
+Form the monic polynomial in $Y$
+
+$$
+\Pi(u,Y)=\prod_{\epsilon\in\{-1,1\}^K}
+ \left(Y-A_0(u)-\sum_{l=1}^K
+                          \epsilon_lA_l(u)\sqrt{p_l(u)}\right).
+\tag{8.9}
+$$
+
+This belongs to $\mathbb Q[u,Y]$: before substitution, changing
+the sign of any formal radical permutes the factors, so only
+even powers of each radical occur, and their squares are the
+polynomials $p_l$. This argument does not require the radicals
+to be algebraically independent. A coefficient of (8.9) is a
+sum of products of at most $2^K$ expressions of polynomial
+radical degree at most $K+1$, where a radical of a quadratic has
+degree weight one. Substitution of even radical powers therefore
+gives degree in $u$ at most
+
+$$
+(K+1)2^K\le (6s+5)2^{6s+4}=B_s.
+\tag{8.10}
+$$
+
+Delete the largest power of $Y$ dividing $\Pi$, obtaining
+$\Pi_0$ with nonzero constant coefficient $\Pi_0(u,0)$.
+This polynomial is still nonzero, since (8.9) is monic.
+If the analytic function $Z$ is not identically zero,
+$\Pi(u,Z(u))=0$ and cancellation in the ring of analytic germs
+gives $\Pi_0(u,Z(u))=0$. It follows that
+
+$$
+\operatorname{ord}_0 Z
+ \le \operatorname{ord}_0\Pi_0(u,0)
+ \le \deg_u\Pi_0(u,0)\le B_s.
+\tag{8.11}
+$$
+
+For the first inequality, write the polynomial equation as its
+constant coefficient plus terms each divisible by $Z$; their
+vanishing orders are at least that of $Z$. If $\Pi_0$ has
+no positive $Y$ powers, the nonzero-$Z$ case cannot occur at
+all. Since every $a_l(0)>0$, (8.8) gives
+$\operatorname{ord}_0Z=\operatorname{ord}_0D+2$ when $D$ is
+nonzero. Thus a nonzero difference cannot have all coefficients
+through order $B_s$ zero. This proves that equal vectors in
+(8.6) are equivalent to identical analytic value functions near
+zero. It supplies a finite equality test even when formal sign
+choices in (8.9) create spurious zero conjugates; deleting the
+$Y$ factors handles precisely that possibility. The large bound
+is sufficient, with no claim of efficiency or optimality.
+
+For two unequal vectors, let $k$ be their first different
+coordinate. The exact difference is $c u^k+O(u^{k+1})$ with
+$c\ne0$, so for sufficiently small positive $u$ its sign is the
+sign of $c$. Hence the lexicographic comparison is the exact
+comparison at every sufficiently large $N$ in the residue.
+There are finitely many pairs of functions and finitely many
+residues. One threshold suffices for every strict comparison;
+identical functions remain exactly tied. Therefore the exact
+minimum in (6.12) selects precisely $\mathcal W_\rho$.
+
+For each selected $z$, all the choices of $\ell$ in (6.9) have
+the same exact value, not only the same Taylor coefficients:
+their degrees at $I_0$ are equal and (6.10) depends only on the
+sum $L$. The same is true for the tail-label and endpoint-map
+choices in Theorem 6.4 by (6.6). Each of these sets is finite
+independently of $N$ on the residue. Counts $F$ and $b$ change
+affinely by the increments already computed. The exhaustive
+reconstruction now proves every template and preimage claim.
+
+The new graph-specific deductions are the exact allocation
+relation (6.12), its coupled equality conditions, the full
+secondary energy (7.2), the reachable obstruction (7.11), and
+the exact eventual selection just proved. They reuse Theorem
+1.3's all-domain source exclusion and the common-law equality
+theorem cited there, rather than reproving either as new content.
+Scalar convexity, Taylor expansion and polynomial sign
+symmetrization are mature intermediate tools; the graph budgets,
+allocation formulas and reconstruction are the additional
+relations. The original CDSO normalization and fixed-cyclomatic
+motivation are from Albalahi--Das--Ali--Barman--Hamza,
+[arXiv:2510.24809v1](https://arxiv.org/html/2510.24809v1), §1
+and §4, also DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176).
+Possible technical overlap with the full text of Zhao--Zhao,
+*Extremal values with respect to vertex-degree-based topological
+indices in unicyclic and bicyclic graphs*, DOI
+[10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+remains unassessed. Its abstract does not resolve that question
+and is not a premise of these proofs; no worldwide-priority
+claim is attached to these repo-derived deductions. ∎
+
+**Open problem 8.3 (Thresholds and changing budgets).** Determine
+least sufficient source thresholds or least refined periods for
+the exact allocation relation, and uniform estimates when $a,h,N$
+grow together. Determine the extremum when the sink count is
+also allowed to vary. Theorems 6.4--8.2 keep $a,h$ fixed in
+Definition 1.1; their finite allocation sizes, comparison bounds
+and thresholds can depend on these integers. They do not exchange
+that quantifier order, and they make no extremal assertion for
+graphs outside the prescribed bipartite orientation and budgets.
+
+## 追加锚（本行以下为增补区）
