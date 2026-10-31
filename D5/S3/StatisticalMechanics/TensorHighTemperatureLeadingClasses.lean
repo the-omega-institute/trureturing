@@ -203,14 +203,135 @@ private theorem identity_degree (s n : ℕ) (hn : 2 ≤ n) (hs : 1 ≤ s) :
   rw [Finset.image_const hne]
   simp
 
-private theorem transposition_degree (s n : ℕ) (hn : 2 ≤ n) :
+private theorem transposition_degree (s n : ℕ) (hn : 2 ≤ n) (hs : 1 ≤ s) :
     degree s (transpositionClass n) =
       ((n : ℚ) ^ s + ((n - 2 : ℕ) : ℚ) ^ s) / 2 := by
-  sorry
+  have hparts : (transpositionClass n).parts = 2 ::ₘ Multiset.replicate (n - 2) 1 := by
+    simp [transpositionClass, hn, Nat.Partition.ofSums, Multiset.mem_replicate]
+  let T := Fin s → (transpositionClass n).parts.toFinset
+  let one : T → Prop := fun t => ∀ j, (t j : ℕ) = 1
+  let w : T → ℚ := fun t =>
+    ∏ j, ((t j : ℕ) * (transpositionClass n).parts.count (t j : ℕ) : ℚ)
+  let l : T → ℕ := fun t =>
+    Finset.lcm (Finset.univ.image (fun j => (t j : ℕ))) id
+  have hne : (Finset.univ : Finset (Fin s)).Nonempty := by
+    exact ⟨⟨0, Nat.lt_of_lt_of_le Nat.zero_lt_one hs⟩, by simp⟩
+  have hval (t : T) (j : Fin s) : (t j : ℕ) = 1 ∨ (t j : ℕ) = 2 := by
+    have hm : (t j : ℕ) ∈ (transpositionClass n).parts :=
+      Multiset.mem_toFinset.mp (t j).property
+    have hm' : (t j : ℕ) ∈ 2 ::ₘ Multiset.replicate (n - 2) 1 := hparts ▸ hm
+    rcases Multiset.mem_cons.mp hm' with h | h
+    · exact Or.inr h
+    · exact Or.inl (Multiset.mem_replicate.mp h).2
+  have hpoint (t : T) :
+      w t / (l t : ℚ) = if one t then w t else w t / 2 := by
+    by_cases ht : one t
+    · have hconst : (fun j => (t j : ℕ)) = (fun _ : Fin s => 1) := by
+        funext j
+        exact ht j
+      have hlone : l t = 1 := by
+        dsimp [l]
+        rw [hconst, Finset.image_const hne]
+        simp
+      simp [ht, hlone]
+    · have hsome : ∃ j, (t j : ℕ) ≠ 1 := by
+        by_contra h
+        apply ht
+        intro j
+        by_contra hj
+        exact h ⟨j, hj⟩
+      obtain ⟨j, hj⟩ := hsome
+      have hjtwo : (t j : ℕ) = 2 := by
+        rcases hval t j with h | h
+        · exact (hj h).elim
+        · exact h
+      have hjmem : (t j : ℕ) ∈ Finset.univ.image (fun j => (t j : ℕ)) := by
+        exact Finset.mem_image.mpr ⟨j, by simp, rfl⟩
+      have h2dvd : 2 ∣ l t := by
+        rw [← hjtwo]
+        exact Finset.dvd_lcm hjmem
+      have hldiv : l t ∣ 2 := by
+        dsimp [l]
+        apply Finset.lcm_dvd
+        intro a ha
+        rcases Finset.mem_image.mp ha with ⟨j', -, rfl⟩
+        rcases hval t j' with h | h
+        · rw [h]
+          norm_num
+        · rw [h]
+          exact dvd_refl 2
+      have hltwo : l t = 2 := Nat.dvd_antisymm hldiv h2dvd
+      simp [ht, hltwo]
+  have hsumEq :
+      degree s (transpositionClass n) = ∑ t : T, if one t then w t else w t / 2 := by
+    change (∑ t : T, w t / (l t : ℚ)) = _
+    apply Finset.sum_congr rfl
+    intro t _
+    exact hpoint t
+  have hone :
+      (∑ t ∈ (Finset.univ : Finset T).filter one, w t) =
+        ((n - 2 : ℕ) : ℚ) ^ s := by
+    by_cases h1 : 1 ∈ (transpositionClass n).parts
+    · let u : T := fun _ => ⟨1, Multiset.mem_toFinset.mpr h1⟩
+      have hfilter : (Finset.univ : Finset T).filter one = {u} := by
+        ext t
+        simp only [mem_filter, mem_univ, mem_singleton, one]
+        constructor
+        · intro ht
+          apply funext
+          intro j
+          apply Subtype.ext
+          exact ht.2 j
+        · intro ht
+          subst t
+          exact ⟨by simp, by intro j; rfl⟩
+      rw [hfilter]
+      simp [w, u, hparts, Multiset.count_replicate]
+    · have hfilter : (Finset.univ : Finset T).filter one = ∅ := by
+        apply Finset.filter_eq_empty_iff.mpr
+        intro t _
+        intro htone
+        have hj0 : Fin s := ⟨0, Nat.lt_of_lt_of_le Nat.zero_lt_one hs⟩
+        have hmem : (t hj0 : ℕ) ∈ (transpositionClass n).parts :=
+          Multiset.mem_toFinset.mp (t hj0).property
+        have hone : (1 : ℕ) ∈ (transpositionClass n).parts := by
+          rw [← htone hj0]
+          exact hmem
+        exact h1 hone
+      rw [hfilter]
+      have hn2 : n - 2 = 0 := by
+        by_contra hn2
+        apply h1
+        rw [hparts]
+        exact Multiset.mem_cons.mpr
+          (Or.inr (Multiset.mem_replicate.mpr ⟨hn2, rfl⟩))
+      simp [hn2, Multiset.count_eq_zero.mpr h1, Nat.ne_of_gt hs]
+  have htotal : (∑ t : T, w t) = (n : ℚ) ^ s := by
+    simpa [T, w] using total_weight s (transpositionClass n)
+  have hnot :
+      (∑ t ∈ (Finset.univ : Finset T).filter one, w t) +
+          ∑ t ∈ (Finset.univ : Finset T).filter (fun t => ¬one t), w t =
+        ∑ t : T, w t := by
+    exact Finset.sum_filter_add_sum_filter_not _ _ _
+  have hnot' :
+      (∑ t ∈ (Finset.univ : Finset T).filter (fun t => ¬one t), w t) =
+        (n : ℚ) ^ s - ((n - 2 : ℕ) : ℚ) ^ s := by
+    linarith [hnot, htotal, hone]
+  calc
+    degree s (transpositionClass n) = ∑ t : T, if one t then w t else w t / 2 := hsumEq
+    _ = ((n - 2 : ℕ) : ℚ) ^ s +
+          (∑ t ∈ (Finset.univ : Finset T).filter (fun t => ¬one t), w t) / 2 := by
+      rw [Finset.sum_ite, hone]
+      congr 1
+      simp_rw [div_eq_mul_inv]
+      rw [Finset.sum_mul]
+    _ = ((n : ℚ) ^ s + ((n - 2 : ℕ) : ℚ) ^ s) / 2 := by
+      rw [hnot']
+      linarith
 
 private theorem transposition_lt_identity (s n : ℕ) (hn : 2 ≤ n) (hs : 1 ≤ s) :
     degree s (transpositionClass n) < degree s (identityClass n) := by
-  rw [transposition_degree s n hn, identity_degree s n hn hs]
+  rw [transposition_degree s n hn hs, identity_degree s n hn hs]
   have hbase : n - 2 < n := by omega
   have hpow : (n - 2) ^ s < n ^ s := Nat.pow_lt_pow_left hbase (by omega)
   have hpowQ : ((n - 2 : ℕ) : ℚ) ^ s < (n : ℚ) ^ s := by
@@ -220,7 +341,51 @@ private theorem transposition_lt_identity (s n : ℕ) (hn : 2 ≤ n) (hs : 1 ≤
 private theorem one_count_le_two_sub {n : ℕ} (p : Nat.Partition n) (hn : 2 ≤ n)
     (hp : p ≠ identityClass n) :
     p.parts.count 1 ≤ n - 2 := by
-  sorry
+  let nonunits := p.parts.filter (fun a => a ≠ 1)
+  let units := p.parts.filter (fun a => ¬a ≠ 1)
+  have hsplit : nonunits + units = p.parts := by
+    exact Multiset.filter_add_not (fun a : ℕ => a ≠ 1) p.parts
+  have hunit : units = Multiset.replicate units.card 1 := by
+    apply Multiset.eq_replicate_card.mpr
+    intro a ha
+    have ha' := Multiset.mem_filter.mp ha
+    simpa using ha'.2
+  have hcount : units.card = p.parts.count 1 := by
+    calc
+      units.card = units.count 1 := by rw [hunit]; simp
+      _ = p.parts.count 1 := Multiset.count_filter_of_pos (by simp)
+  have hnon : nonunits ≠ 0 := by
+    intro hzero
+    apply hp
+    apply Nat.Partition.ext
+    have hparts : p.parts = units := by rw [← hsplit, hzero, zero_add]
+    rw [hparts, hunit]
+    have hcard : units.card = n := by
+      have hsump := p.parts_sum
+      rw [hparts, hunit, Multiset.sum_replicate] at hsump
+      simpa using hsump
+    rw [hcard]
+    have hn0 : n ≠ 0 := by omega
+    have hidentity : (identityClass n).parts = Multiset.replicate n 1 := by
+      simp [identityClass, Nat.Partition.ofSums, Multiset.mem_replicate, hn0]
+    exact hidentity.symm
+  have hnon_sum : 2 ≤ nonunits.sum := by
+    obtain ⟨a, ha⟩ := Multiset.exists_mem_of_ne_zero hnon
+    have hapos := p.parts_pos (Multiset.mem_of_mem_filter ha)
+    have hane := (Multiset.mem_filter.mp ha).2
+    exact (by omega : 2 ≤ a).trans (Multiset.le_sum_of_mem ha)
+  have hsum : nonunits.sum + units.sum = n := by
+    calc
+      nonunits.sum + units.sum = (nonunits + units).sum :=
+        (Multiset.sum_add _ _).symm
+      _ = p.parts.sum := by rw [hsplit]
+      _ = n := p.parts_sum
+  rw [hunit] at hsum
+  simp only [Multiset.sum_replicate, nsmul_eq_mul, mul_one] at hsum
+  have hsum' : nonunits.sum + p.parts.count 1 = n := by
+    simpa [hcount] using hsum
+  apply Nat.le_sub_of_add_le
+  omega
 
 private theorem one_count_eq_two_sub_iff {n : ℕ} (p : Nat.Partition n) (hn : 2 ≤ n)
     (hp : p ≠ identityClass n) :
@@ -236,7 +401,7 @@ private theorem other_degree_lt (s n : ℕ) (hn : 2 ≤ n) (hs : 1 ≤ s)
 theorem result : claim := by
   intro n hn s hs
   have hid := identity_degree s n hn hs
-  have htr := transposition_degree s n hn
+  have htr := transposition_degree s n hn hs
   have hlt := transposition_lt_identity s n hn hs
   refine ⟨hid, htr, hlt, ?_⟩
   intro p hp₁ hp₂
