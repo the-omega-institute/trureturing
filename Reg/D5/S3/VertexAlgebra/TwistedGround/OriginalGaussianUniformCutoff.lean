@@ -43,7 +43,7 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
     · norm_num [traceWeightBound] <;> positivity
   change traceWeightMass 0 ≠ traceWeightMass (1 / 2)
   rw [hz]
-  exact hp.ne'
+  exact hp.ne
 
 def evidence : Registration arena (type_of% @weightedCutoff_norm_le) where
   actual := actual

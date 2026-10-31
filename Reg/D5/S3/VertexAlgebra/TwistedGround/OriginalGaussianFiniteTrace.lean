@@ -119,7 +119,8 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   change traceWeightMass 0 ^ 2 * (0 : ℝ) ^ 0 ≠
     traceWeightMass (1 / 2) ^ 2 * (1 / 2 : ℝ) ^ 0
   rw [mass_zero]
-  simpa using (sq_pos_of_pos mass_half_pos).ne'
+  simpa only [pow_zero, mul_one, zero_pow (by norm_num : (2 : ℕ) ≠ 0)] using
+    (sq_pos_of_pos mass_half_pos).ne
 
 def evidence : Registration arena (type_of% @finiteTraceMoment_bound) where
   actual := actual
