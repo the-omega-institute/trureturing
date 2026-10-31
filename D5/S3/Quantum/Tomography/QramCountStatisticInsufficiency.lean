@@ -6,14 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Tomography/QramCountStatisticInsufficiency.claim; result=D5/S3/Quantum/Tomography/QramCountStatisticInsufficiency.result; claim=D5/S3/Quantum/Tomography/QramCountStatisticInsufficiency.claim
    digest: The plus-count statistic loses exact-weight discrimination information. -/
 
-import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
+import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.Analysis.Complex.Basic
 
 /-! The equal-prior exact-weight model of L. Bohac, arXiv:2512.17503v1,
 Remark 5.3. The function is sampled once and shared by all copies. The witness measures
