@@ -190,7 +190,7 @@ private theorem formContraction_linearForm (D : LatticeData) (z : ℂ)
     _ = ∑ a ∈ (c i).support, ∑ b ∈ (c j).support,
         (c i a * c j b) • C (covariance D z a b) := by
       simp only [formContraction, derivation_sum_apply, Derivation.smul_apply]
-      simp only [linearForm, map_sum, map_smul, sourceContraction,
+      simp only [linearForm, map_sum, Derivation.map_smul, sourceContraction,
         mkDerivation_X, Finset.smul_sum, smul_smul]
     _ = _ := by
       simp only [covarianceMatrix, map_sum, smul_eq_C_mul, ← map_mul]
@@ -375,8 +375,8 @@ private theorem sourceMoment_eq_nativeMoment (D : LatticeData) (z : ℂ)
 
 /-- Every occupation of every finite family of finite-support complex linear
 forms has the exact factorial-weighted native Gaussian coefficient as its
-actual neutral Corr vacuum readout. All matrices and shift parameters are
-allowed, including degenerate forms and empty mode types. -/
+actual neutral Corr vacuum readout. No positivity or nondegeneracy is
+required; all complex shift parameters and empty mode types are included. -/
 theorem sourceVacuum_linearForms (D : LatticeData) (z : ℂ)
     (c : I → Index D →₀ ℂ) (d : I →₀ ℕ) :
     sourceVacuum D z (∏ i, linearForm D (c i) ^ d i) =

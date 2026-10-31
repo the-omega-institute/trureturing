@@ -98,7 +98,15 @@ def evidence : Registration arena.{u} (type_of% (@sourceVacuum_linearForms.{u}))
   actual := actual
   bridge := bridge
   variation := ⟨bridge.mp sourceVacuum_linearForms, rejected, rejected_fails⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_fails
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_fails⟩
+      intro j hj
+      change Unit at i j
+      exact (hj (@Subsingleton.elim Unit inferInstance j i)).elim
+    · intro e
+      cases e
   dependence := dependence
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -124,11 +132,12 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalCorrectionGaussian
     definition := none
     coordinates := #[0, 1, 2, 3, 4, 5]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg"]
-                   stateBinder := 6
-                   functionOperand := false
-                   stateOperand := none
-                   booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[{ name := `autoImplicit, value := .bool false }]
@@ -208,11 +217,12 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalCorrectionGaussian
     definition := none
     coordinates := #[0, 1]
-    readouts := #[{ path := #["body", "body", "body", "arg"]
-                   stateBinder := 2
-                   functionOperand := false
-                   stateOperand := none
-                   booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[{ name := `autoImplicit, value := .bool false }]
