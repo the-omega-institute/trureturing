@@ -99,6 +99,8 @@ private theorem rounding (X C U Q0 L : ℤ) (hX : 0 < X) (hC : 0 ≤ C)
   dsimp only
   let x := U / X
   let S := U - x * X
+  change 0 ≤ x ∧ 0 ≤ S ∧ S < X ∧
+    1 ≤ 2 * S + Q0 + C * x ∧ 2 * S + Q0 + C * x ≤ L
   have hx : 0 ≤ x := Int.ediv_nonneg hU hX.le
   have he := Int.emod_add_mul_ediv U X
   have hr0 := Int.emod_nonneg U (by omega : X ≠ 0)
@@ -159,7 +161,7 @@ private theorem uniform_floor_bound (R D HU w L : ℤ)
       (R - D) * (2 * D * R * R + (D + 2) * (R + 1)) := by
     dsimp only [U, W]
     dsimp [vcoef, wcoef] at hHU ⊢
-    linear_combination D * hHU - wcoef R D * hw
+    linear_combination D * hHU - (D * R * R + (D + 1) * R + 1) * hw
   have hU0 : 0 < U := by
     have hb : 0 < (R - D) * (2 * D * R * R + (D + 2) * (R + 1)) := by positivity
     have hDU : 0 < D * U := by nlinarith only [hUeq, hb]
@@ -184,7 +186,10 @@ private theorem uniform_floor_bound (R D HU w L : ℤ)
   change 0 ≤ x ∧ 0 ≤ S ∧ S < X ∧ 1 ≤ 2 * S + Q0 + C * x ∧
     2 * S + Q0 + C * x ≤ L at hround
   have hUle : U ≤ HU := by dsimp [U]; have := mul_nonneg hw0 hW0; omega
-  have hxU : x * X ≤ U := by dsimp [S] at hround; omega
+  have hxU : x * X ≤ U := by
+    have hh := hround.2.1
+    change 0 ≤ U - x * X at hh
+    omega
   have hcycle : R * X = N + A := by dsimp [X, N, A, xcoef, seed]; ring
   have hxcap : 2 * x < R := by
     by_contra h

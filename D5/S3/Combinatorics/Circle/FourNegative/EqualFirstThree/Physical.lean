@@ -68,13 +68,20 @@ private theorem source_data (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d) :
     exact ⟨by omega, h.2⟩
   have tab := paired_table s d hs hd
   have htab : Table s d R D N (oldRow s d) (newRow s d) := by
-    simpa only [oldRow, newRow, rank, amplitude, Nat.cast_add, Nat.cast_one, Nat.cast_pow,
-      Nat.cast_ofNat, R, D, N] using tab
+    change Table s d R D N
+      (fun i => centered N ((2 : ℤ) ^ i * amplitude s))
+      (fun i => centered (modulus (rank s d + 1)) ((2 : ℤ) ^ i * (2 * (amplitude s : ℤ))))
+    have ht : (amplitude s : ℤ) =
+        1 + (2 : ℤ) ^ s + 2 ^ (2*s) + 2 ^ (3*s) := by
+      simp only [amplitude, Nat.cast_add, Nat.cast_one, Nat.cast_pow, Nat.cast_ofNat]
+    rw [ht]
+    exact tab
   refine ⟨htab, ⟨hR, hD⟩, hA, hN, hM, hb.1, hb.2, ?_⟩
   unfold newRow
   rw [show (2 : ℤ) ^ rank s d * (2 * (amplitude s : ℤ)) =
     2 ^ (rank s d + 1) * amplitude s by rw [pow_succ]; ring,
     centered_full_period (rank s d + 1) (amplitude s), hA]
+  change centered (modulus (rank s d + 1)) (seed R) = seed R
   unfold centered
   rw [hM]
   have hh : (2 * N + 1) / 2 = N := by omega
@@ -141,7 +148,9 @@ private theorem inserted_perm (k : ℕ) (P T : List ℕ)
   apply Multiset.coe_eq_coe.mp
   rw [List.range_succ]
   have h := Multiset.coe_eq_coe.mpr hp
-  simp only [← Multiset.coe_add, Multiset.coe_cons] at h ⊢
+  simp only [← Multiset.coe_add] at h
+  change (P : Multiset ℕ) + ({k} + (T : Multiset ℕ)) =
+    (List.range k : Multiset ℕ) + {k}
   rw [show (P : Multiset ℕ) + ({k} + (T : Multiset ℕ)) =
       (P : Multiset ℕ) + (T : Multiset ℕ) + {k} by ac_rfl, h]
 
@@ -150,7 +159,9 @@ private theorem new_total (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d)
     (word.map (newRow s d)).sum = 0 := by
   have h := (hp.map _).sum_eq.trans (ThreeNegativeEqualOuterSourceBridge.source_zero
     (rank s d + 1) (2 * amplitude s) (by dsimp [rank]; omega))
-  simpa only [newRow, Nat.cast_mul, Nat.cast_ofNat] using h
+  change ((word.map (fun i => centered (modulus (rank s d + 1))
+    ((2 : ℤ) ^ i * (2 * (amplitude s : ℤ))))).sum = 0
+  simpa only [Nat.cast_mul, Nat.cast_ofNat] using h
 
 private theorem finish (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d)
     (P T : List ℕ) (hp : (P ++ T).Perm (List.range (rank s d)))
@@ -169,7 +180,9 @@ private theorem finish (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d)
   · rw [marked_word (rank s d) P.length hk P T rfl hp]
     apply lift_order (rank s d + 1) (2 * amplitude s) (by omega)
       (P ++ rank s d :: T) (inserted_perm _ _ _ hp)
-    · simpa only [newRow, Nat.cast_mul, Nat.cast_ofNat] using hnew
+    · change InStrip (fun i => centered (modulus (rank s d + 1))
+        ((2 : ℤ) ^ i * (2 * (amplitude s : ℤ)))) _ _ _ at hnew
+      simpa only [Nat.cast_mul, Nat.cast_ofNat] using hnew
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero _ _ (by dsimp [rank]; omega)
 
 end D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree
