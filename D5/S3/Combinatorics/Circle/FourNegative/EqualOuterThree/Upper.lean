@@ -142,12 +142,13 @@ private theorem physical (s b : ℕ) (v : ℤ) (R T : List ℕ)
   let M := base s b s s 3
   let N := sourceMod s b s s
   let Bn := 2*B-1
-  let Ln := 2*L-(2^s)-1
-  let Mn := 2*M-1-(2^b)-(2^s)*(2^b)
+  let Ln := 2*L-1-(2^s)
+  let Mn := 2*M-1-(2^b)-(2^b)*(2^s)
   let f := fun i : ℕ => centered N ((2 : ℤ)^i*A)
   let g := fun i : ℕ => centered (2*N+1) ((2 : ℤ)^i*(2*A))
   obtain ⟨hA,hB,hL,hM,huf,hvf,hwf,hxf,hug,hvg,hwg,hxg,hfresh⟩ :=
     source_table s b s s hs hb hs hs
+  simp only [show s+s=2*s by omega] at hwf hxf hwg hxg hfresh
   change 1 ≤ A ∧ A < N at hA
   change 1 ≤ B ∧ B < N at hB
   change 1 ≤ L ∧ L < N at hL
@@ -160,7 +161,8 @@ private theorem physical (s b : ℕ) (v : ℤ) (R T : List ℕ)
   change ∀ i<s, g (s+i)=if i+1<s then 2^i*Bn else -((2*N+1)-Ln)/2 at hvg
   change ∀ i<b, g (2*s+i)=if i+1<b then 2^i*Ln else -((2*N+1)-Mn)/2 at hwg
   change ∀ i<s, g (2*s+b+i)=if i+1<s then 2^i*Mn else -((2*N+1)-A)/2 at hxg
-  have hfresh' : g k = A := by simpa [k] using hfresh
+  have hfresh' : g k = A := by
+    simpa only [show 2*s+b+s=k by dsimp [k,size]; omega] using hfresh
   have hnb := new_base_bounds s b s s hs hb hs hs
   have hnewB : 0 ≤ Bn := by
     have h := hnb 1
@@ -168,12 +170,13 @@ private theorem physical (s b : ℕ) (v : ℤ) (R T : List ℕ)
     omega
   have hnewL : 0 ≤ Ln := by
     have h := hnb 2
-    change 1 ≤ Ln ∧ Ln < 2*N+1 at h
-    omega
+    change 1 ≤ 2*L-(1+(2:ℤ)^s) ∧ 2*L-(1+(2:ℤ)^s) < 2*N+1 at h
+    dsimp only [Ln]; omega
   have hnewM : 0 ≤ Mn := by
     have h := hnb 3
-    change 1 ≤ Mn ∧ Mn < 2*N+1 at h
-    omega
+    change 1 ≤ 2*M-(1+(2:ℤ)^b+(2:ℤ)^b*2^s) ∧
+      2*M-(1+(2:ℤ)^b+(2:ℤ)^b*2^s) < 2*N+1 at h
+    dsimp only [Mn]; omega
   have posU (i : ℕ) (hi : i<s-1) : f i=2^i*A ∧ g i=2^i*(2*A) :=
     ⟨(huf i (by omega)).trans (ite_eq_left (by omega)),
      (hug i (by omega)).trans (ite_eq_left (by omega))⟩
@@ -212,7 +215,7 @@ private theorem physical (s b : ℕ) (v : ℤ) (R T : List ℕ)
       (P2.map g).sum=(2^(s-1)-1)*(2*A) := by
     have hf := ladder_sum f 0 (s-1) A (by intro i hi; simpa using (posU i hi).1)
     have hg := ladder_sum g 0 (s-1) (2*A) (by intro i hi; simpa using (posU i hi).2)
-    simpa [P2, ← List.range_eq_range'] using And.intro hf hg
+    simpa only [P2, ← List.range_eq_range'] using And.intro hf hg
   have hP3 : (P3.map f).sum=(2^(s-1)-1)*M ∧
       (P3.map g).sum=(2^(s-1)-1)*Mn := by
     have hf := ladder_sum f (2*s+b) (s-1) M
@@ -402,6 +405,7 @@ private theorem actual_of_physical (s b : ℕ) (hs : 2≤s) (l : List ℕ) (j : 
   have hseed : (seed s b : ℤ) = A := by
     dsimp [seed,A,base]
     push_cast
+    rw [show 2*s+b=(s+b)+s by omega]
     simp only [pow_add]
     ring
   have old : OriginalOrder k (seed s b)

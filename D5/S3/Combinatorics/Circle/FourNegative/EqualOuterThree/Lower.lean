@@ -48,7 +48,7 @@ private theorem inventory (s b h : ℕ) (hb : 2 ≤ b) (hs : b+2 ≤ s)
   have hTR : List.range' s h ++ List.range' (s+h) (s-h-1) ++ [2*s-1] =
       List.range' s s := by
     rw [hT]
-    simpa only [show s+(s-1)=2*s-1 by omega] using
+    simpa only [show s+(s-1)=2*s-1 by omega, show s-1+1=s by omega] using
       (List.range'_1_concat (s:=s) (n:=s-1)).symm
   have hU : List.range (s-1) ++ [s-1] = List.range s := by
     simpa only [show s-1+1=s by omega] using (List.range_succ (n:=s-1)).symm
@@ -67,7 +67,7 @@ private theorem inventory (s b h : ℕ) (hb : 2 ≤ b) (hs : b+2 ≤ s)
     have h2 := List.range'_append_1 (s:=0) (m:=2*s) (n:=b)
     have h3 := List.range'_append_1 (s:=0) (m:=2*s+b) (n:=s)
     simp only [Nat.zero_add] at h1 h2 h3
-    rw [h1,h2,h3]
+    rw [h1,show s+s=2*s by omega,h2,h3]
     congr 1 <;> omega
   have hreorder :
       (List.range' (2*s+b) (s-1) ++ [3*s+b-1] ++
@@ -105,8 +105,8 @@ private theorem actual_lower (s b : ℕ) (hb : 2 ≤ b) (hs : b+2 ≤ s) :
   let L : ℤ := q*(q*(1+q))+1+q
   let M : ℤ := q*(y*q)+1+y+y*q
   let Bn : ℤ := 2*B-1
-  let Ln : ℤ := 2*L-q-1
-  let Mn : ℤ := 2*M-1-y-q*y
+  let Ln : ℤ := 2*L-1-q
+  let Mn : ℤ := 2*M-1-y-y*q
   let p : ℤ := m-1
   let N : ℤ := q*y*q*q-1
   let f := fun i : ℕ => centered N ((2 : ℤ)^i*A)
@@ -138,6 +138,7 @@ private theorem actual_lower (s b : ℕ) (hb : 2 ≤ b) (hs : b+2 ≤ s) :
   have hhalf : N/2=64*r^4*m^3-1 := by rw [hN]; omega
   obtain ⟨hA,hB,hL,hM,huf,hvf,hwf,hxf,hug,hvg,hwg,hxg,hfresh⟩ :=
     source_table s b s s (by omega) hb (by omega) (by omega)
+  simp only [show s+s=2*s by omega] at hwf hxf hwg hxg hfresh
   change 1≤A ∧ A<N at hA
   change 1≤B ∧ B<N at hB
   change 1≤L ∧ L<N at hL
@@ -154,8 +155,8 @@ private theorem actual_lower (s b : ℕ) (hb : 2 ≤ b) (hs : b+2 ≤ s) :
     simpa only [show 2*s+b+s=k by dsimp [k]; omega] using hfresh
   have hbase := new_base_bounds s b s s (by omega) hb (by omega) (by omega)
   have hBn : 0≤Bn := by have h:=hbase 1; change 1≤Bn ∧ Bn<2*N+1 at h; omega
-  have hLn : 0≤Ln := by have h:=hbase 2; change 1≤Ln ∧ Ln<2*N+1 at h; omega
-  have hMn : 0≤Mn := by have h:=hbase 3; change 1≤Mn ∧ Mn<2*N+1 at h; omega
+  have hLn : 0≤Ln := by have h:=hbase 2; change 1≤2*L-(1+q) ∧ 2*L-(1+q)<2*N+1 at h; dsimp only [Ln]; omega
+  have hMn : 0≤Mn := by have h:=hbase 3; change 1≤2*M-(1+y+y*q) ∧ 2*M-(1+y+y*q)<2*N+1 at h; dsimp only [Mn]; omega
   have posU (i : ℕ) (hi : i<s-1) : f i=2^i*A ∧ g i=2^i*(2*A) :=
     ⟨(huf i (by omega)).trans (ite_eq_left (by omega)),
       (hug i (by omega)).trans (ite_eq_left (by omega))⟩
@@ -333,6 +334,7 @@ private theorem actual_lower (s b : ℕ) (hb : 2 ≤ b) (hs : b+2 ≤ s) :
   have hseed : (seed:ℤ)=A := by
     dsimp [seed,A,q,y]
     push_cast
+    rw [show 2*s+b=(s+b)+s by omega]
     simp only [pow_add]
     ring
   have hk : 0<k := by dsimp [k]; omega
