@@ -15,7 +15,7 @@ open _root_.D5.S3.Combinatorics.Circle.RunFirstEarTransport
 open _root_.D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Endpoint
 noncomputable section
 
-abbrev Params := ℕ × ℕ × ℕ × ℕ
+abbrev Params := Σ _a : ℕ, Σ _b : ℕ, Σ _c : ℕ, ℕ
 private def size (p : Params) : ℕ := p.1 + p.2.1 + p.2.2.1 + p.2.2.2
 abbrev signature : Signature where
   Params := Params
