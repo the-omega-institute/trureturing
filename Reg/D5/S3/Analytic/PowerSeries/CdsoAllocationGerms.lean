@@ -71,7 +71,7 @@ def family : Registration arena (type_of% @allocation_germ_iff_taylor) where
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 
-def audit : Contract.Registration (@allocation_germ_iff_taylor)
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@allocation_germ_iff_taylor)
     (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.PowerSeries.CdsoAllocationGerms.allocation_unit
   realizationName := `Reg.D5.S3.Analytic.PowerSeries.CdsoAllocationGerms.family

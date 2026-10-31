@@ -80,7 +80,7 @@ def family : Registration arena (type_of% @sum_eq_zero_of_coeff_eq_zero.{u}) whe
   sensitivity := sensitivity
   dependence := dependence
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@sum_eq_zero_of_coeff_eq_zero.{u}) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.PowerSeries.RadicalMultiplicity.cutoff_unit
   realizationName := `Reg.D5.S3.Analytic.PowerSeries.RadicalMultiplicity.family
@@ -102,9 +102,9 @@ def audit : Contract.Registration
   sourceSelection := some {
     owner := `D5.S3.Analytic.PowerSeries.RadicalMultiplicity
     definition := none
-    coordinates := #[2]
+    coordinates := #[0, 1, 2, 4]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none
