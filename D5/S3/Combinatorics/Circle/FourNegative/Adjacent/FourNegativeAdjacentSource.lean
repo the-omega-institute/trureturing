@@ -111,6 +111,7 @@ private theorem chains (r s : ℕ) (hr : 2 ≤ r) (hs : 2 ≤ s) :
     have hp : (2 : ℤ)^k%2=0 := by
       rw [show k=(k-1)+1 by dsimp [k]; omega,pow_succ]; omega
     dsimp [N,modulus]; omega
+  have he0 : 0≤e := by dsimp [e]; positivity
   have hNNp : 0<NN := by omega
   have hNNo : NN%2=1 := by omega
   have fV (i : ℕ) : centered N ((2 : ℤ)^(s+i)*A)=centered N ((2 : ℤ)^i*B) :=
@@ -135,13 +136,14 @@ private theorem chains (r s : ℕ) (hr : 2 ≤ r) (hs : 2 ≤ s) :
   · intro i hi; rw [fW]; exact centered_ladder N L M r i hNp hNo hL.1 ⟨by omega,by omega⟩ hi hrels.2.2.1
   · intro i hi; rw [fX]; exact centered_ladder N M A r i hNp hNo hM.1 ⟨by omega,by omega⟩ hi hrels.2.2.2
   · intro i hi; exact centered_ladder NN (2*A) (2*B-1) s i hNNp hNNo (by omega) ⟨by omega,by omega⟩ hi hgrels.1
-  · intro i hi; rw [gV]; exact centered_ladder NN (2*B-1) (2*L-1-y) s i hNNp hNNo hGV ⟨by omega,by dsimp [e] at *; omega⟩ hi hgrels.2.1
-  · intro i hi; rw [gW]; exact centered_ladder NN (2*L-1-y) (2*M-e) r i hNNp hNNo hGW ⟨by omega,by dsimp [e] at *; omega⟩ hi hgrels.2.2.1
+  · intro i hi; rw [gV]; exact centered_ladder NN (2*B-1) (2*L-1-y) s i hNNp hNNo hGV ⟨by omega,by omega⟩ hi hgrels.2.1
+  · intro i hi; rw [gW]; exact centered_ladder NN (2*L-1-y) (2*M-e) r i hNNp hNNo hGW ⟨by omega,by omega⟩ hi hgrels.2.2.1
   · intro i hi; rw [gX]; exact centered_ladder NN (2*M-e) A r i hNNp hNNo hGX ⟨by omega,by omega⟩ hi hgrels.2.2.2
   · have hh : centered NN ((2 : ℤ)^k*(2*A))=centered NN A := by
       apply centered_congr
       have he : (2 : ℤ)^k*(2*A)=A+A*NN := by dsimp [NN,modulus]; rw [pow_succ]; ring
       rw [he,Int.add_mul_emod_self_right]
+    change centered NN ((2 : ℤ)^k*(2*A))=A
     rw [hh]
     exact centered_unique hNNp hNNo (centered_bounds hNNp hNNo A) ⟨by omega,by omega⟩ (centered_mod NN A)
 
