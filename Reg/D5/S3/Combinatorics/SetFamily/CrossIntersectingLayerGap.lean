@@ -3,6 +3,8 @@ import D5.S3.Combinatorics.SetFamily.CrossIntersectingLayerGap
 import Reg.Support.DependentFamily
 import Mathlib.Tactic.NormNum
 
+/-! The full weighted-family telescope with its two layer cardinalities observed. -/
+
 namespace Reg.D5.S3.Combinatorics.SetFamily.CrossIntersectingLayerGap
 open _root_.D5.S3.Combinatorics.SetFamily.CrossIntersectingLayerGap
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -55,7 +57,7 @@ private theorem large_cross :
 private theorem large_mass :
     (1 : ℝ) + 1 < weightedMass (fun _ => 1) largeFamily.{u} := by
   have hc : largeFamily.{u}.card = 5 := by decide
-  simp [weightedMass, hc]
+  norm_num [weightedMass, hc]
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
@@ -88,7 +90,8 @@ def source_registration :
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@weighted_cross_intersecting_layer_gap.{u}) (Realization signature.{u}) Unit Unit := {
   unitName := `Reg.D5.S3.Combinatorics.SetFamily.CrossIntersectingLayerGap.unit
-  realizationName := `Reg.D5.S3.Combinatorics.SetFamily.CrossIntersectingLayerGap.source_registration
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.SetFamily.CrossIntersectingLayerGap.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -108,12 +111,14 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
