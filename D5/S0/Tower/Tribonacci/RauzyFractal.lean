@@ -1,10 +1,10 @@
 /- GID: D5/S0/Tower/Tribonacci/RauzyFractal
    generality: I
    mirror-B: D5/B/S0/Tower/Tribonacci/RauzyFractal
-   mirror-E: none(waiver:exact-attractor-equality)
+   mirror-E: none(waiver:unbounded-symbolic-cover)
    anchors: []
    utility: none
-   digest: The bounded Tribonacci window has a compact Rauzy closure and three prefix contractions. -/
+   digest: The compact Tribonacci Rauzy closure is exactly covered by its three admissible prefix images. -/
 
 import D5.S0.Tower.Tribonacci.ModelSet
 import Mathlib.Topology.MetricSpace.Bounded
@@ -172,5 +172,80 @@ theorem rauzyFractal_prefix_invariant (z : Complex) :
       exact oneZeroPrefixMap_mapsTo_rauzyFractal z hu
   · rcases hw with ⟨u, hu, rfl⟩
     exact oneOneZeroPrefixMap_mapsTo_rauzyFractal z hu
+
+private theorem window_prefix_cover (z : Complex) :
+    tribonacciInternalWindow z ⊆
+      zeroPrefixMap z '' tribonacciInternalWindow z ∪
+        oneZeroPrefixMap z '' tribonacciInternalWindow z ∪
+        oneOneZeroPrefixMap z '' tribonacciInternalWindow z := by
+  have hzero : (0 : Complex) ∈ tribonacciInternalWindow z :=
+    ⟨0, ⟨Fin.elim0, trivial⟩, by simp [conjugateCoordinate]⟩
+  have hone : (1 : Complex) ∈ tribonacciInternalWindow z := by
+    simpa [oneZeroPrefixMap] using one_zero_prefix_mem_window 0 hzero
+  rintro w ⟨Q, name, rfl⟩
+  match Q with
+  | 0 =>
+    exact Or.inl (Or.inl ⟨0, hzero, by simp [zeroPrefixMap, conjugateCoordinate]⟩)
+  | 1 =>
+    cases h : name.1 0
+    · exact Or.inl (Or.inl ⟨0, hzero, by simp [conjugateCoordinate, zeroPrefixMap, h]⟩)
+    · exact Or.inl (Or.inr ⟨0, hzero, by simp [conjugateCoordinate, oneZeroPrefixMap, h]⟩)
+  | 2 =>
+    cases h0 : name.1 0 <;> cases h1 : name.1 1
+    · exact Or.inl (Or.inl ⟨0, hzero, by
+        simp [conjugateCoordinate, Fin.sum_univ_succ, zeroPrefixMap, h0, h1]⟩)
+    · exact Or.inl (Or.inl ⟨1, hone, by
+        simp [conjugateCoordinate, Fin.sum_univ_succ, zeroPrefixMap, h0, h1]⟩)
+    · exact Or.inl (Or.inr ⟨0, hzero, by
+        simp [conjugateCoordinate, Fin.sum_univ_succ, oneZeroPrefixMap, h0, h1]⟩)
+    · exact Or.inr ⟨0, hzero, by
+        simp [conjugateCoordinate, Fin.sum_univ_succ, oneOneZeroPrefixMap, h0, h1]⟩
+  | n + 3 =>
+    obtain ⟨split, rfl⟩ := (tribonacciNameSplitEquiv n).symm.surjective name
+    rcases split with tail | (tail | tail)
+    · refine Or.inl (Or.inl ⟨conjugateCoordinate z tail, ⟨n + 2, tail, rfl⟩, ?_⟩)
+      change zeroPrefixMap z (conjugateCoordinate z tail) =
+        conjugateCoordinate z ⟨Fin.cons false tail.1, _⟩
+      rw [conjugateCoordinate_cons (n + 2) z false tail]
+      simp [zeroPrefixMap]
+    · refine Or.inl (Or.inr ⟨conjugateCoordinate z tail, ⟨n + 1, tail, rfl⟩, ?_⟩)
+      let inner : TribonacciName (n + 2) :=
+        ⟨Fin.cons false tail.1, (admissible_cons_false (n + 1) tail.1).2 tail.2⟩
+      change oneZeroPrefixMap z (conjugateCoordinate z tail) =
+        conjugateCoordinate z ⟨Fin.cons true inner.1, _⟩
+      rw [conjugateCoordinate_cons (n + 2) z true inner,
+        conjugateCoordinate_cons (n + 1) z false tail]
+      simp [oneZeroPrefixMap]
+      ring
+    · refine Or.inr ⟨conjugateCoordinate z tail, ⟨n, tail, rfl⟩, ?_⟩
+      let inner : TribonacciName (n + 1) :=
+        ⟨Fin.cons false tail.1, (admissible_cons_false n tail.1).2 tail.2⟩
+      let middle : TribonacciName (n + 2) :=
+        ⟨Fin.cons true inner.1, by
+          simpa [inner] using (admissible_cons_true_false n tail.1).2 tail.2⟩
+      change oneOneZeroPrefixMap z (conjugateCoordinate z tail) =
+        conjugateCoordinate z ⟨Fin.cons true middle.1, _⟩
+      rw [conjugateCoordinate_cons (n + 2) z true middle,
+        conjugateCoordinate_cons (n + 1) z true inner,
+        conjugateCoordinate_cons n z false tail]
+      simp [oneOneZeroPrefixMap]
+      ring
+
+/-- Every point has an admissible prefix preimage in the same Rauzy closure. -/
+theorem rauzyFractal_prefix_cover {z : Complex}
+    (hz : z ∈ D5.S0.Tower.Tribonacci.Binet.tribonacciCharacteristicPolynomial.roots)
+    (hz_ne : z ≠ (D5.S0.Tower.Tribonacci.Values.tribonacciConstant : Complex)) :
+    zeroPrefixMap z '' rauzyFractal z ∪
+        oneZeroPrefixMap z '' rauzyFractal z ∪
+        oneOneZeroPrefixMap z '' rauzyFractal z = rauzyFractal z := by
+  refine subset_antisymm (rauzyFractal_prefix_invariant z) ?_
+  have hK := rauzyFractal_isCompact hz hz_ne
+  apply closure_minimal
+  · exact (window_prefix_cover z).trans
+      (union_subset_union (union_subset_union (image_mono subset_closure)
+        (image_mono subset_closure)) (image_mono subset_closure))
+  · exact ((hK.image (by unfold zeroPrefixMap; fun_prop)).union
+      (hK.image (by unfold oneZeroPrefixMap; fun_prop))).union
+      (hK.image (by unfold oneOneZeroPrefixMap; fun_prop)) |>.isClosed
 
 end D5.S0.Tower.Tribonacci.RauzyFractal
