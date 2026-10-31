@@ -20,32 +20,32 @@ open private ordinary from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSeco
 
 /-- A common physical order and a literal ear cut throughout the first-peak chamber. -/
 theorem actualSource_first_peak_second_maximum_joint_lift (a b c d : ℕ)
-    (hb : 2≤b) (hc : 2≤c) (hbd : b≤d) (hcd : c≤d) (hda : d<a) :
-    ∃ sigma : List (Fin (a+b+c+d)), ∃ j : ℕ, j≤a+b+c+d ∧
-      OriginalOrder (a+b+c+d) (1+2^a+2^(a+b)+2^(a+b+c)) sigma ∧
-      OriginalOrder (a+b+c+d+1) (2*(1+2^a+2^(a+b)+2^(a+b+c)))
-        (earWord (a+b+c+d) sigma j) := by
-  by_cases hbc : b≤c
-  · have hh : ∃ sigma : List (Fin (a+b+c+d)), ∃ j : ℕ,
-        j=(if b=c ∧ c=d then 3*b else 0) ∧ j≤a+b+c+d ∧
-        OriginalOrder (a+b+c+d) (1+2^a+2^(a+b)+2^(a+b+c)) sigma ∧
-        OriginalOrder (a+b+c+d+1) (2*(1+2^a+2^(a+b)+2^(a+b+c)))
-          (earWord (a+b+c+d) sigma j) := by
+    (hb : 2 ≤ b) (hc : 2 ≤ c) (hbd : b ≤ d) (hcd : c ≤ d) (hda : d<a) :
+    ∃ sigma : List (Fin (a + b + c + d)), ∃ j : ℕ, j ≤ a + b + c + d ∧ 
+      OriginalOrder (a + b + c + d) (1 + 2 ^ a + 2 ^ (a + b) + 2 ^ (a + b + c)) sigma ∧ 
+      OriginalOrder (a + b + c + d + 1) (2 * (1 + 2 ^ a + 2 ^ (a + b) + 2 ^ (a + b + c)))
+        (earWord (a + b + c + d) sigma j) := by
+  by_cases hbc : b ≤ c
+  · have hh : ∃ sigma : List (Fin (a + b + c + d)), ∃ j : ℕ,
+        j=(if b=c ∧ c=d then 3 * b else 0) ∧ j ≤ a + b + c + d ∧ 
+        OriginalOrder (a + b + c + d) (1 + 2 ^ a + 2 ^ (a + b) + 2 ^ (a + b + c)) sigma ∧ 
+        OriginalOrder (a + b + c + d + 1) (2 * (1 + 2 ^ a + 2 ^ (a + b) + 2 ^ (a + b + c)))
+          (earWord (a + b + c + d) sigma j) := by
       by_cases he : b=c ∧ c=d
       · obtain ⟨hbc',hcd'⟩ := he
         subst c
         subst d
         obtain ⟨sigma,_,hj,hold,hnew⟩ :=
           EqualLastThreeUpper.actualSource_equal_last_three_upper_joint_lift a b hb (by omega)
-        have hab : a≠b := by omega
+        have hab : a ≠ b := by omega
         simp only [if_neg hab] at hj hnew
-        have hk : a+b+b+b=a+3*b := by omega
-        have hs : a+b+b=a+2*b := by omega
-        have hres : ∃ sigma : List (Fin (a+3*b)), ∃ j : ℕ,
-            j=3*b ∧ j≤a+3*b ∧
-            OriginalOrder (a+3*b) (1+2^a+2^(a+b)+2^(a+2*b)) sigma ∧
-            OriginalOrder (a+3*b+1) (2*(1+2^a+2^(a+b)+2^(a+2*b)))
-              (earWord (a+3*b) sigma j) := ⟨sigma,3*b,rfl,hj,hold,hnew⟩
+        have hk : a + b + b + b=a + 3 * b := by omega
+        have hs : a + b + b=a + 2 * b := by omega
+        have hres : ∃ sigma : List (Fin (a + 3 * b)), ∃ j : ℕ,
+            j=3 * b ∧ j ≤ a + 3 * b ∧ 
+            OriginalOrder (a + 3 * b) (1 + 2 ^ a + 2 ^ (a + b) + 2 ^ (a + 2 * b)) sigma ∧ 
+            OriginalOrder (a + 3 * b + 1) (2 * (1 + 2 ^ a + 2 ^ (a + b) + 2 ^ (a + 2 * b)))
+              (earWord (a + 3 * b) sigma j) := ⟨sigma,3 * b,rfl,hj,hold,hnew⟩
         simpa only [hk,hs,if_pos (show b=b ∧ b=b from ⟨rfl,rfl⟩)] using hres
       · obtain ⟨sigma,hold,hnew⟩ := Ascending.ordinary a b c d hb hbc hcd hda he
         exact ⟨sigma,0,by simp only [if_neg he],by omega,hold,hnew⟩

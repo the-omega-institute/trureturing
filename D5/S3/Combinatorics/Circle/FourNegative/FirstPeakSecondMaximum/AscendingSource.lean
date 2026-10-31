@@ -9,6 +9,8 @@ import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.AscendingA
 import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Masks
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 
+/-! AscendingSource for the paired physical source construction. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Ascending
@@ -19,16 +21,16 @@ open private size sourceMod base newBase chainLength chainStart oldValue newValu
   chain_values negatives source_signs
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 
-/-- Both the numeric complement identity and the disjoint physical-bit partition. -/
-private theorem mask_data (e r : ℕ) (hr : 1≤r) (hrn : r≤2^e) :
-    (2^e-r)+(r-1)=2^e-1 ∧
-    Disjoint (2^e-r).bitIndices.toFinset (r-1).bitIndices.toFinset ∧
-    (2^e-r).bitIndices.toFinset ∪ (r-1).bitIndices.toFinset=Finset.range e := by
-  have he : (2^e-r)+(r-1)=2^e-1 := by omega
-  exact ⟨he,mask_complement e (2^e-r) (r-1) he⟩
+/- Both the numeric complement identity and the disjoint physical-bit partition. -/
+private theorem mask_data (e r : ℕ) (hr : 1 ≤ r) (hrn : r ≤ 2 ^ e) :
+    (2 ^ e-r) + (r-1)=2 ^ e-1 ∧ 
+    Disjoint (2 ^ e-r).bitIndices.toFinset (r-1).bitIndices.toFinset ∧ 
+    (2 ^ e-r).bitIndices.toFinset ∪ (r-1).bitIndices.toFinset=Finset.range e := by
+  have he : (2 ^ e-r) + (r-1)=2 ^ e-1 := by omega
+  exact ⟨he,mask_complement e (2 ^ e-r) (r-1) he⟩
 
-private theorem low_split (e off r : ℕ) (hr : 1≤r) (hrn : r≤2^e) :
-    (chamberLabels e off (2^e-r) ++ chamberLabels e off (r-1)).Perm
+private theorem low_split (e off r : ℕ) (hr : 1 ≤ r) (hrn : r ≤ 2 ^ e) :
+    (chamberLabels e off (2 ^ e-r) +  + chamberLabels e off (r-1)).Perm
       (List.range' off e) := by
   have hd := mask_data e r hr hrn
   have mem_bit (m i : ℕ) : i∈m.bitIndices.toFinset ↔ m.testBit i=true := by
@@ -41,7 +43,7 @@ private theorem low_split (e off r : ℕ) (hr : 1≤r) (hrn : r≤2^e) :
     · intro hi
       let j := i-off
       have hj : j<e := by dsimp [j]; omega
-      have hmem : j∈(2^e-r).bitIndices.toFinset ∪ (r-1).bitIndices.toFinset := by
+      have hmem : j∈(2 ^ e-r).bitIndices.toFinset ∪ (r-1).bitIndices.toFinset := by
         rw [hd.2.2]
         exact Finset.mem_range.mpr hj
       rcases Finset.mem_union.mp hmem with hp|hq
@@ -58,60 +60,60 @@ private theorem low_split (e off r : ℕ) (hr : 1≤r) (hrn : r≤2^e) :
 
 private def bank (a b c d r v w : ℕ) : Fin 4 → List ℕ :=
   let e := a-d
-  let n := 2^e
-  let off := d+c+b
-  ![List.range' (off+e) (a-1-e),
-    chamberLabels (d-1) 0 ((2^(d-1)-1) ^^^ v) ++ chamberLabels e off (n-r),
-    chamberLabels (c-1) d ((2^(c-1)-1) ^^^ w),
-    List.range' (d+c) (b-1) ++ chamberLabels e off (r-1) ++
-      chamberLabels (d-1) 0 v ++ chamberLabels (c-1) d w]
+  let n := 2 ^ e
+  let off := d + c + b
+  ![List.range' (off + e) (a-1-e),
+    chamberLabels (d-1) 0 ((2 ^ (d-1)-1) ^  ^  ^ v) +  + chamberLabels e off (n-r),
+    chamberLabels (c-1) d ((2 ^ (c-1)-1) ^  ^  ^ w),
+    List.range' (d + c) (b-1) +  + chamberLabels e off (r-1) +  + 
+      chamberLabels (d-1) 0 v +  + chamberLabels (c-1) d w]
 
 private def terminal (a b c d : ℕ) : Fin 4 → ℕ :=
-  ![a+b+c+d-1,d-1,d+c-1,d+c+b-1]
+  ![a + b + c + d-1,d-1,d + c-1,d + c + b-1]
 
 private def word (a b c d r v w : ℕ) : List ℕ :=
   let P := bank a b c d r v w
   let T := terminal a b c d
-  P 0 ++ T 0 :: P 1 ++ T 1 :: P 2 ++ T 2 :: P 3 ++ [T 3]
+  P 0 +  + T 0 :: P 1 +  + T 1 :: P 2 +  + T 2 :: P 3 +  + [T 3]
 
 private theorem bank_inventory (a b c d r v w : ℕ)
-    (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d) (hda : d<a)
-    (hr : 1≤r) (hrn : r≤2^(a-d)) :
-    (word a b c d r v w).Perm (List.range (a+b+c+d)) := by
+    (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d) (hda : d<a)
+    (hr : 1 ≤ r) (hrn : r ≤ 2 ^ (a-d)) :
+    (word a b c d r v w).Perm (List.range (a + b + c + d)) := by
   let e := a-d
-  let off := d+c+b
+  let off := d + c + b
   let U := chamberLabels (d-1) 0
   let V := chamberLabels (c-1) d
   let X := chamberLabels e off
-  let hi := List.range' (off+e) (a-1-e)
-  have hu := (chamberLabels_split (d-1) 0 (2^(d-1)-1) v
+  let hi := List.range' (off + e) (a-1-e)
+  have hu := (chamberLabels_split (d-1) 0 (2 ^ (d-1)-1) v
     (by intro i hi _; simp [Nat.testBit_two_pow_sub_one,hi])).trans
     (List.Perm.of_eq (chamberLabels_full _ _))
-  have hv := (chamberLabels_split (c-1) d (2^(c-1)-1) w
+  have hv := (chamberLabels_split (c-1) d (2 ^ (c-1)-1) w
     (by intro i hi _; simp [Nat.testBit_two_pow_sub_one,hi])).trans
     (List.Perm.of_eq (chamberLabels_full _ _))
   have hx := low_split e off r hr hrn
-  have hxfull : (hi ++ X (2^e-r) ++ X (r-1)).Perm (List.range' off (a-1)) := by
+  have hxfull : (hi +  + X (2 ^ e-r) +  + X (r-1)).Perm (List.range' off (a-1)) := by
     have hh := hx.append_left hi
-    have he : e+(a-1-e)=a-1 := by dsimp [e]; omega
-    have hjoin : List.range' off e ++ hi=List.range' off (a-1) := by
+    have he : e + (a-1-e)=a-1 := by dsimp [e]; omega
+    have hjoin : List.range' off e +  + hi=List.range' off (a-1) := by
       dsimp [hi]
       rw [List.range'_append_1,he]
     simpa only [List.append_assoc] using hh.trans
       ((List.Perm.append_comm).trans (List.Perm.of_eq hjoin))
-  have merge (o len : ℕ) (hlen : 1≤len) :
-      List.range' o (len-1) ++ [o+len-1]=List.range' o len := by
-    simpa only [show o+(len-1)=o+len-1 by omega,show len-1+1=len by omega] using
+  have merge (o len : ℕ) (hlen : 1 ≤ len) :
+      List.range' o (len-1) +  + [o + len-1]=List.range' o len := by
+    simpa only [show o + (len-1)=o + len-1 by omega,show len-1 + 1=len by omega] using
       (List.range'_1_concat (s:=o) (n:=len-1)).symm
   have hall :
-      (List.range' 0 (d-1) ++ [d-1]) ++
-      (List.range' d (c-1) ++ [d+c-1]) ++
-      (List.range' (d+c) (b-1) ++ [d+c+b-1]) ++
-      (List.range' off (a-1) ++ [a+b+c+d-1])=List.range (a+b+c+d) := by
+      (List.range' 0 (d-1) +  + [d-1]) +  + 
+      (List.range' d (c-1) +  + [d + c-1]) +  + 
+      (List.range' (d + c) (b-1) +  + [d + c + b-1]) +  + 
+      (List.range' off (a-1) +  + [a + b + c + d-1])=List.range (a + b + c + d) := by
     have h0 := merge 0 d (by omega)
     simp only [Nat.zero_add] at h0
-    rw [h0,merge d c (by omega),merge (d+c) b (by omega)]
-    have ht : a+b+c+d-1=off+a-1 := by dsimp [off]; omega
+    rw [h0,merge d c (by omega),merge (d + c) b (by omega)]
+    have ht : a + b + c + d-1=off + a-1 := by dsimp [off]; omega
     rw [ht,merge off a (by omega)]
     dsimp [off]
     rw [List.range'_append_1,List.range'_append_1,List.range'_append_1]
@@ -119,36 +121,36 @@ private theorem bank_inventory (a b c d r v w : ℕ)
     congr 1
     omega
   have hw : word a b c d r v w =
-      bank a b c d r v w 0 ++ [terminal a b c d 0] ++
-      bank a b c d r v w 1 ++ [terminal a b c d 1] ++
-      bank a b c d r v w 2 ++ [terminal a b c d 2] ++
-      bank a b c d r v w 3 ++ [terminal a b c d 3] := by
+      bank a b c d r v w 0 +  + [terminal a b c d 0] +  + 
+      bank a b c d r v w 1 +  + [terminal a b c d 1] +  + 
+      bank a b c d r v w 2 +  + [terminal a b c d 2] +  + 
+      bank a b c d r v w 3 +  + [terminal a b c d 3] := by
     simp only [word,List.append_assoc,List.singleton_append]
   apply Multiset.coe_eq_coe.mp
   calc
     (word a b c d r v w : Multiset ℕ) =
-        (↑(U ((2^(d-1)-1) ^^^ v) ++ U v) : Multiset ℕ) +
-        ↑(V ((2^(c-1)-1) ^^^ w) ++ V w) + ↑(List.range' (d+c) (b-1)) +
-        ↑(hi ++ X (2^e-r) ++ X (r-1)) +
-        {d-1}+{d+c-1}+{d+c+b-1}+{a+b+c+d-1} := by
+        (↑(U ((2 ^ (d-1)-1) ^  ^  ^ v) +  + U v) : Multiset ℕ) + 
+        ↑(V ((2 ^ (c-1)-1) ^  ^  ^ w) +  + V w) + ↑(List.range' (d + c) (b-1)) + 
+        ↑(hi +  + X (2 ^ e-r) +  + X (r-1)) + 
+        {d-1} + {d + c-1} + {d + c + b-1} + {a + b + c + d-1} := by
       rw [hw]
       dsimp [bank,terminal,U,V,X,hi,e,off]
       simp only [←Multiset.coe_add,Multiset.coe_singleton]
       ac_rfl
-    _ = ↑(List.range' 0 (d-1)) + ↑(List.range' d (c-1)) +
-        ↑(List.range' (d+c) (b-1)) + ↑(List.range' off (a-1)) +
-        {d-1}+{d+c-1}+{d+c+b-1}+{a+b+c+d-1} := by
+    _ = ↑(List.range' 0 (d-1)) + ↑(List.range' d (c-1)) + 
+        ↑(List.range' (d + c) (b-1)) + ↑(List.range' off (a-1)) + 
+        {d-1} + {d + c-1} + {d + c + b-1} + {a + b + c + d-1} := by
       rw [Multiset.coe_eq_coe.mpr hu,Multiset.coe_eq_coe.mpr hv,Multiset.coe_eq_coe.mpr hxfull]
-    _ = (List.range (a+b+c+d) : Multiset ℕ) := by
+    _ = (List.range (a + b + c + d) : Multiset ℕ) := by
       rw [←hall]
       simp only [←Multiset.coe_add,Multiset.coe_singleton]
       ac_rfl
 
 private theorem bank_good (a b c d r v w : ℕ)
-    (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d) (hda : d<a)
+    (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d) (hda : d<a)
     (j : Fin 4) (i : ℕ) (hi : i∈bank a b c d r v w j) :
     i<size a b c d ∧ i∉negatives a b c d := by
-  have masked (len off m : ℕ) (hm : i∈chamberLabels len off m) : off≤i ∧ i<off+len := by
+  have masked (len off m : ℕ) (hm : i∈chamberLabels len off m) : off ≤ i ∧ i<off + len := by
     obtain ⟨e,he,_,hei⟩ := (chamberLabels_mem _ _ _ _).mp hm
     omega
   fin_cases j
@@ -165,30 +167,30 @@ private theorem bank_good (a b c d r v w : ℕ)
        · simp only [negatives,size,List.mem_cons,List.mem_singleton,List.mem_nil_iff,or_false]; omega)
     | rcases hi with hi|hi
 
-/-- Both source rows are summed on the same physical masks and their complements. -/
+/- Both source rows are summed on the same physical masks and their complements. -/
 private theorem bank_masses (a b c d r v w : ℕ)
-    (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d) (hda : d<a)
-    (hr : 1≤r) (hrn : r≤2^(a-d))
-    (hv : v<2^(d-1)) (hw : w<2^(c-1)) :
+    (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d) (hda : d<a)
+    (hr : 1 ≤ r) (hrn : r ≤ 2 ^ (a-d))
+    (hv : v<2 ^ (d-1)) (hw : w<2 ^ (c-1)) :
     ∀ side : Bool,
     let F := if side then newBase a b c d else base a b c d
     let f := if side then newValue a b c d else oldValue a b c d
-    let C := fun j : Fin 4 => (((2^(chainLength a b c d j-1)-1:ℕ):ℤ))*F j
+    let C := fun j : Fin 4 => (((2 ^ (chainLength a b c d j-1)-1:ℕ):ℤ)) * F j
     let P := bank a b c d r v w
-    ((P 0).map f).sum=C 3-((2^(a-d):ℕ):ℤ)*F 3+F 3 ∧
-    ((P 1).map f).sum=C 0-(v:ℤ)*F 0+((2^(a-d)-r:ℕ):ℤ)*F 3 ∧
-    ((P 2).map f).sum=C 1-(w:ℤ)*F 1 ∧
-    ((P 3).map f).sum=C 2+((r-1:ℕ):ℤ)*F 3+(v:ℤ)*F 0+(w:ℤ)*F 1 := by
+    ((P 0).map f).sum=C 3-((2 ^ (a-d):ℕ):ℤ) * F 3 + F 3 ∧ 
+    ((P 1).map f).sum=C 0-(v:ℤ) * F 0 + ((2 ^ (a-d)-r:ℕ):ℤ) * F 3 ∧ 
+    ((P 2).map f).sum=C 1-(w:ℤ) * F 1 ∧ 
+    ((P 3).map f).sum=C 2 + ((r-1:ℕ):ℤ) * F 3 + (v:ℤ) * F 0 + (w:ℤ) * F 1 := by
   intro side
   dsimp only
   let F := if side then newBase a b c d else base a b c d
   let f := if side then newValue a b c d else oldValue a b c d
-  let C := fun j : Fin 4 => (((2^(chainLength a b c d j-1)-1:ℕ):ℤ))*F j
+  let C := fun j : Fin 4 => (((2 ^ (chainLength a b c d j-1)-1:ℕ):ℤ)) * F j
   let e := a-d
-  let off := d+c+b
+  let off := d + c + b
   have tab := chain_values a b c d ha hb hc hd
   have hseries (j : Fin 4) : ∀ i<chainLength a b c d j-1,
-      f (chainStart b c d j+i)=2^i*F j := by
+      f (chainStart b c d j + i)=2 ^ i * F j := by
     intro i hi
     cases side
     · exact (tab.2.1 j i (by omega)).trans (if_pos (by omega))
@@ -203,43 +205,43 @@ private theorem bank_masses (a b c d r v w : ℕ)
     (by simpa [chainLength,chainStart] using hseries 0)
   have sv := chamberLabels_sum (c-1) d w hw f (F 1)
     (by simpa [chainLength,chainStart] using hseries 1)
-  have hpCap : 2^e-r<2^e := by dsimp [e]; omega
-  have hqCap : r-1<2^e := by dsimp [e]; omega
-  have hxseries : ∀ i<e, f (off+i)=2^i*F 3 := by
+  have hpCap : 2 ^ e-r<2 ^ e := by dsimp [e]; omega
+  have hqCap : r-1<2 ^ e := by dsimp [e]; omega
+  have hxseries : ∀ i<e, f (off + i)=2 ^ i * F 3 := by
     intro i hi
-    exact hseries 3 i (by dsimp [chainLength,e] at *; omega)
-  have sp := chamberLabels_sum e off (2^e-r) hpCap f (F 3) hxseries
+    exact hseries 3 i (by dsimp [chainLength,e] at * ; omega)
+  have sp := chamberLabels_sum e off (2 ^ e-r) hpCap f (F 3) hxseries
   have sq := chamberLabels_sum e off (r-1) hqCap f (F 3) hxseries
-  have hu := ((chamberLabels_split (d-1) 0 (2^(d-1)-1) v
+  have hu := ((chamberLabels_split (d-1) 0 (2 ^ (d-1)-1) v
     (by intro i hi _; simp [Nat.testBit_two_pow_sub_one,hi])).map f).sum_eq
-  have hv' := ((chamberLabels_split (c-1) d (2^(c-1)-1) w
+  have hv' := ((chamberLabels_split (c-1) d (2 ^ (c-1)-1) w
     (by intro i hi _; simp [Nat.testBit_two_pow_sub_one,hi])).map f).sum_eq
   rw [chamberLabels_full] at hu hv'
   simp only [List.map_append,List.sum_append] at hu hv'
   rw [su,full 0] at hu
   rw [sv,full 1] at hv'
-  have uc : ((chamberLabels (d-1) 0 ((2^(d-1)-1) ^^^ v)).map f).sum=C 0-(v:ℤ)*F 0 := by
+  have uc : ((chamberLabels (d-1) 0 ((2 ^ (d-1)-1) ^  ^  ^ v)).map f).sum=C 0-(v:ℤ) * F 0 := by
     omega
-  have vc : ((chamberLabels (c-1) d ((2^(c-1)-1) ^^^ w)).map f).sum=C 1-(w:ℤ)*F 1 := by
+  have vc : ((chamberLabels (c-1) d ((2 ^ (c-1)-1) ^  ^  ^ w)).map f).sum=C 1-(w:ℤ) * F 1 := by
     omega
   have hx := ((low_split e off r hr hrn).map f).sum_eq
   simp only [List.map_append,List.sum_append] at hx
   rw [sp,sq] at hx
-  have hlen : e+(a-1-e)=a-1 := by dsimp [e]; omega
-  have hxjoin : List.range' off e ++ List.range' (off+e) (a-1-e)=List.range' off (a-1) := by
+  have hlen : e + (a-1-e)=a-1 := by dsimp [e]; omega
+  have hxjoin : List.range' off e +  + List.range' (off + e) (a-1-e)=List.range' off (a-1) := by
     rw [List.range'_append_1,hlen]
   have hsum := congrArg (fun l : List ℕ => (l.map f).sum) hxjoin
   simp only [List.map_append,List.sum_append] at hsum
   have hX := full 3
   change ((List.range' off (a-1)).map f).sum=C 3 at hX
   rw [hX,←hx] at hsum
-  have cp : ((2^e-r:ℕ):ℤ)=((2^e:ℕ):ℤ)-(r:ℤ) := Nat.cast_sub hrn
+  have cp : ((2 ^ e-r:ℕ):ℤ)=((2 ^ e:ℕ):ℤ)-(r:ℤ) := Nat.cast_sub hrn
   have cq : ((r-1:ℕ):ℤ)=(r:ℤ)-1 := by rw [Nat.cast_sub hr]; norm_num
   have hW := full 2
-  change ((List.range' (d+c) (b-1)).map f).sum=C 2 at hW
-  change ((bank a b c d r v w 0).map f).sum=_ ∧
-    ((bank a b c d r v w 1).map f).sum=_ ∧
-    ((bank a b c d r v w 2).map f).sum=_ ∧
+  change ((List.range' (d + c) (b-1)).map f).sum=C 2 at hW
+  change ((bank a b c d r v w 0).map f).sum=_ ∧ 
+    ((bank a b c d r v w 1).map f).sum=_ ∧ 
+    ((bank a b c d r v w 2).map f).sum=_ ∧ 
     ((bank a b c d r v w 3).map f).sum=_
   dsimp [bank]
   simp only [List.map_append,List.sum_append]
