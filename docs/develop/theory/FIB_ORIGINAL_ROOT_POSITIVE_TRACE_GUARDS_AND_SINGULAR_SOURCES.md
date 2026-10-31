@@ -1777,7 +1777,7 @@ N(h_+,+\rho)&(2867,2868)&(1218,1219)&\pi-\sigma+1<0
 $$
 
 In the two rows with a shifted inequality, source positivity itself gives
-\(x>1/2\) in the \(R(h_+,-\rho)\) chart and \(x>1\) in the
+\(x>1/2\) in the \(R(h_-,+\rho)\) chart and \(x>1\) in the
 \(N(h_+,+\rho)\) chart, so the displayed products would have to be positive.
 All denominator cases and positive chart poles are checked in the same exact
 reduction; the only possible positive off-curve basepoint has the critical
