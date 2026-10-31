@@ -137,11 +137,11 @@ private theorem rising_endpoints (u r s : ℚ)
   · -- old_seam_4
     have he : 0 = 0 := by
       dsimp [q,p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
-    simpa only [he] using (le_refl (0:ℚ))
+    rw [he] <;> exact le_rfl
   · -- new_seam_4
     have he : 0 = 0 := by
       dsimp [q,p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
-    simpa only [he] using (le_refl (0:ℚ))
+    rw [he] <;> exact le_rfl
   · -- twice_old_peak_margin_4
     have he : ((A - 1) - (0 * 2)) = 548 + 256 * (s - 2) + 528 * (r - 2) + 256 * (r - 2) * (s - 2) + 128 * (r - 2) ^ 2 + 64 * (r - 2) ^ 2 * (s - 2) + 401 * (u - 4) + 192 * (u - 4) * (s - 2) + 392 * (u - 4) * (r - 2) + 192 * (u - 4) * (r - 2) * (s - 2) + 96 * (u - 4) * (r - 2) ^ 2 + 48 * (u - 4) * (r - 2) ^ 2 * (s - 2) + 98 * (u - 4) ^ 2 + 48 * (u - 4) ^ 2 * (s - 2) + 97 * (u - 4) ^ 2 * (r - 2) + 48 * (u - 4) ^ 2 * (r - 2) * (s - 2) + 24 * (u - 4) ^ 2 * (r - 2) ^ 2 + 12 * (u - 4) ^ 2 * (r - 2) ^ 2 * (s - 2) + 8 * (u - 4) ^ 3 + 4 * (u - 4) ^ 3 * (s - 2) + 8 * (u - 4) ^ 3 * (r - 2) + 4 * (u - 4) ^ 3 * (r - 2) * (s - 2) + 2 * (u - 4) ^ 3 * (r - 2) ^ 2 + (u - 4) ^ 3 * (r - 2) ^ 2 * (s - 2) := by
       dsimp [q,p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
@@ -272,11 +272,11 @@ private theorem swapped_endpoints (u r s : ℚ)
   · -- old_seam_4
     have he : 0 = 0 := by
       dsimp [q,p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
-    simpa only [he] using (le_refl (0:ℚ))
+    rw [he] <;> exact le_rfl
   · -- new_seam_4
     have he : 0 = 0 := by
       dsimp [q,p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
-    simpa only [he] using (le_refl (0:ℚ))
+    rw [he] <;> exact le_rfl
   · -- twice_old_peak_margin_4
     have he : ((A - 1) - (0 * 2)) = 552 + 256 * (s - 2) + 532 * (r - 2) + 256 * (r - 2) * (s - 2) + 128 * (r - 2) ^ 2 + 64 * (r - 2) ^ 2 * (s - 2) + 402 * (u - 4) + 192 * (u - 4) * (s - 2) + 393 * (u - 4) * (r - 2) + 192 * (u - 4) * (r - 2) * (s - 2) + 96 * (u - 4) * (r - 2) ^ 2 + 48 * (u - 4) * (r - 2) ^ 2 * (s - 2) + 98 * (u - 4) ^ 2 + 48 * (u - 4) ^ 2 * (s - 2) + 97 * (u - 4) ^ 2 * (r - 2) + 48 * (u - 4) ^ 2 * (r - 2) * (s - 2) + 24 * (u - 4) ^ 2 * (r - 2) ^ 2 + 12 * (u - 4) ^ 2 * (r - 2) ^ 2 * (s - 2) + 8 * (u - 4) ^ 3 + 4 * (u - 4) ^ 3 * (s - 2) + 8 * (u - 4) ^ 3 * (r - 2) + 4 * (u - 4) ^ 3 * (r - 2) * (s - 2) + 2 * (u - 4) ^ 3 * (r - 2) ^ 2 + (u - 4) ^ 3 * (r - 2) ^ 2 * (s - 2) := by
       dsimp [q,p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
@@ -405,11 +405,11 @@ private theorem tied_ac_endpoints (u r s : ℚ)
   · -- old_seam_4
     have he : 0 = 0 := by
       dsimp [p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
-    simpa only [he] using (le_refl (0:ℚ))
+    rw [he] <;> exact le_rfl
   · -- new_seam_4
     have he : 0 = 0 := by
       dsimp [p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
-    simpa only [he] using (le_refl (0:ℚ))
+    rw [he] <;> exact le_rfl
   · -- twice_old_peak_margin_4
     have he : ((A - 1) - (0 * 2)) = 296 + 276 * (r - 2) + 64 * (r - 2) ^ 2 + 210 * (u - 4) + 201 * (u - 4) * (r - 2) + 48 * (u - 4) * (r - 2) ^ 2 + 50 * (u - 4) ^ 2 + 49 * (u - 4) ^ 2 * (r - 2) + 12 * (u - 4) ^ 2 * (r - 2) ^ 2 + 4 * (u - 4) ^ 3 + 4 * (u - 4) ^ 3 * (r - 2) + (u - 4) ^ 3 * (r - 2) ^ 2 := by
       dsimp [p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
@@ -498,7 +498,7 @@ private theorem all_equal_endpoints (u r s : ℚ)
   · -- twice_old_peak_margin_1
     have he : ((B - 1) - ((B - (A * 1)) * 2)) = 0 := by
       dsimp [p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
-    simpa only [he] using (le_refl (0:ℚ))
+    rw [he] <;> exact le_rfl
   · -- twice_new_peak_margin_1
     have he : ((Bp - 1) - ((Bp - (A * 2)) * 2)) = 2 := by
       dsimp [p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
@@ -538,11 +538,11 @@ private theorem all_equal_endpoints (u r s : ℚ)
   · -- old_seam_4
     have he : 0 = 0 := by
       dsimp [p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
-    simpa only [he] using (le_refl (0:ℚ))
+    rw [he] <;> exact le_rfl
   · -- new_seam_4
     have he : 0 = 0 := by
       dsimp [p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
-    simpa only [he] using (le_refl (0:ℚ))
+    rw [he] <;> exact le_rfl
   · -- twice_old_peak_margin_4
     have he : ((A - 1) - (0 * 2)) = 84 + 57 * (u - 4) + 13 * (u - 4) ^ 2 + (u - 4) ^ 3 := by
       dsimp [p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
@@ -673,11 +673,11 @@ private theorem equal_first_small_endpoints (u r s : ℚ)
   · -- old_seam_4
     have he : 0 = 0 := by
       dsimp [q,p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
-    simpa only [he] using (le_refl (0:ℚ))
+    rw [he] <;> exact le_rfl
   · -- new_seam_4
     have he : 0 = 0 := by
       dsimp [q,p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
-    simpa only [he] using (le_refl (0:ℚ))
+    rw [he] <;> exact le_rfl
   · -- twice_old_peak_margin_4
     have he : ((A - 1) - (0 * 2)) = 148 + 105 * r + 25 * r ^ 2 + 2 * r ^ 3 + 274 * (u - 2) + 148 * (u - 2) * r + 24 * (u - 2) * r ^ 2 + (u - 2) * r ^ 3 + 196 * (u - 2) ^ 2 + 72 * (u - 2) ^ 2 * r + 6 * (u - 2) ^ 2 * r ^ 2 + 64 * (u - 2) ^ 3 + 12 * (u - 2) ^ 3 * r + 8 * (u - 2) ^ 4 := by
       dsimp [q,p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
@@ -808,11 +808,11 @@ private theorem equal_first_large_endpoints (u r s : ℚ)
   · -- old_seam_4
     have he : 0 = 0 := by
       dsimp [q,p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
-    simpa only [he] using (le_refl (0:ℚ))
+    rw [he] <;> exact le_rfl
   · -- new_seam_4
     have he : 0 = 0 := by
       dsimp [q,p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
-    simpa only [he] using (le_refl (0:ℚ))
+    rw [he] <;> exact le_rfl
   · -- twice_old_peak_margin_4
     have he : ((A - 1) - (0 * 2)) = 276 + 256 * (r - 1) + 265 * (u - 4) + 256 * (u - 4) * (r - 1) + 97 * (u - 4) ^ 2 + 96 * (u - 4) ^ 2 * (r - 1) + 16 * (u - 4) ^ 3 + 16 * (u - 4) ^ 3 * (r - 1) + (u - 4) ^ 4 + (u - 4) ^ 4 * (r - 1) := by
       dsimp [q,p,Mp,Lp,Bp,D,M,L,B,A,t,z,y,x] <;> ring
