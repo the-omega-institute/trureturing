@@ -3705,274 +3705,501 @@ consumers (15.3)–(15.4).
 
 ## 追加锚（本行以下为增补区）
 
-## 16. Absolute boundedness at the fixed critical law
+## 16. Absolute boundedness for the fixed critical binary law
 
-**Definition 16.1 (Critical binary notation).** In this section fix exactly
-the law $p=p^{[3/4]}$ of Definition 15.1. Put
-
-$$
-\alpha=\alpha_{3/4},\qquad a=a(\alpha),\qquad
-w=e^{-a},\qquad z=e^{-\alpha a},\qquad
-\kappa=\frac{\pi^2}{2a},
-$$
-
-so that $w+z=1$, and define
+**Definition 16.1 (The law and the frequency notation).** Fix exactly
+$p=p^{[3/4]}$ of Definition 15.1, on the ordered alphabet $0<1$.
+Throughout this section put
 
 $$
-D(s)=1-we^{-as}-ze^{-\alpha as},\qquad
-\Delta(t)=D(it),\qquad
-\omega(t)=t^{-3/2}e^{-\pi t/2}\quad(t\geq1).
+\begin{gathered}
+\alpha=\alpha_{3/4},\quad a=a(\alpha),\quad
+w=e^{-a},\quad z=e^{-\alpha a},\quad
+v_0=w+\alpha z,\quad h=av_0,\quad \kappa=\frac{\pi^2}{2a},\\
+D(s)=1-we^{-as}-ze^{-\alpha as},\qquad \Delta(t)=D(it),\\
+t_m^0=\frac{2\pi m}{a},\qquad
+\epsilon_m=m\alpha-r_m,\quad r_m\text{ the nearest integer to }m\alpha,
+\qquad \Omega_m=(t_m^0)^{-3/2}e^{-\pi t_m^0/2}\quad(m\geq1).
+\end{gathered}                                                       \tag{16.1}
 $$
 
-Let $Q_j,P_j$ be the convergents in Definition 15.1 and write
-$T_j=2\pi Q_j/a$. Fix sufficiently small
-$\varepsilon_0>0$ and $r_0\in(0,1/4)$.
-Call $m$ resonant when $\|m\alpha\|<\varepsilon_0$. For a resonant
-$m$, let $\widehat t_m$ be the unique zero of
-$\operatorname {Im}\Delta$ in the fixed neighborhood
-$|at/(2\pi)-m|<r_0$; put
-$\eta_m=\operatorname {Re}\Delta(\widehat t_m)>0$.
-For nonresonant $m$ put $\widehat t_m=2\pi m/a$ and
-$\eta_m=\varepsilon_0$. After decreasing $\varepsilon_0,r_0$ once,
-compactness of the phase variables gives a uniform lower bound for
-$|\Delta|$ on every nonresonant interval. Finitely many small $m$ are
-absorbed into constants below.
+The irrationality in Theorem 15.2 makes $r_m$ unique and
+$0<|\epsilon_m|<1/2$. Retain the original $E_p(n)$, $\mu$, $M_p$,
+$c_*$, and $R_n(p)$ of (8.1), with natural logarithms. In particular
+$E_p(n)$ counts distinct nonempty contiguous Lyndon words once,
+including letters, all lengths $1\leq m\leq n$, all starts
+$0\leq i\leq n-m$, and the whole word when Lyndon. The law is fixed
+before the integer $n$ varies. Retain also $J_p,J_0,H=J_p-J_0$,
+$A_0$ and $\ell$ from (9.5) and (13.4), and put
+$\Psi(t)=-A_0(it)\ell(it)$, with its removable value at zero.
 
-**Lemma 16.2 (Resonant geometry).** There are constants $c,C,r>0$ and
-$j_0$ depending only on $p$ such that, for $j\geq j_0$ and
-$Q_j\leq m<Q_{j+1}$,
+The mathematical supplier versions for this section are the complete
+six sources at commit
+`b9087e51948fa40e487ce8039c2b126d0dff7a66`: the
+[Lyndon order source](https://github.com/the-omega-institute/trureturing/blob/b9087e51948fa40e487ce8039c2b126d0dff7a66/D5/S1/Words/Complexity/LyndonBrackets/LyndonOrder.lean)
+and its
+[Scribe](https://github.com/the-omega-institute/trureturing/blob/b9087e51948fa40e487ce8039c2b126d0dff7a66/Blueprint/D5/S1/Words/Complexity/LyndonBrackets/LyndonOrder.scribe.cs),
+the
+[distinct-factor source](https://github.com/the-omega-institute/trureturing/blob/b9087e51948fa40e487ce8039c2b126d0dff7a66/D5/S1/Words/Complexity/LyndonFactorChristoffelMinimumRefutation.lean)
+and its
+[Scribe](https://github.com/the-omega-institute/trureturing/blob/b9087e51948fa40e487ce8039c2b126d0dff7a66/Blueprint/D5/S1/Words/Complexity/LyndonFactorChristoffelMinimumRefutation.scribe.cs),
+the
+[Glen--Simpson--Smyth note](https://github.com/the-omega-institute/trureturing/blob/b9087e51948fa40e487ce8039c2b126d0dff7a66/Library/Automata/glensimpsonsmyth2017lyndonfactors.md),
+and the complete
+[Sections 1--15 of this volume](https://github.com/the-omega-institute/trureturing/blob/b9087e51948fa40e487ce8039c2b126d0dff7a66/docs/develop/theory/LYNDON_DISTINCT_FACTOR_PERIODIC_ASYMPTOTICS.md).
+The private lexicographic and suffix arguments of the first source
+support its suffix characterization. In the second, `factor` is
+`drop` followed by `take`, and the image in `distinctLyndon` identifies
+equal words. Its private rejection, cover, witness and certificate
+arguments concern the finite length-506 refutation, with no biased
+asymptotic conclusion. Neither that refutation nor its certificates
+are an analytic premise here. The increasing alphabet map, the actual
+information values $Y=-\log p_I$ with masses $p_i$, and the reductions
+(6.8)--(6.9) retain exactly the correspondence in Section 12.
 
-$$
-cQ_{j+1}^{-2}\leq\eta_m\leq C,\qquad
-cQ_{j+1}^{-2}\leq\eta_{Q_j}\leq C Q_{j+1}^{-2},                 \tag{16.1}
-$$
-
-and, whenever $|t-\widehat t_m|\leq r$,
-
-$$
-|\Delta(t)|\geq c\bigl(\eta_m+|t-\widehat t_m|\bigr).         \tag{16.2}
-$$
-
-Moreover $|\widehat t_m-2\pi m/a|\leq C$ and
-
-$$
-Q_{j+1}=e^{\kappa Q_j}Q_j^{3/4}(1+o(1)).                       \tag{16.3}
-$$
-
-*Proof.* Write $u=at/(2\pi)$ and, for $m$ in the indicated interval,
-write $\alpha m-r_m=\varepsilon_m$ with $r_m$ the nearest integer.
-The best-approximation estimate (15.9) gives
-
-$$
-|\varepsilon_m|\geq(2Q_{j+1})^{-1}.                            \tag{16.4}
-$$
-
-For a resonant $m$, put $u=m+v$. The two phases of $\Delta$ are
-$2\pi v$ and $2\pi(\varepsilon_m+\alpha v)$. Since
-$w+z=1$, the equation
-$\operatorname {Im}\Delta=0$ has one solution with $v=O(|\varepsilon_m|)$:
-the derivative of the imaginary part at $\varepsilon_m=v=0$ is
-$2\pi(w+z\alpha)>0$, and the implicit-function theorem applies on a
-fixed neighborhood. At that solution, Taylor's formula and
-$1-\cos y\geq c y^2$ for $|y|$ small give
-
-$$
-\eta_m=1-w\cos(2\pi v)-z\cos(2\pi(\varepsilon_m+\alpha v))
-      \asymp \varepsilon_m^2.                                  \tag{16.5}
-$$
-
-The two phase errors cannot both be $o(|\varepsilon_m|)$ because their
-linear combination has coefficient $w+z\alpha$; this proves the lower
-comparison in (16.5). Equations (16.4) and (16.5) give the first bound
-in (16.1). For $m=Q_j$, (15.8) gives
-$|\varepsilon_{Q_j}|\asymp Q_{j+1}^{-1}$, proving the second bound.
-
-Differentiating $D(it)$ shows that, on the same fixed neighborhood,
-the derivative of its imaginary part has modulus at least
-$a(w+z\alpha)/3$. Thus the imaginary part is a valid coordinate and
-the real part is at least a fixed multiple of $\eta_m$; consequently
-$|\Delta(t)|^2\geq c(\eta_m^2+|t-\widehat t_m|^2)$, which implies
-(16.2). For nonresonant $m$ the same estimate is unnecessary: the
-compactness lower bound makes the whole interval a uniformly smooth
-piece. The displacement estimate follows from $v=O(|\varepsilon_m|)$.
-Finally (16.3) is (15.7) with $\tau=3/4$. $\qed$
-
-**Lemma 16.3 (One resonant interval).** Let $A_0(s)=\Gamma(1-s)/(s(1+s))$
-and let $\ell$ be the boundary logarithm in (13.4), so that
-$\Psi(t)=-A_0(it)\ell(it)$. There are constants $c,C>0$ such that,
-for every $x\geq1$, every sufficiently large $m$, and the interval
-$I_m=[2\pi(m-1/2)/a,2\pi(m+1/2)/a]$,
-
-$$
-\left|\int_{I_m}e^{itx}\Psi(t)\,dt\right|
-\leq C\left(
-\frac{\omega(2\pi m/a)e^{-c\eta_m x}}x
-+\frac{\omega(2\pi m/a)(1+\log(2+m))^3}{x^2}\right).                         \tag{16.6}
-$$
-
-*Proof.* Choose a fixed smooth cutoff equal to one on the smaller
-interval where (16.2) holds. On that interval Taylor's formula gives
-
-$$
-\Delta(t)=\eta_m+i\lambda_m(t-\widehat t_m)\,G_m(t),
-\qquad |\lambda_m|\asymp1,\qquad G_m(\widehat t_m)=1,
-$$
-
-where $G_m$ and its first two derivatives are uniformly bounded and
-bounded away from zero; the real part of the linear coefficient is
-$O(\eta_m)$. Hence, after changing the bounded smooth factor $G_m$,
-the difference between $\log\Delta(t)$ and
-$\log(\eta_m+i\lambda_m(t-\widehat t_m))$ has uniformly bounded two
-derivatives. The same is true after multiplying by $A_0(it)$, apart
-from the factor $|A_0(i\widehat t_m)|\asymp\omega(2\pi m/a)$, by the
-Gamma estimates (13.5). For nonresonant $m$, the whole logarithm and
-its first two derivatives are uniformly bounded and two integrations
-by parts give the second term in (16.6). The displayed cubic logarithm
-absorbs the first two derivatives of $A_0$ and the logarithmic factor
-in $\ell$.
-
-For the model logarithm, differentiate once and use the elementary
-residue identity, valid for $x>0$,
-
-$$
-\int_{\mathbb R}\frac{e^{iux}}{\eta+i\lambda u}\,du
-=\frac{2\pi}{\lambda}e^{-\eta x/\lambda}
-$$
-
-with the sign chosen by the sign of $\lambda$. Integrating by parts
-once in the cutoff identity for $\log(\eta+i\lambda u)$ gives
-$O(x^{-1}e^{-c\eta x})+O(x^{-2})$; the cutoff derivatives and the
-uniformly smooth difference contribute $O(x^{-2})$. The tails of the
-interval are treated by two integrations by parts, using (13.5) and
-(16.2). Multiplication by the displayed Gamma factor proves (16.6).
-More explicitly, if $\chi$ is one near zero and supported in the
-fixed local interval, then
+**Lemma 16.2 (An exact local zero).** There are constants
+$r>0$, $\epsilon_0>0$, $c,C>0$, and real analytic functions
+$\theta(\epsilon),d(\epsilon)$ on $[-\epsilon_0,\epsilon_0]$ with
+$\theta(0)=d(0)=0$, such that, for $0<|\epsilon|\leq\epsilon_0$,
 
 $$
 \begin{aligned}
-ix\int e^{ixu}\chi(u)\log(\eta+i\lambda u)\,du
- &=-\int e^{ixu}\chi(u)\frac{i\lambda}{\eta+i\lambda u}\,du\\
- &\quad-\int e^{ixu}\chi'(u)\log(\eta+i\lambda u)\,du .
-\end{aligned}
+\theta(\epsilon)+i d(\epsilon)
+ &=-\frac{2\pi z}{h}\epsilon
+   +i\frac{2\pi^2wz}{a v_0^3}\epsilon^2+O_p(|\epsilon|^3),\\
+c\epsilon^2\leq d(\epsilon)&\leq C\epsilon^2<r/4,
+\qquad |\theta(\epsilon)|<r/4.
+\end{aligned}                                                       \tag{16.2}
 $$
 
-The second integral is $O(x^{-2})$ after one further integration by
-parts because $\chi'$ is supported away from zero. In the first
-integral replace $\chi$ by one; the difference is again smooth away
-from zero. Closing the contour in the half-plane selected by the sign
-of $\lambda x$ gives the displayed residue and
-$O(x^{-1}e^{-c\eta x})$. The quotient estimate
-$|\eta+i\lambda u|\asymp\eta+|u|$ and Taylor's remainder show that
-the two derivatives of the difference of the actual logarithm and
-the model are bounded uniformly; two integrations by parts therefore
-give $O(x^{-2})$. The factor $A_0(i(\widehat t_m+u))$ is its value at
-$u=0$ plus $u$ times a function with the same bounds, and the latter
-term is covered by the same two integrations. The negative-frequency
-estimate follows by conjugation. $\qed$
-
-**Lemma 16.4 (Critical block summation).** With
+For every $m$ with $|\epsilon_m|<\epsilon_0$, set
+$T_m=t_m^0+\theta(\epsilon_m)$ and $d_m=d(\epsilon_m)$.
+For real $|u|\leq2r$ the boundary logarithm has the exact form
 
 $$
-\omega_j=Q_j^{-3/2}e^{-2\kappa Q_j},\qquad
-\eta_j=Q_{j+1}^{-2},
+\log\Delta(T_m+u)=\log(d_m+iu)+g_m(u),\qquad
+\max_{0\leq j\leq2}\sup_{|u|\leq2r}|g_m^{(j)}(u)|\leq C.       \tag{16.3}
 $$
 
-there is a constant $C$ such that, for every $x\geq1$,
+The logarithm of $d_m+iu$ has real part
+$\log|d_m+iu|$ and argument in $(-\pi/2,\pi/2)$.
+The intervals $[T_m-2r,T_m+2r]$ can be taken pairwise disjoint.
+
+*Proof.* In a complex variable $v$ define
 
 $$
-\sum_{j\geq j_0}\omega_j e^{-c\eta_jx}\leq\frac Cx,
-\qquad
-\sum_{j\geq j_0}\omega_j<\infty.                               \tag{16.7}
+F_\epsilon(v)=1-we^{-iav}-ze^{-2\pi i\epsilon}e^{-i\alpha av}.
 $$
 
-*Proof.* Equation (16.3) gives $\omega_j\asymp\eta_j$ and, after
-discarding finitely many terms, $\eta_{j+1}\leq\eta_j/2$. Split the
-sum at the last index with $\eta_jx\geq1$. Before that index, group
-the terms dyadically and use
-$\sum_{k\geq0}2^ke^{-c2^k}<\infty$; afterwards use the geometric
-tail $\sum_{j>J}\eta_j\leq2\eta_{J+1}\leq2/x$. The second assertion is
-the same geometric estimate with $x=1$. $\qed$
-
-**Theorem 16.5 (Bounded critical residual).** For the single fixed law
-$p=p^{[3/4]}$ of Definition 15.1, there is a finite constant $C_p$ such
-that
+This is analytic jointly near $(\epsilon,v)=(0,0)$, where
+$F_0(0)=0$ and $\partial_vF_0(0)=ih\ne0$. The analytic implicit
+function theorem supplies a zero $\zeta(\epsilon)$ near zero.
+For real $\epsilon$ write $\zeta=\theta+id$. Expanding the
+exponentials gives, with total degree at least three in the error,
 
 $$
-|R_n(p)|\leq C_p\qquad\text{for every integer }n\geq2.            \tag{16.8}
+F_\epsilon(v)=i(hv+2\pi z\epsilon)
+ +\tfrac12\bigl[wa^2v^2+z(2\pi\epsilon+\alpha av)^2\bigr]
+ +O_p((|v|+|\epsilon|)^3).
 $$
 
-*Proof.* The transform identity (13.4), the comparison kernel (9.5),
-and the exact occurrence reduction (9.4) apply to this same ordered
-binary iid law and to the original statistic, including letters, every
-legal length and window, and the whole word when Lyndon. The parameter
-map is the one fixed in §12: $Y=-\log p_I$ with masses
-$\mathbb P(I=i)=p_i$, while the increasing alphabet map preserves order,
-rotations, factors, and equality. Thus the six complete public suppliers
-listed there are consumed only through their stated hypotheses and
-versions; the new inference is the critical Fourier block estimate
-(16.6) and its summation. The estimates
-(15.9), (16.1), and (13.5) imply
-$\Psi\in L^1(\mathbb R)$: on the block $Q_j\leq m<Q_{j+1}$,
-$|\Delta(t)|\geq cQ_{j+1}^{-2}$ by (15.10), and hence
-$|\ell(it)|\leq C+Q_j+\log(2+m)$ and the Gamma factor is bounded by
-$C\omega(m)$. Abelian Fourier inversion in (13.4), followed by
-$\sigma\downarrow0$, therefore gives
+The coefficient of $\epsilon$ in $\zeta$ is $-2\pi z/h$.
+At this coefficient the two linear phase errors are
+$-2\pi z\epsilon/v_0$ and $2\pi w\epsilon/v_0$.
+Their quadratic contribution in the last display is
+$2\pi^2wz\epsilon^2/v_0^2$. Thus the coefficient of
+$\epsilon^2$ in $\zeta$ is
+$i2\pi^2wz/(hv_0^2)=i2\pi^2wz/(av_0^3)$.
+It has strictly positive imaginary part. Shrinking the neighborhood
+proves all the bounds (16.2).
+
+Choose $r$ and then $\epsilon_0$ small enough that
+$|\partial_vF_\epsilon(v)-ih|<h/2$ on $|v|\leq3r$ and that
+$|\zeta(\epsilon)|<r/2$. On $|v|\leq 5r/2$ the exact factorization is
 
 $$
-H(x):=J_p(x)-J_0(x)=\frac1{2\pi}\int_{\mathbb R}e^{itx}\Psi(t)\,dt.
+F_\epsilon(v)=(v-\zeta(\epsilon))B_\epsilon(v),\qquad
+B_\epsilon(v)=\int_0^1\partial_vF_\epsilon
+       (\zeta(\epsilon)+s(v-\zeta(\epsilon)))\,ds.
 $$
 
-The finitely many low-frequency pieces are $O(x^{-2})$ by two
-integrations by parts. Apply Lemma 16.3 on each $I_m$ and sum first over
-$Q_j\leq m<Q_{j+1}$. Since $\omega(2\pi m/a)$ decreases geometrically
-with $m$ and (16.1) gives $\eta_m\geq c\eta_j$,
+The segment stays in the chosen disk. Consequently
+$G_\epsilon=B_\epsilon/i$ stays in the disk $|G-h|<h/2$;
+it and its first two derivatives are uniformly bounded there,
+and $|G_\epsilon|\geq h/2$. The analytic logarithm of $G_\epsilon$
+therefore has uniformly bounded derivatives through order two.
+For real $u$, putting $v=\theta+u$ gives
+$F_\epsilon(v)=(d+iu)G_\epsilon(v)$. Since
+$\operatorname{Re}F_\epsilon(v)\geq0$, its boundary argument lies
+in $[-\pi/2,\pi/2]$. At $u=0$ the logarithmic identity holds with
+$g(u)=\log G_\epsilon(\theta+u)$, since $d>0$ and
+$\operatorname{Re}G_\epsilon>0$. Continuity extends that identity
+through the real interval: neither factor vanishes, and two
+continuous logarithms of the same nonzero function differ by a
+constant multiple of $2\pi i$. Finally
+$\Delta(t_m^0+v)=F_{\epsilon_m}(v)$, proving (16.3).
+Choose $r$ also less than $\pi/(8a)$; the displacement bound in
+(16.2) and the spacing $2\pi/a$ then ensure disjointness. $\square$
+
+**Lemma 16.3 (Smoothly localized Fourier bound).** Fix an even
+$\chi\in C_c^\infty((-r,r))$, with $0\leq\chi\leq1$ and
+$\chi=1$ on $[-r/2,r/2]$. There are constants $C>0$ and an
+integer $M$ such that, whenever $m\geq M$ and
+$|\epsilon_m|<\epsilon_0$, for every real $x\geq1$,
 
 $$
-\left|\int_{T_j}^{T_{j+1}}e^{itx}\Psi(t)\,dt\right|
-\leq C\left(\frac{\omega_j e^{-c\eta_jx}}x
-                        +\frac{\omega_j(1+Q_j)^3}{x^2}\right).            \tag{16.9}
+\left|\int_{\mathbb R}e^{itx}\chi(t-T_m)\Psi(t)\,dt\right|
+ \leq \frac{C\Omega_m e^{-d_mx}}x
+ +\frac{C\Omega_m(1+\log(2+m))^3(1+\log(1/d_m))}{x^2}.          \tag{16.4}
 $$
 
-The same estimate holds on negative blocks. Equations (16.7) and
-(16.9) give $H(x)=O_p(x^{-2})$ for $x\geq1$.
+Here $\epsilon_0$ is small enough that $d_m<\min(1,r/4)$.
 
-The comparison expansion (9.6) and (14.3) now yield
+*Proof.* We first establish the elementary logarithm integral used
+inside this estimate. Uniformly for $0<d<\min(1,r/4)$, with the
+same cutoff and for $x\geq1$,
 
 $$
-\mathscr R_p(x)=c_*-x^2H(x)+O_p(x^{-1})=O_p(1).                 \tag{16.10}
+I_d(x):=\int e^{iux}\chi(u)\log(d+iu)\,du
+       =-\frac{2\pi e^{-dx}}x+O_r(x^{-2}).                        \tag{16.5}
 $$
 
-The real/integer interpolation in (14.4) gives
-$R_n(p)=O_p(1)$ for all sufficiently large integers. The finitely many
-values $2\leq n<n_0(p)$ have finite residuals, so enlarging the same
-constant proves (16.8). $\qed$
+There are no finite endpoint terms, since $\chi$ has compact support.
+One integration by parts gives
 
-**Theorem 16.6 (Original expectation and the inherited endpoint).** For
-the same fixed law $p=p^{[3/4]}$ and all integers $n\to\infty$,
+$$
+ixI_d(x)=-\int e^{iux}\frac{\chi(u)}{u-id}\,du
+         -\int e^{iux}\chi'(u)\log(d+iu)\,du.                    \tag{16.6}
+$$
+
+The second integral is $O_r(x^{-1})$: its amplitude has an
+$L^1$ derivative bounded independently of $d$, because
+$\chi'$ is supported where $|u|\geq r/2$.
+For the first integral the full, conditionally convergent integral is
+$\int_{\mathbb R}e^{iux}(u-id)^{-1}du=2\pi i e^{-dx}$.
+Indeed, close $[-R,R]$ by the upper semicircle and take the residue
+at $id$. For $R>2d$ the arc integral has modulus at most
+$2\int_0^\pi e^{-Rx\sin\phi}d\phi=O((Rx)^{-1})$;
+use $\sin\phi\geq2\phi/\pi$ on $[0,\pi/2]$ and symmetry.
+It tends to zero for each $x>0$. The difference from the cutoff
+integral has amplitude $(\chi(u)-1)/(u-id)$, which tends to zero
+at infinity, vanishes near zero, and has a uniformly bounded
+$L^1$ derivative. Integration by parts makes this difference
+$O_r(x^{-1})$. This proves (16.5), including its uniform error.
+
+Write $t=T_m+u$, $a_m(u)=A_0(i(T_m+u))$, and
+$L_m=1+\log(2+m)$. The Gamma estimates (13.5) on this fixed
+neighborhood give
+$\sup_{|u|\leq r}|a_m^{(j)}(u)|\leq C\Omega_m L_m^j$ for
+$j=0,1,2$: the displacement $T_m-t_m^0$ is bounded and
+$T_m+u\asymp m$. The smooth part of $\ell(i(T_m+u))$ in (16.3) is
+
+$$
+q_m(u)=g_m(u)-\log h-\log(i(T_m+u)).
+$$
+
+Its derivatives through order two are bounded by $CL_m$.
+Hence the compact amplitude $\chi a_m q_m$ has second derivative
+of $L^1$ norm at most $C\Omega_m L_m^3$. Two integrations by
+parts bound its Fourier integral by that quantity times $x^{-2}$.
+
+For the remaining amplitude, split
+$\chi a_m\log(d_m+iu)$ into
+$a_m(0)\chi\log(d_m+iu)$ and $b_m(u)\log(d_m+iu)$, where
+$b_m(u)=\chi(u)(a_m(u)-a_m(0))$. Formula (16.5) handles the first
+part. The mean value estimate and the preceding derivative bounds give
+
+$$
+|b_m(u)|\leq C\Omega_mL_m^2|u|,\qquad
+|b_m'(u)|+|b_m''(u)|\leq C\Omega_mL_m^2
+\quad(|u|\leq r).
+$$
+
+All these functions vanish outside the compact support of $\chi$.
+For $0<d<\min(1,r/4)$ the elementary integrals satisfy
+
+$$
+\begin{aligned}
+\int_{-r}^r|\log(d+iu)|\,du&\leq C_r,\\
+\int_{-r}^r\frac{du}{\sqrt{d^2+u^2}}
+ +\int_{-r}^r\frac{|u|\,du}{d^2+u^2}
+ &\leq C_r(1+\log(1/d)).
+\end{aligned}                                                       \tag{16.7}
+$$
+
+For the first bound use $|\arg(d+iu)|\leq\pi/2$ and split
+$|u|\leq d$ from $d<|u|\leq r$; the integral of
+$|\log|u||$ at zero is finite. The other two integrals follow by
+the same split, or by their elementary antiderivatives.
+Since $(\log(d+iu))'=i/(d+iu)$ and
+$|(\log(d+iu))''|=(d^2+u^2)^{-1}$, the product rule and
+(16.7) show
+
+$$
+\left\|\bigl[b_m(u)\log(d_m+iu)\bigr]''\right\|_1
+ \leq C\Omega_m L_m^2(1+\log(1/d_m)).
+$$
+
+A further two integrations by parts are valid for this smooth
+compactly supported function, since $d_m>0$. They give the second
+term of (16.4). Combining the three amplitudes and the harmless
+factor $e^{iT_mx}$ proves (16.4). This proof uses the exact zero
+from Lemma 16.2; it requires no real linear coefficient of size
+$O(d_m)$ at a zero of the imaginary part. $\square$
+
+**Lemma 16.4 (The full boundary transform).** For this law,
+$\Psi\in L^1(\mathbb R)$ and, for every real $x$,
+
+$$
+H(x)=\frac1{2\pi}\int_{\mathbb R}e^{itx}\Psi(t)\,dt.              \tag{16.8}
+$$
+
+With $M$ sufficiently large, let
+$\mathcal N=\{m\geq M:|\epsilon_m|<\epsilon_0\}$ and define
+
+$$
+P(t)=\left[1-\sum_{m\in\mathcal N}
+       (\chi(t-T_m)+\chi(t+T_m))\right]\Psi(t).
+$$
+
+Then $P,P',P''\in L^1(\mathbb R)$ and $P,P'\to0$ at both ends.
+Moreover, the sum over $m\in\mathcal N$ of the numerators of the
+$x^{-2}$ terms in (16.4) is finite.
+
+*Proof.* For $Q_j\leq m<Q_{j+1}$, (15.9) gives
+$|\epsilon_m|>(2Q_{j+1})^{-1}$. At $\tau=3/4$, (15.7) implies
+$\log Q_{j+1}\leq C_p Q_j$ for sufficiently large $j$.
+Together with (16.2), these give, for all large resonant $m$,
+
+$$
+\log(1/d_m)\leq C_p+2\log Q_{j+1}\leq C_p(1+m).                  \tag{16.9}
+$$
+
+Since $\Omega_m=(2\pi/a)^{-3/2}m^{-3/2}e^{-2\kappa m}$,
+(16.9) proves the asserted summability of the error numerators.
+These are estimates on all integer-denominator blocks.
+
+For any large positive $t$, choose the nearest integer $m$ to
+$at/(2\pi)$. Then $t\asymp_p m$. Equations (15.10), (15.9), and
+(15.7) yield
+
+$$
+|\log\Delta(t)|\leq C_p(1+t),\qquad
+|\ell(it)|\leq C_p(1+t).                                         \tag{16.10}
+$$
+
+Indeed $|\Delta(t)|\geq c_p|\epsilon_m|^2$, its modulus is at
+most two, and its boundary argument has magnitude at most $\pi/2$.
+Conjugation gives the negative-frequency bounds. At zero use the
+removable analytic expression in (13.4). The Gamma estimate (13.5)
+therefore proves $\Psi\in L^1$.
+
+For completeness, the boundary limit giving (16.8) is an ordinary
+$L^1$ inversion. The exact transform is
+$\mathcal H(s)=-A_0(s)\ell(s)$ for $0<\operatorname{Re}s<1$,
+by (13.4). The inequality (9.14),
+$|D(\sigma+it)|\geq c_p|D(it)|$ for $0\leq\sigma\leq1/4$,
+and the bounded logarithmic arguments extend (16.10) uniformly to
+this strip. The estimates (13.5) give an integrable dominating
+function at large $|t|$. On compact intervals away from zero use
+continuity and nonvanishing, and at zero use removability. Dominated
+convergence proves
+$\mathcal H(\sigma+i\,\cdot)\to\Psi$ in $L^1$ as
+$\sigma\downarrow0$. Both $J_p$ and $J_0$ have exponential decay
+at $-\infty$ and at most logarithmic growth at $+\infty$, as in
+(9.5)--(9.7). Thus $e^{-\sigma x}H(x)$ is continuous and integrable.
+Fourier inversion for it, followed by this $L^1$ limit, proves
+(16.8) at every real $x$.
+
+It remains to bound the part outside the resonance cores. In the
+cell $t=t_m^0+v$, $|v|\leq\pi/a$, one has
+$\Delta(t)=F_{\epsilon_m}(v)$. On the compact rectangle
+$|v|\leq\pi/a$, $|\epsilon|\leq1/2$, the only zero of
+$F_\epsilon(v)$ for real $v,\epsilon$ is $(0,0)$: equality in the
+positive convex combination forces $e^{-iav}=1$, hence $v=0$,
+and then $e^{-2\pi i\epsilon}=1$, hence $\epsilon=0$.
+Therefore the cells with $|\epsilon_m|\geq\epsilon_0$ have a
+uniform positive lower bound for $|\Delta|$. In a resonant cell,
+where $|t-T_m|\geq r/2$, one has
+$|v|\geq r/4$ by (16.2), so compactness gives a uniform lower
+bound there too. Points of the cutoff support lie in their own
+cells; the intervals are disjoint by Lemma 16.2.
+
+The multiplier defining $P$ vanishes identically on each resonance
+core. It and all its derivatives through order two are uniformly
+bounded; its derivatives are supported outside those cores.
+On their complement, $\Delta$ is bounded away from zero and its
+first two derivatives are bounded. Consequently $\log\Delta$ and
+its first two derivatives are uniformly bounded there. Formula
+(13.5) now bounds $P,P',P''$ at large $|t|$ by an exponential
+times a fixed power of $1+\log(2+|t|)$. On the remaining compact
+interval they are smooth, including at zero. This proves all the
+claimed integrability and endpoint limits. In particular,
+
+$$
+\left|\int e^{itx}P(t)\,dt\right|\leq\frac{\|P''\|_1}{x^2}
+\qquad(x\geq1).                                                    \tag{16.11}
+$$
+
+These integrations have endpoints only at infinity, where the
+boundary terms vanish. $\square$
+
+**Lemma 16.5 (Summation at the critical exponent).** For every fixed
+$c>0$, writing $\lambda_j=Q_{j+1}^{-2}$, one has
+
+$$
+\sum_{j\geq j_0}\lambda_j e^{-c\lambda_j x}\leq C_{p,c}/x
+\qquad(x\geq1),\qquad
+\sum_{m\in\mathcal N}\Omega_m e^{-d_mx}\leq C_p/x.                \tag{16.12}
+$$
+
+*Proof.* The recurrence gives
+$\lambda_{j+1}\leq\lambda_j/4$. Among the terms with
+$x\lambda_j<1$ the geometric tail has sum at most $4/(3x)$.
+For each $k\geq0$, there is at most one $j$ with
+$2^k\leq x\lambda_j<2^{k+1}$. Its contribution is at most
+$2^{k+1}e^{-c2^k}/x$. The sum of these bounds converges, proving
+the first assertion for every $x\geq1$.
+
+By (16.2) and (15.9), if $Q_j\leq m<Q_{j+1}$ is resonant,
+$d_m\geq c_p\lambda_j$. The geometric exponential weight gives
+
+$$
+\sum_{m=Q_j}^{Q_{j+1}-1}\Omega_m
+ \leq C_p Q_j^{-3/2}e^{-2\kappa Q_j}
+ \leq C_p\lambda_j.                                               \tag{16.13}
+$$
+
+The first inequality follows by replacing $m^{-3/2}$ by
+$Q_j^{-3/2}$ and summing the geometric series of ratio
+$e^{-2\kappa}$. The second is exactly the bounded-ratio consequence
+of (15.7) at $\tau=3/4$:
+$Q_{j+1}\sim e^{\kappa Q_j}Q_j^{3/4}$.
+Summing over all complete blocks and applying the first assertion
+with $c=c_p$ proves the second assertion. Any finitely many initial
+terms are also $O_p(x^{-1})$, since each $d_m>0$ and
+$\sup_{x\geq1}xe^{-d_mx}<\infty$. $\square$
+
+**Theorem 16.6 (Absolute boundedness of the original residual).**
+For the single fixed law $p=p^{[3/4]}$ there is a finite constant
+$C_p$ such that
+
+$$
+|R_n(p)|\leq C_p\qquad\text{for every integer }n\geq2.             \tag{16.14}
+$$
+
+*Proof.* Decompose the absolutely convergent inverse integral
+(16.8) by the smooth cutoffs of Lemma 16.4. Their supports are
+disjoint, so the decomposition and summation of integrals are
+justified by $\Psi\in L^1$. The negative-frequency pieces are
+complex conjugates of the positive-frequency pieces, since
+$\Psi(-t)=\overline{\Psi(t)}$ and $\chi$ is even.
+The residual piece is bounded by (16.11). Sum (16.4) over the
+positive pieces. Its error numerators are summable by (16.9),
+and its exponential terms are bounded by Lemma 16.5. Thus
+
+$$
+|H(x)|\leq \frac{C_p}{x^2}
+       +\frac{C_p}{x}\sum_{m\in\mathcal N}\Omega_m e^{-d_mx}
+       \leq\frac{C_p}{x^2}\qquad(x\geq1).                         \tag{16.15}
+$$
+
+The reused comparison (9.6) gives
+$\mathscr R_p(x)=c_*-x^2H(x)+O_p(x^{-1})$, with
+$\mathscr R_p$ exactly (14.3). The all-real/all-integer transfer
+(14.4), under this same fixed positive nonarithmetic law, yields
+
+$$
+R_{\lfloor e^x\rfloor}(p)=c_*-x^2H(x)+o_p(1)
+                                      \qquad(x\to+\infty).       \tag{16.16}
+$$
+
+In particular (16.15) bounds $R_n(p)$ for every sufficiently large
+integer $n$ by taking $x=\log n$. The occurrence contribution in
+this transfer is precisely
+$O_p((\log n)^2n^{-\delta_0}+(\log n)^3/n)$,
+$\delta_0=a/(4\log2)>0$; hence it tends to zero on the full integer
+sequence. No selected phase or subsequence is needed.
+For each remaining integer $2\leq n<n_0(p)$, the finite word
+statistic satisfies $0\leq D(W_n)\leq n(n+1)/2$, so its expectation
+and its residual (8.1) are finite. Enlarge the eventual bound by
+the maximum of the absolute values of these finitely many residuals.
+This proves (16.14) with one constant depending only on $p$.
+$\square$
+
+The analytic inputs to (16.15) are the exact logarithmic transform
+(13.4), the Gamma bounds (13.5), and the continued-fraction estimates
+(15.7)--(15.10). The Gamma statements retain their precise primary
+sources, [NIST DLMF 5.11.1--5.11.2](https://dlmf.nist.gov/5.11)
+and [5.15.1](https://dlmf.nist.gov/5.15#E1), at
+$1-\sigma-it$ with real part in $[3/4,1]$.
+The exponential constant is $\pi/2$, and
+$(\pi/2)(2\pi/a)=2\kappa$. The convergent input retains
+[Sondow, arXiv:math/0406300v1, Section 3, Theorem 1 and (5)](https://arxiv.org/pdf/math/0406300v1),
+with numerators $P_j$, denominators $Q_j$, and actual information
+ratio $\alpha$. Its errors are (15.8); their best-approximation
+consequence for every intermediate integer denominator is (15.9).
+The new inference is their combination with the exact local zero,
+smooth Fourier decomposition and critical summation in this section
+to obtain (16.15) and then the original-expectation bound (16.14).
+Neither boundedness of $W_p$ nor failure of the sufficient condition
+$S(p)<\infty$ is used to infer a residual conclusion.
+
+**Theorem 16.7 (Expectation and inherited nonconvergence).** For this
+same fixed law and along all integers $n\to\infty$,
 
 $$
 E_p(n)=M_p(n)+\frac{\mu n}{\log n}
-       +O_p\!\left(\frac n{(\log n)^2}\right).                  \tag{16.11}
+           +O_p\!\left(\frac{n}{(\log n)^2}\right).              \tag{16.17}
 $$
 
-The residual in (16.8) has no finite limit. Consequently there is no
-real constant $C$ for which
+The same residual $R_n(p)$ has no finite limit, and there is no
+real constant $C$ with
 
 $$
 E_p(n)=M_p(n)+\frac{\mu n}{\log n}
-            +\frac{Cn}{(\log n)^2}
-            +o_p\!\left(\frac n{(\log n)^2}\right).             \tag{16.12}
+        +\frac{Cn}{(\log n)^2}
+        +o_p\!\left(\frac{n}{(\log n)^2}\right).                 \tag{16.18}
 $$
 
-*Proof.* Equation (16.11) is exactly the definition of $R_n(p)$ in
-(8.1) together with the newly proved absolute bound (16.8). The
-nonconvergence statement is the $\tau=3/4$ line of Theorem 15.2,
-which concerns this same all-integer residual and this same original
-expectation. It is therefore inherited rather than reproved here.
-If (16.12) held, multiplying by $(\log n)^2/n$ would give
-$R_n(p)\to C$, contradicting that inherited conclusion. Thus the
-second-order term is bounded but cannot be replaced by a constant with
-an $o_p(n/(\log n)^2)$ remainder. No assertion about arbitrary critical
-laws, separate signs, rates, or parameter-uniform constants follows. $\qed$
+*Proof.* Theorem 16.6 and the exact definition (8.1) give (16.17).
+Nonconvergence is the unchanged $\tau=3/4$ conclusion of Theorem
+15.2 for this same original integer residual. If (16.18) held,
+(8.1) would imply $R_n(p)\to C$, contradicting that inherited
+conclusion. Thus boundedness is the additional conclusion here;
+nonconvergence and the exclusion of a constant second-order
+little-$o$ expansion are inherited consequences of Theorem 15.2.
+
+The original-model reduction retains the hypotheses and source maps
+of Sections 6 and 12: [Glen--Simpson--Smyth, arXiv:1701.00928v1,
+Sections 1, 3--4 and (6)](https://arxiv.org/pdf/1701.00928v1),
+with their $\sigma=2$, concerns distinct contiguous factor words;
+[Hirakawa--Nakashima--Inenaga--Takeda, arXiv:2106.01190v2,
+Table 1, page 2](https://arxiv.org/pdf/2106.01190v2) denotes its
+uniform expectation by $E_{DF}$. The biased law uses the weighted
+reduction (6.8), not the uniform expectation formula. Its probability
+input is the zero-event inequality of [Arratia--Goldstein--Gordon,
+original 1989 paper, Section 2, Theorem 1, pages 10--11](https://dornsife.usc.edu/larry-goldstein/wp-content/uploads/sites/221/2023/06/AGG-1.pdf):
+the Bernoulli indices are the legal windows, their means are $P(w)$,
+the neighborhoods contain their own index, and borderlessness and
+iid disjoint windows give $b_2=b_3=0$. The harmonic and Euler-Gamma
+inputs retain [Flajolet--Gourdon--Dumas, original 1995 paper,
+(12), Example 7 and the periodicity discussion](https://algo.inria.fr/flajolet/Publications/FlGoDu95.pdf).
+The positive-mean origin-lattice theorem of [Blackwell, original
+1953 paper, Section 1, Theorem 1](https://msp.org/pjm/1953/3-2/pjm-v3-n2-p03-p.pdf)
+remains a rate-free input to Section 7. [Boyer,
+arXiv:1506.07625v1, Definitions 2.11 and 3.5 and Proposition 4.3](https://arxiv.org/pdf/1506.07625v1)
+retains its positive-drift, exponential-moment and weak-diophantine
+hypotheses in Theorem 8.3; that polynomial hypothesis is not an input
+here. The Basel value [DLMF 25.6.1](https://dlmf.nist.gov/25.6#E1)
+retains its role in the inherited definition of $c_*$. None of these
+maps requires equality with inaccessible historical source bytes.
+
+All parameter ranges of Theorem 15.2 and the sufficient-only and
+necessary-only directions of Theorems 13.2 and 14.1 retain their
+hypotheses. The exact-critical classification for arbitrary individual
+laws remains unresolved. Theorem 16.6 concerns only the one law
+$p^{[3/4]}$ and asserts no separate signs, extrema, rates or bound
+uniform in a parameter. $\square$
 
 ## 追加锚（本行以下为增补区）
