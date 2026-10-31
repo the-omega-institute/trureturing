@@ -16,8 +16,8 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 /-- Observe the circuit's weight in the strict positivity premise. -/
-abbrev signature.{w} : Signature where
-  Params := Σ ι : Type w, ι
+abbrev signature.{u_3} : Signature where
+  Params := Σ ι : Type u_3, ι
   State q := q.1 → ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -26,15 +26,15 @@ abbrev signature.{w} : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual.{w} : Realization signature.{w} :=
+def actual.{u_3} : Realization signature.{u_3} :=
   realize signature (fun _ q weight => weight q.2) (fun e => nomatch e)
 
-def rejected.{w} : Realization signature.{w} :=
+def rejected.{u_3} : Realization signature.{u_3} :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
-abbrev arena.{u, v, w} : Arena where
-  signature := signature.{w}
-  Law R := ∀ {V : Type u} {E : Type v} {ι : Type w}
+abbrev arena.{u_1, u_2, u_3} : Arena where
+  signature := signature.{u_3}
+  Law R := ∀ {V : Type u_1} {E : Type u_2} {ι : Type u_3}
     [Fintype E] [DecidableEq E] [Fintype ι]
     (G : EdgeGraph V E) (coefficient : SignedEdge E → ℝ)
     (weight : ι → ℝ) (base : ι → V)
@@ -44,14 +44,14 @@ abbrev arena.{u, v, w} : Arena where
     (∀ e, coefficient (e, true) = 0) → ∀ i,
     0 < R.readout () ⟨ι, i⟩ weight → ∀ e ∈ (cycle i).edges, e.2 = false
 
-private def loopGraph.{u, v} : EdgeGraph PUnit.{u + 1} PUnit.{v + 1} where
+private def loopGraph.{u_1, u_2} : EdgeGraph PUnit.{u_1 + 1} PUnit.{u_2 + 1} where
   source _ := ⟨⟩
   target _ := ⟨⟩
 
-private def reverseLoop.{u, v} : (signedGraph loopGraph.{u, v}).Walk ⟨⟩ ⟨⟩ :=
+private def reverseLoop.{u_1, u_2} : (signedGraph loopGraph.{u_1, u_2}).Walk ⟨⟩ ⟨⟩ :=
   .concat .nil (⟨⟩, true) rfl
 
-private theorem reverseLoop_simple.{u, v} : IsSimpleCycle reverseLoop.{u, v} := by
+private theorem reverseLoop_simple.{u_1, u_2} : IsSimpleCycle reverseLoop.{u_1, u_2} := by
   refine ⟨by simp [reverseLoop], ?_⟩
   intro vertex before inner after he hi hout
   have hlen : 1 = before.length + inner.length + after.length := by
@@ -61,22 +61,22 @@ private theorem reverseLoop_simple.{u, v} : IsSimpleCycle reverseLoop.{u, v} := 
       _ = _ := by rw [he]; simp only [List.length_append, EdgeGraph.Walk.edges_length]
   omega
 
-theorem rejected_law.{u, v, w} : ¬ arena.{u, v, w}.Law rejected := by
+theorem rejected_law.{u_1, u_2, u_3} : ¬ arena.{u_1, u_2, u_3}.Law rejected := by
   intro h
-  have hb := @h PUnit.{u + 1} PUnit.{v + 1} PUnit.{w + 1}
+  have hb := @h PUnit.{u_1 + 1} PUnit.{u_2 + 1} PUnit.{u_3 + 1}
     inferInstance inferInstance inferInstance loopGraph (fun _ => 0) (fun _ => 0)
     (fun _ => ⟨⟩) (fun _ => reverseLoop) (fun _ => le_rfl)
     (fun _ => reverseLoop_simple) (by intro e; simp) (fun _ => rfl) ⟨⟩
     (by norm_num [rejected, realize]) (⟨⟩, true) (by simp [reverseLoop, EdgeGraph.Walk.edges])
   exact Bool.noConfusion hb
 
-theorem dependence.{w} : ObservationalDependence signature.{w} actual := by
+theorem dependence.{u_3} : ObservationalDependence signature.{u_3} actual := by
   intro i
-  refine ⟨⟨PUnit.{w + 1}, ⟨⟩⟩, (fun _ => 0), (fun _ => 1), ?_⟩
+  refine ⟨⟨PUnit.{u_3 + 1}, ⟨⟩⟩, (fun _ => 0), (fun _ => 1), ?_⟩
   exact zero_ne_one
 
-def source_registration.{u, v, w} : Registration arena.{u, v, w}
-    (type_of% @positive_coefficient_forward.{u, v, w}) where
+def source_registration.{u_1, u_2, u_3} : Registration arena.{u_1, u_2, u_3}
+    (type_of% @positive_coefficient_forward.{u_1, u_2, u_3}) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨positive_coefficient_forward, rejected, rejected_law⟩
@@ -88,22 +88,22 @@ def source_registration.{u, v, w} : Registration arena.{u, v, w}
       exact nomatch e
   dependence := dependence
 
-def registration.{u, v, w} :
+def registration.{u_1, u_2, u_3} :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@positive_coefficient_forward.{u, v, w}) (Realization signature.{w}) Unit Unit := {
+      (@positive_coefficient_forward.{u_1, u_2, u_3}) (Realization signature.{u_3}) Unit Unit := {
   unitName := `Reg.D5.S3.Combinatorics.Graph.LayeredCirculation.LayeredFlow.unit
   realizationName :=
     `Reg.D5.S3.Combinatorics.Graph.LayeredCirculation.LayeredFlow.source_registration
   realizationSource := none
   generated := false
-  arena := .source ⟨arena.{u, v, w}⟩
-  objectArena := .source ⟨arena.{u, v, w}⟩
+  arena := .source ⟨arena.{u_1, u_2, u_3}⟩
+  objectArena := .source ⟨arena.{u_1, u_2, u_3}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena.{u, v, w} ⟨source_registration⟩
+  realization := .source arena.{u_1, u_2, u_3} ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{w} (fun _ q weight => weight q.2) (fun e => nomatch e))
+  readout := some actual.{u_3}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

@@ -14,8 +14,8 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 /-- Observe the appended edge's source, which decides the outgoing increment. -/
-abbrev signature.{u, v} : Signature where
-  Params := Σ V : Type u, Σ E : Type v, EdgeGraph V E
+abbrev signature.{uV, uE} : Signature where
+  Params := Σ V : Type uV, Σ E : Type uE, EdgeGraph V E
   State q := q.2.1
   Role := Unit
   finiteRole := inferInstance
@@ -24,15 +24,15 @@ abbrev signature.{u, v} : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual.{u, v} : Realization signature.{u, v} :=
+def actual.{uV, uE} : Realization signature.{uV, uE} :=
   realize signature (fun _ q edge => q.2.2.source edge) (fun e => nomatch e)
 
-def rejected.{u, v} : Realization signature.{u, v} :=
+def rejected.{uV, uE} : Realization signature.{uV, uE} :=
   realize signature (fun _ q edge => q.2.2.target edge) (fun e => nomatch e)
 
-abbrev arena.{u, v} : Arena where
-  signature := signature.{u, v}
-  Law R := ∀ {V : Type u} {E : Type v} {G : EdgeGraph V E} {start finish : V}
+abbrev arena.{uV, uE} : Arena where
+  signature := signature.{uV, uE}
+  Law R := ∀ {V : Type uV} {E : Type uE} {G : EdgeGraph V E} {start finish : V}
     [Fintype E] [DecidableEq E] [DecidableEq V]
     (walkSoFar : G.Walk start finish) (edge : E)
     (legal : G.source edge = finish) (vertex : V),
@@ -40,27 +40,27 @@ abbrev arena.{u, v} : Arena where
       G.outgoingMultiplicity walkSoFar.edgeMultiplicity vertex +
         if R.readout () ⟨V, E, G⟩ edge = vertex then 1 else 0
 
-private def oneEdge.{u, v} : EdgeGraph (ULift.{u} Bool) PUnit.{v + 1} where
+private def oneEdge.{uV, uE} : EdgeGraph (ULift.{uV} Bool) PUnit.{uE + 1} where
   source _ := ⟨false⟩
   target _ := ⟨true⟩
 
-theorem rejected_law.{u, v} : ¬ arena.{u, v}.Law rejected := by
+theorem rejected_law.{uV, uE} : ¬ arena.{uV, uE}.Law rejected := by
   intro h
   have hb := h (G := oneEdge) .nil ⟨⟩ rfl ⟨false⟩
-  have hne : (⟨true⟩ : ULift.{u} Bool) ≠ ⟨false⟩ :=
+  have hne : (⟨true⟩ : ULift.{uV} Bool) ≠ ⟨false⟩ :=
     fun he => Bool.noConfusion (congrArg ULift.down he)
   norm_num [rejected, realize, oneEdge, outgoingMultiplicity, Walk.edgeMultiplicity, hne] at hb
 
-theorem dependence.{u, v} : ObservationalDependence signature.{u, v} actual := by
+theorem dependence.{uV, uE} : ObservationalDependence signature.{uV, uE} actual := by
   intro i
-  let G : EdgeGraph (ULift.{u} Bool) (ULift.{v} Bool) := {
+  let G : EdgeGraph (ULift.{uV} Bool) (ULift.{uE} Bool) := {
     source := fun e => ⟨e.down⟩
     target := fun e => ⟨e.down⟩ }
-  refine ⟨⟨ULift.{u} Bool, ULift.{v} Bool, G⟩, ⟨false⟩, ⟨true⟩, ?_⟩
+  refine ⟨⟨ULift.{uV} Bool, ULift.{uE} Bool, G⟩, ⟨false⟩, ⟨true⟩, ?_⟩
   exact fun h => Bool.noConfusion (congrArg ULift.down h)
 
-def source_registration.{u, v} : Registration arena.{u, v}
-    (type_of% @Walk.outgoingMultiplicity_edgeMultiplicity_concat.{u, v}) where
+def source_registration.{uV, uE} : Registration arena.{uV, uE}
+    (type_of% @Walk.outgoingMultiplicity_edgeMultiplicity_concat.{uV, uE}) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨Walk.outgoingMultiplicity_edgeMultiplicity_concat, rejected, rejected_law⟩
@@ -72,24 +72,23 @@ def source_registration.{u, v} : Registration arena.{u, v}
       exact nomatch e
   dependence := dependence
 
-def registration.{u, v} :
+def registration.{uV, uE} :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@Walk.outgoingMultiplicity_edgeMultiplicity_concat.{u, v})
-      (Realization signature.{u, v}) Unit Unit := {
+      (@Walk.outgoingMultiplicity_edgeMultiplicity_concat.{uV, uE})
+      (Realization signature.{uV, uE}) Unit Unit := {
   unitName := `Reg.D5.S3.Combinatorics.Graph.LayeredCirculation.SupplierGraph.unit
   realizationName :=
     `Reg.D5.S3.Combinatorics.Graph.LayeredCirculation.SupplierGraph.source_registration
   realizationSource := none
   generated := false
-  arena := .source ⟨arena.{u, v}⟩
-  objectArena := .source ⟨arena.{u, v}⟩
+  arena := .source ⟨arena.{uV, uE}⟩
+  objectArena := .source ⟨arena.{uV, uE}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena.{u, v} ⟨source_registration⟩
+  realization := .source arena.{uV, uE} ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u, v}
-    (fun _ q edge => q.2.2.source edge) (fun e => nomatch e))
+  readout := some actual.{uV, uE}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
