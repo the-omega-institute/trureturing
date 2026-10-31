@@ -1,0 +1,29 @@
+**定义 11.1（完整固定安排类与分别优化的资源）。** 对整数 $k\ge2$，完整保留定义 8.1、9.1 的收费 A 合同：
+
+$$
+\mathcal C_k=(0,\infty)^k\times\bigl([0,\infty)^k\setminus\{0\}\bigr),
+\qquad R=c\ell^{\mathsf T}.
+$$
+
+初始 $c$、固定量具 $\ell$ 及其非空支撑均未知。每次制备供应精确相同的未知 $c$，同一个 $\ell$ 在所有依次进行的运行中固定。每次制备立即强制取得并支付精确无噪初读 $D=\ell^{\mathsf T}c>0$，空运行与重复数值的初读也各自收费。每个动作仍是内部不含 $1^k$、长度恰为 $k+1$ 的实际二进制窗口，其作用为
+
+$$
+E_{p,t}=e_t r_p^{\mathsf T},\qquad
+0\le p,t<k,\quad p+t\le k,\qquad
+(r_p)_s=\begin{cases}1,&s+p<k,\\0,&s+p\ge k.\end{cases}
+$$
+
+每个完整窗口后立即强制取得并支付精确读数 $\ell^{\mathsf T}x$。杀死对象的合法窗口、零态及其后续付费零读数都保留；没有复制、重置、回访已离开的对象、窗口内部读取、免费动作或额外观察。
+
+记 $\mathcal F_k$ 为所有有限确定性固定非自适应安排的类：完整有序的制备、实际窗口及停止安排只依赖 $k$，与所有已读数值无关；只有最后的解码函数可以任意依赖实际有限读数记录。要求对每个 $(c,\ell)\in\mathcal C_k$ 都精确输出初始 $R$，不要求解码函数连续、可测或可计算。各安排 $\Pi$ 的制备数 $P_\Pi$、窗口数 $W_\Pi$ 和总付费读数 $N_\Pi=P_\Pi+W_\Pi$ 均为与世界无关的有限非负整数。分别定义
+
+$$
+\begin{aligned}
+p_{\mathrm{fixed}}(k)&=\inf_{\Pi\in\mathcal F_k}P_\Pi,\\
+w_{\mathrm{fixed}}(k)&=\inf_{\Pi\in\mathcal F_k}W_\Pi,\\
+n_{\mathrm{fixed}}(k)&=\inf_{\Pi\in\mathcal F_k}N_\Pi.
+\end{aligned}
+$$
+
+每个下确界都不限制另外两种资源；空类的下确界约定为 $+\infty$。固定性只限制取得与停止，不向解码函数增添观察。
+

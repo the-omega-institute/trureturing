@@ -1,0 +1,16 @@
+**定理 3.1（正长度端点族的满张成）。** 串接合法窗口后得到的非零端点族包含每个 $E_{p,t}$，$0\le p,t<k$。因此
+
+$$
+\operatorname{span}(\mathcal P_k)=\operatorname{Mat}_k(K),
+\qquad
+\bigcap_{A\in\mathcal P_k}\ker\bigl(R\mapsto\operatorname{tr}(AR)\bigr)=\{0\}.
+$$
+
+**证明。** 取端点 $(p,0)$ 的合法窗口，再取端点 $(0,t)$ 的合法窗口。端点组合律给出 $E_{0,t}E_{p,0}=E_{p,t}$，其实际词长为 $2(k+1)>0$。所有矩阵单位都可由前缀差分
+
+$$
+E_{p,t}-E_{p-1,t}=-e_t e_{k-p}^{\mathsf T}
+$$
+
+（$1\le p<k$）及 $E_{k-1,t}=e_t e_0^{\mathsf T}$ 生成。满张成后，迹配对的非退化性给出标量观察族的共同核为零。∎
+

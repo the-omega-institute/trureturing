@@ -1,0 +1,26 @@
+**定理 2.3（单窗口的不可见关系核）。** 在约定 1.1 的迹合同下，
+
+$$
+\ker\Phi_k
+=\left\{X:
+\begin{array}{ll}
+X_{s,t}=0,&s\ge t,\\
+\displaystyle\sum_{s=0}^{t-1}X_{s,t}=0,&t\ge1
+\end{array}\right\}.
+$$
+
+等价地，第 $t=0,1$ 列全部为零；对 $t\ge2$，第 $t$ 列只允许出现在严格上三角位置，并且该列的前缀和为零。其维数为
+
+$$
+\dim_K\ker\Phi_k=\frac{(k-1)(k-2)}2.
+$$
+
+**证明。** 由
+
+$$
+\operatorname{tr}(E_{p,t}X)=r_p^{\mathsf T}Xe_t
+=\sum_{s=0}^{k-p-1}X_{s,t},
+$$
+
+观察坐标是第 $t$ 列长度至少为 $\max(1,t)$ 的前缀和。对 $t=0,1$，所有非空前缀长度都可用，逐次相减得到整列为零。对 $t\ge2$，可用前缀长度 $k,k-1,\ldots,t$，所以得到 $X_{s,t}=0$（$s\ge t$）以及前 $t$ 项总和为零；反过来这些条件使所有可用前缀和都为零。每个 $t\ge2$ 的列贡献 $t-1$ 个自由度，求和得维数公式。秩–零化度公式继而给出 $\operatorname{rank}\Phi_k=|\mathcal D_k|$，故 $\Phi_k$ 满射。∎
+
