@@ -43,7 +43,7 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   intro i
   refine ⟨(), 0, 1 / 2, ?_⟩
   norm_num [actual, realize]
-  norm_cast
+  exact Complex.ofReal_injective.ne (by norm_num : (0 : ℝ) ≠ 1 / 4)
 
 def evidence : Registration arena (type_of% @bilinear_opposite_resolvent_scalar) where
   actual := actual
@@ -109,7 +109,8 @@ private theorem column_half_ne_zero :
   rw [hz, smul_zero] at he
   have h := (bilinear_opposite_resolvent_scalar (r := 1 / 2) (by norm_num)
     (by norm_num)).2
-  norm_num [he] at h
+  rw [he] at h
+  norm_num at h
 
 namespace Column
 
@@ -154,7 +155,8 @@ def evidence : Registration arena (type_of% @weightedColumn_equation) where
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@weightedColumn_equation) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent.Column.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent.Column.evidence
+  realizationName :=
+    `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent.Column.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -229,7 +231,8 @@ def evidence : Registration arena (type_of% @opposite_resolvent_weighted_source)
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@opposite_resolvent_weighted_source) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent.Opposite.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent.Opposite.evidence
+  realizationName :=
+    `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent.Opposite.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
