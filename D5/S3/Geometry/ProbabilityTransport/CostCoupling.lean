@@ -520,7 +520,7 @@ private lemma real_solution {I J : Type*} [Fintype J]
 private lemma real_dual_solution {I J : Type*} [Fintype I]
     (A : I → J → ℝ) (b : I → ℝ) (c : J → ℝ) (y : I → NNeg ℝ) :
     (realLP A b c).dualize.IsSolution y ↔ ∀ j, ∑ i, -(A i j) * (y i).val ≤ c j := by
-  change (∀ j, (fun i => -(toE (A i j))) ᵥ⬝ y ≤ toE (c j)) ↔ _
+  change (∀ j, (fun i => toE (-(A i j))) ᵥ⬝ y ≤ toE (c j)) ↔ _
   simp only [e_dot, e_le]
 
 private lemma paired_solution {K J : Type*} [Fintype J]
