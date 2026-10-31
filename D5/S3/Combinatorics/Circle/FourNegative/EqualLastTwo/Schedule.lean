@@ -43,7 +43,7 @@ private theorem large_weights (a b d : ℕ) (hd : 2 ≤ d) (hb : d+2 ≤ b) (ha 
   have h2 : Disjoint ({a-d-1}:Finset ℕ) (Finset.Ico (a-b-1) (a-d-3)) := by
     simp [Finset.disjoint_left]; omega
   simp only [bankLarge, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val_two, Matrix.cons_val_three]
+    Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons]
   simp only [weight,Finset.sum_union h0,Finset.sum_union h2,Finset.sum_singleton,
     sum_Ico_two _ _ (show a-d ≤ a-1 by omega),
     sum_Ico_two _ _ (show a-b-1 ≤ a-d-3 by omega),sum_range_two]
@@ -55,7 +55,7 @@ private theorem large_weights (a b d : ℕ) (hd : 2 ≤ d) (hb : d+2 ≤ b) (ha 
     rw [←pow_add]; congr 1; omega
   rw [e0,e1,e2]
   norm_num
-  repeat' constructor <;> ring
+  ring_nf <;> simp
 
 private theorem adjacent_weights (a d : ℕ) (hd : 2 ≤ d) (ha : d+4 ≤ a) :
     let m : ℤ := 2^(a-d-4)
@@ -68,7 +68,7 @@ private theorem adjacent_weights (a d : ℕ) (hd : 2 ≤ d) (ha : d+4 ≤ a) :
   have h3 : Disjoint ({a-d-2}:Finset ℕ) (Finset.range (a-d-4)) := by
     simp [Finset.disjoint_left]; omega
   simp only [bankAdjacent, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val_two, Matrix.cons_val_three]
+    Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons]
   simp only [weight,Finset.sum_union h0,Finset.sum_union h3,Finset.sum_singleton,
     sum_Ico_two _ _ (show a-d ≤ a-1 by omega),sum_range_two]
   have e0 : (2:ℤ)^(a-d)=2^(a-d-4)*2^4 := by
@@ -81,7 +81,7 @@ private theorem adjacent_weights (a d : ℕ) (hd : 2 ≤ d) (ha : d+4 ≤ a) :
     rw [←pow_add]; congr 1; omega
   rw [e0,e1,e2,e3]
   norm_num
-  repeat' constructor <;> ring
+  ring_nf <;> simp
 
 private theorem native_sum (v : ℕ → ℤ) (s n : ℕ) (A : ℤ)
     (h : ∀ i < n, v (s+i)=(2:ℤ)^i*A) :
@@ -194,7 +194,7 @@ private theorem corner_two_mass (d : ℕ) (hd : 2 ≤ d)
   simp only [Nat.add_zero,pow_zero,one_mul] at x0
   norm_num at x1
   rw [x0,show 3*d+2=3*d+1+1 by omega,x1]
-  repeat' constructor <;> ring
+  ring_nf <;> simp
 
 private theorem corner_three_mass (d : ℕ) (hd : 2 ≤ d)
     (v : ℕ → ℤ) (U V W X : ℤ)
@@ -223,7 +223,7 @@ private theorem corner_three_mass (d : ℕ) (hd : 2 ≤ d)
     congr 1 <;> omega
   rw [eX,show d+3-1=d+2 by omega] at bX
   have dP : Disjoint ({3*d+1}:Finset ℕ) (Finset.Ico (3*d+4) (4*d+3)) := by
-    simp [Finset.disjoint_left]; omega
+    simp [Finset.disjoint_left]
   have dQ : Disjoint (shift d (Finset.range (d-1))) ({3*d+3}:Finset ℕ) := by
     simp [Finset.disjoint_left,shift,image_range]; omega
   have dR : Disjoint (Finset.range (d-1)) ({3*d+2}:Finset ℕ) := by
@@ -236,7 +236,7 @@ private theorem corner_three_mass (d : ℕ) (hd : 2 ≤ d)
   simp only [Nat.add_zero,pow_zero,one_mul] at x0
   norm_num at x1 x2
   rw [x0,show 3*d+2=3*d+1+1 by omega,x1,show 3*d+3=3*d+1+2 by omega,x2]
-  repeat' constructor <;> ring
+  ring_nf <;> simp
 
 private theorem finish (a b d : ℕ) (hd : 2 ≤ d) (hb : d < b) (ha : b < a)
     (cut : ℕ) (P T : List ℕ) (hc : P.length=cut)
