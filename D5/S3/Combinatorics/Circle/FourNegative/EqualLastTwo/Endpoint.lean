@@ -20,7 +20,7 @@ open private four_perm from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.
 open private Checks from D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Arithmetic
 open private checks_strip from D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Physical
 open private blocksWord from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
-open private size negatives source_signs from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private size negatives source_signs sourceMod chain_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open private finish toList_sum large_mass adjacent_mass corner_two_mass corner_three_mass
   from D5.S3.Combinatorics.Circle.FourNegative.EqualLastTwo.Schedule
 open private large_checks adjacent_checks corner_two_checks corner_three_checks
@@ -202,6 +202,7 @@ private theorem physical_plan (a b d : ℕ) (hd : 2 ≤ d) (hb : d < b) (ha : b 
   · simpa only [hword] using checks_strip (f a b d) (N a b d/2) bs hC hp hn oldchecks
   · simpa only [hnewword] using checks_strip (g a b d) (N a b d) bsn hD hpn hnn newchecks
 
+-- The physical partition and both source rows are checked together.
 set_option maxHeartbeats 2400000 in
 private theorem large_plan (a b d : ℕ) (hd : 2 ≤ d) (hb : d+2 ≤ b) (ha : b < a) :
     ∃ sigma : List (Fin (rank (a) (b) d)), d ≤ rank (a) (b) d ∧
@@ -255,10 +256,9 @@ private theorem large_plan (a b d : ℕ) (hd : 2 ≤ d) (hb : d+2 ≤ b) (ha : b
     have hodd : N a b d=2*((2:ℤ)^(a-1)*y*t*t)-1 := by rw [hN,hxhalf]; ring
     omega
   have hD : 0 ≤ N a b d := by
-    rw [hN,hx,hy]
-    have hu : 1 ≤ u := by dsimp [u]; positivity
-    have hv : 1 ≤ v := by dsimp [v]; positivity
-    nlinarith [mul_nonneg (show 0 ≤ v-1 by omega) (show 0 ≤ u-1 by omega)]
+    have h := (chain_values a b d d (by omega) (by omega) hd hd).1 0
+    change 0 ≤ sourceMod a b d d
+    omega
   have gates := large_checks u v t (by dsimp [u]; positivity) (by dsimp [v]; positivity) ht
   dsimp only at gates
   rw [←hx,←hy,←hm,←hN] at gates
@@ -436,6 +436,7 @@ private theorem large_plan (a b d : ℕ) (hd : 2 ≤ d) (hb : d+2 ≤ b) (ha : b
     simpa only [bs,List.map_cons,List.map_nil,f0,f1,f2,f3,nt0.1,nt1.1,nt2.1,nt3.1] using gates.1
   · simpa only [bsn,List.map_cons,List.map_nil,List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,hear,mul_add,g0,g1,g2,g3,nt0.2,nt1.2,nt2.2,nt3.2] using gates.2
 
+-- The physical partition and both source rows are checked together.
 set_option maxHeartbeats 2400000 in
 private theorem adjacent_plan (a d : ℕ) (hd : 2 ≤ d) (ha : d+4 ≤ a) :
     ∃ sigma : List (Fin (rank (a) (d+1) d)), d ≤ rank (a) (d+1) d ∧
@@ -482,9 +483,9 @@ private theorem adjacent_plan (a d : ℕ) (hd : 2 ≤ d) (ha : d+4 ≤ a) :
     have hodd : N a b d=2*((2:ℤ)^(a-1)*y*t*t)-1 := by rw [hN,hxhalf]; ring
     omega
   have hD : 0 ≤ N a b d := by
-    rw [hN,hx,hy]
-    have hm : 1 ≤ m := by dsimp [m]; positivity
-    nlinarith
+    have h := (chain_values a b d d (by omega) (by omega) hd hd).1 0
+    change 0 ≤ sourceMod a b d d
+    omega
   have gates := adjacent_checks m t (by dsimp [m]; positivity) ht
   dsimp only at gates
   rw [←hx,←hy,←hN] at gates
@@ -662,6 +663,7 @@ private theorem adjacent_plan (a d : ℕ) (hd : 2 ≤ d) (ha : d+4 ≤ a) :
     simpa only [bs,List.map_cons,List.map_nil,f0,f1,f2,f3,nt0.1,nt1.1,nt2.1,nt3.1] using gates.1
   · simpa only [bsn,List.map_cons,List.map_nil,List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,hear,mul_add,g0,g1,g2,g3,nt0.2,nt1.2,nt2.2,nt3.2] using gates.2
 
+-- The physical partition and both source rows are checked together.
 set_option maxHeartbeats 2400000 in
 private theorem corner_two_plan (d : ℕ) (hd : 2 ≤ d) :
     ∃ sigma : List (Fin (rank (d+2) (d+1) d)), 3*d+1 ≤ rank (d+2) (d+1) d ∧
@@ -704,8 +706,9 @@ private theorem corner_two_plan (d : ℕ) (hd : 2 ≤ d) :
     have hodd : N a b d=2*((2:ℤ)^(a-1)*y*t*t)-1 := by rw [hN,hxhalf]; ring
     omega
   have hD : 0 ≤ N a b d := by
-    rw [hN,hx,hy]
-    nlinarith
+    have h := (chain_values a b d d (by omega) (by omega) hd hd).1 0
+    change 0 ≤ sourceMod a b d d
+    omega
   have gates := corner_two_checks t ht
   dsimp only at gates
   rw [←hx,←hy,←hN] at gates
@@ -869,7 +872,9 @@ private theorem corner_two_plan (d : ℕ) (hd : 2 ≤ d) :
     · rw [List.mem_singleton.mp hi,hear]; exact (tab.1 0).le
   have hperm : (blocksWord bs).Perm (List.range k) := by
     have h := corner_two_partition d hd
-    simpa [bs,blocksWord,P,Q,R,G,n0,n1,n2,n3,k,rank,b,a] using h
+    have hkeq : k=4*d+3 := by dsimp [k,rank,a,b]; omega
+    simpa only [bs,blocksWord,P,Q,R,G,n0,n1,n2,n3,hkeq,List.append_assoc,
+      List.cons_append,List.nil_append,List.append_nil] using h
   have hcut : pre.length=3*d+1 := by
     have hdis : Disjoint (Finset.range (d-1)) ({3*d+1}:Finset ℕ) := by
       simp [Finset.disjoint_left]; omega
@@ -918,6 +923,7 @@ private theorem corner_two_plan (d : ℕ) (hd : 2 ≤ d) :
     simpa only [bs,List.map_cons,List.map_nil,f0,f1,f2,f3,nt0.1,nt1.1,nt2.1,nt3.1] using gates.1
   · simpa only [bsn,List.map_cons,List.map_nil,List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,hear,mul_add,g0,g1,g2,g3,nt0.2,nt1.2,nt2.2,nt3.2] using gates.2
 
+-- The physical partition and both source rows are checked together.
 set_option maxHeartbeats 2400000 in
 private theorem corner_three_plan (d : ℕ) (hd : 2 ≤ d) :
     ∃ sigma : List (Fin (rank (d+3) (d+1) d)), d ≤ rank (d+3) (d+1) d ∧
@@ -960,8 +966,9 @@ private theorem corner_three_plan (d : ℕ) (hd : 2 ≤ d) :
     have hodd : N a b d=2*((2:ℤ)^(a-1)*y*t*t)-1 := by rw [hN,hxhalf]; ring
     omega
   have hD : 0 ≤ N a b d := by
-    rw [hN,hx,hy]
-    nlinarith
+    have h := (chain_values a b d d (by omega) (by omega) hd hd).1 0
+    change 0 ≤ sourceMod a b d d
+    omega
   have gates := corner_three_checks t ht
   dsimp only at gates
   rw [←hx,←hy,←hN] at gates
@@ -1006,7 +1013,7 @@ private theorem corner_three_plan (d : ℕ) (hd : 2 ≤ d) :
       have h := (tab.2.2.1 3 i (by dsimp [length]; dsimp [a] at *; omega)).2
       simpa [start,A,B,L,M,Bn,Ln,Mn,x,y,t,b,a,show 2*d+(d+1)=3*d+1 by omega] using h)
   simp only [←toList_sum] at mf mg
-  have f0 : 2*(P.toList.map (f a b d)).sum=(4*t-14)*M := by
+  have f0 : 2*(P.toList.map (f a b d)).sum=(8*t-14)*M := by
     have hmass := mf.1
     dsimp [P,a,b] at hmass
     simp only [pow_add,pow_one] at hmass
@@ -1030,7 +1037,7 @@ private theorem corner_three_plan (d : ℕ) (hd : 2 ≤ d) :
     simp only [pow_add,pow_one] at hmass
     norm_num at hmass
     rw [hthalf]; dsimp [t] at *; nlinarith only [hmass]
-  have g0 : 2*(P.toList.map (g a b d)).sum=(4*t-14)*Mn := by
+  have g0 : 2*(P.toList.map (g a b d)).sum=(8*t-14)*Mn := by
     have hmass := mg.1
     dsimp [P,a,b] at hmass
     simp only [pow_add,pow_one] at hmass
@@ -1125,7 +1132,9 @@ private theorem corner_three_plan (d : ℕ) (hd : 2 ≤ d) :
     · rw [List.mem_singleton.mp hi,hear]; exact (tab.1 0).le
   have hperm : (blocksWord bs).Perm (List.range k) := by
     have h := corner_three_partition d hd
-    simpa [bs,blocksWord,P,Q,R,G,n0,n1,n2,n3,k,rank,b,a] using h
+    have hkeq : k=4*d+4 := by dsimp [k,rank,a,b]; omega
+    simpa only [bs,blocksWord,P,Q,R,G,n0,n1,n2,n3,hkeq,List.append_assoc,
+      List.cons_append,List.nil_append,List.append_nil] using h
   have hcut : pre.length=d := by
     have hdis : Disjoint ({3*d+1}:Finset ℕ) (Finset.Ico (3*d+4) (4*d+3)) := by
       simp [Finset.disjoint_left]; omega

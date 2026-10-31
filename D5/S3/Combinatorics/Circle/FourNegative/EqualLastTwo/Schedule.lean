@@ -246,7 +246,8 @@ private theorem finish (a b d : ℕ) (hd : 2 ≤ d) (hb : d < b) (ha : b < a)
     omega
   · apply lift_order _ _ hk _ hp
     · simpa only [hf,hmod] using hold
-    · simpa only [hf,f,rank,size] using hz.1
+    · have hzold : ((List.range (rank a b d)).map (f a b d)).sum=0 := hz.1
+      simpa only [hf] using hzold
   · rw [marked_word (rank a b d) cut hk P T hc hp]
     apply lift_order _ _ (by omega) _ (inserted_perm _ _ _ hp)
     · have hh : modulus (rank a b d+1)/2=N a b d := by rw [hmodn]; omega

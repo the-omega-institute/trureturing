@@ -14,6 +14,7 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.EqualLastTwo
 open private heads newHeads delta from D5.S3.Combinatorics.Circle.FourNegative.EqualLastTwo.Source
 open private Checks from D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Arithmetic
 
+-- Normalization expands all sixteen seam and peak polynomials.
 set_option maxHeartbeats 2400000 in
 private theorem large_checks (u v t : ℤ) (hu : 1 ≤ u) (hv : 1 ≤ v) (ht : 4 ≤ t) :
     let y := 4*t*v
@@ -41,6 +42,7 @@ private theorem large_checks (u v t : ℤ) (hu : 1 ≤ u) (hv : 1 ≤ v) (ht : 4
   all_goals ring_nf
   all_goals positivity
 
+-- Normalization expands all sixteen seam and peak polynomials.
 set_option maxHeartbeats 2400000 in
 private theorem adjacent_checks (m t : ℤ) (hm : 1 ≤ m) (ht : 4 ≤ t) :
     let y := 2*t
@@ -66,6 +68,7 @@ private theorem adjacent_checks (m t : ℤ) (hm : 1 ≤ m) (ht : 4 ≤ t) :
   all_goals ring_nf
   all_goals positivity
 
+-- Normalization expands all sixteen seam and peak polynomials.
 set_option maxHeartbeats 2400000 in
 private theorem corner_two_checks (t : ℤ) (ht : 4 ≤ t) :
     let y := 2*t
@@ -90,6 +93,7 @@ private theorem corner_two_checks (t : ℤ) (ht : 4 ≤ t) :
   all_goals ring_nf
   all_goals positivity
 
+-- Normalization expands all sixteen seam and peak polynomials.
 set_option maxHeartbeats 2400000 in
 private theorem corner_three_checks (t : ℤ) (ht : 4 ≤ t) :
     let y := 2*t
@@ -104,9 +108,9 @@ private theorem corner_three_checks (t : ℤ) (ht : 4 ≤ t) :
     let N := x*y*t*t-1
     let Q := 2*N+1
     Checks (N-1) 0
-      [((4*t-14)*M, A-N), ((t-2)*B+8*M, L-N), ((t-2)*A+4*M, B-N), ((2*t-2)*L, M-N)] ∧
+      [((8*t-14)*M, A-N), ((t-2)*B+8*M, L-N), ((t-2)*A+4*M, B-N), ((2*t-2)*L, M-N)] ∧
     Checks (2*N) 0
-      [((4*t-14)*Mn+2*A, A-Q), ((t-2)*Bn+8*Mn, Ln-Q), ((t-2)*(2*A)+4*Mn, Bn-Q), ((2*t-2)*Ln, Mn-Q)] := by
+      [((8*t-14)*Mn+2*A, A-Q), ((t-2)*Bn+8*Mn, Ln-Q), ((t-2)*(2*A)+4*Mn, Bn-Q), ((2*t-2)*Ln, Mn-Q)] := by
   obtain ⟨t0, ht0, rfl⟩ : ∃ z : ℤ, 0 ≤ z ∧ t=z+4 := ⟨t-4,by omega,by ring⟩
   dsimp [Checks,heads,newHeads,delta]
   repeat' constructor
