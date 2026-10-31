@@ -9,6 +9,7 @@
 import Mathlib.Combinatorics.Enumerative.Partition.Basic
 import Mathlib.Algebra.GCDMonoid.FinsetLemmas
 import Mathlib.Data.Rat.Cast.Order
+import Mathlib.Tactic.Linarith
 
 /-! Formal reading of the all-ones and transposition leading classes in (7.21). -/
 
@@ -101,7 +102,12 @@ private theorem transposition_degree (s n : ℕ) (hn : 2 ≤ n) :
 
 private theorem transposition_lt_identity (s n : ℕ) (hn : 2 ≤ n) (hs : 1 ≤ s) :
     degree s (transpositionClass n) < degree s (identityClass n) := by
-  sorry
+  rw [transposition_degree s n hn, identity_degree s n hn hs]
+  have hbase : n - 2 < n := by omega
+  have hpow : (n - 2) ^ s < n ^ s := Nat.pow_lt_pow_left hbase (by omega)
+  have hpowQ : ((n - 2 : ℕ) : ℚ) ^ s < (n : ℚ) ^ s := by
+    exact_mod_cast hpow
+  linarith
 
 private theorem one_count_le_two_sub {n : ℕ} (p : Nat.Partition n) (hn : 2 ≤ n)
     (hp : p ≠ identityClass n) :
