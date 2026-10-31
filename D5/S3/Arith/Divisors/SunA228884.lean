@@ -50,6 +50,7 @@
    Its ZMod implementation uses Matrix.circulant, and the proof applies the original Roldan
    Fourier and Ramanujan declarations by their public names.
    The three original private identities above identify the unchanged statements and proofs.
+   The public owner and its frozen importers require canonical re-pinning in Stage B.
    Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/22671.
 -/
 
