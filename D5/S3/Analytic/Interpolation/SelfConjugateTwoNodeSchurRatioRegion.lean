@@ -90,7 +90,7 @@ private theorem twoH_comm {R : Type*} [CommRing R] (m : ℕ) (x y : R) :
   unfold twoH; rw [← Finset.sum_range_reflect]; exact Finset.sum_congr rfl fun i hi => by
     simp only [Nat.succ_sub_one, Nat.sub_sub_self (Nat.le_of_lt_succ (Finset.mem_range.mp hi)),
       mul_comm]
-theorem twoH_sub_mul {R : Type*} [CommRing R] (m : ℕ) (x y : R) :
+private theorem twoH_sub_mul {R : Type*} [CommRing R] (m : ℕ) (x y : R) :
     (x - y) * twoH m x y = x ^ (m + 1) - y ^ (m + 1) := by
   induction m with | zero => simp [twoH] | succ m ih => rw [twoH_succ]; linear_combination x * ih
 private theorem twoH_rec {R : Type*} [CommRing R] (k : ℕ) (x y : R) :
@@ -115,7 +115,7 @@ private def finTwoSymEquiv (d : ℕ) : Fin (d + 1) ≃ Sym (Fin 2) d where
 private theorem finTwoSymEquiv_val (d : ℕ) (i : Fin (d + 1)) :
     (finTwoSymEquiv d i).val =
       Multiset.replicate i.val (0 : Fin 2) + Multiset.replicate (d - i.val) (1 : Fin 2) := rfl
-theorem h_eq_twoH (d : ℕ) (z : Fin 2 → ℂ) : h d z = twoH d (z 0) (z 1) := by
+private theorem h_eq_twoH (d : ℕ) (z : Fin 2 → ℂ) : h d z = twoH d (z 0) (z 1) := by
   unfold h twoH; rw [← Fin.sum_univ_eq_sum_range]
   refine (Fintype.sum_equiv (finTwoSymEquiv d)
     (fun i : Fin (d + 1) => z 0 ^ (i : ℕ) * z 1 ^ (d - (i : ℕ)))
