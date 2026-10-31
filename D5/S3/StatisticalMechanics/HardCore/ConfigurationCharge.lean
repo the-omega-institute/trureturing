@@ -102,9 +102,9 @@ private theorem singleton_weight_symmetry (lam : ℝ) (u v : α) :
       if occupiedNeighbors G J u = {v} then lam ^ J.card else 0 := by
   rw [← sum_filter, ← sum_filter]
   refine sum_bij'
-    (i := fun J _ => insert v (J.erase u))
-    (j := fun J _ => insert u (J.erase v))
-    (hi := ?_) (hj := ?_) (h := ?_) (left_inv := ?_) (right_inv := ?_)
+    (i := fun (J : Finset α) _ => insert v (J.erase u))
+    (j := fun (J : Finset α) _ => insert u (J.erase v))
+    (hi := ?_) (hj := ?_) (h := ?_) (left_neg := ?_) (right_neg := ?_)
   · intro J hJ
     obtain ⟨hJ, hN⟩ := mem_filter.mp hJ
     exact mem_filter.mpr ⟨(singleton_exchange G J u v hJ hN).1,
@@ -338,6 +338,7 @@ theorem defect_eq_expected_charge (lam : ℝ) (hlam : 0 < lam) :
             (∑ v, ∑ u, if occupiedNeighbors G J v = {u} then q u - q v else 0)) := by
         simp_rw [configuration_charge_split]
         simp only [mul_sub, mul_add, sum_sub_distrib, sum_add_distrib]
+        rfl
       _ = (∑ u, ((G.degree u : ℝ) * q u) * p u) - (∑ v, q v) +
           (∑ v, q v * ((1 + 1 / lam) * p v)) := by
         rw [hdeg, hconst, hvac, hsingle, sub_zero]

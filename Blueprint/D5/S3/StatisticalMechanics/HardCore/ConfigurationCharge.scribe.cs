@@ -27,7 +27,7 @@ internal sealed class ConfigurationChargeDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("The mean actual Gibbs configuration cardinality minus the sum of the degree weights."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("hardcore-charge-defect-eq-expectation"),
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/ConfigurationCharge.defect_eq_expected_charge"),
-                H("Actual Gibbs defect equals expected source charge"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                H("Actual Gibbs defect equals expected source charge"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("This is the complete source identity: D equals the sum over actual independent configurations J of P(J) times C(J). The finite sum is also written using the existing actual Gibbs PMF. There is no local-balance certificate, assumed normalization, arbitrary marginal law, finite periodic proxy or nonempty-graph premise.")),
                     Paragraph(Text("The proof exchanges the sole occupied neighbor u of v with v. Independence supplies the reverse singleton-neighbor condition; the inverse exchange and equal cardinality preserve the common-activity weight. Opposite directed singleton contributions therefore cancel in expectation. The zero-neighbor contribution follows from the existing actual deletion partition identity and marked-weight identity. Finite double counting and the degree-weight denominator then give the exact defect. Empty carriers and edgeless graphs are included by the same finite sums.")),
