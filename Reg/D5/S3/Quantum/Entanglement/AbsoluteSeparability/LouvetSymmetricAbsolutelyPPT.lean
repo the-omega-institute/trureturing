@@ -2,6 +2,10 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound registrations for the public theorems in the mirrored owner. -/
+
+set_option linter.style.longLine false
+
 set_option pp.proofs false in
 #print D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT.occupation_fiber_card
 set_option pp.proofs false in
@@ -13,7 +17,6 @@ open _root_.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsol
 open _root_.D5.S3.Quantum.Entanglement.OccupancyWordSectors
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
-set_option linter.style.longLine false
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -80,8 +83,14 @@ def registration :
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT
+    definition := none
     coordinates := #[0, 1, 2]
-    readouts := #[{ path := #["body", "body", "body", "body", "arg"], stateBinder := 3 }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -154,10 +163,14 @@ def registration :
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT
+    definition := none
     coordinates := #[0, 1, 3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "arg", "body", "fn", "arg"]
-      stateBinder := 5 }] }
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

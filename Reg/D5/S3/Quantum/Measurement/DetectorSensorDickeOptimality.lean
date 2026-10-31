@@ -2,6 +2,10 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound registrations for the public theorems in the mirrored owner. -/
+
+set_option linter.style.longLine false
+
 set_option pp.proofs false in
 #print D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.weight_class_card
 
@@ -10,7 +14,6 @@ namespace Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
 open _root_.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
-set_option linter.style.longLine false
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -72,8 +75,14 @@ def registration :
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
+    definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "arg"], stateBinder := 1 }] }
+    readouts := #[{
+      path := #["body", "body", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

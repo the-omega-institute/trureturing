@@ -2,6 +2,10 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound registrations for the public theorems in the mirrored owner. -/
+
+set_option linter.style.longLine false
+
 set_option pp.proofs false in
 #print D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.pauli_rotation
 set_option pp.proofs false in
@@ -19,8 +23,6 @@ set_option pp.proofs false in
 set_option pp.proofs false in
 #print D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.dicke_site_sum
 
-/-! Source-bound audits of the public spin-covariance identities. -/
-
 namespace Reg.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
 open _root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -30,7 +32,6 @@ open _root_.D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 open _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
 open Matrix
 open scoped BigOperators
-set_option linter.style.longLine false
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -135,10 +136,14 @@ def registration :
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
+    definition := none
     coordinates := #[]
     readouts := #[{
       path := #["body", "arg", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 1 }] }
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -153,7 +158,7 @@ namespace OrthogonalSandwich
 abbrev arena.{u, v} : Arena where
   signature := matrixSignature.{v}
   Law R := ∀ {k : Type u} {n : Type v} [Fintype k] [Fintype n]
-    [DecidableEq k] (q : Matrix k k ℂ) (hq : qᵀ * q = 1)
+    [DecidableEq k] (q : Matrix k k ℂ) (_hq : qᵀ * q = 1)
     (s : k → Matrix n n ℂ) (x : Matrix n n ℂ),
     R.readout () n
       (∑ a : k, (∑ c : k, q a c • s c) * x * (∑ e : k, q a e • s e))
@@ -164,7 +169,7 @@ private theorem rejected_law.{u, v} : ¬ arena.{u, v}.Law matrixRejected := by
   exact @h (ULift.{u} Unit) (ULift.{v} Unit) inferInstance inferInstance inferInstance
     1 (by simp) (fun _ => 0) 0
 
-private theorem dependence.{u, v} : ObservationalDependence matrixSignature.{v} matrixActual := by
+private theorem dependence.{v} : ObservationalDependence matrixSignature.{v} matrixActual := by
   exact matrix_dependence
 
 def source_registration.{u, v} : Registration arena.{u, v} (type_of% (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.orthogonal_sandwich.{u, v})) where
@@ -200,11 +205,14 @@ def registration.{u, v} :
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
+    definition := none
     coordinates := #[1]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
-      functionOperand := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -277,11 +285,14 @@ def registration :
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
+    definition := none
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 0
-      stateOperand := some #["arg"] }] }
+      stateOperand := some #["arg"]
+      functionOperand := false
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -340,11 +351,14 @@ def registration :
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
+    definition := none
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
-      functionOperand := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -369,7 +383,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (n : ℕ) (u : Matrix.specialUnitaryGroup (Fin 2) ℂ)
     (r : Matrix (Fin 3) (Fin 3) ℝ)
-    (hr : ∀ a, u.val * pauli a * u.valᴴ =
+    (_hr : ∀ a, u.val * pauli a * u.valᴴ =
       ∑ c : Fin 3, (r a c : ℂ) • pauli c) (a : Fin 3),
     R.readout () n
       (tensorOp (fun _ : Fin n => u.val) * collectiveSpin n a *
@@ -422,11 +436,14 @@ def registration :
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
+    definition := none
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
-      functionOperand := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -441,9 +458,9 @@ namespace QuadraticRotation
 abbrev arena.{u} : Arena where
   signature := matrixSignature.{u}
   Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
-    (d : Matrix n n ℂ) (hd : dᴴ * d = 1) (r : Matrix (Fin 3) (Fin 3) ℝ)
-    (hr : rᵀ * r = 1) (j : Fin 3 → Matrix n n ℂ)
-    (hj : ∀ a, d * j a * dᴴ = ∑ c : Fin 3, (r a c : ℂ) • j c)
+    (d : Matrix n n ℂ) (_hd : dᴴ * d = 1) (r : Matrix (Fin 3) (Fin 3) ℝ)
+    (_hr : rᵀ * r = 1) (j : Fin 3 → Matrix n n ℂ)
+    (_hj : ∀ a, d * j a * dᴴ = ∑ c : Fin 3, (r a c : ℂ) • j c)
     (a b : Fin 3),
     R.readout () n
       (d * ((1 / 2 : ℂ) • (j a * j b + j b * j a) -
@@ -493,11 +510,14 @@ def registration.{u} :
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
+    definition := none
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
-      functionOperand := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -514,7 +534,7 @@ abbrev arena.{u, v, w, z} : Arena where
   Law R := ∀ {a : Type u} {b : Type v} {i : Type w} {j : Type z}
     [Fintype a] [Fintype b] [Fintype i] [Fintype j]
     [DecidableEq j] (v : Matrix a i ℂ) (w : Matrix b j ℂ)
-    (hw : wᴴ * w = 1) (z : Matrix (i × j) (i × j) ℂ),
+    (_hw : wᴴ * w = 1) (z : Matrix (i × j) (i × j) ℂ),
     R.readout () a
       (partialTraceRight (Matrix.kronecker v w * z * (Matrix.kronecker v w)ᴴ))
       (v * partialTraceRight z * vᴴ)
@@ -522,9 +542,14 @@ abbrev arena.{u, v, w, z} : Arena where
 private theorem rejected_law.{u, v, w, z} : ¬ arena.{u, v, w, z}.Law matrixRejected := by
   intro h
   exact @h (ULift.{u} Unit) (ULift.{v} Unit) (ULift.{w} Unit) (ULift.{z} Unit)
-    inferInstance inferInstance inferInstance inferInstance inferInstance 0 1 (by simp) 0
+    inferInstance inferInstance inferInstance inferInstance inferInstance
+    0 (fun _ _ => 1)
+    (by
+      ext i j
+      change (∑ _ : ULift.{v} Unit, star (1 : ℂ) * 1) = if i = j then 1 else 0
+      simp [Subsingleton.elim i j]) 0
 
-private theorem dependence.{u, v, w, z} : ObservationalDependence matrixSignature.{u} matrixActual := by
+private theorem dependence.{u} : ObservationalDependence matrixSignature.{u} matrixActual := by
   exact matrix_dependence
 
 def source_registration.{u, v, w, z} : Registration arena.{u, v, w, z} (type_of% (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.partialTrace_isometries.{u, v, w, z})) where
@@ -560,11 +585,14 @@ def registration.{u, v, w, z} :
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
+    definition := none
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
-      functionOperand := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -630,11 +658,14 @@ def registration :
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
+    definition := none
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
-      functionOperand := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
