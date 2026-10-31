@@ -48,7 +48,8 @@ abbrev arena : Arena where
     R.readout () ⟨n, sigma⟩ delta < sigma.idxOf alpha ∧ sigma.idxOf delta < sigma.idxOf gamma ∧
     j ≤ sigma.idxOf alpha ∧ j ≤ sigma.idxOf gamma ∧
     (∀ i : Fin k, actualSource k A i < 0 → sigma.idxOf i < sigma.idxOf delta → i.val = t + 1) ∧
-    ((sigma.take (sigma.idxOf delta)).filter (fun i => actualSource k A i < 0)).length ≤ 1 ∧
+    Set.Subsingleton {i : Fin k | actualSource k A i < 0 ∧
+      sigma.idxOf i < sigma.idxOf delta} ∧
     (∀ i : Fin k, actualSource k A i < 0 ↔
       i.val = 1 ∨ i.val = t + 1 ∨ i.val = t + 3 ∨ i.val = k - 1)
 

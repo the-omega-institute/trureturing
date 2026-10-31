@@ -265,7 +265,8 @@ theorem actualSource_four_gap_lattice_precedence
     sigma.idxOf delta < sigma.idxOf alpha ∧ sigma.idxOf delta < sigma.idxOf gamma ∧
     j ≤ sigma.idxOf alpha ∧ j ≤ sigma.idxOf gamma ∧
     (∀ i : Fin k, actualSource k A i < 0 → sigma.idxOf i < sigma.idxOf delta → i.val = t + 1) ∧
-    ((sigma.take (sigma.idxOf delta)).filter (fun i => actualSource k A i < 0)).length ≤ 1 ∧
+    Set.Subsingleton {i : Fin k | actualSource k A i < 0 ∧
+      sigma.idxOf i < sigma.idxOf delta} ∧
     (∀ i : Fin k, actualSource k A i < 0 ↔
       i.val = 1 ∨ i.val = t + 1 ∨ i.val = t + 3 ∨ i.val = k - 1) := by
   classical
@@ -326,17 +327,8 @@ theorem actualSource_four_gap_lattice_precedence
     · have : i = delta := Fin.ext he
       subst i; omega
   refine ⟨hda.1, hdg.1, hda.2, hdg.2, honly, ?_, complete_inventory n hn⟩
-  let L := (sigma.take (sigma.idxOf delta)).filter (fun i => actualSource (k n) (seed n) i < 0)
-  have hnd : L.Nodup := ((hold.1.nodup_iff.mpr (List.nodup_finRange _)).take (i := sigma.idxOf delta)).filter _
-  have hsub : L.toFinset ⊆ {⟨t n + 1, by dsimp [k,t]; omega⟩} := by
-    intro i hi
-    have hi' := List.mem_filter.mp (List.mem_toFinset.mp hi)
-    have hm : i ∈ sigma := List.mem_of_mem_take hi'.1
-    have hh := honly i (of_decide_eq_true hi'.2) ((List.mem_take_iff_idxOf_lt hm).mp hi'.1)
-    exact Finset.mem_singleton.mpr (Fin.ext hh)
-  have hc := Finset.card_le_card hsub
-  rw [List.toFinset_card_of_nodup hnd, Finset.card_singleton] at hc
-  exact hc
+  intro i hi l hl
+  exact Fin.ext ((honly i hi.1 hi.2).trans (honly l hl.1 hl.2).symm)
 
 #print axioms actualSource_four_gap_lattice_precedence
 end D5.S3.Combinatorics.Circle.FourNegativeLatticePrecedence
