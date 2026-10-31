@@ -457,7 +457,7 @@ s_H=2\left\lceil 2^{18}(\Delta/\ell)^2T^3\right\rceil.
 $$
 
 For an even positive integer $s$, put $S=s/2$, $k=mS$,
-$K=K_k$ and $E=E(s,k)$. All operators and projections below act on the
+$K=K_k$ and $E=E(s,k)$. Restrict $K$ and $P_{\mathrm{sym}}$ to the
 complete space $\mathcal H_{mS}$ of Definition 1.1. Define
 
 $$
