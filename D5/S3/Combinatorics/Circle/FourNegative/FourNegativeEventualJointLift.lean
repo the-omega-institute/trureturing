@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/FourNegativeEventualJointLift
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/FourNegativeEventualJointLift
    mirror-E: none(waiver:no-escape-mirror-specified)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
