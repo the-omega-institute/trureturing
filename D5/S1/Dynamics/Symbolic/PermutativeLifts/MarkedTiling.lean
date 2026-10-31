@@ -78,7 +78,7 @@ def readTile (W : Bool → List Bool) (s : TileState W) : Bool :=
   (W s.1).get s.2
 
 /-- Reading a marked state at a specified type and physical offset. -/
-theorem readTile_coordinate (W : Bool → List Bool) (s : TileState W)
+theorem readTile_of_coordinates (W : Bool → List Bool) (s : TileState W)
     (a : Bool) (p : ℕ) (hp : p < (W a).length)
     (ht : s.1 = a) (ho : s.2.val = p) : readTile W s = (W a)[p] := by
   rcases s with ⟨b, q⟩

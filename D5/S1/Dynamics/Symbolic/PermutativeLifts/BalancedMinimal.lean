@@ -45,7 +45,7 @@ theorem balancedWindow_infix_pair (n : ℕ) (y : BalancedPoint) (t : ℤ) (r : �
     by_cases hfirst : p + j < (balancedWord n a).length
     · have hs := tiled_forwards (balancedWord n) x.2 t j hfirst
       rw [List.getElem_append_left hfirst]
-      exact readTile_coordinate (balancedWord n) (x.1 (t + (j : ℤ))) a (p + j) hfirst
+      exact readTile_of_coordinates (balancedWord n) (x.1 (t + (j : ℤ))) a (p + j) hfirst
         hs.1 hs.2
     · let q : ℕ := p + j - (balancedWord n a).length
       have hq : q < (balancedWord n c).length := by
@@ -55,7 +55,7 @@ theorem balancedWindow_infix_pair (n : ℕ) (y : BalancedPoint) (t : ℤ) (r : �
       have hindex : t + (j : ℤ) = b + (q : ℤ) := by dsimp [b, q]; omega
       have hs := tiled_forwards (balancedWord n) x.2 b q (by simpa only [hb, zero_add] using hq)
       rw [List.getElem_append_right (by omega), hindex]
-      exact readTile_coordinate (balancedWord n) (x.1 (b + (q : ℤ))) c q hq hs.1
+      exact readTile_of_coordinates (balancedWord n) (x.1 (b + (q : ℤ))) c q hq hs.1
         (by simpa only [hb, zero_add] using hs.2)
 
 /-- Every occurring finite window lies in every sufficiently high actual block. -/
