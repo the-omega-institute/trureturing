@@ -57,7 +57,7 @@ private theorem source_data (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d) :
   have hN : N = D * R * R * R - 1 := by
     dsimp [N, modulus, rank, D, R]
     rw [show 3 * s + d = d + s + s + s by omega]
-    simp only [pow_add] <;> ring
+    simp only [pow_add]
   have hM : modulus (rank s d + 1) = 2 * N + 1 := by
     dsimp [N, modulus]; rw [pow_succ]; ring
   have hb : 0 < seed R ∧ seed R < N := by
@@ -159,8 +159,8 @@ private theorem new_total (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d)
     (word.map (newRow s d)).sum = 0 := by
   have h := (hp.map _).sum_eq.trans (ThreeNegativeEqualOuterSourceBridge.source_zero
     (rank s d + 1) (2 * amplitude s) (by dsimp [rank]; omega))
-  change ((word.map (fun i => centered (modulus (rank s d + 1))
-    ((2 : ℤ) ^ i * (2 * (amplitude s : ℤ))))).sum = 0
+  change (List.map (fun i : ℕ => centered (modulus (rank s d + 1))
+    ((2 : ℤ) ^ i * (2 * (amplitude s : ℤ)))) word).sum = 0
   simpa only [Nat.cast_mul, Nat.cast_ofNat] using h
 
 private theorem finish (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d)

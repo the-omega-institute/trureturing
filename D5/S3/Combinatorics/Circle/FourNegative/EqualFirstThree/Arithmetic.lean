@@ -200,4 +200,95 @@ private theorem uniform_floor_bound (R D HU w L : ℤ)
   · simpa only [Q0, add_assoc] using hround.2.2.2.1
   · simpa only [Q0, add_assoc] using hround.2.2.2.2
 
+open private pow_ge_four
+  from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Source
+
+set_option maxHeartbeats 1600000 in
+private theorem hard_floor (s d : ℕ) (hd : 2 ≤ d) (hhard : 2*d ≤ s) :
+    let R : ℤ := 2 ^ s
+    let D : ℤ := 2 ^ d
+    let H : ℤ := 2 ^ (s-d)
+    let N := D * R * R * R - 1
+    let HU := (N - vcoef R D) / 2
+    let w := (2 : ℤ) ^ (s-1) - H
+    let U := HU - w * wcoef R D
+    let x := U / xcoef R D
+    let S := U - x * xcoef R D
+    let Q := 1 + (R+1) * w + eta R * x
+    0 ≤ x ∧ x < (2 : ℤ) ^ (s-1) ∧ 0 ≤ S ∧
+      1 ≤ 2*S+Q ∧ 2*S+Q ≤ (seed R-1)/2 := by
+  dsimp only
+  by_cases hd3 : 3 ≤ d
+  · let R : ℤ := 2 ^ s
+    let D : ℤ := 2 ^ d
+    let H : ℤ := 2 ^ (s-d)
+    let r : ℤ := 2 ^ (s-1)
+    let e : ℤ := 2 ^ (d-1)
+    let N := D*R*R*R-1
+    let HU := (N-vcoef R D)/2
+    let w := r-H
+    let L := (seed R-1)/2
+    have hD := pow_ge_four d hd
+    have hD8 : (8 : ℤ) ≤ D := by
+      simpa [D] using pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hd3
+    have hR : D*D ≤ R := by
+      have h := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hhard
+      simpa only [show 2*d=d+d by omega,pow_add] using h
+    have hRH : D*H=R := by
+      dsimp [R,D,H]; rw [←pow_add,show d+(s-d)=s by omega]
+    have hr : 2*r=R := by
+      dsimp [r,R]; conv_rhs => rw [show s=s-1+1 by omega,pow_succ]; ring
+    have he : 2*e=D := by
+      dsimp [e,D]; conv_rhs => rw [show d=d-1+1 by omega,pow_succ]; ring
+    have hHU : 2*HU=N-vcoef R D := by
+      have hp : N-vcoef R D=2*(e*(R*R*R-R*R-R-1)-1) := by
+        dsimp [N,vcoef]; rw [←he]; ring
+      dsimp [HU]; omega
+    have hw : 2*D*w=D*R-2*R := by
+      dsimp only [w]
+      linear_combination D*hr-2*hRH
+    have hL : 2*L=seed R-1 := by
+      have hp : seed R-1=2*(r*eta R) := by
+        dsimp [seed,eta]; rw [←hr]; ring
+      dsimp [L]; omega
+    have h := uniform_floor_bound R D HU w L hD hR (Or.inl hD8) hHU hw hL
+    dsimp only at h
+    refine ⟨h.2.2.1,?_,h.2.2.2.2.1,h.2.2.2.2.2.1,?_⟩
+    · change _ < r
+      omega
+    · exact h.2.2.2.2.2.2
+  · have hd2 : d=2 := by omega
+    subst d
+    by_cases hs6 : 6 ≤ s
+    · let R : ℤ := 2 ^ s
+      let r : ℤ := 2 ^ (s-1)
+      let H : ℤ := 2 ^ (s-2)
+      let HU := (4*R*R*R-1-vcoef R 4)/2
+      let w := r-H
+      let L := (seed R-1)/2
+      have hR64 : (64 : ℤ) ≤ R := by
+        simpa [R] using pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hs6
+      have hr : 2*r=R := by
+        dsimp [r,R]; conv_rhs => rw [show s=s-1+1 by omega,pow_succ]; ring
+      have hH : 4*H=R := by
+        dsimp [H,R]
+        conv_rhs => rw [show s=(s-2)+2 by omega,pow_add]
+        norm_num; ring
+      have hHU : 2*HU=4*R*R*R-1-vcoef R 4 := by
+        have hp : 4*R*R*R-1-vcoef R 4=2*(2*(R*R*R-R*R-R-1)-1) := by dsimp [vcoef]; ring
+        dsimp [HU]; omega
+      have hw : 2*4*w=4*R-2*R := by dsimp only [w]; linear_combination 4*hr-2*hH
+      have hL : 2*L=seed R-1 := by
+        have hp : seed R-1=2*(r*eta R) := by dsimp [seed,eta]; rw [←hr]; ring
+        dsimp [L]; omega
+      have h := uniform_floor_bound R 4 HU w L (by omega) (by nlinarith) (Or.inr ⟨rfl,hR64⟩) hHU hw hL
+      norm_num only [show (2 : ℤ)^2=4 by norm_num] at *
+      dsimp only at h
+      refine ⟨h.2.2.1,?_,h.2.2.2.2.1,h.2.2.2.2.2.1,?_⟩
+      · change _ < r
+        omega
+      · exact h.2.2.2.2.2.2
+    · have cases : s=4 ∨ s=5 := by omega
+      rcases cases with rfl | rfl <;> norm_num [seed,eta,vcoef,wcoef,xcoef]
+
 end D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree
