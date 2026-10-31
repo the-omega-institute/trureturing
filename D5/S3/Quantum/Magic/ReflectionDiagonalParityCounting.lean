@@ -271,7 +271,7 @@ private lemma disjoint_counts {m : ℕ} (gs : List (Fin m × Fin m))
     simp only [evenOutputs, outputs, returns, List.foldr_cons, List.filter_cons,
       Pi.add_apply, Finset.sum_add_distrib] at hi ⊢
     cases ht : (∑ i, ls p.1 i) <;> cases hc : (∑ i, ls p.2 i) <;>
-      simp [ht, hc, Bool.add_eq_xor] at hi ⊢ <;> omega
+      simp [Bool.add_eq_xor] at hi ⊢ <;> omega
 
 theorem count_bound {m : ℕ} (hm : 0 < m) (gs : List (Fin m × Fin m))
     (ls : Fin m → Fin m → Bool)
