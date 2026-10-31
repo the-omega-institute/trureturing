@@ -5,6 +5,7 @@
    anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
    utility: none
    digest: Exact floor budget for the uniform last-U physical mask selection. -/
+import Mathlib.Data.Int.DivMod
 import D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Source
 
 /-! The floor is chosen by the actual remaining old mass and the actual X coefficient. -/

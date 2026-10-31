@@ -5,6 +5,7 @@
    anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
    utility: none
    digest: An actual floor mask and interior ear throughout the hard small-d window. -/
+import Mathlib.Data.Int.DivMod
 import D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Lower
 import D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.HardArithmetic
 set_option autoImplicit false

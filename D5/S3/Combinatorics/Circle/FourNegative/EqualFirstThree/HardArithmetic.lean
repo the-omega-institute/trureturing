@@ -5,6 +5,7 @@
    anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
    utility: none
    digest: Exact two-mode bounds for the last-U floor schedule. -/
+import Mathlib.Data.Int.DivMod
 import D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.LowerArithmetic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
