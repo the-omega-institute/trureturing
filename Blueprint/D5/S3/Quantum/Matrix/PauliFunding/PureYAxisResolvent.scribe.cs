@@ -88,7 +88,7 @@ internal sealed class PureYAxisResolventDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Entry(string name, string title, string prose,
         DescribeRole role = DescribeRole.Theorem, Formula? formula = null) => Describe.Lean(
-            DescribeId.Create(name.Replace('_', '-')), DeclarationHandle.Create(Module + name), H(title),
+            DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Module + name), H(title),
             formula is null && role == DescribeRole.Definition ? StatementSource.WithoutFormula() :
                 StatementSource.FromAuthor(Disp(formula ?? throw new System.InvalidOperationException(
                     "Theorem entries require their full authored statement."))), AssessedProvenance.FromRepo(),
