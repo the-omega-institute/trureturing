@@ -280,7 +280,8 @@ private lemma dicke_split_factor (t s : ℕ) :
     simp [k, l]
   rw [Matrix.mul_apply, Finset.sum_eq_single (k, l)]
   · rw [dickeSplitSum]
-    simp only [Matrix.submatrix_apply, id_eq, Matrix.kronecker, Matrix.kroneckerMap,
+    dsimp only [Matrix.kronecker, Matrix.kroneckerMap]
+    simp only [Matrix.submatrix_apply, id_eq,
       Matrix.of_apply, dickeIsometry,
       hw, show (∑ i, (x i).val) = k.val from rfl,
       show (∑ i, (y i).val) = l.val from rfl, ite_true, dickeSplitSum,
@@ -299,11 +300,13 @@ private lemma dicke_split_factor (t s : ℕ) :
     · have hb : (∑ i, (y i).val) ≠ b.val := by
         intro hb
         exact hab (Prod.ext ha (Fin.ext hb.symm))
-      simp [Matrix.kronecker, Matrix.kroneckerMap, dickeIsometry, hb]
+      dsimp only [Matrix.kronecker, Matrix.kroneckerMap]
+      simp [dickeIsometry, hb]
     · have hx : (∑ i, (x i).val) ≠ a.val := by
         intro hx
         exact ha (Fin.ext hx.symm)
-      simp [Matrix.kronecker, Matrix.kroneckerMap, dickeIsometry, hx]
+      dsimp only [Matrix.kronecker, Matrix.kroneckerMap]
+      simp [dickeIsometry, hx]
   · simp
 
 set_option backward.isDefEq.respectTransparency false in
@@ -318,8 +321,9 @@ private lemma partialTrace_isometries {a b i j : Type*}
     simpa [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply,
       mul_comm, eq_comm] using h
   ext x y
+  dsimp only [Matrix.kronecker, Matrix.kroneckerMap]
   simp only [partialTraceRight, Matrix.mul_apply, Matrix.conjTranspose_apply,
-    Matrix.kronecker, Matrix.kroneckerMap, Matrix.of_apply, Fintype.sum_prod_type, star_mul]
+    Matrix.of_apply, Fintype.sum_prod_type, star_mul]
   simp_rw [Finset.sum_mul]
   conv_lhs =>
     rw [Finset.sum_comm]
@@ -425,16 +429,17 @@ private lemma ladder_casimir :
     Jplus 8 * (Jplus 8)ᴴ + (Jplus 8)ᴴ * Jplus 8 =
       (40 : ℂ) • 1 - (2 : ℂ) • (Jz 8 * Jz 8) := by
   ext i j
+  dsimp only [Jz]
   fin_cases i <;> fin_cases j <;>
-    norm_num [Jplus, Jz, Matrix.mul_apply, Fin.sum_univ_succ,
+    norm_num [Jplus, Matrix.mul_apply, Fin.sum_univ_succ,
       Matrix.conjTranspose_apply, Complex.star_def, Complex.conj_ofReal] <;>
     ring_nf <;> norm_num [← Complex.ofReal_pow, Real.sq_sqrt]
 
 private lemma quadrupole_tracefree :
     quadrupole 0 0 + quadrupole 1 1 = -quadrupole 2 2 := by
-  rw [quadrupole]
-  simp only [quadrupole, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val, Matrix.head_cons, Fin.isValue, ite_true, Jx, Jy]
+  dsimp only [quadrupole, Jx, Jy]
+  simp only [Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val, Matrix.head_cons, Fin.isValue, ite_true]
   norm_num [div_eq_mul_inv]
   simp only [Matrix.add_mul, Matrix.mul_add, Matrix.sub_mul, Matrix.mul_sub,
     Matrix.smul_mul, Matrix.mul_smul, smul_add, smul_sub, smul_smul]
@@ -453,8 +458,9 @@ private lemma kraus_cartesian (q : Fin 5) : witnessKraus q =
       (Real.sqrt (3 / 3080) : ℂ) •
         (quadrupole 0 0 - quadrupole 1 1 - (2 * Complex.I) • quadrupole 0 1)] q := by
   fin_cases q <;>
-    simp only [witnessKraus, quadrupole, Matrix.cons_val_zero, Matrix.cons_val_one,
-      Matrix.cons_val, Matrix.head_cons, Fin.isValue, Jx, Jy] <;>
+    dsimp only [witnessKraus, quadrupole, Jx, Jy] <;>
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one,
+      Matrix.cons_val, Matrix.head_cons, Fin.isValue] <;>
     norm_num [div_eq_mul_inv] <;>
     simp only [Matrix.add_mul, Matrix.mul_add, Matrix.sub_mul, Matrix.mul_sub,
       Matrix.smul_mul, Matrix.mul_smul, smul_add, smul_sub, smul_smul] <;>
@@ -462,9 +468,10 @@ private lemma kraus_cartesian (q : Fin 5) : witnessKraus q =
 
 private lemma quadrupole_adjoint (a b : Fin 3) :
     (quadrupole a b)ᴴ = quadrupole a b := by
-  have hz : (Jz 8)ᴴ = Jz 8 := by simp [Jz]
+  have hz : (Jz 8)ᴴ = Jz 8 := by dsimp only [Jz]; simp
   fin_cases a <;> fin_cases b <;>
-    simp [quadrupole, Jx, Jy, Matrix.conjTranspose_sub, Matrix.conjTranspose_smul,
+    dsimp only [quadrupole, Jx, Jy] <;>
+    simp [Matrix.conjTranspose_sub, Matrix.conjTranspose_smul,
       Matrix.conjTranspose_add, Matrix.conjTranspose_mul, hz] <;>
     simp only [Matrix.add_mul, Matrix.mul_add, Matrix.sub_mul, Matrix.mul_sub,
       Matrix.smul_mul, Matrix.mul_smul, smul_add, smul_sub, smul_smul] <;>
@@ -601,12 +608,13 @@ private lemma dicke_collective (a : Fin 3) :
   rw [dickeCoefficient]
   have hwle := weight_le 8 x
   generalize hw : (∑ k, (x k).val) = w at *
+  dsimp only [Jx, Jy, Jz]
   fin_cases a <;> fin_cases r <;> interval_cases w <;>
     norm_num [pauliAxes,
       D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
       D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
       dickeCoefficient, dickeIsometry, hw, Matrix.mul_apply, Fin.sum_univ_succ, Nat.choose,
-      Jx, Jy, Jplus, Jz, Matrix.conjTranspose_apply, Complex.star_def,
+      Jplus, Matrix.conjTranspose_apply, Complex.star_def,
       Complex.conj_ofReal, h8, h14, h18, h20, h28, h56, h70] <;>
     field_simp (disch := first | norm_num | (norm_cast <;> positivity)) <;> (try ring_nf) <;>
     norm_num [← Complex.ofReal_pow, Real.sq_sqrt] <;> (try ring) <;>
@@ -672,8 +680,8 @@ private lemma channel_covariant (u : Matrix.specialUnitaryGroup (Fin 2) ℂ)
   have hs (ab : Fin 3 × Fin 3) : spinAction 8 u * quadrupole ab.1 ab.2 *
       (spinAction 8 u)ᴴ = ∑ ce : Fin 3 × Fin 3,
         q ab ce • quadrupole ce.1 ce.2 := by
-    simpa only [quadrupole, Fintype.sum_prod_type, q, Matrix.kronecker,
-      Matrix.kroneckerMap, Matrix.of_apply, Matrix.map_apply] using
+    dsimp only [q, Matrix.kronecker, Matrix.kroneckerMap]
+    simpa only [quadrupole, Fintype.sum_prod_type, Matrix.of_apply, Matrix.map_apply] using
       quadratic_rotation (spinAction 8 u) (spin_action_unitary 8 u) r hr
         (![Jx 8, Jy 8, Jz 8]) hj ab.1 ab.2
   have hd : (spinAction 8 u)ᴴ * spinAction 8 u = 1 := spin_action_unitary 8 u

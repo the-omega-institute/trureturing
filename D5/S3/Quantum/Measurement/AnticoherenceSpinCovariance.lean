@@ -146,14 +146,16 @@ theorem local_action {n : ℕ} (k : Fin n) (a : Matrix (Fin 2) (Fin 2) ℂ)
   let e := Equiv.funSplitAt k (Fin 2)
   have he (b : Fin 2) : e.symm (b, fun i => x i.val) = Function.update x k b := by
     funext i
-    by_cases hi : i = k <;> simp [e, Equiv.funSplitAt, Equiv.piSplitAt, hi]
+    by_cases hi : i = k <;>
+      dsimp only [e, Equiv.funSplitAt, Equiv.piSplitAt] <;> simp [hi]
   have hk (b : Fin 2) (z : {i : Fin n // i ≠ k} → Fin 2) :
       localOp k a x (e.symm (b, z)) =
         a (x k) b * (if (fun i : {i : Fin n // i ≠ k} => x i.val) = z then 1 else 0) := by
     unfold localOp tensorOp
     rw [Matrix.of_apply, Fintype.prod_eq_mul_prod_subtype_ne _ k]
     have hy (i : {i : Fin n // i ≠ k}) : e.symm (b, z) i.val = z i := by
-      simp [e, Equiv.funSplitAt, Equiv.piSplitAt, i.property]
+      dsimp only [e, Equiv.funSplitAt, Equiv.piSplitAt]
+      simp [i.property]
     have hp : (∏ i : {i : Fin n // i ≠ k},
         Function.update (fun _ : Fin n => (1 : Matrix (Fin 2) (Fin 2) ℂ)) k a i.val
           (x i.val) (e.symm (b, z) i.val)) =
@@ -167,7 +169,8 @@ theorem local_action {n : ℕ} (k : Fin n) (a : Matrix (Fin 2) (Fin 2) ℂ)
           rfl
         _ = _ := by simp [Fintype.prod_boole, funext_iff]
     rw [hp, Function.update_self]
-    simp [e, Equiv.funSplitAt, Equiv.piSplitAt]
+    dsimp only [e, Equiv.funSplitAt, Equiv.piSplitAt]
+    simp
   change (∑ y : Fin n → Fin 2, localOp k a x y * f y) = _
   rw [← e.symm.sum_comp]
   simp only [Fintype.sum_prod_type, hk, ite_mul, mul_ite, one_mul, zero_mul,

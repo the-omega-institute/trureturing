@@ -25,11 +25,13 @@ def witnessState : Matrix (Fin 9) (Fin 9) ℂ :=
   diagonal (fun r => (![209, 92, 560, 0, 441, 0, 294, 168, 0] r : ℂ) / 1764)
 
 def witnessKraus : Fin 5 → Matrix (Fin 9) (Fin 9) ℂ :=
-  ![(1 / (Real.sqrt 1540 : ℂ)) • ((3 : ℂ) • (Jz 8 * Jz 8) - (20 : ℂ) • 1),
-    (-(Real.sqrt (3 / 3080) : ℂ)) • (Jz 8 * Jplus 8 + Jplus 8 * Jz 8),
-    (Real.sqrt (3 / 3080) : ℂ) • (Jz 8 * (Jplus 8)ᴴ + (Jplus 8)ᴴ * Jz 8),
-    (Real.sqrt (3 / 3080) : ℂ) • (Jplus 8 * Jplus 8),
-    (Real.sqrt (3 / 3080) : ℂ) • ((Jplus 8)ᴴ * (Jplus 8)ᴴ)]
+  let z : Matrix (Fin 9) (Fin 9) ℂ := Jz 8
+  let p : Matrix (Fin 9) (Fin 9) ℂ := Jplus 8
+  ![(1 / (Real.sqrt 1540 : ℂ)) • ((3 : ℂ) • (z * z) - (20 : ℂ) • 1),
+    (-(Real.sqrt (3 / 3080) : ℂ)) • (z * p + p * z),
+    (Real.sqrt (3 / 3080) : ℂ) • (z * pᴴ + pᴴ * z),
+    (Real.sqrt (3 / 3080) : ℂ) • (p * p),
+    (Real.sqrt (3 / 3080) : ℂ) • (pᴴ * pᴴ)]
 
 def witnessChannel : MatrixMap (Fin 9) (Fin 9) ℂ :=
   MatrixMap.of_kraus witnessKraus witnessKraus
@@ -70,8 +72,9 @@ private lemma kraus_entry (q : Fin 5) (i r : Fin 9) :
       if (i.val : ℤ) = (r.val : ℤ) + krausShift q then (krausAmplitude q r : ℂ)
       else 0 := by
   rw [witnessKraus, krausShift, krausAmplitude]
+  dsimp only [Jz]
   fin_cases q <;> fin_cases i <;> fin_cases r <;>
-    norm_num [witnessKraus, krausShift, krausAmplitude, Jplus, Jz, Matrix.mul_apply,
+    norm_num [witnessKraus, krausShift, krausAmplitude, Jplus, Matrix.mul_apply,
       Fin.sum_univ_succ, Matrix.conjTranspose_apply, Complex.star_def,
       Complex.conj_ofReal] <;> ring
 
