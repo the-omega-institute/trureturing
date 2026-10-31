@@ -46,6 +46,8 @@ internal sealed class HannaLaurentFirstMomentDocument : IScribeDocumentDefinitio
                         Paragraph(Text("The first equality is in the integers; the second is in the rationals, using the literal Laurent coefficients. Both hold for every natural n with 0<n. The coefficient bridge retains the constant term and every nonpositive coefficient, while the existing degree bound identifies the displayed finite sum with the full row moment.")),
                         Paragraph(Text("Differentiate only the finite inverse-variable rowPolynomial. For n=1 its derivative is one. For n>=2, evaluation at one annihilates every differentiated summand except the last two, whose values are n and -(n-1). Their sum is one. The polynomial derivative coefficient identity gives the integer weighted sum, and the exact coefficient bridge transfers it to the original bilateral series. No evaluation of the bilateral series at one is used.")),
                         Paragraph(Text("This is an application of the existing coefficient and support theorems and polynomial differentiation. Its mathematical scope is the published formula (3) with its original range and arithmetic. Global priority and global prior solvedness remain outside the theorem."))),
-                    DescribeRole.Theorem))));
+                    DescribeRole.Theorem,
+                    new OpenProblemResolutionClaim(ProblemSlugRef.Create(
+                        "oeis-a391810-laurent-first-moment"), ResolutionKind.Proved)))));
     }
 }
