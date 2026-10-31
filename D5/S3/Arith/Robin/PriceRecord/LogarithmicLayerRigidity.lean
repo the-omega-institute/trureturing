@@ -579,6 +579,296 @@ private theorem ratio_one_of_sub_zero {α : Type*} {l : Filter α} {A L : α →
   field_simp
   <;> ring
 
+private theorem record_logarithmic_balance_limit {α : Type*} {l : Filter α}
+    (m : α → ℕ) (lambda : α → ℝ) (hm : ∀ x, 2 ≤ m x)
+    (hlambda : ∀ x, 0 < lambda x)
+    (hrecord : ∀ x n, 0 < n → n < m x →
+      goldenResourceObjective (lambda x) n < goldenResourceObjective (lambda x) (m x))
+    (j : ℕ) (hj : 2 ≤ j)
+    (hP : Tendsto (fun x => (largestPrime (m x) : ℝ)) l atTop) :
+    Tendsto (fun x => Real.log (largestPrime (m x) : ℝ) *
+      ((layerPrime (m x) j : ℝ) ^ j * Real.log (layerPrime (m x) j : ℝ) /
+        ((largestPrime (m x) : ℝ) * Real.log (largestPrime (m x) : ℝ)) - 1)) l (𝓝 0) := by
+  let P : α → ℝ := fun x => largestPrime (m x)
+  let Q : α → ℝ := fun x => layerPrime (m x) j
+  let L : α → ℝ := fun x => Real.log (P x)
+  let H : α → ℝ := fun x => Real.log (Q x)
+  let dP : α → ℝ := fun x => 1 / L x ^ 3
+  let dQ : α → ℝ := fun x => 1 / H x ^ 3
+  let V : α → ℝ := fun x => P x * (1 - dP x)
+  let W : α → ℝ := fun x => Q x * (1 + dQ x)
+  let X : α → ℝ := fun x => Q x * (1 - dQ x)
+  let Y : α → ℝ := fun x => P x * (1 + dP x)
+  let A : α → ℝ := fun x => Real.log (V x)
+  let B : α → ℝ := fun x => Real.log (W x)
+  let E : α → ℝ := fun x => Real.log (Y x)
+  let F : α → ℝ := fun x => Real.log (X x)
+  let r : α → ℕ := fun x => ⌈L x ^ 3⌉₊
+  let s : α → ℕ := fun x => ⌈(r x : ℝ) * A x / B x⌉₊ - 1
+  let t : α → ℕ := fun x => ⌊(r x : ℝ) * E x / F x⌋₊ + 1
+  let b : α → ℝ := fun x => (s x : ℝ) / (r x : ℝ) * (H x / L x)
+  let c : α → ℝ := fun x => (t x : ℝ) / (r x : ℝ) * (H x / L x)
+  have hjpos : (0 : ℝ) < j := by exact_mod_cast (by omega : 0 < j)
+  have hfirst := record_ratio_limit m lambda hm hlambda hrecord j hj hP
+  obtain ⟨hQ, hHL, hsep⟩ := coarse_scale_limits P Q j hj (fun x => Nat.cast_nonneg _) hP hfirst
+  have hL : Tendsto L l atTop := Real.tendsto_log_atTop.comp hP
+  have hH : Tendsto H l atTop := Real.tendsto_log_atTop.comp hQ
+  have hLH : Tendsto (fun x => L x / H x) l (𝓝 (j : ℝ)) := by
+    simpa only [inv_div, inv_inv] using hHL.inv₀ (inv_ne_zero hjpos.ne')
+  obtain ⟨hdP, hV, hY, hA, hE, hPsmall, hPd⟩ := shrinking_scale_limits P hP
+  obtain ⟨hdQ, hX, hW, hF, hB, hQsmall, hQd⟩ := shrinking_scale_limits Q hQ
+  have hHB : Tendsto (fun x => H x / B x) l (𝓝 1) := by
+    simpa only [inv_div, inv_one] using (ratio_one_of_sub_zero hH hB).inv₀ (by norm_num : (1 : ℝ) ≠ 0)
+  have hHF : Tendsto (fun x => H x / F x) l (𝓝 1) := by
+    simpa only [inv_div, inv_one] using (ratio_one_of_sub_zero hH hF).inv₀ (by norm_num : (1 : ℝ) ≠ 0)
+  have hLB : Tendsto (fun x => L x / B x) l (𝓝 (j : ℝ)) := by
+    have hh := hLH.mul hHB
+    simp only [mul_one] at hh
+    apply hh.congr'
+    filter_upwards [hH.eventually_gt_atTop 0] with x hx
+    field_simp
+  have hLF : Tendsto (fun x => L x / F x) l (𝓝 (j : ℝ)) := by
+    have hh := hLH.mul hHF
+    simp only [mul_one] at hh
+    apply hh.congr'
+    filter_upwards [hH.eventually_gt_atTop 0] with x hx
+    field_simp
+  have hrpos : ∀ᶠ x in l, 0 < (r x : ℝ) := by
+    filter_upwards [hL.eventually_gt_atTop 0] with x hx
+    exact_mod_cast (Nat.ceil_pos.mpr (pow_pos hx 3))
+  have hrratio : Tendsto (fun x => (r x : ℝ) / L x ^ 3) l (𝓝 1) :=
+    tendsto_nat_ceil_div_atTop.comp ((tendsto_pow_atTop (by norm_num : 3 ≠ 0)).comp hL)
+  have hLr : Tendsto (fun x => L x / (r x : ℝ)) l (𝓝 0) := by
+    have hinv := ((tendsto_pow_atTop (by norm_num : 2 ≠ 0)).comp hL).const_div_atTop 1
+    have hh := hinv.div hrratio (by norm_num : (1 : ℝ) ≠ 0)
+    simp only [zero_div] at hh
+    apply hh.congr'
+    filter_upwards [hL.eventually_gt_atTop 0, hrpos] with x hx hrx
+    change (1 / L x ^ 2) / ((r x : ℝ) / L x ^ 3) = L x / (r x : ℝ)
+    field_simp
+  have hz : ∀ᶠ x in l, 0 < (r x : ℝ) * A x / B x ∧ 0 ≤ (r x : ℝ) * E x / F x := by
+    filter_upwards [hrpos, hV.eventually_gt_atTop 1, hW.eventually_gt_atTop 1,
+      hY.eventually_gt_atTop 1, hX.eventually_gt_atTop 1] with x hrx hv hw hy hx
+    exact ⟨div_pos (mul_pos hrx (Real.log_pos hv)) (Real.log_pos hw),
+      (div_pos (mul_pos hrx (Real.log_pos hy)) (Real.log_pos hx)).le⟩
+  have hround : ∀ᶠ x in l,
+      |(s x : ℝ) - (r x : ℝ) * A x / B x| ≤ 1 ∧
+      |(t x : ℝ) - (r x : ℝ) * E x / F x| ≤ 1 := by
+    filter_upwards [hz] with x hx
+    obtain ⟨hslt, hsge, htlt, htle⟩ := rounded_counts hx.1 hx.2
+    exact ⟨abs_le.mpr ⟨by linarith, by linarith⟩, abs_le.mpr ⟨by linarith, by linarith⟩⟩
+  have hpos : ∀ᶠ x in l, L x ≠ 0 ∧ B x ≠ 0 ∧ F x ≠ 0 ∧ (r x : ℝ) ≠ 0 := by
+    filter_upwards [hL.eventually_gt_atTop 0, hW.eventually_gt_atTop 1,
+      hX.eventually_gt_atTop 1, hrpos] with x hl hw hx hrx
+    exact ⟨hl.ne', (Real.log_pos hw).ne', (Real.log_pos hx).ne', hrx.ne'⟩
+  have hb : LogClose l L b := rounded_log_balance L H A B r s (j : ℝ)⁻¹
+    hL hHL hHB (by simpa only [inv_inv] using hLB) hA hB hLr
+    (hpos.mono fun x hx => ⟨hx.1, hx.2.1, hx.2.2.2⟩)
+    (hround.mono fun x hx => hx.1)
+  have hc : LogClose l L c := rounded_log_balance L H E F r t (j : ℝ)⁻¹
+    hL hHL hHF (by simpa only [inv_inv] using hLF) hE hF hLr
+    (hpos.mono fun x hx => ⟨hx.1, hx.2.2.1, hx.2.2.2⟩)
+    (hround.mono fun x hx => hx.2)
+  have count_limit (n : α → ℕ) (hn : Tendsto (fun x => (n x : ℝ) / (r x : ℝ) * (H x / L x)) l (𝓝 1)) :
+      Tendsto (fun x => (n x : ℝ) / H x ^ 3) l (𝓝 ((j : ℝ) ^ 4)) := by
+    have hh := (hn.mul hrratio).mul (hLH.pow 4)
+    simp only [one_mul] at hh
+    apply hh.congr'
+    filter_upwards [hL.eventually_gt_atTop 0, hH.eventually_gt_atTop 0, hrpos] with x hl hh hrx
+    field_simp
+    <;> ring
+  let C : ℝ := (j : ℝ) ^ 4 + 2
+  have hC : 0 < C := by dsimp [C]; positivity
+  have hC1 : 1 < C := by dsimp [C]; nlinarith [sq_nonneg ((j : ℝ) ^ 2)]
+  have hCj : (j : ℝ) ^ 4 < C := by dsimp [C]; linarith
+  have hcaps : ∀ᶠ x in l, r x ≤ ⌈C * L x ^ 3⌉₊ ∧
+      s x ≤ ⌈C * H x ^ 3⌉₊ ∧ t x ≤ ⌈C * H x ^ 3⌉₊ := by
+    filter_upwards [hrratio.eventually_lt_const hC1,
+      (count_limit s hb.1).eventually_lt_const hCj,
+      (count_limit t hc.1).eventually_lt_const hCj,
+      hL.eventually_gt_atTop 0, hH.eventually_gt_atTop 0] with x hrx hsx htx hl hh
+    have cap (n : ℕ) (K : ℝ) (hK : 0 < K) (hn : (n : ℝ) / K ^ 3 < C) : n ≤ ⌈C * K ^ 3⌉₊ := by
+      have hn' := ((div_lt_iff₀ (pow_pos hK 3)).mp hn).le
+      exact_mod_cast hn'.trans (Nat.le_ceil (C * K ^ 3))
+    exact ⟨cap _ _ hl hrx, cap _ _ hh hsx, cap _ _ hh htx⟩
+  have hWV : Tendsto (fun x => W x / V x) l (𝓝 0) := by
+    have hpminus : Tendsto (fun x => 1 - dP x) l (𝓝 1) := by simpa only [dP, L, sub_zero] using (hdP.const_sub 1)
+    have hqplus : Tendsto (fun x => 1 + dQ x) l (𝓝 1) := by simpa only [dQ, H, add_zero] using (hdQ.const_add 1)
+    have hh := hsep.mul (hqplus.div hpminus (by norm_num : (1 : ℝ) ≠ 0))
+    simp only [zero_mul] at hh
+    apply hh.congr'
+    filter_upwards [hP.eventually_gt_atTop 0, hpminus.eventually_ne (by norm_num : (1 : ℝ) ≠ 0)] with x hp hpm
+    dsimp [V, W]
+    field_simp
+  obtain ⟨T, _, hexchange⟩ := shrinking_rounded_exchanges C hC
+  have hineq : ∀ᶠ x in l,
+      (s x : ℝ) * ((1 - (Q x)⁻¹) * (W x)⁻¹ ^ j) ≤ (r x : ℝ) * (V x)⁻¹ ∧
+      (r x : ℝ) * ((1 - (P x)⁻¹) * (Y x)⁻¹) ≤ (t x : ℝ) * (X x)⁻¹ ^ j := by
+    filter_upwards [hP.eventually_ge_atTop T, hQ.eventually_ge_atTop T,
+      hV.eventually_gt_atTop 1, hX.eventually_gt_atTop 1,
+      hWV.eventually_lt_const (by norm_num : (0 : ℝ) < 1), hcaps, hz] with x hp hq hv hx hwv hcap hzx
+    exact hexchange (m x) j (hm x) hj (lambda x) (hlambda x) (hrecord x)
+      hp hq hv hx ((div_lt_one (by linarith : 0 < V x)).mp hwv) hzx.1 hcap.1 hcap.2.1 hcap.2.2
+  have hLQsmall : Tendsto (fun x => L x / Q x) l (𝓝 0) := by
+    have hh := hLH.mul hQsmall
+    simp only [mul_zero] at hh
+    apply hh.congr'
+    filter_upwards [hH.eventually_gt_atTop 0] with x hx
+    change (L x / H x) * (H x / Q x) = L x / Q x
+    field_simp
+  have hLdQ : Tendsto (fun x => L x * dQ x) l (𝓝 0) := by
+    have hh := hLH.mul hQd
+    simp only [mul_zero] at hh
+    apply hh.congr'
+    filter_upwards [hH.eventually_gt_atTop 0] with x hx
+    change (L x / H x) * (H x * dQ x) = L x * dQ x
+    field_simp
+  have pminus : LogClose l L (fun x => 1 - dP x) := by
+    apply log_close_of_scaled hL
+    convert hPd.neg using 1 <;> ext x <;> ring
+  have pplus : LogClose l L (fun x => 1 + dP x) := by
+    apply log_close_of_scaled hL
+    convert hPd using 1 <;> ext x <;> ring
+  have qminus : LogClose l L (fun x => 1 - dQ x) := by
+    apply log_close_of_scaled hL
+    convert hLdQ.neg using 1 <;> ext x <;> ring
+  have qplus : LogClose l L (fun x => 1 + dQ x) := by
+    apply log_close_of_scaled hL
+    convert hLdQ using 1 <;> ext x <;> ring
+  have pgain : LogClose l L (fun x => 1 - (P x)⁻¹) := by
+    apply log_close_of_scaled hL
+    convert hPsmall.neg using 1 <;> ext x <;> try simp only [div_eq_mul_inv]
+    all_goals ring
+  have qgain : LogClose l L (fun x => 1 - (Q x)⁻¹) := by
+    apply log_close_of_scaled hL
+    convert hLQsmall.neg using 1 <;> ext x <;> try simp only [div_eq_mul_inv]
+    all_goals ring
+  let lower : α → ℝ := fun x => b x * (1 - (Q x)⁻¹) * (1 - dP x) * ((1 + dQ x) ^ j)⁻¹
+  let upper : α → ℝ := fun x => c x * (1 + dP x) * ((1 - (P x)⁻¹) * (1 - dQ x) ^ j)⁻¹
+  have hlower : LogClose l L lower := log_close_mul
+    (log_close_mul (log_close_mul hb qgain) pminus) (log_close_inv (log_close_pow qplus j))
+  have hupper : LogClose l L upper := log_close_mul
+    (log_close_mul hc pplus) (log_close_inv (log_close_mul pgain (log_close_pow qminus j)))
+  let balance : α → ℝ := fun x => Q x ^ j * H x / (P x * L x)
+  have hbounds : ∀ᶠ x in l, lower x ≤ balance x ∧ balance x ≤ upper x := by
+    filter_upwards [hineq, hP.eventually_gt_atTop 1, hQ.eventually_gt_atTop 1,
+      hL.eventually_gt_atTop 0, hH.eventually_gt_atTop 0, hrpos,
+      pminus.1.eventually (eventually_gt_nhds (by norm_num : (0 : ℝ) < 1)),
+      qminus.1.eventually (eventually_gt_nhds (by norm_num : (0 : ℝ) < 1)),
+      qplus.1.eventually (eventually_gt_nhds (by norm_num : (0 : ℝ) < 1)),
+      pplus.1.eventually (eventually_gt_nhds (by norm_num : (0 : ℝ) < 1))] with x hi hp hq hl hh hrx hpm hqm hqp hpp
+    have hp0 : 0 < P x := by linarith
+    have hq0 : 0 < Q x := by linarith
+    have hpg : 0 < 1 - (P x)⁻¹ := sub_pos.mpr ((inv_lt_one₀ hp0).mpr hp)
+    have hqden : 0 < Q x ^ j * (1 + dQ x) ^ j := mul_pos (pow_pos hq0 j) (pow_pos hqp j)
+    have hpden : 0 < P x * (1 - dP x) := mul_pos hp0 hpm
+    have hlo : (s x : ℝ) * (1 - (Q x)⁻¹) * (P x * (1 - dP x)) ≤
+        (r x : ℝ) * (Q x ^ j * (1 + dQ x) ^ j) := by
+      apply (div_le_div_iff₀ hqden hpden).mp
+      simpa only [W, V, mul_pow, inv_pow, div_eq_mul_inv, mul_inv_rev, mul_assoc] using hi.1
+    have hlo' : (s x : ℝ) * (1 - (Q x)⁻¹) * (1 - dP x) /
+        ((r x : ℝ) * (1 + dQ x) ^ j) ≤ Q x ^ j / P x := by
+      apply (div_le_div_iff₀ (mul_pos hrx (pow_pos hqp j)) hp0).mpr
+      convert hlo using 1 <;> ring
+    have hidenq : 0 < Q x ^ j * (1 - dQ x) ^ j := mul_pos (pow_pos hq0 j) (pow_pos hqm j)
+    have hidenp : 0 < P x * (1 + dP x) := mul_pos hp0 hpp
+    have hhi : (r x : ℝ) * (1 - (P x)⁻¹) * (Q x ^ j * (1 - dQ x) ^ j) ≤
+        (t x : ℝ) * (P x * (1 + dP x)) := by
+      apply (div_le_div_iff₀ hidenp hidenq).mp
+      simpa only [Y, X, mul_pow, inv_pow, div_eq_mul_inv, mul_inv_rev, mul_assoc] using hi.2
+    have hhi' : Q x ^ j / P x ≤ (t x : ℝ) * (1 + dP x) /
+        ((r x : ℝ) * (1 - (P x)⁻¹) * (1 - dQ x) ^ j) := by
+      apply (div_le_div_iff₀ hp0 (mul_pos (mul_pos hrx hpg) (pow_pos hqm j))).mpr
+      convert hhi using 1 <;> ring
+    constructor
+    · convert mul_le_mul_of_nonneg_right hlo' (div_pos hh hl).le using 1 <;>
+        dsimp [lower, balance, b] <;> field_simp <;> ring
+    · convert mul_le_mul_of_nonneg_right hhi' (div_pos hh hl).le using 1 <;>
+        dsimp [upper, balance, c] <;> field_simp <;> ring
+  have hscaled : Tendsto (fun x => L x * (balance x - 1)) l (𝓝 0) := by
+    apply tendsto_of_tendsto_of_tendsto_of_le_of_le' hlower.2 hupper.2
+    · filter_upwards [hbounds, hL.eventually_gt_atTop 0] with x hx hl
+      exact mul_le_mul_of_nonneg_left (sub_le_sub_right hx.1 1) hl.le
+    · filter_upwards [hbounds, hL.eventually_gt_atTop 0] with x hx hl
+      exact mul_le_mul_of_nonneg_left (sub_le_sub_right hx.2 1) hl.le
+  exact hscaled
+
+private theorem record_second_order_limit {α : Type*} {l : Filter α}
+    (m : α → ℕ) (lambda : α → ℝ) (hm : ∀ x, 2 ≤ m x)
+    (hlambda : ∀ x, 0 < lambda x)
+    (hrecord : ∀ x n, 0 < n → n < m x →
+      goldenResourceObjective (lambda x) n < goldenResourceObjective (lambda x) (m x))
+    (j : ℕ) (hj : 2 ≤ j)
+    (hP : Tendsto (fun x => (largestPrime (m x) : ℝ)) l atTop) :
+    Tendsto (fun x => Real.log (largestPrime (m x) : ℝ) *
+      ((layerPrime (m x) j : ℝ) ^ j / ((j : ℝ) * (largestPrime (m x) : ℝ)) - 1) +
+        Real.log (j : ℝ)) l (𝓝 0) := by
+  let P : α → ℝ := fun x => largestPrime (m x)
+  let Q : α → ℝ := fun x => layerPrime (m x) j
+  let L : α → ℝ := fun x => Real.log (P x)
+  let R : α → ℝ := fun x => Q x ^ j / ((j : ℝ) * P x)
+  have hjpos : (0 : ℝ) < j := by exact_mod_cast (by omega : 0 < j)
+  have hfirst := record_ratio_limit m lambda hm hlambda hrecord j hj hP
+  have hQ := (coarse_scale_limits P Q j hj (fun x => Nat.cast_nonneg _) hP hfirst).1
+  have hR : Tendsto R l (𝓝 1) := by
+    have hh := hfirst.div_const (j : ℝ)
+    simp only [div_self hjpos.ne'] at hh
+    convert hh using 1
+    ext x
+    dsimp [R]
+    ring
+  have hlogR : Tendsto (fun x => Real.log (R x)) l (𝓝 0) := by
+    simpa only [Real.log_one] using hR.log (by norm_num : (1 : ℝ) ≠ 0)
+  have hbalance := record_logarithmic_balance_limit m lambda hm hlambda hrecord j hj hP
+  have hh := (hbalance.sub ((hR.sub_const 1).mul_const (Real.log (j : ℝ)))).sub (hR.mul hlogR)
+  simp only [sub_self, zero_mul, one_mul, sub_zero] at hh
+  apply hh.congr'
+  filter_upwards [hP.eventually_gt_atTop 1, hQ.eventually_gt_atTop 0] with x hp hq
+  have hlog : Real.log (R x) = (j : ℝ) * Real.log (Q x) - Real.log (j : ℝ) - L x := by
+    dsimp [R, L]
+    rw [Real.log_div (pow_ne_zero j hq.ne') (mul_ne_zero hjpos.ne' (by linarith : P x ≠ 0)),
+      Real.log_pow, Real.log_mul hjpos.ne' (by linarith : P x ≠ 0)]
+    ring
+  change L x * (Q x ^ j * Real.log (Q x) / (P x * L x) - 1) -
+    (R x - 1) * Real.log (j : ℝ) - R x * Real.log (R x) =
+      L x * (R x - 1) + Real.log (j : ℝ)
+  rw [hlog]
+  dsimp [R]
+  have hLne : L x ≠ 0 := (Real.log_pos hp).ne'
+  field_simp [hjpos.ne', (by linarith : P x ≠ 0), hLne]
+  <;> ring
+
+/-- Uniform logarithmic second-order rigidity of every fixed prime layer of
+literal strict positive-price full predecessor records. -/
+theorem price_record_logarithmic_layer_rigidity (j : ℕ) (hj : 2 ≤ j)
+    (epsilon : ℝ) (hepsilon : 0 < epsilon) :
+    ∃ T : ℝ, 1 < T ∧ ∀ m : ℕ, 2 ≤ m → ∀ lambda : ℝ, 0 < lambda →
+      (∀ n : ℕ, 0 < n → n < m →
+        goldenResourceObjective lambda n < goldenResourceObjective lambda m) →
+      T ≤ (largestPrime m : ℝ) →
+      |Real.log (largestPrime m : ℝ) *
+        ((layerPrime m j : ℝ) ^ j / ((j : ℝ) * (largestPrime m : ℝ)) - 1) +
+          Real.log (j : ℝ)| < epsilon := by
+  let S := {v : ℕ × ℝ // 2 ≤ v.1 ∧ 0 < v.2 ∧
+    ∀ n : ℕ, 0 < n → n < v.1 →
+      goldenResourceObjective v.2 n < goldenResourceObjective v.2 v.1}
+  let m : S → ℕ := fun x => x.1.1
+  let lambda : S → ℝ := fun x => x.1.2
+  let P : S → ℝ := fun x => largestPrime (m x)
+  let l : Filter S := comap P atTop
+  have hP : Tendsto P l atTop := tendsto_comap
+  have hh := record_second_order_limit m lambda (fun x => x.2.1) (fun x => x.2.2.1)
+    (fun x => x.2.2.2) j hj hP
+  have hevent := (Metric.tendsto_nhds.mp hh) epsilon hepsilon
+  obtain ⟨T, hT⟩ := eventually_atTop.mp (eventually_comap.mp hevent)
+  refine ⟨max T 2, lt_of_lt_of_le (by norm_num) (le_max_right _ _), ?_⟩
+  intro n hn lam hlam hrecord hlarge
+  let x : S := ⟨(n, lam), hn, hlam, hrecord⟩
+  have hx := hT (largestPrime n : ℝ) ((le_max_left T 2).trans hlarge) x rfl
+  simpa only [Real.dist_eq, sub_zero] using hx
+
+#print axioms price_record_logarithmic_layer_rigidity
+
 #print axioms shrinking_rounded_exchanges
 
 end D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity
