@@ -4516,3 +4516,400 @@ The longer-odd-rim $s=2$ case and arbitrary connected even-order
 bases remain unresolved by these arguments. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 16. Spin-one confinement for longer odd-rim wheels
+
+**定义 16.1（The original spin-one wheel carrier）。** For every integer
+$r\geq3$, put $n=2r+1$, $m=n+1$, and let $H=K_1\vee C_n$ have hub
+$h$ and rim $\mathbb Z/n\mathbb Z$, with just the spokes and rim edges.
+Use the original equal Boolean fibres $B_i=\{i\}\times[2]$,
+$\Omega=\bigsqcup_iB_i$, and the entire complex $m$-particle space
+$\mathcal H_m$ of Definitions 1.1–1.2. Thus $s=2$, $|\Omega|=2m$,
+$K=K_m$ is positive ordinary token adjacency, and $P_{\mathrm{sym}}$
+is the original within-fibre projection. Set
+
+$$
+E=\min\operatorname{spec}K,\qquad
+\mathcal N=\ker P_{\mathrm{sym}},\qquad
+c_n=\cos(\pi/n),\qquad t_n=\frac{49}{50}c_n+\frac7{100}.
+\tag{16.1}
+$$
+
+The minimum defining $E$ is over all of $\mathcal H_m$.
+The sector decomposition (13.4)–(13.5) applies to this carrier
+independently of the graph-block hypotheses of Theorem 13.2:
+
+$$
+\mathcal H_m\cong\bigoplus_{\boldsymbol J\in\{0,1\}^m}
+ \left(\bigotimes_i V_{J_i}\right)_{\sum_i Z_i=0},\qquad
+K=\sum_{\{i,j\}\in E(H)}(J_i^+J_j^-+J_i^-J_j^+).
+\tag{16.2}
+$$
+
+Each original fibre has the unique spin-zero vector
+$\chi=(|\{1\}\rangle-|\{2\}\rangle)/\sqrt2$ and the three spin-one
+vectors in (13.4). Both multiplicities are one, $n_i=I+Z_i$,
+and $P_{\mathrm{sym}}$ selects precisely $\boldsymbol J=(1,\ldots,1)$.
+Every sector in (16.2) includes all its globally feasible weights
+$|x_i|\leq J_i$, $\sum_i x_i=0$, including the endpoints. No restriction
+on complex superpositions or entanglement is imposed.
+
+The representation suppliers in (6.6)–(6.12) specialize as follows:
+Srinivasan, [Theorem 1.2 and pp. 3–5](https://arxiv.org/pdf/1001.0280v2),
+has Boolean rank $2$, starting rank $1-J_i$ and up operator $L_i^*$;
+Feinsilver, [§§3–4, Proposition 4.3 and §4.2.2](https://arxiv.org/pdf/1102.0368v2),
+has principal number $2J_i$, $T=L_i^*$ and $T^*=L_i$.
+The complete word counts and Gram formulas, with their counting
+recurrences, in [OccupancyWordSectors](../../../D5/S3/Quantum/Entanglement/OccupancyWordSectors.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Quantum/Entanglement/OccupancyWordSectors.scribe.cs)
+normalize the triplet with two-letter counts $(2-n_i,n_i)$.
+For [the collective-oscillator supplier](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md)
+the exact algebraic map is $d=m$, $N=2$, $g=0$, $e=1$,
+$B=A(H)$, $a_i=L_i/\sqrt2$, $H_2=\hbar K/2$;
+no low-excitation approximation is used.
+The singleton-difference definition in
+[TokenGraphLaplacianRadiusRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.scribe.cs)
+gives exactly the coefficient-one moves of (2.4).
+These conventions agree with Apte–Parekh–Sud,
+[v3, Definition 1 and Fact 2](https://arxiv.org/pdf/2506.03441v3);
+the shifted operator $WI/2-K$ in that Fact is a different operator.
+
+**定理 16.2（A full-carrier wheel energy bound）。** For every odd $n\geq7$
+with Definition 16.1,
+
+$$
+\boxed{\quad E\leq-\frac{4n(n+1)}{2n+1}t_n<-2n.\quad}
+\tag{16.3}
+$$
+
+Proof. Write $c=c_n$, $\varepsilon=1/10$, and
+$u_j=\exp(2\pi\mathrm i rj/n)$ for $j\in\mathbb Z/n\mathbb Z$.
+Since $\gcd(r,2r+1)=1$, the $u_j$ run through all $n$th roots of
+unity. The vectors $u^k=(u_j^k)_j$, $0\leq k<n$, are orthogonal,
+with squared norm $n$: for distinct exponents the inner product is
+a geometric sum with ratio a nontrivial $n$th root. Cycle adjacency
+$a_C$ satisfies $a_Cu=-2cu$. Also $a_C\preceq2I$, since
+$2\operatorname{Re}(\overline{v_j}v_{j+1})\leq|v_j|^2+|v_{j+1}|^2$
+for each rim edge and every complex $v$.
+Define phases on all base vertices by
+
+$$
+w_h=-1,\qquad w_j=\frac{u_j+\varepsilon}{1+\varepsilon u_j}.
+\tag{16.4}
+$$
+
+The denominators have modulus at least $1-\varepsilon>0$.
+The numerator and denominator have the same squared modulus
+$1+\varepsilon^2+2\varepsilon\operatorname{Re}u_j$, so $|w_i|=1$
+at every vertex. Since $n$ is odd, finite geometric division gives
+
+$$
+\begin{aligned}
+\frac1{1+\varepsilon u_j}
+ &=\frac{\sum_{k=0}^{n-1}(-\varepsilon u_j)^k}{1+\varepsilon^n},\\
+w_j&=\mu+A\sum_{k=1}^{n-1}(-\varepsilon)^{k-1}u_j^k,\\
+\mu&=\frac{\varepsilon+\varepsilon^{n-1}}{1+\varepsilon^n}
+ \geq\varepsilon,\qquad
+A=\frac{1-\varepsilon^2}{1+\varepsilon^n}>0.
+\end{aligned}
+\tag{16.5}
+$$
+
+The inequality for $\mu$ follows by subtracting $\varepsilon$:
+the numerator of the difference is
+$\varepsilon^{n-1}(1-\varepsilon^2)>0$.
+Thus the rim vector has the orthogonal decomposition
+$w_{\rm rim}=Au+v$, $v\perp u$,
+$\|v\|^2=n(1-A^2)$, and $\sum_jw_j=n\mu$.
+Self-adjointness and $a_Cu=-2cu$ eliminate its cross terms.
+Consequently, with $a_H=A(H)$,
+
+$$
+\begin{aligned}
+w^*a_Hw
+ &=w_{\rm rim}^*a_Cw_{\rm rim}-2n\mu\\
+ &\leq-2ncA^2+2n(1-A^2)-2n\mu\\
+ &=-2n\bigl((1+c)A^2+\mu-1\bigr).
+\end{aligned}
+\tag{16.6}
+$$
+
+For $n\geq7$, put $\delta=\varepsilon^n<1/100000$. Since $\delta<1$,
+
+$$
+(1+\delta)^2\leq1+3\delta
+ <1+\frac3{100000}<\frac{9801}{9800},\qquad
+A^2=\frac{9801}{10000(1+\delta)^2}>\frac{49}{50}.
+\tag{16.7}
+$$
+
+Here the last strict rational comparison follows from
+$3\cdot9800<100000$. As $c>0$, (16.5)–(16.7) imply
+
+$$
+(1+c)A^2+\mu-1
+ >\frac{49}{50}c+\frac8{100}>t_n,
+\qquad w^*a_Hw\leq-2nt_n.
+\tag{16.8}
+$$
+
+Lift these phases to a vector on the original carrier, not to a
+minimum in an auxiliary spin space. For each $m$-subset $T\subseteq\Omega$ set
+
+$$
+\Phi(T)=\binom{2m}{m}^{-1/2}\prod_{(i,a)\in T}w_i.
+\tag{16.9}
+$$
+
+Its norm is one because every product has modulus one. It is
+within-fibre invariant and has exactly $m$ particles. For an ordered
+pair of distinct coordinates $x\in B_i$, $y\in B_j$, exactly
+$\binom{2m-2}{m-1}$ such subsets contain $x$ and omit $y$.
+The phase product in the corresponding adjacency quadratic form is
+$\overline{w_i}w_j$. There are four coordinate pairs for every
+ordered base edge. Hence, counting both orientations just as in (2.4),
+
+$$
+\begin{aligned}
+\langle\Phi,K\Phi\rangle
+ &=4\frac{\binom{2m-2}{m-1}}{\binom{2m}{m}}w^*a_Hw
+ =\frac{2m}{2m-1}w^*a_Hw\\
+ &\leq-\frac{4nm}{2m-1}t_n.
+\end{aligned}
+\tag{16.10}
+$$
+
+The ratio is $m^2/((2m)(2m-1))$, by factorial cancellation.
+The full-space Rayleigh principle proves the first inequality in
+(16.3). For complex vectors it is the same principle: if $K$ is
+real symmetric and $z=x+\mathrm i y$, then
+$z^*Kz=x^{\mathsf T}Kx+y^{\mathsf T}Ky$ and
+$z^*z=\|x\|^2+\|y\|^2$.
+
+The subset count, normalization and real/complex comparison are the
+intermediates (3.5)–(3.7), supplied in full by
+[CutBoundRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.scribe.cs):
+`Test.move`, `Test.toNbr_bij`, `Test.token_energy`, `counting_identity`,
+`card_move_family`, `W_move` and the proof-local norm and Rayleigh
+identities. Their parameters here are $N=2m$, $k=m$, block size $2$,
+and coordinate phase $w_i$; no pentagon energy or cut estimate is used.
+The phase-subset method also has the classical fixed-magnetization
+precedent Bärwinkel–Schmidt–Schnack,
+[§§2.2–2.3, (14)–(21)](https://arxiv.org/pdf/cond-mat/0210458v2),
+whose cyclic hypotheses are not assumed for the wheel.
+The wheel-specific inference is (16.4)–(16.8), followed by the
+unchanged full-carrier count.
+
+For the strict endpoint comparison, $\cos x\geq1-x^2/2$ follows by
+integrating $\sin x\leq x$ on $x\geq0$. One elementary exact bound
+$\pi^2<10$ follows from
+
+$$
+0<\int_0^1\frac{x^4(1-x)^4}{1+x^2}\,dx=\frac{22}{7}-\pi,
+\qquad \left(\frac{22}{7}\right)^2<10.
+\tag{16.11}
+$$
+
+For the integral identity divide its integrand to obtain
+$x^6-4x^5+5x^4-4x^2+4-4/(1+x^2)$ and integrate each term.
+It follows that
+
+$$
+\begin{aligned}
+t_n&>\frac{21}{20}-\frac{49}{10n^2},\\
+\frac{21}{20}-\frac{49}{10n^2}
+ -\left(1-\frac1{2n+2}\right)
+ &=\frac{n^3+11n^2-98n-98}{20n^2(n+1)}>0.
+\end{aligned}
+\tag{16.12}
+$$
+
+Indeed for $v=n-7\geq0$ the numerator is
+$v^3+32v^2+203v+98>0$. Therefore
+$t_n>(2n+1)/(2n+2)$, which proves the second inequality in (16.3)
+with $m=n+1$, including $n=7$. $\square$
+
+**定理 16.3（Every ground vector on the original wheel carrier）。**
+For every graph and carrier of Definition 16.1, every $E$-ground
+vector lies in $\operatorname{ran}P_{\mathrm{sym}}$.
+The actual $\mathcal N$ is nonzero and reducing, and for
+
+$$
+g=\min\operatorname{spec}(K|_{\mathcal N})-E
+\tag{16.13}
+$$
+
+one has $g>0$ and, on the whole original complex carrier,
+
+$$
+K-EI\succeq g(I-P_{\mathrm{sym}}),\qquad
+\|(I-P_{\mathrm{sym}})\phi\|^2
+ \leq\frac{\langle\phi,K\phi\rangle-E}{g}
+ \quad(\|\phi\|=1).
+\tag{16.14}
+$$
+
+Proof. First record the required singlet estimate on the spin-one
+rim, as a classical coupling intermediate. Write
+$\boldsymbol J_i=(X_i,Y_i,Z_i)$ and
+$H_{\rm iso}=\sum_{j\in\mathbb Z/n\mathbb Z}
+ \boldsymbol J_j\cdot\boldsymbol J_{j+1}$.
+For fixed $j$, the two distinct neighbors carry total spin
+$q=0,1,2$, since $V_1\otimes V_1=V_0\oplus V_1\oplus V_2$.
+Coupling this spin to the central spin one gives total spins
+$l=|q-1|,\ldots,q+1$. These decompositions can be read directly
+from weight multiplicities: subtract successively the character
+of the largest remaining spin, whose weights are all integers
+from its negative to its positive value. Orthogonal invariant
+complements give all copies, so none are discarded.
+Equivalently these are the triangle and orthogonality rules for
+Clebsch–Gordan coupling, [DLMF §§34.1–34.3](https://dlmf.nist.gov/34.1),
+as used in (10.8).
+The Casimir of a spin-$q$ representation is $q(q+1)I$.
+Thus on the complete three-site space the eigenvalues of
+
+$$
+h_j=\boldsymbol J_j\cdot(\boldsymbol J_{j-1}+\boldsymbol J_{j+1})
+\quad\hbox{are}\quad
+\frac{l(l+1)-2-q(q+1)}2.
+\tag{16.15}
+$$
+
+Their minima for $q=0,1,2$ are respectively $0,-2,-3$.
+Therefore $h_j\succeq-3I$, also with arbitrary spectator factors,
+and $\sum_jh_j=2H_{\rm iso}$ gives
+$H_{\rm iso}\succeq-3nI/2$.
+If $f$ is a unit total singlet on the rim, simultaneous rotations
+make its three Cartesian edge-sum expectations equal. Since
+$K_{C_n}=2\sum_j(X_jX_{j+1}+Y_jY_{j+1})$, this proves
+
+$$
+\langle f,K_{C_n}f\rangle
+ =\frac43\langle f,H_{\rm iso}f\rangle\geq-2n.
+\tag{16.16}
+$$
+
+The estimate is on every singlet, not an independently optimized
+choice of rim state.
+
+Suppose some sector of (16.2) with a zero spin had minimum $E$.
+Choose a zero-spin site $p$. At any other zero-spin site, replace
+its one-dimensional factor $\chi$ in a unit sector ground vector
+by $|1,0\rangle$. Both factors have weight zero and all three spin
+expectations zero. Since there is no intrafibre interaction, the
+replacement preserves the energy expectation and total weight.
+The new sector minimum is at most $E$ by this trial and at least
+$E$ by the definition of the whole-space minimum. Choose a ground
+vector in it and repeat at every other zero-spin site.
+This is the $j=0$ endpoint of the nonstrict comparison (7.4)–(7.5).
+Its original bilinear-spin formulation is Ghassemi
+Tabrizi–Henderson–Kühne–Scuseria,
+[Appendix A4, (A34)–(A54) and its fixed-magnetization paragraph](https://pmc.ncbi.nlm.nih.gov/articles/PMC12613319/#app1-sec4),
+DOI [10.1021/acs.jctc.5c01412](https://doi.org/10.1021/acs.jctc.5c01412),
+with maximal spin $s_i=1$, variable spin $t_i=J_i\in\{0,1\}$,
+$M=0$, and $D_{ij}=\operatorname{diag}(2a_{ij},2a_{ij},0)$.
+Only nonstrict existence is used, with its endpoint trial explicitly
+verified here. The spin-one pair realization is also the one in
+Benassi–Lees–Ueltschi,
+[§§4.1–4.3, Lemma 9](https://arxiv.org/pdf/1510.03215v3);
+their nonnegative ferromagnetic product-coupling hypotheses do not
+supply strictness for the positive adjacency used here.
+
+We now have a unit actual ground vector $\Psi=\chi_p\otimes f$,
+with spin one at every site other than $p$, and
+$K_{H-p}f=Ef$. Put $A=N_H(p)$, $R=V(H)\setminus(\{p\}\cup A)$,
+and $B^\pm=\sum_{i\in A}J_i^\pm$. Release the factor at $p$ by
+$\Theta=|1,0\rangle_p\otimes f$. Its Rayleigh quotient is $E$ by
+the same zero-expectation calculation. Since $K-EI\succeq0$ on
+the full carrier, equality implies $(K-EI)\Theta=0$. Subtracting
+the equation for $f$ gives
+
+$$
+0=\sqrt2\,|1,1\rangle_p\otimes B^-f
+  +\sqrt2\,|1,-1\rangle_p\otimes B^+f.
+\tag{16.17}
+$$
+
+The two displayed weight factors are orthogonal, so $B^-f=B^+f=0$.
+The commutator $[B^+,B^-]=2Z_A$ also gives $Z_Af=0$.
+Consequently $f$ lies in the total-singlet space on $A$, tensored
+with the zero-weight space on $R$. Indeed on each total-spin
+chain, the two ladder operators have no common kernel unless
+that spin is zero. This statement includes all multiplicities and
+arbitrary entanglement between $A$ and $R$.
+
+If $p=h$, then $A$ is the entire rim and $R$ is empty.
+Equation (16.16) gives $E=\langle f,K_{C_n}f\rangle\geq-2n$,
+contradicting (16.3).
+
+If $p$ is a rim vertex, its two rim neighbors are distinct and
+nonadjacent for $n\geq7$. The induced graph on $A$ is the
+three-vertex path through the hub. The complete bipartite singlet
+obstruction (7.6)–(7.10), also used in §§14–15, supplies a unit
+zero-weight ground vector $u_A$ of this induced spin-one adjacency
+$K_A$, with minimum $e_A$, which is not killed by both $B^\pm$.
+Its hypotheses are precisely a nonempty bipartite graph, positive
+unit edge coefficients, integer spin $S=1$, and minimum on the
+entire zero-weight space. No property of $H[R]$ is required.
+
+Use the reduced density $\rho_R$ of this same $f$ on $R$.
+It is supported on $Z_R=0$. A one-site vector spin, sandwiched
+between total-singlet projections on $A$, is zero: conjugation
+by simultaneous rotations fixes those projections and rotates
+that vector, whose only rotation-invariant vector is zero.
+Thus all crossing-edge expectations in $f$ vanish, and
+
+$$
+E=\langle f,K_Af\rangle+\operatorname{tr}(\rho_RK_R),\qquad
+\langle f,K_Af\rangle\geq e_A.
+\tag{16.18}
+$$
+
+The density
+$|\chi_p\rangle\langle\chi_p|\otimes
+ |u_A\rangle\langle u_A|\otimes\rho_R$
+is on the original globally half-filled carrier. Its edges at $p$
+vanish, and its $A$–$R$ edge expectations vanish because $u_A$
+has definite weight zero and hence
+$\langle u_A,J_i^\pm u_A\rangle=0$. Its energy is therefore
+$e_A+\operatorname{tr}(\rho_RK_R)\leq E$; the full-space variational
+principle forces equality. Diagonalize this same $\rho_R$ into
+unit vectors $h_b$ of weight zero with positive weights. Every
+$\chi_p\otimes u_A\otimes h_b$ has energy at least $E$, and their
+weighted average is $E$. Each is consequently an actual ground
+vector. Release its pair at $p$ once more. Equation (16.17), now
+with $f=u_A\otimes h_b$, forces $B^-u_A=B^+u_A=0$, a contradiction.
+This is the same-state replacement of (15.10)–(15.13), with the
+retained marginal displayed in (16.18); no separate attainability
+of local optima is being assumed.
+
+Both possibilities for $p$ are excluded. Every summand in (16.2)
+with a zero spin therefore has minimum strictly greater than $E$.
+The decomposition is finite, orthogonal and reducing, so every
+complex $E$-ground vector, including superpositions of sectors,
+belongs to its all-spin-one summand. This proves the confinement.
+The vector $\chi_h\otimes\bigotimes_{i\ne h}|1,0\rangle_i$ is a
+nonzero vector in $\mathcal N$ with exactly $m$ particles.
+Fibre permutations commute with $K$, so $\mathcal N$ reduces $K$.
+Its finite nonempty spectrum excludes $E$ by confinement; hence
+$g$ in (16.13) is positive. On $\operatorname{ran}P_{\mathrm{sym}}$,
+$K-EI\succeq0$; on $\mathcal N$, $K-EI\succeq gI$.
+Adding these reducing quadratic forms proves (16.14), and taking
+a unit-vector expectation proves its mass bound. $\square$
+
+The supplied five-rim conclusion at every even fibre size and the
+longer odd-rim conclusion at $s\geq4$ are Proposition 15.3 and
+Proposition 15.4. The additional graph-domain endpoint in
+Theorems 16.2–16.3 is exactly $K_1\vee C_n$, odd $n\geq7$, $s=2$,
+with the symbolic full-space energy bound (16.3).
+Their combination uses the classical three-site coupling lower
+bound only through its singlet consequence (16.16), the supplied
+sector and local replacement arguments, and the wheel phase
+estimate (16.4)–(16.8). It gives no exact value of $E$, quantitative
+lower bound for $g$, other filling, changed sign, weighted or
+unequal or odd fibres, or physical realization. Arbitrary connected
+even-order bases remain outside these conclusions.
+
+## 追加锚（本行以下为增补区）
