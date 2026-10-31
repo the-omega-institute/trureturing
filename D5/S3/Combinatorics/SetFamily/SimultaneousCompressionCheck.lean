@@ -46,13 +46,21 @@ example :
         w (insert 2 (shift 0 1 X)) else 0 := by
     intro X hX ht
     rw [onlyt X hX ht]
-    norm_num [w, shift, Ω, insert_comm]
+    norm_num [w, shift, Ω,
+      show ({2, 0} : Finset ℕ) = {0, 2} by decide,
+      show ({0, 2} : Finset ℕ) ≠ {1} by decide,
+      show ({0, 2} : Finset ℕ) ≠ {0} by decide,
+      show ({0, 2} : Finset ℕ) ≠ {2} by decide]
   have hvlaw : ∀ X ∈ Ω, 1 ∈ X →
       v X = v (shift 0 1 X) + if insert 2 (shift 0 1 X) ∈ Ω then
         v (insert 2 (shift 0 1 X)) else 0 := by
     intro X hX ht
     rw [onlyt X hX ht]
-    norm_num [v, shift, Ω, insert_comm]
+    norm_num [v, shift, Ω,
+      show ({2, 0} : Finset ℕ) = {0, 2} by decide,
+      show ({0, 2} : Finset ℕ) ≠ {1} by decide,
+      show ({0, 2} : Finset ℕ) ≠ {0} by decide,
+      show ({0, 2} : Finset ℕ) ≠ {2} by decide]
   have hA : A ⊆ Ω := by simp [A, Ω]
   have hc : CrossIntersecting A A := by
     intro X hX Y hY hd
@@ -111,13 +119,21 @@ example :
         w (insert 2 (shift 0 1 X)) else 0 := by
     intro X hX ht
     rw [onlyt X hX ht]
-    norm_num [w, shift, Ω, insert_comm]
+    norm_num [w, shift, Ω,
+      show ({2, 0} : Finset ℕ) = {0, 2} by decide,
+      show ({0, 2} : Finset ℕ) ≠ {1} by decide,
+      show ({0, 2} : Finset ℕ) ≠ {0} by decide,
+      show ({0, 2} : Finset ℕ) ≠ {2} by decide]
   have hvlaw : ∀ X ∈ Ω, 1 ∈ X →
       v X = v (shift 0 1 X) + if insert 2 (shift 0 1 X) ∈ Ω then
         v (insert 2 (shift 0 1 X)) else 0 := by
     intro X hX ht
     rw [onlyt X hX ht]
-    norm_num [v, shift, Ω, insert_comm]
+    norm_num [v, shift, Ω,
+      show ({2, 0} : Finset ℕ) = {0, 2} by decide,
+      show ({0, 2} : Finset ℕ) ≠ {1} by decide,
+      show ({0, 2} : Finset ℕ) ≠ {0} by decide,
+      show ({0, 2} : Finset ℕ) ≠ {2} by decide]
   have hA : A ⊆ Ω := by simp [A, Ω]
   have hc : CrossIntersecting A A := by
     intro X hX Y hY hd
