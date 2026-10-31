@@ -4,14 +4,15 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Restriction to residue one and explicit theta reconstruction classify dihedral intertwiners with zero neutral block across two lattices. -/
+   digest: Explicit paired-residue reconstruction classifies zero-neutral dihedral intertwiners. -/
 
 import D5.S3.VertexAlgebra.SourceBPZ.ThetaChargeRotation
 import Mathlib.RepresentationTheory.Intertwining
 
+/-! # Explicit reconstruction of paired charge-residue intertwiners -/
+
 set_option autoImplicit false
 set_option maxRecDepth 4096
-set_option maxHeartbeats 1200000
 set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
@@ -75,7 +76,9 @@ private theorem residue_decomposition (D : LatticeData)
   ext a
   simp only [map_add, Finsupp.add_apply, projection_coeff]
   generalize ell a.1.1 = r
-  fin_cases r <;> norm_num
+  fin_cases r <;> norm_num [show (0 : ZMod 3) ≠ 2 by decide,
+    show (1 : ZMod 3) ≠ 2 by decide, show (2 : ZMod 3) ≠ 0 by decide,
+    show (2 : ZMod 3) ≠ 1 by decide]
 
 private theorem projection_theta (D : LatticeData)
     (ell : Charge D →+ ZMod 3) (k : ℤ)
@@ -93,7 +96,10 @@ private theorem projection_theta (D : LatticeData)
   rw [projection_on_residue D ell k r (-0) _ (hsector 0),
     projection_on_residue D ell k r (-1) _ (hsector 1),
     projection_on_residue D ell k r (-2) _ (hsector 2)] at h
-  fin_cases r <;> norm_num at h ⊢ <;> exact h.symm
+  fin_cases r <;> simpa [show (-1 : ZMod 3) = 2 by decide,
+    show (-2 : ZMod 3) = 1 by decide, show (0 : ZMod 3) ≠ 2 by decide,
+    show (2 : ZMod 3) ≠ 0 by decide, show (1 : ZMod 3) ≠ 2 by decide,
+    show (2 : ZMod 3) ≠ 1 by decide] using h.symm
 
 private theorem rotation_on_residue (D : LatticeData)
     (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (k : ℤ)
@@ -149,7 +155,7 @@ private theorem intertwiner_preserves_residue (D E : LatticeData)
     {a : EnergyFiber E n | ellE a.1.1 = r}
   rw [Finsupp.mem_supported']
   intro a ha
-  have ht := T.isIntertwining (DihedralGroup.r 1) x
+  have ht := LinearMap.congr_fun (T.isIntertwining' (DihedralGroup.r 1)) x
   change T (gradeChargeRotation D ellD phase m (Multiplicative.ofAdd 1) x) =
     gradeChargeRotation E ellE phase n (Multiplicative.ofAdd 1) (T x) at ht
   rw [rotation_on_residue D ellD phase m 1 r x hx, map_smul] at ht
@@ -171,7 +177,7 @@ private theorem intertwiner_theta (D E : LatticeData)
       (gradeChargeDihedralRepresentation D ellD phase m)
       (gradeChargeDihedralRepresentation E ellE phase n)) (x : grade D m) :
     T (gradeTheta D m x) = gradeTheta E n (T x) := by
-  have ht := T.isIntertwining (DihedralGroup.sr 0) x
+  have ht := LinearMap.congr_fun (T.isIntertwining' (DihedralGroup.sr 0)) x
   change T (gradeChargeRotation D ellD phase m (Multiplicative.ofAdd (-0))
       (gradeTheta D m x)) =
     gradeChargeRotation E ellE phase n (Multiplicative.ofAdd (-0))
@@ -277,7 +283,7 @@ private theorem pairedMap_rotation (D E : LatticeData)
         (gradeTheta D m x) := by
     have h := congrArg (fun f : Module.End ℂ (grade D m) => f (gradeTheta D m x))
       (gradeChargeRotation_theta_conj D ellD phase m (Multiplicative.ofAdd i))
-    simpa only [LinearMap.comp_apply, gradeTheta_sq] using h
+    simpa [LinearMap.comp_apply, gradeTheta_sq] using h
   have htarget := gradeTheta_mem_gradeChargeResidue_neg E ellE n 1 hE
     (B (gradeChargeResidueProjection D ellD m 1 (gradeTheta D m x))).val
     (B (gradeChargeResidueProjection D ellD m 1 (gradeTheta D m x))).property
@@ -346,7 +352,8 @@ def gradeChargeIntertwinerFromResidue (D E : LatticeData)
     intro x
     change pairedMap D E ellD ellE m n (B + C) x =
       pairedMap D E ellD ellE m n B x + pairedMap D E ellD ellE m n C x
-    simp only [pairedMap, LinearMap.add_apply, Submodule.coe_add, map_add]
+    simp only [pairedMap, LinearMap.coe_mk, AddHom.coe_mk,
+      LinearMap.add_apply, Submodule.coe_add, map_add]
     abel
   map_smul' c B := by
     apply Subtype.ext
@@ -355,8 +362,8 @@ def gradeChargeIntertwinerFromResidue (D E : LatticeData)
     intro x
     change pairedMap D E ellD ellE m n (c • B) x =
       c • pairedMap D E ellD ellE m n B x
-    simp only [pairedMap, LinearMap.smul_apply, Submodule.coe_smul, map_smul,
-      RingHom.id_apply, smul_add]
+    simp only [pairedMap, LinearMap.coe_mk, AddHom.coe_mk,
+      LinearMap.smul_apply, Submodule.coe_smul, map_smul, smul_add]
 
 /-- The inverse uses the actual residue-one projection and the two lattice thetas. -/
 theorem gradeChargeIntertwinerFromResidue_apply (D E : LatticeData)
@@ -392,7 +399,7 @@ theorem gradeChargeIntertwinerRestrict_fromResidue (D E : LatticeData)
   have ht := gradeTheta_mem_gradeChargeResidue_neg D ellD m 1 hD x.val x.property
   have hq : gradeChargeResidueProjection D ellD m 1 (gradeTheta D m x.val) = 0 := by
     apply Subtype.ext
-    simpa only [if_neg (by decide : (-1 : ZMod 3) ≠ 1)] using
+    simpa [show (-1 : ZMod 3) ≠ 1 by decide] using
       projection_on_residue D ellD m 1 (-1) (gradeTheta D m x.val) ht
   rw [hp, hq]
   simp
@@ -419,8 +426,8 @@ theorem gradeChargeIntertwinerFromResidue_restrict (D E : LatticeData)
   rw [← intertwiner_theta D E ellD ellE phase m n T.val]
   have hp : gradeTheta D m (gradeChargeResidueProjection D ellD m 1
       (gradeTheta D m x)).val = (gradeChargeResidueProjection D ellD m 2 x).val := by
-    rw [projection_theta D ellD m hD 1 x, gradeTheta_sq]
-    norm_num
+    rw [projection_theta D ellD m hD 1 x, gradeTheta_sq,
+      show (-1 : ZMod 3) = 2 by decide]
   rw [hp]
   have h := congrArg T.val (residue_decomposition D ellD m x)
   rw [map_add, map_add, T.property (gradeChargeResidueProjection D ellD m 0 x),
