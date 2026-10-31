@@ -101,6 +101,7 @@ private theorem physical_partition (a b c d : ℕ)
     norm_num [assigned,transfer,Matrix.cons_val_zero',Matrix.cons_val_succ',
       Fin.isValue,ite_true,ite_false,Finset.mem_insert,Finset.mem_erase,
       positivePacket,negativeLabel,chainStart,chainLength,Finset.mem_Ico,size] <;>
-    split_ifs at * <;> omega
+    trace_state
+  all_goals split_ifs at * <;> omega
 
 end D5.S3.Combinatorics.Circle.FourNegative.BalancedGaps
