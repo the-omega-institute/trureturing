@@ -1,5 +1,5 @@
 /- GID: D5/S1/Dynamics/Symbolic/PermutativeLifts/BalancedRegularity
-   generality: S
+   generality: I
    mirror-B: D5/B/S1/Dynamics/Symbolic/PermutativeLifts/BalancedRegularity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
