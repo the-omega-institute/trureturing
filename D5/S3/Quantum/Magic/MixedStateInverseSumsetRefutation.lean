@@ -6,7 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Magic/MixedStateInverseSumsetRefutation.claim; result=D5/S3/Quantum/Magic/MixedStateInverseSumsetRefutation.result; claim=D5/S3/Quantum/Magic/MixedStateInverseSumsetRefutation.claim
    digest: A two-level qudit state refutes the mixed-state inverse sumset bound. -/
 
-import D5.S3.Observer.WindowRegister
+import D5.S3.Observer.MatrixUnitCertificate
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 import Mathlib.LinearAlgebra.Matrix.Rank
@@ -168,26 +168,15 @@ private lemma tau_entropy : vonNeumannEntropy tau = 3 / 2 * Real.log 2 := by
   rw [show (4 : ℝ) = 2 ^ 2 from by norm_num, Real.log_pow]
   ring
 
-private lemma shift_power_entry {d : ℕ} [NeZero d] (q : ZMod d) (i j : ZMod d) :
-    (shiftMatrix d ^ q.val) i j = if i - q = j then 1 else 0 := by
-  have hm := (Matrix.permMatrixHom (n := ZMod d) (R := ℂ)).map_pow
-    ((shiftPerm d)⁻¹) q.val
-  change (((shiftPerm d)⁻¹ ^ q.val)⁻¹).permMatrix ℂ =
-    (((shiftPerm d)⁻¹)⁻¹).permMatrix ℂ ^ q.val at hm
-  simp only [inv_pow, inv_inv] at hm
-  rw [shiftMatrix_eq_permMatrix, ← hm]
-  simp only [Equiv.Perm.permMatrix, PEquiv.toMatrix_apply, Equiv.toPEquiv_apply,
-    Option.mem_def, Option.some.injEq, shiftPerm_pow_apply, ZMod.natCast_zmod_val]
-
 private lemma weyl_diagonal (p q i : ZMod 7) :
     weyl 7 p q i i = if q = 0 then windowRoot 7 ^ (i.val * p.val) else 0 := by
   simp only [weyl, clockMatrix, diagonal_pow, Matrix.smul_apply, diagonal_mul,
-    Pi.pow_apply, shift_power_entry, smul_eq_mul]
+    Pi.pow_apply, D5.S3.Observer.MatrixUnitCertificate.shift_matrix_pow_apply,
+    ZMod.natCast_zmod_val, sub_self, smul_eq_mul]
   by_cases hq : q = 0
   · subst q
     simp [pow_mul]
-  · have h : i - q ≠ i := by simpa using hq
-    simp [hq, h]
+  · simp [hq, Ne.symm hq]
 
 private lemma characteristic_off_axis (p q : ZMod 7) (hq : q ≠ 0) :
     charFun rho.1 (p, q) = 0 := by
