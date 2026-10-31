@@ -52,7 +52,25 @@ def claim : Prop :=
 private theorem total_weight (s : ℕ) {n : ℕ} (p : Nat.Partition n) :
     (∑ t : Fin s → p.parts.toFinset,
       ∏ j, ((t j : ℕ) * p.parts.count (t j : ℕ) : ℚ)) = (n : ℚ) ^ s := by
-  sorry
+  let f : p.parts.toFinset → ℚ :=
+    fun a => ((a : ℕ) * p.parts.count (a : ℕ) : ℚ)
+  have hsum : (∑ a : p.parts.toFinset, f a) = n := by
+    change (∑ a : p.parts.toFinset,
+      ((a : ℕ) * p.parts.count (a : ℕ) : ℚ)) = n
+    have h := Finset.sum_multiset_count p.parts
+    rw [p.parts_sum] at h
+    have hqNat : n = ∑ m ∈ p.parts.toFinset, p.parts.count m * m := by
+      simpa [nsmul_eq_mul] using h
+    have hq : (∑ m ∈ p.parts.toFinset, (p.parts.count m : ℚ) * m) = n := by
+      exact_mod_cast hqNat.symm
+    rw [← Finset.sum_subtype p.parts.toFinset (by simp)
+      (fun a => ((a : ℕ) * p.parts.count a : ℚ))]
+    simpa [mul_comm] using hq
+  change (∑ t : Fin s → p.parts.toFinset, ∏ j, f (t j)) = (n : ℚ) ^ s
+  rw [← Fintype.prod_sum (fun _ a => f a)]
+  have hsum' : (∑ j ∈ p.parts.toFinset.attach, f j) = n := by
+    simpa [Finset.sum_attach] using hsum
+  simp [hsum']
 
 private theorem degree_le_from_one_count (s : ℕ) {n : ℕ} (p : Nat.Partition n)
     (hs : 1 ≤ s) :
