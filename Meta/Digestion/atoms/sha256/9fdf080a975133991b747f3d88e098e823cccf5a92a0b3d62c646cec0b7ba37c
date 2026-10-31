@@ -1,0 +1,148 @@
+### 2.1. Relative entropy and the global supporting inequality
+
+Proof of Theorem 2.1. We use finite-dimensional relative-entropy joint
+convexity and data processing, in their standard scope; see J. Watrous,
+*The Theory of Quantum Information* (2018), DOI 10.1017/9781316848142.
+The required mixed-unitary case and matrix derivatives can be obtained
+inside this proof as follows.
+For states $A$ and $B>0$ write
+$D(A\Vert B)=\operatorname{tr} A\log A-\operatorname{tr} A\log B$.
+
+For a mixed-unitary channel $T=\sum p_j\operatorname{Ad}_{U_j}$ and states
+$A$, $B>0$,
+
+$$
+ D(TA\Vert TB)\leq D(A\Vert B),\qquad
+ D(A\Vert B)\geq0,
+$$
+
+and the last equality holds exactly when $A=B$.
+For $A>0$, a traceless Hermitian $H$, and the quadratic form
+
+$$
+ G_A(H)=\operatorname{tr} H\,\mathrm D\log_A[H],
+$$
+
+one has $G_{TA}(TH)\leq G_A(H)$, and $G_A$ is positive definite.
+
+For the relative-entropy ingredient, proceed as follows.
+For positive $A_i,B_i$, set $A=\sum p_iA_i$, $B=\sum p_iB_i$.
+On the Hilbert--Schmidt matrix space let
+$\mathscr D_i=L_{B_i}R_{A_i}^{-1}$ and
+$\mathscr D=L_BR_A^{-1}$; left and right multiplication commute,
+so these are positive operators. Define the isometry into a direct sum by
+
+$$
+ (VX)_i=\sqrt{p_i}\,X A^{-1/2}A_i^{1/2}.
+$$
+
+Direct multiplication gives $V^*V=I$ and
+$V^*(\bigoplus\mathscr D_i)V=\mathscr D$.
+For every positive operator $T$ and isometry $V$,
+
+$$
+ (V^*TV+sI)^{-1}\leq V^*(T+sI)^{-1}V\quad(s\geq0).
+$$
+
+For example this follows from the variational formula for an inverse
+quadratic form by restricting its maximizing vector to $\operatorname{ran}V$.
+Integrate this inequality using
+$-\log t=\int_0^\infty[(t+s)^{-1}-(1+s)^{-1}]\mathrm d s$ to obtain
+operator Jensen for $-\log$. Applying it to $A^{1/2}$ and using
+$(VA^{1/2})_i=\sqrt{p_i}A_i^{1/2}$ proves
+
+$$
+ D(A\Vert B)\leq\sum_i p_iD(A_i\Vert B_i).
+$$
+
+Indeed $\log(L_BR_A^{-1})=L_{\log B}-R_{\log A}$, which identifies
+the quadratic forms with the displayed relative entropies. Choose
+$A_i=U_iAU_i^*$ and $B_i=U_iBU_i^*$ to get mixed-unitary contraction.
+For singular $A$, replace it by $(1-\delta)A+\delta I/d$ and pass
+to the limit; $B$ and $TB$ are positive and entropy is continuous.
+
+For nonnegativity, diagonalize $A$ and $B$, with eigenvalues
+$\lambda_i\geq0$, $\mu_j>0$ and overlap weights $c_{ij}$.
+The doubly stochastic weights give
+
+$$
+ D(A\Vert B)=\sum_{ij}c_{ij}
+ [\lambda_i\log(\lambda_i/\mu_j)-\lambda_i+\mu_j]\geq0.
+$$
+
+The scalar summand is zero exactly when $\lambda_i=\mu_j$.
+Equality therefore implies that each eigenvector of $A$ belongs to
+the eigenspace of $B$ with that same eigenvalue, hence $A=B$.
+
+Using finite-dimensional matrix functional calculus (R. Bhatia,
+*Matrix Analysis*, 1997, DOI 10.1007/978-1-4612-0653-8),
+differentiating the resolvent formula for $\log$ gives
+
+$$
+ \mathrm D\log_A[H]=\int_0^\infty(A+sI)^{-1}H(A+sI)^{-1}\mathrm d s.
+$$
+
+In an eigenbasis of $A$,
+
+$$
+G_A(H)=\sum_{ij}|H_{ij}|^2\ell(\lambda_i,\lambda_j),\quad
+ \ell(x,y)=\begin{cases}(\log x-\log y)/(x-y)&x\ne y,\\1/x&x=y.
+ \end{cases}
+\tag{2.4}
+$$
+
+Every coefficient is positive. Apply contraction to
+$D(A+sH\Vert A)=s^2G_A(H)/2+O(s^3)$ for sufficiently small signed
+$s$, using trace zero, to prove the metric inequality.
+
+Where $P,Q,R>0$, the entropy objective is real analytic on the real
+space of trace-one Hermitian matrices, whether the source is singular
+or not. Its trace-one gradient representative is
+
+$$
+M_\omega=4\Phi(\log P_\omega)+\Psi(\log Q_\omega)
+                  -3\Gamma(\log R_\omega).
+\tag{2.5}
+$$
+
+The unrestricted gradient is $M_\omega+2I$; scalar identity terms
+are local and do not affect any argument. The channels are self-adjoint
+for the trace pairing. For every physical source $\rho$, even if its
+outputs are singular, direct expansion gives
+
+$$
+\begin{aligned}
+F(\rho)-F(\omega)-\operatorname{tr} M_\omega(\rho-\omega)
+ &=4D(P_\rho\Vert P_\omega)+D(Q_\rho\Vert Q_\omega)
+                           -3D(R_\rho\Vert R_\omega)\\
+ &\geq D(P_\rho\Vert P_\omega)+D(Q_\rho\Vert Q_\omega)\geq0.
+\end{aligned}
+\tag{2.6}
+$$
+
+All second arguments are positive, so these are finite relative
+entropies and mixed-unitary contraction applies without an input-support gap.
+If $b>0$, $\Phi$ is an invertible real linear map: its eigenvalues
+on the commuting and anticommuting operator subspaces are $1,b$.
+Thus the right side is strictly positive for $\rho\ne\omega$.
+Consequently a positive-output reference satisfying (2.2)
+is the unique global minimizer on its fiber, since its local term pairs
+to zero with $\rho-\omega$, and
+$\operatorname{tr} N(\rho-\omega)=\operatorname{tr} N\rho\geq0$.
+
+For completeness, the ambient second derivative on trace-zero directions is
+
+$$
+F''_\rho[H,H]=4G_P(\Phi H)+G_Q(\Psi H)-3G_R(\Gamma H)
+ \geq G_P(\Phi H)+G_Q(\Psi H)>0\quad(H\ne0,b>0).
+\tag{2.7}
+$$
+
+Here $\Gamma H=\Psi(\Phi H)$, so the first metric contraction alone
+pays the three subtracted terms. On segments of positive-output states
+this proves convexity. For arbitrary physical endpoints replace both by
+their mixtures with $I/4$; the whole regularized segment has positive
+outputs. Let the mixing tend to zero and use entropy continuity to prove
+convexity of $F$ on the entire physical state set. This also justifies
+one-dimensional convexity when a diagonal competitor has singular outputs.
+

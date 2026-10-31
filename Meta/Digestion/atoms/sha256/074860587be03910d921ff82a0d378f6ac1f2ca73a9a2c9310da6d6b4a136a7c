@@ -1,0 +1,37 @@
+**Theorem 5.1 (Combined bounds and necessary negative-deficit funding).**
+For every source and independent biases of Definition 1.1, and for
+every allowed $N$ and product observable $W$, combining
+(3.13) with (4.12) gives
+
+$$
+\boxed{\Delta\geq\mathcal C_N+
+ \int_0^1w_a(t)[3d_t^{\mathsf T}V_t^+d_t+3\mathcal R_t-2s_t]dt.}
+\tag{5.1}
+$$
+
+Using (3.14) also gives
+
+$$
+\boxed{\Delta\geq\mathcal C_N+
+ \int_0^1w_a(t)\left[\frac{1-2\kappa_t}{1+\kappa_t}s_t+3\mathcal R_t\right]dt.}
+\tag{5.2}
+$$
+
+Let $E_+=\{t\in[0,1):\kappa_t>1/2\}$ and
+$E_-=[0,1)\setminus E_+$.  Any hypothetical physical state with
+$\Delta<0$ must satisfy, simultaneously for every allowed witness $N$
+and every chosen $W$,
+
+$$
+\boxed{
+ \int_{E_+}w_a(t)\frac{2\kappa_t-1}{1+\kappa_t}s_t\,dt
+ >\mathcal C_N+3\int_0^1w_a(t)\mathcal R_t\,dt
+ +\int_{E_-}w_a(t)\frac{1-2\kappa_t}{1+\kappa_t}s_t\,dt.}
+\tag{5.3}
+$$
+
+Thus a negative state would need enough full local BKM overlap on
+$E_+$ to pay both the entropy-compatibility budget and the residual
+correlation cost. The condition applies to the actual physical
+source with its jointly constrained correlations.
+
