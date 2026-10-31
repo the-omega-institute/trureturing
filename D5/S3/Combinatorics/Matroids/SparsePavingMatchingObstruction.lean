@@ -9,7 +9,6 @@
 import D5.S3.Combinatorics.Matroids.AliabadiZerbibMatroidMatching
 import Mathlib.Combinatorics.Hall.Finite
 import Mathlib.Combinatorics.Additive.CauchyDavenport
-import Mathlib.Tactic
 
 /-! Native finite matroids retain their actual bases, circuits, and closure. -/
 
@@ -20,11 +19,27 @@ open AliabadiZerbibMatroidMatching
 open scoped Pointwise
 
 /- admission_basis: escape-witness
-   Candidate witness: native sparse-paving nonspanning sets and the repair of
-   a dependent system of distinct representatives by a single exchange.
+   Escape witness: sparse_hall_obstruction constructs a base-valued repair
+   of a dependent system of distinct representatives by a single exchange.
    This is an abstract structural argument, not a finite certified instance.
    Paving and ordered matching retain the existing source predicates.
    Cauchy-Davenport, Hall, and native dual-rank identities are upstream supply.
+   Declaration classification after expansion of local helpers:
+   small_indep: bind-only; consumers: dual_paving_card_bound, nonspanning_structure.
+   dual_paving_card_bound: bind-only; consumer: nonspanning_structure.
+   nonspanning_structure: bind-only; consumer: sparse_hall_obstruction.
+   sparse_hall_obstruction: content; consumer: basiswise_obstruction.
+   admissibleUnion: definition; consumers: sum_blocked_subset, union_card_bound,
+     additive_bound, basiswise_obstruction.
+   BasisMatches: definition; consumers: matches_iff_representatives,
+     basiswise_obstruction.
+   sum_blocked_subset: bind-only; consumers: additive_bound, basiswise_obstruction.
+   additive_bound: bind-only; consumer: union_card_bound.
+   union_card_bound: bind-only; consumer: basiswise_obstruction.
+   matches_iff_representatives: bind-only; consumer: basiswise_obstruction.
+   basiswise_obstruction: content; escape_witness: sparse_hall_obstruction.
+   The witness is the new representative repair on the live path to the
+   obstruction equivalence, not an instance of the supplied interval family.
 -/
 
 private lemma small_indep {α : Type*} (N : Matroid α) [N.Finite]
@@ -56,7 +71,7 @@ private lemma dual_paving_card_bound {α : Type*} (N : Matroid α) [N.Finite]
   by_contra hn
   have hsd := Set.ncard_sdiff_add_ncard_of_subset hX hfin
   have hsmall : (N.E \ X).ncard < q := by omega
-  have hi := small_indep N✶ hp hq.symm (by simpa using (sdiff_subset : N.E \ X ⊆ N.E)) hsmall
+  have hi := small_indep N✶ hp hq.symm (by simp) hsmall
   have hid := N.eRk_dual_add_eRank (N.E \ X) sdiff_subset
   rw [hi.eRk_eq_encard, Set.sdiff_sdiff_cancel_left hX, hr,
     ← hDfin.cast_ncard_eq] at hid
@@ -87,7 +102,8 @@ private lemma nonspanning_structure {α : Type*} (N : Matroid α) [N.Finite]
     (by simpa using hns)
   have hsub := N.subset_closure X hX
   have hcleq : N.closure X = X :=
-    (Set.eq_of_subset_of_ncard_le hsub (by omega) (N.ground_finite.subset (N.closure_subset_ground X))).symm
+    (Set.eq_of_subset_of_ncard_le hsub (by omega)
+      (N.ground_finite.subset (N.closure_subset_ground X))).symm
   refine ⟨hcir, Matroid.isFlat_iff_closure_eq.mpr hcleq, heq, ?_⟩
   simpa [← hfin.cast_ncard_eq, heq] using hcir.eRk_add_one_eq
 
@@ -284,7 +300,7 @@ theorem basiswise_obstruction [IsAddTorsionFree G]
   classical
   dsimp only
   have hSfin := hS.indep.finite
-  letI : Finite S := hSfin.to_subtype
+  let : Finite S := hSfin.to_subtype
   have hScard : S.ncard = r := by
     have hc := hS.encard_eq_eRank
     rw [← hSfin.cast_ncard_eq, hMr] at hc
