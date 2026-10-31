@@ -410,4 +410,3 @@ theorem mixed_cycle_recovery (b : OrthonormalBasis (Axis k) ℝ V)
 #print axioms mixed_cycle_recovery
 
 end D5.S3.Observer.LinearMemory.MixedCycleRecovery
-
