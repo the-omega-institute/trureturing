@@ -20,7 +20,19 @@ $$\forall I,O,A,B,R: Type, [\operatorname{Fintype}(R)], \forall K: A \to B \to R
 
 The squared complex amplitudes are summed over the discarded Kraus index. The outcome b is retained, so these weights need not sum to one within a branch.
 
-**Theorem 1.2 (Orthogonality, factorization, and stochastic normalization).**
+**Theorem 1.2 (Entries of a Kraus map on a diagonal input).**
+
+$$\forall I,O,R: Type, [\operatorname{Fintype}(I)] [\operatorname{DecidableEq}(I)] [\operatorname{Fintype}(R)], \forall K: R \to \operatorname{Matrix}(O, I, \mathbb{C}), \forall p: I \to \mathbb{C}, \forall o,q: O, \operatorname{MatrixMap.of_{kraus}}\left(K, K, \operatorname{Matrix.diagonal}\left(p\right), o, q\right) = \sum_{i \in I} {\sum_{r \in R} {\operatorname{K}(r, o, i) \cdot \operatorname{starRingEnd}\left(\mathbb{C}, \operatorname{K}(r, q, i)\right)} \cdot \operatorname{p}(i)}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/DiagonalKrausInstrumentFactorization.diagonal_entry_expansion` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each output entry is the input-weighted sum of the corresponding Kraus column Gram coefficients.
+
+**Theorem 1.3 (Orthogonality, factorization, and stochastic normalization).**
 
 $$\forall I,O,A,B,R: Type, [\operatorname{Fintype}(I)] [\operatorname{DecidableEq}(I)] [\operatorname{Fintype}(O)] [\operatorname{DecidableEq}(O)] [\operatorname{Fintype}(B)] [\operatorname{Fintype}(R)], \forall K: A \to B \to R \to \operatorname{Matrix}(O, I, \mathbb{C}),\\{}{\forall a \in A, \sum_{b \in B} {\sum_{r \in R} {{\operatorname{K}(a, b, r)}^{*} \operatorname{K}(a, b, r)}} = \operatorname{identity}(I)} \Rightarrow\\{}{\forall a,b,o,i, 0 \leq \operatorname{W}(a, b, o, i)} \land {\forall a,i, \sum_{b \in B} {\sum_{o \in O} {\operatorname{W}(a, b, o, i)}} = 1} \land\\{}{{\forall a,b,i,o,q, o \neq q \Rightarrow \sum_{r \in R} {\operatorname{K}(a, b, r, o, i) \operatorname{conj}(\operatorname{K}(a, b, r, q, i))} = 0} \iff {\forall p: I \to \mathbb{C}, \forall a,b, \operatorname{Phi}(a, b, \operatorname{diag}(p)) = \operatorname{diag}(o \mapsto \sum_{i \in I} {\operatorname{W}(a, b, o, i) \operatorname{p}(i)})}} \land\\{}{\forall a, \exists C: \operatorname{QuantumChannel}(I, O), \forall \rho: \operatorname{Matrix}(I, I, \mathbb{C}), \operatorname{matrixAction}(C, \rho) = \sum_{b \in B} {\operatorname{Phi}(a, b, \rho)}}$$
 
@@ -40,6 +52,7 @@ This finite-dimensional result supplies a mathematical criterion for a quantum b
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Measurement/DiagonalKrausInstrumentFactorization.diagonal_entry_expansion`
 - Truth anchor: `D5/S3/Quantum/Measurement/DiagonalKrausInstrumentFactorization.diagonal_instrument_factorization`
 - Truth anchor: `D5/S3/Quantum/Measurement/DiagonalKrausInstrumentFactorization.weight`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
