@@ -1,0 +1,45 @@
+**Definition 1.1 (fixed shared source).** Let $a,b>0$ with $a+b=1$, let
+$Q\sim\mu$ on $(0,1)$, and let $X_0\sim\operatorname{Bernoulli}(b)$ be
+independent of $Q$. Conditional on $(Q,X_0)$, the left and right arms are
+independent copies of the Markov chain
+$$
+P_Q=\begin{pmatrix}1-Q&Q\\1&0\end{pmatrix}.
+$$
+A fresh boundary query costs one unit and returns $1$ exactly on a newly
+exposed $00$ edge. The first such marker stops source access. An observer has
+an independent seed $U\sim\nu$ and may choose sides causally from $U$ and the
+ordered action/reply journal. Every fixed finite-history seed section of the
+action, stop, and decoder rules is measurable. The seed is visible to decoding.
+The controller must decide almost surely, with a forced root label; coherent
+interval labels are obtained by propagating that root guess through the journal.
+Their event $0$-$1$ loss equals root loss: correct root plus the acquired
+relations gives every exposed label, and a correct whole labeling includes the
+root. An incoherent labeling cannot improve the minimum, since it matches
+neither of the two possible coherent labelings. On a marker the root and every label in the
+exposed connected interval are recovered by propagation. On a marker-free
+journal the observer may stop voluntarily.
+
+Put
+$$
+M_j=\int q^j\,\mu(dq),\qquad A_j=M_j-M_{j+1},\qquad
+v_j=bA_{j-1}-aA_j\quad(j\ge1),
+$$
+and $J_N=\sum_{j=0}^{N-1}M_j$ for $N\ge1$. Thus $A_j>0$ and
+$M_j\downarrow0$. A zero-reply replay has arm lengths $(\ell,r)$, with
+$$
+k=\lfloor\ell/2\rfloor+\lfloor r/2\rfloor,\qquad
+s=(\ell\bmod2)+(r\bmod2).
+$$
+Its two integrated root masses are $aM_{k+s}$ and $bM_k$, so write
+$$
+e(\ell,r)=\min\{aM_{k+s},bM_k\}.
+$$
+Write $C=\mathbb E T$ for the extended mean actual paid count and $E$ for
+the prior-average error of the chosen decoder. Prior-integrated MAP minimizes
+this error separately on every finite terminal journal, including ties.
+
+For a fixed horizon $n$, a policy is required to continue on the zero-reply
+replay until exactly $n$ queries and then stop if no marker has appeared. Its
+actual paid count is the marker time truncated at $n$, not the declared
+horizon.
+
