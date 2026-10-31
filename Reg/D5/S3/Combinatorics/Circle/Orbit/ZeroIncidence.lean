@@ -61,11 +61,6 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hz0 := hz (0 : Fin 1)
   norm_num [rejected, realize, orbitSum, finCycle_apply] at hz0
 
-private theorem actual_law : arena.Law actual := by
-  intro k hk t S
-  dsimp [actual, realize]
-  exact actualSource_orbit_zero_balanced k hk t S
-
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨3, 0, 1, ?_⟩
