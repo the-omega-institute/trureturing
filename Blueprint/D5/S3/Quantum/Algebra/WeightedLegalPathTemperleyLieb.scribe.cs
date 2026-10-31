@@ -43,7 +43,66 @@ internal sealed class WeightedLegalPathTemperleyLiebDocument : IScribeDocumentDe
                             + "flank; the proof also establishes the adjacent unique "
                             + "survivor and the distant locality argument. No nonempty "
                             + "path-space premise is used."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            new DocumentBlock.Section(H("Application: Fibonacci three-setting tomography"), Blocks(
+            Paragraph(Text(
+                "Use labels 0=vacuum and 1=tau, adjacency R(c,d) iff c=1 or d=1, "
+                    + "weights d(0)=1 and d(1)=phi, and delta=phi, where phi is the golden ratio. "
+                    + "The fixed-endpoint carrier LegalPath R 3 0 1 has precisely the two ordered "
+                    + "paths (0,1,0,1) and (0,1,1,1). Reindexing the coordinate orthonormal basis "
+                    + "by these paths identifies the source H_3^tau with C^2. The literal "
+                    + "pathProjection entries at positions 1 and 2 are P=diag(1,0) and "
+                    + "Q=[[r^2,b],[b,r]], with r=1/phi>0, s=sqrt(r)>0, and b=r*s>0. "
+                    + "The Perron equation is phi=phi*1 at label 0 and 1+phi=phi^2 at label 1; "
+                    + "the weighted-path theorem therefore supplies the actual projection laws. "
+                    + "In the fixed gauge F=[[r,s],[s,-r]], Q=F*P*F-adjoint. "
+                    + "The permitted active pulse V=I+(i-1)P=diag(i,1) is unitary.")),
+            Paragraph(Text(
+                "For every real p,x,y with 0<=p<=1 and x^2+y^2<=p(1-p), keep the entire "
+                    + "mixed-state matrix rho=[[p,x+i*y],[x-i*y,1-p]]. All three readouts use this "
+                    + "same rho: m0=Tr(P*rho), m1=Tr(Q*rho), and m2=Tr(Q*V*rho*V-adjoint). "
+                    + "Writing h=r^2-r=1-2*r<0, they equal p, r+h*p+2*b*x, and r+h*p-2*b*y. "
+                    + "Thus p=m0, x=(m1-r-h*m0)/(2*b), and y=(r+h*m0-m2)/(2*b), exactly FT.25. "
+                    + "The sign in the scalarB correspondence is essential: "
+                    + "rho=FourQubitParentConstruction.scalarB(1/2,(x,-y,p-1/2)). "
+                    + "Its public scalarB_posSemidef_iff identifies precisely the full closed "
+                    + "radius-1/2 ball, including all boundary states.")),
+            Paragraph(Text(
+                "For every epsilon>=0 and all three errors |eta_j|<=epsilon, invert the noisy "
+                    + "readouts m+eta without imposing positivity on the reconstructed matrix. "
+                    + "The coordinate errors are delta_p=eta0, delta_x=(eta1-h*eta0)/(2*b), and "
+                    + "delta_y=(h*eta0-eta2)/(2*b). Since (1-h)/(2*b)=sqrt(phi), their absolute "
+                    + "values are at most epsilon, sqrt(phi)*epsilon, and sqrt(phi)*epsilon. "
+                    + "Applying TraceNorm.transitionMass_sq and traceNorm_nonneg to this same "
+                    + "trace-zero matrix difference gives half its trace norm equal to "
+                    + "sqrt(delta_p^2+delta_x^2+delta_y^2). Consequently it is at most "
+                    + "kappa*epsilon, where kappa=sqrt(1+2*phi), as in FT.26. "
+                    + "These are applications and coefficient normalizations of existing "
+                    + "matrix and norm results; no new mathematical declaration is required.")),
+            Paragraph(Text(
+                "For eta0=eta1=eta2=epsilon, the three coordinate errors are simultaneously "
+                    + "epsilon, sqrt(phi)*epsilon, and -sqrt(phi)*epsilon, and half the trace norm "
+                    + "is exactly kappa*epsilon. At the true state rho=I/2 all three exact "
+                    + "readouts are 1/2. For every 0<=epsilon<=1/(4*kappa), the noisy readouts "
+                    + "are in [0,1], the reconstructed Bloch radius is at most 1/4, and the "
+                    + "reconstructed trace-one matrix is positive semidefinite. Its actual "
+                    + "P,Q,V readouts equal those same noisy values. This is a positive physical "
+                    + "neighborhood, so any constant smaller than kappa fails even there; "
+                    + "sharpness concerns one simultaneously realizable state and error triple.")),
+            Paragraph(Text(
+                "For arbitrary raw reconstruction project u=(p_hat-1/2,x_hat,y_hat) onto the "
+                    + "actual Euclidean closed ball of radius 1/2. Mathlib's "
+                    + "exists_norm_eq_iInf_of_complete_convex supplies a nearest point v. Its "
+                    + "norm_eq_iInf_iff_real_inner_le_zero characterization gives "
+                    + "inner(u-v,w-v)<=0 for every true ball point w. Expanding the squared "
+                    + "distance yields norm(v-w)<=norm(u-w). The signed coordinate permutation "
+                    + "(u0,u1,u2) maps to (u1,-u2,u0), preserving this distance and the ball. "
+                    + "Return v to the same matrix family as rho(v0+1/2,v1,v2). It is positive "
+                    + "semidefinite with trace one, and its half trace-norm error to every true "
+                    + "state cannot exceed the raw error. Hence FT.26 survives this closed-ball "
+                    + "projection. The readouts throughout are expectations from independent "
+                    + "preparations; finite-sample statistics require a separate error budget.")))))));
+
 
     private static Formula Call(string name, params Formula[] args)
     {
