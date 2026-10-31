@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The original general-parameter Mills classification, including both sharp global-sign and complete-monotonicity equivalence chains with their closed endpoints.
+Original Mills normalization and complete classification.
 
 **Definition 1.1 (Original signed remainder normalization).**
 
@@ -54,31 +54,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.positive_c
 
 For every n >= 2 and real a, if the original F n a is completely monotone, then a <= theta (n-2). The proof consumes the zeroth derivative sign and the concrete origin limit. The hypothesis that F is globally nonnegative alone suffices, as established by positive_sign_necessary. The exact general-a Gamma coefficient identity and positivity of B_(n-2) translate u_n <= 0 into the threshold bound.
 
-**Theorem 1.5 (Strictly decreasing upper normalized remainder).**
-
-Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strict_anti`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strict_anti` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Write E_k(y) = (-1)^k (exp(-y) - sum_{j<k} (-y)^j/j!). For every k >= 1, E_k(y)/y^k strictly decreases on y > 0. The proof uses the existing public ExpRemainderDifferences.R with k=r+1, then the pinned Mathlib Taylor integral theorem gives E_k(y)/y^k = integral_0^1 (1-s)^(k-1) exp(-sy) ds / (k-1)!. Strict integral comparison at s=1/2 proves the multiplier order.
-
-**Theorem 1.6 (Strictly increasing lower normalized remainder).**
-
-Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strict_mono`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strict_mono` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every k >= 1, E_k(y)/y^(k-1) strictly increases on y > 0. Changing variables in the same Taylor integral gives E_k(y)/y^(k-1) = integral_0^y (1-q/y)^(k-1) exp(-q) dq / (k-1)!. Increasing y increases the integrand on the old interval and adds a strictly positive interval. This includes k=1.
-
-**Theorem 1.7 (Strict exponential remainder moment bounds).**
+**Theorem 1.5 (Strict exponential remainder moment bounds).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.moment_ratio_bounds`
 
@@ -90,7 +66,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.moment_rat
 
 With source remainder order r+1 and z positive, B_r/I_r < M2/M0 < B_(r+1)/I_(r+1). Both M0 and M2 are strictly positive. Apply IncompleteBeta.Comparison.weighted_means_lt to the positive densities E_(r+1)(z(1+v^2)) and (1+v^2)^r for the lower bound, and to (1+v^2)^(r+1) and E_(r+1)(z(1+v^2)) for the upper bound. The two proved normalized remainder orders give the required strict density ratios.
 
-**Theorem 1.8 (Strict inner threshold bounds).**
+**Theorem 1.6 (Strict inner threshold bounds).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.inner_threshold_bounds`
 
@@ -102,7 +78,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.inner_thre
 
 The two positive moment ratios imply theta_r < (1-M0/M2)/2 < theta_(r+1). Every denominator is strictly positive, including both polynomial moments. The conclusion holds for every r >= 0 and z > 0.
 
-**Theorem 1.9 (Both closed parameter ranges for the signed kernel).**
+**Theorem 1.7 (Both closed parameter ranges for the signed kernel).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_closed_ranges`
 
@@ -114,7 +90,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_clo
 
 For source truncation n=r+2 and every t>0, the kernel L from (2.5) is strictly positive when a <= theta_r and strictly negative when a >= theta_(r+1). Its inner integral is exactly 2 M2 times the difference between the inner threshold and a. The strict inner bounds include both parameter endpoints. The exact equality of its Laplace integral with the original F gives both complete-monotonicity sufficiency branches.
 
-**Theorem 1.10 (Exact general-parameter Gamma coefficient correspondence).**
+**Theorem 1.8 (Exact general-parameter Gamma coefficient correspondence).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.coefficient_identity`
 
@@ -126,7 +102,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.coefficien
 
 For every r >= 0 and real a, the original u_(r+2)(a,a-2) equals (2r+3)! / (4^(r+1) r!) times (I_r+(2a-1)B_r). The proof directly consumes Result.coeff_sum, Result.intPow_rec and Result.coeff_factorial at their original owner. The same original identities give u_1(a,a-2)=0 for every real a; this removes the first term from the rescaled finite sum. Linearity of the polynomial moment gives B_r=I_(r+1)-I_r. The coefficient is a strictly positive factor times a-theta_r. Both coefficient-sign equivalences include the zero endpoint.
 
-**Theorem 1.11 (Absolute polynomial bound for the signed kernel).**
+**Theorem 1.9 (Absolute polynomial bound for the signed kernel).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_polynomial_bound`
 
@@ -138,7 +114,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_pol
 
 For every r >= 0, every real a and t >= 0, the absolute value of L r a t is at most (abs(1-2a)+1) t^(2r+5). The source remainder order is r+1. The proof consumes the exact original Result.expRemainderBounds through E r y = Result.expRemainder (r+1) y. The coefficient weight is bounded in absolute value on [0,1], so this estimate holds without a sign restriction on a.
 
-**Theorem 1.12 (Every absolute exponential moment of the signed kernel).**
+**Theorem 1.10 (Every absolute exponential moment of the signed kernel).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_exponential_moments`
 
@@ -150,7 +126,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_exp
 
 For every pair of natural orders r,m, every real a and every x>0, t^m exp(-xt) L r a t is absolutely integrable on t>0. The polynomial estimate is dominated by the existing exact exponential moment of order m+2r+5. The kernel is continuous for all real t.
 
-**Theorem 1.13 (Exact original Gamma coefficient in the Laplace recurrence).**
+**Theorem 1.11 (Exact original Gamma coefficient in the Laplace recurrence).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_laplace_rec`
 
@@ -162,7 +138,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_lap
 
 For every r>=0, real a and x>0, the Laplace integral of L (r+1) a equals -u_(r+3)(a,a-2)/x^(2r+6) minus the Laplace integral of L r a. The exact original exponential-remainder recurrence gives the polynomial kernel difference. Absolute integrability permits integral subtraction, and the original coefficient_identity identifies the polynomial moment.
 
-**Theorem 1.14 (Exact finite subtraction inside the Laplace integral).**
+**Theorem 1.12 (Exact finite subtraction inside the Laplace integral).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.laplace_finite_subtraction`
 
@@ -174,7 +150,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.laplace_fi
 
 For every r>=0, real a and x>0, the Laplace integral of L r a equals (-1)^(r+2) times the Laplace integral of the original G_a minus the finite sum of the original (-1)^k u_k(a,a-2)/x^(2k), with 1<=k<=r+2. The base case subtracts u_2/x^4 and uses u_1=0. The exact kernel recurrence then adds each successive Gamma term. All integral subtractions are absolutely integrable. The difference between this expression and the actual F is precisely (-1)^(r+2) times Y_(a,a-2)-(a-1)-Laplace(G_a).
 
-**Theorem 1.15 (Every ordinary derivative of the signed kernel integral).**
+**Theorem 1.13 (Every ordinary derivative of the signed kernel integral).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.signed_kernel_moment_iterated`
 
@@ -186,43 +162,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.signed_ker
 
 For every r,m>=0 and every real a, the mth ordinary derivative of the Laplace integral of L r a equals the integral of (-t)^m exp(-xt) L r a t for x>0. No positivity assumption on the kernel or parameter is used. On y>x/2, the absolute derivative integrand is dominated by (abs(1-2a)+1) t^(m+2r+6) exp(-xt/2), an integrable exponential moment.
 
-**Theorem 1.16 (General-parameter Gaussian convolution kernel identity).**
-
-Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.gaussian_kernel_identity`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.gaussian_kernel_identity` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every real a and t, the source kernel G_a(t) equals t^3/4 times the integral from zero to one of (1+(2a-1)v^2) exp(-(1+v^2)t^2/4). Integrating the derivative of v exp(-(1+v^2)t^2/4) gives exp(-t^2/2) as the integral of (1-t^2 v^2/2) times the same exponential. Substitution in G and linearity of the integral give the stated identity. This is the source's pointwise identity (2.3).
-
-**Theorem 1.17 (The negative-parameter Gaussian kernel is the original K kernel).**
-
-Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.gaussian_kernel_eq_K`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.gaussian_kernel_eq_K` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-A second interval integration by parts gives G_(-1)(t)=K(t), preserving the original Gaussian convolution normalization and the exact K supplier.
-
-**Theorem 1.18 (The exact general-parameter Gaussian Laplace identity).**
-
-Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.gaussian_laplace_identity`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.gaussian_laplace_identity` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The original Mills Laplace formula and square convolution are combined with the original kernelLaplace identity at parameter -1. A direct integration by parts gives the t times Gaussian integral, and linearity in a then yields Y_(a,a-2)(x)-(a-1)=integral exp(-xt) G_a(t) for every x>0.
-
-**Theorem 1.19 (The exact Laplace representation of the original F).**
+**Theorem 1.14 (The exact Laplace representation of the original F).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.actual_f_laplace`
 
@@ -234,7 +174,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.actual_f_l
 
 Substitution of the Gaussian identity into the finite-subtraction defect removes the residual exactly, giving F_(r+2,a)(x)=integral exp(-xt)L_(r,a)(t).
 
-**Theorem 1.20 (Every ordinary derivative of the original F).**
+**Theorem 1.15 (Every ordinary derivative of the original F).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.actual_f_iterated_deriv`
 
@@ -246,7 +186,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.actual_f_i
 
 The exact Laplace representation and the signed-kernel iterated differentiation theorem give the integral of (-t)^m exp(-xt)L for every ordinary order m, including zero.
 
-**Theorem 1.21 (Positive complete-monotonicity sufficiency with the closed endpoint).**
+**Theorem 1.16 (Positive complete-monotonicity sufficiency with the closed endpoint).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.positive_cm_sufficiency`
 
@@ -258,7 +198,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.positive_c
 
 The positive closed kernel range, exact F Laplace representation and all-order derivative formula prove complete monotonicity whenever a <= theta_(n-2), including equality.
 
-**Theorem 1.22 (Negative complete-monotonicity sufficiency with the closed endpoint).**
+**Theorem 1.17 (Negative complete-monotonicity sufficiency with the closed endpoint).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.negative_cm_sufficiency`
 
@@ -270,7 +210,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.negative_c
 
 The negative closed kernel range, exact F Laplace representation and all-order derivative formula prove complete monotonicity of -F whenever a >= theta_(n-1), including equality.
 
-**Theorem 1.23 (A quantitative bound for every original remainder).**
+**Theorem 1.18 (A quantitative bound for every original remainder).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.actual_f_bound`
 
@@ -282,7 +222,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.actual_f_b
 
 For every r>=0, real a and x>0, the absolute value of F_(r+2,a)(x) is at most (abs(1-2a)+1) (2r+5)! / x^(2r+6). Integral norm comparison applies the signed-kernel polynomial bound and the exact original exponential moment. Consequently x^(2r+4) F_(r+2,a)(x) tends to zero at infinity, with an absolute bound equal to a fixed constant times x^(-2).
 
-**Theorem 1.24 (The original infinity asymptotic with its exact Gamma coefficient).**
+**Theorem 1.19 (The original infinity asymptotic with its exact Gamma coefficient).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.infinity_endpoint`
 
@@ -294,7 +234,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.infinity_e
 
 For every n>=2 and real a, x^(2n+2) F_(n,a)(x) tends to -u_(n+1)(a,a-2) at infinity. The exact finite Laplace recurrence gives F_(n+1,a)=-u_(n+1)/x^(2n+2)-F_(n,a). The quantitative next-remainder bound makes x^(2n+2) F_(n+1,a) tend to zero. This proves the source's limit (2.12) in the original normalization.
 
-**Theorem 1.25 (Sharp negative necessity already from the global sign).**
+**Theorem 1.20 (Sharp negative necessity already from the global sign).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.negative_sign_sharp_necessary`
 
@@ -306,7 +246,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.negative_s
 
 If -F_(n,a) is globally nonnegative on x>0, its rescaled infinity limit is nonnegative. Thus u_(n+1)(a,a-2)>=0, and the exact coefficient identity with positive B_(n-1) gives a>=theta_(n-1), including equality.
 
-**Theorem 1.26 (Complete original Theorem 2.1).**
+**Theorem 1.21 (Complete original Theorem 2.1).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.result`
 
@@ -325,11 +265,6 @@ For every integer n>=2 and every real a, global nonnegativity of the original F_
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.actual_f_iterated_deriv`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.actual_f_laplace`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.coefficient_identity`
-- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strict_anti`
-- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strict_mono`
-- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.gaussian_kernel_eq_K`
-- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.gaussian_kernel_identity`
-- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.gaussian_laplace_identity`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.infinity_endpoint`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.inner_threshold_bounds`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_closed_ranges`
@@ -347,4 +282,6 @@ For every integer n>=2 and every real a, global nonnegativity of the original F_
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.signed_kernel_moment_iterated`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.theorem21`
 - Dependency: [D5/S3/Analytic/IncompleteBeta/Comparison](../IncompleteBeta/Comparison.md)
+- Dependency: [D5/S3/Analytic/XuYangMillsRemainder/GaussianLaplace](GaussianLaplace.md)
+- Dependency: [D5/S3/Analytic/XuYangMillsRemainder/NormalizedRemainderOrders](NormalizedRemainderOrders.md)
 - Dependency: [D5/S3/Analytic/XuYangMillsRemainder/Result](Result.md)

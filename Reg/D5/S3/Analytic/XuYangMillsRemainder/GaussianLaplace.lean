@@ -37,7 +37,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     nlinarith [hv.1, hv.2]
   have he : (0 : ℝ) = (1 / 4 : ℝ) * ∫ v in (0 : ℝ)..1,
       (1 - v ^ 2) * exp (-(1 + v ^ 2) / 4) := by
-    simpa [rejected, realize, G] using H 0 1
+    simpa [rejected, realize, G, sub_eq_add_neg] using H 0 1
   nlinarith
 
 def family : Registration arena (type_of% @gaussian_kernel_identity) where
