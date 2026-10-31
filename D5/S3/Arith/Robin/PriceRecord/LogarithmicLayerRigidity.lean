@@ -18,6 +18,11 @@ noncomputable section
 namespace D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity
 
 open Finset Filter Asymptotics
+open D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
+open D5.S3.Arith.GoldenResourceOptimalInteger
+open D5.S3.Arith.GoldenResource.GoldenResource5040EndpointComparison
+open D5.S3.Arith.Robin.OriginalEndpointPrimeTail (largestPrime)
+open D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure (price_record_prime_structure)
 open scoped Topology BigOperators Chebyshev
 
 private theorem theta_error_eight :
@@ -220,5 +225,165 @@ theorem shrinking_prime_windows (C : ℝ) (hC : 0 < C) :
     (by nlinarith [div_nonneg (by norm_num : (0 : ℝ) ≤ 1) hL3.le])
     (by ring_nf; exact le_refl _)
   exact ⟨D, U, hDcard, hUcard, hD, hU⟩
+
+private theorem rounded_counts {z w : ℝ} (hz : 0 < z) (hw : 0 ≤ w) :
+    ((⌈z⌉₊ - 1 : ℕ) : ℝ) < z ∧ z - 1 ≤ ((⌈z⌉₊ - 1 : ℕ) : ℝ) ∧
+    w < ((⌊w⌋₊ + 1 : ℕ) : ℝ) ∧ ((⌊w⌋₊ + 1 : ℕ) : ℝ) ≤ w + 1 := by
+  have hc : 1 ≤ ⌈z⌉₊ := Nat.ceil_pos.mpr hz
+  rw [Nat.cast_sub hc, Nat.cast_add, Nat.cast_one]
+  exact ⟨by linarith [Nat.ceil_lt_add_one hz.le],
+    by linarith [Nat.le_ceil z], Nat.lt_floor_add_one w,
+    by linarith [Nat.floor_le hw]⟩
+
+private theorem log_budget_products_lt {D U : Finset ℕ} {r s : ℕ} {V W : ℝ}
+    (hDcard : D.card = r) (hUcard : U.card = s) (hV : 0 < V) (hW : 0 < W)
+    (hD : ∀ p ∈ D, V ≤ (p : ℝ)) (hU : ∀ q ∈ U, (q : ℝ) ≤ W)
+    (hbudget : (s : ℝ) * Real.log W < (r : ℝ) * Real.log V) :
+    (∏ q ∈ U, q) < ∏ p ∈ D, p := by
+  apply finite_products_lt hDcard hUcard hV hD hU
+  apply (div_lt_one (pow_pos hV r)).mpr
+  apply (Real.log_lt_log_iff (pow_pos hW s) (pow_pos hV r)).mp
+  simpa only [Real.log_pow] using hbudget
+
+private theorem exchange_window_bound {m : ℕ} {lambda V Z W : ℝ} {a b : ℕ}
+    (hcert : ExchangeSupply m lambda) (hlambda : 0 < lambda)
+    (D U : Finset ℕ) (hdis : Disjoint D U)
+    (hD : ∀ p ∈ D, p.Prime ∧ p ∣ m)
+    (hU : ∀ q ∈ U, q.Prime)
+    (hprod : (∏ q ∈ U, q) < ∏ p ∈ D, p)
+    (ha : 1 ≤ a) (hV : 0 < V) (hZ : 1 < Z)
+    (hDval : ∀ p ∈ D, a ≤ m.factorization p)
+    (hUval : ∀ q ∈ U, m.factorization q + 1 ≤ b)
+    (hDV : ∀ p ∈ D, V ≤ (p : ℝ))
+    (hUZ : ∀ q ∈ U, Z ≤ (q : ℝ))
+    (hUW : ∀ q ∈ U, (q : ℝ) ≤ W) :
+    (U.card : ℝ) * ((1 - Z⁻¹) * W⁻¹ ^ b) ≤ (D.card : ℝ) * V⁻¹ ^ a := by
+  by_contra! hbad
+  apply exchange_forbids_scaled_gain_bounds hcert hlambda (by norm_num : (0 : ℝ) < 1)
+    D U hdis hD hU hprod
+  · intro p hp
+    simpa only [one_mul] using gain_upper_window (hD p hp).1 ha (hDval p hp) hV (hDV p hp)
+  · intro q hq
+    simpa only [one_mul] using gain_lower_window
+      (fun p a hp ha => golden_layer_gain_lower hp ha) (hU q hq)
+      (by omega : 1 ≤ m.factorization q + 1) (hUval q hq) hZ (hUZ q hq) (hUW q hq)
+  · exact hbad
+
+/-- Simultaneous finite exchanges use their actual scale-dependent windows.
+The scalar capacity premises bound the rounded counts, not prime existence. -/
+private theorem shrinking_rounded_exchanges (C : ℝ) (hC : 0 < C) :
+    ∃ T : ℝ, 1 < T ∧ ∀ (m j : ℕ), 2 ≤ m → 2 ≤ j →
+      ∀ lambda : ℝ, 0 < lambda →
+      (∀ n : ℕ, 0 < n → n < m →
+        goldenResourceObjective lambda n < goldenResourceObjective lambda m) →
+      let P : ℝ := largestPrime m
+      let Q : ℝ := layerPrime m j
+      let V : ℝ := P * (1 - 1 / Real.log P ^ 3)
+      let W : ℝ := Q * (1 + 1 / Real.log Q ^ 3)
+      let X : ℝ := Q * (1 - 1 / Real.log Q ^ 3)
+      let Y : ℝ := P * (1 + 1 / Real.log P ^ 3)
+      let r : ℕ := ⌈Real.log P ^ 3⌉₊
+      let s : ℕ := ⌈(r : ℝ) * Real.log V / Real.log W⌉₊ - 1
+      let t : ℕ := ⌊(r : ℝ) * Real.log Y / Real.log X⌋₊ + 1
+      T ≤ P → T ≤ Q → 1 < V → 1 < X → W < V →
+      0 < (r : ℝ) * Real.log V / Real.log W →
+      r ≤ ⌈C * Real.log P ^ 3⌉₊ →
+      s ≤ ⌈C * Real.log Q ^ 3⌉₊ →
+      t ≤ ⌈C * Real.log Q ^ 3⌉₊ →
+      (s : ℝ) * ((1 - Q⁻¹) * W⁻¹ ^ j) ≤ (r : ℝ) * V⁻¹ ∧
+      (r : ℝ) * ((1 - P⁻¹) * Y⁻¹) ≤ (t : ℝ) * X⁻¹ ^ j := by
+  obtain ⟨T, hT, hcapacity⟩ := shrinking_prime_windows C hC
+  refine ⟨T, hT, ?_⟩
+  intro m j hm hj lambda hlambda hrecord P Q V W X Y r s t hP hQ hV hX hsep hz hr hs ht
+  have hP1 : 1 < P := hT.trans_le hP
+  have hQ1 : 1 < Q := hT.trans_le hQ
+  have hWQ : Q < W := by
+    dsimp [W]
+    nlinarith [mul_pos (by linarith : 0 < Q)
+      (div_pos (by norm_num : (0 : ℝ) < 1) (pow_pos (Real.log_pos hQ1) 3))]
+  have hPY : P < Y := by
+    dsimp [Y]
+    nlinarith [mul_pos (by linarith : 0 < P)
+      (div_pos (by norm_num : (0 : ℝ) < 1) (pow_pos (Real.log_pos hP1) 3))]
+  have hw : 0 ≤ (r : ℝ) * Real.log Y / Real.log X :=
+    div_nonneg (mul_nonneg (Nat.cast_nonneg _) (Real.log_pos (hP1.trans hPY)).le)
+      (Real.log_pos hX).le
+  obtain ⟨hslow, _, htup, _⟩ := rounded_counts hz hw
+  have hlowerbudget : (s : ℝ) * Real.log W < (r : ℝ) * Real.log V :=
+    (lt_div_iff₀ (Real.log_pos (hQ1.trans hWQ))).mp hslow
+  have hupperbudget : (r : ℝ) * Real.log Y < (t : ℝ) * Real.log X :=
+    (div_lt_iff₀ (Real.log_pos hX)).mp htup
+  obtain ⟨DP, UP, hDPcard, hUPcard, hDP, hUP⟩ := hcapacity P hP r hr
+  obtain ⟨DQ, UQ, hDQcard, hUQcard, hDQ, hUQ⟩ := hcapacity Q hQ s hs
+  obtain ⟨EQ, FQ, hEQcard, _, hEQ, _⟩ := hcapacity Q hQ t ht
+  have hstructure := price_record_prime_structure hm hlambda hrecord
+  have hsupport (p : ℕ) (hp : p.Prime) (hpP : (p : ℝ) ≤ P) : p ∣ m := by
+    apply Nat.dvd_of_mem_primeFactors
+    rw [hstructure.2]
+    exact Nat.mem_primesLE.mpr ⟨by exact_mod_cast (show (p : ℝ) ≤ (largestPrime m : ℝ) from hpP), hp⟩
+  have hcert : ExchangeSupply m lambda := by
+    intro D U hdis hD hU hprod
+    exact (signed_exchange_certificate lambda (by omega : 0 < m) hrecord D U
+      (fun p hp => (hD p hp).1) hU (fun p hp => (hD p hp).2) hdis hprod).2.2
+  have hDPdonor : ∀ p ∈ DP, p.Prime ∧ p ∣ m :=
+    fun p hp => ⟨(hDP p hp).1, hsupport p (hDP p hp).1 (hDP p hp).2.2⟩
+  have hDPval : ∀ p ∈ DP, 1 ≤ m.factorization p := by
+    intro p hp
+    exact ((hDPdonor p hp).1.dvd_iff_one_le_factorization (by omega : m ≠ 0)).mp
+      (hDPdonor p hp).2
+  have hUQval : ∀ q ∈ UQ, m.factorization q + 1 ≤ j := by
+    intro q hq
+    have h := valuation_above_layer_prime (by omega : 0 < m) (by omega : 1 ≤ j)
+      (hUQ q hq).1 (by exact_mod_cast (show (layerPrime m j : ℝ) < (q : ℝ) from (hUQ q hq).2.1))
+    omega
+  have hQnat : 1 < layerPrime m j := by exact_mod_cast (show (1 : ℝ) < (layerPrime m j : ℝ) from hQ1)
+  have hQP : Q ≤ P := by
+    obtain ⟨hmem, _⟩ := layer_prime_mem hQnat
+    rw [hstructure.2] at hmem
+    change (layerPrime m j : ℝ) ≤ (largestPrime m : ℝ)
+    exact_mod_cast (Nat.mem_primesLE.mp hmem).1
+  have hEQval : ∀ p ∈ EQ, j ≤ m.factorization p := by
+    intro p hp
+    exact valuation_below_layer_prime (hEQ p hp).1 hstructure.1
+      (by exact_mod_cast (show (p : ℝ) ≤ (layerPrime m j : ℝ) from (hEQ p hp).2.2))
+  have hEQdonor : ∀ p ∈ EQ, p.Prime ∧ p ∣ m := by
+    intro p hp
+    exact ⟨(hEQ p hp).1, hsupport p (hEQ p hp).1 ((hEQ p hp).2.2.trans hQP)⟩
+  have hUPval : ∀ q ∈ UP, m.factorization q + 1 ≤ 1 := by
+    intro q hq
+    have hndiv : ¬q ∣ m := by
+      intro hdiv
+      have hmem := (hUP q hq).1.mem_primeFactors hdiv (by omega : m ≠ 0)
+      rw [hstructure.2] at hmem
+      have hle : (q : ℝ) ≤ P := by
+        change (q : ℝ) ≤ (largestPrime m : ℝ)
+        exact_mod_cast (Nat.mem_primesLE.mp hmem).1
+      exact (hUP q hq).2.1.not_ge hle
+    simp [Nat.factorization_eq_zero_of_not_dvd hndiv]
+  constructor
+  · have hdis : Disjoint DP UQ := Finset.disjoint_left.mpr (by
+      intro p hpD hpU
+      exact (hDP p hpD).2.1.not_ge ((hUQ p hpU).2.2.trans hsep.le))
+    have hprod := log_budget_products_lt hDPcard hUQcard
+      (by linarith : 0 < V) (by linarith : 0 < W)
+      (fun p hp => (hDP p hp).2.1.le) (fun q hq => (hUQ q hq).2.2) hlowerbudget
+    have hbound := exchange_window_bound hcert hlambda DP UQ hdis hDPdonor
+      (fun q hq => (hUQ q hq).1) hprod (by norm_num : 1 ≤ 1)
+      (by linarith : 0 < V) hQ1 hDPval hUQval
+      (fun p hp => (hDP p hp).2.1.le) (fun q hq => (hUQ q hq).2.1.le)
+      (fun q hq => (hUQ q hq).2.2)
+    simpa only [hDPcard, hUQcard, pow_one] using hbound
+  · have hdis : Disjoint EQ UP := Finset.disjoint_left.mpr (by
+      intro p hpD hpU
+      exact (hUP p hpU).2.1.not_ge ((hEQ p hpD).2.2.trans hQP))
+    have hprod := log_budget_products_lt hEQcard hUPcard
+      (by linarith : 0 < X) (by linarith : 0 < Y)
+      (fun p hp => (hEQ p hp).2.1.le) (fun q hq => (hUP q hq).2.2) hupperbudget
+    have hbound := exchange_window_bound hcert hlambda EQ UP hdis hEQdonor
+      (fun q hq => (hUP q hq).1) hprod (by omega : 1 ≤ j)
+      (by linarith : 0 < X) hP1 hEQval hUPval
+      (fun p hp => (hEQ p hp).2.1.le) (fun q hq => (hUP q hq).2.1.le)
+      (fun q hq => (hUP q hq).2.2)
+    simpa only [hEQcard, hUPcard, pow_one] using hbound
 
 end D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity
