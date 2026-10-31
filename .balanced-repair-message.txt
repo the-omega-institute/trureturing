@@ -1,0 +1,1 @@
+WIP: split balanced polynomial conjunctions before inequality normalization

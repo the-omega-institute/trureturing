@@ -76,7 +76,10 @@ private theorem polynomial_endpoints (n : Fin 16) (q : ℤ) (hq : 4 ≤ q) :
   fin_cases n <;>
     norm_num [order,ear,checks,earChecks,masses,correction,transfer,lengths,bases,newBases,
       drops,newDrops,modulus,powers,offsets,Pi.sub_apply] <;>
-    repeat' constructor <;>
-    (first | apply sub_nonneg.mp | skip) <;> ring_nf <;> positivity
+    repeat' apply And.intro
+  all_goals
+    apply sub_nonneg.mp
+    ring_nf
+    positivity
 
 end D5.S3.Combinatorics.Circle.FourNegative.BalancedGaps
