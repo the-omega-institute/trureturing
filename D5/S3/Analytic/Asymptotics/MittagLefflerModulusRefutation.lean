@@ -602,7 +602,7 @@ theorem source_endpoint_scaled_limit {E : ℝ → ℝ → ℂ → ℂ} (hE : IsS
         exact mul_le_mul_of_nonneg_left h (by positivity)
       _ = B * r ^ (-(1 / 2 : ℝ)) := by dsimp only [B]; rw [← hrad]; ring
   have herr : Tendsto (fun r : ℝ => (r : ℂ) ^ 2 * A * J r) atTop (𝓝 0) := by
-    refine squeeze_zero_norm' (g := fun r : ℝ => B * Real.rpow r (-(1 / 2 : ℝ))) ?_ ?_
+    refine squeeze_zero_norm' (a := fun r : ℝ => B * Real.rpow r (-(1 / 2 : ℝ))) ?_ ?_
     · filter_upwards [eventually_gt_atTop (0 : ℝ)] with r hr
       exact hb hr
     · simpa only [mul_zero, Real.rpow_eq_pow] using
@@ -685,7 +685,7 @@ theorem source_endpoint_failure {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSource
   have hray := (source_endpoint_scaled_limit hE hα hw hm).norm
   have haxis' : Tendsto (fun r : ℝ => r ^ 2 * (E α (α - 1) (-r : ℂ)).re) atTop
       (𝓝 (endpointCoefficient α)) := by
-    simpa [Complex.mul_re, ← Complex.ofReal_pow] using haxis
+    simpa [Function.comp_def, Complex.mul_re, ← Complex.ofReal_pow] using haxis
   have hray' : Tendsto (fun r : ℝ => r ^ 2 * ‖E α (α - 1) ((r : ℂ) * rayDirection α)‖)
       atTop (𝓝 (endpointCoefficient α / (1 + rayTilt α ^ 2))) := by
     convert hray using 1
@@ -700,7 +700,10 @@ theorem source_endpoint_failure {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSource
   have hre' : (((r : ℂ) * rayDirection α).re : ℂ) = (-r : ℂ) := by
     simp [Complex.mul_re, hre]
   rw [hre']
-  exact (mul_lt_mul_left (sq_pos_of_pos hr)).mp hstrict
+  by_contra hnot
+  have hle := le_of_not_gt hnot
+  have hmul := mul_le_mul_of_nonneg_left hle (sq_nonneg r)
+  exact (not_lt_of_ge hmul) hstrict
 
 /-- One point is chosen at the endpoint, then beta-continuity supplies a closed
 interval of failures at that same point. This holds for every alpha in (1,2). -/
