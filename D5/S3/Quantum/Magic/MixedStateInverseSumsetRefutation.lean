@@ -256,9 +256,11 @@ private lemma rank_eq : meanRank rho.1 = 7 := by
 private lemma gap_bounds : 0 ≤ gapFactor rho.1 ∧ gapFactor rho.1 ≤ 1 := by
   classical
   delta gapFactor magicGap
-  dsimp only
-  split_ifs with h
-  · have hu := Finset.sup'_le h (fun x => ‖charFun rho.1 x‖)
+  simp -congrConsts only
+  by_cases h : (univ.filter (fun x : ZMod 7 × ZMod 7 =>
+    charFun rho.1 x ≠ 0 ∧ ‖charFun rho.1 x‖ ≠ 1)).Nonempty
+  · rw [dif_pos h]
+    have hu := Finset.sup'_le h (fun x => ‖charFun rho.1 x‖)
       (fun x _ => characteristic_bound x)
     obtain ⟨x, hx⟩ := h
     have hl := (norm_nonneg (charFun rho.1 x)).trans
@@ -266,7 +268,8 @@ private lemma gap_bounds : 0 ≤ gapFactor rho.1 ∧ gapFactor rho.1 ≤ 1 := by
     constructor
     · positivity
     · nlinarith
-  · norm_num
+  · rw [dif_neg h]
+    norm_num
 
 private lemma purity_eq : purity rho.1 = 1 / 2 := by
   change (trace ((diagonal fun i => (rhoWeights i : ℂ)) *
