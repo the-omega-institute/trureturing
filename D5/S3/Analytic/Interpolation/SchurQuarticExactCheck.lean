@@ -6,6 +6,7 @@ import Mathlib.Tactic
 
 noncomputable section
 open Set Metric Complex Polynomial
+open scoped ComplexConjugate
 open D5.S3.Analytic.Interpolation.SchurConjugateSlope
 open D5.S3.Analytic.Interpolation.SelfConjugateTwoNodeSchurRatioRegion
 open D5.S3.Analytic.Interpolation.SelfConjugateGridSchurRatioRefutation (h Q)
@@ -76,7 +77,7 @@ example (d : ℝ) (hd : 0 < d) (hdhalf : d ≤ 1 / 2) :
   have hinterp (g : ℂ → ℂ) : error d g = deriv g 1 -
       deriv (interpolant g (1 - d) (Real.sqrt 3 * d)) 1 := by
     rw [interpolant_deriv]
-    simp only [error, slope, node, other, ofReal_sub, ofReal_one, hnv]
+    simp only [error, D5.S3.Analytic.Interpolation.SchurConjugateSlope.slope, node, other, ofReal_sub, ofReal_one, hnv]
   have hpoly (z : ℂ) : (poly d).eval₂ (algebraMap ℝ ℂ) z = quartic d z := by
     simp [poly, quartic, eval₂_add, eval₂_sub, eval₂_mul, eval₂_pow]
     ring
@@ -136,7 +137,7 @@ example (d : ℝ) (hd : 0 < d) (hdhalf : d ≤ 1 / 2) :
       ‖deriv (deriv (quartic d)) z‖ ≤ 1 := by
     rw [hsecond]
     change ‖f z / (scale d : ℂ)‖ ≤ 1
-    rw [norm_div, norm_real, Real.norm_eq_abs, abs_of_pos hs, div_le_one hs]
+    rw [norm_div, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hs, div_le_one hs]
     exact hbound z hz
   have hunit : ‖deriv (deriv (quartic d)) I‖ = 1 := by
     rw [hsecond]
@@ -146,7 +147,7 @@ example (d : ℝ) (hd : 0 < d) (hdhalf : d ≤ 1 / 2) :
       rw [Complex.sq_norm, hs2]
       simp [f, Complex.normSq_apply, I_sq, pow_two]
       ring
-    rw [norm_div, hI, norm_real, Real.norm_eq_abs, abs_of_pos hs, div_self hs0]
+    rw [norm_div, hI, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hs, div_self hs0]
   have hbdd : BddAbove ((fun z => ‖deriv (deriv (quartic d)) z‖) ''
       closedBall (0 : ℂ) 1) := ⟨1, by rintro r ⟨z, hz, rfl⟩; exact hsecond_bound z hz⟩
   have hnorm : diskNorm (quartic d) = 1 := by
@@ -215,7 +216,7 @@ example (d : ℝ) (hd : 0 < d) (hdhalf : d ≤ 1 / 2) :
       (first_inequality_region (1 - d) (Real.sqrt 3 * d) hab hw).2.1.mpr
         ((first_inequality_region (1 - d) (Real.sqrt 3 * d) hab hw).2.2.1.mpr
           (by rw [mul_pow, h3]; ring_nf; exact le_rfl)) _ (by omega)
-    rw [hinter t ht, hmon _ (by omega), norm_mul, norm_real, Real.norm_eq_abs, abs_of_pos hd]
+    rw [hinter t ht, hmon _ (by omega), norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hd]
     nlinarith
   have htwo : error d (monomial 2) = (d : ℂ) := by
     rw [hinter 2 (by norm_num), hmon 2 (by norm_num),
@@ -234,7 +235,7 @@ example (d : ℝ) (hd : 0 < d) (hdhalf : d ≤ 1 / 2) :
     simp only [I_sq, h3C]
     ring
   have hnonempty : (values d).Nonempty := ⟨d, 2, by norm_num, by
-    rw [htwo, norm_real, Real.norm_eq_abs, abs_of_pos hd]⟩
+    rw [htwo, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hd]⟩
   have hbounded : BddAbove (values d) := ⟨d, by
     rintro r ⟨t, ht, rfl⟩
     exact hmonbound t ht⟩
@@ -242,7 +243,7 @@ example (d : ℝ) (hd : 0 < d) (hdhalf : d ≤ 1 / 2) :
     apply le_antisymm (csSup_le hnonempty (by
       rintro r ⟨t, ht, rfl⟩; exact hmonbound t ht))
     exact le_csSup hbounded ⟨2, by norm_num, by
-      rw [htwo, norm_real, Real.norm_eq_abs, abs_of_pos hd]⟩
+      rw [htwo, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hd]⟩
   refine ⟨hpoly, hdeg, hnodes, hnodeball, hconj, hinterp, hmember, hnorm, ?_,
     hstrict, hcorr, hnonempty, hbounded, hsup, htwo, hthree⟩
   simpa only [ofReal_mul, hsformula] using herror
