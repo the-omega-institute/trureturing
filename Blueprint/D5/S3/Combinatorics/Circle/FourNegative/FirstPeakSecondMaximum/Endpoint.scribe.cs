@@ -1,0 +1,21 @@
+using static StrataLint.Scribe.DefinitionDsl;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum;
+internal sealed class EndpointDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "First peak and second maximum: physical joint lift",
+        H("All a>d>=max(b,c), with b,c at least two"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("actual-source-first-peak-second-maximum-joint-lift"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FourNegative/FirstPeakSecondMaximum/Endpoint.actualSource_first_peak_second_maximum_joint_lift"),
+                H("One physical order and one literal ear cut"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For natural a,b,c,d with b,c at least two, b and c at most d, and d strictly below a, put k=a+b+c+d and A=1+2^a+2^(a+b)+2^(a+b+c). A single permutation sigma of the physical Fin k labels and a single natural cut j at most k satisfy OriginalOrder(k,A,sigma) and OriginalOrder(k+1,2A,earWord(k,sigma,j)). Each order includes its literal permutation, total zero and the half-modulus bounds for every natural take-prefix, including empty and overlong prefixes. Equal values retain their distinct labels.")),
+                    Paragraph(Text("Set n=2^(a-d), y=2^b, z=2^c, t=2^d and D=yz+y+1. The positive heads are A=ntD+1, B=nt^2(y+1)+t+1, L=nzt^2+zt+z+1 and M=tyz+D. The four physical chains start at 0,d,d+c,d+c+b and have lengths d,c,b,a. Their new heads are 2A, Bn=2B-1, Ln=2L-z-1 and Mn=2M-D. The native chain identities give both terminal masses. The old total is zero, the new old-label total is -A, and the fresh label k contributes A.")),
+                    Paragraph(Text("When b<=c and the last three gaps are not all equal, complementary low-X masks p=n-r and q=r-1 partition precisely the first a-d X labels. A U-mask v and a V-mask w move whole physical occurrences. The terminal bank order is X,U,V,W. Its old seams are A-nM, B-rM-vA, L-rM-vA-wB,0. Its new seams are 2A-nMn, Bn-rMn-2vA, Ln-rMn-2vA-wBn,0. The successors in the two rows are A,B,L,M and A,Bn,Ln,Mn. The equal, twice and separated charts cover respectively c=b, c=b+1 and c>=b+2. Signed quotient and remainder bounds yield the masks and all seam and peak inequalities. For b=c=d the equal-last-three construction supplies the literal cut 3b; other charts use cut zero.")),
+                    Paragraph(Text("When c<b, write E=nD. The reverse grid uses epsilon=A-RM, G=epsilon+M, C=floor((4B-2L+z-2E-2)/4), v=floor((C-epsilon)/A), and r=max(1,ceil(((v+1)A-C)/M)). The ceiling is signed: ceil(q/M)=-floor(-q/M). Euclidean division proves 0<=v, 1<=r<=R, 0<=C-((v+1)A-rM)<G and 2v<t before conversion to natural masks. The three grid cases are d>b with R=n, d=b and n=8 with R=7, and d=b with n>=16 and R=floor(L/M). Exact polynomial identities in nonnegative shifted coordinates establish their universal margins.")),
+                    Paragraph(Text("The descending grid orders terminal banks X,V,U,W. Its old seams are A-nM, L-B+(v+1)A-rM, L-rM,0, and its new seams are 2A-nMn, Ln-Bn+2(v+1)A-rMn, Ln-rMn,0. The successors are A,L,B,M and A,Ln,Bn,Mn. The remaining unbounded cases d=b,n=2 and d=b,n=4 use u=2^(b-c-1), r=n-1, p=1 and q=n-2. A single nonterminal U bit u moves to V, and terminal banks are X,U,V,W. Their old seams are A-nM, B-rM-uA, L-rM,0 and new seams are 2A-nMn, Bn-rMn-2uA, Ln-rMn,0. Polynomial margins in z-4 and u-1 handle every b,c in these two cases.")),
+                    Paragraph(Text("Complementary bit partitions and interval concatenation give the complete physical inventory. Exact paired bank sums and native terminal identities give every seam and peak. Nonnegative terms within each bank and the four-strip lemma then give all prefix inequalities. The physical lift and marked-word identities retain the original seed, doubled seed and literal ear cut. The grid constructions are due to the caller and reuse the dyadic-mask, source-table and physical transport results. The unrestricted strict-saddle chamber, full four-gap joint lift and Circle C3.1 remain open."))),
+                DescribeRole.Theorem)), []));
+}
