@@ -155,6 +155,109 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[] }
 
+
+/-- The full support-iteration theorem with both original masses observed. -/
+abbrev iteration_arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {α : Type u} [DecidableEq α] (J : Finset α) (S : DeletionSystem J)
+    (A B : Finset (Finset α)), A ⊆ S.feasible J → B ⊆ S.feasible J →
+    CrossIntersecting A B →
+    ∃ K : Finset α, ∃ C D : Finset (Finset α),
+      K ⊆ J ∧ S.terminal K ∧ C ⊆ S.feasible K ∧ D ⊆ S.feasible K ∧
+      CrossIntersecting C D ∧ RelativelyUpper (S.feasible K) C ∧
+      RelativelyUpper (S.feasible K) D ∧
+      R.readout false ⟨α, S.leftWeight J, S.rightWeight J⟩ A ≤ mass (S.leftWeight K) C ∧
+      R.readout true ⟨α, S.leftWeight J, S.rightWeight J⟩ B ≤ mass (S.rightWeight K) D ∧
+      (A.Nonempty → C.Nonempty) ∧ (B.Nonempty → D.Nonempty)
+
+private def empty_system : DeletionSystem (∅ : Finset (ULift.{u} Unit)) where
+  feasible := fun _ => ∅
+  leftWeight := fun _ _ => 0
+  rightWeight := fun _ _ => 0
+  terminal := fun _ => True
+  left_nonneg := by simp
+  right_nonneg := by simp
+  projection := by simp
+  left_marginal := by simp
+  right_marginal := by simp
+  local_move := by simp
+
+private theorem iteration_intervention_law (i : Bool) :
+    ¬ iteration_arena.{u}.Law (intervention i) := by
+  intro h
+  obtain ⟨K, C, D, _, _, _, _, _, _, _, hw, hv, _⟩ :=
+    h ∅ empty_system ∅ ∅ (by simp [empty_system]) (by simp [empty_system])
+      (by simp [CrossIntersecting])
+  cases i <;> norm_num [intervention, realize, empty_system, mass] at hw hv
+
+private theorem iteration_rejected_law : ¬ iteration_arena.{u}.Law rejected := by
+  intro h
+  obtain ⟨K, C, D, _, _, _, _, _, _, _, hw, _⟩ :=
+    h ∅ empty_system ∅ ∅ (by simp [empty_system]) (by simp [empty_system])
+      (by simp [CrossIntersecting])
+  norm_num [rejected, realize, empty_system, mass] at hw
+
+def iteration_source_registration :
+    Registration iteration_arena.{u} (type_of% @exists_terminal_compression.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@exists_terminal_compression.{u}, rejected, iteration_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨intervention i, ?_, rfl, iteration_intervention_law i⟩
+      intro j hj
+      funext p F
+      simp [actual, intervention, realize, hj]
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def iteration_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@exists_terminal_compression.{u}) (Realization signature.{u}) Bool Unit := {
+  unitName := `Reg.D5.S3.Combinatorics.SetFamily.SimultaneousCompression.iteration_unit
+  realizationName := `Reg.D5.S3.Combinatorics.SetFamily.SimultaneousCompression.iteration_source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨iteration_arena⟩
+  objectArena := .source ⟨iteration_arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source iteration_arena ⟨iteration_source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u}
+    (fun i p F => mass (if i then p.2.2 else p.2.1) F) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.SetFamily.SimultaneousCompression
+    definition := none
+    coordinates := #[0, 2, 3]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "body", "arg", "body", "arg", "body",
+        "arg", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }, {
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "body", "arg", "body", "arg", "body",
+        "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms iteration_source_registration
+#print axioms iteration_registration
+
 #print axioms source_registration
 #print axioms registration
 end

@@ -77,5 +77,44 @@ internal sealed class SimultaneousCompressionDocument : IScribeDocumentDefinitio
                         + "requires actual conditional completion weights and a condition-preserving ear-slide "
                         + "construction. The present statement assumes the local weight equations; it does not "
                         + "establish those geometric facts or an original-family deficit bound."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("simultaneous-compression-relative-upper"),
+                DeclarationHandle.Create(Prefix + "RelativelyUpper"), H("Relative upper closure"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A family is relatively upper inside Omega when every feasible superset "
+                    + "of any of its members is also a member. No upward closure of Omega itself is required."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("simultaneous-compression-deletion-system"),
+                DeclarationHandle.Create(Prefix + "DeletionSystem"), H("Coherent data on every reduced support"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Fix a finite coordinate support J. For every sub-support H, specify a finite "
+                    + "feasible trace family, two real weights and a terminal predicate. Both weights are nonnegative "
+                    + "on feasible traces. Deleting any t in H maps the feasible family exactly onto the family at "
+                    + "H minus t, and the full projection-fibre sums of each weight equal that side's weights there. "
+                    + "At every nonterminal H there must be s,t,u with t in H and s distinct from both t and u, "
+                    + "satisfying the local exclusion, feasible-shift and two separate one-to-two weight equations. "
+                    + "These conditions specify feasible traces and weights; they do not assume that selected "
+                    + "families remain cross-intersecting after deletion."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("exists-terminal-simultaneous-compression"),
+                DeclarationHandle.Create(Prefix + "exists_terminal_compression"),
+                H("A common terminal support for both measures"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For any deletion system on J and cross-intersecting subfamilies A and B "
+                        + "of its feasible traces at J, there are a sub-support K of J and feasible families C,D "
+                        + "at K. The support K is terminal, C and D are cross-intersecting and each is relatively "
+                        + "upper. The left mass of C is at least the original left mass of A, and the right mass "
+                        + "of D is at least the original right mass of B. Each nonempty input side has a nonempty "
+                        + "output side, including when its weights vanish.")),
+                    Paragraph(Text("Strong induction on the finite support applies the local simultaneous "
+                        + "compression at a nonterminal support. Deleting its chosen t strictly reduces the support. "
+                        + "The exact projection and marginal equations identify both reduced mass bounds with the "
+                        + "next system's weights, so the induction preserves them separately. At a terminal support, "
+                        + "two polar extensions give a mutually maximal cross-intersecting pair; any feasible "
+                        + "superset of a member also meets the opposite family and therefore belongs to that pair.")),
+                    Paragraph(Text("The terminal predicate is arbitrary. A polygon application must establish "
+                        + "all the system conditions for its actual conditional completion counts and prove that "
+                        + "terminal supports have the desired independent-coordinate meaning. This theorem does "
+                        + "not establish those geometric and counting conditions or a same-original-family deficit."))),
                 DescribeRole.Theorem)), []));
 }
