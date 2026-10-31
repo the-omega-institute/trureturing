@@ -85,7 +85,7 @@ internal sealed class CompleteMertensPeakDocument : IScribeDocumentDefinition
                         + "with an independently defined zero-sum kernel.")),
                     Paragraph(Text(
                         "WeightedPrimeLimit.chebyshev_error_kernel_integrable supplies absolute "
-                        + "integrability on (1,infinity). CompleteChebyshevTailIdentity." 
+                        + "integrability on (1,infinity). CompleteChebyshevTailIdentity."
                         + "complete_chebyshev_tail_identity supplies the exact normalized Q identity "
                         + "for every real endpoint at least two. Mathlib's tendsto_integral_Ioi_zero "
                         + "then selects a finite B>=A with twice the absolute Chebyshev tail "
