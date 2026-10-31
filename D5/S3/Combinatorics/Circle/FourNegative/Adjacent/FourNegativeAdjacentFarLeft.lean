@@ -19,6 +19,7 @@ open private coefficient_bounds chains from D5.S3.Combinatorics.Circle.FourNegat
 open private Gates four_strip from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
 
 set_option maxHeartbeats 1600000 in
+-- Coupled source identities and prefix bounds expand independent dyadic products.
 private theorem small_arithmetic (c b : ℤ) (hc : 2 ≤ c) (hb : c ≤ b) :
     let x := 4*c*b
     let y := 2*b
@@ -54,14 +55,16 @@ private theorem small_arithmetic (c b : ℤ) (hc : 2 ≤ c) (hb : c ≤ b) :
   have ec : c=u+2 := by dsimp [u]; ring
   have eb : b=u+2+v := by dsimp [u,v]; ring
   simp only [ec,eb]
+  ring_nf
   repeat' constructor
   all_goals first
-    | ring
+    | rfl
     | apply le_of_sub_nonneg
       ring_nf
       positivity
 
 set_option maxHeartbeats 1600000 in
+-- Coupled source identities and prefix bounds expand independent dyadic products.
 private theorem large_arithmetic (p b : ℤ) (hp : 1 ≤ p) (hb : 2 ≤ b) :
     let x := 4*p*b^2
     let y := 2*b
@@ -97,14 +100,16 @@ private theorem large_arithmetic (p b : ℤ) (hp : 1 ≤ p) (hb : 2 ≤ b) :
   have ep : p=u+1 := by dsimp [u]; ring
   have eb : b=v+2 := by dsimp [v]; ring
   simp only [ep,eb]
+  ring_nf
   repeat' constructor
   all_goals first
-    | ring
+    | rfl
     | apply le_of_sub_nonneg
       ring_nf
       positivity
 
 set_option maxHeartbeats 2400000 in
+-- Coupled source identities and prefix bounds expand independent dyadic products.
 private theorem symbolic (r s : ℕ) (hs : 2 ≤ s) (hr : s+2 ≤ r) :
     ∃ sigma : List (Fin (2*r+2*s)), ∃ j : ℕ, j ≤ 2*r+2*s ∧
       OriginalOrder (2*r+2*s) (1+2^r+2^(2*r)+2^(2*r+s)) sigma ∧

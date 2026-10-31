@@ -45,6 +45,7 @@ private theorem ceiling_multiple (R B T : ℤ) (hR : 0 < R) (hB : 0 < B)
   · rw [hc]; exact hbnds.2
 
 set_option maxHeartbeats 1200000 in
+-- Coupled source identities and prefix bounds expand independent dyadic products.
 private theorem arithmetic (a b : ℤ) (ha : 2 ≤ a) (hb : 4*a ≤ b) :
     let x := 2*a
     let y := 2*b
@@ -92,6 +93,9 @@ private theorem arithmetic (a b : ℤ) (ha : 2 ≤ a) (hb : 4*a ≤ b) :
     exact ⟨by positivity,by positivity,by positivity,by positivity⟩
   obtain ⟨cA,cB,cL,cM,cGV,cGW,cGX⟩ := coefficient_bounds (2*a) (2*b) (by omega) (by omega)
   have hh0 : (0 : ℤ) ≤ h := by positivity
+  have hab : 2*b ≤ a*b := by
+    have hb0 : 0 ≤ b := by omega
+    nlinarith only [mul_nonneg (show 0 ≤ a-2 by omega) hb0]
   dsimp only [Gates]
   have hCdiv : ((2*a)^2*(2*b)^2-1)/2 = 8*a^2*b^2 - 1 := by ring_nf; omega
   have hd0 : -(((2*a)^2*(2*b)^2-1)-(1+2*b+(2*a)*(2*b)+(2*a)^2*(2*b)))/2 = -8*a^2*b^2 + 4*a^2*b + 2*a*b + b + 1 := by ring_nf; omega
@@ -103,13 +107,18 @@ private theorem arithmetic (a b : ℤ) (ha : 2 ≤ a) (hb : 4*a ≤ b) :
   have he2 : -((2*((2*a)^2*(2*b)^2-1)+1)-(2*(1+2*a+(2*a)*(2*b)+(2*a)*(2*b)^2)-(1+2*a+(2*a)*(2*b))))/2 = -16*a^2*b^2 + 8*a*b^2 + 2*a*b + a + 1 := by ring_nf; omega
   have he3 : -((2*((2*a)^2*(2*b)^2-1)+1)-(1+2*a+(2*a)^2+(2*a)^2*(2*b)))/2 = -16*a^2*b^2 + 4*a^2*b + 2*a^2 + a + 1 := by ring_nf; omega
   simp only [hCdiv,hd0,hd1,hd2,hd3,he0,he1,he2,he3]
-  ring_nf at hlow hhigh margins cA cB cL cM cGV cGW cGX ⊢
+  ring_nf at hlow hhigh margins cA cB cL cM cGV cGW cGX hab ⊢
   clear hCdiv hd0 hd1 hd2 hd3 he0 he1 he2 he3 hR hT
   clear hu hv ea eb u v
   repeat' constructor
-  all_goals omega
+  all_goals first
+    | rfl
+    | linarith only [ha,hb,hh0,hhb,hlow,hhigh,margins.1,margins.2.1,
+        margins.2.2.1,margins.2.2.2,cA.1,cA.2,cB.1,cB.2,cL.1,cL.2,
+        cM.1,cM.2,cGV,cGW,cGX,hab]
 
 set_option maxHeartbeats 1600000 in
+-- Coupled source identities and prefix bounds expand independent dyadic products.
 private theorem far_right (r s : ℕ) (hr : 2 ≤ r) (hs : r+2 ≤ s) :
     ∃ sigma : List (Fin (2*r+2*s)), ∃ j : ℕ, j ≤ 2*r+2*s ∧
       OriginalOrder (2*r+2*s) (1+2^r+2^(2*r)+2^(2*r+s)) sigma ∧
@@ -366,11 +375,14 @@ private theorem far_right (r s : ℕ) (hr : 2 ≤ r) (hs : r+2 ≤ s) :
   have hz' : ((List.range (k+1)).map g).sum=0 := by
     have he : ((2*t : ℕ) : ℤ)=2*A := by push_cast; rw [ht]
     simpa only [g,←he] using ThreeNegativeEqualOuterSourceBridge.source_zero (k+1) (2*t) (by dsimp [k]; omega)
-  have hlen : pre.length ≤ k := by have hh := hp.length_eq; simp only [word,List.length_append,List.length_singleton,List.length_range] at hh; omega
-  refine ⟨word.map (label k (by dsimp [k]; omega)),pre.length,hlen,?_,?_⟩
+  have hcut : pre.length = k-1 := by
+    have hh := hp.length_eq
+    simp only [word,List.length_append,List.length_singleton,List.length_range] at hh
+    omega
+  refine ⟨word.map (label k (by dsimp [k]; omega)),k-1,by dsimp [k]; omega,?_,?_⟩
   · exact lift_order k t (by dsimp [k]; omega) word hp
       (by simpa only [f,N,←ht] using oldstrip) (by simpa only [f,N,←ht] using hz)
-  · rw [marked_word k pre.length (by dsimp [k]; omega) pre [z] rfl (by simpa only [word] using hp)]
+  · rw [marked_word k (k-1) (by dsimp [k]; omega) pre [z] hcut (by simpa only [word] using hp)]
     have he : ((2*t : ℕ) : ℤ)=2*A := by push_cast; rw [ht]
     simpa only [List.append_assoc,List.singleton_append] using
       (lift_order (k+1) (2*t) (by dsimp [k]; omega) (pre++[k]++[z]) hp'
