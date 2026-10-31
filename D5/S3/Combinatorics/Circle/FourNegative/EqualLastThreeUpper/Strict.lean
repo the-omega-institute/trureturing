@@ -29,7 +29,7 @@ private theorem inventory (a s : ℕ) (hs : 2 ≤ s) (ha : s < a) :
   have h2 : List.range (b + 1) ++ List.range' (3 * s) (a - s - 1) = List.range c := by
     simpa only [List.range_eq_range', Nat.zero_add, 
       show b + 1 = 3 * s by dsimp [b];omega, 
-      show b + 1 + (a - s - 1) = c by dsimp [b, c];omega] using
+      show 3 * s + (a - s - 1) = c by dsimp [c];omega] using
       range_join 0 (b + 1) (a - s - 1)
   have h3 : List.range c ++ List.range' c (s + 1) = List.range k := by
     simpa only [List.range_eq_range', Nat.zero_add, 
@@ -39,6 +39,7 @@ private theorem inventory (a s : ℕ) (hs : 2 ≤ s) (ha : s < a) :
   apply List.Perm.trans (l₂ := (List.range b ++ [b]) ++
       List.range' (3 * s) (a - s - 1) ++ List.range' c (s + 1))
   · apply Multiset.coe_eq_coe.mp
+    dsimp [b, c]
     simp only [←Multiset.coe_add]
     ac_rfl
   · exact List.Perm.of_eq hh
@@ -69,9 +70,13 @@ private theorem strict (a s : ℕ) (hs : 2 ≤ s) (ha : s < a) :
   have hh : 2 ≤ h := by
     simpa [h] using pow_le_pow_right₀ (by norm_num : (1:ℤ) ≤ 2) (show 1 ≤ a - s by omega)
   have he : 2 * e = h := by
-    dsimp [e, h]; conv_rhs => rw [show a - s = a - s - 1 + 1 by omega, pow_succ];ring
+    dsimp [e, h]
+    conv_rhs => rw [show a - s = a - s - 1 + 1 by omega, pow_succ]
+    ring
   have hr : 2 * r = q := by
-    dsimp [r, q]; conv_rhs => rw [show s = s - 1 + 1 by omega, pow_succ];ring
+    dsimp [r, q]
+    conv_rhs => rw [show s = s - 1 + 1 by omega, pow_succ]
+    ring
   let P := List.range' (a + 2 * s - 1) s
   let U := List.range (s - 1)
   let V := List.range' s (s - 1)
@@ -128,7 +133,7 @@ private theorem strict (a s : ℕ) (hs : 2 ≤ s) (ha : s < a) :
   change 2 * f a s nu = B - N a s ∧ 2 * g a s nu = Bn - (2 * N a s + 1) at nU
   change 2 * f a s nv = L - N a s ∧ 2 * g a s nv = Ln - (2 * N a s + 1) at nV
   change 2 * f a s nw = M - N a s ∧ 2 * g a s nw = Mn - (2 * N a s + 1) at nW
-  have hN : N a s = h * q ^ 4 - 1 := by rw [(source_numeric a s).1, hx]; dsimp [q];ring
+  have hN : N a s = h * q ^ 4 - 1 := by rw [(source_numeric a s).1, hx] <;> dsimp [q] <;> ring
   have hhalf : 2 * (N a s/2) = N a s - 1 := by
     have heq : N a s = 2 * (h * r * q ^ 3 - 1) + 1 := by rw [hN];linear_combination -h * q ^ 3 * hr
     omega
@@ -163,7 +168,7 @@ private theorem strict (a s : ℕ) (hs : 2 ≤ s) (ha : s < a) :
   have hold : InStrip (f a s) (N a s/2) 0 (blocksWord bs) := by
     apply checks_strip _ _ _ hcap
     · intro b hb i hi
-      simp only [bs, List.mem_cons, List.mem_singleton] at hb
+      simp only [bs, List.mem_cons, List.mem_nil_iff, or_false] at hb
       rcases hb with rfl|rfl|rfl|rfl
       · exact bP.2.2.1 i hi
       · exact bU.2.2.1 i hi
@@ -172,7 +177,7 @@ private theorem strict (a s : ℕ) (hs : 2 ≤ s) (ha : s < a) :
         · exact bW.2.2.1 i hi
         · exact bX.2.2.1 i hi
     · intro b hb
-      simp only [bs, List.mem_cons, List.mem_singleton] at hb
+      simp only [bs, List.mem_cons, List.mem_nil_iff, or_false] at hb
       rcases hb with rfl|rfl|rfl|rfl
       · exact nsP.1
       · exact nsU.1
@@ -182,7 +187,7 @@ private theorem strict (a s : ℕ) (hs : 2 ≤ s) (ha : s < a) :
   have hnew : InStrip (g a s) (N a s) 0 (blocksWord bsn) := by
     apply checks_strip _ _ _ (by omega)
     · intro b hb i hi
-      simp only [bsn, List.mem_cons, List.mem_singleton] at hb
+      simp only [bsn, List.mem_cons, List.mem_nil_iff, or_false] at hb
       rcases hb with rfl|rfl|rfl|rfl
       · exact bP.2.2.2 i hi
       · exact bU.2.2.2 i hi
@@ -193,7 +198,7 @@ private theorem strict (a s : ℕ) (hs : 2 ≤ s) (ha : s < a) :
         · exact bW.2.2.2 i hi
         · exact bX.2.2.2 i hi
     · intro b hb
-      simp only [bsn, List.mem_cons, List.mem_singleton] at hb
+      simp only [bsn, List.mem_cons, List.mem_nil_iff, or_false] at hb
       rcases hb with rfl|rfl|rfl|rfl
       · exact nsP.2
       · exact nsU.2
@@ -203,7 +208,7 @@ private theorem strict (a s : ℕ) (hs : 2 ≤ s) (ha : s < a) :
   have hP : P++[nx]=List.range' (a + 2 * s - 1) (s + 1) := by
     simpa only [P, show a + 2 * s - 1 + s = nx by dsimp[nx];omega] using range_end (a + 2 * s - 1) s
   have hU : U++[nu]=List.range s := by
-    simpa only [U, nu, show s - 1 + 1 = s by omega] using (List.range_succ (n:=s - 1)).symm
+    simpa only [U, nu, Nat.succ_eq_add_one, show s - 1 + 1 = s by omega] using (List.range_succ (n:=s - 1)).symm
   have hV : V++[nv]=List.range' s s := by
     simpa only [V, show s + (s - 1) = nv by dsimp[nv];omega, show s - 1 + 1 = s by omega] using range_end s (s - 1)
   have hUV : (U++[nu])++(V++[nv]) = List.range (2 * s) := by
@@ -217,7 +222,7 @@ private theorem strict (a s : ℕ) (hs : 2 ≤ s) (ha : s < a) :
   have hw : pre++post = List.range' (a + 2 * s - 1) (s + 1)++List.range (3 * s - 1)++X++[nw] := by
     calc
       pre++post = (P++[nx])++(((U++[nu])++(V++[nv]))++W)++X++[nw] := by
-        simp only [pre, post, List.append_assoc, List.cons_append, List.singleton_append]
+        simp only [pre, post, List.append_assoc, List.cons_append, List.singleton_append, List.nil_append]
       _ = _ := by rw [hP, hUVW]
   have hp : (pre++post).Perm (List.range (rank a s)) := by
     rw [hw];exact inventory a s hs ha

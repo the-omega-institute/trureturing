@@ -74,29 +74,29 @@ private theorem equal (s : ℕ) (hs : 2 ≤ s) :
   have hold : InStrip (f s s) (N s s/2) 0 (blocksWord bs) := by
     apply checks_strip _ _ _ hcap
     · intro j hj i hi
-      simp only [bs, List.mem_cons, List.mem_singleton] at hj
+      simp only [bs, List.mem_cons, List.mem_nil_iff, or_false] at hj
       rcases hj with rfl|rfl|rfl|rfl
       all_goals exact (bp _).2.2.1 i hi
     · intro j hj
-      simp only [bs, List.mem_cons, List.mem_singleton] at hj
+      simp only [bs, List.mem_cons, List.mem_nil_iff, or_false] at hj
       rcases hj with rfl|rfl|rfl|rfl
       all_goals exact (ns _).1
-    · simpa only [bs, List.map_cons, List.map_nil, hhalf, bm, (nm 0).1, (nm 1).1, (nm 2).1, (nm 3).1, 
+    · simpa [bs, List.map_cons, List.map_nil, hhalf, bm, (nm 0).1, (nm 1).1, (nm 2).1, (nm 3).1, 
         successor] using cert.1
   have hnew : InStrip (g s s) (N s s) 0 (blocksWord bsn) := by
     apply checks_strip _ _ _ (by omega)
     · intro j hj i hi
-      simp only [bsn, List.mem_cons, List.mem_singleton] at hj
+      simp only [bsn, List.mem_cons, List.mem_nil_iff, or_false] at hj
       rcases hj with rfl|rfl|rfl|rfl
       · rcases List.mem_append.mp hi with hi|hi
         · exact (bp 0).2.2.2 i hi
         · have heq := List.mem_singleton.mp hi;subst i;rw [ear];exact (tab.1 0).le
       all_goals exact (bp _).2.2.2 i hi
     · intro j hj
-      simp only [bsn, List.mem_cons, List.mem_singleton] at hj
+      simp only [bsn, List.mem_cons, List.mem_nil_iff, or_false] at hj
       rcases hj with rfl|rfl|rfl|rfl
       all_goals exact (ns _).2
-    · simpa only [bsn, List.map_cons, List.map_nil, gem, gm, (nm 0).2, (nm 1).2, (nm 2).2, (nm 3).2, 
+    · simpa [bsn, List.map_cons, List.map_nil, gem, gm, (nm 0).2, (nm 1).2, (nm 2).2, (nm 3).2, 
         newSuccessor] using cert.2
   have bend (j : Fin 4) : b j++[n j]=List.range' (start s j) s := by
     have hl : length s s j = s := by fin_cases j <;> rfl
@@ -112,7 +112,7 @@ private theorem equal (s : ℕ) (hs : 2 ≤ s) :
     simp only [Nat.zero_add, show s + s = 2 * s by omega] at h01
     simp only [Nat.zero_add, show 2 * s + s = 3 * s by omega] at h012
     simp only [Nat.zero_add, show 3 * s + s = rank s s by dsimp[rank];omega] at h0123
-    simpa only [start, ←List.range_eq_range'] using
+    simpa [start, ←List.range_eq_range'] using
       (show List.range' 0 s++List.range' s s++List.range' (2 * s) s++List.range' (3 * s) s =
         List.range' 0 (rank s s) by rw [h01, h012, h0123])
   let pre := b 0
