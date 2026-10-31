@@ -42,10 +42,6 @@ def configurationCharge (lam : ℝ) (J : Finset α) : ℝ :=
 def occupationDefect (lam : ℝ) : ℝ :=
   meanOccupation G univ lam - ∑ v, degreeWeight G lam v
 
-private theorem mem_full_configurations (J : Finset α) :
-    J ∈ configurations G univ ↔ G.IsIndepSet (J : Set α) := by
-  simp [configurations]
-
 private theorem singleton_exchange (J : Finset α) (u v : α)
     (hJ : J ∈ configurations G univ)
     (hN : occupiedNeighbors G J v = {u}) :
@@ -60,7 +56,7 @@ private theorem singleton_exchange (J : Finset α) (u v : α)
     have : u ∈ occupiedNeighbors G J v := hN.symm ▸ mem_singleton_self u
     exact (mem_filter.mp this).2
   have huv : u ≠ v := (G.ne_of_adj hvu).symm
-  have hind := (mem_full_configurations G J).mp hJ
+  have hind : G.IsIndepSet (J : Set α) := (mem_filter.mp hJ).2
   have hv : v ∉ J := by
     intro hv
     exact hind hv hu huv.symm hvu
@@ -70,7 +66,7 @@ private theorem singleton_exchange (J : Finset α) (u v : α)
     have he : x = u := mem_singleton.mp (hN ▸ hmem)
     exact (mem_erase.mp hx).1 he
   have hvE : v ∉ J.erase u := fun h => hv (mem_of_mem_erase h)
-  refine ⟨(mem_full_configurations G _).mpr ?_, ?_, ?_, ?_⟩
+  refine ⟨mem_filter.mpr ⟨mem_powerset.mpr (subset_univ _), ?_⟩, ?_, ?_, ?_⟩
   · intro x hx y hy hxy
     rcases mem_insert.mp hx with hxv | hxJ
     · subst x
@@ -104,20 +100,26 @@ private theorem singleton_weight_symmetry (lam : ℝ) (u v : α) :
   refine sum_bij'
     (i := fun (J : Finset α) _ => insert v (J.erase u))
     (j := fun (J : Finset α) _ => insert u (J.erase v))
-    (hi := ?_) (hj := ?_) (h := ?_) (left_neg := ?_) (right_neg := ?_)
-  · intro J hJ
+    (hi := ?forward) (hj := ?backward) (h := ?weights)
+    (left_neg := ?inverse) (right_neg := ?reverse)
+  case forward =>
+    intro J hJ
     obtain ⟨hJ, hN⟩ := mem_filter.mp hJ
     exact mem_filter.mpr ⟨(singleton_exchange G J u v hJ hN).1,
       (singleton_exchange G J u v hJ hN).2.1⟩
-  · intro J hJ
+  case backward =>
+    intro J hJ
     obtain ⟨hJ, hN⟩ := mem_filter.mp hJ
     exact mem_filter.mpr ⟨(singleton_exchange G J v u hJ hN).1,
       (singleton_exchange G J v u hJ hN).2.1⟩
-  · intro J hJ
+  case weights =>
+    intro J hJ
     rw [(singleton_exchange G J u v (mem_filter.mp hJ).1 (mem_filter.mp hJ).2).2.2.2]
-  · intro J hJ
+  case inverse =>
+    intro J hJ
     exact (singleton_exchange G J u v (mem_filter.mp hJ).1 (mem_filter.mp hJ).2).2.2.1
-  · intro J hJ
+  case reverse =>
+    intro J hJ
     exact (singleton_exchange G J v u (mem_filter.mp hJ).1 (mem_filter.mp hJ).2).2.2.1
 
 private theorem event_mass_eq (lam : ℝ) (P : Finset α → Prop) [DecidablePred P] :
@@ -127,8 +129,7 @@ private theorem event_mass_eq (lam : ℝ) (P : Finset α → Prop) [DecidablePre
   rw [sum_div]
   apply sum_congr rfl
   intro J hJ
-  simp only [gibbsMass, if_pos hJ]
-  split_ifs <;> simp
+  by_cases hp : P J <;> simp [gibbsMass, hJ, hp]
 
 private theorem singleton_mass_symmetry (lam : ℝ) (u v : α) :
     (∑ J ∈ configurations G univ,
@@ -168,7 +169,7 @@ private theorem vacancy_mass_balance (lam : ℝ) (hlam : 0 < lam) (v : α) :
     simp [K, closedComplement, and_comm]
   have hc : closedComplement G K v = closedComplement G univ v := by
     ext x
-    simp [K, closedComplement, and_assoc]
+    simp [K, closedComplement]
   have hv : v ∈ K := by simp [K]
   have hz : (∑ J ∈ configurations G univ,
       if occupiedNeighbors G J v = ∅ then lam ^ J.card else 0) =
@@ -188,7 +189,7 @@ private theorem vacancy_mass_balance (lam : ℝ) (hlam : 0 < lam) (v : α) :
       (one_le_partition G univ (fun _ => lam) (fun _ _ => hlam.le)))
   rw [event_mass_eq, event_mass_eq, hz, hp, how]
   field_simp [ne_of_gt hlam, hZ]
-  <;> ring
+  ring
 
 private theorem excess_charge_split (q : α → ℝ) (S : Finset α) (v : α) :
     (if 2 ≤ S.card then (∑ u ∈ S, q u) - q v else 0) =
@@ -208,9 +209,11 @@ private theorem excess_charge_split (q : α → ℝ) (S : Finset α) (v : α) :
       exact h1 (hu ▸ card_singleton u)
     simp [h2, he, hn]
 
+omit [DecidableEq α] in
 private theorem neighbor_weight_sum (q : α → ℝ) (J : Finset α) :
     (∑ v, ∑ u ∈ occupiedNeighbors G J v, q u) =
       ∑ u ∈ J, (G.degree u : ℝ) * q u := by
+  classical
   simp only [occupiedNeighbors, sum_filter]
   rw [sum_comm]
   apply sum_congr rfl
@@ -324,7 +327,7 @@ theorem defect_eq_expected_charge (lam : ℝ) (hlam : 0 < lam) :
     have hd : 0 < 1 + ((G.degree v : ℝ) + 1) * lam := by positivity
     dsimp [q, degreeWeight]
     field_simp [ne_of_gt hlam, ne_of_gt hd]
-    <;> ring
+    ring
   have hraw : (∑ J ∈ configurations G univ,
       gibbsMass G univ lam J * configurationCharge G lam J) =
       meanOccupation G univ lam - ∑ v, q v := by
