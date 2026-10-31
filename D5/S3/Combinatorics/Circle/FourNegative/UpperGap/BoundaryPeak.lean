@@ -87,7 +87,7 @@ private theorem peak_first_bounds (a b c : ℕ)
         rw [ey'] at h'
         exact Or.inl (by dsimp [B,A,C,x,y,z];nlinarith only [h'])
   let q : ℕ := ((B-1)/(2*A)).toNat
-  have hn := multiple_floor_nat A B 2 hA (by norm_num) (by nlinarith only [lower.1])
+  have hn := multiple_floor_nat A B 2 hA (by norm_num) (by norm_num;linarith only [lower.1])
   change 1≤q ∧ ((2*q:ℕ):ℤ)=2*((B-1)/(2*A)) ∧
     1≤B-((2*q:ℕ):ℤ)*A ∧ B-((2*q:ℕ):ℤ)*A≤2*A at hn
   have peak : 0≤2*((2*q:ℕ):ℤ)*A-B-1 := by
@@ -104,7 +104,9 @@ private theorem peak_first_bounds (a b c : ℕ)
       (head_separation x y z (zpow_four a ha) (zpow_four b (by omega)) (zpow_four c hc))
     have hh := hn.2.2.1
     dsimp [B] at hh
+    push_cast at hh ⊢
     nlinarith only [hh]
+  dsimp only [y] at cap
   refine ⟨q,hn.1,by exact_mod_cast cap,?_,?_,?_⟩
   · exact le_trans (by norm_num) hn.2.2.1
   · nlinarith only [hn.2.2.1]
@@ -145,7 +147,8 @@ private theorem peak_last_bounds (a b c : ℕ)
     · nlinarith only [h.1]
     · nlinarith only [h.2.1]
     · nlinarith only [h.2.2]
-    · positivity
+    · simp only [zero_mul,sub_zero]
+      positivity
   · by_cases hadj : b=a+1
     · have h := peak_last_adjacent_int (2^a) (2^c) 0
         (zpow_four a ha) (zpow_four c hc) (by norm_num)
@@ -179,14 +182,21 @@ private theorem peak_last_bounds (a b c : ℕ)
           _ = (2:ℤ)^(a+(b-a-2)+2) := by simp only [pow_add];norm_num;ring
           _ = _ := by congr 1;omega
       rw [ey''] at hbuf
-      change 0≤M-2*A ∧ 0≤(y-2)*L-(M+1-2*A) at hcap
-      change 0≤M-D-1-2*L at hbuf
+      have hcap' : 0≤M-2*A ∧ 0≤(y-2)*L-(M+1-2*A) := by
+        constructor
+        · dsimp [M,A,x,y,z];nlinarith only [hcap.1]
+        · dsimp [M,A,L,x,y,z];nlinarith only [hcap.2]
+      have hbuf' : 0≤M-D-1-2*L := by
+        dsimp [M,D,L,x,y,z];nlinarith only [hbuf]
       have hr := rounded_last_packet A L M z (2^(b-1))
-        (by dsimp [L];positivity) (zpow_four c hc) (zpow_one _)
-        (by omega) (by rw [ey];nlinarith only [hcap.2])
-        (by rw [ey];exact hbuf)
+        (by
+          have h : (0:ℤ)≤2*y*z*(x+1)+z := by dsimp [x,y,z];positivity
+          dsimp only [L]
+          omega) (zpow_four c hc) (zpow_one _)
+        (by omega) (by rw [ey];nlinarith only [hcap'.2])
+        (by rw [ey];dsimp only [D] at hbuf';nlinarith only [hbuf'])
       let w : ℤ := (M+1-2*A+2*L-1)/(2*L)
-      have hD : 2*2^(b-1)*z+2*2^(b-1)+1=D := by rw [ey];rfl
+      have hD : 2*2^(b-1)*z+2*2^(b-1)+1=D := by rw [ey]
       change 1≤w ∧ w≤2^(b-1)-1 ∧ 0≤M-A-w*L ∧
         0≤(2*M-(2*2^(b-1)*z+2*2^(b-1)+1))-2*A-w*(2*L-z-1) ∧
         0≤2*A+2*w*L-M-1 ∧ 0<2*2^(b-1)*z+2*2^(b-1)+1-w*(z+1) at hr
@@ -206,8 +216,10 @@ private theorem peak_certificate (a b c : ℕ)
     (ha : 2≤a) (hc : 2≤c) (hab : a≤b) (hcb : c≤b) :
     Nonempty (Certificate a b c (b+1)) := by
   by_cases he : a=b ∧ b=c
-  · obtain ⟨rfl,rfl⟩ := he
-    exact all_equal_certificate c hc
+  · rcases he with ⟨hab',hbc'⟩
+    subst b
+    subst c
+    exact all_equal_certificate a ha
   let x : ℤ := 2^a
   let y : ℤ := 2^b
   let z : ℤ := 2^c
@@ -219,6 +231,15 @@ private theorem peak_certificate (a b c : ℕ)
   obtain ⟨q,hq,hqcap,lo,ln,lp⟩ := peak_first_bounds a b c ha hc hab hcb he
   obtain ⟨w,hw,sl,tl,pl,ed⟩ := peak_last_bounds a b c ha hc hab hcb
   have hzpos : (0:ℤ)≤z := by dsimp [z];positivity
+  have ey : 2*(2:ℤ)^(b-1)=y := by
+    dsimp [y]
+    rw [mul_comm 2 (2^(b-1)),←pow_succ,Nat.sub_add_cancel (by omega : 1≤b)]
+  have hwz : (w:ℤ)<(2:ℤ)^(b-1) := by exact_mod_cast hw
+  have hwy : 2*(w:ℤ)≤y := by nlinarith only [ey,hwz]
+  have hprod := mul_le_mul_of_nonneg_right hwy (by omega : 0≤z+1)
+  have ed2 : 0≤D-2*(w:ℤ)*(z+1) := by
+    dsimp only [D]
+    nlinarith only [hprod]
   have hm := peak_middle_bounds a b c ha hc hab hcb
   let u := 2*q-1
   let r : ℕ := if a<c then 1 else 0
@@ -238,7 +259,8 @@ private theorem peak_certificate (a b c : ℕ)
     by_cases hac : a<c
     · have he0 : e=0 := by
         have he' : (2^0:ℕ).testBit e=true := by simpa [r,hac] using hre
-        simpa [Nat.testBit_two_pow,eq_comm] using he' 
+        have ht : 0=e := of_decide_eq_true (by simpa only [Nat.testBit_two_pow] using he')
+        exact ht.symm
       subst e
       exact multiple_predecessor_bits 1 q hq 0 (by omega)
     · simp [r,hac] at hre
@@ -261,6 +283,7 @@ private theorem peak_certificate (a b c : ℕ)
     change 0≤2*A+2*(w:ℤ)*L-M-1 at pl
     change 0≤D-(w:ℤ)*(z+1) at ed
     refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,?_,?_,?_,?_⟩
-    all_goals nlinarith only [lo,ln,lp,hm.1,hm.2.1,hm.2.2,sl,tl,pl,ed,hzpos]
+    all_goals dsimp only [D,y,z] at hm tl ed ed2 hzpos
+    all_goals nlinarith only [lo,ln,lp,hm.1,hm.2.1,hm.2.2,sl,tl,pl,ed,ed2,hzpos]
 
 end D5.S3.Combinatorics.Circle.FourNegative.UpperGap
