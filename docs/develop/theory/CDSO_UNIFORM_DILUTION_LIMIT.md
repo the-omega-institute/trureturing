@@ -3187,3 +3187,557 @@ nonemptiness of Theorem 13.1 continue to hold on every original
 integer sequence, without the extra assumptions (24.7) or (25.1).
 
 ## 追加锚（本行以下为增补区）
+
+## 27. The uncapped auxiliary problem and uniform bounds for its finite attainers
+
+**Definition 27.1 (Uncapped scalarization).** Let $\mathscr A_M$ be
+exactly the normalized nonnegative arrays in Definition 7.2 satisfying
+(7.3), with indices $1\le k<d\le M$, without a resource cap. Retain
+exactly $r,c$ in (7.4) and $g(t)=2(\sqrt{1+t^2}-1)$. Set
+
+$$
+\mathscr A_{\rm fin}=\bigcup_{M\ge3}\mathscr A_M,\qquad
+\Psi_M(x)=\min_{Q\in\mathscr A_M}\{x r(Q)+c(Q)\},\qquad
+\Psi(x)=\inf_{M\ge3}\Psi_M(x)\quad(x>0).
+\tag{27.1}
+$$
+
+The notation $Q$ denotes a whole array, not a pair chosen independently
+from its incidences. Let $\mathscr A_\infty$ consist of the countable
+arrays satisfying exactly the nonnegative-series version of (7.3),
+with $r,c<\infty$, without a cap. Write
+
+$$
+\mathscr O_x=\{Q\in\mathscr A_\infty:xr(Q)+c(Q)=\Psi(x)\},\qquad
+S=\{x>0:\exists Q\in\mathscr A_{\rm fin},\ xr(Q)+c(Q)=\Psi(x)\}.
+\tag{27.2}
+$$
+
+These are auxiliary array domains. No cap is removed from
+$\mathcal L$, $F$, $F_M$, the original graph class, or the common-law
+domain. In particular, (7.3) still includes the marked inequalities
+$Z_k\le(k-1)q_k$ and every strict incidence index $k<d$.
+
+**Lemma 27.2 (Countable attainment and a harmless large cap).** Put
+$H_x=3x+c_*$, using exactly the comparison cost in Definition 10.1.
+For every $x>0$ and every $R>H_x/x$,
+
+$$
+\Psi(x)=\mathcal L(x,1;R)
+       =\min_{Q\in\mathscr A_\infty}\{xr(Q)+c(Q)\},\qquad
+\mathscr O_x\ne\varnothing.
+\tag{27.3}
+$$
+
+Every $Q\in\mathscr O_x$ has $1<r(Q)\le H_x/x<R$. Each finite
+program in (27.1) has a minimum. The function $\Psi$ is concave and,
+for $0<a\le x\le y\le b<\infty$ and $H=3b+c_*$, satisfies
+
+$$
+x\le\Psi(x)\le H_x,\qquad
+0\le\Psi(y)-\Psi(x)\le(H/a)(y-x).
+\tag{27.4}
+$$
+
+**Proof.** The comparison array with $(r,c)=(3,c_*)$ belongs to
+$\mathscr A_3$, so $\Psi_M(x)\le H_x$ for every $M\ge3$. The finite
+polyhedron $\mathscr A_M$ is closed and bounded: its column
+normalization bounds $t,z,w$, while $q_k\le E_k$ gives
+$\sum_kq_k\le\sum_ddt_d\le M$. It is nonempty by the same comparison
+array. Thus its minimum exists.
+
+Since $c\ge0$, any finite minimizing sequence with objective tending
+to $\Psi(x)\le H_x<xR$ eventually has $r<R$. Consequently
+$\mathcal L(x,1;R)=\Psi(x)$. Theorem 15.6 supplies a countable
+minimizer with that cap. Conversely, for any $Q\in\mathscr A_\infty$,
+choose $R'>\max\{1,r(Q),H_x/x\}$. Its finite approximations in
+Theorem 15.6 imply $\Psi(x)\le xr(Q)+c(Q)$. This proves (27.3).
+For any countable feasible array, the nonnegative summation argument
+in Corollary 15.7 gives $r>1$; it uses only finite $r$, not optimality.
+Thus $\Psi(x)\ge x$, and a minimizer has
+$r\le\Psi(x)/x\le H_x/x$.
+
+Concavity follows by taking the infimum of affine functions of $x$.
+Monotonicity follows from $r\ge0$. For the quantitative upper bound,
+take finite arrays with objective at $x$ at most $\Psi(x)+\epsilon$.
+Their resources are at most $(H+\epsilon)/a$. Evaluating the same
+arrays at $y$ gives
+
+$$
+\Psi(y)\le\Psi(x)+\epsilon
+          +(y-x)(H+\epsilon)/a.
+$$
+
+Let $\epsilon\downarrow0$. This proves (27.4), including continuity
+on $(0,\infty)$. ∎
+
+**Lemma 27.3 (A common cutoff for every existing finite scalarized
+attainer in a coefficient interval).** Fix $0<a\le b<\infty$, and put
+
+$$
+H=3b+c_*,\qquad
+K_{a,b}=\left\lceil
+2+\frac{4H}{\gamma}+\frac{48H^2}{a\gamma^2}
+\right\rceil,\qquad \gamma=\frac2{1+\sqrt2}.
+\tag{27.5}
+$$
+
+Apply (16.3) with
+
+$$
+a_*=a,\qquad A^*=b,\qquad B^*=1,\qquad
+H^*=H,\qquad K^*=K_{a,b},
+$$
+
+and denote its resulting constants by $d_{a,b},u_{a,b}$. Define
+
+$$
+M_{a,b}=\max\{3,\lceil1+H/u_{a,b}\rceil\}.
+\tag{27.6}
+$$
+
+Every finite scalarized attainer at every $x\in[a,b]\cap S$ belongs
+to $\mathscr A_{M_{a,b}}$, and its source indices are at most
+$K_{a,b}$. No existence of a finite attainer is assumed outside $S$.
+Moreover, $S$ is closed relative to $(0,\infty)$.
+
+**Proof.** Choose $R^*=H/a+1$. A finite scalarized attainer at
+$x\in[a,b]$ has $r\le H/a<R^*$, and Lemma 27.2 makes it an attainer
+of $\mathcal L(x,1;R^*)$. For an attained dual of this capped
+problem, complementarity in Theorem 15.3 and the strict inequality
+$r<R^*$ imply $\lambda=0$. Hence
+
+$$
+A=x\in[a,b],\qquad \ell=\Psi(x)\in[a,H],\qquad \beta=1.
+\tag{27.7}
+$$
+
+Lemma 16.1 bounds its largest source index by $K_{a,b}$. Lemma 16.2
+then bounds every tail degree by $1+H/u_{a,b}$. These are exactly
+the existing support-bound hypotheses, now with a common cap used
+only to obtain the dual. This proves (27.6).
+
+If $x_n\in S$ and $x_n\to x>0$, discard finitely many terms so that
+$x_n\in[a,b]\subset(0,\infty)$. Their finite attainers lie in one
+compact $\mathscr A_{M_{a,b}}$. A convergent subsequence has a limit
+there, and continuity in Lemma 27.2 makes its objective at $x$ equal
+to $\Psi(x)$. Thus $x\in S$, proving relative closedness. This
+argument bounds the support of finite attainers; it makes no claim
+that every countable optimum is finite. ∎
+
+## 28. Exact resource-face selection and the capped optimal face
+
+**Theorem 28.1 (Finite replacement of the complete scalarized resource
+face).** Fix $x>0$. Suppose there exist sequences
+
+$$
+x_n^-\in S,\qquad x_n^+\in S,\qquad
+x_n^-<x<x_n^+,\qquad x_n^-\to x,\quad x_n^+\to x.
+\tag{28.1}
+$$
+
+Then there are finite arrays $Q_{\min},Q_{\max}\in\mathscr O_x$
+such that, with $r_{\min}=r(Q_{\min})$ and
+$r_{\max}=r(Q_{\max})$,
+
+$$
+\{(r(Q),c(Q)):Q\in\mathscr O_x\}
+ =\{(r,\Psi(x)-xr):r_{\min}\le r\le r_{\max}\}.
+\tag{28.2}
+$$
+
+Every pair on the right is attained by a convex combination of these
+two finite arrays. They and their mixtures can all be chosen at the
+single cutoff $M_{x/2,2x}$ in (27.6). The case
+$r_{\min}=r_{\max}$ is included. In particular, the assertion holds
+at every $x>0$ if $S=(0,\infty)$.
+
+**Proof.** Eventually both coefficient sequences lie in
+$[x/2,2x]$. Choose finite attainers $Q_n^\pm$ there. Lemma 27.3
+places all of them in one compact finite polyhedron. Passing to a
+subsequence separately on each side gives limits $Q^+,Q^-$ at
+that cutoff. Since
+
+$$
+x_n^\pm r(Q_n^\pm)+c(Q_n^\pm)=\Psi(x_n^\pm),
+$$
+
+continuity implies $Q^+,Q^-\in\mathscr O_x$.
+
+For any $Q\in\mathscr O_x$, optimality at the nearby coefficient
+and Lemma 27.2 give
+
+$$
+\Psi(x)+(x_n^\pm-x)r(Q_n^\pm)
+ \le\Psi(x_n^\pm)
+ \le\Psi(x)+(x_n^\pm-x)r(Q).
+\tag{28.3}
+$$
+
+The first inequality uses the feasible array $Q_n^\pm$ at $x$;
+the second uses the same whole array $Q$ at $x_n^\pm$. Division
+by the positive or negative coefficient difference, respectively,
+shows
+
+$$
+r(Q_n^+)\le r(Q)\le r(Q_n^-).
+$$
+
+The limits therefore satisfy $r(Q^+)\le r(Q)\le r(Q^-)$ for every
+$Q\in\mathscr O_x$. Take $Q_{\min}=Q^+$ and $Q_{\max}=Q^-$.
+They are themselves in that face, so they attain its exact resource
+extrema. Any intermediate resource is attained by their convex
+mixture, and its cost is $\Psi(x)-xr$ by linearity. Conversely every
+point of the face has this cost and lies between the two extrema.
+This proves (28.2). If the extrema coincide, either array supplies
+the required pair. Every mixture satisfies each individual balance
+and marked inequality in (7.3), since its two constituent arrays do.
+No selection of raw incidence atoms is made. ∎
+
+**Proposition 28.2 (The exact scalar coefficient of a capped face).**
+Fix $\alpha,\beta>0$, $R>1$, let
+$L=\mathcal L(\alpha,\beta;R)$, and choose any attained dual from
+Theorem 15.3. Put
+
+$$
+x=\frac{\alpha+\lambda}{\beta}=\frac A\beta>0.
+\tag{28.4}
+$$
+
+Then
+
+$$
+\beta\Psi(x)=\ell=L+\lambda R.
+\tag{28.5}
+$$
+
+Every countable capped optimum belongs to $\mathscr O_x$. For any
+$Q\in\mathscr O_x$ with $r(Q)\le R$,
+
+$$
+\alpha r(Q)+\beta c(Q)-L=\lambda\{R-r(Q)\}.
+\tag{28.6}
+$$
+
+Consequently, for this prescribed dual, finite capped attainment is
+equivalent to the existence of a finite $Q\in\mathscr O_x$ such that
+
+$$
+r(Q)\le R,\qquad \lambda\{R-r(Q)\}=0.
+\tag{28.7}
+$$
+
+**Proof.** The nonnegative weak-duality summation (15.6) applies to
+every uncapped array with finite $r,c$: its row-price sum is bounded
+by $Ar$ and its cost sum by $\beta c$. The cap is not used in that
+summation. Thus $\ell\le Ar+\beta c$ on $\mathscr A_\infty$.
+For a countable capped optimum $Q_*$, Theorem 15.6 and Corollary
+15.7 give
+
+$$
+Ar(Q_*)+\beta c(Q_*)=L+\lambda r(Q_*)
+                   =L+\lambda R=\ell.
+$$
+
+Lemma 27.2 identifies the uncapped infimum with the countable
+minimum, proving (28.5) and $Q_*\in\mathscr O_x$. Subtracting
+$L=\beta\Psi(x)-\lambda R$ gives (28.6). If a finite array is a
+capped optimum, the same complementarity gives (28.7). Conversely,
+(28.6) makes every finite selection in (28.7) a capped optimum. ∎
+
+**Corollary 28.3 (Universal scalarized attainment supplies every exact
+cap).** If $S=(0,\infty)$, then every
+$\mathcal L(\alpha,\beta;R)$ with $\alpha,\beta>0$, $R>1$ has a
+finite attainer. More precisely, for every countable capped optimum
+$Q_*$ and every prescribed attained dual, there is a finite capped
+optimum with exactly the same resource and cost as $Q_*$. A mixture
+of at most two finite scalarized attainers at the coefficient
+(28.4) suffices.
+
+**Proof.** Proposition 28.2 puts $Q_*$ in $\mathscr O_x$.
+Theorem 28.1 supplies a finite mixture with
+$r=r(Q_*)$ and $c=c(Q_*)$. It therefore preserves (28.7).
+If $\lambda>0$, complementarity gives $r(Q_*)=R$, and the mixture
+hits that cap exactly. If $\lambda=0$, its unchanged resource may
+be strictly below $R$ or equal to $R$; both give the same objective.
+This also covers an endpoint resource, coincident face endpoints,
+and ties between scalarized minimizers. Neither endpoint constituent
+is required individually to satisfy the cap when an interior
+mixture is used. ∎
+
+## 29. Equivalence with the complete winning-envelope question
+
+**Proposition 29.1 (Every positive coefficient occurs on an actual
+unique winner).** For any $x>0$ define the following positive numbers,
+using $c_*$ from Definition 10.1:
+
+$$
+\begin{gathered}
+D_x=\sqrt{2/x},\qquad H_x=3x+c_*,\qquad Q_x=H_x/x,\\
+\kappa_x=\min\left\{
+ \frac{D_x}{2(Q_x+1)},\frac1{2D_xH_x}\right\},\qquad
+\beta_x=D_x\kappa_x.
+\end{gathered}
+\tag{29.1}
+$$
+
+At the original parameter pair $(\kappa_x,D_x)$, the exact original
+$j_0$ is one and the exact original $J_0$ is two. Branch $j=1$ is
+the unique winner both for $F$ and for every $F_M$, $M\ge3$. One has
+
+$$
+\begin{aligned}
+F(\kappa_x,D_x)&=-\frac1{4D_x^2}+\beta_x\Psi(x),\\
+F_M(\kappa_x,D_x)&=-\frac1{4D_x^2}+\beta_x\Psi_M(x),\\
+F_M(\kappa_x,D_x)-F(\kappa_x,D_x)
+ &=\beta_x\{\Psi_M(x)-\Psi(x)\}.
+\end{aligned}
+\tag{29.2}
+$$
+
+All scalarized minimizers used in these identities have resource
+strictly below the original $R_1=D_x/\kappa_x$.
+
+**Proof.** Since $c_*>0$, one has $Q_x>3$. The choices in (29.1) give
+
+$$
+R_1\ge2(Q_x+1)>Q_x>3,\qquad
+\beta_xH_x\le\tfrac12,\qquad
+\frac{2\kappa_x}{D_x}=\beta_x x.
+\tag{29.3}
+$$
+
+For every $M\ge3$, the comparison array at cutoff three shows
+$\Psi_M(x)\le H_x$. Each minimum defining $\Psi_M(x)$ therefore
+has $r\le Q_x<R_1$, by nonnegative cost. It follows that
+
+$$
+\mathcal L_M(\beta_x x,\beta_x;R_1)=\beta_x\Psi_M(x),\qquad
+\mathcal L(\beta_x x,\beta_x;R_1)=\beta_x\Psi(x).
+\tag{29.4}
+$$
+
+The second identity also follows from Lemma 27.2; it includes every
+countable scalarized minimizer. Thus the cap has not been discarded
+from either original branch: it is strictly satisfied at the
+uncapped minima.
+
+Moreover $3\kappa_x/D_x\le3/\{2(Q_x+1)\}<1$, so the formula in
+Definition 10.1 gives $j_0=1$. Its comparison value is exactly
+$T_0=2+\beta_xH_x\in(2,5/2]$, and hence $J_0=2$. Both indices
+are admissible since $R_1>3$. Branch one has envelope term at most
+$5/2$, whereas branch two has term at least four, at every finite
+cutoff and in the unrestricted value. This proves unique actual
+winning without a hypothesis on any losing optimizer. Substitution
+in the unchanged (10.2) and (15.1) proves (29.2). ∎
+
+**Theorem 29.2 (The all-positive scalarized finite-attainment
+equivalence).** The following two assertions are equivalent:
+
+1. For every $x>0$, the uncapped auxiliary problem (27.1) has a finite
+   attainer, that is, $S=(0,\infty)$.
+2. The complete assertion of Open problem 18.2 holds, with exactly
+   the original $F_M$, $F$, $J_0$, $R_j>1$ admissibility and
+   infeasible-branch convention, on every positive compact rectangle.
+
+If they hold, the explicit endpoint-only cutoff is precisely
+$\widehat M_{\mathcal K}$ of (17.1)--(17.3). All winning-cap ties,
+incidence transitions and equal-endpoint rectangles are included.
+The first assertion also implies finite attainment of every capped
+branch with $\alpha,\beta>0$, $R>1$; this is a consequence, rather
+than an added requirement on losing branches in the second assertion.
+
+**Proof.** Assume the first assertion. At any positive pair
+$(\kappa,D)$, choose any actual winning index in the nonempty finite
+minimum (10.2). Its parameters are exactly
+
+$$
+\alpha=2\kappa/D,\qquad \beta=D\kappa,\qquad R=R_j=Dj/\kappa>1.
+$$
+
+Corollary 28.3 gives a finite attainer on that branch, even at a
+binding cap. Hence $F_M=F$ for some finite $M$ at this point.
+Theorem 17.1 now gives the same $\widehat M_{\mathcal K}$ throughout
+any prescribed rectangle $\mathcal K$. Its hypotheses require only
+finite attainment on a winner at each point, and its proof includes
+all ties and degenerate rectangles. No alteration of $J_0$ or of an
+inadmissible or infeasible branch is made. This proves the second
+assertion with its requested explicit bound.
+
+Conversely, fix any $x>0$ and use the original pair in (29.1).
+Apply the second assertion to its equal-endpoint rectangle
+$\{\kappa_x\}\times\{D_x\}$. Equality at its finite cutoff and
+(29.2) give $\Psi_M(x)=\Psi(x)$. The minimum in (27.1) exists,
+so $x\in S$. Since $x$ was arbitrary, the first assertion follows.
+The additional capped-branch conclusion is Corollary 28.3. ∎
+
+**Corollary 29.3 (Exact negative transfer).** If some $x>0$ does not
+belong to $S$, then the fixed positive pair (29.1) satisfies
+
+$$
+F_M(\kappa_x,D_x)>F(\kappa_x,D_x)\qquad(M\ge3).
+\tag{29.5}
+$$
+
+It is a genuine refutation of Open problem 18.2, on the corresponding
+equal-endpoint rectangle or on any positive compact rectangle
+containing that pair. Conversely, if a fixed positive pair has
+$F_M>F$ for every finite $M$, choose any of its actual winning
+branches and any attained dual on that branch, and put
+$x=(\alpha+\lambda)/\beta$. Then for some $0<\delta<x$, at least
+one of the intervals
+
+$$
+(x-\delta,x),\qquad(x,x+\delta)
+\tag{29.6}
+$$
+
+is disjoint from $S$. Thus an original winning-envelope obstruction
+also forces actual uncapped scalarized nonattainment at positive
+coefficients. The fixed-compact/all-cutoff refutation criterion in
+Open problem 18.2 has the same consequence by Corollary 17.2.
+
+**Proof.** If $x\notin S$, each attained finite value $\Psi_M(x)$
+is strictly greater than $\Psi(x)$. Equation (29.2), with
+$\beta_x>0$, proves (29.5) on an actual unique winner.
+
+For the converse, no winning branch at the stated pair has a finite
+attainer, by Definition 15.1. Proposition 28.2 supplies a countable
+capped optimum in $\mathscr O_x$ satisfying (28.7). If $S$ accumulated
+at $x$ from both sides, Theorem 28.1 would replace that optimum by
+a finite array with the same resource and cost. It would be a finite
+attainer on the chosen winning branch, a contradiction. Failure of
+two-sided accumulation means that one interval in (29.6) avoids
+$S$, after decreasing $\delta$ to be less than $x$. Any coefficient
+in that interval is an auxiliary nonattainment coefficient, and
+(29.1)--(29.5) transfer it back to an original unique winner.
+Finally, Corollary 17.2 converts a compact obstruction to a fixed-pair
+obstruction. No existence of either obstruction is assumed here. ∎
+
+**Corollary 29.4 (The original-graph consumer of the equivalence).**
+Under either equivalent assertion of Theorem 29.2, let
+$\mathcal K$ be any positive compact rectangle, including an
+equal-endpoint rectangle. For every $(\kappa,D)\in\mathcal K$ and
+every original integer sequence with $a_n\ge4$, $h_n\ge1$,
+$N_n\ge1$ and
+
+$$
+a_n\to\infty,\qquad h_n/\sqrt{a_n}\to\kappa,\qquad
+N_n/a_n^{3/2}\to D,
+\tag{29.7}
+$$
+
+the full original graph class is eventually nonempty and
+
+$$
+\frac{V_{N_n}(a_n,h_n)-a_n(a_n+1)^2}{a_n^2}
+ \longrightarrow F(\kappa,D)
+ =F_{\widehat M_{\mathcal K}}(\kappa,D).
+\tag{29.8}
+$$
+
+There is a recovery sequence with one fixed winning index $j$,
+$a_n+j$ core sinks and $h_n+1-j$ tail sinks, for which every tail
+degree and every full degree of a source touching the tail is at
+most $B_{\mathcal K}$ from (18.1). The remaining source degrees lie
+between $a_n$ and $a_n+j$. Each graph has exactly $N_n$ sources,
+$a_n+1+h_n$ sinks and $a_nN_n$ edges, is simple, connected and
+bipartite, and has $k_u<d_i$ on every edge. Core sink degrees are
+not bounded by this conclusion.
+
+**Proof.** Theorem 29.2 supplies pointwise finite winning attainment,
+so the hypotheses of Theorem 18.1 hold with exactly the endpoint
+constants of Theorem 17.1. That theorem supplies the asserted
+recovery sequence and bounds. In particular, its use of Theorem
+8.1 approximates the finite marked arrays by actual rooted patterns,
+after strict-cap mixing when necessary. Theorem 11.1 is applied
+only with its strict condition $\kappa r/D<j$; it provides each
+sufficiently large exact integer budget, without restricting a
+congruence class. Proposition 12.2 supplies the lower limit over
+the whole prescribed graph class. Theorem 13.1 independently gives
+the full-minimum limit and eventual nonemptiness on every sequence
+(29.7), even without either assertion of Theorem 29.2.
+
+Under a nonattainment hypothesis in Corollary 29.3 the same independent
+Theorem 13.1 still applies, including at the pair (29.1). Thus the
+strict finite-cutoff gap concerns its actual original-graph limit,
+not the value of a substitute graph domain. Finite-array attainment
+does not assert attainment by one connected rooted pattern or a
+degree bound for every original minimizer. Neither $\mathcal X(a,h)$
+nor $M(a,h)$ has been changed. ∎
+
+## 30. Sources and the remaining scalarized existence question
+
+The scalarization and supporting-hyperplane interpretation are
+classical: S. Boyd and L. Vandenberghe, *Convex Optimization*,
+[author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf),
+Section 4.7.4, printed pp.178--180. The finite affine strong-duality
+and dual-attainment input is exactly Section 5.2.3, (5.26)--(5.27),
+and Section 5.2.4, printed pp.226--227, already used in Theorem 15.3.
+Sections 5.6.1--5.6.3, printed pp.249--252, give the standard
+perturbation and sensitivity viewpoint. No differentiability of
+$\Psi$ or uniqueness of a dual or primal minimizer is assumed here;
+(28.3) is the direct comparison of the two affine objectives.
+These mature scalarization and sensitivity facts are not asserted
+as new mathematics.
+
+The additional correspondence uses the actual CDSO support bounds
+in Lemmas 16.1--16.2 to put all existing nearby finite attainers in
+one finite polyhedron. Compactness inside that common cutoff, rather
+than compactness of an unspecified infinite-dimensional feasible
+set, permits the exact resource endpoints in Theorem 28.1. The
+coefficient (28.4), exact cap identity (28.6), all-cutoff original
+winning identity (29.2) and the endpoint and graph consumers are
+deductions for the specific normalized marked constraints and exact
+nonlinear cost of this volume. They do not replace those constraints
+by independent moments, a quadratic cost, or relaxed graph budgets.
+
+C. Bayer and J. Teichmann, *The proof of Tchakaloff's theorem*,
+[arXiv:math/0502473v2](https://arxiv.org/abs/math/0502473v2),
+Theorem 1 and Corollaries 1--2, pp.2--4, give finite positive
+representations for finitely many integrable functions; their
+Theorem 2 gives the polynomial cubature formulation. That result is
+not a premise of Theorems 28.1 or 29.2. Applied just to normalization,
+resource and cost of raw incidence actions, it would not preserve
+the countably many row balances in (7.3). Nor does a finite mixture
+of countable components imply finitely many reachable source rows.
+Here the two endpoint arrays already have finite support and satisfy
+all row constraints before they are mixed. Theorem 21.1 and Lemma
+23.1 retain their separate scopes, including the possibility that a
+normalized component exceeds an original cap.
+
+The original CDSO normalization remains Albalahi--Das--Ali--Barman--Hamza,
+*On the hyperbolic Sombor index and its counterpart*,
+[arXiv:2510.24809v1](https://arxiv.org/html/2510.24809v1), Section 1,
+and DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176):
+the maximum endpoint degree is the denominator and the factor
+$1/\sqrt2$ is dropped. No extremal theorem from that paper is used
+in the equivalence. The Zhao--Zhao full-text overlap identified in
+Section 6 remains unassessed, and no global priority assertion is
+made.
+
+**Open boundary 30.1 (Universal scalarized attainment remains the
+existence obligation).** Theorems 28.1 and 29.2 do not prove
+$S=(0,\infty)$ and do not exhibit $x\notin S$. In particular,
+finite attainment at one coefficient alone has not supplied both
+resource endpoints there: (28.1) is a sufficient two-sided
+finite-attainment hypothesis, established everywhere only under the
+universal assertion. The large-cap construction in Lemma 27.2
+proves countable attainment and does not by itself make an optimum
+finite. The local cutoff in Lemma 27.3 bounds finite attainers when
+they exist and does not turn an arbitrary countable optimum into a
+finite one.
+
+It follows that the complete proof or genuine refutation of Open
+problem 18.2 remains unresolved. Its original full parameter,
+winning-envelope and integer-sequence quantifiers are unchanged.
+A proof of universal uncapped attainment would complete the original
+finite-sufficiency assertion through Theorem 29.2, with its existing
+explicit endpoint bound and exact-budget graph recovery. A proved
+positive coefficient outside $S$ would instead give the fixed-pair
+strict inequalities (29.5), and hence the original genuine quantified
+refutation. A losing-branch obstruction, a failure of finite cubature
+to preserve balances, or the equivalence alone supplies neither
+outcome.
+
+## 追加锚（本行以下为增补区）
