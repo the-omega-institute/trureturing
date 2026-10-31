@@ -24,7 +24,7 @@ open _root_.Equiv _root_.Equiv.Perm Finset MvPolynomial CategoryTheory
 multiplicity. The degree proof changes no data in the literal partition. -/
 def tripleShape {n : ℕ} (r : Fin 3 → ℕ) (hr : ∑ i, r i = n) : n.Partition :=
   weightPartition (Finsupp.equivFunOnFinite.symm r)
-    (by simpa only [Finsupp.degree_eq_sum] using hr)
+    (by simpa only [Finsupp.degree_eq_sum, Finsupp.coe_equivFunOnFinite_symm] using hr)
 
 private theorem tripleShape_parts {n : ℕ} (r : Fin 3 → ℕ) (hr : ∑ i, r i = n) :
     (tripleShape r hr).parts =
@@ -37,7 +37,7 @@ private theorem tripleShape_parts {n : ℕ} (r : Fin 3 → ℕ) (hr : ∑ i, r i
   change (weightPartition d _).parts = _
   rw [weightPartition_parts, hs]
   by_cases h0 : r 0 = 0 <;> by_cases h1 : r 1 = 0 <;> by_cases h2 : r 2 = 0 <;>
-    simp [d, h0, h1, h2]
+    simp [d, h0, h1, h2, Multiset.filter_singleton]
 
 private theorem tripleShape_sorted {n : ℕ} (r : Fin 3 → ℕ) (hr : ∑ i, r i = n)
     (h01 : r 1 ≤ r 0) (h12 : r 2 ≤ r 1) :
@@ -46,9 +46,17 @@ private theorem tripleShape_sorted {n : ℕ} (r : Fin 3 → ℕ) (hr : ∑ i, r 
   rw [tripleShape_parts, Multiset.coe_sort]
   apply List.mergeSort_eq_self
   apply List.Pairwise.filter
-  simp only [List.pairwise_cons, List.mem_cons, List.mem_singleton, List.not_mem_nil,
-    forall_eq_or_imp, forall_eq, List.pairwise_nil, and_true]
-  omega
+  refine .cons ?_ (.cons ?_ (.cons ?_ .nil))
+  · intro a ha
+    simp only [List.mem_cons, List.mem_singleton] at ha
+    rcases ha with rfl | rfl
+    · exact h01
+    · exact h12.trans h01
+  · intro a ha
+    have he : a = r 2 := List.mem_singleton.mp ha
+    subst a
+    exact h12
+  · simp
 
 private theorem tripleShape_rows {n : ℕ} (r : Fin 3 → ℕ) (hr : ∑ i, r i = n)
     (h01 : r 1 ≤ r 0) (h12 : r 2 ≤ r 1) (i : Fin 3) :
@@ -64,22 +72,21 @@ private theorem fixedColourings_eq_youngFixed {n : ℕ} (r : Fin 3 → ℕ)
     fixedColourings (fun i => (r i : ℤ)) π =
       Nat.card {q : Perm (Fin n) ⧸ youngSubgroup (tripleShape r hr) // π • q = q} := by
   let d : Fin 3 →₀ ℕ := Finsupp.equivFunOnFinite.symm r
-  have hd : d.degree = n := by simpa only [Finsupp.degree_eq_sum] using hr
+  have hd : d.degree = n := by simpa only [d, Finsupp.degree_eq_sum, Finsupp.coe_equivFunOnFinite_symm] using hr
   let ρ := (partitionEquivConjClasses n).symm (ConjClasses.mk π)
   have hπ : ConjClasses.mk π = partitionEquivConjClasses n ρ :=
     ((partitionEquivConjClasses n).apply_symm_apply _).symm
   have hc := coeff_psumPart_eq_card_fixedPoints (σ := Fin 3) ℤ hπ hd
   rw [psumPart_eq_psumPart_partition ℤ hπ, coeff_psumPart_partition] at hc
-  change (_ : ℤ) = (Nat.card {q : Perm (Fin n) ⧸ youngSubgroup (tripleShape r hr) //
-    π • q = q} : ℤ) at hc
   have he : fixedColourings (fun i => (r i : ℤ)) π =
       #{f : Fin n → Fin 3 | f ∘ π = f ∧ ∀ i, #{x | f x = i} = d i} := by
-    apply congrArg Finset.card
-    apply filter_congr
-    intro f _
-    simp only [fixedColourings, d, Int.natCast_inj]
+    unfold fixedColourings
+    congr 1
+    ext f
+    simp only [mem_filter, mem_univ, true_and, d,
+      Finsupp.coe_equivFunOnFinite_symm, Int.natCast_inj]
   rw [he]
-  exact_mod_cast hc
+  simpa only [tripleShape, d] using (Int.natCast_inj.mp hc)
 
 private theorem sum_spechtChar_mul_fixedColourings {n : ℕ} (μ : n.Partition)
     (r : Fin 3 → ℕ) (hr : ∑ i, r i = n) :
@@ -107,13 +114,14 @@ private theorem weight_prefix_le_rows {n : ℕ} (r : Fin 3 → ℕ) (hr : ∑ i,
       (_root_.YoungDiagram.ofPartition (tripleShape r hr)).rowLen 1 := by
   let d : Fin 3 →₀ ℕ := Finsupp.equivFunOnFinite.symm r
   obtain ⟨e, he⟩ := exists_perm_mapDomain_eq_partWeight d
-    (show d.degree = n by simpa only [Finsupp.degree_eq_sum] using hr)
+    (show d.degree = n by simpa only [d, Finsupp.degree_eq_sum, Finsupp.coe_equivFunOnFinite_symm] using hr)
   let p : Perm (Fin 3) := e.trans (Fintype.equivFin (Fin 3))
   let q : ℕ → ℕ := (_root_.YoungDiagram.ofPartition (tripleShape r hr)).rowLen
   have hp (i : Fin 3) : r i = q (p i) := by
     have h := congrArg (fun w : Fin 3 →₀ ℕ => w (e i)) he
     rw [Finsupp.mapDomain_apply_of_injective e.injective, partWeight_apply] at h
-    exact h
+    simpa only [d, Finsupp.coe_equivFunOnFinite_symm, p, q, tripleShape,
+      Equiv.trans_apply] using h
   have h01 : q 1 ≤ q 0 := _root_.YoungDiagram.rowLen_anti _ 0 1 (by omega)
   have h12 : q 2 ≤ q 1 := _root_.YoungDiagram.rowLen_anti _ 1 2 (by omega)
   have hne : p 0 ≠ p 1 := p.injective.ne (by decide)
@@ -151,7 +159,8 @@ private theorem shifted_strict_prefix (r : Fin 3 → ℕ) (σ : Perm (Fin 3)) (h
   have hn : ¬ ((σ 0 : ℕ) = 0 ∧ (σ 1 : ℕ) = 1) := by
     rintro ⟨h0, h1⟩
     apply hσ
-    ext i
+    apply Equiv.ext
+    intro i
     fin_cases i
     · exact Fin.ext h0
     · exact Fin.ext h1
@@ -171,18 +180,19 @@ private theorem shifted_not_dominated {n : ℕ} (r : Fin 3 → ℕ) (hr : ∑ i,
         (shifted_nat_sum r hr σ hnonneg)) := by
   let a : Fin 3 → ℕ := fun i => (shifted r σ i).toNat
   have ha (i : Fin 3) : (a i : ℤ) = shifted r σ i := Int.toNat_of_nonneg (hnonneg i)
-  have hat : ∑ i, a i = n := by
-    have h := shifted_sum r hr σ
-    simp_rw [← ha] at h
-    exact_mod_cast h
+  have hat : ∑ i, a i = n := shifted_nat_sum r hr σ hnonneg
   intro hd
   have hb := weight_prefix_le_rows a hat
   have hd1 := hd 1
   have hd2 := hd 2
   rw [prefix_rows, prefix_rows] at hd1 hd2
   simp only [sum_range_succ, range_zero, sum_empty, zero_add] at hd1 hd2
-  rw [tripleShape_rows r hr h01 h12 (0 : Fin 3)] at hd1 hd2
-  rw [tripleShape_rows r hr h01 h12 (1 : Fin 3)] at hd2
+  have hr0 : (_root_.YoungDiagram.ofPartition (tripleShape r hr)).rowLen 0 = r 0 := by
+    simpa using tripleShape_rows r hr h01 h12 (0 : Fin 3)
+  have hr1 : (_root_.YoungDiagram.ofPartition (tripleShape r hr)).rowLen 1 = r 1 := by
+    simpa using tripleShape_rows r hr h01 h12 (1 : Fin 3)
+  rw [hr0] at hd1 hd2
+  rw [hr1] at hd2
   have hb1 : a 0 ≤ r 0 := hb.1.trans hd1
   have hb2 : a 0 + a 1 ≤ r 0 + r 1 := hb.2.trans hd2
   have hi := shifted_strict_prefix r σ hσ
@@ -206,16 +216,13 @@ theorem sum_spechtChar_mul_virtualCharacter {n : ℕ} (r : Fin 3 → ℕ)
     · let a : Fin 3 → ℕ := fun i => (shifted r σ i).toNat
       have ha : (fun i => (a i : ℤ)) = shifted r σ :=
         funext fun i => Int.toNat_of_nonneg (hn i)
-      have hat : ∑ i, a i = n := by
-        have h := shifted_sum r hr σ
-        rw [← ha] at h
-        exact_mod_cast h
+      have hat : ∑ i, a i = n := shifted_nat_sum r hr σ hn
       rw [← ha, sum_spechtChar_mul_fixedColourings _ a hat]
       by_cases hs : σ = 1
       · subst σ
         have he : a = r := by ext i; simp [a, shifted]
-        subst a
-        rw [finrank_hom_spechtModuleℂ_permutationModuleℂ_self]
+        have hshape : tripleShape a hat = tripleShape r hr := by simp only [he]
+        rw [hshape, finrank_hom_spechtModuleℂ_permutationModuleℂ_self]
         simp
       · rw [finrank_hom_spechtModuleℂ_permutationModuleℂ_eq_zero
           (shifted_not_dominated r hr h01 h12 σ hs hn)]
