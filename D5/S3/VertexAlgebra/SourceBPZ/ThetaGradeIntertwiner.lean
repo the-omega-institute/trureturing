@@ -403,4 +403,22 @@ def thetaIntertwinerEquiv (D : LatticeData) (m n : ℤ) :
       simpa only [LinearMap.comp_apply, LinearMap.id_apply] using
         thetaIntertwinerFromBlocks_leftInverse D m n F)
 
+theorem thetaIntertwiner_finrank (D : LatticeData) (m n : ℤ)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) :
+    Module.finrank ℂ (thetaIntertwiner D m n) =
+      Module.finrank ℂ (plusGrade D m) * Module.finrank ℂ (plusGrade D n) +
+        Module.finrank ℂ (minusGrade D m) * Module.finrank ℂ (minusGrade D n) := by
+  letI : FiniteDimensional ℂ (grade D m) := grade_finiteDimensional D hD m
+  letI : FiniteDimensional ℂ (grade D n) := grade_finiteDimensional D hD n
+  letI : FiniteDimensional ℂ (plusGrade D m) :=
+    Submodule.finiteDimensional_of_le inf_le_left
+  letI : FiniteDimensional ℂ (plusGrade D n) :=
+    Submodule.finiteDimensional_of_le inf_le_left
+  letI : FiniteDimensional ℂ (minusGrade D m) :=
+    Submodule.finiteDimensional_of_le inf_le_left
+  letI : FiniteDimensional ℂ (minusGrade D n) :=
+    Submodule.finiteDimensional_of_le inf_le_left
+  rw [(thetaIntertwinerEquiv D m n).finrank_eq, Module.finrank_prod,
+    Module.finrank_linearMap, Module.finrank_linearMap]
+
 end D5.S3.VertexAlgebra.SourceBPZ.ThetaGradeIntertwiner
