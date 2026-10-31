@@ -19,14 +19,14 @@ internal sealed class PolygonEarSlideDocument : IScribeDocumentDefinition
         H("Actual polygon carrier and complete conditioned fibres"), Blocks(
             Node("IsSegment", "Segments", Scope(All("e", Chord, IffF(C("IsSegment", X("e")), Not(C("IsDiag", X("e")))))),
                 "A segment has distinct endpoints in the symmetric square.", DescribeRole.Definition),
-            Node("IsSide", "Boundary sides", Scope(All("e", Chord, IffF(C("IsSide", X("e")), ExistsF("i", Vertex, EqF(X("e"), Pair(X("i"), Add(X("i"), N(1)))))))),
+            Node("IsSide", "Boundary sides", Scope(All("e", Chord, IffF(C("IsSide", X("e")), ExistsF("i", Vertex, EqF(X("e"), Pair(X("i"), AddF(X("i"), N(1)))))))),
                 "An unordered boundary side joins successive cyclic vertices.", DescribeRole.Definition),
             Node("IsDiagonal", "Internal diagonals", Scope(All("e", Chord, IffF(C("IsDiagonal", X("e")), AndF(C("IsSegment", X("e")), Not(C("IsSide", X("e"))))))),
                 "Internal diagonals are segments that are not boundary sides.", DescribeRole.Definition),
             Node("Cross", "Actual cyclic crossing", Scope(All("e", Chord, All("f", Chord,
                 IffF(C("Cross", X("e"), X("f")), ExistsF("a", Vertex, ExistsF("b", Vertex, ExistsF("c", Vertex, ExistsF("d", Vertex,
                     AndF(EqF(X("e"), Pair(X("a"), X("b"))), AndF(EqF(X("f"), Pair(X("c"), X("d"))),
-                        AndF(C("sbtw", X("a"), X("c"), X("b")), C("sbtw", X("b"), X("d"), X("a")))))))))))),
+                        AndF(C("sbtw", X("a"), X("c"), X("b")), C("sbtw", X("b"), X("d"), X("a"))))))))))))),
                 "Crossing uses strict cyclic betweenness witnesses.", DescribeRole.Definition),
             Node("IsTriangulation", "Maximal noncrossing finite diagonal carrier", Scope(All("T", Chords,
                 IffF(Tri(X("T")), AndF(Diagonals(X("T")), AndF(
@@ -35,10 +35,10 @@ internal sealed class PolygonEarSlideDocument : IScribeDocumentDefinition
                         ExistsF("f", Chord, AndF(InF(X("f"), X("T")), C("Cross", X("e"), X("f")))))))))))),
                 "The carrier contains every maximal noncrossing finite set of internal diagonals; no completion is selected.", DescribeRole.Definition),
             Node("ear", "Ear diagonal at a cyclic centre", Scope(All("i", Vertex,
-                EqF(C("ear", X("i")), Pair(Sub(X("i"), N(1)), Add(X("i"), N(1)))))),
+                EqF(C("ear", X("i")), Pair(Sub(X("i"), N(1)), AddF(X("i"), N(1)))))),
                 "The local names sEar, tEar, uEar denote ear(1), ear(2), ear(3).", DescribeRole.Definition),
             Node("EarCenters", "All ears of the actual chord set", Scope(All("T", Chords, All("i", Vertex,
-                IffF(InF(X("i"), Ears(X("T"))), InF(C("ear", X("i")), X("T"))))))),
+                IffF(InF(X("i"), Ears(X("T"))), InF(C("ear", X("i")), X("T")))))),
                 "Every ear of the complete finite chord set is observed.", DescribeRole.Definition),
             Node("E_K", "Common compatible ear carrier", Scope(All("K", Sets, All("i", Vertex,
                 IffF(InF(X("i"), C("EK", X("K"))), AndF(Not(InF(X("i"), X("K"))),
@@ -50,23 +50,23 @@ internal sealed class PolygonEarSlideDocument : IScribeDocumentDefinition
                         AndF(C("Disjoint", X("Q"), Ears(X("T"))), EqF(Inter(Ears(X("T")), X("J")), X("X"))))), CloseBrace)), "P", "Q", "J", "X")),
                 "P is forced, Q is forbidden, and the entire observed J trace equals X. The subtype includes infeasible empty fibres.", DescribeRole.Definition),
             Node("vertexSwap", "Exchange the two local vertices", Scope(All("i", Vertex,
-                EqF(C("vertexSwap", X("n"), X("i")), C("swap", N(1), N(2), X("i")))))),
+                EqF(C("vertexSwap", X("n"), X("i")), C("swap", N(1), N(2), X("i"))))),
                 "The vertex permutation exchanges 1 and 2 and fixes every other vertex.", DescribeRole.Definition),
             Node("chordSwap", "Induced unordered-chord exchange", Scope(All("e", Chord,
-                EqF(C("chordSwap", X("e")), C("map", C("vertexSwap", X("n")), X("e")))))),
+                EqF(C("chordSwap", X("e")), C("map", C("vertexSwap", X("n")), X("e"))))),
                 "Symmetric-square map transports each unordered pair.", DescribeRole.Definition),
             Node("AvoidTwo", "Avoid the deleted centre", Scope(All("e", Chord,
-                IffF(C("AvoidTwo", X("e")), All("x", Vertex, Not(EqF(X("e"), Pair(N(2), X("x"))))))))),
+                IffF(C("AvoidTwo", X("e")), All("x", Vertex, Not(EqF(X("e"), Pair(N(2), X("x")))))))),
                 "Every endpoint avoids vertex 2.", DescribeRole.Definition),
             Node("isTriangulation_map_add", "Cyclic translation of all triangulations", Scope(All("T", Chords, All("a", Vertex,
-                Imp(Tri(X("T")), Tri(C("shiftChords", X("T"), X("a")))))))),
+                Imp(Tri(X("T")), Tri(C("shiftChords", X("T"), X("a"))))))),
                 "shiftChords(T,a) is the finite image of T under the chord map x -> x+a. Diagonal, noncrossing, and maximality conditions are preserved."),
             Node("cross_chordSwap_of_avoidTwo", "Crossing transport away from centre 2", Scope(All("e", Chord, All("f", Chord,
                 Imp(Lower(6), Imp(C("AvoidTwo", X("e")), Imp(C("AvoidTwo", X("f")),
-                    IffF(C("Cross", C("chordSwap", X("e")), C("chordSwap", X("f"))), C("Cross", X("e"), X("f")))))))))),
+                    IffF(C("Cross", C("chordSwap", X("e")), C("chordSwap", X("f"))), C("Cross", X("e"), X("f"))))))))),
                 "Crossing is transported in both directions, including across the cyclic seam."),
             Node("avoidTwo_of_mem_triangulation", "Ear-centre exclusion", Scope(All("T", Chords, All("e", Chord,
-                Imp(Lower(6), Imp(Tri(X("T")), Imp(InF(Ear(2), X("T")), Imp(InF(X("e"), X("T")), C("AvoidTwo", X("e"))))))))))),
+                Imp(Lower(6), Imp(Tri(X("T")), Imp(InF(Ear(2), X("T")), Imp(InF(X("e"), X("T")), C("AvoidTwo", X("e"))))))))),
                 "A triangulation containing t has no internal diagonal incident with its centre 2."),
             Node("phi", "Forward complete chord map", MapFormula(true),
                 "Erase t, exchange vertices 1 and 2 in every retained chord, and insert s.", DescribeRole.Definition),
@@ -131,7 +131,7 @@ internal static class PolygonEarSlideFormula
     internal static Formula Not(Formula a) => Seq(Neg, Sp, Open, a, Close);
     internal static Formula InF(Formula a, Formula b) => R(a, InMacro, b);
     internal static Formula SubF(Formula a, Formula b) => R(a, Subseteq, b);
-    internal static Formula Add(Formula a, Formula b) => R(a, Plus, b);
+    internal static Formula AddF(Formula a, Formula b) => R(a, Plus, b);
     internal static Formula Sub(Formula a, Formula b) => R(a, Minus, b);
     internal static Formula Union(Formula a, Formula b) => R(a, Cup, b);
     internal static Formula Inter(Formula a, Formula b) => C("inter", a, b);
@@ -144,7 +144,7 @@ internal static class PolygonEarSlideFormula
     internal static Formula Diagonals(Formula t) => All("e", Chord, Imp(InF(X("e"), t), C("IsDiagonal", X("e"))));
     internal static Formula Fibre(Formula j, Formula r) => C("ConditionFiber", X("P"), X("Q"), j, r);
     internal static Formula Lower(int n) => R(N(n), Leq, X("n"));
-    internal static Formula Pos(bool cyclic, int i) => cyclic ? (i == 0 ? X("a") : Add(X("a"), N(i))) : N(i);
+    internal static Formula Pos(bool cyclic, int i) => cyclic ? (i == 0 ? X("a") : AddF(X("a"), N(i))) : N(i);
     internal static Formula Reduced(bool cyclic) => Erase(Erase(X("J"), Pos(cyclic, 2)), Pos(cyclic, 3));
     internal static Formula LocalHyp(bool cyclic, Formula body) => Imp(Not(InF(Pos(cyclic, 0), X("J"))),
         Imp(InF(Pos(cyclic, 1), X("J")), Imp(InF(Pos(cyclic, 2), X("J")),

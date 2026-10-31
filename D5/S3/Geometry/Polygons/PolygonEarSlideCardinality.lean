@@ -21,8 +21,9 @@ open Finset PolygonEarSlide PolygonEarSlide.Carrier PolygonEarSlide.Actual
 variable {n : ℕ} [NeZero n]
 
 /-- Restoring the two erased observations leaves exactly the optional third ear. -/
+omit [NeZero n] in
 private theorem restore_trace {E J X : Finset (ZMod n)} {t u : ZMod n}
-    (ht : t ∉ E) (huX : u ∉ X)
+    (ht : t ∉ E)
     (h : E ∩ (J.erase t).erase u = X) :
     E ∩ J = if u ∈ E ∩ J then insert u X else X := by
   ext i
@@ -56,17 +57,20 @@ theorem condition_fibre_card_at (hn : 14 ≤ n) (a : ZMod n)
   let B := ConditionFiber P Q J (insert u X)
   have hval (k : ℕ) (hk : k < n) : (k : ZMod n).val = k :=
     ZMod.val_natCast_of_lt hk
+  have hvalone : (1 : ZMod n).val = 1 := by simpa using hval 1 (by omega)
+  have hvaltwo : (2 : ZMod n).val = 2 := by simpa using hval 2 (by omega)
+  have hvalthree : (3 : ZMod n).val = 3 := by simpa using hval 3 (by omega)
   have hst : s ≠ t := by
     intro h
     have he : (1 : ZMod n) = 2 := add_left_cancel h
     have hv := congrArg ZMod.val he
-    rw [hval 1 (by omega), hval 2 (by omega)] at hv
+    rw [hvalone, hvaltwo] at hv
     omega
   have hus : u ≠ s := by
     intro h
     have he : (3 : ZMod n) = 1 := add_left_cancel h
     have hv := congrArg ZMod.val he
-    rw [hval 3 (by omega), hval 1 (by omega)] at hv
+    rw [hvalthree, hvalone] at hv
     omega
   have htR : t ∉ R := fun h => (mem_erase.mp (mem_erase.mp (hR h)).2).1 rfl
   have huR : u ∉ R := fun h => (mem_erase.mp (hR h)).1 rfl
@@ -85,7 +89,7 @@ theorem condition_fibre_card_at (hn : 14 ≤ n) (a : ZMod n)
       if u ∈ EarCenters x.1 ∩ J then insert u X else X := by
     have hs : s ∈ EarCenters x.1 := (mem_inter.mp
       ((Finset.ext_iff.mp x.2.2.2.2 s).mpr (by simp [X]))).1
-    exact restore_trace (no_t x.1 x.2.1 hs) huX x.2.2.2.2
+    exact restore_trace (no_t x.1 x.2.1 hs) x.2.2.2.2
   have reduce (T : Finset (Sym2 (ZMod n)))
       (h : EarCenters T ∩ J = X ∨ EarCenters T ∩ J = insert u X) :
       EarCenters T ∩ (J.erase t).erase u = X := by
@@ -104,8 +108,8 @@ theorem condition_fibre_card_at (hn : 14 ≤ n) (a : ZMod n)
           reduce x.1 (Or.inl x.2.2.2.2)⟩, by simpa [x.2.2.2.2] using huX⟩
       left_inv := fun _ => by apply Subtype.ext; apply Subtype.ext; rfl
       right_inv := fun _ => Subtype.ext rfl }
-  haveI : Finite A := by dsimp [A, ConditionFiber]; infer_instance
-  haveI : Finite B := by dsimp [B, ConditionFiber]; infer_instance
+  have : Finite A := by dsimp [A, ConditionFiber]; infer_instance
+  have : Finite B := by dsimp [B, ConditionFiber]; infer_instance
   rw [Nat.card_congr (condition_fibre_equiv_at hn a hJ ha0 ha1 ha2 hR)]
   change Nat.card F = Nat.card A + if u ∈ J then Nat.card B else 0
   by_cases huJ : u ∈ J
@@ -116,7 +120,7 @@ theorem condition_fibre_card_at (hn : 14 ≤ n) (a : ZMod n)
             reduce x.1 (Or.inr x.2.2.2.2)⟩, by simp [x.2.2.2.2]⟩
         left_inv := fun _ => by apply Subtype.ext; apply Subtype.ext; rfl
         right_inv := fun _ => Subtype.ext rfl }
-    rw [if_pos huJ, ← Nat.card_sum, ← Nat.card_congr (Equiv.sumCongr eA eB)]
+    rw [ite_eq_left huJ, ← Nat.card_sum, ← Nat.card_congr (Equiv.sumCongr eA eB)]
     exact (Nat.card_congr (Equiv.sumCompl (fun x : F => u ∉ EarCenters x.1 ∩ J))).symm
   · have eF : F ≃ {x : F // u ∉ EarCenters x.1 ∩ J} :=
       { toFun := fun x => ⟨x, fun h => huJ (mem_inter.mp h).2⟩
