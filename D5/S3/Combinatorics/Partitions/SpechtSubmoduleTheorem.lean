@@ -355,6 +355,7 @@ theorem polytabloid_def (t : YoungTableau μ) :
 
 end YoungTableau
 open YoungTableau
+attribute [local instance] YoungTableau.decidablePredMemColSubgroup
 variable {μ : YoungDiagram}
 noncomputable abbrev permutationModuleBasis {n : ℕ} (μ : n.Partition) :
     Module.Basis (Equiv.Perm (Fin n) ⧸ youngSubgroup μ) ℚ
