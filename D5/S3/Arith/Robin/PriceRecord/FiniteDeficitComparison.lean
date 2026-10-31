@@ -4,8 +4,7 @@
    mirror-E: none(waiver:general-theorem-no-numerical-experiment)
    anchors: []
    utility: none
-   digest: Exact finite Euler deficit between the actual tail and the literal prime-square record sum.
--/
+   digest: Exact finite Euler deficit between the actual tail and the literal prime-square record sum. -/
 
 import D5.S3.Arith.Robin.PriceRecord.HigherValuationTail
 import D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity

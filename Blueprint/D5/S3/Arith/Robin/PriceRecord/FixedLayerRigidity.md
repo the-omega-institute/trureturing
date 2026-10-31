@@ -30,9 +30,35 @@ If a family of actual records has P=largestPrime(m) tending to infinity and is e
 
 Fixed-layer rigidity alone does not prove a full Euler-tail asymptotic, signed prime-error control, Robin's inequality for every n>5040, or the Riemann hypothesis. It is a repository derivation using classical prime-benefit exchanges and the prime number theorem, with no claim of literature novelty. The paper-only exponent envelope and leading Robin correction are not part of the Lean theorem claim.
 
+**Lemma 1.2 (Valuation below a fixed layer cutoff).**
+
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity.valuation_below_layer_prime`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity.valuation_below_layer_prime` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the antitone prime valuations of one actual record, every prime q at or below layerPrime(m,j) has valuation at least j. The proof and cutoff definition are the original owner source.
+
+**Lemma 1.3 (Valuation above a fixed layer cutoff).**
+
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity.valuation_above_layer_prime`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity.valuation_above_layer_prime` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a positive actual integer, a prime q strictly above layerPrime(m,j) has valuation below j. This handles empty cutoffs because layerPrime is defined with the max-one convention.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity.price_record_fixed_layer_rigidity`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity.valuation_above_layer_prime`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity.valuation_below_layer_prime`
 - Dependency: [D5/S3/Arith/ExponentExchange/PriceRecordPrimeBlockTail](../../ExponentExchange/PriceRecordPrimeBlockTail.md)
 - Dependency: [D5/S3/Arith/GoldenLayerMarginalDecay](../../GoldenLayerMarginalDecay.md)
 - Dependency: [D5/S3/Arith/GoldenResource/GoldenResource5040EndpointComparison](../../GoldenResource/GoldenResource5040EndpointComparison.md)

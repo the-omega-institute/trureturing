@@ -84,10 +84,23 @@ The proof uses the canonical logarithm factorization log(m)=theta(P)+Q, where Q 
 
 The same declaration then consumes the canonical Mertens.E3 prefix identity and the shared general log-sigma/Euler helper to obtain V+E3(P)+log(log(theta(P)))-log(log(P))<=robinLogMargin(m). The support and theta hypotheses are finite theorem premises only; they do not assert actual-record structure, 5040 divisibility, RH, or control of the remaining signed pure-prime quantity.
 
+**Lemma 1.5 (Nonnegativity of every actual prime layer tail).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.layer_tail_nonneg`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.layer_tail_nonneg` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural m and every prime p, layerTail(m,p) is nonnegative. This is the original pointwise logarithmic fact used by the complete-tail identity and by the finite actual-record deficit.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.endpoint_local`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.finite_min_tail_robin_bound`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.layer_tail_nonneg`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.original_endpoint_prime_tail_supply`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.tail_robin_data`
 - Dependency: [D5/S3/Arith/GoldenResource/FirstLayerMarginalAntitone](../GoldenResource/FirstLayerMarginalAntitone.md)
