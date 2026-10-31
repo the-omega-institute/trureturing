@@ -1032,3 +1032,87 @@ and DependentFamily support sources were inspected. Full dependent-domain source
 reconstruction and lawful readout, whole-family intervention/sensitivity, actual
 observational dependence, native elaboration and binding evidence remain absent.
 No Reg mirror or declared_validated claim is supplied.
+
+
+## Ordered three-colouring Gram and virtual-character criterion
+
+The three-row route uses ordered colourings with integer margins. Negative
+margins have no colourings; equal and empty rows stay labelled, with no extra
+row factorial. A pair of colourings is grouped by its nine joint fibre sizes
+under one common permutation action. This gives the unnormalised character
+pairing n! times the number of nonnegative 3 by 3 tables with those margins.
+The signed six-by-six table sum is consequently the Gram matrix of the signed
+permutation character in arbitrary degree. The argument does not impose n <= 3.
+
+Three necessary private suppliers are selected from
+`TauCeti/GroupTheory/Perm/FiberSubgroup.lean` at immutable revision
+`5a01f5fe3621126cccf9ba22e700493cbc7b7156`:
+`natCard_fiberSubgroup`, `exists_forall_card_filter_eq`, and
+`sum_natCard_fiberSubgroup_smul`. Their proof bodies are unchanged; only private
+visibility and surrounding local context differ. The complete Apache 2.0 text,
+contributor attribution and no-NOTICE assessment above apply. These are selected
+proofs, not a whole-file/library import. Retirement remains against OUR unchanged
+Mathlib pin `56a005855ea17e0b0958f73ec801ae140b0a1679`; an exact compatible
+published supplier should replace them when available.
+
+The actual source consumer chain is:
+
+| Source endpoint | Consumer |
+| --- | --- |
+| private fibre-count suppliers | `ThreeRowGram.sum_fixedColourings_mul` |
+| `ThreeRowGram.character_colouringRepresentation` | `ThreeRowGram.sum_colouringTrace_mul`, also its cast in the signed Gram proof |
+| `ThreeRowGram.sum_fixedColourings_mul` | `ThreeRowGram.sum_colouringTrace_mul` |
+| `ThreeRowGram.sum_colouringTrace_mul` | `ThreeRowGram.sum_virtualCharacter_mul` |
+| `ThreeRowGram.sum_virtualCharacter_mul` | private `ThreeRowGram.spechtChar_eq_virtualCharacter_of_gram` |
+| `ThreeRowGram.virtualCharacter_eq_frobChar` | `ThreeRowGram.ordinaryTrace_eq_frobChar_of_gram` |
+| exposed `TauCeti.spechtTrace_inv` | private `ThreeRowGram.spechtChar_inv`, then the actual integral self-norm |
+| exposed `TauCeti.hsw_powerSumProd_eq_psumPart` | `ThreeRowGram.virtualCharacter_eq_frobChar` |
+| `ThreeRowGram.ordinaryTrace_eq_frobChar_of_gram` | terminal conditional criterion; unconditional ordinary/HSW consumer still missing |
+
+The two exposed declarations only lose `private`; their bodies are unchanged.
+The virtual character is identified with the existing HSW alternant coefficient
+using the full cycle partition, including all fixed points. The norm criterion
+uses the unchanged actual complex polytabloid module, its integral trace,
+actual self-orthogonality and positivity of integer squares. It retains two
+explicit hypotheses: signed contingency self-Gram equal to one, and actual
+Specht/virtual mixed sum equal to n!. Neither hypothesis is asserted as proved,
+and neither defines the Specht module by the desired coefficient.
+
+The owning Scribes give the mathematical Cauchy, strict-dominance and final
+weighted-substitution arguments. The missing Lean work is the finite Cauchy
+coefficient identity for decreasing triples, sorting/deleting-zero identification
+with the literal Young-subgroup module, strict shifted dominance and the mixed
+pairing, their same-shape discharge, and substitution in BOTH original averages
+through the existing coefficient owner and `solution_unique`. This alternative
+does not require full Young rule, Kostka completeness or general Schur expansion.
+It has not established that its total formalization cost is smaller.
+
+The full original quantifiers are preserved: every n >= 1 and partition of n,
+independent per-occurrence Ev with duplicate outcomes, exact reciprocal z,
+length sign, all positive cycles including ones, every padded nonincreasing
+even-part shape of at most three rows and total 2n, rectangle (n,n,0) also for
+odd n, and the even-binomial/odd-zero value in each average. The source criterion
+does not yet prove either unconditional ordinary theorem.
+
+Classical provenance is verified against Etingof et al., *Introduction to
+Representation Theory*, author arXiv version
+<https://arxiv.org/pdf/0901.0827>, sections 4.14--4.15: Proposition 4.44,
+Theorem 4.46, Theorem 4.47, Lemma 4.48 and Corollary 4.49. The proposed
+5.14/5.15 numbering was not verified in this version and is not cited as such.
+Krattenthaler, *Advanced Determinant Calculus*, equation (2.7), is verified in
+the primary source <https://www.mat.univie.ac.at/~slc/wpapers/s42kratt.tex>
+(and its PDF), linked from
+<https://www.mat.univie.ac.at/~kratt/artikel/detsurv.html>.
+No originality or complete prior-art eligibility claim is made.
+
+All new declarations have utility none: finite colour alphabet and nine table
+entries do not bound degree or dependent domains. The unfinished section 3.9
+exception is linked to issue 24542; issue 21960 is unchanged and 22528 remains
+coefficient-only. Required audit evidence remains the full original dependent
+telescope, scoped observations, lawful enrolled-template readout, exact source
+reconstruction/equivalence, actual-positive law, whole-family interventions and
+sensitivity, observational dependence and native binding. No Reg mirror or
+`declared_validated` claim is supplied. Source consumer references do not prove
+compiled proof-term liveness or independent escape. This is uncompiled WIP,
+not standalone admissible firstfreeze content. No native Lean/Lake, accepted
+axiom closure, emission, freeze, deposit, ordinary PR, CI or merge is asserted.

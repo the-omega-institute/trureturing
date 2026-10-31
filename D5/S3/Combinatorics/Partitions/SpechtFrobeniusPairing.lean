@@ -68,7 +68,7 @@ private theorem char_permutationModuleℂ (ν : n.Partition) (π : Perm (Fin n))
 
 /-- This uses the existing every-representative trace certification with the full partition;
 it does not replace the module by a coefficient-defined character. -/
-private theorem spechtTrace_inv (μ : n.Partition) (π : Perm (Fin n)) :
+theorem spechtTrace_inv (μ : n.Partition) (π : Perm (Fin n)) :
     LinearMap.trace ℂ _ ((spechtModuleℂ μ).ρ π⁻¹) =
       LinearMap.trace ℂ _ ((spechtModuleℂ μ).ρ π) := by
   let ν := (partitionEquivConjClasses n).symm (ConjClasses.mk π)
@@ -141,7 +141,7 @@ theorem sum_spechtTrace_smul_psumPart_eq_multiplicities {σ : Type*} [Fintype σ
 
 /-- Exact list-to-partition power-sum transport. The equality of full multisets retains all
 parts equal to one and every repeated occurrence; no degree/alphabet condition is used. -/
-private theorem hsw_powerSumProd_eq_psumPart {τ : List ℕ} (ρ : n.Partition)
+theorem hsw_powerSumProd_eq_psumPart {τ : List ℕ} (ρ : n.Partition)
     (hτ : (τ : Multiset ℕ) = ρ.parts) :
     D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.powerSumProd τ =
       psumPart (Fin 3) ℤ ρ := by
