@@ -85,14 +85,17 @@ private lemma superlevel {S r t s : ℝ} (hS : 0 < S) (ht : t ∈ Ioo 0 1)
   have hq : 0 ≤ S ^ 2 + 4 * r ^ 2 * (t⁻¹ - 1) := by positivity
   have hroot := Real.sq_sqrt hq
   have hroot0 := Real.sqrt_nonneg (S ^ 2 + 4 * r ^ 2 * (t⁻¹ - 1))
-  have hinv : t * t⁻¹ = 1 := mul_inv_cancel₀ ht.1.ne'
   rw [resolvent, lt_div_iff₀ hd]
+  have he : t * (s ^ 2 + S * s + r ^ 2) < r ^ 2 ↔
+      s ^ 2 + S * s < r ^ 2 * (t⁻¹ - 1) := by
+    rw [mul_comm t, ← lt_div_iff₀ ht.1]
+    have hid : r ^ 2 / t = r ^ 2 * (t⁻¹ - 1) + r ^ 2 := by ring
+    rw [hid]
+    constructor <;> intro h <;> linarith
+  rw [he]
   unfold levelLength
   constructor
-  · intro h
-    have hquad : s ^ 2 + S * s < r ^ 2 * (t⁻¹ - 1) := by
-      apply (mul_lt_mul_iff_right₀ ht.1).mp
-      nlinarith [hinv]
+  · intro hquad
     have hpos : 0 ≤ 2 * s + S := by positivity
     have hlt : 2 * s + S < Real.sqrt (S ^ 2 + 4 * r ^ 2 * (t⁻¹ - 1)) := by
       nlinarith only [hquad, hroot, hroot0, hpos]
@@ -101,10 +104,9 @@ private lemma superlevel {S r t s : ℝ} (hS : 0 < S) (ht : t ∈ Ioo 0 1)
     have hquad : s ^ 2 + S * s < r ^ 2 * (t⁻¹ - 1) := by
       have hp : 0 < 2 * s + S := by positivity
       nlinarith only [h, hroot, hroot0, hp]
-    have hm := mul_lt_mul_of_pos_right hquad ht.1
-    nlinarith [hinv]
+    exact hquad
 
-private lemma length_convex {S t : ℝ} (hS : 0 ≤ S) (ht : t ∈ Ioo 0 1) :
+private lemma length_convex {S t : ℝ} (ht : t ∈ Ioo 0 1) :
     ConvexOn ℝ (Ici 0) (fun r => levelLength S r t) := by
   have hc : 0 ≤ t⁻¹ - 1 := by
     rw [sub_nonneg, one_le_inv₀ ht.1]
@@ -239,7 +241,7 @@ theorem convex_kernel {S : ℝ} (hS : 0 < S) {j : ℕ} (hj : 1 ≤ j) :
     (((integrable_density hS x hj).const_mul a).add
       ((integrable_density hS y hj).const_mul b)) measurableSet_Ioo
   intro t ht
-  have hh := (length_convex hS.le ht).2 hx hy ha hb hab
+  have hh := (length_convex ht).2 hx hy ha hb hab
   simp only [smul_eq_mul] at hh
   have hm := mul_le_mul_of_nonneg_right hh (pow_nonneg ht.1.le (j - 1))
   dsimp only [density]
@@ -280,7 +282,7 @@ private lemma denominator_comparison {S P T : ℝ} (hS : 0 < S) (hP : 0 < P)
   have he : (T ^ 2 / P) * resolvent S (Real.sqrt P) s =
       T ^ 2 / (s ^ 2 + S * s + P) := by
     rw [resolvent, hp]
-    field_simp
+    field_simp [hP.ne', hdp.ne']
   rw [← mul_pow]
   apply pow_le_pow_left₀ (mul_nonneg (by positivity)
     (resolvent_nonneg hS.le _ (le_of_lt hs)))
@@ -345,13 +347,20 @@ theorem scalar_fidelity_moment {ι : Type*} [Fintype ι] (a b : ι → ℝ)
     · simp [hi, (hz i hi).1, scalarMoment, zero_pow (show j ≠ 0 by omega)]
     · rw [← kernel_scale hS (lt_of_le_of_ne (hw i) (Ne.symm hi)) _ hj,
         hwS i, hwr i, scalar_eq_kernel (ha i) (hb i)]
-  have hJ := (convex_kernel hS hj).map_sum_le (t := Finset.univ)
+  have hJ := (convex_kernel hS hj).map_sum_le (t := Finset.univ) (w := w) (p := r)
     (fun i _ => hw i) hsum (fun i _ => div_nonneg (Real.sqrt_nonneg _) (hw i))
   simp only [smul_eq_mul] at hJ
   simp_rw [hwr, hmoment] at hJ
   have hCS : T ≤ Real.sqrt (α * β) := by
     have hh := Real.sum_sqrt_mul_sqrt_le (Finset.univ : Finset ι) ha hb
-    simpa only [Real.sqrt_mul (ha _)] using hh
+    calc
+      T = ∑ i, Real.sqrt (a i) * Real.sqrt (b i) := by
+        dsimp [T]
+        apply Finset.sum_congr rfl
+        intro i _
+        exact Real.sqrt_mul (ha i) _
+      _ ≤ Real.sqrt α * Real.sqrt β := hh
+      _ = Real.sqrt (α * β) := (Real.sqrt_mul hα.le _).symm
   have hT0 : 0 ≤ T := Finset.sum_nonneg (fun _ _ => Real.sqrt_nonneg _)
   have hP : 0 < α * β := mul_pos hα hβ
   have hT2 : T ^ 2 ≤ α * β := by

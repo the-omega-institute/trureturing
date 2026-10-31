@@ -49,7 +49,8 @@ private lemma simultaneous_spectrum (A B : Matrix n n ℂ)
     exact hd
   have hes : φ A - Complex.I • φ B = diagonal (fun i => star (d i)) := by
     simpa only [star_add, star_smul, hφAs, hφBs, Complex.star_def, Complex.conj_I,
-      neg_smul, ← sub_eq_add_neg, Matrix.star_diagonal] using congrArg star he
+      neg_smul, ← sub_eq_add_neg, Matrix.star_eq_conjTranspose,
+      Matrix.diagonal_conjTranspose, Pi.star_apply] using congrArg star he
   have heA : φ A = diagonal (fun i => ((d i).re : ℂ)) := by
     ext i k
     have h := congrFun (congrFun he i) k
@@ -131,7 +132,8 @@ private lemma map_sqrt (U : unitary (Matrix n n ℂ)) (X : Matrix n n ℂ)
       CFC.sqrt ((Unitary.conjStarAlgAut ℂ _ U) X) := by
   let φ := Unitary.conjStarAlgAut ℂ (Matrix n n ℂ) U
   simpa only [CFC.sqrt] using
-    (NonUnitalStarAlgHomClass.map_cfcₙ (R := ℝ≥0) φ NNReal.sqrt X)
+    (NonUnitalStarAlgHomClass.map_cfcₙ (R := ℝ≥0) φ NNReal.sqrt X
+      (ha := hX.nonneg) (hφa := map_nonneg φ hX.nonneg))
 
 private lemma root_fidelity_spectral (A B : Matrix n n ℂ)
     (hA : A.PosSemidef) (hB : B.PosSemidef)
@@ -249,7 +251,7 @@ private lemma moment_spectral (A B : Matrix n n ℂ)
     (trace (sandwich A B s ^ j)).re =
       ∑ i, (a i * b i / ((s + a i) * (s + b i))) ^ j := by
   rw [← trace_conj U, map_pow, sandwich_spectral A B U a b ha hb heA heB hs,
-    ← diagonal_pow, trace_diagonal, Complex.re_sum]
+    diagonal_pow, trace_diagonal, Complex.re_sum]
   simp
 
 private lemma gamma_spectral (A B : Matrix n n ℂ)
@@ -288,12 +290,12 @@ private lemma normalized_fidelity_spectral (A B : Matrix n n ℂ)
   let β := (trace B).re
   let φ := Unitary.conjStarAlgAut ℂ (Matrix n n ℂ) U
   have hAn : φ (α⁻¹ • A) = diagonal (fun i => (a i / α : ℝ)) := by
-    rw [map_smul_of_tower, heA, ← diagonal_smul]
+    rw [φ.toAlgEquiv.toLinearMap.map_smul_of_tower α⁻¹ A, heA, ← diagonal_smul]
     congr 1
     funext i
     simp [div_eq_mul_inv, mul_comm]
   have hBn : φ (β⁻¹ • B) = diagonal (fun i => (b i / β : ℝ)) := by
-    rw [map_smul_of_tower, heB, ← diagonal_smul]
+    rw [φ.toAlgEquiv.toLinearMap.map_smul_of_tower β⁻¹ B, heB, ← diagonal_smul]
     congr 1
     funext i
     simp [div_eq_mul_inv, mul_comm]
