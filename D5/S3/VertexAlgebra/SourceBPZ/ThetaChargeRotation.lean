@@ -372,6 +372,108 @@ theorem gradeChargeRotation_on_gradeChargeBasisVector (D : LatticeData)
   rw [chargeRotation_on_basis]
   rfl
 
+theorem gradeChargeRotation_coeff (D : LatticeData) (ell : Charge D →+ ZMod 3)
+    (phase : ChargePhase) (n : ℤ) (g : Multiplicative (ZMod 3))
+    (v : grade D n) (a : EnergyFiber D n) :
+    gradeCoeffEquiv D n (gradeChargeRotation D ell phase n g v) a =
+      chargePhaseScalar phase (g.toAdd * ell a.1.1) * gradeCoeffEquiv D n v a := by
+  change carrierCoeffEquiv D (gradeChargeRotation D ell phase n g v).1 a.1 =
+    chargePhaseScalar phase (g.toAdd * ell a.1.1) * carrierCoeffEquiv D v.1 a.1
+  have hc :
+      ((Finsupp.lapply a.1).comp (carrierCoeffEquiv D).toLinearMap).comp
+          (chargeRotation D ell phase g) =
+        chargePhaseScalar phase (g.toAdd * ell a.1.1) •
+          ((Finsupp.lapply a.1).comp (carrierCoeffEquiv D).toLinearMap) := by
+    apply (carrierBasis D).ext
+    intro b
+    simp only [LinearMap.comp_apply, LinearMap.smul_apply, Finsupp.lapply_apply,
+      smul_eq_mul]
+    rw [chargeRotation_on_basis, map_smul]
+    simp only [Finsupp.smul_apply, smul_eq_mul]
+    have hcoord : ((carrierCoeffEquiv D).toLinearMap (carrierBasis D b)) a.1 =
+        if b = a.1 then 1 else 0 := by
+      change ((carrierCoeffEquiv D).toLinearMap (carrierBasis D b)) a.1 = _
+      have hbasis : (carrierCoeffEquiv D).toLinearMap (carrierBasis D b) =
+          Finsupp.single b 1 := by
+        exact (carrierBasis D).repr_self b
+      rw [hbasis]
+      simp [Finsupp.single_apply]
+    rw [hcoord]
+    by_cases h : b = a.1
+    · subst b
+      simp
+    · simp [h]
+  have hv := LinearMap.congr_fun hc v.1
+  change carrierCoeffEquiv D (chargeRotation D ell phase g v.1) a.1 = _ at hv
+  simpa [LinearMap.comp_apply, smul_eq_mul] using hv
+
+theorem chargePhaseScalar_eq_one_iff (phase : ChargePhase)
+    (hphase : phase (Multiplicative.ofAdd (1 : ZMod 3)) ≠ 1) (z : ZMod 3) :
+    chargePhaseScalar phase z = 1 ↔ z = 0 := by
+  constructor
+  · intro hz
+    fin_cases z
+    · rfl
+    · exfalso
+      apply hphase
+      apply Units.ext
+      exact hz
+    · change chargePhaseScalar phase (2 : ZMod 3) = 1 at hz
+      have hzneg : chargePhaseScalar phase (-1) = 1 := by
+        rw [show (-1 : ZMod 3) = 2 by decide]
+        exact hz
+      have hinv : (chargePhaseScalar phase (1 : ZMod 3))⁻¹ = 1 := by
+        rw [← chargePhaseScalar_neg phase (1 : ZMod 3)]
+        exact hzneg
+      have hone : chargePhaseScalar phase (1 : ZMod 3) = 1 := inv_eq_one.mp hinv
+      exfalso
+      apply hphase
+      apply Units.ext
+      exact hone
+  · intro hz
+    simpa [hz]
+
+def gradeChargeResidue (D : LatticeData) (ell : Charge D →+ ZMod 3)
+    (n : ℤ) (r : ZMod 3) : Submodule ℂ (grade D n) :=
+  (Finsupp.supported ℂ ℂ {a : EnergyFiber D n | ell a.1.1 = r}).comap
+    (gradeCoeffEquiv D n).toLinearMap
+
+theorem gradeChargeRotation_fixed_iff_gradeChargeResidue_zero
+    (D : LatticeData) (ell : Charge D →+ ZMod 3) (phase : ChargePhase)
+    (hphase : phase (Multiplicative.ofAdd (1 : ZMod 3)) ≠ 1)
+    (n : ℤ) (v : grade D n) :
+    gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1) v = v ↔
+      v ∈ gradeChargeResidue D ell n 0 := by
+  constructor
+  · intro hv
+    change gradeCoeffEquiv D n v ∈ Finsupp.supported ℂ ℂ
+      {a : EnergyFiber D n | ell a.1.1 = 0}
+    rw [Finsupp.mem_supported']
+    intro a ha
+    have hc := congrArg (fun w : grade D n => gradeCoeffEquiv D n w a) hv
+    rw [gradeChargeRotation_coeff] at hc
+    have hscalar : chargePhaseScalar phase (ell a.1.1) ≠ 1 := by
+      intro hs
+      apply ha
+      exact (chargePhaseScalar_eq_one_iff phase hphase (ell a.1.1)).mp hs
+    have hc' : chargePhaseScalar phase (ell a.1.1) *
+        gradeCoeffEquiv D n v a = gradeCoeffEquiv D n v a := by
+      simpa using hc
+    have hzero : (chargePhaseScalar phase (ell a.1.1) - 1) *
+        gradeCoeffEquiv D n v a = 0 := by
+      rw [sub_mul, hc']
+      ring
+    exact (mul_eq_zero.mp hzero).resolve_left (sub_ne_zero.mpr hscalar)
+  · intro hv
+    apply (gradeCoeffEquiv D n).injective
+    ext a
+    rw [gradeChargeRotation_coeff]
+    by_cases ha : ell a.1.1 = 0
+    · have hs := (chargePhaseScalar_eq_one_iff phase hphase 0).mpr rfl
+      simp [ha, hs]
+    · have hcoeff := (Finsupp.mem_supported' ℂ (gradeCoeffEquiv D n v)).mp hv a ha
+      simp [hcoeff]
+
 def gradeChargeSector (D : LatticeData) (ell : Charge D →+ ZMod 3)
     (n : ℤ) (j : ZMod 3) : Submodule ℂ (grade D n) :=
   Submodule.span ℂ (Set.range (fun a : ChargeEnergyFiber D ell n j =>
