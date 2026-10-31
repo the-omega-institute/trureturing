@@ -51,8 +51,11 @@ private theorem conjugate_projection {d : ℕ} (U : unitaryGroup (Fin d) ℂ)
   · calc
       _ = star (U : Matrix (Fin d) (Fin d) ℂ) * P *
           ((U : Matrix (Fin d) (Fin d) ℂ) * star (U : Matrix (Fin d) (Fin d) ℂ)) * P * (U : Matrix (Fin d) (Fin d) ℂ) := by noncomm_ring
-      _ = _ := by rw [Unitary.coe_mul_star_self]; simp only [mul_one, mul_assoc, hPP]
-  · rw [trace_mul_cycle, Unitary.coe_mul_star_self, one_mul, ht]
+      _ = star (U : Matrix (Fin d) (Fin d) ℂ) * (P * P) * (U : Matrix (Fin d) (Fin d) ℂ) := by
+        rw [Unitary.mul_star_self_of_mem U.prop]
+        noncomm_ring
+      _ = _ := by rw [hPP]
+  · rw [trace_mul_cycle, (Unitary.mul_star_self_of_mem U.prop), one_mul, ht]
 
 /-- A single unitary and a single column-stochastic matrix transporting a finite
 weighted family of normalized pure projections induce one permutation of the
@@ -77,8 +80,8 @@ private theorem weighted_ray_transport {ι κ : Type*} [Fintype ι] [DecidableEq
   have hQ (k : κ) := conjugate_projection U (P k) (hP k) (hPP k) (ht k)
   have hm (i : ι) : w i = ∑ j, T i j * w j := by
     have he := congrArg (fun A : Matrix (Fin d) (Fin d) ℂ => (trace A).re) (hE i)
-    simpa only [← Matrix.smul_mul, ← Matrix.mul_smul, Matrix.trace_smul,
-      Matrix.trace_sum, map_sum, hQ (g i) |>.2.2, ht, Complex.real_smul,
+    simpa only [Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_smul,
+      Matrix.trace_sum, Complex.re_sum, map_sum, hQ (g i) |>.2.2, ht, Complex.real_smul,
       Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero,
       Complex.one_re, mul_one] using he
   have hs (i j : ι) (hij : T i j ≠ 0) : P (g j) = Q (g i) := by
@@ -90,7 +93,7 @@ private theorem weighted_ray_transport {ι κ : Type*} [Fintype ι] [DecidableEq
       have hel : star (U : Matrix (Fin d) (Fin d) ℂ) * (w i • P (g i)) * (U : Matrix (Fin d) (Fin d) ℂ) =
           w i • Q (g i) := by simp [Q]
       rw [hel, smul_mul, hqq, smul_zero, trace_zero, Complex.zero_re] at he
-      simpa only [sum_mul, trace_sum, map_sum, smul_mul, trace_smul,
+      simpa only [sum_mul, trace_sum, Complex.re_sum, map_sum, smul_mul, trace_smul,
         smul_smul, Complex.real_smul, Complex.mul_re, Complex.ofReal_re,
         Complex.ofReal_im, mul_zero, sub_zero] using he.symm
     have hn (j : ι) : 0 ≤ (trace (P (g j) * (1 - Q (g i)))).re :=
@@ -127,8 +130,15 @@ private theorem weighted_ray_transport {ι κ : Type*} [Fintype ι] [DecidableEq
     apply hPinj
     have he' := congrArg (fun A : Matrix (Fin d) (Fin d) ℂ =>
       (U : Matrix (Fin d) (Fin d) ℂ) * A * star (U : Matrix (Fin d) (Fin d) ℂ)) he
-    simpa only [Q, ← mul_assoc, Unitary.coe_mul_star_self, one_mul,
-      mul_assoc, Unitary.coe_mul_star_self, mul_one] using he'
+    have hc (M : Matrix (Fin d) (Fin d) ℂ) :
+        (U : Matrix (Fin d) (Fin d) ℂ) *
+          (star (U : Matrix (Fin d) (Fin d) ℂ) * M * (U : Matrix (Fin d) (Fin d) ℂ)) *
+          star (U : Matrix (Fin d) (Fin d) ℂ) = M := by
+      calc
+        _ = ((U : Matrix (Fin d) (Fin d) ℂ) * star (U : Matrix (Fin d) (Fin d) ℂ)) * M *
+          ((U : Matrix (Fin d) (Fin d) ℂ) * star (U : Matrix (Fin d) (Fin d) ℂ)) := by noncomm_ring
+        _ = M := by rw [Unitary.mul_star_self_of_mem U.prop]; simp
+    simpa only [Q, hc] using he' 
   let π : Equiv.Perm κ := Equiv.ofBijective f (Finite.injective_iff_bijective.mp hfinj)
   have hsupport (i j : ι) (hij : T i j ≠ 0) : g j = π (g i) :=
     hPinj ((hs i j hij).trans (hf (g i)))
@@ -146,7 +156,6 @@ private theorem weighted_ray_transport {ι κ : Type*} [Fintype ι] [DecidableEq
       by_cases hj : g j = π k
       · rw [if_pos hj]
         have he : (∑ i with g i = k, T i j) = ∑ i, T i j := by
-          symm
           apply sum_subset (filter_subset _ _) 
           intro i _ hi
           have hgi : g i ≠ k := by simpa only [mem_filter, mem_univ, true_and] using hi
@@ -200,7 +209,7 @@ def probability (ρ : Matrix (Fin 2) (Fin 2) ℂ) : Fin 5 → ℝ :=
 def Autonomous (U : unitaryGroup (Fin 2) ℂ) (T : Matrix (Fin 5) (Fin 5) ℝ) : Prop :=
   T ∈ colStochastic ℝ (Fin 5) ∧
     ∀ ρ : Matrix (Fin 2) (Fin 2) ℂ, ρ.PosSemidef → trace ρ = 1 →
-      T.mulVec (probability ρ) = probability (U * ρ * star (U : Matrix _ _ ℂ))
+      T.mulVec (probability ρ) = probability ((U : Matrix (Fin 2) (Fin 2) ℂ) * ρ * star (U : Matrix (Fin 2) (Fin 2) ℂ))
 
 /-- All kernels, including t=0 and t=1/3. -/
 def kernel (t : ℝ) : Matrix (Fin 5) (Fin 5) ℝ :=
@@ -226,7 +235,7 @@ private theorem ray_facts (k : Fin 4) :
   refine ⟨?_, D5.S3.Quantum.Information.ActualQubitChordObstruction.pure _ hn,
     blochMatrix_trace 1 _⟩
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [ray, blochMatrix, Matrix.conjTranspose_apply]
+  fin_cases i <;> fin_cases j <;> simp [ray, blochMatrix, Matrix.conjTranspose_apply, sub_eq_add_neg]
 
 private theorem ray_injective : Function.Injective ray := by
   intro k l h
@@ -239,7 +248,7 @@ private theorem ray_injective : Function.Injective ray := by
   have h11p : 0 < Real.sqrt 11 := Real.sqrt_pos.mpr (by norm_num)
   have hp : 0 < 1 / Real.sqrt 11 := by positivity
   have hp3 : 0 < 1 / Real.sqrt 3 := by positivity
-  fin_cases k <;> fin_cases l <;> norm_num [direction] at h0 h1 h2 ⊢ <;>
+  fin_cases k <;> fin_cases l <;> simp_all [direction] <;>
     nlinarith
 
 private theorem effect_factor (s : Fin 5) : effect s = weight s • ray (group s) := by
@@ -250,7 +259,7 @@ private theorem effect_factor (s : Fin 5) : effect s = weight s • ray (group s
     apply Complex.ext <;>
     simp [effect, weight, ray, group, direction, blochMatrix, scalarB, B_formula,
       Complex.mul_re, Complex.mul_im, Complex.div_re, Complex.div_im] <;>
-    field_simp <;> ring
+    field_simp <;> ring_nf <;> norm_num [Real.sq_sqrt]
 
 private theorem effect_hermitian (s : Fin 5) : (effect s).IsHermitian := by
   rw [effect_factor]
@@ -274,10 +283,10 @@ private theorem density_trace_ext {d : ℕ} (A B : Matrix (Fin d) (Fin d) ℂ)
   have hz : (trace ((A-B) * (A-B))).re = 0 := hle (hA.sub hB)
   have hp := Matrix.posSemidef_conjTranspose_mul_self (A-B)
   have hi : (trace ((A-B)ᴴ * (A-B))).im = 0 :=
-    (Complex.nonneg_iff.mp hp.trace_nonneg).2
+    (Complex.nonneg_iff.mp hp.trace_nonneg).2.symm
   have he : trace ((A-B)ᴴ * (A-B)) = 0 := by
     apply Complex.ext
-    · simpa only [(hA.sub hB).eq] using hz
+    · simpa only [(hA.sub hB).eq, Complex.zero_re] using hz
     · exact hi
   exact sub_eq_zero.mp (Matrix.trace_conjTranspose_mul_self_eq_zero_iff.mp he)
 
@@ -301,7 +310,7 @@ private theorem operator_transport (U : unitaryGroup (Fin 2) ℂ)
 private theorem group_weight (k : Fin 4) :
     (∑ i with group i = k, weight i) =
       gain * (![4 * Real.sqrt 3, Real.sqrt 11, 2, Real.sqrt 11] : Fin 4 → ℝ) k := by
-  fin_cases k <;> norm_num [group, weight, Fin.sum_univ_succ] <;> ring
+  fin_cases k <;> simp [group, weight, Fin.sum_univ_succ, Finset.sum_filter] <;> ring
 
 private theorem scalar_of_fixed_rays (U : unitaryGroup (Fin 2) ℂ)
     (hA : star (U : Matrix (Fin 2) (Fin 2) ℂ) * ray 0 * (U : Matrix (Fin 2) (Fin 2) ℂ) = ray 0)
@@ -310,7 +319,7 @@ private theorem scalar_of_fixed_rays (U : unitaryGroup (Fin 2) ℂ)
   have comm (k : Fin 4) (hk : star (U : Matrix (Fin 2) (Fin 2) ℂ) * ray k * (U : Matrix (Fin 2) (Fin 2) ℂ) = ray k) :
       ray k * (U : Matrix (Fin 2) (Fin 2) ℂ) = (U : Matrix (Fin 2) (Fin 2) ℂ) * ray k := by
     have he := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (U : Matrix _ _ ℂ) * M) hk
-    simpa only [← mul_assoc, Unitary.coe_mul_star_self, one_mul] using he
+    simpa only [← mul_assoc, (Unitary.mul_star_self_of_mem U.prop), one_mul] using he
   have h01 : (U : Matrix (Fin 2) (Fin 2) ℂ) 0 1 = 0 := by
     have he := congrFun₂ (comm 2 hC) 0 1
     simpa [ray, direction, blochMatrix, Matrix.mul_apply, Fin.sum_univ_two] using he
@@ -322,7 +331,6 @@ private theorem scalar_of_fixed_rays (U : unitaryGroup (Fin 2) ℂ)
     have he := congrArg Complex.re hz
     have hp : 0 < Real.sqrt 3 := Real.sqrt_pos.mpr (by norm_num)
     norm_num [ray, direction, blochMatrix] at he
-    positivity
   have hdiag : (U : Matrix (Fin 2) (Fin 2) ℂ) 1 1 = U 0 0 := by
     apply mul_left_cancel₀ ha
     have he := congrFun₂ (comm 0 hA) 0 1
@@ -330,7 +338,7 @@ private theorem scalar_of_fixed_rays (U : unitaryGroup (Fin 2) ℂ)
   have hscalar : (U : Matrix (Fin 2) (Fin 2) ℂ) = (U 0 0) • 1 := by
     ext i j
     fin_cases i <;> fin_cases j <;> simp [h01, h10, hdiag]
-  have hu := congrFun₂ (Unitary.coe_star_mul_self U) 0 0
+  have hu := congrFun₂ ((Unitary.star_mul_self_of_mem U.prop) U) 0 0
   rw [hscalar] at hu
   have hn : ‖(U : Matrix (Fin 2) (Fin 2) ℂ) 0 0‖ = 1 := by
     have he := congrArg norm hu
@@ -347,9 +355,8 @@ private theorem autonomous_constraints (U : unitaryGroup (Fin 2) ℂ)
     (∀ i j, group j ≠ group i → T i j = 0) ∧
     (∀ i, weight i = ∑ j, T i j * weight j) := by
   have hw (i : Fin 5) : 0 < weight i := by
-    fin_cases i <;> simp only [weight, Matrix.cons_val_zero, Matrix.cons_val_one,
-      Matrix.cons_val_two, Matrix.cons_val_three, Matrix.cons_val_four] <;>
-      positivity [gain_pos]
+    have hp := gain_pos
+    fin_cases i <;> dsimp [weight] <;> positivity
   have hg : Function.Surjective group := by
     intro k
     fin_cases k
@@ -389,7 +396,7 @@ private theorem autonomous_constraints (U : unitaryGroup (Fin 2) ℂ)
   obtain ⟨γ, hγ⟩ := hphase
   have hfix (k : Fin 4) : star (U : Matrix (Fin 2) (Fin 2) ℂ) * ray k * (U : Matrix (Fin 2) (Fin 2) ℂ) = ray k := by
     have hc : ray k * (U : Matrix (Fin 2) (Fin 2) ℂ) = (U : Matrix (Fin 2) (Fin 2) ℂ) * ray k := by rw [hγ]; simp [mul_smul, smul_mul]
-    rw [mul_assoc, hc, ← mul_assoc, Unitary.coe_star_mul_self, one_mul]
+    rw [mul_assoc, hc, ← mul_assoc, (Unitary.star_mul_self_of_mem U.prop), one_mul]
   have hpall (k : Fin 4) : π k = k := ray_injective ((hπ k).symm.trans (hfix k))
   refine ⟨⟨γ, hγ⟩, ?_, ?_⟩
   · intro i j hne
@@ -397,8 +404,8 @@ private theorem autonomous_constraints (U : unitaryGroup (Fin 2) ℂ)
     exact hne (by simpa [hpall] using hs i j hn)
   · intro i
     have he := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (trace M).re) (hE i)
-    rw [← smul_mul, ← mul_smul, hfix, trace_smul, (ray_facts _).2.2] at he
-    simpa [trace_sum, trace_smul, (ray_facts _).2.2, smul_smul] using he
+    rw [Matrix.mul_smul, Matrix.smul_mul, hfix, trace_smul, (ray_facts _).2.2] at he
+    simpa [trace_sum, trace_smul, fun k => (ray_facts k).2.2, smul_smul] using he
 
 private theorem kernel_of_constraints (T : Matrix (Fin 5) (Fin 5) ℝ)
     (hT : T ∈ colStochastic ℝ (Fin 5))
@@ -430,7 +437,7 @@ private theorem kernel_of_constraints (T : Matrix (Fin 5) (Fin 5) ℝ)
   have h41 := hz 4 1 (by decide)
   have h42 := hz 4 2 (by decide)
   have h43 := hz 4 3 (by decide)
-  simp only [Fin.sum_univ_succ, Fin.val_zero, Fin.val_succ, Matrix.cons_val_zero,
+  simp [Fin.sum_univ_succ,
     h10, h20, h30, h01, h21, h31, h41, h02, h12, h32, h42,
     h03, h13, h23, h43, h14, h24, h34, add_zero, zero_add] at c0 c1 c2 c3 c4
   have h00 : T 0 0 = 1 - T 4 0 := by linarith
@@ -453,6 +460,7 @@ private theorem kernel_of_constraints (T : Matrix (Fin 5) (Fin 5) ℝ)
 private theorem autonomous_of_kernel (U : unitaryGroup (Fin 2) ℂ)
     (hphase : ∃ γ : ℝ, (U : Matrix (Fin 2) (Fin 2) ℂ) = Complex.exp ((γ : ℂ) * Complex.I) • 1)
     (t : ℝ) (ht : 0 ≤ t) (ht' : t ≤ 1/3) : Autonomous U (kernel t) := by
+  unfold Autonomous
   constructor
   · apply mem_colStochastic_iff_sum.mpr
     constructor
@@ -465,15 +473,14 @@ private theorem autonomous_of_kernel (U : unitaryGroup (Fin 2) ℂ)
     have hc : (U : Matrix (Fin 2) (Fin 2) ℂ) * ρ = ρ * (U : Matrix (Fin 2) (Fin 2) ℂ) := by
       rw [hγ]; simp [smul_mul, mul_smul]
     have hρ : (U : Matrix (Fin 2) (Fin 2) ℂ) * ρ * star (U : Matrix (Fin 2) (Fin 2) ℂ) = ρ := by
-      rw [hc, mul_assoc, Unitary.coe_mul_star_self, mul_one]
+      rw [hc, mul_assoc, (Unitary.mul_star_self_of_mem U.prop), mul_one]
     rw [hρ]
     have hr : probability ρ 0 = 3 * probability ρ 4 := by
       simp [probability, effect, mul_smul, trace_smul]
       ring
     ext i
     fin_cases i <;>
-      simp [kernel, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;>
-      nlinarith [hr]
+      simp [kernel, Matrix.mulVec, dotProduct, Fin.sum_univ_succ, hr] <;> ring
 
 /-- For the original five effects in the order (0,2,3,5,25), one nonnegative
 column-stochastic matrix transports Born probabilities for every qubit density
@@ -481,7 +488,10 @@ matrix precisely when the unitary is a scalar phase and the matrix is the
 specified one-parameter kernel, with the complete closed parameter interval. -/
 theorem original_five_effect_classification
     (U : unitaryGroup (Fin 2) ℂ) (T : Matrix (Fin 5) (Fin 5) ℝ) :
-    Autonomous U T ↔
+    (T ∈ colStochastic ℝ (Fin 5) ∧
+      ∀ ρ : Matrix (Fin 2) (Fin 2) ℂ, ρ.PosSemidef → trace ρ = 1 →
+        T.mulVec (probability ρ) = probability
+          ((U : Matrix (Fin 2) (Fin 2) ℂ) * ρ * star (U : Matrix (Fin 2) (Fin 2) ℂ))) ↔
       (∃ γ : ℝ, (U : Matrix (Fin 2) (Fin 2) ℂ) = Complex.exp ((γ : ℂ) * Complex.I) • 1) ∧
       ∃ t : ℝ, 0 ≤ t ∧ t ≤ 1/3 ∧ T = kernel t := by
   constructor
