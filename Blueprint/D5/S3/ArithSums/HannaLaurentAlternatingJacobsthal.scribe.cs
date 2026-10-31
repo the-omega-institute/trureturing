@@ -80,6 +80,9 @@ internal sealed class HannaLaurentAlternatingJacobsthalDocument : IScribeDocumen
                             "Write P_n(y)=-1+sum from j=1 to n of y^j(1-y^j)^(n-j), with y the inverse Laurent variable. Only this finite polynomial is evaluated at -1. Shifting its finite index by two proves P_(n+2)(-1)=P_n(-1)-2^(n+1) for n>0. A positive-index two-step induction, with rows one and two checked separately, combines this identity with J(n+2)=J(n)+2^n to obtain P_n(-1)=-2 J(n). The imported degree bound and polynomial coefficient evaluation identify the negative of this value with the complete alternating coefficient sum.")),
                         Paragraph(Text(
                             "The displayed five clauses retain both equalities of formula (5), the rational original-series equality, the coefficient identification for every natural k, and vanishing past the inclusive bound. Casting the integer round/Jacobsthal equality yields the rational-series/Jacobsthal equality as well. Neither the bilateral series nor its summands are evaluated at 1 or -1. At n=0 the finite polynomial has value -1, whereas J(0)=0; the alternating-row theorem therefore retains precisely the source range n>=1. No global literature-priority or other A391810 conjecture is asserted."))),
-                    DescribeRole.Theorem))));
+                    DescribeRole.Theorem,
+                    new OpenProblemResolutionClaim(
+                        ProblemSlugRef.Create("oeis-a391810-alternating-jacobsthal"),
+                        ResolutionKind.Proved)))));
     }
 }

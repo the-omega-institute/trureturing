@@ -22,6 +22,10 @@ $$\forall n \in \mathbb{N},\; 1 \le n \Rightarrow \left(\sum_{0 \leq k < \left\l
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/HannaLaurentAlternatingJacobsthal.full_formula_five` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a391810-alternating-jacobsthal` (proved) by `D5/S3/ArithSums/HannaLaurentAlternatingJacobsthal.full_formula_five`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a391810-alternating-jacobsthal","declaration_gid":"D5/S3/ArithSums/HannaLaurentAlternatingJacobsthal.full_formula_five","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A391810, nonpositive Laurent coefficients and zero row sums*. URL: <https://oeis.org/A391810/internal>.
