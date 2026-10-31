@@ -895,3 +895,249 @@ $$
 **来源与适用边界 9.1。** 第 6–8 节在第 1–5 节已由重叠实三轴切分图册黏合出全局正交复结构 $J$ 与复 Hilbert 载体 $\mathcal{H}=(V,g,J)$ 的基础上，建立概率闭合、单本体仪器更新与有限精度守卫读出三组结构边界，且不修改第 1–5 节的任何既有条目。第 6 节将 [`AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md`](AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md) 定理 11.2 与命题 11.3 的前置条件推进到任意有限二元切分菜单：定理 6.2 给出框架概率赋值自动满足 RC 的充要核空间相等条件 $L_{\mathfrak{M}}=\ker\mathsf{E}_{\mathfrak{M}}$，并在包含同一完备层析基菜单且局部核完备的菜单族上由秩一投影闭包直接导出 $H_v\succeq0$（$d\ge2$）；不预先假设跨标架 RC 时的同时线性化与正锥闭合在 $\dim_{\mathbb{C}}\mathcal{H}\ge3$ 完整正交标架可加情形归属 Gleason 1957（定理 2.8 与第 3 节）、在全效果集 $\mathcal{E}(\mathcal{H})$ 子恒等可加分解情形归属 Busch 2003；命题 6.3 第 2 项以 $\mathbb{C}^3$ 四组相互无偏基菜单证明即使同时具备有限框架可加性、完整 RC、完备厄米层析与菜单投影严格正概率，仍不蕴涵重构算子半正定。第 7 节中定理 7.2 第 1 项与第 3 项作为承重推导两侧的文献先例桥接步骤：完全正性与 Choi 矩阵 $R_{\Lambda_b}\succeq0$ 及 Kraus 算子求和分解的等价严格归属 Choi 1975 定理 1–2（算子求和表示亦见 Kraus 1971，而单系统正性与二分算子在乘积向量上的块正性对偶归属 Jamiołkowski 1972），锐正交投影完全正仪器由本征纯态不扰动性（理想测量条件）唯一锁定为 Lüders 投影更新（Lüders 1951）的充要刻画归属 Busch–Lahti–Mittelstaedt 1991 与 Busch 2008 定理 5；定理 7.2 第 2 项针对 [`AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md`](AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md) 定理 5.2 的算子三轴纯度亏格给出一般保迹二能级映射下的显式公式与 $O(3)=SO(3)\sqcup(O(3)\setminus SO(3))$ 精确二分，将命题 7.1 的 $F/2$ 反例定位于 $\det M=-1$ 连通分支，并在命题 7.3 中证明混噪非 CP 正映射满足 $D_1\succ0$、退化锐投影可重复 CP 仪器删去本征纯态不扰动性后偏离 Lüders 更新（同时区分用于检验二能级 CP 的二维参考切分与实现秩四通道所需的四维或两位内部记录上下文）。第 8 节消费 [`AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md`](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md) 定理 205.3、207.1 与 208.2 的波函数扰动不等式和因果档案结构，证明闭下水平集与一致误差界 $\delta<\frac{3}{4}\vartheta=\frac{3m_*}{64}$ 保持连续时间首点取得、有限跳数界、精确报告与全历史测度同构；有限跳数仍本质依赖原十五门系统的有界相位导数 $|p'|<8\pi$ 与正质量二点块跳跃增益 $>10\vartheta-2\delta$，而非仅由抽象有限地址集推出。第 6–8 节尚未涉及离散晶格隐藏库消去下的多探针共同传播速度与有限体积涨落界。
 
 ## 追加锚（本行以下为增补区）
+
+## 10. 离散周期晶格无隙多探针的隐藏库消去、门户对称判据与速度分裂反例
+
+**定义 10.1（离散周期晶格上的无隙可见—有隙隐藏耦合二次量子系统与零模切折合对）。** 固定空间维数 $d\ge1$、晶格常数 $a>0$、周期边长整数 $L\ge3$、可见探针分量数 $M\ge1$ 与隐藏库分量数 $M_h\ge1$。在离散周期环面晶格 $\Lambda_L=(\mathbb{Z}/L\mathbb{Z})^d$ 上，记对偶离散波矢集为 $\Lambda_L^*=\{\frac{2\pi}{La}n:n=(n_1,\ldots,n_d)\in\{0,1,\ldots,L-1\}^d\}$，最近邻离散负拉普拉斯符号为
+
+$$
+\mu_k=\frac{4}{a^2}\sum_{r=1}^{d}\sin^2\!\left(\frac{\pi n_r}{L}\right)\ge0\qquad\left(\mu_k=0\iff k=0;\ \min_{k\ne0}\mu_k=\mu_{\min}(L)=\frac{4}{a^2}\sin^2\!\left(\frac{\pi}{L}\right)>0\right).
+$$
+
+考虑实空间格点厄米正则场 $\hat{X}(x)=(\hat{q}(x),\hat{h}(x))^{\mathsf T}$ 与 $\hat{P}(x)$（$x\in\Lambda_L$，可见坐标 $\hat{q}(x)$ 占前 $M$ 分量，隐藏坐标 $\hat{h}(x)$ 占后 $M_h$ 分量，满足 $[\hat{X}_\alpha(x),\hat{P}_\beta(y)]=i\hbar\delta_{xy}\delta_{\alpha\beta}$ 及 $[\hat{X}_\alpha(x),\hat{X}_\beta(y)]=[\hat{P}_\alpha(x),\hat{P}_\beta(y)]=0$），作酉离散 Fourier 变换 $\hat{X}_k=\frac{1}{L^{d/2}}\sum_{x\in\Lambda_L}e^{-ik\cdot ax}\hat{X}(x)$、$\hat{P}_k=\frac{1}{L^{d/2}}\sum_{x\in\Lambda_L}e^{-ik\cdot ax}\hat{P}(x)$（其中 $-k\in\Lambda_L^*$ 指倒格模代表 $\frac{2\pi}{La}((-n)\bmod L)$，满足 $\mu_{-k}=\mu_k$，故实场共轭配对 $\hat{X}_{-k,\alpha}=\hat{X}_{k,\alpha}^\dagger$、$\hat{P}_{-k,\alpha}=\hat{P}_{k,\alpha}^\dagger$ 与正则对易 $[\hat{X}_{k,\alpha},\hat{P}_{k',\beta}^\dagger]=i\hbar\delta_{kk'}\delta_{\alpha\beta}$ 同时成立）。时间反演偶、晶格平移与各向同性离散梯度耦合的实二次正则量子晶格总哈密顿量为 $\hat{H}=\sum_{k\in\Lambda_L^*}\hat{H}_k$，其中单波矢模哈密顿量为
+
+$$
+\hat{H}_k=\frac{1}{2}\hat{P}_k^\dagger T^{-1}\hat{P}_k+\frac{1}{2}\hat{X}_k^\dagger V(\mu_k)\hat{X}_k,\qquad V(\mu_k)=V_0+\mu_kV_1,
+$$
+
+其中惯性矩阵 $T\in M_{M+M_h}(\mathbb{R})$、零波矢局域势矩阵 $V_0\in M_{M+M_h}(\mathbb{R})$ 与离散梯度刚度矩阵 $V_1\in M_{M+M_h}(\mathbb{R})$ 均为实对称矩阵，按可见—隐藏分块写作
+
+$$
+T=\begin{pmatrix}T_{VV}&T_{VH}\\ T_{VH}^{\mathsf T}&T_{HH}\end{pmatrix}\succ0,\qquad
+V_0=\begin{pmatrix}A_0&C_0\\ C_0^{\mathsf T}&H_0\end{pmatrix}\succeq0,\qquad
+V_1=\begin{pmatrix}V_{1,VV}&V_{1,VH}\\ V_{1,VH}^{\mathsf T}&V_{1,HH}\end{pmatrix}\succeq0,
+$$
+
+并满足**隐藏库局域有隙** $H_0\succ0$ 与**可见扇区红外无隙（零模平衡）**
+
+$$
+A_0-C_0H_0^{-1}C_0^{\mathsf T}=0.
+$$
+
+定义零模切嵌入矩阵 $N_0\in M_{(M+M_h)\times M}(\mathbb{R})$、单模下三角消去矩阵 $S\in\operatorname{SL}_{M+M_h}(\mathbb{R})$ 及可见折合惯性—刚度矩阵对 $(Z_{\mathrm{eff}},K_{\mathrm{eff}})$ 为
+
+$$
+N_0=\begin{pmatrix}I_M\\ -H_0^{-1}C_0^{\mathsf T}\end{pmatrix},\qquad
+S=\begin{pmatrix}I_M&0\\ -H_0^{-1}C_0^{\mathsf T}&I_{M_h}\end{pmatrix},\qquad
+Z_{\mathrm{eff}}=N_0^{\mathsf T}TN_0,\qquad
+K_{\mathrm{eff}}=N_0^{\mathsf T}V_1N_0.
+$$
+
+**定理 10.2（无隙切空间正定判据、红外共同声速矩阵充要条件与跨速度门户正交交织充分定理）。** 在定义 10.1 下：
+
+1. **零模切空间分解与非零波矢全局正定充要判据**：恒有 $S^{\mathsf T}V_0S=\operatorname{diag}(0_M,H_0)$ 与 $\ker V_0=\operatorname{Ran}N_0$（$\dim_{\mathbb{R}}\ker V_0=M$），折合惯性矩阵恒严格正定 $Z_{\mathrm{eff}}\succ0$；且下列三项彼此等价（即使未约化梯度刚度 $V_1$ 退化奇异，例如隐藏库局域不传播 $V_{1,HH}=0,V_{1,VH}=0$）：
+   - 对一切非零晶格波矢 $k\ne0$（或任一 $\mu>0$），完整模势矩阵严格正定 $V(\mu_k)=V_0+\mu_kV_1\succ0$；
+   - $\ker V_0\cap\ker V_1=\{0\}$；
+   - 折合可见刚度矩阵严格正定 $K_{\mathrm{eff}}=N_0^{\mathsf T}V_1N_0\succ0$；
+
+2. **多探针共同红外声速的广义本征值充要条件**：当 $K_{\mathrm{eff}}\succ0$ 时，将矩阵束 $(K_{\mathrm{eff}},Z_{\mathrm{eff}})$ 的 $M$ 个广义特征值（即对称正定矩阵 $\widehat{K}_{\mathrm{eff}}=Z_{\mathrm{eff}}^{-1/2}K_{\mathrm{eff}}Z_{\mathrm{eff}}^{-1/2}$ 的特征值）按递增次序记为 $0<c_1^2\le c_2^2\le\cdots\le c_M^2$。则完整晶格动力学束 $(V(\mu_k),T)$ 的前 $M$ 条声学本征频率平方 $\omega_1(k)^2\le\cdots\le\omega_M(k)^2$ 在红外标度 $\mu_k\to0^+$（例如固定整波数模号并令 $La\to\infty$）下满足 $\lim_{\mu_k\to0^+}\frac{\omega_j(k)^2}{\mu_k}=c_j^2$（$1\le j\le M$），且全部 $M$ 个可见探针共享单一正红外声速 $c_1=\cdots=c_M=c_{\mathrm{eff}}>0$ 当且仅当
+
+$$
+K_{\mathrm{eff}}=c_{\mathrm{eff}}^2Z_{\mathrm{eff}};
+$$
+
+3. **无需未约化全系统等速的可见不可约门户交织充分机制**：设群 $G$ 在可见探针空间 $\mathbb{R}^M$ 上有实正交**不可约**表示 $g\mapsto R_g\in O(M)$，在隐藏库空间 $\mathbb{R}^{M_h}$ 上有任意实正交表示 $g\mapsto\widetilde{R}_g\in O(M_h)$（不要求 $\widetilde{R}_g$ 不可约，亦不要求未约化系统满足 $V_1=c^2T$）。若分块矩阵对对角作用 $D_g=\operatorname{diag}(R_g,\widetilde{R}_g)\in O(M+M_h)$ 不变：
+
+$$
+D_g^{\mathsf T}TD_g=T,\qquad D_g^{\mathsf T}V_0D_g=V_0,\qquad D_g^{\mathsf T}V_1D_g=V_1\qquad(\forall g\in G),
+$$
+
+且 $K_{\mathrm{eff}}\ne0$，则存在纯量 $z_{\mathrm{eff}}>0$、$k_{\mathrm{eff}}>0$ 使 $Z_{\mathrm{eff}}=z_{\mathrm{eff}}I_M$、$K_{\mathrm{eff}}=k_{\mathrm{eff}}I_M$，从而全部 $M$ 个可见探针严格共享共同红外声速 $c_{\mathrm{eff}}=\sqrt{k_{\mathrm{eff}}/z_{\mathrm{eff}}}>0$。特别地，当可见探针具有裸惯性 $I_M$ 与裸速度 $c_0>0$，通过 $O(M)$ 等变矢量门户 $\frac{\Omega^2}{2}\|h-\alpha q\|^2$（$M_h=M,\Omega>0,\alpha\in\mathbb{R}$）耦合具有**不同**裸速度 $v_h\ge0$（$v_h\ne c_0$，惯性 $I_M$）的隐藏矢量多重态时，未约化系统违背 [`QUANTUM-REALITY.md`](QUANTUM-REALITY.md) 定理 21.1 的全系统共同锥判据，但约化红外可见扇区严格具有共同声速
+
+$$
+c_{\mathrm{eff}}^2=\frac{c_0^2+\alpha^2v_h^2}{1+\alpha^2}.
+$$
+
+**证明。** 直接展开分块乘法：因 $A_0=C_0H_0^{-1}C_0^{\mathsf T}$，有
+
+$$
+S^{\mathsf T}V_0S=\begin{pmatrix}I_M&-C_0H_0^{-1}\\ 0&I_{M_h}\end{pmatrix}\begin{pmatrix}C_0H_0^{-1}C_0^{\mathsf T}&C_0\\ C_0^{\mathsf T}&H_0\end{pmatrix}\begin{pmatrix}I_M&0\\ -H_0^{-1}C_0^{\mathsf T}&I_{M_h}\end{pmatrix}=\begin{pmatrix}0_M&0\\ 0&H_0\end{pmatrix}.
+$$
+
+因 $S$ 可逆且 $H_0\succ0$，$V_0x=0\iff S^{\mathsf T}V_0S(S^{-1}x)=0\iff S^{-1}x=\binom{u}{0}\iff x=S\binom{u}{0}=N_0u$（$u\in\mathbb{R}^M$），且 $\operatorname{rank}N_0=M$，故 $\ker V_0=\operatorname{Ran}N_0$，由 $T\succ0$ 知 $Z_{\mathrm{eff}}=N_0^{\mathsf T}TN_0\succ0$。对任意 $\mu>0$，因 $V_0\succeq0$ 与 $\mu V_1\succeq0$，二次型 $x^{\mathsf T}(V_0+\mu V_1)x=x^{\mathsf T}V_0x+\mu x^{\mathsf T}V_1x\ge0$ 取零当且仅当 $x\in\ker V_0\cap\ker V_1$；将 $x\in\ker V_0$ 写为 $x=N_0u$，则 $x\in\ker V_1\iff u^{\mathsf T}N_0^{\mathsf T}V_1N_0u=u^{\mathsf T}K_{\mathrm{eff}}u=0$（因 $V_1\succeq0$）。故 $V_0+\mu V_1\succ0\iff\ker V_0\cap\ker V_1=\{0\}\iff K_{\mathrm{eff}}\succ0$，证毕第 1 项。
+
+第 2 项中，$\lim_{\mu_k\to0^+}\frac{\omega_j(k)^2}{\mu_k}=c_j^2$ 由下节定理 11.1 的非微扰双侧界 $0\le c_j^2-\frac{\omega_j(k)^2}{\mu_k}\le\frac{\mu_k\|\widehat{W}_{12}\|_{\mathrm{op}}^2}{\Omega_{\mathrm{opt},0}^2-\mu_kc_M^2}$ 直接推出；而对称矩阵 $\widehat{K}_{\mathrm{eff}}=Z_{\mathrm{eff}}^{-1/2}K_{\mathrm{eff}}Z_{\mathrm{eff}}^{-1/2}$ 的全部 $M$ 个特征值均等于 $c_{\mathrm{eff}}^2$ 当且仅当 $\widehat{K}_{\mathrm{eff}}=c_{\mathrm{eff}}^2I_M$，两边同乘 $Z_{\mathrm{eff}}^{1/2}$ 即 $K_{\mathrm{eff}}=c_{\mathrm{eff}}^2Z_{\mathrm{eff}}$。
+
+现证第 3 项。由 $D_g^{\mathsf T}V_0D_g=V_0$ 取分块得 $R_g^{\mathsf T}C_0\widetilde{R}_g=C_0$ 与 $\widetilde{R}_g^{\mathsf T}H_0\widetilde{R}_g=H_0$，故 $C_0\widetilde{R}_g=R_gC_0$、$H_0^{-1}\widetilde{R}_g=\widetilde{R}_gH_0^{-1}$。于是
+
+$$
+D_gN_0=\begin{pmatrix}R_g&0\\ 0&\widetilde{R}_g\end{pmatrix}\begin{pmatrix}I_M\\ -H_0^{-1}C_0^{\mathsf T}\end{pmatrix}=\begin{pmatrix}R_g\\ -\widetilde{R}_gH_0^{-1}C_0^{\mathsf T}\end{pmatrix}=\begin{pmatrix}R_g\\ -H_0^{-1}(C_0\widetilde{R}_g^{\mathsf T})^{\mathsf T}\end{pmatrix}=\begin{pmatrix}I_M\\ -H_0^{-1}C_0^{\mathsf T}\end{pmatrix}R_g=N_0R_g.
+$$
+
+由这一门户交织恒等式 $D_gN_0=N_0R_g$，对一切 $g\in G$ 有
+
+$$
+R_g^{\mathsf T}Z_{\mathrm{eff}}R_g=(N_0R_g)^{\mathsf T}T(N_0R_g)=N_0^{\mathsf T}(D_g^{\mathsf T}TD_g)N_0=Z_{\mathrm{eff}},\qquad
+R_g^{\mathsf T}K_{\mathrm{eff}}R_g=N_0^{\mathsf T}(D_g^{\mathsf T}V_1D_g)N_0=K_{\mathrm{eff}}.
+$$
+
+因 $Z_{\mathrm{eff}}$ 与 $K_{\mathrm{eff}}$ 是实对称矩阵，其特征子空间均在实不可约正交表示 $\{R_g\}_{g\in G}$ 下不变；不可约性排除非平凡真不变子空间，故 $Z_{\mathrm{eff}}=z_{\mathrm{eff}}I_M$（$z_{\mathrm{eff}}>0$）且 $K_{\mathrm{eff}}=k_{\mathrm{eff}}I_M$（由 $K_{\mathrm{eff}}\succeq0$ 且 $K_{\mathrm{eff}}\ne0$ 知 $k_{\mathrm{eff}}>0$），从而 $K_{\mathrm{eff}}=(k_{\mathrm{eff}}/z_{\mathrm{eff}})Z_{\mathrm{eff}}$。在矢量门户特例中，$T=I_{2M}$，$V_1=\operatorname{diag}(c_0^2I_M,v_h^2I_M)$，$H_0=\Omega^2I_M$，$C_0=-\alpha\Omega^2I_M$，故 $N_0=\binom{I_M}{\alpha I_M}$，$Z_{\mathrm{eff}}=(1+\alpha^2)I_M$，$K_{\mathrm{eff}}=(c_0^2+\alpha^2v_h^2)I_M$，相除即得 $c_{\mathrm{eff}}^2=\frac{c_0^2+\alpha^2v_h^2}{1+\alpha^2}$。∎
+
+**命题 10.3（单共享隐藏标量门户的速度分裂阻塞定理与多探针全异声速实现）。**
+
+1. **单共享隐藏标量无法保持多探针共同光锥**：设可见探针数 $M\ge2$，具有全同裸惯性 $T_{VV}=I_M$ 与全同裸梯度刚度 $V_{1,VV}=c_0^2I_M$（$c_0>0$），耦合至**单一共享隐藏标量库**（$M_h=1$，$T_{HH}=1$，$T_{VH}=0$，$V_{1,HH}=v_h^2\ge0$，$V_{1,VH}=0$），局域无隙平衡门户势为 $\frac{\Omega^2}{2}(h-b^{\mathsf T}q)^2$（$\Omega>0$，耦合向量 $b\in\mathbb{R}^M\setminus\{0\}$）。只要隐藏库裸速度与可见裸速度不同（$v_h\ne c_0$，含局域不传播库 $v_h=0$），约化可见扇区必然违背定理 10.2 第 2 项的共同声速判据，精确分裂为 $M-1$ 个未偏移横向模与 $1$ 个门户纵向模：
+
+$$
+c_\perp^2=c_0^2\quad(\text{重数 }M-1,\ u\perp b),\qquad
+c_\parallel^2=\frac{c_0^2+\|b\|^2v_h^2}{1+\|b\|^2}\ne c_0^2\quad(\text{重数 }1,\ u\parallel b).
+$$
+
+特别地，取 $M=2,M_h=1,c_0=1,v_h=2,\Omega=3$ 及探针置换对称耦合 $b=(1,1)^{\mathsf T}$，有 $Z_{\mathrm{eff}}=\begin{pmatrix}2&1\\ 1&2\end{pmatrix}$，$K_{\mathrm{eff}}=\begin{pmatrix}5&4\\ 4&5\end{pmatrix}$，反对称模 $u_\perp=(1,-1)^{\mathsf T}$ 与对称模 $u_\parallel=(1,1)^{\mathsf T}$ 的红外声速平方分别为 $c_\perp^2=1\ne3=c_\parallel^2$；
+
+2. **$M$ 个探针产生 $M$ 个两两不同稳定声速的对角实现**：取 $M\ge2,M_h=M$，$T=I_{2M}$，$V_1=\operatorname{diag}(c_0^2I_M,v_h^2I_M)$（$v_h\ne c_0$），局域势为 $\sum_{j=1}^M\frac{\Omega^2}{2}(h_j-jq_j)^2$（$\Omega>0$），则系统满足定义 10.1 的全部稳定性与无隙可见条件，但其 $M$ 条可见声学分支具有 $M$ 个严格两两不同的红外声速平方
+
+$$
+c_j^2=\frac{c_0^2+j^2v_h^2}{1+j^2}\qquad(1\le j\le M).
+$$
+
+**证明。** 对第 1 项，门户势矩阵为 $V_0=\Omega^2\begin{pmatrix}bb^{\mathsf T}&-b\\ -b^{\mathsf T}&1\end{pmatrix}$，满足 $H_0=\Omega^2>0$、$C_0=-\Omega^2b$ 与 $A_0-C_0H_0^{-1}C_0^{\mathsf T}=\Omega^2bb^{\mathsf T}-\Omega^2bb^{\mathsf T}=0$。零模切嵌入为 $N_0=\binom{I_M}{b^{\mathsf T}}$，故
+
+$$
+Z_{\mathrm{eff}}=I_M+bb^{\mathsf T},\qquad K_{\mathrm{eff}}=c_0^2I_M+v_h^2bb^{\mathsf T}.
+$$
+
+对任意 $u\in b^\perp\setminus\{0\}$（维数 $M-1\ge1$），$K_{\mathrm{eff}}u=c_0^2u=c_0^2Z_{\mathrm{eff}}u$，故 $c_\perp^2=c_0^2$；在 $b$ 上，$K_{\mathrm{eff}}b=(c_0^2+\|b\|^2v_h^2)b$ 而 $Z_{\mathrm{eff}}b=(1+\|b\|^2)b$，故 $c_\parallel^2=\frac{c_0^2+\|b\|^2v_h^2}{1+\|b\|^2}$。两者之差为 $c_\parallel^2-c_\perp^2=\frac{\|b\|^2(v_h^2-c_0^2)}{1+\|b\|^2}\ne0$（因 $b\ne0$ 且 $v_h\ne c_0$）。将 $M=2,c_0^2=1,v_h^2=4,b=(1,1)^{\mathsf T}$（$\|b\|^2=2$）代入立得 $c_\perp^2=1$ 与 $c_\parallel^2=\frac{1+8}{1+2}=3$（注意此时探针置换群 $\mathbb{Z}_2$ 在 $\mathbb{R}^2$ 上可约分解为 $\mathbb{R}u_\perp\oplus\mathbb{R}u_\parallel$，印证定理 10.2 第 3 项中可见表示不可约性不可删去）。第 2 项对每个指标 $j\in\{1,\ldots,M\}$ 独立退化为 $1+1$ 维块 $Z_{\mathrm{eff}}=\operatorname{diag}(1+j^2)_{j=1}^M$、$K_{\mathrm{eff}}=\operatorname{diag}(c_0^2+j^2v_h^2)_{j=1}^M$，而函数 $t\mapsto\frac{c_0^2+tv_h^2}{1+t}$ 在 $v_h\ne c_0$ 时于 $[0,\infty)$ 上严格单调，故 $c_1^2,\ldots,c_M^2$ 两两互异。∎
+
+## 11. 离散晶格非微扰声学色散界、超锥 Bessel 尾项分离与有限体积无隙涨落夹逼
+
+**定理 11.1（动能正交化零模变换与全部声学分支的非微扰紧致双侧色散界）。** 在定义 10.1 下，设 $K_{\mathrm{eff}}\succ0$，记 $S^{\mathsf T}TS=\begin{pmatrix}Z_{\mathrm{eff}}&T_{12}\\ T_{12}^{\mathsf T}&T_{22}\end{pmatrix}\succ0$ 与 $S^{\mathsf T}V_1S=\begin{pmatrix}K_{\mathrm{eff}}&W_{12}\\ W_{12}^{\mathsf T}&W_{22}\end{pmatrix}\succeq0$。令隐藏惯性 Schur 补为 $\widetilde{T}_H=T_{22}-T_{12}^{\mathsf T}Z_{\mathrm{eff}}^{-1}T_{12}\succ0$，定义分块上三角矩阵
+
+$$
+U_T=\begin{pmatrix}Z_{\mathrm{eff}}^{-1/2}&-Z_{\mathrm{eff}}^{-1}T_{12}\widetilde{T}_H^{-1/2}\\ 0&\widetilde{T}_H^{-1/2}\end{pmatrix}.
+$$
+
+则变换矩阵 $SU_T$ 同时将惯性矩阵化为单位阵 $U_T^{\mathsf T}S^{\mathsf T}TSU_T=I_{M+M_h}$、将零波矢势矩阵保持为分块对角阵 $U_T^{\mathsf T}S^{\mathsf T}V_0SU_T=\operatorname{diag}(0_M,\widetilde{H}_0)$（其中 $\widetilde{H}_0=\widetilde{T}_H^{-1/2}H_0\widetilde{T}_H^{-1/2}\succ0$，其最小特征值 $\Omega_{\mathrm{opt},0}^2=\lambda_{\min}(\widetilde{H}_0)>0$ 恰为 $k=0$ 处束 $(V_0,T)$ 的精确光学频率间隙平方），并将完整动力学束 $(V(\mu_k),T)$ 正交等价化为标准实对称矩阵
+
+$$
+\mathcal{M}(\mu_k)=U_T^{\mathsf T}S^{\mathsf T}(V_0+\mu_kV_1)SU_T=\begin{pmatrix}\mu_k\widehat{K}_{\mathrm{eff}}&\mu_k\widehat{W}_{12}\\ \mu_k\widehat{W}_{12}^{\mathsf T}&\widetilde{H}_0+\mu_k\widehat{W}_{22}\end{pmatrix},
+$$
+
+其中 $\widehat{K}_{\mathrm{eff}}=Z_{\mathrm{eff}}^{-1/2}K_{\mathrm{eff}}Z_{\mathrm{eff}}^{-1/2}$（特征值为 $0<c_1^2\le\cdots\le c_M^2$），$\widehat{W}_{12}=Z_{\mathrm{eff}}^{-1/2}(W_{12}\widetilde{T}_H^{-1/2}-K_{\mathrm{eff}}Z_{\mathrm{eff}}^{-1}T_{12}\widetilde{T}_H^{-1/2})$，$\widehat{W}_{22}\succeq0$。由此得到：
+
+1. **全布里渊区无条件变分上界**：对**一切**波矢 $k\in\Lambda_L^*$ 及每条声学分支 $1\le j\le M$，有
+
+$$
+\omega_j(k)^2\le\mu_kc_j^2;
+$$
+
+2. **声学窗口内的非微扰紧致双侧界**：对一切满足 $\mu_kc_M^2<\Omega_{\mathrm{opt},0}^2$ 的波矢 $k$ 及全部 $1\le j\le M$，有
+
+$$
+0\le\mu_kc_j^2-\omega_j(k)^2\le\frac{\mu_k^2\|\widehat{W}_{12}\|_{\mathrm{op}}^2}{\Omega_{\mathrm{opt},0}^2-\mu_kc_M^2},
+$$
+
+且右端上界前因子常数 $1$ 在二模系统 $\mathcal{M}(\mu)=\begin{pmatrix}\mu c^2&\mu w\\ \mu w&\Omega^2\end{pmatrix}$ 的 $\mu\to0^+$ 渐近展开 $\mu c^2-\omega_1(\mu)^2=\frac{\mu^2w^2}{\Omega^2-\mu c^2}+O(\mu^4)$ 下精确达到。
+
+**证明。** 直接按分块矩阵乘法检验 $U_T^{\mathsf T}\begin{pmatrix}Z_{\mathrm{eff}}&T_{12}\\ T_{12}^{\mathsf T}&T_{22}\end{pmatrix}U_T$：左上块为 $Z_{\mathrm{eff}}^{-1/2}Z_{\mathrm{eff}}Z_{\mathrm{eff}}^{-1/2}=I_M$；右上块为 $Z_{\mathrm{eff}}^{-1/2}(-T_{12}\widetilde{T}_H^{-1/2}+T_{12}\widetilde{T}_H^{-1/2})=0$；右下块为 $\widetilde{T}_H^{-1/2}(T_{22}-T_{12}^{\mathsf T}Z_{\mathrm{eff}}^{-1}T_{12})\widetilde{T}_H^{-1/2}=I_{M_h}$。又因 $U_T$ 为分块上三角阵，其作用在 $S^{\mathsf T}V_0S=\operatorname{diag}(0_M,H_0)$ 上给出 $\operatorname{diag}(0_M,\widetilde{T}_H^{-1/2}H_0\widetilde{T}_H^{-1/2})=\operatorname{diag}(0_M,\widetilde{H}_0)$，作用在 $S^{\mathsf T}V_1S\succeq0$ 上保持左上块 $Z_{\mathrm{eff}}^{-1/2}K_{\mathrm{eff}}Z_{\mathrm{eff}}^{-1/2}=\widehat{K}_{\mathrm{eff}}$ 与右下块 $\widehat{W}_{22}\succeq0$。故 $(V(\mu_k),T)$ 的全体广义特征值逐一等于 $\mathcal{M}(\mu_k)$ 的标准特征值 $\omega_1(k)^2\le\cdots\le\omega_{M+M_h}(k)^2$。
+
+因 $\mu_k\widehat{K}_{\mathrm{eff}}$ 是 $\mathcal{M}(\mu_k)$ 的左上 $M\times M$ 主子矩阵，Cauchy 主子矩阵特征值交错定理对一切 $\mu_k\ge0$ 与 $1\le j\le M$ 直接给出 $\omega_j(k)^2\le\lambda_j(\mu_k\widehat{K}_{\mathrm{eff}})=\mu_kc_j^2$，证毕第 1 项。
+
+当 $\mu_kc_M^2<\Omega_{\mathrm{opt},0}^2$ 时，置正标量 $\sigma=\Omega_{\mathrm{opt},0}^2-\mu_kc_M^2>0$。由完平方半正定恒等式
+
+$$
+\begin{pmatrix}\frac{\mu_k^2}{\sigma}\widehat{W}_{12}\widehat{W}_{12}^{\mathsf T}&\mu_k\widehat{W}_{12}\\ \mu_k\widehat{W}_{12}^{\mathsf T}&\sigma I_{M_h}\end{pmatrix}=\begin{pmatrix}\frac{\mu_k}{\sqrt{\sigma}}\widehat{W}_{12}\\ \sqrt{\sigma}I_{M_h}\end{pmatrix}\begin{pmatrix}\frac{\mu_k}{\sqrt{\sigma}}\widehat{W}_{12}^{\mathsf T}&\sqrt{\sigma}I_{M_h}\end{pmatrix}\succeq0
+$$
+
+及 $\widetilde{H}_0+\mu_k\widehat{W}_{22}\succeq\widetilde{H}_0\succeq\Omega_{\mathrm{opt},0}^2I_{M_h}=(\sigma+\mu_kc_M^2)I_{M_h}$，从 $\mathcal{M}(\mu_k)$ 中减去该半正定非对角耦合块立得 Loewner 下界
+
+$$
+\mathcal{M}(\mu_k)\succeq\begin{pmatrix}\mu_k\widehat{K}_{\mathrm{eff}}-\frac{\mu_k^2}{\sigma}\widehat{W}_{12}\widehat{W}_{12}^{\mathsf T}&0\\ 0&\mu_kc_M^2I_{M_h}\end{pmatrix}.
+$$
+
+右端分块对角矩阵的右下块全部 $M_h$ 个特征值均为 $\mu_kc_M^2$，而左上块的第 $j$ 小特征值满足 $\lambda_j(\mu_k\widehat{K}_{\mathrm{eff}}-\frac{\mu_k^2}{\sigma}\widehat{W}_{12}\widehat{W}_{12}^{\mathsf T})\le\mu_kc_j^2\le\mu_kc_M^2$（$1\le j\le M$），故右端矩阵的前 $M$ 小特征值精确等于左上块的 $M$ 个特征值。应用 Weyl 算子单调性与微扰界 $\lambda_j(A-B)\ge\lambda_j(A)-\|B\|_{\mathrm{op}}$（$B\succeq0$），即得
+
+$$
+\omega_j(k)^2\ge\lambda_j\!\left(\mu_k\widehat{K}_{\mathrm{eff}}-\frac{\mu_k^2}{\sigma}\widehat{W}_{12}\widehat{W}_{12}^{\mathsf T}\right)\ge\mu_kc_j^2-\frac{\mu_k^2\|\widehat{W}_{12}\|_{\mathrm{op}}^2}{\Omega_{\mathrm{opt},0}^2-\mu_kc_M^2}.
+$$
+
+对 $2\times2$ 矩阵 $\mathcal{M}(\mu)=\begin{pmatrix}\mu c^2&\mu w\\ \mu w&\Omega^2\end{pmatrix}$，求根公式给出 $\mu c^2-\omega_1(\mu)^2=\frac{\sqrt{(\Omega^2-\mu c^2)^2+4\mu^2w^2}-(\Omega^2-\mu c^2)}{2}=\frac{2\mu^2w^2}{\sqrt{(\Omega^2-\mu c^2)^2+4\mu^2w^2}+(\Omega^2-\mu c^2)}=\frac{\mu^2w^2}{\Omega^2-\mu c^2}+O(\mu^4)$，证毕渐近紧致性。∎
+
+**命题 11.2（离散最近邻晶格上超锥 Bessel 对易尾项与布里渊区四阶旋转各向异性的双分离命题）。**
+
+1. **红外声速不蕴涵离散晶格上的严格零支撑微因果光锥（利用一维谐振链 Bessel 传播核：Schrödinger 1914）**：在一维无限最近邻谐振晶格 $\mathbb{Z}$（晶格间距 $a>0$，单位惯性 $T=1$，纯可见无隙刚度 $(Kq)(x)=\frac{c_0^2}{a^2}(2q(x)-q(x+1)-q(x-1))$，$c_0>0$；或周期晶格 $\mathbb{Z}/L\mathbb{Z}$，$L\ge 2r+1$）上，红外声速精确为 $c_{\mathrm{eff}}=c_0$，但在任意非零格点距离 $r\in\mathbb{Z}_{\ge1}$（空间距离 $|x|=ra$）上，无穷晶格 Heisenberg 正则对易子精确等于 $2r$ 阶第一类 Bessel 函数（Schrödinger 1914）
+
+$$
+\frac{1}{i\hbar}\bigl[\hat{q}(r,t),\hat{p}(0,0)\bigr]=J_{2r}\!\left(\frac{2c_0t}{a}\right)=\sum_{n=0}^{\infty}\frac{(-1)^n}{n!(n+2r)!}\left(\frac{c_0t}{a}\right)^{2r+2n},
+$$
+
+从而在整个超锥区间 $0<c_0t<\min(ra,\,a\sqrt{2r+1})$ 内严格大于零，满足双侧交错级数界
+
+$$
+0<\frac{(c_0t/a)^{2r}}{(2r)!}\left(1-\frac{(c_0t/a)^2}{2r+1}\right)<\frac{1}{i\hbar}\bigl[\hat{q}(r,t),\hat{p}(0,0)\bigr]<\frac{(c_0t/a)^{2r}}{(2r)!};
+$$
+
+2. **等速隐藏库耦合下离散晶格仍有 $O(a^2|k|^4)$ 旋转各向异性**：在 $d\ge2$ 维超立方晶格上，即使全部可见与隐藏模满足 $c_a=c_0=c_{\mathrm{eff}}>0$（从而连续场四阶失配系数 $A_2=0$，见 [`QUANTUM-REALITY.md`](QUANTUM-REALITY.md) 定理 25.1），连续布里渊区色散符号 $\mu(k)=\frac{4}{a^2}\sum_{r=1}^d\sin^2(\frac{ak_r}{2})$（$k\in[-\frac{\pi}{a},\frac{\pi}{a}]^d$，在 $L\to\infty$ 下由离散波矢集 $\Lambda_L^*$ 稠密采样，且在 $\sqrt{d}\in\mathbb{Q}$ 时于有限周期 $L$ 同模格点上精确取到）在固定欧氏模长 $|k|=\kappa>0$（$a\kappa\ll1$）下沿晶轴方向 $k_{\mathrm{axis}}=(\kappa,0,\ldots,0)$ 与空间对角方向 $k_{\mathrm{diag}}=\frac{\kappa}{\sqrt{d}}(1,\ldots,1)$ 的领先差值仍满足
+
+$$
+\mu(k_{\mathrm{diag}})-\mu(k_{\mathrm{axis}})=\frac{a^2(d-1)}{12d}\kappa^4+O(a^4\kappa^6)>0.
+$$
+
+**证明。** 对第 1 项，因 $0\preceq K\preceq\frac{4c_0^2}{a^2}I$ 有界，定义整函数有界自伴算子 $C(t)=\sum_{m=0}^\infty\frac{(-1)^mt^{2m}}{(2m)!}K^m$ 与 $S_{\mathrm{sinc}}(t)=\sum_{m=0}^\infty\frac{(-1)^mt^{2m+1}}{(2m+1)!}K^m$（无需在 $0\in\operatorname{spec}(K)$ 处对 $\sqrt{K}$ 求逆），则线性 Heisenberg 方程 $\ddot{\hat{q}}(t)=-K\hat{q}(t)$ 的唯一解为 $\hat{q}(t)=C(t)\hat{q}(0)+S_{\mathrm{sinc}}(t)\hat{p}(0)$，故 $\frac{1}{i\hbar}[\hat{q}(r,t),\hat{p}(0,0)]=[C(t)]_{r,0}=\sum_{m=0}^\infty\frac{(-1)^mt^{2m}}{(2m)!}(K^m)_{r,0}$。在 $\ell^2(\mathbb{Z})$ 上记右移酉算子 $(Sq)(x)=q(x-1)$（故 $Se_0=e_1$，$(S^\ell)_{r,0}=\delta_{r,\ell}$），则 $K=\frac{c_0^2}{a^2}(2I-S-S^{-1})=-\frac{c_0^2}{a^2}S^{-1}(S-I)^2$，从而 $K^m=(-1)^m(\frac{c_0^2}{a^2})^mS^{-m}(S-I)^{2m}$。在二项展开 $S^{-m}(S-I)^{2m}=\sum_{j=0}^{2m}(-1)^{2m-j}\binom{2m}{j}S^{j-m}$ 中取 $S^r$ 项（即 $j=m+r$，$m\ge r$；当 $m<r$ 时为 $0$），其系数为 $(-1)^{m-r}\binom{2m}{m+r}$，与前因子 $(-1)^m$ 相乘得 $(K^m)_{r,0}=(-1)^r(\frac{c_0^2}{a^2})^m\binom{2m}{m+r}$。代入余弦级数并令 $n=m-r\ge0$，有 $(-1)^m(-1)^r=(-1)^{2r+n}=(-1)^n$ 且 $\frac{1}{(2m)!}\binom{2m}{m+r}=\frac{1}{(m-r)!(m+r)!}=\frac{1}{n!(n+2r)!}$，逐项合成为 $J_{2r}(\frac{2c_0t}{a})$。当 $0<\frac{c_0t}{a}<\sqrt{2r+1}$ 时，正项序列 $u_n=\frac{(c_0t/a)^{2r+2n}}{n!(n+2r)!}$ 满足 $\frac{u_{n+1}}{u_n}=\frac{(c_0t/a)^2}{(n+1)(n+2r+1)}\le\frac{(c_0t/a)^2}{2r+1}<1$，严格单调递减趋于 $0$，莱布尼茨交错级数截断不等式 $u_0-u_1<\sum_{n=0}^\infty(-1)^nu_n<u_0$ 直接给出所示正双侧界（在有限环 $\mathbb{Z}/L\mathbb{Z}$，$L\ge2r+1$ 上，循环右移满足 $S_L^L=I$，故 $(S_L^{j-m})_{r,0}=\mathbf{1}_{j-m\equiv r\pmod L}$，给出镜像求和 $\sum_{\ell\in\mathbb{Z}}J_{2|r+\ell L|}(\frac{2c_0t}{a})$，在 $0<\frac{c_0t}{a}\le1$ 内每项皆严格为正，总和同样严格大于零）。
+
+对第 2 项，由 $\sin^2(\frac{ak_r}{2})=\frac{a^2k_r^2}{4}-\frac{a^4k_r^4}{48}+O(a^6k_r^6)$，对 $r=1,\ldots,d$ 求和并乘 $\frac{4}{a^2}$ 得 $\mu_k=|k|^2-\frac{a^2}{12}\sum_{r=1}^dk_r^4+O(a^4|k|^6)$。在 $k_{\mathrm{axis}}$ 上 $\sum_{r=1}^dk_r^4=\kappa^4$，在 $k_{\mathrm{diag}}$ 上 $\sum_{r=1}^dk_r^4=d(\frac{\kappa^2}{d})^2=\frac{\kappa^4}{d}$，两者相减即得 $\frac{a^2}{12}(1-\frac{1}{d})\kappa^4+O(a^4\kappa^6)>0$。∎
+
+**定理 11.3（有限体积无隙晶格零均值扇区的精确可见刚度、算子单调量子协方差夹逼与红外维数判据——[`QUANTUM-REALITY.md`](QUANTUM-REALITY.md) 注 19.1 闭合）。** 在定义 10.1 下，设 $K_{\mathrm{eff}}\succ0$。
+
+1. **零波矢零模发散与非零波矢精确可见刚度恒等式**：在 $k=0$ 零模上，对软质量正则化 $V_0(\sigma)=V_0+\sigma^2\operatorname{diag}(I_M,0_{M_h})$（$\sigma>0$），其可见静态逆矩阵满足 $[(V_0(\sigma))^{-1}]_{VV}=\sigma^{-2}I_M\to\infty$（$\sigma\downarrow0$）；而在零均值投影扇区的每一个非零波矢 $k\in\Lambda_L^*\setminus\{0\}$（$\mu_k\ge\mu_{\min}(L)>0$）上，可见边际逆刚度 $K_{\mathrm{vis}}(\mu_k)=([(V_0+\mu_kV_1)^{-1}]_{VV})^{-1}\succ0$ 恒满足精确恒等式
+
+$$
+K_{\mathrm{vis}}(\mu_k)=\mu_kK_{\mathrm{eff}}-\mu_k^2W_{12}(H_0+\mu_kW_{22})^{-1}W_{12}^{\mathsf T},
+$$
+
+并在一切 $k\ne0$ 上满足无条件上界 $K_{\mathrm{vis}}(\mu_k)\preceq\mu_kK_{\mathrm{eff}}$，在满足 $\mu_k\|K_{\mathrm{eff}}^{-1/2}W_{12}H_0^{-1}W_{12}^{\mathsf T}K_{\mathrm{eff}}^{-1/2}\|_{\mathrm{op}}\le\eta<1$ 的波矢窗口内满足双侧 Loewner 夹逼
+
+$$
+(1-\eta)\mu_kK_{\mathrm{eff}}\preceq\mu_kK_{\mathrm{eff}}-\mu_k^2W_{12}H_0^{-1}W_{12}^{\mathsf T}\preceq K_{\mathrm{vis}}(\mu_k)\preceq\mu_kK_{\mathrm{eff}};
+$$
+
+2. **非零波矢解耦扇区量子 KMS 热态与零温基态可见协方差的算子单调 Loewner 双侧界**：在解耦非零波矢哈密顿量 $\hat{H}_{\ne0}=\sum_{k\in\Lambda_L^*\setminus\{0\}}\hat{H}_k$（满足 $[\hat{H}_0,\hat{H}_{\ne0}]=0$ 且在每个 $k\ne0$ 上有严格正频阵 $\mathcal{M}(\mu_k)\succ0$，故对任意逆温度 $\beta\in(0,\infty)$ 具有唯一迹类 Gibbs／KMS 平衡态 $\rho_{\beta,\ne0}=(\operatorname{Tr}_{\mathcal{F}_{\ne0}}e^{-\beta\hat{H}_{\ne0}})^{-1}e^{-\beta\hat{H}_{\ne0}}$ 与唯一可归一 Fock 基态 $|0\rangle_{\ne0}$，且与软质量正则化 $V_0(\sigma)$ 全系统 Gibbs 态／基态在 $\sigma\downarrow0$ 下对一切 $k\ne0$ 可观测量的期望严格一致）下，每个非零波矢 $k\in\Lambda_L^*\setminus\{0\}$ 的位置对称协方差 $\operatorname{Cov}_\beta(\hat{X}_k)=\langle\hat{X}_k\hat{X}_k^\dagger\rangle_{\beta,\ne0}=\bigl(\langle\frac{1}{2}\{\hat{X}_{k,\alpha},\hat{X}_{k,\gamma}^\dagger\}\rangle_{\beta,\ne0}\bigr)_{\alpha,\gamma}$ 与零温量子基态协方差 $\operatorname{Cov}_\infty(\hat{X}_k)=\langle\hat{X}_k\hat{X}_k^\dagger\rangle_{\mathrm{vac},\ne0}=\frac{\hbar}{2}SU_T\mathcal{M}(\mu_k)^{-1/2}U_T^{\mathsf T}S^{\mathsf T}$ 的可见 $M\times M$ 主块满足通用热—零点分解夹逼
+
+$$
+\max_{\preceq}\!\left\{\frac{1}{\beta}K_{\mathrm{vis}}(\mu_k)^{-1},\ \operatorname{Cov}_\infty(\hat{q}_k)\right\}\preceq\operatorname{Cov}_\beta(\hat{q}_k)\preceq\frac{1}{\beta}K_{\mathrm{vis}}(\mu_k)^{-1}+\operatorname{Cov}_\infty(\hat{q}_k)
+$$
+
+（其中左端意为 $\operatorname{Cov}_\beta(\hat{q}_k)$ 同时在 Loewner 序下大于等于两项，特含全局下界 $\operatorname{Cov}_\beta(\hat{q}_k)\succeq\frac{1}{\beta\mu_k}K_{\mathrm{eff}}^{-1}$）；记红外主项为 $\Sigma_{\mathrm{IR}}(\mu_k)=\frac{\hbar}{2\sqrt{\mu_k}}Z_{\mathrm{eff}}^{-1/2}\widehat{K}_{\mathrm{eff}}^{-1/2}Z_{\mathrm{eff}}^{-1/2}$、动能混合矩阵为 $B_V=-Z_{\mathrm{eff}}^{-1}T_{12}\widetilde{T}_H^{-1/2}$、无量纲耦合比为 $\theta_k=\frac{2\mu_k\|\widehat{W}_{12}\|_{\mathrm{op}}^2}{c_1^2\Omega_{\mathrm{opt},0}^2}$，则在一切满足 $\theta_k<1$ 的非零波矢 $k\ne0$ 上，零温基态可见协方差满足显式非渐近双侧 Loewner 夹逼
+
+$$
+\frac{1}{\sqrt{1+\theta_k}}\Sigma_{\mathrm{IR}}(\mu_k)+\frac{\hbar}{2}B_V\bigl(\widetilde{H}_0+\mu_k\widehat{W}_{22}+\tfrac{1}{2}\Omega_{\mathrm{opt},0}^2I_{M_h}\bigr)^{-1/2}B_V^{\mathsf T}\preceq\operatorname{Cov}_\infty(\hat{q}_k)\preceq\frac{1}{\sqrt{1-\theta_k}}\Sigma_{\mathrm{IR}}(\mu_k)+\frac{\hbar}{\sqrt{2}\,\Omega_{\mathrm{opt},0}}B_VB_V^{\mathsf T}
+$$
+
+（特别地，当 $\mu_k\to0^+$ 时有 $\operatorname{Cov}_\infty(\hat{q}_k)=\Sigma_{\mathrm{IR}}(\mu_k)+O(1)$，当无折合动能混合 $T_{12}=0$ 时余项更紧为 $O(\sqrt{\mu_k})$）；
+
+3. **实空间局域零均值涨落随 $L\to\infty$ 的维数收敛与发散二分（谐振门户系统的红外维数标度，对比 Mermin–Wagner 1966；Hohenberg 1967）**：令实空间格点零均值投影场为 $\widetilde{q}(x)=\hat{q}(x)-\frac{1}{L^d}\sum_{y\in\Lambda_L}\hat{q}(y)=\frac{1}{L^{d/2}}\sum_{k\ne0}e^{ik\cdot ax}\hat{q}_k$。当固定晶格常数 $a>0$ 并令周期边长 $L\to\infty$ 时：
+   - 在零温量子基态（$\beta=\infty$）下，$\operatorname{Tr}\operatorname{Cov}_\infty(\widetilde{q}(x))=\frac{1}{L^d}\sum_{k\ne0}\operatorname{Tr}\operatorname{Cov}_\infty(\hat{q}_k)$ 当且仅当空间维数 $d\ge2$ 时关于 $L$ 一致有界，而在 $d=1$ 时按 $\Theta(\ln L)$ 发散；
+   - 在有限正温 KMS 热态（$0<\beta<\infty$）下，$\operatorname{Tr}\operatorname{Cov}_\beta(\widetilde{q}(x))$ 当且仅当空间维数 $d\ge3$ 时关于 $L$ 一致有界，而在 $d=2$ 时按 $\Theta(\ln L)$ 发散、在 $d=1$ 时按 $\Theta(L)$ 发散。
+
+**证明。** 对第 1 项，因变换 $\binom{q}{h}=S\binom{q}{\xi}$ 的左上块为 $I_M$、右上块为 $0$，有 $\Pi_VS=\begin{pmatrix}I_M&0\end{pmatrix}$（其中 $\Pi_V=\begin{pmatrix}I_M&0\end{pmatrix}$）。因此对任意可逆对称矩阵 $B$，$[B^{-1}]_{VV}=\Pi_VB^{-1}\Pi_V^{\mathsf T}=(\Pi_VS)(S^{\mathsf T}BS)^{-1}(\Pi_VS)^{\mathsf T}=[(S^{\mathsf T}BS)^{-1}]_{11}$。将此式分别应用于 $S^{\mathsf T}V_0(\sigma)S=\operatorname{diag}(\sigma^2I_M,H_0)$ 与 $S^{\mathsf T}(V_0+\mu_kV_1)S=\begin{pmatrix}\mu_kK_{\mathrm{eff}}&\mu_kW_{12}\\ \mu_kW_{12}^{\mathsf T}&H_0+\mu_kW_{22}\end{pmatrix}$，分块逆矩阵 Schur 补公式立即给出 $[V_0(\sigma)^{-1}]_{VV}=\sigma^{-2}I_M$ 与精确恒等式 $K_{\mathrm{vis}}(\mu_k)=\mu_kK_{\mathrm{eff}}-\mu_k^2W_{12}(H_0+\mu_kW_{22})^{-1}W_{12}^{\mathsf T}$。因 $W_{22}\succeq0$ 且 $H_0\succ0$，算子求逆的反单调性给出 $0\preceq(H_0+\mu_kW_{22})^{-1}\preceq H_0^{-1}$，两边夹乘 $\mu_k^2W_{12}(\cdot)W_{12}^{\mathsf T}$ 即得第 1 项的全部 Loewner 不等式。
+
+对第 2 项，在动能正交化坐标 $\hat{X}_k=SU_T\hat{Y}_k$、$\hat{P}_k=(SU_T)^{-\mathsf T}\hat{\Pi}_k$ 下，$\hat{H}_k=\frac{1}{2}\hat{\Pi}_k^\dagger\hat{\Pi}_k+\frac{1}{2}\hat{Y}_k^\dagger\mathcal{M}(\mu_k)\hat{Y}_k$（对一切 $k\ne0$ 有 $\mathcal{M}(\mu_k)\succ0$，且 $[\hat{Y}_{k,\alpha},\hat{Y}_{k',\gamma}^\dagger]=0$、$[\hat{Y}_{k,\alpha},\hat{\Pi}_{k',\gamma}^\dagger]=i\hbar\delta_{kk'}\delta_{\alpha\gamma}$）；在非零波矢总哈密顿量 $\hat{H}_{\ne0}=\sum_{k\in\Lambda_L^*\setminus\{0\}}\hat{H}_k$ 中利用实对称性 $\mathcal{M}(\mu_{-k})=\mathcal{M}(\mu_k)$ 将自共轭实模（$\Lambda_L^*$ 中 $k=-k$）与共轭模对 $\{k,-k\}$（$\Lambda_L^*$ 中 $k\ne-k$）展开为独立正频厄米玻色简正模，谱分解即给出 $\operatorname{Cov}_\beta(\hat{Y}_k)=\frac{\hbar}{2}\mathcal{M}(\mu_k)^{-1/2}\coth(\frac{\beta\hbar}{2}\mathcal{M}(\mu_k)^{1/2})$ 与 $\operatorname{Cov}_\infty(\hat{Y}_k)=\frac{\hbar}{2}\mathcal{M}(\mu_k)^{-1/2}$。对一切标量 $u>0$，由 $e^{-u}=\cosh u-\sinh u>0$、$\frac{d}{du}(u\cosh u-\sinh u)=u\sinh u>0$ 及 $e^{-u}<1<\frac{\sinh u}{u}$ 立得初等双曲不等式
+
+$$
+\max\!\left(\frac{1}{u},\,1\right)<\coth u<\frac{1}{u}+1\qquad(\forall u>0).
+$$
+
+在谱上取 $u=\frac{\beta\hbar}{2}\lambda^{1/2}$（$\lambda\in\operatorname{spec}\mathcal{M}(\mu_k)$），即得 $\max_{\preceq}\{\frac{1}{\beta}\mathcal{M}(\mu_k)^{-1},\frac{\hbar}{2}\mathcal{M}(\mu_k)^{-1/2}\}\preceq\operatorname{Cov}_\beta(\hat{Y}_k)\preceq\frac{1}{\beta}\mathcal{M}(\mu_k)^{-1}+\frac{\hbar}{2}\mathcal{M}(\mu_k)^{-1/2}$；两边夹乘 $\Pi_VSU_T(\cdot)U_T^{\mathsf T}S^{\mathsf T}\Pi_V^{\mathsf T}$ 并注意 $(SU_T)\mathcal{M}(\mu_k)^{-1}(SU_T)^{\mathsf T}=V(\mu_k)^{-1}$ 的左上块恰为 $K_{\mathrm{vis}}(\mu_k)^{-1}\succeq(\mu_kK_{\mathrm{eff}})^{-1}$，立得热—零点分解夹逼。再取 $\sigma=\frac{1}{2}\Omega_{\mathrm{opt},0}^2$，由定理 11.1 的完平方不等式及其变号对偶同时给出分块对角双侧界
+
+$$
+\mathcal{M}_-(\mu_k)=\begin{pmatrix}\mu_k\widehat{K}_{\mathrm{eff}}-\frac{\mu_k^2}{\sigma}\widehat{W}_{12}\widehat{W}_{12}^{\mathsf T}&0\\ 0&\frac{1}{2}\Omega_{\mathrm{opt},0}^2I_{M_h}\end{pmatrix}\preceq\mathcal{M}(\mu_k)\preceq\begin{pmatrix}\mu_k\widehat{K}_{\mathrm{eff}}+\frac{\mu_k^2}{\sigma}\widehat{W}_{12}\widehat{W}_{12}^{\mathsf T}&0\\ 0&\widetilde{H}_0+\mu_k\widehat{W}_{22}+\frac{1}{2}\Omega_{\mathrm{opt},0}^2I_{M_h}\end{pmatrix}=\mathcal{M}_+(\mu_k).
+$$
+
+因 $\widehat{K}_{\mathrm{eff}}\succeq c_1^2I_M\succ0$，在 $\sigma=\frac{1}{2}\Omega_{\mathrm{opt},0}^2$ 下有标量化界 $0\preceq\frac{\mu_k^2}{\sigma}\widehat{W}_{12}\widehat{W}_{12}^{\mathsf T}\preceq\frac{2\mu_k^2\|\widehat{W}_{12}\|_{\mathrm{op}}^2}{\Omega_{\mathrm{opt},0}^2}I_M\preceq\theta_k\mu_k\widehat{K}_{\mathrm{eff}}$，故当 $\theta_k<1$ 时 $\mathcal{M}_\pm(\mu_k)$ 的左上块分别被纯标量倍数 $(1-\theta_k)\mu_k\widehat{K}_{\mathrm{eff}}\succ0$（从下）与 $(1+\theta_k)\mu_k\widehat{K}_{\mathrm{eff}}$（从上）正定控制。因函数 $t\mapsto t^{-1/2}=\frac{1}{\pi}\int_0^\infty(t+s)^{-1}s^{-1/2}\,ds$ 在 $(0,\infty)$ 上算子单调递减（Löwner 1934），有 $\mathcal{M}_+(\mu_k)^{-1/2}\preceq\mathcal{M}(\mu_k)^{-1/2}\preceq\mathcal{M}_-(\mu_k)^{-1/2}$；两端分块对角阵求负二分之一次幂后仍为严格分块对角阵，左乘 $\Pi_VSU_T=\begin{pmatrix}Z_{\mathrm{eff}}^{-1/2}&B_V\end{pmatrix}$、右乘其转置时交叉项恒等于零，直接给出所示非渐近双侧 Loewner 夹逼，且由 $(\frac{1}{\sqrt{1\mp\theta_k}}-1)\Sigma_{\mathrm{IR}}(\mu_k)=O(\sqrt{\mu_k})$ 立得渐近式 $\operatorname{Cov}_\infty(\hat{q}_k)=\Sigma_{\mathrm{IR}}(\mu_k)+O(1)$。
+
+对第 3 项，平移不变性使不同波矢 $k\ne k'$ 正交无关联，故 $\operatorname{Cov}_\beta(\widetilde{q}(x))=\frac{1}{L^d}\sum_{k\ne0}\operatorname{Cov}_\beta(\hat{q}_k)$。在整个离散布里渊区 $n\in[-L/2,L/2)^d\cap\mathbb{Z}^d\setminus\{0\}$ 上，由 $\frac{2}{\pi}\theta\le\sin\theta\le\theta$（$\theta\in[0,\pi/2]$）知 $\frac{16}{L^2a^2}\|n\|_2^2\le\mu_k\le\frac{4\pi^2}{L^2a^2}\|n\|_2^2$；结合 $(V_0+\mu_kV_1)$ 在全非零布里渊区上正定连续，在 $\mu_k\ge\delta_0>0$ 的紫外区域内每项 $\operatorname{Tr}\operatorname{Cov}_\infty(\hat{q}_k)$ 与 $\operatorname{Tr}\operatorname{Cov}_\beta(\hat{q}_k)$ 一致有正上下界，贡献 $O(1)$；在红外球 $0<\mu_k<\delta_0$ 内，由第 1–2 项的双侧界知 $\operatorname{Tr}\operatorname{Cov}_\infty(\hat{q}_k)=\Theta(\mu_k^{-1/2})=\Theta(L/\|n\|_2)$，而有限正温下 $\operatorname{Tr}\operatorname{Cov}_\beta(\hat{q}_k)=\Theta(\mu_k^{-1})=\Theta(L^2/\|n\|_2^2)$。将有限和 $\frac{1}{L^d}\sum_{1\le\|n\|_2\le cL}\|n\|_2^{-\alpha}=L^{\alpha-d}\sum_{1\le\|n\|_2\le cL}\|n\|_2^{-\alpha}$ 分别在 $\alpha=1$（零温量子基态）与 $\alpha=2$（有限正温 KMS 态）下与 $d$ 维球壳积分比较：$d>\alpha$ 时 $L^{\alpha-d}\cdot\Theta(L^{d-\alpha})=\Theta(1)$ 一致有界，$d=\alpha$ 时为 $\Theta(\ln L)$，$d<\alpha$（即 $d=1,\alpha=2$）时为 $\Theta(L)$。∎
+
+## 12. 第 10–11 节的来源、文献归属与适用边界
+
+**来源与适用边界 12.1。** 第 10–11 节在不修改第 1–9 节任何既有条目的前提下，在离散周期晶格 $(\mathbb{Z}/L\mathbb{Z})^d$ 上补齐了 [`QUANTUM-REALITY.md`](QUANTUM-REALITY.md) 第 19.1 节（命题 19.1 与注 19.1）与第 21–29 节保留的三项离散—无隙桥梁：模拟引力与涌现时空中多组分场出现多重声速／双度量以及利用内部对称群恢复共同二阶传播锥的物理研究方向归属 Barceló–Liberati–Visser 2005 与 Liberati–Visser–Weinfurtner 2006 第 4.4 节；定理 10.2 第 3 项在不假定未约化全系统满足 [`QUANTUM-REALITY.md`](QUANTUM-REALITY.md) 定理 21.1／假设 23.1 的 $V_1=c^2T$、亦不要求隐藏表示不可约的前提下，由零模切交织恒等式 $D_gN_0=N_0R_g$ 给出可见不可约门户导出共同红外声速的精确代数证明，并在命题 10.3 中证明单共享隐藏标量门户（$M_h=1,v_h\ne c_0$）必然将 $M\ge2$ 个探针分裂为 $c_\perp^2=c_0^2$ 与 $c_\parallel^2=\frac{c_0^2+\|b\|^2v_h^2}{1+\|b\|^2}$。Schur 补特征值约化误差界的一般数值分析先例归属 Dusson–Sigal–Stamm 2021；定理 11.1 针对无隙声学零模矩阵束构造了同时正交化动能并保持零模核的上三角变换 $SU_T$，由分块完平方与 Weyl 单调性给出无隐藏常数（前因子为渐近紧致的 $1$）的非微扰双侧色散界。一维最近邻谐振链位移—动量响应的精确 Bessel 函数解归属 Schrödinger 1914，离散量子晶格有限群速度指数尾界的一般理论归属 Lieb–Robinson 1972 与谐振晶格推广 Nachtergaele–Sims 2006，幂函数 $t\mapsto t^{-1/2}$ 的算子单调性归属 Löwner 1934，低维连续对称无隙涨落的红外维数发散现象归属 Mermin–Wagner 1966 与 Hohenberg 1967；命题 11.2 以精确 $J_{2r}(\frac{2c_0t}{a})$ 超锥非零对易子与 $O(a^2|k|^4)$ 晶格方向差严格划清“红外领先共同声速”与“连续严格零支撑光锥／全频洛伦兹不变性”的界限，而定理 11.3 通过显式分离 $k=0$ 零模发散与 $k\ne0$ 零均值投影扇区的算子单调夹逼闭合了 [`QUANTUM-REALITY.md`](QUANTUM-REALITY.md) 注 19.1。第 10–11 节结论严格限定于二次谐振晶格模型，不声称已导出动态弯曲时空张量引力方程（Einstein 场方程）或非线性相互作用重整化不变性。
+
+## 追加锚（本行以下为增补区）
