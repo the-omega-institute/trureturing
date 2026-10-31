@@ -58,17 +58,4 @@ theorem transfer_shift {G : Type*} [Monoid G] (π : Bool → G) (n : ℕ)
     congrFun (read_decode n y) 0
   simpa [shiftTiling_apply, hread] using hnext
 
-/-- One fixed base trivializes every finite permutation-valued letter cocycle.
-Only the level and its transfer depend on the chosen finite action. -/
-theorem exists_continuous_permutation_transfer {Q : Type*} [Finite Q]
-    [TopologicalSpace (Equiv.Perm Q)]
-    (π : Bool → Equiv.Perm Q) :
-    ∃ β : FactorialPoint → Equiv.Perm Q,
-      Continuous β ∧ ∀ y, β (shiftFactorial 1 y) = π (y.1 0) * β y := by
-  let n := Nat.card (Equiv.Perm Q) + 1
-  refine ⟨transfer π n, continuous_transfer π n, ?_⟩
-  intro y
-  apply transfer_shift
-  exact fun a => word_holonomy_eq_one π (by dsimp [n]; omega) (by dsimp [n]; omega) a
-
 end D5.S1.Dynamics.Symbolic.PermutativeLifts

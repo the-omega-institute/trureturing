@@ -69,12 +69,6 @@ theorem repeatWord_getElem {α : Type*} (w : List α) {k i : ℕ}
           simp only [hm]
       simpa only [repeatWord_succ] using hget
 
-/-- The two substitutions at level n have the same zero-run and one or two
-copies of the same one-run. The index zero is used only for the initial letters. -/
-def directive (n : ℕ) (a : Bool) : List Bool :=
-  List.replicate n.factorial false ++
-    List.replicate ((if a then 2 else 1) * n.factorial) true
-
 /-- The actual binary words in the universal finite-permutation construction. -/
 def word : ℕ → Bool → List Bool
   | 0, a => [a]
@@ -86,11 +80,6 @@ def word : ℕ → Bool → List Bool
 theorem word_succ (n : ℕ) (a : Bool) :
     word (n + 1) a = repeatWord (word n false) (n + 1).factorial ++
       repeatWord (word n true) ((if a then 2 else 1) * (n + 1).factorial) := rfl
-
-/-- The same recursion, exposing the actual lower-level block-type word. -/
-theorem word_succ_flatMap (n : ℕ) (a : Bool) :
-    word (n + 1) a = (directive (n + 1) a).flatMap (word n) := by
-  simp [word_succ, directive, List.flatMap_replicate, repeatWord]
 
 @[simp] theorem word_length_succ (n : ℕ) (a : Bool) :
     (word (n + 1) a).length =
@@ -127,11 +116,6 @@ theorem word_length_lower_bound (n : ℕ) (a : Bool) :
 theorem word_length_pos (n : ℕ) (a : Bool) : 0 < (word n a).length := by
   have := word_length_lower_bound n a
   omega
-
-theorem word_ne_nil (n : ℕ) (a : Bool) : word n a ≠ [] := by
-  intro h
-  have := word_length_pos n a
-  simp [h] at this
 
 theorem word_false_length_lt_true {n : ℕ} (hn : 0 < n) :
     (word n false).length < (word n true).length := by

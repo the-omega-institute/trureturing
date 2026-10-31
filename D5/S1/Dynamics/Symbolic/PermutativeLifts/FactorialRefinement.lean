@@ -77,13 +77,6 @@ theorem refineState_type_true_iff (n : ℕ) (s : TileState (word (n + 1))) :
   simp only [refineState]
   split <;> simp_all
 
-theorem refineState_start (n : ℕ) (a : Bool) :
-    refineState n ⟨a, ⟨0, word_length_pos (n + 1) a⟩⟩ =
-      ⟨false, ⟨0, word_length_pos n false⟩⟩ := by
-  have h : 0 < (n + 1).factorial * (word n false).length :=
-    Nat.mul_pos (Nat.factorial_pos _) (word_length_pos n false)
-  simp [refineState, h]
-
 /-- Refining one adjacent pair preserves the actual local tiling rule. -/
 theorem refineState_next (n : ℕ) {s t : TileState (word (n + 1))}
     (hst : TileNext (word (n + 1)) s t) :

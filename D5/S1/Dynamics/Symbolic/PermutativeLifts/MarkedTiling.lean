@@ -69,10 +69,6 @@ def shiftTiling (W : Bool → List Bool) (k : ℤ) (x : MarkedTiling W) :
     MarkedTiling W :=
   ⟨shift k x.1, tiled_shift W x.2 k⟩
 
-theorem continuous_shiftTiling (W : Bool → List Bool) (k : ℤ) :
-    Continuous (shiftTiling W k) :=
-  ((continuous_shift k).comp continuous_subtype_val).subtype_mk _
-
 @[simp] theorem shiftTiling_apply (W : Bool → List Bool) (k : ℤ)
     (x : MarkedTiling W) (i : ℤ) :
     (shiftTiling W k x).1 i = x.1 (k + i) := rfl

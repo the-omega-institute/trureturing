@@ -42,7 +42,8 @@ theorem continuous_decode (n : ℕ) : Continuous (decode n) := by
     · exact fun hy => ⟨decode n y, hy, read_decode n y⟩
     · rintro ⟨x, hx, hxy⟩
       have he : x = decode n y := readTiling_injective n (hxy.trans (read_decode n y).symm)
-      simpa only [he] using hx
+      change decode n y ∈ s
+      rwa [he] at hx
   rw [heq]
   exact hclosed.preimage continuous_subtype_val
 
@@ -73,7 +74,7 @@ theorem factorial_no_positive_period (y : FactorialPoint) {p : ℕ} (hp : 0 < p)
   have hb : (x.1 b).2.val = 0 := (tiled_boundary_behind (word n) x.2 0).2
   have hlen := word_length_lower_bound n (x.1 b).1
   have hinside : (x.1 b).2.val + p < (word n (x.1 b).1).length := by
-    dsimp [n] at hlen
+    have hn : p < n := by dsimp [n]; omega
     omega
   have hforward := (tiled_forwards (word n) x.2 b p hinside).2
   have hsame := congrArg (fun z : MarkedTiling (word n) => (z.1 b).2.val) hxperiod

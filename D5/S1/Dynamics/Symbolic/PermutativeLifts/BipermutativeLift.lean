@@ -297,10 +297,6 @@ noncomputable def fullShiftEquiv : (ℤ → A) ≃ ((ℤ → A) × Prefix A k) w
   left_inv := reconstruct_coordinates bh
   right_inv := coordinates_reconstruct bh
 
-private theorem full_shift_conjugacy (x : ℤ → A) :
-    fullShiftEquiv bh (shift 1 x) = skewPerm bh (fullShiftEquiv bh x) :=
-  coordinates_shift bh x
-
 end Reconstruction
 
 section Topology

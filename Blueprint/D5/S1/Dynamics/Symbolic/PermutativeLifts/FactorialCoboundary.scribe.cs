@@ -12,7 +12,7 @@ internal sealed class FactorialCoboundaryDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("construction"), DeclarationHandle.Create(Owner + "transfer"),
                 H("Construction"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("At a level where both block holonomies are identity, the prefix product from the recognizable block boundary gives a continuous transfer. Advancing inside a block adds the current letter permutation on the left. At a boundary, identity holonomy supplies the same equation. The finite set Q remains the actual action fibre; it is not replaced by a regular group action."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("main-result"), DeclarationHandle.Create(Owner + "exists_continuous_permutation_transfer"),
+            Describe.Lean(DescribeId.Create("main-result"), DeclarationHandle.Create(Owner + "transfer_shift"),
                 H("Result"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("At a level where both block holonomies are identity, the prefix product from the recognizable block boundary gives a continuous transfer. Advancing inside a block adds the current letter permutation on the left. At a boundary, identity holonomy supplies the same equation. The finite set Q remains the actual action fibre; it is not replaced by a regular group action."))), DescribeRole.Theorem)),
             [ DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Dynamics/Symbolic/PermutativeLifts/FactorialSubshift")) ]));

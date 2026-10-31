@@ -86,7 +86,12 @@ private theorem shiftLift_add {k : ℕ} {h : (Fin (k + 2) → Bool) → Bool}
 instance liftShiftAction {k : ℕ} (h : (Fin (k + 2) → Bool) → Bool) :
     AddAction ℤ (LiftPoint h factorialSubshift) where
   vadd := shiftLift
-  zero_vadd x := by apply Subtype.ext; funext i; simp [shiftLift, shift]
+  zero_vadd x := by
+    change shiftLift 0 x = x
+    apply Subtype.ext
+    funext i
+    change x.1 (0 + i) = x.1 i
+    rw [zero_add]
   add_vadd := shiftLift_add
 
 /-- Every length at least two is represented by `k+2`; the fibre is exactly

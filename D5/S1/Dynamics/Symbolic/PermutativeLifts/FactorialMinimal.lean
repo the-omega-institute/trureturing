@@ -29,11 +29,6 @@ def factorialWindow (y : ℤ → Bool) (t : ℤ) (r : ℕ) : List Bool :=
 @[simp] theorem factorialWindow_length (y : ℤ → Bool) (t : ℤ) (r : ℕ) :
     (factorialWindow y t r).length = r := by simp [factorialWindow]
 
-theorem factorialWindow_occurs (y : ℤ → Bool) (t : ℤ) (r : ℕ) :
-    WordOccursAt (factorialWindow y t r) y t := by
-  intro j hj
-  simp [factorialWindow]
-
 private theorem readTile_coordinate (W : Bool → List Bool) (s : TileState W)
     (a : Bool) (p : ℕ) (hp : p < (W a).length)
     (ht : s.1 = a) (ho : s.2.val = p) : readTile W s = (W a)[p] := by
@@ -54,18 +49,17 @@ private theorem marked_block_occurs (W : Bool → List Bool) (x : MarkedTiling W
 private theorem occurs_of_infix {u v : List Bool} {y : ℤ → Bool} {t : ℤ}
     (huv : u <:+: v) (hv : WordOccursAt v y t) :
     ∃ k : ℕ, k + u.length ≤ v.length ∧ WordOccursAt u y (t + (k : ℤ)) := by
-  obtain ⟨pre, post, heq⟩ := huv
+  obtain ⟨pre, post, rfl⟩ := huv
   refine ⟨pre.length, ?_, ?_⟩
-  · rw [← heq]
-    simp only [List.length_append]
+  · simp only [List.length_append]
     omega
   · intro j hj
     have hij : pre.length + j < (pre ++ u ++ post).length := by
       simp only [List.length_append]
       omega
-    have hread := hv (pre.length + j) (by rw [← heq]; exact hij)
-    have hletter : v[pre.length + j]'(by rw [← heq]; exact hij) = u[j] := by
-      rw [← heq, List.getElem_append_right (by omega)]
+    have hread := hv (pre.length + j) hij
+    have hletter : (pre ++ u ++ post)[pre.length + j]'hij = u[j] := by
+      rw [List.getElem_append_right (by omega)]
       simp only [Nat.add_sub_cancel_left]
       exact List.getElem_append_left hj
     simpa only [Int.natCast_add, add_assoc] using hread.trans hletter
@@ -151,10 +145,16 @@ theorem factorialWindow_uniform_recurrence (y : FactorialPoint) (t : ℤ) (r : �
     cases a
     · exact word_false_length_le_true n
     · exact le_refl _
-  have hu := (x.1 u).2.isLt
   have hheight := hle (x.1 u).1
   have hkheight := hle (x.1 b).1
-  refine ⟨b + (k : ℤ), ?_, ?_, hocc⟩ <;> dsimp [b] <;> omega
+  have hk' : k + (factorialWindow y.1 t r).length ≤ (word n (x.1 b).1).length := hk
+  have hk_bound : k ≤ H := by omega
+  have hdist : (word n (x.1 u).1).length - (x.1 u).2.val ≤ H :=
+    (Nat.sub_le _ _).trans hheight
+  have hb_bounds : u ≤ b ∧ b ≤ u + (H : ℤ) := by
+    dsimp only [b]
+    constructor <;> omega
+  refine ⟨b + (k : ℤ), ?_, ?_, hocc⟩ <;> omega
 
 theorem factorialWindow_occurs_everywhere (y z : FactorialPoint) (t : ℤ) (r : ℕ) :
     ∃ s : ℤ, WordOccursAt (factorialWindow y.1 t r) z.1 s := by
@@ -210,11 +210,18 @@ theorem factorial_orbit_dense (y : FactorialPoint) :
 
 instance factorialShiftAction : AddAction ℤ FactorialPoint where
   vadd := shiftFactorial
-  zero_vadd y := by apply Subtype.ext; funext i; simp [shiftFactorial, shift_apply]
-  add_vadd a b y := by
+  zero_vadd y := by
+    change shiftFactorial 0 y = y
     apply Subtype.ext
     funext i
-    simp [shiftFactorial, shift_apply, add_assoc, add_comm a b]
+    change y.1 (0 + i) = y.1 i
+    exact congrArg y.1 (zero_add i)
+  add_vadd a b y := by
+    change shiftFactorial (a + b) y = shiftFactorial a (shiftFactorial b y)
+    apply Subtype.ext
+    funext i
+    change y.1 ((a + b) + i) = y.1 (b + (a + i))
+    exact congrArg y.1 (by omega : (a + b) + i = b + (a + i))
 
 instance factorialShiftMinimal : AddAction.IsMinimal ℤ FactorialPoint where
   dense_orbit := factorial_orbit_dense
