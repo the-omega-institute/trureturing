@@ -322,7 +322,7 @@ def ignored_by_snapshot(target, metadata, commit, paths):
         return set(result.stdout.split(b"\0")) >= set(paths)
 
 
-def interrupted_removal(target, metadata, stack, source, branch):
+def interrupted_removal(target, metadata, stack, source, branch, *, reconverge=True):
     """Return the record of an earlier removal whose deletion stopped part way."""
     record = metadata / REMOVAL_RECORD
     if not record.exists():
@@ -346,6 +346,8 @@ def interrupted_removal(target, metadata, stack, source, branch):
     recorded_tip = git(target, "rev-parse", "--verify", removal["recovery_branch"] + "^{commit}", check=False)
     if (value(target, "rev-parse", "--verify", "HEAD^{commit}") != commit
             or recorded_tip.returncode or os.fsdecode(recorded_tip.stdout).strip() != commit):
+        if not reconverge:
+            raise Refused("interrupted_removal_identity_changed")
         from worktree_publication import commit_snapshot, recovery_root
         # Pin the old object before checkpointing; its former branch can have moved.
         predecessor = dict(commit=commit, recovery_branch=recovery_root(stack, source, target, commit))

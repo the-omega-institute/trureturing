@@ -50,14 +50,14 @@ private theorem first_two_layer :
   norm_num only [Nat.cast_ofNat]
   rw [div_mul_cancel₀ _ hlog]
 
-private theorem half_first_two_layer_pos : 0 < goldenLayerMarginal 2 1 / 2 := by
+theorem half_first_two_layer_pos : 0 < goldenLayerMarginal 2 1 / 2 := by
   have hlog : 0 < Real.log (2 : ℝ) := Real.log_pos (by norm_num)
   have hpos : 0 < Real.log (3 / 2 : ℝ) := Real.log_pos (by norm_num)
   have hmarginal : 0 < goldenLayerMarginal 2 1 :=
     (mul_pos_iff_of_pos_right hlog).mp (by rwa [first_two_layer])
   exact div_pos hmarginal (by norm_num)
 
-private theorem two_record_at_half_first_layer :
+theorem two_record_at_half_first_layer :
     ∀ n : ℕ, 0 < n → n < 2 →
       goldenResourceObjective (goldenLayerMarginal 2 1 / 2) n <
         goldenResourceObjective (goldenLayerMarginal 2 1 / 2) 2 := by

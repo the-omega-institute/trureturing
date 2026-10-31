@@ -1,0 +1,14 @@
+**Equation 5.3 (`eq:L`).**
+
+$$
+L=T_G^{-1}T_RU_\phi^{-1}:H_1(T)\longrightarrow H_1(G),
+ \qquad L^*=\phi_\#\kappa_R\kappa_G^{-1}.
+$$
+
+It satisfies $`\langle L^*a,z\rangle_T=\langle a,Lz\rangle_G`$.
+If $Q_G,Q_T$ are the column matrices in [(5.2)](#eq-columns), and $D_e$
+deletes the central coordinate, the unique matrix $M$ is determined by
+
+<a id="eq-solve"></a>
+<a id="eq:solve"></a>
+
