@@ -4,9 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Two-sided equal-length tiling phases, word recognizability, and periodic common columns. -/
+   digest: Equal-length tiling phases, recognizability, and periodic common columns. -/
 
 import D5.S1.Dynamics.Symbolic.PermutativeLifts.MarkedTiling
+
+/-! # Equal-length marked tiling phases and recognizability
+
+Physical offsets give two-sided cyclic phases. Visible words and boundaries
+identify marked tilings, and shared columns give periodic coordinates. -/
 
 set_option autoImplicit false
 
@@ -47,23 +52,25 @@ theorem tiled_offset_phase (W : Bool → List Bool) (L : ℕ)
     induction j using Int.induction_on with
     | zero =>
       have hxlt : ((x.1 0).2.val : ℤ) < (L : ℤ) := by
-        have := (x.1 0).2.isLt
-        rw [hW] at this
+        have hh : (x.1 0).2.val < L := by
+          simpa only [hW] using (x.1 0).2.isLt
         omega
-      dsimp [y, periodicTile]
-      rw [hW, zero_add, Int.emod_eq_of_lt (by omega) hxlt]
+      simp only [y, periodicTile, hW, zero_add]
+      rw [Int.emod_eq_of_lt (by omega) hxlt]
       simp
     | succ n ih =>
       exact (tileNext_offset_eq_iff W L hW (x.2 (n : ℤ)) (hy (n : ℤ))).1 ih
     | pred n ih =>
       apply (tileNext_offset_eq_iff W L hW (x.2 (-(n : ℤ) - 1))
         (hy (-(n : ℤ) - 1))).2
-      simpa only [sub_add_cancel] using ih
+      have hi : -(n : ℤ) - 1 + 1 = -(n : ℤ) := by omega
+      simpa only [hi] using ih
   have hm0 := Int.emod_nonneg (i + ((x.1 0).2.val : ℤ))
     (show (L : ℤ) ≠ 0 by omega)
   have hm := heq i
   dsimp [y, periodicTile] at hm
-  rw [hW] at hm
+  have hm' : (x.1 i).2.val = ((i + ((x.1 0).2.val : ℤ)) % (L : ℤ)).toNat := by
+    simpa only [hW] using hm
   omega
 
 /-- Every integer multiple of the common length preserves all offsets. -/
@@ -74,7 +81,7 @@ theorem tiled_offset_periodic (W : Bool → List Bool) (L : ℕ)
   have h₁ := tiled_offset_phase W L hW hL x (i + k * (L : ℤ))
   have h₂ := tiled_offset_phase W L hW hL x i
   rw [show i + k * (L : ℤ) + ((x.1 0).2.val : ℤ) =
-    (i + ((x.1 0).2.val : ℤ)) + k * (L : ℤ) by ring,
+    (i + ((x.1 0).2.val : ℤ)) + k * (L : ℤ) by omega,
     Int.add_mul_emod_self_right] at h₁
   omega
 
@@ -83,7 +90,7 @@ theorem tiled_offset_aligned (W : Bool → List Bool) (L : ℕ)
     (hW : ∀ a, (W a).length = L) (hL : 0 < L)
     (x : MarkedTiling W) (hzero : (x.1 0).2.val = 0) (i : ℤ) :
     ((x.1 i).2.val : ℤ) = i % (L : ℤ) := by
-  simpa only [hzero, Nat.cast_zero, add_zero] using tiled_offset_phase W L hW hL x i
+  simpa [hzero] using tiled_offset_phase W L hW hL x i
 
 private theorem readTile_eq_get (W : Bool → List Bool) (s : TileState W)
     (a : Bool) (j : ℕ) (hj : j < (W a).length)
@@ -144,16 +151,16 @@ theorem tiled_common_column_periodic (W : Bool → List Bool) (L : ℕ)
     (hW : ∀ a, (W a).length = L) (hL : 0 < L)
     (x : MarkedTiling W) (i : ℤ)
     (hc : (W false).get ⟨(x.1 i).2.val, by
-        have := (x.1 i).2.isLt; rw [hW] at this; rw [hW]; exact this⟩ =
+        simpa only [hW] using (x.1 i).2.isLt⟩ =
       (W true).get ⟨(x.1 i).2.val, by
-        have := (x.1 i).2.isLt; rw [hW] at this; rw [hW]; exact this⟩)
+        simpa only [hW] using (x.1 i).2.isLt⟩)
     (k : ℤ) : readTiling W x (i + k * (L : ℤ)) = readTiling W x i := by
   have hlt : (x.1 i).2.val < L := by simpa only [hW] using (x.1 i).2.isLt
   have h₁ := readTile_eq_get W (x.1 (i + k * (L : ℤ)))
-    (x.1 (i + k * (L : ℤ))).1 (x.1 i).2.val (by rw [hW]; exact hlt) rfl
+    (x.1 (i + k * (L : ℤ))).1 (x.1 i).2.val (by simpa only [hW] using hlt) rfl
     (tiled_offset_periodic W L hW hL x i k)
   have h₂ := readTile_eq_get W (x.1 i) (x.1 i).1 (x.1 i).2.val
-    (by rw [hW]; exact hlt) rfl rfl
+    (by simpa only [hW] using hlt) rfl rfl
   change readTile W (x.1 (i + k * (L : ℤ))) = readTile W (x.1 i)
   rw [h₁, h₂]
   cases (x.1 (i + k * (L : ℤ))).1 <;> cases (x.1 i).1
@@ -161,5 +168,22 @@ theorem tiled_common_column_periodic (W : Bool → List Bool) (L : ℕ)
   · exact hc
   · exact hc.symm
   · rfl
+
+-- Temporary exact applications, removed after the preliminary kernel check.
+example (x : MarkedTiling (fun _ => [false, true])) (i k : ℤ) :
+    readTiling (fun _ => [false, true]) x (i + k * 2) =
+      readTiling (fun _ => [false, true]) x i := by
+  exact tiled_common_column_periodic (fun _ => [false, true]) 2 (fun _ => rfl)
+    (by decide) x i rfl k
+
+example (x y : MarkedTiling (fun a => [a, !a]))
+    (hr : readTiling (fun a => [a, !a]) x = readTiling (fun a => [a, !a]) y)
+    (hb : ∀ i, (x.1 i).2.val = 0 ↔ (y.1 i).2.val = 0) : x = y := by
+  have hinj : Function.Injective (fun a : Bool => [a, !a]) := by
+    intro a b h
+    simpa only [List.head?_cons, Option.some.injEq] using
+      congrArg (fun l : List Bool => l.head?) h
+  exact equalLength_tiling_eq_of_read_boundaries (fun a => [a, !a]) 2
+    (fun _ => rfl) hinj x y hr hb
 
 end D5.S1.Dynamics.Symbolic.PermutativeLifts
