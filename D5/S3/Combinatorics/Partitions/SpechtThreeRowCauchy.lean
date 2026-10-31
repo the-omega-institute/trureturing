@@ -40,9 +40,9 @@ private def deltaProduct {R : Type*} [CommRing R] (x : Fin 3 → R) : R :=
 
 /-- The cleared three-by-three Cauchy numerator, evaluated over any commutative ring. -/
 private theorem cauchy_numerator {R : Type*} [CommRing R] (x y : Fin 3 → R) :
-    (fun i : Fin 3 =>
+    Matrix.det (fun i : Fin 3 =>
       ![(1-x i*y 1)*(1-x i*y 2), (1-x i*y 0)*(1-x i*y 2),
-        (1-x i*y 0)*(1-x i*y 1)]).det = deltaProduct x * deltaProduct y := by
+        (1-x i*y 0)*(1-x i*y 1)]) = deltaProduct x * deltaProduct y := by
   rw [Matrix.det_fin_three]
   simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val, deltaProduct]
   ring
@@ -103,16 +103,18 @@ private theorem edgeWeight_add (i j : Fin 3) (k l : ℕ) :
   omega
 
 /-- The geometric series of a single labelled edge, defined by its monomials. -/
-private def edgeSeries (i j : Fin 3) : Series :=
-  fun d => if ∃ k : ℕ, d = edgeWeight i j k then 1 else 0
+private def edgeSeries (i j : Fin 3) : Series := by
+  classical
+  exact fun d => if ∃ k : ℕ, d = edgeWeight i j k then 1 else 0
 
 private theorem edgeSeries_inverse (i j : Fin 3) :
     (1 - MvPowerSeries.monomial (edgeWeight i j 1) (1 : ℤ)) * edgeSeries i j = 1 := by
   classical
   apply MvPowerSeries.ext
   intro d
-  simp only [sub_mul, one_mul, map_sub, MvPowerSeries.coeff_monomial_mul, one_mul,
-    MvPowerSeries.coeff_one, MvPowerSeries.coeff_apply]
+  rw [sub_mul, one_mul, map_sub, MvPowerSeries.coeff_monomial_mul,
+    MvPowerSeries.coeff_one]
+  simp only [one_mul, MvPowerSeries.coeff_apply]
   by_cases he : ∃ k : ℕ, d = edgeWeight i j k
   · obtain ⟨k, rfl⟩ := he
     have hsub : edgeWeight i j k - edgeWeight i j 1 = edgeWeight i j (k-1) := by
@@ -124,8 +126,9 @@ private theorem edgeSeries_inverse (i j : Fin 3) :
       simp [edgeSeries, edgeWeight, Finsupp.le_def]
     · have hle : edgeWeight i j 1 ≤ edgeWeight i j k := by
         intro t
-        rcases t with t | t <;> by_cases ht : t = i <;> by_cases ht' : t = j <;>
-          simp [edgeWeight, Finsupp.single_apply, ht, ht'] <;> omega
+        rcases t with t | t
+        · by_cases ht : i = t <;> simp [edgeWeight, Finsupp.single_apply, ht] <;> omega
+        · by_cases ht : j = t <;> simp [edgeWeight, Finsupp.single_apply, ht] <;> omega
       have hne : edgeWeight i j k ≠ 0 := by
         intro h
         have hx := congrArg (fun e : Variables →₀ ℕ => e (Sum.inl i)) h
@@ -167,13 +170,13 @@ private theorem matching_product_coefficient (σ : Perm (Fin 3)) (u v : Fin 3 �
     have hs : ∑ i, l i = d := (mem_finsuppAntidiag.mp hl).1
     have hx (i : Fin 3) : k i = u i := by
       have h := congrArg (fun e : Variables →₀ ℕ => e (Sum.inl i)) hs
-      simpa [hk, edgeWeight, d, doubleWeight] using h
+      simpa [hk, edgeWeight, Finsupp.single_apply, d, doubleWeight] using h
     have hy (i : Fin 3) : k i = v (σ i) := by
       have h := congrArg (fun e : Variables →₀ ℕ => e (Sum.inr (σ i))) hs
-      simpa [hk, edgeWeight, σ.injective.eq_iff, d, doubleWeight] using h
+      simpa [hk, edgeWeight, Finsupp.single_apply, σ.injective.eq_iff, d, doubleWeight] using h
     refine ⟨?_, fun i => (hx i).symm.trans (hy i)⟩
     ext i t
-    simp only [L, hk, hx]
+    simp only [L, Finsupp.coe_equivFunOnFinite_symm, hk, hx]
   by_cases hm : ∀ i, u i = v (σ i)
   · rw [if_pos hm]
     have hL : L ∈ finsuppAntidiag univ d := by
@@ -181,9 +184,9 @@ private theorem matching_product_coefficient (σ : Perm (Fin 3)) (u v : Fin 3 �
       refine ⟨?_, subset_univ _⟩
       ext t
       rcases t with i | j
-      · simp [L, edgeWeight, d, doubleWeight]
+      · simp [L, edgeWeight, Finsupp.single_apply, d, doubleWeight]
       · rw [← σ.apply_symm_apply j]
-        simp [L, edgeWeight, σ.injective.eq_iff, d, doubleWeight, hm]
+        simp [L, edgeWeight, Finsupp.single_apply, σ.injective.eq_iff, d, doubleWeight, hm]
     rw [Finset.sum_eq_single L]
     · simp [L, MvPowerSeries.coeff_apply, edgeSeries]
     · intro l hl hne
@@ -211,7 +214,7 @@ private theorem strict_matching_unique (u v : Fin 3 → ℕ)
     generalize e1 : σ 1 = i1 at *
     generalize e2 : σ 2 = i2 at *
     fin_cases i0 <;> fin_cases i1 <;> fin_cases i2 <;> simp_all
-    all_goals first | omega | (ext i; fin_cases i <;> assumption)
+    all_goals first | omega | (apply Equiv.ext; intro i; fin_cases i <;> simp_all)
   refine ⟨hid, funext fun i => ?_⟩
   simpa [hid] using hm i
 
@@ -245,21 +248,23 @@ private theorem coeff_cauchyKernel (n : ℕ) (a b : Fin 3 → ℕ) (ha : ∑ i, 
     have hs := (mem_finsuppAntidiag.mp (mem_filter.mp hl).1).1
     have hrow (i : Fin 3) : ∑ j, toTable l (i,j) = a i := by
       have h := congrArg (fun e : Variables →₀ ℕ => e (Sum.inl i)) hs
-      simpa [recover l hl, edgeWeight, Fintype.sum_prod_type, d, doubleWeight] using h
+      simpa [recover l hl, edgeWeight, Finsupp.single_apply, Fintype.sum_prod_type, d, doubleWeight] using h
     have hcol (j : Fin 3) : ∑ i, toTable l (i,j) = b j := by
       have h := congrArg (fun e : Variables →₀ ℕ => e (Sum.inr j)) hs
-      simpa [recover l hl, edgeWeight, Fintype.sum_prod_type, d, doubleWeight] using h
+      simpa [recover l hl, edgeWeight, Finsupp.single_apply, Fintype.sum_prod_type, d, doubleWeight] using h
     apply mem_filter.mpr
     refine ⟨?_, ?_, ?_⟩
     · rw [mem_piAntidiag]
       refine ⟨?_, fun _ _ => mem_univ _⟩
-      rw [Fintype.sum_prod_type]
-      simp_rw [hrow]
-      exact ha
+      calc
+        (∑ e : Fin 3 × Fin 3, toTable l e) =
+            ∑ i : Fin 3, ∑ j : Fin 3, toTable l (i,j) := Fintype.sum_prod_type _
+        _ = ∑ i : Fin 3, a i := sum_congr rfl (fun i _ => hrow i)
+        _ = n := ha
     · intro i
-      exact_mod_cast hrow i
+      exact congrArg (fun k : ℕ => (k : ℤ)) (hrow i)
     · intro j
-      exact_mod_cast hcol j
+      exact congrArg (fun k : ℕ => (k : ℤ)) (hcol j)
   have from_mem (A : Fin 3 × Fin 3 → ℕ) (hA : A ∈ T) : toDecomp A ∈ S := by
     obtain ⟨-, hrow, hcol⟩ := mem_filter.mp hA
     apply mem_filter.mpr
@@ -268,19 +273,19 @@ private theorem coeff_cauchyKernel (n : ℕ) (a b : Fin 3 → ℕ) (ha : ∑ i, 
     refine ⟨?_, subset_univ _⟩
     ext t
     rcases t with i | j
-    · have h : ∑ j, A (i,j) = a i := by exact_mod_cast hrow i
-      simpa [toDecomp, edgeWeight, Fintype.sum_prod_type, d, doubleWeight] using h
-    · have h : ∑ i, A (i,j) = b j := by exact_mod_cast hcol j
-      simpa [toDecomp, edgeWeight, Fintype.sum_prod_type, d, doubleWeight] using h
+    · have h : ∑ j, A (i,j) = a i := Int.natCast_inj.mp (hrow i)
+      simpa [toDecomp, edgeWeight, Finsupp.single_apply, Fintype.sum_prod_type, d, doubleWeight] using h
+    · have h : ∑ i, A (i,j) = b j := Int.natCast_inj.mp (hcol j)
+      simpa [toDecomp, edgeWeight, Finsupp.single_apply, Fintype.sum_prod_type, d, doubleWeight] using h
   have hcard : S.card = T.card := by
     apply card_bij' (fun l _ => toTable l) (fun A _ => toDecomp A) to_mem from_mem
     · intro l hl
       ext e t
-      simpa only [toDecomp] using congrArg (fun w : Variables →₀ ℕ => w t) (recover l hl e).symm
+      simpa only [toDecomp, Finsupp.coe_equivFunOnFinite_symm] using congrArg (fun w : Variables →₀ ℕ => w t) (recover l hl e).symm
     · intro A _
       funext e
       simp [toTable, toDecomp, edgeWeight]
-  rw [cauchyKernel, ← Fintype.prod_prod_type, MvPowerSeries.coeff_prod]
+  rw [cauchyKernel, ← Fintype.prod_prod_type', MvPowerSeries.coeff_prod]
   simp only [MvPowerSeries.coeff_apply, edgeSeries, prod_boole, mem_univ, forall_true_left]
   rw [sum_boole]
   change (S.card : ℤ) = (T.card : ℤ)
@@ -295,7 +300,7 @@ theorem cauchy_coefficient_delta (u v : Fin 3 → ℕ)
       if u = v then (1 : ℤ) else 0 := by
   classical
   have hid : doubleVandermonde * cauchyKernel =
-      (fun i j : Fin 3 => edgeSeries i j).det := by
+      Matrix.det (fun i j : Fin 3 => edgeSeries i j) := by
     apply cauchy_inverse_identity
     intro i j
     have hm : (MvPowerSeries.X (Sum.inl i) : Series) * MvPowerSeries.X (Sum.inr j) =
@@ -328,9 +333,14 @@ private theorem side_vandermonde (f : Fin 3 → Variables) :
         MvPowerSeries.monomial (Finsupp.mapDomain f (permutedStaircase σ)) (1 : ℤ) := by
   let φ : MvPolynomial (Fin 3) ℤ →+* Series :=
     MvPolynomial.coeToMvPowerSeries.ringHom.comp (MvPolynomial.rename f).toRingHom
+  have hX (i : Fin 3) : φ (MvPolynomial.X i) = MvPowerSeries.X (f i) := by
+    simp [φ]
+  have hm (e : Fin 3 →₀ ℕ) (c : ℤ) : φ (MvPolynomial.monomial e c) =
+      MvPowerSeries.monomial (Finsupp.mapDomain f e) c := by
+    simp [φ, MvPolynomial.rename_monomial]
   have h := congrArg φ vandermonde_eq_signed_monomials
-  simpa [φ, D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.vandermonde3,
-    deltaProduct, Units.smul_def] using h
+  simpa only [D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.vandermonde3,
+    map_mul, map_sub, map_sum, map_zsmul, hX, hm, deltaProduct] using h
 
 private theorem sideWeights (σ τ : Perm (Fin 3)) :
     Finsupp.mapDomain Sum.inl (permutedStaircase σ) +
@@ -437,9 +447,8 @@ private theorem signedContingencyGram_eq_kernelCoeff {n : ℕ} (r q : Fin 3 → 
         (doubleWeight (fun i => r i + staircase i) (fun j => q j + staircase j))
         (doubleVandermonde * cauchyKernel) := by
   rw [doubleVandermonde_expansion, sum_mul]
-  simp_rw [sum_mul, smul_mul_assoc, map_sum, map_smul, coeff_shifted_kernel r q hr,
-    smul_eq_mul]
-  rfl
+  simp only [sum_mul, smul_mul_assoc, map_sum, map_smul, coeff_shifted_kernel r q hr,
+    smul_eq_mul, signedContingencyGram]
 
 /-- The finite signed contingency Gram is the Kronecker delta for decreasing
 natural triples of every degree. No Specht assumption enters this identity. -/
@@ -485,8 +494,8 @@ theorem spechtCharValue_eq_frobChar {n : ℕ} (r : Fin 3 → ℕ)
     ← spechtCharValue_eq_spechtChar _ _ hπ] at h
   exact_mod_cast h
 
-private theorem evTypes_parts {n : ℕ} (λ : n.Partition) {τ : List ℕ}
-    (hτ : τ ∈ D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes λ.parts.toList) :
+private theorem evTypes_parts {n : ℕ} (lam : n.Partition) {τ : List ℕ}
+    (hτ : τ ∈ D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes lam.parts.toList) :
     τ.sum = 2*n ∧ ∀ a ∈ τ, 0 < a := by
   have hgeneral (l : List ℕ) (hl : ∀ a ∈ l, 0 < a) :
       ∀ τ ∈ D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes l,
@@ -508,54 +517,54 @@ private theorem evTypes_parts {n : ℕ} (λ : n.Partition) {τ : List ℕ}
         constructor
         · simp only [List.sum_cons]; omega
         · simpa only [List.mem_cons, forall_eq_or_imp] using And.intro ha (And.intro ha hp)
-  simpa [λ.parts_sum] using hgeneral λ.parts.toList (fun a ha => λ.parts_pos (by simpa using ha)) τ hτ
+  simpa [lam.parts_sum] using hgeneral lam.parts.toList (fun a ha => lam.parts_pos (by simpa using ha)) τ hτ
 
 /-- The complete Ev list defines a partition of 2n, including every one-cycle. -/
-def evPartition {n : ℕ} (λ : n.Partition)
-    (τ : {τ // τ ∈ D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes λ.parts.toList}) :
+def evPartition {n : ℕ} (lam : n.Partition)
+    (τ : {τ // τ ∈ D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes lam.parts.toList}) :
     (2*n).Partition where
   parts := τ.val
   parts_pos := by
     intro a ha
-    exact (evTypes_parts λ τ.property).2 a (by simpa using ha)
-  parts_sum := by simpa using (evTypes_parts λ τ.property).1
+    exact (evTypes_parts lam τ.property).2 a (by simpa using ha)
+  parts_sum := by simpa using (evTypes_parts lam τ.property).1
 
 private theorem rows_total {m : ℕ} {r : Fin 3 → ℕ}
     (hr : r ∈ D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.R3 m) : ∑ i, r i = m :=
   Finset.Nat.mem_antidiagonalTuple.mp (mem_filter.mp hr).1
 
 /-- The signed even-row sum of actual ordinary character values, with Ev multiplicity. -/
-def signedEvSpechtSum {n : ℕ} (λ : n.Partition) : ℤ :=
-  ((D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes λ.parts.toList).attach.map
+def signedEvSpechtSum {n : ℕ} (lam : n.Partition) : ℤ :=
+  ((D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes lam.parts.toList).attach.map
     fun τ => ∑ r ∈ (D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.R3 (2*n)).attach,
       (-1 : ℤ)^τ.val.length *
-        spechtCharValue (tripleShape r.val (rows_total r.property)) (evPartition λ τ)).sum
+        spechtCharValue (tripleShape r.val (rows_total r.property)) (evPartition lam τ)).sum
 
 /-- The rectangle sum of actual ordinary character values; odd n is included. -/
-def rectangleEvSpechtSum {n : ℕ} (λ : n.Partition) : ℤ :=
-  ((D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes λ.parts.toList).attach.map
+def rectangleEvSpechtSum {n : ℕ} (lam : n.Partition) : ℤ :=
+  ((D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes lam.parts.toList).attach.map
     fun τ => spechtCharValue (tripleShape ![n,n,0] (by simp [Fin.sum_univ_three]; omega))
-      (evPartition λ τ)).sum
+      (evPartition lam τ)).sum
 
 /-- Both original inner Ev sums consume the actual same-partition trace bridge. -/
-theorem evSpechtSums_eq_coefficients {n : ℕ} (λ : n.Partition) :
-    signedEvSpechtSum λ =
-      ((D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes λ.parts.toList).map
+theorem evSpechtSums_eq_coefficients {n : ℕ} (lam : n.Partition) :
+    signedEvSpechtSum lam =
+      ((D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes lam.parts.toList).map
         fun τ => ∑ r ∈ D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.R3 (2*n),
           (-1 : ℤ)^τ.length *
             D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.frobChar r τ).sum ∧
-    rectangleEvSpechtSum λ =
-      ((D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes λ.parts.toList).map
+    rectangleEvSpechtSum lam =
+      ((D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes lam.parts.toList).map
         fun τ => D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.frobChar ![n,n,0] τ).sum := by
-  have hrow (τ : {τ // τ ∈ D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes λ.parts.toList})
+  have hrow (τ : {τ // τ ∈ D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes lam.parts.toList})
       (r : {r // r ∈ D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.R3 (2*n)}) :
-      spechtCharValue (tripleShape r.val (rows_total r.property)) (evPartition λ τ) =
+      spechtCharValue (tripleShape r.val (rows_total r.property)) (evPartition lam τ) =
         D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.frobChar r.val τ.val :=
     spechtCharValue_eq_frobChar r.val (rows_total r.property)
       (mem_filter.mp r.property).2.1 (mem_filter.mp r.property).2.2.1 _ rfl
-  have hrect (τ : {τ // τ ∈ D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes λ.parts.toList}) :
+  have hrect (τ : {τ // τ ∈ D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.evTypes lam.parts.toList}) :
       spechtCharValue (tripleShape ![n,n,0] (by simp [Fin.sum_univ_three]; omega))
-        (evPartition λ τ) =
+        (evPartition lam τ) =
         D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.frobChar ![n,n,0] τ.val :=
     spechtCharValue_eq_frobChar ![n,n,0] _ (by simp) (by simp) _ rfl
   constructor
@@ -566,45 +575,45 @@ theorem evSpechtSums_eq_coefficients {n : ℕ} (λ : n.Partition) :
 
 /-- Actual ordinary characters satisfy the original per-partition Ev identity.
 Its weighted consumers below evaluate both reciprocal-centralizer averages. -/
-theorem ordinaryEv_identity {n : ℕ} (hn : 1 ≤ n) (λ : n.Partition) :
-    signedEvSpechtSum λ = rectangleEvSpechtSum λ := by
-  rw [(evSpechtSums_eq_coefficients λ).1, (evSpechtSums_eq_coefficients λ).2]
-  exact D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.result n hn λ
+theorem ordinaryEv_identity {n : ℕ} (hn : 1 ≤ n) (lam : n.Partition) :
+    signedEvSpechtSum lam = rectangleEvSpechtSum lam := by
+  rw [(evSpechtSums_eq_coefficients lam).1, (evSpechtSums_eq_coefficients lam).2]
+  exact D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.result n hn lam
 
 /-- The two reciprocal-centralizer weighted averages of actual ordinary characters
 are equal; the evaluated consumers below give their common value. -/
 theorem ordinaryWeightedEv_identity (n : ℕ) (hn : 1 ≤ n) :
-    (∑ λ : n.Partition,
-      (D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.zPartition λ : ℚ)⁻¹ *
-        (signedEvSpechtSum λ : ℚ)) =
-    ∑ λ : n.Partition,
-      (D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.zPartition λ : ℚ)⁻¹ *
-        (rectangleEvSpechtSum λ : ℚ) := by
+    (∑ lam : n.Partition,
+      (D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.zPartition lam : ℚ)⁻¹ *
+        (signedEvSpechtSum lam : ℚ)) =
+    ∑ lam : n.Partition,
+      (D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.zPartition lam : ℚ)⁻¹ *
+        (rectangleEvSpechtSum lam : ℚ) := by
   apply sum_congr rfl
-  intro λ _
-  rw [ordinaryEv_identity hn λ]
+  intro lam _
+  rw [ordinaryEv_identity hn lam]
 
 open PowerSeries
 open D5.S3.Combinatorics.Partitions.HemmerStraubWestrem
 open D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2
 
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 2000000 in
 /-- The rectangular ordinary average in the full original HSW conjecture.
 The partition sum, Laurent series and coefficient maps below are local to this
 consumer. ODE uniqueness and the rectangular coefficient identity are reused
 from their existing owners, with no new coefficient-character definition. -/
-set_option maxRecDepth 4096 in
-set_option maxHeartbeats 2000000 in
 theorem ordinaryWeightedRectangleEv_evaluated (n : ℕ) (hn : 1 ≤ n) :
-    (∑ λ : n.Partition,
-      (D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.zPartition λ : ℚ)⁻¹ *
-        (rectangleEvSpechtSum λ : ℚ)) =
+    (∑ lam : n.Partition,
+      (D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.zPartition lam : ℚ)⁻¹ *
+        (rectangleEvSpechtSum lam : ℚ)) =
       if Even n then (((n / 2 + 2).choose 2 : ℕ) : ℚ) else 0 := by
   classical
   let cycleWeight (k : ℕ) : LaurentPolynomial ℚ :=
     2 * (LaurentPolynomial.T (k : ℤ) + 1 + LaurentPolynomial.T (-(k : ℤ)))
-  let term {d : ℕ} (λ : d.Partition) : LaurentPolynomial ℚ :=
-    (zPartition λ : ℚ)⁻¹ • (λ.parts.map cycleWeight).prod
-  let A (d : ℕ) : LaurentPolynomial ℚ := ∑ λ : d.Partition, term λ
+  let term {d : ℕ} (lam : d.Partition) : LaurentPolynomial ℚ :=
+    (zPartition lam : ℚ)⁻¹ • (lam.parts.map cycleWeight).prod
+  let A (d : ℕ) : LaurentPolynomial ℚ := ∑ lam : d.Partition, term lam
 
   have partition_exponent_count {n : ℕ} (p : Nat.Partition n)
       (k : ℕ) (hk : 0 < k) : partitionExponent p (k - 1) = p.parts.count k := by
@@ -1111,14 +1120,14 @@ theorem ordinaryWeightedRectangleEv_evaluated (n : ℕ) (hn : 1 ≤ n) :
       Int.coe_castRingHom]
 
   have haverage :
-      (∑ λ : n.Partition, (zPartition λ : ℚ)⁻¹ * (rectangleEvSpechtSum λ : ℚ)) =
+      (∑ lam : n.Partition, (zPartition lam : ℚ)⁻¹ * (rectangleEvSpechtSum lam : ℚ)) =
       ((Finsupp.lapply (R := ℚ) 0).comp
         (AddMonoidAlgebra.coeffLinearEquiv ℚ).toLinearMap)
           ((1 - LaurentPolynomial.T (-1 : ℤ)) * A n) := by
     simp only [A, Finset.mul_sum, map_sum]
     apply Finset.sum_congr rfl
-    intro λ _
-    rw [term, mul_smul_comm, map_smul, character_constantTerm n hn λ]
+    intro lam _
+    rw [term, mul_smul_comm, map_smul, character_constantTerm n hn lam]
     rfl
   rw [haverage]
   have he := congrArg (coeff n) weighted_constant_term_series
@@ -1132,9 +1141,9 @@ theorem ordinaryWeightedRectangleEv_evaluated (n : ℕ) (hn : 1 ≤ n) :
 /-- The signed ordinary average has the same evaluated value, with all even
 three-row shapes and all occurrence-wise Ev outcomes retained. -/
 theorem ordinaryWeightedSignedEv_evaluated (n : ℕ) (hn : 1 ≤ n) :
-    (∑ λ : n.Partition,
-      (D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.zPartition λ : ℚ)⁻¹ *
-        (signedEvSpechtSum λ : ℚ)) =
+    (∑ lam : n.Partition,
+      (D5.S3.Combinatorics.PerfectMatchings.DeformedJucysMurphyC2.zPartition lam : ℚ)⁻¹ *
+        (signedEvSpechtSum lam : ℚ)) =
       if Even n then (((n / 2 + 2).choose 2 : ℕ) : ℚ) else 0 := by
   rw [ordinaryWeightedEv_identity n hn]
   exact ordinaryWeightedRectangleEv_evaluated n hn
