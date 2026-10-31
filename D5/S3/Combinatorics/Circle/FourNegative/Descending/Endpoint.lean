@@ -107,13 +107,13 @@ theorem actualSource_descending_joint_lift (a b c d : ℕ)
     exact ⟨by simpa only [if_pos hi] using tab.2.1 r i (by omega),
       by simpa only [if_pos hi] using tab.2.2.1 r i (by omega)⟩
   have mf := selected_mass a b c d hd hdc hcb hba f A B M
-    (fun i hi => by simpa [chainStart,hbase] using (positives 0 i (by simpa [chainLength] using hi)).1)
-    (fun i hi => by simpa [chainStart,hbase] using (positives 1 i (by simpa [chainLength] using hi)).1)
-    (fun i hi => by simpa [chainStart,hbase] using (positives 3 i (by simpa [chainLength] using hi)).1)
+    (fun i hi => by simpa [chainStart,hbase] using (positives 0 i (by dsimp [chainLength]; omega)).1)
+    (fun i hi => by simpa [chainStart,hbase] using (positives 1 i (by dsimp [chainLength]; omega)).1)
+    (fun i hi => by simpa [chainStart,hbase] using (positives 3 i (by dsimp [chainLength]; omega)).1)
   have mg := selected_mass a b c d hd hdc hcb hba g (2*A) (2*B-1) J
-    (fun i hi => by simpa [chainStart,hnewbase] using (positives 0 i (by simpa [chainLength] using hi)).2)
-    (fun i hi => by simpa [chainStart,hnewbase] using (positives 1 i (by simpa [chainLength] using hi)).2)
-    (fun i hi => by simpa [chainStart,hnewbase] using (positives 3 i (by simpa [chainLength] using hi)).2)
+    (fun i hi => by simpa [chainStart,hnewbase] using (positives 0 i (by dsimp [chainLength]; omega)).2)
+    (fun i hi => by simpa [chainStart,hnewbase] using (positives 1 i (by dsimp [chainLength]; omega)).2)
+    (fun i hi => by simpa [chainStart,hnewbase] using (positives 3 i (by dsimp [chainLength]; omega)).2)
   let P := selected a b c d 0
   let Q := selected a b c d 1
   let R := selected a b c d 2
@@ -160,7 +160,7 @@ theorem actualSource_descending_joint_lift (a b c d : ℕ)
   have terminal (r : Fin 4) :
       f (chainStart b c d r+(chainLength a b c d r-1)) = -(N-nextBase a b c d r)/2 ∧
       g (chainStart b c d r+(chainLength a b c d r-1)) = -((2*N+1)-nextNewBase a b c d r)/2 := by
-    have hl : 2 ≤ chainLength a b c d r := by fin_cases r <;> simpa [chainLength] using (show 2 ≤ _ by omega)
+    have hl : 2 ≤ chainLength a b c d r := by fin_cases r <;> dsimp [chainLength] <;> omega
     exact ⟨by simpa only [if_neg (by omega : ¬chainLength a b c d r-1+1 < chainLength a b c d r)] using tab.2.1 r _ (by omega),
       by simpa only [if_neg (by omega : ¬chainLength a b c d r-1+1 < chainLength a b c d r)] using tab.2.2.1 r _ (by omega)⟩
   have nt0 := terminal 3

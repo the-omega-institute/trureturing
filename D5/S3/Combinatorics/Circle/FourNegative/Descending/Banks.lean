@@ -60,18 +60,11 @@ private theorem first_card (a b c d : ℕ)
 
 private theorem sum_range_two (n : ℕ) :
     ∑ i ∈ Finset.range n, (2 : ℤ)^i = 2^n-1 := by
-  have hp := Nat.two_pow_pos n
-  have hn : (∑ i ∈ Finset.range n, (2 : ℕ)^i)+1 = 2^n := by
-    have h := Nat.geomSum_eq (by decide : 2 ≤ 2) n
-    simp only [Nat.sub_self, Nat.reduceSub, Nat.div_one] at h
-    omega
-  have hn' : (∑ i ∈ Finset.range n, (2 : ℤ)^i)+1 = 2^n := by exact_mod_cast hn
-  omega
+  simpa using geom_sum_mul (2 : ℤ) n
 
 private theorem sum_Ico_two (l n : ℕ) (h : l ≤ n) :
     ∑ i ∈ Finset.Ico l n, (2 : ℤ)^i = 2^n-2^l := by
-  rw [Finset.sum_Ico_eq_sub _ h,sum_range_two,sum_range_two]
-  ring
+  simpa using geom_sum_Ico_mul (2 : ℤ) h
 
 private theorem bank_masses (a H E F : ℕ) (hh : H+2 ≤ a-1)
     (he : E ≤ H) (hf : F ≤ E) :
