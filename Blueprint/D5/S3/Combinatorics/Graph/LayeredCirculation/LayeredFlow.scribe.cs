@@ -247,8 +247,8 @@ internal sealed class LayeredFlowDocument : IScribeDocumentDefinition
         Formula concat = At(Q("Maths", "EdgeGraph", "Walk", "concat"),
             X("initial"), X("edge"), X("legal"));
         Formula split = Equal(At(Q("Maths", "EdgeGraph", "Walk", "edges"), concat),
-            At(Q("List", "append"), Edges("before"),
-                At(Q("List", "append"), Edges("inner"), Edges("after"))));
+            At(Q("List", "append"),
+                At(Q("List", "append"), Edges("before"), Edges("inner")), Edges("after")));
         Formula outside = new Formula.Binary(Length("before"), FormulaBinaryOperator.Add,
             Length("after"));
         Formula minimal = All("v", X("V"),
