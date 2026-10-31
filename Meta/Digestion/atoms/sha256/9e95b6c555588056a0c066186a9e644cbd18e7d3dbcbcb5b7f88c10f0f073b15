@@ -1,0 +1,21 @@
+**定理 271.2（串联证书律）。** 若 $M_1$、$M_2$ 的合同分别为
+
+$$
+(\alpha_1,\gamma_1,c_1),
+\qquad
+(\alpha_2,\gamma_2,c_2),
+$$
+
+且 $M_1$ 的输出作为 $M_2$ 的输入，那么串联模块 $M_2\circ M_1$ 具有合同
+
+$$
+\boxed{
+\mathcal C(M_2\circ M_1)
+=
+(\alpha_2+\gamma_2\alpha_1,
+\gamma_2\gamma_1,
+ c_1+c_2).
+}
+\tag{271.2}
+$$
+
