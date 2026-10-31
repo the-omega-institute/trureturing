@@ -9,22 +9,22 @@ internal sealed class CommonPhasePolynomialDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Faithful actual common-phase polynomial invariants, quadratic generation and unique Hermitian representation.",
         H("Complete Common Phase Polynomial Invariants"), Blocks(
-Describe.Lean(DescribeId.Create("coeff-aeval-diag"),
+            Describe.Lean(DescribeId.Create("coeff-aeval-diag"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/CommonPhasePolynomial.coeff_aeval_diag"),
                 H("Diagonal coefficient formula"), StatementSource.FromAuthor(Disp(All("sigma", F.Id("Type"), All("R", F.Id("Type"), Seq(OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Sp, All("d", Rel(F.Id("sigma"), To, F.Id("R")), All("f", Call("MvPolynomial", F.Id("sigma"), F.Id("R")), All("m", Call("Exponent", F.Id("sigma")), Rel(Call("coeff", Call("aevalDiag", F.Id("d"), F.Id("f")), F.Id("m")), Eq, Rel(Call("exponentProduct", F.Id("m"), F.Id("d")), Cdot, Call("coeff", F.Id("f"), F.Id("m")))))))))))),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuadraticForms/toobysmith2026phasepolynomial")),
-                Blocks(Paragraph(Text("For any commutative ring R and any variable type sigma, aevalDiag(d,f) substitutes C(d(i))*X(i) into f. Exponent(sigma) is sigma to finitely supported natural numbers. ExponentProduct(m,d) is the product over the support of m of d(i) raised to m(i). The coefficient of m after substitution is that product times the original coefficient. This is the pinned Physlib declaration, with its proof retained."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("For any commutative ring R and any variable type sigma, aevalDiag(d,f) substitutes C(d(i))*X(i) into f. Exponent(sigma) is sigma to finitely supported natural numbers. ExponentProduct(m,d) is the product over the support of m of d(i) raised to m(i). The coefficient of m after substitution is that product times the original coefficient."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("coeff-eq-zero-of-charge-ne-zero"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/CommonPhasePolynomial.coeff_eq_zero_of_charge_ne_zero"),
-                H("Charge balance"), StatementSource.FromAuthor(Disp(All("sigma", F.Id("Type"), All("K", F.Id("Type"), Seq(OpenBracket, Call("Field", F.Id("K")), CloseBracket, Sp, All("w", Rel(F.Id("sigma"), To, F.Id("Z")), All("c", F.Id("K"), Rel(Rel(F.Id("c"), Neq, D(0)), Implies, Rel(All("n", F.Id("Z"), Rel(Rel(Call("zpow", F.Id("c"), F.Id("n")), Eq, D(1)), Implies, Rel(F.Id("n"), Eq, D(0)))), Implies, All("f", Call("MvPolynomial", F.Id("sigma"), F.Id("K")), Rel(Rel(Call("chargeSubstitution", F.Id("w"), F.Id("c"), F.Id("f")), Eq, F.Id("f")), Implies, All("m", Call("Exponent", F.Id("sigma")), Rel(Rel(Call("charge", F.Id("w"), F.Id("m")), Neq, D(0)), Implies, Rel(Call("coeff", F.Id("f"), F.Id("m")), Eq, D(0))))))))))))))),
+                H("Charge balance"), StatementSource.FromAuthor(Disp(All("sigma", F.Id("Type"), All("K", F.Id("Type"), Seq(OpenBracket, Call("Field", F.Id("K")), CloseBracket, Sp, All("w", Rel(F.Id("sigma"), To, Seq(Mathbb, Grp(F.Id("Z")))), All("c", F.Id("K"), Rel(Rel(F.Id("c"), Neq, D(0)), Implies, Rel(All("n", Seq(Mathbb, Grp(F.Id("Z"))), Rel(Rel(Call("zpow", F.Id("c"), F.Id("n")), Eq, D(1)), Implies, Rel(F.Id("n"), Eq, D(0)))), Implies, All("f", Call("MvPolynomial", F.Id("sigma"), F.Id("K")), Rel(Rel(Call("chargeSubstitution", F.Id("w"), F.Id("c"), F.Id("f")), Eq, F.Id("f")), Implies, All("m", Call("Exponent", F.Id("sigma")), Rel(Rel(Call("charge", F.Id("w"), F.Id("m")), Neq, D(0)), Implies, Rel(Call("coeff", F.Id("f"), F.Id("m")), Eq, D(0))))))))))))))),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuadraticForms/toobysmith2026phasepolynomial")),
                 Blocks(Paragraph(Text("For a field K, integer weights w and a nonzero scalar c, assume c^n=1 only for n=0 among all integers. ChargeSubstitution substitutes C(c raised to w(i))*X(i). Formal invariance under this substitution forces a coefficient to vanish whenever the sum over its finite exponent support of m(i)*w(i) is nonzero. No assumption about actual conjugate evaluation belongs to this supplier; that bridge is established separately."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("exists-infiniteorder-unitary"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/CommonPhasePolynomial.exists_infiniteOrder_unitary"),
-                H("An infinite-order complex unitary phase"), StatementSource.FromAuthor(Disp(Ex("w", Call("unitary", F.Id("C")), All("n", F.Id("Z"), Rel(Rel(Call("zpow", F.Id("w"), F.Id("n")), Eq, D(1)), Implies, Rel(F.Id("n"), Eq, D(0))))))),
+                H("An infinite-order complex unitary phase"), StatementSource.FromAuthor(Disp(Ex("w", Call("unitary", Seq(Mathbb, Grp(F.Id("C")))), All("n", Seq(Mathbb, Grp(F.Id("Z"))), Rel(Rel(Call("zpow", F.Id("w"), F.Id("n")), Eq, D(1)), Implies, Rel(F.Id("n"), Eq, D(0))))))),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuadraticForms/toobysmith2026phasepolynomial")),
-                Blocks(Paragraph(Text("There exists a complex unitary scalar with no nontrivial integer power equal to one. The retained Physlib proof constructs exp(i) and uses the irrationality of pi. These three leaf transplants use the pinned source and full Apache-2.0 license recorded in the cited source note, and retire when equivalent declarations are available in the repository pin of Mathlib."))), DescribeRole.Theorem),
-Describe.Lean(DescribeId.Create("actual-cartesian"),
+                Blocks(Paragraph(Text("There exists a complex unitary scalar with no nontrivial integer power equal to one. The phase exp(i) has this property by irrationality of pi."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-cartesian"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/CommonPhasePolynomial.actual_cartesian"),
                 H("Actual evaluation"), StatementSource.FromAuthor(Disp(Coordinates(All("p", P, All("z", V, Rel(Call("eval", Call("cartesian", F.Id("z")), Call("toCartesian", F.Id("p"))), Eq, Actual(F.Id("p"), F.Id("z"))))), false))),
                 AssessedProvenance.FromRepo(),
@@ -46,19 +46,19 @@ Describe.Lean(DescribeId.Create("actual-cartesian"),
                 Blocks(Paragraph(Text("Every polynomial in the real and imaginary coordinates has exactly one expansion in z and its conjugate with the same actual values. Complex coefficients permit all complex-valued polynomial functions on the underlying real coordinate space; real coefficients are included through their canonical embedding. The inverse substitution is x=(z+w)/2 and y=(z-w)/(2i)."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("cartesian-homogeneous"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/CommonPhasePolynomial.cartesian_homogeneous"),
-                H("Homogeneous degree correspondence"), StatementSource.FromAuthor(Disp(Coordinates(All("p", P, All("n", F.Id("N"), Rel(Call("IsHomogeneous", Call("toCartesian", F.Id("p")), F.Id("n")), Iff, Call("IsHomogeneous", F.Id("p"), F.Id("n"))))), false))),
+                H("Homogeneous degree correspondence"), StatementSource.FromAuthor(Disp(Coordinates(All("p", P, All("n", Seq(Mathbb, Grp(F.Id("N"))), Rel(Call("IsHomogeneous", Call("toCartesian", F.Id("p")), F.Id("n")), Iff, Call("IsHomogeneous", F.Id("p"), F.Id("n"))))), false))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every natural n, the polynomial is homogeneous of degree n exactly when its Cartesian image is. This uses the homogeneous substitution theorem in both directions. The zero polynomial is homogeneous of every degree, and no nonzero hypothesis is imposed."))), DescribeRole.Theorem),
-Describe.Lean(DescribeId.Create("balanced-monomial-mem-quadratic-adjoin"),
+            Describe.Lean(DescribeId.Create("balanced-monomial-mem-quadratic-adjoin"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/CommonPhasePolynomial.balanced_monomial_mem_quadratic_adjoin"),
-                H("Unrestricted balanced-monomial generation"), StatementSource.FromAuthor(Disp(Coordinates(All("m", Call("Exponent", F.Id("iota")), Rel(Rel(Call("holo", F.Id("m")), Eq, Call("anti", F.Id("m"))), Implies, Rel(Call("monomial", F.Id("m"), D(1)), InMacro, Call("quadraticAlgebra", F.Id("iota")))))))),
+                H("Unrestricted balanced-monomial generation"), StatementSource.FromAuthor(Disp(Coordinates(All("m", Call("PairedExponent", F.Id("iota")), Rel(Rel(Call("holo", F.Id("m")), Eq, Call("anti", F.Id("m"))), Implies, Rel(Call("monomial", F.Id("m"), D(1)), InMacro, Call("quadraticAlgebra", F.Id("iota")))))))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Exponent(iota) denotes finitely supported natural exponents on the two copies of iota. Holo and anti are the sums on the first and second copy. QuadraticAlgebra is the complex subalgebra generated by all X(inl i) times X(inr j). Equal totals give membership by induction: when the common total is positive, select one positive exponent on each side, subtract that pair, and multiply the inductively obtained element by its quadratic generator. At total zero the monomial is one. The proof requires no supplied factorization certificate and includes empty coordinate types."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("PairedExponent(iota) denotes finitely supported natural exponents on the two copies of iota. Holo and anti are the sums on the first and second copy. QuadraticAlgebra is the complex subalgebra generated by all X(inl i) times X(inr j). Equal totals give membership by induction: when the common total is positive, select one positive exponent on each side, subtract that pair, and multiply the inductively obtained element by its quadratic generator. At total zero the monomial is one. The proof requires no supplied factorization certificate and includes empty coordinate types."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("common-phase-polynomial-theorem"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/CommonPhasePolynomial.common_phase_polynomial_theorem"),
                 H("Actual invariance, balance and generation"), StatementSource.FromAuthor(Disp(Coordinates(All("p", P, And(Rel(Call("Invariant", F.Id("p")), Iff, Call("Balanced", F.Id("p"))), Rel(Call("Invariant", F.Id("p")), Iff, Rel(F.Id("p"), InMacro, Call("quadraticAlgebra", F.Id("iota"))))))))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Invariant means equality of actual values under multiplication of every coordinate by exp(i theta), for every complex vector and every real theta. Balanced means every nonzero coefficient has equal holomorphic and antiholomorphic totals. Faithful actual evaluation converts phase invariance into formal diagonal invariance. The pinned diagonal charge theorem eliminates nonzero charges using an infinite-order unitary phase. Every balanced monomial then lies in the quadratic algebra by constructive pairing. Conversely every generator and hence every element of its generated algebra is invariant. Zero, constants, empty support and unrestricted degrees are included."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("Invariant means equality of actual values under multiplication of every coordinate by exp(i theta), for every complex vector and every real theta. Balanced means every nonzero coefficient has equal holomorphic and antiholomorphic totals. Faithful actual evaluation converts phase invariance into formal diagonal invariance. The diagonal charge theorem eliminates nonzero charges using an infinite-order unitary phase. Every balanced monomial then lies in the quadratic algebra by constructive pairing. Conversely every generator and hence every element of its generated algebra is invariant. Zero, constants, empty support and unrestricted degrees are included."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-quadratic-generation"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/CommonPhasePolynomial.actual_quadratic_generation"),
                 H("Generation in the algebra of actual functions"),
@@ -70,7 +70,7 @@ Describe.Lean(DescribeId.Create("balanced-monomial-mem-quadratic-adjoin"),
                 Blocks(Paragraph(Text("ActualQuadraticAlgebra is the complex subalgebra of all functions from complex coordinate vectors to complex values generated by the functions z_i times conjugate(z_j), with ordinary pointwise operations. Every invariant actual polynomial belongs to this algebra. The evaluation algebra homomorphism sends the formal generated algebra to this actual generated algebra."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("invariant-minimum-degree"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/CommonPhasePolynomial.invariant_minimum_degree"),
-                H("Lower bound for nonconstant invariants"), StatementSource.FromAuthor(Disp(Coordinates(All("p", P, Rel(Call("Invariant", F.Id("p")), Implies, Rel(Seq(Neg, Sp, Ex("c", F.Id("C"), Rel(F.Id("p"), Eq, Call("C", F.Id("c"))))), Implies, Rel(D(2), Leq, Call("totalDegree", F.Id("p"))))))))),
+                H("Lower bound for nonconstant invariants"), StatementSource.FromAuthor(Disp(Coordinates(All("p", P, Rel(Call("Invariant", F.Id("p")), Implies, Rel(Seq(Neg, Sp, Ex("c", Seq(Mathbb, Grp(F.Id("C"))), Rel(F.Id("p"), Eq, Call("C", F.Id("c"))))), Implies, Rel(D(2), Leq, Call("totalDegree", F.Id("p"))))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Every invariant which is not a constant polynomial has total degree at least two. Under balance, a nonzero supported exponent has total degree twice its holomorphic total. Degree less than two therefore leaves only the constant monomial. This implication makes no positive-dimension assumption."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("invariant-degree-two"),
@@ -78,7 +78,7 @@ Describe.Lean(DescribeId.Create("balanced-monomial-mem-quadratic-adjoin"),
                 H("Attainment in positive dimension"), StatementSource.FromAuthor(Disp(Coordinates(All("i", F.Id("iota"), And(Call("Invariant", Call("quadraticGenerator", F.Id("i"), F.Id("i"))), Rel(Call("totalDegree", Call("quadraticGenerator", F.Id("i"), F.Id("i"))), Eq, D(2))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Any supplied coordinate i gives the invariant z_i times its conjugate with degree exactly two. Supplying i expresses positive dimension; no nonconstant polynomial is asserted to exist when the coordinate type is empty."))), DescribeRole.Theorem),
-Describe.Lean(DescribeId.Create("actual-quadratic-matrix-unique"),
+            Describe.Lean(DescribeId.Create("actual-quadratic-matrix-unique"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/CommonPhasePolynomial.actual_quadratic_matrix_unique"),
                 H("Uniqueness from actual values"), StatementSource.FromAuthor(Disp(Coordinates(All("H", M, All("K", M, Rel(All("z", V, Rel(Q(F.Id("H"), F.Id("z")), Eq, Q(F.Id("K"), F.Id("z")))), Implies, Rel(F.Id("H"), Eq, F.Id("K")))))))),
                 AssessedProvenance.FromRepo(),
@@ -111,11 +111,11 @@ Describe.Lean(DescribeId.Create("actual-quadratic-matrix-unique"),
         return Seq([.. content]);
     }
     private static Formula All(string name, Formula type, Formula body) =>
-        Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, body);
+        Seq(Open, Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, body, Close);
     private static Formula Ex(string name, Formula type, Formula body) =>
-        Seq(Exists, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, body);
+        Seq(Open, Exists, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, body, Close);
     private static Formula Unique(string name, Formula type, Formula body) =>
-        Seq(Exists, Bang, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, body);
+        Seq(Open, Exists, Bang, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, body, Close);
     private static Formula Rel(Formula left, Formula relation, Formula right) =>
         Seq(Open, left, Sp, relation, Sp, right, Close);
     private static Formula And(params Formula[] parts)
@@ -133,8 +133,8 @@ Describe.Lean(DescribeId.Create("actual-quadratic-matrix-unique"),
         All("iota", F.Id("Type"), finite
             ? Seq(OpenBracket, Call("Fintype", F.Id("iota")), CloseBracket, Sp, body) : body);
     private static Formula P => Call("Poly", F.Id("iota"));
-    private static Formula V => Rel(F.Id("iota"), To, F.Id("C"));
-    private static Formula M => Call("Matrix", F.Id("iota"), F.Id("iota"), F.Id("C"));
+    private static Formula V => Rel(F.Id("iota"), To, Seq(Mathbb, Grp(F.Id("C"))));
+    private static Formula M => Call("Matrix", F.Id("iota"), F.Id("iota"), Seq(Mathbb, Grp(F.Id("C"))));
     private static Formula Actual(Formula p, Formula z) => Call("actual", p, z);
     private static Formula Q(Formula h, Formula z) => Call("starDotMul", h, z);
     private static Formula Reality(Formula p) =>
@@ -156,7 +156,7 @@ Describe.Lean(DescribeId.Create("actual-quadratic-matrix-unique"),
     private static Formula Complete()
     {
         Formula p = F.Id("p");
-        Formula nonconstant = Seq(Neg, Sp, Ex("c", F.Id("C"), Rel(p, Eq, Call("C", F.Id("c")))));
+        Formula nonconstant = Seq(Neg, Sp, Ex("c", Seq(Mathbb, Grp(F.Id("C"))), Rel(p, Eq, Call("C", F.Id("c")))));
         Formula lower = Rel(Call("Invariant", p), Implies,
             Rel(nonconstant, Implies, Rel(D(2), Leq, Call("totalDegree", p))));
         Formula attain = All("i", F.Id("iota"), And(
@@ -166,7 +166,7 @@ Describe.Lean(DescribeId.Create("actual-quadratic-matrix-unique"),
             Unique("q", P, All("z", V, Rel(Actual(F.Id("q"), F.Id("z")), Eq,
                 Call("eval", Call("cartesian", F.Id("z")), p)))),
             Rel(Call("totalDegree", Call("toCartesian", p)), Eq, Call("totalDegree", p)),
-            All("n", F.Id("N"), Rel(Call("IsHomogeneous", Call("toCartesian", p), F.Id("n")), Iff,
+            All("n", Seq(Mathbb, Grp(F.Id("N"))), Rel(Call("IsHomogeneous", Call("toCartesian", p), F.Id("n")), Iff,
                 Call("IsHomogeneous", p, F.Id("n")))),
             Rel(Call("Invariant", p), Iff, Call("Balanced", p)),
             Rel(Call("Invariant", p), Iff, Rel(p, InMacro, Call("quadraticAlgebra", F.Id("iota")))),

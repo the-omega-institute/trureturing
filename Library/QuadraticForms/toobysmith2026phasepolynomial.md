@@ -6,7 +6,8 @@ title: "Physlib charge balance and infinite-order unitary phase"
 doi: null
 url: https://github.com/leanprover-community/physlib/tree/a8823c76303bab825824ddecb7bd540880c4ae62/PhyslibAlpha/Particles/BeyondTheStandardModel/TwoHDM
 claim: "Generic diagonal coefficient rescaling, charge balancing, and existence of an infinite-order complex unitary phase."
-strata_touched: [D5/S3/Quantum/Algebra]
+strata_touched:
+  - D5/S3/Quantum/Algebra/CommonPhasePolynomial
 license: Apache-2.0
 triage: anchor
 ---

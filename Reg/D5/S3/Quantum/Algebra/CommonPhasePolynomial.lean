@@ -39,6 +39,7 @@ abbrev arena : Arena where
     holo m = anti m → R.readout () ⟨ι, fi⟩ m ∈ quadraticAlgebra (ι := ι)
 
 set_option maxHeartbeats 800000 in
+-- The counterexample reduces the polymorphic Sigma parameter of the dependent realization.
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   classical
   intro h
@@ -78,9 +79,9 @@ def family : Registration arena.{u} (type_of% (@balanced_monomial_mem_quadratic_
       exact nomatch e
   dependence := dependence
 
-noncomputable def registration : Contract.Registration
+noncomputable def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@balanced_monomial_mem_quadratic_adjoin.{u}) (Realization signature.{u})
-    (type_of% (@MvPolynomial.monomial)) Unit := {
+    (type_of% (@MvPolynomial.monomial.{u,0})) Unit := {
   unitName := `D5.S3.Quantum.Algebra.PhasePolynomial.balanced_monomial_mem_quadratic_adjoin.information_unit
   realizationName := `Reg.D5.S3.Quantum.Algebra.CommonPhasePolynomial.family
   realizationSource := none
@@ -96,7 +97,7 @@ noncomputable def registration : Contract.Registration
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (@MvPolynomial.monomial)
+  escapeFrom := some (@MvPolynomial.monomial.{u,0})
   sourceSelection := some {
     owner := `D5.S3.Quantum.Algebra.CommonPhasePolynomial
     definition := none
