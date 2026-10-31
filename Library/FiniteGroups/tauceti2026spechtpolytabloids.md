@@ -873,9 +873,9 @@ unknown for every declaration, including the earlier representation chain.
 | `SpechtFrobeniusPairing.char_permutationModuleℂ` | Local composition; no independent escape witness | `SpechtFrobeniusPairing.sum_spechtTrace_mul_card_fixedPoints` |
 | `SpechtFrobeniusPairing.spechtTrace_inv` | Local composition; no independent escape witness | `SpechtFrobeniusPairing.sum_spechtTrace_mul_card_fixedPoints` |
 | `SpechtFrobeniusPairing.sum_spechtTrace_mul_card_fixedPoints` | Local composition; no independent escape witness | `SpechtFrobeniusPairing.sum_spechtTrace_smul_psumPart_eq_multiplicities` |
-| `SpechtFrobeniusPairing.sum_spechtTrace_smul_psumPart_eq_multiplicities` | Local composition; no independent escape witness | **Terminal source comparison; full ordinary/HSW consumer missing; not standalone admissible** |
+| `SpechtFrobeniusPairing.sum_spechtTrace_smul_psumPart_eq_multiplicities` | Local composition; no independent escape witness | **Retired from the delivered source: this comparison has no full-consumer use** |
 | `SpechtFrobeniusPairing.hsw_powerSumProd_eq_psumPart` | Local composition; no independent escape witness | `SpechtFrobeniusPairing.hsw_frobChar_eq_fixedTabloid_coefficients` |
-| `SpechtFrobeniusPairing.hsw_frobChar_eq_fixedTabloid_coefficients` | Local composition; no independent escape witness | **Terminal source comparison; full ordinary/HSW consumer missing; not standalone admissible** |
+| `SpechtFrobeniusPairing.hsw_frobChar_eq_fixedTabloid_coefficients` | Local composition; no independent escape witness | **Retired from the delivered source: this comparison has no full-consumer use** |
 
 ### Exact residual and retirement
 
@@ -1237,3 +1237,19 @@ inside this complete ordinary weighted application. The canonical publication
 and admission records belong to the full consumer delivery. The Apache
 attribution, complete license, no-NOTICE assessment and retirement obligations
 above remain applicable.
+
+The current compiled dependency readout identified no consumer for the former
+`sum_spechtTrace_smul_psumPart_eq_multiplicities` and
+`hsw_frobChar_eq_fixedTabloid_coefficients` composition theorems. Both are removed,
+together with their theorem descriptions. The retained
+`sum_spechtTrace_mul_card_fixedPoints` is consumed in `SpechtYoungTrace` and
+`SpechtThreeRowMixed`; `hsw_powerSumProd_eq_psumPart` is consumed in
+`SpechtThreeRowVirtual`. These are proof-organization helpers, with no independent
+new-content claim. The generated `weightPartition.congr_simp` is a compiler
+congruence artifact, not an authored retained theorem.
+
+The current source-bound Reg report records both evaluated endpoint registrations
+as `declared_unresolved`, with `IE-C050 ClosedTruthReadout`,
+`reason=unclassified_form`, and `rule=source.residual_requires_open`. The typed
+family proofs compile; this report does not certify `declared_validated`. The
+section 3.9 linked-issue exception #24542 applies without changing the inspector.

@@ -14,12 +14,12 @@ Selected A17.2PORT from TauCeti 5a01f5fe3621126cccf9ba22e700493cbc7b7156.
 Changes: selected declarations and surrounding namespaces; exact pinned Mathlib
 and existing D5 suppliers are reused. Library/FiniteGroups/tauceti2026spechtpolytabloids.md
 records immutable locators, license, consumers and retirement against OUR Mathlib pin.
-SOURCE ONLY: no Lean/Lake invocation, native elaboration, axiom closure, proof-term
-liveness, admission, validated Reg, emission, firstfreeze, deposit, PR or CI claim.
+Natively compiled as a supplier of the full SpechtThreeRowCauchy target.
+The retained trace pairing and list transport have actual full-consumer uses.
 Unfinished escape audit: https://github.com/the-omega-institute/trureturing/issues/24542.
-These are necessary suppliers/comparisons for the full HSW target. No independent
-firstfreeze or new-content qualification is claimed. Both original ordinary weighted
-identities remain unfinished. No character is defined by a polynomial coefficient.
+These are consumed suppliers for the full HSW target. The two unused bind-only
+comparison theorems were retired. Both original ordinary weighted identities are
+proved in SpechtThreeRowCauchy. No character is defined by a polynomial coefficient.
 utility: none: arbitrary degrees and finite alphabets, no bounded enumeration.
 -/
 import D5.S3.Combinatorics.Partitions.SpechtFixedTabloidPowerSum
@@ -116,29 +116,6 @@ theorem sum_spechtTrace_mul_card_fixedPoints (μ ν : n.Partition) :
       (mul_inv_cancel_left₀ hf _).symm
     _ = _ := by rw [h]
 
-/-- An arbitrary-degree finite-alphabet comparison that consumes actual ordinary traces and
-the fixed-tabloid power-sum expansion. The remaining coefficients are genuine dimensions of
-Hom spaces into Young permutation modules. They have NOT been identified with Kostka numbers;
-therefore the right side is NOT asserted to be the Schur polynomial of μ. -/
-theorem sum_spechtTrace_smul_psumPart_eq_multiplicities {σ : Type*} [Fintype σ]
-    (μ : n.Partition) :
-    (∑ π : Perm (Fin n), LinearMap.trace ℂ _ ((spechtModuleℂ μ).ρ π) •
-      psumPart σ ℂ π.partition) =
-    (n.factorial : ℂ) • ∑ ν : n.Partition,
-      (Module.finrank ℂ (spechtModuleℂ μ ⟶ permutationModuleℂ ν) : ℂ) • msymm σ ℂ ν := by
-  classical
-  have hp (π : Perm (Fin n)) :
-      psumPart σ ℂ π.partition = ∑ ν : n.Partition,
-        (Nat.card {q : Perm (Fin n) ⧸ youngSubgroup ν // π • q = q} : ℂ) • msymm σ ℂ ν := by
-    let ρ := (partitionEquivConjClasses n).symm (ConjClasses.mk π)
-    have hπ : ConjClasses.mk π = partitionEquivConjClasses n ρ :=
-      ((partitionEquivConjClasses n).apply_symm_apply _).symm
-    rw [← psumPart_eq_psumPart_partition ℂ hπ]
-    exact psumPart_eq_sum_card_fixedPoints_smul_msymm ℂ hπ
-  simp_rw [hp, Finset.smul_sum, smul_smul]
-  rw [Finset.sum_comm]
-  simp_rw [← Finset.sum_smul, sum_spechtTrace_mul_card_fixedPoints]
-
 /-- Exact list-to-partition power-sum transport. The equality of full multisets retains all
 parts equal to one and every repeated occurrence; no degree/alphabet condition is used. -/
 theorem hsw_powerSumProd_eq_psumPart {τ : List ℕ} (ρ : n.Partition)
@@ -148,32 +125,6 @@ theorem hsw_powerSumProd_eq_psumPart {τ : List ℕ} (ρ : n.Partition)
   rw [D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.powerSumProd, psumPart, ← hτ,
     Multiset.map_coe, Multiset.prod_coe]
 
-set_option maxHeartbeats 1000000 in
-/-- The exact existing HSW coefficient expressed through fixed tabloids. This supplies its
-monomial-coordinate input to Young's rule. It is NOT an ordinary-character identification. -/
-theorem hsw_frobChar_eq_fixedTabloid_coefficients (μ : Fin 3 → ℕ)
-    (ρ : n.Partition) {π : Perm (Fin n)}
-    (hπ : ConjClasses.mk π = partitionEquivConjClasses n ρ) {τ : List ℕ}
-    (hτ : (τ : Multiset ℕ) = ρ.parts) :
-    D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.frobChar μ τ =
-      ∑ ν : n.Partition,
-        (Nat.card {q : Perm (Fin n) ⧸ youngSubgroup ν // π • q = q} : ℤ) *
-          (D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.vandermonde3 *
-            msymm (Fin 3) ℤ ν).coeff
-              (Finsupp.equivFunOnFinite.symm fun i => μ i + (2 - (i : ℕ))) := by
-  classical
-  rw [D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.frobChar,
-    hsw_powerSumProd_eq_psumPart ρ hτ,
-    psumPart_eq_sum_card_fixedPoints_smul_msymm ℤ hπ, Finset.mul_sum, coeff_sum]
-  apply Finset.sum_congr rfl
-  intro ν _
-  rw [mul_smul_comm, coeff_smul, smul_eq_mul]
-  exact congrArg (fun d : DecidableEq (Fin 3) =>
-    (Nat.card {q : Perm (Fin n) ⧸ youngSubgroup ν // π • q = q} : ℤ) *
-      (D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.vandermonde3 *
-        @msymm (Fin 3) ℤ _ _ d n ν).coeff
-          (Finsupp.equivFunOnFinite.symm fun i => μ i + (2 - (i : ℕ))))
-    (Subsingleton.elim _ _)
 
 end TauCeti
 
