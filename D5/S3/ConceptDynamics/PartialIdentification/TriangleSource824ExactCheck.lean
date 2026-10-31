@@ -34,7 +34,9 @@ run_elab do
     from by
       classical
       let root : PMF Bool := PMF.ofFintype (fun _ => (1 / 2 : ℝ≥0∞))
-        (by norm_num [Fintype.sum_bool])
+        (by
+          simp only [Fintype.sum_bool, one_div, ← two_mul]
+          exact ENNReal.mul_inv_cancel (by norm_num) (by norm_num))
       let μα : Measure Bool := Measure.dirac false
       let μβ : Measure Bool := Measure.dirac false
       let μγ : Measure Bool := root.toMeasure
@@ -55,7 +57,7 @@ run_elab do
       haveI : IsProbabilityMeasure μγ := by dsimp [μγ]; infer_instance
       haveI : IsProbabilityMeasure P := by
         dsimp [P]
-        exact Measure.isProbabilityMeasure_map hd.aemeasurable
+        infer_instance
       have hsource (s : Bool × (Bool × Bool)) :
           μ {s} = ENNReal.ofReal
             (sharedRootSourceLaw.mass (s.2.2, (s.2.1, s.1)) : ℝ) := by
