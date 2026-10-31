@@ -5,7 +5,7 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Natural lift compatibility for both actual centered sources. -/
-import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Source
+import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Strip
 
 /-! Increasing the fourth gap leaves charge unchanged and scales every inherited shadow. -/
 set_option autoImplicit false
@@ -128,5 +128,117 @@ private theorem lifted_prefix_height (a b c d t : ℕ) (xs : List ℕ)
       ring
   rw [List.map_append,List.sum_append,new_low_mass a b c d t ha hb hc hd,hh]
   ring
+
+
+open private Strong strong_positive_block strong_append strong_scaled strong_strips
+  from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Strip
+
+private theorem charge_nonneg (a b c d i : ℕ)
+    (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 3≤d) (hi : i<a+b+c+d) :
+    0≤charge a b c d i := by
+  obtain ⟨u,v,w,x,_⟩:=source_shadow_charge a b c d ha hb hc hd
+  dsimp only at u v w x
+  change 0≤2*old a b c d i-enlarged a b c d i
+  unfold old enlarged modZ seedZ
+  by_cases hu : i<d
+  · rw [(u i hu).1]
+    split_ifs <;> norm_num
+  · by_cases hv : i<d+c
+    · have he : i=d+(i-d) := by omega
+      rw [he,(v (i-d) (by omega)).1]
+      split_ifs <;> positivity
+    · by_cases hw : i<d+c+b
+      · have he : i=d+c+(i-(d+c)) := by omega
+        rw [he,(w (i-(d+c)) (by omega)).1]
+        split_ifs <;> positivity
+      · have he : i=d+c+b+(i-(d+c+b)) := by omega
+        rw [he,(x (i-(d+c+b)) (by omega)).1]
+        split_ifs <;> positivity
+
+private theorem new_low_charge_mass (a b c d t : ℕ)
+    (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 3≤d) :
+    ((List.range t).map (charge a b c (d+t))).sum=0 := by
+  apply List.sum_eq_zero
+  intro v hv
+  obtain ⟨i,hi,rfl⟩:=List.mem_map.mp hv
+  exact (new_low_source a b c d t i ha hb hc hd (List.mem_range.mp hi)).1
+
+/-- Every prefix of the newly prepended physical block is strong. -/
+private theorem new_low_strong (a b c d t : ℕ) (B : ℤ)
+    (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 3≤d)
+    (hA : 1≤seedZ a b c) (hAB : seedZ a b c≤B) :
+    Strong (old a b c (d+t)) (charge a b c (d+t))
+      ((2:ℤ)^t*B) 0 (seedZ a b c) (List.range t) := by
+  apply strong_positive_block
+  · intro i hi
+    rw [(new_low_source a b c d t i ha hb hc hd (List.mem_range.mp hi)).2]
+    positivity
+  · intro i hi
+    exact (new_low_source a b c d t i ha hb hc hd (List.mem_range.mp hi)).1
+  · omega
+  · exact hA
+  · rw [new_low_mass a b c d t ha hb hc hd]
+    have hm:=mul_le_mul_of_nonneg_left hAB (show 0≤(2:ℤ)^t by positivity)
+    nlinarith only [hm]
+
+/-- The literal natural lift preserves every actual strong prefix, including the endpoint. -/
+private theorem natural_lift_strong (a b c d t : ℕ) (B : ℤ) (xs : List ℕ)
+    (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 3≤d)
+    (hA : 1≤seedZ a b c) (hAB : seedZ a b c≤B)
+    (hx : ∀ i∈xs, i<a+b+c+d)
+    (hs : Strong (old a b c d) (charge a b c d) B 0 (seedZ a b c) xs)
+    (hq : (xs.map (charge a b c d)).sum=seedZ a b c) :
+    Strong (old a b c (d+t)) (charge a b c (d+t)) ((2:ℤ)^t*B)
+      0 (seedZ a b c) (List.range t++xs.map (t+·)) := by
+  apply strong_append
+  · exact new_low_strong a b c d t B ha hb hc hd hA hAB
+  · rw [new_low_mass a b c d t ha hb hc hd,
+      new_low_charge_mass a b c d t ha hb hc hd,zero_add,sub_zero]
+    have he:=strong_scaled (old a b c d) (charge a b c d)
+      (old a b c (d+t)) (charge a b c (d+t)) (t+·)
+      ((2:ℤ)^t) B 0 (seedZ a b c) xs (by exact_mod_cast Nat.one_le_two_pow)
+      hs (fun i hi => charge_nonneg a b c d i ha hb hc hd (hx i hi)) (by omega)
+      (fun i hi => inherited_old_lift a b c d t i ha hb hc hd (hx i hi))
+      (fun i hi => (inherited_source_lift a b c d t i ha hb hc hd (hx i hi)).1)
+    simpa only [mul_zero,zero_add] using he
+
+/-- The lift has exactly zero old total and preserves the complete actual charge. -/
+private theorem natural_lift_totals (a b c d t : ℕ) (xs : List ℕ)
+    (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 3≤d)
+    (hx : ∀ i∈xs, i<a+b+c+d)
+    (hf : (xs.map (old a b c d)).sum=0)
+    (hq : (xs.map (charge a b c d)).sum=seedZ a b c) :
+    ((List.range t++xs.map (t+·)).map (old a b c (d+t))).sum=0 ∧
+      ((List.range t++xs.map (t+·)).map (charge a b c (d+t))).sum=seedZ a b c := by
+  constructor
+  · rw [lifted_prefix_height a b c d t xs ha hb hc hd hx,hf,hq]
+    ring
+  · rw [List.map_append,List.sum_append,new_low_charge_mass a b c d t ha hb hc hd,
+      zero_add,List.map_map]
+    convert hq using 2
+    apply List.map_congr_left
+    intro i hi
+    exact (inherited_source_lift a b c d t i ha hb hc hd (hx i hi)).1
+
+
+/-- The same naturally lifted physical word has both actual centered-source strips. -/
+private theorem natural_lift_strips (a b c d t : ℕ) (B : ℤ) (xs : List ℕ)
+    (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 3≤d)
+    (hA : 1≤seedZ a b c) (hAB : seedZ a b c≤B)
+    (hx : ∀ i∈xs, i<a+b+c+d)
+    (hs : Strong (old a b c d) (charge a b c d) B 0 (seedZ a b c) xs)
+    (hq : (xs.map (charge a b c d)).sum=seedZ a b c) :
+    let ys:=List.range t++xs.map (t+·)
+    InStrip (old a b c (d+t)) ((2:ℤ)^t*B-1) 0 ys ∧
+      InStrip (enlarged a b c (d+t)) (2*((2:ℤ)^t*B)-1) (seedZ a b c) ys := by
+  have hl:=natural_lift_strong a b c d t B xs ha hb hc hd hA hAB hx hs hq
+  have hh:=strong_strips (old a b c (d+t)) (charge a b c (d+t))
+    ((2:ℤ)^t*B) 0 (seedZ a b c) (List.range t++xs.map (t+·)) hl
+  have he : (fun i => 2*old a b c (d+t) i-charge a b c (d+t) i)=
+      enlarged a b c (d+t) := by
+    funext i
+    dsimp only [charge]
+    ring
+  simpa only [he,mul_zero,zero_add] using hh
 
 end D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
