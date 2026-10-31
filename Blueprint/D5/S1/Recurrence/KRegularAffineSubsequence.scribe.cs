@@ -18,7 +18,8 @@ internal sealed class KRegularAffineSubsequenceDocument : IScribeDocumentDefinit
                 "Sequences have domain the natural numbers, including zero, and values in the integers. "
                 + "Write K_k(s) for the set of all sequences n ↦ s(k^e n+r), where e and r are natural "
                 + "numbers and r<k^e. The sequence s is k-regular exactly when the integer span of "
-                + "K_k(s) is finitely generated. Neither the values nor the kernel are required to be finite.")),
+                + "K_k(s) is finitely generated; denote this property by Regular(k,s). "
+                + "Neither the values nor the kernel are required to be finite.")),
             Node("affine_kernel_span_le", "Uniform transport of kernel spans", TransportFormula(),
                 "For every base k≥2, positive natural step a, natural offset b, and finite family G "
                 + "whose integer span equals the span of K_k(s), the entire sampled kernel span lies "
@@ -66,8 +67,8 @@ internal sealed class KRegularAffineSubsequenceDocument : IScribeDocumentDefinit
         return Disp(All("k", Naturals(), All("a", Naturals(), All("b", Naturals(),
             All("s", SequenceType(), Implies(LessOrEqual(D(2), k), Implies(LessOrEqual(D(1), a),
                 All("G", Call("Finset", SequenceType()),
-                    Implies(Equal(Span(family), Span(Call("K", k, s))),
-                        Subset(Span(Call("K", k, observed)), Span(generators))))))))));
+                    Implies(Equal(Span(family), Span(Kernel(k, s))),
+                        Subset(Span(Kernel(k, observed)), Span(generators))))))))));
     }
 
     private static Formula ClosureFormula()
@@ -85,7 +86,10 @@ internal sealed class KRegularAffineSubsequenceDocument : IScribeDocumentDefinit
     private static Formula Naturals() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
     private static Formula Integers() => new Formula.Integers();
     private static Formula SequenceType() => Seq(Naturals(), Sp, To, Sp, Integers());
-    private static Formula Span(Formula set) => Call("span", Integers(), set);
+    private static Formula Span(Formula set) => Seq(
+        Operatorname, Grp(F.Id("span")), Underscore, Grp(Integers()), Open, set, Close);
+    private static Formula Kernel(Formula k, Formula s) => Seq(
+        F.Id("K"), Underscore, Grp(k), Open, s, Close);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula Add(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Add, right);
