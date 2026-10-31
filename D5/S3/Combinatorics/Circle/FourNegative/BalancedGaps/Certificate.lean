@@ -43,7 +43,7 @@ private theorem halve_ear_checks (mass : Finset ℕ → ℤ) (f : ℕ → ℤ) (
     (hh : earChecks (2*C) (2*E) (2*h) e (bs.map (fun b => (2*mass b.1,2*f b.2)))) :
     finiteEarChecks mass f C E h e bs := by
   induction bs generalizing e h with
-  | nil => trivial
+  | nil => simp only [finiteEarChecks]
   | cons b bs ih =>
     rcases b with ⟨P,n⟩
     cases e with
@@ -79,7 +79,7 @@ private theorem balanced_certificate (s : ℕ) (hs : 2≤s) (n : Fin 16) :
     rw [pow_add]; ring
   have hbase : bases n q = base a b c d := by
     funext r
-    fin_cases r <;> simp only [bases,base,hp]
+    fin_cases r <;> simp only [bases,base,hp,a,b,c,d,Matrix.cons_val_zero',Matrix.cons_val_succ']
   have hnewbase : newBases n q = newBase a b c d := by
     funext r
     fin_cases r <;> simp [newBases,newBase,charge,hbase,hp,a,b,c,d]
@@ -87,7 +87,7 @@ private theorem balanced_certificate (s : ℕ) (hs : 2≤s) (n : Fin 16) :
     dsimp [modulus,sourceMod]
     rw [hp,hp,hp,hp]
   have hlength (r : Fin 4) : lengths n q r = (2:ℤ)^(chainLength a b c d r) := by
-    fin_cases r <;> simpa only [lengths,chainLength,a,b,c,d] using hp _
+    fin_cases r <;> simpa only [lengths,chainLength,a,b,c,d,Matrix.cons_val_zero',Matrix.cons_val_succ'] using hp _
   have hm (r : Fin 4) := assigned_masses a b c d ha hb hc hd n r
   have hD := source_doubles a b c d ha hb hc hd
   have hmold (r : Fin 4) : masses n q (bases n q) r =
@@ -105,10 +105,10 @@ private theorem balanced_certificate (s : ℕ) (hs : 2≤s) (n : Fin 16) :
     rw [(hD.2 r).2]
     fin_cases r <;> simp [newDrops,nextNewBase,hbase,hnewbase,hmod]
   have hmapped : (order n).map (fun r => (masses n q (bases n q) r,drops n q r)) =
-      (packets a b c d n).map (fun b => (2*oldMass a b c d b.1,2*oldValue a b c d b.2)) := by
+      (packets a b c d n).map (fun blk => (2*oldMass a b c d blk.1,2*oldValue a b c d blk.2)) := by
     simp only [packets,List.map_map,Function.comp_def,hmold,hdold]
   have hmappednew : (order n).map (fun r => (masses n q (newBases n q) r,newDrops n q r)) =
-      (packets a b c d n).map (fun b => (2*newMass a b c d b.1,2*newValue a b c d b.2)) := by
+      (packets a b c d n).map (fun blk => (2*newMass a b c d blk.1,2*newValue a b c d blk.2)) := by
     simp only [packets,List.map_map,Function.comp_def,hmnew,hdnew]
   have hpoly := polynomial_endpoints n q hq
   refine ⟨DataCertificate.mk (packets a b c d n) (negative_order a b c d ha hb hc hd n)
