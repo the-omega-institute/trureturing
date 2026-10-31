@@ -83,9 +83,16 @@ private theorem fixedColourings_eq_youngFixed {n : ℕ} (r : Fin 3 → ℕ)
     unfold fixedColourings
     congr 1
     ext f
-    simp [d, Finsupp.coe_equivFunOnFinite_symm]
+    simp [d]
+  have hshape : weightPartition d hd = tripleShape r hr := rfl
+  rw [hshape] at hc
   rw [he]
-  convert (Int.natCast_inj.mp hc) using 1 <;> simp [tripleShape, d]
+  convert (Int.natCast_inj.mp hc) using 1
+  all_goals
+    first
+    | rfl
+    | (congr 1; ext f; simp [d])
+    | congr 3
 
 private theorem sum_spechtChar_mul_fixedColourings {n : ℕ} (μ : n.Partition)
     (r : Fin 3 → ℕ) (hr : ∑ i, r i = n) :
