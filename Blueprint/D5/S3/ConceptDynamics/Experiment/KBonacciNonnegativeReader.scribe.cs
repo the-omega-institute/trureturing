@@ -122,20 +122,21 @@ internal sealed class KBonacciNonnegativeReaderDocument : IScribeDocumentDefinit
         Formula prep = At(F.Id("P"), pi, w);
         Formula win = At(F.Id("W"), pi, w);
         Formula reads = At(F.Id("N"), pi, w);
-        Formula budgets = Seq(prep, Le, D(1), Land, win, Le, D(2), Land, reads, Le, D(3));
+        Formula budgets = Seq(prep, Le, Sp, D(1), Land, Sp, win, Le, Sp, D(2),
+            Land, Sp, reads, Le, Sp, D(3));
         return Disp(Seq(
             All(b, window, Seq(Exists, Sp, p, Comma, t, InMacro, Sp, fin, Comma, Sp,
-                At(F.Id("lead"), b), Eq, p, Land,
-                At(F.Id("A"), b), Eq, At(F.Id("E"), p, t))), Land,
+                At(F.Id("lead"), b), Eq, p, Land, Sp,
+                At(F.Id("A"), b), Eq, At(F.Id("E"), p, t))), Land, Sp,
             All(p, fin, All(t, fin, Seq(Exists, Sp, b, InMacro, Sp, window, Comma, Sp,
-                At(F.Id("A"), b), Eq, At(F.Id("E"), p, t)))), Land,
-            All(w, c, Seq(D(0), Lt, At(F.Id("D"), w))), Land,
-            All(pi, proto, All(w, c, Seq(reads, Eq, prep, Plus, win))), Land,
-            All(pi, proto, Seq(correct, Implies, Neg,
-                All(w, c, Seq(prep, Le, D(1))))), Land,
-            All(pi, proto, Seq(correct, Implies, D(2), Le, At(F.Id("B"), pi))), Land,
-            D(2), Le, F.Id("V"), Land, F.Id("V"), Neq, D(1), Land,
+                At(F.Id("A"), b), Eq, At(F.Id("E"), p, t)))), Land, Sp,
+            All(w, c, Seq(D(0), Lt, Sp, At(F.Id("D"), w))), Land, Sp,
+            All(pi, proto, All(w, c, Seq(reads, Eq, prep, Plus, win))), Land, Sp,
+            All(pi, proto, Seq(correct, Implies, Sp, Neg,
+                All(w, c, Seq(prep, Le, Sp, D(1))))), Land, Sp,
+            All(pi, proto, Seq(correct, Implies, Sp, D(2), Le, Sp, At(F.Id("B"), pi))), Land, Sp,
+            D(2), Le, Sp, F.Id("V"), Land, Sp, F.Id("V"), Neq, Sp, D(1), Land, Sp,
             Neg, Open, Exists, Sp, pi, InMacro, Sp, proto, Comma, Sp,
-                correct, Land, All(w, c, budgets), Close));
+                correct, Land, Sp, All(w, c, budgets), Close));
     }
 }
