@@ -3549,3 +3549,501 @@ intermediates and this inference carry no worldwide priority
 assertion. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 14. One bipartite component in each neighborhood and arbitrary-core coronas
+
+**定义 14.1（A component condition on the original base）。** Let $H$
+be a finite connected simple unit-weight graph of even order $m\geq2$.
+Assume that, for every $p\in V(H)$, the induced open neighborhood
+$H[N_H(p)]$ has at least one bipartite connected component. A singleton
+component counts as bipartite; the other components are unrestricted.
+For any integer $S\geq1$, set $s=2S$, $k=mS$ and use the original
+fibres $B_i$, blow-up $H[\overline{K_{2S}}]$, entire complex Boolean
+carrier $\mathcal H_{mS}$, positive ordinary token adjacency $K=K_{mS}$
+and original within-fibre projection $P_{\mathrm{sym}}$ of Definitions
+1.1–1.2. Put
+
+$$
+E=\lambda_{\min}(K),\qquad \mathcal N=\ker P_{\mathrm{sym}}.
+\tag{14.1}
+$$
+
+Only the global token number $mS$ is fixed. In particular, no weight
+or occupancy is prescribed separately on a neighborhood component.
+
+**定理 14.2（Confinement from one bipartite neighborhood component）。**
+For every $H,S$ of Definition 14.1, every $E$-ground vector lies in
+$\operatorname{ran}P_{\mathrm{sym}}$. The actual subspace $\mathcal N$
+is nonzero and reduces $K$, and
+
+$$
+\begin{aligned}
+g&:=\lambda_{\min}(K|_{\mathcal N})-E>0,\\
+K-EI&\succeq g(I-P_{\mathrm{sym}}),\\
+\|(I-P_{\mathrm{sym}})\phi\|^2
+&\leq\frac{\langle\phi,K\phi\rangle-E}{g}
+\qquad(\phi\in\mathcal H_{mS},\ \|\phi\|=1).
+\end{aligned}
+\tag{14.2}
+$$
+
+All local-spin sectors, multiplicity copies and complex superpositions
+are included, also when $S=1$ or $m=2$.
+
+Proof. Use the complete Boolean-chain decomposition (6.6)–(6.12).
+It does not require a flat least mode. A fibre has every integer spin
+$J_i=S-t_i$, $0\leq t_i\leq S$, with multiplicity
+$r_{2S}(t_i)=\binom{2S}{t_i}-\binom{2S}{t_i-1}$. Each tensor of
+chains retains its entire slice
+
+$$
+\mathcal X_t=\{x\in\mathbb Z^m:|x_i|\leq J_i,\ \sum_i x_i=0\}.
+\tag{14.3}
+$$
+
+Its occupancy at $i$ is $S+x_i$, its ladder coefficients are exactly
+$b_{J_i}^{\pm}(x_i)$ of (6.10), including their endpoint zeros, and
+its operator is
+
+$$
+K_{\boldsymbol J}=\sum_{\{i,j\}\in E(H)}
+(J_i^+J_j^-+J_i^-J_j^+)
+=2\sum_{\{i,j\}\in E(H)}(X_iX_j+Y_iY_j).
+\tag{14.4}
+$$
+
+Here $Z_i|x_i\rangle=x_i|x_i\rangle$,
+$X_i=(J_i^++J_i^-)/2$ and $Y_i=(J_i^+-J_i^-)/(2i)$.
+Every slice (14.3) contains the all-zero configuration.
+$P_{\mathrm{sym}}$ selects precisely $t=0$.
+The classical representation parameters are Srinivasan,
+[Theorem 1.2 and its representation derivation on pp. 4–5](https://arxiv.org/pdf/1001.0280v2),
+Boolean rank $n=2S$, starting rank $t_i$, raising operator $L_i^*=J_i^+$;
+and Feinsilver, [§§3–4, (8), (10), (16), Proposition 4.3 and §4.2.2](https://arxiv.org/pdf/1102.0368v2),
+principal number $2S-2t_i=2J_i$. Orthogonality, normalized ladder
+coefficients and all multiplicities are the supplied representation,
+not restrictions on an input state.
+
+The token convention is the singleton-difference definition
+[tokenGraph](../../../D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.lean)
+and [its corresponding definition](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.scribe.cs).
+The move bijection and energy identity Test.toNbr_bij and
+Test.token_energy in
+[CutBoundRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lean)
+give the move accounting in (2.4); its complex_real_energy,
+complex_real_norm and real_complex_rayleigh, with
+[the minimum and result explanations](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.scribe.cs),
+give the same complex Rayleigh convention as (1.2).
+These inputs concern the carrier, adjacency and quadratic form;
+their particular refutations and phase energies are not used.
+The top-chain normalization is the two-letter instance of
+sector_words_card_multinomial and sector_gram in
+[OccupancyWordSectors](../../../D5/S3/Quantum/Entanglement/OccupancyWordSectors.lean)
+and [its cardinality and Gram statements](../../../Blueprint/D5/S3/Quantum/Entanglement/OccupancyWordSectors.scribe.cs),
+with counts $(2S-n_i,n_i)$, including $n_i=0,2S$.
+For the exact identification in Proposition 6.3 with
+[the collective-oscillator theory, Definitions 1.1–1.2](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md),
+the parameters are $d=m$, $N=2S$, Boolean labels $g=0,e=1$ and
+$B=A(H)$: $a_{i,2S}=L_i/\sqrt{2S}$ and
+$H_{2S}(A(H))=\hbar K/(2S)$ on this two-state carrier.
+No fixed-low-excitation approximation is used at excitation $mS$.
+In Apte–Parekh–Sud,
+[v3, Definition 1, §3.2 and Fact 2](https://arxiv.org/pdf/2506.03441v3),
+(14.4) is adjacency $A(F_{mS}(H[\overline{K_{2S}}]))$;
+their shifted XY block is the different operator $WI/2-K$.
+
+We first extend the local input of §7. Let $G$ be a nonempty finite
+simple unit-weight graph with at least one bipartite connected
+component $C$, and let $D=V(G)\setminus C$. Put spin $S$ at every
+vertex. Let $K_G$ be the operator (14.4) for $G$ and $e$ its minimum
+on the full total-zero-weight space. We show that this ground space
+contains a vector not annihilated by both total ladders. No condition
+is placed on $G[D]$.
+
+If a ground vector already has this property, there is nothing to
+prove. Otherwise choose a unit ground vector $v$ killed by both
+ladders. Their commutator also kills it by total $Z$, so all three
+total spin components kill it. Thus $v$ is a total singlet, fixed by
+all simultaneous spin rotations. Its reduced density on $C$ is
+rotation-invariant: conjugating on $C$ can be transferred, using this
+invariance of $v$, to a unitary on $D$, which disappears under the
+partial trace. In the classical orthogonal spin decomposition of the
+$C$ factors it therefore has the form
+
+$$
+\rho_C=\bigoplus_q I_{V_q}\otimes A_q,\qquad A_q\succeq0,\qquad
+\sum_q(2q+1)\operatorname{tr}A_q=1.
+\tag{14.5}
+$$
+
+Here $V_q$ is the spin-$q$ representation and the second factor is
+its full multiplicity space. To see the decomposition directly, the total operators on $C$ obey
+$[L,U]=-2Z_C$, $[Z_C,U]=U$ and $L=U^*$, as in (6.6).
+In any nonzero invariant orthogonal remainder, choose a unit vector
+$h$ at its smallest weight $-q$. Then $Lh=0$ and
+$\|Uh\|^2=2q\geq0$. Repeated commutation gives
+$LU^a h=a(2q-a+1)U^{a-1}h$ and
+$\|U^a h\|^2=a!(2q)!/(2q-a)!$ for $0\leq a\leq2q$,
+with $U^{2q+1}h=0$. The resulting spin-$q$ chain is invariant,
+and its orthogonal complement is invariant because $L=U^*$ and
+$Z_C=Z_C^*$. Iteration exhausts the finite space. All $q$ are
+integers, since all original weights are integers. On inequivalent
+chains a rotation-intertwining operator is zero, while between two
+spin-$q$ chains it is scalar on the chain coordinate: it preserves
+weights and commuting with $U$ makes all its weight-diagonal entries
+equal. This gives precisely (14.5), with arbitrary operators on the
+multiplicity factors. Every $V_q$ contains exactly one vector of
+weight zero. Consequently, with $Z_C=\sum_{i\in C}Z_i$,
+
+$$
+\|\mathbf1_{Z_C=0}v\|^2
+=\operatorname{tr}(\rho_C\mathbf1_{Z_C=0})
+=\sum_q\operatorname{tr}A_q>0.
+\tag{14.6}
+$$
+
+Set $w=\mathbf1_{Z_C=0}v\ne0$. Since $C$ is a connected component,
+$K_G=K_C\otimes I+I\otimes K_D$, and its projection to $Z_C=0$
+commutes with $K_G$. Thus $K_Gw=ew$, with $Z_Cw=Z_Dw=0$.
+This selects a nonzero part of the same globally feasible vector;
+it has not assumed zero weight on components of an arbitrary vector.
+All other globally feasible component weights remain in the minimum $e$.
+
+If $C$ is a singleton $\{c\}$, write $w=|S,0\rangle_c\otimes h$,
+where $h\ne0$ has $Z_D=0$. This is still a ground vector. For
+$B_G^+=\sum_{i\in V(G)}J_i^+$, the two terms in
+
+$$
+B_G^+w=\sqrt{S(S+1)}\,|S,1\rangle_c\otimes h
++|S,0\rangle_c\otimes\sum_{i\in D}J_i^+h
+\tag{14.7}
+$$
+
+are orthogonal. Its squared norm is at least
+$S(S+1)\|h\|^2>0$. Normalizing $w$ gives the required choice.
+This includes $D=\varnothing$, where its factor is $\mathbb C$.
+
+Suppose instead that $C$ has an edge. For $\alpha=x,y,z$ put
+$T_\alpha=\sum_{\{i,j\}\in E(G)}J_i^\alpha J_j^\alpha$.
+Since $v$ is a singlet and $2(T_x+T_y)v=ev$, simultaneous rotations
+interchanging the axes also give
+$2(T_x+T_z)v=ev$ and $2(T_y+T_z)v=ev$.
+Adding these last two equations and subtracting the first yields
+
+$$
+T_zv=(e/4)v,\qquad
+T_z|x\rangle=q_G(x)|x\rangle,\qquad
+q_G(x)=\sum_{\{i,j\}\in E(G)}x_ix_j.
+\tag{14.8}
+$$
+
+The projection defining $w$ commutes with $T_z$, so this equation
+also holds on $w$.
+
+On the $Z_C=0$ slice, a bipartition side $C_+$ defines the unitary
+sign $U_C|x\rangle=(-1)^{\sum_{i\in C_+}(S+x_i)}|x\rangle$.
+Every move crosses the bipartition and changes the exponent by one,
+so $U_CK_CU_C^*=-K_C$. The matrix of $K_C$ has nonnegative
+entries and its configuration graph on this slice is connected.
+Indeed the independent $2S$-blow-up of connected $C$ with an edge
+is connected. Its edge transpositions generate all vertex
+permutations: the transposition of the endpoints of a path is a
+product of the successive edge transpositions and their reverses.
+These permutations act transitively on subsets of any fixed
+cardinality. Removing steps that leave a subset fixed gives token
+paths. Their block-occupancy images connect all configurations
+$|x_i|\leq S$, $\sum_{i\in C}x_i=0$, and every nontrivial image
+step has the strictly positive coefficients (6.10).
+Perron–Frobenius and the sign conjugation therefore show that the
+least eigenspace of $K_C$ on this slice is a line with a unit
+spanning vector $u_C$ nonzero at every configuration.
+This is the connected-component argument of §7; no sign
+conjugation on $D$ or on $G$ is asserted.
+
+Let $e_C(0)$ and $e_D(0)$ be the two slice minima. The $D$ slice
+is nonempty, since all its spins are integers; if $D$ is empty,
+its space is $\mathbb C$, $K_D=0$ and $e_D(0)=0$.
+Their product slice is contained in the space defining $e$, so
+$e\leq e_C(0)+e_D(0)$. Conversely its operator is at least
+$(e_C(0)+e_D(0))I$, and $w\ne0$ is its eigenvector at $e$.
+Hence equality holds. Positivity of the two excess operators then
+implies $w=u_C\otimes h_D$ with $h_D\ne0$ in the $D$ slice.
+This equality of minima is a consequence of the selected ground
+vector, not a decomposition assumption on the global minimum.
+
+Choose any configuration $y$ with $h_D(y)\ne0$. Full support of
+$u_C$ and (14.8) imply
+
+$$
+q_C(x)+q_D(y)=e/4
+\qquad\text{for every }x\text{ with }|x_i|\leq S,\quad
+\sum_{i\in C}x_i=0.
+\tag{14.9}
+$$
+
+For the all-zero $x$, $q_C(x)=0$. For an edge $\{a,b\}$ of $C$,
+take $x_a=1,x_b=-1$ and all other coordinates zero; then
+$q_C(x)=-1$. Both configurations are allowed for every $S\geq1$.
+They contradict (14.9). Thus, for an edged bipartite component,
+no ground vector of the full $G$ slice can be a singlet. Together
+with (14.7) this proves the local choice for every allowed $G$,
+including arbitrary nonbipartite components and all empty outside
+factors. The local obstruction (7.6)–(7.10) is consumed here with
+its bipartite argument confined to $C$; the additional inference
+is that unrestricted other components do not invalidate the choice.
+
+Now suppose a nonsymmetric sector in (6.12) has minimum $E$, and
+choose $p$ with $J_p<S$. Use the nonstrict fixed-zero-weight
+comparison (7.4)–(7.5) to increase every other local spin to $S$.
+It applies with arbitrary other integer spins, including zero.
+Each intermediate sector occurs in the same original carrier, so
+its minimum cannot be below $E$ and must remain $E$.
+The primary comparison is Ghassemi Tabrizi–Henderson–Kühne–Scuseria,
+[Appendix A4, (A34)–(A54) and its final fixed-magnetization paragraph](https://pmc.ncbi.nlm.nih.gov/articles/PMC12613319/#app1-sec4),
+DOI [10.1021/acs.jctc.5c01412](https://doi.org/10.1021/acs.jctc.5c01412):
+maximal local spin $s_i=S$, variable local spin $t_i=J_i$, $M=0$
+and $D_{ij}=\operatorname{diag}(2a_{ij},2a_{ij},0)$.
+Only nonstrict comparison is used. In §7 its zero-weight triplet
+has zero Cartesian expectations, and its upper-spin projection has
+squared coefficient $((j+1)^2-x^2)/((j+1)(2j+1))>0$ at every
+$-j\leq x\leq j$. Distinct weights have orthogonal images, so the
+induction applies to entangled inputs, starting at $j=0$ and including
+endpoints. No equality exclusion is imported from that comparison.
+
+Realize the resulting spin $J_p$ by the symmetric space on $2J_p$
+of the original $2S$ coordinates at $p$ and $S-J_p$ disjoint
+singlet pairs, as in §7. This intertwines the collective spins:
+the pair operators annihilate each singlet, and at weight $x_p$
+the occupancy is $(J_p+x_p)+(S-J_p)=S+x_p$.
+All multiplicity copies have the same matrix, so this realization
+preserves the minimum even if a different copy supplied it.
+Choose one pair and write a unit ground vector as
+$\Psi=|0,0\rangle\otimes f$. The remaining original auxiliaries,
+all other fixed pairs and arbitrary entanglement stay in $f$.
+Put
+
+$$
+A=N_H(p),\quad R=V(H)\setminus(\{p\}\cup A),\quad
+B_A^\pm=\sum_{i\in A}J_i^\pm,\quad Z_A=\sum_{i\in A}Z_i.
+\tag{14.10}
+$$
+
+Connectedness gives $A\ne\varnothing$. Release only the chosen
+pair into $|1,0\rangle$, giving $\Theta=|1,0\rangle\otimes f$.
+Both pair states have weight zero and zero spin expectations; there
+are no intrafibre interactions. Thus $\Theta$ lies in the same
+$\mathcal H_{mS}$ with Rayleigh quotient $E$. Equality at the actual
+minimum implies the eigenvector equation, since the nonnegative
+spectral excesses $(\lambda-E)|c_\lambda|^2$ sum to zero.
+Omitting the pair gives $K^{\mathrm{rem}}f=Ef$.
+Its spin-one coefficients at weight zero are $\sqrt2$, so
+
+$$
+0=(K-EI)\Theta
+=\sqrt2|1,1\rangle\otimes B_A^-f
++\sqrt2|1,-1\rangle\otimes B_A^+f.
+\tag{14.11}
+$$
+
+Orthogonality yields $B_A^-f=B_A^+f=0$, and their commutator gives
+$Z_Af=0$. In each spin-$q$ irreducible, the two ladder norms can
+both vanish only for $q=0$. Hence $f$ is in the total-singlet space
+$\mathcal S_A$ on $A$, tensored with the joint zero-weight space of
+the remaining auxiliaries at $p$ and all sites of $R$.
+
+For $i\in A$, every single-site spin component has zero matrix
+elements between singlets on $A$. Simultaneous rotations fix both
+singlets and rotate these three matrix elements as a vector; the
+only vector fixed by all rotations is zero. This identity can be
+tensored with any operator on the other factors, so crossing
+interactions have zero expectation even for entangled $f$.
+There are no edges between $p$ and $R$. Therefore
+
+$$
+E=\langle f,K_Af\rangle+\langle f,K_Rf\rangle,
+\tag{14.12}
+$$
+
+where $K_A,K_R$ are the induced operators with the unchanged
+spin-$S$ factors. The local conclusion just proved, applied to
+$G=H[A]$, supplies a unit ground vector $u_A$ on its full $Z_A=0$
+slice, with energy $e_A$, not annihilated by both $B_A^\pm$.
+Let $\rho_{pR}$ be the reduced density of this same $f$ on all
+remaining factors. It has trace one and joint zero-weight support.
+In the original half-filled carrier form
+
+$$
+\rho=|0,0\rangle\langle0,0|\otimes
+|u_A\rangle\langle u_A|\otimes\rho_{pR}.
+\tag{14.13}
+$$
+
+Since $u_A$ has definite weight zero,
+$\langle u_A,J_i^\pm u_A\rangle=0$ for every $i\in A$.
+Thus all crossing expectations in (14.13) vanish, and
+
+$$
+E\leq\operatorname{tr}(K\rho)
+=e_A+\langle f,K_Rf\rangle
+\leq\langle f,K_Af\rangle+\langle f,K_Rf\rangle=E.
+\tag{14.14}
+$$
+
+Both comparisons use the same entire-carrier minimum $E$.
+Spectrally decompose $\rho_{pR}$ into unit vectors $h$ with positive
+weights, all in its actual joint zero-weight support. Every
+$|0,0\rangle\otimes u_A\otimes h$ has energy at least $E$;
+their average is $E$, so each is a ground vector. Apply the same
+pair release (14.11) to any one. It forces
+$(B_A^-u_A)\otimes h=(B_A^+u_A)\otimes h=0$, contrary to the
+choice of $u_A$. If $R=\varnothing$, its factor is $\mathbb C$
+and $K_R=0$; the remaining original auxiliaries at $p$ are still
+retained in $\rho_{pR}$ and $h$. The argument also permits no
+remaining auxiliaries, interpreting their tensor product as $\mathbb C$.
+
+This is the strict replacement (7.11)–(7.15) with the enlarged local
+input, without separately optimizing any outside state or component
+weight. For its two-auxiliary precedent see Benassi–Lees–Ueltschi,
+[v3, §4.3, Lemma 9 and (4.12)–(4.17)](https://arxiv.org/pdf/1510.03215v3),
+DOI [10.1007/s10955-016-1580-2](https://doi.org/10.1007/s10955-016-1580-2).
+Their $R^i$ is the collective spin of a pair of spin-half auxiliaries;
+their strictness concerns a negative Hamiltonian with nonnegative
+product couplings in directions 1 and 3. Those hypotheses do not
+supply strictness for positive adjacency on the present possibly
+nonbipartite $H$.
+
+We have excluded energy $E$ from every $t\ne0$ sector. The orthogonal
+decomposition reduces $K$ and $P_{\mathrm{sym}}$ and retains every
+copy. Each nonzero component of any complex ground vector is itself
+a ground vector, so every such vector has only $t=0$ components.
+Fibre permutations commute with $K$, hence $\mathcal N$ reduces it.
+It is nonzero: take a nonzero one-particle vector orthogonal to
+constants in one fibre, occupancy $2S-1$ in a second fibre, and
+occupancy $S$ in every other fibre. The tensor is killed by
+$P_{\mathrm{sym}}$ and has occupancy
+$1+(2S-1)+(m-2)S=mS$, also for $S=1,m=2$.
+The finite nonempty spectrum of $K|_{\mathcal N}$ excludes $E$,
+so its minimum is strictly greater than $E$. On
+$\operatorname{ran}P_{\mathrm{sym}}$, $K-EI\succeq0$ by the
+whole-space definition of $E$; on $\mathcal N$, $K-EI\succeq gI$.
+Adding their quadratic forms proves (14.2) on the entire complex
+carrier, including all entangled superpositions. Unit normalization
+and division by $g>0$ give its last inequality.
+
+The additional graph-domain inference is the local selection
+(14.5)–(14.9) with unrestricted $D$, followed by the supplied strict
+replacement. The full-state certificate, flat-domain bounds, odd-scale
+results, complete multipartite results and all-even block-graph result
+of §§1–13 retain their distinct hypotheses and conclusions.
+The representations, nonstrict comparison, singlet matrix elements
+and finite-spectrum implications are reused intermediates. No exact
+$E$, numerical $g$ or rate is supplied. The arbitrary connected
+even-order base problem without the component condition remains
+unresolved by these results; failure of this sufficient condition
+is not a counterexample. Other fillings, weights, odd or unequal
+Boolean fibres are outside the assertion. $\square$
+
+**推论 14.3（A pendant leaf at every vertex of an arbitrary core）。**
+Let $F$ be any nonempty finite connected simple unit-weight graph.
+For every $v\in V(F)$ retain a core vertex $c_v$ and adjoin one
+distinct leaf $\ell_v$ whose only neighbor is $c_v$. Let
+$H=F\mathbin\circ K_1$ have exactly the core edges of $F$ and
+these leaf edges. Then every conclusion of Theorem 14.2 holds on
+the original complete complex half-filled carrier of $H$ at every
+integer $S\geq1$, including a one-vertex core.
+
+Proof. Write $r=|V(F)|\geq1$. The graph $H$ is finite, simple,
+connected and unit-weight, of even order $m=2r\geq2$.
+For a core vertex,
+
+$$
+H[N_H(c_v)]=F[N_F(v)]\ \sqcup\ \{\ell_v\}.
+\tag{14.15}
+$$
+
+Indeed $\ell_v$ is adjacent only to $c_v$, which is outside the
+open neighborhood; no other leaf is adjacent to $c_v$.
+The singleton component in (14.15) is bipartite, regardless of the
+other components. For a leaf $\ell_v$, its open neighborhood is
+the singleton $\{c_v\}$, also bipartite. Thus Definition 14.1 holds
+at every vertex. Theorem 14.2 applies with the original $2r$ fibres
+of size $2S$, $k=2rS$, positive adjacency, original projection and
+actual whole-carrier minimum. When $r=1$, $H=K_2$, so this includes
+$m=2$ and $S=1$, without an outside vertex or a core edge.
+Some of these applications are also supplied by previous hypotheses:
+if $F$ is a tree, $H$ is a tree and hence a block graph, covered by
+Corollary 13.3; clique cores of order at least four are the supplied
+Proposition 12.4. The assertion here permits every connected core;
+it does not assert that every corona lies outside the prior domains.
+$\square$
+
+**命题 14.4（Coronas outside all four supplied graph hypotheses）。**
+For every integer $r\geq5$, let $F_r=K_r-\{a,b\}$ be the complete
+graph with just the edge $\{a,b\}$ removed, and put
+$H_r=F_r\mathbin\circ K_1$. Then $H_r$ has order $2r$ and all
+conclusions (14.2) at every integer $S\geq1$. On $H_r$ itself,
+the connected block-graph hypothesis of Corollary 13.3, the wholly
+bipartite-neighborhood hypothesis of Definition 7.1, the complete
+multipartite hypothesis of Corollary 11.3 and the flat-least-mode
+hypothesis of Assumption 3.1 all fail.
+
+Proof. The core is connected: its sole nonadjacent pair $a,b$ has
+a common neighbor, and every other pair is adjacent. Corollary 14.3
+therefore gives order $m=2r$, filling $k=2rS$ and every conclusion,
+on the unchanged original carrier. In particular every core vertex
+has its own isolated leaf component in its neighborhood, and a leaf
+has a singleton neighborhood.
+
+The core $F_r$ is two-connected. Deleting any one of its vertices
+leaves a complete graph or a complete graph missing one edge on
+$r-1\geq4$ vertices. Either is connected, since any missing pair
+still has a third vertex joining them. It is a maximal two-connected
+subgraph of $H_r$: a leaf cannot lie in a two-connected subgraph,
+as it has degree at most one there. Thus this core is a graph block
+of $H_r$. It is not a clique because $a,b$ are nonadjacent.
+Consequently $H_r$ is not a block graph in the precise sense of
+Definition 12.1 and Corollary 13.3.
+
+At the core vertex $c_a$, the other core neighbors are the
+$r-2$ vertices distinct from $a,b$. They induce $K_{r-2}$;
+the remaining neighbor is its isolated leaf $\ell_a$.
+Since $r-2\geq3$, this neighborhood contains a triangle and is not
+bipartite. This disproves the wholly bipartite-neighborhood condition
+on $H_r$, while its singleton component still meets Definition 14.1.
+
+In a complete multipartite graph, distinct nonadjacent vertices must
+belong to the same independent part. Choose two distinct core labels
+$u,v$. In $H_r$, $\ell_u$ is nonadjacent to both $c_v$ and
+$\ell_v$, whereas $c_v$ is adjacent to $\ell_v$.
+These three relations are incompatible with any complete multipartite
+partition. Thus $H_r$ fails that hypothesis, with arbitrary labelled
+or unequal parts as well.
+
+Finally let $A=A(F_r)$ and order the base adjacency coordinates as
+cores followed by leaves. Then
+
+$$
+a_r=A(H_r)=\begin{pmatrix}A&I\ I&0\end{pmatrix}.
+\tag{14.16}
+$$
+
+Choose any core edge $\{u,v\}$. Give a vector $w$ the coordinates
+$w_{c_u}=1$, $w_{c_v}=-1$, $w_{\ell_u}=-1$,
+$w_{\ell_v}=1$, and zero elsewhere. Its squared norm is four.
+Only the core edge and these two leaf edges contribute to its
+adjacency quadratic form, each with endpoint product $-1$ and both
+orientations. Hence $\langle w,a_rw\rangle=-6$, and the actual
+least base eigenvalue satisfies $\lambda_{\min}(a_r)\leq-3/2<-1$.
+For any complex eigenvector $z$ at this least eigenvalue $\lambda$,
+the leaf equations in (14.16) are $\lambda z_{\ell_v}=z_{c_v}$.
+If every coordinate had modulus one, they would force $|\lambda|=1$,
+a contradiction. This rules out the exact complex flat least mode
+of Assumption 3.1 on $H_r$; it does not require a formula for that
+base eigenvalue or for the many-body $E$.
+
+Thus these coronas exhibit the graph-domain addition while the
+classical spin tools and spectral implications remain the supplied
+intermediates. No priority assertion or conclusion for arbitrary
+connected even-order bases follows from the four failed sufficient
+hypotheses. $\square$
+
+## 追加锚（本行以下为增补区）
