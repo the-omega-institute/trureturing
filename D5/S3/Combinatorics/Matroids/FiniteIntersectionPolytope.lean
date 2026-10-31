@@ -6,19 +6,23 @@
    utility: none
    digest: Extreme points of two finite matroid rank-inequality regions have zero-one coordinates. -/
 
+
 import D5.S3.Combinatorics.Matroids.FiniteIntersection
 import D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse
 import D5.S3.Observer.Separation.FixedSkeletonWeightedInclusion.RowCertificates
 import Mathlib.Data.Finset.Max
 import Mathlib.Data.Finset.Powerset
+import Mathlib.Order.Zorn
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import D5.S3.Fourier.CharacterSelection.SignedIncidenceTotalUnimodularity
 import Mathlib.Tactic
 
+/-! # Zero-one extreme points of finite matroid intersection rank regions -/
+
+
 open scoped BigOperators
 namespace D5.S3.Combinatorics.Matroids.FiniteIntersectionPolytope
 
-open Classical
 variable {E : Type*} [DecidableEq E]
 
 private structure TightChain (F : Finset E → Prop) where
@@ -27,35 +31,31 @@ private structure TightChain (F : Finset E → Prop) where
   chain : ∀ A ∈ sets, ∀ B ∈ sets, A ⊆ B ∨ B ⊆ A
   maximal : ∀ A, F A → (∀ B ∈ sets, A ⊆ B ∨ B ⊆ A) → A ∈ sets
 
-private lemma exists_tightChain [Fintype E] (F : Finset E → Prop) : Nonempty (TightChain F) := by
+omit [DecidableEq E] in
+private lemma exists_tightChain [Finite E] (F : Finset E → Prop) :
+    Nonempty (TightChain F) := by
   classical
-  let good : Finset (Finset (Finset E)) := Finset.univ.filter fun C =>
-    (∀ A ∈ C, F A) ∧ (∀ A ∈ C, ∀ B ∈ C, A ⊆ B ∨ B ⊆ A)
-  have hgood : (∅ : Finset (Finset E)) ∈ good := by simp [good]
-  obtain ⟨C, hC, hmax⟩ := good.exists_max_image Finset.card ⟨∅, hgood⟩
-  have hC' := (Finset.mem_filter.mp hC).2
-  refine ⟨⟨C, hC'.1, hC'.2, ?_⟩⟩
-  intro A hA hcmp
-  by_contra hn
-  have hins : insert A C ∈ good := by
-    simp only [good, Finset.mem_filter, Finset.mem_univ, true_and]
-    constructor
-    · intro B hB
-      rcases Finset.mem_insert.mp hB with rfl | hB
-      · exact hA
-      · exact hC'.1 B hB
-    · intro B hB D hD
-      rcases Finset.mem_insert.mp hB with hBA | hBC
-      · subst B
-        rcases Finset.mem_insert.mp hD with rfl | hD
-        · exact Or.inl (Finset.Subset.refl _)
-        · exact hcmp D hD
-      · rcases Finset.mem_insert.mp hD with hDA | hDC
-        · subst D
-          exact (hcmp B hBC).symm
-        · exact hC'.2 B hBC D hDC
-  have := hmax _ hins
-  simp [Finset.card_insert_of_notMem hn] at this
+  letI := Fintype.ofFinite E
+  obtain ⟨S,hS,_⟩ :=
+    (IsChain.empty : IsChain (· ≤ ·) (∅ : Set {A : Finset E // F A})).exists_maxChain
+  let C := S.toFinset.image Subtype.val
+  refine ⟨⟨C, ?_, ?_, ?_⟩⟩
+  · intro A hA
+    obtain ⟨B,_,rfl⟩ := Finset.mem_image.mp hA
+    exact B.property
+  · intro A hA B hB
+    obtain ⟨a,ha,rfl⟩ := Finset.mem_image.mp hA
+    obtain ⟨b,hb,rfl⟩ := Finset.mem_image.mp hB
+    exact hS.isChain.total (by simpa using ha) (by simpa using hb)
+  · intro A hA hcmp
+    let a : {A : Finset E // F A} := ⟨A,hA⟩
+    have hins : IsChain (· ≤ ·) (insert a S) := hS.isChain.insert (by
+      intro b hb _
+      exact hcmp b (Finset.mem_image.mpr ⟨b, by simpa using hb, rfl⟩))
+    have ha : a ∈ S := by
+      rw [hS.2 hins (Set.subset_insert _ _)]
+      exact Set.mem_insert _ _
+    exact Finset.mem_image.mpr ⟨a, by simpa using ha, rfl⟩
 
 namespace TightChain
 variable {F : Finset E → Prop} (C : TightChain F)
@@ -242,20 +242,28 @@ private lemma layerMatrix_tu {F G : Finset E → Prop} (C : TightChain F) (D : T
     simp only [eq_comm (a := some A), D.owner_eq_iff]
 
 
+noncomputable def rankRegion [Finite E] (M1 M2 : Matroid E) : Set (E → ℝ) :=
+  {x | (∀ e, 0 ≤ x e) ∧
+    (∀ U : Set E, (∑ e ∈ U.toFinite.toFinset, x e) ≤ ((M1.eRk U).toNat : ℝ)) ∧
+    (∀ U : Set E, (∑ e ∈ U.toFinite.toFinset, x e) ≤ ((M2.eRk U).toNat : ℝ))}
+
 variable [Fintype E]
 
-noncomputable def rankRegion (M1 M2 : Matroid E) : Set (E → ℝ) := by
-  classical
-  exact {x | (∀ e, 0 ≤ x e) ∧
-    (∀ U : Set E, (∑ e ∈ U.toFinset, x e) ≤ ((M1.eRk U).toNat : ℝ)) ∧
-    (∀ U : Set E, (∑ e ∈ U.toFinset, x e) ≤ ((M2.eRk U).toNat : ℝ))}
+open Classical in
+private lemma mem_rankRegion (M1 M2 : Matroid E) (x : E → ℝ) :
+    x ∈ rankRegion M1 M2 ↔ (∀ e, 0 ≤ x e) ∧
+      (∀ U : Set E, (∑ e ∈ U.toFinset, x e) ≤ ((M1.eRk U).toNat : ℝ)) ∧
+      (∀ U : Set E, (∑ e ∈ U.toFinset, x e) ≤ ((M2.eRk U).toNat : ℝ)) := by
+  simp [rankRegion]
 
 private def tight (M : Matroid E) (x : E → ℝ) (A : Finset E) : Prop :=
   (∑ e ∈ A, x e) = ((M.eRk (A : Set E)).toNat : ℝ)
 
+omit [DecidableEq E] [Fintype E] in
 private lemma tight_empty (M : Matroid E) (x : E → ℝ) : tight M x ∅ := by
   simp [tight]
 
+open Classical in
 private lemma tight_lattice (M : Matroid E) (x : E → ℝ)
     (hx : ∀ U : Set E, (∑ e ∈ U.toFinset, x e) ≤ ((M.eRk U).toNat : ℝ))
     {A B : Finset E} (hA : tight M x A) (hB : tight M x B) :
@@ -302,6 +310,7 @@ private theorem actual_active_kernel_zero {E : Type u} [Fintype E]
     | .inr (.inr U) => ((M2.eRk U).toNat : ℝ)
   have hregion : rankRegion M1 M2 = {x : E → ℝ | ∀ j, a j x ≤ b j} := by
     ext x
+    rw [mem_rankRegion]
     change ((∀ e, 0 ≤ x e) ∧
       (∀ U : Set E, (∑ e ∈ U.toFinset, x e) ≤ ((M1.eRk U).toNat : ℝ)) ∧
       (∀ U : Set E, (∑ e ∈ U.toFinset, x e) ≤ ((M2.eRk U).toNat : ℝ))) ↔ _
@@ -325,7 +334,7 @@ private theorem actual_active_kernel_zero {E : Type u} [Fintype E]
   intro j hj
   rcases j with e | (U | U)
   · have hv0 : v e = 0 := by simpa [a, b] using hj
-    simp [a, b, h0 e hv0]
+    simp [a, h0 e hv0]
   · have ht : (∑ e ∈ U.toFinset, v e) = ((M1.eRk U).toNat : ℝ) := by
       simpa [a, b, subsetSum] using hj
     simpa [a, subsetSum] using h1 U ht
@@ -341,8 +350,7 @@ private lemma compressed_kernel_zero (M1 M2 : Matroid E) (v : E → ℝ)
     (hC : ∀ A ∈ C.sets, (∑ e ∈ C.layer A, d e) = 0)
     (hD : ∀ A ∈ D.sets, (∑ e ∈ D.layer A, d e) = 0) : d = 0 := by
   classical
-  have hfeas := hv.1
-  change (∀ e, 0 ≤ v e) ∧ _ at hfeas
+  have hfeas := (mem_rankRegion M1 M2 v).mp hv.1
   apply actual_active_kernel_zero M1 M2 v hv d h0
   · intro U hU
     have ht : tight M1 v U.toFinset := by simpa [tight] using hU
@@ -359,6 +367,7 @@ private noncomputable def layerRhs (M : Matroid E) (v : E → ℝ) (C : TightCha
     (A : C.sets) : ℤ := (M.eRk (A : Set E)).toNat -
       (M.eRk (C.pred A : Set E)).toNat
 
+open Classical in
 private lemma layer_consistent (M : Matroid E) (v : E → ℝ)
     (hv : ∀ U : Set E, (∑ e ∈ U.toFinset, v e) ≤ ((M.eRk U).toNat : ℝ))
     (C : TightChain (tight M v)) (A : C.sets) :
@@ -395,6 +404,7 @@ private noncomputable def equationRhs (M1 M2 : Matroid E) (v : E → ℝ)
     (C.sets ⊕ D.sets) ⊕ {e : E // v e = 0} → ℤ :=
   Sum.elim (Sum.elim (layerRhs M1 v C) (fun A => -layerRhs M2 v D A)) (fun _ => 0)
 
+omit [Fintype E] in
 private lemma equationMatrix_tu (v : E → ℝ) {F G : Finset E → Prop}
     (C : TightChain F) (D : TightChain G) :
     (equationMatrix v C D).IsTotallyUnimodular := by
@@ -403,7 +413,7 @@ private lemma equationMatrix_tu (v : E → ℝ) {F G : Finset E → Prop}
   intro _ e
   refine ⟨e, 1, ?_⟩
   ext j
-  simp [Pi.single_apply, eq_comm]
+  simp [Pi.single_apply]
 
 private lemma equationMatrix_consistent (M1 M2 : Matroid E) (v : E → ℝ)
     (hv : v ∈ rankRegion M1 M2)
@@ -411,14 +421,15 @@ private lemma equationMatrix_consistent (M1 M2 : Matroid E) (v : E → ℝ)
     (equationMatrix v C D).map (Int.castRingHom ℝ) *ᵥ v =
       fun r => (equationRhs M1 M2 v C D r : ℝ) := by
   classical
+  have hfeas := (mem_rankRegion M1 M2 v).mp hv
   ext r
   cases r with
   | inl r =>
     change ((layerMatrix C D).map (Int.castRingHom ℝ) *ᵥ v) r = _
     rw [layerMatrix_mulVec]
     cases r with
-    | inl A => exact layer_consistent M1 v hv.2.1 C A
-    | inr A => simpa [equationRhs] using congrArg Neg.neg (layer_consistent M2 v hv.2.2 D A)
+    | inl A => exact layer_consistent M1 v hfeas.2.1 C A
+    | inr A => simpa [equationRhs] using congrArg Neg.neg (layer_consistent M2 v hfeas.2.2 D A)
   | inr e =>
     simpa [Matrix.mulVec, dotProduct, equationMatrix_zero_row, equationRhs,
       Sum.elim_inr] using e.property
@@ -464,12 +475,14 @@ private lemma integer_solution_of_kernel_zero {R N : Type*} [Fintype R] [Fintype
   refine ⟨z, fun e => ?_⟩
   exact sub_eq_zero.mp (congrFun hd e)
 
-omit [DecidableEq E] in
-theorem extreme_point_zero_one (M1 M2 : Matroid E)
+omit [DecidableEq E] [Fintype E] in
+theorem extreme_point_zero_one [Finite E] (M1 M2 : Matroid E)
     (_hM1 : M1.E = Set.univ) (_hM2 : M2.E = Set.univ)
     (v : E → ℝ) (hv : v ∈ Set.extremePoints ℝ (rankRegion M1 M2)) :
     ∀ e, v e = 0 ∨ v e = 1 := by
   classical
+  letI := Fintype.ofFinite E
+  have hfeas := (mem_rankRegion M1 M2 v).mp hv.1
   obtain ⟨C⟩ := exists_tightChain (tight M1 v)
   obtain ⟨D⟩ := exists_tightChain (tight M2 v)
   obtain ⟨z,hz⟩ := integer_solution_of_kernel_zero (equationMatrix v C D)
@@ -477,11 +490,11 @@ theorem extreme_point_zero_one (M1 M2 : Matroid E)
     (equationMatrix_consistent M1 M2 v hv.1 C D)
     (equationMatrix_kernel M1 M2 v hv C D)
   intro e
-  have hn : 0 ≤ v e := hv.1.1 e
+  have hn : 0 ≤ v e := hfeas.1 e
   have hr : (M1.eRk {e}).toNat ≤ 1 := by
     rw [← ENat.natCast_le_natCast, FiniteIntersection.cast_toNat_eRk]
     exact M1.eRk_singleton_le e
-  have he := hv.1.2.1 ({e} : Set E)
+  have he := hfeas.2.1 ({e} : Set E)
   simp only [Set.toFinset_singleton, Finset.sum_singleton] at he
   have hu : v e ≤ 1 := he.trans (by exact_mod_cast hr)
   have hz0 : (0 : ℤ) ≤ z e := by exact_mod_cast (hz e ▸ hn)
