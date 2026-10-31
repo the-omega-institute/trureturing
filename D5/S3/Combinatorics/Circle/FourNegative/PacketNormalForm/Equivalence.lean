@@ -21,6 +21,9 @@ open private packetChecks withEar strip_iff_packetChecks normalize_blocks withEa
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
 open private orderedPackets finiteChecks finiteEarChecks DataCertificate DataCertificate.mk
   finiteChecks_equiv finiteEarChecks_equiv
+  DataCertificate.packets DataCertificate.negativeOrder DataCertificate.earSlot
+  DataCertificate.positiveLabels DataCertificate.partition
+  DataCertificate.oldEndpoints DataCertificate.newEndpoints
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
 
 private def finitePackets (bs : List (List ℕ × ℕ)) : List (Finset ℕ × ℕ) :=
@@ -223,27 +226,27 @@ private theorem physical_packet_equivalence (k : ℕ) (f g : ℕ → ℤ) (C D E
     · apply (finiteEarChecks_equiv mass' g D E 0 k e hear (finitePackets bs) hm').mpr
       exact (finite_ear_checks g D 0 k e bs hndall).mpr hnewchecks
   · rintro ⟨cert⟩
-    let bs := orderedPackets cert.packets
-    have hperm : (blocksWord bs).Perm (List.range k) := Quot.exact cert.partition
+    let bs := orderedPackets (DataCertificate.packets cert)
+    have hperm : (blocksWord bs).Perm (List.range k) := Multiset.coe_eq_coe.mp (DataCertificate.partition cert)
     have hbslen : bs.length = 4 := by
-      have hh := cert.negativeOrder.length_eq
+      have hh := (DataCertificate.negativeOrder cert).length_eq
       simpa [bs,orderedPackets,hnglen] using hh
     have hpold : ∀ b ∈ bs, ∀ i ∈ b.1, 0 ≤ f i := by
       intro b hb i hi
       obtain ⟨b',hb',rfl⟩ := List.mem_map.mp hb
-      have hp := cert.positiveLabels b' hb' i (Finset.mem_toList.mp hi)
+      have hp := (DataCertificate.positiveLabels cert) b' hb' i (Finset.mem_toList.mp hi)
       have hs := hsign i hp.1
       rw [if_neg hp.2] at hs
       exact hs.1.le
     have hpnew : ∀ b ∈ bs, ∀ i ∈ b.1, 0 ≤ g i := by
       intro b hb i hi
       obtain ⟨b',hb',rfl⟩ := List.mem_map.mp hb
-      have hp := cert.positiveLabels b' hb' i (Finset.mem_toList.mp hi)
+      have hp := (DataCertificate.positiveLabels cert) b' hb' i (Finset.mem_toList.mp hi)
       have hs := hsign i hp.1
       rw [if_neg hp.2] at hs
       exact hs.2.le
     have hnegs : (bs.map Prod.snd).Perm ng := by
-      simpa [bs,orderedPackets,List.map_map,Function.comp_def] using cert.negativeOrder
+      simpa [bs,orderedPackets,List.map_map,Function.comp_def] using (DataCertificate.negativeOrder cert)
     have hnegative (v : ℕ) (hv : v ∈ bs.map Prod.snd) : f v ≤ 0 ∧ g v ≤ 0 := by
       have hn := hnegs.mem_iff.mp hv
       have hs := hsign v (hngrange v hn)
@@ -251,23 +254,23 @@ private theorem physical_packet_equivalence (k : ℕ) (f g : ℕ → ℤ) (C D E
       exact ⟨hs.1.le,hs.2.le⟩
     have hnegf : ∀ b ∈ bs, f b.2 ≤ 0 :=
       fun b hb => (hnegative b.2 (List.mem_map.mpr ⟨b,hb,rfl⟩)).1
-    have hmarkedpos := withEar_positive g k cert.earSlot.val bs
+    have hmarkedpos := withEar_positive g k (DataCertificate.earSlot cert).val bs
       (by rw [hear]; exact hE.le) hpnew
-    have hmarkedneg : ∀ b ∈ withEar k cert.earSlot.val bs, g b.2 ≤ 0 := by
+    have hmarkedneg : ∀ b ∈ withEar k (DataCertificate.earSlot cert).val bs, g b.2 ≤ 0 := by
       intro b hb
       apply (hnegative b.2 _).2
-      rw [← withEar_negatives k cert.earSlot.val bs]
+      rw [← withEar_negatives k (DataCertificate.earSlot cert).val bs]
       exact List.mem_map.mpr ⟨b,hb,rfl⟩
-    have hm : ∀ b ∈ cert.packets, mass b.1 = ∑ i ∈ b.1, f i :=
-      fun b hb => hmass b.1 (cert.positiveLabels b hb)
-    have hm' : ∀ b ∈ cert.packets, mass' b.1 = ∑ i ∈ b.1, g i :=
-      fun b hb => hmass' b.1 (cert.positiveLabels b hb)
+    have hm : ∀ b ∈ (DataCertificate.packets cert), mass b.1 = ∑ i ∈ b.1, f i :=
+      fun b hb => hmass b.1 ((DataCertificate.positiveLabels cert) b hb)
+    have hm' : ∀ b ∈ (DataCertificate.packets cert), mass' b.1 = ∑ i ∈ b.1, g i :=
+      fun b hb => hmass' b.1 ((DataCertificate.positiveLabels cert) b hb)
     have hold := (strip_iff_packetChecks f C 0 bs ⟨by omega,hC⟩ hpold hnegf).mpr
-      ((finiteChecks_equiv mass f C 0 cert.packets hm).mp cert.oldEndpoints)
-    have hnew := (strip_iff_packetChecks g D 0 (withEar k cert.earSlot.val bs) ⟨by omega,hD⟩
+      ((finiteChecks_equiv mass f C 0 (DataCertificate.packets cert) hm).mp (DataCertificate.oldEndpoints cert))
+    have hnew := (strip_iff_packetChecks g D 0 (withEar k (DataCertificate.earSlot cert).val bs) ⟨by omega,hD⟩
       hmarkedpos hmarkedneg).mpr
-      ((finiteEarChecks_equiv mass' g D E 0 k cert.earSlot.val hear cert.packets hm').mp cert.newEndpoints)
-    obtain ⟨pre,post,hword,hmarked⟩ := withEar_split k cert.earSlot.val bs (by omega)
+      ((finiteEarChecks_equiv mass' g D E 0 k (DataCertificate.earSlot cert).val hear (DataCertificate.packets cert) hm').mp (DataCertificate.newEndpoints cert))
+    obtain ⟨pre,post,hword,hmarked⟩ := withEar_split k (DataCertificate.earSlot cert).val bs (by omega)
     have hcut : pre.length ≤ k := by
       have hh := hperm.length_eq
       rw [hword] at hh
