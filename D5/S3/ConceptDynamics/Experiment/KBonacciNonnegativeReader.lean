@@ -339,5 +339,61 @@ private theorem one_preparation_terminal_collision (π : Protocol)
         transfer.2 v (fun a ha => (heq a ha).symm.trans (transfer.1 a ha))
       exact collision_of_same_run π u v hne nu (π.history u) (π.output u) hnu hv
 
+private theorem initial_positive (w : World) : 0 < read ([], none) w := by
+  change 0 < w.ell ⬝ᵥ w.c
+  rw [dotProduct, Fin.sum_univ_two]
+  have hpos : 0 < w.ell 0 ∨ 0 < w.ell 1 := by
+    have := w.ell_nonzero
+    by_contra h
+    push_neg at h
+    linarith
+  rcases hpos with h | h
+  · exact add_pos_of_pos_of_nonneg (mul_pos h (w.c_pos 0))
+      (mul_nonneg (w.ell_nonneg 1) (le_of_lt (w.c_pos 1)))
+  · exact add_pos_of_nonneg_of_pos
+      (mul_nonneg (w.ell_nonneg 0) (le_of_lt (w.c_pos 0))) (mul_pos h (w.c_pos 1))
+
+/-- The complete dimension-two obstruction for the original rank-one target.
+Worst costs are extended suprema, and the infimum includes an empty protocol class.
+Only the preparation equality and simultaneous resource law are excluded. -/
+theorem complete_source_8_2 :
+    (∀ word : Window, ∃ p t : Fin 2,
+      (word.val.takeWhile id).length = p.val ∧ live word.val = endpoint p t) ∧
+    (∀ p t : Fin 2, ∃ word : Window, live word.val = endpoint p t) ∧
+    (∀ w : World, 0 < read ([], none) w) ∧
+    (∀ (π : Protocol) (w : World), paidReads (π.history w) =
+      preparations (π.history w) + windows (π.history w)) ∧
+    (∀ π : Protocol, Correct π → ¬ (∀ w, preparations (π.history w) ≤ 1)) ∧
+    (∀ π : Protocol, Correct π → (2 : ENNReal) ≤ worstPreparations π) ∧
+    (2 : ENNReal) ≤ preparationValue ∧
+    preparationValue ≠ 1 ∧
+    ¬ (∃ π : Protocol, Correct π ∧ ∀ w,
+      preparations (π.history w) ≤ 1 ∧ windows (π.history w) ≤ 2 ∧
+        paidReads (π.history w) ≤ 3) := by
+  have impossible (π : Protocol) (hc : Correct π)
+      (hb : ∀ w, preparations (π.history w) ≤ 1) : False := by
+    obtain ⟨u, v, hne, _, he⟩ := one_preparation_terminal_collision π hb
+    exact hne ((hc u).symm.trans (he.trans (hc v)))
+  have lower (π : Protocol) (hc : Correct π) :
+      (2 : ENNReal) ≤ worstPreparations π := by
+    have hex : ∃ w, 2 ≤ preparations (π.history w) := by
+      by_contra h
+      push_neg at h
+      exact impossible π hc (fun w => by have := h w; omega)
+    obtain ⟨w, hw⟩ := hex
+    exact le_trans (by exact_mod_cast hw) (le_iSup
+      (fun w : World => (preparations (π.history w) : ENNReal)) w)
+  have value : (2 : ENNReal) ≤ preparationValue := by
+    exact le_iInf (fun π => lower π.val π.property)
+  refine ⟨window_endpoint, all_endpoints, initial_positive, fun _ _ => charges _,
+    impossible, lower, value, ?_, ?_⟩
+  · intro he
+    rw [he] at value
+    norm_num at value
+  · rintro ⟨π, hc, hb⟩
+    exact impossible π hc (fun w => (hb w).1)
+
+#print axioms complete_source_8_2
+
 end
 end D5.S3.ConceptDynamics.Experiment.KBonacciNonnegativeReader
