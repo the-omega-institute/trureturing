@@ -81,8 +81,8 @@ internal sealed class BornJaccardTracialClassificationDocument : IScribeDocument
         var classification = Seq(Par(tri), Sp, Iff, Sp, Par(scalar));
         var separation = All("X", Call("Subspace", space), All("Z", Call("Subspace", space),
             Seq(Par(Eqn(Call("d", rho, c, x, z), D(0))), Sp, Iff, Sp, Par(Eqn(x, z)))));
-        var hypotheses = And(Seq(D(2), Leq, n), And(Call("PosDef", rho),
-            And(Eqn(Call("Tr", rho), D(1)), Seq(D(0), Leq, c))));
+        var hypotheses = And(Seq(D(2), Sp, Leq, Sp, n), And(Call("PosDef", rho),
+            And(Eqn(Call("Tr", rho), D(1)), Seq(D(0), Sp, Leq, Sp, c))));
         return All("n", naturals, All("rho", Call("Matrix", n, n, complex),
             All("c", reals, Imp(hypotheses,
                 And(classification, And(Imp(scalar, Call("Metric", rho, c)), separation))))));
