@@ -93,11 +93,21 @@ private theorem arithmetic (a b : ℤ) (ha : 2 ≤ a) (hb : 4*a ≤ b) :
   obtain ⟨cA,cB,cL,cM,cGV,cGW,cGX⟩ := coefficient_bounds (2*a) (2*b) (by omega) (by omega)
   have hh0 : (0 : ℤ) ≤ h := by positivity
   dsimp only [Gates]
+  have hCdiv : ((2*a)^2*(2*b)^2-1)/2 = 8*a^2*b^2 - 1 := by ring_nf; omega
+  have hd0 : -(((2*a)^2*(2*b)^2-1)-(1+2*b+(2*a)*(2*b)+(2*a)^2*(2*b)))/2 = -8*a^2*b^2 + 4*a^2*b + 2*a*b + b + 1 := by ring_nf; omega
+  have hd1 : -(((2*a)^2*(2*b)^2-1)-(1+2*b+(2*b)^2+(2*a)*(2*b)^2))/2 = -8*a^2*b^2 + 4*a*b^2 + 2*b^2 + b + 1 := by ring_nf; omega
+  have hd2 : -(((2*a)^2*(2*b)^2-1)-(1+2*a+(2*a)*(2*b)+(2*a)*(2*b)^2))/2 = -8*a^2*b^2 + 4*a*b^2 + 2*a*b + a + 1 := by ring_nf; omega
+  have hd3 : -(((2*a)^2*(2*b)^2-1)-(1+2*a+(2*a)^2+(2*a)^2*(2*b)))/2 = -8*a^2*b^2 + 4*a^2*b + 2*a^2 + a + 1 := by ring_nf; omega
+  have he0 : -((2*((2*a)^2*(2*b)^2-1)+1)-(2*(1+2*b+(2*a)*(2*b)+(2*a)^2*(2*b))-1))/2 = -16*a^2*b^2 + 8*a^2*b + 4*a*b + 2*b + 1 := by ring_nf; omega
+  have he1 : -((2*((2*a)^2*(2*b)^2-1)+1)-(2*(1+2*b+(2*b)^2+(2*a)*(2*b)^2)-1-2*b))/2 = -16*a^2*b^2 + 8*a*b^2 + 4*b^2 + b + 1 := by ring_nf; omega
+  have he2 : -((2*((2*a)^2*(2*b)^2-1)+1)-(2*(1+2*a+(2*a)*(2*b)+(2*a)*(2*b)^2)-(1+2*a+(2*a)*(2*b))))/2 = -16*a^2*b^2 + 8*a*b^2 + 2*a*b + a + 1 := by ring_nf; omega
+  have he3 : -((2*((2*a)^2*(2*b)^2-1)+1)-(1+2*a+(2*a)^2+(2*a)^2*(2*b)))/2 = -16*a^2*b^2 + 4*a^2*b + 2*a^2 + a + 1 := by ring_nf; omega
+  simp only [hCdiv,hd0,hd1,hd2,hd3,he0,he1,he2,he3]
   ring_nf at hlow hhigh margins cA cB cL cM cGV cGW cGX ⊢
   omega
 
 set_option maxHeartbeats 1600000 in
-private theorem symbolic (r s : ℕ) (hr : 2 ≤ r) (hs : r+2 ≤ s) :
+private theorem far_right (r s : ℕ) (hr : 2 ≤ r) (hs : r+2 ≤ s) :
     ∃ sigma : List (Fin (2*r+2*s)), ∃ j : ℕ, j ≤ 2*r+2*s ∧
       OriginalOrder (2*r+2*s) (1+2^r+2^(2*r)+2^(2*r+s)) sigma ∧
       OriginalOrder (2*r+2*s+1) (2*(1+2^r+2^(2*r)+2^(2*r+s)))
@@ -310,7 +320,8 @@ private theorem symbolic (r s : ℕ) (hr : 2 ≤ r) (hs : r+2 ≤ s) :
     simp only [Nat.zero_add,show s+s=2*s by omega] at h1 h2 h3
     calc
       _ = (U++[u])++(V++[v])++(W++[w])++(X++[z]) := by simp only [List.append_assoc]
-      _ = _ := by rw [hUall,hVall,hWall,hXall,List.range_eq_range',h1,h2,h3]
+      _ = _ := by
+        rw [hUall,hVall,hWall,hXall,List.range_eq_range',h1,h2,h3]
         rw [show 2*s+r+r=k by dsimp [k]; omega,←List.range_eq_range']
   have hp : word.Perm (List.range k) := by
     rw [←inventory]

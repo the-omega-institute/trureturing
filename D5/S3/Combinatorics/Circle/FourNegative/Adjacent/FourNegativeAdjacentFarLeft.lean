@@ -46,14 +46,14 @@ private theorem small_arithmetic (c b : ℤ) (hc : 2 ≤ c) (hb : c ≤ b) :
   have he1 : -((2*((4*c*b)^2*(2*b)^2-1)+1)-(2*(1+(2*b)+(4*c*b)*(2*b)+(4*c*b)^2*(2*b))-1))/2 = -64*b^4*c^2 + 32*b^3*c^2 + 8*b^2*c + 2*b + 1 := by ring_nf; omega
   have he2 : -((2*((4*c*b)^2*(2*b)^2-1)+1)-(1+(4*c*b)+(4*c*b)^2+(4*c*b)^2*(2*b)))/2 = -64*b^4*c^2 + 16*b^3*c^2 + 8*b^2*c^2 + 2*b*c + 1 := by ring_nf; omega
   have he3 : -((2*((4*c*b)^2*(2*b)^2-1)+1)-(2*(1+(2*b)+(2*b)^2+(4*c*b)*(2*b)^2)-1-(2*b)))/2 = -64*b^4*c^2 + 16*b^3*c + 4*b^2 + b + 1 := by ring_nf; omega
-  rw [hxdiv,hcdiv,hd0,hd1,hd2,hd3,he0,he1,he2,he3]
+  simp only [hxdiv,hcdiv,hd0,hd1,hd2,hd3,he0,he1,he2,he3]
   let u := c-2
   let v := b-c
   have hu : 0 ≤ u := by dsimp [u]; omega
   have hv : 0 ≤ v := by dsimp [v]; omega
   have ec : c=u+2 := by dsimp [u]; ring
   have eb : b=u+2+v := by dsimp [u,v]; ring
-  rw [ec,eb]
+  simp only [ec,eb]
   ring_nf
   repeat' constructor
   all_goals first | positivity | rfl | omega
@@ -86,14 +86,14 @@ private theorem large_arithmetic (p b : ℤ) (hp : 1 ≤ p) (hb : 2 ≤ b) :
   have he1 : -((2*((4*p*b^2)^2*(2*b)^2-1)+1)-(2*(1+(2*b)+(4*p*b^2)*(2*b)+(4*p*b^2)^2*(2*b))-1))/2 = -64*b^6*p^2 + 32*b^5*p^2 + 8*b^3*p + 2*b + 1 := by ring_nf; omega
   have he2 : -((2*((4*p*b^2)^2*(2*b)^2-1)+1)-(1+(4*p*b^2)+(4*p*b^2)^2+(4*p*b^2)^2*(2*b)))/2 = -64*b^6*p^2 + 16*b^5*p^2 + 8*b^4*p^2 + 2*b^2*p + 1 := by ring_nf; omega
   have he3 : -((2*((4*p*b^2)^2*(2*b)^2-1)+1)-(2*(1+(2*b)+(2*b)^2+(4*p*b^2)*(2*b)^2)-1-(2*b)))/2 = -64*b^6*p^2 + 16*b^4*p + 4*b^2 + b + 1 := by ring_nf; omega
-  rw [hxdiv,hcdiv,hd0,hd1,hd2,hd3,he0,he1,he2,he3]
+  simp only [hxdiv,hcdiv,hd0,hd1,hd2,hd3,he0,he1,he2,he3]
   let u := p-1
   let v := b-2
   have hu : 0 ≤ u := by dsimp [u]; omega
   have hv : 0 ≤ v := by dsimp [v]; omega
   have ep : p=u+1 := by dsimp [u]; ring
   have eb : b=v+2 := by dsimp [v]; ring
-  rw [ep,eb]
+  simp only [ep,eb]
   ring_nf
   repeat' constructor
   all_goals first | positivity | rfl | omega
@@ -105,6 +105,20 @@ private theorem symbolic (r s : ℕ) (hs : 2 ≤ s) (hr : s+2 ≤ r) :
       OriginalOrder (2*r+2*s+1) (2*(1+2^r+2^(2*r)+2^(2*r+s)))
         (earWord (2*r+2*s) sigma j) := by
   classical
+  let a : ℤ := 2^(r-1)
+  let b : ℤ := 2^(s-1)
+  let x := 2*a
+  let y := 2*b
+  let k := 2*r+2*s
+  let N := modulus k
+  let A := 1+x+x^2+x^2*y
+  let B := 1+y+x*y+x^2*y
+  let L := 1+y+y^2+x*y^2
+  let M := 1+x+x*y+x*y^2
+  let e := 1+x+x*y
+  let GV := 2*B-1
+  let GW := 2*L-1-y
+  let GX := 2*M-e
   let T : ℤ := 2^(r-s)
   let p : ℤ := 2^(r-2*s)
   let t : ℕ := 1+2^r+2^(2*r)+2^(2*r+s)
@@ -148,7 +162,9 @@ private theorem symbolic (r s : ℕ) (hs : 2 ≤ s) (hr : s+2 ≤ r) :
         simpa only [c,pow_one] using pow_le_pow_right₀ (by decide : (1 : ℤ) ≤ 2) (show 1 ≤ r-s-1 by omega)
       have hcb : c ≤ b := pow_le_pow_right₀ (by decide : (1 : ℤ) ≤ 2) (by omega)
       have hcT : 2*c=T := by
-        dsimp [c,T]; rw [show r-s=(r-s-1)+1 by omega,pow_succ]; ring
+        dsimp [c,T]
+        conv_rhs => rw [show r-s=(r-s-1)+1 by omega,pow_succ]
+        ring
       have hcx : 4*c*b=x := by dsimp [x]; rw [haT,←hcT]; ring
       have hp : p=1 := by dsimp [p]; rw [show r-2*s=0 by omega]; norm_num
       rw [hp]
@@ -156,11 +172,12 @@ private theorem symbolic (r s : ℕ) (hs : 2 ≤ s) (hr : s+2 ≤ r) :
     · have hp : 1 ≤ p := by dsimp [p]; positivity
       have hpx : 4*p*b^2=x := by
         dsimp only [p,b]
-        rw [←hx,show r=(r-2*s)+(s-1)+(s-1)+2 by omega]
+        rw [←hx]
+        conv_rhs => rw [show r=(r-2*s)+(s-1)+(s-1)+2 by omega]
         simp only [pow_add,pow_succ]; ring
       have hpT : 2*p*b=T := by
         dsimp only [p,b,T]
-        rw [show r-s=(r-2*s)+(s-1)+1 by omega]
+        conv_rhs => rw [show r-s=(r-2*s)+(s-1)+1 by omega]
         simp only [pow_add,pow_succ]; ring
       simpa only [hpx,hpT,hhalf] using large_arithmetic p b hp hb
   obtain ⟨hU,hV,hW,hX,hU',hV',hW',hX',hear⟩ := chains r s (by omega) hs
@@ -316,7 +333,8 @@ private theorem symbolic (r s : ℕ) (hs : 2 ≤ s) (hr : s+2 ≤ r) :
     simp only [Nat.zero_add,show s+s=2*s by omega] at h1 h2 h3
     calc
       _ = (U++[u])++(V++[v])++(W++[w])++(Xlow++Xhigh++[z]) := by simp only [List.append_assoc]
-      _ = _ := by rw [hUall,hVall,hWall,hXall,List.range_eq_range',h1,h2,h3]
+      _ = _ := by
+        rw [hUall,hVall,hWall,hXall,List.range_eq_range',h1,h2,h3]
         rw [show 2*s+r+r=k by dsimp [k]; omega,←List.range_eq_range']
   have hp : word.Perm (List.range k) := by
     rw [←inventory]
