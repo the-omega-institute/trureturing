@@ -68,30 +68,6 @@ private theorem deleted_law (side : Bool) : ¬ arena.Law (deleted side) := by
   · simp [deleted, rejected, realize] at hold
   · simp [deleted, rejected, realize] at hnew
 
-private theorem zero_old : OriginalOrder 10 0 (List.finRange 10) := by
-  have hf : actualSource 10 0 = fun _ => (0 : ℤ) := by
-    funext i
-    fin_cases i <;> norm_num [actualSource, centered, modulus]
-  have hz (xs : List (Fin 10)) : (xs.map (actualSource 10 0)).sum = 0 := by
-    rw [hf]
-    induction xs <;> simp_all
-  refine ⟨List.Perm.refl _, hz _, ?_⟩
-  intro n
-  rw [hz]
-  norm_num [modulus]
-
-private theorem zero_new : OriginalOrder 11 0 (List.finRange 11) := by
-  have hf : actualSource 11 0 = fun _ => (0 : ℤ) := by
-    funext i
-    fin_cases i <;> norm_num [actualSource, centered, modulus]
-  have hz (xs : List (Fin 11)) : (xs.map (actualSource 11 0)).sum = 0 := by
-    rw [hf]
-    induction xs <;> simp_all
-  refine ⟨List.Perm.refl _, hz _, ?_⟩
-  intro n
-  rw [hz]
-  norm_num [modulus]
-
 private theorem bad_old : ¬ OriginalOrder 10 2 (List.finRange 10) := by
   intro h
   have hh := h.2.2 9
@@ -109,12 +85,34 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
     intro he
     have hp := congrFun he (List.finRange 10)
     change OriginalOrder 10 0 (List.finRange 10) = OriginalOrder 10 2 (List.finRange 10) at hp
-    exact bad_old (hp.mp zero_old)
+    have hz : OriginalOrder 10 0 (List.finRange 10) := by
+      have hf : actualSource 10 0 = fun _ => (0 : ℤ) := by
+        funext i
+        fin_cases i <;> norm_num [actualSource, centered, modulus]
+      have hz (xs : List (Fin 10)) : (xs.map (actualSource 10 0)).sum = 0 := by
+        rw [hf]
+        induction xs <;> simp_all
+      refine ⟨List.Perm.refl _, hz _, ?_⟩
+      intro n
+      rw [hz]
+      norm_num [modulus]
+    exact bad_old (hp.mp hz)
   · refine ⟨⟨2,4⟩, 0, 2, ?_⟩
     intro he
     have hp := congrFun he (List.finRange 11)
     change OriginalOrder 11 0 (List.finRange 11) = OriginalOrder 11 2 (List.finRange 11) at hp
-    exact bad_new (hp.mp zero_new)
+    have hz : OriginalOrder 11 0 (List.finRange 11) := by
+      have hf : actualSource 11 0 = fun _ => (0 : ℤ) := by
+        funext i
+        fin_cases i <;> norm_num [actualSource, centered, modulus]
+      have hz (xs : List (Fin 11)) : (xs.map (actualSource 11 0)).sum = 0 := by
+        rw [hf]
+        induction xs <;> simp_all
+      refine ⟨List.Perm.refl _, hz _, ?_⟩
+      intro n
+      rw [hz]
+      norm_num [modulus]
+    exact bad_new (hp.mp hz)
 
 def source_registration : Registration arena
     (type_of% (@actualSource_equal_gaps_first_ear)) where
