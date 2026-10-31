@@ -1,0 +1,17 @@
+**Definition 1.1 (Words and exponents).** For a finite alphabet $B$, write $`B^*`$ for its free monoid, with concatenation as multiplication and empty word $\varepsilon$. A factor is a contiguous subword. Reversal is denoted by $w\mapsto\overline w$; a palindrome satisfies $w=\overline w$. For a nonempty finite word $w=w_0\cdots w_{n-1}$, a positive integer $t\le n$ is a period if $w_j=w_{j+t}$ whenever $0\le j<n-t$. Its least positive period is $\operatorname{per}(w)$, and its exponent is $|w|/\operatorname{per}(w)$. For a one-sided infinite word $x$, put
+
+$$
+E(x)=\sup\left\{\frac{|w|}{\operatorname{per}(w)}:
+ w\text{ is a nonempty finite factor of }x\right\}.
+$$
+
+Define $`E^*(x)=+\infty`$ when $E(x)=+\infty$; otherwise define
+
+$$
+E^*(x)=\lim_{N\to\infty}\sup\left\{
+\frac{|w|}{\operatorname{per}(w)}:
+ w\text{ is a factor of }x,\ |w|\ge N\right\}.
+$$
+
+These are the ordinary and asymptotic critical exponents, with the infinite-exponent convention of Dvořáková and Pelantová, *The limit of repetition thresholds of rich sequences*, [arXiv:2509.06104v1, Introduction](https://arxiv.org/html/2509.06104v1#S1).
+
