@@ -1,7 +1,7 @@
 /- GID: D5/S3/HilbertOperators/DavisKahanProjector
    generality: G
    mirror-B: D5/B/S3/HilbertOperators/DavisKahanProjector
-   mirror-E: none(waiver:source-compatibility-probe)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
    digest: Full arbitrary-RCLike complete-Hilbert common-gap Davis--Kahan projector norm bound.
@@ -9,13 +9,23 @@
 
 /-
 Copyright (c) 2026 Kitware, Inc. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
-Authors: Jon Crall, GPT 5.6 High, Claude Fable 5
-Adapted from LeanPool/lean-pool at bbc67ff1e3ac4fc6a969daf42985a0d8f988d0b8.
-This source-only compatibility port preserves the upstream proof bodies and
-uses native pinned Mathlib projection, invariance, and Pythagoras suppliers.
-Modified file: source declarations are retained with their upstream provenance
-and the present namespace/location; no mathematical endpoint is narrowed.
+Released under Apache 2.0 license as described in
+ docs/reports/brooks-suppliers/daviskahan-LICENSE.txt.
+Authors: Jon Crall, GPT 5.6 High, Claude Fable 5, Claude Opus 5
+
+Adapted from LeanPool/lean-pool at bbc67ff1e3ac4fc6a969daf42985a0d8f988d0b8,
+whose DavisKahan sources originate in AIQ-Kitware's Davis--Kahan formalization
+at 38e37da6e147cd0016da1eb05987c3edf7d95b39. Per-file attribution and source
+correspondence are in Library/HilbertOperators/leanpool2026daviskahanprojector.md.
+The full Apache 2.0 license and upstream NOTICE are retained in
+ docs/reports/brooks-suppliers/daviskahan-LICENSE.txt and daviskahan-NOTICE.txt.
+
+Modified file: combines the five attributed source units, expands their
+quadratic-form and reducing-subspace predicates, and uses native pinned
+Mathlib projection, invariance, and Pythagorean suppliers. Namespaces and
+one private helper name are adapted; the mathematical scope is preserved.
+Retire each redundant port when an equivalent declaration is available at
+this repository's own future Mathlib pin, and directly reuse that declaration.
 -/
 
 module
@@ -28,7 +38,7 @@ public import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Idempotent
 public import Mathlib.Analysis.RCLike.Basic
 public import Mathlib.Analysis.InnerProductSpace.Defs
 
-/-! # Full common-gap Davis--Kahan projector compatibility port -/
+/-! # Common-gap Davis--Kahan projector bound -/
 
 open scoped InnerProductSpace
 
@@ -479,7 +489,7 @@ packaged from a bounded `T` and a reducing subspace.
 The mathematics is `TauCeti.re_inner_reducedExtension_self`, which is stated at
 the value `T (P x) + κ • (x - P x)` and assumes only invariance; this wrapper
 supplies the packaging and drops `Reduces` to its invariance half. -/
-private theorem re_inner_reducedExtension_self {T : E →L[𝕜] E}
+private theorem re_inner_bounded_reducedExtension_self {T : E →L[𝕜] E}
     {W : Submodule 𝕜 E} [W.HasOrthogonalProjection] (hW : (∀ x ∈ W, T x ∈ W) ∧ (∀ x ∈ Wᗮ, T x ∈ Wᗮ))
     (κ : ℝ) (x : E) :
     RCLike.re ⟪(T ∘L W.starProjection
@@ -590,7 +600,7 @@ theorem sinTheta_directed_coercive
     have hpx : P x ∈ U := U.starProjection_apply_mem x
     have hre : RCLike.re ⟪A' x, x⟫_𝕜
         = RCLike.re ⟪A (P x), P x⟫_𝕜 + (c + g) * ‖x - P x‖ ^ 2 := by
-      rw [hA', hP]; exact re_inner_reducedExtension_self hU (c + g) x
+      rw [hA', hP]; exact re_inner_bounded_reducedExtension_self hU (c + g) x
     have hpyth : ‖x‖ ^ 2 = ‖P x‖ ^ 2 + ‖x - P x‖ ^ 2 := by
       rw [hP]
       simpa only [Submodule.starProjection_orthogonal_val] using
@@ -603,7 +613,7 @@ theorem sinTheta_directed_coercive
     have hqx : Q x ∈ V := V.starProjection_apply_mem x
     have hre : RCLike.re ⟪B' x, x⟫_𝕜
         = RCLike.re ⟪B (Q x), Q x⟫_𝕜 + c * ‖x - Q x‖ ^ 2 := by
-      rw [hB', hQ]; exact re_inner_reducedExtension_self hV c x
+      rw [hB', hQ]; exact re_inner_bounded_reducedExtension_self hV c x
     have hpyth : ‖x‖ ^ 2 = ‖Q x‖ ^ 2 + ‖x - Q x‖ ^ 2 := by
       rw [hQ]
       simpa only [Submodule.starProjection_orthogonal_val] using
