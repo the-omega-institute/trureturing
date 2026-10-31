@@ -82,7 +82,7 @@ internal sealed class CommonPhasePolynomialDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/CommonPhasePolynomial.actual_quadratic_matrix_unique"),
                 H("Uniqueness from actual values"), StatementSource.FromAuthor(Disp(Coordinates(All("H", M, All("K", M, Rel(All("z", V, Rel(Q(F.Id("H"), F.Id("z")), Eq, Q(F.Id("K"), F.Id("z")))), Implies, Rel(F.Id("H"), Eq, F.Id("K")))))))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("StarDotMul(H,z) denotes star(z) dot (H times z). Equality of this value for every actual complex vector forces equality of H and K, with no Hermitian assumption. The proof turns both forms into paired-variable polynomials, uses faithful actual evaluation and compares their coefficients. The empty matrix case is included."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("StarDotMul(H,z) denotes star(z) dot (H times z). Equality of this value for every actual complex vector forces equality of H and K, with no Hermitian assumption. The proof identifies each matrix with its complex-linear map on the finite Euclidean space and directly applies Mathlib's ext_inner_map supplier to the normalized inner-product equality. The empty matrix case is included."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("invariant-quadratic-hermitian"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/CommonPhasePolynomial.invariant_quadratic_hermitian"),
                 H("Unique Hermitian representation"), StatementSource.FromAuthor(Disp(Coordinates(All("p", P, QuadraticConditions(F.Id("p"), UniqueMatrix(F.Id("p"))))))),

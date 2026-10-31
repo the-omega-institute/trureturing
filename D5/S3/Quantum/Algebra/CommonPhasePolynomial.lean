@@ -661,10 +661,12 @@ private theorem quadraticMatrix_hermitian (H : Matrix ι ι ℂ)
 /-- Equality of quadratic forms on all actual complex vectors determines the entire matrix. -/
 theorem actual_quadratic_matrix_unique (H K : Matrix ι ι ℂ)
     (h : ∀ z, star z ⬝ᵥ (H *ᵥ z) = star z ⬝ᵥ (K *ᵥ z)) : H = K := by
-  have he : matrixPolynomial H = matrixPolynomial K := actual_injective (by
-    funext z; simpa only [actual_matrixPolynomial] using h z)
-  funext j i
-  simpa only [matrixPolynomial_coeff] using congrArg (fun p : Poly ι => p.coeff (pairExponent i j)) he
+  apply Matrix.toEuclideanLin.injective
+  apply (ext_inner_map _ _).mp
+  intro v
+  have hv := h (WithLp.ofLp v)
+  simpa [EuclideanSpace.inner_eq_star_dotProduct, Matrix.ofLp_toLpLin,
+    Matrix.toLin'_apply] using hv
 
 /-- Every real-valued homogeneous quadratic actual invariant has exactly one Hermitian matrix. -/
 theorem invariant_quadratic_hermitian (p : Poly ι) (hp : Invariant p)
