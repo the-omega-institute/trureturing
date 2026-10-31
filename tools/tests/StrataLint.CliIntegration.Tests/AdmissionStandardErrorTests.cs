@@ -67,7 +67,7 @@ public sealed class AdmissionStandardErrorTests
 
         AdmissionStandardError.AssertOnlyTimingEvents(standardError);
         Assert.ThrowsAny<XunitException>(() => AdmissionStandardError.AssertOnlyTimingEvents(
-            Encoding.UTF8.GetBytes(error + "unexpected stderr\n")));
+            Encoding.UTF8.GetBytes(error.ToString() + "unexpected stderr\n")));
     }
 
     [Theory]
@@ -95,7 +95,10 @@ public sealed class AdmissionStandardErrorTests
         TimingEvent.Replace("repository-read", "", StringComparison.Ordinal),
         TimingEvent.Replace("passed", "unknown", StringComparison.Ordinal),
         TimingEvent.Replace(":1}", ":-1}", StringComparison.Ordinal),
+        TimingEvent.Replace(":1}", ":0.5}", StringComparison.Ordinal),
+        TimingEvent.Replace(":1}", ":1e999}", StringComparison.Ordinal),
         TimingEvent.Replace(":1}", ":\"1\"}", StringComparison.Ordinal),
+        TimingEvent.Replace(":1}", ":1,\"message\":\"warning\"}", StringComparison.Ordinal),
         TimingEvent.Replace("\"elapsed_seconds\":1", "\"message\":\"warning\"", StringComparison.Ordinal),
         TimingEvent.Replace("\"level\":\"information\"", "\"level\":null", StringComparison.Ordinal),
     };
