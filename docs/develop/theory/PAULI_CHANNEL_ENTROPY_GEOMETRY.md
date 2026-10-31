@@ -3730,3 +3730,257 @@ The unrestricted pure-product, pure-source and mixed-source sign
 problems on the full original independent bias square remain open.
 
 ## 追加锚（本行以下为增补区）
+
+## 17. Asymmetric Holevo losses and the full bias square
+
+Use the original states, independent $a,b\in[0,1]$, channels and
+deficit of Definitions 1.1--1.2. The exact asymmetric rearrangement
+below gives source criteria for actual mixed states and completes
+the entire bias square for the source plane of Theorem 16.2.
+
+**Theorem 17.1 (An asymmetric exact deficit identity).**
+For every physical source, retain $A_E,B_E,J_0$ from Theorem 15.2
+and put
+$$
+ T_C=g-h_C=I(U:D\mid C)_\Omega,\qquad
+ T_D=g-h_D=I(U:C\mid D)_\Omega.
+$$
+These are nonnegative for the actual controlled state (12.2), and
+$$
+ \begin{aligned}
+ \Delta&=I(P)+I(\rho)+A_D-B_C+2T_C+T_D,\\
+ \Delta&=I(P)+I(\rho)+A_C-B_D+2T_D+T_C.
+ \end{aligned}
+\tag{17.1}
+$$
+Consequently
+$$
+ \Delta\geq I(P)+I(\rho)+\max\{A_D-B_C,A_C-B_D\}.
+\tag{17.2}
+$$
+In particular $B_C=0$ gives
+$\Delta\geq I(P)+I(\rho)+A_D$, with the exchanged statement for
+$B_D=0$.
+
+Proof.
+Equation (12.6) identifies each $T_E$ with the displayed actual CMI.
+Equivalently it is the genuine loss of $U$-Holevo information under
+the corresponding partial trace. Its nonnegativity is strong
+subadditivity, not an assertion of CMI monotonicity under arbitrary
+changes to the conditioning system. The definitions give exactly
+$$
+ A_E-J_0=T_E-B_E.
+$$
+Substitute $A_C-J_0=T_C-B_C$ twice into (15.1), and then substitute
+$A_D-J_0=T_D-B_D$ once. This yields the first identity in (17.1);
+exchange $C,D$ for the second. Both identities retain the original
+deficit and all its coefficients. Theorem 15.2 supplies $A_E\geq0$,
+and dropping only the nonnegative $T_E$ gives (17.2). All are finite
+entropies of actual classical-quantum states. Singular states and
+zero control probabilities are included by omitting zero blocks.
+
+**Corollary 17.2 (Input-correlation and control-entropy regions).**
+Every actual complex source satisfies
+$$
+ \Delta(\rho;a,b)\geq I(P)+I(\rho)
+       -H_2\!\left(\frac{1-a}{2}\right).
+\tag{17.3}
+$$
+Thus $I(\rho)\geq H_2((1-a)/2)$ proves $\Delta\geq I(P)$ for
+every $b$. In particular the source-only condition
+$$
+ I(\rho)\geq\log2
+$$
+proves this bound for all independent $a,b\in[0,1]$. If the
+inequality is strict, then
+$$
+ \Delta\geq I(P)+m,\qquad m=I(\rho)-\log2>0
+\tag{17.4}
+$$
+uniformly on the complete closed bias square. This source region
+contains a nonempty open set of faithful NPT mixed states.
+
+Proof.
+Write $\chi_U(\rho)=S(Q)-S(\rho)$ and
+$\chi_U(\rho_C)=S(Q_C)-S(\rho_C)$ for the actual binary
+$U$-ensembles. Then
+$$
+ B_C=\chi_U(\rho)-\chi_U(\rho_C),\qquad
+ 0\leq B_C\leq\chi_U(\rho)\leq H_2((1-a)/2).
+$$
+The first inequality is relative-entropy data processing; the next
+uses nonnegative local Holevo information; the last is the standard
+entropy-of-mixture bound already used in Corollary 12.3 (Watrous,
+*The Theory of Quantum Information*). Equation (17.1), $A_D\geq0$
+and $T_E\geq0$ imply (17.3). The remaining inequalities use
+$H_2\leq\log2$.
+
+For nonemptiness, a maximally entangled pure state has
+$I(\rho)=2\log2$. Its mixtures
+$(1-\epsilon)|\Phi^+\rangle\langle\Phi^+|+\epsilon I_4/4$
+are faithful for $\epsilon>0$ and retain $I(\rho)>\log2$ for
+sufficiently small $\epsilon$ by finite-dimensional entropy
+continuity. The least partial-transpose eigenvalue is
+$-(1-\epsilon)/2+\epsilon/4<0$ when $\epsilon<2/3$.
+Faithfulness, strict input mutual information and NPT are open
+conditions, proving the asserted physical open set. This argument
+does not require a pure-source Gram representation for a mixed state.
+
+**Theorem 17.3 (Flagged mixed sources and the full product-source plane).**
+Choose any unit qubit vector $|c_0\rangle$ with
+$\langle c_0|X|c_0\rangle=0$, put $|c_1\rangle=X|c_0\rangle$,
+and let $\sigma_0$ be any actual complex qubit density matrix.
+For $p\in[0,1]$, define $\sigma_1=X\sigma_0X$ and
+$$
+ \rho_p=p|c_0\rangle\langle c_0|\otimes\sigma_0
+       +(1-p)|c_1\rangle\langle c_1|\otimes\sigma_1.
+\tag{17.5}
+$$
+For every independent $a,b\in[0,1]$,
+$$
+ B_C=0,\qquad
+ \boxed{\Delta(\rho_p;a,b)\geq I(P)+I(\rho_p)+A_D\geq0.}
+\tag{17.6}
+$$
+In particular this includes $|c_0\rangle\langle c_0|\otimes\sigma_0$
+for arbitrary mixed $\sigma_0$. Every complex pure product source
+with $x_C=0$ or $x_D=0$ therefore satisfies
+$$
+ \boxed{\Delta\geq I(P)+A_{\bar E}\geq0
+ \quad\text{whenever }x_E=0,\qquad
+ \text{for all independent }a,b\in[0,1].}
+\tag{17.7}
+$$
+This removes the $b\leq2^{-1/4}$ restriction from the source-plane
+conclusion of Theorem 16.2, without a Bell-covariance restriction.
+
+Proof.
+The two $C$ vectors are orthonormal. Conjugation by $K=XX$ swaps
+the two complete product blocks in (17.5), so $K\rho_pK=\rho_{1-p}$
+and $Q=\rho_q$, where
+$$
+ q=\frac{1+a(2p-1)}2.
+$$
+The two $D$ block entropies agree, since their states are unitarily
+conjugate. The actual block entropy formulas give
+$$
+ \begin{aligned}
+ S(\rho_p)&=H_2(p)+S(\sigma_0),&S((\rho_p)_C)&=H_2(p),\\
+ S(Q)&=H_2(q)+S(\sigma_0),&S(Q_C)&=H_2(q).
+ \end{aligned}
+$$
+Their substitution into the definition of $B_C$ gives zero for
+every $a$. This quantity depends only on $\rho_p,a$, not on $b$.
+Theorem 17.1 proves (17.6). Taking $p=1$ and $\sigma_0$ pure
+gives (17.7) for $E=C$; exchange the qubits for $E=D$.
+Zero probabilities, zero eigenvalues and both bias endpoints are
+included in these block formulas. If $\sigma_0$ is positive definite
+and $0<p<1$, the source is itself faithful. Moreover
+$$
+ I(\rho_p)=S(p\sigma_0+(1-p)\sigma_1)-S(\sigma_0),
+$$
+which is strictly positive for $0<p<1$ when $\sigma_0\ne\sigma_1$,
+by strict concavity of entropy. Such sources have a strictly positive
+margin uniform on the full bias square, even though no large input
+mutual-information hypothesis was imposed. The proof uses actual
+orthogonal flags and Holevo losses, not a general quantum Ingleton
+assertion.
+
+**Theorem 17.4 (A correlated mixed-state ball on the full bias square).**
+In (17.5), take $p=3/4$, let the unit vector $|c_0\rangle$ have
+Bloch vector $(0,1/\sqrt2,1/\sqrt2)$, and let the pure $\sigma_0$
+have Bloch vector $(1/3,2/3,2/3)$. Denote this exact correlated
+source by $\tau$. Every actual complex density matrix satisfying
+$\tfrac12\|\rho-\tau\|_1\leq10^{-4}$ obeys
+$$
+ \boxed{\Delta(\rho;a,b)>3/10
+ \quad\text{for all independent }a,b\in[0,1].}
+\tag{17.8}
+$$
+This ball contains a nonempty physical open set of faithful NPT
+mixed states. The center has $0<I(\tau)<\log2$, so the source-only
+large-input-correlation hypothesis of Corollary 17.2 does not apply
+to it. It is not invariant under conjugation by $K$.
+
+Proof.
+The $D$ margin has Bloch vector $(1/3,1/3,1/3)$, of radius
+$1/\sqrt3$. Since the two conditional $D$ blocks are pure,
+$$
+ I(\tau)=H_2\!\left(\frac{1+1/\sqrt3}{2}\right)\in(0,\log2).
+$$
+Put $\lambda=(1+1/\sqrt3)/2$. Then
+$\lambda(1-\lambda)=1/6$, and $-\log x>1-x$ for $0<x<1$ gives
+$$
+ I(\tau)>2\lambda(1-\lambda)=1/3.
+$$
+Theorem 17.3 thus gives a positive margin exceeding $1/3$ on the
+entire closed bias square. Conjugation by $K$ changes the two
+orthogonal $C$ block weights from $3/4,1/4$ to $1/4,3/4$, so
+$K\tau K\ne\tau$.
+
+Let $t_0=10^{-4}$. The actual channel contractivity and entropy
+continuity estimate already used in Theorem 16.4 give
+$$
+ |\Delta(\rho)-\Delta(\tau)|\leq E(t_0)
+ :=8B_4(t_0)+12B_2(t_0).
+$$
+Since $10^4<2^{14}$, $\log2<694/1000$ and
+$\log(1+t)\leq t$,
+$$
+ \begin{aligned}
+ E(t_0)&\leq t_0[28\log2+20(1+t_0)+20\log(10^4)]\\
+ &<233.754/10000<1/30.
+ \end{aligned}
+$$
+Subtracting proves (17.8), uniformly in the original independent
+biases. No Gram spectral equality has been applied to a mixed state.
+
+Write $\sigma_j=|d_j\rangle\langle d_j|$, choosing
+$|d_1\rangle=X|d_0\rangle$. Their Bloch vectors give
+$|\langle d_0|d_1\rangle|^2=1/9$. Put
+$\epsilon=t_0/4$, $\gamma=\epsilon^2$ and define
+$$
+ \begin{aligned}
+ \tau_\epsilon&=\tau+\epsilon|c_0d_0\rangle\langle c_1d_1|
+                    +\epsilon|c_1d_1\rangle\langle c_0d_0|,\\
+ \rho_*&=(1-\gamma)\tau_\epsilon+\gamma I_4/4.
+ \end{aligned}
+$$
+The two displayed product vectors are orthonormal because the $C$
+vectors are. On their span $\tau_\epsilon$ has matrix
+$\left(\begin{smallmatrix}3/4&\epsilon\\\epsilon&1/4\end{smallmatrix}\right)$,
+which is positive since $\epsilon^2<3/16$. It has trace one and
+half trace distance exactly $\epsilon$ from $\tau$.
+The density $\rho_*$ is faithful, and its distance to $\tau$ is at
+most $\epsilon+3\gamma/4<t_0$; the bound $3/4$ for distance to
+$I_4/4$ holds for every density matrix by convexity from pure states.
+
+Under partial transpose on $D$, compress to the orthonormal pair
+$|c_0\overline{d_0}^{\perp}\rangle$,
+$|c_1\overline{d_1}^{\perp}\rangle$. The compression of
+$\tau_\epsilon^{T_D}$ has zero diagonal and off-diagonal modulus
+$\epsilon(1-|\langle d_0|d_1\rangle|^2)=8\epsilon/9$.
+The corresponding compression of $\rho_*^{T_D}$ therefore has
+negative eigenvalue
+$$
+ \gamma/4-(1-\gamma)8\epsilon/9<0.
+$$
+It supplies a negative Rayleigh quotient for the full partial
+transpose. Thus $\rho_*$ is faithful NPT and lies strictly inside
+the ball. Faithfulness and NPT are open, proving the claimed
+physical open subset with the full-square bound (17.8).
+
+The product center (16.7), with $|\delta|/\beta=28/37$, now also
+satisfies the full-square pure bound (17.7); its previous strict
+old-residual facts remain valid. Combining (17.7) with (16.9)
+extends its positive uniform mixed neighborhoods to any compact
+$b\in[0,b_*]$ with $b_*<1$. This does not give a strictly positive
+uniform margin at its identity corner $a=b=1$, where that product
+center has $\Delta=0$.
+
+The unrestricted pure-product sign question when both local $X$
+coordinates are nonzero remains open, as do the unrestricted pure
+and mixed source problems. The sufficient mixed-source criteria in
+this section are not a claim about all sources.
+
+## 追加锚（本行以下为增补区）
