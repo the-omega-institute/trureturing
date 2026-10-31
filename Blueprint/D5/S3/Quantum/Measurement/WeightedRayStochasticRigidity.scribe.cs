@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Measurement;
 
@@ -13,7 +15,7 @@ internal sealed class WeightedRayStochasticRigidityDocument : IScribeDocumentDef
             Describe.Lean(DescribeId.Create("original-five-effect-classification"),
                 DeclarationHandle.Create(Prefix + "original_five_effect_classification"),
                 H("All autonomous kernels for the fixed five effects"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(Disp(Classification())), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("The outcome order is (0,2,3,5,25). The Pauli Y convention has upper-right entry -i. The gain is the positive reciprocal of 1+2 sqrt(3)+sqrt(11). The effects are E25=(gain/2)(sqrt(3) I-X-Y-Z), E0=3 E25, E2=(gain/2)(sqrt(11) I+3X+Y+Z), E3=gain(I+Z), and E5=(gain/2)(sqrt(11) I+X+3Y+Z). Probability is the real trace of rho times the corresponding effect.")),
                     Paragraph(Text("Autonomy quantifies over every positive semidefinite trace-one qubit matrix, with one real five-by-five matrix acting on the probability column. Every entry is nonnegative and every column sums to one. The matrix can depend on the specified unitary but is fixed across all input states.")),
@@ -22,4 +24,42 @@ internal sealed class WeightedRayStochasticRigidityDocument : IScribeDocumentDef
                     Paragraph(Text("Every ray is then fixed. The support constraint fixes each of the three singleton columns and confines columns 0 and 25 to their common group. Set t=T25,0. Column sums and the stationary weight ratio (3,1) give T00=1-t, T0,25=3t, and T25,25=1-3t. Entry nonnegativity is exactly 0<=t<=1/3. Conversely these matrices preserve the relation p0=3 p25, and a scalar phase preserves every density matrix. The kernel rows are (1-t,0,0,0,3t), (0,1,0,0,0), (0,0,1,0,0), (0,0,0,1,0), and (t,0,0,0,1-3t). Both endpoints belong to the classification.")),
                     Paragraph(Text("No stochastic inverse or invertibility is assumed. The result classifies this fixed Born probability representation; it supplies no unknown actual event laws, physical availability of inputs, acquisition, calibration, or origin of Born probabilities."))),
                 DescribeRole.Theorem))));
+
+    private static Formula X(string name) => F.Id(name);
+    private static Formula Reals() => Seq(Mathbb, Grp(X("R")));
+    private static Formula Complexes() => Seq(Mathbb, Grp(X("C")));
+    private static Formula Fin(byte n) => Call("Fin", D(n));
+    private static Formula Matrices(byte n, Formula field) => Call("Matrix", Fin(n), Fin(n), field);
+    private static Formula Typed(Formula value, Formula type) => Seq(Open, value, Colon, Sp, type, Close);
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Ex(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula Implies(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula LE(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Smul(Formula a, Formula b) => Seq(Open, a, Close, Sp, Cdot, Sp, Open, b, Close);
+    private static Formula Qualified(string owner, string name) => Seq(Operatorname, Grp(X(owner), Dot, X(name)));
+
+    private static Formula Classification()
+    {
+        var u = X("U");
+        var t = X("T");
+        var r = X("r");
+        var g = X("g");
+        var x = X("t");
+        var qubit = Matrices(2, Complexes());
+        var conjugate = Multiply(Multiply(Typed(u, qubit), r), Call("star", Typed(u, qubit)));
+        var transport = All("r", qubit,
+            Implies(Call("PosSemidef", r), Implies(Equal(Call("trace", r), Num(1)),
+                Equal(Call("mulVec", t, Call("probability", r)), Call("probability", conjugate)))));
+        var stochastic = new Formula.Relation(t, FormulaRelationOperator.MemberOf,
+            Call("colStochastic", Reals(), Fin(5)));
+        var phase = Ex("g", Reals(), Equal(Typed(u, qubit),
+            Smul(Call("exp", Multiply(Typed(g, Complexes()), Qualified("Complex", "I"))), Typed(Num(1), qubit))));
+        var kernels = Ex("t", Reals(), And(LE(Num(0), x),
+            And(LE(x, new Formula.Fraction(Num(1), Num(3))), Equal(t, Call("kernel", x)))));
+        return All("U", Call("unitaryGroup", Fin(2), Complexes()), All("T", Matrices(5, Reals()),
+            new Formula.Logic(And(stochastic, transport), FormulaLogicOperator.Iff, And(phase, kernels))));
+    }
 }
