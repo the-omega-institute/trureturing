@@ -21,7 +21,7 @@ noncomputable section
 
 /-- Retain the alphabet and prefix length as parameters. -/
 abbrev signature.{u} : Signature where
-  Params := Σ α : Type u, ℕ
+  Params := Σ _ : Type u, ℕ
   State p := Word p.1 p.2
   Role := Unit
   finiteRole := inferInstance
