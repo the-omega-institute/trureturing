@@ -784,7 +784,7 @@ $$
 \Pr_{\mathsf R(a,f)}(i,B,w)
 =t_i(a)\int
  \mathbf1_{\{\mathcal A(\omega)\in B\}}
- \mathbf1_{\{W(\omega)=w\}}\,mu^{\rm hid}_{a,i,f}(d\omega).
+ \mathbf1_{\{W(\omega)=w\}}\,\mu^{\rm hid}_{a,i,f}(d\omega).
 \tag{147.5}
 $$
 
