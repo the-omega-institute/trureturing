@@ -47,8 +47,11 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), (fun _ _ => 0, fun _ _ => 0), (fun _ _ => 0, fun _ _ => 1), ?_⟩
   intro h
-  have hfun : (fun _ _ : Bool => 0) = (fun _ _ : Bool => 1) := by
-    have htrue : (fun _ _ : Bool => 0) = (fun _ _ : Bool => 0) := rfl
+  change
+    ((fun _ _ : Bool => 0) = (fun _ _ : Bool => 0)) =
+      ((fun _ _ : Bool => 0) = (fun _ _ : Bool => 1)) at h
+  have hfun : (fun _ _ : Bool => (0 : ℝ)) = (fun _ _ : Bool => (1 : ℝ)) := by
+    have htrue : (fun _ _ : Bool => (0 : ℝ)) = (fun _ _ : Bool => (0 : ℝ)) := rfl
     rw [h] at htrue
     exact htrue
   have hbad := congrFun (congrFun hfun false) false

@@ -58,7 +58,8 @@ private theorem hull_nonneg {n : ℕ} {r : Fin n → Bool → Bool → ℝ}
     rintro r (⟨s, rfl⟩ | ⟨γ, rfl⟩) <;> simp only [Set.mem_ofPred_eq]
     · dsimp only [deterministicPostprocess]
       split_ifs <;> norm_num
-    · split_ifs <;> norm_num
+    · dsimp only [D5.S3.Quantum.Entanglement.BinaryDetectionThresholdRefutation.parityBox]
+      split_ifs <;> norm_num
   apply convexHull_min hsub ?_ hr
   intro x hx y hy u v hu hv _
   exact add_nonneg (mul_nonneg hu hx) (mul_nonneg hv hy)
