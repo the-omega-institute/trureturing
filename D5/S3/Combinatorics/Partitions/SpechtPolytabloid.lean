@@ -32,8 +32,9 @@ Candidate admission: genuine representation constructions and the polytabloid
 nonvanishing proof, subject to per-declaration and native live-dependency review.
 Bind-only organization is consumed by these constructions and proofs; it supplies
 no independent admission witness. Exact source selections and uses are in the Library
-note. No open-problem-resolution admission is claimed: an ordinary-trace-specific
-current preregistration/echo has not been established. Caller owns issue handling.
+note. No open-problem-resolution admission is claimed for this supplier checkpoint.
+Issue 21960 already preregisters the full ordinary assertion; issue 22528 covers
+only the earlier coefficient result. The original literature gaps remain open.
 utility: none: these are unbounded constructions and general structural proofs,
 not a finite enumeration, checker, numerical reduction or certified instance.
 -/

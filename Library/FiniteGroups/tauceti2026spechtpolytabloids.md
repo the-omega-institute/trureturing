@@ -236,16 +236,164 @@ The rejected PartitionAlternantCoefficients standalone module and its Scribe are
 removed. Its source derivation remains recoverable at c77e08fff8fb94bc8a77133f38ca3a3768bd08df
 and is reusable only in a full comparison that actually consumes it.
 
-Still required are the source proofs of the rational/integer trace character,
-complex simplicity and trace cast, literal full-cycle class indexing (including
+Still required are native verification of the simplicity continuation below,
+the rational/integer trace character and trace cast, literal full-cycle class indexing (including
 fixed points), Young's rule, arbitrary-degree finite-alphabet Schur expansion,
 bialternant and height vanishing, the coefficient comparison at the padded
 three-row label, and substitution into the existing full weighted HSW argument.
 No degree bound, changed character model, dropped Ev multiplicity or restricted
-shape family is an acceptable replacement. Preregistration #21960 explicitly
-binds the weighted coefficient conventions; issue #22528 names that weighted
-result's audit. They do not supply current registration/echo for a new ordinary
-trace comparison. Caller owns that precise missing preregistration and Reg work.
+shape family is an acceptable replacement. Preregistration #21960 already records the full original ordinary-character
+assertion and its weighted conventions. Issue #22528 concerns the earlier
+coefficient result. Current Reg reconstruction and validation of the new
+ordinary trace comparison remain unfinished; no duplicate preregistration is needed.
+
+## James submodule continuation
+
+`SpechtTabloidForm` and `SpechtSubmoduleTheorem` select the invariant pairing,
+its orthogonal complement, the row-column counting/factorization argument,
+James's rank-one antisymmetrizer calculation, the submodule dichotomy and
+rational irreducibility for the **same** literal partition. They do not copy
+the symmetrizer ideal, dominance order, character classification, standard basis,
+Young's rule or symmetric-polynomial modules. The original 80 declarations
+remain in `SpechtPolytabloid`; this continuation selects 79 named declarations plus one local invertibility instance
+from 20 immutable source files (some already represented in the original port).
+This is an A17.2PORT supplier chain, not standalone new-content qualification.
+
+Exact D5 reuse: `FiniteCharacterAlgebra.Subrepresentation.toSubmodule_bot`
+in the polytabloid-preimage proof, from module statement identity
+`sha256:5ea5be4246f85df1a6a5a34be414eaa3174509f06a0bb1c923f3d8e8cfff6a55`.
+The existing atom-to-irreducibility and surjective-restriction results were
+examined; no standalone rational irreducibility specialization is retained,
+since the complex proof below uses scalar endomorphisms and the character norm
+criterion. `InducedCharacterFormula` and `MackeyCharacterFormula` were examined:
+their induction character, Frobenius reciprocity and double-coset formulas do not
+prove James's same-shape antisymmetrizer lemma. They remain candidates for the
+later Young-rule/character comparison; no duplicates of them are added.
+The two uses of the private `toSubmodule_le_toSubmodule` normalization in the
+supplier proof are replaced inline by `change`, leaving the existing frozen D5
+module and all pins untouched.
+
+Every entry below is a source-level selection, with an actual current proof
+consumer where present. Bind-only organization supplies no admission witness.
+The scalar pairing/orthogonal invariant subrepresentation, row-column counting,
+factorization, antisymmetrizer collapse and James dichotomy are the substantive
+ported proof chain; their exact proof shapes and liveness require native terms.
+Atomicity of the rational polytabloid span is a substantive source endpoint,
+not the full original theorem. Its use in the final comparison must be checked
+before first freeze. No new standalone ordinary-character/coefficient wrapper is added.
+
+The original full ordinary assertion was already preregistered in #21960, with
+clarification at https://github.com/the-omega-institute/trureturing/issues/21960#issuecomment-6537494498.
+No new preregistration, priority claim, forecast or deadline is created here.
+#22528 concerns only the earlier coefficient result. The literature screen is
+still partial; an existing settlement of the exact assertion defeats open-problem
+eligibility. This checkpoint claims neither that eligibility nor a settlement.
+
+The continuation also selects the rational scalar-endomorphism proof and the flat
+intertwining-kernel comparison, ending in `instSimpleSpechtModuleℂ` for the already
+constructed module. The scalarity proof normalizes the restricted algebra action
+locally, without a duplicate public/private normalization declaration. Simplicity
+uses the Mathlib complex character norm criterion, not rational irreducibility alone.
+No arbitrary assignment of labels or classification bijection is used.
+
+Still missing: native elaboration and standard-axiom closure of the whole selected
+chain; integral trace and its
+same-partition labeling; a representative using the **full** permutation partition
+and independence of that representative; arbitrary-degree finite-alphabet
+power-sum/Schur expansion; height vanishing and division-free bialternant
+coefficient comparison to the existing three-variable `frobChar`; and consumption
+of that comparison in **both** full weighted sums. Nothing here imposes a degree
+bound, removes fixed points, changes Ev multiplicity, restricts the odd rectangle,
+or replaces the Z-to-Q-to-C casts. Existing coefficient work is not rederived.
+
+Public four-slot reconstruction, full-family sensitivity and observational
+dependence remain uncompiled. No Reg mirror or declared_validated status exists.
+Audit issue: https://github.com/the-omega-institute/trureturing/issues/24542.
+
+### Continuation declaration selections
+
+| Immutable source locator | Declaration | Candidate proof shape / admission | Source-level current consumer |
+| --- | --- | --- | --- |
+| `TauCeti/RepresentationTheory/PermutationForm.lean:101` | `permutationForm` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `permutationForm_apply`, `permutationForm_comm`, `permutationForm_isSymm`, `permutationForm_isRefl`, `permutationForm_self_pos`, `permutationForm_self_eq_zero_iff`, `permutationForm_restrict_nondegenerate`, `permutationForm_ofMulAction_invariant`, `permutationForm_ofMulAction_left`, `ofMulAction_mem_orthogonal`, `orthogonalSubrepresentation`, `toSubmodule_orthogonalSubrepresentation`, `isCompl_orthogonalSubrepresentation`, `tabloidForm` |
+| `TauCeti/RepresentationTheory/PermutationForm.lean:110` | `permutationForm_apply` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `permutationForm_comm`, `permutationForm_self_pos`, `permutationForm_ofMulAction_invariant` |
+| `TauCeti/RepresentationTheory/PermutationForm.lean:122` | `permutationForm_comm` | content candidate (ported); A17.2PORT supplier only, native review pending | `permutationForm_isSymm`, `ofMulAction_mem_orthogonal` |
+| `TauCeti/RepresentationTheory/PermutationForm.lean:135` | `permutationForm_isSymm` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `permutationForm_isRefl` |
+| `TauCeti/RepresentationTheory/PermutationForm.lean:139` | `permutationForm_isRefl` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `isCompl_orthogonalSubrepresentation` |
+| `TauCeti/RepresentationTheory/PermutationForm.lean:183` | `permutationForm_self_pos` | content candidate (ported); A17.2PORT supplier only, native review pending | `permutationForm_self_eq_zero_iff` |
+| `TauCeti/RepresentationTheory/PermutationForm.lean:192` | `permutationForm_self_eq_zero_iff` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `permutationForm_restrict_nondegenerate` |
+| `TauCeti/RepresentationTheory/PermutationForm.lean:199` | `permutationForm_restrict_nondegenerate` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `isCompl_orthogonalSubrepresentation` |
+| `TauCeti/RepresentationTheory/PermutationForm.lean:216` | `permutationForm_ofMulAction_invariant` | content candidate (ported); A17.2PORT supplier only, native review pending | `permutationForm_ofMulAction_left` |
+| `TauCeti/RepresentationTheory/PermutationForm.lean:230` | `permutationForm_ofMulAction_left` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `ofMulAction_mem_orthogonal`, `tabloidForm_asAlgebraHom_columnAntisymmetrizer` |
+| `TauCeti/RepresentationTheory/PermutationForm.lean:237` | `ofMulAction_mem_orthogonal` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `orthogonalSubrepresentation` |
+| `TauCeti/RepresentationTheory/PermutationForm.lean:255` | `orthogonalSubrepresentation` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `toSubmodule_orthogonalSubrepresentation`, `isCompl_orthogonalSubrepresentation`, `isCompl_orthogonalSubrepresentation_permutationModule`, `spechtSubrepresentation_le_or_le_orthogonal`, `exists_mem_asAlgebraHom_columnAntisymmetrizer_eq_polytabloid` |
+| `TauCeti/RepresentationTheory/PermutationForm.lean:264` | `toSubmodule_orthogonalSubrepresentation` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `spechtSubrepresentation_le_or_le_orthogonal` |
+| `TauCeti/RepresentationTheory/PermutationForm.lean:285` | `isCompl_orthogonalSubrepresentation` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `isCompl_orthogonalSubrepresentation_permutationModule` |
+| `TauCeti/RepresentationTheory/Symmetric/PermutationModule/Form.lean:60` | `tabloidForm` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `tabloidForm_asAlgebraHom_columnAntisymmetrizer` |
+| `TauCeti/RepresentationTheory/Symmetric/PermutationModule/Form.lean:99` | `isCompl_orthogonalSubrepresentation_permutationModule` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `isAtom_spechtSubrepresentation`, `exists_mem_asAlgebraHom_columnAntisymmetrizer_eq_polytabloid` |
+| `TauCeti/Combinatorics/Young/Tableau.lean:91` | `colIndex_apply` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `exists_rowIndex_colIndex (simp)` |
+| `TauCeti/Combinatorics/Young/Tableau.lean:104` | `rowFiberEquiv` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `card_filter_rowIndex_eq` |
+| `TauCeti/Combinatorics/Young/Tableau.lean:164` | `rowIndex_colIndex_mem` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `colIndex_lt_rowLen` |
+| `TauCeti/Combinatorics/Young/Tableau.lean:170` | `colIndex_lt_rowLen` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `card_filter_colIndex_lt_and_rowIndex_eq` |
+| `TauCeti/Combinatorics/Young/Tableau.lean:182` | `exists_rowIndex_colIndex` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `card_filter_colIndex_lt_and_rowIndex_eq` |
+| `TauCeti/Combinatorics/Young/Tableau.lean:187` | `card_filter_rowIndex_eq` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `card_filter_colIndex_comp_lt_and_rowIndex_eq_le`, `colIndex_lt_rowLen_of_injective` |
+| `TauCeti/Combinatorics/Young/Tableau.lean:230` | `card_filter_colIndex_lt_and_rowIndex_eq` | content candidate (ported); A17.2PORT supplier only, native review pending | `sum_card_filter_colIndex_comp_lt_and_rowIndex_eq` |
+| `TauCeti/Combinatorics/Young/Tableau.lean:258` | `card_filter_colIndex_comp_lt_and_rowIndex_eq_le` | content candidate (ported); A17.2PORT supplier only, native review pending | `colIndex_lt_rowLen_of_injective` |
+| `TauCeti/Combinatorics/Young/Tableau.lean:285` | `sum_card_filter_colIndex_comp_lt_and_rowIndex_eq` | content candidate (ported); A17.2PORT supplier only, native review pending | `colIndex_lt_rowLen_of_injective` |
+| `TauCeti/Combinatorics/Young/Tableau.lean:318` | `colIndex_lt_rowLen_of_injective` | content candidate (ported); A17.2PORT supplier only, native review pending | `mem_mul_of_not_rowMeetsColumnTwice` |
+| `TauCeti/Combinatorics/Young/Tableau.lean:422` | `rowIndex_relabel` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `rowMeetsColumnTwice_relabel_left_iff` |
+| `TauCeti/Combinatorics/Young/Tableau.lean:443` | `relabelPerm` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `relabel_relabelPerm`, `exists_relabel_eq` |
+| `TauCeti/Combinatorics/Young/Tableau.lean:454` | `relabel_relabelPerm` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `exists_relabel_eq` |
+| `TauCeti/Combinatorics/Young/Tableau.lean:458` | `exists_relabel_eq` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `spechtSubrepresentation_eq_span_orbit`, `exists_asAlgebraHom_columnAntisymmetrizer_single_eq_sign_smul` |
+| `TauCeti/GroupTheory/Perm/FiberSubgroup.lean:77` | `swap_mem_fiberSubgroup` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `swap_mem_rowSubgroup`, `swap_mem_colSubgroup` |
+| `TauCeti/RepresentationTheory/Symmetric/RowColumnSubgroup.lean:77` | `swap_mem_rowSubgroup` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `exists_eq_smul_polytabloid_single` |
+| `TauCeti/RepresentationTheory/Symmetric/RowColumnSubgroup.lean:84` | `swap_mem_colSubgroup` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `exists_eq_smul_polytabloid_single` |
+| `TauCeti/RepresentationTheory/Symmetric/Vanishing.lean:80` | `RowMeetsColumnTwice` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `rowMeetsColumnTwice_def`, `rowMeetsColumnTwice_relabel_iff`, `rowMeetsColumnTwice_relabel_left_iff`, `mem_mul_of_not_rowMeetsColumnTwice`, `exists_asAlgebraHom_columnAntisymmetrizer_single_eq_sign_smul`, `exists_eq_smul_polytabloid_single` |
+| `TauCeti/RepresentationTheory/Symmetric/Vanishing.lean:86` | `rowMeetsColumnTwice_def` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `rowMeetsColumnTwice_relabel_iff`, `rowMeetsColumnTwice_relabel_left_iff`, `exists_eq_smul_polytabloid_single` |
+| `TauCeti/RepresentationTheory/Symmetric/Vanishing.lean:94` | `rowMeetsColumnTwice_relabel_iff` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `mem_mul_of_not_rowMeetsColumnTwice` |
+| `TauCeti/RepresentationTheory/Symmetric/Vanishing.lean:107` | `rowMeetsColumnTwice_relabel_left_iff` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `exists_asAlgebraHom_columnAntisymmetrizer_single_eq_sign_smul` |
+| `TauCeti/RepresentationTheory/Symmetric/Factorization.lean:68` | `mem_mul_of_not_rowMeetsColumnTwice` | content candidate (ported); A17.2PORT supplier only, native review pending | `exists_asAlgebraHom_columnAntisymmetrizer_single_eq_sign_smul` |
+| `TauCeti/Algebra/MonoidAlgebra/SubgroupCharSum.lean:88` | `subgroupCharSum_mul_single` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `asAlgebraHom_subgroupCharSum_apply_eq_zero`, `mul_columnAntisymmetrizer_right` |
+| `TauCeti/RepresentationTheory/AsAlgebraHom.lean:181` | `asAlgebraHom_eq_zero_of_mul_single_eq_neg` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `asAlgebraHom_subgroupCharSum_apply_eq_zero` |
+| `TauCeti/RepresentationTheory/SubgroupCharSum.lean:45` | `asAlgebraHom_subgroupCharSum_apply` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `asAlgebraHom_columnAntisymmetrizer_apply` |
+| `TauCeti/RepresentationTheory/SubgroupCharSum.lean:62` | `asAlgebraHom_subgroupCharSum_apply_eq_zero` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `asAlgebraHom_columnAntisymmetrizer_single_eq_zero` |
+| `TauCeti/RepresentationTheory/Symmetric/Symmetrizer.lean:191` | `mul_columnAntisymmetrizer_right` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `exists_asAlgebraHom_columnAntisymmetrizer_single_eq_sign_smul` |
+| `TauCeti/RepresentationTheory/Symmetric/Symmetrizer.lean:321` | `asAlgebraHom_columnAntisymmetrizer_apply` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `tabloidForm_asAlgebraHom_columnAntisymmetrizer` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/Module.lean:109` | `tabloid_surjective` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `exists_eq_smul_polytabloid_single` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/Module.lean:174` | `polytabloid_def` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `exists_asAlgebraHom_columnAntisymmetrizer_single_eq_sign_smul`, `spechtSubrepresentation_le_or_le_orthogonal`, `exists_mem_asAlgebraHom_columnAntisymmetrizer_eq_polytabloid` |
+| `TauCeti/RepresentationTheory/Symmetric/PermutationModule/Basic.lean:59` | `permutationModuleBasis` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `exists_eq_smul_polytabloid` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/Module.lean:317` | `spechtSubrepresentation_toSubmodule` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `spechtSubrepresentation_eq_span_orbit`, `spechtSubrepresentation_le_or_le_orthogonal` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/Module.lean:329` | `spechtSubrepresentation_eq_span_orbit` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `spechtSubrepresentation_le_or_le_orthogonal`, `intertwiningMap_eq_smul_one_of_apply_polytabloid_eq` |
+| `TauCeti/RepresentationTheory/Symmetric/Dominance.lean:114` | `asAlgebraHom_columnAntisymmetrizer_single_eq_zero` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `exists_eq_smul_polytabloid_single` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/SubmoduleTheorem.lean:91` | `exists_asAlgebraHom_columnAntisymmetrizer_single_eq_sign_smul` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `exists_eq_smul_polytabloid_single` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/SubmoduleTheorem.lean:122` | `exists_eq_smul_polytabloid_single` | content candidate (ported); A17.2PORT supplier only, native review pending | `exists_eq_smul_polytabloid` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/SubmoduleTheorem.lean:144` | `exists_eq_smul_polytabloid` | content candidate (ported); A17.2PORT supplier only, native review pending | `spechtSubrepresentation_le_or_le_orthogonal`, `algebraMap_intertwiningMap_spechtSubrepresentation_bijective` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/SubmoduleTheorem.lean:171` | `tabloidForm_asAlgebraHom_columnAntisymmetrizer` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `spechtSubrepresentation_le_or_le_orthogonal` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/SubmoduleTheorem.lean:198` | `spechtSubrepresentation_le_or_le_orthogonal` | content candidate (ported); A17.2PORT supplier only, native review pending | `isAtom_spechtSubrepresentation` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/Dominance.lean:79` | `exists_mem_asAlgebraHom_columnAntisymmetrizer_eq_polytabloid` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `algebraMap_intertwiningMap_spechtSubrepresentation_bijective` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/AbsoluteIrreducibility.lean:49` | `intertwiningMap_eq_smul_one_of_apply_polytabloid_eq` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `algebraMap_intertwiningMap_spechtSubrepresentation_bijective` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/AbsoluteIrreducibility.lean:92` | `algebraMap_intertwiningMap_injective` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `algebraMap_intertwiningMap_spechtSubrepresentation_injective`, `algebraMap_intertwiningMap_spechtModule_bijective` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/AbsoluteIrreducibility.lean:103` | `algebraMap_intertwiningMap_spechtSubrepresentation_injective` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `algebraMap_intertwiningMap_spechtSubrepresentation_bijective` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/AbsoluteIrreducibility.lean:118` | `algebraMap_intertwiningMap_spechtSubrepresentation_bijective` | content candidate (ported); A17.2PORT supplier only, native review pending | `algebraMap_intertwiningMap_spechtModule_bijective` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/AbsoluteIrreducibility.lean:157` | `algebraMap_intertwiningMap_spechtModule_bijective` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `spechtModuleScalarAlgEquiv` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/AbsoluteIrreducibility.lean:195` | `spechtModuleScalarAlgEquiv` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `spechtModuleIntertwiningEndAlgEquiv` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/AbsoluteIrreducibility.lean:209` | `spechtModuleIntertwiningEndAlgEquiv` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `instSimpleSpechtModuleℂ` |
+| `TauCeti/LinearAlgebra/TensorProduct/Hom.lean:24` | `isBaseChange_baseChangeHom` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `intertwiningDefect_homBaseChangeEquiv`, `comap_ker_intertwiningDefect_baseChange`, `_root_.Representation.intertwiningMapBaseChangeEquiv` |
+| `TauCeti/RepresentationTheory/BaseChange.lean:127` | `_root_.Representation.baseChange_apply` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `intertwiningDefect_baseChange` |
+| `TauCeti/RepresentationTheory/BaseChange.lean:492` | `intertwiningDefect` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `intertwiningDefect_apply`, `mem_ker_intertwiningDefect`, `intertwiningMapEquivKerDefect`, `intertwiningDefect_baseChange`, `intertwiningDefect_homBaseChangeEquiv`, `comap_ker_intertwiningDefect_baseChange`, `_root_.Representation.intertwiningMapBaseChangeEquiv` |
+| `TauCeti/RepresentationTheory/BaseChange.lean:496` | `intertwiningDefect_apply` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `mem_ker_intertwiningDefect`, `intertwiningDefect_baseChange` |
+| `TauCeti/RepresentationTheory/BaseChange.lean:501` | `mem_ker_intertwiningDefect` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `intertwiningMapEquivKerDefect` |
+| `TauCeti/RepresentationTheory/BaseChange.lean:509` | `intertwiningMapEquivKerDefect` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `_root_.Representation.intertwiningMapBaseChangeEquiv` |
+| `TauCeti/RepresentationTheory/BaseChange.lean:522` | `intertwiningDefect_baseChange` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `intertwiningDefect_homBaseChangeEquiv` |
+| `TauCeti/RepresentationTheory/BaseChange.lean:534` | `intertwiningDefect_homBaseChangeEquiv` | content candidate (ported); A17.2PORT supplier only, native review pending | `comap_ker_intertwiningDefect_baseChange` |
+| `TauCeti/RepresentationTheory/BaseChange.lean:557` | `comap_ker_intertwiningDefect_baseChange` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `_root_.Representation.intertwiningMapBaseChangeEquiv` |
+| `TauCeti/RepresentationTheory/BaseChange.lean:577` | `_root_.Representation.intertwiningMapBaseChangeEquiv` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `_root_.Representation.finrank_intertwiningMap_baseChange` |
+| `TauCeti/RepresentationTheory/BaseChange.lean:626` | `_root_.Representation.finrank_intertwiningMap_baseChange` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `finrank_intertwiningMap_spechtModuleℂ` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/Complex.lean:97` | `spechtModuleℂ_def` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `finrank_intertwiningMap_spechtModuleℂ` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/Complex.lean:124` | `finrank_intertwiningMap_spechtModuleℂ` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `sum_character_spechtModuleℂ_mul_character_spechtModuleℂ_inv_eq_finrank_mul_card` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/Complex.lean:154` | `sum_character_spechtModuleℂ_mul_character_spechtModuleℂ_inv_eq_finrank_mul_card` | bind-only organization (ported); A17.2PORT supplier only, native review pending | `instSimpleSpechtModuleℂ` |
+| `TauCeti/RepresentationTheory/Symmetric/Specht/Complex.lean:173` | `instSimpleSpechtModuleℂ` | content candidate (ported); A17.2PORT supplier only, native review pending | complex same-partition construction output; comparison consumer not yet delivered |
+
+The local complex invertibility instance is selected from `Specht/Complex.lean:82-83` and consumed by the character norm/trace pairing. The two construction endpoints, rational atomicity and complex simplicity, are useful source outputs; their eventual ordinary-comparison consumers are not delivered or claimed. No firstfreeze is authorized by this checkpoint.
 
 ## Apache License 2.0 (complete upstream LICENSE)
 
