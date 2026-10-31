@@ -41,12 +41,16 @@ internal sealed class MatharA027182SelfConvolutionDocument : IScribeDocumentDefi
                 "Symmetry of the row turns its central self-convolution into a sum of squares. Vandermonde's identity evaluates the square and mixed binomial sums. "
                 + "The resulting closed form is a combination of three consecutive central binomial coefficients, an exponential and an affine term. "
                 + "Four consecutive central-binomial identities give an order-two recurrence for that combination. A shifted operator factorization then yields the six-term recurrence.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mathar-a027182"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("mathar-a027182-" + (name == "T" ? "row" : name)), DeclarationHandle.Create(Prefix + name),
-        H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+        H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));

@@ -70,6 +70,10 @@ $$\forall n \in \mathbb{N},\; 6 \le n \Rightarrow (2 \cdot ((n : \mathbb{Z}) + 2
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/MatharA027182SelfConvolution.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mathar-a027182` (proved) by `D5/S1/Recurrence/MatharA027182SelfConvolution.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathar-a027182","declaration_gid":"D5/S1/Recurrence/MatharA027182SelfConvolution.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. J. Mathar and Clark Kimberling (2026). *OEIS A027182: self-convolution of the four-diamondized Pascal row*. URL: <https://oeis.org/A027182>.
