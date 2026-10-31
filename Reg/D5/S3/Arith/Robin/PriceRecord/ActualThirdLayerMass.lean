@@ -107,30 +107,22 @@ def limitActual : Realization limitSignature :=
 def limitRejected : Realization limitSignature :=
   realize limitSignature (fun _ _ _ => 0) (fun e => nomatch e)
 
-/-- A common real scale readout observes the cutoff in the prime premise and
-the requested precision in the conclusion. Both remain free in the full
-original telescope; the positive precision and existential cutoff are literal. -/
+/-- Only the positive existential cutoff is observed. The full original
+record family, largest-prime premise and mass conclusion retain their scope. -/
 abbrev limitArena : Arena where
   signature := limitSignature
-  Law R := ∀ epsilon : ℝ, 0 < epsilon → ∃ T : ℝ, 0 < T ∧
+  Law R := ∀ epsilon : ℝ, 0 < epsilon → ∃ T : ℝ, 0 < R.readout () () T ∧
     ∀ m : ℕ, 2 ≤ m → ∀ lambda : ℝ, 0 < lambda →
     (∀ n : ℕ, 0 < n → n < m →
       goldenResourceObjective lambda n < goldenResourceObjective lambda m) →
-    R.readout () () T ≤ (largestPrime m : ℝ) →
-    strict_inventory_third_layer_mass m / Real.sqrt (largestPrime m : ℝ) <
-      R.readout () () epsilon
+    T ≤ (largestPrime m : ℝ) →
+    strict_inventory_third_layer_mass m / Real.sqrt (largestPrime m : ℝ) < epsilon
 
 private theorem limit_rejected_law : ¬ limitArena.Law limitRejected := by
   intro h
-  obtain ⟨T, _, hrecords⟩ := h 1 (by norm_num)
-  have hbad := hrecords 2 (by norm_num) (goldenLayerMarginal 2 1 / 2)
-    half_first_two_layer_pos two_record_at_half_first_layer
-    (by change (0 : ℝ) ≤ (largestPrime 2 : ℝ); positivity)
-  have hp2 : (2 : ℕ).primeFactors = {2} := (by norm_num : Nat.Prime 2).primeFactors
-  have hf2 : (2 : ℕ).factorization 2 = 1 :=
-    (by norm_num : Nat.Prime 2).factorization_self
-  change strict_inventory_third_layer_mass 2 / Real.sqrt (largestPrime 2 : ℝ) < 0 at hbad
-  norm_num [strict_inventory_third_layer_mass, hp2, Finset.filter_singleton, hf2] at hbad
+  obtain ⟨T, hT, _⟩ := h 1 (by norm_num)
+  change (0 : ℝ) < 0 at hT
+  exact (lt_irrefl 0) hT
 
 def limitFamily : Registration limitArena (type_of% @price_record_third_layer_mass_vanishing) where
   actual := limitActual
@@ -205,18 +197,11 @@ def limitAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "arg", "body", "arg", "body", "body",
-        "body", "body", "body", "domain", "fn", "arg"]
+      path := #["body", "body", "arg", "body", "fn", "arg", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none
-      booleanPredicate := false }, {
-      path := #["body", "body", "arg", "body", "arg", "body", "body",
-        "body", "body", "body", "body", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false } ] }
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
