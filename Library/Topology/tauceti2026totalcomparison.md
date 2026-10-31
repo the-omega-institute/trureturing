@@ -25,7 +25,11 @@ lines 73–126, full-file SHA-256
 Consumed extension support is from `Embedding/ExtendHomology/Basic.lean`,
 lines 64–82, full-file SHA-256
 `04c064e82d2cf8ea7b679392130fc444b22e5f4b53c1dab62540917612fd4a1a`.
-The latter file attributes its authorship to Claude and cites
+The embedding binding also corresponds to `Embedding/DownNatSucc.lean`,
+lines 27–35, full-file SHA-256
+`11fcdd12fb381b23df8335d545a6f31f8a5b716a01deeda00a63f128617d98bb`.
+It directly uses the receiving `ComplexShape.embeddingDown'Add (1 : ℕ) 1`.
+The extension-support file attributes its authorship to Claude and cites
 https://github.com/TauCetiProject/TauCeti/pull/10141.
 
 The source pins Lean 4.36.0-rc1 and Mathlib

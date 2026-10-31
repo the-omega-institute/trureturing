@@ -20,7 +20,7 @@ internal sealed class TotalComplexDocument : IScribeDocumentDefinition
         Seq(All("K", Call("HomologicalComplex2", V("C"), Down, Down)),
             All("L", Call("HomologicalComplex2", V("C"), Down, Down)),
             All("phi", Call("Hom", V("K"), V("L")))),
-        Seq(OpenParen, All("q", V("Nat")), Call("QuasiIso", RowMap), CloseParen,
+        Seq(Open, All("q", V("Nat")), Call("QuasiIso", RowMap), Close,
             Sp, Rightarrow, Sp,
             Call("QuasiIso", Call("totalMap", V("phi"), Down)))
     ]));
