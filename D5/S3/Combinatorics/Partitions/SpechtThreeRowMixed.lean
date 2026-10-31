@@ -37,7 +37,7 @@ private theorem tripleShape_parts {n : ℕ} (r : Fin 3 → ℕ) (hr : ∑ i, r i
   change (weightPartition d _).parts = _
   rw [weightPartition_parts, hs]
   by_cases h0 : r 0 = 0 <;> by_cases h1 : r 1 = 0 <;> by_cases h2 : r 2 = 0 <;>
-    simp [d, h0, h1, h2, Multiset.filter_singleton]
+    simp [d, h0, h1, h2, Multiset.filter_singleton] <;> rfl
 
 private theorem tripleShape_sorted {n : ℕ} (r : Fin 3 → ℕ) (hr : ∑ i, r i = n)
     (h01 : r 1 ≤ r 0) (h12 : r 2 ≤ r 1) :
@@ -48,7 +48,7 @@ private theorem tripleShape_sorted {n : ℕ} (r : Fin 3 → ℕ) (hr : ∑ i, r 
   apply List.Pairwise.filter
   refine .cons ?_ (.cons ?_ (.cons ?_ .nil))
   · intro a ha
-    simp only [List.mem_cons, List.mem_singleton] at ha
+    simp only [List.mem_cons, List.not_mem_nil, or_false] at ha
     rcases ha with rfl | rfl
     · exact h01
     · exact h12.trans h01
@@ -83,10 +83,9 @@ private theorem fixedColourings_eq_youngFixed {n : ℕ} (r : Fin 3 → ℕ)
     unfold fixedColourings
     congr 1
     ext f
-    simp only [mem_filter, mem_univ, true_and, d,
-      Finsupp.coe_equivFunOnFinite_symm, Int.natCast_inj]
+    simp [d, Finsupp.coe_equivFunOnFinite_symm]
   rw [he]
-  simpa only [tripleShape, d] using (Int.natCast_inj.mp hc)
+  convert (Int.natCast_inj.mp hc) using 1 <;> simp [tripleShape, d]
 
 private theorem sum_spechtChar_mul_fixedColourings {n : ℕ} (μ : n.Partition)
     (r : Fin 3 → ℕ) (hr : ∑ i, r i = n) :
@@ -120,8 +119,9 @@ private theorem weight_prefix_le_rows {n : ℕ} (r : Fin 3 → ℕ) (hr : ∑ i,
   have hp (i : Fin 3) : r i = q (p i) := by
     have h := congrArg (fun w : Fin 3 →₀ ℕ => w (e i)) he
     rw [Finsupp.mapDomain_apply_of_injective e.injective, partWeight_apply] at h
-    simpa only [d, Finsupp.coe_equivFunOnFinite_symm, p, q, tripleShape,
-      Equiv.trans_apply] using h
+    change r i = (_root_.YoungDiagram.ofPartition (weightPartition d _)).rowLen
+      ((Fintype.equivFin (Fin 3)) (e i))
+    simpa only [d, Finsupp.coe_equivFunOnFinite_symm] using h
   have h01 : q 1 ≤ q 0 := _root_.YoungDiagram.rowLen_anti _ 0 1 (by omega)
   have h12 : q 2 ≤ q 1 := _root_.YoungDiagram.rowLen_anti _ 1 2 (by omega)
   have hne : p 0 ≠ p 1 := p.injective.ne (by decide)
@@ -165,6 +165,7 @@ private theorem shifted_strict_prefix (r : Fin 3 → ℕ) (σ : Perm (Fin 3)) (h
     · exact Fin.ext h0
     · exact Fin.ext h1
     · apply Fin.ext
+      change (σ (2 : Fin 3) : ℕ) = 2
       have hn0 : (σ 2 : ℕ) ≠ 0 := fun h => hi02 (Fin.ext (h0.trans h.symm))
       have hn1 : (σ 2 : ℕ) ≠ 1 := fun h => hi12 (Fin.ext (h1.trans h.symm))
       omega
