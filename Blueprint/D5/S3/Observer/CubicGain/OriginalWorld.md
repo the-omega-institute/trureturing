@@ -54,7 +54,7 @@ Lean statement: `D5/S3/Observer/CubicGain/OriginalWorld.original_coordinates`
 
 For every original parent W, decoding gives strict parent coordinates, encoding their reconstructed parent world returns W, and their response equals originalResponse W.
 
-**Theorem 1.3 (encoded strict parent).**
+**Theorem 1.4 (encoded strict parent).**
 
 Lean statement: `D5/S3/Observer/CubicGain/OriginalWorld.encoded_parent`
 
@@ -66,7 +66,7 @@ Lean statement: `D5/S3/Observer/CubicGain/OriginalWorld.encoded_parent`
 
 For every strict parent coordinate triple C, encoding parentWorld C produces an OriginalParent with the literal original history rows.
 
-**Theorem 1.4 (encoded actual response).**
+**Theorem 1.5 (encoded actual response).**
 
 Lean statement: `D5/S3/Observer/CubicGain/OriginalWorld.encoded_response`
 
@@ -78,7 +78,7 @@ Lean statement: `D5/S3/Observer/CubicGain/OriginalWorld.encoded_response`
 
 For every coordinate triple C, the actual original response of encodeWorld (parentWorld C) equals the response computed from C.
 
-**Theorem 1.5 (bounded response coefficients).**
+**Theorem 1.6 (bounded response coefficients).**
 
 Lean statement: `D5/S3/Observer/CubicGain/OriginalWorld.bounded_response_coefficients`
 
@@ -93,6 +93,7 @@ For every real M there are bounds D,G such that every original parent with |P₅
 ## References
 
 - Truth anchor: `D5/S3/Observer/CubicGain/OriginalWorld.bounded_response_coefficients`
+- Truth anchor: `D5/S3/Observer/CubicGain/OriginalWorld.coefficient_degree`
 - Truth anchor: `D5/S3/Observer/CubicGain/OriginalWorld.encoded_parent`
 - Truth anchor: `D5/S3/Observer/CubicGain/OriginalWorld.encoded_response`
 - Truth anchor: `D5/S3/Observer/CubicGain/OriginalWorld.originalParentHomeomorph`
