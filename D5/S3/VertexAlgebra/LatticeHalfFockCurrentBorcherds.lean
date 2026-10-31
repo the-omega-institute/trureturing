@@ -25,8 +25,7 @@ open scoped BigOperators
 noncomputable section
 
 local macro "halfChoose" : term =>
-  pure (Lean.mkIdent ((Lean.Name.num `_private.D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.halfBinomial_choose))
+  pure (Lean.mkIdent `D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.halfBinomial_choose)
 local macro "positivePascal" : term =>
   pure (Lean.mkIdent ((Lean.Name.num `_private.D5.S3.VertexAlgebra.LatticeHalfFockPositiveCurrentResidue 0) ++
     `D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField.positive_pascal_difference))
