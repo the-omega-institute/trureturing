@@ -201,7 +201,8 @@ theorem dependence.{uV, uE} : ObservationalDependence signature.{uV, uE} actual 
 
 def source_registration.{uV, uE} : Registration arena.{uV, uE}
     (type_of% @cycle_initial_visited_nodup.{uV, uE}) where
-  actual := actual
+  actual := realize signature.{uV, uE}
+    (fun _ q edge => q.2.2.target edge) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨cycle_initial_visited_nodup, rejected, rejected_law⟩
   sensitivity := by
