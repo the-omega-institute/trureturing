@@ -222,7 +222,17 @@ private lemma hard_character (m : ℕ) (hm : 0 < m) (v : basis m) (he : evenLabe
 private lemma rotation_labels (m : ℕ) (circuit : List (gate m))
     (θ : basis m → ℝ) (c : ℂ)
     (h : circuitMatrix circuit = c • Matrix.diagonal (fun x => Complex.exp ((θ x : ℂ) * Complex.I)))
-    (hnf : wireLabels circuit = initialLabels m) :
+    (hnf : wireLabels circuit = initialLabels m)
+    (hmul : ∀ (v : basis m) (f g : basis m → ℂ),
+      (∀ x, f x ≠ 0) → (∀ x, g x ≠ 0) →
+        character v (fun x => f x * g x) = character v f * character v g)
+    (hglobal : ∀ (v : basis m) (c : ℂ), v ≠ zeroLabel → c ≠ 0 →
+      character v (fun _ : basis m => c) = 1)
+    (hfactor : ∀ (v w : basis m) (f : Bool → ℂ), v ≠ w →
+      w ≠ zeroLabel → (∀ b, f b ≠ 0) →
+        character v (fun x => f (dot w x)) = 1)
+    (hchars : ∀ v, evenLabel v → v ≠ zeroLabel →
+      character v (fun x => Complex.exp ((θ x : ℂ) * Complex.I)) = -1) :
     ∀ v, evenLabel v → v ≠ zeroLabel → v ∈ rotationLabels circuit := by sorry
 
 private lemma even_output_count (m : ℕ) (circuit : List (gate m))
@@ -250,7 +260,26 @@ private lemma claim_for_n (n : ℕ) (hn : 1 ≤ n) :
   intro circuit c h
   obtain ⟨a, ha, hnf⟩ := normal_form (2 * n) circuit
   have hidentity := diagonal_forces_identity (2 * n) circuit c hardTheta h
+  have hmul : ∀ (v : basis (2 * n)) (f g : basis (2 * n) → ℂ),
+      (∀ x, f x ≠ 0) → (∀ x, g x ≠ 0) →
+        character v (fun x => f x * g x) = character v f * character v g := by
+    intro v f g hf hg
+    exact character_mul (2 * n) v f g hf hg
+  have hglobal : ∀ (v : basis (2 * n)) (d : ℂ), v ≠ zeroLabel → d ≠ 0 →
+      character v (fun _ : basis (2 * n) => d) = 1 := by
+    intro v d hv hd
+    exact character_global (2 * n) (Nat.mul_pos (by decide) hn) v hv d hd
+  have hfactor : ∀ (v w : basis (2 * n)) (f : Bool → ℂ), v ≠ w →
+      w ≠ zeroLabel → (∀ b, f b ≠ 0) →
+        character v (fun x => f (dot w x)) = 1 := by
+    intro v w f hvw hw hf
+    exact character_factor (2 * n) v w f hvw hw hf
+  have hchars : ∀ v : basis (2 * n), evenLabel v → v ≠ zeroLabel →
+      character v (fun x => Complex.exp ((hardTheta x : ℂ) * Complex.I)) = -1 := by
+    intro v he hv
+    exact hard_character (2 * n) (Nat.mul_pos (by decide) hn) v he hv
   have hlabels := rotation_labels (2 * n) circuit hardTheta c h hidentity
+    hmul hglobal hfactor hchars
   have houtputs := even_output_count (2 * n) circuit hidentity hlabels
   have hbirths := birth_count (2 * n) circuit hidentity hlabels
   have hreturn := return_count (2 * n) circuit hidentity hlabels
