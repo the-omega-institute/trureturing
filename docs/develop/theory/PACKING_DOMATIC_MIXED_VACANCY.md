@@ -1219,10 +1219,8 @@ All indices $h$ in the following sets are integers. Set
 
 $$
 D_m=\begin{cases}
-\{2+2h:0\le h<(m-2)/2\}\ \cup\ \{m+1\}\
-\qquad{}\cup\ \{m+5+2h:0\le h<(m-4)/2\},&m\text{ even},\\[2mm]
-\{3+2h:0\le h<(m-3)/2\}\ \cup\ \{m+1\}\
-\qquad{}\cup\ \{m+4+2h:0\le h<(m-3)/2\},&m\text{ odd}.
+\{2+2h:0\le h<(m-2)/2\}\ \cup\ \{m+1\}\cup\ \{m+5+2h:0\le h<(m-4)/2\},&m\text{ even},\\[2mm]
+\{3+2h:0\le h<(m-3)/2\}\ \cup\ \{m+1\}\cup\ \{m+4+2h:0\le h<(m-3)/2\},&m\text{ odd}.
 \end{cases} \tag{10.1}
 $$
 
@@ -1448,6 +1446,8 @@ on $A_i$ and zero outside $A_i$, exactly as in the source's Section 1;
 the single positive packing $f_m$ itself is unchanged. This is precisely
 the interpretation of $Q$ in Definition 1.2.
 
+The local supplier citations below use
+[source version fe6e2625fb21b97e340cfc50244b975befaf7008](https://github.com/the-omega-institute/trureturing/tree/fe6e2625fb21b97e340cfc50244b975befaf7008).
 The fixed-six predicate in
 [`PackingDomaticInfiniteSix`](../../../D5/S3/Combinatorics/PackingDomatic/PackingDomaticInfiniteSix.lean)
 has the same full integer domain and radius convention, with $k=6$
