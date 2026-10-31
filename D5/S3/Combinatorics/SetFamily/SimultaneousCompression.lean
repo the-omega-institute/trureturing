@@ -4,7 +4,7 @@
    mirror-E: none(waiver:general-structural-theorem)
    anchors: []
    utility: none
-   digest: A simultaneous local compression preserves cross-intersection after coordinate deletion. -/
+   digest: Local compression preserves cross-intersection after coordinate deletion. -/
 
 import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.Real.Basic
@@ -77,7 +77,7 @@ private lemma compressed_subset {Ω A : Finset (Finset α)} {s t u : α}
   · exact (mem_filter.mp hX).2
 
 private lemma compressed_cross_one_sided {Ω A B : Finset (Finset α)} {s t u : α}
-    (hA : A ⊆ Ω) (hB : B ⊆ Ω) (hst : s ≠ t)
+    (hA : A ⊆ Ω)
     (hexcludes : ∀ Z ∈ Ω, t ∈ Z → s ∉ Z ∧ u ∉ Z)
     (hcross : CrossIntersecting A B)
     {X Y : Finset α}
@@ -124,8 +124,8 @@ private lemma compressed_cross {Ω A B : Finset (Finset α)} {s t u : α}
       ((compressedFamily Ω A s t u).image (fun X => X.erase t))
       ((compressedFamily Ω B s t u).image (fun X => X.erase t)) := by
   intro X hX Y hY
-  obtain ⟨X, hX, rfl⟩ := mem_image.mp hX
-  obtain ⟨Y, hY, rfl⟩ := mem_image.mp hY
+  obtain ⟨X, hXC, rfl⟩ := mem_image.mp hX
+  obtain ⟨Y, hYC, rfl⟩ := mem_image.mp hY
   by_cases hsY : s ∈ Y
   · by_cases hsX : s ∈ X
     · intro hd
@@ -133,9 +133,11 @@ private lemma compressed_cross {Ω A B : Finset (Finset α)} {s t u : α}
         (mem_erase.mpr ⟨hst, hsY⟩)
     · have hc : CrossIntersecting B A := by
         intro V hV W hW
-        exact (hcross W hW V hV).symm
-      exact (compressed_cross_one_sided hB hA hst hexcludes hc hY hX hsX).symm
-  · exact compressed_cross_one_sided hA hB hst hexcludes hcross hX hY hsY
+        intro hd
+        exact hcross W hW V hV hd.symm
+      intro hd
+      exact compressed_cross_one_sided hB hexcludes hc hYC hXC hsX hd.symm
+  · exact compressed_cross_one_sided hA hexcludes hcross hXC hYC hsY
 
 private lemma augmented_not_mem {Ω A B : Finset (Finset α)} {s t u : α}
     (hA : A ⊆ Ω) (hB : B ⊆ Ω)
