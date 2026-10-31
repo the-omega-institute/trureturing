@@ -993,15 +993,6 @@ lemma psi_phi (hn : 6 ≤ n) {T : Finset (Sym2 (ZMod n))}
   ext e
   simp [Function.comp_def, chordSwap_involutive, ht]
 
-lemma phi_injective (hn : 6 ≤ n) {T U : Finset (Sym2 (ZMod n))}
-    (hdiagT : ∀ e ∈ T, IsDiagonal e) (hdiagU : ∀ e ∈ U, IsDiagonal e)
-    (htT : tEar (n := n) ∈ T) (htU : tEar (n := n) ∈ U)
-    (hsT : sEar (n := n) ∉ T) (hsU : sEar (n := n) ∉ U)
-    (h : phi T = phi U) : T = U := by
-  apply (psi_phi hn hdiagT htT hsT).symm.trans
-  rw [h]
-  exact psi_phi hn hdiagU htU hsU
-
 lemma phi_image_members_are_diagonal (hn : 6 ≤ n) {T : Finset (Sym2 (ZMod n))}
     (hT : IsTriangulation T) (ht : tEar (n := n) ∈ T)
     {e : Sym2 (ZMod n)} (he : e ∈ image chordSwap (T.erase (tEar (n := n)))) :
@@ -1647,10 +1638,6 @@ lemma chord_map_add_neg_map_add (e : Sym2 (ZMod n)) (a : ZMod n) :
   induction e using Sym2.ind with
   | _ x y => simp [Sym2.map_map, Function.comp_def, add_assoc]
 
-lemma chord_map_add_map_neg (e : Sym2 (ZMod n)) (a : ZMod n) :
-    (e.map (fun x => x + -a)).map (fun x => x + a) = e := by
-  simpa [add_comm] using chord_map_add_neg_map_add e (-a)
-
 lemma isDiagonal_map_add {e : Sym2 (ZMod n)} (h : IsDiagonal e) (a : ZMod n) :
     IsDiagonal (e.map (fun x => x + a)) := by
   refine ⟨?_, ?_⟩
@@ -1664,11 +1651,6 @@ lemma isDiagonal_map_add {e : Sym2 (ZMod n)} (h : IsDiagonal e) (a : ZMod n) :
     rw [hi, Sym2.map_mk]
     congr 1
     ring
-
-lemma isSide_map_add {e : Sym2 (ZMod n)} (h : IsSide e) (a : ZMod n) :
-    IsSide (e.map (fun x => x + a)) := by
-  obtain ⟨i, rfl⟩ := h
-  exact ⟨i + a, by rw [Sym2.map_mk, add_right_comm]⟩
 
 lemma isTriangulation_map_add {T : Finset (Sym2 (ZMod n))}
     (hT : IsTriangulation T) (a : ZMod n) :
@@ -1822,10 +1804,6 @@ lemma mem_E_K_shift_iff {K : Finset (ZMod n)} {i a : ZMod n} :
         simpa [hjk] using hcrossik
       exact hcross j hj hcross'
 
-lemma shiftSet_subset_shiftSet {S U : Finset (ZMod n)} {a : ZMod n}
-    (h : S ⊆ U) : shiftSet S a ⊆ shiftSet U a := by
-  exact image_subset_image h
-
 lemma shiftSet_disjoint_shiftSet {S U : Finset (ZMod n)} {a : ZMod n}
     (h : Disjoint S U) : Disjoint (shiftSet S a) (shiftSet U a) := by
   apply Finset.disjoint_left.mpr
@@ -1853,13 +1831,6 @@ lemma shiftSet_insert (S : Finset (ZMod n)) (x a : ZMod n) :
 lemma shiftSet_union (S U : Finset (ZMod n)) (a : ZMod n) :
     shiftSet (S ∪ U) a = shiftSet S a ∪ shiftSet U a := by
   simp [shiftSet]
-
-lemma shift_E_K (K : Finset (ZMod n)) (a : ZMod n) :
-    shiftSet (E_K K) a = E_K (shiftSet K a) := by
-  ext i
-  rw [mem_shiftSet_iff]
-  have h := mem_E_K_shift_iff (K := K) (i := i + -a) (a := a)
-  simpa [add_assoc] using h.symm
 
 def shift_condition_fibre_equiv (a : ZMod n)
     {P Q J X : Finset (ZMod n)} :
@@ -1939,11 +1910,6 @@ def shift_condition_fibre_equiv (a : ZMod n)
   · intro y
     rcases y with ⟨U, hU, hP, hQ, htrace⟩
     exact Subtype.ext (by simpa [neg_neg] using shiftChords_add_neg U (-a))
-
-lemma shiftChords_isTriangulation {T : Finset (Sym2 (ZMod n))}
-    (hT : IsTriangulation T) (a : ZMod n) :
-    IsTriangulation (shiftChords T a) :=
-  isTriangulation_map_add hT a
 
 def condition_fibre_equiv (hn : 14 ≤ n)
     {P Q J R : Finset (ZMod n)}
