@@ -17,7 +17,7 @@ set_option autoImplicit false
 
 namespace D5.S1.Dynamics.Symbolic.PermutativeLifts
 
-private theorem tileState_ext (W : Bool → List Bool) {s t : TileState W}
+private theorem tile_state_ext (W : Bool → List Bool) {s t : TileState W}
     (ha : s.1 = t.1) (ho : s.2.val = t.2.val) : s = t := by
   rcases s with ⟨a, p⟩
   rcases t with ⟨b, q⟩
@@ -25,7 +25,7 @@ private theorem tileState_ext (W : Bool → List Bool) {s t : TileState W}
   subst b
   exact congrArg (Sigma.mk a) (Fin.ext ho)
 
-private theorem tileNext_offset_eq_iff (W : Bool → List Bool) (L : ℕ)
+private theorem tile_next_offset_eq_iff (W : Bool → List Bool) (L : ℕ)
     (hW : ∀ a, (W a).length = L) {s t u v : TileState W}
     (hst : TileNext W s t) (huv : TileNext W u v) :
     s.2.val = u.2.val ↔ t.2.val = v.2.val := by
@@ -59,9 +59,9 @@ theorem tiled_offset_phase (W : Bool → List Bool) (L : ℕ)
       rw [Int.emod_eq_of_lt (by omega) hxlt]
       simp
     | succ n ih =>
-      exact (tileNext_offset_eq_iff W L hW (x.2 (n : ℤ)) (hy (n : ℤ))).1 ih
+      exact (tile_next_offset_eq_iff W L hW (x.2 (n : ℤ)) (hy (n : ℤ))).1 ih
     | pred n ih =>
-      apply (tileNext_offset_eq_iff W L hW (x.2 (-(n : ℤ) - 1))
+      apply (tile_next_offset_eq_iff W L hW (x.2 (-(n : ℤ) - 1))
         (hy (-(n : ℤ) - 1))).2
       have hi : -(n : ℤ) - 1 + 1 = -(n : ℤ) := by omega
       exact Eq.mpr (congrArg
@@ -93,17 +93,17 @@ theorem tiled_offset_aligned (W : Bool → List Bool) (L : ℕ)
     ((x.1 i).2.val : ℤ) = i % (L : ℤ) := by
   simpa [hzero] using tiled_offset_phase W L hW hL x i
 
-private theorem readTile_eq_get (W : Bool → List Bool) (s : TileState W)
+private theorem read_tile_eq_get (W : Bool → List Bool) (s : TileState W)
     (a : Bool) (j : ℕ) (hj : j < (W a).length)
     (ha : s.1 = a) (ho : s.2.val = j) :
     readTile W s = (W a).get ⟨j, hj⟩ := by
-  have heq : s = ⟨a, ⟨j, hj⟩⟩ := tileState_ext W ha ho
+  have heq : s = ⟨a, ⟨j, hj⟩⟩ := tile_state_ext W ha ho
   rw [heq]
   rfl
 
 /-- Equal readout and equal boundaries identify tiles whose words, rather than
 whose lengths, are distinct. The common length may be the same for both types. -/
-theorem equalLength_tiling_eq_of_read_boundaries (W : Bool → List Bool) (L : ℕ)
+theorem equal_length_tiling_eq_of_read_boundaries (W : Bool → List Bool) (L : ℕ)
     (hW : ∀ a, (W a).length = L) (hinj : Function.Injective W)
     (x y : MarkedTiling W) (hr : readTiling W x = readTiling W y)
     (hb : ∀ i, (x.1 i).2.val = 0 ↔ (y.1 i).2.val = 0) : x = y := by
@@ -121,12 +121,12 @@ theorem equalLength_tiling_eq_of_read_boundaries (W : Bool → List Bool) (L : �
     intro j hjx hjy
     have hfx := tiled_forwards W x.2 b j (by omega)
     have hfy := tiled_forwards W y.2 b j (by omega)
-    have hxread := readTile_eq_get W (x.1 (b + (j : ℤ))) (x.1 b).1 j hjx
+    have hxread := read_tile_eq_get W (x.1 (b + (j : ℤ))) (x.1 b).1 j hjx
       hfx.1 (by omega)
-    have hyread := readTile_eq_get W (y.1 (b + (j : ℤ))) (y.1 b).1 j hjy
+    have hyread := read_tile_eq_get W (y.1 (b + (j : ℤ))) (y.1 b).1 j hjy
       hfy.1 (by omega)
     exact hxread.symm.trans ((congrFun hr (b + (j : ℤ))).trans hyread)
-  exact tileState_ext W (hxb.1.symm.trans ((hinj hwords).trans hyb.1)) hoff
+  exact tile_state_ext W (hxb.1.symm.trans ((hinj hwords).trans hyb.1)) hoff
 
 /-- A column shared by the two words has a type-independent readout. -/
 theorem tiled_read_common_column (W : Bool → List Bool) (L : ℕ)
@@ -140,7 +140,7 @@ theorem tiled_read_common_column (W : Bool → List Bool) (L : ℕ)
   have hoff : (x.1 i).2.val = j := by
     have := tiled_offset_aligned W L hW hL x hzero i
     omega
-  have hr := readTile_eq_get W (x.1 i) (x.1 i).1 j (by rw [hW]; exact hj) rfl hoff
+  have hr := read_tile_eq_get W (x.1 i) (x.1 i).1 j (by rw [hW]; exact hj) rfl hoff
   change readTile W (x.1 i) = _
   rw [hr]
   cases (x.1 i).1
@@ -157,10 +157,10 @@ theorem tiled_common_column_periodic (W : Bool → List Bool) (L : ℕ)
         simpa only [hW] using (x.1 i).2.isLt⟩)
     (k : ℤ) : readTiling W x (i + k * (L : ℤ)) = readTiling W x i := by
   have hlt : (x.1 i).2.val < L := by simpa only [hW] using (x.1 i).2.isLt
-  have h₁ := readTile_eq_get W (x.1 (i + k * (L : ℤ)))
+  have h₁ := read_tile_eq_get W (x.1 (i + k * (L : ℤ)))
     (x.1 (i + k * (L : ℤ))).1 (x.1 i).2.val (by simpa only [hW] using hlt) rfl
     (tiled_offset_periodic W L hW hL x i k)
-  have h₂ := readTile_eq_get W (x.1 i) (x.1 i).1 (x.1 i).2.val
+  have h₂ := read_tile_eq_get W (x.1 i) (x.1 i).1 (x.1 i).2.val
     (by simpa only [hW] using hlt) rfl rfl
   have hcommon (a b : Bool) :
       (W a).get ⟨(x.1 i).2.val, by simpa only [hW] using hlt⟩ =
@@ -171,22 +171,5 @@ theorem tiled_common_column_periodic (W : Bool → List Bool) (L : ℕ)
     · exact hc.symm
     · rfl
   exact h₁.trans ((hcommon _ _).trans h₂.symm)
-
--- Temporary exact applications, removed after the preliminary kernel check.
-example (x : MarkedTiling (fun _ => [false, true])) (i k : ℤ) :
-    readTiling (fun _ => [false, true]) x (i + k * 2) =
-      readTiling (fun _ => [false, true]) x i := by
-  exact tiled_common_column_periodic (fun _ => [false, true]) 2 (fun _ => rfl)
-    (by decide) x i rfl k
-
-example (x y : MarkedTiling (fun a => [a, !a]))
-    (hr : readTiling (fun a => [a, !a]) x = readTiling (fun a => [a, !a]) y)
-    (hb : ∀ i, (x.1 i).2.val = 0 ↔ (y.1 i).2.val = 0) : x = y := by
-  have hinj : Function.Injective (fun a : Bool => [a, !a]) := by
-    intro a b h
-    simpa only [List.head?_cons, Option.some.injEq] using
-      congrArg (fun l : List Bool => l.head?) h
-  exact equalLength_tiling_eq_of_read_boundaries (fun a => [a, !a]) 2
-    (fun _ => rfl) hinj x y hr hb
 
 end D5.S1.Dynamics.Symbolic.PermutativeLifts

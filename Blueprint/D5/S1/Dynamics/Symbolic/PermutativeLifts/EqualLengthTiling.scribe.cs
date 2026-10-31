@@ -12,7 +12,7 @@ internal sealed class EqualLengthTilingDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("phase"), DeclarationHandle.Create(Owner + "tiled_offset_phase"),
                 H("Two-sided phase"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For two binary words of a common positive length L, the marked offset at every integer i is the nonnegative remainder of i plus the offset at zero modulo L. Comparing the tiling with a periodic tiling of one word propagates offset equality both forwards and backwards. Thus translation by any integer multiple of L preserves the phase, and the boundary set is one residue class."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("recognizability"), DeclarationHandle.Create(Owner + "equalLength_tiling_eq_of_read_boundaries"),
+            Describe.Lean(DescribeId.Create("recognizability"), DeclarationHandle.Create(Owner + "equal_length_tiling_eq_of_read_boundaries"),
                 H("Identification from symbols and boundaries"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Suppose the two words have equal lengths and are distinct as words. Two actual marked tilings with identical visible sequences and identical boundary sets are equal. Boundaries first identify every offset. Starting at the common preceding boundary, forward traversal reads every letter of the corresponding words; equality of those words identifies their types. Distinct word lengths are not required."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("common-column"), DeclarationHandle.Create(Owner + "tiled_common_column_periodic"),
