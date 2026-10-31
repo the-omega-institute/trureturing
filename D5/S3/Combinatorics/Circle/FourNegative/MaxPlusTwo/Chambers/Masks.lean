@@ -90,4 +90,32 @@ private theorem labels_nested_four (len off u1 u2 u3 : ℕ)
   have hp' := (hp.append_left (labels len off ((2^len-1) ^^^ u1))).trans h1
   simpa only [List.append_assoc,labels_full] using hp'
 
+theorem chamberLabels_sum (len off mask : ℕ) (hm : mask<2^len)
+    (f : ℕ→ℤ) (A : ℤ) (hf : ∀ e<len, f (off+e)=2^e*A) :
+    ((chamberLabels len off mask).map f).sum=(mask:ℤ)*A := by
+  exact labels_sum len off mask hm f A hf
+
+theorem chamberLabels_positive (len off mask : ℕ) (f : ℕ→ℤ) (A : ℤ)
+    (hA : 0≤A) (hf : ∀ e<len, f (off+e)=2^e*A) :
+    ∀ i∈chamberLabels len off mask, 0≤f i := by
+  exact labels_positive len off mask f A hA hf
+
+theorem chamberLabels_nested_four (len off u1 u2 u3 : ℕ)
+    (h12 : ∀ e<len, u2.testBit e=true → u1.testBit e=true)
+    (h23 : ∀ e<len, u3.testBit e=true → u2.testBit e=true) :
+    (chamberLabels len off ((2^len-1) ^^^ u1) ++
+      chamberLabels len off (u1 ^^^ u2) ++ chamberLabels len off (u2 ^^^ u3) ++
+      chamberLabels len off u3).Perm (List.range' off len) := by
+  exact labels_nested_four len off u1 u2 u3 h12 h23
+
+theorem chamberLabels_full (len off : ℕ) :
+    chamberLabels len off (2^len-1)=List.range' off len := by
+  exact labels_full len off
+
+theorem chamberLabels_split (len off outer inner : ℕ)
+    (hsub : ∀ e<len, inner.testBit e=true → outer.testBit e=true) :
+    (chamberLabels len off (outer ^^^ inner) ++
+      chamberLabels len off inner).Perm (chamberLabels len off outer) := by
+  exact labels_split len off outer inner hsub
+
 end D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers

@@ -18,22 +18,22 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
 open private ceilpos from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Arithmetic
 
 /-- A mask is decoded into the original physical labels in increasing order. -/
-private def labels (len off mask : ℕ) : List ℕ :=
+def labels (len off mask : ℕ) : List ℕ :=
   ((List.range len).filter (fun i => mask.testBit i)).map (off + ·)
 
 /-- Four positive blocks; each is followed by its own physical negative label. -/
-private structure Blocks where
+structure Blocks where
   first : List ℕ
   second : List ℕ
   third : List ℕ
   fourth : List ℕ
 
-private def Blocks.word (P : Blocks) (a b c d : ℕ) : List ℕ :=
+def Blocks.word (P : Blocks) (a b c d : ℕ) : List ℕ :=
   P.first ++ [d-1] ++ P.second ++ [d+c-1] ++ P.third ++ [d+c+b-1] ++
     P.fourth ++ [d+c+b+a-1]
 
 /-- The common template permits both releasing U-bits and advancing V-bits. -/
-private def maskedBlocks (a b c d u1 u2 u3 v0 v2 v3 w : ℕ) : Blocks :=
+def maskedBlocks (a b c d u1 u2 u3 v0 v2 v3 w : ℕ) : Blocks :=
   let U := labels (d-1) 0
   let V := labels (c-1) d
   let W := labels (b-1) (d+c)
@@ -48,7 +48,7 @@ private def maskedBlocks (a b c d u1 u2 u3 v0 v2 v3 w : ℕ) : Blocks :=
    U u3 ++ V v3 ++ W w ++ X xf⟩
 
 /-- Monotone chambers, including the descending boundary's advanced X-positive. -/
-private def monotoneBlocks (a b c : ℕ) : Blocks :=
+def monotoneBlocks (a b c : ℕ) : Blocks :=
   let R : ℕ := 2^a
   let T : ℕ := 2^b
   let Z : ℕ := 2^c
@@ -90,7 +90,7 @@ private def monotoneBlocks (a b c : ℕ) : Blocks :=
     maskedBlocks a b c d u u (u ^^^ wl.2) 0 v v wl.1
 
 /-- Strict valley and peak chambers use the same physical mask template. -/
-private def extremaBlocks (a b c : ℕ) : Blocks :=
+def extremaBlocks (a b c : ℕ) : Blocks :=
   let R : ℕ := 2^a
   let T : ℕ := 2^b
   let Z : ℕ := 2^c
@@ -120,19 +120,19 @@ private def extremaBlocks (a b c : ℕ) : Blocks :=
     maskedBlocks a b c d uv.1 s uw.1 uv.2 0 0 uw.2
 
 /-- Exact supplied chamber constructor at the minimal fourth gap. -/
-private def baseBlocks (a b c : ℕ) : Blocks :=
+def baseBlocks (a b c : ℕ) : Blocks :=
   if min a c ≤ b ∧ b ≤ max a c then monotoneBlocks a b c
   else extremaBlocks a b c
 
-private def baseWord (a b c : ℕ) : List ℕ :=
+def baseWord (a b c : ℕ) : List ℕ :=
   (baseBlocks a b c).word a b c (max (max a b) c + 2)
 
 /-- Natural lift adds new low U-labels and shifts every inherited physical label. -/
-private def physicalWord (a b c d : ℕ) : List ℕ :=
+def physicalWord (a b c d : ℕ) : List ℕ :=
   let t := d-(max (max a b) c+2)
   List.range t ++ (baseWord a b c).map (t+·)
 
-private theorem labels_mem (len off mask i : ℕ) :
+theorem labels_mem (len off mask i : ℕ) :
     i ∈ labels len off mask ↔ ∃ e < len, mask.testBit e = true ∧ off+e=i := by
   simp only [labels, List.mem_map, List.mem_filter, List.mem_range]
   constructor
@@ -141,8 +141,36 @@ private theorem labels_mem (len off mask i : ℕ) :
   · rintro ⟨e,he,hb,hi⟩
     exact ⟨e,⟨he,hb⟩,hi⟩
 
-private theorem labels_nodup (len off mask : ℕ) : (labels len off mask).Nodup := by
+theorem labels_nodup (len off mask : ℕ) : (labels len off mask).Nodup := by
   apply List.Nodup.map (fun x y h => Nat.add_left_cancel h)
   exact (List.nodup_range (n := len)).filter _
+
+/- Public names consumed by the complete endpoint.  The definitions remain the
+   single source of the physical mask algorithm above. -/
+def chamberLabels (len off mask : ℕ) : List ℕ := labels len off mask
+def chamberMaskedWord (a b c d u1 u2 u3 v0 v2 v3 w : ℕ) : List ℕ :=
+  let U := chamberLabels (d-1) 0
+  let V := chamberLabels (c-1) d
+  let W := chamberLabels (b-1) (d+c)
+  let X := chamberLabels (a-1) (d+c+b)
+  let uf := 2^(d-1)-1
+  let vf := 2^(c-1)-1
+  let wf := 2^(b-1)-1
+  let xf := 2^(a-1)-1
+  (U (uf ^^^ u1) ++ V v0) ++ [d-1] ++
+    (U (u1 ^^^ u2) ++ V (vf ^^^ (v0 ||| v2))) ++ [d+c-1] ++
+    (U (u2 ^^^ u3) ++ V (v2 ^^^ v3) ++ W (wf ^^^ w)) ++ [d+c+b-1] ++
+    (U u3 ++ V v3 ++ W w ++ X xf) ++ [d+c+b+a-1]
+def chamberBaseWord (a b c : ℕ) : List ℕ := baseWord a b c
+def chamberPhysicalWord (a b c d : ℕ) : List ℕ := physicalWord a b c d
+
+theorem chamberLabels_mem (len off mask i : ℕ) :
+    i ∈ chamberLabels len off mask ↔
+      ∃ e < len, mask.testBit e = true ∧ off+e=i := by
+  exact labels_mem len off mask i
+
+theorem chamberLabels_nodup (len off mask : ℕ) :
+    (chamberLabels len off mask).Nodup := by
+  exact labels_nodup len off mask
 
 end D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
