@@ -8,6 +8,7 @@
 
 import Mathlib.Combinatorics.Enumerative.Partition.Basic
 import Mathlib.Algebra.GCDMonoid.FinsetLemmas
+import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
 import Mathlib.Data.Rat.Cast.Order
 import Mathlib.Tactic.Linarith
 
@@ -76,7 +77,114 @@ private theorem total_weight (s : ℕ) {n : ℕ} (p : Nat.Partition n) :
 private theorem degree_le_from_one_count (s : ℕ) {n : ℕ} (p : Nat.Partition n)
     (hs : 1 ≤ s) :
     degree s p ≤ ((n : ℚ) ^ s + (p.parts.count 1 : ℚ) ^ s) / 2 := by
-  sorry
+  let T := Fin s → p.parts.toFinset
+  let one : T → Prop := fun t => ∀ j, (t j : ℕ) = 1
+  let w : T → ℚ := fun t => ∏ j, ((t j : ℕ) * p.parts.count (t j : ℕ) : ℚ)
+  let l : T → ℕ := fun t =>
+    Finset.lcm (Finset.univ.image (fun j => (t j : ℕ))) id
+  have hne : (Finset.univ : Finset (Fin s)).Nonempty := by
+    exact ⟨⟨0, Nat.lt_of_lt_of_le Nat.zero_lt_one hs⟩, by simp⟩
+  have hlpos (t : T) : 0 < l t := by
+    have hzero : ∀ a ∈ Finset.univ.image (fun j => (t j : ℕ)), a ≠ 0 := by
+      intro a ha
+      rcases Finset.mem_image.mp ha with ⟨j, -, rfl⟩
+      exact (p.parts_pos (Multiset.mem_toFinset.mp (t j).property)).ne'
+    have hlzero : l t ≠ 0 := by
+      intro hz
+      obtain ⟨a, ha, ha0⟩ := Finset.lcm_eq_zero_iff.mp hz
+      exact hzero a ha ha0
+    exact Nat.pos_of_ne_zero hlzero
+  have hpoint (t : T) :
+      w t / (l t : ℚ) ≤ if one t then w t else w t / 2 := by
+    by_cases ht : one t
+    · have hconst : (fun j => (t j : ℕ)) = (fun _ : Fin s => 1) := by
+        funext j
+        exact ht j
+      have hlone : l t = 1 := by
+        dsimp [l]
+        rw [hconst, Finset.image_const hne]
+        simp
+      simp [ht, hlone]
+    · have hsome : ∃ j, (t j : ℕ) ≠ 1 := by
+        by_contra h
+        apply ht
+        intro j
+        by_contra hj
+        exact h ⟨j, hj⟩
+      obtain ⟨j, hj⟩ := hsome
+      have hjge : 2 ≤ (t j : ℕ) := by
+        have hjpos := p.parts_pos (Multiset.mem_toFinset.mp (t j).property)
+        omega
+      have hjmem : (t j : ℕ) ∈ Finset.univ.image (fun j => (t j : ℕ)) := by
+        exact Finset.mem_image.mpr ⟨j, by simp, rfl⟩
+      have hjdvd : (t j : ℕ) ∣ l t := Finset.dvd_lcm hjmem
+      have hlge : 2 ≤ l t := hjge.trans (Nat.le_of_dvd (hlpos t) hjdvd)
+      have hlgeQ : (2 : ℚ) ≤ (l t : ℚ) := by exact_mod_cast hlge
+      have hw : 0 ≤ w t := by
+        dsimp [w]
+        apply Finset.prod_nonneg
+        intro k _
+        positivity
+      simp [ht]
+      exact div_le_div_of_nonneg_left hw (by norm_num) hlgeQ
+  have hpoint_sum :
+      degree s p ≤ ∑ t : T, if one t then w t else w t / 2 := by
+    change (∑ t : T, w t / (l t : ℚ)) ≤ _
+    exact Finset.sum_le_sum fun t _ => hpoint t
+  have hone :
+      (∑ t ∈ (Finset.univ : Finset T).filter one, w t) =
+        (p.parts.count 1 : ℚ) ^ s := by
+    by_cases h1 : 1 ∈ p.parts
+    · let u : T := fun _ => ⟨1, Multiset.mem_toFinset.mpr h1⟩
+      have hfilter : (Finset.univ : Finset T).filter one = {u} := by
+        ext t
+        simp only [mem_filter, mem_univ, mem_singleton, one]
+        constructor
+        · intro ht
+          apply funext
+          intro j
+          apply Subtype.ext
+          exact ht.2 j
+        · intro ht
+          subst t
+          exact ⟨by simp, by intro j; rfl⟩
+      rw [hfilter]
+      simp [w, u]
+    · have hfilter : (Finset.univ : Finset T).filter one = ∅ := by
+        apply Finset.filter_eq_empty_iff.mpr
+        intro t _
+        intro htone
+        have hj0 : Fin s := ⟨0, Nat.lt_of_lt_of_le Nat.zero_lt_one hs⟩
+        have hmem : (t hj0 : ℕ) ∈ p.parts :=
+          Multiset.mem_toFinset.mp (t hj0).property
+        have hone : (1 : ℕ) ∈ p.parts := by
+          rw [← htone hj0]
+          exact hmem
+        exact h1 hone
+      rw [hfilter]
+      simp [Multiset.count_eq_zero.mpr h1, Nat.ne_of_gt hs]
+  have htotal : (∑ t : T, w t) = (n : ℚ) ^ s := by
+    simpa [T, w] using total_weight s p
+  have hnot :
+      (∑ t ∈ (Finset.univ : Finset T).filter one, w t) +
+          ∑ t ∈ (Finset.univ : Finset T).filter (fun t => ¬one t), w t =
+        ∑ t : T, w t := by
+    exact Finset.sum_filter_add_sum_filter_not _ _ _
+  have hnot' :
+      (∑ t ∈ (Finset.univ : Finset T).filter (fun t => ¬one t), w t) =
+        (n : ℚ) ^ s - (p.parts.count 1 : ℚ) ^ s := by
+    linarith [hnot, htotal, hone]
+  calc
+    degree s p ≤ ∑ t : T, if one t then w t else w t / 2 := hpoint_sum
+    _ = (p.parts.count 1 : ℚ) ^ s +
+          (∑ t ∈ (Finset.univ : Finset T).filter (fun t => ¬one t), w t) / 2 := by
+      rw [Finset.sum_ite, hone]
+      congr 1
+      simp_rw [div_eq_mul_inv]
+      rw [Finset.sum_mul]
+    _ = ((n : ℚ) ^ s + (p.parts.count 1 : ℚ) ^ s) / 2 := by
+      rw [hnot']
+      linarith
 
 private theorem identity_degree (s n : ℕ) (hn : 2 ≤ n) (hs : 1 ≤ s) :
     degree s (identityClass n) = (n : ℚ) ^ s := by
