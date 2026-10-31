@@ -29,7 +29,7 @@ def arena : Arena where
 private theorem rejected_fails : ¬ arena.Law rejected := by
   intro h
   have hh := h (r := 0) le_rfl (by norm_num)
-  norm_num [rejected, realize, gaussianDet_zero, Real.zero_rpow] at hh
+  norm_num [rejected, realize, gaussianDet_zero, Real.rpow_eq_pow, Real.zero_rpow] at hh
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i

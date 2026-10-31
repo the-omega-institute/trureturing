@@ -64,8 +64,8 @@ private lemma traceBilinear_smul_right (u v : H) (c : ℂ) :
 private def traceBilinearCLM (u : H) : H →L[ℂ] ℂ :=
   ({ toFun := traceBilinear u
      map_add' := traceBilinear_add_right u
-     map_smul' := fun c v => traceBilinear_smul_right u v c } : H →ₗ[ℂ] ℂ).
-    mkContinuous ‖u‖ (traceBilinear_bound u)
+     map_smul' := fun c v => traceBilinear_smul_right u v c } : H →ₗ[ℂ] ℂ).mkContinuous
+    ‖u‖ (traceBilinear_bound u)
 
 private lemma traceBilinear_sub_left (u v w : H) :
     traceBilinear (u - v) w = traceBilinear u w - traceBilinear v w := by
@@ -82,8 +82,8 @@ private def traceMomentCLM (u : H) : (H →L[ℂ] H) →L[ℂ] ℂ :=
        exact traceBilinear_add_right u (T u) (S u)
      map_smul' := fun c T => by
        change traceBilinear u (c • T u) = _
-       exact traceBilinear_smul_right u (T u) c } : (H →L[ℂ] H) →ₗ[ℂ] ℂ).
-    mkContinuous (‖u‖ * ‖u‖) (fun T => by
+       exact traceBilinear_smul_right u (T u) c } : (H →L[ℂ] H) →ₗ[ℂ] ℂ).mkContinuous
+    (‖u‖ * ‖u‖) (fun T => by
       calc
         _ ≤ ‖u‖ * ‖T u‖ := traceBilinear_bound u (T u)
         _ ≤ ‖u‖ * (‖T‖ * ‖u‖) :=
@@ -106,10 +106,11 @@ private lemma traceCutoff_basis_expansion (N : ℕ) (r : ℝ) :
   rw [Finset.sum_range]
   apply Finset.sum_congr rfl
   intro j _
-  change lp.single 2 j.val ((j.val + 1 : ℂ) * sourceValue r j.val) =
-    ((j.val + 1 : ℂ) * sourceValue r j.val) • lp.single 2 j.val (1 : ℂ)
+  change (lp.single 2 j.val ((j.val + 1 : ℂ) * sourceValue r j.val) : H) =
+    ((j.val + 1 : ℂ) * sourceValue r j.val) • (lp.single 2 j.val (1 : ℂ) : H)
   simpa only [smul_eq_mul, mul_one] using
-    lp.single_smul 2 j.val ((j.val + 1 : ℂ) * sourceValue r j.val) (1 : ℂ)
+    lp.single_smul (E := fun _ : ℕ => ℂ) 2 j.val
+      ((j.val + 1 : ℂ) * sourceValue r j.val) (1 : ℂ)
 
 private lemma traceCutoff_power_coordinate (N p : ℕ) (r : ℝ) (i : Fin N) :
     ((sectionOp N (Real.sqrt r : ℂ) ^ p) (weightedCutoff N r)) i.val =
@@ -234,14 +235,14 @@ theorem actual_odd_moment_series_eq_signed_inverse_difference {r : ℝ}
     Summable (fun k : ℕ => ‖∑' n : ℕ, weightedSource r hr.le hr1 n *
       ((operator (Real.sqrt r : ℂ) ^ (2 * k + 1)) (weightedSource r hr.le hr1)) n‖) ∧
     Summable (fun n : ℕ => ‖weightedSource r hr.le hr1 n *
-      resolvent (Real.sqrt r : ℂ) (weightedSource r hr.le hr1) n‖) ∧
+      OriginalGaussianResolvent.resolvent (Real.sqrt r : ℂ) (weightedSource r hr.le hr1) n‖) ∧
     Summable (fun n : ℕ => ‖weightedSource r hr.le hr1 n *
       oppositeResolvent (Real.sqrt r : ℂ) (weightedSource r hr.le hr1) n‖) ∧
     (∑' k : ℕ, ∑' n : ℕ, weightedSource r hr.le hr1 n *
       ((operator (Real.sqrt r : ℂ) ^ (2 * k + 1)) (weightedSource r hr.le hr1)) n) =
       (1 / 2 : ℂ) *
         ((∑' n : ℕ, weightedSource r hr.le hr1 n *
-          resolvent (Real.sqrt r : ℂ) (weightedSource r hr.le hr1) n) -
+          OriginalGaussianResolvent.resolvent (Real.sqrt r : ℂ) (weightedSource r hr.le hr1) n) -
          (∑' n : ℕ, weightedSource r hr.le hr1 n *
           oppositeResolvent (Real.sqrt r : ℂ) (weightedSource r hr.le hr1) n)) := by
   have hz := radial_norm_lt_one hr1
@@ -250,7 +251,7 @@ theorem actual_odd_moment_series_eq_signed_inverse_difference {r : ℝ}
       (pow_lt_one₀ (norm_nonneg _) hz (by norm_num : (2 : ℕ) ≠ 0))
   have h := traceOddMoments hT (weightedSource r hr.le hr1)
   exact ⟨h.1, traceBilinear_norm_summable _ _, traceBilinear_norm_summable _ _,
-    by simpa only [traceBilinear, resolvent, oppositeResolvent] using h.2⟩
+    by simpa only [traceBilinear, OriginalGaussianResolvent.resolvent, oppositeResolvent] using h.2⟩
 
 /- A total parameter function makes the open-set derivative-limit API usable.
    On the radial domain it is proved equal to the existing weightedSource. -/
@@ -354,7 +355,7 @@ private lemma traceBilinear_moment_error (T S : H →L[ℂ] H) (u w : H) :
       add_le_add h₁ (norm_sub_le_norm_sub_add_norm_sub _ _ _)
     _ ≤ ‖u - w‖ * (‖T‖ * ‖u‖) +
         (‖w‖ * (‖T‖ * ‖u - w‖) + ‖w‖ * (‖T - S‖ * ‖w‖)) :=
-      add_le_add_left (add_le_add h₂ h₃) _
+      add_le_add le_rfl (add_le_add h₂ h₃)
     _ = _ := by ring
 
 private lemma traceBilinear_moment_uniform {α : Type*} {s : Set α}
@@ -438,7 +439,7 @@ private lemma traceFiniteDerivative_eq (N : ℕ) {t : ℝ} (ht1 : t < 1) :
 private lemma traceFiniteDerivatives_uniform {a R : ℝ} (ha : 0 < a)
     (haR : a < R) (hR1 : R < 1) :
     TendstoUniformlyOn
-      (fun N t => -((1 / (t : ℂ)) * ∑' k : ℕ, finiteTraceMoment N (2 * k + 1) t))
+      (fun N (t : ℝ) => -((1 / (t : ℂ)) * ∑' k : ℕ, finiteTraceMoment N (2 * k + 1) t))
       traceRadialDerivative atTop (Set.Ioo a R) := by
   have hm := traceSignedScalar_uniform ha haR hR1 1 (by norm_num)
   have hp := traceSignedScalar_uniform ha haR hR1 (-1) (by norm_num)
@@ -496,10 +497,10 @@ theorem compact_uniform_scalar_derivatives_and_final_exchange {a R : ℝ}
     let W : ℝ → H := fun t => ∑' n : ℕ,
       lp.single 2 n ((n + 1 : ℂ) * sourceValue t n)
     let G : ℝ → ℂ := fun t => -(1 / (2 * (t : ℂ))) *
-      ((∑' n : ℕ, W t n * resolvent (Real.sqrt t : ℂ) (W t) n) -
+      ((∑' n : ℕ, W t n * OriginalGaussianResolvent.resolvent (Real.sqrt t : ℂ) (W t) n) -
        (∑' n : ℕ, W t n * oppositeResolvent (Real.sqrt t : ℂ) (W t) n))
     TendstoUniformlyOn
-      (fun N t => -((1 / (t : ℂ)) * ∑' k : ℕ, finiteTraceMoment N (2 * k + 1) t))
+      (fun N (t : ℝ) => -((1 / (t : ℂ)) * ∑' k : ℕ, finiteTraceMoment N (2 * k + 1) t))
       G atTop (Set.Ioo a R) ∧
     ∀ t ∈ Set.Ioo a R,
       HasDerivAt (fun s : ℝ => gaussianLogDet (Real.sqrt s : ℂ)) (G t) t := by
@@ -512,9 +513,17 @@ theorem compact_uniform_scalar_derivatives_and_final_exchange {a R : ℝ}
       (Eventually.of_forall (fun N s hs =>
         finiteLog_hasDerivAt_traceMoments N (ha.trans hs.1) (hs.2.trans hR1)))
       (fun s hs => finiteLog_tendsto (radial_norm_lt_one (hs.2.trans hR1))) ht
-  simpa only [traceRadialDerivative, traceLimitSignedScalar, traceBilinear,
-    traceRadialSignedInverse, one_smul, neg_one_smul, resolvent, oppositeResolvent,
-    traceWeightVector] using And.intro hu hd
+  constructor
+  · convert hu using 1
+    funext t
+    simp only [traceRadialDerivative, traceLimitSignedScalar, traceBilinear,
+      traceRadialSignedInverse, one_smul, neg_one_smul,
+      OriginalGaussianResolvent.resolvent, oppositeResolvent, traceWeightVector]
+  · intro t ht
+    convert hd t ht using 1 <;>
+      simp only [traceRadialDerivative, traceLimitSignedScalar, traceBilinear,
+        traceRadialSignedInverse, one_smul, neg_one_smul,
+        OriginalGaussianResolvent.resolvent, oppositeResolvent, traceWeightVector]
 
 /-- The original radial trace-log derivative, in the literal unconjugated
     signed-inverse form on the original infinite carrier. -/
@@ -523,7 +532,7 @@ theorem gaussianLogDet_hasDerivAt_bilinear_resolvent {r : ℝ}
     HasDerivAt (fun t : ℝ => gaussianLogDet (Real.sqrt t : ℂ))
       (-(1 / (2 * (r : ℂ))) *
         ((∑' n : ℕ, weightedSource r hr.le hr1 n *
-          resolvent (Real.sqrt r : ℂ) (weightedSource r hr.le hr1) n) -
+          OriginalGaussianResolvent.resolvent (Real.sqrt r : ℂ) (weightedSource r hr.le hr1) n) -
          (∑' n : ℕ, weightedSource r hr.le hr1 n *
           oppositeResolvent (Real.sqrt r : ℂ) (weightedSource r hr.le hr1) n))) r := by
   have ha : 0 < r / 2 := by linarith
@@ -537,7 +546,7 @@ theorem gaussianLogDet_hasDerivAt_bilinear_resolvent {r : ℝ}
 
 /-- The radial logarithmic derivative of the actual Gaussian closed-cycle
     determinant, consuming the finite-trace exchange and BOTH actual weighted
-    inverse scalars from the current operator and weighted-resolvent owners. -/
+    inverse scalars from the original operator and weighted-resolvent formulas. -/
 theorem gaussianLogDet_hasDerivAt_period {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     HasDerivAt (fun t : ℝ => gaussianLogDet (Real.sqrt t : ℂ))
       ((deriv F r / F r - 1 / (4 * (1 - r)) : ℝ) : ℂ) r := by

@@ -19,9 +19,9 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Topology.Order.DenselyOrdered
 import Mathlib.Tactic
 
-set_option autoImplicit false
-
 /-! Analytic identities for the original signed Gaussian operator and its literal cutoffs. -/
+
+set_option autoImplicit false
 
 set_option backward.isDefEq.respectTransparency false
 
@@ -101,9 +101,8 @@ private lemma realLogPeriod_hasDerivAt {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
   have hd : HasDerivAt
       (fun t : ℝ => Real.log (F t) + (1 / 4 : ℝ) * Real.log (1 - t))
       (deriv F r / F r - 1 / (4 * (1 - r))) r := by
-    convert h₁.add h₂ using 1
-    field_simp [hb, hF]
-    <;> ring
+    convert h₁.fun_add h₂ using 1 <;>
+      first | rfl | (simp only [id_eq]; field_simp [hb, hF] <;> ring)
   exact hd.ofReal_comp
 
 private lemma radialLog_continuousOn :
@@ -137,7 +136,7 @@ theorem gaussianLogDet_real_normalization {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1)
   have hd : ∀ t ∈ Ioo (0 : ℝ) 1, HasDerivAt Δ 0 t := by
     intro t ht
     simpa only [Δ, sub_self] using
-      (OriginalGaussianTraceBilinear.gaussianLogDet_hasDerivAt_period ht.1 ht.2).sub
+      (OriginalGaussianTraceBilinear.gaussianLogDet_hasDerivAt_period ht.1 ht.2).fun_sub
         (realLogPeriod_hasDerivAt ht.1 ht.2)
   have hc : ContinuousOn Δ (Ico (0 : ℝ) 1) :=
     radialLog_continuousOn.sub realLogPeriod_continuousOn
@@ -167,12 +166,12 @@ theorem gaussianDet_real_period_identity {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) 
   by_cases hr0 : r = 0
   · subst r
     simp only [Real.sqrt_zero, Complex.ofReal_zero, gaussianDet_zero, sub_zero,
-      Real.one_rpow, F_zero, mul_one, Complex.ofReal_one]
+      Real.rpow_eq_pow, Real.one_rpow, F_zero, mul_one, Complex.ofReal_one]
   have hb : 0 < (1 : ℝ) - r := by linarith
   have hF : 0 < F r := lt_of_lt_of_le zero_lt_one (F_ge_one hr hr1)
   rw [gaussianDet, gaussianLogDet_real_normalization hr hr1, ← Complex.ofReal_exp]
   congr 1
-  rw [Real.exp_add, Real.exp_log hF, Real.rpow_def_of_pos hb]
+  rw [Real.exp_add, Real.exp_log hF, Real.rpow_eq_pow, Real.rpow_def_of_pos hb]
   rw [mul_comm (1 / 4 : ℝ) (Real.log (1 - r)), mul_comm (F r)]
 
 private lemma norm_sq_lt_one {z : ℂ} (hz : ‖z‖ < 1) : ‖z ^ 2‖ < 1 := by
@@ -217,7 +216,7 @@ private lemma periodProduct_real {t : ℝ} (ht : 0 < t) (ht1 : t < 1) :
       show (1 / 4 : ℂ) = ((1 / 4 : ℝ) : ℂ) by norm_num,
       ← Complex.ofReal_mul, ← Complex.ofReal_exp]
     congr 1
-    rw [Real.rpow_def_of_pos hb, mul_comm]
+    rw [Real.rpow_eq_pow, Real.rpow_def_of_pos hb, mul_comm]
   calc
     gaussianDet (t : ℂ) = ((Real.rpow (1 - t ^ 2) (1 / 4 : ℝ) * F (t ^ 2) : ℝ) : ℂ) := by
       simpa only [hs] using gaussianDet_real_period_identity (sq_nonneg t) hr1
