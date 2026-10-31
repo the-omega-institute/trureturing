@@ -99,8 +99,8 @@ private theorem resolvent_evenMoment_upper {a h s : ℝ} (ha0 : 0 ≤ a) (ha1 : 
     linarith
   have hid : (1 / q) ^ 2 - 2 * (4 * s * a / R) * (1 / q) - h / R =
       4 * s * (2 * q * (1 - a) - h * (1 + s)) / (R * q ^ 2) := by
+    field_simp [ne_of_gt hq, ne_of_gt hR]
     dsimp [R, q]
-    field_simp
     ring
   have hp : 0 ≤ (1 / q) ^ 2 - 2 * (4 * s * a / R) * (1 / q) - h / R := by
     rw [hid]
@@ -138,7 +138,7 @@ private theorem semidisk_integrable {a t : ℝ} (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
 
 /-- The section-20 matrix integral coefficient of the two actual control blocks. -/
 def resolventCoefficient (a t : ℝ) (j : ℕ) : ℝ :=
-  (1 / (j : ℝ)) * ∫ s in Ioi (0 : ℝ), moment a t j s
+  (1 / (j : ℝ)) * ∫ s in Ioi (0 : ℝ), complexMoment a t j s
 
 /-- The section-20 funding coefficient in the pure-Y family. The last two summands
 are respectively the local coefficient and the marginal coefficient. -/
@@ -146,5 +146,126 @@ def fundingCoefficient (a t : ℝ) (j : ℕ) : ℝ :=
   resolventCoefficient a t j +
     (1 - a ^ (2 * j)) / (2 * (j : ℝ) * (2 * (j : ℝ) - 1)) -
     1 / (2 * (j : ℝ) * (2 * (j : ℝ) - 1))
+
+private theorem reference_integral (a : ℝ) (j : ℕ) (hj : 1 ≤ j) :
+    IntegrableOn (fun s : ℝ => a ^ (2 * j) / (1 + 2 * s) ^ (2 * j)) (Ioi 0) ∧
+      (∫ s in Ioi (0 : ℝ), a ^ (2 * j) / (1 + 2 * s) ^ (2 * j)) =
+        a ^ (2 * j) / (2 * (2 * (j : ℝ) - 1)) := by
+  have he : (fun s : ℝ => a ^ (2 * j) / (1 + 2 * s) ^ (2 * j)) =
+      (fun s : ℝ => a ^ (2 * j) * (1 / (1 + 2 * s) ^ (2 * j))) := by
+    funext s
+    ring
+  rw [he]
+  obtain ⟨hi, hv⟩ := baseline_integral j hj
+  exact ⟨hi.const_mul _, by rw [integral_const_mul, hv]; ring⟩
+
+private theorem semidisk_funding {a t : ℝ} (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
+    (ht : t ^ 2 ≤ 1 - a ^ 2) (j : ℕ) (hj : 1 ≤ j) :
+    IntegrableOn (complexMoment a t j) (Ioi 0) ∧ 0 ≤ fundingCoefficient a t j ∧
+      (0 < h a t → 0 < fundingCoefficient a t j) ∧
+      (h a t = 0 → fundingCoefficient a t j = 0) := by
+  have hiR := semidisk_integrable ha0 ha1 ht j hj
+  have hi := hiR.congr_fun
+    (fun s hs => (complex_moment_eq_real ha0 ha1 ht hs j).symm) measurableSet_Ioi
+  obtain ⟨hb, hv⟩ := reference_integral a j hj
+  have hjpos : 0 < (j : ℝ) := by exact_mod_cast (show 0 < j by omega)
+  have hf : fundingCoefficient a t j =
+      (1 / (j : ℝ)) *
+        ((∫ s in Ioi (0 : ℝ), complexMoment a t j s) -
+          a ^ (2 * j) / (2 * (2 * (j : ℝ) - 1))) := by
+    unfold fundingCoefficient resolventCoefficient
+    simp only [div_eq_mul_inv, mul_inv_rev]
+    ring
+  have hmono : a ^ (2 * j) / (2 * (2 * (j : ℝ) - 1)) ≤
+      ∫ s in Ioi (0 : ℝ), complexMoment a t j s := by
+    rw [← hv]
+    exact setIntegral_mono_on hb hi measurableSet_Ioi
+      (fun s hs => (moment_comparison ha0 ha1 ht hs j).trans_eq
+        (complex_moment_eq_real ha0 ha1 ht hs j).symm)
+  refine ⟨hi, ?_, ?_, ?_⟩
+  · rw [hf]
+    exact mul_nonneg (by positivity) (sub_nonneg.mpr hmono)
+  · intro hh
+    have hstrict := strict_integral_of_strict_on hi hb
+      (fun s hs => (moment_strict ha0 ha1 ht hh hs j hj).trans_eq
+        (complex_moment_eq_real ha0 ha1 ht hs j).symm)
+    rw [hv] at hstrict
+    rw [hf]
+    exact mul_pos (by positivity) (sub_pos.mpr hstrict)
+  · intro hh
+    have heq : (∫ s in Ioi (0 : ℝ), complexMoment a t j s) =
+        a ^ (2 * j) / (2 * (2 * (j : ℝ) - 1)) := by
+      rw [← hv]
+      exact setIntegral_congr_fun measurableSet_Ioi
+        (fun s hs => (complex_moment_eq_real ha0 ha1 ht hs j).trans
+          (moment_boundary ha0 ha1 ht hh hs j hj))
+    rw [hf, heq, sub_self, mul_zero]
+
+/-- Every actual pure-Y source has nonnegative funding coefficients at every positive
+order. Strictness and equality retain the complete bias and partner-axis boundary. -/
+theorem pure_y_axis_funding (a y X Y Z : ℝ) (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
+    (hy : y ^ 2 = 1) (hD : X ^ 2 + Y ^ 2 + Z ^ 2 = 1) (j : ℕ) (hj : 1 ≤ j) :
+    let t := (-y * Y) * Real.sqrt (1 - a ^ 2)
+    IntegrableOn (complexMoment a t j) (Ioi 0) ∧ 0 ≤ fundingCoefficient a t j ∧
+      (0 < fundingCoefficient a t j ↔ a < 1 ∧ |Y| < 1) ∧
+      (fundingCoefficient a t j = 0 ↔ a = 1 ∨ |Y| = 1) := by
+  let t := (-y * Y) * Real.sqrt (1 - a ^ 2)
+  have hu : 0 ≤ 1 - a ^ 2 := sub_nonneg.mpr ((sq_le_one_iff₀ ha0).mpr ha1)
+  have hY2 : Y ^ 2 ≤ 1 := by nlinarith [sq_nonneg X, sq_nonneg Z]
+  have hYa : |Y| ≤ 1 := (sq_le_one_iff_abs_le_one Y).mp hY2
+  have ht2 : t ^ 2 = Y ^ 2 * (1 - a ^ 2) := by
+    dsimp [t]
+    simp only [mul_pow, neg_sq, hy, one_mul, Real.sq_sqrt hu]
+  have ht : t ^ 2 ≤ 1 - a ^ 2 := by
+    rw [ht2]
+    nlinarith [mul_nonneg (sub_nonneg.mpr hY2) hu]
+  have hh : h a t = (1 - a ^ 2) * (1 - Y ^ 2) := by
+    unfold h
+    rw [ht2]
+    ring
+  obtain ⟨hi, hn, hp, hz⟩ := semidisk_funding ha0 ha1 ht j hj
+  change IntegrableOn (complexMoment a t j) (Ioi 0) ∧ _
+  refine ⟨hi, hn, ?_, ?_⟩
+  · constructor
+    · intro hd
+      constructor
+      · by_contra hn'
+        have ha : a = 1 := by linarith
+        have hb : h a t = 0 := by rw [hh, ha]; norm_num
+        rw [hz hb] at hd
+        exact (lt_irrefl (0 : ℝ)) hd
+      · by_contra hn'
+        have hY : |Y| = 1 := by linarith
+        have hY' : Y ^ 2 = 1 := by rw [← sq_abs, hY]; norm_num
+        have hb : h a t = 0 := by rw [hh, hY']; ring
+        rw [hz hb] at hd
+        exact (lt_irrefl (0 : ℝ)) hd
+    · rintro ⟨ha, hY⟩
+      apply hp
+      rw [hh]
+      exact mul_pos (sub_pos.mpr ((sq_lt_one_iff₀ ha0).mpr ha))
+        (sub_pos.mpr ((sq_lt_one_iff_abs_lt_one Y).mpr hY))
+  · constructor
+    · intro hd
+      by_contra hn'
+      have ha : a < 1 := lt_of_le_of_ne ha1 (by tauto)
+      have hY : |Y| < 1 := lt_of_le_of_ne hYa (by tauto)
+      have hb : 0 < h a t := by
+        rw [hh]
+        exact mul_pos (sub_pos.mpr ((sq_lt_one_iff₀ ha0).mpr ha))
+          (sub_pos.mpr ((sq_lt_one_iff_abs_lt_one Y).mpr hY))
+      have hd' := hp hb
+      rw [hd] at hd'
+      exact (lt_irrefl (0 : ℝ)) hd'
+    · rintro (ha | hY)
+      · apply hz
+        rw [hh, ha]
+        norm_num
+      · apply hz
+        have hY' : Y ^ 2 = 1 := by rw [← sq_abs, hY]; norm_num
+        rw [hh, hY']
+        ring
+
+#print axioms pure_y_axis_funding
 
 end D5.S3.Quantum.Matrix.PauliFunding
