@@ -37,7 +37,8 @@ internal sealed class ReflectionDiagonalParityCountingDocument : IScribeDocument
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For each update, record the new target vector before continuing with the updated wire labels. The empty update list has no outputs. "
-                    + "The list retains repeated vectors and has one entry per update; it does not include the initial vectors."))),
+                    + "The list retains repeated vectors and has one entry per update; it does not include the initial vectors. "
+                    + "A right fold constructs the function of the current label array: each step prepends its target output and passes the updated array to the remaining steps."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("count-bound"), DeclarationHandle.Create(Prefix + "count_bound"),

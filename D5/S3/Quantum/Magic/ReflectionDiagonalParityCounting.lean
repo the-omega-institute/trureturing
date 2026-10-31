@@ -25,27 +25,26 @@ def update {m : ℕ} (ls : Fin m → Fin m → Bool) (p : Fin m × Fin m) :
 def labels {m : ℕ} (gs : List (Fin m × Fin m)) (ls : Fin m → Fin m → Bool) :
     Fin m → Fin m → Bool := gs.foldl update ls
 
-def outputs {m : ℕ} : List (Fin m × Fin m) → (Fin m → Fin m → Bool) → List (Fin m → Bool)
-  | [], _ => []
-  | p :: gs, ls => (ls p.1 + ls p.2) :: outputs gs (update ls p)
+noncomputable def outputs {m : ℕ} :
+    List (Fin m × Fin m) → (Fin m → Fin m → Bool) → List (Fin m → Bool) :=
+  List.foldr (fun p next ls => (ls p.1 + ls p.2) :: next (update ls p)) (fun _ => [])
 
 private def evenOutputs {m : ℕ} (gs : List (Fin m × Fin m))
     (ls : Fin m → Fin m → Bool) : List (Fin m → Bool) :=
   (outputs gs ls).filter (fun v => decide (parity v = false))
 
-private def births {m : ℕ} : List (Fin m × Fin m) →
-    (Fin m → Fin m → Bool) → List (Fin m → Bool)
-  | [], _ => []
-  | p :: gs, ls =>
+private noncomputable def births {m : ℕ} (gs : List (Fin m × Fin m)) :
+    (Fin m → Fin m → Bool) → List (Fin m → Bool) :=
+  gs.foldr (fun p next ls =>
     if parity (ls p.1) = true ∧ parity (ls p.2) = true then
-      (ls p.1 + ls p.2) :: births gs (update ls p)
-    else births gs (update ls p)
+      (ls p.1 + ls p.2) :: next (update ls p)
+    else next (update ls p)) (fun _ => [])
 
-private def returns {m : ℕ} : List (Fin m × Fin m) → (Fin m → Fin m → Bool) → ℕ
-  | [], _ => 0
-  | p :: gs, ls =>
+private noncomputable def returns {m : ℕ} (gs : List (Fin m × Fin m)) :
+    (Fin m → Fin m → Bool) → ℕ :=
+  gs.foldr (fun p next ls =>
     (if parity (ls p.1) = false ∧ parity (ls p.2) = true then 1 else 0) +
-      returns gs (update ls p)
+      next (update ls p)) (fun _ => 0)
 
 private def evenWires {m : ℕ} (ls : Fin m → Fin m → Bool) : ℕ :=
   ∑ j, if parity (ls j) = false then 1 else 0
@@ -84,23 +83,25 @@ private lemma even_card (m : ℕ) (hm : 0 < m) :
   have hc := Fintype.card_congr (Equiv.ofBijective f hf)
   simpa [Fintype.card_subtype, Fintype.card_fun] using hc.symm
 
-private def listSpan {m : ℕ} : List (Fin m → Bool) → Finset (Fin m → Bool)
-  | [] => {0}
-  | v :: vs => listSpan vs ∪ (listSpan vs).image (fun w => v + w)
+private noncomputable def listSpan {m : ℕ} (vs : List (Fin m → Bool)) :
+    Finset (Fin m → Bool) :=
+  vs.foldr (fun v s => s ∪ s.image (fun w => v + w)) {0}
 
 private lemma span_zero {m : ℕ} (vs : List (Fin m → Bool)) : 0 ∈ listSpan vs := by
   induction vs with
-  | nil => simp [listSpan.eq_1, listSpan.eq_2]
+  | nil => simp [listSpan]
   | cons v vs ih => exact Finset.mem_union_left _ ih
 
 private lemma span_add {m : ℕ} (vs : List (Fin m → Bool)) :
     ∀ a ∈ listSpan vs, ∀ b ∈ listSpan vs, a + b ∈ listSpan vs := by
   classical
   induction vs with
-  | nil => simp [listSpan.eq_1, listSpan.eq_2]
+  | nil => simp [listSpan]
   | cons v vs ih =>
     intro a ha b hb
-    rw [listSpan.eq_def] at ha hb ⊢
+    change a ∈ listSpan vs ∪ (listSpan vs).image (fun w => v + w) at ha
+    change b ∈ listSpan vs ∪ (listSpan vs).image (fun w => v + w) at hb
+    change a + b ∈ listSpan vs ∪ (listSpan vs).image (fun w => v + w)
     rcases Finset.mem_union.mp ha with ha | ha <;>
       rcases Finset.mem_union.mp hb with hb | hb
     · exact Finset.mem_union_left _ (ih a ha b hb)
@@ -109,7 +110,7 @@ private lemma span_add {m : ℕ} (vs : List (Fin m → Bool)) :
       apply Finset.mem_union_right
       apply Finset.mem_image.mpr
       refine ⟨a + b1, ih a ha b1 hb1, ?_⟩
-      simp only [add_assoc, add_left_comm]
+      simp only [add_left_comm]
     · obtain ⟨a1, ha1, haeq⟩ := Finset.mem_image.mp ha
       subst a
       apply Finset.mem_union_right
@@ -140,11 +141,11 @@ private lemma span_card {m : ℕ} (vs : List (Fin m → Bool)) :
     (listSpan vs).card ≤ 2 ^ vs.length := by
   classical
   induction vs with
-  | nil => simp [listSpan.eq_1, listSpan.eq_2]
+  | nil => simp [listSpan]
   | cons v vs ih =>
     have hc := Finset.card_union_le (listSpan vs) ((listSpan vs).image (fun w => v + w))
     have hi := Finset.card_image_le (s := listSpan vs) (f := fun w => v + w)
-    rw [listSpan.eq_2]
+    change (listSpan vs ∪ (listSpan vs).image (fun w => v + w)).card ≤ _
     rw [List.length_cons, pow_succ]
     omega
 
@@ -179,7 +180,7 @@ private lemma span_outputs {m : ℕ} (gs : List (Fin m × Fin m))
     ∀ v ∈ outputs gs ls, parity v = false → v ∈ s := by
   classical
   induction gs generalizing ls with
-  | nil => simp [outputs.eq_1, outputs.eq_2]
+  | nil => simp [outputs]
   | cons p gs ih =>
     have hout : parity (ls p.1 + ls p.2) = false → ls p.1 + ls p.2 ∈ s := by
       intro he
@@ -189,7 +190,7 @@ private lemma span_outputs {m : ℕ} (gs : List (Fin m × Fin m))
       · simp [ht, hc, Bool.add_eq_xor] at he
       · simp [ht, hc, Bool.add_eq_xor] at he
       · apply hb
-        simp [births.eq_1, births.eq_2, ht, hc]
+        simp [births, ht, hc]
     have hnext : ∀ j, parity (update ls p j) = false → update ls p j ∈ s := by
       intro j he
       by_cases hj : j = p.1
@@ -201,9 +202,13 @@ private lemma span_outputs {m : ℕ} (gs : List (Fin m × Fin m))
     have hbt : ∀ v ∈ births gs (update ls p), v ∈ s := by
       intro v hv
       apply hb
-      rw [births.eq_def]
-      by_cases hh : parity (ls p.1) = true ∧ parity (ls p.2) = true <;>
-        simp [births.eq_1, births.eq_2, hh, hv]
+      change v ∈ (if parity (ls p.1) = true ∧ parity (ls p.2) = true then
+        (ls p.1 + ls p.2) :: births gs (update ls p) else births gs (update ls p))
+      by_cases hh : parity (ls p.1) = true ∧ parity (ls p.2) = true
+      · rw [if_pos hh]
+        exact List.mem_cons_of_mem _ hv
+      · rw [if_neg hh]
+        exact hv
     intro v hv he
     rcases List.mem_cons.mp hv with rfl | hv
     · exact hout he
@@ -246,17 +251,16 @@ private lemma wire_update_count {m : ℕ} (ls : Fin m → Fin m → Bool) (p : F
     ← Finset.sum_erase_add _ _ (Finset.mem_univ p.1), hrest]
   simp only [update.eq_1, Function.update_self, parity_add]
   cases ht : parity (ls p.1) <;> cases hc : parity (ls p.2) <;>
-    simp [ht, hc, Bool.add_eq_xor]
+    simp_all [Bool.add_eq_xor]
 
 private lemma return_balance {m : ℕ} (gs : List (Fin m × Fin m))
     (ls : Fin m → Fin m → Bool) :
     evenWires (labels gs ls) + returns gs ls = evenWires ls + (births gs ls).length := by
   induction gs generalizing ls with
-  | nil => simp [labels.eq_1, returns.eq_1, returns.eq_2, births.eq_1, births.eq_2]
+  | nil => simp [labels.eq_1, returns, births]
   | cons p gs ih =>
     have hi := ih (update ls p)
     have hs := wire_update_count ls p
-    rw [returns.eq_def]
     change evenWires (labels gs (update ls p)) +
       ((if _ then 1 else 0) + returns gs (update ls p)) =
       evenWires ls + (if _ then _ :: births gs (update ls p) else births gs (update ls p)).length
@@ -268,11 +272,11 @@ private lemma disjoint_counts {m : ℕ} (gs : List (Fin m × Fin m))
     (ls : Fin m → Fin m → Bool) :
     (evenOutputs gs ls).length + returns gs ls ≤ gs.length := by
   induction gs generalizing ls with
-  | nil => simp [evenOutputs, outputs.eq_1, returns.eq_1]
+  | nil => simp [evenOutputs, outputs, returns]
   | cons p gs ih =>
     have hi := ih (update ls p)
     cases ht : parity (ls p.1) <;> cases hc : parity (ls p.2) <;>
-      simp [evenOutputs, outputs.eq_2, returns.eq_2, parity_add,
+      simp [evenOutputs, outputs, returns, parity_add,
         ht, hc, Bool.add_eq_xor] at hi ⊢ <;> omega
 
 theorem count_bound {m : ℕ} (hm : 0 < m) (gs : List (Fin m × Fin m))
