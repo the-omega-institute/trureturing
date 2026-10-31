@@ -76,7 +76,8 @@ public sealed class LibraryDocumentCapacityTests
         var diagnostics = RuleCatalog.Default.EvaluateDeltaSingle(CapacityRule, fixture.Build(
             RawChangeSet.CreateWithKinds([(path, RawChangeKind.Added)]))).Diagnostics;
 
-        Assert.Equal(rejected, diagnostics.Any());
+        Assert.Equal(rejected, diagnostics.Any(diagnostic =>
+            diagnostic.Message.StartsWith("library document spans ", StringComparison.Ordinal)));
     }
 
     [Theory]

@@ -157,7 +157,7 @@ public sealed class ArtifactDeltaCapacityTests
     [InlineData(RawChangeKind.Copied)]
     public void RenameAndCopyDestinationsAreNewArtifacts(RawChangeKind sourceKind)
     {
-        const string source = "docs/develop/old.md";
+        const string source = "agents/old.md";
         var fixture = Fixture();
         fixture.Baseline[source] = Lines(1001);
         if (sourceKind == RawChangeKind.Copied)
