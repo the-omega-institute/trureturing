@@ -6,6 +6,9 @@
    utility: none
    digest: Labelled dyadic reserve banks retain empty middle banks and the exact first-bank cardinality. -/
 import D5.S3.Combinatorics.Circle.FourNegative.Descending.Arithmetic
+import Mathlib.Algebra.Order.Interval.Finset.Basic
+
+/-! Physical reserve banks, exact masses and the literal first-bank length. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -19,6 +22,15 @@ private def shift (s : ℕ) (P : Finset ℕ) : Finset ℕ := P.image (s+·)
 
 private theorem mem_shift (s i : ℕ) (P : Finset ℕ) :
     i ∈ shift s P ↔ ∃ j ∈ P, s+j=i := by simp [shift]
+
+private theorem image_Ico (s l n : ℕ) :
+    (Finset.Ico l n).image (s+·) = Finset.Ico (s+l) (s+n) := by
+  exact Finset.image_add_left_Ico l n s
+
+private theorem image_range (s n : ℕ) :
+    (Finset.range n).image (s+·) = Finset.Ico s (s+n) := by
+  simpa only [Finset.range_eq_Ico, Nat.add_zero] using
+    Finset.image_add_left_Ico 0 n s
 
 private def selected (a b c d : ℕ) : Fin 3 → Finset ℕ :=
   let H := a-d-2
@@ -48,6 +60,20 @@ private theorem selected_good (a b c d : ℕ)
         Matrix.cons_val_two,mem_shift,Finset.mem_union,Finset.mem_singleton,
         Finset.mem_Ico,Finset.mem_range] at hi hj <;> simp_all <;> omega
 
+private theorem remainder_eq (a b c d : ℕ)
+    (hd : 2 ≤ d) (hdc : d < c) (hcb : c ≤ b) (hba : b < a) :
+    Finset.range (a+b+c+d) \ (selected a b c d 0 ∪ selected a b c d 1 ∪
+      selected a b c d 2 ∪ {a+b+c+d-1,d-1,d+c-1,d+c+b-1}) =
+    shift (d+c) (Finset.range (b-1)) ∪
+      shift (d+c+b) (bank a (a-d-2) (a-c-1) (a-b-1) 3) := by
+  ext i
+  simp only [selected,bank,Matrix.cons_val_zero,Matrix.cons_val_one,
+    Matrix.cons_val_two,Matrix.cons_val_three,shift,Finset.image_union,
+    Finset.image_singleton,image_Ico,image_range,Finset.mem_sdiff,
+    Finset.mem_union,Finset.mem_insert,Finset.mem_singleton,Finset.mem_Ico,
+    Finset.mem_range]
+  omega
+
 private theorem first_card (a b c d : ℕ)
     (hd : 2 ≤ d) (hdc : d < c) (hcb : c ≤ b) (hba : b < a) :
     (selected a b c d 0).card = d := by
@@ -55,7 +81,7 @@ private theorem first_card (a b c d : ℕ)
     simp [Finset.disjoint_left]; omega
   simp only [selected,bank,Matrix.cons_val_zero,shift]
   rw [Finset.card_image_of_injective _ (fun _ _ h => Nat.add_left_cancel h),
-    Finset.card_union_of_disjoint hdis,Finset.card_singleton,Finset.card_Ico]
+    Finset.card_union_of_disjoint hdis,Finset.card_singleton,Nat.card_Ico]
   omega
 
 private theorem sum_range_two (n : ℕ) :

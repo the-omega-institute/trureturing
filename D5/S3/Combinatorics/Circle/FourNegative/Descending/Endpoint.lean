@@ -7,6 +7,8 @@
    digest: One actual physical order and the literal cut d throughout the four-independent-gap descending chamber. -/
 import D5.S3.Combinatorics.Circle.FourNegative.Descending.Banks
 
+/-! A common physical permutation and its fresh ear at the literal cut d. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.Descending
@@ -19,7 +21,7 @@ open private label lift_order marked_word
 open private four_perm four_strip
   from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 open private reserve_bounds from D5.S3.Combinatorics.Circle.FourNegative.Descending.Arithmetic
-open private bank shift mem_shift selected selected_good first_card selected_mass
+open private bank shift mem_shift selected selected_good remainder_eq image_range first_card selected_mass
   from D5.S3.Combinatorics.Circle.FourNegative.Descending.Banks
 
 private theorem half_power (n : ℕ) (hn : 1 ≤ n) :
@@ -140,12 +142,17 @@ theorem actualSource_descending_joint_lift (a b c d : ℕ)
   have pos (j : Fin 3) (i : ℕ) (hi : i ∈ (selected a b c d j).toList) : 0 ≤ f i ∧ 0 ≤ g i := by
     have hg := good.1 j i (Finset.mem_toList.mp hi)
     exact allpos i hg.1 hg.2
+  have Gform : G = shift (d+c) (Finset.range (b-1)) ∪
+      shift (d+c+b) (bank a (a-d-2) (a-c-1) (a-b-1) 3) :=
+    remainder_eq a b c d hd hdc hcb hba
   have posG (i : ℕ) (hi : i ∈ G.toList) : 0 ≤ f i ∧ 0 ≤ g i := by
-    have hg := Finset.mem_sdiff.mp (Finset.mem_toList.mp hi)
-    apply allpos i (Finset.mem_range.mp hg.1)
-    have hn := hg.2
-    simp only [Finset.mem_union,Finset.mem_insert,Finset.mem_singleton,not_or] at hn
-    exact hn.2
+    have hg := Finset.mem_toList.mp hi
+    rw [Gform] at hg
+    simp only [bank,Matrix.cons_val_three,shift,image_range,Finset.mem_union,
+      Finset.mem_Ico] at hg
+    rcases hg with hg | hg
+    all_goals apply allpos i
+    all_goals dsimp [k,nx,nu,nv,nw] <;> omega
   have totals := source_totals a b c d (by omega) (by omega) (by omega) hd
   have hfzero : (word.map f).sum = 0 := (hp.map f).sum_eq.trans totals.1
   have hear : g k = A := by simpa [k,size,hbase] using tab.2.2.2

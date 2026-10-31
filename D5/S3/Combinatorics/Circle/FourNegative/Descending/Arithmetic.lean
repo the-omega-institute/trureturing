@@ -8,10 +8,13 @@
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 import D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 
+/-! Uniform reserve inequalities for the entire descending chamber. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.Descending
 
+set_option maxHeartbeats 1800000 in
 private theorem reserve_bounds (x y z t h u v : ℤ)
     (ht : 4 ≤ t) (hz : 2*t ≤ z) (hy : z ≤ y) (hx : 2*y ≤ x)
     (hh : 1 ≤ h) (hu : 1 ≤ u) (hv : 1 ≤ v)
@@ -102,13 +105,18 @@ private theorem reserve_bounds (x y z t h u v : ℤ)
     apply (mul_nonneg_iff_of_pos_left (by omega : 0 < 2*y)).mp
     rw [t2id]
     exact t2rhs
-  have hD : z+2 ≤ D := by dsimp [D]; nlinarith [mul_nonneg (by omega : 0 ≤ y-1) hz0]
-  have huD : D ≤ u*D := by nlinarith [mul_nonneg (by omega : 0 ≤ u-1) (by omega : 0 ≤ D)]
-  have hvD : D ≤ v*D := by nlinarith [mul_nonneg (by omega : 0 ≤ v-1) (by omega : 0 ≤ D)]
+  have hD : z+2 ≤ D := by dsimp [D]; nlinarith only [mul_nonneg (by omega : 0 ≤ y-1) hz0, show 1 ≤ y by omega]
+  have huD : D ≤ u*D := by nlinarith only [mul_nonneg (by omega : 0 ≤ u-1) (by omega : 0 ≤ D)]
+  have hvD : D ≤ v*D := by nlinarith only [mul_nonneg (by omega : 0 ≤ v-1) (by omega : 0 ≤ D)]
   have hhD : 0 ≤ 3*h*D := by positivity
-  have hA : 1 ≤ A := by dsimp [A]; nlinarith [mul_nonneg hx0 (by omega : 0 ≤ D)]
+  have hA : 1 ≤ A := by dsimp [A]; nlinarith only [mul_nonneg hx0 (by omega : 0 ≤ D)]
   refine ⟨s0,s1,s2,t0,t1,t2,?_,?_,?_,?_,?_,?_⟩
   all_goals dsimp [J] at *
-  all_goals nlinarith only [s0,s1,s2,t0,t1,t2,huD,hvD,hhD,hD,hA,hz0]
+  · nlinarith only [s0,hhD]
+  · nlinarith only [s1,huD,hD,hz0]
+  · nlinarith only [s2,hvD,hD]
+  · nlinarith only [t0,hhD,hA]
+  · nlinarith only [t1,huD,hD,hz0]
+  · nlinarith only [t2,hvD,hD,hz0]
 
 end D5.S3.Combinatorics.Circle.FourNegative.Descending
