@@ -7,6 +7,8 @@
    digest: Reflection-symmetric diagonal unitaries require the registered worst-case CNOT count. -/
 
 import Mathlib.Data.Matrix.Basic
+import Mathlib.Algebra.Ring.BooleanRing
+import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Analysis.Complex.Exponential
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Data.Fintype.Order
@@ -46,13 +48,13 @@ def cnotCount {m : ℕ} (circuit : List (gate m)) : ℕ :=
   (circuit.filter (fun g => match g with | Sum.inl _ => true | Sum.inr _ => false)).length
 
 private def dot {m : ℕ} (v x : basis m) : Bool :=
-  decide ((Finset.univ.filter (fun i => v i = true ∧ x i = true)).card % 2 = 1)
+  ∑ i, (v i && x i)
 
 private def character {m : ℕ} (v : basis m) (f : basis m → ℂ) : ℂ :=
   ∏ x : basis m, f x ^ (if dot v x then (-1 : ℤ) else 1)
 
 private def evenLabel {m : ℕ} (v : basis m) : Prop :=
-  (Finset.univ.filter (fun i => v i = true)).card % 2 = 0
+  (∑ i, v i) = false
 
 private def zeroLabel {m : ℕ} : basis m := fun _ => false
 
@@ -129,7 +131,93 @@ private lemma hardTheta_reflection (m : ℕ) (x : basis m) :
 
 private lemma normal_form (m : ℕ) (circuit : List (gate m)) :
     ∃ a : basis m → basis m, Function.Bijective a ∧
-      a = applyLabels (wireLabels circuit) := by sorry
+      a = applyLabels (wireLabels circuit) := by
+  classical
+  let toggle : Fin m → Fin m → basis m → basis m := fun t c x =>
+    Function.update x t (Bool.xor (x t) (x c))
+  have htoggle (t c : Fin m) (h : t ≠ c) :
+      Function.Bijective (toggle t c) := by
+    have hinv (x : basis m) : toggle t c (toggle t c x) = x := by
+      funext j
+      by_cases hj : j = t
+      · subst j
+        have hc : c ≠ t := Ne.symm h
+        simp [toggle, Function.update_apply, hc, Bool.xor_assoc,
+          Bool.xor_left_comm, Bool.xor_comm]
+      · simp [toggle, Function.update_apply, hj]
+    refine ⟨?_, ?_⟩
+    · intro x y hxy
+      have hxy' := congrArg (toggle t c) hxy
+      simpa only [hinv] using hxy'
+    · intro y
+      exact ⟨toggle t c y, hinv y⟩
+  have happly (labels : Fin m → basis m) (t c : Fin m) (h : t ≠ c) :
+      applyLabels (updateLabels labels t c) = toggle t c ∘ applyLabels labels := by
+    have hsum (a b x : basis m) :
+        (∑ i, ((a i ^^ b i) && x i)) =
+          ((∑ i, (a i && x i)) ^^ (∑ i, (b i && x i))) := by
+      classical
+      induction (Finset.univ : Finset (Fin m)) using Finset.induction_on with
+      | empty => rfl
+      | @insert z s hz ih =>
+          rw [Finset.sum_insert hz, Finset.sum_insert hz, Finset.sum_insert hz]
+          rw [Bool.and_xor_distrib_right, ih]
+          simp [Bool.add_eq_xor, Bool.xor_assoc, Bool.xor_left_comm, Bool.xor_comm]
+    funext x j
+    by_cases hj : j = t
+    · subst j
+      simp only [Function.comp_apply, applyLabels, updateLabels, toggle,
+        Function.update_apply, dot]
+      exact hsum (labels t) (labels c) x
+    · simp [applyLabels, updateLabels, toggle, Function.update_apply, hj]
+  have hupdate (labels : Fin m → basis m) (t c : Fin m) (h : t ≠ c)
+      (ha : Function.Bijective (applyLabels labels)) :
+      Function.Bijective (applyLabels (updateLabels labels t c)) := by
+    rw [happly labels t c h]
+    exact (htoggle t c h).comp ha
+  have hlabels : ∀ (gs : List (gate m)) (labels : Fin m → basis m),
+      Function.Bijective (applyLabels labels) →
+      Function.Bijective (applyLabels (gs.foldl (fun ls g =>
+        match g with
+        | Sum.inl p => updateLabels ls p.1.1 p.1.2
+        | Sum.inr _ => ls) labels)) := by
+    intro gs
+    induction gs with
+    | nil =>
+        intro labels ha
+        simpa using ha
+    | cons g gs ih =>
+        intro labels ha
+        cases g with
+        | inl p =>
+            apply ih
+            exact hupdate labels p.1.1 p.1.2 p.2 ha
+        | inr p =>
+            apply ih labels ha
+  have hi : Function.Bijective (applyLabels (initialLabels m)) := by
+    have hselect (j : Fin m) (y : basis m) :
+        (∑ i, (decide (i = j) && y i)) = y j := by
+      rw [Finset.sum_eq_single j]
+      · simp
+      · intro i hi hij
+        have hz : decide (i = j) = false := by simp [hij]
+        simp [hz, Bool.mul_eq_and]
+        rfl
+      · simp
+    refine ⟨?_, ?_⟩
+    · intro x y hxy
+      funext j
+      have hj :
+          (∑ i, (decide (i = j) && x i)) =
+            (∑ i, (decide (i = j) && y i)) := by
+        simpa [applyLabels, initialLabels, initialLabel, dot] using congrFun hxy j
+      exact (hselect j x).symm.trans (hj.trans (hselect j y))
+    · intro y
+      refine ⟨y, ?_⟩
+      funext j
+      exact hselect j y
+  refine ⟨applyLabels (wireLabels circuit), ?_, rfl⟩
+  exact hlabels circuit (initialLabels m) hi
 
 private lemma diagonal_forces_identity (m : ℕ) (circuit : List (gate m)) (c : ℂ)
     (θ : basis m → ℝ)
@@ -171,17 +259,9 @@ private lemma hard_character (m : ℕ) (hm : 0 < m) (v : basis m) (he : evenLabe
     change (if (∀ i, o i = false) ∨ (∀ i, o i = true) then Real.pi / 2 else 0) = _
     rw [if_pos (Or.inr (by intro i; simp [o]))]
   have hzdot : dot v z = false := by
-    simp [dot, z, zeroLabel]
+    simp [dot, z, zeroLabel, Bool.mul_eq_and]
   have hodot : dot v o = false := by
-    unfold dot
-    have hs : Finset.univ.filter (fun i => v i = true ∧ o i = true) =
-        Finset.univ.filter (fun i => v i = true) := by
-      ext i
-      simp [o]
-    rw [hs]
-    have hnot : ¬((Finset.univ.filter (fun i => v i = true)).card % 2 = 1) := by
-      simpa [evenLabel] using he
-    simp [hnot]
+    simpa [dot, o, evenLabel, Bool.mul_eq_and] using he
   have hphase : Complex.exp (((Real.pi / 2 : ℝ) : ℂ) * Complex.I) = Complex.I := by
     rw [Complex.exp_ofReal_mul_I, cos_pi_div_two, sin_pi_div_two]
     simp
