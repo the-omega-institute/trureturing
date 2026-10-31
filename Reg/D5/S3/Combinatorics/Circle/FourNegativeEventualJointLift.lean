@@ -40,7 +40,8 @@ def rejected : Realization signature :=
     | true => fun _ => False) (fun e => nomatch e)
 
 def deleted (side : Bool) : Realization signature :=
-  realize signature (fun j p seed => if j = side then rejected.readout j p seed else actual.readout j p seed)
+  realize signature (fun j p seed =>
+    if j = side then rejected.readout j p seed else actual.readout j p seed)
     (fun e => nomatch e)
 
 abbrev arena : Arena where
@@ -73,17 +74,25 @@ private theorem zero_old : OriginalOrder 15 0 (List.finRange 15) := by
   have hf : actualSource 15 0 = fun _ => (0 : ℤ) := by
     funext i
     fin_cases i <;> norm_num [actualSource, centered, modulus]
-  refine ⟨List.Perm.refl _, ?_, ?_⟩
-  · simp [hf]
-  · intro n; simp [hf, modulus]
+  have hz (xs : List (Fin 15)) : (xs.map (actualSource 15 0)).sum = 0 := by
+    rw [hf]
+    induction xs <;> simp_all
+  refine ⟨List.Perm.refl _, hz _, ?_⟩
+  intro n
+  rw [hz]
+  norm_num [modulus]
 
 private theorem zero_new : OriginalOrder 16 0 (List.finRange 16) := by
   have hf : actualSource 16 0 = fun _ => (0 : ℤ) := by
     funext i
     fin_cases i <;> norm_num [actualSource, centered, modulus]
-  refine ⟨List.Perm.refl _, ?_, ?_⟩
-  · simp [hf]
-  · intro n; simp [hf, modulus]
+  have hz (xs : List (Fin 16)) : (xs.map (actualSource 16 0)).sum = 0 := by
+    rw [hf]
+    induction xs <;> simp_all
+  refine ⟨List.Perm.refl _, hz _, ?_⟩
+  intro n
+  rw [hz]
+  norm_num [modulus]
 
 private theorem bad_old : ¬ OriginalOrder 15 2 (List.finRange 15) := by
   intro h
@@ -126,7 +135,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@_root_.D5.S3.Combinatorics.Circle.FourNegativeEventualJointLift.actualSource_four_negative_eventual_joint_lift)
     (type_of% (realize signature actual.readout actual.anchor)) Nat Unit := {
   unitName := `D5.S3.Combinatorics.Circle.FourNegativeEventualJointLift.actualSource_four_negative_eventual_joint_lift.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Circle.FourNegativeEventualJointLift.source_registration
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.Circle.FourNegativeEventualJointLift.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
