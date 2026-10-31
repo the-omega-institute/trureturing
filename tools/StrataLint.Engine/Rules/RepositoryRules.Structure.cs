@@ -220,8 +220,8 @@ internal static partial class RepositoryRules
     private static ImmutableArray<RuleFinding> Capacity(DeltaRuleContext context) =>
         Capacity(context.Current, context.Baseline, context.Changes);
 
-    internal static ImmutableArray<RuleFinding> Capacity(
-        RepositorySnapshot current, RepositorySnapshot baseline, RawChangeSet changes)
+    internal static ImmutableArray<RuleFinding> ArtifactCapacity(
+        RepositorySnapshot current, RawChangeSet changes)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var change in changes.Entries.Where(static change =>
@@ -237,6 +237,14 @@ internal static partial class RepositoryRules
                     $"artifact spans {lines} lines (hard limit {ArtifactHardLineLimit})"));
         }
 
+        return findings.ToImmutable();
+    }
+
+    internal static ImmutableArray<RuleFinding> Capacity(
+        RepositorySnapshot current, RepositorySnapshot baseline, RawChangeSet changes)
+    {
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        findings.AddRange(ArtifactCapacity(current, changes));
         findings.AddRange(TheoryCapacity(current, changes));
         findings.AddRange(LibraryCapacity(current, changes));
         var directories = CapacityPathsByDirectory(current.Files.Keys);

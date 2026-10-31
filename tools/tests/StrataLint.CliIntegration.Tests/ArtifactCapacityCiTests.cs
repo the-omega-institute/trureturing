@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using StrataLint.Cli;
 
 namespace StrataLint.CliIntegration.Tests;
@@ -13,11 +14,8 @@ public sealed class ArtifactCapacityCiTests
         "README.md",
         "docs/reports/fixture.md",
         "tools/TestSupport/StrataLint.RuleTestSupport/Fixture.cs",
-        "Evidence/D5/fixture.txt",
         "docs/VISION.md",
         "docs/assets/inquiry-cycle.svg",
-        "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
-        "docs/develop/spec/trureturing_engineering_optimization_v1.md",
         "tools/lean-inspector/README.md",
         "tools/scripts/agent/openproblem/README.md",
         "tools/scripts/agent/openproblem/SCREENED-OUT-fixture.md",
@@ -55,6 +53,8 @@ public sealed class ArtifactCapacityCiTests
     [InlineData("Blueprint/D5/S0/Carrier/Fixture.md")]
     [InlineData("Library/notes/fixture.md")]
     [InlineData("docs/develop/theory/fixture.md")]
+    [InlineData("docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md")]
+    [InlineData("docs/develop/spec/trureturing_engineering_optimization_v1.md")]
     public void ProductionCapacityPathKeepsCanonicalExemptions(string path)
     {
         using var fixture = new CiFixture();
@@ -74,7 +74,11 @@ public sealed class ArtifactCapacityCiTests
         var result = fixture.Source();
         Assert.Equal(0, result.ExitCode);
         // The narrow mode must not accidentally execute path policy or full current.
-        Assert.DoesNotContain("SL-015", Encoding.UTF8.GetString(result.StandardOutput), StringComparison.Ordinal);
+        var verdict = Encoding.UTF8.GetString(result.StandardOutput).Split('\n')
+            .Single(line => line.StartsWith("{\"executed\":", StringComparison.Ordinal));
+        using var json = JsonDocument.Parse(verdict);
+        Assert.Equal("SL-003", Assert.Single(json.RootElement.GetProperty("executed").EnumerateArray()).GetString());
+        Assert.Empty(json.RootElement.GetProperty("diagnostics").EnumerateArray());
     }
 
     private sealed class CiFixture : IDisposable

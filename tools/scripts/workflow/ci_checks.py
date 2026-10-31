@@ -105,9 +105,16 @@ def unit_run(name, unit, *, current=None):
 def current_phase(phase, data, plan, base, paths):
     report = os.environ.get("LEAN_REPORT", REPORT)
     if phase == "source":
-        if not plan["hits"]["current"]:
+        if not plan["source"]:
             result(phase, "not-applicable")
             return 0
+        if plan["capacity"]:
+            if not base:
+                raise DetectError("selected artifact capacity requires a readable protected base")
+            capacity = execute("artifact-capacity", ["dotnet", CLI, "check-source",
+                               "--artifact-capacity", "--protected-base", base])
+            if capacity or not plan["hits"]["current"]:
+                return capacity
         if plan["theory"]:
             return current_phase("check-delta", data, plan, base, paths)
         if plan["delta"] and not base:
@@ -196,7 +203,7 @@ class Prerequisite:
 
 
 def current_prerequisite(data, plan, base, paths):
-    if not plan["hits"]["current"]:
+    if not plan["source"]:
         result("source", "not-applicable")
         return Prerequisite(0, "not-applicable", False)
     prepared = prepare_judge(data)
@@ -279,14 +286,14 @@ def local(args, data, revision):
         changed = work / "changed"
         write_paths(changed, paths)
         blocked = False
-        if plan["hits"]["current"]:
+        if plan["source"]:
             def run_current():
                 nonlocal blocked
                 prefix = current_prerequisite(data, plan, base, changed)
                 blocked = not prefix.allowed
-                return current_run(data, plan, base, changed, prefix)
+                return current_run(data, plan, base, changed, prefix) if plan["hits"]["current"] else prefix.code
             code = current_code = with_budget(work / "current-budget", run_current)
-            result("current", "success" if code == 0 else "failure", code, code)
+            result("current" if plan["hits"]["current"] else "source", "success" if code == 0 else "failure", code, code)
             failures.append(code)
         for name, unit in data["units"].items():
             if not plan["hits"][name]:
@@ -381,7 +388,7 @@ def main():
         paths = read_changed(args.changed)
         plan = selection(data, paths, args.purpose)
         base = args.base
-        if not base and plan["delta"]:
+        if not base and (plan["delta"] or plan["capacity"]):
             base = base_commit(Path.cwd(), "HEAD^1") if args.purpose == "pull-request" else os.environ.get("CI_PUSH_BEFORE", "")
         return current_phase(args.phase, data, plan, base, args.changed)
     except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as error:

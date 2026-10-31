@@ -239,6 +239,7 @@ class ContractTests(unittest.TestCase):
         # The real declaration's content/theory/infrastructure mapping is tested above.
         data, _ = contract.load(self.root)
         data["CI_UNITS"] = ["[current]", "unmatched/*", "[probe]", "probes/*"]
+        data["current"]["capacity_paths"] = "unmatched/*\n"
         data["units"] = {"probe": {"project": "", "command": 'bash -c \'exit "$PROBE_EXIT"\'',
                                    "dotnet": False, "lean": "none", "cache-dependency-path": ""}}
         self.put("Meta/ci-units.json", json.dumps(data).encode())

@@ -42,9 +42,9 @@ def load(root):
         if bool(unit["project"].strip()) == bool(unit["command"].strip()):
             raise DetectError(f"set exactly one of project and command: {name}")
     current = data["current"]
-    if not isinstance(current, dict) or set(current) != {"report_paths", "delta_paths", "judge_build_args"}:
+    if not isinstance(current, dict) or set(current) != {"report_paths", "delta_paths", "capacity_paths", "judge_build_args"}:
         raise DetectError("invalid current fields")
-    for key in ("report_paths", "delta_paths"):
+    for key in ("report_paths", "delta_paths", "capacity_paths"):
         if not isinstance(current[key], str):
             raise DetectError(f"invalid current {key}")
         parse("[scope]\n" + current[key])
@@ -70,7 +70,10 @@ def selection(data, paths, purpose):
     theory = hits["current"] and paths is not None and bool(paths) and not report
     delta = hits["current"] and (theory or (purpose == "pull-request" and matches(
         parse("[scope]\n" + data["current"]["delta_paths"]), paths)["scope"]))
+    capacity = purpose == "pull-request" and matches(
+        parse("[scope]\n" + data["current"]["capacity_paths"]), paths)["scope"]
     return {"hits": hits, "report": report, "theory": theory, "delta": delta,
+            "capacity": capacity, "source": hits["current"] or capacity,
             "compiled-audit": report and hits["tests-lean"],
             "fib-regressions": report and hits.get("tests-fib", False),
             "source-evidence": report and hits["tests-declared-template"]}

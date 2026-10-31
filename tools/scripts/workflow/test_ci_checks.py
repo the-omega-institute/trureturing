@@ -208,7 +208,10 @@ class CheckTests(unittest.TestCase):
         result, calls, plan = self.local_spies(paths=("README.md",))
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertFalse(plan["hits"]["current"])
-        self.assertFalse(any("check-source" in call or "check-delta" in call for call in calls))
+        sources = [call for call in calls if "check-source" in call]
+        self.assertEqual(1, len(sources))
+        self.assertIn("--artifact-capacity", sources[0])
+        self.assertFalse(any("check-delta" in call for call in calls))
         result, calls, plan = self.local_spies(paths=("docs/develop/theory/Note.md",), purpose="push")
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertTrue(plan["theory"])

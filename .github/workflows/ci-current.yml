@@ -31,6 +31,7 @@ jobs:
       report: ${{ steps.detect.outputs.report }}
       delta: ${{ steps.detect.outputs.delta }}
       theory: ${{ steps.detect.outputs.theory }}
+      source: ${{ steps.detect.outputs.source }}
     steps:
       # Commits and trees only, and only the entry scripts in the working tree.
       - uses: actions/checkout@v5
@@ -56,11 +57,11 @@ jobs:
           CI_BASE: ${{ steps.entry.outputs.base }}
         run: python3 tools/scripts/workflow/ci_detect.py --contract --changed "$RUNNER_TEMP/changed-paths"
 
-  # A phase of selected current, not another CI_UNITS entry. Native Actions
+  # A source phase selected by the shared contract, not another CI_UNITS entry. Native Actions
   # releases independent units after this narrow source prerequisite completes.
   source:
     needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}').current
+    if: needs.detect.outputs.source == 'true'
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     outputs:
@@ -511,140 +512,140 @@ jobs:
 
   banned-api-proof:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['banned-api-proof'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['banned-api-proof'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: banned-api-proof
 
   capability-proof:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['capability-proof'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['capability-proof'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: capability-proof
 
   filemap:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['filemap'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['filemap'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: filemap
 
   selftest:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['selftest'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['selftest'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: selftest
 
   tests-architecture:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-architecture'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-architecture'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-architecture
 
   tests-cache:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cache'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cache'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-cache
 
   tests-cache-native:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cache-native'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cache-native'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-cache-native
 
   tests-cache-release:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cache-release'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cache-release'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-cache-release
 
   tests-ci-entry:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-ci-entry'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-ci-entry'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-ci-entry
 
   tests-cli:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cli'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cli'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-cli
 
   tests-cli-integration:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cli-integration'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cli-integration'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-cli-integration
 
   tests-configuration:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-configuration'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-configuration'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-configuration
 
   tests-cover-batch:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cover-batch'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cover-batch'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-cover-batch
 
   tests-declared-template:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-declared-template
 
   tests-digestion:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-digestion'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-digestion'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-digestion
 
   tests-engine:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-engine'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-engine'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-engine
 
   tests-filemap:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-filemap'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-filemap'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-filemap
 
   tests-header-script:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-header-script'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-header-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-header-script
 
   tests-instruction-contract:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-instruction-contract'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-instruction-contract'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-instruction-contract
 
   tests-integration-mirror:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-integration-mirror'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-integration-mirror'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-integration-mirror
@@ -674,154 +675,154 @@ jobs:
 
   tests-lean:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-lean
 
   tests-lean-cache-script:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean-cache-script'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean-cache-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-lean-cache-script
 
   tests-lean-report-script:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean-report-script'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean-report-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-lean-report-script
 
   tests-playbook-script:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-playbook-script'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-playbook-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-playbook-script
 
   tests-pr-script:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-pr-script'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-pr-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-pr-script
 
   tests-report-supervisor:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-report-supervisor'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-report-supervisor'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-report-supervisor
 
   tests-repository-configuration:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-configuration'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-configuration'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-repository-configuration
 
   tests-repository-contract:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-contract'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-contract'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-repository-contract
 
   tests-repository-filemap:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-filemap'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-filemap'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-repository-filemap
 
   tests-repository-topology:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-topology'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-topology'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-repository-topology
 
   tests-resource-observation:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-resource-observation'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-resource-observation'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-resource-observation
 
   tests-rules:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-rules'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-rules'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-rules
 
   tests-scribe:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-scribe'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-scribe'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-scribe
 
   tests-script:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-script'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-script
 
   tests-source-atomizer:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-source-atomizer'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-source-atomizer'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-source-atomizer
 
   tests-engineering:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-engineering'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-engineering'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-engineering
 
   tests-runtime:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-runtime'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-runtime'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-runtime
 
   tests-test-evidence:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-test-evidence'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-test-evidence'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-test-evidence
 
   tests-truth:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-truth'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-truth'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-truth
 
   tests-truth-release:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-truth-release'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-truth-release'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-truth-release
 
   tests-workflow-script:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-workflow-script'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-workflow-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-workflow-script
 
   tests-worktree-contract:
     needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-worktree-contract'] }}
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (needs.detect.outputs.source == 'false' || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-worktree-contract'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-worktree-contract
