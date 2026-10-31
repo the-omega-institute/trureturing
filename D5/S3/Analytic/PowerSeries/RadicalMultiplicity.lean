@@ -16,7 +16,7 @@ import Mathlib.Tactic
 /-
 Copyright (c) 2026 Yuma Mizuno. All rights reserved.
 Released under Apache 2.0. Full license and NOTICE chain:
-Library/Analytic/leanpool-differential-wronskian.md.
+Library/Analytic/mizuno2026differentialwronskian.md.
 Required closure transplanted from LeanPool/lean-pool,
 revision edbe5bd56f476cc2965564676b66199f281ab714,
 LeanPool/MarkoffModP/BGS/Algebra/DifferentialWronskian.lean.
@@ -139,7 +139,7 @@ end BGS.Algebra
 
 /-
 Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
-Apache-2.0. Full license: Library/Analytic/tauceti-laurent-derivation.md.
+Apache-2.0. Full license: Library/Analytic/tauceti2026laurentderivation.md.
 Required closure from TauCetiProject/TauCeti at
 93af5b549b7d9ed44291d6ceb093a8013dda00f8,
 TauCeti/RingTheory/LaurentSeries/{Basic,Derivative}.lean.

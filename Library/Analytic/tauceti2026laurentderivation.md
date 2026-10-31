@@ -1,5 +1,5 @@
 ---
-bibkey: tauceti-laurent-derivation
+bibkey: tauceti2026laurentderivation
 authors: The Tau Ceti contributors
 year: 2026
 title: Differentiation of Laurent series

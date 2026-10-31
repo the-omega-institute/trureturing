@@ -1,5 +1,5 @@
 ---
-bibkey: leanpool-differential-wronskian
+bibkey: mizuno2026differentialwronskian
 authors: Yuma Mizuno
 year: 2026
 title: Ordinary Wronskians over differential fields
