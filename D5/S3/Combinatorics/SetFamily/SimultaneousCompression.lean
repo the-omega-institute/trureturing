@@ -11,6 +11,7 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 
 set_option autoImplicit false
+set_option relaxedAutoImplicit false
 
 open Finset
 
@@ -163,5 +164,160 @@ private lemma augmented_not_mem {Ω A B : Finset (Finset α)} {s t u : α}
   rcases mem_insert.mp haAug with hau | haShift
   · exact (hexcludes Y (hB hY) htY).2 (hau ▸ haY)
   · exact (disjoint_left.mp hd) haShift haY
+
+/-- Sum of the individual exact-trace weights. -/
+def mass (w : Finset α → ℝ) (A : Finset (Finset α)) : ℝ := ∑ X ∈ A, w X
+
+/-- Forget a coordinate by summing over every feasible original trace. -/
+def marginalWeight (Ω : Finset (Finset α)) (w : Finset α → ℝ)
+    (t : α) (R : Finset α) : ℝ :=
+  ∑ X ∈ Ω with X.erase t = R, w X
+
+private lemma shift_recover {s t : α} {X : Finset α} (hs : s ∉ X) (ht : t ∈ X) :
+    insert t ((shift s t X).erase s) = X := by
+  rw [shift, erase_insert, erase_eq_of_notMem (not_mem_erase_of_not_mem hs), insert_erase ht]
+
+private lemma compressed_mass_eq {Ω A B : Finset (Finset α)} {s t u : α}
+    (hA : A ⊆ Ω) (hB : B ⊆ Ω) (hsu : s ≠ u)
+    (hexcludes : ∀ Z ∈ Ω, t ∈ Z → s ∉ Z ∧ u ∉ Z)
+    (hshift : ∀ Z ∈ Ω, t ∈ Z → shift s t Z ∈ Ω)
+    (hcross : CrossIntersecting A B)
+    (hmaxA : ∀ Z ∈ Ω, (∀ Y ∈ B, ¬ Disjoint Z Y) → Z ∈ A)
+    (w : Finset α → ℝ)
+    (hlaw : ∀ X ∈ Ω, t ∈ X →
+      w X = w (shift s t X) + if insert u (shift s t X) ∈ Ω then
+        w (insert u (shift s t X)) else 0) :
+    mass w (compressedFamily Ω A s t u) = mass w A := by
+  let M := moved A s t
+  let S := M.image (shift s t)
+  let U := (M.image fun X => insert u (shift s t X)).filter (· ∈ Ω)
+  have hM : M ⊆ A := fun X hX => (moved_mem hX).1
+  have hno (X : Finset α) (hX : X ∈ M) : s ∉ X ∧ u ∉ X :=
+    hexcludes X (hA (hM hX)) (moved_mem hX).2.1
+  have hnu (X : Finset α) (hX : X ∈ M) : u ∉ shift s t X := by
+    simp [shift, Ne.symm hsu, (hno X hX).2]
+  have hSi : Set.InjOn (shift s t) M := by
+    intro X hX Y hY heq
+    have h := congrArg (fun Z : Finset α => insert t (Z.erase s)) heq
+    rwa [shift_recover (hno X hX).1 (moved_mem hX).2.1,
+      shift_recover (hno Y hY).1 (moved_mem hY).2.1] at h
+  have hUi : Set.InjOn (fun X => insert u (shift s t X)) M := by
+    intro X hX Y hY heq
+    apply hSi hX hY
+    have h := congrArg (fun Z : Finset α => Z.erase u) heq
+    simpa only [erase_insert, erase_eq_of_notMem (hnu X hX),
+      erase_eq_of_notMem (hnu Y hY)] using h
+  have hAS : Disjoint (A \ M) S := by
+    apply disjoint_left.mpr
+    intro Z hZ hZS
+    obtain ⟨X, hX, rfl⟩ := mem_image.mp hZS
+    exact (moved_mem hX).2.2 (mem_sdiff.mp hZ).1
+  have hAU : Disjoint ((A \ M) ∪ S) U := by
+    apply disjoint_left.mpr
+    intro Z hZ hZU
+    obtain ⟨hZi, _⟩ := mem_filter.mp hZU
+    obtain ⟨X, hX, rfl⟩ := mem_image.mp hZi
+    rcases mem_union.mp hZ with hZA | hZS
+    · exact augmented_not_mem hA hB hexcludes hshift hcross hmaxA hX
+        (mem_sdiff.mp hZA).1
+    · obtain ⟨Y, hY, heq⟩ := mem_image.mp hZS
+      have hu : u ∈ shift s t Y := heq.symm ▸ mem_insert_self _ _
+      exact hnu Y hY hu
+  have hsumS : (∑ X ∈ S, w X) = ∑ X ∈ M, w (shift s t X) := sum_image hSi
+  have hsumU : (∑ X ∈ U, w X) = ∑ X ∈ M,
+      if insert u (shift s t X) ∈ Ω then w (insert u (shift s t X)) else 0 := by
+    rw [show U = (M.image fun X => insert u (shift s t X)).filter (· ∈ Ω) from rfl,
+      sum_filter, sum_image hUi]
+  change (∑ X ∈ ((A \ M) ∪ S) ∪ U, w X) = ∑ X ∈ A, w X
+  rw [sum_union hAU, sum_union hAS, hsumS, hsumU, add_assoc, ← sum_add_distrib]
+  have heq : (∑ X ∈ M, w (shift s t X) +
+      if insert u (shift s t X) ∈ Ω then w (insert u (shift s t X)) else 0) =
+      ∑ X ∈ M, w X := by
+    apply sum_congr rfl
+    intro X hX
+    exact (hlaw X (hA (hM hX)) (moved_mem hX).2.1).symm
+  rw [heq]
+  exact sum_sdiff hM
+
+private lemma mass_le_marginal {Ω A : Finset (Finset α)} (hA : A ⊆ Ω)
+    (w : Finset α → ℝ) (hw : ∀ X ∈ Ω, 0 ≤ w X) (t : α) :
+    mass w A ≤ mass (marginalWeight Ω w t) (A.image fun X => X.erase t) := by
+  unfold mass marginalWeight
+  rw [sum_fiberwise_eq_sum_filter]
+  apply sum_le_sum_of_subset_of_nonneg
+  · intro X hX
+    exact mem_filter.mpr ⟨hA hX, mem_image_of_mem _ hX⟩
+  · intro X hX _
+    exact hw X (mem_filter.mp hX).1
+
+private def polar (Ω A : Finset (Finset α)) : Finset (Finset α) :=
+  Ω.filter fun X => ∀ Y ∈ A, ¬ Disjoint X Y
+
+private lemma maximal_pair {Ω A B : Finset (Finset α)}
+    (hA : A ⊆ Ω) (hB : B ⊆ Ω) (hc : CrossIntersecting A B) :
+    ∃ C D : Finset (Finset α), A ⊆ C ∧ B ⊆ D ∧ C ⊆ Ω ∧ D ⊆ Ω ∧
+      CrossIntersecting C D ∧
+      (∀ X ∈ Ω, (∀ Y ∈ D, ¬ Disjoint X Y) → X ∈ C) ∧
+      (∀ Y ∈ Ω, (∀ X ∈ C, ¬ Disjoint Y X) → Y ∈ D) := by
+  let C := polar Ω B
+  let D := polar Ω C
+  have hAC : A ⊆ C := by
+    intro X hX
+    exact mem_filter.mpr ⟨hA hX, hc X hX⟩
+  have hBD : B ⊆ D := by
+    intro Y hY
+    refine mem_filter.mpr ⟨hB hY, ?_⟩
+    intro X hX hd
+    exact (mem_filter.mp hX).2 Y hY hd.symm
+  refine ⟨C, D, hAC, hBD, filter_subset _ _, filter_subset _ _, ?_, ?_, ?_⟩
+  · intro X hX Y hY hd
+    exact (mem_filter.mp hY).2 X hX hd.symm
+  · intro X hX hcX
+    exact mem_filter.mpr ⟨hX, fun Y hY => hcX Y (hBD hY)⟩
+  · intro Y hY hcY
+    exact mem_filter.mpr ⟨hY, hcY⟩
+
+/-- Two independently weighted cross-intersecting families admit the same
+coordinate deletion. The one-to-two local law is required separately for each
+weight, and the reduced weights sum over the full feasible projection fibres. -/
+theorem exists_simultaneous_compression
+    (Ω A B : Finset (Finset α)) (s t u : α)
+    (hA : A ⊆ Ω) (hB : B ⊆ Ω) (hst : s ≠ t) (hsu : s ≠ u)
+    (hexcludes : ∀ X ∈ Ω, t ∈ X → s ∉ X ∧ u ∉ X)
+    (hshift : ∀ X ∈ Ω, t ∈ X → shift s t X ∈ Ω)
+    (w v : Finset α → ℝ) (hw : ∀ X ∈ Ω, 0 ≤ w X) (hv : ∀ X ∈ Ω, 0 ≤ v X)
+    (hwlaw : ∀ X ∈ Ω, t ∈ X →
+      w X = w (shift s t X) + if insert u (shift s t X) ∈ Ω then
+        w (insert u (shift s t X)) else 0)
+    (hvlaw : ∀ X ∈ Ω, t ∈ X →
+      v X = v (shift s t X) + if insert u (shift s t X) ∈ Ω then
+        v (insert u (shift s t X)) else 0)
+    (hcross : CrossIntersecting A B) :
+    ∃ C D : Finset (Finset α),
+      C ⊆ Ω.image (fun X => X.erase t) ∧ D ⊆ Ω.image (fun X => X.erase t) ∧
+      CrossIntersecting C D ∧
+      mass w A ≤ mass (marginalWeight Ω w t) C ∧
+      mass v B ≤ mass (marginalWeight Ω v t) D := by
+  obtain ⟨A', B', hAA', hBB', hA', hB', hc, hmA, hmB⟩ := maximal_pair hA hB hcross
+  have hcb : CrossIntersecting B' A' := by
+    intro X hX Y hY hd
+    exact hc Y hY X hX hd.symm
+  let C := compressedFamily Ω A' s t u
+  let D := compressedFamily Ω B' s t u
+  have hC : C ⊆ Ω := compressed_subset hA' hshift
+  have hD : D ⊆ Ω := compressed_subset hB' hshift
+  refine ⟨C.image (fun X => X.erase t), D.image (fun X => X.erase t),
+    image_subset_image hC, image_subset_image hD,
+    compressed_cross hA' hB' hst hexcludes hc, ?_, ?_⟩
+  · calc
+      mass w A ≤ mass w A' :=
+        sum_le_sum_of_subset_of_nonneg hAA' (fun X hX _ => hw X (hA' hX))
+      _ = mass w C := (compressed_mass_eq hA' hB' hsu hexcludes hshift hc hmA w hwlaw).symm
+      _ ≤ _ := mass_le_marginal hC w hw t
+  · calc
+      mass v B ≤ mass v B' :=
+        sum_le_sum_of_subset_of_nonneg hBB' (fun X hX _ => hv X (hB' hX))
+      _ = mass v D := (compressed_mass_eq hB' hA' hsu hexcludes hshift hcb hmB v hvlaw).symm
+      _ ≤ _ := mass_le_marginal hD v hv t
 
 end D5.S3.Combinatorics.SetFamily.SimultaneousCompression
