@@ -1167,17 +1167,57 @@ unchanged and are used by the two-variable-set Vandermonde transport.
 | `Cauchy.evPartition`, `signedEvSpechtSum`, `rectangleEvSpechtSum` | `Cauchy.evSpechtSums_eq_coefficients`, `ordinaryEv_identity`, `ordinaryWeightedEv_identity` |
 | `Cauchy.evSpechtSums_eq_coefficients` | `Cauchy.ordinaryEv_identity`, using existing `HemmerStraubWestrem.result` |
 | `Cauchy.ordinaryEv_identity` | `Cauchy.ordinaryWeightedEv_identity` |
-| `Cauchy.ordinaryWeightedEv_identity` | terminal WIP: equality of both actual reciprocal-centralizer averages, common-value evaluation still absent |
+| `Cauchy.ordinaryWeightedEv_identity` | `Cauchy.ordinaryWeightedSignedEv_evaluated` |
+| `Cauchy.ordinaryWeightedRectangleEv_evaluated` | `Cauchy.ordinaryWeightedSignedEv_evaluated`; rectangular final evaluated consumer |
+| `Cauchy.ordinaryWeightedSignedEv_evaluated` | signed final evaluated consumer |
 
 In this table `Mixed` and `Cauchy` abbreviate module names; declarations share
 namespace `SpechtPolytabloid.TauCeti.ThreeRowGram`. The weighted identity uses
-the existing `DeformedJucysMurphyC2.zPartition` literally. It is equality of the
-two actual averages and does not assert their common binomial/zero value.
-The existing owning HSW Scribe gives that weighted coefficient derivation using
-`LatticeHalfFockChargedCoefficients.solution_unique`. A separately retained Lean
-consumer carrying that evaluation to both actual averages is still absent; the
-retired coefficient module is not restored or duplicated. Every original
-quantifier and parity case stated above remains required.
+the existing `DeformedJucysMurphyC2.zPartition` literally. Both evaluated
+consumers quantify over every `n : ℕ` with the sole premise `1 ≤ n`, and conclude
+the literal rational weighted sum equals
+`if Even n then (((n / 2 + 2).choose 2 : ℕ) : ℚ) else 0`.
+
+The rectangular final consumer retains the owning weighted derivation from
+[the merged HSW Scribe](https://github.com/the-omega-institute/trureturing/blob/165fcda2eb263add60bba2842909811e26a35683/Blueprint/D5/S3/Combinatorics/Partitions/HemmerStraubWestrem.scribe.cs).
+Its partition sum and Laurent coefficient maps are local proof bindings, not a
+new global coefficient system. The partition-deletion equivalence is Mathlib's
+`Nat.Partition.partitionWithPartEquiv`; insertion at positive part `k` consumes
+`zExponent_add_single` at index `k-1`. The exact ODE application uses existing
+private `LatticeHalfFockChargedCoefficients.solution_unique`, with
+`Ring = LaurentPolynomial ℚ`, first series the local literal partition sum,
+second series the product of the three rescaled `invOneSubPow` factors of order
+two, and the common driver at index `k` equal to
+`2 * (T (k+1) + 1 + T (-(k+1)))`. `HasUniqueDiv.of_module_rat` provides the
+stronger unique-divisibility instance and hence additive torsion freeness.
+`Batteries.Tactic.OpenPrivate` accesses that existing proof and the owning HSW
+`ev_right`, `right_coefficient` and `triProd`; none of their bodies changes.
+The earlier immutable coefficient source at
+[69f68474](https://github.com/the-omega-institute/trureturing/blob/69f68474a0566d6f465a14259b74f28b58e293f3/D5/S3/Combinatorics/Partitions/HemmerStraubWestremWeightedAverage.lean)
+is the source for the local finite-sum and Laurent normalization calculations.
+Its alternate ODE proof and global weighted/coefficient declarations are not
+retained. The retired module is absent.
+
+The adjacent Laurent coefficients reduce the constant-term generating series
+to `(1-t²)⁻³`; `PowerSeries.coeff_expand` gives the even binomial and odd zero.
+The same-literal-shape actual trace enters through
+`evSpechtSums_eq_coefficients`; no coefficient defines an ordinary character.
+The signed final consumer applies `ordinaryWeightedEv_identity` and the
+rectangular evaluation. All original partitions, occurrence-wise choices,
+duplicate Ev lists, positive cycles including ones, zero-padded/equal even rows
+and odd rectangles remain included. The module's generality tag is `I` because
+its reused coefficient-uniqueness supplier lies in an `I` module; the endpoint
+quantifiers remain all `n ≥ 1`.
+
+The two new public endpoints use the existing section 3.9 unfinished-audit
+exception [#24542](https://github.com/the-omega-institute/trureturing/issues/24542).
+The actual pointwise-equality and dependent-family enrollments were inspected.
+Lawful source selections and full reconstruction for these exact unbounded
+weighted-average telescopes, the actual-positive law, whole-family intervention
+and sensitivity with other readouts fixed, observational dependence, compiled
+proofs and current binding evidence are absent. No Reg mirror or
+`declared_validated` status is asserted. The original preregistration #21960
+and coefficient-only audit #22528 retain their separate scopes.
 
 These are uncompiled proof sources. Native elaboration and accepted axiom closure
 of the entire imported Specht chain, actual proof-term liveness, the section 3.9
