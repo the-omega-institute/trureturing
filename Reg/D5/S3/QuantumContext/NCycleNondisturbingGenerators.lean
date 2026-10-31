@@ -61,8 +61,11 @@ private theorem hull_nonneg {n : ℕ} {r : Fin n → Bool → Bool → ℝ}
     · dsimp only [D5.S3.Quantum.Entanglement.BinaryDetectionThresholdRefutation.parityBox]
       split_ifs <;> norm_num
   apply convexHull_min hsub ?_ hr
-  intro x hx y hy u v hu hv _
-  exact add_nonneg (mul_nonneg hu hx) (mul_nonneg hv hy)
+  exact (convex_Ici (𝕜 := ℝ) (0 : ℝ)).linear_preimage
+    ((LinearMap.proj (R := ℝ) c : (Bool → ℝ) →ₗ[ℝ] ℝ).comp
+      ((LinearMap.proj (R := ℝ) b : (Bool → Bool → ℝ) →ₗ[ℝ] Bool → ℝ).comp
+        (LinearMap.proj (R := ℝ) i :
+          (Fin n → Bool → Bool → ℝ) →ₗ[ℝ] Bool → Bool → ℝ)))
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
