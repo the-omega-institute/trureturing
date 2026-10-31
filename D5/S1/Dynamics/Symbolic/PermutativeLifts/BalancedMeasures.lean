@@ -39,9 +39,16 @@ theorem continuous_phase (n : ℕ) : Continuous (phase n) := by
 
 theorem phase_shift (n : ℕ) (g : ℤ) (y : BalancedPoint) :
     phase n (shiftBalanced g y) = (g : ZMod (height n)) + phase n y := by
-  simp only [phase, decode_shift, shiftTiling, add_zero]
-  exact SparseDisagreement.offset_cast (balancedWord n) (height n)
-    (balancedWord_length n) (decode n y) g
+  have hd := congrArg
+    (fun x : MarkedTiling (balancedWord n) => ((x.1 0).2.val : ZMod (height n)))
+    (decode_shift n g y)
+  have ht : phase n (shiftBalanced g y) =
+      (((decode n y).1 (g + 0)).2.val : ZMod (height n)) := by
+    exact hd
+  have hg := congrArg
+    (fun i : ℤ => (((decode n y).1 i).2.val : ZMod (height n))) (add_zero g)
+  exact ht.trans (hg.trans (SparseDisagreement.offset_cast (balancedWord n) (height n)
+    (balancedWord_length n) (decode n y) g))
 
 theorem continuous_shiftBalanced (g : ℤ) : Continuous (shiftBalanced g) := by
   exact ((continuous_shift g).comp continuous_subtype_val).subtype_mk _

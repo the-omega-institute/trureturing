@@ -99,7 +99,7 @@ theorem balanced_invariant_probability_unique
     obtain ⟨I, S, hS, rfl⟩ := (mem_measurableCylinders s).mp hs
     rw [Measure.map_apply hemb.measurable (hS.cylinder I),
       Measure.map_apply hemb.measurable (hS.cylinder I)]
-    apply measureReal_eq_measureReal_iff.mp
+    apply (measureReal_eq_measureReal_iff (by finiteness) (by finiteness)).mp
     obtain ⟨t, r, hC⟩ := cylinder_window_determined I S
     exact window_event_measure_eq μ ν hμ hν t r _ hC
   · simp [Measure.map_apply hemb.measurable]
