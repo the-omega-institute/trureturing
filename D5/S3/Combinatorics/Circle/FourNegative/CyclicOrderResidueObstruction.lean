@@ -22,8 +22,9 @@ open private sum_linear from D5.S3.Combinatorics.Circle.PeriodicShortening
 private theorem dyadic_residue (n : ℕ) (hn : n % 8 = 0) :
     (2 : ℤ) ^ n % 85 = 1 := by
   obtain ⟨t, rfl⟩ := Nat.dvd_of_mod_eq_zero hn
-  rw [pow_mul, Int.pow_emod]
-  norm_num
+  rw [pow_mul]
+  have h : (2 : ℤ) ^ 8 ≡ 1 [ZMOD 85] := by norm_num [Int.ModEq]
+  simpa [Int.ModEq] using Int.ModEq.pow t h
 
 private theorem residue_windows (x m H K : ℤ) (v w z e : Bool)
     (hx : 4 ≤ x) (hr : x % 85 = 1) (hm : 2 * m ≤ x - 2)
@@ -101,9 +102,9 @@ private theorem source_chains (n : ℕ) (hn : 2 ≤ n) :
     have nz := hX 1 (by decide)
     have nzn := hXn 1 (by decide)
     simp only [show ¬ n - 1 + 1 < n by omega, show ¬ n + 1 < n + 1 by omega,
-      if_false, pow_zero, pow_one, zero_add, add_zero] at u un
+      ite_false, pow_zero, pow_one, zero_add, add_zero] at u un
     norm_num only [pow_zero, pow_one, zero_add, add_zero, show 0 + 1 < 2 by decide,
-      show ¬ 1 + 1 < 2 by decide, if_true, if_false, one_mul] at v vn nv nvn w wn nw nwn z zn nz nzn
+      show ¬ 1 + 1 < 2 by decide, ite_true, ite_false, one_mul] at v vn nv nvn w wn nw nwn z zn nz nzn
     change f (n - 1) = _ at u
     change F n = _ at un
     have gnu : g (n - 1) = F n := by rw [hshift, show n - 1 + 1 = n by omega]
@@ -111,11 +112,13 @@ private theorem source_chains (n : ℕ) (hn : 2 ≤ n) :
       dsimp [x]
       simpa using pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hn
     have hxe : x = 2 * (2 : ℤ) ^ (n - 1) := by
-      dsimp [x]; rw [show n = (n - 1) + 1 by omega, pow_succ]; ring
+      dsimp [x]
+      conv_lhs => rw [show n = (n - 1) + 1 by omega, pow_succ]
+      ring
     have fresh : g (n + 6) = 85 := by
       rw [hshift]
       change centered M ((2 : ℤ) ^ (n + 7) * 85) = 85
-      rw [show M = modulus (n + 7) from rfl, centered_full_period]
+      rw [show M = modulus (n + 7) from rfl, centered_full_period (n + 7) 85]
       change centered M 85 = 85
       dsimp only [centered]
       rw [hM]
@@ -212,16 +215,15 @@ private theorem source_readout (n : ℕ) (hn : 2 ≤ n) (i : ℕ) (hi : i < n + 
       5 * hit (n + 2) i + 11 * hit (n + 3) i + 21 * hit (n + 4) i +
       43 * hit (n + 5) i := by
   obtain ⟨hU, hnu, hv, hnv, hw, hnw, hz, hnz, _⟩ := source_chains n hn
+  dsimp only at hU hnu hv hnv hw hnw hz hnz
   dsimp only
   have hc : i + 1 < n ∨ i = n - 1 ∨ i = n ∨ i = n + 1 ∨ i = n + 2 ∨
       i = n + 3 ∨ i = n + 4 ∨ i = n + 5 := by omega
   rcases hc with hc | rfl | rfl | rfl | rfl | rfl | rfl | rfl
   · obtain ⟨hf, hg⟩ := hU i hc
     rw [hf, hg]
-    simp (disch := omega) [uWeight, hit]
-    ring
-  all_goals simp (disch := omega) only [uWeight, hit, if_pos, if_neg, mul_zero,
-    mul_one, add_zero, zero_add]
+    simp (disch := omega) [uWeight, hit] <;> ring
+  all_goals simp (disch := omega) [uWeight, hit]
   all_goals omega
 
 private theorem hit_sum (S : Finset ℕ) (j : ℕ) :
@@ -247,7 +249,7 @@ private theorem u_mass (n : ℕ) (hn : 2 ≤ n) (S : Finset ℕ) :
   rw [hsum, Finset.sum_filter] at hb
   change (∑ i ∈ S, uWeight n i) ≤ 2 ^ (n - 1) - 1 at hb
   have hp : (2 : ℤ) ^ n = 2 * 2 ^ (n - 1) := by
-    rw [show n = (n - 1) + 1 by omega, pow_succ]
+    conv_lhs => rw [show n = (n - 1) + 1 by omega, pow_succ]
     ring
   refine ⟨Finset.sum_nonneg (fun i _ => ?_), by omega⟩
   dsimp [uWeight]
@@ -321,7 +323,10 @@ theorem actual_source_cyclic_order_residue_obstruction
   have old_bound (r : ℕ) : 0 ≤ ((s.take r).map f).sum ∧
       ((s.take r).map f).sum ≤ 32 * x - 1 := by
     have h := hold.2.2 r
-    simpa only [s, ← List.map_take, List.map_map, Function.comp_def, actualSource, f, hN] using h
+    change 0 ≤ ((sigma.take r).map (fun i => f i.val)).sum ∧
+      ((sigma.take r).map (fun i => f i.val)).sum ≤ modulus (n + 6) / 2 at h
+    rw [hN] at h
+    simpa only [s, ← List.map_take, List.map_map, Function.comp_def] using h
   have new_height (r : ℕ) :
       (((earWord (n + 6) sigma cut).take r).map (actualSource (n + 7) 170)).sum =
       ((s.take (if r ≤ cut then r else r - 1)).map g).sum +
@@ -330,7 +335,7 @@ theorem actual_source_cyclic_order_residue_obstruction
     have hfr : actualSource (n + 7) 170 (Fin.last (n + 6)) = 85 := hfresh
     rw [hfr] at he
     simpa only [s, ← List.map_take, List.map_map, Function.comp_def, actualSource,
-      Fin.val_castSucc, Fin.val_last, g, hfresh] using he
+      Fin.val_castSucc, Fin.val_last, g, hfresh, Nat.cast_ofNat] using he
   have new_bound (r : ℕ) :
       0 ≤ ((s.take (if r ≤ cut then r else r - 1)).map g).sum +
         (if r ≤ cut then 0 else 85) ∧
@@ -359,17 +364,17 @@ theorem actual_source_cyclic_order_residue_obstruction
     by_cases hc : cut ≤ p
     · have hb := new_bound (p + 1)
       have ha := new_bound (p + 2)
-      simp only [if_neg (by omega : ¬ p + 1 ≤ cut),
-        if_neg (by omega : ¬ p + 2 ≤ cut), Nat.add_sub_cancel] at hb ha
+      simp only [ite_eq_right (by omega : ¬ p + 1 ≤ cut),
+        ite_eq_right (by omega : ¬ p + 2 ≤ cut), Nat.add_sub_cancel] at hb ha
       have he : p + 2 - 1 = p + 1 := by omega
       simp only [he, step g, hX.2] at ha
-      simp only [K, e, hc, decide_true, Bool.true_eq_true, if_true, mul_one]
+      simp only [K, e, hc, decide_true, ite_true, mul_one]
       rw [step g, hX.2]
       omega
     · have hb := new_bound p
       have ha := new_bound (p + 1)
-      simp only [if_pos (by omega : p ≤ cut), if_pos (by omega : p + 1 ≤ cut), add_zero] at hb ha
-      simp only [K, e, hc, decide_false, Bool.false_eq_true, if_false, mul_zero, add_zero]
+      simp only [ite_eq_left (by omega : p ≤ cut), ite_eq_left (by omega : p + 1 ≤ cut), add_zero] at hb ha
+      simp only [K, e, hc, decide_false, Bool.false_eq_true, ite_false, mul_zero, add_zero]
       rw [step g, hX.2] at ha ⊢
       omega
   let S := (s.take (p + 1)).toFinset
@@ -381,7 +386,7 @@ theorem actual_source_cyclic_order_residue_obstruction
   have hm := u_mass n hn S
   have hr := subset_readout n hn S hS
   have hsum (v : ℕ → ℤ) : (∑ i ∈ S, v i) = ((s.take (p + 1)).map v).sum :=
-    List.sum_toFinset v (hnd.take _)
+    List.sum_toFinset v hnd.take
   change (2 * (∑ i ∈ S, f i) = _) ∧ (2 * (∑ i ∈ S, f i) - (∑ i ∈ S, g i) = _) at hr
   simp only [hsum f, hsum g] at hr
   change (2 * H = _) ∧ (2 * H - ((s.take (p + 1)).map g).sum = _) at hr
@@ -393,44 +398,51 @@ theorem actual_source_cyclic_order_residue_obstruction
     have hz : n + 5 ∈ S := (smem _ (by omega)).mpr (by exact le_rfl)
     have hb : (if n + 1 ∈ S then (1 : ℤ) else 0) = if order then 1 else 0 := by simp [hv]
     have hrv := hr
-    simp only [if_neg hu, if_pos hw, if_pos hz, hb, mul_zero, mul_one, add_zero] at hrv
+    simp only [ite_eq_right hu, ite_eq_left hw, ite_eq_left hz, hb, mul_zero, mul_one, add_zero] at hrv
     apply residue_windows x (∑ i ∈ S, uWeight n i) H K v w z e hx
       (dyadic_residue n h8) hm.2 hH hK order
-    · dsimp [v, w, z]
+    · dsimp [v, w, z, x]
       simp only [decide_eq_true_eq]
-      cases order <;> norm_num at hrv ⊢ <;> nlinarith only [hrv.1]
+      cases order <;> by_cases hV : n ∈ S <;> by_cases hW : n + 2 ∈ S <;>
+        by_cases hZ : n + 4 ∈ S <;> simp [hV, hW, hZ] at hrv ⊢ <;>
+        nlinarith only [hrv.1]
     · dsimp [K, v, w, z]
       simp only [decide_eq_true_eq]
-      cases order <;> norm_num at hrv ⊢ <;> linarith only [hrv.2]
+      cases order <;> by_cases hV : n ∈ S <;> by_cases hW : n + 2 ∈ S <;>
+        by_cases hZ : n + 4 ∈ S <;> simp [hV, hW, hZ] at hrv ⊢ <;>
+        linarith only [hrv.2]
   rcases hord with hord | hord
   · have ho := sublist_positions s hnd _ hord
-    simp only [List.pairwise_cons, List.mem_cons, List.mem_singleton, List.not_mem_nil,
-      forall_eq_or_imp, forall_eq, List.pairwise_nil, and_true] at ho
+    have hVX : s.idxOf (n + 1) < s.idxOf (n + 5) :=
+      ho.rel_getElem_of_lt (i := 0) (j := 2) (by simp) (by simp) (by decide)
+    have hWX : s.idxOf (n + 3) < s.idxOf (n + 5) :=
+      ho.rel_getElem_of_lt (i := 1) (j := 2) (by simp) (by simp) (by decide)
+    have hXU : s.idxOf (n + 5) < s.idxOf (n - 1) :=
+      ho.rel_getElem_of_lt (i := 2) (j := 3) (by simp) (by simp) (by decide)
     apply finish true
     · rw [smem _ (by omega)]
       dsimp [p]
       omega
-    · simp only [Bool.true_eq_true, iff_true]
-      rw [smem _ (by omega)]
-      dsimp [p]
-      omega
-    · rw [smem _ (by omega)]
-      dsimp [p]
-      omega
+    · have hv : n + 1 ∈ S := (smem _ (by omega)).mpr (by dsimp [p]; omega)
+      simp [hv]
+    · exact (smem _ (by omega)).mpr (by dsimp [p]; omega)
   · have ho := sublist_positions s hnd _ hord
-    simp only [List.pairwise_cons, List.mem_cons, List.mem_singleton, List.not_mem_nil,
-      forall_eq_or_imp, forall_eq, List.pairwise_nil, and_true] at ho
+    have hWX : s.idxOf (n + 3) < s.idxOf (n + 5) :=
+      ho.rel_getElem_of_lt (i := 0) (j := 1) (by simp) (by simp) (by decide)
+    have hXU : s.idxOf (n + 5) < s.idxOf (n - 1) :=
+      ho.rel_getElem_of_lt (i := 1) (j := 2) (by simp) (by simp) (by decide)
+    have hXV : s.idxOf (n + 5) < s.idxOf (n + 1) :=
+      ho.rel_getElem_of_lt (i := 1) (j := 3) (by simp) (by simp) (by decide)
     apply finish false
     · rw [smem _ (by omega)]
       dsimp [p]
       omega
-    · simp only [Bool.false_eq_true, iff_false]
-      rw [smem _ (by omega)]
-      dsimp [p]
-      omega
-    · rw [smem _ (by omega)]
-      dsimp [p]
-      omega
+    · have hv : n + 1 ∉ S := by
+        rw [smem _ (by omega)]
+        dsimp [p]
+        omega
+      simp [hv]
+    · exact (smem _ (by omega)).mpr (by dsimp [p]; omega)
 
 #print axioms actual_source_cyclic_order_residue_obstruction
 
