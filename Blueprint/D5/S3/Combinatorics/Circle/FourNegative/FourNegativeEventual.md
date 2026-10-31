@@ -14,5 +14,5 @@ These are proof components for the explicit eventual four-isolated-bit family. T
 
 ## References
 
-- Dependency: [D5/S3/Combinatorics/Circle/ThreeBitSource](ThreeBitSource.md)
-- Dependency: [D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterJointLift](ThreeNegativeEqualOuterJointLift.md)
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeBitSource](../ThreeBitSource.md)
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterJointLift](../ThreeNegativeEqualOuterJointLift.md)

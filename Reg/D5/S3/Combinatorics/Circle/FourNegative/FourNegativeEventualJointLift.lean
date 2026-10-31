@@ -1,4 +1,4 @@
-import D5.S3.Combinatorics.Circle.FourNegativeEventualJointLift
+import D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
@@ -8,11 +8,11 @@ set_option relaxedAutoImplicit false
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
-namespace Reg.D5.S3.Combinatorics.Circle.FourNegativeEventualJointLift
+namespace Reg.D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
 open _root_.D5.S3.Combinatorics.Circle.SourceWidth
 open _root_.D5.S3.Combinatorics.Circle.PeriodicShortening
 open _root_.D5.S3.Combinatorics.Circle.RunFirstEarTransport
-open _root_.D5.S3.Combinatorics.Circle.FourNegativeEventualJointLift
+open _root_.D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
 noncomputable section
 
 abbrev Params := Σ _a : ℕ, Σ _b : ℕ, Σ _c : ℕ, ℕ
@@ -132,11 +132,11 @@ def source_registration : Registration arena
   dependence := actual_dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
-    (@_root_.D5.S3.Combinatorics.Circle.FourNegativeEventualJointLift.actualSource_four_negative_eventual_joint_lift)
+    (@_root_.D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift.actualSource_four_negative_eventual_joint_lift)
     (type_of% (realize signature actual.readout actual.anchor)) Nat Unit := {
-  unitName := `D5.S3.Combinatorics.Circle.FourNegativeEventualJointLift.actualSource_four_negative_eventual_joint_lift.__information_unit
+  unitName := `D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift.actualSource_four_negative_eventual_joint_lift.__information_unit
   realizationName :=
-    `Reg.D5.S3.Combinatorics.Circle.FourNegativeEventualJointLift.source_registration
+    `Reg.D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -152,7 +152,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.FourNegativeEventualJointLift
+    owner := `D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
     definition := none
     coordinates := #[0, 1, 2, 3]
     readouts := #[{
@@ -175,4 +175,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
 #print axioms source_registration
 #print axioms audit
 end
-end Reg.D5.S3.Combinatorics.Circle.FourNegativeEventualJointLift
+end Reg.D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift

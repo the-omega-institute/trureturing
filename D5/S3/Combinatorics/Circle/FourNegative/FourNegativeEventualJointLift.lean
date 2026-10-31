@@ -1,20 +1,20 @@
-/- GID: D5/S3/Combinatorics/Circle/FourNegativeEventualJointLift
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/FourNegativeEventualJointLift
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegativeEventualJointLift
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/FourNegativeEventualJointLift
    mirror-E: none(waiver:no-escape-mirror-specified)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: A common physical four-negative order and its literal fresh ear. -/
-import D5.S3.Combinatorics.Circle.FourNegativeEventual
+import D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventual
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Combinatorics.Circle.FourNegativeEventualJointLift
+namespace D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private four_chain_table eventual_mask_certificate
   chainMask chainMask_sum maskWord
-  from D5.S3.Combinatorics.Circle.FourNegativeEventual
+  from D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventual
 open FourNegativeEventual
 open private mask_labels_mem positive_block_strip
   from D5.S3.Combinatorics.Circle.ThreeBitSource
@@ -459,4 +459,4 @@ theorem actualSource_four_negative_eventual_joint_lift (a b c d : ℕ)
   rw [marked_word k Pre.length hk Pre Post rfl hpold]
   exact hnew'
 
-end D5.S3.Combinatorics.Circle.FourNegativeEventualJointLift
+end D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift

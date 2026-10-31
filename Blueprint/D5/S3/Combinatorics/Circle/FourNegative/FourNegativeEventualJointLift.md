@@ -6,9 +6,9 @@ An eventual physical four-negative joint lift
 
 **Theorem 1.1 (The independent four-gap eventual family).**
 
-Lean statement: `D5/S3/Combinatorics/Circle/FourNegativeEventualJointLift.actualSource_four_negative_eventual_joint_lift`
+Lean statement: `D5/S3/Combinatorics/Circle/FourNegative/FourNegativeEventualJointLift.actualSource_four_negative_eventual_joint_lift`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FourNegativeEventualJointLift.actualSource_four_negative_eventual_joint_lift` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FourNegative/FourNegativeEventualJointLift.actualSource_four_negative_eventual_joint_lift` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,5 +24,5 @@ This is an eventual family within Circle Conjecture 3.1 of Damasdi, Frankl, Pach
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Circle/FourNegativeEventualJointLift.actualSource_four_negative_eventual_joint_lift`
-- Dependency: [D5/S3/Combinatorics/Circle/FourNegativeEventual](FourNegativeEventual.md)
+- Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/FourNegativeEventualJointLift.actualSource_four_negative_eventual_joint_lift`
+- Dependency: [D5/S3/Combinatorics/Circle/FourNegative/FourNegativeEventual](FourNegativeEventual.md)

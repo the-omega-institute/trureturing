@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Circle/FourNegativeEventual
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/FourNegativeEventual
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegativeEventual
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/FourNegativeEventual
    mirror-E: none(waiver:no-escape-mirror-specified)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
@@ -14,7 +14,7 @@ import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Combinatorics.Circle.FourNegativeEventual
+namespace D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventual
 
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
@@ -953,4 +953,4 @@ private theorem eventual_mask_certificate (a b c d : ℕ)
   · simpa only [hqcast, hLcast] using hsL
   · simpa only [hqcast, hMcast] using hsM
 
-end D5.S3.Combinatorics.Circle.FourNegativeEventual
+end D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventual

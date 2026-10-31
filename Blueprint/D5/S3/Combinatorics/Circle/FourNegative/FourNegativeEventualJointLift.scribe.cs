@@ -1,12 +1,12 @@
 using static StrataLint.Scribe.DefinitionDsl;
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.FourNegative;
 internal sealed class FourNegativeEventualJointLiftDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An eventual physical four-negative joint lift",
         H("One physical permutation and one literal fresh ear"),
         Blocks(Describe.Lean(DescribeId.Create("actual-source-four-negative-eventual-joint-lift"),
-            DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FourNegativeEventualJointLift.actualSource_four_negative_eventual_joint_lift"),
+            DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FourNegative/FourNegativeEventualJointLift.actualSource_four_negative_eventual_joint_lift"),
             H("The independent four-gap eventual family"), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
             Blocks(
