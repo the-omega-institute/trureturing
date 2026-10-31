@@ -17,7 +17,7 @@ internal sealed partial class ProductionCliEnvironment
         ImmutableArray<Diagnostic> planeObservations = [];
         try
         {
-            var options = ParseCheckArguments(arguments);
+            var options = ParseCheckArguments(arguments, allowArtifactCapacity: delta);
             if ((!delta && (options.CandidateLeanReport is null || options.ProtectedBase is not null || options.ArtifactCapacity))
                 || (delta && options.ProtectedBase is null))
                 throw new InvalidOperationException(delta

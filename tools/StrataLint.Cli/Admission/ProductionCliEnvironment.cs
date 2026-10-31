@@ -187,7 +187,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 "repository-prepare",
                 () =>
                 {
-                    var options = ParseCheckArguments(arguments);
+                    var options = ParseCheckArguments(arguments, allowArtifactCapacity: false);
                     var prepared = repository.Prepare(options.ProtectedBase);
                     var bootstrap = BootstrapGate.Evaluate(prepared.Changes);
                     return (
@@ -370,7 +370,9 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         return memory.ToArray();
     }
 
-    private static CheckArguments ParseCheckArguments(IReadOnlyList<string> arguments)
+    private static CheckArguments ParseCheckArguments(
+        IReadOnlyList<string> arguments,
+        bool allowArtifactCapacity)
     {
         string? protectedBase = null;
         string? candidateLeanReport = null;
@@ -380,7 +382,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         {
             if (arguments[index] == "--artifact-capacity")
             {
-                if (artifactCapacity) throw CheckUsage();
+                if (artifactCapacity || !allowArtifactCapacity) throw CheckUsage();
                 artifactCapacity = true;
                 continue;
             }
@@ -413,7 +415,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
 
     private static InvalidOperationException CheckUsage() => new(
         "USAGE: StrataLint check [--protected-base REV] "
-        + "--candidate-lean-report FILE [--scribe-paths-from FILE] [--artifact-capacity]\n"
+        + "--candidate-lean-report FILE [--scribe-paths-from FILE]\n"
         + "USAGE: StrataLint check-current --candidate-lean-report FILE [--scribe-paths-from FILE]\n"
         + "USAGE: StrataLint check-delta --protected-base REV [--candidate-lean-report FILE] "
         + "[--scribe-paths-from FILE] [--artifact-capacity]\n"

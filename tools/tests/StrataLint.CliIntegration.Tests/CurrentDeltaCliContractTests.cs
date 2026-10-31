@@ -6,6 +6,24 @@ namespace StrataLint.CliIntegration.Tests;
 public sealed class CurrentDeltaCliContractTests
 {
     [Theory]
+    [InlineData("check", "USAGE: StrataLint check [--protected-base REV] --candidate-lean-report FILE [--scribe-paths-from FILE]")]
+    [InlineData("check-current", "USAGE: StrataLint check-current --candidate-lean-report FILE [--scribe-paths-from FILE]")]
+    public void StandaloneChecksRejectArtifactCapacityAsAnUnsupportedUsageOption(
+        string command, string usage)
+    {
+        using var fixture = new TemporaryDirectory();
+        var result = TestProcessRunner.Run("dotnet", [typeof(StrataLint.Cli.Program).Assembly.Location,
+            command, "--artifact-capacity", "--candidate-lean-report", "report.json"], fixture.Path,
+            TestBudgets.ScriptProcessHangGuard, 64 * 1024);
+
+        Assert.Equal(2, result.ExitCode);
+        var error = Encoding.UTF8.GetString(result.StandardError);
+        Assert.Contains(usage, error, StringComparison.Ordinal);
+        Assert.DoesNotContain(usage + " [--artifact-capacity]", error,
+            StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData("check-current", false)]
     [InlineData("check-delta", true)]
     public void StandaloneChecksRequireTheExplicitReportAndRejectStageArguments(string command, bool delta)
