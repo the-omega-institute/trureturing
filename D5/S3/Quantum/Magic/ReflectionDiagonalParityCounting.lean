@@ -205,9 +205,9 @@ private lemma span_outputs {m : ℕ} (gs : List (Fin m × Fin m))
       change v ∈ (if parity (ls p.1) = true ∧ parity (ls p.2) = true then
         (ls p.1 + ls p.2) :: births gs (update ls p) else births gs (update ls p))
       by_cases hh : parity (ls p.1) = true ∧ parity (ls p.2) = true
-      · rw [if_pos hh]
+      · rw [ite_eq_left hh]
         exact List.mem_cons_of_mem _ hv
-      · rw [if_neg hh]
+      · rw [ite_eq_right hh]
         exact hv
     intro v hv he
     rcases List.mem_cons.mp hv with rfl | hv
