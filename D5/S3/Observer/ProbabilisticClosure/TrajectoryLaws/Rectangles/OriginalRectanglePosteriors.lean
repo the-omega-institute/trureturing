@@ -262,7 +262,7 @@ private theorem half_line_count_bounds (θ : Presentation H)
   exact ⟨by simpa only [left_count w b j z] using hzl,
     by simpa only [right_count w b j z] using hzr⟩
 
-private theorem rectangle_rho_range (B : Matrix H H ℝ) (R : Rectangle B) :
+theorem rectangle_rho_range (B : Matrix H H ℝ) (R : Rectangle B) :
     0 ≤ 1-rectangleMinimum B R / rectangleMaximum B R ∧
       1-rectangleMinimum B R / rectangleMaximum B R < 1 := by
   let S := (R.rows ×ˢ R.cols).image fun ij => B ij.1 ij.2

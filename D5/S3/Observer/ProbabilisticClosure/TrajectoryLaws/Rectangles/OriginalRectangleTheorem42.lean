@@ -29,6 +29,7 @@ open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalErasureCompariso
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleOccurrence
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleRoutes
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectanglePosteriors
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleSmoothing
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalUnifilarErasureTail
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.FiniteClosedClasses
 
@@ -54,9 +55,8 @@ private theorem native_component_irreducible
     (θ : Presentation H)
     (D : FiniteClosedClasses.ClosedClass (θ.matrix false + θ.matrix true))
     (hc : 0 < ∑ i : D.val, θ.initial i.val) :
-    ∀ i j : D.val, ∃ n : ℕ,
-      0 < (((nativeComponent θ D hc).matrix false +
-        (nativeComponent θ D hc).matrix true)^n) i j := by
+    IsIrreducible ((nativeComponent θ D hc).matrix false +
+      (nativeComponent θ D hc).matrix true) := by
   let T := θ.matrix false + θ.matrix true
   have hT : T ∈ rowStochastic ℝ H := Matrix.mem_rowStochastic_iff_sum.mpr
     ⟨fun i j => add_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _), θ.stochastic⟩
@@ -70,30 +70,7 @@ private theorem native_component_irreducible
       rfl
     rw [he]
     exact hi
-  have hnonneg : ∀ i j : D.val,
-      0 ≤ ((nativeComponent θ D hc).matrix false +
-        (nativeComponent θ D hc).matrix true) i j := by
-    intro i j
-    exact add_nonneg ((nativeComponent θ D hc).matrix_nonneg false i j)
-      ((nativeComponent θ D hc).matrix_nonneg true i j)
-  exact (Matrix.isIrreducible_iff_exists_pow_pos hnonneg).mp hκ
-
-private theorem component_rho_range {S : Type u} [Fintype S]
-    (B : Matrix S S ℝ) (R : Rectangle B) :
-    0 ≤ 1 - rectangleMinimum B R / rectangleMaximum B R ∧
-      1 - rectangleMinimum B R / rectangleMaximum B R < 1 := by
-  let S := (R.rows ×ˢ R.cols).image fun ij => B ij.1 ij.2
-  have hS : S.Nonempty := (R.rows_nonempty.product R.cols_nonempty).image _
-  have hu : 0 < rectangleMinimum B R := by
-    obtain ⟨ij, hij, he⟩ := Finset.mem_image.mp (Finset.min'_mem S hS)
-    change 0 < S.min' hS
-    rw [← he]
-    exact R.positive ij.1 (Finset.mem_product.mp hij).1 ij.2
-      (Finset.mem_product.mp hij).2
-  have huv : rectangleMinimum B R ≤ rectangleMaximum B R := Finset.min'_le_max' S hS
-  have hv : 0 < rectangleMaximum B R := hu.trans_le huv
-  exact ⟨sub_nonneg.mpr ((div_le_one hv).mpr huv),
-    sub_lt_self _ (div_pos hu hv)⟩
+  exact hκ
 
 private theorem geometric_root_tail
     (b : ℕ) (hb : 0 < b) (η : ℝ) (hη0 : 0 ≤ η) (hη1 : η < 1)
@@ -251,19 +228,28 @@ theorem native_component_rectangle_theorem42
             (1-Real.sqrt (1 - selectedEpsilon κ w r a *
               (1-(1-rectangleMinimum (product κ w) R /
               rectangleMaximum (product κ w) R)^2))))) := by
+  classical
   dsimp only
   let κ := nativeComponent θ D hc
   let K : ProbabilityMeasure (PathSpace D.val) := jointLaw κ
   let b := w.length + Fintype.card D.val
   have hK : HasOriginalCylinders K κ := by
     exact (same_law_trimming κ).1
-  have hcomponent := native_component_irreducible θ D hc
+  have hcomponent : ∀ i j : D.val, ∃ n : ℕ,
+      0 < ((κ.matrix false + κ.matrix true)^n) i j := by
+    have hnonneg : ∀ i j : D.val, 0 ≤ (κ.matrix false + κ.matrix true) i j := by
+      intro i j
+      exact add_nonneg (κ.matrix_nonneg false i j) (κ.matrix_nonneg true i j)
+    intro i j
+    obtain ⟨n, _, hn⟩ := (Matrix.isIrreducible_iff_exists_pow_pos hnonneg).mp
+      (native_component_irreducible θ D hc) i j
+    exact ⟨n, hn⟩
   obtain ⟨a, ha0, hab, hafalse, haseam, hainj, haincoming, hocc⟩ :=
     irreducible_rectangle_occurrence κ K hK hcomponent w R r hr
   have hclass := component_restriction θ D hc J hJ K hK
   have hvis : (K : Measure (PathSpace D.val)).map Prod.snd = (visibleLaw κ : Measure (ℤ → Bool)) :=
     native_visible_pushforward κ K rfl
-  have hρ := component_rho_range (product κ w) R
+  have hρ := rectangle_rho_range (product κ w) R
   let ρ := 1 - rectangleMinimum (product κ w) R /
     rectangleMaximum (product κ w) R
   let ε := selectedEpsilon κ w r a
@@ -284,11 +270,7 @@ theorem native_component_rectangle_theorem42
   have hnonneg (j : ℕ) : 0 ≤ leftRisk κ j ∧ 0 ≤ rightRisk κ j := by
     exact ⟨integral_nonneg (fun z => sq_nonneg _), integral_nonneg (fun z => sq_nonneg _)⟩
   have hb : 0 < b := by
-    have hcD : 0 < Fintype.card D.val :=
-      (FiniteClosedClasses.actual_structure (θ.matrix false + θ.matrix true)
-        (Matrix.mem_rowStochastic_iff_sum.mpr
-          ⟨fun i j => add_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _), θ.stochastic⟩)).class_card D |>.1
-    have hwlen : 0 < w.length := List.length_pos.mpr hw
+    have hcD : 0 < Fintype.card D.val := Fintype.card_pos_iff.mpr ⟨r⟩
     omega
   have hroot (R₀ : ℕ) := geometric_root_tail b hb η hη.1 hη.2
     (leftRisk κ) (rightRisk κ) hbound R₀
