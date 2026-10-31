@@ -156,8 +156,8 @@ end PauliRotation
 
 namespace OrthogonalSandwich
 
-abbrev signature.{u} : Signature where
-  Params := Type u
+abbrev signature.{u_1} : Signature where
+  Params := Type u_1
   State k := Matrix k k ℂ
   Role := Unit
   finiteRole := inferInstance
@@ -166,42 +166,42 @@ abbrev signature.{u} : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual.{u} : Realization signature.{u} :=
+def actual.{u_1} : Realization signature.{u_1} :=
   realize signature (fun _ _ q => qᵀ) (fun e => nomatch e)
-def rejected.{u} : Realization signature.{u} :=
+def rejected.{u_1} : Realization signature.{u_1} :=
   realize signature (fun _ _ _ => fun _ _ => 2) (fun e => nomatch e)
 
-abbrev arena.{u, v} : Arena where
-  signature := signature.{u}
-  Law R := ∀ {k : Type u} {n : Type v} [Fintype k] [Fintype n]
+abbrev arena.{u_1, u_2} : Arena where
+  signature := signature.{u_1}
+  Law R := ∀ {k : Type u_1} {n : Type u_2} [Fintype k] [Fintype n]
     [DecidableEq k] (q : Matrix k k ℂ) (_hq : R.readout () k q * q = 1)
     (s : k → Matrix n n ℂ) (x : Matrix n n ℂ),
     (∑ a : k, (∑ c : k, q a c • s c) * x * (∑ e : k, q a e • s e)) =
       ∑ c : k, s c * x * s c
 
-private theorem rejected_law.{u, v} : ¬ arena.{u, v}.Law rejected := by
+private theorem rejected_law.{u_1, u_2} : ¬ arena.{u_1, u_2}.Law rejected := by
   intro h
-  have hb := @h (ULift.{u} Unit) (ULift.{v} Unit) inferInstance inferInstance
+  have hb := @h (ULift.{u_1} Unit) (ULift.{u_2} Unit) inferInstance inferInstance
     inferInstance (fun _ _ => 1 / 2)
     (by
       ext a b
-      change (∑ _ : ULift.{u} Unit, (2 : ℂ) * (1 / 2)) = if a = b then 1 else 0
+      change (∑ _ : ULift.{u_1} Unit, (2 : ℂ) * (1 / 2)) = if a = b then 1 else 0
       simp [Subsingleton.elim a b]) (fun _ => 1) 1
   have he := congrFun (congrFun hb ⟨()⟩) ⟨()⟩
   norm_num [Matrix.mul_apply, Matrix.smul_apply, Matrix.one_apply] at he
 
-private theorem dependence.{u} : ObservationalDependence signature.{u} actual := by
+private theorem dependence.{u_1} : ObservationalDependence signature.{u_1} actual := by
   intro i
-  refine ⟨ULift.{u} Unit, 0, (fun _ _ => 1), ?_⟩
+  refine ⟨ULift.{u_1} Unit, 0, (fun _ _ => 1), ?_⟩
   intro h
   have he := congrFun (congrFun h ⟨()⟩) ⟨()⟩
   change (0 : ℂ) = 1 at he
   exact zero_ne_one he
 
-def source_registration.{u, v} : Registration arena (type_of% (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.orthogonal_sandwich.{u, v})) where
-  actual := realize signature.{u} (fun _ _ q => qᵀ) (fun e => nomatch e)
+def source_registration.{u_1, u_2} : Registration arena (type_of% (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.orthogonal_sandwich.{u_1, u_2})) where
+  actual := realize signature.{u_1} (fun _ _ q => qᵀ) (fun e => nomatch e)
   bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.orthogonal_sandwich.{u, v}, rejected, rejected_law⟩
+  variation := ⟨@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.orthogonal_sandwich.{u_1, u_2}, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -210,9 +210,9 @@ def source_registration.{u, v} : Registration arena (type_of% (@_root_.D5.S3.Qua
       exact nomatch e
   dependence := dependence
 
-def registration.{u, v} :
+def registration.{u_1, u_2} :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.orthogonal_sandwich.{u, v}) (Realization signature.{u}) Unit Unit where
+      (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.orthogonal_sandwich.{u_1, u_2}) (Realization signature.{u_1}) Unit Unit where
   unitName := `D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.orthogonal_sandwich.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.OrthogonalSandwich.source_registration
   realizationSource := none
@@ -224,7 +224,7 @@ def registration.{u, v} :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u} (fun _ _ q => qᵀ) (fun e => nomatch e))
+  readout := some (realize signature.{u_1} (fun _ _ q => qᵀ) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -567,8 +567,8 @@ end QuadraticRotation
 
 namespace PartialTraceIsometries
 
-abbrev signature.{v, z} : Signature where
-  Params := Σ _ : Type v, Type z
+abbrev signature.{u_2, u_4} : Signature where
+  Params := Σ _ : Type u_2, Type u_4
   State p := Matrix p.1 p.2 ℂ
   Role := Unit
   finiteRole := inferInstance
@@ -577,14 +577,14 @@ abbrev signature.{v, z} : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual.{v, z} : Realization signature.{v, z} :=
+def actual.{u_2, u_4} : Realization signature.{u_2, u_4} :=
   realize signature (fun _ _ w => wᴴ) (fun e => nomatch e)
-def rejected.{v, z} : Realization signature.{v, z} :=
+def rejected.{u_2, u_4} : Realization signature.{u_2, u_4} :=
   realize signature (fun _ _ _ => fun _ _ => 2) (fun e => nomatch e)
 
-abbrev arena.{u, v, w, z} : Arena where
-  signature := signature.{v, z}
-  Law R := ∀ {a : Type u} {b : Type v} {i : Type w} {j : Type z}
+abbrev arena.{u_1, u_2, u_3, u_4} : Arena where
+  signature := signature.{u_2, u_4}
+  Law R := ∀ {a : Type u_1} {b : Type u_2} {i : Type u_3} {j : Type u_4}
     [Fintype a] [Fintype b] [Fintype i] [Fintype j]
     [DecidableEq j] (v : Matrix a i ℂ) (w : Matrix b j ℂ)
     (_hw : R.readout () ⟨b, j⟩ w * w = 1) (z : Matrix (i × j) (i × j) ℂ),
@@ -592,14 +592,14 @@ abbrev arena.{u, v, w, z} : Arena where
       v * partialTraceRight z * vᴴ
 
 set_option backward.isDefEq.respectTransparency false in
-private theorem rejected_law.{u, v, w, z} : ¬ arena.{u, v, w, z}.Law rejected := by
+private theorem rejected_law.{u_1, u_2, u_3, u_4} : ¬ arena.{u_1, u_2, u_3, u_4}.Law rejected := by
   intro h
-  have hb := @h (ULift.{u} Unit) (ULift.{v} Unit) (ULift.{w} Unit) (ULift.{z} Unit)
+  have hb := @h (ULift.{u_1} Unit) (ULift.{u_2} Unit) (ULift.{u_3} Unit) (ULift.{u_4} Unit)
     inferInstance inferInstance inferInstance inferInstance inferInstance
     (fun _ _ => 1) (fun _ _ => 1 / 2)
     (by
       ext a b
-      change (∑ _ : ULift.{v} Unit, (2 : ℂ) * (1 / 2)) = if a = b then 1 else 0
+      change (∑ _ : ULift.{u_2} Unit, (2 : ℂ) * (1 / 2)) = if a = b then 1 else 0
       simp [Subsingleton.elim a b]) (fun _ _ => 1)
   have he := congrFun (congrFun hb ⟨()⟩) ⟨()⟩
   simp only [partialTraceRight, Matrix.mul_apply, Matrix.conjTranspose_apply,
@@ -607,18 +607,18 @@ private theorem rejected_law.{u, v, w, z} : ¬ arena.{u, v, w, z}.Law rejected :
     Fintype.sum_prod_type, Fintype.sum_unique] at he
   norm_num at he
 
-private theorem dependence.{v, z} : ObservationalDependence signature.{v, z} actual := by
+private theorem dependence.{u_2, u_4} : ObservationalDependence signature.{u_2, u_4} actual := by
   intro i
-  refine ⟨⟨ULift.{v} Unit, ULift.{z} Unit⟩, 0, (fun _ _ => 1), ?_⟩
+  refine ⟨⟨ULift.{u_2} Unit, ULift.{u_4} Unit⟩, 0, (fun _ _ => 1), ?_⟩
   intro h
   have he := congrFun (congrFun h ⟨()⟩) ⟨()⟩
   change star (0 : ℂ) = star 1 at he
   simp at he
 
-def source_registration.{u, v, w, z} : Registration arena (type_of% (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.partialTrace_isometries.{u, v, w, z})) where
-  actual := realize signature.{v, z} (fun _ _ w => wᴴ) (fun e => nomatch e)
+def source_registration.{u_1, u_2, u_3, u_4} : Registration arena (type_of% (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.partialTrace_isometries.{u_1, u_2, u_3, u_4})) where
+  actual := realize signature.{u_2, u_4} (fun _ _ w => wᴴ) (fun e => nomatch e)
   bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.partialTrace_isometries.{u, v, w, z}, rejected, rejected_law⟩
+  variation := ⟨@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.partialTrace_isometries.{u_1, u_2, u_3, u_4}, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -627,9 +627,9 @@ def source_registration.{u, v, w, z} : Registration arena (type_of% (@_root_.D5.
       exact nomatch e
   dependence := dependence
 
-def registration.{u, v, w, z} :
+def registration.{u_1, u_2, u_3, u_4} :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.partialTrace_isometries.{u, v, w, z}) (Realization signature.{v, z}) Unit Unit where
+      (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.partialTrace_isometries.{u_1, u_2, u_3, u_4}) (Realization signature.{u_2, u_4}) Unit Unit where
   unitName := `D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.partialTrace_isometries.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.PartialTraceIsometries.source_registration
   realizationSource := none
@@ -641,7 +641,7 @@ def registration.{u, v, w, z} :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{v, z} (fun _ _ w => wᴴ) (fun e => nomatch e))
+  readout := some (realize signature.{u_2, u_4} (fun _ _ w => wᴴ) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
