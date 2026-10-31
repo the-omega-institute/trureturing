@@ -181,8 +181,8 @@ theorem sum_spechtTrace_mul_spechtTrace_inv (μ ν : n.Partition) :
         LinearMap.trace ℂ _ ((spechtModuleℂ ν).ρ π⁻¹)) =
         (if μ = ν then (1 : ℂ) else 0) := by
     by_cases he : μ = ν
-    · simpa only [if_pos he] using h
-    · simpa only [if_neg he] using h
+    · simpa only [_root_.FDRep.character, if_pos he] using h
+    · simpa only [_root_.FDRep.character, if_neg he] using h
   calc
     _ = (n.factorial : ℂ) * ((n.factorial : ℂ)⁻¹ *
         ∑ π : Perm (Fin n), LinearMap.trace ℂ _ ((spechtModuleℂ μ).ρ π) *
