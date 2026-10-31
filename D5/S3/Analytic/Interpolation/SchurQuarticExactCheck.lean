@@ -94,7 +94,8 @@ example (d : ℝ) (hd : 0 < d) (hdhalf : d ≤ 1 / 2) :
           ((natDegree_C_mul_X_pow_le _ 2).trans (by norm_num))))
         (natDegree_C_mul_X_pow_le _ 4))
     · have hc : (poly d).coeff 4 = -(eps d / (12 * scale d)) := by
-        norm_num [poly, coeff_C_mul]
+        simp only [poly, coeff_sub, coeff_add, coeff_C_mul, coeff_X_pow]
+        norm_num
       rw [hc]
       exact neg_ne_zero.mpr (div_ne_zero he0
         (mul_ne_zero (by norm_num : (12 : ℝ) ≠ 0) hs0))
@@ -188,10 +189,10 @@ example (d : ℝ) (hd : 0 < d) (hdhalf : d ≤ 1 / 2) :
     ring_nf
     have hI3 : I ^ 3 = -I := by norm_num
     have hr3 : ((Real.sqrt 3 : ℝ) : ℂ) ^ 3 = 3 * (Real.sqrt 3 : ℝ) := by
-      rw [pow_succ, h3C]; ring
+      rw [pow_succ, h3C]
     simp only [I_sq, hI3, h3C, hr3]
-    rw [heC] at hs2C ⊢
-    linear_combination (d : ℂ) * hs2C
+    simp only [hs2C, heC]
+    ring
   have hstrict : d < d * Real.sqrt (1 + d ^ 4 / 9) := by
     have H : 1 < Real.sqrt (1 + d ^ 4 / 9) := by
       apply (Real.lt_sqrt (by norm_num : (0 : ℝ) ≤ 1)).mpr
@@ -219,7 +220,11 @@ example (d : ℝ) (hd : 0 < d) (hdhalf : d ≤ 1 / 2) :
     dsimp [m]
     rw [← sub_div, div_right_comm, hdiv]
     simp only [ofReal_sub, ofReal_one]
-    field_simp
+    have hn0 : (n : ℂ) ≠ 0 := by exact_mod_cast (by omega : n ≠ 0)
+    have hn1 : (n : ℂ) - 1 ≠ 0 := by
+      apply sub_ne_zero.mpr
+      exact_mod_cast (by omega : n ≠ 1)
+    field_simp [hdC, hn0, hn1]
     ring
   have hinter (t : ℤ) (ht : 2 ≤ t) : normalizedMonomial t = m t.toNat := by
     have H : (t.toNat : ℤ) = t := Int.toNat_of_nonneg (by omega)
@@ -247,7 +252,11 @@ example (d : ℝ) (hd : 0 < d) (hdhalf : d ≤ 1 / 2) :
   have hthree : error d (normalizedMonomial 3) = (d : ℂ) := by
     unfold error
     have HM : deriv (normalizedMonomial 3) 1 = (1 / 2 : ℂ) := by
-      simpa [normalizedMonomial] using (((hasDerivAt_id (1 : ℂ)).pow 3).div_const (6 : ℂ)).deriv
+      have HMfun : normalizedMonomial 3 = (fun z : ℂ => z ^ 3 / 6) := by
+        funext z
+        norm_num [normalizedMonomial]
+      rw [HMfun]
+      convert (((hasDerivAt_id (1 : ℂ)).pow 3).div_const (6 : ℂ)).deriv using 1 <;> norm_num
     rw [HM]
     dsimp [normalizedMonomial, node, other]
     have h3C : ((Real.sqrt 3 : ℝ) : ℂ) ^ 2 = 3 := by exact_mod_cast h3
@@ -258,7 +267,7 @@ example (d : ℝ) (hd : 0 < d) (hdhalf : d ≤ 1 / 2) :
     ring_nf
     have hI3 : I ^ 3 = -I := by norm_num
     have hr3 : ((Real.sqrt 3 : ℝ) : ℂ) ^ 3 = 3 * (Real.sqrt 3 : ℝ) := by
-      rw [pow_succ, h3C]; ring
+      rw [pow_succ, h3C]
     simp only [I_sq, hI3, h3C, hr3]
     ring
   have hnonempty : (values d).Nonempty := ⟨d, 2, by norm_num, by
