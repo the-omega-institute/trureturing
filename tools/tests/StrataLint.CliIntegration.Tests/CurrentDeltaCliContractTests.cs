@@ -1,10 +1,94 @@
 using System.Text;
 using StrataLint.Cli;
+using StrataLint.Engine;
+using StrataLint.EngineeringScope;
+using StrataLint.TestSupport;
 
 namespace StrataLint.CliIntegration.Tests;
 
 public sealed class CurrentDeltaCliContractTests
 {
+    [Theory]
+    [InlineData("check", "--artifact-capacity", "USAGE: StrataLint check [--protected-base REV] --candidate-lean-report FILE [--scribe-paths-from FILE]")]
+    [InlineData("check-current", "--artifact-capacity", "USAGE: StrataLint check-current --candidate-lean-report FILE [--scribe-paths-from FILE]")]
+    [InlineData("check-current", "--protected-base", "USAGE: StrataLint check-current --candidate-lean-report FILE [--scribe-paths-from FILE]")]
+    [InlineData("check-delta", "--scribe-paths-from", "USAGE: StrataLint check-delta --protected-base REV [--candidate-lean-report FILE] [--artifact-capacity]")]
+    public void UnsupportedCheckOptionsFailBeforeRepositoryAccess(
+        string command, string option, string usage)
+    {
+        var gateway = EmptyGateway();
+        var environment = new ProductionCliEnvironment(
+            "/fixture", gateway, new FakeLeanReportSource(null));
+
+        var result = command switch
+        {
+            "check" => Failure(environment.Check([option, "value", "--candidate-lean-report", "report.json"])),
+            "check-current" => environment.CheckCurrent([option, "value", "--candidate-lean-report", "report.json"]),
+            "check-delta" => environment.CheckDelta(["--protected-base", new string('a', 40), option, "value"]),
+            _ => throw new ArgumentOutOfRangeException(nameof(command)),
+        };
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains(usage, result.Error, StringComparison.Ordinal);
+        Assert.Equal(0, gateway.ReadCount);
+        Assert.Equal(0, gateway.PrepareCount);
+
+        static ExplicitCommandResult Failure(AdmissionOutcome outcome) => outcome switch
+        {
+            AdmissionOutcome.InfrastructureFailure failure => new(2, string.Empty, failure.Message),
+            _ => throw new Xunit.Sdk.XunitException("expected infrastructure failure"),
+        };
+    }
+
+    [Theory]
+    [InlineData("check")]
+    [InlineData("check-current")]
+    [InlineData("check-delta")]
+    public void DeclaredCheckOptionsAreParsedBeforeRepositoryWork(string command)
+    {
+        var gateway = EmptyGateway();
+        var environment = new ProductionCliEnvironment(
+            "/fixture", gateway, new FakeLeanReportSource(null));
+        var arguments = command switch
+        {
+            "check" => (IReadOnlyList<string>)[
+                "--protected-base", new string('a', 40),
+                "--candidate-lean-report", "missing-report.json",
+                "--scribe-paths-from", "missing-paths.txt"],
+            "check-current" => (IReadOnlyList<string>)[
+                "--candidate-lean-report", "missing-report.json",
+                "--scribe-paths-from", "missing-paths.txt"],
+            "check-delta" => (IReadOnlyList<string>)[
+                "--protected-base", new string('a', 40),
+                "--candidate-lean-report", "missing-report.json",
+                "--artifact-capacity"],
+            _ => throw new ArgumentOutOfRangeException(nameof(command)),
+        };
+
+        var result = command switch
+        {
+            "check" => Failure(environment.Check(arguments)),
+            "check-current" => environment.CheckCurrent(arguments),
+            "check-delta" => environment.CheckDelta(arguments),
+            _ => throw new ArgumentOutOfRangeException(nameof(command)),
+        };
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.DoesNotContain("USAGE:", result.Error, StringComparison.Ordinal);
+        Assert.True(gateway.ReadCount > 0 || gateway.PrepareCount > 0);
+
+        static ExplicitCommandResult Failure(AdmissionOutcome outcome) => outcome switch
+        {
+            AdmissionOutcome.InfrastructureFailure failure => new(2, string.Empty, failure.Message),
+            _ => throw new Xunit.Sdk.XunitException("expected infrastructure failure"),
+        };
+    }
+
+    private static FakeRepositoryGateway EmptyGateway() => new(
+        RawChangeSet.Create([]),
+        RawRepositorySnapshot.Create([]),
+        RawRepositorySnapshot.Create([]));
+
     [Theory]
     [InlineData("check", "USAGE: StrataLint check [--protected-base REV] --candidate-lean-report FILE [--scribe-paths-from FILE]")]
     [InlineData("check-current", "USAGE: StrataLint check-current --candidate-lean-report FILE [--scribe-paths-from FILE]")]

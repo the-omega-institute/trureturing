@@ -15,6 +15,13 @@ internal sealed record CheckArguments(
     string? ScribePaths = null,
     bool ArtifactCapacity = false);
 
+internal enum CheckCommand
+{
+    Check,
+    CheckCurrent,
+    CheckDelta,
+}
+
 internal interface IRepositoryGateway
 {
     AdmissionTopologyOutcome InspectAdmissionTopology();
@@ -187,7 +194,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 "repository-prepare",
                 () =>
                 {
-                    var options = ParseCheckArguments(arguments, allowArtifactCapacity: false);
+                    var options = ParseCheckArguments(arguments, CheckCommand.Check);
                     var prepared = repository.Prepare(options.ProtectedBase);
                     var bootstrap = BootstrapGate.Evaluate(prepared.Changes);
                     return (
@@ -372,8 +379,11 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
 
     private static CheckArguments ParseCheckArguments(
         IReadOnlyList<string> arguments,
-        bool allowArtifactCapacity)
+        CheckCommand command)
     {
+        var allowProtectedBase = command is CheckCommand.Check or CheckCommand.CheckDelta;
+        var allowScribePaths = command is not CheckCommand.CheckDelta;
+        var allowArtifactCapacity = command is CheckCommand.CheckDelta;
         string? protectedBase = null;
         string? candidateLeanReport = null;
         string? scribePaths = null;
@@ -389,9 +399,9 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
 
             var target = arguments[index] switch
             {
-                "--protected-base" when protectedBase is null => 0,
+                "--protected-base" when allowProtectedBase && protectedBase is null => 0,
                 "--candidate-lean-report" when candidateLeanReport is null => 1,
-                "--scribe-paths-from" when scribePaths is null => 2,
+                "--scribe-paths-from" when allowScribePaths && scribePaths is null => 2,
                 _ => throw CheckUsage(),
             };
             if (++index >= arguments.Count)
@@ -418,7 +428,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         + "--candidate-lean-report FILE [--scribe-paths-from FILE]\n"
         + "USAGE: StrataLint check-current --candidate-lean-report FILE [--scribe-paths-from FILE]\n"
         + "USAGE: StrataLint check-delta --protected-base REV [--candidate-lean-report FILE] "
-        + "[--scribe-paths-from FILE] [--artifact-capacity]\n"
+        + "[--artifact-capacity]\n"
         + "check-delta requires --candidate-lean-report FILE for non-theory changes");
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
