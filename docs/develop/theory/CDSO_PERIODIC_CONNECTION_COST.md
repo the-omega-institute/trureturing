@@ -1590,3 +1590,1549 @@ that quantifier order, and they make no extremal assertion for
 graphs outside the prescribed bipartite orientation and budgets.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 9. Polynomial uniformity on a positive-excess sublevel
+
+All laws and graphs in this section have exactly the domains of
+Definition 1.1. In particular every nonempty source neighborhood remains
+allowed. Fix a finite $R\ge4$, put
+
+$$
+C_0=R^2+10,\qquad J=\lceil4C_0\rceil,\qquad
+\kappa=h/\sqrt a\in[7/2,R],
+\tag{9.1}
+$$
+
+and increase an $R$-only lower threshold for $a$ when specified below.
+All constants with subscript $R$ are positive and finite and depend only
+on this fixed $R$. Every $O_R$ estimate is uniform in $h$, the law, its
+labels and the bounded indices under discussion. We may assume
+$s\le2a$ and $h\ge J$. A branch index selected from an approximate law
+is not assumed to belong to $J_*$.
+
+**Lemma 9.1 (The relaxed-sublevel bootstrap).** For every sufficiently
+large $a$ depending only on $R$, every law with $H(x)\le M+1$ has a
+partition $C\dot\cup D=[s]$ with the following properties. Write
+
+$$
+\begin{gathered}
+|C|=m=a+j,\quad r=m-1,\quad |D|=n=h+1-j,\\
+u_c=j/r,\quad \alpha=(a-1)/r,\quad
+\beta=j/(rn),\quad \eta=\beta^{-1},\\
+t_k=y_k\ (k\in D),\quad u=\sum_{k\in D}t_k,\quad
+c=\min_{i\in C}y_i,\quad \delta=\max_{k\in D}t_k.
+\end{gathered}
+\tag{9.2}
+$$
+
+Then $2\le j\le J$, $\kappa^2/j^2>5/2$,
+$u>\ell_j=(j-1)/(m-2)$, and
+
+$$
+u=O_R(a^{-1/2}),\qquad
+c\ge1-O_R(a^{-1/2}),\qquad
+\delta\le\beta(1+O_R(a^{-1/4})).
+\tag{9.3}
+$$
+
+The partition is the threshold partition determined by the actual
+marginals. There is no hypothesis on the positive support of $x$.
+
+**Proof.** Growing Lemma 7.1 applies on the enlarged sublevel: the
+comparison $S_1$ gives
+$M+1\le S_1+1\le a^3+C_0a^2$ eventually, uniformly in (9.1).
+Its threshold is $b/a$, with $b=4C_0$, and its core floor is
+$c_0=(8C_0+1)^{-1}$. In particular it gives $1\le j\le J$,
+$t_k<b/a$, $y_i\ge c_0$ on $C$, $u=O_R(a^{-1/2})$, and, for
+$v=a\mathbb P(T\cap D\ne\varnothing)$,
+
+$$
+\begin{gathered}
+v\ge c_R>0,\qquad v\le j+O_R(a^{-1/2}),\\
+\frac{H-B_0(a)}{a^2}
+\ge\kappa^2/v+2v+2j-2-O_R(a^{-1/2}).
+\end{gathered}
+\tag{9.4}
+$$
+
+This invocation uses the stated $a^3+C_0a^2$ sublevel of Growing
+Lemma 7.1, rather than the exact-minimum sublevel of Growing Lemma 15.2.
+For $1\le k\le J$, direct expansion of $S_k$ gives
+
+$$
+\frac{S_k-B_0(a)}{a^2}=g_k(\kappa)+O_R(a^{-1/2}),\qquad
+g_k(\kappa)=\kappa^2/k+4k-2.
+\tag{9.5}
+$$
+
+Let $\mathcal U(\kappa)=\min_{k\le J}g_k(\kappa)$ and
+$\phi_j(\kappa)=\min_{0<w\le j}
+(\kappa^2/w+2w+2j-2)$. Growing Theorem 7.2's scalar evaluation
+identifies $\min_j\phi_j=\mathcal U$ on this interval. Clipping
+$v$ to $w=\min(v,j)$ in (9.4), and using
+$H\le M+1\le\min_{k\le J}S_k+1$, gives
+
+$$
+0\le\phi_j(\kappa)-\mathcal U(\kappa)
+\le O_R(a^{-1/2})+a^{-2}.
+\tag{9.6}
+$$
+
+At a zero of this difference in $[7/2,R]$, the scalar phase formula
+excludes $j=1$. For $j=2$ it gives $\kappa^2/j^2\ge49/16$;
+for $j\ge3$ it gives $\kappa^2/j^2\ge4(j-1)/j\ge8/3$.
+Consequently the minimum of $\phi_j-\mathcal U$ on the finite union
+
+$$
+\{(\kappa,1):7/2\le\kappa\le R\}
+\ \cup\!
+\bigcup_{j=2}^J
+\{(\kappa,j):7/2\le\kappa\le R,\ \kappa^2/j^2\le5/2\}
+\tag{9.7}
+$$
+
+is a positive $R$-only number. The functions are explicit continuous
+functions on these compact sets; empty sets are omitted. Choosing $a$
+so that the right side of (9.6) is smaller than this number proves the
+index and margin assertions. This compactness concerns a fixed ratio
+interval and a bounded finite index set, not laws at fixed $a,h$.
+
+For this same actual $j$, use $H\le S_j+1$ in (9.4)--(9.5).
+On $0<w\le j$, the derivative of $\kappa^2/w+2w$ is at most
+$-1/2$. Hence $j-w=O_R(a^{-1/2})$, and
+$v=j+O_R(a^{-1/2})$. Since $au\ge v$ and
+$a\ell_j=j-1+O_R(a^{-1})$, this proves $u>\ell_j$.
+
+We give the residual bootstrap on this enlarged sublevel explicitly.
+For the same law set
+
+$$
+\begin{gathered}
+B=|T\cap D|,\quad L=|T\cap C|,\quad K=L+B,\quad A=\{B>0\},\\
+\mathfrak a=mr(2m-1),\quad \mathfrak b=3m^2-3m+1,\quad d=2m-1,\\
+Q(l)=(m-l)(r-l)(2m-1+l)=\mathfrak a-\mathfrak b l+l^3,\\
+f_u(y)=r^2/y-d(j-1+u)/y^2,\quad \bar y=(a-u)/m,\\
+\mathcal S_f=\sum_{i\in C}f_u(y_i)-m f_u(\bar y),\\
+\mathcal B(w)=\frac{r^2m^2}{a-w}
+             -\frac{dm^3(j-1+w)}{(a-w)^2},\qquad
+\mathcal A(u)=\frac{\mathcal B(0)-\mathcal B(u)}u,\\
+\gamma=\eta^2-\mathfrak a+\mathcal A(u).
+\end{gathered}
+\tag{9.8}
+$$
+
+On $c_0\le y\le1$, differentiation gives $f_u''(y)\ge a^2$
+eventually. Also, uniformly on $0\le w\le u$,
+
+$$
+\begin{gathered}
+\mathcal B'(w)=-a^2+O_R(a),\qquad
+\mathcal A(u)=a^2+O_R(a),\\
+z_*:=\frac{n^2}{j^2a}=\frac{\kappa^2}{j^2}+O_R(a^{-1/2}),\qquad
+\eta^2/a^3=z_*+O_R(a^{-1}),\\
+(\mathfrak a-\mathcal A(u))/a^3=2+O_R(a^{-1}),\qquad
+\gamma\ge a^3/4,\quad \gamma=O_R(a^3).
+\end{gathered}
+\tag{9.9}
+$$
+
+The incidence identities (Growing (15.12)--(15.14)) are algebraic
+identities and inequalities for this actual law. With
+$I_i=\mathbf1_{i\in T}$ and
+
+$$
+\rho_i=(1-I_i)d(r-L)+I_i(m-L)(m-L-1)\ge0,
+\tag{9.10}
+$$
+
+they read
+
+$$
+\begin{gathered}
+\sum_{i\in C}\rho_i=Q(L),\qquad
+\mathbb E\rho_i=\mathbb E[L^2I_i]-r^2y_i+d(j-1+u),\\
+H\ge H_D+\mathcal B(u)+\mathbb E Q(L)+\mathcal S_f,\\
+ru-j\le m\mathbb E[B-1;A]+\mathbb E[L;A].
+\end{gathered}
+\tag{9.11}
+$$
+
+Here $H_D=\mathbb E[K^2\sum_{k\in T\cap D}t_k^{-2};A]$.
+Nonnegativity in (9.10) follows from the consecutive integer factors,
+including $L=m$. For $K\ge L$, dropping the nonnegative difference
+$K^2-L^2$ and using $y_i^{-2}\ge1$ proves the middle line of
+(9.11). Strong Jensen gives
+$\mathcal S_f\ge(a^2/2)\sum_{i\in C}(y_i-\bar y)^2$.
+
+For $B>0$ define
+
+$$
+\begin{aligned}
+V_T&=\sum_{k\in T\cap D}t_k^{-1},\\
+\mathcal G_T
+&=K^2\sum_{k\in T\cap D}t_k^{-2}+Q(L)-\mathcal A(u)B
+  -2\eta V_T+\gamma B-\frac\gamma r\{m(B-1)+L\}.
+\end{aligned}
+\tag{9.12}
+$$
+
+The actual marginal identity gives $\mathbb E[V_T;A]=n$.
+Substitution in (9.11), using $\gamma\ge0$, yields
+
+$$
+\begin{gathered}
+H\ge E_j+\mathbb E[\mathcal G_T;A]
+              +\mathbb E[Q(L);A^c]+\mathcal S_f,\\
+E_j=\mathcal B(0)+2\eta n-j\gamma/r=S_j+O_R(a).
+\end{gathered}
+\tag{9.13}
+$$
+
+The last equality follows from
+$\mathcal B(0)=a^3+2ja^2+O_R(a)$,
+$j(\mathfrak a-\mathcal A(u))/r=2ja^2+O_R(a)$ and
+$m^3r/(a-1)=a^3+4ja^2+O_R(a)$.
+For a tail singleton, $\mathcal G_{\{k\}}=(t_k^{-1}-\eta)^2$.
+For every other type with $B>0$, completing reciprocal squares gives
+
+$$
+\mathcal G_T\ge
+\eta^2(1-B/K^2)-\mathcal A(u)(B-1)
+-\mathfrak b L+L^3-\frac\gamma r(K-1).
+\tag{9.14}
+$$
+
+If $2\le K\le\sqrt a$, then $B/K^2\le1/2$ and all negative
+terms after the first are $O_R(a^{5/2})$. Thus (9.14) is at least
+$a^3/4$ eventually. If $K>\sqrt a$, the actual threshold
+$t_k<b/a$ gives $K^2t_k^{-1}>4\eta$ eventually. Using $Q(L)\ge0$
+in (9.12) instead gives
+
+$$
+\mathcal G_T\ge\frac{BK^2a^2}{2b^2}-\mathcal A(u)B
+            +\gamma\left(1-\frac{K-1}r\right).
+\tag{9.15}
+$$
+
+For $K\le m$ the last term is nonnegative; for $K>m$ its negative
+part is at most $\gamma n/r=O_R(a^{5/2})$, whereas the first
+term then has order at least $a^4$. In both cases (9.15) is at
+least $a^3/(4b^2)$ eventually. This covers every $K\le s$.
+
+All three residuals in (9.13) are therefore nonnegative. Since
+$H\le M+1\le S_j+1$, their sum is $O_R(a)$; the added constant
+one has been retained in this comparison. It follows that
+
+$$
+p_2:=\mathbb P(A,K\ge2)=O_R(a^{-2}),\qquad
+\sum_{i\in C}(y_i-\bar y)^2=O_R(a^{-1}).
+\tag{9.16}
+$$
+
+As $\bar y=1-O_R(a^{-1})$, this gives the core bound in (9.3).
+Put $x_k=x_{\{k\}}$. Then $0\le t_k-x_k\le p_2$.
+If $w=\eta t_k\ge1$, we have $x_k\ge t_k/2$ eventually,
+since $\eta p_2=O_R(a^{-1/2})$. Its singleton square implies
+
+$$
+\frac\eta2\frac{(w-1)^2}{w}
+\le x_k(t_k^{-1}-\eta)^2\le O_R(a).
+\tag{9.17}
+$$
+
+Thus $(w-1)^2/w=O_R(a^{-1/2})$, so $w-1=O_R(a^{-1/4})$.
+Labels with $t_k<\beta$ already obey the asserted upper bound.
+This proves (9.3) for the positive-excess sublevel. ∎
+
+**Theorem 9.2 (Full-law polynomial cap stability, including near
+branches).** There are $A_R,B_R$ such that for every integer pair in
+(9.1) with $a\ge A_R$ and every original law with
+
+$$
+0\le\tau:=H(x)-M\le1,
+\tag{9.18}
+$$
+
+the actual partition of Lemma 9.1 has an index $2\le j\le J$ and
+satisfies $0\le S_j-M\le\tau$. For its notation (9.2), let
+$\varepsilon=\sum_{T\text{ exceptional}}x_T$, with exceptional
+meaning every type except $C$ and the singletons in $D$. Then
+
+$$
+\begin{gathered}
+e:=\mathbb E[K-1;A]\le\tau/a^3,\qquad
+|u-u_c|\le4\tau/a^3,\qquad
+\varepsilon\le16\tau/a^2,\\
+|y_i-\alpha|\le3\varepsilon\quad(i\in C),\\
+\sum_{k\in D}(t_k-u/n)^2\le8\beta^3\tau,\qquad
+\max_{k\in D}|t_k-\beta|
+\le\sqrt{8\beta^3\tau}+\frac{4\tau}{na^3},\\
+\|x-x^{j,*}\|_1\le B_R a^{-2}\sqrt\tau.
+\end{gathered}
+\tag{9.19}
+$$
+
+Here $x^{j,*}$ is the actual cap law on this partition, even when
+$j$ is a nonwinning index. In particular every tail marginal is
+between $\beta/2$ and $3\beta/2$ after increasing $A_R$.
+There is a quantitative winning-index implication:
+
+$$
+\tau\le\frac1{2J^2a}\quad\Longrightarrow\quad j\in J_*.
+\tag{9.20}
+$$
+
+**Proof.** We retain the Jensen losses in the strict-payment argument.
+Use $\mathfrak a,\mathfrak b,d,\rho_i$ from (9.8)--(9.10), and put
+
+$$
+\begin{gathered}
+\mathfrak c=rd,\qquad
+b(u)=d((m-2)u-(j-1))>0,\\
+F_j(u)=\frac{n^2}{u}+\frac{r^2m^2}{a-u}
+                    +\frac{m^3b(u)}{(a-u)^2},\\
+P_j=-F_j'(u_c),\qquad
+\Lambda=3/\delta^2-\max\{\mathfrak a,\mathfrak b\}/c^2.
+\end{gathered}
+\tag{9.21}
+$$
+
+On $A$, each $\mathfrak c B-\rho_i\ge0$, and
+
+$$
+\sum_{i\in C}(\mathfrak c B-\rho_i)
+=\mathfrak a(B-1)+\mathfrak b L-L^3
+\le\max\{\mathfrak a,\mathfrak b\}(K-1).
+\tag{9.22}
+$$
+
+Indeed for $I_i=0$ the left summand is
+$d\{r(B-1)+L\}$; for $I_i=1$ it is
+$\mathfrak c(B-1)+r^2+dL-L^2\ge0$ for $1\le L\le m$.
+Off $A$ every $\rho_i\ge0$. Weight these signed inequalities
+by $y_i^{-2}\le c^{-2}$, and use
+$B(K^2-1)\ge3(K-1)$ on $A$. The exact incidence identity for
+$H$ then gives
+
+$$
+H\ge\sum_{k\in D}t_k^{-1}
+       +\sum_{i\in C}\{r^2/y_i+b(u)/y_i^2\}+\Lambda e.
+\tag{9.23}
+$$
+
+For example this identity follows directly by substituting
+$\mathbb E\rho_i=\mathbb E[L^2I_i]-r^2y_i+d(j-1+u)$,
+and keeping the nonnegative core term from $K^2-L^2$.
+
+Let $\bar t=u/n$. The two Jensen losses in (9.23) can be
+retained as
+
+$$
+\begin{gathered}
+H\ge F_j(u)+\Lambda e+\mathcal J_D
+                   +a^2\sum_{i\in C}(y_i-\bar y)^2,\\
+\mathcal J_D=\sum_{k\in D}t_k^{-1}-n^2/u
+=\sum_{k\in D}\frac{(t_k-\bar t)^2}{\bar t^2t_k}
+\ge\frac1{8\beta^3}\sum_{k\in D}(t_k-\bar t)^2.
+\end{gathered}
+\tag{9.24}
+$$
+
+The last bound uses $\bar t\le\delta\le2\beta$ from Lemma 9.1.
+For the core loss, the second derivative of
+$r^2/y+b(u)/y^2$ is at least $2a^2$ on $0<y\le1$.
+
+The scalar function in (9.21) is strictly convex on
+$\ell_j<u<a$: differentiation gives Growing (15.22), with all
+four displayed terms positive. At $u_c$ its exact derivative is
+
+$$
+F_j'(u_c)=-\frac{n^2r^2}{j^2}
+ +\frac{r^2(2mr^2+2m-1)}{(a-1)^2}.
+\tag{9.25}
+$$
+
+By (9.9), $P_j/a^3=z_*-2+O_R(a^{-1})$.
+The bounds (9.3) therefore give, uniformly over all surviving indices,
+
+$$
+P_j\ge a^3/4,\qquad
+\frac{\Lambda-(m/r)P_j}{a^3}
+\ge2z_*-O_R(a^{-1/4})\ge1.
+\tag{9.26}
+$$
+
+The original mean also gives $(u-u_c)_+\le(m/r)e$ by
+(9.11), since $m(B-1)+L\le m(K-1)$ on $A$.
+Apply the supporting tangent of $F_j$ at $u_c$, where $F_j(u_c)=S_j$.
+If $u\le u_c$, keep $P_j(u_c-u)$; if $u>u_c$, pay this
+negative tangent term using $(m/r)P_je$. Equations (9.24)--(9.26)
+prove the quantitative inequality
+
+$$
+H-S_j\ge a^3 e+\frac{a^3}{4}(u_c-u)_+
+       +\mathcal J_D+a^2\sum_{i\in C}(y_i-\bar y)^2.
+\tag{9.27}
+$$
+
+In particular $S_j\le H$ and $S_j\ge M$, because its cap is an
+admissible law. Thus every term on the right is at most $\tau$.
+This proves the assertions about $e,u$ and the tail variance.
+The supporting-tangent inequality used here has precisely the
+one-dimensional convexity hypotheses verified in (9.25)--(9.26);
+see Boyd--Vandenberghe, *Convex Optimization*, §3.1.3, printed p.69.
+
+To obtain exceptional mass, retain the exact common-mean identity
+
+$$
+\zeta:=\mathbb E[m-L;A^c]
+=j-ru+r\mathbb E[B-1;A]+e
+\le r(u_c-u)_++me.
+\tag{9.28}
+$$
+
+On $A^c$ every type other than $C$ has $m-L\ge1$; on $A$ every
+exceptional type has $K-1\ge1$. Hence
+$\varepsilon\le\zeta+e\le(4r+m+1)\tau/a^3
+\le16\tau/a^2$, using $m,r\le2a$.
+Normalization and the original mean give (3.4), so
+
+$$
+x_C-\alpha=-\frac1r\sum_{T\text{ exceptional}}(K-1)x_T,
+\qquad |x_C-\alpha|\le2\varepsilon.
+\tag{9.29}
+$$
+
+Every core marginal is $x_C$ plus at most $\varepsilon$, proving
+its bound. The tail bound in (9.19) follows from (9.24) and
+$|\bar t-\beta|=|u-u_c|/n$.
+Here $n\asymp_R\sqrt a$ and $\beta\asymp_R a^{-3/2}$.
+Consequently that tail bound divided by $\beta$ tends uniformly
+to zero for $\tau\le1$; this proves its asserted neighborhood.
+Also
+
+$$
+\sum_{k\in D}(t_k-x_{\{k\}})
+=\mathbb E[B;A,K\ge2]\le2e.
+\tag{9.30}
+$$
+
+Combining (9.29)--(9.30) with Cauchy for the tail deviations gives
+
+$$
+\|x-x^{j,*}\|_1
+\le3\varepsilon+2e+\sqrt{8n\beta^3\tau}
+                          +4\tau/a^3
+\le B_R a^{-2}\sqrt\tau.
+\tag{9.31}
+$$
+
+Finally $S_j$ has denominator dividing $j(a-1)$. If $k\in J_*$,
+a positive $S_j-S_k$ is at least $1/(jk(a-1))\ge1/(J^2(a-1))$.
+The bound $S_j-M\le\tau$ therefore proves (9.20).
+No separation assumption on the real phase parameter has been imposed;
+nonwinning branches remain in (9.19) until this rational test excludes
+them. All exact ties remain. ∎
+
+**Lemma 9.3 (All-cardinality local remainder bounds).** There are
+$A_R,L_R$ such that, for every winning cap and original law satisfying
+
+$$
+\varepsilon\le1/16,\qquad
+|y_k-\beta|\le\beta/2\quad(k\in D),
+\tag{9.32}
+$$
+
+one has, with $P(x)$ as in (3.1) and $\nu_k=y_k-\beta$,
+
+$$
+H(x)\ge S_j+P(x)+\frac1{3\beta^3}\sum_{k\in D}\nu_k^2
+                         -L_Ra^{11}\varepsilon^2.
+\tag{9.33}
+$$
+
+In addition, along any probability-law segment with marginals at least
+$\delta_0>0$, a direction $v$ satisfies
+
+$$
+|D^2H(x)[v,v]|\le10s^3\delta_0^{-3}\|v\|_1^2.
+\tag{9.34}
+$$
+
+The constants cover every source cardinality up to $s$.
+
+**Proof.** Put $z=x_C$ and use (9.29). For each core label set
+$e_i=\sum_{T\text{ exceptional},\,i\in T}x_T$ and
+$f_i=\sum_{T\text{ exceptional},\,i\in T}K^2x_T$.
+Then $0\le e_i\le\varepsilon$, $0\le f_i\le s^2\varepsilon$,
+and its energy is $(m^2z+f_i)/(z+e_i)^2$. The marginal displacement
+has magnitude at most $3\varepsilon$ and the numerator displacement
+at most $2m^2\varepsilon+s^2\varepsilon$.
+Since $\alpha\ge1/2$, the segment joining these arguments to their
+cap arguments has marginal at least $1/4$. Direct differentiation of
+$A/y^2$ bounds the sum of the core Taylor remainders by
+$O_R(a^3\varepsilon^2)$.
+
+For each tail label set
+
+$$
+q_k=\sum_{T\text{ exceptional},\,k\in T}(K^2-1)x_T\ge0.
+\tag{9.35}
+$$
+
+The exact tail energy is $\sum_k(1/y_k+q_k/y_k^2)$, and
+$\|q\|_2\le\sum_kq_k\le s^3\varepsilon$.
+On (9.32), the exact reciprocal identity and the derivative of $y^{-2}$
+give
+
+$$
+\begin{aligned}
+\sum_k\frac1{y_k}
+&\ge\frac n\beta-\beta^{-2}\sum_k\nu_k
+                           +\frac2{3\beta^3}\|\nu\|_2^2,\\
+\sum_k\frac{q_k}{y_k^2}
+&\ge\beta^{-2}\sum_kq_k
+                      -16\beta^{-3}\|q\|_2\|\nu\|_2.
+\end{aligned}
+\tag{9.36}
+$$
+
+The first line uses
+$1/y=1/\beta-(y-\beta)/\beta^2+(y-\beta)^2/(\beta^2y)$.
+The inequality $16QV\le V^2/3+192Q^2$ retains
+$\|\nu\|_2^2/(3\beta^3)$ and pays at most
+$192\beta^{-3}s^6\varepsilon^2$.
+Since $\beta^{-3}=O_R(a^{9/2})$ and $s\le2a$, this payment is
+$O_R(a^{21/2}\varepsilon^2)\le O_R(a^{11}\varepsilon^2)$.
+The core and tail linear terms, including $\beta^{-2}\sum q_k$,
+are exactly $DH(x^{j,*})[x-x^{j,*}]=P(x)$ by Lemma 2.3.
+This proves (9.33).
+
+For (9.34), write $A_i(x)=\sum_{T\ni i}K^2x_T$.
+On a probability-law segment, $0\le A_i\le s^2y_i$, while
+$|D A_i[v]|\le s^2\|v\|_1$ and $|D y_i[v]|\le\|v\|_1$.
+The exact second derivative is
+
+$$
+D^2(A_i/y_i^2)[v,v]
+=6A_i(Dy_i[v])^2/y_i^4-4DA_i[v]Dy_i[v]/y_i^3.
+\tag{9.37}
+$$
+
+Its absolute value is at most $10s^2\delta_0^{-3}\|v\|_1^2$.
+Summing over $s$ labels proves (9.34), without counting or
+restricting the exceptional types. ∎
+
+**Lemma 9.4 (Uniform graph realization and near-minimum comparison).**
+There are $A_R,U_R,E_R,T_R$ such that, whenever (9.1) holds,
+$a\ge A_R$ and $N\ge a^{24}$, the original graph class is
+nonempty and contains a graph with
+
+$$
+W(G)\le M+\chi_N/N+U_Ra^{10}/N^2.
+\tag{9.38}
+$$
+
+Every original graph with value at most the right side of (9.38)
+satisfies the same-law bounds
+
+$$
+0\le H(x_G)-W(G)\le T_Ra^{17}/N^2,\qquad
+0\le H(x_G)-M\le E_Ra^{7/2}/N.
+\tag{9.39}
+$$
+
+**Proof.** Uniformly for the bounded winning indices,
+$m,r\in[a,2a]$, $n\asymp_R\sqrt a$, $\alpha\ge1/2$ and
+$\beta\asymp_R a^{-3/2}$. The displayed price formulas give
+$b_j=O_R(a^3)$, $c_j=O_R(a^2)$, hence
+$0<\chi_{j,N}=O_R(a^{7/2})$ and $M=O_R(a^3)$.
+
+Choose a winning $j$ with $\chi_{j,N}=\chi_N$. Reuse Lemma 4.2's
+single joint construction: $n$ connectors, $d=d_{j,N}<r$
+missing-one core sources, and
+
+$$
+F=\frac{(a-1)N-n-(r-1)d}{r},\qquad T=N-F-n-d.
+\tag{9.40}
+$$
+
+The residue makes $F,T$ integers. The exact shared budgets are
+$F+T+n+d=N$ and $mF+rd+2n+T=aN$. Write
+$f_0=(n+(r-1)d)/r=O_R(a)$, so $F=\alpha N-f_0$ and
+$T=n\beta N-n+(n-d)/r$. Give the $T$ singleton sources to
+the $n$ tails with counts differing by at most one. Each tail degree
+then differs from $\beta N+1/r-d/(rn)$ by less than one.
+A core degree is $F+d-o_i+e_i$, where $o_i$ and $e_i$ count its
+omissions and connector endpoints. Thus the law satisfies
+
+$$
+\|x_G-x^{j,*}\|_1=O_R(a/N),\qquad
+\min_i y_i\ge\beta/2
+\tag{9.41}
+$$
+
+for the stated threshold, after increasing $A_R$.
+Here $F,T>0$. A full-core source connects all core sinks, and the
+one connector per tail connects every tail. Repeated neighborhoods
+belong to different sources, so the graph is simple and bipartite.
+All sink degrees exceed $s$ once $N\ge a^{24}$ and $a\ge A_R$;
+indeed $\beta N/2\gg_R s$. This proves strict orientation for
+the same graph, including every integer residue.
+
+On the segment to its cap the least marginal is at least $\beta/2$.
+Equation (9.34) and (9.41) bound the absolute Taylor remainder by
+$O_R(a^{15/2}(a/N)^2)=O_R(a^{19/2}/N^2)$.
+Its linear term is exactly $(nb_j+dc_j)/N=\chi_N/N$.
+As $W\le H$, this proves (9.38) with the stated $a^{10}$ envelope.
+
+For every competitor on this upper sublevel, $W\le L_Ra^3$ for
+an $R$-only $L_R$: use $M=O_R(a^3)$, the price bound and (9.38).
+The edge inequality in the original domain gives
+$\vartheta H\le W\le H$, with $\vartheta=2/(1+\sqrt2)$, and
+$H\ge\sum_i y_i^{-1}$ as in (3.10). Therefore the actual
+marginals obey $y_i\ge\vartheta/(L_Ra^3)$.
+Applying (3.11) with $s\le2a$ gives the first bound of (9.39),
+with, for example, $T_R=4(L_R/\vartheta)^4$.
+Together with (9.38) and $\chi_N=O_R(a^{7/2})$ it gives
+
+$$
+H-M\le O_R(a^{7/2}/N)+U_Ra^{10}/N^2+T_Ra^{17}/N^2
+\le E_Ra^{7/2}/N,
+\tag{9.42}
+$$
+
+since $N\ge a^{24}$. Nonnegativity is the definition of $M$.
+All these bounds concern the same actual law and graph; no independent
+choice of marginal data has entered. ∎
+
+**Theorem 9.5 (A common-growth first-connection theorem in the
+original graph class).** There are absolute integers
+
+$$
+p=24,\qquad q=17
+\tag{9.43}
+$$
+
+with $q\ge1$ and $p>q+2$ such that the following holds. For each
+fixed finite $R\ge4$ there are positive finite $R$-only constants
+$A_R,C_R,D_R$ such that every integer $a\ge A_R$,
+$(7/2)\sqrt a\le h\le R\sqrt a$, and
+$N\ge\lceil D_Ra^p\rceil$ has a nonempty original class and
+
+$$
+\left|V_N-M-\frac{\chi_N}{N}\right|
+\le\frac{C_Ra^q}{N^2}.
+\tag{9.44}
+$$
+
+Every exact minimizer has exactly the source types of Theorem 1.3
+for a law-winning $j\in J_*$ with $\chi_{j,N}=\chi_N$.
+All law ties, price ties and integer residues are included.
+
+**Proof.** Choose one threshold for Lemmas 9.1--9.4. By Growing
+Proposition 15.6, there are at most two winning indices, adjacent
+when distinct. Each price in (2.1), and each $b_j,c_j$, has denominator
+dividing $j^2(a-1)^2$. This follows by substituting
+$\eta=rn/j$ and $\alpha^{-1}=r/(a-1)$ in (1.8) and (2.1);
+the division by $r$ in $\lambda_j$ and $c_j$ cancels one numerator
+factor $r$. Thus a common positive integer denominator for every
+winning price, $\chi_{j,N}$ and $\chi_N$ can be chosen as
+
+$$
+D_*=(a-1)^2\prod_{j\in J_*}j^2\le J^4a^2.
+\tag{9.45}
+$$
+
+Take $L_R$ from (9.33), $U_R,E_R,T_R$ from Lemma 9.4, and put
+
+$$
+\begin{gathered}
+F_R=T_R+256L_RE_R^2,\qquad
+C_R=1+U_R+F_R,\\
+D_R=1+2J^2E_R+2J^4C_R.
+\end{gathered}
+\tag{9.46}
+$$
+
+These are explicit choices in terms of the proved $R$-only estimates;
+none depends on a fixed pair $a,h$ or on $N$.
+
+Consider any graph whose value is at most the upper comparison
+(9.38). Its actual excess $\tau$ is at most $E_Ra^{7/2}/N$ by
+(9.39), and the threshold makes this at most $1/(2J^2a)$.
+Theorem 9.2 therefore supplies a genuinely winning cap partition,
+with $\varepsilon\le16E_Ra^{3/2}/N$ and the tail neighborhood
+in (9.32). Its core neighborhood follows from (9.29).
+After the fixed threshold increase $\varepsilon\le1/16$ as well.
+Equations (9.33) and (9.39) give
+
+$$
+\begin{aligned}
+W(G)
+&\ge M+\frac{\mathcal P_j(G)}N
+        -\frac{256L_RE_R^2a^{14}+T_Ra^{17}}{N^2}\\
+&\ge M+\frac{\mathcal P_j(G)}N-\frac{F_Ra^{17}}{N^2}\\
+&\ge M+\frac{\chi_N}N-\frac{F_Ra^{17}}{N^2}.
+\end{aligned}
+\tag{9.47}
+$$
+
+The last line is Lemma 4.1, which applies to every connected
+source neighborhood type once this winning partition is supplied.
+A graph above (9.38) already exceeds the last line of (9.47).
+Consequently this is a lower bound over the entire original class.
+Combining it with its one actual upper graph proves (9.44).
+
+The finite labelled graph class has an exact minimizer. For any
+such minimizer, (9.38) and (9.47) imply
+
+$$
+0\le\mathcal P_j(G)-\chi_N
+\le\frac{U_Ra^{10}+F_Ra^{17}}N
+\le\frac{C_Ra^{17}}N
+<\frac1{J^4a^2}\le\frac1{D_*}.
+\tag{9.48}
+$$
+
+Both prices have denominator dividing $D_*$. Hence their difference
+is zero. The inequalities
+$\mathcal P_j(G)\ge\chi_{j,N}\ge\chi_N$ are both equalities.
+Lemma 4.1's equality characterization now gives one two-element
+core--tail connector per tail, exactly $d_{j,N}$ missing-one core
+sources, and only full cores and singleton tails for the rest.
+It also gives $\chi_{j,N}=\chi_N$. No source restriction was
+assumed to obtain this conclusion. ∎
+
+The stability and graph deductions in this section are repo-derived.
+They reuse Growing Lemma 7.1's coarse sublevel certificate, Theorem
+7.2's scalar phase evaluation, Theorem 15.5's exact law value and
+Proposition 15.6's finite branch competition. Equations (9.8)--(9.17)
+retain the incidence residuals of Growing (15.7)--(15.18) on the stated
+positive-excess sublevel. The price and exact-budget consumers are
+Lemmas 2.3, 4.1 and 4.2 of this volume. The later allocation, secondary
+energy and refined-periodic selection of Sections 6--8 retain their
+fixed-parameter quantifiers. [*CDSO uniform dilution limit*, Corollary
+40.3](CDSO_UNIFORM_DILUTION_LIMIT.md) treats the finite positive limit
+$N/a^{3/2}\to D$ and its dilution variational value. The window here
+has $N/a^{3/2}\to\infty$ and controls the finer $\chi_N/N$ term
+and exact source exclusion; it makes no new finite-positive-$D$ claim.
+
+The scalar supporting-tangent principle is the intermediate
+literature-attested input of Boyd--Vandenberghe,
+[*Convex Optimization*](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf),
+§3.1.3, printed p.69; the second derivatives above verify its hypotheses.
+The original CDSO definition is Albalahi--Das--Ali--Barman--Hamza,
+[*On the hyperbolic Sombor index and its counterpart*](https://arxiv.org/html/2510.24809v1),
+§1, DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176):
+maximum endpoint degree in the denominator, with the factor
+$1/\sqrt2$ dropped. Its general connected-graph conjecture is not
+a premise of this prescribed bipartite-budget theorem. Full-text
+technical overlap with Zhao--Zhao, DOI
+[10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+is not determined here; no worldwide-priority claim is made.
+
+Theorem 9.5 supplies a sufficient deep polynomial window for the
+common-growth part of Open problem 8.3. It does not determine least
+thresholds or least refined periods, uniform later template selection,
+the scale $N\asymp a^2$, varying $R$, or the extremum when the sink
+number is allowed to vary. The sink budget throughout is exactly
+$s=a+1+h$, with the original nonlinear objective and all the graph
+conditions of Definition 1.1.
+
+## 追加锚（本行以下为增补区）
+
+## 10. Effective uniform exact selection and canonical allocation data
+
+The graph domain and normalization remain those of Definition 1.1.
+Throughout this section $R\ge4$ is fixed and finite. Constants with
+subscript $R$ depend only on $R$, and may be enlarged. Assume
+$a\ge A_R$ and $(7/2)\sqrt a\le h\le R\sqrt a$. Use $J$ from
+(9.1); in particular $2\le j\le J$ for every $j\in J_*$,
+$m,r\le2a$, $\alpha\ge1/2$, $s\le2a$, and
+$n\asymp_R\sqrt a$, $\beta\asymp_R a^{-3/2}$. Theorems and
+proofs here are ordinary mathematical deductions, not claims of
+Lean verification.
+
+**Theorem 10.1 (Uniform exact allocation and reconstruction).**
+After increasing $A_R,D_R$ in Theorem 9.5, for every integer
+$N\ge\lceil D_Ra^{24}\rceil$, the exact relation (6.12) and every
+reconstruction and equality condition in Theorem 6.4 hold. Thus
+Sections 6.1--6.4 have uniform quantifiers on this window, including
+all law ties, price ties and remainders.
+
+**Proof.** For every winning branch and every $0\le d<r$,
+
+$$
+\begin{gathered}
+F=\alpha N+\varphi,\qquad F+d=\alpha N+\sigma,
+\qquad Q=n\beta N-\sigma,\\
+|\varphi|\le C_Ra,\quad |\sigma|\le C_R,
+\quad |z_i|\le C_Ra,\quad
+b=\beta N+\gamma-t/n=\beta N+O_R(1).
+\end{gathered}
+\tag{10.1}
+$$
+
+These follow directly from (6.1), (6.4) and (7.1), since
+$d<r=O_R(a)$ and $n=O_R(\sqrt a)$. They hold uniformly over
+all allocation entries, rather than only minimizing ones. In this
+window $F>0$, every possible core degree
+$F+d+z_i=\alpha N+O_R(a)$ exceeds $s$, and both balanced tail
+degrees exceed $s$. Every reconstruction in Theorem 6.4 is therefore
+legal: (6.13) gives exactly $N$ sources and $aN$ edges; different
+sources may have identical neighborhoods in a simple bipartite graph;
+a full-core source connects all core sinks, and the one connector at
+each tail connects every tail. All source degrees are at most $s$,
+so the required strict orientation holds on every edge.
+
+Conversely Theorem 9.5 gives every original minimizer exactly the
+source types used in (6.2), for $j\in\mathcal J_N$. Its actual law
+also satisfies the bounds used in the proof of that theorem, in
+particular every tail marginal is at least $\beta/2$ by (9.19).
+Thus every tail degree exceeds $4$ uniformly here. The singleton
+transfer in Lemma 6.2 is legal on this same graph and forces exact
+balancing. Lemma 6.3 then applies verbatim: its coupled move fixes
+all degrees and budgets, and its strict equality condition is (6.9).
+All inequalities needed for feasibility have just been made uniform;
+no compactness over fixed integer parameters is being used. This proves
+both directions of (6.12) and the exhaustive preimage assertion. ∎
+
+**Proposition 10.2 (Least period of the complete allocation state).**
+For fixed $a,h,j$, the integer state $(d_{j,N},t_{j,N})$ in (6.1),
+viewed as a sequence for integer $N$, has least positive period
+
+$$
+P_j=\frac{r_jn_j}{\gcd(j,r_jn_j)}.
+\qquad
+P_{\rm data}=\operatorname{lcm}_{j\in J_*}P_j
+\tag{10.2}
+$$
+
+is the least period of the full vector of these states and a sufficient
+period for the graph selection data. This asserts no leastness for the
+optimizer sequence.
+
+**Proof.** Since $a-1=r-j$, direct substitution gives
+
+$$
+d_N=[n+jN]_r,\qquad Q_N=\frac{jN+n-d_N}{r}.
+\tag{10.3}
+$$
+
+A shift $T>0$ preserves $d$ if and only if $r\mid jT$.
+Under that condition $Q_{N+T}-Q_N=jT/r$, so it also preserves
+$t=[Q]_n$ if and only if $n\mid jT/r$. Both conditions together
+are exactly $rn\mid jT$, with least positive solution (10.2).
+The argument is independent of $N$, and also proves leastness on any
+cofinal sequence of consecutive integer budgets. Taking all branches
+gives the least common multiple. For such a shift,
+$\alpha T=T-jT/r$ and $\beta T=jT/(rn)$ are integers;
+$F$ and $b$ increase by these amounts, while $d,t,\varphi,\sigma$
+and $v_\pm$ stay fixed. The prices depend on $d$ alone.
+Consequently the germs (8.4) can equally be defined on residues modulo
+$P_{\rm data}$, using the same formulas and the common state of that
+residue. This does not evaluate a graph at a possibly small residue
+representative. Since $P_{\rm data}\mid P$, the original period $P$
+is retained below without any change of notation. Distinct states can
+have coincident selected values or templates; their period need not
+be the least optimizer period. ∎
+
+**Lemma 10.3 (Exact normalized-radical identity).** For a difference
+$D$ of two functions (8.4), write its terms as in (8.7), and set
+
+$$
+b_l=\frac{a_l'(0)}{a_l(0)},\qquad
+c_l=\frac{k_l}{a_l(0)}>0,\qquad
+q_l(u)=(1+b_lu)^2+c_l^2u^2.
+\tag{10.4}
+$$
+
+Group equal signatures $(b_l,c_l)$, and for each signature let
+$W_q(u)$ be the sum of its affine weights $w_l(u)$, with signs.
+Then $D$ is identically zero if and only if every $W_q$ is the zero
+polynomial. This includes repeated terms, zero weights and negative
+weights.
+
+**Proof.** The discriminant of $q_l$ is $-4c_l^2<0$. Thus it is
+an irreducible quadratic over $\mathbb Q$, with constant term one.
+Two such normalized quadratics agree exactly when $b_l$ and $c_l$
+agree. Distinct ones are nonassociate irreducibles; valuation at each
+of these factors proves independence of their classes in
+$\mathbb Q(u)^*/\mathbb Q(u)^{*2}$. The multiquadratic construction
+then gives independent sign changes of their square roots. To check
+the field step explicitly, induct on the number adjoined. Suppose the
+earlier subset products form a basis, with all sign changes acting
+independently. If the next $q$ were a square $z^2$ in that field, each
+sign automorphism would send $z$ to $z$ or $-z$. Thus $z$ would be a
+simultaneous eigenvector. The subset-product basis has distinct
+characters, so each such eigenspace is one-dimensional over
+$\mathbb Q(u)$, and $z$ would be a base-field multiple of one subset
+product. Squaring contradicts the independent square classes. The next
+quadratic extension therefore has degree two; its basis and all sign
+changes extend the previous ones. This proves the assertion by induction.
+It is the elementary quadratic Kummer construction;
+[Stacks, Section 9.24](https://stacks.math.columbia.edu/tag/09I6)
+gives the standard root-adjoining and sign-automorphism background.
+
+The positive branches in (8.3) satisfy
+
+$$
+R_{k_l}(a_l,u)=\frac{\sqrt{q_l(u)}}{1+b_lu}-1,
+\qquad
+\frac{u^2D(u)}2
+=\sum_q\frac{W_q(u)}{1+b_qu}\sqrt{q(u)}-\sum_qW_q(u).
+\tag{10.5}
+$$
+
+These square roots, as formal series with constant term one, give an
+embedding of the same field into the field of Laurent series. In that
+field $1$ and the individual square roots are linearly independent over
+$\mathbb Q(u)$, by the sign automorphisms. Thus (10.5) vanishes
+exactly when all $W_q/(1+b_qu)$ vanish; then its rational part
+vanishes too. All denominators are units at zero. This also proves
+that normalization is essential: $a_1=1,k_1=1$ and $a_2=2,k_2=2$
+give the same radical quotient, so their opposite weights cancel. ∎
+
+**Proposition 10.4 (Graph-specific classification of exact ties).**
+After increasing the $R$-only threshold $A_R$, on any fixed residue
+$\rho$ modulo $P$, two allocation germs from (8.4) satisfy
+
+$$
+\mathscr A_{\rho,j,z}\equiv\mathscr A_{\rho,j',z'}
+\quad\Longleftrightarrow\quad
+j=j'\ \text{and}\ \{z_i:i\in C\}=\{z_i':i\in C'\}
+\text{ as multisets}.
+\tag{10.6}
+$$
+
+This is a branch-and-histogram classification, not uniqueness of a
+labelled graph or of an isomorphism class.
+
+**Proof.** The normalized frequencies $c$ of core terms are
+$m_j/\alpha_j$, $r_j/\alpha_j$ and $2/\alpha_j$;
+tail terms have frequencies $\eta_j,2\eta_j$. Enlarge $A_R$ so
+that, for every winning index,
+
+$$
+\eta_j\ge13a,\qquad
+m_j/\alpha_j\le4a,\qquad 2/\alpha_j\le4.
+\tag{10.7}
+$$
+
+Indeed $n_j\ge3\sqrt a$ eventually, $r_j\ge a$ and $j\le J$,
+so $\eta_j\ge3a^{3/2}/J$. A full-core frequency is at least
+$a$, hence cannot equal a connector frequency. Nor can it equal a tail
+frequency by (10.7). Full-core frequencies at distinct branches are
+distinct, since $m_jr_j/(a-1)$ strictly increases in $j$. Finally a
+full-core frequency cannot equal any missing-one frequency: such an
+equality would require $m_j(m_j-1)=r_{j'}^2$, whereas the left side
+lies strictly between $(m_j-1)^2$ and $m_j^2$.
+
+Consequently each full-core signature occurs only among full-core terms
+of its own branch. Its grouped coefficient in one germ is its positive
+integer multiplicity times $\alpha_j+\varphi_ju$, whose constant
+term is positive. Lemma 10.3 excludes identity for distinct branches.
+Within one branch, the first signature coordinate is
+$(\sigma_j+z_i)/\alpha_j$. Equality of all its full-core grouped
+coefficients therefore recovers exactly the multiplicity of every value
+of $z_i$. Conversely (8.4) is symmetric in the coordinates of $z$;
+$L,z_0$ and all remaining sums are determined by this multiset. Equal
+histograms on the fixed state hence give identical functions. No
+separation of the other frequency classes from each other is needed. ∎
+
+**Lemma 10.5 (A sufficient quadratic Taylor cutoff).** Put
+
+$$
+T_s=3(6s+5)^2.
+\tag{10.8}
+$$
+
+Two germs (8.4) are identical if and only if their coefficients through
+order $T_s$ agree. This assertion already holds for fixed admissible
+parameters without the extra frequency separation in Proposition 10.4.
+It handles repeated radicals and zero summands.
+
+**Proof.** Use (8.7)--(8.8), with $K\le6s+4$. The case $K=0$ is
+zero. Otherwise write each nonzero summand of $Z$ as $A\sqrt p$,
+including its rational summand by taking $p=1$; here
+$\deg A\le K+1$, $\deg p\le2$, and $p(0)>0$. Choose a maximal
+constant-linearly-independent subset of these analytic summands,
+of size $\ell\le K+1$. Their Wronskian $\mathcal W$ is nonzero.
+The criterion being used is Bostan--Dumas, *Wronskians and linear
+independence*, Theorem 2, American Mathematical Monthly 117 (2010),
+722--727, DOI [10.4169/000298910X515785](https://doi.org/10.4169/000298910X515785),
+[arXiv:1301.6598v1](https://arxiv.org/html/1301.6598v1): over
+characteristic zero, linearly independent formal series have nonzero
+Wronskian. Taking a basis first avoids any independence assumption on
+repeated or cancelling original terms.
+
+For each selected column let $B_0=A$. Differentiation gives
+
+$$
+(A\sqrt p)^{(v)}=p^{1/2-v}B_v,\qquad
+B_{v+1}=pB_v'+(1/2-v)p'B_v,\qquad
+\deg B_v\le K+1+v.
+\tag{10.9}
+$$
+
+For $p=1$ the same formula just differentiates $A$. Factor
+$p^{1/2-(\ell-1)}$ out of its Wronskian column. The entry in row
+$v=0,\ldots,\ell-1$ that remains is
+$p^{\ell-1-v}B_v$, of degree at most
+$K+1+2(\ell-1)-v$. Thus the remaining determinant is a nonzero
+polynomial of degree at most
+
+$$
+\ell(K+1)+\frac32\ell(\ell-1).
+\tag{10.10}
+$$
+
+All the factored functions are units at zero, so this degree bounds
+$\operatorname{ord}_0\mathcal W$. This low-degree determinant
+factorization is the mature method also used by Koiran--Portier--Tavenas,
+*A Wronskian Approach to the Real $\tau$-Conjecture*, §3 and the
+proof of Theorem 13, [arXiv:1205.1015v3](https://arxiv.org/html/1205.1015v3),
+DOI [10.1016/j.jsc.2014.09.036](https://doi.org/10.1016/j.jsc.2014.09.036).
+Their distinct-real-zero bound is not being substituted for a local
+multiplicity bound; (10.9)--(10.10) establish the needed degree here.
+
+Suppose $Z\ne0$. Express $Z$ in the chosen basis and replace a column
+with nonzero coefficient by $Z$. The new determinant is a nonzero
+constant times $\mathcal W$. Expanding on that column, whose $v$th
+entry has order at least $\operatorname{ord}_0Z-v$, gives
+
+$$
+\operatorname{ord}_0Z\le\operatorname{ord}_0\mathcal W+\ell-1.
+\tag{10.11}
+$$
+
+If $\operatorname{ord}_0Z<\ell-1$ this is immediate; otherwise all
+these lower orders are nonnegative and the determinant expansion proves
+it directly. Since $\prod a_l$ is a unit,
+$\operatorname{ord}_0D=\operatorname{ord}_0Z-2$. Equations
+(10.10)--(10.11), with $\ell\le K+1$, imply
+
+$$
+\operatorname{ord}_0D
+\le\ell(K+1)+\tfrac32\ell(\ell-1)+\ell-3
+<3(K+1)^2\le T_s.
+\tag{10.12}
+$$
+
+This proves the sufficient cutoff. The basis argument also covers a
+zero rational part, constant affine denominators, and $\ell=1$.
+No nonvanishing claim was made for an unreduced Wronskian. ∎
+
+**Lemma 10.6 (Uniform rational separation and analytic control).**
+For all winning branches, all residues and all allocations in Section 8,
+set the positive even integer
+
+$$
+Q_0=2(a-1)\prod_{j\in J_*}(j r_j n_j)\le C_Ra^4.
+\tag{10.13}
+$$
+
+For any pair difference $D$ of the corresponding germs,
+
+$$
+(2Q_0)^{k+3}[u^k]D\in\mathbb Z\quad(k\ge0).
+\tag{10.14}
+$$
+
+There are $R$-only positive $c_R,C_R$ such that all these differences
+are holomorphic on a neighborhood of the closed disk
+$|u|\le r_0=c_Ra^{-3/2}$ and satisfy $|D(u)|\le M_0=C_Ra^6$
+on that disk. In particular a first nonzero coefficient of order $k$
+has absolute value at least $(2Q_0)^{-(k+3)}$.
+
+**Proof.** Growing Proposition 15.6 supplies at most two winning
+indices, both bounded by $J$. Each factor $jr_jn_j$ is
+$O_R(a^{3/2})$, proving (10.13). The coefficients of every affine
+weight $w_l$ in (8.7), and the numbers $b_l,c_l$ in (10.4), have
+denominators dividing $Q_0$. For the core this follows from
+
+$$
+\alpha=\frac{a-1}{r},\quad
+\varphi=-\frac{n+(r-1)d}{r},\quad
+\frac{\delta_i}{\alpha}=\frac{d-n+rz_i}{a-1},\quad
+\frac{k}{\alpha}=\frac{kr}{a-1}.
+\tag{10.15}
+$$
+
+For a tail the corresponding quantities are
+
+$$
+\beta=\frac{j}{rn},\quad
+v_-=\frac{n-d-rt}{rn},\quad v_+=v_-+1,\quad
+\frac{v_-}{\beta}=\frac{n-d-rt}{j},\quad
+\frac{k}{\beta}=\frac{krn}{j}.
+\tag{10.16}
+$$
+
+Multiplicities in (8.4) are integers, so do not add denominators.
+These formulas apply also to $a_0$ and to absent terms.
+
+For one normalized term, expand directly as
+
+$$
+R=\sqrt{1+\frac{c^2u^2}{(1+bu)^2}}-1
+ =\sum_{v\ge1}\binom{1/2}{v}c^{2v}u^{2v}(1+bu)^{-2v}.
+\tag{10.17}
+$$
+
+For $q\ge2$ its coefficient of $u^q$ is the sum over
+$1\le v\le q/2$ of
+
+$$
+\binom{1/2}{v}(-1)^{q-2v}
+ \binom{q-1}{q-2v}c^{2v}b^{q-2v}.
+\tag{10.18}
+$$
+
+The denominator of $\binom{1/2}{v}$ divides $2^{2v}$:
+explicitly it is $(-1)^{v-1}C_{v-1}/2^{2v-1}$ with integral
+Catalan number $C_{v-1}$. The remaining monomial has denominator
+dividing $Q_0^q$, so $[u^q]R\in(2Q_0)^{-q}\mathbb Z$.
+The coefficients of orders zero and one vanish. Multiplication by an
+affine weight with denominator dividing $Q_0$, and then by $2/u^2$,
+proves (10.14). This estimate uses the normalized quotients before
+clearing their product; no exponential denominator from a norm
+polynomial is needed.
+
+Uniformly in (10.15)--(10.16),
+$|b_l|+c_l\le C_Ra^{3/2}$. Core offsets have size $O_R(a)$;
+tail offsets $v_\pm$ have size $O_R(1)$, while
+$\beta^{-1}=O_R(a^{3/2})$. Choose $c_R$ small enough that on
+a neighborhood of the closed disk, $|b_lu|,|c_lu|\le1/8$.
+The square root in (10.17) is then its single holomorphic branch
+with value one at zero, and $|R|\le Cc_l^2|u|^2$.
+Every weight coefficient has size at most $C_Ra$ and there are
+$O_R(a)$ terms; hence $\sum_l|w_l(u)|\le C_Ra^2$ on this
+disk. Dividing their vanishing factors $u^2$ in (8.7) gives
+$|D(u)|\le C_Ra^5\le C_Ra^6$, including $u=0$ by continuity.
+This proves the disk and size assertions for one common radius and
+bound. All estimates are uniform in the integer states and allocations. ∎
+
+**Theorem 10.7 (Effective common-growth exact graph selector).**
+For each fixed finite $R\ge4$ there are $R$-only positive constants
+$A_R,D_R,E_R$ such that, for every pair in Definition 1.1 and every
+integer
+
+$$
+N\ge\max\left\{\lceil D_Ra^{24}\rceil,
+                 \left\lceil\exp(E_Ra^2\log a)\right\rceil\right\},
+\tag{10.19}
+$$
+
+the following is an exact selection rule in the original graph class.
+On the residue $\rho=N\bmod P$, replace $B_s$ in (8.6) by $T_s$
+from (10.8). The lexicographically least vectors select precisely all
+pairs attaining (6.12), and Theorem 6.4 reconstructs precisely all exact
+minimizers. All selected pairs have one common branch and one common
+$z$-histogram. Every source-label, endpoint, omission, minimum-offset
+allocation and high-tail-label freedom allowed by that reconstruction
+is retained. One may instead use $P_{\rm data}$ with the coherent
+residue germs described in Proposition 10.2. Neither period is asserted
+to be the least optimizer period, and (10.19) is only a sufficient
+threshold.
+
+**Proof.** Theorem 10.1 first identifies the exact original graph
+minimum with the finite allocation relation. Lemma 10.5 says that
+matching finite vectors means identity of the value germs. Otherwise
+let $k\le T_s$ be the first nonzero coefficient of a pair difference,
+called $c_k$. Cauchy's estimate on the disk of Lemma 10.6 gives, for
+$0<u\le r_0/2$,
+
+$$
+\left|D(u)-c_ku^k\right|
+ \le 2M_0r_0^{-(k+1)}u^{k+1}.
+\tag{10.20}
+$$
+
+Thus its sign is the sign of $c_k$ whenever
+
+$$
+N\ge\max\{2/r_0,
+       4M_0(2Q_0)^{k+3}r_0^{-(k+1)}\},\qquad u=1/N.
+\tag{10.21}
+$$
+
+Indeed the error is then at most half the nonzero leading term by
+(10.14). Since $s\le2a$, $k\le3(12a+5)^2$, $Q_0\le C_Ra^4$,
+$M_0=C_Ra^6$, and $r_0^{-1}=C_Ra^{3/2}$, the logarithm of the
+right side of (10.21) is at most $E_Ra^2\log a$, after choosing
+one $R$-only $E_R$. This bound holds for each pair and residue with
+the same constants. There is no multiplication by the number of
+allocations or residues. Every strict comparison therefore has its
+Taylor sign simultaneously in (10.19); all identities stay exact.
+This proves the selector and all tie claims. Proposition 10.4 then
+identifies the selected equivalence class with one branch and one
+histogram. Exhaustive reconstruction follows from Theorem 10.1. ∎
+
+The coefficient-separation step is logically necessary: even the linear
+function $\varepsilon-u$, for a positive rational $\varepsilon$,
+has a bounded vanishing order but requires $N>1/\varepsilon$ for
+its positive eventual sign. Lemma 10.6 supplies the extra arithmetic
+information for the actual graph functions. Theorem 10.7 therefore
+strengthens the uniformity of the later selector, without inferring a
+uniform sign threshold from finite order alone.
+
+## 11. A necessary source-threshold scale from finite connection costs
+
+This section compares different branches before restricting to a law
+winner. It keeps every graph budget and the strict orientation in
+Definition 1.1. A template-class comparison is not a lower bound for
+all graphs outside those classes.
+
+**Definition 11.1 (Templates on a possibly nonwinning branch).**
+Fix finite $R\ge4$, an integer $J_0\ge2$ and $c>0$. Let
+$(7/2)\sqrt a\le h\le R\sqrt a$, $2\le j\le J_0$, and take
+$a$ sufficiently large in terms of $R,J_0,c$. Define $m,r,n,\alpha,
+\beta,d,F,Q$ by (1.6), (6.1), without requiring $j\in J_*$.
+Let $\widehat{\mathfrak C}_{j,N}$ be the class of original graphs
+having a partition of sizes $m,n$ and exactly $n$ core--tail connectors,
+one per tail, $d$ missing-one core sources, $F$ full-core sources and
+$Q-n$ tail-singleton sources. All endpoint, omission and singleton
+allocations satisfying the original graph conditions are allowed.
+Write
+
+$$
+\widehat V_{j,N}=\min_{G\in\widehat{\mathfrak C}_{j,N}}W(G),
+\qquad \bar\chi_{j,N}=nb_j+dc_j,
+\tag{11.1}
+$$
+
+where the rational formulas (1.8) define $b_j,c_j$ also on this
+branch. The bar distinguishes this algebraic extension from the
+winning-branch price $\chi_N$; positivity of the extended prices
+is not assumed.
+
+**Lemma 11.2 (Uniform full-template comparison).** There are
+$A_{R,J_0,c},C_{R,J_0,c}$ such that for all the above pairs with
+$a\ge A_{R,J_0,c}$ and every integer $N\ge ca^2$, each
+$\widehat{\mathfrak C}_{j,N}$ is nonempty and
+
+$$
+\left|\widehat V_{j,N}-S_j-\frac{\bar\chi_{j,N}}N\right|
+ \le \frac{C_{R,J_0,c}a^5}{N^2}.
+\tag{11.2}
+$$
+
+The estimate is uniform in every integer remainder. In particular its
+lower bound applies to the minimum over every old winning-branch
+template, including unbalanced tail allocations.
+
+**Proof.** Bounded $j$ gives $r,m\asymp a$, $n\asymp_R\sqrt a$,
+$\alpha\ge1/2$ and $\beta\asymp_{R,J_0}a^{-3/2}$.
+The identities (10.1) still hold, uniformly over these branches, except
+that no assertion of law optimality is used. Thus $F>0$ for
+$N\ge ca^2$. For arbitrary $e,o$ in (6.2), all core degrees
+are $\alpha N+O_{R,J_0}(a)$ and exceed $m$. Balanced tail degrees
+are $\beta N+O_{R,J_0}(1)$, hence tend uniformly to infinity even
+at $N=ca^2$. They exceed $2$, the maximum source degree incident
+to a tail. Together with (6.13), this proves the precise source and
+edge counts, simplicity, connectedness and strict orientation of every
+balanced construction. It proves nonemptiness without the unnecessary
+requirement that tail degrees exceed $s$ at this smaller scale.
+
+We first reduce every graph in the template class to such balanced
+tails. Strict orientation at its connector forces each integer tail
+degree $q_k\ge3$, even if it is far from its balanced degree. In
+fact (6.7) is strictly positive for every real $x\ge3$. To check the
+extra interval, the numerator $x^3-3x^2-2$ is increasing on this
+range and at least $-2$, whereas
+$x^2+4\le2(x^2+1)$ and $3x^2+8\ge35$. Thus the second term
+of (6.7) exceeds
+$140/[3x^3(x^2+1)^{3/2}]$, which exceeds the possible negative
+part $2/[x^3(x^2+1)^{3/2}]$ of its first term.
+
+If $q_k\ge q_l+2$, transfer a singleton from $k$ to $l$.
+The donor degree after the transfer is at least $4$ and both
+connector degrees are still strictly less than their tail degrees.
+Core degrees and all source degrees remain fixed. The connector at
+each tail and the full cores preserve connectedness, and changing one
+singleton neighborhood preserves simplicity and both budgets. Strict
+convexity decreases $g(q_k)+g(q_l)$ as in (6.8). Repetition terminates,
+for example by the strictly decreasing integer sum of squared tail
+degrees, at the balanced degrees $b,b+1$. Hence minimizing over the
+whole template class is equivalent to minimizing over balanced tails
+and arbitrary feasible $e,o$. This supplies a full-template lower
+bound, rather than a comparison of two chosen constructions.
+
+We estimate the value on every such balanced graph using its same actual
+empirical law. Put $z_i=e_i-o_i$, $\delta_i=\sigma+z_i$ and use
+$B_i$ from (7.4), before any coupled core minimization. Uniformly,
+
+$$
+\begin{gathered}
+|\sigma|\le C,\quad |\varphi|\le Ca,\quad
+\sum_i|\delta_i|\le Ca,\quad \sum_i\delta_i^2\le Ca^2,
+\quad \max_i|B_i|\le Ca^3,\\
+q_k=\beta N+\nu_k,\quad |\nu_k|\le C,\quad
+\sum_i\delta_i=\sigma,\quad \sum_k\nu_k=-\sigma.
+\end{gathered}
+\tag{11.3}
+$$
+
+Here and within this proof $C$ depends only on $R,J_0,c$.
+For example $\sum|z_i|\le n+d=O(a)$ proves the offset bounds,
+and
+$B_i=m^2\sigma+(r^2-m^2)d-r^2o_i+4e_i$ proves the numerator
+bound. The balanced tail offsets are exactly those of (7.7), with
+$\gamma=O(1)$, proving their uniform boundedness. For large $a$,
+$|\delta_i|\le\alpha N/2$ and $|\nu_k|\le\beta N/2$.
+Taylor expansion of the exact law identity (7.5), with these bounds,
+gives the first two terms in (7.6). Its summed core error is bounded by
+
+$$
+\frac C{N^2}\sum_i
+       (m^2\delta_i^2+|B_i\delta_i|)
+ \le\frac{Ca^4}{N^2};
+\tag{11.4}
+$$
+
+the summed tail error is at most
+$Cn\beta^{-3}/N^2\le Ca^5/N^2$. These estimates follow from the
+Taylor remainder for $(1+x)^{-2}$ on $|x|\le1/2$; in the term
+with $B_i/N$ its remainder after the constant term is bounded by
+$C|B_i\delta_i|/N^2$. No fixed-parameter error is being reused
+as a joint-growth error.
+
+The constant term is $m^3/\alpha+n/\beta=S_j$.
+For clarity the linear coefficient is exactly
+
+$$
+\frac{m^3\varphi+r^3d+4n-2m^2\sigma}{\alpha^2}
+       +(3n+\sigma)\eta^2
+ =nb_j+dc_j.
+\tag{11.5}
+$$
+
+Indeed $\sum_iB_i=m^3\varphi+r^3d+4n$,
+$\sum_i\delta_i=\sigma$, $\sum_k\nu_k=-\sigma$;
+substitution of $\varphi=\sigma-d$, $r\sigma=d-n$ and $m=r+1$
+into (1.8) proves the equality. This is rational algebra and does not
+use any winning-branch inequality.
+
+It remains to pass from this law energy to the original graph objective.
+The scalar inequality
+$0\le x-2(\sqrt{1+x}-1)\le x^2/4$ for $x\ge0$ yields
+
+$$
+0\le H(x_G)-W(G)
+ \le\frac N4\sum_{ui\in E}\frac{d_G(u)^4}{d_G(i)^4}.
+\tag{11.6}
+$$
+
+At a core the fourth-power numerator is
+$Fm^4+(d-o_i)r^4+16e_i\le CNa^4$ and its degree is at least
+$\alpha N/2$. Summing over $m=O(a)$ cores bounds their part
+by $Ca^5/N^2$. At a balanced tail the numerator is $q_k+15$,
+so its part is at most $CN/q_k^3\le C/(\beta^3N^2)$;
+summing over $n$ tails again gives $Ca^5/N^2$.
+Equations (11.3)--(11.6) bound the absolute error on every balanced
+graph, uniformly over its endpoints, omissions, all $d,t$ and labels.
+Their minimum has the same bound. The balancing reduction proves that
+this minimum is $\widehat V_{j,N}$, completing (11.2). ∎
+
+**Theorem 11.3 (An integer-family obstruction and a necessary
+$a^{5/2}$ source threshold).** Set
+
+$$
+a=6t^2,\qquad h=12t-1,\qquad s=a+12t,
+\qquad t\in\mathbb Z_{>0},\quad t\longrightarrow\infty.
+\tag{11.7}
+$$
+
+These parameters lie in the $R=5$ domain for large $t$ and have
+$J_* =\{2\}$. At the exact integer budget $N=a^2t$,
+
+$$
+\widehat V_{3,N}-\widehat V_{2,N}
+      =-84a+O(\sqrt a)<0.
+\tag{11.8}
+$$
+
+Thus the original graph class is nonempty and has exact minimizers,
+but none has any of the law-winning source templates permitted by
+Theorem 9.5 at this smaller budget. No global optimality of branch
+$j=3$ is asserted.
+
+More precisely, for a fixed admissible pair define $T_{\rm src}(a,h)$
+to be the least positive integer $K$ such that, for every integer
+$N\ge K$, the original class is nonempty and every exact minimizer
+has the source-type conclusion of Theorem 1.3, including a law-winning,
+price-winning branch. Theorem 9.5 ensures
+$T_{\rm src}(a,h)\le\lceil D_5a^{24}\rceil$ on this family for
+large $t$. Nevertheless
+
+$$
+\liminf_{t\to\infty}
+ \frac{T_{\rm src}(6t^2,12t-1)}{(6t^2)^{5/2}}
+ \ge\frac{5\sqrt6}{9}.
+\tag{11.9}
+$$
+
+In particular no uniform fixed multiple of $a^2$ suffices for that
+source-type conclusion in the $R=5$ domain.
+
+**Proof.** Here $h/\sqrt a=2\sqrt6-1/(\sqrt6t)$ lies between
+$7/2$ and $5$ for large $t$. Apply Growing Proposition 15.6, retaining
+its exact adjacent-difference formula rather than a limiting phase
+comparison. At $h+1=12t$ and $a=6t^2$ it gives
+
+$$
+\begin{aligned}
+S_3-S_2&=36a-24t+96+\frac{138}{a-1}>0,\\
+S_2-S_1&=-8a^2+32a+40-24t+\frac{46}{a-1}<0
+                     \quad\text{for large }t.
+\end{aligned}
+\tag{11.10}
+$$
+
+For example the polynomial divisions in that formula give
+$D_2(a)=4a^2+32a+96+138/(a-1)$ and
+$D_1(a)=4a^2+20a+40+46/(a-1)$; subtracting
+$24t+(a-1)(12t)^2/(j(j+1))$ gives (11.10).
+Strict discrete convexity makes $j=2$ the unique winner among all
+$1\le j\le h$, and Growing Theorem 15.5 identifies this as the full
+law winner. This proves $J_* =\{2\}$, without asserting that only
+these two adjacent branches need be considered for finite-graph
+optimality.
+
+We next compute the connection-price difference, retaining the remainder
+$d=d_{j,N}$ for each branch. Substituting (1.8) gives the exact rational
+identity, valid on either possibly nonwinning branch,
+
+$$
+\begin{aligned}
+\bar\chi_{j,N}={}&\frac{(3r^2-r)n^3}{j^2}
+ +\frac{nr^2}{(a-1)^2}
+                  \left(\frac{m^3}{r}+4-2m^2\right)\\
+ &+\frac{drn^2}{j^2}
+ -\frac{dr(r^3+r^2m+m^2)}{(a-1)^2}.
+\end{aligned}
+\tag{11.11}
+$$
+
+On (11.7), put $\kappa=2\sqrt6$; then
+$n=\kappa\sqrt a-j$ exactly. For fixed $j=2,3$,
+$r=a+O(1)$, $m=a+O(1)$ and $0\le d<r$ imply, uniformly over
+all integer $N$,
+
+$$
+\bar\chi_{j,N}=\frac{3\kappa^3}{j^2}a^{7/2}+O(a^3),
+\qquad
+\bar\chi_{3,N}-\bar\chi_{2,N}
+     =-20\sqrt6\,a^{7/2}+O(a^3).
+\tag{11.12}
+$$
+
+To see the uniform remainder directly, the first term in (11.11) is
+$3\kappa^3a^{7/2}/j^2+O(a^3)$, its second is $O(a^{5/2})$,
+and each $d$-term is $O(a^3)$. The leading difference is
+$3(2\sqrt6)^3(1/9-1/4)=-20\sqrt6$. Thus no choice of a
+residue or a repair count has been hidden in (11.12).
+
+Fix any real $D>0$ and take the integer budget
+$N=\lfloor Da^{5/2}\rfloor$. Lemma 11.2 applies to $j=2,3$
+with $R=5,J_0=3$ and, for example, $c=1$ once $a$ is large.
+Equations (11.2), (11.10)--(11.12) give
+
+$$
+\widehat V_{3,N}-\widehat V_{2,N}
+ =\left(36-\frac{20\sqrt6}{D}\right)a+O_D(\sqrt a).
+\tag{11.13}
+$$
+
+Indeed its two error terms $a^5/N^2$ are $O_D(1)$, while the
+price remainder divided by $N$ is $O_D(\sqrt a)$; rounding $N$
+changes the leading quotient by $O_D(a^{-3/2})$. Formula (11.8)
+is the special case $D=1/\sqrt6$, for which
+$N=a^{5/2}/\sqrt6=a^2t$ is already an integer and the coefficient
+is $36-120=-84$.
+
+If $0<D<5\sqrt6/9$, the leading coefficient in (11.13) is strictly
+negative. Both template classes are nonempty by Lemma 11.2, so the
+finite original class has a minimum and
+
+$$
+V_N\le\widehat V_{3,N}<\widehat V_{2,N}.
+\tag{11.14}
+$$
+
+By definition $\widehat V_{2,N}$ is the minimum over all original
+graphs with any $j=2$ source template, including every partition,
+endpoint array, omission array, and unbalanced tail array. The lawful
+balancing argument in Lemma 11.2 is what makes this the required lower
+bound for all of them. Since the only law winner is $j=2$, no exact
+original minimizer at this $N$ can have the asserted old source types.
+This excludes every law-winning template, rather than just a preferred
+construction at that branch.
+
+Consequently $T_{\rm src}(a,h)>\lfloor Da^{5/2}\rfloor$ for every
+fixed $D<5\sqrt6/9$ and all sufficiently large $t$. Its finiteness
+and upper bound follow from Theorem 9.5, independently of any behavior
+at smaller budgets. Divide by $a^{5/2}$, take the lower limit and then
+let $D$ increase to $5\sqrt6/9$, proving (11.9). ∎
+
+The obstruction concerns retaining the law-winning source restriction,
+not the existence of a different uniform finite-$N$ variational rule.
+It neither proves $j=3$ globally optimal nor decides the critical value
+$D=5\sqrt6/9$, nor proves that $a^{5/2}$ is sufficient. A theorem
+at $N\asymp a^2$ would have to retain competing near-law branches
+and obtain new full-domain stability and exclusion estimates. The
+$\tau\le1$ premise of Theorem 9.2 cannot simply be reused at a
+larger excess. No moving-$R$ result or variable-sink-budget extremum
+is implied.
+
+## 12. Sources and remaining scope of the effective selection results
+
+The graph-specific deductions in Sections 10--11 use the existing exact
+law envelope and cap competition in Growing Theorem 15.5 and Proposition
+15.6, the actual-graph allocation in Sections 6--8, and Theorem 9.5's
+uniform source exclusion. They do not reprove those results as new
+content. The uniform legality bridge, normalized frequency separation,
+coefficient separation for these particular graph functions, and the
+finite-connection reversal in (11.14) are the additional relations.
+The positive finite-dilution regime in
+[*CDSO uniform dilution limit*, Corollary 40.3](CDSO_UNIFORM_DILUTION_LIMIT.md)
+has $N/a^{3/2}\to D\in(0,\infty)$; the budgets in (10.19) and
+(11.13) instead have that ratio tending to infinity, so that corollary
+is not substituted for either uniform estimate here.
+
+The analytic Wronskian criterion is the characteristic-zero statement
+of Bostan--Dumas cited in Lemma 10.5. The determinant factorization
+method is also present in Koiran--Portier--Tavenas, §3 and Theorem 13,
+with its stated distinct-zero scope. The derivative recurrence and local
+order estimate needed here are explicitly (10.9)--(10.12). The
+multiquadratic sign argument is standard field theory; independence
+here follows from the actual irreducible factors in (10.4), not merely
+from naming square classes. Binomial series, Cauchy's coefficient
+estimate and scalar convexity are intermediate tools, not separate
+claims of new general results.
+
+The maximum-endpoint-degree definition and removal of $1/\sqrt2$ are
+Albalahi--Das--Ali--Barman--Hamza,
+[*On the hyperbolic Sombor index and its counterpart*](https://arxiv.org/html/2510.24809v1),
+§1, DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176).
+The general fixed-order, fixed-cyclomatic connected-graph question in
+its §4 remains broader than this prescribed bipartite domain. Full-text
+technical overlap with Zhao--Zhao, DOI
+[10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+remains unassessed; it is not a premise and no worldwide-priority claim
+is made. These are prose results, with no assertion of new Lean
+verification or of a digestion or frozen-ledger state.
+
+The least optimizer period and least sufficient selector threshold
+remain undetermined. Proposition 10.2 identifies only the least full
+allocation-state period. Theorem 10.7 gives a sufficient effective
+exponential selector threshold; it does not assert a polynomial one.
+Theorem 11.3 supplies a necessary lower scale for the distinct
+law-winning source restriction. It leaves the exact minimizers and
+phase transitions at the intermediate scale, the critical constant's
+behavior, changing $R$, and varying sink budgets open.
+
+## 追加锚（本行以下为增补区）

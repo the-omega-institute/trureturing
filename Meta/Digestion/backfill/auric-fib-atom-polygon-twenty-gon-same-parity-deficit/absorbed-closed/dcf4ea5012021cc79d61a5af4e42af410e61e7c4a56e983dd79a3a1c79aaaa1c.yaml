@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:dcf4ea5012021cc79d61a5af4e42af410e61e7c4a56e983dd79a3a1c79aaaa1c
+  normalized_sha256: sha256:dcf4ea5012021cc79d61a5af4e42af410e61e7c4a56e983dd79a3a1c79aaaa1c
+cas_ref: sha256:dcf4ea5012021cc79d61a5af4e42af410e61e7c4a56e983dd79a3a1c79aaaa1c
+coverage_gids:
+  - gid: D5/S3/Combinatorics/SetFamily/CrossIntersectingLayerGap.weighted_cross_intersecting_layer_gap
+    target_statement_id: sha256:d7da903b6d4b8ba682809e362b8d7858f98db4f29e2fb3bfcace5d1438235af6
+receipts:
+  unresolved_subitems: []

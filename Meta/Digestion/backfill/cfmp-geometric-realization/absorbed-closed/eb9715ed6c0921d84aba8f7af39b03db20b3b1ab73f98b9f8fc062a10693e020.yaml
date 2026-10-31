@@ -9,6 +9,8 @@ coverage_gids:
     target_statement_id: sha256:936e1340704630a3a096303d4ee33ed5f353a90b6c98acfbee166bc9569070c1
   - gid: D5/S3/Geometry/Hyperideal/LengthGramInverseDiagonal.inverse_diagonal_pos
     target_statement_id: sha256:3f94279e138236d1dc545245f7efdb15e97a17928cfac72a5d0cb52377681571
+  - gid: D5/S3/Geometry/Hyperideal/LengthGramUnitNormals.dual_unit_normal
+    target_statement_id: sha256:994aa7c220e47ce62dacbe44369da1bc1a4538be73d5974ba95b9e9156cba102
   - gid: D5/S3/Geometry/Hyperideal/LorentzGramDeterminant.lorentz_gram_determinant
     target_statement_id: sha256:8d0e8b4737963ab99d924bc64e8cfe80415bd7f39c2a8059cedc1bcfa98473a2
 receipts:

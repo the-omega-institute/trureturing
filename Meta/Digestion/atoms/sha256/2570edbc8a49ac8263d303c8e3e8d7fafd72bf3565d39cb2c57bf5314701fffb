@@ -1,0 +1,28 @@
+**假设与定义 B-46.1（保留全部实际完成的三核问题）。** 固定任意标号严格凸二十二边形，原耳为 $e_j=v_{j-1}v_{j+1}$，指标属于 $\mathbb Z/22\mathbb Z$。任取六条不同、两两不交叉的原耳 $D=\{f_{ab}:1\le a<b\le4\}$，$f_{ab}=f_{ba}$；兼容允许共端点。任意预先指定四个实际剖分 $T_a$，满足完整耳集等号 $\operatorname{Ear}(T_a)=\{f_{ab}:b\ne a\}$。同一实际族 $\mathcal F$ 包含四见证，任意两个不同成员的完整耳集相交。
+
+沿用 B-44.1 的三个匹配 $M_i$，令 $Q_i=D\setminus M_i$、$\mathcal A_i=\mathcal F\cap\Gamma(M_i)$、$a_i=|\mathcal A_i|$，其中 $\Gamma(R)$ 仍为精确 $D$ 迹等于 $R$ 的全部实际完成纤维。以下只要求三个 $a_i>0$，不要求核完整取满，不施加放置奇偶、族对称性、饱和性、成员完整耳数或共同保护耳条件。置
+
+$$
+\begin{gathered}
+c_r=C_{20-r},\qquad C_t=\frac1{t+1}\binom{2t}{t},\\
+W=c_2-4c_3+6c_4-4c_5+c_6=135100620,\\
+L=c_2+6c_3-10c_4+4c_5=940710120,\\
+h_{22}=c_2-4c_3+5c_4-2c_5=116458200.
+\end{gathered}
+\tag{46.1}
+$$
+
+第 B-37、B-41 节的 $u,u_0,b_i,t_i,z_{ij},s,w_3,w_4$ 均继续从这一个 $\mathcal F$ 计算。具体地，$b_i=|\mathcal F\cap\Gamma(Q_i)|$，$u$ 是该族在原有通用迹类 $\mathcal U$ 中的成员数，$u_0=|\mathcal U|$；对 $\{i,j,k\}=\{1,2,3\}$，$t_k$ 计入精确迹为 $M_i\cup\{x\}$ 或 $M_j\cup(M_k\setminus\{x\})$（$x\in M_k$）的四个路径纤维与 $\mathcal F$ 的交。记
+
+$$
+\begin{gathered}
+w_3=c_3-3c_4+3c_5-c_6,\qquad w_4=c_4-2c_5+c_6,\\
+s=c_2-2c_3+c_4,\qquad z_{ij}=a_i+a_j+b_i+b_j+t_k,\\
+\eta=u_0-u,\quad r_i=w_4-b_i,\quad
+\ell_i=2w_3-t_i,\quad d_{ij}=s-z_{ij}.
+\end{gathered}
+\tag{46.2}
+$$
+
+这些分类只按 $D$ 迹分组，不删除任何外耳或对角线完成。
+
