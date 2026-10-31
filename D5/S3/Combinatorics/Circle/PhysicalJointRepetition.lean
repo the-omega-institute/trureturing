@@ -20,7 +20,12 @@ open SourceWidth PeriodicShorteningArithmetic PeriodicShortening RunFirstEarTran
 open scoped BigOperators
 
 def blockLabel (d r j : ℕ) (hj : j < r) (i : Fin d) : Fin (d * r) :=
-  ⟨j * d + i.val, by omega⟩
+  ⟨j * d + i.val, by
+    calc
+      j * d + i.val < j * d + d := Nat.add_lt_add_left i.isLt _
+      _ = (j + 1) * d := by rw [Nat.succ_mul]
+      _ ≤ r * d := Nat.mul_le_mul_right d (Nat.succ_le_of_lt hj)
+      _ = d * r := Nat.mul_comm _ _⟩
 
 def repeatWord (d r : ℕ) (hr : 0 < r) (tau : List (Fin d)) : List (Fin (d * r)) :=
   (List.finRange r).reverse.flatMap (fun j =>
@@ -31,9 +36,13 @@ private theorem list_prefix_strip {α : Type*} (f : α → ℤ) (B h : ℤ) (l :
       h + ((l.take n).map f).sum ≤ B) :
     InStrip f B h l := by
   induction l generalizing h with
-  | nil => simpa [InStrip] using hl 0
+  | nil =>
+      simpa [InStrip] using hl 0
   | cons x xs ih =>
-      refine ⟨by simpa using hl 0, by simpa using (hl 0).2, ih (h + f x) ?_⟩
+      simp only [InStrip]
+      refine ⟨?_, ?_, ih (h + f x) ?_⟩
+      · simpa using (hl 0).1
+      · simpa using (hl 0).2
       intro n
       simpa [List.take_succ_cons, add_assoc] using hl (n + 1)
 
@@ -74,34 +83,53 @@ private theorem block_perm (d r : ℕ) (hd : 0 < d) (hr : 0 < r) (tau : List (Fi
     rintro ⟨j, i⟩ ⟨k, h⟩ he
     have hv := congrArg Fin.val he
     dsimp [θ, blockLabel] at hv
-    have hjk : j.val = k.val := by omega
+    have hjk : j.val = k.val := by
+      have hdivj : (j.val * d + i.val) / d = j.val := by
+        apply Nat.div_eq_of_lt_le
+        · omega
+        · calc
+            j.val * d + i.val < j.val * d + d := Nat.add_lt_add_left i.isLt _
+            _ = (j.val + 1) * d := by rw [Nat.succ_mul]
+      have hdivk : (k.val * d + h.val) / d = k.val := by
+        apply Nat.div_eq_of_lt_le
+        · omega
+        · calc
+            k.val * d + h.val < k.val * d + d := Nat.add_lt_add_left h.isLt _
+            _ = (k.val + 1) * d := by rw [Nat.succ_mul]
+      have hv' := congrArg (fun n => n / d) hv
+      rw [hdivj, hdivk] at hv'
+      exact hv'
+    rw [hjk] at hv
     have hik : i.val = h.val := by omega
     exact Prod.ext (Fin.ext hjk) (Fin.ext hik)
-  have hcomplete : ((List.finRange r).flatMap (fun j =>
-      (List.finRange d).map (θ (j, ·)))).Perm (List.finRange (d * r)) := by
+  let row : Fin r → List (Fin (d * r)) := fun j =>
+    (List.finRange d).map (fun i => θ (j, i))
+  have hcomplete : ((List.finRange r).flatMap row).Perm (List.finRange (d * r)) := by
     have hflatten : (List.finRange r).flatMap (fun j =>
-        (List.finRange d).map (θ (j, ·))) =
+        row j) =
         ((List.finRange r).product (List.finRange d)).map θ := by
-      simp only [List.product, List.map_flatMap, List.map_map, Function.comp_def]
+      simp only [row, List.product, List.map_flatMap, List.map_map, Function.comp_def]
     rw [hflatten]
     apply (List.perm_ext_iff_of_nodup
       (((List.nodup_finRange r).product (List.nodup_finRange d)).map hθ)
       (List.nodup_finRange _)).mpr
     intro x
     simp only [List.mem_finRange, iff_true]
-    let j : Fin r := ⟨x.val / d, by omega⟩
+    let j : Fin r := ⟨x.val / d, by
+      apply (Nat.div_lt_iff_lt_mul (by omega : 0 < d)).2
+      simpa [Nat.mul_comm] using x.isLt⟩
     let i : Fin d := ⟨x.val % d, Nat.mod_lt _ hd⟩
     have hdiv := Nat.mod_add_div x.val d
     have hv : θ (j, i) = x := by
       apply Fin.ext
-      dsimp [θ, blockLabel, j, i]
-      omega
+      simpa [θ, blockLabel, j, i, Nat.add_comm, Nat.mul_comm] using hdiv
     exact List.mem_map.mpr ⟨(j, i), by simp, hv⟩
-  have hbase : (List.finRange r).reverse.flatMap (fun j =>
-      (List.finRange d).map (θ (j, ·))).Perm (List.finRange (d * r)) := by
-    exact ((List.Perm.reverse (List.Perm.refl _)).flatMap_right _).trans hcomplete
+  have hbase : ((List.finRange r).reverse.flatMap row).Perm (List.finRange (d * r)) := by
+    exact ((List.reverse_perm _).flatMap_right _).trans hcomplete
   have hblocks : (repeatWord d r hr (List.finRange d)).Perm (List.finRange (d * r)) := by
-    simpa [repeatWord, θ, blockLabel] using hbase
+    change ((List.finRange r).reverse.flatMap
+      (fun j => (List.finRange d).map (fun i => θ (j, i)))).Perm _
+    exact hbase
   exact (List.Perm.flatMap_left _ (fun j _ => (htau.map _))).trans hblocks
 
 private theorem multiplier_eq_geom (d r : ℕ) (hd : 0 < d) :
@@ -115,41 +143,57 @@ private theorem old_value (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
         (blockLabel d r j.val j.isLt i) =
       (geom d r : ℤ) * actualSource d w i := by
   have hmult := ThreeRowSource.repeated_source d r w (by omega) (by omega)
-    (blockLabel d r j.val j.isLt i)
+    ⟨(blockLabel d r j.val j.isLt i).val, by
+      simpa [Nat.mul_comm] using (blockLabel d r j.val j.isLt i).isLt⟩
   have hmg : ThreeRowSource.multiplier d r = geom d r := multiplier_eq_geom d r (by omega)
   rw [hmg] at hmult
   have hprod := ThreeRowSource.multiplier_identity d r
   rw [hmg] at hprod
   have hG : 0 < geom d r := by
-    have := geom_mono d (by omega) (show 1 ≤ r by omega)
+    have hmono := geom_mono d (by omega) (show 1 ≤ r by omega)
     have h1 : geom d 1 = 1 := by
       simp only [geom, pow_one]
-      exact Nat.div_self (by
-        have : 1 < 2 ^ d := Nat.one_lt_two_pow (by omega)
-        omega)
-    omega
+      have hp : 1 < 2 ^ d := Nat.one_lt_two_pow (by omega)
+      exact Nat.div_self (by omega)
+    have hge : 1 ≤ geom d r := by simpa [h1] using hmono
+    exact lt_of_lt_of_le Nat.zero_lt_one hge
   have hwt : w < modulus d := by
     unfold modulus
-    have : w + 1 ≤ 2 ^ (d - 1) := by omega
-    have hp : 2 ^ (d - 1) ≤ 2 ^ d := by
-      exact Nat.pow_le_pow_right (by omega) (by omega)
-    omega
+    have hw' : (w : ℤ) + 1 ≤ (2 : ℤ) ^ (d - 1) := by
+      have hp0 : 0 < 2 ^ (d - 1) := pow_pos (by omega) _
+      exact_mod_cast (show w + 1 ≤ 2 ^ (d - 1) by omega)
+    have hpEq : (2 : ℤ) ^ (d - 1) * 2 = (2 : ℤ) ^ d := by
+      calc
+        (2 : ℤ) ^ (d - 1) * 2 = (2 : ℤ) ^ ((d - 1) + 1) := by
+          rw [pow_succ]
+        _ = (2 : ℤ) ^ d := by rw [show d - 1 + 1 = d by omega]
+    have hp : (2 : ℤ) ^ (d - 1) ≤ (2 : ℤ) ^ d := by nlinarith [hpEq]
+    nlinarith [hp]
   have hlt : w * geom d r < modulus (r * d) := by
-    have hh := Nat.mul_lt_mul_of_pos_right hwt hG
+    have hh := Int.mul_lt_mul_of_pos_right (show (w : ℤ) < modulus d by exact_mod_cast hwt)
+      (by exact_mod_cast hG : (0 : ℤ) < geom d r)
     have heq : modulus d * geom d r = modulus (r * d) := by
-      simpa [Nat.mul_comm] using hprod
-    rw [← heq] at hh
+      simpa [mul_comm] using hprod
+    rw [heq] at hh
     exact hh
-  have hmod : (w * geom d r) % (2 ^ (r * d) - 1) = w * geom d r := by
-    have hmpos : 0 < modulus (r * d) :=
-      (TwoRunSource.modulus_positive_odd (r * d) (by omega)).1
-    have heq : modulus (r * d) = 2 ^ (r * d) - 1 := rfl
-    rw [← heq]
-    exact Nat.mod_eq_of_lt hlt
+  have hltNat : w * geom d r < 2 ^ (r * d) - 1 := by
+    have hlt' : (w : ℤ) * (geom d r : ℤ) < (2 : ℤ) ^ (r * d) - 1 := by
+      simpa [modulus] using hlt
+    have hcast : ((2 ^ (r * d) - 1 : ℕ) : ℤ) =
+        (2 : ℤ) ^ (r * d) - 1 := by
+      have hp0 : 0 < 2 ^ (r * d) := pow_pos (by omega) _
+      rw [Nat.cast_sub hp0]
+      norm_num
+    rw [← hcast] at hlt'
+    exact_mod_cast hlt'
+  have hmod : (w * geom d r) % (2 ^ (r * d) - 1) = w * geom d r :=
+    Nat.mod_eq_of_lt hltNat
   have hi : ((blockLabel d r j.val j.isLt i).val % d) = i.val := by
     dsimp [blockLabel]
-    rw [Nat.add_mul_mod_self_left, Nat.mod_eq_of_lt i.isLt]
-  simpa [Nat.mul_comm, hmod, hi] using hmult
+    rw [Nat.mul_add_mod_self_right, Nat.mod_eq_of_lt i.isLt]
+  have hmod' : (w * geom d r) % (2 ^ (d * r) - 1) = w * geom d r := by
+    simpa [Nat.mul_comm] using hmod
+  simpa [Nat.mul_comm, hmod, hmod', hi, actualSource] using hmult
 
 private theorem old_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
     (hw : w ≤ 2 ^ (d - 1) - 1) (tau : List (Fin d))
@@ -170,13 +214,14 @@ private theorem old_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
     have hh := ThreeRowSource.multiplier_identity d r
     have hm := multiplier_eq_geom d r (by omega)
     rw [hm] at hh
-    exact_mod_cast (by simpa [Nat.mul_comm] using hh)
+    exact_mod_cast (by simpa [G, mul_comm, mul_left_comm, mul_assoc] using hh)
   have hhalfD : 2 * (modulus d / 2) = modulus d - 1 := by
     have ho := (TwoRunSource.modulus_positive_odd d (by omega)).2
     have he := Int.emod_add_mul_ediv (modulus d) 2
     omega
   have hhalfR : 2 * (modulus (d * r) / 2) = modulus (d * r) - 1 := by
-    have ho := (TwoRunSource.modulus_positive_odd (d * r) (by omega)).2
+    have ho := (TwoRunSource.modulus_positive_odd (d * r)
+      (Nat.mul_pos (by omega) (by omega))).2
     have he := Int.emod_add_mul_ediv (modulus (d * r)) 2
     omega
   have hcap : G * (modulus d / 2) ≤ modulus (d * r) / 2 := by
@@ -197,13 +242,15 @@ private theorem old_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
     apply list_prefix_strip f (modulus (d * r) / 2) 0 _
     intro n
     rw [← List.map_take]
-    have hm : ((tau.take n).map f) =
+    simp only [List.map_map, Function.comp_def]
+    have hm : ((tau.take n).map (fun i => f (blockLabel d r j.val j.isLt i))) =
         (tau.take n).map (fun i => G * a i) := by
       apply List.map_congr_left
       intro i hi
       exact hval i
     rw [hm, List.sum_map_mul_left]
-    have hs := inStrip_prefix htau.2.2 n
+    have hs := htau.2.2 n
+    simp only [zero_add]
     change 0 ≤ G * ((tau.take n).map a).sum ∧
       G * ((tau.take n).map a).sum ≤ modulus (d * r) / 2
     constructor
@@ -214,15 +261,13 @@ private theorem old_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
       change ((tau.take n).map a).sum ≤ modulus d / 2 at hB0
       nlinarith [hcap]
   have hsum : ((tau.map (blockLabel d r j.val j.isLt)).map f).sum = 0 := by
-    rw [List.map_map]
-    have hm : (tau.map (fun i => f (blockLabel d r j.val j.isLt i))).sum =
-        (tau.map (fun i => G * a i)).sum := by
+    simp only [List.map_map, Function.comp_def]
+    have hmap : tau.map (fun i => f (blockLabel d r j.val j.isLt i)) =
+        tau.map (fun i => G * a i) := by
       apply List.map_congr_left
       intro i hi
       exact hval i
-    rw [hm, List.sum_map_mul_left]
-    have hbase := ((htau.1.map a).sum_eq).trans htau.2.1
-    rw [hbase]
+    rw [hmap, List.sum_map_mul_left, htau.2.1]
     ring
   exact ⟨hstrip, hsum⟩
 
@@ -244,12 +289,15 @@ private theorem new_regular_value (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
     periodic_source_equations d w r hd hw hr
   have hs := shift_source (d * r) (w * geom d r)
     (blockLabel d r j.val j.isLt i)
-  have hh := hx j.val (by omega) i (by
-    dsimp [blockLabel]
-    omega)
+  have hh := hx j.val j.isLt i (by
+    simpa [blockLabel, Nat.add_comm, Nat.mul_comm] using
+      Nat.succ_lt_succ (blockLabel d r j.val j.isLt i).isLt)
   have hcast :
-      (⟨(blockLabel d r j.val j.isLt i).val + 1, by omega⟩ : Fin (d * r + 1)) =
-        ⟨j.val * d + i.val + 1, by omega⟩ := by
+      (⟨(blockLabel d r j.val j.isLt i).val + 1,
+        Nat.succ_lt_succ (blockLabel d r j.val j.isLt i).isLt⟩ : Fin (d * r + 1)) =
+        ⟨j.val * d + i.val + 1, by
+          simpa [blockLabel] using
+            Nat.succ_lt_succ (blockLabel d r j.val j.isLt i).isLt⟩ := by
     apply Fin.ext
     rfl
   rw [hs, hcast]
@@ -267,20 +315,21 @@ private theorem new_top_value (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
   have hs := shift_source (d * r) (w * geom d r)
     (blockLabel d r (r - 1) (by omega) j)
   have hh := hlast j (by
-    dsimp [blockLabel]
-    omega)
+    simpa [blockLabel, Nat.add_comm, Nat.mul_comm] using
+      Nat.succ_lt_succ (blockLabel d r (r - 1) (by omega) j).isLt)
   have hcast :
-      (⟨(blockLabel d r (r - 1) (by omega) j).val + 1, by omega⟩ : Fin (d * r + 1)) =
-        ⟨(r - 1) * d + j.val + 1, by omega⟩ := by
+      (⟨(blockLabel d r (r - 1) (by omega) j).val + 1,
+        Nat.succ_lt_succ (blockLabel d r (r - 1) (by omega) j).isLt⟩ : Fin (d * r + 1)) =
+        ⟨(r - 1) * d + j.val + 1, by
+          simpa [blockLabel] using
+            Nat.succ_lt_succ (blockLabel d r (r - 1) (by omega) j).isLt⟩ := by
     apply Fin.ext
     dsimp [blockLabel]
-    omega
   rw [hs, hcast]
   have hshift : actualSource (d + 1) w ⟨j.val + 1, by omega⟩ =
       actualSource (d + 1) (2 * w) j.castSucc := by
     exact (shift_source d w j).symm
-  rw [hshift]
-  simpa [Nat.mul_comm, Nat.add_comm, Nat.add_left_comm, Nat.add_assoc] using hh
+  simpa [hshift, Nat.mul_comm, Nat.add_comm, Nat.add_left_comm, Nat.add_assoc] using hh
 
 private def rowCharge (d w j : ℕ) (i : Fin d) : ℤ :=
   (2 : ℤ) ^ i.val * (w : ℤ) * (geom d j : ℤ) + charge d w i
@@ -351,9 +400,20 @@ private theorem regular_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
       ((block.take n).map f).sum =
         2 * G * ((tau.take n).map a).sum -
           ((tau.take n).map (rowCharge d w j.val)).sum := by
-    rw [← List.map_take, List.map_map]
+    have htake : block.take n =
+        (tau.take n).map (fun i => (blockLabel d r j.val j.isLt i).castSucc) := by
+      simpa only [block, ← List.map_take, List.map_map, Function.comp_def]
+    rw [htake]
+    rw [List.map_map]
     simp only [Function.comp_def]
-    apply map_sum_linear
+    have hmap : (tau.take n).map (fun i => f (blockLabel d r j.val j.isLt i).castSucc) =
+        (tau.take n).map (fun i => 2 * G * a i - rowCharge d w j.val i) := by
+      apply List.map_congr_left
+      intro i hi
+      exact hval i
+    rw [hmap]
+    have hm := map_sum_linear (tau.take n) a (rowCharge d w j.val) (2 * G) (-1)
+    simpa [sub_eq_add_neg, mul_assoc] using hm
   have hbase := htau.2.2
   have hstrip : InStrip f (modulus (d * r + 1) / 2) start block := by
     apply list_prefix_strip f (modulus (d * r + 1) / 2) start block
@@ -384,9 +444,14 @@ private theorem regular_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
         rw [modulus]
         have hp : (2 : ℤ) ^ (d * r + 1) = 2 * ((2 : ℤ) ^ d) ^ r := by
           rw [pow_succ, pow_mul]
+          ring
         rw [hp]
         change (2 * ((2 : ℤ) ^ d) ^ r - 1) / 2 = _
         change ((2 : ℤ) ^ d - 1) * (geom d r : ℤ) = _ at hgeom
+        have hQ : ((2 : ℤ) ^ d) ^ r =
+            ((2 : ℤ) ^ d - 1) * (geom d r : ℤ) + 1 := by
+          nlinarith [hgeom]
+        rw [hQ]
         omega
       rw [hhalf]
       dsimp [start, G]
@@ -396,23 +461,129 @@ private theorem regular_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
       rw [show r - 1 + 1 = r by omega] at hsucc
       have hw0 : 0 ≤ (w : ℤ) := Int.natCast_nonneg _
       have hwq : (w : ℤ) ≤ (2 : ℤ) ^ d - 1 := by
-        have hw' : (w : ℤ) ≤ (2 : ℤ) ^ (d - 1) - 1 := by exact_mod_cast hw
+        have hw' : (w : ℤ) ≤ (2 : ℤ) ^ (d - 1) - 1 := by
+          have hwNat : w ≤ 2 ^ (d - 1) - 1 := hw
+          have hwCast : (w : ℤ) ≤ ((2 ^ (d - 1) - 1 : ℕ) : ℤ) := by
+            exact_mod_cast hwNat
+          have hcast : ((2 ^ (d - 1) - 1 : ℕ) : ℤ) =
+              (2 : ℤ) ^ (d - 1) - 1 := by
+            have hp0 : 0 < 2 ^ (d - 1) := pow_pos (by omega) _
+            rw [Nat.cast_sub (by omega)]
+            norm_num
+          rwa [hcast] at hwCast
         have hp : (2 : ℤ) ^ (d - 1) ≤ (2 : ℤ) ^ d := by
-          rw [show d = d - 1 + 1 by omega, pow_succ]
-          nlinarith
+          have he : (2 : ℤ) ^ (d - 1) * 2 = (2 : ℤ) ^ d := by
+            calc
+              (2 : ℤ) ^ (d - 1) * 2 = (2 : ℤ) ^ ((d - 1) + 1) := by rw [pow_succ]
+              _ = (2 : ℤ) ^ d := by rw [show d - 1 + 1 = d by omega]
+          nlinarith [he]
         omega
-      nlinarith [hs.2, hmono, hsucc]
+      have hrel : (geom d r : ℤ) =
+          (geom d (r - 1) : ℤ) + ((2 : ℤ) ^ d) ^ (r - 1) := hsucc
+      have hB : 2 * ((2 : ℤ) ^ (d - 1) - 1) = (2 : ℤ) ^ d - 2 := by
+        have he : (2 : ℤ) ^ (d - 1) * 2 = (2 : ℤ) ^ d := by
+          calc
+            (2 : ℤ) ^ (d - 1) * 2 = (2 : ℤ) ^ ((d - 1) + 1) := by rw [pow_succ]
+            _ = (2 : ℤ) ^ d := by rw [show d - 1 + 1 = d by omega]
+        nlinarith [he]
+      have hp : (2 : ℤ) ^ (d - 1) ≤ (2 : ℤ) ^ d := by
+        have he : (2 : ℤ) ^ (d - 1) * 2 = (2 : ℤ) ^ d := by
+          calc
+            (2 : ℤ) ^ (d - 1) * 2 = (2 : ℤ) ^ ((d - 1) + 1) := by rw [pow_succ]
+            _ = (2 : ℤ) ^ d := by rw [show d - 1 + 1 = d by omega]
+        nlinarith [he]
+      have hwB : (w : ℤ) + (2 : ℤ) ^ (d - 1) - 1 ≤ (2 : ℤ) ^ d - 2 := by
+        have hw' : (w : ℤ) ≤ (2 : ℤ) ^ (d - 1) - 1 := by
+          have hwNat : w ≤ 2 ^ (d - 1) - 1 := hw
+          have hwCast : (w : ℤ) ≤ ((2 ^ (d - 1) - 1 : ℕ) : ℤ) := by exact_mod_cast hwNat
+          have hcast : ((2 ^ (d - 1) - 1 : ℕ) : ℤ) = (2 : ℤ) ^ (d - 1) - 1 := by
+            have hp0 : 0 < 2 ^ (d - 1) := pow_pos (by omega) _
+            rw [Nat.cast_sub (by omega)]; norm_num
+          rwa [hcast] at hwCast
+        nlinarith [hw', hp]
+      have hstart : (w : ℤ) * geom d (j.val + 1) ≤
+          (w : ℤ) * geom d (r - 1) := by
+        have hmono' : (geom d (j.val + 1) : ℤ) ≤ geom d (r - 1) := by
+          exact_mod_cast hmono
+        exact mul_le_mul_of_nonneg_left hmono' hw0
+      have hBmod : modulus d / 2 = (2 : ℤ) ^ (d - 1) - 1 := by
+        unfold modulus
+        have he : (2 : ℤ) ^ (d - 1) * 2 = (2 : ℤ) ^ d := by
+          calc
+            (2 : ℤ) ^ (d - 1) * 2 = (2 : ℤ) ^ ((d - 1) + 1) := by rw [pow_succ]
+            _ = (2 : ℤ) ^ d := by rw [show d - 1 + 1 = d by omega]
+        omega
+      have hgeom_prev : ((2 : ℤ) ^ d - 1) * (geom d (r - 1) : ℤ) =
+          ((2 : ℤ) ^ d) ^ (r - 1) - 1 := by
+        have hh := geom_mul d (r - 1) (by omega)
+        change ((2 : ℤ) ^ d - 1) * (geom d (r - 1) : ℤ) =
+          ((2 : ℤ) ^ d) ^ (r - 1) - 1 at hh
+        exact hh
+      have hAq : (2 : ℤ) * (2 : ℤ) ^ (d - 1) = (2 : ℤ) ^ d := by
+        calc
+          (2 : ℤ) * (2 : ℤ) ^ (d - 1) = (2 : ℤ) ^ ((d - 1) + 1) := by
+            rw [pow_succ]
+            ring
+          _ = (2 : ℤ) ^ d := by rw [show d - 1 + 1 = d by omega]
+      have hwA : (w : ℤ) ≤ (2 : ℤ) ^ (d - 1) - 1 := by
+        have hwNat : w ≤ 2 ^ (d - 1) - 1 := hw
+        have hwCast : (w : ℤ) ≤ ((2 ^ (d - 1) - 1 : ℕ) : ℤ) := by
+          exact_mod_cast hwNat
+        have hcast : ((2 ^ (d - 1) - 1 : ℕ) : ℤ) =
+            (2 : ℤ) ^ (d - 1) - 1 := by
+          have hp0 : 0 < 2 ^ (d - 1) := by positivity
+          rw [Nat.cast_sub (by omega)]
+          norm_num
+        rwa [hcast] at hwCast
+      have hwh : (w : ℤ) * (geom d (r - 1) : ℤ) ≤
+          (geom d r : ℤ) := by
+        have hH0 : 0 ≤ (geom d (r - 1) : ℤ) := by positivity
+        have hmul := mul_le_mul_of_nonneg_right hwA hH0
+        nlinarith [hmul, hgeom_prev, hAq, hrel]
+      nlinarith [hstart, hwh, hB, hBmod]
     constructor
     · have hG0 : 0 ≤ 2 * G := by positivity
-      nlinarith [hs.1, hf.2, hf.1]
+      have hterm : 0 ≤ 2 * G * ((tau.take n).map a).sum :=
+        mul_nonneg hG0 hs.1
+      have hstart0 : 0 ≤ start := by dsimp [start]; positivity
+      have hgeomj := geom_succ d j.val (by omega)
+      have hstart_charge : (w : ℤ) * ((2 : ℤ) ^ d) ^ j.val ≤ start := by
+        dsimp [start]
+        have hw0 : 0 ≤ (w : ℤ) := by positivity
+        have hgeomj' : (geom d (j.val + 1) : ℤ) =
+            (geom d j.val : ℤ) + ((2 : ℤ) ^ d) ^ j.val := by
+          simpa using hgeomj
+        nlinarith
+      have hsub : 0 ≤ start -
+          ((tau.take n).map (rowCharge d w j.val)).sum := by
+        nlinarith [hstart_charge, hf.2]
+      nlinarith [hterm, hsub]
     · have hG0 : 0 ≤ 2 * G := by positivity
-      nlinarith [hs.2, hf.1, hcap]
+      have hterm := mul_le_mul_of_nonneg_left hs.2 hG0
+      nlinarith [hterm, hf.1, hcap]
   have hsum : (block.map f).sum = -(w : ℤ) * ((2 : ℤ) ^ d) ^ j.val := by
-    rw [← List.map_map]
-    simp only [Function.comp_def]
-    rw [map_sum_linear]
-    have hbase0 := ((htau.1.map a).sum_eq).trans htau.2.1
-    rw [hbase0, hsumF]
+    have hmapfull : block.map f =
+        tau.map (fun i => f (blockLabel d r j.val j.isLt i).castSucc) := by
+      simp [block, List.map_map, Function.comp_def]
+    rw [hmapfull]
+    have hm := map_sum_linear tau a (rowCharge d w j.val) (2 * G) (-1)
+    have hmap : tau.map (fun i => f (blockLabel d r j.val j.isLt i).castSucc) =
+        tau.map (fun i => 2 * G * a i - rowCharge d w j.val i) := by
+      apply List.map_congr_left
+      intro i hi
+      exact hval i
+    rw [hmap]
+    rw [show (fun i => 2 * G * a i - rowCharge d w j.val i) =
+      (fun i => (2 * G) * a i + (-1) * rowCharge d w j.val i) by
+        funext i; ring]
+    rw [hm]
+    have hbase0 : (tau.map a).sum = 0 := by
+      simpa [a] using htau.2.1
+    have hcharges : (tau.map (rowCharge d w j.val)).sum =
+        (∑ i : Fin d, rowCharge d w j.val i) := by
+      rw [(htau.1.map (rowCharge d w j.val)).sum_eq]
+      rw [← List.sum_toFinset _ (List.nodup_finRange _), List.toFinset_finRange]
+    rw [hbase0, hcharges, hsumF]
     ring
   exact ⟨hstrip, hsum⟩
 
@@ -450,49 +621,75 @@ private theorem ear_prefix_formula (d : ℕ) (sigma : List (Fin d)) (cut : ℕ)
                   List.take_succ_cons, List.sum_cons, add_assoc] using
                   congrArg (f x.castSucc + ·) he
 
-private theorem blocks_concat {α β : Type*} (f : β → ℤ) (B : ℤ) (start : ℤ)
+private theorem blocks_concat {α β : Type*} (f : β → ℤ) (B : ℤ)
     (rows : List α) (block : α → List β)
+    (hB : 0 ≤ B)
     (hstrip : ∀ x ∈ rows, InStrip f B 0 (block x))
-    (hsum : ∀ x ∈ rows, (block x).map f |>.sum = 0) :
-    InStrip f B start (rows.flatMap block) := by
-  induction rows generalizing start with
-  | nil => simp [InStrip]
+    (hsum : ∀ x ∈ rows, ((block x).map f).sum = 0) :
+    InStrip f B 0 (rows.flatMap block) := by
+  induction rows with
+  | nil => exact ⟨by omega, hB⟩
   | cons x xs ih =>
       simp only [List.flatMap_cons]
-      apply inStrip_append (hstrip x (by simp))
-      simpa [hsum x (by simp)] using
-        ih (start := start + (block x).map f |>.sum)
-          (fun y hy => hstrip y (by simp [hy]))
-          (fun y hy => hsum y (by simp [hy]))
+      have htail := ih
+        (fun y hy => hstrip y (by simp [hy]))
+        (fun y hy => hsum y (by simp [hy]))
+      have htail' : InStrip f B (0 + ((block x).map f).sum)
+          (xs.flatMap block) := by
+        simpa [hsum x (by simp)] using htail
+      exact inStrip_append (hstrip x (by simp)) htail'
 
 private theorem blocks_sum {α β : Type*} (f : β → ℤ) (rows : List α)
-    (block : α → List β) (hsum : ∀ x ∈ rows, (block x).map f |>.sum = 0) :
+    (block : α → List β) (hsum : ∀ x ∈ rows, ((block x).map f).sum = 0) :
     ((rows.flatMap block).map f).sum = 0 := by
   induction rows with
   | nil => simp
   | cons x xs ih =>
       simp only [List.flatMap_cons, List.map_append, List.sum_append]
-      rw [hsum x (by simp), ih]
+      rw [hsum x (by simp), ih (fun y hy => hsum y (by simp [hy]))]
       ring
+
+private theorem centered_nat_value (k t : ℕ) (hk : 0 < k)
+    (ht0 : 0 ≤ (t : ℤ)) (hthalf : (t : ℤ) ≤ modulus k / 2) :
+    centered (modulus k) (t : ℤ) = (t : ℤ) := by
+  obtain ⟨hN, ho⟩ := TwoRunSource.modulus_positive_odd k hk
+  apply centered_unique hN ho (centered_bounds hN ho _) ?_ ?_
+  · exact ⟨by omega, hthalf⟩
+  · rw [centered_mod]
 
 private theorem base_fresh_value (d w : ℕ) (hd : 2 ≤ d)
     (hw : w ≤ 2 ^ (d - 1) - 1) :
     actualSource (d + 1) (2 * w) (Fin.last d) = (w : ℤ) := by
-  unfold actualSource
+  change centered (modulus (d + 1)) ((2 : ℤ) ^ d * (2 * (w : ℕ))) = (w : ℤ)
   have hpow : (2 : ℤ) ^ d * (2 * (w : ℕ)) =
       (2 : ℤ) ^ (d + 1) * (w : ℕ) := by
     rw [pow_succ]
-    simp only [Nat.cast_mul, Nat.cast_ofNat]
     ring
   rw [hpow, centered_full_period]
-  obtain ⟨hN, ho⟩ := TwoRunSource.modulus_positive_odd (d + 1) (by omega)
-  apply centered_unique hN ho (centered_bounds hN ho _) ?_ rfl
   have hhalf : modulus (d + 1) / 2 = (2 : ℤ) ^ d - 1 := by
     unfold modulus
     rw [pow_succ]
     omega
+  apply centered_nat_value (d + 1) w (by omega) (by positivity)
   rw [hhalf]
-  constructor <;> omega
+  have hw' : (w : ℤ) ≤ (2 : ℤ) ^ (d - 1) - 1 := by
+    have hwNat : w ≤ 2 ^ (d - 1) - 1 := hw
+    have hwCast : (w : ℤ) ≤ ((2 ^ (d - 1) - 1 : ℕ) : ℤ) := by
+      exact_mod_cast hwNat
+    have hcast : ((2 ^ (d - 1) - 1 : ℕ) : ℤ) =
+        (2 : ℤ) ^ (d - 1) - 1 := by
+      have hp0 : 0 < 2 ^ (d - 1) := by positivity
+      rw [Nat.cast_sub (by omega)]
+      norm_num
+    rwa [hcast] at hwCast
+  have hpow : (2 : ℤ) ^ (d - 1) ≤ (2 : ℤ) ^ d := by
+    have hp : (0 : ℤ) ≤ (2 : ℤ) ^ (d - 1) := by positivity
+    have he : (2 : ℤ) ^ (d - 1) * 2 = (2 : ℤ) ^ d := by
+      calc
+        (2 : ℤ) ^ (d - 1) * 2 = (2 : ℤ) ^ ((d - 1) + 1) := by rw [pow_succ]
+        _ = (2 : ℤ) ^ d := by rw [show d - 1 + 1 = d by omega]
+    nlinarith [he]
+  omega
 
 private theorem top_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
     (hw : w ≤ 2 ^ (d - 1) - 1) (tau : List (Fin d)) (cut : ℕ)
@@ -520,47 +717,71 @@ private theorem top_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
     simpa [R, H, G] using new_top_value d r w hd hr hw i
   have htopfresh : f (Fin.last (d * r)) = (w : ℤ) * G := by
     unfold f
-    unfold actualSource
+    change centered (modulus (d * r + 1))
+      ((2 : ℤ) ^ (d * r) * (2 * (w * geom d r : ℕ))) = (w : ℤ) * G
     have hp : (2 : ℤ) ^ (d * r) * (2 * (w * geom d r : ℕ)) =
         (2 : ℤ) ^ (d * r + 1) * (w * geom d r : ℕ) := by
       rw [pow_succ]
       simp only [Nat.cast_mul, Nat.cast_ofNat]
       ring
     rw [hp, centered_full_period]
-    obtain ⟨hN, ho⟩ := TwoRunSource.modulus_positive_odd (d * r + 1) (by omega)
-    apply centered_unique hN ho (centered_bounds hN ho _) ?_ rfl
     have hhalf : modulus (d * r + 1) / 2 =
         ((2 : ℤ) ^ d) ^ r - 1 := by
       unfold modulus
       rw [pow_succ, pow_mul]
       omega
-    rw [hhalf]
     have hG0 : 0 ≤ (w : ℤ) * (geom d r : ℤ) := by positivity
     have hGcap : (w : ℤ) * (geom d r : ℤ) ≤ ((2 : ℤ) ^ d) ^ r - 1 := by
       have hprod := geom_mul d r (by omega)
       have hwlt : (w : ℤ) < (2 : ℤ) ^ d - 1 := by
-        have : (w : ℤ) + 1 ≤ (2 : ℤ) ^ (d - 1) := by exact_mod_cast (by omega)
+        have hp0Nat : 0 < 2 ^ (d - 1) := by positivity
+        have hpNat : 1 ≤ 2 ^ (d - 1) := by omega
+        have hwNat : w + 1 ≤ 2 ^ (d - 1) := by omega
+        have hw' : (w : ℤ) + 1 ≤ (2 : ℤ) ^ (d - 1) := by
+          exact_mod_cast hwNat
         have hp2 : (2 : ℤ) ^ (d - 1) ≤ (2 : ℤ) ^ d := by
-          rw [show d = d - 1 + 1 by omega, pow_succ]
-          nlinarith
+          have he : (2 : ℤ) ^ (d - 1) * 2 = (2 : ℤ) ^ d := by
+            calc
+              (2 : ℤ) ^ (d - 1) * 2 = (2 : ℤ) ^ ((d - 1) + 1) := by rw [pow_succ]
+              _ = (2 : ℤ) ^ d := by rw [show d - 1 + 1 = d by omega]
+          nlinarith [he]
+        have hApos : (0 : ℤ) < (2 : ℤ) ^ (d - 1) := by positivity
+        have hplt : (2 : ℤ) ^ (d - 1) < (2 : ℤ) ^ d := by
+          have he : (2 : ℤ) ^ (d - 1) * 2 = (2 : ℤ) ^ d := by
+            calc
+              (2 : ℤ) ^ (d - 1) * 2 = (2 : ℤ) ^ ((d - 1) + 1) := by rw [pow_succ]
+              _ = (2 : ℤ) ^ d := by rw [show d - 1 + 1 = d by omega]
+          nlinarith [he]
         omega
-      have hmul := mul_lt_mul_of_nonneg_right hwlt
-        (by positivity : 0 ≤ (geom d r : ℤ))
+      have hgeompos : (0 : ℤ) < (geom d r : ℤ) := by
+        have hmono := geom_mono d (by omega) (show 1 ≤ r by omega)
+        have h1 : geom d 1 = 1 := by
+          simp only [geom, pow_one]
+          exact Nat.div_self (by
+            have : 1 < 2 ^ d := Nat.one_lt_two_pow (by omega)
+            omega)
+        have hge : 1 ≤ geom d r := by simpa [h1] using hmono
+        exact_mod_cast (show 0 < geom d r by omega)
+      have hmul := Int.mul_lt_mul_of_pos_right hwlt hgeompos
       have hprod' : ((2 : ℤ) ^ d - 1) * (geom d r : ℤ) =
           ((2 : ℤ) ^ d) ^ r - 1 := hprod
       nlinarith [hmul, hprod']
-    constructor <;> omega
+    apply centered_nat_value (d * r + 1) (w * geom d r) (by omega) (by positivity)
+    rw [hhalf]
+    simpa [Nat.cast_mul] using hGcap
   have hformula (n : ℕ) :
       ((block.take n).map f).sum =
         R * (((earWord d tau cut).take n).map (actualSource (d + 1) (2 * w))).sum +
         H * ((tau.take (if n ≤ cut then n else n - 1)).map a).sum +
         (if n ≤ cut then 0 else H * (w : ℤ)) := by
     rw [ear_prefix_formula (d * r) top cut (by simpa [top, htau_len] using hcut) f n]
-    simp only [List.map_map, Function.comp_def]
     rw [htopfresh]
     rw [ear_prefix_formula d tau cut (by simpa [htau_len] using hcut) g n]
-    rw [base_fresh_value d w hd hw]
+    have hfresh : g (Fin.last d) = (w : ℤ) := by
+      simpa [g] using base_fresh_value d w hd hw
+    rw [hfresh]
     rw [← List.map_take, List.map_map]
+    simp only [Function.comp_def]
     have hmap :
         (tau.take (if n ≤ cut then n else n - 1)).map
             (fun i => f (blockLabel d r (r - 1) (by omega) i).castSucc) =
@@ -572,8 +793,12 @@ private theorem top_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
     rw [hmap]
     rw [map_sum_linear]
     -- The two projections are exactly the corresponding prefix of `tau`.
-    simp only [top, List.map_map, Function.comp_def]
-    ring
+    have hrel0 : G = R + H := by
+      have hh := geom_succ d (r - 1) (by omega)
+      rw [show r - 1 + 1 = r by omega] at hh
+      dsimp [G, R, H]
+      nlinarith
+    by_cases hn : n ≤ cut <;> simp [hn] <;> nlinarith [hrel0]
   have hstrip : InStrip f (modulus (d * r + 1) / 2) 0 block := by
     apply list_prefix_strip f (modulus (d * r + 1) / 2) 0 block
     intro n
@@ -597,9 +822,15 @@ private theorem top_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
       unfold modulus
       have hp : (2 : ℤ) ^ (d * r + 1) = 2 * ((2 : ℤ) ^ d) ^ r := by
         rw [pow_succ, pow_mul]
+        ring
       rw [hp]
       have hg := geom_mul d r (by omega)
-      change ((2 : ℤ) ^ d - 1) * (geom d r : ℤ) = (2 : ℤ) ^ d ^ r - 1 at hg
+      change ((2 : ℤ) ^ d - 1) * (geom d r : ℤ) = ((2 : ℤ) ^ d) ^ r - 1 at hg
+      have hQ : ((2 : ℤ) ^ d) ^ r =
+          ((2 : ℤ) ^ d - 1) * (geom d r : ℤ) + 1 := by
+        nlinarith [hg]
+      dsimp [G]
+      rw [hQ]
       omega
     rw [htopB]
     have hR : 0 ≤ R := by positivity
@@ -613,23 +844,70 @@ private theorem top_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
       dsimp [G, R, H]
       nlinarith
     have hq : (4 : ℤ) ≤ (2 : ℤ) ^ d := by
-      exact_mod_cast (show 4 ≤ 2 ^ d by omega)
+      have hqNat := Nat.pow_le_pow_right (by omega : 1 ≤ 2) hd
+      norm_num at hqNat
+      exact_mod_cast hqNat
     have hellw : (2 : ℤ) ^ (d - 1) - 1 + (w : ℤ) ≤ (2 : ℤ) ^ d - 2 := by
       have hp : (2 : ℤ) ^ d = 2 * (2 : ℤ) ^ (d - 1) := by
         conv_lhs => rw [show d = d - 1 + 1 by omega, pow_succ]
         ring
-      have hw' : (w : ℤ) ≤ (2 : ℤ) ^ (d - 1) - 1 := by exact_mod_cast hw
+      have hw' : (w : ℤ) ≤ (2 : ℤ) ^ (d - 1) - 1 := by
+        have hwNat : w ≤ 2 ^ (d - 1) - 1 := hw
+        have hwCast : (w : ℤ) ≤ ((2 ^ (d - 1) - 1 : ℕ) : ℤ) := by
+          exact_mod_cast hwNat
+        have hcast : ((2 ^ (d - 1) - 1 : ℕ) : ℤ) =
+            (2 : ℤ) ^ (d - 1) - 1 := by
+          have hp0 : 0 < 2 ^ (d - 1) := by positivity
+          rw [Nat.cast_sub (by omega)]
+          norm_num
+        rwa [hcast] at hwCast
       rw [hp]
       omega
     have hcap : R * ((2 : ℤ) ^ d - 1) +
           H * ((2 : ℤ) ^ (d - 1) - 1 + (w : ℤ)) ≤
           ((2 : ℤ) ^ d - 1) * G := by
-      nlinarith [hrel, hellw]
+      have hcoef : (2 : ℤ) ^ (d - 1) - 1 + (w : ℤ) ≤
+          (2 : ℤ) ^ d - 1 := by omega
+      have hmul := mul_le_mul_of_nonneg_left hcoef hH
+      nlinarith [hrel, hmul]
     by_cases hnc : n ≤ cut
     · simp only [if_pos hnc]
-      constructor <;> nlinarith [hn.1, hn.2, hsumh, ho.1, hcap]
+      have hnewlo : 0 ≤ R *
+          (((earWord d tau cut).take n).map (actualSource (d + 1) (2 * w))).sum :=
+        mul_nonneg hR hn.1
+      have holdlo : 0 ≤ H *
+          ((tau.take (if n ≤ cut then n else n - 1)).map a).sum :=
+        mul_nonneg hH ho.1
+      have hnewhi : R *
+          (((earWord d tau cut).take n).map (actualSource (d + 1) (2 * w))).sum ≤
+          R * ((2 : ℤ) ^ d - 1) :=
+        mul_le_mul_of_nonneg_left hn.2 hR
+      have holdhi : H *
+          ((tau.take (if n ≤ cut then n else n - 1)).map a).sum ≤
+          H * ((2 : ℤ) ^ (d - 1) - 1) := by
+        have hh := mul_le_mul_of_nonneg_left ho.2 hH
+        simpa [holdB] using hh
+      simp only [if_pos hnc] at holdlo holdhi
+      constructor <;> nlinarith [hnewlo, holdlo, hnewhi, holdhi, hcap]
     · simp only [if_neg hnc]
-      constructor <;> nlinarith [hn.1, hn.2, hsumh, ho.1, hcap]
+      have hnewlo : 0 ≤ R *
+          (((earWord d tau cut).take n).map (actualSource (d + 1) (2 * w))).sum :=
+        mul_nonneg hR hn.1
+      have holdlo : 0 ≤ H *
+          ((tau.take (if n ≤ cut then n else n - 1)).map a).sum :=
+        mul_nonneg hH ho.1
+      have hHw : 0 ≤ H * (w : ℤ) := mul_nonneg hH (by positivity)
+      have hnewhi : R *
+          (((earWord d tau cut).take n).map (actualSource (d + 1) (2 * w))).sum ≤
+          R * ((2 : ℤ) ^ d - 1) :=
+        mul_le_mul_of_nonneg_left hn.2 hR
+      have holdhi : H *
+          ((tau.take (if n ≤ cut then n else n - 1)).map a).sum ≤
+          H * ((2 : ℤ) ^ (d - 1) - 1) := by
+        have hh := mul_le_mul_of_nonneg_left ho.2 hH
+        simpa [holdB] using hh
+      simp only [if_neg hnc] at holdlo holdhi
+      constructor <;> nlinarith [hnewlo, holdlo, hHw, hnewhi, holdhi, hcap]
   have hsum : (block.map f).sum = (w : ℤ) * H := by
     have htop_len : top.length = d := by
       simpa [top] using htau.1.length_eq
@@ -643,9 +921,9 @@ private theorem top_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
         htau_len]
       omega
     have htake_block : block.take (d + 1) = block := by
-      rw [← hblock_len, List.take_length]
+      simpa [hblock_len] using (List.take_length block)
     have htake_ear : (earWord d tau cut).take (d + 1) = earWord d tau cut := by
-      rw [← hear_len, List.take_length]
+      simpa [hear_len] using (List.take_length (earWord d tau cut))
     have hf := hformula (d + 1)
     have hformula_full :
         (block.map f).sum =
@@ -655,24 +933,29 @@ private theorem top_block (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
         show d + 1 - 1 = d by omega] using hf
     rw [hformula_full, hnew.2.1]
     have holdsum : ((tau.take d).map a).sum = 0 := by
-      simpa [show tau.length = d by simpa using htau.1.length_eq] using htau.2.1
+      have htake : tau.take d = tau := by
+        simpa [show tau.length = d by simpa using htau.1.length_eq] using
+          (List.take_length tau)
+      rw [htake]
+      simpa [a] using htau.2.1
     rw [holdsum]
     ring
   exact ⟨hstrip, hsum⟩
 
-private def lowerBlocks (d r : ℕ) (hr : 0 < r) (tau : List (Fin d)) :
-    ℕ → List (Fin (d * r))
-  | n => (List.finRange n).reverse.flatMap (fun j =>
-      tau.map (blockLabel d r j.val j.isLt))
+private def lowerBlocks (d r : ℕ) (hr : 2 ≤ r) (tau : List (Fin d)) :
+    List (Fin (d * r)) :=
+  (List.finRange (r - 1)).reverse.flatMap (fun j =>
+    tau.map (blockLabel d r j.val (by omega)))
 
 private theorem lower_aux (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
     (hw : w ≤ 2 ^ (d - 1) - 1) (tau : List (Fin d))
     (htau : OriginalOrder d w tau) :
-    ∀ n : ℕ, n + 2 ≤ r →
+    ∀ (n : ℕ) (hnr : n + 1 < r) (hn : n + 2 ≤ r),
       let f := actualSource (d * r + 1) (2 * (w * geom d r))
       let rows := (List.finRange (n + 1)).reverse
       let block := fun j : Fin (n + 1) =>
-        (tau.map (blockLabel d r j.val (by omega))).map Fin.castSucc
+        (tau.map (blockLabel d r j.val
+          (lt_trans j.isLt hnr))).map Fin.castSucc
       InStrip f (modulus (d * r + 1) / 2)
         ((w : ℤ) * geom d (n + 1)) (rows.flatMap block) ∧
       ((rows.flatMap block).map f).sum =
@@ -680,25 +963,31 @@ private theorem lower_aux (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
   intro n
   induction n with
   | zero =>
-      intro hn
+      intro hnr hn
       dsimp only
+      have hj0 : (0 : ℕ) < r := by omega
+      have hjr : (0 : ℕ) + 1 < r := by omega
       have hb := regular_block d r w hd hr hw tau htau
-        ⟨0, by omega⟩ (by omega)
-      simp only [List.finRange_succ_last, List.reverse_append, List.reverse_singleton,
-        List.singleton_append, List.flatMap_cons, List.flatMap_nil,
-        List.map_nil, List.append_nil]
+        ⟨0, hj0⟩ hjr
+      rw [List.finRange_succ_last (n := 0), List.reverse_append]
+      simp only [List.reverse_singleton, List.singleton_append, List.flatMap_cons,
+        List.flatMap_nil, List.map_nil, List.append_nil]
       refine ⟨?_, ?_⟩
       · simpa using hb.1
-      · simpa using hb.2
+      · have hgeom1 : geom d 1 = 1 := by
+          simp only [geom, pow_one]
+          exact Nat.div_self (by
+            have : 1 < 2 ^ d := Nat.one_lt_two_pow (by omega)
+            omega)
+        simpa [hgeom1] using hb.2
   | succ n ih =>
-      intro hn
+      intro hnr hn
       dsimp only
       have hb := regular_block d r w hd hr hw tau htau
         ⟨n + 1, by omega⟩ (by omega)
-      have htail := ih (by omega)
-      simp only [List.finRange_succ_last, List.reverse_append, List.reverse_singleton,
-        List.singleton_append, List.flatMap_cons, List.flatMap_nil,
-        List.map_nil, List.append_nil]
+      have htail := ih (by omega) (by omega)
+      rw [List.finRange_succ_last (n := n + 1), List.reverse_append]
+      simp only [List.reverse_singleton, List.singleton_append, List.flatMap_cons]
       have hgeom : (geom d (n + 2) : ℤ) =
           (geom d (n + 1) : ℤ) + ((2 : ℤ) ^ d) ^ (n + 1) := by
         have hh := geom_succ d (n + 1) (by omega)
@@ -709,33 +998,47 @@ private theorem lower_aux (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
             (w : ℤ) * geom d (n + 1) := by
         rw [hgeom]
         ring
+      have hbSum :
+          (tau.map (fun x =>
+            actualSource (d * r + 1) (2 * (w * geom d r))
+              ((blockLabel d r (n + 1) (by omega) x).castSucc))).sum =
+            -(w : ℤ) * ((2 : ℤ) ^ d) ^ (n + 1) := by
+        simpa only [List.map_map, Function.comp_def, Fin.val_last] using hb.2
       constructor
       · apply inStrip_append hb.1
-        simpa [hstart] using htail.1
+        rw [← List.map_reverse, List.flatMap_map]
+        simp only [List.map_map, Function.comp_def, Fin.val_last]
+        rw [hbSum, hstart]
+        simpa only [List.map_reverse, List.flatMap_map, List.map_map,
+          Function.comp_def, Fin.val_castSucc] using htail.1
       · simp only [List.map_append, List.sum_append]
-        rw [hb.2, htail.2]
+        rw [← List.map_reverse, List.flatMap_map]
+        have htailSum := htail.2
+        simp only [List.map_map, Function.comp_def, Fin.val_castSucc] at htailSum
+        simp only [List.map_map, Function.comp_def, Fin.val_last]
+        rw [hbSum, htailSum]
         rw [hgeom]
         ring
 
 private theorem repeat_split (d r : ℕ) (hr : 2 ≤ r) (tau : List (Fin d)) :
     repeatWord d r (by omega) tau =
       tau.map (blockLabel d r (r - 1) (by omega)) ++
-        lowerBlocks d r (by omega) tau (r - 1) := by
+        lowerBlocks d r hr tau := by
   unfold repeatWord lowerBlocks
   have hfr : List.finRange r =
-      List.finRange (r - 1) ++ [⟨r - 1, by omega⟩] := by
+      (List.finRange (r - 1)).map Fin.castSucc ++
+        [Fin.last (r - 1)] := by
     simpa [show r = (r - 1) + 1 by omega] using
-      (List.finRange_succ_last (r - 1))
+      (List.finRange_succ_last (n := r - 1))
   rw [hfr, List.reverse_append]
-  simp only [List.reverse_singleton, List.singleton_append, List.flatMap_cons,
+  simp [List.reverse_singleton, List.singleton_append, List.flatMap_cons,
     List.flatMap_append, List.flatMap_singleton]
-  rfl
 
 private theorem earWord_append (k : ℕ) (sigma rho : List (Fin k)) (cut : ℕ)
     (hcut : cut ≤ sigma.length) :
     earWord k (sigma ++ rho) cut = earWord k sigma cut ++ rho.map Fin.castSucc := by
   unfold earWord
-  rw [take_append_of_le_length hcut, drop_append_of_le_length hcut]
+  rw [List.take_append_of_le_length hcut, List.drop_append_of_le_length hcut]
   simp only [List.map_append, List.append_assoc]
 
 private theorem ear_perm_local (k : ℕ) (sigma : List (Fin k)) (cut : ℕ)
@@ -761,13 +1064,15 @@ private theorem lower_blocks_result (d r w : ℕ) (hd : 2 ≤ d) (hr : 2 ≤ r)
     (hw : w ≤ 2 ^ (d - 1) - 1) (tau : List (Fin d))
     (htau : OriginalOrder d w tau) :
     let f := actualSource (d * r + 1) (2 * (w * geom d r))
-    let lower := (lowerBlocks d r (by omega) tau (r - 1)).map Fin.castSucc
+    let lower := (lowerBlocks d r hr tau).map Fin.castSucc
     InStrip f (modulus (d * r + 1) / 2)
       ((w : ℤ) * geom d (r - 1)) lower ∧
       (lower.map f).sum = -(w : ℤ) * geom d (r - 1) := by
   dsimp only
-  have hh := lower_aux d r w hd hr hw tau htau (r - 2) (by omega)
-  simpa [lowerBlocks, List.map_flatMap, List.map_map, Function.comp_def] using hh
+  have hh := lower_aux d r w hd hr hw tau htau (r - 2) (by omega) (by omega)
+  have hrel : r - 2 + 1 = r - 1 := by omega
+  simpa [lowerBlocks, hrel, List.flatMap_map, List.map_map, Function.comp_def,
+    Fin.val_castSucc] using hh
 
 /- The common descending block transport.  The base order and its literal ear
 are reused verbatim; only the source values are charged by the geometric row. -/
@@ -787,11 +1092,15 @@ public theorem physical_joint_repetition
   let oldBlock := fun j : Fin r => tau.map (blockLabel d r j.val j.isLt)
   have hold_block (j : Fin r) :
       InStrip oldf (modulus (d * r) / 2) 0 (oldBlock j) ∧
-        (oldBlock j).map oldf |>.sum = 0 := by
+        ((oldBlock j).map oldf).sum = 0 := by
     simpa [oldf, oldBlock] using old_block d r w hd hr hw tau hold j
   have hold_strip : InStrip oldf (modulus (d * r) / 2) 0
       (rows.flatMap oldBlock) := by
-    apply blocks_concat oldf (modulus (d * r) / 2) 0 rows oldBlock
+    apply blocks_concat oldf (modulus (d * r) / 2) rows oldBlock
+      (by
+        have hN := (TwoRunSource.modulus_positive_odd (d * r)
+          (Nat.mul_pos (by omega) (by omega))).1
+        omega)
       (fun j hj => (hold_block j).1)
       (fun j hj => (hold_block j).2)
   have hold_sum : ((rows.flatMap oldBlock).map oldf).sum = 0 := by
@@ -802,18 +1111,20 @@ public theorem physical_joint_repetition
       (repeatWord d r (by omega) tau) := by
     refine ⟨hperm_old, ?_, ?_⟩
     · simpa [repeatWord, rows, oldBlock, oldf] using hold_sum
-    · simpa [repeatWord, rows, oldBlock, oldf] using hold_strip
+    · intro n
+      simpa [repeatWord, rows, oldBlock, oldf] using
+        (inStrip_prefix hold_strip n)
   have hsplit := repeat_split d r hr tau
   let top := tau.map (blockLabel d r (r - 1) (by omega))
   let topEar := earWord (d * r) top cut
-  let lower := (lowerBlocks d r (by omega) tau (r - 1)).map Fin.castSucc
+  let lower := (lowerBlocks d r hr tau).map Fin.castSucc
   have htau_len : tau.length = d := by simpa using hold.1.length_eq
   have hsplit_new :
       earWord (d * r) (repeatWord d r (by omega) tau) cut = topEar ++ lower := by
-    rw [hsplit, earWord_append (d * r) top
-      (lowerBlocks d r (by omega) tau (r - 1)) cut]
-    · rfl
-    · simpa [top, htau_len] using hcut
+    rw [hsplit]
+    rw [earWord_append (d * r) top
+      (lowerBlocks d r hr tau) cut
+      (by simpa [top, htau_len] using hcut)]
   have htop := top_block d r w hd hr hw tau cut hold hnew hcut
   have hlower := lower_blocks_result d r w hd hr hw tau hold
   have hnew_strip : InStrip newf (modulus (d * r + 1) / 2)
@@ -830,6 +1141,8 @@ public theorem physical_joint_repetition
     exact (hnew_perm.map newf).sum_eq.trans
       ((ZeroSumSubsets.source_cycle (by omega) (2 * (w * geom d r))).2.1)
   refine ⟨hold_order, ?_⟩
-  exact ⟨hnew_perm, hnew_sum, by simpa [newf] using hnew_strip⟩
+  exact ⟨hnew_perm, hnew_sum, by
+    intro n
+    simpa [newf] using (inStrip_prefix hnew_strip n)⟩
 
 end D5.S3.Combinatorics.Circle.PhysicalJointRepetition
