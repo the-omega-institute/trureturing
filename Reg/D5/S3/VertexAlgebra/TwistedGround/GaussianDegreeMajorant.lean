@@ -63,7 +63,8 @@ def evidence : Registration arena (type_of% @partial_sum_bound) where
     · intro i
       refine ⟨rejectedBound, ?_, rfl, rejected_fails⟩
       intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
+      change Unit at i j
+      exact (hj (@Subsingleton.elim Unit inferInstance j i)).elim
     · intro e
       cases e
   dependence := bound_dependence
@@ -89,11 +90,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.TwistedGround.GaussianDegreeMajorant
     definition := none
     coordinates := #[1]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"]
-                   stateBinder := 2
-                   functionOperand := false
-                   stateOperand := none
-                   booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -121,7 +123,8 @@ def evidence : Registration arena (type_of% @tsum_bound) where
     · intro i
       refine ⟨rejectedBound, ?_, rfl, rejected_fails⟩
       intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
+      change Unit at i j
+      exact (hj (@Subsingleton.elim Unit inferInstance j i)).elim
     · intro e
       cases e
   dependence := bound_dependence
@@ -147,11 +150,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.TwistedGround.GaussianDegreeMajorant
     definition := none
     coordinates := #[1]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"]
-                   stateBinder := 2
-                   functionOperand := false
-                   stateOperand := none
-                   booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -184,7 +188,8 @@ private theorem rejected_fails : ¬ arena.Law rejected := by
   have hh : Summable (fun _ : ℕ => (1 : ℝ)) :=
     h vacuum (c := 0) (r := 0) (by norm_num) (by norm_num)
       (by norm_num) vacuum_nonneg vacuum_zero vacuum_rec
-  exact not_finite ℕ (Finite.of_summable_const (by norm_num : (0 : ℝ) < 1) hh)
+  letI := Finite.of_summable_const (by norm_num : (0 : ℝ) < 1) hh
+  exact not_finite ℕ
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), (fun _ => 0), (fun _ => 1), ?_⟩
@@ -201,7 +206,8 @@ def evidence : Registration arena (type_of% @summable_of_creation_recurrence) wh
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_fails⟩
       intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
+      change Unit at i j
+      exact (hj (@Subsingleton.elim Unit inferInstance j i)).elim
     · intro e
       cases e
   dependence := actual_dependence
@@ -228,11 +234,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.TwistedGround.GaussianDegreeMajorant
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"]
-                   stateBinder := 0
-                   functionOperand := false
-                   stateOperand := none
-                   booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

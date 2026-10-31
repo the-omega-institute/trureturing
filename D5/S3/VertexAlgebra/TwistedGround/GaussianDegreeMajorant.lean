@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: An all-degree Gaussian creation recurrence implies a uniform exponential square-mass bound. -/
+   digest: A creation recurrence gives a uniform all-degree mass bound. -/
 
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.Calculus.Deriv.Pow
@@ -14,7 +14,7 @@ import Mathlib.Topology.Algebra.InfiniteSum.Real
 /-!
 This is the analytic lemma for the CCR proof of squeezed-vacuum summability.
 Its hypothesis is a scalar recurrence, not a Gaussian norm formula, a bound
-on partialMass sums, or summability. FactorialFockQuadraticEstimate derives that
+on partial sums, or summability. FactorialFockQuadraticEstimate derives that
 recurrence from polynomial creation and differentiation. Every manipulation
 before the last two theorems is finite; no power-series interchange occurs.
 -/

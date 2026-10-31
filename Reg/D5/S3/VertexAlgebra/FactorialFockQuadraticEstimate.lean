@@ -68,7 +68,8 @@ def evidence : Registration arena.{u} (type_of% (@all_degree_partial_bound.{u}))
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_fails⟩
       intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
+      change Unit at i j
+      exact (hj (@Subsingleton.elim Unit inferInstance j i)).elim
     · intro e
       cases e
   dependence := actual_dependence
@@ -131,7 +132,8 @@ def evidence : Registration arena.{u} (type_of% (@finite_occupation_bound.{u})) 
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_fails⟩
       intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
+      change Unit at i j
+      exact (hj (@Subsingleton.elim Unit inferInstance j i)).elim
     · intro e
       cases e
   dependence := actual_dependence
@@ -216,7 +218,8 @@ def evidence : Registration arena.{u} (type_of% (@degree_mass_recurrence.{u})) w
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_fails⟩
       intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
+      change Unit at i j
+      exact (hj (@Subsingleton.elim Unit inferInstance j i)).elim
     · intro e
       cases e
   dependence := actual_dependence

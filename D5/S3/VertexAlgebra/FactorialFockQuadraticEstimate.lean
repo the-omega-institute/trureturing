@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Creation-derivative estimates for all Gaussian degrees and factorial-weighted mixed coefficients. -/
+   digest: All-degree Gaussian bounds in the factorial Fock metric. -/
 
 import D5.S3.VertexAlgebra.FactorialFockMetric
 import D5.S3.VertexAlgebra.TwistedGround.GaussianDegreeMajorant
@@ -239,7 +239,7 @@ private theorem row_creation_mass (v : I → ℂ) (p : P) :
       rw [creation_pairing, mul_add, mul_ite, mul_zero]
     simp_rw [hp, Finset.sum_add_distrib]
     congr 1
-    · simp only [Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true, RCLike.conj_mul,
+    · simp only [Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, ite_true, RCLike.conj_mul,
         Finset.sum_mul]
       rfl
     · rw [Finset.sum_comm]
@@ -256,7 +256,7 @@ private theorem row_creation_mass (v : I → ℂ) (p : P) :
   simpa only [mass, Complex.add_re, Complex.mul_re, Complex.ofReal_re,
     Complex.ofReal_im, zero_mul, sub_zero] using hreal
 
-/-- Creation by a symmetric quadratic is controlled by HS mass and scalar
+/-- Matrix-weighted creation is controlled by HS mass and scalar
 operator norm. The estimate holds for EVERY polynomial p and arbitrary degree. -/
 theorem quadratic_creation_bound (A : Matrix I I ℂ) {q : ℝ} (hq : 0 ≤ q)
     (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ ≤ q) (p : P) :
@@ -324,12 +324,12 @@ private theorem quadratic_pderiv (A : Matrix I I ℂ)
   have hrow : (∑ j, ∑ k, if j = i then A j k • (X k : P) else 0) =
       ∑ j, A i j • (X j : P) := by
     rw [Finset.sum_comm]
-    simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   simp only [quadratic, Derivation.map_smul, map_sum, pderiv_mul, pderiv_X,
     Pi.single_apply, smul_add, Finset.sum_add_distrib]
   simp only [ite_mul, mul_ite, one_mul, mul_one, zero_mul, mul_zero,
     smul_ite, smul_zero, Finset.sum_ite_eq', Finset.sum_ite_eq,
-    Finset.mem_univ, if_true, hcol, hrow]
+    Finset.mem_univ, ite_true, hcol, hrow]
   rw [← add_smul]
   norm_num
 
@@ -404,7 +404,6 @@ theorem all_degree_partial_bound (A : Matrix I I ℂ)
   have hs := all_degree_summable A hsym hq hq1 hA
   have hfinite := hs.sum_le_tsum (Finset.range (N + 1)) (fun n _ => mass_nonneg (gaussianPiece A n))
   apply hfinite.trans
-
   simpa only [div_div] using hb
 
 /-- Mixed exponential coefficient selected at its forced homogeneous degree.
@@ -484,36 +483,5 @@ theorem occupation_summable (A : Matrix I I ℂ)
   exact finite_occupation_bound A hsym hq hq1 hA S
 
 
--- BEGIN TRANSIENT NATIVE SPECIALIZATIONS
-example : mass (gaussianPiece (fun (_ : Unit) (_ : Unit) => (1 / 2 : ℂ)) 1) =
-    (1 / 8 : ℝ) := by
-  norm_num [mass_eq_sum, gaussianPiece, quadratic, MvPolynomial.X,
-    MvPolynomial.smul_monomial, MvPolynomial.monomial_mul_monomial, MvPolynomial.support_monomial,
-    Finsupp.prod_single_index, weight,
-    ← Finsupp.single_add]
-
-example : mass (gaussianPiece (fun (_ : Unit) (_ : Unit) => (1 / 2 : ℂ)) 2) =
-    (3 / 128 : ℝ) := by
-  norm_num [mass_eq_sum, gaussianPiece, quadratic, MvPolynomial.X, pow_two,
-    MvPolynomial.smul_monomial, MvPolynomial.monomial_mul_monomial, MvPolynomial.support_monomial,
-    Finsupp.prod_single_index, weight,
-    ← Finsupp.single_add]
-
-open scoped Matrix.Norms.L2Operator in
-example : Summable (fun d : Unit →₀ ℕ => (weight d : ℝ) *
-    ‖gaussianCoefficient (Matrix.diagonal (fun _ : Unit => (1 / 2 : ℂ))) d‖ ^ 2) := by
-  apply occupation_summable _ (fun i j => by cases i; cases j; rfl)
-    (q := 1 / 2) (by norm_num) (by norm_num)
-  rw [Matrix.l2_opNorm_toEuclideanCLM, Matrix.l2_opNorm_diagonal]
-  norm_num
-
-example : gaussianCoefficient (0 : Matrix (Fin 0) (Fin 0) ℂ) 0 = 1 :=
-  gaussianCoefficient_zero _
-
-example : Summable (fun d : Unit →₀ ℕ =>
-    (weight d : ℝ) * ‖gaussianCoefficient (0 : Matrix Unit Unit ℂ) d‖ ^ 2) := by
-  apply occupation_summable _ (fun _ _ => rfl) (q := 0) (by norm_num) (by norm_num)
-  simp
--- END TRANSIENT NATIVE SPECIALIZATIONS
 
 end D5.S3.VertexAlgebra.FactorialFockQuadraticEstimate
