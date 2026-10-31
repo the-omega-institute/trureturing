@@ -13,6 +13,10 @@ import Mathlib.Topology.Algebra.InfiniteSum.Module
 import Mathlib.Tactic.Module
 import Mathlib.Tactic.NoncommRing
 
+/-! Analytic identities for the original signed Gaussian operator and its literal cutoffs. -/
+
+set_option backward.isDefEq.respectTransparency false
+
 noncomputable section
 open scoped BigOperators Topology
 open Filter

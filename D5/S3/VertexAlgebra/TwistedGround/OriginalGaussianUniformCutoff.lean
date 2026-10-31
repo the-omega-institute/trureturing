@@ -11,8 +11,12 @@ import Mathlib.Analysis.Normed.Group.FunctionSeries
 import Mathlib.Analysis.Normed.Ring.InfiniteSum
 import Mathlib.Analysis.SpecificLimits.Normed
 
+/-! Analytic identities for the original signed Gaussian operator and its literal cutoffs. -/
+
+set_option backward.isDefEq.respectTransparency false
+
 noncomputable section
-open scoped BigOperators Topology
+open scoped BigOperators Topology ENNReal
 open Filter
 
 namespace D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianUniformCutoff
@@ -37,7 +41,8 @@ private lemma traceTerm_uniform_bound {ρ : ℝ} (hρ : 0 ≤ ρ)
 /-- Uniform operator-norm convergence of the ACTUAL principal square cutoffs. -/
 theorem sectionOp_tendstoUniformlyOn {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1) :
     TendstoUniformlyOn sectionOp operator atTop {z : ℂ | ‖z‖ ≤ ρ} := by
-  have h := tendstoUniformlyOn_tsum (unit1Geo_summable hρ hρ1)
+  have h := tendstoUniformlyOn_tsum (f := fun (p : ℕ × ℕ) (z : ℂ) => term z p)
+    (s := {z : ℂ | ‖z‖ ≤ ρ}) (unit1Geo_summable hρ hρ1)
     (fun p z hz => traceTerm_uniform_bound hρ hz p)
   have hp := tendsto_finset_range.prodMk tendsto_finset_range
   rw [prod_atTop_atTop_eq] at hp
@@ -48,7 +53,10 @@ theorem sectionOp_tendstoUniformlyOn {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1)
       (fun z => ∑' p : ℕ × ℕ, term z p) atTop {z : ℂ | ‖z‖ ≤ ρ} := by
     intro u hu
     exact hc.eventually (h u hu)
-  simpa only [sectionOp, operator, Finset.sum_product] using hh
+  change TendstoUniformlyOn
+    (fun N z => ∑ n ∈ Finset.range N, ∑ m ∈ Finset.range N, term z (n, m))
+    (fun z => ∑' p : ℕ × ℕ, term z p) atTop {z : ℂ | ‖z‖ ≤ ρ}
+  simpa only [Finset.sum_product] using hh
 
 def traceWeightedTerm (r : ℝ) (n : ℕ) : H :=
   lp.single 2 n ((n + 1 : ℂ) * sourceValue r n)
@@ -75,9 +83,11 @@ lemma traceWeightedTerm_tsum {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
   rw [(lp.evalCLM ℂ (fun _ : ℕ => ℂ) 2 n).map_tsum
     (traceWeightedTerm_summable hr hr1).of_norm]
   rw [tsum_eq_single n]
-  · simp [traceWeightedTerm, lp.single_apply]
+  · change (lp.single 2 n ((n + 1 : ℂ) * sourceValue r n) : H) n = _
+    simp [lp.single_apply]
   · intro i hi
-    simp [traceWeightedTerm, lp.single_apply, hi]
+    change (lp.single 2 i ((i + 1 : ℂ) * sourceValue r i) : H) n = 0
+    simp [lp.single_apply, hi]
 
 /-- Uniform l2 convergence, with the literal weightedSource as limit.
     A subtype keeps proof arguments explicit without inventing an exterior extension. -/

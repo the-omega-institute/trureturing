@@ -15,6 +15,10 @@ import Mathlib.Analysis.Complex.RealDeriv
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.LinearAlgebra.Matrix.Trace
 
+/-! Analytic identities for the original signed Gaussian operator and its literal cutoffs. -/
+
+set_option backward.isDefEq.respectTransparency false
+
 noncomputable section
 open scoped BigOperators Topology
 open Filter
@@ -59,7 +63,7 @@ private lemma traceMatrixProduct_hasDerivAt {n : Type*} [Fintype n]
       ((D * B r + A r * E) i j) r := by
   have hd := HasDerivAt.fun_sum (u := Finset.univ)
     (fun k _ => (hA i k).mul (hB k j))
-  simpa only [Matrix.mul_apply, Matrix.add_apply, Finset.sum_add_distrib] using hd
+  simpa only [Pi.mul_apply, Matrix.mul_apply, Matrix.add_apply, Finset.sum_add_distrib] using hd
 
 private lemma traceMatrixPower_hasDerivAt {n : Type*} [Fintype n] [DecidableEq n]
     {A : ℝ → Matrix n n ℂ} {D : Matrix n n ℂ} {r : ℝ}
@@ -122,7 +126,7 @@ private lemma trace_rankOne (N : ℕ) (A : Matrix (Fin N) (Fin N) ℂ)
     Matrix.trace (A * Matrix.vecMulVec w w) =
       ∑ i : Fin N, ∑ j : Fin N, w i * A i j * w j := by
   classical
-  unfold Matrix.trace
+  change (∑ i : Fin N, (A * Matrix.vecMulVec w w) i i) = _
   simp only [Matrix.mul_apply, Matrix.vecMulVec_apply]
   apply Finset.sum_congr rfl
   intro i _
@@ -138,10 +142,12 @@ private lemma trace_radial_entry_hasDerivAt {r : ℝ} (hr : 0 < r) (n m : ℕ) :
   let e : ℕ := (n + 1) + (m + 1)
   let z : ℂ := (Real.sqrt r : ℂ)
   let c : ℂ := pairScalar (n + 1) (m + 1) /
-    ((Real.sqrt (n + 1 : ℝ) : ℂ) * (Real.sqrt (m + 1 : ℝ) : ℂ))
+    ((Real.sqrt ((n + 1 : ℕ) : ℝ) : ℂ) * (Real.sqrt ((m + 1 : ℕ) : ℝ) : ℂ))
   have hz : z ≠ 0 := by
+    dsimp [z]
     exact_mod_cast (Real.sqrt_pos.mpr hr).ne'
   have hz2 : z ^ 2 = (r : ℂ) := by
+    dsimp [z]
     exact_mod_cast Real.sq_sqrt hr.le
   have hs := (Real.hasDerivAt_sqrt hr.ne').ofReal_comp
   have hd := (hs.pow e).const_mul c
@@ -156,6 +162,8 @@ private lemma trace_radial_entry_hasDerivAt {r : ℝ} (hr : 0 < r) (n m : ℕ) :
       conv_lhs => rw [he]
       rw [pow_succ]
     push_cast
+    change c * ((e : ℂ) * z ^ (e - 1) * (1 / (2 * z))) =
+      (1 / (2 * (r : ℂ))) * ((e : ℂ) * (c * z ^ e))
     rw [← hz2, hp]
     field_simp [hz]
     <;> ring
@@ -165,8 +173,7 @@ private lemma trace_radial_entry_hasDerivAt {r : ℝ} (hr : 0 < r) (n m : ℕ) :
     push_cast
     rfl
   rw [he, ha] at hc
-  convert hd using 1
-  exact hc.symm
+  convert hd using 1 <;> first | (funext t; rfl) | simpa only [he, z] using hc.symm
 
 private lemma trace_radial_section_hasDerivAt (N : ℕ) {r : ℝ} (hr : 0 < r)
     (i j : Fin N) :
@@ -211,8 +218,8 @@ theorem traceWeightBound_summable {R : ℝ} (hR : 0 ≤ R) (hR1 : R < 1) :
     exact (Real.sqrt_lt hR zero_le_one).mpr (by simpa using hR1)
   have ht := summable_pow_mul_geometric_of_norm_lt_one 1 (r := Real.sqrt R) hs
   have hu : Summable (fun n : ℕ => (n : ℝ) * Real.sqrt R ^ n) := by simpa using ht
-  simpa only [traceWeightBound, Nat.cast_add, Nat.cast_one] using
-    (summable_nat_add_iff 1).mpr hu
+  change Summable (fun n : ℕ => (n + 1 : ℝ) * Real.sqrt R ^ (n + 1))
+  simpa only [Nat.cast_add, Nat.cast_one] using (summable_nat_add_iff 1).mpr hu
 
 theorem traceWeightValue_bound {R r : ℝ} (hrR : r ≤ R) (n : ℕ) :
     ‖(n + 1 : ℂ) * sourceValue r n‖ ≤ traceWeightBound R n := by
@@ -265,10 +272,12 @@ theorem finiteTraceMoment_bound (N p : ℕ) {r R : ℝ}
         (mul_le_mul (traceWeightValue_bound hrR i.val)
           (trace_finite_power_bound N p hr hrR hR1 i j)
           (norm_nonneg _) (traceWeightBound_nonneg _ _))
-        (traceWeightValue_bound hrR j.val) (norm_nonneg _) (by positivity)
+        (traceWeightValue_bound hrR j.val) (norm_nonneg _)
+        (mul_nonneg (traceWeightBound_nonneg R i.val) (pow_nonneg hR p))
     _ = S ^ 2 * R ^ p := by
       dsimp [S]
-      simp only [Finset.mul_sum, Finset.sum_mul]
+      simp_rw [mul_assoc, ← Finset.mul_sum]
+      rw [← Finset.sum_mul]
       ring
     _ ≤ traceWeightMass R ^ 2 * R ^ p := by
       gcongr
@@ -323,6 +332,6 @@ theorem finiteLog_hasDerivAt_traceMoments (N : ℕ) {r : ℝ}
     (fun k t ht => finiteTraceTerm_hasDerivAt N k (ha.trans ht.1))
     (fun k t ht => finiteTraceTerm_derivative_bound N k ha ht.1.le ht.2.le hR1)
     hm hb hm
-  simpa only [finiteLog, tsum_mul_left] using hd.neg
+  simpa only [finiteLog, tsum_mul_left] using hd.fun_neg
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteTrace
