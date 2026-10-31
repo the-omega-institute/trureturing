@@ -231,7 +231,9 @@ local instance laurentCharZero (R : Type*) [Field R] [CharZero R] :
 private noncomputable def laurentD (R : Type*) [CommRing R] :
     Derivation R (LaurentSeries R) (LaurentSeries R) where
   toFun f := LaurentSeries.derivative R f
-  map_add' f g := (LaurentSeries.derivative R).map_add f g
+  map_add' f g := by
+    ext n
+    simp [LaurentSeries.derivative_apply, smul_add]
   map_smul' c f := by
     change LaurentSeries.derivative R (algebraMap R (LaurentSeries R) c * f) =
       algebraMap R (LaurentSeries R) c * LaurentSeries.derivative R f
@@ -320,9 +322,9 @@ private theorem D_jet (S : ℝ⸨X⸩) (p A : ℝ[X])
     simp only [polyJet, map_add, map_mul, smul_eq_mul]
     have hz : polyLS p ^ (-(v : ℤ)) =
         polyLS p ^ (-((v + 1 : ℕ) : ℤ)) * polyLS p := by
-      rw [← zpow_one (polyLS p), ← zpow_add₀ hp]
-      congr 1
-      omega
+      calc
+        _ = polyLS p ^ (-((v + 1 : ℕ) : ℤ) + 1) := by congr 1; omega
+        _ = _ := by rw [zpow_add₀ hp, zpow_one]
     have hz' : polyLS p ^ (-(v : ℤ) - 1) =
         polyLS p ^ (-((v + 1 : ℕ) : ℤ)) := by congr 1; push_cast; ring
     rw [hz', hz]
@@ -333,6 +335,7 @@ private theorem D_jet (S : ℝ⸨X⸩) (p A : ℝ[X])
     simp only [map_sub, map_div₀, map_one, map_ofNat, map_natCast, Int.cast_neg,
       Int.cast_natCast]
     field_simp
+    <;> push_cast
     <;> ring
 
 private def wronskianPS {n : ℕ} (f : Fin n → ℝ⟦X⟧) :
@@ -356,10 +359,57 @@ private theorem wronskianPS_ne_zero {n : ℕ} (f : Fin n → ℝ⟦X⟧)
   have he : BGS.Algebra.derivationWronskian (laurentD ℝ)
       (fun i => (f i : ℝ⸨X⸩)) =
       (wronskianPS f).map (HahnSeries.ofPowerSeries ℤ ℝ) := by
-    ext i j
-    exact iterate_coe _ _
-  rw [he, ← RingHom.map_det] at h
+    exact Matrix.ext fun i j => iterate_coe _ _
+  rw [he] at h
+  change Matrix.det ((HahnSeries.ofPowerSeries ℤ ℝ).mapMatrix (wronskianPS f)) ≠ 0 at h
+  rw [← RingHom.map_det] at h
   exact fun hz => h (by rw [hz, map_zero])
+
+
+private theorem detPoly_degree {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ[X])
+    (d : ℕ) (hM : ∀ i j, (M i j).natDegree ≤ d) :
+    M.det.natDegree ≤ n * d := by
+  classical
+  rw [Matrix.det_apply]
+  apply Polynomial.natDegree_sum_le_of_forall_le
+  intro σ _
+  have hsign : (Equiv.Perm.sign σ • ∏ i, M (σ i) i).natDegree ≤
+      (∏ i, M (σ i) i).natDegree := by
+    rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with h | h
+    · simp [h]
+    · simp [h, Units.neg_smul, Polynomial.natDegree_neg]
+  refine hsign.trans ((Polynomial.natDegree_prod_le _ _).trans ?_)
+  calc
+    (∑ i, (M (σ i) i).natDegree) ≤ ∑ _i : Fin n, d := Finset.sum_le_sum fun i _ => hM _ _
+    _ = n * d := by simp
+
+private theorem column_order {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ⟦X⟧)
+    (j : Fin n) (b : ℕ) (hM : ∀ i, (b : ℕ∞) ≤ (M i j).order) :
+    (b : ℕ∞) ≤ M.det.order := by
+  classical
+  have hdiv : ∀ i, (PowerSeries.X : ℝ⟦X⟧) ^ b ∣ M i j := by
+    intro i
+    rw [PowerSeries.X_pow_dvd_iff]
+    exact PowerSeries.nat_le_order_iff.mp (hM i)
+  choose c hc using hdiv
+  have he : M = M.updateCol j ((PowerSeries.X ^ b : ℝ⟦X⟧) • c) := by
+    apply Matrix.ext
+    intro i k
+    by_cases hk : k = j
+    · subst k
+      simpa [Matrix.updateCol_apply, Pi.smul_apply, smul_eq_mul] using hc i
+    · simp [Matrix.updateCol_apply, hk]
+  have hd : (PowerSeries.X : ℝ⟦X⟧) ^ b ∣ M.det := by
+    refine ⟨(M.updateCol j c).det, ?_⟩
+    conv_lhs => rw [he]
+    exact Matrix.det_updateCol_smul M j _ c
+  exact PowerSeries.nat_le_order_iff.mpr (PowerSeries.X_pow_dvd_iff.mp hd)
+
+private theorem polynomial_order_le (p : ℝ[X]) (hp : p ≠ 0) :
+    (p : ℝ⟦X⟧).order ≤ (p.natDegree : ℕ∞) := by
+  apply PowerSeries.order_le
+  simpa only [Polynomial.coeff_coe, ← Polynomial.leadingCoeff] using
+    (Polynomial.leadingCoeff_ne_zero.mpr hp)
 
 end
 end CdsoRadical

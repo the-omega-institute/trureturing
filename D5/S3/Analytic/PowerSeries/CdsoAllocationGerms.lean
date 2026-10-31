@@ -8,6 +8,7 @@
 
 import D5.S3.Analytic.PowerSeries.RadicalMultiplicity
 import Mathlib.Analysis.Analytic.Binomial
+import Mathlib.Analysis.Analytic.Polynomial
 import Mathlib.Analysis.Analytic.Order
 import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
 import Mathlib.Analysis.Calculus.Deriv.Polynomial
@@ -63,7 +64,8 @@ private theorem taylor_poly (p : ℝ[X]) : taylor p.eval = (p : ℝ⟦X⟧) := b
   induction p using Polynomial.induction_on' with
   | add p q hp hq =>
     simpa only [Polynomial.eval_add, Polynomial.coe_add, hp, hq] using
-      taylor_add (p.analyticAt) (q.analyticAt)
+      taylor_add (AnalyticOnNhd.eval_polynomial p 0 (Set.mem_univ 0))
+        (AnalyticOnNhd.eval_polynomial q 0 (Set.mem_univ 0))
   | monomial n c =>
     have hx (k : ℕ) : taylor (fun u : ℝ => u ^ k) = PowerSeries.X ^ k := by
       induction k with
@@ -140,5 +142,95 @@ private theorem analytic_radicalExtension (b δ k : ℝ) (hb : 0 < b) :
       ((analytic_sqrt hpoly hpos).add (by fun_prop)))
   simp only [mul_zero, add_zero, zero_pow (by decide : 2 ≠ 0)]
   positivity
+
+
+/-- Source branch, residue remainders, and an integer allocation vector.
+The analytic conclusions also apply to vectors outside the allocation inequalities. -/
+structure AllocationData (a h : ℕ) where
+  j : ℕ
+  j_pos : 0 < j
+  j_le : j ≤ h
+  d : ℕ
+  d_lt : d < a + j - 1
+  t : ℕ
+  t_lt : t < h + 1 - j
+  z : Fin (a + j) → ℤ
+
+namespace AllocationData
+
+variable {a h : ℕ}
+
+def m (b : AllocationData a h) : ℕ := a + b.j
+def r (b : AllocationData a h) : ℕ := b.m - 1
+def n (b : AllocationData a h) : ℕ := h + 1 - b.j
+def alpha (b : AllocationData a h) : ℝ := ((a : ℝ) - 1) / b.r
+def beta (b : AllocationData a h) : ℝ := (b.j : ℝ) / ((b.r : ℝ) * b.n)
+def phi (b : AllocationData a h) : ℝ :=
+  -((b.n : ℝ) + ((b.r : ℝ) - 1) * b.d) / b.r
+def sigma (b : AllocationData a h) : ℝ := ((b.d : ℝ) - b.n) / b.r
+def gamma (b : AllocationData a h) : ℝ := ((b.n : ℝ) - b.d) / ((b.r : ℝ) * b.n)
+def vminus (b : AllocationData a h) : ℝ := b.gamma - (b.t : ℝ) / b.n
+def vplus (b : AllocationData a h) : ℝ := b.vminus + 1
+
+def zplus (b : AllocationData a h) (i : Fin (a + b.j)) : ℝ := max (b.z i : ℝ) 0
+def zminus (b : AllocationData a h) (i : Fin (a + b.j)) : ℝ := max (-(b.z i : ℝ)) 0
+def L (b : AllocationData a h) : ℝ := b.n - ∑ i, b.zplus i
+
+def zmin (b : AllocationData a h) : ℤ := by
+  letI : Nonempty (Fin (a + b.j)) := ⟨⟨0, by have := b.j_pos; omega⟩⟩
+  exact Finset.univ.inf' Finset.univ_nonempty b.z
+
+def delta (b : AllocationData a h) (i : Fin (a + b.j)) : ℝ := b.sigma + b.z i
+def delta0 (b : AllocationData a h) : ℝ := b.sigma + b.zmin
+
+/-- The source allocation inequalities. They are not separation hypotheses. -/
+def Admissible (b : AllocationData a h) : Prop :=
+  (∑ i, b.z i) = (b.n : ℤ) - b.d ∧
+    (∑ i, max (b.z i) 0) ≤ b.n ∧ (∑ i, max (-b.z i) 0) ≤ b.d
+
+private theorem alpha_pos (b : AllocationData a h) (ha : 2 ≤ a) : 0 < b.alpha := by
+  have hr : 0 < b.r := by unfold r m; have := b.j_pos; omega
+  unfold alpha
+  positivity
+
+private theorem beta_pos (b : AllocationData a h) (ha : 2 ≤ a) : 0 < b.beta := by
+  have hr : 0 < b.r := by unfold r m; have := b.j_pos; omega
+  have hn : 0 < b.n := by unfold n; have := b.j_le; omega
+  unfold beta
+  have := b.j_pos
+  positivity
+
+/-- The full bracket in source formula (8.4), parametrized by its radical function. -/
+def combination (H : ℝ → ℝ → ℝ → ℝ → ℝ) (b : AllocationData a h) (u : ℝ) : ℝ :=
+  (∑ i, ((b.alpha + b.phi * u) * H b.alpha (b.delta i) b.m u +
+    u * ((b.d : ℝ) - b.zminus i) * H b.alpha (b.delta i) b.r u +
+    u * b.zplus i * H b.alpha (b.delta i) 2 u)) +
+  u * b.L * (H b.alpha b.delta0 2 u - H b.alpha b.delta0 b.r u) +
+  ((b.n : ℝ) - b.t) * ((b.beta + (b.vminus - 1) * u) * H b.beta b.vminus 1 u +
+    u * H b.beta b.vminus 2 u) +
+  (b.t : ℝ) * ((b.beta + (b.vplus - 1) * u) * H b.beta b.vplus 1 u +
+    u * H b.beta b.vplus 2 u)
+
+/-- The actual positive-parameter function in (8.4). -/
+def actual (b : AllocationData a h) (u : ℝ) : ℝ :=
+  2 / u ^ 2 * b.combination radicalR u
+
+/-- Its removable analytic extension at zero. -/
+def extension (b : AllocationData a h) (u : ℝ) : ℝ :=
+  2 * b.combination radicalExtension u
+
+private theorem analytic_extension (b : AllocationData a h) (ha : 2 ≤ a) :
+    AnalyticAt ℝ b.extension 0 := by
+  have hα := b.alpha_pos ha
+  have hβ := b.beta_pos ha
+  have hcore (i : Fin (a + b.j)) (k : ℝ) :=
+    analytic_radicalExtension b.alpha (b.delta i) k hα
+  have hmin (k : ℝ) := analytic_radicalExtension b.alpha b.delta0 k hα
+  have hminus (k : ℝ) := analytic_radicalExtension b.beta b.vminus k hβ
+  have hplus (k : ℝ) := analytic_radicalExtension b.beta b.vplus k hβ
+  unfold extension combination
+  fun_prop
+
+end AllocationData
 
 end CdsoPeriodic
