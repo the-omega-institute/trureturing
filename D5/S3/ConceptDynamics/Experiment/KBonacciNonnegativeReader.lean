@@ -4,10 +4,12 @@
    mirror-E: none(waiver:exact-symbolic-obstruction)
    anchors: []
    utility: none
-   digest: Nonnegative fixed readers obstruct one preparation for unrestricted terminating actual-window protocols. -/
+   digest: Nonnegative readers obstruct one preparation for unrestricted actual-window protocols. -/
 
 import D5.S1.Words.AdmissibleWords.KBonacciActualEndpointOperators
 import D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization
+
+/-! Exact irreversible acquisition with an unknown nonnegative fixed reader. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -118,7 +120,8 @@ private theorem all_endpoints : ∀ p t : Fin 2,
   have h := D5.S1.Words.AdmissibleWords.KBonacciActualEndpointOperators.actual_endpoint_operators
     (K := ℝ) 2 (by decide)
   have hw := h.2.2.2.2.2.2.2.2.2.2.1 p t (by omega)
-  exact ⟨⟨_, hw.1, by rw [hw.2.2.2.1]; simp⟩, hw.2.2.2.2⟩
+  have hn : base.evalFrom 0 _ = some t := hw.2.2.2.1
+  exact ⟨⟨_, hw.1, by rw [hn]; simp⟩, hw.2.2.2.2⟩
 
 private theorem state_snoc (w : World) (prior : List Action) (a : Action) :
     state w (prior ++ [a]) = advance w (state w prior) a := by
@@ -128,9 +131,10 @@ private theorem charges (h : History) : paidReads h = preparations h + windows h
   induction h with
   | nil => rfl
   | cons a h ih =>
+    simp only [paidReads, List.length_cons, preparations, windows, List.countP_cons] at ih ⊢
     cases ha : a.1.2 <;>
-      simp_all [paidReads, preparations, windows, List.countP_cons, Nat.add_assoc,
-        Nat.add_comm, Nat.add_left_comm]
+      simp only [ha, Option.isNone, Option.isSome, Bool.false_eq_true, ite_false,
+        ite_true] <;> omega
 
 private theorem terminal_unique (π : Protocol) (w : World) (n : ℕ) (h : History) (R : Mat)
     (hr : execute read π.policy n [] w = some (h, R)) :
@@ -139,7 +143,8 @@ private theorem terminal_unique (π : Protocol) (w : World) (n : ℕ) (h : Histo
   have hn := execute_mono read π.policy n (max n m) [] w h R (le_max_left ..) hr
   have hm' := execute_mono read π.policy m (max n m) [] w _ _ (le_max_right ..) hm
   rw [hn] at hm'
-  exact (Prod.mk.inj (Option.some.inj hm')).symm
+  have he := Prod.mk.inj (Option.some.inj hm')
+  exact ⟨he.1.symm, he.2.symm⟩
 
 private theorem query_tail (policy : History → Sum Query Mat) (w : World)
     (n : ℕ) (pre h : History) (R : Mat) (q : Query)
@@ -166,8 +171,8 @@ private theorem continuation_read_eq (u v : World) (prior : List Action) (h : Hi
   | cons a h ih =>
     rcases hc with ⟨ha, _, hc⟩
     have hzero : preparations h = 0 := by
-      simpa only [preparations, List.countP_cons] using
-        (Nat.add_eq_zero_iff.mp hp).2
+      simp only [preparations, List.countP_cons] at hp ⊢
+      split at hp <;> omega
     have hsome : ∃ word, a.1.2 = some word := by
       cases hact : a.1.2 with
       | none => simp [preparations, List.countP_cons, hact] at hp
@@ -183,6 +188,59 @@ private theorem continuation_read_eq (u v : World) (prior : List Action) (h : Hi
     rcases List.mem_cons.mp hb with rfl | hb
     · exact he
     · exact ih _ hs' hc hzero b hb
+
+private def corner (other : Bool) : World where
+  c := ![1, if other then 2 else 1]
+  ell := ![1, 0]
+  c_pos := by intro i; fin_cases i <;> cases other <;> norm_num
+  ell_nonneg := by intro i; fin_cases i <;> norm_num
+  ell_nonzero := by norm_num
+
+private def interior (other : Bool) : World where
+  c := if other then ![3/4, 1/4] else ![1/4, 3/4]
+  ell := ![1, 1]
+  c_pos := by intro i; fin_cases i <;> cases other <;> norm_num
+  ell_nonneg := by intro i; fin_cases i <;> norm_num
+  ell_nonzero := by norm_num
+
+private theorem corner_initial (b : Bool) : read ([], none) (corner b) = 1 := by
+  cases b <;> norm_num [read, state, advance, observe, corner, dotProduct, Fin.sum_univ_two]
+
+private theorem corner_different : target (corner false) ≠ target (corner true) := by
+  intro h
+  have he := congrArg (fun R : Mat => R 1 0) h
+  norm_num [target, corner, Matrix.vecMulVec_apply] at he
+
+/-- The two source pairs agree after the selected first *actual* window. The
+trailing endpoint is unrestricted, including the boundary reader's zero read. -/
+private theorem first_window_collision (word : Window) :
+    ∃ u v : World, u.ell = v.ell ∧ target u ≠ target v ∧
+      read ([], none) u = 1 ∧ read ([], none) v = 1 ∧
+      state u [none, some word] = state v [none, some word] := by
+  obtain ⟨p, t, _, he⟩ := window_endpoint word
+  fin_cases p
+  · refine ⟨interior false, interior true, rfl, ?_, ?_, ?_, ?_⟩
+    · intro ht
+      have hf := congrArg (fun R : Mat => R 0 0) ht
+      norm_num [target, interior, Matrix.vecMulVec_apply] at hf
+    · norm_num [read, state, advance, observe, interior, dotProduct, Fin.sum_univ_two]
+    · norm_num [read, state, advance, observe, interior, dotProduct, Fin.sum_univ_two]
+    · change some (live word.val *ᵥ (interior false).c) =
+        some (live word.val *ᵥ (interior true).c)
+      rw [he]
+      congr 1
+      ext i
+      fin_cases i <;> fin_cases t <;>
+        norm_num [endpoint, interior, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+  · refine ⟨corner false, corner true, rfl, corner_different,
+      corner_initial false, corner_initial true, ?_⟩
+    change some (live word.val *ᵥ (corner false).c) =
+      some (live word.val *ᵥ (corner true).c)
+    rw [he]
+    congr 1
+    ext i
+    fin_cases i <;> fin_cases t <;>
+      norm_num [endpoint, corner, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
 
 end
 end D5.S3.ConceptDynamics.Experiment.KBonacciNonnegativeReader
