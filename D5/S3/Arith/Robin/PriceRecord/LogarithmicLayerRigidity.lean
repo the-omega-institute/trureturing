@@ -386,4 +386,199 @@ private theorem shrinking_rounded_exchanges (C : ℝ) (hC : 0 < C) :
       (fun q hq => (hUP q hq).2.2)
     simpa only [hEQcard, hUPcard, pow_one] using hbound
 
+private theorem record_ratio_limit {α : Type*} {l : Filter α}
+    (m : α → ℕ) (lambda : α → ℝ) (hm : ∀ x, 2 ≤ m x)
+    (hlambda : ∀ x, 0 < lambda x)
+    (hrecord : ∀ x n, 0 < n → n < m x →
+      goldenResourceObjective (lambda x) n < goldenResourceObjective (lambda x) (m x))
+    (j : ℕ) (hj : 2 ≤ j)
+    (hP : Tendsto (fun x => (largestPrime (m x) : ℝ)) l atTop) :
+    Tendsto (fun x => (layerPrime (m x) j : ℝ) ^ j / (largestPrime (m x) : ℝ))
+      l (𝓝 (j : ℝ)) := by
+  apply Metric.tendsto_nhds.mpr
+  intro epsilon hepsilon
+  obtain ⟨T, _, hT⟩ := price_record_fixed_layer_rigidity j hj epsilon hepsilon
+  filter_upwards [hP.eventually_ge_atTop T] with x hx
+  simpa only [Real.dist_eq] using hT (m x) (hm x) (lambda x) (hlambda x) (hrecord x) hx
+
+private theorem coarse_scale_limits {α : Type*} {l : Filter α} (P Q : α → ℝ)
+    (j : ℕ) (hj : 2 ≤ j) (hQnonneg : ∀ x, 0 ≤ Q x)
+    (hP : Tendsto P l atTop)
+    (hfirst : Tendsto (fun x => Q x ^ j / P x) l (𝓝 (j : ℝ))) :
+    Tendsto Q l atTop ∧
+      Tendsto (fun x => Real.log (Q x) / Real.log (P x)) l (𝓝 (j : ℝ)⁻¹) ∧
+      Tendsto (fun x => Q x / P x) l (𝓝 0) := by
+  have hjpos : (0 : ℝ) < j := by exact_mod_cast (by omega : 0 < j)
+  have hjne : j ≠ 0 := by omega
+  have hQpow : Tendsto (fun x => Q x ^ j) l atTop := by
+    apply (hfirst.pos_mul_atTop hjpos hP).congr'
+    filter_upwards [hP.eventually_gt_atTop 0] with x hx
+    exact div_mul_cancel₀ _ hx.ne'
+  have hQ : Tendsto Q l atTop := by
+    apply ((tendsto_rpow_atTop (inv_pos.mpr hjpos)).comp hQpow).congr'
+    exact Eventually.of_forall fun x => Real.pow_rpow_inv_natCast (hQnonneg x) hjne
+  have hLP := Real.tendsto_log_atTop.comp hP
+  have hlogH := hfirst.log hjpos.ne'
+  have hsmall := hlogH.div_atTop hLP
+  have hratio : Tendsto (fun x => Real.log (Q x) / Real.log (P x))
+      l (𝓝 (j : ℝ)⁻¹) := by
+    have hh := (((tendsto_const_nhds : Tendsto (fun _ : α => (1 : ℝ)) l (𝓝 1)).add hsmall).div_const (j : ℝ))
+    have hh' : Tendsto (fun x => (1 + Real.log (Q x ^ j / P x) / Real.log (P x)) /
+        (j : ℝ)) l (𝓝 (j : ℝ)⁻¹) := by simpa using hh
+    apply hh'.congr'
+    filter_upwards [hP.eventually_gt_atTop 1, hQ.eventually_gt_atTop 0] with x hx hqx
+    rw [Real.log_div (pow_ne_zero j hqx.ne') (by linarith : P x ≠ 0), Real.log_pow]
+    field_simp [(Real.log_pos hx).ne', hjpos.ne']
+    <;> ring
+  have hqinv : Tendsto (fun x => (Q x ^ (j - 1))⁻¹) l (𝓝 0) :=
+    tendsto_inv_atTop_zero.comp ((tendsto_pow_atTop (by omega : j - 1 ≠ 0)).comp hQ)
+  have hsep : Tendsto (fun x => Q x / P x) l (𝓝 0) := by
+    have hh := hfirst.mul hqinv
+    simp only [mul_zero] at hh
+    apply hh.congr'
+    filter_upwards [hQ.eventually_gt_atTop 0] with x hx
+    have hpow : Q x ^ j = Q x ^ (j - 1) * Q x := by
+      rw [← pow_succ, Nat.sub_add_cancel (by omega : 1 ≤ j)]
+    rw [hpow]
+    field_simp
+  exact ⟨hQ, hratio, hsep⟩
+
+private def LogClose {α : Type*} (l : Filter α) (L f : α → ℝ) : Prop :=
+  Tendsto f l (𝓝 1) ∧ Tendsto (fun x => L x * (f x - 1)) l (𝓝 0)
+
+private theorem log_close_of_scaled {α : Type*} {l : Filter α} {L f : α → ℝ}
+    (hL : Tendsto L l atTop)
+    (hscaled : Tendsto (fun x => L x * (f x - 1)) l (𝓝 0)) : LogClose l L f := by
+  refine ⟨?_, hscaled⟩
+  have hh := (hscaled.div_atTop hL).add_const 1
+  simp only [zero_add] at hh
+  apply hh.congr'
+  filter_upwards [hL.eventually_gt_atTop 0] with x hx
+  field_simp
+  <;> ring
+
+private theorem log_close_mul {α : Type*} {l : Filter α} {L f g : α → ℝ}
+    (hf : LogClose l L f) (hg : LogClose l L g) :
+    LogClose l L (fun x => f x * g x) := by
+  refine ⟨by simpa using hf.1.mul hg.1, ?_⟩
+  have hh := (hf.2.mul hg.1).add hg.2
+  simp only [zero_mul, zero_add] at hh
+  convert hh using 1
+  ext x
+  ring
+
+private theorem log_close_inv {α : Type*} {l : Filter α} {L f : α → ℝ}
+    (hf : LogClose l L f) : LogClose l L (fun x => (f x)⁻¹) := by
+  refine ⟨by simpa using hf.1.inv₀ (by norm_num : (1 : ℝ) ≠ 0), ?_⟩
+  have hh := hf.2.neg.div hf.1 (by norm_num : (1 : ℝ) ≠ 0)
+  simp only [neg_zero, zero_div] at hh
+  apply hh.congr'
+  filter_upwards [hf.1.eventually_ne (by norm_num : (1 : ℝ) ≠ 0)] with x hx
+  change -(L x * (f x - 1)) / f x = L x * ((f x)⁻¹ - 1)
+  field_simp [hx]
+  <;> ring
+
+private theorem log_close_pow {α : Type*} {l : Filter α} {L f : α → ℝ}
+    (hf : LogClose l L f) (k : ℕ) : LogClose l L (fun x => f x ^ k) := by
+  induction k with
+  | zero =>
+    constructor
+    · simpa using (tendsto_const_nhds : Tendsto (fun _ : α => (1 : ℝ)) l (𝓝 1))
+    · simpa using (tendsto_const_nhds : Tendsto (fun _ : α => (0 : ℝ)) l (𝓝 0))
+  | succ k hk => simpa only [pow_succ] using log_close_mul hk hf
+
+private theorem bounded_error_scaled_zero {α : Type*} {l : Filter α} (u e : α → ℝ)
+    (hu : Tendsto u l (𝓝 0)) (he : ∀ᶠ x in l, |e x| ≤ 1) :
+    Tendsto (fun x => u x * e x) l (𝓝 0) := by
+  apply squeeze_zero_norm' (a := fun x => |u x|)
+  · filter_upwards [he] with x hx
+    simpa only [Real.norm_eq_abs, abs_mul, mul_one] using
+      mul_le_mul_of_nonneg_left hx (abs_nonneg (u x))
+  · simpa using hu.abs
+
+private theorem rounded_log_balance {α : Type*} {l : Filter α}
+    (L H A B : α → ℝ) (r n : α → ℕ) (c : ℝ)
+    (hL : Tendsto L l atTop)
+    (hHL : Tendsto (fun x => H x / L x) l (𝓝 c))
+    (hHB : Tendsto (fun x => H x / B x) l (𝓝 1))
+    (hLB : Tendsto (fun x => L x / B x) l (𝓝 c⁻¹))
+    (hA : Tendsto (fun x => A x - L x) l (𝓝 0))
+    (hB : Tendsto (fun x => B x - H x) l (𝓝 0))
+    (hLr : Tendsto (fun x => L x / (r x : ℝ)) l (𝓝 0))
+    (hpos : ∀ᶠ x in l, L x ≠ 0 ∧ B x ≠ 0 ∧ (r x : ℝ) ≠ 0)
+    (hround : ∀ᶠ x in l, |(n x : ℝ) - (r x : ℝ) * A x / B x| ≤ 1) :
+    LogClose l L (fun x => (n x : ℝ) / (r x : ℝ) * (H x / L x)) := by
+  have hHr : Tendsto (fun x => H x / (r x : ℝ)) l (𝓝 0) := by
+    have hh := hHL.mul hLr
+    simp only [mul_zero] at hh
+    apply hh.congr'
+    filter_upwards [hpos] with x hx
+    field_simp [hx.1]
+  have he := bounded_error_scaled_zero (fun x => H x / (r x : ℝ))
+    (fun x => (n x : ℝ) - (r x : ℝ) * A x / B x) hHr hround
+  have hh := (he.add (hHB.mul hA)).sub (hLB.mul hB)
+  simp only [one_mul, zero_mul, mul_zero, add_zero, sub_zero] at hh
+  apply log_close_of_scaled hL
+  apply hh.congr'
+  filter_upwards [hpos] with x hx
+  field_simp [hx.1, hx.2.1, hx.2.2]
+  <;> ring
+
+private theorem shrinking_scale_limits {α : Type*} {l : Filter α} (X : α → ℝ)
+    (hX : Tendsto X l atTop) :
+    Tendsto (fun x => 1 / Real.log (X x) ^ 3) l (𝓝 0) ∧
+    Tendsto (fun x => X x * (1 - 1 / Real.log (X x) ^ 3)) l atTop ∧
+    Tendsto (fun x => X x * (1 + 1 / Real.log (X x) ^ 3)) l atTop ∧
+    Tendsto (fun x => Real.log (X x * (1 - 1 / Real.log (X x) ^ 3)) - Real.log (X x)) l (𝓝 0) ∧
+    Tendsto (fun x => Real.log (X x * (1 + 1 / Real.log (X x) ^ 3)) - Real.log (X x)) l (𝓝 0) ∧
+    Tendsto (fun x => Real.log (X x) / X x) l (𝓝 0) ∧
+    Tendsto (fun x => Real.log (X x) * (1 / Real.log (X x) ^ 3)) l (𝓝 0) := by
+  have hL := Real.tendsto_log_atTop.comp hX
+  have hd : Tendsto (fun x => 1 / Real.log (X x) ^ 3) l (𝓝 0) :=
+    ((tendsto_pow_atTop (by norm_num : 3 ≠ 0)).comp hL).const_div_atTop 1
+  have hm : Tendsto (fun x => 1 - 1 / Real.log (X x) ^ 3) l (𝓝 1) := by
+    simpa using (tendsto_const_nhds.sub hd : Tendsto (fun x => 1 - 1 / Real.log (X x) ^ 3) l (𝓝 (1 - 0)))
+  have hp : Tendsto (fun x => 1 + 1 / Real.log (X x) ^ 3) l (𝓝 1) := by
+    simpa using (tendsto_const_nhds.add hd : Tendsto (fun x => 1 + 1 / Real.log (X x) ^ 3) l (𝓝 (1 + 0)))
+  have hmLog : Tendsto (fun x => Real.log (X x * (1 - 1 / Real.log (X x) ^ 3)) - Real.log (X x)) l (𝓝 0) := by
+    have hh := hm.log (by norm_num : (1 : ℝ) ≠ 0)
+    simp only [Real.log_one] at hh
+    apply hh.congr'
+    filter_upwards [hX.eventually_gt_atTop 0, hm.eventually_ne (by norm_num : (1 : ℝ) ≠ 0)] with x hx hmx
+    rw [Real.log_mul hx.ne' hmx]
+    ring
+  have hpLog : Tendsto (fun x => Real.log (X x * (1 + 1 / Real.log (X x) ^ 3)) - Real.log (X x)) l (𝓝 0) := by
+    have hh := hp.log (by norm_num : (1 : ℝ) ≠ 0)
+    simp only [Real.log_one] at hh
+    apply hh.congr'
+    filter_upwards [hX.eventually_gt_atTop 0, hp.eventually_ne (by norm_num : (1 : ℝ) ≠ 0)] with x hx hpx
+    rw [Real.log_mul hx.ne' hpx]
+    ring
+  have hlogdiv : Tendsto (fun x => Real.log (X x) / X x) l (𝓝 0) := by
+    have hbase : Tendsto (fun x : ℝ => Real.log x / x) atTop (𝓝 0) := by
+      simpa only [Real.rpow_one] using
+        (isLittleO_log_rpow_rpow_atTop (1 : ℝ) (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero
+    exact hbase.comp hX
+  have hLd : Tendsto (fun x => Real.log (X x) * (1 / Real.log (X x) ^ 3)) l (𝓝 0) := by
+    have hh := ((tendsto_pow_atTop (by norm_num : 2 ≠ 0)).comp hL).const_div_atTop 1
+    apply hh.congr'
+    filter_upwards [hL.eventually_gt_atTop 0] with x hx
+    change 1 / Real.log (X x) ^ 2 = Real.log (X x) * (1 / Real.log (X x) ^ 3)
+    field_simp
+  exact ⟨hd, hX.atTop_mul_pos (by norm_num) hm,
+    hX.atTop_mul_pos (by norm_num) hp, hmLog, hpLog, hlogdiv, hLd⟩
+
+private theorem ratio_one_of_sub_zero {α : Type*} {l : Filter α} {A L : α → ℝ}
+    (hL : Tendsto L l atTop) (hdiff : Tendsto (fun x => A x - L x) l (𝓝 0)) :
+    Tendsto (fun x => A x / L x) l (𝓝 1) := by
+  have hh := (hdiff.div_atTop hL).add_const 1
+  simp only [zero_add] at hh
+  apply hh.congr'
+  filter_upwards [hL.eventually_gt_atTop 0] with x hx
+  change (A x - L x) / L x + 1 = A x / L x
+  field_simp
+  <;> ring
+
+#print axioms shrinking_rounded_exchanges
+
 end D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity
