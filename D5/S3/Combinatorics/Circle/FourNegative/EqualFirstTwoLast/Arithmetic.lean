@@ -106,21 +106,13 @@ private theorem upper_chart (q m : ℤ) (hq : 4 ≤ q) (hm : 1 ≤ m) :
       _ = 486 + 566*H + 297*Q + 332*Q*H + 60*Q^2 + 64*Q^2*H + 4*Q^3 + 4*Q^3*H := by
         dsimp [A,B,L,M,N,Bn,Ln,Mn]; ring
       _ ≥ 0 := by positivity
-  have old_seam_3 : 0 ≤ 2*(0) := by
-    calc
-      _ = 0 := by
-        dsimp [A,B,L,M,N,Bn,Ln,Mn]; ring
-      _ ≥ 0 := by positivity
+  have old_seam_3 : (0 : ℤ) ≤ 2*(0 : ℤ) := by norm_num
   have old_peak_slack_3 : 0 ≤ B (4+Q)-1-2*(0) := by
     calc
       _ = 84 + 57*Q + 13*Q^2 + Q^3 := by
         dsimp [A,B,L,M,N,Bn,Ln,Mn]; ring
       _ ≥ 0 := by positivity
-  have new_seam_3 : 0 ≤ 2*(0) := by
-    calc
-      _ = 0 := by
-        dsimp [A,B,L,M,N,Bn,Ln,Mn]; ring
-      _ ≥ 0 := by positivity
+  have new_seam_3 : (0 : ℤ) ≤ 2*(0 : ℤ) := by norm_num
   have new_peak_slack_3 : 0 ≤ Bn (4+Q)-1-2*(0) := by
     calc
       _ = 168 + 114*Q + 26*Q^2 + 2*Q^3 := by
@@ -195,21 +187,13 @@ private theorem lower_chart (z m : ℤ) (hz : 4 ≤ z) (hm : 2 ≤ m) :
       _ = 812 + 1748*H + 1184*H^2 + 256*H^3 + 394*Q + 852*Q*H + 584*Q*H^2 + 128*Q*H^3 + 48*Q^2 + 104*Q^2*H + 72*Q^2*H^2 + 16*Q^2*H^3 := by
         dsimp [A,B,L,M,N,Bn,Ln,Mn]; ring
       _ ≥ 0 := by positivity
-  have old_seam_3 : 0 ≤ 2*(0) := by
-    calc
-      _ = 0 := by
-        dsimp [A,B,L,M,N,Bn,Ln,Mn]; ring
-      _ ≥ 0 := by positivity
+  have old_seam_3 : (0 : ℤ) ≤ 2*(0 : ℤ) := by norm_num
   have old_peak_slack_3 : 0 ≤ L (2*(4+Q)*(2+H)) (4+Q)-1-2*(0) := by
     calc
       _ = 1092 + 1056*H + 256*H^2 + 801*Q + 784*Q*H + 192*Q*H^2 + 196*Q^2 + 194*Q^2*H + 48*Q^2*H^2 + 16*Q^3 + 16*Q^3*H + 4*Q^3*H^2 := by
         dsimp [A,B,L,M,N,Bn,Ln,Mn]; ring
       _ ≥ 0 := by positivity
-  have new_seam_3 : 0 ≤ 2*(0) := by
-    calc
-      _ = 0 := by
-        dsimp [A,B,L,M,N,Bn,Ln,Mn]; ring
-      _ ≥ 0 := by positivity
+  have new_seam_3 : (0 : ℤ) ≤ 2*(0 : ℤ) := by norm_num
   have new_peak_slack_3 : 0 ≤ Ln (2*(4+Q)*(2+H)) (4+Q)-1-2*(0) := by
     calc
       _ = 2180 + 2112*H + 512*H^2 + 1601*Q + 1568*Q*H + 384*Q*H^2 + 392*Q^2 + 388*Q^2*H + 96*Q^2*H^2 + 32*Q^3 + 32*Q^3*H + 8*Q^3*H^2 := by

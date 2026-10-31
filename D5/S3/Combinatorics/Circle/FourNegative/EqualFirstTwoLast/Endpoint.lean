@@ -17,7 +17,7 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.EqualFirstTwoLast
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private A B L M N Bn Ln Mn Margin UpperBounds LowerBounds upper_chart lower_chart
   from D5.S3.Combinatorics.Circle.FourNegative.EqualFirstTwoLast.Arithmetic
-open private oldValue newValue seed Rows native positive_pair gates_of_margins native_inventory realize
+open private oldValue newValue seed native positive_pair gates_of_margins native_inventory realize
   from D5.S3.Combinatorics.Circle.FourNegative.EqualFirstTwoLast.Source
 open private Gates four_strip
   from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
@@ -148,7 +148,7 @@ private theorem upper (s t : ℕ) (hs : 2 ≤ s) (ht : 2 ≤ t) (hchart : s+2 �
       hg1 hg2 hg3 hg4
     · dsimp only [P1,Up,Vp,Wp,Xp]
       nlinarith only [rows.packetV.2,splitg]
-    · simp only [P2n,P2,Xp,List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,rows.fresh]
+    · simp only [P2n,P2,Xp,k,List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,rows.fresh]
       nlinarith only [rows.packetX.2]
     · dsimp only [P3,Up,Vp,Wp,Xp]
       nlinarith only [rows.packetW.2]
@@ -296,7 +296,7 @@ private theorem lower (s t : ℕ) (hs : 2 ≤ s) (ht : 2 ≤ t) (hchart : t+2 �
       (by have := rows.mod_nonneg; omega) (by omega) ?_ ?_ ?_ ?_
       rows.stepX.2 rows.stepW.2 rows.stepU.2 rows.stepV.2
       hg1 hg2 hg3 hg4
-    · simp only [P1n,P1,Xp,List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,rows.fresh]
+    · simp only [P1n,P1,Xp,k,List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,rows.fresh]
       nlinarith only [rows.packetX.2]
     · dsimp only [P2,Up,Vp,Wp,Xp]
       nlinarith only [rows.packetW.2]
@@ -343,7 +343,10 @@ theorem actualSource_equal_first_two_last_joint_lift (s t : ℕ)
         OriginalOrder (3*s+t) (1+2^s+2^(s+s)+2^(s+s+t)) sigma ∧
         OriginalOrder (3*s+t+1) (2*(1+2^s+2^(s+s)+2^(s+s+t)))
           (earWord (3*s+t) sigma (s+1)) := by
-      simpa only [seed,show s+t+s+s=3*s+t by omega] using upper s t hs ht hu
+      have hk : s+t+s+s = 3*s+t := by omega
+      have h := upper s t hs ht hu
+      rw [hk] at h
+      simpa [seed] using h
     obtain ⟨sigma,hold,hnew⟩ := hu'
     exact ⟨sigma,s+1,by omega,hold,hnew⟩
   · by_cases hl : t+2 ≤ s
@@ -351,14 +354,19 @@ theorem actualSource_equal_first_two_last_joint_lift (s t : ℕ)
           OriginalOrder (3*s+t) (1+2^s+2^(s+s)+2^(s+s+t)) sigma ∧
           OriginalOrder (3*s+t+1) (2*(1+2^s+2^(s+s)+2^(s+s+t)))
             (earWord (3*s+t) sigma 0) := by
-        simpa only [seed,show s+t+s+s=3*s+t by omega] using lower s t hs ht hl
+        have hk : s+t+s+s = 3*s+t := by omega
+        have h := lower s t hs ht hl
+        rw [hk] at h
+        simpa [seed] using h
       obtain ⟨sigma,hold,hnew⟩ := hl'
       exact ⟨sigma,0,by omega,hold,hnew⟩
     · have hts : t ≤ s+1 := by omega
       have hst : s ≤ t+1 := by omega
       have hbal : max (max s s) (max t s) ≤ min (min s s) (min t s)+1 := by omega
-      simpa only [show s+s+t+s=3*s+t by omega] using
-        BalancedGaps.actualSource_balanced_gaps_joint_lift s s t s hs hs ht hs hbal
+      have hk : s+s+t+s = 3*s+t := by omega
+      have h := BalancedGaps.actualSource_balanced_gaps_joint_lift s s t s hs hs ht hs hbal
+      rw [hk] at h
+      exact h
 
 #print axioms actualSource_equal_first_two_last_joint_lift
 end D5.S3.Combinatorics.Circle.FourNegative.EqualFirstTwoLast

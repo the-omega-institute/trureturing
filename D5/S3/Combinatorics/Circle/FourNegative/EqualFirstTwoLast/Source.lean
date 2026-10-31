@@ -32,7 +32,7 @@ private def newValue (s t i : ℕ) : ℤ :=
   centered (2*N (2^s) (2^t)+1) ((2 : ℤ)^i * (2*A (2^s) (2^t)))
 private def seed (s t : ℕ) : ℕ := 1+2^s+2^(s+s)+2^(s+s+t)
 
-private structure Rows (s t : ℕ) (q z : ℤ) (f g : ℕ → ℤ) : Prop where
+structure Rows (s t : ℕ) (q z : ℤ) (f g : ℕ → ℤ) : Prop where
   mod_nonneg : 0 ≤ N q z
   a_nonneg : 0 ≤ A q z
   b_nonneg : 0 ≤ B q
@@ -184,13 +184,36 @@ private theorem native (s t : ℕ) (hs : 2 ≤ s) (ht : 2 ≤ t) :
     (s+t+s+s) (seed s t) (by omega)
   have hznew := ThreeNegativeEqualOuterSourceBridge.source_zero
     (s+t+s+s+1) (2*seed s t) (by omega)
+  dsimp only [f,g] at sumUf sumUg negU sumVf sumVg negV sumWf sumWg negW sumXf sumXg negX
+  have hq1 : (1 : ℤ) ≤ q := by
+    dsimp [q]
+    have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hs
+    norm_num at this ⊢
+    omega
+  have hz1 : (1 : ℤ) ≤ z := by
+    dsimp [z]
+    have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) ht
+    norm_num at this ⊢
+    omega
+  have hprod : (1 : ℤ) ≤ q*q*z*q := by
+    calc
+      (1 : ℤ) = 1*1*1*1 := by ring
+      _ ≤ q*q*z*q := by gcongr
   refine {
-    mod_nonneg := by omega
-    a_nonneg := by omega
-    b_nonneg := by omega
-    l_nonneg := by omega
-    m_nonneg := by omega
-    bn_nonneg := by dsimp [Bn]; omega
+    mod_nonneg := by
+      change 0 ≤ q*q*z*q - 1
+      omega
+    a_nonneg := by dsimp [A]; positivity
+    b_nonneg := by dsimp [B]; positivity
+    l_nonneg := by dsimp [L]; positivity
+    m_nonneg := by dsimp [M]; positivity
+    bn_nonneg := by
+      have hB0 : (0 : ℤ) ≤ q*(1+q+q*q) := by positivity
+      have hB : (1 : ℤ) ≤ B q := by
+        dsimp [B]
+        nlinarith
+      change 0 ≤ 2*B q - 1
+      omega
     ln_nonneg := by dsimp [Ln,L,q,z]; ring_nf; positivity
     mn_nonneg := by dsimp [Mn,M,q,z]; ring_nf; positivity
     posU := posU, posV := posV, posW := posW, posX := posX
@@ -203,9 +226,14 @@ private theorem native (s t : ℕ) (hs : 2 ≤ s) (ht : 2 ≤ t) :
     packetX := by rw [sumXf,sumXg,negX.1,negX.2]; dsimp only [r,u]; exact ⟨by ring,by ring⟩
     stepX := by rw [negX.1,negX.2]; constructor <;> nlinarith only [relX,relXn]
     fresh := hfresh
-    totalOld := by simpa only [f,oldValue,hmod,hseed] using hzold
+    totalOld := by
+      change ((List.range (s+t+s+s)).map
+        (fun i => centered (N q z) ((2 : ℤ)^i * A q z))).sum = 0
+      simpa [hmod,hseed] using hzold
     totalNew := by
-      simpa only [g,newValue,hmod',Nat.cast_mul,Nat.cast_ofNat,hseed] using hznew }
+      change ((List.range (s+t+s+s+1)).map
+        (fun i => centered (2*N q z+1) ((2 : ℤ)^i * (2*A q z)))).sum = 0
+      simpa [hmod',Nat.cast_mul,Nat.cast_ofNat,hseed] using hznew }
 
 private theorem positive_pair (f g : ℕ → ℤ) (H J : ℤ) (off len : ℕ)
     (hH : 0 ≤ H) (hJ : 0 ≤ J)
@@ -271,10 +299,15 @@ private theorem realize (s t cut : ℕ) (hs : 2 ≤ s) (ht : 2 ≤ t)
   have hseed : (a:ℤ)=A q z := by
     dsimp [a,seed]; push_cast
     dsimp [A,q,z]; simp only [pow_add]; ring
+  change InStrip (fun i => centered (N (2^s) (2^t)) ((2 : ℤ)^i * A (2^s) (2^t)))
+      (N (2^s) (2^t)/2) 0 (pre++post) at hold
+  change InStrip (fun i => centered (2*N (2^s) (2^t)+1)
+      ((2 : ℤ)^i * (2*A (2^s) (2^t))))
+      (N (2^s) (2^t)) 0 (pre++(s+t+s+s)::post) at hnew
   have old : OriginalOrder k a ((pre++post).map (label k hk)) := by
     apply lift_order k a hk (pre++post) hp
-    · simpa only [oldValue,hmod,hseed] using hold
-    · simpa only [oldValue,hmod,hseed] using rows.totalOld
+    · simpa [hmod,hseed] using hold
+    · exact ThreeNegativeEqualOuterSourceBridge.source_zero k a (by dsimp [k]; omega)
   have hp' : (pre++k::post).Perm (List.range (k+1)) := by
     have hreorder : (pre++k::post).Perm ((pre++post)++[k]) := by
       simpa only [List.append_assoc] using
@@ -284,8 +317,8 @@ private theorem realize (s t cut : ℕ) (hs : 2 ≤ s) (ht : 2 ≤ t)
       ((pre++k::post).map (label (k+1) (by omega))) := by
     apply lift_order (k+1) (2*a) (by omega) (pre++k::post) hp'
     · have hhalf : (2*N q z+1)/2=N q z := by omega
-      simpa only [newValue,hmod',Nat.cast_mul,Nat.cast_ofNat,hseed,hhalf] using hnew
-    · simpa only [newValue,hmod',Nat.cast_mul,Nat.cast_ofNat,hseed] using rows.totalNew
+      simpa [hmod',Nat.cast_mul,Nat.cast_ofNat,hseed,hhalf] using hnew
+    · exact ThreeNegativeEqualOuterSourceBridge.source_zero (k+1) (2*a) (by dsimp [k]; omega)
   refine ⟨(pre++post).map (label k hk),old,?_⟩
   rw [marked_word k cut hk pre post hlen hp]
   exact new
