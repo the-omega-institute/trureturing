@@ -22,17 +22,17 @@ open private actualSource_four_negative_adjacent_reverse_joint_lift
 
 /-- All three central dyadic branches admit a literal ear on the same physical order. -/
 theorem actualSource_four_negative_adjacent_near_joint_lift (r s : ℕ)
-    (hr : 2≤r) (hs : 2≤s) (hnear : r≤s+1 ∧ s≤r+1) :
-    ∃ sigma : List (Fin (2*r+2*s)), ∃ j : ℕ, j≤2*r+2*s ∧
-      OriginalOrder (2*r+2*s) (1+2^r+2^(2*r)+2^(2*r+s)) sigma ∧
-      OriginalOrder (2*r+2*s+1) (2*(1+2^r+2^(2*r)+2^(2*r+s)))
-        (earWord (2*r+2*s) sigma j) := by
-  by_cases he : r=s
+    (hr : 2 ≤ r) (hs : 2 ≤ s) (hnear : r ≤ s + 1 ∧ s ≤ r + 1) :
+    ∃ sigma : List (Fin (2 * r + 2 * s)), ∃ j : ℕ, j ≤ 2 * r + 2 * s ∧
+      OriginalOrder (2 * r + 2 * s) (1 + 2 ^ r + 2 ^ (2 * r) + 2 ^ (2 * r + s)) sigma ∧
+      OriginalOrder (2 * r + 2 * s + 1) (2 * (1 + 2 ^ r + 2 ^ (2 * r) + 2 ^ (2 * r + s)))
+        (earWord (2 * r + 2 * s) sigma j) := by
+  by_cases he : r = s
   · obtain ⟨sigma,hold,hnew⟩ := actualSource_four_negative_adjacent_equal_joint_lift r s hs he
     exact ⟨sigma,0,by omega,hold,hnew⟩
-  · by_cases hd : r=s+1
+  · by_cases hd : r = s + 1
     · obtain ⟨sigma,hj,hold,hnew⟩ := actualSource_four_negative_adjacent_double_joint_lift r s hs hd
-      exact ⟨sigma,2*s+r,hj,hold,hnew⟩
+      exact ⟨sigma,2 * s + r,hj,hold,hnew⟩
     · obtain ⟨sigma,hold,hnew⟩ := actualSource_four_negative_adjacent_reverse_joint_lift r s hr (by omega)
       exact ⟨sigma,0,by omega,hold,hnew⟩
 
