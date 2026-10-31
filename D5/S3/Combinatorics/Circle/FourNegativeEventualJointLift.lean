@@ -61,10 +61,10 @@ private theorem four_strip_of_masses (f : ℕ → ℤ) (C t1 t2 t3 : ℤ)
     (hb3 : t2 + (P3.map f).sum ≤ C) (hb4 : t3 + (P4.map f).sum ≤ C) :
     InStrip f C 0 (P1 ++ alpha :: P2 ++ beta :: P3 ++ gamma :: P4 ++ [delta]) := by
   simp only [List.append_assoc, List.cons_append]
-  apply positive_then_step f C 0 P1 (P2 ++ beta :: P3 ++ gamma :: P4 ++ [delta]) alpha
+  apply positive_then_step f C 0 P1 (P2 ++ beta :: (P3 ++ gamma :: (P4 ++ [delta]))) alpha
     hp1 (by omega) (by omega)
   rw [zero_add, hs1]
-  apply positive_then_step f C t1 P2 (P3 ++ gamma :: P4 ++ [delta]) beta hp2 ht1 hb2
+  apply positive_then_step f C t1 P2 (P3 ++ gamma :: (P4 ++ [delta])) beta hp2 ht1 hb2
   rw [hs2]
   apply positive_then_step f C t2 P3 (P4 ++ [delta]) gamma hp3 ht2 hb3
   rw [hs3]
@@ -163,75 +163,83 @@ theorem actualSource_four_negative_eventual_joint_lift (a b c d : ℕ)
   have hufpos (e : ℕ) (he : e < d - 1) :
       f (0 + e) = (2 : ℤ) ^ e * (A) := by
     have hv := huf e (by omega)
-    simpa only [if_pos (show e + 1 < d by omega), Nat.zero_add] using hv
+    simpa only [ite_eq_left (show e + 1 < d by omega), Nat.zero_add] using hv
   have hugpos (e : ℕ) (he : e < d - 1) :
       g (0 + e) = (2 : ℤ) ^ e * (2 * A) := by
     have hv := hug e (by omega)
-    simpa only [if_pos (show e + 1 < d by omega), Nat.zero_add] using hv
+    simpa only [ite_eq_left (show e + 1 < d by omega), Nat.zero_add] using hv
   have hunegf : f (0 + d - 1) = B - td * A := by
     have hv := huf (d - 1) (by omega)
-    rw [if_neg (by omega)] at hv
-    simpa only [Nat.zero_add, show 0 + (d - 1) = 0 + d - 1 by omega,
-      negative_step _ _ _ _ hrelU] using hv
+    rw [ite_eq_right (by omega)] at hv
+    change f (0 + (d - 1)) = -((N) - (B)) / 2 at hv
+    rw [negative_step _ _ _ _ hrelU] at hv
+    simpa only [Nat.zero_add, show 0 + (d - 1) = 0 + d - 1 by omega] using hv
   have hunegg : g (0 + d - 1) = B' - td * (2 * A) := by
     have hv := hug (d - 1) (by omega)
-    rw [if_neg (by omega)] at hv
-    simpa only [Nat.zero_add, show 0 + (d - 1) = 0 + d - 1 by omega,
-      negative_step _ _ _ _ hrelU'] using hv
+    rw [ite_eq_right (by omega)] at hv
+    change g (0 + (d - 1)) = -((2 * N + 1) - (B')) / 2 at hv
+    rw [negative_step _ _ _ _ hrelU'] at hv
+    simpa only [Nat.zero_add, show 0 + (d - 1) = 0 + d - 1 by omega] using hv
   have hvfpos (e : ℕ) (he : e < c - 1) :
       f (d + e) = (2 : ℤ) ^ e * (B) := by
     have hv := hvf e (by omega)
-    simpa only [if_pos (show e + 1 < c by omega), Nat.zero_add] using hv
+    simpa only [ite_eq_left (show e + 1 < c by omega), Nat.zero_add] using hv
   have hvgpos (e : ℕ) (he : e < c - 1) :
       g (d + e) = (2 : ℤ) ^ e * (B') := by
     have hv := hvg e (by omega)
-    simpa only [if_pos (show e + 1 < c by omega), Nat.zero_add] using hv
+    simpa only [ite_eq_left (show e + 1 < c by omega), Nat.zero_add] using hv
   have hvnegf : f (d + c - 1) = L - zc * B := by
     have hv := hvf (c - 1) (by omega)
-    rw [if_neg (by omega)] at hv
-    simpa only [Nat.zero_add, show d + (c - 1) = d + c - 1 by omega,
-      negative_step _ _ _ _ hrelV] using hv
+    rw [ite_eq_right (by omega)] at hv
+    change f (d + (c - 1)) = -((N) - (L)) / 2 at hv
+    rw [negative_step _ _ _ _ hrelV] at hv
+    simpa only [Nat.zero_add, show d + (c - 1) = d + c - 1 by omega] using hv
   have hvnegg : g (d + c - 1) = L' - zc * B' := by
     have hv := hvg (c - 1) (by omega)
-    rw [if_neg (by omega)] at hv
-    simpa only [Nat.zero_add, show d + (c - 1) = d + c - 1 by omega,
-      negative_step _ _ _ _ hrelV'] using hv
+    rw [ite_eq_right (by omega)] at hv
+    change g (d + (c - 1)) = -((2 * N + 1) - (L')) / 2 at hv
+    rw [negative_step _ _ _ _ hrelV'] at hv
+    simpa only [Nat.zero_add, show d + (c - 1) = d + c - 1 by omega] using hv
   have hwfpos (e : ℕ) (he : e < b - 1) :
       f (d + c + e) = (2 : ℤ) ^ e * (L) := by
     have hv := hwf e (by omega)
-    simpa only [if_pos (show e + 1 < b by omega), Nat.zero_add] using hv
+    simpa only [ite_eq_left (show e + 1 < b by omega), Nat.zero_add] using hv
   have hwgpos (e : ℕ) (he : e < b - 1) :
       g (d + c + e) = (2 : ℤ) ^ e * (L') := by
     have hv := hwg e (by omega)
-    simpa only [if_pos (show e + 1 < b by omega), Nat.zero_add] using hv
+    simpa only [ite_eq_left (show e + 1 < b by omega), Nat.zero_add] using hv
   have hwnegf : f (d + c + b - 1) = M - yb * L := by
     have hv := hwf (b - 1) (by omega)
-    rw [if_neg (by omega)] at hv
-    simpa only [Nat.zero_add, show d + c + (b - 1) = d + c + b - 1 by omega,
-      negative_step _ _ _ _ hrelW] using hv
+    rw [ite_eq_right (by omega)] at hv
+    change f (d + c + (b - 1)) = -((N) - (M)) / 2 at hv
+    rw [negative_step _ _ _ _ hrelW] at hv
+    simpa only [Nat.zero_add, show d + c + (b - 1) = d + c + b - 1 by omega] using hv
   have hwnegg : g (d + c + b - 1) = M' - yb * L' := by
     have hv := hwg (b - 1) (by omega)
-    rw [if_neg (by omega)] at hv
-    simpa only [Nat.zero_add, show d + c + (b - 1) = d + c + b - 1 by omega,
-      negative_step _ _ _ _ hrelW'] using hv
+    rw [ite_eq_right (by omega)] at hv
+    change g (d + c + (b - 1)) = -((2 * N + 1) - (M')) / 2 at hv
+    rw [negative_step _ _ _ _ hrelW'] at hv
+    simpa only [Nat.zero_add, show d + c + (b - 1) = d + c + b - 1 by omega] using hv
   have hxfpos (e : ℕ) (he : e < a - 1) :
       f (d + c + b + e) = (2 : ℤ) ^ e * (M) := by
     have hv := hxf e (by omega)
-    simpa only [if_pos (show e + 1 < a by omega), Nat.zero_add] using hv
+    simpa only [ite_eq_left (show e + 1 < a by omega), Nat.zero_add] using hv
   have hxgpos (e : ℕ) (he : e < a - 1) :
       g (d + c + b + e) = (2 : ℤ) ^ e * (M') := by
     have hv := hxg e (by omega)
-    simpa only [if_pos (show e + 1 < a by omega), Nat.zero_add] using hv
+    simpa only [ite_eq_left (show e + 1 < a by omega), Nat.zero_add] using hv
   have hxnegf : f (d + c + b + a - 1) = A - xa * M := by
     have hv := hxf (a - 1) (by omega)
-    rw [if_neg (by omega)] at hv
-    simpa only [Nat.zero_add, show d + c + b + (a - 1) = d + c + b + a - 1 by omega,
-      negative_step _ _ _ _ hrelX] using hv
+    rw [ite_eq_right (by omega)] at hv
+    change f (d + c + b + (a - 1)) = -((N) - (A)) / 2 at hv
+    rw [negative_step _ _ _ _ hrelX] at hv
+    simpa only [Nat.zero_add, show d + c + b + (a - 1) = d + c + b + a - 1 by omega] using hv
   have hxnegg : g (d + c + b + a - 1) = A - xa * M' := by
     have hv := hxg (a - 1) (by omega)
-    rw [if_neg (by omega)] at hv
-    simpa only [Nat.zero_add, show d + c + b + (a - 1) = d + c + b + a - 1 by omega,
-      negative_step _ _ _ _ hrelX'] using hv
+    rw [ite_eq_right (by omega)] at hv
+    change g (d + c + b + (a - 1)) = -((2 * N + 1) - (A)) / 2 at hv
+    rw [negative_step _ _ _ _ hrelX'] at hv
+    simpa only [Nat.zero_add, show d + c + b + (a - 1) = d + c + b + a - 1 by omega] using hv
   have block (len off m : ℕ) (hm : m < 2 ^ len) (Y Z : ℤ)
       (hY : 0 ≤ Y) (hZ : 0 ≤ Z)
       (hf : ∀ e < len, f (off + e) = (2 : ℤ) ^ e * Y)
@@ -281,82 +289,82 @@ theorem actualSource_four_negative_eventual_joint_lift (a b c d : ℕ)
   let tau2' : ℤ := nL * L' - 2 * A * q
   let tau3' : ℤ := nM * M' - 2 * A * q
   have hmass1f : (P1.map f).sum = td * A - B + tau1 := by
-    simp only [P1, List.map_append, List.sum_append, hU0.1, hV0.1,
-      Nat.cast_sub (show q ≤ 2 ^ (d - 1) by omega),
-      Nat.cast_sub (show 1 ≤ q by omega), Nat.cast_sub (show 1 ≤ nB by omega),
-      Nat.cast_sub (show nB ≤ 2 ^ (c - 1) by omega),
-      Nat.cast_sub (show 1 ≤ nL by omega), Nat.cast_sub (show nL ≤ 2 ^ (b - 1) by omega),
-      Nat.cast_sub (show 1 ≤ nM by omega), Nat.cast_sub (show nM ≤ 2 ^ (a - 1) by omega),
+    simp only [P1, U0, V0, List.map_append, List.sum_append, hU0.1, hV0.1,
+      Nat.cast_sub hq.2,
+      Nat.cast_sub hq.1, Nat.cast_sub hnB.1,
+      Nat.cast_sub hnB.2,
+      Nat.cast_sub hnL.1, Nat.cast_sub hnL.2,
+      Nat.cast_sub hnM.1, Nat.cast_sub hnM.2,
       Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one]
     dsimp [tau1, tau2, tau3, tau1', tau2', tau3', td, zc, yb, xa]
     ring
   have hmass1g : (P1.map g).sum = td * (2 * A) - B' + tau1' := by
-    simp only [P1, List.map_append, List.sum_append, hU0.2.1, hV0.2.1,
-      Nat.cast_sub (show q ≤ 2 ^ (d - 1) by omega),
-      Nat.cast_sub (show 1 ≤ q by omega), Nat.cast_sub (show 1 ≤ nB by omega),
-      Nat.cast_sub (show nB ≤ 2 ^ (c - 1) by omega),
-      Nat.cast_sub (show 1 ≤ nL by omega), Nat.cast_sub (show nL ≤ 2 ^ (b - 1) by omega),
-      Nat.cast_sub (show 1 ≤ nM by omega), Nat.cast_sub (show nM ≤ 2 ^ (a - 1) by omega),
+    simp only [P1, U0, V0, List.map_append, List.sum_append, hU0.2.1, hV0.2.1,
+      Nat.cast_sub hq.2,
+      Nat.cast_sub hq.1, Nat.cast_sub hnB.1,
+      Nat.cast_sub hnB.2,
+      Nat.cast_sub hnL.1, Nat.cast_sub hnL.2,
+      Nat.cast_sub hnM.1, Nat.cast_sub hnM.2,
       Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one]
     dsimp [tau1, tau2, tau3, tau1', tau2', tau3', td, zc, yb, xa]
     ring
   have hmass2f : (P2.map f).sum = zc * B - L + tau2 - tau1 := by
-    simp only [P2, List.map_append, List.sum_append, hV1.1, hW0.1,
-      Nat.cast_sub (show q ≤ 2 ^ (d - 1) by omega),
-      Nat.cast_sub (show 1 ≤ q by omega), Nat.cast_sub (show 1 ≤ nB by omega),
-      Nat.cast_sub (show nB ≤ 2 ^ (c - 1) by omega),
-      Nat.cast_sub (show 1 ≤ nL by omega), Nat.cast_sub (show nL ≤ 2 ^ (b - 1) by omega),
-      Nat.cast_sub (show 1 ≤ nM by omega), Nat.cast_sub (show nM ≤ 2 ^ (a - 1) by omega),
+    simp only [P2, V1, W0, List.map_append, List.sum_append, hV1.1, hW0.1,
+      Nat.cast_sub hq.2,
+      Nat.cast_sub hq.1, Nat.cast_sub hnB.1,
+      Nat.cast_sub hnB.2,
+      Nat.cast_sub hnL.1, Nat.cast_sub hnL.2,
+      Nat.cast_sub hnM.1, Nat.cast_sub hnM.2,
       Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one]
     dsimp [tau1, tau2, tau3, tau1', tau2', tau3', td, zc, yb, xa]
     ring
   have hmass2g : (P2.map g).sum = zc * B' - L' + tau2' - tau1' := by
-    simp only [P2, List.map_append, List.sum_append, hV1.2.1, hW0.2.1,
-      Nat.cast_sub (show q ≤ 2 ^ (d - 1) by omega),
-      Nat.cast_sub (show 1 ≤ q by omega), Nat.cast_sub (show 1 ≤ nB by omega),
-      Nat.cast_sub (show nB ≤ 2 ^ (c - 1) by omega),
-      Nat.cast_sub (show 1 ≤ nL by omega), Nat.cast_sub (show nL ≤ 2 ^ (b - 1) by omega),
-      Nat.cast_sub (show 1 ≤ nM by omega), Nat.cast_sub (show nM ≤ 2 ^ (a - 1) by omega),
+    simp only [P2, V1, W0, List.map_append, List.sum_append, hV1.2.1, hW0.2.1,
+      Nat.cast_sub hq.2,
+      Nat.cast_sub hq.1, Nat.cast_sub hnB.1,
+      Nat.cast_sub hnB.2,
+      Nat.cast_sub hnL.1, Nat.cast_sub hnL.2,
+      Nat.cast_sub hnM.1, Nat.cast_sub hnM.2,
       Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one]
     dsimp [tau1, tau2, tau3, tau1', tau2', tau3', td, zc, yb, xa]
     ring
   have hmass3f : (P3.map f).sum = yb * L - M + tau3 - tau2 := by
-    simp only [P3, List.map_append, List.sum_append, hW1.1, hX0.1,
-      Nat.cast_sub (show q ≤ 2 ^ (d - 1) by omega),
-      Nat.cast_sub (show 1 ≤ q by omega), Nat.cast_sub (show 1 ≤ nB by omega),
-      Nat.cast_sub (show nB ≤ 2 ^ (c - 1) by omega),
-      Nat.cast_sub (show 1 ≤ nL by omega), Nat.cast_sub (show nL ≤ 2 ^ (b - 1) by omega),
-      Nat.cast_sub (show 1 ≤ nM by omega), Nat.cast_sub (show nM ≤ 2 ^ (a - 1) by omega),
+    simp only [P3, W1, X0, List.map_append, List.sum_append, hW1.1, hX0.1,
+      Nat.cast_sub hq.2,
+      Nat.cast_sub hq.1, Nat.cast_sub hnB.1,
+      Nat.cast_sub hnB.2,
+      Nat.cast_sub hnL.1, Nat.cast_sub hnL.2,
+      Nat.cast_sub hnM.1, Nat.cast_sub hnM.2,
       Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one]
     dsimp [tau1, tau2, tau3, tau1', tau2', tau3', td, zc, yb, xa]
     ring
   have hmass3g : (P3.map g).sum = yb * L' - M' + tau3' - tau2' := by
-    simp only [P3, List.map_append, List.sum_append, hW1.2.1, hX0.2.1,
-      Nat.cast_sub (show q ≤ 2 ^ (d - 1) by omega),
-      Nat.cast_sub (show 1 ≤ q by omega), Nat.cast_sub (show 1 ≤ nB by omega),
-      Nat.cast_sub (show nB ≤ 2 ^ (c - 1) by omega),
-      Nat.cast_sub (show 1 ≤ nL by omega), Nat.cast_sub (show nL ≤ 2 ^ (b - 1) by omega),
-      Nat.cast_sub (show 1 ≤ nM by omega), Nat.cast_sub (show nM ≤ 2 ^ (a - 1) by omega),
+    simp only [P3, W1, X0, List.map_append, List.sum_append, hW1.2.1, hX0.2.1,
+      Nat.cast_sub hq.2,
+      Nat.cast_sub hq.1, Nat.cast_sub hnB.1,
+      Nat.cast_sub hnB.2,
+      Nat.cast_sub hnL.1, Nat.cast_sub hnL.2,
+      Nat.cast_sub hnM.1, Nat.cast_sub hnM.2,
       Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one]
     dsimp [tau1, tau2, tau3, tau1', tau2', tau3', td, zc, yb, xa]
     ring
   have hmass4f : (P4.map f).sum = xa * M - A - tau3 := by
-    simp only [P4, List.map_append, List.sum_append, hU1.1, hX1.1,
-      Nat.cast_sub (show q ≤ 2 ^ (d - 1) by omega),
-      Nat.cast_sub (show 1 ≤ q by omega), Nat.cast_sub (show 1 ≤ nB by omega),
-      Nat.cast_sub (show nB ≤ 2 ^ (c - 1) by omega),
-      Nat.cast_sub (show 1 ≤ nL by omega), Nat.cast_sub (show nL ≤ 2 ^ (b - 1) by omega),
-      Nat.cast_sub (show 1 ≤ nM by omega), Nat.cast_sub (show nM ≤ 2 ^ (a - 1) by omega),
+    simp only [P4, U1, X1, List.map_append, List.sum_append, hU1.1, hX1.1,
+      Nat.cast_sub hq.2,
+      Nat.cast_sub hq.1, Nat.cast_sub hnB.1,
+      Nat.cast_sub hnB.2,
+      Nat.cast_sub hnL.1, Nat.cast_sub hnL.2,
+      Nat.cast_sub hnM.1, Nat.cast_sub hnM.2,
       Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one]
     dsimp [tau1, tau2, tau3, tau1', tau2', tau3', td, zc, yb, xa]
     ring
   have hmass4g : (P4.map g).sum = xa * M' - 2 * A - tau3' := by
-    simp only [P4, List.map_append, List.sum_append, hU1.2.1, hX1.2.1,
-      Nat.cast_sub (show q ≤ 2 ^ (d - 1) by omega),
-      Nat.cast_sub (show 1 ≤ q by omega), Nat.cast_sub (show 1 ≤ nB by omega),
-      Nat.cast_sub (show nB ≤ 2 ^ (c - 1) by omega),
-      Nat.cast_sub (show 1 ≤ nL by omega), Nat.cast_sub (show nL ≤ 2 ^ (b - 1) by omega),
-      Nat.cast_sub (show 1 ≤ nM by omega), Nat.cast_sub (show nM ≤ 2 ^ (a - 1) by omega),
+    simp only [P4, U1, X1, List.map_append, List.sum_append, hU1.2.1, hX1.2.1,
+      Nat.cast_sub hq.2,
+      Nat.cast_sub hq.1, Nat.cast_sub hnB.1,
+      Nat.cast_sub hnB.2,
+      Nat.cast_sub hnL.1, Nat.cast_sub hnL.2,
+      Nat.cast_sub hnM.1, Nat.cast_sub hnM.2,
       Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one]
     dsimp [tau1, tau2, tau3, tau1', tau2', tau3', td, zc, yb, xa]
     ring
