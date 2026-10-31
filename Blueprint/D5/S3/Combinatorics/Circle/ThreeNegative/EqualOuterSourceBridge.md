@@ -8,9 +8,9 @@ This module publicly re-exports three private ThreeBitSource facts consumed by T
 
 **Lemma 1.1 (Integer total zero).**
 
-Lean statement: `D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterSourceBridge.source_zero`
+Lean statement: `D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterSourceBridge.source_zero`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterSourceBridge.source_zero` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterSourceBridge.source_zero` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ For every natural k,t with 3<=k, the sum over i<k of centered(modulus(k),2^i*t) 
 
 **Lemma 1.2 (The actual three source chains).**
 
-Lean statement: `D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterSourceBridge.actual_source_chains`
+Lean statement: `D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterSourceBridge.actual_source_chains`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterSourceBridge.actual_source_chains` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterSourceBridge.actual_source_chains` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,9 +32,9 @@ For natural x,y,z with 0<x, 0<y and 2<=z, put P=2^x, Q=2^y, R=2^z, N=modulus(x+y
 
 **Lemma 1.3 (The consumed physical schedule criterion).**
 
-Lean statement: `D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterSourceBridge.physical_schedule`
+Lean statement: `D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterSourceBridge.physical_schedule`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterSourceBridge.physical_schedule` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterSourceBridge.physical_schedule` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -44,9 +44,9 @@ For any label type and integer increment function f, the word F,av,Q,aw,G,au sat
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterSourceBridge.actual_source_chains`
-- Truth anchor: `D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterSourceBridge.physical_schedule`
-- Truth anchor: `D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterSourceBridge.source_zero`
-- Dependency: [D5/S3/Combinatorics/Circle/DyadicPrefix](DyadicPrefix.md)
-- Dependency: [D5/S3/Combinatorics/Circle/SourceWidth](SourceWidth.md)
-- Dependency: [D5/S3/Combinatorics/Circle/ThreeBitSource](ThreeBitSource.md)
+- Truth anchor: `D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterSourceBridge.actual_source_chains`
+- Truth anchor: `D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterSourceBridge.physical_schedule`
+- Truth anchor: `D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterSourceBridge.source_zero`
+- Dependency: [D5/S3/Combinatorics/Circle/DyadicPrefix](../DyadicPrefix.md)
+- Dependency: [D5/S3/Combinatorics/Circle/SourceWidth](../SourceWidth.md)
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeBitSource](../ThreeBitSource.md)

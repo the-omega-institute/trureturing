@@ -31,4 +31,4 @@ This proves the complete ordered cone 2<=a<b<=c of the joint-order problem assoc
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/ThreeNegativeOrderedConeJointLift.actualSource_three_negative_ordered_cone_joint_lift`
-- Dependency: [D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterJointLift](ThreeNegativeEqualOuterJointLift.md)
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterJointLift](ThreeNegative/EqualOuterJointLift.md)
