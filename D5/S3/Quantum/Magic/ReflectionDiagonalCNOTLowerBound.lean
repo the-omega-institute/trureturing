@@ -11,6 +11,8 @@ import Mathlib.Analysis.Complex.Exponential
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Data.Fintype.Order
 
+/-! Formal reading of the reflection-symmetric diagonal synthesis lower-bound conjecture. -/
+
 set_option autoImplicit false
 noncomputable section
 open scoped BigOperators
@@ -158,10 +160,12 @@ private lemma rotation_labels (m : ℕ) (circuit : List (gate m))
     ∀ v, evenLabel v → v ≠ zeroLabel → v ∈ rotationLabels circuit := by sorry
 
 private lemma even_output_count (m : ℕ) (circuit : List (gate m))
+    (hnf : wireLabels circuit = initialLabels m)
     (hlabels : ∀ v, evenLabel v → v ≠ zeroLabel → v ∈ rotationLabels circuit) :
     2 ^ (m - 1) - 1 ≤ cnotCount circuit := by sorry
 
 private lemma birth_count (m : ℕ) (circuit : List (gate m))
+    (hnf : wireLabels circuit = initialLabels m)
     (hlabels : ∀ v, evenLabel v → v ≠ zeroLabel → v ∈ rotationLabels circuit) :
     m - 1 ≤ cnotCount circuit := by sorry
 
@@ -181,8 +185,8 @@ private lemma claim_for_n (n : ℕ) (hn : 1 ≤ n) :
   obtain ⟨a, ha, hnf⟩ := normal_form (2 * n) circuit
   have hidentity := diagonal_forces_identity (2 * n) circuit c hardTheta h
   have hlabels := rotation_labels (2 * n) circuit hardTheta c h hidentity
-  have houtputs := even_output_count (2 * n) circuit hlabels
-  have hbirths := birth_count (2 * n) circuit hlabels
+  have houtputs := even_output_count (2 * n) circuit hidentity hlabels
+  have hbirths := birth_count (2 * n) circuit hidentity hlabels
   have hreturn := return_count (2 * n) circuit hidentity hlabels
   sorry
 
