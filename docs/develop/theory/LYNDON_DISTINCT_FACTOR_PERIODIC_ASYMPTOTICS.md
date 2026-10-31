@@ -997,3 +997,474 @@ large integers $n$. Taking their limit proves $c=\log h-1$.
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 7. The first correction for a fixed positive source
+
+**Definition 7.1 (Information arithmetic and the coefficient).** Retain
+all the hypotheses, the iid law, and the distinct contiguous word
+statistic of Definition 6.1. Set $L=\log n$ for integers $n>1$ and
+$\mu=1-\gamma$. Let $I$ have $\mathbb P(I=i)=p_i$, and put
+
+$$
+Y=-\log p_I,\qquad h=\mathbb EY,\qquad
+\sigma^2=\operatorname{Var}(Y),\qquad m_2=\mathbb EY^2.
+$$
+
+Repeated information values carry the sum of their letter
+probabilities. Call $Y$ arithmetic if its support is contained in
+$d\mathbb Z$ for some $d>0$, and take $d$ maximal; otherwise call it
+nonarithmetic. Containment in a translate of a lattice is not this
+condition. This is the definition of a $d$-lattice variable in
+Blackwell, *Extension of a renewal theorem*, Pacific J. Math. **3**
+(1953), 315–320, §1
+([complete original](https://msp.org/pjm/1953/3-2/pjm-v3-n2-p03-p.pdf)).
+Define, for real $v,u,x$,
+
+$$
+k(v)=\frac{1-(1+e^v)e^{-e^v}}{e^v},\qquad
+b(u)=\{u\}-\frac12,\qquad
+B_p(x)=
+\begin{cases}
+\mu,&Y\text{ nonarithmetic},\\
+\displaystyle\mu+d\int_{\mathbb R}k(v)b((x-v)/d)\,dv,
+       &Y\text{ arithmetic of span }d.
+\end{cases}                                                        \tag{7.1}
+$$
+
+In particular $b(j)=-1/2$ for every integer $j$. The integral in (7.1)
+is an ordinary absolutely convergent integral. Indeed, the kernel
+calculations in §§3–4, with $v=(\log q)w$, give
+
+$$
+K_q(w)=(\log q)k((\log q)w),\qquad
+\int_{\mathbb R}k(v)\,dv=1,\qquad
+\int_{\mathbb R}vk(v)\,dv=\mu,\qquad
+|k^{(j)}(v)|\leq C_j e^{-|v|}\quad(j\geq0).                         \tag{7.2}
+$$
+
+Thus (7.1) contains no unspecified expectation or remainder.
+
+**Theorem 7.2 (The full fixed-source first correction).** For every
+fixed integer $q\geq2$ and every fixed positive probability vector $p$
+of length $q$, along all integers $n\to\infty$,
+
+$$
+E_p(n)=n\log n-n\log\log n+(\log h-1)n
+             +\frac{n}{\log n}B_p(\log n)+r_p(n),\qquad
+\lim_{n\to\infty}\frac{\log n}{n}r_p(n)=0.                          \tag{7.3}
+$$
+
+The remainder is deterministic for each fixed $p$. In particular,
+(7.3) includes arithmetic and nonarithmetic information laws, and
+$\sigma^2=0$. Its quantifiers do not give a nonarithmetic convergence
+rate, an $O_p(n/(\log n)^2)$ remainder, higher biased orders, or bounds
+uniform as $p$ approaches the boundary or as $p$ or $q$ varies with $n$.
+
+*Proof.* The weighted occurrence reduction (6.8) and the exact
+information-sum expression (6.9) apply under precisely these
+hypotheses. In their notation $a=-\log\max_i p_i>0$ and
+$b_0=-\log\min_i p_i<\infty$; use $b_0$ here to distinguish this bound
+from the function $b$. For independent copies $Y_j$ of $Y$, put
+$S_0=0$ and $S_m=\sum_{j=1}^mY_j$. The reused formulas are
+
+$$
+\begin{aligned}
+E_p(n)&=(n+1)H_n-n-F_p(n)+O_p(n^{1-\delta}+\log n),\\
+\frac{F_p(n)}n&=\sum_{m\geq1}\frac1m\mathbb E A(e^{L-S_m}),
+\qquad \delta=\frac{a}{4\log q}>0.
+\end{aligned}                                                       \tag{7.4}
+$$
+
+Here $A$ is Definition 3.1's function, and $a\leq Y_j\leq b_0$.
+These formulas retain single letters, the boundary $n-m+1$, every
+legal window, and whole Lyndon words. Their combinatorial input is
+Glen–Simpson–Smyth, arXiv:1701.00928v1, §§1, 3–4, pp. 1–5; the
+probability input is the zero-event inequality, not the
+total-variation normalization, in Arratia–Goldstein–Gordon (1989),
+§2, Theorem 1. The parameter map and word transport are exactly
+Definition 6.1's. The uniform occurrence formula is not being applied
+to a biased law. The refinement required beyond Theorem 6.2 is the
+coefficient of $L^{-1}$ in (7.4).
+
+For real $t\geq0$ define
+
+$$
+T(t)=\max\{m\geq0:S_m\leq t\},\qquad
+K(t)=T(t)+1,\qquad R(t)=S_{K(t)}-t,\qquad
+Q(t)=\mathbb EH_{T(t)}.
+$$
+
+Put $Q(t)=0$ for $t<0$. Thus $K(t)$ is the first index with $S_m>t$,
+not the first with $S_m\geq t$. We have $0<R(t)\leq b_0$ and
+$\lfloor t/b_0\rfloor\leq T(t)\leq\lfloor t/a\rfloor$.
+We shall use Blackwell's Theorem 1 at its actual hypotheses:
+independent identically distributed increments of positive mean,
+with arithmeticity defined through $d\mathbb Z$. It gives the
+nonarithmetic interval-renewal limit of interval mass divided by its
+length, equal to $1/h$, and in the arithmetic case the point-renewal
+limit equal to $d/h$. Our increments are positive and bounded with
+finite mean $h>0$. No density, positive-variance hypothesis, or rate
+is part of this application.
+
+To make the resulting overshoot calculation explicit, let
+$U=\sum_{m\geq0}\mathcal L(S_m)$ be the renewal measure and set
+$g(u)=\mathbb E(Y-u)_+$ for $u\geq0$. This function is continuous,
+nonnegative, and zero for $u\geq b_0$. Conditioning on the last sum
+not exceeding $t$ gives the exact identity
+
+$$
+\mathbb ER(t)=\int_{[0,t]}g(t-s)\,U(ds).                            \tag{7.5}
+$$
+
+Indeed, on each path exactly one of the events
+$S_m\leq t<S_m+Y_{m+1}$ occurs, and its overshoot is
+$Y_{m+1}-(t-S_m)$. A zero difference contributes zero, so conditioning
+also gives the displayed $g$ at equality. Only finitely many terms
+are possible for fixed $t$, since $S_m\geq am$.
+
+If $Y$ is nonarithmetic, Blackwell's interval limit implies
+
+$$
+\mathbb ER(t)\longrightarrow
+       \frac1h\int_0^{b_0}g(u)\,du=\frac{m_2}{2h}.                 \tag{7.6}
+$$
+
+Here is the passage from intervals to this integral, including its
+endpoints. For fixed $\varepsilon>0$ the mass $U\{s\}$ at a point
+$s\to\infty$ is bounded by the renewal mass of an interval of length
+$2\varepsilon$ containing $s$; its limit superior is at most
+$2\varepsilon/h$. Letting $\varepsilon\downarrow0$ makes point masses
+vanish. On $[0,b_0]$ sandwich $g$ by the upper and lower step functions
+of a finite partition. Blackwell's limit applies to each translated
+interval; endpoint masses have just been handled. The limiting upper
+and lower bounds are the corresponding Riemann sums divided by $h$.
+Their difference tends to zero by continuity of $g$, proving (7.6).
+Finally, integrating $(Y-u)_+$ over $u\geq0$ gives $Y^2/2$, which
+proves the last equality. This argument uses only the classical
+interval theorem and does not impose a convergence rate.
+
+If $Y$ has maximal arithmetic span $d$, write $t=d(k+\theta)$ with
+$k=\lfloor t/d\rfloor$ and $0\leq\theta<1$. Put
+$u_j=U\{jd\}$. Blackwell's arithmetic conclusion is $u_j\to d/h$.
+This follows by applying its interval conclusion to
+$((j-1)d,jd]$, which contains just the possible renewal value $jd$.
+At $t=kd$, (7.5) is a finite convolution with the fixed finitely
+supported sequence $g(jd)$, so
+
+$$
+\begin{aligned}
+\mathbb ER(kd)&\longrightarrow
+ \frac dh\sum_{j\geq0}g(jd)
+ =\frac dh\mathbb E\left[\frac{Y^2}{2d}+\frac Y2\right]
+ =\frac{m_2}{2h}+\frac d2.
+\end{aligned}
+$$
+
+For $Y=md$ the sum used here is
+$\sum_{j=0}^{m-1}(md-jd)=dm(m+1)/2$; hence it includes the $j=0$
+term. Since no renewal sum lies strictly between $kd$ and $(k+1)d$,
+$K(t)=K(kd)$ and $R(t)=R(kd)-d\theta$ exactly. Consequently
+
+$$
+\mathbb ER(t)=\frac{m_2}{2h}
+                   -d\,b(t/d)+o_p(1),                             \tag{7.7}
+$$
+
+where the error tends to zero uniformly over $0\leq\theta<1$ as
+$k\to\infty$. At $\theta=0$ the right-hand correction is $d/2$,
+as required by the strict crossing definition of $K$.
+
+We next retain enough of the stopping-sum fluctuations to determine
+$Q(t)$. All the following estimates hold as real $t\to\infty$.
+Write $K=K(t)$, $T=T(t)$, and $M=S_K-hK$. The finite stopping-sum
+identities (6.11), with the same bounded stopping time, give
+
+$$
+h\mathbb EK=t+\mathbb ER(t),\qquad
+\mathbb EM^2=\sigma^2\mathbb EK,\qquad \mathbb EM=0.
+$$
+
+In particular $\mathbb EK=t/h+O_p(1)$. Since $hK-t=R(t)-M$ and
+$R(t)$ is bounded, Cauchy–Schwarz gives
+
+$$
+\mathbb E(T-t/h)=\frac{\mathbb ER(t)}h-1,\qquad
+\mathbb E(T-t/h)^2=\frac{\sigma^2}{h^3}t+O_p(\sqrt t+1).            \tag{7.8}
+$$
+
+For the second equality, expand $(R-M)^2$, use
+$|\mathbb E(RM)|\leq b_0(\mathbb EM^2)^{1/2}$, then replace $K$ by
+$T=K-1$; the first equality bounds the additional linear term.
+These statements also hold when $\sigma^2=0$.
+
+A third absolute moment small enough for Taylor's remainder follows
+without a limit theorem. Let $J=\lfloor t/a\rfloor+1$, and, for
+$1\leq j\leq J$, let
+$D_j=(Y_j-h)\mathbf1_{\{K\geq j\}}$ and
+$N_j=\sum_{i=1}^jD_i$, with $N_0=0$. Relative to the first $j-1$
+increments, $\mathbb E(D_j\mid Y_1,\ldots,Y_{j-1})=0$, and
+$|D_j|\leq c$ for a constant depending only on $p$. Thus
+$\mathbb EN_j^2\leq c^2j$. Expanding $(N_{j-1}+D_j)^4$ and
+conditioning gives
+
+$$
+\mathbb EN_j^4\leq\mathbb EN_{j-1}^4
+ +6c^2\mathbb EN_{j-1}^2+4c^3\mathbb E|N_{j-1}|+c^4.
+$$
+
+Summing and using $\mathbb E|N_j|\leq c\sqrt j$ proves
+$\mathbb EM^4=\mathbb EN_J^4=O_p(t^2)$.
+Since $T-t/h=(R-M)/h-1$, it follows that
+
+$$
+\mathbb E|T-t/h|^3=O_p(t^{3/2}),\qquad
+\mathbb E|T-t/h|=O_p(\sqrt t).                                    \tag{7.9}
+$$
+
+For example the cubic bound follows from
+$\mathbb E|M|^3\leq(\mathbb EM^2\mathbb EM^4)^{1/2}$ and boundedness
+of $R$.
+
+For $t\geq2b_0$, both $T$ and $t/h$ are at least $t/(2b_0)$.
+Taylor's theorem for the logarithm, through its quadratic term,
+therefore has a uniform cubic remainder bounded by
+$C_p|T-t/h|^3/t^3$. The same lower bounds give
+$\mathbb E(1/T)=h/t+O_p(t^{-3/2})$. Apply the classical harmonic
+estimate $H_j=\log j+\gamma+1/(2j)+O(j^{-2})$ from (3.8), equivalently
+Flajolet–Gourdon–Dumas (1995), Example 7, p. 27. Equations
+(7.8)–(7.9) yield
+
+$$
+\begin{aligned}
+Q(t)
+ &=\log(t/h)+\gamma
+   +\frac h t\left(\frac{\mathbb ER(t)}h-1\right)
+   -\frac{h^2}{2t^2}\frac{\sigma^2t}{h^3}
+   +\frac h{2t}+o_p(t^{-1})\\
+ &=\log(t/h)+\gamma
+   +\frac1t\left(\mathbb ER(t)-\frac{m_2}{2h}\right)
+   +o_p(t^{-1}).
+\end{aligned}                                                       \tag{7.10}
+$$
+
+The identity $m_2=h^2+\sigma^2$ accounts for the cancellation of the
+variance term. Define $\beta(t)=0$ in the nonarithmetic case, and
+$\beta(t)=d\,b(t/d)$ in the arithmetic case. By (7.6)–(7.7),
+
+$$
+Q(t)=\log t-\log h+\gamma-\frac{\beta(t)}t
+                         +\frac{\varepsilon_p(t)}t,\qquad
+\varepsilon_p(t)\longrightarrow0\quad(t\to\infty).                  \tag{7.11}
+$$
+
+The limit is over all real $t$, including arithmetic thresholds.
+In particular $\sup_{t\geq T_0}|\varepsilon_p(t)|\to0$ as
+$T_0\to\infty$. This is an asymptotic conclusion for each fixed law,
+not a rate statement for nonarithmetic laws.
+
+Since $dA(e^v)/dv=k(v)$ and $A(e^v)\to0$ as $v\to-\infty$,
+Tonelli's theorem applied to (7.4) gives the exact smoothing identity
+
+$$
+\frac{F_p(n)}n
+ =\int_{\mathbb R}k(v)
+       \sum_{m\geq1}\frac1m\mathbb P(S_m\leq L-v)\,dv
+ =\int_{\mathbb R}k(v)Q(L-v)\,dv.                                  \tag{7.12}
+$$
+
+The event retains $S_m=L-v$; for negative thresholds the sum is
+empty. On $|v|\leq L/3$, insert (7.11) and use
+
+$$
+\log(L-v)=\log L-\frac vL+O(v^2/L^2),\qquad
+\frac1{L-v}=\frac1L+O(|v|/L^2).
+$$
+
+The integrated $\varepsilon_p$ term is $o_p(1/L)$ by the supremum
+bound following (7.11). The other integrated errors are $O_p(L^{-2})$
+by (7.2) and boundedness of $\beta$. The remaining region is
+negligible at this precision: for $s\geq0$,
+$0\leq Q(s)\leq1+\log(1+s/a)$, and for $s<0$ it is zero.
+Together with $k(v)\leq C e^{-|v|}$ this bounds the tails of (7.12)
+by $O_p((1+\log(L+1))e^{-L/3})$. For the negative tail one can use
+$\log(1+(L+|v|)/a)\leq C_p+\log(L+1)+\log(1+|v|)$ and integrate
+against $e^{-|v|}$. Extending the coefficient integrals to the whole
+line also costs only exponential tails with polynomial factors.
+Using (7.2) now gives
+
+$$
+\frac{F_p(n)}n
+ =\log L-\log h+\gamma
+   -\frac1L\left[\mu+\int_{\mathbb R}k(v)\beta(L-v)\,dv\right]
+   +o_p(L^{-1})
+ =\log L-\log h+\gamma-\frac{B_p(L)}L+o_p(L^{-1}).                   \tag{7.13}
+$$
+
+Finally, $(n+1)H_n-n=n\log n+(\gamma-1)n+O(\log n)$.
+Since $\delta>0$ is fixed, $n^{1-\delta}+\log n=o_p(n/\log n)$.
+Substitution of (7.13) into (7.4) proves (7.3) on the full integer
+sequence. For uniform $p$ the stronger all-order result is already
+Theorem 3.2; the added inference here is its first-correction
+counterpart for fixed nonuniform $p$, using the weighted reduction
+already proved in §6 and the classical renewal theorem. $\square$
+
+**Theorem 7.3 (Fourier coefficients and the exact arithmetic
+obstruction).** If $Y$ is arithmetic of span $d$, then $B_p$ is real,
+$C^\infty$, and $d$-periodic, with period mean $\mu$ and
+$|B_p(x)-\mu|\leq d/2$. For $C_d(\theta)=B_p(d\theta)$, using
+$\widehat C_d(\ell)=\int_0^1C_d(\theta)e^{-2\pi i\ell\theta}\,d\theta$,
+
+$$
+\widehat C_d(0)=\mu,\qquad
+\widehat C_d(\ell)=
+ -\frac{d\,\Gamma(1-2\pi i\ell/d)}
+ {2\pi i\ell(1+2\pi i\ell/d)}\ne0
+                 \quad(\ell\in\mathbb Z\setminus\{0\}).             \tag{7.14}
+$$
+
+A constant $c_p$ can replace $B_p(\log n)$ in (7.3) with an
+$o_p(n/\log n)$ remainder if and only if $Y$ is nonarithmetic; in
+that case $c_p=\mu$. In the arithmetic case the complete
+subsequential limit set, along integers $n\to\infty$, of
+
+$$
+Z_p(n)=\frac{\log n}{n}
+ \left[E_p(n)-n\log n+n\log\log n-(\log h-1)n\right]                 \tag{7.15}
+$$
+
+is $B_p([0,d])$, a nondegenerate compact interval. Omitting the
+$n/\log n$ correction altogether gives no $o_p(n/\log n)$ remainder
+in either arithmeticity class.
+
+*Proof.* The bound and periodicity follow directly from (7.1),
+$|b|\leq1/2$, positivity of $k$, and its unit integral. For smoothness,
+subdivide according to $(x-v)/d\in[j,j+1)$ to write the integral part
+of (7.1) as
+
+$$
+d^2\int_0^1(u-1/2)\sum_{j\in\mathbb Z}k(x-d(j+u))\,du.
+$$
+
+For $x$ in a compact interval, each derivative series converges
+uniformly by (7.2). Differentiation under this bounded integral is
+therefore valid at every order. This proves smoothness also at period
+endpoints, without differentiating a fractional part.
+
+The transform calculation (4.6), after $v=(\log q)w$, gives for every
+real $\tau$, not just a discrete frequency,
+
+$$
+\int_{\mathbb R}k(v)e^{-i\tau v}\,dv
+ =\int_0^1\int_0^\infty u e^{-ux}x^{-i\tau}\,dx\,du
+ =\frac{\Gamma(1-i\tau)}{1+i\tau}.                                 \tag{7.16}
+$$
+
+The absolute double integral is one, so Fubini applies in the stated
+range. This is the Euler transform on its convergence half-plane,
+as in Flajolet–Gourdon–Dumas, §1, equation (12), not a continuation
+past that range. The same complete calculation (4.7) gives
+$\int vk(v)\,dv=\Gamma'(1)+1=\mu$. The proof of (4.8) establishes
+$\Gamma'(1)=-\gamma$ and $\Gamma(1-i\tau)\ne0$ for all real $\tau$;
+these Gamma facts and the kernel transform are reused here.
+
+The function $b$ has integral zero on a period and nonzero Fourier
+coefficient $-1/(2\pi i\ell)$ at integer $\ell\ne0$, by (4.4).
+Fubini in (7.1) is justified by its bounded factor $b$ and
+$\int k=1$. Translation by $v/d$ multiplies that coefficient by
+$e^{-2\pi i\ell v/d}$. Formula (7.16) with
+$\tau=2\pi\ell/d$ proves (7.14), including the zero coefficient.
+Its nonzero numerator and nonzero denominators prove that $B_p$ is
+nonconstant.
+
+Equation (7.3) gives $Z_p(n)=B_p(\log n)+o_p(1)$. For every real
+$\theta\in[0,1]$ choose integers
+$n_j=\lfloor\exp(d(j+\theta))\rfloor$. They tend to infinity, and
+$\log n_j-d(j+\theta)\to0$. Continuity and periodicity give
+$Z_p(n_j)\to B_p(d\theta)$ even at $\theta=0,1$; a fractional part
+approaching one has the same coefficient value as zero. Conversely,
+any convergent subsequence of $Z_p(n)$ has a further subsequence
+whose phases modulo $d$ converge in $[0,d]$. Its limit is the value
+of $B_p$ at that phase. This proves the claimed complete limit set.
+The image is a compact interval by continuity and the intermediate
+value theorem, and it is nondegenerate by (7.14).
+
+A constant replacement would force $Z_p(n)\to c_p$, contradicting
+this interval in the arithmetic case. In the nonarithmetic case
+(7.1) and (7.3) give convergence to $\mu$, so this constant works
+and is unique. Finally $\mu>0$: the decreasing sequence
+$H_j-\log j$ has limit $\gamma$; its decrease follows from
+$\log(1+1/j)=\int_j^{j+1}x^{-1}\,dx>1/(j+1)$. Moreover,
+$\gamma\leq H_2-\log2<1$, since
+$\log2=\int_1^2x^{-1}\,dx>1/2$. Hence the nonarithmetic normalized
+residual is not zero. In the arithmetic case the nonconstant
+interval of limits cannot be the singleton $\{0\}$, either.
+Thus omission cannot leave an $o_p(n/\log n)$ remainder. $\square$
+
+**Proposition 7.4 (Classification, uniform specialization, and two
+positive-variance examples).** The information law is arithmetic if
+and only if every ratio $(-\log p_i)/(-\log p_1)$ is rational.
+Furthermore $\sigma^2=0$ if and only if $p_i=1/q$ for every $i$.
+In that case $d=h=\log q$ and
+
+$$
+B_p(\log n)=(\log q)\Phi_{q,1}(\{\log_q n\}).                       \tag{7.17}
+$$
+
+For $p=(1/2,1/4,1/4)$ one has
+
+$$
+d=\log2,\qquad h=\tfrac32\log2,\qquad
+\sigma^2=\tfrac14(\log2)^2>0,\qquad
+B_p(x)=(\log2)\Phi_{2,1}(x/\log2).                                 \tag{7.18}
+$$
+
+For $p=(1/3,2/3)$ one has $\sigma^2>0$, $Y$ nonarithmetic, and
+$B_p(x)=\mu$. Thus positive variance admits both arithmeticity
+classes and contributes no separate term to the first coefficient.
+
+*Proof.* Write $y_i=-\log p_i>0$. If $y_i\in d\mathbb Z$, each
+$y_i/y_1$ is a ratio of positive integers. Conversely, if all these
+ratios are rational, a common denominator supplies $c>0$ such that
+$y_i=c m_i$ with positive integers $m_i$. Put $g=\gcd_i m_i$.
+Then $d=cg$ is a span. For any other span $d'$, a Bezout combination
+of the $m_i$ shows $cg/d'\in\mathbb Z_{>0}$, so $d'\leq cg$.
+This proves both the equivalence and existence of the maximal span
+in Definition 7.1.
+
+All $p_i$ are strictly positive. Therefore zero variance means that
+all $y_i$ agree, hence all $p_i$ agree; their sum forces $p_i=1/q$.
+The converse is immediate. A single positive support value has
+maximal span equal to itself, giving $d=h=\log q$. Equation (4.3)
+and $K_q(w)=(\log q)k((\log q)w)$ give
+
+$$
+(\log q)\Phi_{q,1}(\theta)
+ =\mu+(\log q)\int_{\mathbb R}
+                    k(v)b(\theta-v/\log q)\,dv.
+$$
+
+This is (7.1) with $d=\log q$ and $x=(\log q)\theta$.
+Periodicity proves (7.17). This specialization, its all-order
+extension, its transform, and its phase limits are the results
+already established in §§3–5.
+
+For $(1/2,1/4,1/4)$, the information values $\log2$ and $2\log2$
+each have probability $1/2$. Their mean and variance are the values
+in (7.18), and the presence of $\log2$ makes the maximal span
+$\log2$. Formula (7.1) depends only on that span within the
+arithmetic class, so the uniform binary identity just proved gives
+(7.18), despite the different entropy.
+
+For $(1/3,2/3)$ the two information values $\log3$ and $\log(3/2)$
+are distinct, each of positive probability, so variance is positive.
+If their ratio were a positive rational $r/s$, with positive integers
+$r,s$, then $s\log3=r\log(3/2)$, hence
+$2^r3^s=3^r$. Unique prime factorization makes this impossible.
+The ratio criterion therefore proves nonarithmeticity, and (7.1)
+gives $B_p=\mu$. Nevertheless its two support values lie in the
+translated lattice $\log(3/2)+(\log2)\mathbb Z$. This also proves
+explicitly why translated-lattice containment is insufficient.
+The cancellation in (7.10) and the formula (7.1) show that variance
+adds no further first coefficient. $\square$
+
+## 追加锚（本行以下为增补区）
