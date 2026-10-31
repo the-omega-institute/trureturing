@@ -6,9 +6,9 @@ A physical floor-mask joint order for strictly ordered middle-minimum gaps
 
 **Theorem 1.1 (One complete physical permutation and one literal ear cut).**
 
-Lean statement: `D5/S3/Combinatorics/Circle/ThreeNegativeMiddleGapJointLift.actualSource_three_negative_middle_gap_joint_lift`
+Lean statement: `D5/S3/Combinatorics/Circle/MiddleGap/ThreeNegativeMiddleGapJointLift.actualSource_three_negative_middle_gap_joint_lift`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/ThreeNegativeMiddleGapJointLift.actualSource_three_negative_middle_gap_joint_lift` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/MiddleGap/ThreeNegativeMiddleGapJointLift.actualSource_three_negative_middle_gap_joint_lift` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -30,6 +30,6 @@ This proves the entire strict chamber 2<=b<a<c of the joint-order problem associ
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Circle/ThreeNegativeMiddleGapJointLift.actualSource_three_negative_middle_gap_joint_lift`
-- Dependency: [D5/S3/Combinatorics/Circle/ThreeBitSource](ThreeBitSource.md)
-- Dependency: [D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterJointLift](ThreeNegativeEqualOuterJointLift.md)
+- Truth anchor: `D5/S3/Combinatorics/Circle/MiddleGap/ThreeNegativeMiddleGapJointLift.actualSource_three_negative_middle_gap_joint_lift`
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeBitSource](../ThreeBitSource.md)
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterJointLift](../ThreeNegativeEqualOuterJointLift.md)
