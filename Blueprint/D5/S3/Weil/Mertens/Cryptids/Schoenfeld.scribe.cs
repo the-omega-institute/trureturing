@@ -10,7 +10,8 @@ internal sealed class SchoenfeldDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("source-conclusion"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/Cryptids/Schoenfeld.abs_psi_sub_self_le_seven_eighths_of_five_thousand_le"),
                 H("abs psi sub self le seven eighths of five thousand le"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Analytic/cryptids2026rhpsi")),
                 Blocks(Paragraph(Text("The exact statement and hypotheses are those of the original declaration, checked on the current project pins."))),
                 DescribeRole.Theorem))));
 }

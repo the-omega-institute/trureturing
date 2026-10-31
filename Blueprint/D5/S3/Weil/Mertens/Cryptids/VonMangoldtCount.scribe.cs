@@ -10,7 +10,8 @@ internal sealed class VonMangoldtCountDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("source-conclusion"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/Cryptids/VonMangoldtCount.weightedZeroCountingFunction_eq_zero_of_le_six"),
                 H("weightedZeroCountingFunction eq zero of le six"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Analytic/cryptids2026rhpsi")),
                 Blocks(Paragraph(Text("The exact statement and hypotheses are those of the original declaration, checked on the current project pins."))),
                 DescribeRole.Theorem))));
 }

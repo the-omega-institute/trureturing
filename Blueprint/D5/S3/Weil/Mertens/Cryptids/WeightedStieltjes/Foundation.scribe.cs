@@ -10,7 +10,8 @@ internal sealed class WeightedStieltjesFoundationDocument : IScribeDocumentDefin
             Describe.Lean(DescribeId.Create("source-conclusion"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/Cryptids/WeightedStieltjes/Foundation.integrable_and_integral_perronAux_of_mem_Ioo"),
                 H("integrable and integral perronAux of mem Ioo"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Analytic/cryptids2026rhpsi")),
                 Blocks(Paragraph(Text("The exact statement and hypotheses are those of the original declaration, checked on the current project pins."))),
                 DescribeRole.Theorem))));
 }

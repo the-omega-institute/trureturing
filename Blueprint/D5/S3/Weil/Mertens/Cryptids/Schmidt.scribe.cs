@@ -10,7 +10,8 @@ internal sealed class SchmidtDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("source-conclusion"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/Cryptids/Schmidt.analyticOrderAt_riemannZeta_ne_top"),
                 H("analyticOrderAt riemannZeta ne top"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Analytic/cryptids2026rhpsi")),
                 Blocks(Paragraph(Text("The exact statement and hypotheses are those of the original declaration, checked on the current project pins."))),
                 DescribeRole.Theorem))));
 }
