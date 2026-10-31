@@ -380,7 +380,6 @@ theorem coeff_partWeight_psumPart_partition (π : Perm (Fin n)) (ν : n.Partitio
   rw [coeff_psumPart_partition, ← fiberSubgroup_youngColouring ν hν,
     card_fixedPoints_quotient_fiberSubgroup]
   congr 3
-  case e_s => ext x; simp
   ext f
   exact and_congr_right' (forall_congr' fun i => by rw [card_filter_youngColouring ν hν i])
 
