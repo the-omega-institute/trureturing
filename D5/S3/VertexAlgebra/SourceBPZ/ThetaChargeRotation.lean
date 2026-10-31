@@ -351,6 +351,54 @@ theorem gradeChargeRotation_fixed_theta (D : LatticeData)
     simpa [hminus_inv] using hcomp
   exact hcomp'.symm
 
+abbrev ChargeEnergyFiber (D : LatticeData) (ell : Charge D →+ ZMod 3)
+    (n : ℤ) (j : ZMod 3) :=
+  {a : EnergyFiber D n // ell a.1.1 = j}
+
+def gradeChargeBasisVector (D : LatticeData) (n : ℤ) (a : EnergyFiber D n) : grade D n :=
+  ⟨carrierBasis D a.1, by
+    rw [grade_eq_span]
+    exact Submodule.subset_span ⟨a.1, a.2, rfl⟩⟩
+
+theorem gradeChargeRotation_on_gradeChargeBasisVector (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ)
+    (g : Multiplicative (ZMod 3)) (a : EnergyFiber D n) :
+    gradeChargeRotation D ell phase n g (gradeChargeBasisVector D n a) =
+      chargePhaseScalar phase (g.toAdd * ell a.1.1) •
+        gradeChargeBasisVector D n a := by
+  apply Subtype.ext
+  change chargeRotation D ell phase g (gradeChargeBasisVector D n a).1 = _
+  change chargeRotation D ell phase g (carrierBasis D a.1) = _
+  rw [chargeRotation_on_basis]
+  rfl
+
+def gradeChargeSector (D : LatticeData) (ell : Charge D →+ ZMod 3)
+    (n : ℤ) (j : ZMod 3) : Submodule ℂ (grade D n) :=
+  Submodule.span ℂ (Set.range (fun a : ChargeEnergyFiber D ell n j =>
+    gradeChargeBasisVector D n a.1))
+
+theorem gradeChargeRotation_mem_gradeChargeSector (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ)
+    (g : Multiplicative (ZMod 3)) (j : ZMod 3)
+    (v : grade D n) (hv : v ∈ gradeChargeSector D ell n j) :
+    gradeChargeRotation D ell phase n g v ∈ gradeChargeSector D ell n j := by
+  rw [gradeChargeSector] at hv ⊢
+  refine Submodule.span_induction ?_ ?_ ?_ ?_ hv
+  · rintro x ⟨a, rfl⟩
+    rw [gradeChargeRotation_on_gradeChargeBasisVector]
+    refine (Submodule.span ℂ (Set.range (fun a : ChargeEnergyFiber D ell n j =>
+      gradeChargeBasisVector D n a.1))).smul_mem _ ?_
+    exact Submodule.subset_span (Set.mem_range.mpr ⟨a, rfl⟩)
+  · exact Submodule.zero_mem _
+  · intro x y _ _ hx hy
+    simpa only [map_add] using
+      (Submodule.span ℂ (Set.range (fun a : ChargeEnergyFiber D ell n j =>
+        gradeChargeBasisVector D n a.1))).add_mem hx hy
+  · intro c x _ hx
+    simpa only [map_smul] using
+      (Submodule.span ℂ (Set.range (fun a : ChargeEnergyFiber D ell n j =>
+        gradeChargeBasisVector D n a.1))).smul_mem c hx
+
 /-- The fixed vectors of the dihedral action on a grade. -/
 abbrev gradeChargeDihedralInvariants (D : LatticeData)
     (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ) :
