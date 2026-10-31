@@ -79,15 +79,8 @@ private theorem triangle_normalized : IsNormalizedNC (antiCount, -2) := by
         {r | antiCount r ≤ 2} := by
       rintro _ ⟨s, rfl⟩
       exact antiCount_deterministic s
-    have hconv : Convex ℝ {r | antiCount r ≤ 2} := by
-      intro r hr s hs a b ha hb hab
-      change antiCount (a • r + b • s) ≤ 2
-      rw [map_add, map_smul, map_smul]
-      change a * antiCount r + b * antiCount s ≤ 2
-      calc
-        _ ≤ a * 2 + b * 2 := add_le_add (mul_le_mul_of_nonneg_left hr ha)
-          (mul_le_mul_of_nonneg_left hs hb)
-        _ = 2 := by linarith [hab]
+    have hconv : Convex ℝ {r | antiCount r ≤ 2} :=
+      (convex_Iic (2 : ℝ)).linear_preimage antiCount
     have hbound := convexHull_min hsub hconv hr
     change antiCount r ≤ 2 at hbound
     change antiCount r + -2 ≤ 0
@@ -208,15 +201,8 @@ private theorem wins_normalized : IsNormalizedGBell (wins, -3) := by
         q = productBehavior α r} ⊆ {q | wins q ≤ 3} := by
       rintro q ⟨α, r, hα, hr, rfl⟩
       exact wins_product α r hα hr
-    have hconv : Convex ℝ {q : Behavior 3 | wins q ≤ 3} := by
-      intro p hp q hq a b ha hb hab
-      change wins (a • p + b • q) ≤ 3
-      rw [map_add, map_smul, map_smul]
-      change a * wins p + b * wins q ≤ 3
-      calc
-        _ ≤ a * 3 + b * 3 := add_le_add (mul_le_mul_of_nonneg_left hp ha)
-          (mul_le_mul_of_nonneg_left hq hb)
-        _ = 3 := by linarith [hab]
+    have hconv : Convex ℝ {q : Behavior 3 | wins q ≤ 3} :=
+      (convex_Iic (3 : ℝ)).linear_preimage wins
     have hb := convexHull_min hsub hconv hp
     change wins p ≤ 3 at hb
     change wins p + -3 ≤ 0
