@@ -25,9 +25,13 @@ private theorem shift (N u v : ℤ) (len i : ℕ)
     (h : (2 : ℤ)^len * u = N + v) :
     centered N ((2 : ℤ)^(len+i)*u) = centered N ((2 : ℤ)^i*v) := by
   apply centered_congr
-  have he : (2 : ℤ)^(len+i)*u = 2^i*v + 2^i*N := by rw [pow_add]; nlinarith only [h]
+  have he : (2 : ℤ)^(len+i)*u = 2^i*v + 2^i*N := by
+    calc
+      _ = 2^i*(2^len*u) := by rw [pow_add]; ring
+      _ = _ := by rw [h]; ring
   rw [he, Int.add_mul_emod_self_right]
 
+set_option maxHeartbeats 800000 in
 private theorem chains (n : ℕ) (hn : 2 ≤ n) :
     let z : ℤ := 2^n
     let k := 2*(n+1)+2*n
@@ -42,10 +46,10 @@ private theorem chains (n : ℕ) (hn : 2 ≤ n) :
     (∀ i < n, f (n+i) = if i+1<n then 2^i*B else -(N-L)/2) ∧
     (∀ i < n+1, f (2*n+i) = if i+1<n+1 then 2^i*L else -(N-M)/2) ∧
     (∀ i < n+1, f (2*n+(n+1)+i) = if i+1<n+1 then 2^i*M else -(N-A)/2) ∧
-    (∀ i < n, g i = if i+1<n then 2^i*(2*A) else -((2*N+1)-(2*B-1))/2) ∧
-    (∀ i < n, g (n+i) = if i+1<n then 2^i*(2*B-1) else -((2*N+1)-(2*L-1-z))/2) ∧
-    (∀ i < n+1, g (2*n+i) = if i+1<n+1 then 2^i*(2*L-1-z) else -((2*N+1)-(2*M-1-2*z-2*z^2))/2) ∧
-    (∀ i < n+1, g (2*n+(n+1)+i) = if i+1<n+1 then 2^i*(2*M-1-2*z-2*z^2) else -((2*N+1)-A)/2) ∧
+    (∀ i < n, g i = if i+1<n then 2^i*(2*A) else -((modulus (k+1))-(2*B-1))/2) ∧
+    (∀ i < n, g (n+i) = if i+1<n then 2^i*(2*B-1) else -((modulus (k+1))-(2*L-1-z))/2) ∧
+    (∀ i < n+1, g (2*n+i) = if i+1<n+1 then 2^i*(2*L-1-z) else -((modulus (k+1))-(2*M-1-2*z-2*z^2))/2) ∧
+    (∀ i < n+1, g (2*n+(n+1)+i) = if i+1<n+1 then 2^i*(2*M-1-2*z-2*z^2) else -((modulus (k+1))-A)/2) ∧
     g k = A := by
   dsimp only
   let z : ℤ := 2^n
@@ -68,21 +72,27 @@ private theorem chains (n : ℕ) (hn : 2 ≤ n) :
   have hbounds : (1 ≤ A ∧ A < N) ∧ (1 ≤ B ∧ B < N) ∧
       (1 ≤ L ∧ L < N) ∧ (1 ≤ M ∧ M < N) := by
     dsimp [A,B,L,M]; rw [hN]
-    repeat' constructor <;> nlinarith only [hz,hz2,hz3,hz4]
+    refine ⟨⟨?_,?_⟩,⟨?_,?_⟩,⟨?_,?_⟩,⟨?_,?_⟩⟩
+    all_goals nlinarith only [hz,hz2,hz3,hz4]
   have hpow : (2 : ℤ)^(n+1) = 2*z := by dsimp [z]; rw [pow_succ]; ring
   have hrels : z*A=N+B ∧ z*B=N+L ∧ (2*z)*L=N+M ∧ (2*z)*M=N+A := by
-    rw [hN]; dsimp [A,B,L,M]; repeat' constructor <;> ring
+    rw [hN]
+    dsimp [A,B,L,M]
+    refine ⟨?_,?_,?_,?_⟩ <;> ring
   have hgrels : z*(2*A)=NN+(2*B-1) ∧
       z*(2*B-1)=NN+(2*L-1-z) ∧
       (2*z)*(2*L-1-z)=NN+(2*M-1-2*z-2*z^2) ∧
       (2*z)*(2*M-1-2*z-2*z^2)=NN+A := by
-    rw [hNN,hN]; dsimp [A,B,L,M]; repeat' constructor <;> ring
+    rw [hNN,hN]
+    dsimp [A,B,L,M]
+    refine ⟨?_,?_,?_,?_⟩ <;> ring
   have hgbounds : (1 ≤ 2*A ∧ 2*A ≤ NN) ∧ (1 ≤ 2*B-1 ∧ 2*B-1 ≤ NN) ∧
       (1 ≤ 2*L-1-z ∧ 2*L-1-z ≤ NN) ∧
       (1 ≤ 2*M-1-2*z-2*z^2 ∧ 2*M-1-2*z-2*z^2 ≤ NN) := by
     rw [hNN]
     dsimp [A,B,L,M] at *
-    repeat' constructor <;> nlinarith only [hbounds,hz,hz2,hz3]
+    refine ⟨⟨?_,?_⟩,⟨?_,?_⟩,⟨?_,?_⟩,⟨?_,?_⟩⟩
+    all_goals nlinarith only [hbounds,hz,hz2,hz3]
   have hNp : 0 < N := by omega
   have hNo : N % 2 = 1 := by
     have hp : (2 : ℤ)^k % 2 = 0 := by
