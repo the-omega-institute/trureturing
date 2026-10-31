@@ -1240,7 +1240,7 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 
 ### CLAUDE §7.14 撤因反例读数
 
-**必要反例**:#4198 在健康 base 上是真 revert,自身 engineering 224/225、1 fail,故无条件放行纯 revert 会隐藏真红。#4305 的绿→红 transition 实由前笔 #4295 的 `ScribeTestSymbolBinder` 与滞后一拍 BaseSnapshot 造成;候选 edge 不等于根因,计划须读 BaseSnapshot、candidate 程序集及测试发现输入,不能由 base 独定(2026-08-31 GitHub checks/git 树记录)。该 dev 红已实证,“全部 open PR 同红”未逐一核实,`ASSUMED-UNVERIFIED`。
+#4305 的绿→红 transition 实由前笔 #4295 的 `ScribeTestSymbolBinder` 与滞后一拍 BaseSnapshot 造成;候选 edge 不等于根因,计划须读 BaseSnapshot、candidate 程序集及测试发现输入,不能由 base 独定(2026-08-31 GitHub checks/git 树记录)。该 dev 红已实证,“全部 open PR 同红”未逐一核实,`ASSUMED-UNVERIFIED`。
 
 ### CLAUDE §9.2 引用校验样本缺口
 
@@ -1248,13 +1248,7 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 
 ### CLAUDE §10.1 容量 override 复核读数
 
-旧 perf-event-lib.sh 已由 `807f1db05d` 删除,supervisor 已不读 CPU,静态 CPU 现役读者在该复核为零,不能再称双真源。
-
 旧 1 的问题是无案而非数小。
-
-### CLAUDE §10.2 缓存恢复参照点读数
-
-**参照点(2026-08-23 实测,同日同机)**:有热 donor 的新 lane = **13 秒**(`status=seeded, method=clonefile`,内容层 1430 + 依赖层 8550,两层 warm);无 donor 走 release 归档 = **6.5 分钟**(取 5m08s 走 `mode=prefix` + 补编 1m18s,重编 19/1513 个模块)。
 
 ### CLAUDE §10.2 配置比较读数
 
