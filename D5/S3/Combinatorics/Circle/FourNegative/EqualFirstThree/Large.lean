@@ -66,8 +66,9 @@ private theorem large (s d : ℕ) (hs : 2≤s) (hds : s+2≤d) :
     simpa only [u,Nat.cast_pow,Nat.cast_ofNat] using hp
   have hDu : D=2*R*(u:ℤ) := by
     simp only [D,R,u,Nat.cast_pow,Nat.cast_ofNat]
-    rw [show d=s+(d-s-1)+1 by omega,pow_succ,pow_add]
-    ring
+    calc
+      (2 : ℤ)^d = 2^(s+(d-s-1)+1) := by congr 1; omega
+      _ = 2*2^s*2^(d-s-1) := by rw [pow_succ,pow_add]; ring
   have hu : u<2^(d-1) := by
     have hz : (u:ℤ)<e := by nlinarith only [hR,hu2,hDu,he]
     change (u : ℤ) < (2 : ℤ)^(d-1) at hz
