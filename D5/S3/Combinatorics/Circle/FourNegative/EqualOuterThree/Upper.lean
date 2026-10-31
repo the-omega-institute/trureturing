@@ -163,7 +163,8 @@ private theorem physical (s b : ℕ) (v : ℤ) (R T : List ℕ)
   change ∀ i<b, g (2*s+i)=if i+1<b then 2^i*Ln else -((2*N+1)-Mn)/2 at hwg
   change ∀ i<s, g (2*s+b+i)=if i+1<s then 2^i*Mn else -((2*N+1)-A)/2 at hxg
   have hfresh' : g k = A := by
-    simpa only [g,N,A,base,sourceMod,show 2*s+b+s=k by dsimp [k,size]; omega] using hfresh
+    simpa only [g,N,A,base,sourceMod,Matrix.cons_val_zero,
+      show 2*s+b+s=k by dsimp [k,size]; omega] using hfresh
   have hnb := new_base_bounds s b s s hs (by omega) hs hs
   have hnewB : 0 ≤ Bn := by
     have h := hnb 1
@@ -373,13 +374,17 @@ private theorem physical (s b : ℕ) (v : ℤ) (R T : List ℕ)
     let pre := P1++[wneg]++P2++[uneg]
     let post := P3++[xneg]++P4++[vneg]
     have he : oldWord = pre ++ post := by simp only [oldWord,pre,post,List.append_assoc]
-    have hj' : pre.length = j := by simp only [pre,List.length_append,List.length_singleton]; dsimp [j]; omega
+    have hj' : pre.length = j := by
+      dsimp [pre,j]
+      simp only [List.length_append,List.length_singleton] <;> omega
     have hj0 : j = pre.length + 0 := by simp [hj']
     rw [he, hj0, insertAt_add]
     simp [pre,post,insertAt,newWord,List.append_assoc]
   refine ⟨oldWord,hperm,?_,j,hj,?_⟩
   · simpa [f,N,A] using hold
-  · simpa [g,N,A,hinsert] using hnew
+  · change InStrip g N 0 (insertAt k oldWord j)
+    rw [hinsert]
+    exact hnew
 
 private theorem actual_of_physical (s b : ℕ) (hs : 2≤s) (l : List ℕ) (j : ℕ)
     (hp : l.Perm (List.range (size s b))) (hj : j ≤ size s b)
@@ -474,7 +479,8 @@ private theorem mask_partition_s_ge_three (s b : ℕ) (hs : 3 ≤ s)
   rw [← hlen, ← h2, ← h1, ← h0]
   try simp only [List.range'_one]
   apply Multiset.coe_eq_coe.mp
-  simp only [← Multiset.coe_add]
+  simp only [← Multiset.coe_add, ← Multiset.cons_coe, ← Multiset.singleton_add,
+    Multiset.coe_nil, add_zero]
   dsimp only [h]
   ac_rfl
 
