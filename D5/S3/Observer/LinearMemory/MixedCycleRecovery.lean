@@ -127,7 +127,7 @@ private theorem generated_fixes_tail (b : OrthonormalBasis (Axis k) ℝ V)
     | mem a ha =>
       rcases ha with ha | ha
       · obtain ⟨A, hA, hF⟩ := ha
-      exact hF j
+        exact hF j
       · rcases ha with rfl
         exact cycle_fixes_tail b r hr j hj
     | one => rfl

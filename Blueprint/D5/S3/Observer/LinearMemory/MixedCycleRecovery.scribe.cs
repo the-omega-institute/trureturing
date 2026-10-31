@@ -62,6 +62,19 @@ internal sealed class MixedCycleRecoveryDocument : IScribeDocumentDefinition
                         + "acquisition cost, seam compatibility or native reachability conclusion."))),
                 DescribeRole.Theorem))));
 
+    private static Formula Sub(Formula value, Formula subscript) => Seq(value, Underscore, Grp(subscript));
+    private static Formula Call(string name, params Formula[] arguments)
+    {
+        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
+        for (var i = 0; i < arguments.Length; i++)
+        {
+            if (i > 0) items.AddRange([Comma, Sp]);
+            items.Add(arguments[i]);
+        }
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+
     private static Formula Rank(Formula map) => Call("finrank", F.Id("R"), Call("range", map));
     private static Formula Eqn(Formula left, Formula right) => Seq(left, Sp, Eq, Sp, right);
     private static Formula Rec(Formula map) => Call("Rec", map);
@@ -87,7 +100,7 @@ internal sealed class MixedCycleRecoveryDocument : IScribeDocumentDefinition
         Formula escape = Seq(Forall, Sp, x, Colon, Sp, v, Comma, Sp,
             Forall, Sp, a, Colon, Sp, F.Id("R"), Comma, Sp,
             Eqn(Call("apply", m, shifted), Call("apply", m, x)), Sp, Land, Sp,
-            Open, a, Sp, Ne, Sp, D(0), Sp, Rightarrow, Sp, shifted, Sp, Ne, Sp, x, Close);
+            Open, a, Sp, Neq, Sp, D(0), Sp, Rightarrow, Sp, shifted, Sp, Neq, Sp, x, Close);
         Formula[] claims = [
             Eqn(Sub(F.Id("C"), D(0)), Call("id", v)),
             Eqn(rows, w),
@@ -108,7 +121,7 @@ internal sealed class MixedCycleRecoveryDocument : IScribeDocumentDefinition
             OpenBracket, Call("FiniteDimensional", F.Id("R"), v), CloseBracket, Comma,
             RowBreak, Grp(), b, Colon, Sp,
             Call("OrthonormalBasis", Call("Sum", Call("Fin", D(3)), Call("Fin", k)), F.Id("R"), v),
-            Comma, Sp, r, Sp, Le, Sp, k, Sp, Rightarrow, RowBreak, Grp()
+            Comma, Sp, r, Sp, Leq, Sp, k, Sp, Rightarrow, RowBreak, Grp()
         };
         for (var i = 0; i < claims.Length; i++)
         {
