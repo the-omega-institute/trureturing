@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Experiment.KBonacciPrefixCompletion
 import Reg.Support.DependentFamily
 
+/-! # Full-domain audit realizations of KBonacci prefix patterns -/
+
 set_option autoImplicit false
 
 namespace Reg.D5.S3.ConceptDynamics.Experiment.KBonacciPrefixCompletion
@@ -179,5 +181,7 @@ noncomputable def patternAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   continuation := .unknown,
   familyRecord := none,
   options := #[] }
+
+end
 
 end Reg.D5.S3.ConceptDynamics.Experiment.KBonacciPrefixCompletion

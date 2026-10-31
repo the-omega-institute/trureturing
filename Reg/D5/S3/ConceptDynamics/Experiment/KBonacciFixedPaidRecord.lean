@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Experiment.KBonacciFixedPaidRecord
 import Reg.Support.DependentFamily
 
+/-! # Typed actual-record realization and full-source correspondence -/
+
 set_option autoImplicit false
 
 namespace Reg.D5.S3.ConceptDynamics.Experiment.KBonacciFixedPaidRecord
@@ -78,7 +80,13 @@ theorem dependence : ObservationalDependence signature actual := by
   refine ⟨sample,w,v,?_⟩
   change paidRecord sample.arrangement w ≠ paidRecord sample.arrangement v
   intro he
-  have first := congrArg (fun record => record.2.head?.map Prod.fst) he
-  norm_num [paidRecord, sample, initial, w, v, Fin.sum_univ_succ] at first
+  have equal :
+      [(initial w, terminalReads w.ell w.c (List.replicate 6 zeroWindow))] =
+      [(initial v, terminalReads v.ell v.c (List.replicate 6 zeroWindow))] :=
+    (Prod.mk.inj he).2
+  have first := (Prod.mk.inj (List.cons.inj equal).1).1
+  norm_num [initial, w, v, Fin.sum_univ_succ] at first
+
+end
 
 end Reg.D5.S3.ConceptDynamics.Experiment.KBonacciFixedPaidRecord
