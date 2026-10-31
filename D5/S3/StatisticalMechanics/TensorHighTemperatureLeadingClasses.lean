@@ -387,16 +387,85 @@ private theorem one_count_le_two_sub {n : ℕ} (p : Nat.Partition n) (hn : 2 ≤
   apply Nat.le_sub_of_add_le
   omega
 
-private theorem one_count_eq_two_sub_iff {n : ℕ} (p : Nat.Partition n) (hn : 2 ≤ n)
-    (hp : p ≠ identityClass n) :
+private theorem one_count_eq_two_sub_iff {n : ℕ} (p : Nat.Partition n) (hn : 2 ≤ n) :
     p.parts.count 1 = n - 2 ↔ p = transpositionClass n := by
-  sorry
+  let nonunits := p.parts.filter (fun a => a ≠ 1)
+  let units := p.parts.filter (fun a => ¬a ≠ 1)
+  have hsplit : nonunits + units = p.parts := by
+    exact Multiset.filter_add_not (fun a : ℕ => a ≠ 1) p.parts
+  have hunit : units = Multiset.replicate units.card 1 := by
+    apply Multiset.eq_replicate_card.mpr
+    intro a ha
+    have ha' := Multiset.mem_filter.mp ha
+    simpa using ha'.2
+  have hcount : units.card = p.parts.count 1 := by
+    calc
+      units.card = units.count 1 := by rw [hunit]; simp
+      _ = p.parts.count 1 := Multiset.count_filter_of_pos (by simp)
+  constructor
+  · intro hcountp
+    have hsum : nonunits.sum + units.sum = n := by
+      calc
+        nonunits.sum + units.sum = (nonunits + units).sum :=
+          (Multiset.sum_add _ _).symm
+        _ = p.parts.sum := by rw [hsplit]
+        _ = n := p.parts_sum
+    rw [hunit] at hsum
+    simp only [Multiset.sum_replicate, nsmul_eq_mul, mul_one] at hsum
+    have hsum' : nonunits.sum + p.parts.count 1 = n := by
+      simpa [hcount] using hsum
+    have hnon_sum : nonunits.sum = 2 := by omega
+    have hnonmem : ∀ a ∈ nonunits, 2 ≤ a := by
+      intro a ha
+      have hapos := p.parts_pos (Multiset.mem_of_mem_filter ha)
+      have hane := (Multiset.mem_filter.mp ha).2
+      omega
+    have hcard_le : 2 * nonunits.card ≤ nonunits.sum := by
+      have hh := Multiset.card_nsmul_le_sum (s := nonunits) (a := 2) hnonmem
+      simpa [nsmul_eq_mul, Nat.mul_comm] using hh
+    have hcard : nonunits.card = 1 := by
+      have hpos : 0 < nonunits.card := Multiset.card_pos.mpr (by
+        intro hzero
+        have : nonunits.sum = 0 := by simp [hzero]
+        omega)
+      omega
+    obtain ⟨a, ha⟩ := Multiset.card_eq_one.mp hcard
+    have hasum : a = 2 := by
+      have hsum_a := congrArg Multiset.sum ha
+      simpa [hnon_sum] using hsum_a.symm
+    have hparts : p.parts = 2 ::ₘ Multiset.replicate (n - 2) 1 := by
+      calc
+        p.parts = nonunits + units := hsplit.symm
+        _ = {a} + units := by rw [ha]
+        _ = {a} + Multiset.replicate units.card 1 := by
+          exact congrArg (fun m => {a} + m) hunit
+        _ = 2 ::ₘ Multiset.replicate (n - 2) 1 := by
+          rw [hasum, hcount, hcountp]
+          simp
+    apply Nat.Partition.ext
+    have htrans : (transpositionClass n).parts = 2 ::ₘ Multiset.replicate (n - 2) 1 := by
+      simp [transpositionClass, hn, Nat.Partition.ofSums, Multiset.mem_replicate]
+    exact hparts.trans htrans.symm
+  · intro hptrans
+    rw [hptrans]
+    simp [transpositionClass, hn, Nat.Partition.ofSums, Multiset.mem_replicate]
 
 private theorem other_degree_lt (s n : ℕ) (hn : 2 ≤ n) (hs : 1 ≤ s)
     (p : Nat.Partition n) (hp₁ : p ≠ identityClass n)
     (hp₂ : p ≠ transpositionClass n) :
     degree s p < degree s (transpositionClass n) := by
-  sorry
+  have hbound := degree_le_from_one_count s p hs
+  have hcountle := one_count_le_two_sub p hn hp₁
+  have hcountlt : p.parts.count 1 < n - 2 := by
+    apply Nat.lt_of_le_of_ne hcountle
+    intro heq
+    exact hp₂ ((one_count_eq_two_sub_iff p hn).mp heq)
+  have hpow : p.parts.count 1 ^ s < (n - 2) ^ s :=
+    Nat.pow_lt_pow_left hcountlt (by omega)
+  have hpowQ : (p.parts.count 1 : ℚ) ^ s < ((n - 2 : ℕ) : ℚ) ^ s := by
+    exact_mod_cast hpow
+  rw [transposition_degree s n hn hs]
+  linarith
 
 theorem result : claim := by
   intro n hn s hs
