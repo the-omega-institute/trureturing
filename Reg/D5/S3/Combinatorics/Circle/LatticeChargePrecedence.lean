@@ -60,10 +60,12 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hold : ∀ r : ℕ, (([0,1].take r).map f).sum ∈ Set.Icc (0 : ℤ) 2 := by
     intro r
-    exact inStrip_prefix (by norm_num [InStrip, f]) r
+    simpa using inStrip_prefix (f := f) (B := 2) (h := 0) (l := [0,1])
+      (by norm_num [InStrip, f]) r
   have hnew : ∀ r : ℕ, (((earWord 2 [0,1] 1).take r).map g).sum ∈ Set.Icc (0 : ℤ) 5 := by
     intro r
-    exact inStrip_prefix (by norm_num [earWord, InStrip, g]) r
+    simpa using inStrip_prefix (f := g) (B := 5) (h := 0) (l := earWord 2 [0,1] 1)
+      (by norm_num [earWord, InStrip, g]) r
   have hh := h 2 [0,1] 1 (by decide) (by decide) f q g 2 2 5 1 2
     (by decide) (by decide)
     (by intro i; fin_cases i <;> norm_num [f])
@@ -76,7 +78,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨⟨2,[0,1]⟩, 0, 1, ?_⟩
-  decide
+  norm_num [actual, realize]
 
 def source_registration : Registration arena (type_of% (@lattice_saturation_suffix_precedence)) where
   actual := actual

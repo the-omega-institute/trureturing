@@ -77,7 +77,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨⟨1, List.finRange 16⟩, 0, 1, ?_⟩
-  norm_num [actual,realize]
+  change (List.finRange 16).idxOf (0 : Fin 16) ≠ (List.finRange 16).idxOf (1 : Fin 16)
+  decide
 
 def source_registration : Registration arena (type_of% (@actualSource_four_gap_lattice_precedence)) where
   actual := actual
