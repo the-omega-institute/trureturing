@@ -19,12 +19,18 @@ Retire this port when this repository's actual pinned Mathlib supplies an equiva
 native finite-ground intersection theorem with the accepted standard axiom closure.
 -/
 
-import Mathlib.Combinatorics.Matroid.Minor.Contract
-import Mathlib.Combinatorics.Matroid.Rank.ENat
-import Mathlib.Tactic.Zify
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.ByContra
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Combinatorics.Matroid.Minor.Contract
+public import Mathlib.Combinatorics.Matroid.Rank.ENat
+public import Mathlib.Tactic.Zify
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.ByContra
+public import Mathlib.Tactic.Linarith
+
+/-! # Finite same-ground matroid intersection -/
+
+@[expose] public section
 
 open Set Matroid
 
@@ -148,12 +154,14 @@ private lemma common_indep_upper_bound [RankFinite M₁] [RankFinite M₂]
     (rank_mono M₂ (sdiff_subset_sdiff_left hI₂.subset_ground))
 
 private lemma exists_common_ind_aux (M₁ M₂ : Matroid α) [M₁.Finite] (hE : M₁.E = M₂.E) :
-    ∃ I X, X ⊆ M₁.E ∧ M₁.Indep I ∧ M₂.Indep I ∧ I.ncard = (M₁.eRk X).toNat + (M₂.eRk (M₂.E \ X)).toNat := by
+    ∃ I X, X ⊆ M₁.E ∧ M₁.Indep I ∧ M₂.Indep I ∧
+      I.ncard = (M₁.eRk X).toNat + (M₂.eRk (M₂.E \ X)).toNat := by
   have _ : M₂.Finite := ⟨hE.symm ▸ M₁.ground_finite⟩
   by_cases hloop : ∀ e ∈ M₁.E, M₁.IsLoop e ∨ M₂.IsLoop e
   · suffices 0 = (M₂.eRk (M₂.E \ M₁.loops)).toNat from
       ⟨∅, M₁.loops, closure_subset_ground _ _, by simpa⟩
-    rw [eq_comm, ENat.toNat_eq_zero, or_iff_left (M₂.isRkFinite_set _).eRk_lt_top.ne, eRk_eq_zero_iff sdiff_subset, sdiff_subset_iff, ← hE]
+    rw [eq_comm, ENat.toNat_eq_zero, or_iff_left (M₂.isRkFinite_set _).eRk_lt_top.ne,
+      eRk_eq_zero_iff sdiff_subset, sdiff_subset_iff, ← hE]
     simpa [subset_def]
   push Not at hloop
   obtain ⟨e, he, he₁, he₂⟩ := hloop
@@ -170,7 +178,8 @@ private lemma exists_common_ind_aux (M₁ M₂ : Matroid α) [M₁.Finite] (hE :
   rw [he₁.contractElem_indep_iff] at hIc₁
   rw [he₂.contractElem_indep_iff] at hIc₂
 
-  simp only [contract_ground, delete_ground, subset_sdiff_singleton_iff] at hXc hXd
+  simp only [contract_ground, delete_ground, subset_sdiff,
+    disjoint_singleton_right] at hXc hXd
 
   by_contra! hcon
   replace hcon :=
@@ -205,7 +214,7 @@ private lemma exists_common_ind_aux (M₁ M₂ : Matroid α) [M₁.Finite] (hE :
   linarith
 termination_by M₁.E.ncard
 
-/-- The finite same-ground matroid intersection certificate and every common-independent cut bound. -/
+/-- A finite same-ground intersection certificate and every common-independent cut bound. -/
 theorem finite_matroid_intersection (E : Set α) (hE : E.Finite) (M₁ M₂ : Matroid α)
     (h₁ : M₁.E = E) (h₂ : M₂.E = E) :
     (∃ I X : Set α, I ⊆ E ∧ X ⊆ E ∧ M₁.Indep I ∧ M₂.Indep I ∧
