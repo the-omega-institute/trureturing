@@ -29,7 +29,7 @@ which need not factor as $\rho_p^{\otimes t}$. The separable strategy of Theorem
 Source: https://arxiv.org/abs/2512.17503v1
 - DOI: https://doi.org/10.48550/arXiv.2512.17503 (the arXiv-issued DataCite DOI; title, author and year from DataCite; the abstract page lists v1 only).
 - URL: https://arxiv.org/abs/2512.17503v1. The e-print member `bias_class_discrimination.tex` has 570 lines and md5 `40312fa46860afbd9a187fe64b700f86`. Locations:
-  - the persistent-memory model, l. 95 and 252–253; the address state, l. 169–174;
+  - the persistent-memory model, l. 95 and 255–256; the address state, l. 169–174;
   - exact-weight classes (Definition, $m\in\{0,\dots,N\}$), l. 244–250;
   - the $t$-copy induced state, l. 397–402;
   - Theorem 5.1 (the count strategy), l. 404–418;
