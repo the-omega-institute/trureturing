@@ -8,6 +8,7 @@
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.CompleteMangoldtLaplace
 import D5.S3.Analytic.ExpRatioCM.Series
+import D5.S3.Analytic.Fourier.PositiveDefinite.Closure
 import D5.S3.Analytic.Interpolation.LogOneSubExpDerivatives
 import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
 import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
@@ -20,8 +21,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 noncomputable section
-open MeasureTheory Set Filter
-open scoped BigOperators Topology
+open MeasureTheory Set Filter Matrix
+open scoped BigOperators Topology ComplexOrder
 open D5.S3.Arith.Robin.CompleteMertensPeak
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 open D5.S3.Analytic.ExpRatioCM.Series
@@ -179,8 +180,7 @@ private lemma log_hasDerivAt {t : ℝ} (ht : 0 < t) :
     (2 * t) hpos).1] at hh
   convert hh.comp t ((hasDerivAt_id t).const_mul 2) using 1
   · rfl
-  · dsimp only [id_eq, mul_one]
-    ring
+  · ring
 
 private lemma hasDerivAt_D1 {t : ℝ} (ht : 0 < t) (ht2 : t < Real.log 2) :
     HasDerivAt D1 (D2 t) t := by
@@ -229,9 +229,8 @@ private lemma weighted_log_limit :
   change 0 < t at ht
   have hne : 1 - Real.exp (-(2 * t)) ≠ 0 :=
     (sub_pos.mpr (Real.exp_lt_one_iff.mpr (by linarith : -(2 * t) < 0))).ne'
-  dsimp
-  field_simp [hne]
-  <;> simp_all only [mul_comm]
+  dsimp only [Function.comp_def]
+  rw [← mul_assoc, div_mul_cancel₀ _ hne]
 
 private lemma D1_atBot : Tendsto D1 (𝓝[>] 0) atBot := by
   have hc : Tendsto (fun t : ℝ => 1 - Real.exp (-(2 * t))) (𝓝[>] 0) (𝓝[>] 0) := by
@@ -304,10 +303,11 @@ private lemma choose_window : ∃ δ : ℝ, 0 < δ ∧ δ < Real.log 2 ∧
     D1_atBot.eventually (eventually_lt_atBot 0)
   have hD2 : ∀ᶠ t in 𝓝[>] (0 : ℝ), 0 < t * D2 t ∧ t * D2 t < 1 :=
     weighted_D2_limit.eventually (Ioo_mem_nhds (by norm_num) (by norm_num))
+  have hlog : ∀ᶠ t : ℝ in 𝓝 0, t < Real.log 2 :=
+    Iio_mem_nhds (Real.log_pos (by norm_num))
   have hwin : ∀ᶠ t in 𝓝[>] (0 : ℝ),
       t < Real.log 2 ∧ 0 < K t ∧ D1 t < 0 ∧ 0 < t * D2 t ∧ t * D2 t < 1 := by
-    filter_upwards [(Iio_mem_nhds (Real.log_pos (by norm_num))).filter_mono
-      nhdsWithin_le_nhds, hK, hD1, hD2] with t ht hkt hd1 hd2
+    filter_upwards [hlog.filter_mono nhdsWithin_le_nhds, hK, hD1, hD2] with t ht hkt hd1 hd2
     exact ⟨ht, hkt, hd1, hd2⟩
   obtain ⟨δ, hδ, hall⟩ := mem_nhdsGT_iff_exists_Ioc_subset.mp hwin
   have hsδ := hall (show δ ∈ Ioc 0 δ from ⟨hδ, le_rfl⟩)
@@ -343,7 +343,10 @@ private lemma zero_endpoint_integral {δ : ℝ} (hδ : 0 < δ) (hδ2 : δ < Real
   have hd (t : ℝ) (ht : t ∈ Ioo 0 δ) :
       HasDerivAt (fun s : ℝ => s * D1 s - K s) (t * D2 t) t := by
     convert ((hasDerivAt_id t).mul (hasDerivAt_D1 ht.1 (ht.2.trans hδ2))).sub
-      (hasDerivAt_K ht.1 (ht.2.trans hδ2)) using 1 <;> dsimp only [Pi.sub_apply, Pi.mul_apply, id_eq] <;> ring
+      (hasDerivAt_K ht.1 (ht.2.trans hδ2)) using 1
+    · rfl
+    · simp only [id_eq]
+      ring
   have hleft : Tendsto (fun t : ℝ => t * D1 t - K t) (𝓝[>] 0) (𝓝 (-K 0)) := by
     simpa using weighted_D1_limit.sub ((K_continuous.tendsto 0).mono_left nhdsWithin_le_nhds)
   have hcont : ContinuousAt (fun t : ℝ => t * D1 t - K t) δ :=
@@ -382,11 +385,12 @@ private lemma triangle_integral {δ u : ℝ} (hδ : 0 < δ) (hδ2 : δ < Real.lo
     (∫ t : ℝ in Ioc 0 δ, max (t - u) 0 * D2 t) =
       (δ - u) * D1 δ - K δ + K u := by
   rcases eq_or_lt_of_le hu with rfl | hu0
-  · rw [← zero_endpoint_integral hδ hδ2 hi]
+  · simp only [sub_zero]
+    rw [← zero_endpoint_integral hδ hδ2 hi]
     apply setIntegral_congr_fun measurableSet_Ioc
     intro t ht
     dsimp only
-    rw [sub_zero, max_eq_left ht.1.le]
+    rw [max_eq_left ht.1.le]
   have hfi := triangle_integrable hu hpos hi
   have hfu : IntervalIntegrable (fun t : ℝ => max (t - u) 0 * D2 t) volume 0 u :=
     (intervalIntegrable_iff_integrableOn_Ioc_of_le hu).mpr
@@ -437,6 +441,171 @@ private lemma actual_positive_representer : ∃ δ r L : ℝ,
   dsimp [L, r]
   field_simp [hD1ne]
   <;> ring
+
+private def intervalVector (s a u : ℝ) : ℂ := (Icc a (a + s)).indicator (fun _ => 1) u
+
+private lemma intervalVector_conj (s a u : ℝ) :
+    star (intervalVector s a u) = intervalVector s a u := by
+  by_cases h : u ∈ Icc a (a + s) <;> simp [intervalVector, h]
+
+private lemma interval_overlap (s a b : ℝ) :
+    Integrable (fun u : ℝ => intervalVector s a u * intervalVector s b u) ∧
+    (∫ u : ℝ, intervalVector s a u * intervalVector s b u) =
+      (max (s - |a - b|) 0 : ℝ) := by
+  have he : (fun u : ℝ => intervalVector s a u * intervalVector s b u) =
+      (Icc (max a b) (min (a + s) (b + s))).indicator (fun _ => (1 : ℂ)) := by
+    ext u
+    rw [← Icc_inter_Icc]
+    by_cases ha : u ∈ Icc a (a + s) <;>
+      by_cases hb : u ∈ Icc b (b + s) <;> simp [intervalVector, ha, hb]
+  rw [he]
+  refine ⟨(integrable_indicator_iff measurableSet_Icc).mpr
+    (integrableOn_const (by simp [Real.volume_Icc])), ?_⟩
+  rw [integral_indicator_const _ measurableSet_Icc, Real.volume_real_Icc,
+    Complex.real_smul, mul_one]
+  congr 2
+  by_cases hab : a ≤ b
+  · rw [min_eq_left (add_le_add_right hab s), max_eq_right hab,
+      abs_of_nonpos (sub_nonpos.mpr hab)]
+    ring
+  · have hba := le_of_not_ge hab
+    rw [min_eq_right (add_le_add_right hba s), max_eq_left hba,
+      abs_of_nonneg (sub_nonneg.mpr hba)]
+    ring
+
+private lemma triangle_quadratic {n : ℕ} (s : ℝ) (x : Fin n → ℝ) (c : Fin n → ℂ) :
+    Integrable (fun u : ℝ => Complex.normSq (∑ i, intervalVector s (x i) u * c i)) ∧
+    (∫ u : ℝ, (Complex.normSq (∑ i, intervalVector s (x i) u * c i) : ℂ)) =
+      star c ⬝ᵥ ((fun i j => ((max (s - |x i - x j|) 0 : ℝ) : ℂ)) *ᵥ c) := by
+  have he (u : ℝ) :
+      (Complex.normSq (∑ i, intervalVector s (x i) u * c i) : ℂ) =
+      ∑ i, ∑ j, star (c i) *
+        (intervalVector s (x i) u * intervalVector s (x j) u) * c j := by
+    rw [Complex.normSq_eq_conj_mul_self]
+    simp only [map_sum, map_mul, starRingEnd_apply, intervalVector_conj]
+    rw [Finset.sum_mul_sum]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    ring
+  have hi (i j : Fin n) : Integrable (fun u : ℝ =>
+      star (c i) * (intervalVector s (x i) u * intervalVector s (x j) u) * c j) :=
+    ((interval_overlap s (x i) (x j)).1.const_mul _).mul_const _
+  have his : Integrable (fun u : ℝ => ∑ i, ∑ j, star (c i) *
+      (intervalVector s (x i) u * intervalVector s (x j) u) * c j) :=
+    integrable_finsetSum _ (fun i _ => integrable_finsetSum _ (fun j _ => hi i j))
+  have hic : Integrable (fun u : ℝ =>
+      (Complex.normSq (∑ i, intervalVector s (x i) u * c i) : ℂ)) :=
+    his.congr (ae_of_all _ (fun u => (he u).symm))
+  refine ⟨?_, ?_⟩
+  · simpa using hic.re
+  · simp_rw [he]
+    rw [integral_finsetSum _ (fun i _ => integrable_finsetSum _ (fun j _ => hi i j))]
+    simp_rw [integral_finsetSum _ (fun j _ => hi _ j), integral_mul_const,
+      integral_const_mul, (interval_overlap s _ _).2]
+    simp only [dotProduct, Matrix.mulVec, Pi.star_apply, Finset.mul_sum, mul_assoc]
+
+private lemma triangle_hermitian {n : ℕ} (s : ℝ) (x : Fin n → ℝ) :
+    Matrix.IsHermitian (fun i j => ((max (s - |x i - x j|) 0 : ℝ) : ℂ)) := by
+  apply Matrix.IsHermitian.ext
+  intro i j
+  simp only [Complex.star_def, Complex.conj_ofReal, abs_sub_comm]
+
+private lemma triangle_posSemidef {n : ℕ} (s : ℝ) (x : Fin n → ℝ) :
+    Matrix.PosSemidef (fun i j => ((max (s - |x i - x j|) 0 : ℝ) : ℂ)) := by
+  apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg (triangle_hermitian s x)
+  intro c
+  rw [← (triangle_quadratic s x c).2, integral_ofReal]
+  exact_mod_cast (integral_nonneg (fun u => Complex.normSq_nonneg _))
+
+private lemma triangle_posDef {n : ℕ} {s : ℝ} (hs : 0 < s) (x : Fin n → ℝ)
+    (hx : Function.Injective x) :
+    Matrix.PosDef (fun i j => ((max (s - |x i - x j|) 0 : ℝ) : ℂ)) := by
+  classical
+  apply Matrix.PosDef.of_dotProduct_mulVec_pos (triangle_hermitian s x)
+  intro c hc
+  have hn : ({i : Fin n | c i ≠ 0} : Set (Fin n)).Nonempty := by
+    by_contra h
+    apply hc
+    funext i
+    by_contra hi
+    exact h ⟨i, hi⟩
+  obtain ⟨i₀, hi₀, hmin⟩ :=
+    Set.exists_min_image ({i : Fin n | c i ≠ 0}) x (Set.toFinite _) hn
+  have hterm (i : Fin n) : ∀ᶠ u in 𝓝[>] (x i₀),
+      intervalVector s (x i) u * c i = if i = i₀ then c i₀ else 0 := by
+    by_cases hi : i = i₀
+    · subst i
+      have hupp : ∀ᶠ u : ℝ in 𝓝 (x i₀), u < x i₀ + s :=
+        Iio_mem_nhds (lt_add_of_pos_right (x i₀) hs)
+      filter_upwards [self_mem_nhdsWithin, hupp.filter_mono nhdsWithin_le_nhds]
+        with u hu hu'
+      rw [if_pos rfl, intervalVector, indicator_of_mem (show u ∈ Icc (x i₀) (x i₀ + s)
+        from ⟨hu.le, hu'.le⟩), one_mul]
+    · by_cases hci : c i = 0
+      · exact Filter.Eventually.of_forall (fun u => by simp [hi, hci])
+      · have hxi : x i₀ < x i := lt_of_le_of_ne (hmin i hci)
+          (fun e => hi (hx e.symm))
+        have hupp : ∀ᶠ u : ℝ in 𝓝 (x i₀), u < x i := Iio_mem_nhds hxi
+        filter_upwards [hupp.filter_mono nhdsWithin_le_nhds] with u hu
+        simp only [if_neg hi, intervalVector,
+          indicator_of_notMem (show u ∉ Icc (x i) (x i + s) from fun h =>
+            (not_lt_of_ge h.1) hu), zero_mul]
+  have hsum : ∀ᶠ u in 𝓝[>] (x i₀), ∑ i, intervalVector s (x i) u * c i = c i₀ := by
+    filter_upwards [Filter.eventually_all.mpr hterm] with u hu
+    simp_rw [hu]
+    simp
+  have hsupport : ∀ᶠ u in 𝓝[>] (x i₀),
+      u ∈ Function.support (fun u : ℝ => Complex.normSq (∑ i, intervalVector s (x i) u * c i)) :=
+    hsum.mono (fun u hu => by
+      change Complex.normSq (∑ i, intervalVector s (x i) u * c i) ≠ 0
+      rw [hu]
+      exact (Complex.normSq_pos.mpr hi₀).ne')
+  obtain ⟨b, hb, hsub⟩ := mem_nhdsGT_iff_exists_Ioc_subset.mp hsupport
+  have hvol : 0 < volume (Ioc (x i₀) b) := by
+    rw [Real.volume_Ioc]
+    exact ENNReal.ofReal_pos.mpr (sub_pos.mpr hb)
+  have hq : 0 < ∫ u : ℝ, Complex.normSq (∑ i, intervalVector s (x i) u * c i) :=
+    (integral_pos_iff_support_of_nonneg (fun u => Complex.normSq_nonneg _)
+      (triangle_quadratic s x c).1).mpr (hvol.trans_le (measure_mono hsub))
+  rw [← (triangle_quadratic s x c).2, integral_ofReal]
+  exact_mod_cast hq
+
+/-- One arithmetic window works for every finite family of distinct real nodes and complex coefficients. -/
+theorem exists_window_posDef : ∃ δ : ℝ, 0 < δ ∧ δ < Real.log 2 ∧
+    ∀ n : ℕ, 1 ≤ n → ∀ x : Fin n → ℝ, Function.Injective x →
+      (∀ i j, |x i - x j| ≤ δ) →
+      Matrix.PosDef (fun i j => (K (x i - x j) : ℂ)) := by
+  obtain ⟨δ, r, L, hδ, hδ2, hr, hL, hpos, hi, hrep⟩ := actual_positive_representer
+  refine ⟨δ, hδ, hδ2, ?_⟩
+  intro n _hn x hx hdiam
+  have hPD : D5.S3.Weil.ZetaLinear.FiniteInversePoissonCriterion.PositiveDefinite
+      (fun t : ℝ => ∫ s : ℝ in Ioc 0 δ,
+        ((max (s - |t|) 0 * D2 s : ℝ) : ℂ)) := by
+    apply D5.S3.Analytic.Fourier.PositiveDefinite.Closure.integral
+    · filter_upwards [ae_restrict_mem measurableSet_Ioc] with s hs
+      intro m y
+      convert (triangle_posSemidef s y).smul (hpos s hs).le using 1
+      ext i j
+      simp only [Pi.smul_apply, smul_eq_mul, Complex.ofReal_mul, abs_sub_comm]
+      ring
+    · intro t
+      exact (triangle_integrable (abs_nonneg t) hpos hi).ofReal
+  have hmix : Matrix.PosSemidef (fun i j =>
+      ((∫ s : ℝ in Ioc 0 δ, max (s - |x i - x j|) 0 * D2 s : ℝ) : ℂ)) := by
+    convert hPD n x using 1
+    ext i j
+    rw [integral_ofReal, abs_sub_comm]
+  have hwide := (triangle_posDef (hδ.trans hL) x hx).smul hr
+  convert hwide.add_posSemidef hmix using 1
+  ext i j
+  rw [(hrep (x i - x j) (hdiam i j)).2]
+  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, Complex.ofReal_add,
+    Complex.ofReal_mul]
+  ring
+
+#print axioms exists_window_posDef
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
 
