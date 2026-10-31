@@ -69,6 +69,8 @@ private theorem actual_nat_joint_iff (a b c d : ℕ)
     exact List.map_congr_left (fun p _ => hv.2 p)
   constructor
   · rintro ⟨sigma,j,hj,hold,hnew⟩
+    change OriginalOrder k A sigma at hold
+    change OriginalOrder (k+1) (2*A) (earWord k sigma j) at hnew
     let l := sigma.map Fin.val
     have hfr : (List.finRange k).map Fin.val = List.range k := by
       apply List.ext_getElem
@@ -81,10 +83,12 @@ private theorem actual_nat_joint_iff (a b c d : ℕ)
       have he : ((l.take n).map f).sum = ((sigma.take n).map (actualSource k A)).sum := by
         rw [hfmap (sigma.take n)]
         simp only [l,List.map_take]
+        rfl
       rw [zero_add,he]
       simpa only [hmod,Set.mem_Icc] using hold.2.2 n
     have hearvalues : (earWord k sigma j).map Fin.val = insertAt k l j := by
       simp [earWord,insertAt,l,List.map_map,Function.comp_def,List.map_take,List.map_drop]
+      rfl
     have hnewstrip : InStrip g N 0 (insertAt k l j) := by
       apply strip_of_prefix
       intro n
@@ -96,6 +100,11 @@ private theorem actual_nat_joint_iff (a b c d : ℕ)
       simpa only [hmod',hhalf,Set.mem_Icc] using hnew.2.2 n
     exact ⟨l,hp,holdstrip,j,hj,hnewstrip⟩
   · rintro ⟨l,hp,hold,j,hj,hnew⟩
+    change l.Perm (List.range k) at hp
+    change j ≤ k at hj
+    change InStrip (fun i => centered N ((2 : ℤ)^i * base a b c d 0)) (N/2) 0 l at hold
+    change InStrip (fun i => centered (2*N+1)
+      ((2 : ℤ)^i * (2 * base a b c d 0))) N 0 (insertAt k l j) at hnew
     have hk : 0 < k := by dsimp [k,size]; omega
     let pre := l.take j
     let post := l.drop j
@@ -112,12 +121,12 @@ private theorem actual_nat_joint_iff (a b c d : ℕ)
       exact hreorder.trans (by simpa [List.range_succ] using hp.append_right [k])
     have hold' : OriginalOrder k A (l.map (label k hk)) := by
       apply lift_order k A hk l hp
-      · simpa only [hmod,hseed,oldValue,f,N] using hold
+      · simpa only [hmod,hseed] using hold
       · exact ThreeNegativeEqualOuterSourceBridge.source_zero k A (by dsimp [k,size]; omega)
     have hnew' : OriginalOrder (k+1) (2*A)
         ((pre ++ k :: post).map (label (k+1) (by omega))) := by
       apply lift_order (k+1) (2*A) (by omega) (pre ++ k :: post) hp'
-      · simpa only [hmod',hseed',hhalf,newValue,g,N,insertAt,pre,post] using hnew
+      · simpa only [hmod',hseed',hhalf,insertAt,pre,post] using hnew
       · exact ThreeNegativeEqualOuterSourceBridge.source_zero (k+1) (2*A)
           (by dsimp [k,size]; omega)
     refine ⟨l.map (label k hk),j,hj,hold',?_⟩
