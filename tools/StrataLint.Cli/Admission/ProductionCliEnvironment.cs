@@ -406,13 +406,13 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             switch (target)
             {
                 case 0:
-                    protectedBase = arguments[index + 1];
+                    protectedBase = arguments[index];
                     break;
                 case 1:
-                    candidateLeanReport = arguments[index + 1];
+                    candidateLeanReport = arguments[index];
                     break;
                 case 2:
-                    scribePaths = arguments[index + 1];
+                    scribePaths = arguments[index];
                     break;
             }
         }

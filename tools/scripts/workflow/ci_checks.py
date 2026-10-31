@@ -117,9 +117,14 @@ def current_phase(phase, data, plan, base, paths):
             if plan["theory"]:
                 return execute("check-delta", ["dotnet", CLI, "check-delta",
                                   "--artifact-capacity", "--protected-base", base], delta=True)
+            if not plan["delta"]:
+                capacity = execute("artifact-capacity", ["dotnet", CLI, "check-source",
+                                   "--artifact-capacity", "--protected-base", base])
+                if capacity:
+                    return capacity
+                return execute("source", ["dotnet", CLI, "check-source", "--current"])
             command = ["dotnet", CLI, "check-source", "--current", "--artifact-capacity"]
-            if plan["delta"]:
-                command += ["--protected-base", base]
+            command += ["--protected-base", base]
             return execute("source", command)
         if plan["theory"]:
             return current_phase("check-delta", data, plan, base, paths)

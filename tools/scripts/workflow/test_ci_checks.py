@@ -221,6 +221,24 @@ class CheckTests(unittest.TestCase):
         self.assertIn("--artifact-capacity", command)
         self.assertIn("--protected-base", command)
 
+    def test_source_keeps_capacity_preparation_separate_when_current_has_no_delta(self):
+        data, _ = contract.load(ROOT)
+        plan = contract.selection(data, ["Problems/fixture.md"], "pull-request")
+        self.assertTrue(plan["capacity"])
+        self.assertTrue(plan["hits"]["current"])
+        self.assertFalse(plan["delta"])
+        with patch.object(checks, "execute", side_effect=[0, 0]) as execute:
+            self.assertEqual(checks.current_phase("source", data, plan, "a" * 40, Path("changed")), 0)
+        self.assertEqual(execute.call_count, 2)
+        capacity = execute.call_args_list[0].args[1]
+        source = execute.call_args_list[1].args[1]
+        self.assertIn("--artifact-capacity", capacity)
+        self.assertIn("--protected-base", capacity)
+        self.assertEqual(source[:3], ["dotnet", checks.CLI, "check-source"])
+        self.assertIn("--current", source)
+        self.assertNotIn("--artifact-capacity", source)
+        self.assertNotIn("--protected-base", source)
+
     def test_source_rejection_blocks_every_guarded_launch_in_executable_local_adapter(self):
         result, calls, plan = self.local_spies(source=1)
         self.assertEqual(1, result.returncode, result.stdout + result.stderr)

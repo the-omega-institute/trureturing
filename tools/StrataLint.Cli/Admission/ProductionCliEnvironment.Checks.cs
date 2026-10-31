@@ -30,6 +30,16 @@ internal sealed partial class ProductionCliEnvironment
                 () => AdmissionRepositoryInputs.ReadBaseline(repository, prepared.Revision));
             if (prepared is not null)
                 raw = AdmissionRepositoryInputs.ReadDeltaInputs(repository, raw, baselineRaw!, prepared.Changes);
+            if (options.ArtifactCapacity)
+            {
+                var capacityCurrent = timing.Measure("snapshot-load", () => Decode(raw));
+                var capacity = timing.Measure("artifact-capacity", () => RuleCatalog.Default.ExecuteArtifactCapacity(
+                    capacityCurrent, prepared!.Changes));
+                if (capacity is RuleExecutionOutcome.InfrastructureFailure
+                    || capacity is RuleExecutionOutcome.Completed completed
+                    && completed.Capability.Diagnostics.Any(static diagnostic => diagnostic.AdmissionEffect is AdmissionEffect.Block))
+                    return RenderStage(capacity, planeObservations);
+            }
             var observedPlane = ImmutableArray<Diagnostic>.Empty;
             var planeFailure = prepared is null ? null
                 : timing.Measure("admission-plane", () => EvaluateAdmissionPlane(raw, baselineRaw!, prepared.Changes, out observedPlane));
@@ -38,16 +48,6 @@ internal sealed partial class ProductionCliEnvironment
                 return new(2, RenderPlaneObservations(planeObservations), planeFailure.Message + "\n");
 
             var current = timing.Measure("snapshot-load", () => Decode(raw));
-            if (options.ArtifactCapacity)
-            {
-                var capacity = timing.Measure("artifact-capacity", () => RuleCatalog.Default.ExecuteArtifactCapacity(
-                    current, prepared!.Changes));
-                if (capacity is RuleExecutionOutcome.InfrastructureFailure failure)
-                    return RenderStage(capacity, planeObservations);
-                if (capacity is RuleExecutionOutcome.Completed completed
-                    && completed.Capability.Diagnostics.Any(static diagnostic => diagnostic.AdmissionEffect is AdmissionEffect.Block))
-                    return RenderStage(capacity, planeObservations);
-            }
             var report = options.CandidateLeanReport is null ? null
                 : timing.Measure("lean-report-load", () => RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, current, validateMaterials: true));
             var policy = timing.Measure("policy-load", () => RepositoryPolicyLoader.Load(current) switch

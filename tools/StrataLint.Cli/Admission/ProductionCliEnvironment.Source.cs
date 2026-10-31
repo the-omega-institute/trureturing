@@ -41,9 +41,6 @@ internal sealed partial class ProductionCliEnvironment
             if (prepared is not null)
             {
                 raw = AdmissionRepositoryInputs.ReadDeltaInputs(repository, raw, baselineRaw!, prepared.Changes);
-                var failure = EvaluateAdmissionPlane(raw, baselineRaw!, prepared.Changes, out observations);
-                if (failure is not null)
-                    return new(2, RenderPlaneObservations(observations), failure.Message + "\n");
             }
             if (capacityRequested)
             {
@@ -54,10 +51,14 @@ internal sealed partial class ProductionCliEnvironment
                 if (capacity is RuleExecutionOutcome.Completed completed
                     && completed.Capability.Diagnostics.Any(static diagnostic => diagnostic.AdmissionEffect is AdmissionEffect.Block))
                     return RenderStage(capacity, observations);
+                if (!currentRequested)
+                    return RenderStage(capacity, observations);
             }
-            if (!currentRequested)
+            if (prepared is not null && currentRequested)
             {
-                throw new InvalidOperationException("artifact capacity requires a protected base");
+                var failure = EvaluateAdmissionPlane(raw, baselineRaw!, prepared.Changes, out observations);
+                if (failure is not null)
+                    return new(2, RenderPlaneObservations(observations), failure.Message + "\n");
             }
             var current = Decode(raw);
             var policy = RepositoryPolicyLoader.Load(current) switch
