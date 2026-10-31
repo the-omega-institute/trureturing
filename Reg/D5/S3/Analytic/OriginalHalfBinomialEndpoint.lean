@@ -106,7 +106,8 @@ namespace Nome
 def arena : Arena where
   signature := signature
   Law R := Tendsto (fun r : ℝ =>
-    Real.exp (-Real.pi * R.readout () () (1 - r) / R.readout () () r) / r)
+    Real.exp (-Real.pi * (OriginalHalfBinomialPeriod.period ((1 - r : ℝ) : ℂ)).re /
+      R.readout () () r) / r)
     (𝓝[>] 0) (𝓝 (1 / 16))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -147,11 +148,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["fn", "fn", "arg", "body", "fn", "arg", "arg", "fn", "arg", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg", "arg", "arg"]
-      booleanPredicate := false }, {
       path := #["fn", "fn", "arg", "body", "fn", "arg", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
