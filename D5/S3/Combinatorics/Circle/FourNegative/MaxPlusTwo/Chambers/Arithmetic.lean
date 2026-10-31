@@ -28,7 +28,9 @@ private theorem ceilpos_bounds (n d : ℤ) (hd : 0 < d) :
   change n ≤ d*(q.toNat:ℤ) ∧ (0<q.toNat → d*((q.toNat:ℤ)-1)<n)
   by_cases hq : 0 ≤ q
   · rw [Int.toNat_of_nonneg hq]
-    constructor <;> intro <;> dsimp [q] at * <;> nlinarith
+    constructor
+    · dsimp [q] at *; nlinarith
+    · intro _; dsimp [q] at *; nlinarith
   · have hz : q.toNat=0 := Int.toNat_eq_zero.mpr (by omega)
     rw [hz]
     simp only [Nat.cast_zero, mul_zero, Nat.lt_irrefl, false_implies, and_true]

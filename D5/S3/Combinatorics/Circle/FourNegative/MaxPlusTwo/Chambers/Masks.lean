@@ -68,4 +68,26 @@ private theorem labels_split (len off outer inner : ℕ)
     have hout:=hsub e he hb'
     simpa [Nat.testBit_xor,hout,hb'] using hb
 
+private theorem labels_full (len off : ℕ) :
+    labels len off (2^len-1)=List.range' off len := by
+  have hf : (List.range len).filter (fun i => (2^len-1).testBit i)=List.range len := by
+    apply List.filter_eq_self.mpr
+    intro i hi
+    simp [Nat.testBit_two_pow_sub_one,List.mem_range.mp hi]
+  rw [labels,hf,List.range_eq_range']
+  simpa only [Nat.add_zero] using (List.map_add_range' (a := off) 0 len 1)
+
+private theorem labels_nested_four (len off u1 u2 u3 : ℕ)
+    (h12 : ∀ e<len, u2.testBit e=true → u1.testBit e=true)
+    (h23 : ∀ e<len, u3.testBit e=true → u2.testBit e=true) :
+    (labels len off ((2^len-1) ^^^ u1) ++ labels len off (u1 ^^^ u2) ++
+      labels len off (u2 ^^^ u3) ++ labels len off u3).Perm (List.range' off len) := by
+  have h1 := labels_split len off (2^len-1) u1
+    (by intro e he _; simp [Nat.testBit_two_pow_sub_one,he])
+  have h2 := labels_split len off u1 u2 h12
+  have h3 := labels_split len off u2 u3 h23
+  have hp := (h3.append_left (labels len off (u1 ^^^ u2))).trans h2
+  have hp' := (hp.append_left (labels len off ((2^len-1) ^^^ u1))).trans h1
+  simpa only [List.append_assoc,labels_full] using hp'
+
 end D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
