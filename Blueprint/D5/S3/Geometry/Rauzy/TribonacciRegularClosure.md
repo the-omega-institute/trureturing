@@ -4,7 +4,19 @@
 
 The original Tribonacci Rauzy fractal is the closure of its interior under the two characteristic-root hypotheses.
 
-**Theorem 1.1 (The actual Rauzy closure is regular closed).**
+**Theorem 1.1 (Exact three-map cover).**
+
+Lean statement: `D5/S3/Geometry/Rauzy/TribonacciRegularClosure.rauzyFractal_prefix_cover`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Rauzy/TribonacciRegularClosure.rauzyFractal_prefix_cover` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The existing name split equivalence reconstructs the three initial blocks through the coordinate identity for adjoining a Boolean digit. Lengths zero, one and two are handled directly by 0, 1, z and 1+z. The finite window is covered in reverse, and compact closed affine images extend the cover to the Rauzy closure. Thus every point in the fractal is the image of another point under one of the three prefix maps. Together with nonempty interior, this equality implies regular closure.
+
+**Theorem 1.2 (The actual Rauzy closure is regular closed).**
 
 Lean statement: `D5/S3/Geometry/Rauzy/TribonacciRegularClosure.rauzyFractal_closure_interior`
 
@@ -19,6 +31,7 @@ Let z be a root of X^3 - X^2 - X - 1 distinct from the real Tribonacci constant 
 ## References
 
 - Truth anchor: `D5/S3/Geometry/Rauzy/TribonacciRegularClosure.rauzyFractal_closure_interior`
+- Truth anchor: `D5/S3/Geometry/Rauzy/TribonacciRegularClosure.rauzyFractal_prefix_cover`
 - Dependency: [D5/S0/Tower/Tribonacci/RauzyFractal](../../../S0/Tower/Tribonacci/RauzyFractal.md)
 - Dependency: [D5/S3/Geometry/Rauzy/TribonacciInterior](TribonacciInterior.md)
 - Dependency: [D5/S3/Topology/ContractingCoverRegularClosure](../../Topology/ContractingCoverRegularClosure.md)

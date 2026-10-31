@@ -4,7 +4,7 @@
 
 The finite Tribonacci internal window has a compact Rauzy closure with the three admissible prefix contractions.
 
-The construction starts from the existing bounded internal window at a non-Perron Tribonacci root. It proves nonemptiness, compactness, an explicit closed-ball bound, and exact self-coverage of the closure under the 0, 10, and 110 prefix maps.
+The construction starts from the existing bounded internal window at a non-Perron Tribonacci root. It proves nonemptiness, compactness, an explicit closed-ball bound, and invariance of the closure under the 0, 10, and 110 prefix maps. Exact attractor equality is left open for a later unit.
 
 **Definition 1.1 (Rauzy closure).**
 
@@ -66,23 +66,10 @@ Lean statement: `D5/S0/Tower/Tribonacci/RauzyFractal.rauzyFractal_prefix_invaria
 
 Admissibility transport is proved for each prefix, and continuity transports the inclusions through closure.
 
-**Theorem 1.6 (Exact three-map cover).**
-
-Lean statement: `D5/S0/Tower/Tribonacci/RauzyFractal.rauzyFractal_prefix_cover`
-
-*Proof.* Machine-checked in Lean as `D5/S0/Tower/Tribonacci/RauzyFractal.rauzyFractal_prefix_cover` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The existing name split equivalence reconstructs the three initial blocks through the coordinate identity for adjoining a Boolean digit. Lengths zero, one and two are handled directly by 0, 1, z and 1+z. The finite window is covered in reverse, and compact closed affine images extend the cover to the Rauzy closure. Thus every point in the fractal is the image of another point under one of the three prefix maps. Together with nonempty interior, this equality implies regular closure.
-
 ## References
 
 - Truth anchor: `D5/S0/Tower/Tribonacci/RauzyFractal.rauzyFractal`
 - Truth anchor: `D5/S0/Tower/Tribonacci/RauzyFractal.rauzyFractal_isCompact`
-- Truth anchor: `D5/S0/Tower/Tribonacci/RauzyFractal.rauzyFractal_prefix_cover`
 - Truth anchor: `D5/S0/Tower/Tribonacci/RauzyFractal.rauzyFractal_prefix_invariant`
 - Truth anchor: `D5/S0/Tower/Tribonacci/RauzyFractal.rauzyFractal_subset_closedBall`
 - Truth anchor: `D5/S0/Tower/Tribonacci/RauzyFractal.zeroPrefixMap`
