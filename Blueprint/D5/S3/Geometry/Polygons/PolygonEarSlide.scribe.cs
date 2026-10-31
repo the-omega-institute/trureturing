@@ -20,7 +20,7 @@ internal sealed class PolygonEarSlideDocument : IScribeDocumentDefinition
             Node("IsSegment", "Segments", Scope(All("e", Chord, IffF(C("IsSegment", X("e")), Not(C("IsDiag", X("e")))))),
                 "A segment has distinct endpoints in the symmetric square.", DescribeRole.Definition),
             Node("IsSide", "Boundary sides", Scope(All("e", Chord, IffF(C("IsSide", X("e")), ExistsF("i", Vertex, EqF(X("e"), Pair(X("i"), AddF(X("i"), N(1)))))))),
-                "An unordered boundary side joins successive cyclic vertices.", DescribeRole.Definition),
+                "An unordered boundary side joins successive cyclic vertices. symPair denotes the unordered pair s(a,b).", DescribeRole.Definition),
             Node("IsDiagonal", "Internal diagonals", Scope(All("e", Chord, IffF(C("IsDiagonal", X("e")), AndF(C("IsSegment", X("e")), Not(C("IsSide", X("e"))))))),
                 "Internal diagonals are segments that are not boundary sides.", DescribeRole.Definition),
             Node("Cross", "Actual cyclic crossing", Scope(All("e", Chord, All("f", Chord,
@@ -87,7 +87,7 @@ internal sealed class PolygonEarSlideDocument : IScribeDocumentDefinition
             Node("condition_fibre_equiv", "Normalized complete conditioned fibre equivalence", Equivalence(false),
                 "J lies in E_K(P union Q), omits 0 and contains 1,2; R lies in J with 1,2,3 erased. All forced and forbidden conditions are preserved. No cardinality, P/Q disjointness or compatibility premise is needed for this local equivalence."),
             Node("condition_fibre_equiv_at", "Complete fibre equivalence at every cyclic origin", Equivalence(true),
-                "Conjugation by cyclic translation includes every origin a, the cyclic seam, and empty fibres. The cardinality theorem in PolygonEarSlideCardinality consumes this equivalence on its live proof path.")), []));
+                "Conjugation by cyclic translation includes every origin a, the cyclic seam, and empty fibres. The cardinality theorem in PolygonEarSlideCardinality uses this equivalence to count the complete fibres.")), []));
 
     private static Formula MapFormula(bool forward) => Scope(All("T", Chords,
         EqF(C(forward ? "phi" : "psi", X("T")), Insert(Ear(forward ? 1 : 2),
@@ -123,7 +123,8 @@ internal static class PolygonEarSlideFormula
     internal static Formula ExistsF(string v, Formula domain, Formula body) => new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(v), domain, body);
     internal static Formula Scope(Formula body) => All("n", X("Nat"), Seq(OpenBracket, C("NeZero", X("n")), CloseBracket, Comma, Sp, body));
     internal static Formula SetsAll(Formula body, params string[] names) { for (int i = names.Length - 1; i >= 0; i--) body = All(names[i], Sets, body); return body; }
-    internal static Formula R(Formula a, Formula op, Formula b) => Seq(Open, a, Sp, op, Sp, b, Close);
+    private static Formula Operand(Formula f) => f is Formula.Bind ? Seq(Open, f, Close) : f;
+    internal static Formula R(Formula a, Formula op, Formula b) => Seq(Open, Operand(a), Sp, op, Sp, Operand(b), Close);
     internal static Formula EqF(Formula a, Formula b) => R(a, F.Eq, b);
     internal static Formula IffF(Formula a, Formula b) => R(a, F.Iff, b);
     internal static Formula AndF(Formula a, Formula b) => R(a, Land, b);
