@@ -23,6 +23,9 @@ from mirror_fixture import MirrorCases
 from cleanup_anchor_cases import CleanupAnchorCases
 from detached_recovery_cases import DetachedRecoveryCases
 from lock_recovery_cases import LockRecoveryCases
+from lake_nested_git_cases import LakeNestedGitCases
+from lake_dependency_content_cases import LakeDependencyContentCases
+from lake_dependency_allowlist_cases import LakeDependencyAllowlistCases
 from scoped_dotnet_cases import ScopedDotnetCases
 from qualification_cases import QualificationCases
 from git_scope_cases import GitScopeCases
@@ -34,7 +37,7 @@ import worktree_protocol as protocol
 import worktree_preservation as preservation
 
 
-class ProtocolTests(ProtocolTailCases, GitScopeCases, QualificationCases, ScopedDotnetCases, IdlePoolCases, LockRecoveryCases, DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
+class ProtocolTests(ProtocolTailCases, GitScopeCases, QualificationCases, ScopedDotnetCases, IdlePoolCases, LockRecoveryCases, LakeNestedGitCases, LakeDependencyContentCases, LakeDependencyAllowlistCases, DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
     source_root = ROOT
 
     def setUp(self):
@@ -965,8 +968,11 @@ if __name__ == "__main__":
         selected = None
         if len(sys.argv) == 3 and sys.argv[1] == "--part":
             part = int(sys.argv[2])
+            # These mixins run through explicit InlineData probes.
+            independently_run = (LockRecoveryCases, LakeNestedGitCases,
+                                 LakeDependencyContentCases, LakeDependencyAllowlistCases)
             names = [name for name in unittest.defaultTestLoader.getTestCaseNames(ProtocolTests)
-                     if name not in LockRecoveryCases.__dict__]
+                     if not any(name in cases.__dict__ for cases in independently_run)]
             selected = ["ProtocolTests." + name for name in names[part::2]]
             sys.argv[1:] = []
         unittest.main(verbosity=2, defaultTest=selected)
