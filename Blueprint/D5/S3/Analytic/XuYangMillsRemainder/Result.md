@@ -466,7 +466,19 @@ $$\forall t \in \mathbb {R},\; \operatorname {HasDerivAt}\left(\operatorname {q1
 
 A second product-rule calculation gives q2.
 
-**Theorem 1.39 (kernelIdentity).**
+**Theorem 1.39 (kernelIntegralIdentities).**
+
+$$\forall t \in \mathbb {R},\; \left(\operatorname {J}\left(v: \mathbb {R}\mapsto 1 - \frac{\left(v\right)^{2} \cdot \left(t\right)^{2}}{2}, t\right) = \operatorname {Real.exp}\left(-\frac{\left(t\right)^{2}}{2}\right)\right) \land \left(\operatorname {J}\left(v: \mathbb {R}\mapsto 1 - 3 \cdot \left(v\right)^{2}, t\right) = \frac{\left(t\right)^{2}}{2} \cdot \operatorname {J}\left(v: \mathbb {R}\mapsto \left(v\right)^{2} \cdot \left(1 - \left(v\right)^{2}\right), t\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/Result.kernelIntegralIdentities` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The two Gaussian integral identities hold for every real t. They follow by integrating the derivatives of v times the Gaussian and v times one minus v squared times the Gaussian. They supply both the original kernel identity and the general-parameter native kernel.
+
+**Theorem 1.40 (kernelIdentity).**
 
 $$\forall t \in \mathbb {R},\; \operatorname {q2}\left(t\right) - \operatorname {q0}\left(t\right) + 3 \cdot t \cdot \operatorname {Real.exp}\left(-\frac{\left(t\right)^{2}}{2}\right) = \operatorname {K}\left(t\right)$$
 
@@ -478,7 +490,7 @@ $$\forall t \in \mathbb {R},\; \operatorname {q2}\left(t\right) - \operatorname 
 
 Two applications of the fundamental theorem in the unit-interval variable remove the lower-degree Gaussian terms, leaving the nonnegative weight v-squared times (1-v-squared).
 
-**Theorem 1.40 (JBound).**
+**Theorem 1.41 (JBound).**
 
 $$\forall p \in \mathbb {R} \to \mathbb {R},\; \left(\operatorname {Continuous}\left(p\right)\right) \Rightarrow \left(\exists C \in \mathbb {R},\; \left(0 \le C\right) \land \left(\forall t \in \mathbb {R},\; \left\lVert \operatorname {J}\left(p, t\right) \right\rVert \le C\right)\right)$$
 
@@ -490,7 +502,7 @@ $$\forall p \in \mathbb {R} \to \mathbb {R},\; \left(\operatorname {Continuous}\
 
 The Gaussian factor is at most one, so compact boundedness of p gives a uniform bound on J.
 
-**Theorem 1.41 (JMomentIntegrable).**
+**Theorem 1.42 (JMomentIntegrable).**
 
 $$\forall p \in \mathbb {R} \to \mathbb {R},\; \left(\operatorname {Continuous}\left(p\right)\right) \Rightarrow \left(\forall m \in \mathbb {N},\; \forall x \in \mathbb {R},\; \left(0 < x\right) \Rightarrow \left(\operatorname {MeasureTheory.IntegrableOn}\left(t: \mathbb {R}\mapsto \left(t\right)^{m} \cdot \operatorname {Real.exp}\left(-\left(x \cdot t\right)\right) \cdot \operatorname {J}\left(p, t\right), \operatorname {Set.Ioi}\left(0\right)\right)\right)\right)$$
 
@@ -502,7 +514,7 @@ $$\forall p \in \mathbb {R} \to \mathbb {R},\; \left(\operatorname {Continuous}\
 
 The uniform bound on J reduces integrability to polynomial exponential moments.
 
-**Theorem 1.42 (JMomentTendsto).**
+**Theorem 1.43 (JMomentTendsto).**
 
 $$\forall p \in \mathbb {R} \to \mathbb {R},\; \left(\operatorname {Continuous}\left(p\right)\right) \Rightarrow \left(\forall m \in \mathbb {N},\; \forall x \in \mathbb {R},\; \left(0 < x\right) \Rightarrow \left(\operatorname {Filter.Tendsto}\left(t: \mathbb {R}\mapsto \left(t\right)^{m} \cdot \operatorname {Real.exp}\left(-\left(x \cdot t\right)\right) \cdot \operatorname {J}\left(p, t\right), \operatorname {Filter.atTop}, \operatorname {nhds}\left(0\right)\right)\right)\right)$$
 
@@ -514,7 +526,7 @@ $$\forall p \in \mathbb {R} \to \mathbb {R},\; \left(\operatorname {Continuous}\
 
 The polynomial exponential envelope tends to zero and controls all integration-by-parts boundary terms.
 
-**Theorem 1.43 (laplaceIBP).**
+**Theorem 1.44 (laplaceIBP).**
 
 $$\forall f \in \mathbb {R} \to \mathbb {R},\; \forall g \in \mathbb {R} \to \mathbb {R},\; \forall x \in \mathbb {R},\; \left(\forall t \in \mathbb {R},\; \operatorname {HasDerivAt}\left(f, \operatorname {g}\left(t\right), t\right)\right) \Rightarrow \left(\left(\operatorname {MeasureTheory.IntegrableOn}\left(t: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(x \cdot t\right)\right) \cdot \operatorname {f}\left(t\right), \operatorname {Set.Ioi}\left(0\right)\right)\right) \Rightarrow \left(\left(\operatorname {MeasureTheory.IntegrableOn}\left(t: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(x \cdot t\right)\right) \cdot \operatorname {g}\left(t\right), \operatorname {Set.Ioi}\left(0\right)\right)\right) \Rightarrow \left(\left(\operatorname {Filter.Tendsto}\left(t: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(x \cdot t\right)\right) \cdot \operatorname {f}\left(t\right), \operatorname {Filter.atTop}, \operatorname {nhds}\left(0\right)\right)\right) \Rightarrow \left(\operatorname {MeasureTheory.integral}\left(\operatorname {Measure.restrict}\left(\operatorname {volume}, \operatorname {Set.Ioi}\left(0\right)\right), t: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(x \cdot t\right)\right) \cdot \operatorname {g}\left(t\right)\right) = x \cdot \operatorname {MeasureTheory.integral}\left(\operatorname {Measure.restrict}\left(\operatorname {volume}, \operatorname {Set.Ioi}\left(0\right)\right), t: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(x \cdot t\right)\right) \cdot \operatorname {f}\left(t\right)\right) - \operatorname {f}\left(0\right)\right)\right)\right)\right)$$
 
@@ -526,7 +538,19 @@ $$\forall f \in \mathbb {R} \to \mathbb {R},\; \forall g \in \mathbb {R} \to \ma
 
 The fundamental theorem on the positive ray gives integration by parts when the weighted function and derivative are integrable and the infinite boundary vanishes.
 
-**Theorem 1.44 (kernelLaplace).**
+**Theorem 1.45 (gaussianLaplaceDerivative).**
+
+$$\forall x \in \mathbb {R},\; \left(0 < x\right) \Rightarrow \left(\left(\operatorname {MeasureTheory.IntegrableOn}\left(t: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(x \cdot t\right)\right) \cdot \left(-t \cdot \operatorname {Real.exp}\left(-\frac{\left(t\right)^{2}}{2}\right)\right), \operatorname {Set.Ioi}\left(0\right)\right)\right) \land \left(\operatorname {MeasureTheory.integral}\left(\operatorname {Measure.restrict}\left(\operatorname {volume}, \operatorname {Set.Ioi}\left(0\right)\right), t: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(x \cdot t\right)\right) \cdot \left(-t \cdot \operatorname {Real.exp}\left(-\frac{\left(t\right)^{2}}{2}\right)\right)\right) = x \cdot \operatorname {MeasureTheory.integral}\left(\operatorname {Measure.restrict}\left(\operatorname {volume}, \operatorname {Set.Ioi}\left(0\right)\right), t: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(x \cdot t\right)\right) \cdot \operatorname {Real.exp}\left(-\frac{\left(t\right)^{2}}{2}\right)\right) - 1\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/Result.gaussianLaplaceDerivative` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The tilted Gaussian derivative is integrable for every positive rate. Integration by parts relates its integral to the Gaussian Laplace transform, with the unit endpoint term at zero.
+
+**Theorem 1.46 (kernelLaplace).**
 
 $$\forall x \in \mathbb {R},\; \left(0 < x\right) \Rightarrow \left(\forall r \in \mathbb {R},\; \left(r = \operatorname {MeasureTheory.integral}\left(\operatorname {Measure.restrict}\left(\operatorname {volume}, \operatorname {Set.Ioi}\left(0\right)\right), t: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(x \cdot t\right)\right) \cdot \operatorname {Real.exp}\left(-\frac{\left(t\right)^{2}}{2}\right)\right)\right) \Rightarrow \left(\left(\left(r\right)^{2} = \operatorname {MeasureTheory.integral}\left(\operatorname {Measure.restrict}\left(\operatorname {volume}, \operatorname {Set.Ioi}\left(0\right)\right), t: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(x \cdot t\right)\right) \cdot \operatorname {q0}\left(t\right)\right)\right) \Rightarrow \left(\left(\left(x\right)^{2} - 1\right) \cdot \left(r\right)^{2} - 3 \cdot x \cdot r + 2 = \operatorname {MeasureTheory.integral}\left(\operatorname {Measure.restrict}\left(\operatorname {volume}, \operatorname {Set.Ioi}\left(0\right)\right), t: \mathbb {R}\mapsto \operatorname {Real.exp}\left(-\left(x \cdot t\right)\right) \cdot \operatorname {K}\left(t\right)\right)\right)\right)\right)$$
 
@@ -538,7 +562,7 @@ $$\forall x \in \mathbb {R},\; \left(0 < x\right) \Rightarrow \left(\forall r \i
 
 Integrating by parts twice transfers x-squared from the Laplace transform to q2. The Gaussian derivative accounts for the linear Mills term, and the kernel identity yields K.
 
-**Definition 1.45 (expRemainder).**
+**Definition 1.47 (expRemainder).**
 
 $$\forall r \in \mathbb {N},\; \forall v \in \mathbb {R},\; \operatorname {expRemainder}\left(r, v\right) = \left(-1\right)^{r} \cdot \left(\operatorname {D5.S3.Analytic.ExpRemainderDifferences.R}\left(r, -v\right) + \frac{\left(-v\right)^{r}}{\operatorname {Nat.factorial}\left(r\right)}\right)$$
 
@@ -550,7 +574,7 @@ $$\forall r \in \mathbb {N},\; \forall v \in \mathbb {R},\; \operatorname {expRe
 
 The exponential remainder R through degree r is evaluated at -v and its top Taylor monomial is restored, then multiplied by the alternating sign. This gives the signed remainder after r terms.
 
-**Theorem 1.46 (expRemainder eq).**
+**Theorem 1.48 (expRemainder eq).**
 
 $$\forall r \in \mathbb {N},\; \forall v \in \mathbb {R},\; \operatorname {expRemainder}\left(r, v\right) = \left(-1\right)^{r} \cdot \left(\operatorname {Real.exp}\left(-v\right) - \sum_{j \in \operatorname {Finset.range}\left(r\right)} \left(\frac{\left(-v\right)^{j}}{\operatorname {Nat.factorial}\left(j\right)}\right)\right)$$
 
@@ -562,7 +586,7 @@ $$\forall r \in \mathbb {N},\; \forall v \in \mathbb {R},\; \operatorname {expRe
 
 Removing the last term from the degree-r Taylor sum gives the finite-remainder expression for every r, including zero, when the sum is empty and the remainder equals exp(-v).
 
-**Theorem 1.47 (expRemainderBounds).**
+**Theorem 1.49 (expRemainderBounds).**
 
 $$\forall r \in \mathbb {N},\; \forall v \in \mathbb {R},\; \left(0 \le v\right) \Rightarrow \left(\left(0 \le \operatorname {expRemainder}\left(r, v\right)\right) \land \left(\operatorname {expRemainder}\left(r, v\right) \le \frac{\left(v\right)^{r}}{\operatorname {Nat.factorial}\left(r\right)}\right)\right)$$
 
@@ -574,7 +598,7 @@ $$\forall r \in \mathbb {N},\; \forall v \in \mathbb {R},\; \left(0 \le v\right)
 
 Taylor’s theorem with a Lagrange remainder gives positivity and the polynomial upper bound. The order-zero case uses exp(-v) between zero and one.
 
-**Theorem 1.48 (expRemainderContinuous).**
+**Theorem 1.50 (expRemainderContinuous).**
 
 $$\forall r \in \mathbb {N},\; \operatorname {Continuous}\left(\operatorname {expRemainder}\left(r\right)\right)$$
 
@@ -586,7 +610,7 @@ $$\forall r \in \mathbb {N},\; \operatorname {Continuous}\left(\operatorname {ex
 
 The finite sum and exponential are continuous.
 
-**Theorem 1.49 (expRemainderRec).**
+**Theorem 1.51 (expRemainderRec).**
 
 $$\forall r \in \mathbb {N},\; \forall v \in \mathbb {R},\; \operatorname {expRemainder}\left(r + 1, v\right) = \frac{\left(v\right)^{r}}{\operatorname {Nat.factorial}\left(r\right)} - \operatorname {expRemainder}\left(r, v\right)$$
 
@@ -598,7 +622,7 @@ $$\forall r \in \mathbb {N},\; \forall v \in \mathbb {R},\; \operatorname {expRe
 
 The next signed remainder is the current Taylor monomial minus the preceding signed remainder.
 
-**Definition 1.50 (remainderKernel).**
+**Definition 1.52 (remainderKernel).**
 
 $$\forall r \in \mathbb {N},\; \forall t \in \mathbb {R},\; \operatorname {remainderKernel}\left(r, t\right) = \frac{\left(t\right)^{5}}{8} \cdot \operatorname {intervalIntegral}\left(v: \mathbb {R}\mapsto \left(v\right)^{2} \cdot \left(1 - \left(v\right)^{2}\right) \cdot \operatorname {expRemainder}\left(r, \frac{\left(1 + \left(v\right)^{2}\right) \cdot \left(t\right)^{2}}{4}\right), 0, 1, \operatorname {volume}\right)$$
 
@@ -610,7 +634,7 @@ $$\forall r \in \mathbb {N},\; \forall t \in \mathbb {R},\; \operatorname {remai
 
 The kernel for every truncation index replaces the Gaussian factor of K by its signed finite Taylor remainder.
 
-**Theorem 1.51 (remainderKernelContinuous).**
+**Theorem 1.53 (remainderKernelContinuous).**
 
 $$\forall r \in \mathbb {N},\; \operatorname {Continuous}\left(\operatorname {remainderKernel}\left(r\right)\right)$$
 
@@ -622,7 +646,7 @@ $$\forall r \in \mathbb {N},\; \operatorname {Continuous}\left(\operatorname {re
 
 Continuous dependence of an integral over the compact unit interval gives continuity of each remainder kernel.
 
-**Theorem 1.52 (remainderKernelBounds).**
+**Theorem 1.54 (remainderKernelBounds).**
 
 $$\forall r \in \mathbb {N},\; \forall t \in \mathbb {R},\; \left(0 \le t\right) \Rightarrow \left(\left(0 \le \operatorname {remainderKernel}\left(r, t\right)\right) \land \left(\operatorname {remainderKernel}\left(r, t\right) \le \left(t\right)^{2 \cdot r + 5}\right)\right)$$
 
@@ -634,7 +658,7 @@ $$\forall r \in \mathbb {N},\; \forall t \in \mathbb {R},\; \left(0 \le t\right)
 
 The unit-interval weight lies between zero and one, and the Taylor remainder bound gives a polynomial envelope for the kernel.
 
-**Theorem 1.53 (remainderKernelMoments).**
+**Theorem 1.55 (remainderKernelMoments).**
 
 $$\forall r \in \mathbb {N},\; \forall m \in \mathbb {N},\; \forall x \in \mathbb {R},\; \left(0 < x\right) \Rightarrow \left(\operatorname {MeasureTheory.IntegrableOn}\left(t: \mathbb {R}\mapsto \left(t\right)^{m} \cdot \operatorname {Real.exp}\left(-\left(x \cdot t\right)\right) \cdot \operatorname {remainderKernel}\left(r, t\right), \operatorname {Set.Ioi}\left(0\right)\right)\right)$$
 
@@ -646,7 +670,7 @@ $$\forall r \in \mathbb {N},\; \forall m \in \mathbb {N},\; \forall x \in \mathb
 
 The polynomial kernel envelope gives integrability after multiplication by every additional moment and positive-rate exponential.
 
-**Theorem 1.54 (remainderKernelRec).**
+**Theorem 1.56 (remainderKernelRec).**
 
 $$\forall r \in \mathbb {N},\; \forall t \in \mathbb {R},\; \operatorname {remainderKernel}\left(r + 1, t\right) = \frac{\left(t\right)^{2 \cdot r + 5}}{8 \cdot \left(4\right)^{r} \cdot \operatorname {Nat.factorial}\left(r\right)} \cdot \operatorname {intervalIntegral}\left(v: \mathbb {R}\mapsto \left(v\right)^{2} \cdot \left(1 - \left(v\right)^{2}\right) \cdot \left(1 + \left(v\right)^{2}\right)^{r}, 0, 1, \operatorname {volume}\right) - \operatorname {remainderKernel}\left(r, t\right)$$
 
@@ -658,7 +682,7 @@ $$\forall r \in \mathbb {N},\; \forall t \in \mathbb {R},\; \operatorname {remai
 
 The exponential-remainder recurrence gives the kernel recurrence with the same compact polynomial moment as the source coefficient.
 
-**Theorem 1.55 (remainderLaplaceRec).**
+**Theorem 1.57 (remainderLaplaceRec).**
 
 $$\forall r \in \mathbb {N},\; \forall x \in \mathbb {R},\; \left(0 < x\right) \Rightarrow \left(\operatorname {moment}\left(\operatorname {remainderKernel}\left(r + 1\right), 0, x\right) = \frac{\frac{\operatorname {Nat.factorial}\left(2 \cdot r + 5\right)}{8 \cdot \left(4\right)^{r} \cdot \operatorname {Nat.factorial}\left(r\right)} \cdot \operatorname {intWeight}\left(r\right)}{\left(x\right)^{2 \cdot r + 6}} - \operatorname {moment}\left(\operatorname {remainderKernel}\left(r\right), 0, x\right)\right)$$
 
@@ -670,7 +694,7 @@ $$\forall r \in \mathbb {N},\; \forall x \in \mathbb {R},\; \left(0 < x\right) \
 
 Integrating the kernel recurrence evaluates its monomial by the Gamma integral and gives the recurrence for successive Laplace remainders.
 
-**Theorem 1.56 (remainderRepresentation).**
+**Theorem 1.58 (remainderRepresentation).**
 
 $$\forall r \in \mathbb {N},\; \forall x \in \mathbb {R},\; \left(0 < x\right) \Rightarrow \left(\left(-1\right)^{r} \cdot \operatorname {D}\left(r + 2, x, -1\right) = \operatorname {moment}\left(\operatorname {remainderKernel}\left(r\right), 0, x\right)\right)$$
 
@@ -682,7 +706,7 @@ $$\forall r \in \mathbb {N},\; \forall x \in \mathbb {R},\; \left(0 < x\right) \
 
 The basic kernel identity gives the order-zero case. Induction combines the coefficient identity with the finite remainder recurrence to obtain the exact positive Laplace representation at every truncation index.
 
-**Theorem 1.57 (Complete monotonicity of every signed remainder).**
+**Theorem 1.59 (Complete monotonicity of every signed remainder).**
 
 $$claim$$
 
@@ -725,11 +749,13 @@ For every natural n≥2 the signed remainder has a nonnegative Laplace kernel. I
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/Result.expRemainderContinuous`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/Result.expRemainderRec`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/Result.expRemainder_eq`
+- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/Result.gaussianLaplaceDerivative`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/Result.intPow`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/Result.intPow_rec`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/Result.intWeight`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/Result.intWeight_eq`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/Result.kernelIdentity`
+- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/Result.kernelIntegralIdentities`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/Result.kernelLaplace`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/Result.laplaceCM`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/Result.laplaceIBP`

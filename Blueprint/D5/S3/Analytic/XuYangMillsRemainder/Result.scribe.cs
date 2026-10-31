@@ -94,6 +94,10 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 "The product rule gives q1 as the derivative of q0.", DescribeRole.Theorem),
             Entry("q1Deriv", All("t", R, C("HasDerivAt", C("q1"), C("q2", V("t")), V("t"))),
                 "A second product-rule calculation gives q2.", DescribeRole.Theorem),
+            Entry("kernelIntegralIdentities", All("t", R, And(
+                Eq(C("J", Lam("v", Sub(new Formula.Number(1), Div(Mul(Pow(V("v"), new Formula.Number(2)), Pow(V("t"), new Formula.Number(2))), new Formula.Number(2)))), V("t")), C("Real.exp", Neg(Div(Pow(V("t"), new Formula.Number(2)), new Formula.Number(2))))),
+                Eq(C("J", Lam("v", Sub(new Formula.Number(1), Mul(new Formula.Number(3), Pow(V("v"), new Formula.Number(2))))), V("t")), Mul(Div(Pow(V("t"), new Formula.Number(2)), new Formula.Number(2)), C("J", Lam("v", Mul(Pow(V("v"), new Formula.Number(2)), Sub(new Formula.Number(1), Pow(V("v"), new Formula.Number(2))))), V("t")))))),
+                "The two Gaussian integral identities hold for every real t. They follow by integrating the derivatives of v times the Gaussian and v times one minus v squared times the Gaussian. They supply both the original kernel identity and the general-parameter native kernel.", DescribeRole.Theorem),
             Entry("kernelIdentity", All("t", R, Eq(Add(Sub(C("q2", V("t")), C("q0", V("t"))), Mul(Mul(new Formula.Number(3), V("t")), C("Real.exp", Neg(Div(Pow(V("t"), new Formula.Number(2)), new Formula.Number(2)))))), C("K", V("t")))),
                 "Two applications of the fundamental theorem in the unit-interval variable remove the lower-degree Gaussian terms, leaving the nonnegative weight v-squared times (1-v-squared).", DescribeRole.Theorem),
             Entry("JBound", All("p", Arr, Imp(C("Continuous", V("p")), Ex("C", R, And(Le(new Formula.Number(0), V("C")), All("t", R, Le(Norm(C("J", V("p"), V("t"))), V("C"))))))),
@@ -104,6 +108,10 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 "The polynomial exponential envelope tends to zero and controls all integration-by-parts boundary terms.", DescribeRole.Theorem),
             Entry("laplaceIBP", All("f", Arr, All("g", Arr, All("x", R, Imp(All("t", R, C("HasDerivAt", V("f"), C("g", V("t")), V("t"))), Imp(C("MeasureTheory.IntegrableOn", Lam("t", Mul(C("Real.exp", Neg(Mul(V("x"), V("t")))), C("f", V("t")))), C("Set.Ioi", new Formula.Number(0))), Imp(C("MeasureTheory.IntegrableOn", Lam("t", Mul(C("Real.exp", Neg(Mul(V("x"), V("t")))), C("g", V("t")))), C("Set.Ioi", new Formula.Number(0))), Imp(C("Filter.Tendsto", Lam("t", Mul(C("Real.exp", Neg(Mul(V("x"), V("t")))), C("f", V("t")))), C("Filter.atTop"), C("nhds", new Formula.Number(0))), Eq(TailIntegral(new Formula.Number(0), "t", Mul(C("Real.exp", Neg(Mul(V("x"), V("t")))), C("g", V("t")))), Sub(Mul(V("x"), TailIntegral(new Formula.Number(0), "t", Mul(C("Real.exp", Neg(Mul(V("x"), V("t")))), C("f", V("t"))))), C("f", new Formula.Number(0))))))))))),
                 "The fundamental theorem on the positive ray gives integration by parts when the weighted function and derivative are integrable and the infinite boundary vanishes.", DescribeRole.Theorem),
+            Entry("gaussianLaplaceDerivative", All("x", R, Imp(Lt(new Formula.Number(0), V("x")), And(
+                C("MeasureTheory.IntegrableOn", Lam("t", GaussianDerivativeIntegrand), C("Set.Ioi", new Formula.Number(0))),
+                Eq(TailIntegral(new Formula.Number(0), "t", GaussianDerivativeIntegrand), Sub(Mul(V("x"), TailIntegral(new Formula.Number(0), "t", Mul(C("Real.exp", Neg(Mul(V("x"), V("t")))), C("Real.exp", Neg(Div(Pow(V("t"), new Formula.Number(2)), new Formula.Number(2))))))), new Formula.Number(1)))))),
+                "The tilted Gaussian derivative is integrable for every positive rate. Integration by parts relates its integral to the Gaussian Laplace transform, with the unit endpoint term at zero.", DescribeRole.Theorem),
             Entry("kernelLaplace", All("x", R, Imp(Lt(new Formula.Number(0), V("x")), All("r", R, Imp(Eq(V("r"), TailIntegral(new Formula.Number(0), "t", Mul(C("Real.exp", Neg(Mul(V("x"), V("t")))), C("Real.exp", Neg(Div(Pow(V("t"), new Formula.Number(2)), new Formula.Number(2))))))), Imp(Eq(Pow(V("r"), new Formula.Number(2)), TailIntegral(new Formula.Number(0), "t", Mul(C("Real.exp", Neg(Mul(V("x"), V("t")))), C("q0", V("t"))))), Eq(Add(Sub(Mul(Sub(Pow(V("x"), new Formula.Number(2)), new Formula.Number(1)), Pow(V("r"), new Formula.Number(2))), Mul(Mul(new Formula.Number(3), V("x")), V("r"))), new Formula.Number(2)), TailIntegral(new Formula.Number(0), "t", Mul(C("Real.exp", Neg(Mul(V("x"), V("t")))), C("K", V("t")))))))))),
                 "Integrating by parts twice transfers x-squared from the Laplace transform to q2. The Gaussian derivative accounts for the linear Mills term, and the kernel identity yields K.", DescribeRole.Theorem),
             Entry("expRemainder", All("r", N, All("v", R, Eq(C("expRemainder", V("r"), V("v")), Mul(Pow(Neg(new Formula.Number(1)), V("r")), Add(C("D5.S3.Analytic.ExpRemainderDifferences.R", V("r"), Neg(V("v"))), Div(Pow(Neg(V("v")), V("r")), C("Nat.factorial", V("r")))))))),
@@ -145,6 +153,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(Disp(statement)),
             source ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);
+    private static Formula GaussianDerivativeIntegrand => Mul(C("Real.exp", Neg(Mul(V("x"), V("t")))), Mul(Neg(V("t")), C("Real.exp", Neg(Div(Pow(V("t"), new Formula.Number(2)), new Formula.Number(2))))));
     private static Formula V(string name) => F.Id(name);
     private static Formula R => Seq(Mathbb, Sp, Grp(V("R")));
     private static Formula N => Seq(Mathbb, Sp, Grp(V("N")));
