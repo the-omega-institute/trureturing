@@ -118,7 +118,9 @@ instance colouringsMulAction (n : ℕ) (a : Fin 3 → ℤ) : MulAction (Perm (Fi
   mul_smul π τ f := by
     apply Subtype.ext
     funext x
-    simp only [Function.comp_apply, mul_inv_rev, Equiv.Perm.mul_apply]
+    change f.1 (((π * τ)⁻¹ : Perm (Fin n)) x) =
+      f.1 ((τ⁻¹ : Perm (Fin n)) ((π⁻¹ : Perm (Fin n)) x))
+    rfl
 
 /-- This is the actual representation on the ordered colourings, independently of its character. -/
 abbrev colouringRepresentation (n : ℕ) (a : Fin 3 → ℤ) : _root_.FDRep ℂ (Perm (Fin n)) :=
@@ -126,15 +128,16 @@ abbrev colouringRepresentation (n : ℕ) (a : Fin 3 → ℤ) : _root_.FDRep ℂ 
 
 private theorem colouring_fixed_iff {n : ℕ} (a : Fin 3 → ℤ) (π : Perm (Fin n))
     (f : Colourings n a) : π • f = f ↔ f.1 ∘ π = f.1 := by
-  change (⟨f.1 ∘ (π⁻¹ : Perm (Fin n)), _⟩ : Colourings n a) = f ↔ _
-  rw [Subtype.ext_iff]
   constructor
   · intro h
+    have hv := congrArg (fun q : Colourings n a => q.1) h
+    change f.1 ∘ (π⁻¹ : Perm (Fin n)) = f.1 at hv
     funext x
-    have hx := congrFun h (π x)
+    have hx := congrFun hv (π x)
     change f.1 (π.symm (π x)) = f.1 (π x) at hx
     simpa only [Function.comp_apply, Equiv.symm_apply_apply] using hx.symm
   · intro h
+    apply Subtype.ext
     funext x
     have hx := congrFun h (π⁻¹ x)
     change f.1 (π (π.symm x)) = f.1 (π.symm x) at hx
@@ -292,7 +295,6 @@ theorem sum_virtualCharacter_mul (n : ℕ) (μ ν : Fin 3 → ℕ) :
           ring
         _ = _ := by rw [hz]
     _ = _ := by
-      simp only [mul_sum]
       apply sum_congr rfl
       intro σ _
       apply sum_congr rfl
