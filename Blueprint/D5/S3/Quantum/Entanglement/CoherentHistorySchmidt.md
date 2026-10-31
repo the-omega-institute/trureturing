@@ -8,7 +8,7 @@ A is any finite alphabet with decidable equality. Words are functions Fin n to A
 
 **Theorem 1.1 (Legal concatenations select a feasible occupation boundary).**
 
-$$\forall A \in Type,\; DecidableEq\left(A\right) \Rightarrow \left(\forall a \in Multiset\left(A\right),\; \forall t \in \mathbb{N},\; \forall s \in \mathbb{N},\; \forall u \in Word\left(A, t\right),\; \forall v \in Word\left(A, s\right),\; occupation\left(FinAppend\left(u, v\right)\right) = a \Leftrightarrow \left(\exists b \in B\left(a, t\right),\; occupation\left(u\right) = val\left(b\right) \land occupation\left(v\right) = a - val\left(b\right)\right)\right)$$
+$$\forall A \in Type,\; DecidableEq\left(A\right) \Rightarrow \left(\forall a \in Multiset\left(A\right),\; \forall t \in \mathbb{N},\; \forall s \in \mathbb{N},\; \forall u \in Word\left(A, t\right),\; \forall v \in Word\left(A, s\right),\; occupation\left(\operatorname{Fin.append}\left(u, v\right)\right) = a \Leftrightarrow \left(\exists b \in Boundary\left(a, t\right),\; occupation\left(u\right) = val\left(b\right) \land occupation\left(v\right) = a - val\left(b\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/CoherentHistorySchmidt.legal_iff` (`✓ std3`). ∎
 
