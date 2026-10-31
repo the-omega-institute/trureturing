@@ -67,8 +67,11 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have htail : tail 3 = -Real.log (8 / 9 : ℝ) := by
     norm_num [tail, layerTail]
   have hsum : finitePrimeSquareSum 3 = (13 / 36 : ℝ) := by
+    have hfac : (3 : ℕ).primeFactors = {3} := Nat.prime_three.primeFactors
+    have hP : largestPrime 3 = 3 := by simp [largestPrime, hfac]
+    have hQ : layerPrime 3 2 = 1 := by simp [layerPrime, hfac]
     have hfilter : (Finset.Ioc 1 3).filter Nat.Prime = {2, 3} := by decide
-    simp only [finitePrimeSquareSum, largestPrime, layerPrime]
+    simp only [finitePrimeSquareSum, hP, hQ]
     rw [hfilter]
     norm_num
   have hbad' :
