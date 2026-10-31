@@ -36,6 +36,10 @@ $$\forall n: \mathbb{N}, \forall k: \mathbb{N}, \exists a: \mathbb{Z}, ((a: \mat
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/LuschnyA323206Parity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/luschny-a323206` (proved) by `D5/S1/Recurrence/Invariants/LuschnyA323206Parity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"luschny-a323206","declaration_gid":"D5/S1/Recurrence/Invariants/LuschnyA323206Parity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Luschny (2019). *OEIS A323206, terminating hypergeometric array and parity conjecture*. URL: <https://oeis.org/A323206>.

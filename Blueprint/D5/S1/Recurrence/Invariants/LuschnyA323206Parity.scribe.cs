@@ -44,13 +44,17 @@ internal sealed class LuschnyA323206ParityDocument : IScribeDocumentDefinition
                 + "odd argument it is the coefficient sum. The two hockey-stick sums "
                 + "give the Catalan number catalan(k+1). The binary support theorem "
                 + "for the shifted Catalan series then gives k+2=2^e, and k+2>=2 "
-                + "forces e>0.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                + "forces e>0.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("luschny-a323206"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("a323206-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));
