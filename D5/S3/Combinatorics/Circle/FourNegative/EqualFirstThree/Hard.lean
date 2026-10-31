@@ -79,9 +79,13 @@ private theorem hard (s d : ℕ) (hd : 2≤d) (hhard : 2*d≤s) :
     have hh : n+1=2^(s-d) := by dsimp [n];omega
     have hz : (n:ℤ)+1=(2:ℤ)^(s-d) := by exact_mod_cast hh
     omega
-  have hu : u<2^(d-1) := by dsimp [u];have hp : 0<2^(d-1) := by positivity;omega
+  have hu : u<2^(d-1) := by
+    dsimp [u]
+    have hp : 0<2^(d-1) := by positivity
+    omega
   have hn : n<2^(s-1) := by
     have hh : (n:ℤ)<r := by nlinarith only [hnc,hH,hD,hRH,hr]
+    change (n : ℤ) < (2 : ℤ)^(s-1) at hh
     exact_mod_cast hh
   have floor := hard_floor s d hd hhard
   dsimp only at floor
@@ -90,7 +94,12 @@ private theorem hard (s d : ℕ) (hd : 2≤d) (hhard : 2*d≤s) :
     1≤2*(HU-(r-H)*W-xi*X)+(1+(R+1)*(r-H)+C*xi) ∧
     2*(HU-(r-H)*W-xi*X)+(1+(R+1)*(r-H)+C*xi)≤(A-1)/2 at floor
   have hxc : (x:ℤ)=xi := Int.toNat_of_nonneg floor.1
-  have hx : x<2^(s-1) := by exact_mod_cast (show (x:ℤ)<r by rw [hxc];exact floor.2.1)
+  have hx : x<2^(s-1) := by
+    have hh : (x : ℤ) < (2 : ℤ)^(s-1) := by
+      change (x : ℤ) < r
+      rw [hxc]
+      exact floor.2.1
+    exact_mod_cast hh
   let U := split_pair f g 0 (d-1) u A (2*A) hu cp.1 cp.2.1
     (by simpa only [Nat.zero_add] using Table.u tab) (by simpa only [Nat.zero_add] using Table.un tab)
   let P := split_pair f g d (s-1) n V (2*V-1) hn cp.2.2.1 cp.2.2.2.1 (Table.v tab) (Table.vn tab)
@@ -109,7 +118,7 @@ private theorem hard (s d : ℕ) (hd : 2≤d) (hhard : 2*d≤s) :
     apply List.Perm.trans (l₂ := (Pair.left U++Pair.right U)++nu::(Pair.left P++Pair.right P)++nv::
       (Pair.left Q++Pair.right Q)++nw::(Pair.left T++Pair.right T)++[nx])
     · apply Multiset.coe_eq_coe.mp
-      simp only [word,F,K,S,G,←Multiset.coe_add,Multiset.coe_cons,Multiset.coe_singleton]
+      simp only [word,F,K,S,G,←Multiset.coe_add,←Multiset.cons_coe,←Multiset.singleton_add,Multiset.coe_singleton]
       ac_rfl
     · exact pair_inventory s d hs hd f g A (2*A) V (2*V-1) W (2*W-R-1) X (2*X-C) u n n x U P Q T
   have fF : (F.map f).sum=(e-1)*A+(H-1)*V := by

@@ -98,10 +98,17 @@ private theorem lower (s d : ℕ) (hd : 2 ≤ d) (hds : d < s) (hsd : s ≤ 2*d-
     have hh : n+1=2^(s-d) := by dsimp [n]; omega
     have hz : (n : ℤ)+1=(2 : ℤ)^(s-d) := by exact_mod_cast hh
     omega
-  have hu : u<2^(d-1) := by dsimp [u]; have hp : 0<2^(d-1) := by positivity; omega
-  have hv : v<2^(s-1) := by dsimp [v]; have hp : 0<2^(s-1) := by positivity; omega
+  have hu : u<2^(d-1) := by
+    dsimp [u]
+    have hp : 0<2^(d-1) := by positivity
+    omega
+  have hv : v<2^(s-1) := by
+    dsimp [v]
+    have hp : 0<2^(s-1) := by positivity
+    omega
   have hn : n<2^(s-1) := by
     have hnr : (n : ℤ)<r := by nlinarith only [hnc,hH,hD,hRH,hr]
+    change (n : ℤ) < (2 : ℤ)^(s-1) at hnr
     exact_mod_cast hnr
   let U := split_pair f g 0 (d-1) u A (2*A) hu cp.1 cp.2.1
     (by simpa only [Nat.zero_add] using (Table.u tab)) (by simpa only [Nat.zero_add] using (Table.un tab))
@@ -121,7 +128,7 @@ private theorem lower (s d : ℕ) (hd : 2 ≤ d) (hds : d < s) (hsd : s ≤ 2*d-
     apply List.Perm.trans (l₂ := ((Pair.left U)++(Pair.right U)) ++ nu ::
       ((Pair.left P)++(Pair.right P)) ++ nv :: ((Pair.left Q)++(Pair.right Q)) ++ nw :: ((Pair.left T)++(Pair.right T)) ++ [nx])
     · apply Multiset.coe_eq_coe.mp
-      simp only [word,F,K,S,G,←Multiset.coe_add,Multiset.coe_cons,Multiset.coe_singleton]
+      simp only [word,F,K,S,G,←Multiset.coe_add,←Multiset.cons_coe,←Multiset.singleton_add,Multiset.coe_singleton]
       ac_rfl
     · exact pair_inventory s d hs hd f g A (2*A) V (2*V-1) W (2*W-R-1) X (2*X-C) u v v n U P Q T
   have fF : (F.map f).sum=(r-1)*V := by rw [(Pair.fl P),hvc]

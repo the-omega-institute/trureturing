@@ -70,8 +70,12 @@ private theorem large (s d : ℕ) (hs : 2≤s) (hds : s+2≤d) :
     ring
   have hu : u<2^(d-1) := by
     have hz : (u:ℤ)<e := by nlinarith only [hR,hu2,hDu,he]
+    change (u : ℤ) < (2 : ℤ)^(d-1) at hz
     exact_mod_cast hz
-  have hv : v<2^(s-1) := by dsimp [v];have hp : 0<2^(s-1) := by positivity;omega
+  have hv : v<2^(s-1) := by
+    dsimp [v]
+    have hp : 0<2^(s-1) := by positivity
+    omega
   have hvc : (v:ℤ)=r-1 := by
     have hp : 0<2^(s-1) := by positivity
     have heq : v+1=2^(s-1) := by dsimp [v];omega
@@ -95,7 +99,7 @@ private theorem large (s d : ℕ) (hs : 2≤s) (hds : s+2≤d) :
     apply List.Perm.trans (l₂ := ((Pair.left U)++(Pair.right U))++nu::((Pair.left P)++(Pair.right P))++nv::
       ((Pair.left Q)++(Pair.right Q))++nw::((Pair.left T)++(Pair.right T))++[nx])
     · apply Multiset.coe_eq_coe.mp
-      simp only [word,F,K,S,G,←Multiset.coe_add,Multiset.coe_cons,Multiset.coe_singleton]
+      simp only [word,F,K,S,G,←Multiset.coe_add,←Multiset.cons_coe,←Multiset.singleton_add,Multiset.coe_singleton]
       ac_rfl
     · exact pair_inventory s d hs hd f g A (2*A) V (2*V-1) W (2*W-R-1) X (2*X-C) u v v v U P Q T
   have fF : (F.map f).sum=(e-1-u)*A := (Pair.fr U)
