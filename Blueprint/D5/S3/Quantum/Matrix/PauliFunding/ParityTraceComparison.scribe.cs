@@ -51,5 +51,5 @@ internal sealed class ParityTraceComparisonDocument : IScribeDocumentDefinition
             Node("comparison","A lower quadratic comparison","even_trace_comparison",ComparisonStatement(false),
                 "A nonnegative c in the sublevel set c^2-2 alpha c-beta≤0 lies below the positive characteristic root. Taking the even power preserves this order, while the other root contributes a nonnegative even power. The order j may be zero."),
             Node("strict","Strict comparison at every positive order","even_trace_strict",ComparisonStatement(true),
-                "A strictly negative characteristic polynomial places c strictly below the positive root. For j≥1 this gives a strict even-power inequality. The result applies to the parity transform of actual Pauli control resolvents, whose product moments are even powers of W.")))));
+                "A strictly negative characteristic polynomial places c strictly below the positive root. For j≥1 this gives a strict even-power inequality. The result applies to the parity transform of actual Pauli control resolvents, whose product moments are even powers of W."))));
 }

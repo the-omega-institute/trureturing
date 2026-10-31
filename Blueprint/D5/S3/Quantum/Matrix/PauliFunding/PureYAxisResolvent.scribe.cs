@@ -101,6 +101,7 @@ internal sealed class PureYAxisResolventDocument : IScribeDocumentDefinition
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Logic(Formula a, FormulaLogicOperator op, Formula b) =>
         new Formula.Logic(Parenthesized(a), op, Parenthesized(b));
     private static Formula And(Formula a, Formula b) => Logic(a, FormulaLogicOperator.And, b);

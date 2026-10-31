@@ -37,6 +37,7 @@ internal sealed class PureYAxisFundingDocument : IScribeDocumentDefinition
     private static Formula V(string x) => F.Id(x);
     private static Formula All(string x, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), domain, body);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Logic(Formula a, FormulaLogicOperator op, Formula b) =>
         new Formula.Logic(Parenthesized(a), op, Parenthesized(b));
     private static Formula And(Formula a, Formula b) => Logic(a, FormulaLogicOperator.And, b);
