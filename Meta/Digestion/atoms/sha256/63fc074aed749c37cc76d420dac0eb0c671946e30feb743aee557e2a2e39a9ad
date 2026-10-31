@@ -1,0 +1,123 @@
+**Proposition 3.2 (Augmented Schur-residual bound).**
+For every $0\leq t<1$,
+
+$$
+G_{A_t}(H)\geq d_t^{\mathsf T}V_t^+d_t+\mathcal R_t.
+\tag{3.5}
+$$
+
+Its use at the entropy endpoint is solely through the improper
+integrals and support limits specified in Definition 3.1.
+
+Proof.
+The Gram matrix
+
+$$
+ \begin{pmatrix}V_t&z_t\\z_t^{\mathsf T}&v_t\end{pmatrix}
+$$
+
+is positive semidefinite.  Orthogonally project the centered $W$ onto
+the span of the six centered local observables.  The residual has squared
+norm $v_t-z_t^{\mathsf T}V_t^+z_t$ and score pairing
+$e_t-z_t^{\mathsf T}V_t^+d_t$.  Applying (3.2) to the
+local span and then to this orthogonal residual proves (3.5).
+The range statements for both $V_t$ and $\widehat V_t$ handle
+singular local Gram matrices and the zero-Schur case.
+
+For a qubit with Bloch vector $p=rn$, define its centered qubit BKM
+matrix in the Pauli basis by
+
+$$
+\mathcal Q_p=\frac r{\operatorname{atanh}r}(I-nn^{\mathsf T})
+ +(1-r^2)nn^{\mathsf T},
+\tag{3.6}
+$$
+
+with continuous values $\mathcal Q_0=I$ and $\mathcal Q_p=0$ for $r=1$.  Actual
+partial trace is a CPTP map. Using standard CPTP relative-entropy
+data processing (Watrous, *The Theory of Quantum Information*), and
+differentiating it at a
+state and a supported trace-zero tangent gives
+
+$$
+G_{A_{t,C}}(D_C)\leq G_{A_t}(D),
+ \qquad G_{A_{t,D}}(D_D)\leq G_{A_t}(D).
+\tag{3.7}
+$$
+
+Using (3.2) in the dual direction yields
+
+$$
+V_C\leq\mathcal Q_{p(t)},\qquad V_D\leq\mathcal Q_{q(t)}.
+\tag{3.8}
+$$
+
+No faithfulness is needed: take the supported limit if a marginal is
+singular.  Positivity of $V_t$ and (3.8) imply, for all
+$x,y$,
+
+$$
+ |x^{\mathsf T}B_ty|^2
+ \leq(x^{\mathsf T}\mathcal Q_{p(t)}x)(y^{\mathsf T}\mathcal Q_{q(t)}y).
+$$
+
+Consequently the normalized full cross operator
+
+$$
+\kappa_t=\left\|(\mathcal Q_{p(t)}^+)^{1/2}B_t
+ (\mathcal Q_{q(t)}^+)^{1/2}\right\|_{\mathrm{op}}
+\tag{3.9}
+$$
+
+obeys $0\leq\kappa_t\leq1$, with the range inclusions supplied by the
+same inequality.  In particular,
+
+$$
+ V_t\leq(1+\kappa_t)\operatorname{diag}(\mathcal Q_{p(t)},\mathcal Q_{q(t)}).
+$$
+
+The variational formula, applied to this order rather than by blindly
+inverting matrices, gives
+
+$$
+d_t^{\mathsf T}V_t^+d_t
+ \geq\frac{s_t}{1+\kappa_t},
+ \qquad
+ s_t=p'(t)^{\mathsf T}\mathcal Q_{p(t)}^+p'(t)
+ +q'(t)^{\mathsf T}\mathcal Q_{q(t)}^+q'(t).
+\tag{3.10}
+$$
+
+If a marginal is pure at an interior point, the convex path forces its
+derivative to be zero, so no undefined inverse is being used.
+
+Since $KA_tK=A_{-t}$ after extending the path to negative $t$, entropy
+is even and $S'(A_t)|_{t=0}=0$.  Two integrations of
+$S''(A_t)=-G_{A_t}(H)$ give
+
+$$
+S(R)-S(P)=\int_0^1w_a(t)G_{A_t}(H)\,dt,
+ \qquad
+ w_a(t)=\begin{cases}1-a,&0\leq t\leq a,\\1-t,&a<t\leq1.
+ \end{cases}
+\tag{3.11}
+$$
+
+The same calculation for both partial traces gives
+
+$$
+h=\int_0^1w_a(t)s_t\,dt.
+\tag{3.12}
+$$
+
+For a singular $P$, first perform both integrations with an upper endpoint
+$T<1$, with weights $w_{a,T}(t)=T-a$ for $0\leq t\leq a$ and
+$w_{a,T}(t)=T-t$ for $a<t\leq T$ (when $a<1$ and $T>a$).
+These nonnegative weights increase to $w_a$ as $T\uparrow1$.
+Monotone convergence of the nonnegative curvature integrals and entropy
+continuity give the stated improper identities. If $a=1$, both entropy
+gains and both weighted integrals are zero. In particular the endpoint
+argument assigns no finite pointwise value to $G_{A_1}(H)$ or $s_1$.  Substitution of
+(3.5), (3.11), and (3.12)
+into (1.4) proves the main all-domain estimate.
+
