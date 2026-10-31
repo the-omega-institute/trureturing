@@ -23,10 +23,10 @@ open scoped BigOperators
 namespace TauCeti.ThreeRowGram
 open _root_.Equiv Finset MvPolynomial
 
-private def staircase (i : Fin 3) : ℕ := 2 - (i : ℕ)
+def staircase (i : Fin 3) : ℕ := 2 - (i : ℕ)
 private def exponent (μ : Fin 3 → ℕ) : Fin 3 →₀ ℕ :=
   Finsupp.equivFunOnFinite.symm fun i => μ i + staircase i
-private def permutedStaircase (σ : Perm (Fin 3)) : Fin 3 →₀ ℕ :=
+def permutedStaircase (σ : Perm (Fin 3)) : Fin 3 →₀ ℕ :=
   Finsupp.equivFunOnFinite.symm fun i => staircase (σ i)
 
 private theorem fixedColourings_eq_zero_of_negative {n : ℕ} {a : Fin 3 → ℤ}
@@ -37,7 +37,7 @@ private theorem fixedColourings_eq_zero_of_negative {n : ℕ} {a : Fin 3 → ℤ
   have hn := Int.natCast_nonneg (#{x | f x = i})
   omega
 
-private theorem vandermonde_eq_signed_monomials :
+theorem vandermonde_eq_signed_monomials :
     D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.vandermonde3 =
       ∑ σ : Perm (Fin 3), (sign σ : ℤ) • monomial (permutedStaircase σ) (1 : ℤ) := by
   let A : Matrix (Fin 3) (Fin 3) (MvPolynomial (Fin 3) ℤ) :=

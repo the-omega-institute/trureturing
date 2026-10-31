@@ -876,19 +876,18 @@ unknown for every declaration, including the earlier representation chain.
 
 ### Exact residual and retirement
 
-The missing next equality is the actual Young-rule identification
+For the general Young-rule route, the missing equality is the identification
 `finrank Complex (spechtModuleComplex mu --> permutationModuleComplex nu) =
 kostkaNumber mu nu`, with its dominance/diagonal and genuine Kostka suppliers.
 It must be connected to the semistandard-tableau Schur expansion and the
 arbitrary-degree `psumPart_eq_sum_spechtCharValue_smul_schurPoly`; these are not
-assumptions or claims of this continuation. The literal positive-parts shape of
-each decreasing three-row vector, row-length/zero-padding correspondence, height
-vanishing above three, division-free bialternant, exact descending staircase
-(2,1,0) and Vandermonde coefficient isolation also remain missing. Only after
-that same-partition ordinary-trace equality is obtained can both original
-weighted sums be transported through the existing strongest D5 coefficient owner
-and `solution_unique`. No coefficient-only result closes either original
-ordinary theorem.
+assumptions or claims here. The alternative three-row construction below avoids
+those unused general closure results. It addresses the literal positive-parts
+shape, zero padding and descending-staircase coefficient isolation directly.
+Its source character bridge is consumed by both ordinary Ev sums; their common
+weighted value still needs the existing strongest D5 coefficient owner and
+`solution_unique`. No coefficient-only result closes either original ordinary
+weighted theorem.
 
 The original target remains all n >= 1 and every partition of n; the exact
 reciprocal centralizer product, independent per-occurrence Ev replacements with
@@ -998,7 +997,7 @@ validated Reg, canonical emission, freeze, deposit, PR, CI or merge is asserted.
 | `SpechtYoungTrace.lean:finrank_hom_spechtModuleℂ_permutationModuleℂ_eq_zero` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtYoungTrace.lean:spechtModuleℂ_iso_iff` |
 | `SpechtYoungTrace.lean:finrank_hom_spechtModuleℂ_permutationModuleℂ_self` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtYoungTrace.lean:spechtModuleℂ_iso_iff` |
 | `SpechtYoungTrace.lean:spechtModuleℂ_iso_iff` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtYoungTrace.lean:sum_spechtTrace_mul_spechtTrace_inv` |
-| `SpechtYoungTrace.lean:sum_spechtTrace_mul_spechtTrace_inv` | Local composition of the existing representation and pinned interfaces; no independent admission | **Terminal WIP: Young Gram/completeness and Frobenius consumer missing** |
+| `SpechtYoungTrace.lean:sum_spechtTrace_mul_spechtTrace_inv` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtThreeRowVirtual.lean`: actual self-norm criterion; general Young-rule consumer remains absent |
 
 ### Exact remaining target and retirement
 
@@ -1010,11 +1009,10 @@ Young rule. The selected endpoints do not assume either fact. The arbitrary-degr
 finite-alphabet psumPart_eq_sum_spechtCharValue_smul_schurPoly remains unported
 and unproved here; the degree-at-most-alphabet equivalence is not substituted.
 
-After those steps the literal positive-parts triple shape, zero padding, Schur
-height vanishing above three, division-free bialternant with descending staircase
-(2,1,0), exact Vandermonde coefficient isolation and the actual ordinary-trace
-equality with HSW.frobChar remain required. Both original weighted sums must
-then consume that bridge and the existing coefficient owner and solution_unique.
+The alternative finite Cauchy route below supplies source constructions for the
+literal triple shape, zero padding and actual ordinary-trace equality without
+the general Schur-height or bialternant route. Both evaluated original weighted
+sums must still consume the existing coefficient owner and solution_unique.
 All n at least one, every partition, fixed-point cycles, per-occurrence Ev
 duplicates, exact reciprocal z and sign, every even-part three-row shape,
 rectangle (n,n,0) also for odd n, and the even-binomial/odd-zero values are
@@ -1067,7 +1065,7 @@ The actual source consumer chain is:
 | `ThreeRowGram.virtualCharacter_eq_frobChar` | `ThreeRowGram.ordinaryTrace_eq_frobChar_of_gram` |
 | exposed `TauCeti.spechtTrace_inv` | private `ThreeRowGram.spechtChar_inv`, then the actual integral self-norm |
 | exposed `TauCeti.hsw_powerSumProd_eq_psumPart` | `ThreeRowGram.virtualCharacter_eq_frobChar` |
-| `ThreeRowGram.ordinaryTrace_eq_frobChar_of_gram` | terminal conditional criterion; unconditional ordinary/HSW consumer still missing |
+| `ThreeRowGram.ordinaryTrace_eq_frobChar_of_gram` | `ThreeRowMixed.ordinaryTrace_eq_frobChar_of_selfGram`, then `ThreeRowCauchy.ordinaryTrace_eq_frobChar` |
 
 The two exposed declarations only lose `private`; their bodies are unchanged.
 The virtual character is identified with the existing HSW alternant coefficient
@@ -1079,11 +1077,11 @@ Specht/virtual mixed sum equal to n!. Neither hypothesis is asserted as proved,
 and neither defines the Specht module by the desired coefficient.
 
 The owning Scribes give the mathematical Cauchy, strict-dominance and final
-weighted-substitution arguments. The missing Lean work is the finite Cauchy
-coefficient identity for decreasing triples, sorting/deleting-zero identification
-with the literal Young-subgroup module, strict shifted dominance and the mixed
-pairing, their same-shape discharge, and substitution in BOTH original averages
-through the existing coefficient owner and `solution_unique`. This alternative
+weighted-substitution arguments. The source constructions below address the finite Cauchy
+coefficient identity, the literal Young-subgroup comparison, strict shifted
+dominance, mixed pairing and same-shape discharge. Native checking of those
+constructions and the evaluated weighted consumer through the existing
+coefficient owner and `solution_unique` remain required. This alternative
 does not require full Young rule, Kostka completeness or general Schur expansion.
 It has not established that its total formalization cost is smaller.
 
@@ -1091,8 +1089,8 @@ The full original quantifiers are preserved: every n >= 1 and partition of n,
 independent per-occurrence Ev with duplicate outcomes, exact reciprocal z,
 length sign, all positive cycles including ones, every padded nonincreasing
 even-part shape of at most three rows and total 2n, rectangle (n,n,0) also for
-odd n, and the even-binomial/odd-zero value in each average. The source criterion
-does not yet prove either unconditional ordinary theorem.
+odd n, and the even-binomial/odd-zero value in each average. The criterion alone
+does not prove either evaluated ordinary weighted theorem.
 
 Classical provenance is verified against Etingof et al., *Introduction to
 Representation Theory*, author arXiv version
@@ -1116,3 +1114,78 @@ sensitivity, observational dependence and native binding. No Reg mirror or
 compiled proof-term liveness or independent escape. This is uncompiled WIP,
 not standalone admissible firstfreeze content. No native Lean/Lake, accepted
 axiom closure, emission, freeze, deposit, ordinary PR, CI or merge is asserted.
+
+
+## Finite Cauchy isolation and literal three-row mixed pairing
+
+`SpechtThreeRowMixed` compares the natural ordered-colouring character with the
+actual Young-subgroup fixed-coset character by applying the two existing
+power-sum coefficient calculations to the same monomial. Its literal partition
+is `tripleShape`, the existing `weightPartition` of the natural triple. Positive
+entries retain their multiplicities, zeros disappear, and weakly decreasing
+triples have those exact padded row lengths. There is no equal-row or empty-row
+factorial. Sorting increases each proper prefix; every nonidentity integer shift
+has a strict proper-prefix increase. Actual Hom dominance kills these terms,
+while the same-partition diagonal Hom dimension supplies one at the identity.
+Negative margins have no colourings. This gives the actual mixed scalar n!.
+
+`SpechtThreeRowCauchy` uses formal power series in six variables, with an edge
+series for each of the nine labelled pairs. A finite exponent-decomposition/table
+bijection identifies its kernel coefficients with the existing contingency
+counts. The cleared three-by-three numerator is a commutative-ring polynomial
+identity, and its nine specified inverse factors give the Cauchy determinant.
+Strict decreasing exponent triples have only the identity matching in the
+three-edge determinant product. Transporting the existing signed Vandermonde
+expansion therefore gives the signed contingency delta in arbitrary degree.
+Together with the mixed scalar and the existing integer sum-of-squares criterion,
+this supplies an unconditional source formula for the actual independently
+defined polytabloid trace of the same literal partition.
+
+The exact unchanged pinned source APIs used for the new construction are
+`Matrix.det_fin_three`, `Matrix.det_apply`, `Matrix.det_mul_column`,
+`MvPowerSeries.coeff_prod`, `MvPowerSeries.coeff_monomial_mul`,
+`MvPowerSeries.monomial_mul_monomial`, `MvPolynomial.coeToMvPowerSeries.ringHom`,
+`Finset.mem_finsuppAntidiag`, `Finset.mem_piAntidiag`, and the existing D5
+`coeff_psumPart_partition`, `coeff_psumPart_eq_card_fixedPoints`,
+`exists_perm_mapDomain_eq_partWeight`, `partWeight_apply`,
+`finrank_hom_spechtModuleℂ_permutationModuleℂ_eq_zero` and its `_self` companion.
+Only `private` is removed from the existing `staircase`, `permutedStaircase`,
+and `vandermonde_eq_signed_monomials`; their definitions and proof bodies are
+unchanged and are used by the two-variable-set Vandermonde transport.
+
+| New source declaration | Actual source consumer |
+| --- | --- |
+| `Mixed.tripleShape` | literal row comparison, mixed pairing, actual trace formula, both ordinary Ev sums |
+| `Mixed.shifted_nat_sum` | strict-dominance partition and Cauchy shifted-exponent comparison |
+| `Mixed.sum_spechtChar_mul_virtualCharacter` | `Mixed.ordinaryTrace_eq_frobChar_of_selfGram` |
+| `Mixed.ordinaryTrace_eq_frobChar_of_selfGram` | `Cauchy.ordinaryTrace_eq_frobChar` |
+| `Cauchy.doubleWeight`, `cauchyKernel`, `doubleVandermonde` | finite table coefficient, determinant isolation and signed Gram comparison |
+| `Cauchy.cauchy_coefficient_delta` | `Cauchy.signedContingencyGram_eq_delta` |
+| `Cauchy.signedContingencyGram_eq_delta` | `Cauchy.ordinaryTrace_eq_frobChar` |
+| `Cauchy.ordinaryTrace_eq_frobChar` | `Cauchy.spechtCharValue_eq_frobChar` |
+| `Cauchy.spechtCharValue_eq_frobChar` | `Cauchy.evSpechtSums_eq_coefficients` |
+| `Cauchy.evPartition`, `signedEvSpechtSum`, `rectangleEvSpechtSum` | `Cauchy.evSpechtSums_eq_coefficients`, `ordinaryEv_identity`, `ordinaryWeightedEv_identity` |
+| `Cauchy.evSpechtSums_eq_coefficients` | `Cauchy.ordinaryEv_identity`, using existing `HemmerStraubWestrem.result` |
+| `Cauchy.ordinaryEv_identity` | `Cauchy.ordinaryWeightedEv_identity` |
+| `Cauchy.ordinaryWeightedEv_identity` | terminal WIP: equality of both actual reciprocal-centralizer averages, common-value evaluation still absent |
+
+In this table `Mixed` and `Cauchy` abbreviate module names; declarations share
+namespace `SpechtPolytabloid.TauCeti.ThreeRowGram`. The weighted identity uses
+the existing `DeformedJucysMurphyC2.zPartition` literally. It is equality of the
+two actual averages and does not assert their common binomial/zero value.
+The existing owning HSW Scribe gives that weighted coefficient derivation using
+`LatticeHalfFockChargedCoefficients.solution_unique`. A separately retained Lean
+consumer carrying that evaluation to both actual averages is still absent; the
+retired coefficient module is not restored or duplicated. Every original
+quantifier and parity case stated above remains required.
+
+These are uncompiled proof sources. Native elaboration and accepted axiom closure
+of the entire imported Specht chain, actual proof-term liveness, the section 3.9
+full dependent-domain audit, regular admission and PR gates remain unverified.
+No source line or Scribe verification supplies any of those guarantees. The
+candidate content witness is finite table/exponent decomposition plus Cauchy
+coefficient isolation and strict shifted dominance on the live source route;
+its elaborated dependency closure and admission basis are NOT ESTABLISHED.
+There is no new axiom, `sorry`, freeze, deposit, validated Reg or standalone PR.
+The Apache attribution, complete license, no-NOTICE assessment and retirement
+obligations above remain applicable and unchanged.
