@@ -9,6 +9,7 @@
 import D5.S1.Dynamics.Symbolic.PermutativeLifts.PeriodicSkeletonDensity
 import Mathlib.Dynamics.PeriodicPts.Defs
 import Mathlib.Algebra.Ring.Periodic
+import Mathlib.Order.Filter.AtTopBot.Finite
 
 /-! The colored skeleton keeps both its mask and its actual letters. Essential
 periods require a nonempty skeleton and its least positive global period.
@@ -220,5 +221,92 @@ theorem leastPeriod_dvd_of_dvd {A : Type*} (x : ℤ → A) {p r : ℕ} (hpr : p 
     leastPeriod x p ∣ leastPeriod x r := by
   have hc := color_periodic_of_dvd hpr (color_leastPeriod_periodic x r)
   exact ((isPeriodicPt_unit_shift_iff (color x p) (leastPeriod x r)).mpr hc).minimalPeriod_dvd
+
+
+/-- Divisibility propagates through any number of levels. -/
+theorem leastPeriods_dvd_of_le {A : Type*} (x : ℤ → A) (h : ℕ → ℕ)
+    (hdvd : ∀ n, h n ∣ h (n + 1)) {i j : ℕ} (hij : i ≤ j) :
+    leastPeriod x (h i) ∣ leastPeriod x (h j) := by
+  induction j, hij using Nat.le_induction with
+  | base => exact dvd_rfl
+  | succ j _ ih => exact ih.trans (leastPeriod_dvd_of_dvd x (hdvd j))
+
+theorem leastPeriods_monotone {A : Type*} (x : ℤ → A) (h : ℕ → ℕ)
+    (hpos : ∀ n, 0 < h n) (hdvd : ∀ n, h n ∣ h (n + 1)) :
+    Monotone (fun n => leastPeriod x (h n)) := by
+  apply monotone_nat_of_le_succ
+  intro n
+  exact Nat.le_of_dvd (leastPeriod_pos x (hpos (n + 1)))
+    (leastPeriod_dvd_of_dvd x (hdvd n))
+
+/-- Bounded extracted periods would all divide one positive factorial.
+Coordinate coverage would then force that factorial to be a global period. -/
+theorem leastPeriods_unbounded {A : Type*} (x : ℤ → A) (h : ℕ → ℕ)
+    (hpos : ∀ n, 0 < h n)
+    (hcover : ∀ i : ℤ, ∃ n, CoordinatePeriodic x (h n) i)
+    (haperiodic : ∀ p : ℕ, 0 < p → shift (p : ℤ) x ≠ x) (K : ℕ) :
+    ∃ n, K < leastPeriod x (h n) := by
+  by_contra hnot
+  have hle : ∀ n, leastPeriod x (h n) ≤ K := by
+    simpa only [not_exists, not_lt] using hnot
+  apply haperiodic K.factorial (Nat.factorial_pos K)
+  funext i
+  obtain ⟨n, hn⟩ := hcover i
+  have hq : CoordinatePeriodic x (leastPeriod x (h n)) i := by
+    change i ∈ sites x (leastPeriod x (h n))
+    rw [sites_leastPeriod_eq]
+    exact hn
+  have hd : leastPeriod x (h n) ∣ K.factorial :=
+    Nat.dvd_factorial (leastPeriod_pos x (hpos n)) (hle n)
+  have hh := coordinate_periodic_of_dvd hd hq 1
+  change x ((K.factorial : ℤ) + i) = x i
+  simpa only [one_mul, add_comm] using hh
+
+/-- The primary source's period structure: strictly increasing positive
+essential periods, divisibility, and coverage of every signed coordinate. -/
+structure PeriodStructure {A : Type*} (x : ℤ → A) where
+  period : ℕ → ℕ
+  essential : ∀ n, EssentialPeriod x (period n)
+  strictMono_period : StrictMono period
+  divides : ∀ n, period n ∣ period (n + 1)
+  covers : ∀ i : ℤ, ∃ n, CoordinatePeriodic x (period n) i
+
+/-- The source normalized skeleton density along an actual period structure. -/
+noncomputable def PeriodStructure.skeletonDensity {x : ℤ → Bool}
+    (P : PeriodStructure x) (n : ℕ) : ℝ :=
+  @density x (P.period n) ⟨Nat.ne_of_gt (P.essential n).1⟩
+
+/-- A nonperiodic point with a nested positive nonempty covering skeleton
+scale admits an actual source period structure, with a cofinal subsequence.
+Positivity, essentiality, removal of repeats and coverage are conclusions. -/
+theorem exists_period_structure {A : Type*} (x : ℤ → A) (h : ℕ → ℕ)
+    (hpos : ∀ n, 0 < h n) (hdvd : ∀ n, h n ∣ h (n + 1))
+    (hnonempty : ∀ n, (sites x (h n)).Nonempty)
+    (hcover : ∀ i : ℤ, ∃ n, CoordinatePeriodic x (h n) i)
+    (haperiodic : ∀ p : ℕ, 0 < p → shift (p : ℤ) x ≠ x) :
+    ∃ (P : PeriodStructure x) (ψ : ℕ → ℕ), StrictMono ψ ∧
+      (∀ n, n ≤ ψ n) ∧ (∀ n, P.period n = leastPeriod x (h (ψ n))) := by
+  let q : ℕ → ℕ := fun n => leastPeriod x (h n)
+  have hmono : Monotone q := leastPeriods_monotone x h hpos hdvd
+  have hunbounded : ∀ K, ∃ n, K < q n := leastPeriods_unbounded x h hpos hcover haperiodic
+  have hqtop : Tendsto q atTop atTop := hmono.tendsto_atTop_atTop fun K => by
+    obtain ⟨n, hn⟩ := hunbounded K
+    exact ⟨n, Nat.le_of_lt hn⟩
+  obtain ⟨ψ, hψ, hvalues⟩ := Filter.strictMono_subseq_of_tendsto_atTop hqtop
+  have hψbound : ∀ n, n ≤ ψ n := fun n => hψ.id_le n
+  let P : PeriodStructure x := {
+    period := fun n => q (ψ n)
+    essential := fun n => leastPeriod_essential x (hpos (ψ n)) (hnonempty (ψ n))
+    strictMono_period := hvalues
+    divides := fun n => leastPeriods_dvd_of_le x h hdvd (Nat.le_of_lt (hψ (Nat.lt_succ_self n)))
+    covers := by
+      intro i
+      obtain ⟨n, hn⟩ := hcover i
+      have hq : CoordinatePeriodic x (q n) i := by
+        change i ∈ sites x (leastPeriod x (h n))
+        rw [sites_leastPeriod_eq]
+        exact hn
+      exact ⟨n, coordinate_periodic_of_dvd (leastPeriods_dvd_of_le x h hdvd (hψbound n)) hq⟩ }
+  exact ⟨P, ψ, hψ, hψbound, fun _ => rfl⟩
 
 end D5.S1.Dynamics.Symbolic.PermutativeLifts.PeriodicSkeleton
