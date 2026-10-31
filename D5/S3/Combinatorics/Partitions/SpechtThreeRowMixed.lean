@@ -18,7 +18,7 @@ namespace D5.S3.Combinatorics.Partitions.SpechtPolytabloid
 noncomputable section
 open scoped BigOperators
 namespace TauCeti.ThreeRowGram
-open _root_.Equiv Finset MvPolynomial CategoryTheory
+open _root_.Equiv _root_.Equiv.Perm Finset MvPolynomial CategoryTheory
 
 /-- Sort the three natural row sizes and delete zero parts. Equal sizes retain their
 multiplicity. The degree proof changes no data in the literal partition. -/

@@ -33,7 +33,7 @@ namespace D5.S3.Combinatorics.Partitions.SpechtPolytabloid
 noncomputable section
 open scoped BigOperators
 namespace TauCeti.ThreeRowGram
-open _root_.Equiv Finset
+open _root_.Equiv _root_.Equiv.Perm Finset
 
 private def deltaProduct {R : Type*} [CommRing R] (x : Fin 3 → R) : R :=
   (x 0 - x 1) * (x 0 - x 2) * (x 1 - x 2)

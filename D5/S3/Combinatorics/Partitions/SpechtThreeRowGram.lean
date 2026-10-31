@@ -26,7 +26,7 @@ namespace D5.S3.Combinatorics.Partitions.SpechtPolytabloid
 noncomputable section
 open scoped BigOperators
 namespace TauCeti
-open _root_.Equiv Finset
+open _root_.Equiv _root_.Equiv.Perm Finset
 
 section CountingSupplier
 variable {α ι : Type*} [Fintype α] [Fintype ι] [DecidableEq ι]
@@ -110,8 +110,8 @@ instance colouringsFinite (n : ℕ) (a : Fin 3 → ℤ) : Finite (Colourings n a
   inferInstanceAs (Finite {f : Fin n → Fin 3 // ∀ i, (#{x | f x = i} : ℤ) = a i})
 
 instance colouringsMulAction (n : ℕ) (a : Fin 3 → ℤ) : MulAction (Perm (Fin n)) (Colourings n a) where
-  smul π f := ⟨f.1 ∘ π⁻¹, fun i => by
-    rw [show #{x | (f.1 ∘ π⁻¹) x = i} = #{x | f.1 x = i} from
+  smul π f := ⟨f.1 ∘ (π⁻¹ : Perm (Fin n)), fun i => by
+    rw [show #{x | (f.1 ∘ (π⁻¹ : Perm (Fin n))) x = i} = #{x | f.1 x = i} from
       card_filter_comp_perm f.1 π⁻¹ i]
     exact f.2 i⟩
   one_smul f := by apply Subtype.ext; rfl
@@ -126,7 +126,7 @@ abbrev colouringRepresentation (n : ℕ) (a : Fin 3 → ℤ) : _root_.FDRep ℂ 
 
 private theorem colouring_fixed_iff {n : ℕ} (a : Fin 3 → ℤ) (π : Perm (Fin n))
     (f : Colourings n a) : π • f = f ↔ f.1 ∘ π = f.1 := by
-  change (⟨f.1 ∘ π⁻¹, _⟩ : Colourings n a) = f ↔ _
+  change (⟨f.1 ∘ (π⁻¹ : Perm (Fin n)), _⟩ : Colourings n a) = f ↔ _
   rw [Subtype.ext_iff]
   constructor
   · intro h
@@ -219,7 +219,7 @@ theorem sum_fixedColourings_mul (n : ℕ) (a b : Fin 3 → ℤ) :
         rw [mem_fiberSubgroup, funext_iff]; rfl)
     simp only [F, ← hrow, ← hcol, hc]
     split_ifs with hm
-    · simp only [hm, and_true]
+    · simp only [hm, forall_const, and_true]
       rw [← sum_filter, sum_const]
     · simp [hm]
   simp_rw [paired_fixed_sum]
@@ -256,7 +256,9 @@ theorem sum_virtualCharacter_mul (n : ℕ) (μ ν : Fin 3 → ℕ) :
     ∑ π : Perm (Fin n), virtualCharacter n μ π * virtualCharacter n ν π =
       (n.factorial : ℤ) * signedContingencyGram n μ ν := by
   classical
-  simp only [virtualCharacter, signedContingencyGram, sum_mul, mul_sum]
+  simp only [virtualCharacter, signedContingencyGram]
+  simp_rw [sum_mul]
+  simp_rw [mul_sum]
   calc
     _ = ∑ σ : Perm (Fin 3), ∑ τ : Perm (Fin 3), ∑ π : Perm (Fin n),
         (sign σ : ℤ) * (fixedColourings (shifted μ σ) π : ℤ) *

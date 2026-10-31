@@ -21,7 +21,7 @@ namespace D5.S3.Combinatorics.Partitions.SpechtPolytabloid
 noncomputable section
 open scoped BigOperators
 namespace TauCeti.ThreeRowGram
-open _root_.Equiv Finset MvPolynomial
+open _root_.Equiv _root_.Equiv.Perm Finset MvPolynomial
 
 def staircase (i : Fin 3) : ℕ := 2 - (i : ℕ)
 private def exponent (μ : Fin 3 → ℕ) : Fin 3 →₀ ℕ :=
