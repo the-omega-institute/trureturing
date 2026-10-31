@@ -37,25 +37,18 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ (n y z : ℕ) (h : 2 * y + 6 * z ≤ n),
-    (partition126 n y z h).parts = r.readout () (n, y) z ∧
-      r.readout () (n, y) z =
-        Multiset.replicate (n - 2 * y - 6 * z) 1 +
-          Multiset.replicate y 2 + Multiset.replicate z 6
+    (partition126 n y z h).parts = r.readout () (n, y) z
 
 private theorem actual_law : arena.Law actual := by
   intro n y z h
-  refine ⟨?_, ?_⟩
-  · simpa [actual, realize] using partition126_parts n y z h
-  · rfl
+  simpa [actual, realize] using partition126_parts n y z h
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hbad := h 2 1 0 (by decide)
-  have hsecond := hbad.2
-  change (0 : Multiset ℕ) =
-    Multiset.replicate (2 - 2 * 1 - 6 * 0) 1 +
-      Multiset.replicate 1 2 + Multiset.replicate 0 6 at hsecond
-  norm_num at hsecond
+  rw [partition126_parts] at hbad
+  change ({2} : Multiset ℕ) = 0 at hbad
+  norm_num at hbad
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -67,20 +60,11 @@ theorem dependence : ObservationalDependence signature actual := by
       Multiset.replicate 1 2 + Multiset.replicate 1 6)
   intro he
   have hc := congrArg (Multiset.count 6) he
-  have hc' : (0 : ℕ) = 1 := by
-    simpa [Multiset.count_add] using hc
-  omega
+  simp [Multiset.count_add] at hc
 
 def source_registration : Registration arena (type_of% @partition126_parts) where
   actual := actual
-  bridge := by
-    constructor
-    · intro hp n y z h
-      refine ⟨?_, ?_⟩
-      · simpa [actual, realize] using hp n y z h
-      · rfl
-    · intro hl n y z h
-      simpa [actual, realize] using (hl n y z h).1
+  bridge := Iff.rfl
   variation := ⟨actual_law, rejected, rejected_law⟩
   sensitivity := by
     constructor
