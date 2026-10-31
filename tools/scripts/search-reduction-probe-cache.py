@@ -18,7 +18,7 @@ import tempfile
 import time
 
 
-VERSION = "probe-cache-v10"
+VERSION = "probe-cache-v11"
 # Lean reserves this status only for its typed, terminal source rejection.
 # All other nonzero statuses, including continuations, remain non-cacheable.
 REJECTION_EXIT = 76

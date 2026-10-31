@@ -643,7 +643,7 @@ structure ProbeRejection where
 def ProbeRejection.message (r : ProbeRejection) : String :=
   s!"{r.arm.label}: {(SourceCertificateFailure.leak r.dependency).message}"
 
-abbrev probeTerminalVersion : String := "probe-terminal-v2/source-audit"
+abbrev probeTerminalVersion : String := "probe-terminal-v3/source-audit"
 
 /-- A typed rejection is a terminal compiler result, distinct from every fault.
 The transport runner maps this reserved status to Lean's ordinary error exit. -/
@@ -653,7 +653,13 @@ private def finishProbeRejection (rejection : ProbeRejection)
     (terminate : Bool := true) : CommandElabM Unit := do
   if (← get).messages.hasErrors then throwError "{rejection.message}"
   if !terminate then throwError "{rejection.message}"
+  emitLookupRecord s!"PROBE_REJECTION {Json.mkObj [
+    ("version", toJson probeTerminalVersion), ("arm", toJson rejection.arm.label),
+    ("dependency", toJson rejection.dependency.toString),
+    ("disposition", toJson "reject; reduction not certified; no admission")] |>.compress}"
   IO.eprintln s!"error: {rejection.message}"
+  (← IO.getStderr).flush
+  (← IO.getStdout).flush
   IO.Process.exit probeRejectionExit.toUInt8
 
 /-- Inspect the actual transitive source closure of checked terms. -/
@@ -673,17 +679,28 @@ def certificateSourceDependencies (source : Environment) (proofs : Array Expr)
     for dependency in info.getUsedConstantsAsSet do todo := todo.push dependency
   return seen.size
 
-/-- Mandatory source audit reuses checked terms without repeating graph
-evaluation or certificate assembly. -/
-def auditProbeCertificates (source : Environment) (request : Request)
-    (result : Observation) : CommandElabM (Option ProbeRejection) := do
-  let some reading := result.graph? | return none
-  let baselineProofs := reading.graph.edges.toArray.filterMap (·.zeroProof) ++
-    reading.baselineProbe.proof?.toArray ++ reading.baselineProof?.toArray
-  let paired := reading.graph.edges.toArray.filterMap (·.pairedZeroProof) ++
-    reading.pairedProbe.proof?.toArray ++ reading.pairedProof?.toArray
-  for (arm, proofs, forbidden) in #[(SourceAuditArm.baseline, baselineProofs, #[request.target] ++ request.additions),
-      (.paired, paired, #[request.target])] do
+/-- A rejected terminal retains only checked source-audit terms. It contains
+no R query, price, unknown or fault record. -/
+structure SourceAuditEvidence where
+  baselineProofs : Array Expr := #[]
+  pairedProofs : Array Expr := #[]
+  baselineAssembled : Bool := false
+  pairedAssembled : Bool := false
+
+def sourceAuditEvidence (result : Observation) : SourceAuditEvidence := Id.run do
+  let some reading := result.graph? | return {}
+  return {
+    baselineProofs := reading.graph.edges.toArray.filterMap (·.zeroProof) ++
+      reading.baselineProbe.proof?.toArray ++ reading.baselineProof?.toArray
+    pairedProofs := reading.graph.edges.toArray.filterMap (·.pairedZeroProof) ++
+      reading.pairedProbe.proof?.toArray ++ reading.pairedProof?.toArray
+    baselineAssembled := reading.baselineProof?.isSome
+    pairedAssembled := reading.pairedProof?.isSome }
+
+def auditSourceCertificates (source : Environment) (request : Request)
+    (evidence : SourceAuditEvidence) : CommandElabM (Option ProbeRejection) := do
+  for (arm, proofs, forbidden) in #[(SourceAuditArm.baseline, evidence.baselineProofs,
+      #[request.target] ++ request.additions), (.paired, evidence.pairedProofs, #[request.target])] do
     let count ← match certificateSourceDependencies source proofs forbidden with
       | .ok count => pure count
       | .error (.leak dependency) => return some {arm, dependency}
@@ -693,17 +710,31 @@ def auditProbeCertificates (source : Environment) (request : Request)
       ("certificates", toJson proofs.size), ("transitive_constants", toJson count),
       ("forbidden", toJson (forbidden.map Name.toString)),
       ("no_forbidden_dependency", toJson true),
-      ("assembled_zero", toJson (if arm == .baseline then reading.baselineProof?.isSome
-        else reading.pairedProof?.isSome))] |>.compress}"
+      ("assembled_zero", toJson (if arm == .baseline then evidence.baselineAssembled
+        else evidence.pairedAssembled))] |>.compress}"
   return none
+
+/-- Mandatory source audit reuses checked terms without repeating graph
+evaluation or certificate assembly. -/
+def auditProbeCertificates (source : Environment) (request : Request)
+    (result : Observation) : CommandElabM (Option ProbeRejection) := do
+  if result.graph?.isNone then return none
+  auditSourceCertificates source request (sourceAuditEvidence result)
+
+inductive ProbeCacheOutcome where
+  | observed (result : Observation)
+  | rejected (target : Name) (evidence : SourceAuditEvidence) (rejection : ProbeRejection)
+
+def ProbeCacheOutcome.target : ProbeCacheOutcome → Name
+  | .observed result => result.target
+  | .rejected target _ _ => target
 
 /-- Complete typed probe data; the runner authenticates the bytes before Lean
 deserializes them. JSON projections are never accepted as probe evidence. -/
 structure ProbeCacheRecord where
   identity : String
   targetHeader : List Name × Expr
-  result : Observation
-  rejection? : Option ProbeRejection := none
+  outcome : ProbeCacheOutcome
   dependencies : Array Declaration := #[]
   dependencyModule? : Option Name := none
 
@@ -785,7 +816,7 @@ private def snapshotProbeSourceData (directory : System.FilePath)
 private def probeIdentity (request : Request) (owners : Array Name) (name : Name)
     (fixture : Bool) : IO String := do
   return reprStr (localConfiguration, certificateLanguageVersion, transportVersion,
-    "probe-record-v10", probeTerminalVersion, ← IO.getEnv "SEARCH_REDUCTION_PROBE_ID", request.target,
+    "probe-record-v11", probeTerminalVersion, ← IO.getEnv "SEARCH_REDUCTION_PROBE_ID", request.target,
     request.baseline, request.additions, request.baselineCommit, request.informationApplication,
     request.certificates.map CertificateNomination.encode,
     request.edgeCertificates.map (fun (n, c) => (n, c.encode)), owners, name, fixture)
@@ -802,8 +833,7 @@ private def probeProofs (result : Observation) : Array Expr := Id.run do
       reading.baselineProof?.toArray ++ reading.pairedProof?.toArray
   return proofs
 
-def checkCachedProbeCertificates (result : Observation) : MetaM Unit := withPublicationContext do
-  let proofs := probeProofs result
+def checkCachedCertificates (proofs : Array Expr) : MetaM Unit := withPublicationContext do
   let before ← getEnv
   try
     -- Every certificate crosses the kernel separately. A temporary root then
@@ -834,6 +864,13 @@ def checkCachedProbeCertificates (result : Observation) : MetaM Unit := withPubl
     unless standardAxioms axioms do throwError "graph.nonstandard_axioms: {axioms}"
   finally setEnv before
   emitLookupRecord s!"PROBE_CACHE_KERNEL_CERTIFICATES count={proofs.size} standard_axioms=true"
+
+def checkCachedProbeCertificates (result : Observation) : MetaM Unit :=
+  checkCachedCertificates (probeProofs result)
+
+def ProbeCacheOutcome.proofs : ProbeCacheOutcome → Array Expr
+  | .observed result => probeProofs result
+  | .rejected _ evidence _ => evidence.baselineProofs ++ evidence.pairedProofs
 
 /-- Freeze only kernel-checked dependency declarations into an ordinary Lean
 module. Hot imports use the same compiled-module trust boundary as cold imports;
@@ -871,22 +908,32 @@ unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
     (base? : Option Environment := none) (importDependencies : Bool := false)
     (moduleMinDependencies : Nat := 0)
     (rejection? : Option ProbeRejection := none) : CommandElabM Unit := do
-  unless probeCacheable result && !(← get).messages.hasErrors do
+  unless !(← get).messages.hasErrors do
     throwError "search.cache_fault_not_reusable"
+  let outcome := match rejection? with
+    | some rejection => ProbeCacheOutcome.rejected request.target (sourceAuditEvidence result) rejection
+    | none => .observed result
+  if rejection?.isNone && !probeCacheable result then
+    throwError "search.cache_fault_not_reusable"
+  if let some rejection := rejection? then
+    unless (← auditSourceCertificates source request (sourceAuditEvidence result)) == some rejection do
+      throwError "search.probe_cache_rejection_mismatch"
+    liftTermElabM <| withEnv source <| checkCachedCertificates outcome.proofs
   let some info := (source.setExporting false).find? request.target
     | throwError "search.cache_missing_target"
   let path := directory / s!"probe-{hash identity}.pickle"
   let mut base := base?.getD (← getEnv)
   let roots ← liftTermElabM <| withPublicationContext do
     let mut roots := #[]
-    if result.presentationEvidence?.isSome ||
-        (result.attempts ++ result.pairAttempts).any (·.proof?.isSome) then
+    if rejection?.isNone && (result.presentationEvidence?.isSome ||
+        (result.attempts ++ result.pairAttempts).any (·.proof?.isSome)) then
       roots := info.type.getUsedConstants
-    for proof in probeProofs result do
+    for proof in outcome.proofs do
       let type ← withEnv source (inferType proof)
       roots := roots ++ type.getUsedConstants ++ proof.getUsedConstants
-    if let some evidence := result.presentationEvidence? then
-      roots := roots ++ evidence.conversionType.getUsedConstants
+    if rejection?.isNone then
+      if let some evidence := result.presentationEvidence? then
+        roots := roots ++ evidence.conversionType.getUsedConstants
     pure roots
   -- Rejected records never publish a target. Its body, if implicated in the
   -- leak, is ordinary checked input needed to repeat the same source audit.
@@ -912,7 +959,7 @@ unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
   IO.FS.createDirAll directory
   let temporary := path.addExtension "tmp"
   pickle temporary ({
-    identity, targetHeader := (info.levelParams, info.type), result, rejection?, dependencies,
+    identity, targetHeader := (info.levelParams, info.type), outcome, dependencies,
     dependencyModule?} : ProbeCacheRecord)
   IO.FS.rename temporary path
 
@@ -946,9 +993,10 @@ unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
   let (record, region) ← unpickle ProbeCacheRecord path
   profilePhase "probe/cache-unpickle-end"
   probeRegions.modify (·.push region)
-  unless record.identity == identity && record.result.target == request.target do
+  unless record.identity == identity && record.outcome.target == request.target do
     throwError "search.probe_cache_identity_mismatch"
-  unless probeCacheable record.result do throwError "search.cache_fault_not_reusable"
+  if let .observed result := record.outcome then
+    unless probeCacheable result do throwError "search.cache_fault_not_reusable"
   if let some module := record.dependencyModule? then
     let imported ← getEnv
     unless imported.allImportedModuleNames.contains module &&
@@ -963,16 +1011,19 @@ unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
   let mainModule := (← getEnv).header.mainModule
   modifyEnv fun _ => source.setMainModule mainModule
   profilePhase "probe/cache-kernel-start"
-  liftTermElabM <| withPublicationContext <| checkCachedProbeCertificates record.result
+  liftTermElabM <| withPublicationContext <| checkCachedCertificates record.outcome.proofs
   profilePhase "probe/cache-kernel-end"
-  let rejection? ← auditProbeCertificates source request record.result
-  unless rejection? == record.rejection? do throwError "search.probe_cache_rejection_mismatch"
-  if let some rejection := rejection? then
+  if let .rejected _ evidence rejection := record.outcome then
+    unless (← auditSourceCertificates source request evidence) == some rejection do
+      throwError "search.probe_cache_rejection_mismatch"
     emitLookupRecord "PROBE_CACHE hit=authenticated kernel_recomputed=true terminal=rejected"
     finishProbeRejection rejection terminateOnRejection
     return true
+  let .observed result := record.outcome | throwError "search.probe_cache_invalid_outcome"
+  unless (← auditProbeCertificates source request result).isNone do
+    throwError "search.probe_cache_rejection_mismatch"
   profilePhase "probe/publication-start"
-  liftTermElabM <| publish name record.result (some source) (some record.targetHeader)
+  liftTermElabM <| publish name result (some source) (some record.targetHeader)
   emitLookupRecord "PROBE_CACHE_CURRENT_CLASSIFIER checked=true input_versions=explicit"
   profilePhase "probe/publication-end"
   let auditModule := s!"SearchReductionAudit_{hash request.target}_{← IO.monoNanosNow}"
@@ -991,7 +1042,7 @@ unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
     ("target", toJson request.target.toString), ("source", toJson auditSource.toString),
     ("module", toJson output.toString), ("payload", toJson payload.toString),
     ("negative_semantics", toJson "authenticated cached meta-computed full R; not an object-level unprovability proof")] |>.compress}"
-  logInfo (observationJson record.result request.baselineCommit).compress
+  logInfo (observationJson result request.baselineCommit).compress
   return true
 
 /-- Count every requested probe, including wrappers that fail before dispatch.
@@ -1262,6 +1313,8 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
       IO.print child.stdout
       IO.eprint child.stderr
       if (← get).messages.hasErrors then IO.Process.exit 1
+      (← IO.getStderr).flush
+      (← IO.getStdout).flush
       IO.Process.exit probeRejectionExit.toUInt8
     if child.exitCode != 0 then
       unless fixture do

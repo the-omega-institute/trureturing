@@ -220,8 +220,8 @@ class ProbeCacheTests(unittest.TestCase):
         commands = (sources / "Commands.lean").read_text()
         status = re.search(r'abbrev probeRejectionExit : UInt32 := (\d+)', commands)
         self.assertEqual(cache.REJECTION_EXIT, int(status.group(1)))
-        self.assertIn('"probe-record-v10"', commands)
-        self.assertEqual(cache.VERSION, "probe-cache-v10")
+        self.assertIn('"probe-record-v11"', commands)
+        self.assertEqual(cache.VERSION, "probe-cache-v11")
 
     def cold_terminal(self, status):
         """Model only the Lean transport, never inspect diagnostic contents."""

@@ -17,7 +17,9 @@ def CacheFixture.write (f : CacheFixture) (result : Observation)
     ({
       identity := f.identity
       targetHeader := ([], mkConst ``True)
-      result, rejection?
+      outcome := match rejection? with
+        | some rejection => .rejected f.request.target (sourceAuditEvidence result) rejection
+        | none => .observed result
       dependencies := f.dependencies} : ProbeCacheRecord)
 
 /-- Each replay case owns a compiler process, which releases imported regions on exit. -/

@@ -43,13 +43,20 @@ and never publish a graph or verdict. An edited rejection is not evidence. -/
 run_cmd withCacheFixture fun f => do
   let request := {f.request with additions := #[`cacheFixtureAux]}
   let result := {f.result with graph? := some {
-    graph := {edges := [{conclusion := 0, zeroProof := some (mkConst `cacheFixtureAux)}]} }}
+    graph := {edges := [{conclusion := 0, zeroProof := some (mkConst `cacheFixtureAux)}]}
+    queryRecords := [{role := "deferred", target := 0, premises := [], terminal := .notRun}] }}
   let rejection : ProbeRejection := {arm := .baseline, dependency := `cacheFixtureAux}
   unless (← auditProbeCertificates (← getEnv) request result) == some rejection do
     -- The replay environment has not installed the dependency yet. The guard
     -- rejects its forbidden name before attempting to resolve its body.
     throwError "source guard did not produce the exact typed rejection"
-  f.write result (some rejection)
+  let cacheBase ← getEnv
+  liftTermElabM do
+    replayCacheDependencies f.dependencies
+    discard <| checkProof f.request.target [] (mkConst ``True) (mkConst ``True.intro)
+  saveProbeCache f.directory f.identity (← getEnv) request result (some cacheBase)
+    (rejection? := some rejection)
+  modifyEnv fun _ => cacheBase
   let name := `cacheReplaySourceRejection
   let message ← try
     discard <| replayProbeCache f.directory f.identity request #[] name false
@@ -61,7 +68,10 @@ run_cmd withCacheFixture fun f => do
     throwError "source rejection published a verdict"
   for changed in [none, some {rejection with dependency := `differentDependency},
       some {rejection with arm := .paired}] do
-    f.write result changed
+    -- The observed-variant mutation must itself be fault-free, so the test
+    -- specifically reaches the source-guard mismatch rather than fault refusal.
+    let mutation := {result with graph? := result.graph?.map (fun g => {g with queryRecords := []})}
+    f.write mutation changed
     let message ← try
       discard <| replayProbeCache f.directory f.identity request #[] name false
       pure "accepted"
@@ -69,6 +79,23 @@ run_cmd withCacheFixture fun f => do
     unless message == "search.probe_cache_rejection_mismatch" do
       throwError "altered rejection was not rejected: {message}"
   logInfo "probe cache: typed source rejection replayed, dependency rechecked, no publication"
+
+run_cmd withCacheFixture fun f => do
+  liftTermElabM do
+    replayCacheDependencies f.dependencies
+    discard <| checkProof f.request.target [] (mkConst ``True) (mkConst ``True.intro)
+  let source ← getEnv
+  let fault := {f.result with base := .incomplete .execution}
+  let identity := f.identity ++ "-fault"
+  for rejection? in [none, some {arm := SourceAuditArm.baseline, dependency := f.request.target}] do
+    let rejected ← try
+      saveProbeCache f.directory identity source f.request fault (rejection? := rejection?)
+      pure false
+      catch _ => pure true
+    unless rejected do throwError "a fault was stored or relabeled as a source refusal"
+  if ← (f.directory / s!"probe-{hash identity}.pickle").pathExists then
+    throwError "fault cache record was written"
+  logInfo "probe cache: ordinary fault cannot be stored or relabeled as a rejection"
 
 run_cmd withCacheFixture fun f => do
   let rejected ← try
