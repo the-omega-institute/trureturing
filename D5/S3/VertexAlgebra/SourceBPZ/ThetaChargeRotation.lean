@@ -537,6 +537,103 @@ theorem gradeChargeRotation_mem_gradeChargeSector (D : LatticeData)
       (Submodule.span ℂ (Set.range (fun a : ChargeEnergyFiber D ell n j =>
         gradeChargeBasisVector D n a.1))).smul_mem c hx
 
+private theorem gradeChargeBasisVector_coeff (D : LatticeData) (n : ℤ)
+    (a : EnergyFiber D n) :
+    gradeCoeffEquiv D n (gradeChargeBasisVector D n a) = Finsupp.single a 1 := by
+  apply Finsupp.ext
+  intro b
+  change (carrierCoeffEquiv D (gradeChargeBasisVector D n a).1) b.1 = _
+  change (carrierBasis D).repr (carrierBasis D a.1) b.1 = _
+  have h := congrArg (fun p : Label D →₀ ℂ => p b.1)
+    ((carrierBasis D).repr_self a.1)
+  simpa [Finsupp.single_apply, Subtype.ext_iff, Prod.ext_iff] using h
+
+private theorem gradeChargeBasisVector_eq_gradeBasis (D : LatticeData) (n : ℤ)
+    (a : EnergyFiber D n) :
+    gradeChargeBasisVector D n a = gradeBasis D n a := by
+  apply (gradeCoeffEquiv D n).injective
+  rw [gradeChargeBasisVector_coeff]
+  exact (gradeBasis D n).repr_self a |>.symm
+
+theorem gradeChargeSector_eq_gradeChargeResidue (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (n : ℤ) (r : ZMod 3)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) :
+    gradeChargeSector D ell n r = gradeChargeResidue D ell n r := by
+  letI := energyFiber_finite D hD n
+  letI := Fintype.ofFinite (EnergyFiber D n)
+  apply le_antisymm
+  · rw [gradeChargeSector]
+    refine Submodule.span_le.mpr ?_
+    rintro x ⟨a, rfl⟩
+    change gradeCoeffEquiv D n (gradeChargeBasisVector D n a.1) ∈
+      Finsupp.supported ℂ ℂ {b : EnergyFiber D n | ell b.1.1 = r}
+    rw [gradeChargeBasisVector_coeff]
+    exact Finsupp.single_mem_supported ℂ 1 a.2
+  · intro v hv
+    have hv' : gradeCoeffEquiv D n v ∈
+        Finsupp.supported ℂ ℂ {a : EnergyFiber D n | ell a.1.1 = r} := hv
+    rw [gradeChargeSector]
+    rw [← (gradeBasis D n).sum_repr v]
+    apply Submodule.sum_mem
+    intro a ha
+    change gradeCoeffEquiv D n v a • gradeBasis D n a ∈ _
+    by_cases has : a ∈ (gradeCoeffEquiv D n v).support
+    · have har : ell a.1.1 = r :=
+        (Finsupp.mem_supported ℂ (gradeCoeffEquiv D n v)).mp hv' has
+      exact Submodule.smul_mem _ _ (Submodule.subset_span
+        (Set.mem_range.mpr ⟨⟨a, har⟩,
+          by simpa using (gradeChargeBasisVector_eq_gradeBasis D n a)⟩))
+    · have hzero : gradeCoeffEquiv D n v a = 0 := by
+        by_contra hzero
+        exact has (Finsupp.mem_support_iff.mpr hzero)
+      simp [hzero]
+
+theorem gradeTheta_mem_gradeChargeSector_neg (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (n : ℤ) (j : ZMod 3)
+    (v : grade D n) (hv : v ∈ gradeChargeSector D ell n j) :
+    gradeTheta D n v ∈ gradeChargeSector D ell n (-j) := by
+  rw [gradeChargeSector] at hv ⊢
+  refine Submodule.span_induction ?_ ?_ ?_ ?_ hv
+  · rintro x ⟨a, rfl⟩
+    let b : EnergyFiber D n := ⟨(-a.1.1.1, a.1.1.2), by
+      simpa [energy, chargeEnergy, bilinear] using a.1.2⟩
+    let b' : ChargeEnergyFiber D ell n (-j) := ⟨b, by
+      dsimp [b]
+      rw [map_neg]
+      simpa using congrArg Neg.neg a.2⟩
+    have htheta : gradeTheta D n (gradeChargeBasisVector D n a.1) =
+        ((-1 : ℂ) ^ (occurrences D a.1.1.2).length) •
+          gradeChargeBasisVector D n b := by
+      apply Subtype.ext
+      change theta D (carrierBasis D a.1.1) = _
+      rw [theta_on_basis]
+      rfl
+    rw [htheta]
+    refine (Submodule.span ℂ (Set.range (fun c : ChargeEnergyFiber D ell n (-j) =>
+      gradeChargeBasisVector D n c.1))).smul_mem _ ?_
+    exact Submodule.subset_span (Set.mem_range.mpr ⟨b', by
+      apply Subtype.ext
+      rfl⟩)
+  · exact Submodule.zero_mem _
+  · intro x y _ _ hx hy
+    simpa only [map_add] using
+      (Submodule.span ℂ (Set.range (fun a : ChargeEnergyFiber D ell n (-j) =>
+        gradeChargeBasisVector D n a.1))).add_mem hx hy
+  · intro c x _ hx
+    simpa only [map_smul] using
+      (Submodule.span ℂ (Set.range (fun a : ChargeEnergyFiber D ell n (-j) =>
+        gradeChargeBasisVector D n a.1))).smul_mem c hx
+
+theorem gradeTheta_mem_gradeChargeResidue_neg (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (n : ℤ) (r : ZMod 3)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (v : grade D n) (hv : v ∈ gradeChargeResidue D ell n r) :
+    gradeTheta D n v ∈ gradeChargeResidue D ell n (-r) := by
+  rw [← gradeChargeSector_eq_gradeChargeResidue D ell n (-r) hD]
+  apply gradeTheta_mem_gradeChargeSector_neg D ell n r v
+  rw [gradeChargeSector_eq_gradeChargeResidue D ell n r hD]
+  exact hv
+
 /-- The fixed vectors of the dihedral action on a grade. -/
 abbrev gradeChargeDihedralInvariants (D : LatticeData)
     (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ) :
