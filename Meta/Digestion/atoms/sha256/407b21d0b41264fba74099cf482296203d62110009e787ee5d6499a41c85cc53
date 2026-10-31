@@ -1,0 +1,99 @@
+**证明。** 记原联合律条件于类 $C$ 后为 $\mathbb J_C$，其平稳行为 $\pi$，可见边缘为 $P_C$；本证明中的矩阵和状态均限制在 $C$ 上。记 $M_{x_{p:q}}=M_{x_p}\cdots M_{x_q}$，空区间的乘积为单位矩阵。先证明一次词出现的条件收缩。给定词右侧任意非负似然列 $z$，若其在 $J_C$ 上的和为正，则从 $s\in I_C$ 出发穿过该词后的条件核为
+
+$$
+K_z(s,t)=\frac{B_C(s,t)z_t}{(B_Cz)_s}.
+$$
+
+对 $t\in J_C$，有
+
+$$
+K_z(s,t)\ge\frac uv\frac{z_t}{\sum_{a\in J_C}z_a}.
+\tag{4.5}
+$$
+
+故所有可行行共享质量 $u/v$ 的同一概率次测度，Dobrushin 收缩系数至多 $\rho$。若 $s\notin I_C$，该词的行全为零，因而不会出现在正似然条件下。对任意非负左似然行 $a$，反向核同理满足
+
+$$
+K_a^{\rm back}(t,s)=\frac{a_sB_C(s,t)}{(aB_C)_t}
+\ge\frac uv\frac{a_s}{\sum_{r\in I_C}a_r},
+\tag{4.6}
+$$
+
+所以前向和后向均有同一个 $\rho$，且与两侧外部似然无关。这些收缩只作用于正分母的可行行；反向可行终点属于 $J_C$。若 $\sum_{J_C}z=0$ 或 $\sum_{I_C}a=0$，相应含词记录的似然为零。任意非负外部消息，包括有零坐标的消息，只须所比较的条件事件有正概率。
+
+对左擦除，取有限 $k\ge j\ge0$、$n\ge1$，在正概率记录上比较
+
+$$
+P_C(X_0=1\mid X_{-k:-1},X_{1:n})\quad\text{与}\quad
+P_C(X_0=1\mid X_{-j:-1},X_{1:n}).
+$$
+
+置
+
+$$
+y=M_{x_{1:n}}\mathbf1,\qquad z_0=Ay,\qquad
+z_t=M_{x_t}z_{t+1}\quad(-j\le t\le-1),\qquad
+a=\pi M_{x_{-k:-j-1}}.
+$$
+
+由原联合律的乘积分解，两种条件下 $H_{-j}$ 的分布分别为
+
+$$
+\mu(s)=\frac{a_s z_{-j}(s)}{a z_{-j}},\qquad
+\bar\mu(s)=\frac{\pi_s z_{-j}(s)}{\pi z_{-j}}.
+$$
+
+较短观测事件包含较长观测事件，故两个分母均为正。在 $z_t(s)>0$ 的状态上，两种条件下从 $H_t$ 到 $H_{t+1}$ 的共同转移为
+
+$$
+T_t(s,h)=\frac{M_{x_t}(s,h)z_{t+1}(h)}{z_t(s)}
+\quad(-j\le t\le-1).
+$$
+
+递推式使每行和为一，且转移只到达下一步的正分母状态；额外过去只改变 $\mu$，不改变这些核。因此 $H_0$ 的两个条件律恰为 $\mu T_{-j}\cdots T_{-1}$ 和 $\bar\mu T_{-j}\cdots T_{-1}$。中心缺失边保留位值 $e\in\{0,1\}$ 的共同转移及其位读出为
+
+$$
+U_0(s;e,h)=\frac{M_e(s,h)y_h}{(Ay)_s},\qquad
+g(s)=\sum_h U_0(s;1,h)=\frac{(M_1y)_s}{(Ay)_s}\in[0,1].
+$$
+
+对 $e$ 求和得到 $A(s,h)y_h/(Ay)_s$，即原中心 $A$ 边在这些观测下的条件转移；两个待比较后验恰为上述两个 $H_0$ 条件律对同一 $g$ 的积分。
+
+对右擦除，比较
+
+$$
+P_C(X_0=1\mid X_{-n:-1},X_{1:k})\quad\text{与}\quad
+P_C(X_0=1\mid X_{-n:-1},X_{1:j}).
+$$
+
+置
+
+$$
+\ell=\pi M_{x_{-n:-1}},\qquad a_1=\ell A,\qquad
+a_{t+1}=a_tM_{x_t}\quad(1\le t\le j),\qquad
+\xi=M_{x_{j+1:k}}\mathbf1.
+$$
+
+两种条件下 $H_{j+1}$ 的分布分别为
+
+$$
+\nu(h)=\frac{a_{j+1}(h)\xi_h}{a_{j+1}\xi},\qquad
+\bar\nu(h)=\frac{a_{j+1}(h)}{a_{j+1}\mathbf1}.
+$$
+
+从 $H_{t+1}$ 反向到 $H_t$ 的共同随机核为
+
+$$
+Q_t(h,s)=\frac{a_t(s)M_{x_t}(s,h)}{a_{t+1}(h)}
+\quad(t=j,\ldots,1),
+$$
+
+在 $a_{t+1}(h)>0$ 上每行和为一，且只到达正分母状态。额外右侧观测只改变起始律 $\nu$，这些核只使用共同左消息和共同的较早观测。故 $H_1$ 的两个条件律为 $\nu Q_j\cdots Q_1$ 和 $\bar\nu Q_j\cdots Q_1$。中心缺失边的反向核及位读出为
+
+$$
+V_0(h;e,s)=\frac{\ell_sM_e(s,h)}{(\ell A)_h},\qquad
+g^{\rm back}(h)=\sum_s V_0(h;1,s)=\frac{(\ell M_1)_h}{(\ell A)_h}\in[0,1].
+$$
+
+对 $e$ 求和得到 $\ell_sA(s,h)/(\ell A)_h$，仍为原中心 $A$ 边的反向条件转移。这两个后验恰为两个 $H_1$ 条件律对同一 $g^{\rm back}$ 的积分，不作平稳密度除法。
+

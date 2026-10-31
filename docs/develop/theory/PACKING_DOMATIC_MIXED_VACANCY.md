@@ -816,3 +816,256 @@ that residual is asserted. The source's $Q(7,6)$ question in 6.3 is
 likewise not decided by these local restrictions.
 
 ## 追加锚（本行以下为增补区）
+## 8. Adjacent colours and a uniform bound below seven
+
+**Theorem 8.1 (Adjacent-colour interval counts).** For every packing
+$f:\mathbb Z\to\{1,2,3,4,5\}$ of 1.1, every $b\in\mathbb Z$, every
+integer $m\ge1$, and each $j\in\{2,3,4\}$, the counts on the same
+interval $I=I(b,m)$ satisfy
+
+$$
+N_j(I)+(j+1)N_{j+1}(I)\le m+j. \tag{8.1}
+$$
+
+Proof. Fix $j$ and $I$, and let $a_1<\cdots<a_n$ be all the
+colour-$(j+1)$ centres in $I$. If $n=0$, then $N_j(I)\le m$ proves
+the assertion. Suppose $n\ge1$. Their separation is at least $j+2$,
+so the integer blocks
+
+$$
+K_i=[a_i,a_i+j+1]\cap\mathbb Z\qquad(1\le i\le n)
+$$
+
+are pairwise disjoint. Each contains at most one colour-$j$ centre:
+its first position has colour $j+1$, and its remaining $j+1$ positions
+span distance $j$, less than the required separation $j+1$.
+Consequently a complete block contains at least $j+1$ positions
+not of colour $j$.
+
+For $i<n$, the endpoint $a_i+j+1$ is smaller than $a_{i+1}$, so
+$K_i\subseteq I$. If $K_n\subseteq I$ also, the blocks account for
+at least $(j+1)n$ positions of $I$ not of colour $j$. Otherwise
+$K_n\cap I$ still contains $a_n$, whose colour is not $j$.
+The first $n-1$ complete blocks and this one position account for
+at least
+
+$$
+(j+1)(n-1)+1=(j+1)n-j
+$$
+
+such positions. In either case $m-N_j(I)\ge(j+1)n-j$, proving
+(8.1). This includes $n=1$ and $m=1$; it uses no centres outside
+$I$ and imposes no condition on their values. $\square$
+
+**Theorem 8.2 (Uniform incidence bound below seven).** For every
+packing in 8.1, every $b\in\mathbb Z$ and every integer $m\ge1$,
+with $M_f$ counting all original centres as in 3.1,
+
+$$
+2475\sum_{z\in I(b,m)}M_f(z)\le17315m+215674. \tag{8.2}
+$$
+
+Thus the coefficient of $m$ in the corresponding average estimate is
+$3463/495=7-2/495$.
+
+Proof. Write $I=I(b,m)$ and $N_j=N_j(I)$. We first use the complete
+coprime relation 2.1 with $p=3$, $q=5$, $L=15$ and initial position
+$z-7$. Its two vacancy ranges are $0\le s\le12$ and $0\le s\le10$.
+Expanding the vacancy definitions gives
+
+$$
+\sum_{r=-7}^{7}\bigl(u_r A_2(z+r)+v_r A_4(z+r)\bigr)\le23,
+\quad
+u_r=\min\{3,8-|r|\},\quad v_r=\min\{5,8-|r|\}. \tag{8.3}
+$$
+
+Indeed $u_r$ counts pairs $(s,a)$ with $0\le s\le12$,
+$0\le a\le2$, $s+a=r+7$; $v_r$ counts the pairs with
+$0\le s\le10$, $0\le a\le4$, $s+a=r+7$.
+These are respectively the sequences
+$1,2,3,\ldots,3,2,1$ and $1,2,3,4,5,\ldots,5,4,3,2,1$
+on the fifteen offsets. The constant is $13+11-1=23$.
+In particular
+
+$$
+\sum_{r=-7}^{7}u_r=39,\qquad
+\sum_{r=-7}^{7}v_r=55,\qquad 0\le u_r\le v_r.
+$$
+
+For a fixed $r$ define
+$G_r(x)=u_rA_2(x)+v_rA_4(x)$. Since the two colours are distinct
+values of the same function $f$, $0\le G_r(x)\le v_r$.
+Applying the interval-shift estimate (3.2) to $G_r/v_r$ therefore gives
+
+$$
+\left|\sum_{z\in I}G_r(z+r)-\sum_{z\in I}G_r(z)\right|
+\le v_r|r|.
+$$
+
+Here $v_r\ge1$ for all displayed offsets. Sum (8.3) over $z\in I$
+and retain these shift errors. Since
+
+$$
+\sum_{r=-7}^{7}v_r|r|
+=2\bigl(5(1+2+3)+4\cdot4+3\cdot5+2\cdot6+7\bigr)=160,
+$$
+
+we obtain the finite inequality
+
+$$
+39N_2+55N_4\le23m+160. \tag{8.4}
+$$
+
+All translates in (8.3) concern the original whole-line packing;
+centres outside $I$ are included before the shift comparison.
+
+The three inequalities (8.1) and the single-colour spacing bound give
+
+$$
+\begin{aligned}
+N_2+3N_3&\le m+2,\\
+N_3+4N_4&\le m+3,\\
+N_4+5N_5&\le m+4,\\
+5N_4&\le m+4.
+\end{aligned} \tag{8.5}
+$$
+
+For the last row, if $N_4>0$, its first and last centres span at least
+$5(N_4-1)$ and at most $m-1$; if $N_4=0$, the row is immediate.
+This is the finite spacing argument in 5.1, with separation 5,
+rather than an assertion about existence of a density.
+
+Multiply the first three rows of (8.5) by $460,320,680$ respectively,
+(8.4) by $10$, and the last row of (8.5) by $8$.
+All multipliers are positive. Their left-hand coefficients are
+
+$$
+\begin{aligned}
+460+10\cdot39&=425\cdot2,\\
+3\cdot460+320&=425\cdot4,\\
+4\cdot320+680+10\cdot55+8\cdot5&=425\cdot6,\\
+5\cdot680&=425\cdot8.
+\end{aligned}
+$$
+
+Their right-hand sum is
+
+$$
+(460+320+680+230+8)m
++2\cdot460+3\cdot320+4\cdot680+1600+32
+=1698m+6232.
+$$
+
+Hence
+
+$$
+425(2N_2+4N_3+6N_4+8N_5)\le1698m+6232. \tag{8.6}
+$$
+
+This is a nonnegative weighted sum of inequalities for the same actual
+counts. The weak-duality algebra of 5.2 supplies no new packing premise;
+the additional premise is the positional restriction (8.1).
+
+For completeness, the incidence identity (3.4) and its shift proof apply
+to every $m\ge1$: estimate (3.2) has that domain, and no step of the
+incidence argument uses $m\ge10$. In particular, using
+$\sum_{j=1}^5N_j=m$,
+
+$$
+\begin{aligned}
+\sum_{z\in I}M_f(z)
+&=3m+2N_2+4N_3+6N_4+8N_5+e_M,\\
+|e_M|&\le\sum_{j=1}^5\sum_{a=-j}^{j}|a|=70.
+\end{aligned}
+$$
+
+The identity uses
+$M_f(z)=\sum_{j=1}^5\sum_{a=-j}^{j}A_j(z+a)$, so it includes
+every original centre covering $z$, with no truncation at the endpoints
+of $I$. Substituting (8.6) yields the stronger intermediate estimate
+
+$$
+\sum_{z\in I}M_f(z)
+\le\frac{2973}{425}m+\frac{35982}{425}.
+$$
+
+Finally
+
+$$
+\frac{2973}{425}=7-\frac2{425}<7-\frac2{495}
+=\frac{3463}{495},\qquad
+\frac{35982}{425}<85<87<\frac{215674}{2475},
+$$
+
+where $35982<85\cdot425=36125$ and
+$87\cdot2475=215325<215674$. Since $m\ge1$, these comparisons give
+(8.2), using $2475(3463/495)=17315$. $\square$
+
+**Corollary 8.3 (A deficit in every window and exclusion of seven classes).**
+Every packing $f:\mathbb Z\to\{1,2,3,4,5\}$ of 1.1 satisfies
+
+$$
+\forall b\in\mathbb Z\quad
+\exists z\in I(b,21568):\ M_f(z)\le6. \tag{8.7}
+$$
+
+Consequently $\neg Q(7,5)$, with $Q$ exactly as in 1.2.
+
+Proof. If $M_f(z)\ge7$ throughout one such interval, (8.2) would give
+
+$$
+17325\cdot21568\le17315\cdot21568+215674,
+\qquad
+215680\le215674,
+$$
+
+a contradiction. The multiplicity is integer-valued, so a position
+where it is smaller than 7 has multiplicity at most 6. The translate
+$b$ was arbitrary.
+
+Suppose now that one packing $f$ and one map
+$c:\mathbb Z\to\{1,\ldots,7\}$ witnessed $Q(7,5)$.
+The class-witness injection in 4.1 gives $M_f(z)\ge7$ at every $z$:
+choose a centre $a_i$ of each label covering $z$; equality
+$a_i=a_{i'}$ would imply $i=c(a_i)=c(a_{i'})=i'$.
+All seven centres are counted in the same $M_f(z)$, contradicting
+(8.7). No dependence of $c$ on $f$'s colour is assumed.
+This uses the forward implication of the classical interval-cover
+bridge 7.4; its converse is not needed. $\square$
+
+**Corollary 8.4 (Common count limits and extremal scope).** On every
+common subsequence in 5.1, its actual limiting incidence satisfies
+
+$$
+W\le\frac{2973}{425}<\frac{3463}{495}<7
+<\frac{23464}{3315}. \tag{8.8}
+$$
+
+In particular $23464/3315$ remains a valid upper bound but is not the
+supremum of the actual values of $W$. Neither coefficient below seven
+in (8.8) is asserted to be sharp or attained. The actual supremum and
+its attainment, and the least interval length forcing a multiplicity
+at most 6, remain undetermined here. The question $Q(7,6)$ in 6.3,
+which is the $k=7$ instance of the source's Problem 3, is not decided
+by the exclusion of $Q(7,5)$.
+
+Proof. Divide the stronger intermediate estimate in 8.2 by $m$ along
+the specified common subsequence. Equation (3.4) gives convergence of
+the left side to $W$, while $35982/(425m)$ tends to zero, uniformly
+in the interval's translate. The first strict comparison was computed
+in 8.2, the second is $3463/495=7-2/495$, and the last is
+$23464/3315=7+259/3315$. Thus every actual value of $W$ is bounded
+strictly below $23464/3315$, and so is their supremum.
+
+The proof supplies upper bounds and a sufficient interval length;
+it supplies no equality realization or matching lower bound for those
+extremal quantities. A palette-six packing may use colour 6 and is
+outside the hypotheses of 8.1--8.3. In the source notation of 1.1--1.2,
+$u_z\leftrightarrow z$, distance is $|u-v|$, radius is the same
+$f(a)$, and $A_i=c^{-1}(i)$. Accordingly Problem 3 at $k=7$
+asks for a palette bound $k-1=6$, whereas 8.3 excludes palette bound
+5. Palette monotonicity gives only $Q(7,5)\Rightarrow Q(7,6)$,
+whose antecedent is false; it gives no answer to $Q(7,6)$.
+$\square$
+
+## 追加锚（本行以下为增补区）
