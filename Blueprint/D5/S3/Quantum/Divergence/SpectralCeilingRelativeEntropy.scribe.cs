@@ -42,9 +42,8 @@ internal sealed class SpectralCeilingRelativeEntropyDocument : IScribeDocumentDe
                     + "g=S(R)-S(P). Since P-R=(1-a)T, B-R=-(1+a)T, and "
                     + "w(1-a)^2+(1-w)(1+a)^2=1-a^2, the result is "
                     + "g>=(1-a^2) Tr(T* T).re/(2M). At a=1, R=P and both sides vanish. "
-                    + "A complete transient Lean check covers arbitrary actual complex P and unitary U, "
-                    + "including singular P and a=0; the bind-only application is not retained as a "
-                    + "separate mathematical declaration.")),
+                    + "The argument applies to arbitrary complex density matrices P and unitary U, "
+                    + "including singular P and a=0.")),
                     Paragraph(Text("For the original deficit, this estimate supplies its global entropy "
                     + "gain while the full endpoint mutual informations I(P) and I(Q) remain in the "
                     + "budget. Completing the spectral-region argument additionally requires the actual "
