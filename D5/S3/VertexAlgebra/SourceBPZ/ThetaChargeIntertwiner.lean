@@ -96,7 +96,9 @@ private theorem projection_theta (D : LatticeData)
   rw [projection_on_residue D ell k r (-0) _ (hsector 0),
     projection_on_residue D ell k r (-1) _ (hsector 1),
     projection_on_residue D ell k r (-2) _ (hsector 2)] at h
-  fin_cases r
+  have hr : r = 0 ∨ r = 1 ∨ r = 2 :=
+    (show ∀ s : ZMod 3, s = 0 ∨ s = 1 ∨ s = 2 from by decide) r
+  rcases hr with rfl | rfl | rfl
   · rw [show (-(0 : ZMod 3)) = 0 by decide]
     simpa [show (-1 : ZMod 3) = 2 by decide,
       show (-2 : ZMod 3) = 1 by decide, show (2 : ZMod 3) ≠ 0 by decide]
@@ -170,7 +172,7 @@ private theorem intertwiner_preserves_residue (D E : LatticeData)
   rw [rotation_on_residue D ellD phase m 1 r x hx, map_smul] at ht
   have hc := congrArg (fun y : grade E n => gradeCoeffEquiv E n y a) ht
   rw [gradeChargeRotation_coeff] at hc
-  simp only [Multiplicative.toAdd_ofAdd, one_mul, map_smul,
+  simp only [toAdd_ofAdd, one_mul, map_smul,
     Finsupp.smul_apply, smul_eq_mul] at hc
   have hne : chargePhaseScalar phase r ≠ chargePhaseScalar phase (ellE a.1.1) := by
     intro heq
