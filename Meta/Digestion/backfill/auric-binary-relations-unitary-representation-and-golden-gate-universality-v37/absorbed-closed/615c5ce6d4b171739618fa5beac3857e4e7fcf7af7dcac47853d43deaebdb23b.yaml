@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:615c5ce6d4b171739618fa5beac3857e4e7fcf7af7dcac47853d43deaebdb23b
   normalized_sha256: sha256:615c5ce6d4b171739618fa5beac3857e4e7fcf7af7dcac47853d43deaebdb23b
 cas_ref: sha256:615c5ce6d4b171739618fa5beac3857e4e7fcf7af7dcac47853d43deaebdb23b
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/WeightedRayStochasticRigidity.original_five_effect_classification
+    target_statement_id: sha256:ffc90a75954ac162f6f95ce7ce02de063cba0eb739369167ca643e277909687f
 receipts:
   unresolved_subitems: []
