@@ -83,7 +83,8 @@ private def negativeCertificate : Finset (Finset point) :=
     (perpPoints.filter fun v => u ≠ v ∧ B u v = 0 ∧ exponent u v = 2).image (triple u)
 
 private theorem point_count : (points w).card = 63 := by
-  simp only [points, w, Submodule.mem_top, true_and]
+  delta w
+  simp only [points, Submodule.mem_top, true_and]
   decide
 
 private theorem perp_count : perpPoints.card = 31 := by decide
@@ -117,6 +118,7 @@ private theorem line_pair (l : Finset point) (hl : l ∈ lines w) :
 private theorem triple_line (u v : point) (hu : u ≠ 0) (hv : v ≠ 0)
     (hne : u ≠ v) (hb : B u v = 0) : triple u v ∈ lines w := by
   classical
+  delta w
   have hs0 : u + v ≠ 0 := fun he => hne (CharTwo.add_eq_zero.mp he)
   have hsu : u + v ≠ u := fun he => hv (add_left_cancel (he.trans (add_zero u).symm))
   have hsv : u + v ≠ v := fun he => hu (add_right_cancel (he.trans (zero_add v).symm))
@@ -125,7 +127,7 @@ private theorem triple_line (u v : point) (hu : u ≠ 0) (hv : v ≠ 0)
   refine ⟨?_, ?_, ?_⟩
   · intro q hq
     simp only [triple, Finset.mem_insert, Finset.mem_singleton] at hq
-    rcases hq with rfl | rfl | rfl <;> simp [points, w, hu, hv, hs0]
+    rcases hq with rfl | rfl | rfl <;> simp [points, hu, hv, hs0]
   · simp [triple, hne, Ne.symm hsu, Ne.symm hsv]
   · intro a ha b hbmem hab
     simp only [triple, Finset.mem_insert, Finset.mem_singleton] at ha hbmem
@@ -135,9 +137,10 @@ private theorem triple_line (u v : point) (hu : u ≠ 0) (hv : v ≠ 0)
 
 private theorem phase_exponent (u v : point) :
     phase u v = AddChar.zmodChar 4 Complex.I_pow_four (exponent u v) := by
-  simp only [phase, exponent, Fin.prod_univ_succ, Fin.sum_univ_succ,
+  delta phase exponent
+  simp only [Fin.prod_univ_succ, Fin.sum_univ_succ,
     AddChar.map_add_eq_mul, Fin.prod_univ_zero, Fin.sum_univ_zero,
-    AddChar.map_zero_eq_one, mul_one, add_zero]
+    mul_one, add_zero]
 
 private theorem char_negative (a : ZMod 4) :
     AddChar.zmodChar 4 Complex.I_pow_four a = -1 ↔ a = 2 := by
@@ -176,9 +179,11 @@ private theorem negative_cover (l : Finset point) (hl : l ∈ counterexample)
   have hvm : v ∈ l := by simp [he, triple]
   apply Finset.mem_biUnion.mpr
   refine ⟨u, ?_, Finset.mem_image.mpr ⟨v, ?_, he.symm⟩⟩
-  · simp only [perpPoints, Finset.mem_filter, Finset.mem_univ, true_and]
+  · delta perpPoints
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
     exact ⟨hu, hlp u hum⟩
-  · simp only [Finset.mem_filter, perpPoints, Finset.mem_univ, true_and]
+  · delta perpPoints
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
     exact ⟨⟨hv, hlp v hvm⟩, hne, hb,
       (triple_negative u v hu hv hne hb).mp (he ▸ hn)⟩
 
@@ -222,8 +227,8 @@ private theorem line_perp_profile (l : Finset point) (hl : l ∈ lines w) :
   have he : triple u v ∩ perpPoints =
       (triple u v).filter (fun q => B pole q = 0) := by
     ext q
-    simp only [Finset.mem_inter, perpPoints, Finset.mem_filter, Finset.mem_univ,
-      true_and, and_assoc]
+    delta perpPoints
+    simp only [Finset.mem_inter, Finset.mem_filter, Finset.mem_univ, true_and]
     constructor
     · tauto
     · rintro ⟨hq, hqp⟩
@@ -231,7 +236,8 @@ private theorem line_perp_profile (l : Finset point) (hl : l ∈ lines w) :
       simp only [triple, Finset.mem_insert, Finset.mem_singleton] at hq
       rcases hq with rfl | rfl | rfl <;> assumption
   have hm : triple u v ∈ counterexample ↔ B pole u = 0 ∧ B pole v = 0 := by
-    simp only [counterexample, Finset.mem_filter, hl, true_and]
+    delta counterexample
+    simp only [Finset.mem_filter, hl, true_and]
     simp [triple, B_add_right]
     intro hpu hpv
     rw [hpu, hpv, zero_add]
@@ -286,7 +292,8 @@ private theorem square_mem (i : Fin 6) : squareLine i ∈ counterexample := by
   classical
   obtain ⟨hu, hv, hne, hb, hpu, hpv, _⟩ := square_data i
   refine Finset.mem_filter.mpr ⟨triple_line _ _ hu hv hne hb, ?_⟩
-  simpa [squareLine, triple, B_add_right, hpu, hpv]
+  delta squareLine
+  simp [triple, B_add_right, hpu, hpv]
 
 private theorem square_even : ∀ q : point,
     (∑ i : Fin 6, if q ∈ squareLine i then (1 : ZMod 2) else 0) = 0 := by decide
@@ -313,7 +320,8 @@ private theorem square_signs : (∑ i : Fin 6, lineSign (squareLine i)) = 1 := b
   classical
   have he (i : Fin 6) : lineSign (squareLine i) = if i = 5 then 1 else 0 := by
     obtain ⟨hu, hv, hne, hb, _, _, hs⟩ := square_data i
-    simp only [lineSign, squareLine, triple_negative _ _ hu hv hne hb, hs]
+    delta lineSign squareLine
+    simp only [triple_negative _ _ hu hv hne hb, hs]
   simp_rw [he]
   simp
 
@@ -343,7 +351,8 @@ private theorem counterexample_degree_le : contextualityDegree counterexample �
     unfold violations
     congr 1
     ext l
-    by_cases hn : lineProduct l = -1 <;> simp [lineSign, hn]
+    delta lineSign
+    by_cases hn : lineProduct l = -1 <;> simp [hn]
   rw [he, negative_certificate_exact, certificate_count] at hmin
   exact hmin
 
@@ -353,8 +362,10 @@ private theorem hexagon_intersection_ge (h : Finset (Finset point))
   have hi := incidence_swap h perpPoints
   have hp : ∀ q ∈ perpPoints, q ∈ points w := by
     intro q hq
-    simp only [perpPoints, Finset.mem_filter, Finset.mem_univ, true_and] at hq
-    simp [points, w, hq.1]
+    delta perpPoints at hq
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hq
+    delta w
+    simp [points, hq.1]
   have hd : (∑ q ∈ perpPoints, (h.filter fun l => q ∈ l).card) = 93 := by
     trans ∑ _q ∈ perpPoints, 3
     · exact Finset.sum_congr rfl (fun q hq => hh.2.1 q (hp q hq))
