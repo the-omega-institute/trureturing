@@ -34,7 +34,7 @@ namespace LinearMap
 theorem isBaseChange_baseChangeHom (R A M N : Type*) [CommSemiring R] [CommSemiring A]
     [Algebra R A] [AddCommMonoid M] [Module R M] [Module.Free R M] [Module.Finite R M]
     [AddCommMonoid N] [Module R N] :
-    IsBaseChange A (baseChangeHom R A M N) := by
+    IsBaseChange A (_root_.LinearMap.baseChangeHom R A M N) := by
   convert! (TensorProduct.isBaseChange R M A).linearMapLeftRight
     (TensorProduct.isBaseChange R N A) using 1
   ext f m
