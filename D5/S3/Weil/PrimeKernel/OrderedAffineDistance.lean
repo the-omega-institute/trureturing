@@ -22,9 +22,6 @@ def kernel {n : ℕ} (L : ℝ) (t : Fin (n + 1) → ℝ) :
     Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ :=
   fun i j => ((L - |t i - t j| : ℝ) : ℂ)
 
-def prefixSum {n : ℕ} (c : Fin (n + 1) → ℂ) (k : Fin n) : ℂ :=
-  ∑ i ∈ Finset.Iic (Fin.castSucc k), c i
-
 def realExtension {n : ℕ} (t : Fin (n + 1) → ℝ) (k : ℕ) : ℝ :=
   if hk : k < n + 1 then t ⟨k, hk⟩ else 0
 
@@ -174,10 +171,6 @@ theorem realExtension_of_lt {n : ℕ} (t : Fin (n + 1) → ℝ) {k : ℕ}
     (hk : k < n + 1) : realExtension t k = t ⟨k, hk⟩ := by
   simp [realExtension, hk]
 
-theorem complexExtension_of_lt {n : ℕ} (c : Fin (n + 1) → ℂ) {k : ℕ}
-    (hk : k < n + 1) : complexExtension c k = c ⟨k, hk⟩ := by
-  simp [complexExtension, hk]
-
 theorem abs_sub_of_le {n : ℕ} {t : Fin (n + 1) → ℝ}
     (h : Monotone t) {i j : Fin (n + 1)} (hij : i ≤ j) :
     |t i - t j| = t j - t i := by
@@ -313,18 +306,6 @@ theorem quadratic_pair_expansion {n : ℕ} (L : ℝ) (t : Fin (n + 1) → ℝ)
   apply Finset.sum_congr rfl
   intro j hj
   simp only [Pi.star_apply, mul_assoc, mul_comm, mul_left_comm]
-
-theorem fin_sum_complexExtension {n : ℕ} (c : Fin (n + 1) → ℂ) :
-    (∑ i : Fin (n + 1), c i) = total c := by
-  unfold total
-  calc
-    (∑ i : Fin (n + 1), c i) =
-        ∑ i : Fin (n + 1), complexExtension c i := by
-      apply Finset.sum_congr rfl
-      intro i hi
-      simp [complexExtension, i.isLt]
-    _ = ∑ i ∈ Finset.range (n + 1), complexExtension c i :=
-      Fin.sum_univ_eq_sum_range (fun k => complexExtension c k) (n + 1)
 
 theorem quadratic_range_expansion {n : ℕ} (L : ℝ) (t : Fin (n + 1) → ℝ)
     (c : Fin (n + 1) → ℂ) :
