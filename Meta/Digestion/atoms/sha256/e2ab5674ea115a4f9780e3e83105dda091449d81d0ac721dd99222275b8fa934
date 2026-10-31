@@ -1,0 +1,1 @@
+- **固定材料核对。** 固定提交中的 `FiniteZeroGramHierarchy.md` 读数支持有限非负权重 Gram 分解；固定提交中的 `ZeckendorfGreedyPermutation.md` 与对应 Lean 源文支持该贪心序列是正整数排列；`EulerLayerRootCorrection.md` 仅作为背景供应。V35 固定 URL 的作者正文、Kedlaya 第八章页面、Suzuki 论文源文与 Robin 背景论文源文均已作非空文本读取。它们是来源核对材料，不是本卷新增 Lean 编译或 RH 认证。
