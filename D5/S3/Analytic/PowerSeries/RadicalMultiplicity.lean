@@ -16,7 +16,7 @@ import Mathlib.Tactic
 /-
 Copyright (c) 2026 Yuma Mizuno. All rights reserved.
 Released under Apache 2.0. Full license and NOTICE chain:
-Library/Analysis/leanpool-differential-wronskian.md.
+Library/Analytic/leanpool-differential-wronskian.md.
 Required closure transplanted from LeanPool/lean-pool,
 revision edbe5bd56f476cc2965564676b66199f281ab714,
 LeanPool/MarkoffModP/BGS/Algebra/DifferentialWronskian.lean.
@@ -139,7 +139,7 @@ end BGS.Algebra
 
 /-
 Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
-Apache-2.0. Full license: Library/Analysis/tauceti-laurent-derivation.md.
+Apache-2.0. Full license: Library/Analytic/tauceti-laurent-derivation.md.
 Required closure from TauCetiProject/TauCeti at
 93af5b549b7d9ed44291d6ceb093a8013dda00f8,
 TauCeti/RingTheory/LaurentSeries/{Basic,Derivative}.lean.
@@ -501,7 +501,7 @@ private theorem jet_sum {n : ℕ} (f : Fin n → ℝ⟦X⟧) (c : Fin n → ℝ)
     rw [Function.iterate_succ_apply', ih, map_sum]
     apply Finset.sum_congr rfl
     intro j _
-    rw [map_smul, Function.iterate_succ_apply']
+    rw [Derivation.map_smul, Function.iterate_succ_apply']
 
 private theorem independent_sum_zero {n d : ℕ} (hn : 0 < n)
     (S : Fin n → ℝ⟦X⟧) (p A : Fin n → ℝ[X])
@@ -594,20 +594,28 @@ theorem sum_eq_zero_of_coeff_eq_zero {ι : Type*} [Fintype ι]
     change (HahnSeries.ofPowerSeries ℤ ℝ) (PowerSeries.C (r j)) *
       (f (b j) : ℝ⸨X⸩) = algebraMap ℝ ℝ⸨X⸩ (r j) * (f (b j) : ℝ⸨X⸩)
     congr 1
-    simp [HahnSeries.algebraMap_apply', PowerSeries.algebraMap_apply]
 
   have hcut : l * (Fintype.card ι + 2 * (l - 1)) + l - 1 ≤
       3 * (Fintype.card ι) ^ 2 := by
     have hlpos : 0 < l := Nat.pos_of_ne_zero hl0
     have hsub : l - 1 + 1 = l := by omega
-    nlinarith [Nat.mul_self_le_mul_self hl]
+    have hmul := Nat.mul_le_mul_left (Fintype.card ι) hl
+    have hsq := Nat.mul_self_le_mul_self hl
+    have htrunc : l * (Fintype.card ι + 2 * (l-1)) + l - 1 ≤
+        l * (Fintype.card ι + 2 * (l-1)) + l := Nat.sub_le _ _
+    nlinarith
   have hz := independent_sum_zero (Nat.pos_of_ne_zero hl0)
     (S ∘ b) (p ∘ b) (A ∘ b)
     (fun j => hS0 (b j)) (fun j => hs (b j))
-    (fun j => hp (b j)) (fun j => hA (b j)) hi' c
-    (fun k hk => by simpa only [Function.comp_apply, ← hc] using
-      hcoeff k (hk.trans hcut))
-  simpa only [Function.comp_apply, f, hc] using hz
+    (fun j => hp (b j)) (fun j => hA (b j))
+    (by simpa only [f, Function.comp_apply, map_mul] using hi') c
+    (fun k hk => by
+      change PowerSeries.coeff k (∑ j, c j • (f ∘ b) j) = 0
+      rw [hc]
+      exact hcoeff k (hk.trans hcut))
+  change (∑ j, c j • (f ∘ b) j) = 0 at hz
+  rw [hc] at hz
+  exact hz
 
 end
 end CdsoRadical

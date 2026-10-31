@@ -20,6 +20,8 @@ noncomputable section
 open Filter Set Polynomial
 open scoped Topology PowerSeries
 
+set_option maxHeartbeats 800000
+
 namespace CdsoPeriodic
 
 /-- The genuine Taylor coefficients of a real function at zero. -/
@@ -35,7 +37,7 @@ private theorem taylor_add {f g : ℝ → ℝ}
     taylor (fun u => f u + g u) = taylor f + taylor g := by
   ext n
   simp only [taylor, PowerSeries.coeff_mk, map_add,
-    iteratedDeriv_add hf.contDiffAt hg.contDiffAt, add_div]
+    iteratedDeriv_fun_add hf.contDiffAt hg.contDiffAt, add_div]
 
 private theorem taylor_mul {f g : ℝ → ℝ}
     (hf : AnalyticAt ℝ f 0) (hg : AnalyticAt ℝ g 0) :
@@ -43,7 +45,7 @@ private theorem taylor_mul {f g : ℝ → ℝ}
   ext n
   simp only [taylor, PowerSeries.coeff_mk, PowerSeries.coeff_mul,
     Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
-  rw [iteratedDeriv_mul hf.contDiffAt hg.contDiffAt, Finset.sum_div]
+  rw [iteratedDeriv_fun_mul hf.contDiffAt hg.contDiffAt, Finset.sum_div]
   apply Finset.sum_congr rfl
   intro i hi
   rw [Nat.cast_choose ℝ (by simpa using Finset.mem_range.mp hi)]
@@ -54,11 +56,14 @@ private theorem taylor_const (c : ℝ) : taylor (fun _ => c) = PowerSeries.C c :
   ext n
   cases n with
   | zero => simp [taylor]
-  | succ n => simp [taylor, iteratedDeriv_succ]
+  | succ n => simp [taylor, iteratedDeriv_const]
 
 private theorem taylor_id : taylor (fun u : ℝ => u) = PowerSeries.X := by
   ext n
-  simp [taylor, iteratedDeriv_id, PowerSeries.coeff_X]
+  simp only [taylor, PowerSeries.coeff_mk, iteratedDeriv_fun_id_zero, PowerSeries.coeff_X]
+  split_ifs with h
+  · subst n; norm_num
+  · simp
 
 private theorem taylor_poly (p : ℝ[X]) : taylor p.eval = (p : ℝ⟦X⟧) := by
   induction p using Polynomial.induction_on' with
@@ -93,8 +98,8 @@ private theorem taylor_eq_zero_iff {f : ℝ → ℝ} (hf : AnalyticAt ℝ f 0) :
     rw [hs] at hp
     exact hp.eventually_eq_zero
   · intro h
-    rw [taylor_congr h, taylor_const]
-    simp
+    rw [taylor_congr h]
+    simpa only [Pi.zero_def, map_zero] using taylor_const 0
 
 private theorem analytic_sqrt {f : ℝ → ℝ} (hf : AnalyticAt ℝ f 0) (h0 : 0 < f 0) :
     AnalyticAt ℝ (fun u => Real.sqrt (f u)) 0 := by
@@ -104,12 +109,16 @@ private theorem analytic_sqrt {f : ℝ → ℝ} (hf : AnalyticAt ℝ f 0) (h0 : 
   have hg : AnalyticAt ℝ (fun u => f u / f 0 - 1) 0 :=
     hf.div_const.sub analyticAt_const
   have hg0 : f 0 / f 0 - 1 = 0 := by simp [ne_of_gt h0]
-  have hh := (hbase.comp 0 (hg0 ▸ hg)).const_mul (Real.sqrt (f 0))
+  have hbase' : AnalyticAt ℝ (fun y : ℝ => Real.sqrt (1+y)) (f 0/f 0-1) := by
+    simpa only [hg0] using hbase
+  have hh := (analyticAt_const : AnalyticAt ℝ (fun _ : ℝ => Real.sqrt (f 0)) 0).mul
+    (hbase'.comp (f := fun u => f u / f 0 - 1) hg)
   convert hh using 1
   funext u
+  change Real.sqrt (f u) = Real.sqrt (f 0) * Real.sqrt (1+(f u/f 0-1))
   rw [← Real.sqrt_mul h0.le]
   congr 1
-  field_simp
+  field_simp [ne_of_gt h0]
   <;> ring
 
 /-- Source radical quotient with the positive real square root. -/
@@ -128,8 +137,9 @@ private theorem radical_rationalization (b δ k u : ℝ) (hb : 0 < b + δ * u) :
   have hden : Real.sqrt ((b + δ * u) ^ 2 + k ^ 2 * u ^ 2) + (b + δ * u) ≠ 0 := by
     positivity
   unfold radicalR radicalExtension
-  field_simp
-  <;> nlinarith
+  generalize hy : Real.sqrt ((b+δ*u)^2+k^2*u^2) = y at hs hden ⊢
+  field_simp [ne_of_gt hb, hden]
+  <;> nlinarith [hs]
 
 private theorem analytic_radicalExtension (b δ k : ℝ) (hb : 0 < b) :
     AnalyticAt ℝ (radicalExtension b δ k) 0 := by
@@ -140,7 +150,7 @@ private theorem analytic_radicalExtension (b δ k : ℝ) (hb : 0 < b) :
   apply analyticAt_const.div
     (((by fun_prop : AnalyticAt ℝ (fun u : ℝ => b + δ * u) 0)).mul
       ((analytic_sqrt hpoly hpos).add (by fun_prop)))
-  simp only [mul_zero, add_zero, zero_pow (by decide : 2 ≠ 0)]
+  simp only [Pi.mul_apply, Pi.add_apply, mul_zero, add_zero, zero_pow (by decide : 2 ≠ 0)]
   positivity
 
 
@@ -163,7 +173,9 @@ private theorem taylor_neg {f : ℝ → ℝ} (hf : AnalyticAt ℝ f 0) :
 
 private theorem taylor_sub {f g : ℝ → ℝ} (hf : AnalyticAt ℝ f 0)
     (hg : AnalyticAt ℝ g 0) : taylor (fun u => f u - g u) = taylor f - taylor g := by
-  simpa [sub_eq_add_neg, taylor_neg hg] using taylor_add hf hg.neg
+  change taylor (fun u => f u + -g u) = _
+  rw [taylor_add (f := f) (g := fun u => -g u) hf hg.neg, taylor_neg hg]
+  rfl
 
 /-- A single rational affine weight multiplying a source radical. Real weights include every
 rational source weight, including negative and zero weights. -/
@@ -196,10 +208,11 @@ private theorem weight_degree (q : RadicalTerm) : q.weight.natDegree ≤ 1 := by
   unfold weight
   compute_degree
 private theorem radicand_degree (q : RadicalTerm) : q.radicand.natDegree ≤ 2 := by
+  have h := q.affine_degree
   unfold radicand
-  compute_degree
+  compute_degree <;> omega
 private theorem root_analytic (q : RadicalTerm) : AnalyticAt ℝ q.root 0 := by
-  apply analytic_sqrt (by fun_prop)
+  apply analytic_sqrt (AnalyticOnNhd.eval_polynomial q.radicand 0 (Set.mem_univ 0))
   simp only [eval_radicand, mul_zero, add_zero, zero_pow (by decide : 2 ≠ 0), mul_zero]
   exact sq_pos_of_pos q.base_pos
 private theorem root_sq (q : RadicalTerm) (u : ℝ) : q.root u ^ 2 = q.radicand.eval u := by
@@ -213,7 +226,7 @@ private theorem root_taylor_sq (q : RadicalTerm) :
     taylor_poly]
 private theorem root_taylor_unit (q : RadicalTerm) :
     PowerSeries.constantCoeff (taylor q.root) ≠ 0 := by
-  simpa [taylor, PowerSeries.constantCoeff, root, eval_radicand,
+  simpa [← PowerSeries.coeff_zero_eq_constantCoeff_apply, taylor, root, eval_radicand,
     Real.sqrt_sq_eq_abs, abs_of_pos q.base_pos] using ne_of_gt q.base_pos
 end RadicalTerm
 
@@ -246,7 +259,7 @@ private theorem clearedCoefficient_degree {ι : Type*} [Fintype ι] [DecidableEq
   cases i with
   | none =>
     have hsum : (∑ i, (q i).weight).natDegree ≤ 1 :=
-      Polynomial.natDegree_sum_le_of_forall_le _ fun i _ => (q i).weight_degree
+      Polynomial.natDegree_sum_le_of_forall_le _ _ fun i _ => (q i).weight_degree
     have hmul := Polynomial.natDegree_mul_le
       (p := -(∑ i, (q i).weight)) (q := familyProduct q)
     simp only [Polynomial.natDegree_neg] at hmul
@@ -266,17 +279,17 @@ private theorem clearedCoefficient_degree {ι : Type*} [Fintype ι] [DecidableEq
 
 private theorem familyExtension_analytic {ι : Type*} [Fintype ι] (q : ι → RadicalTerm) :
     AnalyticAt ℝ (familyExtension q) 0 := by
-  apply AnalyticAt.const_mul
+  apply (analyticAt_const : AnalyticAt ℝ (fun _ : ℝ => (2 : ℝ)) 0).mul
   apply Finset.analyticAt_fun_sum
   intro i _
-  exact (by fun_prop : AnalyticAt ℝ (q i).weight.eval 0).mul
+  exact (AnalyticOnNhd.eval_polynomial (q i).weight 0 (Set.mem_univ 0)).mul
     (analytic_radicalExtension _ _ _ (q i).base_pos)
 
 private theorem cleared_analytic {ι : Type*} [Fintype ι] [DecidableEq ι]
     (q : ι → RadicalTerm) : AnalyticAt ℝ (clearedFunction q) 0 := by
   apply Finset.analyticAt_fun_sum
   intro i _
-  apply AnalyticAt.mul (by fun_prop)
+  apply AnalyticAt.mul (AnalyticOnNhd.eval_polynomial (clearedCoefficient q i) 0 (Set.mem_univ 0))
   cases i with
   | none => exact analyticAt_const
   | some i => exact (q i).root_analytic
@@ -287,7 +300,7 @@ private theorem cleared_identity {ι : Type*} [Fintype ι] [DecidableEq ι]
       (fun u => (familyProduct q).eval u * (u^2 / 2 * familyExtension q u)) := by
   classical
   have hpos : ∀ᶠ u in 𝓝 (0 : ℝ), ∀ i, 0 < (q i).base + (q i).offset * u := by
-    apply Filter.Eventually.all_finite
+    apply Filter.eventually_all.mpr
     intro i
     exact (by fun_prop : ContinuousAt (fun u : ℝ => (q i).base + (q i).offset*u) 0)
       |>.eventually (Ioi_mem_nhds (by simpa using (q i).base_pos))
@@ -299,21 +312,29 @@ private theorem cleared_identity {ι : Type*} [Fintype ι] [DecidableEq ι]
     apply (div_eq_iff (ne_of_gt (by simpa [RadicalTerm.eval_affine] using hu i))).2
     simp only [familyProduct, Polynomial.eval_prod]
     exact (Finset.prod_erase_mul _ _ (Finset.mem_univ i)).symm
+  have hF : u^2/2 * familyExtension q u =
+      ∑ i, (q i).weight.eval u * radicalR (q i).base (q i).offset (q i).frequency u := by
+    simp only [familyExtension, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i _
+    rw [hR i]
+    ring
+  rw [hF]
   simp only [clearedFunction, Fintype.sum_option, clearedCoefficient, clearedRoot,
-    Polynomial.eval_mul, Polynomial.eval_neg, Polynomial.eval_sum, mul_one,
-    familyExtension]
-  rw [mul_comm (u^2/2), mul_assoc, mul_div_cancel₀ _ (by norm_num : (2:ℝ) ≠ 0)]
-  simp_rw [Finset.mul_sum, ← mul_assoc, ← hR]
-  unfold radicalR
-  simp_rw [← RadicalTerm.eval_affine, ← RadicalTerm.eval_radicand,
-    mul_sub, mul_div_assoc, mul_one, Finset.sum_sub_distrib]
-  rw [← Finset.sum_mul, ← sub_eq_add_neg]
-  congr 1
-  apply Finset.sum_congr rfl
-  intro i _
-  rw [← hdiv]
-  unfold RadicalTerm.root
+    Polynomial.eval_mul, Polynomial.eval_neg, Polynomial.eval_sum, mul_one]
+  rw [Finset.mul_sum]
+  have hterm (i : ι) :
+      (familyProduct q).eval u * ((q i).weight.eval u *
+        radicalR (q i).base (q i).offset (q i).frequency u) =
+      (q i).weight.eval u * (∏ j ∈ Finset.univ.erase i, (q j).affine).eval u *
+        (q i).root u - (q i).weight.eval u * (familyProduct q).eval u := by
+    unfold radicalR RadicalTerm.root
+    rw [← RadicalTerm.eval_radicand, ← RadicalTerm.eval_affine, ← hdiv]
+    ring
+  simp_rw [hterm, Finset.sum_sub_distrib, ← Finset.sum_mul]
+  rw [Polynomial.eval_finset_sum]
   ring
+
 private theorem coeff_mul_zero {f g : ℝ⟦X⟧} {B : ℕ}
     (hg : ∀ k ≤ B, PowerSeries.coeff k g = 0) :
     ∀ k ≤ B, PowerSeries.coeff k (f * g) = 0 := by
@@ -321,7 +342,7 @@ private theorem coeff_mul_zero {f g : ℝ⟦X⟧} {B : ℕ}
   rw [PowerSeries.coeff_mul]
   apply Finset.sum_eq_zero
   intro ij hij
-  have hij' := Finset.mem_antidiagonal.mp hij
+  have hij' := Finset.HasAntidiagonal.mem_antidiagonal.mp hij
   rw [hg ij.2 (by omega), mul_zero]
 
 private theorem familyExtension_zero_of_coeff {ι : Type*} [Fintype ι] [DecidableEq ι]
@@ -352,13 +373,12 @@ private theorem familyExtension_zero_of_coeff {ι : Type*} [Fintype ι] [Decidab
   have ht : taylor (clearedFunction q) = ∑ i, (A i : ℝ⟦X⟧) * S i := by
     have h := taylor_sum Finset.univ
       (fun i u => (A i).eval u * clearedRoot q i u)
-      (fun i _ => (by fun_prop : AnalyticAt ℝ (A i).eval 0).mul (hroot i))
-    simp only [Finset.mem_univ, Finset.sum_const_zero, Finset.sum_const, Finset.sum_attach] at h
+      (fun i _ => (AnalyticOnNhd.eval_polynomial (A i) 0 (Set.mem_univ 0)).mul (hroot i))
     change taylor (clearedFunction q) = _ at h
     rw [h]
     apply Finset.sum_congr rfl
     intro i _
-    rw [taylor_mul (by fun_prop) (hroot i), taylor_poly]
+    rw [taylor_mul (AnalyticOnNhd.eval_polynomial (A i) 0 (Set.mem_univ 0)) (hroot i), taylor_poly]
   let U : ℝ[X] := C (1/2 : ℝ) * X^2
   have hU : U.eval = fun u : ℝ => u^2/2 := by
     funext u
@@ -368,10 +388,14 @@ private theorem familyExtension_zero_of_coeff {ι : Type*} [Fintype ι] [Decidab
   have hfactor : taylor (clearedFunction q) =
       (familyProduct q : ℝ⟦X⟧) * ((U : ℝ⟦X⟧) * taylor (familyExtension q)) := by
     rw [taylor_congr (cleared_identity q)]
-    rw [taylor_mul (by fun_prop)
-      ((by fun_prop : AnalyticAt ℝ U.eval 0).mul (familyExtension_analytic q))]
-    rw [← hU, taylor_mul (by fun_prop) (familyExtension_analytic q),
-      taylor_poly, taylor_poly]
+    have hU' (u : ℝ) : U.eval u = u^2/2 := congrFun hU u
+    simp_rw [← hU']
+    rw [taylor_mul (f := (familyProduct q).eval) (g := fun u => U.eval u * familyExtension q u)
+      (AnalyticOnNhd.eval_polynomial (familyProduct q) 0 (Set.mem_univ 0))
+      ((AnalyticOnNhd.eval_polynomial U 0 (Set.mem_univ 0)).mul (familyExtension_analytic q))]
+    rw [taylor_mul (f := U.eval) (g := familyExtension q)
+      (AnalyticOnNhd.eval_polynomial U 0 (Set.mem_univ 0))
+      (familyExtension_analytic q), taylor_poly, taylor_poly]
   have hzero : taylor (clearedFunction q) = 0 := by
     rw [ht]
     apply CdsoRadical.sum_eq_zero_of_coeff_eq_zero S p A hS0 hsq hp
@@ -380,8 +404,9 @@ private theorem familyExtension_zero_of_coeff {ι : Type*} [Fintype ι] [Decidab
     exact coeff_mul_zero (coeff_mul_zero hcoeff)
   have hprod : (familyProduct q : ℝ⟦X⟧) ≠ 0 := by
     have h0 : PowerSeries.constantCoeff (familyProduct q : ℝ⟦X⟧) ≠ 0 := by
-      simpa [familyProduct, Polynomial.coe_prod, Polynomial.coe_mul, RadicalTerm.affine]
-        using Finset.prod_ne_zero_iff.mpr (fun i _ => ne_of_gt (q i).base_pos)
+      rw [Polynomial.constantCoeff_coe, ← Polynomial.eval_zero]
+      simp only [familyProduct, Polynomial.eval_prod, RadicalTerm.eval_affine, mul_zero, add_zero]
+      exact Finset.prod_ne_zero_iff.mpr (fun i _ => ne_of_gt (q i).base_pos)
     exact fun h => h0 (by rw [h, map_zero])
   have hUne : (U : ℝ⟦X⟧) ≠ 0 := by
     simp [U]
@@ -436,8 +461,9 @@ def Admissible (b : AllocationData a h) : Prop :=
 
 private theorem alpha_pos (b : AllocationData a h) (ha : 2 ≤ a) : 0 < b.alpha := by
   have hr : 0 < b.r := by unfold r m; have := b.j_pos; omega
+  have haR : (2 : ℝ) ≤ a := by exact_mod_cast ha
   unfold alpha
-  positivity
+  exact div_pos (by linarith) (by exact_mod_cast hr)
 
 private theorem beta_pos (b : AllocationData a h) (ha : 2 ≤ a) : 0 < b.beta := by
   have hr : 0 < b.r := by unfold r m; have := b.j_pos; omega
@@ -465,20 +491,8 @@ def actual (b : AllocationData a h) (u : ℝ) : ℝ :=
 def extension (b : AllocationData a h) (u : ℝ) : ℝ :=
   2 * b.combination radicalExtension u
 
-private theorem analytic_extension (b : AllocationData a h) (ha : 2 ≤ a) :
-    AnalyticAt ℝ b.extension 0 := by
-  have hα := b.alpha_pos ha
-  have hβ := b.beta_pos ha
-  have hcore (i : Fin (a + b.j)) (k : ℝ) :=
-    analytic_radicalExtension b.alpha (b.delta i) k hα
-  have hmin (k : ℝ) := analytic_radicalExtension b.alpha b.delta0 k hα
-  have hminus (k : ℝ) := analytic_radicalExtension b.beta b.vminus k hβ
-  have hplus (k : ℝ) := analytic_radicalExtension b.beta b.vplus k hβ
-  unfold extension combination
-  fun_prop
-
 private abbrev TermIndex (b : AllocationData a h) :=
-  (Fin b.m × Fin 3) ⊕ (Fin 2 ⊕ ((Fin (b.n-b.t) ⊕ Fin b.t) × Fin 2))
+  (Fin (a+b.j) × Fin 3) ⊕ (Fin 2 ⊕ ((Fin (b.n-b.t) ⊕ Fin b.t) × Fin 2))
 
 private def term (b : AllocationData a h) (ha : 2 ≤ a) : b.TermIndex → RadicalTerm
   | .inl (i,k) =>
@@ -509,6 +523,7 @@ private theorem term_card (b : AllocationData a h) :
     have := b.j_le
     omega
   simp only [TermIndex, Fintype.card_sum, Fintype.card_prod, Fintype.card_fin]
+  dsimp only [m] at hmn
   omega
 
 private theorem extension_as_family (b : AllocationData a h) (ha : 2 ≤ a) :
@@ -525,6 +540,11 @@ private theorem extension_as_family (b : AllocationData a h) (ha : 2 ≤ a) :
   simp_rw [Finset.sum_add_distrib, Finset.sum_mul, Finset.mul_sum]
   ring_nf
 
+private theorem analytic_extension (b : AllocationData a h) (ha : 2 ≤ a) :
+    AnalyticAt ℝ b.extension 0 := by
+  rw [b.extension_as_family ha]
+  exact familyExtension_analytic _
+
 private theorem actual_extension (b : AllocationData a h) (ha : 2 ≤ a) :
     b.actual =ᶠ[𝓝[>] 0] b.extension := by
   have hpos (δ : ℝ) : ∀ᶠ u in 𝓝 (0:ℝ), 0 < b.alpha + δ*u :=
@@ -533,13 +553,13 @@ private theorem actual_extension (b : AllocationData a h) (ha : 2 ≤ a) :
   have hpos' (δ : ℝ) : ∀ᶠ u in 𝓝 (0:ℝ), 0 < b.beta + δ*u :=
     (by fun_prop : ContinuousAt (fun u : ℝ => b.beta + δ*u) 0).eventually
       (Ioi_mem_nhds (by simpa using b.beta_pos ha))
-  have hall : ∀ᶠ u in 𝓝 (0:ℝ), ∀ i : Fin b.m, 0 < b.alpha+b.delta i*u :=
-    Filter.Eventually.all_finite fun i => hpos (b.delta i)
+  have hall : ∀ᶠ u in 𝓝 (0:ℝ), ∀ i : Fin (a+b.j), 0 < b.alpha+b.delta i*u :=
+    Filter.eventually_all.mpr fun i => hpos (b.delta i)
   filter_upwards [hall.filter_mono nhdsWithin_le_nhds,
     (hpos b.delta0).filter_mono nhdsWithin_le_nhds,
     (hpos' b.vminus).filter_mono nhdsWithin_le_nhds,
     (hpos' b.vplus).filter_mono nhdsWithin_le_nhds, self_mem_nhdsWithin] with u hi h0 hm hp hu
-  have hR (i : Fin b.m) (k : ℝ) := radical_rationalization b.alpha (b.delta i) k u (hi i)
+  have hR (i : Fin (a+b.j)) (k : ℝ) := radical_rationalization b.alpha (b.delta i) k u (hi i)
   have h0R (k : ℝ) := radical_rationalization b.alpha b.delta0 k u h0
   have hmR (k : ℝ) := radical_rationalization b.beta b.vminus k u hm
   have hpR (k : ℝ) := radical_rationalization b.beta b.vplus k u hp
@@ -594,6 +614,7 @@ theorem allocation_germ_iff_taylor {a h : ℕ} (ha : 2 ≤ a)
       ∀ k ≤ 3*(6*(a+1+h)+5)^2,
         iteratedDeriv k b.extension 0 / k.factorial =
           iteratedDeriv k c.extension 0 / k.factorial) := by
+  classical
   have hb := b.analytic_extension ha
   have hc := c.analytic_extension ha
   have hbe := b.actual_extension ha
@@ -612,13 +633,13 @@ theorem allocation_germ_iff_taylor {a h : ℕ} (ha : 2 ≤ a)
     have hsize : Fintype.card (Option (b.TermIndex ⊕ c.TermIndex)) ≤ 6*(a+1+h)+5 := by
       have h1 := b.term_card
       have h2 := c.term_card
-      simp only [Fintype.card_option, Fintype.card_sum]
+      rw [Fintype.card_option, Fintype.card_sum]
       omega
     have hbound : 3 * (Fintype.card (Option (b.TermIndex ⊕ c.TermIndex)))^2 ≤
         3*(6*(a+1+h)+5)^2 := by nlinarith
     have hz := familyExtension_zero_of_coeff q (fun k hk => by
       rw [pair_family, taylor_sub hb hc]
-      simp only [map_sub, sub_eq_zero]
+      simp only [map_sub, sub_eq_zero, taylor, PowerSeries.coeff_mk]
       exact hcoeff k (hk.trans hbound))
     rw [pair_family] at hz
     exact hz.mono fun u hu => sub_eq_zero.mp hu

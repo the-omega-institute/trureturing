@@ -6,6 +6,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.PowerSeries;
 
 internal sealed class CdsoAllocationGermsDocument : IScribeDocumentDefinition
 {
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The full CDSO allocation functions have removable analytic extensions and the quadratic Taylor cutoff.",
         H("Actual allocation germs"),
@@ -13,18 +16,20 @@ internal sealed class CdsoAllocationGermsDocument : IScribeDocumentDefinition
             DescribeId.Create("cdso-actual-allocation-germ-cutoff"),
             DeclarationHandle.Create("D5/S3/Analytic/PowerSeries/CdsoAllocationGerms.allocation_germ_iff_taylor"),
             H("Full allocation functions and their genuine coefficients"),
-            StatementSource.FromAuthor(Disp(Seq(
-                D(2), Sp, Le, Sp, F.Id("a"), Sp, Implies, Sp,
-                Call("AnalyticAtZero", F.Id("E_b")), Sp, Land, Sp,
-                Call("AnalyticAtZero", F.Id("E_c")), Sp, Land, Sp,
-                Call("PositiveGermEq", F.Id("A_b"), F.Id("E_b")), Sp, Land, Sp,
-                Call("PositiveGermEq", F.Id("A_c"), F.Id("E_c")), Sp, Land, Sp,
-                Open, Call("PositiveGermEq", F.Id("A_b"), F.Id("A_c")), Sp, Iff, Sp,
-                Forall, Sp, F.Id("k"), Sp, Le, Sp,
-                D(3), Open, D(6), Open, F.Id("a"), Plus, D(1), Plus, F.Id("h"), Close, Plus, D(5), Close,
-                Caret, Grp(D(2)), Comma, Sp,
-                Call("TaylorCoeff", F.Id("E_b"), F.Id("k")), Sp, Eq, Sp,
-                Call("TaylorCoeff", F.Id("E_c"), F.Id("k")), Close))),
+            StatementSource.FromAuthor(Disp(All("a", Nat, All("h", Nat,
+                All("b", Call("AllocationData", F.Id("a"), F.Id("h")),
+                All("c", Call("AllocationData", F.Id("a"), F.Id("h")), Seq(
+                    D(2), Sp, Le, Sp, F.Id("a"), Sp, Implies, Sp,
+                    Call("AnalyticAtZero", Call("extension", F.Id("b"))), Sp, Land, Sp,
+                    Call("AnalyticAtZero", Call("extension", F.Id("c"))), Sp, Land, Sp,
+                    Call("PositiveGermEq", Call("actual", F.Id("b")), Call("extension", F.Id("b"))), Sp, Land, Sp,
+                    Call("PositiveGermEq", Call("actual", F.Id("c")), Call("extension", F.Id("c"))), Sp, Land, Sp,
+                    Open, Call("PositiveGermEq", Call("actual", F.Id("b")), Call("actual", F.Id("c"))), Sp, Iff, Sp,
+                    All("k", Nat, Seq(F.Id("k"), Sp, Le, Sp,
+                        D(3), Open, D(6), Open, F.Id("a"), Plus, D(1), Plus, F.Id("h"), Close, Plus, D(5), Close,
+                        Caret, Grp(D(2)), Sp, Implies, Sp,
+                        Call("TaylorCoeff", Call("extension", F.Id("b")), F.Id("k")), Sp, Eq, Sp,
+                        Call("TaylorCoeff", Call("extension", F.Id("c")), F.Id("k")))), Close))))))),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text("Fix natural a at least two and h. An allocation datum has a branch j with 1<=j<=h, a remainder d<a+j-1, a remainder t<h+1-j, and an arbitrary integer vector z on Fin(a+j). Write m=a+j, r=m-1, n=h+1-j and s=a+1+h. Source-admissible vectors satisfy sum z=n-d, sum z-positive<=n and sum z-negative<=d; the theorem also permits all other integer vectors. Every source residue supplies such d and t, so no residue, branch or allocation is excluded.")),

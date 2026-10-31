@@ -6,6 +6,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.PowerSeries;
 
 internal sealed class RadicalMultiplicityDocument : IScribeDocumentDefinition
 {
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A finite sum of polynomial multiples of quadratic radicals is determined by a quadratic initial jet.",
         H("Local multiplicity of polynomial radical sums"),
@@ -13,11 +16,17 @@ internal sealed class RadicalMultiplicityDocument : IScribeDocumentDefinition
             DescribeId.Create("cdso-radical-sum-cutoff"),
             DeclarationHandle.Create("D5/S3/Analytic/PowerSeries/RadicalMultiplicity.sum_eq_zero_of_coeff_eq_zero"),
             H("A cutoff allowing repeated radicals and cancellation"),
-            StatementSource.FromAuthor(Disp(Seq(
-                Call("RadicalData", F.Id("S"), F.Id("p"), F.Id("A")), Sp, Land, Sp,
-                Open, Forall, Sp, F.Id("k"), Sp, Le, Sp, D(3), F.Id("n"), Caret, Grp(D(2)), Comma, Sp,
-                Call("coeff", F.Id("k"), F.Id("Z")), Sp, Eq, Sp, D(0), Close,
-                Sp, Implies, Sp, F.Id("Z"), Sp, Eq, Sp, D(0)))),
+            StatementSource.FromAuthor(Disp(All("I", Call("Type"), Seq(
+                OpenBracket, Call("Fintype", F.Id("I")), CloseBracket, Sp,
+                All("S", new Formula.TypeArrow(F.Id("I"), Call("RealPowerSeries")),
+                All("p", new Formula.TypeArrow(F.Id("I"), Call("RealPolynomial")),
+                All("A", new Formula.TypeArrow(F.Id("I"), Call("RealPolynomial")), Seq(
+                    Call("RadicalData", F.Id("I"), F.Id("S"), F.Id("p"), F.Id("A")), Sp, Land, Sp,
+                    Open, All("k", Nat, Seq(F.Id("k"), Sp, Le, Sp,
+                        D(3), Call("card", F.Id("I")), Caret, Grp(D(2)), Sp, Implies, Sp,
+                        Call("coeff", F.Id("k"), Call("RadicalSum", F.Id("S"), F.Id("A"))),
+                        Sp, Eq, Sp, D(0))), Close, Sp, Implies, Sp,
+                    Call("RadicalSum", F.Id("S"), F.Id("A")), Sp, Eq, Sp, D(0))))))))),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text("Let I be any finite type, n its cardinality, p_i and A_i real polynomials, and S_i real formal power series. RadicalData means S_i squared equals p_i, the constant coefficient of S_i is nonzero, the degree of p_i is at most two, and the degree of A_i is at most n, for every i. Put Z equal to the sum of A_i S_i. If every coefficient of Z from zero through 3n squared, inclusive, is zero, then Z is the zero series. Zero polynomials, constant radicands, repeated S_i, arbitrary signs and the empty index type are allowed.")),
