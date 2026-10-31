@@ -32,10 +32,12 @@ The product and half-line formulas correspond to DLMF 5.8.3 and 5.4.4.
 
 Each selected DLMF file carries “Copyright (c) 2026 Bastiaan J Braams. All rights
 reserved”, “Authors: Bastiaan J Braams” and an explicit Apache 2.0 release grant.
-The complete Apache License 2.0 terms are distributed in the repository root
-`LICENSE`. The adapted files retain the notices and prominently identify the
-changed namespace, imports and shared exponential-integrability owner. No NOTICE
-file occurs in the complete source tree at the cited revision.
+The complete source tree at the cited revision has no LICENSE, NOTICE or
+COPYING-named file. Each selected file carries the explicit Apache 2.0 grant
+quoted above. This repository distributes the complete Apache License 2.0 terms
+in its root `LICENSE`. The adapted files retain the notices and prominently
+identify the changed namespace, imports and shared exponential-integrability
+owner.
 
 The exponential-integrability proof is extracted from the existing
 `PairwisePoissonHolonomyEnergy` owner, rather than copied as a second proof.

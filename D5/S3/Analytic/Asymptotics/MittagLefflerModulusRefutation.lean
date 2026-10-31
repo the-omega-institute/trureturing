@@ -20,7 +20,8 @@ Direct frozen dependencies (declaration statement_id):
 The public result is the designated refutation result (`basis=refutes`) and is exempt from
 four-slot escape registration (CLAUDE.md §3.9).
 The source conventions are literal; CompletelyMonotoneOn is reused from its existing owner.
-Only the endpoint pair (3/2,1/2) is certified; no all-alpha or interior-beta family is asserted.
+The endpoint contour argument gives a fixed point for every alpha in (1,2),
+then beta-continuity extends the strict inequality to a closed beta interval.
 -/
 
 import D5.S3.Analytic.Asymptotics.MittagLefflerBarnesKernel
