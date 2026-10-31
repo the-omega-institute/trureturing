@@ -23,7 +23,9 @@ abbrev signature : Signature where
   Role := Bool
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output role k := if role then Fin k → ℤ else Fin k → Bool
+  Output role k := match role with
+    | false => Fin k → Bool
+    | true => Fin k → ℤ
   Anchor := Empty
   finiteAnchor := inferInstance
 
