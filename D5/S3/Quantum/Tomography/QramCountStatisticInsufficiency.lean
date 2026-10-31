@@ -7,12 +7,14 @@
    digest: The plus-count statistic loses exact-weight discrimination information. -/
 
 import D5.S3.Observer.BornReduction
+import D5.S3.Quantum.Thermal.MetrotropyHalfErgotropyRefutation
 
 /-! The equal-prior exact-weight model of L. Bohac, arXiv:2512.17503v1,
 Remark 5.3. The function is sampled once and shared by all copies. The witness measures
 both registers in the Walsh basis and rejects equal nonzero outcomes. -/
 
 set_option autoImplicit false
+set_option linter.style.longLine false
 
 noncomputable section
 
@@ -20,6 +22,8 @@ open Finset Matrix
 open scoped ComplexOrder
 
 namespace D5.S3.Quantum.Tomography.QramCountStatisticInsufficiency
+
+open D5.S3.Quantum.Thermal.MetrotropyHalfErgotropyRefutation (u4 u4_unitary)
 
 /-- The number of true addresses of a Boolean memory. -/
 def weight {n : ℕ} (f : Fin (2 ^ n) → Bool) : ℕ :=
@@ -73,8 +77,7 @@ def claim : Prop :=
           successProb n t m₀ m₁ e ≤ successProb n t m₀ m₁ (countTest n t g)
 
 private def walsh (y x : Fin 4) : ℂ :=
-  (![![1, 1, 1, 1], ![1, -1, 1, -1], ![1, 1, -1, -1],
-    ![1, -1, -1, 1]] : Fin 4 → Fin 4 → ℂ) y x / 2
+  u4 y x
 
 private def walshPair (y z : Fin 4) (x : Fin 2 → Fin 4) : ℂ :=
   walsh y (x 0) * walsh z (x 1)
@@ -87,16 +90,18 @@ private def witness : Matrix (Fin 2 → Fin 4) (Fin 2 → Fin 4) ℂ := 1 - reje
 
 private lemma walsh_orthogonal (y z : Fin 4) :
     (star (walsh y)) ⬝ᵥ walsh z = if y = z then 1 else 0 := by
-  delta walsh
-  fin_cases y <;> fin_cases z <;>
-    norm_num [dotProduct, Fin.sum_univ_succ]
+  simpa only [Matrix.mul_apply, Matrix.star_eq_conjTranspose,
+    Matrix.conjTranspose_apply, Matrix.one_apply, walsh, dotProduct,
+    Pi.star_apply, mul_comm, eq_comm] using
+    congrArg (fun a : Matrix (Fin 4) (Fin 4) ℂ => a z y)
+      (Matrix.mem_unitaryGroup_iff.mp u4_unitary)
 
 private lemma plus_walsh : plusState 2 = walsh 0 := by
   have hs : Real.sqrt 4 = 2 := by
     rw [Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num)]; norm_num
   funext x
   delta plusState addressState walsh
-  fin_cases x <;> norm_num [hs]
+  fin_cases x <;> norm_num [hs, u4, Matrix.smul_apply, smul_eq_mul]
 
 private lemma class_one : weightClass 2 1 =
     {![true, false, false, false], ![false, true, false, false],
@@ -152,7 +157,8 @@ private lemma one_overlap (f : Fin 4 → Bool) (hf : f ∈ weightClass 2 1) (y :
   rw [class_one] at hf
   simp only [Finset.mem_insert, Finset.mem_singleton] at hf
   rcases hf with rfl | rfl | rfl | rfl <;> fin_cases y <;>
-    delta addressState walsh <;> norm_num [Fin.sum_univ_succ, hs]
+    delta addressState walsh <;>
+    norm_num [Fin.sum_univ_succ, hs, u4, Matrix.smul_apply, smul_eq_mul]
 
 private lemma weight_one_law (y z : Fin 4) :
     Matrix.trace (copyState 2 2 1 *
@@ -193,7 +199,7 @@ private lemma class_two_states :
   have hs : Real.sqrt 4 = 2 := by
     rw [Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num)]; norm_num
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> funext x <;> fin_cases x <;>
-    delta addressState walsh <;> norm_num [hs]
+    delta addressState walsh <;> norm_num [hs, u4, Matrix.smul_apply, smul_eq_mul]
 
 private lemma weight_two_state : copyState 2 2 2 = (1 / 3 : ℂ) • reject := by
   rw [copyState_rank, class_two]
@@ -298,11 +304,12 @@ private lemma weight_two_law (y z : Fin 4) :
 
 private lemma complement_walsh : 1 - plusProj 2 =
     ∑ y : Fin 3, Matrix.vecMulVec (walsh y.succ) (star (walsh y.succ)) := by
+  have h := D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.sum_projectors
+    (Matrix.UnitaryGroup.transpose ⟨u4, u4_unitary⟩)
+  change (∑ y : Fin 4, Matrix.vecMulVec (walsh y) (star (walsh y))) = 1 at h
+  rw [Fin.sum_univ_succ] at h
   rw [plusProj, plus_walsh]
-  ext x y
-  delta walsh
-  fin_cases x <;> fin_cases y <;>
-    norm_num [Matrix.vecMulVec_apply, Fin.sum_univ_succ, Matrix.one_apply]
+  rw [← h, add_sub_cancel_left]
 
 private lemma count_walsh (k : Fin 3) : countProj 2 2 k =
     ∑ y : Fin 4, ∑ z : Fin 4,
