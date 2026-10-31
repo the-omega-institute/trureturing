@@ -1,12 +1,15 @@
-/-! Complete physical upper witnesses for gaps `(s,b,s,s)`, `s ≥ 2`,
-`b ≥ s+2`.  The masks are literal label lists; the theorem returns the
-old/new `InStrip` witness consumed by the later full-family assembly.
--/
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/EqualOuterThree/Upper
+   generality: I
+   mirror-B: none(waiver:private-consumed-construction-described-at-endpoint)
+   mirror-E: none(waiver:private-consumed-construction)
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   utility: none
+   digest: Consumed upper construction for the complete equal-outer-three family. -/
 import D5.S3.Combinatorics.Circle.FourNegative.EqualOuterThree.UpperArithmetic
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Transport
 import D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
-import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+import D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -15,7 +18,7 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.EqualOuterThree
 
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
-open private UpperBounds upperGates chart_s_ge_three chart_s_two_large chart_corner
+open private UpperBounds chart_s_ge_three chart_s_two_large chart_corner
   from D5.S3.Combinatorics.Circle.FourNegative.EqualOuterThree
 open private source_table
   from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.SourceTable
@@ -25,8 +28,10 @@ open private insertAt
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 open private insertAt_add
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
-open private four_strip
+open private Gates four_strip
   from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
+open private negative_step
+  from D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
 open private label lift_order marked_word ladder_sum
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
@@ -123,7 +128,7 @@ private theorem physical (s b : ℕ) (v : ℤ) (R T : List ℕ)
     (hweight : ∀ (h : ℕ → ℤ) (H : ℤ),
       (∀ i < b-1, h (2*s+i) = 2^i*H) →
       (T.map h).sum = (v-1)*H)
-    (hend : UpperBounds (2^s) (2^b) (2^(s-1)) v) :
+    (hend : UpperBounds (2^s) (2^b) (2^(s-1)) (2^(b-1)) v) :
     ∃ l : List ℕ, l.Perm (List.range (size s b)) ∧
       InStrip (fun i => centered (sourceMod s b s s)
         ((2 : ℤ)^i * base s b s s 0)) (sourceMod s b s s / 2) 0 l ∧
@@ -195,19 +200,20 @@ private theorem physical (s b : ℕ) (v : ℤ) (R T : List ℕ)
     have hf := (hW.map f).sum_eq
     have hg := (hW.map g).sum_eq
     have hsf := ladder_sum f (2*s) (b-1) L
-      (by intro i hi; exact posW i hi)
+      (by intro i hi; exact (posW i hi).1)
     have hsg := ladder_sum g (2*s) (b-1) Ln
-      (by intro i hi; exact posW i hi)
+      (by intro i hi; exact (posW i hi).2)
     have ht := hweight f L (by intro i hi; exact (posW i hi).1)
     have ht' := hweight g Ln (by intro i hi; exact (posW i hi).2)
     simp only [List.map_append,List.sum_append] at hf hg
-    rw [ht,ht',hsf,hsg] at hf hg
+    rw [ht,hsf] at hf
+    rw [ht',hsg] at hg
     constructor <;> nlinarith only [hf,hg]
   have hP2 : (P2.map f).sum=(2^(s-1)-1)*A ∧
       (P2.map g).sum=(2^(s-1)-1)*(2*A) := by
-    have hf := ladder_sum f 0 (s-1) A (by intro i hi; exact (posU i hi).1)
-    have hg := ladder_sum g 0 (s-1) (2*A) (by intro i hi; exact (posU i hi).2)
-    simpa [P2] using And.intro hf hg
+    have hf := ladder_sum f 0 (s-1) A (by intro i hi; simpa using (posU i hi).1)
+    have hg := ladder_sum g 0 (s-1) (2*A) (by intro i hi; simpa using (posU i hi).2)
+    simpa [P2, ← List.range_eq_range'] using And.intro hf hg
   have hP3 : (P3.map f).sum=(2^(s-1)-1)*M ∧
       (P3.map g).sum=(2^(s-1)-1)*Mn := by
     have hf := ladder_sum f (2*s+b) (s-1) M
@@ -223,72 +229,123 @@ private theorem physical (s b : ℕ) (v : ℤ) (R T : List ℕ)
     have ht' := hweight g Ln (by intro i hi; exact (posW i hi).2)
     simp only [P4,List.map_append,List.sum_append,List.map_append] 
     rw [hvf',hvg',ht,ht']
-  have hnegW : f wneg=-(N-M)/2 ∧ g wneg=-((2*N+1)-Mn)/2 := by
-    simpa [wneg] using And.intro (hwf (b-1) (by omega)) (hwg (b-1) (by omega))
-  have hnegU : f uneg=-(N-B)/2 ∧ g uneg=-((2*N+1)-Bn)/2 := by
-    simpa [uneg] using And.intro (huf (s-1) (by omega)) (hug (s-1) (by omega))
-  have hnegX : f xneg=-(N-A)/2 ∧ g xneg=-((2*N+1)-A)/2 := by
-    simpa [xneg,k,size] using And.intro (hxf (s-1) (by omega)) (hxg (s-1) (by omega))
-  have hnegV : f vneg=-(N-L)/2 ∧ g vneg=-((2*N+1)-Ln)/2 := by
-    simpa [vneg] using And.intro (hvf (s-1) (by omega)) (hvg (s-1) (by omega))
   have hpowq : (2^s : ℤ) = 2*(2^(s-1)) := pow_step s (by omega)
   have hpowy : (2^b : ℤ) = 2*(2^(b-1)) := pow_step b (by omega)
+  have rels : (2:ℤ)^s*A=N+B ∧ (2:ℤ)^s*B=N+L ∧
+      (2:ℤ)^b*L=N+M ∧ (2:ℤ)^s*M=N+A := by
+    dsimp [A,B,L,M,N,base,sourceMod]
+    constructor; ring
+    constructor; ring
+    constructor <;> ring
+  have grels : (2:ℤ)^s*(2*A)=2*N+1+Bn ∧ (2:ℤ)^s*Bn=2*N+1+Ln ∧
+      (2:ℤ)^b*Ln=2*N+1+Mn ∧ (2:ℤ)^s*Mn=2*N+1+A := by
+    dsimp [Bn,Ln,Mn,A,B,L,M,N,base,sourceMod]
+    constructor; ring
+    constructor; ring
+    constructor <;> ring
+  have hnegW : f wneg=M-2^(b-1)*L ∧
+      g wneg=Mn-2^(b-1)*Ln := by
+    have hf := hwf (b-1) (by omega)
+    have hg := hwg (b-1) (by omega)
+    rw [ite_eq_right (by omega), negative_step N L M (2^(b-1))
+      (by rw [← hpowy]; exact rels.2.2.1)] at hf
+    rw [ite_eq_right (by omega), negative_step (2*N+1) Ln Mn (2^(b-1))
+      (by rw [← hpowy]; exact grels.2.2.1)] at hg
+    simpa only [show 2*s+(b-1)=wneg by dsimp [wneg]; omega] using And.intro hf hg
+  have hnegU : f uneg=B-2^(s-1)*A ∧
+      g uneg=Bn-2^(s-1)*(2*A) := by
+    have hf := huf (s-1) (by omega)
+    have hg := hug (s-1) (by omega)
+    rw [ite_eq_right (by omega), negative_step N A B (2^(s-1))
+      (by rw [← hpowq]; exact rels.1)] at hf
+    rw [ite_eq_right (by omega), negative_step (2*N+1) (2*A) Bn (2^(s-1))
+      (by rw [← hpowq]; exact grels.1)] at hg
+    simpa only [uneg] using And.intro hf hg
+  have hnegX : f xneg=A-2^(s-1)*M ∧
+      g xneg=A-2^(s-1)*Mn := by
+    have hf := hxf (s-1) (by omega)
+    have hg := hxg (s-1) (by omega)
+    rw [ite_eq_right (by omega), negative_step N M A (2^(s-1))
+      (by rw [← hpowq]; exact rels.2.2.2)] at hf
+    rw [ite_eq_right (by omega), negative_step (2*N+1) Mn A (2^(s-1))
+      (by rw [← hpowq]; exact grels.2.2.2)] at hg
+    simpa only [show 2*s+b+(s-1)=xneg by dsimp [xneg,k,size]; omega] using And.intro hf hg
+  have hnegV : f vneg=L-2^(s-1)*B ∧
+      g vneg=Ln-2^(s-1)*Bn := by
+    have hf := hvf (s-1) (by omega)
+    have hg := hvg (s-1) (by omega)
+    rw [ite_eq_right (by omega), negative_step N B L (2^(s-1))
+      (by rw [← hpowq]; exact rels.2.1)] at hf
+    rw [ite_eq_right (by omega), negative_step (2*N+1) Bn Ln (2^(s-1))
+      (by rw [← hpowq]; exact grels.2.1)] at hg
+    simpa only [show s+(s-1)=vneg by dsimp [vneg]; omega] using And.intro hf hg
+  have hhalf : N/2=(2:ℤ)^(3*s)*2^(b-1)-1 := by
+    have hn : N=2*((2:ℤ)^(3*s)*2^(b-1))-1 := by
+      dsimp [N,sourceMod]
+      rw [hpowy]
+      simp only [pow_mul]
+      ring
+    omega
   have hgates :
-      upperGates (N/2) (P1.map f).sum (f wneg)
+      Gates (N/2) (P1.map f).sum (f wneg)
         (P2.map f).sum (f uneg) (P3.map f).sum (f xneg)
         (P4.map f).sum (f vneg) ∧
-      upperGates N (P1.map g).sum (g wneg)
+      Gates N (P1.map g).sum (g wneg)
         (P2.map g).sum (g uneg) (([k]++P3).map g).sum (g xneg)
         (P4.map g).sum (g vneg) := by
-    rw [hRmass.1,hP2.1,hP3.1,hP4.1,hRmass.2,hP2.2,hP3.2,hP4.2,
+    rw [hRmass.1,hP2.1,hP3.1,hP4.1,hRmass.2,hP2.2,hP4.2,
       hnegW.1,hnegU.1,hnegX.1,hnegV.1,hnegW.2,hnegU.2,hnegX.2,hnegV.2]
-    simp only [List.map_cons,List.map_nil,List.sum_cons,List.sum_nil,zero_add,hfresh']
+    simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,hfresh',hP3.2]
     have hh := hend
     dsimp only [UpperBounds] at hh
-    convert hh using 3 <;> (try dsimp [N,A,B,L,M,Bn,Ln,Mn]) <;>
-      (try rw [hpowq,hpowy]) <;> ring
+    rw [hhalf]
+    convert hh using 2 <;> dsimp [N,A,B,L,M,Bn,Ln,Mn,base,sourceMod] <;>
+      (try rw [hpowy]) <;> simp only [pow_mul] <;> ring
+  have posblock (z : ℕ → ℤ) (H : ℤ) (o n : ℕ) (hH : 0≤H)
+      (hh : ∀ i<n,z (o+i)=2^i*H) : ∀ i∈List.range' o n, 0≤z i := by
+    intro i hi
+    have hi' := List.mem_range'_1.mp hi
+    rw [show i=o+(i-o) by omega,hh (i-o) (by omega)]
+    positivity
+  have hAf : 0≤A := by omega
+  have hBf : 0≤B := by omega
+  have hLf : 0≤L := by omega
+  have hMf : 0≤M := by omega
   have hpold : ∀ i ∈ P1, 0≤f i := by
     intro i hi
-    have hm := hW.mem_iff.mp (List.mem_append_left T hi)
-    obtain ⟨t, ht, heq⟩ := List.mem_range'.mp hm
-    subst i
-    simpa only [show 2*s+t=2*s+t by rfl] using (posW t ht).1.le
+    exact posblock f L (2*s) (b-1) hLf (by intro j hj; exact (posW j hj).1)
+      i (hW.mem_iff.mp (List.mem_append_left T hi))
   have hpoldU : ∀ i ∈ P2, 0≤f i := by
-    intro i hi; exact (posU i (List.mem_range.mp hi)).1.le
-  have hpoldX : ∀ i ∈ P3, 0≤f i := by
     intro i hi
-    simpa only [show i=2*s+b+(i-(2*s+b)) by omega] using
-      (posX (i-(2*s+b)) (by omega)).1.le
+    rw [(posU i (List.mem_range.mp hi)).1]
+    positivity
+  have hpoldX : ∀ i ∈ P3, 0≤f i :=
+    posblock f M (2*s+b) (s-1) hMf (by intro j hj; exact (posX j hj).1)
   have hpoldV : ∀ i ∈ P4, 0≤f i := by
     intro i hi
     rcases List.mem_append.mp hi with hi|hi
-    · simpa only [show i=s+(i-s) by omega] using (posV (i-s) (by omega)).1.le
-    · have hm := hW.mem_iff.mp (List.mem_append_right R hi)
-      obtain ⟨t, ht, heq⟩ := List.mem_range'.mp hm
-      subst i
-      simpa only [show 2*s+t=2*s+t by rfl] using (posW t ht).1.le
+    · exact posblock f B s (s-1) hBf (by intro j hj; exact (posV j hj).1) i hi
+    · exact posblock f L (2*s) (b-1) hLf (by intro j hj; exact (posW j hj).1)
+        i (hW.mem_iff.mp (List.mem_append_right R hi))
   have hpnew : ∀ i ∈ P1, 0≤g i := by
     intro i hi
-    have hm := hW.mem_iff.mp (List.mem_append_left T hi)
-    obtain ⟨t, ht, heq⟩ := List.mem_range'.mp hm
-    subst i
-    simpa only [show 2*s+t=2*s+t by rfl] using (posW t ht).2.le
+    exact posblock g Ln (2*s) (b-1) hnewL (by intro j hj; exact (posW j hj).2)
+      i (hW.mem_iff.mp (List.mem_append_left T hi))
   have hpnewU : ∀ i ∈ P2, 0≤g i := by
-    intro i hi; exact (posU i (List.mem_range.mp hi)).2.le
+    intro i hi
+    rw [(posU i (List.mem_range.mp hi)).2]
+    positivity
   have hpnewX : ∀ i ∈ [k]++P3, 0≤g i := by
     intro i hi
-    rcases List.mem_cons.mp hi with rfl|hi
-    · exact hA.le
-    · simpa only [show i=2*s+b+(i-(2*s+b)) by omega] using
-        (posX (i-(2*s+b)) (by omega)).2.le
+    rcases List.mem_cons.mp hi with hi|hi
+    · rw [hi,hfresh']; exact hAf
+    · exact posblock g Mn (2*s+b) (s-1) hnewM (by intro j hj; exact (posX j hj).2) i hi
   have hpnewV : ∀ i ∈ P4, 0≤g i := by
     intro i hi
     rcases List.mem_append.mp hi with hi|hi
-    · simpa only [show i=s+(i-s) by omega] using (posV (i-s) (by omega)).2.le
-    · have hm := hW.mem_iff.mp (List.mem_append_right R hi)
-      obtain ⟨t, ht, heq⟩ := List.mem_range'.mp hm
-      subst i
-      simpa only [show 2*s+t=2*s+t by rfl] using (posW t ht).2.le
+    · exact posblock g Bn s (s-1) hnewB (by intro j hj; exact (posV j hj).2) i hi
+    · exact posblock g Ln (2*s) (b-1) hnewL (by intro j hj; exact (posW j hj).2)
+        i (hW.mem_iff.mp (List.mem_append_right R hi))
   let oldWord := P1++[wneg]++P2++[uneg]++P3++[xneg]++P4++[vneg]
   let newWord := P1++[wneg]++P2++[uneg]++[k]++P3++[xneg]++P4++[vneg]
   have hperm : oldWord.Perm (List.range k) := by
@@ -319,7 +376,7 @@ private theorem physical (s b : ℕ) (v : ℤ) (R T : List ℕ)
   · simpa [f,N,A] using hold
   · simpa [g,N,A,hinsert] using hnew
 
-private theorem actual_of_physical (s b : ℕ) (l : List ℕ) (j : ℕ)
+private theorem actual_of_physical (s b : ℕ) (hs : 2≤s) (l : List ℕ) (j : ℕ)
     (hp : l.Perm (List.range (size s b))) (hj : j ≤ size s b)
     (hold : InStrip (fun i => centered (sourceMod s b s s)
       ((2 : ℤ)^i * base s b s s 0)) (sourceMod s b s s / 2) 0 l)
@@ -337,20 +394,23 @@ private theorem actual_of_physical (s b : ℕ) (l : List ℕ) (j : ℕ)
   have hk : 0 < k := by dsimp [k,size]; omega
   have hmod : modulus k = N := by
     dsimp [k,N,size,modulus,sourceMod]
+    simp only [pow_add]
     ring
   have hmod' : modulus (k+1) = 2*N+1 := by
     dsimp [k,N,size,modulus,sourceMod]
+    simp only [pow_add]
     ring
   have hseed : (seed s b : ℤ) = A := by
     dsimp [seed,A,base]
     push_cast
+    simp only [pow_add]
     ring
   have old : OriginalOrder k (seed s b)
       (l.map (label k hk)) := by
     apply lift_order k (seed s b) hk l hp
     · simpa [hmod,hseed] using hold
     · simpa [hmod,hseed] using
-        (ThreeNegativeEqualOuterSourceBridge.source_zero k (seed s b) hk)
+        (ThreeNegativeEqualOuterSourceBridge.source_zero k (seed s b) (by dsimp [k,size]; omega))
   let pre := l.take j
   let post := l.drop j
   have hlen : l.length = k := by
@@ -372,7 +432,7 @@ private theorem actual_of_physical (s b : ℕ) (l : List ℕ) (j : ℕ)
     apply lift_order (k+1) (2*seed s b) (by omega) (pre ++ k :: post) hnewperm
     · simpa [hmod',hseed,insertAt,pre,post] using hnew
     · simpa [hmod',hseed] using
-        (ThreeNegativeEqualOuterSourceBridge.source_zero (k+1) (2*seed s b) (by omega))
+        (ThreeNegativeEqualOuterSourceBridge.source_zero (k+1) (2*seed s b) (by dsimp [k,size]; omega))
   have hpr : (pre ++ post).Perm (List.range k) := by
     rw [List.take_append_drop]
     exact hp
@@ -468,8 +528,8 @@ private theorem upper_s_ge_three (s b : ℕ) (hs : 3 ≤ s) (hb : s+2 ≤ b) :
           ((2 : ℤ)^i * (2*base s b s s 0))) (sourceMod s b s s) 0
           (insertAt (size s b) l j) := by
   let h := b-s-2
-  let m := 2^h
-  let v := 3*m
+  let m : ℤ := 2^h
+  let v : ℤ := 3*m
   have hh : 0 ≤ h := by dsimp [h]; omega
   have hm : 1 ≤ m := by dsimp [m]; positivity
   have hq : (2:ℤ)^s = 2*(2:ℤ)^(s-1) := pow_step s (by omega)
@@ -478,12 +538,14 @@ private theorem upper_s_ge_three (s b : ℕ) (hs : 3 ≤ s) (hb : s+2 ≤ b) :
     rw [show b=s+2+(b-s-2) by omega, pow_add, pow_add, pow_add]
     norm_num
     ring
-  have hbnd : UpperBounds (2^s) (2^b) (2^(s-1)) v := by
+  have hbnd : UpperBounds (2^s) (2^b) (2^(s-1)) (2^(b-1)) v := by
     have hc := chart_s_ge_three (2^(s-1):ℤ) (2^h:ℤ) (by
       have : (8:ℤ) ≤ 2^s := by exact pow_le_pow_right₀ (by norm_num) (by omega)
       nlinarith [hq]) (by positivity)
-    simpa [v,m,h,show (2:ℤ)^s=2*(2:ℤ)^(s-1) by exact hq,
-      show (2:ℤ)^b=8*(2:ℤ)^(s-1)*(2:ℤ)^h by exact hy] using hc
+    simpa only [v,m,show (2:ℤ)^s=2*(2:ℤ)^(s-1) by exact hq,
+      show (2:ℤ)^b=8*(2:ℤ)^(s-1)*(2:ℤ)^h by exact hy,
+      show (2:ℤ)^(b-1)=4*(2:ℤ)^(s-1)*(2:ℤ)^h by
+        have hy2 := pow_step b (by omega); rw [hy] at hy2; nlinarith only [hy2]] using hc
   apply physical s b (v : ℤ) (wRest s b) (wMask s b) (by omega) hb
     (mask_partition_s_ge_three s b hs hb)
     (by intro H K hh; simpa [v,m] using weight_s_ge_three s b hs hb H K hh) hbnd
@@ -500,7 +562,7 @@ private theorem upper_s_two_four :
     mask_partition_corner
   · intro h H hh; simpa [wMaskCorner] using weight_corner h H hh
   · simpa [show (2:ℤ)^2=4 by norm_num, show (2:ℤ)^4=16 by norm_num,
-      show (2:ℤ)^(2-1)=2 by norm_num] using chart_corner
+      show (2:ℤ)^(2-1)=2 by norm_num, show (2:ℤ)^(4-1)=8 by norm_num] using chart_corner
 
 private theorem upper_s_two_large (b : ℕ) (hb : 5 ≤ b) :
     ∃ l : List ℕ, l.Perm (List.range (size 2 b)) ∧
@@ -511,16 +573,18 @@ private theorem upper_s_two_large (b : ℕ) (hb : 5 ≤ b) :
           ((2 : ℤ)^i * (2*base 2 b 2 2 0))) (sourceMod 2 b 2 2) 0
           (insertAt (size 2 b) l j) := by
   let h := b-5
-  let m := 2^h
-  let v := 5*m
+  let m : ℤ := 2^h
+  let v : ℤ := 5*m
   have hh : 0 ≤ h := by dsimp [h]; omega
   have hm : 1 ≤ m := by dsimp [m]; positivity
   have hy : (2:ℤ)^b = 32*(2:ℤ)^h := by
     dsimp [h]; rw [show b=5+h by omega, pow_add]; norm_num; ring
-  have hbnd : UpperBounds (2^2) (2^b) (2^(2-1)) v := by
+  have hbnd : UpperBounds (2^2) (2^b) (2^(2-1)) (2^(b-1)) v := by
     have hc := chart_s_two_large (2^h:ℤ) (by positivity)
-    simpa [v,m,h,hy,show (2:ℤ)^2=4 by norm_num,
-      show (2:ℤ)^(2-1)=2 by norm_num] using hc
+    simpa only [v,m,hy,show (2:ℤ)^2=4 by norm_num,
+      show (2:ℤ)^(2-1)=2 by norm_num,
+      show (2:ℤ)^(b-1)=16*(2:ℤ)^h by
+        have hy2 := pow_step b (by omega); rw [hy] at hy2; nlinarith only [hy2]] using hc
   apply physical 2 b (v : ℤ) (wRestTwo b) (wMaskTwo b) (by omega) (by omega)
     (mask_partition_two b hb)
     (by intro H K hh; simpa [v,m] using weight_two b hb H K hh) hbnd
@@ -533,7 +597,7 @@ private theorem upper_actual_s_ge_three (s b : ℕ) (hs : 3 ≤ s) (hb : s+2 ≤
           (earWord (size s b) sigma j) := by
   rcases upper_s_ge_three s b hs hb with ⟨l,hp,hold,j,hj,hnew⟩
   let sigma := l.map (label (size s b) (by dsimp [size]; omega))
-  have hsigma := actual_of_physical s b l j hp hj hold hnew
+  have hsigma := actual_of_physical s b (by omega) l j hp hj hold hnew
   exact ⟨sigma, hsigma.1, j, hj, hsigma.2⟩
 
 private theorem upper_actual_s_two_four :
@@ -544,7 +608,7 @@ private theorem upper_actual_s_two_four :
           (earWord (size 2 4) sigma j) := by
   rcases upper_s_two_four with ⟨l,hp,hold,j,hj,hnew⟩
   let sigma := l.map (label (size 2 4) (by dsimp [size]; omega))
-  have hsigma := actual_of_physical 2 4 l j hp hj hold hnew
+  have hsigma := actual_of_physical 2 4 (by omega) l j hp hj hold hnew
   exact ⟨sigma, hsigma.1, j, hj, hsigma.2⟩
 
 private theorem upper_actual_s_two_large (b : ℕ) (hb : 5 ≤ b) :
@@ -555,7 +619,7 @@ private theorem upper_actual_s_two_large (b : ℕ) (hb : 5 ≤ b) :
           (earWord (size 2 b) sigma j) := by
   rcases upper_s_two_large b hb with ⟨l,hp,hold,j,hj,hnew⟩
   let sigma := l.map (label (size 2 b) (by dsimp [size]; omega))
-  have hsigma := actual_of_physical 2 b l j hp hj hold hnew
+  have hsigma := actual_of_physical 2 b (by omega) l j hp hj hold hnew
   exact ⟨sigma, hsigma.1, j, hj, hsigma.2⟩
 
 end D5.S3.Combinatorics.Circle.FourNegative.EqualOuterThree

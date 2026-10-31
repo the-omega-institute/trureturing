@@ -1,9 +1,10 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/EqualOuterThree/LowerArithmetic
    generality: I
-   mirror-B: none(source-preparation)
-   mirror-E: none(source-preparation)
+   mirror-B: none(waiver:private-consumed-construction-described-at-endpoint)
+   mirror-E: none(waiver:private-consumed-construction)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
-   utility: consumed lower endpoint arithmetic for the unbounded s>=b+2 branch. -/
+   utility: none
+   digest: Consumed lowerarithmetic construction for the complete equal-outer-three family. -/
 import D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
 
 set_option autoImplicit false

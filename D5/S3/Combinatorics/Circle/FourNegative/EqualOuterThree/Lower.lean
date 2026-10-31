@@ -1,9 +1,10 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/EqualOuterThree/Lower
    generality: I
-   mirror-B: none(source-preparation)
-   mirror-E: none(source-preparation)
+   mirror-B: none(waiver:private-consumed-construction-described-at-endpoint)
+   mirror-E: none(waiver:private-consumed-construction)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
-   utility: complete private lower physical source for gaps (s,b,s,s). -/
+   utility: none
+   digest: Consumed lower construction for the complete equal-outer-three family. -/
 import D5.S3.Combinatorics.Circle.FourNegative.EqualOuterThree.LowerArithmetic
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 import D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
