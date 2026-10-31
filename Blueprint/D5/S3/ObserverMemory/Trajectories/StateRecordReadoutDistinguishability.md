@@ -24,6 +24,10 @@ The first public conjunct quantifies over every state-only readout s. Since both
 
 The second public conjunct is an equivalence. The composed history readout q2 after the record-image map lies outside its equality kernel exactly when q2(lambda) and q2(lambdaPrime) differ. Thus its two directions are the source's two record-separation assertions.
 
+For a measurable history carrier and finite measurable state and record-output types with measurable singletons, assume that the endpoint and record-output maps are measurable, and put Dirac probability laws on two certified histories. If their endpoints agree, their endpoint pushforward laws are equal and their finite statistical TV is zero. If the two finite outputs q2(recordImage(history)) differ, the corresponding record-output laws are distinct Dirac laws, with statistical TV one. This law interpretation uses the same observe map and preserves observe_advance.
+
+A generated example has Unit state, Boolean readings, List Bool records, append(r,b)=r++[b], the list-prefix relation, constant reading true, and controlledUpdate returning the Unit state. Take the initial history at ((),[]) and one next step with control false. The certified observations are ((),[]) and ((),[true]); the endpoints agree while the records differ. With q2=list.isEmpty their outputs are true and false, so their record-output TV is one. Replacing q2 by a constant gives TV zero despite the same distinct record images. This is a conditional discrimination statement, not a claim that distinct records always yield distinct outputs or that arbitrary history functions satisfy the certified evolution law.
+
 The theorem does not claim that q2 separates every pair of distinct records. A constant q2 makes both sides of the equivalence false, as required by the source's conditional wording.
 
 ## References

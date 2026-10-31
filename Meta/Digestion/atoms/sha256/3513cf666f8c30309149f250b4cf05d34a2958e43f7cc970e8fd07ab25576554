@@ -1,0 +1,97 @@
+### 2.5. An explicit physical comparison source
+
+Fix any real $t$ and put $u_t=(1+t)/4$, $w_t=(1-t)/4$.
+For sufficiently small signed $\varepsilon$, let $q=q_t(\varepsilon^2)$
+be the small root near zero of
+
+$$
+f(q,s)=(r+q)[q(\beta-q)-2w_t^2s]-2u_t^2sq=0,
+ \qquad s=\varepsilon^2.
+\tag{2.24}
+$$
+
+This specifies an unambiguous analytic branch: $f(0,0)=0$ and
+$f_q(0,0)=r\beta>0$, so IFT gives the unique root in a neighborhood
+of $(q,s)=(0,0)$. It is analytic jointly in $(s,t)$ locally at each
+finite $t$, and the construction and estimates can be made uniform
+on any fixed compact interval of $t$ by shrinking $|\varepsilon|$.
+Implicit differentiation gives
+
+$$
+q_t(\varepsilon^2)=\frac{2w_t^2}{\beta}\varepsilon^2
+                       +O(\varepsilon^4)
+    =\frac52(1-t)^2\varepsilon^2+O(\varepsilon^4).
+\tag{2.25}
+$$
+
+Define the actual matrix
+
+$$
+W_\varepsilon(t)=
+ \begin{pmatrix}
+ r+q&u_t\varepsilon&u_t\varepsilon&0\\
+ u_t\varepsilon&\beta-q&0&w_t\varepsilon\\
+ u_t\varepsilon&0&\beta-q&w_t\varepsilon\\
+ 0&w_t\varepsilon&w_t\varepsilon&q
+ \end{pmatrix}.
+\tag{2.26}
+$$
+
+Positivity follows by a Schur complement.
+The antisymmetric middle vector has eigenvalue $\beta-q>0$.
+On $\{|++\rangle,(|+-\rangle+|-+\rangle)/\sqrt2,|--\rangle\}$
+the block is
+
+$$
+ \begin{pmatrix}r+q&\sqrt2u_t\varepsilon&0\\
+ \sqrt2u_t\varepsilon&\beta-q&\sqrt2w_t\varepsilon\\
+ 0&\sqrt2w_t\varepsilon&q\end{pmatrix}.
+$$
+
+Its leading $2\times2$ block $A$ is positive for small
+$|\varepsilon|$, since at zero it is $\operatorname{diag}(r,\beta)$.
+The determinant of the three-dimensional block is
+$f(q,\varepsilon^2)=0$. Its Schur complement over $A$ is
+therefore exactly zero, explicitly
+
+$$
+ q-\frac{2w_t^2\varepsilon^2(r+q)}
+                 {(r+q)(\beta-q)-2u_t^2\varepsilon^2}=0.
+$$
+
+Thus the three-dimensional block is PSD of rank two and the complete
+$W$ is PSD of rank three. This also proves $q\geq0$ on the physical
+branch, including $q=0$ when $t=1$. Its trace is
+$r+2\beta=1$. Either partial trace has diagonal entries
+$(r+\beta,\beta)$ and off-diagonal entry
+$(u_t+w_t)\varepsilon=\varepsilon/2$; hence both are exactly
+$\sigma_\varepsilon$. Positive outputs follow by continuity from
+(2.8). Its tangent is $H(t)$, so (2.12) or
+(2.25) gives actual second derivative $J(t)$.
+
+The root depends on $\varepsilon^2$ and
+$UW_\varepsilon(t)U^*=W_{-\varepsilon}(t)$. Its objective is therefore
+even analytic, with the same signed-domain justification used above.
+For $t=t_*$ this proves
+
+$$
+\Delta(C_\varepsilon)-\Delta(W_\varepsilon(t_*))
+      =\gamma\varepsilon^2+O(\varepsilon^4),\qquad
+ 0\leq F(W_\varepsilon(t_*))-F(\omega_\varepsilon)=O(\varepsilon^4).
+\tag{2.27}
+$$
+
+The second inequality follows from global optimality, and its order
+from the equal tangent, equal second derivative, and even analyticity.
+The explicit comparison source is not asserted to equal the optimizer
+at fourth or higher order. In particular any bound $L$ valid on the
+whole physical fiber must obey
+
+$$
+ L(1/2,1/2,\sigma_\varepsilon,\sigma_\varepsilon)
+       \leq\Delta(C_\varepsilon)-\frac\gamma2\varepsilon^2
+ \quad(0<|\varepsilon|<\varepsilon_0)
+$$
+
+after a further reduction of $\varepsilon_0$.
+

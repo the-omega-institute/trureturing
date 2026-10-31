@@ -19,6 +19,7 @@ from unittest.mock import patch
 from native_fixture import NativeFixture
 from worktree_protocol_tail import ProtocolTailCases
 from idle_pool_cases import IdlePoolCases
+from idle_removal_cases import IdleRemovalCases
 from mirror_fixture import MirrorCases
 from cleanup_anchor_cases import CleanupAnchorCases
 from detached_recovery_cases import DetachedRecoveryCases
@@ -37,7 +38,7 @@ import worktree_protocol as protocol
 import worktree_preservation as preservation
 
 
-class ProtocolTests(ProtocolTailCases, GitScopeCases, QualificationCases, ScopedDotnetCases, IdlePoolCases, LockRecoveryCases, LakeNestedGitCases, LakeDependencyContentCases, LakeDependencyAllowlistCases, DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
+class ProtocolTests(ProtocolTailCases, GitScopeCases, QualificationCases, ScopedDotnetCases, IdlePoolCases, IdleRemovalCases, LockRecoveryCases, LakeNestedGitCases, LakeDependencyContentCases, LakeDependencyAllowlistCases, DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
     source_root = ROOT
 
     def setUp(self):

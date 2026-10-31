@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:843ec2306df78bb979aefb6daae1ce6c9ba9a508dbdec1b60cc43255b45802be
+  normalized_sha256: sha256:843ec2306df78bb979aefb6daae1ce6c9ba9a508dbdec1b60cc43255b45802be
+cas_ref: sha256:843ec2306df78bb979aefb6daae1ce6c9ba9a508dbdec1b60cc43255b45802be
+coverage_gids:
+  - gid: D5/S3/Observer/RationalRouting/Prices.original_view_action_prices
+    target_statement_id: sha256:7340f16b9f70c35f8c4066065fe4924613e40b6f70e6ed5d2b547a1fa366e5a4
+receipts:
+  unresolved_subitems: []

@@ -7,6 +7,17 @@
    digest: The actual signed Gaussian finite determinant and pointwise cutoff limit. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent
+import Mathlib.Analysis.Normed.Group.Tannery
+import Mathlib.Analysis.Normed.Group.FunctionSeries
+import Mathlib.Analysis.Matrix.Spectrum
+import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
+import Mathlib.Analysis.Complex.LocallyUniformLimit
+import Mathlib.Analysis.Complex.CauchyIntegral
+import Mathlib.Analysis.Analytic.IsolatedZeros
+import Mathlib.Analysis.Normed.Module.Connected
+import Mathlib.Analysis.SpecificLimits.Basic
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 
 /-! Actual signed cycles and determinants on the original Gaussian operator. -/
 
@@ -645,5 +656,118 @@ theorem finite_determinants_tendsto {z : ℂ} (hz : ‖z‖ < 1) :
       atTop (𝓝 (gaussianDet z)) := by
   simp_rw [finite_determinant_identity _ z hz]
   exact Complex.continuous_exp.continuousAt.tendsto.comp (finiteLog_tendsto hz)
+
+/- Uniform analytic control of the recursively summed original signed walks.
+The geometric bounds below are uniform on each smaller complex disk. -/
+
+private lemma unit1Entry_diff (i j : ℕ) :
+    Differentiable ℂ (fun z : ℂ => unit1Entry z i j) := by
+  dsimp [unit1Entry, matrixEntry]
+  fun_prop
+
+private lemma unit1WalkTerm_bound {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1)
+    {z : ℂ} (hzρ : ‖z‖ ≤ ρ) (p i j m : ℕ) :
+    ‖unit1Entry z i m * unit1Walk z p m j‖ ≤
+      ρ ^ (i + 1) * ρ ^ (m + 1) * (ρ ^ 2) ^ p := by
+  have hz : ‖z‖ < 1 := hzρ.trans_lt hρ1
+  have hop : ‖operator z‖ ≤ ρ ^ 2 :=
+    (operator_norm_le hz).trans (pow_le_pow_left₀ (norm_nonneg z) hzρ 2)
+  rw [norm_mul, unit1Walk_eq_power hz]
+  exact mul_le_mul (unit1Entry_bound hρ hzρ i m)
+    ((unit1Power_coordinate_bound (operator z) p j m).trans
+      (pow_le_pow_left₀ (norm_nonneg _) hop p))
+    (norm_nonneg _) (unit1Geo_nonneg hρ (i, m))
+
+private lemma unit1Walk_succ_bound {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1)
+    {z : ℂ} (hzρ : ‖z‖ ≤ ρ) (p i j : ℕ) :
+    ‖unit1Walk z (p + 1) i j‖ ≤
+      ρ ^ (i + 1) * (∑' m : ℕ, ρ ^ (m + 1)) * (ρ ^ 2) ^ p := by
+  have hg : Summable (fun m : ℕ => ρ ^ (m + 1)) :=
+    (summable_nat_add_iff 1).mpr (summable_geometric_of_lt_one hρ hρ1)
+  rw [unit1Walk]
+  exact tsum_of_norm_bounded
+    (by simpa only [tsum_mul_left, tsum_mul_right] using
+      (((hg.mul_left (ρ ^ (i + 1))).mul_right ((ρ ^ 2) ^ p)).hasSum))
+    (fun m => unit1WalkTerm_bound hρ hρ1 hzρ p i j m)
+
+private lemma unit1Walk_diff (p i j : ℕ) :
+    DifferentiableOn ℂ (fun z : ℂ => unit1Walk z p i j) (ball (0 : ℂ) 1) := by
+  induction p generalizing i with
+  | zero =>
+    change DifferentiableOn ℂ (fun _ : ℂ => if i = j then 1 else 0) _
+    exact (differentiable_const _).differentiableOn
+  | succ p ih =>
+    intro z hz
+    have hz1 : ‖z‖ < 1 := mem_ball_zero_iff.mp hz
+    obtain ⟨ρ, hzρ, hρ1⟩ := exists_between hz1
+    have hρ : 0 ≤ ρ := (norm_nonneg z).trans hzρ.le
+    have hg : Summable (fun m : ℕ => ρ ^ (m + 1)) :=
+      (summable_nat_add_iff 1).mpr (summable_geometric_of_lt_one hρ hρ1)
+    have hd : DifferentiableOn ℂ
+        (fun w : ℂ => ∑' m : ℕ, unit1Entry w i m * unit1Walk w p m j)
+        (ball (0 : ℂ) ρ) := by
+      apply Complex.differentiableOn_tsum_of_summable_norm
+        ((hg.mul_left (ρ ^ (i + 1))).mul_right ((ρ ^ 2) ^ p))
+        (fun m => (unit1Entry_diff i m).differentiableOn.mul
+          ((ih m).mono (ball_subset_ball hρ1.le))) isOpen_ball
+      intro m w hw
+      exact unit1WalkTerm_bound hρ hρ1 (mem_ball_zero_iff.mp hw).le p i j m
+    exact (hd.differentiableAt
+      (isOpen_ball.mem_nhds (mem_ball_zero_iff.mpr hzρ))).differentiableWithinAt
+
+/-- Positive-length diagonal walks have a summable geometric envelope in the
+outer vertex, so their actual infinite trace is holomorphic. -/
+private lemma cycleTrace_diff (k : ℕ) :
+    DifferentiableOn ℂ (fun z : ℂ => cycleTrace z k) (ball (0 : ℂ) 1) := by
+  intro z hz
+  have hz1 : ‖z‖ < 1 := mem_ball_zero_iff.mp hz
+  obtain ⟨ρ, hzρ, hρ1⟩ := exists_between hz1
+  have hρ : 0 ≤ ρ := (norm_nonneg z).trans hzρ.le
+  have hg : Summable (fun i : ℕ => ρ ^ (i + 1)) :=
+    (summable_nat_add_iff 1).mpr (summable_geometric_of_lt_one hρ hρ1)
+  have hd : DifferentiableOn ℂ
+      (fun w : ℂ => ∑' i : ℕ, unit1Walk w (2 * (k + 1)) i i)
+      (ball (0 : ℂ) ρ) := by
+    apply Complex.differentiableOn_tsum_of_summable_norm
+      ((hg.mul_right (∑' m : ℕ, ρ ^ (m + 1))).mul_right ((ρ ^ 2) ^ (2 * k + 1)))
+      (fun i => (unit1Walk_diff (2 * (k + 1)) i i).mono
+        (ball_subset_ball hρ1.le)) isOpen_ball
+    intro i w hw
+    have he : (2 * k + 1) + 1 = 2 * (k + 1) := by omega
+    simpa only [he] using
+      unit1Walk_succ_bound hρ hρ1 (mem_ball_zero_iff.mp hw).le (2 * k + 1) i i
+  exact (hd.differentiableAt
+    (isOpen_ball.mem_nhds (mem_ball_zero_iff.mpr hzρ))).differentiableWithinAt
+
+/-- Complex holomorphy of the actual infinite signed-cycle logarithm.
+All three summations (internal vertex, outer vertex, and cycle length) have
+uniform summable majorants on a disk strictly larger than the evaluation point. -/
+theorem gaussianLogDet_differentiableOn :
+    DifferentiableOn ℂ gaussianLogDet {z : ℂ | ‖z‖ < 1} := by
+  intro z hz
+  have hz1 : ‖z‖ < 1 := hz
+  obtain ⟨ρ, hzρ, hρ1⟩ := exists_between hz1
+  have hρ : 0 ≤ ρ := (norm_nonneg z).trans hzρ.le
+  have hd : DifferentiableOn ℂ
+      (fun w : ℂ => ∑' k : ℕ, cycleTrace w k / (k + 1 : ℂ))
+      (ball (0 : ℂ) ρ) := by
+    apply Complex.differentiableOn_tsum_of_summable_norm
+      (unit1Majorant_summable hρ hρ1)
+      (fun k => ((cycleTrace_diff k).mono (ball_subset_ball hρ1.le)).div_const _)
+      isOpen_ball
+    intro k w hw
+    rw [norm_div, show ‖(k + 1 : ℂ)‖ = (k + 1 : ℝ) by
+      simpa only [Nat.cast_add, Nat.cast_one] using Complex.norm_natCast (k + 1)]
+    exact (div_le_self (norm_nonneg _)
+      (by linarith [Nat.cast_nonneg (α := ℝ) k] : 1 ≤ (k + 1 : ℝ))).trans
+      (cycleTrace_bound hρ hρ1 (mem_ball_zero_iff.mp hw).le k)
+  exact ((hd.neg).differentiableAt
+    (isOpen_ball.mem_nhds (mem_ball_zero_iff.mpr hzρ))).differentiableWithinAt
+
+/-- Complex holomorphy of the exponential of the actual original Gaussian
+signed-cycle logarithm, on the full open unit disk. -/
+theorem gaussianDet_differentiableOn :
+    DifferentiableOn ℂ gaussianDet {z : ℂ | ‖z‖ < 1} := by
+  exact gaussianLogDet_differentiableOn.cexp
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianDeterminant

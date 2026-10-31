@@ -1,0 +1,12 @@
+**Theorem 2.2 (actual-image recovery criterion, reused).** For any $u:H\to U$ and $v:H\to V$,
+
+$$
+\left(\exists!\,\bar v:u(H)\to v(H),\quad
+v^\#=\bar v\circ u^\#\right)
+\quad\Longleftrightarrow\quad \ker u\subseteq\ker v.
+$$
+
+Consequently $u$ and $v$ recover each other exactly when $\ker u=\ker v$; the resulting functions between their images are inverse bijections.
+
+Proof. A factor sends equal $u$ values to equal $v$ values, giving necessity. Conversely define $\bar v(u(h))=v(h)$. Kernel inclusion makes this independent of the history representing the input, and its output belongs to $v(H)$. Every input in $u(H)$ has a representative, which also proves uniqueness. With both inclusions, each composite fixes every realized value. This is precisely the actual-image criterion of [Process Geometry §34, PG.3403](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), recalled as a supporting result rather than a new general factorization theorem. $\square$
+

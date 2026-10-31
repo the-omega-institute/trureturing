@@ -1,0 +1,37 @@
+**Theorem 30.2 (sharp acquisition classification).** Under Assumption 28.1,
+
+$$
+\operatorname{Stat}(S)\subseteq\operatorname{Fwd}(S)
+ \subseteq\operatorname{Stat}(\mathbb N_{>0}),
+\tag{30.4}
+$$
+
+and the exact universality criteria, for the same class of public original-target presentations, are
+
+$$
+\begin{aligned}
+\operatorname{Fwd}(S)=\operatorname{Stat}(\mathbb N_{>0})
+ &\quad\Longleftrightarrow\quad S\text{ is numerically unbounded},\\
+\operatorname{Stat}(S)=\operatorname{Stat}(\mathbb N_{>0})
+ &\quad\Longleftrightarrow\quad\operatorname{Div}(S)=\mathbb N_{>0}.
+\end{aligned}
+\tag{30.5}
+$$
+
+If $S$ is empty both its classes consist exactly of tasks whose target has at most one value on the promised prior. The statements quantify over pointwise finite controllers; none supplies a uniform resource budget or an algorithm deciding the right-hand arithmetic properties from arbitrary menu codes.
+
+Proof. A stationary program is a forward program using no actions. A forward $S$-program is a forward all-integer program that requests only names in $S$. The reverse simulation of Theorem 24.3, using a stationary $q_{\Lambda_D}$ to simulate each requested future $q_D$, therefore gives the second inclusion in (30.4). Every all-integer service used by that simulation is among the conditional services for the comparison class. This invokes the established exact simulation, without assuming $\Lambda_D\in S$.
+
+Unboundedness gives the first equality in (30.5) by Theorem 29.2 and (30.4). Conversely, if $S$ is bounded choose an integer $M\ge1$ with $D\le M$ for every $D\in S$. This bound is chosen in the impossibility proof; it need not be computable from $E$. Take the explicit finite original prior
+
+$$
+A_M=\{1/(3M),1/(2M)\}.
+\tag{30.6}
+$$
+
+For every available scale $D$, both points are below $1/M\le1/D$. Theorem 11.2 gives $1/D$ as the minimum predictive cut at scale $D$, so the two points have identical $q_D(f_u(\cdot))$ for every finite chronological $u$. A deterministic forward controller therefore obtains identical reports along every common actual branch: actions, enumeration and computations choose the same next step, and induction applies the preceding equality at each read. No terminating such controller can distinguish the two originals. This also covers $S=\varnothing$, with no reports. Yet the stationary all-integer port $q_{2M}$ returns respectively $0$ and $1$. The public list (30.6) consequently permits exact original rational recovery and hence original-word recovery with all-integer reads, but not forward $S$-recovery. Forward universality fails.
+
+Apply Theorem 30.1 with $T=\mathbb N_{>0}$ in both directions to obtain the stationary equality criterion, since $\operatorname{Div}(\mathbb N_{>0})=\mathbb N_{>0}$. Explicitly, divisor cofinality finds an actually listed multiple for each requested scale; if it fails, (30.2) separates an all-integer stationary task from every stationary $S$-controller. A menu with every positive divisor is necessarily unbounded, consistently with the first criterion.
+
+For an empty menu the entire evolution of an ordinary program, including any forward actions, is source-independent. A terminating output must therefore be identical on all promised sources. Every task with at most one target value has a constant-output finite program, including the vacuous empty-prior case. This proves the empty-menu statement without treating $1$ as an available divisor. The positive proofs use enumerator searches under supplied promises; the negative proofs do not turn boundedness or a missing divisor into decidable menu properties. $\square$
+

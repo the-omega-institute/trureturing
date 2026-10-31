@@ -1,0 +1,13 @@
+**Equation 2.1 (`eq:positive`).**
+
+$$
+(\text{leg flag},\text{toward }A,\text{toward }B).
+$$
+
+Let $D_{xy}$ insert $x$ before $y$, and let $Y_{xy}$ be the rooted
+cherry specified by the $X$ cycles in the following table. Substituting
+$(h_1,h_2,h_3,h_4)=(x,A,B,y)$ into [(1.1)](#eq-ihx) gives
+
+<a id="eq-cherry"></a>
+<a id="eq:cherry"></a>
+

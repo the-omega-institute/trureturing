@@ -1,0 +1,5 @@
+source_id = "auric-actual-prime-kernel-local-positivity-schur-insertion-and-robin-budget"
+path = "docs/develop/theory/AURIC_ACTUAL_PRIME_KERNEL_LOCAL_POSITIVITY_SCHUR_INSERTION_AND_ROBIN_BUDGET.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:07f02247628fd9baf973c3854475d3110b2e9eef340389584a9ccda97f79c61f
+  normalized_sha256: sha256:07f02247628fd9baf973c3854475d3110b2e9eef340389584a9ccda97f79c61f
+cas_ref: sha256:07f02247628fd9baf973c3854475d3110b2e9eef340389584a9ccda97f79c61f
+coverage_gids:
+  - gid: D5/S3/Weil/PrimeNumberTheorem/Smooth1.MellinOfSmooth1a
+    target_statement_id: sha256:dbc68432f4940ddcb693db5b3de7f12bf09d910add108baea2b450e7e476a80f
+receipts:
+  unresolved_subitems: []

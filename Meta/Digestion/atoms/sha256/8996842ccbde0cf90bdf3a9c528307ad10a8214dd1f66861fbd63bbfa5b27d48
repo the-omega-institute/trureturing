@@ -1,0 +1,104 @@
+### 2.4. Marginal diagonal optimum, logarithmic bound, and cost
+
+Let $R_\varepsilon=\sqrt{r^2+\varepsilon^2}$ and
+$n_\varepsilon=(rY+\varepsilon X)/R_\varepsilon$. For
+$|\varepsilon|<\sqrt{19}/10$, the margins are positive and have distinct
+eigenvalues. All sources diagonal in their product eigenbasis are exactly
+
+$$
+\rho_\varepsilon(c)=\tfrac14[I+R_\varepsilon(n_\varepsilon I+In_\varepsilon)
+                              +c\,n_\varepsilon n_\varepsilon],
+ \qquad 2R_\varepsilon-1\leq c\leq1.
+\tag{2.20}
+$$
+
+These bounds follow by writing its four probabilities
+$(1+2R+c,1-c,1-c,1-2R+c)/4$.
+At $(\varepsilon,c)=(0,2r-1)$ the derivative of $F$ in $c$ is
+$\operatorname{tr} M_0YY/4=m>0$. The endpoint and its outputs vary analytically,
+so this endpoint derivative stays positive for all sufficiently small
+signed $\varepsilon$. Convexity on the whole interval, including its
+possibly singular-output end, proves that its unique minimum is
+
+$$
+ C_\varepsilon=\rho_\varepsilon(2R_\varepsilon-1).
+$$
+
+It is analytic, rank three, and has first tangent $H(t_c)$ with
+
+$$
+ t_c=\frac{2r-1}{r}=\frac89.
+$$
+
+Define
+
+$$
+\begin{aligned}
+D&=A+\tfrac89B-\tfrac{10}9m\\
+  &=\tfrac{113}{90}\log(27/2)+\tfrac{115}{126}\log(9/2)
+     -\tfrac{85}{246}\log(45/4)+\tfrac5{138}\log(27/4)
+     -\tfrac5{18}\log(236196/125).
+\end{aligned}
+\tag{2.21}
+$$
+
+The identity follows by expanding (2.17), with the five logarithms
+kept as separate symbols. The following strict bound holds:
+
+$$
+D>\frac{8191}{10332}>0.
+\tag{2.22}
+$$
+
+Indeed $8/3<e<11/4$: the first inequality follows from the terms through
+$1/3!$ and a positive tail, and for the second the terms through $1/4!$
+sum to $65/24$, with remaining tail at most
+$(1/120)\sum_{k\geq0}6^{-k}=1/100$.
+The exact rational comparisons
+
+$$
+ (11/4)^5<(27/2)^2,\quad 11/4<9/2,\quad
+ (8/3)^3>45/4,\quad 27/4>1,\quad
+ (8/3)^8>236196/125
+$$
+
+give, respectively,
+
+$$
+ \log(27/2)>5/2,\quad\log(9/2)>1,\quad
+ \log(45/4)<3,\quad\log(27/4)>0,\quad
+ \log(236196/125)<8.
+$$
+
+Using the correct signs of all five coefficients in (2.21) yields
+
+$$
+ D>\frac{113}{90}\frac52+\frac{115}{126}
+                       -\frac{85}{246}3-\frac5{18}8
+    =\frac{8191}{10332}.
+$$
+
+In particular
+
+$$
+t_c-t_* =\frac{D}{B+10m}>0,\qquad
+ \gamma=(B+10m)(t_c-t_*)^2=\frac{D^2}{B+10m}>0.
+\tag{2.23}
+$$
+
+Both rank-three paths have the same affine margins and base point.
+Their first derivatives in $F$ are equal by (2.10), since
+$\langle v_0,H(t)v_0\rangle=0$. Their actual second derivatives are
+$J(t_c)$ and $J(t_*)$, respectively. Taylor expansion and
+(2.19) therefore give the coefficient $\gamma$ in (2.3).
+To establish its asserted remainder, note that all paths and all their
+outputs are real analytic for signed $\varepsilon$ in an open interval
+about zero; the output spectra are bounded away from zero on a smaller
+closed interval. The conjugation by $U=YY$ relates the two signs for
+both $C$ and $\omega$, so both objective values are even analytic
+functions. The cubic term and every other odd term vanish. This proves
+$O(\varepsilon^4)$, with a finite uniform remainder constant after
+shrinking the interval. Since $\Delta-F$ is the same on the fiber, the
+claim holds for $\Delta$ as well. In particular the gap is at least
+$\gamma\varepsilon^2/2$ for sufficiently small nonzero $\varepsilon$.
+

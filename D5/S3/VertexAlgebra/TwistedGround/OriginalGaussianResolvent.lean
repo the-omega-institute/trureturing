@@ -29,7 +29,7 @@ lemma weight_le_one (n : ℕ) : centralWeight n ≤ 1 := by
   rw [centralWeight, div_le_one (by positivity)]
   exact_mod_cast Nat.centralBinom_le_four_pow n
 
-private def basis (n : ℕ) : H := lp.single 2 n 1
+def basis (n : ℕ) : H := lp.single 2 n 1
 
 private def rankOne (n m : ℕ) : H →L[ℂ] H :=
   (lp.evalCLM ℂ (fun _ : ℕ => ℂ) 2 m).smulRight (basis n)
@@ -89,7 +89,7 @@ def operator (z : ℂ) : H →L[ℂ] H := ∑' p : ℕ × ℕ, term z p
 def sectionOp (N : ℕ) (z : ℂ) : H →L[ℂ] H :=
   ∑ n ∈ Finset.range N, ∑ m ∈ Finset.range N, term z (n, m)
 
-private lemma sectionOp_tendsto {z : ℂ} (hz : ‖z‖ < 1) :
+lemma sectionOp_tendsto {z : ℂ} (hz : ‖z‖ < 1) :
     Tendsto (fun N => sectionOp N z) atTop (𝓝 (operator z)) := by
   have h := (term_summable hz).of_norm.hasSum
   have hp := tendsto_finset_range.prodMk tendsto_finset_range
@@ -130,10 +130,10 @@ lemma operator_apply {z : ℂ} (hz : ‖z‖ < 1) (x : H) (n : ℕ) :
       _ = _ := by simp
   exact (show operator z x n = _ from h.tsum_eq.symm).trans (hp.trans heq)
 
-private def zeroExtend (N : ℕ) (x : EuclideanSpace ℂ (Fin N)) : H :=
+def zeroExtend (N : ℕ) (x : EuclideanSpace ℂ (Fin N)) : H :=
   ∑ n ∈ Finset.range N, lp.single 2 n (if hn : n < N then x ⟨n, hn⟩ else 0)
 
-private lemma zeroExtend_apply (N : ℕ) (x : EuclideanSpace ℂ (Fin N)) (n : ℕ) :
+lemma zeroExtend_apply (N : ℕ) (x : EuclideanSpace ℂ (Fin N)) (n : ℕ) :
     zeroExtend N x n = if hn : n < N then x ⟨n, hn⟩ else 0 := by
   classical
   simp only [zeroExtend, lp.coeFn_sum, lp.coeFn_single]
@@ -177,7 +177,7 @@ private def restriction (N : ℕ) : H →L[ℂ] EuclideanSpace ℂ (Fin N) :=
       have h := lp.sum_rpow_le_norm_rpow (p := 2) (by norm_num) x (Finset.range N)
       simpa [Real.rpow_two, Finset.sum_range] using h)
 
-private lemma sectionOp_factorization (N : ℕ) (z : ℂ) :
+lemma sectionOp_factorization (N : ℕ) (z : ℂ) :
     sectionOp N z = (inclusion N).comp
       ((Matrix.toEuclideanCLM (n := Fin N) (𝕜 := ℂ) (finiteSection N z)).comp
         (restriction N)) := by
@@ -213,7 +213,7 @@ private lemma inclusion_norm_le (N : ℕ) : ‖inclusion N‖ ≤ 1 := by
 private lemma restriction_norm_le (N : ℕ) : ‖restriction N‖ ≤ 1 := by
   apply LinearMap.mkContinuous_norm_le _ zero_le_one
 
-private lemma sectionOp_norm_le (N : ℕ) {z : ℂ} (hz : ‖z‖ < 1) :
+lemma sectionOp_norm_le (N : ℕ) {z : ℂ} (hz : ‖z‖ < 1) :
     ‖sectionOp N z‖ ≤ ‖z‖ ^ 2 := by
   rw [sectionOp_factorization]
   calc
@@ -688,7 +688,7 @@ private lemma scalar_shifted_sum {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
   simp only [centralWeight_zero, pow_zero, one_mul, hL0] at he
   linarith
 
-private lemma entry_sqrt (z : ℂ) (s t : ℕ) (hs : 0 < s) (ht : 0 < t) :
+lemma entry_sqrt (z : ℂ) (s t : ℕ) (hs : 0 < s) (ht : 0 < t) :
     matrixEntry z s t =
       (Real.sqrt (s : ℝ) : ℂ) * (Real.sqrt (t : ℝ) : ℂ) *
         halfBinomial s * halfBinomial t * z ^ (s + t) / ((s : ℂ) + t) := by
