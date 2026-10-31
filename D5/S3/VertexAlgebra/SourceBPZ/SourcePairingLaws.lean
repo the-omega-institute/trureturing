@@ -143,7 +143,7 @@ theorem sourcePairing_neutralMode (D : LatticeData) (i : Fin D.rank)
         exact integerWick_neutral D i a m p q
       · simp [h]
 
-private theorem substitution_monomial_weight (D : LatticeData)
+theorem substitution_monomial_weight (D : LatticeData)
     (A : ℕ → Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (d : Exponent D) (c : ℂ) :
     IsWeightedHomogeneous (fun x : Index D => (x.2 : ℤ)+1)
