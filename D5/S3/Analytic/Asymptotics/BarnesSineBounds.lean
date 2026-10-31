@@ -40,6 +40,10 @@ private theorem barnesRes_sq_norm_sin (x y : ℝ) :
   nlinarith [this]
 
 /-- `|sin x| cosh y ≤ ‖sin (x + iy)‖`. -/
+private theorem barnesRes_abs_sinh_le_norm_sin (x y : ℝ) : |Real.sinh y| ≤ ‖Complex.sin (x + y * I)‖ := by
+  rw [← sq_le_sq₀ (abs_nonneg _) (norm_nonneg _), sq_abs, barnesRes_sq_norm_sin]
+  nlinarith [sq_nonneg (Real.sin x)]
+
 private theorem barnesRes_abs_sin_mul_cosh_le_norm_sin (x y : ℝ) :
     |Real.sin x| * Real.cosh y ≤ ‖Complex.sin (x + y * I)‖ := by
   rw [← sq_le_sq₀ (by positivity) (norm_nonneg _), mul_pow, sq_abs, barnesRes_sq_norm_sin,
@@ -58,5 +62,15 @@ theorem barnesRes_sin_lower_line (x y : ℝ) :
     have := Real.exp_pos (-(π*|y|)); linarith
   have := abs_nonneg (Real.sin (π*x))
   nlinarith
+
+theorem barnesRes_sin_lower_far (x : ℝ) {y : ℝ} (hy : 1 ≤ |y|) :
+    1/4 * Real.exp (π*|y|) ≤ ‖Complex.sin (π*((x:ℂ) + y*I))‖ := by
+  have hw : (π:ℂ)*((x:ℂ) + y*I) = ((π*x:ℝ):ℂ) + ((π*y:ℝ):ℂ)*I := by push_cast; ring
+  rw [hw]
+  refine le_trans ?_ (barnesRes_abs_sinh_le_norm_sin (π*x) (π*y))
+  rw [Real.abs_sinh, abs_mul, abs_of_pos Real.pi_pos, Real.sinh_eq]
+  have h4 := Real.add_one_le_exp (π*|y|)
+  have h5 : Real.exp (-(π*|y|)) ≤ 1 := Real.exp_le_one_iff.mpr (by nlinarith [Real.pi_pos])
+  nlinarith [Real.two_le_pi]
 
 end D5.S3.Analytic.Asymptotics.BarnesSineBounds

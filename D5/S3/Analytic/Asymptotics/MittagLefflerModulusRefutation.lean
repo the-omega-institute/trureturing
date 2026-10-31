@@ -23,6 +23,8 @@ The source conventions are literal; CompletelyMonotoneOn is reused from its exis
 Only the endpoint pair (3/2,1/2) is certified; no all-alpha or interior-beta family is asserted.
 -/
 
+import D5.S3.Analytic.Asymptotics.MittagLefflerBarnesKernel
+import D5.S3.Analytic.Asymptotics.MellinBarnesSeries
 import Mathlib.Analysis.Normed.Group.FunctionSeries
 import D5.S3.Analytic.KilbasSaigo.Series
 import D5.S3.Analytic.ExpRatioCM.Defs
@@ -69,7 +71,7 @@ set_option maxHeartbeats 0
 set_option maxRecDepth 10000
 
 open scoped BigOperators
-open Filter Topology
+open Filter Topology MeasureTheory
 namespace D5.S3.Analytic.Asymptotics.MittagLefflerModulusRefutation
 private noncomputable def rho : ℝ := (Real.sqrt Real.pi)⁻¹
 private noncomputable def term (z : ℂ) (k : ℕ) : ℂ :=
@@ -397,6 +399,115 @@ theorem source_continuous_beta {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSourceS
     exact Filter.Frequently.of_forall fun M =>
       continuousOn_finsetSum _ fun n _ => (hterm n).continuousOn
   exact hC.continuousAt (Icc_mem_nhds (by dsimp [a]; linarith) (by linarith))
+
+/-- The actual Barnes contour at the endpoint beta=alpha-1 vanishes as it moves left.
+This uses the literal fixed-beta coefficient summability, not an assumed sector identity. -/
+theorem source_left_integral_tendsto_zero {α : ℝ} (hα : 1 < α) {z : ℂ} (hz0 : z ≠ 0)
+    (hz : 0 < MittagLefflerBarnesKernel.margin α z) :
+    Tendsto (fun n : ℕ => ∫ y : ℝ,
+      MittagLefflerBarnesKernel.kernel α (α - 1) z
+        (MittagLefflerBarnesKernel.leftLine n + y * Complex.I)) atTop (𝓝 0) := by
+  let δ : ℝ := MittagLefflerBarnesKernel.margin α z
+  let b : ℝ := 3 * α / 2 - 1
+  let M : ℝ := ∫ y : ℝ, Real.exp (-(δ * |y|))
+  let B : ℝ := 2 * Real.pi * Real.exp (Real.log ‖z‖ / 2) * M
+  have hα0 : 0 < α := by linarith
+  have hb : 0 < b := by dsimp [b]; linarith
+  have hnorm : 0 < ‖z‖ := norm_pos_iff.mpr hz0
+  have hM : 0 ≤ M := integral_nonneg fun _ => (Real.exp_pos _).le
+  have hB : 0 ≤ B := by dsimp [B]; positivity
+  have hsmall : Tendsto (fun n : ℕ =>
+      B * ‖z ^ n / (Real.Gamma (α * (n : ℝ) + b) : ℂ)‖) atTop (𝓝 0) := by
+    simpa only [mul_zero] using
+      (source_norm_summable_positive hα0 hb z).tendsto_atTop_zero.const_mul B
+  have hbound (n : ℕ) :
+      ‖∫ y : ℝ, MittagLefflerBarnesKernel.kernel α (α - 1) z
+        (MittagLefflerBarnesKernel.leftLine (n + 1) + y * Complex.I)‖ ≤
+          B * ‖z ^ n / (Real.Gamma (α * (n : ℝ) + b) : ℂ)‖ := by
+    have hx : 1 / 2 ≤ α - 1 - α * MittagLefflerBarnesKernel.leftLine (n + 1) := by
+      dsimp [MittagLefflerBarnesKernel.leftLine]
+      push_cast
+      nlinarith [Nat.cast_nonneg (R := ℝ) n]
+    have harg : α - 1 - α * MittagLefflerBarnesKernel.leftLine (n + 1) =
+        α * (n : ℝ) + b := by
+      dsimp [MittagLefflerBarnesKernel.leftLine, b]
+      push_cast
+      ring
+    have hrad : Real.exp (-MittagLefflerBarnesKernel.leftLine (n + 1) * Real.log ‖z‖) =
+        Real.exp (Real.log ‖z‖ / 2) * ‖z‖ ^ n := by
+      rw [show -MittagLefflerBarnesKernel.leftLine (n + 1) * Real.log ‖z‖ =
+        Real.log ‖z‖ / 2 + (n : ℝ) * Real.log ‖z‖ by
+          dsimp [MittagLefflerBarnesKernel.leftLine]
+          push_cast
+          ring, Real.exp_add, Real.exp_nat_mul, Real.exp_log hnorm]
+    have h := MittagLefflerBarnesKernel.norm_integral_leftLine_le hα0 (α - 1) z hz
+      (n + 1) hx
+    rw [harg, hrad] at h
+    rw [norm_div, norm_pow, Complex.norm_real, Real.norm_eq_abs,
+      abs_of_pos (Real.Gamma_pos_of_pos (by positivity : 0 < α * (n : ℝ) + b))]
+    convert h using 1 <;> dsimp [B, M, δ] <;> ring
+  have hshift : Tendsto (fun n : ℕ => ∫ y : ℝ,
+      MittagLefflerBarnesKernel.kernel α (α - 1) z
+        (MittagLefflerBarnesKernel.leftLine (n + 1) + y * Complex.I)) atTop (𝓝 0) :=
+    squeeze_zero_norm hbound hsmall
+  exact (tendsto_add_atTop_iff_nat 1).mp hshift
+
+/-- Literal-series identification with the Barnes integral at beta=alpha-1.
+The factor is `1/(2*pi)` because the vertical line is parametrized by `dy`.
+Every analytic contour obligation is discharged on the actual kernel. -/
+theorem source_barnes_identity {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSourceSeries E)
+    {α : ℝ} (hα : 1 < α) {z : ℂ} (hz0 : z ≠ 0)
+    (hz : 0 < MittagLefflerBarnesKernel.margin α z) :
+    E α (α - 1) z = (1 / (2 * (Real.pi : ℂ))) *
+      ∫ y : ℝ, MittagLefflerBarnesKernel.kernel α (α - 1) z
+        ((1 / 2 : ℝ) + y * Complex.I) := by
+  have hα0 : 0 < α := by linarith
+  have hab (n : ℕ) : MittagLefflerBarnesKernel.leftLine (n + 1) ≤
+      MittagLefflerBarnesKernel.leftLine n := by
+    dsimp [MittagLefflerBarnesKernel.leftLine]
+    push_cast
+    linarith
+  have hd : MellinBarnesSeries.MBSeriesData
+      (MittagLefflerBarnesKernel.kernel α (α - 1) z)
+      MittagLefflerBarnesKernel.leftLine (fun n : ℕ => -(n : ℂ))
+      (MittagLefflerBarnesKernel.leftNumerator α (α - 1) z) := by
+    refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+    · intro n
+      simp only [Complex.neg_re, Complex.natCast_re]
+      dsimp [MittagLefflerBarnesKernel.leftLine]
+      push_cast
+      linarith
+    · intro n
+      simp only [Complex.neg_re, Complex.natCast_re]
+      dsimp [MittagLefflerBarnesKernel.leftLine]
+      linarith
+    · exact fun n => MittagLefflerBarnesKernel.differentiableOn_leftNumerator α (α - 1) z n
+    · exact fun n s hs hn => MittagLefflerBarnesKernel.kernel_eq_leftNumerator α (α - 1) z n hs hn
+    · intro n
+      apply MittagLefflerBarnesKernel.integrable_line hα0 (α - 1) _ z _ hz
+      intro he
+      have := MittagLefflerBarnesKernel.abs_sin_leftLine n
+      simpa only [he, abs_zero] using this
+    · exact fun n => (MittagLefflerBarnesKernel.horizontal_tendsto_zero
+        hα0 (α - 1) _ _ z (hab n) hz).1
+    · exact fun n => (MittagLefflerBarnesKernel.horizontal_tendsto_zero
+        hα0 (α - 1) _ _ z (hab n) hz).2
+  have hs : Summable (fun n : ℕ =>
+      MittagLefflerBarnesKernel.leftNumerator α (α - 1) z n (-(n : ℂ))) := by
+    simp_rw [MittagLefflerBarnesKernel.leftNumerator_residue α (α - 1) hz0]
+    exact (hE α hα0 (α - 1) z).summable
+  have hm := MellinBarnesSeries.mbSeries_hasSum hd
+    (source_left_integral_tendsto_zero hα hz0 hz) hs
+  simp_rw [MittagLefflerBarnesKernel.leftNumerator_residue α (α - 1) hz0] at hm
+  have he := (hE α hα0 (α - 1) z).mul_left (2 * (Real.pi : ℂ))
+  have hid := hm.unique he
+  have hid' : (∫ y : ℝ, MittagLefflerBarnesKernel.kernel α (α - 1) z
+      ((1 / 2 : ℝ) + y * Complex.I)) = 2 * (Real.pi : ℂ) * E α (α - 1) z := by
+    simpa only [MittagLefflerBarnesKernel.leftLine, Nat.cast_zero, sub_zero] using hid
+  rw [hid']
+  have hp : (2 * (Real.pi : ℂ)) ≠ 0 :=
+    mul_ne_zero (by norm_num) (by exact_mod_cast Real.pi_ne_zero)
+  field_simp
 
 private theorem source_exists : ∃ E : ℝ → ℝ → ℂ → ℂ, IsSourceSeries E := by
   refine ⟨fun α β z => ∑' n : ℕ, z^n / (Real.Gamma (α*n+β) : ℂ), ?_⟩

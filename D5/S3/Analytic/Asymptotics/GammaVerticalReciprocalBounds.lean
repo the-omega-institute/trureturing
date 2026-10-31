@@ -209,7 +209,7 @@ private theorem cosh_le_exp_abs (t : ℝ) : Real.cosh t ≤ Real.exp |t| := by
   linarith
 
 /-- For `x ≥ 1/2`: `|1/Γ(x+iy)|² = P(x,y)/Γ(x)² ≤ cosh(πy)/Γ(x)²`. -/
-private theorem norm_recip_Gamma_sq_le {x : ℝ} (hx : 1 / 2 ≤ x) (y : ℝ) :
+theorem norm_recip_Gamma_sq_le {x : ℝ} (hx : 1 / 2 ≤ x) (y : ℝ) :
     ‖(Complex.Gamma (x + I * y))⁻¹‖ ^ 2 ≤ Real.exp (π * |y|) / Real.Gamma x ^ 2 := by
   have hx0 : 0 < x := by linarith
   have hG := Real.Gamma_pos_of_pos hx0
