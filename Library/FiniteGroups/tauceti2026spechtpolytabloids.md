@@ -601,3 +601,142 @@ The local complex invertibility instance is selected from `Specht/Complex.lean:8
    limitations under the License.
 
 ```
+
+## Integral ordinary trace continuation (source only)
+
+`SpechtOrdinaryTrace.lean` continues the same constructed Specht module; it does
+not introduce another representation or an isomorphism with a surrogate. The
+selected `Complex.character_spechtModuleℂ` fact concerns exactly
+`FDRep.of (Representation.baseChange ℂ (spechtModule μ).ρ)`, the existing definition.
+The final `spechtCharValue_ordinaryTrace` source statement certifies simplicity
+of that actual module, existence of a permutation with the full specified
+partition, and equality of its complex trace with the integer value at **every**
+such permutation. Its first conjunct is the original semantic obligation that the
+ordinary character belongs to an irreducible module; it is not a dummy proof-term
+argument inserted into the trace computation. Its second conjunct includes all
+fixed points, through `Equiv.Perm.partition`, and imposes no degree/alphabet bound.
+This is necessary ordinary-character certification, not the HSW result, and has
+no independent firstfreeze/admission claim. All proof-term liveness is unverified.
+
+### Exact reuse and adaptations
+
+The main checkout's Mathlib source was read at the actual pinned revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679`. Its
+`Mathlib/RepresentationTheory/Character.lean:207` already supplies
+`FDRep.isIntegral_character`. This directly discharges integrality over ℤ;
+`IsIntegrallyClosed.isIntegral_iff` gives the integer in ℚ. Consequently this
+continuation does **not** select the TauCeti finite-order endomorphism/root-of-unity
+integrality closure. The selected integer-character definition uses the numerator
+of the already constructed rational trace, and proves the cast back to that trace.
+`LinearMap.trace_baseChange` is reused from pinned Mathlib. The exact casts are
+ℤ → ℚ → ℂ, with `Rat.cast_intCast` in the final complex comparison.
+
+The existing D5 `FiniteCharacterAlgebra.TauCeti.ClassFunction.mem_iff`,
+`toConjClasses` and `toConjClasses_mk` are directly reused, through the current
+Specht dependency chain. `InducedCharacterFormula` and `MackeyCharacterFormula`
+were inspected: their induction and double-coset formulas do not establish this
+same-shape trace or the finite-alphabet Frobenius expansion, so no extra copies or
+unused imports of those formulas are introduced. They remain exact available
+suppliers for any later selected Young-rule proof that actually needs them.
+
+Selected immutable source locators (all at the TauCeti revision above):
+
+- `TauCeti/Combinatorics/Enumerative/Partition/Basic.lean`, `parts_equivCast`.
+- `TauCeti/RepresentationTheory/Symmetric/Partitions.lean`, from
+  `exists_perm_partition_eq` through `partitionEquivConjClasses`, and the three
+  inverse/parts lemmas ending at `parts_partitionEquivConjClasses_symm_mk`.
+  Forward inverse companions and cardinality formulas are omitted.
+- `TauCeti/RepresentationTheory/CharacterTable/Values.lean`,
+  `FDRep.exists_char_eq_intCast`, `intCharacter`, `intCharacter_cast`,
+  `intCharacter_conj`, `intClassFunction`, `intClassFunction_apply`.
+  Integrality is adapted to the pinned Mathlib supplier. The unused equality-iff
+  companion and the trivial private definition wrapper are inlined.
+- `TauCeti/RepresentationTheory/BaseChange.lean`,
+  `Representation.character_baseChange` only; the existing local base-change
+  definition and application lemma are reused.
+- `TauCeti/RepresentationTheory/Symmetric/Specht/Character.lean`,
+  `spechtChar`, `spechtChar_cast`, `spechtCharConjClasses`,
+  `spechtCharConjClasses_mk`, `spechtCharValue`,
+  `spechtCharValue_eq_spechtChar`. Trivial definition wrappers are inlined.
+- `TauCeti/RepresentationTheory/Symmetric/Specht/Complex.lean`,
+  `character_spechtModuleℂ`, `character_spechtModuleℂ_intCast` only.
+  No classification of all complex representations is required for this step.
+
+### Per-declaration consumers and admission boundary
+
+Every row below is a **source** dependency assessment. Except for the explicit
+representative construction, these are bind-only constructions or organization of
+exact suppliers; no row is an independent escape witness. Ported mathematical
+content is attributed to its supplier and supplies no independent novelty. The
+new local endpoint is bind-only composition and the necessary semantic
+certification of this source continuation; it is not standalone admissible new
+content and cannot be first-frozen on a promised Frobenius/HSW consumer.
+Native dependency closure, liveness and admission remain open for every row.
+
+| Declaration in SpechtPolytabloid namespace | Source consumer |
+| --- | --- |
+| `TauCeti.parts_equivCast` | `parts_partitionEquivConjClasses_symm_mk` |
+| `TauCeti.exists_perm_partition_eq` (ported representative construction) | `permConjClassPartition_surjective` |
+| `TauCeti.permConjClassPartition` | `permConjClassPartition_mk`, injectivity, surjectivity and equivalence construction |
+| `TauCeti.permConjClassPartition_mk` | injectivity, surjectivity, `partitionEquivPermConjClasses_symm_mk` |
+| `TauCeti.permConjClassPartition_injective` | `partitionEquivPermConjClasses` |
+| `TauCeti.permConjClassPartition_surjective` | `partitionEquivPermConjClasses` |
+| `TauCeti.partitionEquivPermConjClasses` | `partitionEquivConjClasses`, its inverse lemma |
+| `TauCeti.partitionEquivConjClasses` | `spechtCharValue`, inverse/parts lemmas, final certification |
+| `TauCeti.partitionEquivPermConjClasses_symm_mk` | `partitionEquivConjClasses_symm_mk` via its simp attribute |
+| `TauCeti.partitionEquivConjClasses_symm_mk` | `parts_partitionEquivConjClasses_symm_mk` |
+| `TauCeti.parts_partitionEquivConjClasses_symm_mk` | `spechtCharValue_ordinaryTrace` (existence and every-representative comparison) |
+| `FDRep.exists_char_eq_intCast` | `FDRep.intCharacter_cast` |
+| `FDRep.intCharacter` | integer cast/conjugacy, `intClassFunction`, `spechtChar` |
+| `FDRep.intCharacter_cast` | `FDRep.intCharacter_conj`, `spechtChar_cast` |
+| `FDRep.intCharacter_conj` | `FDRep.intClassFunction` |
+| `FDRep.intClassFunction` | `spechtCharConjClasses`, `intClassFunction_apply` |
+| `FDRep.intClassFunction_apply` | `spechtCharConjClasses_mk` |
+| `Representation.character_baseChange` | `character_spechtModuleℂ` |
+| `TauCeti.spechtChar` | rational/complex cast comparison and conjugacy-value comparison |
+| `TauCeti.spechtChar_cast` | `character_spechtModuleℂ_intCast` |
+| `TauCeti.spechtCharConjClasses` | `spechtCharValue`, `spechtCharConjClasses_mk` |
+| `TauCeti.spechtCharConjClasses_mk` | `spechtCharValue_eq_spechtChar` |
+| `TauCeti.spechtCharValue` | `spechtCharValue_eq_spechtChar`, final certification |
+| `TauCeti.spechtCharValue_eq_spechtChar` | `spechtCharValue_ordinaryTrace` |
+| `TauCeti.character_spechtModuleℂ` | `character_spechtModuleℂ_intCast` |
+| `TauCeti.character_spechtModuleℂ_intCast` | `spechtCharValue_ordinaryTrace` |
+| `TauCeti.spechtCharValue_ordinaryTrace` | current necessary ordinary-trace certification endpoint; Frobenius and full weighted-sum consumption still absent; no standalone admission |
+
+The existing `instSimpleSpechtModuleℂ` is now directly consumed by the first
+conclusion of the ordinary-trace certification. This proves no new simplicity
+construction and does not imply that the trace equality depends on irreducibility:
+trace integrality holds for arbitrary rational finite-group representations.
+Both obligations belong to the original ordinary-character interpretation.
+
+### Concrete remaining comparison
+
+The public arbitrary-degree supplier
+`FrobeniusCharacteristic.psumPart_eq_sum_spechtCharValue_smul_schurPoly` was read
+at the immutable revision. It expands a power-sum product in any finite alphabet,
+with `spechtCharValue` coefficients. Its proof uses the fixed-tabloid power-sum
+expansion, Young's rule and the Kostka/monomial Schur expansion. Those necessary
+suppliers have not been ported in this pass. The separate characteristic linear
+equivalence with `degree ≤ alphabet` is insufficient and is not substituted.
+
+After that actual supplier closure is selected and validated, one must connect
+positive full cycle lists to its partition power sums, construct the literal
+positive-parts partition of each decreasing padded triple and prove its row lengths,
+vanish shapes of height greater than three, multiply by the division-free Schur
+bialternant, identify the descending staircase (2,1,0) with
+`(X₀-X₁)(X₀-X₂)(X₁-X₂)`, and isolate the exact `HSW.frobChar` coefficient.
+No such bridge is assumed or claimed here. Both original weighted equalities remain
+unfinished, with all n ≥ 1, every λ ⊢ n, exact reciprocal z, duplicate Ev outcomes,
+positive cycles including 1s, all even three-row shapes, rectangle (n,n,0) even for
+odd n, the sign, and the parity-dependent binomial value still required. Reuse the
+strongest existing D5 coefficient owner and `solution_unique`; do not reprove them
+or modify the separate live coefficient branch.
+
+The source-linked escape audit remains unfinished at
+https://github.com/the-omega-institute/trureturing/issues/24542; the additional
+module and all its new public theorems require faithful source reconstruction,
+readout, whole-family intervention/sensitivity and native binding evidence. The
+DependentFamily and PointwiseEquality registration supports were inspected; no
+uncompiled Reg mirror is represented as validated. Issue 21960 remains the sole
+existing preregistration of the full original assertion. No literature settlement,
+new forecast, open-problem eligibility or full ordinary theorem is asserted.
