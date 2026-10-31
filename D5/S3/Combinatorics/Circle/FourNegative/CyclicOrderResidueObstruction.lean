@@ -117,9 +117,11 @@ private theorem source_chains (n : ℕ) (hn : 2 ≤ n) :
       change centered M ((2 : ℤ) ^ (n + 7) * 85) = 85
       rw [show M = modulus (n + 7) from rfl, centered_full_period]
       change centered M 85 = 85
-      dsimp [centered]
+      dsimp only [centered]
       rw [hM]
-      omega
+      have hhalf : (128 * x - 1) / 2 = 64 * x - 1 := by omega
+      rw [hhalf, Int.emod_eq_of_lt (by omega) (by omega)]
+      ring
     have hu : 2 * f (n - 1) = 2 - 43 * x := by
       change f (n - 1) = -(N - (1 + x + x * 4 + x * 4 * 4)) / 2 at u
       rw [hN] at u
@@ -381,7 +383,7 @@ theorem actual_source_cyclic_order_residue_obstruction
   have hsum (v : ℕ → ℤ) : (∑ i ∈ S, v i) = ((s.take (p + 1)).map v).sum :=
     List.sum_toFinset v (hnd.take _)
   change (2 * (∑ i ∈ S, f i) = _) ∧ (2 * (∑ i ∈ S, f i) - (∑ i ∈ S, g i) = _) at hr
-  rw [hsum f, hsum g] at hr
+  simp only [hsum f, hsum g] at hr
   change (2 * H = _) ∧ (2 * H - ((s.take (p + 1)).map g).sum = _) at hr
   have finish (order : Bool) (hu : n - 1 ∉ S)
       (hv : (n + 1 ∈ S ↔ order = true)) (hw : n + 3 ∈ S) : False := by
