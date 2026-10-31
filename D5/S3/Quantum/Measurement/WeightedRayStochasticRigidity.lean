@@ -252,6 +252,7 @@ private theorem ray_injective : Function.Injective ray := by
   all_goals norm_num [direction] at h0
   all_goals norm_num [direction] at h1
   all_goals norm_num [direction] at h2
+  all_goals simp only [div_eq_mul_inv, neg_one_mul, one_mul] at h0 h1 h2 hp hp3
   all_goals nlinarith
 
 private theorem effect_factor (s : Fin 5) : effect s = weight s • ray (group s) := by
@@ -307,7 +308,12 @@ private theorem operator_transport (U : unitaryGroup (Fin 2) ℂ)
   calc
     _ = (trace (((U : Matrix (Fin 2) (Fin 2) ℂ) * ρ * star (U : Matrix (Fin 2) (Fin 2) ℂ)) * effect s)).re := by
       congr 1
-      simpa only [Matrix.mul_assoc, Matrix.star_eq_conjTranspose] using trace_mul_comm (ρ * star (U : Matrix _ _ ℂ) * effect s) (U : Matrix _ _ ℂ)
+      calc
+        _ = trace ((ρ * (U : Matrix (Fin 2) (Fin 2) ℂ)ᴴ * effect s) *
+            (U : Matrix (Fin 2) (Fin 2) ℂ)) := by congr 1; noncomm_ring
+        _ = trace ((U : Matrix (Fin 2) (Fin 2) ℂ) *
+            (ρ * (U : Matrix (Fin 2) (Fin 2) ℂ)ᴴ * effect s)) := trace_mul_comm _ _
+        _ = _ := by congr 1; noncomm_ring
     _ = _ := by simpa [mul_sum, mul_smul, trace_sum, trace_smul] using he.symm
 
 private theorem group_weight (k : Fin 4) :
