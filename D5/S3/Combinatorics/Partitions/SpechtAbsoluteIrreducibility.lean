@@ -44,7 +44,7 @@ theorem exists_mem_asAlgebraHom_columnAntisymmetrizer_eq_polytabloid (t : YoungT
       (spechtSubrepresentation lam).toSubmodule ⊔
         (orthogonalSubrepresentation (spechtSubrepresentation lam)).toSubmodule := by
     have h := congrArg Subrepresentation.toSubmodule hc.sup_eq_top
-    rw [Subrepresentation.toSubmodule_sup, Subrepresentation.toSubmodule_top] at h
+    rw [Subrepresentation.toSubmodule_sup, _root_.D5.S3.FiniteGroups.FiniteCharacterAlgebra.Subrepresentation.toSubmodule_top] at h
     rw [h]
     exact Submodule.mem_top
   obtain ⟨e, he, w, hw, hsum⟩ := Submodule.mem_sup.mp hsup
