@@ -2,7 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.PowerSeries.RadicalMultiplicity
 import Reg.Support.DependentFamily
 
-/-! The cutoff audit observes the actual radical sum at its final conclusion. -/
+/-! The cutoff audit observes the radical family in its final sum. -/
 
 open scoped PowerSeries LaurentSeries
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -12,30 +12,23 @@ noncomputable section
 namespace Reg.D5.S3.Analytic.PowerSeries.RadicalMultiplicity
 universe u
 
-structure Parameters where
-  index : Type u
-  finiteIndex : Fintype index
-  coefficient : index → Polynomial ℝ
-
-attribute [instance] Parameters.finiteIndex
-
-abbrev signature : Signature.{u+1,u,0,0,0} where
-  Params := Parameters.{u}
-  State P := P.index → ℝ⟦X⟧
+abbrev signature : Signature.{u+1,u,0,u,0} where
+  Params := Type u
+  State I := I → ℝ⟦X⟧
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := ℝ⟦X⟧
+  Output _ I := I → ℝ⟦X⟧
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature := realize signature
-  (fun _ P S => letI := P.finiteIndex; ∑ i, (P.coefficient i : ℝ⟦X⟧) * S i) (fun e => nomatch e)
+  (fun _ _ S => S) (fun e => nomatch e)
 
 def rejected : Realization signature := realize signature
-  (fun _ _ _ => (1 : ℝ⟦X⟧)) (fun e => nomatch e)
+  (fun _ _ _ _ => (1 : ℝ⟦X⟧)) (fun e => nomatch e)
 
-abbrev arena : Arena.{u+1,u,0,0,0} where
+abbrev arena : Arena.{u+1,u,0,u,0} where
   signature := signature
   Law R := ∀ {ι : Type u} [Fintype ι]
     (S : ι → ℝ⟦X⟧) (p A : ι → Polynomial ℝ)
@@ -45,16 +38,27 @@ abbrev arena : Arena.{u+1,u,0,0,0} where
     (_ : ∀ j, (A j).natDegree ≤ Fintype.card ι)
     (_ : ∀ k ≤ 3 * (Fintype.card ι)^2,
       PowerSeries.coeff k (∑ j, (A j : ℝ⟦X⟧) * S j) = 0),
-    R.readout () ⟨ι, inferInstance, A⟩ S = 0
+    ∑ j, (A j : ℝ⟦X⟧) * R.readout () ι S j = 0
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have he := @h (ULift Empty) inferInstance (fun i => nomatch i.down)
-    (fun i => nomatch i.down) (fun i => nomatch i.down)
-    (by intro i; exact i.down.elim) (by intro i; exact i.down.elim)
-    (by intro i; exact i.down.elim) (by intro i; exact i.down.elim)
-    (by intros; simp)
-  exact one_ne_zero he
+  let I := ULift.{u} (Fin 2)
+  let S : I → ℝ⟦X⟧ := fun i => if i.down = 0 then 1 else -1
+  let p : I → Polynomial ℝ := fun _ => 1
+  let A : I → Polynomial ℝ := fun _ => 1
+  have hS0 : ∀ i, PowerSeries.constantCoeff (S i) ≠ 0 := by
+    intro i
+    by_cases hi : i.down = 0 <;> simp [S, hi]
+  have hs : ∀ i, S i ^ 2 = (p i : ℝ⟦X⟧) := by
+    intro i
+    by_cases hi : i.down = 0 <;> simp [S, p, hi]
+  have hZ : (∑ i : I, (A i : ℝ⟦X⟧) * S i) = 0 := by
+    simp [I, A, S, Fin.sum_univ_two]
+  have he := @h I inferInstance S p A hS0 hs
+    (by intro i; simp [p]) (by intro i; simp [A])
+    (by intro k hk; rw [hZ]; simp)
+  change (∑ _i : I, (1 : ℝ⟦X⟧) * 1) = 0 at he
+  norm_num [I, Fin.sum_univ_two] at he
 
 private theorem sensitivity : Sensitivity arena actual := by
   constructor
@@ -69,9 +73,10 @@ private theorem sensitivity : Sensitivity arena actual := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨⟨ULift Unit, inferInstance, fun _ => 1⟩,
-    (fun _ => 0), (fun _ => 1), ?_⟩
-  simp [actual, realize]
+  refine ⟨ULift Unit, (fun _ => 0), (fun _ => 1), ?_⟩
+  intro h
+  have he := congrFun h (ULift.up ())
+  norm_num [actual, realize] at he
 
 def family : Registration arena (type_of% @sum_eq_zero_of_coeff_eq_zero.{u}) where
   actual := actual
@@ -80,7 +85,7 @@ def family : Registration arena (type_of% @sum_eq_zero_of_coeff_eq_zero.{u}) whe
   sensitivity := sensitivity
   dependence := dependence
 
-def audit : Contract.Registration.{u+1,0,1,0,0,0,u+1,u,0,0,0,0}
+def audit : Contract.Registration.{u+1,0,1,0,0,0,u+1,u,0,u,0,0}
     (@sum_eq_zero_of_coeff_eq_zero.{u}) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.PowerSeries.RadicalMultiplicity.cutoff_unit
   realizationName := `Reg.D5.S3.Analytic.PowerSeries.RadicalMultiplicity.family
@@ -93,8 +98,7 @@ def audit : Contract.Registration.{u+1,0,1,0,0,0,u+1,u,0,0,0,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature
-    (fun _ P S => letI := P.finiteIndex; ∑ i, (P.coefficient i : ℝ⟦X⟧) * S i) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ S => S) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -102,9 +106,10 @@ def audit : Contract.Registration.{u+1,0,1,0,0,0,u+1,u,0,0,0,0}
   sourceSelection := some {
     owner := `D5.S3.Analytic.PowerSeries.RadicalMultiplicity
     definition := none
-    coordinates := #[0, 1, 2, 4]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "fn", "arg", "arg", "body", "arg", "fn"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none

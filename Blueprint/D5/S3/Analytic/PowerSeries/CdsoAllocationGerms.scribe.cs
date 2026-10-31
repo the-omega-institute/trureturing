@@ -16,7 +16,7 @@ internal sealed class CdsoAllocationGermsDocument : IScribeDocumentDefinition
             DescribeId.Create("cdso-actual-allocation-germ-cutoff"),
             DeclarationHandle.Create("D5/S3/Analytic/PowerSeries/CdsoAllocationGerms.allocation_germ_iff_taylor"),
             H("Full allocation functions and their genuine coefficients"),
-            StatementSource.FromAuthor(Disp(All("a", Nat, All("h", Nat,
+            StatementSource.FromAuthor(Disp(All("a", F.Id("Nat"), All("h", F.Id("Nat"),
                 All("b", Call("AllocationData", F.Id("a"), F.Id("h")),
                 All("c", Call("AllocationData", F.Id("a"), F.Id("h")), Seq(
                     D(2), Sp, Le, Sp, F.Id("a"), Sp, Implies, Sp,
@@ -25,7 +25,7 @@ internal sealed class CdsoAllocationGermsDocument : IScribeDocumentDefinition
                     Call("PositiveGermEq", Call("actual", F.Id("b")), Call("extension", F.Id("b"))), Sp, Land, Sp,
                     Call("PositiveGermEq", Call("actual", F.Id("c")), Call("extension", F.Id("c"))), Sp, Land, Sp,
                     Open, Call("PositiveGermEq", Call("actual", F.Id("b")), Call("actual", F.Id("c"))), Sp, Iff, Sp,
-                    All("k", Nat, Seq(F.Id("k"), Sp, Le, Sp,
+                    All("k", F.Id("Nat"), Seq(F.Id("k"), Sp, Le, Sp,
                         D(3), Open, D(6), Open, F.Id("a"), Plus, D(1), Plus, F.Id("h"), Close, Plus, D(5), Close,
                         Caret, Grp(D(2)), Sp, Implies, Sp,
                         Call("TaylorCoeff", Call("extension", F.Id("b")), F.Id("k")), Sp, Eq, Sp,

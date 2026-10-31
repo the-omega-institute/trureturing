@@ -22,7 +22,7 @@ internal sealed class RadicalMultiplicityDocument : IScribeDocumentDefinition
                 All("p", new Formula.TypeArrow(F.Id("I"), Call("RealPolynomial")),
                 All("A", new Formula.TypeArrow(F.Id("I"), Call("RealPolynomial")), Seq(
                     Call("RadicalData", F.Id("I"), F.Id("S"), F.Id("p"), F.Id("A")), Sp, Land, Sp,
-                    Open, All("k", Nat, Seq(F.Id("k"), Sp, Le, Sp,
+                    Open, All("k", F.Id("Nat"), Seq(F.Id("k"), Sp, Le, Sp,
                         D(3), Call("card", F.Id("I")), Caret, Grp(D(2)), Sp, Implies, Sp,
                         Call("coeff", F.Id("k"), Call("RadicalSum", F.Id("S"), F.Id("A"))),
                         Sp, Eq, Sp, D(0))), Close, Sp, Implies, Sp,
