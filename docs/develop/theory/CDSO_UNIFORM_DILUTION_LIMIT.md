@@ -3741,3 +3741,424 @@ to preserve balances, or the equivalence alone supplies neither
 outcome.
 
 ## 追加锚（本行以下为增补区）
+
+## 31. The rigid entrance price and an exact integer return test
+
+**Definition 31.1 (The row-one two-row comparison).** For $x>0$ put
+
+$$
+\begin{gathered}
+C_d=(d-1)g(1/d)+g(2/d),\qquad
+B_d(x)=dx+C_d,\qquad
+\mathfrak B(x)=\min_{d\ge3}B_d(x),\\
+a_x=\mathfrak B(x)-x,\qquad
+f_e(x)=\frac{a_x-e g(2/e)}{e-1},\qquad
+\vartheta_x=\sup_{e\ge3}f_e(x),\\
+\mathsf T_2(x)=\inf_{d,e\ge3}\{x r_{de}+c_{de}\}.
+\end{gathered}
+\tag{31.1}
+$$
+
+All degree indices in this section are integers unless a real argument
+is explicitly specified. The pairs $(r_{de},c_{de})$ are the actual
+normalized pair flows of Proposition 23.2. Thus $\mathsf T_2$ compares
+only flows with source rows one and two and injection only at one.
+It does not include two-row flows with injection at two, and it is
+not a replacement for $\Psi$.
+
+**Proposition 31.2 (Finite exact comparison and all minimizing pairs).**
+For every $x>0$, define
+
+$$
+D_x^{\rm ent}=\left\lfloor\frac{3x+C_3}{x}\right\rfloor,\qquad
+n_x=\max\{3,\lceil8/a_x\rceil\},\qquad E_x=2n_x-1.
+\tag{31.2}
+$$
+
+The minimum defining $\mathfrak B(x)$ exists, $a_x>0$, and
+
+$$
+\begin{gathered}
+\mathfrak B(x)=\min_{3\le d\le D_x^{\rm ent}}B_d(x),\\
+0<\frac{a_x}{2(n_x-1)}
+ \le\vartheta_x=\max_{3\le e\le E_x}f_e(x),\\
+\mathsf T_2(x)=\mathfrak B(x)-\vartheta_x.
+\end{gathered}
+\tag{31.3}
+$$
+
+In particular the infimum defining $\mathsf T_2$ is attained.
+Its minimizing pairs are exactly all pairs for which
+$B_d(x)=\mathfrak B(x)$ and $f_e(x)=\vartheta_x$.
+The same value is the minimum over all normalized finite flows
+supported on source rows one and two with injection only at one.
+
+**Proof.** Since $B_d(x)\ge dx$ and $x>0$, its minimum exists.
+A minimizing $d$ satisfies $dx\le B_3(x)=3x+C_3$, proving its
+cutoff. Every $B_d(x)>3x$, so $\mathfrak B(x)>3x>x$.
+The exact pair formula (23.4) gives
+
+$$
+x r_{de}+c_{de}
+ =\frac{(e-2)B_d(x)+x+e g(2/e)}{e-1}.
+\tag{31.4}
+$$
+
+For each fixed $e$, the positive factor $(e-2)/(e-1)$ makes
+its minimizing $d$ exactly a minimizer of $B_d(x)$.
+After that minimization, (31.4) is $\mathfrak B(x)-f_e(x)$.
+
+The inequality $g(z)\le z^2$ gives
+$n_xg(2/n_x)\le4/n_x\le a_x/2$. Hence
+$f_{n_x}(x)\ge a_x/\{2(n_x-1)\}>0$.
+Also $f_e(x)\to0$ as $e\to\infty$, so its positive supremum is
+attained. If $f_e(x)=\vartheta_x$, then
+
+$$
+(e-1)\vartheta_x=a_x-e g(2/e)<a_x,
+\qquad
+e<1+\frac{a_x}{\vartheta_x}\le2n_x-1.
+$$
+
+The stated, slightly larger closed integer cutoff follows.
+This proves (31.3) and the characterization of all minimizing
+pairs. Every pair is feasible by Proposition 23.2, and that
+proposition expresses every other finite flow in the stated
+class as a convex combination of these pair flows. Such a
+combination cannot have smaller objective. ∎
+
+**Theorem 31.3 (Entrance rigidity across all attained duals).**
+Fix $x>0$ and any harmless cap $R>H_x/x$ from Lemma 27.2.
+Suppose there exists an actual normalized optimal flow $y$ for
+$\Psi(x)$ whose injection satisfies $b_k=0$ for every $k\ge2$.
+For every attained dual of $\mathcal L(x,1;R)$, write
+$\ell=\Psi(x)$ and $p=u_2$. Then
+
+$$
+\ell+p=\mathfrak B(x),\qquad
+0<\vartheta_x\le p\le x/2<1/3,\qquad
+v_2=x-2p.
+\tag{31.5}
+$$
+
+Thus $u_2$, $v_2$ and the row-two return gap are independent of
+the choice of attained dual. Every positive row-one action in
+any such optimal flow has degree in
+$\operatorname{argmin}_{d\ge3}B_d(x)$.
+
+For $0<z<1/3$ define
+
+$$
+\tau(z)=\frac{2(2-z)}{\sqrt{z(4-z)}},\qquad
+\mathcal E(z)=\{\lfloor\tau(z)\rfloor,\lceil\tau(z)\rceil\}.
+\tag{31.6}
+$$
+
+The exact all-degree return gap is
+
+$$
+\begin{aligned}
+G_2
+ &=\min_{e\ge3}\{(e-2)p+x+e g(2/e)-\ell\}\\
+ &=\min_{e\in\mathcal E(p)}
+       \{(e-1)p+x+e g(2/e)-\mathfrak B(x)\}.
+\end{aligned}
+\tag{31.7}
+$$
+
+Both integers in $\mathcal E(p)$ are at least three.
+If the two values tie, both are retained.
+
+**Proof.** Lemma 27.2 puts every scalarized optimum strictly inside
+the prescribed cap. Thus every attained dual has
+$A=x$, $\beta=1$, $\lambda=0$ and $\ell=\Psi(x)$.
+Proposition 20.2 and Theorem 21.1 give a nonzero injection.
+Since only row one is allowed, $b_1>0$ and $W_1=b_1>0$.
+Lemma 23.1 makes each positive row-one action $(1,2,d)$.
+For every integer $d\ge3$, the all-degree dual test with
+unmarked row one and marked row two is
+
+$$
+\ell\le (d-1)\{x+g(1/d)\}+x-p+g(2/d)=B_d(x)-p.
+\tag{31.8}
+$$
+
+Every positive row-one action has equality by the exact gap
+identity. At least one exists. Consequently
+$\ell+p=\min_dB_d(x)$, with the asserted minimizing degrees.
+The same actual optimum has zero gap against every attained
+dual, so this reasoning fixes $p$ for all of them.
+
+Lemma 20.3 gives $p>0$, and the row equality gives
+$p\le x/2$ and $v_2=x-2p$.
+A positive row-one action satisfies $d^2<6/x$ by Lemma 23.1.
+Since $d\ge3$, one has $x<2/3$, and hence $p<1/3$.
+The self-return column inequalities and (31.8) give, for every $e$,
+
+$$
+0\le(e-1)p+x+e g(2/e)-\mathfrak B(x)
+  =(e-1)\{p-f_e(x)\}.
+\tag{31.9}
+$$
+
+Taking the maximum of $f_e$ proves $\vartheta_x\le p$.
+
+For the integer minimization use the exact identity
+$e g(2/e)=2\sqrt{e^2+4}-2e$, rather than a quadratic approximation.
+The real function
+
+$$
+h_z(t)=(t-2)z+x+2\sqrt{t^2+4}-2t\quad(t\ge3)
+$$
+
+has derivatives
+
+$$
+h_z'(t)=z-2+\frac{2t}{\sqrt{t^2+4}},\qquad
+h_z''(t)=\frac8{(t^2+4)^{3/2}}>0.
+$$
+
+Its unique unrestricted positive critical point is $\tau(z)$.
+For $0<z<1/3$ it lies above three: indeed
+$h_z'(3)<1/3-2+6/\sqrt{13}<0$, where the last
+inequality is equivalent to $324<325$.
+Strict decrease up to $\tau(z)$ and strict increase afterwards
+put every integer minimizer among its two adjacent integers.
+Applying this with $z=p$ proves (31.7). ∎
+
+**Corollary 31.4 (Quantitative gap from the whole two-row comparison).**
+Under the hypotheses of Theorem 31.3 put
+
+$$
+\varepsilon_x=\mathsf T_2(x)-\Psi(x)=p-\vartheta_x,\qquad
+E_x^\circ=\lceil\tau(\vartheta_x)\rceil.
+\tag{31.10}
+$$
+
+Then
+
+$$
+2\varepsilon_x\le G_2\le(E_x^\circ-1)\varepsilon_x.
+\tag{31.11}
+$$
+
+In particular, $G_2=0$ if and only if an actual pair flow of
+Proposition 23.2 is scalarized optimal. If one such pair is
+optimal, every attained dual has $G_2=0$.
+
+**Proof.** Every pair is a feasible uncapped array, so
+$\Psi(x)\le\mathsf T_2(x)$ by Lemma 27.2. Equations (31.3)
+and (31.5) give (31.10). For each $e$ the return slack is exactly
+
+$$
+(e-1)\{p-f_e(x)\}
+ =(e-1)\varepsilon_x
+   +(e-1)\{\vartheta_x-f_e(x)\}.
+\tag{31.12}
+$$
+
+The second term is nonnegative, and $e-1\ge2$, giving the lower
+bound in (31.11). Choose any maximizing degree $e_0$ for $f_e$.
+At $p=\vartheta_x$ the corresponding slack is zero and all
+others are nonnegative. The real minimization in the proof of
+Theorem 31.3, now at $z=\vartheta_x\le p<1/3$, therefore gives
+$e_0\in\mathcal E(\vartheta_x)$. At the actual $p$, its slack is
+$(e_0-1)\varepsilon_x\le(E_x^\circ-1)\varepsilon_x$.
+The minimum over all $e$ gives the upper bound.
+Proposition 31.2 supplies an actual minimizing pair, so equality
+of its value with $\Psi$ is attainment, rather than a limiting
+resource or a relaxed column comparison. ∎
+
+## 32. A positive return gap forces strict departure and higher rows
+
+**Proposition 32.1 (A quantitative departure barrier on the same
+optimal flow).** Retain the hypotheses of Theorem 31.3 and fix
+any one of its attained duals and any actual normalized optimal
+flow with injection only at row one. Suppose $G_2>0$.
+Every positive action $(2,j,d)$ has $j\ge3$ and
+
+$$
+v_j\le v_2-G_2.
+\tag{32.1}
+$$
+
+Every active row $k\ge3$ satisfies the same bound. No positive
+action from any of these rows targets row two, so all marked
+incidence in row two comes directly from row one. Moreover
+
+$$
+0<G_2\le v_2=x-2p,\qquad
+0<\varepsilon_x\le\frac{x-2\vartheta_x}{4}.
+\tag{32.2}
+$$
+
+These statements refer to this actual optimal flow and its
+all-degree dual; existence of a flow with $G_2>0$ is not asserted.
+
+Write $W_+=\sum_{k\ge3}W_k$ and define
+
+$$
+D_2=\left\lfloor1+\frac{\ell}{p}\right\rfloor,\qquad
+P_*=(D_2-2)(D_2-1).
+\tag{32.3}
+$$
+
+Then $D_2\ge4$, all quantities below are finite, and
+
+$$
+\begin{gathered}
+\frac{W_2}{P_*}\le W_+\le\frac{W_2}{5},\\
+\frac57\le W_2\le\frac{P_*}{P_*+2}<1,\qquad
+1-W_2=\sum_{k\ge3}(k-1)W_k.
+\end{gathered}
+\tag{32.4}
+$$
+
+Thus a positive gap would force positive higher-row mass in the
+actual optimum, with a bound depending on its actual $\ell,p$.
+
+**Proof.** There is positive row-one action mass, all targeting
+two, so $I_2>0$ and $W_2>0$. For a positive action $(2,j,d)$,
+unmarked contact permits row $j$ as a competitor and gives
+
+$$
+a_{jd}=u_j+g(j/d)-u_2-g(2/d)\ge0.
+$$
+
+Its column contact and marked comparison give
+
+$$
+\begin{aligned}
+b_{jd}
+ &=u_2+v_2+g(2/d)-u_j-v_j-g(j/d)\\
+ &=(d-2)p+x+d g(2/d)-\ell\ge G_2.
+\end{aligned}
+$$
+
+Adding gives $a_{jd}+b_{jd}=v_2-v_j$.
+This proves (32.1), excludes $j=2$, and gives $G_2\le v_2$.
+The resolvent (21.2) puts every active row on a finite positive
+path from the injection. The first step is $1\longrightarrow2$.
+After the first departure from two, Lemma 23.1 makes the marked
+price nonincreasing along the remainder of the path.
+Consequently every reached row at least three has price at most
+$v_2-G_2$ and cannot return to two. This proves the asserted
+barrier on the entire active support. Combining
+$2\varepsilon_x\le G_2\le x-2p$ with
+$p=\vartheta_x+\varepsilon_x$ proves (32.2).
+
+For $k\ge2$ the zero-injection condition gives $W_k=I_k$.
+There is no marked incidence into two except from one, so
+
+$$
+W_2=I_2=\sum_d\frac{y_{12d}}{d-1}.
+\tag{32.5}
+$$
+
+Every other positive action has target $j\ge3$ and $d\ge4$.
+Its propagation coefficient is
+$p_{jd}=1/\{(j-1)(d-1)\}\le1/6$.
+The nonnegative balance sums therefore give
+
+$$
+W_+=\sum_{j\ge3}I_j
+ \le\frac16(W_2+W_+),\qquad W_+\le W_2/5.
+\tag{32.6}
+$$
+
+These sums are finite by Theorem 19.1 and Proposition 20.2.
+For all non-row-one actions, $1/(d-1)\le1/3$.
+Their normalization mass is $1-W_2$ by (32.5), whence
+
+$$
+1-W_2
+ \le\frac13(W_2+W_+)\le\frac25W_2.
+$$
+
+This proves $W_2\ge5/7$. Also nonnegative summation in
+Definition 20.1 gives the exact normalization identity
+
+$$
+1=\sum_{j\ge2}(j-1)I_j
+  =W_2+\sum_{j\ge3}(j-1)W_j.
+\tag{32.7}
+$$
+
+Each positive action out of two satisfies $d\le D_2$ by
+Lemma 20.3. Since it targets $j\ge3$, $D_2\ge4$ and
+$p_{jd}\ge1/P_*$. Summing just these contributions to the
+higher-row incoming mass gives $W_+\ge W_2/P_*>0$.
+Finally (32.7) gives
+$1\ge W_2+2W_+\ge W_2(1+2/P_*)$.
+This proves the remaining bounds in (32.4), including $W_2<1$.
+Every sum uses the same flow, not separate extremizers of its
+resource and cost. ∎
+
+## 33. Sources and the unresolved return relation
+
+The exact scalar cost remains
+$g(z)=2(\sqrt{1+z^2}-1)$ from Definition 27.1.
+The original normalization is that of Albalahi--Das--Ali--Barman--Hamza,
+*On the hyperbolic Sombor index and its counterpart*,
+[arXiv:2510.24809v1](https://arxiv.org/html/2510.24809v1),
+Section 1, equation (1) and the following definition: the CDSO
+denominator is the maximum endpoint degree and the factor
+$1/\sqrt2$ is dropped. No extremal assertion from that paper is
+used in Sections 31--32.
+
+The finite affine duality input to the reused Theorem 15.3 is
+Boyd--Vandenberghe, *Convex Optimization*,
+[author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf),
+Sections 5.2.3--5.2.4, printed pp.226--227,
+especially (5.26)--(5.27) and dual attainment under the affine
+refinement. The integer minimization in (31.7) uses elementary
+real differentiation inside a CDSO-specific proof.
+Entrance rigidity, the exact comparison gap, the strict departure
+barrier and the mass bounds are deductions for the particular
+marked balances and nonlinear cost of this volume. They are not
+applications of a finite-moment representation theorem to discard
+the countably many row constraints. The Zhao--Zhao full-text
+overlap specified in Section 6 remains unassessed; no global
+priority or exhaustive-literature assertion is made.
+
+**Open boundary 33.1 (The return implication remains unproved).**
+For every $x>0$ admitting an actual scalarized optimal flow with
+injection only at row one, the remaining proposed implication is
+
+$$
+G_2=0.
+\tag{33.1}
+$$
+
+Theorem 31.3 makes this a dual-independent assertion about that
+coefficient, and Corollary 31.4 identifies its precise missing
+inequality as $\Psi(x)\ge\mathsf T_2(x)$ under the stated
+row-one-optimality hypothesis. The reverse inequality is already
+true because the pair flows are feasible. Neither the two adjacent
+integer test nor the departure barrier establishes the missing
+inequality. In particular, (32.1)--(32.4) are necessary consequences
+of a positive gap, not an existence certificate or a contradiction.
+
+A strict counterexample to (33.1) still requires an actual $x>0$,
+an all-degree attained dual with $\ell=\Psi(x)$, and an actual
+normalized row-one-only optimal flow satisfying the full countable
+balances, with the strictly positive return value in (31.7).
+No such coefficient and certificate is supplied here. Computing
+the two integer values with an uncertified proposed $\ell$ or $p$
+would not supply those obligations.
+
+Even a certified positive gap would refute only (33.1).
+The optimum could still be a finite array using more than two
+source rows. It would not imply $x\notin S$, or any strict gap
+between the original winning envelopes $F_M$ and $F$.
+The complete all-positive compact-rectangle assertion of Open
+problem 18.2, its exact finite endpoint bound, all winning ties
+and its genuine quantified refutation criterion remain unchanged
+and unresolved. The original-graph transfer remains exactly
+Theorem 29.2 and Corollary 29.4, through Theorem 8.1,
+Theorem 11.1, Proposition 12.2 and Theorem 13.1, with the same
+strict incidence conditions and exact integer budgets.
+Nothing in Sections 31--32 supplies universal scalarized finite
+attainment or a coefficient outside $S$.
+
+## 追加锚（本行以下为增补区）
