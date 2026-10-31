@@ -20,31 +20,39 @@ open scoped BigOperators
 abbrev signature : Signature where
   Params := ℕ
   State _ := ℕ
-  Role := Unit
+  Role := Bool
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ k := Fin k → ℤ
+  Output role k := if role then Fin k → ℤ else Fin k → Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ k t => actualSource k t) (fun e => nomatch e)
+  realize signature (fun role k t => match role with
+    | false => negativeBit k t
+    | true => actualSource k t) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => fun _ => -1) (fun e => nomatch e)
+  realize signature (fun role k t => match role with
+    | false => negativeBit k t
+    | true => fun _ => -1) (fun e => nomatch e)
+
+def rejectedBits : Realization signature :=
+  realize signature (fun role k t => match role with
+    | false => fun _ => false
+    | true => actualSource k t) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (k : ℕ) (hk : 0 < k) (t : ℕ) (S : Finset (Fin k)),
-    let s := R.readout () k t
-    let b : Fin k → Bool := fun i => decide (s i < 0)
-    let n := (Finset.univ.filter (fun i : Fin k => s i < 0)).card
+    let b := R.readout false k t
+    let n := (Finset.univ.filter (fun i : Fin k => R.readout true k t i < 0)).card
     let E := orbitNegativeCount k hk S b ⟨0, by omega⟩
-    ((∀ h, orbitSum k hk S s h = 0) ↔
+    ((∀ h, orbitSum k hk S (R.readout true k t) h = 0) ↔
       (∀ h, orbitNegativeCount k hk S b h = E)) ∧
-    ((∀ h, orbitSum k hk S s h = 0) → k * E = S.card * n) ∧
+    ((∀ h, orbitSum k hk S (R.readout true k t) h = 0) → k * E = S.card * n) ∧
     (Nat.Coprime k n →
-      (∀ h, orbitSum k hk S s h = 0) →
+      (∀ h, orbitSum k hk S (R.readout true k t) h = 0) →
       (S = ∅ ∨ S = Finset.univ))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -52,21 +60,42 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hh := h 1 (by decide) 0 ({0} : Finset (Fin 1))
   have hbal : ∀ h : Fin 1,
       orbitNegativeCount 1 (by decide) ({0} : Finset (Fin 1))
-          (fun _ => decide ((-1 : ℤ) < 0)) h =
+          (negativeBit 1 0) h =
         orbitNegativeCount 1 (by decide) ({0} : Finset (Fin 1))
-          (fun _ => decide ((-1 : ℤ) < 0)) ⟨0, by decide⟩ := by
+          (negativeBit 1 0) ⟨0, by decide⟩ := by
     intro hphase
-    simp [orbitNegativeCount]
+    simp [orbitNegativeCount, negativeBit, actualSource, centered, modulus]
   have hz := hh.1.2 hbal
   have hz0 := hz (0 : Fin 1)
   norm_num [rejected, realize, orbitSum, finCycle_apply] at hz0
 
+private theorem rejected_bits_law : ¬ arena.Law rejectedBits := by
+  intro h
+  have hh := h 3 (by decide) 1 ({0} : Finset (Fin 3))
+  have hbal : ∀ h : Fin 3,
+      orbitNegativeCount 3 (by decide) ({0} : Finset (Fin 3))
+          (fun _ => false) h =
+        orbitNegativeCount 3 (by decide) ({0} : Finset (Fin 3))
+          (fun _ => false) ⟨0, by decide⟩ := by
+    intro hphase
+    simp [orbitNegativeCount]
+  have hz0 := hh.1.2 hbal (0 : Fin 3)
+  norm_num [rejectedBits, realize, orbitSum, finCycle_apply,
+    actualSource, centered, modulus] at hz0
+
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨3, 0, 1, ?_⟩
-  intro he
-  have hh := congrFun he (0 : Fin 3)
-  norm_num [actual, realize, actualSource, centered, modulus] at hh
+  cases i with
+  | false =>
+    refine ⟨3, 0, 4, ?_⟩
+    intro he
+    have hh := congrFun he (0 : Fin 3)
+    norm_num [actual, realize, negativeBit, actualSource, centered, modulus] at hh
+  | true =>
+    refine ⟨3, 0, 1, ?_⟩
+    intro he
+    have hh := congrFun he (0 : Fin 3)
+    norm_num [actual, realize, actualSource, centered, modulus] at hh
 
 def source_registration : Registration arena
     (type_of% (@_root_.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.actualSource_orbit_zero_balanced)) where
@@ -76,16 +105,26 @@ def source_registration : Registration arena
   sensitivity := by
     constructor
     · intro i
-      refine ⟨rejected, ?_, rfl, rejected_law⟩
-      intro j hji
-      exact False.elim (hji (Subsingleton.elim _ _))
+      cases i with
+      | false =>
+        refine ⟨rejectedBits, ?_, rfl, rejected_bits_law⟩
+        intro j hji
+        cases j with
+        | false => exact False.elim (hji rfl)
+        | true => rfl
+      | true =>
+        refine ⟨rejected, ?_, rfl, rejected_law⟩
+        intro j hji
+        cases j with
+        | false => rfl
+        | true => exact False.elim (hji rfl)
     · intro e
       exact nomatch e
   dependence := actual_dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@_root_.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.actualSource_orbit_zero_balanced)
-    (Realization signature) Nat Unit where
+    (Realization signature) Nat Bool where
   unitName := `D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.actualSource_orbit_zero_balanced.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.source_registration
   realizationSource := none
@@ -97,7 +136,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ k t => actualSource k t) (fun e => nomatch e))
+  readout := some (realize signature (fun role k t => match role with
+    | false => negativeBit k t
+    | true => actualSource k t) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -107,6 +148,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
+      path := #["body", "body", "body", "body", "value"],
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }, {
       path := #["body", "body", "body", "body", "body", "body", "body",
         "fn", "arg", "fn", "arg", "body", "fn", "arg", "fn", "arg"],
       stateBinder := 2
