@@ -21,43 +21,6 @@ open OriginalGaussianMatrix OriginalGaussianResolvent
 set_option maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-/-- The ordinary real falling-binomial product, including the empty product. -/
-def binomialProduct (x : ℝ) (n : ℕ) : ℝ :=
-  (∏ j ∈ Finset.range n, (x - j)) / n.factorial
-
-lemma jet_create_product (n k : ℕ) :
-    jetScalar n (-(k : ℤ) - 1) = (binomialProduct (k - 1 / 2) n : ℂ) := by
-  simp only [jetScalar, binomialProduct, map_div₀, map_prod, Complex.ofReal_sub,
-    Complex.ofReal_natCast, Complex.ofReal_div, Complex.ofReal_one, Complex.ofReal_ofNat,
-    Int.cast_sub, Int.cast_neg, Int.cast_natCast, Int.cast_one]
-  congr 2
-  apply Finset.prod_congr rfl
-  intro j hj
-  ring
-
-lemma jet_annihilate_product (n k : ℕ) :
-    jetScalar n (k : ℤ) = (-1 : ℂ)^n *
-      (binomialProduct (k + n + 1 / 2) n : ℂ) := by
-  have hrev : (∏ j ∈ Finset.range n, ((k : ℂ) + 3 / 2 + j)) =
-      ∏ j ∈ Finset.range n, ((k : ℂ) + n + 1 / 2 - j) := by
-    rw [← Finset.prod_range_reflect]
-    apply Finset.prod_congr rfl
-    intro j hj
-    have hj' : j < n := Finset.mem_range.mp hj
-    push_cast [Nat.cast_sub (by omega : j + 1 ≤ n)]
-    ring
-  simp only [jetScalar, Int.cast_natCast]
-  have hneg : (∏ j ∈ Finset.range n, (-(k : ℂ) - 3 / 2 - j)) =
-      (-1 : ℂ)^n * ∏ j ∈ Finset.range n, ((k : ℂ) + 3 / 2 + j) := by
-    simp_rw [show ∀ j : ℕ, -(k : ℂ) - 3 / 2 - j =
-      (-1 : ℂ) * ((k : ℂ) + 3 / 2 + j) by intro j; ring]
-    simp [Finset.prod_mul_distrib]
-  rw [hneg, hrev]
-  simp only [binomialProduct, map_div₀, map_prod, Complex.ofReal_sub,
-    Complex.ofReal_add, Complex.ofReal_natCast, Complex.ofReal_div,
-    Complex.ofReal_one, Complex.ofReal_ofNat]
-  ring
-
 private lemma rising_product (n k : ℕ) :
     (∏ j ∈ Finset.range n, ((k : ℝ) + 2 + j)) =
       (n.factorial : ℝ) * ((k + n + 1).choose n : ℝ) := by
@@ -65,7 +28,12 @@ private lemma rising_product (n k : ℕ) :
   rw [Nat.ascFactorial_eq_prod_range] at h
   have hc := congrArg (fun a : ℕ => (a : ℝ)) h
   push_cast at hc
-  convert hc using 1 <;> congr 1 <;> omega
+  convert hc using 1
+  · apply Finset.prod_congr rfl
+    intro j hj
+    ring
+  · congr 2
+    omega
 
 /-- Both literal jet products obey the same binomial majorant, at every order. -/
 theorem jet_binomial_bound (n k : ℕ) (m : ℤ)
@@ -101,8 +69,8 @@ private lemma pair_half_bound (q : ℂ) (s t : ℕ) (hs : 0 < s) (ht : 0 < t) :
     nlinarith [sq_nonneg (Real.sqrt (s : ℝ) - Real.sqrt (t : ℝ)),
       Real.sq_sqrt (Nat.cast_nonneg s), Real.sq_sqrt (Nat.cast_nonneg t)]
   have hw : centralWeight s * centralWeight t ≤ 1 :=
-    mul_le_one₀ (centralWeight_nonneg s) (weight_le_one s)
-      (centralWeight_nonneg t) (weight_le_one t)
+    by simpa using mul_le_mul (weight_le_one s) (weight_le_one t)
+      (centralWeight_nonneg t) zero_le_one
   apply (div_le_iff₀ hst).mpr
   calc
     _ = (Real.sqrt (s : ℝ) * Real.sqrt (t : ℝ)) *
@@ -110,7 +78,7 @@ private lemma pair_half_bound (q : ℂ) (s t : ℕ) (hs : 0 < s) (ht : 0 < t) :
     _ ≤ ((s : ℝ) + t) / 2 * 1 * ‖q‖^(s+t) := by gcongr; linarith
     _ = _ := by ring
 
-private lemma jet_square_majorant (N n k : ℕ) (a root q : ℂ) (m : ℤ)
+private lemma jet_square_majorant (n k : ℕ) (a root q : ℂ) (m : ℤ)
     (hm : m = (k : ℤ) ∨ m = -(k : ℤ)-1)
     (ha : ‖a‖ ≤ 1/16) (hq : ‖q‖ ≤ 1/16)
     (hroot : ‖root‖^2 = ‖q‖) :
@@ -124,8 +92,10 @@ private lemma jet_square_majorant (N n k : ℕ) (a root q : ℂ) (m : ℤ)
     have h : k+1 ≤ 2^k := k.lt_two_pow_self
     exact_mod_cast h
   have hj := jet_power_bound n k m hm
-  have hsmallA : 4 * ‖a‖^2 ≤ (1/2 : ℝ) := by nlinarith [norm_nonneg a]
-  have hsmallQ : 8 * ‖q‖^2 ≤ (1/2 : ℝ) := by nlinarith [norm_nonneg q]
+  have hsmallA : 4 * ‖a‖^2 ≤ (1/2 : ℝ) := by
+    nlinarith [pow_le_pow_left₀ (norm_nonneg a) ha 2]
+  have hsmallQ : 8 * ‖q‖^2 ≤ (1/2 : ℝ) := by
+    nlinarith [pow_le_pow_left₀ (norm_nonneg q) hq 2]
   simp only [norm_mul, norm_pow, Complex.norm_real, Real.norm_eq_abs,
     abs_of_nonneg (Real.sqrt_nonneg _), mul_pow]
   rw [Real.sq_sqrt (by positivity), hroot]
@@ -167,6 +137,16 @@ theorem damping_nonempty (N : ℕ) (T : ℂ) (hT : T ≠ 0) :
   have he := eta_bounds N
   have hm : 0 < min 1 (‖T‖^2) := lt_min (by norm_num) hr
   have hm' : 0 < min 1 (1 / ‖T‖^2) := lt_min (by norm_num) (by positivity)
+  have hsmall : eta N / 2 * min 1 (‖T‖^2) ≤ eta N / 2 := by
+    nlinarith [mul_le_mul_of_nonneg_left (min_le_left (1 : ℝ) (‖T‖^2))
+      (show 0 ≤ eta N / 2 by positivity)]
+  have hsmall' : eta N / 2 * min 1 (1/‖T‖^2) ≤ eta N / 2 := by
+    nlinarith [mul_le_mul_of_nonneg_left (min_le_left (1 : ℝ) (1/‖T‖^2))
+      (show 0 ≤ eta N / 2 by positivity)]
+  have hrad := mul_le_mul_of_nonneg_left (min_le_right (1 : ℝ) (‖T‖^2))
+    (show 0 ≤ eta N / 2 by positivity)
+  have hrad' := mul_le_mul_of_nonneg_left (min_le_right (1 : ℝ) (1/‖T‖^2))
+    (show 0 ≤ eta N / 2 by positivity)
   refine ⟨{
     T := T, T_ne := hT
     alpha := eta N / 2 * min 1 (‖T‖^2)
@@ -179,13 +159,13 @@ theorem damping_nonempty (N : ℕ) (T : ℂ) (hT : T ≠ 0) :
     beta_lt := ?_
     gamma_lt := ?_ }, rfl⟩
   · apply lt_min
-    · nlinarith [min_le_left (1 : ℝ) (‖T‖^2)]
-    · nlinarith [min_le_right (1 : ℝ) (‖T‖^2)]
+    · nlinarith
+    · nlinarith [mul_pos he.1 hr]
   · apply lt_min
-    · nlinarith [min_le_left (1 : ℝ) (‖T‖^2)]
-    · nlinarith [min_le_right (1 : ℝ) (‖T‖^2)]
+    · nlinarith
+    · nlinarith [mul_pos he.1 hr]
   · apply lt_min
-    · nlinarith [min_le_left (1 : ℝ) (1 / ‖T‖^2)]
+    · nlinarith
     · have := min_le_right (1 : ℝ) (1 / ‖T‖^2)
       rw [div_eq_mul_inv]
       nlinarith [mul_pos he.1 (inv_pos.mpr hr)]
@@ -222,15 +202,48 @@ private lemma root_norms :
   exact ⟨rfl, rfl⟩
 
 /-- Source n is the original positive source frequency n+1. -/
-def SS (n m : ℕ) : ℂ := matrixEntry d.sourceRatio (n+1) (m+1)
+def SS (n m : ℕ) : ℂ :=
+  (d.alpha : ℂ)^((n+1)+(m+1)) * pairScalar (n+1) (m+1) /
+    ((Real.sqrt (n+1 : ℝ) : ℂ) * (Real.sqrt (m+1 : ℝ) : ℂ)) *
+    d.T ^ (-(2 * (((n+1)+(m+1) : ℕ) : ℤ)))
 
 /-- The native annihilation jet, with its doubled integer Hahn powers factored. -/
-def SI (n k : ℕ) : ℂ := d.sourceRatio^(n+1) * d.inputRoot * d.inputRatio^k *
-  (Real.sqrt (((k : ℝ) + 1/2) / (n+1)) : ℂ) * jetScalar n (k : ℤ)
+def SI (n k : ℕ) : ℂ :=
+  (d.alpha : ℂ)^(n+1) * (Real.sqrt d.beta : ℂ) * (d.beta : ℂ)^k *
+    (Real.sqrt (((k : ℝ)+1/2)/(n+1)) : ℂ) * jetScalar n (k : ℤ) *
+    d.T ^ (-2*(k : ℤ)-2*(n+1)-1)
 
 /-- The native creation jet; the output block is holomorphic, without conjugation. -/
-def SO (n k : ℕ) : ℂ := d.sourceRatio^(n+1) * d.outputRoot * d.outputRatio^k *
-  (Real.sqrt (((k : ℝ) + 1/2) / (n+1)) : ℂ) * jetScalar n (-(k : ℤ)-1)
+def SO (n k : ℕ) : ℂ :=
+  (d.alpha : ℂ)^(n+1) * (Real.sqrt d.gamma : ℂ) * (d.gamma : ℂ)^k *
+    (Real.sqrt (((k : ℝ)+1/2)/(n+1)) : ℂ) * jetScalar n (-(k : ℤ)-1) *
+    d.T ^ (2*(k : ℤ)-2*(n+1)+1)
+
+private lemma ss_factored (n m : ℕ) : d.SS n m =
+    matrixEntry d.sourceRatio (n+1) (m+1) := by
+  have he : -(2 * ((((n+1)+(m+1) : ℕ) : ℤ))) =
+      -((2*((n+1)+(m+1)) : ℕ) : ℤ) := by push_cast; ring
+  simp only [SS, he, matrixEntry, sourceRatio, div_pow, zpow_neg, zpow_natCast,
+    pow_mul, Nat.cast_add, Nat.cast_one]
+  ring
+
+private lemma si_factored (n k : ℕ) : d.SI n k =
+    d.sourceRatio^(n+1) * d.inputRoot * d.inputRatio^k *
+      (Real.sqrt (((k : ℝ)+1/2)/(n+1)) : ℂ) * jetScalar n (k : ℤ) := by
+  have he : -2*(k : ℤ)-2*(n+1)-1 =
+      -((2*(n+1) : ℕ) : ℤ) + -((2*k : ℕ) : ℤ) + (-1) := by push_cast; ring
+  simp only [SI, he, zpow_add₀ d.T_ne, zpow_neg, zpow_natCast,
+    zpow_one, sourceRatio, inputRoot, inputRatio, div_pow, pow_mul]
+  ring
+
+private lemma so_factored (n k : ℕ) : d.SO n k =
+    d.sourceRatio^(n+1) * d.outputRoot * d.outputRatio^k *
+      (Real.sqrt (((k : ℝ)+1/2)/(n+1)) : ℂ) * jetScalar n (-(k : ℤ)-1) := by
+  have he : 2*(k : ℤ)-2*(n+1)+1 =
+      -((2*(n+1) : ℕ) : ℤ) + ((2*k : ℕ) : ℤ) + 1 := by push_cast; ring
+  simp only [SO, he, zpow_add₀ d.T_ne, zpow_neg, zpow_natCast,
+    zpow_one, sourceRatio, outputRoot, outputRatio, div_pow, mul_pow, pow_mul]
+  ring
 
 def IO (k l : ℕ) : ℂ :=
   if k = l then (Real.sqrt (d.beta*d.gamma) : ℂ) * ((d.beta*d.gamma : ℝ) : ℂ)^k else 0
@@ -248,20 +261,21 @@ def entry (i j : Index N) : ℂ :=
   if i.1 = j.1 then d.scalar i.2.1 j.2.1 i.2.2 j.2.2 else 0
 
 private lemma ss_symm (n m : ℕ) : d.SS n m = d.SS m n := by
-  unfold SS matrixEntry pairScalar
-  congr 1
-  · ring
-  · omega
+  simp only [ss_factored, matrixEntry, pairScalar]
+  rw [Nat.add_comm (n+1) (m+1)]
+  ring
 
 private lemma ss_square_bound (n m : ℕ) :
     ‖d.SS n m‖^2 ≤ (eta N)^4 / 4 * (1/2 : ℝ)^n * (1/2 : ℝ)^m := by
+  rw [d.ss_factored]
   have he := eta_bounds N
   have hq := (d.ratio_bounds).1
-  have hsmall : ‖d.sourceRatio‖^2 ≤ (1/2 : ℝ) := by nlinarith [norm_nonneg d.sourceRatio]
+  have hsmall : ‖d.sourceRatio‖^2 ≤ (1/2 : ℝ) := by
+    nlinarith [pow_le_pow_left₀ (norm_nonneg d.sourceRatio) (hq.trans he.2) 2]
   have h := pair_half_bound d.sourceRatio (n+1) (m+1) (by omega) (by omega)
   calc
     _ ≤ ((1/2 : ℝ) * ‖d.sourceRatio‖^((n+1)+(m+1)))^2 := by
-      dsimp [SS]; gcongr
+      gcongr
     _ = ‖d.sourceRatio‖^4 / 4 * (‖d.sourceRatio‖^2)^n *
         (‖d.sourceRatio‖^2)^m := by
       simp only [mul_pow, pow_add, pow_succ, pow_mul]; ring
@@ -269,8 +283,9 @@ private lemma ss_square_bound (n m : ℕ) :
 
 private lemma si_square_bound (n k : ℕ) :
     ‖d.SI n k‖^2 ≤ 4 * (eta N)^3 * (1/2 : ℝ)^n * (1/2 : ℝ)^k := by
+  rw [d.si_factored]
   have he := eta_bounds N
-  have h := jet_square_majorant N n k d.sourceRatio d.inputRoot d.inputRatio (k : ℤ)
+  have h := jet_square_majorant n k d.sourceRatio d.inputRoot d.inputRatio (k : ℤ)
     (Or.inl rfl) ((d.ratio_bounds).1.trans he.2)
     ((d.ratio_bounds).2.1.trans he.2) d.root_norms.1
   apply h.trans
@@ -282,8 +297,9 @@ private lemma si_square_bound (n k : ℕ) :
 
 private lemma so_square_bound (n k : ℕ) :
     ‖d.SO n k‖^2 ≤ 4 * (eta N)^3 * (1/2 : ℝ)^n * (1/2 : ℝ)^k := by
+  rw [d.so_factored]
   have he := eta_bounds N
-  have h := jet_square_majorant N n k d.sourceRatio d.outputRoot d.outputRatio (-(k : ℤ)-1)
+  have h := jet_square_majorant n k d.sourceRatio d.outputRoot d.outputRatio (-(k : ℤ)-1)
     (Or.inr rfl) ((d.ratio_bounds).1.trans he.2)
     ((d.ratio_bounds).2.2.trans he.2) d.root_norms.2
   apply h.trans
@@ -301,9 +317,11 @@ private lemma io_square_bound (n m : ℕ) :
       Complex.norm_real, Real.norm_eq_abs, abs_of_pos d.beta_pos, abs_of_pos d.gamma_pos]
     field_simp [norm_ne_zero_iff.mpr d.T_ne]
   have ht : d.beta*d.gamma ≤ (eta N)^2 := by
-    rw [hr]; nlinarith [d.ratio_bounds.2.1, d.ratio_bounds.2.2,
-      norm_nonneg d.inputRatio, norm_nonneg d.outputRatio]
-  have ht' : d.beta*d.gamma ≤ (1/2 : ℝ) := by nlinarith
+    rw [hr, pow_two]
+    exact mul_le_mul d.ratio_bounds.2.1 d.ratio_bounds.2.2
+      (norm_nonneg d.outputRatio) he.1.le
+  have ht' : d.beta*d.gamma ≤ (1/2 : ℝ) := by
+    nlinarith [pow_le_pow_left₀ he.1.le he.2 2]
   by_cases h : n = m
   · subst m
     simp only [IO, if_pos rfl, norm_mul, norm_pow, Complex.norm_real,
@@ -312,7 +330,7 @@ private lemma io_square_bound (n m : ℕ) :
     calc
       _ = (d.beta*d.gamma) * ((d.beta*d.gamma)^2)^n := by ring
       _ ≤ (eta N)^2 * ((1/2 : ℝ)^2)^n := by gcongr
-      _ = _ := by rw [mul_assoc, ← mul_pow, ← pow_mul, ← pow_mul]
+      _ = _ := by ring
   · simp only [IO, if_neg h, norm_zero, zero_pow (by decide : 2 ≠ 0)]
     positivity
 
@@ -327,8 +345,7 @@ private lemma block_nonneg (a b : Fin 3) : 0 ≤ blockMajorant (N := N) a b := b
 private lemma scalar_bound (a b : Fin 3) (n m : ℕ) :
     ‖d.scalar a b n m‖^2 ≤ blockMajorant (N := N) a b *
       (1/2 : ℝ)^n * (1/2 : ℝ)^m := by
-  fin_cases a <;> fin_cases b <;> simp only [scalar, blockMajorant, Matrix.cons_val_zero,
-    Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.cons_val_fin_one]
+  fin_cases a <;> fin_cases b <;> dsimp [scalar, blockMajorant]
   · exact d.ss_square_bound n m
   · exact d.si_square_bound n m
   · exact d.so_square_bound n m
@@ -354,7 +371,9 @@ private def envelope (p : Index N × Index N) : ℝ :=
 
 private lemma envelope_nonneg (p : Index N × Index N) : 0 ≤ envelope p := by
   dsimp [envelope]
-  split_ifs <;> positivity [block_nonneg]
+  split_ifs
+  · exact mul_nonneg (mul_nonneg (block_nonneg _ _) (by positivity)) (by positivity)
+  · exact le_rfl
 
 private lemma envelope_summable : Summable (envelope (N := N)) := by
   have hg : Summable (fun n : ℕ => (1/2 : ℝ)^n) :=
@@ -385,21 +404,30 @@ private lemma envelope_mass :
   classical
   have hg : (∑' n : ℕ, (1/2 : ℝ)^n) = 2 := by
     rw [tsum_geometric_of_lt_one (by norm_num) (by norm_num)]; norm_num
+  have hs := envelope_summable (N := N)
   have hinner (i : Index N) :
       (∑' j : Index N, envelope (i,j)) =
-        ∑ b : Fin 3, blockMajorant (N := N) i.2.1 b * (1/2 : ℝ)^i.2.2 * 2 := by
-    rw [(envelope_summable.prod_factor i).tsum_prod]
-    simp_rw [tsum_fintype]
+        (2 * ∑ b : Fin 3, blockMajorant (N := N) i.2.1 b) * (1/2 : ℝ)^i.2.2 := by
+    rw [(hs.prod_factor i).tsum_prod]
+    have hleg (c : Fin N) : (∑' j : Fin 3 × ℕ, envelope (i,(c,j))) =
+        ∑' b : Fin 3, ∑' m : ℕ, envelope (i,(c,(b,m))) :=
+      ((hs.prod_factor i).prod_factor c).tsum_prod
+    simp_rw [hleg]
     simp only [envelope]
-    simp_rw [tsum_prod, tsum_fintype]
-    simp_rw [tsum_ite_left]
-    simp only [tsum_mul_left, hg]
-    simp
-  rw [envelope_summable.tsum_prod]
+    simp_rw [tsum_ite_const, tsum_mul_left, hg, tsum_fintype]
+    simp [Finset.sum_mul, mul_assoc, mul_comm, mul_left_comm]
+  have hrows : Summable (fun i : Index N =>
+      (2 * ∑ b : Fin 3, blockMajorant (N := N) i.2.1 b) * (1/2 : ℝ)^i.2.2) :=
+    hs.prod.congr hinner
+  rw [hs.tsum_prod]
   simp_rw [hinner]
-  rw [tsum_prod]
-  simp_rw [tsum_fintype, tsum_prod, tsum_fintype, tsum_finsetSum]
-  simp only [mul_assoc, tsum_mul_left, tsum_mul_right, hg]
+  rw [hrows.tsum_prod]
+  have hleg (c : Fin N) :
+      (∑' j : Fin 3 × ℕ, (2 * ∑ b : Fin 3, blockMajorant (N := N) j.1 b) * (1/2 : ℝ)^j.2) =
+        ∑' a : Fin 3, ∑' n : ℕ,
+          (2 * ∑ b : Fin 3, blockMajorant (N := N) a b) * (1/2 : ℝ)^n :=
+    (hrows.prod_factor c).tsum_prod
+  simp_rw [hleg, tsum_mul_left, hg, tsum_fintype]
   simp [blockMajorant, Fin.sum_univ_succ]
   ring
 
@@ -407,9 +435,9 @@ def massBound (N : ℕ) : ℝ := 13 * N * (eta N)^2
 
 private lemma massBound_lt (N : ℕ) : massBound N < 1/4 := by
   unfold massBound eta
-  have hp : 0 < (N : ℝ)+1 := by positivity
-  apply (div_lt_iff₀ (by positivity : 0 < (16*((N : ℝ)+1))^2)).mp ?_
-  field_simp
+  rw [show 13 * (N : ℝ) * (1/(16*((N : ℝ)+1)))^2 =
+    13 * N / (256 * ((N : ℝ)+1)^2) by ring]
+  apply (div_lt_iff₀ (by positivity : (0 : ℝ) < 256*((N : ℝ)+1)^2)).mpr
   nlinarith [sq_nonneg (N : ℝ)]
 
 /-- All colors and all frequencies have finite matrix square mass; the two
@@ -426,8 +454,9 @@ theorem matrix_square_mass :
   refine ⟨hs, (hs.tsum_le_tsum hle envelope_summable).trans ?_⟩
   rw [envelope_mass]
   have he := eta_bounds N
-  have he2 : (eta N)^2 ≤ 1 := by nlinarith
-  have he3 : 64*(eta N)^3 ≤ 4*(eta N)^2 := by nlinarith [sq_nonneg (eta N)]
+  have he2 : (eta N)^2 ≤ 1 := by nlinarith [pow_le_pow_left₀ he.1.le he.2 2]
+  have he3 : 64*(eta N)^3 ≤ 4*(eta N)^2 := by
+    nlinarith [mul_le_mul_of_nonneg_right he.2 (sq_nonneg (eta N))]
   unfold massBound
   gcongr
   nlinarith [sq_nonneg (eta N), mul_le_mul_of_nonneg_right he2 (sq_nonneg (eta N))]
@@ -478,11 +507,9 @@ private theorem synthesized :
     rw [e.symm_apply_apply, setBasis_apply] at h
     exact congrArg (fun x : Space N => x i) h
   · apply Real.sqrt_le_sqrt
-    rw [← e.symm.tsum_eq]
-    simp only [e.apply_symm_apply]
+    rw [e.symm.tsum_eq]
     simp_rw [d.column_norm]
-    rw [← d.matrix_square_mass.1.prod_symm.tsum_prod,
-      d.matrix_square_mass.1.tsum_comm]
+    rw [d.matrix_square_mass.1.tsum_comm, ← d.matrix_square_mass.1.tsum_prod]
     exact d.matrix_square_mass.2
 
 /-- The actual complex-linear one-particle operator, obtained from its native columns. -/
@@ -497,7 +524,7 @@ theorem operator_realization :
     ‖d.operator‖ ≤ Real.sqrt (massBound N) ∧ ‖d.operator‖ < 1/2 := by
   obtain ⟨hentry, hhs, hnorm⟩ := Classical.choose_spec d.synthesized
   refine ⟨hentry, d.entry_symmetric, hhs, hnorm, hnorm.trans_lt ?_⟩
-  exact (Real.sqrt_lt (by norm_num : (0 : ℝ) ≤ 1/2)).mpr (by
+  exact (Real.sqrt_lt' (by norm_num : (0 : ℝ) < 1/2)).mpr (by
     convert massBound_lt N using 1 <;> norm_num)
 
 #print axioms operator_realization
