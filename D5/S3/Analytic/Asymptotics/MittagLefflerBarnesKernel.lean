@@ -149,10 +149,16 @@ theorem integrable_line {α : ℝ} (hα : 0 < α) (β c : ℝ) (z : ℂ)
   obtain ⟨C, K, h⟩ := exists_line_majorant hα β c z hc
   have hm : AEStronglyMeasurable (fun y : ℝ => kernel α β z (c + y * I)) := by
     simp_rw [reflected]
-    have hrecip := Complex.differentiable_one_div_Gamma.continuous
-    fun_prop
-  exact ((GammaVerticalReciprocalBounds.integrable_one_add_abs_pow_mul_exp_neg hz K).
-    const_mul C).mono' hm (Filter.Eventually.of_forall h)
+    have hrecip : Continuous (fun w : ℂ => (Complex.Gamma w)⁻¹) := by
+      simpa only [one_div] using Complex.differentiable_one_div_Gamma.continuous
+    have hsin : Continuous (fun y : ℝ =>
+        Complex.sin (Real.pi * ((c : ℂ) + y * I))) := by fun_prop
+    have hdiv : Continuous (fun y : ℝ =>
+        (Real.pi : ℂ) / Complex.sin (Real.pi * ((c : ℂ) + y * I))) :=
+      continuous_const.div hsin (fun y => norm_pos_iff.mp (sine_pos hc y))
+    exact ((hdiv.mul (hrecip.comp (by fun_prop))).mul (by fun_prop)).aestronglyMeasurable
+  exact ((GammaVerticalReciprocalBounds.integrable_one_add_abs_pow_mul_exp_neg hz K).const_mul
+    C).mono' hm (Filter.Eventually.of_forall h)
 
 
 private theorem barnesRes_Gamma_add_nat_succ (w : ℂ) (n : ℕ) (h : ∀ j : ℕ, j ≤ n → w + j ≠ 0) :
@@ -246,13 +252,13 @@ theorem differentiableOn_leftNumerator (α β : ℝ) (z : ℂ) (n : ℕ) :
   have hone : 0 < (1 - s).re := by
     simp only [Complex.sub_re, Complex.one_re]
     dsimp [leftLine] at hs'
-    nlinarith [hs'.2, Nat.cast_nonneg (R := ℝ) n]
+    nlinarith [hs'.2, Nat.cast_nonneg (α := ℝ) n]
   have hGamma {w : ℂ} (hw : 0 < w.re) : DifferentiableAt ℂ Complex.Gamma w := by
     apply Complex.differentiableAt_Gamma
     intro m he
     have := congrArg Complex.re he
     simp only [Complex.neg_re, Complex.natCast_re] at this
-    nlinarith [Nat.cast_nonneg (R := ℝ) m]
+    nlinarith [Nat.cast_nonneg (α := ℝ) m]
   have h1 : DifferentiableAt ℂ (fun s : ℂ => Complex.Gamma (1 - s)) s :=
     (hGamma hone).comp s (by fun_prop)
   have h2 : DifferentiableAt ℂ
@@ -278,7 +284,7 @@ theorem kernel_eq_leftNumerator (α β : ℝ) (z : ℂ) (n : ℕ) {s : ℂ}
     intro j hj
     rcases lt_or_eq_of_le hj with hj | rfl
     · simpa only [add_zero] using left_factor_ne_zero n j hj hs
-    · simpa only [add_zero, ← sub_neg_eq_add] using sub_ne_zero.mpr hne
+    · simpa only [add_zero, sub_neg_eq_add] using sub_ne_zero.mpr hne
   calc
     kernel α β z s = G s * Complex.Gamma (s + 0) := by dsimp [kernel, G]; ring
     _ = G s * Complex.Gamma (s + 0 + n + 1) /
@@ -296,8 +302,8 @@ theorem leftNumerator_residue (α β : ℝ) {z : ℂ} (hz : z ≠ 0) (n : ℕ) :
     (Complex.Gamma ((β : ℂ) - α * s))⁻¹ * Complex.exp (-s * Complex.log (-z))
   have hr := mbSeries_Gamma_residue G 0 n
   simp only [sub_zero, add_zero] at hr
-  change G (-n) * Complex.Gamma (-n + n + 1) /
-    (∏ j ∈ Finset.range n, (-n + j)) = _
+  change G (-(n : ℂ)) * Complex.Gamma (-(n : ℂ) + n + 1) /
+    (∏ j ∈ Finset.range n, (-(n : ℂ) + j)) = _
   rw [hr]
   have hfac : Complex.Gamma (1 - (-(n : ℂ))) = (n.factorial : ℂ) := by
     convert Complex.Gamma_nat_eq_factorial n using 1 <;> congr 1 <;> ring
@@ -344,7 +350,9 @@ theorem norm_line_le_recip_gamma {α : ℝ} (hα : 0 < α) (β c : ℝ) (z : ℂ
   have hG : ‖(Complex.Gamma (((β - α * c : ℝ) : ℂ) + I * ((-α * y : ℝ) : ℂ)))⁻¹‖ ≤
       Real.exp (Real.pi * (α * |y|) / 2) / Real.Gamma (β - α * c) := by
     apply (sq_le_sq₀ (norm_nonneg _) (by positivity)).mp
-    rw [div_pow, ← Real.exp_nat_mul, show (2 : ℝ) * (Real.pi * (α * |y|) / 2) =
+    rw [div_pow, ← Real.exp_nat_mul]
+    norm_num only [Nat.cast_ofNat]
+    rw [show (2 : ℝ) * (Real.pi * (α * |y|) / 2) =
       Real.pi * (α * |y|) by ring]
     exact hGsq
   have harg : (β : ℂ) - α * ((c : ℂ) + y * I) =
@@ -398,7 +406,11 @@ theorem norm_line_le_recip_gamma {α : ℝ} (hα : 0 < α) (β c : ℝ) (z : ℂ
 /-- The half-integer lines have a sine factor of absolute value one. -/
 theorem abs_sin_leftLine (n : ℕ) : |Real.sin (Real.pi * leftLine n)| = 1 := by
   induction n with
-  | zero => norm_num [leftLine, mul_div_assoc, Real.sin_pi_div_two]
+  | zero =>
+    have hzero : Real.pi * leftLine 0 = Real.pi / 2 := by
+      norm_num [leftLine] <;> ring
+    rw [hzero, Real.sin_pi_div_two]
+    norm_num
   | succ n ih =>
     have hstep : Real.pi * leftLine (n + 1) = Real.pi * leftLine n - Real.pi := by
       dsimp [leftLine]
@@ -448,7 +460,8 @@ private theorem exists_horizontal_majorant {α : ℝ} (hα : 0 < α) (β a b : �
   let X : ℝ := |β| + α * (|a| + |b|)
   obtain ⟨A, K, hA⟩ := GammaVerticalReciprocalBounds.exists_norm_recip_Gamma_le X
   have hA0 : 0 ≤ A := by
-    have h := hA 0 (by dsimp [X]; constructor <;> positivity) 0
+    have hX : 0 ≤ X := by dsimp [X]; positivity
+    have h := hA 0 ⟨neg_nonpos.mpr hX, hX⟩ 0
     simp only [abs_zero, add_zero, one_pow, mul_one, mul_zero, zero_div,
       Real.exp_zero] at h
     exact (norm_nonneg _).trans h
@@ -463,8 +476,10 @@ private theorem exists_horizontal_majorant {α : ℝ} (hα : 0 < α) (β a b : �
   have hxG : β - α * x ∈ Icc (-X) X := by
     have htri : |β - α * x| ≤ |β| + |α * x| := by
       simpa only [sub_zero, zero_sub, abs_neg] using abs_sub_le β 0 (α * x)
-    have h := htri.trans (add_le_add_left
-      (show |α * x| ≤ α * (|a| + |b|) by rw [abs_mul, abs_of_pos hα]; gcongr) |β|)
+    have hmul : |α * x| ≤ α * (|a| + |b|) := by
+      rw [abs_mul, abs_of_pos hα]
+      exact mul_le_mul_of_nonneg_left hxabs hα.le
+    have h : |β - α * x| ≤ X := by dsimp [X]; linarith
     exact abs_le.mp h
   have hG := hA (β - α * x) hxG (-α * y)
   have habs : |(-α * y)| = α * |y| := by rw [abs_mul, abs_neg, abs_of_pos hα]
@@ -543,7 +558,7 @@ theorem horizontal_tendsto_zero {α : ℝ} (hα : 0 < α) (β a b : ℝ) (z : �
     simp only [mul_zero, zero_mul] at hp'
     apply squeeze_zero_norm' _ hp'
     filter_upwards [hl.eventually (eventually_ge_atTop 1)] with T hT
-    convert hbound hT using 1 <;> ring
+    simpa only [Function.comp_def, mul_assoc] using hbound hT
   constructor
   · apply hlim
     exact tendsto_id.congr' (by
@@ -583,7 +598,7 @@ theorem differentiableOn_rightNumerator (α β : ℝ) (z : ℂ) (n : ℕ) :
   have hs' : s.re ∈ Icc (rightLine n) (rightLine (n + 1)) := hs
   have hpos : 0 < s.re := by
     dsimp [rightLine] at hs'
-    nlinarith [hs'.1, Nat.cast_nonneg (R := ℝ) n]
+    nlinarith [hs'.1, Nat.cast_nonneg (α := ℝ) n]
   have hshift : 0 < (1 - s + (n : ℂ) + 1).re := by
     simp only [Complex.add_re, Complex.sub_re, Complex.one_re, Complex.natCast_re]
     dsimp [rightLine] at hs'
@@ -594,7 +609,7 @@ theorem differentiableOn_rightNumerator (α β : ℝ) (z : ℂ) (n : ℕ) :
     intro m he
     have := congrArg Complex.re he
     simp only [Complex.neg_re, Complex.natCast_re] at this
-    nlinarith [Nat.cast_nonneg (R := ℝ) m]
+    nlinarith [Nat.cast_nonneg (α := ℝ) m]
   have h1 := hGamma hpos
   have h2 : DifferentiableAt ℂ
       (fun s : ℂ => (Complex.Gamma ((β : ℂ) - α * s))⁻¹) s :=
@@ -659,11 +674,17 @@ theorem rightNumerator_residue (α β : ℝ) {z : ℂ} (hz : z ≠ 0) (n : ℕ) 
   generalize (Real.Gamma (β - α * ((n : ℝ) + 1)) : ℂ)⁻¹ = G
   have hsign0 : (-1 : ℂ) ^ n ≠ 0 := pow_ne_zero _ (by norm_num)
   field_simp [hfac0, hzpow, hsign0] <;> ring
+  all_goals rw [show n * 2 = 2 * n by ring, pow_mul]
+  all_goals simp
 
 /-- The sine on each right half-integer line has absolute value one. -/
 theorem abs_sin_rightLine (n : ℕ) : |Real.sin (Real.pi * rightLine n)| = 1 := by
   induction n with
-  | zero => norm_num [rightLine, mul_div_assoc, Real.sin_pi_div_two]
+  | zero =>
+    have hzero : Real.pi * rightLine 0 = Real.pi / 2 := by
+      norm_num [rightLine] <;> ring
+    rw [hzero, Real.sin_pi_div_two]
+    norm_num
   | succ n ih =>
     have hstep : Real.pi * rightLine (n + 1) = Real.pi * rightLine n + Real.pi := by
       dsimp [rightLine]
@@ -724,7 +745,8 @@ theorem integral_right_step {α : ℝ} (hα : 0 < α) (β : ℝ) {z : ℂ} (hz0 
       linarith
   have h := BarnesResidue.barnesRes_vertical_shift
     (φ := rightNumerator α β z n) (p := (n : ℂ) + 1)
-    (by simp [rightLine]; linarith) (by simp [rightLine]; push_cast; linarith)
+    (by simp [rightLine] <;> linarith)
+    (by simp [rightLine] <;> push_cast <;> linarith)
     (differentiableOn_rightNumerator α β z n)
     (by simpa only [← hv n (Or.inl rfl)] using hi n)
     (by simpa only [← hv (n + 1) (Or.inr rfl)] using hi (n + 1))
@@ -752,7 +774,9 @@ theorem norm_kernel_pos_scale (α β c y : ℝ) {r : ℝ} (hr : 0 < r)
     rw [hl, mul_add, Complex.exp_add]
   have hn : ‖Complex.exp (-((c : ℂ) + y * I) * (Real.log r : ℂ))‖ =
       Real.rpow r (-c) := by
-    rw [Complex.norm_exp, Real.rpow_def_of_pos hr]
+    rw [Complex.norm_exp]
+    change Real.exp _ = r ^ (-c)
+    rw [Real.rpow_def_of_pos hr]
     congr 1
     simp <;> ring
   simp only [kernel, he, norm_mul, hn]
