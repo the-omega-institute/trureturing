@@ -1,0 +1,16 @@
+**Definition 6.1 (positive coprime boundary process).** Use one type, one root $(1,1)$, and
+
+$$
+\mathcal B=\{(p,q)\in\mathbb N_{>0}^2:\gcd(p,q)=1\}.
+$$
+
+Both named actions are total:
+
+$$
+L(p,q)=(p,p+q),\qquad R(p,q)=(p+q,q).
+$$
+
+Their event labels are their names. The current exact response is $r(p,q)=p/q\in\mathbb Q_{>0}$. Equality of these rational responses identifies the pairs: if $pq'=p'q$ and both fractions are positive and reduced, coprimality gives $p\mid p'$ and $p'\mid p$, so $p=p'$ and then $q=q'$. Thus this scalar rational readout retains the entire declared boundary state.
+
+These two child formulas are the classical **Calkin–Wilf** convention, not the usual Stern–Brocot mediant-child order. The rational construction is literature-attested in Calkin and Wilf, *Recounting the Rationals*, [DOI:10.1080/00029890.2000.12005205](https://doi.org/10.1080/00029890.2000.12005205). Both conventions use the same two positive unimodular matrix generators. Definition 6.4 gives the explicit correspondence to the Stern–Brocot chart and to the repository's convention; their ordered histories are not silently identified.
+

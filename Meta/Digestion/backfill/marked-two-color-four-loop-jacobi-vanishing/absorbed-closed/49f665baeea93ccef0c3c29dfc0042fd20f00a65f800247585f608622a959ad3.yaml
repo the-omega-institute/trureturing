@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:49f665baeea93ccef0c3c29dfc0042fd20f00a65f800247585f608622a959ad3
+  normalized_sha256: sha256:49f665baeea93ccef0c3c29dfc0042fd20f00a65f800247585f608622a959ad3
+cas_ref: sha256:49f665baeea93ccef0c3c29dfc0042fd20f00a65f800247585f608622a959ad3
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/Jacobi/LeafPruningCore.terminal_core_greatest
+    target_statement_id: sha256:1e0b9bcd9f54b6aada3bd7063917c3a00c2e3d6fa6a5049487824bede2e3ac40
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,22 @@
+**Equation 5.4 (`eq:solve`).**
+
+$$
+D_eQ_GM=D_eU_\phi^{-1}Q_T.
+$$
+
+The substitution is $F_T(M^{\mathsf T}\mathbf x,M^{\mathsf T}\mathbf y)$.
+The columns of $M$ are the transported target generators, which explains
+the transpose when their images are listed as substitution rows. The
+same rule without $D_e$ handles an automorphism. Equation
+[(3.1)](#eq-cycleinverse) proves existence, uniqueness and integral
+invertibility; no spanning tree is assigned to the resolution. The AS
+scalar in [(1.2)](#eq-chi) stays outside this substitution.
+
+In a signed edge tuple the $j$th entry $m$ maps $e_j^+$ to $e_{|m|}^+$
+if $m>0$ and to $e_{|m|}^-$ if $m<0$, and maps its opposite flag to
+the opposite target flag. The tables in Section 8 give all 23 maps,
+their reversed *source* vertex sets, and their substitutions.
+Thus every datum can be verified by fiber membership, three-cycle
+comparison, and [(5.4)](#eq-solve); the table does not merely classify
+unoriented pairings.
+

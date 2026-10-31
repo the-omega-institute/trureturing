@@ -1,0 +1,61 @@
+**Definition 1.1 (States, channels, and entropy deficit).** Let $C,D$ be
+qubits and let $I_2$ be the qubit identity. The Pauli matrices are
+
+$$
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+$$
+
+Write $AB=A\otimes B$ when the tensor factors are unambiguous and $I$
+for the identity on the space in question. The source domain consists of
+all actual complex Hermitian $4\times4$ matrices $\rho\geq0$ with
+$\operatorname{tr}\rho=1$ on $\mathbb C_C^2\otimes\mathbb C_D^2$.
+For independently variable $a,b\in[0,1]$, set
+
+$$
+\begin{aligned}
+K&=XX,\qquad L=ZZ,\qquad \operatorname{Ad}_U(A)=UAU^*,\\
+\Psi&=\frac{1+a}{2}\operatorname{id}+\frac{1-a}{2}\operatorname{Ad}_K,
+&\Phi&=\frac{1+b}{2}\operatorname{id}+\frac{1-b}{2}\operatorname{Ad}_L,\\
+\Gamma&=\Psi\Phi=\Phi\Psi,
+&P&=\Phi\rho,\quad Q=\Psi\rho,\quad R=\Gamma\rho.
+\end{aligned}
+\tag{1.1}
+$$
+
+The conjugations commute, although the individual qubit axes differ.
+For a density matrix $A$, define $S(A)=-\operatorname{tr}A\log A$, with
+natural logarithms and $0\log0=0$, and write $A_E$ for the actual partial
+trace to $E=C,D$. Put
+
+$$
+\begin{aligned}
+\Delta(\rho)&=3S(R)-4S(P)-S(Q)
+ +\sum_{E=C,D}\bigl[3S(P_E)+S(Q_E)-2S(R_E)\bigr],\\
+F(\rho)&=3S(R)-4S(P)-S(Q),\\
+\mathcal F_{\sigma,\tau}
+ &=\{\rho\geq0:\operatorname{tr}\rho=1,\ \rho_C=\sigma,\ \rho_D=\tau\}.
+\end{aligned}
+\tag{1.2}
+$$
+
+With $\boldsymbol\sigma=(X,Y,Z)$, every source has the unique expansion
+
+$$
+\rho=\frac14\left[I+\sum_i u_i\sigma_i\otimes I
+ +\sum_jv_j I\otimes\sigma_j
+ +\sum_{i,j=x,y,z}T_{ij}\sigma_i\otimes\sigma_j\right].
+\tag{1.3}
+$$
+
+All nine correlation coefficients $T_{ij}$ and all six marginal coordinates
+$u_i,v_j$ are real; matrix entries need not be real. Positivity is imposed
+on the complete complex matrix, with no rank, separability, axis, or
+common-bias restriction. The margins are
+$\sigma=(I+u\cdot\boldsymbol\sigma)/2$ and
+$\tau=(I+v\cdot\boldsymbol\sigma)/2$.
+Partial trace of a product Pauli conjugation is the corresponding local
+Pauli conjugation. Thus $\Delta-F$ depends only on $(\sigma,\tau,a,b)$;
+minimizing $F$ and $\Delta$ on a fixed-margin fiber is equivalent.
+
