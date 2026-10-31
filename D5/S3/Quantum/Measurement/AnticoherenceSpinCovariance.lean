@@ -6,7 +6,6 @@
    utility: none
    digest: Pauli conjugation supplies the orthogonal rotation of collective spin axes. -/
 
-import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
 import D5.S3.QuantumChannels.ChannelTimeReversalNoGo
 import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
