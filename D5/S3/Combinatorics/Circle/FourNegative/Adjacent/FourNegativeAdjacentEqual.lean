@@ -44,9 +44,9 @@ private theorem first_ear (k t : ℕ) (hk : 2 ≤ k)
     rw [(hp.map (charge k t)).sum_eq]
     rw [← List.sum_toFinset _ (List.nodup_finRange _),List.toFinset_finRange]
     exact charge_sum k t hk ht
-  have hsource (i : Fin k) : actualSource (k + 1) (2 * t) i.castSucc = 
+  have hsource (i : Fin k) : actualSource (k + 1) (2 * t) i.castSucc =
       2 * actualSource k t i - charge k t i := by
-    have he : actualSource (k + 1) (2 * t) i.castSucc = 
+    have he : actualSource (k + 1) (2 * t) i.castSucc =
         actualSource (k + 1) t ⟨i.val + 1,Nat.succ_lt_succ i.isLt⟩ := by
       dsimp [actualSource]
       push_cast
@@ -66,7 +66,7 @@ private theorem first_ear (k t : ℕ) (hk : 2 ≤ k)
       ((sigma.take n).map (charge k t)).sum ≤ t := by
     simpa only [hsum] using prefix_nonneg_le sigma (charge k t) (fun i _ => hnonneg i) n
   have linear (l : List (Fin k)) :
-      (l.map (fun i => 2 * actualSource k t i - charge k t i)).sum = 
+      (l.map (fun i => 2 * actualSource k t i - charge k t i)).sum =
         2 * (l.map (actualSource k t)).sum - (l.map (charge k t)).sum := by
     simpa only [neg_one_mul,sub_eq_add_neg] using
       sum_linear l (actualSource k t) (charge k t) 2 (-1)
@@ -171,7 +171,7 @@ private theorem diagonal (n : ℕ) (hn : 2 ≤ n) :
       rw [row j a hj (by omega),ite_eq_left (by omega)]
       positivity
     have hneg : f (j * n + (n - 1)) = -H := by rw [row j (n - 1) hj (by omega),ite_eq_right (by omega)]
-    have he : P +  + [j * n + (n - 1)] = List.range' (j * n) n := by
+    have he : P ++ [j * n + (n - 1)] = List.range' (j * n) n := by
       simpa only [show n - 1 + 1 = n by omega] using (List.range'_1_concat (s:=j * n) (n:=n - 1)).symm
     have hH : 0 ≤ H := mul_nonneg (by omega : 0 ≤ q - 1) hDi.le
     have hp : InStrip f H 0 P := positive_block_strip hpos (by omega) (by rw [hmass]; omega)
@@ -188,7 +188,7 @@ private theorem diagonal (n : ℕ) (hn : 2 ≤ n) :
     | succ m ih =>
       obtain ⟨hpre,hzero⟩ := ih (by omega)
       obtain ⟨hb,hbz⟩ := block m (by omega)
-      have he : List.range (m * n) +  + List.range' (m * n) n = List.range ((m + 1) * n) := by
+      have he : List.range (m * n) ++ List.range' (m * n) n = List.range ((m + 1) * n) := by
         simpa only [List.range_eq_range',Nat.zero_add,Nat.add_mul,Nat.one_mul] using
           List.range'_append_1 (s:=0) (m:=m * n) (n:=n)
       constructor
@@ -213,10 +213,10 @@ private theorem diagonal (n : ℕ) (hn : 2 ≤ n) :
     intro m
     have hh := inStrip_prefix hs.1 m
     rw [show 4 * n = k by dsimp [k]; omega] at hh
-    have hm : ((List.range k).take m).map (fun i => actualSource k t (label k hNat i)) = 
+    have hm : ((List.range k).take m).map (fun i => actualSource k t (label k hNat i)) =
         ((List.range k).take m).map f :=
       List.map_congr_left (fun i hi => hvalue i (List.mem_of_mem_take hi))
-    simpa only [sigma,List.take_map,List.map_map,hm,zero_add] using hh
+    simpa only [sigma,← List.map_take,List.map_map,hm,zero_add] using hh
   have zero : (sigma.map (actualSource k t)).sum = 0 := by
     have hm : sigma.map (actualSource k t) = (List.range k).map f := by
       dsimp only [sigma]

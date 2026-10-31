@@ -46,29 +46,29 @@ private theorem arithmetic (q : ℤ) (hq : 4 ≤ q) :
   omega
 
 private theorem inventory (n : ℕ) (hn : 3 ≤ n) :
-    ([0] +  + List.range' (3 * n + 2) (n - 1) +  + [4 * n + 1] +  + [n + 1] +  + 
-      List.range' (2 * n + 2) (n - 1) +  + [3 * n + 1] +  + List.range' 1 (n - 1) +  + [n] +  + 
-      List.range' (n + 2) (n - 1) +  + [2 * n + 1]).Perm (List.range (2 * n + 2 * (n + 1))) := by
-  have hU : [0] +  + List.range' 1 (n - 1) +  + [n] = List.range (n + 1) := by
+    ([0] ++ List.range' (3 * n + 2) (n - 1) ++ [4 * n + 1] ++ [n + 1] ++
+      List.range' (2 * n + 2) (n - 1) ++ [3 * n + 1] ++ List.range' 1 (n - 1) ++ [n] ++
+      List.range' (n + 2) (n - 1) ++ [2 * n + 1]).Perm (List.range (2 * n + 2 * (n + 1))) := by
+  have hU : [0] ++ List.range' 1 (n - 1) ++ [n] = List.range (n + 1) := by
     have h := List.range'_append_1 (s:=0) (m:=1) (n:=n - 1)
     simp only [List.range'_one,Nat.zero_add,show 1 + (n - 1) = n by omega,←List.range_eq_range'] at h
     rw [h]
     exact (List.range_succ (n:=n)).symm
-  have hV : [n + 1] +  + List.range' (n + 2) (n - 1) +  + [2 * n + 1] = List.range' (n + 1) (n + 1) := by
+  have hV : [n + 1] ++ List.range' (n + 2) (n - 1) ++ [2 * n + 1] = List.range' (n + 1) (n + 1) := by
     have h := List.range'_append_1 (s:=n + 1) (m:=1) (n:=n - 1)
     simp only [List.range'_one,show n + 1 + 1 = n + 2 by omega,show 1 + (n - 1) = n by omega] at h
     rw [h]
     simpa only [show n + 1 + n = 2 * n + 1 by omega] using (List.range'_1_concat (s:=n + 1) (n:=n)).symm
-  have hW : List.range' (2 * n + 2) (n - 1) +  + [3 * n + 1] = List.range' (2 * n + 2) n := by
+  have hW : List.range' (2 * n + 2) (n - 1) ++ [3 * n + 1] = List.range' (2 * n + 2) n := by
     simpa only [show 2 * n + 2 + (n - 1) = 3 * n + 1 by omega,show n - 1 + 1 = n by omega] using
       (List.range'_1_concat (s:=2 * n + 2) (n:=n - 1)).symm
-  have hX : List.range' (3 * n + 2) (n - 1) +  + [4 * n + 1] = List.range' (3 * n + 2) n := by
+  have hX : List.range' (3 * n + 2) (n - 1) ++ [4 * n + 1] = List.range' (3 * n + 2) n := by
     simpa only [show 3 * n + 2 + (n - 1) = 4 * n + 1 by omega,show n - 1 + 1 = n by omega] using
       (List.range'_1_concat (s:=3 * n + 2) (n:=n - 1)).symm
-  have hall : ([0] +  + List.range' 1 (n - 1) +  + [n]) +  + 
-      ([n + 1] +  + List.range' (n + 2) (n - 1) +  + [2 * n + 1]) +  + 
-      (List.range' (2 * n + 2) (n - 1) +  + [3 * n + 1]) +  + 
-      (List.range' (3 * n + 2) (n - 1) +  + [4 * n + 1]) = List.range (2 * n + 2 * (n + 1)) := by
+  have hall : ([0] ++ List.range' 1 (n - 1) ++ [n]) ++
+      ([n + 1] ++ List.range' (n + 2) (n - 1) ++ [2 * n + 1]) ++
+      (List.range' (2 * n + 2) (n - 1) ++ [3 * n + 1]) ++
+      (List.range' (3 * n + 2) (n - 1) ++ [4 * n + 1]) = List.range (2 * n + 2 * (n + 1)) := by
     rw [hU,hV,hW,hX,List.range_eq_range']
     have h1 := List.range'_append_1 (s:=0) (m:=n + 1) (n:=n + 1)
     have h2 := List.range'_append_1 (s:=0) (m:=2 * n + 2) (n:=n)
@@ -76,7 +76,7 @@ private theorem inventory (n : ℕ) (hn : 3 ≤ n) :
     simp only [Nat.zero_add,show n + 1 + (n + 1) = 2 * n + 2 by omega] at h1 h2 h3
     rw [show 2 * n + 2 + n = 3 * n + 2 by omega] at h2
     calc
-      _ = ((List.range' 0 (n + 1) +  + List.range' (n + 1) (n + 1)) +  + List.range' (2 * n + 2) n) +  + List.range' (3 * n + 2) n := by simp only [List.append_assoc]
+      _ = ((List.range' 0 (n + 1) ++ List.range' (n + 1) (n + 1)) ++ List.range' (2 * n + 2) n) ++ List.range' (3 * n + 2) n := by simp only [List.append_assoc]
       _ = List.range' 0 (3 * n + 2 + n) := by rw [h1,h2,h3]
       _ = _ := by rw [show 3 * n + 2 + n = 2 * n + 2 * (n + 1) by omega,←List.range_eq_range']
   rw [←hall]
@@ -204,14 +204,14 @@ private theorem symbolic (n : ℕ) (hn : 3 ≤ n) :
   have xp : ∀ i∈X, 0 ≤ f i ∧ 0 ≤ g i := by
     intro i hi; obtain ⟨j,hj,rfl⟩ := List.mem_range'.mp hi
     simp only [Nat.one_mul]; rw [(posX j hj).1,(posX j hj).2]; constructor <;> positivity
-  let F1 := [0] +  + X
-  let F2 := [n + 1] +  + W
-  let word := F1 +  + [x] +  + F2 +  + [w] +  + U +  + [u] +  + V +  + [v]
+  let F1 := [0] ++ X
+  let F2 := [n + 1] ++ W
+  let word := F1 ++ [x] ++ F2 ++ [w] ++ U ++ [u] ++ V ++ [v]
   have hp : word.Perm (List.range k) := by simpa only [word,F1,F2,U,V,W,X,u,v,w,x,k,List.append_assoc] using inventory n hn
   have hold : Gates (N/2) (F1.map f).sum (f x) (F2.map f).sum (f w) (U.map f).sum (f u) (V.map f).sum (f v) := by
     simp only [F1,F2,List.map_append,List.map_singleton,List.sum_append,List.sum_singleton,h0.1,h1.1,sumU.1,sumV.1,sumW.1,sumX.1,negU.1,negV.1,negW.1,negX.1]
     simpa only [←hzq,←hN,A,B,L,M] using (arithmetic q hq).1
-  have hnew : Gates N (([k] +  + F1).map g).sum (g x) (F2.map g).sum (g w) (U.map g).sum (g u) (V.map g).sum (g v) := by
+  have hnew : Gates N (([k] ++ F1).map g).sum (g x) (F2.map g).sum (g w) (U.map g).sum (g u) (V.map g).sum (g v) := by
     simp only [F1,F2,List.map_append,List.map_singleton,List.sum_append,List.sum_singleton,hear,h0.2,h1.2,sumU.2,sumV.2,sumW.2,sumX.2,negU.2,negV.2,negW.2,negX.2,hNN]
     have he : A + (2 * A + (q - 1) * GX) = 3 * A + (q - 1) * GX := by ring
     rw [he]
@@ -229,14 +229,14 @@ private theorem symbolic (n : ℕ) (hn : 3 ≤ n) :
       (fun i hi => (p2 i hi).1) (fun i hi => (up i hi).1) (fun i hi => (vp i hi).1) hold
   have newstrip : InStrip g N 0 (k::word) := by
     simpa only [word,List.append_assoc,List.singleton_append,List.cons_append,List.nil_append] using
-      four_strip g N ([k] +  + F1) F2 U V x w u v
+      four_strip g N ([k] ++ F1) F2 U V x w u v
         (by intro i hi; rcases List.mem_append.mp hi with hi|hi
             · rw [List.mem_singleton.mp hi,hear]; exact hAp
             · exact (p1 i hi).2)
         (fun i hi => (p2 i hi).2) (fun i hi => (up i hi).2) (fun i hi => (vp i hi).2) hnew
   have hp' : (k::word).Perm (List.range (k + 1)) := by
     rw [List.range_succ]
-    exact (List.perm_append_comm : ([k] +  + word).Perm (word +  + [k])).trans (hp.append_right [k])
+    exact (List.perm_append_comm : ([k] ++ word).Perm (word ++ [k])).trans (hp.append_right [k])
   have hz : ((List.range k).map f).sum = 0 := by
     simpa only [f,N,←ht] using ThreeNegativeEqualOuterSourceBridge.source_zero k t (by dsimp [k]; omega)
   have hz' : ((List.range (k + 1)).map g).sum = 0 := by
@@ -244,7 +244,7 @@ private theorem symbolic (n : ℕ) (hn : 3 ≤ n) :
     simpa only [g,←he] using ThreeNegativeEqualOuterSourceBridge.source_zero (k + 1) (2 * t) (by dsimp [k]; omega)
   refine ⟨word.map (label k (by dsimp [k]; omega)),?_,?_⟩
   · exact lift_order k t (by dsimp [k]; omega) word hp (by simpa only [f,N,←ht] using oldstrip) (by simpa only [f,N,←ht] using hz)
-  · rw [show word = List.nil +  + word from rfl,marked_word k 0 (by dsimp [k]; omega) [] word rfl (by simpa using hp)]
+  · rw [show word = List.nil ++ word from rfl,marked_word k 0 (by dsimp [k]; omega) [] word rfl (by simpa using hp)]
     have he : ((2 * t : ℕ) : ℤ) = 2 * A := by push_cast; rw [ht]
     exact lift_order (k + 1) (2 * t) (by dsimp [k]; omega) (k::word) hp'
       (by have hh : modulus (k + 1)/2 = N := by omega
