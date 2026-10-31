@@ -34,6 +34,16 @@ internal sealed class MittagLefflerModulusRefutationDocument : IScribeDocumentDe
                 AssessedProvenance.FromRepo(Source),
                 "For each positive alpha and complex z, every family satisfying the literal convergent source series is continuous as a function of beta on the whole real line. On every compact beta interval, eventual monotonicity of real Gamma on [2,infinity) gives a summable majorant from its left endpoint. The partial sums are continuous because reciprocal complex Gamma is entire, including at its zeros. Their local uniform limit equals E by HasSum uniqueness.",
                 DescribeRole.Theorem),
+            Entry("ggps-left-contour-limit", "source_left_integral_tendsto_zero", "The actual moving-left limit",
+                EndpointParameters(Call("Tendsto", MapVariable("n",F.Id("Nat"),EndpointIntegral(Call("leftLine",F.Id("n")))),F.Id("atTop"),Call("nhds",Num(0)))),
+                AssessedProvenance.FromRepo(Source),
+                "At beta=alpha-1 the real reciprocal-Gamma argument on the line indexed by n is alpha*n+alpha/2-1. Write n=m+1. The retained Gamma denominator then has fixed betaPrime=3*alpha/2-1, so the integral bound is a fixed factor times the m-th norm coefficient of the actual convergent Mittag-Leffler series at betaPrime. Summability forces it to zero. No Barnes identity or asymptotic is assumed.", DescribeRole.Theorem),
+            Entry("ggps-barnes-identity", "source_barnes_identity", "The literal Barnes identity",
+                All("E",FamilyType(),Implies(Call("IsSourceSeries",F.Id("E")),EndpointParameters(
+                    Equal(App(F.Id("E"),F.Id("alpha"),Subtract(F.Id("alpha"),Num(1)),F.Id("z")),
+                        Multiply(new Formula.Fraction(Num(1),Multiply(Num(2),Seq(Pi,Sp))),EndpointIntegral(new Formula.Fraction(Num(1),Num(2)))))))),
+                AssessedProvenance.FromRepo(Source),
+                "For every literal source realization, alpha greater than one and nonzero exterior z, the endpoint beta=alpha-1 value is one over 2*pi times the integral in dy on Re(s)=1/2. The proof supplies the actual shifted-Gamma holomorphic numerator, single-pole factorization, all boundary-line integrability, both horizontal limits and moving-left limit. Its residues are exactly z^n/Gamma(alpha*n+beta). The residue HasSum and the original source HasSum agree by uniqueness. This identity alone does not supply the two rightward shifts or the all-alpha closed-beta family.", DescribeRole.Theorem),
             Entry("ggps-refutation", "result", "The characterization is false",
                 Seq(Neg, Sp, Parenthesized(ClaimBody())), AssessedProvenance.FromRepo(Source),
                 "At alpha = 3/2 and beta = 1/2, the interval condition holds. For z = −115+10i, the series instead satisfies norm(E(3/2,1/2,z)) < re(E(3/2,1/2,−115)). The 64-term sum on the real axis is greater than 3/100000, while the absolute real and imaginary parts at z are at most 1/1000000 and 1/100000. At either argument the omitted tail has norm at most 4/10^13. The series exists for every positive alpha and every real beta, including the reciprocal-Gamma pole values. The example refutes the implication from the parameter interval to the global reverse inequality. The all-alpha family, an interior-beta neighbourhood and a corrected universal region remain open here.",
@@ -48,6 +58,19 @@ internal sealed class MittagLefflerModulusRefutationDocument : IScribeDocumentDe
             openProblemResolutionClaim: name == "result"
                 ? new OpenProblemResolutionClaim(ProblemSlugRef.Create("ggps2025"), ResolutionKind.Refuted)
                 : null);
+
+    private static Formula MapVariable(string n,Formula type,Formula f) => Seq(Open,F.Id(n),Colon,type,Sp,Mapsto,Sp,f,Close);
+    private static Formula EndpointIntegral(Formula c)
+    {
+        Formula y=F.Id("y"), imaginary=Seq(Operatorname,Grp(F.Id("ComplexI")));
+        return Call("integral",MapVariable("y",F.Id("Real"),Call("kernel",F.Id("alpha"),Subtract(F.Id("alpha"),Num(1)),F.Id("z"),Add(c,Multiply(y,imaginary)))));
+    }
+    private static Formula EndpointParameters(Formula f)
+    {
+        Formula alpha=F.Id("alpha"), z=F.Id("z");
+        Formula hypotheses=And(Seq(z,Neq,Sp,Num(0)),Lt(Num(0),Call("margin",alpha,z)));
+        return All("alpha",F.Id("Real"),Implies(Lt(Num(1),alpha),All("z",F.Id("Complex"),Implies(hypotheses,f))));
+    }
 
     private static Formula SeriesFormula()
     {

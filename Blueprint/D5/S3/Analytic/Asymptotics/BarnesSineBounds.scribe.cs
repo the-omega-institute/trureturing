@@ -13,7 +13,19 @@ internal sealed class BarnesSineBoundsDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Analytic/Asymptotics/BarnesSineBounds.barnesRes_sin_lower_line"),
                 H("A sine lower bound"), StatementSource.FromAuthor(Disp(All("x", R, All("y", R, Leq(Mul(Div(Abs(Call("sin", Mul(Seq(Pi, Sp), V("x")))), Num(2)), Call("exp", Mul(Seq(Pi, Sp), Abs(V("y"))))), Norm(Call("sin", Mul(Seq(Pi, Sp), Add(V("x"), Mul(V("y"), Seq(Operatorname, Grp(F.Id("ComplexI"))))))))))))),
                 AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text("Here pi is the circle constant, i is the imaginary unit, and real inputs in complex expressions are embedded in Complex. The square of the sine norm is sin(x)^2+sinh(y)^2; its cosh bound yields the displayed estimate."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("barnessinebounds-barnesres-sin-lower-far"),
+                DeclarationHandle.Create("D5/S3/Analytic/Asymptotics/BarnesSineBounds.barnesRes_sin_lower_far"),
+                H("A bound uniform in the real coordinate"),StatementSource.FromAuthor(Disp(FarFormula())),
+                AssessedProvenance.FromLiterature(Source),Blocks(Paragraph(Text("For abs(y) at least one, the sinh term gives exp(pi*abs(y))/4 independently of x. The literal kernel horizontal-decay proof uses this bound uniformly on each finite strip."))),DescribeRole.Theorem))));
+
+    private static Formula FarFormula()
+    {
+        Formula lhs=Mul(Div(Num(1),D(4)),Call("exp",Mul(Seq(Pi,Sp),Abs(V("y")))));
+        Formula rhs=Norm(Call("sin",Mul(Seq(Pi,Sp),Add(V("x"),Mul(V("y"),Seq(Operatorname,Grp(F.Id("ComplexI"))))))));
+        Formula implication=new Formula.Logic(Leq(Num(1),Abs(V("y"))),FormulaLogicOperator.Implies,Leq(lhs,rhs));
+        return All("x",R,All("y",R,implication));
+    }
 
     private static Formula R => F.Id("Real");
     private static Formula V(string name) => F.Id(name);

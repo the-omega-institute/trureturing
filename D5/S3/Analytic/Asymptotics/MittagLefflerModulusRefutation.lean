@@ -414,8 +414,6 @@ theorem source_left_integral_tendsto_zero {α : ℝ} (hα : 1 < α) {z : ℂ} (h
   have hα0 : 0 < α := by linarith
   have hb : 0 < b := by dsimp [b]; linarith
   have hnorm : 0 < ‖z‖ := norm_pos_iff.mpr hz0
-  have hM : 0 ≤ M := integral_nonneg fun _ => (Real.exp_pos _).le
-  have hB : 0 ≤ B := by dsimp [B]; positivity
   have hsmall : Tendsto (fun n : ℕ =>
       B * ‖z ^ n / (Real.Gamma (α * (n : ℝ) + b) : ℂ)‖) atTop (𝓝 0) := by
     simpa only [mul_zero] using
@@ -487,7 +485,7 @@ theorem source_barnes_identity {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSourceS
       apply MittagLefflerBarnesKernel.integrable_line hα0 (α - 1) _ z _ hz
       intro he
       have := MittagLefflerBarnesKernel.abs_sin_leftLine n
-      simpa only [he, abs_zero] using this
+      simpa [he] using this
     · exact fun n => (MittagLefflerBarnesKernel.horizontal_tendsto_zero
         hα0 (α - 1) _ _ z (hab n) hz).1
     · exact fun n => (MittagLefflerBarnesKernel.horizontal_tendsto_zero

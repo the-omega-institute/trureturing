@@ -18,7 +18,19 @@ internal sealed class GammaVerticalReciprocalBoundsDocument : IScribeDocumentDef
                 DeclarationHandle.Create("D5/S3/Analytic/Asymptotics/GammaVerticalReciprocalBounds.integrable_one_add_abs_pow_mul_exp_neg"),
                 H("Integrable polynomial-exponential majorant"), StatementSource.FromAuthor(Disp(All("c", R, Imp(Lt(Num(0), V("c")), All("K", N, Call("Integrable", Map("y", R, Mul(Pow(Add(Num(1), Abs(V("y"))), V("K")), Call("exp", Negate(Mul(V("c"), Abs(V("y"))))))))))))),
                 AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text("For every positive real c and natural K the displayed real function is Lebesgue integrable. Half of the exponential decay absorbs the polynomial; the remaining half is the two-sided exponential integral."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("gammaverticalreciprocalbounds-norm-recip-gamma-sq-le"),
+                DeclarationHandle.Create("D5/S3/Analytic/Asymptotics/GammaVerticalReciprocalBounds.norm_recip_Gamma_sq_le"),
+                H("The retained real Gamma denominator"),StatementSource.FromAuthor(Disp(RetainedFormula())),
+                AssessedProvenance.FromLiterature(Source),Blocks(Paragraph(Text("The existing squared estimate retains Gamma(x)^2 for all real x at least one half. The literal Barnes moving-left estimate consumes it directly, including arbitrarily large x."))),DescribeRole.Theorem))));
+
+    private static Formula RetainedFormula()
+    {
+        Formula point=Add(V("x"),Mul(Seq(Operatorname,Grp(F.Id("ComplexI"))),V("y")));
+        Formula lhs=Pow(Norm(Div(Num(1),Call("ComplexGamma",point))),Num(2));
+        Formula rhs=Div(Call("exp",Mul(Seq(Pi,Sp),Abs(V("y")))),Pow(Call("RealGamma",V("x")),Num(2)));
+        return All("x",R,Imp(Leq(Div(Num(1),Num(2)),V("x")),All("y",R,Leq(lhs,rhs))));
+    }
 
     private static Formula StripFormula()
     {
