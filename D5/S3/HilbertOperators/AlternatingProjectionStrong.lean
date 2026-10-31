@@ -4,12 +4,14 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Actual alternating orthogonal-projection powers converge strongly on arbitrary complete Hilbert spaces. -/
+   digest: Alternating projection powers converge strongly on arbitrary complete Hilbert spaces. -/
 
-import Mathlib.Analysis.InnerProductSpace.MeanErgodic
-import Mathlib.Topology.Order.MonotoneConvergence
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
+module
+
+public import Mathlib.Analysis.InnerProductSpace.MeanErgodic
+public import Mathlib.Topology.Order.MonotoneConvergence
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
 
 /-! # Strong convergence of two alternating orthogonal projections
 
@@ -22,6 +24,8 @@ Literature: H. H. Bauschke, F. Deutsch and H. Hundal,
 projections*, arXiv:0710.2387v1, Theorem 1.1; C. Badea, S. Grivaux and
 V. Müller, *The rate of convergence in the method of alternating projections*,
 arXiv:1006.2047v1, equation (1.1). -/
+
+@[expose] public section
 
 open Filter Function
 open scoped Topology
@@ -53,7 +57,8 @@ private theorem tendsto_pow_of_regular (T : H →L[k] H) (hT : ‖T‖ ≤ 1) (x
     | zero => simp
     | succ m ih =>
       have h := (hreg.comp (tendsto_add_atTop_nat m)).add ih
-      simpa only [Function.comp_apply, Nat.succ_eq_add_one, Nat.add_assoc, sub_add_sub_cancel, add_zero] using h
+      simpa only [Function.comp_apply, Nat.succ_eq_add_one, Nat.add_assoc,
+        sub_add_sub_cancel, add_zero] using h
   have hwindow (m : ℕ) (hm : m ≠ 0) :
       Tendsto (fun n : ℕ => (T ^ n) (birkhoffAverage k (T : H → H) id m x) - (T ^ n) x)
         atTop (𝓝 0) := by
@@ -150,7 +155,8 @@ private theorem alternating_regular (U V : ClosedSubmodule k H) (x : H) :
   have hbdd : BddBelow (Set.range (fun n : ℕ => ‖(T ^ n) x‖ ^ 2)) :=
     ⟨0, by rintro _ ⟨n, rfl⟩; positivity⟩
   have hlim := tendsto_atTop_ciInf hanti hbdd
-  have hdrop : Tendsto (fun n : ℕ => 2 * (‖(T ^ n) x‖ ^ 2 - ‖(T ^ (n + 1)) x‖ ^ 2))
+  have hdrop : Tendsto
+      (fun n : ℕ => 2 * (‖(T ^ n) x‖ ^ 2 - ‖(T ^ (n + 1)) x‖ ^ 2))
       atTop (𝓝 0) := by
     simpa using (tendsto_const_nhds.mul (hlim.sub (hlim.comp (tendsto_add_atTop_nat 1))))
   have hsq : Tendsto (fun n : ℕ => ‖(T ^ (n + 1)) x - (T ^ n) x‖ ^ 2)
@@ -168,10 +174,13 @@ theorem tendsto_alternatingProjection_pow (U V : ClosedSubmodule k H) (x : H) :
     Tendsto (fun n : ℕ => ((U.toSubmodule.starProjection ∘L V.toSubmodule.starProjection) ^ n) x)
       atTop (𝓝 ((U ⊓ V).toSubmodule.starProjection x)) := by
   let T := U.toSubmodule.starProjection ∘L V.toSubmodule.starProjection
-  have hT : ‖T‖ ≤ 1 :=
-    (ContinuousLinearMap.opNorm_comp_le _ _).trans
-      (mul_le_one₀ U.toSubmodule.starProjection_norm_le
-        (norm_nonneg _) V.toSubmodule.starProjection_norm_le)
+  have hT : ‖T‖ ≤ 1 := by
+    calc
+      ‖T‖ ≤ ‖U.toSubmodule.starProjection‖ * ‖V.toSubmodule.starProjection‖ :=
+        ContinuousLinearMap.opNorm_comp_le _ _
+      _ ≤ 1 * 1 := mul_le_mul U.toSubmodule.starProjection_norm_le
+        V.toSubmodule.starProjection_norm_le (norm_nonneg _) (by norm_num)
+      _ = 1 := one_mul 1
   have hfix : T.eqLocus (1 : H →L[k] H) = (U ⊓ V).toSubmodule := by
     ext z
     change T z = z ↔ z ∈ U.toSubmodule ∧ z ∈ V.toSubmodule
@@ -200,8 +209,14 @@ theorem tendsto_alternatingProjection_pow (U V : ClosedSubmodule k H) (x : H) :
     have h := T.tendsto_birkhoffAverage_orthogonalProjection hT x
     change Tendsto (fun m : ℕ => birkhoffAverage k (T : H → H) id m x)
       atTop (𝓝 ((T.eqLocus (1 : H →L[k] H)).starProjection x)) at h
-    rw [hfix] at h
-    exact h
+    have hproj : (T.eqLocus (1 : H →L[k] H)).starProjection x = p := by
+      apply Submodule.eq_starProjection_of_mem_of_inner_eq_zero
+      · change T p = p
+        exact hp
+      · intro w hw
+        apply (U ⊓ V).toSubmodule.starProjection_inner_eq_zero x w
+        rwa [hfix] at hw
+    simpa only [hproj] using h
   exact tendsto_pow_of_regular T hT x p hp (alternating_regular U V x) havg
 
 end D5.S3.HilbertOperators.AlternatingProjectionStrong
