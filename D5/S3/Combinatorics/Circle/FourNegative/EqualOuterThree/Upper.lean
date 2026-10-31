@@ -231,7 +231,7 @@ private theorem physical (s b : ℕ) (v : ℤ) (R T : List ℕ)
     have hvg' := ladder_sum g s (s-1) Bn (by intro i hi; exact (posV i hi).2)
     have ht := hweight f L (by intro i hi; exact (posW i hi).1)
     have ht' := hweight g Ln (by intro i hi; exact (posW i hi).2)
-    simp only [P4,List.map_append,List.sum_append,List.map_append] 
+    simp only [P4,List.map_append,List.sum_append,List.map_append]
     rw [hvf',hvg',ht,ht']
     exact ⟨rfl,rfl⟩
   have hpowq : (2^s : ℤ) = 2*(2^(s-1)) := pow_step s (by omega)
