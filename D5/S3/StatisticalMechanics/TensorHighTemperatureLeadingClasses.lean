@@ -17,7 +17,7 @@ namespace D5.S3.StatisticalMechanics.TensorHighTemperatureLeadingClasses
 
 open Finset
 open D5.S3.Combinatorics.Partitions.ColouredOddMultiplicity (onesPartition)
-open D5.S1.Recurrence.Partitions.GawronUlasFactorialSignConjecture (partition126)
+open D5.S1.Recurrence.Partitions.GawronUlasFactorialSignConjecture (partition126 partition126_parts)
 
 set_option autoImplicit false
 
@@ -49,10 +49,11 @@ def claim : Prop :=
 private theorem transposition_parts (n : ℕ) (hn : 2 ≤ n) :
     (transpositionClass n).parts = 2 ::ₘ Multiset.replicate (n - 2) 1 := by
   rw [transpositionClass, dite_eq_left hn]
-  change (Multiset.replicate (n - 2 * 1 - 6 * 0) 1 +
-    Multiset.replicate 1 2 + Multiset.replicate 0 6).filter (fun a => a ≠ 0) = _
-  simp [Multiset.filter_singleton, Multiset.singleton_add, Multiset.mem_replicate,
-    add_comm]
+  rw [partition126_parts]
+  simp only [Nat.mul_one, Nat.mul_zero, Nat.sub_zero, Nat.add_zero,
+    Multiset.replicate_zero, Multiset.replicate_one, Multiset.add_zero]
+  change Multiset.replicate (n - 2) 1 + {2} = _
+  rw [Multiset.add_comm, Multiset.singleton_add]
 
 private theorem total_weight (s : ℕ) {n : ℕ} (p : Nat.Partition n) :
     (∑ t : Fin s → p.parts.toFinset,
@@ -278,7 +279,7 @@ private theorem transposition_lt_identity (s n : ℕ) (hn : 2 ≤ n) (hs : 1 ≤
     exact_mod_cast hpow
   linarith
 
-private theorem one_count_le_two_sub {n : ℕ} (p : Nat.Partition n) (_hn : 2 ≤ n)
+private theorem one_count_le_two_sub {n : ℕ} (p : Nat.Partition n)
     (hp : p ≠ onesPartition n) :
     p.parts.count 1 ≤ n - 2 := by
   let nonunits := p.parts.filter (fun a => a ≠ 1)
@@ -387,7 +388,7 @@ private theorem other_degree_lt (s n : ℕ) (hn : 2 ≤ n) (hs : 1 ≤ s)
     (hp₂ : p ≠ transpositionClass n) :
     degree s p < degree s (transpositionClass n) := by
   have hbound := degree_le_from_one_count s p hs
-  have hcountle := one_count_le_two_sub p hn hp₁
+  have hcountle := one_count_le_two_sub p hp₁
   have hcountlt : p.parts.count 1 < n - 2 := by
     apply Nat.lt_of_le_of_ne hcountle
     intro heq
