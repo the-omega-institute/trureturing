@@ -12,10 +12,13 @@ universe u
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
+/-- The common carrier with both independent weights. -/
+abbrev Parameter := Σ α : Type u, (Finset α → ℝ) × (Finset α → ℝ)
+
 /-- Each role observes the initial exact-trace mass of one side. -/
 abbrev signature : Signature where
-  Params := Type u
-  State α := (Finset α → ℝ) × Finset (Finset α)
+  Params := Parameter.{u}
+  State p := Finset (Finset p.1)
   Role := Bool
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -24,7 +27,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ _ p => mass p.1 p.2) (fun e => nomatch e)
+  realize signature (fun i p F => mass (if i then p.2.2 else p.2.1) F) (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
@@ -49,13 +52,13 @@ abbrev arena : Arena where
     ∃ C D : Finset (Finset α),
       C ⊆ Ω.image (fun X => X.erase t) ∧ D ⊆ Ω.image (fun X => X.erase t) ∧
       CrossIntersecting C D ∧
-      R.readout false α (w, A) ≤ mass (marginalWeight Ω w t) C ∧
-      R.readout true α (v, B) ≤ mass (marginalWeight Ω v t) D ∧
+      R.readout false ⟨α, w, v⟩ A ≤ mass (marginalWeight Ω w t) C ∧
+      R.readout true ⟨α, w, v⟩ B ≤ mass (marginalWeight Ω v t) D ∧
       (A.Nonempty → C.Nonempty) ∧ (B.Nonempty → D.Nonempty)
 
 /-- An intervention changes precisely one input-mass role. -/
 def intervention (i : Bool) : Realization signature.{u} :=
-  realize signature (fun j _ p => if j = i then 1 else mass p.1 p.2)
+  realize signature (fun j p F => if j = i then 1 else mass (if j then p.2.2 else p.2.1) F)
     (fun e => nomatch e)
 
 private theorem intervention_law (i : Bool) : ¬ arena.{u}.Law (intervention i) := by
@@ -84,8 +87,8 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
-  refine ⟨ULift.{u} Unit, ((fun _ => 0), {∅}), ((fun _ => 1), {∅}), ?_⟩
-  simp [actual, realize, mass]
+  refine ⟨⟨ULift.{u} Unit, (fun _ => 1), (fun _ => 1)⟩, ∅, {∅}, ?_⟩
+  cases i <;> simp [actual, realize, mass]
 
 def source_registration :
     Registration arena.{u} (type_of% @exists_simultaneous_compression.{u}) where
@@ -97,7 +100,7 @@ def source_registration :
     · intro i
       refine ⟨intervention i, ?_, rfl, intervention_law i⟩
       intro j hj
-      funext α p
+      funext p F
       simp [actual, intervention, realize, hj]
     · intro e
       exact nomatch e
@@ -117,7 +120,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature.{u}
-    (fun _ _ p => mass p.1 p.2) (fun e => nomatch e))
+    (fun i p F => mass (if i then p.2.2 else p.2.1) F) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -125,8 +128,25 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.SetFamily.SimultaneousCompression
     definition := none
-    coordinates := #[0]
-    readouts := #[] }
+    coordinates := #[0, 14, 15]
+    readouts := #[{ path := #[
+        "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "arg", "body", "arg",
+        "body", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }, { path := #[
+        "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "arg", "body", "arg",
+        "body", "arg", "arg", "arg", "arg", "fn", "arg", "fn",
+        "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
