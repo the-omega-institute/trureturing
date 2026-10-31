@@ -1,0 +1,21 @@
+**Equation 1.1 (`eq:ihx`).**
+
+$$
+\begin{array}{c|cc}
+ &\text{first fiber and cycle}&\text{second fiber and cycle}\\\hline
+I&(k^+,h_1,h_2)&(k^-,h_3,h_4)\\
+H&(k^+,h_1,h_3)&(k^-,h_2,h_4)\\
+X&(k^+,h_1,h_4)&(k^-,h_2,h_3)
+\end{array}
+\qquad I-H+X=0.
+$$
+
+The central endpoints are distinct. The edge involution is unchanged;
+in particular external flags may already be paired to each other. The
+cycles in this table are retained, not sorted after resolution.
+This is the flag version of the usual oriented Jacobi identity. As a
+check independent of a picture, the transpositions $(12),(23),(34)$ of
+external flags send $(I,H,X)$, after AS normalization, respectively to
+$(-I,X,H)$, $(H,I,-X)$, and $(-I,X,H)$. Each negates the relator. Thus
+checking one port labeling checks every labeling with its correct sign.
+
