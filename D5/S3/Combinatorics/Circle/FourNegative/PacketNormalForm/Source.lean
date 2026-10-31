@@ -216,9 +216,8 @@ private theorem chain_index (a b c d i : ℕ)
     (i ∉ negatives a b c d → i-chainStart b c d (chainOf b c d i)+1 <
       chainLength a b c d (chainOf b c d i)) := by
   dsimp [chainOf]
-  split_ifs <;> simp only [chainStart, chainLength, Matrix.cons_val_succ,
-    Matrix.cons_val_zero, Nat.zero_add, Nat.sub_zero] <;>
-    simp only [negatives, List.mem_cons, List.mem_singleton, List.mem_nil_iff, or_false, size] at * <;> omega
+  split_ifs <;> dsimp [chainStart, chainLength] <;>
+    simp only [negatives, List.mem_cons, List.mem_nil_iff, or_false, size] at * <;> omega
 
 private theorem positive_values (a b c d : ℕ)
     (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d)

@@ -38,14 +38,14 @@ private theorem split_packets (bad : ℕ → Prop) [DecidablePred bad] (l : List
         simp [he]
       obtain ⟨bs, hb, hp, hn⟩ := ih htail
       by_cases hx : bad x
-      · refine ⟨([],x) :: bs, by simp [blocksWord, hb], ?_, ?_⟩
+      · refine ⟨([],x) :: bs, by change x :: blocksWord bs = x :: xs; rw [hb], ?_, ?_⟩
         · intro b hb'
           rcases List.mem_cons.mp hb' with h | h
           · subst b; simp
           · exact hp b h
         · simp [hn, hx]
       · cases bs with
-        | nil => simp [blocksWord] at hb; exact (hxs hb.symm).elim
+        | nil => simp [blocksWord] at hb; exact (hxs hb).elim
         | cons b bs =>
           rcases b with ⟨P,n⟩
           refine ⟨(x :: P,n) :: bs, ?_, ?_, ?_⟩
@@ -64,11 +64,9 @@ private def insertAt (ear : ℕ) (l : List ℕ) (j : ℕ) : List ℕ :=
 
 private theorem insertAt_add (ear : ℕ) (pre post : List ℕ) (j : ℕ) :
     insertAt ear (pre ++ post) (pre.length + j) = pre ++ insertAt ear post j := by
-  induction pre with
-  | nil => simp [insertAt]
-  | cons x xs ih =>
-    simpa [insertAt, Nat.add_assoc, List.take_succ_cons, List.drop_succ_cons] using
-      congrArg (x :: ·) ih
+  unfold insertAt
+  rw [List.take_length_add_append, List.drop_length_add_append]
+  rw [List.append_assoc]
 
 private theorem slide_packet (f : ℕ → ℤ) (B h : ℤ) (ear : ℕ)
     (pre P post : List ℕ) (j : ℕ) (hj : j ≤ P.length)
