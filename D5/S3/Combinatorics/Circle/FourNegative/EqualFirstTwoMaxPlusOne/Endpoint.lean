@@ -77,9 +77,8 @@ private theorem inventory (u c v : ℕ) (hu : 2 ≤ u) (hc : u < c)
   have h3 := List.range'_append_1 (s:=0) (m:=c+1+c+u) (n:=u)
   simp only [Nat.zero_add] at h1 h2 h3
   rw [h1,h2,h3]
+  rw [List.range_eq_range']
   congr 1
-  have hsum : u+1 ≤ c := by omega
-  have hsumZ : (u : ℤ) + 1 ≤ c := by exact_mod_cast hsum
   omega
 
 set_option maxHeartbeats 2400000 in
