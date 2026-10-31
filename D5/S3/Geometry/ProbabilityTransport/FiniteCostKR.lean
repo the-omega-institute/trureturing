@@ -6,8 +6,9 @@
    utility: none
    digest: General cost Kantorovich Rubinstein transport -/
 import D5.S3.Geometry.ProbabilityTransport.CostCoupling
-import Mathlib.Basic.Real.Basic
 import D5.S3.Analytic.Convexity.FiniteStrongDuality
+/-! # Finite and general-cost Kantorovich-Rubinstein transport. -/
+
 open D5.S3.Analytic.Convexity.FarkasAlternative
 open D5.S3.Analytic.Convexity.ExtendedFarkas
 open D5.S3.Analytic.Convexity.FiniteStrongDuality
@@ -255,7 +256,7 @@ private theorem finiteCTransform_properties {α : Type*}
     exact ⟨by linarith [key x y], by linarith [key y x, hc_symm x y]⟩
   · intro a ha
     have h := Finset.le_sup' (fun b => u b - c a b) ha
-    simpa only [hc_self, sub_zero] using h
+    simpa only [hc_self, sub_zero, finiteCTransform] using h
   · intro b hb
     apply Finset.sup'_le
     intro a ha
@@ -324,7 +325,9 @@ theorem finite_kr_attained {I : Type*} [Fintype I]
     have hv := Finset.sum_le_sum (s := Finset.univ) (fun j _ =>
       mul_le_mul_of_nonneg_left (hfv j (fun i _ => hfeas i j)) (hb j))
     have h := add_le_add hu hv
-    simpa only [mul_neg, Finset.sum_neg_distrib, ← sub_eq_add_neg] using h
+    simp only [mul_neg, Finset.sum_neg_distrib] at h
+    dsimp only [f]
+    linarith
   have heq : (∑ i, ∑ j, c i j * P i j) =
       (∑ i, a i * f i) - ∑ j, b j * f j := by
     exact le_antisymm (hobj.trans_le hge) (finite_transport_weak a b c P hP hrow hcol f hf)
@@ -404,7 +407,8 @@ private theorem finiteRange_transportation_dual
       Finset.sum_coe_sort hSfin.toFinset (fun y => ((Measure.map S ν) {y}).toReal)
     rw [hcoe, ← ENNReal.toReal_sum (fun y _ => measure_ne_top _ _), hνmass, ENNReal.toReal_one]
   obtain ⟨P, u, v, hPnn, hProw, hPcol, hfeas, hval⟩ :=
-    FiniteTransportInterface.finite_transport_attained a b Cost ha_nn hb_nn ha_sum hb_sum (fun i j => hc_nonneg i j)
+    FiniteTransportInterface.finite_transport_attained a b Cost ha_nn hb_nn ha_sum hb_sum
+      (fun i j => hc_nonneg i j)
   set ulift : α → ℝ := fun x => if h : x ∈ hTfin.toFinset then u ⟨x, h⟩ else 0 with hulift_def
   set vlift : α → ℝ := fun y => if h : y ∈ hSfin.toFinset then v ⟨y, h⟩ else 0 with hvlift_def
   have hulift_eq : ulift = fun x => ∑ i ∈ hTfin.toFinset.attach,
@@ -622,10 +626,12 @@ theorem wassersteinCostCoupling_le_dual
   refine ENNReal.le_of_forall_pos_le_add fun ε hε _hb => ?_
   have hε4 : (0 : ℝ) < (ε : ℝ) / 4 := by positivity
   obtain ⟨T, hT, hTfin, hTcost⟩ :=
-    exists_finiteRange_map_cost_le c hc_nonneg hc_self hc_symm hc_triangle hc_cont hc_le_dist μ x₀ hμ_cm
+    exists_finiteRange_map_cost_le c hc_nonneg hc_self hc_symm hc_triangle hc_cont
+      hc_le_dist μ x₀ hμ_cm
       ((ε : ℝ) / 4) hε4
   obtain ⟨S, hS, hSfin, hScost⟩ :=
-    exists_finiteRange_map_cost_le c hc_nonneg hc_self hc_symm hc_triangle hc_cont hc_le_dist ν x₀ hν_cm
+    exists_finiteRange_map_cost_le c hc_nonneg hc_self hc_symm hc_triangle hc_cont
+      hc_le_dist ν x₀ hν_cm
       ((ε : ℝ) / 4) hε4
   have : IsProbabilityMeasure (Measure.map T μ) :=
     (Measure.isProbabilityMeasure_map_iff hT.aemeasurable).mpr inferInstance
