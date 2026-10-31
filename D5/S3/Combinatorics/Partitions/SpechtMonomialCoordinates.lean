@@ -14,7 +14,7 @@ Selected A17.2PORT from TauCeti 5a01f5fe3621126cccf9ba22e700493cbc7b7156.
 Changes: selected declarations and surrounding namespaces; exact pinned Mathlib
 and existing D5 suppliers are reused. Library/FiniteGroups/tauceti2026spechtpolytabloids.md
 records immutable locators, license, consumers and retirement against OUR Mathlib pin.
-SOURCE ONLY: no Lean/Lake invocation, native elaboration, axiom closure, proof-term
+Historical initial source-stage status: no Lean/Lake invocation, native elaboration, axiom closure, proof-term
 liveness, admission, validated Reg, emission, firstfreeze, deposit, PR or CI claim.
 Unfinished escape audit: https://github.com/the-omega-institute/trureturing/issues/24542.
 These are necessary suppliers/comparisons for the full HSW target. No independent
@@ -104,11 +104,6 @@ theorem card_toMultiset_eq_degree (d : σ →₀ ℕ) : Multiset.card d.toMultis
 noncomputable def weightSym (d : σ →₀ ℕ) (h : d.degree = n) : Sym σ n :=
   ⟨d.toMultiset, (card_toMultiset_eq_degree d).trans h⟩
 
-@[simp]
-theorem coe_weightSym (d : σ →₀ ℕ) (h : d.degree = n) :
-    (weightSym d h : Multiset σ) = d.toMultiset :=
-  (rfl)
-
 variable [DecidableEq σ]
 
 noncomputable def weightPartition (d : σ →₀ ℕ) (h : d.degree = n) : n.Partition :=
@@ -191,36 +186,6 @@ theorem exists_perm_mapDomain_eq_partWeight (d : σ →₀ ℕ) (h : d.degree = 
   exact hy.symm
 
 variable (R : Type*) [CommSemiring R]
-
-@[simp]
-theorem coeff_msymm_eq_zero_of_degree_ne (ν : n.Partition) {d : σ →₀ ℕ} (h : d.degree ≠ n) :
-    (msymm σ R ν).coeff d = 0 := by
-  rw [msymm, coeff_sum]
-  refine Finset.sum_eq_zero fun s _ => ?_
-  rw [prod_map_X_eq_monomial, coeff_monomial, ite_eq_right]
-  rintro rfl
-  exact h (by rw [← card_toMultiset_eq_degree, Multiset.toFinsupp_toMultiset]; exact s.1.2)
-
-@[simp]
-theorem coeff_msymm (ν : n.Partition) {d : σ →₀ ℕ} (h : d.degree = n) :
-    (msymm σ R ν).coeff d = if weightPartition d h = ν then 1 else 0 := by
-  have hinj : ∀ s : Sym σ n, Multiset.toFinsupp (s : Multiset σ) = d ↔ s = weightSym d h :=
-    fun s => by rw [Multiset.toFinsupp_eq_iff, ← Sym.coe_inj, coe_weightSym]
-  rw [msymm, coeff_sum]
-  simp only [prod_map_X_eq_monomial, coeff_monomial]
-  by_cases hν : weightPartition d h = ν
-  · rw [ite_eq_left hν,
-      Finset.sum_eq_single (⟨weightSym d h, hν⟩ : {a : Sym σ n // Nat.Partition.ofSym a = ν})]
-    · exact ite_eq_left ((hinj _).mpr rfl)
-    · rintro ⟨s, hs⟩ - hne
-      exact ite_eq_right fun hcoeff => hne (Subtype.ext ((hinj s).mp hcoeff))
-    · exact fun hmem => absurd (Finset.mem_univ _) hmem
-  · refine (Finset.sum_eq_zero fun s _ => ite_eq_right fun hcoeff => hν ?_).trans
-      (ite_eq_right hν).symm
-    -- `weightPartition d h` is `Nat.Partition.ofSym (weightSym d h)` by definition, and `s` ranges
-    -- over the multisets of letters whose partition is `ν`.
-    exact (congrArg (fun t : Sym σ n => Nat.Partition.ofSym t)
-      ((hinj s.1).mp hcoeff)).symm.trans s.2
 
 variable {R}
 

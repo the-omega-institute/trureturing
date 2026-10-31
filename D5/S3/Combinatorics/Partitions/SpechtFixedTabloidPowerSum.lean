@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Full-cycle power sums expand in fixed-tabloid counts over every finite alphabet. -/
+   digest: Full-cycle power-sum coefficients count fixed tabloids over every finite alphabet. -/
 
 /-
 Copyright (c) 2026 Tau Ceti. All rights reserved.
@@ -14,7 +14,7 @@ Selected A17.2PORT from TauCeti 5a01f5fe3621126cccf9ba22e700493cbc7b7156.
 Changes: selected declarations and surrounding namespaces; exact pinned Mathlib
 and existing D5 suppliers are reused. Library/FiniteGroups/tauceti2026spechtpolytabloids.md
 records immutable locators, license, consumers and retirement against OUR Mathlib pin.
-SOURCE ONLY: no Lean/Lake invocation, native elaboration, axiom closure, proof-term
+Historical initial source-stage status: no Lean/Lake invocation, native elaboration, axiom closure, proof-term
 liveness, admission, validated Reg, emission, firstfreeze, deposit, PR or CI claim.
 Unfinished escape audit: https://github.com/the-omega-institute/trureturing/issues/24542.
 These are necessary suppliers/comparisons for the full HSW target. No independent
@@ -246,21 +246,6 @@ theorem psumPart_isSymmetric [Fintype σ] {n : ℕ} (μ : n.Partition) :
   obtain ⟨k, -, rfl⟩ := Multiset.mem_map.mp hp
   exact psum_isSymmetric σ R k
 
-theorem isHomogeneous_psum [Fintype σ] (k : ℕ) : (psum σ R k).IsHomogeneous k :=
-  IsHomogeneous.sum _ _ _ fun i _ => isHomogeneous_X_pow i k
-
-theorem isHomogeneous_psumPart [Fintype σ] {n : ℕ} (μ : n.Partition) :
-    (psumPart σ R μ).IsHomogeneous n := by
-  have key : ∀ s : Multiset ℕ, ((s.map (psum σ R)).prod).IsHomogeneous s.sum := fun s => by
-    induction s using Multiset.induction_on with
-    | empty => exact isHomogeneous_one σ R
-    | cons k s ih =>
-      rw [Multiset.map_cons, Multiset.prod_cons, Multiset.sum_cons]
-      exact (isHomogeneous_psum R k).mul ih
-  rw [psumPart]
-  have h := key μ.parts
-  rwa [μ.parts_sum] at h
-
 noncomputable local instance : DecidableEq σ := Classical.decEq σ
 
 theorem psumPart_partition_eq_sum_prod_X (π : Perm α) :
@@ -392,23 +377,6 @@ theorem coeff_psumPart_eq_card_fixedPoints {ρ : n.Partition} {π : Perm (Fin n)
       Nat.card {q : Perm (Fin n) ⧸ youngSubgroup (weightPartition d h) // π • q = q} := by
   rw [coeff_eq_coeff_partWeight (psumPart_isSymmetric R ρ) h, psumPart_eq_psumPart_partition R hπ,
     coeff_partWeight_psumPart_partition R π _ (card_parts_weightPartition_le d h)]
-
-theorem psumPart_eq_sum_card_fixedPoints_smul_msymm {ρ : n.Partition} {π : Perm (Fin n)}
-    (hπ : ConjClasses.mk π = partitionEquivConjClasses n ρ) :
-    psumPart σ R ρ = ∑ ν : n.Partition,
-      (Nat.card {q : Perm (Fin n) ⧸ youngSubgroup ν // π • q = q} : R) • msymm σ R ν := by
-  ext d
-  rw [coeff_sum]
-  simp only [coeff_smul, smul_eq_mul]
-  by_cases hd : d.degree = n
-  · rw [coeff_psumPart_eq_card_fixedPoints R hπ hd, Finset.sum_eq_single (weightPartition d hd)]
-    · rw [coeff_msymm R _ hd, ite_eq_left rfl, mul_one]
-    · exact fun ν _ hne => by
-        rw [coeff_msymm R ν hd, ite_eq_right fun hw => hne hw.symm, mul_zero]
-    · exact fun hmem => absurd (Finset.mem_univ _) hmem
-  · rw [(isHomogeneous_psumPart R ρ).coeff_eq_zero hd]
-    exact (Finset.sum_eq_zero fun ν _ => by
-      rw [coeff_msymm_eq_zero_of_degree_ne R ν hd, mul_zero]).symm
 
 end FixedTabloids
 end TauCeti

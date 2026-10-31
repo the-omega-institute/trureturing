@@ -822,23 +822,23 @@ unknown for every declaration, including the earlier representation chain.
 | `SpechtMonomialCoordinates.rowLen_eq_zero_of_colLen_le` | `TauCeti/Combinatorics/Young/Diagram.lean:64`; selected port | `SpechtMonomialCoordinates.getD_rowLens` |
 | `SpechtMonomialCoordinates.getD_rowLens` | `TauCeti/Combinatorics/Young/Diagram.lean:96`; selected port | `SpechtMonomialCoordinates.rowLen_ofPartition` |
 | `SpechtMonomialCoordinates.rowLen_ofPartition` | `TauCeti/Combinatorics/Young/Partitions.lean:48`; selected port | `SpechtMonomialCoordinates.map_univ_val_partWeight`, `SpechtFixedTabloidPowerSum.card_filter_youngColouring` |
-| `SpechtMonomialCoordinates.prod_map_X_eq_monomial` | `TauCeti/Algebra/MvPolynomial/Monomial.lean:39`; selected port | `SpechtMonomialCoordinates.coeff_msymm_eq_zero_of_degree_ne`, `SpechtMonomialCoordinates.coeff_msymm`, `SpechtFixedTabloidPowerSum.coeff_psumPart_partition` |
+| `SpechtMonomialCoordinates.prod_map_X_eq_monomial` | `TauCeti/Algebra/MvPolynomial/Monomial.lean:39`; selected port | `SpechtFixedTabloidPowerSum.coeff_psumPart_partition` |
 | `SpechtMonomialCoordinates.rowLenWeight` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Basic.lean:254`; selected port | `SpechtMonomialCoordinates.rowLenWeight_apply`, `SpechtMonomialCoordinates.partWeight` |
 | `SpechtMonomialCoordinates.rowLenWeight_apply` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Basic.lean:258`; selected port | `SpechtMonomialCoordinates.partWeight_apply` |
 | `SpechtMonomialCoordinates.partWeight` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Basic.lean:392`; selected port | `SpechtMonomialCoordinates.partWeight_apply`, `SpechtMonomialCoordinates.map_univ_val_partWeight`, `SpechtMonomialCoordinates.exists_perm_mapDomain_eq_partWeight`, `SpechtMonomialCoordinates.coeff_eq_coeff_partWeight`, `SpechtFixedTabloidPowerSum.card_filter_youngColouring`, `SpechtFixedTabloidPowerSum.coeff_partWeight_psumPart_partition` |
 | `SpechtMonomialCoordinates.partWeight_apply` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Basic.lean:396`; selected port | `SpechtMonomialCoordinates.map_univ_val_partWeight`, `SpechtFixedTabloidPowerSum.card_filter_youngColouring` |
 | `SpechtMonomialCoordinates.exists_perm_comp_eq` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:98`; selected port | `SpechtMonomialCoordinates.exists_perm_mapDomain_eq_partWeight` |
-| `SpechtMonomialCoordinates.card_toMultiset_eq_degree` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:117`; selected port | `SpechtMonomialCoordinates.weightSym`, `SpechtMonomialCoordinates.coeff_msymm_eq_zero_of_degree_ne` |
-| `SpechtMonomialCoordinates.weightSym` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:123`; selected port | `SpechtMonomialCoordinates.coe_weightSym`, `SpechtMonomialCoordinates.weightPartition`, `SpechtMonomialCoordinates.coeff_msymm` |
-| `SpechtMonomialCoordinates.coe_weightSym` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:128`; selected port | `SpechtMonomialCoordinates.coeff_msymm` |
-| `SpechtMonomialCoordinates.weightPartition` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:134`; selected port | `SpechtMonomialCoordinates.weightPartition_parts`, `SpechtMonomialCoordinates.card_parts_weightPartition_le`, `SpechtMonomialCoordinates.exists_perm_mapDomain_eq_partWeight`, `SpechtMonomialCoordinates.coeff_msymm`, `SpechtMonomialCoordinates.coeff_eq_coeff_partWeight`, `SpechtFixedTabloidPowerSum.coeff_psumPart_eq_card_fixedPoints`, `SpechtFixedTabloidPowerSum.psumPart_eq_sum_card_fixedPoints_smul_msymm` |
+| `SpechtMonomialCoordinates.card_toMultiset_eq_degree` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:117`; selected port | `SpechtMonomialCoordinates.weightSym` |
+| `SpechtMonomialCoordinates.weightSym` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:123`; selected port | `SpechtMonomialCoordinates.weightPartition` |
+| `SpechtMonomialCoordinates.coe_weightSym` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:128`; selected port | **Retired from the delivered source: only supported the unused monomial expansion** |
+| `SpechtMonomialCoordinates.weightPartition` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:134`; selected port | `SpechtMonomialCoordinates.weightPartition_parts`, `SpechtMonomialCoordinates.card_parts_weightPartition_le`, `SpechtMonomialCoordinates.exists_perm_mapDomain_eq_partWeight`, `SpechtMonomialCoordinates.coeff_eq_coeff_partWeight`, `SpechtFixedTabloidPowerSum.coeff_psumPart_eq_card_fixedPoints` |
 | `SpechtMonomialCoordinates.weightPartition_parts` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:141`; selected port | `SpechtMonomialCoordinates.card_parts_weightPartition_le`, `SpechtMonomialCoordinates.exists_perm_mapDomain_eq_partWeight` |
 | `SpechtMonomialCoordinates.card_parts_weightPartition_le` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:153`; selected port | `SpechtMonomialCoordinates.exists_perm_mapDomain_eq_partWeight`, `SpechtFixedTabloidPowerSum.coeff_psumPart_eq_card_fixedPoints` |
 | `SpechtMonomialCoordinates.map_univ_val` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:163`; selected port | `SpechtMonomialCoordinates.exists_perm_mapDomain_eq_partWeight` |
 | `SpechtMonomialCoordinates.map_univ_val_partWeight` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:182`; selected port | `SpechtMonomialCoordinates.exists_perm_mapDomain_eq_partWeight` |
 | `SpechtMonomialCoordinates.exists_perm_mapDomain_eq_partWeight` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:219`; selected port | `SpechtMonomialCoordinates.coeff_eq_coeff_partWeight` |
-| `SpechtMonomialCoordinates.coeff_msymm_eq_zero_of_degree_ne` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:237`; selected port | `SpechtFixedTabloidPowerSum.psumPart_eq_sum_card_fixedPoints_smul_msymm` |
-| `SpechtMonomialCoordinates.coeff_msymm` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:249`; selected port | `SpechtFixedTabloidPowerSum.psumPart_eq_sum_card_fixedPoints_smul_msymm` |
+| `SpechtMonomialCoordinates.coeff_msymm_eq_zero_of_degree_ne` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:237`; selected port | **Retired from the delivered source: only supported the unused monomial expansion** |
+| `SpechtMonomialCoordinates.coeff_msymm` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:249`; selected port | **Retired from the delivered source: only supported the unused monomial expansion** |
 | `SpechtMonomialCoordinates.coeff_eq_coeff_partWeight` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Basis.lean:143`; selected port | `SpechtFixedTabloidPowerSum.coeff_psumPart_eq_card_fixedPoints` |
 | `SpechtFixedTabloidPowerSum.perm_zpow_right` | `TauCeti/GroupTheory/Perm/Basic.lean:55`; selected port | `SpechtFixedTabloidPowerSum.apply_eq_of_apply_eq` |
 | `SpechtFixedTabloidPowerSum.apply_eq_of_apply_eq` | `TauCeti/GroupTheory/Perm/Basic.lean:78`; selected port | `SpechtFixedTabloidPowerSum.invariantColouringEquiv` |
@@ -855,8 +855,8 @@ unknown for every declaration, including the earlier representation chain.
 | `SpechtFixedTabloidPowerSum.smul_eq_self_iff_quotientFiberSubgroupEquiv` | `TauCeti/GroupTheory/Perm/FiberSubgroup.lean:307`; selected port | `SpechtFixedTabloidPowerSum.card_fixedPoints_quotient_fiberSubgroup` |
 | `SpechtFixedTabloidPowerSum.card_fixedPoints_quotient_fiberSubgroup` | `TauCeti/GroupTheory/Perm/FiberSubgroup.lean:324`; selected port | `SpechtFixedTabloidPowerSum.coeff_partWeight_psumPart_partition` |
 | `SpechtFixedTabloidPowerSum.psumPart_isSymmetric` | `TauCeti/RingTheory/MvPolynomial/Symmetric/PowerSum.lean:60`; selected port | `SpechtFixedTabloidPowerSum.coeff_psumPart_eq_card_fixedPoints` |
-| `SpechtFixedTabloidPowerSum.isHomogeneous_psum` | `TauCeti/RingTheory/MvPolynomial/Symmetric/PowerSum.lean:68`; selected port | `SpechtFixedTabloidPowerSum.isHomogeneous_psumPart` |
-| `SpechtFixedTabloidPowerSum.isHomogeneous_psumPart` | `TauCeti/RingTheory/MvPolynomial/Symmetric/PowerSum.lean:72`; selected port | `SpechtFixedTabloidPowerSum.psumPart_eq_sum_card_fixedPoints_smul_msymm` |
+| `SpechtFixedTabloidPowerSum.isHomogeneous_psum` | `TauCeti/RingTheory/MvPolynomial/Symmetric/PowerSum.lean:68`; selected port | **Retired from the delivered source: only supported the unused monomial expansion** |
+| `SpechtFixedTabloidPowerSum.isHomogeneous_psumPart` | `TauCeti/RingTheory/MvPolynomial/Symmetric/PowerSum.lean:72`; selected port | **Retired from the delivered source: only supported the unused monomial expansion** |
 | `SpechtFixedTabloidPowerSum.psumPart_partition_eq_sum_prod_X` | `TauCeti/RingTheory/MvPolynomial/Symmetric/PowerSum.lean:96`; selected port | `SpechtFixedTabloidPowerSum.coeff_psumPart_partition` |
 | `SpechtFixedTabloidPowerSum.coeff_psumPart_partition` | `TauCeti/RingTheory/MvPolynomial/Symmetric/PowerSum.lean:125`; selected port | `SpechtFixedTabloidPowerSum.coeff_partWeight_psumPart_partition` |
 | `SpechtFixedTabloidPowerSum.youngBlockEquiv` | `TauCeti/RepresentationTheory/Symmetric/YoungSubgroup.lean:79`; selected port | `SpechtFixedTabloidPowerSum.card_filter_youngColouring` |
@@ -866,8 +866,8 @@ unknown for every declaration, including the earlier representation chain.
 | `SpechtFixedTabloidPowerSum.fiberSubgroup_youngColouring` | `TauCeti/RepresentationTheory/Symmetric/PermutationModule/PowerSum.lean:97`; selected port | `SpechtFixedTabloidPowerSum.coeff_partWeight_psumPart_partition` |
 | `SpechtFixedTabloidPowerSum.card_filter_youngColouring` | `TauCeti/RepresentationTheory/Symmetric/PermutationModule/PowerSum.lean:107`; selected port | `SpechtFixedTabloidPowerSum.coeff_partWeight_psumPart_partition` |
 | `SpechtFixedTabloidPowerSum.coeff_partWeight_psumPart_partition` | `TauCeti/RepresentationTheory/Symmetric/PermutationModule/PowerSum.lean:133`; selected port | `SpechtFixedTabloidPowerSum.coeff_psumPart_eq_card_fixedPoints` |
-| `SpechtFixedTabloidPowerSum.coeff_psumPart_eq_card_fixedPoints` | `TauCeti/RepresentationTheory/Symmetric/PermutationModule/PowerSum.lean:176`; selected port | `SpechtFixedTabloidPowerSum.psumPart_eq_sum_card_fixedPoints_smul_msymm` |
-| `SpechtFixedTabloidPowerSum.psumPart_eq_sum_card_fixedPoints_smul_msymm` | `TauCeti/RepresentationTheory/Symmetric/PermutationModule/PowerSum.lean:190`; selected port | `SpechtFrobeniusPairing.sum_spechtTrace_smul_psumPart_eq_multiplicities`, `SpechtFrobeniusPairing.hsw_frobChar_eq_fixedTabloid_coefficients` |
+| `SpechtFixedTabloidPowerSum.coeff_psumPart_eq_card_fixedPoints` | `TauCeti/RepresentationTheory/Symmetric/PermutationModule/PowerSum.lean:176`; selected port | `SpechtThreeRowMixed.fixedColourings_eq_youngFixed` |
+| `SpechtFixedTabloidPowerSum.psumPart_eq_sum_card_fixedPoints_smul_msymm` | `TauCeti/RepresentationTheory/Symmetric/PermutationModule/PowerSum.lean:190`; selected port | **Retired from the delivered source: only supported the unused monomial expansion** |
 | `SpechtFrobeniusPairing.char_ofMulAction` | `TauCeti/RepresentationTheory/Induction/Permutation.lean:365`; selected port | `SpechtFrobeniusPairing.char_permutationModuleℂ` |
 | `SpechtFrobeniusPairing.permutationModuleℂ` | Local composition; no independent escape witness | `SpechtFrobeniusPairing.char_permutationModuleℂ`, `SpechtFrobeniusPairing.sum_spechtTrace_mul_card_fixedPoints`, `SpechtFrobeniusPairing.sum_spechtTrace_smul_psumPart_eq_multiplicities` |
 | `SpechtFrobeniusPairing.char_permutationModuleℂ` | Local composition; no independent escape witness | `SpechtFrobeniusPairing.sum_spechtTrace_mul_card_fixedPoints` |
@@ -1000,7 +1000,7 @@ validated Reg, canonical emission, freeze, deposit, PR, CI or merge is asserted.
 | `SpechtYoungTrace.lean:finrank_hom_spechtModuleℂ_permutationModuleℂ_eq_zero` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtYoungTrace.lean:spechtModuleℂ_iso_iff` |
 | `SpechtYoungTrace.lean:finrank_hom_spechtModuleℂ_permutationModuleℂ_self` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtYoungTrace.lean:spechtModuleℂ_iso_iff` |
 | `SpechtYoungTrace.lean:spechtModuleℂ_iso_iff` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtYoungTrace.lean:sum_spechtTrace_mul_spechtTrace_inv` |
-| `SpechtYoungTrace.lean:sum_spechtTrace_mul_spechtTrace_inv` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtThreeRowVirtual.lean`: actual self-norm criterion; general Young-rule consumer remains absent |
+| `SpechtYoungTrace.lean:sum_spechtTrace_mul_spechtTrace_inv` | Local composition of the existing representation and pinned interfaces; no independent admission | `SpechtThreeRowVirtual.lean` |
 
 ### Exact remaining target and retirement
 
@@ -1253,3 +1253,17 @@ as `declared_unresolved`, with `IE-C050 ClosedTruthReadout`,
 `reason=unclassified_form`, and `rule=source.residual_requires_open`. The typed
 family proofs compile; this report does not certify `declared_validated`. The
 section 3.9 linked-issue exception #24542 applies without changing the inspector.
+
+The complete 21-module compiled dependency acquisition at revision
+`780800597c095aab8d0f18083f9f3cb057031a2b` exposed the remaining unused expansion
+branch after the two composition theorems above were removed. The selected port
+lemmas `coe_weightSym`, `coeff_msymm`, `coeff_msymm_eq_zero_of_degree_ne`,
+`isHomogeneous_psum`, `isHomogeneous_psumPart`, and
+`psumPart_eq_sum_card_fixedPoints_smul_msymm` have no use outside that branch and
+are removed. Their supplier descriptions now state the genuinely consumed
+`coeff_eq_coeff_partWeight` and `coeff_psumPart_eq_card_fixedPoints` results.
+The latter enters `SpechtThreeRowMixed.fixedColourings_eq_youngFixed`, then the
+actual mixed scalar and both full evaluated ordinary endpoints. The Cauchy
+bridge and the two evaluated endpoint propositions are unchanged. The generated
+`weightPartition.congr_simp` remains a compiler artifact, with no authored or
+independent admission claim.
