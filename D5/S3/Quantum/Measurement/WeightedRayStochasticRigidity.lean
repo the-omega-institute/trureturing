@@ -338,7 +338,7 @@ private theorem scalar_of_fixed_rays (U : unitaryGroup (Fin 2) ℂ)
   have hscalar : (U : Matrix (Fin 2) (Fin 2) ℂ) = (U 0 0) • 1 := by
     ext i j
     fin_cases i <;> fin_cases j <;> simp [h01, h10, hdiag]
-  have hu := congrFun₂ ((Unitary.star_mul_self_of_mem U.prop) U) 0 0
+  have hu := congrFun₂ (Unitary.star_mul_self_of_mem U.prop) 0 0
   rw [hscalar] at hu
   have hn : ‖(U : Matrix (Fin 2) (Fin 2) ℂ) 0 0‖ = 1 := by
     have he := congrArg norm hu
