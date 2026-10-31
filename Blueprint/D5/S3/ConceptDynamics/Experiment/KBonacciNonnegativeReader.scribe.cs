@@ -124,10 +124,10 @@ internal sealed class KBonacciNonnegativeReaderDocument : IScribeDocumentDefinit
         Formula reads = At(F.Id("N"), pi, w);
         Formula budgets = Seq(prep, Le, D(1), Land, win, Le, D(2), Land, reads, Le, D(3));
         return Disp(Seq(
-            All(b, window, Seq(Exists, Sp, p, Comma, t, InMacro, fin, Comma, Sp,
+            All(b, window, Seq(Exists, Sp, p, Comma, t, InMacro, Sp, fin, Comma, Sp,
                 At(F.Id("lead"), b), Eq, p, Land,
                 At(F.Id("A"), b), Eq, At(F.Id("E"), p, t))), Land,
-            All(p, fin, All(t, fin, Seq(Exists, Sp, b, InMacro, window, Comma, Sp,
+            All(p, fin, All(t, fin, Seq(Exists, Sp, b, InMacro, Sp, window, Comma, Sp,
                 At(F.Id("A"), b), Eq, At(F.Id("E"), p, t)))), Land,
             All(w, c, Seq(D(0), Lt, At(F.Id("D"), w))), Land,
             All(pi, proto, All(w, c, Seq(reads, Eq, prep, Plus, win))), Land,
@@ -135,7 +135,7 @@ internal sealed class KBonacciNonnegativeReaderDocument : IScribeDocumentDefinit
                 All(w, c, Seq(prep, Le, D(1))))), Land,
             All(pi, proto, Seq(correct, Implies, D(2), Le, At(F.Id("B"), pi))), Land,
             D(2), Le, F.Id("V"), Land, F.Id("V"), Neq, D(1), Land,
-            Neg, Open, Exists, Sp, pi, InMacro, proto, Comma, Sp,
+            Neg, Open, Exists, Sp, pi, InMacro, Sp, proto, Comma, Sp,
                 correct, Land, All(w, c, budgets), Close));
     }
 }
