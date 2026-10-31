@@ -52,9 +52,26 @@ internal sealed class TreeMarkovStabilityDocument : IScribeDocumentDefinition
             And(Equal(p, Call("markovLaw", I("G"), I("F"))),
                 Equal(q, Call("markovLaw", I("G"), I("H"))))));
         return All(Seq(I("V"), Colon, I("FiniteType"), Comma, I("G"), Colon, Call("SimpleGraph", I("V")),
-            Comma, I("X"), Colon, Seq(I("V"), To, I("FiniteType")), Comma,
+            Comma, I("X"), Colon, Seq(I("V"), Sp, To, Sp, I("FiniteType")), Comma,
             I("F"), Comma, I("H"), Colon, Call("Family", I("G"), I("X")), Comma,
             p, Comma, q, Colon, Call("Mass", Call("Configurations", I("X")))), Imp(premises, conclusion));
+    }
+
+    private static Formula Sharpness()
+    {
+        Formula p = Call("markovLaw", I("G"), I("F"));
+        Formula q = Call("markovLaw", I("G"), I("H"));
+        Formula assumptions = And(Call("IsTree", I("G")),
+            And(Rel(D(2), Le, Call("card", I("V"))),
+                All(I("i"), Equal(Node("F", I("i")), Node("H", I("i"))))));
+        Formula universal = All(Seq(I("V"), Colon, I("FiniteType"), Comma,
+            I("G"), Colon, Call("SimpleGraph", I("V")), Comma,
+            I("X"), Colon, Seq(I("V"), Sp, To, Sp, I("FiniteType")), Comma,
+            I("F"), Comma, I("H"), Colon, Call("Family", I("G"), I("X"))),
+            Imp(assumptions, Rel(TV(p, q), Le, Call("min", D(1),
+                Multiply(I("c"), Call("edgeBudget", I("F"), I("H")))))));
+        return Seq(Neg, Paren(Seq(Exists, Sp, I("c"), Colon, Mathbb, Grp(I("R")), Comma,
+            And(Rel(I("c"), Lt, D(1)), universal))));
     }
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -97,7 +114,7 @@ internal sealed class TreeMarkovStabilityDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("universal-sharp-edge-coefficient"),
                 DeclarationHandle.Create(Prefix + "edge_coefficient_one_sharp"), H("Universal sharpness"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(Disp(Sharpness())), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("SmallerEdgeCoefficient is the closed claim that there exists a real c<1 " +
                     "such that, for every finite tree with at least two vertices, every family of finite node spaces " +
                     "and every two consistent normalized families F,H with equal node laws, their actual markovLaw " +
