@@ -438,3 +438,186 @@ At this parameter $\tau_\alpha=1/2$, so $\gamma_\alpha=(a+b)/(ab)>0$. Formulas (
 The equal-velocity choice $a=b=c$ has $\theta=2\pi/3$ and $\delta=3$; its three-phase instance is Theorem 2.1. The present equivalences concern arbitrary positive triples and the chronological binary transfers of Definition 1.2. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 5. Irrational angles with diverging damping gaps
+
+**Theorem 5.1 (Common initial state and schedule for every interior damping parameter).** For every $a,b,c>0$, retain the original centered matrices of Definition 3.1,
+
+$$
+A=\begin{pmatrix}1&0\\-2c&b+c\end{pmatrix},\qquad
+B=\begin{pmatrix}-1&\dfrac{2a}{a+b}\\0&-(b+c)\end{pmatrix},\qquad
+B_\alpha=\begin{pmatrix}
+\dfrac{b(1-2\alpha)-\alpha a}{b+\alpha a}&\dfrac{2\alpha a}{b+\alpha a}\\
+0&-(b+c)
+\end{pmatrix},\qquad
+M=A^{-1}B,\quad N_\alpha=A^{-1}B_\alpha,
+$$
+
+and put
+
+$$
+\theta=\arccos\left(\frac{2ac}{(a+b)(b+c)}-1\right),\qquad
+Q(x,y)=\frac{x^2}{a}+\frac{(y-x)^2}{b}+\frac{y^2}{c},\qquad
+\|u\|_Q=\sqrt{Q(u)}.
+$$
+
+Assume $\theta/(2\pi)\notin\mathbb Q$. There exist one $u_0\in\mathbb R^2\setminus\{0\}$ and one infinite binary schedule $\varepsilon$, both depending only on $(a,b,c)$, such that for every fixed $\alpha\in(0,1)$ the chronological recurrence
+
+$$
+u_{t+1}=\begin{cases}
+N_\alpha u_t,&\varepsilon_t=1,\\
+Mu_t,&\varepsilon_t=0
+\end{cases}
+\qquad(t\in\mathbb Z_{\geq0})
+$$
+
+has infinitely many damped times $t_0<t_1<t_2<\cdots$, with
+
+$$
+\{t\geq0:\varepsilon_t=1\}=\{t_j:j\geq0\},\qquad
+\lim_{j\to\infty}(t_{j+1}-t_j)=\infty,\qquad
+\inf_{t\in\mathbb Z_{\geq0}}\|u_t\|_Q
+\geq\frac34\|u_0\|_Q>0.
+$$
+
+The choices of $u_0$, $\varepsilon$ and hence the times $t_j$ precede the universal quantifier over $\alpha$. The interval includes $\alpha=b/(a+2b)$, where $N_\alpha$ is singular. Each trajectory uses one fixed $\alpha$; its later states need not be common to different values of $\alpha$.
+
+*Proof.* Fix an arbitrary positive triple satisfying the irrationality assumption. The form $Q$ and all coordinates remain as displayed. In particular $\|\cdot\|_Q$ is a norm: it is the Euclidean norm of the injective linear image
+
+$$
+(x,y)\longmapsto\left(\frac{x}{\sqrt a},\frac{y-x}{\sqrt b},\frac{y}{\sqrt c}\right).
+$$
+
+Thus its triangle inequality and reverse triangle inequality apply to differences of states as well as to states.
+
+Use the coefficients $\xi,\eta,\tau_\alpha,C$ of Definition 3.1. The original-matrix identities (3.1), (3.3) and (3.4) give, for every $z=(x,y)^T\in\mathbb R^2$ and every $\alpha\in(0,1)$,
+
+$$
+\begin{gathered}
+\|Mz\|_Q=\|z\|_Q,\qquad
+Q(N_\alpha z)=Q(z)-4\tau_\alpha(1-\tau_\alpha)
+                    \frac{a+b}{ab}(x-\xi y)^2\leq Q(z),\\
+N_\alpha z=Mz\quad\text{if }z\in H=\{(x,y)^T:x=\xi y\}.
+\end{gathered}
+\tag{5.1}
+$$
+
+The weighted Dirichlet form is the one used in [the finite-path source](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.lean) and [the damped-sweep source](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean), with their corresponding [finite-path](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.scribe.cs) and [damped-sweep](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs) statements; the first-event loss and equality mechanism are those of the damped-sweep source. The parameter correspondence is $m=2$, $(v_1,v_2,v_3)=(a,b,c)$, $(z_1,z_2)=(x,y)$ and $z_0=z_3=0$; zero-based indices are smaller by one. The first-event weight denoted `theta` in the damped-sweep source is $\tau_\alpha=\alpha(a+b)/(b+\alpha a)$ here, whereas $\theta$ in this theorem is the angle. The source transfer $M_\alpha$ is $N_\alpha$. The odd/even sweep and Token-1 first row have the hypotheses of [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, Sections IV.A and IV.B.1](https://arxiv.org/html/2608.27085v1#S4): positive velocities, zero centered endpoints, and a fixed interior damping parameter. The schedule here has precisely the abstract meaning of Definition 1.2.
+
+Choose a unit vector on the common equality line by setting
+
+$$
+w=\begin{pmatrix}\xi\\1\end{pmatrix},\qquad
+r=\sqrt{\frac1{a+b}+\frac1c},\qquad
+u_0=\frac{w}{r}.
+\tag{5.2}
+$$
+
+Indeed (3.2) gives $Q(w)=1/(a+b)+1/c=r^2>0$, and therefore $u_0\in H$, $u_0\ne0$ and $\|u_0\|_Q=1$. This choice depends only on the triple.
+
+We next obtain arbitrarily late, arbitrarily close returns of $M^q u_0$ to $u_0$. Put $\beta=\theta/(2\pi)$, an irrational real number. For a real $s$, write $\{s\}=s-\lfloor s\rfloor$ and $\operatorname{dist}(s,\mathbb Z)=\min_{p\in\mathbb Z}|s-p|$; a nearest integer is one of $\lfloor s\rfloor$ and $\lfloor s\rfloor+1$. For every integer $R\geq2$, the number
+
+$$
+\mu_R=\min_{1\leq q<R}\operatorname{dist}(q\beta,\mathbb Z)
+$$
+
+is strictly positive: this is a minimum of finitely many positive numbers, since a positive integer multiple of an irrational number is not an integer. Given any $\rho>0$, choose a positive integer $K$ with $1/K<\min(\mu_R,\rho)$. Partition $[0,1)$ into the $K$ half-open intervals of length $1/K$. Two of the $K+1$ fractional parts $\{i\beta\}$, $0\leq i\leq K$, lie in the same interval. If their indices are $i<k$, put $q=k-i$ and $p=\lfloor k\beta\rfloor-\lfloor i\beta\rfloor$. Then
+
+$$
+1\leq q\leq K,\qquad
+|q\beta-p|=|\{k\beta\}-\{i\beta\}|<\frac1K.
+$$
+
+If $q<R$, this contradicts $\mu_R\leq\operatorname{dist}(q\beta,\mathbb Z)\leq|q\beta-p|$. Consequently $q\geq R$ and $\operatorname{dist}(q\beta,\mathbb Z)<\rho$. This is the classical pigeonhole approximation argument, used here with the explicit exclusion of every $q<R$.
+
+To pass from angular returns to the original vectors, use (3.5) with
+
+$$
+J=\frac{M-CI}{\sin\theta},\qquad
+M^q=\cos(q\theta)I+\sin(q\theta)J,\qquad
+D=1+\|Ju_0\|_Q>0.
+$$
+
+These expressions are defined because $0<\theta<\pi$. For a nearest integer $p$ to $q\beta$, put $s=q\theta-2\pi p$. The elementary bounds $|\sin s|\leq|s|$ and $|\cos s-1|\leq|s|$ follow from the real mean value theorem, since the derivatives of sine and cosine have absolute value at most one; see [NIST DLMF, §4.20](https://dlmf.nist.gov/4.20). Periodicity and the triangle inequality therefore give
+
+$$
+\begin{aligned}
+\|M^q u_0-u_0\|_Q
+&\leq|\cos s-1|\,\|u_0\|_Q+|\sin s|\,\|Ju_0\|_Q\\
+&\leq D|s|
+=2\pi D\operatorname{dist}(q\beta,\mathbb Z).
+\end{aligned}
+\tag{5.3}
+$$
+
+The addition formulas underlying (3.5) are [DLMF, (4.21.2) and (4.21.3)](https://dlmf.nist.gov/4.21#i). Given any $e>0$ and $R\geq2$, the preceding pigeonhole argument with $\rho=e/(2\pi D)$ supplies a $q\geq R$ for which $\|M^q u_0-u_0\|_Q<e$. All quantities in this return statement depend only on the triple, $e$ and $R$.
+
+For each integer $j\geq0$, set $e_j=2^{-j-3}$ and define
+
+$$
+\begin{aligned}
+d_j&=\min\{q\in\mathbb Z_{\geq1}:q\geq j+2
+                 \text{ and }\|M^q u_0-u_0\|_Q\leq e_j\},\\
+t_0&=0,\qquad t_{j+1}=t_j+d_j,\qquad
+\varepsilon_t=\begin{cases}1,&t=t_j\text{ for some }j\geq0,\\0,&\text{otherwise}.
+\end{cases}
+\end{aligned}
+\tag{5.4}
+$$
+
+The return statement proves that each set defining $d_j$ is nonempty; well-ordering of the positive integers supplies its minimum. These definitions contain no $\alpha$. Every $d_j$ is finite and at least $j+2$, so $t_j$ is strictly increasing, $t_j\geq2j$ and $t_j\to\infty$. Thus (5.4) defines the schedule at every integer time, its damped times are exactly the $t_j$, and $t_{j+1}-t_j=d_j\to\infty$. Each interval between consecutive damped times has $d_j-1\geq1$ undamped transfers.
+
+Only now fix an arbitrary $\alpha\in(0,1)$, and let $(u_t)$ be its actual recurrence with (5.2) and (5.4). Define
+
+$$
+E_j=\sum_{i=0}^{j-1}e_i=\frac14(1-2^{-j})\qquad(j\geq0),
+\tag{5.5}
+$$
+
+where the empty sum is zero. We prove by induction that
+
+$$
+\|u_{t_j}-u_0\|_Q\leq E_j.
+\tag{5.6}
+$$
+
+It holds for $j=0$ because $t_0=0$. Suppose it holds for $j$. The schedule first applies $N_\alpha$ at $t_j$ and then applies $M$ at each of the next $d_j-1$ transfer times. In particular, at every intermediate phase, including the next damped input, the exact chronological formula is
+
+$$
+u_{t_j+k}=M^{k-1}N_\alpha u_{t_j}\qquad(1\leq k\leq d_j).
+\tag{5.7}
+$$
+
+There is no omitted transfer between these states. Since $u_0\in H$, (5.1) says $N_\alpha u_0=Mu_0$. Linearity, the $Q$-isometry of $M$ and nonexpansiveness of $N_\alpha$ now yield, for every such $k$,
+
+$$
+\begin{aligned}
+\|u_{t_j+k}-M^k u_0\|_Q
+&=\|M^{k-1}N_\alpha(u_{t_j}-u_0)\|_Q\\
+&=\|N_\alpha(u_{t_j}-u_0)\|_Q
+\leq\|u_{t_j}-u_0\|_Q\leq E_j.
+\end{aligned}
+\tag{5.8}
+$$
+
+Taking $k=d_j$ in (5.8) and using the defining return bound in (5.4) gives
+
+$$
+\|u_{t_{j+1}}-u_0\|_Q
+\leq\|u_{t_j+d_j}-M^{d_j}u_0\|_Q
+   +\|M^{d_j}u_0-u_0\|_Q
+\leq E_j+e_j=E_{j+1}.
+$$
+
+This completes the induction. At the input time $t_j$, (5.6) and the reverse triangle inequality give $\|u_{t_j}\|_Q\geq1-E_j$. At every phase $t_j+k$ with $1\leq k\leq d_j$, (5.8) and $\|M^k u_0\|_Q=1$ give the same lower bound. Every integer $t\geq0$ belongs to one of these intervals, since $t_0=0$ and $t_j\to\infty$. As $E_j\leq1/4$, it follows that
+
+$$
+\|u_t\|_Q\geq\frac34=\frac34\|u_0\|_Q>0
+\qquad\text{for every integer }t\geq0.
+$$
+
+Taking the infimum proves the asserted all-time bound. The argument applies to each fixed $\alpha$ using the very same choices (5.2) and (5.4); it uses neither an $\alpha$-dependent return time nor equality of the resulting trajectories.
+
+Finally, for $\alpha_*=b/(a+2b)$ positivity gives $0<\alpha_*<1$, and substitution into $\tau_\alpha$ gives $\tau_{\alpha_*}=1/2$. By (3.1), $\det N_{\alpha_*}=2\tau_{\alpha_*}-1=0$. Nevertheless the loss coefficient in (5.1) is then $(a+b)/(ab)>0$, the map is still nonexpansive in the same norm, and its equality $N_{\alpha_*}u_0=Mu_0$ still holds. Formulas (5.7) and (5.8) use no inverse of $N_\alpha$, so the entire proof includes this singular parameter. $\square$
+
+## 追加锚（本行以下为增补区）
