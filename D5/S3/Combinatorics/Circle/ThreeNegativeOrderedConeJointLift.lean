@@ -1075,7 +1075,7 @@ theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
           have hs' := (hplusT.map g).sum_eq
           rw [hzero'] at hs'
           exact hs'
-        simp only [plusT, List.map_append, List.sum_append, List.map_cons, List.map_nil,
+        simp only [plusT, alpha, beta, gamma, List.map_append, List.sum_append, List.map_cons, List.map_nil,
           List.sum_cons, List.sum_nil, add_zero, hPsum.2, hTsum.2, hgA', hgB', hgG', hgear]
           at hpluszero
         linarith only [hpluszero]
@@ -1097,7 +1097,7 @@ theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
       · have hEndpoint : xn - Ka + (Q.toList.map g).sum = D - u + Kb := by
           have hpluszero := (hplusT.map g).sum_eq
           rw [hzero'] at hpluszero
-          simp only [plusT, List.map_append, List.sum_append, List.map_cons, List.map_nil,
+          simp only [plusT, alpha, beta, gamma, List.map_append, List.sum_append, List.map_cons, List.map_nil,
             List.sum_cons, List.sum_nil, add_zero, hPsum.2, hTsum.2,
             hgA', hgB', hgG', hgear] at hpluszero
           dsimp only [D]
