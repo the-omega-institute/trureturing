@@ -77,8 +77,6 @@ private theorem negative_order (a b c d : ℕ)
   have hh := (hp.map (negativeLabel a b c d)).trans (List.Perm.of_eq he)
   simpa [packets,List.map_map,Function.comp_def] using hh
 
-attribute [local reducible] positivePacket negativeLabel assigned size chainStart chainLength
-
 set_option maxRecDepth 4000 in
 set_option maxHeartbeats 1600000 in
 private theorem physical_partition (a b c d : ℕ)
@@ -105,11 +103,11 @@ private theorem physical_partition (a b c d : ℕ)
     simp only [packets,order,Matrix.cons_val_zero',Matrix.cons_val_succ',List.map_cons,List.map_nil,orderedPackets,blocksWord,
       ← Multiset.coe_add,← Multiset.cons_coe,Multiset.coe_nil,Multiset.count_add,
       Multiset.count_cons,Multiset.count_zero,hcount] <;>
-    norm_num [assigned,transfer,Matrix.cons_val_zero',Matrix.cons_val_succ',
+    norm_num +instances [assigned,transfer,Matrix.cons_val_zero',Matrix.cons_val_succ',
       Fin.isValue,ite_true,ite_false,Finset.mem_insert,Finset.mem_erase,
       positivePacket,negativeLabel,chainStart,chainLength,Finset.mem_Ico,size] <;>
     clear hcount hrange <;>
     rcases hloc with h | h | h | h | h | h | h | h | h | h | h <;>
-    simp +instances (disch := omega) [negativeLabel,chainStart,chainLength,size]
+    simp (disch := omega) only [if_pos,if_neg,zero_add,add_zero]
 
 end D5.S3.Combinatorics.Circle.FourNegative.BalancedGaps
