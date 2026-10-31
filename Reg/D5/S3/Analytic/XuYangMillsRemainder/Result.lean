@@ -129,8 +129,8 @@ def arena : Arena where
   signature := signature
   Law R := ∀ t : ℝ,
     R.readout () t (fun v => 1 - v ^ 2 * t ^ 2 / 2) = exp (-t ^ 2 / 2) ∧
-    R.readout () t (fun v => 1 - 3 * v ^ 2) =
-      t ^ 2 / 2 * R.readout () t (fun v => v ^ 2 * (1 - v ^ 2))
+    J (fun v => 1 - 3 * v ^ 2) t =
+      t ^ 2 / 2 * J (fun v => v ^ 2 * (1 - v ^ 2)) t
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have h0 := (h 0).1
@@ -176,16 +176,6 @@ def audit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
-      booleanPredicate := false }, {
-      path := #["body", "arg", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "arg"]
-      booleanPredicate := false }, {
-      path := #["body", "arg", "arg", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -201,17 +191,22 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law R := ∀ (x : ℝ), 0 < x →
-    IntegrableOn (fun t : ℝ => R.readout () () (-x * t) *
-      (-t * R.readout () () (-t ^ 2 / 2))) (Ioi 0) ∧
-    (∫ t in Ioi (0 : ℝ), R.readout () () (-x * t) *
-      (-t * R.readout () () (-t ^ 2 / 2))) =
-      x * (∫ t in Ioi (0 : ℝ), R.readout () () (-x * t) *
-        R.readout () () (-t ^ 2 / 2)) - 1
+  Law R := ∀ {x : ℝ}, 0 < x →
+    IntegrableOn (fun t : ℝ => exp (-x * t) * (-t * exp (-t ^ 2 / 2))) (Ioi 0) ∧
+    (∫ t in Ioi (0 : ℝ), exp (-x * t) * (-t * exp (-t ^ 2 / 2))) =
+      x * (∫ t in Ioi (0 : ℝ), exp (-x * t) * R.readout () () (-t ^ 2 / 2)) - 1
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have h0 := (h 1 (by norm_num)).2
-  norm_num [rejected, realize] at h0
+  have hbad := (h (x := 1) (by norm_num)).2
+  have hn := (_root_.D5.S3.Analytic.XuYangMillsRemainder.Result.gaussianLaplaceDerivative
+    (x := 1) (by norm_num)).2
+  have hp : 0 < ∫ t in Ioi (0 : ℝ), exp (-(1 : ℝ) * t) * exp (-t ^ 2 / 2) := by
+    letI : NeZero (volume (Ioi (0 : ℝ))) := ⟨by simp⟩
+    simpa only [sub_eq_add_neg, exp_add, neg_div] using
+      integral_exp_pos (millsLaplaceIntegrable (x := 1) (by norm_num))
+  norm_num [rejected, realize] at hbad
+  simp only [one_mul, neg_one_mul, neg_mul, mul_neg] at hn hp
+  linarith
 def family : Registration arena
     (type_of% @_root_.D5.S3.Analytic.XuYangMillsRemainder.Result.gaussianLaplaceDerivative) where
   actual := actual
@@ -251,7 +246,7 @@ def audit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "fn", "arg", "fn", "arg", "body", "fn", "arg", "fn"]
+      path := #["body", "body", "arg", "arg", "fn", "arg", "arg", "arg", "body", "arg", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

@@ -28,7 +28,8 @@ internal sealed class ParameterClassificationDocument : IScribeDocumentDefinitio
     private static Formula Sign(bool negative) => All("x", R, Imp(Lt(Num(0), V("x")), Le(Num(0), Value(negative))));
     private static Formula CM(bool negative) => C("Result.CompletelyMonotoneOn", Seq(V("x"), Colon, Sp, R, Mapsto, Sp, Value(negative)));
     private static DocumentBlock Entry(string name, Formula statement, string text, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("mills-parameter-" + name), DeclarationHandle.Create(Prefix + name),
+        Describe.Lean(DescribeId.Create("mills-parameter-" + name.ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name),
             H(name), StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);
     private static Formula V(string name) => F.Id(name);
