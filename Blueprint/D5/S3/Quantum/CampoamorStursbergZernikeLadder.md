@@ -24,6 +24,10 @@ $$\forall (N: \mathbb{N}), (1 \leq N) \implies (\forall (gamma: \mathbb{N} \to \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/CampoamorStursbergZernikeLadder.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/campoamor-stursberg-et-al-2025-zernike-ladder-factorization` (proved) by `D5/S3/Quantum/CampoamorStursbergZernikeLadder.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"campoamor-stursberg-et-al-2025-zernike-ladder-factorization","declaration_gid":"D5/S3/Quantum/CampoamorStursbergZernikeLadder.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. Campoamor-Stursberg, F. J. Herranz, D. Latini, I. Marquette, A. Blasco (2026). *Generalized quantum Zernike Hamiltonians: Polynomial Higgs-type algebras and algebraic derivation of the spectrum*. DOI: [10.1088/1361-6544/ae64a2](https://doi.org/10.1088/1361-6544/ae64a2). URL: <https://arxiv.org/abs/2502.02491v2>.
