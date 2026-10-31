@@ -46,13 +46,13 @@ example :
         w (insert 2 (shift 0 1 X)) else 0 := by
     intro X hX ht
     rw [onlyt X hX ht]
-    norm_num [w, shift, Ω]
+    norm_num [w, shift, Ω, insert_comm]
   have hvlaw : ∀ X ∈ Ω, 1 ∈ X →
       v X = v (shift 0 1 X) + if insert 2 (shift 0 1 X) ∈ Ω then
         v (insert 2 (shift 0 1 X)) else 0 := by
     intro X hX ht
     rw [onlyt X hX ht]
-    norm_num [v, shift, Ω]
+    norm_num [v, shift, Ω, insert_comm]
   have hA : A ⊆ Ω := by simp [A, Ω]
   have hc : CrossIntersecting A A := by
     intro X hX Y hY hd
@@ -60,7 +60,7 @@ example :
     have hY' : Y = {1} := by simpa [A] using hY
     subst X
     subst Y
-    exact (disjoint_left.mp hd) (by simp) (by simp)
+    exact (disjoint_left.mp hd) (a := 1) (by simp) (by simp)
   obtain ⟨C, D, _, _, hc', hw', hv', hC, hD⟩ := exists_simultaneous_compression
     Ω A A 0 1 2 hA hA (by decide) (by decide) hex hsh w v hw hv hwlaw hvlaw hc
   refine ⟨C, D, hc', ?_, ?_, hC (by simp [A]), hD (by simp [A])⟩
@@ -111,13 +111,13 @@ example :
         w (insert 2 (shift 0 1 X)) else 0 := by
     intro X hX ht
     rw [onlyt X hX ht]
-    norm_num [w, shift, Ω]
+    norm_num [w, shift, Ω, insert_comm]
   have hvlaw : ∀ X ∈ Ω, 1 ∈ X →
       v X = v (shift 0 1 X) + if insert 2 (shift 0 1 X) ∈ Ω then
         v (insert 2 (shift 0 1 X)) else 0 := by
     intro X hX ht
     rw [onlyt X hX ht]
-    norm_num [v, shift, Ω]
+    norm_num [v, shift, Ω, insert_comm]
   have hA : A ⊆ Ω := by simp [A, Ω]
   have hc : CrossIntersecting A A := by
     intro X hX Y hY hd
@@ -125,7 +125,7 @@ example :
     have hY' : Y = {1} := by simpa [A] using hY
     subst X
     subst Y
-    exact (disjoint_left.mp hd) (by simp) (by simp)
+    exact (disjoint_left.mp hd) (a := 1) (by simp) (by simp)
   have hmall (z : Finset ℕ → ℝ) (hz : ∀ X ∈ Ω, 0 ≤ z X) :
       ∀ R, 0 ≤ marginalWeight Ω z 1 R := by
     intro R
@@ -172,7 +172,7 @@ example :
     exists_terminal_compression {1} S A A (by simpa [S] using hA)
       (by simpa [S] using hA) hc
   have hK0 : K = ∅ := by
-    apply eq_empty_iff_forall_not_mem.mpr
+    apply eq_empty_iff_forall_notMem.mpr
     intro x hx
     have hx1 : x = 1 := mem_singleton.mp (hK hx)
     subst x
