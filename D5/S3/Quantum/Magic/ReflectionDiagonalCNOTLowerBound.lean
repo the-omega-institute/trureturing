@@ -146,7 +146,8 @@ private lemma character_global (m : ℕ) (hm : 0 < m) (v : basis m)
     (hv : v ≠ zeroLabel) (c : ℂ) (hc : c ≠ 0) :
     character v (fun _ : basis m => c) = 1 := by sorry
 
-private lemma character_factor (m : ℕ) (v w : basis m) (f : Bool → ℂ) (hvw : v ≠ w)
+private lemma character_factor (m : ℕ) (v w : basis m) (f : Bool → ℂ)
+    (hv : v ≠ zeroLabel) (hvw : v ≠ w)
     (hw : w ≠ fun _ : Fin m => false) (hf : ∀ b, f b ≠ 0) :
     character v (fun x => f (dot w x)) = 1 := by sorry
 
@@ -228,7 +229,7 @@ private lemma rotation_labels (m : ℕ) (circuit : List (gate m))
         character v (fun x => f x * g x) = character v f * character v g)
     (hglobal : ∀ (v : basis m) (c : ℂ), v ≠ zeroLabel → c ≠ 0 →
       character v (fun _ : basis m => c) = 1)
-    (hfactor : ∀ (v w : basis m) (f : Bool → ℂ), v ≠ w →
+    (hfactor : ∀ (v w : basis m) (f : Bool → ℂ), v ≠ zeroLabel → v ≠ w →
       w ≠ zeroLabel → (∀ b, f b ≠ 0) →
         character v (fun x => f (dot w x)) = 1)
     (hchars : ∀ v, evenLabel v → v ≠ zeroLabel →
@@ -269,11 +270,11 @@ private lemma claim_for_n (n : ℕ) (hn : 1 ≤ n) :
       character v (fun _ : basis (2 * n) => d) = 1 := by
     intro v d hv hd
     exact character_global (2 * n) (Nat.mul_pos (by decide) hn) v hv d hd
-  have hfactor : ∀ (v w : basis (2 * n)) (f : Bool → ℂ), v ≠ w →
+  have hfactor : ∀ (v w : basis (2 * n)) (f : Bool → ℂ), v ≠ zeroLabel → v ≠ w →
       w ≠ zeroLabel → (∀ b, f b ≠ 0) →
         character v (fun x => f (dot w x)) = 1 := by
-    intro v w f hvw hw hf
-    exact character_factor (2 * n) v w f hvw hw hf
+    intro v w f hv hvw hw hf
+    exact character_factor (2 * n) v w f hv hvw hw hf
   have hchars : ∀ v : basis (2 * n), evenLabel v → v ≠ zeroLabel →
       character v (fun x => Complex.exp ((hardTheta x : ℂ) * Complex.I)) = -1 := by
     intro v he hv
