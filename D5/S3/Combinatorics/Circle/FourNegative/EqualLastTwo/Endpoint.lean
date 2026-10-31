@@ -259,7 +259,7 @@ private theorem large_plan (a b d : ℕ) (hd : 2 ≤ d) (hb : d+2 ≤ b) (ha : b
     have h := (chain_values a b d d (by omega) (by omega) hd hd).1 0
     change 0 ≤ sourceMod a b d d
     omega
-  have gates := large_checks u v t (by dsimp [u]; positivity) (by dsimp [v]; positivity) ht
+  have gates := large_checks u v t (by dsimp [u]; exact one_le_pow₀ (by norm_num : (1:ℤ) ≤ 2)) (by dsimp [v]; exact one_le_pow₀ (by norm_num : (1:ℤ) ≤ 2)) ht
   dsimp only at gates
   let P := largeP a b d
   let Q := largeQ a b d
@@ -291,7 +291,7 @@ private theorem large_plan (a b d : ℕ) (hd : 2 ≤ d) (hb : d+2 ≤ b) (ha : b
   have mg := large_mass a b d hd hb ha (g a b d) (2*A) (Bn) (Ln) (Mn)
     (fun i hi => by
       have h := (tab.2.2.1 0 i (by dsimp [length]; omega)).2
-      simpa [start,A,B,L,M,Bn,Ln,Mn,x,y,t] using h)
+      simpa [start,newHeads,A,B,L,M,Bn,Ln,Mn,x,y,t] using h)
     (fun i hi => by
       have h := (tab.2.2.1 1 i (by dsimp [length]; omega)).2
       simpa [start,A,B,L,M,Bn,Ln,Mn,x,y,t] using h)
@@ -335,7 +335,7 @@ private theorem large_plan (a b d : ℕ) (hd : 2 ≤ d) (hb : d+2 ≤ b) (ha : b
   change 2*f a b d n2=L-N a b d ∧ 2*g a b d n2=Ln-(2*N a b d+1) at nt2
   have nt3 := tab.2.2.2.1 2
   have e3 : start b d 2+length a b d 2-1=n3 := by
-    dsimp [start,length,n3,k,rank]; omega
+    dsimp [start,length,n3,k,rank] <;> omega
   rw [e3] at nt3
   change 2*f a b d n3=M-N a b d ∧ 2*g a b d n3=Mn-(2*N a b d+1) at nt3
   have posP : ∀ i ∈ P.toList, 0 ≤ f a b d i ∧ 0 ≤ g a b d i := by
@@ -369,11 +369,11 @@ private theorem large_plan (a b d : ℕ) (hd : 2 ≤ d) (hb : d+2 ≤ b) (ha : b
   have neg0 : f a b d n0 ≤ 0 ∧ g a b d n0 ≤ 0 := by
     apply negative_label a b d hd hdb hba
     · dsimp [n0,k,rank]; omega
-    · simp [n0,k,rank,negatives,size]; omega
+    · simp [n0,k,rank,negatives,size] <;> omega
   have neg1 : f a b d n1 ≤ 0 ∧ g a b d n1 ≤ 0 := by
     apply negative_label a b d hd hdb hba
     · dsimp [n1,k,rank]; omega
-    · simp [n1,k,rank,negatives,size]; omega
+    · simp [n1,k,rank,negatives,size] <;> omega
   have neg2 : f a b d n2 ≤ 0 ∧ g a b d n2 ≤ 0 := by
     apply negative_label a b d hd hdb hba
     · dsimp [n2,k,rank]; omega
@@ -485,7 +485,7 @@ private theorem adjacent_plan (a d : ℕ) (hd : 2 ≤ d) (ha : d+4 ≤ a) :
     have h := (chain_values a b d d (by omega) (by omega) hd hd).1 0
     change 0 ≤ sourceMod a b d d
     omega
-  have gates := adjacent_checks m t (by dsimp [m]; positivity) ht
+  have gates := adjacent_checks m t (by dsimp [m]; exact one_le_pow₀ (by norm_num : (1:ℤ) ≤ 2)) ht
   dsimp only at gates
   let P := adjacentP a d
   let Q := adjacentQ a d
@@ -517,7 +517,7 @@ private theorem adjacent_plan (a d : ℕ) (hd : 2 ≤ d) (ha : d+4 ≤ a) :
   have mg := adjacent_mass a d hd ha (g a b d) (2*A) (Bn) (Ln) (Mn)
     (fun i hi => by
       have h := (tab.2.2.1 0 i (by dsimp [length]; omega)).2
-      simpa [start,A,B,L,M,Bn,Ln,Mn,x,y,t,b,show 2*d+(d+1)=3*d+1 by omega] using h)
+      simpa [start,newHeads,A,B,L,M,Bn,Ln,Mn,x,y,t,b,show 2*d+(d+1)=3*d+1 by omega] using h)
     (fun i hi => by
       have h := (tab.2.2.1 1 i (by dsimp [length]; omega)).2
       simpa [start,A,B,L,M,Bn,Ln,Mn,x,y,t,b,show 2*d+(d+1)=3*d+1 by omega] using h)
@@ -595,11 +595,11 @@ private theorem adjacent_plan (a d : ℕ) (hd : 2 ≤ d) (ha : d+4 ≤ a) :
   have neg0 : f a b d n0 ≤ 0 ∧ g a b d n0 ≤ 0 := by
     apply negative_label a b d hd hdb hba
     · dsimp [n0,k,rank,b]; omega
-    · simp [n0,k,rank,negatives,size,b]; omega
+    · simp [n0,k,rank,negatives,size,b] <;> omega
   have neg1 : f a b d n1 ≤ 0 ∧ g a b d n1 ≤ 0 := by
     apply negative_label a b d hd hdb hba
     · dsimp [n1,k,rank,b]; omega
-    · simp [n1,k,rank,negatives,size,b]; omega
+    · simp [n1,k,rank,negatives,size,b] <;> omega
   have neg2 : f a b d n2 ≤ 0 ∧ g a b d n2 ≤ 0 := by
     apply negative_label a b d hd hdb hba
     · dsimp [n2,k,rank,b]; omega
@@ -739,7 +739,7 @@ private theorem corner_two_plan (d : ℕ) (hd : 2 ≤ d) :
   have mg := corner_two_mass d hd (g a b d) (2*A) (Bn) (Ln) (Mn)
     (fun i hi => by
       have h := (tab.2.2.1 0 i (by dsimp [length]; omega)).2
-      simpa [start,A,B,L,M,Bn,Ln,Mn,x,y,t,b,a,show 2*d+(d+1)=3*d+1 by omega] using h)
+      simpa [start,newHeads,A,B,L,M,Bn,Ln,Mn,x,y,t,b,a,show 2*d+(d+1)=3*d+1 by omega] using h)
     (fun i hi => by
       have h := (tab.2.2.1 1 i (by dsimp [length]; omega)).2
       simpa [start,A,B,L,M,Bn,Ln,Mn,x,y,t,b,a,show 2*d+(d+1)=3*d+1 by omega] using h)
@@ -752,52 +752,54 @@ private theorem corner_two_plan (d : ℕ) (hd : 2 ≤ d) :
   simp only [←toList_sum] at mf mg
   have f0 : 2*(P.toList.map (f a b d)).sum=(t-2)*A+2*M := by
     have hmass := mf.1
-    dsimp [P,a,b] at hmass
-    simp only [pow_add,pow_one] at hmass
-    norm_num at hmass
-    rw [hthalf]; dsimp [t] at *; nlinarith only [hmass]
+    change (P.toList.map (f a b d)).sum = _ at hmass
+    rw [hmass]
+    rw [hthalf]
+    ring
   have f1 : 2*(Q.toList.map (f a b d)).sum=(t-2)*B+4*M := by
     have hmass := mf.2.1
-    dsimp [Q,a,b] at hmass
-    simp only [pow_add,pow_one] at hmass
-    norm_num at hmass
-    rw [hthalf]; dsimp [t] at *; nlinarith only [hmass]
+    change (Q.toList.map (f a b d)).sum = _ at hmass
+    rw [hmass]
+    rw [hthalf]
+    ring
   have f2 : 2*(R.toList.map (f a b d)).sum=(4*t-8)*M := by
     have hmass := mf.2.2.1
-    dsimp [R,a,b] at hmass
-    simp only [pow_add,pow_one] at hmass
-    norm_num at hmass
-    dsimp [t]; nlinarith only [hmass]
+    change (R.toList.map (f a b d)).sum = _ at hmass
+    rw [hmass]
+    dsimp only [t]
+    simp only [pow_add,pow_one]
+    ring
   have f3 : 2*(G.toList.map (f a b d)).sum=(2*t-2)*L := by
     have hmass := mf.2.2.2
-    dsimp [G,a,b] at hmass
-    simp only [pow_add,pow_one] at hmass
-    norm_num at hmass
-    dsimp [t]; nlinarith only [hmass]
+    change (G.toList.map (f a b d)).sum = _ at hmass
+    rw [hmass]
+    dsimp only [t]
+    ring
   have g0 : 2*(P.toList.map (g a b d)).sum=(t-2)*(2*A)+2*Mn := by
     have hmass := mg.1
-    dsimp [P,a,b] at hmass
-    simp only [pow_add,pow_one] at hmass
-    norm_num at hmass
-    rw [hthalf]; dsimp [t] at *; nlinarith only [hmass]
+    change (P.toList.map (g a b d)).sum = _ at hmass
+    rw [hmass]
+    rw [hthalf]
+    ring
   have g1 : 2*(Q.toList.map (g a b d)).sum=(t-2)*Bn+4*Mn := by
     have hmass := mg.2.1
-    dsimp [Q,a,b] at hmass
-    simp only [pow_add,pow_one] at hmass
-    norm_num at hmass
-    rw [hthalf]; dsimp [t] at *; nlinarith only [hmass]
+    change (Q.toList.map (g a b d)).sum = _ at hmass
+    rw [hmass]
+    rw [hthalf]
+    ring
   have g2 : 2*(R.toList.map (g a b d)).sum=(4*t-8)*Mn := by
     have hmass := mg.2.2.1
-    dsimp [R,a,b] at hmass
-    simp only [pow_add,pow_one] at hmass
-    norm_num at hmass
-    dsimp [t]; nlinarith only [hmass]
+    change (R.toList.map (g a b d)).sum = _ at hmass
+    rw [hmass]
+    dsimp only [t]
+    simp only [pow_add,pow_one]
+    ring
   have g3 : 2*(G.toList.map (g a b d)).sum=(2*t-2)*Ln := by
     have hmass := mg.2.2.2
-    dsimp [G,a,b] at hmass
-    simp only [pow_add,pow_one] at hmass
-    norm_num at hmass
-    dsimp [t]; nlinarith only [hmass]
+    change (G.toList.map (g a b d)).sum = _ at hmass
+    rw [hmass]
+    dsimp only [t]
+    ring
   have nt0 := tab.2.2.2.1 0
   have e0 : start b d 0+length a b d 0-1=n0 := by
     dsimp [start,length,n0,k,rank,b,a]; omega
@@ -849,7 +851,7 @@ private theorem corner_two_plan (d : ℕ) (hd : 2 ≤ d) :
   have neg0 : f a b d n0 ≤ 0 ∧ g a b d n0 ≤ 0 := by
     apply negative_label a b d hd hdb hba
     · dsimp [n0,k,rank,b,a]; omega
-    · simp [n0,k,rank,negatives,size,b,a]; omega
+    · simp [n0,k,rank,negatives,size,b,a] <;> omega
   have neg1 : f a b d n1 ≤ 0 ∧ g a b d n1 ≤ 0 := by
     apply negative_label a b d hd hdb hba
     · dsimp [n1,k,rank,b,a]; omega
@@ -857,7 +859,7 @@ private theorem corner_two_plan (d : ℕ) (hd : 2 ≤ d) :
   have neg2 : f a b d n2 ≤ 0 ∧ g a b d n2 ≤ 0 := by
     apply negative_label a b d hd hdb hba
     · dsimp [n2,k,rank,b,a]; omega
-    · simp [n2,k,rank,negatives,size,b,a]; omega
+    · simp [n2,k,rank,negatives,size,b,a] <;> omega
   have neg3 : f a b d n3 ≤ 0 ∧ g a b d n3 ≤ 0 := by
     apply negative_label a b d hd hdb hba
     · dsimp [n3,k,rank,b,a]; omega
@@ -878,8 +880,9 @@ private theorem corner_two_plan (d : ℕ) (hd : 2 ≤ d) :
     have hdisQ : Disjoint (shift d (Finset.range (d-1))) ({3*d+2}:Finset ℕ) := by
       simp [Finset.disjoint_left,shift,image_range]; omega
     simp only [pre,P,Q,R,n0,n1,corner2P,corner2Q,corner2R,List.length_append,List.length_cons,Finset.length_toList]
-    rw [Finset.card_union_of_disjoint hdis,Finset.card_union_of_disjoint hdisQ,
-      Finset.card_image_of_injective _ (fun _ _ h => Nat.add_left_cancel h)]
+    rw [Finset.card_union_of_disjoint hdis,Finset.card_union_of_disjoint hdisQ]
+    dsimp only [shift]
+    rw [Finset.card_image_of_injective _ (fun _ _ h => Nat.add_left_cancel h)]
     simp only [Finset.card_range,Finset.card_singleton,Nat.card_Ico]
     omega
   apply physical_plan a b d hd hdb hba bs bsn (3*d+1) pre post hcut
@@ -998,7 +1001,7 @@ private theorem corner_three_plan (d : ℕ) (hd : 2 ≤ d) :
   have mg := corner_three_mass d hd (g a b d) (2*A) (Bn) (Ln) (Mn)
     (fun i hi => by
       have h := (tab.2.2.1 0 i (by dsimp [length]; omega)).2
-      simpa [start,A,B,L,M,Bn,Ln,Mn,x,y,t,b,a,show 2*d+(d+1)=3*d+1 by omega] using h)
+      simpa [start,newHeads,A,B,L,M,Bn,Ln,Mn,x,y,t,b,a,show 2*d+(d+1)=3*d+1 by omega] using h)
     (fun i hi => by
       have h := (tab.2.2.1 1 i (by dsimp [length]; omega)).2
       simpa [start,A,B,L,M,Bn,Ln,Mn,x,y,t,b,a,show 2*d+(d+1)=3*d+1 by omega] using h)
@@ -1011,52 +1014,54 @@ private theorem corner_three_plan (d : ℕ) (hd : 2 ≤ d) :
   simp only [←toList_sum] at mf mg
   have f0 : 2*(P.toList.map (f a b d)).sum=(8*t-14)*M := by
     have hmass := mf.1
-    dsimp [P,a,b] at hmass
-    simp only [pow_add,pow_one] at hmass
-    norm_num at hmass
-    dsimp [t]; nlinarith only [hmass]
+    change (P.toList.map (f a b d)).sum = _ at hmass
+    rw [hmass]
+    dsimp only [t]
+    simp only [pow_add,pow_one]
+    ring
   have f1 : 2*(Q.toList.map (f a b d)).sum=(t-2)*B+8*M := by
     have hmass := mf.2.1
-    dsimp [Q,a,b] at hmass
-    simp only [pow_add,pow_one] at hmass
-    norm_num at hmass
-    rw [hthalf]; dsimp [t] at *; nlinarith only [hmass]
+    change (Q.toList.map (f a b d)).sum = _ at hmass
+    rw [hmass]
+    rw [hthalf]
+    ring
   have f2 : 2*(R.toList.map (f a b d)).sum=(t-2)*A+4*M := by
     have hmass := mf.2.2.1
-    dsimp [R,a,b] at hmass
-    simp only [pow_add,pow_one] at hmass
-    norm_num at hmass
-    rw [hthalf]; dsimp [t] at *; nlinarith only [hmass]
+    change (R.toList.map (f a b d)).sum = _ at hmass
+    rw [hmass]
+    rw [hthalf]
+    ring
   have f3 : 2*(G.toList.map (f a b d)).sum=(2*t-2)*L := by
     have hmass := mf.2.2.2
-    dsimp [G,a,b] at hmass
-    simp only [pow_add,pow_one] at hmass
-    norm_num at hmass
-    dsimp [t]; nlinarith only [hmass]
+    change (G.toList.map (f a b d)).sum = _ at hmass
+    rw [hmass]
+    dsimp only [t]
+    ring
   have g0 : 2*(P.toList.map (g a b d)).sum=(8*t-14)*Mn := by
     have hmass := mg.1
-    dsimp [P,a,b] at hmass
-    simp only [pow_add,pow_one] at hmass
-    norm_num at hmass
-    dsimp [t]; nlinarith only [hmass]
+    change (P.toList.map (g a b d)).sum = _ at hmass
+    rw [hmass]
+    dsimp only [t]
+    simp only [pow_add,pow_one]
+    ring
   have g1 : 2*(Q.toList.map (g a b d)).sum=(t-2)*Bn+8*Mn := by
     have hmass := mg.2.1
-    dsimp [Q,a,b] at hmass
-    simp only [pow_add,pow_one] at hmass
-    norm_num at hmass
-    rw [hthalf]; dsimp [t] at *; nlinarith only [hmass]
+    change (Q.toList.map (g a b d)).sum = _ at hmass
+    rw [hmass]
+    rw [hthalf]
+    ring
   have g2 : 2*(R.toList.map (g a b d)).sum=(t-2)*(2*A)+4*Mn := by
     have hmass := mg.2.2.1
-    dsimp [R,a,b] at hmass
-    simp only [pow_add,pow_one] at hmass
-    norm_num at hmass
-    rw [hthalf]; dsimp [t] at *; nlinarith only [hmass]
+    change (R.toList.map (g a b d)).sum = _ at hmass
+    rw [hmass]
+    rw [hthalf]
+    ring
   have g3 : 2*(G.toList.map (g a b d)).sum=(2*t-2)*Ln := by
     have hmass := mg.2.2.2
-    dsimp [G,a,b] at hmass
-    simp only [pow_add,pow_one] at hmass
-    norm_num at hmass
-    dsimp [t]; nlinarith only [hmass]
+    change (G.toList.map (g a b d)).sum = _ at hmass
+    rw [hmass]
+    dsimp only [t]
+    ring
   have nt0 := tab.2.2.2.1 3
   have e0 : start b d 3+length a b d 3-1=n0 := by
     dsimp [start,length,n0,k,rank,b,a]; omega
@@ -1108,7 +1113,7 @@ private theorem corner_three_plan (d : ℕ) (hd : 2 ≤ d) :
   have neg0 : f a b d n0 ≤ 0 ∧ g a b d n0 ≤ 0 := by
     apply negative_label a b d hd hdb hba
     · dsimp [n0,k,rank,b,a]; omega
-    · simp [n0,k,rank,negatives,size,b,a]; omega
+    · simp [n0,k,rank,negatives,size,b,a] <;> omega
   have neg1 : f a b d n1 ≤ 0 ∧ g a b d n1 ≤ 0 := by
     apply negative_label a b d hd hdb hba
     · dsimp [n1,k,rank,b,a]; omega
@@ -1116,7 +1121,7 @@ private theorem corner_three_plan (d : ℕ) (hd : 2 ≤ d) :
   have neg2 : f a b d n2 ≤ 0 ∧ g a b d n2 ≤ 0 := by
     apply negative_label a b d hd hdb hba
     · dsimp [n2,k,rank,b,a]; omega
-    · simp [n2,k,rank,negatives,size,b,a]; omega
+    · simp [n2,k,rank,negatives,size,b,a] <;> omega
   have neg3 : f a b d n3 ≤ 0 ∧ g a b d n3 ≤ 0 := by
     apply negative_label a b d hd hdb hba
     · dsimp [n3,k,rank,b,a]; omega
@@ -1133,7 +1138,7 @@ private theorem corner_three_plan (d : ℕ) (hd : 2 ≤ d) :
       List.cons_append,List.nil_append,List.append_nil] using h
   have hcut : pre.length=d := by
     have hdis : Disjoint ({3*d+1}:Finset ℕ) (Finset.Ico (3*d+4) (4*d+3)) := by
-      simp [Finset.disjoint_left]; omega
+      simp [Finset.disjoint_left] <;> omega
     simp only [pre,P,corner3P,Matrix.cons_val_zero,shift,Finset.length_toList]
     rw [Finset.card_union_of_disjoint hdis,Finset.card_singleton,Nat.card_Ico]
     omega
