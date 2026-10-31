@@ -1,0 +1,15 @@
+### 7.1 原门矩阵及黄金关系
+
+项目固定门稿与 v15 的门约定为以下精确矩阵。这里继续使用原比特顺序， 避免把中央占据模式 $010$ 的位置标签与本稿权重标签 $3$ 混同。［[golden](#ref-golden)，[v15](#ref-v15)］
+
+$$
+\varphi=\frac{1+\sqrt5}{2},\quad
+\zeta=e^{3\pi i/5},\quad
+Q=\begin{pmatrix}\varphi^{-1}&\varphi^{-3/2}\\
+                  \varphi^{-3/2}&\varphi^{-2}\end{pmatrix},
+\qquad
+\mathcal P=n_Ln_R+(1-n_L)(1-n_R)Q_C .
+$$
+
+<a id="thm:golden"></a>
+
