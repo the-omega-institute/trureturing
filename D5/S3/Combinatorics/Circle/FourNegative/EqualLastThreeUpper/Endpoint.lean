@@ -33,8 +33,8 @@ theorem actualSource_equal_last_three_upper_joint_lift (a s : ℕ) (hs : 2 ≤ s
         (earWord (a + 3 * s) sigma (if a = s then s - 1 else 3 * s)) := by
   by_cases heq : a = s
   · subst a
-    simpa only [if_pos rfl, rank, amplitude] using equal s hs
-  · simpa only [if_neg heq, rank, amplitude] using strict a s hs (by omega)
+    simpa [rank, amplitude] using equal s hs
+  · simpa only [ite_eq_right heq, rank, amplitude] using strict a s hs (by omega)
 
 #check actualSource_equal_last_three_upper_joint_lift
 #print axioms actualSource_equal_last_three_upper_joint_lift
