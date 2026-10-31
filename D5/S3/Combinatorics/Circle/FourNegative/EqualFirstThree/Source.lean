@@ -83,11 +83,14 @@ private theorem paired_table (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d) :
   have eoV : 1 + D + D * R + D * R * R = V := by dsimp [V, vcoef]; ring
   have eoW : 1 + R + R * D + R * D * R = W := by dsimp [W, wcoef]; ring
   have eoX : 1 + R + R * R + R * R * D = X := by dsimp [X, xcoef]; ring
-  simp only [eoV, eoW, eoX] at hU hV hW hX
-  change ∀ i < d, f i = if i + 1 < d then 2 ^ i * A else -(N - V)/2 at hU
-  change ∀ i < s, f (d + i) = if i + 1 < s then 2 ^ i * V else -(N - W)/2 at hV
-  change ∀ i < s, f (d + s + i) = if i + 1 < s then 2 ^ i * W else -(N - X)/2 at hW
-  change ∀ i < s, f (d + s + s + i) = if i + 1 < s then 2 ^ i * X else -(N - A)/2 at hX
+  change ∀ i < d, f i = if i + 1 < d then 2 ^ i * A else -(N - (1 + D + D * R + D * R * R))/2 at hU
+  change ∀ i < s, f (d + i) = if i + 1 < s then 2 ^ i * (1 + D + D * R + D * R * R) else -(N - (1 + R + R * D + R * D * R))/2 at hV
+  change ∀ i < s, f (d + s + i) = if i + 1 < s then 2 ^ i * (1 + R + R * D + R * D * R) else -(N - (1 + R + R * R + R * R * D))/2 at hW
+  change ∀ i < s, f (d + s + s + i) = if i + 1 < s then 2 ^ i * (1 + R + R * R + R * R * D) else -(N - A)/2 at hX
+  rw [eoV] at hU
+  rw [eoV, eoW] at hV
+  rw [eoW, eoX] at hW
+  rw [eoX] at hX
   have hDn : (2 : ℤ) ^ (d + 1) = 2 * D := by dsimp [D]; rw [pow_succ]; ring
   simp only [hDn] at hUn hVn hWn hXn
   have eV : 1 + 2 * D + 2 * D * R + 2 * D * R * R = Vn := by dsimp [Vn, V, vcoef]; ring

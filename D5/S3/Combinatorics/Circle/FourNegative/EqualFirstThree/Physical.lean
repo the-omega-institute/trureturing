@@ -57,7 +57,7 @@ private theorem source_data (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d) :
   have hN : N = D * R * R * R - 1 := by
     dsimp [N, modulus, rank, D, R]
     rw [show 3 * s + d = d + s + s + s by omega]
-    simp only [pow_add]; ring
+    simp only [pow_add] <;> ring
   have hM : modulus (rank s d + 1) = 2 * N + 1 := by
     dsimp [N, modulus]; rw [pow_succ]; ring
   have hb : 0 < seed R ∧ seed R < N := by
