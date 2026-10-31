@@ -115,7 +115,7 @@ private lemma contract_eRk_add (M : Matroid α) (C X : Set α) :
   rw [contract_eRk_union, contract_eRk_add_of_subset]
   exact subset_union_right
 
-@[simp] private lemma cast_toNat_eRk (M : Matroid α) [RankFinite M] (X : Set α) :
+@[simp] lemma cast_toNat_eRk (M : Matroid α) [RankFinite M] (X : Set α) :
     ((M.eRk X).toNat : ℕ∞) = M.eRk X :=
   ENat.natCast_toNat (M.isRkFinite_set X).eRk_lt_top.ne
 
@@ -127,7 +127,7 @@ private lemma rank_mono (M : Matroid α) [RankFinite M] (hXY : X ⊆ Y) :
 private lemma indep_rank_eq_ncard (hI : M.Indep I) : (M.eRk I).toNat = I.ncard := by
   rw [hI.eRk_eq_encard, ncard_def]
 
-private lemma rank_submod (M : Matroid α) [RankFinite M] (X Y : Set α) :
+lemma rank_submod (M : Matroid α) [RankFinite M] (X Y : Set α) :
     (M.eRk (X ∩ Y)).toNat + (M.eRk (X ∪ Y)).toNat ≤
       (M.eRk X).toNat + (M.eRk Y).toNat := by
   rw [← ENat.natCast_le_natCast, Nat.cast_add, Nat.cast_add,
