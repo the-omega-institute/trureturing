@@ -23,6 +23,7 @@ The source conventions are literal; CompletelyMonotoneOn is reused from its exis
 Only the endpoint pair (3/2,1/2) is certified; no all-alpha or interior-beta family is asserted.
 -/
 
+import Mathlib.Analysis.Normed.Group.FunctionSeries
 import D5.S3.Analytic.KilbasSaigo.Series
 import D5.S3.Analytic.ExpRatioCM.Defs
 import D5.S3.Weil.ZetaGamma.FormCore.FiniteGaussianCap4.FiniteGaussianAnalyticEndpoints
@@ -347,6 +348,57 @@ private theorem source_norm_summable {α : ℝ} (hα : 0 < α) (β : ℝ) (z : �
   rw [← norm_mul]
   congr 1
   ring
+
+/-- For a fixed positive alpha and complex argument, the literal source family is
+continuous in beta throughout the positive half-line. Reciprocal Gamma is used
+as an entire function, so each finite summand is continuous even at its zeros. -/
+theorem source_continuousOn_beta {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSourceSeries E)
+    {α : ℝ} (hα : 0 < α) (z : ℂ) :
+    ContinuousOn (fun β : ℝ => E α β z) (Set.Ioi 0) := by
+  have heq (β : ℝ) : E α β z =
+      ∑' n : ℕ, z ^ n / (Real.Gamma (α * n + β) : ℂ) :=
+    (hE α hα β z).tsum_eq.symm
+  simp_rw [heq]
+  have hterm (n : ℕ) :
+      Continuous (fun β : ℝ => z ^ n / (Real.Gamma (α * n + β) : ℂ)) := by
+    simp_rw [div_eq_mul_inv, ← Complex.Gamma_ofReal]
+    exact continuous_const.mul
+      (Complex.differentiable_one_div_Gamma.continuous.comp (by fun_prop))
+  intro b hb
+  have hb0 : 0 < b := hb
+  let a : ℝ := b / 2
+  have ha : 0 < a := half_pos hb0
+  obtain ⟨N, hN⟩ := exists_nat_gt ((2 - a) / α)
+  have hN' : 2 ≤ α * N + a := by
+    have := (div_lt_iff₀ hα).mp hN
+    nlinarith
+  have hbound : ∀ᶠ n : ℕ in atTop, ∀ β ∈ Set.Icc a (b + 1),
+      ‖z ^ n / (Real.Gamma (α * n + β) : ℂ)‖ ≤
+        ‖z ^ n / (Real.Gamma (α * n + a) : ℂ)‖ := by
+    filter_upwards [eventually_ge_atTop N] with n hn
+    intro β hβ
+    have hna : 2 ≤ α * n + a := by
+      have : (N : ℝ) ≤ n := by exact_mod_cast hn
+      nlinarith
+    have hnb : 2 ≤ α * n + β := by linarith [hβ.1]
+    have hG : Real.Gamma (α * n + a) ≤ Real.Gamma (α * n + β) :=
+      Real.Gamma_strictMonoOn_Ici.monotoneOn hna hnb (by linarith [hβ.1])
+    rw [norm_div, norm_div, norm_pow, Complex.norm_real, Complex.norm_real,
+      Real.norm_eq_abs, Real.norm_eq_abs,
+      abs_of_pos (Real.Gamma_pos_of_pos (by linarith : 0 < α * n + β)),
+      abs_of_pos (Real.Gamma_pos_of_pos (by linarith : 0 < α * n + a))]
+    exact div_le_div_of_nonneg_left (pow_nonneg (norm_nonneg _) _)
+      (Real.Gamma_pos_of_pos (by linarith)) hG
+  have hU := tendstoUniformlyOn_tsum_nat_eventually
+    (source_norm_summable_positive hα ha z) hbound
+  have hC : ContinuousOn
+      (fun β : ℝ => ∑' n : ℕ, z ^ n / (Real.Gamma (α * n + β) : ℂ))
+      (Set.Icc a (b + 1)) := by
+    apply hU.continuousOn
+    exact Filter.Frequently.of_forall fun M =>
+      continuousOn_finsetSum _ fun n _ => (hterm n).continuousOn
+  exact (hC.continuousAt (Icc_mem_nhds (by dsimp [a]; linarith) (by linarith))).
+    continuousWithinAt
 
 private theorem source_exists : ∃ E : ℝ → ℝ → ℂ → ℂ, IsSourceSeries E := by
   refine ⟨fun α β z => ∑' n : ℕ, z^n / (Real.Gamma (α*n+β) : ℂ), ?_⟩
