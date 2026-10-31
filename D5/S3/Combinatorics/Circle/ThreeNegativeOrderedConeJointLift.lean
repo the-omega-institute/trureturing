@@ -983,7 +983,10 @@ theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
     dsimp only [D]
     rw [hDexpr, huHalf]
     dsimp only [Kb, u]
-    rw [hrhalf, hsp]
+    have hsdiv : s / 2 = p := by
+      rw [hsp]
+      exact Int.mul_ediv_cancel_left p (by norm_num)
+    rw [hsdiv, hrhalf, hsp]
     ring
   by_cases hcut : D ≤ s * t + s / 2
   · have hDleN := hDleN_of_le hcut
