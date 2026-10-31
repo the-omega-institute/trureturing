@@ -13,7 +13,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.AdvancedX
 /-! Every independent gap ordering is retained before the natural fourth-gap lift. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-namespace D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo
+namespace D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Endpoint
 open SourceWidth PeriodicShortening RunFirstEarTransport Chambers
 open private seedZ old charge natural_lift_strong
   from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Lift
@@ -81,7 +81,6 @@ theorem actualSource_max_plus_two_first_ear (a b c d : ℕ)
   let t:=d-d0
   let B:ℤ:=2^(d0-1)*2^a*2^b*2^c
   let xs:=baseWord a b c
-  have hd0 : max (max a b) c+2=d0 := rfl
   have hd' : d0+t=d := by dsimp [d0,t] at *; omega
   obtain ⟨hinv,hstrong⟩:=base_actual a b c ha hb hc
   change xs.Perm (List.range (a+b+c+d0)) at hinv
@@ -102,9 +101,7 @@ theorem actualSource_max_plus_two_first_ear (a b c d : ℕ)
     rw [show d-1=t+(d0-1) by dsimp [t,d0] at *;omega,pow_add]
     ring
   rw [hd',hpow] at hl
-  have hword : physicalWord a b c d=List.range t++xs.map (t+·) := by
-    dsimp [physicalWord,t,xs]
-    rw [hd0]
+  have hword : physicalWord a b c d=List.range t++xs.map (t+·) := rfl
   have hlInv : (List.range t++xs.map (t+·)).Perm (List.range (a+b+c+d)) := by
     have hmap : (List.range (a+b+c+d0)).map (t+·)=List.range' t (a+b+c+d0) := by
       rw [List.range_eq_range']
@@ -119,4 +116,4 @@ theorem actualSource_max_plus_two_first_ear (a b c d : ℕ)
   · simpa only [hword] using hlInv
   · simpa only [hword] using hl
 
-end D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo
+end D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Endpoint

@@ -57,7 +57,7 @@ private theorem ascending_actual (a b c : ℕ) (ha : 2≤a)
     have he2 : e<2 := by
       by_contra hh
       have hz:=Nat.testBit_eq_false_of_lt (lt_of_lt_of_le hlen (Nat.pow_le_pow_right Nat.zero_lt_two (show 2≤e by omega)))
-      simp only [hz] at he
+      simp [hz] at he
     change (2^2-1:ℕ).testBit e=true
     simp only [Nat.testBit_two_pow_sub_one,decide_eq_true_eq]
     exact he2
@@ -73,8 +73,7 @@ private theorem ascending_actual (a b c : ℕ) (ha : 2≤a)
   have hword : baseWord a b c=chamberMaskedWord a b c (c+2) 3 3 (3 ^^^ wl.2) 0 v v wl.1 := by
     dsimp only [baseWord,baseBlocks]
     rw [if_pos hmono]
-    simp only [monotoneBlocks,if_neg hnot,hd]
-    simp only [if_neg hneq]
+    simp only [monotoneBlocks,if_neg hnot,if_neg hneq,hd]
     rw [hD,hseed]
     have he1 : 4*(Z:ℤ)*((R:ℤ)*T+R+1)/2=e1 := by
       have he : 4*(Z:ℤ)*((R:ℤ)*T+R+1)=2*e1 := by dsimp [e1]; ring

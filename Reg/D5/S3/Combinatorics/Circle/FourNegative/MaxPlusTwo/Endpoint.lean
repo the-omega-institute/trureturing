@@ -12,7 +12,7 @@ namespace Reg.D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Endpoint
 open _root_.D5.S3.Combinatorics.Circle.SourceWidth
 open _root_.D5.S3.Combinatorics.Circle.PeriodicShortening
 open _root_.D5.S3.Combinatorics.Circle.RunFirstEarTransport
-open _root_.D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo
+open _root_.D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Endpoint
 noncomputable section
 
 abbrev Params := ℕ × ℕ × ℕ × ℕ
@@ -129,9 +129,9 @@ def source_registration : Registration arena
   dependence := actual_dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
-    (@_root_.D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.actualSource_max_plus_two_first_ear)
+    (@_root_.D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Endpoint.actualSource_max_plus_two_first_ear)
     (type_of% (realize signature actual.readout actual.anchor)) Nat Unit := {
-  unitName := `D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.actualSource_max_plus_two_first_ear.__information_unit
+  unitName := `D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Endpoint.actualSource_max_plus_two_first_ear.__information_unit
   realizationName :=
     `Reg.D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Endpoint.source_registration
   realizationSource := none

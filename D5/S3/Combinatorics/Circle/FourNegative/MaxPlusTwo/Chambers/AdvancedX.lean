@@ -253,7 +253,7 @@ private theorem actual_advanced_strong_exact
       linarith only [hh]
   have inv0:=masked_inventory a b c d u1 u2 u3 v0 v2 v3 w
     (by omega) (by omega) (by omega) (by omega) hU12 hU23
-    (by intro e he _; simp [Nat.testBit_two_pow_sub_one,he])
+    (by intro e _ he; simp at he)
     (by intro e _ he; simp only [Nat.testBit_or,he,Bool.or_true]) hV23 hVxor
   have hpword:=advanced_permutation a b c d u1 u2 u3 v0 v2 v3 w xt
   have inv:=hpword.trans inv0
@@ -321,7 +321,7 @@ private theorem descending_edge_actual (b : ℕ) (hb : 2≤b) :
     by_cases he : b=2
     · left; norm_num [T,he]
     · right; exact_mod_cast (Nat.pow_le_pow_right Nat.zero_lt_two (show 3≤b by omega))
-  have hu1 : (u1:ℤ)=if (T:ℤ)=4 then 5 else T+5 := by
+  have hu1 : (u1:ℤ)=if (T:ℤ)=4 then (5:ℤ) else (T:ℤ)+5 := by
     by_cases he : b=2
     · norm_num [T,u1,he]
     · have h8 : 8≤T:=Nat.pow_le_pow_right Nat.zero_lt_two (show 3≤b by omega)
@@ -358,7 +358,7 @@ private theorem descending_edge_actual (b : ℕ) (hb : 2≤b) :
     have hmono : min (b+1) 2≤b ∧ b≤max (b+1) 2 := by
       rw [min_eq_right (by omega),max_eq_left (by omega)]; omega
     have hd : max (max (b+1) b) 2+2=b+3 := by
-      rw [max_eq_left (by omega),max_eq_left (by omega)]; omega
+      rw [max_eq_left (by omega),max_eq_left (by omega)]
     have he : (2:ℕ)^(b+1)=2*2^b := by rw [pow_succ]; ring
     have hz (len off : ℕ) : labels len off 0=[] := by simp [labels]
     dsimp only [baseWord,baseBlocks]
@@ -374,7 +374,7 @@ private theorem descending_edge_actual (b : ℕ) (hb : 2≤b) :
     apply masked_inventory _ _ _ _ _ _ _ _ _ _ _ (by omega) (by omega) (by omega) (by omega)
     · intro e _ he; exact h5sub e he
     · intro e _ he; exact he
-    · intro e he _; simp [Nat.testBit_two_pow_sub_one,he]
+    · intro e _ he; simp at he
     · simp
     · simp
     · simp
