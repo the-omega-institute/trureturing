@@ -80,6 +80,15 @@ private theorem coeff_shifted (n : ℕ) (μ : Fin 3 → ℕ) (σ : Perm (Fin 3))
     have hle : staircase (σ i) ≤ μ i + staircase i := h i
     simp only [Finsupp.tsub_apply, exponent, permutedStaircase,
       Finsupp.coe_equivFunOnFinite_symm, shifted]
+    let fibreCount (d : DecidablePred (fun x : Fin n => f x = i)) : ℕ :=
+      (@Finset.filter (Fin n) (fun x => f x = i) d Finset.univ).card
+    suffices ∀ (d₁ d₂ : DecidablePred (fun x : Fin n => f x = i)),
+        fibreCount d₁ = μ i + staircase i - staircase (σ i) ↔
+          (fibreCount d₂ : ℤ) = (μ i : ℤ) - (i : ℕ) + (σ i : ℕ) by
+      exact this _ _
+    intro d₁ d₂
+    rw [show fibreCount d₁ = fibreCount d₂ from
+      congrArg fibreCount (Subsingleton.elim d₁ d₂)]
     unfold staircase at hle ⊢
     omega
   · rw [if_neg h]
