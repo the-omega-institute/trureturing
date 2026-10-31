@@ -70,21 +70,25 @@ example (d : ℝ) (hd : 0 < d) (hdhalf : d ≤ 1 / 2) :
     exact mul_ne_zero (mul_ne_zero (by norm_num) (by exact_mod_cast ne_of_gt hb)) I_ne_zero
   have hnodes : node d ≠ other d := sub_ne_zero.mp hnv0
   have hconj : other d = conj (node d) := by
-    simp [other, node, map_add, map_mul]
+    simp [other, node, map_add, map_mul, sub_eq_add_neg]
   have hnodeball : node d ∈ closedBall (0 : ℂ) 1 := by
-    rw [mem_closedBall, dist_zero_right, norm_le_one_iff]
-    simpa [node, Complex.normSq_apply, pow_two] using hab
+    rw [mem_closedBall, dist_zero_right]
+    apply (sq_le_sq₀ (norm_nonneg _) (by norm_num : (0 : ℝ) ≤ 1)).mp
+    rw [Complex.sq_norm]
+    simpa [node, Complex.normSq_apply] using hab
   have hinterp (g : ℂ → ℂ) : error d g = deriv g 1 -
       deriv (interpolant g (1 - d) (Real.sqrt 3 * d)) 1 := by
     rw [interpolant_deriv]
-    simp only [error, D5.S3.Analytic.Interpolation.SchurConjugateSlope.slope, node, other, ofReal_sub, ofReal_one, hnv]
+    unfold error
+    rw [hnv]
+    simp only [D5.S3.Analytic.Interpolation.SchurConjugateSlope.slope, node, other, ofReal_sub, ofReal_one]
   have hpoly (z : ℂ) : (poly d).eval₂ (algebraMap ℝ ℂ) z = quartic d z := by
     simp [poly, quartic, eval₂_add, eval₂_sub, eval₂_mul, eval₂_pow]
     ring
   have hdeg : (poly d).natDegree = 4 := by
-    apply natDegree_eq_of_le_of_coeff_ne_zero
+    refine natDegree_eq_of_le_of_coeff_ne_zero (n := 4) ?_ ?_
     · unfold poly
-      compute_degree!
+      compute_degree
     · simp [poly, coeff_add, coeff_sub, coeff_C_mul, coeff_X_pow]
       exact div_ne_zero he0 (mul_ne_zero (by norm_num) hs0)
   let first : ℂ → ℂ := fun z =>
@@ -96,7 +100,7 @@ example (d : ℝ) (hd : 0 < d) (hdhalf : d ≤ 1 / 2) :
       ((hasDerivAt_const z (eps d : ℂ)).mul
         ((((hasDerivAt_id z).pow 2).div_const 2).sub
           (((hasDerivAt_id z).pow 4).div_const 12)))).div_const (scale d : ℂ) using 1 <;>
-      dsimp [quartic, first] <;> ring
+      dsimp [quartic, first] <;> first | ring | (funext x; dsimp [quartic]; ring)
   have hg2 (z : ℂ) : HasDerivAt first (second z) z := by
     convert ((((hasDerivAt_id z).pow 2).div_const 2).add
       ((hasDerivAt_const z (eps d : ℂ)).mul
@@ -112,7 +116,8 @@ example (d : ℝ) (hd : 0 < d) (hdhalf : d ≤ 1 / 2) :
   have hcircle (z : ℂ) (hz : ‖z‖ = 1) : ‖f z‖ ≤ scale d := by
     have hxy : z.re ^ 2 + z.im ^ 2 = 1 := by
       have H := congrArg (fun r : ℝ => r ^ 2) hz
-      simpa [Complex.sq_norm, Complex.normSq_apply, pow_two] using H
+      rw [Complex.sq_norm] at H
+      simpa [Complex.normSq_apply] using H
     have hfact : f z = z * (1 - 2 * (eps d : ℂ) * (z.im : ℂ) * I) := by
       apply Complex.ext <;>
         simp [f, pow_two, Complex.mul_re, Complex.mul_im] <;>
@@ -120,8 +125,7 @@ example (d : ℝ) (hd : 0 < d) (hdhalf : d ≤ 1 / 2) :
     rw [hfact, norm_mul, hz, one_mul]
     apply (sq_le_sq₀ (norm_nonneg _) hs.le).mp
     rw [Complex.sq_norm, hs2]
-    simp only [Complex.normSq_apply, sub_re, one_re, mul_re, ofReal_re, ofReal_im,
-      ofNat_re, ofNat_im, I_re, I_im, mul_im, one_im, sub_im]
+    simp [Complex.normSq_apply]
     have hnon := mul_nonneg (sq_nonneg (eps d)) (show 0 ≤ 1 - z.im ^ 2 by
       nlinarith [sq_nonneg z.re])
     nlinarith
@@ -129,10 +133,10 @@ example (d : ℝ) (hd : 0 < d) (hdhalf : d ≤ 1 / 2) :
     apply Complex.norm_le_of_forall_mem_frontier_norm_le
       (U := ball (0 : ℂ) 1) isBounded_ball hf.diffContOnCl
     · intro w hw
-      rw [frontier_ball (by norm_num : (1 : ℝ) ≠ 0)] at hw
+      rw [frontier_ball (0 : ℂ) (by norm_num : (1 : ℝ) ≠ 0)] at hw
       apply hcircle
       simpa only [mem_sphere, dist_zero_right] using hw
-    · rwa [closure_ball (by norm_num : (0 : ℝ) < 1)]
+    · rwa [closure_ball (0 : ℂ) (by norm_num : (1 : ℝ) ≠ 0)]
   have hsecond_bound (z : ℂ) (hz : z ∈ closedBall (0 : ℂ) 1) :
       ‖deriv (deriv (quartic d)) z‖ ≤ 1 := by
     rw [hsecond]
