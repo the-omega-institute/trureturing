@@ -39,16 +39,19 @@ private theorem native_labels (a b c d : ℕ)
     chainStart b c d r ∈ positivePacket a b c d r := by
   fin_cases r <;>
     simp only [positivePacket,chainStart,chainLength,Finset.mem_Ico,negatives,
-      List.mem_cons,List.mem_nil_iff,or_false,size] <;> constructor <;> omega
+      List.mem_cons,List.mem_nil_iff,or_false,size,
+      Matrix.cons_val_zero',Matrix.cons_val_succ'] <;> constructor <;> omega
 
 private theorem assigned_labels (a b c d : ℕ)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d) (n : Fin 16) (r : Fin 4) :
     ∀ i ∈ assigned a b c d n r, i < size a b c d ∧ i ∉ negatives a b c d := by
   have h := native_labels a b c d ha hb hc hd
   have hs (src : Fin 4) := (h src).1 _ (h src).2
-  fin_cases n <;> simp only [assigned,transfer,Matrix.cons_val_zero,Matrix.cons_val_one,
-    Matrix.cons_val_succ] <;> try exact (h r).1
-  all_goals
+  cases he : transfer n with
+  | none => simpa only [assigned,he] using (h r).1
+  | some p =>
+    rcases p with ⟨src,dst⟩
+    simp only [assigned,he]
     split_ifs <;> intro i hi
     · exact (h r).1 i (Finset.mem_of_mem_erase hi)
     · rcases Finset.mem_insert.mp hi with hi | hi
@@ -58,9 +61,9 @@ private theorem assigned_labels (a b c d : ℕ)
 
 private theorem packet_labels (a b c d : ℕ)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d) (n : Fin 16) :
-    ∀ b ∈ packets a b c d n, ∀ i ∈ b.1, i < size a b c d ∧ i ∉ negatives a b c d := by
-  intro b hb'
-  obtain ⟨r,_,rfl⟩ := List.mem_map.mp hb'
+    ∀ blk ∈ packets a b c d n, ∀ i ∈ blk.1, i < size a b c d ∧ i ∉ negatives a b c d := by
+  intro blk hblk
+  obtain ⟨r,_,rfl⟩ := List.mem_map.mp hblk
   exact assigned_labels a b c d ha hb hc hd n r
 
 private theorem negative_order (a b c d : ℕ)
@@ -80,7 +83,7 @@ private theorem physical_partition (a b c d : ℕ)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d) (n : Fin 16) :
     (blocksWord (orderedPackets (packets a b c d n)) : Multiset ℕ) =
       (List.range (size a b c d) : Multiset ℕ) := by
-  apply Multiset.ext
+  apply Multiset.ext.mpr
   intro i
   have hcount (P : Finset ℕ) :
       Multiset.count i (P.toList : Multiset ℕ) = if i∈P then 1 else 0 := by
@@ -92,10 +95,10 @@ private theorem physical_partition (a b c d : ℕ)
       (show (List.range (size a b c d) : Multiset ℕ).Nodup from List.nodup_range))
   rw [hrange]
   fin_cases n <;>
-    simp only [packets,order,List.map_cons,List.map_nil,orderedPackets,blocksWord,
+    simp only [packets,order,Matrix.cons_val_zero',Matrix.cons_val_succ',List.map_cons,List.map_nil,orderedPackets,blocksWord,
       Multiset.coe_append,Multiset.coe_cons,Multiset.coe_nil,Multiset.count_add,
       Multiset.count_cons,Multiset.count_zero,hcount] <;>
-    simp only [assigned,transfer,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_succ,
+    simp only [assigned,transfer,Matrix.cons_val_zero',Matrix.cons_val_succ',
       Fin.isValue,ite_true,ite_false,Finset.mem_insert,Finset.mem_erase,
       positivePacket,negativeLabel,chainStart,chainLength,Finset.mem_Ico,size] <;>
     split_ifs <;> omega
