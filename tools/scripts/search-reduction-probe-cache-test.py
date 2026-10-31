@@ -4,6 +4,7 @@ import importlib.util
 import json
 import os
 import re
+import subprocess
 from pathlib import Path
 import tempfile
 import unittest
@@ -300,6 +301,36 @@ class ProbeCacheTests(unittest.TestCase):
                                     "SEARCH_REDUCTION_PROBE_CACHE": "0"}), \
                 patch.object(cache.subprocess, "call", return_value=cache.REJECTION_EXIT):
             self.assertEqual(cache.run(["lean", "request.lean"]), 1)
+
+    def test_real_lean_terminal_preserves_the_rejection_diagnostic(self):
+        built = subprocess.run([
+            "make", "lean", "LEAN_SKIP_LOCK=1",
+            "LEAN_TARGETS=LeanInformationAuditRegTests.SearchReduction.ProbeCacheFixture"],
+            text=True, capture_output=True)
+        self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
+        request = self.directory / "terminal.lean"
+        request.write_text('''import LeanInformationAuditRegTests.SearchReduction.ProbeCacheFixture
+open Lean Meta Elab Command LeanInformationAudit.SearchReduction
+open LeanInformationAudit.Tests.SearchReduction
+run_cmd withCacheFixture fun f => do
+  let request := {f.request with additions := #[`cacheFixtureAux]}
+  let result := {f.result with graph? := some {
+    graph := {edges := [{conclusion := 0, zeroProof := some (mkConst `cacheFixtureAux)}]} }}
+  f.write result (some {arm := .baseline, dependency := `cacheFixtureAux})
+  discard <| replayProbeCache f.directory f.identity request #[] `terminalTransportRegression
+''')
+        profile = self.directory / "terminal.profile"
+        env = dict(os.environ, SEARCH_REDUCTION_PROBE_CACHE="0",
+                   SEARCH_REDUCTION_WORKERS="1", SEARCH_REDUCTION_RESUME="",
+                   SEARCH_REDUCTION_PROFILE=str(profile))
+        result = subprocess.run(["make", "search-reduction-run", f"REQUESTS={request}"],
+                                env=env, text=True, capture_output=True)
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertIn("baseline: search.source_certificate_leak:cacheFixtureAux", result.stderr)
+        self.assertIn("PROBE_CACHE hit=authenticated", result.stderr)
+        trace = profile.read_text()
+        self.assertNotIn("R_QUERY", trace)
+        self.assertNotIn("search/branch/start", trace)
 
     def make_record(self):
         path = self.directory / "record"

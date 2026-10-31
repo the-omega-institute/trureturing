@@ -1304,7 +1304,7 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
       ((← IO.getEnv "SEARCH_REDUCTION_WORKERS").bind String.toNat?).getD 8
     profilePhase "request/child-start"
     let child ← IO.Process.output {
-      cmd := "lean", args := #[s!"-j{workers}", "--root=" ++ directory.toString,
+      cmd := "lean", args := #[s!"-j{workers}", "-DstderrAsMessages=false", "--root=" ++ directory.toString,
         "-o", output.toString, input.toString],
       env := #[("SEARCH_REDUCTION_PROBE_PLANNED", some "1")]}
     profilePhase "request/child-end"
