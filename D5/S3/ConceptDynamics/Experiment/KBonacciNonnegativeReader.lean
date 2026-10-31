@@ -128,14 +128,9 @@ private theorem state_snoc (w : World) (prior : List Action) (a : Action) :
   simp [state, List.foldl_append]
 
 private theorem charges (h : History) : paidReads h = preparations h + windows h := by
-  induction h with
-  | nil => rfl
-  | cons a h ih =>
-    simp only [paidReads, List.length_cons, preparations, windows, List.countP_cons] at ih ⊢
-    simp only [Option.isNone, Option.isSome] at ih ⊢
-    cases ha : a.1.2 <;>
-      simp only [ha, Option.isNone, Option.isSome, Bool.false_eq_true, ite_false,
-        ite_true] <;> omega
+  simpa [paidReads, preparations, windows, Bool.not_eq_true] using
+    (List.length_eq_countP_add_countP (fun a : Sigma (fun _ : Query => ℝ) => a.1.2.isNone)
+      (l := h))
 
 private theorem terminal_unique (π : Protocol) (w : World) (n : ℕ) (h : History) (R : Mat)
     (hr : execute read π.policy n [] w = some (h, R)) :
@@ -357,19 +352,23 @@ private theorem initial_positive (w : World) : 0 < read ([], none) w := by
 Worst costs are extended suprema, and the infimum includes an empty protocol class.
 Only the preparation equality and simultaneous resource law are excluded. -/
 theorem complete_source_8_2 :
+    let T : World → Mat := target
+    let correct : Protocol → Prop := fun π => ∀ w, π.output w = T w
+    let value : ENNReal := ⨅ π : {π : Protocol // correct π}, worstPreparations π.val
     (∀ word : Window, ∃ p t : Fin 2,
       (word.val.takeWhile id).length = p.val ∧ live word.val = endpoint p t) ∧
     (∀ p t : Fin 2, ∃ word : Window, live word.val = endpoint p t) ∧
     (∀ w : World, 0 < read ([], none) w) ∧
     (∀ (π : Protocol) (w : World), paidReads (π.history w) =
       preparations (π.history w) + windows (π.history w)) ∧
-    (∀ π : Protocol, Correct π → ¬ (∀ w, preparations (π.history w) ≤ 1)) ∧
-    (∀ π : Protocol, Correct π → (2 : ENNReal) ≤ worstPreparations π) ∧
-    (2 : ENNReal) ≤ preparationValue ∧
-    preparationValue ≠ 1 ∧
-    ¬ (∃ π : Protocol, Correct π ∧ ∀ w,
+    (∀ π : Protocol, correct π → ¬ (∀ w, preparations (π.history w) ≤ 1)) ∧
+    (∀ π : Protocol, correct π → (2 : ENNReal) ≤ worstPreparations π) ∧
+    (2 : ENNReal) ≤ value ∧
+    value ≠ 1 ∧
+    ¬ (∃ π : Protocol, correct π ∧ ∀ w,
       preparations (π.history w) ≤ 1 ∧ windows (π.history w) ≤ 2 ∧
         paidReads (π.history w) ≤ 3) := by
+  dsimp only
   have impossible (π : Protocol) (hc : Correct π)
       (hb : ∀ w, preparations (π.history w) ≤ 1) : False := by
     obtain ⟨u, v, hne, _, he⟩ := one_preparation_terminal_collision π hb
