@@ -95,7 +95,7 @@ private theorem large (s d : ℕ) (hs : 2≤s) (hds : s+2≤d) :
     apply List.Perm.trans (l₂ := ((Pair.left U)++(Pair.right U))++nu::((Pair.left P)++(Pair.right P))++nv::
       ((Pair.left Q)++(Pair.right Q))++nw::((Pair.left T)++(Pair.right T))++[nx])
     · apply Multiset.coe_eq_coe.mp
-      simp only [word,F,K,S,G,Multiset.coe_append,Multiset.coe_cons,Multiset.coe_singleton]
+      simp only [word,F,K,S,G,←Multiset.coe_add,Multiset.coe_cons,Multiset.coe_singleton]
       ac_rfl
     · exact pair_inventory s d hs hd f g A (2*A) V (2*V-1) W (2*W-R-1) X (2*X-C) u v v v U P Q T
   have fF : (F.map f).sum=(e-1-u)*A := (Pair.fr U)

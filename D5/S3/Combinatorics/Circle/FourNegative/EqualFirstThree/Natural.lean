@@ -150,6 +150,7 @@ private theorem natural_slices (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d)
   have m2 := (Table.nvn tab)
   have m3 := (Table.nwn tab)
   have m4 := (Table.nxn tab)
+  rw [←hM] at m1 m2 m3 m4
   have hp : word.Perm (List.range (rank s d)) := natural_inventory s d hs hd
   have hz : (word.map f).sum = 0 := old_total s d hs hd word hp
   have hhalfD : 2 * (2 : ℤ) ^ (d - 1) = D := by
@@ -161,14 +162,15 @@ private theorem natural_slices (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d)
   have hmhalf : M/2 = N := by omega
   have hC0 : 0 < C := by dsimp [C,eta]; positivity
   have hCA : C + 1 ≤ A ∧ R + 2 ≤ A ∧ 3 * C ≤ 2 * A := by
-    have hRR : 0 ≤ R * R := mul_self_nonneg R
-    have hRR1 : R + 1 ≤ R * R := by nlinarith
-    have hcube : 4 * (R * R) ≤ R * R * R :=
-      mul_le_mul_of_nonneg_right hR hRR
+    let z := R-4
+    have hz : 0≤z := by dsimp [z];omega
+    have he : R=z+4 := by dsimp [z];ring
     dsimp [C,A,eta,seed]
-    constructor
-    · nlinarith
-    constructor <;> nlinarith
+    rw [he]
+    repeat' constructor
+    all_goals apply sub_nonneg.mp
+    all_goals ring_nf
+    all_goals positivity
   have oldbounds : (A ≤ V ∧ V ≤ 2 * A - 1) ∧
       (A ≤ W ∧ W ≤ 2 * A - 1) ∧ (A ≤ X ∧ X ≤ 2 * A - 1) := by
     rcases hcase with he | he

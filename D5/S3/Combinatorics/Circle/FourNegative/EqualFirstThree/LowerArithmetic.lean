@@ -78,9 +78,13 @@ private theorem lower_bounds (R D H r e B : ℤ)
   have ht : 2*t=N+V-2*A+2*n*X := by dsimp only [t]; linear_combination A*he+hDA
   have hnX : n*X=H*X-X := by dsimp [n]; ring
   have hseam1 : 2*p+(W-N)=2*(R-D) := by omega
-  have hseam2 : 2*p+(W-N)+2*q+(X-N)=2*(R-D)*(R+1) := by omega
+  have hseam2 : 2*p+(W-N)+2*q+(X-N)=2*(R-D)*(R+1) := by nlinarith only [hp,hq,hXV]
   have hseam3 : 2*p+(W-N)+2*q+(X-N)+2*t+(V-N)=2*n*C := by
     nlinarith only [hp,hq,ht,hHX,hnX]
+  have hDm : 0≤D-1 := by omega
+  have hDmm : 0≤2*D-1 := by omega
+  have hRDm : 0≤R-D := by omega
+  have hRDmm : 0≤R-2*D := by omega
   have hWVbound : W ≤ 2*V-1 := by
     have hh : 0 ≤ D*R*R+(D-1)*R+2*D := by positivity
     dsimp [W,V,wcoef,vcoef]
