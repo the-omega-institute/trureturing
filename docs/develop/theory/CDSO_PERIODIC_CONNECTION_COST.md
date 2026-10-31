@@ -1620,7 +1620,7 @@ pair \((a,h)\). Define
 
 $$
 A_R=\max\{A_R^{\mathrm{cap}},(8K_R)^2,8K_R\},\qquad
-C_R=K_R,\qquad D_R=2K_R^2.
+C_R=K_R^9,\qquad D_R=2K_R^{20}.
 \tag{9.2}
 $$
 
@@ -1680,19 +1680,19 @@ gives the safe bound (9.5). No enumeration of labelled subsets is used.
 \(\square\)
 
 **Lemma 9.2 (Uniform realization and full-class lower estimate).** Under
-(9.3), for every integer \(N\ge K_Ra^{20}\) there is an actual graph in
+(9.3), for every integer \(N\ge K_R^{20}a^{20}\) there is an actual graph in
 \(\mathfrak G_N(a,h)\) with a winning \(j\) satisfying
 \(\chi_{j,N}=\chi_N\) and
 
 $$
-W(G)\le M+\frac{\chi_N}{N}+\frac{K_Ra^{17}}{N^2}.
+W(G)\le M+\frac{\chi_N}{N}+\frac{K_R^9a^{17}}{N^2}.
 \tag{9.7}
 $$
 
 For every graph \(G\in\mathfrak G_N(a,h)\),
 
 $$
-W(G)\ge M+\frac{\chi_N}{N}-\frac{K_Ra^{17}}{N^2}.
+W(G)\ge M+\frac{\chi_N}{N}-\frac{K_R^9a^{17}}{N^2}.
 \tag{9.8}
 $$
 
@@ -1716,18 +1716,18 @@ construction therefore lies in the original class for every integer
 residue, with no congruence restriction on \(N\).
 
 For this graph the degree-ratio expansion (9.4)--(9.5) and (9.9) give
-the fixed formulas (4.8) with an error bounded by \(K_Ra^{12}/N^2\).
+the fixed formulas (4.8) with an error bounded by \(K_R^3a^{12}/N^2\).
 For example, the fourth-order remainder is bounded by
 
 $$
 N(aN)\left(\frac{2K_Ra}{\beta N}\right)^6
-\le K_Ra^{17}N^{-4}
-\le K_Ra^{17}N^{-2},
+\le K_R^9a^{17}N^{-4}
+\le K_R^9a^{17}N^{-2},
 \tag{9.10}
 $$
 
 and the rational denominator expansions in (7.6) are smaller than the
-same envelope. This proves (9.7) after enlarging \(K_R\).
+same \(K_R^9a^{17}N^{-2}\) envelope. This proves (9.7).
 
 For the lower bound, first consider a graph with value no larger than the
 right side of (9.7). By (9.4), this is a sublevel \(W\le2K_Ra^3\).
@@ -1735,7 +1735,7 @@ The bridge (3.10) therefore gives \(y_i\ge K_R^{-1}a^{-3}\). Inserting
 this bound and \(s\le K_Ra\) into (3.11) yields
 
 $$
-0\le H(x_G)-W(G)\le K_Ra^{17}N^{-2}.
+0\le H(x_G)-W(G)\le K_R^9a^{17}N^{-2}.
 \tag{9.11}
 $$
 
@@ -1744,14 +1744,14 @@ the law in one of the cap neighborhoods; Growing Theorem 15.5 identifies
 the corresponding sublevel minimum with \(M(a,h)\). On that neighborhood,
 the quantitative form of (3.2), together with the price bound
 \(P(x)\ge(a^2/K_R)\varepsilon\) from Lemma 9.1, gives
-\(\varepsilon\le K_Ra^{3/2}/N\): indeed the upper construction gives
-\(H(x_G)-M\le K_Ra^{7/2}/N+K_Ra^{17}/N^2\), and the second term is
-absorbed by \(N\ge K_Ra^{20}\). The Taylor estimate (3.2), whose second
+\(\varepsilon\le K_R^3a^{3/2}/N\): indeed the upper construction gives
+\(H(x_G)-M\le K_R^3a^{7/2}/N+K_R^9a^{17}/N^2\), and the second term is
+absorbed by \(N\ge K_R^{20}a^{20}\). The Taylor estimate (3.2), whose second
 derivatives are bounded by \(K_Ra^{9/2}\) on these neighborhoods, then
 gives
 
 $$
-W(G)\ge M+\frac{\mathcal P_j(G)}N-\frac{K_Ra^{17}}{N^2}.
+W(G)\ge M+\frac{\mathcal P_j(G)}N-\frac{K_R^9a^{17}}{N^2}.
 \tag{9.12}
 $$
 
@@ -1813,13 +1813,13 @@ and use the cap \(j\) supplied by (9.12). Combining (9.7), (9.12), and
 
 $$
 0\le\mathcal P_j(G)-\chi_N
-\le\frac{2K_Ra^{17}}N.
+\le\frac{2K_R^9a^{17}}N.
 \tag{9.16}
 $$
 
 By (9.5), a strict inequality on the left is at least
 \(D_*^{-1}\ge K_R^{-1}a^{-6}\). The threshold (9.14), with
-\(D_R=2K_R^2\), makes the right side of (9.16) smaller than this gap.
+\(D_R=2K_R^{20}\), makes the right side of (9.16) smaller than this gap.
 Therefore \(\mathcal P_j(G)=\chi_N\), and both inequalities
 \(\mathcal P_j(G)\ge\chi_{j,N}\ge\chi_N\) are equalities. Lemma 4.1
 now gives exactly the three source types listed above. Its equality proof
