@@ -60,7 +60,7 @@ theorem dependence : ObservationalDependence signature actual := by
       Multiset.replicate 1 2 + Multiset.replicate 1 6)
   intro he
   have hc := congrArg (Multiset.count 6) he
-  simp [Multiset.count_add] at hc
+  simp at hc
 
 def source_registration : Registration arena (type_of% @partition126_parts) where
   actual := actual
