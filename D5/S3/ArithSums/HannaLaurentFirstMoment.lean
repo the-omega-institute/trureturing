@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/ArithSums/HannaLaurentFirstMoment
    mirror-E: none(waiver:symbolic-laurent-coefficient-proof)
-   anchors: [D5/S3/ArithSums/HannaLaurentRowSums,mathlib/module/Mathlib.Algebra.Polynomial.Derivative]
+   anchors: [mathlib/module/Mathlib.Algebra.Polynomial.Derivative]
    utility: none
    digest: The first weighted moment of every positive A391810 Laurent row equals one. -/
 
