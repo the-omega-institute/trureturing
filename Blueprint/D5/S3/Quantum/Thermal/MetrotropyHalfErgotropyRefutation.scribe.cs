@@ -38,6 +38,22 @@ internal sealed class MetrotropyHalfErgotropyRefutationDocument : IScribeDocumen
                     + "Metrotropy02.tex, line 308, asks whether this inequality holds when the initial state is not stationary. "
                     + "The universal proposition displayed here gives that question precise matrix domains and quantifiers; measurements have rank-one projectors.",
                 AssessedProvenance.FromRepo(Source)),
+            Node("u4", "The normalized four-dimensional Walsh matrix", UFourFormula(),
+                "The four rows are the real Walsh vectors, each scaled by one half. "
+                    + "This matrix supplies the measurement basis of the four-dimensional counterexample.",
+                AssessedProvenance.FromRepo(Source)),
+            Describe.Lean(
+                DescribeId.Create("metrotropy-half-ergotropy-u4-unitary"),
+                DeclarationHandle.Create(Prefix + "u4_unitary"),
+                H("The Walsh matrix is unitary"),
+                StatementSource.FromAuthor(Disp(new Formula.Relation(Local("u4"),
+                    FormulaRelationOperator.MemberOf,
+                    At(Qualified("Matrix", "unitaryGroup"), FinOf(D(4)), Complexes())))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "The product of this matrix with its conjugate transpose is the identity. "
+                        + "Its rows and columns therefore form orthonormal bases of complex four-space."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("metrotropy-half-ergotropy-result"),
                 DeclarationHandle.Create(Prefix + "result"),
@@ -125,6 +141,21 @@ internal sealed class MetrotropyHalfErgotropyRefutationDocument : IScribeDocumen
         Some(basis, Unitaries(), Eq(X("e"), Energy(output, X("h")))), CloseBrace);
     private static Formula EnergyBinders(Formula body) => All(X("d"), Naturals(),
         All(X("h"), MatrixType(), All(Rho, MatrixType(), body)));
+
+    private static Formula UFourFormula()
+    {
+        Formula one = Typed(D(1), Complexes());
+        Formula minusOne = new Formula.Negate(one);
+        Formula matrix = Seq(Begin, Grp(X("bmatrix")),
+            one, Amp, one, Amp, one, Amp, one, RowBreak,
+            one, Amp, minusOne, Amp, one, Amp, minusOne, RowBreak,
+            one, Amp, one, Amp, minusOne, Amp, minusOne, RowBreak,
+            one, Amp, minusOne, Amp, minusOne, Amp, one, End, Grp(X("bmatrix")));
+        return Eq(Typed(Local("u4"),
+                At(Qualified("Matrix"), FinOf(D(4)), FinOf(D(4)), Complexes())),
+            Seq(Parenthesized(new Formula.Fraction(one, Typed(D(2), Complexes()))),
+                Sp, Cdot, Sp, Parenthesized(matrix)));
+    }
 
     private static Formula MeasuredFormula() => All(X("d"), Naturals(),
         All(X("u"), Unitaries(), All(Rho, MatrixType(), Eq(LocalCall("measured", X("u"), Rho),
