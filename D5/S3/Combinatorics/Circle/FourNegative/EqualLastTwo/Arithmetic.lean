@@ -7,6 +7,7 @@
    digest: Exact doubled packet bounds in all four unbounded equal-last-two families. -/
 import D5.S3.Combinatorics.Circle.FourNegative.EqualLastTwo.Source
 import D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Arithmetic
+/-! Exact physical construction and doubled packet checks. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.EqualLastTwo

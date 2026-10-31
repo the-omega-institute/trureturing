@@ -9,6 +9,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 import D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Source
 import Mathlib.Algebra.Order.Interval.Finset.Basic
 
+/-! Exact physical chains and explicit occurrence banks. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.EqualLastTwo
@@ -103,10 +104,10 @@ private theorem source_numeric (a b d : ℕ) :
     (amplitude a b d:ℤ)=heads ((2:ℤ)^a) (2^b) (2^d) 0 := by
   refine ⟨?_,?_,?_,?_⟩
   · dsimp [N,sourceMod]; ring
-  · dsimp [modulus,rank,N,sourceMod]; simp only [pow_add]; ring
+  · dsimp [modulus,rank,N,sourceMod]; simp only [pow_add] <;> ring
   · dsimp [modulus,rank,N,sourceMod]; simp only [pow_add,pow_one]; ring
   · simp only [amplitude,Nat.cast_add,Nat.cast_one,Nat.cast_pow,Nat.cast_ofNat]
-    dsimp [heads,delta]; simp only [pow_add]; ring
+    dsimp [heads,delta]; simp only [pow_add] <;> ring
 
 private def shift (s : ℕ) (P : Finset ℕ) : Finset ℕ := P.image (s+·)
 
