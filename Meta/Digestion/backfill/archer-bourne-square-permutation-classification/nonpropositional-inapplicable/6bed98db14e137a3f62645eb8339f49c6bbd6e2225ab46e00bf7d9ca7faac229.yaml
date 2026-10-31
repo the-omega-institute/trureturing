@@ -6,6 +6,6 @@ coverage_gids: []
 receipts:
   unresolved_subitems: []
   nonpropositional:
-    justification: Notational convention fixing one-line permutation words, composition order (pi sigma)(i) = pi(sigma(i)), square pi^2(i) = pi(pi(i)), classical pattern avoidance, and non-empty proper direct-sum decomposition tau oplus rho; asserts no standalone proposition.
+    justification: Notational convention fixing one-line permutation words pi(1)...pi(n), inverse position pos(v) = pi^{-1}(v), square q = pi o pi with q(i) = pi(pi(i)), pattern containment and avoidance, and left-to-right position terminology (right of position i); asserts no standalone proposition.
     previous_atom_id: 77b1530d6aee0b3949e9383e7c2a8288b88f4a49845c19d1661d34f03efadecd
     next_atom_id: 8e5e76b192d524636313156ef5a6e5d91d1b31c6700295f03c1699466e43ef37
