@@ -2313,7 +2313,11 @@ retain the incidence residuals of Growing (15.7)--(15.18) on the stated
 positive-excess sublevel. The price and exact-budget consumers are
 Lemmas 2.3, 4.1 and 4.2 of this volume. The later allocation, secondary
 energy and refined-periodic selection of Sections 6--8 retain their
-fixed-parameter quantifiers.
+fixed-parameter quantifiers. [*CDSO uniform dilution limit*, Corollary
+40.3](CDSO_UNIFORM_DILUTION_LIMIT.md) treats the finite positive limit
+$N/a^{3/2}\to D$ and its dilution variational value. The window here
+has $N/a^{3/2}\to\infty$ and controls the finer $\chi_N/N$ term
+and exact source exclusion; it makes no new finite-positive-$D$ claim.
 
 The scalar supporting-tangent principle is the intermediate
 literature-attested input of Boyd--Vandenberghe,
