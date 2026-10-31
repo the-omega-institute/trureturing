@@ -48,7 +48,10 @@ internal sealed class AnticoherenceTraceDistanceRefutationDocument : IScribeDocu
                 StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(Local("claim"))))),
                 AssessedProvenance.FromRepo(Source),
                 ResultArgument(),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("denis-lacaille-martin-serrano-ensastiga-2026-anticoherence-trace-distance"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance) =>
