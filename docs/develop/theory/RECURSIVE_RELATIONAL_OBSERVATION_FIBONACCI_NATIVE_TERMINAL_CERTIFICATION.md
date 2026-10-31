@@ -2561,3 +2561,339 @@ $m_i=0$ 时不承担后验义务；$M_i z=0$ 时节点给 $m_i=0$，没有后射
 [RRORare34]: ../../../D5/S3/Quantum/Measurement/RareBranchConditionalErrorSharpness.lean
 
 ## 追加锚（本行以下为增补区）
+
+## 40. 原生扇区的条件系数纤维
+
+固定 $0<\varepsilon<1$、记录 $i\in\{0,1\}$，令 $j=1-i$，并沿用 [III] (164.2)–(164.7) 的 $89$ 维载体、$S$、$R_s$、$w_s$ 和 $\kappa_s=x^{m_s}$。记
+
+$$
+S_i=\{s\in S:9\in s\ \Longleftrightarrow\ i=1\},\qquad
+\mathcal K_i=M_i\mathcal K,\qquad
+\mathbb P_i=\mathbb P(\mathcal K_i).
+$$
+
+对 $\phi\in\mathbb P_i$ 取单位代表，置
+
+$$
+\begin{aligned}
+d_s(\phi)&=\kappa_s|a_s(\phi)|-\|v_s(\phi)\|,\\
+u_s(\phi)&=\kappa_s^2|a_s(\phi)|^2-\|v_s(\phi)\|^2,\\
+L_i(\phi)&=\min_{s\in S_i}[d_s(\phi)]_+^2,\\
+F_i(\phi)&=
+\begin{cases}
+\displaystyle\sum_{s\in S_i}u_s(\phi)^{-2},&u_s(\phi)>0\text{ for every }s\in S_i,\\
+\infty,&\text{otherwise},
+\end{cases}\\
+V_i&=\{\phi:d_s(\phi)>0\text{ for every }s\in S_i\},\\
+Z_i&=\{\phi:d_s(\phi)\ge0\text{ for every }s\in S_i\}.
+\end{aligned}
+\tag{40.1}
+$$
+
+These quantities are independent of the unit representative. The symbols $d_s,u_s$ in (40.1) are sector gaps and not the correction $d(z)=\varepsilon H(z)$ of (28.2). The $16$ sectors in each $S_i$ have generating polynomials
+
+$$
+P_0(r)=5+5r+4r^2+r^3+r^4,\qquad
+P_1(r)=8+5r+2r^2+r^3.
+\tag{40.2}
+$$
+
+Define the source constants
+
+$$
+a_i=\left(\sum_{s\in S_i}\kappa_s^{-2}\right)^{-1}
+   =\frac1{P_i(x^{-2})},\qquad
+D_i=\left(\sum_{s\in S_i}\kappa_s^{-4/3}\right)^3
+   =P_i(x^{-4/3})^3.
+\tag{40.3}
+$$
+
+Thus $P_0(2)=55$ and $P_1(2)=34$, the two original record-block dimensions. The enumeration is source-specific: among the $16$ subsets with $9\notin s$, the numbers of $m_s=0,1,2,3,4$ are $(5,5,4,1,1)$; among the $16$ subsets with $9\in s$, they are $(8,5,2,1,0)$.
+
+**引理 40.1（两个源特定极值）。** 在各自的射影扇区上，
+
+$$
+\max_{\phi\in\mathbb P_i}L_i(\phi)=a_i,
+\qquad
+\inf_{\phi\in V_i}F_i(\phi)=D_i.
+\tag{40.4}
+$$
+
+两端均可达到。第一端由 $v_s=0$、$|a_s|^2=a_i\kappa_s^{-2}$ 达到；第二端由 $v_s=0$、$\|R_s\phi\|^2$ 与 $\kappa_s^{-4/3}$ 成正比达到。
+
+**证明。** 若 $L_i(\phi)\ge\ell$，则 $|a_s|^2\ge\ell\kappa_s^{-2}$，故
+
+$$
+1=\sum_{s\in S_i}(|a_s|^2+\|v_s\|^2)
+ \ge \ell\sum_{s\in S_i}\kappa_s^{-2}.
+$$
+
+这给出 $L_i\le a_i$。取 $\phi=\sum_s a_sw_s$，并选择上述模长，得到等号。对于 $F_i$，令 $r_s=\|R_s\phi\|^2$。有 $u_s\le\kappa_s^2r_s$，而 Holder 不等式给
+
+$$
+\sum_{s\in S_i}u_s^{-2}
+\ge\sum_{s\in S_i}\kappa_s^{-4}r_s^{-2}
+\ge\left(\sum_{s\in S_i}\kappa_s^{-4/3}\right)^3.
+$$
+
+取 $v_s=0$ 及 $r_s\propto\kappa_s^{-4/3}$ 同时达到两次不等式的等号。正交的 $w_s$ 使这些系数确实给出单位向量。∎
+
+**定理 40.2（固定记录质量的完整条件系数纤维）。** 取 $0<t<1$、$\phi\in\mathbb P_i$、$\psi\in\mathbb P_j$，并令
+
+$$
+z=\sqrt t\,\phi+\sqrt{1-t}\,\psi,\qquad
+\gamma_i^H(z)=\frac{\varepsilon H(z)}{t},\qquad H\in\{h,h_{\rm sm}\}.
+\tag{40.5}
+$$
+
+The same common-source row has
+
+$$
+\gamma_j^H(z)=\frac{\varepsilon H(z)}{1-t},
+\qquad
+t\gamma_i^H(z)=(1-t)\gamma_j^H(z)=\varepsilon H(z).
+\tag{40.5a}
+$$
+
+在所有单位 $\psi$ 上的精确像为
+
+$$
+\left\{\gamma_i^h(z)\right\}
+ =\left[0,\ \varepsilon\min\left\{L_i(\phi),\frac{(1-t)a_j}{t}\right\}\right],
+\tag{40.6}
+$$
+
+以及
+
+$$
+\left\{\gamma_i^{h_{\rm sm}}(z)\right\}
+ =\left[0,\ \frac{\varepsilon}{2t}
+ \exp\left\{-\frac{F_i(\phi)}{t^2}-\frac{D_j}{(1-t)^2}\right\}\right],
+\tag{40.7}
+$$
+
+其中 $\exp(-\infty)=0$。在 $t=1$ 时两种纤维都为 $\{0\}$。在 $t=0$ 时条件系数本身不定义；其保留图的闭包纤维分别为
+
+$$
+\left[0,\varepsilon L_i(\phi)\right]\quad\text{和}\quad\{0\}.
+\tag{40.8}
+$$
+
+因此每个显示的上端为零时，整个纤维确实塌缩为零，而 (40.8) 的第一项只表示趋近零记录质量的图极限。
+
+**证明。** 正交扇区分解给
+
+$$
+h(z)=\min\{tL_i(\phi),(1-t)L_j(\psi)\},
+\qquad
+h_{\rm sm}(z)=\frac12\exp\left\{-\frac{F_i(\phi)}{t^2}-\frac{F_j(\psi)}{(1-t)^2}\right\}.
+\tag{40.9}
+$$
+
+单位球面在每个 $\mathcal K_j$ 中道路连通。$L_j$ 连续，取值为从 $0$ 到 $a_j$ 的整个区间；零值由某个 $v_s$ 与 $w_s$ 正交的单位向量取得。$h_{\rm sm}$ 也连续，且同一退化向量给零值。引理 40.1 给出 $F_j$ 的最小值 $D_j$，所以 $\exp(-F_j)$ 的最大值为 $\exp(-D_j)$。连续像连通且含零和最大值，遂得到 (40.6)–(40.7)。当 $t=1$ 时另一个记录扇区完全消失，(40.9) 为零。
+
+当 $t\downarrow0$ 时，(40.6) 的上端趋于 $\varepsilon L_i(\phi)$；而 $F_i\ge D_i>0$ 时，(40.7) 被 $\varepsilon(2t)^{-1}e^{-D_i/t^2}$ 控制，趋于零，$F_i=+\infty$ 时恒为零。∎
+
+## 41. 质量遗忘、零记录图与实际前缀闭包
+
+**定理 41.1（质量遗忘后的精确连续包络）。** 定义 $G_i^H:\mathbb P_i\to[0,\infty)$ 为对所有 $0<t<1$ 的固定质量纤维上端的最大值，并把 $t=1$ 的上端取为零。则
+
+$$
+G_i^h(\phi)=\varepsilon L_i(\phi).
+\tag{41.1}
+$$
+
+对于 $h_{\rm sm}$，在 $\phi\notin V_i$ 时 $G_i^{h_{\rm sm}}(\phi)=0$；在 $\phi\in V_i$ 时，令 $\tau_i(\phi)\in(0,1)$ 为方程
+
+$$
+F_i(\phi)=\frac{\tau_i(\phi)^2}{2}
+       +D_j\left(\frac{\tau_i(\phi)}{1-\tau_i(\phi)}\right)^3
+\tag{41.2}
+$$
+
+的唯一解，则
+
+$$
+G_i^{h_{\rm sm}}(\phi)=
+\frac{\varepsilon}{2\tau_i(\phi)}
+\exp\left\{-\frac{F_i(\phi)}{\tau_i(\phi)^2}
+           -\frac{D_j}{(1-\tau_i(\phi))^2}\right\}.
+\tag{41.3}
+$$
+
+两种 $G_i^H$ 都连续，且每个上端都在数学上达到。它们的完整质量遗忘图像是紧的闭下图
+
+$$
+\mathscr H_i^H=\{(\phi,\gamma):\phi\in\mathbb P_i,\ 0\le\gamma\le G_i^H(\phi)\}.
+\tag{41.4}
+$$
+
+**证明。** (40.6) 在足够小但正的 $t$ 下可达到 $\varepsilon L_i(\phi)$，因为 $a_j>0$；故 (41.1) 是最大值而非仅为上确界。对 (40.7) 取对数并求导，唯一临界点满足 (41.2)。其右端严格递增，从零趋于无穷；端点处函数趋于零，所以该临界点是唯一最大值。若 $\phi$ 趋近 $V_i$ 的边界，则某个 $u_s$ 趋于零，故 $F_i\to+\infty$，由 (41.2)–(41.3) 得上端趋于零。于是 (41.3) 在 $\mathbb P_i\setminus V_i$ 上以零连续延拓。射影空间紧，(41.4) 是连续函数的闭下图，因而紧。达到性来自 (40.6)–(40.7) 中的等号向量与相应的 $t$。∎
+
+**定理 41.2（保留父源的零记录边界）。** 令 $q\in\mathbb P_j$ 为被保留的父源零质量端点，$\phi\in\mathbb P_i$ 为虚拟的后射线。令 $t_n\downarrow0$、$\phi_n\to\phi$、$\psi_n\to q$，并取由 (40.5) 产生的系数。对 $h$，所有可能的极限系数恰为
+
+$$
+\begin{cases}
+\{\varepsilon L_i(\phi)\},&q\in V_j,\\
+[0,\varepsilon L_i(\phi)],&q\in Z_j\setminus V_j,\\
+\{0\},&q\notin Z_j.
+\end{cases}
+\tag{41.5}
+$$
+
+对 $h_{\rm sm}$，无论 $q$ 属于 $V_j$、$Z_j\setminus V_j$ 还是 $\mathbb P_j\setminus Z_j$，极限系数都为 $0$。忘记父源后，$t=0$ 的 $h$ 图纤维是 $[0,\varepsilon L_i(\phi)]$，$h_{\rm sm}$ 图纤维是 $\{0\}$；$t=1$ 两者均为 $\{0\}$。因此 (41.5) 给出零记录边界的全部内、边界、外三种情形，而不是单个反例。
+
+**证明。** $q\in V_j$ 时 $L_j(\psi_n)$ 有正下界，(40.6) 的第二个上限趋于无穷，极限只能是 $\varepsilon L_i(\phi)$。若 $q\notin Z_j$，某个 $d_s(q)<0$，连续性使该负号在邻域内保持，故 $L_j(\psi_n)=0$，极限为零。
+
+若 $q\in Z_j\setminus V_j$，对每个 $s\in S_j$ 取与 $a_s(q)$ 对齐的相位 $\theta_s$，置
+
+$$
+\widetilde q_\delta
+=q+\delta\sum_{s\in S_j}\kappa_s^{-1}e^{i\theta_s}w_s,
+\qquad
+\psi_\delta=\frac{\widetilde q_\delta}{\|\widetilde q_\delta\|}.
+$$
+
+在每个扇区中 $v_s$ 不变而 $\kappa_s|a_s|$ 增加 $\delta$；归一化只乘以同一个因子。因此 $\psi_\delta\in V_j$，并且因为 $q$ 至少有一个 gap 为零，
+
+$$
+d_s(\psi_\delta)
+=\frac{d_s(q)+\delta}{\|\widetilde q_\delta\|},
+\qquad
+L_j(\psi_\delta)=\frac{\delta^2}{\|\widetilde q_\delta\|^2}.
+$$
+
+令 $\delta$ 与 $\sqrt{t_n}$ 同阶并调节其常数，$(1-t_n)L_j(\psi_{\delta})/t_n$ 可趋于任意 $\lambda\in[0,\infty]$。代入 (40.6)，得到恰为 $[0,\varepsilon L_i(\phi)]$ 的极限集合。这里 $Z_j=\overline{V_j}$ 也由同一扰动得到。
+
+对光滑场，$F_i(\phi)\ge D_i>0$ 时
+
+$$
+0\le\gamma_i^{h_{\rm sm}}(z_n)
+\le\frac{\varepsilon}{2t_n}e^{-D_i/t_n^2}\longrightarrow0;
+$$
+
+若 $F_i(\phi)=+\infty$，它恒为零。最后对父源取并集，$V_j$ 给端点，边界或外部给全区间，故忘记父源的结论成立。∎
+
+**定理 41.3（数学图与实际有限 ready 前缀图的闭包相等）。** 令 $\mathscr G_{i,+}^H$ 为所有非零数学 $z$ 的三元组
+
+$$
+\left(t_i(z),[M_i z],\frac{\varepsilon H(z)}{t_i(z)}\right),\qquad t_i(z)>0,
+\tag{41.6}
+$$
+
+并在 $t=0,1$ 处加入定理 41.1–41.2 的图极限。令 $\mathscr G_{i,\mathrm{act}}^H$ 为 (41.6) 中 $z=\chi_a$、$a\in\mathsf W_{11}$ 的子集。以 $[0,1]\times\mathbb P_i\times[0,\varepsilon]$ 的自然拓扑取闭包，则
+
+$$
+\overline{\mathscr G_{i,\mathrm{act}}^H}
+ =\overline{\mathscr G_{i,+}^H}.
+\tag{41.7}
+$$
+
+若保留另一个父射线，则在同样的声明中加入 $[M_jz]$ 的射影坐标，所得实际图闭包仍等于数学图闭包，其 $t=0$ 纤维正是 (41.5)。
+
+**证明。** 包含关系的一边显然。反向地，给数学点 (41.6)，取同一射线的原有限 ready 前缀序列，使用 [III] (144.12) 的全载体射线稠密性。由于 $t_i(z)>0$，投影射线、质量和系数在该点连续，故可逐点逼近。对端点图先取一列正质量数学点，再对每一点选择足够近的实际前缀，作对角序列；投影趋零时使用节点连续延拓。保留父射线的情形只是在同一个 $89$ 维射线收敛下同时应用两个正交投影，故同样成立。这个证明没有要求实际集合含有任何精确碰撞，也没有要求实际系数填满区间、给出合成速率、有限字长率或达到数学最大值的实际字。∎
+
+## 42. 连续后射线恢复的尖锐风险与零条件行
+
+对每个 $i$，令 $\mathcal A_i$、$\mathcal X_i$ 和 $E_i(R_i)$ 分别为 (32.1)–(32.2) 的实际正记录前缀、实际后射线集合和误差；令 $B_i(\phi)$ 为 (30.4) 的 Born 行，令 $C_i$ 为其固定有符号行。于是 $C_i$ 有 $16$ 个非零单元，八个为 $+1$、八个为 $-1$，并且
+
+$$
+K_i(\chi_a)=B_i([M_i\chi_a])+\gamma_i^H(\chi_a)C_i,
+\qquad
+\operatorname{TV}(B_i+\gamma C_i,B_i+\gamma'C_i)=8|\gamma-\gamma'|.
+\tag{42.1}
+$$
+
+**定理 42.1（恰在实际域上的尖锐连续解码误差）。** 对恰为 RRO32 所允许的连续解码器
+
+$$
+R_i:\mathcal X_i\longrightarrow\Delta(\Omega_{10}),
+$$
+
+有
+
+$$
+\inf_{R_i\,\mathrm{continuous}}E_i(R_i)
+ =4\max_{\phi\in\mathbb P_i}G_i^H(\phi).
+\tag{42.2}
+$$
+
+下确界是达到的。达到者是先在整个 $\mathbb P_i$ 上定义、再限制到 $\mathcal X_i$ 的合法连续概率行
+
+$$
+R_i^*(\phi)=B_i(\phi)+\frac{G_i^H(\phi)}2C_i.
+\tag{42.3}
+$$
+
+特别地，
+
+$$
+\inf E_i(R_i)=4\varepsilon a_i
+ =\frac{4\varepsilon}{P_i(x^{-2})}
+\qquad(H=h),
+\tag{42.4}
+$$
+
+而对 $H=h_{\rm sm}$，令 $\tau_i\in(0,1)$ 为
+
+$$
+D_i=\frac{\tau_i^2}{2}+D_j\left(\frac{\tau_i}{1-\tau_i}\right)^3,
+\tag{42.5}
+$$
+
+则
+
+$$
+\inf E_i(R_i)=
+\frac{2\varepsilon}{\tau_i}
+\exp\left\{-\frac{D_i}{\tau_i^2}
+           -\frac{D_j}{(1-\tau_i)^2}\right\}.
+\tag{42.6}
+$$
+
+**证明。** 对每个 $\phi$，$B_i(\phi)$ 是 $\gamma=0$ 的概率行，$B_i(\phi)+G_i^H(\phi)C_i$ 是定理 40.2 的可达端点，因而也是概率行。两端的中点就是 (42.3)，它连续且仍在概率单纯形内。由 (42.1)，对任意实际系数 $0\le\gamma_i^H(\chi_a)\le G_i^H([M_i\chi_a])$，中点误差不超过 $4G_i^H$，给出 (42.2) 的上界。
+
+另一方面，RRO32 的实际域下界给出每个 $a\in\mathcal A_i$ 的 $E_i(R_i)\ge4\gamma_i^H(\chi_a)$。定理 41.3 将实际正前缀图稠密到每个数学可达端点，故实际系数的上确界等于 $\max G_i^H$，得到相同的下界。由引理 40.1，$\max G_i^h=\varepsilon a_i$；对光滑场，(41.3) 在 $F_i=D_i$ 的等号向量上达到，给出 (42.5)–(42.6)。∎
+
+**定理 42.2（零记录不决定归一化条件行）。** 对每个零记录父端点 $q\in\mathbb P_j$，选取两个配置基射线 $\phi_1,\phi_2\in\mathbb P_i$，使其 $W$ 标签不同。令
+
+$$
+z_k(t)=\sqrt t\,\phi_k+\sqrt{1-t}\,q,
+\qquad 0<t<1,\quad k=1,2.
+\tag{42.7}
+$$
+
+则对 $H=h$ 与 $H=h_{\rm sm}$ 都有 $H(z_k(t))=0$，从而未归一化联合行
+
+$$
+J_{i,k}(t;w)=tK_i(z_k(t);w)
+$$
+
+连续趋于全零行，而归一化条件行满足
+
+$$
+K_i(z_k(t);\cdot)=B_i(\phi_k)\quad\text{且}\quad
+B_i(\phi_1)\ne B_i(\phi_2).
+\tag{42.8}
+$$
+
+所以在每一个零记录父端点，连续的未归一化联合律有唯一零延拓；归一化行没有由零质量条件概率确定的 canonical 值。这个结论同时适用于连续场和光滑场。
+
+**证明。** 在固定记录扇区内取两个不同的配置基向量；由于 $W$ 在 $E_i$ 上单射，它们的 Born 行是不同的 Dirac 行。每条路径 (42.7) 在 $i$ 扇区只占一个扇区，其他 $S_i$ 扇区为空，故 $h$ 的最小项和 $h_{\rm sm}$ 的乘积因子都为零。于是修正系数恒为零，(42.8) 成立，而乘以 $t$ 后的联合行逐坐标趋于零。若给零记录指定一个归一化条件行，沿两条路径的连续性将迫使它同时等于两个不同的 Born 行，矛盾。普通条件概率在零质量事件上允许任意版本；这里的图闭包只记录路径极限，不把其中一个极限提升为条件律。∎
+
+## 43. 来源对应、条件边界与未移入的前提
+
+本组的源特定承重是把 [III] (164.2)–(164.10)、(165.1)–(165.6) 的原 $89$ 维扇区分解接到本卷 (28.1)–(32.9) 的字面保留切口。扇区枚举给 (40.2)–(40.3)，正交分解与 Holder 给 (40.4)，连续像给 (40.6)–(40.8)，对数导数给 (41.2)，原 ready 射线稠密性给 (41.7)，而 RRO32 的实际域下界与 (42.1) 的十六单元符号行共同给 (42.2)。这些是同一来源、同一 $M_i$、同一 $H=h$ 或 $h_{\rm sm}$ 的参数对应；没有把已有的无关 $\Gamma_i$ 记号移作本组包络。
+
+| 来源 | 本组实际使用与保留的条件 |
+| --- | --- |
+| [III] §§164–165，尤其 (164.2)–(164.10)、(165.1)–(165.6) | 提供 $S_i$、$m_s$、$R_s,w_s,\kappa_s$、节点上界、两个连续／光滑场及其原分量方程。没有增加新的密度、载体、准备或过程。 |
+| [III] (144.12) 与本卷定理 29.2、RRO32 | 提供同一原 $89$ 维载体上实际有限 ready 射线的全域稠密性、共同正值见证和连续解码下界。它们不供应精确 native 碰撞、区间填充、取得速率或实际达到数学最大值的字。 |
+| D5/S3/ObserverMemory/PredictionFactors/ConditionalProbabilityProfileMinimality.lean:37 与 PositiveConditioningPredictionStability.lean:34 | 前者要求有限 $X$ 与给定 PMF 预测因子化，后者要求完整联合律、边缘、扩展历史条件和严格正性；这些已读声明不供应本组的连续射线纤维、零质量版本或原生稠密桥。此处没有新增 Lean 声明或编译核验。 |
+| D5/S3/Observer/MeasureSeparation/RobustMinimaxKernelBound.lean:179、D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.lean、ChebyshevCenterRegularization.lean | 这些供应者分别处理 Boolean same-fiber、原子观测或 Euclidean 正则化；它们不提供本组 TV 线段半径。中点、三角不等式和 RRO32 下界在此直接计算。 |
+| [Chang–Pollard, *Conditioning as disintegration*](http://www.stat.yale.edu/~jtc5/papers/ConditioningAsDisintegration.pdf), Theorems 1–3；[Ackerman–Freer–Roy, *On the computability of conditional probability*](https://arxiv.org/html/1005.3014v4), Lemmas 3.4–3.5 | 前者的 sigma-finite Radon、可数生成像和支配测度条件只给几乎处处唯一性，正质量归一化且允许在像零集改值；后者的连续版本一致性还要求同一律的 support 点。零记录标签不满足这些附加条件，故不能选出 (42.8) 的 canonical 行。 |
+| [Foucart–Liao, *Optimal Recovery from Inaccurate Data in Hilbert Spaces*](https://arxiv.org/pdf/2111.02601v1), §§1.1–1.3；[Feng–Gruenhage–Shen, *Continuous Selections of Lower semicontinuous Set-valued Mappings*](https://arxiv.org/pdf/1904.01085v1), Theorem 1.1 | 前者提供“局部一致集的 Chebyshev 半径、全局取上确界”的组织原则，后者的选择定理还要求下半连续多值映射等域条件。本组的 TV 线段半径和连续选择由 (40.6)–(42.3) 直接给出，没有把抽象选择定理当作 actual $\mathcal X_i$ 的前件。 |
+
+上述结果固定共同来源、原始 $M_i$、文字记录 $I=b_9(Q_-)$、保留配置 $Q_+=Q_-$、空未来切口、[III] (157.24) 只在 §30 所列切口作为条件概率前件、$0<\varepsilon<1$ 及 $H=h$ 或 $h_{\rm sm}$。它们没有加入未来动力学、获取过程、额外读口、准备、复位、复制、共同正质量下界或任何新条件概率来源；(41.7) 也没有把数学闭包改写成有限取得率。零质量处的归一化条件行仍是未由静态密度和连续性确定的边界数据，空间、时间、边界与记忆的长期互相恢复问题仍需独立的过程关系。
+
+## 追加锚（本行以下为增补区）
