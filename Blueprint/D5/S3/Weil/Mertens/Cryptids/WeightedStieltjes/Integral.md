@@ -12,7 +12,7 @@ Lean statement: `D5/S3/Weil/Mertens/Cryptids/WeightedStieltjes/Integral.norm_psi
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/Cryptids/WeightedStieltjes/Integral.norm_psi1_sub_truncated_smoothedPerron_two_le` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Google LLC (Google DeepMind) (2026). *Cryptids — formal RH Chebyshev psi estimate and analytic source closure*. URL: <https://github.com/google-deepmind/cryptids/blob/e5f59ed70d1549a61ef8873a6fbae9268fdbd557/Cryptids/Semantics/Riemann/Analytic.lean>.
 
 *Commentary.*
 
