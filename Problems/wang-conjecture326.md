@@ -20,7 +20,6 @@ Conjecture 3.26, states:
 > unitary ring. If d(S,R) < infinity then
 > sup {D_bar(a)(S/H): a in S and <a> is not a group} < infinity.
 
-The source is preregistered in [issue 23896](https://github.com/the-omega-institute/trureturing/issues/23896).
 Conjecture 5.3 is a separate finite-semigroup assertion and is not a second
 settlement of this question.
 
@@ -136,7 +135,7 @@ hypotheses of Theorem 3.25 remain separate source statements.
 
 Unresolved here: which additional uniform structural hypotheses restore
 the implication, exact individual relative constants, and the independent
-status of Conjecture 5.3. No new successor is preregistered by this unit.
+status of Conjecture 5.3.
 
 Ordinary convolution and congruence quotients are reused from pinned
 Mathlib. The positive cyclic closure is the native subsemigroup closure,
