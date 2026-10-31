@@ -14,7 +14,7 @@ internal sealed class AlternatingProjectionStrongDocument : IScribeDocumentDefin
         H("Strong convergence of alternating orthogonal projections"), Blocks(
             Paragraph(Text("For a closed k-linear subspace U of H, P(U) denotes the actual orthogonal projection U.toSubmodule.starProjection from H to H. Comp(A,B) applies B first and then A. Inf(U,V) denotes the closed linear intersection. Powers are powers of bounded endomorphisms: the zeroth power is the identity, and applying the nth power agrees with n iterations of the same map.")),
             Describe.Lean(DescribeId.Create("alternating-projection-strong-convergence"),
-                DeclarationHandle.Create(Prefix + "tendsto_alternatingProjection_pow"),
+                DeclarationHandle.Create(Prefix + "tendsto_alternating_projection_pow"),
                 H("Actual nonaveraged powers"), StatementSource.FromAuthor(Disp(EndpointFormula())),
                 AssessedProvenance.FromLiterature(Background), Blocks(
                     Paragraph(Text("The universes u and v, the RCLike scalar k, and the complete inner product space H are arbitrary. For all closed k-linear subspaces U and V and every x in H, set T=P(U) composed with P(V). Then the sequence T to the power n applied to x converges in the norm topology to P(Inf(U,V)) applied to x. The displayed epsilon statement is precisely this pointwise norm convergence; N can depend on the vector, both subspaces and epsilon.")),

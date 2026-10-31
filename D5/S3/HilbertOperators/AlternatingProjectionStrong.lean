@@ -46,11 +46,7 @@ private theorem tendsto_pow_of_regular (T : H →L[k] H) (hT : ‖T‖ ≤ 1) (x
     Tendsto (fun n : ℕ => (T ^ n) x) atTop (𝓝 p) := by
   classical
   have hpow (n : ℕ) (z : H) : (T ^ n) z = (T : H → H)^[n] z := by
-    induction n with
-    | zero => rfl
-    | succ n ih =>
-      rw [pow_succ', mul_apply_eq_comp, iterate_succ_apply']
-      rw [ih]
+    exact congrFun (FunLike.coe_pow_eq_iterate T n) z
   have hshift (m : ℕ) :
       Tendsto (fun n : ℕ => (T ^ (n + m)) x - (T ^ n) x) atTop (𝓝 0) := by
     induction m with
@@ -170,7 +166,7 @@ private theorem alternating_regular (U V : ClosedSubmodule k H) (x : H) :
 
 /-- The actual nonaveraged powers of the product of the two orthogonal
 projections converge in norm to the projection onto their intersection. -/
-theorem tendsto_alternatingProjection_pow (U V : ClosedSubmodule k H) (x : H) :
+theorem tendsto_alternating_projection_pow (U V : ClosedSubmodule k H) (x : H) :
     Tendsto (fun n : ℕ => ((U.toSubmodule.starProjection ∘L V.toSubmodule.starProjection) ^ n) x)
       atTop (𝓝 ((U ⊓ V).toSubmodule.starProjection x)) := by
   let T := U.toSubmodule.starProjection ∘L V.toSubmodule.starProjection
