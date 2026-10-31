@@ -1,0 +1,9 @@
+**Definition 17.1 (actions on compatible cells).** For $a\in\{L,R\}$ and $I\in\mathscr P_n$, define $U_{a,n}(I)$ to be the cell containing $f_a(x)$ for any $x\in I$. Corollary 11.3 makes this independent of $x$. These maps commute with restriction: choose a rational in the finer cell, apply the same action, and take containing cells at the two stages. Hence
+
+$$
+\widehat a((I_n)_n)=(U_{a,n}(I_n))_n
+\tag{17.1}
+$$
+
+is a well-defined action on $\mathscr L_{\mathbf s}$. It extends the actual source action in the exact sense $\widehat a\circ\iota=\iota\circ f_a$. This definition uses the predictive tower. On a general raw tower no stagewise action or commutation law is presumed.
+

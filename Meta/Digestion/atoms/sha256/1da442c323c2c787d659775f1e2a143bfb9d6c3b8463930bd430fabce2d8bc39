@@ -1,0 +1,4 @@
+**Proposition 7.1 (actionwise injectivity does not recover order).** Let configurations be subsets of $\{a,b\}$, rooted at the empty set. The operation named $a$ adds $a$ only when it is absent; $b$ is defined similarly. Each successor map is injective on its own legal domain, the root is outside both images, and the endpoint is an exact current readout. Nevertheless $ab$ and $ba$ have the same endpoint $\{a,b\}$.
+
+Proof. Removing the named element inverts each individual operation. But the two incoming pairs $(b,\{a\})$ and $(a,\{b\})$ have the same successor. Thus PREDECESSOR fails at precisely the overlap between action images. Every declared future response from that common endpoint is the same, including its exhausted legal menu, while the literal past words differ. Taking memory to be the endpoint satisfies RECORD and still cannot repair this collision. $\square$
+
