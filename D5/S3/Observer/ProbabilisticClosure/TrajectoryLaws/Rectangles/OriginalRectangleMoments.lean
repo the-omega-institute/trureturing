@@ -148,7 +148,10 @@ private theorem conditional_payment {Ω : Type*} [mΩ : MeasurableSpace Ω]
   filter_upwards [condExp_sub (integrable_const 1) (hi.smul (1-ρ^2)) m,
     condExp_smul (μ := μ) (1-ρ^2) I m, hlower] with z hsub hmul hlo
   rw [hsub, hmul, condExp_const hm]
-  have hfac : 0 ≤ 1-ρ^2 := by nlinarith
+  have hsq : ρ^2 ≤ 1 := by
+    simpa only [pow_two, mul_one] using
+      (mul_le_mul hρ1 hρ1 hρ (by norm_num : (0 : ℝ) ≤ 1))
+  have hfac : 0 ≤ 1-ρ^2 := sub_nonneg.mpr hsq
   change 1 - (1-ρ^2) * (μ[I | m]) z ≤ _
   nlinarith [mul_le_mul_of_nonneg_left hlo hfac]
 
@@ -181,6 +184,9 @@ private def payment (w : List Bool) (b : ℕ) (d : ℤ) (ρ : ℝ) (q : ℕ)
 private theorem payment_bounds (w : List Bool) (b : ℕ) (d : ℤ) (ρ : ℝ)
     (hρ : 0 ≤ ρ) (hρ1 : ρ ≤ 1) (q : ℕ) (z : PathSpace H) :
     0 ≤ payment w b d ρ q z ∧ payment w b d ρ q z ≤ 1 := by
+  have hsq : ρ^2 ≤ 1 := by
+    simpa only [pow_two, mul_one] using
+      (mul_le_mul hρ1 hρ1 hρ (by norm_num : (0 : ℝ) ≤ 1))
   constructor
   · exact Finset.prod_nonneg fun i _ => by split_ifs <;> positivity
   · apply Finset.prod_le_one₀
