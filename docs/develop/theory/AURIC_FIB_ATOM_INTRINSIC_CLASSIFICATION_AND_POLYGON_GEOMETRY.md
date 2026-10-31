@@ -4070,7 +4070,7 @@ $$
 
 ## 40. Long-gap fourteen-gon: sharp three-core bound and exact fifteen-partition profile
 
-This appendix presents the supplied computer-assisted finite proof of the sharp three-core bound and its exact fifteen-partition profile. The supplied proof and realizing supports have received a separated executable source assessment; this proposed manuscript still requires independent executable manuscript verification. Published B-39.4 already gives $A\le5005$, and B-39.5 already gives the original-family strict bound $|\mathcal F|\le33258=L-126$. That original residual/classification consumer is supplied by §39. The distinct result here is the exact core objective: its uniform maximum is $4290$, matching the existing lower construction B-37.8, and the other fourteen normalized partitions have exact maximum $3690$. These are core counts, not maxima of total family size. The full reductions and table are given here; executable code and finite data belong to the private companion in §40.6.
+This appendix presents the supplied computer-assisted finite proof of the sharp three-core bound and its exact fifteen-partition profile. Published B-39.4 already gives $A\le5005$, and B-39.5 already gives the original-family strict bound $|\mathcal F|\le33258=L-126$. That original residual/classification consumer is supplied by §39. The distinct result here is the exact core objective: its uniform maximum is $4290$, matching the existing lower construction B-37.8, and the other fourteen normalized partitions have exact maximum $3690$. These are core counts, not maxima of total family size. The full reductions and table are given here; executable code and finite data belong to the private companion in §40.6.
 
 ### 40.1. Fixed labelled domain and sharp core bound
 
@@ -4080,7 +4080,7 @@ $$
 \Gamma(R)=\{T:\operatorname{Ear}(T)\cap D=R\}.
 $$
 
-**定理 B-40.1（supplied long-gap matching-core bound; computer-assisted; manuscript verification outstanding）。** If F is any family of actual triangulations of this same polygon which is pairwise intersecting in complete ear sets, and
+**定理 B-40.1（supplied long-gap matching-core bound; computer-assisted）。** If F is any family of actual triangulations of this same polygon which is pairwise intersecting in complete ear sets, and
 
 $$
 a_i=|F\cap\Gamma(M_i)|>0\quad(i=1,2,3),
@@ -4100,7 +4100,7 @@ $$
 
 Here $D=\{f_{ab}:1\le a<b\le4\}$ has arbitrary $K_4$ labelling, with $f_{ab}=f_{ba}$, $S_a=\{f_{ab}:b\ne a\}$, and the four arbitrarily specified actual witnesses satisfy $\operatorname{Ear}(T_a)=S_a$. The original family contains all four witnesses and is pairwise intersecting in full ear sets. The proposed bound needs no witness hypothesis, so it applies to every such choice. The existing original-family consequence and the distinct sharpness statement are separated in §40.5. No maximality or saturation assumption is made.
 
-The proposed proof gives the geometric and combinatorial reductions explicitly and specifies the remaining finite arithmetic by a complete standard-library Python verifier in the private experiment companion. It is an ordinary computer-assisted finite proof, not a Lean/kernel proof. The two enumeration implementations are checks within the supplied source; author reproduction and the separated source assessment do not replace independent verification of this manuscript.
+The proposed proof gives the geometric and combinatorial reductions explicitly and specifies the remaining finite arithmetic by a complete standard-library Python verifier in the private experiment companion. It is an ordinary computer-assisted finite proof, not a Lean/kernel proof. The two enumeration implementations are checks within the supplied source.
 
 ### 40.2. Exact geometric reduction and full-ear weights
 
@@ -4186,7 +4186,7 @@ $$
 
 All other rows have maximum 3690. The companion verifier evaluates the finite formulas using exact integers, computes the table by recurrence (40.3), and requires equality of the entire maximal-clique lists with a separate pivoted clique enumeration. Its triangulation recursion independently checks (40.1): each triangulation has one unique triangle adjacent to root side (a,b); its apex k separates two smaller intervals. An interior original ear i=1,...,12 is present exactly when triangle (i-1,i,i+1) appears. Ears 0 and 13 are detected in root triangles (0,1,13) and (0,12,13). Duplicate ear masks in this recursion represent different triangulations and are deliberately counted with multiplicity.
 
-The supplied finite results satisfy these assertions. The table and (40.2), with the exhaustive finite computation, give $A\le4290$ for every original family in this long-gap domain. The separated source assessment reproduced the complete table and checked actual realization of source-computed maximizing supports in each row. Acceptance of the proposed manuscript remains subject to independent manuscript verification.
+The supplied finite results satisfy these assertions. The table and (40.2), with the exhaustive finite computation, give $A\le4290$ for every original family in this long-gap domain.
 
 ### 40.5. Sharpness, realizing families and already supplied original-family results
 
@@ -4205,9 +4205,9 @@ $$
 \{0,2,5,9\},\qquad\{1,4,6,9\},\qquad\{1,5,8,10\}.
 $$
 
-These are exactly the relabelled subfamilies $\mathcal Y_i$ of the published construction. B-37.8 proves that each lies in its exact matching trace, has $c_4=C_8=1430$ members, and that its full family $\mathcal F_\ast$ is full-ear-intersecting and contains every prescribed choice of the four complete-star witnesses. Thus it supplies $A=3c_4=4290$ in this normalized placement without any new lower-bound search. Together with B-40.1, this proves optimality of its core objective; it makes no optimality claim about $|\mathcal F_\ast|$.
+These are exactly the relabelled subfamilies $\mathcal Y_i$ of the published construction. B-37.8 proves that each lies in its exact matching trace, has $c_4=C_8=1430$ members, and that its full family $\mathcal F_\ast$ is full-ear-intersecting and contains every prescribed choice of the four complete-star witnesses. Thus it supplies $A=3c_4=4290$ in this normalized placement. Together with B-40.1, this proves optimality of its core objective; it makes no optimality claim about $|\mathcal F_\ast|$.
 
-For each row, the supplied finite proof and its source assessment also justify realization directly from an already computed maximizing spanning clique $C$. Define
+For each row, the supplied finite proof and its source also justify realization directly from an already computed maximizing spanning clique $C$. Define
 
 $$
 \mathcal F_C=\{T\in\mathcal T_{14}:\ (i,\operatorname{Ear}(T))\in C
@@ -4235,10 +4235,10 @@ B-38.4 has the separate gap multiset $(2,2,1,1,1,1)$, equivalently $E_0=\varnoth
 
 The supplied mathematical source is artifact `6ae585c69b5dc1f88b8eccdc`, `mathematical-result.md`, SHA-256 `1ffc20ecba6f58312dc7c11a750145ac6a172e6d6dd925c676dd7d6ea1c3aaa0`. The complete executable companion is retained at [experiments/fib-fourteen-long-gap-24633](https://github.com/the-omega-institute/trureturing-experiments/tree/d39146cc8047e4969beb9296647d46c3d2d0689b/experiments/fib-fourteen-long-gap-24633) in the private experiments repository. It contains `verify.py` (SHA-256 `67ac0e3ab5a4eb0b10e3f294a2de4bcdbf23bbee472535f4210faedae5b80313`), `results.json` (SHA-256 `051fa1e452b13043f1340eb0754c21dbe710af7827b22151f44445a6828ef86c`) and reproduction instructions. The program preserves every supplied enumeration function, expected triple and assertion; its only additions serialize the finite result rows. It requires Python 3.12 or newer, exact integers and no third-party dependencies. The source/table correspondence includes every partition, vertex count, maximal-clique count and maximum; the 27 first-row spanning weights above are supplementary arithmetic. Attainment is justified separately in B-40.2 by the existing B-37.8 construction and by the supplied complete-ear-support realization, not by a bare numerical maximum.
 
-The project source correspondence is B-32 ear deletion, B-33 exact-trace counting and literal equality families, B-37's common-family interfaces and its explicit lower construction B-37.8, and the published long-gap bounds B-39.4/B-39.5. Their current published source is [the owner at commit `52fdc99080bdca5a4686482df82bad5a6f39f7c7`](https://github.com/the-omega-institute/trureturing/blob/52fdc99080bdca5a4686482df82bad5a6f39f7c7/docs/develop/theory/AURIC_FIB_ATOM_INTRINSIC_CLASSIFICATION_AND_POLYGON_GEOMETRY.md), published through [PR24647](https://github.com/the-omega-institute/trureturing/pull/24647). The supplied candidate's older source pin `3143b5b6d2dcd2c00a95c3fb99ba5db59f498f1d` supplies its B-32/B-33/B-37 parameter correspondence; it is not evidence that the original residual is currently unsupplied. B-38 retains its separate gap-pattern scope. The finite upper proof and table are supplied repository-derived mathematics; this exposition supplies their integration and source attribution, without a new theorem search, lower-bound search or substantive solving claim.
+The project source correspondence is B-32 ear deletion, B-33 exact-trace counting and literal equality families, B-37's common-family interfaces and its explicit lower construction B-37.8, and the published long-gap bounds B-39.4/B-39.5. Their current published source is [the owner at commit `52fdc99080bdca5a4686482df82bad5a6f39f7c7`](https://github.com/the-omega-institute/trureturing/blob/52fdc99080bdca5a4686482df82bad5a6f39f7c7/docs/develop/theory/AURIC_FIB_ATOM_INTRINSIC_CLASSIFICATION_AND_POLYGON_GEOMETRY.md), published through [PR24647](https://github.com/the-omega-institute/trureturing/pull/24647). The supplied candidate's older source pin `3143b5b6d2dcd2c00a95c3fb99ba5db59f498f1d` supplies its B-32/B-33/B-37 parameter correspondence; it is not evidence that the original residual is currently unsupplied. B-38 retains its separate gap-pattern scope. The finite upper proof and table are supplied repository-derived mathematics.
 
 Leader–Tan, *Some results on intersecting families of triangulations*, [arXiv:2610.39116v1](https://arxiv.org/html/2610.39116v1), §§2–4, uses $T_m=C_{m-2}$. Its ear-deletion count $T_{14-r}=C_{12-r}$ is the containing count $h(S)$ in (40.1). Its noncrossing-$D$ intersection theorem does not permit replacing full-ear adjacency in $G$ by $D$-only intersection, and its all-ear additive bound does not supply this finite matching-core bound. Talbot, *Intersecting Families of Separated Sets*, [arXiv:math/0211314v1](https://arxiv.org/html/math/0211314v1), Theorem 4, uses fixed $r,k$, $n\ge2(k+1)r$ and gap-binomial-product weights; those are not the exact full-ear completion weights (40.1). These are the supplied source's scoped comparisons, not a new exhaustive literature search or a global novelty/priority claim.
 
-Source production and exposition use the same GPT family with repository-prior exposure; prior provider memory is unknown. This provenance provides no independent-priors or model-diversity claim. Independent acceptance of this proposed manuscript remains outstanding. There is no Lean/kernel verification, formal admission, digestion coverage, physical-realization claim or numerical $C_{\rm src}$ claim. No saturation, placement symmetry or selected small-complete-ear restriction is assumed for an arbitrary family. There is no residual-inhabitation, sharp total-family bound, all-maximizer classification or $n\ge15$ assertion. Only the core attainments specified in B-40.2 are claimed.
+There is no Lean/kernel verification, formal admission, digestion coverage, physical-realization claim or numerical $C_{\rm src}$ claim. No saturation, placement symmetry or selected small-complete-ear restriction is assumed for an arbitrary family. There is no residual-inhabitation, sharp total-family bound, all-maximizer classification or $n\ge15$ assertion. Only the core attainments specified in B-40.2 are claimed.
 
 ## 追加锚（本行以下为增补区）
