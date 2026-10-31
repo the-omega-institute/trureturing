@@ -14,7 +14,7 @@ Lean statement: `D5/S1/Dynamics/Symbolic/PermutativeLifts/BalancedLiftSplitting.
 
 *Commentary.*
 
-For every k and every bipermutative binary block code of length k+2, the full inverse image of the same fixed balancedSubshift is homeomorphic to BalancedPoint times the literal prefix set Fin(k+1) to Bool. The whole inverse image and every prefix are retained.
+For every k and every bipermutative binary block code of length k+2, the full inverse image of the same fixed balancedSubshift is homeomorphic to BalancedPoint times the literal prefix set Fin(k+1) to Bool. The whole inverse image and every prefix are retained. For a source x with coded image y, the transformed prefix label β(y)^(-1)(sourcePrefix x) is valued in that original prefix set.
 
 **Theorem 1.2 (splitting_conjugacy).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S1/Dynamics/Symbolic/PermutativeLifts/BalancedLiftSplitting.
 
 *Commentary.*
 
-The homeomorphism conjugates the actual lift shift to the balanced base shift times the identity on the literal prefix fibre.
+The homeomorphism conjugates the actual lift shift to the balanced base shift and fixes the transformed prefix label β(y)^(-1)(sourcePrefix x), valued in the original prefix set.
 
 **Theorem 1.3 (splitting_fibre_invariant).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S1/Dynamics/Symbolic/PermutativeLifts/BalancedLiftSplitting.
 
 *Commentary.*
 
-Every signed integer iterate preserves its fibre coordinate.
+Every signed integer iterate preserves the transformed prefix label β(y)^(-1)(sourcePrefix x), valued in the original prefix set.
 
 **Theorem 1.4 (splitting_fibre_clopen).**
 

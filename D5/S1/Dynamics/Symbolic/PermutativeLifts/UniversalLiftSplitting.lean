@@ -36,8 +36,15 @@ theorem permutationTransfer_shift {Q : Type*} [Finite Q]
 /-- The original finite fibre is retained throughout the conjugacy. -/
 noncomputable def trivializingHomeomorph {Q : Type*} [Finite Q]
     [TopologicalSpace Q] [DiscreteTopology Q] (π : Bool → Equiv.Perm Q) :
-    (FactorialPoint × Q) ≃ₜ (FactorialPoint × Q) :=
-  finiteFibreHomeomorph (permutationTransfer π) (continuous_permutationTransfer π)
+    (FactorialPoint × Q) ≃ₜ (FactorialPoint × Q) where
+  toFun z := (z.1, (permutationTransfer π z.1).symm z.2)
+  invFun z := (z.1, permutationTransfer π z.1 z.2)
+  left_inv z := by simp
+  right_inv z := by simp
+  continuous_toFun :=
+    (finiteFibreHomeomorph (permutationTransfer π) (continuous_permutationTransfer π)).continuous
+  continuous_invFun :=
+    (finiteFibreHomeomorph (permutationTransfer π) (continuous_permutationTransfer π)).symm.continuous
 
 theorem trivializing_conjugacy {Q : Type*} [Finite Q]
     [TopologicalSpace Q] [DiscreteTopology Q] (π : Bool → Equiv.Perm Q)

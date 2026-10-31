@@ -14,7 +14,7 @@ Lean statement: `D5/S1/Dynamics/Symbolic/PermutativeLifts/BalancedLiftComponents
 
 *Commentary.*
 
-The orbit closure of every point in the entire inverse image is exactly the clopen minimal fibre selected by its original prefix coordinate.
+The orbit closure of every point in the entire inverse image is exactly the clopen minimal fibre selected by the transformed prefix label β(y)^(-1)(sourcePrefix x), valued in the original prefix set.
 
 **Theorem 1.2 (Exact number of distinct orbit closures).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S1/Dynamics/Symbolic/PermutativeLifts/BalancedLiftComponents
 
 *Commentary.*
 
-The full product splitting intertwines every signed integer shift with the balanced base shift and the identity on the original prefix fibre.
+The full product splitting intertwines every signed integer shift with the balanced base shift and fixes the transformed prefix label β(y)^(-1)(sourcePrefix x), valued in the original prefix set.
 
 **Definition 1.4 (Actual fibre homeomorphism).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S1/Dynamics/Symbolic/PermutativeLifts/BalancedLiftComponents
 
 *Commentary.*
 
-For each literal binary prefix, its nonempty clopen fibre in the full inverse image is homeomorphic to the balanced base. The inverse is the full splitting inverse with that prefix fixed.
+For each value of the transformed prefix label in the original binary prefix set, its nonempty clopen fibre in the full inverse image is homeomorphic to the balanced base. The inverse is the full splitting inverse with that label fixed.
 
 **Theorem 1.5 (Minimal fibres).**
 
