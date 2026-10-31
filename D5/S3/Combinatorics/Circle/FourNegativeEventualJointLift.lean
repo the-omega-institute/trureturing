@@ -78,6 +78,12 @@ private theorem negative_step (N Y Z h : ℤ) (hrel : 2 * h * Y = N + Z) :
   rw [he]
   omega
 
+private theorem last_seam_bounds (N A H K : ℤ) (hA : 1 ≤ A ∧ A < N)
+    (hH : 2 * H = N - A) (hK : 2 * K = 2 * N + 1 - A) :
+    (0 ≤ H ∧ H ≤ N / 2) ∧ (0 ≤ K ∧ K ≤ N) := by
+  constructor <;> constructor <;> omega
+
+set_option maxHeartbeats 1000000 in
 /-- The eventual construction keeps all four independent gap coordinates. -/
 theorem actualSource_four_negative_eventual_joint_lift (a b c d : ℕ)
     (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : a + b + c + 3 ≤ d) :
@@ -171,13 +177,13 @@ theorem actualSource_four_negative_eventual_joint_lift (a b c d : ℕ)
   have hunegf : f (0 + d - 1) = B - td * A := by
     have hv := huf (d - 1) (by omega)
     rw [ite_eq_right (by omega)] at hv
-    change f (0 + (d - 1)) = -((N) - (B)) / 2 at hv
+    change f (d - 1) = -((N) - (B)) / 2 at hv
     rw [negative_step _ _ _ _ hrelU] at hv
     simpa only [Nat.zero_add, show 0 + (d - 1) = 0 + d - 1 by omega] using hv
   have hunegg : g (0 + d - 1) = B' - td * (2 * A) := by
     have hv := hug (d - 1) (by omega)
     rw [ite_eq_right (by omega)] at hv
-    change g (0 + (d - 1)) = -((2 * N + 1) - (B')) / 2 at hv
+    change g (d - 1) = -((2 * N + 1) - (B')) / 2 at hv
     rw [negative_step _ _ _ _ hrelU'] at hv
     simpa only [Nat.zero_add, show 0 + (d - 1) = 0 + d - 1 by omega] using hv
   have hvfpos (e : ℕ) (he : e < c - 1) :
@@ -383,12 +389,10 @@ theorem actualSource_four_negative_eventual_joint_lift (a b c d : ℕ)
     (by have hy0 : 0 ≤ y := by dsimp [y]; positivity
         have hyz0 : 0 ≤ y * z := by dsimp [y, z]; positivity
         nlinarith only [hy0, hyz0]) hsM.1 hsM.2
-  have hlastf : 0 ≤ xa * M - A ∧ xa * M - A ≤ N / 2 := by
-    have he : 2 * (xa * M - A) = N - A := by nlinarith only [hrelX]
-    constructor <;> omega
-  have hlastg : 0 ≤ xa * M' - A ∧ xa * M' - A ≤ N := by
-    have he : 2 * (xa * M' - A) = 2 * N + 1 - A := by nlinarith only [hrelX']
-    constructor <;> omega
+  have hlast := last_seam_bounds N A (xa * M - A) (xa * M' - A) hA
+    (by nlinarith only [hrelX]) (by nlinarith only [hrelX'])
+  have hlastf := hlast.1
+  have hlastg := hlast.2
   have append_pos (h : ℕ → ℤ) (A B : List ℕ)
       (hA : ∀ i ∈ A, 0 ≤ h i) (hB : ∀ i ∈ B, 0 ≤ h i) :
       ∀ i ∈ A ++ B, 0 ≤ h i := by
