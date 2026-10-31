@@ -7,6 +7,7 @@
    digest: Adjacent dyadic peak chamber with an advanced physical V mask. -/
 import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Arithmetic
 import Mathlib.Tactic.Ring
+import Batteries.Tactic.OpenPrivate
 
 /-! Advancing V creates the exact grid step Delta=8A-2e1. -/
 set_option autoImplicit false
