@@ -149,7 +149,9 @@ private theorem physical_packet_equivalence (k : ℕ) (f g : ℕ → ℤ) (C D E
     have hnegative : (bs.map Prod.snd).Perm ng := by rw [hnegs]; exact hfilter
     have hbslen : bs.length = 4 := by simpa [hnglen] using hnegative.length_eq
     have hndall : ∀ b ∈ bs, b.1.Nodup := by
-      have hnword : (blocksWord bs).Nodup := hword ▸ hperm.nodup_iff.mpr (List.nodup_range k)
+      have hnword : (blocksWord bs).Nodup := by
+        rw [hword]
+        exact hperm.nodup_iff.mpr (List.nodup_range k)
       rw [blocksWord_flatMap] at hnword
       have hnblocks := (List.nodup_flatMap.mp hnword).1
       intro b hb

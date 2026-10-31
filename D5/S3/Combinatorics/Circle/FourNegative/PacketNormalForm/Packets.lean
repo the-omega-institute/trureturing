@@ -33,8 +33,8 @@ private theorem strip_iff_packetChecks (f : ℕ → ℤ) (C h : ℤ)
   | nil => simp [blocksWord, packetChecks, InStrip, hh]
   | cons b bs ih =>
     rcases b with ⟨P,n⟩
-    have hP := hp (P,n) (by simp)
-    have hneg := hn (P,n) (by simp)
+    have hP : ∀ i ∈ P, 0 ≤ f i := hp (P,n) (by simp)
+    have hneg : f n ≤ 0 := hn (P,n) (by simp)
     have hps : ∀ b ∈ bs, ∀ i ∈ b.1, 0 ≤ f i := fun b hb => hp b (by simp [hb])
     have hns : ∀ b ∈ bs, f b.2 ≤ 0 := fun b hb => hn b (by simp [hb])
     have hsum : 0 ≤ (P.map f).sum := by simpa using List.sum_le_sum hP
@@ -50,7 +50,7 @@ private theorem strip_iff_packetChecks (f : ℕ → ℤ) (C h : ℤ)
     · rintro ⟨hpost, hpeak, hchecks⟩
       have hnext : 0 ≤ h + (P.map f).sum + f n ∧
           h + (P.map f).sum + f n ≤ C := ⟨hpost, by omega⟩
-      apply inStrip_append (positive_block_strip hP hh.1 hpeak)
+      apply inStrip_append (positive_block_strip (l := P) hP hh.1 hpeak)
       exact ⟨by omega, hpeak, (ih _ hnext hps hns).mpr hchecks⟩
 
 private def withEar (ear : ℕ) : ℕ → List (List ℕ × ℕ) → List (List ℕ × ℕ)
@@ -67,7 +67,7 @@ private theorem normalize_blocks (f : ℕ → ℤ) (C h : ℤ) (ear : ℕ)
   | nil => simp [blocksWord] at hj
   | cons b bs ih =>
     rcases b with ⟨P,n⟩
-    have hP := hp (P,n) (by simp)
+    have hP : ∀ i ∈ P, 0 ≤ f i := hp (P,n) (by simp)
     have hps : ∀ b ∈ bs, ∀ i ∈ b.1, 0 ≤ f i := fun b hb => hp b (by simp [hb])
     have heword : blocksWord ((P,n) :: bs) = P ++ n :: blocksWord bs := by
       simp [blocksWord]
