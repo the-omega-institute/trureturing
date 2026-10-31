@@ -77,6 +77,8 @@ private theorem negative_order (a b c d : ℕ)
   have hh := (hp.map (negativeLabel a b c d)).trans (List.Perm.of_eq he)
   simpa [packets,List.map_map,Function.comp_def] using hh
 
+attribute [local reducible] positivePacket negativeLabel assigned size chainStart chainLength
+
 set_option maxRecDepth 4000 in
 set_option maxHeartbeats 1600000 in
 private theorem physical_partition (a b c d : ℕ)
