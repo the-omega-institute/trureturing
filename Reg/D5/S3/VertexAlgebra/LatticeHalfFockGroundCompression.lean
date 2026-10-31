@@ -1,5 +1,8 @@
+import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 import D5.S3.VertexAlgebra.LatticeHalfFockGroundCompression
+
+/-! Exact source bridges for canonical augmentation; complete audits remain open. -/
 
 set_option autoImplicit false
 
@@ -7,12 +10,27 @@ namespace Reg.D5.S3.VertexAlgebra.LatticeHalfFockGroundCompression
 open _root_.D5.S3.VertexAlgebra
 open LatticeGeneratingFieldLocality LatticeHalfFockChargedTensorCoefficients
 open LatticeHalfFockFockNormalField LatticeHalfFockFiniteCorrection
-open LatticeHalfFockCorrectedField LatticeHalfFockGroundCompression
+open LatticeHalfFockCorrectedField
+open _root_.D5.S3.VertexAlgebra.LatticeHalfFockGroundCompression
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open scoped BigOperators
 noncomputable section
 
 abbrev BoundData := {D : LatticeData // IsUnit D.G.det}
+
+namespace Retraction
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  BoundData (fun _ => Unit) (fun p => Module.End ℂ (ActualGround p.val p.property))
+def actual : Realization signature := realize signature
+  (fun _ p _ => (pi p.val p.property).comp (iota p.val p.property))
+  (fun empty => nomatch empty)
+def arena : Arena where
+  signature := signature
+  Law readout := ∀ (D : LatticeData) (hu : IsUnit D.G.det),
+    readout.readout () ⟨D, hu⟩ () = LinearMap.id
+theorem source_bridge : (type_of% (@ground_retraction)) ↔ arena.Law actual := Iff.rfl
+end Retraction
+
 abbrev Parameter := Σ data : BoundData, ℤ
 abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
   Parameter (fun p => Oscillator p.1.val)

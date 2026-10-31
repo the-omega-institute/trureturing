@@ -14,8 +14,9 @@
 
 import D5.S3.VertexAlgebra.LatticeHalfFockCorrectedConformal
 
+/-! Canonical constant-coefficient compression of the native algebraic fields. -/
+
 set_option autoImplicit false
-set_option maxHeartbeats 2000000
 set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.VertexAlgebra.LatticeHalfFockGroundCompression
@@ -64,12 +65,11 @@ def compression (D : LatticeData) (hu : IsUnit D.G.det) :
 private theorem negative_current_augmentation (D : LatticeData) (hu : IsUnit D.G.det)
     (index : Index D) (mode : ℤ) (negative : mode < 0) (v : ActualTensor D hu) :
     pi D hu (jetCurrent D hu index mode v) = 0 := by
-  induction v using TensorProduct.induction_on with
-  | zero => simp
+  induction v using TensorProduct.inductionOn with
   | tmul r g =>
     simp only [jetCurrent, LinearMap.smul_apply, map_smul,
       LatticeHalfFock.tensorCurrent, LatticeHalfFock.tensorEnd, TensorProduct.map_tmul,
-      LinearMap.id_apply, LatticeHalfFock.current, if_pos negative,
+      LinearMap.id_apply, LatticeHalfFock.current, ite_eq_left negative,
       LinearMap.mulLeft_apply, pi_tmul]
     have aug : epsilon D (X (index.1, (-mode-1).toNat) * r) = 0 := by
       change MvPolynomial.constantCoeff (X (index.1, (-mode-1).toNat) * r) = 0
@@ -93,16 +93,17 @@ private theorem nonempty_flatTerm_augmentation (D : LatticeData) (hu : IsUnit D.
     pi D hu (flatTerm D hu field (index :: tail) e (iota D hu g) modes) = 0 := by
   rcases modes with ⟨mode, rest⟩
   by_cases negative : mode < 0
-  · simp only [flatTerm, flatCoefficient, if_pos negative, Module.End.mul_apply]
+  · simp only [flatTerm, flatCoefficient, ite_eq_left negative, Module.End.mul_apply]
     exact negative_current_augmentation D hu index mode negative _
-  · simp only [flatTerm, flatCoefficient, if_neg negative, Module.End.mul_apply,
+  · simp only [flatTerm, flatCoefficient, ite_eq_right negative, Module.End.mul_apply,
       nonnegative_current_vacuum D hu index mode (by omega) g, map_zero]
 
 private theorem nonempty_word_augmentation (D : LatticeData) (hu : IsUnit D.G.det)
     (field : NativeField D hu) (index : Index D) (tail : List (Index D))
     (e : ℤ) (g : ActualGround D hu) :
     pi D hu ((wordField D hu field (index :: tail)).coeff e (iota D hu g)) = 0 := by
-  rw [wordField_coefficient, map_finsum _ (flatTerm_finite D hu field (index :: tail) e (iota D hu g))]
+  rw [wordField_coefficient,
+    map_finsum _ (flatTerm_finite D hu field (index :: tail) e (iota D hu g))]
   simp only [nonempty_flatTerm_augmentation, finsum_zero]
 
 private theorem monomial_augmentation (D : LatticeData) (hu : IsUnit D.G.det)
@@ -143,15 +144,17 @@ theorem polynomialField_ground_compression (D : LatticeData) (hu : IsUnit D.G.de
   classical
   apply LinearMap.ext
   intro g
-  change pi D hu ((polynomialField D hu 0 r).coeff e (iota D hu g)) = _
+  change pi D hu ((polynomialField D hu 0 r).coeff e (iota D hu g)) =
+    (if e = 0 then epsilon D r else 0) • g
   induction r using MvPolynomial.induction_on' with
   | add p q hp hq =>
-    simp only [map_add, HVertexOperator.coeff_add, LinearMap.add_apply, hp, hq]
+    simp only [map_add, Pi.add_apply, LinearMap.add_apply, hp, hq]
     split_ifs <;> simp [add_smul]
   | monomial a c =>
-    rw [show monomial a c = c • (monomial a 1 : Oscillator D) by simp]
-    simp only [map_smul, HVertexOperator.coeff_smul, LinearMap.smul_apply,
-      monomial_augmentation, RingHom.id_apply, smul_smul]
+    rw [show monomial a c = c • (monomial a 1 : Oscillator D) by
+      simp [MvPolynomial.smul_monomial]]
+    simp only [map_smul, Pi.smul_apply, LinearMap.smul_apply,
+      monomial_augmentation, smul_smul]
     split_ifs <;> simp
 
 /- proof_shape: correctedField_ground_compression: content
@@ -167,13 +170,20 @@ theorem correctedField_ground_compression (D : LatticeData) (hu : IsUnit D.G.det
   classical
   apply LinearMap.ext
   intro g
-  simp only [LinearMap.comp_apply, correctedField, Finsupp.lsum_single,
-    correctedPolynomial, correctedSum, Finsupp.lsum_apply, Finsupp.sum]
+  change pi D hu ((correctedField D hu (Finsupp.single 0 p)).coeff e (iota D hu g)) =
+    (∑ s ∈ (Corr D 0 p).support,
+      if e = -2 * (s : ℤ) then epsilon D ((Corr D 0 p) s) else 0) • g
+  rw [correctedField, Finsupp.lsum_single]
+  simp only [correctedPolynomial, LinearMap.comp_apply, correctedSum,
+    Finsupp.lsum_apply, Finsupp.sum]
   change pi D hu ((∑ s ∈ (Corr D 0 p).support,
     shiftField D hu s (polynomialField D hu 0 ((Corr D 0 p) s))).coeff e (iota D hu g)) = _
   change pi D hu (coefficientAt D hu e (iota D hu g)
     (∑ s ∈ (Corr D 0 p).support, shiftField D hu s (polynomialField D hu 0 ((Corr D 0 p) s)))) = _
-  simp only [map_sum, coefficientAt, shiftField_coefficient_public]
+  simp only [map_sum]
+  change (∑ s ∈ (Corr D 0 p).support, pi D hu
+    ((shiftField D hu s (polynomialField D hu 0 ((Corr D 0 p) s))).coeff e (iota D hu g))) = _
+  simp only [shiftField_coefficient_public, LinearMap.smul_apply, LinearMap.id_apply]
   rw [Finset.sum_smul]
   apply Finset.sum_congr rfl
   intro s hs
@@ -186,7 +196,7 @@ private theorem compressed_support (D : LatticeData) (hu : IsUnit D.G.det)
     (p : Oscillator D) :
     Function.support (fun e => compression D hu
       ((correctedField D hu (Finsupp.single 0 p)).coeff e)) ⊆
-      (Corr D 0 p).support.image (fun s => -2 * (s : ℤ)) := by
+      (Corr D 0 p).support.image (fun s : ℕ => -2 * (s : ℤ)) := by
   classical
   intro e nonzero
   by_contra outside
@@ -196,7 +206,12 @@ private theorem compressed_support (D : LatticeData) (hu : IsUnit D.G.det)
   apply nonzero
   change (pi D hu).comp (((correctedField D hu (Finsupp.single 0 p)).coeff e).comp (iota D hu)) = 0
   rw [correctedField_ground_compression]
-  simp [absent]
+  have zeroSum : (∑ s ∈ (Corr D 0 p).support,
+      if e = -2 * (s : ℤ) then epsilon D ((Corr D 0 p) s) else 0) = 0 := by
+    apply Finset.sum_eq_zero
+    intro s hs
+    exact ite_eq_right (absent s hs)
+  rw [zeroSum, zero_smul]
 
 private theorem compressed_odd (D : LatticeData) (hu : IsUnit D.G.det)
     (p : Oscillator D) (e : ℤ) (odd : e % 2 = 1) :
@@ -212,7 +227,7 @@ def compressedLaurent (D : LatticeData) (hu : IsUnit D.G.det) (p : Oscillator D)
     {f : ℤ →₀ Module.End ℂ (ActualGround D hu) // ∀ e : ℤ, e % 2 = 1 → f e = 0} :=
   ⟨Finsupp.ofSupportFinite
     (fun e => compression D hu ((correctedField D hu (Finsupp.single 0 p)).coeff e))
-    (((Corr D 0 p).support.image (fun s => -2 * (s : ℤ))).finite_toSet.subset
+    (((Corr D 0 p).support.image (fun s : ℕ => -2 * (s : ℤ))).finite_toSet.subset
       (compressed_support D hu p)),
     compressed_odd D hu p⟩
 
