@@ -7,6 +7,7 @@
    digest: Normalized Bell and contextuality inequalities obey the binary n-cycle trade-off. -/
 
 import D5.S3.QuantumContext.NCycleNondisturbingGenerators
+import D5.S3.QuantumBounds.MerminMeasurementDependence.Model
 
 /-! The binary generalized Bell scenario of Porto–Ruffolo–Rabelo–Terra Cunha–Kurzyński,
 arXiv:2405.02964v2. Context `i` consists of measurements `i` and `finRotate n i`.
@@ -18,6 +19,7 @@ noncomputable section
 
 open Finset
 open D5.S3.Estimation.DecisionRisk.DescentDefectBounds (IsRowStochastic deterministicPostprocess)
+open D5.S3.Quantum.Entanglement.BinaryDetectionThresholdRefutation (parityBox)
 
 namespace D5.S3.QuantumContext.NCycleNonlocalityContextualityTradeoff
 
@@ -87,7 +89,7 @@ private def oddSigns {n : ℕ} (γ : Fin n → Bool) : Prop :=
   (∏ i, if γ i then (-1 : ℝ) else 1) = -1
 
 private def vertex {n : ℕ} (γ : Fin n → Bool) : BobBehavior n :=
-  fun i b c => if Bool.xor b c = γ i then 1 / 2 else 0
+  fun i b c => parityBox (fun _ _ => γ i) 0 0 b c
 
 private def generators (n : ℕ) : Set (BobBehavior n) :=
   Set.range deterministic ∪ {r | ∃ γ, oddSigns γ ∧ r = vertex γ}
@@ -128,23 +130,27 @@ private lemma vertex_nd {n : ℕ} (γ : Fin n → Bool) : IsND (vertex γ) := by
   refine ⟨?_, ?_, ?_⟩
   · intro i b c
     rw [vertex.eq_1]
+    dsimp only [parityBox]
     split_ifs <;> norm_num
   · intro i
-    dsimp only [vertex]
+    dsimp only [vertex, parityBox]
     cases h : γ i <;> norm_num [Fintype.sum_bool, h]
   · intro i c
-    dsimp only [vertex]
+    dsimp only [vertex, parityBox]
     cases h : γ i <;> cases k : γ (finRotate n i) <;>
       cases c <;> norm_num [Fintype.sum_bool, h, k]
 
 private lemma bool_sign_sum {ι : Type} (s : Finset ι) (γ : ι → Bool) :
     (∏ i ∈ s, if γ i then (-1 : ℝ) else 1) = if ∑ i ∈ s, γ i then -1 else 1 := by
-  classical
-  induction s using Finset.induction with
-  | empty => simp [Bool.zero_eq_false]
-  | @insert i s hi ih =>
-    rw [prod_insert hi, sum_insert hi, ih]
-    cases γ i <;> cases (∑ j ∈ s, γ j) <;> norm_num [Bool.add_eq_xor]
+  let χ : Bool →+ Additive ℝ :=
+    { toFun := fun b => Additive.ofMul (D5.S3.QuantumBounds.MerminMeasurementDependence.boolSign b)
+      map_zero' := rfl
+      map_add' := by
+        intro a b
+        change (if a + b then (-1 : ℝ) else 1) =
+          (if a then (-1 : ℝ) else 1) * (if b then -1 else 1)
+        cases a <;> cases b <;> norm_num [Bool.add_eq_xor] }
+  exact (congrArg Additive.toMul (map_sum χ γ s)).symm
 
 private lemma even_signs_assignment {n : ℕ} (γ : Fin n → Bool) (hγ : ∑ i, γ i = false) :
     ∃ s : Fin n → Bool, ∀ i, Bool.xor (s i) (s (finRotate n i)) = γ i := by
@@ -195,7 +201,7 @@ private lemma even_vertex_noncontextual {n : ℕ} (γ : Fin n → Bool)
     ext i b c
     change vertex γ i b c = (1 / 2 : ℝ) * deterministic s i b c +
       (1 / 2 : ℝ) * deterministic (fun j => !(s j)) i b c
-    simp only [vertex, deterministic, deterministicPostprocess, Prod.mk.injEq]
+    simp only [vertex, parityBox, deterministic, deterministicPostprocess, Prod.mk.injEq]
     simp only [← hs i]
     have hbinary (u v b c : Bool) :
         (if Bool.xor b c = Bool.xor u v then (1 / 2 : ℝ) else 0) =
@@ -260,10 +266,10 @@ private lemma midpoint_noncontextual {n : ℕ}
       (1 / 2 : ℝ) * vertex δ i b c + (1 / 2 : ℝ) * vertex ε i b c
     by_cases hi : i = j
     · subst i
-      dsimp only [vertex]
+      dsimp only [vertex, parityBox]
       cases h₁ : γ j <;> cases h₂ : η j <;> cases b <;> cases c <;>
         simp_all [δ, ε, Function.update]
-    · dsimp only [vertex]
+    · dsimp only [vertex, parityBox]
       simp only [δ, ε, Function.update_of_ne hi]
   rw [heq]
   exact (convex_convexHull ℝ _) hδ hε (by norm_num) (by norm_num) (by norm_num)

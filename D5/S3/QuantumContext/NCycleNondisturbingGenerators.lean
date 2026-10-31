@@ -8,6 +8,8 @@
 
 import D5.S3.Combinatorics.Graph.LayeredCirculation.LayeredFlow
 import D5.S3.Estimation.DecisionRisk.DescentDefectBounds
+import D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence
+import D5.S3.Quantum.Entanglement.BinaryDetectionThresholdRefutation
 
 /-! The normalized circulation supplier applied to the two-outcome layered cycle graph. -/
 
@@ -29,7 +31,8 @@ def allGenerators (n : ℕ) : Set (Fin n → Bool → Bool → ℝ) :=
   Set.range (fun s : Fin n → Bool => fun i b c =>
     deterministicPostprocess (fun j => (s j, s (finRotate n j))) i (b, c)) ∪
   Set.range (fun γ : Fin n → Bool => fun i b c =>
-    if Bool.xor b c = γ i then (1 / 2 : ℝ) else 0)
+    D5.S3.Quantum.Entanglement.BinaryDetectionThresholdRefutation.parityBox
+      (fun _ _ => γ i) 0 0 b c)
 
 private lemma departures_visited {v e : Type} [Fintype e] [DecidableEq e] [DecidableEq v]
     {g : EdgeGraph v e} {a b : v} (w : g.Walk a b) (u : v) :
@@ -102,12 +105,8 @@ private lemma circuit_generator {n : ℕ} (hn : 0 < n) {a : Fin n × Bool}
       simp only [mass, Fintype.sum_bool] at h₀ h₁ ⊢
       omega
     have hmass (i : Fin (k + 1)) : mass i = mass 0 := by
-      induction i using Fin.induction with
-      | zero => rfl
-      | succ i ih =>
-        have hrot : finRotate (k + 1) i.castSucc = i.succ := by
-          exact finRotate_of_lt i.isLt
-        rw [← hrot, hstep, ih]
+      exact D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.all_equal_of_adjacent
+        (Nat.succ_pos k) mass (fun i => (hstep i).symm) i
     have hlength : w.length = (k + 1) * mass 0 := by
       have h := sum_edgeMultiplicity_eq_length w
       simp only [Fintype.sum_prod_type, Fintype.sum_bool, hz, zero_add] at h
@@ -123,8 +122,9 @@ private lemma circuit_generator {n : ℕ} (hn : 0 < n) {a : Fin n × Bool}
       have hp := hw.1
       rw [hlength] at hp
       exact Nat.pos_of_mul_pos_left hp
-    have hnreal : (k : ℝ) + 1 ≠ 0 := by positivity
-    have hcases : mass 0 = 1 ∨ mass 0 = 2 := by omega
+    have hnreal : (k : ℝ) + 1 ≠ 0 := Nat.cast_add_one_ne_zero k
+    have hcases : mass 0 = 1 ∨ mass 0 = 2 := by
+      simpa only [hpositive.ne', false_or] using (Order.le_two_iff.mp hupper)
     rcases hcases with hm | hm
     · let s : Fin (k + 1) → Bool := fun i => decide ((∑ c, count i true c) = 1)
       have hrows (i : Fin (k + 1)) (b : Bool) :
@@ -138,13 +138,31 @@ private lemma circuit_generator {n : ℕ} (hn : 0 < n) {a : Fin n × Bool}
           (hr : ∀ b, (∑ c, m b c) = if u = b then 1 else 0)
           (hc : ∀ c, (∑ b, m b c) = if v = c then 1 else 0) :
           ∀ b c, m b c = if u = b ∧ v = c then 1 else 0 := by
+        let f : Bool → Bool → ℝ := fun b c => m b c
+        let g : Bool → Bool → ℝ := fun b c => if u = b ∧ v = c then 1 else 0
+        have hfrow (b : Bool) : (∑ c, f b c) = if u = b then 1 else 0 := by
+          dsimp only [f]
+          rw [← Nat.cast_sum, hr b]
+          split_ifs <;> norm_num
+        have hfcol (c : Bool) : (∑ b, f b c) = if v = c then 1 else 0 := by
+          dsimp only [f]
+          rw [← Nat.cast_sum, hc c]
+          split_ifs <;> norm_num
+        have hgrow (b : Bool) : (∑ c, g b c) = if u = b then 1 else 0 := by
+          by_cases h : u = b <;> simp [g, h]
+        have hgcol (c : Bool) : (∑ b, g b c) = if v = c then 1 else 0 := by
+          by_cases h : v = c <;> simp [g, h]
+        have hzero : m (!u) (!v) = 0 := by
+          have hz : (∑ c, m (!u) c) = 0 := by simpa using hr (!u)
+          exact sum_eq_zero_iff.mp hz (!v) (mem_univ _)
+        have heq := D5.S3.Quantum.Entanglement.BinaryDetectionThresholdRefutation.binary_eq f g (!u) (!v)
+          (by simp_rw [hfrow, hgrow])
+          (by rw [hfrow, hgrow]) (by rw [hfcol, hgcol])
+          (by simp [f, g, hzero])
         intro b c
-        have hr₀ := hr false
-        have hr₁ := hr true
-        have hc₀ := hc false
-        have hc₁ := hc true
-        cases u <;> cases v <;> cases b <;> cases c <;>
-          norm_num [Fintype.sum_bool] at hr₀ hr₁ hc₀ hc₁ ⊢ <;> omega
+        have h := congrFun (congrFun heq b) c
+        dsimp only [f, g] at h
+        split_ifs at h ⊢ <;> exact_mod_cast h
       have hcounts (i : Fin (k + 1)) (b c : Bool) :
           count i b c = if s i = b ∧ s (finRotate (k + 1) i) = c then 1 else 0 :=
         htable (count i) (s i) (s (finRotate (k + 1) i)) (hrows i)
@@ -166,13 +184,35 @@ private lemma circuit_generator {n : ℕ} (hn : 0 < n) {a : Fin n × Bool}
       have htable (m : Bool → Bool → ℕ)
           (hr : ∀ b, (∑ c, m b c) = 1) (hc : ∀ c, (∑ b, m b c) = 1) :
           ∀ b c, m b c = if Bool.xor b c = decide (m false true = 1) then 1 else 0 := by
+        let f : Bool → Bool → ℝ := fun b c => m b c
+        let g : Bool → Bool → ℝ := fun b c =>
+          if Bool.xor b c = decide (m false true = 1) then 1 else 0
+        have hfrow (b : Bool) : (∑ c, f b c) = 1 := by
+          dsimp only [f]
+          rw [← Nat.cast_sum, hr b]
+          norm_num
+        have hfcol (c : Bool) : (∑ b, f b c) = 1 := by
+          dsimp only [f]
+          rw [← Nat.cast_sum, hc c]
+          norm_num
+        have hgrow (b : Bool) : (∑ c, g b c) = 1 := by
+          cases h : decide (m false true = 1) <;> cases b <;> norm_num [g, h, Fintype.sum_bool]
+        have hgcol (c : Bool) : (∑ b, g b c) = 1 := by
+          cases h : decide (m false true = 1) <;> cases c <;> norm_num [g, h, Fintype.sum_bool]
+        have hcorner : f false true = g false true := by
+          by_cases he : m false true = 1
+          · simp [f, g, he]
+          · have hz : m false true = 0 := by
+              have h := hr false
+              simp only [Fintype.sum_bool] at h
+              omega
+            simp [f, g, hz]
+        have heq := D5.S3.Quantum.Entanglement.BinaryDetectionThresholdRefutation.binary_eq f g false true
+          (by simp_rw [hfrow, hgrow]) (by rw [hfrow, hgrow]) (by rw [hfcol, hgcol]) hcorner
         intro b c
-        have hr₀ := hr false
-        have hr₁ := hr true
-        have hc₀ := hc false
-        have hc₁ := hc true
-        cases b <;> cases c <;> by_cases he : m false true = 1 <;>
-          norm_num [Fintype.sum_bool, he] at hr₀ hr₁ hc₀ hc₁ ⊢ <;> omega
+        have h := congrFun (congrFun heq b) c
+        dsimp only [f, g] at h
+        split_ifs at h ⊢ <;> exact_mod_cast h
       have hcounts (i : Fin (k + 1)) (b c : Bool) :
           count i b c = if Bool.xor b c = γ i then 1 else 0 :=
         htable (count i) (hrows i) (fun c => (hbalance i c).symm.trans (hrows _ c)) b c

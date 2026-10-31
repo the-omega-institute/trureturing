@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.Orbit;
 
@@ -8,6 +10,13 @@ internal sealed class ZeroIncidenceDocument : IScribeDocumentDefinition
         "Orbitwise zero sums are exactly balanced negative incidence, with an exact covering law and a coprime obstruction.",
         H("The labelled circle action and balanced negative incidence"),
         Blocks(
+            Describe.Lean(DescribeId.Create("all-equal-of-adjacent"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/Orbit/ZeroIncidence.all_equal_of_adjacent"),
+                H("Adjacent equality makes a cyclic function constant"),
+                StatementSource.FromAuthor(Disp(AdjacentEqualityFormula())), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A natural-valued function on a nonempty finite cycle is constant when its value agrees with its cyclic successor at every position."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-source-orbit-zero-balanced"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Circle/Orbit/ZeroIncidence.actualSource_orbit_zero_balanced"),
                 H("Orbitwise zero is equivalent to balanced incidence"),
@@ -24,4 +33,24 @@ internal sealed class ZeroIncidenceDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "For any four-bit odd-k corollary, the representative must satisfy 0≤t<N and have four distinct occupied binary positions; this excludes the all-ones and unreduced-weight cases. In the original four-gap setting all gaps are at least two and k≥8, so that qualification is automatic. The generic theorem remains valid for every seed and every negative count. It rules out nontrivial phase-robust zero-return packets when gcd(k,n)=1, but it does not rule out phase-specific packets or fullJ witnesses, and it proves no universal J existence statement."))),
                 DescribeRole.Theorem)), []));
+    private static Formula AdjacentEqualityFormula()
+    {
+        Formula k = F.Id("k"), g = F.Id("g"), h = F.Id("h");
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula domain = new Formula.Apply(F.Id("Fin"), [k]);
+        Formula value = new Formula.Apply(g, [h]);
+        Formula successor = new Formula.Apply(new Formula.Apply(F.Id("finRotate"), [k]), [h]);
+        Formula adjacent = new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("h"),
+            domain, new Formula.Relation(value, FormulaRelationOperator.Equal,
+                new Formula.Apply(g, [successor])));
+        Formula constant = new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("h"),
+            domain, new Formula.Relation(value, FormulaRelationOperator.Equal,
+                new Formula.Apply(g, [new Formula.Number(0)])));
+        return new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("k"), naturals,
+            new Formula.Logic(new Formula.Relation(new Formula.Number(0), FormulaRelationOperator.LessThan, k),
+                FormulaLogicOperator.Implies,
+                new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("g"),
+                    new Formula.TypeArrow(domain, naturals),
+                    new Formula.Logic(adjacent, FormulaLogicOperator.Implies, constant))));
+    }
 }
