@@ -322,6 +322,87 @@ def gradeChargeDihedralRepresentation (D : LatticeData)
         have hidx : j - i = (-i) + j := by ring
         rw [hidx]
 
+/-- The fixed vectors of the dihedral action on a grade. -/
+abbrev gradeChargeDihedralInvariants (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ) :
+    Submodule ℂ (grade D n) :=
+  @Representation.invariants ℂ (DihedralGroup 3) (grade D n)
+    inferInstance inferInstance inferInstance inferInstance
+    (gradeChargeDihedralRepresentation D ell phase n)
+
+theorem mem_gradeChargeDihedralInvariants_iff (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ) (v : grade D n) :
+    v ∈ gradeChargeDihedralInvariants D ell phase n ↔
+      (gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1) v = v ∧
+        gradeTheta D n v = v) := by
+  rw [Representation.mem_invariants]
+  constructor
+  · intro h
+    constructor
+    · have h1 := h (DihedralGroup.r 1)
+      change gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1) v = v at h1
+      exact h1
+    · have h0 := h (DihedralGroup.sr 0)
+      change (gradeChargeRotation D ell phase n (Multiplicative.ofAdd (-0))).comp
+        (gradeTheta D n) v = v at h0
+      rw [show (-0 : ZMod 3) = 0 by simp, gradeChargeRotation_zero] at h0
+      simpa only [LinearMap.comp_apply, LinearMap.id_apply] using h0
+  · rintro ⟨hr, ht⟩ g
+    cases g with
+    | r i =>
+      fin_cases i
+      · change gradeChargeRotation D ell phase n (Multiplicative.ofAdd 0) v = v
+        rw [gradeChargeRotation_zero]
+        exact rfl
+      · change gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1) v = v
+        exact hr
+      · change gradeChargeRotation D ell phase n (Multiplicative.ofAdd 2) v = v
+        have htwo : gradeChargeRotation D ell phase n (Multiplicative.ofAdd 2) v =
+            gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1)
+              (gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1) v) := by
+          convert gradeChargeRotation_apply_add D ell phase n 1 1 v using 1 <;> norm_num
+        calc
+          _ = gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1)
+                (gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1) v) := htwo
+          _ = v := by rw [hr, hr]
+    | sr i =>
+      fin_cases i
+      · change (gradeChargeRotation D ell phase n (Multiplicative.ofAdd (-0))).comp
+          (gradeTheta D n) v = v
+        rw [show (-0 : ZMod 3) = 0 by simp, gradeChargeRotation_zero]
+        simpa only [LinearMap.comp_apply, LinearMap.id_apply] using ht
+      · change gradeChargeRotation D ell phase n (Multiplicative.ofAdd (-1))
+          (gradeTheta D n v) = v
+        have htwo : gradeChargeRotation D ell phase n (Multiplicative.ofAdd 2)
+            (gradeTheta D n v) =
+              gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1)
+                (gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1)
+                  (gradeTheta D n v)) := by
+          convert gradeChargeRotation_apply_add D ell phase n 1 1 (gradeTheta D n v)
+            using 1 <;> norm_num
+        have htwo' : gradeChargeRotation D ell phase n (Multiplicative.ofAdd 2)
+            (gradeTheta D n v) = v := by
+          calc
+            gradeChargeRotation D ell phase n (Multiplicative.ofAdd 2)
+                (gradeTheta D n v) =
+                gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1)
+                  (gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1)
+                    (gradeTheta D n v)) := htwo
+            _ = gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1)
+                  (gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1) v) := by rw [ht]
+            _ = gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1) v := by
+              exact congrArg (gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1)) hr
+            _ = v := hr
+        have hneg : (-1 : ZMod 3) = 2 := by decide
+        rw [hneg]
+        exact htwo'
+      · change gradeChargeRotation D ell phase n (Multiplicative.ofAdd (-2))
+          (gradeTheta D n v) = v
+        rw [ht]
+        have hneg : (-2 : ZMod 3) = 1 := by decide
+        rw [hneg]
+        exact hr
+
 theorem gradeChargeDihedral_character_average_finrank (D : LatticeData)
     (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) :
