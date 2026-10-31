@@ -44,8 +44,9 @@ lemma bitSign_add (a b : ZMod 2) : bitSign (a + b) = bitSign a * bitSign b := by
 lemma bitSign_boolBit (b : Bool) : bitSign (b.toNat : ZMod 2) = boolSign b := by
   cases b <;> simp [bitSign, boolSign]
 
-lemma prod_boolSign {ι : Type*} [DecidableEq ι] (x : ι → Bool) (I : Finset ι) :
+lemma prod_boolSign {ι : Type*} (x : ι → Bool) (I : Finset ι) :
     (∏ i ∈ I, boolSign (x i)) = bitSign (∑ i ∈ I, ((x i).toNat : ZMod 2)) := by
+  classical
   induction I using Finset.induction_on with
   | empty => simp [bitSign, boolSign]
   | @insert i I hi ih =>
@@ -100,7 +101,6 @@ def evenSetting {d : ℕ} (x : Fin d → ZMod 2) : Setting (d+1) := by
     have hz : ((fun x => hammingDist x (fun _ => false)) (evenExtension x) : ZMod 2) = 0 := by
       rw [← parity_sum,Fin.sum_univ_castSucc]
       simp only [evenExtension,Fin.snoc_castSucc,Fin.snoc_last,boolBit_bitBool]
-      dsimp only at *
       exact CharTwo.add_self_eq_zero _
     have hdvd : 2 ∣ (fun x => hammingDist x (fun _ => false)) (evenExtension x) :=
       (ZMod.natCast_eq_zero_iff _ _).mp hz
