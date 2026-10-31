@@ -66,7 +66,21 @@ $$\forall (d: \mathbb{N}), (\forall (\mu: \mathbb{R}), (\operatorname{D5.S3.Quan
 
 The coordinate swap F exchanges the two factors. The Werner matrix is the weighted sum of I + F and I − F with the displayed normalizing denominators. For d greater than one and parameter between zero and one, these are mixtures of the normalized symmetric and antisymmetric projections. The formula is from main.tex, line 946. Nat.cast explicitly includes d in the reals; the dots between real coefficients and complex matrices denote real scalar multiplication.
 
-**Definition 1.6 (Completeness without permuting indices).**
+**Definition 1.6 (The normalized identity matrix).**
+
+$$\forall (d: \mathbb{N}), ((\operatorname{D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness.designAverage}\left(d\right): \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)) = (\frac{1}{(\operatorname{Nat.cast}\left(d\right): \mathbb{R})}) \cdot ((1: \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right))))$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/Witness/WernerTesterIncompleteness.designAverage` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Maria Anastasia Jivulescu; Cécilia Lancien; Ion Nechita (2022). *Multipartite Entanglement Detection Via Projective Tensor Norms*. DOI: [10.1007/s00023-022-01187-9](https://doi.org/10.1007/s00023-022-01187-9). URL: <https://arxiv.org/abs/2010.06365v1>.
+
+*Commentary.*
+
+The normalized identity on d coordinates is the identity matrix scaled by the real reciprocal of d.
+
+**Definition 1.7 (Completeness without permuting indices).**
 
 $$\operatorname{D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness.claim} = \forall (d_{1}: \mathbb{N}), (\forall (d_{2}: \mathbb{N}), (\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(d_{1}\right) \times \operatorname{Fin}\left(d_{2}\right)), (\operatorname{Fin}\left(d_{1}\right) \times \operatorname{Fin}\left(d_{2}\right)), \mathbb{C}\right)), ((\operatorname{Matrix.PosSemidef}\left(\rho\right)) \Rightarrow ((\operatorname{Matrix.trace}\left(\rho\right) = (1: \mathbb{C})) \Rightarrow ((\neg \operatorname{D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness.Separable}\left(\rho\right)) \Rightarrow (\exists (n_{1}: \mathbb{N}), (\exists (n_{2}: \mathbb{N}), (\exists (e_{1}: (\operatorname{Matrix}\left(\operatorname{Fin}\left(d_{1}\right), \operatorname{Fin}\left(d_{1}\right), \mathbb{C}\right)) \to_{l}[\mathbb{C}] (\operatorname{EuclideanSpace}\left(\mathbb{C}, \operatorname{Fin}\left(n_{1}\right)\right))), (\exists (e_{2}: (\operatorname{Matrix}\left(\operatorname{Fin}\left(d_{2}\right), \operatorname{Fin}\left(d_{2}\right), \mathbb{C}\right)) \to_{l}[\mathbb{C}] (\operatorname{EuclideanSpace}\left(\mathbb{C}, \operatorname{Fin}\left(n_{2}\right)\right))), ((\operatorname{D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness.IsTester}\left(e_{1}\right)) \land ((\operatorname{D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness.IsTester}\left(e_{2}\right)) \land ((1: \mathbb{R}) < \left\lVert \operatorname{D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness.testerImage}\left(e_{1}, e_{2}, \rho\right) \right\rVert))))))))))))$$
 
@@ -80,7 +94,7 @@ $$\operatorname{D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness.cl
 
 The bipartite completeness assertion asks for two complex testers detecting each entangled density matrix, in arbitrary natural dimensions, by a projective norm strictly greater than one. No permutation of the input indices is allowed. This is the bipartite reading of the question in main.tex, line 1365; a bipartite counterexample also disproves the assertion for all numbers of parties.
 
-**Theorem 1.7 (An undetected entangled family).**
+**Theorem 1.8 (An undetected entangled family).**
 
 $$\forall (d: \mathbb{N}), (\forall (\mu: \mathbb{R}), (((3: \mathbb{N}) \le d) \Rightarrow ((\frac{(1: \mathbb{R})}{(\operatorname{Nat.cast}\left(d\right): \mathbb{R})} \le \mu) \Rightarrow ((\mu < \frac{(1: \mathbb{R})}{(2: \mathbb{R})}) \Rightarrow ((\operatorname{Matrix.PosSemidef}\left(\operatorname{D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness.werner}\left(d, \mu\right)\right)) \land ((\operatorname{Matrix.trace}\left(\operatorname{D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness.werner}\left(d, \mu\right)\right) = (1: \mathbb{C})) \land ((\neg \operatorname{D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness.Separable}\left(\operatorname{D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness.werner}\left(d, \mu\right)\right)) \land (\forall (n_{1}: \mathbb{N}), (\forall (n_{2}: \mathbb{N}), (\forall (e_{1}: (\operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)) \to_{l}[\mathbb{C}] (\operatorname{EuclideanSpace}\left(\mathbb{C}, \operatorname{Fin}\left(n_{1}\right)\right))), (\forall (e_{2}: (\operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)) \to_{l}[\mathbb{C}] (\operatorname{EuclideanSpace}\left(\mathbb{C}, \operatorname{Fin}\left(n_{2}\right)\right))), ((\forall (x: \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)), (\left\lVert \operatorname{DFunLike.coe}\left(e_{1}\right)\left(x\right) \right\rVert \le \operatorname{D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm}\left(x\right))) \Rightarrow ((\forall (x: \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)), (\left\lVert \operatorname{DFunLike.coe}\left(e_{2}\right)\left(x\right) \right\rVert \le \operatorname{D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm}\left(x\right))) \Rightarrow (\left\lVert \operatorname{D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness.testerImage}\left(e_{1}, e_{2}, \operatorname{D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness.werner}\left(d, \mu\right)\right) \right\rVert \le (1: \mathbb{R})))))))))))))))$$
 
@@ -94,7 +108,7 @@ $$\forall (d: \mathbb{N}), (\forall (\mu: \mathbb{R}), (((3: \mathbb{N}) \le d) 
 
 For d at least three and parameter in the interval from 1/d inclusive to 1/2 exclusive, the Werner matrix is positive semidefinite, has trace one, and is entangled. Every pair of complex linear contractions has image projective norm at most one, whether or not the contractions attain norm one.
 
-**Theorem 1.8 (Complex testers are incomplete).**
+**Theorem 1.9 (Complex testers are incomplete).**
 
 $$\neg \operatorname{D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness.claim}$$
 
@@ -131,6 +145,7 @@ Finally take d = 3 and μ = 1/3. Completeness would supply testers with image pr
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/WernerTesterIncompleteness.IsTester`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/WernerTesterIncompleteness.Separable`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/WernerTesterIncompleteness.claim`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/WernerTesterIncompleteness.designAverage`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/WernerTesterIncompleteness.result`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/WernerTesterIncompleteness.tensorPair`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/WernerTesterIncompleteness.testerImage`

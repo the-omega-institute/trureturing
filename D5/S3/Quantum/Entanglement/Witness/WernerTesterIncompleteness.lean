@@ -194,7 +194,7 @@ private def designProjector (d : ℕ) : DesignIndex d → Matrix (Fin d) (Fin d)
     (fun z => (1 / (d : ℝ)) • Matrix.vecMulVec (fun i => phase (z i))
       (star (fun i => phase (z i))))
 
-private def designAverage (d : ℕ) : Matrix (Fin d) (Fin d) ℂ := (1 / (d : ℝ)) • 1
+def designAverage (d : ℕ) : Matrix (Fin d) (Fin d) ℂ := (1 / (d : ℝ)) • 1
 
 private def designCentered (d : ℕ) (t : DesignIndex d) : Matrix (Fin d) (Fin d) ℂ :=
   designProjector d t - designAverage d
