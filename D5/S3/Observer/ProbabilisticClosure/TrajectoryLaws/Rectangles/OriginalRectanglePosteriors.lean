@@ -135,7 +135,10 @@ private theorem rightList_wordAt (n : ℕ) (z : Visible) :
 private theorem left_suffix (j k : ℕ) (hjk : j ≤ k) (z : Visible) :
     (leftList k z).drop (k-j) = leftList j z := by
   rw [leftList_wordAt,leftList_wordAt,wordAt_drop _ _ _ (by omega)]
-  congr 1 <;> push_cast <;> omega
+  have hd : -(k : ℤ)+(k-j : ℕ) = -(j : ℤ) := by
+    rw [Int.natCast_sub hjk]
+    ring
+  rw [hd,show k-(k-j) = j by omega]
 
 private theorem right_prefix (j n : ℕ) (hjn : j ≤ n) (z : Visible) :
     (rightList n z).take j = rightList j z := by
@@ -164,7 +167,8 @@ private theorem finite_condExp_bounds (θ : Presentation H)
       rw [← left_suffix j k hjk z,List.take_append_drop]
     have hh := hs.1 ((leftList k z).take (k-j)) (leftList j z) (rightList n z)
       (by rwa [he]) hshort
-    simpa only [he,hce,hce',leftList,List.length_ofFn] using hh
+    rw [he,hce,hce'] at hh
+    simpa only [leftList,List.length_ofFn] using hh
   · intro k n hjn
     filter_upwards [positive_observed_record P k n,positive_observed_record P k j,
       record_condExp P k n,record_condExp P k j] with z hlong hshort hce hce'
@@ -172,7 +176,8 @@ private theorem finite_condExp_bounds (θ : Presentation H)
       rw [← right_prefix j n hjn z,List.take_append_drop]
     have hh := hs.2 (leftList k z) (rightList j z) ((rightList n z).drop j)
       (by rwa [he]) hshort
-    simpa only [he,hce,hce',rightList,List.length_ofFn] using hh
+    rw [he,hce,hce'] at hh
+    simpa only [rightList,List.length_ofFn] using hh
 
 /-- Count the recursively split finite word by the same chronological block indicators. -/
 private theorem count_wordAt (w : List Bool) (b q n : ℕ) (d : ℤ)
@@ -240,7 +245,7 @@ private theorem half_line_count_bounds (θ : Presentation H)
   let b := w.length + Fintype.card H
   let ρ := 1-rectangleMinimum (product θ w) R / rectangleMaximum (product θ w) R
   have hb : 0 < b := by
-    have hw' : 0 < w.length := List.length_pos.mpr hw
+    have hw' : 0 < w.length := List.length_pos_iff.mpr hw
     dsimp [b]
     omega
   have hf := finite_condExp_bounds θ J hc w hw R j
@@ -292,7 +297,7 @@ private theorem count_payment_integrable (J : Measure (PathSpace H)) [IsProbabil
 private theorem erasedBit_memLp (P : Measure Visible) [IsProbabilityMeasure P] :
     MemLp erasedBit 2 P := by
   have hm : Measurable erasedBit := by unfold erasedBit; fun_prop
-  apply memLp_of_bounded _ hm.aestronglyMeasurable 2
+  apply memLp_of_bounded (a := 0) (b := 1) _ hm.aestronglyMeasurable 2
   exact Filter.Eventually.of_forall fun z => by
     cases hz : z 0 <;> simp [erasedBit,hz]
 
