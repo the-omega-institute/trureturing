@@ -51,7 +51,10 @@ theorem actualSource_four_negative_adjacent_double_joint_lift
   have hq : 2 ≤ q := by
     simpa [q] using pow_le_pow_right₀ (by decide : (1 : ℤ) ≤ 2) (show 1 ≤ n-1 by omega)
   have hzq : z=2*q := by
-    dsimp [z,q]; rw [show n=(n-1)+1 by omega,pow_succ]; ring
+    change (2 : ℤ)^n=2*2^(n-1)
+    calc
+      _ = (2 : ℤ)^((n-1)+1) := congrArg (fun m => (2 : ℤ)^m) (by omega)
+      _ = _ := by rw [pow_succ]; ring
   have hN : N=4*z^4-1 := by
     dsimp [N,k,modulus,z]
     rw [show 2*(n+1)+2*n=n+n+n+n+2 by omega]
@@ -83,35 +86,35 @@ theorem actualSource_four_negative_adjacent_double_joint_lift
   let x := 4*n+1
   have posU (i : ℕ) (hi : i∈U) : f i=2^i*A ∧ g i=2^i*(2*A) := by
     have hi' : i<n-1 := List.mem_range.mp hi
-    exact ⟨(hU i (by omega)).trans (if_pos (by omega)),(hU' i (by omega)).trans (if_pos (by omega))⟩
+    exact ⟨(hU i (by omega)).trans (ite_eq_left (by omega)),(hU' i (by omega)).trans (ite_eq_left (by omega))⟩
   have posV (i : ℕ) (hi : i<n-1) : f (n+i)=2^i*B ∧ g (n+i)=2^i*GV := by
-    exact ⟨(hV i (by omega)).trans (if_pos (by omega)),(hV' i (by omega)).trans (if_pos (by omega))⟩
+    exact ⟨(hV i (by omega)).trans (ite_eq_left (by omega)),(hV' i (by omega)).trans (ite_eq_left (by omega))⟩
   have posW (i : ℕ) (hi : i<n) : f (2*n+i)=2^i*L ∧ g (2*n+i)=2^i*GW := by
-    exact ⟨(hW i (by omega)).trans (if_pos (by omega)),(hW' i (by omega)).trans (if_pos (by omega))⟩
+    exact ⟨(hW i (by omega)).trans (ite_eq_left (by omega)),(hW' i (by omega)).trans (ite_eq_left (by omega))⟩
   have posX (i : ℕ) (hi : i<n-1) : f (3*n+2+i)=2^i*(2*M) ∧ g (3*n+2+i)=2^i*(2*GX) := by
     have e : 3*n+2+i=2*n+(n+1)+(i+1) := by omega
     rw [e]
     constructor
-    · rw [hX (i+1) (by omega),if_pos (by omega),pow_succ]; ring
-    · rw [hX' (i+1) (by omega),if_pos (by omega),pow_succ]; ring
+    · rw [hX (i+1) (by omega),ite_eq_left (by omega),pow_succ]; ring
+    · rw [hX' (i+1) (by omega),ite_eq_left (by omega),pow_succ]; ring
   have hx0 : f x0=M ∧ g x0=GX := by
-    simpa only [Nat.add_zero,pow_zero,one_mul,if_pos (by omega : 0+1<n+1)] using
+    simpa only [Nat.add_zero,pow_zero,one_mul,ite_eq_left (by omega : 0+1<n+1)] using
       And.intro (hX 0 (by omega)) (hX' 0 (by omega))
   have negU : f u=-(N-B)/2 ∧ g u=-(modulus (k+1)-GV)/2 := by
-    simpa only [if_neg (by omega : ¬ n-1+1<n)] using And.intro (hU (n-1) (by omega)) (hU' (n-1) (by omega))
+    simpa only [ite_eq_right (by omega : ¬ n-1+1<n)] using And.intro (hU (n-1) (by omega)) (hU' (n-1) (by omega))
   have negV : f v=-(N-L)/2 ∧ g v=-(modulus (k+1)-GW)/2 := by
-    simpa only [show n+(n-1)=v by dsimp [v]; omega,if_neg (by omega : ¬ n-1+1<n)] using
+    simpa only [show n+(n-1)=v by dsimp [v]; omega,ite_eq_right (by omega : ¬ n-1+1<n)] using
       And.intro (hV (n-1) (by omega)) (hV' (n-1) (by omega))
   have negW : f w=-(N-M)/2 ∧ g w=-(modulus (k+1)-GX)/2 := by
-    simpa only [show 2*n+n=w by dsimp [w]; omega,if_neg (by omega : ¬ n+1<n+1)] using
+    simpa only [show 2*n+n=w by dsimp [w]; omega,ite_eq_right (by omega : ¬ n+1<n+1)] using
       And.intro (hW n (by omega)) (hW' n (by omega))
   have negX : f x=-(N-A)/2 ∧ g x=-(modulus (k+1)-A)/2 := by
-    simpa only [show 2*n+(n+1)+n=x by dsimp [x]; omega,if_neg (by omega : ¬ n+1<n+1)] using
+    simpa only [show 2*n+(n+1)+n=x by dsimp [x]; omega,ite_eq_right (by omega : ¬ n+1<n+1)] using
       And.intro (hX n (by omega)) (hX' n (by omega))
   have sumU : (U.map f).sum=(q-1)*A ∧ (U.map g).sum=(q-1)*(2*A) := by
     have hu (i : ℕ) (hi : i<n-1) := posU i (List.mem_range.mpr hi)
-    exact ⟨by simpa [U,q] using ladder_sum f 0 (n-1) A (fun i hi => by simpa using (hu i hi).1),
-      by simpa [U,q] using ladder_sum g 0 (n-1) (2*A) (fun i hi => by simpa using (hu i hi).2)⟩
+    exact ⟨by simpa only [U,q,←List.range_eq_range'] using ladder_sum f 0 (n-1) A (fun i hi => by simpa using (hu i hi).1),
+      by simpa only [U,q,←List.range_eq_range'] using ladder_sum g 0 (n-1) (2*A) (fun i hi => by simpa using (hu i hi).2)⟩
   have sumV : (V.map f).sum=(q-1)*B ∧ (V.map g).sum=(q-1)*GV :=
     ⟨ladder_sum f n (n-1) B (fun i hi => (posV i hi).1),
       ladder_sum g n (n-1) GV (fun i hi => (posV i hi).2)⟩
@@ -185,7 +188,10 @@ theorem actualSource_four_negative_adjacent_double_joint_lift
     dsimp [P,F1,U,V,W]; simp only [List.length_append,List.length_singleton,List.length_range',List.length_range]; omega
   have hp' : (P++k::R).Perm (List.range (k+1)) := by
     have he : (P++k::R).Perm ((P++R)++[k]) := by
-      apply Multiset.coe_eq_coe.mp; simp only [← Multiset.coe_add,Multiset.coe_cons,Multiset.coe_singleton]; ac_rfl
+      change (P++([k]++R)).Perm ((P++R)++[k])
+      apply Multiset.coe_eq_coe.mp
+      simp only [← Multiset.coe_add]
+      ac_rfl
     rw [List.range_succ]
     exact he.trans (hp.append_right [k])
   have hz : ((List.range k).map f).sum=0 := by
@@ -193,7 +199,7 @@ theorem actualSource_four_negative_adjacent_double_joint_lift
   have hz' : ((List.range (k+1)).map g).sum=0 := by
     have he : ((2*t : ℕ) : ℤ)=2*A := by push_cast; rw [ht]
     simpa only [g,← he] using ThreeNegativeEqualOuterSourceBridge.source_zero (k+1) (2*t) (by dsimp [k]; omega)
-  refine ⟨(P++R).map (label k (by dsimp [k]; omega)),by dsimp [k]; omega,?_,?_⟩
+  refine ⟨(P++R).map (label k (by dsimp [k]; omega)),by omega,?_,?_⟩
   · apply lift_order k t (by dsimp [k]; omega) (P++R) hp
     · simpa only [f,N,← ht] using hstrip
     · simpa only [f,N,← ht] using hz
