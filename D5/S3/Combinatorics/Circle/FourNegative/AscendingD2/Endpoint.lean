@@ -172,21 +172,6 @@ private theorem finite_order (k t : ℕ) (word : List (Fin k))
     have h := hs ⟨0, by omega⟩
     simpa using h
 
-private theorem finite_four : ∃ sigma : List (Fin 11),
-    OriginalOrder 11 549 sigma ∧ OriginalOrder 12 1098 (earWord 11 sigma 0) := by
-  refine ⟨[9, 2, 8, 7, 10, 4, 6, 5, 0, 3, 1], ?_, ?_⟩
-  all_goals apply finite_order <;> decide
-
-private theorem finite_five : ∃ sigma : List (Fin 12),
-    OriginalOrder 12 1061 sigma ∧ OriginalOrder 13 2122 (earWord 12 sigma 0) := by
-  refine ⟨[8, 2, 9, 10, 3, 11, 5, 7, 6, 0, 4, 1], ?_, ?_⟩
-  all_goals apply finite_order <;> decide
-
-private theorem finite_six : ∃ sigma : List (Fin 13),
-    OriginalOrder 13 2085 sigma ∧ OriginalOrder 14 4170 (earWord 13 sigma 0) := by
-  refine ⟨[9, 3, 10, 11, 4, 12, 6, 8, 7, 0, 5, 2, 1], ?_, ?_⟩
-  all_goals apply finite_order <;> decide
-
 /-- Every independent 2≤a<b<c has a complete literal physical first-ear joint order.
 Both complete integer totals vanish and both orders include every natural take-prefix. -/
 theorem actualSource_strict_ascending_d2_joint_lift (a b c : ℕ)
@@ -207,8 +192,11 @@ theorem actualSource_strict_ascending_d2_joint_lift (a b c : ℕ)
   · exact realize 2 3 c (by decide) (by decide) (by omega) (tail_choice c hc7)
   have hc : c = 4 ∨ c = 5 ∨ c = 6 := by omega
   rcases hc with rfl|rfl|rfl
-  · exact finite_four
-  · exact finite_five
-  · exact finite_six
+  · refine ⟨[9, 2, 8, 7, 10, 4, 6, 5, 0, 3, 1], ?_, ?_⟩
+    all_goals apply finite_order <;> decide
+  · refine ⟨[8, 2, 9, 10, 3, 11, 5, 7, 6, 0, 4, 1], ?_, ?_⟩
+    all_goals apply finite_order <;> decide
+  · refine ⟨[9, 3, 10, 11, 4, 12, 6, 8, 7, 0, 5, 2, 1], ?_, ?_⟩
+    all_goals apply finite_order <;> decide
 
 end D5.S3.Combinatorics.Circle.FourNegative.AscendingD2
