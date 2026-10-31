@@ -842,7 +842,7 @@ Robin violation. All tail and normalization inputs are unconditional. -/
 theorem actual_kernel_peak_robin_violation
     {y : ℝ} (hy : log 10000 ≤ y)
     (hpeak : 4 * y + 9 < exp (-y / 2) *
-      (U (exp y) - log (2 * pi) +
+      (U (exp y) - log (2 * Real.pi) +
         D5.S3.Weil.Mertens.IntegratedExplicit.trivialT y)) :
     ∃ t : ℝ, exp y ≤ t ∧
       let N := Nat.lcmUpto ⌊t⌋₊
@@ -852,11 +852,11 @@ theorem actual_kernel_peak_robin_violation
     calc
       10000 = exp (log 10000) := (exp_log (by norm_num)).symm
       _ ≤ exp y := exp_le_exp.mpr hy
-  have hcorrection : 0 < log (2 * pi) -
+  have hcorrection : 0 < log (2 * Real.pi) -
       D5.S3.Weil.Mertens.IntegratedExplicit.trivialT y := by
     have ht := D5.S3.Weil.Mertens.IntegratedExplicit.trivialT_le_mass hy0
-    have hl : log (2 : ℝ) ≤ log (2 * pi) :=
-      log_le_log (by norm_num) (by nlinarith [pi_gt_three])
+    have hl : log (2 : ℝ) ≤ log (2 * Real.pi) :=
+      log_le_log (by norm_num) (by nlinarith [Real.pi_gt_three])
     linarith [Real.log_two_gt_d9]
   have hroot : sqrt (exp y) = exp (y / 2) := by
     rw [sqrt_eq_rpow, Real.rpow_def_of_pos (exp_pos y), log_exp]
@@ -874,7 +874,7 @@ theorem actual_kernel_peak_robin_violation
   apply qualitative_mertens_peak hA
   rw [log_exp, hroot]
   have hm := mul_le_mul_of_nonneg_left (add_le_add_right hthreshold 9) (exp_pos (y / 2)).le
-  linarith
+  nlinarith only [hm, hscaled, hcorrection]
 
 end
 end D5.S3.Arith.Robin.CompleteMertensPeak
