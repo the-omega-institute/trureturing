@@ -21,7 +21,8 @@ internal sealed class InverseQuadraticFormDocument : IScribeDocumentDefinition
                     "D5/S3/Quantum/Entanglement/ExponentialKernel/InverseQuadraticForm.inverse_quadratic_form"),
                 H("Nonsingularity and the complete quadratic identity"),
                 StatementSource.FromAuthor(Statement()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/QuadraticForms/rybickipress1995irregular")),
                 Blocks(
                     Paragraph(Text(
                         "The inverse in the formula is the nonsingular matrix inverse. "
@@ -40,7 +41,9 @@ internal sealed class InverseQuadraticFormDocument : IScribeDocumentDefinition
                         "When n=0 the matrix has the single entry one, the adjacent-order "
                         + "hypothesis is empty, and the sum over Fin(0) is empty. The identity is x(0) squared. "
                         + "The construction is the usual unequal-gap AR(1), or sampled Ornstein-Uhlenbeck, "
-                        + "innovation factorization. It concerns the real exponential matrix; a physical "
+                        + "innovation factorization. Rybicki and Press give the corresponding tridiagonal "
+                        + "inverse for irregularly sampled exponential correlations; expanding that inverse "
+                        + "gives this quadratic form. It concerns the real exponential matrix; a physical "
                         + "channel optimum requires its separate channel and norm arguments."))),
                 DescribeRole.Theorem))));
 
