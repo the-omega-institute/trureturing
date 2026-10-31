@@ -103,7 +103,8 @@ def registration.{u_1, u_2, u_3} :
   realization := .source arena.{u_1, u_2, u_3} ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual.{u_3}
+  readout := some (realize signature.{u_3}
+    (fun _ q weight => weight q.2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

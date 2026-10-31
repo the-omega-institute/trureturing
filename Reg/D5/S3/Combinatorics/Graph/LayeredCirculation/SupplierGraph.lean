@@ -88,7 +88,8 @@ def registration.{uV, uE} :
   realization := .source arena.{uV, uE} ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual.{uV, uE}
+  readout := some (realize signature.{uV, uE}
+    (fun _ q edge => q.2.2.source edge) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
