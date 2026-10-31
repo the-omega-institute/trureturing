@@ -41,7 +41,7 @@ def chronologicalCount (w : List Bool) (b : ℕ) (d : ℤ) (q : ℕ)
   ∑ i ∈ Finset.range q, if z ∈ blockSuccess w b (d + (i : ℤ) * b) then 1 else 0
 
 private theorem markedField_le (t : ℤ) :
-    markedField (H := H) t ≤ inferInstance :=
+    markedField (H := H) t ≤ (inferInstance : MeasurableSpace (PathSpace H)) :=
   (show Measurable (fun z : PathSpace H => (state t z, past t z)) by
     unfold state past; fun_prop).comap_le
 
@@ -87,13 +87,13 @@ private theorem occurrence_on_markedField (θ : Presentation H)
   rw [state_partition J t E, state_partition J t (E ∩ _), Finset.mul_sum]
   apply Finset.sum_le_sum
   intro h _
-  rw [Set.inter_right_comm E, he, he]
+  rw [Set.inter_right_comm E, he]
   exact (original_rectangle_occurrence θ J hc w R r hr a ha).2.2.2 t h _
     (hB.preimage (measurable_const.prodMk measurable_id))
 
 private theorem condExp_indicator_lower {Ω : Type*} [mΩ : MeasurableSpace Ω]
     (μ : Measure Ω) [IsProbabilityMeasure μ] (m : MeasurableSpace Ω) (hm : m ≤ mΩ)
-    (S : Set Ω) (hS : MeasurableSet S) (ε : ℝ) (hε : 0 ≤ ε)
+    (S : Set Ω) (hS : MeasurableSet[mΩ] S) (ε : ℝ) (hε : 0 ≤ ε)
     (hlower : ∀ A, MeasurableSet[m] A → ENNReal.ofReal ε * μ A ≤ μ (A ∩ S)) :
     ∀ᵐ z ∂μ, ε ≤ (μ[S.indicator (fun _ => (1 : ℝ)) | m]) z := by
   let f := S.indicator (fun _ => (1 : ℝ))
@@ -110,7 +110,7 @@ private theorem condExp_indicator_lower {Ω : Type*} [mΩ : MeasurableSpace Ω]
     rw [integral_sub integrable_condExp.integrableOn (integrable_const ε),
       setIntegral_condExp hm hf hA, setIntegral_const, smul_eq_mul]
     have he : (∫ z in A, f z ∂μ) = μ.real (A ∩ S) := by
-      simp only [f, setIntegral_indicator hS, setIntegral_const, smul_eq_mul, mul_one]
+      simp only [f, setIntegral_indicator hS, setIntegral_const, smul_eq_mul, mul_one, Set.inter_comm]
     rw [he, sub_nonneg]
     have hh := ENNReal.toReal_mono (measure_ne_top μ (A ∩ S)) (hlower A hA)
     simpa only [ENNReal.toReal_mul, ENNReal.toReal_ofReal hε, measureReal_def,
@@ -134,7 +134,7 @@ theorem marked_success_condExp (θ : Presentation H)
 
 private theorem conditional_payment {Ω : Type*} [mΩ : MeasurableSpace Ω]
     (μ : Measure Ω) [IsProbabilityMeasure μ] (m : MeasurableSpace Ω) (hm : m ≤ mΩ)
-    (S : Set Ω) (hS : MeasurableSet S) (ε ρ : ℝ) (hρ : 0 ≤ ρ) (hρ1 : ρ ≤ 1)
+    (S : Set Ω) (hS : MeasurableSet[mΩ] S) (ε ρ : ℝ) (hρ : 0 ≤ ρ) (hρ1 : ρ ≤ 1)
     (hlower : ∀ᵐ z ∂μ, ε ≤ (μ[S.indicator (fun _ => (1 : ℝ)) | m]) z) :
     ∀ᵐ z ∂μ, (μ[fun z => if z ∈ S then ρ^2 else 1 | m]) z ≤
       1 - ε * (1-ρ^2) := by
@@ -147,7 +147,9 @@ private theorem conditional_payment {Ω : Type*} [mΩ : MeasurableSpace Ω]
   rw [he]
   filter_upwards [condExp_sub (integrable_const 1) (hi.smul (1-ρ^2)) m,
     condExp_smul (μ := μ) (1-ρ^2) I m, hlower] with z hsub hmul hlo
-  rw [hsub, hmul, condExp_const hm]
+  rw [hsub]
+  change (μ[(fun _ => (1 : ℝ)) | m]) z - (μ[(1-ρ^2) • I | m]) z ≤ _
+  rw [hmul, condExp_const hm]
   have hsq : ρ^2 ≤ 1 := by
     simpa only [pow_two, mul_one] using
       (mul_le_mul hρ1 hρ1 hρ (by norm_num : (0 : ℝ) ≤ 1))
@@ -169,10 +171,11 @@ private theorem earlier_block_measurable (w : List Bool) (b : ℕ) (d t : ℤ)
         OriginalFutureScreening.readPrefix b (future d z) := by
       funext k
       dsimp [read,past,future,OriginalFutureScreening.readPrefix]
-      congr 1
-      have hk := k.isLt
+      apply congrArg z.2
+      change t - (((t-d-1-(k.val : ℤ)).toNat : ℤ)+1) = d+(k.val : ℤ)
+      have hk : (k.val : ℤ) < (b : ℤ) := by exact_mod_cast k.isLt
       rw [Int.toNat_of_nonneg (by omega)]
-      omega
+      ring
     simp only [Set.mem_preimage, Set.mem_setOf_eq, hread]
   rw [he]
   exact ⟨_, (Set.toFinite _).measurableSet.preimage hm, rfl⟩

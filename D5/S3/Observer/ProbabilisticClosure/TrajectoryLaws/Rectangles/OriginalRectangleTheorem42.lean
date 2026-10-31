@@ -9,12 +9,13 @@
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.Rectangles.OriginalRectanglePosteriors
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.Rectangles.OriginalRectangleRoutes
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalUnifilarErasureTail
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
-open MeasureTheory ProbabilityTheory Function Filter
+open MeasureTheory ProbabilityTheory Function Filter Matrix
 open scoped BigOperators ENNReal Classical
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkedPredictiveQuotient
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalMarkedLaw
@@ -87,38 +88,50 @@ private theorem component_rho_range {S : Type u} [Fintype S]
 private theorem geometric_root_tail
     (b : ℕ) (hb : 0 < b) (η : ℝ) (hη0 : 0 ≤ η) (hη1 : η < 1)
     (eL eR : ℕ → ℝ)
-    (hnonneg : ∀ n, 0 ≤ eL n ∧ 0 ≤ eR n)
     (hbound : ∀ n, eL n ≤ η^(n/b) ∧ eR n ≤ η^(n/b)) (R : ℕ) :
     Summable (fun n => Real.sqrt (eL (R+n)) + Real.sqrt (eR (R+n))) ∧
       (∑' n, Real.sqrt (eL (R+n)) + Real.sqrt (eR (R+n))) ≤
         2 * (b : ℝ) * (Real.sqrt η)^(R/b) / (1-Real.sqrt η) := by
   have hsη0 : 0 ≤ Real.sqrt η := Real.sqrt_nonneg _
-  have hsη1 : Real.sqrt η < 1 := by
-    rw [Real.sqrt_lt_iff]
-    exact ⟨hη0, by nlinarith [hη1]⟩
+  have hsη1 : Real.sqrt η < 1 :=
+    (Real.sqrt_lt hη0 zero_le_one).mpr (by simpa using hη1)
   have hseries := tail_series (1 : ℝ) (Real.sqrt η) (by norm_num) hsη0 hsη1 b hb R
-  have hsqrt (n : ℕ) (h : 0 ≤ eL (R+n)) :
+  simp only [one_mul] at hseries
+  have hsqrt (n : ℕ) :
       Real.sqrt (eL (R+n)) ≤ (Real.sqrt η)^((R+n)/b) := by
     calc
       Real.sqrt (eL (R+n)) ≤ Real.sqrt (η^((R+n)/b)) :=
         Real.sqrt_le_sqrt (hbound (R+n)).1
-      _ = (Real.sqrt η)^((R+n)/b) := by rw [Real.sqrt_pow]
-  have hsqrt' (n : ℕ) (h : 0 ≤ eR (R+n)) :
+      _ = η ^ ((((R+n)/b : ℕ) : ℝ) / 2) := by
+        rw [Real.sqrt_eq_rpow, ← Real.rpow_natCast_mul hη0]
+        congr 1
+        ring
+      _ = (Real.sqrt η)^((R+n)/b) := by
+        rw [Real.rpow_div_two_eq_sqrt _ hη0, Real.rpow_natCast]
+  have hsqrt' (n : ℕ) :
       Real.sqrt (eR (R+n)) ≤ (Real.sqrt η)^((R+n)/b) := by
     calc
       Real.sqrt (eR (R+n)) ≤ Real.sqrt (η^((R+n)/b)) :=
         Real.sqrt_le_sqrt (hbound (R+n)).2
-      _ = (Real.sqrt η)^((R+n)/b) := by rw [Real.sqrt_pow]
+      _ = η ^ ((((R+n)/b : ℕ) : ℝ) / 2) := by
+        rw [Real.sqrt_eq_rpow, ← Real.rpow_natCast_mul hη0]
+        congr 1
+        ring
+      _ = (Real.sqrt η)^((R+n)/b) := by
+        rw [Real.rpow_div_two_eq_sqrt _ hη0, Real.rpow_natCast]
   have hpoint (n : ℕ) :
       Real.sqrt (eL (R+n)) + Real.sqrt (eR (R+n)) ≤
         2 * (Real.sqrt η)^((R+n)/b) := by
-    exact add_le_add (hsqrt n (hnonneg (R+n)).1) (hsqrt' n (hnonneg (R+n)).2)
+    calc
+      _ ≤ (Real.sqrt η)^((R+n)/b) + (Real.sqrt η)^((R+n)/b) :=
+        add_le_add (hsqrt n) (hsqrt' n)
+      _ = 2 * (Real.sqrt η)^((R+n)/b) := by ring
   have hnon (n : ℕ) : 0 ≤ Real.sqrt (eL (R+n)) + Real.sqrt (eR (R+n)) :=
     add_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _)
   have hsum : Summable (fun n => Real.sqrt (eL (R+n)) + Real.sqrt (eR (R+n))) :=
     Summable.of_nonneg_of_le hnon hpoint (hseries.1.mul_left 2)
-  refine ⟨hsum, (hsum.tsum_le_tsum hpoint (hseries.1.mul_left 2)).trans_eq ?_⟩
-  rw [← tsum_mul_left]
+  refine ⟨hsum, (hsum.tsum_le_tsum hpoint (hseries.1.mul_left 2)).trans ?_⟩
+  rw [tsum_mul_left]
   calc
     2 * ∑' n : ℕ, (Real.sqrt η)^((R+n)/b) ≤
         2 * ((b : ℝ)/(1-Real.sqrt η) * (Real.sqrt η)^(R/b)) :=
@@ -133,6 +146,7 @@ private theorem geometric_square_tail
     ∑' n : ℕ, (ENNReal.ofReal (eL (R+n)) + ENNReal.ofReal (eR (R+n))) ≤
       ENNReal.ofReal (2 * (b : ℝ) * η^(R/b) / (1-η)) := by
   have hseries := tail_series (1 : ℝ) η (by norm_num) hη0 hη1 b hb R
+  simp only [one_mul] at hseries
   have hpoint (n : ℕ) :
       ENNReal.ofReal (eL (R+n)) + ENNReal.ofReal (eR (R+n)) ≤
         ENNReal.ofReal (2 * η^((R+n)/b)) := by
@@ -173,12 +187,18 @@ theorem native_component_rectangle_theorem42
     let b := w.length + Fintype.card D.val
     ∃ a : ∀ h, LabelledRoute κ h r,
       (a r).length = 0 ∧ (∀ h, (a h).length ≤ Fintype.card D.val) ∧
+      (∀ h, w.head? = some false → (a h).length < Fintype.card D.val) ∧
+      (∀ h, h ≠ r → w.head? = some true →
+        (List.ofFn (a h).labels).getLast? = some false) ∧
+      (∀ h, Function.Injective (a h).states) ∧
+      (w.head? = some true → ∀ s, κ.matrix true s r = 0) ∧
       (∀ t : ℤ,
         ENNReal.ofReal (∑ i : D.val, θ.initial i.val) •
             K.map (componentInclusion D.val) =
           J.restrict (state t ⁻¹' (D.val : Set H))) ∧
       (∀ w' (i j : D.val),
         product κ w' i j = product θ w' i.val j.val) ∧
+      K.map Prod.snd = (visibleLaw κ : Measure (ℤ → Bool)) ∧
       (∀ j : ℕ,
         let ρ := 1 - rectangleMinimum (product κ w) R /
           rectangleMaximum (product κ w) R
@@ -199,6 +219,8 @@ theorem native_component_rectangle_theorem42
             ρ ^ OriginalRectangleMoments.chronologicalCount w b 1 (j/b) z) ∧
         leftRisk κ j ≤ η^(j/b) ∧ rightRisk κ j ≤ η^(j/b)) ∧
       (∀ R₀ : ℕ,
+        Summable (fun n : ℕ =>
+          Real.sqrt (leftRisk κ (R₀+n)) + Real.sqrt (rightRisk κ (R₀+n))) ∧
         rootErasureTail κ R₀ ≤
           2 * (b : ℝ) * (Real.sqrt (1 - selectedEpsilon κ w r a *
             (1-(1-rectangleMinimum (product κ w) R /
@@ -226,7 +248,7 @@ theorem native_component_rectangle_theorem42
   have hK : HasOriginalCylinders K κ := by
     exact (same_law_trimming κ).1
   have hcomponent := native_component_irreducible θ D hc
-  obtain ⟨a, ha0, hab, _, _, _, hocc⟩ :=
+  obtain ⟨a, ha0, hab, hafalse, haseam, hainj, haincoming, hocc⟩ :=
     irreducible_rectangle_occurrence κ K hK hcomponent w R r hr
   have hclass := component_restriction θ D hc J hJ K hK
   have hvis : K.map Prod.snd = (visibleLaw κ : Measure (ℤ → Bool)) :=
@@ -236,7 +258,8 @@ theorem native_component_rectangle_theorem42
     rectangleMaximum (product κ w) R
   let ε := selectedEpsilon κ w r a
   let η := 1 - ε * (1-ρ^2)
-  have hε : 0 < ε ∧ ε ≤ 1 := by simpa [ε] using hocc.1
+  have hε : 0 < ε ∧ ε ≤ 1 := by
+    simpa [ε] using And.intro hocc.1 hocc.2.1
   have hη : 0 ≤ η ∧ η < 1 := by
     dsimp [η]
     have hs : 0 < 1-ρ^2 := by nlinarith [hρ.1, hρ.2]
@@ -258,10 +281,10 @@ theorem native_component_rectangle_theorem42
     have hwlen : 0 < w.length := List.length_pos.mpr hw
     omega
   have hroot (R₀ : ℕ) := geometric_root_tail b hb η hη.1 hη.2
-    (leftRisk κ) (rightRisk κ) hnonneg hbound R₀
+    (leftRisk κ) (rightRisk κ) hbound R₀
   have hsq (R₀ : ℕ) := geometric_square_tail b hb η hη.1 hη.2
     (leftRisk κ) (rightRisk κ) hnonneg hbound R₀
-  refine ⟨a, ha0, hab, ?_, ?_, ?_, ?_⟩
+  refine ⟨a, ha0, hab, hafalse, haseam, hainj, haincoming, ?_, ?_, hvis, ?_, ?_⟩
   · intro t
     exact (hclass t).1
   · intro w' i j
@@ -271,7 +294,7 @@ theorem native_component_rectangle_theorem42
     have hρ' : ρ = 1 - rectangleMinimum (product κ w) R /
         rectangleMaximum (product κ w) R := rfl
     refine ⟨⟨by simpa [ρ] using hρ.1, by simpa [ρ] using hρ.2⟩,
-      hε, hη, ?_, ?_⟩
+      hε, hη, ?_, ?_, ?_⟩
     · simpa [ρ, ε, η, hvis, bitPredictor, fullMean, leftMean, rightMean]
         using hh.1
     · simpa [ρ, ε, η, hvis, bitPredictor, fullMean, leftMean, rightMean]
@@ -281,7 +304,7 @@ theorem native_component_rectangle_theorem42
   · intro R₀
     have hroot0 := hroot R₀
     have hsq0 := hsq R₀
-    refine ⟨?_, ?_, ?_⟩
+    refine ⟨hroot0.1, ?_, ?_, ?_⟩
     · simpa [rootErasureTail, η, ε, ρ] using hroot0.2
     · simpa [erasureTail, η, ε, ρ] using hsq0
     · simpa [rootErasureTail, η, ε, ρ] using (hroot 0).2

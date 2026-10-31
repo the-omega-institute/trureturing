@@ -82,8 +82,10 @@ private theorem leftField_sup : (⨆ k, leftField k) = beforeField := by
     exact MeasurableSpace.comap_le_comap_of_eq_comp _ hf he
   · have hm (n : ℕ) : @Measurable Visible Bool (⨆ k, leftField k) inferInstance
         (fun z => before z n) := by
+      have hw : Measurable[leftField (n+1)] (leftWord (n+1)) :=
+        Measurable.of_comap_le le_rfl
       have hh : Measurable[leftField (n+1)] (fun z => leftWord (n+1) z 0) :=
-        (measurable_pi_apply 0).comp (Measurable.of_comap_le le_rfl)
+        (measurable_pi_apply (0 : Fin (n+1))).comp hw
       have hh' := hh.mono (le_iSup leftField (n+1)) le_rfl
       convert hh' using 1
       funext z
@@ -101,9 +103,11 @@ private theorem rightField_sup : (⨆ n, rightField n) = afterField := by
       (show Measurable f by dsimp [f]; fun_prop) rfl
   · have hm (n : ℕ) : @Measurable Visible Bool (⨆ k, rightField k) inferInstance
         (fun z => after z n) := by
+      have hw : Measurable[rightField (n+1)] (rightWord (n+1)) :=
+        Measurable.of_comap_le le_rfl
       have hh : Measurable[rightField (n+1)]
           (fun z => rightWord (n+1) z (Fin.last n)) :=
-        (measurable_pi_apply (Fin.last n)).comp (Measurable.of_comap_le le_rfl)
+        (measurable_pi_apply (Fin.last n)).comp hw
       exact hh.mono (le_iSup rightField (n+1)) le_rfl
     letI : MeasurableSpace Visible := ⨆ k, rightField k
     exact (Measurable.of_eval hm).comap_le
@@ -150,8 +154,9 @@ private theorem past_limit (P : Measure Visible) [IsProbabilityMeasure P]
       (𝓝 ((P[Y | MeasurableSpace.comap (rightObservation n) inferInstance]) z)) := by
   have he : (⨆ k, growPast n k) = MeasurableSpace.comap (rightObservation n) inferInstance := by
     simp only [growPast, ← iSup_sup, leftField_sup, rightObservation_field]
-  simpa only [he, growPast, ← recordField_eq] using
-    (tendsto_ae_condExp (μ := P) (ℱ := growPast n) Y)
+  have ht := tendsto_ae_condExp (μ := P) (ℱ := growPast n) Y
+  rw [he] at ht
+  simpa only [growPast, ← recordField_eq] using ht
 
 private theorem future_limit (P : Measure Visible) [IsProbabilityMeasure P]
     (Y : Visible → ℝ) (k : ℕ) :
@@ -159,8 +164,9 @@ private theorem future_limit (P : Measure Visible) [IsProbabilityMeasure P]
       (𝓝 ((P[Y | MeasurableSpace.comap (leftObservation k) inferInstance]) z)) := by
   have he : (⨆ n, growFuture k n) = MeasurableSpace.comap (leftObservation k) inferInstance := by
     simp only [growFuture, ← sup_iSup, rightField_sup, leftObservation_field]
-  simpa only [he, growFuture, ← recordField_eq] using
-    (tendsto_ae_condExp (μ := P) (ℱ := growFuture k) Y)
+  have ht := tendsto_ae_condExp (μ := P) (ℱ := growFuture k) Y
+  rw [he] at ht
+  simpa only [growFuture, ← recordField_eq] using ht
 
 private theorem full_future_limit (P : Measure Visible) [IsProbabilityMeasure P]
     (Y : Visible → ℝ) :
@@ -169,8 +175,9 @@ private theorem full_future_limit (P : Measure Visible) [IsProbabilityMeasure P]
       atTop (𝓝 ((P[Y | MeasurableSpace.comap exterior inferInstance]) z)) := by
   have he : (⨆ n, finishFuture n) = MeasurableSpace.comap exterior inferInstance := by
     simp only [finishFuture, ← sup_iSup, rightField_sup, exterior_field]
-  simpa only [he, finishFuture, ← rightObservation_field] using
-    (tendsto_ae_condExp (μ := P) (ℱ := finishFuture) Y)
+  have ht := tendsto_ae_condExp (μ := P) (ℱ := finishFuture) Y
+  rw [he] at ht
+  simpa only [finishFuture, ← rightObservation_field] using ht
 
 private theorem full_past_limit (P : Measure Visible) [IsProbabilityMeasure P]
     (Y : Visible → ℝ) :
@@ -179,8 +186,9 @@ private theorem full_past_limit (P : Measure Visible) [IsProbabilityMeasure P]
       atTop (𝓝 ((P[Y | MeasurableSpace.comap exterior inferInstance]) z)) := by
   have he : (⨆ k, finishPast k) = MeasurableSpace.comap exterior inferInstance := by
     simp only [finishPast, ← iSup_sup, leftField_sup, exterior_field]
-  simpa only [he, finishPast, ← leftObservation_field] using
-    (tendsto_ae_condExp (μ := P) (ℱ := finishPast) Y)
+  have ht := tendsto_ae_condExp (μ := P) (ℱ := finishPast) Y
+  rw [he] at ht
+  simpa only [finishPast, ← leftObservation_field] using ht
 
 /-- Finite conditional-expectation comparisons pass to the same-measure full
 exterior posterior and the two exact one-sided observations. On the left the
