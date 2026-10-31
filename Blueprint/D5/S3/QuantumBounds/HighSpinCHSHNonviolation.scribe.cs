@@ -77,8 +77,8 @@ internal sealed class HighSpinCHSHNonviolationDocument : IScribeDocumentDefiniti
                             + "its square as four times the identity. Conjugating ρ by the isometric dilation preserves "
                             + "positive semidefiniteness and trace one.")),
                     Paragraph(Text(
-                        "The matrix Cauchy–Schwarz inequality applied to the lifted operator and the identity, "
-                            + "together with its Hermitian square, bounds the norm of its trace expectation by two. "
+                        "The Hermitian square gives an operator norm at most two, and the density-matrix "
+                            + "expectation estimate bounds the norm of its trace expectation by that operator norm. "
                             + "Cyclicity of trace moves the dilation through the original expectation; multiplying by "
                             + "the norm of (n/2)² yields (n/2)²·2 = n²/2. This proves the claim for every n ≥ 2."))),
                 DescribeRole.Theorem))));

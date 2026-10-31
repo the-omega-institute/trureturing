@@ -76,7 +76,7 @@ private lemma coeff_sq_sum (n : ℕ) (r : ℝ) :
   rw [← pow_mul, ← pow_mul]
   ring
 
-private lemma ladder_pair (n k : ℕ) (hk : k < n) :
+lemma ladder_pair (n k : ℕ) (hk : k < n) :
     Real.sqrt ((k + 1 : ℝ) * (n - k : ℝ)) * Real.sqrt (n.choose (k + 1) : ℝ) =
       (n - k : ℝ) * Real.sqrt (n.choose k : ℝ) ∧
     Real.sqrt ((k + 1 : ℝ) * (n - k : ℝ)) * Real.sqrt (n.choose k : ℝ) =

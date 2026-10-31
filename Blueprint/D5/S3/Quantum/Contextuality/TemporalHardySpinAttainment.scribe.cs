@@ -36,6 +36,15 @@ internal sealed class TemporalHardySpinAttainmentDocument : IScribeDocumentDefin
                     + "This definition allows every real direction u; the unit-length "
                     + "conditions for the four measurement directions appear in claim."),
             Describe.Lean(
+                DescribeId.Create("temporal-hardy-spin-ladder-pair"),
+                DeclarationHandle.Create(Prefix + "ladder_pair"),
+                H("Binomial spin ladder coefficients"),
+                StatementSource.FromAuthor(Disp(LadderPairFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For k < n, the spin ladder coefficient relates the square roots of two adjacent binomial coefficients in both directions."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("temporal-hardy-spin-raising-entry"),
                 DeclarationHandle.Create(Prefix + "raising_entry"),
                 H("Entries of the raising matrix"),
@@ -167,6 +176,20 @@ internal sealed class TemporalHardySpinAttainmentDocument : IScribeDocumentDefin
             Mul(Call("ofReal", At(u, D(index))), Call(component, n));
         return All(n, Naturals(), All(u, Directions(), Equal(Call("spinComponent", n, u),
             Add(Add(term(0, "Jx"), term(1, "Jy")), term(2, "Jz")))));
+    }
+
+    private static Formula LadderPairFormula()
+    {
+        var n = F.Id("n"); var k = F.Id("k");
+        var nr = Typed(Call("cast", n), Reals());
+        var kr = Typed(Call("cast", k), Reals());
+        var step = Call("sqrt", Mul(Add(kr, D(1)), Subtract(nr, kr)));
+        var current = Call("sqrt", Typed(Call("cast", Call("choose", n, k)), Reals()));
+        var next = Call("sqrt", Typed(Call("cast", Call("choose", n, Add(k, D(1)))), Reals()));
+        return All(n, Naturals(), All(k, Naturals(), ImpliesFormula(
+            new Formula.Relation(k, FormulaRelationOperator.LessThan, n),
+            And(Equal(Mul(step, next), Mul(Subtract(nr, kr), current)),
+                Equal(Mul(step, current), Mul(Add(kr, D(1)), next))))));
     }
 
     private static Formula RaisingEntryFormula()

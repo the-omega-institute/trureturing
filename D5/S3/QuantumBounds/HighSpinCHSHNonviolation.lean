@@ -8,7 +8,7 @@
 
 import D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment
 import D5.S3.Quantum.Dynamics.SpinCoupledEvenHypercubeGroverFixedPoint
-import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound
 import D5.S3.QuantumBounds.LandauCommutingCollapse
 
 /-! The symmetric-qubit dilation of linear spin observables gives the CHSH bound. -/
@@ -17,7 +17,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open scoped BigOperators Matrix Kronecker ComplexOrder symmDiff
+open scoped BigOperators Matrix Kronecker ComplexOrder symmDiff Matrix.Norms.L2Operator
 open Matrix Complex
 open D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment (spinComponent raising_entry)
 open D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound (Jplus Jx Jy Jz)
@@ -202,26 +202,16 @@ private lemma raising_coefficient (n k : ℕ) (hk : k < n) :
   have hc : 0 < c := by
     change 0 < (n.choose (k + 1) : ℝ)
     exact_mod_cast Nat.choose_pos (show k + 1 ≤ n by omega)
-  have ha : 0 ≤ a := Nat.cast_nonneg _
-  have hq : 0 ≤ q := mul_nonneg (by positivity)
-    (sub_nonneg.mpr (by exact_mod_cast hk.le))
   have h₁ : (n : ℝ) * a = ((n : ℝ) - k) * b :=
     absent_choose_identity n k hn hk.le
-  have h₂ : (n : ℝ) * a = ((k : ℝ) + 1) * c := by
-    have h := congrArg (fun m : ℕ => (m : ℝ)) (Nat.add_one_mul_choose_eq (n - 1) k)
-    rw [Nat.sub_add_cancel (by omega : 1 ≤ n)] at h
-    push_cast at h
-    simpa only [mul_comm] using h
   have hroot : (n : ℝ) * a = Real.sqrt q * Real.sqrt b * Real.sqrt c := by
-    apply (sq_eq_sq₀ (by positivity) (by positivity)).mp
     calc
-      _ = (((n : ℝ) - k) * b) * (((k : ℝ) + 1) * c) := by
-        rw [pow_two]
-        exact congrArg₂ (· * ·) h₁ h₂
+      _ = ((n : ℝ) - k) * b := h₁
+      _ = (((n : ℝ) - k) * Real.sqrt b) * Real.sqrt b := by
+        rw [mul_assoc, ← pow_two, Real.sq_sqrt hb.le]
+      _ = (Real.sqrt q * Real.sqrt c) * Real.sqrt b := by
+        rw [(D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.ladder_pair n k hk).1]
       _ = _ := by
-        rw [mul_pow, mul_pow, Real.sq_sqrt hq, Real.sq_sqrt hb.le,
-          Real.sq_sqrt hc.le]
-        change _ = (((k : ℝ) + 1) * ((n : ℝ) - k)) * b * c
         ring
   change a * (1 / Real.sqrt b) * (1 / Real.sqrt c) = (1 / n : ℝ) * Real.sqrt q
   have hsb : Real.sqrt b ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr hb)
@@ -475,20 +465,19 @@ private lemma dilated_density (n : ℕ)
 private lemma density_involution_bound {ι : Type*} [Fintype ι] [DecidableEq ι]
     (τ l : Matrix ι ι ℂ) (hτ : τ.PosSemidef) (ht : τ.trace = 1)
     (hl : l.IsHermitian) (hs : l ^ 2 = (4 : ℂ) • 1) : ‖(τ * l).trace‖ ≤ 2 := by
-  let _ := τ.toMatrixSeminormedAddCommGroup hτ
-  let _ := τ.toMatrixInnerProductSpace hτ
-  have hcs := inner_mul_inner_self_le (𝕜 := ℂ) (1 : Matrix ι ι ℂ) l
-  change ‖(l * τ * (1 : Matrix ι ι ℂ)ᴴ).trace‖ * ‖(1 * τ * lᴴ).trace‖ ≤
-    ((1 * τ * (1 : Matrix ι ι ℂ)ᴴ).trace).re * ((l * τ * lᴴ).trace).re at hcs
-  have hlt : (l * τ * lᴴ).trace = 4 := by
-    rw [hl.eq, trace_mul_cycle, ← pow_two, hs, Matrix.smul_mul, one_mul,
-      trace_smul, ht]
-    simp
-  rw [hlt] at hcs
-  simp only [conjTranspose_one, mul_one, one_mul, hl.eq, ht,
-    trace_mul_comm l τ] at hcs
-  norm_num at hcs
-  nlinarith [norm_nonneg (τ * l).trace]
+  have hn := Matrix.l2_opNorm_conjTranspose_mul_self l
+  rw [hl.eq, ← pow_two, hs, norm_smul] at hn
+  have hnorm : ‖l‖ ≤ 2 := by
+    by_cases hι : IsEmpty ι
+    · letI := hι
+      have hz : l = 0 := Subsingleton.elim _ _
+      simp [hz]
+    · haveI : Nonempty ι := not_isEmpty_iff.mp hι
+      rw [norm_one] at hn
+      norm_num at hn
+      nlinarith [norm_nonneg l]
+  exact (D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound.density_expectation_bound
+    τ l hτ ht).trans hnorm
 
 private lemma expectation_bound (n : ℕ) (hn : 2 ≤ n)
     (ρ : Matrix (Fin (n + 1) × Fin (n + 1)) (Fin (n + 1) × Fin (n + 1)) ℂ)
