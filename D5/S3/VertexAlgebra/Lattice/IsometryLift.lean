@@ -11,20 +11,6 @@ import D5.S3.VertexAlgebra.OriginalCurrentMetric
 import D5.S3.VertexAlgebra.Lattice.NormFourVirasoroVector
 import Batteries.Tactic.OpenPrivate
 
-set_option autoImplicit false
-set_option backward.isDefEq.respectTransparency false
-
-namespace D5.S3.VertexAlgebra.Lattice.IsometryLift
-open LatticeGeneratingFieldLocality LatticeFiniteNegativeGeneration
-open LatticeAllStateField LatticeAllStateReconstruction LatticeSugawaraConformal
-open LatticeActualProductKernel LatticeActualOrderedProducts MvPolynomial
-open LatticeTwistedGroundRealization LatticeTwistedGroundRealization.SignQuotient
-open scoped BigOperators VertexOperator
-noncomputable section
-
-open private lift_phase_nonzero lift_phase_cocycle from
-  D5.S3.VertexAlgebra.LatticeTwistedGroundRealization
-
 /-!
 The form is integral, symmetric and even on the diagonal. No positivity,
 nondegeneracy or finite-order condition is required. Charge and every creation
@@ -44,6 +30,23 @@ attribution in the owning sources. No literature novelty, coherent isometry-grou
 action, standard fixed-space normalization or finite lift order is asserted.
 -/
 
+
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+
+namespace D5.S3.VertexAlgebra.Lattice.IsometryLift
+open LatticeGeneratingFieldLocality LatticeFiniteNegativeGeneration
+open LatticeAllStateField LatticeAllStateReconstruction LatticeSugawaraConformal
+open LatticeActualGeneratorLocality LatticeActualProductKernel
+open LatticeActualOrderedProducts MvPolynomial
+open LatticeTwistedGroundRealization LatticeTwistedGroundRealization.SignQuotient
+open scoped BigOperators VertexOperator
+noncomputable section
+
+open private lift_phase_nonzero lift_phase_cocycle from
+  D5.S3.VertexAlgebra.LatticeTwistedGroundRealization
+
+
 open private neutral_negative_single from
   D5.S3.VertexAlgebra.LatticeFiniteNegativeGeneration
 open private creation_one from
@@ -59,11 +62,11 @@ private def compatibleStates (D : LatticeData) (U : Module.End ℂ (Carrier D)) 
   add_mem' := by
     intro a b ha hb n c
     simp only [map_add, VertexOperator.ncoeff, Pi.add_apply, LinearMap.add_apply]
-    rw [ha n c, hb n c]
+    exact congrArg₂ (· + ·) (ha n c) (hb n c)
   smul_mem' := by
     intro z a ha n b
     simp only [map_smul, VertexOperator.ncoeff, Pi.smul_apply, LinearMap.smul_apply]
-    rw [ha n b]
+    exact congrArg (z • ·) (ha n b)
 
 private theorem compatible_product (D : LatticeData) (U : Module.End ℂ (Carrier D))
     (a b : Carrier D) (ha : a ∈ compatibleStates D U)
@@ -79,8 +82,7 @@ private theorem compatible_product (D : LatticeData) (U : Module.End ℂ (Carrie
   change U (((Y D (((Y D a)[[r]]) b))[[n]]) c) =
     ((Y D (U (((Y D a)[[r]]) b)))[[n]]) (U c)
   rw [ha r b, source.2.2, map_sub, map_smul,
-    U.toAddMonoidHom.map_finsum source.1,
-    U.toAddMonoidHom.map_finsum source.2.1, target.2.2]
+    map_finsum U source.1, map_finsum U source.2.1, target.2.2]
   simp only [map_smul, ha, hb]
 
 private theorem ground_current_product (D : LatticeData) (a : Charge D) :
@@ -95,9 +97,11 @@ private theorem ground_current_product (D : LatticeData) (a : Charge D) :
 private theorem current_field (D : LatticeData) (i : Fin D.rank) :
     Y D (Finsupp.single 0 (X (i, 0) : Oscillator D)) =
       neutralField D i := by
-  have h := stateField_current D i
-  rw [neutral_negative_single D i 0 0 1] at h
-  simpa only [Nat.cast_zero, mul_one] using h
+  have hs : ((neutralField D i)[[-1]]) (vacuum D) =
+      Finsupp.single 0 (X (i, 0) : Oscillator D) := by
+    simpa only [vacuum, Nat.cast_zero, neg_zero, zero_sub, mul_one] using
+      neutral_negative_single D i 0 0 1
+  simpa only [hs] using stateField_current D i
 
 private theorem all_state_of_ground (D : LatticeData) (U : Module.End ℂ (Carrier D))
     (hground : ∀ a : Charge D, Finsupp.single a 1 ∈ compatibleStates D U) :
@@ -133,7 +137,7 @@ private theorem charge_expansion (D : LatticeData) (a : Charge D) :
     (∑ i : Fin D.rank, a i • unitCharge D i) = a := by
   classical
   ext j
-  simp [unitCharge, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, mul_ite]
+  simp [unitCharge, Finset.sum_apply, mul_ite]
 
 private theorem additive_expansion (D : LatticeData) {A : Type*} [AddCommGroup A]
     (f : Charge D →+ A) (a : Charge D) :
@@ -150,8 +154,7 @@ private theorem charge_coordinates (D : LatticeData) (g : Charge D ≃+ Charge D
     (g a j : ℂ) = ∑ i : Fin D.rank, (a i : ℂ) * mixingMatrix D g j i := by
   have h := congrArg (fun v : Charge D => (v j : ℂ))
     (additive_expansion D g.toAddMonoidHom a)
-  simpa only [mixingMatrix, Finset.sum_apply, Pi.smul_apply, zsmul_eq_mul,
-    Int.cast_sum, Int.cast_mul] using h
+  simpa [mixingMatrix, Finset.sum_apply, zsmul_eq_mul] using h
 
 private theorem mixing_inverse (D : LatticeData) (g h : Charge D ≃+ Charge D)
     (hinv : ∀ a, g (h a) = a) :
@@ -201,7 +204,8 @@ private theorem defect_symmetric (D : LatticeData) (g : Charge D ≃+ Charge D)
     rw [hg] at h1
     change integralCocycle D (g a) (g b) + integralCocycle D a b =
       integralCocycle D (g b) (g a) + integralCocycle D b a
-    linear_combination h1 - h2
+    apply CharTwo.add_eq_zero.mp
+    rw [add_add_add_comm, h1, h2, CharTwo.add_self_eq_zero]
   exact Matrix.IsSymm.ext (fun i j => hs _ _)
 
 private theorem defect_pairing (D : LatticeData) (g : Charge D ≃+ Charge D)
@@ -221,6 +225,8 @@ private theorem defect_pairing (D : LatticeData) (g : Charge D ≃+ Charge D)
   simp only [Finset.smul_sum, zsmul_eq_mul, defectMatrix, reduceCharge]
   apply Finset.sum_congr rfl
   intro j _
+  change (a i : F₂) * ((b j : F₂) * defect D g (unitCharge D i) (unitCharge D j)) =
+    (a i : F₂) * defect D g (unitCharge D i) (unitCharge D j) * (b j : F₂)
   ring
 
 /-- A unit-valued phase of the literal lower-triangular cocycle defect. -/
@@ -252,7 +258,7 @@ private theorem phase_law (D : LatticeData) (g : Charge D ≃+ Charge D)
   calc
     _ = (epsilon D (g a) (g b) * epsilon D (g a) (g b)) *
         ((phase D g (a + b) : ℂ) * epsilon D a b) := by
-          rw [epsilon, paritySign_square, one_mul]
+          simp only [epsilon, paritySign_square, one_mul]
     _ = (epsilon D (g a) (g b) * epsilon D a b *
         (phase D g (a + b) : ℂ)) * epsilon D (g a) (g b) := by ring
     _ = _ := by rw [← h]
@@ -271,7 +277,7 @@ private theorem oscillator_charge (D : LatticeData) (g : Charge D ≃+ Charge D)
 private theorem oscillator_smul (D : LatticeData) (g : Charge D ≃+ Charge D)
     (z : ℂ) (p : Oscillator D) :
     (oscillator D g).toRingHom (z • p) = z • oscillator D g p :=
-  (oscillator D g).map_smul z p
+  map_smul (oscillator D g) z p
 
 private theorem oscillator_series (D : LatticeData) (g : Charge D ≃+ Charge D)
     (a : Charge D) :
@@ -302,7 +308,9 @@ private theorem oscillator_coefficient (D : LatticeData) (g : Charge D ≃+ Char
   unfold creationCoeff
   split_ifs
   · exact map_zero _
-  · rw [← PowerSeries.coeff_map, oscillator_exponential]
+  · change (oscillator D g).toRingHom
+      (PowerSeries.coeff k.toNat (creationExponential D a)) = _
+    rw [← PowerSeries.coeff_map, oscillator_exponential]
 
 private theorem contraction_coordinates (D : LatticeData) (g : Charge D ≃+ Charge D)
     (hg : ∀ a b, bilinear D (g a) (g b) = bilinear D a b)
@@ -312,12 +320,13 @@ private theorem contraction_coordinates (D : LatticeData) (g : Charge D ≃+ Cha
         (bilinear D a (unitCharge D i) : ℂ) := by
   let f : Charge D →+ ℤ := (Matrix.toBilin' D.G (g a)).toAddMonoidHom
   have hf (b : Charge D) : f b = bilinear D (g a) b := by
-    exact Matrix.toBilin'_apply _ _ _
+    change Matrix.toBilin' D.G (g a) b = _
+    exact Matrix.toBilin'_apply D.G (g a) b
   have h := additive_expansion D f (g (unitCharge D i))
   simp_rw [hf, zsmul_eq_mul] at h
   rw [hg] at h
   have hc := congrArg (fun z : ℤ => (z : ℂ)) h
-  simpa only [mixingMatrix, Int.cast_sum, Int.cast_mul] using hc.symm
+  simpa [mixingMatrix] using hc.symm
 
 private theorem translated_naturality (D : LatticeData) (g : Charge D ≃+ Charge D)
     (hg : ∀ a b, bilinear D (g a) (g b) = bilinear D a b)
@@ -345,14 +354,18 @@ private theorem translated_naturality (D : LatticeData) (g : Charge D ≃+ Charg
       rw [← Finset.sum_mul]
       congr 1
       simp only [Polynomial.smul_C, smul_smul]
-      rw [← Polynomial.C.map_sum, ← Finset.sum_smul, contraction_coordinates D g hg]
-    simp only [AlgHom.comp_apply, T, MvPolynomial.aeval_X, oscillator_X,
-      map_sum, map_smul]
+      rw [← map_sum Polynomial.C, ← Finset.sum_smul, contraction_coordinates D g hg]
+    simp only [AlgHom.comp_apply, T, MvPolynomial.aeval_X, AlgEquiv.coe_toAlgHom]
     change Polynomial.map (oscillator D g).toRingHom (translationVariable D a x.1 x.2) =
-      ∑ j : Fin D.rank, mixingMatrix D g j x.1 • translationVariable D (g a) j x.2
+      (T (g a)) (oscillator D g (X x))
+    rw [oscillator_X]
+    simp only [map_sum, map_smul, T, MvPolynomial.aeval_X]
+    have hx : (oscillator D g).toRingHom (X (x.1, x.2)) =
+        ∑ j : Fin D.rank, mixingMatrix D g j x.1 • X (j, x.2) :=
+      oscillator_X D g (x.1, x.2)
     simp only [translationVariable, Polynomial.map_sub, Polynomial.map_mul,
       Polynomial.map_C, Polynomial.map_pow, Polynomial.map_X, oscillator_smul,
-      map_one, oscillator_X, smul_sub, Finset.sum_sub_distrib]
+      map_one, hx, smul_sub, Finset.sum_sub_distrib]
     rw [hC, hB]
   exact AlgHom.congr_fun h p
 
@@ -418,6 +431,7 @@ private theorem lift_rawSingle (D : LatticeData) (g : Charge D ≃+ Charge D)
       (translatedPolynomial D (g a) (oscillator D g p)).coeff d =
         oscillator D g ((translatedPolynomial D a p).coeff d) := by
     rw [← translated_naturality D g hg, Polynomial.coeff_map]
+    rfl
   have hp : oscillator D g
       (∑ d ∈ (translatedPolynomial D a p).support,
         (translatedPolynomial D a p).coeff d • creationCoeff D a
@@ -474,8 +488,8 @@ theorem lift_compatible (D : LatticeData) (g : Charge D ≃+ Charge D)
       ((Y D (lift D g (Finsupp.single a 1)))[[n]]) (lift D g v)
     rw [lift_single, map_one, map_smul, stateField_ground, stateField_ground,
       actual_modes]
-    simpa only [VertexOperator.ncoeff, Pi.smul_apply, LinearMap.smul_apply,
-      ← VertexOperator.ncoeff, actual_modes] using lift_rawCoeff D g hg a (-n - 1) v
+    rw [map_smul, Pi.smul_apply, LinearMap.smul_apply, actual_modes]
+    exact lift_rawCoeff D g hg a (-n - 1) v
   have hall (a : Carrier D) (n : ℤ) (b : Carrier D) :
       lift D g (((Y D a)[[n]]) b) =
         ((Y D (lift D g a))[[n]]) (lift D g b) :=
