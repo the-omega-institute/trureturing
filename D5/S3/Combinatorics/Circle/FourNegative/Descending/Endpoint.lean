@@ -149,8 +149,9 @@ theorem actualSource_descending_joint_lift (a b c d : ℕ)
   have posG (i : ℕ) (hi : i ∈ G.toList) : 0 ≤ f i ∧ 0 ≤ g i := by
     have hg := Finset.mem_toList.mp hi
     rw [Gform] at hg
-    simp only [bank,Matrix.cons_val_three,shift,image_range,Finset.mem_union,
-      Finset.mem_Ico] at hg
+    change i ∈ shift (d+c) (Finset.range (b-1)) ∪
+      shift (d+c+b) (Finset.range (a-b-1)) at hg
+    simp only [shift,image_range,Finset.mem_union,Finset.mem_Ico] at hg
     rcases hg with hg | hg
     all_goals apply allpos i
     all_goals dsimp [k,nx,nu,nv,nw] <;> omega
@@ -169,8 +170,8 @@ theorem actualSource_descending_joint_lift (a b c d : ℕ)
       f (chainStart b c d r+(chainLength a b c d r-1)) = -(N-nextBase a b c d r)/2 ∧
       g (chainStart b c d r+(chainLength a b c d r-1)) = -((2*N+1)-nextNewBase a b c d r)/2 := by
     have hl : 2 ≤ chainLength a b c d r := by fin_cases r <;> dsimp [chainLength] <;> omega
-    exact ⟨by simpa only [if_neg (by omega : ¬chainLength a b c d r-1+1 < chainLength a b c d r)] using tab.2.1 r _ (by omega),
-      by simpa only [if_neg (by omega : ¬chainLength a b c d r-1+1 < chainLength a b c d r)] using tab.2.2.1 r _ (by omega)⟩
+    exact ⟨by simpa only [if_neg (by omega : ¬chainLength a b c d r-1+1 < chainLength a b c d r)] using tab.2.1 r (chainLength a b c d r-1) (by omega),
+      by simpa only [if_neg (by omega : ¬chainLength a b c d r-1+1 < chainLength a b c d r)] using tab.2.2.1 r (chainLength a b c d r-1) (by omega)⟩
   have nt0 := terminal 3
   have nt1 := terminal 0
   have nt2 := terminal 1
@@ -192,7 +193,7 @@ theorem actualSource_descending_joint_lift (a b c d : ℕ)
   have nf1 : 2*f nu=B-N := by
     have he : B-N=2*((2 : ℤ)^(d-1)*(1+x+x*y-x*y*z)+1) := by dsimp [B]; rw [hN,hthalf]; ring
     rw [nt1.1]; change 2*(-(N-B)/2)=B-N; omega
-  have ng1 : 2*g nu=(2*B-1)-(2*N+1) := by rw [nt1.2]; dsimp [nu]; omega
+  have ng1 : 2*g nu=(2*B-1)-(2*N+1) := by rw [nt1.2]; omega
   have nf2 : 2*f nv=L-N := by
     have he : L-N=2*((2 : ℤ)^(c-1)*(t*(1+x)-x*y*t+1)+1) := by dsimp [L]; rw [hN,hzhalf]; ring
     rw [nt2.1]; omega
@@ -229,14 +230,17 @@ theorem actualSource_descending_joint_lift (a b c d : ℕ)
     rw [nt3.2]
     omega
   have oldstrip : InStrip f (N/2) 0 word := by
+    suffices hs : InStrip f (N/2) 0
+        (P.toList ++ nx :: Q.toList ++ nu :: R.toList ++ nv :: G.toList ++ [nw]) by
+      simpa only [word,post,List.append_assoc,List.cons_append,List.nil_append] using hs
     apply four_strip f P.toList Q.toList R.toList G.toList nx nu nv nw (N/2) 0
       (fun i hi => (pos 0 i hi).1) (fun i hi => (pos 1 i hi).1)
       (fun i hi => (pos 2 i hi).1) (fun i hi => (posG i hi).1) (by omega)
-    · constructor <;> nlinarith only [m0,nf0,relx,s0,o0,hNodd,Int.emod_add_ediv N 2]
-    · constructor <;> nlinarith only [m0,m1,nf0,nf1,relx,relt,s1,o1,hNodd,Int.emod_add_ediv N 2]
-    · constructor <;> nlinarith only [m0,m1,m2,nf0,nf1,nf2,relx,relt,relz,s2,o2,hNodd,Int.emod_add_ediv N 2]
+    · constructor <;> nlinarith only [m0,nf0,relx,s0,o0,hNodd,Int.emod_add_mul_ediv N 2]
+    · constructor <;> nlinarith only [m0,m1,nf0,nf1,relx,relt,s1,o1,hNodd,Int.emod_add_mul_ediv N 2]
+    · constructor <;> nlinarith only [m0,m1,m2,nf0,nf1,nf2,relx,relt,relz,s2,o2,hNodd,Int.emod_add_mul_ediv N 2]
     · exact lastold
-    · simpa only [zero_add] using hfzero
+    · simpa only [word,post,List.append_assoc,List.cons_append,List.nil_append,zero_add] using hfzero
   have newstrip : InStrip g N 0 (P.toList ++ k :: post) := by
     have hm0 : ((P.toList ++ [k]).map g).sum=(P.toList.map g).sum+A := by simp [hear]
     have htzero : ((P.toList ++ [k] ++ post).map g).sum=0 := by
@@ -252,28 +256,41 @@ theorem actualSource_descending_joint_lift (a b c d : ℕ)
             rw [hear]
             have hb := tab.1 0
             rw [hbase] at hb
-            exact hb.1.le)
+            change 1 ≤ A ∧ A < N at hb
+            omega)
       (fun i hi => (pos 1 i hi).2) (fun i hi => (pos 2 i hi).2)
       (fun i hi => (posG i hi).2) (by omega)
       (by rw [hm0]; constructor <;> nlinarith only [j0,ng0,hrelx,k0,t0])
       (by rw [hm0]; constructor <;> nlinarith only [j0,j1,ng0,ng1,hrelx,hrelt,k1,t1])
       (by rw [hm0]; constructor <;> nlinarith only [j0,j1,j2,ng0,ng1,ng2,hrelx,hrelt,hrelz,k2,t2])
-      lastnew htzero
-    simpa only [List.append_assoc,List.singleton_append] using hs
+      lastnew (by simpa only [post,List.append_assoc,List.cons_append,
+        List.nil_append,zero_add] using htzero)
+    simpa only [post,List.append_assoc,List.singleton_append,List.cons_append,
+      List.nil_append] using hs
   have plen : P.toList.length=d := by simpa [P] using first_card a b c d hd hdc hcb hba
   have hpnew : (P.toList ++ k :: post).Perm (List.range (k+1)) := by
     have hh : (P.toList ++ k :: post).Perm (word ++ [k]) := by
       simpa [word,List.append_assoc] using (List.perm_append_singleton k post).symm.append_left P.toList
     exact hh.trans (by simpa [List.range_succ] using hp.append_right [k])
+  have fform : f = fun i => centered N ((2 : ℤ)^i*A) := by
+    funext i
+    change centered N ((2 : ℤ)^i*base a b c d 0) = _
+    rw [hbase]
+    rfl
+  have gform : g = fun i => centered (2*N+1) ((2 : ℤ)^i*(2*A)) := by
+    funext i
+    change centered (2*N+1) ((2 : ℤ)^i*(2*base a b c d 0)) = _
+    rw [hbase]
+    rfl
   refine ⟨word.map (label k (by dsimp [k]; omega)),?_,?_⟩
   · apply lift_order k s (by dsimp [k]; omega) word hp
-    · simpa only [f,oldValue,hbase,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,hmod,hseed] using oldstrip
+    · simpa only [fform,hmod,hseed] using oldstrip
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero k s (by dsimp [k]; omega)
   · have marked := marked_word k d (by dsimp [k]; omega) P.toList post plen hp
     rw [marked]
     apply lift_order (k+1) (2*s) (by omega) (P.toList ++ k :: post) hpnew
     · have hseed' : ((2*s : ℕ) : ℤ)=2*A := by push_cast; rw [hseed]
-      simpa only [g,newValue,hbase,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,hmod',hseed',show (2*N+1)/2=N by omega] using newstrip
+      simpa only [gform,hmod',hseed',show (2*N+1)/2=N by omega] using newstrip
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero (k+1) (2*s) (by dsimp [k]; omega)
 
 end D5.S3.Combinatorics.Circle.FourNegative.Descending
