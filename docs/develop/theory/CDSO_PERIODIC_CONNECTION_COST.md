@@ -3136,3 +3136,820 @@ phase transitions at the intermediate scale, the critical constant's
 behavior, changing $R$, and varying sink budgets open.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Original-graph localization at the finite connection scale
+
+**Definition 13.1 (Actual threshold partition and comparison sublevel).**
+Fix finite $R\ge4$, $c>0$ and $B>0$. Throughout Sections 13--14,
+$a,h,N$ are integers, $a$ is sufficiently large in terms of these
+fixed constants, and
+
+$$
+\frac72\sqrt a\le h\le R\sqrt a,\qquad
+s=a+1+h,\qquad N\ge ca^{5/2}.
+\tag{13.1}
+$$
+
+The graphs, objective and empirical law are exactly those of Definition
+1.1. In particular no nonempty neighborhood is removed. Set
+
+$$
+C_*=4(R^2+20),\qquad b_R=4C_*,\qquad J_R=\lceil4C_*\rceil,
+\qquad T_N=\frac{a^{7/2}}N.
+\tag{13.2}
+$$
+
+For an actual graph define
+
+$$
+C=\{i:y_i\ge b_R/a\},\qquad D=[s]\setminus C.
+\tag{13.3}
+$$
+
+Here $y_i=d_G(i)/N$ always denotes that graph's actual marginal. The
+comparison sublevel is $W(G)\le M+BT_N$. Constants below may depend
+on $R,c,B$; they are uniform in all three integers, labels, residues
+and graphs on this sublevel. A fixed increase of $B$ is permitted
+before fixing the constants. Eventually $h>J_R$ and $s\le2a$.
+
+**Lemma 13.2 (A nonlinear bootstrap with no imposed marginal floor).**
+Every graph on the sublevel in Definition 13.1 has, for its partition
+(13.3), the following properties. Put
+
+$$
+\begin{gathered}
+m=|C|=a+j,\quad r=m-1,\quad n=|D|=h+1-j,\\
+u_c=j/r,\quad \alpha=(a-1)/r,\quad
+\beta=j/(rn),\quad \eta=1/\beta,\\
+L=|T\cap C|,\quad B_T=|T\cap D|,\quad K=|T|,\quad
+A=\{B_T>0\},\quad t_k=y_k\ (k\in D),\quad
+u=\sum_{k\in D}t_k.
+\end{gathered}
+\tag{13.4}
+$$
+
+Then
+
+$$
+\begin{gathered}
+2\le j\le J_R,\qquad h^2/(aj^2)>5/2,\qquad
+u>\ell_j=(j-1)/(m-2),\\
+\min_{i\in C}y_i\ge1-O_{R,c,B}(a^{-1/2}),\qquad
+t_k=\beta(1+O_{R,c,B}(a^{-1/4}))\quad(k\in D),\\
+\mathbb P(A,K\ge2)=O_{R,c,B}(a^{-2}),\qquad
+Z:=\mathbb E\left[K^2\sum_{k\in T\cap D}t_k^{-2};A,K\ge2\right]
+=O_{R,c,B}(a).
+\end{gathered}
+\tag{13.5}
+$$
+
+These conclusions precede any bound on $H-M$ smaller than order
+$a^2$. The index $j$ is not assumed to minimize the law energy.
+
+**Proof.** All probabilities and expectations in this proof are under
+$x_G$. The winning-branch formula gives
+$M\le S_1\le a^3+(R^2+6)a^2$ eventually. Since $BT_N\le(B/c)a$,
+Uniform Dilution Lemma 2.1 places the actual law in
+$H\le a^3+C_*a^2$. Apply Growing Lemma 7.1 with $C=C_*$.
+Its actual threshold is precisely (13.3). It supplies a core floor
+$c_0=(8C_*+1)^{-1}$, $1\le j\le J_R$, $n\asymp_R\sqrt a$,
+$u=O_R(a^{-1/2})$, and, for $v=a\mathbb P(A)$,
+
+$$
+v_*\le v\le j+O_R(a^{-1/2}).
+\tag{13.6}
+$$
+
+The core estimate in the proof of that lemma and the nonlinear
+common-event estimate of Uniform Dilution Lemma 2.2 give
+
+$$
+\frac{W-B_0(a)}{a^2}
+\ge \frac{(h+1-j)^2}{av}+2v+2j-2
+       -O_R(a^{-1/2})-O_R(a^3/N^2).
+\tag{13.7}
+$$
+
+This is the inequality before scalar minimization in Uniform Dilution
+Proposition 3.1, using the enlarged fixed coarse-sublevel constant.
+Its core error is $O_R(a^5/N^2)$: $y_i\ge c_0$, $K\le s$, and
+$H\le2a^3$ suffice. Its tail error is the common-event error
+$n^4/(4N^2\mathbb P(A)^3)$, also $O_R(a^5/N^2)$ by (13.6).
+Thus no individual tail floor is used in (13.7).
+
+For completeness, write $q=h/\sqrt a$ and
+
+$$
+g_k(q)=q^2/k+4k-2,\qquad
+\phi_j(q)=\min_{0<w\le j}(q^2/w+2w+2j-2),\qquad
+\mathcal U(q)=\min_{1\le k\le J_R}g_k(q).
+\tag{13.8}
+$$
+
+Growing Theorem 7.2 evaluates $\min_j\phi_j=\mathcal U$ on this
+fixed interval. Clip $v$ to $\min(v,j)$ in (13.7). Compare with
+$W\le M+BT_N\le\min_k S_k+BT_N$ and
+$(S_k-B_0)/a^2=g_k(q)+O_R(a^{-1/2})$. This gives
+$0\le\phi_j(q)-\mathcal U(q)=O_{R,c,B}(a^{-1/2})$.
+The compact positive gap used in (9.7) applies unchanged: at a zero
+of this difference $j\ne1$, and $q^2/j^2$ is at least $49/16$
+for $j=2$, and at least $4(j-1)/j\ge8/3$ for $j\ge3$.
+There are finitely many $j$ and $q\in[7/2,R]$. Hence $j\ge2$
+and $q^2/j^2>5/2$ eventually. On $0<w\le j$ the derivative of
+$q^2/w+2w$ is then at most $-1/2$. Comparing (13.7) with $S_j$
+also gives $v=j+O_{R,c,B}(a^{-1/2})$. Since $au\ge v$ and
+$a\ell_j=j-1+O_R(a^{-1})$, this proves $u>\ell_j$.
+This scalar argument uses the nonlinear value, not a premise
+$H\le M+1$.
+
+We next retain residuals to control the individual marginals. Use the
+quantities $\mathfrak a,\mathfrak b,d,Q,f_u,\mathcal S_f,
+\mathcal B,\mathcal A(u),\gamma$ defined in (9.8), for the same
+actual partition. In particular
+
+$$
+\begin{gathered}
+Q(l)=(m-l)(r-l)(2m-1+l)\ge0\quad(0\le l\le m),\\
+\mathcal A(u)=a^2+O_R(a),\qquad
+\gamma=\eta^2-\mathfrak a+\mathcal A(u)\ge a^3/4,\\
+\eta\asymp_R a^{3/2},\qquad
+\mathcal S_f\ge\frac{a^2}{2}
+           \sum_{i\in C}(y_i-(a-u)/m)^2.
+\end{gathered}
+\tag{13.9}
+$$
+
+The estimates in (9.9) require only bounded $j$, $q^2/j^2>5/2$,
+$u=O_R(a^{-1/2})$ and the coarse core floor. Their differentiated
+rational expressions, and the incidence identities (9.10)--(9.11),
+therefore apply here without a small-excess hypothesis.
+
+Put $g(z)=2(\sqrt{1+z^2}-1)$ and
+$\mathcal F_N(z)=N^2g(z/N)$. On every actual incidence $K/t_k<N$
+by strict orientation. Two scalar estimates needed below are
+
+$$
+\begin{aligned}
+\mathcal F_N(z)-2wz
+&\ge-2N^2\left(1-\sqrt{1-w^2/N^2}\right)
+ \ge-w^2-Cw^4/N^2\quad(0\le w\le N/2),\\
+\mathcal F_N(z)-2\eta z+\eta^2
+&\ge\tfrac18(z-\eta)^2-C\eta^4/N^2
+                      \quad(0\le z\le N).
+\end{aligned}
+\tag{13.10}
+$$
+
+The first line follows by minimizing the strictly convex scalar
+function: its stationary point is
+$z=w/\sqrt{1-w^2/N^2}$. The second follows from
+$\mathcal F_N''(z)=2(1+z^2/N^2)^{-3/2}\ge1/\sqrt2$ on $[0,N]$,
+$\mathcal F_N(\eta)\ge\eta^2-\eta^4/(4N^2)$, and
+$|\mathcal F_N'(\eta)-2\eta|\le\eta^3/N^2$; Young's inequality
+absorbs the last linear error. Here $\eta/N=O_{R,c}(a^{-1})$,
+so the displayed restrictions on $w$ hold in every use. These are
+scalar convexity statements, with their derivatives verified, rather
+than convexity claims about $H$.
+
+For $T\in A$ define $V_T=\sum_{k\in T\cap D}t_k^{-1}$ and
+
+$$
+\begin{aligned}
+\widetilde{\mathcal G}_T={}&
+\sum_{k\in T\cap D}\mathcal F_N(K/t_k)+Q(L)-\mathcal A(u)B_T
+-2\eta V_T\\
+&+\gamma B_T-\frac\gamma r\{m(B_T-1)+L\}.
+\end{aligned}
+\tag{13.11}
+$$
+
+Replacing just the tail quadratic energy by its exact nonlinear
+energy in the algebra of (9.11)--(9.13) gives
+
+$$
+\begin{gathered}
+W\ge E_j+\mathbb E[\widetilde{\mathcal G}_T;A]
+ +\mathbb E[Q(L);A^c]+\mathcal S_f-C_Ra^5/N^2,\\
+E_j=\mathcal B(0)+2\eta n-j\gamma/r=S_j+O_R(a).
+\end{gathered}
+\tag{13.12}
+$$
+
+Indeed $\mathbb E V_T=n$, $\mathbb E B_T=u$ and
+$ru-j\le\mathbb E[m(B_T-1)+L;A]$ are identities or
+inequalities for this actual law. The core replacement loses only
+the core Taylor error already bounded after (13.7).
+
+For a tail singleton the residual (13.11) is exactly
+$\mathcal F_N(1/t_k)-2\eta/t_k+\eta^2$, so (13.10) applies.
+For every other type in $A$ there is a fixed $\epsilon_R>0$ such that
+
+$$
+\widetilde{\mathcal G}_T
+\ge\frac1{16}\sum_{k\in T\cap D}\mathcal F_N(K/t_k)
+       +\epsilon_Ra^3-C_RB_T\eta^4/N^2.
+\tag{13.13}
+$$
+
+Here is an all-cardinality verification. If $2\le K\le\sqrt a$,
+apply the first line of (13.10) to $15\mathcal F_N/16$ with
+$w=16\eta/(15K)$. The part after the retained $\mathcal F_N/16$
+is bounded below by
+
+$$
+\eta^2\left(1-\frac{16B_T}{15K^2}\right)
+-\mathcal A(u)(B_T-1)-\mathfrak bL+L^3
+-\frac\gamma r(K-1)-C_RB_T\eta^4/N^2.
+\tag{13.14}
+$$
+
+Since $B_T/K^2\le1/2$, the leading coefficient is at least $7/15$;
+all the other negative terms before the error are $O_R(a^{5/2})$.
+This proves (13.13) in this range. If $K>\sqrt a$, use
+$\mathcal F_N(K/t_k)\ge\vartheta K^2/t_k^2$ with
+$\vartheta=2/(1+\sqrt2)$. The actual threshold $t_k<b_R/a$
+gives $2\eta/(K^2/t_k)=O_R(a^{-1/2})$. After retaining $1/16$
+of the nonlinear cost, the cost minus $2\eta V_T$ is therefore
+at least $(\vartheta/2)K^2\sum t_k^{-2}$ eventually. Keep
+$Q(L)\ge0$ in (13.11). For $K\le m$ the remaining $\gamma$ term
+$\gamma(1-(K-1)/r)$ is nonnegative; for $K>m$ its negative
+part is at most $\gamma n/r=O_R(a^{5/2})$. The positive term
+is at least a fixed multiple of $B_TK^2a^2$, whereas
+$\mathcal A(u)B_T=O_R(a^2B_T)$. This proves (13.13) also
+for every $\sqrt a<K\le s$.
+
+Upon taking expectations, the errors in (13.10), (13.13) total at
+most $C_R\eta^4u/N^2\le C_Ra^{11/2}/N^2=O_{R,c}(\sqrt a)$.
+Since $W\le M+BT_N\le S_j+O_{R,c,B}(a)$, (13.12) implies
+
+$$
+\begin{gathered}
+\mathbb P(A,K\ge2)\le C_{R,c,B}a^{-2},\qquad
+Z\le C_{R,c,B}a,\\
+\sum_{k\in D}x_{\{k\}}(t_k^{-1}-\eta)^2\le C_{R,c,B}a,\qquad
+\sum_{i\in C}(y_i-(a-u)/m)^2\le C_{R,c,B}a^{-1}.
+\end{gathered}
+\tag{13.15}
+$$
+
+For $Z$ use $\mathcal F_N(K/t_k)\ge\vartheta K^2/t_k^2$ again.
+Since $(a-u)/m=1-O_R(a^{-1})$, the last bound proves the core
+assertion in (13.5).
+
+Write $x_k=x_{\{k\}}$. If $t_k<\beta/2$, then
+$(t_k^{-1}-\eta)^2\ge1/(4t_k^2)$, while the portion of $Z$ at
+this label is at least $(t_k-x_k)/t_k^2$. The first three bounds
+of (13.15) would imply $1/(4t_k)\le C_{R,c,B}a$. This contradicts
+$1/t_k>2\eta\asymp_R a^{3/2}$. Hence every $t_k\ge\beta/2$.
+Also $t_k-x_k\le\mathbb P(A,K\ge2)=O(a^{-2})=o(\beta)$, so
+$x_k\ge t_k/2$ eventually. With $w=\eta t_k\ge1/2$, the singleton
+bound now gives
+
+$$
+\frac\eta2\frac{(w-1)^2}{w}\le C_{R,c,B}a.
+\tag{13.16}
+$$
+
+It first bounds $w$, and then gives $w=1+O_{R,c,B}(a^{-1/4})$.
+This derives both sides of the tail control from the original graph.
+It completes the proof of (13.5). ∎
+
+**Lemma 13.3 (Retained energy, integer degree control and transfer).**
+On the same actual-graph sublevel, use (13.4), put
+$c_C=\min_{i\in C}y_i$, $\delta=\max_{k\in D}t_k$, and set
+
+$$
+\begin{gathered}
+e=\mathbb E[K-1;A],\qquad
+\zeta=\mathbb E[m-L;A^c],\\
+\mathcal J_D=\sum_{k\in D}t_k^{-1}-n^2/u,\qquad
+\bar y=(a-u)/m.
+\end{gathered}
+\tag{13.17}
+$$
+
+There is a uniform constant $C_{R,c,B}$ such that
+
+$$
+\begin{aligned}
+W-S_j+C_{R,c,B}a^5/N^2\ \ge{}&
+a^3e+\frac{a^3}{4}(u_c-u)_++\mathcal J_D\\
+&+a^2\sum_{i\in C}(y_i-\bar y)^2+Z/32.
+\end{aligned}
+\tag{13.18}
+$$
+
+Consequently
+
+$$
+\begin{gathered}
+e+|u-u_c|\le C_{R,c,B}T_N/a^3,\qquad
+\zeta\le C_{R,c,B}T_N/a^2,\qquad Z\le C_{R,c,B}T_N,\\
+K_u^2\le C_{R,c,B}\sqrt a
+\quad\text{for every source touching }D,\\
+0\le H(x_G)-W(G)\le C_{R,c,B}a^{11/2}/N^2.
+\end{gathered}
+\tag{13.19}
+$$
+
+**Proof.** The tail floor was derived in Lemma 13.2. It now licenses
+expanding the singleton baseline, but still not expanding every
+individual tail incidence with a small-ratio premise. For $K\ge2$,
+strict orientation and differentiation in $K^2$ give
+
+$$
+\mathcal F_N(K/t)-\mathcal F_N(1/t)
+\ge\frac{K^2-1}{\sqrt2\,t^2}.
+\tag{13.20}
+$$
+
+Because $K^2\le4(K^2-1)/3$ and $2/3<1/\sqrt2$,
+
+$$
+\frac1{\sqrt2}\frac{K^2-1}{t^2}
+\ge\frac58\frac{K^2-1}{t^2}+\frac1{32}\frac{K^2}{t^2}.
+\tag{13.21}
+$$
+
+Summing the exact singleton baseline gives
+$\sum_k t_k\mathcal F_N(1/t_k)\ge
+\sum_k1/t_k-C_Rn\beta^{-3}/N^2$; its error is $O_R(a^5/N^2)$.
+Apply (13.21) to the remaining tail terms and keep $Z/32$.
+The signed core incidence calculation (9.22)--(9.23), which uses
+only this actual law, then yields
+
+$$
+W\ge F_j(u)+\Lambda_N e+\mathcal J_D
++a^2\sum_{i\in C}(y_i-\bar y)^2+Z/32-C_{R,c,B}a^5/N^2,
+\tag{13.22}
+$$
+
+where
+
+$$
+\begin{gathered}
+F_j(u)=\frac{n^2}{u}+\frac{r^2m^2}{a-u}
+ +\frac{m^3d((m-2)u-(j-1))}{(a-u)^2},\qquad d=2m-1,\\
+\Lambda_N=\frac{15}{8\delta^2}
+       -\frac{\max\{\mathfrak a,\mathfrak b\}}{c_C^2}.
+\end{gathered}
+\tag{13.23}
+$$
+
+In detail, the retained tail surplus is at least
+$(5/8)\mathbb E[B_T(K^2-1);A]/\delta^2\ge15e/(8\delta^2)$.
+The negative core incidence correction is at most
+$\max\{\mathfrak a,\mathfrak b\}e/c_C^2$ by (9.22); the omitted
+core term from $K^2-L^2$ is nonnegative. The scalar core function
+$r^2/y+d((m-2)u-(j-1))/y^2$ has second derivative at least
+$2a^2$, since $u>\ell_j$. Jensen gives exactly its stated core
+variance term. The core nonlinear replacement again costs only
+$O_R(a^5/N^2)$. This proves (13.22).
+
+On $\ell_j<u<a$, the four positive terms in Growing (15.22)
+prove $F_j''(u)>0$. At $u_c$ one has $F_j(u_c)=S_j$ and, by
+(9.25),
+
+$$
+P_j:=-F_j'(u_c),\qquad
+P_j/a^3=z_*-2+O_R(a^{-1}),\qquad
+z_*:=n^2/(j^2a)>5/2-O_R(a^{-1/2}).
+\tag{13.24}
+$$
+
+The already established core and tail estimates give
+
+$$
+P_j\ge a^3/4,\qquad
+\frac{\Lambda_N-(m/r)P_j}{a^3}
+\ge\frac78z_*-O_{R,c,B}(a^{-1/4})\ge1.
+\tag{13.25}
+$$
+
+Use the supporting tangent of this scalar convex function at $u_c$.
+The actual mean identity gives $(u-u_c)_+\le(m/r)e$ as in
+(9.11). Paying the negative tangent with this inequality proves
+(13.18), while retaining its positive side when $u<u_c$.
+No law-winning-index or $H-M\le1$ premise has been used.
+
+The cap with this bounded index is an admissible law, so $S_j\ge M$.
+Also $a^5/N^2\le C_cT_N$. Thus the left side of (13.18) is at most
+$C_{R,c,B}T_N$. The exact common-mean identity (9.28) gives
+
+$$
+\zeta=j-ru+r\mathbb E[B_T-1;A]+e
+       \le r(u_c-u)_++me.
+\tag{13.26}
+$$
+
+This proves the first line of (13.19).
+
+For a source of degree $K\ge2$ touching at least one tail, its
+single contribution to $Z$ is at least $K^2/(N\delta^2)$. Its
+empirical mass is at least $1/N$; repeated identical neighborhoods
+only increase that mass. Hence
+
+$$
+K^2\le N\delta^2Z\le C_{R,c,B}N\beta^2T_N
+                      \le C_{R,c,B}\sqrt a.
+\tag{13.27}
+$$
+
+A tail singleton already has $K=1$. This proves the degree conclusion
+for actual graph sources, rather than for a selected template.
+
+Finally the edge inequality (11.6) applies to the entire actual graph.
+For cores, $K\le s$, $y_i\ge1/2$ and $H\le2a^3$ bound its error
+by $C_Ra^5/N^2$. For tails, (13.27), $t_k\ge\beta/2$ and
+
+$$
+H_D=\sum_k t_k^{-1}
+ +\mathbb E\left[(K^2-1)\sum_{k\in T\cap D}t_k^{-2};A,K\ge2\right]
+\le C_Ra^2+Z\le C_{R,c,B}a^2
+\tag{13.28}
+$$
+
+bound the error by
+
+$$
+\frac1{4N^2}\mathbb E\left[K^4\sum_{k\in T\cap D}t_k^{-4}\right]
+\le\frac{C_{R,c,B}\sqrt a}{N^2\beta^2}H_D
+\le C_{R,c,B}\frac{a^{11/2}}{N^2}.
+\tag{13.29}
+$$
+
+The core and tail errors prove the last line of (13.19). Every
+denominator, source cardinality and energy in this transfer belongs
+to $x_G$; no marginal from a cap has replaced an actual marginal. ∎
+
+## 14. A defect expansion and the full-class finite-connection envelope
+
+**Lemma 14.1 (First variation controlled by actual incidence defects).**
+For every graph on the sublevel of Definition 13.1, let $j$ and its
+actual partition be as above. Define $\rho_j$ algebraically by (2.1),
+without requiring $j\in J_*$. Then
+
+$$
+W(G)\ge S_j+\sum_T\rho_j(L,B_T)x_{G,T}
+                   -C_{R,c,B}a^{11/2}/N^2.
+\tag{14.1}
+$$
+
+Moreover the integer price sum of every connected graph, with this
+partition, satisfies
+
+$$
+N\sum_T\rho_j(L,B_T)x_{G,T}
+             \ge nb_j+d_{j,N}c_j=\bar\chi_{j,N}.
+\tag{14.2}
+$$
+
+**Proof.** Write $p=\mathbb P(A)$ and, for $i\in C$, set
+
+$$
+\begin{gathered}
+v_i=y_i-\alpha,\qquad
+D_i=\mathbb P(i\notin T,A^c),\qquad
+l_i=\mathbb P(i\in T,A),\\
+q_i^C=\mathbb E[(K^2-m^2)\mathbf1_{i\in T}].
+\end{gathered}
+\tag{14.3}
+$$
+
+The identity $y_i=1-p-D_i+l_i$ gives
+$v_i=u_c-p-D_i+l_i$. Here
+$\sum D_i=\zeta$, $\sum l_i=\mathbb E[L;A]\le2e$,
+and $|p-u_c|\le|u-u_c|+\mathbb E[B_T-1;A]\le C T_N/a^3$.
+Consequently Lemma 13.3 gives the stronger summed displacement bound
+
+$$
+\sum_{i\in C}|v_i|\le C T_N/a^2.
+\tag{14.4}
+$$
+
+For a core-only type,
+$|K^2-m^2|L=(m-L)(m+L)L\le2m^2(m-L)$.
+For a type meeting the tail, $|K^2-m^2|\le C_Ra^2$ and
+$\mathbb E[L;A]\le2e$. Thus
+
+$$
+\sum_{i\in C}|q_i^C|\le C_Ra^2(\zeta+e)\le C T_N.
+\tag{14.5}
+$$
+
+In this proof $C$ may depend on $R,c,B$. The exact core energy is
+
+$$
+H_C=m^2\sum_{i\in C}\frac1{y_i}
+                 +\sum_{i\in C}\frac{q_i^C}{y_i^2}.
+\tag{14.6}
+$$
+
+Taylor expansion at $y_i=\alpha$, using $y_i,\alpha\ge1/2$,
+has constant and linear terms
+$m^3/\alpha-m^2\alpha^{-2}\sum v_i+\alpha^{-2}\sum q_i^C$.
+Its absolute remainder is bounded by
+
+$$
+C\left(a^2\sum_i v_i^2+\sum_i|q_i^Cv_i|\right)
+\le C T_N^2/a^2.
+\tag{14.7}
+$$
+
+This uses summed actual defects, rather than the much larger bound
+obtained by multiplying total exceptional mass by $m$.
+
+For tails set
+
+$$
+q_k^D=\mathbb E[(K^2-1)\mathbf1_{k\in T};A,K\ge2],\qquad
+Q_D=\sum_{k\in D}q_k^D,\qquad \omega_k=t_k-\beta.
+\tag{14.8}
+$$
+
+All $q_k^D$ are nonnegative. Since $t_k\le\delta$,
+
+$$
+Q_D\le\delta^2Z\le C\beta^2T_N,\qquad
+\sum_k(q_k^D)^2\le Q_D^2.
+\tag{14.9}
+$$
+
+The exact tail energy is $\sum_k(1/t_k+q_k^D/t_k^2)$.
+On $\beta/2\le t_k\le3\beta/2$ the reciprocal identity and
+the derivative bound for $t^{-2}$ give
+
+$$
+\begin{aligned}
+H_D\ge{}&\frac n\beta-\beta^{-2}\sum_k\omega_k
+          +\beta^{-2}Q_D+\frac2{3\beta^3}\|\omega\|_2^2
+          -16\beta^{-3}Q_D\|\omega\|_2\\
+\ge{}&\frac n\beta-\beta^{-2}\sum_k\omega_k
+          +\beta^{-2}Q_D+\frac1{3\beta^3}\|\omega\|_2^2
+          -192\beta^{-3}Q_D^2.
+\end{aligned}
+\tag{14.10}
+$$
+
+The final negative term is at most $C\beta T_N^2$, by (14.9).
+Together with (14.7), its magnitude is at most
+
+$$
+C(a^{-2}+\beta)T_N^2\le C a^{11/2}/N^2.
+\tag{14.11}
+$$
+
+The constant term of the combined core and tail expansions is $S_j$.
+Their linear term is exactly
+$DH(x^{j,*})[x_G-x^{j,*}]=\sum_T\rho_j(L,B_T)x_{G,T}$.
+Lemma 2.3 is a differentiation and affine-subtraction identity; its
+proof uses only normalization and mean $a$, so it remains valid for
+this possibly nonwinning cap. The transfer in Lemma 13.3 now proves
+(14.1).
+
+To license (14.2), positivity cannot be inferred merely from having
+a bounded index. Here it follows from the additional derived margin
+$z_*>5/2-O_R(a^{-1/2})$. In fact (2.6) gives, uniformly at this
+actual index,
+
+$$
+rc_j=(z_*-2)a^3+O_R(a^2)>0,\quad
+b_j=3z_*a^3+O_R(a^2),\quad
+0<rc_j<\eta^2<b_j.
+\tag{14.12}
+$$
+
+Also $\eta^2>(2m^2+4)/\alpha^2$ eventually. The exact identities
+(2.3), (2.7), (2.8) therefore prove all the price comparisons in
+Lemma 2.2 for this index, without using law optimality. Its proof
+covers every $1\le K\le s$. The connected contraction count (4.3)
+and the congruence $(a-1)N\equiv b-D_0\pmod r$ in (4.7)
+are likewise independent of law optimality. Applying the proof of
+Lemma 4.1 with these now verified price hypotheses gives (14.2),
+for all residues $0\le d_{j,N}<r$. This is a lower bound over
+original connected graphs and all their neighborhoods. It makes no
+claim that equality in the energy requires price equality. ∎
+
+**Theorem 14.2 (Uniform finite-connection value over the prescribed
+full graph class).** For each fixed finite $R\ge4$ and $c>0$,
+there are finite positive $A_{R,c},C_{R,c}$ such that, for every
+integer $a\ge A_{R,c}$, every integer
+$(7/2)\sqrt a\le h\le R\sqrt a$, and every integer
+$N\ge ca^{5/2}$, the graph class in Definition 1.1 is nonempty.
+Use the fixed $J_R$ in (13.2) and the algebraically extended prices
+of Definition 11.1 to define
+
+$$
+L_N=\min_{2\le j\le J_R}
+             \left(S_j+\frac{\bar\chi_{j,N}}N\right).
+\tag{14.13}
+$$
+
+Then its full-class minimum satisfies
+
+$$
+|V_N-L_N|\le C_{R,c}\frac{a^{11/2}}{N^2}.
+\tag{14.14}
+$$
+
+The assertion includes every integer remainder in every branch.
+In particular, on any fixed window
+$c\le N/a^{5/2}\le C'<\infty$, it gives
+$V_N=L_N+O_{R,c}(\sqrt a)$. For every exact minimizer the
+partition (13.3) has a derived index $2\le j\le J_R$ and
+
+$$
+S_j+\bar\chi_{j,N}/N\le L_N+C_{R,c}a^{11/2}/N^2.
+\tag{14.15}
+$$
+
+**Proof.** For large $a$ every $2\le j\le J_R$ has $n>0$.
+Lemma 11.2 applies to every such branch, at all our integer budgets.
+It proves nonemptiness, the graph conditions including strict
+orientation, and
+
+$$
+V_N\le L_N+C_{R,c}a^5/N^2.
+\tag{14.16}
+$$
+
+The minimum exists because the labeled graph domain is finite.
+Every winning law index belongs to this bounded interval, by Growing
+Theorem 15.5 and Lemma 15.2. For such an index
+$|\bar\chi_{j,N}|\le C_Ra^{7/2}$, uniformly in its residue.
+Thus (14.16), or that single winning template, puts every exact
+minimizer in $W\le M+B_RT_N$ after fixing a sufficiently large
+$B_R$; $a^5/N^2=o(T_N)$ uniformly here. Lemmas 13.2--14.1
+apply to that actual minimizer. They give
+
+$$
+V_N\ge S_j+\bar\chi_{j,N}/N-C_{R,c}a^{11/2}/N^2
+       \ge L_N-C_{R,c}a^{11/2}/N^2.
+\tag{14.17}
+$$
+
+Together with (14.16) this proves (14.14) and (14.15).
+The lower argument ranges over the entire original graph class:
+the comparison sublevel is justified by an available original-graph
+upper bound, and localization within it is proved from its actual
+nonlinear value. In particular it assumes neither template membership,
+a tail floor, a tail-touching degree cutoff, a winning law branch,
+nor an excess at most one. ∎
+
+## 15. Global leading competition on the integer transition family
+
+**Theorem 15.1 (Actual core switch and leading global value).** Let
+
+$$
+a=6t^2,\qquad h=12t-1,\qquad N=\lfloor Da^{5/2}\rfloor,
+\qquad D>0\text{ fixed},\qquad t\in\mathbb Z_{>0},\quad t\to\infty.
+\tag{15.1}
+$$
+
+Use $R=5$ and the actual marginal threshold (13.3), with its fixed
+$b_5$. Then
+
+$$
+\frac{V_N-M}{a}\longrightarrow
+ \min\left\{\frac{36\sqrt6}{D},\ 36+\frac{16\sqrt6}{D}\right\}.
+\tag{15.2}
+$$
+
+Set $D_c=5\sqrt6/9$. For every sufficiently large $t$, every exact
+minimizer has
+
+$$
+|C|=
+\begin{cases}
+a+3,&0<D<D_c,\\
+a+2,&D>D_c.
+\end{cases}
+\tag{15.3}
+$$
+
+These are actual threshold core sizes; no exact source-template
+membership is asserted. At the exact integer budget $N=a^2t$,
+
+$$
+V_N=M+132a+O(\sqrt a),\qquad |C|=a+3
+\quad\text{for every exact minimizer eventually}.
+\tag{15.4}
+$$
+
+**Proof.** Reuse the exact computations (11.10)--(11.12). They give
+$M=S_2$, $S_3-S_2=36a+O(\sqrt a)$, and, uniformly over all
+residues,
+
+$$
+\bar\chi_{2,N}=36\sqrt6\,a^{7/2}+O(a^3),\qquad
+\bar\chi_{3,N}=16\sqrt6\,a^{7/2}+O(a^3).
+\tag{15.5}
+$$
+
+One must also exclude the other bounded branches in the global
+finite envelope. For each $2\le j\le J_5$,
+
+$$
+\frac{S_j-B_0(a)}{a^2}\longrightarrow 24/j+4j-2.
+\tag{15.6}
+$$
+
+This scalar sequence has its only minima at $j=2,3$, both with
+value $18$: its adjacent difference is $4-24/(j(j+1))$.
+The finite remaining index set therefore has a fixed positive gap.
+Its $S_j-S_2$ is bounded below by a positive multiple of $a^2$.
+For all these fixed indices, including the nonwinning ones,
+$|\bar\chi_{j,N}|=O(a^{7/2})$ by the rational formula (11.11).
+Dividing by $N$ gives only $O_D(a)$ and cannot close that gap.
+Thus the minimum defining $L_N$ is attained among $j=2,3$ eventually.
+
+Theorem 14.2 has error $O_D(\sqrt a)$ at (15.1). Combining it
+with (15.5), and retaining the harmless floor in $N$, yields
+
+$$
+V_N=M+a\min\left\{\frac{36\sqrt6}{D},\
+                              36+\frac{16\sqrt6}{D}\right\}
+           +O_D(\sqrt a).
+\tag{15.7}
+$$
+
+Indeed the $O(a^3)$ price remainders divided by $N$ are
+$O_D(\sqrt a)$, and rounding $N$ changes the displayed leading
+quotients by $O_D(a^{-3/2})$. This proves (15.2), also at $D=D_c$.
+
+For an exact minimizer, (14.15) first excludes every actual threshold
+index except $2,3$, by the same order-$a^2$ gap. The signed difference
+between their finite comparison values is
+
+$$
+\left(36-\frac{20\sqrt6}{D}\right)a+O_D(\sqrt a).
+\tag{15.8}
+$$
+
+Away from $D_c$ its order-$a$ gap exceeds the $O_D(\sqrt a)$
+allowance in (14.15). It forces $j=3$ below $D_c$ and $j=2$
+above $D_c$, proving (15.3) for every exact minimizer. Lemma 13.2
+also gives $y_i\ge1-O_D(a^{-1/2})$ on this actual core and
+$y_k\asymp a^{-3/2}$ on its complement, so the fixed threshold
+in (13.3) identifies the branch unambiguously.
+
+Finally $N=a^2t=a^{5/2}/\sqrt6$ is an integer. Take
+$D=1/\sqrt6<D_c$ in (15.7). The competing coefficients are $216$
+and $36+96=132$, proving both assertions in (15.4). ∎
+
+## 16. Sources and unresolved finite structure
+
+The new relations in Sections 13--15 are deductions for the prescribed
+graph class: the nonlinear residual with retained exceptional-tail
+energy, its actual marginal floor, the integer incidence degree bound,
+the defect-controlled first variation, and their full-class value and
+threshold-core consequences. The law envelopes, scalar phase gaps,
+price contraction argument and template constructions are reused from
+Growing Lemma 7.1, Theorem 7.2, Theorem 15.5 and Proposition 15.6,
+Uniform Dilution Lemmas 2.1--2.2 and Proposition 3.1, and Sections
+2, 4, 9 and 11 of this volume. Each use beyond an old small-excess or
+winning-index hypothesis is accompanied above by its required
+inequalities; it is not an extension by assertion.
+
+Scalar supporting tangents and Jensen are used only after the displayed
+second derivatives or positive coefficients verify their hypotheses;
+see Boyd--Vandenberghe, *Convex Optimization*, §3.1.3, printed pp.69--70,
+[author text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).
+The conjugate in (13.10) is obtained by the displayed stationary-point
+calculation. These scalar tools are standard intermediate facts;
+no new general convexity theorem or convexity of the law energy is
+claimed.
+
+The primary CDSO definition and broader extremal question are
+Albalahi--Das--Ali--Barman--Hamza,
+[*On the hyperbolic Sombor index and its counterpart*](https://arxiv.org/html/2510.24809v1),
+§§1,4, DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176).
+There the denominator is the maximum endpoint degree; subtracting the
+edge count gives the excess in (1.4). Smirnov,
+[*Bicyclic graphs with maximum complementary diminished Sombor index*](https://www.dmlett.com/archive/v18/DML26_v18_pp100-106.pdf),
+Discrete Math. Lett. 18, 100--106, DOI
+[10.47443/dml.2026.164](https://doi.org/10.47443/dml.2026.164),
+Theorem 2.1, determines the bicyclic maxima and disproves the stated
+minimum-degree prediction for those maxima. It is not a minimum theorem
+in the present growing-cyclomatic prescribed bipartite domain.
+Zhao--Zhao, *Extremal values with respect to vertex-degree-based
+topological indices in unicyclic and bicyclic graphs*, DOI
+[10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+has an abstract describing sufficient conditions for almost regular
+extremizers and maximum VDB indices in those two fixed-cyclomatic
+classes. Its detailed full-text overlap remains unassessed. Neither
+its abstract nor inaccessible technical content is a premise here.
+These distinctions preclude treating every part of the broader question
+as unresolved, and make no worldwide-priority claim for the deductions.
+
+Theorem 14.2 determines a uniform value envelope, and Theorem 15.1
+identifies an actual threshold partition away from its critical
+constant. They leave the critical constant's finite branch behavior,
+exact source support, global optimality of a particular $j=3$ template,
+and sufficiency of $a^{5/2}$ for eventual exact source restriction
+undetermined. The threshold-core conclusion is weaker than such a
+source restriction. Moving $R$, changing the prescribed sink budget,
+and the unrestricted original connected-graph extremal problem are
+outside these theorems.
+
+## 追加锚（本行以下为增补区）
