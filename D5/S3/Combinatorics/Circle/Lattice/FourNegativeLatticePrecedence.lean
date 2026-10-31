@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/Lattice/FourNegativeLatticePrecedence
    mirror-E: none(waiver:no-escape-mirror-specified)
-   anchors: [mathlib/module/Mathlib.Data.List.Basic]
+   anchors: [mathlib/module/Mathlib.Logic.Equiv.Fin.Rotate]
    utility: none
    digest: Necessary delta precedence for every actual four-gap source with t=4n+2. -/
 import D5.S3.Combinatorics.Circle.Lattice.LatticeChargePrecedence

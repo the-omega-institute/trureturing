@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/Lattice/LatticeChargePrecedence
    mirror-E: none(waiver:no-escape-mirror-specified)
-   anchors: [mathlib/module/Mathlib.Data.List.Basic]
+   anchors: [mathlib/module/Mathlib.Logic.Equiv.Fin.Rotate]
    utility: none
    digest: Saturated lattice returns bound the same physical suffix charge. -/
 import D5.S3.Combinatorics.Circle.RunFirstEarTransport
