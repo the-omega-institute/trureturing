@@ -71,7 +71,8 @@ private theorem finite_ear_checks (f : ℕ → ℤ) (C h : ℤ) (ear e : ℕ)
         h + ((P.toFinset.toList ++ [ear]).map f).sum ≤ C ∧
         packetChecks f C (h + ((P.toFinset.toList ++ [ear]).map f).sum + f n)
           (orderedPackets (finitePackets bs))) ↔ _
-      simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,hmass]
+      simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,List.map_nil,
+        List.sum_cons,List.sum_nil,add_zero,hmass]
       exact and_congr Iff.rfl (and_congr Iff.rfl (finite_packet_checks f C _ bs hs))
     | succ e =>
       change (0 ≤ h + (P.toFinset.toList.map f).sum + f n ∧
