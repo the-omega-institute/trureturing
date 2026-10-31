@@ -324,6 +324,12 @@ $$\forall n \in \mathrm{Nat},\; 2 \le n \Rightarrow \left(\forall v \in \mathrm{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/CollisionPrefix.collision_ratio` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a396659-edge-collision-ratio` (proved) by `D5/S3/Combinatorics/Graph/Walks/CollisionPrefix.collision_ratio` and `D5/S3/Combinatorics/Graph/Walks/CollisionPrefix.long_count_positive`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a396659-edge-collision-ratio","declaration_gid":"D5/S3/Combinatorics/Graph/Walks/CollisionPrefix.collision_ratio","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a396659-edge-collision-ratio","declaration_gid":"D5/S3/Combinatorics/Graph/Walks/CollisionPrefix.long_count_positive","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
