@@ -28,11 +28,6 @@ def IsMatrixAlgebra (b : Submodule ℂ (Matrix (Fin 4) (Fin 4) ℂ)) : Prop :=
 def IsNoncommutative (b : Submodule ℂ (Matrix (Fin 4) (Fin 4) ℂ)) : Prop :=
   ∃ x ∈ b, ∃ y ∈ b, x * y ≠ y * x
 
-/-- Block assembly, with the scoped `Matrix.instL2OpNormedAddCommGroup` norm. -/
-def blockMatrix {n k : ℕ} (x : Fin n → Fin n → Matrix (Fin k) (Fin k) ℂ) :
-    Matrix (Fin n × Fin k) (Fin n × Fin k) ℂ :=
-  Matrix.of fun p q => x p.1 q.1 p.2 q.2
-
 /-- A completely isometric representation with reversed multiplication.
 All block norms use the scoped `Matrix.instL2OpNormedAddCommGroup` instance. -/
 def IsReversible (b : Submodule ℂ (Matrix (Fin 4) (Fin 4) ℂ)) : Prop :=
@@ -41,7 +36,7 @@ def IsReversible (b : Submodule ℂ (Matrix (Fin 4) (Fin 4) ℂ)) : Prop :=
       (∀ x ∈ b, ∀ y ∈ b, ρ (y * x) = ρ x * ρ y) ∧
       ∀ n (x : Fin n → Fin n → Matrix (Fin 4) (Fin 4) ℂ),
         (∀ i j, x i j ∈ b) →
-        ‖blockMatrix (fun i j => ρ (x i j))‖ = ‖blockMatrix x‖
+        ‖Matrix.comp _ _ _ _ ℂ (fun i j => ρ (x i j))‖ = ‖Matrix.comp _ _ _ _ ℂ x‖
 
 /-- The source CAR example, using zero-based indices for its matrix units. -/
 def carAlgebra : Submodule ℂ (Matrix (Fin 4) (Fin 4) ℂ) :=
@@ -137,26 +132,20 @@ private lemma witness_reversible : IsReversible witness := by
     change -(y * x) = (-x) * (-y)
     rw [neg_mul_neg, witness_anticommutes x hx y hy]
   · intro n x hx
-    change ‖blockMatrix (fun i j => -(x i j))‖ = ‖blockMatrix x‖
-    exact norm_neg (blockMatrix x)
-
-private def conjugate (q : Matrix.unitaryGroup (Fin 4) ℂ) :
-    Matrix (Fin 4) (Fin 4) ℂ ≃⋆ₐ[ℂ] Matrix (Fin 4) (Fin 4) ℂ :=
-  Unitary.conjStarAlgAut ℂ (Matrix (Fin 4) (Fin 4) ℂ) (star q)
-
-private lemma conjugate_trace (q : Matrix.unitaryGroup (Fin 4) ℂ)
-    (x : Matrix (Fin 4) (Fin 4) ℂ) : Matrix.trace (conjugate q x) = Matrix.trace x := by
-  dsimp only [conjugate]
-  simp only [Unitary.conjStarAlgAut_star_apply]
-  exact Matrix.trace_units_conj' (Unitary.toUnits q) x
+    change ‖Matrix.comp _ _ _ _ ℂ (fun i j => -(x i j))‖ = ‖Matrix.comp _ _ _ _ ℂ x‖
+    exact norm_neg (Matrix.comp _ _ _ _ ℂ x)
 
 private def delta (x : Matrix (Fin 4) (Fin 4) ℂ) : ℂ :=
   2 * Matrix.trace ((x * star x) ^ 2) - Matrix.trace (x * star x) ^ 2
 
 private lemma delta_conjugate (q : Matrix.unitaryGroup (Fin 4) ℂ)
-    (x : Matrix (Fin 4) (Fin 4) ℂ) : delta (conjugate q x) = delta x := by
+    (x : Matrix (Fin 4) (Fin 4) ℂ) : delta (Unitary.conjStarAlgAut ℂ _ (star q) x) = delta x := by
   dsimp only [delta]
-  rw [← map_star, ← map_mul, ← map_pow, conjugate_trace, conjugate_trace]
+  rw [← map_star, ← map_mul, ← map_pow]
+  simp only [Unitary.conjStarAlgAut_star_apply]
+  exact congrArg₂ (fun a b : ℂ => 2 * a - b ^ 2)
+    (Matrix.trace_units_conj' (Unitary.toUnits q) ((x * star x) ^ 2))
+    (Matrix.trace_units_conj' (Unitary.toUnits q) (x * star x))
 
 private lemma car_delta (a b : ℂ) : delta (form 1 a b 0) = 0 := by
   dsimp only [delta]
@@ -172,8 +161,8 @@ private lemma witness_delta : delta (form 2 1 0 0) = 9 := by
   (dsimp only [form]; norm_num)
 
 private lemma conjugate_product_line (q : Matrix.unitaryGroup (Fin 4) ℂ)
-    (h : ∀ x ∈ witness, conjugate q x ∈ carAlgebra) :
-    ∃ t : ℂ, t ≠ 0 ∧ conjugate q (form 2 0 0 1) = t • form 1 0 0 1 := by
+    (h : ∀ x ∈ witness, Unitary.conjStarAlgAut ℂ _ (star q) x ∈ carAlgebra) :
+    ∃ t : ℂ, t ≠ 0 ∧ Unitary.conjStarAlgAut ℂ _ (star q) (form 2 0 0 1) = t • form 1 0 0 1 := by
   obtain ⟨a, b, c, hu⟩ := (car_coordinates _).mp
     (h _ ((witness_coordinates _).mpr ⟨1, 0, 0, rfl⟩))
   obtain ⟨d, e, f, hv⟩ := (car_coordinates _).mp
@@ -182,7 +171,7 @@ private lemma conjugate_product_line (q : Matrix.unitaryGroup (Fin 4) ℂ)
     rw [form_product]
     ext i j
     fin_cases i <;> fin_cases j <;> (dsimp only [form]; norm_num)
-  have he : conjugate q (form 2 0 0 1) =
+  have he : Unitary.conjStarAlgAut ℂ _ (star q) (form 2 0 0 1) =
       ((e * a - d * b) / 2) • form 1 0 0 1 := by
     rw [hw, map_smul, map_mul, ← hv, ← hu, form_product]
     ext i j
@@ -190,26 +179,30 @@ private lemma conjugate_product_line (q : Matrix.unitaryGroup (Fin 4) ℂ)
     ring
   refine ⟨_, ?_, he⟩
   intro ht
-  have hz : conjugate q (form 2 0 0 1) = 0 := by rw [he, ht, zero_smul]
-  have hwz : form 2 0 0 1 = 0 := by
-    apply EquivLike.injective (conjugate q)
-    simpa only [map_zero] using hz
+  have hz : Unitary.conjStarAlgAut ℂ _ (star q) (form 2 0 0 1) = 0 := by rw [he, ht, zero_smul]
+  have hwz : form 2 0 0 1 = 0 :=
+    (Unitary.conjStarAlgAut ℂ _ (star q)).toRingEquiv.map_eq_zero_iff.mp hz
   have hh := congrArg (fun x : Matrix (Fin 4) (Fin 4) ℂ => x 0 3) hwz
   dsimp only [form] at hh
   norm_num at hh
 
 private lemma conjugate_complement (q : Matrix.unitaryGroup (Fin 4) ℂ)
-    (h : ∀ x ∈ witness, conjugate q x ∈ carAlgebra) :
-    ∃ a b : ℂ, conjugate q (form 2 1 0 0) = form 1 a b 0 := by
+    (h : ∀ x ∈ witness, Unitary.conjStarAlgAut ℂ _ (star q) x ∈ carAlgebra) :
+    ∃ a b : ℂ, Unitary.conjStarAlgAut ℂ _ (star q) (form 2 1 0 0) = form 1 a b 0 := by
   obtain ⟨t, ht, hw⟩ := conjugate_product_line q h
   obtain ⟨a, b, c, hu⟩ := (car_coordinates _).mp
     (h _ ((witness_coordinates _).mpr ⟨1, 0, 0, rfl⟩))
-  have hz : Matrix.trace (star (conjugate q (form 2 0 0 1)) *
-      conjugate q (form 2 1 0 0)) = 0 := by
-    rw [← map_star, ← map_mul, conjugate_trace]
-    simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.star_apply,
-      Fin.sum_univ_succ]
-    (dsimp only [form]; norm_num)
+  have hz : Matrix.trace (star (Unitary.conjStarAlgAut ℂ _ (star q) (form 2 0 0 1)) *
+      Unitary.conjStarAlgAut ℂ _ (star q) (form 2 1 0 0)) = 0 := by
+    rw [← map_star, ← map_mul]
+    simp only [Unitary.conjStarAlgAut_star_apply]
+    calc
+      _ = Matrix.trace (star (form 2 0 0 1) * form 2 1 0 0) :=
+        Matrix.trace_units_conj' (Unitary.toUnits q) _
+      _ = 0 := by
+        simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.star_apply,
+          Fin.sum_univ_succ]
+        (dsimp only [form]; norm_num)
   rw [hw, ← hu] at hz
   simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.star_apply,
     Fin.sum_univ_succ] at hz
@@ -220,9 +213,8 @@ private lemma conjugate_complement (q : Matrix.unitaryGroup (Fin 4) ℂ)
 
 private lemma witness_not_equivalent : ¬ UnitarilyEquivalent witness carAlgebra := by
   rintro ⟨q, hq⟩
-  have h : ∀ x ∈ witness, conjugate q x ∈ carAlgebra := by
+  have h : ∀ x ∈ witness, Unitary.conjStarAlgAut ℂ _ (star q) x ∈ carAlgebra := by
     intro x hx
-    dsimp only [conjugate]
     simpa only [Unitary.conjStarAlgAut_star_apply] using (hq x).mp hx
   obtain ⟨a, b, hab⟩ := conjugate_complement q h
   have hd := delta_conjugate q (form 2 1 0 0)
