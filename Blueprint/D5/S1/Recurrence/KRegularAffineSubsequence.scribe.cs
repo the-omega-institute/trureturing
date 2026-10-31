@@ -59,16 +59,16 @@ internal sealed class KRegularAffineSubsequenceDocument : IScribeDocumentDefinit
         var f = F.Id("f");
         var family = F.Id("G");
         var observed = LambdaIn("n", Naturals(), Call("s", Add(Multiply(a, F.Id("n")), b)));
-        var generators = Seq(OpenBrace, f, Colon, Sp, SequenceType(), Sp, Mid, Sp,
-            Some("g", SequenceType(), And(Member(g, family),
-                Some("c", Naturals(), And(Less(c, Add(a, b)),
-                    Equal(f, LambdaIn("n", Naturals(), Call("g", Add(Multiply(a, F.Id("n")), c))))))),
-            Sp, CloseBrace);
+        var observation = LambdaIn("n", Naturals(), Call("g", Add(Multiply(a, F.Id("n")), c)));
+        var member = Some("g", SequenceType(), And(Member(g, family),
+            Some("c", Naturals(), And(Less(c, Add(a, b)), Equal(f, observation)))));
+        var generators = Seq(OpenBrace, f, Colon, Sp, SequenceType(), Sp, Mid, Sp, member, Sp, CloseBrace);
+        var conclusion = Subset(Span(Kernel(k, observed)), Span(generators));
+        var spanning = Equal(Span(family), Span(Kernel(k, s)));
+        var generated = All("G", Call("Finset", SequenceType()), Implies(spanning, conclusion));
+        var hypotheses = Implies(LessOrEqual(D(2), k), Implies(LessOrEqual(D(1), a), generated));
         return Disp(All("k", Naturals(), All("a", Naturals(), All("b", Naturals(),
-            All("s", SequenceType(), Implies(LessOrEqual(D(2), k), Implies(LessOrEqual(D(1), a),
-                All("G", Call("Finset", SequenceType()),
-                    Implies(Equal(Span(family), Span(Kernel(k, s))),
-                        Subset(Span(Kernel(k, observed)), Span(generators))))))))));
+            All("s", SequenceType(), hypotheses)))));
     }
 
     private static Formula ClosureFormula()
