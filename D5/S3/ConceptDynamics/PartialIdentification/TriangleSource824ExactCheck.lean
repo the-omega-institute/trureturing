@@ -61,7 +61,7 @@ run_elab do
             (sharedRootSourceLaw.mass (s.2.2, (s.2.1, s.1)) : ℝ) := by
         rcases s with ⟨a, b, c⟩
         cases a <;> cases b <;> cases c <;>
-          norm_num [μ, μα, μβ, μγ, root, ← Set.singleton_prod_singleton,
+          norm_num [ENNReal.ofReal_div_of_pos, μ, μα, μβ, μγ, root, ← Set.singleton_prod_singleton,
             Measure.prod_prod, PMF.toMeasure_apply_singleton, PMF.ofFintype_apply,
             sharedRootSourceLaw, productResponseLaw, productResponseMass,
             balancedCovariateLaw, boolPointLaw, boolPointMass]
@@ -75,7 +75,7 @@ run_elab do
         rcases c with ⟨c₀, c₁⟩
         cases a₀ <;> cases a₁ <;> cases b₀ <;> cases b₁ <;>
           cases c₀ <;> cases c₁ <;>
-          norm_num [P, μγ, root, Measure.map_apply hd (measurableSet_singleton _),
+          norm_num [ENNReal.ofReal_div_of_pos, P, μγ, root, Measure.map_apply hd (measurableSet_singleton _),
             PMF.toMeasure_apply_fintype, PMF.ofFintype_apply, Set.indicator,
             A, B, C, Kernel.deterministic_apply, fA, fB, fC, diag,
             sharedRootSourceLaw, productResponseLaw, productResponseMass,
@@ -90,7 +90,7 @@ run_elab do
         rcases a with ⟨a₀, a₁⟩
         rcases b with ⟨b₀, b₁⟩
         cases a₀ <;> cases a₁ <;> cases b₀ <;> cases b₁ <;>
-          norm_num [μγ, root, PMF.toMeasure_apply_fintype, PMF.ofFintype_apply,
+          norm_num [ENNReal.ofReal_div_of_pos, μγ, root, PMF.toMeasure_apply_fintype, PMF.ofFintype_apply,
             sharedRootJointLaw_mass, diag, Set.indicator, Fintype.sum_bool]
       let first := pushforwardResponseLaw sharedRootJointLaw Prod.fst
       let second := pushforwardResponseLaw sharedRootJointLaw Prod.snd
@@ -102,7 +102,7 @@ run_elab do
         rw [Measure.map_apply (measurable_of_countable _) (measurableSet_singleton _)]
         rcases a with ⟨a₀, a₁⟩
         cases a₀ <;> cases a₁ <;>
-          norm_num [μγ, root, PMF.toMeasure_apply_fintype, PMF.ofFintype_apply,
+          norm_num [ENNReal.ofReal_div_of_pos, μγ, root, PMF.toMeasure_apply_fintype, PMF.ofFintype_apply,
             first, pushforwardResponseLaw, pushforwardSignatureMass,
             sharedRootJointLaw_mass, diag, Set.indicator,
             Fintype.sum_prod_type, Fintype.sum_bool]
@@ -115,7 +115,7 @@ run_elab do
         rw [Measure.map_apply (measurable_of_countable _) (measurableSet_singleton _)]
         rcases b with ⟨b₀, b₁⟩
         cases b₀ <;> cases b₁ <;>
-          norm_num [μγ, root, PMF.toMeasure_apply_fintype, PMF.ofFintype_apply,
+          norm_num [ENNReal.ofReal_div_of_pos, μγ, root, PMF.toMeasure_apply_fintype, PMF.ofFintype_apply,
             second, pushforwardResponseLaw, pushforwardSignatureMass,
             sharedRootJointLaw_mass, diag, Set.indicator,
             Fintype.sum_prod_type, Fintype.sum_bool]
@@ -137,7 +137,9 @@ run_elab do
             ext o
             simp
           _ = (P.fst.prod (P.snd.fst.prod P.snd.snd))
-              ({a} ×ˢ ({b} ×ˢ Set.univ)) := congrArg (fun ν => ν _) hfactor
+              ({a} ×ˢ ({b} ×ˢ Set.univ)) := congrArg
+                (fun ν : Measure ((Bool × Bool) × ((Bool × Bool) × (Bool × Bool))) =>
+                  ν ({a} ×ˢ ({b} ×ˢ Set.univ))) hfactor
           _ = P.fst {a} * (P.snd.fst {b} * P.snd.snd Set.univ) := by
             rw [Measure.prod_prod, Measure.prod_prod]
           _ = _ := by rw [measure_univ, mul_one, hfirst, hsecond]

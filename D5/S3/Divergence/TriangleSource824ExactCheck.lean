@@ -14,10 +14,14 @@ run_elab do
     from by
       intro α β γ _ _ _ a b c _ _ _
       dsimp
-      constructor
-      · simp only [Measure.fst_prod, Measure.snd_prod, and_self]
-      · simpa only [Measure.fst_prod, Measure.snd_prod] using
-          InformationTheory.klDiv_self (a.prod (b.prod c))))) none
+      have ha : (a.prod (b.prod c)).fst = a := Measure.fst_prod
+      have hb : (a.prod (b.prod c)).snd.fst = b := by
+        rw [Measure.snd_prod, Measure.fst_prod]
+      have hc : (a.prod (b.prod c)).snd.snd = c := by
+        rw [Measure.snd_prod, Measure.snd_prod]
+      exact ⟨⟨ha, hb, hc⟩, by
+        rw [ha, hb, hc]
+        exact InformationTheory.klDiv_self (a.prod (b.prod c))⟩))) none
 
   Lean.Elab.Term.synthesizeSyntheticMVarsNoPostponing
   let proof ← Lean.instantiateMVars proof
