@@ -720,7 +720,7 @@ not a coefficient-defined character.
 | `spechtTrace_eq_hsw_frobChar` | Consumes `spechtCharValue_ordinaryTrace` for the SAME independently constructed complex module; consumed by the triple theorem |
 | `triplePartition` | Literal positive row partition; consumed by shape and triple trace theorems |
 | `triplePartition_shape` | Original first three rows and all later rows zero; consumed by the triple trace theorem |
-| `spechtTrace_triplePartition_eq_hsw_frobChar` | Necessary source endpoint, not consumed by either original weighted HSW average; no standalone admission |
+| `spechtTrace_triplePartition_eq_hsw_frobChar` | Consumed by `HemmerStraubWestremOrdinary.ordinaryCharacter_triple_eq_coefficient`, then by BOTH `leftTerm_eq_frobenius` and `rightTerm_eq_frobenius`; no standalone admission |
 
 The local same-shape comparison is candidate coefficient-isolation content;
 the padded trace statement is exact application organization. Neither supplies
@@ -731,18 +731,47 @@ the requested three-row coefficient.
 
 ## Full remaining theorem and evidence boundary
 
-Both original weighted averages still need genuine ordinary-trace consumers and
-their evaluations through the existing HSW coefficient owner and strongest
-`LatticeHalfFockChargedCoefficients.solution_unique`. That owner is not
-reimplemented here. The unresolved full target retains every n >= 1 and every
-partition, independent per-occurrence Ev choices with duplicate list outcomes,
-full positive cycle lists including ones, exact reciprocal centralizer
+`HemmerStraubWestremOrdinary` defines the actual complex trace at an
+independently selected full-cycle representative. `ordinaryCharacter_eq_trace`
+compares it with any representative of the same complete partition; that
+comparison is used at the representation supplier's own representative in the
+triple coefficient bridge. `evTypes_spec` supplies positive parts and doubled
+size to `evPartition`. This partition is formed separately for each occurrence
+of the original Ev list, without conversion to a finite set. Its parts are the
+literal multiset of the occurrence, including ones. The R3 membership proofs
+supply decreasing triples of size 2n; `triplePartition` retains their exact
+positive rows and zero padding. The rectangle is (n,n,0) for every n.
+
+| Ordinary declaration | Textual source consumer |
+| --- | --- |
+| `ordinaryCharacter_eq_trace` | `ordinaryCharacter_triple_eq_coefficient` |
+| `evTypes_spec` | `evPartition`, used in both ordinary terms |
+| `leftTerm_eq_frobenius` | `pointwise_identity`, `averages_eq_frobenius` |
+| `rightTerm_eq_frobenius` | `pointwise_identity`, `averages_eq_frobenius` |
+| `pointwise_identity` | `weighted_identity` |
+| `averages_eq_frobenius` | `HemmerStraubWestremOrdinaryClosedForm.result` |
+| `weighted_identity` | `HemmerStraubWestremOrdinaryClosedForm.result` |
+| `HemmerStraubWestremOrdinaryClosedForm.result` | Exact external full-problem endpoint, without a standalone known-port claim |
+
+The coefficient API is the canonical
+`HemmerStraubWestremWeightedAverage.result` published at
+https://github.com/the-omega-institute/trureturing/blob/69f68474a0566d6f465a14259b74f28b58e293f3/D5/S3/Combinatorics/Partitions/HemmerStraubWestremWeightedAverage.lean.
+The closed-form composition references that API through its original module
+path, rather than copying its implementation. Its supplier import must be
+available before native validation of this composition. The coefficient owner
+must reuse the strongest
+`LatticeHalfFockChargedCoefficients.solution_unique`; neither its implementation
+nor its formal ODE proof is reproduced in these ordinary-character consumers.
+
+The full endpoint retains every n >= 1 and every input partition, independent
+per-occurrence Ev choices with duplicate outcomes, full positive cycle lists
+including ones, the existing exact reciprocal centralizer
 `z = product_k k^multiplicity(k) * multiplicity(k)!`, length sign,
-integer-to-rational-to-complex casts, all even-part shapes of size 2n with at
-most three rows and zero padding, and rectangle (n,n,0) for every n including
-odd n. BOTH weighted averages must equal choose(n/2+2,2) for even n and zero
-for odd n. The existing per-partition coefficient result alone does not prove
-these evaluations.
+integer-to-rational-to-complex casts, and all even-part shapes of size 2n with
+at most three rows and zero padding. Both weighted averages are compared with
+choose(n/2+2,2) in even degree and zero in odd degree. These are source-level
+consumers; native proof-term dependence and the complete ordinary result remain
+unverified.
 
 All new sources require native reconstruction, accepted axiom closure and
 proof-term dependence checks. The faithful Reg audit still requires exact
