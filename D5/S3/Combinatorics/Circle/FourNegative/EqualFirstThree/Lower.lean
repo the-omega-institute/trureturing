@@ -69,9 +69,13 @@ private theorem lower (s d : ℕ) (hd : 2 ≤ d) (hds : d < s) (hsd : s ≤ 2*d-
   have cp := coeff_positive R D hR hD
   change 0≤A ∧ 0≤2*A ∧ 0≤V ∧ 0≤2*V-1 ∧ 0≤W ∧
     0≤2*W-R-1 ∧ 0≤X ∧ 0≤2*X-C at cp
-  have hr : 2*r=R := by dsimp [r,R]; conv_rhs => rw [show s=s-1+1 by omega,pow_succ]
+  have hr : 2*r=R := by
+    dsimp [r,R]
+    conv_rhs => rw [show s=s-1+1 by omega,pow_succ]
     ring
-  have he : 2*e=D := by dsimp [e,D]; conv_rhs => rw [show d=d-1+1 by omega,pow_succ]
+  have he : 2*e=D := by
+    dsimp [e,D]
+    conv_rhs => rw [show d=d-1+1 by omega,pow_succ]
     ring
   have hH : 2≤H := by
     simpa [H] using pow_le_pow_right₀ (by norm_num : (1 : ℤ)≤2) (show 1≤s-d by omega)
