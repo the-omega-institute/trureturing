@@ -27,7 +27,7 @@ private def Gates (C m1 d1 m2 d2 m3 d3 m4 d4 : ℤ) : Prop :=
 
 private theorem block (f : ℕ → ℤ) (C a b : ℤ) (L : List ℕ) (v : ℕ)
     (hp : ∀ i ∈ L, 0 ≤ f i) (ha : 0 ≤ a) (hb : 0 ≤ b ∧ b ≤ C)
-    (he : a+(L.map f).sum+f v=b) (hpeak : a+(L.map f).sum ≤ C) :
+    (he : a + (L.map f).sum + f v = b) (hpeak : a + (L.map f).sum ≤ C) :
     InStrip f C a (L++[v]) := by
   apply inStrip_append (positive_block_strip hp ha hpeak)
   have hm : 0 ≤ (L.map f).sum := List.sum_nonneg (by simpa using hp)
@@ -63,8 +63,8 @@ private theorem four_strip (f : ℕ → ℤ) (C : ℤ) (L1 L2 L3 L4 : List ℕ)
     List.sum_append,List.sum_singleton,zero_add,add_assoc] using h234)
   simpa only [List.append_assoc] using hall
 
--- Exact coupled old and new peak inequalities expand quartic polynomials.
 set_option maxHeartbeats 800000 in
+-- Exact coupled old and new peak inequalities expand quartic polynomials.
 private theorem arithmetic (q : ℤ) (hq : 2 ≤ q) :
     let z := 2*q
     let N := 4*z^4-1
@@ -123,7 +123,7 @@ private theorem inventory (n : ℕ) (hn : 2 ≤ n) :
       _ = ((List.range' 0 n ++ List.range' n n) ++ List.range' (2*n) (n+1)) ++
           List.range' (3*n+1) (n+1) := by simp only [List.append_assoc]
       _ = List.range' 0 (3*n+1+(n+1)) := by rw [h1,h2,h3]
-      _ = _ := by congr 1; omega
+      _ = _ := by rw [show 3*n+1+(n+1)=2*(n+1)+2*n by omega,←List.range_eq_range']
   rw [← he]
   apply Multiset.coe_eq_coe.mp
   simp only [← Multiset.coe_add]

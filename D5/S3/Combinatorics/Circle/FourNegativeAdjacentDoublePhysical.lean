@@ -20,8 +20,8 @@ open private chains from D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoubleJo
 open private Gates four_strip arithmetic inventory
   from D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoubleSchedule
 
--- The physical source, block masses and both full prefix strips are elaborated together.
 set_option maxHeartbeats 1600000 in
+-- The physical source, block masses and both full prefix strips are elaborated together.
 /-- The complete r=s+1 branch of the adjacent paired-gap family, with the literal
 numeric cut 2s+r and the same physical old labels in the marked new word. -/
 theorem actualSource_four_negative_adjacent_double_joint_lift
@@ -60,7 +60,8 @@ theorem actualSource_four_negative_adjacent_double_joint_lift
   have ht : (t : ℤ)=A := by
     dsimp [t,A,z]
     push_cast
-    simp only [pow_add,pow_succ,pow_mul]; ring
+    rw [show 2*(n+1)=n+n+2 by omega]
+    simp only [pow_add,pow_succ]; ring
   obtain ⟨hU,hV,hW,hX,hU',hV',hW',hX',hear⟩ := chains n hn
   change ∀ i<n, f i=if i+1<n then 2^i*A else -(N-B)/2 at hU
   change ∀ i<n, f (n+i)=if i+1<n then 2^i*B else -(N-L)/2 at hV
@@ -185,7 +186,8 @@ theorem actualSource_four_negative_adjacent_double_joint_lift
   have hp' : (P++k::R).Perm (List.range (k+1)) := by
     have he : (P++k::R).Perm ((P++R)++[k]) := by
       apply Multiset.coe_eq_coe.mp; simp only [← Multiset.coe_add,Multiset.coe_cons,Multiset.coe_singleton]; ac_rfl
-    exact he.trans ((hp.append_right [k]).trans (List.range_succ.symm ▸ List.Perm.refl _))
+    rw [List.range_succ]
+    exact he.trans (hp.append_right [k])
   have hz : ((List.range k).map f).sum=0 := by
     simpa only [f,N,← ht] using ThreeNegativeEqualOuterSourceBridge.source_zero k t (by dsimp [k]; omega)
   have hz' : ((List.range (k+1)).map g).sum=0 := by
@@ -193,13 +195,13 @@ theorem actualSource_four_negative_adjacent_double_joint_lift
     simpa only [g,← he] using ThreeNegativeEqualOuterSourceBridge.source_zero (k+1) (2*t) (by dsimp [k]; omega)
   refine ⟨(P++R).map (label k (by dsimp [k]; omega)),by dsimp [k]; omega,?_,?_⟩
   · apply lift_order k t (by dsimp [k]; omega) (P++R) hp
-    · simpa only [← ht] using hstrip
-    · simpa only [← ht] using hz
+    · simpa only [f,N,← ht] using hstrip
+    · simpa only [f,N,← ht] using hz
   · rw [marked_word k (2*n+(n+1)) (by dsimp [k]; omega) P R hcut hp]
     have he : ((2*t : ℕ) : ℤ)=2*A := by push_cast; rw [ht]
     apply lift_order (k+1) (2*t) (by dsimp [k]; omega) (P++k::R) hp'
     · have hh : modulus (k+1)/2=N := by omega
-      simpa only [he,hh] using hstrip'
-    · simpa only [he] using hz'
+      simpa only [g,he,hh] using hstrip'
+    · simpa only [g,he] using hz'
 
 end D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoublePhysical
