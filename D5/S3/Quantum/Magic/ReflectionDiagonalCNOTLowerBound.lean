@@ -153,8 +153,7 @@ private lemma character_factor (m : ℕ) (v w : basis m) (f : Bool → ℂ)
     (hw : w ≠ fun _ : Fin m => false) (hf : ∀ b, f b ≠ 0) :
     character v (fun x => f (dot w x)) = 1 := by sorry
 
-private lemma hard_character (m : ℕ) (hm : 0 < m) (v : basis m) (he : evenLabel v)
-    (hv : v ≠ fun _ => false) :
+private lemma hard_character (m : ℕ) (hm : 0 < m) (v : basis m) (he : evenLabel v) :
     character v (fun x => Complex.exp ((hardTheta x : ℂ) * Complex.I)) = -1 := by
   classical
   let z : basis m := zeroLabel
@@ -279,8 +278,8 @@ private lemma claim_for_n (n : ℕ) (hn : 1 ≤ n) :
     exact character_factor (2 * n) v w f hv hvw hw hf
   have hchars : ∀ v : basis (2 * n), evenLabel v → v ≠ zeroLabel →
       character v (fun x => Complex.exp ((hardTheta x : ℂ) * Complex.I)) = -1 := by
-    intro v he hv
-    exact hard_character (2 * n) (Nat.mul_pos (by decide) hn) v he hv
+    intro v he _
+    exact hard_character (2 * n) (Nat.mul_pos (by decide) hn) v he
   have hlabels := rotation_labels (2 * n) circuit hardTheta c h hidentity
     hmul hglobal hfactor hchars
   have houtputs := even_output_count (2 * n) circuit hidentity hlabels
