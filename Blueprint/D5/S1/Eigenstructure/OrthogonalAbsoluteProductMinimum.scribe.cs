@@ -50,7 +50,7 @@ internal sealed class OrthogonalAbsoluteProductMinimumDocument : IScribeDocument
         Formula k = F.Id("K"), p = F.Id("P"), q = F.Id("Q");
         return Disp(Seq(Forall, Sp, k, Sp, InMacro, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp,
             Forall, Sp, p, Comma, q, Sp, InMacro, Sp,
-            Seq(Mathbb, Grp(F.Id("R")), Caret, Grp(k, Times, k)), Comma, Esc,
+            Seq(Mathbb, Grp(F.Id("R")), Caret, Grp(k, Sp, Times, Sp, k)), Comma, Esc,
             Call("objective", p, q), Sp, Eq, Sp,
             Call("rho", Seq(Abs(Seq(p, q)), Sp,
                 Abs(Seq(q, Caret, Grp(F.Id("T")), Sp, p, Caret, Grp(Minus, D(1))))))));
@@ -61,7 +61,7 @@ internal sealed class OrthogonalAbsoluteProductMinimumDocument : IScribeDocument
         Formula orth = Call("O", k);
         return Disp(Seq(Forall, Sp, k, Sp, InMacro, Sp, Seq(Mathbb, Grp(F.Id("N"))),
             Comma, Sp, k, Sp, Gt, Sp, D(0), Comma, Esc,
-            Forall, Sp, p, Sp, InMacro, Sp, Seq(Mathbb, Grp(F.Id("R")), Caret, Grp(k, Times, k)),
+            Forall, Sp, p, Sp, InMacro, Sp, Seq(Mathbb, Grp(F.Id("R")), Caret, Grp(k, Sp, Times, Sp, k)),
             Comma, Sp, Call("det", p), Sp, Neq, Sp, D(0), Sp, Rightarrow, Esc,
             Open, Forall, Sp, q, Sp, InMacro, Sp, orth, Comma, Sp,
             Call("objective", p, q), Sp, Ge, Sp, D(1), Close, Sp, Land, Esc,
