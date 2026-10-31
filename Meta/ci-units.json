@@ -1831,6 +1831,7 @@
     "tools/Architecture/BannedSymbols.Guid.txt"
   ],
   "current": {
+    "capacity_paths": "*\n",
     "report_paths": "*\n!docs/develop/theory/*\n",
     "delta_paths": "*\n!Blueprint/*\n!Evidence/*\n!Golden/Projection/*.json\n!Problems/*\n!README.md\n!docs/VISION.md\n!docs/assets/inquiry-cycle.svg\n!docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md\n!docs/develop/spec/trureturing_engineering_optimization_v1.md\n!docs/reports/*\n!tools/TestSupport/StrataLint.RuleTestSupport/*\n!tools/lean-inspector/README.md\n!tools/scripts/agent/openproblem/README.md\n!tools/scripts/agent/openproblem/SCREENED-OUT*.md\n!tools/scripts/agent/prime_slabs/CPU.md\n",
     "judge_build_args": [

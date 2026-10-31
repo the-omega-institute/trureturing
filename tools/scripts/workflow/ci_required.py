@@ -64,9 +64,15 @@ def main():
     problems = []
     prerequisite = results.pop("source", None)
     if "current" in hits:
+        selected_source = needs["detect"].get("outputs", {}).get("source")
+        if selected_source not in ("true", "false"):
+            print("CI_REQUIRED_ERROR detect source selection must be true or false", file=sys.stderr)
+            return 2
+        if hits["current"] and selected_source != "true":
+            problems.append("selected current has no source prerequisite")
         if prerequisite is None:
             problems.append("current source prerequisite is missing from needs")
-        elif hits["current"]:
+        elif selected_source == "true":
             outputs = needs["source"].get("outputs", {})
             status = outputs.get("source_status") if isinstance(outputs, dict) else None
             continuation = outputs.get("continuation") if isinstance(outputs, dict) else None

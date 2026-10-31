@@ -4,6 +4,14 @@ namespace StrataLint.Engine;
 
 public sealed partial class RuleCatalog
 {
+    internal RuleExecutionOutcome ExecuteArtifactCapacity(RepositorySnapshot current, RawChangeSet changes)
+    {
+        var capacity = RegistrationFor(RuleId.CreateKnown(3));
+        return new RuleExecutionOutcome.Completed(CompletedRuleSet.Create(
+            Stamp(capacity.Descriptor, RepositoryRules.ArtifactCapacity(current, changes)), [],
+            [capacity.Descriptor.Id], ExecutionOrder.Where(id => id != capacity.Descriptor.Id).ToImmutableArray()));
+    }
+
     // This is a prerequisite subset, never a certificate for the remaining predicates.
     // Its source cores are also called by normal current/delta execution.
     internal RuleExecutionOutcome ExecuteSourcePrerequisite(

@@ -11,9 +11,20 @@ internal sealed partial class ProductionCliEnvironment
         ImmutableArray<Diagnostic> observations = [];
         try
         {
+            if (arguments.Count == 3 && arguments[0] == "--artifact-capacity" && arguments[1] == "--protected-base")
+            {
+                var preparedCapacity = repository.Prepare(arguments[2]);
+                var selected = preparedCapacity.Changes.Entries.Where(static change =>
+                    change.Kind is RawChangeKind.Added or RawChangeKind.Modified
+                    && !RepositoryRules.IsArtifactLineCapacityExcluded(change.Path.Value))
+                    .Select(static change => DigestionQuerySelection.Literal(change.Path.Value)).ToArray();
+                var capacityRaw = selected.Length == 0 ? RawRepositorySnapshot.Create([]) : repository.ReadCurrent(selected);
+                return RenderStage(timing.Measure("artifact-capacity", () => RuleCatalog.Default.ExecuteArtifactCapacity(
+                    Decode(capacityRaw), preparedCapacity.Changes)));
+            }
             if (arguments.Count is not (1 or 3) || arguments[0] != "--current"
                 || arguments.Count == 3 && arguments[1] != "--protected-base")
-                throw new InvalidOperationException("USAGE: StrataLint check-source --current [--protected-base SHA]");
+                throw new InvalidOperationException("USAGE: StrataLint check-source --current [--protected-base SHA] | --artifact-capacity --protected-base SHA");
             var raw = timing.Measure("repository-read", () => AdmissionRepositoryInputs.ReadCurrent(repository));
             var prepared = arguments.Count == 3 ? repository.Prepare(arguments[2]) : null;
             var baselineRaw = prepared is null ? null : AdmissionRepositoryInputs.ReadBaseline(repository, prepared.Revision);

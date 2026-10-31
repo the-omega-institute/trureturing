@@ -12,6 +12,8 @@ SCRIPT = Path(__file__).with_name("ci_required.py")
 
 def needs(detect="success", hits=None, **results):
     value = {"detect": {"result": detect, "outputs": {} if hits is None else {"hits": hits}}}
+    if "current" in results:
+        value["detect"]["outputs"]["source"] = "false" if results["current"] == "skipped" else "true"
     value.update({name: {"result": result, "outputs": {"unit": name} if result == "success" else {}}
                   for name, result in results.items()})
     return value
@@ -69,6 +71,15 @@ class CiRequiredTests(unittest.TestCase):
         self.assertEqual(0, self.verdict(value, hits).returncode)
         value["source"]["result"] = "success"
         self.assert_red(self.verdict(value, hits), "unhit current source prerequisite")
+
+    def test_source_selection_missing_malformed_or_inconsistent_cannot_pass(self):
+        value = needs(current="success")
+        value["source"] = {"result": "success", "outputs": {"source_status": "accepted", "continuation": "true"}}
+        for selected in (None, True, "", "invalid"):
+            value["detect"]["outputs"]["source"] = selected
+            self.assert_malformed(self.verdict(value, {"current": True}), "source selection")
+        value["detect"]["outputs"]["source"] = "false"
+        self.assert_red(self.verdict(value, {"current": True}), "selected current has no source prerequisite")
 
     def verdict(self, needs_value, hits):
         env = {key: value for key, value in os.environ.items() if key not in ("NEEDS", "HITS")}
