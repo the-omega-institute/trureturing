@@ -6,6 +6,7 @@
    utility: none
    digest: Exact actual-source transport for explicitly constructed boundary packets. -/
 import D5.S3.Combinatorics.Circle.FourNegative.UpperGap.Rounding
+import D5.S3.Combinatorics.Circle.FourNegative.UpperGap.SourceMasses
 
 /-! Uncompiled preparation source. This helper consumes explicit lists and their
 numeric packet checks. It assumes neither Certificate existence nor a feasible

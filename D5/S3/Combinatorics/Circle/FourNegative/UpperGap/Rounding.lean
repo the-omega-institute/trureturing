@@ -5,7 +5,8 @@
    anchors: [mathlib/module/Mathlib.Data.Int.DivMod.Lemmas]
    utility: none
    digest: Integer floor and ceiling bounds used by the two rounded boundary chambers. -/
-import D5.S3.Combinatorics.Circle.FourNegative.UpperGap.SourceMasses
+import D5.S3.Combinatorics.Circle.FourNegative.UpperGap.BoundaryAlgebra
+import Mathlib.Data.Nat.Bitwise
 
 /-! Uncompiled preparation source. All divisions in these lemmas are integer
 Euclidean divisions; no real rounding or favorable-subset premise is used. -/
@@ -121,5 +122,60 @@ private theorem rounded_last_packet (A L M z h : ℤ)
   refine ⟨hr.1,hc,?_,hT,?_,hE⟩
   · nlinarith only [hT,hE]
   · nlinarith only [hr.2.1]
+
+-- A positive multiple of a dyadic block has every lower bit in its predecessor.
+private theorem multiple_predecessor_bits (k q : ℕ) (hq : 1 ≤ q)
+    (i : ℕ) (hi : i < k) : (2^k*q-1).testBit i = true := by
+  have hp : 0 < (2:ℕ)^k := by positivity
+  have he : 2^k*q-1 = 2^k*(q-1)+(2^k-1) := by
+    have hq' : q-1+1=q := by omega
+    have hp' : 2^k-1+1=2^k := by omega
+    nlinarith
+  have hm : (2^k*q-1) % 2^k = 2^k-1 := by
+    rw [he, Nat.add_mod]
+    simp [Nat.mod_eq_of_lt (by omega : 2^k-1 < 2^k)]
+  have ht := Nat.testBit_mod_two_pow (2^k*q-1) k i
+  rw [hm] at ht
+  simpa [Nat.testBit_two_pow_sub_one,hi] using ht.symm
+
+private theorem multiple_predecessor_contains (k q : ℕ) (hq : 1 ≤ q) :
+    (2^k*q-1) &&& (2^k-1) = 2^k-1 := by
+  apply Nat.eq_of_testBit_eq
+  intro i
+  rw [Nat.testBit_and, Nat.testBit_two_pow_sub_one]
+  by_cases hi : i<k
+  · simp [hi,multiple_predecessor_bits k q hq i hi]
+  · simp [hi]
+
+private theorem interval_contains_singleton (k i : ℕ) (hi : i<k) :
+    (2^k-1) &&& 2^i = 2^i := by
+  rw [Nat.and_two_pow]
+  simp [Nat.testBit_two_pow_sub_one,hi]
+
+private theorem distinct_singletons_union (i j : ℕ) (hij : i≠j) :
+    2^i ||| 2^j = 2^i+2^j := by
+  rcases lt_or_gt_of_ne hij with hi|hj
+  · exact Nat.or_two_pow_eq_add_of_lt (Nat.pow_lt_pow_right (by decide) hi)
+  · rw [Nat.or_comm, Nat.add_comm]
+    exact Nat.or_two_pow_eq_add_of_lt (Nat.pow_lt_pow_right (by decide) hj)
+
+private theorem multiple_floor_nat (A B : ℤ) (H : ℕ)
+    (hA : 0<A) (hH : 1≤H) (hlower : (H:ℤ)*A≤B-1) :
+    let q := ((B-1)/((H:ℤ)*A)).toNat
+    1≤q ∧ ((H*q:ℕ):ℤ)=(H:ℤ)*((B-1)/((H:ℤ)*A)) ∧
+    1≤B-((H*q:ℕ):ℤ)*A ∧ B-((H*q:ℕ):ℤ)*A≤(H:ℤ)*A := by
+  have hHz : (0:ℤ)<H := by exact_mod_cast hH
+  have hn := multiple_floor_positive A H B hA hHz hlower
+  have hq : 1≤(B-1)/((H:ℤ)*A) := by
+    have hden : 0<(H:ℤ)*A := mul_pos hHz hA
+    exact (Int.le_ediv_iff_mul_le hden).mpr (by simpa using hlower)
+  have hcast : (((B-1)/((H:ℤ)*A)).toNat:ℤ)=(B-1)/((H:ℤ)*A) :=
+    Int.toNat_of_nonneg (by omega)
+  have hnat : 1≤((B-1)/((H:ℤ)*A)).toNat := by omega
+  have he : ((H*((B-1)/((H:ℤ)*A)).toNat:ℕ):ℤ)=
+      (H:ℤ)*((B-1)/((H:ℤ)*A)) := by rw [Nat.cast_mul,hcast]
+  have hs := multiple_floor_seam A H B hA hHz
+  dsimp only at hs ⊢
+  exact ⟨hnat,he,by simpa [he] using hs.1,by simpa [he] using hs.2.1⟩
 
 end D5.S3.Combinatorics.Circle.FourNegative.UpperGap
