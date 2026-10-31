@@ -128,7 +128,8 @@ private theorem state_snoc (w : World) (prior : List Action) (a : Action) :
   simp [state, List.foldl_append]
 
 private theorem charges (h : History) : paidReads h = preparations h + windows h := by
-  simpa [paidReads, preparations, windows, Bool.not_eq_true] using
+  simpa only [paidReads, preparations, windows, decide_not, Bool.decide_coe,
+    Option.not_isNone] using
     (List.length_eq_countP_add_countP (fun a : Sigma (fun _ : Query => ℝ) => a.1.2.isNone)
       (l := h))
 
@@ -171,7 +172,7 @@ private theorem continuation_read_eq (u v : World) (prior : List Action) (h : Hi
       split at hp <;> omega
     have hsome : ∃ word, a.1.2 = some word := by
       cases hact : a.1.2 with
-      | none => simp [preparations, List.countP_cons, hact] at hp
+      | none => simp [preparations, hact] at hp
       | some word => exact ⟨word, rfl⟩
     obtain ⟨word, hact⟩ := hsome
     have hs' : state u (prior ++ [a.1.2]) = state v (prior ++ [a.1.2]) := by
@@ -179,7 +180,7 @@ private theorem continuation_read_eq (u v : World) (prior : List Action) (h : Hi
       simp only [advance, hs]
     have he : read a.1 u = read a.1 v := by
       simp only [read, ha, hs', observe]
-      cases state v (prior ++ [a.1.2]) <;> simp [observe, hell]
+      cases state v (prior ++ [a.1.2]) <;> simp [hell]
     intro b hb
     rcases List.mem_cons.mp hb with rfl | hb
     · exact he
@@ -268,7 +269,7 @@ private theorem one_preparation_terminal_collision (π : Protocol)
     have hqa : q.2 = none := by
       by_contra hne
       have hmem := hc.2.1 hne
-      simpa [hq0] using hmem
+      simp [hq0] at hmem
     have hq : q = ([], none) := Prod.ext hq0 hqa
     subst q
     simp only [corner_initial, List.nil_append] at ht hh
@@ -340,7 +341,7 @@ private theorem initial_positive (w : World) : 0 < read ([], none) w := by
   have hpos : 0 < w.ell 0 ∨ 0 < w.ell 1 := by
     have := w.ell_nonzero
     by_contra h
-    push_neg at h
+    push Not at h
     linarith
   rcases hpos with h | h
   · exact add_pos_of_pos_of_nonneg (mul_pos h (w.c_pos 0))
@@ -377,7 +378,7 @@ theorem complete_source_8_2 :
       (2 : ENNReal) ≤ worstPreparations π := by
     have hex : ∃ w, 2 ≤ preparations (π.history w) := by
       by_contra h
-      push_neg at h
+      push Not at h
       exact impossible π hc (fun w => by have := h w; omega)
     obtain ⟨w, hw⟩ := hex
     exact le_trans (by exact_mod_cast hw) (le_iSup
@@ -387,6 +388,7 @@ theorem complete_source_8_2 :
   refine ⟨window_endpoint, all_endpoints, initial_positive, fun _ _ => charges _,
     impossible, lower, value, ?_, ?_⟩
   · intro he
+    change preparationValue = 1 at he
     rw [he] at value
     norm_num at value
   · rintro ⟨π, hc, hb⟩
