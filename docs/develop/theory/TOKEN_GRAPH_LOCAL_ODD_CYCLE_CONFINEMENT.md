@@ -1490,3 +1490,745 @@ about other signs, weights, unequal or odd fibres, other filling,
 physical realization or worldwide priority.
 
 ## 追加锚（本行以下为增补区）
+## 23. Four equal integer spins on a diamond
+
+**定义 23.1（The complete local zero-weight space）。** Let $D$ be the
+simple diamond with vertices $1,2,3,4$ and edges
+$12,13,14,23,24$. Its central vertices are $1,2$ and its nonadjacent
+tips are $3,4$. For an integer $S\geq1$, put one spin $S$ at each
+vertex, with the normalized weights and ladders in (19.5). On the
+entire complex tensor product $V_S^{\otimes4}$ put
+
+$$
+\begin{aligned}
+T_\alpha&=\sum_{ij\in E(D)}J_i^\alpha J_j^\alpha
+\quad(\alpha=x,y,z),&
+I_D&=T_x+T_y+T_z,\\
+K_D&=\sum_{ij\in E(D)}(J_i^+J_j^-+J_i^-J_j^+)
+       =2(T_x+T_y),&
+\mathcal V_D(0)&=\ker\sum_{i=1}^4Z_i,\\
+e_D(0)&=\min\operatorname{spec}(K_D|_{\mathcal V_D(0)}),&
+\mathcal G_D(0)&=\ker(K_D-e_D(0)I)\cap\mathcal V_D(0),\\
+\mathcal S_D&=\ker\sum_iJ_i^+\cap\ker\sum_iJ_i^-,&
+L_S&=-4S^2-\frac83S.
+\end{aligned}
+\tag{23.1}
+$$
+
+Every edge in $K_D$ has the positive coefficient one. The space
+$\mathcal S_D$ is the full total-singlet space, including all
+coupling multiplicities. Only the total weight, rather than any
+pair weight or individual weight, is fixed in $\mathcal V_D(0)$.
+
+**定理 23.2（The diamond has no singlet zero-weight ground vector）。**
+For every integer $S\geq1$ in Definition 23.1,
+
+$$
+\langle v,K_Dv\rangle\geq L_S
+\quad(v\in\mathcal S_D,\ \|v\|=1),\qquad
+ e_D(0)<L_S,\qquad
+\mathcal G_D(0)\cap\mathcal S_D=\{0\}.
+\tag{23.2}
+$$
+
+Proof. Use the classical addition of two angular momenta. Its triangle
+range and normalization are
+[DLMF (34.2.1)](https://dlmf.nist.gov/34.2.E1),
+[(34.1.1)](https://dlmf.nist.gov/34.1.E1) and the orthogonality and
+completeness relations
+[(34.3.16)](https://dlmf.nist.gov/34.3.E16) and
+[(34.3.17)](https://dlmf.nist.gov/34.3.E17).
+For $S\otimes S$ the coupled spins are exactly $q=0,1,\ldots,2S$;
+the pair Casimir on spin $q$ is $q(q+1)$. These are classical
+intermediates, used with both endpoints included.
+
+Write $c=S(S+1)$, $B=\boldsymbol J_1+\boldsymbol J_2$ and
+$A=\boldsymbol J_3+\boldsymbol J_4$. The five actual diamond edges
+give
+
+$$
+I_D=\boldsymbol J_1\cdot\boldsymbol J_2+B\cdot A,
+\qquad
+\boldsymbol J_1\cdot\boldsymbol J_2=\tfrac12(B^2-2cI).
+\tag{23.3}
+$$
+
+A total singlet $v$ satisfies $(A+B)_\alpha v=0$ for every
+Cartesian component $\alpha$. Since each $A_\alpha$ commutes with
+each $B_\beta$, this gives $B\cdot Av=-B^2v$ and hence
+$I_Dv=-cv-\tfrac12B^2v$. Simultaneous rotations of all four spins
+fix every vector in every singlet copy. Such rotations interchange
+the same-axis products, so
+$\langle v,T_xv\rangle=\langle v,T_yv\rangle
+=\langle v,T_zv\rangle$. Consequently, for every unit singlet,
+
+$$
+\begin{aligned}
+\langle v,K_Dv\rangle
+ &=\frac43\langle v,I_Dv\rangle
+ =-\frac43c-\frac23\langle v,B^2v\rangle\\
+ &\geq-\frac43S(S+1)-\frac23(2S)(2S+1)
+ =L_S.
+\end{aligned}
+\tag{23.4}
+$$
+
+This bound uses the entire pair-spin spectrum. It imposes no
+particular pair coupling on the singlet being bounded and applies
+to arbitrary complex superpositions of its multiplicity copies.
+
+For a competing vector, take the actual maximal-spin subspace
+$q=2S$ of each pair $12$ and $34$. Couple these two spin-$q$
+spaces to their normalized singlet
+
+$$
+w=\frac1{\sqrt{2q+1}}
+ \sum_{M=-q}^{q}(-1)^{q-M}|q,M\rangle_{12}|q,-M\rangle_{34},
+\qquad q=2S.
+\tag{23.5}
+$$
+
+The coefficient is precisely
+[DLMF (34.3.1)](https://dlmf.nist.gov/34.3.E1), with
+$j_1=j_2=q$, total spin zero and weights $M,-M$, in the convention
+of (34.1.1). Thus $w$ is a unit total singlet and belongs to the
+same $\mathcal V_D(0)$. Also $B^2w=q(q+1)w$, so (23.4) is an
+equality for this vector:
+
+$$
+\langle w,K_Dw\rangle=L_S<0.
+\tag{23.6}
+$$
+
+We show that this Rayleigh value is not an eigenvalue attained by
+$w$. If a total singlet $u$ satisfies $K_Du=e u$, rotate that
+vector equation to interchange the coordinate axes. Since each
+rotation fixes $u$, the resulting three equations are
+
+$$
+2(T_x+T_y)u=e u,\qquad
+2(T_y+T_z)u=e u,\qquad
+2(T_x+T_z)u=e u.
+\tag{23.7}
+$$
+
+Adding the last two and subtracting the first gives
+$T_zu=(e/4)u$. In the original four-site weight basis,
+
+$$
+T_z|x_1,x_2,x_3,x_4\rangle
+=\{x_1x_2+(x_1+x_2)(x_3+x_4)\}
+ |x_1,x_2,x_3,x_4\rangle.
+\tag{23.8}
+$$
+
+Its diagonal value at $(0,0,0,0)$ is zero. This coordinate exists
+for every integer $S\geq1$ and has a nonzero coefficient in $w$.
+To see the coefficient without any cancellation assumption, realize
+each spin $S$ as the symmetric space on $2S$ Boolean coordinates.
+The maximal pair spin $2S$ is the symmetric space on their $4S$
+coordinates. The normalized weight-zero vectors therefore satisfy
+
+$$
+\langle S,0;S,0\mid 2S,0\rangle
+ =\frac{\binom{2S}{S}}{\sqrt{\binom{4S}{2S}}}>0.
+\tag{23.9}
+$$
+
+This is the normalized Dicke count: the product of the two
+weight-zero vectors has $\binom{2S}{S}^2$ Boolean terms, and the
+weight-zero vector on $4S$ coordinates has $\binom{4S}{2S}$ terms.
+The Boolean normalization is the classical symmetric-chain
+normalization of Srinivasan,
+[Theorem 1.2](https://arxiv.org/html/1001.0280v2), and Feinsilver,
+[§3.1, (10), and §4.2.2](https://arxiv.org/html/1102.0368v2).
+Only $M=0$ in (23.5) contributes to the four-site zero coordinate.
+Since $q=2S$ is even, its coefficient is
+
+$$
+\langle0,0,0,0\mid w\rangle
+=\frac1{\sqrt{4S+1}}
+ \frac{\binom{2S}{S}^{\!2}}{\binom{4S}{2S}}>0.
+\tag{23.10}
+$$
+
+Here each zero in the bra denotes the weight of an entire spin-$S$
+site. If $K_Dw=L_Sw$, (23.7)–(23.8) at this coordinate would give
+$0=(L_S/4)\langle0,0,0,0\mid w\rangle$, contradicting
+(23.6) and (23.10). Thus $w$ is not an eigenvector.
+
+The operator $K_D$ preserves total weight. Its finite Hermitian
+restriction to $\mathcal V_D(0)$ has minimum at most $L_S$ by
+(23.6). If that minimum equalled $L_S$, expand $w$ in an
+orthonormal eigenbasis of this restriction. The equality
+$\sum_\theta(\theta-L_S)|w_\theta|^2=0$, with all summands
+nonnegative, would force $K_Dw=L_Sw$. This has just been excluded.
+Therefore $e_D(0)<L_S$. The lower bound for every singlet in
+(23.4) now excludes every nonzero singlet from its ground space.
+The argument includes $S=1$ and uses no limiting spin estimate.
+$\square$
+
+## 24. Diamond components and the unchanged original carrier
+
+**定义 24.1（Class $\mathcal C_{\diamond}$）。** Let $H$ be a finite
+connected simple unit-weight graph of even order $m\geq2$. Say that
+$H\in\mathcal C_{\diamond}$ if, for every $p\in V(H)$, at least
+one actual connected component of the induced open neighborhood
+$H[N_H(p)]$ is bipartite, a simple odd cycle $C_n$ with $n\geq3$,
+or a diamond. A singleton component is bipartite. Other actual
+components, their sizes and their edges are unrestricted, as are
+all attachments outside the selected neighborhood component.
+
+For every integer $S\geq1$, set $s=2S$ and use exactly Definition
+19.1:
+
+$$
+\begin{aligned}
+\Omega&=V(H)\times[2S],&
+\mathcal H_{mS}
+ &=\operatorname{span}_{\mathbb C}
+       \{|T\rangle:T\subseteq\Omega,\ |T|=mS\},\\
+K_s&=A(F_{mS}(H[\mathrm{empty}_{2S}])),&
+P_s&=\prod_{i\in V(H)}P_i,&
+E_s&=\min\operatorname{spec}(K_s|_{\mathcal H_{mS}}).
+\end{aligned}
+\tag{24.1}
+$$
+
+Here $F_{mS}$ denotes the ordinary token graph, every allowed move
+has coefficient one, and $P_i$ is invariance under all permutations
+of the original $2S$ coordinates at $i$. Only global half filling
+is imposed. In particular $E_s$ is the minimum on the entire
+original carrier, before imposing any fibre symmetry.
+
+**定理 24.2（Every original ground vector at every even scale）。**
+For every $H\in\mathcal C_{\diamond}$ and every integer $S\geq1$,
+
+$$
+\ker(K_s-E_sI)\subseteq\operatorname{ran}P_s.
+\tag{24.2}
+$$
+
+This includes every original local-spin sector, multiplicity copy,
+feasible weight, complex superposition and entangled vector.
+
+Proof. The representation and minimizing-realization input is the
+complete Theorem 19.2, including its component conclusion (19.4).
+The companion source versions for this proof are Git
+`e45f5aa2928bfa0d3239246268831d37a4146425`: the
+[owning volume](TOKEN_GRAPH_BLOWUP_DEFECT_DECOMPOSITION.md), the
+[collective-oscillator volume](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md),
+the three Lean sources and three Scribes cited below, and §§1–22
+of this volume. Their roles and parameters are as follows.
+
+The orthogonal Boolean-chain decomposition in the owning volume,
+(6.6)–(6.12), and here (19.5), is on the whole space (24.1):
+
+$$
+\mathcal H_{mS}\cong
+\bigoplus_{\substack{0\leq t_i\leq S\\
+               1\leq a_i\leq r_{2S}(t_i)}}
+ \left(\bigotimes_i V_{S-t_i}\right)_{\sum_i x_i=0},
+\qquad
+r_{2S}(t)=\binom{2S}{t}-\binom{2S}{t-1}.
+\tag{24.3}
+$$
+
+The convention is $\binom{2S}{-1}=0$. The weights are all
+$-J_i\leq x_i\leq J_i$, with $J_i=S-t_i$, and original occupancy
+$S+x_i$. No other filling is fixed. Each $a_i$ is a separate
+orthogonal multiplicity copy; collective spin acts identically on
+all these copies. The original $P_s$ selects exactly $t_i=0$
+for every $i$.
+
+The primary representation parameters are Srinivasan,
+[Theorem 1.2](https://arxiv.org/html/1001.0280v2), Boolean rank
+$n=2S$, starting rank $t_i$, layer $u=S+x_i$ and up operator
+$L_i^\ast$. Its normalized raising coefficient is
+$\sqrt{(u+1-t_i)(2S-t_i-u)}$, precisely (19.5).
+Feinsilver,
+[§§3–4, (8)–(10), (16), Proposition 4.3 and §4.2.2](https://arxiv.org/html/1102.0368v2),
+has $T=L_i^\ast$, $T^\ast=L_i$, principal number
+$2S-2t_i=2J_i$, chain index $J_i+x_i$ and grading $-2Z_i$.
+The vacuum count and orthogonality there give exactly the
+multiplicities and orthogonal copies in (24.3), including the
+spin-zero endpoint. These are consumed representation results.
+
+The full counting recurrences and theorems
+`sector_words_card_multinomial` and `sector_gram` in
+[OccupancyWordSectors](../../../D5/S3/Quantum/Entanglement/OccupancyWordSectors.lean)
+and its
+[Scribe](../../../Blueprint/D5/S3/Quantum/Entanglement/OccupancyWordSectors.scribe.cs)
+normalize the symmetric fibre vectors by two-letter counts
+$(2S-n_i,n_i)$, including $n_i=0,2S$; for (23.9), the combined
+pair uses length $4S$ and counts $(2S,2S)$. These word-count
+statements alone do not assert a whole-carrier ground theorem.
+The collective-oscillator volume has the exact algebraic map
+$d=m$, $N=2S$, $g=0$, $e=1$, $B=A(H)$,
+$a_i=L_i/\sqrt{2S}$ and $H_{2S}=\hbar K_s/(2S)$ on the chosen
+two-state code. Its symmetric-code calculation is not substituted
+for the complete decomposition (24.3), and no low-excitation
+approximation is used.
+
+The singleton-difference definition in the complete
+[TokenGraphLaplacianRadiusRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.lean)
+and its
+[Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.scribe.cs)
+is the move defining $K_s$ in (24.1). The primary convention is
+Apte–Parekh–Sud,
+[v3, Definition 1 and Fact 2](https://arxiv.org/html/2506.03441v3),
+with $2mS$ original vertices, $mS$ tokens and edge weights one.
+Their shifted block $WI/2-K_s$ is a different operator. Their
+Definition 1 has $1\leq k<N$; the present $k=mS$, $N=2mS$
+always lies in that range.
+
+For the phase trials used in the odd-cycle inputs, the complete
+private and proof-local bodies `Test.move`, `Test.toNbr_bij`,
+`Test.token_energy`, `counting_identity`, `W_move`, `phi40_norm`,
+`phi40_energy` and `choose_ratio40` in
+[CutBoundRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lean)
+and the full
+[Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.scribe.cs)
+supply the coefficient and ordered-move counting mechanism. Their
+fixed refutation has $N=200$, $k=100$, $s=40$; the general
+phase-count identity is consumed through the owning volume's
+(3.5)–(3.7) and the local consequences (21.5)–(21.6), with
+$N=2nS$, $k=nS$, $s=2S$ on a cycle. Neither supplied refutation
+is a premise for spectral confinement.
+
+Theorem 19.2 uses only the nonstrict fixed-weight spin comparison
+from Ghassemi Tabrizi–Henderson–Kühne–Scuseria,
+[Appendix A4, (A34)–(A54) and its final fixed-magnetization paragraph](https://pmc.ncbi.nlm.nih.gov/articles/PMC12613319/#app1-sec4),
+DOI [10.1021/acs.jctc.5c01412](https://doi.org/10.1021/acs.jctc.5c01412).
+The map is maximal local spin $s_i=S$, variable spin $t_i=J_i$,
+magnetization $M=0$ and bilinear coupling
+$D_{ij}=\operatorname{diag}(2a_{ij},2a_{ij},0)$ for $a=A(H)$.
+This supplies existence of a maximal-spin minimizing choice, not
+strictness or an assertion about every original ground vector.
+The selected-pair replacement and actual-component separation in
+Theorem 19.2 supply the stronger necessary condition used here.
+In particular, no strictness is imported from that primary
+nonstrict result.
+
+Now suppose that a reducing summand of (24.3), deficient at a
+vertex $p$ with $J_p<S$, attains the actual $E_s$. Theorem 19.2
+provides a minimizing realization with all other spins $S$ and,
+for every actual component $C$ of $H[N_H(p)]$, requires
+
+$$
+\operatorname{ran}\rho_C\subseteq\mathcal G_C(0),\qquad
+\mathcal G_C(0)\subseteq\mathcal S_C.
+\tag{24.4}
+$$
+
+Here the local spaces and energies are exactly (19.3), and
+$\mathcal G_C(0)$ is nonzero because the zero-weight space is
+finite and nonempty. The zero weights and separate singlets in
+(24.4) are conclusions of that theorem on actual components.
+They are not independent restrictions on the original carrier.
+No marginal of every initially chosen deficient vector is assumed
+to be unchanged.
+
+Choose an actual component qualifying in Definition 24.1. If it
+is a diamond, Theorem 23.2 contradicts (24.4) at this exact spin
+$S$, including $S=1$.
+
+If it is bipartite, use the full local obstruction in the owning
+volume's (7.6)–(7.10), as consumed in Theorem 21.2: a nonempty
+bipartite graph with equal integer spins $S\geq1$ has a
+zero-weight ground vector which is not a total singlet. The
+operator there is precisely positive
+$\sum_{ij}(J_i^+J_j^-+J_i^-J_j^+)$ on the entire zero-weight
+space. For a singleton the vector is $|S,0\rangle$, and
+$\|J^+|S,0\rangle\|^2=S(S+1)>0$. For a connected component
+with an edge the supplied bipartition conjugation and
+Perron–Frobenius argument uses all allowed zero-total-weight
+configurations. Its incompatible diagonal values at the zero
+configuration and the configuration with weights $1,-1$ on an
+edge are $0$ and $-1$. Those weights exist also at $S=1$.
+Thus the cited obstruction retains the endpoint and contradicts
+the universal inclusion in (24.4).
+
+If the selected component is $C_n$ with odd $n\geq3$, consume
+the componentwise odd-cycle argument of Theorem 21.2. Its four
+cases depend only on the one actual component, (24.4), and,
+when $S=1$, the necessary cone equality of Theorem 20.1. They
+do not require that other vertices of $H$ satisfy Definition
+21.1. The exact estimates are the following.
+
+For $S\geq2$, cycle adjacency has the flat least eigenvalue
+$\lambda=-2\cos(\pi/n)<0$. Equations (21.4) and (21.6) give,
+for every unit total singlet $v$ on the cycle,
+
+$$
+\langle v,K_Cv\rangle\geq\frac23\lambda nS(S+1),\qquad
+ e_C(0)\leq\lambda nS^2\frac{2nS}{2nS-1}.
+\tag{24.5}
+$$
+
+The competing vector is the normalized phase product on the
+actual $nS$-subsets of $C\times[2S]$, constant within each
+fibre-occupancy orbit. It is in the symmetric spin-$S$ tensor
+space with only total weight zero. The exact strict comparison
+(21.7) is
+
+$$
+S^2\frac{2nS}{2nS-1}-\frac23S(S+1)
+=\frac{2S\{nS(S-2)+S+1\}}{3(2nS-1)}>0.
+\tag{24.6}
+$$
+
+Since $\lambda n<0$, the upper bound in (24.5) is strictly
+below the singlet lower bound, also at $S=2$ and $n=3$.
+This contradicts (24.4).
+
+For $S=1,n=5$, (21.8) gives $-12<e_C(0)<-8$ if a singlet is
+a local ground vector. Rotating its eigenvector equation as in
+(23.7) gives $T_zv=(e_C(0)/4)v$. The operator $T_z$ is integer
+diagonal in the spin-one weight basis, so any nonzero coordinate
+forces $e_C(0)\in4\mathbb Z$. No such integer multiple lies
+strictly between $-12$ and $-8$. This is exactly the supplied
+five-cycle obstruction.
+
+For $S=1,n=3$, the singlet Casimir identity (21.9) gives
+$\langle K_C\rangle=-4$ for every unit singlet. Thus (24.4)
+would imply $e_C(0)=-4$. Theorem 20.1 at this deficient vertex
+requires $\varepsilon_{\{p\}\cup C}(0)=e_C(0)$ on the entire
+original Boolean carrier of the actual cone. This cone is $K_4$.
+The product of the two pair singlets (21.10), each on two actual
+spin-one fibres, has energy $-16/3$ there. Consequently
+$\varepsilon_{\{p\}\cup C}(0)\leq-16/3<-4$, a contradiction.
+
+For $S=1$ and odd $n\geq7$, (21.11) gives the isotropic cycle
+bound $H_{\rm iso}\succeq-3nI/2$. Rotational invariance on a
+singlet gives $\langle K_C\rangle\geq-2n$, hence (24.4)
+requires $e_C(0)\geq-2n$. The actual cone is the wheel
+$K_1\vee C_n$. The complete normalized original-carrier trial
+and strict estimate from the owning volume's Theorem 16.2,
+consumed as (21.12), give
+
+$$
+\varepsilon_{\{p\}\cup C}(0)
+\leq-\frac{4n(n+1)}{2n+1}
+ \left(\frac{49}{50}\cos\frac\pi n+\frac7{100}\right)
+<-2n\leq e_C(0).
+\tag{24.7}
+$$
+
+Its parameters are $N_D=2(n+1)$, $k_D=n+1$, central phase $-1$
+and rim phases $(u_j+1/10)/(1+u_j/10)$, with
+$u_j=e^{2\pi\mathrm i (n-1)j/(2n)}$. The supplied strict bound
+includes $n=7$. It is a trial on the entire original zero-weight
+cone carrier, not an independently prescribed local-spin minimum.
+It contradicts Theorem 20.1. This cone equality is used only at
+$S=1$; no whole-fibre removal for larger $S$ is inferred.
+
+Every possible qualifying component has contradicted attainment
+of $E_s$ by the deficient summand. Each summand of (24.3) reduces
+$K_s$. Projecting an arbitrary complex $E_s$-ground vector onto
+one of these summands therefore gives either zero or an
+$E_s$-ground vector in that summand. All deficient projections
+must vanish. The remaining summands have all $t_i=0$ and are
+exactly $\operatorname{ran}P_s$. This proves (24.2) with every
+copy, feasible weight and superposition retained. $\square$
+
+**推论 24.3（A qualitative gap at the same actual minimum）。** For
+every $H\in\mathcal C_{\diamond}$ and every integer $S\geq1$,
+the original space $\mathcal N_s=\ker P_s$ is nonzero and reduces
+$K_s$. With exactly the $E_s$ of (24.1),
+
+$$
+\begin{aligned}
+g_s&=\min\operatorname{spec}(K_s|_{\mathcal N_s})-E_s>0,\\
+K_s-E_sI&\succeq g_s(I-P_s),\\
+\|(I-P_s)\phi\|^2
+ &\leq\frac{\langle\phi,K_s\phi\rangle-E_s}{g_s}
+ \qquad(\phi\in\mathcal H_{mS},\ \|\phi\|=1).
+\end{aligned}
+\tag{24.8}
+$$
+
+In particular energy excess at most any $\delta\geq0$ bounds the
+same mass by $\delta/g_s$. Positivity is qualitative; no numerical
+value or uniform-in-$S$ lower bound for $g_s$ is asserted.
+
+Proof. Each original fibre permutation commutes with $K_s$, so its
+invariant projection $P_i$, their commuting product $P_s$ and
+$I-P_s$ commute with $K_s$. Their ranges are reducing. Choose a
+nonzero one-particle vector orthogonal to constants in one fibre;
+this is possible because $2S\geq2$. Tensor it with an
+occupancy-$(2S-1)$ vector in a second fibre and occupancy-$S$
+vectors in all remaining fibres. This nonzero product is killed
+by $P_s$ and has total occupancy
+$1+(2S-1)+(m-2)S=mS$. Thus $\mathcal N_s\ne\{0\}$, including
+$m=2,S=1$.
+
+Its finite nonempty spectrum has every eigenvalue at least $E_s$.
+Theorem 24.2 excludes equality for every eigenvector in
+$\mathcal N_s$, so its least eigenvalue exceeds this same $E_s$.
+On $\operatorname{ran}P_s$, $K_s-E_sI\succeq0$; on
+$\mathcal N_s$, $K_s-E_sI\succeq g_sI$. Add the two reducing
+quadratic forms to obtain the operator inequality in (24.8).
+Its expectation in any unit complex vector gives the displayed
+mass estimate. No symmetric-space substitute for $E_s$ enters
+this argument. $\square$
+
+## 25. A six-vertex graph requiring the diamond alternative
+
+**定义 25.1（The graph $Q$）。** Take six distinct vertices
+$\{a,b,u,v,w,\ell\}$. On the five-vertex set
+$\{a,b,u,v,w\}$ include every edge except $ab$, and add the
+single edge $a\ell$. There are no other edges. Give every edge
+weight one. Write $W=\{u,v,w\}$ for the three mutually adjacent
+vertices of the core.
+
+**命题 25.2（An actual consumer outside every prior sufficient domain）。**
+The graph $Q$ is finite, connected, simple and of even order six.
+It belongs to $\mathcal C_{\diamond}$. At every integer $S\geq1$,
+all conclusions (24.2) and (24.8) hold for the entire original
+complex $6S$-subset carrier of $Q[\mathrm{empty}_{2S}]$, with
+its original $K_s,P_s,E_s$. At every one of these even scales it
+is outside every sufficient whole-graph confinement domain in the
+nine sources specified in the proof of Theorem 24.2.
+
+Proof. The core is connected, and $\ell$ is attached to $a$.
+The complete induced neighborhoods, with no omitted edges or
+components, are
+
+$$
+\begin{aligned}
+Q[N_Q(a)]&=K_3[W]\sqcup\{\ell\},\\
+Q[N_Q(b)]&=K_3[W],\\
+Q[N_Q(x)]&=K_4[\{a,b\}\cup(W\setminus\{x\})]-ab
+                    &&(x\in W),\\
+Q[N_Q(\ell)]&=\{a\}.
+\end{aligned}
+\tag{25.1}
+$$
+
+At $a$ the leaf is an isolated neighborhood component because it
+has no other neighbor. At $b$ the whole neighborhood is the simple
+odd cycle $C_3$. At $x\in W$ the sole component is a diamond,
+with the two vertices of $W\setminus\{x\}$ central and $a,b$
+the tips. At $\ell$ the neighborhood is a singleton. These
+actual components verify Definition 24.1. Theorem 24.2 and
+Corollary 24.3 apply at every $S\geq1$, with $N=12S$ and
+$k=6S$. There is no separately imposed neighborhood filling.
+
+We check the prior domains on this same graph. At any $x\in W$,
+its diamond neighborhood is connected, contains a triangle and
+has two vertices of degree three. It is nonbipartite and is not
+a simple cycle of any length. Thus it has no bipartite component.
+This excludes the owning volume's wholly bipartite-neighborhood
+domain in §7, its bipartite-component domain in §14, its
+bipartite-or-$C_5$ domain in Definition 15.1(a), the whole
+bipartite-or-odd-cycle domain in Definition 17.1 here and the
+actual-component class $\mathcal C$ of Definition 21.1. In
+particular this excludes all their specific consumers, including
+the corona families in §14, the shared-wheel family in §18 and
+the family in §22. Theorem 21.2 cannot be applied to $Q$.
+
+For the other neighborhood condition, the diamond has no complex
+flat least mode. Label its two central coordinates by a common
+value $c$ and its two tip coordinates by a common value $d$.
+The central-antisymmetric subspace has eigenvalue $-1$, and the
+tip-antisymmetric subspace has eigenvalue zero. On the remaining
+constant-on-pairs subspace, adjacency acts by
+
+$$
+\begin{pmatrix}1&2\\2&0\end{pmatrix}
+\begin{pmatrix}c\\d\end{pmatrix},
+\qquad
+\lambda_\pm=\frac{1\pm\sqrt{17}}2.
+\tag{25.2}
+$$
+
+These four dimensions exhaust its adjacency space. Its least
+eigenvalue is the simple $\lambda_-\in(-2,-1)$, so every least
+eigenvector is of this constant-on-pairs form and satisfies
+$\lambda_-d=2c$. If all four coordinates had modulus one,
+this equation would force $|\lambda_-|=2$, a contradiction.
+Thus the nonbipartite neighborhood at $x$ fails the precise
+whole-neighborhood least-eigenvector condition in the owning
+volume's Definition 15.1(b). Its theorem supplies no scale
+$S\geq2$ for $Q$, and asserts no $S=1$ conclusion from that
+condition.
+
+The global flat least-mode hypothesis also fails. On the induced
+diamond at $N_Q(x)$ take values $+1$ at its two central vertices
+and $-1$ at its two tips, and extend by zero at the other two
+vertices of $Q$. The central edge contributes $2$ and the four
+central-tip edges contribute $-8$ to its adjacency quadratic form;
+the squared norm is $4$. All other edges contribute zero. Hence
+
+$$
+\lambda_Q=\min\operatorname{spec}A(Q)\leq-\frac32<-1.
+\tag{25.3}
+$$
+
+If $z$ were a modulus-one eigenvector for $\lambda_Q$, the leaf
+equation would be $\lambda_Qz_\ell=z_a$. Its moduli would give
+$|\lambda_Q|=1$, contrary to (25.3). This excludes Assumption
+3.1 and all flat-global-mode sufficient gap regimes in the owning
+volume's §6, at every even scale. Its general §2 defect identity
+is a lower-bound certificate and supplies no separate sufficient
+every-ground confinement domain for this graph.
+
+The core $Q[\{a,b,u,v,w\}]=K_5-ab$ is a nonclique maximal
+two-connected block. Deleting $a$ or $b$ leaves $K_4$; deleting
+one of $u,v,w$ leaves $K_4-ab$, which is connected. Thus no
+single core vertex separates the core. The only outside vertex
+has degree one and cannot belong to any larger two-connected
+subgraph. Since $a,b$ are nonadjacent, this block is not a
+clique. The block-graph domains of the owning volume's §§12–13
+therefore fail, including their spin-one endpoint conclusion and
+clique-with-pendant-leaves consumers.
+
+The graph is not complete multipartite. Its vertex $\ell$ is
+nonadjacent to both $b$ and $u$, whereas $bu$ is an edge. In a
+complete multipartite graph, distinct nonadjacent vertices must
+lie in the same independent part. Those two nonadjacencies
+would put $b$ and $u$ in the part containing $\ell$, contradicting
+their edge. This excludes the balanced, dominant-part and combined
+complete-multipartite domains in §§10–11, for every part-size
+endpoint and every $S$.
+
+The individual odd-rim wheels in Proposition 15.4 and §16 have
+no degree-one vertices; $Q$ has exactly one. The five-rim wheel
+with $2t$ rim leaves in Proposition 15.3 has a six-vertex core
+after all degree-one vertices are removed, whereas removing the
+unique leaf of $Q$ leaves a five-vertex core. Thus $Q$ is not
+any graph in those specific families, including $t=0$. The
+odd-fibre theorems in §§8–9 have a different fibre parity and
+supply none of the present even scales.
+
+The collective-oscillator volume and the three Lean/Scribe pairs
+supply the algebra, word normalization, token conventions,
+phase counts and refutations mapped in Theorem 24.2; none states
+an additional sufficient whole-graph ground-confinement domain.
+Together with the graph and scale exclusions above, this exhausts
+the sufficient domains in all nine supplied sources. These are
+failures of their exact hypotheses, not counterexamples to their
+conclusions. The new conclusion on $Q$ is precisely the
+original-model conclusion already obtained from its actual
+diamond components. $\square$
+
+## 26. The scale-dependent union and the remaining question
+
+**定义 26.1（Sufficient domains at a fixed even scale）。** Work only
+in the common domain of finite connected simple unit-weight
+$H$ of even order $m\geq2$. Let $\mathcal M$ consist of complete
+multipartite graphs with at least two nonempty parts, and let
+$\mathcal B$ consist of block graphs. Let $\mathcal L$ be the
+whole-neighborhood class in the owning volume's Definition
+15.1(b): each actual neighborhood is bipartite or has a flat
+least mode for its entire adjacency. Let $\mathcal C$ retain
+exactly Definition 21.1.
+
+For even $s=2S\geq2$, define $\mathcal F_s$ by the global
+flat-least-mode hypothesis (3.1) of the owning volume, together
+with a positive-gap regime of its Theorem 6.2. Explicitly, write
+$\ell=-\lambda_{\min}(A(H))$, $\Delta=\max_i\deg_H(i)$,
+$T=m+2$ and
+
+$$
+ s_H=2\left\lceil2^{18}(\Delta/\ell)^2T^3\right\rceil.
+\tag{26.1}
+$$
+
+Require either $s\geq s_H$, or
+
+$$
+s\geq4T,\qquad
+\ell s-64\Delta T^{3/2}\sqrt{s/2}-64\Delta T^2>0.
+\tag{26.2}
+$$
+
+The second alternative includes the immediate strict-positive
+application of that theorem's (6.3), without replacing the exact
+finite-scale bound by its asymptotic size. Define
+$\mathcal L_S=\mathcal L$ for $S\geq2$ and
+$\mathcal L_1=\varnothing$, and put
+
+$$
+\mathcal U_s^{\rm old}
+ =\mathcal M\cup\mathcal B\cup\mathcal C
+       \cup\mathcal L_S\cup\mathcal F_s,
+\qquad
+\mathcal U_s^{\rm diamond}
+ =\mathcal U_s^{\rm old}\cup\mathcal C_{\diamond}.
+\tag{26.3}
+$$
+
+All sets here are restricted to the stated common domain. The
+remaining original-model question at scale $s$ is every-ground
+confinement for $H\notin\mathcal U_s^{\rm diamond}$. Its
+simultaneous all-even version asks for every integer $S\geq1$,
+retaining the separate union (26.3) at each scale. The component
+inclusions (19.4) and the $S=1$ whole-cone equalities (20.2)
+remain necessary conditions, not an if-and-only-if criterion.
+No arbitrary-$H$ conclusion or actual original-$E_s$
+nonsymmetric-ground counterexample is specified outside this
+union.
+
+**命题 26.2（Preserved old domains and a strict addition）。** The
+sufficient graph/scale domains of the nine sources in Theorem
+24.2, including the direct positive-bound consequence (26.2),
+have union $\mathcal U_s^{\rm old}$ within this common even-scale
+domain. Every $H\in\mathcal U_s^{\rm diamond}$ satisfies
+(24.2) and (24.8) on its full original carrier at that scale.
+The graph $Q$ of Definition 25.1 belongs to
+$\mathcal U_s^{\rm diamond}\setminus\mathcal U_s^{\rm old}$
+for every even $s\geq2$. The new component class does not contain
+all the old sufficient classes.
+
+Proof. The owning volume's Corollary 11.3 covers exactly the
+complete-multipartite domain $\mathcal M$ at every even scale,
+including both the balanced and dominant-part regimes and the
+two- and three-part cases. Corollary 13.3 supplies all of
+$\mathcal B$, including $S=1$. Definition 15.1(b) and Theorem
+15.2 supply $\mathcal L_S$ with exactly the endpoint $S\geq2$.
+The global flat-mode sufficient regimes in Theorem 6.2 are those
+in $\mathcal F_s$, with (26.2) read directly from (6.3).
+
+The remaining all-even neighborhood domains are contained in
+$\mathcal C$: this includes wholly bipartite neighborhoods,
+a bipartite actual component at every vertex, whole
+bipartite-or-$C_5$ neighborhoods and whole
+bipartite-or-odd-cycle neighborhoods. These inclusions are the
+ones proved in Proposition 21.3 or follow by selecting their
+stated actual component. The individual odd-rim wheels and all
+the particular consumers in §§15–18 and §22 satisfy these
+conditions; the pendant-core consumers of §§12 and 14 are already
+in $\mathcal B$ or $\mathcal C$. Theorem 21.2 supplies all of
+$\mathcal C$. The odd-fibre statements supply no even scale.
+The representation and refutation suppliers have no further
+whole-graph confinement domain. This proves the asserted old
+union while preserving each graph and scale hypothesis.
+
+Every member of $\mathcal C$ is in $\mathcal C_{\diamond}$.
+Theorem 24.2 and Corollary 24.3 therefore supply the new domain,
+and the cited old conclusions supply each other member of the
+union. Proposition 25.2 proves $Q\in\mathcal C_{\diamond}$ and
+excludes it from every old member at every stated scale.
+For noncontainment in the other direction, $K_6$ belongs to
+$\mathcal M$ and $\mathcal B$ and has all-even confinement by
+the cited results. Its neighborhood at every vertex is $K_5$,
+one connected component which is nonbipartite, not a simple odd
+cycle and not a diamond. Thus $K_6\notin\mathcal C_{\diamond}$.
+
+The additional mathematical inference is the all-integer-spin
+diamond obstruction of Theorem 23.2 and its insertion into the
+actual-component conclusion of Theorem 19.2. Angular-momentum
+addition, Boolean-chain representation, nonstrict spin comparison,
+the bipartite and odd-cycle obstructions, and the finite-spectrum
+gap implication are the cited intermediates. The statements
+preserve positive coefficient-one adjacency, equal even fibres,
+the entire complex globally half-filled carrier and the same
+actual $E_s$. They give neither an exact $E_s$ nor a numerical or
+scale-uniform gap, and make no extension to other signs,
+weights, fibre sizes or fillings, physical realization or
+worldwide priority. The question in Definition 26.1 outside the
+stated scale-dependent union remains unresolved here. $\square$
+
+## 追加锚（本行以下为增补区）
