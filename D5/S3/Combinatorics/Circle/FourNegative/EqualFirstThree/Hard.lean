@@ -146,21 +146,30 @@ private theorem hard (s d : ℕ) (hd : 2≤d) (hhard : 2*d≤s) :
     intro i hi;rcases List.mem_append.mp hi with hi|hi
     · exact Pair.prg T i hi
     · have hi : i=rank s d := by simpa using hi
-      subst i;rw [hear];omega
+      subst i;rw [hear];exact hA.le
   have hB : 2*(N/2)=D*R*R*R-2 := by
     have hh : N=2*(e*R*R*R-1)+1 := by rw [hN,←he];ring
+    clear * - hh hN
     omega
-  have hHU : 2*HU=D*R*R*R-1-V := by dsimp [HU];omega
+  have hHU : 2*HU=D*R*R*R-1-V := by
+    have hnu := Table.nu tab
+    change 2*f (d-1)=V-N at hnu
+    rw [←hN]
+    clear * - hnu
+    dsimp only [HU]
+    omega
   have hL : 2*((A-1)/2)=A-1 := by
     have hh : A-1=2*(r*C) := by dsimp [A,C,seed,eta];rw [←hr];ring
+    clear * - hh
     omega
   have cert := hard_bounds R D H r e (N/2) HU xi ((A-1)/2)
     hD hH hRD hRH hr he hB hHU hL floor.1
-    ⟨floor.2.2.1,by omega,by omega⟩
+    ⟨floor.2.2.1,by simpa only [add_assoc] using floor.2.2.2.1,
+      by simpa only [add_assoc] using floor.2.2.2.2⟩
   dsimp only at cert
   rw [←hN] at cert
   have hold : InStrip f (N/2) 0 word := by
-    apply bounds_strip f F K S G nw nv nx nu (N/2) 0 pff pkf (Pair.prf T) pgf (by omega)
+    apply bounds_strip f F K S G nw nv nx nu (N/2) 0 pff pkf (Pair.prf T) pgf le_rfl
     · rw [fF,fK,fS,Table.nw tab,Table.nv tab,Table.nx tab,Table.nu tab];exact cert.1
     · simpa only [zero_add] using old_total s d hs hd word hp
   let left := F++nw::K++nv::S
@@ -171,13 +180,16 @@ private theorem hard (s d : ℕ) (hd : 2≤d) (hhard : 2*d≤s) :
     have hh := new_total s d hs hd _ hpnew
     simpa only [left,right,List.append_assoc,List.cons_append,List.nil_append,List.singleton_append] using hh
   have hnew : InStrip g N 0 (F++nw::K++nv::(S++[rank s d])++nx::G++[nu]) := by
-    apply bounds_strip g F K (S++[rank s d]) G nw nv nx nu N 0 pfg pkg pse pgg (by omega)
+    apply bounds_strip g F K (S++[rank s d]) G nw nv nx nu N 0 pfg pkg pse pgg le_rfl
     · rw [gF,gK,gS,Table.nwn tab,Table.nvn tab,Table.nxn tab,Table.nun tab];exact cert.2
     · simpa only [zero_add] using htotal
   apply finish s d hs hd left right (by rw [hsplit];exact hp)
   · rw [hsplit];exact hold
   · change InStrip g (modulus (rank s d+1)/2) 0 _
-    have hh : modulus (rank s d+1)/2=N := by omega
+    have hh : modulus (rank s d+1)/2=N := by
+      clear * - hM
+      change modulus (rank s d+1)=2*N+1 at hM
+      omega
     rw [hh]
     simpa only [left,right,List.append_assoc,List.cons_append,List.nil_append,List.singleton_append] using hnew
 end D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree

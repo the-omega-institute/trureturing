@@ -117,13 +117,7 @@ private theorem lower (s d : ℕ) (hd : 2 ≤ d) (hds : d < s) (hsd : s ≤ 2*d-
     apply List.Perm.trans (l₂ := ((Pair.left U)++(Pair.right U)) ++ nu ::
       ((Pair.left P)++(Pair.right P)) ++ nv :: ((Pair.left Q)++(Pair.right Q)) ++ nw :: ((Pair.left T)++(Pair.right T)) ++ [nx])
     · apply Multiset.coe_eq_coe.mp
-      change (((Pair.left P) : Multiset ℕ)+{nv})+(((Pair.left Q) : Multiset ℕ)+{nw})+
-        (((Pair.left U) : Multiset ℕ)+((Pair.left T) : Multiset ℕ)+{nu})+
-        (((Pair.right U) : Multiset ℕ)+((Pair.right P) : Multiset ℕ)+((Pair.right Q) : Multiset ℕ)+((Pair.right T) : Multiset ℕ)+{nx}) =
-        (((Pair.left U) : Multiset ℕ)+((Pair.right U) : Multiset ℕ))+({nu}+
-        (((Pair.left P) : Multiset ℕ)+((Pair.right P) : Multiset ℕ))+({nv}+
-        (((Pair.left Q) : Multiset ℕ)+((Pair.right Q) : Multiset ℕ))+({nw}+
-        (((Pair.left T) : Multiset ℕ)+((Pair.right T) : Multiset ℕ))+{nx})))
+      simp only [word,F,K,S,G,←Multiset.coe_add,Multiset.coe_cons,Multiset.coe_singleton]
       ac_rfl
     · exact pair_inventory s d hs hd f g A (2*A) V (2*V-1) W (2*W-R-1) X (2*X-C) u v v n U P Q T
   have fF : (F.map f).sum=(r-1)*V := by rw [(Pair.fl P),hvc]
@@ -136,6 +130,7 @@ private theorem lower (s d : ℕ) (hd : 2 ≤ d) (hds : d < s) (hsd : s ≤ 2*d-
     simp only [S,List.map_append,List.sum_append,(Pair.gl U),(Pair.gl T),huc,hnc]
   have hB : 2*(N/2)=D*R*R*R-2 := by
     have hh : N=2*(e*R*R*R-1)+1 := by rw [hN,←he]; ring
+    clear * - hh hN
     omega
   have cert := lower_bounds R D H r e (N/2) hD hH hHD hRH hr he hB
   change Bounds ((r-1)*V) ((r-1)*W) ((e-1)*A+(H-1)*X)
@@ -165,7 +160,7 @@ private theorem lower (s d : ℕ) (hd : 2 ≤ d) (hds : d < s) (hsd : s ≤ 2*d-
     · exact (Pair.prg Q) i hi
     · exact (Pair.prg T) i hi
   have hold : InStrip f (N/2) 0 word := by
-    apply bounds_strip f F K S G nv nw nu nx (N/2) 0 (Pair.plf P) (Pair.plf Q) psf pgf (by omega)
+    apply bounds_strip f F K S G nv nw nu nx (N/2) 0 (Pair.plf P) (Pair.plf Q) psf pgf le_rfl
     · rw [fF,fK,fS,(Table.nv tab),(Table.nw tab),(Table.nu tab),(Table.nx tab)]
       exact cert.1
     · simpa only [zero_add] using old_total s d hs hd word hp
@@ -182,16 +177,19 @@ private theorem lower (s d : ℕ) (hd : 2 ≤ d) (hds : d < s) (hsd : s ≤ 2*d-
     rcases List.mem_append.mp hi with hi|hi
     · exact pgg i hi
     · have hi : i=rank s d := by simpa using hi
-      subst i; rw [hear]; omega
+      subst i; rw [hear]; exact hA.le
   have hnew : InStrip g N 0 (F ++ nv :: K ++ nw :: S ++ nu :: (G++[rank s d]) ++ [nx]) := by
-    apply bounds_strip g F K S (G++[rank s d]) nv nw nu nx N 0 (Pair.plg P) (Pair.plg Q) psg pge (by omega)
+    apply bounds_strip g F K S (G++[rank s d]) nv nw nu nx N 0 (Pair.plg P) (Pair.plg Q) psg pge le_rfl
     · rw [gF,gK,gS,(Table.nvn tab),(Table.nwn tab),(Table.nun tab),(Table.nxn tab)]
       exact cert.2
     · simpa only [zero_add] using htotal
   apply finish s d hs hd left [nx] (by rw [hsplit]; exact hp)
   · rw [hsplit]; exact hold
   · change InStrip g (modulus (rank s d+1)/2) 0 _
-    have hh : modulus (rank s d+1)/2=N := by omega
+    have hh : modulus (rank s d+1)/2=N := by
+      clear * - hM
+      change modulus (rank s d+1)=2*N+1 at hM
+      omega
     rw [hh]
     simpa only [left,List.append_assoc,List.cons_append,List.nil_append,List.singleton_append] using hnew
 

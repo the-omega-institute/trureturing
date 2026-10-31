@@ -63,8 +63,18 @@ private theorem pair_inventory (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d)
       (P.left ++ P.right) ++ (d+s-1) ::
       (Q.left ++ Q.right) ++ (d+s+s-1) ::
       (T.left ++ T.right) ++ [d+s+s+s-1]).Perm (List.range (rank s d)) := by
-  exact (U.perm.append (List.Perm.cons _ (P.perm.append (List.Perm.cons _
-    (Q.perm.append (List.Perm.cons _ (T.perm.append (List.Perm.refl _)))))))).trans
-      (natural_inventory s d hs hd)
+  have hp := U.perm.append (List.Perm.cons (d-1) (P.perm.append
+    (List.Perm.cons (d+s-1) (Q.perm.append (List.Perm.cons (d+s+s-1)
+      (T.perm.append (List.Perm.refl [d+s+s+s-1])))))))
+  have hn := natural_inventory s d hs hd
+  have hpn : ((U.left ++ U.right) ++ (d-1) ::
+      (P.left ++ P.right) ++ (d+s-1) ::
+      (Q.left ++ Q.right) ++ (d+s+s-1) ::
+      (T.left ++ T.right) ++ [d+s+s+s-1]).Perm
+      (List.range' 0 (d-1) ++ (d-1) :: List.range' d (s-1) ++
+        (d+s-1) :: List.range' (d+s) (s-1) ++
+        (d+s+s-1) :: List.range' (d+s+s) (s-1) ++ [d+s+s+s-1]) := by
+    simpa only [List.append_assoc, List.cons_append] using hp
+  exact hpn.trans hn
 
 end D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree

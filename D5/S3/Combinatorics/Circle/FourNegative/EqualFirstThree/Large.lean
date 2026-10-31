@@ -124,28 +124,35 @@ private theorem large (s d : ℕ) (hs : 2≤s) (hds : s+2≤d) :
     · exact (Pair.prg T) i hi
   have hB : 2*(N/2)=D*R*R*R-2 := by
     have hh : N=2*(e*R*R*R-1)+1 := by rw [hN,←he];ring
+    clear * - hh hN
     omega
   have cert := large_bounds R D (u:ℤ) r e (N/2) hR hu2 hDu hr he hB
   dsimp only at cert
   change Bounds _ _ _ _ _ _ _ (N/2) 0 ∧ Bounds _ _ _ _ _ _ _ (D*R*R*R-1) A at cert
   rw [←hN] at cert
   have hold : InStrip f (N/2) 0 word := by
-    apply bounds_strip f F K S G nw nv nu nx (N/2) 0 (Pair.prf U) (Pair.plf P) (Pair.plf Q) pgf (by omega)
+    apply bounds_strip f F K S G nw nv nu nx (N/2) 0 (Pair.prf U) (Pair.plf P) (Pair.plf Q) pgf le_rfl
     · rw [fF,fK,fS,(Table.nw tab),(Table.nv tab),(Table.nu tab),(Table.nx tab)];exact cert.1
     · simpa only [zero_add] using old_total s d hs hd word hp
   have hzg : A+(word.map g).sum=0 := by
     have hh := new_total s d hs hd (rank s d::word)
       (by simpa only [List.nil_append] using inserted_perm (rank s d) [] word hp)
-    simpa only [List.map_cons,List.sum_cons,hear] using hh
+    change g (rank s d)+(word.map g).sum=0 at hh
+    rwa [hear] at hh
   have hgs : InStrip g N A word := by
     apply bounds_strip g F K S G nw nv nu nx N A (Pair.prg U) (Pair.plg P) (Pair.plg Q) pgg hA.le
     · rw [gF,gK,gS,(Table.nwn tab),(Table.nvn tab),(Table.nun tab),(Table.nxn tab)];exact cert.2
     · exact hzg
-  apply finish s d hs hd [] word (by simpa using hp) (by simpa using hold)
+  apply finish s d hs hd [] word
+    (by simpa only [List.nil_append] using hp)
+    (by simpa only [List.nil_append] using hold)
   change InStrip g (modulus (rank s d+1)/2) 0 (rank s d::word)
-  have hh : modulus (rank s d+1)/2=N := by omega
+  have hh : modulus (rank s d+1)/2=N := by
+    clear * - hM
+    change modulus (rank s d+1)=2*N+1 at hM
+    omega
   rw [hh]
   change 0≤(0:ℤ) ∧ 0≤N ∧ InStrip g N (0+g (rank s d)) word
   rw [hear,zero_add]
-  exact ⟨le_rfl,by omega,hgs⟩
+  exact ⟨le_rfl,le_trans hA.le hAN.le,hgs⟩
 end D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree
