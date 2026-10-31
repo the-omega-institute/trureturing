@@ -204,8 +204,10 @@ private lemma normalized_tail_remainder :
       _ ≤ _ := by
         rw [abs_of_nonneg (trivialT_nonneg hl)]
         linarith [(trivialT_le_mass hl).trans (le_abs_self (1 - Real.log 2))]
+  have hi : Tendsto (fun x : ℝ => (Real.sqrt x)⁻¹) atTop (𝓝 0) :=
+    tendsto_inv_atTop_zero.comp Real.tendsto_sqrt_atTop
   have h := (hO.mul (isBigO_refl (fun x : ℝ => (Real.sqrt x)⁻¹) atTop)).trans_tendsto
-    (by simpa only [one_mul, Pi.inv_apply] using Real.tendsto_sqrt_atTop.inv_tendsto_atTop)
+    (by simpa only [one_mul, Pi.mul_apply] using hi)
   apply h.congr'
   filter_upwards [eventually_ge_atTop (2 : ℝ)] with x hx
   simpa only [div_eq_mul_inv] using (normalized_tail_formula hx).symm
@@ -233,7 +235,7 @@ private lemma oscillation_moving_difference (hRH : RiemannHypothesis)
   have huc' : Tendsto (fun p : ℝ × ℝ =>
       ((rhOscillation p.1).re, (rhOscillation p.2).re)) (uniformity ℝ) (uniformity ℝ) := huc
   have hout := tendsto_uniformity_iff_dist_tendsto_zero.mp (huc'.comp hpair)
-  apply tendsto_zero_iff_abs_tendsto_zero.mpr
+  rw [tendsto_zero_iff_abs_tendsto_zero]
   simpa only [Real.dist_eq, Function.comp_def] using hout
 
 private lemma tail_slow_variation (hRH : RiemannHypothesis) {v : ℝ → ℝ}
@@ -263,7 +265,7 @@ private lemma tail_slow_variation (hRH : RiemannHypothesis) {v : ℝ → ℝ}
   simp only [mul_zero, sub_zero, add_zero] at ht
   apply ht.congr'
   filter_upwards [hv0] with x hvx
-  dsimp only [Function.comp_def, H, Pi.smul_apply, smul_eq_mul]
+  dsimp only [Function.comp_def, H, Pi.smul_apply, smul_eq_mul, Pi.mul_apply]
   field_simp [(Real.sqrt_pos.mpr hvx).ne']
   <;> ring
 
@@ -285,6 +287,7 @@ private lemma shift_atTop (s : ℝ) :
   apply h.congr'
   filter_upwards [eventually_ne_atTop (0 : ℝ)] with x hx
   field_simp
+  rfl
 
 private lemma scale_identity {x : ℝ} (hx : 0 < x) :
     (x ^ (3 / 4 : ℝ)) ^ 2 * Real.sqrt x = x ^ 2 := by
