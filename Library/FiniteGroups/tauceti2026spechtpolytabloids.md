@@ -740,3 +740,177 @@ DependentFamily and PointwiseEquality registration supports were inspected; no
 uncompiled Reg mirror is represented as validated. Issue 21960 remains the sole
 existing preregistration of the full original assertion. No literature settlement,
 new forecast, open-problem eligibility or full ordinary theorem is asserted.
+
+
+## Fixed-tabloid and actual-trace Frobenius precursor (source continuation)
+
+This continuation is source only at the same unchanged pins. It adds
+`SpechtMonomialCoordinates`, `SpechtFixedTabloidPowerSum`, and
+`SpechtFrobeniusPairing`, with their matching Blueprint Scribes. The exact supplier
+`FrobeniusCharacteristic.psumPart_eq_sum_spechtCharValue_smul_schurPoly` was
+inspected at TauCeti 5a01f5fe3621126cccf9ba22e700493cbc7b7156. Its proof requires
+the fixed-tabloid power-sum expansion, Young's rule and the Kostka/monomial Schur
+expansion. Only the first of these and its actual-trace character-pairing
+precursor are supplied in this finite batch. The degree-at-most-alphabet linear
+equivalence is neither imported nor substituted for the unrestricted formula.
+
+The implemented source chain is:
+
+1. Sort arbitrary finite-alphabet exponent weights into their literal nonzero
+   partition. `rowLen_ofPartition` supplies actual decreasing row lengths, with
+   zeros beyond the last row. No Schur polynomial is defined by these weights.
+2. Expand a full-permutation-partition power-sum product through invariant
+   colourings. The cycle-orbit fibres include fixed points, so one-cycles remain
+   present. An equivariant coset/colouring equivalence identifies the coefficients
+   with fixed points of actual Young tabloids.
+3. Use OUR existing D5 `FiniteCharacterAlgebra` character pairing to convert the
+   sum of the product of the actual complex Specht trace and the tabloid count
+   into factorial times the dimension of the actual Hom space from that Specht
+   module to the complex Young permutation module. The orientation of the Hom
+   matches the existing pairing supplier. The existing
+   `spechtCharValue_ordinaryTrace` is consumed by `spechtTrace_inv`, comparing
+   inverse permutations through their full partitions. No representation
+   equivalence, simplicity hypothesis or Frobenius equality is assumed.
+4. Combine these into
+   `sum_spechtTrace_smul_psumPart_eq_multiplicities`: for every degree and finite
+   alphabet, the sum of actual Specht traces times full-cycle power sums equals
+   factorial times the monomial expansion with genuine Hom dimensions.
+   These dimensions are **not** identified with Kostka numbers, and the result
+   is **not** claimed to be the same-shape Schur polynomial.
+5. `hsw_frobChar_eq_fixedTabloid_coefficients` transports the existing exact HSW
+   list power-sum product through the fixed-tabloid expansion, retaining repeated
+   occurrences and ones by equality of full multisets. It expresses the existing
+   integer coefficient owner in tabloid coordinates, **not** as an ordinary
+   character. The original coefficient owner is reused without edits or reproof.
+
+The current D5 `FiniteCharacterAlgebra` supplies
+`ClassFunction.characterPairing_ofFDRep_eq_finrank`, `characterPairing_apply`,
+and `ofCharacter_apply`. `InducedCharacterFormula` and `MackeyCharacterFormula`
+were examined; their formulas do not identify these multiplicities with Kostka
+numbers, so no unused import or copied induction closure is added. OUR pinned
+Mathlib supplies `MvPolynomial.psumPart`, `msymm`, finite-dimensional
+representation traces, and permutation/coset infrastructure. The source search
+found no matching same-shape Schur/Specht comparison there; that bounded search
+is not a complete literature or worldwide minimality claim.
+
+### Selected source and per-declaration consumers
+
+All following locators are immutable paths in the same TauCeti revision, under
+the existing Apache license reproduced above. No new license or NOTICE exception
+is introduced. Fifty selected declaration bodies were compared directly to the
+immutable source: 49 are byte-identical, and `invariantColouringEquiv` changes
+only the qualification of the selected local SameCycle helper. Surrounding
+sections supply the explicit/implicit parameters required at OUR pin; no
+supplier theorem is accepted as an elaborated proof by this comparison.
+
+Every row records an actual **source** consumer, not native proof-term liveness.
+Port rows credit the supplier and claim no independent novelty or escape witness.
+Local rows compose existing suppliers and are bind-only necessary comparison
+helpers. The two terminal comparison endpoints have no subsequent ordinary-HSW
+consumer yet. This entire source checkpoint has **no independent admission or
+firstfreeze claim**, and those endpoints must not be first-frozen as standalone
+content. The earlier complex simplicity proof is part of the ordinary-character
+certification; this composition does not establish that its proof term is live
+inside a final ordinary-character theorem. Native closure and admission remain
+unknown for every declaration, including the earlier representation chain.
+
+| Module / declaration | Immutable supplier or local proof shape | Actual source consumer |
+| --- | --- | --- |
+| `SpechtMonomialCoordinates.rowLen_eq_zero_of_colLen_le` | `TauCeti/Combinatorics/Young/Diagram.lean:64`; selected port | `SpechtMonomialCoordinates.getD_rowLens` |
+| `SpechtMonomialCoordinates.getD_rowLens` | `TauCeti/Combinatorics/Young/Diagram.lean:96`; selected port | `SpechtMonomialCoordinates.rowLen_ofPartition` |
+| `SpechtMonomialCoordinates.rowLen_ofPartition` | `TauCeti/Combinatorics/Young/Partitions.lean:48`; selected port | `SpechtMonomialCoordinates.map_univ_val_partWeight`, `SpechtFixedTabloidPowerSum.card_filter_youngColouring` |
+| `SpechtMonomialCoordinates.prod_map_X_eq_monomial` | `TauCeti/Algebra/MvPolynomial/Monomial.lean:39`; selected port | `SpechtMonomialCoordinates.coeff_msymm_eq_zero_of_degree_ne`, `SpechtMonomialCoordinates.coeff_msymm`, `SpechtFixedTabloidPowerSum.coeff_psumPart_partition` |
+| `SpechtMonomialCoordinates.rowLenWeight` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Basic.lean:254`; selected port | `SpechtMonomialCoordinates.rowLenWeight_apply`, `SpechtMonomialCoordinates.partWeight` |
+| `SpechtMonomialCoordinates.rowLenWeight_apply` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Basic.lean:258`; selected port | `SpechtMonomialCoordinates.partWeight_apply` |
+| `SpechtMonomialCoordinates.partWeight` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Basic.lean:392`; selected port | `SpechtMonomialCoordinates.partWeight_apply`, `SpechtMonomialCoordinates.map_univ_val_partWeight`, `SpechtMonomialCoordinates.exists_perm_mapDomain_eq_partWeight`, `SpechtMonomialCoordinates.coeff_eq_coeff_partWeight`, `SpechtFixedTabloidPowerSum.card_filter_youngColouring`, `SpechtFixedTabloidPowerSum.coeff_partWeight_psumPart_partition` |
+| `SpechtMonomialCoordinates.partWeight_apply` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Basic.lean:396`; selected port | `SpechtMonomialCoordinates.map_univ_val_partWeight`, `SpechtFixedTabloidPowerSum.card_filter_youngColouring` |
+| `SpechtMonomialCoordinates.exists_perm_comp_eq` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:98`; selected port | `SpechtMonomialCoordinates.exists_perm_mapDomain_eq_partWeight` |
+| `SpechtMonomialCoordinates.card_toMultiset_eq_degree` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:117`; selected port | `SpechtMonomialCoordinates.weightSym`, `SpechtMonomialCoordinates.coeff_msymm_eq_zero_of_degree_ne` |
+| `SpechtMonomialCoordinates.weightSym` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:123`; selected port | `SpechtMonomialCoordinates.coe_weightSym`, `SpechtMonomialCoordinates.weightPartition`, `SpechtMonomialCoordinates.coeff_msymm` |
+| `SpechtMonomialCoordinates.coe_weightSym` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:128`; selected port | `SpechtMonomialCoordinates.coeff_msymm` |
+| `SpechtMonomialCoordinates.weightPartition` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:134`; selected port | `SpechtMonomialCoordinates.weightPartition_parts`, `SpechtMonomialCoordinates.card_parts_weightPartition_le`, `SpechtMonomialCoordinates.exists_perm_mapDomain_eq_partWeight`, `SpechtMonomialCoordinates.coeff_msymm`, `SpechtMonomialCoordinates.coeff_eq_coeff_partWeight`, `SpechtFixedTabloidPowerSum.coeff_psumPart_eq_card_fixedPoints`, `SpechtFixedTabloidPowerSum.psumPart_eq_sum_card_fixedPoints_smul_msymm` |
+| `SpechtMonomialCoordinates.weightPartition_parts` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:141`; selected port | `SpechtMonomialCoordinates.card_parts_weightPartition_le`, `SpechtMonomialCoordinates.exists_perm_mapDomain_eq_partWeight` |
+| `SpechtMonomialCoordinates.card_parts_weightPartition_le` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:153`; selected port | `SpechtMonomialCoordinates.exists_perm_mapDomain_eq_partWeight`, `SpechtFixedTabloidPowerSum.coeff_psumPart_eq_card_fixedPoints` |
+| `SpechtMonomialCoordinates.map_univ_val` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:163`; selected port | `SpechtMonomialCoordinates.exists_perm_mapDomain_eq_partWeight` |
+| `SpechtMonomialCoordinates.map_univ_val_partWeight` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:182`; selected port | `SpechtMonomialCoordinates.exists_perm_mapDomain_eq_partWeight` |
+| `SpechtMonomialCoordinates.exists_perm_mapDomain_eq_partWeight` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:219`; selected port | `SpechtMonomialCoordinates.coeff_eq_coeff_partWeight` |
+| `SpechtMonomialCoordinates.coeff_msymm_eq_zero_of_degree_ne` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:237`; selected port | `SpechtFixedTabloidPowerSum.psumPart_eq_sum_card_fixedPoints_smul_msymm` |
+| `SpechtMonomialCoordinates.coeff_msymm` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Monomial.lean:249`; selected port | `SpechtFixedTabloidPowerSum.psumPart_eq_sum_card_fixedPoints_smul_msymm` |
+| `SpechtMonomialCoordinates.coeff_eq_coeff_partWeight` | `TauCeti/RingTheory/MvPolynomial/Symmetric/Schur/Basis.lean:143`; selected port | `SpechtFixedTabloidPowerSum.coeff_psumPart_eq_card_fixedPoints` |
+| `SpechtFixedTabloidPowerSum.perm_zpow_right` | `TauCeti/GroupTheory/Perm/Basic.lean:55`; selected port | `SpechtFixedTabloidPowerSum.apply_eq_of_apply_eq` |
+| `SpechtFixedTabloidPowerSum.apply_eq_of_apply_eq` | `TauCeti/GroupTheory/Perm/Basic.lean:78`; selected port | `SpechtFixedTabloidPowerSum.invariantColouringEquiv` |
+| `SpechtFixedTabloidPowerSum.fullCycleType` | `TauCeti/GroupTheory/Perm/Partition.lean:103`; selected port | `SpechtFixedTabloidPowerSum.fullCycleType_def`, `SpechtFixedTabloidPowerSum.fullCycleType_eq_map_card_filter` |
+| `SpechtFixedTabloidPowerSum.fullCycleType_def` | `TauCeti/GroupTheory/Perm/Partition.lean:317`; selected port | `SpechtFixedTabloidPowerSum.psumPart_partition_eq_sum_prod_X` |
+| `SpechtFixedTabloidPowerSum.fullCycleType_eq_map_card_filter` | `TauCeti/GroupTheory/Perm/Partition.lean:429`; selected port | `SpechtFixedTabloidPowerSum.psumPart_partition_eq_sum_prod_X` |
+| `SpechtFixedTabloidPowerSum.invariantColouringEquiv` | `TauCeti/GroupTheory/Perm/Basic.lean:260`; selected port | `SpechtFixedTabloidPowerSum.invariantColouringEquiv_apply_coe`, `SpechtFixedTabloidPowerSum.psumPart_partition_eq_sum_prod_X` |
+| `SpechtFixedTabloidPowerSum.invariantColouringEquiv_apply_coe` | `TauCeti/GroupTheory/Perm/Basic.lean:271`; selected port | `SpechtFixedTabloidPowerSum.psumPart_partition_eq_sum_prod_X` |
+| `SpechtFixedTabloidPowerSum.card_filter_comp_perm` | `TauCeti/GroupTheory/Perm/Basic.lean:285`; selected port | `SpechtFixedTabloidPowerSum.quotientFiberSubgroupEquiv` |
+| `SpechtFixedTabloidPowerSum.fiberSubgroup_comp_of_injective` | `TauCeti/GroupTheory/Perm/FiberSubgroup.lean:109`; selected port | `SpechtFixedTabloidPowerSum.fiberSubgroup_youngColouring` |
+| `SpechtFixedTabloidPowerSum.quotientFiberSubgroupEquiv` | `TauCeti/GroupTheory/Perm/FiberSubgroup.lean:267`; selected port | `SpechtFixedTabloidPowerSum.quotientFiberSubgroupEquiv_mk`, `SpechtFixedTabloidPowerSum.quotientFiberSubgroupEquiv_smul`, `SpechtFixedTabloidPowerSum.smul_eq_self_iff_quotientFiberSubgroupEquiv`, `SpechtFixedTabloidPowerSum.card_fixedPoints_quotient_fiberSubgroup` |
+| `SpechtFixedTabloidPowerSum.quotientFiberSubgroupEquiv_mk` | `TauCeti/GroupTheory/Perm/FiberSubgroup.lean:290`; selected port | `SpechtFixedTabloidPowerSum.quotientFiberSubgroupEquiv_smul` |
+| `SpechtFixedTabloidPowerSum.quotientFiberSubgroupEquiv_smul` | `TauCeti/GroupTheory/Perm/FiberSubgroup.lean:297`; selected port | `SpechtFixedTabloidPowerSum.smul_eq_self_iff_quotientFiberSubgroupEquiv` |
+| `SpechtFixedTabloidPowerSum.smul_eq_self_iff_quotientFiberSubgroupEquiv` | `TauCeti/GroupTheory/Perm/FiberSubgroup.lean:307`; selected port | `SpechtFixedTabloidPowerSum.card_fixedPoints_quotient_fiberSubgroup` |
+| `SpechtFixedTabloidPowerSum.card_fixedPoints_quotient_fiberSubgroup` | `TauCeti/GroupTheory/Perm/FiberSubgroup.lean:324`; selected port | `SpechtFixedTabloidPowerSum.coeff_partWeight_psumPart_partition` |
+| `SpechtFixedTabloidPowerSum.psumPart_isSymmetric` | `TauCeti/RingTheory/MvPolynomial/Symmetric/PowerSum.lean:60`; selected port | `SpechtFixedTabloidPowerSum.coeff_psumPart_eq_card_fixedPoints` |
+| `SpechtFixedTabloidPowerSum.isHomogeneous_psum` | `TauCeti/RingTheory/MvPolynomial/Symmetric/PowerSum.lean:68`; selected port | `SpechtFixedTabloidPowerSum.isHomogeneous_psumPart` |
+| `SpechtFixedTabloidPowerSum.isHomogeneous_psumPart` | `TauCeti/RingTheory/MvPolynomial/Symmetric/PowerSum.lean:72`; selected port | `SpechtFixedTabloidPowerSum.psumPart_eq_sum_card_fixedPoints_smul_msymm` |
+| `SpechtFixedTabloidPowerSum.psumPart_partition_eq_sum_prod_X` | `TauCeti/RingTheory/MvPolynomial/Symmetric/PowerSum.lean:96`; selected port | `SpechtFixedTabloidPowerSum.coeff_psumPart_partition` |
+| `SpechtFixedTabloidPowerSum.coeff_psumPart_partition` | `TauCeti/RingTheory/MvPolynomial/Symmetric/PowerSum.lean:125`; selected port | `SpechtFixedTabloidPowerSum.coeff_partWeight_psumPart_partition` |
+| `SpechtFixedTabloidPowerSum.youngBlockEquiv` | `TauCeti/RepresentationTheory/Symmetric/YoungSubgroup.lean:79`; selected port | `SpechtFixedTabloidPowerSum.card_filter_youngColouring` |
+| `SpechtFixedTabloidPowerSum.length_sort_parts_le` | `TauCeti/RepresentationTheory/Symmetric/PermutationModule/PowerSum.lean:78`; selected port | `SpechtFixedTabloidPowerSum.youngColouring` |
+| `SpechtFixedTabloidPowerSum.psumPart_eq_psumPart_partition` | `TauCeti/RepresentationTheory/Symmetric/PermutationModule/PowerSum.lean:84`; selected port | `SpechtFixedTabloidPowerSum.coeff_psumPart_eq_card_fixedPoints`, `SpechtFrobeniusPairing.sum_spechtTrace_smul_psumPart_eq_multiplicities` |
+| `SpechtFixedTabloidPowerSum.youngColouring` | `TauCeti/RepresentationTheory/Symmetric/PermutationModule/PowerSum.lean:92`; selected port | `SpechtFixedTabloidPowerSum.fiberSubgroup_youngColouring`, `SpechtFixedTabloidPowerSum.card_filter_youngColouring` |
+| `SpechtFixedTabloidPowerSum.fiberSubgroup_youngColouring` | `TauCeti/RepresentationTheory/Symmetric/PermutationModule/PowerSum.lean:97`; selected port | `SpechtFixedTabloidPowerSum.coeff_partWeight_psumPart_partition` |
+| `SpechtFixedTabloidPowerSum.card_filter_youngColouring` | `TauCeti/RepresentationTheory/Symmetric/PermutationModule/PowerSum.lean:107`; selected port | `SpechtFixedTabloidPowerSum.coeff_partWeight_psumPart_partition` |
+| `SpechtFixedTabloidPowerSum.coeff_partWeight_psumPart_partition` | `TauCeti/RepresentationTheory/Symmetric/PermutationModule/PowerSum.lean:133`; selected port | `SpechtFixedTabloidPowerSum.coeff_psumPart_eq_card_fixedPoints` |
+| `SpechtFixedTabloidPowerSum.coeff_psumPart_eq_card_fixedPoints` | `TauCeti/RepresentationTheory/Symmetric/PermutationModule/PowerSum.lean:176`; selected port | `SpechtFixedTabloidPowerSum.psumPart_eq_sum_card_fixedPoints_smul_msymm` |
+| `SpechtFixedTabloidPowerSum.psumPart_eq_sum_card_fixedPoints_smul_msymm` | `TauCeti/RepresentationTheory/Symmetric/PermutationModule/PowerSum.lean:190`; selected port | `SpechtFrobeniusPairing.sum_spechtTrace_smul_psumPart_eq_multiplicities`, `SpechtFrobeniusPairing.hsw_frobChar_eq_fixedTabloid_coefficients` |
+| `SpechtFrobeniusPairing.char_ofMulAction` | `TauCeti/RepresentationTheory/Induction/Permutation.lean:365`; selected port | `SpechtFrobeniusPairing.char_permutationModuleℂ` |
+| `SpechtFrobeniusPairing.permutationModuleℂ` | Local composition; no independent escape witness | `SpechtFrobeniusPairing.char_permutationModuleℂ`, `SpechtFrobeniusPairing.sum_spechtTrace_mul_card_fixedPoints`, `SpechtFrobeniusPairing.sum_spechtTrace_smul_psumPart_eq_multiplicities` |
+| `SpechtFrobeniusPairing.char_permutationModuleℂ` | Local composition; no independent escape witness | `SpechtFrobeniusPairing.sum_spechtTrace_mul_card_fixedPoints` |
+| `SpechtFrobeniusPairing.spechtTrace_inv` | Local composition; no independent escape witness | `SpechtFrobeniusPairing.sum_spechtTrace_mul_card_fixedPoints` |
+| `SpechtFrobeniusPairing.sum_spechtTrace_mul_card_fixedPoints` | Local composition; no independent escape witness | `SpechtFrobeniusPairing.sum_spechtTrace_smul_psumPart_eq_multiplicities` |
+| `SpechtFrobeniusPairing.sum_spechtTrace_smul_psumPart_eq_multiplicities` | Local composition; no independent escape witness | **Terminal source comparison; full ordinary/HSW consumer missing; not standalone admissible** |
+| `SpechtFrobeniusPairing.hsw_powerSumProd_eq_psumPart` | Local composition; no independent escape witness | `SpechtFrobeniusPairing.hsw_frobChar_eq_fixedTabloid_coefficients` |
+| `SpechtFrobeniusPairing.hsw_frobChar_eq_fixedTabloid_coefficients` | Local composition; no independent escape witness | **Terminal source comparison; full ordinary/HSW consumer missing; not standalone admissible** |
+
+### Exact residual and retirement
+
+The missing next equality is the actual Young-rule identification
+`finrank Complex (spechtModuleComplex mu --> permutationModuleComplex nu) =
+kostkaNumber mu nu`, with its dominance/diagonal and genuine Kostka suppliers.
+It must be connected to the semistandard-tableau Schur expansion and the
+arbitrary-degree `psumPart_eq_sum_spechtCharValue_smul_schurPoly`; these are not
+assumptions or claims of this continuation. The literal positive-parts shape of
+each decreasing three-row vector, row-length/zero-padding correspondence, height
+vanishing above three, division-free bialternant, exact descending staircase
+(2,1,0) and Vandermonde coefficient isolation also remain missing. Only after
+that same-partition ordinary-trace equality is obtained can both original
+weighted sums be transported through the existing strongest D5 coefficient owner
+and `solution_unique`. No coefficient-only result closes either original
+ordinary theorem.
+
+The original target remains all n >= 1 and every partition of n; the exact
+reciprocal centralizer product, independent per-occurrence Ev replacements with
+duplicate outcomes, positive full cycle lists of sum 2n including ones, every
+even-part shape of at most three rows with zero padding, rectangle (n,n,0) for
+odd n as well, sign by list length, and even-binomial/odd-zero values are all
+still required. No clause is removed or restricted by these precursor lemmas.
+
+Retirement is evaluated against OUR Mathlib pin
+56a005855ea17e0b0958f73ec801ae140b0a1679, not TauCeti's different pin. Replace
+selected port declarations only when an exact compatible published supplier
+covers their actual use. There is no dependency upgrade and no entire-file
+TauCeti import. No new complete prior-art claim or open-problem eligibility is
+established. Issue 21960 remains the full preregistration unchanged; 22528 remains
+coefficient-only.
+
+The linked unfinished escape audit is issue 24542. Existing PointwiseEquality
+and DependentFamily registration supports were read. The all-degree dependent
+partition/group/module domains, the full reconstruction/readout bridge and
+whole-family intervention, sensitivity and actual observational-dependence
+proofs have not been constructed and compiled. No Reg mirror or
+`declared_validated` status is claimed. No local Lean/Lake, native elaboration,
+accepted axiom closure, proof-term liveness, canonical emission, freeze, deposit,
+PR, CI or merge result is asserted. Native validation remains with the caller's
+existing Mac task; this pass neither accesses nor starts another Mac job/tree.
