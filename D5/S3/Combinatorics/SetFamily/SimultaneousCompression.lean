@@ -337,6 +337,7 @@ theorem exists_simultaneous_compression
 def RelativelyUpper (Ω A : Finset (Finset α)) : Prop :=
   ∀ X ∈ A, ∀ Y ∈ Ω, X ⊆ Y → Y ∈ A
 
+omit [DecidableEq α] in
 private lemma maximal_upper {Ω A B : Finset (Finset α)}
     (hc : CrossIntersecting A B)
     (hm : ∀ Y ∈ Ω, (∀ Z ∈ B, ¬ Disjoint Y Z) → Y ∈ A) :
@@ -401,41 +402,41 @@ theorem exists_terminal_compression (J : Finset α) (S : DeletionSystem J)
         (A.Nonempty → C.Nonempty) ∧ (B.Nonempty → D.Nonempty) by
     exact h J Subset.rfl A B hA hB hc
   intro H
-  induction H using Finset.strongInductionOn with
-  | H H ih =>
-    intro hHJ A B hA hB hc
-    by_cases ht : S.terminal H
-    · obtain ⟨C, D, hAC, hBD, hC, hD, hCD, hmC, hmD⟩ := maximal_pair hA hB hc
-      have hDC : CrossIntersecting D C := by
-        intro X hX Y hY hd
-        exact hCD Y hY X hX hd.symm
-      exact ⟨H, C, D, Subset.rfl, ht, hC, hD, hCD,
-        maximal_upper hCD hmC, maximal_upper hDC hmD,
-        sum_le_sum_of_subset_of_nonneg hAC
-          (fun X hX _ => S.left_nonneg H hHJ X (hC hX)),
-        sum_le_sum_of_subset_of_nonneg hBD
-          (fun X hX _ => S.right_nonneg H hHJ X (hD hX)),
-        fun hne => hne.mono hAC, fun hne => hne.mono hBD⟩
-    · obtain ⟨s, t, u, htH, hst, hsu, hex, hsh, hwl, hvl⟩ := S.local_move H hHJ ht
-      obtain ⟨C, D, hC, hD, hCD, hw, hv, hneC, hneD⟩ :=
-        exists_simultaneous_compression (S.feasible H) A B s t u hA hB hst hsu
-          hex hsh (S.leftWeight H) (S.rightWeight H)
-          (S.left_nonneg H hHJ) (S.right_nonneg H hHJ) hwl hvl hc
-      rw [S.projection H hHJ t htH] at hC hD
-      have hw' : mass (S.leftWeight H) A ≤ mass (S.leftWeight (H.erase t)) C := by
-        convert hw using 1
-        apply sum_congr rfl
-        intro X hX
-        exact (S.left_marginal H hHJ t htH X (hC hX)).symm
-      have hv' : mass (S.rightWeight H) B ≤ mass (S.rightWeight (H.erase t)) D := by
-        convert hv using 1
-        apply sum_congr rfl
-        intro X hX
-        exact (S.right_marginal H hHJ t htH X (hD hX)).symm
-      obtain ⟨K, E, F, hK, hterm, hE, hF, hEF, huE, huF, hwK, hvK, hneE, hneF⟩ :=
-        ih (H.erase t) (erase_ssubset htH) ((erase_subset t H).trans hHJ) C D hC hD hCD
-      exact ⟨K, E, F, hK.trans (erase_subset t H), hterm, hE, hF, hEF, huE, huF,
-        hw'.trans hwK, hv'.trans hvK, fun hne => hneE (hneC hne),
-        fun hne => hneF (hneD hne)⟩
+  induction H using Finset.strongInductionOn
+  rename_i H ih
+  intro hHJ A B hA hB hc
+  by_cases ht : S.terminal H
+  · obtain ⟨C, D, hAC, hBD, hC, hD, hCD, hmC, hmD⟩ := maximal_pair hA hB hc
+    have hDC : CrossIntersecting D C := by
+      intro X hX Y hY hd
+      exact hCD Y hY X hX hd.symm
+    exact ⟨H, C, D, Subset.rfl, ht, hC, hD, hCD,
+      maximal_upper hCD hmC, maximal_upper hDC hmD,
+      sum_le_sum_of_subset_of_nonneg hAC
+        (fun X hX _ => S.left_nonneg H hHJ X (hC hX)),
+      sum_le_sum_of_subset_of_nonneg hBD
+        (fun X hX _ => S.right_nonneg H hHJ X (hD hX)),
+      fun hne => hne.mono hAC, fun hne => hne.mono hBD⟩
+  · obtain ⟨s, t, u, htH, hst, hsu, hex, hsh, hwl, hvl⟩ := S.local_move H hHJ ht
+    obtain ⟨C, D, hC, hD, hCD, hw, hv, hneC, hneD⟩ :=
+      exists_simultaneous_compression (S.feasible H) A B s t u hA hB hst hsu
+        hex hsh (S.leftWeight H) (S.rightWeight H)
+        (S.left_nonneg H hHJ) (S.right_nonneg H hHJ) hwl hvl hc
+    rw [S.projection H hHJ t htH] at hC hD
+    have hw' : mass (S.leftWeight H) A ≤ mass (S.leftWeight (H.erase t)) C := by
+      convert hw using 1
+      apply sum_congr rfl
+      intro X hX
+      exact (S.left_marginal H hHJ t htH X (hC hX)).symm
+    have hv' : mass (S.rightWeight H) B ≤ mass (S.rightWeight (H.erase t)) D := by
+      convert hv using 1
+      apply sum_congr rfl
+      intro X hX
+      exact (S.right_marginal H hHJ t htH X (hD hX)).symm
+    obtain ⟨K, E, F, hK, hterm, hE, hF, hEF, huE, huF, hwK, hvK, hneE, hneF⟩ :=
+      ih (H.erase t) (erase_ssubset htH) ((erase_subset t H).trans hHJ) C D hC hD hCD
+    exact ⟨K, E, F, hK.trans (erase_subset t H), hterm, hE, hF, hEF, huE, huF,
+      hw'.trans hwK, hv'.trans hvK, fun hne => hneE (hneC hne),
+      fun hne => hneF (hneD hne)⟩
 
 end D5.S3.Combinatorics.SetFamily.SimultaneousCompression

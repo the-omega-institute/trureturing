@@ -4,6 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SetFamily;
 
 internal sealed class SimultaneousCompressionDocument : IScribeDocumentDefinition
 {
+    private const string Source = "D5/L/Geometry/leadertan2026triangulations";
     private const string Prefix = "D5/S3/Combinatorics/SetFamily/SimultaneousCompression.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -23,7 +24,7 @@ internal sealed class SimultaneousCompressionDocument : IScribeDocumentDefinitio
                     + "with X minus {t}. The operation is defined for every finite trace."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("simultaneous-compression-family"),
                 DeclarationHandle.Create(Prefix + "compressedFamily"), H("One trace becomes one or two traces"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(LibraryNoteRef.Create(Source)),
                 Blocks(Paragraph(Text("Let Omega be the finite feasible trace family. Among members X of A "
                     + "containing t, move exactly those whose shifted trace is absent from A. Retain all other "
                     + "members, insert each moved trace's shifted trace, and also insert its extension by u "
@@ -45,7 +46,7 @@ internal sealed class SimultaneousCompressionDocument : IScribeDocumentDefinitio
             Describe.Lean(DescribeId.Create("exists-simultaneous-weighted-compression"),
                 DeclarationHandle.Create(Prefix + "exists_simultaneous_compression"),
                 H("A common deletion does not decrease either mass"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(LibraryNoteRef.Create(Source)),
                 Blocks(
                     Paragraph(Text("Let alpha be any type with decidable equality, Omega a finite family of "
                         + "feasible finite subsets, and A and B subfamilies of Omega. Choose s,t,u with s distinct "
@@ -72,6 +73,9 @@ internal sealed class SimultaneousCompressionDocument : IScribeDocumentDefinitio
                         + "original trace rules out an intersection only at t, including when the other output "
                         + "came from a moved trace. Finally, full projection fibres can only increase mass by "
                         + "nonnegativity. The argument uses each side's own weight equation.")),
+                    Paragraph(Text("Leader and Tan use the one-to-two ear replacement in the proof of Theorem 2 "
+                        + "and simultaneous compression for cross-intersecting triangulation families in Lemma 8. "
+                        + "Here the two nonnegative weights have their own explicitly assumed local equations.")),
                     Paragraph(Text("Iteration requires the feasibility, local equations and full projection law "
                         + "on every reduced support. Applying this result to polygon triangulations additionally "
                         + "requires actual conditional completion weights and a condition-preserving ear-slide "
@@ -98,7 +102,7 @@ internal sealed class SimultaneousCompressionDocument : IScribeDocumentDefinitio
             Describe.Lean(DescribeId.Create("exists-terminal-simultaneous-compression"),
                 DeclarationHandle.Create(Prefix + "exists_terminal_compression"),
                 H("A common terminal support for both measures"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(LibraryNoteRef.Create(Source)),
                 Blocks(
                     Paragraph(Text("For any deletion system on J and cross-intersecting subfamilies A and B "
                         + "of its feasible traces at J, there are a sub-support K of J and feasible families C,D "
