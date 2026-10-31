@@ -100,7 +100,7 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
     norm_num [actual, realize, actualSource, centered, modulus] at hh
 
 def source_registration : Registration arena
-    (type_of% (@_root_.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.actualSource_orbit_zero_balanced)) where
+    (type_of% @actualSource_orbit_zero_balanced) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨actualSource_orbit_zero_balanced, rejected, rejected_law⟩
@@ -127,7 +127,9 @@ def source_registration : Registration arena
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@_root_.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.actualSource_orbit_zero_balanced)
     (Realization signature) Nat Bool where
-  unitName := `D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.actualSource_orbit_zero_balanced.__information_unit
+  unitName := Lean.Name.str
+    `D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.actualSource_orbit_zero_balanced
+    "__information_unit"
   realizationName := `Reg.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.source_registration
   realizationSource := none
   generated := false

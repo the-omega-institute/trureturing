@@ -26,8 +26,16 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+/-- The zero test uses only the finite coordinate of `ZMod 2`. -/
+private def zeroDecision (z : ZMod 2) : Decidable (z = 0) where
+  decide := Nat.casesOn (show Fin 2 from z).val true (fun _ => false)
+  reflects_decide := by
+    fin_cases z
+    · exact rfl
+    · exact one_ne_zero
+
 def actual : Realization signature :=
-  realize signature (fun _ _ z => decide (z = 0)) (fun e => nomatch e)
+  realize signature (fun _ _ z => @decide (z = 0) (zeroDecision z)) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e => nomatch e)
@@ -44,7 +52,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
-  norm_num [actual, realize]
+  norm_num [actual, realize, zeroDecision]
 
 def source_registration : Registration arena
     (type_of% (@bit_cases)) where
@@ -67,8 +75,7 @@ def registration :
       (@bit_cases)
       (Realization signature) Unit Unit := {
   unitName := `MerminMeasurementDependence.Coordinates.bit_cases.unit
-  realizationName :=
-    `Reg.D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates.bit_cases.source_registration
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -78,7 +85,8 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ z => decide (z = 0)) (fun e => nomatch e))
+  readout := some (realize signature
+    (fun _ _ z => @decide (z = 0) (zeroDecision z)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -155,8 +163,7 @@ def registration :
       (@bitSign_add)
       (Realization signature) Unit Unit := {
   unitName := `MerminMeasurementDependence.Coordinates.bitSign_add.unit
-  realizationName :=
-    `Reg.D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates.bitSign_add.source_registration
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -243,8 +250,7 @@ def registration :
       (@bitSign_boolBit)
       (Realization signature) Unit Unit := {
   unitName := `MerminMeasurementDependence.Coordinates.bitSign_boolBit.unit
-  realizationName :=
-    `Reg.D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates.bitSign_boolBit.source_registration
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -331,8 +337,7 @@ def registration :
       (@boolBit_bitBool)
       (Realization signature) Unit Unit := {
   unitName := `MerminMeasurementDependence.Coordinates.boolBit_bitBool.unit
-  realizationName :=
-    `Reg.D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates.boolBit_bitBool.source_registration
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -420,8 +425,7 @@ def registration.{u} :
       (@prod_boolSign.{u})
       (Realization signature) Unit Unit := {
   unitName := `MerminMeasurementDependence.Coordinates.prod_boolSign.unit
-  realizationName :=
-    `Reg.D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates.prod_boolSign.source_registration
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
@@ -508,8 +512,7 @@ def registration :
       (@settingWeight_eq_sum)
       (Realization signature) Unit Unit := {
   unitName := `MerminMeasurementDependence.Coordinates.settingWeight_eq_sum.unit
-  realizationName :=
-    `Reg.D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates.settingWeight_eq_sum.source_registration
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -598,8 +601,7 @@ def registration :
       (@parity_sum)
       (Realization signature) Unit Unit := {
   unitName := `MerminMeasurementDependence.Coordinates.parity_sum.unit
-  realizationName :=
-    `Reg.D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates.parity_sum.source_registration
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -688,8 +690,7 @@ def registration :
       (@setting_parity)
       (Realization signature) Unit Unit := {
   unitName := `MerminMeasurementDependence.Coordinates.setting_parity.unit
-  realizationName :=
-    `Reg.D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates.setting_parity.source_registration
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -779,8 +780,7 @@ def registration :
       (@settingWeight_snoc)
       (Realization signature) Unit Unit := {
   unitName := `MerminMeasurementDependence.Coordinates.settingWeight_snoc.unit
-  realizationName :=
-    `Reg.D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates.settingWeight_snoc.source_registration
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -869,8 +869,7 @@ def registration :
       (@weight_not_add_weight)
       (Realization signature) Unit Unit := {
   unitName := `MerminMeasurementDependence.Coordinates.weight_not_add_weight.unit
-  realizationName :=
-    `Reg.D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates.weight_not_add_weight.source_registration
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -962,8 +961,7 @@ def registration :
       (@evenSetting_freeSetting)
       (Realization signature) Unit Unit := {
   unitName := `MerminMeasurementDependence.Coordinates.evenSetting_freeSetting.unit
-  realizationName :=
-    `Reg.D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates.evenSetting_freeSetting.source_registration
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -1052,8 +1050,7 @@ def registration :
       (@freeSetting_evenSetting)
       (Realization signature) Unit Unit := {
   unitName := `MerminMeasurementDependence.Coordinates.freeSetting_evenSetting.unit
-  realizationName :=
-    `Reg.D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates.freeSetting_evenSetting.source_registration
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -1145,8 +1142,7 @@ def registration :
       (@evenRepresentative_last)
       (Realization signature) Unit Unit := {
   unitName := `MerminMeasurementDependence.Coordinates.evenRepresentative_last.unit
-  realizationName :=
-    `Reg.D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates.evenRepresentative_last.source_registration
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
