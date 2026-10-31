@@ -174,13 +174,13 @@ theorem actualSource_four_negative_eventual_joint_lift (a b c d : ℕ)
       g (0 + e) = (2 : ℤ) ^ e * (2 * A) := by
     have hv := hug e (by omega)
     simpa only [ite_eq_left (show e + 1 < d by omega), Nat.zero_add] using hv
-  have hunegf : f (0 + d - 1) = B - td * A := by
+  have hunegf : f (d - 1) = B - td * A := by
     have hv := huf (d - 1) (by omega)
     rw [ite_eq_right (by omega)] at hv
     change f (d - 1) = -((N) - (B)) / 2 at hv
     rw [negative_step _ _ _ _ hrelU] at hv
     simpa only [Nat.zero_add, show 0 + (d - 1) = 0 + d - 1 by omega] using hv
-  have hunegg : g (0 + d - 1) = B' - td * (2 * A) := by
+  have hunegg : g (d - 1) = B' - td * (2 * A) := by
     have hv := hug (d - 1) (by omega)
     rw [ite_eq_right (by omega)] at hv
     change g (d - 1) = -((2 * N + 1) - (B')) / 2 at hv
@@ -296,81 +296,49 @@ theorem actualSource_four_negative_eventual_joint_lift (a b c d : ℕ)
   let tau3' : ℤ := nM * M' - 2 * A * q
   have hmass1f : (P1.map f).sum = td * A - B + tau1 := by
     simp only [P1, U0, V0, List.map_append, List.sum_append, hU0.1, hV0.1,
-      Nat.cast_sub hq.2,
-      Nat.cast_sub hq.1, Nat.cast_sub hnB.1,
-      Nat.cast_sub hnB.2,
-      Nat.cast_sub hnL.1, Nat.cast_sub hnL.2,
-      Nat.cast_sub hnM.1, Nat.cast_sub hnM.2,
+      Nat.cast_sub hq.2, Nat.cast_sub hnB.1,
       Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one]
     dsimp [tau1, tau2, tau3, tau1', tau2', tau3', td, zc, yb, xa]
     ring
   have hmass1g : (P1.map g).sum = td * (2 * A) - B' + tau1' := by
     simp only [P1, U0, V0, List.map_append, List.sum_append, hU0.2.1, hV0.2.1,
-      Nat.cast_sub hq.2,
-      Nat.cast_sub hq.1, Nat.cast_sub hnB.1,
-      Nat.cast_sub hnB.2,
-      Nat.cast_sub hnL.1, Nat.cast_sub hnL.2,
-      Nat.cast_sub hnM.1, Nat.cast_sub hnM.2,
+      Nat.cast_sub hq.2, Nat.cast_sub hnB.1,
       Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one]
     dsimp [tau1, tau2, tau3, tau1', tau2', tau3', td, zc, yb, xa]
     ring
   have hmass2f : (P2.map f).sum = zc * B - L + tau2 - tau1 := by
     simp only [P2, V1, W0, List.map_append, List.sum_append, hV1.1, hW0.1,
-      Nat.cast_sub hq.2,
-      Nat.cast_sub hq.1, Nat.cast_sub hnB.1,
-      Nat.cast_sub hnB.2,
-      Nat.cast_sub hnL.1, Nat.cast_sub hnL.2,
-      Nat.cast_sub hnM.1, Nat.cast_sub hnM.2,
+      Nat.cast_sub hnB.2, Nat.cast_sub hnL.1,
       Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one]
     dsimp [tau1, tau2, tau3, tau1', tau2', tau3', td, zc, yb, xa]
     ring
   have hmass2g : (P2.map g).sum = zc * B' - L' + tau2' - tau1' := by
     simp only [P2, V1, W0, List.map_append, List.sum_append, hV1.2.1, hW0.2.1,
-      Nat.cast_sub hq.2,
-      Nat.cast_sub hq.1, Nat.cast_sub hnB.1,
-      Nat.cast_sub hnB.2,
-      Nat.cast_sub hnL.1, Nat.cast_sub hnL.2,
-      Nat.cast_sub hnM.1, Nat.cast_sub hnM.2,
+      Nat.cast_sub hnB.2, Nat.cast_sub hnL.1,
       Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one]
     dsimp [tau1, tau2, tau3, tau1', tau2', tau3', td, zc, yb, xa]
     ring
   have hmass3f : (P3.map f).sum = yb * L - M + tau3 - tau2 := by
     simp only [P3, W1, X0, List.map_append, List.sum_append, hW1.1, hX0.1,
-      Nat.cast_sub hq.2,
-      Nat.cast_sub hq.1, Nat.cast_sub hnB.1,
-      Nat.cast_sub hnB.2,
-      Nat.cast_sub hnL.1, Nat.cast_sub hnL.2,
-      Nat.cast_sub hnM.1, Nat.cast_sub hnM.2,
+      Nat.cast_sub hnL.2, Nat.cast_sub hnM.1,
       Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one]
     dsimp [tau1, tau2, tau3, tau1', tau2', tau3', td, zc, yb, xa]
     ring
   have hmass3g : (P3.map g).sum = yb * L' - M' + tau3' - tau2' := by
     simp only [P3, W1, X0, List.map_append, List.sum_append, hW1.2.1, hX0.2.1,
-      Nat.cast_sub hq.2,
-      Nat.cast_sub hq.1, Nat.cast_sub hnB.1,
-      Nat.cast_sub hnB.2,
-      Nat.cast_sub hnL.1, Nat.cast_sub hnL.2,
-      Nat.cast_sub hnM.1, Nat.cast_sub hnM.2,
+      Nat.cast_sub hnL.2, Nat.cast_sub hnM.1,
       Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one]
     dsimp [tau1, tau2, tau3, tau1', tau2', tau3', td, zc, yb, xa]
     ring
   have hmass4f : (P4.map f).sum = xa * M - A - tau3 := by
     simp only [P4, U1, X1, List.map_append, List.sum_append, hU1.1, hX1.1,
-      Nat.cast_sub hq.2,
-      Nat.cast_sub hq.1, Nat.cast_sub hnB.1,
-      Nat.cast_sub hnB.2,
-      Nat.cast_sub hnL.1, Nat.cast_sub hnL.2,
-      Nat.cast_sub hnM.1, Nat.cast_sub hnM.2,
+      Nat.cast_sub hq.1, Nat.cast_sub hnM.2,
       Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one]
     dsimp [tau1, tau2, tau3, tau1', tau2', tau3', td, zc, yb, xa]
     ring
   have hmass4g : (P4.map g).sum = xa * M' - 2 * A - tau3' := by
     simp only [P4, U1, X1, List.map_append, List.sum_append, hU1.2.1, hX1.2.1,
-      Nat.cast_sub hq.2,
-      Nat.cast_sub hq.1, Nat.cast_sub hnB.1,
-      Nat.cast_sub hnB.2,
-      Nat.cast_sub hnL.1, Nat.cast_sub hnL.2,
-      Nat.cast_sub hnM.1, Nat.cast_sub hnM.2,
+      Nat.cast_sub hq.1, Nat.cast_sub hnM.2,
       Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one]
     dsimp [tau1, tau2, tau3, tau1', tau2', tau3', td, zc, yb, xa]
     ring
@@ -476,14 +444,15 @@ theorem actualSource_four_negative_eventual_joint_lift (a b c d : ℕ)
   have hk : 0 < k := by dsimp [k]; omega
   have hold' : OriginalOrder k u (l.map (label k hk)) := by
     apply lift_order k u hk l hpold
-    · simpa only [f, hmod, hseed, l, Pre, Post, List.append_assoc, List.singleton_append] using hold
+    · simpa only [f, hmod, hseed, l, Pre, Post, List.append_assoc, List.singleton_append,
+        List.cons_append, List.nil_append] using hold
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero k u (by dsimp [k]; omega)
   have hnew' : OriginalOrder (k + 1) (2 * u)
       ((Pre ++ k :: Post).map (label (k + 1) (by omega))) := by
     apply lift_order (k + 1) (2 * u) (by omega) (Pre ++ k :: Post) hpnew
     · have hhalf : (2 * N + 1) / 2 = N := by omega
       simpa only [g, hmod', hseed', hhalf, Pre, Post, List.append_assoc,
-        List.singleton_append, List.cons_append] using hnew
+        List.singleton_append, List.cons_append, List.nil_append] using hnew
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero (k + 1) (2 * u) (by dsimp [k]; omega)
   refine ⟨l.map (label k hk), Pre.length, hcut, hold', ?_⟩
   change OriginalOrder (k + 1) (2 * u) (earWord k ((Pre ++ Post).map (label k hk)) Pre.length)
