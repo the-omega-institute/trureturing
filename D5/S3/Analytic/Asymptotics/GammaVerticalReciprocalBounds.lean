@@ -98,7 +98,8 @@ private theorem Gamma_div_Gamma_add_mul_I_sq {x y : ℝ} (hx : ∀ k : ℕ, (x :
     have hre : ((x : ℂ) + I * y).re = x := by simp
     rw [hre, Complex.ofReal_re, div_self (Real.rpow_pos_of_pos (Nat.cast_pos.mpr hn) x).ne',
       one_mul,
-      norm_prod, norm_prod, div_pow, ← prod_pow, ← prod_pow, ← prod_div_distrib]
+      norm_prod, norm_prod, div_pow, ← Finset.prod_pow, ← Finset.prod_pow,
+      ← prod_div_distrib]
     refine prod_congr rfl fun j _ => ?_
     have h1 : ‖(x : ℂ) + I * y + j‖ ^ 2 = (x + j) ^ 2 + y ^ 2 := by
       rw [Complex.sq_norm, Complex.normSq_apply]; simp; ring
