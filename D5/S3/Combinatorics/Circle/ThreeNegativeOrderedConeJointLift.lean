@@ -978,13 +978,8 @@ theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
     intro z hz
     obtain ⟨i, hi, rfl⟩ := List.mem_map.mp hz
     exact (hTpos i hi).2
-  have hTailCorrection : vInt + p + 1 ≤ ah * (s + 1) := by
-    have hm := mul_le_mul_of_nonneg_right
-      (show (1 : ℤ) ≤ ah by linarith only [hah0])
-      (show (0 : ℤ) ≤ s + 1 by linarith only [hs])
-    linarith only [hm, hvlt, hsp]
   have hTailEndpoint : D - u + Kb =
-      2 * (Hg - y + Hb) + vInt + p + 1 - ah * (s + 1) := by
+      2 * (Hg - y + Hb) + vInt - p := by
     dsimp only [D]
     rw [hDexpr, huHalf]
     dsimp only [Kb, u]
@@ -1104,7 +1099,7 @@ theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
           dsimp only [D]
           linarith only [hpluszero]
         rw [hEndpoint, hTailEndpoint]
-        linarith only [hQupper, hTailCorrection, hC]
+        linarith only [hQupper, hvlt, hC]
     have hNewQendT' : 0 ≤ (P.toList.map g).sum - Ka + (Q.toList.map g).sum ∧
         (P.toList.map g).sum - Ka + (Q.toList.map g).sum ≤ N := by
       rw [hPsum.2]
