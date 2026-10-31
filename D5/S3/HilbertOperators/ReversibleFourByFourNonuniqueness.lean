@@ -7,12 +7,6 @@
    digest: Weighted anticommuting matrices refute unitary uniqueness of reversible algebras. -/
 
 import Mathlib.Analysis.CStarAlgebra.Matrix
-import Mathlib.LinearAlgebra.UnitaryGroup
-import Mathlib.Algebra.Star.UnitaryStarAlgAut
-import Mathlib.LinearAlgebra.Span.Defs
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
 
 /-! The nonunital matrix-algebra reading of Blecher, arXiv:2509.17673v2,
 Example 5.2 and its unitary-uniqueness conjecture; preregistration #24898. -/
