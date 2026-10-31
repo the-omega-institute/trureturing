@@ -668,7 +668,7 @@ theorem actual_quadratic_matrix_unique (H K : Matrix ι ι ℂ)
   have hv := h (WithLp.ofLp v)
   have hv' := congrArg (fun q : ℂ => star q) hv
   simpa [EuclideanSpace.inner_eq_star_dotProduct, Matrix.ofLp_toLpLin,
-    Matrix.toLin'_apply, dotProduct_comm] using hv'
+    Matrix.toLin'_apply, dotProduct_comm, dotProduct, mul_comm] using hv'
 
 /-- Every real-valued homogeneous quadratic actual invariant has exactly one Hermitian matrix. -/
 theorem invariant_quadratic_hermitian (p : Poly ι) (hp : Invariant p)
