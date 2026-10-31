@@ -132,6 +132,7 @@ private theorem charges (h : History) : paidReads h = preparations h + windows h
   | nil => rfl
   | cons a h ih =>
     simp only [paidReads, List.length_cons, preparations, windows, List.countP_cons] at ih ⊢
+    simp only [Option.isNone, Option.isSome] at ih ⊢
     cases ha : a.1.2 <;>
       simp only [ha, Option.isNone, Option.isSome, Bool.false_eq_true, ite_false,
         ite_true] <;> omega
@@ -241,6 +242,102 @@ private theorem first_window_collision (word : Window) :
     ext i
     fin_cases i <;> fin_cases t <;>
       norm_num [endpoint, corner, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+
+private theorem collision_of_same_run (π : Protocol) (u v : World)
+    (hne : target u ≠ target v) (n : ℕ) (h : History) (R : Mat)
+    (hu : execute read π.policy n [] u = some (h, R))
+    (hv : execute read π.policy n [] v = some (h, R)) :
+    ∃ u v : World, target u ≠ target v ∧
+      π.history u = π.history v ∧ π.output u = π.output v := by
+  have eu := terminal_unique π u n h R hu
+  have ev := terminal_unique π v n h R hv
+  exact ⟨u, v, hne, eu.1.trans ev.1.symm, eu.2.trans ev.2.symm⟩
+
+/-- A source-specific collision for every legal, pointwise finite, one-preparation
+protocol. It neither assumes a collision certificate nor bounds the window tail. -/
+private theorem one_preparation_terminal_collision (π : Protocol)
+    (bound : ∀ w, preparations (π.history w) ≤ 1) :
+    ∃ u v : World, target u ≠ target v ∧
+      π.history u = π.history v ∧ π.output u = π.output v := by
+  obtain ⟨n, hn⟩ := π.terminates (corner false)
+  cases hp0 : π.policy [] with
+  | inr R =>
+    apply collision_of_same_run π (corner false) (corner true) corner_different 1 [] R
+    · simp [execute, hp0]
+    · simp [execute, hp0]
+  | inl q =>
+    obtain ⟨m, tail, ht, hh⟩ := query_tail π.policy (corner false) n [] _ _ q hp0 hn
+    have hc := π.lawful (corner false)
+    rw [hh] at hc
+    have hq0 : q.1 = [] := hc.1
+    have hqa : q.2 = none := by
+      by_contra hne
+      have hmem := hc.2.1 hne
+      simpa [hq0] using hmem
+    have hq : q = ([], none) := Prod.ext hq0 hqa
+    subst q
+    simp only [corner_initial, List.nil_append] at ht hh
+    have htail : Chronological [none] tail := hc.2.2
+    have hpaid : preparations tail = 0 := by
+      have hb := bound (corner false)
+      rw [hh] at hb
+      simpa [preparations] using hb
+    cases hp1 : π.policy [⟨([], none), 1⟩] with
+    | inr R =>
+      apply collision_of_same_run π (corner false) (corner true) corner_different 2
+        [⟨([], none), 1⟩] R
+      · simp [execute, hp0, corner_initial, hp1]
+      · simp [execute, hp0, corner_initial, hp1]
+    | inl q =>
+      obtain ⟨m', rest, ht', htail'⟩ := query_tail π.policy (corner false) m
+        [⟨([], none), 1⟩] tail _ q hp1 ht
+      rw [htail'] at htail
+      have hq0 : q.1 = [none] := htail.1
+      have hqa : ∃ word, q.2 = some word := by
+        cases ha : q.2 with
+        | some word => exact ⟨word, rfl⟩
+        | none =>
+          rw [htail'] at hpaid
+          simp [preparations, ha] at hpaid
+      obtain ⟨word, hqa⟩ := hqa
+      have hq : q = ([none], some word) := Prod.ext hq0 hqa
+      subst q
+      obtain ⟨u, v, hell, hne, huD, hvD, hs⟩ := first_window_collision word
+      obtain ⟨nu, hnu⟩ := π.terminates u
+      obtain ⟨mu, tailu, htu, hhu⟩ := query_tail π.policy u nu [] _ _
+        ([], none) hp0 hnu
+      simp only [huD, List.nil_append] at htu hhu
+      obtain ⟨mu', restu, htru, htailu⟩ := query_tail π.policy u mu
+        [⟨([], none), 1⟩] tailu _ ([none], some word) hp1 htu
+      have hwhole : π.history u = ⟨([], none), 1⟩ ::
+          ⟨([none], some word), read ([none], some word) u⟩ :: restu := by
+        rw [hhu, htailu]
+      have hcrest : Chronological [none, some word] restu := by
+        have hl := π.lawful u
+        rw [hwhole] at hl
+        exact hl.2.2.2.2
+      have hprest : preparations restu = 0 := by
+        have hb := bound u
+        rw [hwhole] at hb
+        simpa [preparations] using hb
+      have hread : read ([none], some word) u = read ([none], some word) v := by
+        change observe u (state u [none, some word]) =
+          observe v (state v [none, some word])
+        rw [hs]
+        cases state v [none, some word] <;> simp [observe, hell]
+      have heq : ∀ a ∈ π.history u, read a.1 u = read a.1 v := by
+        rw [hwhole]
+        intro a ha
+        rcases List.mem_cons.mp ha with rfl | ha
+        · exact huD.trans hvD.symm
+        rcases List.mem_cons.mp ha with rfl | ha
+        · exact hread
+        · exact continuation_read_eq u v [none, some word] restu hell hs
+            hcrest hprest a ha
+      have transfer := execute_transfer read π.policy nu [] u _ _ hnu
+      have hv : execute read π.policy nu [] v = some (π.history u, π.output u) :=
+        transfer.2 v (fun a ha => (heq a ha).symm.trans (transfer.1 a ha))
+      exact collision_of_same_run π u v hne nu (π.history u) (π.output u) hnu hv
 
 end
 end D5.S3.ConceptDynamics.Experiment.KBonacciNonnegativeReader
