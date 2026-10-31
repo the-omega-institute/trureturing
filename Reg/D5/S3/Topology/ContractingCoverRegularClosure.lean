@@ -89,7 +89,7 @@ def family : Registration arena.{u,v} sourceScope.{u,v} where
     simpa using (Set.empty_ne_univ : (∅ : Set PUnit.{u+1}) ≠ univ)
 
 def registration :
-    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, u, 0, 0}
       (@closure_interior_eq_of_contracting_cover.{u,v}) (Realization signature.{u}) Unit Unit where
   unitName := `D5.S3.Topology.ContractingCoverRegularClosure.closure_interior_eq_of_contracting_cover.__information_unit
   realizationName := `Reg.D5.S3.Topology.ContractingCoverRegularClosure.family
