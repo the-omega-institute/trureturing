@@ -57,12 +57,6 @@ private lemma centralWeight_pos (n : ℕ) : 0 < centralWeight n := by
 private lemma centralWeight_nonneg (n : ℕ) : 0 ≤ centralWeight n :=
   (centralWeight_pos n).le
 
-private lemma centralWeight_le_one (n : ℕ) : centralWeight n ≤ 1 := by
-  unfold centralWeight
-  rw [div_le_iff₀ (by positivity : (0 : ℝ) < 4 ^ n)]
-  norm_num
-  exact_mod_cast Nat.centralBinom_le_four_pow n
-
 private lemma centralWeight_step (n : ℕ) :
     (2 * (n + 1) : ℝ) * centralWeight (n + 1) =
       (2 * n + 1) * centralWeight n := by
@@ -407,8 +401,6 @@ private lemma finiteSection_weighted_row_le (N : ℕ) (z : ℂ) (hz : ‖z‖ < 
       have hsqrt_sq : Real.sqrt (s : ℝ) ^ 2 = (s : ℝ) :=
         Real.sq_sqrt (by positivity)
       have hq : 0 ≤ ‖z‖ ^ 2 := sq_nonneg _
-      have hmargin : 0 ≤ 1 - centralWeight s := by
-        linarith [centralWeight_le_one s]
       have hpartial : centralWeight s *
           (∑ x ∈ Finset.range N,
             centralWeight (x + 1) /
