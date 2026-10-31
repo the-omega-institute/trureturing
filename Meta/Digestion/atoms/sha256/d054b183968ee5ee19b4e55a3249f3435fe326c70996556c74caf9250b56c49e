@@ -1,0 +1,16 @@
+**Equation 1.2 (`eq:chi`).**
+
+$$
+\chi(\phi)=\prod_{v\in V_3}\chi_v(\phi),\qquad
+\phi\omega_v\phi^{-1}=\omega_{\phi(v)}^{\chi_v(\phi)},
+\quad \chi_v(\phi)\in\{1,-1\}.
+$$
+
+This scalar is the AS sign. Independently choose an orientation of each
+edge, an ordered pair of its actual flags, for chain coordinates.
+Reversing an auxiliary edge direction does not reverse a vertex cycle.
+A loop-direction reversal must be a swap of its two flags.
+
+<a id="thm-main"></a>
+<a id="thm:main"></a>
+
