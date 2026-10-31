@@ -127,10 +127,10 @@ public sealed class RuleEngineCapacityTests
         fixture.Files[path] = string.Concat(Enumerable.Repeat("line\n", 1001));
         fixture.Changes.Add(path);
 
-        var finding = Assert.Single(RuleCatalog.Default.EvaluateSingle(
+        var finding = Assert.Single(RuleCatalog.Default.EvaluateDeltaSingle(
             RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
         Assert.Equal(path, finding.Path);
-        Assert.Equal("artifact exceeds 1000 lines", finding.Message);
+        Assert.Equal("artifact spans 1001 lines (hard limit 1000)", finding.Message);
     }
 
     [Fact]
@@ -278,11 +278,13 @@ public sealed class RuleEngineCapacityTests
         fixture.Changes.Add(path);
 
         var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
+            RuleCatalog.Default.EvaluateDeltaSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
 
         Assert.Equal(path, diagnostic.Path);
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Equal($"artifact exceeds {RepositoryRules.ArtifactHardLineLimit} lines", diagnostic.Message);
+        Assert.Equal(
+            $"artifact spans {RepositoryRules.ArtifactHardLineLimit + 1} lines "
+            + $"(hard limit {RepositoryRules.ArtifactHardLineLimit})", diagnostic.Message);
     }
 
     [Fact]
@@ -707,7 +709,7 @@ public sealed class RuleEngineCapacityTests
         fixture.Changes.Add("Meta/NewOversize.txt");
 
         var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
+            RuleCatalog.Default.EvaluateDeltaSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
             item => item.Path == "Meta/NewOversize.txt");
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
     }

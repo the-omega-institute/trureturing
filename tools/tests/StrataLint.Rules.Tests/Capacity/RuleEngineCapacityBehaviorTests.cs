@@ -42,12 +42,12 @@ public sealed class RuleEngineCapacityBehaviorTests
         fixture.Files[Source] = prefix + string.Concat(Enumerable.Repeat("// padding\n",
             1001 - prefix.Count(character => character == '\n')));
 
-        var result = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3),
+        var result = RuleCatalog.Default.EvaluateDeltaSingle(RuleId.CreateKnown(3),
             fixture.Build(RawChangeSet.Create([Source])));
 
         var finding = Assert.Single(result.Diagnostics);
         Assert.Equal(Source, finding.Path);
-        Assert.Equal("artifact exceeds 1000 lines", finding.Message);
+        Assert.Equal("artifact spans 1001 lines (hard limit 1000)", finding.Message);
         Assert.Equal(AdmissionEffect.Block, finding.AdmissionEffect);
     }
 
