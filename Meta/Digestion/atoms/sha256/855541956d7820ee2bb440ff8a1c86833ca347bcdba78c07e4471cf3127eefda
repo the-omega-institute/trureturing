@@ -1,0 +1,66 @@
+**定理 B-34.4（原条件纤维上的严格和界）。** 对每对非空子族 $\mathcal F\subseteq\mathcal X_A$、$\mathcal G\subseteq\mathcal X_B$，若它们在完整耳上交叉相交，则
+
+$$
+|\mathcal F|+|\mathcal G|<a.
+\tag{34.10}
+$$
+
+证明。取它们在式(34.2)的 $E$ 上出现的全部迹。式(34.3)使这两个迹族交叉相交；两侧实际成员数分别不超过相应迹族的 $w_E$ 总权重。应用引理B-34.3，归结为某个无交叉非空 $J_0\subseteq E$ 上的交叉相交非空向上族 $\mathscr C,\mathscr D$。置 $d=|J_0|\ge1$。
+
+首先验证这里实际条件权重的全部性质。由式(34.7)，对 $R\subseteq J_0$ 及 $r=|R|$，
+
+$$
+w_{J_0}(R)=w_r=\sum_{j=0}^{d-r}(-1)^j\binom{d-r}{j}d_{r+j},\qquad
+\sum_{r=0}^d\binom dr w_r=a.
+\tag{34.11}
+$$
+
+因为 $K\cup J_0$ 两两不交叉，$d+4\le\lfloor n/2\rfloor$，所以式(34.11)中的每个 $d_{r+j}$ 均由式(34.5)在合法剩余多边形上定义。
+
+这些非负权重满足
+
+$$
+w_0\ge w_1\ge\cdots\ge w_d,\qquad w_0>w_1.
+\tag{34.12}
+$$
+
+非严格部分使用 [B32-LT] Lemma4 的耳翻转注入，并核对条件不变性。固定 $R\subseteq J_0$ 和 $h\in J_0\setminus R$，从精确迹为 $R+h$ 的 $\mathcal X_A$ 成员出发，翻转 $h$。新对角线交叉 $h$，故不可能是 $K\cup J_0$ 中的其他耳；翻转不移去任何其他对角线。因此强制的 $A$、禁止的 $B$ 以及其余全部 $J_0$ 迹不变，所得精确迹为 $R$。耳中心在翻转前不接内部对角线，翻转后恰接新的一条；它是唯一交叉 $h$ 的对角线，故逆翻转唯一，映射为注入。这给 $w_{r+1}\le w_r$。
+
+严格性需要一个不在注入像内的空迹实际完成。固定 $h\in J_0$，删去强制的两个 $A$ 耳，得到 $m=n-2\ge9$ 顶点的凸剩余多边形 $Q$。$J_0\cup B$ 中各耳的中心与邻点都未被删去，仍是 $Q$ 的同一条耳：它们与 $A$ 的耳中心不相邻。设 $h$ 的中心为 $v_i$，在 $Q$ 中取以 $v_i$ 为根的完整扇形剖分。扇形的两个耳中心恰是 $v_i$ 的两个边界邻点；它们不是 $J_0\cup B$ 中的耳中心，因为这些耳与 $h$ 两两不交叉。因此该扇形避免 $J_0\cup B$ 的全部耳。添回两个 $A$ 耳即给 $\mathcal X_A$ 中一个空 $J_0$ 迹成员。
+
+此成员在 $v_i$ 接有 $m-3\ge6$ 条内部对角线。添回的 $A$ 耳不会移去这些对角线；而由精确单点迹 $\{h\}$ 翻转得到的成员，在 $v_i$ 恰接一条内部对角线。所以该空迹完成不在上述单点到空迹的注入像内，得到 $w_0>w_1$。两侧权重相同，故这一严格性适用于式(34.11)的共同权重。
+
+接下来在这个实际条件带权布尔立方体内作加性估计。对任意非空向上族 $\mathscr C\subseteq2^{J_0}$，若 $\varnothing\notin\mathscr C$，置
+
+$$
+b_r=\binom dr,\qquad \alpha_r=\frac{|\{R\in\mathscr C:|R|=r\}|}{b_r}.
+$$
+
+按一层包含边双计数，
+
+$$
+(d-r)|\mathscr C^{(r)}|\le(r+1)|\mathscr C^{(r+1)}|,
+$$
+
+因为每个入选 $r$ 元集的所有直接超集均入选，而每个 $(r+1)$ 元集只有 $r+1$ 个直接子集。用 $(d-r)b_r=(r+1)b_{r+1}$，得 $\alpha_r\le\alpha_{r+1}$。另有 $\alpha_0=0,\alpha_d=1$。展开两重有限和并成对合并得恒等式
+
+$$
+\begin{aligned}
+a|\mathscr C|-2^d\mu_{J_0}(\mathscr C)
+&=\sum_{0\le r<s\le d}b_rb_s(w_r-w_s)(\alpha_s-\alpha_r)\\
+&>0.
+\end{aligned} \tag{34.13}
+$$
+
+每项非负；$(r,s)=(0,d)$ 项严格正，因为 $w_0>w_1\ge w_d$，且 $\alpha_d-\alpha_0=1$。这也包括 $d=1$。
+
+交叉相交且非空的 $\mathscr C,\mathscr D$ 都不含空集，故式(34.13)对两族各自适用。补集映射把 $\mathscr C$ 注入 $2^{J_0}\setminus\mathscr D$：若 $R\in\mathscr C$ 而 $J_0\setminus R\in\mathscr D$，两者不交。因此 $|\mathscr C|+|\mathscr D|\le2^d$，从而
+
+$$
+\mu_{J_0}(\mathscr C)+\mu_{J_0}(\mathscr D)
+<\frac{a}{2^d}(|\mathscr C|+|\mathscr D|)\le a.
+\tag{34.14}
+$$
+
+原族大小之和不超过左边，便得式(34.10)。这个严格和界是对原始完整耳交叉相交子族的结论；没有将乘积界转作和界。∎
+

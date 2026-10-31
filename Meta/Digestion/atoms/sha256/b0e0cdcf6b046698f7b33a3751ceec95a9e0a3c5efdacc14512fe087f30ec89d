@@ -1,0 +1,45 @@
+#### 定理 5.3（精确 KL 勾股与非正交修正）
+
+若 $q\in\mathcal E$，则
+
+$$
+\boxed{ D\!\left(p\middle\Vert q\right) = D\!\left(p\middle\Vert p^*\right) + D\!\left(p^*\middle\Vert q\right) .}
+$$
+
+更一般地，对任意正 $q$，设其交互参数为 $\eta_q$，则
+
+$$
+\boxed{ D\!\left(p\middle\Vert q\right) = D\!\left(p\middle\Vert p^*\right) + D\!\left(p^*\middle\Vert q\right) 
+ -\eta_q(\kappa-\kappa^*).}
+$$
+
+<a id="proof-5-3"></a>
+
+**证明。** 
+$\log q$ 为常数、$x,y,z,xy$ 的线性组合。$p$ 和 $p^*$ 的前三均值与总质量相同，故
+
+$$
+\sum_s(p_s-p_s^*)\log q_s=\eta_q(\kappa-\kappa^*).
+$$
+
+在正内点，相同论证对 $\log p^*$ 给零，因其交互参数为零，直接展开三个 KL 的差即可。
+边界也可直接证明：当 $R>0$，$p^*$ 的底面是 $p$ 的条件边缘的乘积，故 $\operatorname{supp} p\subseteq\operatorname{supp} p^*$，按该条件表展开即得
+
+$$
+D\!\left(p\middle\Vert p^*\right) =H(p^*)-H(p)=R I_0(p).
+$$
+
+任意满支撑 $q$ 的对数线性形式仍给
+
+$$
+D\!\left(p\middle\Vert q\right) - D\!\left(p^*\middle\Vert q\right) 
+=H(p^*)-H(p)-\eta_q(\kappa-\kappa^*),
+$$
+
+所以结论覆盖纤维端点、零边缘和 $Z=0$ 的底面。$R=0$ 时 $p=p^*=\delta_2$，两式亦成立。令 $\eta_q=0$ 得第一式。
+ ∎
+
+这是经典信息投影定理在本来源上的具体实例，理论背景见 [1](#ref-cs)。KL 通常不对称，故这里的“勾股”指有向散度的精确分解，不是把它当成普通欧氏距离。
+
+<a id="statement-5-4"></a>
+

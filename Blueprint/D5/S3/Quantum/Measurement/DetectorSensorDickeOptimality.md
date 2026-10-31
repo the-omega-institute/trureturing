@@ -76,7 +76,21 @@ $$claim = \forall (n : \mathbb{N}) , (3 \leq n) \to (\forall (theta : \mathbb{R}
 
 Section 5, Conjecture 1, page 10: “Consider the ISO problem, with the unitary operator 𝑈, initial state |𝜓⟩, and final states {|𝜙ᵢ⟩} as defined therein. Recall that the eigenvalues of 𝑈 are {𝑒^{+𝑖𝜃}, 𝑒^{−𝑖𝜃}}. Let 𝑛 ≥ 3 be the number of sensors. For a given 𝜃 ∈ (0,𝑇] ∪ [180 − 𝑇, 180), degrees, where 𝑇 is from Theorem 2, the optimal initial state |𝜓⟩ for the ISO problem is as follows. Let 𝑆ₗ be the partition that minimizes (𝑅ₗ + cos(2𝜃)𝐿ₗ)/(𝑅ₗ + 𝐿ₗ), where 𝑅ₗ and 𝐿ₗ are as defined in the previous section. The coefficients of the optimal solution are such that their coefficient-squares are given by: |𝜓ⱼ|² = 1/|𝑆ₗ| ∀ |𝜓ⱼ|² ∈ 𝑆ₗ  |𝜓ⱼ|² = 0 ∀ |𝜓ⱼ|² ∉ 𝑆ₗ” The formula uses radians, φ for the proposed state and ψ for a competitor. Each minimizing l and every assignment of coefficient phases are allowed. The words of weight l number Nat.choose n l. The two Fin n indices have values 0 and 1; their proof fields are omitted.
 
-**Theorem 1.7 (result).**
+**Theorem 1.7 (weight_class_card).**
+
+$$\forall (n : \mathbb{N}) , \forall (k : \mathbb{N}) , \operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left((fun x : Fin\left(n\right) \to Bool \mapsto \operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left((fun j : Fin\left(n\right) \mapsto x\left(j\right) = true), (\operatorname{Finset}.\operatorname{univ} : Finset\left(Fin\left(n\right)\right))\right)\right) = k), (\operatorname{Finset}.\operatorname{univ} : Finset\left(Fin\left(n\right) \to Bool\right))\right)\right) = \operatorname{Nat}.\operatorname{choose}\left(n, k\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.weight_class_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* C. Zhan, H. Gupta, M. Hillery (2024). *Optimizing Initial State of Detector Sensors in Quantum Sensor Networks*. DOI: [10.1145/3655028](https://doi.org/10.1145/3655028). URL: <https://arxiv.org/abs/2306.17401v6>.
+
+*Commentary.*
+
+The Boolean words with exactly k true coordinates form a class of cardinality Nat.choose n k.
+
+**Theorem 1.8 (result).**
 
 $$claim$$
 
@@ -103,6 +117,7 @@ Averaging a feasible Gram decomposition over sensor permutations preserves its o
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.lCount`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.rCount`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.result`
+- Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.weight_class_card`
 - Dependency: [D5/S3/Quantum/Entanglement/TriangleIndependentSourceNoise](../Entanglement/TriangleIndependentSourceNoise.md)
 - Dependency: [D5/S3/Quantum/Measurement/AntidistinguishabilityGram](AntidistinguishabilityGram.md)
 - Dependency: [D5/S3/Quantum/Recovery/PurifiedLocalPath](../Recovery/PurifiedLocalPath.md)

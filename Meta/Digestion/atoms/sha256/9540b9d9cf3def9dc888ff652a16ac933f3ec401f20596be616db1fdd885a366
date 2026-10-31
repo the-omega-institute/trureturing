@@ -1,0 +1,40 @@
+#### 定理 7.1（协方差体积的单纯形平方和）
+
+设有限个向量 $v_i\in\mathbb{R}^d$ 具有非负权重 $p_i$，且 $\sum_i p_i=1$。
+记其均值为 $\mu=\sum_i p_iv_i$，协方差为 $G=\sum_i p_i(v_i-\mu)(v_i-\mu)^T$。则
+
+$$
+\boxed{\det G=(d!)^2\!
+\sum_{i_0<\cdots<i_d}
+\left(\prod_{k=0}^{d}p_{i_k}\right)
+\operatorname{Vol}_d(v_{i_0},\ldots,v_{i_d})^2.}
+$$
+
+特别在二维，
+
+$$
+\det G=4\sum_{i<j<k}p_ip_jp_k A_{ijk}^2.
+$$
+
+<a id="proof-7-1"></a>
+
+**证明。** 
+令 $M$ 的第 $i$ 行为 $\sqrt{p_i}(1,v_i^T)$。其 Gram 矩阵为
+
+$$
+M^TM=\begin{pmatrix}1&\mu^T\\\mu&\sum_i p_iv_iv_i^T\end{pmatrix}.
+$$
+
+减去首行、列的相应倍数，其行列式为 $\det G$。Cauchy--Binet 把它写成全部 $(d+1)$ 行子矩阵的行列式平方之和。每个子式等于 $\sqrt{\prod p_{i_k}}$ 乘增广顶点行列式，后者的绝对值为 $d!$ 倍单纯形体积，得到结论。
+ ∎
+
+这是一种真正的广义勾股：Gram 体积来自外幂空间中的范数，子式是其正交坐标。项目矩三角形卷已使用此经典恒等式：当 $v_i=(r_i,r_i^2)$ 时，三角面积由 Vandermonde 给出
+
+$$
+A(a,b,c)=\tfrac12(b-a)(c-a)(c-b),\quad a<b<c.
+$$
+
+面积很小意味着这些候选响应在该读出中接近退化；精确可逆与稳定可逆是两项不同要求。
+
+<a id="statement-7-2"></a>
+

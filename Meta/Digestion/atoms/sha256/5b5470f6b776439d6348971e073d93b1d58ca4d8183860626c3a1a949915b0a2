@@ -1,0 +1,39 @@
+**Theorem 2.4 (All finite hub numbers are strictly worse in the four-hub window).** Let $a\in[2,3]$. For every finite $s\ge5$ and every $x\in\mathcal P_s(a)$,
+
+$$
+J_s(x)\ge 8s+\frac{32}{3}(a-3)>F_4(a)+4.
+$$
+
+Hence
+
+$$
+\min_{s\ge4}\ \min_{x\in\mathcal P_s(a)}J_s(x)=F_4(a),
+$$
+
+and the equality profile is exactly the one in Theorem 2.2.
+
+**Proof.** Apply Lemma 2.3 to every incidence $(T,i)$ with $i\in T$, writing $k=|T|$ and $y=y_i$. Since $y_i\le1$,
+
+$$
+\begin{aligned}
+2J_s(x)
+&=\sum_Tx_T|T|^2\sum_{i\in T}y_i^{-2}\\
+&\ge16\sum_T\sum_{i\in T}\frac{x_T}{y_i}
+ +\frac{64}{3}\sum_Tx_T|T|\left(1-\frac4{|T|}\right)\\
+&=16s+\frac{64}{3}(q-4)
+ =16s+\frac{64}{3}(a-3).
+\end{aligned}
+$$
+
+The first incidence identity is exact because
+$\sum_T\sum_{i\in T}x_T/y_i=\sum_i y_i/y_i=s$. Dividing by two proves the first bound. For $s\ge5$ it is enough to compare with $s=5$. Put $u=a-2\in[0,1]$. A direct expansion gives
+
+$$
+3(a+1)^2\left(40+\frac{32}{3}(a-3)-F_4(a)-4\right)
+=36(1-2u)^2+124u^2+32u^3>0.
+$$
+
+Thus every $s\ge5$ has a strict gap. Theorem 2.2 supplies the four-hub value and its complete equality conditions. ∎
+
+The first inequality in this proof, before the comparison with $F_4$, remains valid whenever the profile domain is nonempty, with no restriction $a\in[2,3]$.
+

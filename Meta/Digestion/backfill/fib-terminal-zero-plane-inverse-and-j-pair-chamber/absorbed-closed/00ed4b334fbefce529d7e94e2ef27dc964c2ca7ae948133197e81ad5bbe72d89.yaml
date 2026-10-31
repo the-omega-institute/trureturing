@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:00ed4b334fbefce529d7e94e2ef27dc964c2ca7ae948133197e81ad5bbe72d89
+  normalized_sha256: sha256:00ed4b334fbefce529d7e94e2ef27dc964c2ca7ae948133197e81ad5bbe72d89
+cas_ref: sha256:00ed4b334fbefce529d7e94e2ef27dc964c2ca7ae948133197e81ad5bbe72d89
+coverage_gids:
+  - gid: D5/S3/Observer/CubicGain/TerminalSourceRank.observation_ranks_and_fixed_source_uniqueness
+    target_statement_id: sha256:1251d4998c247ba9a78ee453ae8d74ffbe3a5ae6b6daea2047766b4fcb2a5373
+receipts:
+  unresolved_subitems: []

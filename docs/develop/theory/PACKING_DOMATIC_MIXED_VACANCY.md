@@ -1479,3 +1479,199 @@ integer $k\ge4$ in the source's Problem 3, remain outside this result.
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Every even number of classes at least eight
+
+**Definition 11.1 (Complementary blocks for an even class count).** Let
+$m\ge4$ be an integer, put $k=2m$ and $T=2k=4m$, and define
+
+$$
+q_m=\begin{cases}m,&m\text{ even},\\m-1,&m\text{ odd},\end{cases}\qquad
+r_m=\begin{cases}m+3,&m\text{ even},\\m+2,&m\text{ odd}.
+\end{cases}
+$$
+
+For the even and odd cases respectively, let
+
+$$
+D_m=
+\begin{cases}
+\{2+2h:0\le h<(m-2)/2\}\cup\{m+1\}
+ \cup\{m+4+2h:0\le h<(m-4)/2\},&m\text{ even},\\[2mm]
+\{2+2h:0\le h<(m-3)/2\}\cup\{m\}
+ \cup\{m+3+2h:0\le h<(m-3)/2\},&m\text{ odd}.
+\end{cases}
+$$
+
+Write the members of $D_m$ increasingly as
+$d_1<\cdots<d_{m-2}$. Define $F_m$ on the residues
+$0,\ldots,T-1$ by
+
+$$
+\begin{aligned}
+F_m(0)&=F_m(k)=2m-1,\\
+F_m(1)&=m-1,&F_m(1+k)&=m,\\
+F_m(q_m)&=m,&F_m(q_m+k)&=m-1,\\
+F_m(r_m)&=m-1,&F_m(r_m+k)&=m,\\
+F_m(d_j)&=j,&F_m(d_j+1)&=2m-1-j,\\
+F_m(d_j+k)&=2m-1-j,&F_m(d_j+1+k)&=j
+\qquad(1\le j\le m-2).
+\end{aligned}
+$$
+
+For an integer $a$, let $R_T(a)$ and $R_k(a)$ be its Euclidean remainders
+in $\{0,\ldots,T-1\}$ and $\{0,\ldots,k-1\}$, and put
+
+$$
+f_m(a)=F_m(R_T(a)),\qquad c_m(a)=1+R_k(a).
+$$
+
+Thus $c_m$ has the $k$ residue classes modulo $k$ as its classes.
+
+**Theorem 11.2 (The original even-family upper bound).** For every integer
+$m\ge4$, the maps in Definition 11.1 are well-defined and satisfy
+
+$$
+\begin{aligned}
+u\ne v,\quad f_m(u)=f_m(v)=j&\Longrightarrow |u-v|\ge j+1,\\
+\forall z\in\mathbb Z\ \forall i\in\{1,\ldots,2m\}\ \exists a\in\mathbb Z:
+&\quad c_m(a)=i,\quad |z-a|\le f_m(a).
+\end{aligned}
+$$
+
+Consequently $Q(k,k-1)$ of Definition 1.2 holds for every even integer
+$k\ge8$. In the notation of Brešar--Ferme--Hu,
+[*Partitioning an $S$-packing coloring into broadcast dominating sets*](https://arxiv.org/html/2610.03477v1),
+Sections 1 and 3.2 and Problem 3 in Section 5, this gives
+$\chi_{\rho,k}(P_\infty)\le k-1$ for every even $k\ge8$.
+
+**Proof.** If $m$ is even, the exceptional positions in the first block
+$[0,2m-1]\cap\mathbb Z$ are $\{0,1,m,m+3\}$, and their complement is the disjoint union
+
+$$
+[2,m-1]\cap\mathbb Z,\qquad [m+1,m+2]\cap\mathbb Z,\qquad
+[m+4,2m-1]\cap\mathbb Z.
+$$
+
+Their lengths are $m-2$, $2$, and $m-4$, all even. Pairing consecutive
+positions from the left endpoint gives exactly the pairs
+$\{d_j,d_j+1\}$ in the even row of Definition 11.1. If $m$ is odd,
+then $m\ge5$, the exceptional positions are $\{0,1,m-1,m+2\}$, and the complement is
+
+$$
+[2,m-2]\cap\mathbb Z,\qquad [m,m+1]\cap\mathbb Z,\qquad
+[m+3,2m-1]\cap\mathbb Z.
+$$
+
+These lengths are $m-3$, $2$, and $m-3$, again all even, and consecutive
+pairing gives the odd row. Hence the exceptional positions and the
+$m-2$ pairs partition the first block. Translating by $k$ partitions the
+second block, so every residue receives exactly one value. The assigned
+values are $1,\ldots,2m-1$, all positive and at most $2m-1=k-1$.
+
+It remains to check the packing. The value $2m-1$ occurs exactly at
+$k\mathbb Z$, whose successive gaps are $k=2m$, the required value plus
+one. For $1\le j\le m-2$, the complete occurrence sets of the two
+values assigned to the pair beginning at $d_j$ are
+
+$$
+\begin{aligned}
+\{a:f_m(a)=j\}&=\{d_j,d_j+1+k\}+T\mathbb Z,\\
+\{a:f_m(a)=2m-1-j\}&=\{d_j+1,d_j+k\}+T\mathbb Z.
+\end{aligned}
+$$
+
+Their cyclic gaps are respectively $k+1,k-1$ and $k-1,k+1$. Since
+$k-1=2m-1\ge 2m-j$ for $j\ge1$, every such gap is at least one more
+than either colour in its row.
+
+The remaining occurrence sets are
+
+$$
+\{a:f_m(a)=m-1\}=\{1,r_m,q_m+k\}+T\mathbb Z,\qquad
+\{a:f_m(a)=m\}=\{q_m,1+k,r_m+k\}+T\mathbb Z.
+$$
+
+For even $m$, their cyclic gap triples are
+
+$$
+(m+2,\,2m-3,\,m+1)\quad\text{and}\quad
+(m+1,\,m+2,\,2m-3),
+$$
+
+while for odd $m$ they are
+
+$$
+(m+1,\,2m-3,\,m+2)\quad\text{and}\quad
+(m+2,\,m+1,\,2m-3).
+$$
+
+Because $m\ge4$, every displayed gap is at least $m+1$. This is at
+least one more than $m$, and hence also at least one more than $m-1$.
+The listed occurrence sets exhaust all values, and any two distinct
+members of one set are separated by a nonempty sum of its cyclic gaps.
+Thus the packing inequalities hold across every period boundary and on
+the whole integer line.
+
+The assignments also give, for every integer $a$,
+
+$$
+f_m(a)+f_m(a+k)=
+\begin{cases}
+4m-2,&a\equiv0\pmod k,\\
+2m-1,&a\not\equiv0\pmod k.
+\end{cases}
+\tag{11.1}
+$$
+
+In particular the sum is always at least $2m-1=k-1$. Fix $z\in\mathbb Z$
+and a class label $i\in\{1,\ldots,k\}$. Euclidean division gives
+integers $q$ and $e$ with $0\le e<k$ such that
+
+$$
+a=i-1+qk,\qquad z=a+e.
+$$
+
+Both $a$ and $a+k$ have class label $i$. If $e\le f_m(a)$, then $a$
+covers $z$. Otherwise integrality gives $e\ge f_m(a)+1$, and (11.1)
+implies
+
+$$
+|z-(a+k)|=k-e\le k-1-f_m(a)\le f_m(a+k).
+$$
+
+So $a+k$ covers $z$. This uses the original interval endpoints and the
+same positive $f_m$ for every radius and every centre; negative $q$ and
+the endpoint values $e=0,k-1$ are included in the same division. Since
+$z$ and $i$ were arbitrary, the common covering condition in Definition
+1.2 follows. Every even $k\ge8$ is $2m$ for an integer $m\ge4$, proving
+the assertion. The source parameter map is
+$u_a\leftrightarrow a$, $d_{P_\infty}(u_a,u_b)=|a-b|$, ordinary packing
+sequence $S=(1,2,3,\ldots)$, palette $t=2m-1=k-1$, and partition classes
+$c_m^{-1}(i)=(i-1)+k\mathbb Z$, exactly as in the source definition.
+\square$
+
+**Corollary 11.3 (The all-$k\ge4$ source consequence).** Combining the
+published BFH $k=4,5,6$ upper assertions with Theorem 9.2 for $k=7$,
+Theorem 10.2 for odd $k\ge9$, and Theorem 11.2 for even $k\ge8$ gives
+
+$$
+\forall k\in\mathbb Z,\quad k\ge4\Longrightarrow Q(k,k-1),
+$$
+
+and therefore
+
+$$
+\chi_{\rho,k}(P_\infty)\le k-1\qquad(k\ge4).
+$$
+
+Here the BFH input is its original whole-line definition and its exact
+small-case assertions; the owner construction at $k=7$ is the same
+whole-line $Q(7,6)$ realization of Theorem 9.2, and the two infinite
+families use the same $f$ simultaneously for every class and every
+integer position. The cited finite-path suppliers and the six-class
+palette theorem concern different predicates or already-consumed cases;
+no finite endpoint, least-palette, sharpness, extremizer, or periodicity
+claim is added by this corollary.
+
+## 追加锚（本行以下为增补区）
