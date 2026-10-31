@@ -45,4 +45,5 @@ Let G be a finite connected cyclic flag graph with an actual cycle or two distin
 - Truth anchor: `D5/S3/Combinatorics/Graph/Jacobi/FlagPruning.LeafPruning`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Jacobi/FlagPruning.extractComponentHair`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Jacobi/FlagPruning.pruned_branching_component_vanishes`
+- Dependency: [D5/S3/Combinatorics/Graph/Jacobi/LeafPruningRanks](LeafPruningRanks.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Jacobi/OpenHairRepresentation](OpenHairRepresentation.md)
