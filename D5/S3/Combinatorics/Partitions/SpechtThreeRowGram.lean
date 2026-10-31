@@ -139,6 +139,7 @@ private theorem colouring_fixed_iff {n : ℕ} (a : Fin 3 → ℤ) (π : Perm (Fi
   · intro h
     apply Subtype.ext
     funext x
+    change f.1 (π.symm x) = f.1 x
     have hx := congrFun h (π⁻¹ x)
     change f.1 (π (π.symm x)) = f.1 (π.symm x) at hx
     simpa only [Function.comp_apply, Equiv.apply_symm_apply] using hx.symm
