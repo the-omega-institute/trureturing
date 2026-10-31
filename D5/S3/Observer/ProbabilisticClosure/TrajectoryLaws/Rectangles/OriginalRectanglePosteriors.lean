@@ -112,7 +112,7 @@ private theorem wordAt_take (d : ℤ) (n s : ℕ) (hs : s ≤ n) (z : Visible) :
   · intro i hi hi'
     simp only [wordAt,List.getElem_take,List.getElem_ofFn]
 
-private theorem wordAt_drop (d : ℤ) (n s : ℕ) (hs : s ≤ n) (z : Visible) :
+private theorem wordAt_drop (d : ℤ) (n s : ℕ) (z : Visible) :
     (wordAt d n z).drop s = wordAt (d+s) (n-s) z := by
   apply List.ext_getElem
   · simp [wordAt]
@@ -134,7 +134,7 @@ private theorem rightList_wordAt (n : ℕ) (z : Visible) :
 
 private theorem left_suffix (j k : ℕ) (hjk : j ≤ k) (z : Visible) :
     (leftList k z).drop (k-j) = leftList j z := by
-  rw [leftList_wordAt,leftList_wordAt,wordAt_drop _ _ _ (by omega)]
+  rw [leftList_wordAt,leftList_wordAt,wordAt_drop]
   have hd : -(k : ℤ)+(k-j : ℕ) = -(j : ℤ) := by
     rw [Int.natCast_sub hjk]
     ring
@@ -188,7 +188,7 @@ private theorem count_wordAt (w : List Bool) (b q n : ℕ) (d : ℤ)
   | succ q ih =>
     have hn' : q*b+b ≤ n := by simpa only [Nat.add_mul,one_mul] using hn
     have hb : b ≤ n := by omega
-    rw [originalSuccessCount,wordAt_take d n b hb,wordAt_drop d n b hb,
+    rw [originalSuccessCount,wordAt_take d n b hb,wordAt_drop d n b,
       ih (n-b) (d+b) (by omega)]
     have he : (w <:+: wordAt d b z.2) ↔ z ∈ blockSuccess w b d := by
       rfl
@@ -204,10 +204,10 @@ private theorem count_wordAt (w : List Bool) (b q n : ℕ) (d : ℤ)
     rw [hsplit]
     simp only [he]
 
-private theorem left_count (w : List Bool) (b j : ℕ) (hb : 0 < b) (z : PathSpace H) :
+private theorem left_count (w : List Bool) (b j : ℕ) (z : PathSpace H) :
     originalSuccessCount w b (j/b) ((leftList j z.2).drop (j%b)) =
       chronologicalCount w b (-((j/b : ℕ) : ℤ)*b) (j/b) z := by
-  rw [leftList_wordAt,wordAt_drop _ _ _ (Nat.le_of_lt (Nat.mod_lt j hb))]
+  rw [leftList_wordAt,wordAt_drop]
   have hdiv : j%b+(j/b)*b = j := by
     simpa only [Nat.mul_comm b] using Nat.mod_add_div j b
   have hn : j-j%b = (j/b)*b := by omega
@@ -244,10 +244,6 @@ private theorem half_line_count_bounds (θ : Presentation H)
   let P := J.map Prod.snd
   let b := w.length + Fintype.card H
   let ρ := 1-rectangleMinimum (product θ w) R / rectangleMaximum (product θ w) R
-  have hb : 0 < b := by
-    have hw' : 0 < w.length := List.length_pos_iff.mpr hw
-    dsimp [b]
-    omega
   have hf := finite_condExp_bounds θ J hc w hw R j
   have hh := finite_record_bounds_to_half_lines P erasedBit j
     (fun z => ρ ^ originalSuccessCount w b (j/b) ((leftList j z).drop (j%b)))
@@ -255,7 +251,7 @@ private theorem half_line_count_bounds (θ : Presentation H)
   have hl := ae_of_ae_map measurable_snd.aemeasurable hh.1
   have hr := ae_of_ae_map measurable_snd.aemeasurable hh.2
   filter_upwards [hl,hr] with z hzl hzr
-  exact ⟨by simpa only [left_count w b j hb z] using hzl,
+  exact ⟨by simpa only [left_count w b j z] using hzl,
     by simpa only [right_count w b j z] using hzr⟩
 
 private theorem rectangle_rho_range (B : Matrix H H ℝ) (R : Rectangle B) :
