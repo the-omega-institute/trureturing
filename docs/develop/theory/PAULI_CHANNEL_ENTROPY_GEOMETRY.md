@@ -2132,7 +2132,7 @@ relative-entropy mixing identity is
 $$
  g=wD(P\Vert R)+(1-w)D(KPK\Vert R).
 $$
-Since $P,KPK,R\preceq MI$, Lemma 11.1,
+Since $P,KPK,R\preceq MI$, the relative-entropy estimate above,
 $P-R=(1-a)T$, and $KPK-R=-(1+a)T$ give
 $$
  g\geq\frac{w(1-a)^2+(1-w)(1+a)^2}{2M}\|T\|_2^2
