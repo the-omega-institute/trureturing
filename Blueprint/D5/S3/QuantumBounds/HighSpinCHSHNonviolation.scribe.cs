@@ -81,7 +81,10 @@ internal sealed class HighSpinCHSHNonviolationDocument : IScribeDocumentDefiniti
                             + "expectation estimate bounds the norm of its trace expectation by that operator norm. "
                             + "Cyclicity of trace moves the dilation through the original expectation; multiplying by "
                             + "the norm of (n/2)² yields (n/2)²·2 = n²/2. This proves the claim for every n ≥ 2."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hanotel-loubenets-2025-high-spin-chsh-nonviolation"),
+                    ResolutionKind.Proved)))));
 
     private static Formula UnitFormula() => All("u", VectorType(), Equivalence(Unit(X("u")), Equal(
         Add(Add(Pow(At(X("u"), D(0)), D(2)), Pow(At(X("u"), D(1)), D(2))),
