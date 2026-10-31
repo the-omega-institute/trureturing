@@ -19,17 +19,9 @@ namespace D5.S3.Combinatorics.Circle.FourNegativeEventual
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
 
-open private ThreeBitSource.centered_ladder ThreeBitSource.mask_labels
-  ThreeBitSource.mask_labels_bound ThreeBitSource.mask_labels_mem
-  ThreeBitSource.mask_complement ThreeBitSource.mask_labels_disjoint
-  ThreeBitSource.mask_labels_sum ThreeBitSource.labelled_permutation
+open private mask_labels mask_labels_bound mask_labels_mem mask_complement
+  mask_labels_disjoint mask_labels_sum
   from D5.S3.Combinatorics.Circle.ThreeBitSource
-open ThreeBitSource
-open private ThreeNegativeEqualOuterJointLift.label
-  ThreeNegativeEqualOuterJointLift.lift_order
-  ThreeNegativeEqualOuterJointLift.marked_word
-  ThreeNegativeEqualOuterJointLift.schedule_from_tail
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 private theorem centered_shift (N X Y : ℤ) (e i : ℕ)
     (hN : 0 < N) (hodd : N % 2 = 1)
@@ -797,7 +789,7 @@ private theorem chainMask_partition (len off m n : ℕ) (hs : m + n = 2 ^ len - 
   have hn : n < 2 ^ len := by omega
   have hc := mask_complement len m n hs
   have hd := mask_labels_disjoint (len := len) (off := off) (hx := hm) (hy := hn) hc.1
-  simp only [chainMask, dif_pos hm, dif_pos hn]
+  simp only [chainMask, dite_eq_left hm, dite_eq_left hn]
   apply (List.perm_ext_iff_of_nodup ?_ (List.nodup_range' (s := off) (n := len))).mpr
   · intro i
     simp only [List.mem_append, Finset.mem_toList, mask_labels_mem, List.mem_range'_1]
@@ -822,7 +814,7 @@ private theorem chainMask_sum (len off m : ℕ) (hm : m < 2 ^ len)
     (f : ℕ → ℤ) (A : ℤ) (hf : ∀ e < len, f (off + e) = (2 : ℤ) ^ e * A) :
     ((chainMask len off m).map f).sum = (m : ℤ) * A := by
   classical
-  simp only [chainMask, dif_pos hm]
+  simp only [chainMask, dite_eq_left hm]
   change (((mask_labels len off m hm).toList : Multiset ℕ).map f).sum = _
   rw [Finset.coe_toList]
   exact mask_labels_sum len off m hm f A hf
@@ -879,9 +871,9 @@ private theorem four_mask_inventory (a b c d q nB nL nM : ℕ)
     ac_rfl
   have hrange : List.range' 0 d ++ List.range' d c ++ List.range' (d + c) b ++
       List.range' (d + c + b) a = List.range (a + b + c + d) := by
-    rw [← List.range'_append_1 (s := 0) (m := d) (n := c)]
-    rw [← List.range'_append_1 (s := 0) (m := d + c) (n := b)]
-    rw [← List.range'_append_1 (s := 0) (m := d + c + b) (n := a)]
+    rw [List.range'_append_1 (s := 0) (m := d) (n := c)]
+    rw [List.range'_append_1 (s := 0) (m := d + c) (n := b)]
+    rw [List.range'_append_1 (s := 0) (m := d + c + b) (n := a)]
     simp [← List.range_eq_range', show d + c + b + a = a + b + c + d by omega]
   exact hreorder.trans (by simpa only [← List.append_assoc, hrange] using hu.append (hv.append (hw.append hx)))
 
