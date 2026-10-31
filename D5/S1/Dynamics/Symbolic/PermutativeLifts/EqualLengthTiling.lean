@@ -93,14 +93,6 @@ theorem tiled_offset_aligned (W : Bool → List Bool) (L : ℕ)
     ((x.1 i).2.val : ℤ) = i % (L : ℤ) := by
   simpa [hzero] using tiled_offset_phase W L hW hL x i
 
-private theorem read_tile_eq_get (W : Bool → List Bool) (s : TileState W)
-    (a : Bool) (j : ℕ) (hj : j < (W a).length)
-    (ha : s.1 = a) (ho : s.2.val = j) :
-    readTile W s = (W a).get ⟨j, hj⟩ := by
-  have heq : s = ⟨a, ⟨j, hj⟩⟩ := tile_state_ext W ha ho
-  rw [heq]
-  rfl
-
 /-- Equal readout and equal boundaries identify tiles whose words, rather than
 whose lengths, are distinct. The common length may be the same for both types. -/
 theorem equal_length_tiling_eq_of_read_boundaries (W : Bool → List Bool) (L : ℕ)
@@ -121,11 +113,12 @@ theorem equal_length_tiling_eq_of_read_boundaries (W : Bool → List Bool) (L : 
     intro j hjx hjy
     have hfx := tiled_forwards W x.2 b j (by omega)
     have hfy := tiled_forwards W y.2 b j (by omega)
-    have hxread := read_tile_eq_get W (x.1 (b + (j : ℤ))) (x.1 b).1 j hjx
+    have hxread := readTile_coordinate W (x.1 (b + (j : ℤ))) (x.1 b).1 j hjx
       hfx.1 (by omega)
-    have hyread := read_tile_eq_get W (y.1 (b + (j : ℤ))) (y.1 b).1 j hjy
+    have hyread := readTile_coordinate W (y.1 (b + (j : ℤ))) (y.1 b).1 j hjy
       hfy.1 (by omega)
-    exact hxread.symm.trans ((congrFun hr (b + (j : ℤ))).trans hyread)
+    simpa only [List.get_eq_getElem] using
+      hxread.symm.trans ((congrFun hr (b + (j : ℤ))).trans hyread)
   exact tile_state_ext W (hxb.1.symm.trans ((hinj hwords).trans hyb.1)) hoff
 
 /-- A column shared by the two words has a type-independent readout. -/
@@ -140,12 +133,13 @@ theorem tiled_read_common_column (W : Bool → List Bool) (L : ℕ)
   have hoff : (x.1 i).2.val = j := by
     have := tiled_offset_aligned W L hW hL x hzero i
     omega
-  have hr := read_tile_eq_get W (x.1 i) (x.1 i).1 j (by rw [hW]; exact hj) rfl hoff
+  have hr := readTile_coordinate W (x.1 i) (x.1 i).1 j (by rw [hW]; exact hj) rfl hoff
   change readTile W (x.1 i) = _
+  simp only [List.get_eq_getElem]
   rw [hr]
   cases (x.1 i).1
   · rfl
-  · exact hc.symm
+  · exact (by simpa only [List.get_eq_getElem] using hc.symm)
 
 /-- Every point in a shared phase column is periodic with the full tile length. -/
 theorem tiled_common_column_periodic (W : Bool → List Bool) (L : ℕ)
@@ -157,10 +151,10 @@ theorem tiled_common_column_periodic (W : Bool → List Bool) (L : ℕ)
         simpa only [hW] using (x.1 i).2.isLt⟩)
     (k : ℤ) : readTiling W x (i + k * (L : ℤ)) = readTiling W x i := by
   have hlt : (x.1 i).2.val < L := by simpa only [hW] using (x.1 i).2.isLt
-  have h₁ := read_tile_eq_get W (x.1 (i + k * (L : ℤ)))
+  have h₁ := readTile_coordinate W (x.1 (i + k * (L : ℤ)))
     (x.1 (i + k * (L : ℤ))).1 (x.1 i).2.val (by simpa only [hW] using hlt) rfl
     (tiled_offset_periodic W L hW hL x i k)
-  have h₂ := read_tile_eq_get W (x.1 i) (x.1 i).1 (x.1 i).2.val
+  have h₂ := readTile_coordinate W (x.1 i) (x.1 i).1 (x.1 i).2.val
     (by simpa only [hW] using hlt) rfl rfl
   have hcommon (a b : Bool) :
       (W a).get ⟨(x.1 i).2.val, by simpa only [hW] using hlt⟩ =
@@ -168,8 +162,9 @@ theorem tiled_common_column_periodic (W : Bool → List Bool) (L : ℕ)
     cases a <;> cases b
     · rfl
     · exact hc
-    · exact hc.symm
+    · exact (by simpa only [List.get_eq_getElem] using hc.symm)
     · rfl
+  simp only [List.get_eq_getElem] at hcommon
   exact h₁.trans ((hcommon _ _).trans h₂.symm)
 
 end D5.S1.Dynamics.Symbolic.PermutativeLifts

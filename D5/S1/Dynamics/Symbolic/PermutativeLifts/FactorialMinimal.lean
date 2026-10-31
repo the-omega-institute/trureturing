@@ -29,15 +29,6 @@ def factorialWindow (y : ℤ → Bool) (t : ℤ) (r : ℕ) : List Bool :=
 @[simp] theorem factorialWindow_length (y : ℤ → Bool) (t : ℤ) (r : ℕ) :
     (factorialWindow y t r).length = r := by simp [factorialWindow]
 
-private theorem readTile_coordinate (W : Bool → List Bool) (s : TileState W)
-    (a : Bool) (p : ℕ) (hp : p < (W a).length)
-    (ht : s.1 = a) (ho : s.2.val = p) : readTile W s = (W a)[p] := by
-  rcases s with ⟨b, q⟩
-  dsimp at ht ho
-  subst a
-  subst p
-  rfl
-
 private theorem marked_block_occurs (W : Bool → List Bool) (x : MarkedTiling W)
     (b : ℤ) (hb : (x.1 b).2.val = 0) :
     WordOccursAt (W (x.1 b).1) (readTiling W x) b := by
