@@ -110,20 +110,20 @@ def evidence : Registration arena.{u} (type_of% (@sourceVacuum_linearForms.{u}))
   dependence := dependence
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@sourceVacuum_linearForms.{u}) (type_of% (realize signature actual.readout actual.anchor))
+    (@sourceVacuum_linearForms.{u}) (Realization signature.{u})
     Type Unit where
   unitName := `D5.S3.VertexAlgebra.TwistedGround.OriginalCorrectionGaussian.sourceVacuum_linearForms.__information_unit
   realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalCorrectionGaussian.LinearForms.evidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨evidence⟩
+  realization := .source arena.{u} ⟨evidence.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
+  readout := some (realize signature.{u} actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -195,7 +195,7 @@ def evidence : Registration arena (type_of% (@sourceVacuum_eq_evaluation)) where
   dependence := dependence
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@sourceVacuum_eq_evaluation) (type_of% (realize signature actual.readout actual.anchor))
+    (@sourceVacuum_eq_evaluation) (Realization signature)
     Type Unit where
   unitName := `D5.S3.VertexAlgebra.TwistedGround.OriginalCorrectionGaussian.sourceVacuum_eq_evaluation.__information_unit
   realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalCorrectionGaussian.Evaluation.evidence
