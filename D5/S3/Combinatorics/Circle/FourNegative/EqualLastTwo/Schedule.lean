@@ -42,13 +42,18 @@ private theorem large_weights (a b d : ℕ) (hd : 2 ≤ d) (hb : d+2 ≤ b) (ha 
     simp [Finset.disjoint_left]; omega
   have h2 : Disjoint ({a-d-1}:Finset ℕ) (Finset.Ico (a-b-1) (a-d-3)) := by
     simp [Finset.disjoint_left]; omega
-  dsimp only [bankLarge]
+  simp only [bankLarge, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val_two, Matrix.cons_val_three]
   simp only [weight,Finset.sum_union h0,Finset.sum_union h2,Finset.sum_singleton,
     sum_Ico_two _ _ (show a-d ≤ a-1 by omega),
     sum_Ico_two _ _ (show a-b-1 ≤ a-d-3 by omega),sum_range_two]
-  rw [show a-d=(a-d-3)+3 by omega,show a-d-2=(a-d-3)+1 by omega,
-    show a-d-1=(a-d-3)+2 by omega]
-  simp only [pow_add]
+  have e0 : (2:ℤ)^(a-d)=2^(a-d-3)*2^3 := by
+    rw [←pow_add]; congr 1; omega
+  have e1 : (2:ℤ)^(a-d-2)=2^(a-d-3)*2^1 := by
+    rw [←pow_add]; congr 1; omega
+  have e2 : (2:ℤ)^(a-d-1)=2^(a-d-3)*2^2 := by
+    rw [←pow_add]; congr 1; omega
+  rw [e0,e1,e2]
   norm_num
   repeat' constructor <;> ring
 
@@ -62,12 +67,19 @@ private theorem adjacent_weights (a d : ℕ) (hd : 2 ≤ d) (ha : d+4 ≤ a) :
     simp [Finset.disjoint_left]; omega
   have h3 : Disjoint ({a-d-2}:Finset ℕ) (Finset.range (a-d-4)) := by
     simp [Finset.disjoint_left]; omega
-  dsimp only [bankAdjacent]
+  simp only [bankAdjacent, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val_two, Matrix.cons_val_three]
   simp only [weight,Finset.sum_union h0,Finset.sum_union h3,Finset.sum_singleton,
     sum_Ico_two _ _ (show a-d ≤ a-1 by omega),sum_range_two]
-  rw [show a-d=(a-d-4)+4 by omega,show a-d-3=(a-d-4)+1 by omega,
-    show a-d-1=(a-d-4)+3 by omega,show a-d-2=(a-d-4)+2 by omega]
-  simp only [pow_add]
+  have e0 : (2:ℤ)^(a-d)=2^(a-d-4)*2^4 := by
+    rw [←pow_add]; congr 1; omega
+  have e1 : (2:ℤ)^(a-d-3)=2^(a-d-4)*2^1 := by
+    rw [←pow_add]; congr 1; omega
+  have e2 : (2:ℤ)^(a-d-1)=2^(a-d-4)*2^3 := by
+    rw [←pow_add]; congr 1; omega
+  have e3 : (2:ℤ)^(a-d-2)=2^(a-d-4)*2^2 := by
+    rw [←pow_add]; congr 1; omega
+  rw [e0,e1,e2,e3]
   norm_num
   repeat' constructor <;> ring
 
@@ -90,7 +102,9 @@ private theorem large_mass (a b d : ℕ) (hd : 2 ≤ d) (hb : d+2 ≤ b) (ha : b
     (∑ i ∈ largeR a b d, v i)=(2^(d-1)-1)*V+(5*m-u)*X ∧
     (∑ i ∈ largeG a b d, v i)=(2^(b-1)-1)*W+(u-1)*X := by
   have bw := large_weights a b d hd hb ha
-  have bx (r : Fin 4) := shift_sum v (2*d+b) (bankLarge a d (a-b-1) r) X (by
+  have bx (r : Fin 4) :
+      (∑ i ∈ shift (2*d+b) (bankLarge a d (a-b-1) r), v i)=weight (bankLarge a d (a-b-1) r)*X :=
+    shift_sum v (2*d+b) (bankLarge a d (a-b-1) r) X (by
     intro i hi; apply hX i
     fin_cases r <;> simp [bankLarge] at hi <;> omega)
   have bU := native_sum v 0 (d-1) U (by simpa using hU)
@@ -122,7 +136,9 @@ private theorem adjacent_mass (a d : ℕ) (hd : 2 ≤ d) (ha : d+4 ≤ a)
     (∑ i ∈ adjacentR a d, v i)=(2^(d-1)-1)*V+(8*m)*X ∧
     (∑ i ∈ adjacentG a d, v i)=(2^(d)-1)*W+(5*m-1)*X := by
   have bw := adjacent_weights a d hd ha
-  have bx (r : Fin 4) := shift_sum v (3*d+1) (bankAdjacent a d r) X (by
+  have bx (r : Fin 4) :
+      (∑ i ∈ shift (3*d+1) (bankAdjacent a d r), v i)=weight (bankAdjacent a d r)*X :=
+    shift_sum v (3*d+1) (bankAdjacent a d r) X (by
     intro i hi; apply hX i
     fin_cases r <;> simp [bankAdjacent] at hi <;> omega)
   have bU := native_sum v 0 (d-1) U (by simpa using hU)
@@ -157,14 +173,16 @@ private theorem corner_two_mass (d : ℕ) (hd : 2 ≤ d)
   have bW := native_sum v (2*d) d W hW
   have x0 := hX 0 (by omega)
   have x1 := hX 1 (by omega)
-  have bX := shift_sum v (3*d+1) (Finset.Ico 2 (d+2-1)) X (by
+  have bX : (∑ i ∈ shift (3*d+1) (Finset.Ico 2 (d+2-1)), v i)=
+      (∑ i ∈ Finset.Ico 2 (d+2-1), (2:ℤ)^i)*X :=
+    shift_sum v (3*d+1) (Finset.Ico 2 (d+2-1)) X (by
     intro i hi; apply hX; exact (Finset.mem_Ico.mp hi).2)
   rw [sum_Ico_two _ _ (show 2 ≤ d+2-1 by omega)] at bX
   have eX : shift (3*d+1) (Finset.Ico 2 (d+2-1))=
       Finset.Ico (3*d+3) (4*d+2) := by
     rw [shift,image_Ico]
     congr 1 <;> omega
-  rw [eX] at bX
+  rw [eX,show d+2-1=d+1 by omega] at bX
   have dP : Disjoint (Finset.range (d-1)) ({3*d+1}:Finset ℕ) := by
     simp [Finset.disjoint_left]; omega
   have dQ : Disjoint (shift d (Finset.range (d-1))) ({3*d+2}:Finset ℕ) := by
@@ -194,14 +212,16 @@ private theorem corner_three_mass (d : ℕ) (hd : 2 ≤ d)
   have x0 := hX 0 (by omega)
   have x1 := hX 1 (by omega)
   have x2 := hX 2 (by omega)
-  have bX := shift_sum v (3*d+1) (Finset.Ico 3 (d+3-1)) X (by
+  have bX : (∑ i ∈ shift (3*d+1) (Finset.Ico 3 (d+3-1)), v i)=
+      (∑ i ∈ Finset.Ico 3 (d+3-1), (2:ℤ)^i)*X :=
+    shift_sum v (3*d+1) (Finset.Ico 3 (d+3-1)) X (by
     intro i hi; apply hX; exact (Finset.mem_Ico.mp hi).2)
   rw [sum_Ico_two _ _ (show 3 ≤ d+3-1 by omega)] at bX
   have eX : shift (3*d+1) (Finset.Ico 3 (d+3-1))=
       Finset.Ico (3*d+4) (4*d+3) := by
     rw [shift,image_Ico]
     congr 1 <;> omega
-  rw [eX] at bX
+  rw [eX,show d+3-1=d+2 by omega] at bX
   have dP : Disjoint ({3*d+1}:Finset ℕ) (Finset.Ico (3*d+4) (4*d+3)) := by
     simp [Finset.disjoint_left]; omega
   have dQ : Disjoint (shift d (Finset.range (d-1))) ({3*d+3}:Finset ℕ) := by
