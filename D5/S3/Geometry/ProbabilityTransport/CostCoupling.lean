@@ -488,7 +488,6 @@ private lemma e_le (x y : ℝ) : toE x ≤ toE y ↔ x ≤ y :=
   (WithBot.coe_strictMono.comp WithTop.coe_strictMono).le_iff_le
 private lemma e_inj (x y : ℝ) : toE x = toE y ↔ x = y :=
   (WithBot.coe_strictMono.comp WithTop.coe_strictMono).injective.eq_iff
-private lemma e_neg (x : ℝ) : -(toE x) = toE (-x) := rfl
 private lemma e_dot {K : Type*} [Fintype K] (c : K → ℝ) (x : K → NNeg ℝ) :
     (fun k => toE (c k)) ᵥ⬝ x = toE (∑ k, c k * (x k).val) := by
   change (∑ k, toE ((x k).val * c k)) = _
@@ -522,7 +521,7 @@ private lemma real_dual_solution {I J : Type*} [Fintype I]
     (A : I → J → ℝ) (b : I → ℝ) (c : J → ℝ) (y : I → NNeg ℝ) :
     (realLP A b c).dualize.IsSolution y ↔ ∀ j, ∑ i, -(A i j) * (y i).val ≤ c j := by
   change (∀ j, (fun i => -(toE (A i j))) ᵥ⬝ y ≤ toE (c j)) ↔ _
-  simp only [e_neg, e_dot, e_le]
+  simp only [e_dot, e_le]
 
 private lemma paired_solution {K J : Type*} [Fintype J]
     (B : K → J → ℝ) (d : K → ℝ) (c : J → ℝ) (x : J → NNeg ℝ) :
