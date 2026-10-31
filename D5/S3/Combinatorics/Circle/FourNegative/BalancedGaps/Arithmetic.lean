@@ -78,7 +78,7 @@ private theorem polynomial_endpoints (n : Fin 16) (q : ℤ) (hq : 4 ≤ q) :
       drops,newDrops,modulus,powers,offsets,Pi.sub_apply] <;>
     repeat' apply And.intro
   all_goals
-    apply sub_nonneg.mp
+    first | apply sub_nonneg.mp | apply sub_pos.mp
     ring_nf
     positivity
 
