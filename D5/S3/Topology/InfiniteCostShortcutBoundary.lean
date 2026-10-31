@@ -2,9 +2,11 @@
    generality: G
    mirror-B: D5/B/S3/Topology/InfiniteCostShortcutBoundary
    mirror-E: none(waiver:finite-counterexample)
-   anchors: [mathlib/module/Mathlib.Topology.EMetricSpace.Defs]
-   utility: none
+   anchors: []
+   utility: kind=certified-instance; basis=terminal=gid:D5/S3/Topology/InfiniteCostShortcutBoundary.self_glue_distance_zero
    digest: A two-point extended metric separates infinite paid cost from a zero-cost self-gluing shortcut. -/
+
+/- Escape audit unfinished for the five public boundary theorems: https://github.com/the-omega-institute/trureturing/issues/24553. No declared_validated registration is claimed. -/
 
 import D5.S3.Topology.FiniteOrbitChainMetric
 import Mathlib.Data.Bool.Basic
