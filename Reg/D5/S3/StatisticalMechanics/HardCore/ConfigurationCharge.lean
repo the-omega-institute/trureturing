@@ -115,7 +115,7 @@ theorem observation_dependence : DependentFamily.ObservationalDependence
   dsimp [charge, sample, configurationCharge]
   rw [hU]
   norm_num [degreeWeight, occupiedNeighbors, SimpleGraph.degree,
-    SimpleGraph.neighborFinset_eq_filter, hU, star]
+    SimpleGraph.neighborFinset_eq_filter, hU, star, filter_insert, filter_empty]
 
 def familyRegistration : DependentFamily.Registration arena.{u} sourceScope.{u} where
   actual := actual
@@ -135,8 +135,9 @@ noncomputable def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
       (@defect_eq_expected_charge.{u})
       (DependentFamily.Realization signature.{u}) Unit Unit where
-  unitName :=
-    `D5.S3.StatisticalMechanics.HardCore.ConfigurationCharge.defect_eq_expected_charge.__information_unit
+  unitName := .str
+    `D5.S3.StatisticalMechanics.HardCore.ConfigurationCharge.defect_eq_expected_charge
+    "__information_unit"
   realizationName := `Reg.D5.S3.StatisticalMechanics.HardCore.ConfigurationCharge.familyRegistration
   realizationSource := none
   generated := false
