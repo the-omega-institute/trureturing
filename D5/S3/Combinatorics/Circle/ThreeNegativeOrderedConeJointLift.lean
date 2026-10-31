@@ -331,7 +331,7 @@ private theorem doubled_source_zero_cast (n t : ℕ) (u : ℤ) (hn : 3 ≤ n)
   rw [htu] at hz
   exact hz
 
-set_option maxHeartbeats 5000000 in
+set_option maxHeartbeats 10000000 in
 /-- The full ordered cone 2 <= a < b <= c has one physical joint permutation and
 one literal ear, with the ear selected by the exact beta charge. -/
 theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
@@ -968,6 +968,28 @@ theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
   have hDleN_of_le (hcut : D ≤ s * t + s / 2) : D ≤ N :=
     le_trans hcut hLamN
   have hQcase : D ≤ s * t + s / 2 ∨ s * t + s / 2 < D := le_or_gt D (s * t + s / 2)
+  have hold := ordered_schedule f (List.range k) P.toList Q.toList T.toList
+    alpha beta gamma Ha Hb Hg C hp hfA' hfB' hfG' hHa0 hHb0 ⟨hHg0, hHgC⟩
+    (fun i hi => (hPpos i hi).1) (fun i hi => (hQpos i hi).1) (fun i hi => (hTpos i hi).1)
+    hOldP' hOldAlpha' hOldQend' hOldBeta' hzero
+  have hyn0 : 0 ≤ yn := by
+    rw [← hTsum.2]
+    apply List.sum_nonneg
+    intro z hz
+    obtain ⟨i, hi, rfl⟩ := List.mem_map.mp hz
+    exact (hTpos i hi).2
+  have hTailCorrection : vInt + p + 1 ≤ ah * (s + 1) := by
+    have hm := mul_le_mul_of_nonneg_right
+      (show (1 : ℤ) ≤ ah by linarith only [hah0])
+      (show (0 : ℤ) ≤ s + 1 by linarith only [hs])
+    linarith only [hm, hvlt, hsp]
+  have hTailEndpoint : D - u + Kb =
+      2 * (Hg - y + Hb) + vInt + p + 1 - ah * (s + 1) := by
+    dsimp only [D]
+    rw [hDexpr, huHalf]
+    dsimp only [Kb, u]
+    rw [hrhalf, hsp]
+    ring
   by_cases hcut : D ≤ s * t + s / 2
   · have hDleN := hDleN_of_le hcut
     have hsumQ : xn - Ka + u + (Q.toList.map g).sum - Kb + yn - Kg = 0 := by
@@ -1011,12 +1033,6 @@ theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
     have hNewBetaQ' : 0 ≤ (P.toList.map g).sum - Ka + ((k :: Q.toList).map g).sum - Kb ∧
         (P.toList.map g).sum - Ka + ((k :: Q.toList).map g).sum - Kb ≤ N := by
       exact fresh_prefix_bounds_sub g P.toList Q.toList k xn u Ka Kb N hPsum.2 hgear hNewBetaQ
-    change (P.toList ++ alpha :: Q.toList ++ beta :: T.toList ++ [gamma]).Perm
-        (List.range k) at hp
-    have hold := ordered_schedule f (List.range k) P.toList Q.toList T.toList
-      alpha beta gamma Ha Hb Hg C hp hfA' hfB' hfG' hHa0 hHb0 ⟨hHg0, hHgC⟩
-      (fun i hi => (hPpos i hi).1) (fun i hi => (hQpos i hi).1) (fun i hi => (hTpos i hi).1)
-      hOldP' hOldAlpha' hOldQend' hOldBeta' hzero
     change (P.toList ++ alpha :: k :: Q.toList ++ beta :: T.toList ++ [gamma]).Perm
         (List.range (k + 1)) at hplusQ
     have hnew := ordered_schedule g (List.range (k + 1)) P.toList
@@ -1060,14 +1076,35 @@ theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
           have hs' := (hplusT.map g).sum_eq
           rw [hzero'] at hs'
           exact hs'
-        simpa only [plusT, List.map_append, List.sum_append, List.map_cons, List.map_nil,
+        simp only [plusT, List.map_append, List.sum_append, List.map_cons, List.map_nil,
           List.sum_cons, List.sum_nil, add_zero, hPsum.2, hTsum.2, hgA', hgB', hgG', hgear]
-          using hpluszero
-      rw [show xn - Ka + (Q.toList.map g).sum - Kb = D - u by omega]
-      exact ⟨hDminusU, by omega⟩
+          at hpluszero
+        linarith only [hpluszero]
+      have heq : xn - Ka + (Q.toList.map g).sum - Kb = D - u := by
+        dsimp only [D]
+        linarith only [hs]
+      rw [heq]
+      refine ⟨hDminusU, ?_⟩
+      dsimp only [D]
+      linarith only [hKgN, hyn0, hu.1]
+    have hNewBetaT' : 0 ≤ (P.toList.map g).sum - Ka + (Q.toList.map g).sum - Kb ∧
+        (P.toList.map g).sum - Ka + (Q.toList.map g).sum - Kb ≤ N := by
+      rw [hPsum.2]
+      exact hNewBetaT
     have hNewQendT : 0 ≤ xn - Ka + (Q.toList.map g).sum ∧
         xn - Ka + (Q.toList.map g).sum ≤ N := by
-      constructor <;> omega
+      constructor
+      · linarith only [hNewBetaT.1, hKb0]
+      · have hEndpoint : xn - Ka + (Q.toList.map g).sum = D - u + Kb := by
+          have hpluszero := (hplusT.map g).sum_eq
+          rw [hzero'] at hpluszero
+          simp only [plusT, List.map_append, List.sum_append, List.map_cons, List.map_nil,
+            List.sum_cons, List.sum_nil, add_zero, hPsum.2, hTsum.2,
+            hgA', hgB', hgG', hgear] at hpluszero
+          dsimp only [D]
+          linarith only [hpluszero]
+        rw [hEndpoint, hTailEndpoint]
+        linarith only [hQupper, hTailCorrection, hC]
     have hNewQendT' : 0 ≤ (P.toList.map g).sum - Ka + (Q.toList.map g).sum ∧
         (P.toList.map g).sum - Ka + (Q.toList.map g).sum ≤ N := by
       rw [hPsum.2]
@@ -1083,7 +1120,7 @@ theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
             subst hi
             rw [hgear]
             omega)
-      hPnewMass hNewAlpha hNewQendT' hNewBetaT hzero'
+      hPnewMass hNewAlpha hNewQendT' hNewBetaT' hzero'
     let pre := P.toList ++ alpha :: Q.toList ++ beta :: T.toList
     let j := pre.length
     have hj : j ≤ k := by
@@ -1096,13 +1133,7 @@ theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
     have hk : 0 < k := by dsimp [k]; omega
     refine ⟨word.map (label k hk), j, hj, ?_, ?_⟩
     · refine lift_order k (1 + 2 ^ a + 2 ^ (a + b)) hk word hp ?_ ?_
-      · change (P.toList ++ alpha :: Q.toList ++ beta :: T.toList ++ [gamma]).Perm
-          (List.range k) at hp
-        have hold := ordered_schedule f (List.range k) P.toList Q.toList T.toList
-          alpha beta gamma Ha Hb Hg C hp hfA' hfB' hfG' hHa0 hHb0 ⟨hHg0, hHgC⟩
-          (fun i hi => (hPpos i hi).1) (fun i hi => (hQpos i hi).1) (fun i hi => (hTpos i hi).1)
-          hOldP' hOldAlpha' hOldQend' hOldBeta' hzero
-        simpa only [word, hseed, hhalf] using hold
+      · simpa only [word, hseed, hhalf] using hold
       · simpa only [hseed] using hzero
     · have he : earWord k (word.map (label k hk)) j = plusT.map (label (k + 1) (by omega)) := by
         have hw : pre ++ [gamma] = word := by
