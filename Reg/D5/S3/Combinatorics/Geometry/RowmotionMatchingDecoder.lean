@@ -36,38 +36,20 @@ abbrev arena : Arena where
   Law R := ∀ {m : ℕ} (M Q : NCMatching m),
     (∀ k, IsOpening M k ↔ IsOpening Q k) → R.readout () m M = Q.partner
 
-private def adjacent : NCMatching 4 where
-  partner := { toFun := ![1, 0, 3, 2]
-               invFun := ![1, 0, 3, 2]
-               left_inv := by intro i; fin_cases i <;> rfl
-               right_inv := by intro i; fin_cases i <;> rfl }
-  involutive := by intro i; fin_cases i <;> rfl
-  noFixed := by intro i; fin_cases i <;> decide
-  noncrossing := by intro a b; fin_cases a <;> fin_cases b <;> decide
-
-private def nested : NCMatching 4 where
-  partner := { toFun := ![3, 2, 1, 0]
-               invFun := ![3, 2, 1, 0]
-               left_inv := by intro i; fin_cases i <;> rfl
-               right_inv := by intro i; fin_cases i <;> rfl }
-  involutive := by intro i; fin_cases i <;> rfl
-  noFixed := by intro i; fin_cases i <;> decide
-  noncrossing := by intro a b; fin_cases a <;> fin_cases b <;> decide
-
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have he := h adjacent adjacent (fun _ => Iff.rfl)
-  have hx := congrArg (fun e : Equiv.Perm (Fin 4) => e 0) he
-  change (0 : Fin 4) = 1 at hx
-  exact (by decide : (0 : Fin 4) ≠ 1) hx
+  have he := h (patternMatching 4) (patternMatching 4) (fun _ => Iff.rfl)
+  have hx := congrArg (fun e : Equiv.Perm (Fin 6) => e 0) he
+  change (0 : Fin 6) = 1 at hx
+  exact (by decide : (0 : Fin 6) ≠ 1) hx
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  refine ⟨4, adjacent, nested, ?_⟩
+  refine ⟨6, patternMatching 4, patternMatching 0, ?_⟩
   intro h
-  have hx := congrArg (fun e : Equiv.Perm (Fin 4) => e 0) h
-  change (1 : Fin 4) = 3 at hx
-  exact (by decide : (1 : Fin 4) ≠ 3) hx
+  have hx := congrArg (fun e : Equiv.Perm (Fin 6) => e 0) h
+  change (1 : Fin 6) = 5 at hx
+  exact (by decide : (1 : Fin 6) ≠ 5) hx
 
 def source_registration : Registration arena (type_of% @partner_eq_of_openings) where
   actual := actual
@@ -135,26 +117,6 @@ abbrev arena : Arena where
     (∀ M : OrdinaryMatching n, Separated (decode M) ∧ (decode M).OrdConnected) ∧
     (∀ I : Set (Fin 3 × Fin n), Separated I → ∃ M : OrdinaryMatching n, decode M = I)
 
-private def adjacentSix : NCMatching 6 where
-  partner := {
-    toFun := ![1, 0, 3, 2, 5, 4]
-    invFun := ![1, 0, 3, 2, 5, 4]
-    left_inv := by intro i; fin_cases i <;> rfl
-    right_inv := by intro i; fin_cases i <;> rfl }
-  involutive := by intro i; fin_cases i <;> rfl
-  noFixed := by intro i; fin_cases i <;> decide
-  noncrossing := by intro a b; fin_cases a <;> fin_cases b <;> decide
-
-private def nestedSix : NCMatching 6 where
-  partner := {
-    toFun := ![5, 4, 3, 2, 1, 0]
-    invFun := ![5, 4, 3, 2, 1, 0]
-    left_inv := by intro i; fin_cases i <;> rfl
-    right_inv := by intro i; fin_cases i <;> rfl }
-  involutive := by intro i; fin_cases i <;> rfl
-  noFixed := by intro i; fin_cases i <;> decide
-  noncrossing := by intro a b; fin_cases a <;> fin_cases b <;> decide
-
 private def spaced (P : NCMatching 6) : OrdinaryMatching 60 :=
   ⟨{ sites := OrderEmbedding.ofStrictMono
         (fun k : Fin 6 => (⟨8 * k.val, by have := k.isLt; omega⟩ : Fin 64))
@@ -168,7 +130,7 @@ private def spaced (P : NCMatching 6) : OrdinaryMatching 60 :=
        apply le_min <;> omega },
    by intro k; change 8 * k.val < 62; have := k.isLt; omega⟩
 
-private theorem spaced_ne : spaced adjacentSix ≠ spaced nestedSix := by
+private theorem spaced_ne : spaced (patternMatching 4) ≠ spaced (patternMatching 0) := by
   intro h
   have hh := congrArg (fun M : OrdinaryMatching 60 => M.val.pairs.partner 0) h
   change (1 : Fin 6) = 5 at hh
@@ -176,12 +138,12 @@ private theorem spaced_ne : spaced adjacentSix ≠ spaced nestedSix := by
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact spaced_ne ((h (n := 60)).1 (show rejected.readout () 60 (spaced adjacentSix) =
-    rejected.readout () 60 (spaced nestedSix) from rfl))
+  exact spaced_ne ((h (n := 60)).1 (show rejected.readout () 60 (spaced (patternMatching 4)) =
+    rejected.readout () 60 (spaced (patternMatching 0)) from rfl))
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  refine ⟨60, spaced adjacentSix, spaced nestedSix, ?_⟩
+  refine ⟨60, spaced (patternMatching 4), spaced (patternMatching 0), ?_⟩
   intro he
   exact spaced_ne (ordinary_decoder.1 he)
 

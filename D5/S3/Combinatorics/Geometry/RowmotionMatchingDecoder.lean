@@ -481,7 +481,8 @@ private def patternPartner : Fin 5 → Fin 6 → Fin 6 :=
   ![![5, 4, 3, 2, 1, 0], ![5, 2, 1, 4, 3, 0], ![3, 2, 1, 0, 5, 4],
     ![1, 0, 5, 4, 3, 2], ![1, 0, 3, 2, 5, 4]]
 
-private def patternMatching (w : Fin 5) : NCMatching 6 where
+/-- The five noncrossing pairings, in the five possible opening/closing orders. -/
+def patternMatching (w : Fin 5) : NCMatching 6 where
   partner := {
     toFun := patternPartner w
     invFun := patternPartner w
