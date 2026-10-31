@@ -152,7 +152,7 @@ open scoped LaurentSeries PowerSeries
 
 namespace CdsoRadical
 
-open HahnSeries
+open HahnSeries Polynomial
 
 private theorem coe_derivative {R : Type*} [CommRing R] (f : R⟦X⟧) :
     ((PowerSeries.derivative f : R⟦X⟧) : R⸨X⸩) =
@@ -163,7 +163,7 @@ private theorem coe_derivative {R : Type*} [CommRing R] (f : R⟦X⟧) :
   rcases i with n | n
   · simp [PowerSeries.coeff_derivative, Ring.choose_one_right,
       show ¬(n : ℤ) < 0 by omega, show ¬(n : ℤ) + 1 < 0 by omega,
-      show ((n : ℤ) + 1).natAbs = n + 1 by omega, nsmul_eq_mul]
+      show ((n : ℤ) + 1).natAbs = n + 1 by omega, nsmul_eq_mul, mul_comm]
   · rcases n with _ | n
     · simp [Ring.choose_one_right]
     · simp [show Int.negSucc (n + 1) + 1 < 0 by omega]
@@ -295,5 +295,61 @@ private theorem D_root (S : ℝ⸨X⸩) (p : ℝ[X])
   apply (eq_div_iff hp).2
   rw [← hs]
   linear_combination S / 2 * h
+
+
+private theorem D_jet (S : ℝ⸨X⸩) (p A : ℝ[X])
+    (hp : polyLS p ≠ 0) (hs : S ^ 2 = polyLS p) (v : ℕ) :
+    ((laurentD ℝ).toLinearMap ^ v) (polyLS A * S) =
+      S * polyLS p ^ (-(v : ℤ)) * polyLS (polyJet p A v) := by
+  induction v with
+  | zero => simp [polyJet, mul_comm]
+  | succ v ih =>
+    rw [pow_succ', Module.End.mul_apply, ih]
+    change laurentD ℝ (S * polyLS p ^ (-(v : ℤ)) * polyLS (polyJet p A v)) = _
+    rw [Derivation.leibniz, Derivation.leibniz, Derivation.leibniz_zpow,
+      D_root S p hp hs, D_poly, D_poly]
+    simp only [polyJet, map_add, map_mul, smul_eq_mul]
+    have hz : polyLS p ^ (-(v : ℤ)) =
+        polyLS p ^ (-((v + 1 : ℕ) : ℤ)) * polyLS p := by
+      rw [← zpow_one (polyLS p), ← zpow_add₀ hp]
+      congr 1
+      omega
+    have hz' : polyLS p ^ (-(v : ℤ) - 1) =
+        polyLS p ^ (-((v + 1 : ℕ) : ℤ)) := by congr 1; push_cast; ring
+    rw [hz', hz]
+    have hC (c : ℝ) : polyLS (Polynomial.C c) = algebraMap ℝ ℝ⸨X⸩ c := by
+      simp [polyLS, Polynomial.coe_C, HahnSeries.algebraMap_apply',
+        PowerSeries.algebraMap_apply]
+    rw [hC]
+    simp only [map_sub, map_div₀, map_one, map_ofNat, map_natCast, Int.cast_neg,
+      Int.cast_natCast]
+    field_simp
+    <;> ring
+
+private def wronskianPS {n : ℕ} (f : Fin n → ℝ⟦X⟧) :
+    Matrix (Fin n) (Fin n) ℝ⟦X⟧ :=
+  fun i j => PowerSeries.derivative^[i.val] (f j)
+
+private theorem iterate_coe (f : ℝ⟦X⟧) (v : ℕ) :
+    ((laurentD ℝ).toLinearMap ^ v) (f : ℝ⸨X⸩) =
+      ((PowerSeries.derivative^[v] f : ℝ⟦X⟧) : ℝ⸨X⸩) := by
+  induction v with
+  | zero => rfl
+  | succ v ih =>
+    rw [pow_succ', Module.End.mul_apply, ih, Function.iterate_succ_apply']
+    exact (coe_derivative _).symm
+
+private theorem wronskianPS_ne_zero {n : ℕ} (f : Fin n → ℝ⟦X⟧)
+    (hi : LinearIndependent ℝ (fun i => (f i : ℝ⸨X⸩))) :
+    (wronskianPS f).det ≠ 0 := by
+  have h := BGS.Algebra.derivationWronskian_det_ne_zero_of_linearIndependent
+    (laurentD ℝ) (laurentD_constants) n _ hi
+  have he : BGS.Algebra.derivationWronskian (laurentD ℝ)
+      (fun i => (f i : ℝ⸨X⸩)) =
+      (wronskianPS f).map (HahnSeries.ofPowerSeries ℤ ℝ) := by
+    ext i j
+    exact iterate_coe _ _
+  rw [he, ← RingHom.map_det] at h
+  exact fun hz => h (by rw [hz, map_zero])
 
 end CdsoRadical
