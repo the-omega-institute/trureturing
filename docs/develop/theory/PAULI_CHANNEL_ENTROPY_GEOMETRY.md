@@ -4273,3 +4273,271 @@ stated source and bias domain. The general funding comparison at
 $a,b\in(0,1)$, the unrestricted pure-product sign, and the general
 pure-source and mixed-source sign remain unresolved outside the
 previously proved regions.
+
+## 追加锚（本行以下为增补区）
+
+## 19. Quantitative edge funding and the local discord gap
+
+Retain the independent biases and pure-product notation of §18, and put
+$u=1-a^2$, $v=1-b^2$ and
+$f(s)=e(\sqrt{1-s})$, $0\leq s\leq1$. Thus $e$ decreases and $f$
+increases. All entropies below use natural logarithms.
+
+**Proposition 19.1 (A quantitative margin on every nonidentity bias edge).**
+For every complex pure product source with $\mu=-y_Cy_D=0$, at $b=0$,
+$$
+ A_E-J\geq\frac{1-a^2}{2}y_E^2
+            +\frac{\alpha_1(a)}{24}x_E^2z_E^2,
+ \qquad E=C,D,
+ \quad \alpha_1(a)=(1-a^2)\frac{\operatorname{atanh}a}{a},
+\tag{19.1}
+$$
+where $\alpha_1(0)=1$ and $\alpha_1(1)=0$. At $a=0$ the corresponding
+bound holds with $a$ replaced by $b$. On either edge away from an
+identity channel, both funding gaps are strictly positive precisely
+when neither source factor is an $X$ or $Z$ eigenstate. Every such point
+has a pure-product neighborhood, permitting $\mu\ne0$ and interior
+biases, on which both funding inequalities remain strict.
+
+Proof.
+First let both factors be real. In (18.4), retain its degree-four
+difference before discarding the remaining nonnegative terms:
+$$
+ \mathcal A(X,Z)-I(p(XU,ZV,0))
+ \geq X^2Z^2\left(\frac16-\frac{U^2V^2}{2}\right)
+ \geq\frac{X^2Z^2}{24}.
+$$
+The last inequality uses $U^2V^2\leq1/4$. Insert
+$X=t x_E$, $Z=z_E$ in the one-bias integral of §18.
+The exact scalar remainder (18.6) is nonnegative, and
+$\int t^2\,d\nu_a(t)=\alpha_1(a)$, giving (19.1) when $y_E=0$.
+
+For a complex local factor with nonzero $XZ$ projection write
+$x_E^2=tX^2$, $z_E^2=tZ^2$, $y_E^2=1-t$, $X^2+Z^2=1$.
+At $b=0$ its exact gap is $A(t)=f(p)+f(q)-f(r)$, with
+$$
+ p=1-tZ^2,\qquad q=u(1-tX^2),\qquad r=1-a^2tZ^2\geq p,q.
+$$
+Here
+$$
+ f'(s)=\frac{\operatorname{atanh}\sqrt{1-s}}{2\sqrt{1-s}}
+ \geq\frac12
+$$
+is decreasing, with $f'(1)=1/2$. Consequently
+$$
+ A'(t)=-Z^2f'(p)-uX^2f'(q)+a^2Z^2f'(r)
+       \leq-u f'(r)\leq-\frac u2.
+$$
+Integrating gives $A(t)\geq A(1)+u(1-t)/2$.
+Normalizing the $XZ$ projection increases $J$ by the local-dephasing
+argument in §18. Its real-factor margin is
+$\alpha_1(a)X^2Z^2/24\geq\alpha_1(a)x_E^2z_E^2/24$.
+If instead the other factor is complex, normalize that factor, leaving
+$A_E$ fixed and increasing $J$. These two observations handle both
+choices of $E$, because $\mu=0$ guarantees at least one real factor.
+If a projection vanishes, $J=0$ and its factor has
+$A_E=e(a)=f(u)\geq u/2$; the other factor's bound follows by the same
+normalization argument. Continuity includes all singular endpoints.
+
+For $a<1$ both coefficients in (19.1) are positive. A unit local Bloch
+vector has $y_E^2=x_E^2z_E^2=0$ exactly at an $X$ or $Z$ eigenstate.
+Such an eigenfactor has $A_E=J=0$ directly. Hadamard conjugation gives
+the other edge, and entropy continuity gives the asserted neighborhoods.
+
+**Definition 19.2 (The actual local orbit control state).**
+For a real pure source $|c\rangle=(c_0,c_1)$ on physical qubit $C$, put
+$x=2c_0c_1$, $z=c_0^2-c_1^2$, and set
+$\pi_i=(1+(-1)^ia)/2$, $\eta_j=(1+(-1)^jb)/2$.
+On control qubits $A,B$ define
+$$
+ \Gamma^{(C)}_{ij,kl}
+  =\sqrt{\pi_i\eta_j\pi_k\eta_l}
+       \langle X^kZ^lc\mid X^iZ^jc\rangle.
+\tag{19.2}
+$$
+For a bipartite state $\omega$, its one-way entropic discord, with $B$
+measured over all POVMs $M$, is
+$$
+ D_B(\omega)=S(\omega_B)-S(\omega)
+                +\inf_M\sum_jp_jS(\omega_{A|j}).
+\tag{19.3}
+$$
+
+**Proposition 19.3 (The local funding term is optimized discord).**
+For every real pure $C$ and independently variable $a,b\in[0,1]$,
+$$
+ D_B(\Gamma^{(C)})=f(vx^2)+f(uz^2)-f(vx^2+uz^2)=A_C.
+\tag{19.4}
+$$
+The computational-basis measurement of control $B$ attains the
+infimum over all POVMs. The same statement holds with $C,D$ exchanged.
+
+Proof.
+The actual anticommuting orbit in (19.2) gives
+$$
+ \Gamma^{(C)}=\frac14\left[(I+aZ)\otimes(I+bZ)
+       +z\sqrt v(I+aZ)\otimes X
+       +x\sqrt u X\otimes(Z+bI)\right].
+\tag{19.5}
+$$
+Its margins are
+$\Gamma^{(C)}_A=(I+aZ+bx\sqrt uX)/2$ and
+$\Gamma^{(C)}_B=(I+bZ+z\sqrt vX)/2$.
+In particular the first margin contains $bx$, rather than $x$;
+the local control phases cannot be replaced by the phases of the
+commuting global orbit. The nonzero spectrum of the Gram equals that
+of the physical $R_C$, whence
+$$
+ S(\Gamma^{(C)})=f(vx^2+uz^2),\qquad
+ S(\Gamma^{(C)}_B)=f(vx^2).
+\tag{19.6}
+$$
+
+The entropy–concurrence identity used next is the standard pure
+two-qubit intermediate identity in Wootters, equations (6)–(8),
+pp. 2–3, DOI
+[10.1103/PhysRevLett.80.2245](https://doi.org/10.1103/PhysRevLett.80.2245);
+see [the existing source note](../../../Library/QuantumStates/wootters1998formationfunction.md).
+The special POVM optimization needed here has the following direct
+proof. Purify the actual Gram by
+$$
+ |\Omega\rangle_{ABC}
+ =\sum_{i,j}\sqrt{\pi_i\eta_j}|ij\rangle X^iZ^j|c\rangle.
+$$
+Tracing $B$ gives
+$\rho_{AC}=\eta_0|\psi_0\rangle\langle\psi_0|
+                  +\eta_1|\psi_1\rangle\langle\psi_1|$, where
+$$
+ |\psi_0\rangle=\sqrt{\pi_0}|0,c\rangle
+                     +\sqrt{\pi_1}|1,Xc\rangle,
+ \qquad |\psi_1\rangle=(Z_A\otimes Z_C)|\psi_0\rangle.
+$$
+For spin flip $w\mapsto\widetilde w=(Y\otimes Y)\overline w$,
+the symmetric spin-flip matrix of $\sqrt{\eta_j}\psi_j$ is
+$$
+ \tau=-\sqrt u
+ \begin{pmatrix}
+  \eta_0z&\sqrt{\eta_0\eta_1}\\
+  \sqrt{\eta_0\eta_1}&\eta_1z
+ \end{pmatrix}.
+\tag{19.7}
+$$
+Its determinant is $-u\eta_0\eta_1x^2\leq0$ and its trace is
+$-\sqrt u z$. Since it is real symmetric, its singular values
+$s_1\geq s_2$ satisfy $s_1-s_2=\sqrt u|z|$.
+
+Refining a POVM to rank-one effects can only decrease average
+conditional entropy. A rank-one $B$ POVM produces subnormalized pure
+$AC$ vectors that are isometric mixtures of $\sqrt{\eta_j}\psi_j$.
+Write this mixing matrix as $W$, $W^*W=I$, their probabilities as
+$p_j$, and their normalized pure-state concurrences as $c_j$.
+Then
+$$
+ \sum_jp_jc_j=\sum_j|(W\tau W^T)_{jj}|\geq s_1-s_2.
+\tag{19.8}
+$$
+Indeed a Takagi factorization $\tau=V\operatorname{diag}(s_1,s_2)V^T$
+and $T=WV$ give
+$|s_1T_{j1}^2+s_2T_{j2}^2|
+ \geq s_1|T_{j1}|^2-s_2|T_{j2}|^2$; sum and use $T^*T=I$.
+
+The entropy of either margin of a normalized pure two-qubit vector
+of concurrence $c$ is $F(c)=e(\sqrt{1-c^2})=f(c^2)$.
+This follows from its $2\times2$ amplitude determinant. For
+$r=\sqrt{1-c^2}$,
+$$
+ F'(c)=\frac{c\operatorname{atanh}r}{r}\geq0,\qquad
+ F''(c)=\frac{\operatorname{atanh}r-r}{r^3}\geq0.
+$$
+Thus Jensen's inequality and (19.8) give
+$$
+ \sum_jp_jS(\Gamma^{(C)}_{A|j})
+   =\sum_jp_jF(c_j)\geq F(\sqrt u|z|)=f(uz^2).
+$$
+The computational $B$ measurement produces the two $\psi_j$,
+each of concurrence $\sqrt u|z|$, and attains this bound.
+Together with (19.6), this proves (19.4). Continuity covers zero
+control weights, zero-probability outcomes and degenerate spectra.
+
+**Proposition 19.4 (The exact Schur-map deficit and its remaining gap).**
+Let both pure physical factors be real, and let $G$ be the actual
+global control Gram in (18.8). There is a trace-preserving separable
+Schur channel $\mathcal T_D$ with
+$\mathcal T_D(\Gamma^{(C)})=G$. If $\mathcal P_B$ is control $B$
+computational pinching and $\chi=\mathcal P_B\Gamma^{(C)}$, then
+$$
+ \begin{aligned}
+ \mathcal T_D(\chi)&=\mathcal P_BG=G_A\otimes\sigma_b,
+ &\sigma_b&=(I+bZ)/2,\\
+ A_C-J
+ &=\left[D(\Gamma^{(C)}\Vert\chi)
+        -D(G\Vert\mathcal T_D\chi)\right]
+            -\left[S(G_B)-S(\Gamma^{(C)}_B)\right],
+ \end{aligned}
+\tag{19.9}
+$$
+where $D$ is support-aware relative entropy. Both bracketed
+quantities are nonnegative. In particular ordinary relative-entropy
+data processing gives only
+$$
+ J\leq A_C+S(G_B)-S(\Gamma^{(C)}_B).
+\tag{19.10}
+$$
+
+Proof.
+For $x_D^2+z_D^2=1$, choose real unit vectors $d_+,d_-$ with Bloch
+vectors $(z_D,0,x_D)$ and $(z_D,0,-x_D)$, respectively, and put
+$D_\pm=\operatorname{diag}(d_{\pm,0},d_{\pm,1})$.
+The two Kraus operators
+$$
+ K_+=I_A\otimes D_+,\qquad K_-=Z_A\otimes D_-
+\tag{19.11}
+$$
+satisfy $K_+^*K_++K_-^*K_-=I$. Their entrywise multiplier has unit
+diagonal, multiplies the $B$ coherences by $z_D$, and multiplies
+$A$ coherences in the two $B$ diagonal blocks by $x_D,-x_D$.
+Applying it to (19.5) therefore gives exactly
+$$
+ G=\frac14\left[(I+aZ)\otimes(I+bZ)
+  +\kappa\sqrt uX\otimes(I+bZ)
+  +\lambda\sqrt v(I+aZ)\otimes X\right].
+$$
+Applying it to $\chi$ gives $G_A\otimes\sigma_b$, as asserted.
+This is also a one-way local operation: the diagonal instrument on
+$B$ is followed by its conditional $Z_A$ correction.
+
+For completeness, the local state is separable directly:
+$$
+ \Gamma^{(C)}(0,0)=\frac12\sum_{s=\pm}
+ |s_X\rangle\langle s_X|\otimes\frac{I+z_CX+s x_CZ}{2}.
+$$
+Both second factors are pure. The general-bias state is obtained by
+the local positive filters $\sqrt{I+aZ},\sqrt{I+bZ}$, with total trace
+one, so remains a mixture of at most two product pure states.
+Separability does not make $\mathcal T_D$ a product channel.
+
+The conditional entropy calculation in Proposition 19.3 gives
+$S(\chi)=e(b)+f(uz_C^2)$. The pinching relative-entropy identity
+and (19.4) yield
+$$
+ D(\Gamma^{(C)}\Vert\chi)
+   =A_C+e(b)-S(\Gamma^{(C)}_B).
+$$
+Since $G_A$ is the actual first margin and $G_B$ has diagonal
+$\sigma_b$, the relative-entropy chain rule gives
+$$
+ D(G\Vert G_A\otimes\sigma_b)=J+e(b)-S(G_B).
+$$
+Subtract to obtain (19.9). The first bracket is nonnegative by data
+processing. The second is nonnegative because the $B$ Bloch vector
+$(z_C\sqrt v,0,b)$ is changed to $(z_Cz_D\sqrt v,0,b)$.
+All support-degenerate endpoints follow by continuity.
+
+For these actual inputs the still-unproved comparison $J\leq A_C$
+is therefore exactly the assertion that the first bracket in (19.9)
+is at least the second. Positivity of the first bracket alone does
+not imply it. Proposition 19.3 reformulates the same target as
+$I(A:B)_G\leq D_B(\Gamma^{(C)})$; it supplies neither generic discord
+monotonicity under separable operations nor a proof of the unrestricted
+interior funding comparison. That comparison, and the original
+deficit sign beyond the previously proved domains, remain open.
