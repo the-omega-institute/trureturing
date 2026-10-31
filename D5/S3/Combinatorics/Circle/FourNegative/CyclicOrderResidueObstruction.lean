@@ -81,7 +81,10 @@ private theorem source_chains (n : ℕ) (hn : 2 ≤ n) :
     · simpa [f, N, hi, mul_comm] using hU i (by omega)
     · rw [hshift]
       have hh := hUn (i + 1) (by omega)
-      simpa [F, M, show i + 1 + 1 < n + 1 by omega, pow_succ] using hh
+      have he : F (i + 1) = (2 : ℤ) ^ (i + 1) * 85 := by
+        simpa [F, M, show i + 1 + 1 < n + 1 by omega] using hh
+      rw [he, pow_succ]
+      ring
   · have hpow : (2 : ℤ) ^ (n + 1) = 2 * x := by dsimp [x]; rw [pow_succ]; ring
     have u := hU (n - 1) (by omega)
     have un := hUn n (by omega)
@@ -127,10 +130,13 @@ private theorem source_chains (n : ℕ) (hn : 2 ≤ n) :
       rw [hM, hpow] at un
       omega
     have hv : f n = 21 * x + 1 := by
-      simpa [f, N, x, mul_add, add_mul] using v
+      change f n = 1 + x + x * 4 + x * 4 * 4 at v
+      linarith only [v]
     have hvn : g n = 42 * x + 1 := by
       rw [hshift]
-      simpa [F, M, pow_succ, x, mul_add, add_mul, mul_comm, mul_left_comm, mul_assoc] using vn
+      change F (n + 1) = 1 + 2 ^ (n + 1) + 2 ^ (n + 1) * 4 + 2 ^ (n + 1) * 4 * 4 at vn
+      rw [hpow] at vn
+      linarith only [vn]
     have hnv : f (n + 1) = 3 - 22 * x := by
       change f (n + 1) = -(N - (1 + 4 + 4 * x + 4 * x * 4)) / 2 at nv
       rw [hN] at nv
@@ -141,11 +147,15 @@ private theorem source_chains (n : ℕ) (hn : 2 ≤ n) :
       rw [hM, hpow] at nvn
       omega
     have hw : f (n + 2) = 20 * x + 5 := by
-      simpa [f, N, x, mul_add, add_mul] using w
+      change f (n + 2) = 1 + 4 + 4 * x + 4 * x * 4 at w
+      linarith only [w]
     have hwn : g (n + 2) = 40 * x + 5 := by
       rw [hshift]
-      simpa [F, M, pow_succ, x, mul_add, add_mul, mul_comm, mul_left_comm, mul_assoc,
-        add_comm, add_left_comm, add_assoc] using wn
+      change F (n + 1 + 2) = 1 + 4 + 4 * 2 ^ (n + 1) + 4 * 2 ^ (n + 1) * 4 at wn
+      rw [hpow] at wn
+      have he : n + 1 + 2 = n + 2 + 1 := by omega
+      rw [he] at wn
+      linarith only [wn]
     have hnw : f (n + 3) = 11 - 24 * x := by
       change f (n + 2 + 1) = -(N - (1 + 4 + 4 * 4 + 4 * 4 * x)) / 2 at nw
       rw [hN] at nw
@@ -160,11 +170,15 @@ private theorem source_chains (n : ℕ) (hn : 2 ≤ n) :
       rw [he] at nwn
       omega
     have hz : f (n + 4) = 16 * x + 21 := by
-      simpa [f, N, x, mul_add, add_mul, add_assoc] using z
+      change f (n + 4) = 1 + 4 + 4 * 4 + 4 * 4 * x at z
+      linarith only [z]
     have hzn : g (n + 4) = 32 * x + 21 := by
       rw [hshift]
-      simpa [F, M, pow_succ, x, mul_add, add_mul, mul_comm, mul_left_comm, mul_assoc,
-        add_comm, add_left_comm, add_assoc] using zn
+      change F (n + 1 + 2 + 2) = 1 + 4 + 4 * 4 + 4 * 4 * 2 ^ (n + 1) at zn
+      rw [hpow] at zn
+      have he : n + 1 + 2 + 2 = n + 4 + 1 := by omega
+      rw [he] at zn
+      linarith only [zn]
     have hnz : f (n + 5) = 43 - 32 * x := by
       change f (n + 2 + 2 + 1) = -(N - 85) / 2 at nz
       rw [hN] at nz
@@ -305,13 +319,15 @@ theorem actual_source_cyclic_order_residue_obstruction
   have old_bound (r : ℕ) : 0 ≤ ((s.take r).map f).sum ∧
       ((s.take r).map f).sum ≤ 32 * x - 1 := by
     have h := hold.2.2 r
-    simpa only [s, List.take_map, List.map_map, Function.comp_def, actualSource, f, hN] using h
+    simpa only [s, ← List.map_take, List.map_map, Function.comp_def, actualSource, f, hN] using h
   have new_height (r : ℕ) :
       (((earWord (n + 6) sigma cut).take r).map (actualSource (n + 7) 170)).sum =
       ((s.take (if r ≤ cut then r else r - 1)).map g).sum +
         (if r ≤ cut then 0 else 85) := by
     have he := ear_prefix (n + 6) sigma cut (by omega) (actualSource (n + 7) 170) r
-    simpa only [s, List.take_map, List.map_map, Function.comp_def, actualSource,
+    have hfr : actualSource (n + 7) 170 (Fin.last (n + 6)) = 85 := hfresh
+    rw [hfr] at he
+    simpa only [s, ← List.map_take, List.map_map, Function.comp_def, actualSource,
       Fin.val_castSucc, Fin.val_last, g, hfresh] using he
   have new_bound (r : ℕ) :
       0 ≤ ((s.take (if r ≤ cut then r else r - 1)).map g).sum +
@@ -379,10 +395,10 @@ theorem actual_source_cyclic_order_residue_obstruction
     apply residue_windows x (∑ i ∈ S, uWeight n i) H K v w z e hx
       (dyadic_residue n h8) hm.2 hH hK order
     · dsimp [v, w, z]
-      simp only [Bool.decide_coe]
+      simp only [decide_eq_true_eq]
       cases order <;> norm_num at hrv ⊢ <;> nlinarith only [hrv.1]
     · dsimp [K, v, w, z]
-      simp only [Bool.decide_coe]
+      simp only [decide_eq_true_eq]
       cases order <;> norm_num at hrv ⊢ <;> linarith only [hrv.2]
   rcases hord with hord | hord
   · have ho := sublist_positions s hnd _ hord
