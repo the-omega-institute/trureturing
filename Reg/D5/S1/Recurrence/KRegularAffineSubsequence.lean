@@ -88,13 +88,13 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   localNames := false
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
+  bundleNonempty := .absent
   readout := some (realize signature
     (fun _ p n => p.2.2 (p.1 * n + p.2.1)) (fun e => nomatch e))
-  variation := .evidence ⟨(show True from trivial)⟩ trivial
-  sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
+  variation := .absent
+  sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S1.Recurrence.KRegularAffineSubsequence
     definition := none
@@ -182,13 +182,13 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   localNames := false
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
+  bundleNonempty := .absent
   readout := some (realize signature
     (fun _ p n => p.2.2 (p.1 * n + p.2.1)) (fun e => nomatch e))
-  variation := .evidence ⟨(show True from trivial)⟩ trivial
-  sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
+  variation := .absent
+  sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S1.Recurrence.KRegularAffineSubsequence
     definition := none

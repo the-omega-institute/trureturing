@@ -12,8 +12,8 @@ import D5.S1.Recurrence.MetaFibonacci.SobolewskiUlasParityPositions
 # Affine subsequences of integer k-regular sequences
 
 The kernel and regularity predicate are the native ones in
-`SobolewskiUlasParityPositions`. The import determines generality I; neither
-statement restricts the base, values, or kernel to a finite family.
+`SobolewskiUlasParityPositions`. Both statements allow arbitrary bases k ≥ 2,
+unbounded integer values, and infinite kernels.
 
 Allouche and Shallit, *The Ring of k-Regular Sequences*, author-hosted preprint,
 Theorem 2.6, PDF page 7; the Noetherian coefficient convention and Definition 2.1
