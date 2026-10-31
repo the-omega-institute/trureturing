@@ -115,7 +115,7 @@ internal sealed class MixedCycleRecoveryDocument : IScribeDocumentDefinition
         ];
         var body = new List<Formula> {
             Begin, Grp(F.Id("gathered")), Forall, Sp, k, Comma, Sp, r, Colon, Sp,
-            F.Id("N"), Comma, Sp, v, Colon, Sp, Call("Type"), Comma, RowBreak, Grp(),
+            F.Id("N"), Comma, Sp, v, Colon, Sp, Seq(Operatorname, Grp(F.Id("Type"))), Comma, RowBreak, Grp(),
             OpenBracket, Call("NormedAddCommGroup", v), CloseBracket, Comma, Sp,
             OpenBracket, Call("InnerProductSpace", F.Id("R"), v), CloseBracket, Comma, Sp,
             OpenBracket, Call("FiniteDimensional", F.Id("R"), v), CloseBracket, Comma,
@@ -126,7 +126,7 @@ internal sealed class MixedCycleRecoveryDocument : IScribeDocumentDefinition
         for (var i = 0; i < claims.Length; i++)
         {
             if (i > 0) body.AddRange([Sp, Land, RowBreak, Grp()]);
-            body.Add(claims[i]);
+            body.AddRange([Open, claims[i], Close]);
         }
         body.AddRange([Dot, End, Grp(F.Id("gathered"))]);
         return Disp(Seq([.. body]));

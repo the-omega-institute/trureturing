@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Observer.LinearMemory.MixedCycleRecovery
 
+/-! A dependent-family audit of the complete mixed-cycle recovery statement. -/
+
 noncomputable section
 
 namespace Reg.D5.S3.Observer.LinearMemory.MixedCycleRecovery
@@ -15,7 +17,7 @@ set_option relaxedAutoImplicit false
 
 universe u
 
-/-- All source carriers, structures, dimensions, bases and prefix choices. -/
+/-- All source carriers, structures, dimensions, bases and bound choices. -/
 structure Parameters where
   k : ℕ
   V : Type u
@@ -24,7 +26,7 @@ structure Parameters where
   finite : letI := normed; letI := inner; FiniteDimensional ℝ V
   basis : letI := normed; letI := inner; OrthonormalBasis (Axis k) ℝ V
   r : ℕ
-  prefix : r ≤ k
+  bound : r ≤ k
 
 attribute [instance] Parameters.normed Parameters.inner Parameters.finite
 
@@ -34,18 +36,18 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := generated p.basis p.r p.prefix → visible p.basis
+  Output _ p := generated p.basis p.r p.bound → visible p.basis
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ p x => observations p.basis p.r p.prefix x) (fun e => nomatch e)
+  realize signature (fun _ p x => observations p.basis p.r p.bound x) (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 /-- One selected readout occurrence varies, with the entire original telescope retained. -/
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature.{u}
   Law R := ∀ {k : ℕ} {V : Type u} [n : NormedAddCommGroup V]
     [i : InnerProductSpace ℝ V] [f : FiniteDimensional ℝ V]
@@ -125,7 +127,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature.{u}
-    (fun _ p x => observations p.basis p.r p.prefix x) (fun e => nomatch e))
+    (fun _ p x => observations p.basis p.r p.bound x) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
