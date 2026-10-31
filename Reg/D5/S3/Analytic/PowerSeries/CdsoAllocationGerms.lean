@@ -31,17 +31,20 @@ def arena : Arena where
         iteratedDeriv k b.extension 0 / k.factorial =
           iteratedDeriv k c.extension 0 / k.factorial)
 
-private def admissibleDatum (a h : ℕ) (hh : 0 < h) :
+private def admissibleDatum (a h : ℕ) (ha : 2 ≤ a) (hh : 0 < h) :
     {b : AllocationData a h // b.Admissible} := by
   let b : AllocationData a h :=
     ⟨1, by decide, hh, 0, by omega, 0, by omega,
       fun i => if i = 0 then (h : ℤ) else 0⟩
   refine ⟨b, ?_⟩
-  simp [AllocationData.Admissible, AllocationData.n, b,
-    max_eq_left (Nat.cast_nonneg h : (0 : ℤ) ≤ h),
-    max_eq_right (neg_nonpos.mpr (Nat.cast_nonneg h : (0 : ℤ) ≤ h))]
+  have hzpos (i : Fin (a+1)) : max (if i=0 then (h:ℤ) else 0) 0 =
+      if i=0 then (h:ℤ) else 0 := by
+    split_ifs <;> omega
+  have hzneg (i : Fin (a+1)) : max (-(if i=0 then (h:ℤ) else 0)) 0 = 0 := by
+    split_ifs <;> omega
+  simp [AllocationData.Admissible, AllocationData.n, b, hzpos, hzneg]
 
-def b0 : AllocationData 2 2 := (admissibleDatum 2 2 (by decide)).val
+def b0 : AllocationData 2 2 := (admissibleDatum 2 2 (by decide) (by decide)).val
 
 def b1 : AllocationData 2 2 :=
   ⟨2, by decide, by decide, 0, by decide, 0, by decide,

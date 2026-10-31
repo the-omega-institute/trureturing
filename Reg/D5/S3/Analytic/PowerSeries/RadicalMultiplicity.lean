@@ -35,7 +35,7 @@ def actual : Realization signature := realize signature
 def rejected : Realization signature := realize signature
   (fun _ _ _ => (1 : ℝ⟦X⟧)) (fun e => nomatch e)
 
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ {ι : Type u} [Fintype ι]
     (S : ι → ℝ⟦X⟧) (p A : ι → Polynomial ℝ)
