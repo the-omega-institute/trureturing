@@ -64,7 +64,7 @@ private theorem dependence.{u} : ObservationalDependence signature.{u} actual :=
 
 def source_registration.{u} : Registration arena
     (type_of% (@_root_.D5.S3.Quantum.Entanglement.CoherentHistorySchmidt.legal_iff.{u})) where
-  actual := actual
+  actual := realize signature.{u} (fun _ _ w => occupation w) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.Quantum.Entanglement.CoherentHistorySchmidt.legal_iff.{u},
     rejected, rejected_law⟩
