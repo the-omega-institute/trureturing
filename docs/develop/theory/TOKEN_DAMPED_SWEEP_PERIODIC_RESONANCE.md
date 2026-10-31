@@ -2011,7 +2011,7 @@ q=2\theta_\alpha-1
 \tag{12.1}
 $$
 
-Here $e_i$ is the original coordinate vector; $z_2=0$ for $m=1$. A star on a vector or an ordinary matrix means conjugate transpose; $R^{\dagger}=G^{-1}R^*G$ denotes the $Q$-adjoint. In particular $\ell^{\dagger}a=af_1$. The form is positive definite, since its defining sum can vanish only when all consecutive differences, and hence all coordinates, vanish. Put
+Here $e_i$ is the original coordinate vector; $z_2=0$ for $m=1$. A star on a vector or an ordinary matrix means conjugate transpose. For an endomorphism of the state space, $R^{\dagger}=G^{-1}R^*G$ denotes its $Q$-adjoint. Observation output spaces have the standard Hermitian inner product, so $\ell^{\dagger}a=af_1$ and $\mathcal O_T^{\dagger}=G^{-1}\mathcal O_T^*$. The form is positive definite, since its defining sum can vanish only when all consecutive differences, and hence all coordinates, vanish. Put
 
 $$
 \mathcal O_Tz=(\ell(z),\ell(Tz),\ldots,\ell(T^{m-1}z))^T,
@@ -2272,7 +2272,7 @@ h_i=\frac{S_i(S-S_i)}{S},\qquad h=\max_{1\leq i\leq m}h_i>0,
 \tag{14.2}
 $$
 
-A zero tolerance can be decided by a fixed finite expression in these original parameters and data. To specify it without an unevaluated power norm, write $L_i=2v_{i+1}/s_i$, $R_i=2v_i/s_i$ and let $\delta_{ij}$ be the Kronecker symbol, zero whenever an index is outside $1,\ldots,m$. For odd $i$ define rows
+A zero tolerance has the following finite algebraic criterion in the original parameters and data. To specify it without an unevaluated power norm, write $L_i=2v_{i+1}/s_i$, $R_i=2v_i/s_i$ and let $\delta_{ij}$ be the Kronecker symbol, zero whenever an index is outside $1,\ldots,m$. For odd $i$ define rows
 
 $$
 \begin{aligned}
