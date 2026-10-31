@@ -440,7 +440,7 @@ private theorem valley_rising_strong (a b c : ℕ) (hb : 2≤b)
       rw [show c+2-1=c+1 by omega,pow_succ]; ring
     rw [he]
     simp only [Nat.cast_zero,Nat.cast_ofNat,mul_zero,sub_zero,add_zero,zero_add]
-    simp only [Nat.cast_add,Nat.cast_mul,Nat.cast_pow,Nat.cast_one,Nat.cast_ofNat] at hs
+    simp only [p,q,Nat.cast_add,Nat.cast_mul,Nat.cast_pow,Nat.cast_one,Nat.cast_ofNat] at hs ⊢
     ring_nf at hs ⊢
     exact hs
 
@@ -541,7 +541,8 @@ private theorem valley_falling_masks (a b c : ℕ) (hb : 2≤b)
   have htwo : ∀ e, (2:ℕ).testBit e=true → u.testBit e=true := by
     intro e he
     have he1 : e=1 := by
-      simpa only [show (2:ℕ)=2^1 by decide,Nat.testBit_two_pow,decide_eq_true_eq] using he
+      have he' : ((2:ℕ)^1).testBit e=true := he
+      simpa only [Nat.testBit_two_pow,decide_eq_true_eq] using he'
     subst e
     rw [hfull]
     simp only [Nat.testBit_two_pow_sub_one,decide_eq_true_eq]
@@ -559,12 +560,24 @@ private theorem valley_falling_masks (a b c : ℕ) (hb : 2≤b)
     ((J:ℤ)=2 → e2≤2*A+2*e1 ∧ 2*A+2*e1≤2*e2-A) ∧
     (4≤(J:ℤ) → 2*e1≤e2) at hp
   have h2cap : 2<2^(a+1) := by
-    have ht : 4≤2^(a+1) := Nat.pow_le_pow_right Nat.zero_lt_two (by omega)
+    have ht : 4≤2^(a+1) := Nat.pow_le_pow_right Nat.zero_lt_two (show 2≤a+1 by omega)
     omega
   have h1cap : 1<2^(c-1) := by
-    have ht : 2≤2^(c-1) := Nat.pow_le_pow_right Nat.zero_lt_two (by omega)
+    have ht : 2≤2^(c-1) := Nat.pow_le_pow_right Nat.zero_lt_two (show 1≤c-1 by omega)
     omega
-  change u<2^(a+1) ∧ _
+  change u<2^(a+1) ∧
+    (if Z=2*T then (2,1) else (u,ceilpos (e2-A*u) (2*e1))).1<2^(a+1) ∧
+    (if Z=2*T then (2,1) else (u,ceilpos (e2-A*u) (2*e1))).2<2^(c-1) ∧
+    (∀ e, (if Z=2*T then (2,1) else (u,ceilpos (e2-A*u) (2*e1))).1.testBit e=true →
+      u.testBit e=true) ∧
+    (∀ e, (2:ℕ).testBit e=true →
+      (if Z=2*T then (2,1) else (u,ceilpos (e2-A*u) (2*e1))).1.testBit e=true) ∧
+    e1≤A*u ∧ A*u≤2*e1-A ∧
+    e2≤A*(if Z=2*T then (2,1) else (u,ceilpos (e2-A*u) (2*e1))).1+
+      2*e1*(if Z=2*T then (2,1) else (u,ceilpos (e2-A*u) (2*e1))).2 ∧
+    A*(if Z=2*T then (2,1) else (u,ceilpos (e2-A*u) (2*e1))).1+
+      2*e1*(if Z=2*T then (2,1) else (u,ceilpos (e2-A*u) (2*e1))).2≤2*e2-A ∧
+    e3≤2*A ∧ 2*A≤2*e3-A
   by_cases he : Z=2*T
   · simp only [if_pos he]
     have hj : J=2 := by nlinarith [hZ]
@@ -647,7 +660,9 @@ private theorem valley_falling_word (a b c : ℕ) (hb : 2≤b)
     omega
   dsimp only [baseWord,baseBlocks]
   rw [if_neg hnot]
-  simp only [extremaBlocks,if_pos hval,if_pos hZR,hd,hA,he1,he2]
+  simp only [extremaBlocks,if_pos hval,if_pos hZR,hd]
+  simp only [Nat.cast_pow,Nat.cast_ofNat] at hA he1 he2 ⊢
+  rw [hA,he1,he2]
   rfl
 
 set_option maxHeartbeats 1000000 in
@@ -669,8 +684,11 @@ private theorem valley_falling_actual (a b c : ℕ) (hb : 2≤b)
   change u<2^(a+1) at hcap
   change uv.1<2^(a+1) at hcap2
   change uv.2<2^(c-1) at hvcap
+  change e1≤A*u ∧ A*u≤2*e1-A ∧
+    e2≤A*uv.1+2*e1*uv.2 ∧ A*uv.1+2*e1*uv.2≤2*e2-A ∧
+    2*(R:ℤ)*(T:ℤ)*Z≤2*A ∧ 2*A≤2*(2*(R:ℤ)*(T:ℤ)*Z)-A at hbounds
   have h2cap : 2<2^(a+1) := by
-    have ht : 4≤2^(a+1) := Nat.pow_le_pow_right Nat.zero_lt_two (by omega)
+    have ht : 4≤2^(a+1) := Nat.pow_le_pow_right Nat.zero_lt_two (show 2≤a+1 by omega)
     omega
   have hword:=valley_falling_word a b c hb hbc hca
   change baseWord a b c=chamberMaskedWord a b c (a+2) u uv.1 2 0 uv.2 0 0 at hword
@@ -702,7 +720,8 @@ private theorem valley_falling_actual (a b c : ℕ) (hb : 2≤b)
         rw [show a+2-1=a+1 by omega,pow_succ]; ring
       rw [he]
       simp only [Nat.cast_zero,Nat.cast_ofNat,mul_zero,sub_zero,add_zero,zero_add]
-      simp only [Nat.cast_add,Nat.cast_mul,Nat.cast_pow,Nat.cast_one,Nat.cast_ofNat] at hbounds
+      dsimp only [e1,e2,A,R,T,Z] at hbounds
+      simp only [Nat.cast_pow,Nat.cast_ofNat] at hbounds
       ring_nf at hbounds ⊢
       exact hbounds
 
@@ -748,7 +767,8 @@ private theorem actual_orders_of_strong (a b c d : ℕ) (xs : List ℕ)
   simp only [mul_zero,zero_add] at hstrips
   have hold : OriginalOrder k seed (xs.map (label k (by omega))) := by
     apply lift_order k seed (by dsimp [k]; omega) xs hinv
-    · simpa only [old,hmod,hseed,show N/2=B-1 by omega] using hstrips.1
+    · have hsOld : InStrip (fun i => centered N (2^i*A)) (B-1) 0 xs := hstrips.1
+      simpa only [hmod,hseed,show N/2=B-1 by omega] using hsOld
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero k seed (by dsimp [k];omega)
   have hear:=(source_shadow_charge a b c d ha hb hc hd).2.2.2.2
   change enlarged a b c d (d+c+b+a)=A at hear
@@ -765,8 +785,9 @@ private theorem actual_orders_of_strong (a b c d : ℕ) (xs : List ℕ)
       (([k]++xs).map (label (k+1) (by omega))) := by
     apply lift_order (k+1) (2*seed) (by omega) ([k]++xs) hnewperm
     · have hhalf : (2*N+1)/2=N := by omega
-      simpa only [enlarged,hmod,hmod',Nat.cast_mul,Nat.cast_ofNat,hseed,hhalf]
-        using hnewstrip
+      have hsNew : InStrip (fun i => centered (2*N+1) (2^i*(2*A))) N 0 ([k]++xs) :=
+        hnewstrip
+      simpa only [hmod,hmod',Nat.cast_mul,Nat.cast_ofNat,hseed,hhalf] using hsNew
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero (k+1) (2*seed) (by dsimp [k];omega)
   refine ⟨hold,?_⟩
   rw [show earWord k (xs.map (label k (by omega))) 0=
@@ -818,7 +839,9 @@ private theorem valley_rising_orders (a b c d : ℕ)
       rw [List.range_eq_range']
       simpa only [Nat.add_zero] using (List.map_add_range' (a:=t) 0 (a+b+c+d0) 1)
     have hi:=(hinv.map (t+·)).append_left (List.range t)
-    rw [hmap,List.range_eq_range',List.range'_append_1] at hi
+    have hr := List.range'_append_1 (s:=0) (m:=t) (n:=a+b+c+d0)
+    simp only [Nat.zero_add] at hr
+    rw [hmap,List.range_eq_range',hr] at hi
     simpa only [Nat.zero_add,←List.range_eq_range',show t+(a+b+c+d0)=a+b+c+d by omega] using hi
   apply actual_orders_of_strong a b c d (physicalWord a b c d) (by omega) hb (by omega) (by omega)
   · simpa only [hword] using hlInv
