@@ -5,7 +5,7 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Six reserve bounds and their paired seam and peak consequences. -/
-import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
+import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 import D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 
 set_option autoImplicit false
