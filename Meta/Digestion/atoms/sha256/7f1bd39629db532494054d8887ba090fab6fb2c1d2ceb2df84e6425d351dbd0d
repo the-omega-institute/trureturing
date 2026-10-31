@@ -1,0 +1,35 @@
+**假设 B-35.1（固定实际域及匹配核）。** 固定定义B-32.1的同一个严格凸标号 $n$ 边形，$n\ge12$，以及六条两两不交叉的实际耳 $D=\{f_{ab}:1\le a<b\le4\}$。四个实际剖分 $T_a$ 已经指定，并满足完整耳集等号 $\operatorname{Ear}(T_a)=S_a$。族 $\mathcal F\subseteq\mathcal T_n$ 必须包含全部四个 $T_a$，任意两个不同成员的完整耳集相交。沿用第33节的 $M_i,Q_i,\tau,\Gamma,\mathscr U_0,w_r,L$；特别地，$\Gamma(H)$ 包含迹 $H$ 的全部实际完成，允许任意 $D$ 外耳。
+
+在本节及第36节，定义匹配核、通用部分以及二匹配相交部分为
+
+$$
+\begin{aligned}
+\mathcal X_i&=\Gamma(M_i)\quad(1\le i\le3),\\
+\mathcal U&=\Gamma[\mathscr U_0],\qquad
+\nu=|\mathcal U|=4w_3+12w_4+6w_5+w_6,\\
+\mathcal P_{AB}&=\{T\in\mathcal H:\tau(T)\cap A\ne\varnothing,
+\ \tau(T)\cap B\ne\varnothing\},\\
+\mathcal H_g&=\{T\in\mathcal H:g\in\operatorname{Ear}(T)\}.
+\end{aligned} \tag{35.1}
+$$
+
+这里 $A,B,C$ 表示 $M_1,M_2,M_3$ 的任意一个排列，并记 $Q_A=D\setminus A$、$Q_B=D\setminus B$、$Q_C=D\setminus C$；$g$ 是 $D$ 外的一条实际耳；$\mathcal H$ 仍由定义B-32.1给出。本节的 $\mathcal U$ 取 $q=0$，与第34节仅用于 $q=1$ 的同名字母分别解释。匹配核中的完整三耳成员专指
+
+$$
+\operatorname{Ear}(V)=M_i\cup\{g\},\qquad g\notin D. \tag{35.2}
+$$
+
+四个固定完整星三耳成员的迹是 $S_a$，不在任何 $\mathcal X_i$ 内。完整三耳路径 $M_i\cup\{z\}$、$z\in D\setminus M_i$ 的迹也不是二元迹，因而同样不属于本节的匹配核。
+
+只使用约定B-32.2的 Catalan 数及第33节已经求出的权重：$c_r=C_{n-r-2}$，$2\le r\le6$；需要 $c_7$ 时另明确要求 $n\ge14$。定理B-33.3及式(33.10)–(33.15)供应
+
+$$
+\begin{gathered}
+w_2>w_4>0,\quad w_3,w_5,w_6>0,\\
+L=\nu+w_2+2w_4+6w_3,\qquad
+\nu=4c_3-6c_5+3c_6. \tag{35.3}
+\end{gathered}
+$$
+
+这些是后面条件推导的已有输入，不重新作为一般权重定理。
+

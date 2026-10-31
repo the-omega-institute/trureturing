@@ -1,0 +1,2 @@
+**定义 B-1.4（本卷接口）。** 记 $`X=\mathbb{\text{𝔼}} x`$、$`Y=\mathbb{\text{𝔼}} y`$、$`Z=\mathbb{\text{𝔼}} z`$、$`r=1-Z`$、$`\kappa=\mathbb{\text{𝔼}}(xy)`$。单窗反解、纤维和函数目标使用 [A 卷 §2](AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md#2-三均值关联纤维与目标差分) 的完整证明；观察者与算术的扩展使用同一 $`M,S,q`$ 接口，残差、Fisher、相位及多窗接缝的扩展使用同一 $`(p,X,Y,Z,r,\kappa)`$ 接口。三卷共享这些明示接口，每个几何动作的合法性与消费者仍在本卷证明。
+

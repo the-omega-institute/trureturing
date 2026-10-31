@@ -1,0 +1,34 @@
+**引理 B-34.2（两侧相同的条件迹权重）。** 对任意两两不交叉的 $I\subseteq E$，令 $r=|I|$，则
+
+$$
+\begin{aligned}
+|\{T\in\mathcal X_A:I\subseteq\operatorname{Ear}(T)\}|
+&=|\{T\in\mathcal X_B:I\subseteq\operatorname{Ear}(T)\}|\\
+&=d_r:=c_{r+2}-2c_{r+3}+c_{r+4}.
+\end{aligned} \tag{34.5}
+$$
+
+特别，$|\mathcal X_A|=|\mathcal X_B|=a>0$。对任意 $J\subseteq E$ 及任意 $R\subseteq J$，两侧在 $J$ 上的精确迹权重相同，记为
+
+$$
+w_J(R)=|\{T\in\mathcal X_A:\operatorname{Ear}(T)\cap J=R\}|
+=|\{T\in\mathcal X_B:\operatorname{Ear}(T)\cap J=R\}|.
+\tag{34.6}
+$$
+
+交叉的 $R$ 的权重为零，而 $\sum_{R\subseteq J}w_J(R)=a$。
+
+证明。$K\cup I$ 的 $r+4$ 条耳两两不交叉，耳中心因而组成边界循环中的独立集，所以 $r+4\le\lfloor n/2\rfloor$。在强制 $A\cup I$ 的实际完成中，对两条 $B$ 耳分别容斥；三个包含事件由式(32.1)的删耳双射计为 $c_{r+2},c_{r+3},c_{r+4}$，给式(34.5)。交换 $A,B$ 得相同数值。各项指标均在式(34.4)的合法范围内。定理B-32.3证明中的完整双耳构造分别给出完整耳集恰为 $A$ 与 $B$ 的剖分，故 $a>0$。
+
+对非交叉 $R$，再次有限容斥得到
+
+$$
+w_J(R)=\sum_{V\subseteq J\setminus R}(-1)^{|V|}
+\begin{cases}
+d_{|R\cup V|},&R\cup V\text{ 两两不交叉},\\
+0,&\text{否则}.
+\end{cases} \tag{34.7}
+$$
+
+每个非零分支的下标合法，因为 $K\cup R\cup V$ 两两不交叉。式(34.5)使左右两侧逐项相等。每个实际剖分恰有一个 $J$ 迹，求和即得总权重 $a$。这只是实际完成计数的条件容斥，未给同大小的一般交叉迹赋相同权重。∎
+
