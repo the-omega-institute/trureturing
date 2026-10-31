@@ -372,6 +372,16 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("pool_pressure_failure_after_eviction_preserves_receipt")]
     [InlineData("pool_confirmation_timeout_after_eviction_preserves_receipt")]
     [InlineData("pool_unexpected_removal_failure_preserves_recovery")]
+    [InlineData("pool_resumes_interrupted_eviction_without_cache")]
+    [InlineData("pool_resumes_interrupted_eviction_with_deleted_ignore")]
+    [InlineData("pool_retains_dirty_idle_without_removal_record")]
+    [InlineData("pool_retains_interrupted_eviction_with_modified_file")]
+    [InlineData("pool_retains_interrupted_eviction_with_untracked_file")]
+    [InlineData("pool_never_claims_pending_removal_even_when_clean")]
+    [InlineData("pool_retains_mismatched_removal_record_without_reconverging")]
+    [InlineData("pool_revalidates_interrupted_eviction_before_common_removal")]
+    [InlineData("pool_pending_removal_keeps_unfinished_operation_guard")]
+    [InlineData("pool_pending_removal_does_not_displace_healthy_capacity")]
     public void IdlePoolPreservesNativeGitState(string probe)
     {
         if (OperatingSystem.IsWindows()) return;

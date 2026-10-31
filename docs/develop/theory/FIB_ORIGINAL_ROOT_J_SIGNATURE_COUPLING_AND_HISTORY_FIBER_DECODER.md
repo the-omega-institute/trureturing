@@ -2679,225 +2679,691 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
+## 23. kappa 零层的整个历史像与早叶绝对响应
 
-## 23. 四次 J 后 M 分支的完整增益共同核
-
-**定义 23.1（单位来源与原核上的零历史方向）。** 固定定义 3.1 的任意完整合法 $256$ 来源元组，保留全部 $254$ 个非空前缀、原 $1538\times1024$ 矩阵及其整个核 $V=\ker B$。只要求两个 $j_e=(J^7,e)$ 来源满足 $\sigma(P_{j_e})=1$。令 $H$ 为 (10.1) 的共同非常数增益映射，置
+**定义 23.1（原全核上的焦点来源层）。** Fix any complete legal source tuple of Definition 3.1. Thus all $256$ fixed sources have the form (1.2), all $254$ nonempty prefixes enter the original $1538\times1024$ matrix $B$, and throughout this section and Sections 24–27
 
 $$
-\begin{gathered}
-Z=\ker H,\qquad v=J^4M,\\
-w_A=J^4MJJ,\quad w_B=J^4MMJ,\quad
-w_C=J^4MJM,\quad w_D=J^4MMM.
-\end{gathered}
+V=\ker B,\qquad j_e=(J^7,e),\qquad w_*=JJJMJJJ,\qquad q_e=(w_*,e).
 \tag{23.1}
 $$
 
-$\mathcal D_v$ 是这四个字面叶的全部八个原槽，$R_v$ 是 (3.8) 的共同第五响应。此定义不要求 $E,\Delta$ 为零、非零或独立，也不要求 $\dim V=\operatorname{rank}H$。
-
-**定理 23.2（一个固定来源对决定八个完整投影的共同核）。** 在定义 23.1 下有以下穷尽二分。若 $P_{(w_B,0)}=P_{(w_B,1)}$，则完整 $D_{w_B}|_V=0$。若这两个固定来源不同，则对全部八个 $q\in\mathcal D_v$ 同时有
+The two sources $P_{j_e}$ have unit signature $b_{j_e}+c_{j_e}=1$. Use the polynomial-valued map $p=H$ and the scalar forms $A,\Delta,E,F,\kappa$ of (10.1), (11.2), and assume, as identities or ranks on this entire $V$,
 
 $$
-\begin{aligned}
-\ker(G_q|_V)&=Z,\\
-\operatorname{rank}(G_q|_V)&=\operatorname{rank}H,\\
-\operatorname{rank}[B;G_q]&=\operatorname{rank}B+\operatorname{rank}H.
-\end{aligned}
+\operatorname{rank}H=2,\qquad
+\operatorname{rank}(F,\Delta)=2,\qquad
+\kappa=p(6)-p(5)=0.
 \tag{23.2}
 $$
 
-特别地，后一分支中每个完整增益和 $R_v$ 都经同一个 $H(V)$ 线性分解，包含各槽原有的常数系数与漂移。
+No original $G_q$ or $D_w$ guard is assumed. The other $254$ sources remain arbitrary legal sources, including repetitions. In particular (23.2) gives $E=-4F+22\Delta$ by (11.7); the condition $E=13\Delta/4$ of Definition 12.1 is not imposed. The gain coefficients remain forms on $V$; zero blocks are allowed in these linear identities. Legal worlds still require a nonzero real gain of degree at most three and an arbitrary constant drift, with the original clocks, actions, and stopping rule of Definition 1.1.
 
-证明。先复用定理 10.1 证明中的五步逐固定来源单射性；其计算本身不要求任何秩假设。若一个固定来源的增益 $f$ 在 $J^4M$ 五个祖先上响应全零，定理 5.1 的允许零增益版本给出 $f=k$ 及 $(\sigma(P)-1)k=0$。第五响应再给 $(\sigma(P)+d-1)k=0$，其中 $d=1-P_{11}>0$。相减得 $dk=0$，所以 $f=0$。因此，若任一 $w\in\{w_A,w_B,w_C,w_D\}$ 的两个固定来源相同，引理 3.2 对任意 $x\in V$ 给出的五个响应差为零，单射性便使完整 $D_wx=0$。这说明第一分支，并将用于后面的原守卫消费者。
-
-以下设 $w_B$ 的两个固定来源不同。任取同一个 $x\in Z$。单位 $J^7$ 来源的前四个响应为 $(Hx)(i)=0$。引理 3.2 使 $J^4$ 以下所有原槽共享这四个零响应；定理 5.1 的零块版本遂给出
-
-$$
-g_{q,x}(T)=k_q,\qquad (\sigma(P_q)-1)k_q=0
-\quad(q\in\mathcal D_{J^4}).
-\tag{23.3}
-$$
-
-这里 $k_q$ 是这个同一 $x$ 的常数系数，并未要求其非零。在 $w_B$ 的两个槽上，实际第五、第六累计矩阵为 $M,M^2$。利用 $M^2=I+M$，各自第六响应减第五响应正是 $k_q$。共同祖先响应因此给出两个相等的常数 $k_0=k_1=k$。
-
-若 $k\ne0$，(23.3) 先给两个单位签名。共同第五和第七响应又分别给出相同的 $\tau$ 和 $\eta$，因为这两个响应是 $k(\tau-1)$ 和 $k\eta$。定义 2.1 的精确逆遂给两个固定来源相同，矛盾。故 $k=0$，特别是这个 $x$ 的共同第五响应 $R_v(x)=0$。现在对任意 $q\in\mathcal D_v$，前四个响应与第五响应均零；上述逐固定来源五步单射性给出 $G_qx=0$。这对每个 $x\in Z$ 成立，证明 $Z\subseteq\ker(G_q|_V)$。
-
-反向，若任意 $x\in V$ 满足 $G_qx=0$，该槽的前四个祖先响应都零。共同祖先与单位 $J^7$ 来源于是使 $Hx$ 在 $1,2,3,4$ 处均零。$Hx$ 次数至多三，故恒零，得到 $\ker(G_q|_V)\subseteq Z$。这里使用的是 $Hx$ 这个固定多项式的根计数，没有把随时钟变化的迹因子作多项式系数插值。
-
-两个核相等给出共同商空间 $V/Z\simeq H(V)$ 上的线性分解及第一项秩等式；(3.10) 给出第二项秩等式。$R_v=\ell_v(P_q)G_q$ 也经同一商空间分解。每一步均作用于原整个 $V$；在 $Z$ 上选向量只用于证明映射的核，未把 $Z$ 的限制非零误作原守卫。∎
-
-**推论 23.3（秩一层八槽守卫的精确缩减）。** 在定义 23.1 下，若 $\operatorname{rank}H=1$，则 $\mathcal D_v$ 的全部八个原 $G$ 守卫及其四个叶的所有适用完整 $D$ 守卫同时成立，当且仅当四个叶的固定来源对均不同。此时取任意非零生成元 $p\in H(V)$，存在同一个非零线性形式 $L\in V^*$ 及八个固定非零多项式 $f_q$，使
-
-$$
-Hx=L(x)p,\qquad
-g_{q,x}(T)=L(x)f_q(T),\qquad
-\delta_{q,x}=-L(x)f_q(0),
-\qquad q\in\mathcal D_v.
-\tag{23.4}
-$$
-
-证明。若有一个同源叶，定理 23.2 证明开头的逐源单射性使其完整 $D$ 在整个 $V$ 上为零。若四对均不同，特别是 $w_B$ 来源不同，(23.2) 使八个 $G$ 的秩全为一；这四叶没有适用的同源 $D$。最后用同一个一维商 $V/Z$ 写出 (23.4)；各 $f_q$ 非零来自其完整 $G$ 的秩为一。$L$ 取零时允许零块，且没有把 $\dim V$ 改为一。∎
-
-## 24. E 与 Delta 同零的秩一来源二分
-
-**定义 24.1（整个原核上的零 E、零 Delta 直线）。** 在定义 23.1 的完整合同下，另设整个 $V$ 上 $\operatorname{rank}H=1$ 且 $E=\Delta=0$，并要求完整来源元组满足全部原守卫 (3.9)。令
-
-$$
-A=\frac{(H\,\cdot)(1)+(H\,\cdot)(3)}2,\qquad
-u(T)=\frac{T^3-9T^2+23T}{15}.
-\tag{24.1}
-$$
-
-由 (11.6)，$Hx=A(x)u$，其中 $A$ 是非零线性形式。推论 23.3 给出唯一实数 $\rho$，使 $R_{J^4M}=\rho A$。对来源写 $d_q=1-a_q\in(0,1)$、$t_q=b_q+c_q>0$、$S_q=t_q+d_q=\tau(P_q)$，并沿用 IV 定义 19.4 的两个全部单位来源
-
-$$
-Q_0(d)=\begin{pmatrix}1-d&1-d\\d&d\end{pmatrix},\qquad
-Q_1(d)=\begin{pmatrix}1-d&d\\1-d&d\end{pmatrix}.
-\tag{24.2}
-$$
-
-**定理 24.2（非单位共同增益支与单位两组根支）。** 在定义 24.1 下，$J^4M$ 以下八个原槽必恰落入下列两类之一。
-
-第一类为 $\rho=1$。八个完整增益均为
-
-$$
-g_{q,x}(T)=A(x)(u(T)-1)
-=\frac{A(x)}{15}(T-1)(T-3)(T-5).
-\tag{24.3}
-$$
-
-$w_A$ 的两个来源中至少一个非单位。$J^4MJ$ 以下四个来源有共同的左下元素 $c_q=C$，且 $0<C<1/2$；其两个叶分别满足
-
-$$
-d_{(w_A,0)}+d_{(w_A,1)}=1+C,\qquad
-d_{(w_C,0)}+d_{(w_C,1)}=1+2C.
-\tag{24.4}
-$$
-
-$J^4MM$ 以下四个来源有共同的 $S_q=S$，且
-
-$$
-1<S<2.
-\tag{24.5}
-$$
-
-第二类为全部八个来源均单位。存在唯一 $d_*\in(0,1)\setminus\{1/2\}$，使 $\rho=1-d_*$，并有以下无序来源对与完整增益：
-
-$$
-\begin{array}{c|c|c}
-\text{原叶}&\{P_{(w,0)},P_{(w,1)}\}&g_{(w,e),x}(T)\\ \hline
-w_A,w_C&\{Q_0(d_*),Q_1(d_*)\}&A(x)(u(T)-2)\\
-w_B,w_D&\{Q_0(5d_*/16),Q_1(5d_*/16)\}&A(x)(u(T)-21/5).
-\end{array}
-\tag{24.6}
-$$
-
-因此第二类的两组增益分别在原时钟六与七为零；第一类的三个根则为原时钟一、三、五。所有式子的归一化漂移仍是相应常数系数的相反数。这里给的是完整元组的必要来源二分，不是任一类向其余 $248$ 槽的延拓存在性。
-
-证明。全部原守卫与推论 23.3 先使四个叶的固定来源对均不同。由 (23.4)，可写每个 $q\in\mathcal D_v$ 的完整增益为 $A(x)f_q(T)$。四个 J 祖先的传播 (11.8) 在 $E=\Delta=0$ 时化为
-
-$$
-f_q(T)=k_q+u(T),\qquad
-(t_q-1)(k_q+1)=0,\qquad
-\rho=S_q(k_q+1)-k_q.
-\tag{24.7}
-$$
-
-最后一式是原第五响应，因为 $u(5)=1$。特别地，一个非单位来源强制 $k_q=-1$，从而 $\rho=1$；单位来源则满足
-
-$$
-k_q=\frac{\rho-1}{d_q}-1.
-\tag{24.8}
-$$
-
-这些等式含完整常数项，分母只是固定正来源参数。
-
-先设 $\rho=1$。(24.7)–(24.8) 使八个 $k_q$ 全为 $-1$，得到 (24.3)。其第六与第七增益分别为 $A$ 与 $(16/5)A$。实际第六动作为 J 时累计矩阵为 $JM$，迹为 $1+c_q$，所以共同响应为 $(2+c_q)A$。$A\ne0$ 给 $J^4MJ$ 以下共同的 $c_q=C>0$。合法来源满足 $b_q=d_q(1-d_q)/C$。实际末动作为 J 或 M 的迹分别为 $t_q+d_q$ 与 $t_q+2d_q$。两个叶的末响应相等，分别给
+**引理 23.2（完整三 J 插值与四个实际晚响应）。** Under Definition 23.1 there are independent forms $u,v\in V^*$ such that
 
 $$
 \begin{aligned}
-0&=(d_0-d_1)\left(1+\frac{1-d_0-d_1}{C}\right)&&\text{在 }w_A,\\
-0&=(d_0-d_1)\left(2+\frac{1-d_0-d_1}{C}\right)&&\text{在 }w_C.
+p(T)&=uT(T-5)(T-6)+vT(T-11),\\
+A&=19u-17v,&\Delta&=-2u-14v,\\
+F&=-5u-65v,&E&=-24u-48v.
 \end{aligned}
-\tag{24.9}
+\tag{23.3}
 $$
 
-同一叶若 $d_0=d_1$，共同的 $C$ 与来源秩一方程即给来源相等，已被原守卫排除。因此两式分别给 (24.4)。第二式再与 $d_0,d_1<1$ 给出 $C<1/2$。若 $w_A$ 两来源都单位，其共同 $c$ 及共同末迹 $S=1+d$ 会给相同的 $d,b,a$，又与来源不同矛盾。因此该叶至少一个来源非单位。
-
-实际第六动作为 M 时累计矩阵为 $M^2$，共同响应是 $(2+S_q)A$；故 $J^4MM$ 以下有共同 $S_q=S$。在 $w_B$，末累计矩阵为 $JM^2$，迹为 $1+b_q+2c_q$；共同第七响应及 $A\ne0$ 给两个来源共同的 $\eta=b_q+2c_q$。令 $\zeta=S-\eta=d_q-c_q$。两个来源不同，故 $c_0\ne c_1$，且
-
-$$
-d_e=c_e+\zeta,\qquad b_e=S-\zeta-2c_e.
-\tag{24.10}
-$$
-
-把这些式子代入两个来源各自的 $b_ec_e=d_e(1-d_e)$，得到 $c_0,c_1$ 是同一二次式的两个不同根，具体为
+For either of the two fixed sources $P_e=P_{q_e}$ put
 
 $$
 \begin{gathered}
-c_0+c_1=S+\zeta-1,\qquad c_0c_1=\zeta(1-\zeta),\\
-b_0+b_1=2(1-2\zeta),\qquad
-b_0b_1=1-(S+\zeta-1)^2.
+t_e=b_e+c_e>0,\quad R_e=1+b_e>1,\quad S_e=t_e+a_e>0,\\
+s_e=S_e-1,\quad h_e=1-\frac1{t_e},\quad
+x_e=R_eh_e,\quad y_e=S_eh_e,\quad Q_e=g_e(0)+A.
 \end{gathered}
+\tag{23.4}
+$$
+
+Here $Q_e$ initially belongs to the whole $V^*$, with no factorization assumption. Define
+
+$$
+L(T)=\frac{T(T-2)(2T-5)}3,\qquad
+W(T)=\frac{T(T-2)(T-4)}6.
+\tag{23.5}
+$$
+
+The complete gain and normalized drift maps are
+
+$$
+g_e(T)=Q_e-A+p(T)+h_e[-Q_eL(T)+\Delta W(T)],
+\qquad \delta_e=A-Q_e.
+\tag{23.6}
+$$
+
+The actual cumulative matrices and traces are as follows. Write $C=MJ$ and $D=JMJ$ in this table only.
+
+| Clock $i$ | $A_i$ | $\operatorname{tr}(A_iP_e)$ | $L(i)$ | $W(i)$ | $p(i)$ |
+| --- | --- | --- | --- | --- | --- |
+| $0$ | $I$ | $1$ | $0$ | $0$ | $0$ |
+| $1$ | $J$ | $t_e$ | $1$ | $1/2$ | $20u-10v$ |
+| $2$ | $I$ | $1$ | $0$ | $0$ | $24u-18v$ |
+| $3$ | $J$ | $t_e$ | $1$ | $-1/2$ | $18u-24v$ |
+| $4$ | $C=\begin{pmatrix}1&0\\1&1\end{pmatrix}$ | $R_e$ | $8$ | $0$ | $8u-28v$ |
+| $5$ | $D=\begin{pmatrix}1&1\\1&0\end{pmatrix}$ | $S_e$ | $25$ | $5/2$ | $-30v$ |
+| $6$ | $C$ | $R_e$ | $56$ | $8$ | $-30v$ |
+| $7$ | $D$ | $S_e$ | $105$ | $35/2$ | $14u-28v$ |
+
+In particular the four absolute responses, each a form on the same $V$, are
+
+$$
+\begin{aligned}
+z_{e,4}&=A+(b_e-8x_e)Q_e-11R_eu-11R_ev,\\
+z_{e,5}&=A+(s_e-25y_e)Q_e+(-19S_e-5y_e)u+(-13S_e-35y_e)v,\\
+z_{e,6}&=A+(b_e-56x_e)Q_e+(-19R_e-16x_e)u+(-13R_e-112x_e)v,\\
+z_{e,7}&=A+(s_e-105y_e)Q_e+(-5S_e-35y_e)u+(-11S_e-245y_e)v.
+\end{aligned}
+\tag{23.7}
+$$
+
+The original rows of $B$ require $z_{0,i}=z_{1,i}$ at every one of these four clocks, as well as their common first-three-$J$ history.
+
+Proof. Every polynomial in the image of $H$ vanishes at zero and satisfies $p(6)=p(5)$. These two independent linear conditions on polynomials of degree at most three define a two-dimensional space. The two polynomials multiplying $u,v$ in (23.3) form a basis of that space. Rank two of $H$ makes the coefficient forms independent. Evaluation gives (23.3); the determinant of the displayed $(F,\Delta)$ coordinates relative to $(u,v)$ is $-60$.
+
+Unit signature of the $J^7$ suppliers makes the common responses at clocks $1,2,3$ equal to $p(1),p(2),p(3)$, by Theorem 4.1 and Lemma 3.2. For a fixed $Q_e$, the right side of (23.6) has the correct values at $0,1,2,3$: at the odd clocks use $p(1)=A-\Delta/2$, $p(3)=A+\Delta/2$ and $t_e(1-h_e)=1$. The difference from any compatible gain is a cubic or lower polynomial with four distinct roots, so it is zero. This proves the full interpolation, including its one free form $Q_e$, using only $t_e>0$.
+
+The table follows by successive left multiplication in (1.3). At every late clock its absolute response is
+
+$$
+z_{e,i}=\bigl[\tau_{e,i}(1-h_eL(i))-1\bigr]Q_e
+ +A+\tau_{e,i}\bigl[p(i)-A+h_e\Delta W(i)\bigr],
+\tag{23.8}
+$$
+
+where $(\tau_{e,4},\tau_{e,5},\tau_{e,6},\tau_{e,7})=(R_e,S_e,R_e,S_e)$. Substitution gives all four rows of (23.7). No fourth initial $J$, gain-sample inverse, or discarded drift occurs in this derivation. ∎
+
+## 24. 全响应张成条件、零差边界与全部斜率
+
+**引理 24.1（保留隐藏形式的张成恒等式与边界）。** Define the numerical source vectors and their difference by
+
+$$
+\zeta_e=(x_e,y_e,b_e,s_e)^{\mathsf T},\qquad
+ d=\zeta_1-\zeta_0=(d_x,d_y,d_b,d_s)^{\mathsf T},\qquad
+\mathcal Z=\operatorname{span}_{\mathbb R}\{\zeta_0,\zeta_1\}.
+\tag{24.1}
+$$
+
+The four equalities in (23.7) are equivalent to the whole-$V$ identity
+
+$$
+\zeta_1Q_1-\zeta_0Q_0=(N_ud)u+(N_vd)v,
+\tag{24.2}
+$$
+
+where
+
+$$
+N_u=\begin{pmatrix}
+-1/3&0&-1/6&0\\
+0&-3/8&0&7/40\\
+-8/3&0&29/3&0\\
+0&-35/8&0&187/8
+\end{pmatrix},\qquad
+N_v=\begin{pmatrix}
+-7/3&0&-1/24&0\\
+0&-21/8&0&1/40\\
+-56/3&0&32/3&0\\
+0&-245/8&0&109/8
+\end{pmatrix}.
+\tag{24.3}
+$$
+
+Consequently $N_ud,N_vd\in\mathcal Z$, and, for $C=N_v-7N_u$,
+
+$$
+Cd=(9d_b/8,-6d_s/5,-57d_b,-150d_s)^{\mathsf T}\in\mathcal Z.
+\tag{24.4}
+$$
+
+If the sources are distinct, then necessarily
+
+$$
+d_bd_s\ne0,\qquad \dim\mathcal Z=2,\qquad
+\mathcal Z=\operatorname{span}\{d,Cd\}.
+\tag{24.5}
+$$
+
+Writing $m=d_s/d_b$ and $r=s_e-mb_e$, one further has $mr\ne0$.
+
+Proof. The coefficients of $Q_e$ in (23.7) are $N\zeta_e$, where
+
+$$
+N=\begin{pmatrix}
+-8&0&1&0\\0&-25&0&1\\-56&0&1&0\\0&-105&0&1
+\end{pmatrix},\qquad \det N=3840.
+$$
+
+Multiplying the four response equalities by $N^{-1}$ gives (24.2)–(24.3). For every linear functional $\ell$ on $\mathbb R^4$ annihilating $\mathcal Z$, (24.2) gives
+$0=\ell(N_ud)u+\ell(N_vd)v$. Independence of $u,v$ proves both asserted memberships. This retains arbitrary hidden components of $Q_0,Q_1$ on the original $V$.
+
+Suppose first $d_b=d_s=0$. The sources have common $R,S$, and if they are distinct then $d_h=h_1-h_0\ne0$: otherwise $t,a,c$ reconstruct identically from (23.4). Now $d=d_h(R,S,0,0)$, while every vector in $\mathcal Z$ obeys $Ry-Sx=0$. But
+
+$$
+R(N_ud)_y-S(N_ud)_x=-\frac{RSd_h}{24}\ne0,
+$$
+
+contradicting $N_ud\in\mathcal Z$.
+
+If $d_b=0$ and $d_s\ne0$, the common $b>0$ implies
+$\mathcal Z\cap\{b\text{-coordinate}=0\}=\mathbb R d$.
+Thus $Cd=-150d$, forcing $d_x=0$ and $d_y=d_s/125$. Now $N_ud$ also has zero $b$-coordinate, so it must be collinear with $d$. Its $(y,s)$ determinant is instead
+
+$$
+\det\begin{pmatrix}d_y&(N_ud)_y\\d_s&(N_ud)_s\end{pmatrix}
+=\frac{46}{3125}d_s^2\ne0.
+\tag{24.6}
+$$
+
+If $d_s=0$ and $d_b\ne0$, consider first common $s\ne0$. The analogous intersection with zero $s$-coordinate gives $Cd=-57d$, hence $d_y=0$ and $d_x=-3d_b/152$. The vector $N_ud$ then also lies in that intersection. Its $(x,b)$ determinant is
+
+$$
+\det\begin{pmatrix}d_x&(N_ud)_x\\d_b&(N_ud)_b\end{pmatrix}
+=-\frac{275}{8664}d_b^2\ne0.
+\tag{24.7}
+$$
+
+For common $s=0$, all of $\mathcal Z$ has zero $s$-coordinate, so $(N_ud)_s=-35d_y/8=0$. Moreover $S=1$ implies $t=1-a\in(0,1)$, and the common $y=h$ is strictly negative. Intersecting $\mathcal Z$ with zero $y$-coordinate now again makes $Cd,N_ud$ collinear with $d$, giving the same contradiction (24.7).
+
+These cases prove $d_bd_s\ne0$. The determinant of the bottom coordinates of $(d,Cd)$ is $-93d_bd_s$, so they form a basis of $\mathcal Z$, whose bottom projection is invertible. The number $r=s_e-mb_e$ is the same for the two endpoints. If $r=0$, expressing each $\zeta_e=\alpha_ed+\beta_eCd$ and comparing the bottom coordinates gives
+$0=r=-93md_b\beta_e$. Both vectors would lie in $\mathbb R d$, contradicting dimension two. Thus $mr\ne0$. None of these cases divides by $h_e$, $s_e$, a gain, or a value of a form at a chosen vector. ∎
+
+**引理 24.2（无除法丢支的斜率与实际端点直线）。** For distinct sources under Definition 23.1 put
+
+$$
+X=\frac{d_x}{d_b},\quad Y=\frac{d_y}{d_s},\quad
+m=\frac{d_s}{d_b},\quad r=s_e-mb_e,\quad
+\lambda=-\frac{152X+3}{248},\quad \mu=\frac{250Y-2}{155}.
+\tag{24.8}
+$$
+
+Every actual endpoint obeys
+
+$$
+s_e=mb_e+r,\qquad x_e=Xb_e+\lambda\frac r m,\qquad
+y_e=Ys_e-\mu r.
+\tag{24.9}
+$$
+
+The only possible slope pairs are
+
+$$
+(X,Y)=(1,1),\qquad\text{or}\qquad
+X=\frac{251+55q}{2096},\quad
+Y=\frac{-427-92q}{4585},\quad q=\sqrt{21}\text{ or }-\sqrt{21}.
+\tag{24.10}
+$$
+
+The rational pair $(1,1)$ is impossible for distinct legal endpoints.
+
+Proof. By (24.5), write $N_ud=\rho d+\sigma Cd$. Its last two coordinates give
+
+$$
+\sigma=\frac{-329-64X+105Y}{2232},\qquad
+\rho=\frac{29-8X}{3}+57\sigma.
+$$
+
+The first two coordinates of $N_ud-\rho d-\sigma Cd$, divided respectively by $d_b,d_s$, are $5g_1/5952$ and $g_2/3720$, with
+
+$$
+\begin{aligned}
+g_1&=5120X^2-3192XY-1864X-63Y-1,\\
+g_2&=16000XY-128X-9975Y^2-5890Y-7.
+\end{aligned}
 \tag{24.11}
 $$
 
-$c_e,b_e>0$ 先给 $0<\zeta<1/2$，再给 $0<S+\zeta-1<1$，所以 $S<2$。若 $S\le1$，则 $0<c_0+c_1\le\zeta$；但
+Thus both are zero. Their Sylvester determinant in $Y$ is
 
 $$
-(c_0+c_1)^2\ge4c_0c_1=4\zeta(1-\zeta)>\zeta^2
+\operatorname{Res}_Y(g_1,g_2)
+=333312(X-1)(8384X^2-2008X-1).
 \tag{24.12}
 $$
 
-与之矛盾，最后的严格不等式来自 $0<\zeta<1/2$。于是 $S>1$，证明第一类的全部结论。
+The coefficient $3192X+63$ could vanish only at $X=-3/152$, where $g_1=13640/361\ne0$. Otherwise
+$Y=(5120X^2-1864X-1)/(3192X+63)$; substituting the three resultant roots gives exactly (24.10).
 
-再设 $\rho\ne1$。由 (24.7)，八个来源都单位。在 $w_A$，第七减第五响应为 $(16/5)(1+d_q)A$，所以两槽有共同 $d=d_*\in(0,1)$；(24.8) 使两个完整增益也相同。两个不同单位来源在这个共同 $d$ 下必有不同的 $c$，共享的第六响应因此强制第六增益为零。因 $u(6)=2$，得到
+For completeness, the weaker pair of slope equations
 
 $$
-k=-2,\qquad \rho=1-d_*.
+\begin{aligned}
+1024X^2+200XY-648X-575Y-1&=0,\\
+320XY+704X-1575Y^2+550Y+1&=0
+\end{aligned}
 \tag{24.13}
 $$
 
-单位合法来源的 $b+c=1$ 与 $bc=d(1-d)$ 给出 $\{b,c\}=\{d,1-d\}$，所以其全部来源恰为 (24.2)。此叶两来源不同还要求 $d_*\ne1/2$。
+has the extra solution $(X,Y)=(1/16,-1/15)$. It cannot satisfy the full response condition: at this point $(g_1,g_2)=(-80,800/3)$. Equations (24.2) and (24.11) were obtained by the fixed inverse $N^{-1}$ and the nonzero bottom determinant in (24.5), without dividing by $16X+15Y$. Thus its zero value at the extra solution does not remove a branch by assumption.
 
-对其余任意单位后代，(24.8) 现在给 $k_q=-1-d_*/d_q$。在 $w_A$，第六共同响应已为 $2A$。对 $J^4MJ$ 的任何后代，第六响应的直接展开是
+To prove (24.9), express $\zeta_e=\alpha_ed+\beta_eCd$. Its bottom coordinates give $\beta_e=-r/(93md_b)$; substituting this and $\alpha_e=b_e/d_b+57\beta_e$ into the top two coordinates gives the displayed $\lambda,\mu$. In particular the two numerical columns $\zeta_0,\zeta_1$ are independent. Applying their dual coordinate functionals to (24.2) also proves $Q_0,Q_1\in\operatorname{span}\{u,v\}$ on the entire $V$, rather than assuming the absence of hidden forms.
 
-$$
-\left[2+c_q\left(1-\frac{d_*}{d_q}\right)\right]A.
-\tag{24.14}
-$$
-
-$c_q>0$ 与 $A\ne0$ 使这四个槽全有 $d_q=d_*$，故 $k_q=-2$。各叶来源不同，于是 $w_A,w_C$ 各自恰取 (24.6) 第一行的两个来源，允许跨叶重复。
-
-在 $w_B$，两个槽的第六响应差为
+When $X=Y=1$, $\lambda=-5/8$ and $\mu=8/5$. At each endpoint $z=b_e$ the identity $x_e(1+s_e)=y_e(1+b_e)$ is
 
 $$
-(d_0-d_1)\left(1+\frac{d_*}{d_0d_1}\right)A.
-\tag{24.15}
+f(z)=\left(z-\frac{5r}{8m}\right)(1+mz+r)
+ -\left(mz+r-\frac{8r}{5}\right)(1+z)=0.
 $$
 
-括号严格正，故共同 $d_0=d_1=d$，两完整增益相同。来源不同使两个 $c$ 不同；末 J 的迹为 $2+c$，所以共同第七响应强制第七增益为零。这给 $k=-u(7)=-21/5$，进而由 (24.8) 得
+This polynomial is at most linear. Its two distinct roots force
 
 $$
-d=\frac5{16}d_*.
-\tag{24.16}
+1-m+\frac{39r}{40}=0,\qquad
+r\left[-\frac{5(1+r)}{8m}+\frac35\right]=0.
 $$
 
-对 $J^4MM$ 的任何后代，第六响应为 $[3+d_q-d_*-d_*/d_q]A$。与 $w_B$ 的共同第六响应相减，所得系数为
+Since $mr\ne0$, these give $m=25/64,r=-5/8$. Equation (24.9) becomes $x_e=1+b_e$, hence $h_e=1$, contradicting $h_e=1-1/t_e$ for finite $t_e>0$. ∎
+
+## 25. 两个二次域嵌入的实际来源多项式与完整消元
+
+**引理 25.1（实际来源的二次除式与两个余式）。** Let $q^2=21$ and use either real embedding in (24.10), with $\lambda,\mu$ as in (24.8). For real $m,r\ne0$ define
 
 $$
-(d_q-d)\left(1+\frac{d_*}{d_qd}\right).
-\tag{24.17}
+\begin{gathered}
+s(z)=mz+r,\quad U(z)=Xz+\lambda r/m,\quad v_0(z)=1+z-U(z),\\
+f(z)=U(z)(1+s(z))-(Ys(z)-\mu r)(1+z),\\
+\phi(z)=(1+z)^2+(z-1-2s(z))(1+z)v_0(z)
+ +(s(z)+s(z)^2-z^2)v_0(z)^2.
+\end{gathered}
+\tag{25.1}
 $$
 
-正性使全部这四个槽都取 (24.16) 的 $d$ 和 $k=-21/5$；来源不同便使 $w_B,w_D$ 各自恰为 (24.6) 第二行的来源对。因 $0<5d_*/16<5/16$，该来源对不会退化为同一个矩阵。$\rho$ 唯一给出 $d_*=1-\rho$，证明唯一性。
+Every actual endpoint in (24.9) satisfies $f(b_e)=\phi(b_e)=0$ and $b_e>0$. More precisely, with $t=(1+z)/v_0(z)$, $a=1+s(z)-t$ and $c=t-z$,
 
-两类已按 $\rho=1$ 与 $\rho\ne1$ 穷尽。第一类中已证明 $w_A$ 含非单位来源；第二类全部单位，故也可按八槽中是否存在非单位来源来区分。证明没有除以 $A(x)$ 或任何向量的样本增益，只比较整个原 $V$ 上非零形式 $A$ 的固定系数。∎
+$$
+\phi(z)=v_0(z)^2\,[bc-a(1-a)].
+\tag{25.2}
+$$
 
-**定义 24.3（供应、消费者与剩余数学范围）。** 定理 23.2 直接使用本卷定理 4.1、5.1、5.3、定义 2.1 的仿射逆及定理 10.1 证明中的五步单射性。其新增关系是：$w_B$ 的固定来源不同已足以消去整个 $\ker H$ 在八个原增益中的像，且反向由四个共同祖先得到精确核，而不要求任何秩二独立性。推论 23.3 与定理 24.2 消费此关系于本卷定理 3.3 的原完整 $G,D$ 守卫。定理 24.2 还使用 (11.6)、(11.8) 的实际四祖先传播及 IV 定义 19.4 的单位来源分类。IV 定理 19.5 已给出特定单位来源的局部两步失败；这里的 (24.6) 是全部原守卫下该切片的必要来源分类，(24.3)–(24.5) 则约束非单位支，均不把局部八槽赋值当作完整原根。
+Conversely $f=\phi=0$, together with $z>0,v_0>0,c>0,0<a<1$, reconstructs exactly a legal source satisfying (24.9).
 
-上述供应结果取数学版本 `07d3329a682d006ae011c04266e9158072f5fb1e`，新增推导为相对于这些结果的 repo-derived 普通数学内容。[Li–Lee–Bresler，*A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with Applications to Subspace and Sparsity Models*，定义 2.7、定理 2.8，arXiv:1501.06120v1](https://arxiv.org/html/1501.06120v1) 的受约束非零因子识别须先识别来源轨道，再识别剩余因子；本节逐固定来源单射性也只在来源已经相等后作用。未建立把完整自适应树映入该一般定理的对应，不以一般秩零度、根计数、二次式根和或有限维商空间本身作为新增成果，也不作外部优先性断言。
+Write $\widetilde f=mf=a_fz^2+b_fz+c_f$ and $\widetilde\phi=m^2\phi=\sum_{j=0}^4F_jz^j$. Their complete coefficients are specified by
 
-定理 23.2–23.3 保留全部 $E,\Delta$ 情形；定理 24.2 的额外 $E=\Delta=0$ 只界定其来源分类的适用切片。整个单位秩一原事件仍要求对每个完整合法元组，在同一个整个 $V$ 上证明某个原完整 $G$ 或适用完整 $D$ 消失，或给出全部 $256$ 来源及全部原守卫同时非零的一个完整元组。这里没有证明两种来源支能否与更早兄弟分支及其余原槽同时相容，没有排除全部秩一元组，也没有给出一个完整反例。任意实常数漂移、各槽常数差、零块的线性作用、任意非零实三次或更低增益、符号、次数下降、采样根、重根、重复与非对称无界来源，以及原时钟、两个动作与提前停止均保持定义 1.1、3.1 的范围。
+$$
+\begin{aligned}
+a_f&=m^2(X-Y),\\
+b_f&=m[X-Ym+r(X+\lambda-Y+\mu)],\\
+c_f&=r[\lambda(1+r)+m(\mu-Y)],\\
+W_0(z)&=m+m(1-X)z-\lambda r,\\
+\widetilde\phi&=m^2(1+z)^2
+ +m(z-1-2mz-2r)(1+z)W_0(z)\\
+&\hspace{16mm}+[(mz+r)+(mz+r)^2-z^2]W_0(z)^2.
+\end{aligned}
+\tag{25.3}
+$$
+
+For two distinct actual endpoints one necessarily has $\widetilde f\mid\widetilde\phi$. Equivalently the following two remainder coefficients vanish:
+
+$$
+\begin{aligned}
+R_1={}&F_4(-b_f^3+2a_fb_fc_f)
+ +F_3a_f(b_f^2-a_fc_f)-F_2a_f^2b_f+F_1a_f^3,\\
+R_0={}&F_4(-b_f^2c_f+a_fc_f^2)
+ +F_3a_fb_fc_f-F_2a_f^2c_f+F_0a_f^3.
+\end{aligned}
+\tag{25.4}
+$$
+
+Proof. Identity $x_eS_e=y_eR_e$ gives $f(b_e)=0$. At an actual endpoint $v_0=(1+b_e)/t_e>0$. Direct expansion of $bc-a(1-a)$ under the displayed reconstruction gives
+
+$$
+bc-a(1-a)=t^2+(z-1-2s)t+s+s^2-z^2,
+$$
+
+and hence (25.2) and the converse. The actual feasible-source equation is retained; unrestricted low-rank differences are not substituted for it. This distinction is the one in [Choudhary–Mitra, *Identifiability Scaling Laws in Bilinear Inverse Problems*, Proposition 1 and Remark 5](https://arxiv.org/html/1402.2637v2): the lifted uniqueness criterion intersects the nullspace with the realizable factor-difference set, and necessity concerns valid original observations. That general criterion does not supply the particular exclusion proved here.
+
+In both real embeddings,
+
+$$
+X-Y=\frac{15617+3397q}{73360}>0,
+\qquad 15617^2-21\cdot3397^2=1558900>0.
+\tag{25.5}
+$$
+
+Thus $a_f\ne0$; two distinct common roots of $\widetilde f$ and $\widetilde\phi$ force the quadratic to divide the latter. Reducing $z^2=(-b_fz-c_f)/a_f$ gives (25.4): $R_1z+R_0$ is the remainder of $a_f^3\widetilde\phi$ modulo $\widetilde f$.
+
+In particular these are polynomial identities in all coefficients, including $F_4=0$. The leading coefficient of $\phi$ is $(m^2-1)(1-X)^2$; $m=1$ and $m=-1$ are covered without a quartic-degree hypothesis or division by $F_4$. ∎
+
+**引理 25.2（全部消元因子与无例外的线性公共根）。** Work in $K=\mathbb Q(q)$, $q^2=21$. Define the nonzero constants
+
+$$
+c_P=\frac{5(14457033612+3153233269q)}{1890394992899},\qquad
+c_Q=\frac{165(1935050735499+422100282034q)}{14533356705407512}
+$$
+
+and the polynomials
+
+$$
+\mathcal P(m,r)=\frac{R_1}{c_Pm^5},\qquad
+\mathcal Q(m,r)=\frac{R_0}{c_Qm^4r}.
+\tag{25.6}
+$$
+
+These are exact polynomial quotients, cubic in $r$. Their coefficients are given below: a row $(i,j,a,b)$ denotes $(a+bq)r^im^j/D$, and every absent coefficient is zero.
+
+For $\mathcal P$ take $D=3340738560000$.
+
+| $i$ | $j$ | $a$ | $b$ |
+| --- | --- | --- | --- |
+| 3 | 2 | 3340738560000 | 0 |
+| 3 | 0 | -1827056570625 | 293848751875 |
+| 2 | 3 | 4532704174080 | 1028308705280 |
+| 2 | 2 | -1576677518400 | -382817454400 |
+| 2 | 1 | -187242672000 | -97164832000 |
+| 2 | 0 | 145086834375 | 87056603125 |
+| 1 | 4 | 1857454129152 | 404246290432 |
+| 1 | 3 | -5168397177792 | -1126116308672 |
+| 1 | 2 | 1148819457960 | 252033032360 |
+| 1 | 1 | 123003174000 | 23820934000 |
+| 1 | 0 | 178738940625 | 40060190625 |
+| 0 | 5 | -327122681856 | -71372701696 |
+| 0 | 4 | -521169690624 | -113749417984 |
+| 0 | 3 | 2715300662016 | 592517104256 |
+| 0 | 2 | -1941884591640 | -423711721240 |
+| 0 | 1 | -2899554000 | -660114000 |
+| 0 | 0 | 174433415625 | 38069259375 |
+
+For $\mathcal Q$ take $D=249370260480000$.
+
+| $i$ | $j$ | $a$ | $b$ |
+| --- | --- | --- | --- |
+| 3 | 2 | 249370260480000 | 0 |
+| 3 | 0 | -140835717474375 | 20962300761875 |
+| 2 | 3 | 552658337587200 | 58957908992000 |
+| 2 | 2 | 108351108360000 | -32017601000000 |
+| 2 | 1 | -169340744577600 | 20182509891600 |
+| 2 | 0 | -147525925758750 | 22071974952500 |
+| 1 | 4 | 447711943704576 | 99105125564416 |
+| 1 | 3 | -43054235246400 | -9551112241600 |
+| 1 | 2 | 7617928645800 | -2566188013800 |
+| 1 | 1 | -10157152362000 | -1907119858000 |
+| 1 | 0 | -21765903534375 | -2161336340625 |
+| 0 | 5 | 29057949696000 | 6319239987200 |
+| 0 | 4 | -321754455730176 | -70174892297216 |
+| 0 | 3 | -85979668228800 | -18696402113600 |
+| 0 | 2 | 167729287425000 | 36544608199000 |
+| 0 | 1 | 13078590000 | -38760540000 |
+| 0 | 0 | -15075695250000 | -3271010531250 |
+
+
+Their resultant has the exact factorization
+
+$$
+\operatorname{Res}_r(\mathcal P,\mathcal Q)
+=C_{\rm res}\,\pi_1\pi_2\pi_4^2\pi_{10},
+\tag{25.7}
+$$
+
+where
+
+$$
+C_{\rm res}=
+\frac{6436343(34102789204947555777361236201861405882384
+ +7441838710956064218440813387047871465519q)}
+{225736244095878290889338248983983642578125000000}\ne0.
+$$
+
+For each factor, the next table specifies
+$D\pi_d(m)=\sum_{j=0}^d(a_j+b_jq)m^j$; every factor is monic.
+
+For $\pi_1$, $D=6758842$.
+
+| $j$ | $a_j$ | $b_j$ |
+| --- | --- | --- |
+| 1 | 6758842 | 0 |
+| 0 | -44275 | -583825 |
+
+For $\pi_2$, $D=128$.
+
+| $j$ | $a_j$ | $b_j$ |
+| --- | --- | --- |
+| 2 | 128 | 0 |
+| 1 | -17 | -3 |
+| 0 | -71 | 11 |
+
+For $\pi_4$, $D=39002112$.
+
+| $j$ | $a_j$ | $b_j$ |
+| --- | --- | --- |
+| 4 | 39002112 | 0 |
+| 3 | 58534080 | 8500800 |
+| 2 | 30319949 | 7500391 |
+| 1 | -17278800 | 1763300 |
+| 0 | -17469375 | 1588125 |
+
+For $\pi_{10}$, $D=17062245588311819887312896$.
+
+| $j$ | $a_j$ | $b_j$ |
+| --- | --- | --- |
+| 10 | 17062245588311819887312896 | 0 |
+| 9 | -35593546045530998738780160 | 457173436223961685819392 |
+| 8 | -41545362097215636693319680 | -615493915977869158252544 |
+| 7 | 112282398051632048949166080 | -4393081964040994652160000 |
+| 6 | 3934735489311257743785984 | 60766558399263163744256 |
+| 5 | -111671728664598417807335424 | 13429219285989423868534784 |
+| 4 | 32453276175106178139660288 | -4460655303726616330180608 |
+| 3 | 53205990777231591426637440 | -10181949092800504656279040 |
+| 2 | -24638997528510328963129200 | 4901161394434320648217200 |
+| 1 | -10801393761771779319523125 | 2308189480767435701979375 |
+| 0 | 6151795926057708187078125 | -1322154759107294202234375 |
+
+Write $\mathcal P=\sum_{i=0}^3p_i(m)r^i$ and
+$\mathcal Q=\sum_{i=0}^3q_i(m)r^i$. Define
+
+$$
+\begin{aligned}
+U_i&=p_3q_i-q_3p_i\quad(0\le i\le2),\\
+\mathcal H_1&=U_2^2p_1-p_3U_2U_0-(p_2U_2-p_3U_1)U_1,\\
+\mathcal H_0&=U_2^2p_0-(p_2U_2-p_3U_1)U_0.
+\end{aligned}
+\tag{25.8}
+$$
+
+Then every real common zero of $\mathcal P,\mathcal Q$ has
+
+$$
+\pi_1(m)\pi_2(m)\pi_4(m)\pi_{10}(m)=0,
+\qquad \mathcal H_1(m)\ne0,\qquad
+r=-\frac{\mathcal H_0(m)}{\mathcal H_1(m)}.
+\tag{25.9}
+$$
+
+Proof. Expanding (25.3)–(25.4) gives exactly the two coefficient tables and (25.6). To specify the determinant convention in (25.7), the Sylvester matrix has its first three rows
+
+$$
+\begin{pmatrix}
+p_3&p_2&p_1&p_0&0&0\\
+0&p_3&p_2&p_1&p_0&0\\
+0&0&p_3&p_2&p_1&p_0
+\end{pmatrix}
+$$
+
+and its last three rows obtained by replacing every $p_i$ with $q_i$. Its determinant is the right side of (25.7), with the coefficient tables above specifying both sides entirely. Expansion and collection of the coefficients of $m$ gives this degree-$21$ identity. The constants $c_P,c_Q,C_{\rm res}$ are nonzero because their rational and $q$ coefficients are not both zero and $q$ is irrational. A common zero makes the determinant zero, also if either cubic drops degree.
+
+For the remaining statements there is the polynomial identity
+
+$$
+\begin{aligned}
+U_2^2\mathcal P
+ &-(p_3U_2r+p_2U_2-p_3U_1)(p_3\mathcal Q-q_3\mathcal P)\\
+ &=\mathcal H_1r+\mathcal H_0.
+\end{aligned}
+\tag{25.10}
+$$
+
+It follows simply by cancelling the cubic and quadratic coefficients; the degrees of $\mathcal H_1,\mathcal H_0$ in $m$ are $14,15$. In particular a common zero obeys $\mathcal H_1r+\mathcal H_0=0$ without division by $p_3$, $q_3$, or $U_2$.
+
+The following finite-field identities certify $\gcd_K(\pi_d,\mathcal H_1)=1$ for every factor. Reduce rational coefficients modulo $109$ and send $q$ to $28$, so $28^2=21$ in $\mathbb F_{109}$. All rational denominators in these polynomial coefficients are units modulo $109$. Each list is in descending order. The columns are the reduced monic factor, the remainder of $\mathcal H_1$ modulo that factor, and its inverse $I_d$.
+
+| $d$ | $\overline{\pi_d}$ | $\overline{\mathcal H_1}\bmod\overline{\pi_d}$ | $I_d$ |
+| --- | --- | --- | --- |
+| $1$ | $(1,53)$ | $(39)$ | $(14)$ |
+| $2$ | $(1,75,1)$ | $(15,82)$ | $(21,65)$ |
+| $4$ | $(1,40,27,29,78)$ | $(17,53,5,67)$ | $(10,21,70,18)$ |
+| $10$ | $(1,21,87,32,10,105,15,96,33,0,48)$ | $(93,66,19,89,107,73,36,47,52,2)$ | $(19,4,86,12,39,61,75,39,106,22)$ |
+
+Multiplication gives
+$(\overline{\mathcal H_1}\bmod\overline{\pi_d})I_d\equiv1\pmod{\overline{\pi_d}}$ in every row. The corresponding resultant of the monic factor with $\mathcal H_1$ is therefore nonzero modulo $109$, and hence nonzero in $K$. This proves coprimality in characteristic zero; it excludes a shared zero in either real embedding, not only in the finite field. Combining it with (25.10) proves (25.9). Every factor also has nonzero constant coefficient. The earlier facts $mr\ne0$ and $a_f\ne0$ justify the only variable divisions used in passing from (25.4) to (25.6) and below. ∎
+
+## 26. 全部实消元根的来源正性排除
+
+**引理 26.1（线性与四次因子的实际端点排除）。** For either real embedding in (24.10), neither a root of $\pi_1$ nor a root of $\pi_4$ can give two distinct positive endpoint values $b_0,b_1$ in (25.1).
+
+Proof. Put $r=-\mathcal H_0/\mathcal H_1$ as justified by (25.9). Reduction of the coefficients in (25.3), (25.8) modulo the indicated monic factor gives the following identities:
+
+$$
+\begin{array}{c|c|c}
+\text{factor}&r&\text{quadratic endpoint identity}\\ \hline
+\pi_1&-\dfrac{2105551+435271q}{6758842}
+ &\widetilde f(-1)=\widetilde f'(-1)=0\\[2mm]
+\pi_4&-\dfrac{403+93q}{550}\,m&\widetilde f(-1)=0\\[2mm]
+\pi_2&\dfrac{44+4q}{25}\,m-1&\text{value of }r\text{ only}
+\end{array}
+\tag{26.1}
+$$
+
+Here a displayed value $r_0$ means
+$[\mathcal H_0+r_0\mathcal H_1]_{\pi_d}=0$; square brackets denote the ordinary polynomial remainder in $K[m]$. The endpoint identities mean the corresponding remainder is zero after substitution of that $r_0$. Thus they are reproducible polynomial identities using the preceding coefficient tables, with no choice among numerical roots. Since $a_f\ne0$, the first row makes $-1$ the repeated and only endpoint root. The second row supplies a negative root of a genuine quadratic, which cannot also have two distinct positive roots. The third row will also be consistent with the remaining sign calculation. ∎
+
+**引理 26.2（二次与十次因子的两个嵌入全实根证书）。** For either real embedding in (24.10), no real root of $\pi_2$ or $\pi_{10}$ can give two distinct positive endpoint values in (25.1).
+
+Proof. At any such pair the quadratic $\widetilde f$ has exactly those two roots, so its sum and product must satisfy
+
+$$
+\Sigma=b_0+b_1=-\frac{b_f}{a_f}>0,\qquad
+\Pi=b_0b_1=\frac{c_f}{a_f}>0,
+\qquad r=-\frac{\mathcal H_0}{\mathcal H_1}.
+\tag{26.2}
+$$
+
+The following rational root and sign tables contradict these two necessary inequalities at every real candidate. They specify exact interval inequalities, including all denominators, rather than sample values.
+
+For $\pi=\pi_d$, define its Sturm sequence
+
+$$
+S_0=\pi,\quad S_1=\pi',\quad
+S_{j+1}=-\operatorname{rem}(S_{j-1},S_j)
+\tag{26.3}
+$$
+
+until a nonzero constant is reached. Degrees descend consecutively from $d$ to zero. The strings below give the signs of the entire sequence in that order, with no sign rescaling. Positive scalar multiples of intermediate members have the same signs. By the classical [Sturm theorem](https://mathworld.wolfram.com/SturmFunction.html), the number of distinct roots between endpoints where no member vanishes is the decrease of sign variations.
+
+| $d$ | embedding $q=\epsilon\sqrt{21}$ | signs at $-\infty$ | signs at $+\infty$ | variations | number of real roots |
+| --- | --- | --- | --- | --- | --- |
+| $2$ | $\epsilon=1$ | $+-+$ | $+++$ | $2,0$ | $2$ |
+| $2$ | $\epsilon=-1$ | $+-+$ | $+++$ | $2,0$ | $2$ |
+| $10$ | $\epsilon=1$ | $+-+-+-+-+-+$ | $+++++++++++$ | $10,0$ | $10$ |
+| $10$ | $\epsilon=-1$ | $+-+-+-+++-+$ | $+++++++-+++$ | $8,2$ | $6$ |
+
+For the next table an integer $k$ means the open interval
+
+$$
+I_k=(k,k+1)/10^{40}.
+\tag{26.4}
+$$
+
+The two Sturm strings are its left and right endpoint signs; every entry is nonzero and its variation decreases by one. The $\mathcal H_1$ column gives its sign throughout the closed interval. The final two columns assert $\Sigma<U<0$ or $\Pi<U<0$ throughout that same closed interval, using (26.2).
+
+| $d$ | $\epsilon$ | $k$ | left signs | right signs | $\mathcal H_1$ | quantity | $U$ |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| $2$ | $1$ | $-2985782171149458257611067931470849801450$ | $+-+$ | $--+$ | $-$ | $\Pi$ | $-7$ |
+| $2$ | $1$ | $5387948349654733259155141492500851791055$ | $-++$ | $+++$ | $+$ | $\Sigma$ | $-1$ |
+| $2$ | $-1$ | $-9612896463062458012058723540821361944375$ | $+-+$ | $--+$ | $-$ | $\Pi$ | $-78$ |
+| $2$ | $-1$ | $9866980284557183010514649979791359954769$ | $-++$ | $+++$ | $+$ | $\Sigma$ | $-2/5$ |
+| $10$ | $1$ | $-14900303158240235068272346925509579148912$ | $+-+-+-+-+-+$ | $--+-+-+-+-+$ | $+$ | $\Sigma$ | $-1/10$ |
+| $10$ | $1$ | $-7268983248392291276468288107260975068607$ | $-+-++-+-+-+$ | $++-++-+-+-+$ | $+$ | $\Pi$ | $-1$ |
+| $10$ | $1$ | $-3389547587737799940204747616600289467145$ | $+-++-++-+-+$ | $--++-++-+-+$ | $-$ | $\Pi$ | $-27$ |
+| $10$ | $1$ | $-2523343347399708120394073751858024232613$ | $-+--++--+-+$ | $++--++--+-+$ | $-$ | $\Pi$ | $-1$ |
+| $10$ | $1$ | $3894478949905479955983062956327338776523$ | $+--++--++-+$ | $---++--++-+$ | $-$ | $\Sigma$ | $-2$ |
+| $10$ | $1$ | $4003885160743208547216168037585790797098$ | $-++--++---+$ | $+++--++---+$ | $-$ | $\Sigma$ | $-3$ |
+| $10$ | $1$ | $4012311223161394525087165560684087966127$ | $+--++---+++$ | $---++---+++$ | $+$ | $\Sigma$ | $-9/5$ |
+| $10$ | $1$ | $4133581715108262830697692869631886911464$ | $-++--++++++$ | $+++--++++++$ | $-$ | $\Sigma$ | $-19/10$ |
+| $10$ | $1$ | $10993874104551404459667837517348831904410$ | $+--++++++++$ | $---++++++++$ | $+$ | $\Sigma$ | $-9/10$ |
+| $10$ | $1$ | $20677167746027230773449565923453654767977$ | $-++++++++++$ | $+++++++++++$ | $+$ | $\Sigma$ | $-2/3$ |
+| $10$ | $-1$ | $-10000324144052933087914355108542757815803$ | $+-+-+-+++-+$ | $--+-+-+++-+$ | $+$ | $\Sigma$ | $-40$ |
+| $10$ | $-1$ | $-8154490805845046823888318184227211947931$ | $-+--++-++-+$ | $++--++-++-+$ | $-$ | $\Pi$ | $-3/5$ |
+| $10$ | $-1$ | $9737550245394149832245877536270006343820$ | $+--++--+--+$ | $---++--+--+$ | $+$ | $\Sigma$ | $-13/10$ |
+| $10$ | $-1$ | $9746697817158641496952696282598371741093$ | $-++---++-++$ | $+++---++-++$ | $-$ | $\Pi$ | $-20000$ |
+| $10$ | $-1$ | $10128750578780969147813799518919765881407$ | $+----++-+++$ | $-----++-+++$ | $+$ | $\Sigma$ | $-1/2$ |
+| $10$ | $-1$ | $10397033195654922707258183768436331103521$ | $-++++++-+++$ | $+++++++-+++$ | $+$ | $\Sigma$ | $-1/2$ |
+
+Here is a complete rational enclosure convention for the inequalities and signs in these tables. Set
+
+$$
+\begin{gathered}
+N=45825756949558400065880471937280084889844565767679719026072421239068684255477708866043615594934450326,\\
+N^2<21\cdot10^{200}<(N+1)^2.
+\end{gathered}
+\tag{26.5}
+$$
+
+Use $[N,N+1]/10^{100}$ for $q$ in the positive embedding and
+$[-N-1,-N]/10^{100}$ in the negative embedding. Enclose every coefficient $a+bq$ by $[a]+[b][q]$. For an interval $[\alpha,\beta]$ use ordinary interval sum and difference, the minimum and maximum of the four endpoint products for multiplication, and
+$[1/\beta,1/\alpha]$ for a reciprocal only after $0\notin[\alpha,\beta]$. Evaluate a polynomial by Horner's rule with these operations. In the root table use $m\in[k,k+1]/10^{40}$ for the interval columns, and its exact rational endpoints for the two Sturm columns. Evaluate $\mathcal H_0,\mathcal H_1$ from (25.8), then $r=-\mathcal H_0/\mathcal H_1$, and finally $a_f,b_f,c_f$ from (25.3).
+
+These rules give the displayed strict bounds on the whole closed intervals. Every $\mathcal H_1$ enclosure has the indicated strict sign; every $a_f$ enclosure is strictly positive, since $m$ is bounded away from zero and (25.5) holds. The procedure therefore uses no reciprocal interval containing zero. The Sturm signs can also be obtained directly in $\mathbb Q(q)$: when the rational and radical terms of $a+bq$ have opposite signs, comparison of $a^2$ with $21b^2$ decides the sign. Together with (25.3), (25.8), and the full coefficient and factor tables, this specifies every algebraic and sign assertion in (26.2)–(26.5) by rational operations and integer comparisons.
+
+There are two disjoint isolating intervals for $\pi_2$ in each embedding and respectively ten and six for $\pi_{10}$. Their one-root variation drops exhaust the counts at infinity. Thus no real candidate lies outside the table. Each listed root violates at least one of the necessary inequalities $\Sigma>0,\Pi>0$. Combining these exclusions with Lemma 26.1 proves that no two distinct positive endpoint roots satisfy (25.1) in either embedding. This excludes even the enlarged algebraic domain with two positive $b$ coordinates; the further original inequalities $v_0>0,c>0,0<a<1$ cannot restore an endpoint pair. ∎
+
+## 27. kappa 零焦点层的同源强制与原完整 D 障碍
+
+**定理 27.1（原整个核上的早叶同源强制）。** For every complete legal source tuple satisfying Definition 23.1, the two fixed sources at the actual leaf $w_*=JJJMJJJ$ coincide and
+
+$$
+\begin{gathered}
+P_{(w_*,0)}=P_{(w_*,1)},\\
+D_{w_*}|_V=0\in\operatorname{Hom}(V,\mathbb R^4),\qquad
+\operatorname{rank}[B;D_{w_*}]=\operatorname{rank}B.
+\end{gathered}
+\tag{27.1}
+$$
+
+In particular this focal unit-$J^7$, rank-two, $\kappa=0$ source stratum cannot satisfy all the original guards (3.9). This is a necessary obstruction for that entire stratum, with all other sources arbitrary; it is not a claim about all remaining source strata or the global eight-versus-nine-reading alternatives.
+
+Proof. Suppose the two sources at $w_*$ are distinct. Lemmas 23.2 and 24.1 apply to their actual absolute responses on the entire original $V$. All zero-coordinate cases are excluded before introducing $X,Y,m,r$. Lemma 24.2 leaves only the two quadratic-field embeddings. The two distinct actual values $b_0,b_1>0$ must then be common roots of the exact source polynomials of Lemma 25.1. Lemma 25.2 accounts for every resultant factor and every variable denominator. Lemmas 26.1–26.2 exclude each factor in both embeddings. This contradiction proves equality of the same two fixed sources, say at $P$.
+
+Now fix any $x\in V$ and put $h_x(T)=g_{q_0,x}(T)-g_{q_1,x}(T)$. Subtracting the original common ancestor equations gives
+
+$$
+\operatorname{tr}(A_iP)h_x(i)=h_x(0)\qquad(0\le i\le7).
+\tag{27.2}
+$$
+
+The following is the supplied fixed-source injectivity argument of [positive-trace Theorems 6.1 and 12.2](FIB_ORIGINAL_ROOT_POSITIVE_TRACE_GUARDS_AND_SINGULAR_SOURCES.md), on exactly this word. Its $JJ$ occurrences start at action positions $1,2,5,6$. In particular the equal cumulative matrices at times $(0,2),(1,3),(4,6)$, with positive traces, give three distinct roots $0,1,4$ of
+
+$$
+h_x(T+2)-h_x(T).
+$$
+
+This polynomial has degree at most two and is therefore zero. A real polynomial of degree at most three with period two is constant: a nonconstant leading term $a_dT^d$ would give leading difference $2da_dT^{d-1}\ne0$. Thus $h_x=c_0$. At clock four, $\operatorname{tr}(A_4P)=1+b>1$, so (27.2) gives $bc_0=0$, and $b>0$ forces $c_0=0$. Hence $h_x=0$.
+
+Every one of its four coefficient differences is zero, including the constant coefficient; the normalized drift difference, its negative, is also zero. Since $x$ was arbitrary in the unchanged $V$, this proves the full map assertion in (27.1). Finally (3.10), equivalently [IV (13.15)](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md), gives
+
+$$
+\operatorname{rank}[B;D_{w_*}]-\operatorname{rank}B
+=\operatorname{rank}(D_{w_*}|_V)=0.
+$$
+
+Source inequality is false at this same original leaf, so its applicable full four-coordinate separation guard fails. No full source tuple needs to be constructed to exclude every tuple in the stated stratum.
+
+The source-first order is also the identifiability decomposition in [Li–Lee–Bresler, *A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems*, Definition 2.7 and Theorem 2.8](https://arxiv.org/html/1501.06120v1): for a constrained nonzero factor pair and a specified ambiguity group, identify the first factor's orbit and then the other factor conditional on it. Here the source identification is the concrete incidence proof of Sections 23–26 and the conditional gain identification is (27.2). The general bilinear theorem is a reference for that order, not a substitute for the original affine-drift, actual-path, or positive-source equations. ∎
+
+**推论 27.2（原域覆盖与共同来源的量词边界）。** In the obstruction of Theorem 27.1 the original $1538\times1024$ matrix, all $256$ fixed slots and all $254$ prefixes remain suppliers of a single $V=\ker B$ of arbitrary dimension. No selected two-plane, quotient of $V$, subkernel, or independently assigned history is a replacement for it. In particular all of the following are included: unit, mixed and equal endpoint signatures; source repetitions and degenerate source-coordinate differences; zero intercepts, zero components and hidden gain forms; both real embeddings and every elimination denominator; arbitrary gain signs, degree drops, repeated or sampled roots, and arbitrary fixed real drifts.
+
+Proof. Unit and nonunit terminal signatures enter the same formulas (23.4)–(23.8); neither $h_e$ nor a signature difference is a divisor. The cases $d_b=0$, $d_s=0$ and $r=0$ are handled explicitly in Lemma 24.1 before divisions. Only the independent whole-$V$ forms $u,v$ are used in (24.2), and hidden $Q_e$ components are retained until that identity forces their factorization. Lemma 25.1 keeps the actual rank-one equation and proves its remainder identities without dividing by a quartic leading coefficient, including $m=\pm1$. Lemma 25.2 and the interval columns of Lemma 26.2 settle all remaining denominators in both embeddings. No gain sample or leading gain coefficient is inverted at any point. The final consumer (27.2) applies to every polynomial of degree at most three, including zero coefficient blocks in linear reasoning; the original $G_q$ guards still own nonzero gains in legal worlds. All four original $D$ coordinates are consumed on every vector of the same $V$.
+
+The equality proved is for the pair at $JJJMJJJ$. Equal $c$ coordinates for a pair at $J^4MMJ$ and equal $d=1-a$ coordinates for another pair at $J^4MJM$ do not identify one common source: the two pairs have different slot indices, with no cross-pair equality supplied by those statements. They play no role in (27.1). Likewise no separate history is assigned to the sibling $JJJMJM$: its actual cumulative matrix at clock six remains
+
+$$
+MJMJ=\begin{pmatrix}1&0\\2&1\end{pmatrix},\qquad
+\operatorname{tr}(MJMJP)=1+2b.
+$$
+
+This one-leaf obstruction supplies neither a complete guarded $256$-source realization nor a universal decoder or a global nine-reading bound. The conditions (23.2) delimit its quantifiers. ∎
 
 ## 追加锚（本行以下为增补区）
