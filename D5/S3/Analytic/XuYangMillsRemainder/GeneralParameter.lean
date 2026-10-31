@@ -1,8 +1,8 @@
 /- GID: D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter
    generality: G
    mirror-B: D5/B/S3/Analytic/XuYangMillsRemainder/GeneralParameter
-   mirror-E: none
-   anchors: [D5/S3/Analytic/XuYangMillsRemainder/Result]
+   mirror-E: none(waiver:kernel-checked-analytic-proof-no-external-evidence)
+   anchors: [mathlib/module/Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas, mathlib/module/Mathlib.Analysis.Calculus.ContDiff.Deriv]
    utility: none
    digest: Complete original Mills sign and complete-monotonicity classification. -/
 
