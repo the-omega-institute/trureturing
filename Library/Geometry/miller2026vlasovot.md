@@ -4,7 +4,7 @@ authors: Joseph K. Miller
 year: 2026
 title: "General-cost optimal transport in the Vlasov formalization"
 doi: null
-url: https://github.com/jtraverso/lean-pool/tree/edbe5bd56f476cc2965564676b66199f281ab714/LeanPool/Vlasov/OT
+url: https://github.com/LeanPool/lean-pool/tree/edbe5bd56f476cc2965564676b66199f281ab714/LeanPool/Vlasov/OT
 claim: "Actual coupling gluing, finite atomic transport, a c-transform, and the hard general-cost Kantorovich-Rubinstein inequality under cost first moments."
 strata_touched:
   - D5/S3/Geometry/ProbabilityTransport/CostCoupling
@@ -38,7 +38,7 @@ The finite c-transform and weak comparison retain an attained single-potential
 maximum. These are applications and formal source adaptations of known
 mathematics, with no original-result or external-open-problem claim.
 
-The source pins are Lean 4.35.0-rc3 and Mathlib `c55e`; the receiving pins are
+The source pins are Lean 4.35.0-rc3 and Mathlib `c55e6e786f49471c72fbddbec5415808896aec1e`; the receiving pins are
 Lean 4.35.0 and Mathlib `56a005855ea17e0b0958f73ec801ae140b0a1679`.
 Only selected optimal-transport statements are included; no Vlasov dynamics,
 Picard infrastructure or pin replacement is part of this dependency.
@@ -51,3 +51,6 @@ The complete applicable NOTICE is retained verbatim in
 of the original artifact
 `e1e1c75e234e0e62b4018f6197a303f3bb7b2923de99730faaa85fa46d285a39`.
 Per-file Miller copyright, author and modification notices are retained.
+
+Equivalent coverage in the receiving pinned Mathlib replaces the corresponding
+selected source transplant when its hypotheses and conclusions match.
