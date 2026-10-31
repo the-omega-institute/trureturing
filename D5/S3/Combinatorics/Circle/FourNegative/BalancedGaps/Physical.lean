@@ -107,7 +107,8 @@ private theorem physical_partition (a b c d : ℕ)
       Fin.isValue,ite_true,ite_false,Finset.mem_insert,Finset.mem_erase,
       positivePacket,negativeLabel,chainStart,chainLength,Finset.mem_Ico,size] <;>
     clear hcount hrange <;>
+    dsimp +instances only [negativeLabel,chainStart,chainLength,size] <;>
     rcases hloc with h | h | h | h | h | h | h | h | h | h | h <;>
-    simp (disch := omega) only [if_pos,if_neg,zero_add,add_zero]
+    simp (disch := omega) only [ite_eq_left,ite_eq_right,zero_add,add_zero]
 
 end D5.S3.Combinatorics.Circle.FourNegative.BalancedGaps
