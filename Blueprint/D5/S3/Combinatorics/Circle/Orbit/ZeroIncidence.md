@@ -4,7 +4,19 @@
 
 Orbitwise zero sums are exactly balanced negative incidence, with an exact covering law and a coprime obstruction.
 
-**Theorem 1.1 (Orbitwise zero is equivalent to balanced incidence).**
+**Theorem 1.1 (Adjacent equality makes a cyclic function constant).**
+
+$$\forall k \in \mathbb{N},\; 0 < k \Rightarrow \left(\forall g \in Fin\left(k\right) \to \mathbb{N},\; \left(\forall h \in Fin\left(k\right),\; g\left(h\right) = g\left(finRotate\left(k\right)\left(h\right)\right)\right) \Rightarrow \left(\forall h \in Fin\left(k\right),\; g\left(h\right) = g\left(0\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/Orbit/ZeroIncidence.all_equal_of_adjacent` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A natural-valued function on a nonempty finite cycle is constant when its value agrees with its cyclic successor at every position.
+
+**Theorem 1.2 (Orbitwise zero is equivalent to balanced incidence).**
 
 Lean statement: `D5/S3/Combinatorics/Circle/Orbit/ZeroIncidence.actualSource_orbit_zero_balanced`
 
@@ -27,5 +39,6 @@ For any four-bit odd-k corollary, the representative must satisfy 0≤t<N and ha
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/ZeroIncidence.actualSource_orbit_zero_balanced`
+- Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/ZeroIncidence.all_equal_of_adjacent`
 - Dependency: [D5/S3/Combinatorics/Circle/SourceWidth](../SourceWidth.md)
 - Dependency: [D5/S3/Combinatorics/Circle/ZeroSumSubsets](../ZeroSumSubsets.md)
