@@ -2622,3 +2622,568 @@ pattern. It changes neither $\mathcal X(a,h)$ nor $M(a,h)$ and
 does not infer a sign for the gap in Corollary 13.2.
 
 ## 追加锚（本行以下为增补区）
+
+## 23. Contact descent and exact two-row resource values
+
+**Lemma 23.1 (Marked-price descent and the singleton entrance).**
+Fix an attained dual from Theorem 15.3 and a representing flow of
+any countable optimum. Write $s_k=u_k+v_k$ for $k\ge2$.
+On every positive action $(k,j,d)$ with $k\ge2$,
+
+$$
+v_j\le v_k.
+\tag{23.1}
+$$
+
+Consequently every unit-injection component of Theorem 21.1 rooted
+at a row $h\ge2$ has finite support. Every positive action with
+unmarked row one has marked row two, and its degree satisfies
+
+$$
+j=2,\qquad d^2<6\beta/A.
+\tag{23.2}
+$$
+
+These conclusions apply to the prescribed optimum and its positive
+actions; no cap feasibility of a normalized component is assumed.
+
+**Proof.** Unmarked and marked contact at the same tail give
+
+$$
+u_k+\beta g(k/d)\le u_j+\beta g(j/d),\qquad
+s_j+\beta g(j/d)\le s_k+\beta g(k/d).
+$$
+
+Subtracting yields (23.1). If $h\ge2$ is an injection row,
+$u_h=A/h$ by (20.3), so the row equality gives $v_h=0$.
+Descent and nonnegativity then force $v_k=0$ at every row reachable
+from $h$. All these rows are active in the prescribed optimum.
+Theorem 19.1 places them at indices at most $H_0$, since its active
+rows above $H_0$ have strictly positive $v_k$. Lemma 20.3 bounds
+all their action degrees. The unit-injection component therefore
+has finite support. This conclusion concerns support; its normalized
+resource value need not lie below $R$.
+
+For an action from row one, unmarked contact permits the competitor
+two and gives
+
+$$
+s_2=A-u_2\le\beta\{g(2/d)-g(1/d)\}.
+\tag{23.3}
+$$
+
+Here $s_2\ge A/2$. If $d\ge4$, strict convexity of $g$ gives
+$2g(2/d)-g(1/d)<g(3/d)$. Thus
+
+$$
+s_2+\beta g(2/d)
+\le\beta\{2g(2/d)-g(1/d)\}
+<\beta g(3/d)\le s_j+\beta g(j/d)\quad(j\ge3).
+$$
+
+Only row two can be marked. At $d=3$ it is the only admissible
+marked row as well. Finally $g'(x)=2x/\sqrt{1+x^2}<2x$ for $x>0$,
+so $g(2/d)-g(1/d)<3/d^2$. Together with (23.3) this proves
+(23.2). All comparisons use the exact nonlinear cost. ∎
+
+**Proposition 23.2 (An exact pair of tail degrees).** For integers
+$d,e\ge3$ there is a normalized finite flow using just the actions
+$(1,2,d)$ and $(2,2,e)$, with injection only at row one. Its
+resource and cost are
+
+$$
+\begin{aligned}
+r_{de}&=1+\frac{(d-1)(e-2)}{e-1}
+       =d-\frac{d-1}{e-1},\\
+c_{de}&=\frac{(d-1)(e-2)g(1/d)
+                 +(e-2)g(2/d)+e g(2/e)}{e-1}.
+\end{aligned}
+\tag{23.4}
+$$
+
+It satisfies every original incidence constraint (7.3), including
+when $d=e$. More generally, every normalized finite flow supported
+on actions $(1,2,d)$ and $(2,2,e)$, with injection only at one,
+is a convex combination of these normalized pair flows. The
+combination preserves the actual $r$ and $c$ simultaneously.
+
+**Proof.** Set
+
+$$
+y_{12d}=\frac{(d-1)(e-2)}{e-1},\qquad y_{22e}=1,
+\tag{23.5}
+$$
+
+and all other actions to zero. Then $W_2=I_2=1$,
+$b_1=W_1=y_{12d}$, $b_k=0$ for $k\ge2$, and
+$\mathcal N(y)=(e-2)/(e-1)+1/(e-1)=1$.
+Proposition 20.2 proves feasibility and gives (23.4). In its
+reconstructed array $q_1=y_{12d}$, $q_2=1$ and $Z_2=1$;
+in particular the marked constraint in row two is an equality.
+Both actions have the strict actual incidence inequality.
+When $d=e$, the two actions have different unmarked rows and their
+column contributions add, with no change to these identities.
+
+For the general flow, write $a_d=y_{12d}$ and $b_e=y_{22e}$.
+Since $b_2$ as an injection coordinate is zero, its row balance and
+normalization give
+
+$$
+\sum_e b_e=W_2=I_2=\mathcal N(y)=1,\qquad
+\sum_d\frac{a_d}{d-1}=1-B,\quad
+B=\sum_e\frac{b_e}{e-1}\le\frac12.
+\tag{23.6}
+$$
+
+Define probabilities $\eta_d=a_d/\{(d-1)(1-B)\}$.
+The weights $\theta_{de}=\eta_d b_e$ sum to one.
+The mixture of (23.5) with these weights has row-two action mass
+$b_e$ and row-one action mass
+
+$$
+\sum_e\theta_{de}\frac{(d-1)(e-2)}{e-1}
+=\eta_d(d-1)(1-B)=a_d.
+$$
+
+It is the original flow itself. Linearity of the three functionals
+in (20.1) proves simultaneous preservation of normalization,
+resource and cost. A component can exceed a specified cap; only
+a feasible final mixture can be used under that cap. ∎
+
+## 24. Exact finite continuation in an inactive-cap region
+
+Throughout this section put $t=\sqrt{\beta/\alpha}$ and
+$L=\mathcal L(\alpha,\beta;R)$. The hypotheses here restrict a
+region of the original parameter space; they do not replace the
+all-positive quantifiers of Open problem 18.2.
+
+**Proposition 24.1 (A comparison interval with a slack actual cap).**
+If $t\ge128$ and $R>2t+6$, then
+
+$$
+\alpha(2t-1/12)\le L\le\alpha(2t+6).
+\tag{24.1}
+$$
+
+Every countable optimum has $r<R$. Every attained dual has
+$\lambda=0$, $A=\alpha$ and $\ell=L$.
+
+**Proof.** The exact identity $g(x)+g(x)^2/4=x^2$, together with
+$g(x)\le x^2$, gives
+
+$$
+g(x)\ge\frac{x^2}{1+x^2/4}.
+\tag{24.2}
+$$
+
+Consider the all-degree dual candidate
+$u_k=\alpha/k^2$ for $k\ge1$ and $v_k=\alpha/k$ for $k\ge2$,
+with $v_1=0$ and $\lambda=0$. Its row equalities hold.
+For any $k<d$ put $z=k^2/(d^2+k^2/4)>0$. Then
+
+$$
+\begin{aligned}
+u_k+\beta g(k/d)
+&\ge\frac\alpha{k^2}+\beta z\\
+&=\frac\alpha{d^2z}+\beta z-\frac\alpha{4d^2}
+ \ge\frac{2\sqrt{\alpha\beta}}d-\frac\alpha{4d^2}.
+\end{aligned}
+$$
+
+Since $m_d\ge b_d$, the column expression is at least
+$d b_d\ge2\sqrt{\alpha\beta}-\alpha/(4d)$.
+For $d\ge3$ this is at least $\alpha(2t-1/12)$.
+The candidate with that value of $\ell$ is dual feasible.
+The weak-duality calculation (15.6) proves the lower bound in
+(24.1); dual attainment for this particular candidate is not used.
+
+For the upper bound choose $d=\lceil t\rceil$ and $e=4d$ in
+Proposition 23.2. Its resource is $r_{de}<d\le t+1<R$.
+Using $g(x)\le x^2$ in its exact cost gives
+
+$$
+c_{d,4d}\le\frac1d+\frac4{d^2}+\frac6{(4d)^2}
+<\frac1d+\frac5{d^2}.
+$$
+
+Here $e/(e-1)\le3/2$. Consequently its objective is at most
+$\alpha d+\beta/d+5\beta/d^2\le\alpha(2t+6)$.
+This is one actual normalized feasible array, not independently
+chosen resource and cost estimates. Every optimum now has
+$r\le L/\alpha\le2t+6<R$. Corollary 15.7 gives
+$\lambda(R-r)=0$ for every attained dual, so $\lambda=0$.
+The other identities follow from (15.3). ∎
+
+**Lemma 24.2 (Quantitative prices and row-two continuation degrees).**
+Under the hypotheses of Proposition 24.1, fix any attained dual
+and any countable optimum. For every $k\ge2$,
+
+$$
+\frac{1-4/(3t)}{k^2}\le\frac{u_k}{\alpha},
+\qquad
+\frac{u_k}{\alpha}\le\frac{(1+12/t)^2}{k^2}
+\quad\text{if row }k\text{ is active}.
+\tag{24.3}
+$$
+
+Every representing optimal flow has injection only at row one.
+If a positive action has unmarked row two and tail degree $d$,
+then, with $x=d/(4t)$,
+
+$$
+\frac t2<d<9t,\qquad |x-1|<\frac8{\sqrt t}.
+\tag{24.4}
+$$
+
+**Proof.** To bound $u_k$ below, test the all-degree column
+inequality at $D_k=\lceil tk^2\rceil$, using marked row two and
+unmarked row $k$. Both are admissible. Since
+$s_2=\alpha-u_2\le\alpha$ and $g(z)\le z^2$,
+
+$$
+\frac\ell\alpha
+\le1+\frac{4t^2}{D_k^2}
+ +(D_k-1)\frac{u_k}{\alpha}
+ +\frac{t^2k^2}{D_k}.
+$$
+
+The lower bound (24.1) therefore gives
+
+$$
+(D_k-1)u_k/\alpha
+\ge t-13/12-4/k^4\ge t-4/3.
+$$
+
+Because $D_k-1<tk^2$ and the right side is positive, this proves
+the first bound in (24.3), with a weak inequality as stated.
+
+For an active $k\ge2$, choose a positive unmarked incidence at
+some $d$. Contact, $g(z)\ge\gamma z^2$, $d-1\ge d/2$ and
+$\ell/\alpha\le2t+6\le3t$ give
+
+$$
+d\ge\frac{\beta\gamma k^2}{2\ell}
+\ge\frac{\gamma tk^2}{6}>\frac{tk^2}{8}.
+\tag{24.5}
+$$
+
+The last step uses $\gamma>3/4$. Put $q=u_k/\alpha$;
+the dual row equality gives $q\le1/k$. The exact Taylor lower
+bound $g(z)\ge z^2-z^4/4$ on $[0,1]$ gives
+
+$$
+\begin{aligned}
+\frac\ell\alpha
+&\ge(d-1)\{q+t^2g(k/d)\}\\
+&\ge dq+\frac{t^2k^2}d-q
+       -\frac{t^2k^2}{d^2}-\frac{t^2k^4}{4d^3}\\
+&\ge2tk\sqrt q-\frac1k-\frac{64}{k^2}
+                         -\frac{128}{tk^2}
+\ge2tk\sqrt q-17.
+\end{aligned}
+\tag{24.6}
+$$
+
+Indeed $k\ge2$ and $t\ge128$ bound the discarded terms by
+$1/2+16+1/4<17$. It follows that
+$2tk\sqrt q\le2t+23$, proving the upper bound in (24.3).
+
+For a positive injection at $k\ge2$, (20.3) requires
+$u_k=\alpha/k$. Equation (24.3) would give
+$k\le(1+12/t)^2<2$, a contradiction. The nonzero injection is
+therefore supported only at one. This uses the actual optimal-flow
+identity, without substituting a separately normalized component.
+
+For an action from row two, (24.5) gives $d>t/2$.
+Write $a_0=1-4/(3t)$. From $u_2/\alpha\ge a_0/4$ and
+$(d-1)u_2\le\ell$,
+
+$$
+d\le1+\frac{4(2t+6)}{a_0}<9t,
+$$
+
+where the last inequality holds for $t\ge128$.
+The same Taylor lower bound, now just for row two, gives
+
+$$
+\begin{aligned}
+\frac\ell\alpha
+&\ge\frac{a_0(d-1)}4
+       +t^2(d-1)\left(\frac4{d^2}-\frac4{d^4}\right)\\
+&\ge t\left(a_0x+\frac1x\right)
+       -\frac{a_0}4-\frac{4t^2}{d^2}-\frac{4t^2}{d^3}\\
+&\ge t\left(a_0x+\frac1x\right)-17.
+\end{aligned}
+$$
+
+The discarded terms are at most $1/4+16+32/t<17$.
+Hence $a_0x+1/x\le2+23/t$. As $x<9/4$, it follows that
+$x+1/x<2+26/t$, and thus
+
+$$
+(x-1)^2=x(x+1/x-2)<\frac{(9/4)26}{t}<\frac{64}{t}.
+$$
+
+This proves (24.4). The inequalities remain valid when tail or
+source contacts tie. ∎
+
+**Theorem 24.3 (Exact finite continuation and an attained resource
+formula).** Suppose
+
+$$
+\alpha,\beta>0,\qquad t=\sqrt{\beta/\alpha}\ge10^{12},
+\qquad R>2t+6,
+\qquad M_t=\lceil9t\rceil.
+\tag{24.7}
+$$
+
+Every countable optimum has source support exactly $\{1,2\}$
+and tail support at degrees at most $M_t$. In particular
+
+$$
+\begin{aligned}
+\mathcal L_{M_t}(\alpha,\beta;R)
+&=\mathcal L(\alpha,\beta;R)\\
+&=\min_{3\le d,e\le M_t}
+       \{\alpha r_{de}+\beta c_{de}\}.
+\end{aligned}
+\tag{24.8}
+$$
+
+The $r_{de},c_{de}$ are exactly (23.4), without replacing $g$ by
+a quadratic cost. Every minimizing pair in (24.8) has $r_{de}<R$.
+There exists an optimum equal to one of these normalized pair
+arrays. This is finite-array attainment, not exact attainment by
+one connected rooted pattern.
+
+**Proof.** Fix a countable optimum, an attained dual and its
+representing flow. Lemma 24.2 leaves only injection at one, and
+Lemma 23.1 makes every positive action from one target two.
+It remains to prove that every positive action from two also
+targets two. Consider such an action $(2,j,d)$ and put $x=d/(4t)$.
+The target row $j$ is active because it has positive marked
+incidence. Equations (24.3)--(24.4) imply
+
+$$
+\begin{gathered}
+999/1000<x<1001/1000,\qquad
+1-4/(3t)\ge1-1/10000,\qquad
+(1+12/t)^2\le1+1/10000,\\
+\frac{s_2+\beta g(2/d)}\alpha
+\le\frac34+\frac1{40000}
+       +\frac14\left(\frac{1000}{999}\right)^2
+<\frac{1001}{1000}.
+\end{gathered}
+\tag{24.9}
+$$
+
+For an active marked competitor $j\ge2$, (24.3) gives
+
+$$
+\frac{s_j}{\alpha}
+=\frac{1-u_j/\alpha}{j-1}
+\ge\frac{j+1}{j^2}-\frac1{10000j^2(j-1)}.
+\tag{24.10}
+$$
+
+For $j=3,4$, Taylor's lower bound gives
+
+$$
+\frac{\beta g(j/d)}\alpha
+\ge\frac{j^2}{16x^2}-\frac{j^4}{1024t^2x^4}
+>\frac{j^2}{16}\left(\frac{1000}{1001}\right)^2
+   -\frac1{1000000}.
+\tag{24.11}
+$$
+
+The error bound uses $t\ge10^{12}$ and $x>999/1000$.
+Thus the marked cost at three is strictly larger than
+
+$$
+\frac49-\frac1{180000}
+ +\frac9{16}\left(\frac{1000}{1001}\right)^2
+ -\frac1{1000000}>\frac{201}{200},
+$$
+
+and at four it is strictly larger than
+
+$$
+\frac5{16}-\frac1{480000}
+ +\left(\frac{1000}{1001}\right)^2
+ -\frac1{1000000}>\frac{13}{10}.
+$$
+
+All these costs are divided by $\alpha$.
+For $j\ge5$, use $s_j\ge0$, $\gamma>4/5$, and $g(z)\ge\gamma z^2$:
+
+$$
+\frac{s_j+\beta g(j/d)}\alpha
+\ge\frac{\gamma j^2}{16x^2}
+>\frac45\frac{25}{16}
+       \left(\frac{1000}{1001}\right)^2>\frac65.
+$$
+
+Each lower bound exceeds the upper bound for marked row two in
+(24.9). A positive marked contact cannot have $j\ge3$.
+This proves the exact $2\longrightarrow2$ continuation.
+
+By the resolvent (21.2), the active rows are precisely those
+reachable from the injection. The only reachable rows are one
+and two, and both are active. Every action from two has $d<9t$
+by Lemma 24.2. Every action from one satisfies
+$(d-1)\alpha\le\ell\le\alpha(2t+6)$, hence
+$d\le2t+7<9t$. There are therefore only finitely many positive
+actions. Proposition 20.2 reconstructs a finite optimal array at
+cutoff $M_t$, proving the first equality in (24.8).
+
+Proposition 23.2 decomposes this normalized optimal flow into
+normalized pair flows with $3\le d,e\le M_t$. Since $\lambda=0$,
+the weak-duality inequality (15.6) gives
+$L\le\alpha r_{de}+\beta c_{de}$ for every pair flow, even before
+imposing its cap. The mixture has objective $L$, so every pair
+with positive mixture weight has objective exactly $L$.
+At least one such pair exists. Conversely every pair in the
+finite displayed minimum has objective at least $L$, proving
+the second equality. A minimizing pair obeys
+$r_{de}\le L/\alpha\le2t+6<R$, since its cost is nonnegative.
+It is itself a cap-feasible optimum with the exact resource value
+(23.4). No passage to a closure of resource values is involved.
+
+The proof does not assume unique minimizing degrees. All ties
+between degrees $d,e$ are retained by the finite minimum, and all
+positive optimal contacts obey the same strict exclusion of marked
+indices at least three. ∎
+
+## 25. A region of the winning envelope and its original-graph consumer
+
+**Corollary 25.1 (Exact finite sufficiency at small $\kappa$ and large
+finite $D$).** If
+
+$$
+0<\kappa\le1/10,\qquad D\ge2\cdot10^{12},
+\tag{25.1}
+$$
+
+then the unique winning core index in (10.2) is $j=1$.
+With $t=D/\sqrt2$ and $M_t=\lceil9D/\sqrt2\rceil$,
+
+$$
+\begin{aligned}
+F(\kappa,D)=F_{M_t}(\kappa,D)
+=-\frac1{4D^2}
++\min_{3\le d,e\le M_t}
+ \left\{\frac{2\kappa}D r_{de}+D\kappa c_{de}\right\}.
+\end{aligned}
+\tag{25.2}
+$$
+
+For any positive compact rectangle $\mathcal K$ contained in
+(25.1), the explicit endpoint-only cutoff
+$\widehat M_{\mathcal K}$ of (17.1)--(17.3) satisfies
+$F_{\widehat M_{\mathcal K}}=F$ throughout $\mathcal K$.
+The endpoint inequalities in (25.1), equal-endpoint rectangles and
+all minimizing-degree ties are included.
+
+On every original integer sequence (18.2) tending to a point of
+this rectangle, the full class of Definition 1.1 is eventually
+nonempty and its minimum has limit
+
+$$
+\frac{V_{N_n}(a_n,h_n)-a_n(a_n+1)^2}{a_n^2}
+\longrightarrow F(\kappa,D)
+=F_{\widehat M_{\mathcal K}}(\kappa,D).
+\tag{25.3}
+$$
+
+There is a recovery sequence with one $(a_n+1)$-sink core and
+$h_n$ tail sinks, whose tail degrees and full degrees of sources
+touching the tail are at most the existing $B_{\mathcal K}$ of
+(18.1). It retains exactly $N_n$ sources, $a_n+1+h_n$ sinks and
+$a_nN_n$ edges, simple connected bipartiteness and $k_u<d_i$ on
+every edge. The remaining source degrees lie between $a_n$ and
+$a_n+1$.
+
+**Proof.** Use exactly $\alpha=2\kappa/D$, $\beta=D\kappa$ and
+$R_j=Dj/\kappa$. Then $t=D/\sqrt2\ge10^{12}$ and
+$R_1\ge10D>2t+6$. Theorem 24.3 applies to branch one.
+Proposition 24.1 gives
+
+$$
+L_1\le\frac{2\kappa}D(2t+6)
+=\kappa(2\sqrt2+12/D)<4\kappa\le2/5.
+$$
+
+Branch one is admissible and its envelope term is
+$2+L_1<12/5<4$. Every admissible $j\ge2$ has
+$2j+\mathcal L(\alpha,\beta;R_j)\ge4$.
+This is a comparison with every competing branch, not a statement
+about a selected losing branch. Thus one is the unique winner,
+and (24.8) proves (25.2).
+
+Pointwise finite winning attainment on $\mathcal K$ is now proved.
+Theorem 17.1 supplies its existing endpoint-only bound without any
+new graph construction. Theorem 18.1, with the winning index one,
+gives precisely the recovery and degree bounds stated here.
+Its use of Theorems 8.1 and 11.1 preserves marked incidence and
+all exact integer budgets, and its lower bound is Proposition
+12.2 or Theorem 13.1 over the full original graph class.
+The latter theorem independently gives the full-minimum limit in
+(25.3). No fixed connected rooted pattern is claimed to attain
+the branch infimum, and no degree bound for all original minimizers
+follows. The actual law domain $\mathcal X(a,h)$ and $M(a,h)$
+remain unchanged. ∎
+
+## 26. Sources and the unchanged all-positive question
+
+The contact descent, singleton entrance, normalized pair resources,
+quantitative dual-price bounds and strict row-two continuation are
+repo-derived from the exact $g$, (7.3), the attained primal and
+dual of Section 15, and the flow, gap and resolvent of Sections
+19--21. The parameter $10^{12}$ in (24.7) is a sufficient explicit
+threshold for the displayed rational inequalities; no optimal
+threshold is asserted. The arithmetic-geometric mean inequality
+and the scalar bounds for $g$ are proved or applied explicitly.
+No external finite-state, monotone-policy or finite-support theorem
+is a premise. The external CDSO convention remains that of
+Albalahi--Das--Ali--Barman--Hamza, arXiv:2510.24809v1, Section 1,
+and Citation 6.2: the denominator is the maximum endpoint degree,
+with no $1/\sqrt2$ factor. The exact original cost is used in
+(23.4), (24.8) and (25.2); Taylor bounds only certify inequalities.
+The finite-duality input and its conditions remain those attributed
+after Theorem 15.3. The Zhao--Zhao full-text overlap identified in
+Section 6 remains unassessed; no global priority claim is made.
+
+Theorem 24.3 rules out unavoidable infinite contact continuation
+through row two in the region (24.7), and Corollary 25.1 rules out
+a fixed-point refutation anywhere in (25.1). These are exact
+finite-attainment results, including actual normalized resource
+values, rather than approximation bounds or a chosen infinite
+policy. They address a restricted region. In particular the
+small-$\kappa$, large-$D$ family alone is not a counterexample to
+Open problem 18.2; beyond the explicit threshold its only winning
+branch has the finite attainers (23.5).
+
+For the remaining positive parameters, Lemma 23.1 does not force
+finite continuation from row two. When $\lambda>0$, the price
+ratio relevant to the inequalities is $\sqrt{\beta/(\alpha+\lambda)}$,
+and Proposition 24.1 has not supplied the needed inactive-cap
+hypothesis. Finite non-singleton injection components can also
+have normalized resources exceeding $R$; replacing a required
+mixture by one component need not preserve its exact cap and
+complementarity. The present results give no general finite
+selection at a binding cap, and no exclusion of every finite
+selection there.
+
+Accordingly Open problem 18.2 remains unresolved on arbitrary
+positive compact rectangles, including its full cap-boundary and
+winning-tie requirements. Its genuine quantified negation also
+remains unresolved: no fixed positive pair is supplied at which
+every winner fails every finite cutoff. The conditions and
+completion criterion of that problem are unchanged. Theorem 17.1
+and Theorem 18.1 remain the endpoint-bound and original-graph
+consumers if finite winning attainment is established in the
+remaining range. The independent full-graph limit and eventual
+nonemptiness of Theorem 13.1 continue to hold on every original
+integer sequence, without the extra assumptions (24.7) or (25.1).
+
+## 追加锚（本行以下为增补区）
