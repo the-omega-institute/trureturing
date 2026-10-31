@@ -34,7 +34,7 @@ internal sealed class KBonacciPrefixCompletionDocument : IScribeDocumentDefiniti
     private static Formula P(Formula w, Formula r) => Call("cumulative", Call("c", w), Seq(r, Plus, D(1)));
     private static Formula E(Formula w, Formula t) => Sub(Call("ell", w), t);
     private static Formula Data(Formula s, Formula w, Formula v) => Call("SameData", s, w, v);
-    private static ScribeNode Def(string name, Formula statement, string text) =>
+    private static DocumentBlock.Describe Def(string name, Formula statement, string text) =>
         Describe.Lean(DescribeId.Create("kbonacci-prefix-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Root + name), H(name),
             StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),

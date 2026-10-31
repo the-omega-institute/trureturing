@@ -31,7 +31,7 @@ internal sealed class KBonacciFixedPaidRecordDocument : IScribeDocumentDefinitio
     private static Formula Arr => Call("Arrangement",K);
     private static Formula Rec => Seq(Arr,Sp,Times,Sp,Call("List",Seq(R,Sp,Times,Sp,Call("List",R))));
     private static Formula Bound(Formula body) => All("k",N,Seq(D(2),Sp,Leq,Sp,K,Sp,Implies,Sp,body));
-    private static ScribeNode Def(string name, Formula formula, string text) =>
+    private static DocumentBlock.Describe Def(string name, Formula formula, string text) =>
         Describe.Lean(DescribeId.Create("kbonacci-paid-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Root + name), H(name), StatementSource.FromAuthor(Disp(formula)),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), DescribeRole.Definition);
