@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.MiddleGap;
 
 internal sealed class ThreeNegativeMiddleGapJointLiftDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class ThreeNegativeMiddleGapJointLiftDocument : IScribeDocumentD
         H("The complete middle-minimum chamber"),
         Blocks(
             Describe.Lean(DescribeId.Create("actual-source-three-negative-middle-gap-joint-lift"),
-                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/ThreeNegativeMiddleGapJointLift.actualSource_three_negative_middle_gap_joint_lift"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/MiddleGap/ThreeNegativeMiddleGapJointLift.actualSource_three_negative_middle_gap_joint_lift"),
                 H("One complete physical permutation and one literal ear cut"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For every natural a,b,c with 2<=b<a<c, put k=a+b+c and u=1+2^a+2^(a+b). The theorem constructs one list sigma of Fin(k) and a natural j<=k such that OriginalOrder(k,u,sigma) and OriginalOrder(k+1,2u,earWord(k,sigma,j)). Each OriginalOrder includes the complete permutation of all physical labels, integer total zero, and both half-modulus bounds on every natural take-prefix, including empty and overlong prefixes. The old labels retain their original identity through castSucc, and the single fresh label k is inserted at the literal cut j.")),

@@ -1,4 +1,4 @@
-import D5.S3.Combinatorics.Circle.ThreeNegativeMiddleGapJointLift
+import D5.S3.Combinatorics.Circle.MiddleGap.ThreeNegativeMiddleGapJointLift
 import Batteries.Tactic.OpenPrivate
 import Reg.D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 import LeanInformationAuditInterface.Contract.Registration
@@ -127,7 +127,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.ThreeNegativeMiddleGapJointLift
+    owner := `D5.S3.Combinatorics.Circle.MiddleGap.ThreeNegativeMiddleGapJointLift
     definition := none
     coordinates := #[0, 1, 2]
     readouts := #[{
