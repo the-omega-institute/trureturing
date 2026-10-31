@@ -18,6 +18,7 @@ import Mathlib.Tactic.Ring
 Example 5.2 and its unitary-uniqueness conjecture; preregistration #24898. -/
 
 set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
 set_option linter.style.longLine false
 
 noncomputable section
@@ -84,18 +85,19 @@ private lemma form_product (t a b c d e f : ℂ) :
     form t a b c * form t d e f = form t 0 0 (t * (b * d - a * e)) := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [form, Matrix.mul_apply, Fin.sum_univ_succ] <;> ring
+    simp [form, Matrix.mul_apply, Fin.sum_univ_succ]
+  ring
 
 private lemma car_coordinates (x : Matrix (Fin 4) (Fin 4) ℂ) :
     x ∈ carAlgebra ↔ ∃ a b c : ℂ, form 1 a b c = x := by
   have hu : (Matrix.single 0 2 1 + Matrix.single 1 3 1 : Matrix (Fin 4) (Fin 4) ℂ) =
       form 1 1 0 0 := by
     ext i j
-    fin_cases i <;> fin_cases j <;> simp [form, Matrix.single_apply]
+    fin_cases i <;> fin_cases j <;> simp [form]
   have hv : (Matrix.single 0 1 1 - Matrix.single 2 3 1 : Matrix (Fin 4) (Fin 4) ℂ) =
       form 1 0 1 0 := by
     ext i j
-    fin_cases i <;> fin_cases j <;> simp [form, Matrix.single_apply]
+    fin_cases i <;> fin_cases j <;> simp [form]
   have hn : form 1 0 0 (-1) = -(form 1 0 0 1) := by
     ext i j
     fin_cases i <;> fin_cases j <;> simp [form]
@@ -121,7 +123,8 @@ private lemma witness_anticommutes (x : Matrix (Fin 4) (Fin 4) ℂ) (hx : x ∈ 
   obtain ⟨d, e, f, rfl⟩ := (witness_coordinates y).mp hy
   rw [form_product, form_product]
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [form] <;> ring
+  fin_cases i <;> fin_cases j <;> simp [form]
+  ring
 
 private lemma witness_noncommutative : IsNoncommutative witness := by
   refine ⟨form 2 1 0 0, (witness_coordinates _).mpr ⟨1, 0, 0, rfl⟩,
@@ -170,12 +173,46 @@ private lemma witness_delta : delta (form 2 1 0 0) = 9 := by
 private lemma conjugate_product_line (q : Matrix.unitaryGroup (Fin 4) ℂ)
     (h : ∀ x ∈ witness, conjugate q x ∈ carAlgebra) :
     ∃ t : ℂ, t ≠ 0 ∧ conjugate q (form 2 0 0 1) = t • form 1 0 0 1 := by
-  sorry
+  obtain ⟨a, b, c, hu⟩ := (car_coordinates _).mp
+    (h _ ((witness_coordinates _).mpr ⟨1, 0, 0, rfl⟩))
+  obtain ⟨d, e, f, hv⟩ := (car_coordinates _).mp
+    (h _ ((witness_coordinates _).mpr ⟨0, 1, 0, rfl⟩))
+  have hw : form 2 0 0 1 = (1 / 2 : ℂ) • (form 2 0 1 0 * form 2 1 0 0) := by
+    rw [form_product]
+    ext i j
+    fin_cases i <;> fin_cases j <;> norm_num [form]
+  have he : conjugate q (form 2 0 0 1) =
+      ((e * a - d * b) / 2) • form 1 0 0 1 := by
+    rw [hw, map_smul, map_mul, ← hv, ← hu, form_product]
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [form] <;> ring
+  refine ⟨_, ?_, he⟩
+  intro ht
+  have hz : conjugate q (form 2 0 0 1) = 0 := by rw [he, ht, zero_smul]
+  have hwz : form 2 0 0 1 = 0 := by
+    apply EquivLike.injective (conjugate q)
+    simpa only [map_zero] using hz
+  have hh := congrArg (fun x : Matrix (Fin 4) (Fin 4) ℂ => x 0 3) hwz
+  norm_num [form] at hh
 
 private lemma conjugate_complement (q : Matrix.unitaryGroup (Fin 4) ℂ)
     (h : ∀ x ∈ witness, conjugate q x ∈ carAlgebra) :
     ∃ a b : ℂ, conjugate q (form 2 1 0 0) = form 1 a b 0 := by
-  sorry
+  obtain ⟨t, ht, hw⟩ := conjugate_product_line q h
+  obtain ⟨a, b, c, hu⟩ := (car_coordinates _).mp
+    (h _ ((witness_coordinates _).mpr ⟨1, 0, 0, rfl⟩))
+  have hz : Matrix.trace (star (conjugate q (form 2 0 0 1)) *
+      conjugate q (form 2 1 0 0)) = 0 := by
+    rw [← map_star, ← map_mul, conjugate_trace]
+    simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.star_apply,
+      Fin.sum_univ_succ]
+    norm_num [form]
+  rw [hw, ← hu] at hz
+  simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.star_apply,
+    Fin.sum_univ_succ] at hz
+  simp [form] at hz
+  have hc : c = 0 := hz.resolve_left ht
+  exact ⟨a, b, by simpa only [hc] using hu.symm⟩
 
 private lemma witness_not_equivalent : ¬ UnitarilyEquivalent witness carAlgebra := by
   rintro ⟨q, hq⟩
