@@ -1,0 +1,33 @@
+#### 定理 2.3（对数半环同构）
+
+在 $\mathbb{R}\cup\{-\infty\}$ 上定义
+
+$$
+a\oplus b=\log(e^a+e^b),\qquad a\otimes b=a+b,
+$$
+
+并约定 $e^{-\infty}=0$、$-\infty+a=-\infty$。则 $\log$ 是
+
+$$
+(\mathbb{R}_{\ge0},+,\times)\ \cong\
+(\mathbb{R}\cup\{-\infty\},\oplus,\otimes)
+$$
+
+的同构，其逆为 $\exp$。原来的零、单位分别成为 $-\infty$、$0$。
+
+<a id="proof-2-3"></a>
+
+**证明。** 
+$\log(ab)=\log a+\log b$，而 $\log(a+b)$ 恰是所定义的 $\oplus$。含零的情形由约定成立。两个双射互逆，故结合律、交换律和分配律全部随坐标变换转移。
+ ∎
+
+所以对数把乘法门变成普通加法门，把加法门变成 log-sum-exp 门。若 $a^2+b^2=c^2$ 且三者为正，同一勾股式在对数坐标中是
+
+$$
+2\log c=(2\log a)\oplus(2\log b).
+$$
+
+它提供精确坐标转换，而没有消去两种组合运算的区别。
+
+<a id="statement-2-4"></a>
+

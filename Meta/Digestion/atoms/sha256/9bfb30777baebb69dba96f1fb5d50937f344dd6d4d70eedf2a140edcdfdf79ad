@@ -1,0 +1,37 @@
+#### 定理 12.4（投影相容决定相对编织相位）
+
+设不同的非零自伴投影 $P,Q$ 满足
+
+$$
+PQP=\lambda P,\qquad QPQ=\lambda Q,
+$$
+
+令 $z\ne1$、$G_P=I+(z-1)P$、$G_Q=I+(z-1)Q$。则
+
+$$
+G_PG_QG_P=G_QG_PG_Q
+\quad\Longleftrightarrow\quad z+\lambda(z-1)^2=0.
+$$
+
+若 $|z|=1$、$z=e^{i\theta}$，则等价于
+
+$$
+\boxed{4\lambda\sin^2(\theta/2)=1.}
+$$
+
+在 $0\le\lambda<1$ 的投影重叠范围内，存在非平凡酉相位解当且仅当 $\lambda\ge1/4$。
+
+<a id="proof-12-4"></a>
+
+**证明。** 
+令 $u=z-1$。用投影等式展开两边，公共项抵消，差为
+
+$$
+(u+u^2+\lambda u^3)(P-Q).
+$$
+
+由于 $u\ne0$ 且 $P\ne Q$，等价于 $1+u+\lambda u^2=0$。除以 $z$ 并用 $z+z^{-1}=2\cos\theta$ 得 $1+\lambda(2\cos\theta-2)=0$。存在性由 $0\le\sin^2\le1$ 及反向选角得到。
+ ∎
+
+<a id="statement-12-5"></a>
+

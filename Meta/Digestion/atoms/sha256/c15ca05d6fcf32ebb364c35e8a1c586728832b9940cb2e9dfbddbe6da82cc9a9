@@ -1,0 +1,52 @@
+**Theorem 3.1 (Exact-budget realization of every finite profile).** Fix a finite $s\ge4$, a number $a\in[2,3)$, and a profile $x\in\mathcal P_s(a)$. Let $(\ell_n)$ be any integer sequence with $\ell_n\ge1$ and $\ell_n/n\to a$. For all sufficiently large $n$ there is a simple connected two-layer graph $G_n\in\mathcal G(n,\ell_n)$ with exactly $s$ hubs such that
+
+$$
+\frac{N_{T,n}}{n-s}\longrightarrow x_T,
+\qquad
+\frac{D_{i,n}}{n-s}\longrightarrow y_i,
+\qquad
+nE(G_n)\longrightarrow J_s(x).
+$$
+
+Every prescribed integer budget $\ell_n$ is used exactly.
+
+**Proof.** Reserve $s$ hubs and $s-1$ source vertices. Join the reserved sources respectively to
+
+$$
+\{1,2\},\ \{2,3\},\ \ldots,\ \{s-1,s\}.
+$$
+
+These sources form a subdivided path through all hubs. Let
+
+$$
+M=n-2s+1
+$$
+
+be the number of remaining sources. Round the finitely many numbers $Mx_T$ to nonnegative integer counts summing to $M$, with an error bounded independently of $n$ in every type. Initially assign those neighborhoods to the remaining sources. If $B$ denotes their total excess membership,
+
+$$
+B=\sum_T(|T|-1)N_T=M a+O_s(1)=\ell_n+o(n).
+$$
+
+The reserved path contributes exactly $s-1$ to the total excess, so the ordinary sources must have total excess exactly $\ell_n$. Since $a<s-1$, for all sufficiently large $n$,
+
+$$
+0\le\ell_n\le(s-1)M.
+$$
+
+If $B<\ell_n$, add one missing hub membership to a source whose neighborhood is not all of $[s]$. If $B>\ell_n$, delete one membership from a source having at least two neighbors. The required operation is always available until $B=\ell_n$, and it changes the type counts by at most $|B-\ell_n|=o(n)$. All neighborhoods remain nonempty subsets of $[s]$.
+
+The reserved path is unchanged, so the graph stays connected. Its edge count is
+
+$$
+2(s-1)+M+\ell_n=n-1+\ell_n.
+$$
+
+The hub degrees are linear because each $y_i>0$, whereas all source degrees are at most $s$; hence the hubs are the actual higher-degree endpoints for all sufficiently large $n$. On every edge the source degree is bounded and the hub degree is linear. Using the remainder identity in §1 gives
+
+$$
+E(G_n)=\frac{J_s(x_n)}{n-s}+O(n^{-3}),
+$$
+
+where $x_n$ is the adjusted profile and $x_n\to x$. Multiplication by $n$ proves the limit. ∎
+

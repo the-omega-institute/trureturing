@@ -1,0 +1,25 @@
+#### 定理 5.1（唯一最大熵完成）
+
+在 $R>0$、$0<X,Y<R$ 下，固定三均值的熵唯一最大于
+
+$$
+\kappa^*=\frac{XY}{R},\qquad
+p^*=\left(\frac{(R-X)(R-Y)}R,\frac{X(R-Y)}R,Z,
+\frac{Y(R-X)}R,\frac{XY}R\right).
+$$
+
+对同一纤维上的正律，令 $F(\kappa)=-H(p(\kappa))$，则
+
+$$
+F'(\kappa)=\eta,\qquad
+F''(\kappa)=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}>0.
+$$
+
+<a id="proof-5-1"></a>
+
+**证明。** 
+纤维导数是 $h=(1,-1,0,-1,1)$，且 $\sum h_s=0$，所以 $F'=\sum h_s\log p_s=\eta$，再求导得第二式。$\eta=0$ 等价于 $R\kappa=XY$，其解位于区间内部；严格凸性给唯一最小负熵。$Z=0$ 时对四底角相同证明，其他退化边界按条件表的退化边缘处理；$R=0$ 时仅剩顶点律。
+ ∎
+
+<a id="statement-5-2"></a>
+
