@@ -32,7 +32,7 @@ open D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
 noncomputable section
 namespace D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianMatrix
 
-private def centralWeight (n : ℕ) : ℝ :=
+def centralWeight (n : ℕ) : ℝ :=
   (Nat.centralBinom n : ℝ) / (4 : ℝ)^n
 
 def matrixEntry (z : ℂ) (s t : ℕ) : ℂ :=
@@ -43,7 +43,7 @@ def matrixEntry (z : ℂ) (s t : ℕ) : ℂ :=
 def finiteSection (N : ℕ) (z : ℂ) : Matrix (Fin N) (Fin N) ℂ :=
   fun i j => matrixEntry z (i.val+1) (j.val+1)
 
-private lemma centralWeight_zero : centralWeight 0 = 1 := by
+lemma centralWeight_zero : centralWeight 0 = 1 := by
   norm_num [centralWeight, Nat.centralBinom]
 
 private lemma centralWeight_one : centralWeight 1 = (1 / 2 : ℝ) := by
@@ -54,7 +54,7 @@ private lemma centralWeight_pos (n : ℕ) : 0 < centralWeight n := by
   · exact_mod_cast Nat.centralBinom_pos n
   · positivity
 
-private lemma centralWeight_nonneg (n : ℕ) : 0 ≤ centralWeight n :=
+lemma centralWeight_nonneg (n : ℕ) : 0 ≤ centralWeight n :=
   (centralWeight_pos n).le
 
 private lemma centralWeight_step (n : ℕ) :
@@ -69,7 +69,7 @@ private lemma centralWeight_step (n : ℕ) :
   field_simp
   nlinarith [hcR]
 
-private lemma halfBinomial_eq_signed_centralWeight (n : ℕ) :
+lemma halfBinomial_eq_signed_centralWeight (n : ℕ) :
     halfBinomial n = (-1 : ℂ)^n * (centralWeight n : ℂ) := by
   induction n with
   | zero =>
@@ -270,7 +270,7 @@ private lemma central_weighted_partial_sum_le (s N : ℕ) (hs : 0 < s) :
   have h := central_weighted_partial_sum_exact s N hs
   linarith [centralWeight_nonneg (N + 1)]
 
-private lemma matrixEntry_norm (z : ℂ) (s t : ℕ) (hs : 0 < s) (ht : 0 < t) :
+lemma matrixEntry_norm (z : ℂ) (s t : ℕ) (hs : 0 < s) (ht : 0 < t) :
     ‖matrixEntry z s t‖ =
       Real.sqrt (s : ℝ) * Real.sqrt (t : ℝ) * centralWeight s *
         centralWeight t * ‖z‖ ^ (s + t) / (s + t : ℝ) := by
