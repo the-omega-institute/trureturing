@@ -6,8 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Tomography/QramCountStatisticInsufficiency.claim; result=D5/S3/Quantum/Tomography/QramCountStatisticInsufficiency.result; claim=D5/S3/Quantum/Tomography/QramCountStatisticInsufficiency.claim
    digest: The plus-count statistic loses exact-weight discrimination information. -/
 
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.Analysis.Complex.Basic
+import D5.S3.Observer.BornReduction
 
 /-! The equal-prior exact-weight model of L. Bohac, arXiv:2512.17503v1,
 Remark 5.3. The function is sampled once and shared by all copies. The witness measures
@@ -126,8 +125,11 @@ private lemma pair_inner (u v a b : Fin 4 → ℂ) :
 private lemma trace_rank {α : Type*} [Fintype α] (u v : α → ℂ) :
     Matrix.trace (Matrix.vecMulVec u (star u) * Matrix.vecMulVec v (star v)) =
       (star u ⬝ᵥ v) * (star v ⬝ᵥ u) := by
-  rw [Matrix.vecMulVec_mul_vecMulVec, Matrix.trace_vecMulVec,
-    dotProduct_smul, dotProduct_comm u (star v), smul_eq_mul]
+  have h := D5.S3.Observer.BornReduction.rank_one_pure_state_modulus_square_reduction
+    (fun _ : Unit => Matrix.vecMulVec v (star v)) (Matrix.vecMulVec u (star u)) () v u rfl rfl
+  change Matrix.trace (Matrix.vecMulVec u (star u) * Matrix.vecMulVec v (star v)) = _ at h
+  rw [h, ← Complex.normSq_eq_norm_sq, Complex.normSq_eq_conj_mul_self]
+  exact congrArg (fun z : ℂ => z * (star v ⬝ᵥ u)) (Matrix.star_dotProduct u v).symm
 
 private lemma copyState_rank (n t m : ℕ) : copyState n t m =
     (1 / (weightClass n m).card : ℂ) • ∑ f ∈ weightClass n m,
@@ -213,28 +215,22 @@ private lemma pair_orthogonal (y z u v : Fin 4) :
   rw [pair_inner, walsh_orthogonal, walsh_orthogonal]
   split_ifs <;> simp_all
 
-private lemma reject_projector : rejectᴴ = reject ∧ reject * reject = reject := by
-  constructor
-  · delta reject
-    simp [Matrix.conjTranspose_sum]
-  · unfold reject
+private lemma reject_projector : IsStarProjection reject where
+  isIdempotentElem := by
+    change reject * reject = reject
+    unfold reject
     simp only [Finset.sum_mul, Finset.mul_sum, Matrix.vecMulVec_mul_vecMulVec,
       pair_orthogonal, Fin.succ_inj, and_self]
     simp [apply_ite]
+  isSelfAdjoint := by
+    change rejectᴴ = reject
+    delta reject
+    simp [Matrix.conjTranspose_sum]
 
-private lemma witness_valid : witness.PosSemidef ∧ (1 - witness).PosSemidef := by
-  have he : witnessᴴ * witness = witness := by
-    delta witness
-    simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_one,
-      reject_projector.1, sub_mul, mul_sub, one_mul, mul_one, reject_projector.2]
-    abel
-  constructor
-  · rw [← he]
-    exact Matrix.posSemidef_conjTranspose_mul_self witness
-  · have hc : 1 - witness = reject := by unfold witness; abel
-    rw [hc]
-    convert Matrix.posSemidef_conjTranspose_mul_self reject using 1
-    rw [reject_projector.1, reject_projector.2]
+open scoped MatrixOrder in
+private lemma witness_valid : witness.PosSemidef ∧ (1 - witness).PosSemidef :=
+  ⟨reject_projector.one_sub.nonneg.posSemidef,
+    reject_projector.one_sub.one_sub.nonneg.posSemidef⟩
 
 private lemma address_norm (f : Fin 4 → Bool) :
     star (addressState 2 f) ⬝ᵥ addressState 2 f = 1 := by
@@ -282,7 +278,7 @@ private lemma witness_success : successProb 2 2 1 2 witness = 29 / 32 := by
     simp_rw [weight_one_law]
     norm_num
   have h₂ : Matrix.trace (copyState 2 2 2 * reject) = 1 := by
-    rw [weight_two_state, Matrix.smul_mul, reject_projector.2,
+    rw [weight_two_state, Matrix.smul_mul, reject_projector.isIdempotentElem.eq,
       Matrix.trace_smul, reject_trace]
     norm_num
   delta successProb witness
@@ -312,9 +308,12 @@ private lemma count_walsh (k : Fin 3) : countProj 2 2 k =
     ∑ y : Fin 4, ∑ z : Fin 4,
       if (if y = 0 then 1 else 0) + (if z = 0 then 1 else 0) = (k : ℕ) then
         Matrix.vecMulVec (walshPair y z) (star (walshPair y z)) else 0 := by
-  have h₀ : (Finset.univ : Finset (Fin 2)).powersetCard 0 = {∅} := by decide
-  have h₁ : (Finset.univ : Finset (Fin 2)).powersetCard 1 = {{0}, {1}} := by decide
-  have h₂ : (Finset.univ : Finset (Fin 2)).powersetCard 2 = {{0, 1}} := by decide
+  have h₀ : (Finset.univ : Finset (Fin 2)).powersetCard 0 = {∅} :=
+    Finset.powersetCard_zero _
+  have h₁ : (Finset.univ : Finset (Fin 2)).powersetCard 1 = {{0}, {1}} := by
+    simpa [Fin.univ_succ] using Finset.powersetCard_one (Finset.univ : Finset (Fin 2))
+  have h₂ : (Finset.univ : Finset (Fin 2)).powersetCard 2 = {{0, 1}} := by
+    simpa [Fin.univ_succ] using Finset.powersetCard_self (Finset.univ : Finset (Fin 2))
   have hp : plusProj 2 = Matrix.vecMulVec (walsh 0) (star (walsh 0)) := by
     rw [plusProj, plus_walsh]
   unfold countProj
