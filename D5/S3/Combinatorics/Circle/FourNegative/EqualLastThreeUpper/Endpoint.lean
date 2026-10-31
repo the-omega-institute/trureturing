@@ -9,7 +9,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Strict
 import D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Equal
 
 /-! The high-X construction for a>=2s is due to Pro task
-b882f14d - 1d25 - 4689 - b46f - 9960312490d7. The extension to every a > s
+b882f14d-1d25-4689-b46f-9960312490d7. The extension to every a > s
 and the separate equality construction are due to the caller.
 Unrestricted physical four - gap J and Circle C3.1 remain open. -/
 set_option autoImplicit false
