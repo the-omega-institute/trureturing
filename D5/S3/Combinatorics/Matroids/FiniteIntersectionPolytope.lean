@@ -17,6 +17,8 @@ import Mathlib.Tactic
 
 open scoped BigOperators
 namespace D5.S3.Combinatorics.Matroids.FiniteIntersectionPolytope
+
+open Classical
 variable {E : Type*} [DecidableEq E]
 
 private structure TightChain (F : Finset E → Prop) where
@@ -238,5 +240,257 @@ private lemma layerMatrix_tu {F G : Finset E → Prop} (C : TightChain F) (D : T
     simp only [layerMatrix, Matrix.submatrix_apply, signedIncidence, row, tail, head,
       Sum.elim_inr, id_eq, Sum.inr.injEq, reduceCtorEq, ite_false, zero_sub]
     simp only [eq_comm (a := some A), D.owner_eq_iff]
+
+
+variable [Fintype E]
+
+noncomputable def rankRegion (M1 M2 : Matroid E) : Set (E → ℝ) := by
+  classical
+  exact {x | (∀ e, 0 ≤ x e) ∧
+    (∀ U : Set E, (∑ e ∈ U.toFinset, x e) ≤ ((M1.eRk U).toNat : ℝ)) ∧
+    (∀ U : Set E, (∑ e ∈ U.toFinset, x e) ≤ ((M2.eRk U).toNat : ℝ))}
+
+private def tight (M : Matroid E) (x : E → ℝ) (A : Finset E) : Prop :=
+  (∑ e ∈ A, x e) = ((M.eRk (A : Set E)).toNat : ℝ)
+
+private lemma tight_empty (M : Matroid E) (x : E → ℝ) : tight M x ∅ := by
+  simp [tight]
+
+private lemma tight_lattice (M : Matroid E) (x : E → ℝ)
+    (hx : ∀ U : Set E, (∑ e ∈ U.toFinset, x e) ≤ ((M.eRk U).toNat : ℝ))
+    {A B : Finset E} (hA : tight M x A) (hB : tight M x B) :
+    tight M x (A ∪ B) ∧ tight M x (A ∩ B) := by
+  classical
+  have hsub := FiniteIntersection.rank_submod M (A : Set E) (B : Set E)
+  have hsub' : ((M.eRk ((A ∩ B : Finset E) : Set E)).toNat : ℝ) +
+      ((M.eRk ((A ∪ B : Finset E) : Set E)).toNat : ℝ) ≤
+      ((M.eRk (A : Set E)).toNat : ℝ) + ((M.eRk (B : Set E)).toNat : ℝ) := by
+    exact_mod_cast hsub
+  have hsum := Finset.sum_union_inter (f := x) (s₁ := A) (s₂ := B)
+  have hi := hx ((A ∩ B : Finset E) : Set E)
+  have hu := hx ((A ∪ B : Finset E) : Set E)
+  simp only [Finset.toFinset_coe] at hi hu
+  unfold tight at *
+  constructor <;> linarith
+
+private noncomputable def subsetSum {E : Type u} [Fintype E] (U : Set E) :
+    (E → ℝ) →ₗ[ℝ] ℝ := by
+  classical
+  exact { toFun := fun x => ∑ e ∈ U.toFinset, x e
+          map_add' := by intros; simp [Finset.sum_add_distrib]
+          map_smul' := by intros; simp [Finset.mul_sum] }
+
+open Classical in
+private theorem actual_active_kernel_zero {E : Type u} [Fintype E]
+    (M1 M2 : Matroid E) (v : E → ℝ) (hv : v ∈ Set.extremePoints ℝ (rankRegion M1 M2))
+    (d : E → ℝ)
+    (h0 : ∀ e, v e = 0 → d e = 0)
+    (h1 : ∀ U : Set E, (∑ e ∈ U.toFinset, v e) = ((M1.eRk U).toNat : ℝ) →
+      (∑ e ∈ U.toFinset, d e) = 0)
+    (h2 : ∀ U : Set E, (∑ e ∈ U.toFinset, v e) = ((M2.eRk U).toNat : ℝ) →
+      (∑ e ∈ U.toFinset, d e) = 0) : d = 0 := by
+  classical
+  let a : E ⊕ (Set E ⊕ Set E) → (E → ℝ) →ₗ[ℝ] ℝ := fun j =>
+    match j with
+    | .inl e => -(LinearMap.proj e)
+    | .inr (.inl U) => subsetSum U
+    | .inr (.inr U) => subsetSum U
+  let b : E ⊕ (Set E ⊕ Set E) → ℝ := fun j =>
+    match j with
+    | .inl _ => 0
+    | .inr (.inl U) => ((M1.eRk U).toNat : ℝ)
+    | .inr (.inr U) => ((M2.eRk U).toNat : ℝ)
+  have hregion : rankRegion M1 M2 = {x : E → ℝ | ∀ j, a j x ≤ b j} := by
+    ext x
+    change ((∀ e, 0 ≤ x e) ∧
+      (∀ U : Set E, (∑ e ∈ U.toFinset, x e) ≤ ((M1.eRk U).toNat : ℝ)) ∧
+      (∀ U : Set E, (∑ e ∈ U.toFinset, x e) ≤ ((M2.eRk U).toNat : ℝ))) ↔ _
+    constructor
+    · rintro ⟨hx0, hx1, hx2⟩ j
+      rcases j with e | (U | U)
+      · simpa [a, b] using hx0 e
+      · simpa [a, b, subsetSum] using hx1 U
+      · simpa [a, b, subsetSum] using hx2 U
+    · intro hx
+      refine ⟨?_, ?_, ?_⟩
+      · intro e
+        simpa [a, b] using hx (.inl e)
+      · intro U
+        simpa [a, b, subsetSum] using hx (.inr (.inl U))
+      · intro U
+        simpa [a, b, subsetSum] using hx (.inr (.inr U))
+  rw [hregion] at hv
+  apply D5.S3.Observer.Separation.FixedSkeletonWeightedInclusion.RowCertificates.active_constraint_kernel_zero
+    a b v hv d
+  intro j hj
+  rcases j with e | (U | U)
+  · have hv0 : v e = 0 := by simpa [a, b] using hj
+    simp [a, b, h0 e hv0]
+  · have ht : (∑ e ∈ U.toFinset, v e) = ((M1.eRk U).toNat : ℝ) := by
+      simpa [a, b, subsetSum] using hj
+    simpa [a, subsetSum] using h1 U ht
+  · have ht : (∑ e ∈ U.toFinset, v e) = ((M2.eRk U).toNat : ℝ) := by
+      simpa [a, b, subsetSum] using hj
+    simpa [a, subsetSum] using h2 U ht
+
+
+private lemma compressed_kernel_zero (M1 M2 : Matroid E) (v : E → ℝ)
+    (hv : v ∈ Set.extremePoints ℝ (rankRegion M1 M2))
+    (C : TightChain (tight M1 v)) (D : TightChain (tight M2 v)) (d : E → ℝ)
+    (h0 : ∀ e, v e = 0 → d e = 0)
+    (hC : ∀ A ∈ C.sets, (∑ e ∈ C.layer A, d e) = 0)
+    (hD : ∀ A ∈ D.sets, (∑ e ∈ D.layer A, d e) = 0) : d = 0 := by
+  classical
+  have hfeas := hv.1
+  change (∀ e, 0 ≤ v e) ∧ _ at hfeas
+  apply actual_active_kernel_zero M1 M2 v hv d h0
+  · intro U hU
+    have ht : tight M1 v U.toFinset := by simpa [tight] using hU
+    exact C.kernel_compression (tight_empty M1 v)
+      (fun A B hA hB => (tight_lattice M1 v hfeas.2.1 hA hB).1)
+      (fun A B hA hB => (tight_lattice M1 v hfeas.2.1 hA hB).2) d hC ht
+  · intro U hU
+    have ht : tight M2 v U.toFinset := by simpa [tight] using hU
+    exact D.kernel_compression (tight_empty M2 v)
+      (fun A B hA hB => (tight_lattice M2 v hfeas.2.2 hA hB).1)
+      (fun A B hA hB => (tight_lattice M2 v hfeas.2.2 hA hB).2) d hD ht
+
+private noncomputable def layerRhs (M : Matroid E) (v : E → ℝ) (C : TightChain (tight M v))
+    (A : C.sets) : ℤ := (M.eRk (A : Set E)).toNat -
+      (M.eRk (C.pred A : Set E)).toNat
+
+private lemma layer_consistent (M : Matroid E) (v : E → ℝ)
+    (hv : ∀ U : Set E, (∑ e ∈ U.toFinset, v e) ≤ ((M.eRk U).toNat : ℝ))
+    (C : TightChain (tight M v)) (A : C.sets) :
+    (∑ e ∈ C.layer A, v e) = (layerRhs M v C A : ℝ) := by
+  have hp := C.pred_valid (tight_empty M v)
+    (fun A B hA hB => (tight_lattice M v hv hA hB).1) A
+  rw [C.sum_layer]
+  rw [C.valid A A.property, hp]
+  simp [layerRhs]
+
+private lemma layerMatrix_mulVec {F G : Finset E → Prop} (C : TightChain F) (D : TightChain G)
+    (v : E → ℝ) :
+    (layerMatrix C D).map (Int.castRingHom ℝ) *ᵥ v =
+      Sum.elim (fun A : C.sets => ∑ e ∈ C.layer A, v e)
+        (fun A : D.sets => -(∑ e ∈ D.layer A, v e)) := by
+  classical
+  ext r
+  cases r <;> simp [Matrix.mulVec, dotProduct, layerMatrix]
+
+
+
+private noncomputable def equationMatrix (v : E → ℝ)
+    {F G : Finset E → Prop} (C : TightChain F) (D : TightChain G) :
+    Matrix ((C.sets ⊕ D.sets) ⊕ {e : E // v e = 0}) E ℤ :=
+  Matrix.fromRows (layerMatrix C D) (fun e j => if j = e then 1 else 0)
+
+private lemma equationMatrix_zero_row (v : E → ℝ) {F G : Finset E → Prop}
+    (C : TightChain F) (D : TightChain G) (e : {e : E // v e = 0}) (j : E) :
+    equationMatrix v C D (.inr e) j = if j = e.val then 1 else 0 := by
+  rfl
+
+private noncomputable def equationRhs (M1 M2 : Matroid E) (v : E → ℝ)
+    (C : TightChain (tight M1 v)) (D : TightChain (tight M2 v)) :
+    (C.sets ⊕ D.sets) ⊕ {e : E // v e = 0} → ℤ :=
+  Sum.elim (Sum.elim (layerRhs M1 v C) (fun A => -layerRhs M2 v D A)) (fun _ => 0)
+
+private lemma equationMatrix_tu (v : E → ℝ) {F G : Finset E → Prop}
+    (C : TightChain F) (D : TightChain G) :
+    (equationMatrix v C D).IsTotallyUnimodular := by
+  classical
+  apply (layerMatrix_tu C D).fromRows_unitlike
+  intro _ e
+  refine ⟨e, 1, ?_⟩
+  ext j
+  simp [Pi.single_apply, eq_comm]
+
+private lemma equationMatrix_consistent (M1 M2 : Matroid E) (v : E → ℝ)
+    (hv : v ∈ rankRegion M1 M2)
+    (C : TightChain (tight M1 v)) (D : TightChain (tight M2 v)) :
+    (equationMatrix v C D).map (Int.castRingHom ℝ) *ᵥ v =
+      fun r => (equationRhs M1 M2 v C D r : ℝ) := by
+  classical
+  ext r
+  cases r with
+  | inl r =>
+    change ((layerMatrix C D).map (Int.castRingHom ℝ) *ᵥ v) r = _
+    rw [layerMatrix_mulVec]
+    cases r with
+    | inl A => exact layer_consistent M1 v hv.2.1 C A
+    | inr A => simpa [equationRhs] using congrArg Neg.neg (layer_consistent M2 v hv.2.2 D A)
+  | inr e =>
+    simpa [Matrix.mulVec, dotProduct, equationMatrix_zero_row, equationRhs,
+      Sum.elim_inr] using e.property
+
+private lemma equationMatrix_kernel (M1 M2 : Matroid E) (v : E → ℝ)
+    (hv : v ∈ Set.extremePoints ℝ (rankRegion M1 M2))
+    (C : TightChain (tight M1 v)) (D : TightChain (tight M2 v))
+    (d : E → ℝ)
+    (hd : (equationMatrix v C D).map (Int.castRingHom ℝ) *ᵥ d = 0) : d = 0 := by
+  classical
+  apply compressed_kernel_zero M1 M2 v hv C D d
+  · intro e he
+    have h := congrFun hd (.inr ⟨e,he⟩)
+    simpa [Matrix.mulVec, dotProduct, equationMatrix_zero_row] using h
+  · intro A hA
+    have h := congrFun hd (.inl (.inl ⟨A,hA⟩))
+    change ((layerMatrix C D).map (Int.castRingHom ℝ) *ᵥ d) (.inl ⟨A,hA⟩) = 0 at h
+    simpa only [layerMatrix_mulVec, Sum.elim_inl] using h
+  · intro A hA
+    have h := congrFun hd (.inl (.inr ⟨A,hA⟩))
+    change ((layerMatrix C D).map (Int.castRingHom ℝ) *ᵥ d) (.inr ⟨A,hA⟩) = 0 at h
+    simpa only [layerMatrix_mulVec, Sum.elim_inr, neg_eq_zero] using h
+
+private lemma integer_solution_of_kernel_zero {R N : Type*} [Fintype R] [Fintype N]
+    (A : Matrix R N ℤ) (hA : A.IsTotallyUnimodular) (b : R → ℤ) (v : N → ℝ)
+    (hsol : A.map (Int.castRingHom ℝ) *ᵥ v = fun i => (b i : ℝ))
+    (hker : ∀ d : N → ℝ, A.map (Int.castRingHom ℝ) *ᵥ d = 0 → d = 0) :
+    ∃ z : N → ℤ, ∀ e, (z e : ℝ) = v e := by
+  classical
+  obtain ⟨B, hB⟩ :=
+    D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.exists_integer_inner_inverse A hA
+  let f := Int.castRingHom ℝ
+  have hB' : A.map f * B.map f * A.map f = A.map f := by
+    simpa only [Matrix.map_mul] using congrArg (fun T => T.map f) hB
+  let z := B *ᵥ b
+  have hzmap : (fun e => (z e : ℝ)) = B.map f *ᵥ (fun i => (b i : ℝ)) := by
+    ext e
+    exact f.map_mulVec B b e
+  have hz : A.map f *ᵥ (fun e => (z e : ℝ)) = fun i => (b i : ℝ) := by
+    rw [hzmap, ← hsol, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, hB', hsol]
+  have hd := hker ((fun e => (z e : ℝ)) - v) (by
+    rw [Matrix.mulVec_sub, hz, hsol, sub_self])
+  refine ⟨z, fun e => ?_⟩
+  exact sub_eq_zero.mp (congrFun hd e)
+
+omit [DecidableEq E] in
+theorem extreme_point_zero_one (M1 M2 : Matroid E)
+    (_hM1 : M1.E = Set.univ) (_hM2 : M2.E = Set.univ)
+    (v : E → ℝ) (hv : v ∈ Set.extremePoints ℝ (rankRegion M1 M2)) :
+    ∀ e, v e = 0 ∨ v e = 1 := by
+  classical
+  obtain ⟨C⟩ := exists_tightChain (tight M1 v)
+  obtain ⟨D⟩ := exists_tightChain (tight M2 v)
+  obtain ⟨z,hz⟩ := integer_solution_of_kernel_zero (equationMatrix v C D)
+    (equationMatrix_tu v C D) (equationRhs M1 M2 v C D) v
+    (equationMatrix_consistent M1 M2 v hv.1 C D)
+    (equationMatrix_kernel M1 M2 v hv C D)
+  intro e
+  have hn : 0 ≤ v e := hv.1.1 e
+  have hr : (M1.eRk {e}).toNat ≤ 1 := by
+    rw [← ENat.natCast_le_natCast, FiniteIntersection.cast_toNat_eRk]
+    exact M1.eRk_singleton_le e
+  have he := hv.1.2.1 ({e} : Set E)
+  simp only [Set.toFinset_singleton, Finset.sum_singleton] at he
+  have hu : v e ≤ 1 := he.trans (by exact_mod_cast hr)
+  have hz0 : (0 : ℤ) ≤ z e := by exact_mod_cast (hz e ▸ hn)
+  have hz1 : z e ≤ (1 : ℤ) := by exact_mod_cast (hz e ▸ hu)
+  have hcases : z e = 0 ∨ z e = 1 := by omega
+  rcases hcases with he | he
+  · left; rw [← hz e, he]; norm_num
+  · right; rw [← hz e, he]; norm_num
+
+#print axioms extreme_point_zero_one
 
 end D5.S3.Combinatorics.Matroids.FiniteIntersectionPolytope
