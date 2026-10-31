@@ -11,6 +11,18 @@ internal sealed class TribonacciRegularClosureDocument : IScribeDocumentDefiniti
             H("Regular closure of the Tribonacci Rauzy fractal"),
             Blocks(
                 Describe.Lean(
+                    DescribeId.Create("tribonacci-rauzy-prefix-cover"),
+                    DeclarationHandle.Create("D5/S3/Geometry/Rauzy/TribonacciRegularClosure.rauzyFractal_prefix_cover"),
+                    H("Exact three-map cover"), StatementSource.WithoutFormula(),
+                    AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                        "The existing name split equivalence reconstructs the three initial "
+                        + "blocks through the coordinate identity for adjoining a Boolean digit. Lengths zero, one "
+                        + "and two are handled directly by 0, 1, z and 1+z. The finite window "
+                        + "is covered in reverse, and compact closed affine images extend "
+                        + "the cover to the Rauzy closure. Thus every point in the fractal is "
+                        + "the image of another point under one of the three prefix maps. "
+                        + "Together with nonempty interior, this equality implies regular closure."))), DescribeRole.Theorem),
+                Describe.Lean(
                     DescribeId.Create("tribonacci-rauzy-regular-closure"),
                     DeclarationHandle.Create("D5/S3/Geometry/Rauzy/TribonacciRegularClosure.rauzyFractal_closure_interior"),
                     H("The actual Rauzy closure is regular closed"), StatementSource.WithoutFormula(),
