@@ -42,7 +42,7 @@ private theorem realize (a b u v : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
   let A := 2 * r + 1
   let alpha : Fin k := ⟨b - 1, by dsimp [k]; omega⟩
   let beta : Fin k := ⟨k - 1, by dsimp [k]; omega⟩
-  let f := actualSource k v
+  let f := actualSource k w
   let gn := actualSource (k + 1) (2 * w)
   let g := fun i : Fin k => actualSource (k + 1) (2 * w) i.castSucc
   let fresh : Fin (k + 1) := Fin.last k
@@ -336,7 +336,7 @@ private theorem realize (a b u v : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
       rw [hseamOld.1]; omega
     · change 0 ≤ p + f alpha
       rw [hseamOld.2]; omega
-    · rw [hBeta]; rw [hC, hN, hq] at *; constructor <;> nlinarith
+    · rw [hBeta]; constructor <;> nlinarith [hC2]
   have hn : InStrip gn N 0 (earWord k sigma E.length) := by
     rw [hear]
     apply two_blocks gn N (EN ++ [fresh]) FN alpha.castSucc beta.castSucc
@@ -357,7 +357,7 @@ private theorem realize (a b u v : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
       change 0 ≤ (EN.map gn).sum + gn fresh + g alpha
       rw [hEN,hFresh,hseamNew.2]; omega
     · change 0 ≤ -g beta ∧ -g beta ≤ N
-      rw [hBetaNew]; rw [hN,hq] at *; constructor <;> nlinarith
+      rw [hBetaNew]; constructor <;> nlinarith [hN]
   have hnp := inserted_perm sigma E.length hsperm
   refine ⟨sigma, E.length, hcut,
     ⟨hsperm, source_total (by dsimp [k]; omega) _ hsperm, ?_⟩,
