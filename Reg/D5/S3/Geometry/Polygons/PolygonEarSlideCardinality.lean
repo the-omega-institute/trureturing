@@ -47,7 +47,7 @@ def source : source_scope :=
   @_root_.D5.S3.Geometry.Polygons.PolygonEarSlideCardinality.condition_fibre_card_at
 
 /-!
-This enrolled dependent-family candidate preserves the original telescope and
+This dependent-family candidate preserves the original telescope and
 uses the actual complete-fibre cardinality as its observation. It is not a
 Contract.Registration. Source selection and reconstruction binding evidence,
 a rejected realization, whole-family sensitivity, and actual observational

@@ -20,8 +20,8 @@ open Finset PolygonEarSlide PolygonEarSlide.Carrier PolygonEarSlide.Actual
 
 variable {n : ℕ} [NeZero n]
 
-/-- Restoring the two erased observations leaves exactly the optional third ear. -/
 omit [NeZero n] in
+/-- Restoring the two erased observations leaves exactly the optional third ear. -/
 private theorem restore_trace {E J X : Finset (ZMod n)} {t u : ZMod n}
     (ht : t ∉ E)
     (h : E ∩ (J.erase t).erase u = X) :

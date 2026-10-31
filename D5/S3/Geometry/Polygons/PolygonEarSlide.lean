@@ -1804,21 +1804,6 @@ lemma mem_E_K_shift_iff {K : Finset (ZMod n)} {i a : ZMod n} :
         simpa [hjk] using hcrossik
       exact hcross j hj hcross'
 
-lemma shiftSet_disjoint_shiftSet {S U : Finset (ZMod n)} {a : ZMod n}
-    (h : Disjoint S U) : Disjoint (shiftSet S a) (shiftSet U a) := by
-  apply Finset.disjoint_left.mpr
-  intro x hxS hxU
-  obtain ⟨s, hs, hxs⟩ := mem_image.mp hxS
-  obtain ⟨u, hu, hxu⟩ := mem_image.mp hxU
-  have : s = u := by
-    apply add_right_cancel
-    exact hxs.trans hxu.symm
-  exact (Finset.disjoint_left.mp h) hs (this ▸ hu)
-
-lemma shiftSet_card (S : Finset (ZMod n)) (a : ZMod n) :
-    (shiftSet S a).card = S.card := by
-  exact card_image_of_injective _ (add_left_injective a)
-
 lemma shiftSet_erase (S : Finset (ZMod n)) (x a : ZMod n) :
     shiftSet (S.erase x) a = (shiftSet S a).erase (x + a) := by
   unfold shiftSet

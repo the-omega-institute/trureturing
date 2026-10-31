@@ -116,7 +116,7 @@ internal static class PolygonEarSlideFormula
     internal static Formula N(int n) => n == 14 ? D(1,4) : D((byte)n);
     internal static Formula C(string name, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(X(name))), [.. args]);
     internal static Formula Vertex => C("ZMod", X("n"));
-    internal static Formula Chord => C("SymTwo", Vertex);
+    internal static Formula Chord => new Formula.Apply(Seq(Operatorname, Grp(X("Sym"), D(2))), [Vertex]);
     internal static Formula Sets => C("Finset", Vertex);
     internal static Formula Chords => C("Finset", Chord);
     internal static Formula All(string v, Formula domain, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(v), domain, body);
