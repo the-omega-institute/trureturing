@@ -1,0 +1,15 @@
+**定义 2.1（完全分量的剥离）。** 给定整数 $\Delta\ge2$，令
+
+$$
+T_\Delta=(\Delta+1)\max\{\Delta^2,2\Delta+1\},\qquad
+\varepsilon_\Delta=T_\Delta^{-1}.
+$$
+
+对最大度至多 $\Delta$ 的图 $G$，令 $\mathcal K(G)$ 为其所有完全连通分量的集合，包括孤立点 $K_1$。令 $H$ 为删去这些分量后得到的诱导子图，$m=|V(H)|$，并置
+
+$$
+C(H)=\sum_{v\in V(H)}\frac1{d_H(v)+1}.
+$$
+
+$H$ 没有完全连通分量，而且 $d_H(v)=d_G(v)$ 对每个 $v\in V(H)$ 成立。
+

@@ -1,0 +1,10 @@
+**定义 1.2（度序列缺陷）。** 定义
+
+$$
+A_v=1+(d_v+1)\lambda,\qquad
+B_G(\lambda)=\sum_{v\in V}\frac{\lambda}{A_v},\qquad
+D_G(\lambda)=M_G(\lambda)-B_G(\lambda).
+$$
+
+Davies–Kang 的共同活动度目标是对每个有限简单图和每个 $\lambda>0$ 均有 $D_G(\lambda)\ge0$，见 [Davies–Kang，arXiv:2501.03379v2，§8，Conjecture A](https://arxiv.org/html/2501.03379v2#S8)。该目标的已知小活动度范围包括：若最大度为 $\Delta\ge1$，则 $0<\lambda\le3/(\Delta+1)^2$，见 [Davies–Sandhu–Tan，arXiv:2505.13396v2，Theorem 1.3](https://arxiv.org/html/2505.13396v2)；以及 $0<\lambda<1/\Delta$，后者是 [Davies–Sandhu–Seo–Tan，arXiv:2605.05149v1，Theorem 1](https://arxiv.org/html/2605.05149v1) 的共同活动度特例。这些文献结果仅作为目标的已知范围。
+

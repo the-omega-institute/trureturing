@@ -1,0 +1,35 @@
+**证明 3.2。** 条件于 $I\cap N(v)=\varnothing$，加入或删去 $v$ 的两类配置权重之比为 $\lambda$，故
+
+$$
+p_v=\frac{\lambda}{1+\lambda}\mathbb P(Y_v=0),
+\qquad \mathbb P(Y_v=0)=\beta p_v.
+$$
+
+这个局部占据关系是 [Davies–Sandhu–Seo–Tan，arXiv:2605.05149v1，Proposition 5 及其证明](https://arxiv.org/html/2605.05149v1) 的共同活动度情形。对非负整数 $Y_v$，逐点恒等式
+
+$$
+Y_v=\mathbf1_{\{Y_v\ge1\}}+(Y_v-1)_+
+$$
+
+给出保留超额项的精确平衡
+
+$$
+\beta p_v+\sum_{u\in N(v)}p_u=1+s_v.
+\tag{3.2a}
+$$
+
+将（3.2a）乘以 $q_v$ 并对 $v$ 求和，利用 $\beta q_v=1-d_vq_v$，得到
+
+$$
+\begin{aligned}
+\sum_v q_vs_v
+&=\sum_vp_v-\sum_vq_v-\sum_vd_vq_vp_v
+  +\sum_{\{u,v\}\in E}(q_up_v+q_vp_u)\\
+&=D_G-\sum_{\{u,v\}\in E}(q_u-q_v)(p_u-p_v).
+\end{aligned}
+$$
+
+这证明（3.2）。若 $N(v)$ 是团，独立性保证 $Y_v\le1$，于是 $s_v=0$。若 $N(v)$ 有不相邻的两个点 $a,b$，配置 $I=\{a,b\}$ 的 Gibbs 概率严格为正，故 $\mathbb P(Y_v\ge2)>0$，$s_v>0$。
+
+连通分量的乘积律使各点的边缘律等于其所属分量上的 Gibbs 边缘律，且顶点度不变。三个量的加性随即由其定义得到，空图亦成立。与只保留（3.2a）左侧大于等于 $1$ 的平衡不等式相比，（3.2）同时保留非负的邻域超额和可能带符号的边余项；两项都来自同一个实际 Gibbs 律。$\square$
+

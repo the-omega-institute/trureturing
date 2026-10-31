@@ -1,0 +1,17 @@
+**定义 7.1（超额配置电荷）。** 沿用定义 1.1、1.2、3.1 的实际共同活动度 Gibbs 律、$\beta,q_v,p_v,Y_v,s_v,D_G,R_G$。置
+
+$$
+Q_G(\lambda)=\sum_{v\in V}q_vs_v,
+$$
+
+并对每个独立集 $J\in\mathcal I(G)$ 定义
+
+$$
+C_{G,\lambda}(J)=
+\sum_{\substack{v\in V\\|J\cap N(v)|\ge2}}
+\left(\sum_{u\in J\cap N(v)}q_u-q_v\right).
+\tag{7.1}
+$$
+
+当 $G,\lambda$ 固定时简记 $C_G(J)$。此电荷使用同一个 $\lambda$ 决定的全部 $q_v$，不是另选独立集分布。
+

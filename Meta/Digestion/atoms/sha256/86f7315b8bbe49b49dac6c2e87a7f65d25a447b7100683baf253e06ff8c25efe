@@ -1,0 +1,7 @@
+**定理 7.2（实际 Gibbs 缺陷的配置期望）。** 对每个有限简单图 $G$ 和每个 $\lambda>0$，有精确恒等式
+
+$$
+D_G(\lambda)=\mathbb E_{G,\lambda}C_G(I).
+\tag{7.2a}
+$$
+

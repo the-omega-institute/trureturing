@@ -1,0 +1,11 @@
+**定理 3.3（非负边余项下的定量缺陷）。** 设 $\Delta\ge2$ 为整数，$G$ 为最大度至多 $\Delta$ 的任意有限简单图。对任意 $\lambda>0$，若 $R_G(\lambda)\ge0$，则
+
+$$
+D_G(\lambda)\ge
+\frac{2W(G)\lambda^3}
+{\Delta\bigl(1+(\Delta+1)\lambda\bigr)(1+\lambda)^{2\Delta+1}}.
+\tag{3.3}
+$$
+
+在此假设下，$D_G(\lambda)=0$ 当且仅当 $G$ 的每个连通分量均完全。
+

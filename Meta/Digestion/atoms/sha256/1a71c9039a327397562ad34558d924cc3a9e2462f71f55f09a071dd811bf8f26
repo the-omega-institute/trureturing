@@ -1,0 +1,98 @@
+**证明 2.2。** 先证明（2.2a）。采用 [Kelly–Postle，*Improving the Caro-Wei bound and applications to Turán stability*，arXiv:2407.17363v1，Theorem 1.4](https://arxiv.org/html/2407.17363v1) 作为中间输入：若图 $F$ 上的函数 $f$ 满足
+
+$$
+f(v)\le\frac1{d_F(v)+1/2},\qquad
+\sum_{v\in K}f(v)\le1\quad\text{对每个团 }K,
+$$
+
+则 $\alpha(F)\ge\sum_v f(v)$。在 $H$ 上取
+
+$$
+f(v)=\frac1{d_H(v)+1}+\varepsilon_\Delta.
+$$
+
+对 $d=d_H(v)\le\Delta$，
+
+$$
+\frac1{d+1/2}-\frac1{d+1}
+=\frac1{(2d+1)(d+1)}
+\ge\frac1{(2\Delta+1)(\Delta+1)}
+\ge\varepsilon_\Delta.
+$$
+
+故满足逐点条件。若 $K$ 是 $H$ 的非空团，令 $k=|K|$。因为 $H$ 没有完全分量，$K$ 至少有一个顶点在 $K$ 外有邻点；否则 $K$ 本身就是一个完全连通分量。该顶点的度至少为 $k$，其余 $k-1$ 个顶点的度至少为 $k-1$。同时 $k\le\Delta$：一个 $\Delta+1$ 阶团的每个顶点都已达到最大度，必自成完全分量。因此
+
+$$
+\sum_{v\in K}\frac1{d_H(v)+1}
+\le\frac{k-1}{k}+\frac1{k+1}
+=1-\frac1{k(k+1)},
+$$
+
+而
+
+$$
+k\varepsilon_\Delta
+\le\frac{k}{\Delta^2(\Delta+1)}
+\le\frac1{k(k+1)}.
+$$
+
+最后一步等价于 $k^2(k+1)\le\Delta^2(\Delta+1)$。空团的条件自动成立，故 Kelly–Postle 的全部假设满足，得到（2.2a）。若 $H$ 为空，所有条件与结论均按空和成立。
+
+系数的上界由两个图给出。$\Delta=2$ 时，$H=C_5$ 满足 $\alpha(H)=2$、$C(H)=5/3$、$m=5$，所以
+
+$$
+\frac{\alpha(H)-C(H)}m=\frac1{15}=\varepsilon_2.
+$$
+
+$\Delta\ge3$ 时，取两个互不相交的 $K_\Delta$，分别选一个顶点并在这两个顶点之间加一条边。所得 $H$ 连通且不完全，最大度为 $\Delta$；任何独立集在每个原团中至多取一个顶点，而在两个团中各取一个非桥端点给出大小为 $2$ 的独立集。因此
+
+$$
+\alpha(H)=2,\qquad m=2\Delta,\qquad
+C(H)=2\left(\frac{\Delta-1}{\Delta}+\frac1{\Delta+1}\right),
+$$
+
+从而
+
+$$
+\frac{\alpha(H)-C(H)}m
+=\frac1{\Delta^2(\Delta+1)}=\varepsilon_\Delta,
+$$
+
+这里用了 $\Delta^2\ge2\Delta+1$。结合下界，系数确为最大值。
+
+再转回实际 Gibbs 律。令其在 $H$ 上的 Shannon 熵为
+
+$$
+\mathsf H_H=-\sum_{J\in\mathcal I(H)}
+\mathbb P_{H,\lambda}(J)\log\mathbb P_{H,\lambda}(J).
+$$
+
+展开定义得到 Gibbs 熵恒等式
+
+$$
+\log Z_H=M_H\log\lambda+\mathsf H_H;
+$$
+
+这也是 [Davies，*Random independent sets and local sparsity*，arXiv:2609.04654v1，引言（1.1）](https://arxiv.org/html/2609.04654v1) 在 $\mu=\pi_{H,\lambda}$ 时的情形。熵满足
+
+$$
+\mathsf H_H\le\log|\mathcal I(H)|\le m\log2.
+$$
+
+第一步可直接由对数的凹性推出：所有独立集概率均正，故 $\mathbb E\log(1/\mathbb P(I))\le\log\mathbb E(1/\mathbb P(I))=\log|\mathcal I(H)|$。最大独立集的一项权重给出 $Z_H\ge\lambda^{\alpha(H)}$。因为 $\log\lambda>0$，上述关系与（2.2a）合并为
+
+$$
+M_H\ge\alpha(H)-\frac{m\log2}{\log\lambda}
+\ge C(H)+m\varepsilon_\Delta-\frac{m\log2}{\log\lambda}.
+$$
+
+不同连通分量的独立集构成笛卡尔积，权重相乘，故分区函数相乘、$M_G$ 按分量相加。一个完全分量 $K_k$ 的分区函数为 $1+k\lambda$，占据期望为 $k\lambda/(1+k\lambda)$；这证明（2.2b）。
+
+若 $\lambda\ge2^{T_\Delta}$，则 $\log2/\log\lambda\le\varepsilon_\Delta$，于是 $M_H\ge C(H)$。对每个 $v\in V(H)$ 和有限的 $\lambda>0$，
+
+$$
+\frac{\lambda}{1+(d_H(v)+1)\lambda}<\frac1{d_H(v)+1}.
+$$
+
+因此 $m>0$ 时 $M_G>B_G$，而 $m=0$ 时各完全分量给出精确等号。空图亦为等号。最大度至多 $1$ 的图只由 $K_1$ 和 $K_2$ 构成，故全部正活动度下均为等号。$\square$
+

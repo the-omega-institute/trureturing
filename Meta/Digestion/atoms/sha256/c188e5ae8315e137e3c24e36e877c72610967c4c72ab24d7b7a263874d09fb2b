@@ -1,0 +1,20 @@
+**命题 9.1（负总余项与正缺陷并存）。** 令 $G$ 由独立三点集 $S$ 与不交并 $K_2\sqcup K_3$ 作完全连接得到：$S$ 的每点与两个团的每点相邻，两个团之间没有边。全部八个顶点使用同一个 $\lambda>0$。记
+
+$$
+A=1+6\lambda,\qquad B=1+5\lambda,\qquad
+Z=1+8\lambda+9\lambda^2+\lambda^3.
+$$
+
+则 $Z_G=Z$，且精确地有
+
+$$
+\begin{aligned}
+R_G(\lambda)&=-\frac{6\lambda^4(\lambda-1)}{ZAB},\\
+D_G(\lambda)&=\frac{\lambda^3(33+187\lambda+48\lambda^2)}{ZAB}>0,\\
+Q_G(\lambda)&=\frac{\lambda^3(33+181\lambda+54\lambda^2)}{ZAB}>0.
+\end{aligned}
+\tag{9.1a}
+$$
+
+特别地，$\lambda>1$ 时总和 $R_G<0$，而原占据目标仍严格成立。此命题不包含图阶最小性断言。
+

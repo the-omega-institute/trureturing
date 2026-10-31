@@ -1,0 +1,24 @@
+**命题 10.2（连接族的正极限缺陷与超额）。** 对 $F=F_{r,m}$，有
+
+$$
+Z_F(\lambda)=(1+\lambda)^{r+1}+(1+m\lambda)^r-1,
+\tag{10.2a}
+$$
+
+且当 $\lambda\to\infty$ 时，
+
+$$
+\begin{aligned}
+Q_F(\lambda)&\longrightarrow Q_\infty
+=\frac{r^2m}{m+r+1}>0,\\
+D_F(\lambda)&\longrightarrow D_\infty
+=\frac{rm(m+r^2+2r)}{(rm+1)(m+r+1)}>0,\\
+\frac{D_F(\lambda)}{Q_F(\lambda)}
+&\longrightarrow\frac{D_\infty}{Q_\infty}
+=\frac{m+r^2+2r}{r(rm+1)}.
+\end{aligned}
+\tag{10.2b}
+$$
+
+其中比值在充分大的有限活动度有定义。
+

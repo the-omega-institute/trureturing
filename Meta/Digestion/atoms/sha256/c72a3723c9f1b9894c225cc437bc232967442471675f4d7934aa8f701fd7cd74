@@ -1,0 +1,57 @@
+**证明 9.1。** 一个独立集不能同时在 $S$ 和团侧取点。团侧在 $K_2,K_3$ 中各至多取一点，故
+
+$$
+Z_G=(1+\lambda)^3+(1+2\lambda)(1+3\lambda)-1=Z.
+\tag{9.1b}
+$$
+
+$S$ 与 $K_3$ 中的点度数均为 $5$，而 $K_2$ 中的点度数为 $4$。分别用下标 $S,2,3$ 表示这三类顶点，对每一个单独顶点有
+
+$$
+\begin{aligned}
+&q_S=q_3=\frac\lambda A,\qquad q_2=\frac\lambda B,\\
+&p_S=\frac{\lambda(1+\lambda)^2}{Z},\qquad
+p_2=\frac{\lambda(1+3\lambda)}{Z},\qquad
+p_3=\frac{\lambda(1+2\lambda)}{Z}.
+\end{aligned}
+\tag{9.1c}
+$$
+
+边余项中，两个团内部的边与 $S$ 到 $K_3$ 的边都因 $q$ 相等而贡献 $0$。剩下的六条 $S$ 到 $K_2$ 的边各贡献
+
+$$
+(q_2-q_S)(p_2-p_S)
+=\frac{\lambda^2}{AB}\frac{\lambda^2(1-\lambda)}Z,
+$$
+
+这直接给出 $R_G$。
+
+对 $S$ 中的点，邻域超额只在两个团各取一点时为 $1$，所以 $s_S=6\lambda^2/Z$。对任一团中的点，邻域里同团的其他顶点至多占据一个；超额只可能来自 $S$ 中的二点集或三点集。因此
+
+$$
+s_2=s_3=\frac{3\lambda^2+2\lambda^3}Z.
+$$
+
+于是独立地算得
+
+$$
+\begin{aligned}
+Q_G
+&=\frac{3\lambda}A\frac{6\lambda^2}Z
++\left(\frac{2\lambda}B+\frac{3\lambda}A\right)
+\frac{3\lambda^2+2\lambda^3}Z\\
+&=\frac{\lambda^3}{ZAB}
+\bigl((27+6\lambda)B+(6+4\lambda)A\bigr),
+\end{aligned}
+$$
+
+展开括号即（9.1a）的 $Q_G$。最后由配置大小计数而非余项符号得到
+
+$$
+M_G=\frac{8\lambda+18\lambda^2+3\lambda^3}Z,
+\qquad
+\sum_vq_v=\frac{6\lambda}A+\frac{2\lambda}B.
+$$
+
+相减、通分，其分子为 $\lambda^3(33+187\lambda+48\lambda^2)$，这证明 $D_G$ 的表达式和严格正性。三个表达式也满足定理 3.2 的 $D_G=Q_G+R_G$。$\square$
+

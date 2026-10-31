@@ -1,0 +1,29 @@
+**定义 3.1（邻域超额与边余项）。** 对定义 1.1 的每个 $G,\lambda$，令
+
+$$
+\beta=1+\frac1\lambda,\qquad
+q_v=\frac1{\beta+d_v}=\frac\lambda{A_v},\qquad
+p_v=\mathbb P_{G,\lambda}(v\in I),
+$$
+
+$$
+Y_v=|I\cap N(v)|,\qquad
+s_v=\mathbb E_{G,\lambda}(Y_v-1)_+,
+\qquad (t)_+=\max\{t,0\},
+$$
+
+以及
+
+$$
+R_G(\lambda)=\sum_{\{u,v\}\in E}(q_u-q_v)(p_u-p_v).
+$$
+
+这里每条无序边只计一次；交换其两个端点不改变被加项。另令
+
+$$
+w_v=\bigl|\{\{a,b\}\subseteq N(v):a\ne b,\ \{a,b\}\notin E\}\bigr|,
+\qquad W(G)=\sum_{v\in V}w_v.
+$$
+
+即 $W(G)$ 是无序诱导三点路的数目：以 $v$ 为中心，两个端点 $\{a,b\}$ 无序，每一条诱导三点路只在其唯一中心计一次。
+

@@ -1,0 +1,21 @@
+**假设 6.2（无结构限制的共同活动度目标，待证）。** 对每个有限简单图 $G$ 与每个 $\lambda>0$，是否总有
+
+$$
+M_G(\lambda)\ge\sum_{v\in V(G)}
+\frac{\lambda}{1+(d_v+1)\lambda}?
+\tag{6.2a}
+$$
+
+这是定义 1.2 的 Davies–Kang 目标，量词仍覆盖所有有限简单图及所有正的共同活动度。由定理 3.2，它等价于
+
+$$
+R_G(\lambda)\ge-\sum_v q_vs_v.
+\tag{6.2b}
+$$
+
+定理 6.1 表明不能在一般图上逐条删去边余项。仍需对同一实际 Gibbs 律中的负边项与邻域超额建立统一补偿，而非另选一个独立集分布或只要求非负向量满足局部平衡不等式。局部占据 LP 的一般活动度障碍见 [Davies–Sandhu–Seo–Tan，arXiv:2605.05149v1，§6](https://arxiv.org/html/2605.05149v1#S6)；该 LP 的可行向量与实际 Gibbs 边缘律是不同的数学对象。
+
+对于每个固定整数 $\Delta\ge2$，定理 2.2 覆盖最大度至多 $\Delta$ 时 $\lambda\ge2^{T_\Delta}$ 的全部图；定理 4.2 和 5.2 覆盖其各自结构类的全部 $\lambda>0$。结合定义 1.2 的已知小活动度结果，在这些结构类之外、最大度为 $\Delta$ 的一般图上，中间活动度范围的统一补偿仍待证。最大度至多 $1$、空图与完全分量均已有精确等号，不构成此缺口。
+
+积分形式的分区函数界不提供（6.2b）所需的逐点补偿。[Lee–Seo，arXiv:2602.02450v2，Theorem 1.1、§5（5.1）与（5.2）](https://arxiv.org/html/2602.02450v2) 中，Theorem 1.1 的结论是 $Z_G$ 的下界，§5 则另述占据率目标；[Lee–Seo，arXiv:2608.17920v1，Theorems 1.1–1.2](https://arxiv.org/html/2608.17920v1) 的结论也是配分量下界。对所有 $\lambda$ 的函数下界不能直接逐点微分为导数下界。类似地，[Zhang–Xu，*On the Variance Fraction of the Hard-Core Model on Graphs with Bounded Maximum Degree*，arXiv:2604.01717v3，Theorem 1.3](https://arxiv.org/html/2604.01717v3) 的方差界按最大度给出，而非（6.2a）的逐顶点度序列之和；它不替代此处的补偿问题。
+

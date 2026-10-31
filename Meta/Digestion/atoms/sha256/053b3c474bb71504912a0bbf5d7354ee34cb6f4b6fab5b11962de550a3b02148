@@ -1,0 +1,70 @@
+**证明 10.3。** 置 $\varepsilon=1-c>0$。先选有限整数 $r\ge2$ 使 $1/r^2<\varepsilon/2$，再选有限整数 $m\ge3$ 使 $(1+2/r)/m<\varepsilon/2$。命题 10.2 给出
+
+$$
+0<\frac{D_\infty}{Q_\infty}
+=\frac{m+r^2+2r}{r(rm+1)}
+\le\frac1{r^2}+\frac{1+2/r}{m}<\varepsilon.
+\tag{10.3b}
+$$
+
+固定所选的有限图 $F=F_{r,m}$。由两个严格正极限及比值极限，存在有限 $L>0$，使对所有 $t\ge L$ 均有
+
+$$
+Q_F(t)>0,\qquad D_F(t)>0,\qquad
+D_F(t)<\varepsilon Q_F(t).
+\tag{10.3c}
+$$
+
+定理 3.2 随即给出 $R_F(t)=D_F(t)-Q_F(t)<-cQ_F(t)$。下面把此高活动度事实传回预先固定的 $\lambda_0$，并保持实际 Gibbs 律与三个量完全对应。
+
+选正整数 $k$ 使 $t=k\lambda_0\ge L$，取 $G=F[K_k]$。对 $G$ 的一个独立集 $I'$，令 $J\subseteq V(F)$ 为被占据的替换团的集合。每团至多占据一个点，故 $J\in\mathcal I(F)$。每个固定 $J$ 恰有 $k^{|J|}$ 个提升，且每个提升在共同活动度 $\lambda_0$ 的未归一化权重均为 $\lambda_0^{|J|}$。因此
+
+$$
+Z_G(\lambda_0)=Z_F(k\lambda_0)=Z_F(t),\qquad
+\mathbb P(J=J_0)=\frac{t^{|J_0|}}{Z_F(t)}.
+\tag{10.3d}
+$$
+
+这正是 $F$ 在共同活动度 $t$ 的 Gibbs 律；条件于 $J$，每个被占据团的标签在 $\{1,\ldots,k\}$ 上独立均匀。以下未加撇的 $q_v,p_v,s_v,Y_v$ 都在 $F,t$ 上计算，加撇的量在 $G,\lambda_0$ 上计算。替换团中每点的度数为
+
+$$
+d'_{(v,i)}=k(d_v+1)-1,
+$$
+
+从而精确地有
+
+$$
+\begin{aligned}
+q'_{(v,i)}
+&=\frac1{1+1/\lambda_0+k(d_v+1)-1}
+=\frac{q_v}{k},\\
+p'_{(v,i)}&=\frac{p_v}{k},\qquad
+M_G(\lambda_0)=M_F(t),\qquad
+\sum_{v,i}q'_{(v,i)}=\sum_vq_v.
+\end{aligned}
+\tag{10.3e}
+$$
+
+特别地 $D_G(\lambda_0)=D_F(t)$。为核对 $Q$，若 $v\notin J$，则 $Y'_{(v,i)}=Y_v(J)$；若 $v\in J$，独立性保证 $Y_v(J)=0$，而 $Y'_{(v,i)}$ 只是本团所选标签是否不等于 $i$ 的指示量，取值至多为 $1$。两种情形均给出逐配置等式
+
+$$
+(Y'_{(v,i)}-1)_+=(Y_v(J)-1)_+.
+$$
+
+所以 $s'_{(v,i)}=s_v$，结合 $q'_{(v,i)}=q_v/k$ 得到 $Q_G(\lambda_0)=Q_F(t)$。最后，本团内部的边因 $q'$ 相同而对 $R_G$ 贡献 $0$；每条原边 $uv$ 的 $k^2$ 条提升边的总贡献为
+
+$$
+k^2\left(\frac{q_u-q_v}k\right)
+\left(\frac{p_u-p_v}k\right)
+=(q_u-q_v)(p_u-p_v).
+$$
+
+故全部实际量满足
+
+$$
+(D_G,Q_G,R_G)(\lambda_0)=(D_F,Q_F,R_F)(t).
+\tag{10.3f}
+$$
+
+把（10.3c）传入（10.3f）即得（10.3a）。$r,m,k$ 均先后选为有限整数；构造没有更改 $\lambda_0$，也未给不同顶点指定不同活动度。若存在结论中排除的函数，在任意 $\lambda_0$ 取 $c=c(\lambda_0)$，即被（10.3a）矛盾。$\square$
+

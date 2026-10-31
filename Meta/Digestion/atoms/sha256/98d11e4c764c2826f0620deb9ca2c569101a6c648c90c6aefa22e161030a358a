@@ -1,0 +1,45 @@
+**证明 4.2。** 由分量乘积律，只需考察一个具有分拆 $C\sqcup S$ 的分量。置
+
+$$
+c=|C|,\qquad b=|S|,\qquad
+r_a=|N(a)\cap S|\quad(a\in C),
+$$
+
+$$
+t=\frac\lambda{1+\lambda},\qquad
+h_a=(1+\lambda)^{-r_a},\qquad
+F=1+\lambda\sum_{a\in C}h_a.
+$$
+
+独立集在 $C$ 中至多取一个顶点。分别按不取 $C$ 和取某个 $a\in C$ 求和，得到
+
+$$
+Z_G=(1+\lambda)^bF,\qquad
+p_a=\frac{\lambda h_a}{F}\quad(a\in C).
+\tag{4.2b}
+$$
+
+对 $z\in S$，不取 $C$ 时其条件占据概率为 $t$；取 $a\in C$ 时，若 $a\notin N(z)$ 则仍为 $t$，否则为 $0$。于是
+
+$$
+p_z=\frac tF\left(1+\lambda
+\sum_{a\in C\setminus N(z)}h_a\right).
+\tag{4.2c}
+$$
+
+这些式子也覆盖 $C=\varnothing$ 或 $S=\varnothing$。
+
+若 $a,a'\in C$，其度分别为 $c-1+r_a,c-1+r_{a'}$。$q_a$ 与 $p_a$ 均随 $r_a$ 单调递减，所以这类边的（4.2a）成立，$r_a=r_{a'}$ 时乘积为 $0$。
+
+若 $\{a,z\}\in E$，$a\in C,z\in S$，则 $r_a\ge1$，且
+
+$$
+d_a=c-1+r_a\ge c\ge d_z,\qquad
+p_a=\frac{\lambda(1+\lambda)^{-r_a}}F
+\le\frac tF\le p_z.
+$$
+
+故 $q_a\le q_z$ 且 $p_a\le p_z$，乘积仍非负。$S$ 内没有边，所有边类型已经穷尽。这证明（4.2a）并给出 $R_G\ge0$，从（3.2）得到 $D_G\ge0$。
+
+若图含诱导三点路，其中心的 $s_v>0$，又 $q_v>0$，所以 $D_G>0$。不含诱导三点路的图只由完全分量构成，反向等号由完全分量的精确期望得到。最后在最大度有界时直接应用定理 3.3；其 $W(G)$ 仍按中心和无序端点计数。$\square$
+

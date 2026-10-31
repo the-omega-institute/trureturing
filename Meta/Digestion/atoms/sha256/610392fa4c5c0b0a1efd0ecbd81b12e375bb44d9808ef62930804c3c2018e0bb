@@ -1,0 +1,38 @@
+**证明 3.3。** 对 $0\le y\le d_v\le\Delta$ 的整数 $y$，
+
+$$
+(y-1)_+\ge\frac2\Delta\binom y2.
+$$
+
+因为 $y=0,1$ 时两边为 $0$，而 $y\ge2$ 时此式等价于 $y\le\Delta$。因此
+
+$$
+s_v\ge\frac2\Delta\mathbb E\binom{Y_v}2
+=\frac2\Delta\sum_{\substack{\{a,b\}\subseteq N(v)\\\{a,b\}\notin E}}
+\mathbb P(a,b\in I).
+\tag{3.3a}
+$$
+
+固定其中一个端点对，令 $U=N[a]\cup N[b]$，$F=G[V\setminus U]$。由于 $a,b$ 不相邻，包含两者的独立集与 $F$ 的独立集一一对应，故
+
+$$
+\mathbb P(a,b\in I)=\frac{\lambda^2Z_F}{Z_G}.
+$$
+
+对每个固定的 $J\in\mathcal I(F)$，向 $U$ 中扩展的允许配置，其权重和至多为全部子集的权重和 $(1+\lambda)^{|U|}$。逐个 $J$ 求和得
+
+$$
+Z_G\le (1+\lambda)^{|U|}Z_F.
+$$
+
+两个闭邻域都含中心 $v$，所以 $|U|\le2(\Delta+1)-1=2\Delta+1$，进而
+
+$$
+\mathbb P(a,b\in I)\ge\frac{\lambda^2}{(1+\lambda)^{2\Delta+1}}.
+\tag{3.3b}
+$$
+
+（3.2）、（3.3a）、（3.3b）和 $q_v\ge\lambda/(1+(\Delta+1)\lambda)$ 给出（3.3）。
+
+若 $W(G)>0$，右侧严格为正。若某个连通分量不完全，在其中取两个不相邻顶点间的一条最短路，该路的前三点构成诱导三点路，故 $W(G)>0$。反之，完全分量没有诱导三点路，且每个完全分量的 $D$ 为 $0$。这也包含没有顶点或最大度至多 $1$ 的边界情形。$\square$
+

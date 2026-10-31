@@ -1,0 +1,10 @@
+**定义 1.1（图与共同活动度）。** 设 $G=(V,E)$ 为任意有限简单图，$n=|V|$，$N(v)=\{u:\{u,v\}\in E\}$，$N[v]=N(v)\cup\{v\}$，$d_v=|N(v)|$。独立集族记为 $\mathcal I(G)$，包括空集；$\alpha(G)=\max_{J\in\mathcal I(G)}|J|$。空图取 $\alpha(G)=0$、最大度为 $0$。对每一个共同参数 $\lambda>0$，定义
+
+$$
+Z_G(\lambda)=\sum_{J\in\mathcal I(G)}\lambda^{|J|},\qquad
+\mathbb P_{G,\lambda}(I=J)=\frac{\lambda^{|J|}}{Z_G(\lambda)},\qquad
+M_G(\lambda)=\mathbb E_{G,\lambda}|I|.
+$$
+
+下文全部占据概率与期望均取此实际 Gibbs 律，图的不同顶点使用同一个 $\lambda$。对空图，$Z_G=1$、$M_G=0$；所有空和均取 $0$。记 $\log$ 为自然对数。
+

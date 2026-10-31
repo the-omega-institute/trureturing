@@ -1,0 +1,24 @@
+**定理 6.1（较高度端点可有较大占据率）。** 设 $G$ 的顶点为六个互异的点 $u,v,a,b,x,y$，边集恰为
+
+$$
+E=\{\{u,v\},\{u,a\},\{u,b\},\{a,b\},
+\{v,x\},\{a,y\},\{b,y\}\}.
+$$
+
+对每个 $\lambda>0$，
+
+$$
+Z_G=1+6\lambda+8\lambda^2+\lambda^3,\qquad
+p_u-p_v=\frac{\lambda^2(\lambda-1)}{Z_G}.
+\tag{6.1a}
+$$
+
+特别地，当 $\lambda>1$ 时，$d_u=3>d_v=2$ 而 $p_u>p_v$，并且边 $\{u,v\}$ 对 $R_G$ 的贡献严格为负：
+
+$$
+(q_u-q_v)(p_u-p_v)
+=-\frac{\lambda^4(\lambda-1)}
+{Z_G(1+4\lambda)(1+3\lambda)}<0.
+\tag{6.1b}
+$$
+

@@ -1,0 +1,5 @@
+source_id = "hard-core-common-activity-stability-and-defect"
+path = "docs/develop/theory/HARD_CORE_COMMON_ACTIVITY_STABILITY_AND_DEFECT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

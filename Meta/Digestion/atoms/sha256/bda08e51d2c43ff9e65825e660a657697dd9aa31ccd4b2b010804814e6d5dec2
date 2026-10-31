@@ -1,0 +1,25 @@
+**定理 2.2（稳定性增益与高活动度占据）。** 对定义 2.1 中的每个 $G,\Delta,H$，有
+
+$$
+\alpha(H)\ge C(H)+m\varepsilon_\Delta.
+\tag{2.2a}
+$$
+
+在所有没有完全连通分量、最大度至多 $\Delta$ 的有限简单图上，$\varepsilon_\Delta$ 是使（2.2a）统一成立的最大系数。对每个 $\lambda>1$，还有
+
+$$
+M_G(\lambda)\ge
+\sum_{K_k\in\mathcal K(G)}\frac{k\lambda}{1+k\lambda}
++C(H)+m\varepsilon_\Delta-\frac{m\log2}{\log\lambda}.
+\tag{2.2b}
+$$
+
+因此，对每个 $\lambda\ge2^{T_\Delta}$，
+
+$$
+M_G(\lambda)\ge B_G(\lambda).
+\tag{2.2c}
+$$
+
+在（2.2c）的范围内，等号成立当且仅当 $G$ 的每个连通分量均完全。另对最大度至多 $1$ 的任意有限简单图，每个 $\lambda>0$ 均有 $M_G(\lambda)=B_G(\lambda)$。阈值 $2^{T_\Delta}$ 是充分条件；（2.2a）的最优系数不蕴含此活动度阈值最优。
+

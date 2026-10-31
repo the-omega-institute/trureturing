@@ -1,0 +1,9 @@
+**证明 8.4。** 对每条诱导三点路及每个 $\beta>1$，有
+
+$$
+q_a+q_b\ge\frac2{\beta+\Delta}
+>\frac1{\beta+\delta}\ge q_v,
+$$
+
+因为 $\beta+2\delta>2\delta+1\ge\Delta$。应用定理 8.1 即可。无诱导三点路时该定理的条件为空条件，仍然适用。$\square$
+
