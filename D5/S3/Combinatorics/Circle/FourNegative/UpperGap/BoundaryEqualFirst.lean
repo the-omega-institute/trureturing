@@ -37,7 +37,7 @@ private theorem equal_first_small_margins (a c : ℕ)
   dsimp only at h
   have ex : (2:ℚ)^(c-a)*2+(2^a-2*2^(c-a))=2^a := by ring
   rw [ex,qpow_split c a (by omega),qpow_half (c-a) (by omega)] at h
-  dsimp only [reorderedMargins,base,newBase,charge]
+  dsimp [reorderedMargins,base,newBase,charge]
   norm_num only [Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_succ,Fin.isValue]
   qify
   simp only [pow_succ] at h ⊢
@@ -70,7 +70,7 @@ private theorem equal_first_large_margins (a c : ℕ)
   have eq : (2:ℚ)^a*2^(c-2*a)/2=2^(c-a-1) := by
     rw [←pow_add,show a+(c-2*a)=c-a by omega,qpow_half (c-a) (by omega)]
   rw [ez,eq] at h
-  dsimp only [reorderedMargins,base,newBase,charge]
+  dsimp [reorderedMargins,base,newBase,charge]
   norm_num only [Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_succ,Fin.isValue]
   qify
   simp only [pow_succ] at h ⊢

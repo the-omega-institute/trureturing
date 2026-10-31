@@ -53,7 +53,9 @@ private theorem swapped_certificate (a b c : ℕ) (hb : 2≤b) (hba : b<a) (hac 
   · positivity
   · intro e _ he; exact he
   · intro e _ he
-    have heq : e=c-a-1 := by simpa only [Nat.testBit_two_pow,decide_eq_true_eq,eq_comm] using he
+    have heq : e=c-a-1 := by
+      have ht : c-a-1=e := of_decide_eq_true (by simpa only [Nat.testBit_two_pow] using he)
+      exact ht.symm
     subst e
     simp [Nat.testBit_two_pow_sub_one,show c-a-1<c-b-1 by omega]
   · exact swapped_margins a b c hb hba hac

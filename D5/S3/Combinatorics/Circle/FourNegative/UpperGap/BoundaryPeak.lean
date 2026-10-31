@@ -50,14 +50,15 @@ private theorem peak_first_bounds (a b c : ℕ)
   have hA : 0<A := by dsimp [A];positivity
   have lower : 0≤B-1-2*A ∧ (0≤B-1-4*A ∨ 0≤4*A-B-1) := by
     by_cases he : b=c
-    · have h := peak_tied_bc_int (2^a) (2^(b-a-1)) 0
+    · subst c
+      have h := peak_tied_bc_int (2^a) (2^(b-a-1)) 0
         (zpow_four a ha) (zpow_one _) (by norm_num)
       dsimp only at h
       have ey : (2:ℤ)^a*2*2^(b-a-1)=2^b := by
         calc
           _ = (2:ℤ)^(a+(b-a-1)+1) := by simp only [pow_add];norm_num;ring
           _ = _ := by congr 1;omega
-      rw [ey,←he] at h
+      rw [ey] at h
       exact ⟨by dsimp [B,A,C,x,y,z];nlinarith only [h.1],
         Or.inr (by dsimp [B,A,C,x,y,z];nlinarith only [h.2])⟩
     · have h := peak_first_lower_int (2^a) (2^c) (2^(b-c-1))
@@ -133,11 +134,12 @@ private theorem peak_last_bounds (a b c : ℕ)
   have ey : 2*(2:ℤ)^(b-1)=y := by
     dsimp [y];rw [mul_comm 2 (2^(b-1)),←pow_succ,Nat.sub_add_cancel (by omega : 1≤b)]
   by_cases he : a=b
-  · have h := peak_last_equal_int (2^c) (2^(a-c)) 0
+  · subst b
+    have h := peak_last_equal_int (2^c) (2^(a-c)) 0
       (zpow_four c hc) (zpow_one _) (by norm_num)
     dsimp only at h
     have ex : (2:ℤ)^c*2^(a-c)=2^a := by rw [←pow_add,Nat.add_sub_of_le (by omega : c≤a)]
-    rw [ex,he] at h
+    rw [ex] at h
     refine ⟨0,by positivity,?_,?_,?_,?_⟩
     all_goals dsimp [A,L,M,D,x,y,z];push_cast
     · nlinarith only [h.1]
@@ -243,10 +245,10 @@ private theorem peak_certificate (a b c : ℕ)
   · intro e _ hre;simp at hre
   · have hbase : base a b c (b+1)=![A,B,L,M] := by
       funext r
-      fin_cases r <;> dsimp [base,A,B,L,M,x,y,z] <;> simp only [pow_succ] <;> ring
+      fin_cases r <;> dsimp [base,A,B,L,M,x,y,z] <;> (try simp only [pow_succ]) <;> ring
     dsimp only [standardMargins,newBase]
     rw [hbase]
-    norm_num only [charge,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_succ,Fin.isValue]
+    dsimp [charge]
     rw [hu,hr]
     change 0≤B-((2*q:ℕ):ℤ)*A at lo
     change 0≤2*B-1-2*((2*q:ℕ):ℤ)*A at ln
