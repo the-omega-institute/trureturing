@@ -724,4 +724,3 @@ theorem opNorm_starProjection_sub_le_of_coercive
     rwa [show ‖A - B‖ = ‖B - A‖ from by rw [← neg_sub, norm_neg]] at h
 
 end Submodule
-
