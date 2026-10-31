@@ -48,23 +48,16 @@ private def character {m : ℕ} (v : Qubits m) (f : Qubits m → ℂ) : ℂ :=
 private def evenLabel {m : ℕ} (v : Qubits m) : Prop :=
   (∑ i, v i) = false
 
-private def updateLabels {m : ℕ} (labels : Fin m → Qubits m) (t c : Fin m) :
-    Fin m → Qubits m :=
-  ReflectionDiagonalParityCounting.update labels (t, c)
-
 private noncomputable def wireLabels {m : ℕ} (circuit : List (gate m)) : Fin m → Qubits m :=
   circuit.foldl (fun labels => Sum.elim
-    (fun p => updateLabels labels p.1.1 p.1.2)
+    (fun p => ReflectionDiagonalParityCounting.update labels (p.1.1, p.1.2))
     (fun _ => labels)) (1 : Matrix (Fin m) (Fin m) Bool)
 
 private noncomputable def rotationLabelsAux {m : ℕ} (circuit : List (gate m)) :
     (Fin m → Qubits m) → Finset (Qubits m) :=
   circuit.foldr (fun g next labels => Sum.elim
-    (fun p => next (updateLabels labels p.1.1 p.1.2))
+    (fun p => next (ReflectionDiagonalParityCounting.update labels (p.1.1, p.1.2)))
     (fun p => insert (labels p.1) (next labels)) g) (fun _ => ∅)
-
-private def rotationLabels {m : ℕ} (circuit : List (gate m)) : Finset (Qubits m) :=
-  rotationLabelsAux circuit (1 : Matrix (Fin m) (Fin m) Bool)
 
 private def hardTheta {m : ℕ} (x : Qubits m) : ℝ :=
   if (∀ i, x i = false) ∨ (∀ i, x i = true) then Real.pi / 2 else 0
@@ -108,17 +101,6 @@ private lemma hardTheta_reflection (m : ℕ) (x : Qubits m) :
     change (if q then Real.pi / 2 else 0) = if p then Real.pi / 2 else 0
     rw [ite_eq_right hq, ite_eq_right hp]
 
-private lemma apply_update {m : ℕ} (labels : Fin m → Qubits m) (t c : Fin m)
-    (x : Qubits m) :
-    Matrix.mulVec (updateLabels labels t c) x =
-      Function.update (Matrix.mulVec labels x) t
-        ((Matrix.mulVec labels x t) ^^ (Matrix.mulVec labels x c)) := by
-  change (Function.update labels t (labels t + labels c)) *ᵥ x =
-    Function.update (labels *ᵥ x) t ((labels *ᵥ x) t + (labels *ᵥ x) c)
-  funext j
-  simpa only [Matrix.updateRow, Matrix.of_apply, Matrix.mulVec, add_dotProduct] using
-    congrFun (Matrix.updateRow_mulVec labels t (labels t + labels c) x) j
-
 private lemma toggle_involutive {m : ℕ} (t c : Fin m) (h : t ≠ c) :
     Function.Involutive (fun x : Qubits m => Function.update x t (x t ^^ x c)) := by
   intro x
@@ -130,27 +112,22 @@ private lemma toggle_involutive {m : ℕ} (t c : Fin m) (h : t ≠ c) :
 
 private lemma labels_update_bijective {m : ℕ} (labels : Fin m → Qubits m)
     (t c : Fin m) (h : t ≠ c) (ha : Function.Bijective (Matrix.mulVec labels)) :
-    Function.Bijective (Matrix.mulVec (updateLabels labels t c)) := by
-  have heq : Matrix.mulVec (updateLabels labels t c) =
+    Function.Bijective (Matrix.mulVec (ReflectionDiagonalParityCounting.update labels (t, c))) := by
+  have heq : Matrix.mulVec (ReflectionDiagonalParityCounting.update labels (t, c)) =
       (fun x : Qubits m => Function.update x t (x t ^^ x c)) ∘ Matrix.mulVec labels := by
     funext x
-    exact apply_update labels t c x
+    change (Function.update labels t (labels t + labels c)) *ᵥ x =
+      Function.update (labels *ᵥ x) t ((labels *ᵥ x) t + (labels *ᵥ x) c)
+    funext j
+    simpa only [Matrix.updateRow, Matrix.of_apply, Matrix.mulVec, add_dotProduct] using
+      congrFun (Matrix.updateRow_mulVec labels t (labels t + labels c) x) j
   rw [heq]
   exact (toggle_involutive t c h).bijective.comp ha
-
-private lemma cnot_left {m : ℕ} (t c : Fin m) (h : t ≠ c) (a : Matrix (Qubits m) (Qubits m) ℂ)
-    (x y : Qubits m) :
-    (cnotMatrix t c h * a) x y = a (Function.update x t (x t ^^ x c)) y := by
-  classical
-  have hi := toggle_involutive t c h
-  change (((1 : Matrix (Qubits m) (Qubits m) ℂ).submatrix id hi.toPerm) * a) x y = _
-  rw [Matrix.one_submatrix_mul]
-  rfl
 
 private noncomputable def phaseAux {m : ℕ} (gs : List (gate m)) :
     (Fin m → Qubits m) → Qubits m → ℂ :=
   gs.foldr (fun g next labels x => Sum.elim
-    (fun p => next (updateLabels labels p.1.1 p.1.2) x)
+    (fun p => next (ReflectionDiagonalParityCounting.update labels (p.1.1, p.1.2)) x)
     (fun p =>
       (if dotProduct (labels p.1) x = false then Complex.exp (((-p.2 / 2 : ℝ) : ℂ) * Complex.I)
        else Complex.exp (((p.2 / 2 : ℝ) : ℂ) * Complex.I)) * next labels x) g)
@@ -178,7 +155,8 @@ private lemma matrix_normal {m : ℕ} (gs : List (gate m))
     (labels : Fin m → Qubits m) (x y : Qubits m) :
     circuitMatrix gs (Matrix.mulVec labels x) y = phaseAux gs labels x *
       (if Matrix.mulVec (gs.foldl (fun ls => Sum.elim
-        (fun p => updateLabels ls p.1.1 p.1.2) (fun _ => ls)) labels) x = y then 1 else 0) := by
+        (fun p => ReflectionDiagonalParityCounting.update ls (p.1.1, p.1.2))
+        (fun _ => ls)) labels) x = y then 1 else 0) := by
   classical
   induction gs generalizing labels with
   | nil =>
@@ -190,8 +168,19 @@ private lemma matrix_normal {m : ℕ} (gs : List (gate m))
     | inl p =>
       change (cnotMatrix p.1.1 p.1.2 p.2 * circuitMatrix gs :
         Matrix (Qubits m) (Qubits m) ℂ) (Matrix.mulVec labels x) y = _
-      rw [cnot_left, ← apply_update]
-      exact ih (updateLabels labels p.1.1 p.1.2)
+      change (((1 : Matrix (Qubits m) (Qubits m) ℂ).submatrix id
+        (toggle_involutive p.1.1 p.1.2 p.2).toPerm) * circuitMatrix gs)
+        (Matrix.mulVec labels x) y = _
+      rw [Matrix.one_submatrix_mul]
+      change circuitMatrix gs (Function.update (labels *ᵥ x) p.1.1
+        ((labels *ᵥ x) p.1.1 + (labels *ᵥ x) p.1.2)) y = _
+      rw [← show (Function.update labels p.1.1 (labels p.1.1 + labels p.1.2)) *ᵥ x =
+          Function.update (labels *ᵥ x) p.1.1
+            ((labels *ᵥ x) p.1.1 + (labels *ᵥ x) p.1.2) from by
+        funext j
+        simpa only [Matrix.updateRow, Matrix.of_apply, Matrix.mulVec, add_dotProduct] using
+          congrFun (Matrix.updateRow_mulVec labels p.1.1 (labels p.1.1 + labels p.1.2) x) j]
+      exact ih (ReflectionDiagonalParityCounting.update labels (p.1.1, p.1.2))
     | inr p =>
       change (rzMatrix p.1 p.2 * circuitMatrix gs :
         Matrix (Qubits m) (Qubits m) ℂ) (Matrix.mulVec labels x) y = _
@@ -223,15 +212,6 @@ private lemma diagonal_forces_identity (m : ℕ) (circuit : List (gate m)) (c : 
     exact phase_ne_zero circuit (1 : Matrix (Fin m) (Fin m) Bool) x (heval.symm.trans hz)
   exact Matrix.ext_iff_mulVec.mpr fun x => (hfix x).trans (Matrix.one_mulVec x).symm
 
-private lemma character_mul (m : ℕ) (v : Qubits m) (f g : Qubits m → ℂ) :
-    character v (fun x => f x * g x) = character v f * character v g := by
-  classical
-  simp only [character.eq_1, mul_zpow, Finset.prod_mul_distrib]
-
-private lemma exists_dot_true {m : ℕ} (v : Qubits m) (hv : v ≠ 0) :
-    ∃ i, v i = true := by
-  simpa only [Pi.zero_apply, Bool.zero_eq_false, Bool.not_eq_false] using Function.ne_iff.mp hv
-
 private lemma character_cancel {m : ℕ} (v u : Qubits m) (f : Qubits m → ℂ)
     (hu : dotProduct v u = true) (hf : ∀ x, f x ≠ 0)
     (hfu : ∀ x, f (x + u) = f x) : character v f = 1 := by
@@ -255,7 +235,8 @@ private lemma character_cancel {m : ℕ} (v u : Qubits m) (f : Qubits m → ℂ)
 private lemma character_global (m : ℕ) (v : Qubits m)
     (hv : v ≠ 0) (c : ℂ) (hc : c ≠ 0) :
     character v (fun _ : Qubits m => c) = 1 := by
-  obtain ⟨i, hi⟩ := exists_dot_true v hv
+  obtain ⟨i, hi⟩ := (show ∃ i, v i = true from by
+    simpa only [Pi.zero_apply, Bool.zero_eq_false, Bool.not_eq_false] using Function.ne_iff.mp hv)
   exact character_cancel v ((Pi.single i (1 : Bool))) (fun _ => c)
     (by simpa only [dotProduct_single_one] using hi) (fun _ => hc) (fun _ => rfl)
 
@@ -264,11 +245,14 @@ private lemma character_factor (m : ℕ) (v w : Qubits m) (f : Bool → ℂ)
     (hw : w ≠ fun _ : Fin m => false) (hf : ∀ b, f b ≠ 0) :
     character v (fun x => f (dotProduct w x)) = 1 := by
   classical
-  obtain ⟨j, hj⟩ := exists_dot_true w hw
+  obtain ⟨j, hj⟩ := (show ∃ j, w j = true from by
+    simpa only [Pi.zero_apply, Bool.zero_eq_false, Bool.not_eq_false] using Function.ne_iff.mp hw)
   have hsep : ∃ u : Qubits m, dotProduct v u = true ∧ dotProduct w u = false := by
     cases hvj : v j with
     | false =>
-      obtain ⟨i, hi⟩ := exists_dot_true v hv
+      obtain ⟨i, hi⟩ := (show ∃ i, v i = true from by
+        simpa only [Pi.zero_apply, Bool.zero_eq_false, Bool.not_eq_false] using
+          Function.ne_iff.mp hv)
       cases hwi : w i with
       | false => exact ⟨(Pi.single i (1 : Bool)), (dotProduct_single_one v i).trans hi,
           (dotProduct_single_one w i).trans hwi⟩
@@ -335,9 +319,12 @@ private lemma phase_character {m : ℕ} (gs : List (gate m))
           exact Complex.exp_ne_zero _
         · rw [ite_eq_right h]
           exact Complex.exp_ne_zero _
-      change character v (fun x => f (dotProduct (labels p.1) x) * phaseAux gs labels x) = 1
-      rw [character_mul m v _ _,
-        character_factor m v (labels p.1) f hv hvw hw hf, ih labels ha htail, mul_one]
+      change (∏ x : Qubits m, (f (dotProduct (labels p.1) x) * phaseAux gs labels x) ^
+        (if dotProduct v x then (-1 : ℤ) else 1)) = 1
+      simp only [mul_zpow, Finset.prod_mul_distrib]
+      change character v (fun x => f (dotProduct (labels p.1) x)) *
+        character v (phaseAux gs labels) = 1
+      rw [character_factor m v (labels p.1) f hv hvw hw hf, ih labels ha htail, mul_one]
 
 private lemma hard_character (m : ℕ) (hm : 0 < m) (v : Qubits m) (he : evenLabel v) :
     character v (fun x => Complex.exp ((hardTheta x : ℂ) * Complex.I)) = -1 := by
@@ -353,9 +340,8 @@ private lemma hard_character (m : ℕ) (hm : 0 < m) (v : Qubits m) (he : evenLab
   have hoθ : hardTheta o = Real.pi / 2 := by
     change (if (∀ i, o i = false) ∨ (∀ i, o i = true) then Real.pi / 2 else 0) = _
     rw [ite_eq_left (Or.inr (by intro i; simp [o]))]
-  have hzdot : dotProduct v z = false := dotProduct_zero v
   have hodot : dotProduct v o = false := (dotProduct_one v).trans he
-  have hfz : f z = Complex.I := by simp [f, hzdot, hzθ]
+  have hfz : f z = Complex.I := by simp [f, z, hzθ]
   have hfo : f o = Complex.I := by simp [f, hodot, hoθ]
   have hrest (x : Qubits m) (hx : x ∈ (Finset.univ \ {z}) \ {o}) : f x = 1 := by
     have hxz : x ≠ z := by
@@ -385,7 +371,8 @@ private lemma rotation_labels (m : ℕ) (circuit : List (gate m))
       character v (fun _ : Qubits m => c) = 1)
     (hchars : ∀ v, evenLabel v → v ≠ 0 →
       character v (fun x => Complex.exp ((θ x : ℂ) * Complex.I)) = -1) :
-    ∀ v, evenLabel v → v ≠ 0 → v ∈ rotationLabels circuit := by
+    ∀ v, evenLabel v → v ≠ 0 →
+      v ∈ rotationLabelsAux circuit (1 : Matrix (Fin m) (Fin m) Bool) := by
   classical
   have heval (x : Qubits m) : phaseAux circuit (1 : Matrix (Fin m) (Fin m) Bool) x =
       c * Complex.exp ((θ x : ℂ) * Complex.I) := by
@@ -407,9 +394,13 @@ private lemma rotation_labels (m : ℕ) (circuit : List (gate m))
   intro v he hv
   by_contra hmiss
   have hp := phase_character circuit (1 : Matrix (Fin m) (Fin m) Bool) v hi hv hmiss
-  have hh := congrArg (character v) (funext heval)
-  rw [character_mul m v _ _,
-    hglobal v c hv hc, hchars v he hv, one_mul, hp] at hh
+  have hh : character v (phaseAux circuit (1 : Matrix (Fin m) (Fin m) Bool)) =
+      character v (fun _ => c) *
+        character v (fun x => Complex.exp ((θ x : ℂ) * Complex.I)) := by
+    rw [show phaseAux circuit (1 : Matrix (Fin m) (Fin m) Bool) =
+      (fun x => c * Complex.exp ((θ x : ℂ) * Complex.I)) from funext heval]
+    simp only [character.eq_1, mul_zpow, Finset.prod_mul_distrib]
+  rw [hglobal v c hv hc, hchars v he hv, one_mul, hp] at hh
   norm_num at hh
 
 private noncomputable def cnotPairs {m : ℕ} (gs : List (gate m)) : List (Fin m × Fin m) :=
@@ -418,12 +409,13 @@ private noncomputable def cnotPairs {m : ℕ} (gs : List (gate m)) : List (Fin m
 private lemma pairs_labels {m : ℕ} (gs : List (gate m)) (ls : Fin m → Qubits m) :
     ReflectionDiagonalParityCounting.labels (cnotPairs gs) ls =
       gs.foldl (fun labels => Sum.elim
-        (fun p => updateLabels labels p.1.1 p.1.2) (fun _ => labels)) ls := by
+        (fun p => ReflectionDiagonalParityCounting.update labels (p.1.1, p.1.2))
+        (fun _ => labels)) ls := by
   induction gs generalizing ls with
   | nil => rfl
   | cons g gs ih =>
     cases g with
-    | inl p => exact ih (updateLabels ls p.1.1 p.1.2)
+    | inl p => exact ih (ReflectionDiagonalParityCounting.update ls (p.1.1, p.1.2))
     | inr p => exact ih ls
 
 private lemma pairs_count {m : ℕ} (gs : List (gate m)) :
@@ -448,7 +440,7 @@ private lemma rotation_outputs {m : ℕ} (gs : List (gate m))
         v ∈ (ls p.1.1 + ls p.1.2) ::
           ReflectionDiagonalParityCounting.outputs (cnotPairs gs)
             (ReflectionDiagonalParityCounting.update ls p.1)
-      rcases ih (updateLabels ls p.1.1 p.1.2) hv with ⟨j, hj⟩ | hh
+      rcases ih (ReflectionDiagonalParityCounting.update ls (p.1.1, p.1.2)) hv with ⟨j, hj⟩ | hh
       · by_cases hjt : j = p.1.1
         · subst j
           right
@@ -456,10 +448,10 @@ private lemma rotation_outputs {m : ℕ} (gs : List (gate m))
           apply Or.inl
           refine hj.symm.trans ?_
           funext i
-          simp only [updateLabels.eq_1, ReflectionDiagonalParityCounting.update,
+          simp only [ReflectionDiagonalParityCounting.update,
             Function.update_self, Pi.add_apply, Bool.add_eq_xor]
         · left
-          exact ⟨j, by simpa [updateLabels.eq_1, ReflectionDiagonalParityCounting.update,
+          exact ⟨j, by simpa [ReflectionDiagonalParityCounting.update,
             Function.update_apply, hjt] using hj⟩
       · right
         exact List.mem_cons_of_mem _ hh
@@ -469,23 +461,21 @@ private lemma rotation_outputs {m : ℕ} (gs : List (gate m))
       · exact Or.inl ⟨p.1, hh.symm⟩
       · exact ih ls hh
 
-private lemma initial_odd {m : ℕ} (j : Fin m) :
-    (∑ i, (1 : Matrix (Fin m) (Fin m) Bool) j i) = true := by
-  simpa only [Matrix.mulVec, dotProduct_one, Pi.one_apply, Bool.one_eq_true] using
-    congrFun (Matrix.one_mulVec (1 : Fin m → Bool)) j
-
 private lemma return_count (m : ℕ) (hm : 0 < m) (circuit : List (gate m))
     (hnf : wireLabels circuit = (1 : Matrix (Fin m) (Fin m) Bool))
-    (hlabels : ∀ v, evenLabel v → v ≠ 0 → v ∈ rotationLabels circuit) :
+    (hlabels : ∀ v, evenLabel v → v ≠ 0 →
+      v ∈ rotationLabelsAux circuit (1 : Matrix (Fin m) (Fin m) Bool)) :
     2 ^ (m - 1) + m - 2 ≤ cnotCount circuit := by
   have hs (v : Qubits m) (he : (∑ i, v i) = false) (hv : v ≠ 0) :
       v ∈ ReflectionDiagonalParityCounting.outputs (cnotPairs circuit)
         (1 : Matrix (Fin m) (Fin m) Bool) := by
     have hr := rotation_outputs circuit (1 : Matrix (Fin m) (Fin m) Bool) v (hlabels v he hv)
     rcases hr with ⟨j, hj⟩ | hr
-    · have hh := initial_odd j
-      rw [hj, he] at hh
-      exact Bool.noConfusion hh
+    · exfalso
+      exact Bool.false_ne_true (he.symm.trans (by
+        rw [← hj]
+        simpa only [Matrix.mulVec, dotProduct_one, Pi.one_apply, Bool.one_eq_true] using
+          congrFun (Matrix.one_mulVec (1 : Fin m → Bool)) j))
     · exact hr
   have hf (j : Fin m) :
       (∑ i, ReflectionDiagonalParityCounting.labels
@@ -493,9 +483,14 @@ private lemma return_count (m : ℕ) (hm : 0 < m) (circuit : List (gate m))
     rw [pairs_labels]
     change (∑ i, wireLabels circuit j i) = true
     rw [hnf]
-    exact initial_odd j
+    simpa only [Matrix.mulVec, dotProduct_one, Pi.one_apply, Bool.one_eq_true] using
+      congrFun (Matrix.one_mulVec (1 : Fin m → Bool)) j
   have hb := ReflectionDiagonalParityCounting.count_bound hm (cnotPairs circuit)
-    (1 : Matrix (Fin m) (Fin m) Bool) initial_odd hf hs
+    (1 : Matrix (Fin m) (Fin m) Bool)
+    (by
+      intro j
+      simpa only [Matrix.mulVec, dotProduct_one, Pi.one_apply, Bool.one_eq_true] using
+        congrFun (Matrix.one_mulVec (1 : Fin m → Bool)) j) hf hs
   rwa [pairs_count] at hb
 
 private lemma claim_for_n (n : ℕ) (hn : 1 ≤ n) :
@@ -507,18 +502,10 @@ private lemma claim_for_n (n : ℕ) (hn : 1 ≤ n) :
   refine ⟨hardTheta, hardTheta_reflection (2 * n), ?_⟩
   intro circuit c h
   have hidentity := diagonal_forces_identity (2 * n) circuit c hardTheta h
-  have hglobal : ∀ (v : Qubits (2 * n)) (d : ℂ), v ≠ 0 → d ≠ 0 →
-      character v (fun _ : Qubits (2 * n) => d) = 1 := by
-    intro v d hv hd
-    exact character_global (2 * n) v hv d hd
-  have hchars : ∀ v : Qubits (2 * n), evenLabel v → v ≠ 0 →
-      character v (fun x => Complex.exp ((hardTheta x : ℂ) * Complex.I)) = -1 := by
-    intro v he _
-    exact hard_character (2 * n) (Nat.mul_pos (by decide) hn) v he
-  have hlabels := rotation_labels (2 * n) circuit hardTheta c h hidentity
-    hglobal hchars
-  have hreturn := return_count (2 * n) (Nat.mul_pos (by decide) hn) circuit hidentity hlabels
-  exact hreturn
+  exact return_count (2 * n) (Nat.mul_pos (by decide) hn) circuit hidentity
+    (rotation_labels (2 * n) circuit hardTheta c h hidentity
+      (fun v d hv hd => character_global (2 * n) v hv d hd)
+      (fun v he _ => hard_character (2 * n) (Nat.mul_pos (by decide) hn) v he))
 
 theorem result : claim := by
   intro n hn
