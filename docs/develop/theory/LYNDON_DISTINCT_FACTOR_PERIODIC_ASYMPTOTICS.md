@@ -318,8 +318,8 @@ $$
 \begin{aligned}
 \frac{F_q(n)}n
  &=\sum_{m\geq1}\frac1m A(q^{t-m})\\
- &=\int_{\mathbb R}K_q(v)H_{\lfloor t-v\rfloor}\,dv.                   \tag{3.7}
-\end{aligned}
+ &=\int_{\mathbb R}K_q(v)H_{\lfloor t-v\rfloor}\,dv.
+\end{aligned}       \tag{3.7}
 $$
 
 Here the convention $H_k=0$ for $k\leq0$ is essential. It covers the
@@ -492,8 +492,8 @@ $$
  &=\int_0^\infty A'(x)x^{-i\tau}\,dx\\
  &=\int_0^1\int_0^\infty u e^{-ux}x^{-i\tau}\,dx\,du\\
  &=\Gamma(1-i\tau)\int_0^1u^{i\tau}\,du
- =\frac{\Gamma(1-i\tau)}{1+i\tau}.                                   \tag{4.6}
-\end{aligned}
+ =\frac{\Gamma(1-i\tau)}{1+i\tau}.
+\end{aligned}       \tag{4.6}
 $$
 
 The absolute value of the double integrand is $u e^{-ux}$ and its
@@ -510,8 +510,8 @@ $$
  &=\frac1\alpha\int_0^\infty A'(x)\log x\,dx\\
  &=\frac1\alpha\int_0^1\int_0^\infty u e^{-ux}\log x\,dx\,du\\
  &=\frac1\alpha\int_0^1\bigl(\Gamma'(1)-\log u\bigr)\,du
- =\frac{\Gamma'(1)+1}{\alpha}.                                       \tag{4.7}
-\end{aligned}
+ =\frac{\Gamma'(1)+1}{\alpha}.
+\end{aligned}       \tag{4.7}
 $$
 
 Absolute integrability holds: after $y=ux$ the integral of the absolute
