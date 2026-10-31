@@ -12,7 +12,9 @@ import Mathlib.Data.Fintype.Card
 import Mathlib.Dynamics.SymbolicDynamics.Basic
 import Mathlib.Topology.Homeomorph.Lemmas
 import Mathlib.Topology.Instances.Int
-import Mathlib.Tactic
+import Mathlib.Tactic.Ext
+import Lean.Elab.Tactic.Omega
+import Lean.Elab.Tactic.NormCast
 
 /-! Actual finite-prefix permutations, two-sided reconstruction and full-lift conjugacy. -/
 
@@ -114,8 +116,9 @@ private theorem code_shift (x : ℤ → A) (i : ℤ) :
 private theorem prefix_step_code (bh : Bipermutative h) (x : ℤ → A) :
     prefixStep bh (code h x 0) (sourcePrefix x) = sourcePrefix (shift 1 x) := by
   have hlast : rightLetter bh (code h x 0) (sourcePrefix x) = x (k + 1 : ℕ) := by
-    apply (bh.right (sourcePrefix x)).injective
-    rw [right_letter_spec bh (code h x 0) (sourcePrefix x)]
+    unfold rightLetter
+    apply (rightEquiv bh (sourcePrefix x)).symm_apply_eq.mpr
+    change code h x 0 = h (Fin.snoc (sourcePrefix x) (x (k + 1 : ℕ)))
     simp only [code, window_eq_snoc, zero_add, sourcePrefix]
   ext j
   cases j using Fin.lastCases with
@@ -178,13 +181,13 @@ private theorem orbit_base (z : (ℤ → A) × Prefix A k) (i : ℤ) :
     change shift 1 (orbit bh z (n : ℤ)).1 = _
     rw [ih]
     ext j
-    simp only [shift_apply, add_assoc, add_left_comm, add_comm]
+    simp only [shift_apply, sub_eq_add_neg, add_left_comm, add_comm]
   | pred n ih =>
     rw [orbit_pred]
     change shift (-1) (orbit bh z (-(n : ℤ))).1 = _
     rw [ih]
     ext j
-    simp only [shift_apply, add_assoc, add_left_comm, add_comm]
+    simp only [shift_apply, sub_eq_add_neg, add_left_comm, add_comm]
 
 private theorem orbit_overlap (z : (ℤ → A) × Prefix A k) (i : ℤ) (j : Fin k) :
     (orbit bh z (i + 1)).2 j.castSucc = (orbit bh z i).2 j.succ := by
@@ -242,11 +245,17 @@ private theorem code_reconstruct (z : (ℤ → A) × Prefix A k) :
   rw [code_prefix_step bh ((orbit bh z i).1 0) (orbit bh z i).2]
   simpa only [shift_apply, add_zero] using congrFun (orbit_base bh z i) 0
 
+private theorem source_prefix_reconstruct (z : (ℤ → A) × Prefix A k) :
+    sourcePrefix (reconstruct bh z) = z.2 := by
+  change (fun j : Fin (k + 1) => reconstruct bh z (j : ℕ)) = z.2
+  simpa only [zero_add, orbit_zero] using reconstruct_prefix_at bh z 0
+
 private theorem coordinates_reconstruct (z : (ℤ → A) × Prefix A k) :
     coordinates h (reconstruct bh z) = z := by
   apply Prod.ext
   · exact code_reconstruct bh z
-  · simpa only [sourcePrefix, zero_add, orbit_zero] using reconstruct_prefix_at bh z 0
+  · change sourcePrefix (reconstruct bh z) = z.2
+    exact source_prefix_reconstruct bh z
 
 private theorem coordinates_shift_back (x : ℤ → A) :
     coordinates h (shift (-1) x) = (skewPerm bh).symm (coordinates h x) := by
@@ -264,17 +273,20 @@ private theorem orbit_coordinates (x : ℤ → A) (i : ℤ) :
     rw [orbit_succ, ih, ← coordinates_shift]
     congr 1
     ext j
-    simp only [shift_apply, add_assoc, add_left_comm, add_comm]
+    simp only [shift_apply, sub_eq_add_neg, add_left_comm, add_comm]
   | pred n ih =>
     rw [orbit_pred, ih, ← coordinates_shift_back]
     congr 1
     ext j
-    simp only [shift_apply, add_assoc, add_left_comm, add_comm]
+    simp only [shift_apply, sub_eq_add_neg, add_left_comm, add_comm]
 
 private theorem reconstruct_coordinates (x : ℤ → A) :
     reconstruct bh (coordinates h x) = x := by
   ext i
-  simp only [reconstruct, orbit_coordinates, coordinates, sourcePrefix, shift_apply, add_zero]
+  change (orbit bh (coordinates h x) i).2 0 = x i
+  rw [orbit_coordinates]
+  change x (i + 0) = x i
+  exact congrArg x (add_zero i)
 
 /-- Every output configuration and every literal sourcePrefix have exactly one
 two-sided source. Both endpoint permutations are used in this equivalence. -/
@@ -301,7 +313,10 @@ private theorem continuous_code (h : (Fin (k + 2) → A) → A) : Continuous (co
     (continuous_pi fun j => continuous_apply (i + (j : ℕ)))
 
 private theorem continuous_prefix : Continuous (sourcePrefix (A := A) (k := k)) := by
-  exact continuous_pi fun j => continuous_apply (j : ℕ)
+  apply continuous_pi
+  intro j
+  change Continuous (fun x : ℤ → A => x ((j : ℕ) : ℤ))
+  exact continuous_apply ((j : ℕ) : ℤ)
 
 private theorem continuous_coordinates (h : (Fin (k + 2) → A) → A) :
     Continuous (coordinates h) :=
@@ -326,7 +341,8 @@ noncomputable def fullLiftEquiv (bh : Bipermutative h) (Y : Subshift A ℤ) :
   right_inv z := by
     apply Prod.ext
     · exact Subtype.ext (code_reconstruct bh (z.1.1, z.2))
-    · exact congrArg Prod.snd (coordinates_reconstruct bh (z.1.1, z.2))
+    · change sourcePrefix (reconstruct bh (z.1.1, z.2)) = z.2
+      exact source_prefix_reconstruct bh (z.1.1, z.2)
 
 noncomputable def fullLiftHomeomorph (bh : Bipermutative h) (Y : Subshift A ℤ) :
     LiftPoint h Y ≃ₜ (Y.carrier × Prefix A k) where

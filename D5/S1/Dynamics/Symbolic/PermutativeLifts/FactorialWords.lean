@@ -9,7 +9,8 @@
 import Mathlib.Data.List.Infix
 import Mathlib.Data.Nat.Factorial.Basic
 import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.Tactic
+import Mathlib.Tactic.Linarith
+import Lean.Elab.Tactic.Omega
 
 /-! Actual factorial words and their block-recurrence and finite-action identities. -/
 

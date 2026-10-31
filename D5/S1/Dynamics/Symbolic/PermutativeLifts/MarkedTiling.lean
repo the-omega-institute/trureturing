@@ -160,8 +160,10 @@ theorem tiled_backwards (W : Bool → List Bool) {x : ℤ → TileState W}
     (x (i - (k : ℤ))).1 = (x i).1 ∧
       (x (i - (k : ℤ))).2.val = (x i).2.val - k := by
   induction k generalizing i with
-  | zero => simpa only [Int.natCast_zero, sub_zero, Nat.sub_zero] using
-      (And.intro (rfl : (x i).1 = (x i).1) (rfl : (x i).2.val = (x i).2.val))
+  | zero =>
+    have heq : x (i - (0 : ℤ)) = x i := congrArg x (sub_zero i)
+    exact ⟨congrArg (fun s : TileState W => s.1) heq,
+      congrArg (fun s : TileState W => s.2.val) heq⟩
   | succ k ih =>
     have hp := tiled_previous W hx i (by omega)
     have hb := ih (i - 1) (by omega)
@@ -210,8 +212,10 @@ theorem tiled_forwards (W : Bool → List Bool) {x : ℤ → TileState W}
     (x (i + (k : ℤ))).1 = (x i).1 ∧
       (x (i + (k : ℤ))).2.val = (x i).2.val + k := by
   induction k with
-  | zero => simpa only [Int.natCast_zero, add_zero] using
-      (And.intro (rfl : (x i).1 = (x i).1) (rfl : (x i).2.val = (x i).2.val))
+  | zero =>
+    have heq : x (i + (0 : ℤ)) = x i := congrArg x (add_zero i)
+    exact ⟨congrArg (fun s : TileState W => s.1) heq,
+      congrArg (fun s : TileState W => s.2.val) heq⟩
   | succ k ih =>
     have hp := ih (by omega)
     have hh : (x (i + (k : ℤ))).2.val + 1 <
