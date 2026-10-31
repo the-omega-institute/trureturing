@@ -310,7 +310,9 @@ observation fibers. Both list counts are matched to chronological original block
 before the existing ordered limits and occurrence moments are consumed.
 
 The opposite infinite half-line is retained in each conditional expectation.
-The two squared integrals are under the same visible pushforward P of J. -/
+The total bounded bitPredictor versions are used in the conclusion; their
+conditional-expectation identities hold on the same P. Both squared integrals
+are under this exact visible pushforward of J. -/
 theorem original_rectangle_erasure_bounds (θ : Presentation H)
     (J : Measure (PathSpace H)) [IsProbabilityMeasure J] (hc : HasOriginalCylinders J θ)
     (w : List Bool) (hw : w ≠ []) (R : Rectangle (product θ w))
@@ -321,9 +323,9 @@ theorem original_rectangle_erasure_bounds (θ : Presentation H)
     let ρ := 1-rectangleMinimum (product θ w) R / rectangleMaximum (product θ w) R
     let η := 1-selectedEpsilon θ w r a*(1-ρ^2)
     let q := j/b
-    let q0 := P[erasedBit | MeasurableSpace.comap exterior inferInstance]
-    let pL := P[erasedBit | MeasurableSpace.comap (leftObservation j) inferInstance]
-    let pR := P[erasedBit | MeasurableSpace.comap (rightObservation j) inferInstance]
+    let q0 := fun z => bitPredictor P (fun z => z 0) exterior (exterior z)
+    let pL := fun z => bitPredictor P (fun z => z 0) (leftObservation j) (leftObservation j z)
+    let pR := fun z => bitPredictor P (fun z => z 0) (rightObservation j) (rightObservation j z)
     (∀ᵐ z ∂J,
       |q0 z.2-pL z.2| ≤ ρ ^ chronologicalCount w b (-(q : ℤ)*b) q z ∧
       |q0 z.2-pR z.2| ≤ ρ ^ chronologicalCount w b 1 q z) ∧
@@ -335,13 +337,38 @@ theorem original_rectangle_erasure_bounds (θ : Presentation H)
   let ρ := 1-rectangleMinimum (product θ w) R / rectangleMaximum (product θ w) R
   let η := 1-selectedEpsilon θ w r a*(1-ρ^2)
   let q := j/b
-  let q0 := P[erasedBit | MeasurableSpace.comap exterior inferInstance]
-  let pL := P[erasedBit | MeasurableSpace.comap (leftObservation j) inferInstance]
-  let pR := P[erasedBit | MeasurableSpace.comap (rightObservation j) inferInstance]
+  let q0 := fun z => bitPredictor P (fun z => z 0) exterior (exterior z)
+  let pL := fun z => bitPredictor P (fun z => z 0) (leftObservation j) (leftObservation j z)
+  let pR := fun z => bitPredictor P (fun z => z 0) (rightObservation j) (rightObservation j z)
   have hρ := rectangle_rho_range (product θ w) R
-  have hbnd := half_line_count_bounds θ J hc w hw R j
-  have hL : Integrable (fun z => (q0 z-pL z)^2) P := square_integrable P _ _
-  have hR : Integrable (fun z => (q0 z-pR z)^2) P := square_integrable P _ _
+  have hx : Measurable (fun z : Visible => z 0) := measurable_pi_apply 0
+  have he0 : q0 =ᵐ[P] P[erasedBit | MeasurableSpace.comap exterior inferInstance] :=
+    bitPredictor_condExp P (fun z : Visible => z 0) exterior hx
+      (by unfold exterior before after; fun_prop)
+  have heL : pL =ᵐ[P] P[erasedBit | MeasurableSpace.comap (leftObservation j) inferInstance] :=
+    bitPredictor_condExp P (fun z : Visible => z 0) (leftObservation j) hx
+      (by unfold leftObservation leftWord after; fun_prop)
+  have heR : pR =ᵐ[P] P[erasedBit | MeasurableSpace.comap (rightObservation j) inferInstance] :=
+    bitPredictor_condExp P (fun z : Visible => z 0) (rightObservation j) hx
+      (by unfold rightObservation before rightWord; fun_prop)
+  have hbnd : ∀ᵐ z ∂J,
+      |q0 z.2-pL z.2| ≤ ρ ^ chronologicalCount w b (-(q : ℤ)*b) q z ∧
+      |q0 z.2-pR z.2| ≤ ρ ^ chronologicalCount w b 1 q z := by
+    filter_upwards [half_line_count_bounds θ J hc w hw R j,
+      ae_of_ae_map measurable_snd.aemeasurable he0,
+      ae_of_ae_map measurable_snd.aemeasurable heL,
+      ae_of_ae_map measurable_snd.aemeasurable heR] with z hz h0 hl hr
+    simpa only [h0,hl,hr] using hz
+  have hL : Integrable (fun z => (q0 z-pL z)^2) P :=
+    (square_integrable P (MeasurableSpace.comap exterior inferInstance)
+      (MeasurableSpace.comap (leftObservation j) inferInstance)).congr (by
+        filter_upwards [he0,heL] with z h0 hl
+        rw [h0,hl])
+  have hR : Integrable (fun z => (q0 z-pR z)^2) P :=
+    (square_integrable P (MeasurableSpace.comap exterior inferInstance)
+      (MeasurableSpace.comap (rightObservation j) inferInstance)).congr (by
+        filter_upwards [he0,heR] with z h0 hr
+        rw [h0,hr])
   have hsquare (x : ℝ) (K : ℕ) (hx : |x| ≤ ρ^K) : x^2 ≤ ρ^(2*K) := by
     have hh := mul_self_le_mul_self (abs_nonneg x) hx
     simpa only [← pow_two,sq_abs,← pow_mul,Nat.mul_comm K 2] using hh
