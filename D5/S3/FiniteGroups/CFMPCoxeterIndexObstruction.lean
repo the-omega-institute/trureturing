@@ -9,6 +9,8 @@
 import D5.S3.FiniteGroups.CycleNineThreeObstruction
 import Mathlib.GroupTheory.Coxeter.Length
 import Mathlib.GroupTheory.QuotientGroup.Finite
+import Mathlib.GroupTheory.Perm.Fin
+import Mathlib.GroupTheory.DoubleCoset
 import Mathlib.Tactic.FinCases
 
 /-! # The native index-seventy-two Coxeter obstruction -/
@@ -103,6 +105,98 @@ private def pair (i j : Fin 4) : orientation :=
     change canonical.lengthParity _ = 1
     rw [map_mul, CoxeterSystem.lengthParity_simple, CoxeterSystem.lengthParity_simple]
     decide⟩
+
+/-- The native six-sector subgroup. -/
+def blockGroup : Subgroup W :=
+  Subgroup.closure ({canonical.simple 2, canonical.simple 3} : Set W)
+
+private def C : blockGroup := ⟨canonical.simple 2, Subgroup.subset_closure (by simp)⟩
+private def D : blockGroup := ⟨canonical.simple 3, Subgroup.subset_closure (by simp)⟩
+
+private def normalWord (n : Fin 6) : blockGroup := ![1, C, D, C * D, D * C, C * D * C] n
+
+private def step (n : Fin 6) (j : Fin 2) : Fin 6 :=
+  if j = 0 then ![1,0,4,5,2,3] n else ![2,3,0,1,5,4] n
+
+private theorem normal_step (n : Fin 6) (j : Fin 2) :
+    normalWord n * (if j = 0 then C else D) = normalWord (step n j) := by
+  have hcc : C * C = 1 := Subtype.ext (canonical.simple_mul_simple_self 2)
+  have hdd : D * D = 1 := Subtype.ext (canonical.simple_mul_simple_self 3)
+  have hbraid : C * D * C = D * C * D := by
+    apply Subtype.ext
+    have h := canonical.wordProd_braidWord_eq 2 3
+    change canonical.simple 2 * (canonical.simple 3 * (canonical.simple 2 * 1)) =
+      canonical.simple 3 * (canonical.simple 2 * (canonical.simple 3 * 1)) at h
+    simpa only [mul_one, mul_assoc, C, D, Subgroup.coe_mul] using h
+  fin_cases n <;> fin_cases j <;>
+    simp [normalWord, step, ← mul_assoc, hcc, hdd, hbraid]
+
+private theorem normalWord_surjective : Function.Surjective normalWord := by
+  intro x
+  have hstep (w : W) (hw : w ∈ blockGroup) (y : W)
+      (hy : y ∈ ({canonical.simple 2, canonical.simple 3} : Set W))
+      (ih : ∃ n, (normalWord n : W) = w) :
+      ∃ n, (normalWord n : W) = w * y := by
+    obtain ⟨n, hn⟩ := ih
+    simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hy
+    rcases hy with rfl | rfl
+    · refine ⟨step n 0, ?_⟩
+      rw [← hn]
+      exact congrArg Subtype.val (normal_step n 0).symm
+    · refine ⟨step n 1, ?_⟩
+      rw [← hn]
+      exact congrArg Subtype.val (normal_step n 1).symm
+  have hx : ∃ n, (normalWord n : W) = (x : W) := by
+    apply Subgroup.closure_induction_right (s := {canonical.simple 2, canonical.simple 3})
+      (p := fun w _ => ∃ n, (normalWord n : W) = w) ?_ hstep ?_ x.property
+    · exact ⟨0, rfl⟩
+    · intro w hw y hy ih
+      have hiy : y⁻¹ = y := by
+        simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hy
+        rcases hy with rfl | rfl <;> exact canonical.inv_simple _
+      rw [hiy]
+      exact hstep w hw y hy ih
+  obtain ⟨n, hn⟩ := hx
+  exact ⟨n, Subtype.ext hn⟩
+
+private def permReflection (i : Fin 4) : Equiv.Perm (Fin 3) :=
+  ![1, Equiv.swap 1 2, Equiv.swap 0 1, Equiv.swap 1 2] i
+
+private theorem perm_relations : diagram.IsLiftable permReflection := by
+  intro i j
+  fin_cases i <;> fin_cases j <;> decide
+
+private def permRepresentation : W →* Equiv.Perm (Fin 3) :=
+  canonical.lift ⟨permReflection, perm_relations⟩
+
+private def permWord (n : Fin 6) : Equiv.Perm (Fin 3) :=
+  let c : Equiv.Perm (Fin 3) := Equiv.swap 0 1
+  let d : Equiv.Perm (Fin 3) := Equiv.swap 1 2
+  ![1, c, d, c*d, d*c, c*d*c] n
+
+private theorem map_normalWord (n : Fin 6) :
+    permRepresentation (normalWord n : W) = permWord n := by
+  fin_cases n <;> simp [normalWord, permWord, C, D, permRepresentation, permReflection]
+
+private theorem permWord_bijective : Function.Bijective permWord := by decide
+
+/-- The two last native reflections generate a copy of the symmetric group on three letters. -/
+noncomputable def blockGroupEquiv : blockGroup ≃* Equiv.Perm (Fin 3) :=
+  MulEquiv.ofBijective (permRepresentation.comp blockGroup.subtype) (by
+    constructor
+    · intro x y hxy
+      obtain ⟨i, rfl⟩ := normalWord_surjective x
+      obtain ⟨j, rfl⟩ := normalWord_surjective y
+      have hij : i = j := permWord_bijective.1 (by
+        simpa only [MonoidHom.comp_apply, Subgroup.subtype_apply, map_normalWord] using hxy)
+      exact congrArg normalWord hij
+    · intro p
+      obtain ⟨n, hn⟩ := permWord_bijective.2 p
+      exact ⟨normalWord n, (map_normalWord n).trans hn⟩)
+
+private theorem blockGroup_card : Nat.card blockGroup = 6 := by
+  rw [Nat.card_congr blockGroupEquiv.toEquiv, Nat.card_eq_fintype_card, Fintype.card_perm]
+  decide
 
 /-- The normal orientation quotient of order seventy-two is impossible. -/
 theorem result : ¬ claim := by
