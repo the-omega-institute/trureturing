@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/VertexAlgebra/SourceBPZ/ThetaChargeRotation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/group_theory/representation_theory]
+   anchors: []
    utility: none
    digest: A finite charge character produces a genuine ZMod-three representation on every energy grade and is inverted by the lattice reflection. -/
 
