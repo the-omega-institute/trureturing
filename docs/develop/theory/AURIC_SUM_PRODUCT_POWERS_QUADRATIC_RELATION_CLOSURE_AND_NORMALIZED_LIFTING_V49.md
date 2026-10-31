@@ -1276,3 +1276,440 @@ Clifford 复合和非负正交可加平方权重；相关内容与上轮相同�
 [9] 
 [《加乘、对数与算术谱》V19](https://github.com/the-omega-institute/trureturing/blob/e168d4bbef773d94df790275d1f4f2a9e373103f/docs/develop/theory/AURIC_SUM_PRODUCT_LOGARITHMS_AND_ARITHMETIC_SPECTRA_V19.md)，§7.3。
 振幅平方使实指数加倍；载体与实际读出边界另列。
+
+## 13. 固定三端口来源的有限相干标定
+
+**定义 13.1（乘性权重与互斥端口读数）。** 令
+$w:\mathbb C\to[0,\infty)$ 为有限值函数，满足
+
+$$
+w(0)=0,\qquad w(1)=1,\qquad w(zz')=w(z)w(z'),
+\qquad \sup_{|z|\le1}w(z)<\infty.
+$$
+
+最后一个条件约束未归一权重。对有限非零向量
+$v\in\mathbb C^m$ 和端口事件 $C\subseteq\{1,\ldots,m\}$，定义
+
+$$
+\Pi_w(C\mid v)=\frac{\sum_{j\in C}w(v_j)}{\sum_{j=1}^m w(v_j)}.
+$$
+
+非零 $z$ 满足 $w(z)w(z^{-1})=1$，故权重严格正，分母严格正；
+乘性也给 $\Pi_w(C\mid cv)=\Pi_w(C\mid v)$（$c\ne0$）。
+允许的零指数约定为 $w_0(0)=0$、$w_0(z)=1$（$z\ne0$），
+不在零点使用 $0^0$，也不预设零点连续性。
+共同局域权重及保留事件的前例见
+[V46 定义 3.2、定理 3.3、命题 3.4](AURIC_LOG_RECURSION_SQUARED_PROBABILITIES_AND_ENDOGENOUS_ERROR_GEOMETRY_V46.md)；
+连续乘性分类见本卷定理 3.2 与
+[V47 定理 4.2](AURIC_EXISTENTIAL_QUANTIFIERS_SQUARE_WEIGHTS_AND_PROMPT_ERROR_RELATIONS_V47.md)。
+
+**假设 13.2（同源相干控制及事件合同）。** 固定同一个完整来源 $\Omega$，
+观察者包含环境、参考、控制、记录、预测与自我读出。
+在其内部声明三端口复线性接口、同一幅度标定以及
+
+$$
+\psi=(a,0,b)^{\mathsf T},\qquad a,b\in\mathbb C,\quad ab\ne0,
+\qquad H_0=\begin{pmatrix}1&1\\1&-1\end{pmatrix},
+\qquad G_\lambda=(\lambda H_0)\oplus1,\quad \lambda\in\mathbb C^\times.
+$$
+
+第三端口的系数固定为一，是非零的直和旁观分支。
+端口是互斥记录标签；粗事件固定为 $C=\{1,2\}$。
+若将 $\Pi_w$ 解释为实际概率，供应前件包括端口与报告的对应、
+一次作用前后同一事件的对应、同源制备及相干比较。
+两次控制采用同一个 $\lambda$，中途不重标定活动块与旁观块的相对幅度。
+记 $[v]$ 为非零向量的复射线，完整相干回返指全部相对幅度和相位的射线相等。
+
+该接口是完整来源内部的直和，未声明张量参考、任意复制、任意输入制备、
+任意停止时刻或任意控制的取得。精确矩阵的数学定义不供应实际精确控制；
+门族稠密也须另给逼近、相干比较与读数误差合同。
+若采用酉实现后的门前缀记号，则 $\Psi_k=U_k\cdots U_1\Omega$；
+有限接口仍只是其中的指定坐标。
+本卷定理 9.5 的原生连续驱动及局部 Markov 条件保持其原域，
+这里另行声明有限控制合同，不由其替换或取得那些条件。
+
+**定理 13.3（两次相干回返与一次粗事件守恒的指数标定）。**
+在定义 13.1、假设 13.2 下，若同一来源实际供应
+
+$$
+[G_\lambda^2\psi]=[\psi],\qquad
+\Pi_w(C\mid G_\lambda\psi)=\Pi_w(C\mid\psi),
+$$
+
+则
+
+$$
+\boxed{\lambda=\pm\frac1{\sqrt2},\qquad w(z)=|z|^2\quad(z\in\mathbb C),
+\qquad G_\lambda^\dagger G_\lambda=I_3.}
+$$
+
+证明中只由定义 13.1 即得到唯一 $p\ge0$ 使
+$w(z)=|z|^p$（$z\ne0$），零点仍单独取零。
+这一分类是下述有限标定所需的标准 Cauchy 正则性步骤，
+不另立为新的乘性函数分类原理。
+
+证明。先给所需的完整分类。若 $|z|\le1$ 而 $w(z)>1$，
+则所有 $z^n$ 仍在闭单位盘内，$w(z^n)=w(z)^n$ 却无界，矛盾。
+所以盘内权重实际不超过一。对 $|u|=1$，
+$w(u),w(u^{-1})\le1$ 且乘积为一，故 $w(u)=1$。
+写 $z=ru$，$r>0$，便有 $w(z)=w(r)$；相位不变性由此推出。
+令 $f(r)=w(r)>0$。当 $0<r\le s$ 时，
+$f(r)=f(s)f(r/s)\le f(s)$，故 $f$ 单调不减。
+于是
+
+$$
+F(t)=\log f(e^t),\qquad F(s+t)=F(s)+F(t)
+$$
+
+为实值单调可加函数。置 $p=F(1)\ge0$，加性给
+$F(q)=pq$（$q\in\mathbb Q$）。以两侧有理数夹逼任意实数 $t$，
+单调性给 $F(t)=pt$，故 $f(r)=r^p$。
+在 $r=e$ 处取值确定 $p$，所以唯一。
+反向，每个 $p\ge0$ 连同上述零点约定都满足定义 13.1，
+包括在零点不连续的 $p=0$。
+这里采用经典可加方程的正则性机制：
+[Hamel，*Eine Basis aller Zahlen und die unstetigen Lösungen der Funktionalgleichung:
+f(x+y)=f(x)+f(y)*，Math. Ann. 60，459–462](https://doi.org/10.1007/BF01457624)，
+特别是第 462 页关于有限实值解的正则性；
+所需单调情形已在上文用有理数夹逼直接证明。
+
+再作有限相干标定。由 $H_0^2=2I_2$，
+
+$$
+G_\lambda^2\psi=(2\lambda^2a,0,b)^{\mathsf T}.
+$$
+
+射线回返给某个 $c\ne0$，使此向量等于 $c\psi$。
+$b\ne0$ 先给 $c=1$，$a\ne0$ 再给
+
+$$
+2\lambda^2=1.
+$$
+
+这一等式来自相干复合和旁观幅度标定，未使用平方概率或预设酉性。
+令 $A=w(a)>0$、$B=w(b)>0$、$k=2w(\lambda)>0$。
+由于 $G_\lambda\psi=(\lambda a,\lambda a,b)^{\mathsf T}$，
+同一粗事件守恒等于
+
+$$
+\frac{kA}{kA+B}=\frac A{A+B}.
+$$
+
+交叉相乘给 $(k-1)AB=0$，于是 $2w(\lambda)=1$。
+对 $2\lambda^2=1$ 用乘性，得到
+
+$$
+w(2)w(\lambda)^2=1,\qquad w(2)=4.
+$$
+
+分类给 $w(2)=2^p$，故 $p=2$。
+复数方程 $2\lambda^2=1$ 的解为 $\lambda=\pm1/\sqrt2$，且
+
+$$
+G_\lambda^\dagger G_\lambda
+=\operatorname{diag}(2|\lambda|^2,2|\lambda|^2,1)=I_3.
+$$
+
+本卷 §9.3 已用原生旁观单点选择二；V46 §3.2 已在给定正交细分下选择二。
+这里增加的是未知复缩放的指定控制、同源两次射线回返与一次事件守恒的联合有限合同。
+分类步骤及旁观思想分别沿用上述先例；这一合同推导不承担文献优先权结论。
+∎
+
+**命题 13.4（标定条件的非退化域）。**
+若在假设 13.2 的向量形状中允许 $a=0$ 或 $b=0$，
+上述两个合同不再确定指数与控制缩放。
+完整射线回返也不能换成只在指定端口基底中的概率返回。
+
+证明。若 $b=0$、$a\ne0$，任意 $\lambda\ne0$ 都给
+$G_\lambda^2\psi=2\lambda^2\psi$，而一次作用前后 $C$ 的概率均为一。
+若 $a=0$、$b\ne0$，控制根本没有作用到非零活动幅度，两项合同均自动成立。
+二者可配任意定义 13.1 所允许的 $p\ge0$。
+再取 $ab\ne0$、$w(z)=|z|^2$、$\lambda=i/\sqrt2$，则
+$G_\lambda^2\psi=(-a,0,b)^{\mathsf T}$ 与 $\psi$ 的端口概率完全相同，
+但 $b$ 固定使可能的射线比例只能为一，而 $-a\ne a$，故射线不相等。
+此外只有平衡输入 $(1,0)$ 时，任意非零 $(\lambda,\lambda)$
+在归一读数下都给 $(1/2,1/2)$，不能据此区分 $p$。
+∎
+
+**命题 13.5（有限二分标定不替代权重正则性）。**
+去掉定义 13.1 的闭单位盘有界性后，存在有限值、非负、乘性且相位不变的
+$w:\mathbb C\to[0,\infty)$，使
+
+$$
+w(0)=0,\quad w(1)=1,\quad w(2)=4,
+\quad w(1/\sqrt2)=1/2,\quad w(3)=27.
+$$
+
+它对 $\lambda=\pm1/\sqrt2$、任意 $ab\ne0$ 通过定理 13.3 的两个有限合同，
+却不是平方权重。其归一读数始终在 $[0,1]$。
+
+证明。$\log2,\log3$ 在 $\mathbb Q$ 上线性无关：
+非平凡有理关系清除分母后将给 $2^m3^n=1$ 的非平凡整数关系，
+与唯一素分解矛盾。采用 Hamel 基扩张，取含这两个数的 $\mathbb Q$ 基，
+指定基值并作 $\mathbb Q$ 线性延拓，构造可加 $F:\mathbb R\to\mathbb R$，使
+
+$$
+F(\log2)=2\log2,\qquad F(\log3)=3\log3.
+$$
+
+这一基构造及基值的任意有限实值指定，采用上述 Hamel 文第 459–461 页的标准机制。
+令 $w(0)=0$、$w(z)=\exp F(\log|z|)$（$z\ne0$）。
+实 log 的乘加关系与 $F$ 的加性给乘性，相位不变性来自取模。
+加性又给 $F(-\tfrac12\log2)=-\log2$，故所有指定值成立。
+射线回返由 $2\lambda^2=1$；粗事件守恒由 $2w(\lambda)=1$，
+两者均不需要先把此 $w$ 分类为幂。
+若它在闭单位盘有界，定理 13.3 证明内的分类将给单一幂律；
+$w(2)=4$ 将迫使 $w(3)=9$，矛盾。
+任意有限非零向量的权重和严格正且有限，归一值仍在 $[0,1]$。
+因此归一读数有界不能供应未归一权重有界；该反例只界定函数类，
+不主张它是实际可实现的概率响应。
+∎
+
+## 14. 有限细分深度下的指数可辨识性
+
+**定义 14.1（已标定幅度的有限二分族）。**
+取 $p\ge0$，令 $w_p(0)=0$、$w_p(z)=|z|^p$（$z\ne0$），并取
+$|\lambda|=1/\sqrt2$。固定同源非零活动幅度 $a$、旁观幅度 $b$。
+对每个给定整数 $n\ge0$，活动分支细分为 $2^n$ 个互斥记录叶，
+每层把当前活动幅度 $x$ 变成 $(\lambda x,\lambda x)$，旁观幅度仍为 $b$。
+所有活动叶始终对应同一粗事件 $C$，记其归一质量为 $q_n$。
+这是幅度标定及精确幂族内的比较族，未加入定理 13.3 的粗事件守恒条件。
+
+若解释为实际比较，每个给定有限深度所需的同源制备、相位及幅度标定、
+空端口初始化、记录容量、内部控制与同一事件读出均须供应。
+数学递归不供应免费子系统，也不从有限层供应实际无限层。
+树上振幅的乘法与平方守恒复用
+[V46 定理 6.1、命题 6.2](AURIC_LOG_RECURSION_SQUARED_PROBABILITIES_AND_ENDOGENOUS_ERROR_GEOMETRY_V46.md)；
+log 赔率坐标沿用本卷 §3。
+
+**定理 14.2（细分深度与粗事件 log 赔率漂移）。**
+在定义 14.1 下，置 $A=|a|^p>0$、$B=|b|^p>0$，则
+
+$$
+q_n=\frac{A2^{n(1-p/2)}}{A2^{n(1-p/2)}+B}\in(0,1),
+\qquad \operatorname{logit}q=\log\frac q{1-q},
+$$
+
+$$
+\boxed{\operatorname{logit}q_n-\operatorname{logit}q_0
+=n\left(1-\frac p2\right)\log2.}
+$$
+
+对任一整数 $n\ge1$，$q_n=q_0$ 当且仅当 $p=2$。
+形式数列在 $p<2$ 时趋于一，在 $p>2$ 时趋于零，在 $p=2$ 时恒定。
+
+证明。第 $n$ 层每个活动叶的幅度为 $a\lambda^n$，模长为 $|a|2^{-n/2}$。
+$2^n$ 个活动叶的总权重为 $A2^{n(1-p/2)}$，旁观权重为 $B$，归一得到 $q_n$。
+其赔率为 $(A/B)2^{n(1-p/2)}$，取实 log 即得公式。
+所有 log 参数严格正，$p=0$ 时 $A=B=1$ 也成立。
+$n=0$ 不提供指数约束；$n\ge1$ 时严格单调的 logit 给所述等价。
+数列极限直接由指数符号得出，仅为数学极限。
+这个有限深度公式把 V46 已有的一层 $2^{1-p/2}$ 因子与树乘法、
+本卷已有的 log 赔率接成指数灵敏度；它没有把上一层概率再平方，
+也不把该合成另称为新的通用细分原则。
+∎
+
+**推论 14.3（两种读数误差下的指数界）。**
+在定理 14.2 下，给定整数 $n\ge1$ 和有限 $\epsilon\ge0$，若
+
+$$
+|\operatorname{logit}q_n-\operatorname{logit}q_0|\le\epsilon,
+$$
+
+则
+
+$$
+\boxed{|p-2|\le\frac{2\epsilon}{n\log2}.}
+$$
+
+若掌握的是 $|q_n-q_0|\le\delta_q$（$\delta_q\ge0$），且
+$q_0,q_n\in[\tau,1-\tau]$、$0<\tau<1/2$，则
+
+$$
+\boxed{|p-2|\le\frac{2\delta_q}{n\tau(1-\tau)\log2}.}
+$$
+
+证明。第一式整理定理 14.2 的精确等式。
+第二式用中值定理及
+$(\operatorname{logit}q)'=1/[q(1-q)]\le1/[\tau(1-\tau)]$；
+两端点之间的闭区间也包含在 $[\tau,1-\tau]$ 内。
+接近零或一时这个转换常数发散，故概率误差本身没有这里所需的统一 logit 控制。
+两式条件均在精确幂族及精确细分幅度内使用，不处理全域近似乘性。
+∎
+
+## 15. 相干回返与分裂权重同时近似时的区间
+
+**定理 15.1（双缺陷给出的必要指数区间）。**
+设非零输入上的权重已严格分类为 $w(z)=|z|^p$、$p\ge0$，零点取零。
+在假设 13.2 的同一控制形状及幅度标定下，给定 $\lambda\ne0$，分别有
+
+$$
+|2\lambda^2-1|\le\delta_r,\qquad
+|2|\lambda|^p-1|\le\eta_s,
+\qquad 0\le\delta_r<1,\quad0\le\eta_s<1.
+$$
+
+则
+
+$$
+\boxed{
+\frac{2\log(2/(1+\eta_s))}{\log(2/(1-\delta_r))}
+\le p\le
+\frac{2\log(2/(1-\eta_s))}{\log(2/(1+\delta_r))}.}
+$$
+
+并有较松的对称估计
+
+$$
+\boxed{|p-2|\le
+\frac{2[-\log(1-\delta_r)-\log(1-\eta_s)]}
+{\log(2/(1+\delta_r))}.}
+$$
+
+这里 $\delta_r$ 是已标定相干系数的缺陷，$\eta_s$ 是未归一分裂权重的缺陷；
+二者都不是任意报告概率差或未标定射线距离的别名。
+
+证明。反三角不等式和第二个前件分别给
+
+$$
+1-\delta_r\le2|\lambda|^2\le1+\delta_r,
+\qquad 1-\eta_s\le2|\lambda|^p\le1+\eta_s.
+$$
+
+置 $u=\log(2|\lambda|^2)$、$v=\log(2|\lambda|^p)$，则
+
+$$
+\log(1-\delta_r)\le u\le\log(1+\delta_r),\qquad
+\log(1-\eta_s)\le v\le\log(1+\eta_s),
+$$
+
+$$
+p=2\frac{\log2-v}{\log2-u}.
+$$
+
+因 $1+\delta_r<2$、$1+\eta_s<2$，分子分母严格正，
+故分别取上述区间端点得到必要区间，分母取端点时不反转错误方向。
+特别地 $p=0$ 不可能满足 $\eta_s<1$，与正的下界一致。
+又有
+
+$$
+|u|\le-\log(1-\delta_r),\qquad
+|v|\le-\log(1-\eta_s),\qquad
+\log2-u\ge\log\frac2{1+\delta_r}>0.
+$$
+
+将其代入 $p-2=2(u-v)/(\log2-u)$ 即得对称界。
+$\delta_r=\eta_s=0$ 恢复 $p=2$。
+本区间没有反向断言任意区间内的 $p$ 都满足原复相干缺陷。
+∎
+
+**推论 15.2（同一粗事件读数到分裂缺陷的条件转换）。**
+在定理 15.1 的精确幂族与指定控制形状下，取 $ab\ne0$，令
+$q=\Pi_w(C\mid G_\lambda\psi)$、$q_0=\Pi_w(C\mid\psi)$，则
+
+$$
+k=2|\lambda|^p=\frac{q(1-q_0)}{q_0(1-q)},\qquad
+|k-1|=\frac{|q-q_0|}{q_0(1-q)}.
+$$
+
+若 $q,q_0\in[\tau,1-\tau]$、$0<\tau<1/2$，且
+$|q-q_0|\le d<\tau^2$，则可在定理 15.1 中取 $\eta_s=d/\tau^2<1$，
+前提是相干缺陷 $\delta_r<1$ 已独立取得。
+
+证明。由 $q_0=A/(A+B)$、$q=kA/(kA+B)$，其中
+$A=|a|^p>0$、$B=|b|^p>0$，消去 $A/B$ 得第一式，减去一得第二式。
+因 $q_0(1-q)\ge\tau^2$，得所需界。
+若旁观质量或初始活动质量趋零，分母可趋零，不能从任意小的报告差
+直接取得同样小的分裂缺陷；控制矩阵的误差也需另给通向实际报告的桥。
+∎
+
+## 16. 平方标定的几何与动力学扩展接口
+
+**定义 16.1（沿用的关系坐标与支撑约定）。**
+在平方标定后的二元接口 $v=(\alpha,\beta)^{\mathsf T}$ 上，采用
+[V52 定义 2.1、定理 2.2、推论 2.3](AURIC_PURE_STATE_QUOTIENT_GEOMETRY_QUADRATIC_RELATION_GENERATORS_AND_LOSSLESS_RECURSION_V52.md)
+的保尺度外积坐标，记作
+
+$$
+N=|\alpha|^2+|\beta|^2,\quad
+(X,Y,Z)=(2\Re(\bar\alpha\beta),2\Im(\bar\alpha\beta),|\alpha|^2-|\beta|^2).
+$$
+
+这些是满足 $N^2=X^2+Y^2+Z^2$、$N\ge0$ 的纯关系坐标；
+一般二阶正矩阵则采用本卷定理 7.1 的 $N^2\ge X^2+Y^2+Z^2$。
+非零外积只消去共同相位，归一再消去正尺度；纯态球面与混态球体分开使用。
+在 $\alpha\beta\ne0$ 的图上，令
+$\beta/\alpha=e^{u+i\theta}$、$u=\log|\beta/\alpha|$，采用本卷定理 7.2 的
+
+$$
+(X,Y,Z)/N=(\operatorname{sech}u\cos\theta,
+\operatorname{sech}u\sin\theta,-\tanh u),
+\qquad \log(p_1/p_0)=2u.
+$$
+
+两极换图；相位与模长 log 分开。共同相位下的全域多项式关系采用
+V52 定理 5.2、推论 5.3 的生成元 $g_{ij}=z_i\bar z_j$，
+局部比值是有理不变量，不属于其最低多项式次数的断言。
+二维实线性复乘法的行列式 $\det_{\mathbb R}m_z=|z|^2$
+沿用 V47 §4 的代数范数解释，未据此单独指定概率。
+
+对高维 Hermitian 关系矩阵，约定 $p_i=g_{ii}\ge0$，
+在纯二元边上要求 $|g_{ij}|^2=p_ip_j$，并采用
+[V51 定理 8.2](AURIC_CONSTRAINT_RECURSION_PURE_STATE_DUALITY_AND_ENDOGENOUS_STATIC_HISTORY_V51.md)
+及 [V44 定理 7.4、命题 9.1](AURIC_BOUNDARY_EXTENSION_AND_HIGHER_DIMENSIONAL_RELATIONAL_ATLAS_V44.md)
+的闭路相容条件。在全边情形可写为
+$g_{ij}g_{jk}=p_jg_{ik}$；有 $p_a>0$ 时以
+$z_i=g_{ia}/\sqrt{p_a}$ 恢复共同相位之外的振幅。
+零质量行列先由 $|g_{ij}|^2=p_ip_j$ 置零，不为它们定义相位或作除法。
+部分图在每个正支撑连通分量内取闭路乘积为一，各分量各留一个共同相位。
+相位 log 的闭路和只要求属于 $2\pi\mathbb Z$。
+高维纯态的 $2d-2$ 个归一实自由度采用 V52 定理 4.1；
+单个固定三实坐标不能作所有 $d\ge3$ 纯态的局部光滑可逆坐标，
+须保留 V44 §12 的维数边界。
+
+**假设 16.2（扩展到过程所需的额外供应）。**
+若要从标定操作扩展到一般 $U:\mathbb C^d\to\mathbb C^m$，
+另给其复线性及全部数学输入上的平方总质量保持；
+一般等距与等维酉性采用
+[V52 命题 8.5](AURIC_PURE_STATE_QUOTIENT_GEOMETRY_QUADRATIC_RELATION_GENERATORS_AND_LOSSLESS_RECURSION_V52.md)
+的极化论证。单一固定输入的保质量不替代这个全称量词。
+直和旁观分支不供应张量参考、联合读出或完全正更新的认证。
+
+若另给连续 $U:\mathbb R\to U(d)$、$U(0)=I$ 及
+$U(t+s)=U(t)U(s)$，采用
+[《相容预测波与关系谱》定理 4.9 及其有限维连续群说明](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md)
+的指数表示 $U(t)=e^{-itH}$、$H=H^\dagger$（相位单位取 $\hbar=1$）。
+连续复合参数、平移齐次群律、物理钟的对应及单位标定另行供应；
+固定 $t$ 时的指数算子对输入态仍复线性。
+指定 Hermitian $H(t)$ 及非零实常数 $\hbar$ 后的比值 Riccati 方程，采用
+[V55 定理 10.2](AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md)，
+只在所用非零图上求商。
+保二次锥的滤波与保总质量的酉操作，采用同卷 §9 的区分；
+条件分支须另留成功质量及互补记录。
+
+实 log 的乘加坐标采用
+[V17 §2](AURIC_SUM_PRODUCT_LOGARITHMS_AND_QUANTUM_PYTHAGOREAN_GEOMETRY_V17.md)
+与本卷 §3；复 log 使用局部图或支信息，采用
+[DLMF §4.2(i)](https://dlmf.nist.gov/4.2#i) 及
+[§4.8(i)，式 4.8.1–4.8.2](https://dlmf.nist.gov/4.8#i) 的一般值与主支条件。
+非交换控制的矩阵对数不作无条件的加法替换。
+
+**假设 16.3（实际关系与理论结论的范围）。**
+平方标定保留复线性域、乘性及未归一正则性、互斥报告、同源相干控制和同一事件合同。
+原生 $F[\cdot]$ 读出与 $(N,X,Y,Z)$ 的对应仍需具体定义及变换桥；
+共轭使 $Y$ 反号的坐标事实不指定物理手性。
+同一推导可在实振幅上作相应标定，故这里未选择复数域、张量复合、
+空间维数、Hamiltonian、实际时间尺度或全部量子物理的起源。
+门词长度的单增也未给范数、熵、记录容量或可解码复杂度的单增条件。
+
+若接入实际历史关系，必须保留各自来源前件：
+[量子续卷 IV §§206–208](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md)
+的平方探测权重、既定率律及历史桥属于其输入；
+[RRO §§62–67](RECURSIVE_RELATIONAL_OBSERVATION_FIBONACCI_NATIVE_TERMINAL_CERTIFICATION.md)
+的自然过去域、档案及可测恢复限定属于其输入。
+自然域内的必要恢复条件不无条件转移到更大的过去域；
+可测精确恢复不供应有限存储、有限精度或统一在线恢复过程。
+这些关系未充当定理 13.3 的指数起源前提或实际取得证明。
+全域近似乘性的稳定性及实际控制到已标定相干缺陷的误差桥在此仍未供应。
+
+## 追加锚（本行以下为增补区）
