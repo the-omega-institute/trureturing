@@ -29,7 +29,7 @@ The result is literally `UniversalRefutation.result : Not claim`.
 
 The original finite extension uses the actual fibre A^(ℓ−1). Group
 holonomy over a regular group action cannot silently replace this fibre.
-The construction instead trivializes every finite-set-valued permutation
+The construction instead trivializes every finite letter-permutation
 cocycle on one explicit infinite minimal binary base.
 
 ## Gap
@@ -62,7 +62,33 @@ prefixes give distinct closed invariant fibres, contradicting minimality.
 The same binary Y works for every k and every permitted code. There is no
 bounded-length restriction and no substitution of a component for the lift.
 
-## Attribution and limits
+## Falsifier
+
+The construction would fail if the base were empty, finite or nonminimal;
+if its tilings were not recognizable and continuous; if some finite
+letter-permutation cocycle failed the transfer identity; or if the
+reconstruction missed any point of the entire two-sided inverse image.
+An exact prior resolution would defeat the suspected-novel classification,
+without changing the compiled mathematical statement.
+
+## Evidence
+
+All nine modules from `FactorialWords` through `UniversalRefutation` and
+the retained `Reg` mirror compiled on Lean 4.35.0. The scoped report records
+only `Classical.choice`, `Quot.sound` and `propext`, and certifies the literal
+closed negation `UniversalRefutation.result : Not claim`. The nine modules
+have canonical frozen state fragments and emitted Blueprint mirrors.
+These local results do not replace required CI, merge and dev-push checks.
+Unfinished source-bound audit registrations are named in issue 24726.
+
+## Triage
+
+The selected general minimal branch is refuted by one infinite binary
+base uniformly over every permitted length and code. The original optional
+Toeplitz branch and formal strict-ergodicity strengthening remain outside
+this result. Priority remains unestablished.
+
+## ASSUMED-UNVERIFIED
 
 The coboundary/invariant-subset mechanism is known prior work; the Library
 note gives its primary locator. The formal argument reuses pinned Mathlib
