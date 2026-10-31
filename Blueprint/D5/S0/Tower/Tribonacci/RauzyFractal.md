@@ -76,7 +76,7 @@ Lean statement: `D5/S0/Tower/Tribonacci/RauzyFractal.rauzyFractal_prefix_cover`
 
 *Commentary.*
 
-The existing name split equivalence reconstructs the three initial blocks through the private coordinate identity. Lengths zero, one and two are handled directly by 0, 1, z and 1+z. The finite window is covered in reverse, and compact closed affine images extend the cover to the original Rauzy closure. This consumed symbolic premise supplies TribonacciRegularClosure; arbitrary concatenation is never assumed.
+The existing name split equivalence reconstructs the three initial blocks through the coordinate identity for adjoining a Boolean digit. Lengths zero, one and two are handled directly by 0, 1, z and 1+z. The finite window is covered in reverse, and compact closed affine images extend the cover to the Rauzy closure. Thus every point in the fractal is the image of another point under one of the three prefix maps. Together with nonempty interior, this equality implies regular closure.
 
 ## References
 
