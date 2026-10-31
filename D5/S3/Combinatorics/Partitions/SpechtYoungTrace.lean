@@ -176,16 +176,19 @@ theorem sum_spechtTrace_mul_spechtTrace_inv (μ ν : n.Partition) :
   have h := FDRep.char_orthonormal (spechtModuleℂ μ) (spechtModuleℂ ν)
   rw [spechtModuleℂ_iso_iff, Nat.card_perm, Nat.card_fin] at h
   have hf : (n.factorial : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr n.factorial_ne_zero
-  change (n.factorial : ℂ)⁻¹ *
-    (∑ π : Perm (Fin n), LinearMap.trace ℂ _ ((spechtModuleℂ μ).ρ π) *
-      LinearMap.trace ℂ _ ((spechtModuleℂ ν).ρ π⁻¹)) =
-      (if μ = ν then (1 : ℂ) else 0) at h
+  have htrace : (n.factorial : ℂ)⁻¹ *
+      (∑ π : Perm (Fin n), LinearMap.trace ℂ _ ((spechtModuleℂ μ).ρ π) *
+        LinearMap.trace ℂ _ ((spechtModuleℂ ν).ρ π⁻¹)) =
+        (if μ = ν then (1 : ℂ) else 0) := by
+    by_cases he : μ = ν
+    · simpa only [if_pos he] using h
+    · simpa only [if_neg he] using h
   calc
     _ = (n.factorial : ℂ) * ((n.factorial : ℂ)⁻¹ *
         ∑ π : Perm (Fin n), LinearMap.trace ℂ _ ((spechtModuleℂ μ).ρ π) *
           LinearMap.trace ℂ _ ((spechtModuleℂ ν).ρ π⁻¹)) :=
       (mul_inv_cancel_left₀ hf _).symm
-    _ = (n.factorial : ℂ) * (if μ = ν then (1 : ℂ) else 0) := by rw [h]
+    _ = (n.factorial : ℂ) * (if μ = ν then (1 : ℂ) else 0) := by rw [htrace]
     _ = _ := by split_ifs <;> simp
 
 end TauCeti
