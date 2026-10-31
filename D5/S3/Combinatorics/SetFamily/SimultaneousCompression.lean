@@ -332,4 +332,110 @@ theorem exists_simultaneous_compression
   · intro hne
     exact (compressed_nonempty (hne.mono hBB')).image _
 
+
+/-- Closure under feasible supersets, relative to the current trace universe. -/
+def RelativelyUpper (Ω A : Finset (Finset α)) : Prop :=
+  ∀ X ∈ A, ∀ Y ∈ Ω, X ⊆ Y → Y ∈ A
+
+private lemma maximal_upper {Ω A B : Finset (Finset α)}
+    (hc : CrossIntersecting A B)
+    (hm : ∀ Y ∈ Ω, (∀ Z ∈ B, ¬ Disjoint Y Z) → Y ∈ A) :
+    RelativelyUpper Ω A := by
+  intro X hX Y hY hXY
+  apply hm Y hY
+  intro Z hZ hd
+  obtain ⟨a, haX, haZ⟩ := not_disjoint_iff.mp (hc X hX Z hZ)
+  exact disjoint_left.mp hd (hXY haX) haZ
+
+/-- Coherent exact-trace data on all reduced supports. The local hypotheses
+are geometric and scalar conditions; cross-intersection after deletion is
+supplied by the compression theorem, rather than assumed in this structure. -/
+structure DeletionSystem (J : Finset α) where
+  feasible : Finset α → Finset (Finset α)
+  leftWeight : Finset α → Finset α → ℝ
+  rightWeight : Finset α → Finset α → ℝ
+  terminal : Finset α → Prop
+  left_nonneg : ∀ H ⊆ J, ∀ X ∈ feasible H, 0 ≤ leftWeight H X
+  right_nonneg : ∀ H ⊆ J, ∀ X ∈ feasible H, 0 ≤ rightWeight H X
+  projection : ∀ H ⊆ J, ∀ t ∈ H,
+    (feasible H).image (fun X => X.erase t) = feasible (H.erase t)
+  left_marginal : ∀ H ⊆ J, ∀ t ∈ H, ∀ R ∈ feasible (H.erase t),
+    marginalWeight (feasible H) (leftWeight H) t R = leftWeight (H.erase t) R
+  right_marginal : ∀ H ⊆ J, ∀ t ∈ H, ∀ R ∈ feasible (H.erase t),
+    marginalWeight (feasible H) (rightWeight H) t R = rightWeight (H.erase t) R
+  local_move : ∀ H ⊆ J, ¬ terminal H → ∃ s t u : α,
+    t ∈ H ∧ s ≠ t ∧ s ≠ u ∧
+    (∀ X ∈ feasible H, t ∈ X → s ∉ X ∧ u ∉ X) ∧
+    (∀ X ∈ feasible H, t ∈ X → shift s t X ∈ feasible H) ∧
+    (∀ X ∈ feasible H, t ∈ X →
+      leftWeight H X = leftWeight H (shift s t X) +
+        if insert u (shift s t X) ∈ feasible H then
+          leftWeight H (insert u (shift s t X)) else 0) ∧
+    (∀ X ∈ feasible H, t ∈ X →
+      rightWeight H X = rightWeight H (shift s t X) +
+        if insert u (shift s t X) ∈ feasible H then
+          rightWeight H (insert u (shift s t X)) else 0)
+
+/-- Repeated common deletions reach a terminal support. Both final families
+are relatively upper, remain cross-intersecting, retain nonemptiness, and
+have at least their respective original masses. -/
+theorem exists_terminal_compression (J : Finset α) (S : DeletionSystem J)
+    (A B : Finset (Finset α)) (hA : A ⊆ S.feasible J) (hB : B ⊆ S.feasible J)
+    (hc : CrossIntersecting A B) :
+    ∃ K : Finset α, ∃ C D : Finset (Finset α),
+      K ⊆ J ∧ S.terminal K ∧ C ⊆ S.feasible K ∧ D ⊆ S.feasible K ∧
+      CrossIntersecting C D ∧ RelativelyUpper (S.feasible K) C ∧
+      RelativelyUpper (S.feasible K) D ∧
+      mass (S.leftWeight J) A ≤ mass (S.leftWeight K) C ∧
+      mass (S.rightWeight J) B ≤ mass (S.rightWeight K) D ∧
+      (A.Nonempty → C.Nonempty) ∧ (B.Nonempty → D.Nonempty) := by
+  classical
+  suffices h : ∀ H : Finset α, H ⊆ J → ∀ A B : Finset (Finset α),
+      A ⊆ S.feasible H → B ⊆ S.feasible H → CrossIntersecting A B →
+      ∃ K : Finset α, ∃ C D : Finset (Finset α),
+        K ⊆ H ∧ S.terminal K ∧ C ⊆ S.feasible K ∧ D ⊆ S.feasible K ∧
+        CrossIntersecting C D ∧ RelativelyUpper (S.feasible K) C ∧
+        RelativelyUpper (S.feasible K) D ∧
+        mass (S.leftWeight H) A ≤ mass (S.leftWeight K) C ∧
+        mass (S.rightWeight H) B ≤ mass (S.rightWeight K) D ∧
+        (A.Nonempty → C.Nonempty) ∧ (B.Nonempty → D.Nonempty) by
+    exact h J Subset.rfl A B hA hB hc
+  intro H
+  induction H using Finset.strongInductionOn with
+  | H H ih =>
+    intro hHJ A B hA hB hc
+    by_cases ht : S.terminal H
+    · obtain ⟨C, D, hAC, hBD, hC, hD, hCD, hmC, hmD⟩ := maximal_pair hA hB hc
+      have hDC : CrossIntersecting D C := by
+        intro X hX Y hY hd
+        exact hCD Y hY X hX hd.symm
+      exact ⟨H, C, D, Subset.rfl, ht, hC, hD, hCD,
+        maximal_upper hCD hmC, maximal_upper hDC hmD,
+        sum_le_sum_of_subset_of_nonneg hAC
+          (fun X hX _ => S.left_nonneg H hHJ X (hC hX)),
+        sum_le_sum_of_subset_of_nonneg hBD
+          (fun X hX _ => S.right_nonneg H hHJ X (hD hX)),
+        fun hne => hne.mono hAC, fun hne => hne.mono hBD⟩
+    · obtain ⟨s, t, u, htH, hst, hsu, hex, hsh, hwl, hvl⟩ := S.local_move H hHJ ht
+      obtain ⟨C, D, hC, hD, hCD, hw, hv, hneC, hneD⟩ :=
+        exists_simultaneous_compression (S.feasible H) A B s t u hA hB hst hsu
+          hex hsh (S.leftWeight H) (S.rightWeight H)
+          (S.left_nonneg H hHJ) (S.right_nonneg H hHJ) hwl hvl hc
+      rw [S.projection H hHJ t htH] at hC hD
+      have hw' : mass (S.leftWeight H) A ≤ mass (S.leftWeight (H.erase t)) C := by
+        convert hw using 1
+        apply sum_congr rfl
+        intro X hX
+        exact (S.left_marginal H hHJ t htH X (hC hX)).symm
+      have hv' : mass (S.rightWeight H) B ≤ mass (S.rightWeight (H.erase t)) D := by
+        convert hv using 1
+        apply sum_congr rfl
+        intro X hX
+        exact (S.right_marginal H hHJ t htH X (hD hX)).symm
+      obtain ⟨K, E, F, hK, hterm, hE, hF, hEF, huE, huF, hwK, hvK, hneE, hneF⟩ :=
+        ih (H.erase t) (erase_ssubset htH) ((erase_subset t H).trans hHJ) C D hC hD hCD
+      exact ⟨K, E, F, hK.trans (erase_subset t H), hterm, hE, hF, hEF, huE, huF,
+        hw'.trans hwK, hv'.trans hvK, fun hne => hneE (hneC hne),
+        fun hne => hneF (hneD hne)⟩
+
 end D5.S3.Combinatorics.SetFamily.SimultaneousCompression

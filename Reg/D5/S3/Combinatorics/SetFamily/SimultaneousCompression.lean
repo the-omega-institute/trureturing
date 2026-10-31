@@ -3,6 +3,8 @@ import D5.S3.Combinatorics.SetFamily.SimultaneousCompression
 import Reg.Support.DependentFamily
 import Mathlib.Tactic.NormNum
 
+/-! Two source-mass observations over the full simultaneous-compression telescope. -/
+
 namespace Reg.D5.S3.Combinatorics.SetFamily.SimultaneousCompression
 open _root_.D5.S3.Combinatorics.SetFamily.SimultaneousCompression
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -73,7 +75,7 @@ private theorem intervention_law (i : Bool) : ¬ arena.{u}.Law (intervention i) 
     (by simp) (by simp) (by simp) (by simp) (by simp [CrossIntersecting])
   have hCe : C = ∅ := by simpa using hC
   have hDe : D = ∅ := by simpa using hD
-  cases i <;> simp [intervention, realize, hCe, hDe, mass] at hw hv
+  cases i <;> norm_num [intervention, realize, hCe, hDe, mass] at hw hv
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
@@ -83,7 +85,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     (by simp) (by simp) (fun _ => 0) (fun _ => 0)
     (by simp) (by simp) (by simp) (by simp) (by simp [CrossIntersecting])
   have hCe : C = ∅ := by simpa using hC
-  simp [rejected, realize, hCe, mass] at hw
+  norm_num [rejected, realize, hCe, mass] at hw
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
@@ -129,7 +131,8 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     owner := `D5.S3.Combinatorics.SetFamily.SimultaneousCompression
     definition := none
     coordinates := #[0, 14, 15]
-    readouts := #[{ path := #[
+    readouts := #[{
+      path := #[
         "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "arg", "body", "arg",
@@ -137,7 +140,8 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       stateBinder := 3
       functionOperand := false
       stateOperand := none
-      booleanPredicate := false }, { path := #[
+      booleanPredicate := false }, {
+      path := #[
         "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "arg", "body", "arg",

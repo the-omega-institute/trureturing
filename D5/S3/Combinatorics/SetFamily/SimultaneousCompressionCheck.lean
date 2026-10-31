@@ -66,3 +66,5 @@ example :
   refine ⟨C, D, hc', ?_, ?_, hC (by simp [A]), hD (by simp [A])⟩
   · simpa [mass, w, A] using hw'
   · simpa [mass, v, A] using hv'
+
+#print axioms D5.S3.Combinatorics.SetFamily.SimultaneousCompression.exists_simultaneous_compression
