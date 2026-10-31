@@ -3044,3 +3044,412 @@ The unrestricted pure-state sign, and therefore the original mixed-state
 sign of Open assertion 12.5, remain unresolved outside the proved regions.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 15. Bell-sign covariance and neighborhoods uniform over both biases
+
+Use Definitions 1.1--1.2 with the original independent $a,b\in[0,1]$,
+complex density matrices and entropy deficit. Write
+$I(A)=S(A_C)+S(A_D)-S(A)$, including for the source $A=\rho$.
+
+**Definition 15.1 (Bell-sign moments).** For any source put
+$$
+ \kappa=\operatorname{tr}(\rho K),\qquad
+ \lambda=\operatorname{tr}(\rho L),\qquad
+ \mu=\operatorname{tr}(\rho KL),\qquad
+ \delta=\mu-\kappa\lambda,\qquad
+ \beta=(1-|\kappa|)(1-|\lambda|).
+$$
+These are real, because $K,L$ are commuting Hermitian involutions;
+$KL=-YY$. For a pure product with unit local Bloch vectors
+$(x_E,y_E,z_E)$ they become
+$$
+ \kappa=x_Cx_D,\qquad \lambda=z_Cz_D,\qquad \mu=-y_Cy_D.
+$$
+For a general pure source write
+$e_0=S(\rho_C)=S(\rho_D)$.
+
+**Theorem 15.2 (An exact independent-control entropy decomposition).**
+For every physical source define
+$$
+ \begin{aligned}
+ A_E&=S(P_E)+S(Q_E)-S(R_E)-S(\rho_E),\\
+ B_E&=S(Q)-S(\rho)-S(Q_E)+S(\rho_E),\\
+ J_0&=S(P)+S(Q)-S(R)-S(\rho).
+ \end{aligned}
+$$
+All $A_E,B_E,J_0$ are nonnegative, and the unchanged deficit is
+$$
+ \Delta=I(P)+I(\rho)+B_C+B_D+2A_C+2A_D-3J_0.
+\tag{15.1}
+$$
+
+Proof.
+Let $U,V$ be independent binary controls with probabilities
+$\pi_u=(1+(-1)^u a)/2$ and $\eta_v=(1+(-1)^v b)/2$, and form
+$$
+ \Omega_{UVCD}=\sum_{u,v}\pi_u\eta_v|uv\rangle\langle uv|
+       \otimes K^uL^v\rho L^vK^u.
+$$
+The conditional quantum entropies given $U$, given $V$, and given
+$(U,V)$ are, respectively, $S(P),S(Q),S(\rho)$. Their marginal
+counterparts are $S(P_E),S(Q_E),S(\rho_E)$. Independence of the
+controls therefore gives
+$$
+ A_E=I(U:V\mid E)_\Omega,\qquad
+ J_0=I(U:V\mid CD)_\Omega.
+$$
+Their nonnegativity is finite-dimensional strong subadditivity
+(Lieb and Ruskai, *Proof of the strong subadditivity of
+quantum-mechanical entropy*). The two terms in $B_E$ are the Holevo
+informations of the actual $U$-ensemble before and after partial
+trace. Relative-entropy data processing makes $B_E\geq0$; see
+Watrous, *The Theory of Quantum Information*. Every positive-weight
+ensemble member is supported on its average, so the relative
+entropies are finite. Zero-weight members are omitted.
+
+Substitute the displayed definitions and
+$I(\rho)=S(\rho_C)+S(\rho_D)-S(\rho)$ into the right side of (15.1).
+The joint terms are $3S(R)-4S(P)-S(Q)$, and the marginal terms are
+$\sum_E[3S(P_E)+S(Q_E)-2S(R_E)]$. All source entropy terms cancel.
+Thus (15.1) retains the original coefficients and both full endpoint
+mutual informations of (1.4).
+
+For a pure source, put $J=S(P)+S(Q)-S(R)=J_0$. Equation (15.1) gives
+$$
+ \Delta\geq I(P)+2e_0-3J.
+\tag{15.2}
+$$
+Equivalently, with $s_E=S(P_E)+S(Q_E)-S(R_E)$ and
+$F_Q=S(Q)-I(Q)$, the exact identity is
+$$
+ \Delta=I(P)+F_Q+2(s_C+s_D)-3J.
+$$
+Here $s_E=A_E+e_0$ and $F_Q=B_C+B_D-2e_0$, which gives (15.2)
+without discarding a negative endpoint term.
+
+**Lemma 15.3 (The pure-source Gram comparison).**
+For a pure source, $J\geq0$. If $\delta=0$, then $J=0$. If
+$\beta>0$ and $0<\varepsilon=|\delta|/\beta\leq1$, then
+$$
+ J\leq\varepsilon\min\{S(P),S(Q)\}\leq\varepsilon\log2.
+\tag{15.3}
+$$
+If $\beta=0$, necessarily $\delta=0$.
+
+Proof.
+The joint spectral probabilities of the commuting signs are
+$$
+ p_{kl}=\operatorname{tr}\!\left(\rho\frac{(I+kK)(I+lL)}4\right)
+       =\frac{1+k\kappa+l\lambda+kl\mu}{4},\qquad k,l\in\{\pm1\}.
+$$
+They are nonnegative and sum to one. Introduce unit control vectors
+$$
+ |\xi_k\rangle=\sqrt{\pi_0}|0\rangle+k\sqrt{\pi_1}|1\rangle,
+ \qquad
+ |\zeta_l\rangle=\sqrt{\eta_0}|0\rangle+l\sqrt{\eta_1}|1\rangle,
+$$
+and the control matrix
+$$
+ G=\sum_{k,l}p_{kl}|\xi_k\rangle\langle\xi_k|
+                         \otimes|\zeta_l\rangle\langle\zeta_l|.
+\tag{15.4}
+$$
+For $\rho=|\psi\rangle\langle\psi|$, its $(uv,u'v')$ entry is
+$$
+ \sqrt{\pi_u\eta_v\pi_{u'}\eta_{v'}}
+       \sum_{k,l}p_{kl}k^{u+u'}l^{v+v'}.
+$$
+This is the actual overlap of the four vectors
+$\sqrt{\pi_u\eta_v}K^uL^v|\psi\rangle$. Their frame operator is
+$R$, so $G$ and $R$ have the same nonzero spectrum. The two margins
+$G_A,G_B$ are the binary Gram matrices of $Q,P$, respectively.
+Consequently
+$$
+ S(G)=S(R),\qquad S(G_A)=S(Q),\qquad S(G_B)=S(P),\qquad
+ J=I(A:B)_G.
+\tag{15.5}
+$$
+These facts include zero control weights and zero eigenvalues.
+
+Set $p^0_{kl}=(1+k\kappa)(1+l\lambda)/4$. Then
+$$
+ p_{kl}=p^0_{kl}+\delta kl/4,\qquad p^0_{kl}\geq\beta/4.
+$$
+When $\delta=0$, the preparation in (15.4) factorizes as
+$G=G_A\otimes G_B$, proving $J=0$. Otherwise assume the hypotheses
+on $\varepsilon$, and define
+$$
+ p^1_{kl}=p^0_{kl}+\operatorname{sgn}(\delta)\beta kl/4.
+$$
+This is a probability distribution: it is nonnegative, and the
+perturbation has zero total mass and zero one-coordinate marginals.
+Moreover $p=(1-\varepsilon)p^0+\varepsilon p^1$. Preparing the
+same local vectors gives
+$$
+ G=(1-\varepsilon)G_A\otimes G_B+\varepsilon G^1,
+$$
+where $G^1$ is separable and has the same margins $G_A,G_B$.
+Relative-entropy convexity, in its usual finite-dimensional scope
+(Watrous, *The Theory of Quantum Information*), gives
+$$
+ J=D(G\Vert G_A\otimes G_B)
+ \leq\varepsilon D(G^1\Vert G_A\otimes G_B)
+ =\varepsilon I(A:B)_{G^1}.
+$$
+For the last mutual information retain a classical label $(k,l)$
+preparing the product pure states. Data processing from that label
+to $B$ gives $I(A:B)_{G^1}\leq I(A:kl)=S(G_A)$, since its
+conditional $A$-states are pure. Interchanging $A,B$ gives the other
+bound in (15.3). Both compared states are supported on
+$\operatorname{supp}G_A\otimes\operatorname{supp}G_B$, so these
+relative entropies remain finite when the margins are singular.
+Finally $P,Q$ are binary mixtures of pure states, hence each has
+entropy at most $\log2$.
+
+If $\beta=0$, at least one of the two classical signs is
+deterministic in $p$. Its product expectation then satisfies
+$\mu=\kappa\lambda$, so $\delta=0$ as claimed.
+
+**Theorem 15.4 (A product-source region uniform over both biases).**
+For every pure product source, the source-only condition
+$$
+ 3(1+|\lambda|)|\mu-\kappa\lambda|
+ \leq(1-|\kappa|)(1-z_C^2)(1-z_D^2)
+\tag{15.6}
+$$
+implies $\Delta\geq0$ for all independent $a,b\in[0,1]$.
+If $\delta=0$, the stronger bound $\Delta\geq I(P)$ holds for all
+these biases. Condition (15.6) contains an open neighborhood, among
+product sources, of every $\delta=0$ source with $|\kappa|<1$ and
+$|z_C|,|z_D|<1$.
+
+Proof.
+The case $\delta=0$ follows directly from (15.2), since $e_0=0$.
+This also handles $\beta=0$. For the remaining case put
+$$
+ u=1-z_C^2,\quad v=1-z_D^2,\quad
+ w=u+v-uv=1-\lambda^2,\quad \alpha=uv/w.
+$$
+Here $w>0$ and $0\leq\alpha\leq1$. Let
+$$
+ f(t)=H_2\!\left(\frac{1+\sqrt{1-t}}2\right),\qquad0\leq t\leq1.
+$$
+It is continuous and concave, with $f(0)=0$. On the interior,
+$$
+ f'(t)=\frac12\int_0^1\frac{ds}{1-(1-t)s^2},\qquad
+ f''(t)=-\frac12\int_0^1\frac{s^2\,ds}{[1-(1-t)s^2]^2}\leq0;
+$$
+continuity extends concavity to the endpoints. Writing $c=1-b^2$,
+the exact binary product-source spectra give
+$$
+ S(P_C)=f(cu),\qquad S(P_D)=f(cv),\qquad S(P)=f(cw).
+$$
+Since $u,v\leq w$, concavity gives
+$f(cu)\geq(u/w)f(cw)$ and $f(cv)\geq(v/w)f(cw)$. Thus
+$$
+ I(P)\geq\alpha S(P).
+\tag{15.7}
+$$
+Condition (15.6) is exactly $3\varepsilon\leq\alpha$ after
+cancelling the positive factors in
+$w=(1-|\lambda|)(1+|\lambda|)$. It ensures
+$\varepsilon\leq1/3$, so Lemma 15.3 applies. Equations (15.2),
+(15.3) and (15.7) yield
+$$
+ \Delta\geq(\alpha-3\varepsilon)S(P)\geq0.
+$$
+If $w=0$, both $Z$-signs of the product are deterministic and
+$\delta=0$, already handled without division. All bias endpoints
+and singular spectra are included. At the stated $\delta=0$ sources
+the right side of (15.6) is positive, so the source condition is
+strict and persists under small product-source perturbations.
+
+**Theorem 15.5 (An all-pure source condition and the independent-sign bound).**
+For every complex pure source with $\delta=0$,
+$$
+ \Delta\geq I(P)+2e_0
+ \quad\text{for every independent }a,b\in[0,1].
+\tag{15.8}
+$$
+For $\beta>0$, the source-only condition
+$$
+ 3(\log2)|\delta|\leq2e_0\beta
+\tag{15.9}
+$$
+implies $\Delta\geq I(P)\geq0$ for every independent pair of biases.
+If (15.9) is strict, the uniform lower margin is
+$$
+ m=2e_0-3(\log2)|\delta|/\beta>0,\qquad \Delta\geq I(P)+m.
+\tag{15.10}
+$$
+In particular, (15.9) is strict at every entangled pure source with
+$\beta>0$ and $\delta=0$, and persists in a neighborhood among all
+complex pure sources.
+
+Proof.
+For $\delta=0$, Lemma 15.3 gives $J=0$, so (15.2) proves (15.8),
+including $\beta=0$. Otherwise $e_0\leq\log2$ and (15.9) imply
+$\varepsilon=|\delta|/\beta\leq2/3$. Lemma 15.3 therefore applies,
+and $3J\leq3\varepsilon\log2\leq2e_0$. This proves the conclusion
+and the margin (15.10). The strictness and neighborhood assertion
+follow from continuity of the moments and entropy with $\beta>0$.
+
+**Proposition 15.6 (A nonplanar product and an entangled residual bridge).**
+The new source regions intersect the previous residual domain at
+biases outside Theorem 13.1 and sources outside the sufficient
+conditions and mixed ball of §14. The pure-source intersection has
+nonempty interior among complex pure sources.
+
+Proof.
+Take the exact unit Bloch vectors
+$$
+ n_C=\left(\frac5{\sqrt{313}},\frac{60}{13\sqrt{313}},\frac{12}{13}\right),
+ \qquad
+ n_D=\left(\frac7{\sqrt{1201}},-\frac{168}{25\sqrt{1201}},\frac{24}{25}\right),
+$$
+and let $\rho_0=|\psi_0\rangle\langle\psi_0|$ be their product.
+Their unit norms follow from
+$x_E^2=(1-z_E^2)/(1+z_E^2)$ and $y_C=x_Cz_C$, $y_D=-x_Dz_D$.
+All six components are nonzero, the local vectors are unequal, and
+$\mu=\kappa\lambda$. Both $\beta$ and the right side of (15.6) are
+positive. Thus this product lies in the interior of the all-bias
+product region.
+
+At $a_0=999/1000$, $b_0=0$, the $P$-spectrum and $I(P)$ depend
+only on $z_C=12/13,z_D=24/25$. Proposition 14.5 therefore gives
+$$
+ M=613/650>7/20,\qquad 42/1000<I(P)<43/1000.
+$$
+The actual marginal radii give
+$S(R_E)=e(a_0z_E)\geq e(z_E)$ and $S(Q_E)\leq e(a_0)$.
+The rational entropy intervals in Proposition 14.5 give
+$e(z_E)\geq H_2(1/50)>98/1000$ and
+$e(a_0)=H_2(1/2000)<5/1000$. Hence
+$$
+ \ell_C,\ell_D>93/1000>86/1000>2I(P).
+\tag{15.11}
+$$
+Thus the old residual conditions are strict. The source-moment
+condition (14.1) fails: $\tau_{\psi_0}=0$ and
+$d_0=\max\{x_C^2,x_D^2\}-\kappa^2>0$, whereas $a_0<1$.
+Also $a_0>23/24$, outside the bias rectangle of Theorem 13.1.
+
+To obtain entangled sources, put
+$$
+ E_{++}=\frac{(I+K)(I+L)}4=|\Phi^+\rangle\langle\Phi^+|,
+ \quad |\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2,
+$$
+$$
+ W_\theta=I+(e^{i\theta}-1)E_{++},\qquad
+ |\psi_\theta\rangle=W_\theta|\psi_0\rangle.
+$$
+This unitary commutes with $K,L,KL$, so $\kappa,\lambda,\mu$ and
+$\beta>0$ are fixed, and $\delta=0$ throughout. Let $A$ be the
+$2\times2$ coefficient matrix of $\psi_0$, and $s=A_{00}+A_{11}$.
+Writing $t=e^{i\theta}-1$, the diagonal entries each gain $ts/2$.
+Since $\det A=0$,
+$$
+ \det A_\theta=\frac{s^2}{4}(t^2+2t)
+              =\frac{s^2}{4}(e^{2i\theta}-1).
+$$
+Moreover $p_{++}=|s|^2/2=(1+\kappa)(1+\lambda)/4>0$. Thus
+$$
+ \tau_{\psi_\theta}=4|\det A_\theta|^2
+                   =4p_{++}^2\sin^2\theta>0
+$$
+for small nonzero $\theta$. These are entangled pure sources with
+$e_\theta>0$ satisfying (15.9) strictly, and therefore have a full
+pure-source neighborhood covered by Theorem 15.5.
+
+For small $\theta$, (15.11) and the old spectral condition persist
+by entropy continuity. The old condition (14.1) still fails:
+$d_\theta\to d_0>0$ while $\tau_{\psi_\theta}\to0$, so
+$(1-a_0^2)d_\theta>a_0^2\tau_{\psi_\theta}$. Small positive $b$
+and small perturbations of $a_0$ preserve these strict inequalities.
+Finally $x_C(\psi_0)=5/\sqrt{313}>1/4$, whereas the center of the
+mixed ball in Proposition 14.7 has $x_C=0$. The half trace distance
+between these sources is at least $|x_C|/2>1/8$, by testing $XI$.
+This separation persists for small $\theta$, and excludes that old
+ball of radius $1/20000$. All stated exclusions and strict residual
+conditions persist in a sufficiently small pure-source neighborhood.
+
+**Theorem 15.7 (Physical mixed-state balls uniform over every bias).**
+Let $\sigma$ be a pure source for which either $\delta=0$ and
+$e_0>0$, or $\beta>0$ and (15.9) is strict. Define $m=2e_0$ in
+the first case, and use (15.10) in the second; in either case $m>0$.
+For any $0<t_0\leq1$ satisfying
+$$
+ E(t_0):=8B_4(t_0)+12B_2(t_0)<m/2,
+\tag{15.12}
+$$
+every physical complex density matrix with
+$\tfrac12\|\rho-\sigma\|_1\leq t_0$ satisfies
+$$
+ \Delta(\rho;a,b)>m/2
+ \quad\text{for all independent }a,b\in[0,1].
+\tag{15.13}
+$$
+Here $B_d(t)=t\log d+(1+t)H_2(t/(1+t))$ is the entropy-continuity
+bound proved in Theorem 13.1. Such a positive $t_0$ always exists.
+The ball contains faithful states with negative partial transpose.
+For the entangled centers of Proposition 15.6, a sufficiently small
+such ball also intersects the old residual domain in a physical
+open set.
+
+Proof.
+Theorem 15.5 gives $\Delta(\sigma;a,b)\geq m$, uniformly over the
+entire bias square, since $I(P)\geq0$. For each fixed pair of biases,
+channel contractivity bounds every output trace distance by $t_0$,
+and partial trace gives the same bound for each marginal. The
+absolute entropy coefficients of the original deficit are eight in
+dimension four and twelve in dimension two. Thus
+$$
+ |\Delta(\rho;a,b)-\Delta(\sigma;a,b)|\leq E(t_0)<m/2,
+$$
+which proves (15.13) without restricting either bias. The function
+$E$ tends to zero with $t_0$, so (15.12) has positive solutions.
+This extension to mixed states uses entropy continuity.
+
+Every center in the theorem is entangled. Write its nonzero Schmidt
+coefficients as $\sqrt r,\sqrt{1-r}$, where $0<r<1$, and put
+$s=\sqrt{r(1-r)}>0$. For sufficiently small $\gamma>0$, the state
+$$
+ \rho_\gamma=(1-\gamma)\sigma+\gamma I_4/4
+$$
+is faithful and has half trace distance $3\gamma/4<t_0$ from
+$\sigma$. Its partial transpose has eigenvalue
+$\gamma/4-(1-\gamma)s<0$ whenever
+$\gamma<4s/(1+4s)$. These strict properties persist under small
+physical perturbations.
+
+At the centers from Proposition 15.6 the old residual inequalities
+and exclusions hold strictly at suitable interior biases. Reduce
+$t_0$ further to preserve them at those biases, and use continuity
+also in the biases. This yields the asserted physical open
+intersection, while the positivity conclusion (15.13) continues to
+hold throughout the full independent bias square.
+
+**Proposition 15.8 (The mixed-source control matrix has a different budget).**
+The control matrix (15.4), formed from the moments of a mixed source,
+can have zero mutual information while $J_0>0$.
+
+Proof.
+Take $\rho=(I_4+YI)/4=|+y\rangle\langle+y|\otimes I_2/2$
+and $a=b=0$. Then $S(\rho)=\log2$ and
+$\kappa=\lambda=\mu=\delta=0$. Formula (15.4) gives $G=I_4/4$,
+so $I(A:B)_G=0$. Direct Pauli conjugation gives
+$P=Q=R=I_4/4$, and therefore
+$$
+ J_0=S(P)+S(Q)-S(R)-S(\rho)=\log2.
+$$
+The original deficit is zero in this example. Thus the pure-source
+spectral identification (15.5) supplies no mixed-source comparison
+$J_0\leq I(A:B)_G$.
+
+The unrestricted pure-product, pure-source and mixed-source sign
+questions remain open outside the proved regions. All conclusions in
+this section concern the original deficit with its independent biases
+and unchanged endpoint terms.
+
+## 追加锚（本行以下为增补区）
