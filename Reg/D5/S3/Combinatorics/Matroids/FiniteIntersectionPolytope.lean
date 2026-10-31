@@ -24,11 +24,11 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ _ M => M.eRk) (fun e => nomatch e)
+  realize signature (fun _ _ M => M.eRk) (fun e _ => Empty.elim e)
 
 def rejected (i : Bool) : Realization signature.{u} :=
   realize signature (fun j _ M U => if j = i ∧ U.ncard = 2 then 1 else M.eRk U)
-    (fun e => nomatch e)
+    (fun e _ => Empty.elim e)
 
 def observedRegion {E : Type u} [Finite E] (r : Realization signature.{u})
     (M1 M2 : Matroid E) : Set (E → ℝ) :=
@@ -123,7 +123,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
 
 def source_registration : Registration arena.{u}
     (type_of% (@extreme_point_zero_one.{u})) where
-  actual := actual
+  actual := realize signature (fun _ _ M => M.eRk) (fun e _ => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨@extreme_point_zero_one, rejected false, rejected_law false⟩
   sensitivity := by
@@ -151,7 +151,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ M => M.eRk) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ M => M.eRk) (fun e _ => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
