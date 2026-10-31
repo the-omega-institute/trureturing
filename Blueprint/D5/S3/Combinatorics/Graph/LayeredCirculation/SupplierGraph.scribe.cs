@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.LayeredCirculation;
 
@@ -234,6 +236,17 @@ internal sealed class SupplierGraphDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("Exact source telescope, in the module declared generic contexts: def outgoingMultiplicity [Fintype E] [DecidableEq V] (multiplicity : E → ℕ) (vertex : V) : ℕ := ∑ edge with G.source edge = vertex, multiplicity edge"))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("outgoing-multiplicity-concat"),
+                DeclarationHandle.Create(
+                    "D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.outgoingMultiplicity_edgeMultiplicity_concat"),
+                H("Outgoing multiplicity after appending an edge"),
+                StatementSource.FromAuthor(Disp(OutgoingMultiplicityConcatFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Appending a legal edge increases the outgoing multiplicity at a vertex "
+                        + "by one exactly when that vertex is the edge source."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("incomingmultiplicity"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.incomingMultiplicity"),
                 H("incomingMultiplicity"),
@@ -265,4 +278,54 @@ internal sealed class SupplierGraphDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Exact source telescope, in the module declared generic contexts: theorem exists_splitAtEdge (walk : G.Walk start finish) (edge : E) (hmem : edge ∈ walk.edges) : ∃ (before : G.Walk start (G.source edge)) (after : G.Walk (G.target edge) finish), walk.edges = before.edges ++ edge :: after.edges"))),
                 DescribeRole.Theorem))));
+
+    private static Formula OutgoingMultiplicityConcatFormula()
+    {
+        Formula source = At(Q("Maths", "EdgeGraph", "source"), X("G"), X("edge"));
+        Formula appended = At(Q("Maths", "EdgeGraph", "Walk", "concat"),
+            X("walk"), X("edge"), X("legal"));
+        Formula Multiplicity(Formula walk) => At(
+            Q("Maths", "EdgeGraph", "outgoingMultiplicity"), X("G"),
+            At(Q("Maths", "EdgeGraph", "Walk", "edgeMultiplicity"), walk), X("vertex"));
+        Formula indicator = At(Q("ite"), Equal(source, X("vertex")), D(1), D(0));
+        Formula body = Equal(Multiplicity(appended), new Formula.Binary(
+            Multiplicity(X("walk")), FormulaBinaryOperator.Add, indicator));
+        (string Name, Formula Type)[] binders =
+        [
+            ("V", Q("Type")), ("E", Q("Type")),
+            ("G", At(Q("Maths", "EdgeGraph"), X("V"), X("E"))),
+            ("start", X("V")), ("finish", X("V")),
+            ("", At(Q("Fintype"), X("E"))),
+            ("", At(Q("DecidableEq"), X("E"))),
+            ("", At(Q("DecidableEq"), X("V"))),
+            ("walk", At(Q("Maths", "EdgeGraph", "Walk"), X("G"), X("start"), X("finish"))),
+            ("edge", X("E")), ("legal", Equal(source, X("finish"))), ("vertex", X("V"))
+        ];
+        for (int i = binders.Length - 1; i >= 0; i--)
+            body = binders[i].Name.Length == 0
+                ? Seq(OpenBracket, binders[i].Type, CloseBracket, Sp, body)
+                : All(binders[i].Name, binders[i].Type, body);
+        return body;
+    }
+
+    private static Formula X(string name) => F.Id(name);
+    private static Formula Q(params string[] names)
+    {
+        var parts = new System.Collections.Generic.List<Formula>();
+        foreach (string name in names)
+        {
+            if (parts.Count > 0) parts.Add(Dot);
+            parts.Add(X(name));
+        }
+        return Seq(Operatorname, Grp(Seq([.. parts])));
+    }
+    private static Formula At(Formula function, params Formula[] args) =>
+        new Formula.Apply(function, [.. args]);
+    private static Formula Par(Formula value) => Seq(Left, Open, value, Right, Close);
+    private static Formula Typed(Formula value, Formula type) => Par(Seq(value, Colon, Sp, type));
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Typed(X(name), type), Comma, Sp, Par(body));
+    private static Formula Equal(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+
 }
