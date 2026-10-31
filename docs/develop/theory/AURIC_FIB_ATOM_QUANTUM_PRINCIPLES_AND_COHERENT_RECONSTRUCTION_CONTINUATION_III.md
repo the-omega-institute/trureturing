@@ -1598,15 +1598,14 @@ $$
 W\chi_a=\sum_{i:t_i>0}\sqrt{t_i}\,W\phi_i^a,
 \qquad
 [\widehat\Psi_{n+15+s}(\,\cdot\,,z)]
-=[V_f(s)\phi_i^a]quad(z_{13}=i)
+=[V_f(s)\phi_i^a]\quad(z_{13}=i)
 \tag{154.1}
 $$
 
 在实际正支撑切片上成立。原记录质量、全部旧终端及整个旧逻辑隐藏路径律都由该生成模型给出。特别地，对全部 $w\in\Omega_{10}$，
 
 $$
-\Pr_{\widehat{\mathsf R}(a,f)}(I=i,W_{
-m old}=w)
+\Pr_{\widehat{\mathsf R}(a,f)}(I=i,W_{\rm old}=w)
 =\|N_wK_fM_i\chi_a\|^2.
 \tag{154.2}
 $$
@@ -1615,11 +1614,9 @@ $$
 
 $$
 \begin{aligned}
-&\Pr(I=i,A_{\rm old}\in B,W_{
-m old}=w,r\in C)\\
+&\Pr(I=i,A_{\rm old}\in B,W_{\rm old}=w,r\in C)\\
 &\qquad=\mu^{\rm proj}_{a,f}
-      \{I=i,A_{\rm old}\in B,W_{
-m old}=w\}\,\mathcal R_i(C).
+      \{I=i,A_{\rm old}\in B,W_{\rm old}=w\}\,\mathcal R_i(C).
 \end{aligned}
 \tag{154.3}
 $$
