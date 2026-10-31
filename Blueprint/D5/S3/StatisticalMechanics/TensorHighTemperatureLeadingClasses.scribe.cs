@@ -129,7 +129,7 @@ internal sealed class TensorHighTemperatureLeadingClassesDocument : IScribeDocum
         Formula negative = At(Qualified("Nat", "Partition", "indiscrete"), X("n"));
         Formula branch = Call("dite", condition,
             Parenthesized(LambdaOf("h", condition, positive)),
-            Parenthesized(LambdaOf("h", new Formula.Not(Parenthesized(condition)), negative)));
+            Parenthesized(At(Qualified("Function", "const"), new Formula.Not(Parenthesized(condition)), negative)));
         return All("n", Naturals(), Equal(value, branch));
     }
 
