@@ -163,32 +163,26 @@ private theorem ordinary (a b c d : ℕ)
     2 * f (k-1)=AA-N ∧ 2 * g (k-1)=AA-(2 * N + 1) at nat3
   have os0 : ((P 0).map f).sum + f (T 0)=oldSeam corner n y z t rZ vZ 0 := by
     cases corner <;> dsimp [T,terminal,oldSeam] at * 
-    all_goals simp only [Bool.false_eq_true,ite_false,ite_true] at mo
     all_goals dsimp [AA,BB,LL,MM,Bn,Ln,Mn] at * 
     all_goals nlinarith only [mo.1,nat3.1]
   have os1 : ((P 0).map f).sum + f (T 0) + ((P 1).map f).sum + f (T 1)=oldSeam corner n y z t rZ vZ 1 := by
     cases corner <;> dsimp [T,terminal,oldSeam] at * 
-    all_goals simp only [Bool.false_eq_true,ite_false,ite_true] at mo
     all_goals dsimp [AA,BB,LL,MM,Bn,Ln,Mn] at * 
     all_goals nlinarith only [mo.1,nat3.1,mo.2.1,nat0.1,nat1.1]
   have os2 : ((P 0).map f).sum + f (T 0) + ((P 1).map f).sum + f (T 1) + ((P 2).map f).sum + f (T 2)=oldSeam corner n y z t rZ vZ 2 := by
     cases corner <;> dsimp [T,terminal,oldSeam] at * 
-    all_goals simp only [Bool.false_eq_true,ite_false,ite_true] at mo
     all_goals dsimp [AA,BB,LL,MM,Bn,Ln,Mn] at * 
     all_goals nlinarith only [mo.1,nat3.1,mo.2.1,nat0.1,nat1.1,mo.2.2.1]
   have ns0 : AA + ((P 0).map g).sum + g (T 0)=newSeam corner n y z t rZ vZ 0 := by
     cases corner <;> dsimp [T,terminal,newSeam] at * 
-    all_goals simp only [Bool.false_eq_true,ite_false,ite_true] at mg
     all_goals dsimp [AA,BB,LL,MM,Bn,Ln,Mn] at * 
     all_goals nlinarith only [mg.1,nat3.2.1]
   have ns1 : AA + ((P 0).map g).sum + g (T 0) + ((P 1).map g).sum + g (T 1)=newSeam corner n y z t rZ vZ 1 := by
     cases corner <;> dsimp [T,terminal,newSeam] at * 
-    all_goals simp only [Bool.false_eq_true,ite_false,ite_true] at mg
     all_goals dsimp [AA,BB,LL,MM,Bn,Ln,Mn] at * 
     all_goals nlinarith only [mg.1,nat3.2.1,mg.2.1,nat0.2.1,nat1.2.1]
   have ns2 : AA + ((P 0).map g).sum + g (T 0) + ((P 1).map g).sum + g (T 1) + ((P 2).map g).sum + g (T 2)=newSeam corner n y z t rZ vZ 2 := by
     cases corner <;> dsimp [T,terminal,newSeam] at * 
-    all_goals simp only [Bool.false_eq_true,ite_false,ite_true] at mg
     all_goals dsimp [AA,BB,LL,MM,Bn,Ln,Mn] at * 
     all_goals nlinarith only [mg.1,nat3.2.1,mg.2.1,nat0.2.1,nat1.2.1,mg.2.2.1]
   have term0 : 2 * f (T 0)=oldNext corner n y z t 0-N ∧ 
