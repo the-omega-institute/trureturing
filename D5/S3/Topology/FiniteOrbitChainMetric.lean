@@ -64,7 +64,7 @@ noncomputable def distance (a b : Sigma X) : ℝ≥0∞ :=
 
 /- Chain reversal, concatenation and the infimum characterization. -/
 
-private theorem chain_append {a b c : Sigma X} {t u : ℝ≥0∞}
+theorem chain_append {a b c : Sigma X} {t u : ℝ≥0∞}
     (h : G.Chain a b t) (k : G.Chain b c u) : G.Chain a c (t + u) := by
   induction k with
   | nil => simpa using h
@@ -73,7 +73,7 @@ private theorem chain_append {a b c : Sigma X} {t u : ℝ≥0∞}
   | @forward j x u k ih => exact Chain.forward j x ih
   | @backward j x u k ih => exact Chain.backward j x ih
 
-private theorem chain_reverse {a b : Sigma X} {t : ℝ≥0∞}
+theorem chain_reverse {a b : Sigma X} {t : ℝ≥0∞}
     (h : G.Chain a b t) : G.Chain b a t := by
   induction h with
   | nil => exact Chain.nil
