@@ -474,6 +474,17 @@ theorem gradeChargeRotation_fixed_iff_gradeChargeResidue_zero
     · have hcoeff := (Finsupp.mem_supported' ℂ (gradeCoeffEquiv D n v)).mp hv a ha
       simp [hcoeff]
 
+theorem gradeTheta_mem_gradeChargeResidue_zero
+    (D : LatticeData) (ell : Charge D →+ ZMod 3) (phase : ChargePhase)
+    (hphase : phase (Multiplicative.ofAdd (1 : ZMod 3)) ≠ 1)
+    (n : ℤ) (v : grade D n) (hv : v ∈ gradeChargeResidue D ell n 0) :
+    gradeTheta D n v ∈ gradeChargeResidue D ell n 0 := by
+  apply (gradeChargeRotation_fixed_iff_gradeChargeResidue_zero D ell phase
+    hphase n (gradeTheta D n v)).mp
+  exact gradeChargeRotation_fixed_theta D ell phase n v
+    ((gradeChargeRotation_fixed_iff_gradeChargeResidue_zero D ell phase
+      hphase n v).mpr hv)
+
 def gradeChargeSector (D : LatticeData) (ell : Charge D →+ ZMod 3)
     (n : ℤ) (j : ZMod 3) : Submodule ℂ (grade D n) :=
   Submodule.span ℂ (Set.range (fun a : ChargeEnergyFiber D ell n j =>
