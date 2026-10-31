@@ -635,11 +635,45 @@ $$
 $$
 
 The conclusion remains true if the estimator also receives any countable-valued
-label, including a finite counter or finite deleted word. It also holds for a
-procedure that chooses an almost surely finite prefix and a countable label
-and then returns an exact seed. These statements concern output observations
-and countable labels; they do not remove the current arithmetic coordinate
-from the joint-state recovery formulas (5.2) or (6.4).
+label, including a finite counter or finite deleted word, with no independence
+requirement on that label.
+
+For an adaptive finite horizon, the precise observer-information contract is
+as follows. Let $O$ be the infinite concatenated configuration path in
+Theorem 5.1 or Theorem 6.1; the other native output coordinates are fixed as
+in Definition 1.2. Let $L$ be any measurable label taking values in a
+countable discrete set $\mathcal L$.
+On the corresponding initial probability space, put
+
+$$
+\mathcal F_t^L=\overline{\sigma(L,O|_{[0,t]})},\qquad t\ge0,
+\tag{7.1a}
+$$
+
+where the bar means completion under that same initial probability, with no
+other enlargement. All information used for selection and return is confined
+to this filtration. The label may depend arbitrarily on the initial source
+or entire output. Making it available from time zero gives an information
+upper bound also for a label revealed later; it grants no new native readout.
+An admissible sequential rule has a stopping time $T\in[0,\infty]$ with
+$\Pr(T<\infty)=1$, meaning $\{T\le t\}\in\mathcal F_t^L$ for every $t\ge0$,
+and a $G$-valued return $\widehat Z$ measurable with respect to
+
+$$
+\mathcal F_T^L
+=\{A\in\mathcal F:A\cap\{T\le t\}\in\mathcal F_t^L
+                  \text{ for every }t\ge0\},
+\tag{7.1b}
+$$
+
+where $\mathcal F$ is the completed initial sigma-field. Then
+$\Pr(\widehat Z=Z)=0$. In particular the rule may choose when to stop from
+its observed output and $L$, retain its exact stopping time, and return any
+Borel function of $L$ and its time-stamped stopped path. No independence of
+$T$, $L$ and $Z$ is required. No additional continuous advice, source-state
+coordinate or random tape is included in (7.1a). These statements concern
+output observations and countable labels; they do not remove the current
+arithmetic coordinate from the joint-state recovery formulas (5.2) or (6.4).
 
 Proof. First observe the output through $10n$. Under (4.1) its complete block
 marks are $A_n=(B(Z)_0,\ldots,B(Z)_{n-1})$. The tail
@@ -661,13 +695,78 @@ improve exact recovery.
 For a countable label $L$, fix each possible value $l$. The estimator with
 $L=l$ is one Borel function $g_{n,l}(A_n)$, and the event of correct recovery
 with this label is contained in $\{g_{n,l}(A_n)=Z\}$, already null. A countable
-union over $l$ remains null. This argument does not require independence of
-$L$ and $Z$. Finally, any finite selected horizon is bounded by $10N$ for some
-finite integer $N$. On $\{N=n,L=l\}$ the returned estimator is a function of
-the $n$-block prefix and its specified label. Taking the countable union over
-$(n,l)$ proves the last assertion. In particular this covers ordinary stopping
-protocols, without needing an extra independence assertion at their stopping
-times. ∎
+union over $l$ remains null. This uses the unconditional law of $(A_n,Z)$,
+not its law conditioned on $L=l$, and therefore requires no independence of
+$L$ and $Z$. The same conclusion holds for a return measurable only in the
+completion of $\sigma(A_n,L)$: it has a Borel representation $g_n(A_n,L)$
+almost surely. Here is an explicit factorization justification for this use.
+Code $G$ by its residues modulo all positive integers, a continuous injection
+into a countable product of finite discrete spaces with closed image and
+continuous inverse on that image. Each coordinate event of a completed-$\sigma(A_n,L)$-measurable return agrees
+modulo a null set with a pullback of a Borel subset of
+$\mathcal B^n\times\mathcal L$. For each coordinate, disjointize these sets
+and assign a default value on any leftover set. The resulting Borel residue
+code on that product agrees with the return's code off one null set, since
+there are only countably many coordinate events. There it lies in the closed
+image. Apply the inverse on that image, and use a fixed $z_\dagger\in G$
+elsewhere. This constructs
+the required $g_n$ without any assertion about conditional independence.
+
+For the sequential rule, fix $n\ge1$ and set
+
+$$
+E_n=\{T\le10n\},\qquad
+\widehat Z_n=
+\begin{cases}
+\widehat Z,&\text{on }E_n,\\
+z_\dagger,&\text{off }E_n.
+\end{cases}
+\tag{7.2a}
+$$
+
+The stopping condition gives $E_n\in\mathcal F_{10n}^L$. For any Borel
+$D\subseteq G$, stopped measurability gives
+$\{\widehat Z\in D\}\cap E_n\in\mathcal F_{10n}^L$ by (7.1b); adding
+$E_n^c$ when $z_\dagger\in D$ proves that $\widehat Z_n$ is
+$\mathcal F_{10n}^L$-measurable. The whole output through $10n$ is a Borel
+function of $A_n$, including the fixed call, wavefunction and report
+coordinates. Consequently $\mathcal F_{10n}^L$ is contained in the completion
+of $\sigma(A_n,L)$. The factorization just proved supplies a Borel $g_n$ with
+$\widehat Z_n=g_n(A_n,L)$ almost surely. Thus
+
+$$
+\begin{aligned}
+\Pr(E_n\cap\{\widehat Z=Z\})
+&\le\Pr(\widehat Z_n=Z)\\
+&=\Pr(g_n(A_n,L)=Z)=0.
+\end{aligned}
+\tag{7.2b}
+$$
+
+Since $\bigcup_{n\ge1}E_n=\{T<\infty\}$ has probability one, a countable
+union proves the adaptive assertion. This localizes the return on stopping
+by each deterministic block boundary; it never conditions the atomless-tail
+argument on a stopping event.
+
+To check the stated stopped-path example, $T\wedge t$ is
+$\mathcal F_t^L$-measurable, and the path stopped at $T\wedge t$ is a Borel
+function of $(T\wedge t,O|_{[0,t]})$, extended constantly after that stopping
+time. Indeed each rational-time value is obtained by evaluating the observed
+càdlàg path at the corresponding truncated time; these evaluations are Borel
+and generate the path Borel structure. A Borel function of this stopped data
+and $L$ therefore has an $\mathcal F_t^L$-measurable version agreeing with
+the returned value on $\{T\le t\}$. Its return is measurable in (7.1b).
+This covers output-adapted selection even when exact jump times are used.
+
+The stopping-information condition is substantive. Without it, choose a
+Borel injection $e:G\to(0,1)$ and set $H=e(Z)$ using the full source, or
+using the infinite-output recovery of Theorem 5.1 or 6.1. The time-stamped
+prefix $O|_{[0,H]}$ carries its endpoint $H$, so the Borel inverse $e^{-1}$
+on $e(G)$ recovers $Z$ exactly, with $H<1$ and constant label. Such an $H$
+is not an output-filtration stopping time: if it were, boundedness would
+make $H$ measurable in $\mathcal F_1^L$, and its inverse would contradict the
+already proved deterministic-horizon conclusion. Thus bounded anticipative
+endpoint advice differs from a legitimate sequential observation. ∎
 
 **Definition 7.2 (finite source-port acquisition).** A source-blind
 deterministic protocol chooses its instructions and final output only from
