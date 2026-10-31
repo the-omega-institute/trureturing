@@ -73,8 +73,19 @@ private def coeff (x : Bits 3) : ℝ :=
 
 private def witness (x : Bits 3) : ℂ := (coeff x : ℂ) / (Real.sqrt 8 : ℂ)
 
+private lemma sum_bits {α : Type*} [AddCommMonoid α] (f : Bits 3 → α) :
+    (∑ x, f x) = f ![0, 0, 0] + f ![0, 0, 1] + f ![0, 1, 0] + f ![0, 1, 1] +
+      f ![1, 0, 0] + f ![1, 0, 1] + f ![1, 1, 0] + f ![1, 1, 1] := by
+  classical
+  have hu : (Finset.univ : Finset (Bits 3)) =
+      {![0, 0, 0], ![0, 0, 1], ![0, 1, 0], ![0, 1, 1],
+        ![1, 0, 0], ![1, 0, 1], ![1, 1, 0], ![1, 1, 1]} := by decide
+  simp [hu, add_assoc]
+
 private lemma witness_unit : (∑ x, Complex.normSq (witness x)) = 1 := by
-  sorry
+  rw [sum_bits]
+  norm_num [witness, coeff, Complex.normSq_div, Complex.normSq_ofReal,
+    Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 8)]
 
 private lemma overlap_distribution (d : Bits 3) :
     overlapProb 0 0 witness d =
@@ -89,14 +100,25 @@ private lemma abs_distribution (d : Bits 3) :
 
 private lemma overlap_entropy :
     shannonEntropy (overlapProb 0 0 witness) = 2 * Real.log 2 := by
-  sorry
+  rw [shannonEntropy, sum_bits]
+  simp only [overlap_distribution]
+  norm_num [Real.negMulLog_def, Real.log_div]
+  rw [show (4 : ℝ) = 2 ^ 2 by norm_num, Real.log_pow]
+  ring
 
 private lemma abs_entropy :
     shannonEntropy (absProb witness) = 4 * Real.log 2 - (9 / 8) * Real.log 3 := by
-  sorry
+  rw [shannonEntropy, sum_bits]
+  simp only [abs_distribution]
+  norm_num [Real.negMulLog_def, Real.log_div]
+  rw [show (9 : ℝ) = 3 ^ 2 by norm_num, show (16 : ℝ) = 2 ^ 4 by norm_num]
+  simp only [Real.log_pow]
+  ring
 
 private lemma log_gap : 9 * Real.log 3 < 16 * Real.log 2 := by
-  sorry
+  have h := Real.log_lt_log (by norm_num : (0 : ℝ) < 3 ^ 9)
+    (by norm_num : (3 : ℝ) ^ 9 < 2 ^ 16)
+  simpa only [Real.log_pow, Nat.cast_ofNat] using h
 
 /-- The certified three-qubit counterexample to the source's Shannon conjecture. -/
 theorem result : ¬ claim := by
