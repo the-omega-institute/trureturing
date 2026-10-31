@@ -64,6 +64,11 @@ internal sealed class PrimeValuation5040SigmaDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Any upper bound B for normalized sigma on positive ordered residuals "
-                        + "propagates to the joint fibre with the multiplicative factor 403/105."))),
+                        + "propagates to the joint fibre with the multiplicative factor 403/105. "
+                        + "Explicitly, B is real and the hypothesis is universal: for every "
+                        + "natural m, if 1 <= m, m.Coprime 210, and AllowedOrdered 210 m, then "
+                        + "sigma(m)/m <= B. With W coprime to each of 2,3,5,7 and "
+                        + "jointFiber primes5040 profile5040 W (5040*n), the conclusion is "
+                        + "sigma(5040*n)/(5040*n) <= (403/105)*B."))),
                 DescribeRole.Theorem))));
 }
