@@ -322,6 +322,35 @@ def gradeChargeDihedralRepresentation (D : LatticeData)
         have hidx : j - i = (-i) + j := by ring
         rw [hidx]
 
+theorem gradeChargeRotation_fixed_theta (D : LatticeData)
+    (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ)
+    (v : grade D n)
+    (hv : gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1) v = v) :
+    gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1)
+        (gradeTheta D n v) = gradeTheta D n v := by
+  have hmove := gradeChargeRotation_theta_move_apply D ell phase n 1 v
+  rw [hv] at hmove
+  have hminus : gradeChargeRotation D ell phase n (Multiplicative.ofAdd (-1))
+      (gradeTheta D n v) = gradeTheta D n v := hmove.symm
+  have hcomp : gradeChargeRotation D ell phase n (Multiplicative.ofAdd 0)
+      (gradeTheta D n v) =
+      gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1)
+        (gradeChargeRotation D ell phase n (Multiplicative.ofAdd (-1))
+          (gradeTheta D n v)) := by
+    convert gradeChargeRotation_apply_add D ell phase n 1 (-1) (gradeTheta D n v)
+      using 1 <;> norm_num
+  rw [gradeChargeRotation_zero] at hcomp
+  have hminus_inv : gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1)⁻¹
+      (gradeTheta D n v) = gradeTheta D n v := by
+    change gradeChargeRotation D ell phase n (Multiplicative.ofAdd (-1))
+      (gradeTheta D n v) = gradeTheta D n v
+    exact hminus
+  have hcomp' : gradeTheta D n v =
+      gradeChargeRotation D ell phase n (Multiplicative.ofAdd 1)
+        (gradeTheta D n v) := by
+    simpa [hminus_inv] using hcomp
+  exact hcomp'.symm
+
 /-- The fixed vectors of the dihedral action on a grade. -/
 abbrev gradeChargeDihedralInvariants (D : LatticeData)
     (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ) :
