@@ -251,7 +251,7 @@ private theorem ordinary (a b c d : ℕ)
     have htval := nat2.2.2.2
     omega
   have oldstrip : InStrip f (N/2) 0 l := by
-    change InStrip f (N/2) 0 (P 0 +  + T 0 :: P 1 +  + T 1 :: P 2 +  + T 2 :: P 3 +  + [T 3])
+    change InStrip f (N/2) 0 (P 0 ++ T 0 :: P 1 ++ T 1 :: P 2 ++ T 2 :: P 3 ++ [T 3])
     apply four_strip f (P 0) (P 1) (P 2) (P 3) (T 0) (T 1) (T 2) (T 3) (N/2) 0
       (fun i hi => (pos 0 i hi).1) (fun i hi => (pos 1 i hi).1)
       (fun i hi => (pos 2 i hi).1) (fun i hi => (pos 3 i hi).1) le_rfl
@@ -270,7 +270,7 @@ private theorem ordinary (a b c d : ℕ)
     · exact lastold
     · simpa [l,word,P,T] using hfzero
   have newtail : InStrip g N AA l := by
-    change InStrip g N AA (P 0 +  + T 0 :: P 1 +  + T 1 :: P 2 +  + T 2 :: P 3 +  + [T 3])
+    change InStrip g N AA (P 0 ++ T 0 :: P 1 ++ T 1 :: P 2 ++ T 2 :: P 3 ++ [T 3])
     have hAA : 0 ≤ AA := by
       have hh := (chain_values a b c d (by omega) (by omega) hc (by omega)).1 0
       rw [hbase] at hh

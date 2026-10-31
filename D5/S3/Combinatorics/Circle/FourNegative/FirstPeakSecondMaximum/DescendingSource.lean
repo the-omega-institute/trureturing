@@ -29,7 +29,7 @@ private theorem mask_data (e r : ℕ) (hr : 1 ≤ r) (hrn : r ≤ 2 ^ e) :
   exact ⟨he,mask_complement e (2 ^ e-r) (r-1) he⟩
 
 private theorem low_split (e off r : ℕ) (hr : 1 ≤ r) (hrn : r ≤ 2 ^ e) :
-    (chamberLabels e off (2 ^ e-r) +  + chamberLabels e off (r-1)).Perm
+    (chamberLabels e off (2 ^ e-r) ++ chamberLabels e off (r-1)).Perm
       (List.range' off e) := by
   have hd := mask_data e r hr hrn
   have mem_bit (m i : ℕ) : i∈m.bitIndices.toFinset ↔ m.testBit i=true := by
@@ -63,12 +63,12 @@ private def bank (corner : Bool) (a b c d r v : ℕ) : Fin 4 → List ℕ :=
   let n := 2 ^ e
   let off := d + c + b
   let X := List.range' (off + e) (a-1-e)
-  let U := chamberLabels (d-1) 0 ((2 ^ (d-1)-1) ^  ^  ^ v)
+  let U := chamberLabels (d-1) 0 ((2 ^ (d-1)-1) ^^^ v)
   let V := List.range' d (c-1)
-  let W := List.range' (d + c) (b-1) +  + chamberLabels e off (r-1)
+  let W := List.range' (d + c) (b-1) ++ chamberLabels e off (r-1)
   let p := chamberLabels e off (n-r)
   let bit := chamberLabels (d-1) 0 v
-  if corner then ![X,U +  + p,V +  + bit,W] else ![X,V +  + p +  + bit,U,W]
+  if corner then ![X,U ++ p,V ++ bit,W] else ![X,V ++ p ++ bit,U,W]
 
 private def terminal (corner : Bool) (a b c d : ℕ) : Fin 4 → ℕ :=
   if corner then ![a + b + c + d-1,d-1,d + c-1,d + c + b-1]
@@ -77,7 +77,7 @@ private def terminal (corner : Bool) (a b c d : ℕ) : Fin 4 → ℕ :=
 private def word (corner : Bool) (a b c d r v : ℕ) : List ℕ :=
   let P := bank corner a b c d r v
   let T := terminal corner a b c d
-  P 0 +  + T 0 :: P 1 +  + T 1 :: P 2 +  + T 2 :: P 3 +  + [T 3]
+  P 0 ++ T 0 :: P 1 ++ T 1 :: P 2 ++ T 2 :: P 3 ++ [T 3]
 
 /- A power-of-two mask is ONE physical U occurrence, even when values coincide. -/
 private theorem single_bit (len e : ℕ) (he : e<len) :
@@ -106,23 +106,23 @@ private theorem bank_inventory (corner : Bool) (a b c d r v : ℕ)
     (by intro i hi _; simp [Nat.testBit_two_pow_sub_one,hi])).trans
     (List.Perm.of_eq (chamberLabels_full _ _))
   have hx := low_split e off r hr hrn
-  have hxfull : (hi +  + X (2 ^ e-r) +  + X (r-1)).Perm (List.range' off (a-1)) := by
+  have hxfull : (hi ++ X (2 ^ e-r) ++ X (r-1)).Perm (List.range' off (a-1)) := by
     have hh := hx.append_left hi
     have he : e + (a-1-e)=a-1 := by dsimp [e]; omega
-    have hjoin : List.range' off e +  + hi=List.range' off (a-1) := by
+    have hjoin : List.range' off e ++ hi=List.range' off (a-1) := by
       dsimp [hi]
       rw [List.range'_append_1,he]
     simpa only [List.append_assoc] using hh.trans
       ((List.Perm.append_comm).trans (List.Perm.of_eq hjoin))
   have merge (o len : ℕ) (hlen : 1 ≤ len) :
-      List.range' o (len-1) +  + [o + len-1]=List.range' o len := by
+      List.range' o (len-1) ++ [o + len-1]=List.range' o len := by
     simpa only [show o + (len-1)=o + len-1 by omega,show len-1 + 1=len by omega] using
       (List.range'_1_concat (s:=o) (n:=len-1)).symm
   have hall :
-      (List.range' 0 (d-1) +  + [d-1]) +  + 
-      (List.range' d (c-1) +  + [d + c-1]) +  + 
-      (List.range' (d + c) (b-1) +  + [d + c + b-1]) +  + 
-      (List.range' off (a-1) +  + [a + b + c + d-1])=List.range (a + b + c + d) := by
+      (List.range' 0 (d-1) ++ [d-1]) ++ 
+      (List.range' d (c-1) ++ [d + c-1]) ++ 
+      (List.range' (d + c) (b-1) ++ [d + c + b-1]) ++ 
+      (List.range' off (a-1) ++ [a + b + c + d-1])=List.range (a + b + c + d) := by
     have h0 := merge 0 d (by omega)
     simp only [Nat.zero_add] at h0
     rw [h0,merge d c (by omega),merge (d + c) b (by omega)]
@@ -134,17 +134,17 @@ private theorem bank_inventory (corner : Bool) (a b c d r v : ℕ)
     congr 1
     omega
   have hw : word corner a b c d r v =
-      bank corner a b c d r v 0 +  + [terminal corner a b c d 0] +  + 
-      bank corner a b c d r v 1 +  + [terminal corner a b c d 1] +  + 
-      bank corner a b c d r v 2 +  + [terminal corner a b c d 2] +  + 
-      bank corner a b c d r v 3 +  + [terminal corner a b c d 3] := by
+      bank corner a b c d r v 0 ++ [terminal corner a b c d 0] ++ 
+      bank corner a b c d r v 1 ++ [terminal corner a b c d 1] ++ 
+      bank corner a b c d r v 2 ++ [terminal corner a b c d 2] ++ 
+      bank corner a b c d r v 3 ++ [terminal corner a b c d 3] := by
     simp only [word,List.append_assoc,List.singleton_append]
   apply Multiset.coe_eq_coe.mp
   calc
     (word corner a b c d r v : Multiset ℕ) =
-        (↑(U ((2 ^ (d-1)-1) ^  ^  ^ v) +  + U v) : Multiset ℕ) + 
+        (↑(U ((2 ^ (d-1)-1) ^^^ v) ++ U v) : Multiset ℕ) + 
         ↑(List.range' d (c-1)) + ↑(List.range' (d + c) (b-1)) + 
-        ↑(hi +  + X (2 ^ e-r) +  + X (r-1)) + 
+        ↑(hi ++ X (2 ^ e-r) ++ X (r-1)) + 
         {d-1} + {d + c-1} + {d + c + b-1} + {a + b + c + d-1} := by
       rw [hw]
       cases corner <;> dsimp [bank,terminal,U,X,hi,e,off]
@@ -168,7 +168,7 @@ private theorem bank_good (corner : Bool) (a b c d r v : ℕ)
     omega
   cases corner <;> fin_cases j
   all_goals dsimp [bank] at hi
-  all_goals simp only [List.mem_append] at hi
+  all_goals try simp only [List.mem_append] at hi
   all_goals repeat' first
     | (have h := masked _ _ _ hi
        constructor
@@ -239,12 +239,12 @@ private theorem bank_masses (corner : Bool) (a b c d r v : ℕ)
   rw [chamberLabels_full] at hu
   simp only [List.map_append,List.sum_append] at hu
   rw [su,full 0] at hu
-  have uc : ((chamberLabels (d-1) 0 ((2 ^ (d-1)-1) ^  ^  ^ v)).map f).sum=C 0-(v:ℤ) * F 0 := by omega
+  have uc : ((chamberLabels (d-1) 0 ((2 ^ (d-1)-1) ^^^ v)).map f).sum=C 0-(v:ℤ) * F 0 := by omega
   have hx := ((low_split e off r hr hrn).map f).sum_eq
   simp only [List.map_append,List.sum_append] at hx
   rw [sp,sq] at hx
   have hlen : e + (a-1-e)=a-1 := by dsimp [e]; omega
-  have hxjoin : List.range' off e +  + List.range' (off + e) (a-1-e)=List.range' off (a-1) := by
+  have hxjoin : List.range' off e ++ List.range' (off + e) (a-1-e)=List.range' off (a-1) := by
     rw [List.range'_append_1,hlen]
   have hsum := congrArg (fun l : List ℕ => (l.map f).sum) hxjoin
   simp only [List.map_append,List.sum_append] at hsum

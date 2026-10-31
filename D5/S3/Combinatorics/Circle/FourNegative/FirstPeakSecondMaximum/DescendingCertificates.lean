@@ -732,8 +732,7 @@ private theorem cert_corner_2_old_seam_3 (z u : ℤ) (hz : 4 ≤ z) (hu : 1 ≤ 
   have hT : 0 ≤ u-1 := by omega
   have hid : 2 * (oldSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 3) =
       0 := by
-    dsimp [oldSeam,newSeam,oldNext,newNext,delta,eps,width,E,A,B,L,M,D]
-    norm_num <;> ring
+    simp [oldSeam,newSeam]
   rw [hid] <;> positivity
 
 -- corner_2/old_peak_slack_3: 12 terms; constant 296.
@@ -767,8 +766,7 @@ private theorem cert_corner_2_new_seam_3 (z u : ℤ) (hz : 4 ≤ z) (hu : 1 ≤ 
   have hT : 0 ≤ u-1 := by omega
   have hid : 2 * (newSeam true 2 (2 * z * u) z (2 * z * u) (2-1) u 3) =
       0 := by
-    dsimp [oldSeam,newSeam,oldNext,newNext,delta,eps,width,E,A,B,L,M,D]
-    norm_num <;> ring
+    simp [oldSeam,newSeam]
   rw [hid] <;> positivity
 
 -- corner_2/new_peak_slack_3: 12 terms; constant 552.
@@ -1086,8 +1084,7 @@ private theorem cert_corner_4_old_seam_3 (z u : ℤ) (hz : 4 ≤ z) (hu : 1 ≤ 
   have hT : 0 ≤ u-1 := by omega
   have hid : 2 * (oldSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 3) =
       0 := by
-    dsimp [oldSeam,newSeam,oldNext,newNext,delta,eps,width,E,A,B,L,M,D]
-    norm_num <;> ring
+    simp [oldSeam,newSeam]
   rw [hid] <;> positivity
 
 -- corner_4/old_peak_slack_3: 12 terms; constant 296.
@@ -1121,8 +1118,7 @@ private theorem cert_corner_4_new_seam_3 (z u : ℤ) (hz : 4 ≤ z) (hu : 1 ≤ 
   have hT : 0 ≤ u-1 := by omega
   have hid : 2 * (newSeam true 4 (2 * z * u) z (2 * z * u) (4-1) u 3) =
       0 := by
-    dsimp [oldSeam,newSeam,oldNext,newNext,delta,eps,width,E,A,B,L,M,D]
-    norm_num <;> ring
+    simp [oldSeam,newSeam]
   rw [hid] <;> positivity
 
 -- corner_4/new_peak_slack_3: 12 terms; constant 552.

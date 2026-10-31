@@ -30,7 +30,7 @@ private theorem mask_data (e r : ℕ) (hr : 1 ≤ r) (hrn : r ≤ 2 ^ e) :
   exact ⟨he,mask_complement e (2 ^ e-r) (r-1) he⟩
 
 private theorem low_split (e off r : ℕ) (hr : 1 ≤ r) (hrn : r ≤ 2 ^ e) :
-    (chamberLabels e off (2 ^ e-r) +  + chamberLabels e off (r-1)).Perm
+    (chamberLabels e off (2 ^ e-r) ++ chamberLabels e off (r-1)).Perm
       (List.range' off e) := by
   have hd := mask_data e r hr hrn
   have mem_bit (m i : ℕ) : i∈m.bitIndices.toFinset ↔ m.testBit i=true := by
@@ -63,10 +63,10 @@ private def bank (a b c d r v w : ℕ) : Fin 4 → List ℕ :=
   let n := 2 ^ e
   let off := d + c + b
   ![List.range' (off + e) (a-1-e),
-    chamberLabels (d-1) 0 ((2 ^ (d-1)-1) ^  ^  ^ v) +  + chamberLabels e off (n-r),
-    chamberLabels (c-1) d ((2 ^ (c-1)-1) ^  ^  ^ w),
-    List.range' (d + c) (b-1) +  + chamberLabels e off (r-1) +  + 
-      chamberLabels (d-1) 0 v +  + chamberLabels (c-1) d w]
+    chamberLabels (d-1) 0 ((2 ^ (d-1)-1) ^^^ v) ++ chamberLabels e off (n-r),
+    chamberLabels (c-1) d ((2 ^ (c-1)-1) ^^^ w),
+    List.range' (d + c) (b-1) ++ chamberLabels e off (r-1) ++ 
+      chamberLabels (d-1) 0 v ++ chamberLabels (c-1) d w]
 
 private def terminal (a b c d : ℕ) : Fin 4 → ℕ :=
   ![a + b + c + d-1,d-1,d + c-1,d + c + b-1]
@@ -74,7 +74,7 @@ private def terminal (a b c d : ℕ) : Fin 4 → ℕ :=
 private def word (a b c d r v w : ℕ) : List ℕ :=
   let P := bank a b c d r v w
   let T := terminal a b c d
-  P 0 +  + T 0 :: P 1 +  + T 1 :: P 2 +  + T 2 :: P 3 +  + [T 3]
+  P 0 ++ T 0 :: P 1 ++ T 1 :: P 2 ++ T 2 :: P 3 ++ [T 3]
 
 private theorem bank_inventory (a b c d r v w : ℕ)
     (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d) (hda : d<a)
@@ -93,23 +93,23 @@ private theorem bank_inventory (a b c d r v w : ℕ)
     (by intro i hi _; simp [Nat.testBit_two_pow_sub_one,hi])).trans
     (List.Perm.of_eq (chamberLabels_full _ _))
   have hx := low_split e off r hr hrn
-  have hxfull : (hi +  + X (2 ^ e-r) +  + X (r-1)).Perm (List.range' off (a-1)) := by
+  have hxfull : (hi ++ X (2 ^ e-r) ++ X (r-1)).Perm (List.range' off (a-1)) := by
     have hh := hx.append_left hi
     have he : e + (a-1-e)=a-1 := by dsimp [e]; omega
-    have hjoin : List.range' off e +  + hi=List.range' off (a-1) := by
+    have hjoin : List.range' off e ++ hi=List.range' off (a-1) := by
       dsimp [hi]
       rw [List.range'_append_1,he]
     simpa only [List.append_assoc] using hh.trans
       ((List.Perm.append_comm).trans (List.Perm.of_eq hjoin))
   have merge (o len : ℕ) (hlen : 1 ≤ len) :
-      List.range' o (len-1) +  + [o + len-1]=List.range' o len := by
+      List.range' o (len-1) ++ [o + len-1]=List.range' o len := by
     simpa only [show o + (len-1)=o + len-1 by omega,show len-1 + 1=len by omega] using
       (List.range'_1_concat (s:=o) (n:=len-1)).symm
   have hall :
-      (List.range' 0 (d-1) +  + [d-1]) +  + 
-      (List.range' d (c-1) +  + [d + c-1]) +  + 
-      (List.range' (d + c) (b-1) +  + [d + c + b-1]) +  + 
-      (List.range' off (a-1) +  + [a + b + c + d-1])=List.range (a + b + c + d) := by
+      (List.range' 0 (d-1) ++ [d-1]) ++ 
+      (List.range' d (c-1) ++ [d + c-1]) ++ 
+      (List.range' (d + c) (b-1) ++ [d + c + b-1]) ++ 
+      (List.range' off (a-1) ++ [a + b + c + d-1])=List.range (a + b + c + d) := by
     have h0 := merge 0 d (by omega)
     simp only [Nat.zero_add] at h0
     rw [h0,merge d c (by omega),merge (d + c) b (by omega)]
@@ -121,17 +121,17 @@ private theorem bank_inventory (a b c d r v w : ℕ)
     congr 1
     omega
   have hw : word a b c d r v w =
-      bank a b c d r v w 0 +  + [terminal a b c d 0] +  + 
-      bank a b c d r v w 1 +  + [terminal a b c d 1] +  + 
-      bank a b c d r v w 2 +  + [terminal a b c d 2] +  + 
-      bank a b c d r v w 3 +  + [terminal a b c d 3] := by
+      bank a b c d r v w 0 ++ [terminal a b c d 0] ++ 
+      bank a b c d r v w 1 ++ [terminal a b c d 1] ++ 
+      bank a b c d r v w 2 ++ [terminal a b c d 2] ++ 
+      bank a b c d r v w 3 ++ [terminal a b c d 3] := by
     simp only [word,List.append_assoc,List.singleton_append]
   apply Multiset.coe_eq_coe.mp
   calc
     (word a b c d r v w : Multiset ℕ) =
-        (↑(U ((2 ^ (d-1)-1) ^  ^  ^ v) +  + U v) : Multiset ℕ) + 
-        ↑(V ((2 ^ (c-1)-1) ^  ^  ^ w) +  + V w) + ↑(List.range' (d + c) (b-1)) + 
-        ↑(hi +  + X (2 ^ e-r) +  + X (r-1)) + 
+        (↑(U ((2 ^ (d-1)-1) ^^^ v) ++ U v) : Multiset ℕ) + 
+        ↑(V ((2 ^ (c-1)-1) ^^^ w) ++ V w) + ↑(List.range' (d + c) (b-1)) + 
+        ↑(hi ++ X (2 ^ e-r) ++ X (r-1)) + 
         {d-1} + {d + c-1} + {d + c + b-1} + {a + b + c + d-1} := by
       rw [hw]
       dsimp [bank,terminal,U,V,X,hi,e,off]
@@ -155,7 +155,7 @@ private theorem bank_good (a b c d r v w : ℕ)
     omega
   fin_cases j
   all_goals dsimp [bank] at hi
-  all_goals simp only [List.mem_append] at hi
+  all_goals try simp only [List.mem_append] at hi
   all_goals repeat' first
     | (have h := masked _ _ _ hi
        constructor
@@ -220,15 +220,15 @@ private theorem bank_masses (a b c d r v w : ℕ)
   simp only [List.map_append,List.sum_append] at hu hv'
   rw [su,full 0] at hu
   rw [sv,full 1] at hv'
-  have uc : ((chamberLabels (d-1) 0 ((2 ^ (d-1)-1) ^  ^  ^ v)).map f).sum=C 0-(v:ℤ) * F 0 := by
+  have uc : ((chamberLabels (d-1) 0 ((2 ^ (d-1)-1) ^^^ v)).map f).sum=C 0-(v:ℤ) * F 0 := by
     omega
-  have vc : ((chamberLabels (c-1) d ((2 ^ (c-1)-1) ^  ^  ^ w)).map f).sum=C 1-(w:ℤ) * F 1 := by
+  have vc : ((chamberLabels (c-1) d ((2 ^ (c-1)-1) ^^^ w)).map f).sum=C 1-(w:ℤ) * F 1 := by
     omega
   have hx := ((low_split e off r hr hrn).map f).sum_eq
   simp only [List.map_append,List.sum_append] at hx
   rw [sp,sq] at hx
   have hlen : e + (a-1-e)=a-1 := by dsimp [e]; omega
-  have hxjoin : List.range' off e +  + List.range' (off + e) (a-1-e)=List.range' off (a-1) := by
+  have hxjoin : List.range' off e ++ List.range' (off + e) (a-1-e)=List.range' off (a-1) := by
     rw [List.range'_append_1,hlen]
   have hsum := congrArg (fun l : List ℕ => (l.map f).sum) hxjoin
   simp only [List.map_append,List.sum_append] at hsum
