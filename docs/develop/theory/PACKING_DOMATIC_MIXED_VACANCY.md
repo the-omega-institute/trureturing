@@ -1069,3 +1069,139 @@ whose antecedent is false; it gives no answer to $Q(7,6)$.
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 9. The exact seven-class palette on the infinite path
+
+**Definition 9.1 (A period-28 six-colour packing).** Put
+
+$$
+\begin{aligned}
+S_1&=\{1,8,11,15,22,26\}+28\mathbb Z,\\
+S_2&=\{2,6,13,18,25\}+28\mathbb Z,\\
+S_3&=\{3,10,16,20,24\}+28\mathbb Z,\\
+S_4&=\{4,9,17,23\}+28\mathbb Z,\\
+S_5&=\{5,12,19,27\}+28\mathbb Z,\\
+S_6&=\{0,7,14,21\}+28\mathbb Z,
+\end{aligned}
+$$
+
+where the notation means the union of all translates of the displayed
+finite set. Define one map $f:\mathbb Z\to\{1,\ldots,6\}$ by
+$f(a)=j$ exactly when $a\in S_j$. Thus one period, from $0$ through
+$27$, is
+
+$$
+(6,1,2,3,4,5,2,6,1,4,3,1,5,2,6,1,3,4,2,5,3,6,1,4,3,2,1,5).
+$$
+
+For this palette-six map put
+
+$$
+M_f^{[6]}(z)=\#\{a\in\mathbb Z:|a-z|\le f(a)\}.
+$$
+
+**Theorem 9.2 (A common seven-class realization).** The map $f$ of
+Definition 9.1 is a packing on the whole integer path and satisfies
+
+$$
+M_f^{[6]}(z)\ge7\qquad(z\in\mathbb Z).
+$$
+
+Consequently $Q(7,6)$ holds with this same $f$ supplying every radius
+and every centre.
+
+Proof. The successive gaps in each $S_j$, including the wrap-around gap
+to the next period, are
+
+$$
+\begin{array}{c|c|c}
+j&\text{centres in one period}&\text{cyclic gaps}\\ \hline
+1&1,8,11,15,22,26&7,3,4,7,4,3\\
+2&2,6,13,18,25&4,7,5,7,5\\
+3&3,10,16,20,24&7,6,4,4,7\\
+4&4,9,17,23&5,8,6,9\\
+5&5,12,19,27&7,7,8,6\\
+6&0,7,14,21&7,7,7,7.
+\end{array}
+$$
+
+Every entry in row $j$ is at least $j+1$. Any two distinct members of
+$S_j$ are separated by a sum of consecutive cyclic gaps, so their
+distance is at least $j+1$. This proves the packing inequalities, and
+the displayed definition gives $1\le f(a)\le6$ for every integer $a$.
+
+For the covering count, let
+
+$$
+n_j(r)=\#\{a\in S_j:|a-r|\le j\},\qquad 0\le r\le27.
+$$
+
+The count is over all integer translates of the listed residue sets, so
+centres outside $[0,27]$ are included. Directly taking the indicated
+integer intervals gives the following complete rows, written in order
+$r=0,1,\ldots,27$:
+
+$$
+\begin{aligned}
+(n_6(r))&=(1,2,2,2,2,2,2,1,2,2,2,2,2,2,1,2,2,2,2,2,2,1,2,2,2,2,2,2),\\
+(n_5(r))&=(2,2,2,2,2,1,1,2,2,2,2,1,1,1,2,2,2,2,1,1,1,1,2,2,2,1,1,1),\\
+(n_4(r))&=(1,1,1,1,1,2,2,2,2,1,1,1,1,2,1,1,1,1,1,2,2,2,1,1,1,1,1,1),\\
+(n_3(r))&=(1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,2,2,2,1,2,2,2,1,1,1,1),\\
+(n_2(r))&=(1,1,1,1,2,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1),\\
+(n_1(r))&=(1,1,1,0,0,0,0,1,1,1,1,1,1,0,1,1,1,0,0,0,0,1,1,1,0,1,1,1).
+\end{aligned}
+$$
+
+Adding the six rows yields
+
+$$
+(M_f^{[6]}(r))_{r=0}^{27}=(7,8,8,7,8,7,7,8,9,7,7,7,7,8,7,8,8,8,7,8,7,7,8,9,7,7,7,7).
+$$
+
+In particular every entry is at least $7$. Since $f(a+28)=f(a)$, the
+translation $a\mapsto a+28$ bijects the centres covering $z$ with those
+covering $z+28$. Thus $M_f^{[6]}(z+28)=M_f^{[6]}(z)$, and the residue calculation
+proves $M_f^{[6]}(z)\ge7$ for every integer, including negative integers and
+all period endpoints.
+
+Apply Lemma 7.4 with $g=f$, $t=6$, and $k=7$. Its hypotheses are exactly
+the bounded-radius whole-line interval family just verified, and the
+inequality $M_f^{[6]}\ge7$ is its right-hand side because its $M_g$ is
+the same count. The lemma therefore
+gives one map $c:\mathbb Z\to\{1,\ldots,7\}$ such that, for every
+$z\in\mathbb Z$ and every class $i$, there is a centre $a$ with
+$c(a)=i$ and $|z-a|\le f(a)$. This is the required single common
+realization; no class is required to be determined by the value of $f$,
+and no assertion about periodicity of arbitrary solutions is made.
+\square$
+
+**Theorem 9.3 (Exact value for seven classes).** With the source
+notation for packing-domatic colourings of the two-way infinite path,
+
+$$
+\chi_{\rho,7}(P_\infty)=6.
+$$
+
+Proof. Under the source's identification $u_z\leftrightarrow z$, the
+path distance is $|u-v|$, the ordinary packing sequence is
+$(1,2,3,\ldots)$, and the class sets are $c^{-1}(i)$. Therefore the
+definition of $Q(7,t)$ in 1.2 is exactly the source predicate that
+$\chi_{\rho,7}(P_\infty)\le t$. Theorem 9.2 gives
+$\chi_{\rho,7}(P_\infty)\le6$.
+
+The delivered Corollary 8.3 proves $\neg Q(7,5)$ under the same
+whole-line hypotheses and the same single class map. If some
+$t\le5$ satisfied $Q(7,t)$, increasing the palette bound while keeping
+both maps and every centre would give $Q(7,5)$ by the palette
+monotonicity already used in 6.3, a contradiction. Hence no palette
+bound at most $5$ is possible, so the least bound is $6$.
+
+This is the $k=7$ instance of Brešar--Ferme--Hu, *Partitioning an
+$S$-packing coloring into broadcast dominating sets*, arXiv:2610.03477v1,
+Sections 1 and 3.2 and Problem 3 in Section 5. The argument resolves
+only this instance on the original two-way integer path; it makes no
+claim about other values of $k$, extremizers, or optimal deficit lengths.
+\square$
+
+
+## 追加锚（本行以下为增补区）
