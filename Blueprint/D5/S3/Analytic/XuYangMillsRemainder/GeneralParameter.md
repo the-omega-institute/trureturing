@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The original general-parameter Mills target, regularity, Gamma coefficients, sharp origin obstruction, strict remainder moment bounds, closed kernel ranges and absolute Laplace control.
+The original general-parameter Mills classification, including both sharp global-sign and complete-monotonicity equivalence chains with their closed endpoints.
 
 **Definition 1.1 (Original signed remainder normalization).**
 
@@ -26,9 +26,9 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.theorem21`
 
 *Commentary.*
 
-For every n >= 2 and real a, the positive global-sign predicate is equivalent to complete monotonicity and to a <= theta (n-2); the negative global-sign predicate is equivalent to complete monotonicity of -F and to a >= theta (n-1), with both endpoints included. The proposition is retained as the exact source target.
+For every n >= 2 and real a, the positive global-sign predicate is equivalent to complete monotonicity and to a <= theta (n-2); the negative global-sign predicate is equivalent to complete monotonicity of -F and to a >= theta (n-1), with both endpoints included. The proposition is the exact original source target.
 
-The proposition states two separate equivalences in each chain: global sign iff complete monotonicity, and complete monotonicity iff the sharp parameter bound. It is a target definition, not an asserted theorem. the exact Laplace representation and the positive sufficiency branch are now proved in the continuation; the infinity asymptotic, sharp negative necessity and complete two-chain theorem remain open.
+The proposition states two separate equivalences in each chain: global sign iff complete monotonicity, and complete monotonicity iff the sharp parameter bound. The theorem result proves this entire proposition using the original Gaussian Mills ratio, Gamma coefficients and finite subtraction. Complete monotonicity includes C-infinity regularity and every ordinary derivative order, including zero.
 
 **Theorem 1.3 (Gaussian regularity and the original origin asymptotic).**
 
@@ -64,7 +64,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.negative_c
 
 *Commentary.*
 
-For every n >= 2 and real a, if -F n a is completely monotone, or merely globally nonnegative, then a >= theta (n-2). This is the obstruction at the origin; it does not establish the required infinity obstruction u (n+1) a (a-2) >= 0 or the sharp negative-branch threshold theta (n-1).
+For every n >= 2 and real a, if -F n a is completely monotone, or merely globally nonnegative, then a >= theta (n-2). The infinity limit supplies the sharper bound a >= theta (n-1) in negative_sign_sharp_necessary.
 
 **Theorem 1.6 (Strictly decreasing upper normalized remainder).**
 
@@ -124,7 +124,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_clo
 
 *Commentary.*
 
-For source truncation n=r+2 and every t>0, the kernel L from (2.5) is strictly positive when a <= theta_r and strictly negative when a >= theta_(r+1). Its inner integral is exactly 2 M2 times the difference between the inner threshold and a. The strict inner bounds include both parameter endpoints. This proves the kernel sign ranges. The continuation below proves equality of its Laplace integral with the original F and uses it for both sufficiency branches.
+For source truncation n=r+2 and every t>0, the kernel L from (2.5) is strictly positive when a <= theta_r and strictly negative when a >= theta_(r+1). Its inner integral is exactly 2 M2 times the difference between the inner threshold and a. The strict inner bounds include both parameter endpoints. The exact equality of its Laplace integral with the original F gives both complete-monotonicity sufficiency branches.
 
 **Theorem 1.11 (Exact general-parameter Gamma coefficient correspondence).**
 
@@ -208,7 +208,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.all_order_
 
 *Commentary.*
 
-For every derivative order m including zero, the mth derivative of the original F_(r+2,a) equals the signed-kernel moment plus the mth derivative of (-1)^(r+2) [Y_(a,a-2)-(a-1)-Laplace(G_a)]. The finite-subtraction identity and smoothness justify this equality on x>0. The Gaussian identity is discharged in the continuation below. The remaining open obligations are the infinity asymptotic, sharp negative necessity and assembly of the complete two-chain classification.
+For every derivative order m including zero, the mth derivative of the original F_(r+2,a) equals the signed-kernel moment plus the mth derivative of (-1)^(r+2) [Y_(a,a-2)-(a-1)-Laplace(G_a)]. The finite-subtraction identity and smoothness justify this equality on x>0. The Gaussian identity removes this defect exactly, yielding actual_f_iterated_deriv.
 
 **Theorem 1.18 (General-parameter Gaussian convolution kernel identity).**
 
@@ -292,11 +292,60 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.negative_c
 
 *Commentary.*
 
-The negative closed kernel range, exact F Laplace representation and all-order derivative formula prove complete monotonicity of -F whenever a >= theta_(n-1), including equality. The converse still requires the infinity asymptotic.
+The negative closed kernel range, exact F Laplace representation and all-order derivative formula prove complete monotonicity of -F whenever a >= theta_(n-1), including equality.
+
+**Theorem 1.25 (A quantitative bound for every original remainder).**
+
+Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.actual_f_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.actual_f_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every r>=0, real a and x>0, the absolute value of F_(r+2,a)(x) is at most (abs(1-2a)+1) (2r+5)! / x^(2r+6). Integral norm comparison applies the signed-kernel polynomial bound and the exact original exponential moment. Consequently x^(2r+4) F_(r+2,a)(x) tends to zero at infinity, with an absolute bound equal to a fixed constant times x^(-2).
+
+**Theorem 1.26 (The original infinity asymptotic with its exact Gamma coefficient).**
+
+Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.infinity_endpoint`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.infinity_endpoint` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n>=2 and real a, x^(2n+2) F_(n,a)(x) tends to -u_(n+1)(a,a-2) at infinity. The exact finite Laplace recurrence gives F_(n+1,a)=-u_(n+1)/x^(2n+2)-F_(n,a). The quantitative next-remainder bound makes x^(2n+2) F_(n+1,a) tend to zero. This proves the source's limit (2.12) in the original normalization.
+
+**Theorem 1.27 (Sharp negative necessity already from the global sign).**
+
+Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.negative_sign_sharp_necessary`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.negative_sign_sharp_necessary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If -F_(n,a) is globally nonnegative on x>0, its rescaled infinity limit is nonnegative. Thus u_(n+1)(a,a-2)>=0, and the exact coefficient identity with positive B_(n-1) gives a>=theta_(n-1), including equality.
+
+**Theorem 1.28 (Complete original Theorem 2.1).**
+
+Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.result`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.result` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every integer n>=2 and every real a, global nonnegativity of the original F_(n,a) is equivalent to its complete monotonicity and to a<=theta_(n-2). Global nonnegativity of -F_(n,a) is equivalent to complete monotonicity of -F_(n,a) and to a>=theta_(n-1). Both endpoints are included. The positive necessity comes from the origin limit; the negative necessity comes from the infinity limit. The exact signed Laplace formula supplies both sufficient conditions and every ordinary derivative sign, including order zero. The original Mills ratio, Gamma coefficients, D_n and integral thresholds are retained.
 
 ## References
 
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.F`
+- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.actual_f_bound`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.actual_f_iterated_deriv`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.actual_f_laplace`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.all_order_laplace_defect`
@@ -306,6 +355,7 @@ The negative closed kernel range, exact F Laplace representation and all-order d
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.gaussian_kernel_eq_K`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.gaussian_kernel_identity`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.gaussian_laplace_identity`
+- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.infinity_endpoint`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.inner_threshold_bounds`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_closed_ranges`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_exponential_moments`
@@ -315,9 +365,11 @@ The negative closed kernel range, exact F Laplace representation and all-order d
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.moment_ratio_bounds`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.negative_cm_necessary`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.negative_cm_sufficiency`
+- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.negative_sign_sharp_necessary`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.positive_cm_necessary`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.positive_cm_sufficiency`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.regularity_and_origin`
+- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.result`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.signed_kernel_moment_iterated`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.theorem21`
 - Dependency: [D5/S3/Analytic/IncompleteBeta/Comparison](../IncompleteBeta/Comparison.md)
