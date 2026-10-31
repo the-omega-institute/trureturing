@@ -9,6 +9,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.EqualOuterThree.LowerArithmetic
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 import D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
 
+/-! The lower physical construction, consumed by the full family endpoint. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.EqualOuterThree
@@ -51,7 +52,7 @@ private theorem inventory (s b h : ℕ) (hb : 2 ≤ b) (hs : b+2 ≤ s)
     simpa only [show s+(s-1)=2*s-1 by omega, show s-1+1=s by omega] using
       (List.range'_1_concat (s:=s) (n:=s-1)).symm
   have hU : List.range (s-1) ++ [s-1] = List.range s := by
-    simpa only [show s-1+1=s by omega] using (List.range_succ (n:=s-1)).symm
+    simpa only [Nat.succ_eq_add_one,show s-1+1=s by omega] using (List.range_succ (n:=s-1)).symm
   have hW : List.range' (2*s) (b-1) ++ [2*s+b-1] =
       List.range' (2*s) b := by
     simpa only [show 2*s+(b-1)=2*s+b-1 by omega, show b-1+1=b by omega] using
@@ -62,7 +63,7 @@ private theorem inventory (s b h : ℕ) (hb : 2 ≤ b) (hs : b+2 ≤ s)
       (List.range'_1_concat (s:=2*s+b) (n:=s-1)).symm
   have hall : List.range s ++ List.range' s s ++ List.range' (2*s) b ++
       List.range' (2*s+b) s = List.range (3*s+b) := by
-    rw [List.range_eq_range']
+    simp only [List.range_eq_range']
     have h1 := List.range'_append_1 (s:=0) (m:=s) (n:=s)
     have h2 := List.range'_append_1 (s:=0) (m:=2*s) (n:=b)
     have h3 := List.range'_append_1 (s:=0) (m:=2*s+b) (n:=s)
@@ -118,14 +119,12 @@ private theorem actual_lower (s b : ℕ) (hb : 2 ≤ b) (hs : b+2 ≤ s) :
   have hr : 2 ≤ r := by
     dsimp [r]
     simpa using pow_le_pow_right₀ (by decide : (1:ℤ)≤2) (show 1≤b-1 by omega)
-  have hy : y=2*r := by
-    dsimp [y,r]
-    rw [show b=(b-1)+1 by omega, pow_succ]
-    ring
+  have hy : y=2*r := pow_step b (by omega)
   have hq : q=2*y*m := by
-    dsimp [q,y,m,h]
-    rw [show s=(b+1)+(s-b-1) by omega, pow_add, pow_add]
-    ring
+    change (2:ℤ)^s=2*2^b*2^h
+    calc
+      (2:ℤ)^s=2^((b+1)+h) := by congr 1; dsimp [h]; omega
+      _=2*2^b*2^h := by rw [pow_add,pow_succ]; ring
   have hqh : q=2*(2*r*m) := by rw [hq,hy]; ring
   have hpowS : (2:ℤ)^(s-1)=2*r*m := by
     have hhq := pow_step s (by omega)
@@ -180,15 +179,15 @@ private theorem actual_lower (s b : ℕ) (hb : 2 ≤ b) (hs : b+2 ≤ s) :
     constructor <;> ring
   have negU : f (s-1)=B-(2*r*m)*A ∧ g (s-1)=Bn-(2*r*m)*(2*A) := by
     have hf:=huf (s-1) (by omega); have hg:=hug (s-1) (by omega)
-    rw [ite_eq_right (by omega),negative_step N A B (2*r*m) (by simpa [hq,hy] using rels.1)] at hf
+    rw [ite_eq_right (by omega),negative_step N A B (2*r*m) (by simpa only [hqh] using rels.1)] at hf
     rw [ite_eq_right (by omega),negative_step (2*N+1) (2*A) Bn (2*r*m)
-      (by simpa [hq,hy] using grels.1)] at hg
+      (by simpa only [hqh] using grels.1)] at hg
     exact ⟨hf,hg⟩
   have negV : f (2*s-1)=L-(2*r*m)*B ∧ g (2*s-1)=Ln-(2*r*m)*Bn := by
     have hf:=hvf (s-1) (by omega); have hg:=hvg (s-1) (by omega)
-    rw [ite_eq_right (by omega),negative_step N B L (2*r*m) (by simpa [hq,hy] using rels.2.1)] at hf
+    rw [ite_eq_right (by omega),negative_step N B L (2*r*m) (by simpa only [hqh] using rels.2.1)] at hf
     rw [ite_eq_right (by omega),negative_step (2*N+1) Bn Ln (2*r*m)
-      (by simpa [hq,hy] using grels.2.1)] at hg
+      (by simpa only [hqh] using grels.2.1)] at hg
     simpa only [show s+(s-1)=2*s-1 by omega] using And.intro hf hg
   have negW : f (2*s+b-1)=M-r*L ∧ g (2*s+b-1)=Mn-r*Ln := by
     have hf:=hwf (b-1) (by omega); have hg:=hwg (b-1) (by omega)
@@ -198,9 +197,9 @@ private theorem actual_lower (s b : ℕ) (hb : 2 ≤ b) (hs : b+2 ≤ s) :
     simpa only [show 2*s+(b-1)=2*s+b-1 by omega] using And.intro hf hg
   have negX : f (3*s+b-1)=A-(2*r*m)*M ∧ g (3*s+b-1)=A-(2*r*m)*Mn := by
     have hf:=hxf (s-1) (by omega); have hg:=hxg (s-1) (by omega)
-    rw [ite_eq_right (by omega),negative_step N M A (2*r*m) (by simpa [hq,hy] using rels.2.2.2)] at hf
+    rw [ite_eq_right (by omega),negative_step N M A (2*r*m) (by simpa only [hqh] using rels.2.2.2)] at hf
     rw [ite_eq_right (by omega),negative_step (2*N+1) Mn A (2*r*m)
-      (by simpa [hq,hy] using grels.2.2.2)] at hg
+      (by simpa only [hqh] using grels.2.2.2)] at hg
     simpa only [show 2*s+b+(s-1)=3*s+b-1 by omega] using And.intro hf hg
   let T := List.range' s h
   let R := List.range' (s+h) (s-h-1)
@@ -286,15 +285,15 @@ private theorem actual_lower (s b : ℕ) (hb : 2 ≤ b) (hs : b+2 ≤ s) :
     intro i hi; rcases List.mem_append.mp hi with hi|hi
     · exact posblock f L (2*s) (b-1) hpositive.2.2.1 (by intro j hj; exact (posWchain j hj).1) i hi
     · have hi' := List.mem_range'_1.mp hi
-      rw [show i=s+(i-s) by dsimp [T] at hi'; omega]
-      rw [(posV (i-s) (by dsimp [T] at hi'; omega)).1]
+      rw [show i=s+(i-s) by omega]
+      rw [(posV (i-s) (by dsimp only [h] at hi'; omega)).1]
       positivity
   have posWbankn : ∀ i∈PW++T,0≤g i := by
     intro i hi; rcases List.mem_append.mp hi with hi|hi
-    · exact posblock g Ln (2*s) (b-1) hpositive.2.2.2.2.1 (by intro j hj; exact (posWchain j hj).2) i hi
+    · exact posblock g Ln (2*s) (b-1) hLn (by intro j hj; exact (posWchain j hj).2) i hi
     · have hi' := List.mem_range'_1.mp hi
-      rw [show i=s+(i-s) by dsimp [T] at hi'; omega]
-      rw [(posV (i-s) (by dsimp [T] at hi'; omega)).2]
+      rw [show i=s+(i-s) by omega]
+      rw [(posV (i-s) (by dsimp only [h] at hi'; omega)).2]
       positivity
   have hgates : Gates (N/2) (PX.map f).sum (f (3*s+b-1))
       (PU.map f).sum (f (s-1)) (R.map f).sum (f (2*s-1))
@@ -330,7 +329,9 @@ private theorem actual_lower (s b : ℕ) (hb : 2 ≤ b) (hs : b+2 ≤ s) :
     simp only [pow_add]
     ring
   have hmod' : modulus (k+1)=2*N+1 := by
-    dsimp [modulus]; rw [pow_succ]; rw [←hmod]; ring
+    have he : modulus (k+1)=2*modulus k+1 := by
+      dsimp only [modulus]; rw [pow_succ]; ring
+    rw [he,hmod]
   have hseed : (seed:ℤ)=A := by
     dsimp [seed,A,q,y]
     push_cast
