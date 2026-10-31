@@ -219,7 +219,7 @@ private lemma diagonal_forces_identity (m : ℕ) (circuit : List (gate m)) (c : 
     by_contra hn
     have hz : circuitMatrix circuit x (Matrix.mulVec (wireLabels circuit) x) = 0 := by
       rw [h]
-      simp [Matrix.smul_apply, Matrix.diagonal_apply, Ne.symm hn]
+      simp [Matrix.smul_apply, Ne.symm hn]
     exact phase_ne_zero circuit (1 : Matrix (Fin m) (Fin m) Bool) x (heval.symm.trans hz)
   exact Matrix.ext_iff_mulVec.mpr fun x => (hfix x).trans (Matrix.one_mulVec x).symm
 
@@ -393,7 +393,7 @@ private lemma rotation_labels (m : ℕ) (circuit : List (gate m))
     change circuitMatrix circuit (Matrix.mulVec (1 : Matrix (Fin m) (Fin m) Bool) x) x =
       phaseAux circuit (1 : Matrix (Fin m) (Fin m) Bool) x *
         (if Matrix.mulVec (wireLabels circuit) x = x then 1 else 0) at hh
-    simp only [hnf, Matrix.one_mulVec, ite_eq_left rfl, mul_one] at hh
+    simp only [hnf, Matrix.one_mulVec] at hh
     rw [h] at hh
     simpa using hh.symm
   have hc : c ≠ 0 := by
