@@ -34,6 +34,13 @@ internal sealed class DiagonalKrausInstrumentFactorizationDocument : IScribeDocu
                     + "index. The outcome b is retained, so these weights need not sum to one within a branch."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("diagonal-instrument-entry-expansion"),
+                DeclarationHandle.Create(Prefix + "diagonal_entry_expansion"),
+                H("Entries of a Kraus map on a diagonal input"),
+                StatementSource.FromAuthor(EntryExpansionFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Each output entry is the input-weighted sum of the corresponding Kraus column Gram coefficients."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("diagonal-instrument-factorization"),
                 DeclarationHandle.Create(Prefix + "diagonal_instrument_factorization"),
                 H("Orthogonality, factorization, and stochastic normalization"),
@@ -102,6 +109,27 @@ internal sealed class DiagonalKrausInstrumentFactorizationDocument : IScribeDocu
         Forall, Sp, a, Colon, Sp, A, Comma, Sp, b, Colon, Sp, B, Comma, Sp,
         o, Colon, Sp, O, Comma, Sp, i, Colon, Sp, I, Comma, Sp,
         W, Sp, Eq, Sp, SumOver(r, R, Call("normSq", Entry(o)))), false));
+
+    private static Formula EntryExpansionFormula()
+    {
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula k = F.Id("K");
+        Formula gram = Multiply(Call("K", r, o, i),
+            new Formula.Apply(Seq(Operatorname, Grp(F.Id("starRingEnd"))),
+                [complex, Call("K", r, q, i)]));
+        Formula channel = new Formula.Apply(
+            Seq(Operatorname, Grp(F.Id("MatrixMap"), Dot, F.Id("of"), Underscore, Grp(F.Id("kraus")))),
+            [k, k, new Formula.Apply(Seq(Operatorname,
+                Grp(F.Id("Matrix"), Dot, F.Id("diagonal"))), [p]), o, q]);
+        return Disp(Seq(Forall, Sp, I, Comma, O, Comma, R, Colon, Sp, F.Id("Type"), Comma, Sp,
+            OpenBracket, Call("Fintype", I), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", I), CloseBracket, Sp,
+            OpenBracket, Call("Fintype", R), CloseBracket, Comma, Sp,
+            Forall, Sp, k, Colon, Sp, R, Sp, To, Sp, Call("Matrix", O, I, complex), Comma, Sp,
+            Forall, Sp, p, Colon, Sp, I, Sp, To, Sp, complex, Comma, Sp,
+            Forall, Sp, o, Comma, q, Colon, Sp, O, Comma, Sp,
+            Equal(channel, SumOver(i, I, Multiply(SumOver(r, R, gram), Call("p", i))))));
+    }
 
     private static Formula TheoremFormula()
     {

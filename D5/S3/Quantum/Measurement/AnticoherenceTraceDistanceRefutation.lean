@@ -10,6 +10,8 @@ import D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation
 import D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT
 import D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
+import D5.S3.Quantum.Measurement.DiagonalKrausInstrumentFactorization
+import D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness
 
 /-!
 The mixed-state reading of axiom (T4) in Denis–Lacaille–Martin–Serrano-Ensástiga,
@@ -39,6 +41,7 @@ open D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (tensorOp)
 open D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction (pauli)
 open D5.S3.Quantum.Entanglement.OccupancyWordSectors
+open D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness (designAverage)
 
 private def witnessState : Matrix (Fin 9) (Fin 9) ℂ :=
   diagonal (fun r => (![209, 92, 560, 0, 441, 0, 294, 168, 0] r : ℂ) / 1764)
@@ -154,16 +157,15 @@ private lemma kraus_row_product (q : Fin 5) (i j r : Fin 9) :
 private lemma channel_diagonal_entry (p : Fin 9 → ℂ) (i j : Fin 9) :
     witnessChannel (diagonal p) i j = ∑ q : Fin 5, ∑ r : Fin 9,
       p r * (witnessKraus q i r * star (witnessKraus q j r)) := by
-  rw [witnessChannel]
-  simp only [witnessChannel, MatrixMap.of_kraus, LinearMap.coe_sum,
-    LinearMap.coe_mk, AddHom.coe_mk, Finset.sum_apply, Matrix.sum_apply]
+  rw [witnessChannel,
+    D5.S3.Quantum.Measurement.DiagonalKrausInstrumentFactorization.diagonal_entry_expansion]
+  simp_rw [Finset.sum_mul]
+  rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro q _
-  rw [Matrix.mul_apply]
-  simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply]
   apply Finset.sum_congr rfl
   intro r _
-  ring
+  exact mul_comm _ _
 
 set_option maxHeartbeats 1000000 in
 -- Nine diagonal entries each sum the five Kraus contributions.
@@ -209,19 +211,15 @@ def reducedState {n : ℕ} (t : ℕ) (ρ : Matrix (Fin (n + 1)) (Fin (n + 1)) �
         dickeIsometry t
   else 0
 
-/-- The maximally mixed state on the symmetric `t`-qubit subspace. -/
-def mixedState (t : ℕ) : Matrix (Fin (t + 1)) (Fin (t + 1)) ℂ :=
-  (1 / ((t : ℂ) + 1)) • 1
-
 /-- The source's maximum trace distance over all states of spin `t/2`. -/
 def normalizer (t : ℕ) : ℝ :=
   sSup {d : ℝ | ∃ σ : Matrix (Fin (t + 1)) (Fin (t + 1)) ℂ,
-    σ.PosSemidef ∧ σ.trace = 1 ∧ d = traceNorm (σ - mixedState t)}
+    σ.PosSemidef ∧ σ.trace = 1 ∧ d = traceNorm (σ - designAverage (t + 1))}
 
 /-- The distance-based total anticoherence measure for Schatten exponent one. -/
 def anticoherence {n : ℕ} (t : ℕ)
     (ρ : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) : ℝ :=
-  1 - traceNorm (reducedState t ρ - mixedState t) / normalizer t
+  1 - traceNorm (reducedState t ρ - designAverage (t + 1)) / normalizer t
 
 /-- Complete positivity, trace preservation, and covariance under every single-qubit SU(2). -/
 def IsCovariantChannel {n : ℕ} (φ : MatrixMap (Fin (n + 1)) (Fin (n + 1)) ℂ) : Prop :=
@@ -330,13 +328,6 @@ private lemma weight_le (n : ℕ) (x : Fin n → Fin 2) : (∑ i, (x i).val) ≤
   rw [weight_card]
   exact card_finset_fin_le _
 
-private lemma same_weight_permutation (n : ℕ) (x y : Fin n → Fin 2)
-    (h : (∑ i, (x i).val) = ∑ i, (y i).val) :
-    ∃ σ : Equiv.Perm (Fin n), y ∘ σ = x := by
-  apply D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT.occupation_same_orbit
-  apply (occupation_eq_iff_weight n x (occupation y) (occupation_card y)).2
-  rw [weight_count, h]
-
 private lemma tensor_weight_constant (n : ℕ) (u : Matrix (Fin 2) (Fin 2) ℂ)
     (x y : Fin n → Fin 2) (r : Fin (n + 1))
     (h : (∑ i, (x i).val) = ∑ i, (y i).val) :
@@ -359,9 +350,10 @@ private lemma tensor_weight_constant (n : ℕ) (u : Matrix (Fin 2) (Fin 2) ℂ)
         have hu : tensorOp (fun _ : Fin n => u) (x ∘ σ) (z ∘ σ) = tensorOp (fun _ : Fin n => u) x z :=
           Equiv.prod_comp σ (fun i => u (x i) (z i))
         simp only [hu, dickeIsometry, Function.comp_apply, hw]
-  obtain ⟨σ, hσ⟩ := same_weight_permutation n x y h
-  rw [← hσ]
-  exact hp σ y
+  apply D5.S3.Quantum.Entanglement.AbsoluteSeparability.LouvetSymmetricAbsolutelyPPT.symmetric_occupation_constant
+    (fun x => (tensorOp (fun _ : Fin n => u) * dickeIsometry n) x r) hp x y
+  apply (occupation_eq_iff_weight n x (occupation y) (occupation_card y)).2
+  rw [weight_count, h]
 
 private lemma dicke_projector_entry (n : ℕ) (x y : Fin n → Fin 2) :
     (dickeIsometry n * (dickeIsometry n)ᴴ) x y =
@@ -738,7 +730,7 @@ private lemma channel_covariant (u : Matrix.specialUnitaryGroup (Fin 2) ℂ)
     dsimp only [q, Matrix.kronecker, Matrix.kroneckerMap]
     simpa only [quadrupole, Fintype.sum_prod_type, Matrix.of_apply, Matrix.map_apply] using
       quadratic_rotation (spinAction 8 u) (spin_action_unitary 8 u) r hr
-        (![Jx 8, Jy 8, Jz 8]) hj ab.1 ab.2
+        (![Jx 8, Jy 8, Jz 8]) hj (20 / 3) ab.1 ab.2
   have hd : (spinAction 8 u)ᴴ * spinAction 8 u = 1 := spin_action_unitary 8 u
   have hsum : spinAction 8 u *
       (∑ ab : Fin 3 × Fin 3, quadrupole ab.1 ab.2 * x * quadrupole ab.1 ab.2) *
@@ -838,11 +830,14 @@ private lemma diagonal_reduction (n t : ℕ) (ht : t ≤ n) (p : Fin (n + 1) →
         (k, l) (m, l)) = _
     apply Finset.sum_congr rfl
     intro l _
-    rw [Matrix.mul_apply]
-    simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply]
+    have h := D5.S3.Quantum.Measurement.DiagonalKrausInstrumentFactorization.diagonal_entry_expansion
+      (fun _ : Unit => dickeSplit n t) (fun r => (p r : ℂ)) (k, l) (m, l)
+    simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk,
+      AddHom.coe_mk, Fintype.sum_unique] at h
+    rw [h]
     apply Finset.sum_congr rfl
     intro r _
-    ring
+    exact mul_comm _ _
   ext k m
   rw [he]
   simp_rw [split_product]
@@ -896,42 +891,42 @@ private lemma output_reduction : reducedState 7 witnessOutput =
   fin_cases k <;> norm_num [Fin.sum_univ_succ, Nat.choose]
 
 private lemma input_distance :
-    traceNorm (reducedState 7 witnessState - mixedState 7) = 19 / 84 := by
+    traceNorm (reducedState 7 witnessState - designAverage (7 + 1)) = 19 / 84 := by
   rw [input_reduction]
   have he : diagonal (fun k => (![21, 21, 40, 21, 21, 21, 21, 2] k : ℂ) / 168) -
-      mixedState 7 = diagonal (fun k : Fin 8 =>
+      designAverage (7 + 1) = diagonal (fun k : Fin 8 =>
         (((![21, 21, 40, 21, 21, 21, 21, 2] k : ℝ) / 168 - 1 / 8 : ℝ) : ℂ)) := by
     ext i j
     by_cases hij : i = j
     · subst j
-      fin_cases i <;> norm_num [mixedState]
-    · simp [mixedState, diagonal_apply, hij]
+      fin_cases i <;> norm_num [designAverage, Matrix.smul_apply, Complex.real_smul]
+    · simp [designAverage, Matrix.smul_apply, Complex.real_smul, diagonal_apply, hij]
   rw [he, D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation.diagonal_norm]
   norm_num [Fin.sum_univ_succ]
 
 private lemma output_distance :
-    traceNorm (reducedState 7 (witnessChannel witnessState) - mixedState 7) =
+    traceNorm (reducedState 7 (witnessChannel witnessState) - designAverage (7 + 1)) =
       3933 / 17248 := by
   rw [witness_output, output_reduction]
   have he : diagonal (fun k =>
       (![69468, 87252, 64205, 82635, 78360, 59892, 43533, 32095] k : ℂ) / 517440) -
-      mixedState 7 = diagonal (fun k : Fin 8 =>
+      designAverage (7 + 1) = diagonal (fun k : Fin 8 =>
         (((![69468, 87252, 64205, 82635, 78360, 59892, 43533, 32095] k : ℝ) /
           517440 - 1 / 8 : ℝ) : ℂ)) := by
     ext i j
     by_cases hij : i = j
     · subst j
-      fin_cases i <;> norm_num [mixedState]
-    · simp [mixedState, diagonal_apply, hij]
+      fin_cases i <;> norm_num [designAverage, Matrix.smul_apply, Complex.real_smul]
+    · simp [designAverage, Matrix.smul_apply, Complex.real_smul, diagonal_apply, hij]
   rw [he, D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation.diagonal_norm]
   norm_num [Fin.sum_univ_succ]
 
 private lemma normalizer_positive : 0 < normalizer 7 := by
-  have hm : (mixedState 7).PosSemidef ∧ (mixedState 7).trace = 1 := by
-    have he : mixedState 7 = diagonal (fun _ : Fin 8 => (1 / 8 : ℂ)) := by
-      rw [mixedState]
+  have hm : (designAverage (7 + 1)).PosSemidef ∧ (designAverage (7 + 1)).trace = 1 := by
+    have he : designAverage (7 + 1) = diagonal (fun _ : Fin 8 => (1 / 8 : ℂ)) := by
+      rw [designAverage]
       ext i j
-      by_cases hij : i = j <;> norm_num [mixedState, diagonal_apply, hij]
+      by_cases hij : i = j <;> norm_num [designAverage, Matrix.smul_apply, Complex.real_smul, diagonal_apply, hij]
     rw [he]
     exact ⟨posSemidef_diagonal_iff.mpr (by
       intro i; norm_num [Complex.nonneg_iff, Complex.div_re, Complex.div_im]), by norm_num⟩
@@ -941,11 +936,11 @@ private lemma normalizer_positive : 0 < normalizer 7 := by
       (D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm_of_posSemidef hσ)
     simpa [ht] using h
   have hb : BddAbove {d : ℝ | ∃ σ : Matrix (Fin 8) (Fin 8) ℂ,
-      σ.PosSemidef ∧ σ.trace = 1 ∧ d = traceNorm (σ - mixedState 7)} := by
+      σ.PosSemidef ∧ σ.trace = 1 ∧ d = traceNorm (σ - designAverage (7 + 1))} := by
     refine ⟨2, ?_⟩
     rintro d ⟨σ, hσ, ht, rfl⟩
     have h := D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm_add_le
-      σ (-(mixedState 7))
+      σ (-(designAverage (7 + 1)))
     rw [D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm_neg,
       hnorm σ hσ ht, hnorm _ hm.1 hm.2, ← sub_eq_add_neg] at h
     norm_num at h ⊢
@@ -957,14 +952,14 @@ private lemma normalizer_positive : 0 < normalizer 7 := by
       intro i
       split_ifs <;> norm_num
     · simp [σ]
-  have hd : traceNorm (σ - mixedState 7) = 7 / 4 := by
-    have he : σ - mixedState 7 = diagonal (fun i : Fin 8 =>
+  have hd : traceNorm (σ - designAverage (7 + 1)) = 7 / 4 := by
+    have he : σ - designAverage (7 + 1) = diagonal (fun i : Fin 8 =>
         (((if i = 0 then 1 else 0) - 1 / 8 : ℝ) : ℂ)) := by
       ext i j
       by_cases hij : i = j
       · subst j
-        fin_cases i <;> norm_num [σ, mixedState]
-      · simp [σ, mixedState, diagonal_apply, hij]
+        fin_cases i <;> norm_num [σ, designAverage, Matrix.smul_apply, Complex.real_smul]
+      · simp [σ, designAverage, Matrix.smul_apply, Complex.real_smul, diagonal_apply, hij]
     rw [he, D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation.diagonal_norm]
     norm_num [Fin.sum_univ_succ]
   have hle : 7 / 4 ≤ normalizer 7 :=
@@ -975,8 +970,8 @@ theorem result : ¬ claim := by
   intro h
   have hm := h 8 (by norm_num) 7 (by norm_num) (by norm_num)
     witnessChannel witness_channel witnessState witness_state.1 witness_state.2
-  change 1 - traceNorm (reducedState 7 witnessState - mixedState 7) / normalizer 7 ≤
-    1 - traceNorm (reducedState 7 (witnessChannel witnessState) - mixedState 7) /
+  change 1 - traceNorm (reducedState 7 witnessState - designAverage (7 + 1)) / normalizer 7 ≤
+    1 - traceNorm (reducedState 7 (witnessChannel witnessState) - designAverage (7 + 1)) /
       normalizer 7 at hm
   rw [input_distance, output_distance] at hm
   have hlt : (19 / 84 : ℝ) / normalizer 7 < (3933 / 17248 : ℝ) / normalizer 7 :=

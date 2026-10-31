@@ -38,7 +38,7 @@ internal sealed class AnticoherenceSpinCovarianceDocument : IScribeDocumentDefin
                 "Suppose d is unitary, r is real orthogonal, and the family j transforms under conjugation by d with coefficients r. "
                     + "Inserting d adjoint times d between two factors gives the product transformation. "
                     + "Row orthogonality expresses the diagonal correction as the contraction of two r coefficients. "
-                    + "Consequently the symmetrized quadratic product, with diagonal correction twenty thirds, transforms with two copies of r."),
+                    + "Consequently the symmetrized quadratic product, with any complex diagonal correction κ, transforms with two copies of r."),
             Node("dickeIsometry", "Normalized Dicke embedding", DickeIsometry(),
                 "The r-th column is supported on bit words with exactly r.val entries equal to one. "
                     + "Each supported entry is the reciprocal of the square root of Nat.choose n r.val. "
@@ -121,11 +121,11 @@ internal sealed class AnticoherenceSpinCovarianceDocument : IScribeDocumentDefin
         Formula premise = All("a", FinOf(D(3)), Equal(
             Mul(Mul(V("d"), At(V("j"), V("a"))), Adj(V("d"))),
             SumOf("c", FinOf(D(3)), Smul(OfReal(At(V("r"), V("a"), V("c"))), At(V("j"), V("c"))))));
-        Formula conclusion = All("a", FinOf(D(3)), All("b", FinOf(D(3)), Equal(
+        Formula conclusion = All("κ", Complex, All("a", FinOf(D(3)), All("b", FinOf(D(3)), Equal(
             Mul(Mul(V("d"), Quadratic(V("a"), V("b"))), Adj(V("d"))),
             SumOf("c", FinOf(D(3)), SumOf("e", FinOf(D(3)), Smul(
                 Mul(OfReal(At(V("r"), V("a"), V("c"))), OfReal(At(V("r"), V("b"), V("e")))),
-                Quadratic(V("c"), V("e"))))))));
+                Quadratic(V("c"), V("e")))))))));
         return All("n", Type, Instances([At(Qualified("Fintype"), V("n")), At(Qualified("DecidableEq"), V("n"))],
             All("d", Square(V("n")), Imp(Equal(Mul(Adj(V("d")), V("d")), D(1)),
             All("r", Matrix(FinOf(D(3)), FinOf(D(3)), Real),
@@ -136,7 +136,7 @@ internal sealed class AnticoherenceSpinCovarianceDocument : IScribeDocumentDefin
     private static Formula Quadratic(Formula a, Formula b) => Subtract(
         Smul(Typed(new Formula.Fraction(D(1), D(2)), Complex),
             Add(Mul(At(V("j"), a), At(V("j"), b)), Mul(At(V("j"), b), At(V("j"), a)))),
-        Smul(If(Equal(a, b), Typed(new Formula.Fraction(D(2, 0), D(3)), Complex), D(0)), D(1)));
+        Smul(If(Equal(a, b), V("κ"), D(0)), D(1)));
 
     private static Formula DickeIsometry() => All("n", Nat, Equal(
         Typed(Local("dickeIsometry", V("n")), Matrix(Word(V("n")), FinOf(Add(V("n"), D(1))), Complex)),
@@ -181,7 +181,7 @@ internal sealed class AnticoherenceSpinCovarianceDocument : IScribeDocumentDefin
             All("r", FinOf(Add(V("n"), D(1))), Equal(left, right)))));
     }
 
-    private static Formula V(string name) => F.Id(name);
+    private static Formula V(string name) => name == "κ" ? Kappa : F.Id(name);
     private static Formula Qualified(params string[] names)
     {
         var parts = new System.Collections.Generic.List<Formula>();

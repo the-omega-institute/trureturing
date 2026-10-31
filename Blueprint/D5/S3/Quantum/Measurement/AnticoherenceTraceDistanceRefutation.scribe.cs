@@ -25,12 +25,8 @@ internal sealed class AnticoherenceTraceDistanceRefutationDocument : IScribeDocu
                     + "For t greater than n the definition is zero. "
                     + "This is the reduced-state notion of arxiv.tex, lines 150–161, with the full mixed-state range specified at line 178.",
                 AssessedProvenance.FromLiterature(Source)),
-            Node("mixedState", "The maximally mixed symmetric state", MixedState(),
-                "The identity on the symmetric t-qubit space has dimension t plus one. Multiplying it by the reciprocal of that dimension gives its maximally mixed state. "
-                    + "The natural number t is explicitly cast to a complex scalar. See arxiv.tex, lines 333–336.",
-                AssessedProvenance.FromLiterature(Source)),
             Node("normalizer", "The largest distance from the maximally mixed state", Normalizer(),
-                "Take the supremum of the trace norm distances from the maximally mixed state over all positive semidefinite matrices of trace one on the symmetric t-qubit space. "
+                "The maximally mixed reference is the identity divided by t plus one. Take the supremum of its trace norm distances from all positive semidefinite matrices of trace one on the symmetric t-qubit space. "
                     + "This expresses the normalization K_t of arxiv.tex, lines 333–337, using a real supremum. It uses the full Schatten one-norm, without a factor of one half.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("anticoherence", "The Schatten-one distance candidate", Anticoherence(),
@@ -148,15 +144,12 @@ internal sealed class AnticoherenceTraceDistanceRefutationDocument : IScribeDocu
             Equal(Typed(Local("reducedState", V("t"), V("ρ")), SpinMatrix(V("t"))), Parenthesized(body)))));
     }
 
-    private static Formula MixedState() => All("t", Nat,
-        Equal(Typed(Local("mixedState", V("t")), SpinMatrix(V("t"))),
-            Smul(new Formula.Fraction(D(1), Add(NatComplex(V("t")), D(1))), D(1))));
-
     private static Formula Normalizer()
     {
         Formula predicate = Some("σ", SpinMatrix(V("t")),
             And(PosSemidef(V("σ")), And(Equal(Trace(V("σ")), D(1)),
-                Equal(V("d"), TraceNorm(Subtract(V("σ"), Local("mixedState", V("t"))))))));
+                Equal(V("d"), TraceNorm(Subtract(V("σ"), At(Qualified("D5", "S3", "Quantum", "Entanglement", "Witness",
+                    "WernerTesterIncompleteness", "designAverage"), Add(V("t"), D(1)))))))));
         Formula set = Seq(Left, OpenBrace, Typed(V("d"), Real), Sp, Mid, Sp, predicate, Right, CloseBrace);
         return All("t", Nat, Equal(Typed(Local("normalizer", V("t")), Real), At(Qualified("sSup"), set)));
     }
@@ -164,7 +157,8 @@ internal sealed class AnticoherenceTraceDistanceRefutationDocument : IScribeDocu
     private static Formula Anticoherence() => All("n", Nat, All("t", Nat,
         All("ρ", SpinMatrix(V("n")), Equal(Typed(Local("anticoherence", V("t"), V("ρ")), Real),
             Subtract(D(1), new Formula.Fraction(
-                TraceNorm(Subtract(Local("reducedState", V("t"), V("ρ")), Local("mixedState", V("t")))),
+                TraceNorm(Subtract(Local("reducedState", V("t"), V("ρ")), At(Qualified("D5", "S3", "Quantum", "Entanglement", "Witness",
+                    "WernerTesterIncompleteness", "designAverage"), Add(V("t"), D(1))))),
                 Local("normalizer", V("t"))))))));
 
     private static Formula CovariantChannel()
@@ -217,10 +211,8 @@ internal sealed class AnticoherenceTraceDistanceRefutationDocument : IScribeDocu
     private static Formula SU2 => At(Qualified("CoeSort", "coe"),
         At(Qualified("Matrix", "specialUnitaryGroup"), FinOf(D(2)), Complex));
     private static Formula SubtypeVal(Formula x) => At(Qualified("Subtype", "val"), x);
-    private static Formula NatComplex(Formula x) => Typed(At(Qualified("Nat", "cast"), x), Complex);
     private static Formula Adj(Formula x) => At(Qualified("Matrix", "conjTranspose"), x);
     private static Formula Mul(Formula x, Formula y) => Multiply(Parenthesized(x), Parenthesized(y));
-    private static Formula Smul(Formula x, Formula y) => At(Qualified("HSMul", "hSMul"), x, y);
     private static Formula And(Formula x, Formula y) => new Formula.Logic(Parenthesized(x), FormulaLogicOperator.And, Parenthesized(y));
     private static Formula IffOf(Formula x, Formula y) => new Formula.Logic(Parenthesized(x), FormulaLogicOperator.Iff, Parenthesized(y));
     private static Formula Imp(Formula x, Formula y) => Arrow(x, y);

@@ -209,12 +209,12 @@ theorem quadratic_rotation {n : Type*} [Fintype n] [DecidableEq n]
     (d : Matrix n n ℂ) (hd : dᴴ * d = 1) (r : Matrix (Fin 3) (Fin 3) ℝ)
     (hr : rᵀ * r = 1) (j : Fin 3 → Matrix n n ℂ)
     (hj : ∀ a, d * j a * dᴴ = ∑ c : Fin 3, (r a c : ℂ) • j c)
-    (a b : Fin 3) :
+    (κ : ℂ) (a b : Fin 3) :
     d * ((1 / 2 : ℂ) • (j a * j b + j b * j a) -
-      (if a = b then (20 / 3 : ℂ) else 0) • 1) * dᴴ =
+      (if a = b then κ else 0) • 1) * dᴴ =
       ∑ c : Fin 3, ∑ e : Fin 3, ((r a c : ℂ) * (r b e : ℂ)) •
         ((1 / 2 : ℂ) • (j c * j e + j e * j c) -
-          (if c = e then (20 / 3 : ℂ) else 0) • 1) := by
+          (if c = e then κ else 0) • 1) := by
   have hd1 : d * dᴴ = 1 := mul_eq_one_comm.mp hd
   have hp (a b : Fin 3) : d * (j a * j b) * dᴴ =
       (∑ c : Fin 3, (r a c : ℂ) • j c) * (∑ e : Fin 3, (r b e : ℂ) • j e) := by
@@ -229,8 +229,8 @@ theorem quadratic_rotation {n : Type*} [Fintype n] [DecidableEq n]
     have hh := congrArg Complex.ofReal h
     push_cast at hh
     simpa only [apply_ite, Complex.ofReal_one, Complex.ofReal_zero] using hh
-  have hδ : (if a = b then (20 / 3 : ℂ) else 0) =
-      (20 / 3 : ℂ) * ∑ c : Fin 3, (r a c : ℂ) * (r b c : ℂ) := by
+  have hδ : (if a = b then κ else 0) =
+      κ * ∑ c : Fin 3, (r a c : ℂ) * (r b c : ℂ) := by
     rw [hrow]
     split_ifs <;> ring
   simp only [Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_smul, Matrix.smul_mul,
