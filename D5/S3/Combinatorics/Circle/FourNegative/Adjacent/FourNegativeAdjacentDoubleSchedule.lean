@@ -1,23 +1,23 @@
-/- GID: D5/S3/Combinatorics/Circle/FourNegativeAdjacentDoubleSchedule
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/Adjacent/FourNegativeAdjacentDoubleSchedule
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegativeAdjacentDoubleSchedule
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/Adjacent/FourNegativeAdjacentDoubleSchedule
    mirror-E: none(waiver:no-escape-mirror-specified)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Four complementary physical blocks and their exact old and new strips. -/
-import D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoubleJointLift
+import D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleJointLift
 
 /-! Complementary physical inventory and four-block prefix arithmetic. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoubleSchedule
+namespace D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private positive_block_strip from D5.S3.Combinatorics.Circle.ThreeBitSource
 open private label lift_order marked_word ladder_sum
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
-open private chains from D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoubleJointLift
+open private chains from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleJointLift
 
 private def Gates (C m1 d1 m2 d2 m3 d3 m4 d4 : ℤ) : Prop :=
   0 ≤ C ∧ 0 ≤ m1+d1 ∧ 0 ≤ m1+d1+m2+d2 ∧ 0 ≤ m1+d1+m2+d2+m3+d3 ∧
@@ -129,4 +129,4 @@ private theorem inventory (n : ℕ) (hn : 2 ≤ n) :
   simp only [← Multiset.coe_add]
   ac_rfl
 
-end D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoubleSchedule
+end D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule

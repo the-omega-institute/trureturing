@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Circle/FourNegativeAdjacentDoubleJointLift
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/Adjacent/FourNegativeAdjacentDoubleJointLift
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegativeAdjacentDoubleJointLift
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/Adjacent/FourNegativeAdjacentDoubleJointLift
    mirror-E: none(waiver:no-escape-mirror-specified)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
@@ -14,7 +14,7 @@ import D5.S3.Combinatorics.Circle.ThreeBitSource
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoubleJointLift
+namespace D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleJointLift
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private centered_ladder positive_block_strip
   from D5.S3.Combinatorics.Circle.ThreeBitSource
@@ -142,4 +142,4 @@ private theorem chains (n : ℕ) (hn : 2 ≤ n) :
     rw [h]
     apply centered_unique hNNp hNNo (centered_bounds hNNp hNNo A) ⟨by omega, by omega⟩ (centered_mod NN A)
 
-end D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoubleJointLift
+end D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleJointLift

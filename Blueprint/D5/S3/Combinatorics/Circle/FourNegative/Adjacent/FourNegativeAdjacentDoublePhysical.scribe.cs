@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.FourNegative.Adjacent;
 
 internal sealed class FourNegativeAdjacentDoublePhysicalDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class FourNegativeAdjacentDoublePhysicalDocument : IScribeDocume
         H("Four physical chains and a fixed numeric ear cut"),
         Blocks(
             Describe.Lean(DescribeId.Create("actual-source-four-negative-adjacent-double-joint-lift"),
-                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FourNegativeAdjacentDoublePhysical.actualSource_four_negative_adjacent_double_joint_lift"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FourNegative/Adjacent/FourNegativeAdjacentDoublePhysical.actualSource_four_negative_adjacent_double_joint_lift"),
                 H("The unbounded r=s+1 branch"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(

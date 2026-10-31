@@ -1,4 +1,4 @@
-import D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoublePhysical
+import D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoublePhysical
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
@@ -10,11 +10,11 @@ set_option relaxedAutoImplicit false
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
-namespace Reg.D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoublePhysical
+namespace Reg.D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoublePhysical
 open _root_.D5.S3.Combinatorics.Circle.SourceWidth
 open _root_.D5.S3.Combinatorics.Circle.PeriodicShortening
 open _root_.D5.S3.Combinatorics.Circle.RunFirstEarTransport
-open _root_.D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoublePhysical
+open _root_.D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoublePhysical
 noncomputable section
 
 abbrev Params := Σ _ : ℕ, ℕ
@@ -116,10 +116,10 @@ def source_registration : Registration arena
   dependence := actual_dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    (@_root_.D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoublePhysical.actualSource_four_negative_adjacent_double_joint_lift)
+    (@_root_.D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoublePhysical.actualSource_four_negative_adjacent_double_joint_lift)
     (type_of% (realize signature actual.readout actual.anchor)) Nat Unit := {
-  unitName := `D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoublePhysical.actualSource_four_negative_adjacent_double_joint_lift.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoublePhysical.source_registration
+  unitName := `D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoublePhysical.actualSource_four_negative_adjacent_double_joint_lift.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoublePhysical.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -135,7 +135,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoublePhysical
+    owner := `D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoublePhysical
     definition := none
     coordinates := #[0,1]
     readouts := #[{
@@ -156,4 +156,4 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 #print axioms source_registration
 #print axioms audit
 end
-end Reg.D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoublePhysical
+end Reg.D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoublePhysical

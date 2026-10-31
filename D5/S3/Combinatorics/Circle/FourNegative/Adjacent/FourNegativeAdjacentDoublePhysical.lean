@@ -1,24 +1,24 @@
-/- GID: D5/S3/Combinatorics/Circle/FourNegativeAdjacentDoublePhysical
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/Adjacent/FourNegativeAdjacentDoublePhysical
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegativeAdjacentDoublePhysical
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/Adjacent/FourNegativeAdjacentDoublePhysical
    mirror-E: none(waiver:no-escape-mirror-specified)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: An unbounded adjacent paired-gap physical joint witness at r=s+1. -/
-import D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoubleSchedule
+import D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
 
 /-! A common physical permutation for the r=s+1 paired-gap branch. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoublePhysical
+namespace D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoublePhysical
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private label lift_order marked_word ladder_sum
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
-open private chains from D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoubleJointLift
+open private chains from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleJointLift
 open private Gates four_strip arithmetic inventory
-  from D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoubleSchedule
+  from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
 
 set_option maxHeartbeats 1600000 in
 -- The physical source, block masses and both full prefix strips are elaborated together.
@@ -210,4 +210,4 @@ theorem actualSource_four_negative_adjacent_double_joint_lift
       simpa only [g,he,hh] using hstrip'
     · simpa only [g,he] using hz'
 
-end D5.S3.Combinatorics.Circle.FourNegativeAdjacentDoublePhysical
+end D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoublePhysical

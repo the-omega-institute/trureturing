@@ -6,9 +6,9 @@ A literal joint order for adjacent paired gaps with r=s+1
 
 **Theorem 1.1 (The unbounded r=s+1 branch).**
 
-Lean statement: `D5/S3/Combinatorics/Circle/FourNegativeAdjacentDoublePhysical.actualSource_four_negative_adjacent_double_joint_lift`
+Lean statement: `D5/S3/Combinatorics/Circle/FourNegative/Adjacent/FourNegativeAdjacentDoublePhysical.actualSource_four_negative_adjacent_double_joint_lift`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FourNegativeAdjacentDoublePhysical.actualSource_four_negative_adjacent_double_joint_lift` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FourNegative/Adjacent/FourNegativeAdjacentDoublePhysical.actualSource_four_negative_adjacent_double_joint_lift` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -26,4 +26,4 @@ This result is one unbounded branch of the adjacent paired-gap family (r,r,s,s).
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Circle/FourNegativeAdjacentDoublePhysical.actualSource_four_negative_adjacent_double_joint_lift`
+- Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/Adjacent/FourNegativeAdjacentDoublePhysical.actualSource_four_negative_adjacent_double_joint_lift`
