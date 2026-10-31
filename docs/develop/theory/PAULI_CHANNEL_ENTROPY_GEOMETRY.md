@@ -4541,3 +4541,337 @@ $I(A:B)_G\leq D_B(\Gamma^{(C)})$; it supplies neither generic discord
 monotonicity under separable operations nor a proof of the unrestricted
 interior funding comparison. That comparison, and the original
 deficit sign beyond the previously proved domains, remain open.
+
+## 追加锚（本行以下为增补区）
+
+## 20. Matrix Laplace asymptotics for Pauli funding coefficients
+
+**Definition 20.1 (Funding coefficients for a fixed source).**
+Let the physical source be a complex pure product, with unit Bloch
+vectors $C=(x,y,z)$ and $D=(X,Y,Z)$. Fix $a\in[0,1]$, put
+$u=1-a^2$, $q=b^2$, and retain the actual $A_C,J$ of §18. Set
+$$
+ \kappa=xX,\qquad\lambda=zZ,\qquad\mu=-yY,
+ \qquad F_C(q)=A_C(a,\sqrt q)-J(a,\sqrt q).
+$$
+Write $\mathsf X,\mathsf Z$ for the control Pauli matrices, to
+distinguish them from the partner's Bloch coordinates. Define
+$$
+ \begin{aligned}
+ H_\pm&=\frac{(1\pm\lambda)(I+a\mathsf Z)
+                    +(\kappa\pm\mu)\sqrt u\,\mathsf X}{4},\\
+ P_\pm(s)&=H_\pm(H_\pm+sI)^{-1},\qquad
+ M_s=\sqrt{P_-(s)}P_+(s)\sqrt{P_-(s)},\\
+ g_j&=\frac1j\int_0^\infty\operatorname{tr}(M_s^j)\,ds,
+ \qquad c_j=2j(2j-1),\\
+ h_j(r)&=\sum_{n\geq j}\frac{\binom nj r^{2(n-j)}}{c_n}
+ \quad(|r|<1),\\
+ L_j&=(1-z^2)^j h_j(z)-(x^2+a^2y^2)^j h_j(az),\\
+ m_j&=(1-\lambda^2)^j h_j(\lambda),\qquad
+ d_j=g_j+L_j-m_j,\qquad j\geq1.
+ \end{aligned}
+\tag{20.1}
+$$
+Every resolvent here is evaluated at $s>0$. If an entropy term is
+identically zero because its marginal is pure and constant, its
+coefficients are zero; expressions $0\cdot h_j(1)$ are not used.
+
+**Theorem 20.2 (Eventual coefficient nonnegativity for every fixed complex product).**
+For every source and $a$ in Definition 20.1,
+$$
+ F_C(q)=F_C(0)-\sum_{j\geq1}d_jq^j,\qquad0\leq q<1.
+\tag{20.2}
+$$
+There exists an integer $j_0$, depending on this fixed source and $a$,
+such that $d_j\geq0$ for every $j\geq j_0$. These coefficients are
+eventually strictly positive unless $a=1$, $C$ is an $X$ or $Z$ axis,
+or both factors are pure $Y$ axes. In those exceptional cases
+$d_j=0$ for every $j\geq1$. Exchanging the factors gives the
+corresponding assertion for $F_D$.
+
+Proof.
+We establish the exact series, its positive-definite asymptotics,
+and the singular cases separately. All asymptotic constants below
+may depend on the fixed matrices or source.
+
+First, the actual global control Gram is
+$$
+ \begin{aligned}
+ G(a,b)=\frac14\bigl[&(I+a\mathsf Z)\otimes(I+b\mathsf Z)
+ +\kappa\sqrt u\,\mathsf X\otimes(I+b\mathsf Z)\\
+ &+\lambda\sqrt{1-b^2}(I+a\mathsf Z)\otimes\mathsf X
+ +\mu\sqrt{u(1-b^2)}\,\mathsf X\otimes\mathsf X\bigr].
+ \end{aligned}
+\tag{20.3}
+$$
+At $b=0$, diagonalizing the second control's $\mathsf X$ gives
+$\operatorname{diag}(H_+,H_-)$. The two control filters show that
+$G(a,b)$ has the same spectrum as
+$$
+ \mathcal H(b)=
+ \begin{pmatrix}
+ H_+&b\sqrt{H_+}\sqrt{H_-}\\
+ b\sqrt{H_-}\sqrt{H_+}&H_-
+ \end{pmatrix}.
+$$
+Indeed the second filter squares to $I+b\mathsf X$ in this basis,
+and the nonzero spectra of $TT^*$ and $T^*T$ agree. For $s>0$,
+the block determinant formula therefore gives
+$$
+ \frac{\det(\mathcal H(b)+sI)}{\det(\mathcal H(0)+sI)}
+       =\det(I-qM_s).
+\tag{20.4}
+$$
+The blocks are positive semidefinite: their four underlying Bell
+weights are $[1+\lambda\pm(\kappa+\mu)]/4$ and
+$[1-\lambda\pm(\kappa-\mu)]/4$. Their numerators
+are $1$ minus the inner products of $D$ with
+$$
+ C,\quad(x,-y,-z),\quad(-x,y,-z),\quad(-x,-y,z),
+$$
+in some order. Each is nonnegative by the unit-vector inequality.
+Thus $0\leq M_s<I$. With $h=\max(\|H_+\|,\|H_-\|)>0$,
+$\|M_s\|\leq(1+s/h)^{-2}$. For $q<1$, the logarithm in
+(20.4) is bounded at zero and has an integrable $O(s^{-2})$ tail.
+The equal-trace scalar log-determinant entropy identity, applied to
+the eigenvalues, and nonnegative-series interchange give
+$$
+ S(G(a,b))=S(G(a,0))-\sum_{j\geq1}g_jq^j.
+\tag{20.5}
+$$
+This argument uses invertible shifted blocks only, and includes
+singular $H_\pm$.
+
+The actual squared Bloch lengths of $P_C,R_C$ are
+$z^2+q(1-z^2)$ and $a^2z^2+q(x^2+a^2y^2)$; $S(Q_C)$ is
+independent of $q$. The entropy series (18.3) gives
+$A_C(q)=A_C(0)-\sum_jL_jq^j$.
+The actual first control margin is independent of $b$, while the
+second has squared Bloch length $\lambda^2+q(1-\lambda^2)$.
+Consequently $S(G_B(q))=S(G_B(0))-\sum_jm_jq^j$.
+Since $J=I(A:B)_G$, these identities prove (20.2).
+The scalar series and $h_j$ are nonnegative; also $L_j\geq0$,
+because $1-z^2\geq x^2+a^2y^2$ and $h_j(|z|)\geq h_j(|az|)$.
+Entropy continuity at $q=1$ makes each of $\sum g_j$, $\sum L_j$,
+$\sum m_j$ finite, so (20.2) also has its continuous endpoint value.
+
+The scalar coefficients admit the exact integrals
+$$
+ h_j(r)=\frac1{2j}\int_0^1
+       \frac{t^{2j-2}}{(1-r^2t^2)^j}\,dt
+ =\frac1j\int_0^\infty
+       \frac{ds}{(4s^2+4s+1-r^2)^j},\qquad |r|<1.
+\tag{20.6}
+$$
+To prove the first, expand the denominator and use
+$\binom{j+n-1}{j-1}/[2j(2j+2n-1)]
+=\binom{j+n}{j}/c_{j+n}$; all summands are nonnegative.
+The substitution $t=(1+2s)^{-1}$ gives the second integral.
+
+Next consider fixed positive definite $n\times n$ matrices
+$A_0,B_0$. Put $U=A_0^{-1}$, $V=B_0^{-1}$, $K=U+V$,
+and form their resolvent moment $\gamma_j$ exactly as $g_j$ in
+(20.1). We prove the two-term matrix Laplace expansion
+$$
+ \gamma_j=\frac{\operatorname{tr}K^{-1}}{j^2}
+ +\frac{\operatorname{tr}[K^{-3}(U^2+V^2)]}{j^3}
+ +o(j^{-3}).
+\tag{20.7}
+$$
+The dimension-zero case is zero. Otherwise, expansion in operator
+norm at $s=0$ gives
+$$
+ \begin{aligned}
+ M_s&=I-sK+s^2\bigl[U^2+V^2+(UV+VU)/2\bigr]+O(s^3),\\
+ \log M_s&=-sK+s^2C_0+O(s^3),\qquad C_0=(U^2+V^2)/2.
+ \end{aligned}
+\tag{20.8}
+$$
+For each fixed $t\geq0$, $M_{t/j}^j\to e^{-tK}$.
+Let $c=1/\max(\|A_0\|,\|B_0\|)>0$. The global bound
+$$
+ 0\leq\operatorname{tr}(M_{t/j}^j)
+ \leq n(1+ct/j)^{-2j}\leq n(1+ct)^{-2}
+$$
+follows from the resolvent norm bounds and Bernoulli's inequality.
+Its last member is integrable on $[0,\infty)$. The change $s=t/j$
+and dominated convergence prove
+$j^2\gamma_j\to\int_0^\infty\operatorname{tr}(e^{-tK})dt
+=\operatorname{tr}K^{-1}$, including domination of the entire tail.
+
+For the second term, let $k>0$ be the least eigenvalue of $K$ and
+$\eta=k/2$. Write $E(t)=-tK$ and $D_j(t)=j\log M_{t/j}$.
+For some fixed $\epsilon>0$, (20.8) gives on $0\leq t\leq\epsilon j$
+$$
+ D_j(t),E(t)\leq-\eta tI,\qquad
+ \|D_j(t)-E(t)\|\leq C_1t^2/j.
+\tag{20.9}
+$$
+For Hermitian $D,E$ the exact Duhamel identity is
+$$
+ e^D-e^E=\int_0^1e^{(1-v)D}(D-E)e^{vE}\,dv.
+$$
+Equation (20.9) implies
+$j\|e^{D_j(t)}-e^{E(t)}\|\leq C_1t^2e^{-\eta t}$ on that
+local range. For fixed $t$, $j(D_j(t)-E(t))\to t^2C_0$;
+Duhamel and cyclicity of the trace therefore give
+$$
+ j\operatorname{tr}(e^{D_j(t)}-e^{E(t)})
+   \longrightarrow t^2\operatorname{tr}(C_0e^{-tK}).
+$$
+The preceding integrable bound, multiplied by $n$, permits dominated
+convergence with the indicator $t\leq\epsilon j$.
+The complementary tails vanish even at this stronger scale:
+$$
+ \begin{aligned}
+ j\int_{\epsilon j}^\infty\operatorname{tr}(M_{t/j}^j)dt
+ &\leq\frac{nj^2}{c(2j-1)}(1+c\epsilon)^{-(2j-1)}\to0,\\
+ j\int_{\epsilon j}^\infty\operatorname{tr}(e^{-tK})dt
+ &\leq\frac{nj}{k}e^{-k\epsilon j}\to0.
+ \end{aligned}
+$$
+Consequently the next coefficient is
+$\int_0^\infty t^2\operatorname{tr}(C_0e^{-tK})dt
+=2\operatorname{tr}(C_0K^{-3})$, proving (20.7).
+The last equality follows by diagonalizing $K$ and integrating scalar
+exponentials. No commutation of $U,V$ was assumed.
+
+The scalar specialization $A_0=(1+r)/2$, $B_0=(1-r)/2$, together
+with (20.6), gives, for fixed $|r|<1$,
+$$
+ k_j(r):=(1-r^2)^jh_j(r)
+ =\frac{1-r^2}{4j^2}+\frac{1-r^4}{8j^3}+o(j^{-3}).
+\tag{20.10}
+$$
+
+Now assume $a<1$ and $C$ is neither an $X$ nor $Z$ axis.
+Then $|\kappa|,|\lambda|<1$, and
+$$
+ S=H_++H_-=\sigma_a+\kappa T>0,\qquad
+ \sigma_a=(I+a\mathsf Z)/2,\quad T=\sqrt u\,\mathsf X/2.
+$$
+Indeed $\det S=u(1-\kappa^2)/4>0$. Each block has positive trace
+and is either positive definite or nonzero rank one.
+First suppose both are positive definite. The parallel-sum identity
+and (20.7) yield $\lim j^2g_j=\operatorname{tr}(H_+S^{-1}H_-)$.
+Writing $D_0=H_+-H_-=\lambda S+(\mu-\lambda\kappa)T$, we have
+$$
+ \begin{aligned}
+ H_+S^{-1}H_-&=(S-D_0S^{-1}D_0)/4,\\
+ \operatorname{tr}(TS^{-1}T)&=1/(1-\kappa^2),\qquad
+ \operatorname{tr}T=0,\\
+ \lim j^2g_j&=\frac14\left[1-\lambda^2
+            -\frac{(\mu-\lambda\kappa)^2}{1-\kappa^2}\right].
+ \end{aligned}
+\tag{20.11}
+$$
+For the trace identity, use $T^2=uI/4$ and
+$\operatorname{tr}S^{-1}=1/\det S$; the cross terms cancel exactly.
+
+Put $\beta=(x^2+a^2y^2)/(1-a^2z^2)<1$; the denominator minus
+the numerator is $u(1-x^2)>0$. Thus
+$L_j=k_j(z)-\beta^jk_j(az)$, and (20.10) proves
+$j^2L_j\to(1-z^2)/4$, $j^2m_j\to(1-\lambda^2)/4$.
+The exponentially small second term affects neither polynomial order.
+It follows that
+$$
+ \lim j^2d_j=\frac14\left[1-z^2
+              -\frac{(\mu-\kappa\lambda)^2}{1-\kappa^2}\right].
+\tag{20.12}
+$$
+This leading term is nonnegative by the actual product geometry.
+Put $w=X^2$. Cauchy--Schwarz gives
+$(yY+xzXZ)^2\leq(y^2+x^2z^2w)(1-w)$, while
+$$
+ (1-z^2)(1-x^2w)-(y^2+x^2z^2w)(1-w)
+   =x^2(1-w)+y^2w+x^2z^2w^2\geq0.
+$$
+If $x\ne0$, equality would force $w=1$ and $y=z=0$, an excluded
+$X$ axis. If $x=0$, the exact numerator in (20.12) is
+$y^2(1-Y^2)$, so equality requires a pure $Y$ partner.
+In the positive-definite case this leaves precisely
+$x=0$, $0<y^2<1$, $0<z^2<1$, $X=Z=0$, $Y^2=1$.
+Every other such fixed source has a strictly positive limit in (20.12).
+
+For that zero-leading case put $c_0=y^2\in(0,1)$, so
+$\kappa=\lambda=0$, $\mu^2=c_0$, $z^2=1-c_0$.
+Writing $\alpha=4/[u(1-c_0)]$, the exact inverses are
+$$
+ U=H_+^{-1}=\alpha(I-a\mathsf Z-\mu\sqrt u\,\mathsf X),\quad
+ V=H_-^{-1}=\alpha(I-a\mathsf Z+\mu\sqrt u\,\mathsf X).
+$$
+Hence $K=2\alpha(I-a\mathsf Z)$ and
+$U^2+V^2=2\alpha^2[(I-a\mathsf Z)^2+c_0uI]$.
+Using
+$\operatorname{tr}(I-a\mathsf Z)^{-1}=2/u$ and
+$\operatorname{tr}(I-a\mathsf Z)^{-3}=2(1+3a^2)/u^3$ gives
+$$
+ \operatorname{tr}[K^{-3}(U^2+V^2)]
+    =\frac{1-c_0}{8}\left[1+\frac{c_0(1+3a^2)}u\right].
+$$
+The $j^{-3}$ coefficients of $L_j$ and $m_j$ are respectively
+$c_0(2-c_0)/8$ and $1/8$, by (20.10). The leading terms cancel,
+and the second-order limit is
+$$
+ \lim j^3d_j=\frac{c_0(1-c_0)(1+a^2)}{4u}>0.
+\tag{20.13}
+$$
+Thus this remaining positive-definite case also has an eventually
+strictly positive tail.
+
+Suppose next exactly one block has rank one. By cyclicity of trace
+moments we may call it $A_0=hvv^*$, $h>0$, $\|v\|=1$, and call
+the other $B_0>0$. The sole nonzero resolvent eigenvalue is
+$$
+ \ell_s=\frac h{h+s}\langle v,B_0(B_0+sI)^{-1}v\rangle
+     =1-\bigl[h^{-1}+\langle v,B_0^{-1}v\rangle\bigr]s+O(s^2).
+$$
+It obeys the same global bound $\ell_s\leq(1+cs)^{-2}$, with
+$c=1/\max(h,\|B_0\|)$. The first-order dominated-convergence
+argument therefore proves
+$$
+ \lim j^2g_j=\bigl[h^{-1}+\langle v,B_0^{-1}v\rangle\bigr]^{-1}
+           =\operatorname{tr}[A_0(A_0+B_0)^{-1}B_0].
+\tag{20.14}
+$$
+For the last identity, Sherman--Morrison gives
+$\langle v,(A_0+B_0)^{-1}v\rangle=r_0/(1+hr_0)$,
+$r_0=\langle v,B_0^{-1}v\rangle$; take the trace of
+$A_0-A_0(A_0+B_0)^{-1}A_0$.
+Only $B_0$ and $S=A_0+B_0$ have been inverted. The algebra in
+(20.11) uses only $S^{-1}$ and remains valid, so (20.12) follows
+also here. Its only possible nonaxis zero case just treated has
+both blocks positive definite. Thus the one-rank-one case has a
+strictly positive leading limit.
+
+If both blocks have rank one, their zero determinants give
+$|\kappa+\mu|=1+\lambda$ and $|\kappa-\mu|=1-\lambda$.
+Therefore $2=2\max(|\kappa|,|\mu|)$; since $|\kappa|<1$,
+$|\mu|=1$. Actual product factors must then both be pure $Y$ axes.
+Here $H_\pm=|v_\pm\rangle\langle v_\pm|/2$, with unit Bloch
+vectors $(\pm\mu\sqrt u,0,a)$ and
+$|\langle v_+,v_-\rangle|^2=a^2$. The sole possible nonzero
+eigenvalue of $M_s$ is exactly $a^2/(1+2s)^2$. Consequently
+$$
+ g_j=\frac{a^{2j}}{c_j},\qquad
+ L_j=\frac{1-a^{2j}}{c_j},\qquad m_j=\frac1{c_j},\qquad d_j=0.
+$$
+This calculation does not substitute singular inverses into (20.7).
+
+Finally, if $a=1$, then $Q=\rho$, $R=P$, and $A_C=J=0$.
+If $C$ is an $X$ axis, $Q$ retains that pure factor, while $L$ sends
+it to its orthogonal axis state. The mixture defining $R$ is an
+orthogonally flagged mixture of $Q$ and $LQL$, so
+$S(R)=S(P)+S(Q)$ and $J=0$; locally $A_C=0$ as well.
+For a $Z$ axis exchange $K,L$ in this argument. In these cases
+$F_C$ vanishes identically and all its coefficients $d_j$ are zero,
+using the constant-entropy convention of Definition 20.1.
+The rank classification exhausts every other actual product source,
+which proves the theorem.
+
+The threshold $j_0$ is not uniform in the source or $a$.
+Positivity for every $j\geq2$ and the full funding comparison remain
+unresolved. For pure products the original identity is still
+$\Delta=I(P)+B_C+B_D+2A_C+2A_D-3J$ from (15.1).
+No sign of that original deficit beyond the previously proved domains
+is inferred from eventual coefficient positivity alone.
