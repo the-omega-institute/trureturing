@@ -3807,7 +3807,7 @@ $$
 \left|\int_{I_m}e^{itx}\Psi(t)\,dt\right|
 \leq C\left(
 \frac{\omega(2\pi m/a)e^{-c\eta_m x}}x
-+\frac{\omega(2\pi m/a)}{x^2}\right).                         \tag{16.6}
++\frac{\omega(2\pi m/a)(1+\log(2+m))^3}{x^2}\right).                         \tag{16.6}
 $$
 
 *Proof.* Choose a fixed smooth cutoff equal to one on the smaller
@@ -3827,7 +3827,9 @@ derivatives. The same is true after multiplying by $A_0(it)$, apart
 from the factor $|A_0(i\widehat t_m)|\asymp\omega(2\pi m/a)$, by the
 Gamma estimates (13.5). For nonresonant $m$, the whole logarithm and
 its first two derivatives are uniformly bounded and two integrations
-by parts give the second term in (16.6).
+by parts give the second term in (16.6). The displayed cubic logarithm
+absorbs the first two derivatives of $A_0$ and the logarithmic factor
+in $\ell$.
 
 For the model logarithm, differentiate once and use the elementary
 residue identity, valid for $x>0$,
@@ -3902,7 +3904,13 @@ $$
 *Proof.* The transform identity (13.4), the comparison kernel (9.5),
 and the exact occurrence reduction (9.4) apply to this same ordered
 binary iid law and to the original statistic, including letters, every
-legal length and window, and the whole word when Lyndon. The estimates
+legal length and window, and the whole word when Lyndon. The parameter
+map is the one fixed in §12: $Y=-\log p_I$ with masses
+$\mathbb P(I=i)=p_i$, while the increasing alphabet map preserves order,
+rotations, factors, and equality. Thus the six complete public suppliers
+listed there are consumed only through their stated hypotheses and
+versions; the new inference is the critical Fourier block estimate
+(16.6) and its summation. The estimates
 (15.9), (16.1), and (13.5) imply
 $\Psi\in L^1(\mathbb R)$: on the block $Q_j\leq m<Q_{j+1}$,
 $|\Delta(t)|\geq cQ_{j+1}^{-2}$ by (15.10), and hence
@@ -3922,7 +3930,7 @@ with $m$ and (16.1) gives $\eta_m\geq c\eta_j$,
 $$
 \left|\int_{T_j}^{T_{j+1}}e^{itx}\Psi(t)\,dt\right|
 \leq C\left(\frac{\omega_j e^{-c\eta_jx}}x
-                        +\frac{\omega_j}{x^2}\right).            \tag{16.9}
+                        +\frac{\omega_j(1+Q_j)^3}{x^2}\right).            \tag{16.9}
 $$
 
 The same estimate holds on negative blocks. Equations (16.7) and
