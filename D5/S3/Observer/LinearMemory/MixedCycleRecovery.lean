@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Mixed cycles expose exactly their coordinate window and determine target-dependent recovery. -/
+   digest: Mixed cycles expose exactly their coordinate window and determine recovery. -/
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
@@ -70,13 +70,14 @@ def observations (b : OrthonormalBasis (Axis k) ℝ V) (r : ℕ) (hr : r ≤ k) 
 
 private theorem mem_window_iff (b : OrthonormalBasis (Axis k) ℝ V) (r : ℕ) (x : V) :
     x ∈ window b r ↔ ∀ j : Fin k, r ≤ j.val → b.repr x (.inr j) = 0 := by
-  rw [window, b.toBasis.mem_span_image]
+  change x ∈ span ℝ (b.toBasis '' kept r) ↔ _
+  rw [b.toBasis.mem_span_image]
   simp only [Set.subset_def, Finset.mem_coe, Finsupp.mem_support_iff,
     OrthonormalBasis.coe_toBasis_repr_apply]
   constructor
   · intro h j hj
     by_contra hn
-    have := h hn
+    have := h (.inr j) hn
     change j.val < r at this
     omega
   · intro h i hi
@@ -97,8 +98,7 @@ private theorem cycle_nodes_nodup (r : ℕ) (hr : r ≤ k) : (cycleNodes r hr).N
   · intro i
     simp
   · exact List.nodup_ofFn.mpr (fun i j h => Fin.ext (by
-      have := Sum.inr.inj h
-      exact congrArg Fin.val this))
+      exact congrArg (fun t : Fin k => t.val) (Sum.inr.inj h)))
 
 private theorem cycle_fixes_tail (b : OrthonormalBasis (Axis k) ℝ V)
     (r : ℕ) (hr : r ≤ k) (j : Fin k) (hj : r ≤ j.val) :
@@ -110,27 +110,30 @@ private theorem cycle_fixes_tail (b : OrthonormalBasis (Axis k) ℝ V)
     Sum.inr.injEq, reduceCtorEq, false_or, not_exists]
   intro i he
   have := congrArg Fin.val he
-  simp only [Fin.coe_castLE] at this
+  simp only [Fin.val_castLE] at this
   omega
 
 private theorem generated_fixes_tail (b : OrthonormalBasis (Axis k) ℝ V)
     (r : ℕ) (hr : r ≤ k) (g : generated b r hr) (j : Fin k) (hj : r ≤ j.val) :
     g.val (b (.inr j)) = b (.inr j) := by
-  have hg := g.property
-  change g.val ∈ Subgroup.closure _ at hg
-  induction hg using Subgroup.closure_induction with
-  | mem a ha =>
-    rcases ha with ha | ha
-    · exact ha.2 j
-    · rcases ha with rfl
-      exact cycle_fixes_tail b r hr j hj
-  | one => rfl
-  | mul a c ha hc iha ihc =>
-    change a (c (b (.inr j))) = _
-    rw [ihc, iha]
-  | inv a ha iha =>
-    apply a.injective
-    simpa using iha.symm
+  have hfix : ∀ a : V ≃ₗᵢ[ℝ] V, a ∈ generated b r hr →
+      a (b (.inr j)) = b (.inr j) := by
+    intro a ha
+    change a ∈ Subgroup.closure _ at ha
+    induction ha using Subgroup.closure_induction with
+    | mem a ha =>
+      rcases ha with ha | ha
+      · exact ha.2 j
+      · rcases ha with rfl
+        exact cycle_fixes_tail b r hr j hj
+    | one => rfl
+    | mul a c ha hc iha ihc =>
+      change a (c (b (.inr j))) = _
+      rw [ihc, iha]
+    | inv a ha iha =>
+      apply a.injective
+      simpa using iha.symm
+  exact hfix g.val g.property
 
 private theorem pullback_rows_le_window (b : OrthonormalBasis (Axis k) ℝ V)
     (r : ℕ) (hr : r ≤ k) : rowSpace b r hr ≤ window b r := by
@@ -143,7 +146,7 @@ private theorem pullback_rows_le_window (b : OrthonormalBasis (Axis k) ℝ V)
   have hin := (mem_window_iff b 0 x).mp hx j (Nat.zero_le _)
   rw [OrthonormalBasis.repr_apply_apply] at hin
   calc
-    ⟪b (.inr j), g.val.symm x⟫_ℝ = ⟪g.val (b (.inr j)), x⟫_ℝ :=
+    inner ℝ (b (.inr j)) (g.val.symm x) = inner ℝ (g.val (b (.inr j))) x :=
       (g.val.inner_map_eq_flip _ _).symm
     _ = 0 := by rw [hg]; exact hin
 
@@ -153,7 +156,10 @@ private theorem cycle_pow_basis (b : OrthonormalBasis (Axis k) ℝ V)
   induction n with
   | zero => rfl
   | succ n ih =>
-    simp only [pow_succ', LinearIsometryEquiv.mul_apply, Equiv.Perm.mul_apply, ih]
+    rw [pow_succ', pow_succ']
+    change mixedCycle b r hr ((mixedCycle b r hr ^ n) (b i)) =
+      b ((cycleNodes r hr).formPerm (((cycleNodes r hr).formPerm ^ n) i))
+    rw [ih]
     exact OrthonormalBasis.equiv_apply_basis b b _ _
 
 private theorem cycle_reaches_hidden (b : OrthonormalBasis (Axis k) ℝ V)
@@ -178,17 +184,202 @@ private theorem pullback_rows_eq_window (b : OrthonormalBasis (Axis k) ℝ V)
     Subgroup.subset_closure (Or.inr (Set.mem_singleton _))
   cases i with
   | inl t =>
-    exact le_iSup_of_le (⟨1, (generated b r hr).one_mem⟩ : generated b r hr)
-      (le_rfl) ⟨b (.inl t), hvis t, rfl⟩
+    exact Submodule.mem_iSup_of_mem
+      (⟨1, (generated b r hr).one_mem⟩ : generated b r hr)
+      ⟨b (.inl t), hvis t, rfl⟩
   | inr j =>
     have hj : j.val < r := hi
     let j' : Fin r := ⟨j.val, hj⟩
     let a := mixedCycle b r hr ^ (j.val + 1)
     have ha : a ∈ generated b r hr := (generated b r hr).pow_mem hcycle _
-    apply (le_iSup_of_le (⟨a⁻¹, (generated b r hr).inv_mem ha⟩ : generated b r hr)
-      le_rfl)
+    apply Submodule.mem_iSup_of_mem
+      (⟨a⁻¹, (generated b r hr).inv_mem ha⟩ : generated b r hr)
     refine ⟨b (.inl 0), hvis 0, ?_⟩
-    simpa [a, j', LinearIsometryEquiv.inv_eq_symm] using
+    simpa [a, j', LinearIsometryEquiv.inv_def] using
       cycle_reaches_hidden b r hr j'
 
+private def keptEquiv (r : ℕ) (hr : r ≤ k) : kept (k := k) r ≃ Fin 3 ⊕ Fin r where
+  toFun
+    | ⟨.inl i, _⟩ => .inl i
+    | ⟨.inr j, h⟩ => .inr ⟨j.val, h⟩
+  invFun
+    | .inl i => ⟨.inl i, trivial⟩
+    | .inr j => ⟨.inr (Fin.castLE hr j), j.isLt⟩
+  left_inv := by rintro ⟨i | j, h⟩ <;> rfl
+  right_inv := by rintro (i | j) <;> rfl
+
+private theorem window_finrank (b : OrthonormalBasis (Axis k) ℝ V)
+    (r : ℕ) (hr : r ≤ k) : Module.finrank ℝ (window b r) = 3 + r := by
+  classical
+  have hs : Set.range (fun i : kept (k := k) r => b i.val) = b '' kept r := by
+    ext x
+    simp only [Set.mem_range, Set.mem_image]
+    constructor
+    · rintro ⟨i, rfl⟩
+      exact ⟨i.val, i.property, rfl⟩
+    · rintro ⟨i, hi, rfl⟩
+      exact ⟨⟨i, hi⟩, rfl⟩
+  have hi := b.toBasis.linearIndependent.comp
+    (fun i : kept (k := k) r => i.val) Subtype.val_injective
+  have hd := finrank_span_eq_card hi
+  rw [hs] at hd
+  calc
+    Module.finrank ℝ (window b r) = Fintype.card (kept (k := k) r) := hd
+    _ = Fintype.card (Fin 3 ⊕ Fin r) := Fintype.card_congr (keptEquiv r hr)
+    _ = 3 + r := by simp
+
+private theorem observations_kernel (b : OrthonormalBasis (Axis k) ℝ V)
+    (r : ℕ) (hr : r ≤ k) : (observations b r hr).ker = (window b r)ᗮ := by
+  rw [← pullback_rows_eq_window b r hr]
+  unfold rowSpace
+  rw [← Submodule.iInf_orthogonal]
+  ext x
+  rw [LinearMap.mem_ker, Submodule.mem_iInf]
+  constructor
+  · intro hx g
+    rw [Submodule.mem_orthogonal]
+    rintro _ ⟨e, he, rfl⟩
+    have hz : (visible b).orthogonalProjectionOnto (g.val x) = 0 := congrFun hx g
+    have ho := Submodule.orthogonalProjectionOnto_eq_zero_iff.mp hz
+    have hp := (Submodule.mem_orthogonal _ _).mp ho e he
+    simpa only [LinearIsometryEquiv.inner_map_eq_flip, LinearIsometryEquiv.symm_symm]
+      using hp
+  · intro hx
+    ext g
+    change (visible b).orthogonalProjectionOnto (g.val x) = 0
+    apply Submodule.orthogonalProjectionOnto_eq_zero_iff.mpr
+    rw [Submodule.mem_orthogonal]
+    intro e he
+    have hp := (Submodule.mem_orthogonal _ _).mp (hx g) _ ⟨e, he, rfl⟩
+    simpa only [LinearIsometryEquiv.inner_map_eq_flip, LinearIsometryEquiv.symm_symm]
+      using hp
+
+/-- Linear reconstruction is required only on jointly attainable readouts. -/
+def LinearlyRecoverable {Y : Type*} [AddCommGroup Y] [Module ℝ Y]
+    (b : OrthonormalBasis (Axis k) ℝ V) (r : ℕ) (hr : r ≤ k) (T : V →ₗ[ℝ] Y) : Prop :=
+  ∃ recover : (observations b r hr).range →ₗ[ℝ] Y,
+    T = recover.comp (observations b r hr).rangeRestrict
+
+private theorem recovery_iff_kernel {Y : Type*} [AddCommGroup Y] [Module ℝ Y]
+    (b : OrthonormalBasis (Axis k) ℝ V) (r : ℕ) (hr : r ≤ k) (T : V →ₗ[ℝ] Y) :
+    LinearlyRecoverable b r hr T ↔ (observations b r hr).ker ≤ T.ker := by
+  constructor
+  · rintro ⟨recover, h⟩ x hx
+    rw [LinearMap.mem_ker] at hx ⊢
+    rw [h, LinearMap.comp_apply]
+    have hz : (observations b r hr).rangeRestrict x = 0 := Subtype.ext hx
+    rw [hz, map_zero]
+  · intro h
+    let q := (observations b r hr).rangeRestrict
+    have hq : q.ker ≤ T.ker := by simpa only [q, LinearMap.ker_rangeRestrict] using h
+    let f := q.liftOfSurjective (observations b r hr).surjective_rangeRestrict ⟨T, hq⟩
+    refine ⟨f, ?_⟩
+    ext x
+    exact (LinearMap.equivOfSurjective_apply hq).symm
+
+private theorem hidden_orthogonal_window (b : OrthonormalBasis (Axis k) ℝ V)
+    (r : ℕ) (j : Fin k) (hj : r ≤ j.val) : b (.inr j) ∈ (window b r)ᗮ := by
+  rw [Submodule.mem_orthogonal]
+  intro y hy
+  induction hy using Submodule.span_induction with
+  | mem z hz =>
+    rcases hz with ⟨i, hi, rfl⟩
+    have hne : i ≠ Sum.inr j := by
+      intro he
+      subst i
+      change j.val < r at hi
+      omega
+    exact b.orthonormal.inner_eq_zero hne
+  | zero => simp
+  | add x y hx hy ihx ihy => simp [inner_add_left, ihx, ihy]
+  | smul a x hx ih => simp [real_inner_smul_left, ih]
+
+private theorem projection_rank (b : OrthonormalBasis (Axis k) ℝ V)
+    (r : ℕ) (hr : r ≤ k) :
+    Module.finrank ℝ (window b r).orthogonalProjectionOnto.toLinearMap.range = 3 + r := by
+  have hs : Function.Surjective (window b r).orthogonalProjectionOnto.toLinearMap := by
+    intro x
+    exact ⟨x.val, Submodule.orthogonalProjectionOnto_mem_subspace_eq_self x⟩
+  rw [LinearMap.range_eq_top.mpr hs, finrank_top, window_finrank b r hr]
+
+private theorem full_window (b : OrthonormalBasis (Axis k) ℝ V) : window b k = ⊤ := by
+  apply top_unique
+  intro x hx
+  apply (mem_window_iff b k x).mpr
+  intro j hj
+  omega
+
+/-- For every finite hidden dimension and every prefix cycle, the complete
+observation family has exactly the stated row space, ranks, escape pairs and
+linear reconstructions. Scalar rank is separate from the number of vector readouts. -/
+theorem mixed_cycle_recovery (b : OrthonormalBasis (Axis k) ℝ V)
+    (r : ℕ) (hr : r ≤ k) :
+    mixedCycle b 0 (Nat.zero_le k) = 1 ∧
+    rowSpace b r hr = window b r ∧
+    Module.finrank ℝ (rowSpace b r hr) = 3 + r ∧
+    Module.finrank ℝ (LinearMap.id : visible b →ₗ[ℝ] visible b).range = 3 ∧
+    (∀ x : visible b, observations b r hr x ⟨1, (generated b r hr).one_mem⟩ = x) ∧
+    Module.finrank ℝ (visible b).orthogonalProjectionOnto.toLinearMap.range = 3 ∧
+    LinearlyRecoverable b r hr (visible b).orthogonalProjectionOnto.toLinearMap ∧
+    (∀ (h : r < k) (x : V) (a : ℝ),
+      observations b r hr (x + a • b (.inr ⟨r, h⟩)) = observations b r hr x ∧
+      (a ≠ 0 → x + a • b (.inr ⟨r, h⟩) ≠ x)) ∧
+    (LinearlyRecoverable b r hr (LinearMap.id : V →ₗ[ℝ] V) ↔ r = k) ∧
+    Module.finrank ℝ (window b r).orthogonalProjectionOnto.toLinearMap.range = 3 + r ∧
+    LinearlyRecoverable b r hr (window b r).orthogonalProjectionOnto.toLinearMap := by
+  have hrow := pullback_rows_eq_window b r hr
+  have hker := observations_kernel b r hr
+  have he : window b 0 ≤ window b r := by
+    apply Submodule.span_mono
+    apply Set.image_mono
+    intro i hi
+    cases i with
+    | inl i => trivial
+    | inr j => change j.val < 0 at hi; omega
+  have recoverW : LinearlyRecoverable b r hr
+      (window b r).orthogonalProjectionOnto.toLinearMap := by
+    apply (recovery_iff_kernel b r hr _).mpr
+    rw [hker]
+    exact le_of_eq (Submodule.ker_orthogonalProjectionOnto (window b r)).symm
+  refine ⟨?_, hrow, by rw [hrow, window_finrank b r hr], ?_, ?_, ?_, ?_, ?_, ?_,
+    projection_rank b r hr, recoverW⟩
+  · apply b.toBasis.ext_linearIsometryEquiv
+    intro i
+    simp [mixedCycle, cycleNodes, OrthonormalBasis.equiv_apply_basis]
+  · rw [LinearMap.range_id, finrank_top, window_finrank b 0 (Nat.zero_le k)]
+  · intro x
+    change (visible b).orthogonalProjectionOnto x.val = x
+    exact Submodule.orthogonalProjectionOnto_mem_subspace_eq_self x
+  · simpa using projection_rank b 0 (Nat.zero_le k)
+  · apply (recovery_iff_kernel b r hr _).mpr
+    rw [hker]
+    exact (Submodule.orthogonal_le he).trans
+      (le_of_eq (Submodule.ker_orthogonalProjectionOnto (visible b)).symm)
+  · intro h x a
+    have hf : b (.inr ⟨r, h⟩) ∈ (observations b r hr).ker := by
+      rw [hker]
+      exact hidden_orthogonal_window b r ⟨r, h⟩ le_rfl
+    have hz := LinearMap.mem_ker.mp hf
+    constructor
+    · rw [map_add, map_smul, hz, smul_zero, add_zero]
+    · intro ha heq
+      have hs : a • b (.inr ⟨r, h⟩) = 0 := add_left_cancel (heq.trans (add_zero x).symm)
+      exact (smul_eq_zero.mp hs).elim ha (b.toBasis.ne_zero _)
+  · constructor
+    · intro hrec
+      by_contra hne
+      have hlt : r < k := lt_of_le_of_ne hr hne
+      have hf : b (.inr ⟨r, hlt⟩) ∈ (observations b r hr).ker := by
+        rw [hker]
+        exact hidden_orthogonal_window b r ⟨r, hlt⟩ le_rfl
+      have hz := (recovery_iff_kernel b r hr _).mp hrec hf
+      exact b.toBasis.ne_zero _ (LinearMap.mem_ker.mp hz)
+    · intro heq
+      apply (recovery_iff_kernel b r hr _).mpr
+      rw [hker, heq, full_window, Submodule.top_orthogonal_eq_bot]
+      exact bot_le
+
+#print axioms mixed_cycle_recovery
+
 end D5.S3.Observer.LinearMemory.MixedCycleRecovery
+
