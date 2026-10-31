@@ -582,6 +582,22 @@ theorem mem_gradeChargeDihedralInvariants_iff (D : LatticeData)
         rw [hneg]
         exact hr
 
+theorem mem_gradeChargeDihedralInvariants_iff_gradeChargeResidue_zero_and_theta
+    (D : LatticeData) (ell : Charge D →+ ZMod 3) (phase : ChargePhase)
+    (hphase : phase (Multiplicative.ofAdd (1 : ZMod 3)) ≠ 1)
+    (n : ℤ) (v : grade D n) :
+    v ∈ gradeChargeDihedralInvariants D ell phase n ↔
+      (v ∈ gradeChargeResidue D ell n 0 ∧ gradeTheta D n v = v) := by
+  constructor
+  · intro hv
+    have hgen := (mem_gradeChargeDihedralInvariants_iff D ell phase n v).mp hv
+    exact ⟨(gradeChargeRotation_fixed_iff_gradeChargeResidue_zero D ell phase
+      hphase n v).mp hgen.1, hgen.2⟩
+  · rintro ⟨hres, htheta⟩
+    apply (mem_gradeChargeDihedralInvariants_iff D ell phase n v).mpr
+    exact ⟨(gradeChargeRotation_fixed_iff_gradeChargeResidue_zero D ell phase
+      hphase n v).mpr hres, htheta⟩
+
 theorem gradeChargeDihedral_character_average_finrank (D : LatticeData)
     (ell : Charge D →+ ZMod 3) (phase : ChargePhase) (n : ℤ)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) :
