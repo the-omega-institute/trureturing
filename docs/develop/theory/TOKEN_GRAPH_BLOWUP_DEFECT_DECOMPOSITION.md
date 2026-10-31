@@ -938,3 +938,411 @@ even integers below $s_H$, and an optimal threshold are not assertions of
 Theorem 6.2. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 7. Strict symmetry at every even scale with bipartite neighborhoods
+
+**定义 7.1（Locally bipartite graphs and the unrestricted half-filled gap）。**
+Let $H$ be a finite simple unit-weight graph on $[m]$, $m\geq2$, with
+no isolated vertices. Assume that the induced graph $H[N_H(p)]$ is
+bipartite for every vertex $p$. Neighborhoods and $H$ may be disconnected;
+an edgeless neighborhood is bipartite. For every integer $S\geq1$, put
+$s=2S$, $k=mS$, and use exactly the complete complex Boolean space
+$\mathcal H_{mS}$, ordinary positive adjacency $K=K_{mS}$, and original
+block-permutation projection $P_{\mathrm{sym}}$ of Definitions 1.1–1.2.
+Set, independently of Definition 6.1,
+
+$$
+\begin{aligned}
+E_H(2S)&=\lambda_{\min}(K),\\
+g(H,2S)&=\lambda_{\min}\bigl(K|_{\ker P_{\mathrm{sym}}}\bigr)-E_H(2S).
+\end{aligned}
+\tag{7.1}
+$$
+
+Both subspaces reduce $K$. The nonsymmetric subspace is nonzero: take
+a nonconstant one-particle vector in one block, occupancy $2S-1$ in a
+second block, and occupancy $S$ in each remaining block. Their total
+occupancy is $mS$. This construction also applies to $S=1$.
+No flat least mode, regularity, or connectedness is assumed.
+
+**定理 7.2（Strict all-even local-neighborhood separation）。**
+For every $H$ and every integer $S\geq1$ of Definition 7.1,
+
+$$
+\ker(K-E_H(2S)I)\subseteq\operatorname{ran}P_{\mathrm{sym}},
+\qquad g(H,2S)>0.
+\tag{7.2}
+$$
+
+Proof. Write $E=E_H(2S)$. Use the complete orthogonal decomposition
+(6.6)–(6.12), which did not use the flat-mode hypothesis: a local chain
+has integer spin $J_i=S-t_i$, $0\leq J_i\leq S$, magnetic coordinate
+$x_i=n_i-S$, and multiplicity $r_{2S}(t_i)$. Its spin operators are
+
+$$
+Z_i|x_i\rangle=x_i|x_i\rangle,\qquad
+J_i^\pm|x_i\rangle=b_{J_i}^\pm(x_i)|x_i\pm1\rangle,
+\qquad
+K_{\boldsymbol J}=\sum_{\{i,j\}\in E(H)}
+(J_i^+J_j^-+J_i^-J_j^+).
+\tag{7.3}
+$$
+
+Here $b_J^\pm$ are exactly (6.10), and the total magnetic coordinate
+is zero. The Cartesian operators are $X_i=(J_i^++J_i^-)/2$ and
+$Y_i=(J_i^+-J_i^-)/(2i)$. Thus each edge in (7.3) is
+$2(X_iX_j+Y_iY_j)$, with no diagonal shift. The parameter correspondence
+with Srinivasan, [Theorem 1.2 and pp. 4–5](https://arxiv.org/pdf/1001.0280v2),
+is Boolean rank $n=2S$, starting rank $t_i$, and up operator $J_i^+$;
+with Feinsilver, [§3, (8)–(10), Proposition 4.3 and §4.2.2](https://arxiv.org/pdf/1102.0368v2),
+the principal number is $2J_i=2S-2t_i$. These classical representations
+supply all chains, including spin zero, and all multiplicity copies.
+Positive token adjacency and its factor in (7.3) agree with
+Apte–Parekh–Sud, [v3, Definition 1 and §3.2](https://arxiv.org/pdf/2506.03441v3);
+their shifted XY operator $WI/2-K$ is different.
+
+We first use the known nonstrict local-spin comparison, with its
+fixed-magnetization argument made explicit. Its source is
+Ghassemi Tabrizi–Henderson–Kühne–Scuseria,
+[*Scalable Implementation of Mean-Field and Correlation Methods Based
+on Lie-Algebraic Similarity Transformation of Spin Hamiltonians in the
+Jordan–Wigner Representation*, Appendix A4, (A34)–(A54) and the final
+fixed-magnetization paragraph](https://pmc.ncbi.nlm.nih.gov/articles/PMC12613319/#app1-sec4),
+DOI [10.1021/acs.jctc.5c01412](https://doi.org/10.1021/acs.jctc.5c01412).
+In that source's notation, the maximal on-site spin is $s_p=S$, the
+variable on-site spin $t_p$ is our $J_p$, the magnetization is $M=0$,
+and $D_{ij}=\operatorname{diag}(2a_{ij},2a_{ij},0)$.
+We need its nonstrict conclusion, not an exclusion of equality.
+
+Fix the other local spins and let $\eta_j$ be the minimum of (7.3)
+with spin $j$ at $p$ and total magnetic coordinate zero. These spaces
+are nonempty because all spins are integers. Realize spin $j$ as the
+symmetric space of $2j$ auxiliaries and adjoin a pair in the normalized
+spin-one state $|1,0\rangle$. This is the source's singlet-release trial
+with zero projection along the conserved $z$ axis. All three Cartesian
+expectations of that pair vanish. If $f_j$ is a normalized ground vector
+for $\eta_j$, the trial $f_j\otimes|1,0\rangle$ therefore has energy
+$\eta_j$ and still has total magnetic coordinate zero.
+
+The classical spin decomposition of $j\otimes1$ is $1$ for $j=0$,
+and $(j+1)\oplus j\oplus(j-1)$ for integer $j\geq1$. For example,
+subtracting the weight multiplicities of a spin-$(j+1)$ chain and then
+of a spin-$j$ chain leaves precisely a spin-$(j-1)$ chain; orthogonal
+invariant complements give this decomposition. It is the same
+finite-spin representation algebra underlying (6.6)–(6.12).
+The spin-$(j+1)$ projection of the trial is nonzero for every nonzero
+$f_j$, including endpoint magnetic coordinates. Indeed, on
+$|j,x\rangle\otimes|1,0\rangle$ its squared coefficient is
+
+$$
+\left\|P_{j+1}(|j,x\rangle\otimes|1,0\rangle)\right\|^2
+=\frac{2\binom{2j}{j+x}}{\binom{2j+2}{j+x+1}}
+=\frac{(j+1)^2-x^2}{(j+1)(2j+1)}>0
+\quad(-j\leq x\leq j).
+\tag{7.4}
+$$
+
+For the first equality, project the normalized constant vector on
+$(j+x)$-subsets of the first $2j$ coordinates, tensored with the
+normalized one-particle vector of the pair, onto the constant vector
+on $(j+x+1)$-subsets of all $2j+2$ coordinates. There are
+$2\binom{2j}{j+x}$ contributing subsets. Distinct $x$ have orthogonal
+images, so (7.4) also applies to entangled $f_j$ by summing squared norms.
+For $j=0$ the coefficient is one.
+
+Consequently $\eta_1\leq\eta_0$. Inductively assume
+$\eta_0\geq\cdots\geq\eta_j$. The normalized projections of the trial
+onto spins $j-1$ and $j$, when nonzero, have energies at least
+$\eta_{j-1}\geq\eta_j$ and $\eta_j$. Since their weighted average with
+the nonzero spin-$(j+1)$ contribution is $\eta_j$, that last
+contribution has energy at most $\eta_j$. Hence
+
+$$
+\eta_{j+1}\leq\eta_j\qquad(0\leq j<S).
+\tag{7.5}
+$$
+
+This is the cited comparison used as an intermediate. It proves existence
+of a ground vector with increased local spin when equality holds; it
+does not say that every ground vector already has maximal local spins.
+It applies with arbitrary other integer spins, zero spins included.
+
+We next establish the local obstruction needed for strictness. Let $G$
+be a finite bipartite graph carrying spin $S\geq1$ at each vertex, and
+put $K_G=\sum_{\{i,j\}\in E(G)}(J_i^+J_j^-+J_i^-J_j^+)$. If $G$ has
+an edge, no ground vector of $K_G$ on total magnetic coordinate zero
+is a singlet for the total spin of all vertices of $G$.
+To prove this, suppose a normalized $v$ is both such a ground vector,
+with eigenvalue $e$, and a total singlet. Define
+
+$$
+T_\alpha=\sum_{\{i,j\}\in E(G)}J_i^\alpha J_j^\alpha
+\quad(\alpha=x,y,z),\qquad
+K_G=2(T_x+T_y).
+\tag{7.6}
+$$
+
+A total singlet is fixed by all simultaneous spin rotations. Rotate
+$K_Gv=ev$ to obtain also $2(T_x+T_z)v=ev$ and
+$2(T_y+T_z)v=ev$. Adding the last two equations and subtracting the
+first gives
+
+$$
+T_zv=\frac e4v,\qquad
+T_z|x\rangle=\left(\sum_{\{i,j\}\in E(G)}x_ix_j\right)|x\rangle.
+\tag{7.7}
+$$
+
+Choose a connected component $C$ with an edge and let $D=V(G)\setminus C$.
+The reduced density of $v$ on $C$ is invariant under every simultaneous
+spin rotation on $C$, because $v$ is a total singlet. Decompose the
+spin representation on $C$ into irreducibles $V_q$ and their
+multiplicity spaces. All $q$ are nonnegative integers: the weights of
+a tensor product of integer spins are integers. An invariant density
+has the form $\bigoplus_q I_{V_q}\otimes A_q$, $A_q\succeq0$.
+Every $V_q$ contains its zero-weight vector, so
+
+$$
+\operatorname{tr}(\rho_C\,\mathbf1_{Z_C=0})
+=\sum_q\operatorname{tr}A_q>0,
+\qquad Z_C=\sum_{i\in C}Z_i.
+\tag{7.8}
+$$
+
+The inequality follows from $\operatorname{tr}\rho_C
+=\sum_q(2q+1)\operatorname{tr}A_q=1$. Thus the projection $w$ of $v$
+onto $Z_C=0$ is nonzero. It also has $Z_D=0$.
+
+On $C$, a sign change
+$|x\rangle\mapsto(-1)^{\sum_{i\in A}(S+x_i)}|x\rangle$, where
+$A$ is one side of a bipartition of $C$, conjugates $K_C$ to $-K_C$.
+The configuration graph on $Z_C=0$ is connected. To see this on the
+original carrier, the independent $2S$-blow-up of a connected graph
+with an edge is connected. Its edge transpositions generate all vertex
+permutations, since transpositions along a path generate a
+transposition of its endpoints. They therefore connect all subsets
+of a fixed cardinality. Passing to their block occupancies gives the
+connected graph of the allowed moves in (7.3). Every such move has a
+strictly positive coefficient. Perron–Frobenius applied to the
+nonnegative irreducible matrix $K_C$ shows that $-K_C$ has a unique
+least eigenvector with all coordinates strictly positive. Undoing the
+sign change, the least eigenspace of $K_C$ on $Z_C=0$ is a line spanned
+by a vector $u_C$ with every coordinate nonzero.
+
+Let $e_C,e_D$ be the minima on $Z_C=0,Z_D=0$ respectively. If $D$ is
+empty, its space is $\mathbb C$, $K_D=0$ and $e_D=0$. Because $v$ is a
+ground vector at total zero and $w\ne0$, the spectral minimum of
+$K_C\otimes I+I\otimes K_D$ on this subspace is both at least $e$
+and at most the eigenvalue $e$ of $w$. Therefore
+$e=e_C+e_D$, and
+$w=u_C\otimes w_D$ for some nonzero $w_D$. Projection onto $Z_C=0$
+commutes with $T_z$, so (7.7) still holds on $w$.
+Choose any configuration $y$ of $D$ with $w_D(y)\ne0$. For every
+zero-sum configuration $x$ on $C$, its coefficient in $w$ is nonzero,
+and (7.7) requires
+
+$$
+\sum_{\{i,j\}\in E(C)}x_ix_j
++\sum_{\{i,j\}\in E(D)}y_iy_j=\frac e4.
+\tag{7.9}
+$$
+
+Take first $x_i=0$ for every $i\in C$, and then $x_i=1,x_j=-1$
+on the two endpoints of one edge, all other coordinates zero. Both
+are allowed because $S\geq1$, but their first sums in (7.9) are $0$
+and $-1$. This contradiction proves the obstruction, even when $G$
+has isolated vertices or several components. The use of integer spin
+in (7.8) and of the zero and $\pm1$ configurations is essential.
+If $G$ has vertices but no edges, its zero-magnetization ground space
+instead contains
+
+$$
+u_G=\bigotimes_{i\in V(G)}|S,0\rangle,
+\qquad
+\left\|\sum_{i\in V(G)}J_i^+u_G\right\|^2
+=|V(G)|S(S+1)>0.
+\tag{7.10}
+$$
+
+Thus every nonempty bipartite $G$ has a zero-magnetization ground
+vector $u_G$ which is not annihilated by both total ladder operators:
+for an edged $G$ this follows from the obstruction, and for an
+edgeless $G$ use (7.10).
+
+Now suppose that a nonsymmetric sector of the full problem has minimum
+$E$. There is a site $p$ with $J_p<S$. Repeatedly applying (7.5) at
+all other sites gives a ground vector with spin $J_p$ at $p$ and spin
+$S$ everywhere else: no resulting energy can fall below the actual
+full-space minimum $E$. Multiplicity does not restrict this step,
+since every spin $0,\ldots,S$ occurs in the complete Boolean block.
+
+Realize the spin-$J_p$ factor using a symmetric group of $2J_p$
+auxiliaries and $S-J_p$ disjoint singlet pairs at $p$. This realizes an
+actual copy of that spin in the original block of $2S$ Boolean
+coordinates. The collective operators annihilate each singlet pair;
+thus this realization intertwines (7.3), preserves $Z_p$ and all
+energies, and allows arbitrary entanglement of the remaining $2J_p$
+auxiliaries with the other sites. In particular choose one such pair
+and write a normalized ground vector as
+$\Psi=|0,0\rangle\otimes f$. Keep all other singlet pairs fixed.
+Put
+
+$$
+A=N_H(p),\qquad R=[m]\setminus(\{p\}\cup A),\qquad
+B^\pm=\sum_{i\in A}J_i^\pm.
+\tag{7.11}
+$$
+
+There are no edges between $p$ and $R$, and $A$ is nonempty.
+Replace only the chosen pair by $|1,0\rangle$, giving
+$\Theta=|1,0\rangle\otimes f$. Its total magnetic coordinate is still
+zero. Since the pair has zero spin expectation and there is no
+intrablock interaction, $\langle\Theta,K\Theta\rangle=E$.
+For a finite Hermitian matrix with minimum $E$, equality in the
+Rayleigh bound implies the eigenvector equation: expand the vector
+in an orthonormal eigenbasis and sum
+$(\lambda-E)|c_\lambda|^2$. Hence both $\Psi$ and $\Theta$ are ground
+vectors of the actual original operator.
+
+Let $K^{\mathrm{rem}}$ denote the operator acting on $f$ after the
+chosen pair is omitted. Its spin at $p$ consists of the other
+auxiliaries, and $K^{\mathrm{rem}}f=Ef$. The spin-one ladder
+coefficients at magnetic coordinate zero are $\sqrt2$, so
+
+$$
+(K-E)\Theta
+=\sqrt2\,|1,1\rangle\otimes B^-f
++\sqrt2\,|1,-1\rangle\otimes B^+f=0.
+\tag{7.12}
+$$
+
+The two pair states are orthogonal, proving $B^-f=B^+f=0$.
+Their commutator also gives $Z_Af=0$, where
+$Z_A=\sum_{i\in A}Z_i$. In the spin representation of $A$, the common
+kernel of the two ladders is exactly its spin-zero subspace: in a
+spin-$q$ irreducible, both squared ladder norms can vanish only when
+$q=0$. Therefore $f$ lies in
+$\mathcal S_A\otimes\mathcal H_{pR}$, with $\mathcal S_A$ the total
+singlet space on $A$, and its $pR$ part has total magnetic coordinate
+zero.
+
+All spin-one components at a site $i\in A$ have zero matrix elements
+between total singlets on $A$. Indeed, a simultaneous rotation of $A$
+fixes both singlets and rotates these three matrix elements as a vector;
+the only vector fixed by all three-dimensional rotations is zero.
+Equivalently, sandwiching $X_i,Y_i,Z_i$ between the singlet projections
+gives zero. This statement holds with arbitrary operators on $pR$
+tensored alongside it. Consequently the interactions joining $A$ to
+$p$ or to $R$ have zero expectation in $f$. If $K_A,K_R$ denote the
+induced operators on $A,R$, then
+
+$$
+E=\langle f,K_Af\rangle+\langle f,K_Rf\rangle.
+\tag{7.13}
+$$
+
+For $R=\varnothing$, $\mathcal H_R=\mathbb C$ and $K_R=0$;
+no argument requires a vertex or an edge in $R$.
+
+Let $e_A$ be the minimum of $K_A$ on its total-zero subspace, with
+spin $S$ at every vertex. Choose a normalized ground vector $u_A$
+there which is not annihilated by both $B^\pm$. Such a choice exists
+by (7.9)–(7.10), because $H[A]$ is bipartite and $A\ne\varnothing$.
+Let $\rho_{pR}$ be the reduced density of $f$ on the other factors,
+including all the remaining auxiliaries at $p$. It is supported at
+total magnetic coordinate zero. Form the state
+
+$$
+\rho=|0,0\rangle\langle0,0|\otimes
+|u_A\rangle\langle u_A|\otimes\rho_{pR}
+\tag{7.14}
+$$
+
+in the original half-filled space, retaining the same fixed other
+singlet pairs at $p$. As $u_A$ has definite magnetic coordinate zero,
+each $\langle u_A,J_i^\pm u_A\rangle=0$. Hence every crossing edge
+has zero expectation in this product state, and
+
+$$
+\operatorname{tr}(K\rho)
+=e_A+\langle f,K_Rf\rangle
+\leq\langle f,K_Af\rangle+\langle f,K_Rf\rangle=E.
+\tag{7.15}
+$$
+
+All comparisons use the same half-filled carrier. Its minimum is $E$,
+so equality holds. Decompose $\rho_{pR}$ spectrally into normalized
+vectors $h$ with positive weights, each still in its total-zero
+subspace. Every resulting vector
+$|0,0\rangle\otimes u_A\otimes h$ has Rayleigh quotient at least $E$;
+their average equals $E$, so each is a ground vector. Apply the same
+pair replacement and (7.12) to any one of them. It forces
+$B^-u_A=B^+u_A=0$, contradicting the choice of $u_A$.
+This rules out every nonsymmetric sector at energy $E$.
+
+The strict step is the neighborhood obstruction and the product
+replacement (7.7)–(7.15), beyond the cited nonstrict comparison.
+For context, partial ferromagnetic strictness is prior mathematics:
+Benassi–Lees–Ueltschi,
+[*Correlation inequalities for the quantum XY model*, v3, §4.3,
+Lemma 9 and (4.12)–(4.17)](https://arxiv.org/pdf/1510.03215v3),
+DOI [10.1007/s10955-016-1580-2](https://doi.org/10.1007/s10955-016-1580-2),
+prove strict ground-energy decrease for their negative Hamiltonian with
+nonnegative product couplings in the 1 and 3 directions and use it
+for the two-auxiliary triplet construction. Their $R^i$ in (4.2) is
+the spin-one sum of two spin-half auxiliaries, corresponding here to
+the chosen pair, not to an arbitrary full spin-$S$ block.
+The positivity and zero-expectation alternatives in that proof are
+intermediate precedents; they do not supply (7.2) for positive
+adjacency on a possibly nonbipartite $H$. Here bipartiteness is used
+only for the induced neighborhood components. No global sign change
+of $K$ is asserted.
+
+Finally (6.12) is an orthogonal decomposition reducing both $K$ and
+$P_{\mathrm{sym}}$. Its $t=0$ summands are precisely
+$\operatorname{ran}P_{\mathrm{sym}}$. We have excluded energy $E$ from
+every $t\ne0$ summand, without discarding any multiplicity copy.
+An arbitrary ground vector, including a superposition of such copies,
+therefore has only $t=0$ components. The restriction to
+$\ker P_{\mathrm{sym}}$ is a nonempty finite-dimensional Hermitian
+operator whose eigenvalues are all strictly above $E$. Its minimum
+is consequently strictly above $E$, proving (7.2). $\square$
+
+**推论 7.3（Confinement on the complete complex half-filled space）。**
+Under Definition 7.1, for every integer $S\geq1$,
+
+$$
+\boxed{\quad K-E_H(2S)I\succeq
+ g(H,2S)(I-P_{\mathrm{sym}}).\quad}
+\tag{7.16}
+$$
+
+For every normalized complex vector $\phi\in\mathcal H_{mS}$,
+
+$$
+\|(I-P_{\mathrm{sym}})\phi\|^2
+\leq\frac{\langle\phi,K\phi\rangle-E_H(2S)}{g(H,2S)}.
+\tag{7.17}
+$$
+
+Proof. On $\operatorname{ran}P_{\mathrm{sym}}$, the left side of
+(7.16) is nonnegative by the definition of the actual full-space
+minimum. On $\ker P_{\mathrm{sym}}$, it is at least $g(H,2S)I$
+by (7.1). These orthogonal reducing subspaces have no cross terms.
+Adding their quadratic forms proves (7.16) for arbitrary complex
+superpositions, equivalently for all the local-spin sectors and every
+multiplicity copy in (6.12). Taking its quadratic form on $\phi$ and
+dividing by the positive number in (7.2) gives (7.17).
+
+The graph and scale hypotheses of this conclusion differ from those
+of Theorem 6.2: no flat mode is required here, while every induced
+open neighborhood must be bipartite. Theorem 6.2 retains its eventual
+explicit linear bound under its separate flat-mode assumption, without
+this neighborhood restriction. No quantitative rate in $S$ follows
+from the finite-spectrum strictness argument above. The present
+statements concern equal even block sizes, unit weights and half
+filling; the proof gives no corresponding theorem for odd block sizes,
+other fillings, weights or unequal blocks. Strictness beyond the
+locally bipartite graph class requires a further argument. $\square$
+
+## 追加锚（本行以下为增补区）
