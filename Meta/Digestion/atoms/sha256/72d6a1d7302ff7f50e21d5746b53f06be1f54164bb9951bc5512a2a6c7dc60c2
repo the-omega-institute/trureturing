@@ -1,0 +1,23 @@
+**Definition 9.1 (Uniform error on the original entire class).** For real $a,b$ satisfying
+
+$$
+b>0,\qquad a^2+b^2\le1,
+$$
+
+put $w=a+ib$, $W_{a,b}=(w,\overline w)$ and $p_{a,b}(z)=(z-w)(z-\overline w)$. Use the class $\mathscr E_2(\mathbb D)$ of Definition 8.1, with no restriction on the coefficients or real values of its members. The actual two-point interpolant and its slope are
+
+$$
+I_{a,b}g(z)=\frac{z-\overline w}{w-\overline w}g(w)
++\frac{w-z}{w-\overline w}g(\overline w),\qquad
+S_{a,b}(g)=\frac{g(a+ib)-g(a-ib)}{2ib}.
+$$
+
+The denominator is nonzero, and $(I_{a,b}g)'(z)=S_{a,b}(g)$ for every $z$. Define
+
+$$
+T_{a,b,x}(g)=g'(x)-S_{a,b}(g),\qquad
+E(a,b)=\sup_{g\in\mathscr E_2(\mathbb D)}\ \sup_{-1\le x\le1}|T_{a,b,x}(g)|.
+$$
+
+Here the nodes are simple nonreal conjugates, including those on the unit circle. The case $b=0$ is excluded: the displayed interpolant does not define interpolation at a repeated node.
+

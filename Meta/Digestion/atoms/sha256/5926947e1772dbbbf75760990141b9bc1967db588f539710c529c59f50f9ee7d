@@ -1,0 +1,164 @@
+**Theorem 2.1 (Unequal magnitudes and complex relative phase).** For every integer $n\geq2$ and every ordered pair of nonzero rank-one normal complex matrices $A,B$, representation (1.4) is valid up to one common unit scalar, and $D=aP+bQ$. The coefficient in (1.1) is attained. Its zero set is exactly
+
+$$
+c_*=0\quad\Longleftrightarrow\quad
+r=0\ \text{or}\ r=1\ \text{or}\ \omega=1.
+\tag{2.1}
+$$
+
+In the remaining domain (1.6), it is
+
+$$
+c_*=
+\frac{\sqrt{(1-y)^2+2(1-x^2)(1-y)/y}-(1-y)}{1+x}>0.
+\tag{2.2}
+$$
+
+Equivalently, $c_*$ is the unique positive root of
+
+$$
+\frac{1+x}{2}c^2+(1-y)c-\frac{(1-x)(1-y)}{y}=0.
+\tag{2.3}
+$$
+
+For each such pair a unitary attaining (2.2) exists in $\mathcal U(n)$, and every $U\in\mathcal U(n)$ fails the inequality in (1.1) when $0\leq c<c_*$. No change of the realized pair is involved in these two assertions.
+
+*Proof.* By the standard spectral theorem, a nonzero normal matrix of rank one has exactly one nonzero eigenvalue, counted with multiplicity. Thus the original pair has the form
+
+$$
+A=\alpha P,\qquad B=\beta Q,\qquad \alpha,\beta\ne0,
+$$
+
+with orthogonal rank-one spectral projections $P,Q$. Put $a=|\alpha|$, $b=|\beta|$, and $\xi=\overline\alpha/|\alpha|$. Multiplication of both matrices by the single scalar $\xi$ gives (1.4), with $\omega=\xi\beta/b$. Indeed $|\xi X|=|X|$ for $|\xi|=1$, so neither side of (1.1) changes. Moreover $(\alpha P)^*(\alpha P)=a^2P$, whose positive square root is $aP$; similarly $|B|=bQ$. This establishes $D=aP+bQ$ and the normalization using only the credited spectral and positive-square-root facts. Independent changes of the phases of $A$ and $B$ have not been made.
+
+Choose unit vectors $u,v$ spanning the ranges of $P,Q$. Then $\operatorname{tr}(PQ)=|u^*v|^2$, so $0\leq r\leq1$. If $r=0$, the projections are orthogonal and
+
+$$
+(aP+b\omega Q)^*(aP+b\omega Q)=a^2P+b^2Q=D^2,
+$$
+
+hence $|A+B|=D$ and $c_*=0$. If $r=1$, equality in the vector Cauchy–Schwarz inequality gives $P=Q$, whence
+
+$$
+|A+B|=|a+b\omega|P\leq(a+b)P=D
+$$
+
+and again $c_*=0$. If $\omega=1$, the sum $aP+bQ$ is positive semidefinite, so its modulus is $D$ and $c_*=0$. In each boundary clause $c=0$ is itself feasible.
+
+Now assume (1.6). In particular $0<qr^2\eta<1$, so $0<y<1$; also $0<x_0\leq x<1$. Let $S=\operatorname{ran}P+\operatorname{ran}Q$, which has dimension two. Both matrices and their adjoints vanish on $S^\perp$. Changing the phase of the vector $v$ leaves $Q$ unchanged and allows $u^*v=r$. In the orthonormal basis $u,(v-ru)/\sqrt{1-r^2}$ of $S$, the standard two-projection reduction is
+
+$$
+P\big|_S=\begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad
+Q\big|_S=\begin{pmatrix}r^2&r\sqrt{1-r^2}\\
+r\sqrt{1-r^2}&1-r^2\end{pmatrix}.
+\tag{2.4}
+$$
+
+This changes neither the relative scalar $\omega$ nor the pair being studied. In the following trace and determinant calculations all matrices are restricted to $S$, and $I_S$ is its identity. Set
+
+$$
+N=aP+b\omega Q,\qquad M=N^*N,\qquad T=M^{1/2},\qquad
+\delta=ab(1-r^2)>0.
+$$
+
+Formula (2.4) gives
+
+$$
+\operatorname{tr}D=s,\qquad \det D=\delta,
+\qquad \lambda_\pm(D)=\frac s2(1\pm x).
+\tag{2.5}
+$$
+
+The product in the *right* modulus has the order
+
+$$
+M=a^2P+b^2Q+ab(\omega PQ+\overline\omega QP).
+\tag{2.6}
+$$
+
+In particular,
+
+$$
+\begin{aligned}
+\det N&=ab\omega(1-r^2),& \det M&=\delta^2,\\
+\operatorname{tr}M
+&=a^2+b^2+2ab r^2\operatorname{Re}\omega
+=s^2y^2-2\delta.
+\end{aligned}
+\tag{2.7}
+$$
+
+The standard two-dimensional square-root formula, applied to these invariants, reads
+
+$$
+T=\frac{M+\delta I_S}{sy}.
+\tag{2.8}
+$$
+
+For completeness, Cayley–Hamilton gives $M^2-(\operatorname{tr}M)M+\delta^2I_S=0$, and hence $(M+\delta I_S)^2=(\operatorname{tr}M+2\delta)M=s^2y^2M$. The numerator in (2.8) is positive definite and $sy>0$, so uniqueness of the positive square root proves (2.8). Consequently
+
+$$
+\operatorname{tr}T=sy,\qquad \det T=\delta.
+\tag{2.9}
+$$
+
+We need the mixed trace for the same $D$ and $T$, rather than independently chosen spectral data. Using $P^2=P$, $Q^2=Q$, $\operatorname{tr}(PQ)=r^2$ and cyclicity of trace in (2.6), one obtains
+
+$$
+\begin{aligned}
+\operatorname{tr}(DM)
+&=a^3+b^3+ab s r^2(1+2\operatorname{Re}\omega)\\
+&=s\operatorname{tr}M-s\delta,\\
+\operatorname{tr}(DT)
+&=\frac{\operatorname{tr}(DM)+\delta s}{sy}
+=\frac{\operatorname{tr}M}{y}
+=s^2y-\frac{2\delta}{y}.
+\end{aligned}
+\tag{2.10}
+$$
+
+Put $K=T-D$ on $S$. For two-dimensional matrices the identity
+
+$$
+\det(T-D)=\det T+\det D-\operatorname{tr}T\operatorname{tr}D+\operatorname{tr}(TD)
+$$
+
+follows by expanding the determinant. Equations (2.5), (2.9) and (2.10) yield
+
+$$
+\operatorname{tr}K=-s(1-y),\qquad
+\det K=-\frac{2\delta(1-y)}{y}<0.
+\tag{2.11}
+$$
+
+Thus $K$ has one positive eigenvalue $\kappa_+$ and one negative eigenvalue $\kappa_-$. Its positive eigenvalue is
+
+$$
+\kappa_+=\frac s2
+\left(\sqrt{(1-y)^2+\frac{2(1-x^2)(1-y)}{y}}-(1-y)\right),
+\tag{2.12}
+$$
+
+because $4\delta=s^2(1-x^2)$. Set $L=\lambda_+(D)=s(1+x)/2$ and $l=\lambda_-(D)=s(1-x)/2>0$.
+
+Extend $K$ by zero on $S^\perp$. The standard spectral bound $D\leq LI_n$ implies $UDU^*\leq LI_n$ for **every** ambient unitary $U$, including ones that mix $S$ and $S^\perp$. If $e_+\in S$ is a unit eigenvector of $K$ for $\kappa_+$, feasibility in (1.1) forces
+
+$$
+\kappa_+=e_+^*Ke_+\leq c\,e_+^*UDU^*e_+\leq cL.
+\tag{2.13}
+$$
+
+This proves the necessary bound $c\geq\kappa_+/L$ against the full group.
+
+To attain it, choose orthonormal eigenvectors $d_+,d_-$ of $D|_S$ for $L,l$, and orthonormal eigenvectors $e_+,e_-$ of $K|_S$ for $\kappa_+,\kappa_-$. Define $U d_+=e_+$, $U d_-=e_-$ and let $U$ be the identity on $S^\perp$. This specifies a genuine unitary. At $c=\kappa_+/L$ it gives
+
+$$
+cUDU^*-K
+=0\,e_+e_+^*+(cl-\kappa_-)e_-e_-^*\succeq0
+\tag{2.14}
+$$
+
+on $S$, and zero on $S^\perp$. Here $cl-\kappa_->0$. It follows that the infimum is attained and equals (2.2). In particular it is positive throughout (1.6), completing both directions of (2.1). Every larger $c$ is feasible with this same $U$ as well.
+
+Finally $\kappa_+$ satisfies $\kappa_+^2+s(1-y)\kappa_+-2\delta(1-y)/y=0$. Substitution of $\kappa_+=Lc$ and division by $s^2(1+x)/2>0$ gives (2.3). Its constant term is negative and its derivative for $c\geq0$ is $(1+x)c+1-y>0$. Hence it has exactly one positive root. This also verifies the equivalence of (2.2) and (2.3). $\square$
+

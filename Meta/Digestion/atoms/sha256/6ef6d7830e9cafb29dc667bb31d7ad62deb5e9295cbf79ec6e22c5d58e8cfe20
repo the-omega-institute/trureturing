@@ -1,0 +1,23 @@
+**Definition 1.1 (Adjacency average-mixing trace).** Let $G=(V,E)$ be a finite simple undirected unweighted graph, let $n=|V|$, and let $A=A(G)$ be its real adjacency matrix. Write
+
+$$
+A=\sum_{\theta\in\operatorname{spec}(A)}\theta E_\theta,
+\qquad
+\widehat M_A(G)=\sum_{\theta\in\operatorname{spec}(A)}E_\theta\circ E_\theta,
+\qquad
+T_A(G)=\operatorname{tr}\widehat M_A(G)
+      =\sum_{v\in V}\sum_{\theta\in\operatorname{spec}(A)}(E_\theta)_{vv}^{,2}.
+\tag{1.1}
+$$
+
+Here the spectrum indexes distinct eigenvalues, $E_\theta$ is the orthogonal projection onto the entire $\theta$-eigenspace, and $\circ$ is the entrywise product. In particular, a repeated eigenvalue contributes one projection, rather than separate summands for an eigenbasis. Set $E_0=0$ when zero is not an eigenvalue.
+
+The spectral expression (1.1) is the classical average-mixing formula: see Godsil–Guo–Sobchuk, *Diagonal entries of the average mixing matrix*, [arXiv:1910.02039v1, §2](https://arxiv.org/html/1910.02039v1#S2), and Coutinho–Godsil, *Graph Spectra and Continuous Quantum Walks*, [Theorem 15.1.1](https://www.math.uwaterloo.ca/~cgodsil/quagmire/QuantumWalks/pdfs/GrfSpc3.pdf). Indeed, with $U(t)=\exp(itA)$, expansion in the spectral projections gives
+
+$$
+U(t)\circ\overline{U(t)}
+ =\sum_{\theta,\phi}e^{it(\theta-\phi)}E_\theta\circ E_\phi.
+$$
+
+The time average of $e^{it(\theta-\phi)}$ over $[0,R]$ tends to zero for $\theta\ne\phi$ and equals one for $\theta=\phi$. The sum is finite, so (1.1) is precisely the Cesàro average of the original adjacency walk.
+

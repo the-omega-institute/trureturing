@@ -1,0 +1,45 @@
+#### 定理 6.2（递归得分的正交增量）
+
+<a id="thm:fisherchain"></a>
+
+令 $\xi_{n+1}=\partial_\lambda\log k_\lambda(O_{n+1}\mid H_n)$。
+则
+
+$$
+S_{n+1}=S_n+\xi_{n+1},\qquad
+ \mathbb{E}_\lambda[\xi_{n+1}\mid H_n]=0,
+$$
+
+$$
+\boxed{
+ \mathcal I_{n+1}-\mathcal I_n
+ =\mathbb{E}_\lambda\xi_{n+1}^2\ge0.
+ }                                                        \tag{23}
+$$
+
+若只保留一个参数无关的固定粗化 $Y=f(H_n)$，其得分为
+$S_Y=\mathbb{E}_\lambda[S_n\mid Y]$，并且
+
+$$
+\mathcal I_n-\mathcal I_Y
+ =\mathbb{E}_\lambda\operatorname{Var}_\lambda(S_n\mid Y)\ge0.                  \tag{24}
+$$
+
+**证明。**
+
+路径概率的乘法在对数下变为加法，给第一式。
+对 $\sum_ok_\lambda(o\mid h)=1$ 求导给条件零均值，
+所以旧得分与新增得分的交叉期望为零，平方展开即得式 (23)。
+对粗化律
+$p_\lambda(y)=\sum_{h:f(h)=y}p_\lambda(h)$ 求导并除以它，
+得到条件得分；条件方差分解给式 (24)。
+
+∎
+
+这给此前“加法、乘法、对数与勾股”直觉一个明确对应：
+记录分支用加法汇总、路径用乘法组合、对数得分相加，
+而零条件均值使新增得分在平方范数中正交。
+它们全是一个内部记录模型的性质，不需要外部时间轴。
+
+<a id="statement-6-3"></a>
+

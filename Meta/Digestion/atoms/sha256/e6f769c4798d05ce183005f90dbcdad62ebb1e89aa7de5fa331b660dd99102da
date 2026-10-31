@@ -1,0 +1,17 @@
+#### 定义 8.1（相对量子几何张量）
+
+对一个 $C^2$ 单位向量图表，置
+$P_\lambda=\lvert \psi_\lambda\rangle\langle \psi_\lambda\rvert$，
+$\eta_\mu=(I-P_\lambda)\partial_\mu\psi_\lambda$，定义
+
+$$
+\chi_{\mu\nu}=\langle\eta_\mu,\eta_\nu\rangle,\qquad
+ g_{\mu\nu}=\operatorname{Re}\chi_{\mu\nu},\qquad
+ \mathscr F_{\mu\nu}=2\operatorname{Im}\chi_{\mu\nu}.
+ \tag{36}
+$$
+
+$g$ 是读出射线可辨识性的半正定形式；不可辨识方向可以在其中为零。
+
+<a id="statement-8-2"></a>
+

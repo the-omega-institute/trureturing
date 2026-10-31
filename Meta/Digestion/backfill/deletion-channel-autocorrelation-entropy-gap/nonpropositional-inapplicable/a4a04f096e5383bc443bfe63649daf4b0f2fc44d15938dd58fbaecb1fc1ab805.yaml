@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a4a04f096e5383bc443bfe63649daf4b0f2fc44d15938dd58fbaecb1fc1ab805
+  normalized_sha256: sha256:a4a04f096e5383bc443bfe63649daf4b0f2fc44d15938dd58fbaecb1fc1ab805
+cas_ref: sha256:a4a04f096e5383bc443bfe63649daf4b0f2fc44d15938dd58fbaecb1fc1ab805
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Context defining the same odd family for every integer r >= 1: m = 2r + 1, n = 2r + 2, x_r = 0 1^(2r-1) 0, y_r = 0^r 1 0^r, and f(t) = t log_2(t) for t > 0. The only parameter equality, choose(n,m) = n with n = m + 1, is the direct instance of pinned Mathlib Nat.choose_succ_self_right at m, after the nonnegative integer length correspondence. A mask of size n-1 is specified by its unique omitted position; uniform choice is the given uniform-position convention. These definitions and this upstream-only parameter specialization have no project frozen GID for this exact payload. This receipt does not settle the model mass-normalization proposition or any clause of Theorem 2.1.'
+    previous_atom_id: 856f6f02b0eac13c241c276e4eec5cfd505d377c64c10283bc0d875bf2c6416a
+    next_atom_id: 11663d0d68e2df914550000cfdc563ef950f4e441b7993579772925572205485

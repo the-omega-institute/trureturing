@@ -95,7 +95,7 @@ public sealed partial class CleanLanesCommandTests
         {
             if (!nativeRemovalFailure || file != "python3" || !IsProtocol(args, "remove")) return null;
             var modified = args.ToArray();
-            modified[2] = modified[2].Replace("sys.exit(sys.modules['worktree_protocol'].main())", """
+            File.WriteAllText(modified[2], File.ReadAllText(modified[2]).Replace("sys.exit(sys.modules['worktree_protocol'].main())", """
                 p = sys.modules['worktree_preservation']
                 native_git = p.git
                 def interrupt(path, *args, **kwargs):
@@ -104,7 +104,7 @@ public sealed partial class CleanLanesCommandTests
                     return native_git(path, *args, **kwargs)
                 p.git = interrupt
                 sys.exit(sys.modules['worktree_protocol'].main())
-                """, StringComparison.Ordinal);
+                """, StringComparison.Ordinal));
             return production.Run(file, modified, directory, TimeSpan.FromSeconds(60));
         });
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");

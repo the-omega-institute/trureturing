@@ -1,0 +1,107 @@
+**定理 2.1（Spectral, occupancy and Johnson defect identity）。** For every $H,s,k,\varphi$ of Definitions 1.1–1.3,
+
+$$
+\boxed{
+Q-\lambda(b+r)
+=\left\langle F,\bigl((a-\lambda I)\otimes I\bigr)F\right\rangle
++|\lambda|\left\langle V+\sum_iD_i\right\rangle_\psi .
+}
+\tag{2.1}
+$$
+
+Every term on the right is nonnegative. More precisely,
+
+$$
+(a-\lambda I)\otimes I\succeq0,\qquad
+\left(n_i-\frac rm I\right)^2\succeq0,\qquad
+D_i=\sum_{\{u,v\}\subseteq B_i}(I-\tau_{uv})
+\succeq s(I-P_i)\succeq0.
+\tag{2.2}
+$$
+
+The statements hold on the complete Boolean space at occupancy $r$, including nonsymmetric states. In particular, without any flat-eigenvector hypothesis,
+
+$$
+E(s,k)\geq\lambda(b+r).
+\tag{2.3}
+$$
+
+Proof. The finite real symmetric spectral theorem supplies (1.1): if $\{i,j\}$ is an edge, the vector $e_i-e_j$ has quadratic form $-2$ and squared norm $2$, so $\lambda\leq-1$. Complementing both token configurations preserves their adjacency, hence $CK_kC^*=K_{N-k}$ and $Q=\langle\psi,K_r\psi\rangle$.
+
+Expand the lowering operators on a basis vector $|S\rangle$. For $i\ne j$, each term in $L_i^*L_j$ removes one occupied vertex from $B_j$ and adds one unoccupied vertex in $B_i$, with coefficient one. The removed and added vertices are determined by the resulting pair of configurations. Since $a_{ii}=0$, this gives, with no diagonal shift or factor of two,
+
+$$
+K_r=\sum_{i,j}a_{ij}L_i^*L_j,\qquad
+Q=\sum_{i,j}a_{ij}\langle L_i\psi,L_j\psi\rangle
+=\langle F,(a\otimes I)F\rangle.
+\tag{2.4}
+$$
+
+To identify each $D_i$, fix the occupied set $R$ outside $B_i$ and let $q=r-|R|$. On the resulting $q$-subset space inside $B_i$, removing and replacing the same vertex gives $q$ diagonal contributions; removing and replacing distinct vertices gives the adjacency of the Johnson graph $J(s,q)$. Consequently
+
+$$
+L_i^*L_i=qI+A(J(s,q)),\qquad
+D_i=q(s-q)I-A(J(s,q))=L(J(s,q)).
+\tag{2.5}
+$$
+
+Each $q$-subset has $q(s-q)$ Johnson neighbors. If $c_S$ are the coordinates of $\psi$ on $\mathcal H_r$, the exact quadratic form is
+
+$$
+\langle D_i\rangle_\psi
+=\sum_{R\subseteq\Omega\setminus B_i}
+\ \sum_{\{S,T\}\in E(J(s,r-|R|))}
+|c_{R\cup S}-c_{R\cup T}|^2\geq0,
+\tag{2.6}
+$$
+
+where summands with $r-|R|\notin[0,s]$ are omitted. The cases $q=0,s$ have no Johnson edges. Equivalently, each transposition contributes $I-\tau_{uv}$, proving the equality in (2.2). Since $\tau_{uv}$ is a self-adjoint involution, its contribution has quadratic form $\tfrac12\|(I-\tau_{uv})\psi\|^2$. Thus its kernel consists precisely of invariant vectors; taking all transpositions gives $\ker D_i=\operatorname{ran}P_i$.
+
+For completeness the spectral inequality $D_i\succeq s(I-P_i)$ can be obtained directly from the classical Johnson calculation. On functions of the $q$-subsets, first take $q\leq s/2$ and let $f_U(S)=\mathbf1_{U\subseteq S}$ for $|U|=t\leq q$. Let $\mathcal U_t$ be their span and $\mathcal U_{-1}=0$. The relation
+
+$$
+\sum_{\substack{U\supset R\\|U|=t}}f_U=(q-t+1)f_R
+\qquad(|R|=t-1)
+$$
+
+shows $\mathcal U_{t-1}\subseteq\mathcal U_t$, and $\mathcal U_q$ is the whole function space. Counting neighbors according to $|U\setminus S|$ gives
+
+$$
+L(J(s,q))f_U
+=t(s+1-t)f_U-(q-t+1)\sum_{u\in U}f_{U\setminus\{u\}}.
+\tag{2.7}
+$$
+
+Indeed, for $U\subseteq S$ the adjacency count is $(q-t)(s-q)$, for $|U\setminus S|=1$ it is $q-t+1$, and for larger differences it is zero. On $\mathcal U_t/\mathcal U_{t-1}$, (2.7) is the scalar $t(s+1-t)$. Self-adjointness makes $\mathcal U_t\cap\mathcal U_{t-1}^{\perp}$ invariant, so it has this same scalar action. These mutually orthogonal spaces exhaust the layer. The $t=0$ space consists of constants, and for $1\leq t\leq q$,
+
+$$
+t(s+1-t)-s=(t-1)(s-t)\geq0.
+$$
+
+For $q>s/2$ use the graph isomorphism $S\mapsto B_i\setminus S$ to the $(s-q)$-layer. This proves the claimed inequality on every layer, including the zero-dimensional nonconstant part at $q=0,s$ or $s=1$. Formula (2.5) is Feinsilver's Proposition 4.1 with $T=L_i^*$ and $T^*=L_i$; the Johnson eigenvalues used in this calculation are also recorded in Apte–Parekh–Sud v2, Appendix A.3, Lemma 15. These are attributed intermediate identities, not separate new spectral assertions.
+
+On $\mathcal H_r$ one has $\sum_i n_i=rI$. Expanding the squares in $V$ therefore gives $\sum_i n_i^2=V+(r^2/m)I$. Using the definition of $D_i$ now yields the exact norm accounting
+
+$$
+\begin{aligned}
+\|F\|^2
+&=\left\langle\sum_iL_i^*L_i\right\rangle_\psi\\
+&=(s+1)r-\left\langle\sum_i n_i^2\right\rangle_\psi
+-\left\langle\sum_iD_i\right\rangle_\psi\\
+&=b+r-T_\psi.
+\end{aligned}
+\tag{2.8}
+$$
+
+The unit normalization is used in the scalar terms in this equality. For an orthonormal eigenbasis $u_\alpha$ of $a$, write $F=\sum_\alpha u_\alpha\otimes f_\alpha$. If $a u_\alpha=\theta_\alpha u_\alpha$, then
+
+$$
+\left\langle F,\bigl((a-\lambda I)\otimes I\bigr)F\right\rangle
+=\sum_\alpha(\theta_\alpha-\lambda)\|f_\alpha\|^2\geq0.
+\tag{2.9}
+$$
+
+This is an aggregate quadratic-form statement on all tuple components, without componentwise sign assumptions. Combining (2.4) and (2.8), and using $-\lambda=|\lambda|$, proves (2.1). Each occupancy square is positive because $n_i$ is self-adjoint; (2.6) proves the individual Johnson positivity. Minimizing over unit vectors proves (2.3). If $r=0$, $Q=b=V=D_i=0$ on the vacuum, so the same argument and identity include both endpoint sectors.
+
+The spectral quadratic-form method is a classical intermediate also present in Schmidt–Schnack–Luban, [*Bounding and approximating parabolas for the spectrum of Heisenberg spin systems*, Theorem 1](https://arxiv.org/pdf/cond-mat/0101228v1), DOI [10.1209/epl/i2001-00388-9](https://doi.org/10.1209/epl/i2001-00388-9), and Bärwinkel–Schmidt–Schnack, [*Improved upper and lower energy bounds for antiferromagnetic Heisenberg spin systems*, §3](https://arxiv.org/pdf/cond-mat/0210458v2), DOI [10.1140/epjb/e2003-00168-5](https://doi.org/10.1140/epjb/e2003-00168-5). The former's displayed bounds concern isotropic coupling, constant row sums and total spin; the latter's lower bounds add homogeneity assumptions. Here the inference is the particular identity (2.1), with the occupancy and Johnson defects retained on the full Boolean carrier, and its joint consequences below. No constant-row-sum or fixed local-spin irreducibility assumption enters (2.4)–(2.9). $\square$
+

@@ -1,0 +1,48 @@
+**定理 6.1（任一非局部连续方向生成整个 E8）。**
+
+<a id="thm-controlclosure"></a>
+
+对每个 $X\in\mathfrak k\setminus\mathfrak h$，
+
+$$
+\boxed{\ \operatorname{Lie}_{\mathbb R}(\mathfrak h,X)=\mathfrak k.\ }
+$$
+
+**证明。**
+
+令 $\mathfrak l=\operatorname{Lie}_{\mathbb R}(\mathfrak h,X)$。
+其复化 $\mathfrak l_{\mathbb C}$ 是 $\mathfrak h_{\mathbb C}$-子模并包含 $\mathfrak g_0$。
+命题 [3.1](#prop-grading) 的四个非零分级是两两不等价的不可约
+$\mathfrak h_{\mathbb C}$-模。由半单模的完全可约性及该分解的无重数性，
+$X$ 的任一非零非局部分量迫使 $\mathfrak l_{\mathbb C}$ 包含某个完整 $\mathfrak g_j$。
+
+以下证明任一非零分级都经括号生成其余分级。
+写 $u_i=e_i-\mathbf1/5$、$v_i=e_i-\mathbf1/5$ 为两因子的五个标准权。
+以下两组均为“两个根的和仍是根”：
+
+$$
+(u_1,v_1+v_2)+(u_2,v_3+v_4)=(u_1+u_2,-v_5),
+$$
+
+$$
+(u_1+u_2,-v_1)+(u_3+u_4,-v_2)=(-u_5,-v_1-v_2).
+$$
+
+标准根空间括号定理保证对应括号非零，
+故 $[\mathfrak g_1,\mathfrak g_1]\ne0$ 于 $\mathfrak g_2$，
+$[\mathfrak g_2,\mathfrak g_2]\ne0$ 于 $\mathfrak g_4$。
+取负根又得到 $[\mathfrak g_4,\mathfrak g_4]\ne0$ 于 $\mathfrak g_3$，
+$[\mathfrak g_3,\mathfrak g_3]\ne0$ 于 $\mathfrak g_1$。
+括号像是 $\mathfrak h_{\mathbb C}$-子模，目标不可约，故这些非零像都是整个目标。
+循环 $1\to2\to4\to3\to1$ 从任一非零分级到达所有分级。
+因此 $\mathfrak l_{\mathbb C}=\mathfrak g$，从而
+$\dim_{\mathbb R}\mathfrak l=248=\dim_{\mathbb R}\mathfrak k$，得到结论。证毕。
+ □
+
+这里的分级是复分级；紧实共轭交换 $\mathfrak g_1,\mathfrak g_4$ 以及 $\mathfrak g_2,\mathfrak g_3$。
+定理没有把每个复 $50$ 维分级视为一个实 $50$ 维控制空间。
+如果只给某个固定角度的门 $e^{t_0X}$，结论不自动成立；
+例如该门可能就是单位元。
+
+<a id="subsection-6-2"></a>
+

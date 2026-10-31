@@ -1,0 +1,10 @@
+以下四项等价：
+
+1.  $q_\infty$ 几乎处处只取 $0,1$；
+
+1.  存在 $Q\in\operatorname{Proj}\mathcal D_\infty$，使 $\omega((Z-Q)^2)=0$；
+
+1.  完整内部记录可以确定目标 $Z$，忽略概率零事件；
+
+1.  $\omega((Z-q_n)^2)\to0$。
+

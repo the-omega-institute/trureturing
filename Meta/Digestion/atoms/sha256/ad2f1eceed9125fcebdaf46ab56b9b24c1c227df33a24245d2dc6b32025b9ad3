@@ -1,0 +1,27 @@
+#### 定理 7.3（一个“心”产生的精确边关系）
+
+设每个 $V_i:H_i\to H_z$ 为酉，隐藏中心 $z\in H_z$ 接收输运后的边界向量 $y_i=V_i x_i$，权 $a_i>0$，$W=\sum_i a_i$。则
+
+$$
+z^\ast=\frac{\sum_i a_i y_i}{W},\qquad
+ \min_z\sum_i a_i\left\lVert z-y_i\right\rVert ^2
+ =\frac1W\sum_{i<j}a_i a_j\left\lVert y_i-y_j\right\rVert ^2.
+$$
+
+有效 $i\to j$ 关系为 $V_j^\dagger V_i$，任意有效三角闭路为 $I$。
+
+**证明。**
+
+配方得到中心均值，最小值为
+$\sum_i a_i\left\lVert y_i\right\rVert ^2-W^{-1}\left\lVert \sum_i a_i y_i\right\rVert ^2$。
+展开两两差的平方即得所列式。
+左乘 $V_j^\dagger$ 得有效边；三角乘积
+$V_i^\dagger V_kV_k^\dagger V_jV_j^\dagger V_i=I$。
+
+∎
+
+取三角位置向量和 $V_i=I$，等权给重心，按对边长加权给内心。由此中心、边权和变分可以在一个模型中联结。
+但一个只有共同中心且没有额外记忆的星图消元只产生平坦关系，不能自动产生任意非平凡三角 holonomy。量子相干闭路需要额外的边数据或内部结构。
+
+<a id="statement-7-4"></a>
+

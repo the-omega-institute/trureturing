@@ -1,0 +1,23 @@
+## 7. 一种三通道读口怎样覆盖完整量子态
+
+原始 AURIC 五模式三占位均值满足
+$X+Y+Z=1-p_0+p_{13}$，一般不是三结果归一化概率。
+本节沿用 v24 的*附加逻辑编码读口*：
+$\mathbb{C}^2\to\mathbb{C}^3$ 的三元 Fourier 等距映射
+$a_j=(\alpha+\omega^{-j}\beta)/\sqrt3$，$\omega=e^{2\pi i/3}$，
+并把三输出置于 $\lvert 1\rangle,\lvert 3\rangle,\lvert 2\rangle$ 模式。
+这个数学编码和其主动旋转是否在原生菜单可实施，是独立问题。
+
+写 $\rho=(I+r\cdot\sigma)/2$、$|r|\le1$。
+取单位法向 $u$，在 $u^\perp$ 中取夹角 $120^\circ$ 的三个单位向量 $n_j$；
+定义
+
+$$
+E_j=\frac{I+n_j\cdot\sigma}{3},\qquad
+q_j=\operatorname{Tr}(\rho E_j)=\frac{1+n_j\cdot r}{3}.
+$$
+
+$E_j$ 正且和为 $I$，是 trine POVM，不是三个互相正交的 qubit 基态。（[13](#ref-caves)）
+
+<a id="statement-7-1"></a>
+

@@ -312,3 +312,86 @@ def registration :
 
 end
 end Reg.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.ExpectationUpper
+
+namespace Reg.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.AttainmentZeroNeOne
+open _root_.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+
+/-- Observe inequality of binary functions at their source length. -/
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature ℕ
+    (fun n => Fin n → Fin 2) (fun n => (Fin n → Fin 2) → Prop)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ f g => f ≠ g) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (n : ℕ) (_hn : 0 < n),
+    R.readout () n (fun _ : Fin n => (0 : Fin 2)) (fun _ : Fin n => (1 : Fin 2))
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h 1 (by decide)
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, (fun _ => 0), (fun _ => 1), ?_⟩
+  intro h
+  have he := Eq.mp (congrFun h (fun _ => 1)) (Attainment.zero_ne_one 1 (by decide))
+  exact he rfl
+
+def source_registration : Registration arena (type_of% @Attainment.zero_ne_one) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨Attainment.zero_ne_one, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@Attainment.zero_ne_one) (Realization signature) Unit Unit := {
+  unitName := .str ``Attainment.zero_ne_one "__information_unit"
+  realizationName := ``source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ f g => f ≠ g) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Attainment.zero_ne_one
+#print axioms source_registration
+#print axioms registration
+
+end
+end Reg.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.AttainmentZeroNeOne

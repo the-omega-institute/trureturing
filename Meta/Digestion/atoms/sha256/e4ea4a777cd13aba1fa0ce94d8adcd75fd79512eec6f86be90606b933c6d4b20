@@ -1,0 +1,32 @@
+**Definition 117.2 (the two-value update).** Take $\mathcal Z=\{0,1\}$ and the fixed initial value $z=0$. An earlier-frozen path holds $z$ with priority. Every non-marker event holds $z$, including seed acquisition, discarded seed pairs, acquisition completion, the root, parser incompletion, payload returns and Stop delivery. At an unfrozen completed marker, check the original field domains and synchronization $b'=b[a]$, including $c'=c+1\le58$. A malformed formal marker address has supplementary default 0; this does not reject, stop or modify an original source execution. No acceptance or positive-completion test is made.
+
+For a valid unfrozen marker transaction, set
+
+$$
+\gamma(1)=\gamma(3)=0,\qquad \gamma(2)=1.
+$$
+
+If $c'\le27$, put $z'=0$. If $28\le c'\le30$, put
+
+$$
+z'=\begin{cases}
+z,&a=0,\\
+\gamma(c'-27),&a=1\text{ and old }\beta=27,\\
+0,&a=1\text{ and old }\beta\ne27.
+\end{cases}
+$$
+
+For $31\le c'\le58$, let $j=c'-30$ and put
+
+$$
+z'=\begin{cases}
+0,&\beta\ne28,\\
+z,&\beta=28,\ a=1,\ j=1,\\
+1-z,&\beta=28,\ a=1,\ j=3,\\
+z,&\beta=28,\ a=0,\ 1\le j\le3,\\
+0,&\text{otherwise}.
+\end{cases}
+$$
+
+Write $z'$ on every such unfrozen marker transaction, whether the selector continues or first freezes. The original selector then latches this same register if it selects that prefix. In particular the zero rule at $j\ge4$ applies equally to continuing and selecting paths. The quantities $c'-27,j,\gamma(c'-27)$ and the consistency tests are functions of current permitted arguments, not additional persistent variables or modes. No identity, deadline, schedule, reconstructed control or prefix is stored. The old and new bare fields and generic phases are used only as already supplied; the formula happens not to need the acquired seed or field syndrome beyond consistency checks.
+

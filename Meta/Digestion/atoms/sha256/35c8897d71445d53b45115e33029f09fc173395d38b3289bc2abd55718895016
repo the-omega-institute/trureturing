@@ -1,0 +1,28 @@
+**引理 12.2（所有带内迹因子的函数域不可约性）。** 对每个整数 $r\ge3$ 和每个实数 $c$，若 $|c|<2$，则 $\sigma_r-c$ 在 $\mathbb R(t)[\lambda]$ 中不可约，其 $\lambda$-次数为 $r$，首项系数为 $(-1)^r$。
+
+**证明。** 先把 $a,b$ 当作代数独立变量。由事实 3.2 的常系数矩阵积公式，
+
+$$
+T(a)^{r-1}=\begin{pmatrix}X&-Y\\Y&-Z\end{pmatrix},
+\qquad Y^2-XZ=1,
+$$
+
+第二式来自 $\det T(a)=1$。关于 $b$ 的一次多项式
+
+$$
+E_c=Xb-(2Y+c)\in\mathbb R[a][b]
+$$
+
+是本原的：若 $X$ 与 $2Y+c$ 有非常数公因子，取该公因子的一个复根 $\alpha$。恒等式 $Y^2-XZ=1$ 给出 $Y(\alpha)^2=1$，故 $Y(\alpha)=\pm1$，而 $|c|<2$ 蕴含 $2Y(\alpha)+c\ne0$，矛盾。因此 $\gcd_{\mathbb R[a]}(X,2Y+c)=1$。$E_c$ 在 $\mathbb R(a)[b]$ 中是一次多项式，因而不可约；由 Gauss 引理，它在 $\mathbb R[a,b]$ 中不可约。
+
+坐标变换有多项式逆
+
+$$
+a=2-\lambda+t,\qquad b=2-\lambda-t,
+\qquad t=\frac{a-b}{2},\qquad \lambda=2-\frac{a+b}{2},
+$$
+
+所以给出环同构 $\mathbb R[a,b]\simeq\mathbb R[t,\lambda]$。在该同构下，$E_c$ 变为 $\sigma_r-c$，仍不可约。$S_{r-1}$ 首一、次数为 $r-1$，故 $bX$ 的 $\lambda$-首项为 $(-1)^r\lambda^r$，而 $2Y+c$ 的 $\lambda$-次数至多为 $r-2$。于是 $\sigma_r-c$ 在 $\mathbb R[t][\lambda]$ 中的首项系数为单位 $(-1)^r$，从而本原。再次应用 Gauss 引理，得到它在 $\mathbb R(t)[\lambda]$ 中不可约。
+
+两次 Gauss 引理分别用于系数环 $\mathbb R[a]$ 与 $\mathbb R[t]$；所用标准工具见 S. Lang，*Algebra*，修订第三版，第 IV 章 §2。本引理将定理 6.5 的 $r=3$ 结论扩展到全部 $r\ge3$ 和全部实数 $|c|<2$。∎
+

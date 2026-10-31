@@ -1,0 +1,34 @@
+**Definition 18.1 (finite early clock tree and defect ancestors).**
+Let $a$ be the transient exponent of Definition 1.1, and set
+
+$$
+ D_s=\{j:1\le j\le a,\ t_{j-1}=1\},\qquad
+ \ell_a=\min\{m\ge0:F_{m+2}>a\}.
+ \tag{PCR.40}
+$$
+
+Construct a finite rooted address tree $H_s$ as follows. Start with
+$(\varepsilon,e,A,B)=(\varepsilon,1,1,2)$. At a node with $A\le a$,
+use its actual bit $s_{A-1}$ and (PCR.38)--(PCR.39) to include both
+children with their integer coordinates. Stop a branch as soon as
+$A>a$. Let
+
+$$
+ Z_s=\{v\in H_s:A_v\in D_s\},\qquad
+ U_s=\{u\in H_s:\text{some }v\in Z_s\text{ has }u\preceq v\}.
+ \tag{PCR.41}
+$$
+
+Here $\preceq$ includes equality. Define the seed addresses $C_s$ to be
+$\{\varepsilon\}$ if $U_s$ is empty, and otherwise
+
+$$
+ C_s=\{vx:v\in U_s,\ x\in\{a,b\},\ vx\notin U_s\}.
+ \tag{PCR.42}
+$$
+
+The $a$ in the address alphabet remains distinct from the transient
+exponent. The integer recursion uses only actual source entries with
+indices at most that exponent; it does not enumerate finite source
+cuts or invent exterior forests.
+

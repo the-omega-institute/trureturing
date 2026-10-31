@@ -1,0 +1,53 @@
+**定义 109.1（基底射线的对数局部修复）。** 固定 77.1、78.1、79.1、90.1 的原完整响应类 $\mathcal C$，沿用 (98.1) 的 $A_a,q_w$。这里 $H$ 仍为全部十三维空间，$\mathcal B$ 为全部十三个基地址，$w_a=10a010$，$\Omega_{10}$ 为全部 $1024$ 个原标签。每个响应的全部坐标在整个 $S(H)$ 上连续、相位不变、非负且总和为一，满足原同射线条件终端充分性以及全部十三个基底射线、全部标签的精确标定。制备和接续仍遍历原七门生成的所有有限正向字 $p,f\in\mathsf W$，含空字；$\mathcal R,\mathcal D$ 精确采用 (90.1)，其四时系数仍为 $(-1,x^2,-x^2,1)$。不加入次数、预测秩、字长、共同连续模、Lipschitz 或扩大历史前提。定义原完整类的最优偏差
+
+$$
+ M(\varepsilon)=\sup\{\mathcal D(P):P\in\mathcal C,\ \mathcal R(P)\le\varepsilon\},
+ \qquad 0<\varepsilon\le1.
+ \tag{109.1}
+$$
+
+固定一个零对角反 Hermitian 矩阵 $T\in M_{13}(\mathbb C)$，即 $T^*=-T$、$T_{aa}=0$，并置
+
+$$
+ \begin{aligned}
+ N=N(T)&=\max_{a\in\mathcal B}\|Te_a\|,\qquad U_t=\exp(tT),\\
+ Q^t_{w_a}(\psi)&=|\langle U_te_a,\psi\rangle|^2,\qquad
+ Q^t_w(\psi)=0\quad(w\text{ 非法}),\\
+ \zeta&=e^{3\pi i/5},\quad s=x^2,\quad
+ (c_0,c_1,c_2,c_3)=(-1,s,-s,1),\quad \ell=\sum_{k=0}^3|c_k|=2+2x^2,\\
+ m&=\min_{0\le i<j\le3}|\zeta^i-\zeta^j|>0,\quad K=4/m,\quad
+ \gamma=\min_{1\le d\le3}\frac{|1+\zeta^d|}{2}>0.
+ \end{aligned}
+ \tag{109.2}
+$$
+
+对 $0<t<1$，置 $\rho_t=t^3$、$A_t=\log(1/t)$，对每个 $b\in\mathcal B$ 和整个球面定义
+
+$$
+ \begin{aligned}
+ r_b(\psi)&=\sqrt{1-|\langle e_b,\psi\rangle|^2},\\
+ \chi_{b,t}(\psi)&=
+ \begin{cases}
+ 1,&0\le r_b(\psi)\le t^4,\\
+ \displaystyle\frac{\log(t^3/r_b(\psi))}{\log(1/t)},&t^4<r_b(\psi)<t^3,\\
+ 0,&r_b(\psi)\ge t^3.
+ \end{cases}
+ \end{aligned}
+ \tag{109.3}
+$$
+
+令 $\delta_b$ 为原合法标签 $w_b$ 上的点概率向量，定义全部 $1024$ 个坐标的响应
+
+$$
+ \begin{aligned}
+ P^t(\psi)&=\left(1-\sum_{b\in\mathcal B}\chi_{b,t}(\psi)\right)Q^t(\psi)
+              +\sum_{b\in\mathcal B}\chi_{b,t}(\psi)\delta_b,\\
+ B_t&=\max_{b\in\mathcal B}\bigl[1-Q^t_{w_b}(e_b)\bigr],\\
+ h_{w_a}(\psi)&=\langle\psi,[T,A_a]\psi\rangle,\qquad
+ h_w=0\quad(w\text{ 非法}).
+ \end{aligned}
+ \tag{109.4}
+$$
+
+以下函数组范数均指 $\|F\|_\infty=\max_{w\in\Omega_{10}}\sup_{\psi\in S(H)}|F_w(\psi)|$；它是最大坐标误差，不是总变差和。$T$ 在取 $t\downarrow0$ 前固定，所有充分小阈值及 $O_T$ 常数允许依赖 $T$。$U_t$ 只定义数学响应，不被加入原生操作。
+
