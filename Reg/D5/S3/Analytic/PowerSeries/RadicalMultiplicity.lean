@@ -19,7 +19,7 @@ structure Parameters where
 
 attribute [instance] Parameters.finiteIndex
 
-abbrev signature : Signature where
+abbrev signature : Signature.{u+1,u,0,0,0} where
   Params := Parameters.{u}
   State P := P.index → ℝ⟦X⟧
   Role := Unit
@@ -35,7 +35,7 @@ def actual : Realization signature := realize signature
 def rejected : Realization signature := realize signature
   (fun _ _ _ => (1 : ℝ⟦X⟧)) (fun e => nomatch e)
 
-abbrev arena : Arena where
+abbrev arena : Arena.{u+1,u,0,0,0} where
   signature := signature
   Law R := ∀ {ι : Type u} [Fintype ι]
     (S : ι → ℝ⟦X⟧) (p A : ι → Polynomial ℝ)
@@ -80,7 +80,7 @@ def family : Registration arena (type_of% @sum_eq_zero_of_coeff_eq_zero.{u}) whe
   sensitivity := sensitivity
   dependence := dependence
 
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+def audit : Contract.Registration.{u+1,0,1,0,0,0,u+1,u,0,0,0,0}
     (@sum_eq_zero_of_coeff_eq_zero.{u}) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.PowerSeries.RadicalMultiplicity.cutoff_unit
   realizationName := `Reg.D5.S3.Analytic.PowerSeries.RadicalMultiplicity.family
