@@ -9,12 +9,31 @@
 import D5.S3.Quantum.Schatten.CompoundMatrices
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 
+/-! ## The elementary symmetric inequality for a Hermitian Jordan product
+The only public theorem is the exact first question of MO512579.
+All auxiliary theorems are consumed on its proof path.
+-/
+
+/-
+result: proof_shape: bind-only; escape_witness: none.
+admission_basis: open-problem-resolution (#24902), pending pre-freeze review.
+jordan_hermitian: bind-only; consumers: claim, result.
+gram_det_le: bind-only; consumer: principal_det_le.
+principal_det_le: bind-only; consumer: result.
+spectral_minors: bind-only; consumer: result.
+Direct frozen dependency: cauchyBinet, GID D5/S3/Quantum/Schatten/CompoundMatrices.
+Declaration statement_id: sha256:6fb332c198d4506b8775454dff648409222d03ae0a60e7dbf5fca62ea37506df.
+Frozen module statement_id: sha256:8398f8b23ac0815231125a1304c91754b658ebb26e9e24af0ace9c2147f696ce.
+No source code is transplanted. The remaining dependencies are pinned Mathlib.
+-/
+
 set_option autoImplicit false
 
 namespace D5.S3.Quantum.Matrix.MalkounJordanElementary
 
-open Matrix Finset Complex Polynomial
-open scoped BigOperators
+open _root_.Matrix Finset Complex Polynomial
+open scoped ComplexOrder
+open scoped BigOperators AllOrdered
 
 noncomputable section
 
@@ -71,7 +90,7 @@ private theorem principal_det_le {n : ℕ} (X Y : Matrix (Fin n) (Fin n) ℂ)
     ((X * Y + Y * X).submatrix (Subtype.val : S → Fin n) Subtype.val).det.re ≤
       ((X ^ 2 + Y ^ 2).submatrix (Subtype.val : S → Fin n) Subtype.val).det.re := by
   classical
-  let e : Fin S.card → Fin n := S.orderEmbOfFin rfl
+  let e : Fin S.card → Fin n := fun i => (S.orderIsoOfFin rfl i : Fin n)
   let A := X.submatrix id e
   let B := Y.submatrix id e
   let U := Matrix.fromRows A B
@@ -84,26 +103,30 @@ private theorem principal_det_le {n : ℕ} (X Y : Matrix (Fin n) (Fin n) ℂ)
     dsimp [U, A, B]
     rw [Matrix.conjTranspose_fromRows_eq_fromCols_conjTranspose,
       Matrix.fromCols_mul_fromRows, mul_selected X X hX, mul_selected Y Y hY]
-    simp [pow_two]
+    simp only [pow_two]
+    rfl
   have hv : Vᴴ * V = (X ^ 2 + Y ^ 2).submatrix e e := by
     dsimp [V, A, B]
     rw [Matrix.conjTranspose_fromRows_eq_fromCols_conjTranspose,
       Matrix.fromCols_mul_fromRows, mul_selected Y Y hY, mul_selected X X hX]
-    simp [pow_two, add_comm]
+    simp only [pow_two]
+    ext i j
+    simp only [Matrix.add_apply, Matrix.submatrix_apply]
+    ring
   have huv : Uᴴ * V = (X * Y + Y * X).submatrix e e := by
     dsimp [U, V, A, B]
     rw [Matrix.conjTranspose_fromRows_eq_fromCols_conjTranspose,
       Matrix.fromCols_mul_fromRows, mul_selected X Y hX, mul_selected Y X hY]
-    simp
+    rfl
   have h := gram_det_le U V (hu.trans hv.symm)
   rw [hu, huv] at h
   have reindex (M : Matrix (Fin n) (Fin n) ℂ) :
       (M.submatrix e e).det =
         (M.submatrix (Subtype.val : S → Fin n) Subtype.val).det := by
-    simpa only [Matrix.submatrix_submatrix, Function.comp_def,
-      Finset.coe_orderIsoOfFin_apply] using
-      (Matrix.det_submatrix_equiv_self (S.orderIsoOfFin rfl).toEquiv
-        (M.submatrix (Subtype.val : S → Fin n) Subtype.val))
+    change ((M.submatrix (Subtype.val : S → Fin n) Subtype.val).submatrix
+      (S.orderIsoOfFin rfl).toEquiv (S.orderIsoOfFin rfl).toEquiv).det = _
+    exact Matrix.det_submatrix_equiv_self (S.orderIsoOfFin rfl).toEquiv
+      (M.submatrix (Subtype.val : S → Fin n) Subtype.val)
   simpa only [reindex] using h
 
 private theorem spectral_minors {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ)
@@ -115,6 +138,7 @@ private theorem spectral_minors {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ)
   have hc := M.charpoly_coeff_eq_sum_minors k (by simpa using hk)
   have he := Polynomial.coeff_eq_esymm_roots_of_splits hM.splits_charpoly
     (k := n - k) (by simpa using (Nat.sub_le n k))
+  rw [hM.roots_charpoly_eq_eigenvalues, Finset.esymm_map_val] at he
   have he' : M.charpoly.coeff (n - k) =
       (-1 : ℂ) ^ k * (elementarySymmetric hM.eigenvalues k : ℂ) := by
     simpa [Matrix.charpoly_natDegree_eq_dim, M.charpoly_monic.leadingCoeff,
@@ -135,5 +159,7 @@ theorem result : claim := by
   exact Finset.sum_le_sum (fun S _ => principal_det_le X Y hX.isHermitian hY.isHermitian S)
 
 #print axioms result
+
+end
 
 end D5.S3.Quantum.Matrix.MalkounJordanElementary
