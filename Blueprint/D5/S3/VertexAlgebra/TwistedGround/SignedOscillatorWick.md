@@ -14,6 +14,8 @@ Rank zero, empty supports, zero charges, zero vectors and indefinite lattices re
 
 Information-escape registration remains unfinished: the faithful compiled Reg mirrors currently report declared_unresolved. The source-reconstruction diagnostics and missing binding certificates are recorded at https://github.com/the-omega-institute/trureturing/issues/21134 under the repository linked-issue exception. Compilation does not assert a validated registration.
 
+FactorialBilinear.P, FactorialBilinear.form and FactorialBilinear.monomial_left, together with modeMatrix and complex_det_unit, are available at this original owner for direct reuse by OriginalSourceCoevaluation. Their definitions and proof bodies are unchanged. The monomial formula is F(monomial alpha c,p)=weight(alpha)*c*p.coeff alpha; modeMatrix remains the negative half-frequency Gram matrix. The integer source consumer derives its retuning and actual inverse from these owners, without copying private proofs or adding a new inverse axiom.
+
 **Definition 1.1 (wick).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.wick`

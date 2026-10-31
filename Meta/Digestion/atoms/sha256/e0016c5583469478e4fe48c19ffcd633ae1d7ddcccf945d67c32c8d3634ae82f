@@ -1,0 +1,57 @@
+## 固定来源与使用范围
+
+<a id="ref-head"></a>
+
+**[1]** 
+[trureturing，固定提交 2fe4175f9a8a](https://github.com/the-omega-institute/trureturing/commit/2fe4175f9a8a88d3a2d4fa5deb918b67bc3bf890)。
+2026-10-31 15:29:21（新加坡）；本文定向核对公开源码及理论树差异。
+
+<a id="ref-foundation"></a>
+
+**[2]** 
+[AURIC 金字塔基础公式与关系](https://github.com/the-omega-institute/trureturing/blob/2fe4175f9a8a88d3a2d4fa5deb918b67bc3bf890/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)。
+§§2–9：五函数基、关系纤维、条件行列式、minimax、最大熵与 TV。
+
+<a id="ref-correlation"></a>
+
+**[3]** 
+[AURIC 金字塔关联与原生接续](https://github.com/the-omega-institute/trureturing/blob/2fe4175f9a8a88d3a2d4fa5deb918b67bc3bf890/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md)。
+§§3–4：$J_f$、目标关系敏感性及完整纤维。
+
+<a id="ref-determinant"></a>
+
+**[4]** 
+[AURIC 金字塔行列式与原生守卫接续](https://github.com/the-omega-institute/trureturing/blob/2fe4175f9a8a88d3a2d4fa5deb918b67bc3bf890/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_DETERMINANT_AND_NATIVE_GUARD_CONTINUATION.md)。
+定义 0.4、§§1–7：共同占位、遗漏联合关系、条件拼接及赔率参数。
+
+<a id="ref-v24"></a>
+
+**[5]** 
+[AURIC 两基态与三通道，V24](https://github.com/the-omega-institute/trureturing/blob/2fe4175f9a8a88d3a2d4fa5deb918b67bc3bf890/docs/develop/theory/AURIC_TWO_BASIS_STATES_THREE_CHANNELS_PHASE_CHIRALITY_AND_RECURSIVE_SQUARE_LAW_V24.md)。
+§§2–4：线性重构判据、Bloch 几何、反对易第三算符及 Gram 关系。
+
+<a id="ref-v37"></a>
+
+**[6]** 
+[AURIC 二元关系、酉表示与黄金门通用性，V37](https://github.com/the-omega-institute/trureturing/blob/2fe4175f9a8a88d3a2d4fa5deb918b67bc3bf890/docs/develop/theory/AURIC_BINARY_RELATIONS_UNITARY_REPRESENTATION_AND_GOLDEN_GATE_UNIVERSALITY_V37.md)。
+关系表示、接口合同与门集合控制的分层背景。
+
+<a id="ref-hardcore"></a>
+
+**[7]** 
+[共同活动度 hard-core 占据的高活动度稳定性与精确缺陷分解](https://github.com/the-omega-institute/trureturing/blob/2fe4175f9a8a88d3a2d4fa5deb918b67bc3bf890/docs/develop/theory/HARD_CORE_COMMON_ACTIVITY_STABILITY_AND_DEFECT.md)。
+本文只消费定义 1.1 的同源 Gibbs 律；内部消元与赔率乘法是本文继续推导。
+
+<a id="ref-terminal"></a>
+
+**[8]** 
+[递归关系观察：Fibonacci 原生终端认证](https://github.com/the-omega-institute/trureturing/blob/2fe4175f9a8a88d3a2d4fa5deb918b67bc3bf890/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FIBONACCI_NATIVE_TERMINAL_CERTIFICATION.md)。
+最新 §§12–17：付费共同切口条件域、609/610 效果空间、同步块商、
+纯源不可见核、实际前缀 $78$ 与有限原字见证。
+
+<a id="ref-iii"></a>
+
+**[9]** 
+[AURIC 量子原则与相干重构续卷 III](https://github.com/the-omega-institute/trureturing/blob/2fe4175f9a8a88d3a2d4fa5deb918b67bc3bf890/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_III.md)。
+§151：实际来源、尾块、完整标签与条件律类；
+本文沿用其前件，不重新声称取得共同切口或实际操作服务。

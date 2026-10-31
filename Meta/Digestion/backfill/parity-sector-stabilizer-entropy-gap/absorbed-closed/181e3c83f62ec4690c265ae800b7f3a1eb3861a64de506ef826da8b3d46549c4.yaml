@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:181e3c83f62ec4690c265ae800b7f3a1eb3861a64de506ef826da8b3d46549c4
+  normalized_sha256: sha256:181e3c83f62ec4690c265ae800b7f3a1eb3861a64de506ef826da8b3d46549c4
+cas_ref: sha256:181e3c83f62ec4690c265ae800b7f3a1eb3861a64de506ef826da8b3d46549c4
+coverage_gids:
+  - gid: D5/S3/Quantum/Magic/ParitySectorEntropyGap.parity_sector_gaps_and_positivity
+    target_statement_id: sha256:667b769d074605b07e96b80208464531c8448324556fe685a9c48aca07068971
+receipts:
+  unresolved_subitems: []
