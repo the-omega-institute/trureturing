@@ -95,7 +95,7 @@ private theorem weighted_ray_transport {ι κ : Type*} [Fintype ι] [DecidableEq
       rw [hel, smul_mul, hqq, smul_zero, trace_zero, Complex.zero_re] at he
       simpa only [sum_mul, trace_sum, Complex.re_sum, map_sum, smul_mul, trace_smul,
         smul_smul, Complex.real_smul, Complex.mul_re, Complex.ofReal_re,
-        Complex.ofReal_im, mul_zero, sub_zero] using he.symm
+        Complex.ofReal_im, mul_zero, zero_mul, sub_zero] using he.symm
     have hn (j : ι) : 0 ≤ (trace (P (g j) * (1 - Q (g i)))).re :=
       RHLinalg.trace_mul_nonneg_of_posSemidef
         (projection_psd _ (hP _) (hPP _))
@@ -248,8 +248,11 @@ private theorem ray_injective : Function.Injective ray := by
   have h11p : 0 < Real.sqrt 11 := Real.sqrt_pos.mpr (by norm_num)
   have hp : 0 < 1 / Real.sqrt 11 := by positivity
   have hp3 : 0 < 1 / Real.sqrt 3 := by positivity
-  fin_cases k <;> fin_cases l <;> simp_all [direction] <;>
-    nlinarith
+  fin_cases k <;> fin_cases l <;> try rfl
+  all_goals norm_num [direction] at h0
+  all_goals norm_num [direction] at h1
+  all_goals norm_num [direction] at h2
+  all_goals nlinarith
 
 private theorem effect_factor (s : Fin 5) : effect s = weight s • ray (group s) := by
   have h3n : Real.sqrt 3 ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by norm_num))
@@ -259,7 +262,7 @@ private theorem effect_factor (s : Fin 5) : effect s = weight s • ray (group s
     apply Complex.ext <;>
     simp [effect, weight, ray, group, direction, blochMatrix, scalarB, B_formula,
       Complex.mul_re, Complex.mul_im, Complex.div_re, Complex.div_im] <;>
-    field_simp <;> ring_nf <;> norm_num [Real.sq_sqrt]
+    field_simp <;> ring_nf <;> norm_num [Real.sq_sqrt] <;> ring
 
 private theorem effect_hermitian (s : Fin 5) : (effect s).IsHermitian := by
   rw [effect_factor]
@@ -304,13 +307,14 @@ private theorem operator_transport (U : unitaryGroup (Fin 2) ℂ)
   calc
     _ = (trace (((U : Matrix (Fin 2) (Fin 2) ℂ) * ρ * star (U : Matrix (Fin 2) (Fin 2) ℂ)) * effect s)).re := by
       congr 1
-      simpa only [mul_assoc] using trace_mul_comm (ρ * star (U : Matrix _ _ ℂ) * effect s) (U : Matrix _ _ ℂ)
+      simpa only [Matrix.mul_assoc, Matrix.star_eq_conjTranspose] using trace_mul_comm (ρ * star (U : Matrix _ _ ℂ) * effect s) (U : Matrix _ _ ℂ)
     _ = _ := by simpa [mul_sum, mul_smul, trace_sum, trace_smul] using he.symm
 
 private theorem group_weight (k : Fin 4) :
     (∑ i with group i = k, weight i) =
       gain * (![4 * Real.sqrt 3, Real.sqrt 11, 2, Real.sqrt 11] : Fin 4 → ℝ) k := by
-  fin_cases k <;> simp [group, weight, Fin.sum_univ_succ, Finset.sum_filter] <;> ring
+  rw [Finset.sum_filter]
+  fin_cases k <;> simp [group, weight, Fin.sum_univ_succ] <;> ring
 
 private theorem scalar_of_fixed_rays (U : unitaryGroup (Fin 2) ℂ)
     (hA : star (U : Matrix (Fin 2) (Fin 2) ℂ) * ray 0 * (U : Matrix (Fin 2) (Fin 2) ℂ) = ray 0)
@@ -338,7 +342,9 @@ private theorem scalar_of_fixed_rays (U : unitaryGroup (Fin 2) ℂ)
   have hscalar : (U : Matrix (Fin 2) (Fin 2) ℂ) = (U 0 0) • 1 := by
     ext i j
     fin_cases i <;> fin_cases j <;> simp [h01, h10, hdiag]
-  have hu := congrFun₂ (Unitary.star_mul_self_of_mem U.prop) 0 0
+  have huMatrix : star (U : Matrix (Fin 2) (Fin 2) ℂ) * (U : Matrix (Fin 2) (Fin 2) ℂ) = 1 := by
+    simpa only [Unitary.coe_star] using Unitary.coe_star_mul_self U
+  have hu := congrFun₂ huMatrix 0 0
   rw [hscalar] at hu
   have hn : ‖(U : Matrix (Fin 2) (Fin 2) ℂ) 0 0‖ = 1 := by
     have he := congrArg norm hu
