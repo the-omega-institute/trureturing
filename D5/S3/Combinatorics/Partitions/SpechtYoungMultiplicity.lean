@@ -107,9 +107,10 @@ private theorem exists_intertwiningMap_eq_smul_subtype
     (spechtSubrepresentation lam).toRepresentation
     (permutationModule (shapePartition lam)).ρ f σ et
   rw [het] at hf
-  simpa only [Representation.IntertwiningMap.toLinearMap_apply,
-    Representation.IntertwiningMap.smul_apply, D5.S3.FiniteGroups.FiniteCharacterAlgebra.Subrepresentation.coe_subtype,
-    Subrepresentation.toRepresentation, LinearMap.restrict_apply, map_smul] using hf
+  change f ((spechtSubrepresentation lam).toRepresentation σ et) =
+    κ • (permutationModule (shapePartition lam)).ρ σ
+      (et : (permutationModule (shapePartition lam)).V)
+  simpa only [map_smul] using hf
 
 private noncomputable def scalarToSpechtIntertwiningMap (lam : YoungDiagram) :
     ℚ →ₗ[ℚ] Representation.IntertwiningMap (spechtSubrepresentation lam).toRepresentation

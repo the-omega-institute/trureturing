@@ -168,7 +168,12 @@ theorem hsw_frobChar_eq_fixedTabloid_coefficients (μ : Fin 3 → ℕ)
   apply Finset.sum_congr rfl
   intro ν _
   rw [mul_smul_comm, coeff_smul, smul_eq_mul]
-  rfl
+  exact congrArg (fun d : DecidableEq (Fin 3) =>
+    (Nat.card {q : Perm (Fin n) ⧸ youngSubgroup ν // π • q = q} : ℤ) *
+      (D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.vandermonde3 *
+        @msymm (Fin 3) ℤ _ _ d n ν).coeff
+          (Finsupp.equivFunOnFinite.symm fun i => μ i + (2 - (i : ℕ))))
+    (Subsingleton.elim _ _)
 
 end TauCeti
 
