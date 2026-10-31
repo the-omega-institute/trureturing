@@ -42,7 +42,7 @@ internal sealed class FiniteIntersectionPolytopeDocument : IScribeDocumentDefini
         Formula bounds = All("U", Call("Set", e), And(
             Le(SubsetSum(x, u), Rank(m, u)), Le(SubsetSum(x, u), Rank(n, u))));
         Formula feasible = And(All("a", e, Le(D(0), App(x, V("a")))), bounds);
-        Formula region = new Formula.SetBuilder(feasible, x, vector);
+        Formula region = Seq(Left, OpenBrace, x, Colon, Sp, vector, Sp, Mid, Sp, feasible, Right, CloseBrace);
         Formula extreme = Rel(v, InMacro, Call("extremePoints", Reals, region));
         Formula result = All("a", e, Or(Equal(App(v, V("a")), D(0)), Equal(App(v, V("a")), D(1))));
         result = All("v", vector, Imp(extreme, result));

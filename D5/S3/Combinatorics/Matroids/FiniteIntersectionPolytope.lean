@@ -76,11 +76,8 @@ private lemma subset_pred {A B : Finset E} (hB : B ∈ C.sets) (hBA : B ⊂ A) :
 
 private lemma union_valid (h0 : F ∅) (hu : ∀ A B, F A → F B → F (A ∪ B))
     (s : Finset (Finset E)) (hs : ∀ A ∈ s, F A) : F (s.biUnion id) := by
-  induction s using Finset.induction_on with
-  | empty => simpa using h0
-  | @insert A s hn ih =>
-    simp only [Finset.biUnion_insert]
-    exact hu _ _ (hs A (by simp)) (ih fun B hB => hs B (by simp [hB]))
+  rw [← Finset.sup_eq_biUnion]
+  exact Finset.sup_induction h0 (fun A hA B hB => hu A B hA hB) hs
 
 private lemma pred_valid (h0 : F ∅) (hu : ∀ A B, F A → F B → F (A ∪ B))
     (A : Finset E) : F (C.pred A) := by
