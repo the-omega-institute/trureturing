@@ -48,7 +48,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (k : ℕ) (hk : 0 < k) (t : ℕ) (S : Finset (Fin k)),
     let b := R.readout false k t
-    let n := (Finset.univ.filter (fun i : Fin k => R.readout true k t i < 0)).card
+    let n := (negativeSupport k t hk).card
     let E := orbitNegativeCount k hk S b ⟨0, by omega⟩
     ((∀ h, orbitSum k hk S (R.readout true k t) h = 0) ↔
       (∀ h, orbitNegativeCount k hk S b h = E)) ∧
