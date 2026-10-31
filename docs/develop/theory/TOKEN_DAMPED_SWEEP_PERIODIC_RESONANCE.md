@@ -1303,3 +1303,149 @@ Finally $\theta=\arccos(-1/2)=2\pi/3$ and every gap is one. Thus every term of $
 **Definition 7.5 (Unrestricted variable-parameter stable-space problem).** For (7.1)–(7.3) without (U), the unrestricted problem is to determine $S_{\varepsilon,\boldsymbol\alpha}$ for every fixed positive triple, every prescribed binary schedule and every prescribed sequence $\alpha_j\in(0,1)$. This domain permits approach to either endpoint, arbitrary signs of $\lambda_j$, and arbitrary interspersions of zero and nonzero $\lambda_j$. Theorem 7.2 gives angular-divergence sufficiency on the subdomain (U), including singular histories, while Theorem 7.3 gives the complete classification on the smaller subdomain (U) with pointwise nonvanishing. Proposition 7.4 specifies one history outside (U); it supplies no general classification on the unrestricted domain. The fixed-parameter singular classification and orthogonal-pair annihilation in Theorem 6.2 retain their stated constant-parameter hypotheses.
 
 ## 追加锚（本行以下为增补区）
+## 8. Unrestricted histories and finite total logarithmic loss
+
+**Definition 8.1 (Event products and tail inputs).** Use the entire domain of Definition 7.1, without (U). In particular the literal matrices are
+
+$$
+A=\begin{pmatrix}1&0\\-2c&b+c\end{pmatrix},\quad
+B=\begin{pmatrix}-1&2a/(a+b)\\0&-(b+c)\end{pmatrix},\quad
+B_\alpha=\begin{pmatrix}
+[b(1-2\alpha)-\alpha a]/(b+\alpha a)&2\alpha a/(b+\alpha a)\\
+0&-(b+c)
+\end{pmatrix},\quad M=A^{-1}B,\quad N_\alpha=A^{-1}B_\alpha,
+$$
+
+where $a,b,c>0$, and the binary schedule and its interior event parameters are prescribed before $u_0$. Retain the original $Q,G,\theta,t_j,d_j$ of (7.3), and set
+
+$$
+\lambda_j=\frac{\alpha_j(a+2b)-b}{b+\alpha_j a},\qquad
+\delta_j=1-\lambda_j^2\in(0,1],\qquad
+\alpha_j=\frac{b(1+\lambda_j)}{a+2b-a\lambda_j}.
+\tag{8.1}
+$$
+
+The last formula is an increasing bijection from $(-1,1)$ to $(0,1)$: its denominator is positive, its derivative is $2b(a+b)/(a+2b-a\lambda)^2>0$, and its endpoint values are $0,1$. Thus a prescribed sequence in $(-1,1)$ specifies actual original event parameters. Zero $\lambda_j$ means exactly the singular parameter $b/(a+2b)$.
+
+Let $e=h/\|h\|_Q$, $h=(a,a+b)^T$, and $J=(M-\cos\theta I)/\sin\theta$, as in Section 7. For each event set
+
+$$
+e_j=M^{-t_j}e,\quad q_j=Je_j,\quad
+P_j=e_je_j^TG,\quad K_j=P_j+\lambda_j(I-P_j).
+$$
+
+For event indices $s\leq n$ define only the finite products
+
+$$
+\Phi_{s,s}=I,\qquad
+\Phi_{s,n}=K_{n-1}\cdots K_s\quad(n>s),\qquad
+F_n=\Phi_{0,n}.
+\tag{8.2}
+$$
+
+These definitions are also used on a finite list, within its index range. The adjoint of a real matrix $T$ is $T^*=G^{-1}T^TG$. All norms and orthogonality below refer to $Q$. An infinite nonsingular tail starts at an index $s$ such that $\lambda_j\ne0$ for every $j\geq s$; put
+
+$$
+D_s=\sum_{j=s}^\infty-\log|\lambda_j|\in(0,\infty].
+\tag{8.3}
+$$
+
+Its input $z$ is in interaction coordinates. For an actual whole history this input is
+
+$$
+z=M^{-t_s}u_{t_s}=F_su_0.
+\tag{8.4}
+$$
+
+The finite products do not invert any event factor. The source correspondence is the one in Definition 7.1: source $m=2$, velocities $(a,b,c)$, centered coordinates $(x,y)$ and zero exterior coordinates; source indices are reduced by one in Lean. The source $M_\alpha$ is $N_\alpha$, and its private first-event weight `theta` is $\tau_j=\alpha_j(a+b)/(b+\alpha_ja)$, not the rotation angle $\theta$. The local energy decomposition, loss, reflection identities and literal factorization are the complete `local_energy_decomposition`, `Q_dampedEvent_loss`, `Q_event`, `Q_sweepTheta_eq_iff`, `dampedEvent_eq_of_fixed`, `sweepTheta_of_fixed` and `source_factorization` bodies in [TokenDampedSweepContraction](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean), with its complete [Scribe](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs). The same Dirichlet form, zero extension, rigidity, observability and fixed-map power implication occur in [FinitePathDynamics](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.lean) and its complete [Scribe](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.scribe.cs). The [source note](../../../Library/Dynamics/wallner2026passbucket.md) and [fixed-map statement](../../../Problems/wallner-krupke-schmidt-fekete-2026-token-spectral-contraction.md) concern repeated fixed $\alpha$. Their primary original is [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, Sections III and IV](https://arxiv.org/html/2608.27085v1#S3): the linear map has positive velocities and zero centered endpoints in the alternating, catch-up-free rotational regime. Arbitrarily prescribed variable histories remain the abstract linear domain (7.2); no collision realization is assumed.
+
+**Theorem 8.2 (Finite lists, chronology and finite annihilation).** For every allowed history let $\nu(t)$ count events strictly before time $t$. Then
+
+$$
+u_t=M^tF_{\nu(t)}u_0,\qquad
+\|u_t\|_Q=\|F_{\nu(t)}u_0\|_Q.
+\tag{8.5}
+$$
+
+For $r<\infty$ events the exact full-time limiting norm is $\|F_ru_0\|_Q$, and the stable space is $\ker F_r$. Its dimension is $2-\operatorname{rank}F_r$. In particular the empty list has $F_0=I$ and stable space $\{0\}$; so does every finite wholly nonsingular list. Every finite list containing a singular factor has rank zero or one, distinguishable by its finite matrix $F_r$.
+
+For any finite or infinite event list, an initial vector reaches zero in finite time exactly when $F_nu_0=0$ for some finite event prefix $n$, with $n=0$ allowed for $u_0=0$. A nonzero vector can first reach zero only just after a singular event $j$, and the exact condition at that event is
+
+$$
+F_ju_0\ne0,\qquad \lambda_j=0,\qquad e_j^TGF_ju_0=0.
+\tag{8.6}
+$$
+
+All initial states have been annihilated by the end of event $j$ exactly when $F_{j+1}=0$. If $F_j\ne0$, this is equivalent to $\lambda_j=0$ and the finite row $e_j^TGF_j=0$.
+
+*Proof.* The original factorization (7.5), with its actual event parameter at each occurrence, is $N_{\alpha_j}=M(P+\lambda_j(I-P))$. Conjugating its second factor by $M^{t_j}$ gives exactly $K_j$. Before the first event the interaction vector is $u_0$; an undamped transfer leaves it fixed and event $j$ multiplies it by $K_j$. Induction over chronological time proves (8.5). This is the identity (7.8) without any use of (U). Also
+
+$$
+\|K_jw\|_Q^2=\|w\|_Q^2-\delta_j|\langle q_j,w\rangle_Q|^2,
+\qquad |\lambda_j|\|w\|_Q\leq\|K_jw\|_Q\leq\|w\|_Q.
+\tag{8.7}
+$$
+
+After a finite list the norm therefore remains exactly $\|F_ru_0\|_Q$. Positive definiteness gives decay precisely on its kernel: $x_t^2\leq aQ(u_t)$ and $y_t^2\leq cQ(u_t)$, while continuity supplies the converse implication. Rank-nullity gives the dimension assertions. Each $K_j$ has eigenvalues $1,\lambda_j$, so finite nonsingular products are invertible; a singular factor has rank one and cannot subsequently increase rank.
+
+The map $M$ never kills a nonzero vector. A nonsingular $K_j$ cannot do so either. At a singular event $K_j=P_j=e_je_j^TG$, which kills exactly $e_j^{\perp_Q}$. This proves (8.6), including the actual first zero time $t_j+1$. Applied to every input, the same calculation proves the matrix and row conditions. Zero is preserved by every later transfer. These finite tests therefore cover every possible finite annihilation, also within an infinite history. $\square$
+
+**Theorem 8.3 (Exact positive-definite norm for a finite-loss nonsingular tail).** Suppose the event list is infinite, every $\lambda_j$ for $j\geq s$ is nonzero, and $D_s<\infty$. Define the prescribed real rows
+
+$$
+b_{s,j}=q_j^TG\Phi_{s,j}\quad(j\geq s),\qquad
+H_{s,n}=G-\sum_{j=s}^{n-1}\delta_j b_{s,j}^Tb_{s,j}.
+$$
+
+Then the following matrix series converges entrywise, with absolute convergence of every entry:
+
+$$
+H_s=G-\sum_{j=s}^\infty\delta_j b_{s,j}^Tb_{s,j}.
+\tag{8.8}
+$$
+
+It is positive definite and satisfies, for every $z\in\mathbb R^2$ and $n\geq s$,
+
+$$
+e^{-2D_s}Q(z)\leq z^TH_sz\leq Q(z),\qquad
+0\leq z^T(H_{s,n}-H_s)z\leq2D_nQ(z).
+\tag{8.9}
+$$
+
+The exact full chronological limiting norm for tail input $z$ is $\sqrt{z^TH_sz}$. Consequently no nonzero vector reaching this tail is erased, and its stable space is $\{0\}$. This plane norm is not the absolute value of one linear functional.
+
+*Proof.* Apply the exact loss (8.7) successively, starting with $z$ at index $s$. For every finite $n$ it gives
+
+$$
+\|\Phi_{s,n}z\|_Q^2
+=Q(z)-\sum_{j=s}^{n-1}\delta_j|b_{s,j}z|^2
+=z^TH_{s,n}z.
+\tag{8.10}
+$$
+
+The nonnegative loss sum is bounded by $Q(z)$. Applied to the two ordinary coordinate vectors this bounds the sums of both diagonal entries of the series in (8.8). Absolute summability of its off-diagonal entries follows from Cauchy--Schwarz:
+
+$$
+\sum_j\delta_j|(b_{s,j})_1(b_{s,j})_2|
+\leq\left(\sum_j\delta_j|(b_{s,j})_1|^2\right)^{1/2}
+     \left(\sum_j\delta_j|(b_{s,j})_2|^2\right)^{1/2}.
+$$
+
+Thus (8.8) exists with the asserted convergence. The lower inequality in (8.7) gives
+
+$$
+\|\Phi_{s,n}z\|_Q\geq
+\exp\left(-\sum_{j=s}^{n-1}-\log|\lambda_j|\right)\|z\|_Q
+\geq e^{-D_s}\|z\|_Q.
+$$
+
+Pass to the limit in (8.10) to obtain positive definiteness and the first two bounds of (8.9). For $0<r<1$, integrating $1/x$ on $[r,1]$ gives $1-r\leq-\log r$, so $1-r^2\leq2(-\log r)$. Since each $\Phi_{s,j}$ is nonexpansive, $|b_{s,j}z|^2\leq Q(z)$. The remaining loss after index $n$ is therefore at most
+
+$$
+Q(z)\sum_{j=n}^\infty\delta_j\leq2D_nQ(z),
+$$
+
+which proves the prescribed-data error bound. In particular it tends to zero independently of any unknown trajectory limit. Formula (8.5) transfers this limiting norm through every undamped phase: the interaction vector is constant between events and $M$ preserves its norm. Every nonzero $z$ has a positive limit. An absolute linear functional on a real plane vanishes on a nonzero vector, whereas this positive-definite norm does not; hence a single covector cannot represent it. $\square$
+
+## 追加锚（本行以下为增补区）
+
