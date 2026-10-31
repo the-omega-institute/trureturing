@@ -7,8 +7,10 @@
    digest: Local compression preserves cross-intersection after coordinate deletion. -/
 
 import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
+
+/-! Local replacement, full projection fibres, and two separate weighted masses. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -133,8 +135,7 @@ private lemma compressed_cross {Ω A B : Finset (Finset α)} {s t u : α}
       exact (disjoint_left.mp hd) (mem_erase.mpr ⟨hst, hsX⟩)
         (mem_erase.mpr ⟨hst, hsY⟩)
     · have hc : CrossIntersecting B A := by
-        intro V hV W hW
-        intro hd
+        intro V hV W hW hd
         exact hcross W hW V hV hd.symm
       intro hd
       exact compressed_cross_one_sided hB hexcludes hc hYC hXC hsX hd.symm
@@ -165,6 +166,13 @@ private lemma augmented_not_mem {Ω A B : Finset (Finset α)} {s t u : α}
   · exact (hexcludes Y (hB hY) htY).2 (hau ▸ haY)
   · exact (disjoint_left.mp hd) haShift haY
 
+private lemma compressed_nonempty {Ω A : Finset (Finset α)} {s t u : α}
+    (hA : A.Nonempty) : (compressedFamily Ω A s t u).Nonempty := by
+  obtain ⟨X, hX⟩ := hA
+  by_cases hm : X ∈ moved A s t
+  · exact ⟨shift s t X, mem_union_left _ (mem_union_right _ (mem_image_of_mem _ hm))⟩
+  · exact ⟨X, mem_union_left _ (mem_union_left _ (mem_sdiff.mpr ⟨hX, hm⟩))⟩
+
 /-- Sum of the individual exact-trace weights. -/
 def mass (w : Finset α → ℝ) (A : Finset (Finset α)) : ℝ := ∑ X ∈ A, w X
 
@@ -175,7 +183,7 @@ def marginalWeight (Ω : Finset (Finset α)) (w : Finset α → ℝ)
 
 private lemma shift_recover {s t : α} {X : Finset α} (hs : s ∉ X) (ht : t ∈ X) :
     insert t ((shift s t X).erase s) = X := by
-  rw [shift, erase_insert, erase_eq_of_notMem (not_mem_erase_of_not_mem hs), insert_erase ht]
+  rw [shift, erase_insert (by intro h; exact hs (mem_erase.mp h).2), insert_erase ht]
 
 private lemma compressed_mass_eq {Ω A B : Finset (Finset α)} {s t u : α}
     (hA : A ⊆ Ω) (hB : B ⊆ Ω) (hsu : s ≠ u)
@@ -205,8 +213,7 @@ private lemma compressed_mass_eq {Ω A B : Finset (Finset α)} {s t u : α}
     intro X hX Y hY heq
     apply hSi hX hY
     have h := congrArg (fun Z : Finset α => Z.erase u) heq
-    simpa only [erase_insert, erase_eq_of_notMem (hnu X hX),
-      erase_eq_of_notMem (hnu Y hY)] using h
+    simpa only [erase_insert (hnu X hX), erase_insert (hnu Y hY)] using h
   have hAS : Disjoint (A \ M) S := by
     apply disjoint_left.mpr
     intro Z hZ hZS
@@ -230,8 +237,8 @@ private lemma compressed_mass_eq {Ω A B : Finset (Finset α)} {s t u : α}
       sum_filter, sum_image hUi]
   change (∑ X ∈ ((A \ M) ∪ S) ∪ U, w X) = ∑ X ∈ A, w X
   rw [sum_union hAU, sum_union hAS, hsumS, hsumU, add_assoc, ← sum_add_distrib]
-  have heq : (∑ X ∈ M, w (shift s t X) +
-      if insert u (shift s t X) ∈ Ω then w (insert u (shift s t X)) else 0) =
+  have heq : (∑ X ∈ M, (w (shift s t X) +
+      if insert u (shift s t X) ∈ Ω then w (insert u (shift s t X)) else 0)) =
       ∑ X ∈ M, w X := by
     apply sum_congr rfl
     intro X hX
@@ -297,7 +304,8 @@ theorem exists_simultaneous_compression
       C ⊆ Ω.image (fun X => X.erase t) ∧ D ⊆ Ω.image (fun X => X.erase t) ∧
       CrossIntersecting C D ∧
       mass w A ≤ mass (marginalWeight Ω w t) C ∧
-      mass v B ≤ mass (marginalWeight Ω v t) D := by
+      mass v B ≤ mass (marginalWeight Ω v t) D ∧
+      (A.Nonempty → C.Nonempty) ∧ (B.Nonempty → D.Nonempty) := by
   obtain ⟨A', B', hAA', hBB', hA', hB', hc, hmA, hmB⟩ := maximal_pair hA hB hcross
   have hcb : CrossIntersecting B' A' := by
     intro X hX Y hY hd
@@ -308,7 +316,7 @@ theorem exists_simultaneous_compression
   have hD : D ⊆ Ω := compressed_subset hB' hshift
   refine ⟨C.image (fun X => X.erase t), D.image (fun X => X.erase t),
     image_subset_image hC, image_subset_image hD,
-    compressed_cross hA' hB' hst hexcludes hc, ?_, ?_⟩
+    compressed_cross hA' hB' hst hexcludes hc, ?_, ?_, ?_, ?_⟩
   · calc
       mass w A ≤ mass w A' :=
         sum_le_sum_of_subset_of_nonneg hAA' (fun X hX _ => hw X (hA' hX))
@@ -319,5 +327,9 @@ theorem exists_simultaneous_compression
         sum_le_sum_of_subset_of_nonneg hBB' (fun X hX _ => hv X (hB' hX))
       _ = mass v D := (compressed_mass_eq hB' hA' hsu hexcludes hshift hcb hmB v hvlaw).symm
       _ ≤ _ := mass_le_marginal hD v hv t
+  · intro hne
+    exact (compressed_nonempty (hne.mono hAA')).image _
+  · intro hne
+    exact (compressed_nonempty (hne.mono hBB')).image _
 
 end D5.S3.Combinatorics.SetFamily.SimultaneousCompression
