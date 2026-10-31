@@ -416,12 +416,12 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => -1) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law R := ∀ r : ℕ, ∀ v : ℝ, 0 ≤ v →
+  Law R := ∀ r : ℕ, ∀ {v : ℝ}, 0 ≤ v →
     0 ≤ R.readout () r v ∧ expRemainder r v ≤ v^r / r.factorial
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have H := (h 0 0 (by norm_num)).1
+  have H := (h 0 (v := 0) (by norm_num)).1
   norm_num [rejected, realize] at H
 
 private theorem dependence : ObservationalDependence signature actual := by

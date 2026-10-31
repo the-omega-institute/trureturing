@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The original general-parameter Mills target, regularity, Gamma coefficients, sharp origin obstruction, strict remainder moment bounds and closed kernel ranges.
+The original general-parameter Mills target, regularity, Gamma coefficients, sharp origin obstruction, strict remainder moment bounds, closed kernel ranges and absolute Laplace control.
 
 **Definition 1.1 (Original signed remainder normalization).**
 
@@ -138,7 +138,79 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.coefficien
 
 For every r >= 0 and real a, the original u_(r+2)(a,a-2) equals (2r+3)! / (4^(r+1) r!) times (I_r+(2a-1)B_r). The proof directly consumes Result.coeff_sum, Result.intPow_rec and Result.coeff_factorial at their original owner. The same original identities give u_1(a,a-2)=0 for every real a; this removes the first term from the rescaled finite sum. Linearity of the polynomial moment gives B_r=I_(r+1)-I_r. The coefficient is a strictly positive factor times a-theta_r. Both coefficient-sign equivalences include the zero endpoint.
 
-**Theorem 1.12 (General-parameter Gaussian convolution kernel identity).**
+**Theorem 1.12 (Absolute polynomial bound for the signed kernel).**
+
+Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_polynomial_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_polynomial_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every r >= 0, every real a and t >= 0, the absolute value of L r a t is at most (abs(1-2a)+1) t^(2r+5). The source remainder order is r+1. The proof consumes the exact original Result.expRemainderBounds through E r y = Result.expRemainder (r+1) y. The coefficient weight is bounded in absolute value on [0,1], so this estimate holds without a sign restriction on a.
+
+**Theorem 1.13 (Every absolute exponential moment of the signed kernel).**
+
+Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_exponential_moments`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_exponential_moments` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every pair of natural orders r,m, every real a and every x>0, t^m exp(-xt) L r a t is absolutely integrable on t>0. The polynomial estimate is dominated by the existing exact exponential moment of order m+2r+5. The kernel is continuous for all real t.
+
+**Theorem 1.14 (Exact original Gamma coefficient in the Laplace recurrence).**
+
+Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_laplace_rec`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_laplace_rec` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every r>=0, real a and x>0, the Laplace integral of L (r+1) a equals -u_(r+3)(a,a-2)/x^(2r+6) minus the Laplace integral of L r a. The exact original exponential-remainder recurrence gives the polynomial kernel difference. Absolute integrability permits integral subtraction, and the original coefficient_identity identifies the polynomial moment.
+
+**Theorem 1.15 (Exact finite subtraction inside the Laplace integral).**
+
+Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.laplace_finite_subtraction`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.laplace_finite_subtraction` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every r>=0, real a and x>0, the Laplace integral of L r a equals (-1)^(r+2) times the Laplace integral of the original G_a minus the finite sum of the original (-1)^k u_k(a,a-2)/x^(2k), with 1<=k<=r+2. The base case subtracts u_2/x^4 and uses u_1=0. The exact kernel recurrence then adds each successive Gamma term. All integral subtractions are absolutely integrable. The difference between this expression and the actual F is precisely (-1)^(r+2) times Y_(a,a-2)-(a-1)-Laplace(G_a).
+
+**Theorem 1.16 (Every ordinary derivative of the signed kernel integral).**
+
+Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.signed_kernel_moment_iterated`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.signed_kernel_moment_iterated` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every r,m>=0 and every real a, the mth ordinary derivative of the Laplace integral of L r a equals the integral of (-t)^m exp(-xt) L r a t for x>0. No positivity assumption on the kernel or parameter is used. On y>x/2, the absolute derivative integrand is dominated by (abs(1-2a)+1) t^(m+2r+6) exp(-xt/2), an integrable exponential moment. Repeated dominated differentiation also gives C-infinity regularity of this integral.
+
+**Theorem 1.17 (The exact outstanding Gaussian term in every derivative of the original F).**
+
+Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.all_order_laplace_defect`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.all_order_laplace_defect` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every derivative order m including zero, the mth derivative of the original F_(r+2,a) equals the signed-kernel moment plus the mth derivative of (-1)^(r+2) [Y_(a,a-2)-(a-1)-Laplace(G_a)]. The finite-subtraction identity and smoothness justify this equality on x>0. The outstanding Gaussian identity is Y_(a,a-2)-(a-1)=Laplace(G_a); this identity is not assumed or asserted as proved. Consequently the actual F derivative signs, its infinity asymptotic and the full classification remain open.
+
+**Theorem 1.18 (General-parameter Gaussian convolution kernel identity).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.gaussian_kernel_identity`
 
@@ -153,16 +225,22 @@ For every real a and t, the source kernel G_a(t) equals t^3/4 times the integral
 ## References
 
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.F`
+- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.all_order_laplace_defect`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.coefficient_identity`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strict_anti`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strict_mono`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.gaussian_kernel_identity`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.inner_threshold_bounds`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_closed_ranges`
+- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_exponential_moments`
+- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_laplace_rec`
+- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_polynomial_bound`
+- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.laplace_finite_subtraction`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.moment_ratio_bounds`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.negative_cm_necessary`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.positive_cm_necessary`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.regularity_and_origin`
+- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.signed_kernel_moment_iterated`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.theorem21`
 - Dependency: [D5/S3/Analytic/IncompleteBeta/Comparison](../IncompleteBeta/Comparison.md)
 - Dependency: [D5/S3/Analytic/XuYangMillsRemainder/Result](Result.md)
