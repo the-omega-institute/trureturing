@@ -44,7 +44,7 @@ internal sealed class OrthogonalAbsoluteProductMinimumDocument : IScribeDocument
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
-    private static Formula Abs(Formula x) => Seq(Lvert, x, Rvert);
+    private static Formula Abs(Formula x) => new Formula.Absolute(x);
     private static Formula ObjectiveFormula()
     {
         Formula k = F.Id("K"), p = F.Id("P"), q = F.Id("Q");

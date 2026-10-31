@@ -1,5 +1,5 @@
 ---
-bibkey: user32026mo515549
+bibkey: userthree2026orthogonalabsolute
 authors: User3 (MathOverflow user 600125)
 year: 2026
 title: A nontrivial lower bound for the orthogonally transformed absolute product
