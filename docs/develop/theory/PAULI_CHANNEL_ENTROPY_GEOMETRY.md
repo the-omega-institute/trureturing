@@ -2043,3 +2043,416 @@ pinching accounting remain valid. A sufficient argument retaining the
 visible endpoint budget cannot be repaired solely by adding path score
 observables, even all of them; it must use more endpoint information or
 a different combined inequality.
+## 追加锚（本行以下为增补区）
+
+## 11. A spectral region retaining the exact endpoint budget
+
+**Definition 11.1 (Spectral data and the exact budget).** Let $\rho$ be any complex positive semidefinite trace-one matrix on two
+qubits $C,D$. Write $K=X\otimes X$, $L=Z\otimes Z$ and, independently for
+$a,b\in[0,1]$,
+$$
+ \Psi_a(A)=\frac{1+a}{2}A+\frac{1-a}{2}KAK,
+ \qquad
+ \Phi_b(A)=\frac{1+b}{2}A+\frac{1-b}{2}LAL.
+$$
+Set $P=\Phi_b\rho$, $Q=\Psi_a\rho$, $R=\Psi_a P$,
+$S(A)=-\operatorname{tr} A\log A$ with natural logarithms and $0\log0=0$, and
+$$
+ I_A=S(A_C)+S(A_D)-S(A),\qquad
+ g=S(R)-S(P),\quad h=\sum_{E=C,D}[S(R_E)-S(P_E)].
+$$
+The original deficit is
+$$
+ \Delta=3S(R)-4S(P)-S(Q)
+ +\sum_{E=C,D}[3S(P_E)+S(Q_E)-2S(R_E)]
+ =I_P+I_Q+3g-2h.
+$$
+
+**Theorem 11.2 (A comparison retaining all endpoint information).**
+Put $M=\lambda_{\max}(P)$. If the two actual marginal Bloch lengths
+$r_C,r_D$ are less than one and
+$$
+ f(r)=\begin{cases}\operatorname{atanh}(r)/r&r>0,\\1&r=0,\end{cases}
+ \qquad f_*=\max\{f(r_C),f(r_D)\},
+$$
+then
+$$
+ h\leq4Mf_*g,\qquad
+ \Delta\geq I_P+I_Q+(3-8Mf_*)g.
+$$
+In particular, for the entire original source and bias domain,
+$$
+ M\leq\frac7{20}
+ \quad\Longrightarrow\quad
+ \boxed{\Delta\geq I_P+I_Q+\frac1{45}g\geq0.}
+\tag{11.1}
+$$
+Consequently every negative original deficit, if one exists, has
+$\lambda_{\max}(\Phi_b\rho)>7/20$.
+
+Proof.
+We first establish the relative-entropy estimate needed below, using the
+standard finite-dimensional logarithmic functional calculus (Bhatia,
+*Matrix Analysis*). If $A,B$ are density matrices and $A,B\preceq MI$ for $M>0$, then
+$$
+ D(A\Vert B)\geq\frac{\|A-B\|_2^2}{2M}.
+$$
+Here relative entropy is extended by $+\infty$ if the support condition
+fails, and $\|H\|_2^2=\operatorname{tr} H^*H$.
+
+First suppose $A,B$ are positive definite. On the segment
+$A_t=B+t(A-B)\preceq MI$, put $H=A-B$ and
+$F(A)=\operatorname{tr}(A\log A)$. The derivative of the logarithm gives
+$$
+ F''(A_t)[H,H]=\int_0^\infty
+ \operatorname{tr}\bigl(H(A_t+sI)^{-1}H(A_t+sI)^{-1}\bigr)\,ds.
+$$
+In an orthonormal eigenbasis of $A_t$, the integrand is
+$\sum_{ij}|H_{ij}|^2/[(\lambda_i+s)(\lambda_j+s)]$ and hence is at
+least $\|H\|_2^2/(M+s)^2$. It follows that
+$F''(A_t)[H,H]\geq\|H\|_2^2/M$. Integrating with weight $1-t$ and
+using $\operatorname{tr} H=0$ identifies the Bregman remainder with $D(A\Vert B)$
+and proves the bound.
+For singular matrices with support inclusion, restrict to
+$\operatorname{supp}B$ (which contains $\operatorname{supp}A$) and use
+$(1-\varepsilon)A+\varepsilon B$ to approach $A$. This segment is still
+bounded above by $MI$, is positive definite on that support, and its
+relative entropy to $B$ converges by finite-dimensional spectral
+continuity. Without support inclusion the asserted extended inequality
+is immediate.
+
+We now prove the comparison for the actual channels.
+If $a=1$, then $R=P$ and $g=h=0$, so the claims follow directly.
+For the moment assume $a<1$ and $\rho$ positive definite. Define
+$$
+ T=\frac{P-KPK}{2},\qquad w=\frac{1+a}{2}.
+$$
+Both mixing weights are positive, and $R=wP+(1-w)KPK$. The exact
+relative-entropy mixing identity is
+$$
+ g=wD(P\Vert R)+(1-w)D(KPK\Vert R).
+$$
+Since $P,KPK,R\preceq MI$, Lemma 11.1,
+$P-R=(1-a)T$, and $KPK-R=-(1+a)T$ give
+$$
+ g\geq\frac{w(1-a)^2+(1-w)(1+a)^2}{2M}\|T\|_2^2
+ =\frac{1-a^2}{2M}\|T\|_2^2.
+\tag{11.2}
+$$
+
+Write the actual marginal as
+$$
+ P_E=\frac{I+x_EX+y_EY+z_EZ}{2},\qquad
+ r_E^2=x_E^2+y_E^2+z_E^2,\qquad u_E=y_E^2+z_E^2.
+$$
+The reduced channel gives
+$R_E=(I+x_EX+a y_EY+a z_EZ)/2$. For binary entropy
+$\mathsf h(r)=-\sum_{\pm}(1\pm r)\log((1\pm r)/2)/2$, differentiation
+uses $\mathsf h'(r)=-\operatorname{atanh}r$. Thus
+$$
+ h_E=\int_a^1 t u_E f\!\left(\sqrt{x_E^2+t^2u_E}\right)dt
+ \leq\frac{1-a^2}{2}\,u_E f(r_E).
+$$
+The estimate follows because $f$ increases on $[0,1)$, as is also
+immediate from its positive series $\sum_{n\geq0}r^{2n}/(2n+1)$.
+
+To compare the two local tangents with the actual global tangent, put
+$T_E=\operatorname{tr}_{E^c}T=(y_EY+z_EZ)/2$. Then
+$$
+ T=\frac12T_C\otimes I+\frac12I\otimes T_D+T_0,
+ \qquad \operatorname{tr}_C T_0=\operatorname{tr}_D T_0=0.
+$$
+The three terms are Hilbert--Schmidt orthogonal: the marginal tangents
+are traceless, and the two partial traces of $T_0$ vanish. Therefore
+$$
+ \|T\|_2^2\geq\tfrac12(\|T_C\|_2^2+\|T_D\|_2^2)
+ =\frac{u_C+u_D}{4}.
+\tag{11.3}
+$$
+Adding the two marginal estimates and applying (11.2) and
+(11.3) yields
+$$
+ h\leq\frac{1-a^2}{2}f_*(u_C+u_D)
+ \leq2(1-a^2)f_*\|T\|_2^2\leq4Mf_*g.
+$$
+No division by $g$ or by $1-a^2$ is used. Inserting this inequality into
+the exact original deficit proves the first comparison.
+
+Now suppose $M\leq7/20$. Positivity of partial trace applied to
+$P\preceq MI_4$ gives $P_E\preceq2MI_2$. Consequently
+$$
+ \frac{1+r_E}{2}\leq2M,\qquad 0\leq r_E\leq4M-1\leq\frac25.
+$$
+For $0\leq r\leq2/5$, the same positive series gives the rational bound
+$$
+ f(r)=1+\sum_{n\geq1}\frac{r^{2n}}{2n+1}
+ \leq1+\frac{r^2}{3(1-r^2)}\leq\frac{67}{63}.
+$$
+It follows that
+$$
+ h\leq4\cdot\frac7{20}\cdot\frac{67}{63}\,g
+ =\frac{67}{45}g,
+$$
+and
+$$
+ \Delta\geq I_P+I_Q+\left(3-\frac{134}{45}\right)g
+ =I_P+I_Q+\frac1{45}g.
+$$
+The endpoint mutual informations are nonnegative by their exact
+relative-entropy expression, and $g\geq0$ by its mixing identity.
+
+Finally for arbitrary singular $\rho$ use
+$\rho_\varepsilon=(1-\varepsilon)\rho+\varepsilon I_4/4$.
+Both channels preserve the maximally mixed state, and
+$$
+ M_\varepsilon=(1-\varepsilon)M+\varepsilon/4.
+$$
+Thus $M\leq7/20$ implies $M_\varepsilon\leq7/20$. Entropy continuity
+proves (11.1) in the limit. More generally if $r_C,r_D<1$, the
+regularized marginal lengths converge to them, $M_\varepsilon\to M$,
+and continuity of $f$ on $[0,1)$ gives the two comparison inequalities
+by the same limit. This includes singular and nonreal inputs without
+replacing either endpoint mutual information by a lower truncation.
+$\square$
+
+
+## 12. Two classical controls and further exact-deficit regions
+
+**Definition 12.1 (The actual two-control extension).** Keep the whole
+source and independent bias domain of Definition 1.1. For $E=C,D$, write
+$\bar E$ for the other qubit, and put
+
+$$
+ k=S(R)-S(Q),\qquad
+ \ell_E=S(R_E)-S(Q_E),\qquad \ell=\ell_C+\ell_D.
+\tag{12.1}
+$$
+
+Let $U,V$ be independent classical bits with probabilities
+
+$$
+ \pi_u=\frac{1+(-1)^u a}{2},\qquad
+ \eta_v=\frac{1+(-1)^v b}{2},\qquad u,v\in\{0,1\}.
+$$
+
+Their controlled-Pauli state is the density matrix
+
+$$
+ \Omega_{UVCD}=\sum_{u,v}\pi_u\eta_v
+ |u,v\rangle\langle u,v|\otimes K^uL^v\rho L^vK^u.
+\tag{12.2}
+$$
+
+Zero-probability summands are omitted. For subsystems of this state,
+use $I(A:B)=S(A)+S(B)-S(AB)$ and
+
+$$
+ I(A:B\mid F)=S(AF)+S(BF)-S(F)-S(ABF).
+$$
+
+All entropies use natural logarithms and the convention of Definition
+1.1. In particular they are finite for singular states. Define
+$H_2(t)=-t\log t-(1-t)\log(1-t)$ with its continuous endpoint values.
+
+**Theorem 12.2 (An exact two-control deficit identity).** For either
+$E=C,D$ and every source and bias pair of Definition 1.1,
+
+$$
+\begin{aligned}
+ \Delta={}&2I_P-\ell_E
+ +I(U:C\mid D)_\Omega+I(U:D\mid C)_\Omega
+ +I(V:E\mid\bar E)_\Omega.
+\end{aligned}
+\tag{12.3}
+$$
+
+Consequently
+
+$$
+ \Delta\geq2I_P-\min\{\ell_C,\ell_D\}.
+\tag{12.4}
+$$
+
+Proof.
+The probabilities in (12.2) are nonnegative and sum to one, and each
+quantum branch is a unitary conjugate of $\rho$. Since $KL=LK$, the
+$CD$ marginal of $\Omega$ is exactly $R$. Conditioning on $U=u$ gives
+$K^uPK^u$; conditioning on $V=v$ gives $L^vQL^v$. These are product
+unitary conjugations, so the entropy of each joint conditional state,
+and of each of its one-qubit margins, is independent of the control
+value. The classical-quantum entropy formula
+
+$$
+ S\left(\sum_j p_j|j\rangle\langle j|\otimes A_j\right)
+ =H(p)+\sum_jp_jS(A_j)
+$$
+
+follows by diagonalizing each block. Applying it to these actual
+marginal states gives
+
+$$
+\begin{aligned}
+ I(U:CD)_\Omega&=g,& I(U:E)_\Omega&=h_E,\\
+ I(V:CD)_\Omega&=k,& I(V:E)_\Omega&=\ell_E.
+\end{aligned}
+\tag{12.5}
+$$
+
+The mutual-information chain rule therefore yields
+
+$$
+\begin{aligned}
+ I(U:C\mid D)_\Omega&=g-h_D,&
+ I(U:D\mid C)_\Omega&=g-h_C,\\
+ I(V:E\mid\bar E)_\Omega&=k-\ell_{\bar E}.
+\end{aligned}
+\tag{12.6}
+$$
+
+These conditional mutual informations are nonnegative by strong
+subadditivity (Lieb and Ruskai, *Proof of the strong subadditivity of
+quantum-mechanical entropy*, 1973; also Watrous, *The Theory of Quantum
+Information*).
+
+The complete endpoint mutual informations obey the exact balances
+
+$$
+ I_R-I_P=h-g,\qquad I_R-I_Q=\ell-k.
+$$
+
+Thus $I_Q=I_P+h-g-\ell+k$. Substitution into the unchanged original
+budget (1.4), followed by (12.6), gives
+
+$$
+\begin{aligned}
+ \Delta
+ &=2I_P+2g-h+k-\ell\\
+ &=2I_P-\ell_E+(g-h_D)+(g-h_C)+(k-\ell_{\bar E}),
+\end{aligned}
+$$
+
+which is (12.3). No endpoint mutual information was discarded in this
+identity. Applying strong subadditivity gives
+$\Delta\geq2I_P-\ell_E$ for both choices of $E$; their larger lower
+bound is (12.4).
+
+**Corollary 12.3 (Control-entropy, endpoint, and fixed-margin regions).**
+On the full domain of Definition 1.1,
+
+$$
+\begin{aligned}
+ \Delta&\geq2I_P-H_2\!\left(\frac{1-b}{2}\right),\\
+ \Delta&\geq2I_P-
+ \min\left\{H_2\!\left(\frac{1-b}{2}\right),
+             \log2-\max_{E=C,D}S(Q_E)\right\}.
+\end{aligned}
+\tag{12.7}
+$$
+
+In particular either of the two conditions
+
+$$
+ I_P\geq\frac12H_2\!\left(\frac{1-b}{2}\right),
+ \qquad
+ 2I_P+\max_{E=C,D}S(Q_E)\geq\log2
+\tag{12.8}
+$$
+
+implies $\Delta\geq0$. The condition $I_P\geq\tfrac12\log2$
+is sufficient uniformly in both biases, including when
+$\lambda_{\max}(P)>7/20$.
+If $[Q_E,Z]=0$ for at least one $E$, then
+
+$$
+ \Delta\geq2I_P.
+\tag{12.9}
+$$
+
+This conclusion holds whenever a source marginal commutes with $Z$,
+without any joint-state commutation condition. At each such point with
+$I_P>0$, the strict sign $\Delta>0$ holds on a neighborhood relative
+to the original physical state and bias domain.
+
+Proof.
+The standard classical-control entropy bound gives
+
+$$
+ 0\leq\ell_E=I(V:E)_\Omega\leq H(V)
+ =H_2\!\left(\frac{1-b}{2}\right).
+$$
+
+Here the upper bound is the entropy-of-mixture inequality
+$S(\sum_jp_jA_j)\leq H(p)+\sum_jp_jS(A_j)$, equivalently the
+classical-quantum Holevo bound (Watrous, *The Theory of Quantum
+Information*). Also each $R_E$ is a qubit density matrix, whence
+
+$$
+ \ell_E=S(R_E)-S(Q_E)\leq\log2-S(Q_E).
+$$
+
+Therefore
+
+$$
+ \min_E\ell_E\leq
+ \min\left\{H(V),\log2-\max_E S(Q_E)\right\}.
+$$
+
+Combine this with (12.4) to obtain (12.7)--(12.8), and use
+$H_2(t)\leq\log2$ for the bias-uniform sufficient condition.
+
+If $[Q_E,Z]=0$, the local $Z$-mixture fixes $Q_E$, so $R_E=Q_E$ and
+$\ell_E=0$. Equation (12.3) proves (12.9). If instead the source
+margin commutes with $Z$, its local $X$ conjugate still commutes with
+$Z$, since $XZX=-Z$; consequently their mixture $Q_E$ also commutes
+with $Z$. Finally the function $2I_P-\ell_E$ is continuous in the
+state and biases. At a fixed-margin point with $I_P>0$ it equals
+$2I_P>0$, and hence stays positive on a relative open neighborhood.
+Theorem 12.2 gives the asserted strict sign there, even if the base
+point is singular or lies at a bias endpoint.
+
+**Proposition 12.4 (Endpoints and the residual domain).** Theorem 12.2
+and Corollary 12.3 include every singular source and all independent
+$a,b\in[0,1]$. At $b=1$, one has $\Delta\geq2I_P$ for every source.
+At $a=1$, one has $\Delta=I_P+I_Q\geq0$.
+Every negative original deficit, if one exists, must satisfy
+simultaneously
+
+$$
+\begin{gathered}
+ \lambda_{\max}(P)>\frac7{20},\qquad a<1,\quad b<1,\\
+ 2I_P<\ell_C,\qquad 2I_P<\ell_D,\\
+ 2I_P<\min\left\{
+ H_2\!\left(\frac{1-b}{2}\right),
+ \log2-\max_{E=C,D}S(Q_E)\right\}.
+\end{gathered}
+\tag{12.10}
+$$
+
+Proof.
+The state (12.2), its block entropy formula, the entropy balances and
+strong subadditivity use no inverse or logarithm of a positive definite
+matrix. The zero-eigenvalue convention and omission of zero-probability
+branches apply directly, so no support regularization or rank assumption
+is required. If $b=1$, $V$ is constant and $\ell_C=\ell_D=k=0$;
+(12.3) proves the first endpoint assertion. If $a=1$, $R=P$ and
+$g=h=0$, so the original exact budget gives the second.
+For a negative $\Delta$, Theorem 11.2 excludes
+$\lambda_{\max}(P)\leq7/20$, the endpoint assertions exclude $a=1$
+and $b=1$, and (12.4) implies both strict inequalities involving
+$\ell_E$. The upper bounds for $\min_E\ell_E$ in Corollary 12.3 give
+the last line of (12.10).
+
+**Open assertion 12.5 (The unchanged original sign question).** For
+every actual complex PSD trace-one two-qubit $\rho$ and independent
+$a,b\in[0,1]$, does
+
+$$
+ \Delta(\rho)=I_P+I_Q+3g-2h\geq0
+$$
+
+hold? The sign on the residual domain (12.10) is not established by the
+preceding sufficient regions. Open assertion 10.5 therefore remains the
+original unrestricted question, with neither an added source restriction
+nor a replacement endpoint budget.
+
+## 追加锚（本行以下为增补区）
