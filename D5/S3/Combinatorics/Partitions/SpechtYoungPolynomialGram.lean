@@ -92,7 +92,7 @@ private theorem sum_natCard_fiberSubgroup_smul [DecidableEq α] {M : Type*} [Add
 
 end FibreCount
 
-private theorem hsymm_eq_sum_piAntidiag {σ : Type*} [Fintype σ] [DecidableEq σ] (R : Type*)
+theorem hsymm_eq_sum_piAntidiag {σ : Type*} [Fintype σ] [DecidableEq σ] (R : Type*)
     [CommSemiring R] (d : ℕ) :
     MvPolynomial.hsymm σ R d =
       ∑ γ ∈ Finset.piAntidiag (Finset.univ : Finset σ) d,
