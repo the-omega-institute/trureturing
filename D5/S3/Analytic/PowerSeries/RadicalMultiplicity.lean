@@ -155,7 +155,7 @@ namespace CdsoRadical
 open HahnSeries
 
 private theorem coe_derivative {R : Type*} [CommRing R] (f : R⟦X⟧) :
-    ((PowerSeries.derivative R f : R⟦X⟧) : R⸨X⸩) =
+    ((PowerSeries.derivative f : R⟦X⟧) : R⸨X⸩) =
       LaurentSeries.derivative R (f : R⸨X⸩) := by
   ext i
   rw [LaurentSeries.derivative_apply, LaurentSeries.hasseDeriv_coeff,
@@ -185,7 +185,7 @@ private theorem derivative_single_mul_coe {R : Type*} [CommRing R]
     (m : ℤ) (c : R) (φ : R⟦X⟧) :
     LaurentSeries.derivative R (single m c * (φ : R⸨X⸩)) =
       single (m - 1) (m * c) * φ +
-        single m c * ((PowerSeries.derivative R φ : R⟦X⟧) : R⸨X⸩) := by
+        single m c * ((PowerSeries.derivative φ : R⟦X⟧) : R⸨X⸩) := by
   rw [derivative_single_mul, ← coe_derivative]
 
 private theorem derivative_mul {R : Type*} [CommRing R] (f g : R⸨X⸩) :
@@ -251,7 +251,49 @@ private theorem laurentD_constants {R : Type*} [Field R] [CharZero R]
     by_cases hn : n = 0
     · simp [hn]
     · simpa [coeff_single_of_ne hn, hn] using hc n
-  rw [HahnSeries.algebraMap_apply', PowerSeries.algebraMap_apply,
-    HahnSeries.ofPowerSeries_C, ← hs]
+  simpa [HahnSeries.algebraMap_apply', PowerSeries.algebraMap_apply,
+    HahnSeries.ofPowerSeries_C, HahnSeries.C_apply] using hs.symm
+
+
+private def polyJet (p A : ℝ[X]) : ℕ → ℝ[X]
+  | 0 => A
+  | v + 1 => p * (polyJet p A v).derivative +
+      Polynomial.C ((1 : ℝ) / 2 - v) * p.derivative * polyJet p A v
+
+private theorem polyJet_degree (p A : ℝ[X]) {d : ℕ}
+    (hp : p.natDegree ≤ 2) (hA : A.natDegree ≤ d) (v : ℕ) :
+    (polyJet p A v).natDegree ≤ d + 2 * v := by
+  induction v with
+  | zero => simpa [polyJet] using hA
+  | succ v ih =>
+    simp only [polyJet]
+    apply (Polynomial.natDegree_add_le _ _).trans
+    apply max_le
+    · have h := Polynomial.natDegree_mul_le p (polyJet p A v).derivative
+      have h' := (Polynomial.natDegree_derivative_le (polyJet p A v)).trans (Nat.sub_le _ _)
+      omega
+    · have h := Polynomial.natDegree_mul_le
+        (Polynomial.C ((1 : ℝ) / 2 - v) * p.derivative) (polyJet p A v)
+      have h' := Polynomial.natDegree_C_mul_le ((1 : ℝ) / 2 - v) p.derivative
+      have h'' := (Polynomial.natDegree_derivative_le p).trans (Nat.sub_le _ _)
+      omega
+
+private def polyLS : ℝ[X] →+* ℝ⸨X⸩ :=
+  (HahnSeries.ofPowerSeries ℤ ℝ).comp Polynomial.coeToPowerSeries.ringHom
+
+private theorem D_poly (p : ℝ[X]) : laurentD ℝ (polyLS p) = polyLS p.derivative := by
+  change LaurentSeries.derivative ℝ ((p : ℝ⟦X⟧) : ℝ⸨X⸩) =
+    ((p.derivative : ℝ⟦X⟧) : ℝ⸨X⸩)
+  rw [← coe_derivative, PowerSeries.derivative_coe]
+
+private theorem D_root (S : ℝ⸨X⸩) (p : ℝ[X])
+    (hp : polyLS p ≠ 0) (hs : S ^ 2 = polyLS p) :
+    laurentD ℝ S = (1 / 2 : ℝ⸨X⸩) * polyLS p.derivative * S / polyLS p := by
+  have h := congrArg (laurentD ℝ) hs
+  rw [Derivation.leibniz_pow, D_poly] at h
+  simp only [pow_one, nsmul_eq_mul, smul_eq_mul] at h
+  apply (eq_div_iff hp).2
+  rw [← hs]
+  linear_combination S / 2 * h
 
 end CdsoRadical
