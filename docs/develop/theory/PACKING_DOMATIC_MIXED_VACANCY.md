@@ -480,3 +480,339 @@ Neither equality of limiting averages nor a vanishing limiting slack is
 used to infer a pointwise identity.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. Broadcast holes and local multiplicity deficits
+
+**Definition 7.1 (Broadcast holes and deficits).** For one packing
+$f:\mathbb Z\to\{1,2,3,4,5\}$, with the intervals $B_a$ of 3.1, define
+
+$$
+n_j(z)=\#\{a\in\mathbb Z:f(a)=j,\ |a-z|\le j\},\qquad
+V_5(z)=\mathbf1_{\{n_5(z)=0\}},\qquad
+D(z)=\max\{7-M_f(z),0\}.
+$$
+
+Thus $M_f(z)=\sum_{j=1}^5n_j(z)$ counts all original centres.
+The condition $V_5(z)=1$ excludes colour 5 at all eleven positions
+$z-5,\ldots,z+5$. It differs from $h_5(z)=1$, which excludes colour 5
+only at the six positions $z,\ldots,z+5$.
+
+**Theorem 7.2 (A deficit within distance two).** For every packing in
+7.1 and every $z\in\mathbb Z$,
+
+$$
+n_5(z)=0\quad\Longrightarrow\quad
+\exists w\in[z-2,z+2]\cap\mathbb Z:\ M_f(w)\le6. \tag{7.1}
+$$
+
+Consequently the pointwise inequality
+
+$$
+V_5(z)\le\sum_{u=-2}^{2}D(z+u) \tag{7.2}
+$$
+
+holds on the entire integer path.
+
+Proof. Translate $z$ to 0. Suppose $n_5(0)=0$ and, towards a
+contradiction, $M_f(w)\ge7$ for every $-2\le w\le2$. There is no
+colour-5 centre in $[-5,5]$. Spacing gives $n_j(w)\le2$ for every
+$j$: three centres in $[w-j,w+j]$ would span at least $2(j+1)>2j$.
+Also $n_5(w)\le1$ when $|w|\le2$, since the only possible colour-5
+centres covering such a $w$ lie in $\{-7,-6\}$ or $\{6,7\}$.
+Both members of either pair cannot have colour 5.
+
+Put $r=f(0)\in\{1,2,3,4\}$. Spacing gives $n_r(0)=1$.
+Thus $M_f(0)\le1+2+2+2=7$, and the assumed lower bound implies
+$n_j(0)=2$ for every $j\in\{1,2,3,4\}\setminus\{r\}$.
+Each such colour has one centre at $-p_j$ and one at $q_j$, where
+
+$$
+1\le p_j,q_j\le j,\qquad p_j+q_j\ge j+1. \tag{7.3}
+$$
+
+Indeed neither centre is 0, and two on one side would be less than
+$j+1$ apart. Centres of different colours occupy different positions.
+These conclusions use the hole and the multiplicity at 0 jointly.
+
+If $r=4$, the colour-1 centres are $\pm1$, the colour-2 centres must
+then be $\pm2$, and the colour-3 centres must be $\pm3$.
+At 1 the respective counts for colours 1, 2 and 3 are each 1.
+Together with $n_4(1)\le2$ and $n_5(1)\le1$, this gives
+$M_f(1)\le6$, a contradiction.
+
+If $r=3$, the colour-1 and colour-2 centres are again $\pm1,\pm2$.
+The two colour-4 centres have distances 3 or 4 from 0.
+At 1, $n_1(1)=n_2(1)=1$, so $M_f(1)\ge7$ forces
+$n_3(1)=n_4(1)=2$ and $n_5(1)=1$. The second colour-3 centre in
+$[-2,4]$, besides 0, must be 4. Hence the positive colour-4 centre
+is 3, and $n_4(1)=2$ puts its negative counterpart at $-3$.
+The same argument at $-1$ puts colour 3 at $-4$.
+The resulting values are
+
+$$
+f(0)=3,\qquad f(\pm1)=1,\quad f(\pm2)=2,\quad
+f(\pm3)=4,\quad f(\pm4)=3.
+$$
+
+At 2 the counts for colours 1 through 4 are respectively $1,1,2,1$.
+For example the colour-3 centres counted there are 0 and 4;
+spacing excludes any further one in $[-1,5]$. All these counts use
+the full covering windows. Since $n_5(2)\le1$, again $M_f(2)\le6$.
+
+Suppose $r=2$. The colour-1 centres are $\pm1$.
+On each side let $(p,q)$ denote the distances of the colour-3 and
+colour-4 centres covering 0. Position 2 on that side cannot have
+colour 1, 2 or 5, so it has colour 3 or 4. Consequently the possible
+ordered pairs are exactly among
+
+$$
+A=(2,3),\qquad B=(2,4),\qquad C=(3,2). \tag{7.4}
+$$
+
+Here the assertion is only a necessary list: if colour 3 is at distance
+2, colour 4 is at distance 3 or 4; if colour 4 is at distance 2,
+colour 3 is at distance 3. In particular the pair $(3,4)$ is excluded
+by the value required at position 2, not by an ordering assumption.
+For either side put $s=\mathbf1_{\{p=2\}}+\mathbf1_{\{q\le3\}}$;
+its value is 2 for $A$ and 1 for $B,C$. Use subscripts $L,R$ for the
+two sides, and put
+
+$$
+x_R=\mathbf1_{\{f(3)=2\}},\quad x_L=\mathbf1_{\{f(-3)=2\}},\qquad
+b_R=\mathbf1_{\{f(6)=5\}},\quad b_L=\mathbf1_{\{f(-6)=5\}}.
+$$
+
+Directly counting the windows $[0,2],[-1,3],[-2,4],[-3,5],[-4,6]$
+gives the exact formulas
+
+$$
+M_f(1)=4+s_L+x_R+b_R,\qquad
+M_f(-1)=4+s_R+x_L+b_L. \tag{7.5}
+$$
+
+For instance the colour-2 count at 1 is $1+x_R$, the colour-3 count
+is $1+\mathbf1_{\{p_L=2\}}$, and the colour-4 count is
+$1+\mathbf1_{\{q_L\le3\}}$. No additional same-side centre can
+enter these windows because its separation from the displayed centre
+would be too small. The colour-5 contribution comes precisely from 6.
+
+If $s_L=1$, the first lower bound in (7.5) forces $x_R=b_R=1$.
+The condition $x_R=1$ forces the right pair to be $B$, since position
+3 is then unavailable to colours 3 and 4. Hence $s_R=1$, and the
+second lower bound forces $x_L=b_L=1$, putting the left pair at $B$
+as well. If $s_L=2$, the left pair is $A$, so $x_L=0$.
+The second lower bound now forces $s_R=2$ and $b_L=1$;
+the right pair is $A$, so $x_R=0$, and the first bound forces $b_R=1$.
+Thus the only possibilities under both neighbouring lower bounds
+are $A,A$ and $B,B$.
+
+For $A,A$, the values at $\pm2,\pm3$ are 3 and 4 respectively.
+At 2, $n_1=1$, $n_2\le2$, $n_3=1$, $n_4=1$, $n_5\le1$.
+For $B,B$, the values at $\pm2,\pm3,\pm4$ are 3, 2 and 4
+respectively. At 2 the corresponding counts satisfy the same bounds
+(the colour-2 count is exactly 2). Each possibility gives $M_f(2)\le6$.
+
+It remains to treat $r=1$. For $j=2,3,4$ keep the notation $p_j,q_j$
+of (7.3), and define
+
+$$
+\begin{aligned}
+e_L&=\#\{j\in\{2,3,4\}:p_j=j\},&
+e_R&=\#\{j\in\{2,3,4\}:q_j=j\},\\
+a_L&=\mathbf1_{\{f(-2)=1\}},&a_R&=\mathbf1_{\{f(2)=1\}},\\
+b_L&=\mathbf1_{\{f(-6)=5\}},&b_R&=\mathbf1_{\{f(6)=5\}}.
+\end{aligned}
+$$
+
+A centre at $-p_j$ covering 0 ceases to cover 1 precisely when $p_j=j$.
+The positive centre still covers 1. There is no further colour-$j$
+centre in $[1-j,1+j]$: a further positive centre would have to be at
+least $q_j+j+1>j+1$, and a further negative centre would be less than
+$1-j$. The colour-1 count is $1+a_R$ and the colour-5 count is $b_R$.
+Reflection gives the other formula, so exactly
+
+$$
+M_f(1)=7-e_L+a_R+b_R,\qquad
+M_f(-1)=7-e_R+a_L+b_L. \tag{7.6}
+$$
+
+If $a_R=1$, the positive colour-2 centre must be at 1, the colour-3
+centre at 3, and the colour-4 centre at 4. Thus $e_R=2$.
+Likewise $a_L=1$ implies $e_L=2$.
+If $e_L=2$, the lower bound at 1 in (7.6) forces $a_R=b_R=1$,
+hence $e_R=2$; the lower bound at $-1$ then forces $a_L=b_L=1$.
+Both colour-2 centres would be at $-1,1$, contrary to their required
+separation 3. The reflected argument excludes $e_R=2$, and (7.6)
+already bounds each $e$ by 2. Therefore
+
+$$
+e_L,e_R\le1,\qquad a_L=a_R=0. \tag{7.7}
+$$
+
+By (7.3), at least one of $p_2,q_2$ is 2. Reflect if necessary so that
+$p_2=2$. This already contributes one to $e_L$, so (7.7) forces
+$p_3<3$ and $p_4<4$. Distinct occupied positions give $p_3=1,p_4=3$.
+The colour-3 separation then forces $q_3=3$. Now $e_R\le1$ forces
+$q_2=1,q_4=2$. In particular the ordering is derived from both
+neighbouring multiplicities and the packing constraints. The values
+at $-3,-2,-1$ are respectively $4,2,3$. At $-2$ this gives
+$n_1=0$ and $n_2=1$: in the colour-2 window $[-4,0]$, a further
+colour-2 centre at $-4$ is forbidden by the centre at $-2$.
+Together with $n_3\le2$, $n_4\le2$ and $n_5\le1$, it follows that
+$M_f(-2)\le6$.
+
+Every possible $r$ contradicts the five assumed lower bounds, proving
+(7.1). These arguments never assume $M_f(\pm1)=7$ or
+$M_f(\pm2)=7$; the equalities used are the window counts explicitly
+derived above. All covering windows retain their original external
+centres. Finally, if $V_5(z)=0$, (7.2) follows from $D\ge0$.
+If $V_5(z)=1$, (7.1) supplies a summand at least 1, since $M_f$ is
+integer-valued. This proves (7.2). $\square$
+
+**Proposition 7.3 (The radius is sharp).** There is a packing on all
+of $\mathbb Z$ with $n_5(0)=0$ and
+$M_f(-1)=M_f(0)=M_f(1)=7$.
+
+Proof. Define $f(a)=g(|a|)$, where
+
+$$
+(g(0),g(1),g(2),g(3),g(4),g(5),g(6))=(3,1,2,4,3,1,5),
+$$
+
+and for every integer $m\ge7$ set
+
+$$
+g(m)=
+\begin{cases}
+2,&m\equiv3\pmod4,\\
+3,&m\equiv1\pmod4,\\
+1,&m\equiv0,2\pmod4.
+\end{cases}
+$$
+
+On the nonnegative half-line the colour-1 centres are 1, 5 and all even
+integers at least 8; their successive gaps are 4, 3 and then 2.
+The colour-2 centres are 2 and $7+4q$ for $q\ge0$, with gaps 5 and
+then 4. The colour-3 centres are 0, 4 and $9+4q$ for $q\ge0$, with
+gaps 4, 5 and then 4. Colours 4 and 5 occur only at 3 and 6.
+Reflection gives the negative half-line. Across 0 the nearest
+colour-1, colour-2, colour-4 and colour-5 pairs are $\pm1,\pm2,\pm3$
+and $\pm6$, with separations 2, 4, 6 and 12 respectively.
+Colour 3 includes 0 and has nearest other centres at $\pm4$.
+Thus all successive same-colour gaps are at least $j+1$; summing
+successive gaps gives the required separation for any pair of distinct
+colour-$j$ centres. This proves the whole-line packing property.
+
+The only colour-5 centres are $\pm6$, so $n_5(0)=0$. At 0 the vector
+$(n_1,n_2,n_3,n_4,n_5)$ is $(2,2,1,2,0)$.
+At 1 it is $(1,1,2,2,1)$, using centres $1$ for colour 1, $2$ for
+colour 2, $0,4$ for colour 3, $-3,3$ for colour 4, and 6 for colour 5.
+Reflection gives the same total at $-1$. Hence radius 1 cannot replace
+radius 2 in (7.1), nor in (7.2). This packing has $M_f(2)=6$, so it is
+not a witness for $Q(7,5)$. $\square$
+
+**Lemma 7.4 (The classical interval-cover bridge on the whole line).**
+Fix positive integers $t,k$ and any one map $g:\mathbb Z\to\{1,\ldots,t\}$,
+without a packing assumption. Put
+$B_a^g=[a-g(a),a+g(a)]\cap\mathbb Z$ and
+$M_g(z)=\#\{a:z\in B_a^g\}$. Then
+
+$$
+\begin{aligned}
+&\exists c:\mathbb Z\to\{1,\ldots,k\}\quad
+\forall z\in\mathbb Z\ \forall i\in\{1,\ldots,k\}\quad
+\exists a\in\mathbb Z:\ c(a)=i,\ z\in B_a^g\\
+&\hspace{35mm}\Longleftrightarrow\quad
+\forall z\in\mathbb Z:\ M_g(z)\ge k. \tag{7.8}
+\end{aligned}
+$$
+
+Proof. The forward implication is the injection of class witnesses in
+4.1: centres carrying distinct values of one function $c$ are distinct.
+For the converse use the finite interval multi-hypergraph result of
+Pritchard and Rothvoß,
+[*Edge-Colouring Hypergraphs Properly (Covering with Matchings) or
+Polychromatically (Packing Covers)*, arXiv:1009.6144v1](https://arxiv.org/pdf/1009.6144v1),
+Section 3, pp. 4--5: a finite family of intervals on a finite ordered
+ground set, of minimum degree $\delta$, partitions into $\delta$ covers.
+Their Section 1.1 explicitly retains parallel hyperedges. This is the
+classical finite input to the following compactness argument.
+
+For each integer $N\ge0$, take ground set $W_N=[-N,N]\cap\mathbb Z$
+and the nonempty intervals $B_a^g\cap W_N$, indexed by all original
+centres $a$ whose intervals meet $W_N$. There are finitely many of them,
+since such an $a$ lies in $[-N-t,N+t]$. Equal clipped intervals remain
+distinct indexed copies. At every $z\in W_N$ the degree is exactly
+$M_g(z)$: every interval containing $z$ has been retained, including
+those with centre outside $W_N$. The minimum degree $\delta_N$ is
+therefore at least $k$. The cited finite result supplies $\delta_N$
+covering classes. Keep $k-1$ of them and merge the others into the
+last class to obtain $k$ covering classes. This also applies when
+$k=1$. Assign arbitrary label 1 to all centres not indexing this finite
+family, obtaining a map $c_N:\mathbb Z\to\{1,\ldots,k\}$ satisfying
+every covering requirement on $W_N$.
+
+Enumerate $\mathbb Z$ as $a_1,a_2,\ldots$. Starting with all indices
+$N\ge0$, repeatedly use the finiteness of the label set to choose nested
+infinite index sets $S_1\supseteq S_2\supseteq\cdots$ on which
+$c_N(a_j)$ is constant for $N\in S_j$. Define $c(a_j)$ to be that
+constant. Choose strictly increasing $N_\ell\in S_\ell$ with
+$N_\ell\ge\ell$. For a fixed $z$, all centres covering $z$ lie in
+$[z-t,z+t]$ and hence among $a_1,\ldots,a_J$ for some finite $J$.
+For every sufficiently large $\ell$, $N_\ell\ge|z|$ and
+$c_{N_\ell}$ agrees with $c$ on all of these centres. Since
+$c_{N_\ell}$ supplies each of the $k$ labels among them, so does $c$.
+This proves all requirements simultaneously for the one map $c$,
+with the original $g$ unchanged. $\square$
+
+**Corollary 7.5 (The colour-5 centres of a possible seven-class witness).**
+For palette-five packings, $Q(7,5)$ is equivalent to the existence of
+one such packing $f$ with $M_f(z)\ge7$ at every $z\in\mathbb Z$.
+In any witnessing pair $(f,c)$, the set
+$S_5=\{a\in\mathbb Z:f(a)=5\}$ satisfies
+
+$$
+\bigcup_{a\in S_5}[a-5,a+5]\cap\mathbb Z=\mathbb Z. \tag{7.9}
+$$
+
+It is unbounded in both directions, and any two consecutive members
+$a<b$ have
+
+$$
+6\le b-a\le11. \tag{7.10}
+$$
+
+Proof. Apply 7.4 to the same fixed $f$, with $t=5,k=7$, and compare
+with 1.2. For a witness, $M_f\ge7$ everywhere, so $D=0$ everywhere.
+Inequality (7.2) gives $V_5=0$ everywhere, which is precisely (7.9).
+If $S_5$ were empty or bounded above, an integer more than 5 above an
+upper bound would not be covered. The reflected argument excludes a
+lower bound. Thus each member has a next and a previous member: the
+nonempty sets of positive integer distances have least elements.
+The packing condition gives $b-a\ge6$. If consecutive members had
+$b-a\ge12$, the integer $a+6$ would be at distance at least 6 from
+both, and still farther from every other member, contradicting (7.9).
+This gives the inclusive upper endpoint 11. Conversely, for a set
+unbounded in both directions with consecutive gaps at most 11, every
+integer is within 5 of a member: between consecutive $a,b$, an
+uncovered integer would satisfy $z\ge a+6$ and $z\le b-6$, forcing
+$b-a\ge12$. This converse concerns only colour-5 broadcast domination,
+not the existence of seven common covering classes. No step requires
+$S_5$ to be a class of $c$. $\square$
+
+The new joint restriction on the actual realization is (7.1), with its
+pointwise deficit form (7.2) and sharp radius witnessed by 7.3.
+The interval-cover equivalence (7.8) is classical supporting machinery;
+its finite input concerns indexed intervals, and the bounded radius
+makes the common whole-line map follow as above. The vacancy
+constraints of Sections 2--5 still apply to this same $f$.
+Broadcast domination by colour 5 is only a necessary condition for a
+seven-class witness; no sufficiency follows from (7.9)--(7.10).
+Neither existence nor nonexistence of $Q(7,5)$ follows here.
+The bound $23464/3315$, its sharpness and attainment questions, and
+the positive residual $259/3315$ in (5.3) retain their stated scope:
+no improved bound, realizable marginal optimum, or contradiction from
+that residual is asserted. The source's $Q(7,6)$ question in 6.3 is
+likewise not decided by these local restrictions.
+
+## 追加锚（本行以下为增补区）
