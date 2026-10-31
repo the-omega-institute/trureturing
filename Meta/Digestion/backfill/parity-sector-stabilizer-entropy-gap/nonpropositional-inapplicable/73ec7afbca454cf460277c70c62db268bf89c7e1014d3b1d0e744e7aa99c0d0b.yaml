@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:73ec7afbca454cf460277c70c62db268bf89c7e1014d3b1d0e744e7aa99c0d0b
+  normalized_sha256: sha256:73ec7afbca454cf460277c70c62db268bf89c7e1014d3b1d0e744e7aa99c0d0b
+cas_ref: sha256:73ec7afbca454cf460277c70c62db268bf89c7e1014d3b1d0e744e7aa99c0d0b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Scope-boundary disclaimer (Remark 4.5) delineating topics excluded from the volume (even dimensions, multiqubit Weyl-Heisenberg conventions, other subspaces, and extremality); asserts no theorem.
+    previous_atom_id: 91256c153ef4be78d5913d2a316289a3123a6e737468621b3170a2533a0eb618
+    next_atom_id: 86b31ae7155dd263d4047979bdc920f48c4deca28cc80d659c050c1bb104e1bd
