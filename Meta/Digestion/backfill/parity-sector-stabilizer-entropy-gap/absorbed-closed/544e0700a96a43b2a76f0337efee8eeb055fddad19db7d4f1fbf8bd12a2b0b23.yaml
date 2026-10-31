@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:544e0700a96a43b2a76f0337efee8eeb055fddad19db7d4f1fbf8bd12a2b0b23
+  normalized_sha256: sha256:544e0700a96a43b2a76f0337efee8eeb055fddad19db7d4f1fbf8bd12a2b0b23
+cas_ref: sha256:544e0700a96a43b2a76f0337efee8eeb055fddad19db7d4f1fbf8bd12a2b0b23
+coverage_gids:
+  - gid: D5/S3/Quantum/Magic/ParitySectorMoments.parity_nonzero_label_fourth_moment
+    target_statement_id: sha256:45f33d70ce20c3e6576dee4d7ce11f43612a9fb0b72e651d705487776789bee2
+receipts:
+  unresolved_subitems: []
