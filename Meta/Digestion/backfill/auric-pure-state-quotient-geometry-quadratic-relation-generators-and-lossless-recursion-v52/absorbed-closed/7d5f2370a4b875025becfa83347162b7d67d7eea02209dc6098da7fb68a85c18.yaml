@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:7d5f2370a4b875025becfa83347162b7d67d7eea02209dc6098da7fb68a85c18
   normalized_sha256: sha256:7d5f2370a4b875025becfa83347162b7d67d7eea02209dc6098da7fb68a85c18
 cas_ref: sha256:7d5f2370a4b875025becfa83347162b7d67d7eea02209dc6098da7fb68a85c18
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/CommonPhasePolynomial.complete_common_phase_polynomial_theorem
+    target_statement_id: sha256:debb921d7c0fe5d95015ea78e66584d4ba0d151a0760a8af8b531c28e87d8f48
 receipts:
   unresolved_subitems: []
