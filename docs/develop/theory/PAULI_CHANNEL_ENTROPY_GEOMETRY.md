@@ -2710,3 +2710,337 @@ $b\to1$ is not asserted. The original unrestricted sign question in
 Open assertion 12.5 remains unresolved outside the proved regions.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 14. A global pure-state source-moment criterion
+
+Use the original complex states, independent biases, channels and exact
+entropy budget of Definitions 1.1--1.2. Write $I(A)=I_A$ and retain
+$\ell_E=S(R_E)-S(Q_E)$ from Definition 12.1. All logarithms are natural.
+
+**Definition 14.1 (Pure-source moments).** For a unit vector
+$|\psi\rangle\in\mathbb C^2\otimes\mathbb C^2$ and
+$\rho=|\psi\rangle\langle\psi|$, put
+$$
+ x_C=\langle\psi|XI|\psi\rangle,\qquad
+ x_D=\langle\psi|IX|\psi\rangle,\qquad
+ \kappa=\langle\psi|XX|\psi\rangle,
+$$
+$$
+ \tau_\psi=4\det\rho_C=4\det\rho_D,\qquad
+ d_\psi=\max\{\max\{x_C^2,x_D^2\}-\kappa^2,0\}.
+$$
+These moments are real, and $0\leq\tau_\psi\leq1$.
+
+**Theorem 14.2 (A source-moment sufficient condition).** For every
+complex pure source and every independent $a,b\in[0,1]$,
+$$
+ (1-a^2)d_\psi\leq a^2\tau_\psi
+ \quad\Longrightarrow\quad
+ \Delta(\rho;a,b)\geq I(P)\geq0.
+\tag{14.1}
+$$
+
+Proof.
+First consider an arbitrary source, and set
+$\pi_u=(1+(-1)^u a)/2$. The binary ensemble
+$\{\pi_u,K^u\rho K^u\}_{u=0,1}$ has average $Q$ and Holevo
+information $S(Q)-S(\rho)$. The global commutation $KL=LK$ gives
+$$
+ \Phi_b(K^u\rho K^u)=K^uPK^u.
+$$
+The resulting ensemble has average $R$ and Holevo information
+$g=S(R)-S(P)$. Its actual partial trace to $E=C,D$ is the ensemble
+$\{\pi_u,X^uP_EX^u\}_{u=0,1}$, whose Holevo information is $h_E$.
+The standard finite-dimensional CPTP relative-entropy data-processing
+inequality (Watrous, *The Theory of Quantum Information*), applied to
+these ensembles, therefore gives
+$$
+ 0\leq h_E\leq g\leq S(Q)-S(\rho).
+\tag{14.2}
+$$
+This includes singular states and zero weights. Every positive-weight
+ensemble member $A_u$ is supported on its average $\overline A$, since
+$\overline A\succeq\pi_uA_u$. Thus all positive-weight terms in
+$\chi=\sum_u\pi_uD(A_u\Vert\overline A)$ are finite; zero-weight terms
+are omitted. In particular, the unchanged original deficit obeys the
+general bound
+$$
+ \Delta\geq I(P)+I(Q)-g
+ \geq I(P)+I(Q)-S(Q)+S(\rho).
+$$
+Hence $I(Q)+S(\rho)\geq S(Q)$ is sufficient for $\Delta\geq I(P)$
+for arbitrary sources. We now derive a concrete sufficient condition
+for pure sources from their actual spectra.
+
+Write $e(t)=H_2((1+t)/2)$ for $0\leq t\leq1$; it is decreasing.
+For pure $\rho$, the two possibly nonzero eigenvalues of $Q$ are
+$(1\pm s)/2$, where
+$$
+ s^2=a^2+(1-a^2)\kappa^2.
+\tag{14.3}
+$$
+Indeed, the $2\times2$ Gram matrix of
+$\sqrt{\pi_0}|\psi\rangle,\sqrt{\pi_1}K|\psi\rangle$ has trace one
+and determinant $(1-a^2)(1-\kappa^2)/4$. This also proves (14.3) in
+rank-one degeneracies, and $S(Q)=e(s)$.
+
+The two source margins have equal squared Bloch radius
+$1-\tau_\psi$. If the Bloch vector on $E$ is $(x_E,y_E,z_E)$, its
+actual image $Q_E$ has vector $(x_E,ay_E,az_E)$. Its squared radius is
+$$
+ s_E^2=a^2(1-\tau_\psi)+(1-a^2)x_E^2.
+$$
+Consequently
+$$
+ s^2-s_E^2=a^2\tau_\psi+(1-a^2)(\kappa^2-x_E^2).
+\tag{14.4}
+$$
+The hypothesis of (14.1) makes (14.4) nonnegative for both margins.
+The monotonicity of $e$ gives
+$$
+ S(Q_C)\geq S(Q),\qquad S(Q_D)\geq S(Q).
+\tag{14.5}
+$$
+For this pure source, (14.2) reads $0\leq h_E\leq g\leq S(Q)$.
+Retaining both full endpoint mutual informations, expand exactly:
+$$
+ \begin{aligned}
+ \Delta={}&I(P)+[S(Q_C)-S(Q)]+[S(Q_D)-S(Q)]\\
+          &+[S(Q)-g]+2(g-h_C)+2(g-h_D).
+ \end{aligned}
+\tag{14.6}
+$$
+The three middle entropy terms sum to $I(Q)-g$, and the final two
+terms sum to $4g-2h$. Thus (14.6) is precisely the original
+$I(P)+I(Q)+3g-2h$, with unchanged coefficients. Every term after
+$I(P)$ is nonnegative by (14.2) and (14.5); subadditivity gives
+$I(P)\geq0$.
+
+No division by $1-a^2$, a spectral value or $\tau_\psi$ has been
+used. At $a=1$, $g=h_E=S(Q)=0$. At $a=0$, the hypothesis becomes
+$d_\psi=0$. Both $b=0,1$, arbitrary complex amplitudes and all zero
+spectra are included.
+
+**Corollary 14.3 (All biases and an entanglement-dependent interval).**
+Every pure source satisfying
+$$
+ \max\{|x_C|,|x_D|\}\leq|\kappa|
+\tag{14.7}
+$$
+satisfies $\Delta\geq I(P)\geq0$ for all independent $a,b\in[0,1]$.
+For every entangled pure source, $\tau_\psi>0$, the same conclusion
+holds for every $b\in[0,1]$ whenever
+$$
+ a\geq\sqrt{\frac{d_\psi}{\tau_\psi+d_\psi}}.
+$$
+The lower endpoint is zero when $d_\psi=0$.
+
+Proof.
+Condition (14.7) is exactly $d_\psi=0$. For $\tau_\psi>0$, rearranging
+$(1-a^2)d_\psi\leq a^2\tau_\psi$ gives the displayed interval.
+Apply Theorem 14.2.
+
+**Proposition 14.4 (An all-bias family through the full entanglement range).**
+Let $|u\rangle,|v\rangle$ be unit qubit vectors with
+$\langle u|X|u\rangle=\langle v|X|v\rangle=0$. For every
+$0\leq\lambda\leq1$ and $\chi\in\mathbb R$, the source
+$$
+ |\psi\rangle=\sqrt\lambda\,|u\rangle|v\rangle
+       +e^{i\chi}\sqrt{1-\lambda}\,X|u\rangle X|v\rangle
+$$
+satisfies (14.7), hence the original inequality for all independent
+biases.
+
+Proof.
+Each local pair $u,Xu$ and $v,Xv$ is orthonormal. Both margins are
+mixtures of these pairs, and each constituent has zero $X$
+expectation. Thus $x_C=x_D=0$ and $d_\psi=0$. Their eigenvalues
+are $\lambda,1-\lambda$, so $\tau_\psi=4\lambda(1-\lambda)$ covers
+$[0,1]$. The relative phase and both local angles on the $YZ$ circle
+are unrestricted.
+
+**Proposition 14.5 (A strict residual intersection, open among pure sources).**
+The region of Theorem 14.2 contains an open set of complex entangled
+pure sources and independent biases inside the residual region
+(12.10), with biases outside the interval of Theorem 13.1.
+
+Proof.
+Start with the exact product source $|\psi_0\rangle=|uv\rangle$, where
+$$
+ |u\rangle=\frac{5|0\rangle+i|1\rangle}{\sqrt{26}},\qquad
+ |v\rangle=\frac{7|0\rangle+i|1\rangle}{\sqrt{50}},\qquad
+ a_0=\frac{999}{1000},\qquad b_0=0.
+$$
+Here $x_C=x_D=\kappa=0$, while $z_C=12/13$ and $z_D=24/25$.
+Thus (14.7) applies. The binary mixture defining $P$ has smaller
+nonzero eigenvalue $(1-z_Cz_D)/2=37/650$, so
+$$
+ M=\lambda_{\max}(P)=\frac{613}{650}>\frac7{20}.
+$$
+The source marginal vectors have unit length, whereas the $b_0=0$
+channel retains only their $Z$ coordinate. The smaller eigenvalues
+of $P_C,P_D$ are $1/26,1/50$; those of $Q_C,Q_D$ are $1/2000$;
+those of $R_C,R_D$ are $253/6500,64/3125$. Therefore
+$$
+ \begin{aligned}
+ I(P)&=H_2(1/26)+H_2(1/50)-H_2(37/650),\\
+ \ell_C&=H_2(253/6500)-H_2(1/2000),\\
+ \ell_D&=H_2(64/3125)-H_2(1/2000).
+ \end{aligned}
+\tag{14.8}
+$$
+The following strict rational intervals make the comparison exact.
+In the last two columns every integer is divided by $10^6$:
+
+| $q$ | lower bound for $H_2(q)$ | upper bound for $H_2(q)$ |
+| --- | ---: | ---: |
+| $1/26$ | $163023$ | $163024$ |
+| $1/50$ | $98039$ | $98040$ |
+| $37/650$ | $218415$ | $218416$ |
+| $253/6500$ | $164506$ | $164507$ |
+| $64/3125$ | $99901$ | $99902$ |
+| $1/2000$ | $4300$ | $4301$ |
+
+Here is a reconstruction using only rational arithmetic. For any
+positive rational logarithm argument $x$, choose an integer $k$ so
+that $y=2^kx\in[1,2]$, and use $\log x=\log y-k\log2$.
+For $t=(y-1)/(y+1)\in[0,1/3]$, set
+$$
+ L(y)=2\sum_{j=0}^{15}\frac{t^{2j+1}}{2j+1},\qquad
+ U(y)=L(y)+\frac{2t^{33}}{33(1-t^2)}.
+$$
+Expanding $\log y=2\operatorname{atanh}t$ gives
+$L(y)\leq\log y\leq U(y)$: the positive tail is bounded by the
+geometric sum with every denominator replaced by $33$. Bound
+$\log2$ by the same formulas at $y=2$, reversing interval endpoints
+when multiplying by a negative number. Apply these intervals to
+$-q\log q-(1-q)\log(1-q)$ and round outward to denominator $10^6$;
+cross-multiplication yields the six rows above.
+
+Equation (14.8) consequently gives
+$$
+ \frac{42646}{10^6}<I(P)<\frac{42649}{10^6},\qquad
+ \ell_C>\frac{160205}{10^6},\qquad
+ \ell_D>\frac{95600}{10^6}.
+$$
+In particular $2I(P)<\ell_C,\ell_D$, and the original deficit obeys
+$\Delta\geq I(P)>42/1000$.
+
+To obtain an open entangled intersection, put
+$$
+ |\psi_\varepsilon\rangle
+ =\sqrt{1-\varepsilon^2}\,|\psi_0\rangle
+      +\varepsilon K|\psi_0\rangle.
+$$
+For $0<\varepsilon<1$, the local pairs are orthonormal, so these
+sources are entangled and
+$$
+ x_C=x_D=0,\qquad
+ \kappa=2\varepsilon\sqrt{1-\varepsilon^2}>0.
+$$
+For sufficiently small positive $\varepsilon$, the strict residual
+inequalities persist by entropy continuity. They also persist for
+sufficiently small positive $b$ and small perturbations of $a_0$.
+Moreover $\max\{x_C^2,x_D^2\}<\kappa^2$ is strict, so it persists
+under all sufficiently small complex pure-state perturbations.
+Entanglement is open at each of these pure sources. This gives the
+claimed relative open set; $a_0>23/24$ and small $b<1/4$ keep it
+outside the bias rectangle of Theorem 13.1.
+
+**Corollary 14.6 (A necessary additional condition for a pure counterexample).**
+Every pure counterexample to the original inequality must satisfy
+$$
+ (1-a^2)\bigl(\max\{x_C^2,x_D^2\}-\kappa^2\bigr)>a^2\tau_\psi,
+$$
+in addition to the preceding residual conditions.
+
+Proof.
+The contrapositive of Theorem 14.2 requires
+$(1-a^2)d_\psi>a^2\tau_\psi\geq0$. Thus $d_\psi>0$, and its
+positive-part operation can be removed in this strict inequality.
+The preceding proved sufficient regions also exclude a counterexample.
+
+**Proposition 14.7 (An explicit physical mixed-state ball in the residual region).**
+Let $\rho_0=|\psi_0\rangle\langle\psi_0|$ and $a_0=999/1000$
+be the exact product source and bias in Proposition 14.5. Put
+$\eta=1/20000$. Every physical complex density matrix and independent
+biases satisfying
+$$
+ \tfrac12\|\rho-\rho_0\|_1\leq\eta,\qquad
+ |a-a_0|\leq\eta,\qquad 0\leq b\leq\eta
+$$
+obey
+$$
+ \Delta(\rho;a,b)>\frac{19}{1000},\qquad
+ M>\frac7{20},\qquad
+ \ell_E-2I(P)>\frac{651}{500000}\quad(E=C,D).
+\tag{14.9}
+$$
+This region contains faithful states with negative partial transpose
+and a nonempty open subset of the physical state-and-bias domain.
+
+Proof.
+For any density matrix $A$, changing the parameter of either binary
+unitary channel by $s$ changes its output by half trace distance at
+most $|s|/2$, since the difference is
+$(s/2)(A-UAU^{\dagger})$ and $\|A-UAU^{\dagger}\|_1\leq2$.
+Channel contractivity and the triangle inequality therefore bound
+the distance of $P,Q,R$ from their values at $(\rho_0,a_0,0)$ by,
+respectively,
+$$
+ \eta+b/2,\qquad \eta+|a-a_0|/2,\qquad
+ \eta+(b+|a-a_0|)/2.
+$$
+All are at most $\delta=1/10000$, as are the marginal distances.
+The entropy-continuity estimate proved in Theorem 13.1 gives
+$$
+ B_d(\delta)=\delta\log d+(1+\delta)\log(1+\delta)
+                   -\delta\log\delta.
+$$
+The same rational logarithm series used in Proposition 14.5 gives
+$\log2<694/1000$, $\log4<1387/1000$ and
+$\log10000<9211/1000$. Since $\log(1+\delta)\leq\delta$, these imply
+$$
+ B_2(\delta)<\frac{109051}{10^8}<\frac{1091}{10^6},\qquad
+ B_4(\delta)<\frac{115981}{10^8}<\frac{1160}{10^6}.
+$$
+The absolute entropy coefficients in the original deficit and in
+$\ell_E-2I(P)$ consequently give errors bounded by
+$$
+ 8B_4(\delta)+12B_2(\delta)<\frac{23}{1000},\qquad
+ 2B_4(\delta)+6B_2(\delta)<\frac9{1000}.
+$$
+At the exact base point Proposition 14.5 gives
+$\Delta\geq I(P)>42/1000$ and, for both margins,
+$\ell_E-2I(P)>10302/10^6$. Subtracting the displayed errors proves
+the deficit and marginal inequalities in (14.9). The largest
+eigenvalue changes by at most $2\delta$, so
+$$
+ M\geq\frac{613}{650}-2\delta=\frac{61287}{65000}>\frac7{20}.
+$$
+
+For a faithful entangled member, retain $u,v$ from Proposition 14.5,
+put $\varepsilon=1/50000$, and set
+$$
+ |\chi\rangle=\sqrt{1-\varepsilon^2}\,|uv\rangle
+                 +i\varepsilon|Xu\,Xv\rangle,\qquad
+ \rho_*=(1-\varepsilon^2)|\chi\rangle\langle\chi|
+                         +\varepsilon^2 I_4/4.
+$$
+The two local pairs are orthonormal. Hence the distance from $\rho_0$
+is at most $\varepsilon+\varepsilon^2<\eta$, while
+$\rho_*\succeq\varepsilon^2I_4/4$. In local Schmidt coordinates its
+partial transpose has eigenvalue
+$$
+ \varepsilon^2/4-\varepsilon(1-\varepsilon^2)^{3/2}<0.
+$$
+Thus $\rho_*$ is faithful and entangled. Choose $a=a_0$ and
+$0<b<\eta$. The strict distance and parameter inequalities, positivity
+and the negative partial-transpose eigenvalue persist under sufficiently
+small physical perturbations. This gives a nonempty open subset.
+
+The unrestricted pure-state sign, and therefore the original mixed-state
+sign of Open assertion 12.5, remain unresolved outside the proved regions.
+
+## 追加锚（本行以下为增补区）
