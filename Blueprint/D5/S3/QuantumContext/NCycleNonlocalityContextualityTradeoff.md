@@ -168,6 +168,10 @@ $$\forall \left(n: \mathbb{N}\right), \left(\left(\left(3: \mathbb{N}\right) \le
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumContext/NCycleNonlocalityContextualityTradeoff.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/porto-et-al-2024-n-cycle-nonlocality-contextuality-tradeoff` (proved) by `D5/S3/QuantumContext/NCycleNonlocalityContextualityTradeoff.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"porto-et-al-2024-n-cycle-nonlocality-contextuality-tradeoff","declaration_gid":"D5/S3/QuantumContext/NCycleNonlocalityContextualityTradeoff.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Lucas E. A. Porto, Gabriel Ruffolo, Rafael Rabelo, Marcelo Terra Cunha and Paweł Kurzyński (2024). *Trade-off relations between Bell nonlocality and local Kochen–Specker contextuality in generalized Bell scenarios*. DOI: [10.1088/1367-2630/ad7167](https://doi.org/10.1088/1367-2630/ad7167). URL: <https://arxiv.org/abs/2405.02964v2>.
