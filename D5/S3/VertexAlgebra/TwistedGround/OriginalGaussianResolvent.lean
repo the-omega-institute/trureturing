@@ -68,7 +68,7 @@ lemma entry_bound (z : ℂ) (s t : ℕ) (hs : 0 < s) (ht : 0 < t) :
 def term (z : ℂ) (p : ℕ × ℕ) : H →L[ℂ] H :=
   matrixEntry z (p.1 + 1) (p.2 + 1) • rankOne p.1 p.2
 
-private lemma term_summable {z : ℂ} (hz : ‖z‖ < 1) :
+lemma term_summable {z : ℂ} (hz : ‖z‖ < 1) :
     Summable (fun p : ℕ × ℕ => ‖term z p‖) := by
   have hg : Summable (fun n : ℕ => ‖z‖ ^ (n + 1)) :=
     (summable_nat_add_iff 1).mpr (summable_geometric_of_lt_one (norm_nonneg z) hz)
