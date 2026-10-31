@@ -1095,7 +1095,7 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 
 ## 11.28 CLAUDE.md 引用材料
 
-本节保存 CLAUDE.md 引用的命令速查、用途样本读数、配置比较读数与古典引语；这些资料不增设、替代或改变 CLAUDE.md 的规范性规则。
+本节保存 CLAUDE.md 引用的命令速查、样本读数、单案边界与古典引语；这些资料不增设、替代或改变 CLAUDE.md 的规范性规则。
 另保存下列已在 CLAUDE.md 他处保留其规范要素的重复陈述原文；本小节不是这些规范的唯一出处。
 
 
@@ -1212,6 +1212,8 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 
 ### CLAUDE §3.5 用途样本读数
 
+**用途样本(仅限 2026-09-05 采样)**:全库读数来自 dev `a030e0dc6e`;枚举族/反例/证书三行在 `5aa818b070` 复算一致(该树全库 3361 模块/512,850 行)。五坐标不外推为当前全库保证:
+
 | 样本 | 模块 | 行数 | 有下游 import | 闭合 atom | 两者皆无 |
 | --- | --- | --- | --- | --- | --- |
 | 全库 D5 | 3360 | 512,608 | 45% | 58% | 19% |
@@ -1221,7 +1223,24 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 同窗口枚举族 78 模块有 import 或 coverage,77 有 importer,仅 5 有族外 importer(被 6 模块引);4 个数学消费者只用周期 ≤5 底层生成器(`ASSUMED-UNVERIFIED`:未复算声明闭包)。周期 6–12 塔只汇入两个子句打包模块各闭 1 atom,源句报告枚举本身。3 个反例模块两类边皆无,故按边数设用途门会误判。`TribonacciPermanentSurvivors` 声明枚举未用于一般定理。`LeanCacheBudgetPolicy.cs` 注 S0/Tower 81 模块 6305 s@ARM、最贵单子图 1656 s;与本表 80 模块集合是否相同未核对,`ASSUMED-UNVERIFIED`。
 **同窗口的未履行用途**:LRAT 链至 `GoldenDFAOMinimalityTargets` M07–M16 均是假设 `refutation` 的条件定理,仓内 `lrat_proof`/`.lrat`/`.cnf` 皆 0;`FiniteExhaustion`→`FiniteBranchAtlas` 无 importer/coverage/具体实例。`germ_zero_of_center_jet` 三前提仅曲率由 `g60_curvature_le_118` 履行,值界缺,导数只到 g 1(阈值 1 非 1.87),唯一应用仍带假设。`DedekindBhkCertificates` 四实例零引用而定义被用;7 个数值证书无 importer/coverage(详 #5515)。
 
+**黎曼路线样本(2026-09-04,增订二十五至二十九 W-10…W-21)**:W-12 阿基米德可积性提供主要分析逃逸。W-14/W-15 的 `exists_supportRadius`、W-18 的 `activePrimePowers_eq_empty_of_exp_lt_two` 须按第 3.2 条四项检查见证,不能使其 bind-only 主声明取得资格;W-10/11/13/16/17/19/20/21 是去假设化、投影、存在见证绑定或冻结 iff 复合,亦为 bind-only。既有冻结保留,同形新增直接消化,同模块 content helper 不豁免。席位空闲不得在边际收益触底后继续派同形任务。
+
+### CLAUDE §4.5 投影分区反例
+
+**反例与开放违例**:`Evidence/D5/values.json` 的「producer 读单个 toml」不能推出「输入不分区」。2026-08-11 来源记录中的输入样本含 14 个各带 `id`/`lean_gid`/`lean_statement_sha256`/`status` 的独立记录,`|K|>1`,故为违律实例而非豁免例,**开放违例(D5-T0031),非合规**。
+
+### CLAUDE §6.3 分区判词与唤醒域读数
+
+**有界反例(#6164,2026-09-07)**:37 模块/74 文件一次由 `ledger-align --add ×37` 产生,`selectors_considered=3641 changed=0 added=37 unchanged=3604 conflicts=0`,零冲突五项全真。拆 6 PR 付 6 轮 CI、6 份相同 73 行正文,并 ff-merge 5 条落后 262–2078 提交的 lane;缓存重热成本未测(`ASSUMED-UNVERIFIED`)。其中 20 模块缺 `utility:`,单批会连坐其余 17,拆出头齐的 7 条可合,所以判词维有收益,却不验证当时按连通分量盲拆的方法。全仓无按文件数判红规则,超 p75 说明是软评审义务,非机器硬约束。
+**唤醒域结论**:该样本 36 个初落地未冻模块因 deposit 阻断(#6165)未触发当时首冻门,与 37 补冻/20 缺头/17 连坐/7 已合是不同口径。依赖“本应发生而被别处阻断”的动作唤醒门会静默漏审,分区规则不修此缺口。旧“冻结触发缺口仍 open”已 inactive;第 3.4 条现役 changed-unfrozen D5 Lean ∪ first-pin 已补输入域,正文变更/缺头也唤醒,judge-only 不扫未变历史。此硬保证不证明分类/源句映射语义,后者仍靠独立评审。
+
+### CLAUDE §9.2 引用校验样本缺口
+
+**有界缺口**:2026-08-12 普查中 `Golden/values-kernels.toml` 的 `lean_gid/lean_statement_sha256` 仅验唯一/格式,writer 原样复制 values.json;spec SL-018 却要求候选 inspector 验 GID 唯一存在、kind=def、标准三公理闭包、statement SHA 与投影一致。此为该样本的规范/实现缺口,不冒称当前新测量;报现役须真执行,否则标延后。
+
 ### CLAUDE §10.2 配置比较读数
+
+**三类已实测的病因与处方(2026-09-10,`CrimGrundyRefutation`,同一模块同一台机)**:①**一次性 `decide +kernel` 判一个大集合** —— 内核要把全部状态的归约中间项同时驻留,峰值即其和;处方是先 `reduce`、`simp only` 拆合取、`repeat' apply And.intro` 分解,再 `all_goals decide +kernel`,每次只驻留一项。②**证书用线性表** —— `List.lookup` 在内核归约里是二次代价(377 个位置各查一次、平均走一半);处方是换成平衡树的归纳类型,降到对数级。③**伞形 `import Mathlib.Tactic`** —— 载入整个 tactic 库的环境;处方是精确导入,并把无限制的 `simp` 换成 `simp only [具名引理]` 配 `omega`。配置比较:
 
 | 配置 | 墙钟 | `checked` | 峰值内存 |
 | --- | --- | --- | --- |
@@ -1229,6 +1248,8 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 | ① 拆分逐项归约 | 87.2 s | 68.0 s | 3.2 GB |
 | ② 证书换平衡树 | 29.3 s | 11.2 s | 3.0 GB |
 | ③ 精确导入 | 19.2 s | 11.6 s | 1.5 GB |
+
+同批一个**负结果**一并入账:把证书展开成显式 `cons` 链,`checked` 72.1 s 对 68.0 s,**无改进,丢弃**。CI 侧该模块的构建由被杀变为 68 秒通过。**不冒领**:本地峰值内存由 22.7 GB 降到 1.5 GB **不证明**先前那次 SIGTERM 的成因就是内存耗尽 —— runner 侧证据未取,该归因记 `ASSUMED-UNVERIFIED`(第 2.9 条:不确定须带排除项)。已排除的替代解释在该案里是逐条有读数的:非 job timeout(限 45 min 而 job 只跑 7 min 22 s)、非并发取消(`concurrency.group` 为 `ci-<PR 号>`,不跨 PR,且该分支仅一个 run)、非该步自身 timeout(它没有 `timeout-minutes`)。
 
 ### CLAUDE §11.5 古典引语
 

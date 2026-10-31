@@ -457,7 +457,7 @@ private lemma pairScalar_comm (s t : ℕ) : pairScalar s t = pairScalar t s := b
   unfold pairScalar
   ring
 
-private lemma finiteSection_radial_hermitian (N : ℕ) (rho : ℝ) :
+lemma finiteSection_radial_hermitian (N : ℕ) (rho : ℝ) :
     (finiteSection N (rho : ℂ)).IsHermitian := by
   apply Matrix.IsHermitian.ext
   intro i j

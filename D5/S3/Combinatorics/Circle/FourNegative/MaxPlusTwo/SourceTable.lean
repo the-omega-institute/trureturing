@@ -21,7 +21,7 @@ set_option maxHeartbeats 1000000 in
 -- The paired ladders carry eight centered reductions and their arithmetic bounds.
 private theorem source_table (a b c d : ℕ)
     (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c)
-    (hd : 3 ≤ d) :
+    (hd : 2 ≤ d) :
     let x : ℤ := 2 ^ a
     let y : ℤ := 2 ^ b
     let z : ℤ := 2 ^ c
@@ -116,8 +116,8 @@ private theorem source_table (a b c d : ℕ)
     have hdb : 1 + x + x * y < 2 * (x * y) := by nlinarith
     have hp : 4 * (x * y) ≤ x * y * z := by nlinarith
     nlinarith
-  have ht8 : 8 ≤ t := by
-    have h := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show 3 ≤ d by omega)
+  have ht4 : 4 ≤ t := by
+    have h := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hd
     norm_num at h
     simpa [t] using h
   have hA : 1 ≤ A ∧ A < N := by
@@ -125,8 +125,8 @@ private theorem source_table (a b c d : ℕ)
     · dsimp [A, P, DB]
       nlinarith [hP]
     · dsimp [A, N]
-      have hPt : 8 * P ≤ P * t := by
-        simpa [mul_comm] using mul_le_mul_of_nonneg_left ht8 hP.le
+      have hPt : 4 * P ≤ P * t := by
+        simpa [mul_comm] using mul_le_mul_of_nonneg_left ht4 hP.le
       nlinarith [hP, hDBP, hPt]
   have hrelA : t * A = N + B := by dsimp [A, B, N, P, DB]; ring
   have hrelB : z * B = N + L := by dsimp [B, L, N, P, DB, DL]; ring

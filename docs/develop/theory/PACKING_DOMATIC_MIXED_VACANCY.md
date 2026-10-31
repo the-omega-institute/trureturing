@@ -1205,3 +1205,473 @@ claim about other values of $k$, extremizers, or optimal deficit lengths.
 
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Every odd number of classes at least nine
+
+**Definition 10.1 (Complementary blocks on the integer path).** Let
+$m\ge4$ be an integer, and put $k=2m+1$ and $T=2k=4m+2$. Define
+
+$$
+s_m=\begin{cases}m+4,&m\text{ even},\\2,&m\text{ odd}.\end{cases}
+$$
+
+All indices $h$ in the following sets are integers. Set
+
+$$
+D_m=\begin{cases}
+\{2+2h:0\le h<(m-2)/2\}\ \cup\ \{m+1\}\cup\ \{m+5+2h:0\le h<(m-4)/2\},&m\text{ even},\\[2mm]
+\{3+2h:0\le h<(m-3)/2\}\ \cup\ \{m+1\}\cup\ \{m+4+2h:0\le h<(m-3)/2\},&m\text{ odd}.
+\end{cases} \tag{10.1}
+$$
+
+An index range with upper bound zero is empty. Write the members of
+$D_m$ in increasing order as $d_1<\cdots<d_{m-2}$. Define a function
+$F_m$ on the integer residues $0,\ldots,T-1$ by
+
+$$
+\begin{aligned}
+F_m(0)=F_m(k)&=2m,\\
+F_m(s_m)=F_m(s_m+k)&=m,\\
+F_m(1)=F_m(m+3)=F_m(m+k)&=m+1,\\
+F_m(m)=F_m(1+k)=F_m(m+3+k)&=m-1,\\
+F_m(d_j)=F_m(d_j+1+k)&=j&& (1\le j\le m-2),\\
+F_m(d_j+1)=F_m(d_j+k)&=2m-j&& (1\le j\le m-2).
+\end{aligned} \tag{10.2}
+$$
+
+For every $a\in\mathbb Z$, let $R_T(a)$ and $R_k(a)$ be its unique
+remainders in $\{0,\ldots,T-1\}$ and $\{0,\ldots,k-1\}$, respectively.
+Put
+
+$$
+f_m(a)=F_m(R_T(a)),\qquad c_m(a)=1+R_k(a). \tag{10.3}
+$$
+
+Thus the class labelled $i$ is precisely $(i-1)+k\mathbb Z$. The
+remainders are Euclidean remainders for all integers, including negative
+integers.
+
+**Theorem 10.2 (The original odd-family upper bound).** For every integer
+$m\ge4$, Definition 10.1 gives well-defined maps
+
+$$
+f_m:\mathbb Z\longrightarrow\{1,\ldots,2m\},\qquad
+c_m:\mathbb Z\longrightarrow\{1,\ldots,2m+1\}
+$$
+
+such that
+
+$$
+\begin{aligned}
+u\ne v,\quad f_m(u)=f_m(v)=j&\quad\Longrightarrow\quad |u-v|\ge j+1,\\
+\forall z\in\mathbb Z\ \forall i\in\{1,\ldots,2m+1\}\quad
+\exists a\in\mathbb Z:&\quad c_m(a)=i,\quad |z-a|\le f_m(a).
+\end{aligned} \tag{10.4}
+$$
+
+Consequently $Q(k,k-1)$ of Definition 1.2 holds for every odd integer
+$k\ge9$. Equivalently, in Brešar--Ferme--Hu,
+[*Partitioning an S-packing coloring into broadcast dominating sets*,
+arXiv:2610.03477v1](https://arxiv.org/html/2610.03477v1), Sections 1 and
+3.2 and Problem 3 in Section 5,
+
+$$
+\chi_{\rho,k}(P_\infty)\le k-1\qquad(k\ge9\text{ odd}). \tag{10.5}
+$$
+
+Proof. First verify that (10.2) assigns exactly one value to every
+residue. The five exceptional positions in the first block
+$\{0,\ldots,2m\}$ are
+
+$$
+E_m=\{0,1,m,m+3,s_m\}.
+$$
+
+For even $m\ge4$ they are distinct and their complement is the disjoint
+union of integer intervals
+
+$$
+[2,m-1]\cap\mathbb Z,\qquad
+[m+1,m+2]\cap\mathbb Z,\qquad
+[m+5,2m]\cap\mathbb Z. \tag{10.6}
+$$
+
+Their cardinalities are $m-2$, $2$, and $m-4$, respectively. Each is
+even, and pairing consecutive positions from its left endpoint gives
+exactly the pairs $\{d,d+1\}$ from the even row of (10.1). When $m=4$,
+the last interval is empty and the corresponding set of starting
+positions is empty, as prescribed. Hence there are
+$(m-2)/2+1+(m-4)/2=m-2$ such pairs.
+
+For odd $m\ge4$, necessarily $m\ge5$. The exceptional positions are
+$0,1,2,m,m+3$, and their complement is
+
+$$
+[3,m-1]\cap\mathbb Z,\qquad
+[m+1,m+2]\cap\mathbb Z,\qquad
+[m+4,2m]\cap\mathbb Z. \tag{10.7}
+$$
+
+These intervals have even cardinalities $m-3$, $2$, and $m-3$.
+Pairing consecutive positions from the left again gives exactly (10.1),
+with $(m-3)/2+1+(m-3)/2=m-2$ pairs. In either case the pairs are
+mutually disjoint and exhaust the complement of $E_m$. All their
+endpoints lie in $\{0,\ldots,2m\}$. Also $s_m\le2m$, including the
+endpoint $s_4=8$.
+
+Thus the first block is partitioned into the five exceptional positions
+and these $m-2$ pairs. Translating this partition by $k$ gives the
+second block, which is disjoint from the first. Every position in
+(10.2) belongs to one of the two blocks and receives a single value.
+The values in the paired positions are $j$ and $2m-j$ for
+$1\le j\le m-2$; those at exceptional positions are
+$m-1,m,m+1,2m$. All lie in $\{1,\ldots,2m\}$. These colour ranges
+are disjoint, so the occurrences of each colour can now be read
+exhaustively from (10.2). Equations (10.3) define positive maps on all
+of $\mathbb Z$, with $f_m(a+T)=f_m(a)$ and $c_m(a+k)=c_m(a)$.
+
+We next prove the packing inequalities, retaining the gap from each
+period to the next. Colour $2m$ occurs exactly at $k\mathbb Z$, whose
+successive gaps are $k=2m+1$. Colour $m$ occurs exactly at
+$s_m+k\mathbb Z$, with successive gaps $k\ge m+1$.
+
+Fix $1\le j\le m-2$ and write $d=d_j$. The complete occurrence sets
+of the two colours assigned to its pair are
+
+$$
+\begin{aligned}
+\{a:f_m(a)=j\}&=\{d,d+1+k\}+T\mathbb Z,\\
+\{a:f_m(a)=2m-j\}&=\{d+1,d+k\}+T\mathbb Z.
+\end{aligned} \tag{10.8}
+$$
+
+The two listed positions in each row are in increasing order inside
+one period. The successive cyclic gaps in the first row are $k+1,k-1$;
+in the second row they are $k-1,k+1$. In particular every gap is at
+least $k-1=2m$. This is at least $j+1$ and at least
+$(2m-j)+1$, since $j\ge1$ and $j\le m-2$.
+
+The remaining colours have the complete occurrence sets
+
+$$
+\begin{aligned}
+\{a:f_m(a)=m+1\}&=\{1,m+3,m+k\}+T\mathbb Z,\\
+\{a:f_m(a)=m-1\}&=\{m,1+k,m+3+k\}+T\mathbb Z.
+\end{aligned} \tag{10.9}
+$$
+
+Each displayed triple is in increasing order in $[0,T-1]$. For colour
+$m+1$ the successive gaps, including the last-to-first gap, are
+
+$$
+(m+3)-1=m+2,\qquad
+(m+k)-(m+3)=2m-2,\qquad
+(1+T)-(m+k)=m+2.
+$$
+
+For colour $m-1$ they are
+
+$$
+(1+k)-m=m+2,\qquad
+(m+3+k)-(1+k)=m+2,\qquad
+(m+T)-(m+3+k)=2m-2.
+$$
+
+The hypothesis $m\ge4$ gives $2m-2\ge m+2$. Every gap in the first
+set is therefore at least $(m+1)+1$, and every gap in the second is
+at least $(m-1)+1$. At $m=4$ all six gaps just displayed are 6, so
+this endpoint is included. These sets, (10.8), and the two single
+residue classes exhaust the palette. Any two distinct centres of a
+fixed colour are separated by a nonempty sum of its successive gaps.
+Their distance is consequently at least the colour plus one. Because
+the occurrence sets include all translates by $T\mathbb Z$, this
+argument includes every pair across a period boundary and every pair
+of negative integers.
+
+For coverage use the original intervals
+$B_a^{f_m}=[a-f_m(a),a+f_m(a)]\cap\mathbb Z$ of Lemma 7.4, with
+$g=f_m$ and $t=2m$. The two halves of (10.2) give, for every integer
+$a$, the exact identity
+
+$$
+f_m(a)+f_m(a+k)=
+\begin{cases}
+4m,&a\equiv0\pmod k,\\
+2m,&a\not\equiv0\pmod k.
+\end{cases} \tag{10.10}
+$$
+
+Indeed the value $2m$ stays unchanged at the residue 0, the value $m$
+stays unchanged at $s_m$, and each other value is exchanged with its
+complement to $2m$. The identity holds in both directions through the
+two blocks, since translating twice by $k$ is a period. In particular
+$f_m(a)+f_m(a+k)\ge2m=k-1$ for every $a\in\mathbb Z$.
+
+The consecutive-broadcast covering argument used in the source's
+Theorem 3.6 applies here with the following inclusive integer endpoints.
+Fix any $z\in\mathbb Z$ and any label $i\in\{1,\ldots,k\}$. Euclidean
+division of $z-(i-1)$ by $k$ gives an integer $q$ and a remainder
+$e\in\{0,\ldots,k-1\}$ such that
+
+$$
+a=i-1+qk,\qquad z=a+e,\qquad a\le z<a+k. \tag{10.11}
+$$
+
+Both $a$ and $a+k$ have label $i$ under the single map $c_m$.
+If $e\le f_m(a)$, the original centre $a$ covers $z$. Otherwise the
+integrality of $e$ gives $e\ge f_m(a)+1$, and hence
+
+$$
+|z-(a+k)|=k-e\le k-1-f_m(a)\le f_m(a+k). \tag{10.12}
+$$
+
+Thus the original centre $a+k$ covers $z$ in the other case. Equivalently,
+the right endpoint $a+f_m(a)$ and the next left endpoint
+$a+k-f_m(a+k)$ leave no missing integer, since the latter is at most
+the former plus one. This includes equality in (10.10)'s lower bound,
+$e=0$, and $e=k-1$. Division in (10.11) is valid also when $q<0$;
+no half-line boundary or clipped broadcast is introduced. The same
+$f_m$ determines every radius in (10.8)--(10.12), and every integer
+remains a centre with its positive value. Since $z$ and $i$ were
+arbitrary, this proves the second line of (10.4) for the one common
+$c_m$ in (10.3).
+
+Every odd integer $k\ge9$ is uniquely $2m+1$ with integer $m\ge4$,
+so (10.4) proves $Q(k,k-1)$ on the entire claimed range. For (10.5),
+the source parameter map is $u_a\leftrightarrow a$,
+$d_{P_\infty}(u_a,u_b)=|a-b|$, the ordinary packing sequence
+$S=(1,2,3,\ldots)$, palette bound $t=2m=k-1$, and partition sets
+$A_i=c_m^{-1}(i)=(i-1)+k\mathbb Z$. A restricted broadcast is $f_m$
+on $A_i$ and zero outside $A_i$, exactly as in the source's Section 1;
+the single positive packing $f_m$ itself is unchanged. This is precisely
+the interpretation of $Q$ in Definition 1.2.
+
+The local supplier citations below use
+[source version fe6e2625fb21b97e340cfc50244b975befaf7008](https://github.com/the-omega-institute/trureturing/tree/fe6e2625fb21b97e340cfc50244b975befaf7008).
+The fixed-six predicate in
+[`PackingDomaticInfiniteSix`](../../../D5/S3/Combinatorics/PackingDomatic/PackingDomaticInfiniteSix.lean)
+has the same full integer domain and radius convention, with $k=6$
+and labels $0,\ldots,5$ instead of $1,\ldots,6$. Its private
+`upperColour`, `upperClass`, and `five_exists` give the source's
+six-class input; Theorem 9.2 gives the seven-class input. Neither is an
+inductive premise for the construction (10.1)--(10.3). The finite-path
+predicate in
+[`PackingDomaticPathDefs`](../../../D5/S3/Combinatorics/PackingDomatic/PackingDomaticPathDefs.lean)
+has domain $\operatorname{Fin}(n)$, rather than $\mathbb Z$.
+Its endpoint-dependent bound
+[`local_counting`](../../../D5/S3/Combinatorics/PackingDomatic/PackingDomaticPathCounting.lean)
+and its application in
+[`PackingDomaticPath`](../../../D5/S3/Combinatorics/PackingDomatic/PackingDomaticPath.lean)
+concern finite paths and supply no endpoint restriction on the present
+whole-line witness. Likewise the finite interval decomposition cited
+in Lemma 7.4 supplies covering classes once an adequate interval
+multiplicity is given; here (10.10)--(10.12) supply the covering classes
+explicitly for the packing whose same-colour gaps were proved above.
+The additional infinite-family inference is the compatibility of this
+packing with these common covering classes for every $m\ge4$.
+
+The bound (10.5) contains no matching lower bound, and therefore no
+assertion of the exact least palette for these odd values of $k$.
+The construction has periods $T$ and $k$ for its two maps; no periodicity
+condition is imposed on arbitrary witnesses of $Q$. The assertions
+$Q(k,k-1)$ for even $k\ge8$, and consequently the assertion for every
+integer $k\ge4$ in the source's Problem 3, remain outside this result.
+$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 11. Every even number of classes at least eight
+
+**Definition 11.1 (Complementary blocks for an even class count).** Let
+$m\ge4$ be an integer, put $k=2m$ and $T=2k=4m$, and define
+
+$$
+q_m=\begin{cases}m,&m\text{ even},\\m-1,&m\text{ odd},\end{cases}\qquad
+r_m=\begin{cases}m+3,&m\text{ even},\\m+2,&m\text{ odd}.
+\end{cases}
+$$
+
+For the even and odd cases respectively, let
+
+$$
+D_m=
+\begin{cases}
+\{2+2h:0\le h<(m-2)/2\}\cup\{m+1\}
+ \cup\{m+4+2h:0\le h<(m-4)/2\},&m\text{ even},\\[2mm]
+\{2+2h:0\le h<(m-3)/2\}\cup\{m\}
+ \cup\{m+3+2h:0\le h<(m-3)/2\},&m\text{ odd}.
+\end{cases}
+$$
+
+Write the members of $D_m$ increasingly as
+$d_1<\cdots<d_{m-2}$. Define $F_m$ on the residues
+$0,\ldots,T-1$ by
+
+$$
+\begin{aligned}
+F_m(0)&=F_m(k)=2m-1,\\
+F_m(1)&=m-1,&F_m(1+k)&=m,\\
+F_m(q_m)&=m,&F_m(q_m+k)&=m-1,\\
+F_m(r_m)&=m-1,&F_m(r_m+k)&=m,\\
+F_m(d_j)&=j,&F_m(d_j+1)&=2m-1-j,\\
+F_m(d_j+k)&=2m-1-j,&F_m(d_j+1+k)&=j
+\qquad(1\le j\le m-2).
+\end{aligned}
+$$
+
+For an integer $a$, let $R_T(a)$ and $R_k(a)$ be its Euclidean remainders
+in $\{0,\ldots,T-1\}$ and $\{0,\ldots,k-1\}$, and put
+
+$$
+f_m(a)=F_m(R_T(a)),\qquad c_m(a)=1+R_k(a).
+$$
+
+Thus $c_m$ has the $k$ residue classes modulo $k$ as its classes.
+
+**Theorem 11.2 (The original even-family upper bound).** For every integer
+$m\ge4$, the maps in Definition 11.1 are well-defined and satisfy
+
+$$
+\begin{aligned}
+u\ne v,\quad f_m(u)=f_m(v)=j&\Longrightarrow |u-v|\ge j+1,\\
+\forall z\in\mathbb Z\ \forall i\in\{1,\ldots,2m\}\ \exists a\in\mathbb Z:
+&\quad c_m(a)=i,\quad |z-a|\le f_m(a).
+\end{aligned}
+$$
+
+Consequently $Q(k,k-1)$ of Definition 1.2 holds for every even integer
+$k\ge8$. In the notation of Brešar--Ferme--Hu,
+[*Partitioning an $S$-packing coloring into broadcast dominating sets*](https://arxiv.org/html/2610.03477v1),
+Sections 1 and 3.2 and Problem 3 in Section 5, this gives
+$\chi_{\rho,k}(P_\infty)\le k-1$ for every even $k\ge8$.
+
+**Proof.** If $m$ is even, the exceptional positions in the first block
+$[0,2m-1]\cap\mathbb Z$ are $\{0,1,m,m+3\}$, and their complement is the disjoint union
+
+$$
+[2,m-1]\cap\mathbb Z,\qquad [m+1,m+2]\cap\mathbb Z,\qquad
+[m+4,2m-1]\cap\mathbb Z.
+$$
+
+Their lengths are $m-2$, $2$, and $m-4$, all even. Pairing consecutive
+positions from the left endpoint gives exactly the pairs
+$\{d_j,d_j+1\}$ in the even row of Definition 11.1. If $m$ is odd,
+then $m\ge5$, the exceptional positions are $\{0,1,m-1,m+2\}$, and the complement is
+
+$$
+[2,m-2]\cap\mathbb Z,\qquad [m,m+1]\cap\mathbb Z,\qquad
+[m+3,2m-1]\cap\mathbb Z.
+$$
+
+These lengths are $m-3$, $2$, and $m-3$, again all even, and consecutive
+pairing gives the odd row. Hence the exceptional positions and the
+$m-2$ pairs partition the first block. Translating by $k$ partitions the
+second block, so every residue receives exactly one value. The assigned
+values are $1,\ldots,2m-1$, all positive and at most $2m-1=k-1$.
+
+It remains to check the packing. The value $2m-1$ occurs exactly at
+$k\mathbb Z$, whose successive gaps are $k=2m$, the required value plus
+one. For $1\le j\le m-2$, the complete occurrence sets of the two
+values assigned to the pair beginning at $d_j$ are
+
+$$
+\begin{aligned}
+\{a:f_m(a)=j\}&=\{d_j,d_j+1+k\}+T\mathbb Z,\\
+\{a:f_m(a)=2m-1-j\}&=\{d_j+1,d_j+k\}+T\mathbb Z.
+\end{aligned}
+$$
+
+Their cyclic gaps are respectively $k+1,k-1$ and $k-1,k+1$. Since
+$k-1=2m-1\ge 2m-j$ for $j\ge1$, every such gap is at least one more
+than either colour in its row.
+
+The remaining occurrence sets are
+
+$$
+\{a:f_m(a)=m-1\}=\{1,r_m,q_m+k\}+T\mathbb Z,\qquad
+\{a:f_m(a)=m\}=\{q_m,1+k,r_m+k\}+T\mathbb Z.
+$$
+
+For even $m$, their cyclic gap triples are
+
+$$
+(m+2,\,2m-3,\,m+1)\quad\text{and}\quad
+(m+1,\,m+2,\,2m-3),
+$$
+
+while for odd $m$ they are
+
+$$
+(m+1,\,2m-3,\,m+2)\quad\text{and}\quad
+(m+2,\,m+1,\,2m-3).
+$$
+
+Because $m\ge4$, every displayed gap is at least $m+1$. This is at
+least one more than $m$, and hence also at least one more than $m-1$.
+The listed occurrence sets exhaust all values, and any two distinct
+members of one set are separated by a nonempty sum of its cyclic gaps.
+Thus the packing inequalities hold across every period boundary and on
+the whole integer line.
+
+The assignments also give, for every integer $a$,
+
+$$
+f_m(a)+f_m(a+k)=
+\begin{cases}
+4m-2,&a\equiv0\pmod k,\\
+2m-1,&a\not\equiv0\pmod k.
+\end{cases}
+\tag{11.1}
+$$
+
+In particular the sum is always at least $2m-1=k-1$. Fix $z\in\mathbb Z$
+and a class label $i\in\{1,\ldots,k\}$. Euclidean division gives
+integers $q$ and $e$ with $0\le e<k$ such that
+
+$$
+a=i-1+qk,\qquad z=a+e.
+$$
+
+Both $a$ and $a+k$ have class label $i$. If $e\le f_m(a)$, then $a$
+covers $z$. Otherwise integrality gives $e\ge f_m(a)+1$, and (11.1)
+implies
+
+$$
+|z-(a+k)|=k-e\le k-1-f_m(a)\le f_m(a+k).
+$$
+
+So $a+k$ covers $z$. This uses the original interval endpoints and the
+same positive $f_m$ for every radius and every centre; negative $q$ and
+the endpoint values $e=0,k-1$ are included in the same division. Since
+$z$ and $i$ were arbitrary, the common covering condition in Definition
+1.2 follows. Every even $k\ge8$ is $2m$ for an integer $m\ge4$, proving
+the assertion. The source parameter map is
+$u_a\leftrightarrow a$, $d_{P_\infty}(u_a,u_b)=|a-b|$, ordinary packing
+sequence $S=(1,2,3,\ldots)$, palette $t=2m-1=k-1$, and partition classes
+$c_m^{-1}(i)=(i-1)+k\mathbb Z$, exactly as in the source definition.
+\square$
+
+**Corollary 11.3 (The all-$k\ge4$ source consequence).** Combining the
+published BFH $k=4,5,6$ upper assertions with Theorem 9.2 for $k=7$,
+Theorem 10.2 for odd $k\ge9$, and Theorem 11.2 for even $k\ge8$ gives
+
+$$
+\forall k\in\mathbb Z,\quad k\ge4\Longrightarrow Q(k,k-1),
+$$
+
+and therefore
+
+$$
+\chi_{\rho,k}(P_\infty)\le k-1\qquad(k\ge4).
+$$
+
+Here the BFH input is its original whole-line definition and its exact
+small-case assertions; the owner construction at $k=7$ is the same
+whole-line $Q(7,6)$ realization of Theorem 9.2, and the two infinite
+families use the same $f$ simultaneously for every class and every
+integer position. The cited finite-path suppliers and the six-class
+palette theorem concern different predicates or already-consumed cases;
+no finite endpoint, least-palette, sharpness, extremizer, or periodicity
+claim is added by this corollary.
+
+## 追加锚（本行以下为增补区）

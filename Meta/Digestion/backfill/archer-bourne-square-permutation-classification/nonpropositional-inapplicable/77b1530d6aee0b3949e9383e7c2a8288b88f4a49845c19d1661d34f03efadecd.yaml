@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:77b1530d6aee0b3949e9383e7c2a8288b88f4a49845c19d1661d34f03efadecd
+  normalized_sha256: sha256:77b1530d6aee0b3949e9383e7c2a8288b88f4a49845c19d1661d34f03efadecd
+cas_ref: sha256:77b1530d6aee0b3949e9383e7c2a8288b88f4a49845c19d1661d34f03efadecd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "Cited-facts preamble recording (a) Archer and Bourne's chain-avoidance notation (formalized in PermutationSquareDefs) and unproved Section 5 recurrence conjecture for a_n(312, 54321 : 132) (n >= 6), and (b) the non-load-bearing cited step a_n = sum_{k=1}^n b_k c_{n-k} (c_0 = 1), A(x) = B(x)/(1 - x - x^2 - x^3 - x^4), and failure of the conjecture at n = 11 and n = 12 (the n = 11 counterexample is in PermutationSquareRefutation, and the convolution, generating-series identity, and failure for all n >= 11 are formalized in PermutationSquareEnumeration)."
+    previous_atom_id: a9402e53bf6e4c580a8ff48abe838d5bbb9b600a3dd65a9d61618db7e8b56b31
+    next_atom_id: 6bed98db14e137a3f62645eb8339f49c6bbd6e2225ab46e00bf7d9ca7faac229

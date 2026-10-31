@@ -1356,3 +1356,747 @@ III §§152–156 是另一套明确支付的读器历史结果：四个新载�
 [RROIII15718]: https://github.com/the-omega-institute/trureturing/blob/5469ab1edbdc9bc6a66e428c866554fa4ff8f2f0/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_III.md#157-原生分量守恒在完整相干四次密度类中的刚性
 
 ## 追加锚（本行以下为增补区）
+
+## 24. 正则原生源方向的归一化闭包锥
+
+以下只讨论记录零的原生前缀。令 $\mathsf A_{\rm reg}$ 为所有原地址字
+$a\in\{0,\ldots,8\}^{<\infty}$ 的子集，使其 ready 后继 $u_a$ 满足
+
+$$
+ m_0(a)=t_0(a)=1,\qquad
+ \frac14<t_{000}(u_a),t_{010}(u_a),t_{100}(u_a)<\frac12,\qquad
+ \delta_{u_a}\ge\frac12 .
+ \tag{24.1}
+$$
+
+这里的 $m_0,t_0,t_s,\delta_u$ 都沿用 §§12、15、18、20 的定义；特别地，
+$m_0=t_0=1$ 是原记录零支撑和因果归一化的结论，不是一般 Born 记录律。
+对 $a\in\mathsf A_{\rm reg}$ 和 $d\in D_{u_a}$，写
+
+$$
+ \Gamma_a(d)=(B_a(d),D_a(d))\in
+ \operatorname{Herm}_{21}\oplus\operatorname{Herm}_{13}
+ \tag{24.2}
+$$
+
+为 §18 的同步合并块差，并置
+
+$$
+ \widehat{\Gamma}_a(d)=\frac{\Gamma_a(d)}
+ {\bigl(\|B_a(d)\|_F^2+\|D_a(d)\|_F^2\bigr)^{1/2}}
+ \quad(\Gamma_a(d)\ne0).
+ \tag{24.3}
+$$
+
+定义归一化低秩锥截面
+
+$$
+ \mathcal C_1=\left\{(B,D):\begin{array}{l}
+ B=B^*,\ D=D^*,\ \operatorname{rank}B\le2,\ \operatorname{rank}D\le1,\\
+ \operatorname{Tr}B+\operatorname{Tr}D=0,\quad
+ \|B\|_F^2+\|D\|_F^2=1
+ \end{array}\right\}.
+ \tag{24.4}
+$$
+
+**定理 24.1（正则原生源与低秩锥的精确对应）。** 有
+
+$$
+ \overline{\{\widehat{\Gamma}_a(d):a\in\mathsf A_{\rm reg},\ d\in D_{u_a},\ \Gamma_a(d)\ne0\}}
+ =\mathcal C_1 .
+ \tag{24.5}
+$$
+
+闭包在 $\operatorname{Herm}_{21}\oplus\operatorname{Herm}_{13}$ 的 Frobenius 拓扑中取。
+等式的右侧是数学方向的闭包；它不把闭包中的点说成某个可数原生轨道上的精确点。
+
+**证明。** 对任意 $a$ 和 $d$，每个 $21$ 维合并块是至多两个秩一投影的实线性组合，
+每个 $13$ 维块是至多一个秩一投影的实线性组合。因此
+
+$$
+ \operatorname{rank}B_a(d)\le2,\qquad \operatorname{rank}D_a(d)\le1 .
+ \tag{24.6}
+$$
+
+每个占据尾投影的迹为一，而 $d\in D_{u_a}$ 给 $\sum_sd_s=0$，所以
+$\operatorname{Tr}B_a(d)+\operatorname{Tr}D_a(d)=0$。这些条件在归一化和取极限下闭，得到左侧包含于 $\mathcal C_1$。
+
+反之，取 $(B,D)\in\mathcal C_1$。谱分解可写成
+
+$$
+ B=\alpha P_p+\beta P_q,\qquad D=\gamma P_r,\qquad
+ p\perp q,\qquad \alpha+\beta+\gamma=0,
+ \tag{24.7}
+$$
+
+其中零特征值用任意正交射线补足；若 $D=0$，取 $\gamma=0$ 和任意 $r$。把这些射线分别嵌入记录零的 $000,010,100$ 尾块，置
+
+$$
+ v=\frac1{\sqrt3}\bigl(\iota_{000}p+\iota_{010}q+\iota_{100}r\bigr).
+ \tag{24.8}
+$$
+
+这是原 $55$ 维记录零载体中的单位向量。它的三个尾质量都为 $1/3$，且前两条 $21$ 维射线正交，故 $\delta(v)=1$。III (139.7)、(144.9) 以及 §§15、20 已给出的原 $0,\ldots,8$ 正向前缀闭像，给出有限原生前缀 $a_n$，使其 ready 射线 $u_{a_n}$ 射影收敛于 $v$。尾投影、尾质量和两条 $21$ 射线的内积连续，故充分大的 $n$ 满足 (24.1)。这一步只选取实际有限前缀，未加入连续控制或新的准备。
+
+令 $(c_{000},c_{010},c_{100})=(\alpha,\beta,\gamma)$，取固定 $\lambda>0$，使
+$\lambda\max_s|c_s|/2\le1/12$。于是极限尾质量满足统一正裕量
+
+$$
+ \min_{\substack{s\in\{000,010,100\}\\ \epsilon\in\{-1,1\}}}
+ \left(\frac13+\epsilon\frac{\lambda}{2}c_s\right)\ge\frac14 .
+ \tag{24.9}
+$$
+
+这里的 $1/3$ 只指目标 $v$ 的尾质量。由 $t_s(u_{a_n})\to1/3$，充分大的 $n$ 同时满足
+$|t_s(u_{a_n})-1/3|<1/12$，所以实际有限前缀上的每个
+$t_s(u_{a_n})\pm\lambda c_s/2>1/6$。令 $d_n=\lambda(\alpha,\beta,\gamma)$，坐标次序为 $(000,010,100)$。由 $\sum_sc_s=0$，有 $d_n\in D_{u_{a_n}}$，且两个面内点 $t(u_{a_n})\pm d_n/2$ 均为正、总和为一，故都在同一实际源的 $\mathcal F_{u_{a_n}}$ 内。这些是数学可行的面内点，不宣称它们作为实际后验字段已被供应。并且
+
+$$
+ \Gamma_{a_n}(d_n)\longrightarrow\lambda(B,D).
+ \tag{24.10}
+$$
+
+归一化 (24.10) 即得 $\widehat{\Gamma}_{a_n}(d_n)\to(B,D)$。因此 $\mathcal C_1$ 也包含于左侧闭包，证明 (24.5)。∎
+
+## 25. 八十一字的源一致稳定菜单
+
+对任意有限原生字集 $H\subset\mathsf W$（允许 $H=\varnothing$），记
+
+$$
+ n_{u,H}(d)=\max\left(\{0\}\cup
+ \left\{\left|\operatorname{Tr}(B_dX_h)+\operatorname{Tr}(D_dY_h)\right|:h\in H\right\}\right).
+ \tag{25.1}
+$$
+
+因此 $n_{u,\varnothing}(d)=0$；非空时仍是通常的有限最大值。沿用定义 18.1 及 (18.4) 的 $N_u(d)$。定义源一致稳定菜单数
+
+$$
+ m_{\rm stable}=\min\left\{|H|:H\subset\mathsf W\text{ 有限},\ \exists\kappa_H>0,\quad
+ \kappa_HN_u(d)\le n_{u,H}(d)\le N_u(d)\right\},
+ \tag{25.2}
+$$
+
+其中量词覆盖两个记录的每个实际纯源面及其全部 $d\in D_u$；相同菜单只作同一固定源面内的比较，不提供未知源的解码器。
+
+**引理 25.1（一个标量足以消去 $13$ 维秩一块）。** 令 $\mathcal G_8$ 为 $\operatorname{Herm}_{21}$ 中的秩八正交投影流形，令
+
+$$
+ \mathcal S=\{(B,z):B=B^*,\ \operatorname{rank}B\le2,\ \|B\|_F^2+z^2=1\}.
+ \tag{25.3}
+$$
+
+存在 $P_1,\ldots,P_{81}\in\mathcal G_8$ 和 $\alpha>0$，使
+
+$$
+ \min_{(B,z)\in\mathcal S}\max_{1\le j\le81}\left|\operatorname{Tr}(BP_j)+z\right|=\alpha>0 .
+ \tag{25.4}
+$$
+
+**证明。** 秩至多二的 Hermitian 锥的实维数为 $2\cdot21\cdot2-2^2=80$，故 $\mathcal S$ 的实半代数维数至多为 $80$。$\mathcal G_8$ 是复 Grassmann 流形，维数为 $2\cdot8(21-8)=208$，且连通。对非零 $(B,z)\in\mathcal S$，函数
+
+$$
+ P\longmapsto\operatorname{Tr}(BP)+z
+ \tag{25.5}
+$$
+
+不可能在 $\mathcal G_8$ 上恒为零：若 $\operatorname{Tr}(BP)$ 在所有秩八投影上恒定，则交换投影中一个一维方向的标准论证给 $B=\mu I_{21}$；秩约束迫使 $\mu=0$，随后常数项也给 $z=0$，与 (25.3) 矛盾。因此每个单方程零集的半代数维数至多为 $207$。其 $81$ 重 incidence 集的维数至多为
+
+$$
+ 80+81\cdot207=16847<16848=81\cdot208 .
+ \tag{25.6}
+$$
+
+投影到 $\mathcal G_8^{81}$ 后仍是闭半代数集，且由 (25.6) 没有内点。取其补集中的投影组 $(P_1,\ldots,P_{81})$，紧性给出 (25.4) 的正最小值 $\alpha$。秩层维数和半代数 incidence 的这一步使用 Kech–Wolf [KW] 的秩簇与紧归一化方法；这里的投影流形仍是本源的数学闭包。∎
+
+**定理 25.2（至多八十一字的源一致正敏感性）。** 存在一个原生事件 $A$ 的有限字集 $H\subset\mathsf W$，满足 $|H|\le81$，以及一个只依赖固定原生矩阵和事件的 $\kappa_H>0$，使
+
+$$
+ \kappa_HN_u(d)\le n_{u,H}(d)\le N_u(d)
+ \tag{25.7}
+$$
+
+对 (25.2) 的全部记录、实际纯源面和方向成立。
+
+**证明。** 固定一个秩五投影 $Y_0$ 于 $\operatorname{Herm}_{13}$ 的未来轨道。引理 25.1 给出 $P_1,\ldots,P_{81}$。由 (24.4)，任一方向 $C=(B,D)$ 满足 $\operatorname{rank}B\le2$、$\operatorname{rank}D\le1$ 和 $\operatorname{Tr}D=-\operatorname{Tr}B$。故置
+
+$$
+ N(C)=\frac{\|B\|_1+\|D\|_1}{2}
+       =\frac{\|B\|_1+|\operatorname{Tr}B|}{2},
+ \qquad N(C)\le\sqrt2\,\|B\|_F.
+ \tag{25.8}
+$$
+
+置 $z=\operatorname{Tr}(DY_0)$。若 $C\ne0$，则
+
+$$
+ \bigl(\|B\|_F^2+z^2\bigr)^{1/2}\ge\|B\|_F\ge\frac{N(C)}{\sqrt2}.
+ \tag{25.9}
+$$
+
+将 $(B,z)$ 归一化并应用 (25.4)，得到
+
+$$
+ \max_j|\operatorname{Tr}(BP_j)+\operatorname{Tr}(DY_0)|\ge\frac{\alpha}{\sqrt2}N(C).
+ \tag{25.10}
+$$
+
+III (151.3) 给原七地址未来字在 $PU(21)\times PU(13)$ 上的联合稠密性。因此可分别选择原生字 $h_j$，使
+
+$$
+ \|X_{h_j}-P_j\|<\varepsilon,
+ \qquad \|Y_{h_j}-Y_0\|<\varepsilon .
+ \tag{25.11}
+$$
+
+取 $\varepsilon<\alpha/(4\sqrt2)$。由迹范数对偶和 (25.8)，每个 $j$ 的替换误差不超过
+
+$$
+ \varepsilon(\|B\|_1+\|D\|_1)=2\varepsilon N(C).
+ \tag{25.12}
+$$
+
+所以
+
+$$
+ n_{u,H}(d)\ge\frac{\alpha}{2\sqrt2}N_u(d)
+ \quad\text{当 }N_u(d)>0,
+ \tag{25.13}
+$$
+
+零方向两侧都为零。上界是 §18.2 的定义性上界 $n_{u,H}\le N_u$。取 $\kappa_H=\alpha/(2\sqrt2)$ 即得 (25.7)。记录一的方向是同一锥的子类；记录零的重合射线、零尾和商方向若 $N=0$ 仍满足平凡等式。这个菜单只使用原七地址和原事件 $A$，没有把闭包投影当成新的仪器。∎
+
+**定理 25.3（固定菜单的精确闭包判据与最佳统一系数）。** 固定任意有限 $H\subset\mathsf W$，允许空菜单。记
+
+$$
+\begin{aligned}
+ \mathcal C&=\{rC:r\ge0,\ C\in\mathcal C_1\},\\
+ F_H(B,D)&=\bigl(\operatorname{Tr}(BX_h)+\operatorname{Tr}(DY_h)\bigr)_{h\in H},\\
+ \mathfrak n_H(C)&=\max\bigl(\{0\}\cup\{|F_H(C)_h|:h\in H\}\bigr),\\
+ q_H(C)&=\frac{\mathfrak n_H(C)}{N(C)}\qquad(C\in\mathcal C\setminus\{0\}),
+ \quad N(B,D)=\frac{\|B\|_1+\|D\|_1}{2}.
+\end{aligned}
+\tag{25.14}
+$$
+
+这里 $\mathcal C$ 恰是 (24.4) 去掉单位 Frobenius 范数限制后的低秩迹零锥；$F_H$ 是环境实向量空间上的线性映射。则
+
+$$
+\begin{aligned}
+ \kappa_H^*
+ &:=
+ \inf_{\substack{u\text{ 为 (25.2) 的实际纯源}\\ d\in D_u,\ N_u(d)>0}}
+       \frac{n_{u,H}(d)}{N_u(d)}\\
+ &=\inf_{\substack{a\in\mathsf A_{\rm reg}\\ d\in D_{u_a},\ N_{u_a}(d)>0}}
+       \frac{n_{u_a,H}(d)}{N_{u_a}(d)}
+ =\min_{C\in\mathcal C_1}q_H(C).
+\end{aligned}
+\tag{25.15}
+$$
+
+这个最小值是全部实际纯源面上可取的最大非负统一下界系数。特别地，
+
+$$
+\begin{aligned}
+ &\exists\kappa>0\ \ \forall u\text{ 如 (25.2)},\ \forall d\in D_u,\quad
+       \kappa N_u(d)\le n_{u,H}(d)\le N_u(d)\\
+ &\quad\Longleftrightarrow\quad \kappa_H^*>0
+ \quad\Longleftrightarrow\quad \mathcal C_1\cap\ker F_H=\varnothing
+ \quad\Longleftrightarrow\quad \mathcal C\cap\ker F_H=\{0\}.
+\end{aligned}
+\tag{25.16}
+$$
+
+**证明。** Hermitian 秩上界由各阶子式的消失给出闭条件，故 $\mathcal C_1$ 是有限维实向量空间中单位球面的闭子集，因而紧。它非空，例如对正交单位向量 $p,q$ 归一化 $(P_p-P_q,0)$ 即得其中一点。在 $\mathcal C_1$ 上，
+$N(C)\ge(\|B\|_F^2+\|D\|_F^2)^{1/2}/2=1/2$。有限菜单的 $\mathfrak n_H$ 连续，故 $q_H$ 连续并取得最小值，记为 $\mu_H$。这是 [KW] Lemma IV.1 的紧闭归一化方向集方法在本源锥上的应用；实际源与这个方向集的对应由定理 24.1 提供。
+
+对任一实际纯源的 $d\in D_u$，(18.2) 的合并方向 $C_d=(B_d,D_d)$ 满足 $\mathcal C$ 的秩和迹条件，包括记录一、零尾及重合射线情形。(18.4) 给 $N_u(d)=N(C_d)$，而 (25.1) 给 $n_{u,H}(d)=\mathfrak n_H(C_d)$。当 $N_u(d)>0$ 时，$C_d\ne0$，其 Frobenius 归一化 $\widehat C_d$ 属于 $\mathcal C_1$；分子与分母的同次齐性给
+
+$$
+ \frac{n_{u,H}(d)}{N_u(d)}=q_H(\widehat C_d)\ge\mu_H.
+$$
+
+所以 (25.15) 的两个下确界都不小于 $\mu_H$。反之，取使 $q_H(C_*)=\mu_H$ 的 $C_*\in\mathcal C_1$。由 (24.5)，有正则实际前缀及非零合并方向，使
+$\widehat{\Gamma}_{a_n}(d_n)\to C_*$。连续性给相应实际比值趋于 $\mu_H$，故正则来源上的下确界不大于 $\mu_H$。正则记录零来源又属于 (25.2) 的实际纯源类，所以全部来源上的下确界不大于正则来源的下确界，证明三个量相等。定理 24.1 中的固定缩放与正裕量还保证这些逼近方向可选为同一有限前缀面内的可行点差；对任意固定实际面上的其它方向，也可围绕其正占据权重作足够小的同次缩放。因此这里的比值下确界同时适用于面内点差，而非仅为不可实现的线性延伸方向。
+
+若 $N_u(d)=0$，则由 (18.4) 有 $C_d=0$，所以 $n_{u,H}(d)=0$；若 $N_u(d)>0$，刚证的最小值给
+$\mu_HN_u(d)\le n_{u,H}(d)$。上界 $n_{u,H}\le N_u$ 对任意有限菜单由 (18.1) 成立。因此 $\mu_H$ 本身是可取的非负统一下界系数；任意这样的系数又不大于 (25.15) 的下确界，证明其最优性。
+
+因 $N$ 在 $\mathcal C_1$ 上为正，$\mu_H=0$ 当且仅当某个 $C\in\mathcal C_1$ 满足 $\mathfrak n_H(C)=0$，也就是 $F_H(C)=0$。任一非零锥方向可归一化到 $\mathcal C_1$，故这又等价于 $\mathcal C\cap\ker F_H\ne\{0\}$。结合最优系数结论，得到 (25.16)。空菜单时 $F_H$ 取值于零维空间，$\mathfrak n_H$ 恒为零，故 $\kappa_H^*=0$，也满足全部等价式。∎
+
+这里的稳定单射性是在每个固定源面内，以完整 $A$ 预测等价为商后比较任意两点，并对所有实际源使用同一个正系数。只在可数可达源方向上没有额外零点，并不排除其闭包中出现核方向；(25.15) 精确说明后者如何使实际源上的比值下确界为零。源面、共同切口及数学后验与实际字段的区别仍按定义 18.1 保留。
+
+## 26. 七十八字以下的正则原生不稳定性
+
+**定理 26.1（七十八字菜单的实际正则序列障碍）。** 对每个固定原生字集 $H\subset\mathsf W$ 且 $|H|\le78$，存在实际前缀 $a_n\in\{0,\ldots,8\}^{<\infty}$、记录零源 $u_n=u_{a_n}$ 和 $d_n\in D_{u_n}$，使
+
+$$
+\begin{gathered}
+ m_0(a_n)=t_0(a_n)=1,\qquad
+ t_{000}(u_n),t_{010}(u_n),t_{100}(u_n)\longrightarrow\frac13,\qquad
+ \delta_{u_n}\longrightarrow1,\\
+ K_{u_n}=\{0\},\qquad
+ N_{u_n}(d_n)\longrightarrow N_*>0,\qquad
+ \frac{n_{u_n,H}(d_n)}{N_{u_n}(d_n)}\longrightarrow0 .
+ \tag{26.1}
+\end{gathered}
+$$
+
+特别地，任何至多七十八字的固定菜单都没有 (25.7) 所需的正源一致系数；这是一列实际 ready 前缀上的稳定性失败，不是可数原生轨道上的精确碰撞。
+
+**证明。** 固定一个单位 $13$ 维射线 $r$，写 $P_r=|r\rangle\langle r|$，并对 $h\in H$ 置
+
+$$
+ A_h=X_h-\operatorname{Tr}(P_rY_h)I_{21}.
+ \tag{26.2}
+$$
+
+先设 $H\ne\varnothing$。Wang–Xu [WX] 的复广义相位恢复定义和 Theorem 5.2 对任意 Hermitian 测量矩阵都适用。由于
+
+$$
+ \alpha(20)=2,\qquad \epsilon_\alpha=1,\qquad
+ m_{\mathbb C}(21)\ge4\cdot21-2-2\cdot2+1=79,
+ \tag{26.3}
+$$
+
+至多七十八个 $A_h$ 不具有相位恢复性质。于是存在不相差单位相位的 $x,y\in\mathbb C^{21}$，使 $x^*A_hx=y^*A_hy$ 对每个 $h\in H$ 成立。令
+
+$$
+ B=xx^*-yy^*,\qquad c=-\operatorname{Tr}B,\qquad D=cP_r .
+ \tag{26.4}
+$$
+
+则 $B\ne0$、$\operatorname{rank}B\le2$、$\operatorname{rank}D\le1$、
+$\operatorname{Tr}B+\operatorname{Tr}D=0$，并且
+
+$$
+ \operatorname{Tr}(BX_h)+\operatorname{Tr}(DY_h)
+ =\operatorname{Tr}(B A_h)=0\qquad(h\in H).
+ \tag{26.5}
+$$
+
+若 $H=\varnothing$，则直接取任意正交单位向量 $p,q\in\mathbb C^{21}$，令 $B=P_p-P_q$、$c=0$、$D=0$；这同样给出非零锥方向并满足 (26.5)，无需使用相位恢复下界。
+
+以下同时处理两种菜单。取 $B=\alpha P_p+\beta P_q$ 的正交谱分解，零特征值仍用正交 $q$ 补足；若 $D=0$，令 $c=0$ 并保留任意 $r$。定理 24.1 的反向构造，以
+
+$$
+ v_* =\frac1{\sqrt3}\bigl(\iota_{000}p+\iota_{010}q+\iota_{100}r\bigr)
+ \tag{26.6}
+$$
+
+为目标，给出实际正向前缀 $a_n$，其三个尾质量趋于 $1/3$、$\delta_{u_n}\to1$，并最终满足 (24.1)。取固定足够小的 $\lambda>0$，置 $d_n=\lambda(\alpha,\beta,c)$。由 $\alpha+\beta+c=0$ 和正则尾质量，充分大的 $n$ 上两个面内点 $t(u_n)\pm d_n/2$ 都可行。由射线投影连续性，
+
+$$
+ \Gamma_{a_n}(d_n)\longrightarrow\lambda(B,D).
+ \tag{26.7}
+$$
+
+式 (26.5) 和固定菜单的有限性给
+
+$$
+ n_{u_n,H}(d_n)\longrightarrow0.
+ \tag{26.8}
+$$
+
+另一方面迹范数连续，且 $(B,D)\ne0$，所以
+
+$$
+ N_{u_n}(d_n)\longrightarrow
+ \lambda\frac{\|B\|_1+|c|}{2}=N_*>0 .
+ \tag{26.9}
+$$
+
+于是 (26.1) 成立。$\delta_{u_n}>0$ 与 (14.2) 给 $K_{u_n}=\{0\}$；每个有限 $n$ 的完整原菜单仍按其实际射线判定，证明没有调用任何精确碰撞。矩阵 $A_h$ 只是把未知 $13$ 维秩一块的迹吸收到标量中的证明装置，不是新增的测量字、控制或读出。∎
+
+**推论 26.2（稳定菜单数的窄区间）。** 由定理 25.2 和定理 26.1，
+
+$$
+ \boxed{79\le m_{\rm stable}\le81.}
+ \tag{26.10}
+$$
+
+这个区间不决定 $79,80,81$ 中的最小值。它也不把 §16.2 的源依赖至多两个字提升成固定源一致菜单；后者的量词不同。
+
+## 27. 文献对应、来源闭包与精度边界
+
+本增补的新增内容是 (24.5) 的实际正则原生源方向闭包、(25.15)–(25.16) 在此闭包上的固定菜单最佳系数与核判据、(25.7) 的八十一字源一致正敏感性和 (26.1) 的七十八字以下正则序列障碍。有限维迹范数、秩簇维数、Grassmann 流形维数及半代数 incidence 的一般事实属于既有数学；它们在这里的承重使用与本源矩阵、同步合并和实际前缀闭包绑定。
+
+| 来源 | 在本增补中的精确作用与条件 |
+| --- | --- |
+| [III] (139.7)、(144.8)–(144.9)、(151.3)；本卷 §§15、20 | 前缀 $0,\ldots,8$ 的记录零 $55$ 维射影密度、未来 $PU(21)\times PU(13)$ 联合密度、共同标量和逆字母的九次正向替换。只允许原生有限字；不引入连续目标门、独立制备或分别拼接两个块。 |
+| Wang–Xu，*Generalized Phase Retrieval: Measurement Number, Matrix Recovery and Beyond*，[arXiv:1605.08034v3][WX]，Definition 1.1、Theorem 5.2 | 其测量矩阵是任意 Hermitian 矩阵，复维数 $21$ 的下界按 (26.3) 为 $79$。本文先作 (26.2) 的标量平移，再把相位恢复失败转成合并锥方向；没有把该文的测量向量或相位恢复算法当作原生字。 |
+| Kech–Wolf，*Quantum tomography of semi-algebraic sets with constrained measurements*，[arXiv:1507.00903v2][KW]，Lemma II.1、Corollary II.2、Lemma IV.1、Theorem V.2 | 提供 Hermitian 秩簇的维数、归一化闭集合和半代数 incidence 的维数/稳定性框架。本文重新核对 $\operatorname{rank}\le2$ 的 $80$ 维、秩八 Grassmann 的 $208$ 维以及 (25.6)，并把投影轨道替换为本卷的原生闭包；没有借用其 POVM、随机测量或额外读出。 |
+| 本卷 §§13、18、19、21；`FiniteTraceDistance.lean`、`FiniteWordReachability.lean` | §§13、18 给同步 $21/21/13$ 合并、$N=(\|B\|_1+\|D\|_1)/2$ 和纯面秩约束；§21 的有限容限菜单仍保留。两个 Lean 供应者的声明只作为既有矩阵张成、迹范数和字长边界的来源阅读；本增补没有写入或声称新的 Lean 核验。 |
+
+定理 24.1 的闭包点是数学极限，不是实际可数轨道上的点；定理 26.1 的分母由 $N_{u_n}(d_n)\to N_*>0$ 保证，不把相对间隙趋零误写成精确原生碰撞。所有面值仍是数学后验权重；称为实际条件字段还需假设 151.5 的共同切口、可测性、占据支撑和重心条件。零尾与相同射线继续按 §§14、18、22 的商约定处理。
+
+八十一字菜单只证明一个正的、源独立的语义灵敏度 $\kappa_H$，没有给出字清单、最大字长、合成复杂度、执行精度、重复样本数或统计置信界。原 $609$ 字、长度 $\le608$ 的代数张成界继续只承担精确检测；它与 (25.7) 的稳定菜单是不同资源。这里没有增加准备、复制、复位、参考读出、样本 oracle、额外控制或 III §§158–163 的付费读者前件，也没有推出空间、时间、边界和记忆的全面互相恢复。
+
+[WX]: https://arxiv.org/html/1605.08034v3
+[KW]: https://arxiv.org/html/1507.00903v2
+
+## 追加锚（本行以下为增补区）
+
+## 28. 原始配置密度在旧终端与保留记录上的精确核
+
+本节至 §33 研究 [III] §§164–166 的原 $89$ 维配置密度与字面保留记录切口。§28 给出旧终端、分别边缘和同源联合读出的不同核；§29 定位修正的最小坐标阶数及实际有限前缀上的正性；§30 比较读取前后的条件密度；§31 给出仅对紧接旧终端充分的关系边界；§32 证明实际前缀上的连续纯后射线响应障碍。不改判既有条目。[III] 的静态密度反例仍在其原范围内成立；本卷 §§12–27 的共同切口、全正线性表示及纯源中心权重类不是这里的配置律前提。
+
+**定义 28.1（固定密度及三种观察）。** 完整配置集严格取 [III] (157.1) 的九位独立集 $E$，$|E|=89$；固定外部位为 $b_{-1}b_0=10$、$b_{10}b_{11}b_{12}=010$。复用 [III] (164.2)、(164.10) 的
+
+$$
+O=\{1,3,5,7,9\},\qquad S=\{s:s\subseteq O\},\qquad
+c_q=\begin{cases}(-1)^{|q|},&q\in S,\\0,&q\notin S.\end{cases}
+\tag{28.1}
+$$
+
+固定 $0<\varepsilon<1$，分别令 $H=h$ 或 $H=h_{\rm sm}$，其中两个标量场分别是 [III] (164.10)、(165.1) 的原函数；以下每一结论分别对这两个选择成立。简记
+
+$$
+b_q(z)=\frac{|z_q|^2}{\|z\|^2},\qquad
+d(z)=\varepsilon H(z),\qquad
+\Pi_q(z)=b_q(z)+d(z)c_q\quad(z\ne0).
+\tag{28.2}
+$$
+
+这里引用已有密度，不再构造新密度。其来源已经证明 $H$ 连续、射线不变、非负，且 $H\le b_s$ 对每个 $s\in S$ 成立；$\Pi$ 满足归一化、节点条件及原全部十一地址分量方程。取 [III] 145.2(1) 的字面函数
+
+$$
+W(q)=(b_{-1},\ldots,b_8)(q)\in\Omega_{10},\qquad
+I(q)=b_9(q)\in\{0,1\},\qquad \Omega_{10}=\{0,1\}^{10}.
+\tag{28.3}
+$$
+
+在实有符号配置律 $\mathbb R^E$ 上比较线性映射 $W_*$、$(W_*,I_*)$ 和 $(W,I)_*$。中间一个只保存两份边缘，最后一个保存同一配置上的联合表；二者不是同一观察。全部 $1024$ 个旧标签保留，所有理想失败、拒绝、停止和泄漏告警坐标也保留且质量为零。这些固定零坐标不增加可变的有符号方向。
+
+**定理 28.2（原标签纤维与三个核）。** 对定义 28.1 的完整载体，
+
+$$
+\begin{aligned}
+\dim\ker W_*&=34,\\
+\dim\ker(W_*,I_*)&=33,\\
+\ker(W,I)_*&=\{0\}.
+\end{aligned}
+\tag{28.4}
+$$
+
+这些结论同样适用于归一化概率律的差，因为以上各核已包含于总质量零的超平面。特别地，$c$ 是前两个核中的非零方向，却不在第三个核中。
+
+**证明。** $W$ 除去两个固定首位后给出 $1,\ldots,8$ 上的合法独立集 $p$。这些 $p$ 共 $55$ 个；其中 $b_8=0$ 的 $34$ 个有两种合法延拓 $p,p\cup\{9\}$，$b_8=1$ 的 $21$ 个只有 $p$。计数可由路径独立集数递推 $F_n=F_{n-1}+F_{n-2}$、$F_0=1,F_1=2$ 得到；此处 $F_7=34,F_8=55$。因此 $89=2\cdot34+21$，另有 $969$ 个旧标签无配置，其质量为零。
+
+记 $\mathcal P_7$ 为 $\{1,\ldots,7\}$ 上的独立集，$e_q$ 为 $\mathbb R^E$ 的坐标基。每个 $W_*$ 核向量唯一写成
+
+$$
+u=\sum_{p\in\mathcal P_7}\lambda_p
+   (e_{p\cup\{9\}}-e_p).
+\tag{28.5}
+$$
+
+单点纤维上的坐标必须为零，双点纤维上两坐标相反，故这 $34$ 个方向独立且穷尽核。再要求 $I_*u=0$ 等价于 $\sum_p\lambda_p=0$；这是一个非零线性约束，得到维数 $33$。$W_*$ 已保留总质量，故这不是另加的归一化维数扣减。相反，$(W,I)$ 给出所有九个内部位，在 $E$ 上单射；每个非零联合单元恰含一个配置，故联合推前的核为零。于是三个映射的秩分别为 $55,56,89$，与 (28.4) 一致。
+
+在 $S$ 中按是否含 $9$ 配对，$c_{p\cup\{9\}}=-c_p$，故 $W_*c=0$。固定 $I=i$ 后，对 $\{1,3,5,7\}$ 的一个未固定奇位翻转仍使符号相反，所以 $I_*c=0$。$c_\varnothing=1$ 则排除联合核。∎
+
+这个计算使用本源的实际固定边界和字面标签，而非任意两变量的抽象核结论。已有 `JointReadoutSupremum.pair_readout_kernel` 说明同一对象的配对读数具有两个等值关系之交，`pair_readout_least_common_refinement` 给其因子分解性质；它们不把“两份边缘律”提升成“同源联合律”，也不自动给出 (28.4) 的有符号律维数。
+
+## 29. 五奇位修正的检测阶数与有限原生正性
+
+**定理 29.1（最小坐标阶数）。** 对任意 $z\ne0$，$\Pi(z)$ 与 $b(z)$ 在任何未包含全部 $O$ 的坐标子集上具有相同边缘。若 $d(z)>0$，它们在五个奇位 $O$ 的联合边缘上不同；最小的检测坐标数恰为五。具体地，对任意 $s\subseteq O$，
+
+$$
+\bigl(\Pi(z)-b(z)\bigr)
+ \{q:q\cap O=s\}=d(z)(-1)^{|s|}.
+\tag{29.1}
+$$
+
+全配置律和五奇位边缘的总变差距离均为 $16d(z)$，而 $W$ 边缘、$I$ 边缘及 $(\mathbf1_A,I)$ 联合边缘的距离均为零，其中仍取原 $A=\{b_1=1\}$。坐标事件只在这里表示数学集合；没有为原程序增加同时读取五个奇位的读口。
+
+**证明。** 修正只支撑于 $S$，其全部偶位为零。若观察子集遗漏 $j\in O$，映射 $s\mapsto s\mathbin{\triangle}\{j\}$ 在 $S$ 上保持所观察的每个坐标，并使 $c_s$ 变号；逐纤维相消。若某个被指定的偶位为一，该纤维根本不交修正支撑。固定全部奇位则只剩一个可能有修正的配置 $s$，给 (29.1)。于是低于五阶的每一坐标边缘都相同，五阶已有非零差。$32$ 个奇位模式各有绝对差 $d$，所以按 $\operatorname{TV}(\mu,\nu)=\frac12\sum|\mu-\nu|$ 得 $16d$；全配置同理。$A$ 加 $I$ 只使用奇位 $1,9$，仍遗漏三个奇位。其两值报告及任意后处理均相同。∎
+
+这正是已有 `ParityConditionedMoments.parity_conditioned_moments` 与 `parity_conditioned_probability_form` 的 proper-marginal／full-parity 区分在 $S\cong\{0,1\}^5$ 上的对应。供应者以 $\operatorname{paritySign}(0)=-1,\operatorname{paritySign}(1)=1$ 记号书写；五维时其全乘积与这里的 $(-1)^{|s|}$ 差一个整体负号，不影响相消。它们没有给本源的 $H$、原生控制、配置过程或条件档案律；这里不从奇偶边缘相同推出时间序列相同。
+
+**定理 29.2（两个原修正共有的有限 ready 见证）。** 存在同一个有限原十一地址字 $a\in\mathsf W_{11}$，使
+
+$$
+h(\chi_a)>0,\qquad h_{\rm sm}(\chi_a)>0.
+\tag{29.2}
+$$
+
+因此对任意固定 $\varepsilon>0$，两个原密度各自在这个实际有限前缀射线上有严格正的配置级及同源联合级差异。该结论只断言原射线轨道中存在见证，不断言已构造非 Born 物理前律。
+
+**证明。** 复用 [III] (164.17) 的同一个单位向量 $z_*$。其全 $89$ 个坐标非零，且来源分别给出
+
+$$
+h(z_*)=\frac{x^8}{32}>0,\qquad
+h_{\rm sm}(z_*)=\frac12\exp\!\left[
+ -\sum_{s\in S}\left(\frac{32}{x^{2m_s}}\right)^2\right]>0,
+\qquad t_0(z_*)=t_1(z_*)=\frac12.
+\tag{29.3}
+$$
+
+最后一个等式是因为 $z_*$ 在 $32$ 个正交奇位扇区上质量各为 $1/32$，两个记录值各含 $16$ 个扇区。两个 $H$ 都连续且射线不变，故它们的正值集相交为包含 $[z_*]$ 的非空射影开集。[III] (144.12) 已供应
+
+$$
+\overline{\{[\chi_a]:a\in\mathsf W_{11}\}}
+ =\mathbb P(\mathcal K).
+\tag{29.4}
+$$
+
+原 ready 的有限字射线必与该开集相交，给同一个 $a$ 的 (29.2)。所用桥为整个 $89$ 维原十一地址轨道，不是 $55$ 维记录零子轨道，也没有使用 §§12–27 的后验面前件或新增读器。∎
+
+正性还保证每个 $s\in S$ 的坐标非零及两个 $t_i>0$，因为 $0<H\le b_s$。这里没有列出该字 $a$、精确制备 $z_*$、给出字长界、可靠执行界、重复次数或概率估计方法。闭包提供存在性，不提供这些取得与认证费用。
+
+## 30. 字面保留配置切口的条件兼容性
+
+**定义 30.1（单个真实读取切口的条件问题）。** 固定定义 28.1 的一个 $\Pi$。只在一个给定切口，条件式地假设读取前已有 [III] (157.24)：给定实际可读过去 $\mathcal G_-$，当前非零向量为 $z$，且配置条件律为 $\Pi(z)$。读取严格使用 [III] 145.2(1)：
+
+$$
+I=b_9(Q_-),\qquad Q_+=Q_-,\qquad
+\phi_i(z)=\frac{M_i z}{\|M_i z\|}\quad(t_i(z)>0),\qquad
+ t_i(z)=\frac{\|M_i z\|^2}{\|z\|^2}.
+\tag{30.1}
+$$
+
+比较的后切口恰在记录已保留、尚无后续调用之处；取 $\mathcal G_+=\mathcal G_-\vee\sigma(I)$。这是原 $\mathsf R(a,\epsilon)$ 的空未来，不增加配置监测。若同阶段另发满足 [III] (145.4) 的条件独立细档案，给定已有记录后它不再细分配置条件律，以下结论保持。若档案还揭示隐藏配置，则不在本定义内。
+
+**定理 30.2（读取前后都套用 (157.24) 的充要条件）。** 在定义 30.1 的切口，读取的实际条件质量被迫为 $t_i(z)$。对每个正质量分支，保留同一配置所迫的后条件配置律是
+
+$$
+\widehat\Pi_{i,q}(z)
+ =\frac{\mathbf1_{b_9(q)=i}}{t_i(z)}
+       \bigl(b_q(z)+d(z)c_q\bigr).
+\tag{30.2}
+$$
+
+它与在投影纯向量上再次使用同一密度场的 $\Pi_q(\phi_i(z))$ 相等，当且仅当 $d(z)=0$。同一个充要条件对紧接旧完整终端行成立。若 $d(z)>0$，两个分支都正且都不相等。
+
+**证明。** 定理 28.2 已给 $\sum_{q:b_9(q)=i}c_q=0$，所以条件记录质量为 $\sum_{E_i}\Pi_q(z)=t_i(z)$，此处记 $E_i=\{q:b_9(q)=i\}$。字面报告和 $Q_+=Q_-$ 强制普通有限条件化，得 (30.2)，没有自由选择后配置核的余量。
+
+$\phi_i$ 在另一个记录扇区的每个坐标均为零。那个扇区含有 $S$ 的元素，故来源的节点上界 $H\le b_s$ 给
+
+$$
+H(\phi_i(z))=0,\qquad
+\Pi_q(\phi_i(z))=b_q(\phi_i(z))
+ =\frac{\mathbf1_{E_i}(q)b_q(z)}{t_i(z)}.
+\tag{30.3}
+$$
+
+两律之差为 $d(z)c_q/t_i(z)$ 在 $E_i$ 上的限制。该限制不为零，故相等恰等价于 $d(z)=0$。$W$ 在每个固定 $E_i$ 上单射，所以推前到紧接旧终端后仍是同一个充要条件。若 $d>0$，$H\le b_s$ 又给两个记录扇区都正。若 $t_i=0$，则 $H=d=0$，该分支不作除法也不定义条件行。∎
+
+**命题 30.3（字面旧标签、四阶残余及精确距离）。** 对正质量分支定义完整旧终端行
+
+$$
+\begin{aligned}
+K_i(z;w)&=\sum_{q\in E_i:W(q)=w}\widehat\Pi_{i,q}(z),\\
+B_i(z;w)&=\|N_w\phi_i(z)\|^2,\\
+C_i(w)&=\sum_{q\in E_i:W(q)=w}c_q,\qquad
+\gamma_i(z)=\frac{d(z)}{t_i(z)}.
+\end{aligned}
+\tag{30.4}
+$$
+
+则全部 $1024$ 标签上有
+
+$$
+K_i(z;w)=B_i(z;w)+\gamma_i(z)C_i(w).
+\tag{30.5}
+$$
+
+$C_i$ 恰有 $16$ 个非零单元，八个为 $+1$、八个为 $-1$。取字面标签
+
+$$
+w_0=(1,0,0,0,0,0,0,0,0,0),\qquad
+q_0=\varnothing,\quad q_1=\{9\},
+\tag{30.6}
+$$
+
+其两个合法延拓正是 $q_0,q_1$，因而
+
+$$
+K_i(z;w_0)-B_i(z;w_0)=(-1)^i\frac{d(z)}{t_i(z)},\qquad
+\operatorname{TV}(K_i(z),B_i(z))=\frac{8d(z)}{t_i(z)}.
+\tag{30.7}
+$$
+
+同一距离也等于两种后条件配置律的距离。若 $d>0$，给定记录后最小检测阶数恰为四个剩余奇位 $O'=\{1,3,5,7\}$；任何少于四个剩余坐标的边缘仍相同，原事件 $A$ 仍不可检测。将记录质量保留在联合表中，则
+
+$$
+\begin{aligned}
+J(z;i,w)&=t_i(z)K_i(z;w),\\
+J^{\rm proj}(z;i,w)&=t_i(z)B_i(z;w),\\
+\operatorname{TV}(J(z),J^{\rm proj}(z))&=16d(z).
+\end{aligned}
+\tag{30.8}
+$$
+
+零质量行在这两张表中取零。两表的 $W$ 边缘和 $I$ 边缘分别相同。
+
+**证明。** $W$ 在 $E_i$ 上单射，将 (30.2) 推前即得 (30.5)。$S\cap E_i$ 有 $16$ 点，逐点符号为 $(-1)^{i+|s\cap O'|}$，恰有八正八负；(30.6) 上的唯一配置为 $q_i$。于是半个绝对值和为 $8\gamma_i$，且没有在 $W$ 推前时抵消。给定 $I=i$ 后，在任一未固定的剩余奇位翻转给相消，而固定全部 $O'$ 的纤维有修正 $(-1)^{i+|s\cap O'|}\gamma_i$；这是定理 29.1 的同一个逐纤维论证，证明四阶最小性。特别 $A$ 只固定 $b_1$，仍遗漏三个剩余奇位。
+
+最后 $J-J^{\rm proj}$ 是 $d(z)c$ 经单射 $(W,I)$ 的推前，故距离为 $16d$。也可在 $d>0$ 时逐行求和：$\sum_i t_i(8d/t_i)=16d$。$W$ 的纤维将两个记录符号相消，$I$ 的纤维将剩余奇位符号相消，故两份边缘均相等。∎
+
+这里的 $J$ 是“读取前条件律加字面保留规则”强迫的一切口联合表，$J^{\rm proj}$ 是再要求投影后同名密度场时的比较表；二者不是已构造的两个完整程序过程。即使无读取快照的 $W$ 律、记录快照的 $I$ 律和两个表的无条件旧终端律全都相同，保留记录的紧接终端联合律仍可有 (30.8) 的差。定理 29.2 给出一个实际有限前缀射线，使这两个条件要求在原读口不能同时成立；它没有先行赋予该前缀一条实际非 Born 前律。
+
+## 31. 紧接旧终端所需的精确关系边界
+
+**定义 31.1（数学切口族与相对充分性）。** 固定一个 $H$ 和 $\varepsilon$。仅对正记录分支，定义完整数学切口族
+
+$$
+\mathcal D=\{(i,[z]):i\in\{0,1\},\ t_i(z)>0\},\qquad
+\beta(i,[z])=(i,[M_i z]).
+\tag{31.1}
+$$
+
+每个元素只承载 (30.2) 的一切口条件赋值，不宣称其全部元素可精确制备。任务是预测空未来的完整旧终端行 $K(i,[z])=K_i(z)$。统计量 $T$ 对此任务充分，指 $K$ 经 $T$ 因子分解；若要求保留已有记录与后射线，则比较 $(\beta,T)$。这是函数分解意义的精确充分性，没有概率采样、熵或有限位数的定义。
+
+**定理 31.2（一个修正系数的充分性与相对最小性）。** 在 $\mathcal D$ 上，
+
+$$
+\eta(i,[z])=(i,[M_i z],\gamma_i(z)),\qquad
+\gamma_i(z)=\frac{\varepsilon H(z)}{t_i(z)}
+\tag{31.2}
+$$
+
+决定每个紧接旧终端概率。反之，$\gamma_i$ 由 $\beta$ 和终端的一个字面单元恢复：
+
+$$
+\gamma_i(z)=(-1)^i
+  \left(K_i(z;w_0)-\|N_{w_0}\phi_i(z)\|^2\right).
+\tag{31.3}
+$$
+
+因此对任意统计量 $T$，若 $K$ 经 $(\beta,T)$ 因子分解，则 $\eta$ 也经 $(\beta,T)$ 因子分解；且 $(\beta,K)$ 与 $\eta$ 互相因子分解。相对已有 $\beta$，它们是最粗的充分边界。若不要求保留 $\beta$，内在最粗预测量就是行 $K$ 本身，不能把可能含多余相位信息的 $\eta$ 称为绝对最小状态。
+
+**证明。** $[M_i z]$ 决定全部 $B_i(w)$，$i$ 决定固定表 $C_i$；(30.5) 给充分性，(30.7) 给 (31.3)。若 $K=F(\beta,T)$，将 $F$ 的 $w_0$ 单元代入 (31.3)，就得到从 $(\beta,T)$ 到 $\gamma_i$ 的函数；连同已有 $\beta$ 即为到 $\eta$ 的因子。反向由 (30.5) 完成。一般地，任何精确预测器都必须细于其所预测的行 $K$，而 $K$ 预测自身，故无基础读数约束时它是最粗商。∎
+
+**命题 31.3（全数学切口族上的具体丢失关系）。** $\beta$ 在 $\mathcal D$ 上不足以预测紧接旧终端。对每个 $i$，取 (29.3) 的 $z_*$ 及其纯后向量 $p_i=\phi_i(z_*)$，则
+
+$$
+\beta(i,[z_*])=\beta(i,[p_i]),\qquad
+\gamma_i(z_*)=2\varepsilon H(z_*)>0,
+\qquad \gamma_i(p_i)=0,
+\tag{31.4}
+$$
+
+且这两个条件终端行的距离为 $16\varepsilon H(z_*)$。
+
+**证明。** $M_i p_i=p_i$，故两个后射线相同；$t_i(z_*)=1/2$，而 $t_i(p_i)=1$、$H(p_i)=0$。应用 (30.5)，两行的 Born 部分相同，修正系数差为 $2\varepsilon H(z_*)$。$\sum_w|C_i(w)|=16$，故 TV 为其八倍。∎
+
+这是同一 $89$ 维数学载体和同一个已有密度场上的精确纤维例子，没有增加来源或准备；它没有给出两个实际有限 native 字的精确同后射线碰撞。$\gamma_i$ 也不是已供应的物理寄存器、可取得概率或有限比特存储。若另行保留 $t_i$，保留 $d$ 与保留 $\gamma_i$ 等价；只保留后射线则已丢失这里需要的条件修正幅度。即使补回这个幅度，已有证明仍只覆盖紧接旧终端，不给出它在非空未来下的更新或闭合律。
+
+## 32. 实际有限原生前缀上的连续后射线响应障碍
+
+**定理 32.1（连续响应的正统一 TV 下界）。** 固定一个 $H\in\{h,h_{\rm sm}\}$、$0<\varepsilon<1$ 和记录 $i$。令
+
+$$
+\begin{aligned}
+\mathcal A_i&=\{a\in\mathsf W_{11}:t_i(\chi_a)>0\},\\
+\mathcal X_i&=\{[M_i\chi_a]:a\in\mathcal A_i\}
+       \subseteq\mathbb P(\mathcal K_i).
+\end{aligned}
+\tag{32.1}
+$$
+
+给 $\mathcal X_i$ 以射影空间的子空间拓扑，给 $\Delta(\Omega_{10})$ 以 TV 度量。对任意连续映射 $R_i:\mathcal X_i\to\Delta(\Omega_{10})$，定义
+
+$$
+E_i(R_i)=\sup_{a\in\mathcal A_i}
+ \operatorname{TV}\bigl(R_i([M_i\chi_a]),K_i(\chi_a)\bigr).
+\tag{32.2}
+$$
+
+这里 $R_i$ 可以依赖已保留的 $i$，但不再依赖读取前射线、字或其它历史。对每个实际 $a\in\mathcal A_i$ 且 $d(\chi_a)>0$，都有
+
+$$
+E_i(R_i)\ \ge\ \frac{4d(\chi_a)}{t_i(\chi_a)}.
+\tag{32.3}
+$$
+
+进一步，两个记录值各自都满足
+
+$$
+\boxed{E_i(R_i)\ge8\varepsilon H(z_*)>0.}
+\tag{32.4}
+$$
+
+所以即使只在实际有限前缀的可数后射线域上要求连续，后射线单独也不能精确再现全部被迫的条件终端行；不需要先证明两个实际字具有精确相同的后射线。
+
+**证明。** 在开集 $D_i=\{[z]:t_i(z)>0\}$ 上，投影射线映射 $[z]\mapsto[M_i z]$ 连续。可在单位向量的局部相位图中先用连续线性 $M_i$，再除以非零范数并取射线；该描述与相位无关。$t_i$、$d$ 连续，故 $\gamma_i=d/t_i$ 在 $D_i$ 连续，$K_i$ 由 (30.5) 连续。Born 行 $[\phi]\mapsto(\|N_w\phi\|^2)_w$ 也在 $\mathbb P(\mathcal K_i)$ 上连续；有限标签下逐坐标连续等价于 TV 连续。以上都没有把 $t_i=0$ 的边界加入除法域。
+
+固定实际 $a$，简记 $p=[\phi_i(\chi_a)]\in\mathcal X_i$，并以 $B(p)$ 表示它的 Born 旧终端行。由 (29.4) 和有限维复射影空间的可度量性，可以取一列实际有限原字 $a_n$，使
+
+$$
+[\chi_{a_n}]\longrightarrow p.
+\tag{32.5}
+$$
+
+由于 $t_i(p)=1$，最终 $a_n\in\mathcal A_i$，且
+
+$$
+\begin{aligned}
+[M_i\chi_{a_n}]&\longrightarrow p,\\
+t_i(\chi_{a_n})&\longrightarrow1,\qquad
+d(\chi_{a_n})\longrightarrow d(p)=0,\\
+K_i(\chi_{a_n})&\longrightarrow B(p).
+\end{aligned}
+\tag{32.6}
+$$
+
+$d(p)=0$ 使用来源的节点上界，而不是来自未知的过程演化。$p$ 本身已经是实际 $a$ 的后射线，所以它是 $R_i$ 定义域中的点；(32.6) 的后射线序列也在该域内。因此仅需 $R_i$ 在子空间域的 $p$ 处连续，便有 $R_i([M_i\chi_{a_n}])\to R_i(p)$。由 (32.2) 和 TV 的连续性取极限，得到
+
+$$
+\operatorname{TV}(R_i(p),B(p))\le E_i(R_i).
+\tag{32.7}
+$$
+
+同一实际字 $a$ 的误差又不超过 $E_i(R_i)$。三角不等式和 (30.7) 遂给
+
+$$
+\frac{8d(\chi_a)}{t_i(\chi_a)}
+ =\operatorname{TV}(K_i(\chi_a),B(p))
+ \le2E_i(R_i),
+\tag{32.8}
+$$
+
+这就是 (32.3)。证明允许序列后射线相等或不相等，没有把趋近改写成精确碰撞。
+
+最后再用 (29.4) 取实际前缀序列 $b_n$ 满足 $[\chi_{b_n}]\to[z_*]$。由 (29.3) 及连续性，最终两个记录质量都正、$H(\chi_{b_n})>0$，且
+
+$$
+\frac{4d(\chi_{b_n})}{t_i(\chi_{b_n})}
+ \longrightarrow8\varepsilon H(z_*).
+\tag{32.9}
+$$
+
+(32.3) 对每个这样的有限 $b_n$ 成立，同一个上确界 $E_i(R_i)$ 不能小于该极限，得 (32.4)。若取连续场 $h$，下界明确为 $\varepsilon x^8/4$；若取光滑场，其值为 (29.3) 正乘积的 $8\varepsilon$ 倍。后者虽极小仍严格正，不用浮点下溢后的零替代。∎
+
+这个下界针对“所有实际原生前缀上的统一误差”，不是单个给定有限套件的最佳误差，也不是相干噪声预算或采样误差。它已经允许各 $i$ 使用不同的连续响应，没有禁止在读取前保留更多关系。一个定义在可数实际后射线集合上的不连续解码器没有被本定理排除；其存在还须处理实际精确纤维中的相容性，本证明未提供那种精确碰撞或其不存在性。
+
+## 33. 保留记录边界的来源对应与适用范围
+
+本增补的 `repo-derived` 内容是把 [III] 的两种已给修正场接到字面旧标签纤维，得到 (28.4) 的三个精确核、(29.2) 的有限原射线见证、(30.7) 的条件旧单元偏差、(31.3) 的相对恢复边界及 (32.3)–(32.4) 的实际原生连续响应障碍。奇偶相消、条件概率、因子分解、投影连续性和 TV 三角不等式是既有数学工具，不作全球原创声明。这里的新增实质在同一个原来源和同一个记录切口上的对应与证明，不重复构造 [III] 的密度。
+
+| 来源 | 精确作用及不转移的前件 |
+| --- | --- |
+| [III] (144.12)、145.2(1)、157.6／(157.24)、§§164–166 | 全 $89$ 维十一地址 ready 射线密度、字面 $I=b_9(Q_-)$、$Q_+=Q_-$、归一投影纯更新及同一个 $H,c,z_*$。只消费已有矩阵密度桥，不从闭包取得精确制备；(157.24) 在 §30 是单切口条件前件，不是已由静态分量方程证明的过程律。 |
+| [ParityConditionedMoments.lean][RROParity28] 的 `parity_conditioned_moments`、`parity_conditioned_probability_form` | 正维二元立方体上两种均匀奇偶律的 proper moments／marginals 相同及 full-product 不同。本文明确给出 $S$ 的嵌入与符号对应；没有从供应者取得任何时间转移核。 |
+| [JointReadoutSupremum.lean][RROJoint28] 的 `pair_readout_kernel`、`pair_readout_least_common_refinement` | 同一对象的配对读数的等值关系和因子分解序。本文另算有符号律核及 $W,I$ 的具体合法纤维；分别边缘不含同源关联表。 |
+| [SelectiveRecordConditioning.lean][RROSelective28] 的 `selective_record_conditioning` | 前件同时要求非零 Born 分支权重和未归一分支压缩等式；仅有非零记录质量不供应后一条件，也不将配置条件律变成矩阵压缩。§30 直接按字面配置保留作条件化，不借此跳过前件。 |
+| [AllFutureStatisticsSufficiency.lean][RROFuture]；[V41][RROV4128] §§8–9；[V42][RROV4228] §11；本卷 §§12–27 | 前者要求已给 Heisenberg 线性演化和效果，后两卷处理质量归一化及已给未来操作的闭合。此前 $79\ldots81$ 字结果还要求纯源面及共同切口。它们不供应本密度族的路径过程或 $\gamma_i$ 的未来更新，故本增补不调用其全未来充分性。 |
+| Goldstein–Struyve，*On the Uniqueness of Quantum Equilibrium in Bohmian Mechanics*，[arXiv:0704.3070v1][RROGS28]，§§2–4，特别 (5)、(7)–(8) | 唯一性使用已给连续 Bohm 配置流及可微有限阶局部泛函，并非仅要求波函数域上的光滑。这里是有限配置的原分量方程，未供应那个流或局部有限 jet 前件；$h_{\rm sm}$ 的光滑性不触发其唯一性。 |
+| Lüders，*Concerning the state-change due to the measurement process*，[arXiv:quant-ph/0403007v2][RROLuders28]，原文 (3)、(7)–(8) | 原文把选择后的未归一压缩 $Z'_k=P_k ZP_k$ 明列为 state-change ansatz，其迹为结果质量。本文保留来源已经指定的纯投影更新，却另查实际配置的条件律；未从投影名义推出 (157.24)，也未从配置保留反推通用测量公理。 |
+| Shalizi–Crutchfield，*Computational Mechanics: Pattern and Prediction, Structure and Simplicity*，[arXiv:cond-mat/9907176v2][RROSC28]，§III.1、Definition 5、Theorem 2 | 其全未来因果态和熵最小性以已给离散值、离散时间平稳过程为域。这里仅按一个紧接终端行的精确函数分解定义最粗商，不移入平稳过程、全未来闭合或熵／比特最小性。 |
+
+以上 Lean 供应者均为已有源码陈述的阅读与参数对应，没有新的 Lean 文件、编译或内核核验。`ParityKernelSubcoordinates` 的 `subcoordinateLaw_eq` 另以指定 parity Markov 核及均匀初律定义整段路径质量，`LocalMarginalCorrelationBlindSpot` 的 `local_marginal_correlation_blind_spot` 另在给定二体张量矩阵上比较部分迹；这两套前件均未在本源取得，因而不用于推出任何时间独立性或新增张量接口。
+
+精确等式层仅包括本源的数学快照推前及给定读取前条件律后的强迫结果。原 $\mathsf R(a,\epsilon)$ 提供的保留记录与紧接旧终端顺序使 (30.7) 成为字面旧单元的条件差异；单独写下五奇位事件则仍只是数学事件，不自动增加可执行读出。真实取得该条件概率还需前律、正分支事件、实际样本、读出可靠性和估计误差的来源。全文没有从密度公式补出跳率、随机过程、重新抽样、复位、复制、控制或来源，也没有从两个分别可得的边缘拼出未供应的共同实现。
+
+原十一前读／七后读地址、全部标签与理想零失败合同保持其原义。§29、§32 的序列由已有精确矩阵密度桥给出；既无实际字清单、最大长度、带噪预算、样本数和置信保证，也不消除原初始化、调用、保留记录与旧终端费用。付费 $610$ 维读器的辅助 ready、种子、路径核和记录服务未移入原 $89$ 维配置密度问题。§§30–32 排除的是两个具体修正场与字面保留切口上所列条件要求的兼容性及连续后射线响应，不是一般 Born 唯一性；静态密度反例不因此失效，完整过程和长期互相恢复问题仍须分别补足。
+
+[RROParity28]: ../../../D5/S3/Analytic/ReflectedSpectrum/ParityConditionedMoments.lean
+[RROJoint28]: ../../../D5/S3/ObserverMemory/Refinement/JointReadoutSupremum.lean
+[RROSelective28]: ../../../D5/S3/Observer/Conditioning/SelectiveRecordConditioning.lean
+[RROV4128]: AURIC_NORMALIZATION_UNITS_OBSERVER_ORIGINS_AND_QUADRATIC_INVARIANTS_V41.md
+[RROV4228]: AURIC_F13_RELATIONAL_SEMANTICS_QUANTUM_THREE_AXES_AND_RECURSIVE_COMPATIBILITY_V42.md
+[RROGS28]: https://arxiv.org/html/0704.3070v1
+[RROLuders28]: https://arxiv.org/html/quant-ph/0403007v2
+[RROSC28]: https://arxiv.org/html/cond-mat/9907176v2
+
+## 追加锚（本行以下为增补区）
