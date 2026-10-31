@@ -59,9 +59,9 @@ internal sealed class KRegularInterleavingDocument : IScribeDocumentDefinition
                         + "e and c, including e=c=0 and m_0=0.")),
                     Paragraph(Text(
                         "Consequently the entire kernel span of each T_i is contained in its finitely "
-                        + "generated W_i and is finitely generated because the integers are Noetherian. "
-                        + "The full kernel of s lies in the finite sum of the kernel spans of the T_i, "
-                        + "which gives the conclusion by the same submodule argument. The construction "
+                        + "generated W_i. "
+                        + "The full kernel of s lies in the same finite sum of the W_i, "
+                        + "which is finitely generated. The integer span of K_k(s) is therefore finitely generated because the integers are Noetherian. The construction "
                         + "also includes a=1 and N_g=1. It concerns integer coefficients and supplies no "
                         + "general coefficient-ring theorem or finite-state transducer construction."))),
                 DescribeRole.Theorem))));

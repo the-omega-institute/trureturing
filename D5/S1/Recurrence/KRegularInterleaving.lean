@@ -115,9 +115,10 @@ private theorem masked_kernel_form (K a i c : ℕ) (f : ℕ → ℤ)
     have hn : (K * n + c) % a ≠ i := fun h => hs ⟨n, h⟩
     simp [zeroInsert, hn]
 
-private theorem zero_insert_regular (k a i : ℕ) (f : ℕ → ℤ)
+private theorem masked_kernel_envelope (k a i : ℕ) (f : ℕ → ℤ)
     (hk : 2 ≤ k) (ha : 1 ≤ a) (hf : IsKRegular k f) :
-    IsKRegular k (zeroInsert a i f) := by
+    ∃ W : Submodule ℤ (ℕ → ℤ), W.FG ∧
+      Submodule.span ℤ (kKernel k (zeroInsert a i f)) ≤ W := by
   classical
   let C := {g : ℕ // ∃ e : ℕ, Nat.gcd (k ^ e) a = g}
   have hfinite : {g : ℕ | ∃ e : ℕ, Nat.gcd (k ^ e) a = g}.Finite := by
@@ -147,7 +148,7 @@ private theorem zero_insert_regular (k a i : ℕ) (f : ℕ → ℤ)
     apply Submodule.fg_iSup
     intro r
     exact (is_k_regular_affine_subsequence k (u g) d.val f hk (hu g) hf).map _
-  apply hW.of_le
+  refine ⟨W, hW, ?_⟩
   apply Submodule.span_le.mpr
   rintro w ⟨e, c, hc, rfl⟩
   have hke : 0 < k ^ e := pow_pos (by omega) _
@@ -193,8 +194,10 @@ theorem is_k_regular_interleaving (k a : ℕ) (s : ℕ → ℤ)
   classical
   let f (i : Fin a) : ℕ → ℤ := fun n => s (a * n + i.val)
   let T (i : Fin a) : ℕ → ℤ := zeroInsert a i.val (f i)
-  have hT (i : Fin a) : IsKRegular k (T i) :=
-    zero_insert_regular k a i.val (f i) hk ha (hs i.val i.isLt)
+  have hT (i : Fin a) : ∃ W : Submodule ℤ (ℕ → ℤ), W.FG ∧
+      Submodule.span ℤ (kKernel k (T i)) ≤ W :=
+    masked_kernel_envelope k a i.val (f i) hk ha (hs i.val i.isLt)
+  choose W hW hTW using hT
   have hsum (n : ℕ) : (∑ i : Fin a, T i n) = s n := by
     let j : Fin a := ⟨n % a, Nat.mod_lt n (by omega)⟩
     rw [Finset.sum_eq_single j]
@@ -207,9 +210,9 @@ theorem is_k_regular_interleaving (k a : ℕ) (s : ℕ → ℤ)
         exact heq.symm
       simp [T, zeroInsert, hb]
     · simp
-  let W : Submodule ℤ (ℕ → ℤ) := ⨆ i : Fin a, Submodule.span ℤ (kKernel k (T i))
-  have hW : W.FG := Submodule.fg_iSup _ hT
-  apply hW.of_le
+  let V : Submodule ℤ (ℕ → ℤ) := ⨆ i : Fin a, W i
+  have hV : V.FG := Submodule.fg_iSup _ hW
+  apply hV.of_le
   apply Submodule.span_le.mpr
   rintro w ⟨e, c, hc, rfl⟩
   have heq : (fun n => s (k ^ e * n + c)) =
@@ -220,6 +223,6 @@ theorem is_k_regular_interleaving (k a : ℕ) (s : ℕ → ℤ)
   apply Submodule.sum_mem
   intro i _
   apply Submodule.mem_iSup_of_mem i
-  exact Submodule.subset_span ⟨e, c, hc, rfl⟩
+  exact hTW i (Submodule.subset_span ⟨e, c, hc, rfl⟩)
 
 end D5.S1.Recurrence.KRegularInterleaving
