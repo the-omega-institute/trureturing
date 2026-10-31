@@ -77,6 +77,9 @@ private def rotationLabelsAux {m : ℕ} : List (gate m) → (Fin m → basis m) 
 private def rotationLabels {m : ℕ} (circuit : List (gate m)) : Finset (basis m) :=
   rotationLabelsAux circuit (initialLabels m)
 
+private def applyLabels {m : ℕ} (labels : Fin m → basis m) (x : basis m) : basis m :=
+  fun j => dot (labels j) x
+
 private def hardTheta {m : ℕ} (x : basis m) : ℝ :=
   if (∀ i, x i = false) ∨ (∀ i, x i = true) then Real.pi / 2 else 0
 
@@ -122,19 +125,23 @@ private lemma hardTheta_reflection (m : ℕ) (x : basis m) :
     rw [if_neg hq, if_neg hp]
 
 private lemma normal_form (m : ℕ) (circuit : List (gate m)) :
-    Function.Bijective (fun x : basis m => x) := by
-  exact Function.bijective_id
+    ∃ a : basis m → basis m, Function.Bijective a ∧
+      a = applyLabels (wireLabels circuit) := by sorry
 
 private lemma diagonal_forces_identity (m : ℕ) (circuit : List (gate m)) (c : ℂ)
     (θ : basis m → ℝ)
     (h : circuitMatrix circuit = c • Matrix.diagonal (fun x => Complex.exp ((θ x : ℂ) * Complex.I))) :
     wireLabels circuit = initialLabels m := by sorry
 
-private lemma character_mul (m : ℕ) (v : basis m) (f g : basis m → ℂ) :
-    character v (fun x => f x * g x) = character v f * character v g := by sorry
+private lemma character_mul (m : ℕ) (v : basis m) (f g : basis m → ℂ)
+    (hf : ∀ x, f x ≠ 0) (hg : ∀ x, g x ≠ 0) :
+    character v (fun x => f x * g x) = character v f * character v g := by
+  classical
+  simp only [character, mul_zpow, Finset.prod_mul_distrib]
 
-private lemma character_global (m : ℕ) (v : basis m) (c : ℂ) :
-    c ≠ 0 → character v (fun _ : basis m => c) = 1 := by sorry
+private lemma character_global (m : ℕ) (hm : 0 < m) (v : basis m)
+    (hv : v ≠ zeroLabel) (c : ℂ) (hc : c ≠ 0) :
+    character v (fun _ : basis m => c) = 1 := by sorry
 
 private lemma character_factor (m : ℕ) (v w : basis m) (f : Bool → ℂ) (hvw : v ≠ w)
     (hw : w ≠ fun _ : Fin m => false) (hf : ∀ b, f b ≠ 0) :
@@ -171,7 +178,7 @@ private lemma claim_for_n (n : ℕ) (hn : 1 ≤ n) :
           2 ^ (2 * n - 1) + 2 * n - 2 ≤ cnotCount circuit := by
   refine ⟨hardTheta, hardTheta_reflection (2 * n), ?_⟩
   intro circuit c h
-  have hnf := normal_form (2 * n) circuit
+  obtain ⟨a, ha, hnf⟩ := normal_form (2 * n) circuit
   have hidentity := diagonal_forces_identity (2 * n) circuit c hardTheta h
   have hlabels := rotation_labels (2 * n) circuit hardTheta c h hidentity
   have houtputs := even_output_count (2 * n) circuit hlabels
