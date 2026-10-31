@@ -1,20 +1,18 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent
+import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianWeightedResolvent
 import Reg.Support.SingleDependentReadout
 
 /-! The scalar readout varies its actual real parameter while retaining the
 full absolute-convergence and signed-operator statement. -/
 
 noncomputable section
-open scoped BigOperators Topology
-open Filter
-open _root_.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianMatrix
-open _root_.D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
+open scoped BigOperators
 open _root_.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent
+open _root_.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianWeightedResolvent
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
-namespace Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent
+namespace Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianWeightedResolvent
 
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℂ)
@@ -58,8 +56,8 @@ def evidence : Registration arena (type_of% @bilinear_opposite_resolvent_scalar)
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@bilinear_opposite_resolvent_scalar) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent.scalarUnit
-  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent.evidence
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianWeightedResolvent.scalarUnit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianWeightedResolvent.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -76,7 +74,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := some ℝ
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianWeightedResolvent
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -157,9 +155,9 @@ def evidence : Registration arena (type_of% @weightedColumn_equation) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@weightedColumn_equation) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent.Column.unit
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianWeightedResolvent.Column.unit
   realizationName :=
-    `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent.Column.evidence
+    `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianWeightedResolvent.Column.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -176,7 +174,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := some ℝ
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianWeightedResolvent
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -233,9 +231,9 @@ def evidence : Registration arena (type_of% @opposite_resolvent_weighted_source)
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@opposite_resolvent_weighted_source) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent.Opposite.unit
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianWeightedResolvent.Opposite.unit
   realizationName :=
-    `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent.Opposite.evidence
+    `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianWeightedResolvent.Opposite.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -252,7 +250,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := some ℝ
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianWeightedResolvent
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -267,4 +265,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end Opposite
 
-end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianResolvent
+end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianWeightedResolvent
