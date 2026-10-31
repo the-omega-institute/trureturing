@@ -78,8 +78,8 @@ private theorem coeff_shifted (n : ℕ) (μ : Fin 3 → ℕ) (σ : Perm (Fin 3))
     have hi := i.isLt
     have hs := (σ i).isLt
     have hle : staircase (σ i) ≤ μ i + staircase i := h i
-    change (#{x | f x = i}) = (μ i + staircase i) - staircase (σ i) ↔
-      (#{x | f x = i} : ℤ) = (μ i : ℤ) - (i : ℕ) + (σ i : ℕ)
+    simp only [Finsupp.tsub_apply, exponent, permutedStaircase,
+      Finsupp.coe_equivFunOnFinite_symm, shifted]
     unfold staircase at hle ⊢
     omega
   · rw [if_neg h]
