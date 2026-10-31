@@ -140,7 +140,7 @@ private def pointι {s : Finset ι} (a : A) (ha : ∀ i ∈ s, a ∈ P i) :
     R ⟶ (freeFunctor R P).obj (op s) :=
   Sigma.ι (fun _ : {a : A // ∀ i ∈ s, a ∈ P i} ↦ R) ⟨a, ha⟩
 
-@[reassoc (attr := simp)]
+@[simp]
 private lemma pointι_map {s t : Finset ι} (f : op s ⟶ op t) (a : A)
     (ha : ∀ i ∈ s, a ∈ P i) :
     pointι R P a ha ≫ (freeFunctor R P).map f =
@@ -168,7 +168,7 @@ private def epsilon0 : X R P 0 ⟶ ∐ fun _ : A ↦ R :=
   Sigma.desc fun _ ↦ Sigma.desc fun a ↦ Sigma.ι (fun _ : A ↦ R) a.1
 
 omit [LinearOrder ι] in
-@[reassoc (attr := simp)]
+@[simp]
 private lemma single_epsilon0 {s : Finset ι} (hs : #s = 0 + 1) (a : A)
     (ha : ∀ i ∈ s, a ∈ P i) :
     single R P 0 s a ha ≫ epsilon0 R P = Sigma.ι (fun _ : A ↦ R) a := by

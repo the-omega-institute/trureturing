@@ -12,14 +12,21 @@ internal sealed class OrderedCechCoverDocument : IScribeDocumentDefinition
         Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp);
     private static Formula Inst(string name, params Formula[] args) =>
         Seq(OpenBracket, Call(name, args), CloseBracket, Sp);
-    private static Formula[] Context(bool additive, bool zero) => [
+    private static Formula CategoryContext =>
         Seq(All("C", Call("Type", V("u"))), Inst("Category", V("v"), V("C")),
-            Inst("HasCoproducts", V("w"), V("C"))),
-        Seq(All("iota", Call("Type", V("w"))), All("A", Call("Type", V("w")))),
-        Seq(All("R", V("C")), All("P", Seq(V("iota"), Sp, Rightarrow, Sp, Call("Set", V("A"))))),
-        additive ? Seq(Inst("Preadditive", V("C")), Inst("LinearOrder", V("iota"))) : Seq(),
-        zero ? Inst("HasZeroObject", V("C")) : Seq()
-    ];
+            Inst("HasCoproducts", V("w"), V("C")));
+    private static Formula DomainContext =>
+        Seq(All("iota", Call("Type", V("w"))), All("A", Call("Type", V("w"))));
+    private static Formula FamilyContext =>
+        Seq(All("R", V("C")), All("P", Seq(V("iota"), Sp, To, Sp, Call("Set", V("A")))));
+    private static Formula AdditiveContext =>
+        Seq(Grp(), Inst("Preadditive", V("C")), Inst("LinearOrder", V("iota")));
+    private static Formula ZeroContext => Seq(Grp(), Inst("HasZeroObject", V("C")));
+    private static Formula[] Context(bool additive, bool zero) => zero
+        ? (additive ? [CategoryContext, DomainContext, FamilyContext, AdditiveContext, ZeroContext]
+            : [CategoryContext, DomainContext, FamilyContext, ZeroContext])
+        : (additive ? [CategoryContext, DomainContext, FamilyContext, AdditiveContext]
+            : [CategoryContext, DomainContext, FamilyContext]);
     private static Formula K => Call("complex", V("R"), V("P"));
     private static Formula Free => Call("coproduct", V("A"), V("R"));
     private static Formula Single => Call("singleZero", Free);
