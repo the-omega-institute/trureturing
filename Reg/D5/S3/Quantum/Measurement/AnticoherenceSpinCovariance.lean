@@ -48,9 +48,9 @@ abbrev matrixSignature.{u} : Signature where
   finiteAnchor := inferInstance
 
 def matrixActual.{u} : Realization matrixSignature.{u} :=
-  realize matrixSignature (fun _ _ X Y => X = Y) (fun e => nomatch e)
+  realize matrixSignature (fun _ _ X Y => X = Y) (fun e => Empty.elim e)
 def matrixRejected.{u} : Realization matrixSignature.{u} :=
-  realize matrixSignature (fun _ _ _ _ => False) (fun e => nomatch e)
+  realize matrixSignature (fun _ _ _ _ => False) (fun e => Empty.elim e)
 private theorem matrix_dependence.{u} : ObservationalDependence matrixSignature.{u} matrixActual := by
   intro i
   refine ⟨ULift.{u} Unit, 0, 1, ?_⟩
@@ -173,7 +173,7 @@ private theorem dependence.{v} : ObservationalDependence matrixSignature.{v} mat
   exact matrix_dependence
 
 def source_registration.{u, v} : Registration arena.{u, v} (type_of% (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.orthogonal_sandwich.{u, v})) where
-  actual := realize matrixSignature.{v} (fun _ _ X Y => X = Y) (fun e => nomatch e)
+  actual := realize matrixSignature.{v} (fun _ _ X Y => X = Y) (fun e => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.orthogonal_sandwich.{u, v}, matrixRejected, rejected_law⟩
   sensitivity := by
@@ -198,7 +198,7 @@ def registration.{u, v} :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize matrixSignature.{v} (fun _ _ X Y => X = Y) (fun e => nomatch e))
+  readout := some (realize matrixSignature.{v} (fun _ _ X Y => X = Y) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -478,7 +478,7 @@ private theorem dependence.{u} : ObservationalDependence matrixSignature.{u} mat
   exact matrix_dependence
 
 def source_registration.{u} : Registration arena.{u} (type_of% (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.quadratic_rotation.{u})) where
-  actual := realize matrixSignature.{u} (fun _ _ X Y => X = Y) (fun e => nomatch e)
+  actual := realize matrixSignature.{u} (fun _ _ X Y => X = Y) (fun e => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.quadratic_rotation.{u}, matrixRejected, rejected_law⟩
   sensitivity := by
@@ -503,7 +503,7 @@ def registration.{u} :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize matrixSignature.{u} (fun _ _ X Y => X = Y) (fun e => nomatch e))
+  readout := some (realize matrixSignature.{u} (fun _ _ X Y => X = Y) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -553,7 +553,7 @@ private theorem dependence.{u} : ObservationalDependence matrixSignature.{u} mat
   exact matrix_dependence
 
 def source_registration.{u, v, w, z} : Registration arena.{u, v, w, z} (type_of% (@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.partialTrace_isometries.{u, v, w, z})) where
-  actual := realize matrixSignature.{u} (fun _ _ X Y => X = Y) (fun e => nomatch e)
+  actual := realize matrixSignature.{u} (fun _ _ X Y => X = Y) (fun e => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance.partialTrace_isometries.{u, v, w, z}, matrixRejected, rejected_law⟩
   sensitivity := by
@@ -578,7 +578,7 @@ def registration.{u, v, w, z} :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize matrixSignature.{u} (fun _ _ X Y => X = Y) (fun e => nomatch e))
+  readout := some (realize matrixSignature.{u} (fun _ _ X Y => X = Y) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
