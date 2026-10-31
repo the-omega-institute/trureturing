@@ -19,7 +19,7 @@ open private strip_append_iff last_nonpositive ear_not_at_end
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Transport
 open private packetChecks withEar strip_iff_packetChecks normalize_blocks withEar_split
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
-open private orderedPackets finiteChecks finiteEarChecks DataCertificate
+open private orderedPackets finiteChecks finiteEarChecks DataCertificate DataCertificate.mk
   finiteChecks_equiv finiteEarChecks_equiv
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
 
@@ -71,7 +71,7 @@ private theorem finite_ear_checks (f : ℕ → ℤ) (C h : ℤ) (ear e : ℕ)
         h + ((P.toFinset.toList ++ [ear]).map f).sum ≤ C ∧
         packetChecks f C (h + ((P.toFinset.toList ++ [ear]).map f).sum + f n)
           (orderedPackets (finitePackets bs))) ↔ _
-      simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,List.map_nil,
+      simp only [withEar,packetChecks,List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,List.map_nil,
         List.sum_cons,List.sum_nil,add_zero,hmass]
       exact and_congr Iff.rfl (and_congr Iff.rfl (finite_packet_checks f C _ bs hs))
     | succ e =>
@@ -110,7 +110,7 @@ private theorem withEar_positive (f : ℕ → ℤ) (ear e : ℕ)
 private theorem withEar_negatives (ear e : ℕ) (bs : List (List ℕ × ℕ)) :
     (withEar ear e bs).map Prod.snd = bs.map Prod.snd := by
   induction bs generalizing e with
-  | nil => rfl
+  | nil => simp [withEar]
   | cons b bs ih => cases e <;> simp [withEar,ih]
 
 private theorem physical_packet_equivalence (k : ℕ) (f g : ℕ → ℤ) (C D E : ℤ)
@@ -143,7 +143,7 @@ private theorem physical_packet_equivalence (k : ℕ) (f g : ℕ → ℤ) (C D E
     obtain ⟨bs,hword,hpos,hnegs⟩ := split_packets (fun i => i ∈ ng) l hlast
     have hfilter : (l.filter (fun i => decide (i ∈ ng))).Perm ng := by
       apply (hperm.filter (fun i => decide (i ∈ ng))).trans
-      apply List.perm_of_nodup_nodup_toFinset_eq ((List.nodup_range k).filter _) hng
+      apply List.perm_of_nodup_nodup_toFinset_eq ((List.nodup_range (n := k)).filter _) hng
       ext i
       simp only [List.mem_toFinset,List.mem_filter,decide_eq_true_eq,List.mem_range]
       exact ⟨And.right,fun hi => ⟨hngrange i hi,hi⟩⟩
@@ -152,7 +152,7 @@ private theorem physical_packet_equivalence (k : ℕ) (f g : ℕ → ℤ) (C D E
     have hndall : ∀ b ∈ bs, b.1.Nodup := by
       have hnword : (blocksWord bs).Nodup := by
         rw [hword]
-        exact hperm.nodup_iff.mpr (List.nodup_range k)
+        exact hperm.nodup_iff.mpr (List.nodup_range (n := k))
       rw [blocksWord_flatMap] at hnword
       have hnblocks := (List.nodup_flatMap.mp hnword).1
       intro b hb
@@ -214,9 +214,7 @@ private theorem physical_packet_equivalence (k : ℕ) (f g : ℕ → ℤ) (C D E
       fun b hb => hmass b.1 (hlabels' b hb)
     have hm' : ∀ b ∈ finitePackets bs, mass' b.1 = ∑ i ∈ b.1, g i :=
       fun b hb => hmass' b.1 (hlabels' b hb)
-    refine ⟨{ packets := finitePackets bs,
-      negativeOrder := ?_, earSlot := ⟨e,by omega⟩,
-      positiveLabels := hlabels', partition := ?_, oldEndpoints := ?_, newEndpoints := ?_ }⟩
+    refine ⟨DataCertificate.mk (finitePackets bs) ?_ ⟨e,by omega⟩ hlabels' ?_ ?_ ?_⟩
     · simpa [finitePackets,List.map_map,Function.comp_def] using hnegative
     · exact Quot.sound ((finite_packets_perm bs hndall).trans
         ((List.Perm.of_eq hword).trans hperm))
