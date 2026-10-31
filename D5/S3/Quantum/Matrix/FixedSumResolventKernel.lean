@@ -120,21 +120,25 @@ private lemma length_convex {S t : ℝ} (ht : t ∈ Ioo 0 1) :
       Real.sqrt (S ^ 2 + 4 * r ^ 2 * (t⁻¹ - 1)) := by
     rw [Complex.norm_eq_sqrt_sq_add_sq]
     congr 1
-    simp only [Complex.mk_re, Complex.mk_im, mul_pow, hc2]
+    change S ^ 2 + (c * r) ^ 2 = _
+    rw [mul_pow, hc2]
     ring
   refine ⟨convex_Ici 0, ?_⟩
   intro x _ y _ a b ha hb hab
   have hv : (⟨S, c * (a * x + b * y)⟩ : ℂ) =
       a • (⟨S, c * x⟩ : ℂ) + b • (⟨S, c * y⟩ : ℂ) := by
-    apply Complex.ext <;> simp only [Complex.add_re, Complex.add_im,
-      Complex.real_smul_re, Complex.real_smul_im, Complex.mk_re, Complex.mk_im]
-    · nlinarith only [hab]
-    · ring
+    apply Complex.ext
+    · simp only [Complex.add_re, Complex.smul_re, smul_eq_mul]
+      change S = a * S + b * S
+      nlinarith only [congrArg (fun z : ℝ => z * S) hab]
+    · simp only [Complex.add_im, Complex.smul_im, smul_eq_mul]
+      change c * (a * x + b * y) = a * (c * x) + b * (c * y)
+      ring
   have hh := norm_add_le (a • (⟨S, c * x⟩ : ℂ)) (b • (⟨S, c * y⟩ : ℂ))
   rw [← hv, norm_smul, norm_smul, Real.norm_eq_abs, Real.norm_eq_abs,
     abs_of_nonneg ha, abs_of_nonneg hb, hn, hn, hn] at hh
   simp only [smul_eq_mul, levelLength]
-  nlinarith only [hh, hab]
+  nlinarith only [hh, congrArg (fun z : ℝ => z * S) hab]
 
 private def density (S : ℝ) (j : ℕ) (r t : ℝ) : ℝ :=
   levelLength S r t * t ^ (j - 1)
@@ -208,8 +212,9 @@ private lemma integrable_density {S : ℝ} (hS : 0 < S) (r : ℝ) {j : ℕ}
   have hfin := (integrable_resolvent hS r hj).lintegral_lt_top
   rw [layercake_lintegral hS r hj, he] at hfin
   have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
-  have hn : ENNReal.ofReal (j : ℝ) ≠ 0 := (ENNReal.ofReal_pos.mpr hj0).ne'
-  simp [ENNReal.mul_top, hn] at hfin
+  have hn : (j : ℝ≥0∞) ≠ 0 := by exact_mod_cast (show j ≠ 0 by omega)
+  rw [ENNReal.ofReal_natCast, ENNReal.mul_top hn] at hfin
+  exact (lt_irrefl _ hfin)
 
 private lemma layercake {S : ℝ} (hS : 0 < S) (r : ℝ) {j : ℕ}
     (hj : 1 ≤ j) : kernel S j r = ∫ t in Ioo 0 1, density S j r t := by
@@ -246,8 +251,11 @@ theorem convex_kernel {S : ℝ} (hS : 0 < S) {j : ℕ} (hj : 1 ≤ j) :
   have hh := (length_convex (S := S) ht).2 hx hy ha hb hab
   simp only [smul_eq_mul] at hh
   have hm := mul_le_mul_of_nonneg_right hh (pow_nonneg ht.1.le (j - 1))
-  dsimp only [density]
-  nlinarith only [hm]
+  change levelLength S (a * x + b * y) t * t ^ (j - 1) ≤
+    a * (levelLength S x t * t ^ (j - 1)) + b * (levelLength S y t * t ^ (j - 1))
+  calc
+    _ ≤ (a * levelLength S x t + b * levelLength S y t) * t ^ (j - 1) := hm
+    _ = _ := by ring
 
 private lemma kernel_scale {S c : ℝ} (hS : 0 < S) (hc : 0 < c)
     (r : ℝ) {j : ℕ} (hj : 1 ≤ j) : kernel (c * S) j (c * r) = c * kernel S j r := by
