@@ -401,7 +401,7 @@ theorem mixed_cycle_recovery (b : OrthonormalBasis (Axis k) ℝ V)
             (id : V → V) = recover ∘ (observations b r hr))
             ↔ Function.Injective (observations b r hr) :=
           (D5.S3.ConceptDynamics.Restoration.TargetRecoveryCriterion.target_recovery_criterion
-            (observations b r hr) (id : V → V)).1
+            (fun x : V => observations b r hr x) (id : V → V)).1
         _ ↔ (observations b r hr).ker = ⊥ := LinearMap.ker_eq_bot.symm
         _ ↔ LinearlyRecoverable b r hr (LinearMap.id : V →ₗ[ℝ] V) := by
           rw [recovery_iff_kernel, LinearMap.ker_id, le_bot_iff]
