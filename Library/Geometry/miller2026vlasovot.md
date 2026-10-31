@@ -8,7 +8,6 @@ url: https://github.com/LeanPool/lean-pool/tree/edbe5bd56f476cc2965564676b66199f
 claim: "Actual coupling gluing, finite atomic transport, a c-transform, and the hard general-cost Kantorovich-Rubinstein inequality under cost first moments."
 strata_touched:
   - D5/S3/Geometry/ProbabilityTransport/CostCoupling
-  - D5/S3/Geometry/ProbabilityTransport/FiniteCostKR
 license: Apache-2.0
 triage: anchor
 ---
