@@ -104,7 +104,10 @@ internal sealed class ReversibleFourByFourNonuniquenessDocument : IScribeDocumen
                             + "Hence those two subspaces are not unitarily equivalent. Finally, applying claim to B, "
                             + "with its multiplicative closure, noncommutativity and reversibility established above, "
                             + "would supply exactly that impossible equivalence. Therefore claim is false."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("blecher-2025-reversible-four-by-four-nonuniqueness"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, AssessedProvenance provenance, string prose) =>

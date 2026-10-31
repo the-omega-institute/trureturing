@@ -84,6 +84,10 @@ $$\neg \left(\operatorname{D5.S3.HilbertOperators.ReversibleFourByFourNonuniquen
 
 *Proof.* Machine-checked in Lean as `D5/S3/HilbertOperators/ReversibleFourByFourNonuniqueness.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/blecher-2025-reversible-four-by-four-nonuniqueness` (refuted) by `D5/S3/HilbertOperators/ReversibleFourByFourNonuniqueness.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"blecher-2025-reversible-four-by-four-nonuniqueness","declaration_gid":"D5/S3/HilbertOperators/ReversibleFourByFourNonuniqueness.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* David P. Blecher (2025). *Commutativity of operator algebras*. DOI: [10.1016/j.exmath.2025.125742](https://doi.org/10.1016/j.exmath.2025.125742). URL: <https://arxiv.org/abs/2509.17673v2>.
