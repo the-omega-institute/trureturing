@@ -4,7 +4,6 @@ import Reg.Support.DependentFamily
 
 /-! Dependent-family audit of arbitrary-dimensional balanced-monomial generation. -/
 
-open scoped Classical
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Algebra.PhasePolynomial
@@ -29,6 +28,7 @@ abbrev signature : Signature where
 def actual : Realization signature.{u} := realize signature
   (fun _ _ m => monomial m (1 : ℂ)) (fun e => nomatch e)
 
+open Classical in
 def rejected : Realization signature.{u} := realize signature
   (fun _ p _ => if h : Nonempty p.1 then X (.inl (Classical.choice h)) else 0)
   (fun e => nomatch e)
@@ -38,12 +38,17 @@ abbrev arena : Arena where
   Law R := ∀ {ι : Type u} [fi : Fintype ι] (m : (ι ⊕ ι) →₀ ℕ),
     holo m = anti m → R.readout () ⟨ι, fi⟩ m ∈ quadraticAlgebra (ι := ι)
 
+set_option maxHeartbeats 800000 in
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  classical
   intro h
   let ι := ULift.{u} Unit
   have hx : (X (.inl (default : ι)) : Poly ι) ∈ quadraticAlgebra (ι := ι) := by
-    simpa [rejected, realize, ι, holo, anti, Subsingleton.elim (Classical.choice (inferInstance : Nonempty ι)) (default : ι)]
-      using h (ι := ι) 0 (by simp [holo, anti])
+    have hzero := h (ι := ι) 0 (by simp [holo, anti])
+    dsimp only [rejected, realize] at hzero
+    rw [dif_pos (inferInstance : Nonempty ι)] at hzero
+    simpa only [Subsingleton.elim (Classical.choice (inferInstance : Nonempty ι))
+      (default : ι)] using hzero
   have hb := (common_phase_polynomial_theorem (X (.inl (default : ι)) : Poly ι)).1.mp
     ((common_phase_polynomial_theorem _).2.mpr hx)
   have hc : (X (.inl (default : ι)) : Poly ι).coeff

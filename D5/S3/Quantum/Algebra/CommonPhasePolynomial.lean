@@ -719,7 +719,9 @@ theorem complete_common_phase_polynomial_theorem (p : Poly ι) :
       ∃! H : Matrix ι ι ℂ, H.IsHermitian ∧
         (∀ z, actual p z = star z ⬝ᵥ (H *ᵥ z)) ∧
         (∀ i j, H j i = p.coeff (pairExponent i j)) ∧
-        ((∀ z, 0 ≤ (actual p z).re) ↔ H.PosSemidef)) := by
+        ((∀ z, 0 ≤ (actual p z).re) ↔ H.PosSemidef) ∧
+        (∀ K : Matrix ι ι ℂ,
+          (∀ z, actual p z = star z ⬝ᵥ (K *ᵥ z)) → K = H)) := by
   refine ⟨real_coordinates_unique p, cartesian_totalDegree p, cartesian_homogeneous p,
     (common_phase_polynomial_theorem p).1, (common_phase_polynomial_theorem p).2, actual_quadratic_generation p,
     invariant_minimum_degree p, invariant_degree_two, ?_⟩
@@ -728,9 +730,11 @@ theorem complete_common_phase_polynomial_theorem (p : Poly ι) :
   have he : H = coefficientMatrix p := by
     funext j i
     exact hH.2.2 i j
-  refine ⟨H, ⟨hH.1, hH.2.1, hH.2.2, ?_⟩, ?_⟩
+  refine ⟨H, ⟨hH.1, hH.2.1, hH.2.2, ?_, ?_⟩, ?_⟩
   · rw [he]
     exact invariant_quadratic_nonnegative_iff p hp hq hr
+  · intro K hK
+    exact actual_quadratic_matrix_unique K H (fun z => (hK z).symm.trans (hH.2.1 z))
   · intro K hK
     exact huniq K ⟨hK.1, hK.2.1, hK.2.2.1⟩
 
