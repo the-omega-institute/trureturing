@@ -1,5 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Matrix;
 
@@ -43,6 +44,37 @@ internal sealed class MalkounJordanElementaryDocument : IScribeDocumentDefinitio
     private static DocumentBlock Node(string name, string title, string prose,
         DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
             DescribeId.Create("malkoun-jordan-" + name.ToLowerInvariant()),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Presentation(name)),
             provenance, Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula I(string name) => F.Id(name);
+    private static Formula Par(Formula f) => Seq(Open, f, Close);
+    private static Formula App(string name, params Formula[] args) => new Formula.Apply(I(name), [.. args]);
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Par(Seq(I(name), Colon, Sp, type)), Comma, Sp, body);
+    private static Formula Imp(Formula premise, Formula body) =>
+        new Formula.Logic(Par(premise), FormulaLogicOperator.Implies, Par(body));
+    private static Formula LE(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula LT(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula Nat => Seq(Mathbb, Grp(I("N")));
+    private static Formula Herm(string h) => App("Matrix.PosSemidef.isHermitian", I(h));
+    private static Formula E(Formula h) => App("elementarySymmetric", App("Matrix.IsHermitian.eigenvalues", h), I("k"));
+    private static Formula Body()
+    {
+        var n = I("n"); var x = I("X"); var y = I("Y"); var k = I("k");
+        var matrix = App("Matrix", App("Fin", n), App("Fin", n), Seq(Mathbb, Grp(I("C"))));
+        var left = E(App("jordan_hermitian", Herm("hX"), Herm("hY")));
+        var right = E(App("Matrix.IsHermitian.add", App("Matrix.IsHermitian.pow", Herm("hX"), D(2)), App("Matrix.IsHermitian.pow", Herm("hY"), D(2))));
+        return All("n", Nat, Imp(LT(D(0), n), All("X", matrix, All("Y", matrix,
+            All("hX", App("Matrix.PosSemidef", x), All("hY", App("Matrix.PosSemidef", y),
+            All("k", Nat, Imp(LE(D(1), k), Imp(LE(k, n), LE(left, right))))))))));
+    }
+    private static Formula Presentation(string name) => name switch
+    {
+        "claim" => Disp(Equal(I("claim"), Par(Body()))),
+        "result" => Disp(I("claim")),
+        _ => Disp(Equal(App("elementarySymmetric", I("t"), I("k")),
+            Seq(Sum, Underscore, Grp(Seq(I("S"), InMacro, App("Finset.powersetCard", I("k"), I("Finset.univ")))),
+                Prod, Underscore, Grp(Seq(I("i"), InMacro, I("S"))), App("t", I("i")))))
+    };
 }
