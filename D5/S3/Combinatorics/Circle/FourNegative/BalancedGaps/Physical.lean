@@ -79,6 +79,7 @@ private theorem negative_order (a b c d : ℕ)
 
 set_option maxRecDepth 4000 in
 set_option maxHeartbeats 1600000 in
+set_option backward.isDefEq.respectTransparency false in
 private theorem physical_partition (a b c d : ℕ)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d) (n : Fin 16) :
     (blocksWord (orderedPackets (packets a b c d n)) : Multiset ℕ) =
