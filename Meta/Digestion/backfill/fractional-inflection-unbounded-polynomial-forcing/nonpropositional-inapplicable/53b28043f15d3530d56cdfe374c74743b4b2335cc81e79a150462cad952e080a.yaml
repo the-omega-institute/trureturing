@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:53b28043f15d3530d56cdfe374c74743b4b2335cc81e79a150462cad952e080a
+  normalized_sha256: sha256:53b28043f15d3530d56cdfe374c74743b4b2335cc81e79a150462cad952e080a
+cas_ref: sha256:53b28043f15d3530d56cdfe374c74743b4b2335cc81e79a150462cad952e080a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bibliographic attribution and source locator only; no theorem, estimate, fractional weak-solution bridge, or citation truth is established by this settlement.
+    previous_atom_id: 7dc2d84d6b0c18c0b032e54baaa28db30464f9a0677e8de06287fb4ccf330339
+    next_atom_id: 30616c7ae2c2aaba8aadc4e6caf25f5bb3896050e65edbd25b92a545f3af867f
