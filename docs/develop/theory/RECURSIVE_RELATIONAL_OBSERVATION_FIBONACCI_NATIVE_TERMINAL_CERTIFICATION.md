@@ -4496,3 +4496,356 @@ $$
 [RROPastClock]: AURIC_FIB_HISTORY_CLOCK_ARITHMETIC_MEMORY.md
 
 ## 追加锚（本行以下为增补区）
+
+## 68. 原十三路径 ready 回返系数的特征五单位
+
+**定义 68.1（同一原来源、标量环与字）。** 固定 [II] 定义 77.1、定理 77.2 和 [III][RROIII56] 定义 145.1、假设 145.2 的原过程，沿用定义 62.1 的全部共同来源和切口。完整载体仍是 $\mathcal K=\mathbb C^E$、$|E|=89$，唯一初态为 $|q_{\rm r}\rangle=R_0v=J(e_{00100},0)$；保留全部十一／七地址、全部旧终端标签及原失败坐标。这里只量化子族
+
+$$
+\mathsf W=\{0,\ldots,6\}^{<\infty},\qquad
+K_{wj}=K_jK_w,\qquad K_\epsilon=I.
+\tag{68.1}
+$$
+
+每个字母仍是一次完整正向单位调用。由 [IV][RROIV56] (201.2)，此子族的向量及配置留在字面尾块 $100$，其十三维嵌入与 II77 的 $H$ 相同；不是删除其它 $76$ 个配置。计算振幅时用该不变子空间的原正交基
+
+$$
+\begin{aligned}
+\mathcal B=\{&00000,00001,00010,00100,00101,01000,01001,\\
+&01010,10000,10001,10010,10100,10101\},\qquad v=e_{00100}.
+\end{aligned}
+\tag{68.2}
+$$
+
+在 $H$ 中写 $P_j=\mathcal P_j|_H$，避免与配置投影 $P_q$ 混淆。II77 的**全部**局部合同为：内部 $1\le j\le5$ 的两邻位均零时，中心顺序 $0,1$ 上
+
+$$
+P_j=Q=\begin{pmatrix}x&xy\\xy&x^2\end{pmatrix};
+\quad\text{两邻位均一时 }P_j=1;\quad
+\text{两邻位不同时 }P_j=0;
+\quad P_0=n_{b_1},\ P_6=n_{b_5}.
+\tag{68.3}
+$$
+
+固定位仍是 $b_{-1}=b_7=1$、$b_0=b_6=b_8=0$；全部地址使用同一个原公式 $K_j|_H=\zeta[I+(\zeta-1)P_j]$。置
+
+$$
+\begin{gathered}
+\zeta=e^{3\pi i/5},\quad x=-(\zeta+\zeta^{-1}),\quad y=\sqrt x>0,\quad
+\mathcal O=\mathbb Z[\zeta],\quad \mathcal O_y=\mathcal O[y],\\
+\rho:\mathcal O\longrightarrow\mathbb F_5,\quad \zeta\longmapsto-1,\quad x\longmapsto2,
+\qquad \mathbb F_{25}=\mathbb F_5[\eta]/(\eta^2-2).
+\end{gathered}
+\tag{68.4}
+$$
+
+这里 $\rho$ 正是 II (103.7)；$\Phi_{10}(-1)=5$ 保证其定义，而 $2$ 在 $\mathbb F_5$ 中非平方。所有有限字的返回量记为
+
+$$
+u_w=\langle v,K_wv\rangle,\qquad
+B_j(w)=\langle v,P_jK_wv\rangle,\qquad
+u_{wj}=\zeta[u_w+(\zeta-1)B_j(w)].
+\tag{68.5}
+$$
+
+**定理 68.2（全部实际七地址有限字的非零剩余）。** 对定义 68.1 中的每个 $w$，包括空字，以及每个 $j=0,\ldots,6$，$u_w,B_j(w)\in\mathcal O$，并且
+
+$$
+\rho(u_w)\ne0,\qquad \rho(u_{wj})\ne0.
+\tag{68.6}
+$$
+
+这是原 ready 矩阵元的结论，不是任意代数向量、五维限制或稠密轨道上的连续延拓结论。
+
+证明。先交代标量约化，再把每个实际字的剩余接到一个普通八自旋置换系数。
+
+（一）整权重及环映射。复用 II (103.4)–(103.8) 与 [v15][RRONodeV15] §10 的整权重规范，在当前十三路径上取
+
+$$
+m(\beta)=b_1+\cdots+b_5,\qquad S e_\beta=y^{m(\beta)}e_\beta,
+\qquad T_w=S^{-1}K_wS.
+\tag{68.7}
+$$
+
+固定占据位只给 $S$ 一个共同标量，不改变共轭。原投影的二维块变为
+
+$$
+S^{-1}QS=\begin{pmatrix}x&x^2\\x&x^2\end{pmatrix}.
+\tag{68.8}
+$$
+
+一维块仍为 $0,1$，两端仍为 (68.3) 的坐标投影。所以 $T_w$ 和 $S^{-1}P_jS$ 都在 $\operatorname{Mat}_{13}(\mathcal O)$ 中；$T_w$ 的 $vv$ 元是 $u_w$，而 $(S^{-1}P_jS)T_w=S^{-1}P_jK_wS$ 的 $vv$ 元是 $B_j(w)$。这证明所需整性，不以路径振幅逐项相消为前提。共轭把 $\zeta$ 送至 $\zeta^{-1}$，故 $\rho(\bar z)=\rho(z)$ 对 $z\in\mathcal O$ 成立。
+
+亦可安全约化原未加权矩阵。为排除未声明的环关系，注意 $\mathbb Q(\zeta)$ 的最大实子域为 $\mathbb Q(\sqrt5)$，而 $x$ 在该二次域中的范数为 $-1$，故不可能是其中一个平方。若实数 $y$ 属于 $\mathbb Q(\zeta)$，它必须属于该实子域，产生矛盾。因此 $Y^2-x$ 在 $\mathbb Q(\zeta)[Y]$ 上不可约，且
+
+$$
+\mathcal O_y\simeq\mathcal O[Y]/(Y^2-x),\qquad
+\widetilde\rho:\mathcal O_y[1/6]\longrightarrow\mathbb F_{25},\quad
+\zeta\mapsto-1,\quad y\mapsto\eta.
+\tag{68.9}
+$$
+
+首一多项式除法及 $1,y$ 的线性独立给这里的环表示；并非仅检验 $y^4+y^2-1$ 在像中为零。$y^{-1}=y^3+y$，故源权重规范及其逆本来就在 $\mathcal O_y$ 上；$2,3$ 的像可逆，故局部化合法。等价地，可先只用 $\rho(T_w)$，再以可逆对角矩阵 $C=\operatorname{diag}(\eta^{m(\beta)})$ 还原未加权剩余。两种做法都给
+
+$$
+\widetilde\rho(Q)=Q_5=\begin{pmatrix}2&2\eta\\2\eta&4\end{pmatrix},
+\qquad Q_5^2=Q_5,\qquad
+\widetilde\rho(K_j)=2\widetilde\rho(P_j)-I.
+\tag{68.10}
+$$
+
+（二）完整的经典 $14\to13$ 路径转移。令 $W=\operatorname{Inv}_{SU(2)}((\mathbb C^2)^{\otimes8})$。逐次耦合自旋 $1/2$ 给正交路径基 $f_h$，其中 $h_0=h_8=0$，$h_k\ge0$，$h_{k+1}-h_k=\pm1$，中间自旋为 $h_k/2$。其路径数为 Catalan 数 $\binom84/5=14$。到达高度 $4$ 的路径必须前四步全升、后四步全降，故唯一是
+
+$$
+h^*=(0,1,2,3,4,3,2,1,0).
+\tag{68.11}
+$$
+
+令 $s_i$ 是交换第 $i,i+1$ 个物理自旋的真实张量置换，$E_i=(I-s_i)/2$ 为这两个自旋的 singlet 投影。普通 Schur–Weyl 分解把总自旋零重数空间 $W$ 识别为两行图 $[4,4]$ 的 Young 正交表示，其逐前缀分支恰给这些高度。可选择同一组实路径相位，使当外高度 $h_{i-1}=h_{i+1}=a>0$ 时，按中心高度 $a-1,a+1$ 排列的块为
+
+$$
+E_a=\frac1{2(a+1)}
+\begin{pmatrix}a&\sqrt{a(a+2)}\\\sqrt{a(a+2)}&a+2\end{pmatrix}.
+\tag{68.12}
+$$
+
+说明此处使用的普通耦合公式。外自旋 $J=a/2$ 与连续两个 $1/2$ 耦合回 $J$，两个中间通道为 $J\mp1/2$。由 $E_i=1/4-\mathbf s_i\cdot\mathbf s_{i+1}$ 及角动量平方恒等式，两个通道的对角元分别为 $J/(2J+1)$、$(J+1)/(2J+1)$；例如在上通道，$\mathbf s_i$ 对中间总自旋的投影系数为 $1/(2J+1)$，而中间总自旋与最后 $1/2$ 的点积为 $-(J+3/2)/2$，即得后一个值。singlet 通道秩一，其迹为一，确定另一对角及非对角绝对值。实 Young 正交基中相邻换位的可交换非对角元取正；再按 $(-1)^{\sum_k h_k/2}$ 改相，使 $E_i$ 的非对角元同时取正：每个这样的交换只改变一个高度 $2$。这是同一全路径规范，未对每个门另选基。外高度不等时投影为零；$a=0$ 时仅中心高度 $1$，投影为一。这也是 FLW Definition 1、(2)–(3) 的普通整数耦合版本；此处的经典公式不调用其密度结论。
+
+在八自旋的全部十四路径中，所需二维块具体为
+
+$$
+\begin{array}{c|c|c}
+a&\text{中心顺序}&E_a\\ \hline
+1&(2,0)&\begin{pmatrix}3/4&\sqrt3/4\\\sqrt3/4&1/4\end{pmatrix}\\
+2&(1,3)&\begin{pmatrix}1/3&\sqrt2/3\\\sqrt2/3&2/3\end{pmatrix}\\
+3&(2,4)&\begin{pmatrix}3/8&\sqrt{15}/8\\\sqrt{15}/8&5/8\end{pmatrix}.
+\end{array}
+\tag{68.13}
+$$
+
+这些矩阵定义在实际环 $\mathcal A=\mathbb Z[1/6,\sqrt2,\sqrt3,\sqrt5]$ 上。平方类 $2,3,5$ 独立，故多二次域的八个根式单项式线性独立；相应的三个首一二次关系给出 $\mathcal A$ 的环表示。因此下列映射对**所有**环关系相容：
+
+$$
+\nu:\mathcal A\longrightarrow\mathbb F_{25},\qquad
+\sqrt2\mapsto\eta,\quad \sqrt3\mapsto2\eta,\quad \sqrt5\mapsto0.
+\tag{68.14}
+$$
+
+在 $a=3$ 块中，$3/8\mapsto1$、$5/8\mapsto0$、$\sqrt{15}/8\mapsto0$。$h^*$ 上除 $i=4$ 外均为外高度不等的零块；$i=4$ 正是此 $a=3$ 块的中心高度 $4$。所以 $h^*$ 线与其它十三路径在约化后解耦，余下十三路径对全部七个 $\nu(E_i)$ 不变。这里约化的是 (68.13) 的矩阵；没有约化路径基到张量基的可疑逆矩阵，也没有倒置 $5$ 或 $\sqrt5$。两套标量环分别映到同一个有限域，比较其像不要求在它们的合成数域上另有一个共同约化。
+
+下面把余下**每条**路径接回原路径，而非选一个较小扇区。沿用 II (77.7)：令 $\ell_0=\ell_8=\mathbf1$，$\ell_{k+1}=\mathbf1$ 恰当 $b_k=1$，其余为 $\tau$；置
+
+$$
+h_k=\begin{cases}
+0,&k\text{ 偶且 }\ell_k=\mathbf1,\\
+2,&k\text{ 偶且 }\ell_k=\tau,\\
+3,&k\text{ 奇且 }\ell_k=\mathbf1,\\
+1,&k\text{ 奇且 }\ell_k=\tau.
+\end{cases}
+\tag{68.15}
+$$
+
+无相邻占据等价于高度步长 $\pm1$ 且 $0\le h\le3$；反向按高度、奇偶恢复各位，故 (68.2) 与这十三路径双射。以该标签识别两边，并定义全局对角规范
+
+$$
+G e_\beta=(-1)^{b_1+b_3+b_5}e_\beta.
+\tag{68.16}
+$$
+
+对内部奇地址 $j$，$i=j+1$ 为偶数；两邻位零的块是 $a=1$、中心顺序 $(2,0)$。其约化对角为 $2,4$，非对角为 $3\eta$；$G$ 改其符号为 $2\eta$。对内部偶地址，$i$ 为奇数；同一源块是 $a=2$、中心顺序 $(1,3)$，其约化本已为 $Q_5$，$G$ 在该块不改非对角。两邻位均一时，分别是 $a=3$ 留下的中心高度 $2$ 或 $a=0$ 的单通道，约化都为一；两邻位不同时外高度不同，投影为零。最后 $E_1,E_7$ 分别投影到 $h_2=0,h_6=0$，正是 $n_{b_1},n_{b_5}$。这逐项支付了 (68.3) 的全部内部及边界块，于是同时对七个地址有
+
+$$
+\widetilde\rho(P_j)=G\nu(E_{j+1})|_{13}G,\qquad
+\widetilde\rho(K_j)=-G\nu(s_{j+1})|_{13}G.
+\tag{68.17}
+$$
+
+所有识别均只是路径重标号和 $\pm1$ 规范，在剩余域中仍可逆。
+
+ready 的高度是 $(0,1,2,1,0,1,2,1,0)$。前四个及后四个自旋各自先耦合两对 triplet，再耦合为零，故其张量向量（差一个无关整体符号）为 $V=T\otimes T$，其中
+
+$$
+T=\frac{2|0011\rangle+2|1100\rangle-|0101\rangle-|0110\rangle-|1001\rangle-|1010\rangle}{2\sqrt3}.
+\tag{68.18}
+$$
+
+$Gv=-v$，此全局负号在矩阵元中抵消。若 $\pi_w=s_{j_\ell+1}\cdots s_{j_1+1}\in S_8$，(68.17) 对任意长度的乘积给
+
+$$
+\rho(u_w)=(-1)^{|w|}\nu(c_{\pi_w}),\qquad
+c_\pi=\langle T\otimes T,\pi(T\otimes T)\rangle.
+\tag{68.19}
+$$
+
+右侧先在普通复张量空间中计算标量，再作约化；不要求任何自旋—路径换基模五可逆。由 (68.18)，$V$ 的张量系数在 $\frac1{12}\mathbb Z$ 中，故 $c_\pi\in\mathbb Z[1/6]$，其 $\nu$ 像就是通常的模五有理数剩余。
+
+（三）全部 $S_8$ 重叠，而非抽样字。令 $A=s_{12}\otimes s_{34}$，其中 $s_{ab}=(|01\rangle-|10\rangle)/\sqrt2$；此处 $s_{ab}$ 表示二自旋 singlet 向量，不是上面的置换算子。$(A,T)$ 是四自旋不变空间的正交基。由 (68.18) 的张量展开，交换 $(12)$ 或 $(34)$ 的矩阵为 $\operatorname{diag}(-1,1)$，交换 $(23)$ 的矩阵为
+
+$$
+\begin{pmatrix}1/2&\sqrt3/2\\\sqrt3/2&-1/2\end{pmatrix}.
+\tag{68.20}
+$$
+
+这些生成整个 $S_4$ 的作用，且保持下列三点集合。因此 $T$ 的完整 $S_4$ 轨道恰为
+
+$$
+\mathscr T=\left\{(0,1),\ (\sqrt3/2,-1/2),\ (-\sqrt3/2,-1/2)\right\}
+\quad\text{（坐标相对于 }(A,T)\text{）}.
+\tag{68.21}
+$$
+
+同一点的内积为一，不同点的内积为 $-1/2$。
+
+把八个自旋分为 $L=\{1,2,3,4\}$、$R=\{5,6,7,8\}$，记 $\mathscr H=S_L\times S_R$。对任意 $\pi\in S_8$，令 $r=|\pi(L)\cap R|$。分别在输入、输出的两个块内重新编号，先将交叉的 $r$ 条线放到固定位置，再将其余线匹配，即得
+
+$$
+\pi=\ell\tau_r k,\qquad \ell,k\in\mathscr H,
+\tag{68.22}
+$$
+
+其中固定取 $\tau_r=\prod_{p=1}^r(p,p+4)$，只交换两块的前 $r$ 个对应自旋。这是两侧内部置换下的五个双陪集。整块交换 $\omega$ 满足 $\omega V=V$，且 $r(\omega\pi)=4-r(\pi)$、$c_{\omega\pi}=c_\pi$，所以只须 $r=0,1,2$。内部置换并没有被删除：把 $\ell^{-1}$ 吸入 bra、$k$ 吸入 ket，给四个可能各不相同的 $X_i\in\mathscr T$，使
+
+$$
+c_\pi=\langle X_1\otimes X_2,\tau_r(X_3\otimes X_4)\rangle.
+\tag{68.23}
+$$
+
+$r=0$ 时这是 $\langle X_1,X_3\rangle\langle X_2,X_4\rangle$，故只可能为 $1,-1/2,1/4$。
+
+$r=1$ 时，对一个交叉自旋作 transfer。对任何两个四自旋不变向量 $X,Y$，$M_{X,Y}=\operatorname{Tr}_{\text{其余三自旋}}|Y\rangle\langle X|$ 与该自旋的 $SU(2)$ 作用交换，故为标量矩阵；迹为 $\langle X,Y\rangle$，所以 $M_{X,Y}=\langle X,Y\rangle I_2/2$。交换收缩等于两个 transfer 的乘积迹，故
+
+$$
+c_\pi=\tfrac12\langle X_1,X_3\rangle\langle X_2,X_4\rangle
+\in\{1/2,-1/4,1/8\}.
+\tag{68.24}
+$$
+
+$r=2$ 时，交叉二自旋空间分为 spin $0$、spin $1$，维数分别为 $1,3$。写 $X_i=a_iA+b_iT$，坐标是 (68.21) 的三个实向量。对剩余二自旋取迹，正交通道消去交叉项，而 singlet 与 triplet 的归一耦合分别给
+
+$$
+M_{X_1,X_3}=a_1a_3\Pi_0+\frac{b_1b_3}{3}\Pi_1.
+\tag{68.25}
+$$
+
+这也可由两个不可约块上的 Schur 引理及各块迹直接求出。另一个块同理；交换收缩的乘积迹为
+
+$$
+c_\pi=\prod_{i=1}^4a_i+\frac13\prod_{i=1}^4b_i.
+\tag{68.26}
+$$
+
+令 $k$ 是四个 $X_i$ 中非 $(0,1)$ 的个数。若 $k=0,1,2,3$，第一项为零，第二项为 $(-1/2)^k/3$，分别得到**全部四个退化值**
+
+$$
+1/3,\qquad-1/6,\qquad1/12,\qquad-1/24.
+\tag{68.27}
+$$
+
+若 $k=4$，第一项为 $\pm9/16$，第二项为 $1/48$，所以为 $7/12$ 或 $-13/24$。因此每个 $\pi\in S_8$ 的系数均在完整的有限候选集合
+
+$$
+\left\{1,-\tfrac12,\tfrac14,\tfrac12,-\tfrac14,\tfrac18,
+\tfrac13,-\tfrac16,\tfrac1{12},-\tfrac1{24},\tfrac7{12},-\tfrac{13}{24}\right\}
+\tag{68.28}
+$$
+
+中。这里的穷尽性来自交叉数、四个完整局部轨道和 transfer 恒等式，不来自控制字或矩阵的数值枚举。所有分母仅含素因子 $2,3$，所有分子均不被 $5$ 整除，故每个 $c_\pi$ 都是 $\mathbb Z_{(5)}$ 的单位。由 (68.19) 得 $\rho(u_w)\ne0$；应用于同样合法的 $wj$ 得第二个结论。空字对应恒等置换，$u_\epsilon=c_{\rm id}=1$。∎
+
+## 69. 三个实际判别式与全部原单位脉冲的零点排除
+
+**定理 69.1（每个实际入口的闭单位脉冲均无 ready 节点）。** 对每个定义 68.1 的 $w$、每个原地址 $j=0,\ldots,6$ 以及每个实数 $s\in[0,1]$，原不可中断脉冲满足
+
+$$
+\langle q_{\rm r},U_j(s)K_wq_{\rm r}\rangle\ne0.
+\tag{69.1}
+$$
+
+这里用 $K_wq_{\rm r}$ 表示 $K_w|q_{\rm r}\rangle$；通过 $R_0$ 与 (68.5) 的系数相同。特别地，定义 62.1 中每个固定有限前缀都满足 $b_a>0$。
+
+证明。令 $u=u_w$、$B=B_j(w)$、$u'=u_{wj}$。III (145.1) 的**原内部律**给
+
+$$
+z_s=e^{3\pi is/5},\qquad
+\langle v,U_j(s)K_wv\rangle=z_s[(u-B)+z_sB].
+\tag{69.2}
+$$
+
+若此值为零，则因 $|z_s|=1$ 必须 $|u-B|=|B|$，即
+
+$$
+D_j(w)=|u-B|^2-|B|^2
+=|u|^2-\bar uB-u\bar B=0.
+\tag{69.3}
+$$
+
+无需为 $B=0$、$u=B$ 或圆周上的相位另作除法。定理 68.2 给 $D_j(w)\in\mathcal O$，且由共轭与 $\rho$ 相容、(68.5) 有
+
+$$
+\rho(u')=2\rho(B)-\rho(u),\qquad
+\rho(D_j(w))=\rho(u)^2-2\rho(u)\rho(B)
+=-\rho(u)\rho(u')\ne0.
+\tag{69.4}
+$$
+
+故判别式本身非零，排除 (69.2) 在整个闭区间的零点，包括两端。
+
+为明确三个非平凡 ready 行而非任意代数输入，写实际列 $K_wv=\sum_\beta t_\beta e_\beta$、$u=t_{00100}$。由 (68.3) 恰有
+
+$$
+\begin{aligned}
+B_1(w)&=xu+xy\,t_{10100},&
+D_1(w)&=(1-2x)|u|^2-2xy\operatorname{Re}(\bar u\,t_{10100}),\\
+B_3(w)&=x^2u+xy\,t_{00000},&
+D_3(w)&=(1-2x^2)|u|^2-2xy\operatorname{Re}(\bar u\,t_{00000}),\\
+B_5(w)&=xu+xy\,t_{00101},&
+D_5(w)&=(1-2x)|u|^2-2xy\operatorname{Re}(\bar u\,t_{00101}).
+\end{aligned}
+\tag{69.5}
+$$
+
+其余 $j=0,2,4,6$ 有 $P_jv=0$，故 $B_j(w)=0$、$D_j(w)=|u|^2$。式 (69.4) 同时证明 (69.5) 的三个实际判别式和这四个旁观行均非零，量化的是每个完整十三维可达列。
+
+这也保留了 v15 §10 的 Galois 旁观条件的准确位置。对同一个实际加权列 $z=T_we_v$，原整权重酉性与 $\sigma(\zeta)=\zeta^3$、$\sigma(x)=-\varphi$ 给
+
+$$
+\sum_{m(\beta)\ \mathrm{odd}}\varphi^{m(\beta)}|\sigma(z_\beta)|^2
+=\varphi+\sum_{m(\beta)\ \mathrm{even}}\varphi^{m(\beta)}|\sigma(z_\beta)|^2.
+\tag{69.6}
+$$
+
+因此若一个有限字入口有 $u=z_{00100}=0$，其余奇占据旁观坐标必须承担至少 $\varphi$ 的右侧质量；仅局部两态消去不能满足它。但 (69.6) 单独容许其它十三维旁观坐标承担该质量，并不证明全轨道排除。真正排除实际字与部分脉冲的是 (68.19)、(68.28)、(69.4)；未把 Galois 度量解释为物理负概率，也未把任意实时间的 $z_s$ 当成 $\mathcal O$ 的元素再施 $\sigma$。
+
+对固定 $a$，(69.1) 覆盖 (62.1) 的每个逐门区间。原接缝保持向量和配置，没有补跳或重抽；有限段上的 ready 振幅连续且处处非零。因此定理 64.1 直接给 $b_a>0$；等价地，对这个固定前缀可用 (64.2) 的有限风险积分。空字仍为 $b_\epsilon=1$。该紧致性只为指定前缀给正最小值，不给跨全部字的共同正分离界；II77 的射线稠密性仍允许端点 ready 振幅任意接近零。数学上观察 $s$ 不增加分数控制、监测或停脉冲的权限。∎
+
+## 70. 自然过去恢复恰在原 ready 射线回返处存在
+
+**定理 70.1（原自然域的全部有限七地址前缀分类）。** 在定义 62.1 的每个固定 $a\in\mathsf W$ 上，始终使用同一次原执行、全部原档案 $G_a$ 和同一个完整接续 $L_h^a$。以下三项等价：
+
+1. 存在标准 Borel 值 $Y$，满足 $\overline\sigma(G_a)\subseteq\overline\sigma(Y)\subseteq\mathcal N_a=\overline\sigma(X_a,G_a)$，保持全部原 RC 关系，并有可测 $D(Q,Y)=X_a$ 几乎处处。
+2. 原切口终点律 $\pi_a$ 是 Dirac。
+3. $K_av\in\mathbb C v$，即原有限字在射影意义精确回到唯一 ready 射线。
+
+成立时 $\pi_a=\delta_{q_{\rm r}}$。所有量词包含空字；不把不同 $a$ 的恢复坐标拼成一个在线系统。
+
+证明。定理 69.1 已对每个 $a$ 排除 $b_a=0$。把它代入定理 63.1，第一项恰等价于第二项。原平方等变性给 $\pi_a(q)=|\psi_a(|a|)(q)|^2$；定理 68.2 给 $\pi_a(q_{\rm r})=|u_a|^2>0$。所以若它为 Dirac，唯一可能原子是 $q_{\rm r}$，归一向量必为 $R_0v$ 的相位倍数；由等距嵌入得第三项。反之第三项直接给第二项。Dirac 时取 $Y=(G_a,X_a)$，定理 63.1 已证明其保留档案、RC 安全及实际路径解码；这不是重新抽取一个同律路径。非 Dirac 时，自然域的原子谱障碍不可由另选 Borel 坐标消去。∎
+
+**定义 70.2（供应、精度与取得边界）。** 定理 68.2–70.1 是 `repo-derived` 的源特定综合：整权重和原过程直接复用，新增连接是完整经典自旋剩余上的 ready 系数单位、实际脉冲判别式及其对自然过去分类的消费，不主张世界范围的优先权。中间普通数学按以下范围归属。
+
+| 供应 | 准确使用范围 |
+| --- | --- |
+| II77、(103.4)–(103.8)；[v15][RRONodeV15] §§8、10 | 全十三路径、全部七个局部／边界块、原相位、整权重和 $\rho$；Galois 加权酉性仅用于 (69.6)。II103 的完整代码奇相位障碍不冒充 ready 元素的结论。 |
+| [Freedman–Larsen–Wang, *The two-eigenvalue problem and density of Jones representation of braid groups*, math/0103200v1][RRONodeFLW]，§2 Definition 1、(2)–(3) | `literature-attested`：可容许 Young 表、$d$、$[d+1]/([2][d])$ 及相应投影块。普通 $SU(2)$ 耦合、Schur 引理及交换收缩是中间既有数学，(68.12)–(68.13) 明列经典参数与相位。其 Theorem 0.1 的 $r=5,n=8$ 条件属于 II77 已用的密度供应，本证明不以密度推出精确相交，不使用 §6 的印刷融合矩阵作为本地块。 |
+| III145–146；IV201；本卷 62–67 | 原全 $89$ 配置过程、固定单位脉冲、平方最小率、共同创新、无接缝重抽、ready 嵌入、完整档案乘积与自然域 RC／恢复分类。前件仍包括指定的源律与档案权限，不从本节推出这些物理前件。 |
+| [WeightedPathArtinRepresentation][RRONodeLean] 的 weighted_path_artin_markov_invariant | 现有声明在所给邻接、正权重、Perron–Frobenius 关系和复参数关系下，证明归一迹沿代数 Markov 等价不变。它没有 ready 矩阵元非零、经典自旋识别、内部脉冲或记忆取得的结论。这里仅对应其实际声明范围，无新增 Lean、当前编译或新的内核核验。 |
+
+精度仍是固定有限累计内部门时间上的实际完整路径、连续跳时及全部档案的几乎处处可测精确恢复；共同满测集的量词和原 RC 菜单沿用 §§62–67。自然域不等于任意未详定的 $\mathcal F_a^{\rm hid}$；§66 的已消费阈值扩张不由此被禁止，也不被默认为已读资源。没有改动整个原程序类，只对其中七地址 ready 前缀给分类；任意十一地址准备、读后非 ready 分支、多块或自适应控制不在此全称结论中。
+
+取得仍是另一项义务。即使第三项成立，$Y=(G_a,X_a)$ 也直接使用尚未供应读口的隐藏路径；可测存在性不提供原菜单内的有限取得、有限精度存储、可计算解码、误差稳定性或跨切口自主更新。更具体地，若 $\pi_a$ 为 Dirac 而 $X_a$ 非常值，只有原档案 $G_a$ 不能恢复 $X_a$：由 (62.6)，$X_a\perp G_a$；若常值 $Q$ 与 $G_a$ 能解码 $X_a$，则 $X_a$ 同时是 $G_a$ 的函数且与之独立，只能为常值，矛盾。原 $a=1^{10}$ 已给这样的实例：以 (65.1) 的标量 $A\in(0,1)$，定理 65.1 给 ready 回返及 $0<b_a=(1-A)^3<1$，故路径非常值。
+
+因此本结果消去了用有限七地址 ready 节点启用 $b_a=0$ 补场的路线，却没有取得任一非平凡路径记忆，也没有提供统一在线 atlas、任意闭包酉、额外探测／准备或新的物理定律。空间、时间、边界和记忆的一般互恢复及其资源内取得仍保留原问题范围。
+
+[RRONodeV15]: AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md
+[RRONodeFLW]: https://arxiv.org/html/math/0103200v1
+[RRONodeLean]: ../../../D5/S3/Quantum/Algebra/Knot/WeightedPathArtinRepresentation.lean
+
+## 追加锚（本行以下为增补区）
