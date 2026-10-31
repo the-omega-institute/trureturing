@@ -19,6 +19,33 @@ ROOT = Path(__file__).resolve().parents[3]
 
 
 class CheckTests(unittest.TestCase):
+    def test_excluded_paths_run_only_capacity_in_the_source_phase(self):
+        for path in ("README.md", "docs/reports/fixture.md", "tools/TestSupport/StrataLint.RuleTestSupport/Fixture.cs"):
+            with self.subTest(path=path):
+                result, calls, plan = self.local_spies(paths=(path,))
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertFalse(plan["hits"]["current"])
+                self.assertFalse(plan["delta"])
+                self.assertFalse(plan["report"])
+                self.assertEqual(1, sum("--artifact-capacity" in call for call in calls), calls)
+                self.assertFalse(any(call[:2] == ["make", "lean-report"]
+                                     or "check-current" in call or "check-delta" in call for call in calls), calls)
+
+    def test_capacity_rejection_blocks_fanout_even_without_current(self):
+        result, calls, plan = self.local_spies(source=1, paths=("README.md",))
+        self.assertFalse(plan["hits"]["current"])
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        self.assertTrue(any("--artifact-capacity" in call for call in calls), calls)
+        self.assertFalse(any(call[0] in ("elan", "make") for call in calls), calls)
+
+    def test_capacity_source_requires_a_readable_base_independently_of_delta(self):
+        data, _ = contract.load(ROOT)
+        plan = contract.selection(data, ["README.md"], "pull-request")
+        with patch.object(checks, "execute") as execute:
+            with self.assertRaisesRegex(contract.DetectError, "protected base"):
+                checks.current_phase("source", data, plan, "", Path("changed"))
+        execute.assert_not_called()
+
     def test_local_fib_ack_uses_actual_current_without_extra_preparation_or_suite(self):
         for current in (0, 1):
             with self.subTest(current=current), patch.dict(os.environ,
