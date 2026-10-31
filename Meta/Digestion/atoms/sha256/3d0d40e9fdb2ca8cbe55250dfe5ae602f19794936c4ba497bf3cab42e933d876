@@ -1,0 +1,22 @@
+**Proposition 15.8 (The mixed-source control matrix has a different budget).**
+The control matrix (15.4), formed from the moments of a mixed source,
+can have zero mutual information while $J_0>0$.
+
+Proof.
+Take $\rho=(I_4+YI)/4=|+y\rangle\langle+y|\otimes I_2/2$
+and $a=b=0$. Then $S(\rho)=\log2$ and
+$\kappa=\lambda=\mu=\delta=0$. Formula (15.4) gives $G=I_4/4$,
+so $I(A:B)_G=0$. Direct Pauli conjugation gives
+$P=Q=R=I_4/4$, and therefore
+$$
+ J_0=S(P)+S(Q)-S(R)-S(\rho)=\log2.
+$$
+The original deficit is zero in this example. Thus the pure-source
+spectral identification (15.5) supplies no mixed-source comparison
+$J_0\leq I(A:B)_G$.
+
+The unrestricted pure-product, pure-source and mixed-source sign
+questions remain open outside the proved regions. All conclusions in
+this section concern the original deficit with its independent biases
+and unchanged endpoint terms.
+

@@ -1,0 +1,20 @@
+**Proposition 18.2 (A strict full-dephasing funding margin).**
+Under the same pure-product and $\mu=0$ assumptions, at $a=b=0$,
+$$
+ A_E-J\geq\frac{y_E^2}{2}+\frac{x_E^2z_E^2}{24},\qquad E=C,D.
+\tag{18.10}
+$$
+Proof.
+The actual local gap is $e(x_E)+e(z_E)-\log2$.
+Its $n=1$ entropy-series term is $y_E^2/2$; $J$ has no such term.
+For $E=C$, the $n=2$ difference is
+$$
+ \frac{1-(x_C^2+z_C^2)^2
+       +(2-6x_D^2z_D^2)x_C^2z_C^2}{12}.
+$$
+Use $x_D^2z_D^2\leq1/4$ and nonnegativity of every higher-degree
+difference by (18.2). Exchange $C,D$. If neither source is an $X$
+or $Z$ eigenstate, both funding gaps are strict; entropy continuity
+then preserves them on a pure-product neighborhood allowing
+$\mu\ne0$ and sufficiently small nonnegative $a,b$.
+

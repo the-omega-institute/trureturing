@@ -1,0 +1,54 @@
+**Proposition 16.3 (An exact large-covariance point in the old residual domain).**
+Take the unit local Bloch vectors and independent biases
+$$
+ n_C=(0,5/13,12/13),\qquad
+ n_D=(21/125,28/125,24/25),\qquad
+ a_0=999/1000,\quad b_0=0.
+\tag{16.7}
+$$
+Then
+$$
+ \kappa=0,\quad \lambda=288/325,\quad
+ \mu=\delta=-28/325,\quad \beta=37/325,\quad
+ |\delta|/\beta=28/37.
+$$
+The source-moment test of Theorem 14.2 fails: $\tau_\psi=0$ and
+$d_\psi=441/15625>0$, with $a_0<1$. The source condition (15.6)
+would require $84/37\leq1225/22681$, which is false. The
+entanglement-funded pure-source condition likewise fails, since
+$e_0=0$ and $|\delta|>0$. Nevertheless (16.3) gives
+$$
+ \Delta\geq I(P)>42/1000.
+$$
+Every strict old-residual requirement (12.10) holds at this point.
+
+Proof.
+The squared coordinates in (16.7) sum to one on each qubit.
+The displayed moments follow directly from Definition 15.1.
+The $z_C,z_D$ are exactly those in Proposition 14.5, so
+$$
+ M=\lambda_{\max}(P)=613/650>7/20,\qquad
+ 42646/10^6<I(P)<42649/10^6
+$$
+by its already proved rational entropy intervals. At $b_0=0$ the
+$R_C,R_D$ spectra also agree with that proposition. The smaller
+eigenvalue of $Q_C$ is $1/2000$, while $x_D^2>0$ makes the Bloch
+radius of $Q_D$ strictly greater than $a_0$. Therefore
+$$
+ S(Q_D)<H_2(1/2000),\qquad
+ \ell_C>160205/10^6,\quad \ell_D>95600/10^6.
+$$
+Thus $2I(P)<\ell_C,\ell_D$. Since
+$S(Q_E)\leq H_2(1/2000)<4301/10^6$ and $\log2>693/1000$,
+the remaining control-entropy requirements in (12.10) hold as well.
+Here $(1-z_C^2)(1-z_D^2)=49/4225$ and
+$\alpha=1225/22681$, which verifies the failed comparison for (15.6).
+
+The biases are outside the rectangle of Theorem 13.1. The half trace
+distance to the fixed center in Proposition 14.7 is at least
+$|x_D-0|/2=21/250>1/20000$, by the norm-one observable $IX$.
+No exclusion from every existential neighborhood with a different
+center is asserted. All the old-residual inequalities here are strict,
+so they persist for sufficiently small positive $b$ at fixed $a_0$,
+still inside the rectangle of Theorem 16.2.
+

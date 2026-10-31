@@ -1,0 +1,17 @@
+**Definition 15.1 (Bell-sign moments).** For any source put
+$$
+ \kappa=\operatorname{tr}(\rho K),\qquad
+ \lambda=\operatorname{tr}(\rho L),\qquad
+ \mu=\operatorname{tr}(\rho KL),\qquad
+ \delta=\mu-\kappa\lambda,\qquad
+ \beta=(1-|\kappa|)(1-|\lambda|).
+$$
+These are real, because $K,L$ are commuting Hermitian involutions;
+$KL=-YY$. For a pure product with unit local Bloch vectors
+$(x_E,y_E,z_E)$ they become
+$$
+ \kappa=x_Cx_D,\qquad \lambda=z_Cz_D,\qquad \mu=-y_Cy_D.
+$$
+For a general pure source write
+$e_0=S(\rho_C)=S(\rho_D)$.
+

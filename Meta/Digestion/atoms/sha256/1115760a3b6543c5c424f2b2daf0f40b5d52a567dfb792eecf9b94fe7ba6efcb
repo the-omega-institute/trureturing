@@ -1,0 +1,88 @@
+**Proposition 14.5 (A strict residual intersection, open among pure sources).**
+The region of Theorem 14.2 contains an open set of complex entangled
+pure sources and independent biases inside the residual region
+(12.10), with biases outside the interval of Theorem 13.1.
+
+Proof.
+Start with the exact product source $|\psi_0\rangle=|uv\rangle$, where
+$$
+ |u\rangle=\frac{5|0\rangle+i|1\rangle}{\sqrt{26}},\qquad
+ |v\rangle=\frac{7|0\rangle+i|1\rangle}{\sqrt{50}},\qquad
+ a_0=\frac{999}{1000},\qquad b_0=0.
+$$
+Here $x_C=x_D=\kappa=0$, while $z_C=12/13$ and $z_D=24/25$.
+Thus (14.7) applies. The binary mixture defining $P$ has smaller
+nonzero eigenvalue $(1-z_Cz_D)/2=37/650$, so
+$$
+ M=\lambda_{\max}(P)=\frac{613}{650}>\frac7{20}.
+$$
+The source marginal vectors have unit length, whereas the $b_0=0$
+channel retains only their $Z$ coordinate. The smaller eigenvalues
+of $P_C,P_D$ are $1/26,1/50$; those of $Q_C,Q_D$ are $1/2000$;
+those of $R_C,R_D$ are $253/6500,64/3125$. Therefore
+$$
+ \begin{aligned}
+ I(P)&=H_2(1/26)+H_2(1/50)-H_2(37/650),\\
+ \ell_C&=H_2(253/6500)-H_2(1/2000),\\
+ \ell_D&=H_2(64/3125)-H_2(1/2000).
+ \end{aligned}
+\tag{14.8}
+$$
+The following strict rational intervals make the comparison exact.
+In the last two columns every integer is divided by $10^6$:
+
+| $q$ | lower bound for $H_2(q)$ | upper bound for $H_2(q)$ |
+| --- | ---: | ---: |
+| $1/26$ | $163023$ | $163024$ |
+| $1/50$ | $98039$ | $98040$ |
+| $37/650$ | $218415$ | $218416$ |
+| $253/6500$ | $164506$ | $164507$ |
+| $64/3125$ | $99901$ | $99902$ |
+| $1/2000$ | $4300$ | $4301$ |
+
+Here is a reconstruction using only rational arithmetic. For any
+positive rational logarithm argument $x$, choose an integer $k$ so
+that $y=2^kx\in[1,2]$, and use $\log x=\log y-k\log2$.
+For $t=(y-1)/(y+1)\in[0,1/3]$, set
+$$
+ L(y)=2\sum_{j=0}^{15}\frac{t^{2j+1}}{2j+1},\qquad
+ U(y)=L(y)+\frac{2t^{33}}{33(1-t^2)}.
+$$
+Expanding $\log y=2\operatorname{atanh}t$ gives
+$L(y)\leq\log y\leq U(y)$: the positive tail is bounded by the
+geometric sum with every denominator replaced by $33$. Bound
+$\log2$ by the same formulas at $y=2$, reversing interval endpoints
+when multiplying by a negative number. Apply these intervals to
+$-q\log q-(1-q)\log(1-q)$ and round outward to denominator $10^6$;
+cross-multiplication yields the six rows above.
+
+Equation (14.8) consequently gives
+$$
+ \frac{42646}{10^6}<I(P)<\frac{42649}{10^6},\qquad
+ \ell_C>\frac{160205}{10^6},\qquad
+ \ell_D>\frac{95600}{10^6}.
+$$
+In particular $2I(P)<\ell_C,\ell_D$, and the original deficit obeys
+$\Delta\geq I(P)>42/1000$.
+
+To obtain an open entangled intersection, put
+$$
+ |\psi_\varepsilon\rangle
+ =\sqrt{1-\varepsilon^2}\,|\psi_0\rangle
+      +\varepsilon K|\psi_0\rangle.
+$$
+For $0<\varepsilon<1$, the local pairs are orthonormal, so these
+sources are entangled and
+$$
+ x_C=x_D=0,\qquad
+ \kappa=2\varepsilon\sqrt{1-\varepsilon^2}>0.
+$$
+For sufficiently small positive $\varepsilon$, the strict residual
+inequalities persist by entropy continuity. They also persist for
+sufficiently small positive $b$ and small perturbations of $a_0$.
+Moreover $\max\{x_C^2,x_D^2\}<\kappa^2$ is strict, so it persists
+under all sufficiently small complex pure-state perturbations.
+Entanglement is open at each of these pure sources. This gives the
+claimed relative open set; $a_0>23/24$ and small $b<1/4$ keep it
+outside the bias rectangle of Theorem 13.1.
+

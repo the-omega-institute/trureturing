@@ -1,0 +1,30 @@
+**Theorem 15.5 (An all-pure source condition and the independent-sign bound).**
+For every complex pure source with $\delta=0$,
+$$
+ \Delta\geq I(P)+2e_0
+ \quad\text{for every independent }a,b\in[0,1].
+\tag{15.8}
+$$
+For $\beta>0$, the source-only condition
+$$
+ 3(\log2)|\delta|\leq2e_0\beta
+\tag{15.9}
+$$
+implies $\Delta\geq I(P)\geq0$ for every independent pair of biases.
+If (15.9) is strict, the uniform lower margin is
+$$
+ m=2e_0-3(\log2)|\delta|/\beta>0,\qquad \Delta\geq I(P)+m.
+\tag{15.10}
+$$
+In particular, (15.9) is strict at every entangled pure source with
+$\beta>0$ and $\delta=0$, and persists in a neighborhood among all
+complex pure sources.
+
+Proof.
+For $\delta=0$, Lemma 15.3 gives $J=0$, so (15.2) proves (15.8),
+including $\beta=0$. Otherwise $e_0\leq\log2$ and (15.9) imply
+$\varepsilon=|\delta|/\beta\leq2/3$. Lemma 15.3 therefore applies,
+and $3J\leq3\varepsilon\log2\leq2e_0$. This proves the conclusion
+and the margin (15.10). The strictness and neighborhood assertion
+follow from continuity of the moments and entropy with $\beta>0$.
+

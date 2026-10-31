@@ -1,0 +1,60 @@
+**Theorem 17.3 (Flagged mixed sources and the full product-source plane).**
+Choose any unit qubit vector $|c_0\rangle$ with
+$\langle c_0|X|c_0\rangle=0$, put $|c_1\rangle=X|c_0\rangle$,
+and let $\sigma_0$ be any actual complex qubit density matrix.
+For $p\in[0,1]$, define $\sigma_1=X\sigma_0X$ and
+$$
+ \rho_p=p|c_0\rangle\langle c_0|\otimes\sigma_0
+       +(1-p)|c_1\rangle\langle c_1|\otimes\sigma_1.
+\tag{17.5}
+$$
+For every independent $a,b\in[0,1]$,
+$$
+ B_C=0,\qquad
+ \boxed{\Delta(\rho_p;a,b)\geq I(P)+I(\rho_p)+A_D\geq0.}
+\tag{17.6}
+$$
+In particular this includes $|c_0\rangle\langle c_0|\otimes\sigma_0$
+for arbitrary mixed $\sigma_0$. Every complex pure product source
+with $x_C=0$ or $x_D=0$ therefore satisfies
+$$
+ \boxed{\Delta\geq I(P)+A_{\bar E}\geq0
+ \quad\text{whenever }x_E=0,\qquad
+ \text{for all independent }a,b\in[0,1].}
+\tag{17.7}
+$$
+This removes the $b\leq2^{-1/4}$ restriction from the source-plane
+conclusion of Theorem 16.2, without a Bell-covariance restriction.
+
+Proof.
+The two $C$ vectors are orthonormal. Conjugation by $K=XX$ swaps
+the two complete product blocks in (17.5), so $K\rho_pK=\rho_{1-p}$
+and $Q=\rho_q$, where
+$$
+ q=\frac{1+a(2p-1)}2.
+$$
+The two $D$ block entropies agree, since their states are unitarily
+conjugate. The actual block entropy formulas give
+$$
+ \begin{aligned}
+ S(\rho_p)&=H_2(p)+S(\sigma_0),&S((\rho_p)_C)&=H_2(p),\\
+ S(Q)&=H_2(q)+S(\sigma_0),&S(Q_C)&=H_2(q).
+ \end{aligned}
+$$
+Their substitution into the definition of $B_C$ gives zero for
+every $a$. This quantity depends only on $\rho_p,a$, not on $b$.
+Theorem 17.1 proves (17.6). Taking $p=1$ and $\sigma_0$ pure
+gives (17.7) for $E=C$; exchange the qubits for $E=D$.
+Zero probabilities, zero eigenvalues and both bias endpoints are
+included in these block formulas. If $\sigma_0$ is positive definite
+and $0<p<1$, the source is itself faithful. Moreover
+$$
+ I(\rho_p)=S(p\sigma_0+(1-p)\sigma_1)-S(\sigma_0),
+$$
+which is strictly positive for $0<p<1$ when $\sigma_0\ne\sigma_1$,
+by strict concavity of entropy. Such sources have a strictly positive
+margin uniform on the full bias square, even though no large input
+mutual-information hypothesis was imposed. The proof uses actual
+orthogonal flags and Holevo losses, not a general quantum Ingleton
+assertion.
+

@@ -1,0 +1,19 @@
+**Corollary 14.3 (All biases and an entanglement-dependent interval).**
+Every pure source satisfying
+$$
+ \max\{|x_C|,|x_D|\}\leq|\kappa|
+\tag{14.7}
+$$
+satisfies $\Delta\geq I(P)\geq0$ for all independent $a,b\in[0,1]$.
+For every entangled pure source, $\tau_\psi>0$, the same conclusion
+holds for every $b\in[0,1]$ whenever
+$$
+ a\geq\sqrt{\frac{d_\psi}{\tau_\psi+d_\psi}}.
+$$
+The lower endpoint is zero when $d_\psi=0$.
+
+Proof.
+Condition (14.7) is exactly $d_\psi=0$. For $\tau_\psi>0$, rearranging
+$(1-a^2)d_\psi\leq a^2\tau_\psi$ gives the displayed interval.
+Apply Theorem 14.2.
+

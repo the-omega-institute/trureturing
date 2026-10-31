@@ -1,0 +1,19 @@
+**Proposition 14.4 (An all-bias family through the full entanglement range).**
+Let $|u\rangle,|v\rangle$ be unit qubit vectors with
+$\langle u|X|u\rangle=\langle v|X|v\rangle=0$. For every
+$0\leq\lambda\leq1$ and $\chi\in\mathbb R$, the source
+$$
+ |\psi\rangle=\sqrt\lambda\,|u\rangle|v\rangle
+       +e^{i\chi}\sqrt{1-\lambda}\,X|u\rangle X|v\rangle
+$$
+satisfies (14.7), hence the original inequality for all independent
+biases.
+
+Proof.
+Each local pair $u,Xu$ and $v,Xv$ is orthonormal. Both margins are
+mixtures of these pairs, and each constituent has zero $X$
+expectation. Thus $x_C=x_D=0$ and $d_\psi=0$. Their eigenvalues
+are $\lambda,1-\lambda$, so $\tau_\psi=4\lambda(1-\lambda)$ covers
+$[0,1]$. The relative phase and both local angles on the $YZ$ circle
+are unrestricted.
+

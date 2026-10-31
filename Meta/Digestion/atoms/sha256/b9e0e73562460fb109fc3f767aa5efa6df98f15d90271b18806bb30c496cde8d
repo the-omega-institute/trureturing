@@ -1,0 +1,90 @@
+**Theorem 14.2 (A source-moment sufficient condition).** For every
+complex pure source and every independent $a,b\in[0,1]$,
+$$
+ (1-a^2)d_\psi\leq a^2\tau_\psi
+ \quad\Longrightarrow\quad
+ \Delta(\rho;a,b)\geq I(P)\geq0.
+\tag{14.1}
+$$
+
+Proof.
+First consider an arbitrary source, and set
+$\pi_u=(1+(-1)^u a)/2$. The binary ensemble
+$\{\pi_u,K^u\rho K^u\}_{u=0,1}$ has average $Q$ and Holevo
+information $S(Q)-S(\rho)$. The global commutation $KL=LK$ gives
+$$
+ \Phi_b(K^u\rho K^u)=K^uPK^u.
+$$
+The resulting ensemble has average $R$ and Holevo information
+$g=S(R)-S(P)$. Its actual partial trace to $E=C,D$ is the ensemble
+$\{\pi_u,X^uP_EX^u\}_{u=0,1}$, whose Holevo information is $h_E$.
+The standard finite-dimensional CPTP relative-entropy data-processing
+inequality (Watrous, *The Theory of Quantum Information*), applied to
+these ensembles, therefore gives
+$$
+ 0\leq h_E\leq g\leq S(Q)-S(\rho).
+\tag{14.2}
+$$
+This includes singular states and zero weights. Every positive-weight
+ensemble member $A_u$ is supported on its average $\overline A$, since
+$\overline A\succeq\pi_uA_u$. Thus all positive-weight terms in
+$\chi=\sum_u\pi_uD(A_u\Vert\overline A)$ are finite; zero-weight terms
+are omitted. In particular, the unchanged original deficit obeys the
+general bound
+$$
+ \Delta\geq I(P)+I(Q)-g
+ \geq I(P)+I(Q)-S(Q)+S(\rho).
+$$
+Hence $I(Q)+S(\rho)\geq S(Q)$ is sufficient for $\Delta\geq I(P)$
+for arbitrary sources. We now derive a concrete sufficient condition
+for pure sources from their actual spectra.
+
+Write $e(t)=H_2((1+t)/2)$ for $0\leq t\leq1$; it is decreasing.
+For pure $\rho$, the two possibly nonzero eigenvalues of $Q$ are
+$(1\pm s)/2$, where
+$$
+ s^2=a^2+(1-a^2)\kappa^2.
+\tag{14.3}
+$$
+Indeed, the $2\times2$ Gram matrix of
+$\sqrt{\pi_0}|\psi\rangle,\sqrt{\pi_1}K|\psi\rangle$ has trace one
+and determinant $(1-a^2)(1-\kappa^2)/4$. This also proves (14.3) in
+rank-one degeneracies, and $S(Q)=e(s)$.
+
+The two source margins have equal squared Bloch radius
+$1-\tau_\psi$. If the Bloch vector on $E$ is $(x_E,y_E,z_E)$, its
+actual image $Q_E$ has vector $(x_E,ay_E,az_E)$. Its squared radius is
+$$
+ s_E^2=a^2(1-\tau_\psi)+(1-a^2)x_E^2.
+$$
+Consequently
+$$
+ s^2-s_E^2=a^2\tau_\psi+(1-a^2)(\kappa^2-x_E^2).
+\tag{14.4}
+$$
+The hypothesis of (14.1) makes (14.4) nonnegative for both margins.
+The monotonicity of $e$ gives
+$$
+ S(Q_C)\geq S(Q),\qquad S(Q_D)\geq S(Q).
+\tag{14.5}
+$$
+For this pure source, (14.2) reads $0\leq h_E\leq g\leq S(Q)$.
+Retaining both full endpoint mutual informations, expand exactly:
+$$
+ \begin{aligned}
+ \Delta={}&I(P)+[S(Q_C)-S(Q)]+[S(Q_D)-S(Q)]\\
+          &+[S(Q)-g]+2(g-h_C)+2(g-h_D).
+ \end{aligned}
+\tag{14.6}
+$$
+The three middle entropy terms sum to $I(Q)-g$, and the final two
+terms sum to $4g-2h$. Thus (14.6) is precisely the original
+$I(P)+I(Q)+3g-2h$, with unchanged coefficients. Every term after
+$I(P)$ is nonnegative by (14.2) and (14.5); subadditivity gives
+$I(P)\geq0$.
+
+No division by $1-a^2$, a spectral value or $\tau_\psi$ has been
+used. At $a=1$, $g=h_E=S(Q)=0$. At $a=0$, the hypothesis becomes
+$d_\psi=0$. Both $b=0,1$, arbitrary complex amplitudes and all zero
+spectra are included.
+

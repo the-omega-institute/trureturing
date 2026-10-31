@@ -1,0 +1,215 @@
+**Theorem 13.1 (A uniform positive neighborhood in the residual domain).**
+There is $\theta_0\in(0,1/2)$ such that the following holds uniformly
+for independent $a\in[11/12,23/24]$, $b\in[1/4,3/4]$, arbitrary
+$\phi_C,\phi_D\in\mathbb R$, and $0<\theta<\theta_0$.
+Define
+$$
+ u_{\theta,\phi}=\cos(\theta/2)|0\rangle+
+ e^{i\phi}\sin(\theta/2)|1\rangle,\quad
+ \tau=|u_{\theta,\phi_C}u_{\theta,\phi_D}\rangle
+       \langle u_{\theta,\phi_C}u_{\theta,\phi_D}|.
+$$
+Every physical density operator with $\tfrac12\|\rho-\tau\|_1\leq\theta^3$
+satisfies
+$$
+ \Delta(\rho;a,b)\geq\frac7{32}\theta^2\log(1/\theta^2)>0,
+$$
+and simultaneously
+$$
+ \lambda_{\max}(P)>7/20,\qquad 2I(P)<\ell_C,\qquad 2I(P)<\ell_D.
+$$
+Thus these states are outside both previously proved sufficient
+regions. The threshold is existential; no numerical cutoff is asserted.
+
+Proof.
+Write $c=1-b^2$, $\Lambda=\log(1/\theta^2)$,
+$e(t)=H_2((1+t)/2)$, $f(t)=\operatorname{atanh}(t)/t$.
+Every $O$-bound below is uniform over the compact bias rectangle and
+the two phase circles. These bounds follow from Taylor expansion of
+the displayed analytic matrix entries; the spectral estimates below
+avoid differentiating entropy at a zero eigenvalue.
+First let $\rho=\tau$.
+
+The nonzero spectrum of $P$ is $1-\alpha,\alpha$, with
+$$
+ \alpha=\frac{1-\sqrt{b^2+c\cos^4\theta}}2
+        =\frac c2\theta^2+O(\theta^4).
+$$
+Both $P_E$ have spectrum $1-\beta,\beta$, with
+$$
+ \beta=\frac{1-\sqrt{1-c\sin^2\theta}}2
+       =\frac c4\theta^2+O(\theta^4).
+$$
+The constants multiplying $\theta^2$ stay strictly positive, since
+$c\in[7/16,15/16]$. Using
+$H_2(x)=x\log(1/x)+x+O(x^2)$ gives uniformly
+$$
+ I(P)=2H_2(\beta)-H_2(\alpha)
+ =\frac{c\log2}{2}\theta^2+O(\theta^4\Lambda).
+\tag{13.1}
+$$
+In particular the $\theta^2\Lambda$ terms cancel in this mutual
+information.
+
+The pure-state overlap with $K$ is
+$\sin^2\theta\cos\phi_C\cos\phi_D$. Hence
+$$
+ S(Q)=e\left(\sqrt{a^2+(1-a^2)\sin^4\theta
+                   \cos^2\phi_C\cos^2\phi_D}\right)
+      =e(a)+O(\theta^4).
+\tag{13.2}
+$$
+The marginal Bloch vectors directly give
+$S(Q_E)=e(a)+O(\theta^2)$ and
+$S(R_E)=e(a)+O(\theta^2)$.
+
+We now compute the small spectrum of $R$. Order the even and odd
+$L$-parity sectors as $(|00\rangle,|11\rangle)\oplus(|01\rangle,|10\rangle)$.
+Set
+$$
+ v=\frac12(e^{i\phi_D},e^{i\phi_C})^{\mathsf T},\quad
+ J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+ \pi_\pm=(1\pm a)/2,\quad A_0=\operatorname{diag}(\pi_+,\pi_-),
+$$
+$$
+ F=\begin{pmatrix}\pi_+v^{\dagger}\\\pi_-(Jv)^{\dagger}\end{pmatrix},\qquad
+ B_0=\pi_+vv^{\dagger}+\pi_-Jvv^{\dagger}J.
+$$
+The four transformed source vectors give, in operator norm,
+$$
+ R=\begin{pmatrix}
+ A_0+O(\theta^2)&b\theta F+O(\theta^3)\\
+ b\theta F^{\dagger}+O(\theta^3)&\theta^2B_0+O(\theta^4)
+ \end{pmatrix}.
+\tag{13.3}
+$$
+We have $A_0\succeq I/48$ uniformly and
+$$
+ F^{\dagger}A_0^{-1}F=B_0,\qquad \operatorname{tr} B_0=\|v\|^2=1/2.
+$$
+Let
+$$
+ G=\begin{pmatrix}0&-bA_0^{-1}F\\bF^{\dagger}A_0^{-1}&0\end{pmatrix}.
+$$
+This anti-Hermitian matrix has uniformly bounded norm. Taylor
+expansion of the unitary conjugation $e^{-\theta G}Re^{\theta G}$
+cancels the order-$\theta$ off-diagonal block. Its lower block is
+$$
+ \theta^2(B_0-b^2F^{\dagger}A_0^{-1}F)+O(\theta^3)
+ =c\theta^2B_0+O(\theta^3),
+$$
+its upper block is $A_0+O(\theta^2)$, and its off-diagonal block is
+$O(\theta^3)$. Weyl's eigenvalue bound, applied to the resulting
+block-diagonal comparison, shows that the two large eigenvalues are
+$\pi_\pm+O(\theta^2)$ and the two small ones obey
+$$
+ \lambda_3+\lambda_4=\frac c2\theta^2+O(\theta^3),\qquad
+ 0\leq\lambda_j\leq C\theta^2.
+$$
+The large eigenvalues are uniformly bounded away from zero, so their
+entropy contribution is $e(a)+O(\theta^2)$. For the small ones, use
+$$
+ -\sum_{j=3,4}\lambda_j\log\lambda_j
+ =\Lambda\sum_{j=3,4}\lambda_j
+ -\theta^2\sum_{j=3,4}\frac{\lambda_j}{\theta^2}
+                  \log\frac{\lambda_j}{\theta^2}.
+$$
+The second sum is uniformly bounded by continuity of $x\log x$ on
+$[0,C]$, including zero. Also $\theta^3\Lambda=O(\theta^2)$.
+Thus, without a lower bound on either small eigenvalue,
+$$
+ S(R)=e(a)+\frac c2\theta^2\Lambda+O(\theta^2).
+\tag{13.4}
+$$
+
+Equations (13.1)--(13.4) give
+$$
+ I(P)=O(\theta^2),\quad I(Q)=e(a)+O(\theta^2),\quad
+ g=e(a)+O(\theta^2),\quad
+ h=2e(a)-\frac c2\theta^2\Lambda+O(\theta^2).
+$$
+Substitution into the unchanged original deficit yields
+$$
+ \Delta(\tau;a,b)=c\theta^2\Lambda+O(\theta^2).
+\tag{13.5}
+$$
+Both endpoint mutual informations have been retained.
+
+To verify that this region is new, the marginal radii satisfy
+$$
+ r_{Q,E}^2=a^2+(1-a^2)\sin^2\theta\cos^2\phi_E,
+$$
+$$
+ r_{Q,E}^2-r_{R,E}^2
+ =c\sin^2\theta(\cos^2\phi_E+a^2\sin^2\phi_E).
+$$
+Since $e'(r)=-\operatorname{atanh}r$ and $a$ stays away from both zero
+and one, Taylor expansion is uniform and gives
+$$
+ \ell_E=\frac c2\theta^2 f(a)
+            (\cos^2\phi_E+a^2\sin^2\phi_E)+O(\theta^4).
+$$
+Moreover
+$$
+ f(a)(\cos^2\phi_E+a^2\sin^2\phi_E)
+ \geq a\operatorname{atanh}a
+ \geq\frac{11}{24}\log23>2\log2.
+$$
+The last strict inequality follows from $23^{11}>2^{48}$, for example
+by multiplying $(23^3)^3>2^{39}$ and $23^2>2^9$.
+Combining with (13.1) proves a uniform positive order-$\theta^2$
+gap $\ell_E-2I(P)>0$ for small $\theta$. Also
+$\lambda_{\max}(P)=1-\alpha\to1$ uniformly.
+
+Finally let $t=\tfrac12\|\rho-\tau\|_1\leq\theta^3$.
+We use a self-contained finite-dimensional entropy-continuity estimate.
+For density matrices $A,B$ at half trace distance $t>0$, the positive
+and negative parts of $A-B$ give density matrices $\gamma_+,\gamma_-$
+with $A-B=t(\gamma_+-\gamma_-)$. Thus
+$$
+ W=\frac{A+t\gamma_-}{1+t}=\frac{B+t\gamma_+}{1+t}
+$$
+is a common density matrix. Entropy concavity for one mixture and
+the entropy-of-mixture upper bound for the other, as used in Corollary
+12.3, give
+$$
+ |S(A)-S(B)|\leq B_d(t):=
+ t\log d+(1+t)H_2\!\left(\frac{t}{1+t}\right).
+$$
+Indeed, subtracting the two mixture bounds gives
+$S(A)-S(B)\leq t[S(\gamma_+)-S(\gamma_-)]+(1+t)H_2(t/(1+t))$,
+and exchanging $A,B$ gives the reverse bound; both auxiliary entropies
+lie in $[0,\log d]$. Set $B_d(0)=0$.
+The identity
+$$
+ (1+t)H_2\!\left(\frac{t}{1+t}\right)
+ =(1+t)\log(1+t)-t\log t
+$$
+shows that $B_d$ is increasing and $B_d(t)=O(t\log(1/t))$ as
+$t\downarrow0$. This proof includes singular $A,B$.
+
+Channels and partial traces contract trace distance. Therefore every
+four-dimensional output entropy changes by at most $B_4(t)$ and every
+one-qubit marginal entropy by at most $B_2(t)$. The absolute entropy
+coefficients of $\Delta$ sum to eight in dimension four and twelve in
+dimension two, so
+$$
+ |\Delta(\rho)-\Delta(\tau)|\leq8B_4(t)+12B_2(t)
+ =O(\theta^3\Lambda)=o(\theta^2).
+$$
+Likewise
+$$
+ \begin{aligned}
+ |I(P_\rho)-I(P_\tau)|&\leq B_4(t)+2B_2(t),\\
+ |\ell_{E,\rho}-\ell_{E,\tau}|&\leq2B_2(t).
+ \end{aligned}
+$$
+In particular the change in $\ell_E-2I(P)$ is at most
+$2B_4(t)+6B_2(t)=o(\theta^2)$. Thus the uniform positive gaps of
+order $\theta^2$ persist on the entire physical trace-distance ball.
+The spectral maximum changes by at most
+$2t$, preserving $\lambda_{\max}(P)>7/20$.
+Since $c\geq7/16$, the uniform remainder in (13.5) and the
+continuity error are at most $(7/32)\theta^2\Lambda$ after reducing
+$\theta_0>0$. This proves all assertions simultaneously.
+

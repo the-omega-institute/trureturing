@@ -1,0 +1,83 @@
+**Proposition 19.4 (The exact Schur-map deficit and its remaining gap).**
+Let both pure physical factors be real, and let $G$ be the actual
+global control Gram in (18.8). There is a trace-preserving separable
+Schur channel $\mathcal T_D$ with
+$\mathcal T_D(\Gamma^{(C)})=G$. If $\mathcal P_B$ is control $B$
+computational pinching and $\chi=\mathcal P_B\Gamma^{(C)}$, then
+$$
+ \begin{aligned}
+ \mathcal T_D(\chi)&=\mathcal P_BG=G_A\otimes\sigma_b,
+ &\sigma_b&=(I+bZ)/2,\\
+ A_C-J
+ &=\left[D(\Gamma^{(C)}\Vert\chi)
+        -D(G\Vert\mathcal T_D\chi)\right]
+            -\left[S(G_B)-S(\Gamma^{(C)}_B)\right],
+ \end{aligned}
+\tag{19.9}
+$$
+where $D$ is support-aware relative entropy. Both bracketed
+quantities are nonnegative. In particular ordinary relative-entropy
+data processing gives only
+$$
+ J\leq A_C+S(G_B)-S(\Gamma^{(C)}_B).
+\tag{19.10}
+$$
+
+Proof.
+For $x_D^2+z_D^2=1$, choose real unit vectors $d_+,d_-$ with Bloch
+vectors $(z_D,0,x_D)$ and $(z_D,0,-x_D)$, respectively, and put
+$D_\pm=\operatorname{diag}(d_{\pm,0},d_{\pm,1})$.
+The two Kraus operators
+$$
+ K_+=I_A\otimes D_+,\qquad K_-=Z_A\otimes D_-
+\tag{19.11}
+$$
+satisfy $K_+^*K_++K_-^*K_-=I$. Their entrywise multiplier has unit
+diagonal, multiplies the $B$ coherences by $z_D$, and multiplies
+$A$ coherences in the two $B$ diagonal blocks by $x_D,-x_D$.
+Applying it to (19.5) therefore gives exactly
+$$
+ G=\frac14\left[(I+aZ)\otimes(I+bZ)
+  +\kappa\sqrt uX\otimes(I+bZ)
+  +\lambda\sqrt v(I+aZ)\otimes X\right].
+$$
+Applying it to $\chi$ gives $G_A\otimes\sigma_b$, as asserted.
+This is also a one-way local operation: the diagonal instrument on
+$B$ is followed by its conditional $Z_A$ correction.
+
+For completeness, the local state is separable directly:
+$$
+ \Gamma^{(C)}(0,0)=\frac12\sum_{s=\pm}
+ |s_X\rangle\langle s_X|\otimes\frac{I+z_CX+s x_CZ}{2}.
+$$
+Both second factors are pure. The general-bias state is obtained by
+the local positive filters $\sqrt{I+aZ},\sqrt{I+bZ}$, with total trace
+one, so remains a mixture of at most two product pure states.
+Separability does not make $\mathcal T_D$ a product channel.
+
+The conditional entropy calculation in Proposition 19.3 gives
+$S(\chi)=e(b)+f(uz_C^2)$. The pinching relative-entropy identity
+and (19.4) yield
+$$
+ D(\Gamma^{(C)}\Vert\chi)
+   =A_C+e(b)-S(\Gamma^{(C)}_B).
+$$
+Since $G_A$ is the actual first margin and $G_B$ has diagonal
+$\sigma_b$, the relative-entropy chain rule gives
+$$
+ D(G\Vert G_A\otimes\sigma_b)=J+e(b)-S(G_B).
+$$
+Subtract to obtain (19.9). The first bracket is nonnegative by data
+processing. The second is nonnegative because the $B$ Bloch vector
+$(z_C\sqrt v,0,b)$ is changed to $(z_Cz_D\sqrt v,0,b)$.
+All support-degenerate endpoints follow by continuity.
+
+For these actual inputs the still-unproved comparison $J\leq A_C$
+is therefore exactly the assertion that the first bracket in (19.9)
+is at least the second. Positivity of the first bracket alone does
+not imply it. Proposition 19.3 reformulates the same target as
+$I(A:B)_G\leq D_B(\Gamma^{(C)})$; it supplies neither generic discord
+monotonicity under separable operations nor a proof of the unrestricted
+interior funding comparison. That comparison, and the original
+deficit sign beyond the previously proved domains, remain open.
+

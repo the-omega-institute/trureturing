@@ -1,0 +1,13 @@
+**Corollary 14.6 (A necessary additional condition for a pure counterexample).**
+Every pure counterexample to the original inequality must satisfy
+$$
+ (1-a^2)\bigl(\max\{x_C^2,x_D^2\}-\kappa^2\bigr)>a^2\tau_\psi,
+$$
+in addition to the preceding residual conditions.
+
+Proof.
+The contrapositive of Theorem 14.2 requires
+$(1-a^2)d_\psi>a^2\tau_\psi\geq0$. Thus $d_\psi>0$, and its
+positive-part operation can be removed in this strict inequality.
+The preceding proved sufficient regions also exclude a counterexample.
+

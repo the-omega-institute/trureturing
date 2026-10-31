@@ -1,0 +1,83 @@
+**Lemma 15.3 (The pure-source Gram comparison).**
+For a pure source, $J\geq0$. If $\delta=0$, then $J=0$. If
+$\beta>0$ and $0<\varepsilon=|\delta|/\beta\leq1$, then
+$$
+ J\leq\varepsilon\min\{S(P),S(Q)\}\leq\varepsilon\log2.
+\tag{15.3}
+$$
+If $\beta=0$, necessarily $\delta=0$.
+
+Proof.
+The joint spectral probabilities of the commuting signs are
+$$
+ p_{kl}=\operatorname{tr}\!\left(\rho\frac{(I+kK)(I+lL)}4\right)
+       =\frac{1+k\kappa+l\lambda+kl\mu}{4},\qquad k,l\in\{\pm1\}.
+$$
+They are nonnegative and sum to one. Introduce unit control vectors
+$$
+ |\xi_k\rangle=\sqrt{\pi_0}|0\rangle+k\sqrt{\pi_1}|1\rangle,
+ \qquad
+ |\zeta_l\rangle=\sqrt{\eta_0}|0\rangle+l\sqrt{\eta_1}|1\rangle,
+$$
+and the control matrix
+$$
+ G=\sum_{k,l}p_{kl}|\xi_k\rangle\langle\xi_k|
+                         \otimes|\zeta_l\rangle\langle\zeta_l|.
+\tag{15.4}
+$$
+For $\rho=|\psi\rangle\langle\psi|$, its $(uv,u'v')$ entry is
+$$
+ \sqrt{\pi_u\eta_v\pi_{u'}\eta_{v'}}
+       \sum_{k,l}p_{kl}k^{u+u'}l^{v+v'}.
+$$
+This is the actual overlap of the four vectors
+$\sqrt{\pi_u\eta_v}K^uL^v|\psi\rangle$. Their frame operator is
+$R$, so $G$ and $R$ have the same nonzero spectrum. The two margins
+$G_A,G_B$ are the binary Gram matrices of $Q,P$, respectively.
+Consequently
+$$
+ S(G)=S(R),\qquad S(G_A)=S(Q),\qquad S(G_B)=S(P),\qquad
+ J=I(A:B)_G.
+\tag{15.5}
+$$
+These facts include zero control weights and zero eigenvalues.
+
+Set $p^0_{kl}=(1+k\kappa)(1+l\lambda)/4$. Then
+$$
+ p_{kl}=p^0_{kl}+\delta kl/4,\qquad p^0_{kl}\geq\beta/4.
+$$
+When $\delta=0$, the preparation in (15.4) factorizes as
+$G=G_A\otimes G_B$, proving $J=0$. Otherwise assume the hypotheses
+on $\varepsilon$, and define
+$$
+ p^1_{kl}=p^0_{kl}+\operatorname{sgn}(\delta)\beta kl/4.
+$$
+This is a probability distribution: it is nonnegative, and the
+perturbation has zero total mass and zero one-coordinate marginals.
+Moreover $p=(1-\varepsilon)p^0+\varepsilon p^1$. Preparing the
+same local vectors gives
+$$
+ G=(1-\varepsilon)G_A\otimes G_B+\varepsilon G^1,
+$$
+where $G^1$ is separable and has the same margins $G_A,G_B$.
+Relative-entropy convexity, in its usual finite-dimensional scope
+(Watrous, *The Theory of Quantum Information*), gives
+$$
+ J=D(G\Vert G_A\otimes G_B)
+ \leq\varepsilon D(G^1\Vert G_A\otimes G_B)
+ =\varepsilon I(A:B)_{G^1}.
+$$
+For the last mutual information retain a classical label $(k,l)$
+preparing the product pure states. Data processing from that label
+to $B$ gives $I(A:B)_{G^1}\leq I(A:kl)=S(G_A)$, since its
+conditional $A$-states are pure. Interchanging $A,B$ gives the other
+bound in (15.3). Both compared states are supported on
+$\operatorname{supp}G_A\otimes\operatorname{supp}G_B$, so these
+relative entropies remain finite when the margins are singular.
+Finally $P,Q$ are binary mixtures of pure states, hence each has
+entropy at most $\log2$.
+
+If $\beta=0$, at least one of the two classical signs is
+deterministic in $p$. Its product expectation then satisfies
+$\mu=\kappa\lambda$, so $\delta=0$ as claimed.
+

@@ -1,0 +1,59 @@
+**Theorem 15.2 (An exact independent-control entropy decomposition).**
+For every physical source define
+$$
+ \begin{aligned}
+ A_E&=S(P_E)+S(Q_E)-S(R_E)-S(\rho_E),\\
+ B_E&=S(Q)-S(\rho)-S(Q_E)+S(\rho_E),\\
+ J_0&=S(P)+S(Q)-S(R)-S(\rho).
+ \end{aligned}
+$$
+All $A_E,B_E,J_0$ are nonnegative, and the unchanged deficit is
+$$
+ \Delta=I(P)+I(\rho)+B_C+B_D+2A_C+2A_D-3J_0.
+\tag{15.1}
+$$
+
+Proof.
+Let $U,V$ be independent binary controls with probabilities
+$\pi_u=(1+(-1)^u a)/2$ and $\eta_v=(1+(-1)^v b)/2$, and form
+$$
+ \Omega_{UVCD}=\sum_{u,v}\pi_u\eta_v|uv\rangle\langle uv|
+       \otimes K^uL^v\rho L^vK^u.
+$$
+The conditional quantum entropies given $U$, given $V$, and given
+$(U,V)$ are, respectively, $S(P),S(Q),S(\rho)$. Their marginal
+counterparts are $S(P_E),S(Q_E),S(\rho_E)$. Independence of the
+controls therefore gives
+$$
+ A_E=I(U:V\mid E)_\Omega,\qquad
+ J_0=I(U:V\mid CD)_\Omega.
+$$
+Their nonnegativity is finite-dimensional strong subadditivity
+(Lieb and Ruskai, *Proof of the strong subadditivity of
+quantum-mechanical entropy*). The two terms in $B_E$ are the Holevo
+informations of the actual $U$-ensemble before and after partial
+trace. Relative-entropy data processing makes $B_E\geq0$; see
+Watrous, *The Theory of Quantum Information*. Every positive-weight
+ensemble member is supported on its average, so the relative
+entropies are finite. Zero-weight members are omitted.
+
+Substitute the displayed definitions and
+$I(\rho)=S(\rho_C)+S(\rho_D)-S(\rho)$ into the right side of (15.1).
+The joint terms are $3S(R)-4S(P)-S(Q)$, and the marginal terms are
+$\sum_E[3S(P_E)+S(Q_E)-2S(R_E)]$. All source entropy terms cancel.
+Thus (15.1) retains the original coefficients and both full endpoint
+mutual informations of (1.4).
+
+For a pure source, put $J=S(P)+S(Q)-S(R)=J_0$. Equation (15.1) gives
+$$
+ \Delta\geq I(P)+2e_0-3J.
+\tag{15.2}
+$$
+Equivalently, with $s_E=S(P_E)+S(Q_E)-S(R_E)$ and
+$F_Q=S(Q)-I(Q)$, the exact identity is
+$$
+ \Delta=I(P)+F_Q+2(s_C+s_D)-3J.
+$$
+Here $s_E=A_E+e_0$ and $F_Q=B_C+B_D-2e_0$, which gives (15.2)
+without discarding a negative endpoint term.
+

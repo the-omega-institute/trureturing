@@ -1,0 +1,56 @@
+**Theorem 15.7 (Physical mixed-state balls uniform over every bias).**
+Let $\sigma$ be a pure source for which either $\delta=0$ and
+$e_0>0$, or $\beta>0$ and (15.9) is strict. Define $m=2e_0$ in
+the first case, and use (15.10) in the second; in either case $m>0$.
+For any $0<t_0\leq1$ satisfying
+$$
+ E(t_0):=8B_4(t_0)+12B_2(t_0)<m/2,
+\tag{15.12}
+$$
+every physical complex density matrix with
+$\tfrac12\|\rho-\sigma\|_1\leq t_0$ satisfies
+$$
+ \Delta(\rho;a,b)>m/2
+ \quad\text{for all independent }a,b\in[0,1].
+\tag{15.13}
+$$
+Here $B_d(t)=t\log d+(1+t)H_2(t/(1+t))$ is the entropy-continuity
+bound proved in Theorem 13.1. Such a positive $t_0$ always exists.
+The ball contains faithful states with negative partial transpose.
+For the entangled centers of Proposition 15.6, a sufficiently small
+such ball also intersects the old residual domain in a physical
+open set.
+
+Proof.
+Theorem 15.5 gives $\Delta(\sigma;a,b)\geq m$, uniformly over the
+entire bias square, since $I(P)\geq0$. For each fixed pair of biases,
+channel contractivity bounds every output trace distance by $t_0$,
+and partial trace gives the same bound for each marginal. The
+absolute entropy coefficients of the original deficit are eight in
+dimension four and twelve in dimension two. Thus
+$$
+ |\Delta(\rho;a,b)-\Delta(\sigma;a,b)|\leq E(t_0)<m/2,
+$$
+which proves (15.13) without restricting either bias. The function
+$E$ tends to zero with $t_0$, so (15.12) has positive solutions.
+This extension to mixed states uses entropy continuity.
+
+Every center in the theorem is entangled. Write its nonzero Schmidt
+coefficients as $\sqrt r,\sqrt{1-r}$, where $0<r<1$, and put
+$s=\sqrt{r(1-r)}>0$. For sufficiently small $\gamma>0$, the state
+$$
+ \rho_\gamma=(1-\gamma)\sigma+\gamma I_4/4
+$$
+is faithful and has half trace distance $3\gamma/4<t_0$ from
+$\sigma$. Its partial transpose has eigenvalue
+$\gamma/4-(1-\gamma)s<0$ whenever
+$\gamma<4s/(1+4s)$. These strict properties persist under small
+physical perturbations.
+
+At the centers from Proposition 15.6 the old residual inequalities
+and exclusions hold strictly at suitable interior biases. Reduce
+$t_0$ further to preserve them at those biases, and use continuity
+also in the biases. This yields the asserted physical open
+intersection, while the positivity conclusion (15.13) continues to
+hold throughout the full independent bias square.
+

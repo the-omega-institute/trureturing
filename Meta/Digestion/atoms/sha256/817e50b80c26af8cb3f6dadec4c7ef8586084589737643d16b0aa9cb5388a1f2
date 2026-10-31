@@ -1,0 +1,79 @@
+**Proposition 15.6 (A nonplanar product and an entangled residual bridge).**
+The new source regions intersect the previous residual domain at
+biases outside Theorem 13.1 and sources outside the sufficient
+conditions and mixed ball of §14. The pure-source intersection has
+nonempty interior among complex pure sources.
+
+Proof.
+Take the exact unit Bloch vectors
+$$
+ n_C=\left(\frac5{\sqrt{313}},\frac{60}{13\sqrt{313}},\frac{12}{13}\right),
+ \qquad
+ n_D=\left(\frac7{\sqrt{1201}},-\frac{168}{25\sqrt{1201}},\frac{24}{25}\right),
+$$
+and let $\rho_0=|\psi_0\rangle\langle\psi_0|$ be their product.
+Their unit norms follow from
+$x_E^2=(1-z_E^2)/(1+z_E^2)$ and $y_C=x_Cz_C$, $y_D=-x_Dz_D$.
+All six components are nonzero, the local vectors are unequal, and
+$\mu=\kappa\lambda$. Both $\beta$ and the right side of (15.6) are
+positive. Thus this product lies in the interior of the all-bias
+product region.
+
+At $a_0=999/1000$, $b_0=0$, the $P$-spectrum and $I(P)$ depend
+only on $z_C=12/13,z_D=24/25$. Proposition 14.5 therefore gives
+$$
+ M=613/650>7/20,\qquad 42/1000<I(P)<43/1000.
+$$
+The actual marginal radii give
+$S(R_E)=e(a_0z_E)\geq e(z_E)$ and $S(Q_E)\leq e(a_0)$.
+The rational entropy intervals in Proposition 14.5 give
+$e(z_E)\geq H_2(1/50)>98/1000$ and
+$e(a_0)=H_2(1/2000)<5/1000$. Hence
+$$
+ \ell_C,\ell_D>93/1000>86/1000>2I(P).
+\tag{15.11}
+$$
+Thus the old residual conditions are strict. The source-moment
+condition (14.1) fails: $\tau_{\psi_0}=0$ and
+$d_0=\max\{x_C^2,x_D^2\}-\kappa^2>0$, whereas $a_0<1$.
+Also $a_0>23/24$, outside the bias rectangle of Theorem 13.1.
+
+To obtain entangled sources, put
+$$
+ E_{++}=\frac{(I+K)(I+L)}4=|\Phi^+\rangle\langle\Phi^+|,
+ \quad |\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2,
+$$
+$$
+ W_\theta=I+(e^{i\theta}-1)E_{++},\qquad
+ |\psi_\theta\rangle=W_\theta|\psi_0\rangle.
+$$
+This unitary commutes with $K,L,KL$, so $\kappa,\lambda,\mu$ and
+$\beta>0$ are fixed, and $\delta=0$ throughout. Let $A$ be the
+$2\times2$ coefficient matrix of $\psi_0$, and $s=A_{00}+A_{11}$.
+Writing $t=e^{i\theta}-1$, the diagonal entries each gain $ts/2$.
+Since $\det A=0$,
+$$
+ \det A_\theta=\frac{s^2}{4}(t^2+2t)
+              =\frac{s^2}{4}(e^{2i\theta}-1).
+$$
+Moreover $p_{++}=|s|^2/2=(1+\kappa)(1+\lambda)/4>0$. Thus
+$$
+ \tau_{\psi_\theta}=4|\det A_\theta|^2
+                   =4p_{++}^2\sin^2\theta>0
+$$
+for small nonzero $\theta$. These are entangled pure sources with
+$e_\theta>0$ satisfying (15.9) strictly, and therefore have a full
+pure-source neighborhood covered by Theorem 15.5.
+
+For small $\theta$, (15.11) and the old spectral condition persist
+by entropy continuity. The old condition (14.1) still fails:
+$d_\theta\to d_0>0$ while $\tau_{\psi_\theta}\to0$, so
+$(1-a_0^2)d_\theta>a_0^2\tau_{\psi_\theta}$. Small positive $b$
+and small perturbations of $a_0$ preserve these strict inequalities.
+Finally $x_C(\psi_0)=5/\sqrt{313}>1/4$, whereas the center of the
+mixed ball in Proposition 14.7 has $x_C=0$. The half trace distance
+between these sources is at least $|x_C|/2>1/8$, by testing $XI$.
+This separation persists for small $\theta$, and excludes that old
+ball of radius $1/20000$. All stated exclusions and strict residual
+conditions persist in a sufficiently small pure-source neighborhood.
+

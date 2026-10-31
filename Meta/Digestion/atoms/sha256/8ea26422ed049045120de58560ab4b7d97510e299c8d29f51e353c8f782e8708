@@ -1,0 +1,14 @@
+**Definition 14.1 (Pure-source moments).** For a unit vector
+$|\psi\rangle\in\mathbb C^2\otimes\mathbb C^2$ and
+$\rho=|\psi\rangle\langle\psi|$, put
+$$
+ x_C=\langle\psi|XI|\psi\rangle,\qquad
+ x_D=\langle\psi|IX|\psi\rangle,\qquad
+ \kappa=\langle\psi|XX|\psi\rangle,
+$$
+$$
+ \tau_\psi=4\det\rho_C=4\det\rho_D,\qquad
+ d_\psi=\max\{\max\{x_C^2,x_D^2\}-\kappa^2,0\}.
+$$
+These moments are real, and $0\leq\tau_\psi\leq1$.
+

@@ -1,0 +1,29 @@
+**Proposition 13.2 (Faithful, nonreal entangled inputs in the neighborhood).**
+For every sufficiently small $\theta>0$ and every bias pair in Theorem
+13.1, the neighborhood with $\phi_C=\phi_D=0$ contains a faithful,
+nonreal state with negative partial transpose.
+
+Proof.
+Take
+both phases zero, let $v_\theta$ be a real unit vector orthogonal to
+$u_{\theta,0}$, and put $\varepsilon=\theta^3/4$,
+$$
+ \chi_\theta=\sqrt{1-\varepsilon^2}\,u_{\theta,0}\otimes u_{\theta,0}
+       +i\varepsilon v_\theta\otimes v_\theta,\qquad
+ \rho_\theta=(1-\varepsilon^2)|\chi_\theta\rangle\langle\chi_\theta|
+                    +\varepsilon^2 I_4/4.
+$$
+Its trace distance from $\tau$ is at most
+$\varepsilon+\varepsilon^2<\theta^3$. It is faithful. In the local real
+Schmidt bases its partial transpose has eigenvalue
+$$
+ \varepsilon^2/4-\varepsilon(1-\varepsilon^2)^{3/2}<0
+$$
+for small $\theta$, so it is entangled; its imaginary cross term is
+nonzero. The theorem therefore includes faithful entangled and
+nonreal inputs, without asserting uniformity as $a\to1$ or $b\to1$.
+
+The threshold $\theta_0$ is existential. Uniformity as $a\to1$ or
+$b\to1$ is not asserted. The original unrestricted sign question in
+Open assertion 12.5 remains unresolved outside the proved regions.
+

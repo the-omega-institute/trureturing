@@ -1,0 +1,30 @@
+**Definition 20.1 (Funding coefficients for a fixed source).**
+Let the physical source be a complex pure product, with unit Bloch
+vectors $C=(x,y,z)$ and $D=(X,Y,Z)$. Fix $a\in[0,1]$, put
+$u=1-a^2$, $q=b^2$, and retain the actual $A_C,J$ of §18. Set
+$$
+ \kappa=xX,\qquad\lambda=zZ,\qquad\mu=-yY,
+ \qquad F_C(q)=A_C(a,\sqrt q)-J(a,\sqrt q).
+$$
+Write $\mathsf X,\mathsf Z$ for the control Pauli matrices, to
+distinguish them from the partner's Bloch coordinates. Define
+$$
+ \begin{aligned}
+ H_\pm&=\frac{(1\pm\lambda)(I+a\mathsf Z)
+                    +(\kappa\pm\mu)\sqrt u\,\mathsf X}{4},\\
+ P_\pm(s)&=H_\pm(H_\pm+sI)^{-1},\qquad
+ M_s=\sqrt{P_-(s)}P_+(s)\sqrt{P_-(s)},\\
+ g_j&=\frac1j\int_0^\infty\operatorname{tr}(M_s^j)\,ds,
+ \qquad c_j=2j(2j-1),\\
+ h_j(r)&=\sum_{n\geq j}\frac{\binom nj r^{2(n-j)}}{c_n}
+ \quad(|r|<1),\\
+ L_j&=(1-z^2)^j h_j(z)-(x^2+a^2y^2)^j h_j(az),\\
+ m_j&=(1-\lambda^2)^j h_j(\lambda),\qquad
+ d_j=g_j+L_j-m_j,\qquad j\geq1.
+ \end{aligned}
+\tag{20.1}
+$$
+Every resolvent here is evaluated at $s>0$. If an entropy term is
+identically zero because its marginal is pure and constant, its
+coefficients are zero; expressions $0\cdot h_j(1)$ are not used.
+

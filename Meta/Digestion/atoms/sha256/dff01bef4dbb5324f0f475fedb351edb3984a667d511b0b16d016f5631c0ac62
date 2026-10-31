@@ -1,0 +1,96 @@
+**Proposition 19.3 (The local funding term is optimized discord).**
+For every real pure $C$ and independently variable $a,b\in[0,1]$,
+$$
+ D_B(\Gamma^{(C)})=f(vx^2)+f(uz^2)-f(vx^2+uz^2)=A_C.
+\tag{19.4}
+$$
+The computational-basis measurement of control $B$ attains the
+infimum over all POVMs. The same statement holds with $C,D$ exchanged.
+
+Proof.
+The actual anticommuting orbit in (19.2) gives
+$$
+ \Gamma^{(C)}=\frac14\left[(I+aZ)\otimes(I+bZ)
+       +z\sqrt v(I+aZ)\otimes X
+       +x\sqrt u X\otimes(Z+bI)\right].
+\tag{19.5}
+$$
+Its margins are
+$\Gamma^{(C)}_A=(I+aZ+bx\sqrt uX)/2$ and
+$\Gamma^{(C)}_B=(I+bZ+z\sqrt vX)/2$.
+In particular the first margin contains $bx$, rather than $x$;
+the local control phases cannot be replaced by the phases of the
+commuting global orbit. The nonzero spectrum of the Gram equals that
+of the physical $R_C$, whence
+$$
+ S(\Gamma^{(C)})=f(vx^2+uz^2),\qquad
+ S(\Gamma^{(C)}_B)=f(vx^2).
+\tag{19.6}
+$$
+
+The entropy–concurrence identity used next is the standard pure
+two-qubit intermediate identity in Wootters, equations (6)–(8),
+pp. 2–3, DOI
+[10.1103/PhysRevLett.80.2245](https://doi.org/10.1103/PhysRevLett.80.2245);
+see [the existing source note](../../../Library/QuantumStates/wootters1998formationfunction.md).
+The special POVM optimization needed here has the following direct
+proof. Purify the actual Gram by
+$$
+ |\Omega\rangle_{ABC}
+ =\sum_{i,j}\sqrt{\pi_i\eta_j}|ij\rangle X^iZ^j|c\rangle.
+$$
+Tracing $B$ gives
+$\rho_{AC}=\eta_0|\psi_0\rangle\langle\psi_0|
+                  +\eta_1|\psi_1\rangle\langle\psi_1|$, where
+$$
+ |\psi_0\rangle=\sqrt{\pi_0}|0,c\rangle
+                     +\sqrt{\pi_1}|1,Xc\rangle,
+ \qquad |\psi_1\rangle=(Z_A\otimes Z_C)|\psi_0\rangle.
+$$
+For spin flip $w\mapsto\widetilde w=(Y\otimes Y)\overline w$,
+the symmetric spin-flip matrix of $\sqrt{\eta_j}\psi_j$ is
+$$
+ \tau=-\sqrt u
+ \begin{pmatrix}
+  \eta_0z&\sqrt{\eta_0\eta_1}\\
+  \sqrt{\eta_0\eta_1}&\eta_1z
+ \end{pmatrix}.
+\tag{19.7}
+$$
+Its determinant is $-u\eta_0\eta_1x^2\leq0$ and its trace is
+$-\sqrt u z$. Since it is real symmetric, its singular values
+$s_1\geq s_2$ satisfy $s_1-s_2=\sqrt u|z|$.
+
+Refining a POVM to rank-one effects can only decrease average
+conditional entropy. A rank-one $B$ POVM produces subnormalized pure
+$AC$ vectors that are isometric mixtures of $\sqrt{\eta_j}\psi_j$.
+Write this mixing matrix as $W$, $W^*W=I$, their probabilities as
+$p_j$, and their normalized pure-state concurrences as $c_j$.
+Then
+$$
+ \sum_jp_jc_j=\sum_j|(W\tau W^T)_{jj}|\geq s_1-s_2.
+\tag{19.8}
+$$
+Indeed a Takagi factorization $\tau=V\operatorname{diag}(s_1,s_2)V^T$
+and $T=WV$ give
+$|s_1T_{j1}^2+s_2T_{j2}^2|
+ \geq s_1|T_{j1}|^2-s_2|T_{j2}|^2$; sum and use $T^*T=I$.
+
+The entropy of either margin of a normalized pure two-qubit vector
+of concurrence $c$ is $F(c)=e(\sqrt{1-c^2})=f(c^2)$.
+This follows from its $2\times2$ amplitude determinant. For
+$r=\sqrt{1-c^2}$,
+$$
+ F'(c)=\frac{c\operatorname{atanh}r}{r}\geq0,\qquad
+ F''(c)=\frac{\operatorname{atanh}r-r}{r^3}\geq0.
+$$
+Thus Jensen's inequality and (19.8) give
+$$
+ \sum_jp_jS(\Gamma^{(C)}_{A|j})
+   =\sum_jp_jF(c_j)\geq F(\sqrt u|z|)=f(uz^2).
+$$
+The computational $B$ measurement produces the two $\psi_j$,
+each of concurrence $\sqrt u|z|$, and attains this bound.
+Together with (19.6), this proves (19.4). Continuity covers zero
+control weights, zero-probability outcomes and degenerate spectra.
+

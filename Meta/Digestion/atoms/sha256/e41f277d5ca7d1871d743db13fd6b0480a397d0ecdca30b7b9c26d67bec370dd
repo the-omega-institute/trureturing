@@ -1,0 +1,41 @@
+**Theorem 17.1 (An asymmetric exact deficit identity).**
+For every physical source, retain $A_E,B_E,J_0$ from Theorem 15.2
+and put
+$$
+ T_C=g-h_C=I(U:D\mid C)_\Omega,\qquad
+ T_D=g-h_D=I(U:C\mid D)_\Omega.
+$$
+These are nonnegative for the actual controlled state (12.2), and
+$$
+ \begin{aligned}
+ \Delta&=I(P)+I(\rho)+A_D-B_C+2T_C+T_D,\\
+ \Delta&=I(P)+I(\rho)+A_C-B_D+2T_D+T_C.
+ \end{aligned}
+\tag{17.1}
+$$
+Consequently
+$$
+ \Delta\geq I(P)+I(\rho)+\max\{A_D-B_C,A_C-B_D\}.
+\tag{17.2}
+$$
+In particular $B_C=0$ gives
+$\Delta\geq I(P)+I(\rho)+A_D$, with the exchanged statement for
+$B_D=0$.
+
+Proof.
+Equation (12.6) identifies each $T_E$ with the displayed actual CMI.
+Equivalently it is the genuine loss of $U$-Holevo information under
+the corresponding partial trace. Its nonnegativity is strong
+subadditivity, not an assertion of CMI monotonicity under arbitrary
+changes to the conditioning system. The definitions give exactly
+$$
+ A_E-J_0=T_E-B_E.
+$$
+Substitute $A_C-J_0=T_C-B_C$ twice into (15.1), and then substitute
+$A_D-J_0=T_D-B_D$ once. This yields the first identity in (17.1);
+exchange $C,D$ for the second. Both identities retain the original
+deficit and all its coefficients. Theorem 15.2 supplies $A_E\geq0$,
+and dropping only the nonnegative $T_E$ gives (17.2). All are finite
+entropies of actual classical-quantum states. Singular states and
+zero control probabilities are included by omitting zero blocks.
+

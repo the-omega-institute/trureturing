@@ -1,0 +1,7 @@
+## 13. A pure-boundary neighborhood inside the remaining region
+
+Use the states, channels and exact deficit of Definitions 1.1--1.2 and
+the second-channel gains $\ell_E$ of Definition 12.1.
+Write $I(A)=I_A$. Entropy uses natural logarithms and $0\log0=0$;
+write $H_2(t)=-t\log t-(1-t)\log(1-t)$ with continuous endpoint values.
+

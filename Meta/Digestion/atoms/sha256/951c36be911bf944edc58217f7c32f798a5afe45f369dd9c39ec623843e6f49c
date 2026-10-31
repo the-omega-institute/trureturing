@@ -1,0 +1,97 @@
+**Theorem 17.4 (A correlated mixed-state ball on the full bias square).**
+In (17.5), take $p=3/4$, let the unit vector $|c_0\rangle$ have
+Bloch vector $(0,1/\sqrt2,1/\sqrt2)$, and let the pure $\sigma_0$
+have Bloch vector $(1/3,2/3,2/3)$. Denote this exact correlated
+source by $\tau$. Every actual complex density matrix satisfying
+$\tfrac12\|\rho-\tau\|_1\leq10^{-4}$ obeys
+$$
+ \boxed{\Delta(\rho;a,b)>3/10
+ \quad\text{for all independent }a,b\in[0,1].}
+\tag{17.8}
+$$
+This ball contains a nonempty physical open set of faithful NPT
+mixed states. The center has $0<I(\tau)<\log2$, so the source-only
+large-input-correlation hypothesis of Corollary 17.2 does not apply
+to it. It is not invariant under conjugation by $K$.
+
+Proof.
+The $D$ margin has Bloch vector $(1/3,1/3,1/3)$, of radius
+$1/\sqrt3$. Since the two conditional $D$ blocks are pure,
+$$
+ I(\tau)=H_2\!\left(\frac{1+1/\sqrt3}{2}\right)\in(0,\log2).
+$$
+Put $\lambda=(1+1/\sqrt3)/2$. Then
+$\lambda(1-\lambda)=1/6$, and $-\log x>1-x$ for $0<x<1$ gives
+$$
+ I(\tau)>2\lambda(1-\lambda)=1/3.
+$$
+Theorem 17.3 thus gives a positive margin exceeding $1/3$ on the
+entire closed bias square. Conjugation by $K$ changes the two
+orthogonal $C$ block weights from $3/4,1/4$ to $1/4,3/4$, so
+$K\tau K\ne\tau$.
+
+Let $t_0=10^{-4}$. The actual channel contractivity and entropy
+continuity estimate already used in Theorem 16.4 give
+$$
+ |\Delta(\rho)-\Delta(\tau)|\leq E(t_0)
+ :=8B_4(t_0)+12B_2(t_0).
+$$
+Since $10^4<2^{14}$, $\log2<694/1000$ and
+$\log(1+t)\leq t$,
+$$
+ \begin{aligned}
+ E(t_0)&\leq t_0[28\log2+20(1+t_0)+20\log(10^4)]\\
+ &<233.754/10000<1/30.
+ \end{aligned}
+$$
+Subtracting proves (17.8), uniformly in the original independent
+biases. No Gram spectral equality has been applied to a mixed state.
+
+Write $\sigma_j=|d_j\rangle\langle d_j|$, choosing
+$|d_1\rangle=X|d_0\rangle$. Their Bloch vectors give
+$|\langle d_0|d_1\rangle|^2=1/9$. Put
+$\epsilon=t_0/4$, $\gamma=\epsilon^2$ and define
+$$
+ \begin{aligned}
+ \tau_\epsilon&=\tau+\epsilon|c_0d_0\rangle\langle c_1d_1|
+                    +\epsilon|c_1d_1\rangle\langle c_0d_0|,\\
+ \rho_*&=(1-\gamma)\tau_\epsilon+\gamma I_4/4.
+ \end{aligned}
+$$
+The two displayed product vectors are orthonormal because the $C$
+vectors are. On their span $\tau_\epsilon$ has matrix
+$\left(\begin{smallmatrix}3/4&\epsilon\\\epsilon&1/4\end{smallmatrix}\right)$,
+which is positive since $\epsilon^2<3/16$. It has trace one and
+half trace distance exactly $\epsilon$ from $\tau$.
+The density $\rho_*$ is faithful, and its distance to $\tau$ is at
+most $\epsilon+3\gamma/4<t_0$; the bound $3/4$ for distance to
+$I_4/4$ holds for every density matrix by convexity from pure states.
+
+Under partial transpose on $D$, compress to the orthonormal pair
+$|c_0\overline{d_0}^{\perp}\rangle$,
+$|c_1\overline{d_1}^{\perp}\rangle$. The compression of
+$\tau_\epsilon^{T_D}$ has zero diagonal and off-diagonal modulus
+$\epsilon(1-|\langle d_0|d_1\rangle|^2)=8\epsilon/9$.
+The corresponding compression of $\rho_*^{T_D}$ therefore has
+negative eigenvalue
+$$
+ \gamma/4-(1-\gamma)8\epsilon/9<0.
+$$
+It supplies a negative Rayleigh quotient for the full partial
+transpose. Thus $\rho_*$ is faithful NPT and lies strictly inside
+the ball. Faithfulness and NPT are open, proving the claimed
+physical open subset with the full-square bound (17.8).
+
+The product center (16.7), with $|\delta|/\beta=28/37$, now also
+satisfies the full-square pure bound (17.7); its previous strict
+old-residual facts remain valid. Combining (17.7) with (16.9)
+extends its positive uniform mixed neighborhoods to any compact
+$b\in[0,b_*]$ with $b_*<1$. This does not give a strictly positive
+uniform margin at its identity corner $a=b=1$, where that product
+center has $\Delta=0$.
+
+The unrestricted pure-product sign question when both local $X$
+coordinates are nonzero remains open, as do the unrestricted pure
+and mixed source problems. The sufficient mixed-source criteria in
+this section are not a claim about all sources.
+

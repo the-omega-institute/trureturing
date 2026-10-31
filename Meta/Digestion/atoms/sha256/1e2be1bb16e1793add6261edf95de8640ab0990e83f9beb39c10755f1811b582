@@ -1,0 +1,6 @@
+## 14. A global pure-state source-moment criterion
+
+Use the original complex states, independent biases, channels and exact
+entropy budget of Definitions 1.1--1.2. Write $I(A)=I_A$ and retain
+$\ell_E=S(R_E)-S(Q_E)$ from Definition 12.1. All logarithms are natural.
+

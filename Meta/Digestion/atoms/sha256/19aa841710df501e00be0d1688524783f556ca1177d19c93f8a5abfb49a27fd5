@@ -1,0 +1,47 @@
+**Corollary 17.2 (Input-correlation and control-entropy regions).**
+Every actual complex source satisfies
+$$
+ \Delta(\rho;a,b)\geq I(P)+I(\rho)
+       -H_2\!\left(\frac{1-a}{2}\right).
+\tag{17.3}
+$$
+Thus $I(\rho)\geq H_2((1-a)/2)$ proves $\Delta\geq I(P)$ for
+every $b$. In particular the source-only condition
+$$
+ I(\rho)\geq\log2
+$$
+proves this bound for all independent $a,b\in[0,1]$. If the
+inequality is strict, then
+$$
+ \Delta\geq I(P)+m,\qquad m=I(\rho)-\log2>0
+\tag{17.4}
+$$
+uniformly on the complete closed bias square. This source region
+contains a nonempty open set of faithful NPT mixed states.
+
+Proof.
+Write $\chi_U(\rho)=S(Q)-S(\rho)$ and
+$\chi_U(\rho_C)=S(Q_C)-S(\rho_C)$ for the actual binary
+$U$-ensembles. Then
+$$
+ B_C=\chi_U(\rho)-\chi_U(\rho_C),\qquad
+ 0\leq B_C\leq\chi_U(\rho)\leq H_2((1-a)/2).
+$$
+The first inequality is relative-entropy data processing; the next
+uses nonnegative local Holevo information; the last is the standard
+entropy-of-mixture bound already used in Corollary 12.3 (Watrous,
+*The Theory of Quantum Information*). Equation (17.1), $A_D\geq0$
+and $T_E\geq0$ imply (17.3). The remaining inequalities use
+$H_2\leq\log2$.
+
+For nonemptiness, a maximally entangled pure state has
+$I(\rho)=2\log2$. Its mixtures
+$(1-\epsilon)|\Phi^+\rangle\langle\Phi^+|+\epsilon I_4/4$
+are faithful for $\epsilon>0$ and retain $I(\rho)>\log2$ for
+sufficiently small $\epsilon$ by finite-dimensional entropy
+continuity. The least partial-transpose eigenvalue is
+$-(1-\epsilon)/2+\epsilon/4<0$ when $\epsilon<2/3$.
+Faithfulness, strict input mutual information and NPT are open
+conditions, proving the asserted physical open set. This argument
+does not require a pure-source Gram representation for a mixed state.
+

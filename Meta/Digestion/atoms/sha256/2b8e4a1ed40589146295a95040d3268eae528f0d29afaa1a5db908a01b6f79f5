@@ -1,0 +1,19 @@
+**Definition 19.2 (The actual local orbit control state).**
+For a real pure source $|c\rangle=(c_0,c_1)$ on physical qubit $C$, put
+$x=2c_0c_1$, $z=c_0^2-c_1^2$, and set
+$\pi_i=(1+(-1)^ia)/2$, $\eta_j=(1+(-1)^jb)/2$.
+On control qubits $A,B$ define
+$$
+ \Gamma^{(C)}_{ij,kl}
+  =\sqrt{\pi_i\eta_j\pi_k\eta_l}
+       \langle X^kZ^lc\mid X^iZ^jc\rangle.
+\tag{19.2}
+$$
+For a bipartite state $\omega$, its one-way entropic discord, with $B$
+measured over all POVMs $M$, is
+$$
+ D_B(\omega)=S(\omega_B)-S(\omega)
+                +\inf_M\sum_jp_jS(\omega_{A|j}).
+\tag{19.3}
+$$
+

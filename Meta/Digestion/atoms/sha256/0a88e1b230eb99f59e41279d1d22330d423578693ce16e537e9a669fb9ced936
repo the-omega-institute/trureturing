@@ -1,0 +1,82 @@
+**Proposition 14.7 (An explicit physical mixed-state ball in the residual region).**
+Let $\rho_0=|\psi_0\rangle\langle\psi_0|$ and $a_0=999/1000$
+be the exact product source and bias in Proposition 14.5. Put
+$\eta=1/20000$. Every physical complex density matrix and independent
+biases satisfying
+$$
+ \tfrac12\|\rho-\rho_0\|_1\leq\eta,\qquad
+ |a-a_0|\leq\eta,\qquad 0\leq b\leq\eta
+$$
+obey
+$$
+ \Delta(\rho;a,b)>\frac{19}{1000},\qquad
+ M>\frac7{20},\qquad
+ \ell_E-2I(P)>\frac{651}{500000}\quad(E=C,D).
+\tag{14.9}
+$$
+This region contains faithful states with negative partial transpose
+and a nonempty open subset of the physical state-and-bias domain.
+
+Proof.
+For any density matrix $A$, changing the parameter of either binary
+unitary channel by $s$ changes its output by half trace distance at
+most $|s|/2$, since the difference is
+$(s/2)(A-UAU^{\dagger})$ and $\|A-UAU^{\dagger}\|_1\leq2$.
+Channel contractivity and the triangle inequality therefore bound
+the distance of $P,Q,R$ from their values at $(\rho_0,a_0,0)$ by,
+respectively,
+$$
+ \eta+b/2,\qquad \eta+|a-a_0|/2,\qquad
+ \eta+(b+|a-a_0|)/2.
+$$
+All are at most $\delta=1/10000$, as are the marginal distances.
+The entropy-continuity estimate proved in Theorem 13.1 gives
+$$
+ B_d(\delta)=\delta\log d+(1+\delta)\log(1+\delta)
+                   -\delta\log\delta.
+$$
+The same rational logarithm series used in Proposition 14.5 gives
+$\log2<694/1000$, $\log4<1387/1000$ and
+$\log10000<9211/1000$. Since $\log(1+\delta)\leq\delta$, these imply
+$$
+ B_2(\delta)<\frac{109051}{10^8}<\frac{1091}{10^6},\qquad
+ B_4(\delta)<\frac{115981}{10^8}<\frac{1160}{10^6}.
+$$
+The absolute entropy coefficients in the original deficit and in
+$\ell_E-2I(P)$ consequently give errors bounded by
+$$
+ 8B_4(\delta)+12B_2(\delta)<\frac{23}{1000},\qquad
+ 2B_4(\delta)+6B_2(\delta)<\frac9{1000}.
+$$
+At the exact base point Proposition 14.5 gives
+$\Delta\geq I(P)>42/1000$ and, for both margins,
+$\ell_E-2I(P)>10302/10^6$. Subtracting the displayed errors proves
+the deficit and marginal inequalities in (14.9). The largest
+eigenvalue changes by at most $2\delta$, so
+$$
+ M\geq\frac{613}{650}-2\delta=\frac{61287}{65000}>\frac7{20}.
+$$
+
+For a faithful entangled member, retain $u,v$ from Proposition 14.5,
+put $\varepsilon=1/50000$, and set
+$$
+ |\chi\rangle=\sqrt{1-\varepsilon^2}\,|uv\rangle
+                 +i\varepsilon|Xu\,Xv\rangle,\qquad
+ \rho_*=(1-\varepsilon^2)|\chi\rangle\langle\chi|
+                         +\varepsilon^2 I_4/4.
+$$
+The two local pairs are orthonormal. Hence the distance from $\rho_0$
+is at most $\varepsilon+\varepsilon^2<\eta$, while
+$\rho_*\succeq\varepsilon^2I_4/4$. In local Schmidt coordinates its
+partial transpose has eigenvalue
+$$
+ \varepsilon^2/4-\varepsilon(1-\varepsilon^2)^{3/2}<0.
+$$
+Thus $\rho_*$ is faithful and entangled. Choose $a=a_0$ and
+$0<b<\eta$. The strict distance and parameter inequalities, positivity
+and the negative partial-transpose eigenvalue persist under sufficiently
+small physical perturbations. This gives a nonempty open subset.
+
+The unrestricted pure-state sign, and therefore the original mixed-state
+sign of Open assertion 12.5, remain unresolved outside the proved regions.
+

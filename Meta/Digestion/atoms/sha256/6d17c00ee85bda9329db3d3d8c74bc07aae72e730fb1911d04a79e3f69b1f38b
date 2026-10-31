@@ -1,0 +1,6 @@
+## 15. Bell-sign covariance and neighborhoods uniform over both biases
+
+Use Definitions 1.1--1.2 with the original independent $a,b\in[0,1]$,
+complex density matrices and entropy deficit. Write
+$I(A)=S(A_C)+S(A_D)-S(A)$, including for the source $A=\rho$.
+

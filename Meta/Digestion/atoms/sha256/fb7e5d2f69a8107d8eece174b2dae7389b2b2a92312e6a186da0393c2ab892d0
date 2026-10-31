@@ -1,0 +1,44 @@
+**Lemma 16.1 (Entropy concavity in a squared off-diagonal amplitude).**
+Let $M(q)=M_0+\sqrt q\,H$ be trace-one Hermitian positive semidefinite
+matrices for $0\leq q\leq q_{\max}$. Suppose a unitary involution $W$
+satisfies $WM_0W^*=M_0$ and $WHW^*=-H$. Then $q\mapsto S(M(q))$ is
+concave on the entire closed interval, including singular endpoints.
+
+Proof.
+For $s>0$, put $A=M_0+sI$ and $T=A^{-1/2}HA^{-1/2}$. Both
+$M_0\pm\sqrt qH$ are positive semidefinite, since the two signs are
+unitarily conjugate. Thus $I\pm\sqrt qT$ are positive definite.
+The traces of their corresponding resolvents agree by the same
+conjugation. Averaging them gives the exact identity
+$$
+ \operatorname{tr}(M(q)+sI)^{-1}
+ =\operatorname{tr}\!\left[A^{-1/2}(I-qT^2)^{-1}A^{-1/2}\right].
+\tag{16.1}
+$$
+Indeed,
+$$
+ \frac{(I+xT)^{-1}+(I-xT)^{-1}}2=(I-x^2T^2)^{-1}.
+$$
+Diagonalizing the fixed positive semidefinite $T^2$ expresses the
+right side of (16.1) as a sum of nonnegative weights times
+$(1-qt)^{-1}$, $t\geq0$, with positive denominators. It is convex
+in $q$. Consequently
+$$
+ \operatorname{tr}\!\left[M(q)(M(q)+sI)^{-1}\right]
+ =d-s\operatorname{tr}(M(q)+sI)^{-1}
+$$
+is concave in $q$, where $d$ is the matrix dimension. For every
+trace-one positive semidefinite $M$,
+$$
+ S(M)=\int_0^\infty\left[
+ \operatorname{tr}\bigl(M(M+sI)^{-1}\bigr)-\frac1{1+s}
+ \right]ds.
+\tag{16.2}
+$$
+This follows by summing the scalar integral for $-x\log x$; zero
+eigenvalues contribute zero. Integrate the pointwise concavity on
+any $[\epsilon,L]$ and then take the finite entropy limits
+$\epsilon\downarrow0$, $L\uparrow\infty$. This proves concavity
+without differentiating under the integral and with no nonsingularity
+assumption on $M$. The case $q_{\max}=0$ is immediate.
+

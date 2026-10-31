@@ -1,0 +1,54 @@
+**Theorem 15.4 (A product-source region uniform over both biases).**
+For every pure product source, the source-only condition
+$$
+ 3(1+|\lambda|)|\mu-\kappa\lambda|
+ \leq(1-|\kappa|)(1-z_C^2)(1-z_D^2)
+\tag{15.6}
+$$
+implies $\Delta\geq0$ for all independent $a,b\in[0,1]$.
+If $\delta=0$, the stronger bound $\Delta\geq I(P)$ holds for all
+these biases. Condition (15.6) contains an open neighborhood, among
+product sources, of every $\delta=0$ source with $|\kappa|<1$ and
+$|z_C|,|z_D|<1$.
+
+Proof.
+The case $\delta=0$ follows directly from (15.2), since $e_0=0$.
+This also handles $\beta=0$. For the remaining case put
+$$
+ u=1-z_C^2,\quad v=1-z_D^2,\quad
+ w=u+v-uv=1-\lambda^2,\quad \alpha=uv/w.
+$$
+Here $w>0$ and $0\leq\alpha\leq1$. Let
+$$
+ f(t)=H_2\!\left(\frac{1+\sqrt{1-t}}2\right),\qquad0\leq t\leq1.
+$$
+It is continuous and concave, with $f(0)=0$. On the interior,
+$$
+ f'(t)=\frac12\int_0^1\frac{ds}{1-(1-t)s^2},\qquad
+ f''(t)=-\frac12\int_0^1\frac{s^2\,ds}{[1-(1-t)s^2]^2}\leq0;
+$$
+continuity extends concavity to the endpoints. Writing $c=1-b^2$,
+the exact binary product-source spectra give
+$$
+ S(P_C)=f(cu),\qquad S(P_D)=f(cv),\qquad S(P)=f(cw).
+$$
+Since $u,v\leq w$, concavity gives
+$f(cu)\geq(u/w)f(cw)$ and $f(cv)\geq(v/w)f(cw)$. Thus
+$$
+ I(P)\geq\alpha S(P).
+\tag{15.7}
+$$
+Condition (15.6) is exactly $3\varepsilon\leq\alpha$ after
+cancelling the positive factors in
+$w=(1-|\lambda|)(1+|\lambda|)$. It ensures
+$\varepsilon\leq1/3$, so Lemma 15.3 applies. Equations (15.2),
+(15.3) and (15.7) yield
+$$
+ \Delta\geq(\alpha-3\varepsilon)S(P)\geq0.
+$$
+If $w=0$, both $Z$-signs of the product are deterministic and
+$\delta=0$, already handled without division. All bias endpoints
+and singular spectra are included. At the stated $\delta=0$ sources
+the right side of (15.6) is positive, so the source condition is
+strict and persists under small product-source perturbations.
+

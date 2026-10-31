@@ -1,0 +1,11 @@
+## 18. A stationary entropy kernel and funding on the bias boundary
+
+Retain the original channels, independent $a,b\in[0,1]$, and deficit.
+For a pure product source write its unit local Bloch vectors as
+$(x_E,y_E,z_E)$, and retain $A_E,B_E,J=J_0$ from §15. Thus
+$$
+ A_E=S(P_E)+S(Q_E)-S(R_E),\qquad J=S(P)+S(Q)-S(R).
+$$
+Put $e(r)=H_2((1+r)/2)$, evenly extended to $[-1,1]$, and
+$c_n=2n(2n-1)$ for $n\geq1$.
+

@@ -1,0 +1,82 @@
+**Theorem 16.4 (A uniform physical complex mixed-state ball).**
+Let $\sigma$ be the exact product source (16.7). Every actual complex
+density matrix with $\tfrac12\|\rho-\sigma\|_1\leq10^{-7}$ satisfies
+$$
+ \boxed{\Delta(\rho;a,b)>452/10^6>0}
+ \quad\text{for every independent }\quad
+ a\in[0,1],\quad b\in[0,2^{-1/4}].
+\tag{16.8}
+$$
+This ball contains faithful states with negative partial transpose
+and a physical open subset of such states.
+
+Proof.
+For any pure product source in Theorem 16.2 with
+$u=1-z_C^2>0$ and $v=1-z_D^2>0$, choose the norm-one Pauli
+observable along each local transverse Bloch vector. Their connected
+correlation after $\Phi_b$ is exactly $(1-b^2)\sqrt{uv}$.
+Trace/operator norm duality and the standard natural-log quantum
+Pinsker inequality, already used in this volume (Watrous,
+*The Theory of Quantum Information*), give
+$$
+ I(P)=D(P\Vert P_C\otimes P_D)
+ \geq\tfrac12\|P-P_C\otimes P_D\|_1^2
+ \geq\tfrac12(1-b^2)^2uv.
+\tag{16.9}
+$$
+The relative entropy is finite: a joint density matrix is supported
+on the product of its two marginal supports. At (16.7), $uv=49/4225$.
+Hence Theorem 16.2 gives the bias-uniform bound
+$$
+ \Delta(\sigma;a,b)\geq m_*:=
+ \frac{49(3-2\sqrt2)}{16900}>\frac{49}{100000}.
+\tag{16.10}
+$$
+For the last inequality one may use $\sqrt2<283/200$, checked by
+squaring, and cross-multiply the resulting rational numbers.
+
+Put $t_0=10^{-7}$. Channel contractivity and the entropy-continuity
+bound of Theorem 13.1 give, uniformly in both biases,
+$$
+ |\Delta(\rho)-\Delta(\sigma)|\leq E(t_0)
+ :=8B_4(t_0)+12B_2(t_0),\qquad
+ B_d(t)=t\log d+(1+t)\log(1+t)-t\log t.
+$$
+Using $\log(1+t)\leq t$, $10^7<2^{24}$ and the already proved
+$\log2<694/1000$ gives
+$$
+ \begin{aligned}
+ E(t_0)&\leq t_0[8\log4+12\log2+20(1+t_0)+20\log(10^7)]\\
+ &<372.552002/10^7<38/10^6.
+ \end{aligned}
+$$
+Subtracting this from (16.10) proves (16.8). Only the pure-source
+margin was transported by continuity; no mixed-source Gram identity
+has been assumed.
+
+Write the product vector of $\sigma$ as $|c_0d_0\rangle$, choose
+orthogonal local complements, and put $\epsilon=t_0/4$,
+$\gamma=\epsilon^2$,
+$$
+ |\chi\rangle=\sqrt{1-\epsilon^2}|c_0d_0\rangle
+               +\epsilon|c_0^\perp d_0^\perp\rangle,\qquad
+ \rho_*=(1-\gamma)|\chi\rangle\langle\chi|+\gamma I_4/4.
+$$
+Its distance to $\sigma$ is at most $\epsilon+3\gamma/4<t_0$.
+It is faithful, and its least partial-transpose eigenvalue is
+$$
+ \gamma/4-(1-\gamma)\epsilon\sqrt{1-\epsilon^2}<0.
+$$
+Indeed $\epsilon<1/4$ makes each of $1-\epsilon^2$ and
+$\sqrt{1-\epsilon^2}$ greater than $1/2$, while
+$\gamma=\epsilon^2<\epsilon$. Faithfulness and negative partial
+transpose are open conditions. At the selected $a_0$ and sufficiently
+small positive $b$, the strict old-residual inequalities of Proposition
+16.3 also persist under sufficiently small physical state and bias
+perturbations. Source-test failures concern their respective pure or
+product source domains. There is no claim that every member lies in
+the old residual domain for every bias; $a=1$ already excludes that.
+
+The unrestricted pure-product, pure-source and mixed-source sign
+problems on the full original independent bias square remain open.
+

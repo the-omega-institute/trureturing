@@ -1,0 +1,87 @@
+**Theorem 16.2 (A product-source interpolation rectangle).**
+Let $\rho$ be an arbitrary complex pure product source with unit local
+Bloch vectors $(x_E,y_E,z_E)$. If $x_C=0$ or $x_D=0$, then
+$$
+ \boxed{\Delta(\rho;a,b)\geq I(P)\geq0}
+ \quad\text{for every independent }\quad
+ a\in[0,1],\quad b\in[0,2^{-1/4}].
+\tag{16.3}
+$$
+All signs of the coordinates and all singular output spectra are included.
+
+Proof.
+Exchange the physical qubits if necessary and assume $x_C=0$.
+Fix $y_C,z_C,z_D,a,b$, and parameterize the remaining source circle by
+$$
+ v=1-z_D^2,\qquad t=x_D^2\in[0,v],\qquad y_D^2=v-t.
+$$
+The signs of $x_D,y_D$ will not affect the entropy expressions below.
+Along this segment $\kappa=0$, $\lambda=z_Cz_D$ and
+$\mu=-y_Cy_D$. The spectra of $P,Q,P_C,P_D,Q_C,R_C$ are fixed,
+so in particular $I(P)$ is fixed. The actual pure-source Gram matrix
+of Lemma 15.3 takes the form
+$$
+ \begin{aligned}
+ G(\mu)&=G_0+\mu H,\\
+ G_0&=\tfrac14(I+aZ_A)\otimes
+       (I+bZ_B+\lambda\sqrt{1-b^2}X_B),\\
+ H&=\tfrac14\sqrt{1-a^2}\sqrt{1-b^2}\,X_A\otimes X_B.
+ \end{aligned}
+\tag{16.4}
+$$
+Conjugation by $Z_A$ fixes $G_0$ and negates $H$. Every
+$|\mu|\leq|y_C|\sqrt v$ is realized by the displayed pure-product
+segment, with either sign. Thus the whole symmetric interval is
+positive semidefinite, not merely its endpoints. Lemma 16.1 shows
+that $S(G)$ is concave in $\mu^2=y_C^2(v-t)$, hence in $t$.
+The actual Gram spectral identity $S(G)=S(R)$ from Lemma 15.3
+therefore proves concavity of $S(R)$ in $t$. If $y_C=0$ or $H=0$,
+this entropy is constant. This argument applies the spectral identity
+only to actual pure sources.
+
+Use the function $f$ from Theorem 15.4,
+$$
+ f(u)=H_2\!\left(\frac{1+\sqrt{1-u}}2\right),\qquad0\leq u\leq1.
+$$
+Its integral derivatives on $(0,1)$ give
+$$
+ f''(u)=-\frac12\int_0^1\frac{s^2\,ds}{[1-(1-u)s^2]^2}\leq0,
+ \qquad
+ f'''(u)=\int_0^1\frac{s^4\,ds}{[1-(1-u)s^2]^3}\geq0.
+$$
+Set $u=(1-a^2)(1-t)$, $c=1-a^2z_D^2$ and
+$r=b^2u+(1-b^2)c$. The actual local output spectra give
+$$
+ S(Q_D)=f(u),\qquad S(R_D)=f(r).
+\tag{16.5}
+$$
+Their squared Bloch radii are respectively
+$a^2+(1-a^2)t$ and $b^2t+a^2b^2(v-t)+a^2z_D^2$.
+Moreover
+$$
+ c-u=a^2(1-z_D^2)+(1-a^2)t\geq0,
+$$
+so $r\geq u$. Since $f''$ is nonpositive and increasing,
+$$
+ f''(u)-2b^4f''(r)
+ \leq(1-2b^4)f''(u)\leq0
+ \quad\text{when }2b^4\leq1.
+\tag{16.6}
+$$
+The second derivative in $t$ of $S(Q_D)-2S(R_D)$ is $(1-a^2)^2$
+times the left side. This combination is therefore concave in $t$.
+At $a=1$ it is constant; continuity includes all other boundary
+points without requiring a finite entropy derivative at $u=0$.
+Along the segment the original, unchanged deficit is
+$$
+ \Delta=\text{constant}+3S(R)+S(Q_D)-2S(R_D),
+$$
+so it is concave in $t$.
+
+At $t=0$, both local $X$ coordinates vanish. Corollary 14.3 gives
+$\Delta\geq I(P)$ there for all biases. At $t=v$, one has $y_D=0$,
+so $\kappa=\mu=\delta=0$ and Theorem 15.4 gives the same bound.
+Concavity on $[0,v]$, with $I(P)$ constant, proves (16.3).
+If $v=0$, there is only that endpoint. Zero control weights, $a=0,1$,
+$b=0$ and singular Gram matrices have all been included.
+
