@@ -57,11 +57,6 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                 + "The hypothesis that F is globally nonnegative alone suffices, "
                 + "as established by positive_sign_necessary. The exact general-a Gamma coefficient "
                 + "identity and positivity of B_(n-2) translate u_n <= 0 into the threshold bound."),
-            Proof("negative-origin-obstruction", "negative_cm_necessary",
-                "Origin obstruction for the negative branch",
-                "For every n >= 2 and real a, if -F n a is completely monotone, or merely globally nonnegative, "
-                + "then a >= theta (n-2). The infinity limit supplies the sharper bound "
-                + "a >= theta (n-1) in negative_sign_sharp_necessary."),
             Proof("remainder-upper-multiplier", "exp_remainder_ratio_strict_anti",
                 "Strictly decreasing upper normalized remainder",
                 "Write E_k(y) = (-1)^k (exp(-y) - sum_{j<k} (-y)^j/j!). "
@@ -144,15 +139,7 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                 + "integral of L r a equals the integral of (-t)^m exp(-xt) L r a t for x>0. "
                 + "No positivity assumption on the kernel or parameter is used. "
                 + "On y>x/2, the absolute derivative integrand is dominated by "
-                + "(abs(1-2a)+1) t^(m+2r+6) exp(-xt/2), an integrable exponential moment. "
-                + "Repeated dominated differentiation also gives C-infinity regularity of this integral."),
-            Proof("all-order-original-defect", "all_order_laplace_defect",
-                "The exact outstanding Gaussian term in every derivative of the original F",
-                "For every derivative order m including zero, the mth derivative of the original "
-                + "F_(r+2,a) equals the signed-kernel moment plus the mth derivative of "
-                + "(-1)^(r+2) [Y_(a,a-2)-(a-1)-Laplace(G_a)]. "
-                + "The finite-subtraction identity and smoothness justify this equality on x>0. "
-                + "The Gaussian identity removes this defect exactly, yielding actual_f_iterated_deriv."),
+                + "(abs(1-2a)+1) t^(m+2r+6) exp(-xt/2), an integrable exponential moment."),
             Proof("gaussian-kernel-identity", "gaussian_kernel_identity",
                 "General-parameter Gaussian convolution kernel identity",
                 "For every real a and t, the source kernel G_a(t) equals "

@@ -10,9 +10,9 @@
 The general-parameter Mills definitions retain the original normalization from
 `Result.D`. Both complete equivalence chains are recorded as a proposition.
 The Gamma coefficient correspondence identifies the sharp positive-branch
-origin obstruction. Absolute signed-kernel moments and finite subtraction give
-an exact Gaussian defect in every derivative of the original F. The Gaussian
-Laplace identity and the original finite recurrence give the infinity
+origin obstruction. Absolute signed-kernel moments, finite subtraction and the
+Gaussian Laplace identity give the exact signed Laplace representation and
+every ordinary derivative of the original F. The original finite recurrence gives the infinity
 asymptotic and both complete classification chains.
 -/
 
@@ -635,22 +635,6 @@ private theorem positive_cm_necessary (n : ℕ) (hn : 2 ≤ n) (a : ℝ)
     (h : completelyMonotone n a) : a ≤ theta (n - 2) :=
   positive_sign_necessary n hn a (cm_sign_projections n a h)
 
-private theorem negative_sign_necessary (n : ℕ) (hn : 2 ≤ n) (a : ℝ)
-    (h : globalNonpositive n a) : theta (n - 2) ≤ a := by
-  have hl : Tendsto (fun x : ℝ => x ^ (2 * n) * (-F n a x)) (𝓝[>] (0 : ℝ))
-      (𝓝 (-(-u n a (a - 2)))) := by
-    simpa only [neg_mul_eq_mul_neg, neg_neg] using (zero_endpoint n hn a).neg
-  have hu := nonnegative_sign_forces_nonpositive_limit hl h
-  have he : n - 2 + 2 = n := by omega
-  have hs := (coefficient_threshold_signs (n - 2) a).2
-  rw [he] at hs
-  apply hs.mp
-  linarith
-
-private theorem negative_cm_necessary (n : ℕ) (hn : 2 ≤ n) (a : ℝ)
-    (h : CompletelyMonotoneOn (fun x => -F n a x)) : theta (n - 2) ≤ a :=
-  negative_sign_necessary n hn a (neg_cm_sign_projection n a h)
-
 /-! The general-parameter Gaussian convolution kernel, before finite subtraction. -/
 
 def G (a t : ℝ) : ℝ :=
@@ -1237,41 +1221,6 @@ private theorem signed_kernel_moment_iterated (r : ℕ) (a : ℝ) (m : ℕ) :
       exact ih hy
     exact he.deriv_eq.trans (signed_kernel_moment_deriv r m a hx).deriv
 
-private theorem signed_kernel_laplace_smooth (r : ℕ) (a : ℝ) :
-    ContDiffOn ℝ ∞ (moment (L r a) 0) (Ioi 0) := by
-  apply contDiffOn_of_differentiableOn_deriv (n := ⊤)
-  intro m _ x hx
-  have he : iteratedDerivWithin m (moment (L r a) 0) (Ioi 0) =ᶠ[𝓝 x]
-      moment (L r a) m := by
-    filter_upwards [Ioi_mem_nhds hx] with y hy
-    rw [iteratedDerivWithin_of_isOpen isOpen_Ioi hy]
-    exact signed_kernel_moment_iterated r a m hy
-  exact ((signed_kernel_moment_deriv r m a hx).differentiableAt.congr_of_eventuallyEq
-    he).differentiableWithinAt
-
-private theorem all_order_laplace_defect (r m : ℕ) (a : ℝ) {x : ℝ} (hx : 0 < x) :
-    iteratedDeriv m (F (r + 2) a) x =
-      (∫ t in Ioi (0 : ℝ), (-t) ^ m * exp (-x * t) * L r a t) +
-      iteratedDeriv m (fun y : ℝ => (-1 : ℝ) ^ (r + 2) *
-        (Y a (a - 2) y - (a - 1) -
-          ∫ t in Ioi (0 : ℝ), exp (-y * t) * G a t)) x := by
-  have he : EqOn (F (r + 2) a - moment (L r a) 0)
-      (fun y : ℝ => (-1 : ℝ) ^ (r + 2) *
-        (Y a (a - 2) y - (a - 1) -
-          ∫ t in Ioi (0 : ℝ), exp (-y * t) * G a t)) (Ioi 0) := by
-    intro y hy
-    simpa only [Pi.sub_apply, moment, pow_zero, one_mul] using f_laplace_defect r a hy
-  have hF : ContDiffAt ℝ m (F (r + 2) a) x :=
-    ((regularity_and_origin (r + 2) (by omega) a).1.contDiffAt (Ioi_mem_nhds hx)).of_le
-      (by exact_mod_cast le_top)
-  have hM : ContDiffAt ℝ m (moment (L r a) 0) x :=
-    ((signed_kernel_laplace_smooth r a).contDiffAt (Ioi_mem_nhds hx)).of_le
-      (by exact_mod_cast le_top)
-  have hd := he.iteratedDeriv_of_isOpen isOpen_Ioi m hx
-  rw [iteratedDeriv_sub hF hM, signed_kernel_moment_iterated r a m hx] at hd
-  dsimp only [moment] at hd
-  linarith
-
 /-! The Gaussian identity removes the defect and leaves the actual original F. -/
 
 private theorem actual_f_laplace (r : ℕ) (a : ℝ) {x : ℝ} (hx : 0 < x) :
@@ -1353,14 +1302,6 @@ private theorem negative_cm_sufficiency (n : ℕ) (hn : 2 ≤ n) (a : ℝ)
     _ = (-1 : ℝ) ^ m * (-((-t) ^ m * exp (-x * t) * L r a t)) := by
       rw [← hs]
       ring
-
-private theorem positive_sign_sufficiency (n : ℕ) (hn : 2 ≤ n) (a : ℝ)
-    (ha : a ≤ theta (n - 2)) : globalNonnegative n a := by
-  exact cm_sign_projections n a (positive_cm_sufficiency n hn a ha)
-
-private theorem negative_sign_sufficiency (n : ℕ) (hn : 2 ≤ n) (a : ℝ)
-    (ha : theta (n - 1) ≤ a) : globalNonpositive n a := by
-  exact neg_cm_sign_projection n a (negative_cm_sufficiency n hn a ha)
 
 private theorem positive_chain (n : ℕ) (hn : 2 ≤ n) (a : ℝ) :
     (globalNonnegative n a ↔ completelyMonotone n a) ∧
