@@ -91,7 +91,6 @@ private theorem arithmetic (a b : ℤ) (ha : 2 ≤ a) (hb : 4*a ≤ b) :
     rw [ea,eb]; ring_nf
     exact ⟨by positivity,by positivity,by positivity,by positivity⟩
   obtain ⟨cA,cB,cL,cM,cGV,cGW,cGX⟩ := coefficient_bounds (2*a) (2*b) (by omega) (by omega)
-  dsimp only at cA cB cL cM cGV cGW cGX
   have hh0 : (0 : ℤ) ≤ h := by positivity
   dsimp only [Gates]
   ring_nf at hlow hhigh margins cA cB cL cM cGV cGW cGX ⊢
@@ -123,16 +122,20 @@ private theorem symbolic (r s : ℕ) (hr : 2 ≤ r) (hs : r+2 ≤ s) :
   let f := fun i : ℕ => centered N ((2 : ℤ)^i*A)
   let g := fun i : ℕ => centered (modulus (k+1)) ((2 : ℤ)^i*(2*A))
   have ha : 2 ≤ a := by
-    simpa only [a] using pow_le_pow_right₀ (by decide : (1 : ℤ) ≤ 2) (show 1 ≤ r-1 by omega)
+    simpa only [a,pow_one] using pow_le_pow_right₀ (by decide : (1 : ℤ) ≤ 2) (show 1 ≤ r-1 by omega)
   have hb : 4*a ≤ b := by
     have he : (2 : ℤ)^(r+1) = 4*a := by
       rw [show r+1=(r-1)+2 by omega,pow_add]; norm_num; dsimp [a]; ring
     rw [←he]
     exact pow_le_pow_right₀ (by decide : (1 : ℤ) ≤ 2) (by omega)
   have hx : (2 : ℤ)^r=x := by
-    dsimp [x,a]; rw [show r=(r-1)+1 by omega,pow_succ]; ring
+    dsimp [x,a]
+    conv_lhs => rw [show r=(r-1)+1 by omega,pow_succ]
+    ring
   have hy : (2 : ℤ)^s=y := by
-    dsimp [y,b]; rw [show s=(s-1)+1 by omega,pow_succ]; ring
+    dsimp [y,b]
+    conv_lhs => rw [show s=(s-1)+1 by omega,pow_succ]
+    ring
   have hN : N=x^2*y^2-1 := by
     dsimp [N,k,modulus]
     rw [show 2*r+2*s=r+r+(s+s) by omega]
@@ -147,7 +150,11 @@ private theorem symbolic (r s : ℕ) (hr : 2 ≤ r) (hs : r+2 ≤ s) :
   change 0<R at hR
   change R ≤ (b-1)*B at hT
   obtain ⟨h,hh,hhb,hlow,hhigh⟩ := ceiling_multiple R B (b-1) hR
-    (by dsimp [B,x,y]; have : 0 ≤ b := by omega; positivity) hT
+    (by
+      have ha0 : 0 ≤ a := by omega
+      have hb0 : 0 ≤ b := by omega
+      dsimp [B,x,y]
+      positivity) hT
   have hmask : h < 2^(s-1) := by
     have he : (h : ℤ)<(2 : ℤ)^(s-1) := by change (h : ℤ)<b; omega
     exact_mod_cast he
@@ -287,7 +294,7 @@ private theorem symbolic (r s : ℕ) (hr : 2 ≤ r) (hs : r+2 ≤ s) :
     · exact hip i hi
   have inventory : (U++[u]++V++[v]++W++[w]++X++[z]) = List.range k := by
     have hUall : U++[u]=List.range s := by
-      simpa only [U,u,show s-1+1=s by omega] using (List.range_succ (n:=s-1)).symm
+      simpa only [U,u,Nat.succ_eq_add_one,show s-1+1=s by omega] using (List.range_succ (n:=s-1)).symm
     have hVall : V++[v]=List.range' s s := by
       simpa only [V,v,show s+(s-1)=2*s-1 by omega,show s-1+1=s by omega] using
         (List.range'_1_concat (s:=s) (n:=s-1)).symm
@@ -303,18 +310,15 @@ private theorem symbolic (r s : ℕ) (hr : 2 ≤ r) (hs : r+2 ≤ s) :
     simp only [Nat.zero_add,show s+s=2*s by omega] at h1 h2 h3
     calc
       _ = (U++[u])++(V++[v])++(W++[w])++(X++[z]) := by simp only [List.append_assoc]
-      _ = _ := by rw [hUall,hVall,hWall,hXall,List.range_eq_range',h1,h2,h3]; congr 1; dsimp [k]; omega
+      _ = _ := by rw [hUall,hVall,hWall,hXall,List.range_eq_range',h1,h2,h3]
+        rw [show 2*s+r+r=k by dsimp [k]; omega,←List.range_eq_range']
   have hp : word.Perm (List.range k) := by
     rw [←inventory]
-    have hh := split.append_right [v]
-    have he : (U++[u]++(Vlo++Vhi)++[v]++W++[w]++X++[z]).Perm
-        (U++[u]++V++[v]++W++[w]++X++[z]) := by
-      exact (((((List.Perm.refl U).append (List.Perm.refl [u])).append split).append
-        (List.Perm.refl [v])).append (List.Perm.refl W) |>.append (List.Perm.refl [w]) |>.append
-        (List.Perm.refl X) |>.append (List.Perm.refl [z])
-    apply List.Perm.trans (l₂:=U++[u]++(Vlo++Vhi)++[v]++W++[w]++X++[z]) _ he
     apply Multiset.coe_eq_coe.mp
+    have hsplit : (Vlo : Multiset ℕ)+(Vhi : Multiset ℕ)=(V : Multiset ℕ) := by
+      simpa only [←Multiset.coe_add] using Multiset.coe_eq_coe.mpr split
     simp only [word,pre,F,←Multiset.coe_add]
+    rw [←hsplit]
     ac_rfl
   have gatesOld : Gates (N/2) (U.map f).sum (f u) (Vlo.map f).sum (f v)
       (W.map f).sum (f w) (F.map f).sum (f z) := by
