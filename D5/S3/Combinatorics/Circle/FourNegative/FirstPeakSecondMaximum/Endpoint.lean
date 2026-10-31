@@ -15,8 +15,10 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open private ordinary from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.AscendingSchedule
-open private ordinary from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.DescendingSchedule
+open private ascending_joint_construction
+  from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.AscendingSchedule
+open private descending_joint_construction
+  from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.DescendingSchedule
 
 /-- A common physical order and a literal ear cut throughout the first-peak chamber. -/
 theorem actualSource_first_peak_second_maximum_joint_lift (a b c d : ℕ)
@@ -46,12 +48,13 @@ theorem actualSource_first_peak_second_maximum_joint_lift (a b c d : ℕ)
             OriginalOrder (a + 3 * b) (1 + 2 ^ a + 2 ^ (a + b) + 2 ^ (a + 2 * b)) sigma ∧ 
             OriginalOrder (a + 3 * b + 1) (2 * (1 + 2 ^ a + 2 ^ (a + b) + 2 ^ (a + 2 * b)))
               (earWord (a + 3 * b) sigma j) := ⟨sigma,3 * b,rfl,hj,hold,hnew⟩
-        simpa only [hk,hs,if_pos (show b=b ∧ b=b from ⟨rfl,rfl⟩)] using hres
-      · obtain ⟨sigma,hold,hnew⟩ := Ascending.ordinary a b c d hb hbc hcd hda he
+        rw [hk,hs]
+        simpa only [eq_self, and_self, ite_true] using hres
+      · obtain ⟨sigma,hold,hnew⟩ := ascending_joint_construction a b c d hb hbc hcd hda he
         exact ⟨sigma,0,by simp only [if_neg he],by omega,hold,hnew⟩
     obtain ⟨sigma,j,_,hj,hold,hnew⟩ := hh
     exact ⟨sigma,j,hj,hold,hnew⟩
-  · obtain ⟨sigma,hold,hnew⟩ := Descending.ordinary a b c d hc (by omega) hbd hda
+  · obtain ⟨sigma,hold,hnew⟩ := descending_joint_construction a b c d hc (by omega) hbd hda
     exact ⟨sigma,0,by omega,hold,hnew⟩
 
 #print axioms actualSource_first_peak_second_maximum_joint_lift

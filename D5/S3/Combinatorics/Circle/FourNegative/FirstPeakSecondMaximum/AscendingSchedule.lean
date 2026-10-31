@@ -30,7 +30,7 @@ open private label lift_order marked_word
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 set_option maxHeartbeats 2400000 in
-private theorem ordinary (a b c d : ℕ)
+private theorem ascending_joint_construction (a b c d : ℕ)
     (hb : 2 ≤ b) (hbc : b ≤ c) (hcd : c ≤ d) (hda : d<a) (hne : ¬(b=c ∧ c=d)) :
     ∃ sigma : List (Fin (a + b + c + d)),
       OriginalOrder (a + b + c + d) (1 + 2 ^ a + 2 ^ (a + b) + 2 ^ (a + b + c)) sigma ∧ 
