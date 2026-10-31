@@ -2232,3 +2232,774 @@ worldwide priority. The question in Definition 26.1 outside the
 stated scale-dependent union remains unresolved here. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 27. The complete multipartite local obstruction and its sole exception
+
+**定义 27.1（Local spaces and the singlet threshold）。** Let
+$G=K_{p_1,\ldots,p_q}$, where $q\geq2$ and every $p_a$ is a
+positive integer. No parity condition is imposed on
+$n=\sum_a p_a$. For an integer $S\geq1$, put the same spin $S$
+at each vertex, with the normalized ladders of (19.5), and set
+
+$$
+\begin{aligned}
+K_G&=\sum_{ij\in E(G)}(J_i^+J_j^-+J_i^-J_j^+),&
+\mathcal V_G(0)&=\ker\sum_i Z_i,\\
+\mathcal S_G&=\ker\sum_iJ_i^+\cap\ker\sum_iJ_i^-,&
+e_G(0)&=\min\operatorname{spec}(K_G|_{\mathcal V_G(0)}),\\
+\mathcal G_G(0)&=\ker(K_G-e_G(0)I)\cap\mathcal V_G(0),&
+L_a&=p_aS.
+\end{aligned}
+\tag{27.1}
+$$
+
+All spaces are complex subspaces of $V_S^{\otimes n}$; in
+particular $\mathcal S_G$ includes every total-singlet copy.
+Let $\boldsymbol T_a$ be the sum of the site spins in part $a$.
+Define a list $j_a^*$ and a positive number $C_*$ as follows:
+
+$$
+\begin{aligned}
+2\max_aL_a\leq\sum_aL_a:quad&j_a^*=L_a\quad\hbox{for all }a;\\
+L_d>R:=\sum_{a\ne d}L_a:\quad&j_d^*=R,\quad
+ j_a^*=L_a\quad(a\ne d);\\
+C_*&=\sum_a j_a^*(j_a^*+1),\qquad b_G=-\frac23 C_*.
+\end{aligned}
+\tag{27.2}
+$$
+
+The two alternatives are exhaustive, and $d$ in the second is
+unique. Equality in the first alternative is included there.
+Every $j_a^*$ is a positive integer, including $q=2$.
+
+**定理 27.2（Strict local separation, with the exact singlet minimum）。**
+For every graph and spin in Definition 27.1 the singlet space is
+nonzero and
+
+$$
+\min_{\substack{v\in\mathcal S_G\\\|v\|=1}}
+ \langle v,K_Gv\rangle=b_G.
+\tag{27.3}
+$$
+
+The minimum is attained precisely on the total-singlet subspace
+with part spins $j_a^*$, retaining all its internal and coupling
+multiplicities. Unless $G=K_3$ and $S=1$,
+
+$$
+e_G(0)<b_G,\qquad \mathcal G_G(0)\cap\mathcal S_G=\{0\}.
+\tag{27.4}
+$$
+
+At that sole exception,
+
+$$
+e_{K_3}(0)=-4=b_{K_3},\qquad
+\mathcal G_{K_3}(0)=\mathcal S_{K_3}=\mathbb C z,
+\quad
+z=\frac1{\sqrt6}\sum_{\pi\in\mathfrak S_3}
+ \operatorname{sgn}(\pi)|\pi(1,0,-1)\rangle.
+\tag{27.5}
+$$
+
+In fact the least eigenvalue on the whole $V_1^{\otimes3}$ is
+also $-4$, with this same one-dimensional ground space.
+
+Proof. The singlet threshold calculation is the collective-part
+Casimir and coupling calculation in the
+[owning volume, (10.7)–(10.10) and (11.6)](TOKEN_GRAPH_BLOWUP_DEFECT_DECOMPOSITION.md).
+The clique calculation there, (12.4)–(12.7), the bipartite case,
+and the diamond calculation (23.3)–(23.6) are its special
+instances. We use these as the singlet bounds and attaining
+trials inside the local obstruction, with their complete
+parameter ranges verified below.
+The classical addition rule and its coefficient convention are
+[NIST DLMF (34.1.1), (34.2.1), (34.3.16)–(34.3.17)](https://dlmf.nist.gov/34.1).
+For nonnegative integer spins $u,v$, every spin
+$|u-v|,|u-v|+1,\ldots,u+v$ occurs in $V_u\otimes V_v$,
+with both endpoints. Iteration gives exactly the interval
+$[\max(0,2M-U),U]$ for a list with sum $U$ and maximum $M$,
+as proved in the owning volume's (10.8).
+
+A part with $p_a=1$ has only spin $S$. A part with $p_a\geq2$
+has every integer spin from $0$ through $L_a=p_aS$, by this
+interval rule. Fix all part Casimirs and a multiplicity copy,
+and denote its part spins by $j_1,\ldots,j_q$. Such a copy
+contains a total singlet exactly when
+$2\max_a j_a\leq\sum_a j_a$. On any total singlet, rotations
+interchange the three Cartesian axes and leave the vector fixed.
+Writing $\boldsymbol T=\sum_a\boldsymbol T_a$ therefore gives,
+for every unit singlet, including a superposition of these copies,
+
+$$
+\begin{aligned}
+\langle K_G\rangle
+ &=\frac43\sum_{a<b}\langle\boldsymbol T_a\cdot\boldsymbol T_b\rangle
+ =-\frac23\sum_a\langle\boldsymbol T_a^2\rangle.
+\end{aligned}
+\tag{27.6}
+$$
+
+The part Casimirs commute with total spin, so the singlet space
+has the same orthogonal decomposition into their eigenspaces.
+On one of them (27.6) is $-\frac23\sum_a j_a(j_a+1)$.
+In the balanced case each $j_a\leq L_a$, and the simultaneous
+maximal list is feasible. In the dominant case, on every
+singlet copy,
+
+$$
+j_d\leq\sum_{a\ne d}j_a\leq R,\qquad j_a\leq L_a\ (a\ne d).
+\tag{27.7}
+$$
+
+The dominant part has at least two vertices: $p_d=1$ would give
+$L_d=S\leq\sum_{a\ne d}p_aS$. Thus its spin $R$ really occurs,
+and the list $(R,(L_a)_{a\ne d})$ is feasible. Since $x(x+1)$
+is strictly increasing for nonnegative integers, these bounds
+prove (27.3), its attainment and its equality characterization
+on the entire singlet space. They also include two or three
+parts and a dominant part of either parity; none of the parity
+or whole-graph hypotheses of the original applications is
+needed for this local Casimir calculation.
+
+We next prove strictness. Choose actual part-spin subspaces with
+the positive spins $j_a=j_a^*$, and put
+
+$$
+C=\sum_a j_a(j_a+1)=C_*,\qquad
+Q=\sum_a(T_a^z)^2.
+$$
+
+On a singlet $w$ in their tensor product the complete cross-part
+edge set gives the vector identity
+
+$$
+K_Gw=(Q-CI)w,\qquad \langle w,Qw\rangle=C/3
+\quad(\|w\|=1).
+\tag{27.8}
+$$
+
+Indeed, on the whole tensor product,
+$K_G=\boldsymbol T^2-(T^z)^2-\sum_a\boldsymbol T_a^2+Q$.
+Both total-spin terms vanish on a singlet. The second identity
+follows by rotating each part's squared components and using its
+Casimir. Consequently it suffices to find a singlet $w$ which
+is not an eigenvector of the diagonal operator $Q$. Then it has
+Rayleigh quotient $b_G$ but is not a $K_G$ eigenvector. If the
+minimum on the finite space $\mathcal V_G(0)$ were $b_G$, equality
+in its spectral Rayleigh bound would make every such attaining
+vector an eigenvector. Thus that one $w$ proves $e_G(0)<b_G$.
+
+Here are the required coefficient facts, with their endpoints.
+An integer-spin list $(h_1,\ldots,h_t)$ of even sum $U$ with
+$2\max h_i\leq U$ has a singlet whose all-zero weight
+coordinate is nonzero. Zero spins may be deleted. To prove the
+claim by induction, merge two positive spins $a,b$, letting $R$
+and $M$ be the sum and maximum of the remaining spins. If the
+list has two factors, the polygon condition says $a=b$ and the
+pair singlet has nonzero zero coordinate. Otherwise choose an integer $c$ of parity $a+b$ in
+
+$$
+\max\{|a-b|,2M-R\}\leq c\leq\min\{a+b,R\}.
+\tag{27.9}
+$$
+
+This interval is nonempty. The original polygon inequalities
+imply $|a-b|\leq R$ and $2M-R\leq a+b$, while $M\leq R$
+gives $2M-R\leq R$. Its lower endpoints have parity $a+b$
+because $U$ is even, as do $a+b$ and $R$. The new list consisting
+of $c$ and the remaining spins again has even sum and satisfies
+the polygon inequalities. Its positive length decreases, so
+induction applies. The coefficient coupling $|a,0;b,0\rangle$
+to $|c,0\rangle$ is nonzero throughout this chosen parity range:
+with $g=(a+b+c)/2$ the primary all-zero formula is
+
+$$
+\begin{pmatrix}a&b&c\\0&0&0\end{pmatrix}
+=(-1)^g\frac{g!}{(g-a)!(g-b)!(g-c)!}
+ \sqrt{\frac{(2g-2a)!(2g-2b)!(2g-2c)!}{(2g+1)!}}\ne0.
+\tag{27.10}
+$$
+
+This is [DLMF (34.3.5)](https://dlmf.nist.gov/34.3.E5), with
+(34.1.1) converting to the Clebsch–Gordan coefficient. All
+factorial arguments are nonnegative, including at equality in
+any triangle inequality and at $c=0$. Embedding the inductively
+chosen singlet through this coupling preserves a nonzero
+all-zero coefficient, proving the claim.
+
+A second fact will handle an odd sum. If $a,b\geq1$, the spin
+$c=a+b-1$ in $V_a\otimes V_b$ has a nonzero coefficient at
+$(1,-1)$ in its weight-zero vector. For a direct ladder
+verification put $J=a+b$ and start its highest vector at
+
+$$
+h=\sqrt b\,|a,a-1;b,b\rangle
+       -\sqrt a\,|a,a;b,b-1\rangle.
+\tag{27.11}
+$$
+
+It is nonzero, has weight $J-1$ and is killed by the total raising
+operator. Thus it generates that spin-$J-1$ chain. Expand
+$(J_a^-+J_b^-)^{J-1}h$ by the binomial theorem. At the allowed
+coordinate $(t,-t)$, $|t|\leq\min(a,b)$, the two terms have,
+after factoring out
+
+$$
+F_t=(J-1)!
+ \sqrt{\binom{2a}{a+t}\binom{2b}{b-t}}>0,
+$$
+
+the respective factors
+$\sqrt{b/(2a)}(a-t)$ and
+$-\sqrt{a/(2b)}(b+t)$. Their sum is
+$-Jt/\sqrt{2ab}$. A term requiring a negative number of lowerings
+is absent and its displayed linear factor is zero. This includes
+$a=1$ or $b=1$ at $t=1$. The coefficient at $t=1$ is therefore
+nonzero. Normalizing the chain multiplies it by a nonzero common
+scalar. This calculation uses exactly the ladders of (19.5).
+
+For $q=2$, feasibility forces $j_1=j_2=j\geq1$.
+The pair singlet
+$\sum_{t=-j}^j(-1)^{j-t}|j,t;j,-t\rangle/\sqrt{2j+1}$
+has nonzero coordinates at $t=0,1$, with distinct $Q$ values
+$0,2$. Its normalization is
+[DLMF (34.3.1)](https://dlmf.nist.gov/34.3.E1).
+
+For $q=3$, order the spins $a\geq b\geq c\geq1$ and put
+$d=b+c-a\geq0$. There is one singlet copy. Its coordinates at
+
+$$
+(a,t,-a-t),\qquad t=-b,-b+1,\ldots,c-a,
+\tag{27.12}
+$$
+
+are all nonzero. In the factorial expression
+[DLMF (34.2.4)–(34.2.5)](https://dlmf.nist.gov/34.2.E4)
+for the corresponding $3j$ coefficient, $m_1=a$ forces the
+summation index to zero; every remaining factorial is nonnegative
+precisely on this interval. The triangle factor is positive.
+If $d\geq2$, its $d+1\geq3$ consecutive coordinates cannot all
+have the same value of the quadratic polynomial
+$a^2+t^2+(a+t)^2$. If $d=0$, the extreme coordinate has
+$Q=a^2+b^2+c^2>C/3$, because
+$3(a^2+b^2+c^2)-C=\sum_{j\in\{a,b,c\}}j(2j-1)>0$.
+It therefore contradicts the eigenvalue $C/3$ required by (27.8).
+If $d=1$, the two endpoint $Q$ values differ unless
+$a=2b-1$, which together with $a=b+c-1$ says $b=c=u$,
+$a=2u-1$. In this last case $C=6u^2$ and the extreme value is
+$6u^2-6u+2$. Its difference from $C/3$ is
+$2(2u-1)(u-1)>0$ for $u\geq2$. Only $(a,b,c)=(1,1,1)$
+remains.
+
+For $q\geq4$, put $U=\sum_a j_a$. If $U$ is even, the
+all-zero construction (27.9)–(27.10) gives a nonzero coordinate
+with $Q=0<C/3$. If $U$ is odd, choose two smallest spins $a,b$
+and set $c=a+b-1$. The sum $R$ of the other spins satisfies
+$a+b\leq R$, and each other spin is at most $(U-1)/2$ by the
+original polygon inequality and odd parity. Hence the list
+consisting of $c$ and the other spins has even sum $U-1$ and
+satisfies the polygon inequality: $c\leq R$, and every other
+spin is at most $(c+R)/2$. Its all-zero singlet coordinate is
+nonzero by (27.10). Embed its spin $c$ into the two chosen
+factors by (27.11). The resulting singlet has nonzero coordinate
+$(1,-1,0,\ldots,0)$, so $Q=2$ there. But
+$C/3\geq2q/3>2$. In both parities (27.8) again excludes a
+$Q$ eigenvector. This proves strictness for every positive
+feasible list except the three spins $(1,1,1)$.
+
+For the optimizing lists (27.2), that remaining list can arise
+only in the balanced case with $q=3$, $p_1=p_2=p_3=1$, $S=1$.
+In a dominant three-part case $j_d^*=R\geq2$; two-part and
+at-least-four-part lists were already treated. Thus the exception
+is exactly the one specified in the theorem, as a graph as well
+as a spin value.
+
+To settle it completely, in the spin-one triangle the zero-weight
+basis is $|0,0,0\rangle$ and the six permutations of $(1,0,-1)$.
+The ladder coefficient on every permitted move is $2$. On those
+six permutations the moves exchanging adjacent values $1,0$ or
+$0,-1$ form a six-cycle; each permutation is also connected to
+$|0,0,0\rangle$ with coefficient $2$. The operator on the rim
+is $2A(C_6)$. Its nonconstant Fourier modes have eigenvalues
+$2,2,-2,-2,-4$, and are orthogonal to the hub coupling. The
+constant rim mode and the hub have the matrix
+
+$$
+\begin{pmatrix}4&2\sqrt6\\2\sqrt6&0\end{pmatrix},
+\qquad\operatorname{spec}=\{2-2\sqrt7,2+2\sqrt7\}.
+\tag{27.13}
+$$
+
+Since $\sqrt7<3$, both eigenvalues exceed $-4$. The $-4$ mode
+is the alternating rim vector $z$ in (27.5), and is simple.
+The total ladders annihilate $z$ by cancellation of the two
+permutations contributing to every output coordinate. The
+addition rule also says the singlet has multiplicity one: the
+first two spins must couple to spin one to couple with the third
+to zero, and each of those couplings has multiplicity one.
+This proves (27.5).
+
+For completeness, the other weight sectors cannot supply another
+whole-tensor ground vector. At total weights $\pm3$ the operator
+is zero. At $\pm2$ it is $2A(K_3)$, with eigenvalues $4,-2,-2$.
+At weight $1$ use the triples $A_i$ with a single $1$ at $i$
+and zeros elsewhere and $B_i$ with a single $-1$ at $i$ and
+ones elsewhere. With $D=2(\boldsymbol1\boldsymbol1^{\mathsf T}-I_3)$,
+the matrix is
+
+$$
+\begin{pmatrix}D&D\\D&0\end{pmatrix}.
+\tag{27.14}
+$$
+
+The eigenvalues of $D$ are $4,-2,-2$. Thus (27.14) has
+$2\pm2\sqrt5$ once each and $-1\pm\sqrt5$ twice each.
+All exceed $-4$, since $\sqrt5<3$. Reversing all weights is a
+unitary equivalence with weight $-1$. These sectors exhaust the
+whole tensor product, proving its asserted ground classification.
+Finally (27.3) and the strict Rayleigh comparison exclude every
+nonzero singlet from $\mathcal G_G(0)$ in all other cases.
+No restriction to real coefficients, to a single part multiplicity,
+or to a prescribed part weight has entered any lower bound.
+$\square$
+
+## 28. Multipartite components in the original globally half-filled model
+
+**定义 28.1（Class $\mathcal C_{\mathrm{mp}}$）。** In the common
+domain of finite connected simple unit-weight graphs $H$ of even
+order $m\geq2$, let $H\in\mathcal C_{\mathrm{mp}}$ mean that
+for each vertex $p$, at least one actual connected component of
+$H[N_H(p)]$ is either a singleton or a connected complete
+multipartite graph with at least two positive parts. The other
+actual components and every attachment outside the selected
+component are unrestricted.
+For every integer $S\geq1$ put $s=2S$ and retain exactly the
+original objects (19.1)–(19.2):
+
+$$
+\begin{aligned}
+\Omega_s&=V(H)\times[2S],&
+\mathcal H_{mS}&=\operatorname{span}_{\mathbb C}
+ \{|T\rangle:T\subseteq\Omega_s,\ |T|=mS\},\\
+K_s&=A(F_{mS}(H[\overline{K_{2S}}])),&
+P_s&=\prod_iP_i,& E_s&=\min\operatorname{spec}K_s.
+\end{aligned}
+\tag{28.1}
+$$
+
+In particular $E_s$ is the actual entire-carrier minimum,
+without a symmetry restriction, and every allowed token move
+has coefficient one. Only global half filling is prescribed.
+
+**定理 28.2（Every original ground vector at every even scale）。**
+For every $H\in\mathcal C_{\mathrm{mp}}$ and every integer
+$S\geq1$,
+
+$$
+\ker(K_s-E_sI)\subseteq\operatorname{ran}P_s.
+\tag{28.2}
+$$
+
+This includes every local-spin sector, every multiplicity copy,
+every feasible weight, and arbitrary complex superpositions and
+entanglement on (28.1).
+
+Proof. The representation, actual-component transfer and
+spin-one cone results consumed here are the complete
+Theorems 19.2 and 20.1. The supplier versions are Git
+`6e666c2d731da9f46b20322bc85fee74063d9b97`: §§1–26 here,
+the [owning volume](TOKEN_GRAPH_BLOWUP_DEFECT_DECOMPOSITION.md),
+the [collective-oscillator volume](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md),
+and the three source/Scribe pairs specified below. The new
+component inference uses (27.4) and the exact endpoint (27.5),
+rather than any strictness assumption on the spin comparison.
+
+The complete orthogonal Boolean representation is
+
+$$
+\begin{aligned}
+\mathcal H_{mS}&\cong
+ \bigoplus_{\substack{0\leq t_i\leq S\\
+                      1\leq a_i\leq r_{2S}(t_i)}}
+ \left(\bigotimes_i V_{S-t_i}\right)_{\sum_i x_i=0},\\
+r_{2S}(t)&=\binom{2S}{t}-\binom{2S}{t-1},\quad\binom{2S}{-1}=0,\\
+J_i&=S-t_i,\qquad -J_i\leq x_i\leq J_i,\qquad n_i=S+x_i.
+\end{aligned}
+\tag{28.3}
+$$
+
+Every $a_i$ is a separate orthogonal copy. The original adjacency
+on it is exactly the sum of ladders in (19.5), with the endpoint
+zeros retained, and $P_s$ selects exactly all $t_i=0$.
+The primary map to Srinivasan,
+[Theorem 1.2 and its representation derivation](https://arxiv.org/pdf/1001.0280v2),
+is Boolean rank $n=2S$, starting rank $t_i$, layer $u=S+x_i$,
+and up operator $L_i^\ast$. Its normalized coefficient is
+$\sqrt{(u+1-t_i)(2S-t_i-u)}$.
+Feinsilver,
+[§§3–4, (8)–(10), Proposition 4.3 and §4.2.2](https://arxiv.org/pdf/1102.0368v2),
+has $T=L_i^\ast$, $T^\ast=L_i$, principal number $2J_i$,
+chain index $J_i+x_i$ and grading $-2Z_i$. These give both
+the multiplicities in (28.3) and the full orthogonality, including
+spin zero. The owning volume's (6.6)–(6.12) supplies their
+explicit whole-Boolean construction; its use does not require a
+flat eigenvector of $A(H)$.
+
+The full word-cardinality and Gram identities
+`sector_words_card_multinomial` and `sector_gram`, with their
+private head-removal and factorial recurrences in
+[OccupancyWordSectors](../../../D5/S3/Quantum/Entanglement/OccupancyWordSectors.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Quantum/Entanglement/OccupancyWordSectors.scribe.cs),
+use two-letter occupation counts $(2S-n_i,n_i)$ and length $2S$.
+They give the normalized symmetric weight vectors, including
+$n_i=0,2S$. The collective-oscillator algebra has parameters
+$d=m$, $N=2S$, $g=0$, $e=1$, $B=A(H)$,
+$a_i=L_i/\sqrt{2S}$ and $H_{2S}=\hbar K_s/(2S)$ on the
+two-state code. Its symmetric-code statement is used only with
+this map; a fixed-excitation oscillator approximation is not a
+statement on the growing half-filled carrier.
+
+The actual singleton-difference move is the definition `tokenGraph`
+in [TokenGraphLaplacianRadiusRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.scribe.cs).
+The private and proof-local `Test.move`, `Test.adj_mem`,
+`Test.move_injective`, `Test.toNbr_bij` and `Test.token_energy`
+in [CutBoundRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lean)
+and the full [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.scribe.cs)
+identify the same coefficient-one adjacency with the ordered
+lowering/raising sum. Their `counting_identity`, `W_move`,
+`phi40_norm`, `phi40_energy` and `choose_ratio40` give the
+phase-count support consumed in the older odd-cycle domains;
+their fixed parameters are $200$ vertices, $100$ tokens and
+fibre size $40$, not an assumption here. The present argument
+requires none of their cut or Laplacian refutation conclusions.
+Their private real/complex Rayleigh identities use the same
+Hermitian complex inner product as (27.3).
+The primary convention is Apte–Parekh–Sud,
+[v3, Definition 1, §3.2 and Fact 2](https://arxiv.org/pdf/2506.03441v3),
+with $N=2mS$, $k=mS$ and unit edge weights. In their notation
+this is $A(F_k(G_s))$ itself, while $W(G_s)I/2-K_s$ is their
+shifted XY block. Here $1\leq k<N$ at every endpoint in scope.
+
+The nonstrict primary comparison is Ghassemi
+Tabrizi–Henderson–Kühne–Scuseria,
+[Appendix A4, (A34)–(A54) and its final fixed-magnetization paragraph](https://pmc.ncbi.nlm.nih.gov/articles/PMC12613319/#app1-sec4),
+DOI [10.1021/acs.jctc.5c01412](https://doi.org/10.1021/acs.jctc.5c01412).
+Its maximal local spin is $s_i=S$, variable spin $t_i=J_i$,
+fixed magnetization $M=0$, and bilinear coupling
+$D_{ij}=\operatorname{diag}(2a_{ij},2a_{ij},0)$,
+$a=A(H)$. Only existence of a maximal-spin minimizing choice
+is taken from that result. In the fixed-weight argument the
+triplet has weight zero, and the upper-spin projection has
+squared norm $((j+1)^2-x^2)/((j+1)(2j+1))>0$ for every
+$-j\leq x\leq j$, including $j=0$ and both endpoints.
+As in (19.6), distinct weights have orthogonal projected images,
+so the step also applies to entangled vectors. It does not assert
+that every original ground vector has maximal spin.
+
+Suppose now that a summand of (28.3), deficient at $p$, attains
+this actual $E_s$. Theorem 19.2 supplies a minimizing realization
+with all other spins $S$. For every actual connected component
+$C$ of $H[N_H(p)]$ it forces
+
+$$
+\mathcal G_C(0)\subseteq\mathcal S_C.
+\tag{28.4}
+$$
+
+Its proof first releases one original singlet pair at $p$ into
+its zero-weight triplet. Equality at the actual whole-space
+minimum makes the released vector a ground eigenvector; its two
+orthogonal pair weights force the neighborhood ladders to vanish.
+The actual-component weight projections then force zero weight
+on each component, and their commutators with the total ladders
+force separate singlets. The replacement by any local ground
+vector, with the same actual outside density, gives the universal
+inclusion (28.4). Thus this step is about the whole nonzero local
+ground space, not only a chosen vector in one marginal. It uses
+actual components, whose weights are conserved by the neighborhood
+operator. It imposes no independent regional filling on the
+initial original state and requires no condition on other components
+or on crossing attachments.
+
+Choose the component allowed by Definition 28.1. A singleton has
+$K_C=0$ and zero-weight vector $|S,0\rangle$; it is not a
+singlet because $\|J^+|S,0\rangle\|^2=S(S+1)>0$.
+This contradicts (28.4). For a complete multipartite component,
+(27.4) contradicts it unless $C=K_3$, $S=1$.
+At that exception (27.5) says precisely $e_C(0)=-4$ and that its
+whole ground space is the one-dimensional singlet. Use Theorem
+20.1 at this same deficient vertex. Since $S=1$, deficiency
+means $J_p=0$, and it forces
+$\varepsilon_{\{p\}\cup C}(0)=e_C(0)=-4$ on the entire actual
+Boolean zero-weight cone. The cone is $K_4$. On its four actual
+spin-one fibres take the product of two normalized pair singlets
+
+$$
+d_1=\frac{|1,-1\rangle-|0,0\rangle+|-1,1\rangle}{\sqrt3}.
+\tag{28.5}
+$$
+
+Each pair has isotropic edge expectation $-2$ and therefore XY
+expectation $-8/3$; every cross-pair edge has expectation zero
+because each one-site spin expectation vanishes. This actual
+cone vector has total weight zero and energy $-16/3$.
+It is the supplied pair-singlet trial (21.10), also used
+in §24, with no change of the cone's original fibres. Thus
+$\varepsilon_{\{p\}\cup C}(0)\leq-16/3<-4$, the required
+contradiction. The whole-fibre cone assertion is used only at
+$S=1$; no such removal is assumed at larger spins.
+
+Every deficient summand is now excluded from the actual minimum.
+Each summand reduces $K_s$. The projection of an arbitrary complex
+$E_s$ eigenvector onto one is zero or another $E_s$ eigenvector.
+All deficient projections vanish; the remaining summands are
+exactly $\operatorname{ran}P_s$. This proves (28.2) for all
+copies and their superpositions. $\square$
+
+**推论 28.3（The same-minimum qualitative spectral and mass bounds）。**
+For every $H\in\mathcal C_{\mathrm{mp}}$, $S\geq1$, the space
+$\mathcal N_s=\ker P_s$ is nonzero and reducing. With the same
+actual $E_s$ as in (28.1),
+
+$$
+\begin{aligned}
+g_s&=\min\operatorname{spec}(K_s|_{\mathcal N_s})-E_s>0,\\
+K_s-E_sI&\succeq g_s(I-P_s),\\
+\|(I-P_s)\phi\|^2
+ &\leq\frac{\langle\phi,K_s\phi\rangle-E_s}{g_s}
+ \quad(\phi\in\mathcal H_{mS},\ \|\phi\|=1).
+\end{aligned}
+\tag{28.6}
+$$
+
+In particular an energy excess at most $\delta\geq0$ bounds this
+mass by $\delta/g_s$. No numerical or scale-uniform gap is asserted.
+
+Proof. This is the finite-spectrum implication of (28.2), with
+exactly the same hypotheses as the supplied Corollary 24.3.
+Original fibre permutations commute with $K_s$; consequently the
+orthogonal projections $P_s,I-P_s$ commute with it and their
+ranges reduce it. In one fibre choose a nonzero one-particle
+vector orthogonal to constants. Tensor it with any nonzero
+occupancy-$(2S-1)$ vector in a second fibre and occupancy-$S$
+vectors in all other fibres. Its occupancy is
+$1+(2S-1)+(m-2)S=mS$, and $P_s$ kills it. This proves
+$\mathcal N_s\ne0$ also at $m=2,S=1$.
+Every eigenvalue on this finite nonzero space is at least $E_s$.
+Equality would give a nonsymmetric $E_s$ eigenvector, excluded
+by (28.2), so $g_s>0$. The quadratic form of $K_s-E_sI$ is
+nonnegative on $\operatorname{ran}P_s$ and at least $g_s$ times
+the squared norm on $\mathcal N_s$. Add these two reducing
+forms to obtain (28.6), then take its expectation in any unit
+complex vector. This uses no symmetric-space substitute for
+$E_s$ and gives no estimate uniform in $S$. $\square$
+
+## 29. An infinite family with two large interacting parts
+
+**定义 29.1（The graphs $X_r$）。** For each integer $r\geq2$,
+take disjoint sets $A,B$ of size $r$, two further vertices $u,v$,
+and two leaves $\ell_1,\ell_2$. On $A\sqcup B\sqcup\{u\}\sqcup\{v\}$
+put the complete multipartite graph $K_{r,r,1,1}$, choose a vertex
+$a\in A$, and add exactly the edges $a\ell_1,a\ell_2$.
+There are no other edges; every edge has weight one.
+
+**命题 29.2（Confinement beyond every published Section 26 domain）。**
+The graphs $X_r$ form an infinite family of connected interacting
+simple graphs of even order $m=2r+4$ and belong to
+$\mathcal C_{\mathrm{mp}}$. For every $r\geq2$, $S\geq1$,
+all conclusions (28.2) and (28.6) hold on their entire original
+complex carrier with $N=2(2r+4)S$, $k=(2r+4)S$.
+For every even scale $s=2S$,
+
+$$
+X_r\notin\mathcal U_s^{\rm diamond}
+ =\mathcal M\cup\mathcal B\cup\mathcal C
+       \cup\mathcal L_S\cup\mathcal F_s\cup\mathcal C_{\diamond},
+\tag{29.1}
+$$
+
+with exactly the domains and both alternatives for $\mathcal F_s$
+in Definition 26.1.
+
+Proof. The core is connected, and both added vertices are leaves
+at $a$. The order is $2r+4$ and the edge count is $r^2+4r+3$;
+the $r^2$ edges between $A$ and $B$ belong to the same connected
+core as all the other edges. Different $r$ give different orders.
+Thus this family adds interacting core vertices rather than
+disjoint spectator factors. Its complete induced neighborhoods
+are
+
+$$
+\begin{aligned}
+X_r[N(a)]&=K_{r,1,1}[B,\{u\},\{v\}]
+                      \sqcup\{\ell_1\}\sqcup\{\ell_2\},\\
+X_r[N(x)]&=K_{r,1,1}[B,\{u\},\{v\}]
+                                      &&(x\in A\setminus\{a\}),\\
+X_r[N(y)]&=K_{r,1,1}[A,\{u\},\{v\}]
+                                      &&(y\in B),\\
+X_r[N(u)]&=K_{r,r,1}[A,B,\{v\}],&
+X_r[N(v)]&=K_{r,r,1}[A,B,\{u\}],\\
+X_r[N(\ell_i)]&=\{a\} &&(i=1,2).
+\end{aligned}
+\tag{29.2}
+$$
+
+All displayed components are actual components, and the list
+includes every edge of every neighborhood. The leaves are
+isolated within $N(a)$ because their only neighbor is $a$.
+All non-singleton entries are connected complete multipartite
+graphs. This proves membership in Definition 28.1 and the stated
+original-model conclusions.
+
+At $u$ the sole neighborhood component is $K_{r,r,1}$. It contains
+a triangle, has $2r+1\geq5$ vertices, and its singleton-part
+vertex has degree $2r\geq4$. Hence it is not bipartite, not a
+simple odd cycle and not a diamond. It has no other component.
+This excludes $\mathcal C$ and $\mathcal C_{\diamond}$.
+It also has no flat least adjacency mode, as follows. The
+subspaces summing to zero inside either size-$r$ part have
+eigenvalue zero. On constant-on-parts vectors the antisymmetric
+choice $(c,-c,0)$ has eigenvalue $-r$. The symmetric choices
+$(c,c,d)$ have the two eigenvalues of
+
+$$
+\begin{pmatrix}r&1\\2r&0\end{pmatrix},\qquad
+\lambda_\pm=\frac{r\pm\sqrt{r^2+8r}}2.
+\tag{29.3}
+$$
+
+These subspaces exhaust the $2r+1$ dimensions. Since $r>1$,
+$\sqrt{r^2+8r}<3r$, so $\lambda_->-r$. Thus the least
+eigenvalue is the simple $-r$; every vector in its complex
+eigenspace vanishes at the singleton-part vertex. It cannot
+have modulus one at every coordinate. The whole-neighborhood
+condition $\mathcal L$ therefore fails at $u$. This excludes
+$\mathcal L_S$ for every $S\geq2$; $\mathcal L_1$ is empty
+by its definition.
+
+The global flat least-mode hypothesis also fails independently
+of scale. Put $+1$ on $A$, $-1$ on $B$, and zero elsewhere.
+Its adjacency quadratic form is $-2r^2$, its squared norm is
+$2r$, and all edges with a zero endpoint contribute zero. Thus
+
+$$
+\lambda_{\min}(A(X_r))\leq-r\leq-2.
+\tag{29.4}
+$$
+
+A modulus-one eigenvector $z$ for this least eigenvalue would,
+at a leaf, satisfy $\lambda_{\min}z_{\ell_i}=z_a$.
+Taking absolute values would force $|\lambda_{\min}|=1$,
+contradicting (29.4). Since global flatness is required before
+either positive-gap alternative defining $\mathcal F_s$ can
+apply, $X_r\notin\mathcal F_s$ for every even $s$, including
+both the $s\geq s_H$ alternative and the direct strictly
+positive finite-scale expression (26.2).
+
+The graph is not complete multipartite. A leaf is nonadjacent
+to $b\in B$ and to $u$, while $bu$ is an edge. In a complete
+multipartite graph distinct nonadjacent vertices belong to the
+same independent part, so these three relations are impossible.
+This excludes all of $\mathcal M$, with its balanced and
+dominant-part regimes and all part-number endpoints.
+
+The core $K_{r,r,1,1}$ is a maximal two-connected nonclique block.
+Deleting any one core vertex leaves a connected complete
+multipartite graph with at least three nonempty parts. A leaf
+cannot belong to a two-connected enlargement. Two distinct
+vertices of $A$ are nonadjacent, so this maximal block is not
+a clique. Therefore $X_r\notin\mathcal B$.
+
+These exclusions prove (29.1). Proposition 26.2 identifies the
+exact old domains, including all their specific consumers, and
+Definition 26.1 includes the diamond addition. Consequently the
+family is outside every one of those sufficient graph/scale
+domains, rather than outside only a particular asymptotic bound.
+The six-vertex graph of §25 has different order from every
+$X_r$, whose order is at least eight; the earlier consumers lie
+in the excluded union. The assertion here concerns the original
+interacting graphs $X_r$ and their actual $E_s$, not separate
+minimization of the regions in (29.2). $\square$
+
+## 30. The enlarged exact union and its unresolved complement
+
+**定义 30.1（The preserved scale-dependent union）。** In the common
+domain of Definition 26.1, retain its sets $\mathcal M$,
+$\mathcal B$, $\mathcal C$, $\mathcal L_S$, $\mathcal F_s$ and
+$\mathcal C_{\diamond}$ without altering any of their graph
+or scale hypotheses. In particular $\mathcal L_1=\varnothing$
+and $\mathcal L_S=\mathcal L$ for $S\geq2$. For the global
+flat-least-mode graph in $\mathcal F_s$, write
+$\ell=-\lambda_{\min}(A(H))$, $\Delta=\max_i\deg_H(i)$,
+$T=m+2$, and
+
+$$
+s_H=2\left\lceil2^{18}(\Delta/\ell)^2T^3\right\rceil.
+$$
+
+Both original scale alternatives remain: either $s\geq s_H$,
+or simultaneously
+
+$$
+s\geq4T,\qquad
+\ell s-64\Delta T^{3/2}\sqrt{s/2}-64\Delta T^2>0.
+\tag{30.1}
+$$
+
+With $\mathcal C_{\mathrm{mp}}$ exactly as in Definition 28.1,
+put
+
+$$
+\begin{aligned}
+\mathcal U_s^{\rm mp}
+ &=\mathcal U_s^{\rm diamond}\cup\mathcal C_{\mathrm{mp}}\\
+ &=\mathcal M\cup\mathcal B\cup\mathcal C\cup\mathcal L_S
+    \cup\mathcal F_s\cup\mathcal C_{\diamond}
+    \cup\mathcal C_{\mathrm{mp}},\qquad s=2S\geq2.
+\end{aligned}
+\tag{30.2}
+$$
+
+**定理 30.2（Coverage with the original quantifiers）。** For every
+integer $S\geq1$ and every $H\in\mathcal U_s^{\rm mp}$,
+every ground vector on (28.1) is fibre symmetric and all the
+qualitative spectral, operator and mass conclusions (28.6) hold
+at the same actual whole-space $E_s$. The inclusion
+$\mathcal U_s^{\rm diamond}\subsetneq\mathcal U_s^{\rm mp}$
+is strict at every even scale, witnessed by all $X_r$, $r\geq2$.
+
+Proof. Proposition 26.2 supplies the unchanged conclusions for
+$\mathcal U_s^{\rm diamond}$ with exactly the two flat-mode
+regimes and the separate $S=1$ neighborhood endpoint stated
+there. Theorem 28.2 and Corollary 28.3 supply the added class.
+Taking their union proves the first assertion without intersecting
+the old domains with the new condition. Proposition 29.2 gives
+both membership and nonmembership needed for strictness at every
+scale. The singlet thresholds, classical coupling, clique,
+bipartite and diamond calculations are the attributed support
+within Theorem 27.2; the additional local inference is its strict
+zero-weight separation for arbitrary complete multipartite
+components and the exact exceptional ground classification.
+Its insertion into the supplied actual-component condition, with
+the supplied spin-one actual-cone comparison at the exception,
+gives the original-model extension and its infinite consumer.
+
+For an arbitrary connected even-order $H$ outside (30.2),
+every-ground confinement remains unresolved here at that scale.
+The simultaneous all-even question retains this union separately
+for every $S\geq1$; a scale-dependent sufficient hypothesis is
+not silently promoted to an all-scale graph hypothesis.
+The component inclusions (19.4) and spin-one cone equalities
+(20.2) remain necessary conditions, not an if-and-only-if test.
+In particular the local strict comparisons do not construct an
+actual original-$E_s$ nonsymmetric ground counterexample.
+All assertions retain simple unit-weight graphs, positive
+coefficient-one adjacency, equal even fibres, global half filling,
+and the full complex carrier. They determine neither the exact
+original $E_s$ nor a numerical or scale-uniform gap, and give
+no extension to other signs, weights, fibres or fillings.
+$\square$
+
+## 追加锚（本行以下为增补区）
