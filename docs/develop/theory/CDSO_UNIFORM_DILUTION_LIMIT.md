@@ -1457,3 +1457,1168 @@ full-text overlap identified in Section 6 remains unassessed;
 no global priority statement is attached to these deductions.
 
 ## 追加锚（本行以下为增补区）
+
+## 15. Finite support, countable attainment and the all-degree dual
+
+**Definition 15.1 (Finite attainment).** Retain exactly the marked
+incidence constraints (7.3). A finite attainer for
+$\mathcal L(\alpha,\beta;R)$ is an array at some finite cutoff, with
+$r\le R$, whose objective equals (7.5). For integers $M\ge3$ define
+
+$$
+F_M(\kappa,D)=-2-\frac1{4D^2}
+ +\min_{\substack{1\le j\le J_0(\kappa,D)\\R_j>1}}
+       \{2j+\mathcal L_M(\alpha,\beta;R_j)\}.
+\tag{15.1}
+$$
+
+All parameters and $J_0$ are exactly those of Definition 10.1;
+infeasible branches have value $+\infty$. Finite attainment of the
+envelope means $F_M=F$ for some finite $M$. Since the index set is
+finite, this is equivalent to finite attainment of at least one
+winning branch. The original law and graph domains are unchanged.
+
+**Lemma 15.2 (Saturation at every finite optimum).** If a finite array
+attains $L=\mathcal L(\alpha,\beta;R)$, with $\alpha,\beta>0$ and
+$R>1$, then $E_k=kq_k$ for every $k$. Every active source row
+therefore has unmarked mass at least $q_k>0$.
+
+**Proof.** Lemma 9.1 gives $r>1$, hence $L>0$. Suppose a row $l$
+has slack $s_l=lq_l-E_l>0$. Choose an integer $k\ge3$, exceeding
+every source index of the array, with $\alpha/(k-1)<L/2$.
+Choose an integer $d>k,l$, exceeding all its tail degrees, with
+
+$$
+\frac\alpha{k-1}
+ +\beta\{g(k/d)+(d-1)g(l/d)\}<L.
+\tag{15.2}
+$$
+
+This is possible since $g(x)\le x^2$. Before normalization, add
+$t_d=\delta$, $z_{kd}=\delta$, $w_{ld}=(d-1)\delta$, and
+$q_k=\delta/(k-1)$, taking $0<\delta<s_l/(d-1)$. The old row $l$
+remains feasible. The new row has $E_k=Z_k=\delta$ and satisfies
+$q_k\le E_k\le kq_k$ and $Z_k\le(k-1)q_k$. Every new incidence
+has its source index strictly smaller than $d$. Dividing all
+variables by $1+\delta$ gives a normalized feasible array with
+
+$$
+r'=\frac{r+\delta/(k-1)}{1+\delta}<r\le R.
+$$
+
+Its objective is strictly less than $L$ by (15.2), a contradiction.
+Finally $E_k-Z_k\ge kq_k-(k-1)q_k=q_k$. ∎
+
+**Theorem 15.3 (All-degree dual attainment).** For every
+$\alpha,\beta>0$ and $R>1$, put $L=\mathcal L(\alpha,\beta;R)$.
+There exist $\lambda\ge0$, a real $\ell$, $u_1=A=\alpha+\lambda$,
+$v_1=0$, and nonnegative $u_k,v_k$ for all $k\ge2$, such that
+
+$$
+ku_k+(k-1)v_k=A\quad(k\ge2),\qquad \ell=L+\lambda R.
+\tag{15.3}
+$$
+
+For every integer $d\ge3$ define
+
+$$
+\begin{aligned}
+b_d&=\min_{1\le k<d}\{u_k+\beta g(k/d)\},\\
+m_d&=\min_{2\le k<d}\{u_k+v_k+\beta g(k/d)\}.
+\end{aligned}
+$$
+
+Then $\ell\le m_d+(d-1)b_d$ for every $d\ge3$. For any fixed
+finite feasible comparison array $(r_b,c_b)$ with $r_b<R$, the
+dual can be chosen with
+
+$$
+\lambda\le\frac{\alpha r_b+\beta c_b}{R-r_b}.
+\tag{15.4}
+$$
+
+Every finite attainer has $\lambda(R-r)=0$. At every active tail
+degree there is equality in the column inequality, and every
+positive marked or unmarked entry attains its corresponding
+minimum. Also
+
+$$
+\frac A k\le u_k+v_k\le\frac A{k-1}\quad(k\ge2).
+\tag{15.5}
+$$
+
+**Proof.** The source-one constraint forces $Z_1=0$, hence $t_2=0$.
+For $k\ge2$ the smallest admissible source variable is
+$\max\{E_k/k,Z_k/(k-1)\}$, which is at most $E_k$; for $k=1$
+it is $E_1$. Thus deleting the inequality $q_k\le E_k$ does not
+change a finite LP value. If that inequality fails, reducing $q_k$
+to this minimum restores it, decreases $r$, and decreases the
+positive objective.
+
+For each sufficiently large finite cutoff, ordinary finite LP
+strong duality gives an optimum with objective
+$\ell_M-\lambda_M R=\mathcal L_M$. The cap price is $\lambda_M\ge0$.
+Pricing $E_k\le kq_k$ by $u_k\ge0$ and
+$Z_k\le(k-1)q_k$ by $v_k\ge0$ gives
+$ku_k+(k-1)v_k\le\alpha+\lambda_M$. Source one has price
+$u_1=\alpha+\lambda_M$. Eliminating the two column prices gives
+exactly the displayed minima and column inequalities for $d\le M$.
+Increasing a row price preserves those inequalities, so its row
+price inequality can be made an equality. The finite primal is
+feasible with finite value by the comparison array and Theorem
+9.2. Finite LP dual attainment therefore applies, without strict
+incidence inequalities or a strict cap at the optimum.
+
+Testing this dual against the comparison array gives
+
+$$
+\mathcal L_M+\lambda_M R=\ell_M
+ \le\alpha r_b+\beta c_b+\lambda_M r_b.
+$$
+
+Since $\mathcal L_M\ge0$, this bounds $\lambda_M$ by (15.4).
+The row price equalities then bound each coordinate $u_k,v_k$.
+Take a convergent subsequence for $\lambda_M$, followed by a
+diagonal subsequence for all row prices. As
+$\mathcal L_M\downarrow L$, the limit has $\ell=L+\lambda R$.
+Each fixed column inequality involves finitely many coordinates
+and passes to the limit. This proves existence of the stated dual.
+
+For every finite feasible array, its inequalities imply
+
+$$
+\ell\le
+ \sum_{k,d}\{u_k(z_{kd}+w_{kd})+v_kz_{kd}\}+\beta c
+ \le A r+\beta c.
+\tag{15.6}
+$$
+
+The first inequality weights column inequalities by $t_d$; the
+second uses the source inequalities. For an attainer the last
+quantity is $L+\lambda r\le L+\lambda R=\ell$. Every inequality
+is equality. All discarded terms are nonnegative, proving the
+individual contact and cap statements. Finally (15.5) follows
+from the nonnegative row prices and their equality in (15.3). ∎
+
+The finite LP duality step is the standard affine case of
+Boyd--Vandenberghe, *Convex Optimization*, §5.2.3, (5.26)--(5.27),
+and §5.2.4, printed pp.226--227
+([author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)).
+Its affine refinement reduces the constraint qualification to
+feasibility, and the finite objective here excludes $-\infty$.
+Only this intermediate finite-dimensional fact is literature-attested.
+The countable diagonal extension and saturation perturbation are
+deductions for (7.3); no infinite-dimensional strong-duality theorem
+is assumed.
+
+**Corollary 15.4 (No fixed rooted pattern attains a branch infimum).**
+For every rooted pattern with $r\le R$, where $R>1$ and
+$\alpha,\beta>0$, one has
+$\alpha r+\beta c>\mathcal L(\alpha,\beta;R)$.
+
+**Proof.** The pattern has a positive total number $\rho$ of core
+ports by Definition 7.1. Its actual array from Theorem 8.1 has
+$\sum_k(kq_k-E_k)=\rho/n>0$. Some row has positive slack, so
+Lemma 15.2 excludes equality. The array is feasible, which gives
+the non-strict comparison and therefore the asserted strict one.
+There is no assertion of a uniform positive gap over patterns. ∎
+
+**Definition 15.5 (Countable incidence arrays).** Allow every index
+$2\le d<\infty$ and $1\le k<d$, and impose exactly (7.3), with
+the sums interpreted as nonnegative series. Require
+$r=\sum_kq_k\le R$ and
+$c=\sum_{k<d}(z_{kd}+w_{kd})g(k/d)<\infty$. In particular
+$E_k\le kq_k<\infty$ for each fixed $k$. No extra incidence,
+source-type or connected-pattern condition is imposed. These arrays
+are an auxiliary completion of the finite programs; they do not
+enlarge either original domain in Definition 1.1.
+
+**Theorem 15.6 (Attainment in the countable completion).** For every
+$\alpha,\beta>0$ and $R>1$,
+
+$$
+\min_{\text{countable feasible arrays}}
+       \{\alpha r+\beta c\}
+=\mathcal L(\alpha,\beta;R).
+\tag{15.7}
+$$
+
+Every countable feasible array has finite feasible approximations
+whose objectives converge to its objective, with the same cap $r\le R$.
+The minimum in (15.7) exists. Neither assertion requires finite
+support of a minimizer.
+
+**Proof.** First fix a countable feasible array, and a finite
+comparison array $(r_b,c_b)$ with $r_b<R$, supplied by (8.4).
+For sufficiently large $M$ retain only columns $d\le M$, and put
+$\delta_M=\sum_{d>M}t_d$. Then $\delta_M\to0$. Define $E'_k,Z'_k$
+from the retained incidences and replace the retained source counts by
+
+$$
+q'_k=\min\{q_k,E'_k\}\quad(k\ge1).
+\tag{15.8}
+$$
+
+Both terms in this minimum are at least $E'_k/k$, and, for
+$k\ge2$, at least $Z'_k/(k-1)$. For $k=1$, $Z'_1=0$ and
+$q'_1=E'_1$. Thus the counts satisfy all row constraints and
+vanish for $k\ge M$. They increase to $q_k$ as $M\to\infty$,
+because $E'_k\uparrow E_k\ge q_k$. Divide every
+retained variable by $1-\delta_M$. The resulting finite array has
+source ratio $r'_M\le R/(1-\delta_M)$ and objective at most
+$(\alpha r+\beta c)/(1-\delta_M)$. If $r'_M>R$, mix it with the
+comparison array with weight
+
+$$
+\theta_M=\frac{r'_M-R}{r'_M-r_b}
+\le\frac{R\delta_M}{(1-\delta_M)(R-r_b)}.
+\tag{15.9}
+$$
+
+Otherwise use $\theta_M=0$. Take the cutoff large enough to include
+the comparison array. The mixture has $r\le R$ and objective at
+most
+
+$$
+\frac{\alpha r+\beta c}{1-\delta_M}
+ +\theta_M(\alpha r_b+\beta c_b).
+\tag{15.10}
+$$
+
+The retained source and cost sums increase to $r,c$, respectively.
+Normalization and mixing, whose weight tends to zero, therefore
+give finite feasible objectives converging to $\alpha r+\beta c$.
+Their upper excess is bounded by (15.10) minus that objective.
+Consequently $\mathcal L\le\alpha r+\beta c$. Finite arrays are
+themselves countable feasible arrays, so the two infima agree.
+
+For existence, take finite feasible arrays with objectives tending
+to $L=\mathcal L$, all at most $L+1$. Lemma 9.1 gives the uniform
+tail estimate
+
+$$
+\sum_{d>M}t_d
+\le M^{-1/3}
+ \left(\frac{(L+1)R^2}{\beta\gamma}\right)^{1/3}.
+\tag{15.11}
+$$
+
+Each source coordinate is at most $R$, and for each fixed $d$ the
+incidence coordinates are bounded by $d$. Successive subsequences
+and a diagonal choice therefore give coordinatewise limits of
+$t,z,w$ and provisional source counts $\widetilde q_k$.
+Equation (15.11) implies $\sum_dt_d=1$: a fixed finite initial
+sum passes to the limit, and its omitted mass is uniformly bounded
+by the right side of (15.11). Each column has finitely many source
+indices, so its two equalities in (7.3) also pass to the limit.
+
+For each fixed row, nonnegative partial sums give
+$E_k\le k\widetilde q_k$ and
+$Z_k\le(k-1)\widetilde q_k$. The lower constraint
+$\widetilde q_k\le E_k$ need not pass to a coordinatewise limit.
+Instead define
+$q_1=E_1$ and $q_k=\max\{E_k/k,Z_k/(k-1)\}$ for $k\ge2$.
+Then $q_k\le\widetilde q_k$, $q_k\le E_k$, and all row
+constraints hold. For $k=1$, the limiting bound is
+$E_1\le\widetilde q_1$ and $Z_1=0$, so the same conclusion holds.
+Fatou's inequality, applied to the joint nonnegative objective
+series, gives the following bounds. Explicitly, take any finite
+set of source and incidence coordinates, pass its weighted sum to
+the limit along the minimizing sequence, and then take the
+supremum over these finite sets. Since $q_k\le\widetilde q_k$,
+the result is
+
+$$
+\sum_kq_k\le R,\qquad
+\alpha\sum_kq_k+
+ \beta\sum_{k<d}(z_{kd}+w_{kd})g(k/d)\le L.
+\tag{15.12}
+$$
+
+This is a countable feasible array. The first part of the proof
+bounds its objective below by $L$, establishing (15.7) and
+attainment. All limiting arguments concern explicit nonnegative
+series; no countable-dimensional duality or compactness theorem
+for an unspecified topology is used. ∎
+
+**Corollary 15.7 (Saturation and contacts in every countable optimum).**
+Every minimizer in (15.7) has $E_k=kq_k$ and
+$E_k-Z_k\ge q_k$ for every $k$. It satisfies the cap and incidence
+contact conclusions of Theorem 15.3 for every dual there.
+
+**Proof.** For any countable feasible array, put
+$\xi_d=t_d^{-1}\sum_{k<d}(z_{kd}+w_{kd})/k$ at positive columns.
+Then $\xi_d\ge d/(d-1)>1$, and summing gives
+$\sum_dt_d\xi_d=\sum_kE_k/k\le r$. Thus $r>1$.
+
+Suppose an optimal array has row slack $s_l=lq_l-E_l>0$.
+Use the perturbation of Lemma 15.2, taking any $k\ge3$ distinct
+from $l$ with $\alpha/(k-1)<L/2$ and then $d>k,l$ satisfying
+(15.2). Neither index need be absent from the countable array.
+The increments in row $k$, namely
+$(\Delta q_k,\Delta E_k,\Delta Z_k)
+=(\delta/(k-1),\delta,\delta)$, themselves satisfy its homogeneous
+row inequalities. Row $l$ uses less than its slack. The column
+equalities are preserved before normalization, and all series stay
+finite where required. Normalizing strictly decreases both $r$
+and the objective, contradicting (15.7). Therefore all rows are
+saturated, and subtracting the marked bound gives $E_k-Z_k\ge q_k$.
+
+For the contact statements, (15.6) extends to a countable array by
+summing nonnegative series. Indeed the total row-price sum is at
+most $Ar<\infty$, and the cost sum is $\beta c<\infty$. For an
+optimal array the complete chain is
+
+$$
+\ell\le
+\sum_{k,d}\{u_k(z_{kd}+w_{kd})+v_kz_{kd}\}+\beta c
+\le Ar+\beta c=L+\lambda r\le L+\lambda R=\ell.
+\tag{15.13}
+$$
+
+Each inequality is equality. The omitted summands are nonnegative,
+so every positive incidence realizes its corresponding column
+minimum, every positive column has equality, and
+$\lambda(R-r)=0$. ∎
+
+## 16. Explicit support bounds for finite attainers
+
+**Lemma 16.1 (Largest source degree).** For a finite attainer and any
+dual from Theorem 15.3, let $K$ be its largest active source index.
+With $\gamma=2/(1+\sqrt2)$,
+
+$$
+2\le K\le\max\left\{2,\frac{4\ell}{\beta\gamma},
+                         \frac{48\ell^2}{A\beta\gamma^2}\right\}.
+\tag{16.1}
+$$
+
+**Proof.** Marked mass is one and cannot use source one, so $K\ge2$.
+Lemma 15.2 gives a positive unmarked entry $(K,d)$. Its contact
+and $g(x)\ge\gamma x^2$ give
+
+$$
+\ell\ge(d-1)\beta g(K/d)
+ \ge\frac{\beta\gamma K^2}{2d},\qquad
+ d\ge\frac{\beta\gamma K^2}{2\ell}.
+\tag{16.2}
+$$
+
+Every actual marked entry at this tail uses an index at most $K$,
+and by (15.5) its marked price is at least $A/K$. If $K$ strictly
+exceeded both nonconstant bounds in (16.1), then $d>2K$. The
+admissible marked competitor $2K$ would have price at most
+
+$$
+\begin{aligned}
+\frac A{2K-1}+\beta g(2K/d)
+&\le\frac{2A}{3K}+\frac{4\beta K^2}{d^2}\\
+&\le\frac{2A}{3K}+\frac{16\ell^2}{\beta\gamma^2K^2}
+ <\frac A K.
+\end{aligned}
+$$
+
+This contradicts marked contact. The estimates use $K\ge2$,
+$d-1\ge d/2$, and $g(x)\le x^2$. Strictly exceeding both bounds
+is impossible, proving (16.1) including its boundary cases. ∎
+
+**Lemma 16.2 (Tail support).** Suppose a finite attainer and its dual
+satisfy
+
+$$
+0<a_*\le A\le A^*,\quad 0<\beta\le B^*,\quad
+ a_*\le\ell\le H^*,\quad K\le K^*,
+$$
+
+where $K^*\ge2$ is an integer. Define
+
+$$
+\begin{gathered}
+p_* =\lceil4A^*/a_*\rceil+1,\\
+d_* =\left\lceil\max\left\{
+3,K^*+1,p_*+1,2p_*\sqrt{B^*/a_*},4B^*(K^*)^2/a_*
+\right\}\right\rceil,\qquad
+u_* =\frac{a_*}{4(d_*-1)}.
+\end{gathered}
+\tag{16.3}
+$$
+
+Then $u_k\ge u_*$ for $1\le k\le K^*$, and every active tail
+has degree at most $1+H^*/u_*$.
+
+**Proof.** In the all-degree column inequality at $d_*$, use $p_*$
+as a marked competitor and any $k\le K^*$ as an unmarked competitor.
+Both are admissible, and (15.5) gives
+
+$$
+\begin{aligned}
+\ell
+&\le u_{p_*}+v_{p_*}+\beta g(p_*/d_*)
+ +(d_*-1)\{u_k+\beta g(k/d_*)\}\\
+&\le\frac{a_*}{4}+\frac{a_*}{4}
+       +\frac{a_*}{4}+(d_*-1)u_k.
+\end{aligned}
+$$
+
+Here the last cost term is at most $B^*(K^*)^2/d_*\le a_*/4$.
+Since $\ell\ge a_*$, this proves $u_k\ge u_*$. Every active tail
+has equality in its column inequality and unmarked indices at
+most $K^*$, so $\ell\ge(d-1)u_*$. This proves the tail bound,
+without uniqueness of any contact or incidence minimizer. ∎
+
+**Theorem 16.3 (Bounded source support and the infinite alternative).**
+For any fixed $\alpha,\beta>0$, $R>1$, finite attainment of
+$\mathcal L$ is equivalent to the existence of a countable optimum
+with bounded source indices. For any dual from Theorem 15.3 put
+
+$$
+K_{\rm grow}=\max\left\{2,\frac{4\ell}{\beta\gamma},
+                      \frac{192\ell^2}{A\beta\gamma^2}\right\}.
+\tag{16.4}
+$$
+
+If a countable optimum has an active row $k>K_{\rm grow}$, it
+has active rows $k_0=k,k_1,k_2,\ldots$ and positive tail columns
+$d_0,d_1,d_2,\ldots$ with
+
+$$
+w_{k_nd_n}>0,\qquad z_{k_{n+1}d_n}>0,\qquad
+k_{n+1}>\frac43k_n,\qquad
+d_n\ge\frac{\beta\gamma k_n^2}{2\ell}.
+\tag{16.5}
+$$
+
+Thus an unbounded optimal support has an unbounded incidence chain
+of this specified kind. Existence of that alternative is not
+asserted.
+
+**Proof.** Finite attainment supplies a countable optimum with
+bounded source indices. Conversely suppose a countable optimum
+has largest active source index $K$. Corollary 15.7 supplies the
+unmarked mass and contacts used in Lemma 16.1. Its proof does not
+require a bound on the tail indices, only a largest source index:
+choose a positive unmarked entry in row $K$ and compare its
+marked minimum with source $2K$ at the same tail. It therefore
+gives (16.1) here as well. Apply the proof of Lemma 16.2 with
+$a_*=\alpha$, $A^*=A$, $B^*=\beta$, $H^*=\ell$ and this finite
+$K^*=K$. Its column test bounds the finitely many $u_k$ below by
+a common positive number. At every active tail, countable contact
+then gives $\ell\ge(d-1)u_*$. Hence the tail indices are bounded
+too, and the countable optimum is a finite attainer.
+
+Now take an active $k>K_{\rm grow}$. Corollary 15.7 provides a
+positive $w_{kd}$. Contact, (15.5), and $g(x)\ge\gamma x^2$ imply
+
+$$
+\ell\ge(d-1)\beta g(k/d)
+\ge\frac{\beta\gamma k^2}{2d}.
+\tag{16.6}
+$$
+
+Thus $d\ge\beta\gamma k^2/(2\ell)>2k$, so $2k$ is an admissible
+marked competitor. Its marked price is at most
+
+$$
+\begin{aligned}
+u_{2k}+v_{2k}+\beta g(2k/d)
+&\le\frac{2A}{3k}+\frac{16\ell^2}{\beta\gamma^2k^2}\\
+&<\frac{3A}{4k}.
+\end{aligned}
+\tag{16.7}
+$$
+
+Every actual marked index $j$ at that tail attains the minimum,
+and its marked price is at least $A/j$. Therefore $j>4k/3$.
+There is such an index since the column has positive mass and
+one unit of marked incidence per tail. Its row is active, so the
+same argument iterates. This proves (16.5).
+
+The series $\sum_kq_k$ is finite, but this by itself does not
+exclude an increasing chain whose positive row masses tend to
+zero. Accordingly (16.5) supplies neither finite attainment nor
+a counterexample to it. ∎
+
+## 17. Uniformity reduces to pointwise finite attainment
+
+**Theorem 17.1 (Explicit conditional endpoint bound).** Let
+
+$$
+\mathcal K=[\kappa_-,\kappa_+]\times[D_-,D_+],\qquad
+0<\kappa_-\le\kappa_+<\infty,\quad0<D_-\le D_+<\infty.
+$$
+
+Use $c_*$ from Definition 10.1 and define
+
+$$
+\begin{gathered}
+\alpha_-=2\kappa_-/D_+,\quad \alpha_+=2\kappa_+/D_-,\quad
+\beta_-=D_-\kappa_-,\quad \beta_+=D_+\kappa_+,\\
+j_b=\lfloor3\kappa_+/D_-\rfloor+1,\quad
+T_b=2j_b+3\alpha_++\beta_+c_*,\quad J_b=\lceil T_b/2\rceil,\\
+R_b=D_+J_b/\kappa_-,\quad
+\eta=\frac{\beta_-\gamma}{T_bR_b},\quad
+ t_b=\max\{2,\lceil4/\eta\rceil\},\quad r_b=1+2/t_b.
+\end{gathered}
+\tag{17.1}
+$$
+
+Let $c_b=c_{t_b}$ be exactly (8.4), and put
+
+$$
+\begin{gathered}
+C_b=\alpha_+r_b+\beta_+c_b,\quad
+\Lambda_b=2C_b/\eta,\quad A_b=\alpha_++\Lambda_b,\\
+H_b=T_b+\Lambda_bR_b,\quad
+K_b=\left\lceil2+\frac{4H_b}{\beta_-\gamma}
+ +\frac{48H_b^2}{\alpha_-\beta_-\gamma^2}\right\rceil.
+\end{gathered}
+\tag{17.2}
+$$
+
+Apply (16.3) with $a_*=\alpha_-$, $A^*=A_b$, $B^*=\beta_+$,
+$H^*=H_b$, $K^*=K_b$, and denote the resulting constants by
+$d_b,u_b$. Define
+
+$$
+\widehat M_{\mathcal K}
+=\max\{3,\lceil1+H_b/u_b\rceil\}.
+\tag{17.3}
+$$
+
+For every $(\kappa,D)\in\mathcal K$,
+
+$$
+[\exists M\ge3:\ F_M(\kappa,D)=F(\kappa,D)]
+\quad\Longrightarrow\quad
+F_{\widehat M_{\mathcal K}}(\kappa,D)=F(\kappa,D).
+\tag{17.4}
+$$
+
+More precisely, every finite attainer of any winning branch at this
+point has tail degrees at most $\widehat M_{\mathcal K}$ and source
+indices at most $K_b$. No stabilization of losing branches is assumed.
+
+**Proof.** At any point, $T_0\le T_b$ and $J_0\le J_b$. For any
+winning $j$, write $R=R_j$ and $L=\mathcal L(\alpha,\beta;R)$.
+Then $L\le T_b$ and $R\le R_b$. Lemma 9.1, applied to every
+finite feasible array before taking its objective infimum, gives
+
+$$
+T_b\ge L\ge\frac{\beta_-\gamma}{R(R-1)},
+\qquad R-1\ge\frac{\beta_-\gamma}{T_bR_b}=\eta.
+\tag{17.5}
+$$
+
+The comparison pattern (8.4) with $t=t_b$ has
+$r_b\le1+\eta/2<R$ and objective at most $C_b$. Theorem 15.3
+gives a dual with
+
+$$
+\lambda\le\Lambda_b,\quad
+\alpha_-\le A\le A_b,\quad
+\alpha_-\le\ell=L+\lambda R\le H_b.
+\tag{17.6}
+$$
+
+For the lower bound, every feasible finite array has $r>1$, so
+$L\ge\alpha\ge\alpha_-$ even when the infimum is not attained.
+If this branch has a finite attainer, Lemma 16.1 bounds its largest
+source index by $K_b$, and Lemma 16.2 bounds all its tail degrees
+by $1+H_b/u_b$.
+
+If $F_M=F$ at some finite cutoff, a branch attaining the finite
+minimum in (15.1) is a winning branch of (10.2), and its finite
+array attains $L$. The support bound just proved makes this array
+feasible at $\widehat M_{\mathcal K}$. Hence
+$F_{\widehat M_{\mathcal K}}\le F$, with the reverse inequality
+following from $\mathcal L_M\ge\mathcal L$. This proves (17.4).
+The choice of winning branch was arbitrary. No strict separation
+of competing caps or contacts was used, so all ties, incidence
+transitions and equal-endpoint rectangles are included. ∎
+
+**Corollary 17.2 (A fixed-point obstruction suffices).** On $\mathcal K$,
+one common finite cutoff gives exact equality everywhere if and only
+if every point has finite envelope attainment. In that case (17.3)
+is an explicit sufficient cutoff. If some point satisfies
+$F_{\widehat M_{\mathcal K}}(\kappa,D)>F(\kappa,D)$, then at that
+same fixed positive pair $F_M(\kappa,D)>F(\kappa,D)$ for every
+finite $M\ge3$.
+
+**Proof.** The forward direction is immediate and the reverse is
+(17.4) with its common endpoint bound. At a point of strict
+inequality, equality for any finite $M$ would contradict (17.4).
+Neither existence nor nonexistence of such a point is asserted. ∎
+
+## 18. Original-graph recovery and the remaining existence question
+
+**Theorem 18.1 (Bounded tail recovery at a finitely attained point).**
+With the rectangle and constants of Theorem 17.1, put
+
+$$
+P_{\mathcal K}=\max\{\widehat M_{\mathcal K},t_b+2\},\qquad
+B_{\mathcal K}=P_{\mathcal K}+1.
+\tag{18.1}
+$$
+
+Fix a point of $\mathcal K$ with finite envelope attainment. On
+every original integer sequence with $a_n\ge4$, $h_n\ge1$, $N_n\ge1$, and
+
+$$
+a_n\to\infty,\quad h_n/\sqrt{a_n}\to\kappa,\quad
+ N_n/a_n^{3/2}\to D,
+\tag{18.2}
+$$
+
+there are graphs $G_n\in\mathfrak G_{N_n}(a_n,h_n)$ at all
+sufficiently large terms such that
+
+$$
+\frac{W(G_n)-a_n(a_n+1)^2}{a_n^2}
+\longrightarrow F(\kappa,D)=F_{\widehat M_{\mathcal K}}(\kappa,D).
+\tag{18.3}
+$$
+
+For one fixed winning index $j$, these graphs can have an
+$(a_n+j)$-sink core and $h_n+1-j$ tail sinks. Every tail degree
+and full degree of a source touching the tail is at most
+$B_{\mathcal K}$. The other source degrees lie between $a_n$ and
+$a_n+j$. This bounds a recovery sequence, not every minimizer or
+the large core sink degrees. Independently of finite attainment,
+Theorem 13.1 already gives eventual nonemptiness and the full
+original-graph minimum limit on every sequence (18.2).
+
+**Proof.** Fix a finite attainer on a winning branch, whose cutoff
+is at most $\widehat M_{\mathcal K}$ by Theorem 17.1. Mix it with
+an arbitrarily small positive proportion of the comparison pattern
+(8.4) at $t=t_b$. Its ratio becomes strictly smaller than $R_j$,
+even when the attainer was on the cap. Its objective changes by
+arbitrarily little, and the cutoff is at most $P_{\mathcal K}$.
+
+Rational approximation in the finite rational polyhedron (7.3),
+within its faces as in Theorem 8.1, preserves this strict cap and
+approximates the objective. That theorem gives a fixed rooted
+pattern with $r<R_j$ and objective at most $L+\epsilon$.
+In its proof, stub pairing and simple covers preserve degrees;
+attaching a port to a portless component adds a degree-two source
+and increases one tail degree by one. Thus every resulting pattern
+can have full source and tail degrees at most
+$P_{\mathcal K}+1$, independently of its size or denominator.
+Ports are bounded by the source full degree. This uses the actual
+marked constraints, rather than only marginal degree counts.
+
+Apply Theorem 11.1 with this pattern and $j$. Its strict assumption
+is exactly $r<R_j=Dj/\kappa$. At every sufficiently large term it
+constructs a finite simple connected bipartite graph with exactly
+$N_n$ sources, $a_n+1+h_n$ sinks and $a_nN_n$ edges. The pattern
+preserves $k_u<d_i$ on tail edges, and the actual large core degrees
+give it on core edges. The leftover tails use the one-tail pattern
+of Definition 10.1, with source degrees at most two and tail degree
+three, within the same bound. Regular source degrees lie between
+$a_n$ and $a_n+j$. Its limiting normalized value is at most
+$F+\epsilon$.
+
+Choose a fixed such pattern for each error $1/m$. On the given
+integer sequence, choose increasing thresholds beyond which its
+construction is valid and its normalized value is at most
+$F+2/m$. Use pattern $m$ between successive thresholds. The degree
+bound is independent of $m$, so it survives this diagonal choice,
+while the thresholds may depend on the pair, sequence and patterns.
+The upper limit is at most $F$, and Theorem 13.1 (or Proposition
+12.2) gives the reverse lower limit over the full graph class.
+This proves (18.3) with all exact budgets. No fixed rooted pattern
+is asserted to attain the limit; Corollary 15.4 excludes exact
+attainment of its branch infimum by such a pattern. ∎
+
+**Open problem 18.2 (Exact finite sufficiency on every compact
+rectangle).** Determine whether every
+$\mathcal K=[\kappa_-,\kappa_+]\times[D_-,D_+]$ with positive
+finite endpoints admits an integer $M_{\mathcal K}\ge3$, with an
+explicit upper bound depending only on its four endpoints, such that
+
+$$
+F_{M_{\mathcal K}}(\kappa,D)=F(\kappa,D)
+\qquad\text{for every }(\kappa,D)\in\mathcal K.
+\tag{18.4}
+$$
+
+The function $F_M$ is exactly (15.1), with the same $J_0$ and
+$R_j>1$ admissibility as (10.2), and with infeasible branches
+assigned $+\infty$. The question includes all winning-cap ties,
+incidence transitions and equal-endpoint rectangles.
+
+By Theorems 16.3 and 17.1, (18.4) is equivalent to the following
+pointwise assertion: at every $\kappa,D>0$, some winning branch
+has a countable optimum with bounded source support. Every branch
+already has a countable optimum by Theorem 15.6. An affirmative
+answer to the bounded-support assertion makes (17.3) an explicit
+endpoint-only choice in (18.4), and Theorem 18.1 then gives bounded
+tail recovery on every original integer sequence (18.2).
+
+A refutation requires a fixed positive compact rectangle
+$\mathcal K$ such that for every integer $M\ge3$ some point of
+$\mathcal K$ satisfies $F_M>F$. Corollary 17.2 makes this equivalent
+to the existence of a fixed positive pair at which every countable
+optimum of every winning branch has unbounded source support;
+at that pair $F_M>F$ for all finite $M$. A losing branch with no
+finite attainer, failure of one proof method, or approximate cutoff
+stability does not meet this criterion.
+
+Theorem 15.3 gives an attained all-degree dual, and Theorem 15.6
+gives an attained countable primal. Corollary 15.7 gives exact
+saturation and contacts. The increasing chains of Theorem 16.3
+do not exclude summable positive source masses. None of these
+statements proves bounded source support or produces a pair where
+all winning branches lack it. Thus (18.4) and its quantified
+negation both remain unresolved.
+
+The saturation perturbation, countable primal attainment,
+source-degree comparison, support-chain alternative, conditional
+endpoint bound and bounded tail recovery are repo-derived from
+(7.3) and the cited theorems of this volume. Finite LP duality is
+attributed only in its intermediate role following Theorem 15.3.
+The original-object bridge reuses Theorems 8.1, 11.1, 13.1 and
+Proposition 12.2 with their full integer-sequence quantifiers.
+There is no claim about all original minimizers, smaller-order
+finite-budget errors, or connected graphs outside Definition 1.1.
+The Zhao--Zhao full-text overlap in Section 6 remains unassessed;
+no worldwide priority assertion is made.
+
+## 追加锚（本行以下为增补区）
+
+## 19. Finite total incidence on the countable optimal face
+
+**Theorem 19.1 (High-row marked saturation and finite incidence).**
+Fix $\alpha,\beta>0$, $R>1$, an attained dual from Theorem 15.3,
+and any countable optimum from Theorem 15.6. Retain $A,\ell,u,v$
+from (15.3), and put
+
+$$
+H_0=\left\lceil\max\left\{2,
+             \frac{4\ell^2}{A\beta\gamma}\right\}\right\rceil,
+\qquad W_k=\sum_{d>k}w_{kd}=E_k-Z_k.
+\tag{19.1}
+$$
+
+Every active row satisfies
+
+$$
+u_k\le\frac{4\ell^2}{\beta\gamma k^2}.
+\tag{19.2}
+$$
+
+Consequently, for $k>H_0$,
+
+$$
+v_k>0\quad\hbox{if }q_k>0,\qquad
+Z_k=(k-1)q_k,\qquad W_k=q_k.
+\tag{19.3}
+$$
+
+In particular the total incidence, rather than merely the tail
+mass, is finite:
+
+$$
+\sum_d d t_d=\sum_k kq_k\le H_0R+2,
+\qquad \sum_k W_k=\sum_d(d-1)t_d\le H_0R+1.
+\tag{19.4}
+$$
+
+For a positive compact rectangle $\mathcal K$ from Theorem 17.1,
+define, using exactly (17.1)--(17.2),
+
+$$
+H_{\mathcal K}
+=\left\lceil\max\left\{2,
+ \frac{4H_b^2}{\alpha_-\beta_-\gamma}\right\}\right\rceil.
+\tag{19.5}
+$$
+
+Every countable optimum of every winning branch at every point of
+$\mathcal K$ satisfies $\sum_d d t_d\le H_{\mathcal K}R_b+2$.
+This conclusion does not assume finite attainment of that branch.
+
+**Proof.** Saturation and Corollary 15.7 give $W_k\ge q_k>0$ in
+an active row. Choose $d$ with $w_{kd}>0$. Its unmarked contact,
+the nonnegativity of all marked prices, and $g(x)\ge\gamma x^2$
+give
+
+$$
+\ell\ge(d-1)\{u_k+\beta g(k/d)\},\qquad
+ d\ge\frac{\beta\gamma k^2}{2\ell}.
+\tag{19.6}
+$$
+
+Here $d\ge3$ and $d-1\ge d/2$. Therefore
+$u_k\le\ell/(d-1)\le2\ell/d$, proving (19.2).
+For active $k>H_0$ this is strictly less than $A/k$.
+The row equality $ku_k+(k-1)v_k=A$ implies $v_k>0$.
+The equality of the nonnegative sums in (15.13) gives
+
+$$
+v_k\{(k-1)q_k-Z_k\}=0.
+\tag{19.7}
+$$
+
+Thus the marked constraint is saturated at these rows; subtracting
+it from $E_k=kq_k$ proves (19.3). Inactive rows have $q_k=Z_k=W_k=0$.
+Since $\sum_kZ_k=1$, nonnegative summation now gives
+
+$$
+\begin{aligned}
+\sum_k kq_k
+&\le H_0\sum_{k\le H_0}q_k
+   +\sum_{k>H_0}\frac{k}{k-1}Z_k\\
+&\le H_0R+2.
+\end{aligned}
+$$
+
+Tonelli's identity and saturation identify this sum with
+$\sum_d d t_d$. Subtracting $\sum_dt_d=1$ gives the second
+bound in (19.4). For the uniform assertion choose the dual with
+(17.6) on the winning branch. Then $H_0\le H_{\mathcal K}$ and
+$r\le R\le R_b$, proving the stated bound. No unique branch,
+contact or strict inequality between competing caps is needed. ∎
+
+## 20. An exact flow and dual-gap identity for the marked constraints
+
+**Definition 20.1 (Incidence flow).** Let
+
+$$
+\mathcal A=\{(k,j,d):d\ge3,\ 1\le k<d,\ 2\le j<d\}.
+$$
+
+The index $k$ is unmarked and $j$ is marked; both refer to the
+same tail degree $d$. For nonnegative $y=(y_{kjd})_{\mathcal A}$
+with $\sum_{\mathcal A}y_{kjd}<\infty$, put
+
+$$
+\begin{gathered}
+W_k=\sum_{j,d}y_{kjd},\qquad
+I_1=0,\qquad
+I_j=\sum_{k,d}\frac{y_{kjd}}{(j-1)(d-1)}\quad(j\ge2),\\
+b_k=W_k-I_k,\qquad
+\mathcal N(y)=\sum_{\mathcal A}\frac{y_{kjd}}{d-1},\\
+\mathcal R(y)=\sum_k\left(I_k+\frac{b_k}{k}\right),\qquad
+\mathcal C(y)=\sum_{\mathcal A}y_{kjd}
+ \left\{g(k/d)+\frac{g(j/d)}{d-1}\right\}.
+\end{gathered}
+\tag{20.1}
+$$
+
+Only flows with $b_k\ge0$ are considered. The vector $b$ is the
+injection. It is not an additional source type or an extra
+constraint on either original domain.
+
+**Proposition 20.2 (Exact saturated-array correspondence and gap).**
+Saturated countable arrays satisfying (7.3), $E_k=kq_k$ and
+$\sum_ddt_d<\infty$ are exactly the images of the flows in
+Definition 20.1 with $\mathcal N(y)=1$. The correspondence preserves
+$r=\mathcal R(y)$ and $c=\mathcal C(y)$. In particular, imposing
+$\mathcal R(y)\le R$ preserves exactly the original cap on these
+arrays, including equality.
+
+For an attained dual from Theorem 15.3 define
+
+$$
+\begin{aligned}
+p_{jd}&=\frac1{(j-1)(d-1)},\\
+\Delta_{kjd}
+&=u_k-p_{jd}u_j+A p_{jd}
+ +\beta\left\{g(k/d)+\frac{g(j/d)}{d-1}\right\}
+ -\frac\ell{d-1}.
+\end{aligned}
+\tag{20.2}
+$$
+
+Every $\Delta_{kjd}$ is nonnegative. For every normalized flow
+with $\mathcal R(y)\le R$, the exact objective gap is
+
+$$
+\begin{aligned}
+\alpha\mathcal R(y)+\beta\mathcal C(y)-L
+={}&\sum_{\mathcal A}y_{kjd}\Delta_{kjd}
+ +\sum_k b_k(A/k-u_k)\\
+ &+\lambda\{R-\mathcal R(y)\}.
+\end{aligned}
+\tag{20.3}
+$$
+
+Hence such a flow gives an optimum if and only if all three
+nonnegative terms on the right vanish. Equivalently, its positive
+actions satisfy $\Delta_{kjd}=0$, its positive injection rows satisfy
+$u_k=A/k$, and $\lambda\{R-\mathcal R(y)\}=0$.
+Every countable optimum has a representing flow of this kind, with
+$b_k=0$ for $k>H_0$.
+
+**Proof.** Given a saturated array of finite total incidence, set
+
+$$
+y_{kjd}=\frac{w_{kd}z_{jd}}{t_d}\quad(t_d>0),
+\qquad y_{kjd}=0\quad(t_d=0).
+\tag{20.4}
+$$
+
+The column identities in (7.3) show
+
+$$
+\sum_jy_{kjd}=w_{kd},\qquad
+\sum_ky_{kjd}=(d-1)z_{jd}.
+\tag{20.5}
+$$
+
+Thus $\sum y=\sum W_k=\sum(d-1)t_d<\infty$ and
+$\mathcal N(y)=1$. For $k\ge2$, $I_k=Z_k/(k-1)$.
+The marked constraint and saturation imply $I_k\le W_k$, since
+$Z_k\le(k-1)(W_k+Z_k)/k$ is exactly this inequality.
+For source one, $Z_1=0$ and $q_1=W_1$. For every $k$,
+
+$$
+q_k=I_k+b_k/k.
+\tag{20.6}
+$$
+
+This proves nonnegative injection and preservation of $r$.
+Equation (20.5) proves preservation of $c$ as well. The product
+in (20.4) is a way to pair the two types of incidence at one
+column; it asserts no independence of original graph or law data.
+
+Conversely, given a flow as stated, define
+
+$$
+\begin{gathered}
+t_d=\frac1{d-1}\sum_{k,j}y_{kjd},\qquad
+w_{kd}=\sum_jy_{kjd},\qquad
+z_{jd}=\frac1{d-1}\sum_ky_{kjd},\\
+z_{1d}=0,\qquad q_k=I_k+b_k/k.
+\end{gathered}
+\tag{20.7}
+$$
+
+The two column identities hold and $\sum_dt_d=1$.
+For $k\ge2$, $Z_k=(k-1)I_k$ and
+$E_k=W_k+(k-1)I_k=kq_k$; for $k=1$, $E_1=q_1=W_1$.
+The assumption $b_k\ge0$ gives
+$Z_k\le(k-1)q_k$, and $q_k\le E_k$ follows from saturation.
+All incidence indices obey the actual strict inequality $k<d$.
+Also $\sum_ddt_d=1+\sum y<\infty$. This proves the exact image
+statement; different pairings $y$ can represent the same array.
+
+For the dual identity use
+$u_j+v_j=(A-u_j)/(j-1)$. The all-degree column inequality gives
+
+$$
+\ell\le u_j+v_j+\beta g(j/d)
+ +(d-1)\{u_k+\beta g(k/d)\},
+$$
+
+which is $\Delta_{kjd}\ge0$. Moreover $0\le u_k\le A/k$.
+Every series needed below is absolutely convergent: $\sum y<\infty$,
+$0\le I_k,b_k\le W_k$, $u_k\le A$, $p_{jd}\le1/2$, and $g$
+is bounded on $[0,1]$. Summing (20.2) therefore gives
+
+$$
+\sum y_{kjd}\Delta_{kjd}
+=\sum_k u_kb_k+A\sum_k I_k
+ +\beta\mathcal C(y)-\ell\mathcal N(y).
+\tag{20.8}
+$$
+
+Add $\sum_kb_k(A/k-u_k)$, use (20.6) and $\mathcal N(y)=1$,
+and finally use $A=\alpha+\lambda$, $\ell=L+\lambda R$.
+This proves (20.3) and its equality criterion.
+Theorem 19.1 permits (20.4) for every optimum. Equation (19.3)
+gives $W_k=I_k=q_k$ for $k>H_0$, hence $b_k=0$ there. ∎
+
+**Lemma 20.3 (Finite contact actions at a fixed source row).**
+For any attained dual, $u_k>0$ for every fixed $k\ge1$.
+If $\Delta_{kjd}=0$, then
+
+$$
+d\le1+\ell/u_k.
+\tag{20.9}
+$$
+
+Consequently the set of contact actions $(j,d)$ at each fixed
+unmarked row $k$ is finite, without any finite-attainment assumption.
+
+**Proof.** Source one has $u_1=A>0$. For fixed $k\ge2$ choose
+$m\ge2$ with $A/(m-1)<\ell/4$, and then choose an integer
+$d>\max\{k,m,2\}$ so large that
+$\beta m^2/d^2<\ell/4$ and $\beta k^2/d<\ell/4$.
+Testing the column inequality with marked row $m$ and unmarked
+row $k$, using $g(x)\le x^2$, gives
+$\ell<3\ell/4+(d-1)u_k$. Thus $u_k>0$.
+At a contact action the right side of the column test equals
+$\ell$ and all its terms are nonnegative. In particular
+$(d-1)u_k\le\ell$, which is (20.9). Both $j$ and $d$ are then
+in finite sets. ∎
+
+## 21. Two injection rows and the exact remaining support selection
+
+**Theorem 21.1 (Two-injection reduction on every optimal face).**
+Fix $\alpha,\beta>0$, $R>1$ and an attained dual.
+There is a countable optimum whose representing flow has injection
+on at most two rows, all at indices at most $H_0$ and satisfying
+$u_k=A/k$. If $\lambda=0$, one injection row suffices.
+The optimum can use only contact actions of any one prescribed
+countable optimum. This reduction preserves the cap and the exact
+objective; the initial optimum need not have finite support.
+
+More precisely, for its set $S$ of active unmarked rows there are
+probabilities $\pi_k(j,d)$ on the finite contact actions at $k\in S$,
+with all their positive targets $j$ in $S$. Define on $\ell^1(S)$
+
+$$
+(P_\pi f)_j
+=\sum_{k,d}p_{jd}\pi_k(j,d)f_k.
+\tag{21.1}
+$$
+
+The flow has the representation
+
+$$
+W=\sum_{n=0}^{\infty}P_\pi^n b,\qquad
+ y_{kjd}=W_k\pi_k(j,d),\qquad
+\|P_\pi\|_{1\to1}\le\frac12.
+\tag{21.2}
+$$
+
+**Proof.** Start with the flow (20.4) of the prescribed optimum.
+Let $S=\{k:W_k>0\}$ and set $\pi_k(j,d)=y_{kjd}/W_k$.
+Proposition 20.2 and Lemma 20.3 give the stated contact support
+and its local finiteness. If $y_{kjd}>0$, then $I_j>0$ and
+$W_j\ge I_j$, so $j\in S$. Each coefficient $p_{jd}$ is positive
+and at most $1/2$, proving the norm bound by nonnegative summation.
+The definitions give $I=P_\pi W$ and $W=b+P_\pi W$.
+Iteration has a remainder of norm at most $2^{-n}\|W\|_1$,
+proving (21.2). In particular there is no additional positive
+summable solution with zero injection. The injection is nonzero,
+as $W\ne0$ and $\|P_\pi\|<1$, and its support $B$ is a finite
+subset of $\{1,\ldots,H_0\}$ with $u_h=A/h$.
+
+For each $h\in B$, let $e_h$ be the unit vector at $h$, and put
+
+$$
+W^{h}=\sum_{n\ge0}P_\pi^ne_h,\qquad
+ y^{h}_{kjd}=W^{h}_k\pi_k(j,d),\qquad
+ n_h=\mathcal N(y^{h}).
+\tag{21.3}
+$$
+
+These are nonnegative summable flows with injection $e_h$.
+Here $0<n_h<\infty$: the term $W^{h}_h\ge1$ and the probability
+row $\pi_h$ give positive normalized tail mass, while
+$\|W^{h}\|_1\le2$ gives finiteness. Their normalized versions
+$\bar y^{h}=y^{h}/n_h$ satisfy all incidence constraints, but their
+ratios $\rho_h=\mathcal R(\bar y^{h})$ need not individually obey
+the cap. All their actions and injections are contacts, so (20.8)
+gives, without imposing a cap on each component,
+
+$$
+A\rho_h+\beta\mathcal C(\bar y^{h})=\ell.
+\tag{21.4}
+$$
+
+The original flow decomposes exactly as
+
+$$
+y=\sum_{h\in B}\theta_h\bar y^{h},\qquad
+\theta_h=b_h n_h>0,\qquad \sum_{h\in B}\theta_h=1.
+\tag{21.5}
+$$
+
+Indeed (21.2) is linear in $b$, and $\mathcal N(y)=1$ gives the
+last identity. In particular $r=\sum_h\theta_h\rho_h$.
+If $\lambda=0$, choose a component with $\rho_h\le r\le R$.
+Its objective is $\ell=L$ by (21.4), so it is a one-injection
+optimum. If $\lambda>0$, the original $r=R$ by (20.3).
+If some $\rho_h=R$, use that component. Otherwise choose one
+$\rho_h<R$ and one $\rho_{h'}>R$, and mix their normalized flows
+with the unique weights giving ratio $R$. Both normalization and
+(21.4) are preserved, so the mixture has objective
+$\ell-\lambda R=L$ and obeys the cap exactly. It has at most two
+injection rows. Its positive actions were already positive in the
+original flow. Individual components exceeding the cap have only
+been used inside this feasible mixture. ∎
+
+**Corollary 21.2 (Finite attainment as finite reachability with two
+injection rows).** For a fixed branch and any fixed attained dual,
+finite attainment of $\mathcal L(\alpha,\beta;R)$ is equivalent to
+the following selection statement. There exist a set $S$ of source
+indices, contact probabilities $\pi_k(j,d)$ as in Theorem 21.1,
+and nonzero $b\ge0$ supported on at most two rows in
+$\{1,\ldots,H_0\}$ with $u_k=A/k$, such that the flow (21.2)
+satisfies
+
+$$
+\mathcal N(y)=1,\qquad \mathcal R(y)\le R,\qquad
+\lambda\{R-\mathcal R(y)\}=0,
+\tag{21.6}
+$$
+
+and the set reachable from $\operatorname{supp}b$ through positive
+actions $k\longrightarrow j$ is finite. One injection row suffices
+in this equivalence when $\lambda=0$.
+
+**Proof.** For a finite attainer, choose its representing flow in
+Theorem 21.1. Its source set and action set are finite, and the
+reduction retains a subset of them. Conversely, for a selection as
+stated, positivity of $p_{jd}$ and the nonnegative series (21.2)
+show that $W_k>0$ exactly on the reachable set. If that set is
+finite, Lemma 20.3 bounds all its positive action degrees $d$ by
+a common finite integer. Thus $y$ has finite support. Proposition
+20.2 reconstructs an actual finite array satisfying every constraint
+in (7.3), and its gap (20.3) is zero. This is a finite attainer. ∎
+
+## 22. Scope of the optimal-face reduction
+
+Theorems 19.1 and 21.1 and Proposition 20.2 are repo-derived
+consequences of the marked incidence constraints, the attained
+primal and dual, and their nonnegative complementary-slackness sums.
+The geometric-series solution in (21.2) and the two-point interpolation
+in (21.5) are elementary occupation-flow tools. Their CDSO-specific
+coefficients, incidence reconstruction and cap identity are given
+explicitly above; no general finite-state approximation or
+finite-moment support theorem is applied. The finite LP duality
+input remains exactly the affine result attributed after Theorem
+15.3. No additional literature theorem is a premise of the support
+reduction, and no priority assertion is made. The Zhao--Zhao
+full-text overlap in Section 6 remains unassessed.
+
+For every $\kappa,D>0$, apply these statements with exactly
+$\alpha=2\kappa/D$, $\beta=D\kappa$, $R=R_j=Dj/\kappa$ and the
+admissible winning indices of (10.2). A countable optimal flow with
+at most two injection rows exists on every such branch. What is
+not established is the existence, on at least one winning branch,
+of a selection in Corollary 21.2 with finite reachable set.
+The norm bound $\|P_\pi\|\le1/2$, finitely supported injection,
+finite total incidence and finitely many actions at each fixed row
+do not in their proofs bound the union of rows reachable along
+arbitrarily long positive paths. A feasible mixture of components
+must still retain both normalization and (21.6); separately feasible
+or separately optimal resource choices cannot replace that mixture.
+
+Thus Open problem 18.2, including every positive compact rectangle,
+all winning-cap ties and equal-endpoint rectangles, remains open,
+as does its quantified negation. Corollary 21.2 gives an equivalent
+support-selection obligation, not a stronger sufficient condition
+substituted for the question. If that obligation holds on a winner
+at every positive pair, Theorem 17.1 supplies exactly the explicit
+endpoint-only cutoff (17.3), and Theorem 18.1 supplies the bounded
+tail recovery. Neither conclusion is asserted unconditionally here.
+A negative result still requires a fixed positive pair for which
+all winning branches fail finite attainment, or the equivalent
+fixed-compact/all-cutoff criterion of Open problem 18.2.
+
+The original graph and actual common-law domains remain Definition
+1.1. Independently of the unresolved finite-support selection,
+Theorems 8.1, 11.1, 13.1 and Proposition 12.2 still give eventual
+nonemptiness and the full original-graph limit on every integer
+sequence $a_n\to\infty$, $h_n/\sqrt{a_n}\to\kappa>0$,
+$N_n/a_n^{3/2}\to D>0$, with the prescribed exact counts and strict
+edge inequalities. This reduction supplies no new bound on all
+original minimizers and no single exactly attaining connected rooted
+pattern. It changes neither $\mathcal X(a,h)$ nor $M(a,h)$ and
+does not infer a sign for the gap in Corollary 13.2.
+
+## 追加锚（本行以下为增补区）
