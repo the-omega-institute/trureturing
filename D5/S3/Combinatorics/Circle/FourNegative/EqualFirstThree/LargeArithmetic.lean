@@ -51,7 +51,7 @@ private theorem large_bounds (R D u r e B : ℤ)
   let K := u*R^4
   let Z := (u-1)*R^3-u*C
   let Zn := 2*Z+R^3
-  have heq : e=R*u := by omega
+  have heq : e=R*u := by nlinarith only [hD,he]
   have hD4 : 4≤D := by nlinarith
   have hA : 1≤A ∧ A<N := by
     have h := seed_bounds R R R D hR hR hR hD4
@@ -74,6 +74,8 @@ private theorem large_bounds (R D u r e B : ℤ)
   have hZnm : 0≤Zn := by dsimp [Zn];positivity
   have hplus : 0≤R*R+R := by positivity
   have hminus : 0≤R*R-R := by nlinarith
+  have hu2m : 0≤2*u-1 := by omega
+  have hu4m : 0≤4*u-1 := by omega
   have hmul1 : 0≤(2*u-1)*(R*R+R) := by positivity
   have hmul2 : 0≤(2*u-1)*(R*R-R) := by positivity
   have hmul3 : 0≤(4*u-1)*(R*R+R) := by positivity

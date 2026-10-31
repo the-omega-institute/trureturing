@@ -89,6 +89,35 @@ private theorem three_peak_strip (f : ℕ → ℤ) (P Q S G : List ℕ)
   · exact last
   · exact total
 
+private theorem diagonal_coefficients (R : ℤ) (hR : 4≤R) :
+    (seed R≤vcoef R R ∧ vcoef R R≤2*seed R-1) ∧
+    (seed R≤wcoef R R ∧ wcoef R R≤2*seed R-1) ∧
+    (seed R≤xcoef R R ∧ xcoef R R≤2*seed R-1) ∧
+    (seed R≤2*vcoef R R-1 ∧ 2*vcoef R R-1≤2*seed R-1) ∧
+    (seed R≤2*wcoef R R-R-1 ∧ 2*wcoef R R-R-1≤2*seed R-1) ∧
+    (seed R≤2*xcoef R R-eta R ∧ 2*xcoef R R-eta R≤2*seed R-1) := by
+  obtain ⟨z,hz,rfl⟩ : ∃ z : ℤ,0≤z ∧ R=z+4 := ⟨R-4,by omega,by omega⟩
+  dsimp [seed,vcoef,wcoef,xcoef,eta]
+  repeat' constructor
+  all_goals apply sub_nonneg.mp
+  all_goals ring_nf
+  all_goals positivity
+
+private theorem critical_coefficients (R : ℤ) (hR : 4≤R) :
+    (seed R≤vcoef R (2*R) ∧ vcoef R (2*R)≤2*seed R-1) ∧
+    (seed R≤wcoef R (2*R) ∧ wcoef R (2*R)≤2*seed R-1) ∧
+    (seed R≤xcoef R (2*R) ∧ xcoef R (2*R)≤2*seed R-1) ∧
+    (2*seed R≤2*vcoef R (2*R)-1 ∧ 2*vcoef R (2*R)-1≤4*seed R-1) ∧
+    (2*seed R≤2*wcoef R (2*R)-R-1 ∧ 2*wcoef R (2*R)-R-1≤4*seed R-1) ∧
+    (2*seed R≤2*xcoef R (2*R)-eta R ∧ 2*xcoef R (2*R)-eta R≤4*seed R-1) := by
+  obtain ⟨z,hz,rfl⟩ : ∃ z : ℤ,0≤z ∧ R=z+4 := ⟨R-4,by omega,by omega⟩
+  dsimp [seed,vcoef,wcoef,xcoef,eta]
+  repeat' constructor
+  all_goals apply sub_nonneg.mp
+  all_goals ring_nf
+  all_goals positivity
+
+-- The two actual physical rows share packets but have different initial heights.
 set_option maxHeartbeats 1600000 in
 private theorem natural_slices (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d)
     (hcase : d = s ∨ d = s + 1) :
@@ -134,23 +163,25 @@ private theorem natural_slices (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d)
   have j1 : (2 : ℤ) ^ d * (2 * A) = M + Vn := by change D * (2 * A) = M + Vn; rw [hM]; dsimp [Vn]; nlinarith only [r1]
   have j2 : (2 : ℤ) ^ s * Vn = M + Wn := by change R * Vn = M + Wn; rw [hM,hN]; dsimp [Vn,Wn,V,W,vcoef,wcoef]; ring
   have j3 : (2 : ℤ) ^ s * Wn = M + Xn := by change R * Wn = M + Xn; rw [hM,hN]; dsimp [Wn,Xn,W,X,C,wcoef,xcoef,eta]; ring
-  have pu := packet_laws f 0 d A N V (by omega) cp.1 r1 (by simpa only [Nat.zero_add] using (Table.u tab))
-  have pv := packet_laws f d s V N W (by omega) cp.2.2.1 r2 (Table.v tab)
-  have pw := packet_laws f (d + s) s W N X (by omega) cp.2.2.2.2.1 r3 (Table.w tab)
-  have gu := packet_laws g 0 d (2 * A) M Vn (by omega) cp.2.1 j1 (by simpa only [Nat.zero_add] using (Table.un tab))
-  have gv := packet_laws g d s Vn M Wn (by omega) cp.2.2.2.1 j2 (Table.vn tab)
-  have gw := packet_laws g (d + s) s Wn M Xn (by omega) cp.2.2.2.2.2.1 j3 (Table.wn tab)
+  have pu := packet_laws f 0 d A N V (le_trans (by decide) hd) cp.1 r1 (by simpa only [Nat.zero_add] using (Table.u tab))
+  have pv := packet_laws f d s V N W (le_trans (by decide) hs) cp.2.2.1 r2 (Table.v tab)
+  have pw := packet_laws f (d + s) s W N X (le_trans (by decide) hs) cp.2.2.2.2.1 r3 (Table.w tab)
+  have gu := packet_laws g 0 d (2 * A) M Vn (le_trans (by decide) hd) cp.2.1 j1 (by simpa only [Nat.zero_add] using (Table.un tab))
+  have gv := packet_laws g d s Vn M Wn (le_trans (by decide) hs) cp.2.2.2.1 j2 (Table.vn tab)
+  have gw := packet_laws g (d + s) s Wn M Xn (le_trans (by decide) hs) cp.2.2.2.2.2.1 j3 (Table.wn tab)
   have pt := range_positive f (d+s+s) (s-1) X cp.2.2.2.2.2.2.1 (Table.x tab)
   have gt := range_positive g (d+s+s) (s-1) Xn cp.2.2.2.2.2.2.2 (Table.xn tab)
   have n1 := (Table.nu tab)
   have n2 := (Table.nv tab)
   have n3 := (Table.nw tab)
   have n4 := (Table.nx tab)
+  change 2*f nx=A-N at n4
   have m1 := (Table.nun tab)
   have m2 := (Table.nvn tab)
   have m3 := (Table.nwn tab)
   have m4 := (Table.nxn tab)
   rw [←hM] at m1 m2 m3 m4
+  change 2*g nx=A-M at m4
   have hp : word.Perm (List.range (rank s d)) := natural_inventory s d hs hd
   have hz : (word.map f).sum = 0 := old_total s d hs hd word hp
   have hhalfD : 2 * (2 : ℤ) ^ (d - 1) = D := by
@@ -158,73 +189,62 @@ private theorem natural_slices (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d)
     conv_rhs => rw [show d = d - 1 + 1 by omega, pow_succ]
     ring
   have heN : N = 2 * ((2 : ℤ) ^ (d-1) * R * R * R - 1) + 1 := by rw [hN, ←hhalfD]; ring
-  have hhalf : N = 2 * (N/2) + 1 := by omega
-  have hmhalf : M/2 = N := by omega
-  have hC0 : 0 < C := by dsimp [C,eta]; positivity
-  have hCA : C + 1 ≤ A ∧ R + 2 ≤ A ∧ 3 * C ≤ 2 * A := by
-    let z := R-4
-    have hz : 0≤z := by dsimp [z];omega
-    have he : R=z+4 := by dsimp [z];ring
-    dsimp [C,A,eta,seed]
-    rw [he]
-    repeat' constructor
-    all_goals apply sub_nonneg.mp
-    all_goals ring_nf
-    all_goals positivity
-  have oldbounds : (A ≤ V ∧ V ≤ 2 * A - 1) ∧
-      (A ≤ W ∧ W ≤ 2 * A - 1) ∧ (A ≤ X ∧ X ≤ 2 * A - 1) := by
+  have hhalf : N = 2 * (N/2) + 1 := by
+    clear * - heN
+    omega
+  have hmhalf : M/2 = N := by
+    clear * - hM
+    omega
+  have oldbounds : (A≤V ∧ V≤2*A-1) ∧ (A≤W ∧ W≤2*A-1) ∧ (A≤X ∧ X≤2*A-1) := by
     rcases hcase with he | he
-    · have hDR : D = R := by dsimp [D,R]; rw [he]
-      have ev : V = A := by rw [show V = vcoef R D from rfl,hDR]; dsimp [A,vcoef,seed]; ring
-      have ew : W = A := by rw [show W = wcoef R D from rfl,hDR]; dsimp [A,wcoef,seed]; ring
-      have ex : X = A := by rw [show X = xcoef R D from rfl,hDR]; dsimp [A,xcoef,seed]; ring
-      rw [ev,ew,ex]; omega
-    · have hDR : D = 2 * R := by dsimp [D,R]; rw [he,pow_succ]; ring
-      have ev : V = 2 * A - 1 := by dsimp [V]; rw [hDR]; dsimp [A,vcoef,seed]; ring
-      have ew : W = 2 * A - R - 1 := by dsimp [W]; rw [hDR]; dsimp [A,wcoef,seed]; ring
-      have ex : X = 2 * A - C := by dsimp [X]; rw [hDR]; dsimp [A,C,xcoef,seed,eta]; ring
-      rw [ev,ew,ex]; omega
+    · have hDR : D=R := by dsimp [D,R];rw [he]
+      have hb := diagonal_coefficients R hR
+      simpa only [A,V,W,X,hDR] using ⟨hb.1,hb.2.1,hb.2.2.1⟩
+    · have hDR : D=2*R := by dsimp [D,R];rw [he,pow_succ];ring
+      have hb := critical_coefficients R hR
+      simpa only [A,V,W,X,hDR] using ⟨hb.1,hb.2.1,hb.2.2.1⟩
   have hold : InStrip f (N/2) 0 word := by
-    apply three_peak_strip f U P Q T nu nv nw nx N (N/2) 0 A V W X hhalf (by omega)
+    apply three_peak_strip f U P Q T nu nv nw nx N (N/2) 0 A V W X hhalf le_rfl
       pu.1 pv.1 pw.1 n1 n2 n3 pu.2 pv.2 pw.2 pt
     · simpa only [sub_zero] using oldbounds.1
     · simpa only [sub_zero] using oldbounds.2.1
     · simpa only [sub_zero] using oldbounds.2.2
-    · constructor <;> omega
+    · clear * - n4 hA0 hAN hhalf
+      constructor <;> omega
     · simpa only [zero_add] using hz
   rcases hcase with he | he
   · have hDR : D = R := by dsimp [D,R]; rw [he]
-    have ev : V = A := by dsimp [V]; rw [hDR]; dsimp [A,vcoef,seed]; ring
-    have ew : W = A := by dsimp [W]; rw [hDR]; dsimp [A,wcoef,seed]; ring
-    have ex : X = A := by dsimp [X]; rw [hDR]; dsimp [A,xcoef,seed]; ring
-    have bv : A ≤ Vn ∧ Vn ≤ 2*A-1 := by dsimp [Vn]; rw [ev]; omega
-    have bw : A ≤ Wn ∧ Wn ≤ 2*A-1 := by dsimp [Wn]; rw [ew]; omega
-    have bx : A ≤ Xn ∧ Xn ≤ 2*A-1 := by dsimp [Xn]; rw [ex]; omega
+    have hb := diagonal_coefficients R hR
+    have bv : A≤Vn ∧ Vn≤2*A-1 := by simpa only [A,Vn,V,hDR] using hb.2.2.2.1
+    have bw : A≤Wn ∧ Wn≤2*A-1 := by simpa only [A,Wn,W,hDR] using hb.2.2.2.2.1
+    have bx : A≤Xn ∧ Xn≤2*A-1 := by simpa only [A,Xn,X,C,hDR] using hb.2.2.2.2.2
     have hzg : A + (word.map g).sum = 0 := by
       have h := new_total s d hs hd (rank s d :: word)
         (by simpa only [List.nil_append] using inserted_perm (rank s d) [] word hp)
-      simpa only [List.map_cons,List.sum_cons,hear] using h
+      change g (rank s d)+(word.map g).sum=0 at h
+      rwa [hear] at h
     have hgs : InStrip g N A word := by
-      apply three_peak_strip g U P Q T nu nv nw nx M N A (2*A) Vn Wn Xn hM (by omega)
+      apply three_peak_strip g U P Q T nu nv nw nx M N A (2*A) Vn Wn Xn hM hA0.le
         gu.1 gv.1 gw.1 m1 m2 m3 gu.2 gv.2 gw.2 gt
       · simpa only [show 2*A-A=A by ring] using bv
       · simpa only [show 2*A-A=A by ring] using bw
       · simpa only [show 2*A-A=A by ring] using bx
-      · constructor <;> omega
+      · clear * - m4 hA0 hAN hM
+        constructor <;> omega
       · exact hzg
-    apply finish s d hs hd [] word (by simpa using hp) (by simpa using hold)
+    apply finish s d hs hd [] word
+      (by simpa only [List.nil_append] using hp)
+      (by simpa only [List.nil_append] using hold)
     change InStrip g (M/2) 0 (rank s d :: word)
     rw [hmhalf]
     change 0 ≤ (0 : ℤ) ∧ 0 ≤ N ∧ InStrip g N (0 + g (rank s d)) word
     rw [hear,zero_add]
-    exact ⟨le_rfl,by omega,hgs⟩
+    exact ⟨le_rfl,le_trans hA0.le hAN.le,hgs⟩
   · have hDR : D = 2 * R := by dsimp [D,R]; rw [he,pow_succ]; ring
-    have ev : V = 2*A-1 := by dsimp [V]; rw [hDR]; dsimp [A,vcoef,seed]; ring
-    have ew : W = 2*A-R-1 := by dsimp [W]; rw [hDR]; dsimp [A,wcoef,seed]; ring
-    have ex : X = 2*A-C := by dsimp [X]; rw [hDR]; dsimp [A,C,xcoef,seed,eta]; ring
-    have bv : 2*A ≤ Vn ∧ Vn ≤ 4*A-1 := by dsimp [Vn]; rw [ev]; omega
-    have bw : 2*A ≤ Wn ∧ Wn ≤ 4*A-1 := by dsimp [Wn]; rw [ew]; omega
-    have bx : 2*A ≤ Xn ∧ Xn ≤ 4*A-1 := by dsimp [Xn]; rw [ex]; omega
+    have hb := critical_coefficients R hR
+    have bv : 2*A≤Vn ∧ Vn≤4*A-1 := by simpa only [A,Vn,V,hDR] using hb.2.2.2.1
+    have bw : 2*A≤Wn ∧ Wn≤4*A-1 := by simpa only [A,Wn,W,hDR] using hb.2.2.2.2.1
+    have bx : 2*A≤Xn ∧ Xn≤4*A-1 := by simpa only [A,Xn,X,C,hDR] using hb.2.2.2.2.2
     let left := U ++ nu :: P ++ nv :: Q ++ [nw]
     let right := T ++ [nx]
     have hsplit : left ++ right = word := by
@@ -237,15 +257,16 @@ private theorem natural_slices (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d)
     have hgt : ∀ i ∈ rank s d :: T, 0 ≤ g i := by
       intro i hi
       rcases List.mem_cons.mp hi with rfl | hi
-      · rw [hear]; omega
+      · rw [hear]; exact hA0.le
       · exact gt i hi
     have hgs : InStrip g N 0 (U ++ nu :: P ++ nv :: Q ++ nw :: (rank s d :: T) ++ [nx]) := by
       apply three_peak_strip g U P Q (rank s d :: T) nu nv nw nx M N 0
-        (2*A) Vn Wn Xn hM (by omega) gu.1 gv.1 gw.1 m1 m2 m3 gu.2 gv.2 gw.2 hgt
+        (2*A) Vn Wn Xn hM le_rfl gu.1 gv.1 gw.1 m1 m2 m3 gu.2 gv.2 gw.2 hgt
       · simpa only [sub_zero,show 2*(2*A)-1=4*A-1 by ring] using bv
       · simpa only [sub_zero,show 2*(2*A)-1=4*A-1 by ring] using bw
       · simpa only [sub_zero,show 2*(2*A)-1=4*A-1 by ring] using bx
-      · constructor <;> omega
+      · clear * - m4 hA0 hAN hM
+        constructor <;> omega
       · simpa only [zero_add] using htotal
     apply finish s d hs hd left right (by rw [hsplit]; exact hp)
     · rw [hsplit]; exact hold
