@@ -106,7 +106,12 @@ private theorem withEar_split (ear e : ℕ) (bs : List (List ℕ × ℕ))
     | zero => exact ⟨P,n :: blocksWord bs,by simp [blocksWord],by simp [blocksWord,withEar]⟩
     | succ e =>
       obtain ⟨pre,post,hword,hmarked⟩ := ih e (by simpa using he)
-      refine ⟨P ++ n :: pre,post,?_,?_⟩ <;>
-        simp [blocksWord,withEar,hword,hmarked,List.append_assoc]
+      refine ⟨P ++ n :: pre,post,?_,?_⟩
+      · change P ++ n :: blocksWord bs = (P ++ n :: pre) ++ post
+        rw [hword]
+        simp only [List.append_assoc,List.cons_append]
+      · change P ++ n :: blocksWord (withEar ear e bs) = (P ++ n :: pre) ++ ear :: post
+        rw [hmarked]
+        simp only [List.append_assoc,List.cons_append]
 
 end D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm

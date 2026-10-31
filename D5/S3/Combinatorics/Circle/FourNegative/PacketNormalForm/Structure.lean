@@ -16,8 +16,15 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
 open SourceWidth
 open private slide_ear_right from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Transport
 
-private def blocksWord (bs : List (List ℕ × ℕ)) : List ℕ :=
-  bs.flatMap (fun b => b.1 ++ [b.2])
+private def blocksWord : List (List ℕ × ℕ) → List ℕ
+  | [] => []
+  | (P,n) :: bs => P ++ n :: blocksWord bs
+
+private theorem blocksWord_flatMap (bs : List (List ℕ × ℕ)) :
+    blocksWord bs = bs.flatMap (fun b => b.1 ++ [b.2]) := by
+  induction bs with
+  | nil => rfl
+  | cons b bs ih => simp [blocksWord,List.flatMap_cons,ih,List.append_assoc]
 
 private theorem split_packets (bad : ℕ → Prop) [DecidablePred bad] (l : List ℕ)
     (hlast : ∀ pre x, l = pre ++ [x] → bad x) :
@@ -89,28 +96,5 @@ private theorem slide_packet (f : ℕ → ℤ) (B h : ℤ) (ear : ℕ)
     fun i hi => hp i (List.mem_of_mem_drop hi)
   have hh := slide_ear_right f B h ear (pre ++ P.take j) (P.drop j) post he hpos hw
   simpa only [List.append_assoc pre (P.take j) (P.drop j), List.take_append_drop] using hh
-
-private theorem find_next_negative (bad : ℕ → Prop) [DecidablePred bad]
-    (l : List ℕ) (hne : l ≠ [])
-    (hlast : ∀ pre x, l = pre ++ [x] → bad x) :
-    ∃ P n R, l = P ++ n :: R ∧ (∀ x ∈ P, ¬ bad x) ∧ bad n := by
-  induction l with
-  | nil => exact (hne rfl).elim
-  | cons x xs ih =>
-    by_cases hx : bad x
-    · exact ⟨[],x,xs,rfl,by simp,hx⟩
-    · have hxs : xs ≠ [] := by
-        intro he
-        subst xs
-        exact hx (hlast [] x rfl)
-      have ht : ∀ pre y, xs = pre ++ [y] → bad y := by
-        intro pre y he
-        exact hlast (x :: pre) y (by simp [he])
-      obtain ⟨P,n,R,he,hP,hn⟩ := ih hxs ht
-      refine ⟨x :: P,n,R,by simp [he],?_,hn⟩
-      intro y hy
-      rcases List.mem_cons.mp hy with h | h
-      · simpa [h] using hx
-      · exact hP y h
 
 end D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm

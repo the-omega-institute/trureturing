@@ -51,17 +51,6 @@ private theorem strip_of_prefix {α : Type*} (f : α → ℤ) (B h : ℤ)
     intro n
     simpa [List.take_succ_cons, add_assoc] using hp (n + 1)
 
-private theorem strip_positive_perm {α : Type*} (f : α → ℤ) (B h : ℤ)
-    (l r : List α) (hperm : l.Perm r) (hpos : ∀ x ∈ r, 0 ≤ f x)
-    (hl : InStrip f B h l) : InStrip f B h r := by
-  have h0 := (inStrip_prefix hl 0).1
-  have hend := (inStrip_prefix hl l.length).2
-  simp only [List.take_length] at hend
-  rw [(hperm.map f).sum_eq] at hend
-  apply positive_block_strip hpos
-  · simpa using h0
-  · exact hend
-
 /-- Moving the ear right across a nonnegative interval preserves every prefix. -/
 private theorem slide_ear_right {α : Type*} (f : α → ℤ) (B h : ℤ)
     (ear : α) (pre pos post : List α)
