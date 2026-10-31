@@ -63,7 +63,8 @@ private theorem natural_inventory (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d) :
   have h1234 := List.range'_append_1 (s := 0) (m := d + s + s) (n := s)
   simp only [Nat.zero_add] at h12 h123 h1234
   rw [h12, h123, h1234]
-  simpa only [← List.range_eq_range', rank, show d + s + s + s = 3 * s + d by omega]
+  simpa only [← List.range_eq_range', rank, show d + s + s + s = 3 * s + d by omega] using
+    (List.Perm.refl (List.range (rank s d)))
 
 private theorem three_peak_strip (f : ℕ → ℤ) (P Q S G : List ℕ)
     (nu nv nw nx : ℕ) (N B h a b c e : ℤ)
@@ -133,22 +134,22 @@ private theorem natural_slices (s d : ℕ) (hs : 2 ≤ s) (hd : 2 ≤ d)
   have j1 : (2 : ℤ) ^ d * (2 * A) = M + Vn := by change D * (2 * A) = M + Vn; rw [hM]; dsimp [Vn]; nlinarith only [r1]
   have j2 : (2 : ℤ) ^ s * Vn = M + Wn := by change R * Vn = M + Wn; rw [hM,hN]; dsimp [Vn,Wn,V,W,vcoef,wcoef]; ring
   have j3 : (2 : ℤ) ^ s * Wn = M + Xn := by change R * Wn = M + Xn; rw [hM,hN]; dsimp [Wn,Xn,W,X,C,wcoef,xcoef,eta]; ring
-  have pu := packet_laws f 0 d A N V (by omega) cp.1 r1 (by simpa only [Nat.zero_add] using tab.u)
-  have pv := packet_laws f d s V N W (by omega) cp.2.2.1 r2 tab.v
-  have pw := packet_laws f (d + s) s W N X (by omega) cp.2.2.2.2.1 r3 tab.w
-  have gu := packet_laws g 0 d (2 * A) M Vn (by omega) cp.2.1 j1 (by simpa only [Nat.zero_add] using tab.un)
-  have gv := packet_laws g d s Vn M Wn (by omega) cp.2.2.2.1 j2 tab.vn
-  have gw := packet_laws g (d + s) s Wn M Xn (by omega) cp.2.2.2.2.2.1 j3 tab.wn
-  have pt := range_positive f (d+s+s) (s-1) X cp.2.2.2.2.2.2.1 tab.x
-  have gt := range_positive g (d+s+s) (s-1) Xn cp.2.2.2.2.2.2.2 tab.xn
-  have n1 := tab.nu
-  have n2 := tab.nv
-  have n3 := tab.nw
-  have n4 := tab.nx
-  have m1 := tab.nun
-  have m2 := tab.nvn
-  have m3 := tab.nwn
-  have m4 := tab.nxn
+  have pu := packet_laws f 0 d A N V (by omega) cp.1 r1 (by simpa only [Nat.zero_add] using (Table.u tab))
+  have pv := packet_laws f d s V N W (by omega) cp.2.2.1 r2 (Table.v tab)
+  have pw := packet_laws f (d + s) s W N X (by omega) cp.2.2.2.2.1 r3 (Table.w tab)
+  have gu := packet_laws g 0 d (2 * A) M Vn (by omega) cp.2.1 j1 (by simpa only [Nat.zero_add] using (Table.un tab))
+  have gv := packet_laws g d s Vn M Wn (by omega) cp.2.2.2.1 j2 (Table.vn tab)
+  have gw := packet_laws g (d + s) s Wn M Xn (by omega) cp.2.2.2.2.2.1 j3 (Table.wn tab)
+  have pt := range_positive f (d+s+s) (s-1) X cp.2.2.2.2.2.2.1 (Table.x tab)
+  have gt := range_positive g (d+s+s) (s-1) Xn cp.2.2.2.2.2.2.2 (Table.xn tab)
+  have n1 := (Table.nu tab)
+  have n2 := (Table.nv tab)
+  have n3 := (Table.nw tab)
+  have n4 := (Table.nx tab)
+  have m1 := (Table.nun tab)
+  have m2 := (Table.nvn tab)
+  have m3 := (Table.nwn tab)
+  have m4 := (Table.nxn tab)
   have hp : word.Perm (List.range (rank s d)) := natural_inventory s d hs hd
   have hz : (word.map f).sum = 0 := old_total s d hs hd word hp
   have hhalfD : 2 * (2 : ℤ) ^ (d - 1) = D := by

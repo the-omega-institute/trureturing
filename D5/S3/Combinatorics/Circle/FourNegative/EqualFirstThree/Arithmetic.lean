@@ -238,10 +238,10 @@ private theorem hard_floor (s d : ℕ) (hd : 2 ≤ d) (hhard : 2*d ≤ s) :
       dsimp [R,D,H]; rw [←pow_add,show d+(s-d)=s by omega]
     have hr : 2*r=R := by
       dsimp [r,R]; conv_rhs => rw [show s=s-1+1 by omega,pow_succ]
-    ring
+      ring
     have he : 2*e=D := by
       dsimp [e,D]; conv_rhs => rw [show d=d-1+1 by omega,pow_succ]
-    ring
+      ring
     have hHU : 2*HU=N-vcoef R D := by
       have hp : N-vcoef R D=2*(e*(R*R*R-R*R-R-1)-1) := by
         dsimp [N,vcoef]; rw [←he]; ring
@@ -274,7 +274,7 @@ private theorem hard_floor (s d : ℕ) (hd : 2 ≤ d) (hhard : 2*d ≤ s) :
         simpa [R] using pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hs6
       have hr : 2*r=R := by
         dsimp [r,R]; conv_rhs => rw [show s=s-1+1 by omega,pow_succ]
-    ring
+        ring
       have hH : 4*H=R := by
         dsimp [H,R]
         conv_rhs => rw [show s=(s-2)+2 by omega,pow_add]
