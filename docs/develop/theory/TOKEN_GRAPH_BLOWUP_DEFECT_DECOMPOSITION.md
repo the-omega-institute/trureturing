@@ -1937,3 +1937,341 @@ impose a neighborhood restriction at the hub or at any other
 odd-degree vertex. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 10. Every even scale for balanced complete multipartite graphs
+
+**定义 10.1（Labelled parts and the original half-filled operator）。**
+Let $[m]=C_1\sqcup\cdots\sqcup C_q$ be any labelled partition, with
+$p_a=|C_a|\geq1$, and let $H=K_{p_1,\ldots,p_q}$: distinct vertices
+are adjacent exactly when they belong to different parts. Assume
+
+$$
+q\geq4,\qquad m=\sum_{a=1}^q p_a\text{ is even},\qquad
+2\max_a p_a\leq m.
+\tag{10.1}
+$$
+
+For every integer $S\geq1$, set $s=2S$, $k=mS$, and retain the blocks
+$B_i$, graph $H[\overline{K_{2S}}]$, complete complex Boolean space
+$\mathcal H_{mS}$, ordinary positive adjacency $K=K_{mS}$ and original
+within-$B_i$ projection $P_{\mathrm{sym}}$ of Definitions 1.1–1.2.
+Write
+
+$$
+E=\lambda_{\min}(K),\qquad \mathcal N=\ker P_{\mathrm{sym}},\qquad
+L_a=p_aS.
+\tag{10.2}
+$$
+
+Part membership in $C_a$ is distinct from membership in a Boolean block
+$B_i$: the latter always has the original uniform size $2S$.
+
+**定理 10.2（Strict full-space confinement for balanced multipartite
+bases）。** Under Definition 10.1, $\mathcal N$ is nonzero and reduces
+$K$. The number
+
+$$
+g=\lambda_{\min}(K|_{\mathcal N})-E
+\tag{10.3}
+$$
+
+is defined and strictly positive, and
+
+$$
+\begin{aligned}
+\ker(K-EI)&\subseteq\operatorname{ran}P_{\mathrm{sym}},\\
+K-EI&\succeq g(I-P_{\mathrm{sym}}).
+\end{aligned}
+\tag{10.4}
+$$
+
+For every normalized complex $\phi\in\mathcal H_{mS}$, with no
+symmetry assumption,
+
+$$
+\|(I-P_{\mathrm{sym}})\phi\|^2
+\leq\frac{\langle\phi,K\phi\rangle-E}{g}.
+\tag{10.5}
+$$
+
+All these statements use the same entire-carrier minimum $E$ in
+(10.2), at every even $s\geq2$.
+
+Proof. The orthogonal Boolean-chain decomposition (6.6)–(6.12) applies
+without the flat-mode assumption of Definition 6.1. It retains each
+integer spin $J_i=S-t_i$, $0\leq t_i\leq S$, with every multiplicity
+$r_{2S}(t_i)=\binom{2S}{t_i}-\binom{2S}{t_i-1}$, and the entire slice
+$\sum_i x_i=0$, $-J_i\leq x_i\leq J_i$. Its ladder coefficients are
+exactly (6.10), including their zero values at the endpoints. In each
+copy the original operator is
+
+$$
+K_{\boldsymbol J}
+=\sum_{\{i,j\}\in E(H)}(J_i^+J_j^-+J_i^-J_j^+)
+=2\sum_{\{i,j\}\in E(H)}(X_iX_j+Y_iY_j).
+\tag{10.6}
+$$
+
+Here $Z_i|x_i\rangle=x_i|x_i\rangle$,
+$X_i=(J_i^++J_i^-)/2$, and $Y_i=(J_i^+-J_i^-)/(2i)$.
+The $t=0$ chains are precisely $\operatorname{ran}P_{\mathrm{sym}}$.
+The representation sources and their parameters are Srinivasan,
+[Theorem 1.2 and pp. 4–5](https://arxiv.org/pdf/1001.0280v2), Boolean
+rank $n=2S$, starting rank $t_i$, up operator $L_i^*=J_i^+$; and
+Feinsilver, [§§3–4, (8)–(10), Proposition 4.3 and
+§4.2.2](https://arxiv.org/pdf/1102.0368v2), principal number
+$2S-2t_i=2J_i$. Equation (2.4) gives (10.6) on the original carrier.
+In Apte–Parekh–Sud,
+[v3, Definition 1, §3.2 and Fact 2](https://arxiv.org/pdf/2506.03441v3),
+this $K$ is $A(F_k(H[\overline{K_s}]))$; their XY block $WI/2-K$
+is a different operator.
+
+We first obtain a trial bound in that same carrier. Work temporarily
+in its all-$J_i=S$ summand and define the collective spin of a graph
+part by
+
+$$
+\boldsymbol T_a=\sum_{i\in C_a}(X_i,Y_i,Z_i),\qquad
+\boldsymbol T=\sum_a\boldsymbol T_a,\qquad
+\boldsymbol T_a^2=(T_a^x)^2+(T_a^y)^2+(T_a^z)^2.
+\tag{10.7}
+$$
+
+The maximal part spin is $L_a=p_aS$: the tensor of the highest-weight
+vectors has weight $L_a$ and generates a spin-$L_a$ chain. No larger
+spin occurs because all weights are at most $L_a$. The finite unitary
+spin decomposition therefore gives the operator bound
+$\boldsymbol T_a^2\preceq L_a(L_a+1)I$ on the whole tensor product
+of the $p_a$ spin-$S$ factors, not just on its maximal-spin chain.
+
+We consume the classical Clebsch–Gordan rule
+$V_u\otimes V_v\cong\bigoplus_{r=|u-v|}^{u+v}V_r$, with integer
+steps, for spin representations $V_j$. Its normalization, triangle
+range and orthogonality are recorded in
+[NIST DLMF, (34.1.1), (34.2.1), (34.3.16)–(34.3.17)](https://dlmf.nist.gov/34.1).
+For the integer spins here its relevant content can be seen directly:
+the weight character of $V_j$ is $\chi_j(z)=\sum_{x=-j}^jz^x$,
+and counting pairs of weights gives
+$\chi_u(z)\chi_v(z)=\sum_{r=|u-v|}^{u+v}\chi_r(z)$.
+For $u\geq v$ and weight $x\geq0$, both sides have coefficient
+$\min\{2v+1,u+v-x+1\}$ when $x\leq u+v$, and zero otherwise;
+negative weights give the same counts. Complete reducibility and the
+linear independence of these characters, obtained by comparing their
+largest powers, give precisely that decomposition.
+
+In particular, for a nonempty list of nonnegative integer spins with
+sum $U$ and maximum $M$, the spins occurring in their tensor product
+are all integers in
+
+$$
+[\max\{0,2M-U\},U].
+\tag{10.8}
+$$
+
+Here is the endpoint verification needed for its use. For one spin
+this is its singleton interval. If the previous interval is $[l,U]$
+and another spin is $v$, the two-factor rule gives the union of
+$[|r-v|,r+v]$ over its integer $r$. Consecutive such intervals overlap
+or have consecutive integer endpoints, so there is no missing integer.
+The greatest endpoint is $U+v$; the least is the integer distance from
+$v$ to $[l,U]$, namely $\max\{0,l-v,v-U\}$. Substituting
+$l=\max\{0,2M-U\}$ gives
+$\max\{0,2\max(M,v)-(U+v)\}$, proving (10.8) by induction.
+This is the classical coupling rule used as an intermediate.
+
+By (10.1), the integer spins $L_1,\ldots,L_q$ satisfy
+$2\max_aL_a\leq\sum_aL_a$. Thus (10.8) supplies a unit total
+singlet $v$ in $\bigotimes_a V_{L_a}$. Each factor here is an actual
+maximal-part-spin subspace of the original all-$S$ summand. Its
+embedding into the Boolean space intertwines the collective operators.
+Since a singlet has total $Z=0$, this $v$ belongs to the original
+$\mathcal H_{mS}$, with no alteration of filling or blocks.
+
+A total singlet is fixed by simultaneous spin rotations. Consequently
+for any two different parts the expectations of
+$T_a^xT_b^x$, $T_a^yT_b^y$ and $T_a^zT_b^z$ are equal: rotations
+interchanging the axes conjugate one product into another. Since
+$H$ has exactly all cross-part edges,
+
+$$
+\begin{aligned}
+\langle v,Kv\rangle
+&=\frac43\sum_{a<b}\langle v,\boldsymbol T_a\mathbin\cdot
+ \boldsymbol T_bv\rangle\\
+&=\frac23\left\langle v,
+ \left(\boldsymbol T^2-\sum_a\boldsymbol T_a^2\right)v\right\rangle
+=-\frac23\sum_a L_a(L_a+1).
+\end{aligned}
+\tag{10.9}
+$$
+
+Only Rayleigh's inequality is inferred:
+
+$$
+E\leq U_*:=-\frac23\sum_aL_a(L_a+1).
+\tag{10.10}
+$$
+
+Neither $v$ being an eigenvector of $K$ nor equality in (10.10) is
+needed or asserted.
+
+Suppose now that some nonsymmetric sector has minimum $E$. Choose a
+vertex $p$ with $J_p<S$. Apply the nonstrict fixed-zero-magnetization
+comparison (7.4)–(7.5) to increase every other local spin to $S$.
+It requires only integer spins and the bilinear operator (10.6), not
+bipartiteness or a flat mode. Each resulting sector occurs in the
+same original Boolean carrier, so its minimum is at least $E$ and
+hence remains exactly $E$. We obtain a unit ground vector with spin
+$J_p$ at $p$ and spin $S$ at every other vertex. Every intermediate
+zero-weight slice is nonempty, since each integer-spin factor contains
+weight zero.
+
+The primary comparison is Ghassemi Tabrizi–Henderson–Kühne–Scuseria,
+[Appendix A4, (A34)–(A54) and its final fixed-magnetization
+paragraph](https://pmc.ncbi.nlm.nih.gov/articles/PMC12613319/#app1-sec4),
+DOI [10.1021/acs.jctc.5c01412](https://doi.org/10.1021/acs.jctc.5c01412).
+Its maximal on-site spin $s_p$ is $S$, variable on-site spin $t_p$
+is our $J_p$, $M=0$, and
+$D_{ij}=\operatorname{diag}(2a_{ij},2a_{ij},0)$.
+The fixed-$M$ trial uses the zero-weight triplet $|1,0\rangle$.
+Its nonzero upper-spin projection at every weight, including endpoints
+and entangled inputs, is (7.4); the induction in §7 proves the
+nonstrict comparison used here. No equality exclusion is supplied
+by that comparison.
+
+Use the original-carrier singlet-pair realization from §7: realize
+the spin $J_p$ by the symmetric space on $2J_p$ of the original
+$2S$ auxiliaries at $p$, tensored with $S-J_p$ disjoint singlet pairs.
+It intertwines every collective spin component and preserves centered
+occupancy. This realizes the required sector even if the initial
+minimum came from another multiplicity copy, since (6.12) gives the
+same operator on every such copy. Choose one fixed pair and write the
+ground vector as $\Psi=|0,0\rangle\otimes f$, where $\|f\|=1$.
+The other fixed pairs, if any, remain in $f$, along with arbitrary
+entanglement between the remaining auxiliaries and other vertices.
+Write
+
+$$
+p\in C_a,\qquad A=[m]\setminus C_a=N_H(p),\qquad
+B^\pm=\sum_{i\in A}J_i^\pm,\qquad Z_A=\sum_{i\in A}Z_i.
+\tag{10.11}
+$$
+
+Replacing just this pair by $|1,0\rangle$ gives
+$\Theta=|1,0\rangle\otimes f$ in the same $\mathcal H_{mS}$.
+Both pair states have weight zero and zero expectations of all spin
+components. There are no intrablock edges, so
+$\langle\Theta,K\Theta\rangle=E$. For a finite Hermitian operator,
+equality at its actual minimum makes the vector a ground vector:
+$\sum_\lambda(\lambda-E)|c_\lambda|^2=0$ in an orthonormal
+eigenbasis forces all components with $\lambda>E$ to vanish.
+Omitting the pair gives $K^{\mathrm{rem}}f=Ef$, because its collective
+operators annihilate the singlet. The two orthogonal triplet components
+therefore give the original-operator identity
+
+$$
+0=(K-EI)\Theta
+=\sqrt2\,|1,1\rangle\otimes B^-f
+ +\sqrt2\,|1,-1\rangle\otimes B^+f.
+\tag{10.12}
+$$
+
+It follows that $B^-f=B^+f=0$ and, by their commutator, $Z_Af=0$.
+Equivalently all three components of the total spin of $A$ annihilate
+$f$, so simultaneous rotations on $A$ fix $f$. This is exactly the
+singlet consequence of (7.12), before any use there of a bipartite
+neighborhood. It remains valid with every other tensor factor retained.
+
+For $b\ne a$ keep $\boldsymbol T_b$ from (10.7), acting on the
+spin-$S$ sites in $C_b$. Let $K_A$ be the induced operator on $A$.
+All edges incident to $C_a$ are accounted for by
+$T_a^+B^-+T_a^-B^+$; after omitting the chosen pair the same formula
+uses the remaining collective spin of $C_a$. This term annihilates
+$f$, and there are no edges within $C_a$. Hence
+$E=\langle f,K_Af\rangle$. Rotation invariance on $A$ and
+$\sum_{b\ne a}\boldsymbol T_bf=0$ now give, on this same entangled
+vector,
+
+$$
+\begin{aligned}
+E
+&=\frac43\sum_{\substack{b<c\\b,c\ne a}}
+ \langle f,\boldsymbol T_b\mathbin\cdot\boldsymbol T_cf\rangle\\
+&=-\frac23\sum_{b\ne a}\langle f,\boldsymbol T_b^2f\rangle\\
+&\geq-\frac23\sum_{b\ne a}L_b(L_b+1)
+=U_*+\frac23L_a(L_a+1)>U_*.
+\end{aligned}
+\tag{10.13}
+$$
+
+The part-spin bound used in the inequality holds on all part-spin
+sectors and copies, so it imposes no further local symmetry within
+$A$. The last inequality is strict because $p_a\geq1$ and $S\geq1$.
+It contradicts (10.10). Thus no nonsymmetric sector has minimum $E$.
+The additional strict inference is (10.9)–(10.13): the balanced
+maximal-part singlet trial separates the full-space minimum from the
+energy forced by the neighbor singlet. The Boolean representations,
+classical spin coupling, nonstrict comparison and singlet release are
+consumed intermediates. For the last construction also compare
+Benassi–Lees–Ueltschi,
+[v3, §4.3, (4.12)–(4.17) and Lemma 9](https://arxiv.org/pdf/1510.03215v3),
+DOI [10.1007/s10955-016-1580-2](https://doi.org/10.1007/s10955-016-1580-2).
+Their $R^i$ is the collective spin of one pair of spin-half auxiliaries;
+their strictness concerns a negative Hamiltonian with nonnegative
+product couplings in the 1 and 3 directions. It is not a strictness
+result for the positive adjacency used here.
+
+To finish, block permutations commute with $K$, so $P_{\mathrm{sym}}$
+and $I-P_{\mathrm{sym}}$ reduce it. The latter has nonzero range:
+take a nonconstant one-particle vector in one block, occupancy $2S-1$
+in a second block, and occupancy $S$ in each remaining block.
+This is a nonzero vector in $\mathcal N$ of total occupancy $mS$,
+including $S=1$. The finite orthogonal decomposition (6.12), with
+all multiplicities retained, has excluded $E$ from every summand of
+$\mathcal N$. Therefore its spectral minimum is strictly above $E$,
+which proves (10.3) and the ground-vector statement in (10.4), also
+for arbitrary complex superpositions of sectors and copies. On
+$\operatorname{ran}P_{\mathrm{sym}}$ one has $K-EI\succeq0$; on
+$\mathcal N$ one has $K-EI\succeq gI$. Adding the quadratic forms
+on these reducing subspaces proves (10.4) on the entire carrier.
+Its quadratic form on a unit vector gives (10.5).
+
+The proof uses the weak balance inequality in (10.1), including
+$2\max p_a=m$, and includes all singleton parts $q=m$, unequal
+parts and the minimum scale $s=2$. It supplies no quantitative value
+of $g$ or exact formula for $E$. Theorems 6.2, 7.2, 8.2 and 9.2
+retain their separate graph, flat-mode and scale hypotheses. Complete
+multipartite graphs with two or three parts already have bipartite
+open neighborhoods and are covered at even scales by §7; they are
+not an added graph class here. Arbitrary $H$, unbalanced multipartite
+parts, disconnected bases with only global filling, weights, other
+fillings and odd scales are outside this sufficient theorem. Failure
+of (10.1) is not a counterexample. The general arbitrary-$H$ confinement
+problem remains unresolved here. $\square$
+
+**命题 10.3（The labelled $K_4$ and $K_{3,1,1,1}$ applications）。**
+Every labelled realization of $K_4$ and $K_{3,1,1,1}$ satisfies all
+conclusions (10.3)–(10.5) at every even $s\geq2$, on its complete
+original half-filled carrier. Both graphs lie outside Definition 7.1's
+locally bipartite class.
+
+Proof. For $K_4$ take its four singleton parts: $q=m=4$, every
+$p_a=1$, and $2\max p_a=2\leq4$. For $K_{3,1,1,1}$ the four
+nonempty labelled parts have sizes $3,1,1,1$, so $q=4$, $m=6$ and
+$2\max p_a=6=m$. These are finite simple unit-weight graphs with
+exactly the cross-part edges, even order and no isolates. Theorem 10.2
+therefore applies to each at every integer $S\geq1$, with $k=4S$
+and $k=6S$, respectively, and $s=2S$. It retains the original labels
+and each original Boolean block; no identification of equal-sized
+parts is involved.
+
+More generally, in a complete multipartite graph with $q\geq4$,
+the open neighborhood of a vertex in any part contains a triangle:
+choose one vertex from each of three other nonempty parts. Its three
+cross-part edges are present. A bipartite graph cannot contain this
+triangle, so the induced neighborhood is not bipartite. This verifies
+the failure of the locally bipartite hypothesis at every vertex of
+both examples, independently of their labels. The applications use
+the even-scale result just proved; the odd-scale statements of §9
+retain their own hypotheses and conclusions. $\square$
+
+## 追加锚（本行以下为增补区）
