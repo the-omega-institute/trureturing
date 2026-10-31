@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Mertens.Cryptids;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Mertens.Cryptids.WeightedStieltjes.Residues;
 
 internal sealed class WeightedStieltjesResiduesDocument : IScribeDocumentDefinition
 {

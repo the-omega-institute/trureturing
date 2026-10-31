@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Mertens.Cryptids;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Mertens.Cryptids.Schoenfeld;
 
 internal sealed class SchoenfeldDocument : IScribeDocumentDefinition
 {
