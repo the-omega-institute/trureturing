@@ -132,8 +132,8 @@ set_option pp.proofs false in
 namespace CyclePrefix
 
 /-- Observe the closing edge's target in the endpoint of the final subwalk. -/
-abbrev signature.{uV, uE} : Signature where
-  Params := Σ V : Type uV, Σ E : Type uE, EdgeGraph V E
+abbrev signature.{u_1, u_2} : Signature where
+  Params := Σ V : Type u_1, Σ E : Type u_2, EdgeGraph V E
   State q := q.2.1
   Role := Unit
   finiteRole := inferInstance
@@ -142,15 +142,15 @@ abbrev signature.{uV, uE} : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual.{uV, uE} : Realization signature.{uV, uE} :=
+def actual.{u_1, u_2} : Realization signature.{u_1, u_2} :=
   realize signature (fun _ q edge => q.2.2.target edge) (fun e => nomatch e)
 
-def rejected.{uV, uE} : Realization signature.{uV, uE} :=
+def rejected.{u_1, u_2} : Realization signature.{u_1, u_2} :=
   realize signature (fun _ q edge => q.2.2.source edge) (fun e => nomatch e)
 
-abbrev arena.{uV, uE} : Arena where
-  signature := signature.{uV, uE}
-  Law R := ∀ {V : Type uV} {E : Type uE} {G : EdgeGraph V E} {a : V}
+abbrev arena.{u_1, u_2} : Arena where
+  signature := signature.{u_1, u_2}
+  Law R := ∀ {V : Type u_1} {E : Type u_2} {G : EdgeGraph V E} {a : V}
     (edge : E) (initial : G.Walk (G.target edge) a) (legal : G.source edge = a),
     (∀ (v : V) (before : G.Walk (G.target edge) v) (inner : G.Walk v v)
       (after : G.Walk v (R.readout () ⟨V, E, G⟩ edge)),
@@ -158,19 +158,19 @@ abbrev arena.{uV, uE} : Arena where
       0 < inner.length → 0 < before.length + after.length → False) →
     initial.visited.Nodup
 
-private abbrev flipGraph.{uV, uE} : EdgeGraph (ULift.{uV} Bool) (ULift.{uE} Bool) where
+private abbrev flipGraph.{u_1, u_2} : EdgeGraph (ULift.{u_1} Bool) (ULift.{u_2} Bool) where
   source e := ⟨e.down⟩
   target e := ⟨!e.down⟩
 
-private abbrev repeatedPrefix.{uV, uE} :
-    flipGraph.{uV, uE}.Walk ⟨true⟩ ⟨false⟩ := by
-  let first : flipGraph.{uV, uE}.Walk ⟨true⟩ ⟨false⟩ :=
+private abbrev repeatedPrefix.{u_1, u_2} :
+    flipGraph.{u_1, u_2}.Walk ⟨true⟩ ⟨false⟩ := by
+  let first : flipGraph.{u_1, u_2}.Walk ⟨true⟩ ⟨false⟩ :=
     .concat .nil (ULift.up true) rfl
-  let second : flipGraph.{uV, uE}.Walk ⟨true⟩ ⟨true⟩ :=
+  let second : flipGraph.{u_1, u_2}.Walk ⟨true⟩ ⟨true⟩ :=
     .concat first (ULift.up false) rfl
   exact .concat second (ULift.up true) rfl
 
-theorem rejected_law.{uV, uE} : ¬ arena.{uV, uE}.Law rejected := by
+theorem rejected_law.{u_1, u_2} : ¬ arena.{u_1, u_2}.Law rejected := by
   intro h
   have hn := h (G := flipGraph) ⟨false⟩ repeatedPrefix rfl (by
     intro v before inner after he _ _
@@ -180,7 +180,7 @@ theorem rejected_law.{uV, uE} : ¬ arena.{uV, uE}.Law rejected := by
     have hne : joined.edges ≠ [] := by
       rw [he', EdgeGraph.Walk.edges_concat]
       simp
-    have hlast : joined.edges.getLast hne = (⟨false⟩ : ULift.{uE} Bool) := by
+    have hlast : joined.edges.getLast hne = (⟨false⟩ : ULift.{u_2} Bool) := by
       calc
         _ = (repeatedPrefix.concat (ULift.up false) rfl).edges.getLast
             (by simp [EdgeGraph.Walk.edges_concat]) :=
@@ -188,20 +188,20 @@ theorem rejected_law.{uV, uE} : ¬ arena.{uV, uE}.Law rejected := by
         _ = _ := by simp only [EdgeGraph.Walk.edges_concat, List.getLast_append_singleton]
     have hend := joined.target_getLast hne
     rw [hlast] at hend
-    have hb : (⟨true⟩ : ULift.{uV} Bool) = ⟨false⟩ := by
+    have hb : (⟨true⟩ : ULift.{u_1} Bool) = ⟨false⟩ := by
       exact hend
     exact Bool.noConfusion (congrArg ULift.down hb))
-  change ([⟨true⟩, ⟨false⟩, ⟨true⟩, ⟨false⟩] : List (ULift.{uV} Bool)).Nodup at hn
+  change ([⟨true⟩, ⟨false⟩, ⟨true⟩, ⟨false⟩] : List (ULift.{u_1} Bool)).Nodup at hn
   simp at hn
 
-theorem dependence.{uV, uE} : ObservationalDependence signature.{uV, uE} actual := by
+theorem dependence.{u_1, u_2} : ObservationalDependence signature.{u_1, u_2} actual := by
   intro i
-  refine ⟨⟨ULift.{uV} Bool, ULift.{uE} Bool, flipGraph⟩, ⟨false⟩, ⟨true⟩, ?_⟩
+  refine ⟨⟨ULift.{u_1} Bool, ULift.{u_2} Bool, flipGraph⟩, ⟨false⟩, ⟨true⟩, ?_⟩
   exact fun h => Bool.noConfusion (congrArg ULift.down h)
 
-def source_registration.{uV, uE} : Registration arena.{uV, uE}
-    (type_of% @cycle_initial_visited_nodup.{uV, uE}) where
-  actual := realize signature.{uV, uE}
+def source_registration.{u_1, u_2} : Registration arena.{u_1, u_2}
+    (type_of% @cycle_initial_visited_nodup.{u_1, u_2}) where
+  actual := realize signature.{u_1, u_2}
     (fun _ q edge => q.2.2.target edge) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨cycle_initial_visited_nodup, rejected, rejected_law⟩
@@ -213,22 +213,22 @@ def source_registration.{uV, uE} : Registration arena.{uV, uE}
       exact nomatch e
   dependence := dependence
 
-def registration.{uV, uE} :
+def registration.{u_1, u_2} :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@cycle_initial_visited_nodup.{uV, uE}) (Realization signature.{uV, uE}) Unit Unit := {
+      (@cycle_initial_visited_nodup.{u_1, u_2}) (Realization signature.{u_1, u_2}) Unit Unit := {
   unitName := `Reg.D5.S3.Combinatorics.Graph.LayeredCirculation.LayeredFlow.CyclePrefix.unit
   realizationName :=
     `Reg.D5.S3.Combinatorics.Graph.LayeredCirculation.LayeredFlow.CyclePrefix.source_registration
   realizationSource := none
   generated := false
-  arena := .source ⟨arena.{uV, uE}⟩
-  objectArena := .source ⟨arena.{uV, uE}⟩
+  arena := .source ⟨arena.{u_1, u_2}⟩
+  objectArena := .source ⟨arena.{u_1, u_2}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena.{uV, uE} ⟨source_registration⟩
+  realization := .source arena.{u_1, u_2} ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{uV, uE}
+  readout := some (realize signature.{u_1, u_2}
     (fun _ q edge => q.2.2.target edge) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
