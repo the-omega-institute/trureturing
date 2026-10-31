@@ -585,4 +585,33 @@ private theorem four_reserve_strong
     · dsimp [C3,C2,C1,Q1,Q2,Q3]; ring)
   simpa only [List.append_assoc] using s1234
 
+
+set_option maxHeartbeats 1000000 in
+-- Dyadic valley ratios give a common nonnegative polynomial chart, including its smallest edge.
+private theorem valley_rising_bounds (T L P : ℤ) (hT : 4≤T) (hL : 2≤L) (hP : 1≤P) :
+    let R:=T*L
+    let Z:=2*R*P
+    let C:=R*T+R+1
+    let A:=R*T*Z+C
+    let e1:=2*Z*C
+    let e2:=2*(R+1)*Z^2
+    let e3:=2*T*Z^2
+    e1≤3*A ∧ 3*A≤2*e1-A ∧
+    e2≤2*e1*(P+P*L) ∧ 2*e1*(P+P*L)≤2*e2-A ∧
+    e3≤2*e1*P ∧ 2*e1*P≤2*e3-A ∧ 2*(P+P*L)<Z := by
+  dsimp only
+  have ht : 0≤T-4 := by omega
+  have hl : 0≤L-2 := by omega
+  have hp : 0≤P-1 := by omega
+  generalize ht0 : T-4=t at ht
+  generalize hl0 : L-2=l at hl
+  generalize hp0 : P-1=p at hp
+  have heT : T=t+4 := by omega
+  have heL : L=l+2 := by omega
+  have heP : P=p+1 := by omega
+  rw [heT,heL,heP]
+  refine ⟨?_,?_,?_,?_,?_,?_,?_⟩
+  all_goals first | apply sub_nonneg.mp | apply sub_pos.mp
+  all_goals ring_nf; positivity
+
 end D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.FullCone
