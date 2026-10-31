@@ -154,12 +154,12 @@ simp uses must be confirmed by native proof terms. No classification grants firs
 | `relabel_symm_apply` | bind-only | `colIndex_relabel` |
 | `colIndex_relabel` | bind-only | `colSubgroup_relabel (simp in conjugacy premise)` |
 | `nonempty` | bind-only | `spechtSubrepresentation_ne_bot` |
-| `fiberSubgroup` | construction | `mem_fiberSubgroup`; `fiberSubgroup_map_conj`; `fiberSubgroup_inf`; `fiberSubgroup_eq_bot_of_injective`; `youngSubgroup_eq_fiberSubgroup`; `rowSubgroup`; `colSubgroup`; `rowSubgroup_def`; `colSubgroup_def` |
+| `fiberSubgroup` | content (ported construction; source assessment) | `mem_fiberSubgroup`; `fiberSubgroup_map_conj`; `fiberSubgroup_inf`; `fiberSubgroup_eq_bot_of_injective`; `youngSubgroup_eq_fiberSubgroup`; `rowSubgroup`; `colSubgroup`; `rowSubgroup_def`; `colSubgroup_def` |
 | `mem_fiberSubgroup` | bind-only | `fiberSubgroup_map_conj`; `youngSubgroup_eq_fiberSubgroup`; `mem_rowSubgroup`; `mem_colSubgroup`; `rowSubgroup_def`; `colSubgroup_def` |
 | `fiberSubgroup_map_conj` | bind-only | `youngSubgroup_map_conj_eq_rowSubgroup`; `colSubgroup_relabel` |
 | `fiberSubgroup_inf` | bind-only | `rowSubgroup_inf_colSubgroup_eq_bot` |
 | `fiberSubgroup_eq_bot_of_injective` | bind-only | `rowSubgroup_inf_colSubgroup_eq_bot` |
-| `youngBlocksEquiv` | construction | `youngBlock`; `youngBlock_youngBlocksEquiv`; `rowYoungConjugator`; `rowIndex_rowYoungConjugator` |
+| `youngBlocksEquiv` | content (ported construction; source assessment) | `youngBlock`; `youngBlock_youngBlocksEquiv`; `rowYoungConjugator`; `rowIndex_rowYoungConjugator` |
 | `youngBlock` | bind-only | `youngBlock_youngBlocksEquiv`; `youngSubgroup`; `mem_youngSubgroup_stabilizer_iff`; `mem_youngSubgroup_iff`; `youngSubgroup_eq_fiberSubgroup`; `rowIndex_rowYoungConjugator` |
 | `youngBlock_youngBlocksEquiv` | bind-only | `rowIndex_rowYoungConjugator` |
 | `youngSubgroup` | bind-only | `mem_youngSubgroup_stabilizer_iff`; `mem_youngSubgroup_iff`; `youngSubgroup_eq_fiberSubgroup`; `youngSubgroup_map_conj_eq_rowSubgroup`; `permutationModule`; `tabloid` |
@@ -174,11 +174,11 @@ simp uses must be confirmed by native proof terms. No classification grants firs
 | `colSubgroup_def` | bind-only | `rowSubgroup_inf_colSubgroup_eq_bot`; `colSubgroup_relabel` |
 | `rowSubgroup_inf_colSubgroup_eq_bot` | bind-only | `smul_tabloid_injective` |
 | `rowBlocks` | bind-only | `rowCellsEquiv`; `sortedBlocksEquivRows`; `cast_rowBlocks_fst`; `sortedBlocksEquivRows_fst` |
-| `rowCellsEquiv` | construction | `rowYoungConjugator`; `rowIndex_rowYoungConjugator` |
+| `rowCellsEquiv` | content (ported construction; source assessment) | `rowYoungConjugator`; `rowIndex_rowYoungConjugator` |
 | `sortedBlocksEquivRows` | bind-only | `sortedBlocksEquivRows_fst`; `rowYoungConjugator` |
 | `cast_rowBlocks_fst` | bind-only | `sortedBlocksEquivRows_fst` |
 | `sortedBlocksEquivRows_fst` | bind-only | `rowIndex_rowYoungConjugator` |
-| `rowYoungConjugator` | construction | `rowIndex_rowYoungConjugator`; `rowYoungConjugator_relabel`; `youngSubgroup_map_conj_eq_rowSubgroup`; `tabloid`; `tabloid_def` |
+| `rowYoungConjugator` | content (ported construction; source assessment) | `rowIndex_rowYoungConjugator`; `rowYoungConjugator_relabel`; `youngSubgroup_map_conj_eq_rowSubgroup`; `tabloid`; `tabloid_def` |
 | `rowIndex_rowYoungConjugator` | bind-only | `youngSubgroup_map_conj_eq_rowSubgroup` |
 | `rowYoungConjugator_relabel` | bind-only | `tabloid_relabel` |
 | `youngSubgroup_map_conj_eq_rowSubgroup` | bind-only | `smul_tabloid_eq_self_iff` |
@@ -189,7 +189,7 @@ simp uses must be confirmed by native proof terms. No classification grants firs
 | `subgroupCharSum_coeff` | bind-only | `columnAntisymmetrizer_coeff` |
 | `signLinearCharacter` | bind-only | `coe_signLinearCharacter_apply`; `columnAntisymmetrizer_eq_subgroupCharSum` |
 | `coe_signLinearCharacter_apply` | bind-only | `columnAntisymmetrizer_eq_subgroupCharSum (simp)`; `columnAntisymmetrizer_coeff (simp)` |
-| `columnAntisymmetrizer` | construction | `columnAntisymmetrizer_def`; `columnAntisymmetrizer_eq_subgroupCharSum`; `columnAntisymmetrizer_coeff`; `columnAntisymmetrizer_relabel`; `polytabloid` |
+| `columnAntisymmetrizer` | content (ported construction; source assessment) | `columnAntisymmetrizer_def`; `columnAntisymmetrizer_eq_subgroupCharSum`; `columnAntisymmetrizer_coeff`; `columnAntisymmetrizer_relabel`; `polytabloid` |
 | `columnAntisymmetrizer_def` | bind-only | `columnAntisymmetrizer_eq_subgroupCharSum`; `polytabloid_eq_sum` |
 | `columnAntisymmetrizer_eq_subgroupCharSum` | bind-only | `columnAntisymmetrizer_coeff` |
 | `columnAntisymmetrizer_coeff` | bind-only | `columnAntisymmetrizer_relabel` |
@@ -203,18 +203,18 @@ simp uses must be confirmed by native proof terms. No classification grants firs
 | `smul_tabloid_eq_self_iff` | bind-only | `smul_tabloid_eq_iff` |
 | `smul_tabloid_eq_iff` | bind-only | `smul_tabloid_injective` |
 | `smul_tabloid_injective` | bind-only | `polytabloid_coeff_smul_tabloid` |
-| `polytabloid` | construction | `polytabloid_eq_sum`; `polytabloid_relabel`; `polytabloid_coeff_smul_tabloid`; `polytabloid_coeff_tabloid`; `polytabloid_ne_zero`; `spechtSubrepresentation`; `polytabloid_mem_spechtSubrepresentation`; `spechtSubrepresentation_ne_bot` |
+| `polytabloid` | content (ported construction; source assessment) | `polytabloid_eq_sum`; `polytabloid_relabel`; `polytabloid_coeff_smul_tabloid`; `polytabloid_coeff_tabloid`; `polytabloid_ne_zero`; `spechtSubrepresentation`; `polytabloid_mem_spechtSubrepresentation`; `spechtSubrepresentation_ne_bot` |
 | `polytabloid_eq_sum` | bind-only | `polytabloid_coeff_smul_tabloid` |
 | `polytabloid_relabel` | bind-only | `spechtSubrepresentation` |
 | `polytabloid_coeff_smul_tabloid` | content | `polytabloid_coeff_tabloid` |
 | `polytabloid_coeff_tabloid` | content | `polytabloid_ne_zero` |
 | `polytabloid_ne_zero` | content | `spechtSubrepresentation_ne_bot` |
-| `spechtSubrepresentation` | construction | `polytabloid_mem_spechtSubrepresentation`; `spechtSubrepresentation_ne_bot`; `spechtModule` |
+| `spechtSubrepresentation` | content (ported construction; source assessment) | `polytabloid_mem_spechtSubrepresentation`; `spechtSubrepresentation_ne_bot`; `spechtModule` |
 | `polytabloid_mem_spechtSubrepresentation` | bind-only | `spechtSubrepresentation_ne_bot` |
 | `spechtSubrepresentation_ne_bot` | content | Substantive construction/nonvanishing endpoint; no independent theorem closure claimed |
-| `spechtModule` | construction | `spechtModuleℂ` |
-| `baseChange` | construction | `spechtModuleℂ` |
-| `spechtModuleℂ` | construction | Substantive construction/nonvanishing endpoint; no independent theorem closure claimed |
+| `spechtModule` | content (ported construction; source assessment) | `spechtModuleℂ` |
+| `baseChange` | content (ported construction; source assessment) | `spechtModuleℂ` |
+| `spechtModuleℂ` | content (ported construction; source assessment) | Substantive construction/nonvanishing endpoint; no independent theorem closure claimed |
 | `decidablePredMemColSubgroup` | bind-only instance | `columnAntisymmetrizer`, `polytabloid_eq_sum` finite sums |
 | finite-dimensional submodule instance | bind-only instance | `spechtModule`, hence `spechtModuleℂ` |
 
