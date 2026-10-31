@@ -244,8 +244,8 @@ private lemma layerMatrix_tu {F G : Finset E → Prop} (C : TightChain F) (D : T
 
 noncomputable def rankRegion [Finite E] (M1 M2 : Matroid E) : Set (E → ℝ) :=
   {x | (∀ e, 0 ≤ x e) ∧
-    (∀ U : Set E, (∑ e ∈ U.toFinite.toFinset, x e) ≤ ((M1.eRk U).toNat : ℝ)) ∧
-    (∀ U : Set E, (∑ e ∈ U.toFinite.toFinset, x e) ≤ ((M2.eRk U).toNat : ℝ))}
+    ∀ U : Set E, (∑ e ∈ U.toFinite.toFinset, x e) ≤ ((M1.eRk U).toNat : ℝ) ∧
+      (∑ e ∈ U.toFinite.toFinset, x e) ≤ ((M2.eRk U).toNat : ℝ)}
 
 variable [Fintype E]
 
@@ -254,7 +254,7 @@ private lemma mem_rankRegion (M1 M2 : Matroid E) (x : E → ℝ) :
     x ∈ rankRegion M1 M2 ↔ (∀ e, 0 ≤ x e) ∧
       (∀ U : Set E, (∑ e ∈ U.toFinset, x e) ≤ ((M1.eRk U).toNat : ℝ)) ∧
       (∀ U : Set E, (∑ e ∈ U.toFinset, x e) ≤ ((M2.eRk U).toNat : ℝ)) := by
-  simp [rankRegion]
+  simp [rankRegion, forall_and]
 
 private def tight (M : Matroid E) (x : E → ℝ) (A : Finset E) : Prop :=
   (∑ e ∈ A, x e) = ((M.eRk (A : Set E)).toNat : ℝ)
@@ -478,9 +478,13 @@ private lemma integer_solution_of_kernel_zero {R N : Type*} [Fintype R] [Fintype
 omit [DecidableEq E] [Fintype E] in
 theorem extreme_point_zero_one [Finite E] (M1 M2 : Matroid E)
     (_hM1 : M1.E = Set.univ) (_hM2 : M2.E = Set.univ)
-    (v : E → ℝ) (hv : v ∈ Set.extremePoints ℝ (rankRegion M1 M2)) :
+    (v : E → ℝ) (hv : v ∈ Set.extremePoints ℝ
+      {x : E → ℝ | (∀ e, 0 ≤ x e) ∧
+        ∀ U : Set E, (∑ e ∈ U.toFinite.toFinset, x e) ≤ ((M1.eRk U).toNat : ℝ) ∧
+          (∑ e ∈ U.toFinite.toFinset, x e) ≤ ((M2.eRk U).toNat : ℝ)}) :
     ∀ e, v e = 0 ∨ v e = 1 := by
   classical
+  change v ∈ Set.extremePoints ℝ (rankRegion M1 M2) at hv
   letI := Fintype.ofFinite E
   have hfeas := (mem_rankRegion M1 M2 v).mp hv.1
   obtain ⟨C⟩ := exists_tightChain (tight M1 v)
