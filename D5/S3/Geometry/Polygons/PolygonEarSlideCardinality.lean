@@ -4,11 +4,13 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Complete actual conditioned polygon fibre partition and exact cyclic ear-slide cardinality law. -/
+   digest: Complete conditioned polygon fibre partition and cyclic ear-slide counts. -/
 
 import D5.S3.Geometry.Polygons.PolygonEarSlide
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Logic.Equiv.Sum
+
+/-! Exact local complete-fibre counts, with the optional third-ear partition. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -26,15 +28,13 @@ private theorem restore_trace {E J X : Finset (ZMod n)} {t u : ZMod n}
   ext i
   have hi := Finset.ext_iff.mp h i
   simp only [mem_inter, mem_erase] at hi
-  by_cases hu : u ∈ E ∩ J <;> simp only [hu, ite_true, ite_false, mem_inter, mem_insert]
-  · have hum := mem_inter.mp hu
-    by_cases hit : i = t <;> by_cases hiu : i = u <;> subst_vars <;>
-      simp_all only [not_false_eq_true, and_true, and_false, false_and, true_and,
-        not_true_eq_false, or_true, false_or, true_or, iff_false, iff_true]
-  · have hun : ¬(u ∈ E ∧ u ∈ J) := by simpa using hu
-    by_cases hit : i = t <;> by_cases hiu : i = u <;> subst_vars <;>
-      simp_all only [not_false_eq_true, and_true, and_false, false_and, true_and,
-        not_true_eq_false, or_true, false_or, true_or, iff_false, iff_true]
+  split_ifs with hu
+  · simp only [mem_inter, mem_insert]
+    have hum := mem_inter.mp hu
+    by_cases hit : i = t <;> by_cases hiu : i = u <;> grind
+  · simp only [mem_inter]
+    have hun : ¬(u ∈ E ∧ u ∈ J) := by simpa using hu
+    by_cases hit : i = t <;> by_cases hiu : i = u <;> grind
 
 /-- Source (37.8), with all complete conditioned fibres and arbitrary cyclic origin. -/
 theorem condition_fibre_card_at (hn : 14 ≤ n) (a : ZMod n)
@@ -54,27 +54,28 @@ theorem condition_fibre_card_at (hn : 14 ≤ n) (a : ZMod n)
   let F := ConditionFiber P Q ((J.erase t).erase u) X
   let A := ConditionFiber P Q J X
   let B := ConditionFiber P Q J (insert u X)
+  have hval (k : ℕ) (hk : k < n) : (k : ZMod n).val = k :=
+    ZMod.val_natCast_of_lt hk
   have hst : s ≠ t := by
-    dsimp [s, t]
     intro h
     have he : (1 : ZMod n) = 2 := add_left_cancel h
-    have := congrArg ZMod.val he
-    simp [ZMod.val_natCast_of_lt (show 1 < n by omega),
-      ZMod.val_natCast_of_lt (show 2 < n by omega)] at this
+    have hv := congrArg ZMod.val he
+    rw [hval 1 (by omega), hval 2 (by omega)] at hv
+    omega
   have hus : u ≠ s := by
-    dsimp [u, s]
     intro h
     have he : (3 : ZMod n) = 1 := add_left_cancel h
-    have := congrArg ZMod.val he
-    simp [ZMod.val_natCast_of_lt (show 1 < n by omega),
-      ZMod.val_natCast_of_lt (show 3 < n by omega)] at this
+    have hv := congrArg ZMod.val he
+    rw [hval 3 (by omega), hval 1 (by omega)] at hv
+    omega
   have htR : t ∉ R := fun h => (mem_erase.mp (mem_erase.mp (hR h)).2).1 rfl
   have huR : u ∉ R := fun h => (mem_erase.mp (hR h)).1 rfl
   have htX : t ∉ X := by simp [X, hst.symm, htR]
   have huX : u ∉ X := by simp [X, hus, huR]
   have hcross : Cross (ear s) (ear t) := by
-    apply (cross_ear_shift_iff (i := 1) (j := 2) (a := a)).mpr
-      (cross_symm (local_crossings (show 6 ≤ n by omega)).1)
+    simpa only [s, t, add_comm] using
+      (cross_ear_shift_iff (i := 1) (j := 2) (a := a)).mpr
+        (cross_symm (local_crossings (show 6 ≤ n by omega)).1)
   have no_t (T : Finset (Sym2 (ZMod n))) (hT : IsTriangulation T)
       (hs : s ∈ EarCenters T) : t ∉ EarCenters T := by
     intro ht
@@ -103,6 +104,8 @@ theorem condition_fibre_card_at (hn : 14 ≤ n) (a : ZMod n)
           reduce x.1 (Or.inl x.2.2.2.2)⟩, by simpa [x.2.2.2.2] using huX⟩
       left_inv := fun _ => by apply Subtype.ext; apply Subtype.ext; rfl
       right_inv := fun _ => Subtype.ext rfl }
+  haveI : Finite A := by dsimp [A, ConditionFiber]; infer_instance
+  haveI : Finite B := by dsimp [B, ConditionFiber]; infer_instance
   rw [Nat.card_congr (condition_fibre_equiv_at hn a hJ ha0 ha1 ha2 hR)]
   change Nat.card F = Nat.card A + if u ∈ J then Nat.card B else 0
   by_cases huJ : u ∈ J
