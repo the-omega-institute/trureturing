@@ -25,8 +25,8 @@ internal sealed class LowerBoundsDocument : IScribeDocumentDefinition
         Operatorname, Grp(F.Id("Correct")), Open, F.Id("C"), Comma, F.Id("V"), Close,
         Land, Sp, Operatorname, Grp(F.Id("InjOn")), Open, F.Id("V"), Comma, F.Id("P"), Close,
         Longrightarrow, Sp,
-        Open, Forall, Sp, F.Id("h"), Comma, Sp, Call("Cap", F.Id("C"), F.Id("h")), Longrightarrow, D(2), Leq, F.Id("h"), Close,
+        Open, Forall, Sp, F.Id("h"), Comma, Sp, Call("Cap", F.Id("C"), F.Id("h")), Longrightarrow, D(2), Leq, Sp, F.Id("h"), Close,
         Land, Sp,
         Open, Forall, Sp, F.Id("v"), Comma, F.Id("h"), Comma, Sp,
-        Call("Preset", F.Id("C"), F.Id("v")), Land, Call("Cap", F.Id("C"), F.Id("h")), Longrightarrow, D(4), Leq, F.Id("h"), Close));
+        Call("Preset", F.Id("C"), F.Id("v")), Land, Call("Cap", F.Id("C"), F.Id("h")), Longrightarrow, D(4), Leq, Sp, F.Id("h"), Close));
 }

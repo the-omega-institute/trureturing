@@ -22,10 +22,14 @@ internal sealed class ViewsDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem))));
 
     private static Formula Statement() => Disp(Seq(
-        Call("encode", Call("decode", F.Id("p"), F.Id("q"))), Eq, Open, F.Id("p"), Comma, F.Id("q"), Close, Land, Sp,
-        Call("decode", Call("encode", F.Id("w"))), Eq, F.Id("w"), Land, Sp,
+        Open, Forall, Sp, F.Id("p"), Comma, F.Id("q"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Sp,
+        D(0), Lt, F.Id("p"), Land, D(0), Lt, F.Id("q"), Land, Call("Coprime", F.Id("p"), F.Id("q")),
+        Longrightarrow, Call("encode", Call("decode", F.Id("p"), F.Id("q"))), Eq, Open, F.Id("p"), Comma, F.Id("q"), Close, Close, Land, Sp,
+        Open, Forall, Sp, F.Id("w"), Comma, Call("decode", Call("encode", F.Id("w"))), Eq, F.Id("w"), Close, Land, Sp,
         Open, Forall, Sp, F.Id("V"), Comma, F.Id("x"), Comma, D(0), Lt, F.Id("x"),
         Longrightarrow, Sp, Call("recover", F.Id("V"), Call("original", F.Id("V"), F.Id("x"))), Eq, F.Id("x"), Close,
-        Land, Sp, Call("ratio", Call("encode", F.Id("w"))), Eq, Call("attain", F.Id("w"), D(1)), Land, Sp,
-        Call("originalWord", Call("ratio", Call("encode", F.Id("w")))), Eq, F.Id("w")));
+        Land, Sp, Open, Forall, Sp, F.Id("w"), Comma,
+        Call("ratio", Call("encode", F.Id("w"))), Eq, Call("attain", F.Id("w"), D(1)), Close, Land, Sp,
+        Open, Forall, Sp, F.Id("w"), Comma,
+        Call("originalWord", Call("ratio", Call("encode", F.Id("w")))), Eq, F.Id("w"), Close));
 }

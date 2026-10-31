@@ -8,6 +8,8 @@
 
 import D5.S3.Observer.RationalRouting.Source
 
+/-! Universal lower bounds from finite-run replay and incompatible short prefixes. -/
+
 set_option autoImplicit false
 
 namespace D5.S3.Observer.RationalRouting
@@ -49,13 +51,17 @@ private theorem bad_denominator (s d : ℕ)
     (hd : d ∈ [3,5,6,7,9,11,12,13,15,19,20]) : ¬ d ∣ 2^s := by
   simp only [List.mem_cons, List.not_mem_nil, or_false] at hd
   rcases hd with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
-  all_goals first
-    | exact not_dvd_two_power 3 (by norm_num) (by norm_num) (by norm_num) s
-    | exact not_dvd_two_power 5 (by norm_num) (by norm_num) (by norm_num) s
-    | exact not_dvd_two_power 7 (by norm_num) (by norm_num) (by norm_num) s
-    | exact not_dvd_two_power 11 (by norm_num) (by norm_num) (by norm_num) s
-    | exact not_dvd_two_power 13 (by norm_num) (by norm_num) (by norm_num) s
-    | exact not_dvd_two_power 19 (by norm_num) (by norm_num) (by norm_num) s
+  · exact not_dvd_two_power 3 (by norm_num) (by norm_num) (by norm_num) s
+  · exact not_dvd_two_power 5 (by norm_num) (by norm_num) (by norm_num) s
+  · exact not_dvd_two_power 3 (by norm_num) (by norm_num) (by norm_num) s
+  · exact not_dvd_two_power 7 (by norm_num) (by norm_num) (by norm_num) s
+  · exact not_dvd_two_power 3 (by norm_num) (by norm_num) (by norm_num) s
+  · exact not_dvd_two_power 11 (by norm_num) (by norm_num) (by norm_num) s
+  · exact not_dvd_two_power 3 (by norm_num) (by norm_num) (by norm_num) s
+  · exact not_dvd_two_power 13 (by norm_num) (by norm_num) (by norm_num) s
+  · exact not_dvd_two_power 3 (by norm_num) (by norm_num) (by norm_num) s
+  · exact not_dvd_two_power 19 (by norm_num) (by norm_num) (by norm_num) s
+  · exact not_dvd_two_power 5 (by norm_num) (by norm_num) (by norm_num) s
 
 /-- Exact attained-prefix classification, with chronological orientation. -/
 private theorem short_grid_routes (i : Bool) (w : List Bool) (s : ℕ)
@@ -77,12 +83,13 @@ private theorem short_grid_routes (i : Bool) (w : List Bool) (s : ℕ)
       norm_num [attain,step,endpoint] at hd ⊢
     all_goals exfalso; apply bad_denominator s _ ?_ hd; simp
   · simp at hlen
+    omega
 
 private theorem run_word_prefix {State Output : Type} {code : State → Command State Output}
     {x : ℚ} {st : State} {w : List Bool} {out : Output} {v : List Bool}
     {reads : List (List Bool × ℕ)} (run : Run code x st w out v reads) : w <+: v := by
   induction run with
-  | halt _ => exact List.IsPrefix.refl _
+  | halt _ => exact ⟨[], by simp⟩
   | work _ _ ih => exact ih
   | move _ _ ih => exact (List.prefix_append _ _).trans ih
   | read _ _ ih => exact ih
@@ -108,7 +115,7 @@ private theorem endpoint_run_two {State Output : Type}
     (run : Run code (endpoint i) init [] out v reads) : 2 ≤ v.length := by
   by_contra h
   obtain ⟨⟨w,s⟩,hp,hg⟩ := endpoint_run_requires_grid correct injective i run
-  have hlen := (run_read_prefix run (w,s) hp).length_le
+  have hlen : w.length ≤ v.length := (run_read_prefix run (w,s) hp).length_le
   have hshort : w.length ≤ 3 := by omega
   rcases short_grid_routes i w s hshort hg with ⟨_,rfl|rfl⟩ | ⟨_,rfl|rfl⟩ <;>
     simp at hlen <;> omega

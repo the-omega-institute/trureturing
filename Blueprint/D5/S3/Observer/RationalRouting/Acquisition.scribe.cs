@@ -36,5 +36,5 @@ internal sealed class AcquisitionDocument : IScribeDocumentDefinition
         Call("Correct", F.Id("Crec"), F.Id("id")), Land, Call("Cap", F.Id("Crec"), D(2)), Land, Sp,
         Call("Correct", F.Id("Cpre"), F.Id("id")), Land, Call("Cap", F.Id("Cpre"), D(4)), Land, Sp,
         Call("Preset", F.Id("Cpre"), F.Id("LLRL")), Land, Sp,
-        Forall, Sp, F.Id("x"), InMacro, F.Id("P"), Comma, Sp, D(0), Lt, F.Id("x")));
+        Forall, Sp, F.Id("x"), InMacro, Sp, F.Id("P"), Comma, Sp, D(0), Lt, F.Id("x")));
 }

@@ -25,7 +25,7 @@ internal sealed class PricesDocument : IScribeDocumentDefinition
         Forall, Sp, F.Id("V"), InMacro, OpenBrace, F.Id("B"), Comma, F.Id("T"), Comma,
         F.Id("S"), Comma, F.Id("M"), Comma, Open, F.Id("B"), Comma, F.Id("T"), Comma, F.Id("S"), Comma, F.Id("M"), Close, CloseBrace, Comma, Sp,
         Call("FeasibleRec", F.Id("V"), D(2)), Land, Sp,
-        Open, Forall, Sp, F.Id("h"), Comma, Call("FeasibleRec", F.Id("V"), F.Id("h")), Longrightarrow, D(2), Leq, F.Id("h"), Close,
+        Open, Forall, Sp, F.Id("h"), Comma, Call("FeasibleRec", F.Id("V"), F.Id("h")), Longrightarrow, D(2), Leq, Sp, F.Id("h"), Close,
         Land, Sp, Call("FeasiblePre", F.Id("V"), D(4)), Land, Sp,
-        Open, Forall, Sp, F.Id("h"), Comma, Call("FeasiblePre", F.Id("V"), F.Id("h")), Longrightarrow, D(4), Leq, F.Id("h"), Close));
+        Open, Forall, Sp, F.Id("h"), Comma, Call("FeasiblePre", F.Id("V"), F.Id("h")), Longrightarrow, D(4), Leq, Sp, F.Id("h"), Close));
 }

@@ -144,7 +144,9 @@ private theorem rational_reconstruction (x : ℚ) (hx : 0 < x) :
   rw [original_pair x hx]
   have habs : (x.num.natAbs : ℚ) = (x.num : ℚ) := by
     have hn := Rat.num_pos.mpr hx
-    exact_mod_cast (Int.natAbs_of_nonneg hn.le)
+    have hh : (x.num.natAbs : ℤ) = x.num := by
+      rw [Int.natCast_natAbs,abs_of_nonneg hn.le]
+    simpa only [Int.cast_natCast] using congrArg (fun z : ℤ => (z : ℚ)) hh
   simpa [ratio,habs] using Rat.num_div_den x
 
 private theorem path_letters (w : List Bool) : (path w).edges.map NamedEdge.letter = w := by
@@ -163,7 +165,8 @@ private theorem pair_ratio_step (b : Bool) (p : PositivePair)
     field_simp
     <;> ring
   · push_cast
-    ring
+    field_simp [hq']
+    <;> ring
 
 private theorem ratio_fold (w : List Bool) (p : PositivePair)
     (hp : 0 < p.1) (hq : 0 < p.2) :
@@ -182,12 +185,16 @@ private theorem word_rational_roundtrip (w : List Bool) :
   obtain ⟨hp,hq,hc⟩ := encode_good w
   let p := (encode w).1
   let q := (encode w).2
+  have hc' : (p : ℤ).natAbs.Coprime (q : ℤ).natAbs := by simpa using hc
+  have hq' : (0 : ℤ) < q := by exact_mod_cast hq
   have hnum : ((p : ℚ)/q).num = (p : ℤ) := by
-    exact_mod_cast Rat.num_div_eq_of_coprime (by exact_mod_cast hq : (0 : ℤ) < q)
-      (by simpa only [Int.natAbs_natCast] using hc)
+    simpa only [Int.cast_natCast] using
+      (Rat.num_div_eq_of_coprime (a := (p : ℤ)) (b := (q : ℤ)) hq' hc')
   have hden : ((p : ℚ)/q).den = q := by
-    exact_mod_cast Rat.den_div_eq_of_coprime (by exact_mod_cast hq : (0 : ℤ) < q)
-      (by simpa only [Int.natAbs_natCast] using hc)
+    have hh : ((((p : ℚ)/q).den : ℕ) : ℤ) = (q : ℤ) := by
+      simpa only [Int.cast_natCast] using
+        (Rat.den_div_eq_of_coprime (a := (p : ℤ)) (b := (q : ℤ)) hq' hc')
+    exact_mod_cast hh
   dsimp [originalWord,ratio]
   rw [hnum,hden,Int.natAbs_natCast]
   exact decode_encode w

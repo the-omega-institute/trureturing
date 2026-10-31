@@ -8,6 +8,8 @@
 
 import D5.S3.Observer.RationalRouting.LowerBounds
 
+/-! Finite actual acquisition on both rational accumulation tails and endpoints. -/
+
 set_option autoImplicit false
 
 namespace D5.S3.Observer.RationalRouting
@@ -164,12 +166,16 @@ theorem run_unique {State Output : Type} {code : State → Command State Output}
     (r' : Run code x st w out' v' reads') : out = out' ∧ v = v' ∧ reads = reads' := by
   induction r generalizing out' v' reads' with
   | halt h => cases r' <;> simp_all
-  | work h r ih => cases r' <;> simp_all
-  | move h r ih => cases r' <;> simp_all
+  | work h r ih =>
+    cases r' <;> simp_all
+    exact ih (by assumption)
+  | move h r ih =>
+    cases r' <;> simp_all
+    exact ih (by assumption)
   | read h r ih =>
     cases r' <;> simp_all
     obtain ⟨ho,hv,hr⟩ := ih (by assumption)
-    exact ⟨ho,hv,congrArg _ hr⟩
+    exact ⟨ho,hv,hr⟩
 
 private theorem sufficiently_fine_stops (w : List Bool) (s : ℕ) (x t : ℚ)
     (hf : 1/(2 : ℚ)^s < |attain w x-t|) :
@@ -277,7 +283,7 @@ private theorem routing_prefix (preset i : Bool) (x out : ℚ) (todo w v : List 
   induction todo generalizing w with
   | nil => simpa using run
   | cons b todo ih =>
-    apply Run.move rfl
+    apply Run.move (code := acquisitionCode preset) rfl
     apply ih
     simpa [List.append_assoc] using run
 
