@@ -99,7 +99,6 @@ private theorem physical_partition (a b c d : ℕ)
       (d+c < i ∧ i < d+c+b-1) ∨ i = d+c+b-1 ∨
       (d+c+b ≤ i ∧ i < a+b+c+d-1) ∨ i = a+b+c+d-1 ∨
       a+b+c+d ≤ i := by omega
-  clear hcount hrange
   fin_cases n <;>
     simp only [packets,order,Matrix.cons_val_zero',Matrix.cons_val_succ',List.map_cons,List.map_nil,orderedPackets,blocksWord,
       ← Multiset.coe_add,← Multiset.cons_coe,Multiset.coe_nil,Multiset.count_add,
@@ -107,7 +106,8 @@ private theorem physical_partition (a b c d : ℕ)
     norm_num [assigned,transfer,Matrix.cons_val_zero',Matrix.cons_val_succ',
       Fin.isValue,ite_true,ite_false,Finset.mem_insert,Finset.mem_erase,
       positivePacket,negativeLabel,chainStart,chainLength,Finset.mem_Ico,size] <;>
+    clear hcount hrange <;>
     rcases hloc with h | h | h | h | h | h | h | h | h | h | h <;>
-    simp (disch := omega)
+    simp +instances (disch := omega) [negativeLabel,chainStart,chainLength,size]
 
 end D5.S3.Combinatorics.Circle.FourNegative.BalancedGaps
