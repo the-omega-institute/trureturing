@@ -23,6 +23,12 @@ firstfreeze content. Young/Kostka equality and both weighted ordinary sums remai
 utility: none: general unbounded partitions and representation spaces, no enumeration.
 -/
 import D5.S3.Combinatorics.Partitions.SpechtYoungDominance
+import Batteries.Tactic.OpenPrivate
+
+open private D5.S3.FiniteGroups.FiniteCharacterAlgebra.Subrepresentation.subtype
+  D5.S3.FiniteGroups.FiniteCharacterAlgebra.Subrepresentation.coe_subtype
+  D5.S3.FiniteGroups.FiniteCharacterAlgebra.Subrepresentation.coe_toRepresentation_asAlgebraHom_apply
+  from D5.S3.FiniteGroups.FiniteCharacterAlgebra
 
 namespace D5.S3.Combinatorics.Partitions.SpechtPolytabloid
 noncomputable section
@@ -49,7 +55,7 @@ theorem spechtMultiplicity_eq_zero_of_not_dominates (μ : lam.card.Partition)
 private theorem exists_intertwiningMap_eq_smul_subtype
     (f : Representation.IntertwiningMap (spechtSubrepresentation lam).toRepresentation
       (permutationModule (shapePartition lam)).ρ) :
-    ∃ κ : ℚ, f = κ • (spechtSubrepresentation lam).subtype := by
+    ∃ κ : ℚ, f = κ • D5.S3.FiniteGroups.FiniteCharacterAlgebra.Subrepresentation.subtype (spechtSubrepresentation lam) := by
   obtain ⟨t⟩ := YoungTableau.nonempty lam
   obtain ⟨v, hv, hbv⟩ :=
     exists_mem_asAlgebraHom_columnAntisymmetrizer_eq_polytabloid t
@@ -67,7 +73,7 @@ private theorem exists_intertwiningMap_eq_smul_subtype
       (spechtSubrepresentation lam).toRepresentation.asAlgebraHom
           (columnAntisymmetrizer t) v' = et := by
     apply Subtype.ext
-    simpa only [v', et, Subrepresentation.coe_toRepresentation_asAlgebraHom_apply] using hbv
+    simpa only [v', et, D5.S3.FiniteGroups.FiniteCharacterAlgebra.Subrepresentation.coe_toRepresentation_asAlgebraHom_apply] using hbv
   obtain ⟨κ, hκ⟩ := exists_eq_smul_polytabloid t (f v')
   refine ⟨κ, ?_⟩
   have het : f et = κ • (et : (permutationModule (shapePartition lam)).V) := by
@@ -102,13 +108,13 @@ private theorem exists_intertwiningMap_eq_smul_subtype
     (permutationModule (shapePartition lam)).ρ f σ et
   rw [het] at hf
   simpa only [Representation.IntertwiningMap.toLinearMap_apply,
-    Representation.IntertwiningMap.smul_apply, Subrepresentation.coe_subtype,
-    Subrepresentation.toRepresentation_apply, LinearMap.restrict_apply, map_smul] using hf
+    Representation.IntertwiningMap.smul_apply, D5.S3.FiniteGroups.FiniteCharacterAlgebra.Subrepresentation.coe_subtype,
+    Subrepresentation.toRepresentation, LinearMap.restrict_apply, map_smul] using hf
 
 private noncomputable def scalarToSpechtIntertwiningMap (lam : YoungDiagram) :
     ℚ →ₗ[ℚ] Representation.IntertwiningMap (spechtSubrepresentation lam).toRepresentation
       (permutationModule (shapePartition lam)).ρ where
-  toFun κ := κ • (spechtSubrepresentation lam).subtype
+  toFun κ := κ • D5.S3.FiniteGroups.FiniteCharacterAlgebra.Subrepresentation.subtype (spechtSubrepresentation lam)
   map_add' κ ν := by rw [add_smul]
   map_smul' κ ν := by rw [smul_eq_mul, mul_smul, RingHom.id_apply]
 
@@ -122,7 +128,7 @@ private theorem scalarToSpechtIntertwiningMap_injective (lam : YoungDiagram) :
       ν • (polytabloid t : (permutationModule (shapePartition lam)).V) := by
     simpa only [scalarToSpechtIntertwiningMap,
       LinearMap.coe_mk, AddHom.coe_mk, Representation.IntertwiningMap.smul_apply,
-      Subrepresentation.coe_subtype, et] using
+      D5.S3.FiniteGroups.FiniteCharacterAlgebra.Subrepresentation.coe_subtype, et] using
       DFunLike.congr_fun hκν et
   have hpoly : (polytabloid t : (permutationModule (shapePartition lam)).V) ≠ 0 :=
     polytabloid_ne_zero t

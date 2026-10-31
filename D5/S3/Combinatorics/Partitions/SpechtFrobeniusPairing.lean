@@ -31,6 +31,7 @@ noncomputable section
 open scoped BigOperators
 namespace TauCeti
 open _root_.Equiv Finset MvPolynomial CategoryTheory
+open scoped Classical
 
 universe u v w
 
@@ -119,7 +120,6 @@ theorem sum_spechtTrace_mul_card_fixedPoints (μ ν : n.Partition) :
 the fixed-tabloid power-sum expansion. The remaining coefficients are genuine dimensions of
 Hom spaces into Young permutation modules. They have NOT been identified with Kostka numbers;
 therefore the right side is NOT asserted to be the Schur polynomial of μ. -/
-open scoped Classical in
 theorem sum_spechtTrace_smul_psumPart_eq_multiplicities {σ : Type*} [Fintype σ]
     (μ : n.Partition) :
     (∑ π : Perm (Fin n), LinearMap.trace ℂ _ ((spechtModuleℂ μ).ρ π) •
@@ -138,7 +138,6 @@ theorem sum_spechtTrace_smul_psumPart_eq_multiplicities {σ : Type*} [Fintype σ
   simp_rw [hp, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   simp_rw [← Finset.sum_smul, sum_spechtTrace_mul_card_fixedPoints]
-  simp only [Finset.smul_sum, smul_smul]
 
 /-- Exact list-to-partition power-sum transport. The equality of full multisets retains all
 parts equal to one and every repeated occurrence; no degree/alphabet condition is used. -/
@@ -149,6 +148,7 @@ theorem hsw_powerSumProd_eq_psumPart {τ : List ℕ} (ρ : n.Partition)
   rw [D5.S3.Combinatorics.Partitions.HemmerStraubWestrem.powerSumProd, psumPart, ← hτ,
     Multiset.map_coe, Multiset.prod_coe]
 
+set_option maxHeartbeats 1000000 in
 /-- The exact existing HSW coefficient expressed through fixed tabloids. This supplies its
 monomial-coordinate input to Young's rule. It is NOT an ordinary-character identification. -/
 theorem hsw_frobChar_eq_fixedTabloid_coefficients (μ : Fin 3 → ℕ)
