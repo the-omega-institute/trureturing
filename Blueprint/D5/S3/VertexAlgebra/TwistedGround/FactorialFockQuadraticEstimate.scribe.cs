@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.TwistedGround;
 
 internal sealed class FactorialFockQuadraticEstimateDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/VertexAlgebra/FactorialFockQuadraticEstimate.";
+    private const string Prefix = "D5/S3/VertexAlgebra/TwistedGround/FactorialFockQuadraticEstimate.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An operator-norm and Hilbert-Schmidt bound for all mixed Gaussian degrees in the existing factorial Fock metric.",

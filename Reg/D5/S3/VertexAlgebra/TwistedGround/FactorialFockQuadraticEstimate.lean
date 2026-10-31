@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.VertexAlgebra.FactorialFockQuadraticEstimate
+import D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate
 import Reg.Support.DependentFamily
 import Mathlib.Tactic
 
@@ -8,11 +8,11 @@ set_option autoImplicit false
 open scoped BigOperators
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S3.VertexAlgebra.FactorialFockQuadraticEstimate
+open _root_.D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate
 open _root_.D5.S3.VertexAlgebra.FactorialFockMetric (weight)
 
 universe u
-namespace Reg.D5.S3.VertexAlgebra.FactorialFockQuadraticEstimate
+namespace Reg.D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate
 
 structure Modes where
   carrier : Type u
@@ -76,8 +76,8 @@ def evidence : Registration arena.{u} (type_of% (@all_degree_partial_bound.{u}))
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@all_degree_partial_bound.{u}) (Realization signature.{u}) Type Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.FactorialFockQuadraticEstimate.Partial.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.FactorialFockQuadraticEstimate.Partial.evidence
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate.Partial.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate.Partial.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
@@ -93,7 +93,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := some ℝ
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.FactorialFockQuadraticEstimate
+    owner := `D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate
     definition := none
     coordinates := #[0, 1, 2, 5]
     readouts := #[{
@@ -140,8 +140,8 @@ def evidence : Registration arena.{u} (type_of% (@finite_occupation_bound.{u})) 
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@finite_occupation_bound.{u}) (Realization signature.{u}) Type Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.FactorialFockQuadraticEstimate.Occupations.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.FactorialFockQuadraticEstimate.Occupations.evidence
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate.Occupations.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate.Occupations.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
@@ -157,7 +157,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := some ℝ
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.FactorialFockQuadraticEstimate
+    owner := `D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate
     definition := none
     coordinates := #[0, 1, 2, 5]
     readouts := #[{
@@ -226,8 +226,8 @@ def evidence : Registration arena.{u} (type_of% (@degree_mass_recurrence.{u})) w
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@degree_mass_recurrence.{u}) (Realization signature.{u}) Type Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.FactorialFockQuadraticEstimate.Recurrence.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.FactorialFockQuadraticEstimate.Recurrence.evidence
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate.Recurrence.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate.Recurrence.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
@@ -243,7 +243,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := some ℝ
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.FactorialFockQuadraticEstimate
+    owner := `D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate
     definition := none
     coordinates := #[0, 1, 2, 8]
     readouts := #[{
@@ -257,4 +257,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end Recurrence
 
-end Reg.D5.S3.VertexAlgebra.FactorialFockQuadraticEstimate
+end Reg.D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate

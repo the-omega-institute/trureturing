@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/FactorialFockQuadraticEstimate
+/- GID: D5/S3/VertexAlgebra/TwistedGround/FactorialFockQuadraticEstimate
    generality: G
-   mirror-B: D5/B/S3/VertexAlgebra/FactorialFockQuadraticEstimate
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/FactorialFockQuadraticEstimate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -30,7 +30,7 @@ noncomputable section
 open scoped BigOperators
 open ComplexConjugate
 
-namespace D5.S3.VertexAlgebra.FactorialFockQuadraticEstimate
+namespace D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate
 
 open MvPolynomial
 open FactorialFockMetric (weight)
@@ -484,4 +484,4 @@ theorem occupation_summable (A : Matrix I I ℂ)
 
 
 
-end D5.S3.VertexAlgebra.FactorialFockQuadraticEstimate
+end D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate
