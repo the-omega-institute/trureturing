@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.WeightedRayStochasticRigidity
 import Reg.Support.SingleDependentReadout
 
+/-! Whole-telescope observation variation for the fixed five-effect classification. -/
+
 noncomputable section
 open Matrix
 open scoped ComplexOrder MatrixOrder
@@ -56,7 +58,7 @@ theorem dependence : ObservationalDependence signature actual := by
   norm_num [actual, realize, probability, effect,
     _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
     _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula,
-    Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two] at hc
+    Matrix.trace, Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two] at hc
   linarith
 
 def source_registration : Registration arena (type_of% @original_five_effect_classification) where
