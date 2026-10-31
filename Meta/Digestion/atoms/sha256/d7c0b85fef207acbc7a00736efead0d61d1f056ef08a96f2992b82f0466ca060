@@ -1,0 +1,23 @@
+**Definition 11.1 (Templates on a possibly nonwinning branch).**
+Fix finite $R\ge4$, an integer $J_0\ge2$ and $c>0$. Let
+$(7/2)\sqrt a\le h\le R\sqrt a$, $2\le j\le J_0$, and take
+$a$ sufficiently large in terms of $R,J_0,c$. Define $m,r,n,\alpha,
+\beta,d,F,Q$ by (1.6), (6.1), without requiring $j\in J_*$.
+Let $\widehat{\mathfrak C}_{j,N}$ be the class of original graphs
+having a partition of sizes $m,n$ and exactly $n$ core--tail connectors,
+one per tail, $d$ missing-one core sources, $F$ full-core sources and
+$Q-n$ tail-singleton sources. All endpoint, omission and singleton
+allocations satisfying the original graph conditions are allowed.
+Write
+
+$$
+\widehat V_{j,N}=\min_{G\in\widehat{\mathfrak C}_{j,N}}W(G),
+\qquad \bar\chi_{j,N}=nb_j+dc_j,
+\tag{11.1}
+$$
+
+where the rational formulas (1.8) define $b_j,c_j$ also on this
+branch. The bar distinguishes this algebraic extension from the
+winning-branch price $\chi_N$; positivity of the extended prices
+is not assumed.
+

@@ -1,0 +1,77 @@
+**Definition 8.1 (A sufficient refined period and analytic
+allocation functions).** Set
+
+$$
+P=\operatorname{lcm}_{j\in J_*}(r_j n_j),
+\qquad r_j=a+j-1,\quad n_j=h+1-j.
+\tag{8.1}
+$$
+
+This is a sufficient period, with no claim of leastness. It is a
+multiple of $P_*$ in (5.5), and $\alpha_jP,\beta_jP$ are
+integers. Fix $\rho\in\{0,\ldots,P-1\}$. For each
+$j\in\mathcal J_\rho$, the integers $d=d_{j,N}$ and $t$ in
+(6.1) are constant on $N\equiv\rho\pmod P$. Here
+$\mathcal J_\rho$ denotes the common set $\mathcal J_N$ on that
+residue, not a graph assertion at a small budget $N=\rho$.
+Define the rational offsets
+
+$$
+v_- =\gamma-\frac tn,\qquad v_+=\gamma+1-\frac tn,
+\quad
+a_k(u)=\alpha+\delta_k u,\quad a_0(u)=\alpha+\delta_0u,
+\quad c_\pm(u)=\beta+v_\pm u.
+\tag{8.2}
+$$
+
+For $p>0$ and $a(0)>0$ use the analytic germ
+
+$$
+R_p(a,u)=\frac{\sqrt{a(u)^2+p^2u^2}}{a(u)}-1,
+\tag{8.3}
+$$
+
+where the square root is the positive one near $u=0$. For
+$z\in\mathcal Z_{m,n,d}$ define
+
+$$
+\begin{aligned}
+\mathscr A_{\rho,j,z}(u)=\frac2{u^2}\Bigg[&
+ \sum_{i\in C}\left\{
+ (\alpha+\varphi u)R_m(a_i,u)
+   +u(d-z_i^-)R_r(a_i,u)+u z_i^+R_2(a_i,u)\right\}\\
+ &+u L(z)\{R_2(a_0,u)-R_r(a_0,u)\}\\
+ &+(n-t)\{(\beta+(v_--1)u)R_1(c_-,u)
+                                         +uR_2(c_-,u)\}\\
+ &+t\{(\beta+(v_+-1)u)R_1(c_+,u)
+                                         +uR_2(c_+,u)\}\Bigg].
+\end{aligned}
+\tag{8.4}
+$$
+
+The apparent singularity at $u=0$ is removable because every
+$R_p$ vanishes to order at least two. This is a real analytic
+algebraic function near zero, with rational Taylor coefficients.
+For the integers in this residue and sufficiently large $N$,
+
+$$
+\mathscr A_{\rho,j,z}(1/N)=\mathcal A_{j,N}(z).
+\tag{8.5}
+$$
+
+Define $B_s=(6s+5)2^{6s+4}$ and the finite Taylor vector
+
+$$
+\mathbf c_{\rho,j,z}
+ =\left([u^k]\mathscr A_{\rho,j,z}(u)\right)_{k=0}^{B_s}.
+\tag{8.6}
+$$
+
+Order these rational vectors lexicographically from the constant
+coefficient upward. Let $\mathcal W_\rho$ be all pairs $(j,z)$
+whose vector is least among the finite set for that residue.
+The first three entries are $M,\chi_\rho,\Psi_{j,\rho}(z)$
+by Theorem 7.2. Formula (8.6) also retains every later coefficient
+needed for exact selection, rather than declaring all secondary
+ties to be exact ties.
+

@@ -1,0 +1,89 @@
+**Lemma 9.3 (All-cardinality local remainder bounds).** There are
+$A_R,L_R$ such that, for every winning cap and original law satisfying
+
+$$
+\varepsilon\le1/16,\qquad
+|y_k-\beta|\le\beta/2\quad(k\in D),
+\tag{9.32}
+$$
+
+one has, with $P(x)$ as in (3.1) and $\nu_k=y_k-\beta$,
+
+$$
+H(x)\ge S_j+P(x)+\frac1{3\beta^3}\sum_{k\in D}\nu_k^2
+                         -L_Ra^{11}\varepsilon^2.
+\tag{9.33}
+$$
+
+In addition, along any probability-law segment with marginals at least
+$\delta_0>0$, a direction $v$ satisfies
+
+$$
+|D^2H(x)[v,v]|\le10s^3\delta_0^{-3}\|v\|_1^2.
+\tag{9.34}
+$$
+
+The constants cover every source cardinality up to $s$.
+
+**Proof.** Put $z=x_C$ and use (9.29). For each core label set
+$e_i=\sum_{T\text{ exceptional},\,i\in T}x_T$ and
+$f_i=\sum_{T\text{ exceptional},\,i\in T}K^2x_T$.
+Then $0\le e_i\le\varepsilon$, $0\le f_i\le s^2\varepsilon$,
+and its energy is $(m^2z+f_i)/(z+e_i)^2$. The marginal displacement
+has magnitude at most $3\varepsilon$ and the numerator displacement
+at most $2m^2\varepsilon+s^2\varepsilon$.
+Since $\alpha\ge1/2$, the segment joining these arguments to their
+cap arguments has marginal at least $1/4$. Direct differentiation of
+$A/y^2$ bounds the sum of the core Taylor remainders by
+$O_R(a^3\varepsilon^2)$.
+
+For each tail label set
+
+$$
+q_k=\sum_{T\text{ exceptional},\,k\in T}(K^2-1)x_T\ge0.
+\tag{9.35}
+$$
+
+The exact tail energy is $\sum_k(1/y_k+q_k/y_k^2)$, and
+$\|q\|_2\le\sum_kq_k\le s^3\varepsilon$.
+On (9.32), the exact reciprocal identity and the derivative of $y^{-2}$
+give
+
+$$
+\begin{aligned}
+\sum_k\frac1{y_k}
+&\ge\frac n\beta-\beta^{-2}\sum_k\nu_k
+                           +\frac2{3\beta^3}\|\nu\|_2^2,\\
+\sum_k\frac{q_k}{y_k^2}
+&\ge\beta^{-2}\sum_kq_k
+                      -16\beta^{-3}\|q\|_2\|\nu\|_2.
+\end{aligned}
+\tag{9.36}
+$$
+
+The first line uses
+$1/y=1/\beta-(y-\beta)/\beta^2+(y-\beta)^2/(\beta^2y)$.
+The inequality $16QV\le V^2/3+192Q^2$ retains
+$\|\nu\|_2^2/(3\beta^3)$ and pays at most
+$192\beta^{-3}s^6\varepsilon^2$.
+Since $\beta^{-3}=O_R(a^{9/2})$ and $s\le2a$, this payment is
+$O_R(a^{21/2}\varepsilon^2)\le O_R(a^{11}\varepsilon^2)$.
+The core and tail linear terms, including $\beta^{-2}\sum q_k$,
+are exactly $DH(x^{j,*})[x-x^{j,*}]=P(x)$ by Lemma 2.3.
+This proves (9.33).
+
+For (9.34), write $A_i(x)=\sum_{T\ni i}K^2x_T$.
+On a probability-law segment, $0\le A_i\le s^2y_i$, while
+$|D A_i[v]|\le s^2\|v\|_1$ and $|D y_i[v]|\le\|v\|_1$.
+The exact second derivative is
+
+$$
+D^2(A_i/y_i^2)[v,v]
+=6A_i(Dy_i[v])^2/y_i^4-4DA_i[v]Dy_i[v]/y_i^3.
+\tag{9.37}
+$$
+
+Its absolute value is at most $10s^2\delta_0^{-3}\|v\|_1^2$.
+Summing over $s$ labels proves (9.34), without counting or
+restricting the exceptional types. ∎
+

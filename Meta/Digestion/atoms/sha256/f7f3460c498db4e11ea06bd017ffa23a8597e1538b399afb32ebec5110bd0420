@@ -1,0 +1,15 @@
+**Definition 2.1 (Reduced type price).** Fix a winning cap and its
+partition. For a nonempty $T\subseteq[s]$, write
+$L=|T\cap C|$, $B=|T\cap D|$, and $K=L+B$. Define
+
+$$
+\rho_j(L,B)=\frac{L(K^2-2m^2)}{\alpha^2}
+              +B(K^2-2)\eta^2+\eta^2-\lambda_j(K-1).
+\tag{2.1}
+$$
+
+A type is ordinary when it is $C$ or a singleton in $D$; all other
+types are exceptional. Thus
+$\rho_j(m,0)=\rho_j(0,1)=0$,
+$\rho_j(1,1)=b_j$, and $\rho_j(r,0)=c_j$.
+

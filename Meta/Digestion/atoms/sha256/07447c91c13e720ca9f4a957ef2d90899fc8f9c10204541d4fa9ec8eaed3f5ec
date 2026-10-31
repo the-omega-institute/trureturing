@@ -1,0 +1,88 @@
+**Lemma 2.2 (Strict all-cardinality price inequalities).** After
+increasing $A_R$, every winning cap in (1.1) satisfies
+
+$$
+0<rc_j<\eta^2<b_j,\qquad
+\eta^2>\frac{2m^2+4}{\alpha^2}.
+\tag{2.2}
+$$
+
+For core-only types, $1\le L\le m$,
+
+$$
+\rho_j(L,0)=(m-L)c_j
+ +\frac{(m-L)(r-L)(m+r+L)}{\alpha^2}.
+\tag{2.3}
+$$
+
+For types meeting both parts, except $(L,B)=(1,1)$,
+
+$$
+\rho_j(L,B)>B b_j+\eta^2
+                    >B b_j+rc_j.
+\tag{2.4}
+$$
+
+For tail-only types with $B\ge2$,
+
+$$
+\rho_j(0,B)>(B-1)b_j+rc_j.
+\tag{2.5}
+$$
+
+Every exceptional type consequently has strictly positive price.
+These statements include every $1\le K\le s$.
+
+**Proof.** Growing Lemma 15.2 bounds every winning $j$ by a
+constant depending on $R$, with $j\ge2$. Put $q=h/\sqrt a$ and
+$z=n^2/(j^2a)$. That lemma gives
+$z>5/2-O_R(a^{-1/2})$, while $z=O_R(1)$. Uniformly over these
+indices,
+
+$$
+\begin{gathered}
+m=a+O_R(1),\quad r=a+O_R(1),\quad
+\alpha=1+O_R(a^{-1}),\\
+\eta^2=za^3+O_R(a^2),\qquad
+\frac{r^3+r^2m+m^2}{\alpha^2}=2a^3+O_R(a^2),\\
+rc_j=(z-2)a^3+O_R(a^2),\qquad
+b_j=3za^3+O_R(a^2).
+\end{gathered}
+\tag{2.6}
+$$
+
+These imply (2.2). The strict upper bound $rc_j<\eta^2$ also
+follows directly from (1.8). Substitution in (2.1) proves the
+polynomial identity (2.3).
+
+If $L,B\ge1$ and $K\ge3$, subtraction of $Bb_j$ gives exactly
+
+$$
+\begin{aligned}
+\rho_j(L,B)-Bb_j
+={}&\eta^2\left\{B(K^2-5)+1-\frac{L-1}{r}\right\}\\
+ &+\frac{LK^2-4B-2m^2(L-B)+(m^3/r)(L-1)}{\alpha^2}.
+\end{aligned}
+\tag{2.7}
+$$
+
+Since $1\le L\le m$, the last two terms in braces after
+$B(K^2-5)$ have nonnegative sum. The second line is bounded below
+by $-(2m^2+4)K/\alpha^2$. For integers $K\ge3$,
+$B(K^2-5)\ge K+1$. Thus (2.2) makes (2.7) strictly greater than
+$\eta^2$, proving (2.4). The only mixed type of size two is
+$(1,1)$, already listed in Definition 2.1.
+
+For $L=0$, $B\ge2$, the exact subtraction is
+
+$$
+\rho_j(0,B)-(B-1)b_j
+=(B^3-5B+4)\eta^2
+  +\frac{(B-1)(2m^2-4)}{\alpha^2}.
+\tag{2.8}
+$$
+
+Here $B^3-5B+4\ge2$, proving (2.5) by (2.2). Finally (2.3)
+is positive for every core-only exceptional type: $m-L\ge1$,
+$r-L\ge0$, and $c_j>0$. No support assumption has entered. ∎
+

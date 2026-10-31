@@ -1,0 +1,12 @@
+## 10. Effective uniform exact selection and canonical allocation data
+
+The graph domain and normalization remain those of Definition 1.1.
+Throughout this section $R\ge4$ is fixed and finite. Constants with
+subscript $R$ depend only on $R$, and may be enlarged. Assume
+$a\ge A_R$ and $(7/2)\sqrt a\le h\le R\sqrt a$. Use $J$ from
+(9.1); in particular $2\le j\le J$ for every $j\in J_*$,
+$m,r\le2a$, $\alpha\ge1/2$, $s\le2a$, and
+$n\asymp_R\sqrt a$, $\beta\asymp_R a^{-3/2}$. Theorems and
+proofs here are ordinary mathematical deductions, not claims of
+Lean verification.
+

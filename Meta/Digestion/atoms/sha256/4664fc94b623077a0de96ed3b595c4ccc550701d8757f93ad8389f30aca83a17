@@ -1,0 +1,36 @@
+**Definition 7.1 (Secondary allocation energy).** For the data of
+Definition 6.1 put
+
+$$
+\begin{gathered}
+\varphi=F-\alpha N=-\frac{n+(r-1)d}{r},\qquad
+\sigma=\varphi+d=\frac{d-n}{r},\qquad
+\gamma=-\frac{\sigma}{n}=\frac{n-d}{rn},\\
+\delta_i=\sigma+z_i,\qquad \delta_0=\sigma+z_0,\qquad
+B_i^0=m^2\varphi+r^2(d-z_i^-)+4z_i^+,\\
+U_{j,N}=n\gamma^2+\frac{t(n-t)}n-6n\gamma.
+\end{gathered}
+\tag{7.1}
+$$
+
+Define the rational number
+
+$$
+\begin{aligned}
+\Psi_{j,N}(z)={}&\frac1{\alpha^3}
+ \left[\sum_i\{3m^2\delta_i^2-2B_i^0\delta_i\}
+                +2(r^2-4)L(z)\delta_0\right]\\
+ &+\frac{U_{j,N}}{\beta^3}
+       -\frac14\left(\frac{m^5}{\alpha^3}
+                                      +\frac n{\beta^3}\right),\\
+\Psi_N={}&\min_{j\in\mathcal J_N}\
+            \min_{z\in\mathcal Z_{m,n,d_{j,N}}}\Psi_{j,N}(z).
+\end{aligned}
+\tag{7.2}
+$$
+
+The last term in the first formula is the fourth-power correction
+from the original graph objective. All quantities use the same
+actual cap and allocation; no independent optimization of
+numerators or marginal degrees is implicit.
+

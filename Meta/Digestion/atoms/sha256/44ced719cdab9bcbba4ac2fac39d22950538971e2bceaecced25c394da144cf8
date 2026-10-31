@@ -1,0 +1,81 @@
+**Definition 6.1 (Integer allocation data).** All parameters, the
+orientation, the graph class and the normalization remain exactly
+those of Definition 1.1. Fix a winning $j\in J_*$ and an integer
+$N$, and use its $m,r,n,\alpha,\beta$. Write
+
+$$
+\begin{gathered}
+d=d_{j,N},\qquad
+F=\frac{(a-1)N-n-(r-1)d}{r},\qquad
+Q=N-F-d,\\
+b=\left\lfloor\frac Qn\right\rfloor,\qquad
+t=Q-nb\in\{0,\ldots,n-1\},\qquad
+\mathcal J_N=\{j\in J_*:\chi_{j,N}=\chi_N\}.
+\end{gathered}
+\tag{6.1}
+$$
+
+Thus $Q$ is the sum of the actual tail degrees, and the number of
+tail-singleton sources is $Q-n$. All assertions using graphs below
+are for sufficiently large integer $N$, with $a,h$ fixed. In
+particular $F>0$ and $b> s$. The letters $b,t$ in this section
+are integer quotient and remainder, not the price $b_j$.
+
+For a labelled partition $C\dot\cup D=[s]$ of sizes $m,n$, let
+$e_i$ count connectors ending at $i\in C$, and let $o_i$ count
+missing-one sources omitting $i$. Their constraints and the actual
+sink degrees are
+
+$$
+\begin{gathered}
+e_i,o_i\in\mathbb Z_{\ge0},\qquad
+\sum_{i\in C}e_i=n,\qquad \sum_{i\in C}o_i=d,\\
+D_i=F+d-o_i+e_i\quad(i\in C),\qquad
+q_k=1+\#\{\text{singleton sources at }k\}\quad(k\in D),\\
+q_k\in\mathbb Z_{\ge1},\qquad \sum_{k\in D}q_k=Q.
+\end{gathered}
+\tag{6.2}
+$$
+
+For $k>0$ and $x>0$ put
+
+$$
+f_k(x)=\sqrt{1+k^2/x^2}-1,\qquad
+g(x)=(x-1)f_1(x)+f_2(x).
+\tag{6.3}
+$$
+
+Define the finite set, indexed by the core labels,
+
+$$
+\mathcal Z_{m,n,d}=\left\{z\in\mathbb Z^C:
+ \sum_i z_i=n-d,\quad
+ \sum_i z_i^+\le n,\quad \sum_i z_i^-\le d\right\},
+\qquad z_i^+=\max(z_i,0),\quad z_i^-=\max(-z_i,0).
+\tag{6.4}
+$$
+
+Every coordinate lies in $[-d,n]$. For $z$ in this set put
+
+$$
+\begin{gathered}
+L(z)=n-\sum_i z_i^+=d-\sum_i z_i^-\ge0,\qquad
+z_0=\min_i z_i,\qquad I_0(z)=\{i:z_i=z_0\},\\
+D_i(z)=F+d+z_i,\qquad D_0(z)=F+d+z_0,\\
+\mathcal C_{j,N}(z)=
+ \sum_{i\in C}\left\{
+ Ff_m(D_i(z))+(d-z_i^-)f_r(D_i(z))
+                      +z_i^+f_2(D_i(z))\right\}\\
+\hspace{35mm}
+ +L(z)\bigl(f_2(D_0(z))-f_r(D_0(z))\bigr),\\
+\mathcal T_{j,N}=(n-t)g(b)+t g(b+1),\qquad
+\mathcal A_{j,N}(z)=2N\bigl(\mathcal C_{j,N}(z)
+                                      +\mathcal T_{j,N}\bigr).
+\end{gathered}
+\tag{6.5}
+$$
+
+When $L=0$ the last term is zero. When $d=0$, (6.4) forces
+$z_i\ge0$, $\sum_i z_i=n$ and $L=0$. When $t=0$ the $g(b+1)$
+term is absent. These conventions include all zero multiplicities.
+

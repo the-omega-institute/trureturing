@@ -1,0 +1,35 @@
+**Theorem 1.3 (Periodic first connection cost and eventual source
+types).** For every fixed finite $R\ge4$, one can choose $A_R$ so
+that the following holds for every integer pair in (1.1). There
+exist finite constants $C(a,h)>0$ and $N_0(a,h)$ such that, for
+every integer $N\ge N_0(a,h)$, the class $\mathfrak G_N(a,h)$ is
+nonempty and
+
+$$
+\left|V_N-M-\frac{\chi_N}{N}\right|
+\le\frac{C(a,h)}{N^2}.
+\tag{1.10}
+$$
+
+After increasing $N_0$, every exact minimizer has a partition
+$C\dot\cup D=[s]$ associated to some
+$j\in J_*$ with $\chi_{j,N}=\chi_N$, and has precisely these
+source neighborhoods:
+
+1. exactly $n$ two-element sets $\{i,k\}$, with $i\in C$, $k\in D$,
+   one for each $k\in D$;
+2. exactly $d_{j,N}$ sets $C\setminus\{i\}$, with $i\in C$;
+3. full cores $C$ and singleton tails $\{k\}$ for every remaining
+   source.
+
+In particular there are no other source types. The statement does
+not prescribe the core endpoints of the $n$ connectors, the omitted
+core labels, the singleton allocations, or a graph isomorphism
+class. The constants in (1.10), including $N_0$, may depend on the
+fixed integers $a,h$; uniformity as $a,h,N$ grow jointly is not
+asserted.
+
+The proof is given in Section 5. Its lower bound ranges over the
+whole class in Definition 1.1, with no restriction on source
+cardinalities or marginal sizes.
+

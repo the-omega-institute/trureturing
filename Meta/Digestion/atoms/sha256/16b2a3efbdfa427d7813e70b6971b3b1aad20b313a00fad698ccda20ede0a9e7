@@ -1,0 +1,19 @@
+## 9. Polynomial uniformity on a positive-excess sublevel
+
+All laws and graphs in this section have exactly the domains of
+Definition 1.1. In particular every nonempty source neighborhood remains
+allowed. Fix a finite $R\ge4$, put
+
+$$
+C_0=R^2+10,\qquad J=\lceil4C_0\rceil,\qquad
+\kappa=h/\sqrt a\in[7/2,R],
+\tag{9.1}
+$$
+
+and increase an $R$-only lower threshold for $a$ when specified below.
+All constants with subscript $R$ are positive and finite and depend only
+on this fixed $R$. Every $O_R$ estimate is uniform in $h$, the law, its
+labels and the bounded indices under discussion. We may assume
+$s\le2a$ and $h\ge J$. A branch index selected from an approximate law
+is not assumed to belong to $J_*$.
+
