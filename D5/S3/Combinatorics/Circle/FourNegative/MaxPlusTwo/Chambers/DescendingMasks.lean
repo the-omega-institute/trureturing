@@ -98,13 +98,13 @@ private theorem descending_masks (a b c : ℕ) (hc : 2≤c) (hcb : c≤b) (hba :
   change ((2*P ||| 2)=if p=0 then 2 else 2*P+2) ∧
     ((2*P*L ||| 2*P ||| 2)=if p=0 then (if l=0 then 2 else 2*L+2)
       else if l=0 then 2*P+2 else 2*P*L+2*P+2) at hm
-  have hu1i : (u1:ℤ)=if (P:ℤ)=1 then (if (L:ℤ)=1 then 2 else 2*L+2)
-      else if (L:ℤ)=1 then 2*P+2 else 2*P*L+2*P+2 := by
+  have hu1i : (u1:ℤ)=if (P:ℤ)=1 then (if (L:ℤ)=1 then (2:ℤ) else 2*(L:ℤ)+2)
+      else if (L:ℤ)=1 then 2*(P:ℤ)+2 else 2*(P:ℤ)*(L:ℤ)+2*(P:ℤ)+2 := by
     dsimp only [u1]
     rw [h1,h2,hm.2]
     by_cases hp0 : p=0 <;> by_cases hl0 : l=0 <;>
       simp only [hpone,hlone,hp0,hl0,if_true,if_false,Nat.cast_add,Nat.cast_mul,Nat.cast_ofNat]
-  have hu2i : (u2:ℤ)=if (P:ℤ)=1 then 2 else 2*P+2 := by
+  have hu2i : (u2:ℤ)=if (P:ℤ)=1 then (2:ℤ) else 2*(P:ℤ)+2 := by
     dsimp only [u2]
     rw [h2,hm.1]
     by_cases hp0 : p=0 <;>

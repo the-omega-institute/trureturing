@@ -690,7 +690,7 @@ private theorem peak_actual (a b c : ℕ) (ha : 2≤a) (hc : 2≤c)
     · intro e _ he; exact h12 e he
     · intro e _ he; exact h23 e he
     · intro e he _; simp [Nat.testBit_two_pow_sub_one,he]
-    · intro e _ he; simp only [Nat.testBit_or,Bool.or_false] at he; exact he
+    · intro e _ he; simp at he
     · simp
     · simp
   · apply actual_masked_strong a b c (b+2) uv.1 s uw.1 uv.2 0 0 uw.2

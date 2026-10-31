@@ -76,11 +76,15 @@ private theorem ascending_v_masks (a b c : ℕ) (ha : 2≤a)
       have hTR : 2*(R:ℤ)≤T := by rw [←hz]; exact hZR
       have hp:=ascending_equal_end_V (R:ℤ) (T:ℤ) hR4 hTR
       dsimp only at hp
-      rw [←hz,←hA] at hp
-      change e1≤e2 ∧ e2≤3*A at hp
-      have hv : v=0:=ceilpos_zero _ _ (by omega) (by linarith only [hp.2])
+      have hp' : e1≤e2 ∧ e2≤3*A := by
+        dsimp only [e1,e2,C]
+        rw [hA]
+        dsimp only [C]
+        rw [hz]
+        exact hp
+      have hv : v=0:=ceilpos_zero _ _ (by omega) (by linarith only [hp'.2])
       dsimp [S]; rw [hv,Nat.cast_zero,mul_zero,add_zero]
-      linarith only [hf.1,hp.1]
+      linarith only [hf.1,hp'.1]
     · have h2T : 2*(T:ℤ)≤Z := by
         have he : (2:ℕ)^(b+1)≤Z:=Nat.pow_le_pow_right Nat.zero_lt_two (by omega)
         have he' : 2*T≤Z := by simpa only [pow_succ,T,Nat.mul_comm] using he
@@ -106,7 +110,7 @@ private theorem ascending_v_masks (a b c : ℕ) (ha : 2≤a)
       · have h4R : 4*(R:ℤ)≤Z := by
           have he : a+2≤c := by omega
           have hh : (2:ℕ)^(a+2)≤Z:=Nat.pow_le_pow_right Nat.zero_lt_two he
-          have hh' : 4*R≤Z := by simpa only [pow_add,R] using hh
+          have hh' : 4*R≤Z := by simpa only [pow_add,R,show (2:ℕ)^2=4 by norm_num,Nat.mul_comm] using hh
           exact_mod_cast hh'
         have hp:=ascending_wide_V (R:ℤ) (T:ℤ) (Z:ℤ) hR4 hT4 h2T h4R
         change 2*e1≤e2 at hp
@@ -118,7 +122,9 @@ private theorem ascending_v_masks (a b c : ℕ) (ha : 2≤a)
     have hz : (Z:ℤ)=2*(H:ℤ) := by
       have hh : Z=2*H := by
         dsimp [Z,H]
-        rw [show c=c-1+1 by omega,pow_succ]; ring
+        calc
+          (2:ℕ)^c=2^((c-1)+1) := by congr 1; omega
+          _=2*2^(c-1) := by rw [pow_succ]; ring
       exact_mod_cast hh
     have hm:=mass_margin (R:ℤ) (T:ℤ) (Z:ℤ) hR4 hT4 hZ4
     change 3*C<(R:ℤ)*T*Z at hm
@@ -175,11 +181,13 @@ private theorem ascending_w_masks (a b c : ℕ) (ha : 2≤a)
     dsimp [S]
     have hn : 0≤2*e1*(v:ℤ) := by dsimp [e1]; positivity
     linarith only [hn,hApos]
-  dsimp only
-  change (if 4*R≤T then (ceilpos (e3-S) (2*e2),0)
-      else if T=2*R then
-        if e3≤S then (0,0) else (1,ceilpos (S+2*e2-2*e3+A) A)
-      else (0,ceilpos (S-2*e3+A) A)).1<2^(b-1) ∧ _
+  let wl:=if 4*R≤T then (ceilpos (e3-S) (2*e2),0)
+    else if T=2*R then
+      if e3≤S then (0,0) else (1,ceilpos (S+2*e2-2*e3+A) A)
+    else (0,ceilpos (S-2*e3+A) A)
+  change wl.1<2^(b-1) ∧ wl.2≤3 ∧
+    e3≤S+2*e2*wl.1-A*wl.2 ∧ S+2*e2*wl.1-A*wl.2≤2*e3-A
+  dsimp only [wl]
   by_cases hwide : 4*R≤T
   · simp only [if_pos hwide,Prod.fst,Prod.snd,Nat.cast_zero,mul_zero,sub_zero]
     have hwidei : 4*(R:ℤ)≤T := by exact_mod_cast hwide
@@ -192,7 +200,11 @@ private theorem ascending_w_masks (a b c : ℕ) (ha : 2≤a)
       let H : ℕ:=2^(b-1)
       have hH : 1≤H:=Nat.one_le_two_pow
       have ht : (T:ℤ)=2*(H:ℤ) := by
-        have hh : T=2*H := by dsimp [T,H]; rw [show b=b-1+1 by omega,pow_succ]; ring
+        have hh : T=2*H := by
+          dsimp [T,H]
+          calc
+            (2:ℕ)^b=2^((b-1)+1) := by congr 1; omega
+            _=2*2^(b-1) := by rw [pow_succ]; ring
         exact_mod_cast hh
       have hcoef : 0≤(R:ℤ)*T-2*((R:ℤ)+1) := by
         have h:=mul_nonneg (show 0≤(R:ℤ) by omega) (show 0≤(T:ℤ)-4 by omega)
