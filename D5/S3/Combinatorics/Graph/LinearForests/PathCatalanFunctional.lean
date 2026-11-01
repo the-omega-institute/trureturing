@@ -116,7 +116,7 @@ private lemma coeff_path_zero (v m : ℕ) (hm : v < m) :
 
 /-- All legal Catalan parameters, including the empty path and zero parameter. -/
 theorem path_phi_nonnegative (v m : ℕ) (hm : v ≤ m) : 0 ≤ phi (SimpleGraph.hasse ℕ) (range v) m := by
-  rw [← coeff_phi (SimpleGraph.hasse ℕ) (range v) m hm]
+  rw [← coeff_phi v m hm]
   cases v with
   | zero => simp [path_zero, C]
   | succ v =>

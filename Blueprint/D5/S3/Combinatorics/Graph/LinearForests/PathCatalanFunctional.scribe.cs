@@ -11,7 +11,7 @@ internal sealed class PathCatalanFunctionalDocument : IScribeDocumentDefinition
     private static Formula All(string name, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), Nat, body);
     private static Formula Le(Formula left, Formula right) =>
-        new Formula.Relation(left, FormulaRelationOperator.LessOrEqual, right);
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
     private static Formula Imp(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.Implies, right);
 
