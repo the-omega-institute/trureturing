@@ -1,0 +1,31 @@
+**Definition 1.2 (finite deterministic full-record protocol).** Choose an arbitrary integer $k\ge1$, Hermitian positive semidefinite effects $D_1,\ldots,D_k\in M_2(\mathbb C)$ satisfying
+
+$$
+\sum_{y=1}^kD_y=I_2,
+\tag{1.3}
+$$
+
+and arbitrary feedback unitaries $U_1,\ldots,U_k\in U(4)$. The effects act on the full record space $\mathbb C^2$. The system channel after measuring that record and applying the indicated feedback is
+
+$$
+\begin{aligned}
+C_y&=R_0D_y^{\mathsf T}R_0^\dagger,\\
+\Phi(X)&=\sum_{y=1}^kU_y(C_y\circ X)U_y^\dagger,
+\qquad X\in M_4(\mathbb C).
+\end{aligned}
+\tag{1.4}
+$$
+
+Every outcome is included in this sum. There is no postselection, upper bound on the finite outcome count, or diagonal restriction on $U_y$.
+
+The transpose in (1.4) follows from the ket convention (1.2): for any record measurement realizing the effect $D_y$, its coefficient on the system matrix unit $|i\rangle\langle j|$ is
+
+$$
+\langle r_j|D_y|r_i\rangle
+ =\sum_{a,b}\overline{(R_0)_{ja}}(D_y)_{ab}(R_0)_{ib}
+ =(R_0D_y^{\mathsf T}R_0^\dagger)_{ij}.
+\tag{1.5}
+$$
+
+Consequently (1.4) depends on the effects, rather than on a choice of measurement operators realizing each effect. The ordinary transpose cannot be replaced by the adjoint in this convention.
+
