@@ -100,6 +100,7 @@ private theorem flat_gram_log (m n : ℕ) (hm : 0 < m) (hn : 0 < n) :
   have hn0 : (0 : ℝ) < n := by exact_mod_cast hn
   apply (Real.sqrt_eq_iff_eq_sq (by positivity) (Real.exp_pos _).le).mpr
   rw [← Real.exp_nat_mul]
+  norm_num only [Nat.cast_ofNat]
   rcases le_total m n with h | h
   · have hlog : Real.log (m : ℝ) ≤ Real.log (n : ℝ) :=
       Real.log_le_log hm0 (by exact_mod_cast h)
@@ -253,14 +254,14 @@ private theorem exponential_quotient_minimum [Nonempty Sector]
     change _ = ∑ i : Fin (n + 1), ∑ j : Fin (n + 1),
       q i * q j * ExponentialSectorKernel.kernel loss i j
     rw [← hpq, aggregate_energy]
-    simp_rw [hk]
+    simpa only [hk]
   · intro p hp
     have h := hminimum (aggregate f p) (aggregate_simplex f p hp)
     dsimp [ExponentialSectorKernel.energy] at h
     rw [aggregate_energy] at h
     simpa only [hk] using h
 
-private abbrev raw {A B : Type u} [Fintype A] [DecidableEq A]
+abbrev raw {A B : Type u} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] (C : QuantumChannel A B) :
     Matrix A A ℂ →ₗ[ℂ] Matrix B B ℂ :=
   { CStarMatrix.ofMatrixₗ.symm.toLinearMap.comp
@@ -278,6 +279,14 @@ private theorem raw_comp {A B C : Type u} [Fintype A] [DecidableEq A]
         (CStarMatrix.ofMatrix (CStarMatrix.ofMatrix.symm
           (E.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)))))
   rw [Equiv.apply_symm_apply]
+
+private theorem tensor_raw {A B C D : Type u}
+    [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
+    [Fintype C] [DecidableEq C] [Fintype D] [DecidableEq D]
+    (L : QuantumChannel A C) (R : QuantumChannel B D)
+    (Q : QuantumChannel (A × B) (C × D)) (h : TensorRealization L R Q)
+    (X : Matrix (A × B) (A × B) ℂ) :
+    raw Q X = tensorRawAction L R X := h X
 
 private theorem raw_expand {A B : Type u} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] (C : QuantumChannel A B) (X : Matrix A A ℂ) :
@@ -388,7 +397,7 @@ private theorem isometry_retraction {A B : Type u} [Fintype A] [DecidableEq A]
   simp only [Matrix.mul_assoc, hU, Matrix.mul_one]
 
 /-- The compact coordinate `a + d s * b` is split before the residual is padded. -/
-private def compactSplit (r d m : Sector → ℕ) (hr : ∀ s, r s = d s * m s) :
+def compactSplit (r d m : Sector → ℕ) (hr : ∀ s, r s = d s * m s) :
     TargetLocal r ≃ (Σ s, Fin (d s) × Fin (m s)) :=
   Equiv.sigmaCongrRight fun s =>
     ((finCongr ((hr s).trans (Nat.mul_comm _ _))).trans finProdFinEquiv.symm).trans
@@ -410,7 +419,7 @@ private def residualInclusion (d m : Sector → ℕ) (J : ℕ) (hmJ : ∀ s, m s
     subst e
     rfl
 
-private def compactEmbedding (r d m : Sector → ℕ) (J : ℕ)
+def compactEmbedding (r d m : Sector → ℕ) (J : ℕ)
     (hr : ∀ s, r s = d s * m s) (hmJ : ∀ s, m s ≤ J) :
     TargetLocal r ↪ SourceLocal (Coord := Fin J) d :=
   (compactSplit r d m hr).toEmbedding.trans (residualInclusion d m J hmJ)
@@ -431,7 +440,7 @@ private theorem compact_embedding_range (r d m : Sector → ℕ) (J : ℕ)
     rfl
 
 /-- A zero-one placement matrix preserves all coherences, including between sectors. -/
-private def placement {A B : Type u} [DecidableEq B] (f : A ↪ B) : Matrix B A ℂ :=
+def placement {A B : Type u} [DecidableEq B] (f : A ↪ B) : Matrix B A ℂ :=
   fun b a => if f a = b then 1 else 0
 
 private theorem placement_isometry {A B : Type u}
@@ -574,7 +583,7 @@ private theorem tensor_retraction {A B : Type u}
   exact hX.symm
 
 /-- Errors of actual products on the original compact flat source carrier. -/
-private def compactProductErrors (r d : Sector → ℕ)
+def compactProductErrors (r d : Sector → ℕ)
     (source : QuantumChannel Sector (TargetLocal r × TargetLocal r))
     (target : QuantumChannel Sector (TargetLocal d × TargetLocal d)) : Set ℝ :=
   {x | ∃ left : QuantumChannel (TargetLocal r) (TargetLocal d),
@@ -629,7 +638,6 @@ private theorem compact_physical_transport [Nonempty Sector]
         (sourceEncoding d (fun s => flatSpectrum J (m s)))ᴴ from encoding.sourceAction X]
     rw [← compact_flat_encoding r d m J hr hmJ]
     simp only [U, Matrix.conjTranspose_mul, Matrix.mul_assoc]
-    rfl
   let source := R₂.comp encoding.source
   have hsource (X : Matrix Sector Sector ℂ) :
       raw source X = targetEncoding r * X * (targetEncoding r)ᴴ := by
@@ -642,7 +650,7 @@ private theorem compact_physical_transport [Nonempty Sector]
   have hpull (L N : QuantumChannel (TargetLocal r) (TargetLocal d))
       (X : Matrix (TargetLocal r × TargetLocal r) (TargetLocal r × TargetLocal r) ℂ) :
       tensorRawAction (L.comp R) (N.comp R) (raw E₂ X) = tensorRawAction L N X := by
-    rw [hTensor, tensor_comp R R L N, tensor_retraction E R hR]
+    rw [tensor_raw _ _ _ hTensor, tensor_comp R R L N, tensor_retraction E R hR]
   have hrestrict (L N : QuantumChannel (SourceLocal (Coord := Fin J) d) (TargetLocal d))
       (Q : QuantumChannel
         (SourceLocal (Coord := Fin J) d × SourceLocal (Coord := Fin J) d)
@@ -650,7 +658,7 @@ private theorem compact_physical_transport [Nonempty Sector]
       TensorRealization (L.comp E) (N.comp E) (Q.comp E₂) := by
     intro X
     change raw (Q.comp E₂) X = _
-    rw [raw_comp, hQ, hTensor, tensor_comp]
+    rw [raw_comp, tensor_raw _ _ _ hQ, tensor_raw _ _ _ hTensor, tensor_comp]
   have hencoded (Q : QuantumChannel
       (SourceLocal (Coord := Fin J) d × SourceLocal (Coord := Fin J) d)
       (TargetLocal d × TargetLocal d)) :
@@ -666,7 +674,7 @@ private theorem compact_physical_transport [Nonempty Sector]
     obtain ⟨Q, hQ⟩ := hProduct (L.comp R) (N.comp R)
     refine ⟨Q.comp E₂, fun X => ?_⟩
     change raw (Q.comp E₂) X = _
-    rw [raw_comp, hQ, hpull]
+    rw [raw_comp, tensor_raw _ _ _ hQ, hpull]
   · ext x
     constructor
     · rintro ⟨L, N, C, hC, hx⟩
@@ -676,7 +684,7 @@ private theorem compact_physical_transport [Nonempty Sector]
         intro X
         have he := congrArg (fun C => raw C X) hembed
         simp only [raw_comp] at he
-        rw [raw_comp, raw_comp, ← he, hQ, hpull]
+        rw [raw_comp, raw_comp, ← he, tensor_raw _ _ _ hQ, hpull]
         exact (hC _).symm
       exact ⟨L.comp R, N.comp R, Q, hQ, by rw [he]; exact hx⟩
     · rintro ⟨L, N, Q, hQ, hx⟩
@@ -721,7 +729,7 @@ private theorem flat_spectral_minimum [Nonempty Sector]
   exact hleast.csInf_eq
 
 /-- Requiring exact basis outputs restricts the actual compact-carrier products. -/
-private def compactExactProductErrors (r d : Sector → ℕ)
+def compactExactProductErrors (r d : Sector → ℕ)
     (source : QuantumChannel Sector (TargetLocal r × TargetLocal r))
     (target : QuantumChannel Sector (TargetLocal d × TargetLocal d)) : Set ℝ :=
   {x | ∃ left : QuantumChannel (TargetLocal r) (TargetLocal d),
@@ -746,12 +754,12 @@ private theorem compact_error_bddBelow (r d : Sector → ℕ)
   · rw [csSup_of_not_bddAbove hb]
     simp
 
-private def lossTotal (n : ℕ) (loss : ℕ → ℝ) : ℝ :=
+def lossTotal (n : ℕ) (loss : ℕ → ℝ) : ℝ :=
   ∑ i : Fin n, Real.tanh ((loss (i + 1) - loss i) / 4)
 
 /-- Compact flat encodings, actual local splitting, and the ordered distinct-rank value.
 The operation sets are defined on the original source carrier, including their exact basis condition. -/
-private theorem compact_flat_optimality [Nonempty Sector]
+theorem result [Nonempty Sector]
     (r d m : Sector → ℕ) (hr : ∀ s, r s = d s * m s)
     (hd : ∀ s, 0 < d s) (hm : ∀ s, 0 < m s) :
     FlatFeasibilityClaim (Sector := Sector) ∧
@@ -829,7 +837,7 @@ private theorem compact_flat_optimality [Nonempty Sector]
   have hJoint : TensorRealization splitting splitting joint := by
     intro X
     change raw (Q.comp E₂) X = tensorRawAction (S.comp E) (S.comp E) X
-    rw [raw_comp, hQ, hTensor, tensor_comp]
+    rw [raw_comp, tensor_raw _ _ _ hQ, tensor_raw _ _ _ hTensor, tensor_comp]
   have hencoded : joint.comp source = Q.comp encoding.source := by
     apply channel_ext_raw
     intro X
@@ -880,11 +888,20 @@ private theorem compact_flat_optimality [Nonempty Sector]
     exact flat_gram_log (m s) (m t) (hm s) (hm t)
   · intro X
     rw [hencoded]
-    have h := hSchur X
-    simp_rw [hlog] at h
-    exact h
+    have hmatrix : (Matrix.of fun s t => (kernel M s t : ℂ) * X s t) =
+        Matrix.of (fun s t =>
+          (Real.exp (-|Real.log (m s : ℝ) - Real.log (m t : ℝ)| / 2) : ℂ) * X s t) := by
+      funext s t
+      change (kernel M s t : ℂ) * X s t = _
+      rw [show kernel M s t = _ from hlog s t]
+    exact (hSchur X).trans (congrArg
+      (fun Y => targetEncoding d * Y * (targetEncoding d)ᴴ) hmatrix)
   · intro hn
-    simpa only [lossTotal, hn, Fin.sum_univ_zero, mul_zero, zero_div] using hError
+    have hT : lossTotal n loss = 0 := by
+      rw [hn]
+      simp [lossTotal]
+    rw [hT] at hError
+    simpa using hError
   · intro hconstant
     have hn : n = 0 := by
       by_contra hn
@@ -898,6 +915,12 @@ private theorem compact_flat_optimality [Nonempty Sector]
         rw [← hs, ← ht, haf, haf]
         exact hconstant s t
       exact (ne_of_lt hlt) heq
-    simpa only [lossTotal, hn, Fin.sum_univ_zero, mul_zero, zero_div] using hError
+    have hT : lossTotal n loss = 0 := by
+      rw [hn]
+      simp [lossTotal]
+    rw [hT] at hError
+    simpa using hError
+
+#print axioms result
 
 end D5.S3.Quantum.Entanglement.FiniteFlatSectorOptimum
