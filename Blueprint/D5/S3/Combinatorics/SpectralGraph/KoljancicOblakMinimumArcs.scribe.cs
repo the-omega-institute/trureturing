@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SpectralGraph;
 internal sealed class KoljancicOblakMinimumArcsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/SpectralGraph/KoljancicOblakMinimumArcs.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/koljancicoblak2026nssp");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Eigenstructure/koljancicoblak2026nssp");
     public DocumentDefinition Create()
     {
         Formula n=V("n"), e=V("E"), a=V("A"), x=V("X"), i=V("i"), j=V("j"), p=V("p");

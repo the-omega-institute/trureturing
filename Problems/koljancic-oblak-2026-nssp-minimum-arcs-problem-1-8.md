@@ -19,7 +19,7 @@ strong spectral property for graphs*, Problem 1.8, printed page 759:
 
 The source and preregistration are linked from
 [issue #25108](https://github.com/the-omega-institute/trureturing/issues/25108).
-The [Library note](../Library/GraphInvariants/koljancicoblak2026nssp.md)
+The [Library note](../Library/Eigenstructure/koljancicoblak2026nssp.md)
 records source versions, attribution and licensing. The endpoint-looped double
 path is the source's Theorem 5.5 and Remark 2.10(1), not a new upper construction.
 
@@ -75,7 +75,7 @@ The settling declaration is
 `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakMinimumArcs.result`.
 Its definitions, full statement and proof mechanism are exposed in the
 [Blueprint](../Blueprint/D5/S3/Combinatorics/SpectralGraph/KoljancicOblakMinimumArcs.md).
-The [source note](../Library/GraphInvariants/koljancicoblak2026nssp.md)
+The [source note](../Library/Eigenstructure/koljancicoblak2026nssp.md)
 binds the journal and arXiv versions and their attribution. The immutable
 [preregistration](https://github.com/the-omega-institute/trureturing/issues/25108#issuecomment-6553617852)
 selects the entire all-positive-order event.
