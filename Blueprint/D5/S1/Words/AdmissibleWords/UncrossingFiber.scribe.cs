@@ -7,15 +7,14 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S1/Words/AdmissibleWords/UncrossingFiber.";
     private static readonly LibraryNoteRef Hibi =
         LibraryNoteRef.Create("D5/L/Words/hibi1987distributivelattices");
-    private static readonly LibraryNoteRef Stanley =
-        LibraryNoteRef.Create("D5/L/Words/stanley1986posetpolytopes");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual finite Boolean row multisets admit bounded meet-join sorting to a unique explicit "
             + "threshold multiset. Reversing and concatenating normalization routes connects each "
             + "margin fiber. Alternating complement and its inverse transport complete paths to the "
             + "native admissible-word occupancy fibers. The qualitative straightening and its "
-            + "potential are classical, following Hibi and Stanley.",
+            + "potential are classical. Straightening is attributed to Hibi (1987); the fence "
+            + "poset context is attributed to Stanley, Two Poset Polytopes (1986).",
         H("Quantitative uncrossing and native admissible occupancy fibers"),
         Blocks(
             Describe.Lean(
@@ -111,7 +110,7 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "phi_support_fence_iff"),
                 H("Native admissibility is equivalent to the fence inequalities"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Stanley),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The zero-based alternating complement leaves even coordinates unchanged and complements odd coordinates. The native recursive Adm n predicate is equivalent to the alternating fence upper-set inequalities on transformed supports, for every n including zero."))),
                 DescribeRole.Theorem),
             Describe.Lean(
@@ -121,7 +120,7 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The inverse unphi takes a row characteristic function and applies alternating complement. Both inverse equations hold on the full Boolean carriers. Restricting gives a bijection between actual Adm n words and fence rows, so arbitrary intermediate fence rows also decode legally. Original admissible supports are not asserted union-closed."))),
-                DescribeRole.Theorem),
+                DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("phi-original-counts"),
                 DeclarationHandle.Create(Prefix + "phiRows_margin"),

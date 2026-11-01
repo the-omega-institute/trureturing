@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Data.Multiset, mathlib/module/Mathlib.Data.Finset.Card]
    utility: none
-   digest: Finite Boolean uncrossing preserves coordinate margins and admits a bounded forward route to comparable support; the admissible-word consumer transports the route through alternating complement. -/
+   digest: Bounded residual uncrossing reaches explicit threshold rows and connects original native admissible occupancy fibers via a fence bijection. -/
 
 import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import Mathlib.Data.Finset.Card
@@ -268,11 +268,12 @@ private theorem card_union_eq (A B : Finset V) :
   omega
 
 theorem forwardStep_energy {M N : Multiset (Finset V)} (h : ForwardStep M N) :
-    ∃ A B R, M = A ::ₘ B ::ₘ R ∧ N = (A ∩ B) ::ₘ (A ∪ B) ::ₘ R ∧
+    ∃ A B R, (¬ A ⊆ B) ∧ (¬ B ⊆ A) ∧
+      M = A ::ₘ B ::ₘ R ∧ N = (A ∩ B) ::ₘ (A ∪ B) ::ₘ R ∧
       energy N = energy M +
         2 * (A \ B).card * (B \ A).card := by
   rcases h with ⟨R, A, B, hAB, hBA, rfl, rfl⟩
-  refine ⟨A, B, R, rfl, rfl, ?_⟩
+  refine ⟨A, B, R, hAB, hBA, rfl, rfl, ?_⟩
   simp only [energy, height, Multiset.map_cons, Multiset.sum_cons]
   rw [card_union_eq]
   have hcardA : A.card = (A ∩ B).card + (A \ B).card :=
@@ -293,47 +294,20 @@ private theorem card_sdiff_pos_of_not_subset {A B : Finset V} (h : ¬ A ⊆ B) :
     simpa [hz] using this
   exact Finset.card_pos.mpr this
 
-theorem forwardStep_energy_strict {M N : Multiset (Finset V)} (h : ForwardStep M N) :
-    energy M < energy N := by
-  rcases h with ⟨R, A, B, hAB, hBA, rfl, rfl⟩
-  have hcardA : A.card = (A ∩ B).card + (A \ B).card :=
-    (card_inter_add_card_sdiff A B).symm
-  have hcardB : B.card = (A ∩ B).card + (B \ A).card := by
-    simpa [Finset.inter_comm] using (card_inter_add_card_sdiff B A).symm
-  have he : energy ((A ∩ B) ::ₘ (A ∪ B) ::ₘ R) =
-      energy (A ::ₘ B ::ₘ R) + 2 * (A \ B).card * (B \ A).card := by
-    simp only [energy, height, Multiset.map_cons, Multiset.sum_cons]
-    rw [card_union_eq]
-    nlinarith [hcardA, hcardB]
-  rw [he]
-  have ha : 0 < (A \ B).card := card_sdiff_pos_of_not_subset hAB
-  have hb : 0 < (B \ A).card := card_sdiff_pos_of_not_subset hBA
-  have hp : 0 < 2 * (A \ B).card * (B \ A).card := by
-    exact Nat.mul_pos (Nat.mul_pos (by omega) ha) hb
-  omega
-
 theorem forwardStep_energy_gap {M N : Multiset (Finset V)} (h : ForwardStep M N) :
     energy M + 2 ≤ energy N := by
-  rcases h with ⟨R, A, B, hAB, hBA, rfl, rfl⟩
-  have hcardA : A.card = (A ∩ B).card + (A \ B).card :=
-    (card_inter_add_card_sdiff A B).symm
-  have hcardB : B.card = (A ∩ B).card + (B \ A).card := by
-    simpa [Finset.inter_comm] using (card_inter_add_card_sdiff B A).symm
-  have he : energy ((A ∩ B) ::ₘ (A ∪ B) ::ₘ R) =
-      energy (A ::ₘ B ::ₘ R) + 2 * (A \ B).card * (B \ A).card := by
-    simp only [energy, height, Multiset.map_cons, Multiset.sum_cons]
-    rw [card_union_eq]
-    nlinarith [hcardA, hcardB]
+  obtain ⟨A, B, R, hAB, hBA, rfl, rfl, he⟩ := forwardStep_energy h
   rw [he]
-  have ha : 0 < (A \ B).card := card_sdiff_pos_of_not_subset hAB
-  have hb : 0 < (B \ A).card := card_sdiff_pos_of_not_subset hBA
-  have ha1 : 1 ≤ (A \ B).card := by omega
-  have hb1 : 1 ≤ (B \ A).card := by omega
-  have hab : 1 ≤ (A \ B).card * (B \ A).card := by
-    exact (Nat.mul_le_mul ha1 hb1)
+  have ha : 1 ≤ (A \ B).card := card_sdiff_pos_of_not_subset hAB
+  have hb : 1 ≤ (B \ A).card := card_sdiff_pos_of_not_subset hBA
+  have hab : 1 ≤ (A \ B).card * (B \ A).card := Nat.mul_le_mul ha hb
   have hp : 2 ≤ 2 * (A \ B).card * (B \ A).card := by
-    have := Nat.mul_le_mul_left 2 hab
-    simpa [Nat.mul_assoc] using this
+    simpa [Nat.mul_assoc] using Nat.mul_le_mul_left 2 hab
+  omega
+
+theorem forwardStep_energy_strict {M N : Multiset (Finset V)} (h : ForwardStep M N) :
+    energy M < energy N := by
+  have := forwardStep_energy_gap h
   omega
 
 theorem energy_le_card_mul_fintype_card_sq (M : Multiset (Finset V)) :
@@ -686,11 +660,6 @@ private theorem support_wordOfSupport {n : Nat} (A : Finset (Fin n)) :
   ext i
   simp [support, wordOfSupport]
 
-private theorem wordOfSupport_support {n : Nat} (w : Fin n → Bool) :
-    wordOfSupport (support w) = w := by
-  funext i
-  cases hw : w i <;> simp [wordOfSupport, support, hw]
-
 /-- Inverse to the Phi support map on every row, including arbitrary intermediate fence rows. -/
 def unphi {n : Nat} (A : Finset (Fin n)) : Fin n → Bool := phi (wordOfSupport A)
 
@@ -700,7 +669,8 @@ private theorem support_phi_unphi {n : Nat} (A : Finset (Fin n)) :
 
 private theorem unphi_support_phi {n : Nat} (w : Fin n → Bool) :
     unphi (support (phi w)) = w := by
-  rw [unphi, wordOfSupport_support, phi_involutive]
+  apply support_phi_injective
+  exact support_phi_unphi _
 
 private theorem unphi_adm {n : Nat} {A : Finset (Fin n)} (hA : fence n A) :
     Adm n (unphi A) := by
@@ -827,7 +797,7 @@ theorem adm_phi_forward_consumer {n : Nat} {M N : Multiset (Finset (Fin n))}
 
 private theorem nativePath_encode {n : Nat} {M N : Multiset (Fin n → Bool)}
     (h : NativePath M N) : ExchangePath (fenceFamily n) (phiRows M) (phiRows N) := by
-  apply Relation.ReflTransGen.lift phiRows (b := N) (a := M) (r := Relation.SymmGen NativeForwardStep) _ h
+  refine Relation.ReflTransGen.lift phiRows ?_ M N h
   intro X Y hXY
   rcases hXY with hs | hs
   · exact ⟨Or.inl (nativeForwardStep_encode hs), nativeRows_phiRows hs.1,
@@ -837,7 +807,7 @@ private theorem nativePath_encode {n : Nat} {M N : Multiset (Fin n → Bool)}
 
 private theorem exchangePath_decode {n : Nat} {M N : Multiset (Finset (Fin n))}
     (h : ExchangePath (fenceFamily n) M N) : NativePath (unphiRows M) (unphiRows N) := by
-  apply Relation.ReflTransGen.lift unphiRows (b := N) (a := M) (r := ExchangeStep (fenceFamily n)) _ h
+  refine Relation.ReflTransGen.lift unphiRows ?_ M N h
   intro X Y hXY
   rcases hXY.1 with hs | hs
   · exact Or.inl (adm_phi_forward_consumer hXY.2.1 hs)
