@@ -7,14 +7,8 @@
    digest: Two leading spectral values force a strict centered second-moment bound. -/
 
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Finset.Max
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Lean.Elab.Tactic.Omega
 
 /-! A centered finite-spectrum inequality used by the correlation weight obstruction. -/
 

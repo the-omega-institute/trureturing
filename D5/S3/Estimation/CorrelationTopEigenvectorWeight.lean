@@ -9,9 +9,6 @@
 import D5.S3.Estimation.CorrelationWeightSpectralBound
 import D5.S3.Estimation.RankTwoEigenvectorWeight
 import D5.S3.Weil.ZetaLinear.PosIndex
-import Mathlib.Algebra.Order.Round
-import Mathlib.Order.Interval.Finset.Fin
-import Mathlib.Analysis.SpecificLimits.Basic
 
 /-! The eventual-existence reading of Stepanov--Herrmann--Guhr, Question III.5. -/
 

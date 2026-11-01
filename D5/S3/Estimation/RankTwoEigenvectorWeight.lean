@@ -8,9 +8,6 @@
 
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Basic.Real.Basic
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
 
 /-! Spectral coordinates of a positive sum of two rank-one forms. -/
 
@@ -21,8 +18,8 @@ open scoped BigOperators
 
 namespace D5.S3.Estimation.RankTwoEigenvectorWeight
 
-/-- A positive diagonal form with a two-column factorization has two active weights;
-an expectation below half its trace forces the top weight below the other one. -/
+/-- A two-column factorization and a strict half-trace estimate force a larger weight
+away from any maximal diagonal entry. -/
 theorem weight_gap {ι : Type*} [Fintype ι] [DecidableEq ι]
     (μ e s : ι → ℝ) (a b : ℝ) (ha : 0 < a) (hb : 0 < b)
     (hdiag : ∀ i j, (if i = j then μ i else 0) =
