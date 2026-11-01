@@ -35,13 +35,13 @@ internal sealed class MinusFourFamilyDocument : IScribeDocumentDefinition
 
     private static Formula P(Formula f) => Seq(Open, f, Close);
     private static Formula Call(string name, params Formula[] args) =>
-        new Formula.Apply(Seq(Operatorname, Grp(Id(name))), [.. args]);
+        new Formula.Apply(Seq(Operatorname, Grp(FormulaDsl.Id(name))), [.. args]);
     private static Formula Nat => Seq(Mathbb, Grp(FormulaDsl.Id("N")));
     private static Formula Integer => Seq(Mathbb, Grp(FormulaDsl.Id("Z")));
     private static Formula All(string name, Formula type, Formula body) =>
-        Seq(Forall, Sp, P(Seq(Id(name), Colon, type)), Comma, Sp, body);
+        Seq(Forall, Sp, P(Seq(FormulaDsl.Id(name), Colon, type)), Comma, Sp, body);
     private static Formula Some(string name, Formula type, Formula body) =>
-        Seq(Exists, Sp, P(Seq(Id(name), Colon, type)), Comma, Sp, body);
+        Seq(Exists, Sp, P(Seq(FormulaDsl.Id(name), Colon, type)), Comma, Sp, body);
     private static Formula Eq(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
     private static Formula And(Formula left, Formula right) =>
