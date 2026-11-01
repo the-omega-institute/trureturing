@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Geometry/HereditaryLexicographicProduct
   - D5/S3/Geometry/IndependenceComplexTorsionSeed
   - D5/S3/Geometry/FiniteSimplicialSingularHomology
+  - D5/S3/Geometry/IndependenceComplexTorsionSeedSingular
 license: citation-only
 triage: anchor
 ---
@@ -132,8 +133,17 @@ singular chain augmentations give the comparison without an assumed
 good-cover or homology-isomorphism premise. Empty realizations and
 ghost vertices remain within the statement.
 
-Applying this comparison to the finite-chain seed, transporting it
-through the proposed graph construction and induced king-grid embedding,
-and proving the sphere-wedge torsion obstruction are necessary for a
-complete Question 32 counterexample. The generic comparison itself does
-not settle the question.
+`IndependenceComplexTorsionSeedSingular.seedH1IsoSingular` applies that
+comparison to the original 11/32/24 finite integer boundary model. Three
+basis bijections and both differential squares identify its actual short
+complex with the ordered one. The transported `singularSeedClass` is
+nonzero and killed by two in singular H1 of the original coordinate
+realization, with the same integer coefficient object. No abstract
+comparison is assumed.
+
+Transport through the proposed graph construction and induced king-grid
+embedding, and the sphere-wedge torsion obstruction, remain necessary
+for a complete Question 32 counterexample. The singular seed itself does
+not settle the question. The new comparison audit is unfinished under
+issue #25205; the original finite-chain seed audit remains unfinished
+under issue #25149.

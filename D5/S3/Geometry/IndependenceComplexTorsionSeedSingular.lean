@@ -18,6 +18,10 @@ homology hypothesis is introduced here.
 
 -/
 
+set_option backward.defeqAttrib.useBackward true
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 open CategoryTheory Limits
 open scoped BigOperators Finset
@@ -140,8 +144,10 @@ private theorem boundaryCoordinates_apply {p : ℕ} {I : Type}
   rw [FiniteSimplicialSingularHomology.faceι, FiniteSimplicialSingularHomology.orderedBoundary, Sigma.ι_comp_desc_assoc]
   simp only [Preadditive.sum_comp, Preadditive.zsmul_comp, FiniteSimplicialSingularHomology.faceι,
     ι_coordinateIso]
-  simp [ModuleCat.comp_apply, LinearMap.smulRight_apply,
-    FiniteSimplicialSingularHomology.eraseFace, Subtype.ext_iff, Finset.sum_coe_sort]
+  simp [FiniteSimplicialSingularHomology.eraseFace, Subtype.ext_iff]
+  exact Finset.sum_attach s.val (fun v =>
+    if (e i).val = s.val.erase v then
+      (-1 : ℤ) ^ (s.val.filter (fun w => w < v)).card else 0)
 
 private theorem edge_boundary_certificate : ∀ (e : IndependenceComplexTorsionSeed.EdgeIndex) (v : IndependenceComplexTorsionSeed.Vertex),
     IndependenceComplexTorsionSeed.edgeBoundary e v =
