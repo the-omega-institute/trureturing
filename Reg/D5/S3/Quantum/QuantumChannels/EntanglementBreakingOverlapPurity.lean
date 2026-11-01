@@ -159,11 +159,11 @@ end ProjectorTrace
 
 namespace UnitRay
 
-universe u
+universe u_1
 
 /-- Observe the outer projector as its generating vector varies. -/
 abbrev signature : Signature where
-  Params := Type u
+  Params := Type u_1
   State n := n → ℂ
   Role := Unit
   finiteRole := inferInstance
@@ -172,36 +172,36 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u} :=
+def actual : Realization signature.{u_1} :=
   realize signature (fun _ _ ψ => vecMulVec ψ (star ψ)) (fun e => nomatch e)
 
-def rejected : Realization signature.{u} :=
+def rejected : Realization signature.{u_1} :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 /-- Retain both normalization hypotheses and the equality on a common complex ray. -/
 abbrev arena : Arena where
-  signature := signature.{u}
-  Law R := ∀ {n : Type u} [Fintype n] {ψ χ : n → ℂ}
+  signature := signature.{u_1}
+  Law R := ∀ {n : Type u_1} [Fintype n] {ψ χ : n → ℂ}
     (_hψ : star ψ ⬝ᵥ ψ = 1) (_hχ : star χ ⬝ᵥ χ = 1)
     (z : ℂ) (_hz : ψ = z • χ),
     R.readout () n ψ = vecMulVec χ (star χ)
 
-theorem rejected_law : ¬ arena.{u}.Law rejected := by
+theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
   intro h
-  have hh := @h (ULift.{u} Unit) inferInstance (fun _ => 1) (fun _ => 1)
+  have hh := @h (ULift.{u_1} Unit) inferInstance (fun _ => 1) (fun _ => 1)
     (by simp [dotProduct]) (by simp [dotProduct]) 1 (by simp)
   have he : (0 : ℂ) = 1 * star (1 : ℂ) :=
     congrArg (fun M => M (ULift.up ()) (ULift.up ())) hh
   norm_num at he
 
-theorem dependence : ObservationalDependence signature.{u} actual := by
+theorem dependence : ObservationalDependence signature.{u_1} actual := by
   intro i
-  refine ⟨ULift.{u} Unit, (fun _ => 0), (fun _ => 1), ?_⟩
+  refine ⟨ULift.{u_1} Unit, (fun _ => 0), (fun _ => 1), ?_⟩
   intro h
   have he := congrArg (fun M => M (ULift.up ()) (ULift.up ())) h
   simp [actual, realize, vecMulVec_apply] at he
 
-def family : Registration arena.{u} (type_of% (@vecMulVec_eq_of_unit_ray.{u})) where
+def family : Registration arena.{u_1} (type_of% (@vecMulVec_eq_of_unit_ray.{u_1})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@vecMulVec_eq_of_unit_ray, rejected, rejected_law⟩
@@ -215,7 +215,7 @@ def family : Registration arena.{u} (type_of% (@vecMulVec_eq_of_unit_ray.{u})) w
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@vecMulVec_eq_of_unit_ray.{u}) (Realization signature.{u}) Unit Unit := {
+      (@vecMulVec_eq_of_unit_ray.{u_1}) (Realization signature.{u_1}) Unit Unit := {
   unitName :=
     `Reg.D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity.unit_ray_unit
   realizationName :=
