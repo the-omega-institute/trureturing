@@ -335,21 +335,21 @@ end BVParity
 namespace ParityMiss
 open _root_.D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Square
 
-/-- Read a global assignment's parity in the context selected by the parameter. -/
+/-- Read the parity of the local assignment supplied at the selected context. -/
 abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature (Fin 6)
-    (fun _ => Fin 9 → Bool) (fun _ => Bool)
+    (fun _ => Fin 3 → Bool) (fun _ => Bool)
 
 def actual : Realization signature :=
-  realize signature (fun _ x g => parity3 (fun i => g ((C x).get i)))
-    (fun e => nomatch e)
+  realize signature (fun _ _ a => parity3 a) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ x _ => target x) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ g : Fin 9 → Bool, ∃ x : Fin 6, R.readout () x g ≠ target x
+  Law R := ∀ g : Fin 9 → Bool, ∃ x : Fin 6,
+    R.readout () x (fun i => g ((C x).get i)) ≠ target x
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -386,8 +386,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some
-    (realize signature (fun _ x g => parity3 (fun i => g ((C x).get i)))
-      (fun e => nomatch e))
+    (realize signature (fun _ _ a => parity3 a) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -400,7 +399,7 @@ def registration :
       path := #["body", "arg", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
