@@ -8,6 +8,7 @@
 
 import D5.S3.Geometry.Hyperideal.GramDomainContraction
 import D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold
+import D5.S3.Quantum.Information.BargmannImaginaryMaximizers
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability
 
@@ -249,7 +250,8 @@ private def magnitude (t : ℝ) (i : Fin 2) : ℝ :=
   if i = 0 then Real.sqrt t else Real.sqrt (1 - t)
 
 private def localVector (t : ℝ) (c : ZMod 3) : Fin 2 → ℂ :=
-  fun i => (magnitude t i : ℂ) * ZMod.stdAddChar (c * (i.val : ZMod 3))
+  D5.S3.Quantum.Information.BargmannImaginaryMaximizers.Latitude.latitude
+    (1 - t) (ZMod.stdAddChar c)
 
 private def localState (t : ℝ) (c : ZMod 3) : Matrix (Fin 2) (Fin 2) ℂ :=
   D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity (localVector t c)
@@ -264,7 +266,11 @@ private theorem localState_entry (t : ℝ) (c : ZMod 3) (i j : Fin 2) :
       ZMod.stdAddChar (c * ((i.val : ZMod 3) - (j.val : ZMod 3))) := by
   dsimp only [localState, D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity]
   simp only [Matrix.vecMulVec_apply, Pi.star_apply]
-  dsimp only [localVector]
+  have hv (i : Fin 2) : localVector t c i =
+      (magnitude t i : ℂ) * ZMod.stdAddChar (c * (i.val : ZMod 3)) := by
+    fin_cases i <;> norm_num [localVector, magnitude,
+      D5.S3.Quantum.Information.BargmannImaginaryMaximizers.Latitude.latitude]
+  simp only [hv]
   simp only [star_mul', star_character, Complex.star_def, Complex.conj_ofReal, Complex.ofReal_mul]
   rw [mul_sub, sub_eq_add_neg, AddChar.map_add_eq_mul]
   ring
