@@ -33,7 +33,8 @@ private theorem independent_weights (F : Finset (Finset V)) (x : ℤ) (r : ℕ) 
       (∑ S ∈ F, x ^ S.card) ^ r := by
   classical
   simp_rw [← prod_pow_eq_pow_sum]
-  rw [← Fintype.sum_pow, subtype_sum]
+  rw [← subtype_sum F x]
+  exact (Fintype.sum_pow (fun S : ↥F => x ^ S.val.card) r).symm
 
 private theorem hub_weights (H : SimpleGraph V) (U : Finset V) (r : ℕ) (x : ℤ) :
     (∑ S ∈ domSetsAt (replicated H U r) (hub r), x ^ S.card) =
@@ -102,7 +103,7 @@ theorem support_replication_evaluation (H : SimpleGraph V) (v w : V)
 theorem support_replication_connected (H : SimpleGraph V) (v : V)
     (hH : H.Connected) (r : ℕ) : (replicated H {v} r).Connected := by
   classical
-  apply SimpleGraph.connected_iff_exists_forall_reachable.mpr
+  apply (SimpleGraph.connected_iff_exists_forall_reachable _).mpr
   refine ⟨hub r, ?_⟩
   intro a
   cases a with
@@ -115,7 +116,7 @@ theorem support_replication_connected (H : SimpleGraph V) (v : V)
     exact hh.reachable.trans ((hH v a.2).map f)
   | inr a =>
     fin_cases a
-    · exact SimpleGraph.Reachable.refl
+    · exact SimpleGraph.Reachable.refl _
     · exact (show (replicated H {v} r).Adj (hub r) (pendant r) from by
         simp [replicated, hub, pendant]).reachable
 
