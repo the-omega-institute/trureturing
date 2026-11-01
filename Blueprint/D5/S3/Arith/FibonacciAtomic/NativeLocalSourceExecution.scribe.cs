@@ -25,10 +25,9 @@ internal sealed class NativeLocalSourceExecutionDocument : IScribeDocumentDefini
     private static Formula NativeExecutionFormula()
     {
         Formula source = Id("Source");
-        Formula event = Id("Event");
-        Formula events = Call("List", event);
+        Formula events = Call("List", Id("Event"));
 
-        Formula All(Formula body, params BoundVariable[] variables) =>
+        Formula All(Formula body, params Formula.BoundVariable[] variables) =>
             new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
         Formula Exists(string name, Formula domain, Formula body) =>
             new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), domain, body);
@@ -47,20 +46,11 @@ internal sealed class NativeLocalSourceExecutionDocument : IScribeDocumentDefini
             new Formula.Relation(left, FormulaRelationOperator.Equal, right);
         Formula Ne(Formula left, Formula right) =>
             new Formula.Relation(left, FormulaRelationOperator.NotEqual, right);
-        Formula App(string name, params Formula[] arguments) =>
-            new Formula.Apply(RawName(name), [.. arguments]);
-        Formula RawName(string name)
-        {
-            var parts = name.Split('_');
-            var items = new List<Formula>();
-            for (var i = 0; i < parts.Length; i++)
-            {
-                if (i > 0) items.Add(Underscore);
-                items.Add(Id(parts[i]));
-            }
-            return Seq([.. items]);
-        }
-        BoundVariable B(string name, Formula domain) =>
+        Formula Call(string name, params Formula[] arguments) =>
+            new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
+        Formula App(string name, params Formula[] arguments) => Call(name, arguments);
+        Formula Num(long value) => new Formula.Number(value);
+        Formula.BoundVariable B(string name, Formula domain) =>
             new(FormulaIdentifier.Create(name), domain);
         Formula Of(bool value) => App("of", Id(value ? "true" : "false"));
         Formula Some(Formula value) => App("some", value);
@@ -92,7 +82,7 @@ internal sealed class NativeLocalSourceExecutionDocument : IScribeDocumentDefini
                     Eq(Edit(t, Leftmost(t), Id("false")), Some(SplitLeft(t))),
                     Native(SplitLeft(t)),
                     Eq(Composition(SplitLeft(t)),
-                        App("add", Composition(t), App("pair", Num(1), Num(0))))))),
+                        App("add", Composition(t), App("pair", Num(1), Num(0)))))),
             B("t", source));
         var clause3 = All(
             Implies(

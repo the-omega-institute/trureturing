@@ -44,7 +44,7 @@ internal sealed class NativeCompletedHistoryRecoveryDocument : IScribeDocumentDe
         Formula eventList = Call("List", Id("Event"));
         Formula address = Id("Address");
 
-        Formula All(Formula body, params BoundVariable[] variables) =>
+        Formula All(Formula body, params Formula.BoundVariable[] variables) =>
             new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
         Formula Exists(string name, Formula domain, Formula body) =>
             new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), domain, body);
@@ -76,21 +76,12 @@ internal sealed class NativeCompletedHistoryRecoveryDocument : IScribeDocumentDe
             new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
         Formula Le(Formula left, Formula right) =>
             new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
-        Formula App(string name, params Formula[] arguments) =>
-            new Formula.Apply(RawName(name), [.. arguments]);
-        Formula RawName(string name)
-        {
-            var parts = name.Split('_');
-            var items = new List<Formula>();
-            for (var i = 0; i < parts.Length; i++)
-            {
-                if (i > 0) items.Add(Underscore);
-                items.Add(Id(parts[i]));
-            }
-            return Seq([.. items]);
-        }
+        Formula Call(string name, params Formula[] arguments) =>
+            new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
+        Formula App(string name, params Formula[] arguments) => Call(name, arguments);
+        Formula Num(long value) => new Formula.Number(value);
         Formula Arrow(Formula domain, Formula codomain) => new Formula.TypeArrow(domain, codomain);
-        BoundVariable B(string name, Formula domain) =>
+        Formula.BoundVariable B(string name, Formula domain) =>
             new(FormulaIdentifier.Create(name), domain);
         Formula Of(bool value) => App("of", Id(value ? "true" : "false"));
         Formula Some(Formula value) => App("some", value);
@@ -123,7 +114,6 @@ internal sealed class NativeCompletedHistoryRecoveryDocument : IScribeDocumentDe
         var x = Id("X");
         var s = Id("s");
         var v = Id("V");
-        var u = Id("U");
 
         var clause1 = All(
             Iff(
@@ -154,7 +144,7 @@ internal sealed class NativeCompletedHistoryRecoveryDocument : IScribeDocumentDe
             B("n0", nat), B("z", source), B("p", source), B("X", letter));
         var clause5 = All(
             Implies(
-                And(Attained(s), Attained(t), Eq(EventIndex(s), n0), Eq(EventIndex(t), n0)),
+                And(Lt(Num(1), n0), Attained(s), Attained(t), Eq(EventIndex(s), n0), Eq(EventIndex(t), n0)),
                 All(
                     Implies(Eq(Run(s, v), Run(t, w)), And(Eq(s, t), Eq(v, w))),
                     B("V", letters), B("W", letters))),
@@ -170,7 +160,7 @@ internal sealed class NativeCompletedHistoryRecoveryDocument : IScribeDocumentDe
                         Eq(Recover(Num(2), z), Some(Pair(Id("K"), u))),
                         All(
                             Iff(
-                                Eq(Run(Of(false), Id("W")), Run(Id("K"), u)),
+                                Eq(Run(Of(false), Id("W")), z),
                                 Or(Eq(Id("W"), Cons(LetterF(), u)), Eq(Id("W"), Cons(LetterG(), u)))),
                             B("W", letters))))),
             B("z", source));
@@ -186,7 +176,7 @@ internal sealed class NativeCompletedHistoryRecoveryDocument : IScribeDocumentDe
         var clause9 = All(
             Eq(
                 App("replay", t, Id("es")),
-                App("guardedRun", t, App("map", Id("es"), App("toCall")))),
+                App("guardedRun", t, App("map", Id("es"), Id("toCall")))),
             B("t", source), B("es", eventList));
         var clause10 = All(
             Iff(Native(t), And(Attained(t), Ne(t, Of(true)))),
@@ -198,21 +188,22 @@ internal sealed class NativeCompletedHistoryRecoveryDocument : IScribeDocumentDe
                     Eq(App("guardedRun", t, Word(t, w)), Some(Run(t, w))),
                     Eq(Length(Word(t, w)), App("subtract", EventIndex(Run(t, w)), EventIndex(t))))),
             B("t", source), B("W", letters));
+        var preservedValues = All(
+            Implies(Mem(p, Material(t)), Eq(App("y", p), App("x", p))),
+            B("p", address));
+        var freshValues = All(
+            Implies(Mem(p, Material(Run(t, w))),
+                Implies(new Formula.Not(Mem(p, Material(t))), Eq(App("y", p), Num(0)))),
+            B("p", address));
+        var materialExecution = Eq(
+            NativeRun(t, Id("labels"), Id("next"), Id("x"), Word(t, w)),
+            Some(App("quad", Run(t, w), Id("labelsPrime"), Id("nextPrime"), Id("y"))));
+        var materialAnswer = Exists("labelsPrime", Id("RawMap"),
+            Exists("nextPrime", Id("Int"),
+                Exists("y", Id("Value"), And(materialExecution, preservedValues, freshValues))));
         var clause12 = All(
-            Implies(
-                Native(t),
-                All(
-                    Exists("labelsPrime", Id("RawMap"),
-                        Exists("nextPrime", Id("Int"),
-                            Exists("y", App("Value"),
-                                And(
-                                    Eq(NativeRun(t, Id("labels"), Id("next"), Id("x"), Word(t, w)),
-                                        Some(App("quad", Run(t, w), Id("labelsPrime"), Id("nextPrime"), Id("y")))),
-                                    All(Implies(Mem(p, Material(t)), Eq(App("y", p), App("x", p))), B("p", address)),
-                                    All(Implies(
-                                        And(Mem(p, Material(Run(t, w))), new Formula.Not(Mem(p, Material(t)))),
-                                        Eq(App("y", p), Num(0))), B("p", address))))))),
-                    B("labels", Id("RawMap")), B("next", Id("Int")), B("x", Id("Value")))),
+            Implies(Native(t), All(materialAnswer,
+                B("labels", Id("RawMap")), B("next", Id("Int")), B("x", Id("Value")))),
             B("t", source), B("W", letters));
         var clause13 = All(
             Exists("D", Arrow(Id("Bool"), letters),
