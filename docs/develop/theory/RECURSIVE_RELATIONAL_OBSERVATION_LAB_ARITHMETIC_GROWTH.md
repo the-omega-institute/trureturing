@@ -2079,3 +2079,266 @@ is asserted. $\square$
 [REFRESHCONT]: ../../../D5/S3/ConceptDynamics/Agency/FiniteConfigurationAcquisition.lean
 
 ## 追加锚（本行以下为增补区）
+
+## 17. A prescribed old-row horizon and its covering alphabet
+
+**Definition 17.1 (one earned label for a bounded original-row prefix).**
+Retain [§15's native inverse and menu](#15-old-frontier-batches-without-a-fixed-left-first-schedule)
+and [§16's source-only continuation contract](#16-one-old-row-decision-versus-a-complete-native-continuation).
+Fix the same nonempty acquired fibre $(y,k)$, with $y\in\mathcal D_+$
+and $0\le k\le M$. Use Definition 16.1's typed candidates
+$A=C\sqcup P$, $M=|A|$, disjoint leaf blocks $B_p$ and free leaves $Z_y$.
+Write
+
+$$
+\begin{aligned}
+w_p&=|B_p|=\begin{cases}2,&p\in C,\\1,&p\in P,\end{cases}
+& w(T)&=\sum_{p\in T}w_p,\\
+W&=w(A),&c&=|C|,&z&=|Z_y|,\\
+U_y(J)&=Z_y\sqcup\bigsqcup_{p\in A\setminus J}B_p,
+& J&\in\binom Ak.
+\end{aligned}
+\tag{LAGH.1}
+$$
+
+The task is to execute exactly $h$ DISTINCT eligible ORIGINAL-row calls,
+each through complete inner return, and then give the declared finite
+bounded-prefix report and return. This report asserts completion of those
+$h$ calls; it makes no exhaustion claim. Any report, acknowledgement,
+root return and clearing obligations of this prefix interface are fixed
+and source-based. In particular this task neither adopts Task A's
+Stop-if-and-only-if-exhausted rule nor completes Task B or the installed
+full old macro. New children remain ineligible. The admissible horizons are
+
+$$
+h\in\mathbb N,\qquad
+0\le h\le z+W-k-\min(k,c).
+\tag{LAGH.2}
+$$
+
+One actual earned INITIAL supplementary label is the only decoder input
+allowed to depend on the omitted past. A single deterministic decoder may
+use the acquired current source, the fixed declared inputs $k,h$ and
+outer phase, this label, and its own subsequent permitted traffic and
+computation. Reads, guards and replies obey Definition 16.1's source-only
+congruence. No old frontier list or cursor, cohort-refusal test, ancestral
+tape or FetchGrowth/Next query, hidden program, refreshed hidden-state
+readout, pointer age, permission, capacity or timing channel supplies
+another distinction. Unsafe old-row probing is failure, even when its
+primitive source guard would succeed.
+
+The label is a backed finite description earned from the actual batch;
+it grants no reference or authority. Authentic acquired current-root
+access, current source rights and sufficient finite resources remain
+AA20.1's premises. All original navigation, operand acquisition and
+comparison, guards, label and work backing, record/arithmetic maintenance,
+inner replies, acknowledgements and returns are paid. The richer retained
+OLD-list or tape observations of Proposition 15.5 give a different
+conditioned fibre. The minimum below counts effective initial label values
+on this one fibre, including all its admitted earlier orders.
+
+**Theorem 17.2 (exact native finite-horizon alphabet).** In Definition
+17.1, put $r=\max(0,h-z)$. The exact minimum effective initial alphabet is
+
+$$
+\tau_h(y,k)=\min\left\{|\mathcal F|:
+\begin{array}{l}
+\mathcal F\subseteq\mathcal P(A),\quad w(T)\ge r\quad(T\in\mathcal F),\\
+\forall J\in\binom Ak\ \exists T\in\mathcal F:\ T\cap J=\varnothing
+\end{array}\right\}.
+\tag{LAGH.3}
+$$
+
+Permitted source-only adaptivity has the same optimum as one fixed ordered
+$h$-list of current-$y$ leaf addresses per label. Equivalently, (LAGH.3)
+is the ordinary INTEGRAL UNIT-COST SET COVER of universe $\binom Ak$ by
+
+$$
+\left\{\binom Qk:Q\subseteq A,\ w(Q)\le W-r\right\}.
+\tag{LAGH.4}
+$$
+
+Here the point weights restrict allowed covering sets; every selected set
+has cost one. At $h=0$, or whenever $\binom Mk=1$, the answer is one for
+every admissible horizon. A horizon exceeding (LAGH.2) is infeasible
+regardless of the number of labels.
+
+Proof. By Theorems 15.2–15.3 every size-$k$ support is attained, and its
+initial remaining menu has size $z+W-w(J)$. Since $w(J)=k+|J\cap C|$,
+its maximum removed weight is $k+\min(k,c)$: choose as many of the $c$
+cherries as possible and fill the other places with promotions. Thus
+(LAGH.2) is exactly the least remaining-menu size. Above it one attained
+history has fewer than $h$ original rows. Within it, taking $T=A\setminus J$
+for every support supplies a feasible finite family in (LAGH.3), so its
+minimum exists.
+
+For the new interface bridge, fix any successful proposed decoder and
+one of its effective INITIAL labels $\ell$. Apply Theorem 16.4's
+source-response/common-run argument up to the $h$th completed call,
+without its final exhaustion test. All histories receiving $\ell$ begin
+with the same allowed source inputs; that result forces the same permitted
+traffic and choices while the executions remain legal. A forbidden call
+cannot be used to distinguish them. Success on the whole label fibre
+therefore yields one common ordered trace
+$(q_1,\ldots,q_h)$ of distinct original rows. Theorem 16.2's exact menu
+transport identifies them with distinct members of the INITIAL $U_y(J)$
+for every history in this label fibre. Complete inner returns introduce
+no extra decoder observation beyond the stipulated source-only interface.
+This is a common successful $h$-trace, without recovery of the remaining
+menu or of an earlier chronological suffix.
+
+Let $T_\ell$ be the candidates whose blocks this common trace touches.
+At most $z$ entries lie in $Z_y$, so $w(T_\ell)\ge h-z$ and hence
+$w(T_\ell)\ge r$. Legality gives $T_\ell\cap J=\varnothing$ for every
+support in that label fibre. For each size-$k$ $J$, choose an attained
+history supplied by Theorem 15.2 and its actual label. Consequently the
+family of distinct $T_\ell$ covers all supports in (LAGH.3); its size is
+at most the number of effective labels. This proves the lower bound even
+if a label encoder also depends on the omitted chronological order.
+
+Conversely use one fixed finite enumeration procedure on public $y,k,h$
+to choose a canonical minimum family $\mathcal F$ in (LAGH.3) and its order;
+all this computation and backing is charged. Label an actual support $J$
+by its first disjoint $T$.
+The encoder uses the actual support, earned from the batch's real addressed
+successful calls while that information is lawfully available. This is
+not a recovery of $J$ from the projected $y,k$ alone. No additional old
+list or cursor is passed to the decoder. Every label is effective: in a
+minimum family each $T$ has some support $J_T$ disjoint from it and from
+no other member, since otherwise $T$ could be deleted. That attained
+support necessarily receives $T$'s label.
+
+For each label $T$, form from public $y$ and $T$ the leaf set
+$V_T=Z_y\sqcup\bigsqcup_{p\in T}B_p$. It has at least $h$ members.
+Take its first $h$ addresses in a fixed public order. For every support
+assigned this label the entire list lies in $U_y(J)$. Theorems 15.3 and
+16.2 supply precisely these original rows and their successive removal.
+Acquire each REAL operand through paid traversal from the bound current
+root, check its authentic guard, and complete its original call with all
+maintenance, reply, acknowledgement and inner return before advancing.
+Edits at the other distinct original leaves preserve the next target's
+current tag and reference, as in §15. The decoder executes exactly $h$
+calls and then the stipulated bounded-prefix report/return. It need not
+execute whole blocks: the first $h$ leaves may include just one child
+of a cherry, even though $w_p=2$. At $h=0$ the list is empty.
+
+This attains the lower bound with a fixed ordered $h$-list per label.
+It is a conditional initial-label construction, with earned provenance
+and finite backing required; it does not assert that optimal labels for
+different horizons have nested fibres or dynamically maintainable updates.
+The upper uses no $r(\mathrm{successor})$ readout from
+[FiniteConfigurationAcquisition.Run.step][REFRESHCONT]. Post-label state
+is computed only from the label, source and the decoder's own traffic.
+
+Finally set $Q=A\setminus T$. Then $T\cap J=\varnothing$ means $J\subseteq Q$,
+and $w(T)\ge r$ means $w(Q)\le W-r$, proving (LAGH.4) with the same
+number of selected sets. No fractional equality or general closed
+numerical formula is implied. For $h=0$, $\mathcal F=\{\varnothing\}$
+works. On a singleton-support domain choose that support's complement;
+nonemptiness requires at least one effective value in both cases.
+
+For the compact classical specialization take §16.5's all-beta left comb
+$t_0=\beta$, $t_{m+1}=\langle t_m,\beta\rangle$. Here $M=m$, $z=1$
+and every weight is one. For admissible $h\ge1$ put $b=m-h+1$, so
+$k\le b\le m$. Every allowed $Q$ has size at most $b$ and can be enlarged
+to a $b$-subset without losing coverage. Thus the native formula is
+
+$$
+\tau_h(t_m,k)=C(m,m-h+1,k),\qquad 1\le h\le m-k+1,
+\tag{LAGH.5}
+$$
+
+where $C(v,b,t)$ is the classical minimum number of $b$-subsets covering
+all $t$-subsets, not a binomial coefficient. This is the covering-number
+definition of Gordon–Kuperberg–Patashnik–Spencer,
+[*Asymptotically optimal covering designs*, arXiv:math/9511224v1,
+abstract and §1][DESIGNHORIZON]; the zero-target case is interpreted
+directly by its single empty target. Hence $h=1$ gives one, $h=2$ when
+feasible gives $k+1$, and $h=m-k+1$ gives $\binom mk$. For $h=2$ the
+$b=m-1$ blocks omit individual points: their omitted points must escape
+every $k$-set, requiring and attained by $k+1$ distinct points. At the
+last horizon $b=k$, each block covers only itself. For $k=0$, including
+$m=0$, one label directly supplies every feasible list; $h=0$ was already
+settled. These are classical combinatorial values used inside the native
+application, not additional design results.
+
+The abstract supplier [MinimumSafeObservationAlphabet][SAFECONT] has
+states $X=\binom Ak$, actions ordered $h$-tuples of distinct current-$y$
+leaves, and legality precisely tuple membership in $U_y(J)$.
+`deterministic_safe_policy_exists_iff` supplies its common-safe-fibre
+interface; `minimum_safe_observation_alphabet` supplies its `IsLeast`
+interface. The effective-value argument above checks the required
+surjectivity. Neither supplier proves the native common-$h$-trace bridge
+or computes the covering number. For mixed weights the allowed $Q$ may
+have different profiles $(|Q\cap C|,|Q\cap P|)$; this is not directly the
+fixed block-size-vector family of Bailey–Burgess–Cavers–Meagher,
+[*Generalized covering designs and clique coverings*, arXiv:1011.3804v2,
+Definitions 1.1 and 2.1][PROFILEHORIZON]. The mature owner is finite set
+cover, with (LAGH.5) its classical fixed-size specialization. The repository
+already applies $C(m,3,2)$ in [KBonacci continuation X, Theorem 211.10][KBCHORIZON].
+The `repo-derived` increment here is only the native finite-horizon bridge
+and its exact allowed-cover family, using [AA §§17, 20–21][AA] and
+LAB9/15/16.
+The supplied source-view inverses of Proposition 16.6 transport the same
+calculation to acquired oriented support, terminal boundary and labelled
+causal membership on the same source. They supply no actual root access,
+operand, grant or ancestral serial order. The result is an initial
+conditional alphabet optimum, without a fresh Lean-certification or
+worldwide-novelty claim, and without optimizing total storage, navigation,
+traffic, duration, decoder computation or installation. $\square$
+
+**Proposition 17.3 (two successful calls need not complete the cohort).**
+Let $\chi=\langle\beta,\alpha\rangle$ and
+
+$$
+y=\langle\langle\chi,\beta\rangle,\beta\rangle,\qquad k=1.
+\tag{LAGH.6}
+$$
+
+Here $C=\{LL\}$, $P=\{LR,R\}$, weights are $(2,1,1)$ and $Z_y$ is empty.
+The three attained remaining menus, written as leaf addresses, are
+
+$$
+\begin{aligned}
+U_y(\{LL\})&=\{LR,R\},\\
+U_y(\{LR\})&=\{LLL,LLR,R\},\\
+U_y(\{R\})&=\{LLL,LLR,LR\}.
+\end{aligned}
+\tag{LAGH.7}
+$$
+
+The largest uniformly feasible horizon is $h=2$, and $\tau_2(y,1)=2$,
+whereas complete continuation under the SAME input conditioning needs
+three initial values. Two successful calls do not uniformly certify
+exhaustion.
+
+Proof. The inverse entries are respectively
+$\langle\langle\beta,\beta\rangle,\beta\rangle$,
+$\langle\langle\chi,\alpha\rangle,\beta\rangle$ and
+$\langle\langle\chi,\beta\rangle,\alpha\rangle$.
+They belong to AA17.2's attained domain; their respective original-row
+suffixes $S_{LL}$, $P_{LR}$ and $P_R$ give exactly $y,k$.
+Theorem 15.3 gives (LAGH.7). Its least menu size is two, also
+$z+W-k-\min(k,c)=0+4-1-1$.
+
+One label cannot supply a common first row: the intersection of all
+three menus is empty. Two labels suffice. For $J=\{LR\}$ or $\{R\}$,
+choose the ordered calls $(S_{LLL},P_{LLR})$, the two leaves of block $LL$.
+For $J=\{LL\}$ choose $(S_{LR},S_R)$. Both labels are attained, and
+Theorems 15.3 and 16.2 make every call legal through full inner return.
+Equivalently the two sets $T=\{LL\}$ and $T=\{LR,R\}$ have weight two
+and cover all supports in (LAGH.3).
+
+After these two calls the first of the three menus has been exhausted,
+but the other two each have one original row left. The successful
+bounded-prefix report consequently carries no assertion of universal
+exhaustion. Full continuation needs $\binom31=3$ initial values by
+Theorem 16.4, with exactly the same acquired $y,k$, source-only reads,
+root rights and paid inner-call obligations. A larger initial alphabet
+cannot make $h=3$ feasible on this whole fibre. $\square$
+
+[DESIGNHORIZON]: https://arxiv.org/pdf/math/9511224v1
+[PROFILEHORIZON]: https://arxiv.org/pdf/1011.3804v2
+[KBCHORIZON]: KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_X.md#2113-a-fixed-menu-of-actual-joint-measures
+
+## 追加锚（本行以下为增补区）
