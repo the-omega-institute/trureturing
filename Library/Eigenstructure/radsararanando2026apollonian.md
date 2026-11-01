@@ -17,10 +17,14 @@ license: CC-BY-SA-4.0
 triage: anchor
 ---
 
-## Source identity and attribution
+## Locator
 
-Rad Sarar Anando, MathOverflow question 516405, revision 1,
+Rad Sarar Anando, [MathOverflow question 516405](https://mathoverflow.net/questions/516405), revision 1,
 GUID `8C9D6CD5-E3A3-4B25-BDB6-FF5A9A3D3A2B`.
+The locator covers the inner-face graph construction and the stated second
+ordinary-adjacency eigenvalue limit in that revision. The source's numerical
+observations, preliminary bounds and question about other leading eigenvalues
+are not additional premises or results attributed to the formal theorem.
 The quoted construction and question, and their adapted mathematical exposition,
 are attributed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 The adaptations use explicit finite vertex and face indices and separate
