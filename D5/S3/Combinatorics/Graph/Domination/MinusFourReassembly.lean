@@ -5,6 +5,7 @@
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
    utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.result; instance=D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.result
    digest: General rooted-component reduction and support replication, applied to the complete connected minus-four family. -/
+import D5.S3.Combinatorics.CycleSums.ConsecutiveCycleSumsGraph
 import D5.S3.Combinatorics.Graph.LocalDominatingStemBoundReplication
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
@@ -448,24 +449,6 @@ theorem zero_of_messages (d : Decomposition) (x : ℤ)
   simp_rw [hm]
   exact hz
 
-private theorem connected_of_parent {n : ℕ} (H : SimpleGraph (Fin (n + 1)))
-    (parent : Fin (n + 1) → Fin (n + 1))
-    (parent_edge : ∀ v, v ≠ 0 → H.Adj v (parent v))
-    (parent_lower : ∀ v, v ≠ 0 → (parent v).val < v.val) : H.Connected := by
-  apply (SimpleGraph.connected_iff_exists_forall_reachable _).mpr
-  refine ⟨0, ?_⟩
-  intro v
-  have reach : ∀ (t : ℕ) (v : Fin (n + 1)), v.val = t → H.Reachable 0 v := by
-    intro t
-    induction t using Nat.strong_induction_on with
-    | h t ih =>
-      intro v hv
-      by_cases hzero : v = 0
-      · subst v; exact SimpleGraph.Reachable.refl _
-      · exact (ih (parent v).val (hv ▸ parent_lower v hzero) (parent v) rfl).trans
-          (parent_edge v hzero).symm.reachable
-  exact reach v.val v rfl
-
 private theorem evaluation_iso {V W : Type*} [Fintype V] [DecidableEq V]
     [Fintype W] [DecidableEq W] {G : SimpleGraph V} {H : SimpleGraph W}
     (e : G ≃g H) (x : ℤ) : evaluation G x = evaluation H x := by
@@ -608,7 +591,14 @@ theorem result : ∀ N : ℕ, ∃ n : ℕ, N < n ∧ ∃ G : SimpleGraph (Fin n)
   have hbase : evaluation sourceGraph (-4) = 0 :=
     zero_of_messages d (-4) table (by decide) (by decide)
   apply family_of_root sourceGraph 4 5 ?_ ?_ (by decide) (-4) hbase
-  · exact connected_of_parent sourceGraph parent (by decide) (by decide)
+  · have parent_edge : ∀ v : Fin 33, v ≠ 0 → sourceGraph.Adj v (parent v) := by decide
+    have parent_lower : ∀ v : Fin 33, v ≠ 0 → (parent v).val < v.val := by decide
+    have hc := D5.S3.Combinatorics.CycleSums.ConsecutiveCycleSumsGraph.connected_of_predecessor
+      (G := sourceGraph) (C := (univ : Finset (Fin 33))) (0 : Fin 33) (mem_univ _) (by
+        intro v _ hv
+        exact ⟨parent v, mem_univ _, parent_lower v hv, (parent_edge v hv).symm⟩)
+    exact (sourceGraph.induceUnivIso.connected_iff).mp (by
+      simpa only [Finset.coe_univ] using hc)
   · exact leaf_of_unique sourceGraph 5 4 (by decide)
 
 #print axioms result

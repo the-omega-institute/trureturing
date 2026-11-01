@@ -103,7 +103,7 @@ private theorem hub_adj {n k : ℕ} (hn : 0 < n) {v : Fin n}
       omega
 
 /-- A lower-labelled neighbour inside the set gives a path to the least-labelled root. -/
-private theorem connected_of_predecessor {n : ℕ} {G : SimpleGraph (Fin n)}
+theorem connected_of_predecessor {n : ℕ} {G : SimpleGraph (Fin n)}
     {C : Finset (Fin n)} (r : Fin n) (hr : r ∈ C)
     (hp : ∀ v ∈ C, v ≠ r → ∃ u ∈ C, u.val < v.val ∧ G.Adj u v) :
     (G.induce (C : Set (Fin n))).Connected := by
