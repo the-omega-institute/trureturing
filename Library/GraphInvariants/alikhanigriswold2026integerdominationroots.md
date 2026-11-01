@@ -7,6 +7,8 @@ doi: 10.48550/arXiv.2608.00109
 url: https://arxiv.org/abs/2608.00109v1
 claim: Section 4 item 3 asks whether infinitely many connected finite simple graphs have ordinary domination polynomial zero at minus four.
 strata_touched:
+  - D5/S3/Combinatorics/Graph/Domination/MinusFourReplication
+  - D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly
   - D5/S3/Combinatorics/Graph/Domination/MinusFourFamily
   - D5/S3/Combinatorics/Graph/Domination/MinusFourBaseStates
 license: citation-only

@@ -7,6 +7,9 @@ internal sealed class MinusFourFamilyDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Domination/MinusFourFamily.";
 
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/GraphInvariants/alikhanigriswold2026integerdominationroots");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The source graph has the published 33 labels and 36 edges; its base evaluation is an explicit premise of the family reduction.",
         H("Exact source labels and the unbounded-order reduction"),
@@ -22,6 +25,40 @@ internal sealed class MinusFourFamilyDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string id, string title, string declaration,
         DescribeRole role, string prose) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Statement(declaration), declaration == "sourceEdges"
+                ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static StatementSource Statement(string declaration) => declaration == "result_of_base_root"
+        ? StatementSource.FromAuthor(Disp(ImpliesF(Eq(BaseValue, D(0)), FamilyEvent())))
+        : StatementSource.WithoutFormula();
+
+    private static Formula P(Formula f) => Seq(Open, f, Close);
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(Id(name))), [.. args]);
+    private static Formula Nat => Seq(Mathbb, Grp(Id("N")));
+    private static Formula Integer => Seq(Mathbb, Grp(Id("Z")));
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, P(Seq(Id(name), Colon, type)), Comma, Sp, body);
+    private static Formula Some(string name, Formula type, Formula body) =>
+        Seq(Exists, Sp, P(Seq(Id(name), Colon, type)), Comma, Sp, body);
+    private static Formula Eq(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(P(left), FormulaLogicOperator.And, P(right));
+    private static Formula ImpliesF(Formula left, Formula right) =>
+        new Formula.Logic(P(left), FormulaLogicOperator.Implies, P(right));
+    private static Formula MinusFour => P(Seq(Minus, D(4)));
+    private static Formula BaseValue => Call("evaluation", Id("sourceGraph"), MinusFour);
+    private static Formula FamilyEvent()
+    {
+        var n = Id("n"); var graph = Id("G"); var set = Id("S");
+        var weight = new Formula.Power(MinusFour, Call("card", set));
+        var sum = Seq(new Formula.Subscript(Sum,
+            Seq(set, InMacro, Call("domSets", graph))), Sp, weight);
+        return All("N", Nat, Some("n", Nat,
+            And(new Formula.Relation(Id("N"), FormulaRelationOperator.LessThan, n),
+                Some("G", Call("SimpleGraph", Call("Fin", n)),
+                    And(Call("Connected", graph), Eq(sum, D(0)))))));
+    }
 }
