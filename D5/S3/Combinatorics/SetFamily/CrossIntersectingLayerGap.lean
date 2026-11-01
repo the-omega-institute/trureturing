@@ -221,7 +221,9 @@ private theorem mass_le_binomial_of_mandatory_set
   have hfamily : C ⊆ U.powerset.image (fun B => (univ \ B : Finset α)) := by
     intro s hs
     refine mem_image.mpr ⟨univ \ s, mem_powerset.mpr ?_, ?_⟩
-    · exact sdiff_subset_sdiff_left (hsub.trans (hC s hs))
+    · intro a ha
+      exact mem_sdiff.mpr ⟨(mem_sdiff.mp ha).1, fun ha₀ =>
+        (mem_sdiff.mp ha).2 ((hsub.trans (hC s hs)) ha₀)⟩
     · simp
   calc
     weightedMass ω C ≤ ∑ s ∈ U.powerset.image (fun B => (univ \ B : Finset α)),
@@ -311,8 +313,8 @@ theorem weighted_cross_intersecting_layer_gap_of_binomial_threshold
         simpa [coatomIndices] using this
       · exact hcoat c hca
     apply (not_le_of_gt hmassD)
-    apply mass_le_binomial_of_mandatory_set ω D (singletonIndices C) k
-      (by omega) hω _
+    refine mass_le_binomial_of_mandatory_set ω D (singletonIndices C) k
+      (by omega) hω ?_ ?_
     · simp only [hfull, card_univ] at hsmall
       omega
     · intro t ht c hc
