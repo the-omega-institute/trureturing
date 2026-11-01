@@ -129,7 +129,7 @@ private theorem det_perm_d (r a b o c d : Real) :
     Nat.succ_eq_add_one, Nat.reduceAdd, Fin.castLE, Fin.cast]
   ring
 
-set_option maxHeartbeats 3000000 in
+set_option maxHeartbeats 20000000 in
 /- All six local original cosines lie strictly in the open interval exactly when
     the common signed Gram determinant is negative.  This is a local algebraic
 criterion; it does not assert a geometric realization or a face gluing. -/
