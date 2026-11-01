@@ -1,4 +1,4 @@
-import D5.S3.Combinatorics.Circle.PeriodicDaughterJointShortening
+import D5.S3.Combinatorics.Circle.PeriodicDaughterJointShortening.Construction
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
@@ -205,7 +205,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.PeriodicDaughterJointShortening
+    owner := `D5.S3.Combinatorics.Circle.PeriodicDaughterJointShortening.Construction
     definition := none
     coordinates := #[0, 1, 2, 3]
     readouts := #[{

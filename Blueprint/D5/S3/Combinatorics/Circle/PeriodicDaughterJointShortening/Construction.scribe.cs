@@ -9,7 +9,7 @@ internal sealed class PeriodicDaughterJointShorteningDocument : IScribeDocumentD
         H("Minus-one physical joint transport with a periodic daughter"),
         Blocks(
             Describe.Lean(DescribeId.Create("periodic-daughter-joint-shortening"),
-                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/PeriodicDaughterJointShortening.periodic_daughter_joint_shortening"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/PeriodicDaughterJointShortening/Construction.periodic_daughter_joint_shortening"),
                 H("Minus-one physical joint transport with a periodic daughter"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
