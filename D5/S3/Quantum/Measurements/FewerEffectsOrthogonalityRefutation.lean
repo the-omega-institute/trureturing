@@ -84,7 +84,7 @@ private theorem competitor_sqrt (i : Fin 4) :
 private theorem construction_gram :
     gram (construction 4 10) = Matrix.diagonal ![2, 2, 2, 4] := by
   ext i j
-  simp only [gram, D5.S3.Quantum.GeneralizedFidelity.fidelity,
+  simp only [gram.eq_1, D5.S3.Quantum.GeneralizedFidelity.fidelity,
     CFC.sqrt_one, one_mul, mul_one, inv_one]
   rw [construction_sqrt, construction_sqrt]
   dsimp only [construction]
@@ -95,7 +95,7 @@ private theorem construction_gram :
 private theorem competitor_gram :
     gram competitor = Matrix.diagonal ![2, 2, 3, 3] := by
   ext i j
-  simp only [gram, D5.S3.Quantum.GeneralizedFidelity.fidelity,
+  simp only [gram.eq_1, D5.S3.Quantum.GeneralizedFidelity.fidelity,
     CFC.sqrt_one, one_mul, mul_one, inv_one]
   rw [competitor_sqrt, competitor_sqrt]
   dsimp only [competitor]
@@ -113,7 +113,7 @@ private theorem competitor_povm : IsPOVMWith 4 10 competitor := by
       split_ifs <;> simp <;> split_ifs <;> simp
     · intro hzero
       have hdiag := congrFun (congrFun competitor_gram i) i
-      simp only [gram, D5.S3.Quantum.GeneralizedFidelity.fidelity,
+      simp only [gram.eq_1, D5.S3.Quantum.GeneralizedFidelity.fidelity,
         CFC.sqrt_one, one_mul, mul_one, inv_one] at hdiag
       rw [hzero, CFC.sqrt_zero, zero_mul, Matrix.trace_zero] at hdiag
       fin_cases i <;> norm_num [Matrix.diagonal_apply] at hdiag
