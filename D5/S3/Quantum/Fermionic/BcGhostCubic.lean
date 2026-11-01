@@ -93,7 +93,6 @@ private theorem cubic_p_zero (p q : ℤ) (v : Fock) (hp : 2 ≤ p)
       hv, map_zero, neg_zero]
   · have hbc : b (-p-q) * c p + c p * b (-p-q) = 0 := by
       rw [ghost_mixed_car, if_neg (by omega)]
-    have hcc := ghost_c_car p q
     have he : c p * c q * b (-p-q) = c q * b (-p-q) * c p := by
       calc
         _ = -(c q * c p) * b (-p-q) := by rw [c_swap]

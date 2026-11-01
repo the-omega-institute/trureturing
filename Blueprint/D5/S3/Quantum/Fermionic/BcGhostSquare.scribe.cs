@@ -36,7 +36,7 @@ internal sealed class BcGhostSquareDocument : IScribeDocumentDefinition
         H(name.Replace("_", " ")), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
     public DocumentDefinition Create()
     {
-        var r=V("r"); var n=V("n"); var v=V("v");
+        var n=V("n"); var v=V("v");
         return DocumentDefinition.Create(ScribeNode.Create(
             "Full ghost BRST square anomaly",H("The all-integer ghost BRST square"),Blocks(
             Paragraph(Text("The formulas are the classical bc ghost BRST construction, with vacuum cuts b at minus one and c at two. See Kato and Ogawa, Nuclear Physics B 212 (1983), 443–460, and Polchinski, String Theory, volume 1, chapter 4. No novelty of these formulas is claimed. The formal carrier is the original complex finitely supported occupation space.")),
