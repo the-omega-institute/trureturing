@@ -569,6 +569,7 @@ private theorem cert_strict_separated_new_first_peak (Y T H E : ℤ)
       64*Y^3*H*E^2 from by positivity) using 1 <;>
     dsimp [model] <;> ring
 
+set_option maxHeartbeats 2000000 in
 private theorem cert_strict_separated_ceil_old_bank (Y T H E : ℤ)
     (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
   let v := model (4+Y) (2*(4+Y)+T) (4*(1+E)) (2+H)
