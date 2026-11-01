@@ -2476,12 +2476,12 @@ $$
 \begin{aligned}
 J&\le 2+\left\lceil\log_2\log_2(\max(2,M))\right\rceil,\\
 b_{\rm final}&\le\max(2,M^2),\\
-R_{\rm paid}&\le E+2J.
+R_{\rm paid}&\le R_{\rm start}+E+2J.
 \end{aligned}
 \tag{39.19}
 $$
 
-Here $E$ is the genuine entrance cost only when Proposition 39.8 is needed. No intermediate frontier is paid merely to reach a later one. All upgrades use zero extra source actions. The controller additionally retains whatever genuine continuations the user actually performs.
+Here $E$ is the genuine entrance cost only when Proposition 39.8 is needed. The count includes all earlier frontier acquisitions by this same controller in $J$. If accounting begins with an already acquired archive, $R_{\rm start}$ charges its actual paid evidence since binding; it is zero when starting at the original cut or using the separate post-prefix entrance. This starting evidence is reused without paying to acquire it again. No intermediate frontier is paid merely to reach a later one. All upgrades use zero extra source actions. The controller additionally retains whatever genuine continuations the user actually performs.
 
 Proof. At each miss the chosen frontier exceeds the already installed one. For $M>1$ the least covering frontier is strictly below $M^2$ unless $M$ itself is a frontier, in which case it equals $M$; $M=1$ is separate. The indices in (39.18) give the first bound. Acquisition gives the whole original common profile, so every smaller request is answered regardless of repetition, gaps or common factors, and further actions do not invalidate it by Theorem 39.10. If extra earlier evidence already determines the selected frontier, compute it without reading. This can only reduce paid replies. No later request or continuation was used to choose an earlier scale. The two acquisition theorems and the separately charged entrance prove the last inequality. The original denominator remains unrestricted. $\square$
 
@@ -2515,10 +2515,10 @@ $$
 \tag{39.22}
 $$
 
-Let $\mu_{\max}$ be the maximum actual matrix width through the finite prefix. If $P_{\rm ent}$ is the actual sum of entrance scale-name and reply lengths, the cumulative paid binary payload is
+Let $\mu_{\max}$ be the maximum actual matrix width through the finite prefix. If $P_{\rm start}$ is the actual binary payload of starting evidence charged by $R_{\rm start}$ and $P_{\rm ent}$ is the actual sum of entrance scale-name and reply lengths, the cumulative paid binary payload is
 
 $$
-P_{\rm paid}=O\!\left(P_{\rm ent}+\log(M+2)
+P_{\rm paid}=O\!\left(P_{\rm start}+P_{\rm ent}+\log(M+2)
        +J\bigl(\mu_{\max}+\log(U+1)+1\bigr)\right).
 \tag{39.23}
 $$
@@ -2543,7 +2543,7 @@ O\bigl(H+P_{\rm paid}+R\lambda(H+1)+A_{\rm ack}\bigr)
 \tag{39.25}
 $$
 
-bits, plus retained request names when they have a consumer. Store the original interval endpoints and current matrix as working state with $O(e+\mu+\lambda(B))$ bits, plus arithmetic workspace $O(W)$ and counters; selected endpoints are reduced to keep these widths literal. The next acquisition's $e_i$ charges their actual size. No separate full stage archives or $B_i$-entry tuples are required. Reports kept for provenance remain actual rows; derived floor values have no second paid-evidence status. Processing/encoding these rows costs at least their lengths and is added to (39.24).
+bits, plus retained request names when they have a consumer. Store the original interval endpoints and current matrix as working state with $O(e+\mu+\lambda(B)+\lambda(U))$ bits, plus arithmetic workspace $O(W)$ and counters; selected endpoints are reduced to keep these widths literal. The next acquisition's $e_i$ charges their actual size. No separate full stage archives or $B_i$-entry tuples are required. Reports kept for provenance remain actual rows; derived floor values have no second paid-evidence status. Processing/encoding these rows costs at least their lengths and is added to (39.24).
 
 If a consumer asks for all instantaneous values through precision $m$, emit them by $m$ exact divisions at a representative, costing $O(mW^2)$ plus their output length. A word prediction at an authentic cut $t$ and continuation $v$ uses the recorded $u_t$ or its computed matrix. Replaying its $|u_t|+|v|$ letters and evaluating at a representative costs $O((|u_t|+|v|+m)\widehat W^2)$ when all $m$ coordinates are emitted, where $\widehat W$ includes that composed matrix, representative and output operand widths. Matrix entries grow by at most doubling per letter. A full-profile answer can instead emit only $B$ and the two cell endpoints; the infinitely many coordinates are available on demand, not emitted in finite time. Charge each received request's entire binary encoding, each chosen finite prediction word, all emitted bits and any replay used to reconstruct an old matrix. Even a hit has request and output work. Entrance rational inversion takes $O(W_{\rm ent}^3)$ per read as a conservative bound, and all its actual payload and acknowledgements enter (39.25).
 
