@@ -38,7 +38,7 @@ internal sealed class BipartiteCompletionDocument : IScribeDocumentDefinition
             And(Le(F.Id("G"), F.Id("H")), And(Call("IsAcyclic", F.Id("H")),
                 And(DegreeBound("H"), And(Independent("H", "A"), And(Independent("H", "B"),
                     All("u", F.Id("alpha"), Imp(Call("mem", F.Id("u"), F.Id("A")),
-                        Eq(Call("degree", F.Id("H"), F.Id("u")), D(2)))))))));
+                        Eq(Call("degree", F.Id("H"), F.Id("u")), D(2))))))))));
     private static Formula Statement() =>
         All("alpha", Name("Type"),
             Imp(And(Call("Fintype", F.Id("alpha")), Call("DecidableEq", F.Id("alpha"))),
