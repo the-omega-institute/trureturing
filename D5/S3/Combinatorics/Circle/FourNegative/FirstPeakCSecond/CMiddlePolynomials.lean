@@ -12,7 +12,7 @@ Full unrestricted physical J / Circle C3.1 remain OPEN. -/
 import Mathlib.Data.Int.Basic
 import Mathlib.Tactic.Convert
 import Mathlib.Tactic.Positivity.Basic
-import Mathlib.Tactic.Ring.Basic
+import Mathlib.Tactic.Ring.RingNF
 import Batteries.Tactic.OpenPrivate
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
