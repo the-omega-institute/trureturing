@@ -1,6 +1,6 @@
-// Uncompiled companion source. No emitted/validated Scribe artifact is claimed.
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Matrix;
 
@@ -8,13 +8,18 @@ internal sealed class PowerMeanOperatorRefutationDocument : IScribeDocumentDefin
 {
     private const string Prefix = "D5/S3/Quantum/Matrix/PowerMeanOperatorRefutation.";
 
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Eigenstructure/dumitrufranco2017powermeans");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An exact positive definite pair violates the p=2 power-mean distance monotonicity "
         + "in the Euclidean induced operator norm.",
         H("A power-mean counterexample in the Euclidean operator norm"),
         Blocks(
-            Paragraph(Text("Version-specific source: Dumitru–Franco, withdrawn v1, Conjecture 9, "
-                + "as identified in the supplied independent review. The published 2017 successor "
+            Paragraph(Text("Raluca Dumitru and Jose Franco, On the monotonicity of weighted power means of "
+                + "matrices, arXiv:1701.07023v1, Conjecture 9, asks for decreasing distance for "
+                + "every unitarily invariant norm and every 0<p≤2. Version 2 withdraws the "
+                + "preprint because Proposition 4 is false. The published 2017 successor "
                 + "does not state this exact all-norm assertion. The result here concerns that v1 "
                 + "assertion through its p=2 operator-norm specialization; it asserts no novelty, "
                 + "priority, or conclusive later-resolution status.")),
@@ -60,8 +65,37 @@ internal sealed class PowerMeanOperatorRefutationDocument : IScribeDocumentDefin
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Entry(string id, string name, string title, string prose,
-        DescribeRole role) => Describe.Lean(
+        DescribeRole role) => name == "counterexample" ? Paragraph(Text(prose)) : Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            name == "claim" ? StatementSource.FromAuthor(Claim())
+                : name == "result" ? StatementSource.FromAuthor(Disp(Seq(Neg, Sp, V("claim"))))
+                : StatementSource.WithoutFormula(),
+            name == "claim" || name == "mu2" ? AssessedProvenance.FromLiterature(Source)
+                : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+    private static Formula Real => Seq(Mathbb, Grp(V("R")));
+    private static Formula Complex => Seq(Mathbb, Grp(V("C")));
+    private static Formula Nat => Seq(Mathbb, Grp(V("N")));
+    private static Formula Mat => Call("Matrix", Call("Fin", V("n")), Call("Fin", V("n")), Complex);
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, body);
+    private static Formula Par(Formula a) => Seq(Open, a, Close);
+    private static Formula And(Formula a, Formula b) =>
+        new Formula.Logic(Par(a), FormulaLogicOperator.And, Par(b));
+    private static Formula Imp(Formula a, Formula b) =>
+        new Formula.Logic(Par(a), FormulaLogicOperator.Implies, Par(b));
+    private static Formula Le(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Distance(string t) => Call("opnorm",
+        new Formula.Binary(V("A"), FormulaBinaryOperator.Subtract,
+            Call("mu2", V("A"), V("B"), V(t))));
+    private static Formula Claim() => Disp(new Formula.Logic(V("claim"), FormulaLogicOperator.Iff,
+        Par(All("n", Nat, All("A", Mat, All("B", Mat, All("s", Real, All("t", Real,
+            Imp(And(Call("PosSemidef", V("A")), And(Call("PosSemidef", V("B")),
+                And(Le(D(0), V("s")), And(Le(V("s"), V("t")), Le(V("t"), D(1)))))),
+                Le(Distance("t"), Distance("s")))))))))));
 }

@@ -1,39 +1,10 @@
 /- GID: D5/S3/Quantum/Matrix/PowerMeanOperatorRefutation
    generality: I
    mirror-B: D5/B/S3/Quantum/Matrix/PowerMeanOperatorRefutation
-   mirror-E: none(waiver:source-artifact-awaiting-canonical-validation)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Matrix/PowerMeanOperatorRefutation.claim; result=D5/S3/Quantum/Matrix/PowerMeanOperatorRefutation.result; claim=D5/S3/Quantum/Matrix/PowerMeanOperatorRefutation.claim
    digest: An exact positive definite pair violates p=2 Euclidean operator-norm monotonicity. -/
-
-/-
-UNCOMPILED SOURCE ARTIFACT. No Lean/kernel or repository-admission claim is made.
-
-Source scope: Dumitru--Franco, withdrawn v1, Conjecture 9, as supplied in the
-independent review brief. The claim below encodes only its p=2 Euclidean
-operator-norm specialization. Its original direction is nonincreasing in t.
-The full all-norm assertion implies this specialization; it is not itself
-encoded here. The published 2017 successor does not state that exact all-norm
-assertion. No claim of later-resolution status, novelty, or priority is made.
-
-All norms on matrices in this file use Matrix.Norms.L2Operator. In particular,
-they are induced by the Euclidean norm on complex vectors, not an entry norm.
-For X-Y the entry maximum is 24/25 and the Frobenius norm is sqrt 2; neither
-is the norm appearing in claim, counterexample, or result.
-
-The supplied substantive witness is X=diag(1/10,4),
-Y=[[19/50,-24/25],[-24/25,93/25]], v=(3/5,4/5), s=0, t=1/100.
-The live proof uses the exact positive square root (S+rI)/w and a strict
-Rayleigh quotient. No numerical approximation or checker substitutes for
-the spectral-root and operator-norm bridges.
-
-Proof organization: mu2, claim, X, Y are definitions; counterexample is
-consumed by result. Every private helper is consumed by that proof chain.
-The small positivity, square, and arithmetic certificates are auxiliary
-bindings/normalizations, not separate claimed mathematical discoveries.
-The independently supplied proof is implemented below; classification and
-canonical admission remain subject to actual compilation and review.
--/
 
 import D5.S3.Quantum.Matrix.SpectralPower
 import Mathlib.Analysis.CStarAlgebra.Matrix
@@ -45,8 +16,21 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.LinearCombination
 
+/-!
+The claim is the p=2 Euclidean operator-norm specialization of Conjecture 9
+in Dumitru and Franco, arXiv:1701.07023v1. The preprint is withdrawn; no
+later-resolution, originality, or priority claim is made. Its universal
+all-norm assertion implies this specialization, which is the only assertion
+encoded here. The published successor's p=2 Frobenius result is unaffected.
+
+All matrix norms use Matrix.Norms.L2Operator, induced by EuclideanSpace on
+complex vectors. The power mean uses positive spectral powers. The explicit
+positive root (S+rI)/w and a strict Rayleigh quotient give the counterexample
+X=diag(1/10,4), Y=[[19/50,-24/25],[-24/25,93/25]], s=0, t=1/100.
+-/
+
+
 set_option maxRecDepth 8192
-set_option maxHeartbeats 800000
 
 noncomputable section
 open Matrix
@@ -119,14 +103,14 @@ private lemma w_square : w ^ 2 = T + 2 * r := by
 /-- Direct two by two multiplication uses r²=det S. -/
 private lemma K_square : K * K = (T + 2 * r) • S := by
   have hr : (r : ℂ) ^ 2 = (51118101 / 156250000 : ℂ) := by
-    exact_mod_cast (show r ^ 2 = (51118101 / 156250000 : ℝ) by
-      simpa only [d] using r_square)
+    rw [← Complex.ofReal_pow, r_square]
+    norm_num [d]
   ext i j
   fin_cases i <;> fin_cases j <;>
     norm_num [K, S, T, Matrix.mul_apply, dotProduct, Fin.sum_univ_two,
       Matrix.one_apply, RCLike.real_smul_eq_coe_mul, smul_eq_mul,
       Complex.ofReal_add, Complex.ofReal_mul]
-  all_goals first | ring | linear_combination hr
+  all_goals linear_combination hr
 
 private lemma Q_square : Q * Q = S := by
   have hw0 : w ≠ 0 := ne_of_gt w_pos
@@ -209,7 +193,7 @@ private lemma root_rayleigh_gt : c < (a + r) / w := by
   exact (lt_div_iff₀ w_pos).mpr hlt
 
 private lemma rayleigh :
-    inner ℂ v (Matrix.toEuclideanCLM (Q - Y) v) =
+    inner ℂ v (Matrix.toEuclideanCLM (𝕜 := ℂ) (n := Fin 2) (Q - Y) v) =
       (((a + r) / w - 399 / 250 : ℝ) : ℂ) := by
   rw [EuclideanSpace.inner_eq_star_dotProduct, Matrix.ofLp_toEuclideanCLM]
   change ((Q - Y) *ᵥ (![3 / 5, 4 / 5] : Fin 2 → ℂ)) ⬝ᵥ
@@ -224,21 +208,21 @@ private lemma strict_norm : 1 < ‖Y - mu2 Y X (1 / 100)‖ := by
     have h := root_rayleigh_gt
     dsimp [c] at h
     linarith
-  have hop : ‖Matrix.toEuclideanCLM (Q - Y) v‖ ≤ ‖Q - Y‖ := by
+  have hop : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) (n := Fin 2) (Q - Y) v‖ ≤ ‖Q - Y‖ := by
     simpa only [v_norm, mul_one, Matrix.l2_opNorm_toEuclideanCLM] using
-      (Matrix.toEuclideanCLM (Q - Y)).le_opNorm v
+      (Matrix.toEuclideanCLM (𝕜 := ℂ) (n := Fin 2) (Q - Y)).le_opNorm v
   rw [mean_at_t, norm_sub_rev]
   calc
     1 < (a + r) / w - 399 / 250 := hreal
-    _ = ‖inner ℂ v (Matrix.toEuclideanCLM (Q - Y) v)‖ := by
+    _ = ‖inner ℂ v (Matrix.toEuclideanCLM (𝕜 := ℂ) (n := Fin 2) (Q - Y) v)‖ := by
       rw [rayleigh, Complex.norm_of_nonneg (by linarith : 0 ≤ (a + r) / w - 399 / 250)]
-    _ ≤ ‖v‖ * ‖Matrix.toEuclideanCLM (Q - Y) v‖ := norm_inner_le_norm _ _
-    _ = ‖Matrix.toEuclideanCLM (Q - Y) v‖ := by rw [v_norm, one_mul]
+    _ ≤ ‖v‖ * ‖Matrix.toEuclideanCLM (𝕜 := ℂ) (n := Fin 2) (Q - Y) v‖ := norm_inner_le_norm _ _
+    _ = ‖Matrix.toEuclideanCLM (𝕜 := ℂ) (n := Fin 2) (Q - Y) v‖ := by rw [v_norm, one_mul]
     _ ≤ ‖Q - Y‖ := hop
 
 /-- Exact positive definite witnesses with endpoint distance one and a strictly larger
 distance at t=1/100, in the Euclidean induced operator norm. -/
-theorem counterexample :
+private theorem counterexample :
     X.PosDef ∧ Y.PosDef ∧ ‖Y - mu2 Y X 0‖ = 1 ∧
       1 < ‖Y - mu2 Y X (1 / 100)‖ :=
   ⟨X_pos, Y_pos, endpoint_norm, strict_norm⟩
