@@ -919,7 +919,8 @@ private theorem correctionEvaluation_pair (D : LatticeData) (T : ℂˣ)
     ring
   simp only [pairPolynomial, correctionEvaluation, map_mul, aeval_C, aeval_X,
     Option.elim_none, map_pow, algebraMap_eq]
-  rw [← map_pow, hexp, ← map_mul]
+  simp only [← map_pow, ← map_mul]
+  rw [hexp]
   rfl
 
 private theorem correctionAt_X_mul (D : LatticeData) (T : ℂˣ)
@@ -971,10 +972,11 @@ private theorem nativeNeutralLaurentEntry_readout (D : LatticeData) (T : ℂˣ)
     nativeNeutralLaurentEntry D T d input output =
       nativeNormalReadout D T input output (correctionAt D T (monomial d 1)) := by
   rw [nativeNeutralLaurentEntry_raw_normal_expansion, correctionAt_shift_sum]
-  simp only [map_sum, map_smul, smul_eq_mul, nativeNormalReadout_expansion,
-    Finset.mul_sum, nativeNormalReadout_monomial]
+  simp only [map_sum, map_smul, smul_eq_mul]
   apply Finset.sum_congr rfl
   intro s hs
+  rw [nativeNormalReadout_expansion]
+  simp only [Finset.mul_sum, nativeNormalReadout_monomial]
   apply Finset.sum_congr rfl
   intro mon hm
   ring
