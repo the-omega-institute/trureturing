@@ -309,7 +309,9 @@ private lemma correlation_rayleigh {n : ℕ} (hn : 3 ≤ n)
       (Real.sqrt (n : ℝ))⁻¹ ^ 2 * ∑ i, ∑ j, a i j := by
     change (a *ᵥ (fun _ => (Real.sqrt (n : ℝ))⁻¹)) ⬝ᵥ
       (star (fun _ => (Real.sqrt (n : ℝ))⁻¹)) = _
-    simp only [dotProduct, mulVec, Pi.star_apply, star_trivial, mul_sum, sum_mul]
+    rw [dotProduct_comm, dot_mulVec_eq_sum_sum]
+    simp only [Pi.star_apply, star_trivial, sum_mul, mul_sum]
+    rw [sum_comm]
     exact sum_congr rfl fun i _ => sum_congr rfl fun j _ => by ring
   rw [hinner, inv_pow, Real.sq_sqrt (Nat.cast_nonneg n), hsum]
   dsimp only [meanCorr]
