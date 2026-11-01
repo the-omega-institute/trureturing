@@ -20,7 +20,7 @@ Write s=a+1, t=a+2, u=a+3. The complete fibre with trace R+t is equivalent, by c
 
 This is the local complete-count law (37.8) of the pinned theory AURIC_FIB_ATOM_INTRINSIC_CLASSIFICATION_AND_POLYGON_GEOMETRY, B-37.2, at source revision 7a72936968c08198f04951d1326bfd4dd891e804. The four source cases (|P|,|Q|)=(2,2),(3,3),(2,4),(4,2), with disjoint compatible P,Q, are special cases; these extra restrictions are unnecessary for the local law. Exchanging P and Q gives a separate instance using E_K(Q union P)=E_K(P union Q). No equality between the two sides' weights is asserted or used.
 
-The result supplies neither global conditional-count positivity, normalized strict inequality or its equality case, nor terminal independent nonempty support. It does not formalize the remainder of B-37.2. ite(c,x,y) in the formula means x if c holds and y otherwise; EK in the companion document denotes E_K.
+The result supplies neither global conditional-count positivity, normalized strict inequality or its equality case, nor terminal independent nonempty support. It does not formalize the remainder of B-37.2. Natcard in the formula denotes Nat.card, and ite(c,x,y) means x if c holds and y otherwise; EK in the companion document denotes E_K.
 
 ## References
 

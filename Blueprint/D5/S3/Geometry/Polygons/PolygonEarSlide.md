@@ -18,7 +18,7 @@ A segment has distinct endpoints in the symmetric square.
 
 **Definition 1.2 (Boundary sides).**
 
-$$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall e \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; (\operatorname{IsSide}\left(e\right) \iff \exists i \in \operatorname{ZMod}\left(n\right),\; (e = \operatorname{symPair}\left(i, (i + 1)\right)))$$
+$$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall e \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; (\operatorname{IsSide}\left(e\right) \iff (\exists i \in \operatorname{ZMod}\left(n\right),\; (e = \operatorname{symPair}\left(i, (i + 1)\right))))$$
 
 *Formalization.* `D5/S3/Geometry/Polygons/PolygonEarSlide.IsSide` (`✓ std3`).
 
@@ -26,7 +26,7 @@ $$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall e \in \ope
 
 *Commentary.*
 
-An unordered boundary side joins successive cyclic vertices.
+An unordered boundary side joins successive cyclic vertices. symPair denotes the unordered pair s(a,b).
 
 **Definition 1.3 (Internal diagonals).**
 
@@ -42,7 +42,7 @@ Internal diagonals are segments that are not boundary sides.
 
 **Definition 1.4 (Actual cyclic crossing).**
 
-$$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall e \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; \forall f \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; (\operatorname{Cross}\left(e, f\right) \iff \exists a \in \operatorname{ZMod}\left(n\right),\; \exists b \in \operatorname{ZMod}\left(n\right),\; \exists c \in \operatorname{ZMod}\left(n\right),\; \exists d \in \operatorname{ZMod}\left(n\right),\; ((e = \operatorname{symPair}\left(a, b\right)) \land ((f = \operatorname{symPair}\left(c, d\right)) \land (\operatorname{sbtw}\left(a, c, b\right) \land \operatorname{sbtw}\left(b, d, a\right)))))$$
+$$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall e \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; \forall f \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; (\operatorname{Cross}\left(e, f\right) \iff (\exists a \in \operatorname{ZMod}\left(n\right),\; \exists b \in \operatorname{ZMod}\left(n\right),\; \exists c \in \operatorname{ZMod}\left(n\right),\; \exists d \in \operatorname{ZMod}\left(n\right),\; ((e = \operatorname{symPair}\left(a, b\right)) \land ((f = \operatorname{symPair}\left(c, d\right)) \land (\operatorname{sbtw}\left(a, c, b\right) \land \operatorname{sbtw}\left(b, d, a\right))))))$$
 
 *Formalization.* `D5/S3/Geometry/Polygons/PolygonEarSlide.Cross` (`✓ std3`).
 
@@ -54,7 +54,7 @@ Crossing uses strict cyclic betweenness witnesses.
 
 **Definition 1.5 (Maximal noncrossing finite diagonal carrier).**
 
-$$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall T \in \operatorname{Finset}\left(\operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right)\right),\; (\operatorname{IsTriangulation}\left(T\right) \iff (\forall e \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; ((e \in T) \implies \operatorname{IsDiagonal}\left(e\right)) \land (\forall e \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; \forall f \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; ((e \in T) \implies ((f \in T) \implies \neg (\operatorname{Cross}\left(e, f\right)))) \land \forall e \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; (\operatorname{IsDiagonal}\left(e\right) \implies (\neg ((e \in T)) \implies \exists f \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; ((f \in T) \land \operatorname{Cross}\left(e, f\right)))))))$$
+$$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall T \in \operatorname{Finset}\left(\operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right)\right),\; (\operatorname{IsTriangulation}\left(T\right) \iff ((\forall e \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; ((e \in T) \implies \operatorname{IsDiagonal}\left(e\right))) \land ((\forall e \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; \forall f \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; ((e \in T) \implies ((f \in T) \implies \neg (\operatorname{Cross}\left(e, f\right))))) \land (\forall e \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; (\operatorname{IsDiagonal}\left(e\right) \implies (\neg ((e \in T)) \implies (\exists f \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; ((f \in T) \land \operatorname{Cross}\left(e, f\right)))))))))$$
 
 *Formalization.* `D5/S3/Geometry/Polygons/PolygonEarSlide.IsTriangulation` (`✓ std3`).
 
@@ -90,7 +90,7 @@ Every ear of the complete finite chord set is observed.
 
 **Definition 1.8 (Common compatible ear carrier).**
 
-$$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall K \in \operatorname{Finset}\left(\operatorname{ZMod}\left(n\right)\right),\; \forall i \in \operatorname{ZMod}\left(n\right),\; ((i \in \operatorname{EK}\left(K\right)) \iff (\neg ((i \in K)) \land \forall k \in \operatorname{ZMod}\left(n\right),\; ((k \in K) \implies \neg (\operatorname{Cross}\left(\operatorname{ear}\left(i\right), \operatorname{ear}\left(k\right)\right)))))$$
+$$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall K \in \operatorname{Finset}\left(\operatorname{ZMod}\left(n\right)\right),\; \forall i \in \operatorname{ZMod}\left(n\right),\; ((i \in \operatorname{EK}\left(K\right)) \iff (\neg ((i \in K)) \land (\forall k \in \operatorname{ZMod}\left(n\right),\; ((k \in K) \implies \neg (\operatorname{Cross}\left(\operatorname{ear}\left(i\right), \operatorname{ear}\left(k\right)\right))))))$$
 
 *Formalization.* `D5/S3/Geometry/Polygons/PolygonEarSlide.E_K` (`✓ std3`).
 
@@ -138,7 +138,7 @@ Symmetric-square map transports each unordered pair.
 
 **Definition 1.12 (Avoid the deleted centre).**
 
-$$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall e \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; (\operatorname{AvoidTwo}\left(e\right) \iff \forall x \in \operatorname{ZMod}\left(n\right),\; \neg ((e = \operatorname{symPair}\left(2, x\right))))$$
+$$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall e \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; (\operatorname{AvoidTwo}\left(e\right) \iff (\forall x \in \operatorname{ZMod}\left(n\right),\; \neg ((e = \operatorname{symPair}\left(2, x\right)))))$$
 
 *Formalization.* `D5/S3/Geometry/Polygons/PolygonEarSlide.AvoidTwo` (`✓ std3`).
 
@@ -234,7 +234,7 @@ The inverse preserves the full maximal diagonal carrier.
 
 **Theorem 1.20 (Left inverse on complete chord sets).**
 
-$$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall T \in \operatorname{Finset}\left(\operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right)\right),\; ((6 \leq n) \implies (\forall e \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; ((e \in T) \implies \operatorname{IsDiagonal}\left(e\right)) \implies ((\operatorname{ear}\left(2\right) \in T) \implies (\neg ((\operatorname{ear}\left(1\right) \in T)) \implies (\operatorname{psi}\left(\operatorname{phi}\left(T\right)\right) = T)))))$$
+$$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall T \in \operatorname{Finset}\left(\operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right)\right),\; ((6 \leq n) \implies ((\forall e \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; ((e \in T) \implies \operatorname{IsDiagonal}\left(e\right))) \implies ((\operatorname{ear}\left(2\right) \in T) \implies (\neg ((\operatorname{ear}\left(1\right) \in T)) \implies (\operatorname{psi}\left(\operatorname{phi}\left(T\right)\right) = T)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/PolygonEarSlide.psi_phi` (`✓ std3`). ∎
 
@@ -246,7 +246,7 @@ The inverse law requires only diagonal membership and the stated included and ex
 
 **Theorem 1.21 (Right inverse on complete chord sets).**
 
-$$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall T \in \operatorname{Finset}\left(\operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right)\right),\; ((6 \leq n) \implies (\forall e \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; ((e \in T) \implies \operatorname{IsDiagonal}\left(e\right)) \implies ((\operatorname{ear}\left(1\right) \in T) \implies (\neg ((\operatorname{ear}\left(2\right) \in T)) \implies (\operatorname{phi}\left(\operatorname{psi}\left(T\right)\right) = T)))))$$
+$$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall T \in \operatorname{Finset}\left(\operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right)\right),\; ((6 \leq n) \implies ((\forall e \in \operatorname{Sym2}\left(\operatorname{ZMod}\left(n\right)\right),\; ((e \in T) \implies \operatorname{IsDiagonal}\left(e\right))) \implies ((\operatorname{ear}\left(1\right) \in T) \implies (\neg ((\operatorname{ear}\left(2\right) \in T)) \implies (\operatorname{phi}\left(\operatorname{psi}\left(T\right)\right) = T)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/PolygonEarSlide.phi_psi` (`✓ std3`). ∎
 
@@ -302,7 +302,7 @@ $$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall P \in \ope
 
 *Commentary.*
 
-Conjugation by cyclic translation includes every origin a, the cyclic seam, and empty fibres. The cardinality theorem in PolygonEarSlideCardinality consumes this equivalence on its live proof path.
+Conjugation by cyclic translation includes every origin a, the cyclic seam, and empty fibres. The cardinality theorem in PolygonEarSlideCardinality uses this equivalence to count the complete fibres.
 
 ## References
 
