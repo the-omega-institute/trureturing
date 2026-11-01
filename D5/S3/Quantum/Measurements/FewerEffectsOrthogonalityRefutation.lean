@@ -7,7 +7,6 @@
    digest: Four projectors of ranks 2,2,3,3 refute the fewer-effects orthogonality conjecture. -/
 
 import Mathlib.Analysis.Matrix.Order
-import Mathlib.Tactic.FinCases
 
 /-! Conjecture 2 in Liu and DeBrota, arXiv:2105.02074v2, Appendix C. The positive
 square root and squared Frobenius distance are those of Section IV. The construction
