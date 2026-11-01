@@ -148,7 +148,8 @@ public sealed partial class CleanLanesCommandTests
         });
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
         var failed = material is "MERGE_HEAD" or "held-index.lock";
-        Assert.True(result.Success == !failed, result.Output + result.Error);
+        Assert.True(result.Success, result.Output + result.Error);
+        Assert.Equal(failed ? 1 : 0, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
         Assert.Equal(failed, Directory.Exists(lane));
         Assert.True(fixture.BranchExists("harness/disposable-lock"));
         if (failed) Assert.StartsWith("checkpoint_failed:", ReasonFor(result.Output, lane));
