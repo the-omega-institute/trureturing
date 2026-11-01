@@ -853,9 +853,9 @@ def sourceSelection : Contract.SourceSelection where
   coordinates := #[0, 2]
   readouts := #[{
     path := #["body", "body", "body", "fn", "arg"]
-    stateBinder := 1
+    stateBinder := 0
     functionOperand := false
-    stateOperand := none
+    stateOperand := some #["fn", "arg", "arg"]
     booleanPredicate := false }]
 
 /-- Direct source registration using the enrolled dependent-family template. -/
