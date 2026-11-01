@@ -16,7 +16,7 @@ import Mathlib.Tactic
 
 noncomputable section
 open Matrix
-open scoped BigOperators ComplexConjugate Matrix.Norms.Frobenius
+open scoped BigOperators ComplexConjugate InnerProductSpace Matrix.Norms.Frobenius
 
 namespace D5.S3.Quantum.Recovery.FourPathWeightedEqualityRemainder
 
@@ -40,81 +40,131 @@ private lemma transport_trace (U : Matrix Index Index ℂ) (v : Index → ℂ) :
 private lemma unitary_entry_bound (U : Matrix Index Index ℂ)
     (hU : U ∈ Matrix.unitaryGroup Index ℂ) (i j : Index) :
     ‖U i j‖ ≤ 1 := by
-  exact Matrix.entry_norm_bound_of_unitary hU i j
+  exact entry_norm_bound_of_unitary hU i j
 
 private lemma transport_gram (U : Matrix Index Index ℂ) (v : Index → ℂ)
     (hU : U ∈ Matrix.unitaryGroup Index ℂ) :
     (transport U v)ᴴ * transport U v =
-      Matrix.diagonal (fun i => conj (v i) * v i) := by
+      Matrix.diagonal (fun i => star (v i) * v i) := by
   have hU' : Uᴴ * U = (1 : Matrix Index Index ℂ) :=
     Matrix.mem_unitaryGroup_iff'.mp hU
-  simp [transport, Matrix.conjTranspose_mul, hU', Matrix.mul_assoc,
+  simp only [transport, Matrix.conjTranspose_mul, Matrix.diagonal_conjTranspose]
+  rw [← Matrix.mul_assoc (Matrix.diagonal (star v) * Uᴴ) U (Matrix.diagonal v),
+    Matrix.mul_assoc (Matrix.diagonal (star v)) Uᴴ U, hU', Matrix.mul_one,
     Matrix.diagonal_mul_diagonal]
+  rfl
 
 private lemma transport_norm_sq (U : Matrix Index Index ℂ) (v : Index → ℂ)
     (hU : U ∈ Matrix.unitaryGroup Index ℂ) :
     ‖transport U v‖ ^ 2 = ∑ i, ‖v i‖ ^ 2 := by
   have h := D5.S3.Quantum.GNSMatrix.frobenius_norm_sq_eq_trace (transport U v)
   rw [transport_gram U v hU, Matrix.trace_diagonal] at h
-  simpa only [Complex.normSq_eq_norm_sq, map_sum, Complex.ofReal_sum] using
-    congrArg Complex.re h
+  have h' := congrArg Complex.re h
+  simp only [Complex.ofReal_re, Complex.re_sum] at h'
+  have hterm (z : ℂ) : (star z * z).re = ‖z‖ ^ 2 := by
+    simp [Complex.star_def, Complex.mul_re, Complex.sq_norm, Complex.normSq_apply]
+  simp_rw [hterm] at h'
+  exact h'
 
 private lemma diagonal_norm_sq (v : Index → ℂ) :
     ‖Matrix.diagonal (fun i => (‖v i‖ : ℂ))‖ ^ 2 = ∑ i, ‖v i‖ ^ 2 := by
-  rw [← D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability.entryNormSq_eq_hs_sq]
-  simp [D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.entryNormSq,
-    Matrix.diagonal_apply]
+  rw [Matrix.frobenius_norm_diagonal]
+  change ‖WithLp.toLp 2 (fun i => (‖v i‖ : ℂ))‖ ^ 2 = _
+  simp [PiLp.norm_sq_eq_of_L2]
 
-private lemma matrix_inner_formula (A B : Matrix Index Index ℂ) :
-    ⟪A, B⟫_ℂ = ∑ i, ∑ j, conj (A i j) * B i j := by
-  rfl
-
-private lemma transport_diagonal_inner (U : Matrix Index Index ℂ) (v : Index → ℂ)
-    (λ : ℂ) :
-    (⟪transport U v,
-      λ • Matrix.diagonal (fun i => (‖v i‖ : ℂ))⟫_ℂ).re =
-      ∑ i, ‖v i‖ * (conj λ * (U i i * v i)).re := by
-  rw [matrix_inner_formula]
-  simp only [transport, Matrix.mul_diagonal, Matrix.smul_apply,
-    Matrix.diagonal_apply, map_sum, Complex.sum_re]
-  simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true, Complex.mul_re,
-    Complex.conj_mul, Complex.norm_real, Real.norm_eq_abs, sq_abs]
-  apply Finset.sum_congr rfl
-  intro i hi
+private lemma transport_phase_cross (U : Matrix Index Index ℂ) (v : Index → ℂ)
+    (phase : ℂ) :
+    (∑ i, ∑ j, (transport U v i j *
+      star ((phase • Matrix.diagonal (fun i => (‖v i‖ : ℂ))) i j)).re) =
+      ∑ i, ‖v i‖ * (star phase * (U i i * v i)).re := by
+  simp [transport, Matrix.mul_diagonal, Matrix.smul_apply, Matrix.diagonal_apply,
+    Fin.sum_univ_succ, Complex.star_def]
   ring
+
+private lemma distance_sq (U : Matrix Index Index ℂ) (v : Index → ℂ)
+    (hU : U ∈ Matrix.unitaryGroup Index ℂ) (phase : ℂ) (hphase : ‖phase‖ = 1) :
+    ‖transport U v - phase • Matrix.diagonal (fun i => (‖v i‖ : ℂ))‖ ^ 2 =
+      2 * ∑ i, ‖v i‖ * (‖v i‖ - (star phase * (U i i * v i)).re) := by
+  rw [← D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability.entryNormSq_eq_hs_sq]
+  unfold D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.entryNormSq
+  simp only [Matrix.sub_apply]
+  change (∑ i, ∑ j, ‖(transport U v) i j -
+    (phase • Matrix.diagonal (fun i => (‖v i‖ : ℂ))) i j‖ ^ 2) = _
+  have hnorm_sub (x y : ℂ) :
+      ‖x - y‖ ^ 2 = ‖x‖ ^ 2 + ‖y‖ ^ 2 - 2 * (x * star y).re := by
+    simpa only [Complex.sq_norm, Complex.star_def] using Complex.normSq_sub x y
+  simp only [hnorm_sub]
+  simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib]
+  have hA : (∑ i, ∑ j, ‖transport U v i j‖ ^ 2) = ‖transport U v‖ ^ 2 := by
+    exact D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability.entryNormSq_eq_hs_sq _
+  have hB :
+      (∑ i, ∑ j, ‖(phase • Matrix.diagonal (fun i => (‖v i‖ : ℂ))) i j‖ ^ 2) =
+        ∑ i, ‖v i‖ ^ 2 := by
+    change D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.entryNormSq
+      (phase • Matrix.diagonal (fun i => (‖v i‖ : ℂ))) = _
+    rw [D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability.entryNormSq_eq_hs_sq]
+    rw [norm_smul, hphase, one_mul, diagonal_norm_sq]
+  have hcross2 :
+      (∑ i, ∑ j, 2 * (transport U v i j *
+        star ((phase • Matrix.diagonal (fun i => (‖v i‖ : ℂ))) i j)).re) =
+        2 * (∑ i, ∑ j, (transport U v i j *
+          star ((phase • Matrix.diagonal (fun i => (‖v i‖ : ℂ))) i j)).re) := by
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i hi
+    rw [Finset.mul_sum]
+  rw [hA, hB, hcross2, transport_phase_cross U v phase]
+  rw [transport_norm_sq U v hU]
+  rw [Finset.mul_sum]
+  simp_rw [mul_sub]
+  rw [Finset.sum_sub_distrib]
+  rw [mul_sub, Finset.mul_sum, Finset.mul_sum]
+  have hsqsum :
+      (∑ i : Index, 2 * (‖v i‖ * ‖v i‖)) =
+        (∑ i : Index, ‖v i‖ ^ 2) + ∑ i : Index, ‖v i‖ ^ 2 := by
+    rw [← Finset.sum_add_distrib]
+    apply Finset.sum_congr rfl
+    intro i hi
+    ring
+  rw [hsqsum]
 
 /-- The trace defect controls the Hilbert--Schmidt distance to a phased positive diagonal. -/
 theorem weighted_equality_remainder (v : Index → ℂ)
     (U : Matrix Index Index ℂ) (hU : U ∈ Matrix.unitaryGroup Index ℂ) :
-    ∃ λ : ℂ, ‖λ‖ = 1 ∧
-      ‖transport U v - λ • Matrix.diagonal (fun i => (‖v i‖ : ℂ))‖ ^ 2 ≤
+    ∃ phase : ℂ, ‖phase‖ = 1 ∧
+      ‖transport U v - phase • Matrix.diagonal (fun i => (‖v i‖ : ℂ))‖ ^ 2 ≤
         2 * remainder U v := by
   let z : ℂ := Matrix.trace (transport U v)
-  obtain ⟨λ, hλ, hphase⟩ := Complex.exists_norm_mul_eq_self z
-  have hconjphase : conj λ * z = (‖z‖ : ℂ) := by
+  obtain ⟨phase, hphase_norm, hphase⟩ := Complex.exists_norm_mul_eq_self z
+  have hconjphase : star phase * z = (‖z‖ : ℂ) := by
     rw [← hphase]
-    simp only [map_mul, Complex.conj_mul, Complex.normSq_eq_norm_sq, hλ,
-      one_mul]
+    have hp : star phase * phase = (1 : ℂ) := by
+      rw [Complex.star_def, ← Complex.normSq_eq_conj_mul_self,
+        Complex.normSq_eq_norm_sq, hphase_norm]
+      norm_num
+    rw [← mul_assoc, hp, one_mul]
+    simp [norm_mul, hphase_norm, Complex.norm_real, abs_of_nonneg (norm_nonneg z)]
   let a : Index → ℝ := fun i => ‖v i‖
-  let r : Index → ℝ := fun i => a i - (conj λ * (U i i * v i)).re
+  let r : Index → ℝ := fun i => a i - (star phase * (U i i * v i)).re
   have hra : ∀ i, 0 ≤ r i := by
     intro i
     dsimp [r, a]
     have hentry := unitary_entry_bound U hU i i
-    have hmul : ‖U i i‖ * ‖v i‖ ≤ ‖v i‖ :=
-      mul_le_mul_of_nonneg_right hentry (norm_nonneg _)
-    have hnorm : ‖conj λ * (U i i * v i)‖ ≤ ‖v i‖ := by
-      rw [norm_mul, norm_mul, norm_conj, hλ]
+    have hmul : ‖U i i‖ * ‖v i‖ ≤ ‖v i‖ := by
+      simpa using (mul_le_mul_of_nonneg_right hentry (norm_nonneg (v i)))
+    have hnorm : ‖star phase * (U i i * v i)‖ ≤ ‖v i‖ := by
+      rw [norm_mul, norm_mul, norm_star, hphase_norm]
       simpa only [one_mul] using hmul
     exact sub_nonneg.mpr ((Complex.re_le_norm _).trans hnorm)
   have hsumr : ∑ i, r i = radius v - traceRadius U v := by
     have hzre := congrArg Complex.re hconjphase
+    dsimp [z] at hzre
     rw [transport_trace] at hzre
-    dsimp [r, a, radius, traceRadius, z] at hzre ⊢
-    simp only [Complex.re_sum] at hzre
+    dsimp [r, a, radius, traceRadius] at hzre ⊢
+    rw [transport_trace]
+    rw [Finset.mul_sum, Complex.re_sum] at hzre
     rw [← hzre]
     simp only [Finset.sum_sub_distrib]
-    ring
   have htrace_le : traceRadius U v ≤ radius v := by
     rw [traceRadius, transport_trace]
     calc
@@ -123,47 +173,46 @@ theorem weighted_equality_remainder (v : Index → ℂ)
         apply Finset.sum_le_sum
         intro i hi
         rw [norm_mul]
-        exact mul_le_mul_of_nonneg_right (unitary_entry_bound U hU i i)
-          (norm_nonneg _)
+        simpa using (mul_le_mul_of_nonneg_right (unitary_entry_bound U hU i i)
+          (norm_nonneg (v i)))
   have hradius_nonneg : 0 ≤ radius v := by
     dsimp [radius]
     exact Finset.sum_nonneg (fun i hi => norm_nonneg _)
   have hnorm_expand :
-      ‖transport U v - λ • Matrix.diagonal (fun i => (‖v i‖ : ℂ))‖ ^ 2 =
+      ‖transport U v - phase • Matrix.diagonal (fun i => (‖v i‖ : ℂ))‖ ^ 2 =
         2 * ∑ i, a i * r i := by
-    rw [norm_sub_sq (𝕜 := ℂ), transport_norm_sq U v hU,
-      norm_smul, hλ, one_mul, diagonal_norm_sq]
-    rw [transport_diagonal_inner U v λ]
-    dsimp [a, r]
-    simp only [Complex.norm_real, Real.norm_eq_abs, sq_abs]
-    ring_nf
-    rw [Finset.mul_sum]
-    apply congrArg id
-    simp_rw [mul_sub]
-    ring
+    simpa [a, r] using distance_sq U v hU phase hphase_norm
   have hweighted : ∑ i, a i * r i ≤ radius v * (radius v - traceRadius U v) := by
     calc
       ∑ i, a i * r i ≤ radius v * ∑ i, r i := by
-        apply Finset.sum_le_sum
-        intro i hi
-        have hai : a i ≤ radius v := by
-          dsimp [a, radius]
-          exact Finset.single_le_sum (fun j hj => norm_nonneg _) (Finset.mem_univ i)
-        exact mul_le_mul_of_nonneg_right hai (hra i)
+        have hpoint : ∀ i, a i * r i ≤ radius v * r i := by
+          intro i
+          have hai : a i ≤ radius v := by
+            dsimp [a, radius]
+            exact Finset.single_le_sum (fun j hj => norm_nonneg _) (Finset.mem_univ i)
+          exact mul_le_mul_of_nonneg_right hai (hra i)
+        rw [Finset.mul_sum]
+        exact Finset.sum_le_sum (s := (Finset.univ : Finset Index))
+          (fun i hi => hpoint i)
       _ = radius v * (radius v - traceRadius U v) := by rw [hsumr]
   have hfinal :
       2 * (radius v * (radius v - traceRadius U v)) ≤
         2 * remainder U v := by
     dsimp [remainder]
-    have hnonneg : 0 ≤ radius v + traceRadius U v := by
-      positivity
+    have htrace_nonneg : 0 ≤ traceRadius U v := norm_nonneg _
+    have hdelta_nonneg : 0 ≤ radius v - traceRadius U v :=
+      sub_nonneg.mpr htrace_le
     have hfactor : radius v * (radius v - traceRadius U v) ≤
         (radius v + traceRadius U v) * (radius v - traceRadius U v) := by
       apply mul_le_mul_of_nonneg_right
       · linarith
-      · linarith
-    nlinarith [hfactor]
-  refine ⟨λ, hλ, ?_⟩
+      · exact hdelta_nonneg
+    calc
+      2 * (radius v * (radius v - traceRadius U v)) ≤
+          2 * ((radius v + traceRadius U v) * (radius v - traceRadius U v)) :=
+        mul_le_mul_of_nonneg_left hfactor (by norm_num)
+      _ = 2 * (radius v ^ 2 - traceRadius U v ^ 2) := by ring
+  refine ⟨phase, hphase_norm, ?_⟩
   rw [hnorm_expand]
   calc
     2 * ∑ i, a i * r i ≤ 2 * (radius v * (radius v - traceRadius U v)) := by

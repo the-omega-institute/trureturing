@@ -5,14 +5,15 @@ import Reg.Support.DependentFamily
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Recovery.FourPathWeightedEqualityRemainder
+open scoped Matrix.Norms.Frobenius
 
 noncomputable section
 namespace Reg.D5.S3.Quantum.Recovery.FourPathWeightedEqualityRemainder
 
 abbrev claim : Prop := ∀ (v : Index → ℂ) (U : Matrix Index Index ℂ),
   U ∈ Matrix.unitaryGroup Index ℂ →
-    ∃ λ : ℂ, ‖λ‖ = 1 ∧
-      ‖transport U v - λ • Matrix.diagonal (fun i => (‖v i‖ : ℂ))‖ ^ 2 ≤
+    ∃ phase : ℂ, ‖phase‖ = 1 ∧
+      ‖transport U v - phase • Matrix.diagonal (fun i => (‖v i‖ : ℂ))‖ ^ 2 ≤
         2 * remainder U v
 
 abbrev signature : Signature where
@@ -22,21 +23,21 @@ abbrev signature : Signature where
   finiteRole := inferInstance
   nonemptyRole := inferInstance
   Output _ _ := Prop × Bool
-  Anchor := Bool
+  Anchor := Unit
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ b => (claim, b)) (fun _ _ => false)
+  realize signature (fun _ _ b => (claim, b)) (fun _ _ => false)
 
 def rejected : Realization signature :=
-  realize signature (fun _ b => (claim, !b)) (fun _ _ => false)
+  realize signature (fun _ _ b => (claim, !b)) (fun _ _ => false)
 
 def altered : Realization signature :=
-  realize signature (fun _ b => (claim, b)) (fun a _ => a)
+  realize signature (fun _ _ b => (claim, b)) (fun _ _ => true)
 
 abbrev arena : Arena where
   signature := signature
-  Law R := claim ∧ R.readout () () true = (claim, true) ∧ R.anchor true () = false
+  Law R := claim ∧ R.readout () () true = (claim, true) ∧ R.anchor () () = false
 
 theorem actual_law : arena.Law actual := by
   refine ⟨?_, rfl, rfl⟩
@@ -71,7 +72,7 @@ def source_registration : Registration arena claim where
     · intro i
       refine ⟨altered, rfl, ?_, altered_law⟩
       intro j hj
-      exact hj (by simp)
+      exact (hj (Subsingleton.elim _ _)).elim
   dependence := by
     intro i
     refine ⟨(), false, true, ?_⟩
@@ -92,7 +93,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ b => (claim, b)) (fun _ _ => false))
+  readout := some (realize signature (fun _ _ b => (claim, b)) (fun _ _ => false))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
