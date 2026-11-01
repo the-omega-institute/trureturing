@@ -68,7 +68,10 @@ def arena : Arena where
       replyWidths (program.actualReads z) ≤ 6*Nat.size Q + 2*Nat.size V + 4 ∧
       C.lower.num.natAbs ≤ B*originalUpper I ∧ C.upper.num.natAbs ≤ B*originalUpper I ∧
       J.width ≤ max I.width (max (Nat.size (Q^2)) (integerWidth (reply (Q^2) z)) +
-        Nat.size (max (max A.a A.b) (max A.c A.d)) + 3)
+        Nat.size (max (max A.a A.b) (max A.c A.d)) + 3) ∧
+      (∀ e : ℕ, I.width ≤ e → 4*J.width ≤ acquisitionWidth A I B e ∧
+        CutOperandWidths B I (acquisitionWidth A I B e) ∧
+        CutOperandWidths B J (acquisitionWidth A I B e))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h

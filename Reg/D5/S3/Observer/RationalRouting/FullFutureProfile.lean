@@ -127,12 +127,15 @@ theorem actual_dependence : ObservationalDependence signature actual := by
   refine ⟨⟨1,1⟩,1,0,?_⟩
   intro he
   have ht : actual.readout () ⟨1,1⟩ 1 = true := by
-    apply decide_eq_true
-    exact (containing_cell_exact 1 le_rfl (by norm_num) 1).mpr
+    have hh := (containing_cell_exact 1 le_rfl (by norm_num) 1).mpr
       ⟨by norm_num,fun _ _ _ => rfl⟩
+    simpa only [actual,realize,ProfileCell.Contains,Bool.and_eq_true,decide_eq_true_eq]
+      using hh
   have hf : actual.readout () ⟨1,1⟩ 0 ≠ true := by
     intro h
-    have hh : (containingCell 1 1).Contains 0 := of_decide_eq_true h
+    have hh : (containingCell 1 1).Contains 0 := by
+      simpa only [actual,realize,ProfileCell.Contains,Bool.and_eq_true,decide_eq_true_eq]
+        using h
     exact (lt_irrefl 0) hh.1
   apply hf
   rw [← he]
@@ -150,8 +153,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 def family : Registration arena (type_of% (@containing_cell_exact)) where
   actual := actual
-  bridge := by simp only [arena,actual,realize,decide_eq_true_eq]
-  variation := ⟨by simpa only [arena,actual,realize,decide_eq_true_eq] using
+  bridge := by simp only [arena,actual,realize,ProfileCell.Contains,Bool.and_eq_true,decide_eq_true_eq]
+  variation := ⟨by simpa only [arena,actual,realize,ProfileCell.Contains,Bool.and_eq_true,decide_eq_true_eq] using
     @containing_cell_exact,rejected,rejected_law⟩
   sensitivity := by
     constructor

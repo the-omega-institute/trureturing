@@ -833,118 +833,6 @@ private theorem acquisition_spec {A : PositiveMatrix} (hA : Unimodular A)
           ((if determinedReply A J s = none then [(s, h)] else []) ++ [])) = [] ∨ _
         split_ifs <;> simp [r, h, s, ProfileProgram.actualReads]
 
-/-- Exact arithmetic trace of the original-denominator cut scan. The
-counter charges one integer division and one cross-product comparison per step. -/
-inductive CutScanRun : ℕ → ProfileCell → Option (ℤ × ℕ) → ℕ → Prop where
-  | zero (C) : CutScanRun 0 C none 0
-  | found (n : ℕ) (C : ProfileCell)
-      (test : nextNumerator C.lower (n + 1) * (C.upper.den : ℤ) <
-        (n + 1 : ℕ) * C.upper.num) :
-      CutScanRun (n + 1) C (some (nextNumerator C.lower (n + 1), n + 1)) 1
-  | miss (n : ℕ) (C : ProfileCell) (result : Option (ℤ × ℕ)) (k : ℕ)
-      (test : ¬ nextNumerator C.lower (n + 1) * (C.upper.den : ℤ) <
-        (n + 1 : ℕ) * C.upper.num)
-      (tail : CutScanRun n C result k) : CutScanRun (n + 1) C result (k + 1)
-
-private theorem cut_scan_run (B : ℕ) (C : ProfileCell) :
-    ∃ k ≤ B, CutScanRun B C (findCut B C) k := by
-  induction B with
-  | zero => exact ⟨0,le_rfl,CutScanRun.zero C⟩
-  | succ n ih =>
-    dsimp only [findCut]
-    split_ifs with h
-    · exact ⟨1,by omega,CutScanRun.found n C h⟩
-    · obtain ⟨k,hk,run⟩ := ih
-      exact ⟨k+1,by omega,CutScanRun.miss n C _ k h run⟩
-
-/-- The final endpoint scan makes one division at every original denominator.
-Its comparison count is one at denominator one and two thereafter. -/
-inductive EndpointScanRun : ℕ → ℚ → GridEndpoint × GridEndpoint → ℕ → ℕ → Prop where
-  | zero (y) : EndpointScanRun 0 y (zeroEndpoint,oneEndpoint) 0 0
-  | first (y : ℚ) : EndpointScanRun 1 y
-      (zeroEndpoint.maximum ⟨gridQuotient 1 y,1,by omega⟩,
-        ⟨gridQuotient 1 y+1,1,by omega⟩) 1 1
-  | next (n : ℕ) (hn : 1 ≤ n) (y : ℚ) (C : GridEndpoint × GridEndpoint)
-      (d k : ℕ) (tail : EndpointScanRun n y C d k) :
-      EndpointScanRun (n+1) y
-        (C.1.maximum ⟨gridQuotient (n+1) y,n+1,by omega⟩,
-         C.2.minimum ⟨gridQuotient (n+1) y+1,n+1,by omega⟩) (d+1) (k+2)
-
-private theorem endpoint_scan_run (B : ℕ) (y : ℚ) :
-    ∃ k ≤ 2*B, EndpointScanRun B y (scanEndpoints B y) B k := by
-  induction B with
-  | zero => exact ⟨0,by omega,EndpointScanRun.zero y⟩
-  | succ n ih =>
-    by_cases hn : n=0
-    · subst n
-      exact ⟨1,by omega,by simpa [scanEndpoints] using EndpointScanRun.first y⟩
-    · obtain ⟨k,hk,run⟩ := ih
-      refine ⟨k+2,by omega,?_⟩
-      simpa only [scanEndpoints,ite_eq_right hn] using
-        EndpointScanRun.next n (by omega) y _ n k run
-
-/-- Original-denominator arithmetic, with all fixed endpoint arithmetic kept
-outside these counters. The trace is proof data, not an acquired archive. -/
-def AcquisitionScans (A : PositiveMatrix) (I : ProfileCell) (B : ℕ) (z : ℚ)
-    (output : ProfileCell) : Prop :=
-  ∃ K : ProfileCell, ∃ n₀ n₁ k : ℕ,
-    CutScanRun B I (findCut B I) n₀ ∧
-    (if findCut B I = none then n₁ = 0 else
-      let Q := profileScale A I B
-      let J := firstInterval A (Q^2) I (reply (Q^2) z)
-      CutScanRun B J (findCut B J) n₁) ∧
-    EndpointScanRun B K.representative (scanEndpoints B K.representative) B k ∧
-    output = fastContainingCell B K.representative ∧
-    n₀+n₁+B ≤ 3*B ∧ n₀+n₁+k ≤ 4*B
-
-private theorem acquisition_scans {A : PositiveMatrix} (hA : Unimodular A)
-    {I : ProfileCell} (hl : 0 ≤ I.lower) {B : ℕ} (hB : 1 ≤ B)
-    {x : ℚ} (hx : I.Contains x) :
-    AcquisitionScans A I B (mobius A x)
-      ((acquireProfile A I B).execute (mobius A x)) := by
-  obtain ⟨n₀,hn₀,run₀⟩ := cut_scan_run B I
-  unfold acquireProfile
-  split_ifs with hstart
-  · obtain ⟨k,hk,run⟩ := endpoint_scan_run B I.representative
-    exact ⟨I,n₀,0,k,run₀,by simp [hstart],run,rfl,by omega,by omega⟩
-  · let Q := profileScale A I B
-    have hQ : 1 ≤ Q := by
-      have hd : 0 < A.d := (diagonal_positive hA).2
-      dsimp [Q,profileScale]
-      simpa using Nat.mul_le_mul hB (show 1 ≤ A.c * originalUpper I + A.d by omega)
-    have hD : 1 ≤ Q^2 := one_le_pow₀ hQ
-    rw [read_or_derive_execute hA hl hD hx]
-    let r := reply (Q^2) (mobius A x)
-    let J := firstInterval A (Q^2) I r
-    have hJ : J.Contains x := (first_interval_exact hA hD hx.1 rfl x).mpr ⟨hx,rfl⟩
-    have hJl := first_interval_lower_nonneg A (Q^2) I r
-    obtain ⟨n₁,hn₁,run₁⟩ := cut_scan_run B J
-    cases hcut : findCut B J with
-    | none =>
-      dsimp only
-      rw [hcut]
-      obtain ⟨k,hk,run⟩ := endpoint_scan_run B J.representative
-      exact ⟨J,n₀,n₁,k,run₀,by simpa [hstart] using run₁,
-        run,rfl,by omega,by omega⟩
-    | some cut =>
-      obtain ⟨j,m⟩ := cut
-      dsimp only
-      rw [hcut]
-      obtain ⟨hm,hmB,hjl,hju⟩ := (find_cut_spec B J).1 j m hcut
-      have hp : 0 < (j : ℚ)/m := hJl.trans_lt hjl
-      have hi := (first_interval_exact hA hD hx.1 rfl _).mp ⟨hp,hjl.le,hju⟩
-      have hjI : I.lower < (j : ℚ)/m ∧ (j : ℚ)/m < I.upper :=
-        ⟨(le_max_left _ _).trans_lt hjl,hi.1.2.2⟩
-      obtain ⟨hj,hjU⟩ := cut_integer_bounds hl hm (original_upper_bounds hx).2 hjI
-      obtain ⟨hs,_⟩ := transport_bounds hA hm hmB hj.le hjU
-      let s := transportDenominator A j m
-      let p := transportNumerator A j m
-      rw [read_or_derive_execute hA hJl hs hJ]
-      let K := splitInterval J ((j : ℚ)/m) (decide (p ≤ reply s (mobius A x)))
-      obtain ⟨k,hk,run⟩ := endpoint_scan_run B K.representative
-      exact ⟨K,n₀,n₁,k,run₀,by simpa [hstart] using run₁,
-        run,rfl,by omega,by omega⟩
-
 /-- The finite payload inequalities concern complete actual integer replies.
 They do not assign time, price or backing to the source service. -/
 def BoundedReplies (Q V : ℕ) (rows : List (ℕ × ℤ)) : Prop :=
@@ -1220,6 +1108,350 @@ private theorem first_interval_width (A : PositiveMatrix) (D : ℕ) (I : Profile
   split_ifs <;> omega
 
 
+/-- The source's lambda(n) is one plus the natural binary magnitude width. -/
+def acquisitionWidth (A : PositiveMatrix) (I : ProfileCell) (B e : ℕ) : ℕ :=
+  16*(e + (Nat.size B+1) + (Nat.size (originalUpper I)+1) +
+    (Nat.size (max (max A.a A.b) (max A.c A.d))+1) + 1)
+
+private theorem scale_widths (A : PositiveMatrix) (I : ProfileCell) (B : ℕ) :
+    let mu := Nat.size (max (max A.a A.b) (max A.c A.d))
+    Nat.size (profileScale A I B) ≤ Nat.size B + mu + Nat.size (originalUpper I) + 1 ∧
+      Nat.size (A.a*originalUpper I+A.b+1) ≤ mu + Nat.size (originalUpper I) + 2 := by
+  dsimp only
+  let U := originalUpper I
+  let mu := Nat.size (max (max A.a A.b) (max A.c A.d))
+  have ha : Nat.size A.a ≤ mu := Nat.size_le_size
+    ((le_max_left A.a A.b).trans (le_max_left _ _))
+  have hb : Nat.size A.b ≤ mu := Nat.size_le_size
+    ((le_max_right A.a A.b).trans (le_max_left _ _))
+  have hc : Nat.size A.c ≤ mu := Nat.size_le_size
+    ((le_max_left A.c A.d).trans (le_max_right _ _))
+  have hd : Nat.size A.d ≤ mu := Nat.size_le_size
+    ((le_max_right A.c A.d).trans (le_max_right _ _))
+  have hcu := product_size A.c U
+  have hau := product_size A.a U
+  have ht := sum_size (A.c*U) A.d
+  have hv := sum_size (A.a*U) A.b
+  have hv' := sum_size (A.a*U+A.b) 1
+  have hq := product_size B (A.c*U+A.d)
+  simp only [Nat.size_one] at hv'
+  change Nat.size (B*(A.c*U+A.d)) ≤ _ ∧ _
+  constructor <;> omega
+
+private theorem first_interval_uniform_width {A : PositiveMatrix} (hA : Unimodular A)
+    {I : ProfileCell} {B : ℕ} (hB : 1 ≤ B) {x : ℚ} (hx : I.Contains x) :
+    let Q := profileScale A I B
+    let J := firstInterval A (Q^2) I (reply (Q^2) (mobius A x))
+    ∀ e : ℕ, I.width ≤ e → 4*J.width ≤ acquisitionWidth A I B e := by
+  dsimp only
+  let Q := profileScale A I B
+  let D := Q^2
+  let V := A.a*originalUpper I+A.b+1
+  let mu := Nat.size (max (max A.a A.b) (max A.c A.d))
+  have hQ : 1 ≤ Q := by
+    have hd : 0 < A.d := (diagonal_positive hA).2
+    dsimp [Q,profileScale]
+    simpa using Nat.mul_le_mul hB (show 1 ≤ A.c*originalUpper I+A.d by omega)
+  have hD : 1 ≤ D := one_le_pow₀ hQ
+  have hz := current_value_bounds hA hx.1
+    (hx.2.2.trans_le (original_upper_bounds hx).2)
+  have hzV : mobius A x < (V : ℚ) := by
+    simpa only [V,Nat.cast_add,Nat.cast_mul,Nat.cast_one] using hz.2
+  have hr := bounded_reply_size hz.1 hzV hD
+  have hn := (bounded_reply hz.1 hzV hD).1
+  have hna := Int.natAbs_of_nonneg hn
+  have hnt := Int.toNat_of_nonneg hn
+  have hnat : (reply D (mobius A x)).natAbs = (reply D (mobius A x)).toNat := by omega
+  rw [← hnat] at hr
+  have hq := (scale_widths A I B).1
+  have hv := (scale_widths A I B).2
+  have hd : Nat.size D ≤ 2*Nat.size Q := by
+    simpa only [D,pow_two,two_mul] using product_size Q Q
+  have hw := first_interval_width A D I (reply D (mobius A x))
+  intro e he
+  dsimp only [acquisitionWidth,integerWidth] at *
+  omega
+
+/-- All integer operands of one original-denominator cut test, including its
+quotient and cross-products. It contains no rational reduction operation. -/
+def cutOperands (C : ProfileCell) (m : ℕ) : List ℤ :=
+  let n := (m : ℤ)*C.lower.num
+  let j := nextNumerator C.lower m
+  [(m : ℤ),C.lower.num,C.lower.den,C.upper.num,C.upper.den,
+    n,n/(C.lower.den : ℤ),j,j*(C.upper.den : ℤ),(m : ℤ)*C.upper.num]
+
+def CutOperandWidths (B : ℕ) (C : ProfileCell) (W : ℕ) : Prop :=
+  ∀ m : ℕ, 1 ≤ m → m ≤ B → ∀ n ∈ cutOperands C m, integerWidth n ≤ W
+
+private theorem cut_operand_widths (B : ℕ) (C : ProfileCell) :
+    CutOperandWidths B C (Nat.size B + 2*C.width + 2) := by
+  intro m hm hmB n hn
+  have hs := Nat.size_le_size hmB
+  have hln : integerWidth C.lower.num ≤ C.width :=
+    (le_max_left _ _).trans (le_max_left _ _)
+  have hld : Nat.size C.lower.den ≤ C.width :=
+    (le_max_right _ _).trans (le_max_left _ _)
+  have hun : integerWidth C.upper.num ≤ C.width :=
+    (le_max_left _ _).trans (le_max_right _ _)
+  have hud : Nat.size C.upper.den ≤ C.width :=
+    (le_max_right _ _).trans (le_max_right _ _)
+  have hmul := integer_mul_width (m : ℤ) C.lower.num
+  have hmul' := integer_mul_width (m : ℤ) C.upper.num
+  have hdiv := Nat.size_le_size (Int.natAbs_ediv_le_natAbs
+    ((m : ℤ)*C.lower.num) (C.lower.den : ℤ))
+  have hj := integer_add_one_width (((m : ℤ)*C.lower.num)/(C.lower.den : ℤ))
+  have hcross := integer_mul_width (nextNumerator C.lower m) (C.upper.den : ℤ)
+  simp only [integerWidth,Int.natAbs_natCast] at hmul hmul' hcross
+  change integerWidth (nextNumerator C.lower m) ≤ _ at hj
+  dsimp only [integerWidth] at hln hun hj hdiv hld hud
+  simp only [cutOperands,List.mem_cons,List.mem_singleton] at hn
+  rcases hn with rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl <;>
+    simp only [integerWidth,Int.natAbs_natCast] <;> omega
+
+private theorem moving_cut_operand_widths {A : PositiveMatrix} (hA : Unimodular A)
+    {I : ProfileCell} {B : ℕ} (hB : 1 ≤ B) {x : ℚ} (hx : I.Contains x) :
+    let Q := profileScale A I B
+    let J := firstInterval A (Q^2) I (reply (Q^2) (mobius A x))
+    ∀ e : ℕ, I.width ≤ e →
+      CutOperandWidths B I (acquisitionWidth A I B e) ∧
+      CutOperandWidths B J (acquisitionWidth A I B e) := by
+  dsimp only
+  intro e he
+  have hw := first_interval_uniform_width hA hB hx e he
+  have initial := cut_operand_widths B I
+  have current := cut_operand_widths B
+    (firstInterval A ((profileScale A I B)^2) I
+      (reply ((profileScale A I B)^2) (mobius A x)))
+  constructor
+  · intro m hm hmB n hn
+    have hi := initial m hm hmB n hn
+    dsimp only [acquisitionWidth] at *
+    omega
+  · intro m hm hmB n hn
+    have hi := current m hm hmB n hn
+    dsimp only [acquisitionWidth] at *
+    omega
+
+/-- A superset of integer operands in any endpoint-scan quotient or comparison
+between two selected grid candidates. The original zero endpoint contributes 0. -/
+def gridOperands (y : ℚ) (m n : ℕ) : List ℤ :=
+  let p := gridQuotient m y
+  let q := gridQuotient n y
+  [(m : ℤ),(n : ℤ),y.num,y.den,(m : ℤ)*y.num,(n : ℤ)*y.num,
+    p,q,p+1,q+1,p*(n : ℤ),q*(m : ℤ),(p+1)*(n : ℤ),(q+1)*(m : ℤ),0]
+
+def GridOperandWidths (B : ℕ) (y : ℚ) (W : ℕ) : Prop :=
+  ∀ m n : ℕ, 1 ≤ m → m ≤ B → 1 ≤ n → n ≤ B →
+    ∀ k ∈ gridOperands y m n, integerWidth k ≤ W
+
+private theorem grid_operand_widths (B : ℕ) (y : ℚ) :
+    GridOperandWidths B y (2*Nat.size B+rationalWidth y+2) := by
+  intro m n hm hmB hn hnB k hk
+  have hs := Nat.size_le_size hmB
+  have ht := Nat.size_le_size hnB
+  have hnum : integerWidth y.num ≤ rationalWidth y := le_max_left _ _
+  have hden : Nat.size y.den ≤ rationalWidth y := le_max_right _ _
+  have hmul := integer_mul_width (m : ℤ) y.num
+  have hmul' := integer_mul_width (n : ℤ) y.num
+  have hp := Nat.size_le_size (Int.natAbs_ediv_le_natAbs ((m : ℤ)*y.num) (y.den : ℤ))
+  have hq := Nat.size_le_size (Int.natAbs_ediv_le_natAbs ((n : ℤ)*y.num) (y.den : ℤ))
+  have hp' := integer_add_one_width (gridQuotient m y)
+  have hq' := integer_add_one_width (gridQuotient n y)
+  have hc₁ := integer_mul_width (gridQuotient m y) (n : ℤ)
+  have hc₂ := integer_mul_width (gridQuotient n y) (m : ℤ)
+  have hc₃ := integer_mul_width (gridQuotient m y+1) (n : ℤ)
+  have hc₄ := integer_mul_width (gridQuotient n y+1) (m : ℤ)
+  change integerWidth (gridQuotient m y) ≤ integerWidth ((m : ℤ)*y.num) at hp
+  change integerWidth (gridQuotient n y) ≤ integerWidth ((n : ℤ)*y.num) at hq
+  simp only [integerWidth,Int.natAbs_natCast] at *
+  simp only [gridOperands,List.mem_cons,List.mem_singleton] at hk
+  rcases hk with rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl <;>
+    simp only [integerWidth,Int.natAbs_natCast,Int.natAbs_zero,Nat.size_zero] <;> omega
+
+private theorem representative_width (C : ProfileCell) :
+    rationalWidth C.representative ≤ C.width+2 := by
+  unfold ProfileCell.representative
+  split_ifs with hl
+  · exact (le_max_left _ _).trans (Nat.le_add_right _ _)
+  · have he : C.upper/2 = (C.upper.num : ℚ)/((2 : ℤ)*C.upper.den) := by
+      calc
+        C.upper/2 = ((C.upper.num : ℚ)/C.upper.den)/2 := by rw [Rat.num_div_den]
+        _ = (C.upper.num : ℚ)/((2 : ℤ)*C.upper.den) := by push_cast; ring
+    rw [he]
+    have hw := div_int_width C.upper.num ((2 : ℤ)*C.upper.den)
+    have hm := integer_mul_width 2 (C.upper.den : ℤ)
+    have hn : integerWidth C.upper.num ≤ C.width :=
+      (le_max_left _ _).trans (le_max_right _ _)
+    have hd : Nat.size C.upper.den ≤ C.width :=
+      (le_max_right _ _).trans (le_max_right _ _)
+    have htwo : integerWidth 2 = 2 := by decide
+    simp only [integerWidth,Int.natAbs_natCast] at hm
+    dsimp only [integerWidth] at htwo
+    omega
+
+private theorem split_interval_width (C : ProfileCell) (t : ℚ) (side : Bool) :
+    (splitInterval C t side).width ≤ max C.width (rationalWidth t) := by
+  have hl := max_rational_width C.lower t
+  have hu := min_rational_width C.upper t
+  dsimp only [ProfileCell.width,splitInterval] at *
+  split_ifs <;> omega
+
+private theorem cut_rational_width {I : ProfileCell} (hl : 0 ≤ I.lower)
+    {B m U : ℕ} (hm : 1 ≤ m) (hmB : m ≤ B) (hU : I.upper ≤ (U : ℚ))
+    {j : ℤ} (hj : I.lower < (j : ℚ)/m ∧ (j : ℚ)/m < I.upper) :
+    rationalWidth ((j : ℚ)/m) ≤ Nat.size B+Nat.size U+1 := by
+  obtain ⟨hj₀,hjU⟩ := cut_integer_bounds hl hm hU hj
+  have hna := Int.natAbs_of_nonneg hj₀.le
+  have hnt := Int.toNat_of_nonneg hj₀.le
+  have hn : j.natAbs = j.toNat := by omega
+  have hjabs : j.natAbs ≤ m*U := by rwa [hn]
+  have hjw := (Nat.size_le_size hjabs).trans (product_size m U)
+  have hmw := Nat.size_le_size hmB
+  have hw := div_int_width j (m : ℤ)
+  simp only [integerWidth,Int.natAbs_natCast] at hw
+  omega
+
+
+/-- Exact arithmetic trace of the original-denominator cut scan. The
+counter charges one integer division and one cross-product comparison per step. -/
+inductive CutScanRun : ℕ → ProfileCell → Option (ℤ × ℕ) → ℕ → Prop where
+  | zero (C) : CutScanRun 0 C none 0
+  | found (n : ℕ) (C : ProfileCell)
+      (test : nextNumerator C.lower (n + 1) * (C.upper.den : ℤ) <
+        (n + 1 : ℕ) * C.upper.num) :
+      CutScanRun (n + 1) C (some (nextNumerator C.lower (n + 1), n + 1)) 1
+  | miss (n : ℕ) (C : ProfileCell) (result : Option (ℤ × ℕ)) (k : ℕ)
+      (test : ¬ nextNumerator C.lower (n + 1) * (C.upper.den : ℤ) <
+        (n + 1 : ℕ) * C.upper.num)
+      (tail : CutScanRun n C result k) : CutScanRun (n + 1) C result (k + 1)
+
+private theorem cut_scan_run (B : ℕ) (C : ProfileCell) :
+    ∃ k ≤ B, CutScanRun B C (findCut B C) k := by
+  induction B with
+  | zero => exact ⟨0,le_rfl,CutScanRun.zero C⟩
+  | succ n ih =>
+    dsimp only [findCut]
+    split_ifs with h
+    · exact ⟨1,by omega,CutScanRun.found n C h⟩
+    · obtain ⟨k,hk,run⟩ := ih
+      exact ⟨k+1,by omega,CutScanRun.miss n C _ k h run⟩
+
+/-- The final endpoint scan makes one division at every original denominator.
+Its comparison count is one at denominator one and two thereafter. -/
+inductive EndpointScanRun : ℕ → ℚ → GridEndpoint × GridEndpoint → ℕ → ℕ → Prop where
+  | zero (y) : EndpointScanRun 0 y (zeroEndpoint,oneEndpoint) 0 0
+  | first (y : ℚ) : EndpointScanRun 1 y
+      (zeroEndpoint.maximum ⟨gridQuotient 1 y,1,by omega⟩,
+        ⟨gridQuotient 1 y+1,1,by omega⟩) 1 1
+  | next (n : ℕ) (hn : 1 ≤ n) (y : ℚ) (C : GridEndpoint × GridEndpoint)
+      (d k : ℕ) (tail : EndpointScanRun n y C d k) :
+      EndpointScanRun (n+1) y
+        (C.1.maximum ⟨gridQuotient (n+1) y,n+1,by omega⟩,
+         C.2.minimum ⟨gridQuotient (n+1) y+1,n+1,by omega⟩) (d+1) (k+2)
+
+private theorem endpoint_scan_run (B : ℕ) (y : ℚ) :
+    ∃ k ≤ 2*B, EndpointScanRun B y (scanEndpoints B y) B k := by
+  induction B with
+  | zero => exact ⟨0,by omega,EndpointScanRun.zero y⟩
+  | succ n ih =>
+    by_cases hn : n=0
+    · subst n
+      exact ⟨1,by omega,by simpa [scanEndpoints] using EndpointScanRun.first y⟩
+    · obtain ⟨k,hk,run⟩ := ih
+      refine ⟨k+2,by omega,?_⟩
+      simpa only [scanEndpoints,ite_eq_right hn] using
+        EndpointScanRun.next n (by omega) y _ n k run
+
+/-- Original-denominator arithmetic, with all fixed endpoint arithmetic kept
+outside these counters. The trace is proof data, not an acquired archive. -/
+def AcquisitionScans (A : PositiveMatrix) (I : ProfileCell) (B : ℕ) (z : ℚ)
+    (output : ProfileCell) : Prop :=
+  ∃ K : ProfileCell, ∃ n₀ n₁ k : ℕ,
+    CutScanRun B I (findCut B I) n₀ ∧
+    (if findCut B I = none then n₁ = 0 else
+      let Q := profileScale A I B
+      let J := firstInterval A (Q^2) I (reply (Q^2) z)
+      CutScanRun B J (findCut B J) n₁) ∧
+    EndpointScanRun B K.representative (scanEndpoints B K.representative) B k ∧
+    output = fastContainingCell B K.representative ∧
+    n₀+n₁+B ≤ 3*B ∧ n₀+n₁+k ≤ 4*B ∧
+    ∀ e : ℕ, I.width ≤ e →
+      GridOperandWidths B K.representative (acquisitionWidth A I B e)
+
+private theorem acquisition_scans {A : PositiveMatrix} (hA : Unimodular A)
+    {I : ProfileCell} (hl : 0 ≤ I.lower) {B : ℕ} (hB : 1 ≤ B)
+    {x : ℚ} (hx : I.Contains x) :
+    AcquisitionScans A I B (mobius A x)
+      ((acquireProfile A I B).execute (mobius A x)) := by
+  have grid_bound {K : ProfileCell}
+      (hw : ∀ e : ℕ, I.width ≤ e → 4*K.width ≤ acquisitionWidth A I B e) :
+      ∀ e : ℕ, I.width ≤ e →
+        GridOperandWidths B K.representative (acquisitionWidth A I B e) := by
+    intro e he m n hm hmB hn hnB k hk
+    have hrun := grid_operand_widths B K.representative m n hm hmB hn hnB k hk
+    have hrep := representative_width K
+    have hkw := hw e he
+    dsimp only [acquisitionWidth] at *
+    omega
+  have initial_width : ∀ e : ℕ, I.width ≤ e →
+      4*I.width ≤ acquisitionWidth A I B e := by
+    intro e he
+    dsimp only [acquisitionWidth]
+    omega
+  have first_width := first_interval_uniform_width hA hB hx
+  obtain ⟨n₀,hn₀,run₀⟩ := cut_scan_run B I
+  unfold acquireProfile
+  split_ifs with hstart
+  · obtain ⟨k,hk,run⟩ := endpoint_scan_run B I.representative
+    exact ⟨I,n₀,0,k,run₀,by simp [hstart],run,rfl,by omega,by omega,grid_bound initial_width⟩
+  · let Q := profileScale A I B
+    have hQ : 1 ≤ Q := by
+      have hd : 0 < A.d := (diagonal_positive hA).2
+      dsimp [Q,profileScale]
+      simpa using Nat.mul_le_mul hB (show 1 ≤ A.c * originalUpper I + A.d by omega)
+    have hD : 1 ≤ Q^2 := one_le_pow₀ hQ
+    rw [read_or_derive_execute hA hl hD hx]
+    let r := reply (Q^2) (mobius A x)
+    let J := firstInterval A (Q^2) I r
+    have hJ : J.Contains x := (first_interval_exact hA hD hx.1 rfl x).mpr ⟨hx,rfl⟩
+    have hJl := first_interval_lower_nonneg A (Q^2) I r
+    obtain ⟨n₁,hn₁,run₁⟩ := cut_scan_run B J
+    cases hcut : findCut B J with
+    | none =>
+      dsimp only
+      rw [hcut]
+      obtain ⟨k,hk,run⟩ := endpoint_scan_run B J.representative
+      exact ⟨J,n₀,n₁,k,run₀,by simpa [hstart] using run₁,
+        run,rfl,by omega,by omega,grid_bound first_width⟩
+    | some cut =>
+      obtain ⟨j,m⟩ := cut
+      dsimp only
+      rw [hcut]
+      obtain ⟨hm,hmB,hjl,hju⟩ := (find_cut_spec B J).1 j m hcut
+      have hp : 0 < (j : ℚ)/m := hJl.trans_lt hjl
+      have hi := (first_interval_exact hA hD hx.1 rfl _).mp ⟨hp,hjl.le,hju⟩
+      have hjI : I.lower < (j : ℚ)/m ∧ (j : ℚ)/m < I.upper :=
+        ⟨(le_max_left _ _).trans_lt hjl,hi.1.2.2⟩
+      obtain ⟨hj,hjU⟩ := cut_integer_bounds hl hm (original_upper_bounds hx).2 hjI
+      obtain ⟨hs,_⟩ := transport_bounds hA hm hmB hj.le hjU
+      let s := transportDenominator A j m
+      let p := transportNumerator A j m
+      rw [read_or_derive_execute hA hJl hs hJ]
+      let K := splitInterval J ((j : ℚ)/m) (decide (p ≤ reply s (mobius A x)))
+      have htwidth := cut_rational_width hl hm hmB (original_upper_bounds hx).2 hjI
+      have final_width : ∀ e : ℕ, I.width ≤ e →
+          4*K.width ≤ acquisitionWidth A I B e := by
+        intro e he
+        have hjw := first_width e he
+        have hsplit := split_interval_width J ((j : ℚ)/m)
+          (decide (p ≤ reply s (mobius A x)))
+        change K.width ≤ max J.width (rationalWidth ((j : ℚ)/m)) at hsplit
+        dsimp only [acquisitionWidth] at *
+        omega
+      obtain ⟨k,hk,run⟩ := endpoint_scan_run B K.representative
+      exact ⟨K,n₀,n₁,k,run₀,by simpa [hstart] using run₁,
+        run,rfl,by omega,by omega,grid_bound final_width⟩
+
 /-- Actual acquisition on one authentic chronological prefix. The finite
 output is exactly the original cell and evaluates every future word and every
 scale through the requested bound; the actual-read trace has at most two rows. -/
@@ -1248,7 +1480,10 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
       replyWidths (program.actualReads z) ≤ 6*Nat.size Q + 2*Nat.size V + 4 ∧
       C.lower.num.natAbs ≤ B*originalUpper I ∧ C.upper.num.natAbs ≤ B*originalUpper I ∧
       J.width ≤ max I.width (max (Nat.size (Q^2)) (integerWidth (reply (Q^2) z)) +
-        Nat.size (max (max A.a A.b) (max A.c A.d)) + 3) := by
+        Nat.size (max (max A.a A.b) (max A.c A.d)) + 3) ∧
+      (∀ e : ℕ, I.width ≤ e → 4*J.width ≤ acquisitionWidth A I B e ∧
+        CutOperandWidths B I (acquisitionWidth A I B e) ∧
+        CutOperandWidths B J (acquisitionWidth A I B e)) := by
   dsimp only
   rw [chronological_matrix u hx.1]
   obtain ⟨he, ht⟩ := acquisition_spec (unimodular_wordMatrix u.reverse) hl hB hx
@@ -1262,7 +1497,7 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
   have hD : 1 ≤ Q ^ 2 := one_le_pow₀ hQ
   let J := firstInterval A (Q ^ 2) I (reply (Q ^ 2) (mobius A x))
   have hJ : J.Contains x := (first_interval_exact hA hD hx.1 rfl x).mpr ⟨hx,rfl⟩
-  refine ⟨he, ?_, ?_, ht, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨he, ?_, ?_, ht, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · rw [he]
     intro y
     rw [containing_cell_exact B hB hx.1 y]
@@ -1305,5 +1540,8 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
     exact (containing_cell_numerators B hB hx.1 (originalUpper I)
       (hx.2.2.trans_le (original_upper_bounds hx).2)).2
   · exact first_interval_width _ _ _ _
+  · intro e he
+    exact ⟨first_interval_uniform_width hA hB hx e he,
+      moving_cut_operand_widths hA hB hx e he⟩
 
 end D5.S3.Observer.RationalRouting
