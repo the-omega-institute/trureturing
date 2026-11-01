@@ -1,7 +1,7 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
-using static StrataLint.Scribe.Blueprint.D5.S3.Geometry.Polygons.PolygonEarSlideFormula;
+using static StrataLint.Scribe.Blueprint.D5.S3.Geometry.Polygons.PolygonEarSlideGeometryFormula;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.Polygons;
 
@@ -53,7 +53,7 @@ internal sealed class PolygonEarSlideGeometryDocument : IScribeDocumentDefinitio
 
 }
 
-internal static class PolygonEarSlideFormula
+internal static class PolygonEarSlideGeometryFormula
 {
     internal static Formula X(string name) => F.Id(name);
     internal static Formula N(int n) => n == 14 ? D(1,4) : D((byte)n);
