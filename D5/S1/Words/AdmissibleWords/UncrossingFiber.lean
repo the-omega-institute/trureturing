@@ -463,9 +463,11 @@ theorem support_phi_injective {n : Nat} :
   have hphi : phi w = phi z := by
     funext i
     have hi : i ∈ support (phi w) ↔ i ∈ support (phi z) := by
-      rw [h]
-    change (phi w i = true) ↔ (phi z i = true) at hi
-    cases hw : phi w i <;> cases hz : phi z i <;> simp [hw, hz] at hi ⊢
+      have h' : support (phi w) = support (phi z) := by simpa using h
+      rw [h']
+    have hi' : (phi w i = true) ↔ (phi z i = true) := by
+      simpa [support] using hi
+    cases hw : phi w i <;> cases hz : phi z i <;> simp [hw, hz] at hi' ⊢
   calc
     w = phi (phi w) := (phi_involutive w).symm
     _ = phi (phi z) := congrArg phi hphi

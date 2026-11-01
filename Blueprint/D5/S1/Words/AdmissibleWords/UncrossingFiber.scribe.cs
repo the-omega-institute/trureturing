@@ -20,6 +20,7 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "forwardStep_margin"),
                 H("A meet-join step preserves every coordinate margin"),
                 StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The residual multiset is explicit, so repeated rows and empty rows are "
                         + "included. Replacing incomparable A and B by A intersect B and A union "
@@ -30,6 +31,7 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "margin_eq_card_iff"),
                 H("A coordinate has full margin exactly when every row contains it"),
                 StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The characterization is valid for empty rows, repeated rows, and the empty "
                         + "multiset; it is the coordinate-level description of the minimum row."))),
@@ -39,6 +41,7 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "comparable_margin_unique"),
                 H("Comparable row multisets are uniquely determined by mass and margins"),
                 StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Strong induction removes a minimum row, identified by the full-margin "
                         + "coordinates, and reconstructs the multiset from its residual."))),
@@ -48,17 +51,18 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "forwardStep_energy_strict"),
                 H("An incomparable exchange raises rank-square energy"),
                 StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Hibi),
                 Blocks(Paragraph(Text(
                     "If a and b are the two nonempty exclusive parts of the selected rows, the "
                         + "energy increment is 2ab, hence at least two. This is the monotone "
                         + "potential used for the forward route bound."))),
-                DescribeRole.Theorem,
-                provenance: AssessedProvenance.FromLiterature(Hibi)),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("forward-step-energy-gap"),
                 DeclarationHandle.Create(Prefix + "forwardStep_energy_gap"),
                 H("An incomparable exchange raises energy by at least two"),
                 StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Both exclusive parts are nonempty, so the exact rank-square increment is at "
                         + "least two. This is the quantitative induction step."))),
@@ -68,6 +72,7 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "exists_forward_route_to_comparable"),
                 H("Every finite row multiset has a bounded forward route"),
                 StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The route is built by strong induction on the remaining rank-square energy. "
                         + "It has at most floor(m times |V| squared divided by two) forward "
@@ -78,6 +83,7 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "phi_support_fence"),
                 H("Alternating complement sends admissible words to fence rows"),
                 StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The zero-based alternating complement leaves even coordinates and complements "
                         + "odd coordinates. The no-adjacent-one condition becomes the alternating "
@@ -88,6 +94,7 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "phi_involutive"),
                 H("Alternating complement is an involution"),
                 StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Applying the parity-dependent complement twice restores every Boolean word, "
                         + "so the transformed support carrier has no information loss."))),
@@ -97,6 +104,7 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "support_phi_injective"),
                 H("Phi supports faithfully distinguish words"),
                 StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The support of the alternating complement determines the transformed word, "
                         + "and involutivity then recovers the original admissible-word input."))),
@@ -106,6 +114,7 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "adm_phi_route_bound"),
                 H("The admissible carrier inherits the bounded route"),
                 StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For an actual multiset of admissible words, the transformed supports remain "
                         + "in the finite fence family throughout the constructed route. The same "
@@ -117,6 +126,7 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "adm_phi_canonical_endpoint_unique"),
                 H("The comparable endpoint is canonical inside the actual Phi fiber"),
                 StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Any two comparable endpoints reached by forward routes from the same "
                         + "admissible-word multiset have the same mass and coordinate margins, "
@@ -127,6 +137,7 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "adm_phi_forward_consumer"),
                 H("The native admissible-word consumer realizes a four-corner exchange"),
                 StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Two actual admissible words with incomparable transformed supports instantiate "
                         + "the generic residual exchange. In dimension three this includes the "
