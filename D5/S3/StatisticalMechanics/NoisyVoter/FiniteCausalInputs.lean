@@ -143,23 +143,60 @@ private theorem decode_measurable (base : (c : Coord V) → Value G c) (u : V) (
 /-- Equal finite input laws give equal joint laws of all native opinions and sources.
 The input-law premise concerns only the displayed finite set, including no fresh,
 refresh or neighbour-choice coordinate at time zero. -/
-theorem history_map_eq_of_input_map_eq [MeasurableSpace Ω] [MeasurableSpace Ω']
+private theorem history_map_eq_of_input_map_eq [MeasurableSpace Ω] [MeasurableSpace Ω']
     (P : Measure Ω) (Q : Measure Ω')
     (x : (c : Coord V) → Ω → Value G c)
     (y : (c : Coord V) → Ω' → Value G c)
-    (hx : ∀ c, Measurable (x c)) (hy : ∀ c, Measurable (y c))
+    (hx : ∀ c, positive c → Measurable (x c))
+    (hy : ∀ c, positive c → Measurable (y c))
     (base : (c : Coord V) → Value G c) (u : V) (N : ℕ)
     (h : P.map (restrictInputs x u N) = Q.map (restrictInputs y u N)) :
     P.map (history x u N) = Q.map (history y u N) := by
   have he (ω : Ω) := (finite_history_factorization base u N).2 x ω
   have he' (ω : Ω') := (finite_history_factorization base u N).2 y ω
   have hm : Measurable (restrictInputs x u N) :=
-    measurable_pi_iff.mpr (fun c => hx c.val)
+    measurable_pi_iff.mpr (fun c => hx c.val
+      ((finite_history_factorization base u N).1 c.val c.property))
   have hm' : Measurable (restrictInputs y u N) :=
-    measurable_pi_iff.mpr (fun c => hy c.val)
+    measurable_pi_iff.mpr (fun c => hy c.val
+      ((finite_history_factorization base u N).1 c.val c.property))
   rw [show history x u N = decode base u N ∘ restrictInputs x u N from funext he,
     show history y u N = decode base u N ∘ restrictInputs y u N from funext he',
     ← Measure.map_map (decode_measurable base u N) hm,
     ← Measure.map_map (decode_measurable base u N) hm', h]
+
+/-- A realization of the original positive-time coordinate law determines the joint
+opinion-and-source history law. Unused time-zero coordinates require no law or
+independence assumption. The common marginal family can in particular be the
+fair opinion, noisy refresh and actual-neighbour laws. -/
+theorem history_law_of_positive_coordinate_laws [MeasurableSpace Ω] [MeasurableSpace Ω']
+    (P : Measure Ω) (Q : Measure Ω')
+    (x : (c : Coord V) → Ω → Value G c)
+    (y : (c : Coord V) → Ω' → Value G c)
+    (μ : (c : {c : Coord V // positive c}) → Measure (Value G c.val))
+    (hx : ∀ c, positive c → Measurable (x c))
+    (hy : ∀ c, positive c → Measurable (y c))
+    (hix : iIndepFun (fun c : {c : Coord V // positive c} => x c.val) P)
+    (hiy : iIndepFun (fun c : {c : Coord V // positive c} => y c.val) Q)
+    (hlx : ∀ c : {c : Coord V // positive c}, HasLaw (x c.val) (μ c) P)
+    (hly : ∀ c : {c : Coord V // positive c}, HasLaw (y c.val) (μ c) Q)
+    (base : (c : Coord V) → Value G c) (u : V) (N : ℕ) :
+    P.map (history x u N) = Q.map (history y u N) := by
+  classical
+  let inclusion (c : {c // c ∈ historyInputs (G := G) u N}) : {c : Coord V // positive c} :=
+    ⟨c.val, (finite_history_factorization base u N).1 c.val c.property⟩
+  have hinj : Function.Injective inclusion := by
+    intro a b h
+    exact Subtype.ext (congrArg Subtype.val h)
+  have hmx : Measurable (restrictInputs x u N) :=
+    measurable_pi_iff.mpr (fun c => hx c.val (inclusion c).property)
+  have hmy : Measurable (restrictInputs y u N) :=
+    measurable_pi_iff.mpr (fun c => hy c.val (inclusion c).property)
+  have hX := (hix.precomp hinj).hasLaw_infinitePi
+    (fun c => hlx (inclusion c)) hmx.aemeasurable
+  have hY := (hiy.precomp hinj).hasLaw_infinitePi
+    (fun c => hly (inclusion c)) hmy.aemeasurable
+  exact history_map_eq_of_input_map_eq P Q x y hx hy base u N
+    (hX.map_eq.trans hY.map_eq.symm)
 
 end D5.S3.StatisticalMechanics.NoisyVoter.FiniteCausalInputs

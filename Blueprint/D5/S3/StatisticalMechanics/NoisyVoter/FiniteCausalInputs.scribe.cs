@@ -18,10 +18,10 @@ internal sealed class FiniteCausalInputsDocument : IScribeDocumentDefinition
             Paragraph(Text("The history records both the actual synchronous opinion and its disjoint initial-or-fresh source label at each time. Its opinion coordinate is the original nvm recursion; its label coordinate is the original source recursion. The finite vector restrictInputs retains all input coordinates jointly. To decode it, complete the unspecified coordinates using an arbitrary fixed assignment base and run those same recursions. The resulting history is independent of that completion.")),
             Node("factorization", "finite_history_factorization", "Finite reconstruction of the complete joint history", Factorization(),
                 "For every locally finite simple graph, every sample type, every base assignment, root and natural horizon, all inputs are initial or have positive time, and decoding the finite input vector recovers the joint history at every sample point. Agreement propagates through the same refresh decision and the same selected neighbour in the preceding time layer. The statement includes horizon zero and requires no probability, stationarity or independence assumption."),
-            Node("joint-law", "history_map_eq_of_input_map_eq", "Joint history laws depend only on finite input laws", LawTransport(),
-                "The two measurable coordinate families may live on different measurable spaces with different measures. Equality of their finite joint input laws implies equality of the joint opinion-and-source history laws, using the same graph, root and horizon. Only these finite inputs enter the law premise. In particular, no independence or marginal law for a fresh, refresh or choice coordinate at time zero is required."),
+            Node("joint-law", "history_law_of_positive_coordinate_laws", "The positive-time coordinate law determines the joint history law", LawTransport(),
+                "The two coordinate families may live on different measurable spaces with different measures. On each space, require mutual independence of the family indexed by initial and strictly positive-time coordinates, measurability of those coordinates, and the same prescribed marginal laws. Then the complete joint opinion-and-source history laws agree, using the same graph, root and horizon. Neither measurability nor independence nor a marginal law is required for a fresh, refresh or choice coordinate at time zero. The common marginal family is arbitrary and may be specialized to fair opinion coins, noisy refresh controls and uniform choices on the actual neighbour sets."),
             Paragraph(Text("For repetition observations with lag d at times i and i+d, the horizon N=t+d includes every observation, including the empty repetition sum at t=0. Retaining source labels jointly also retains every equality among sources, rather than identifying sources whenever their opinion colours happen to agree. The result transports the full source partition and does not assert independence of source collisions.")),
-            Paragraph(Text("This finite reconstruction supplies the deterministic finite-input part of the ancestral-collision argument. The exact variance decomposition with both the variance of the collision count and the expected squared pair multiplicities, its two remainder identities, and its almost-sure equality criterion require further arguments. The transport theorem states equality of history laws under equality of finite input laws; it does not itself derive those finite product laws from a positive-time coordinate family."))), []));
+            Paragraph(Text("This finite reconstruction supplies the finite-input and realization-independence parts of the ancestral-collision argument. The exact variance decomposition with both the variance of the collision count and the expected squared pair multiplicities, its two remainder identities, and its almost-sure equality criterion require further arguments. Equality of the finite product input laws is obtained from the specified independence and marginals, and the common deterministic decoder then transports it to the joint history."))), []));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("voter-causal-" + id),
@@ -50,6 +50,11 @@ internal sealed class FiniteCausalInputsDocument : IScribeDocumentDefinition
     private static Formula History(string family) => Call("history", X(family), X("u"), X("N"));
     private static Formula Restriction(string family) => Call("restrictInputs", X(family), X("u"), X("N"));
     private static Formula Map(string measure, Formula function) => Call("map", X(measure), function);
+    private static Formula PositiveCoords() => Seq(OpenBrace, X("c"), Colon, Coord(), Bar,
+        Call("positive", X("c")), CloseBrace);
+    private static Formula Val() => Call("val", X("c"));
+    private static Formula PositiveFamily(string family) => Seq(Open, LambdaLower, X("c"), Colon,
+        PositiveCoords(), Comma, App(X(family), Val()), Close);
     private static Formula Graph(Formula body) => All("G", Call("SimpleGraph", X("V")),
         Inst(Seq(X("G"), Dot, Named("LocallyFinite")), body));
     private static Formula RootHorizon(Formula body) =>
@@ -68,13 +73,22 @@ internal sealed class FiniteCausalInputsDocument : IScribeDocumentDefinition
 
     private static Formula LawTransport()
     {
-        var hx = All("c", Coord(), Call("Measurable", App(X("x"), X("c"))));
-        var hy = All("c", Coord(), Call("Measurable", App(X("y"), X("c"))));
-        var law = Imp(Eqn(Map("P", Restriction("x")), Map("Q", Restriction("y"))),
-            Eqn(Map("P", History("x")), Map("Q", History("y"))));
+        var hx = All("c", Coord(), Imp(Call("positive", X("c")),
+            Call("Measurable", App(X("x"), X("c")))));
+        var hy = All("c", Coord(), Imp(Call("positive", X("c")),
+            Call("Measurable", App(X("y"), X("c")))));
+        var hix = Call("iIndepFun", PositiveFamily("x"), X("P"));
+        var hiy = Call("iIndepFun", PositiveFamily("y"), X("Q"));
+        var hlx = All("c", PositiveCoords(), Call("HasLaw", App(X("x"), Val()),
+            App(X("m"), X("c")), X("P")));
+        var hly = All("c", PositiveCoords(), Call("HasLaw", App(X("y"), Val()),
+            App(X("m"), X("c")), X("Q")));
+        var law = Eqn(Map("P", History("x")), Map("Q", History("y")));
+        var marginals = DepArr("c", PositiveCoords(), Call("Measure", Call("Value", X("G"), Val())));
         var body = All("P", Call("Measure", X("O")), All("Q", Call("Measure", X("Oprime")),
             All("x", Assignment("O"), All("y", Assignment("Oprime"),
-                Imp(hx, Imp(hy, RootHorizon(law)))))));
+                All("m", marginals, Imp(hx, Imp(hy, Imp(hix, Imp(hiy,
+                    Imp(hlx, Imp(hly, RootHorizon(law))))))))))));
         return Disp(All("V", Named("Type"), All("O", Named("Type"), All("Oprime", Named("Type"),
             Graph(Inst(Call("MeasurableSpace", X("O")),
                 Inst(Call("MeasurableSpace", X("Oprime")), body)))))));
