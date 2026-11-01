@@ -1790,3 +1790,336 @@ Cover's [*Enumerative Source Encoding*, §I, Propositions 1–2 and inverse algo
 $G(t)\le M_J(t)\le G(t)+N(t)-1$. Theorem 20.1 proves the necessary coefficient $\kappa$ when a logarithmic estimate exists. Theorem 21.2 shows only that the displayed rounded-depth certificate cannot itself yield a superlogarithmic counterexample. Proposition 19.5 leaves the all-source polynomial bound (IV.46c) for the actual recursively inherited words unproved; success of this constructor is only a sufficient route to existence, and its failure would not be a universal-class impossibility. The original question—one computable $J$ and one finite $c$ satisfying the logarithmic bound for every actual endpoint, or a universal-class counterexample—therefore remains open in this increment. No Lean/kernel verification, numerical result, total-cost optimum, physical impossibility or completion of the persistent RRO goal is asserted.
 
 ## 追加锚（本行以下为增补区）
+
+## 23. Native orientation erasure and the pruned tree
+
+**Definition 23.1 (the native quotient and its two fibres).** Use exactly
+[AA Definitions 17.1 and 19.1 and Theorems 17.2 and 19.2](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md):
+the known initial $\alpha$, all finite successful addressed words, and
+$P_p:\alpha\to\beta$, $S_p:\beta\to\langle\beta,\alpha\rangle$ at a
+current leaf, with $\beta$ on the **left**. Write $[t]$ for the finite
+rooted unordered full binary tree retaining branch incidence and leaf
+colours but forgetting sibling order. Isomorphisms preserve the root and
+colours; no vertex identities, clock or physical frames are added. For
+such a coloured tree $U$, define
+
+$$
+\mathcal O(U)=\{t\in\mathcal D:[t]=U\},\qquad
+\mathcal J(U)=\{(t,w):t\in\mathcal O(U),\ w\in\mathcal H(t)\},
+\qquad E(U)=|\mathcal O(U)|,\quad J(U)=|\mathcal J(U)|.
+\tag{IV.61}
+$$
+
+Here $\mathcal D$ and $\mathcal H(t)$ are AA17's exact native domain and
+complete $P/S$ histories. Let $K(U)$ be obtained by deleting every
+$\alpha$ leaf and its incident edge, retaining the other vertices and
+edges, with $K(\alpha)=\varnothing$. Write $n(U)=|K(U)|$. For a rooted
+unary/binary tree $K$, let $b(K)$ count its binary vertices, $s(K)$ those
+binary vertices with isomorphic rooted child subtrees, $A(K)$ the order
+of its rooted automorphism group, and $h_v$ its inclusive descendant
+count at $v$. Empty products and $A(\varnothing)$ are one. An increasing
+labelling is a bijection $\lambda:V(K)\to\{1,\ldots,|K|\}$ strictly
+increasing from parent to child. Write $\mathcal L(K)$ for these
+labellings modulo rooted automorphisms, including one empty labelling.
+
+**Proposition 23.2 (exact admissibility and the alpha exception).** The
+fibre $\mathcal O(U)$ is nonempty exactly when no branch of $U$ has two
+$\alpha$ leaves as children. On this domain $K(U)$ is either empty, for
+$U=\alpha$, or a nonempty rooted unary/binary tree. Pruning is a bijection
+between these admissible unordered coloured trees and the empty or
+rooted unary/binary trees. Its inverse replaces a leaf by $\beta$, a
+unary vertex by an unordered branch with its converted child and an
+$\alpha$ leaf, and a binary vertex by the branch of its converted
+children. If $U$ has $a$ alpha leaves and $c$ beta leaves, then
+
+$$
+n(U)=a+2c-1,
+\tag{IV.62}
+$$
+
+and every history in $\mathcal J(U)$ has exactly this length. In
+particular $E(\alpha)=J(\alpha)=1$, with the empty history, while an
+inadmissible $U$ has $E(U)=J(U)=0$.
+
+**Proof.** An alpha child must be on the right in AA17's domain. Two alpha
+children therefore preclude any native orientation. If every branch has
+at most one alpha child, put that child on the right wherever it occurs,
+and orient the other branches arbitrarily. The resulting term has no
+alpha leaf at an $L$-ending address, hence is reachable by AA17.2. Every
+retained branch has one or two retained children, and every retained leaf
+is beta. The stated inverse follows recursively; in particular a
+zero-child retained branch, which would be confused with beta, is
+excluded by admissibility. A full binary tree has $a+c-1$ branches, so
+pruning leaves $a+c-1+c$ vertices. Splits number $a+c-1$ and promotions
+number $c$, as in AA19.1, proving (IV.62) and the history length. The
+single alpha is the only admissible tree with empty pruning. $\square$
+
+## 24. The addressed history and increasing-labelling correspondence
+
+**Theorem 24.1 (endpoint and prefix preserving computable bijection).**
+For every admissible $U$ there is a uniform computable bijection
+
+$$
+\Phi_U:\mathcal J(U)\longleftrightarrow\mathcal L(K(U)).
+\tag{IV.63}
+$$
+
+Its forward map attaches the event's one-based position in the actual
+word to one newly activated retained vertex: $P_p$ activates $p$, and
+$S_p$ activates $pL$, preserving the already active vertex at $p$. Its
+inverse orders two children by their root labels, puts a sole child on
+the left with alpha on the right, and restores all literal event kinds
+and logical addresses. Every initial label segment reconstructs exactly
+the corresponding legal source prefix and its guards.
+
+**Proof.** For an actual word, at every prefix prune its current source.
+Initially this is empty. A promotion adds the vertex at its alpha leaf;
+a split at an active beta leaf keeps that vertex as the parent and adds
+its left beta child, while its right alpha child is pruned. Thus every
+event adds precisely one vertex, and no active vertex is removed. If the
+right child is eventually activated, its first event is its promotion,
+strictly later than the split creating the left child. Consequently
+parent labels are smaller than child labels, and the earlier of two
+child roots is always the left one. Erasing sibling order gives an
+increasing labelling of the final $K(U)$. Different identifications with
+a fixed representative of $K(U)$ differ exactly by rooted automorphisms,
+so the resulting orbit is well defined.
+
+Conversely take an increasing labelling. Restore a final ordered term by
+replacing a leaf with beta, a sole child by that child on the left and
+alpha on the right, and two children by their increasing root-label
+order. All addresses below refer to this restored term. Process the
+vertices in label order. For the root execute $P_\varepsilon$. For the
+first child $v$ of a vertex $u$, execute $S_{\operatorname{addr}(u)}$;
+for its second child execute $P_{\operatorname{addr}(v)}$.
+
+These are actual guarded operations. Before the first child is
+processed, $u$ is present as beta: its activating event has occurred,
+its split has not, and no descendant can yet be processed. Its split
+therefore creates exactly the left beta child and right alpha leaf.
+Before the second child is processed, this split has occurred, since
+the first child's label is smaller. Its right slot is still alpha:
+there is no earlier activation of that child or any of its descendants.
+Its promotion is therefore legal. The root case uses the known initial
+alpha. No other operation or schedule restriction is required.
+
+More explicitly, for $0\le k\le n$, retain the vertices labelled at most
+$k$. This is ancestor closed; at a two-child vertex it contains the
+first child whenever it contains the second. Convert this truncated tree
+by the same leaf/unary/binary rule, with the empty tree converted to
+alpha. Induction on $k$ proves that it is exactly the source after the
+first $k$ reconstructed actions. At each such source, $P_p$ is enabled
+exactly at its alpha leaves and $S_p$ exactly at its beta leaves; absent
+and branch addresses have neither successful operation. Thus all
+addressed guards, not just the final shape, agree. This is the concrete
+native guard correspondence required to apply
+`EnabledPathSwapConnectivity.result`'s finite lower-cut principle, already
+supplied for the labelled LAB event order by AA17.2.
+
+Both constructions are inverse: the first child of an actual split has
+its split's label, every other activation has its promotion's label, and
+root-label ordering recovers exactly those original left/right choices.
+Conversely the reconstructed activations reproduce the supplied labels
+and incidences. Rooted automorphisms leave this ordered labelled result
+and the resulting addressed word unchanged. Finite tree traversal,
+comparison of distinct integer labels, and replay implement both maps;
+no exposed allocation ordinal or independent serial clock is used.
+The increasing-tree convention and ordering siblings by root labels are
+classical, as in Bergeron–Flajolet–Salvy,
+[*Varieties of Increasing Trees*, Definition 1, §2 and Table 1](https://algo.inria.fr/flajolet/Publications/BeFlSa92.pdf).
+The guard argument above identifies that convention with the specified
+native $P/S$ operations at every prefix. $\square$
+
+**Corollary 24.2 (symmetry-correct endpoint and joint counts).** For
+admissible $U$, put $K=K(U)$ and $n=|K|$. Then
+
+$$
+A(K)=2^{s(K)},\qquad
+E(U)=\frac{2^{b(K)}}{A(K)}=2^{b(K)-s(K)},\qquad
+J(U)=\frac{n!}{A(K)\prod_{v\in K}h_v}
+     =\sum_{t\in\mathcal O(U)}F_{PS}(t).
+\tag{IV.64}
+$$
+
+Equivalently, $J(\alpha)=J(\beta)=1$, and at an admissible unordered
+branch $U=\{X,Y\}$,
+
+$$
+J(U)=\frac{\binom{n(X)+n(Y)}{n(X)}J(X)J(Y)}
+ {1+\mathbf1_{X\cong Y}}.
+\tag{IV.65}
+$$
+
+If one child is alpha the denominator is one. If both child classes are
+equal and non-alpha, the endpoint recurrence is $E(U)=E(X)^2$.
+
+**Proof.** An automorphism acts independently inside the child subtrees,
+with an additional factor two precisely at an isomorphic pair. This gives
+$A(K)=2^{s(K)}$, the usual rooted symmetry-node decomposition; compare
+Kersting–Fischer,
+[*Measuring tree balance using symmetry nodes*, §2 and Lemma 3.2](https://arxiv.org/pdf/2105.00719v2).
+On a fixed vertex realization of $K$, each binary vertex has two orders
+and each unary vertex has its forced left placement. An automorphism
+fixing all these orders fixes every vertex, so its action on the $2^b$
+choices is free. Their orbits are exactly the native ordered endpoints,
+proving the endpoint formula, including equal child classes. The two
+positions of an equal pair still admit every ordered pair of internal
+representatives, rather than an unordered pair of representatives.
+
+For fixed vertices the classical rooted-tree hook formula counts
+$n!/\prod_vh_v$ increasing labellings; see Kuba,
+[*A Note on Hook Length Formulas for Trees*, §§3.1–3.2](https://arxiv.org/pdf/1004.1883v1),
+also credited in AAII Definition 60.5. Distinct labels make the
+automorphism action free. Division by $A(K)$ and Theorem 24.1 prove the
+joint formula. Its recursive form is (IV.65), by distributing the labels
+other than the root among its child subtrees, with division by two for
+an equal pair. The empty case uses $0!=1$. Finally (IV.61) and AA19.2
+supply the sum over ordered endpoints. These are computable integer
+counts on exactly the admissible domain; GPO22–23's fibre of arbitrary
+originals under simultaneous global substitution is a different domain.
+For example $\{\beta,\alpha\}$ has two such global representatives but
+only the native endpoint $\langle\beta,\alpha\rangle$. $\square$
+
+## 25. Orientation and chronology are coupled by subtree mass
+
+**Theorem 25.1 (constant history fibres exactly at equal masses).** For
+admissible $U$, the numbers $F_{PS}(t)$ are constant over
+$t\in\mathcal O(U)$ if and only if the two child subtrees at every binary
+vertex of $K(U)$ have equal numbers of vertices. Equivalently, every
+branch of $U$ with distinct non-alpha child classes $X,Y$ satisfies
+$n(X)=n(Y)$. At any legal pair of orientations, with their internal
+ordered terms $l,r$ fixed and neither equal to alpha,
+
+$$
+\frac{F_{PS}(\langle l,r\rangle)}{F_{PS}(\langle r,l\rangle)}
+ =\frac{n([l])}{n([r])}.
+\tag{IV.66}
+$$
+
+**Proof.** Write $x=n([l])\ge1$, $y=n([r])\ge0$. A non-alpha subtree
+born beta differs from the same target born alpha by deletion of its
+forced first root promotion, so the two history counts agree. AA19.1–19.2
+therefore give
+
+$$
+F_{PS}(\langle l,r\rangle)
+ =\binom{x+y-1}{x-1}F_{PS}(l)F_{PS}(r).
+\tag{IV.67}
+$$
+
+For two non-alpha children, interchanging $x,y$ gives (IV.66). For an
+alpha child the orientation is forced and the factor in (IV.67) is one.
+If the equal-mass condition holds everywhere, induction makes the child
+history counts constant on their endpoint fibres, and equal masses make
+the two permitted orders have equal factors. This proves sufficiency,
+including equal child classes and all unary vertices.
+
+For necessity, take a vertex with unequal positive child masses. Its
+child classes are distinct, so both local orders are reachable. Fix all
+internal representatives and the rest of one ordered endpoint and swap
+only those children. Ancestor factors in (IV.67) depend on unchanged
+subtree masses, hence cancel, as do all fixed internal factors. The full
+history counts have the unequal ratio $x/y$. They cannot be constant.
+Isomorphic children have equal masses automatically, giving the stated
+equivalence of conditions. $\square$
+
+**Proposition 25.2 (two endpoints, three histories, different guards).**
+For $U=\{\beta,\{\beta,\alpha\}\}$ the complete native endpoint and
+history fibres are
+
+$$
+\begin{aligned}
+t_1&=\langle\beta,\langle\beta,\alpha\rangle\rangle,
+&\mathcal H(t_1)&=\{P_\varepsilon S_\varepsilon P_R S_R\},\\
+t_2&=\langle\langle\beta,\alpha\rangle,\beta\rangle,
+&\mathcal H(t_2)&=\{P_\varepsilon S_\varepsilon S_L P_R,
+                    P_\varepsilon S_\varepsilon P_R S_L\}.
+\end{aligned}
+\tag{IV.68}
+$$
+
+Thus $E(U)=2$, $J(U)=3$, and the endpoint projection has fibre sizes one
+and two. At $t_1$ the original action $S_L$ is enabled, while at $t_2$
+it is refused because $L$ is a branch.
+
+**Proof.** The root prefix is $P_\varepsilon S_\varepsilon$. For $t_1$
+the remaining right child must execute $P_R$ before $S_R$. For $t_2$,
+$S_L$ and $P_R$ are both enabled immediately after the root prefix and
+can occur in either order. AA17.2 excludes any other events, proving the
+complete lists. The two child masses are one and two, so (IV.66) also
+gives the ratio $1/2$. The final tags at $L$ are beta and branch,
+respectively, proving the guard distinction under the original $S$.
+$\square$
+
+## 26. Sharp conditional recovery from the native quotient
+
+**Theorem 26.1 (singletons and supplements).** Fix an admissible $U$.
+The quotient alone determines the ordered endpoint exactly when
+$b(K(U))=s(K(U))$. It determines the full addressed history exactly when
+$U=\alpha$, or $K(U)$ is a unary path, or a unary path ending in one
+binary vertex whose two children are leaves. A one-vertex tree and a
+binary root with two leaves are included in these path conventions.
+
+For any supplied deterministic supplement $q$ on $\mathcal J(U)$,
+endpoint recovery is possible exactly when
+
+$$
+q(t,w)=q(t',w')\ \Longrightarrow\ t=t',
+\tag{IV.69}
+$$
+
+and full-history recovery is possible exactly when $q$ is injective.
+The sharp numbers of conditional supplement values are respectively
+$E(U)$ and $J(U)$; the sharp fixed-width binary content sizes are their
+ceiling logarithms. Given the ordered endpoint $t$ as well, the sharp
+history supplement has $F_{PS}(t)$ values, as in AA19.2.
+
+**Proof.** The endpoint assertion follows from (IV.64). In (IV.65), a
+unary vertex has factor one. A binary vertex with child masses $x,y\ge1$
+has factor $\binom{x+y}{x}/(1+\mathbf1_{X\cong Y})$. This equals one
+exactly when both children are leaves: if $x+y\ge3$, the binomial is at
+least three and the denominator at most two. Thus $J=1$ exactly for the
+listed shapes. Equality of supplement values cannot conceal different
+target answers, proving necessity of (IV.69) and injectivity. Conversely
+these conditions define a decoder on the actual image. At least one
+value per distinguishable target is required. Enumerating finite
+endpoints, or the labelling orbits of Theorem 24.1 and their inverse
+histories, assigns exactly the stated numbers of values. Ranking and
+unranking are finite-set indexing, with no extra acquisition premise.
+$\square$
+
+**Proposition 26.2 (which relation supplies orientation).** On the full
+native fibre, an endpoint-preserving bijection
+$\mathcal J(U)\cong\mathcal O(U)\times C$ with one common independent
+history alphabet $C$ exists exactly under Theorem 25.1's equal-mass
+condition. In general the child-root precedence in the increasing
+labelling supplies orientation jointly with chronology, through
+Theorem 24.1; the unordered endpoint alone supplies neither that
+precedence nor the original addressed guard at every endpoint.
+
+**Proof.** A product over the endpoint projection has $|C|$ histories at
+each endpoint, so constant fibre size is necessary. If the sizes are
+constant, rank each finite history fibre separately in a common set of
+that size, obtaining such a product. Without this condition, orientation
+followed by endpoint-conditioned history remains a valid encoding, but
+all pairs from independent orientation and chronology alphabets do not:
+(IV.68) has two endpoint choices and three joint histories. The inverse
+of (IV.63) shows exactly how first-child precedence restores the left
+child of a split, including the forced unary case. Distinct labels do
+not name physical ports; an automorphism orbit supplies no physical
+vertex binding. $\square$
+
+**Definition 26.3 (conditional interface boundary).** These inverses and
+rank alphabets describe static mathematical content at a supplied cut.
+An acquired interpretation retains AA20's initialized same-source root
+binding, current read/write rights, actual backing and work storage,
+charged input/output, maintenance, acknowledgement and return to Ready,
+and AA21's declared causal or full-generation task. An abstract rank or
+labelling orbit supplies none of those hypotheses. In particular this
+correspondence installs no paid acquisition service or callable adapter,
+provides no physical frame alignment or new grants, and makes no
+post-reset survival assertion. Every executable $Q_g$ recovery still
+requires the original conditional interface; generation words here
+exclude requests, refusals, waiting and controller chronology.
+
+## 追加锚（本行以下为增补区）
