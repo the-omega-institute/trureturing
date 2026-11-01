@@ -194,7 +194,10 @@ internal sealed class PerpHyperplaneHexagonContextualityRefutationDocument : ISc
                         + "each other. The argument uses only the line and degree conditions "
                         + "of h, so it also applies when the triangle and planarity conditions "
                         + "are retained."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("saniga-et-al-2025-hexagon-contextuality-generalization"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string title, string declaration,
         Formula formula, AssessedProvenance provenance, string prose) => Describe.Lean(
