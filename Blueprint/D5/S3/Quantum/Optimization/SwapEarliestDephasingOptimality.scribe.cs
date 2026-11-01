@@ -121,7 +121,10 @@ internal sealed class SwapEarliestDephasingOptimalityDocument : IScribeDocumentD
                             + "and use the greedy-step equality to obtain Int.ofNat(runCost(x,i :: hs)) = φ(x). "
                             + "Combining this identity with Int.ofNat(dstar(x)) = φ(x) and injectivity of Int.ofNat proves the stated natural-number equality. "
                             + "The argument includes all natural ready times and every permitted tie choice."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kamin-shchukin-schmidt-van-loock-2023-swap-earliest-dephasing"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose,
         AssessedProvenance provenance) => Describe.Lean(
