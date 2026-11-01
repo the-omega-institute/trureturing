@@ -194,7 +194,8 @@ theorem cusp_quadratic_limit :
     · simpa using (show ContinuousAt (fun t : ℝ => 2 * t) 0 by
         fun_prop).tendsto.mono_left (y := 𝓝[>] 0) nhdsWithin_le_nhds
     · convert r2_limit.div_const 2 using 1 <;> ring
-  apply HasDerivAt.lhopital_zero_nhdsGT (hw.mono fun t ht => hasDerivAt_R ht.1 ht.2)
+  apply HasDerivAt.lhopital_zero_nhdsGT (f' := r1) (g' := fun t : ℝ => 2 * t)
+    (hw.mono fun t ht => hasDerivAt_R ht.1 ht.2)
     (Eventually.of_forall fun t => by
       convert (hasDerivAt_id t).pow 2 using 1 <;> ring)
     (hw.mono fun t ht => by dsimp; positivity) _ _ hfirst
@@ -251,8 +252,15 @@ private lemma K_bounds {t : ℝ} (ht : 0 < t) (ht' : t ≤ 1 / 2) :
     rw [← Real.exp_add]
     congr 1
     ring
-  rw [K_eq_local ht.le (ht'.trans_lt half_lt_log_two)]
-  constructor <;> nlinarith [he]
+  have hident : K t = Real.exp (t / 2) * (1 + Real.eulerMascheroniConstant - t) +
+      Real.exp (-t / 2) * (trivialT t - Real.log (2 * Real.pi)) := by
+    rw [K_eq_local ht.le (ht'.trans_lt half_lt_log_two)]
+    calc
+      _ = (Real.exp (-t / 2) * Real.exp t) * (1 + Real.eulerMascheroniConstant - t) +
+          Real.exp (-t / 2) * (trivialT t - Real.log (2 * Real.pi)) := by ring
+      _ = _ := by rw [he]
+  rw [hident]
+  constructor <;> linarith
 
 private lemma reciprocal_exp_bounds {x : ℝ} (hx : 0 < x) :
     -1 ≤ 1 / (Real.exp x - 1) - 1 / x ∧
