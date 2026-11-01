@@ -6,7 +6,7 @@ An exact restriction and union correspondence connects the actual source graph t
 
 **Theorem 1.1 (The exact weighted reassembly identity).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.source_reassembly`
+$$\operatorname{evaluation}\left(sourceGraph, (-4)\right) = stateEvaluation$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.source_reassembly` (`✓ std3`). ∎
 
@@ -18,7 +18,7 @@ The source vertex coordinates are the disjoint sum of Fin 4 and the eight depend
 
 **Theorem 1.2 (The complete unbounded-order ordinary-domination event).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.result`
+$$\forall (N:\mathbb{N}), \exists (n:\mathbb{N}), (N < n) \land (\exists (G:\operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right)), (\operatorname{Connected}\left(G\right)) \land (\sum_{S\in\operatorname{domSets}\left(G\right)} (-4)^{\operatorname{card}\left(S\right)} = 0))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.result` (`✓ std3`). ∎
 

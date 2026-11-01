@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/MinusFourFamily.sourceEdge
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/MinusFourFamily.sourceEdges` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Saeid Alikhani; Max Griswold (2026). *On the Integer Domination Root Conjecture*. DOI: [10.48550/arXiv.2608.00109](https://doi.org/10.48550/arXiv.2608.00109). URL: <https://arxiv.org/abs/2608.00109v1>.
 
 *Commentary.*
 
@@ -24,17 +24,21 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/MinusFourFamily.sourceGrap
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Saeid Alikhani; Max Griswold (2026). *On the Integer Domination Root Conjecture*. DOI: [10.48550/arXiv.2608.00109](https://doi.org/10.48550/arXiv.2608.00109). URL: <https://arxiv.org/abs/2608.00109v1>.
+
 *Commentary.*
 
 Adjacency holds when either orientation belongs to sourceEdges. The graph is loopless by kernel finite decision and undirected by symmetry of the disjunction. Vertex 5 has sole neighbor 4. Connectedness is proved using a parent for every nonzero label, with each parent strictly smaller and joined by an actual source edge. Strong induction on the label gives a path to vertex 0.
 
 **Theorem 1.3 (The exact original event conditional on the base root).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Domination/MinusFourFamily.result_of_base_root`
+$$(\operatorname{evaluation}\left(sourceGraph, (-4)\right) = 0) \Rightarrow (\forall (N:\mathbb{N}), \exists (n:\mathbb{N}), (N < n) \land (\exists (G:\operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right)), (\operatorname{Connected}\left(G\right)) \land (\sum_{S\in\operatorname{domSets}\left(G\right)} (-4)^{\operatorname{card}\left(S\right)} = 0)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/MinusFourFamily.result_of_base_root` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Saeid Alikhani; Max Griswold (2026). *On the Integer Domination Root Conjecture*. DOI: [10.48550/arXiv.2608.00109](https://doi.org/10.48550/arXiv.2608.00109). URL: <https://arxiv.org/abs/2608.00109v1>.
 
 *Commentary.*
 

@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The hub and pendant choices give an exact generating evaluation for every finite graph and every copy count.
+The hub and pendant choices give an exact generating evaluation for every finite graph and every copy count. Throughout, V is an arbitrary finite vertex type supplied with Fintype and DecidableEq instances.
 
 **Definition 1.1 (Cardinality-weighted ordinary domination).**
 
@@ -18,7 +18,7 @@ For a finite simple graph H and integer x, evaluation(H,x) is the sum of x raise
 
 **Theorem 1.2 (The complete two-case weighted identity).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Domination/MinusFourReplication.replicated_evaluation`
+$$\forall (H:\operatorname{SimpleGraph}\left(V\right)), \forall (U:\operatorname{Finset}\left(V\right)), \forall (r:\mathbb{N}), \forall (x:\mathbb{Z}), \operatorname{evaluation}\left(\operatorname{replicated}\left(H, U, r\right), x\right) = x \cdot (1 + x) \cdot (\sum_{S\in\operatorname{partialSets}\left(H, U\right)} x^{\operatorname{card}\left(S\right)})^{r} + x \cdot \operatorname{evaluation}\left(H, x\right)^{r}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/MinusFourReplication.replicated_evaluation` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ For every finite vertex type V, graph H, attachment set U, nonnegative copy coun
 
 **Theorem 1.3 (An actual internal leaf closes the partial family).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Domination/MinusFourReplication.support_replication_evaluation`
+$$\forall (H:\operatorname{SimpleGraph}\left(V\right)), \forall (v:V), \forall (w:V), ((\operatorname{Leaf}\left(H, w\right)) \land (\operatorname{Adj}\left(H, w, v\right))) \Rightarrow (\forall (r:\mathbb{N}), \forall (x:\mathbb{Z}), \operatorname{evaluation}\left(\operatorname{replicated}\left(H, \left\{v\right\}, r\right), x\right) = x \cdot (x + 2) \cdot \operatorname{evaluation}\left(H, x\right)^{r})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/MinusFourReplication.support_replication_evaluation` (`✓ std3`). ∎
 
@@ -42,7 +42,7 @@ Suppose w is a degree-one vertex of H adjacent to v. A set dominating outside th
 
 **Theorem 1.4 (Paths through each copy support).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Domination/MinusFourReplication.support_replication_connected`
+$$\forall (H:\operatorname{SimpleGraph}\left(V\right)), \forall (v:V), \forall (r:\mathbb{N}), (\operatorname{Connected}\left(H\right)) \Rightarrow (\operatorname{Connected}\left(\operatorname{replicated}\left(H, \left\{v\right\}, r\right)\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/MinusFourReplication.support_replication_connected` (`✓ std3`). ∎
 

@@ -126,7 +126,7 @@ For all 16 core subsets Z and all 256 root selections A, retain the term exactly
 
 **Theorem 1.11 (Reduction through the exact weighted bridge).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Domination/MinusFourBaseStates.result_of_reassembly`
+$$(\operatorname{evaluation}\left(sourceGraph, (-4)\right) = stateEvaluation) \Rightarrow (\forall (N:\mathbb{N}), \exists (n:\mathbb{N}), (N < n) \land (\exists (G:\operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right)), (\operatorname{Connected}\left(G\right)) \land (\sum_{S\in\operatorname{domSets}\left(G\right)} (-4)^{\operatorname{card}\left(S\right)} = 0)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/MinusFourBaseStates.result_of_reassembly` (`✓ std3`). ∎
 
