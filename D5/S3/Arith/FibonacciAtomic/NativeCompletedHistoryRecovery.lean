@@ -10,6 +10,7 @@ import D5.S3.Arith.FibonacciAtomic.NativeLocalSourceExecution
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeFiniteNormalInversion
 import D5.S3.Arith.FibonacciAtomic.SourceTransportCentralizer
 import D5.S3.Arith.FibonacciAtomic.Geometry.NativeGuardedLeafRepair
+import D5.S3.Arith.FibonacciAtomic.SourceCoordinates.IntrinsicSubstitutionCoordinates
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -144,18 +145,7 @@ private theorem collapse_sound (z p : Source) (h : collapse z = some p) :
       exact Bool.and_eq_true_iff.mpr ⟨hn hl,hr⟩
 
 private theorem rho_not_alpha (t : Source) : substitution t ≠ .of true := by
-  cases t with
-  | of b =>
-    cases b with
-    | false =>
-      change (FreeMagma.mul (.of false) (.of true) : Source) ≠ .of true
-      intro h
-      cases h
-    | true =>
-      change (FreeMagma.of false : Source) ≠ .of true
-      intro h
-      cases h
-  | mul l r => intro h; cases h
+  exact SourceCoordinates.IntrinsicSubstitutionCoordinates.no_alpha t
 
 private theorem H_native (t : Source) (hn : Native t) : Native (H t) := by
   induction t with
