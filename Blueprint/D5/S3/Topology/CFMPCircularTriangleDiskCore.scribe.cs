@@ -57,7 +57,7 @@ internal sealed class CFMPCircularTriangleDiskCoreDocument : IScribeDocumentDefi
     {
         var n = Id("n");
         return All("n", Call("Nat"),
-            All("hn", Call("0 < n"),
+            All("hn", Positive(n),
                 All("x", Call("Fan", n), All("y", Call("Fan", n),
                     Implies(Call("SeamRel", n, Id("hn"), Id("x"), Id("y")),
                         Eq(Call("radialSize", Id("x")), Call("radialSize", Id("y"))))))));
@@ -66,14 +66,14 @@ internal sealed class CFMPCircularTriangleDiskCoreDocument : IScribeDocumentDefi
     private static Formula OriginStep()
     {
         var n = Id("n"); var i = Id("i");
-        return All("n", Call("Nat"), All("hn", Call("0 < n"), All("i", Call("Fin", n),
+        return All("n", Call("Nat"), All("hn", Positive(n), All("i", Call("Fin", n),
             Call("SeamRel", n, Id("hn"), Call("originEdge", i), Call("originEdge", Call("next", Id("hn"), i))))));
     }
 
     private static Formula OriginAll()
     {
         var n = Id("n");
-        return All("n", Call("Nat"), All("hn", Call("0 < n"), All("i", Call("Fin", n),
+        return All("n", Call("Nat"), All("hn", Positive(n), All("i", Call("Fin", n),
             Call("SeamRel", n, Id("hn"), Call("originEdge", Call("zeroIndex", Id("hn"))),
                 Call("originEdge", Id("i"))))));
     }
@@ -81,11 +81,12 @@ internal sealed class CFMPCircularTriangleDiskCoreDocument : IScribeDocumentDefi
     private static Formula OriginRadius()
     {
         var n = Id("n");
-        return All("n", Call("Nat"), All("hn", Call("0 < n"), All("i", Call("Fin", n),
+        return All("n", Call("Nat"), All("hn", Positive(n), All("i", Call("Fin", n),
             Eq(Call("radialSize", Call("originEdge", Id("i"))), F.D(0)))));
     }
 
     private static Formula Id(string name) => F.Id(name);
+    private static Formula Positive(Formula n) => new Formula.Relation(F.D(0), FormulaRelationOperator.LessThan, n);
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Id(name), [.. args]);
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
