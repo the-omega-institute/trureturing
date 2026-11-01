@@ -195,9 +195,9 @@ private theorem lower_physical_strips (a b s : ℕ) (hs : 2≤s)
       · exact (negs 2).2
       · exact (negs 3).2
   constructor
-  · simpa only [lowerOldPackets,blocksWord,lowerPre,lowerPost,List.append_assoc,List.singleton_append] using oldstrip
+  · simpa only [lowerOldPackets,blocksWord,lowerPre,lowerPost,List.append_assoc,List.singleton_append,List.cons_append,List.nil_append] using oldstrip
   · simpa only [lowerNewPackets,blocksWord,lowerPre,lowerPost,List.append_assoc,List.singleton_append,
-      List.cons_append] using newstrip
+      List.cons_append,List.nil_append] using newstrip
 
 private theorem lower_physical_finish (a b s : ℕ) (hs : 2≤s)
     (ha : 2≤a) (has : a+1≤s) (hb : 2*s+1≤b) :

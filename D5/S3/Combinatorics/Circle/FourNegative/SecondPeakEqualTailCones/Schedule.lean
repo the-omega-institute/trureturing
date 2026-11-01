@@ -196,9 +196,9 @@ private theorem physical_strips (a b s : ℕ) (hs : 2≤s)
       · exact (negs 2).2
       · exact (negs 3).2
   constructor
-  · simpa only [oldPackets,blocksWord,pre,post,List.append_assoc,List.singleton_append] using oldstrip
+  · simpa only [oldPackets,blocksWord,pre,post,List.append_assoc,List.singleton_append,List.cons_append,List.nil_append] using oldstrip
   · simpa only [newPackets,blocksWord,pre,post,List.append_assoc,List.singleton_append,
-      List.cons_append] using newstrip
+      List.cons_append,List.nil_append] using newstrip
 
 private theorem physical_finish (a b s : ℕ) (hs : 2≤s)
     (hcone : (2*s+2≤a ∧ a+1≤b) ∨ (s+1≤a ∧ max (a+1) (3*s+1)≤b)) :
