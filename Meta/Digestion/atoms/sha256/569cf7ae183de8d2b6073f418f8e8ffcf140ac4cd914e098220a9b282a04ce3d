@@ -1,0 +1,21 @@
+**约定 1.1（读数合同）。** 固定整数 $k\ge2$，状态指标为 $0,\ldots,k-1$，并在一个域 $K$ 上工作。令
+
+$$
+r_p=(\underbrace{1,\ldots,1}_{k-p},0,\ldots,0)^{\mathsf T}
+\qquad(0\le p<k),
+$$
+
+以及
+
+$$
+E_{p,t}=e_t r_p^{\mathsf T},
+$$
+
+其中 $e_t$ 是第 $t$ 个标准列向量。标量端点读数采用
+
+$$
+\Phi(A)_{p,t}=\operatorname{tr}(E_{p,t}A)=r_p^{\mathsf T}Ae_t.
+$$
+
+这是一项明确的线性观测合同。若改用 $\operatorname{tr}(E_{p,t}^{\mathsf T}A)$，以下核的行列方向全部转置。
+
