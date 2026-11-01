@@ -14,7 +14,7 @@ internal sealed class PowerSpectrumStructureDocument : IScribeDocumentDefinition
                 "For every graph isomorphism e:G to H, map native finite walks through e and through its inverse. The two length bounds give equality even when vertices are unreachable. Natural distance and diameter are transported from the same equality."),
             Node("spectrum_top", "The attained spectrum of a nonempty complete graph",
                 Eq(C("spectrum",C("completeGraph",I("V"))),C("singleton",D(1))),
-                "Every maximal independent set is nonempty by domination. In a complete graph its vertices must all coincide, so its cardinality is one. Conversely, each singleton vertex set is independent and dominates all omitted vertices."),
+                "Use the existing-owner theorem CayleySquare.wellCovered_complete. A singleton vertex set is independent and dominates all omitted vertices; comparing any maximal independent set with this singleton gives cardinality one. The same singleton also proves attainment."),
             Node("power_eq_top_of_diam_le", "Every sufficiently large connected power is complete",
                 Imp(And(C("Connected",I("G")),Le(C("diam",I("G")),I("d"))),Eq(C("power",I("G"),I("d")),C("completeGraph",I("V")))),
                 "The native diameter bounds every pairwise distance in a finite connected graph. Consequently every two distinct vertices are adjacent in the stated power."),

@@ -65,7 +65,7 @@ private theorem complete_square_card [Fintype V] [Nonempty V] (I : Finset (V × 
   · exact hy (mem_image.mpr ⟨p,hp,he.symm⟩)
   · exact hx (mem_image.mpr ⟨p,hp,he.symm⟩)
 
-private theorem wellCovered_complete [Nonempty V] : WellCovered (⊤ : SimpleGraph V) := by
+theorem wellCovered_complete [Nonempty V] : WellCovered (⊤ : SimpleGraph V) := by
   classical
   have hcard (I : Finset V) (hI : IsMaximalIndep (⊤ : SimpleGraph V) I) : I.card = 1 := by
     have hi : I.Nonempty := by

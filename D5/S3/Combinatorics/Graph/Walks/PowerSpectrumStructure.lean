@@ -69,33 +69,23 @@ theorem diam_iso {X Y : Type} {J : SimpleGraph X} {K : SimpleGraph Y}
 /-- The spectrum of a nonempty complete graph consists exactly of singleton vertex sets. -/
 theorem spectrum_top [Nonempty V] : spectrum (⊤ : SimpleGraph V) = {1} := by
   classical
-  ext k
-  constructor
-  · rintro ⟨I,hI,rfl⟩
-    have hne : I.Nonempty := by
-      by_contra h
-      have hempty : I = ∅ := not_nonempty_iff_eq_empty.mp h
-      obtain ⟨v⟩ := ‹Nonempty V›
-      obtain ⟨u,hu,_⟩ := hI.2 v (by simp [hempty])
-      simpa [hempty] using hu
-    obtain ⟨u,hu⟩ := hne
-    have hsingle : I = {u} := by
-      apply Finset.eq_singleton_iff_unique_mem.mpr
-      refine ⟨hu,?_⟩
-      intro v hv
-      by_contra h
-      exact hI.1 v hv u hu h (by exact h)
-    simp [hsingle]
-  · intro hk
-    have hk' : k=1 := hk
-    subst k
-    obtain ⟨v⟩ := ‹Nonempty V›
-    refine ⟨{v},⟨?_,?_⟩,by simp⟩
+  obtain ⟨v⟩ := ‹Nonempty V›
+  have hsingle : IsMaximalIndep (⊤ : SimpleGraph V) ({v} : Finset V) := by
+    constructor
     · intro x hx y hy hne _
       simp only [mem_singleton] at hx hy
       exact hne (hx.trans hy.symm)
     · intro x hx
       exact ⟨v,by simp,by simpa using hx⟩
+  ext k
+  constructor
+  · rintro ⟨I,hI,rfl⟩
+    have hcard := CayleySquare.wellCovered_complete I {v} hI hsingle
+    simpa using hcard
+  · intro hk
+    have hk' : k=1 := hk
+    subst k
+    exact ⟨{v},hsingle,by simp⟩
 
 /-- The frozen connected power is complete as soon as the exponent reaches the diameter. -/
 theorem power_eq_top_of_diam_le (hc : G.Connected) {d : ℕ} (hd : G.diam ≤ d) :
