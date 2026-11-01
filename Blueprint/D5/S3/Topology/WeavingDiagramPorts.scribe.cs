@@ -6,6 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Topology;
 internal sealed class WeavingDiagramPortsDocument : IScribeDocumentDefinition
 {
     private const string Module = "D5/S3/Topology/WeavingDiagramPorts";
+    private static LibraryNoteRef Source =>
+        LibraryNoteRef.Create("D5/L/Topology/mishraraundal2021weaving");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The actual finite closed-braid port quotient has an explicit interval-and-outer-strand classification in either uniform smoothing.",
         H("Uniform circles of the finite closed weaving braid"),
@@ -18,9 +20,10 @@ internal sealed class WeavingDiagramPortsDocument : IScribeDocumentDefinition
             Entry("external-no-fixed-point", "external_ne_self", "No external fixed port",
                 AllP(All("x",Call("Dart",P),Ne(Call("external",P,X),X))),
                 "Each external arc connects a top input to a bottom output. In particular no arc has a single endpoint port."),
-            Entry("chronological-successor", "external_chronological", "The next occurrence at the same strand position",
-                AllP(All("q",Id("Nat"),All("i",Call("Fin",N),All("right",Id("Bool"),Call("Next",P,Id("q"),I,Id("right")))))),
-                "Before orders pairs (period,generator) lexicographically. Next states that chronologicalNext is a top port at the same position, strictly after the outgoing occurrence, with no incident generator occurrence strictly between them. Its last conjunct identifies external with this successor after reducing the period modulo m. The generator incidence predicate is j=position or j+1=position. Thus this matching is derived from temporal braid wires rather than an independently stipulated graph."),
+            Paragraph(Text("Here is the chronological derivation of the external matching. Before cyclic reduction, an occurrence is (q,i), with natural period q and generator 0 <= i < n. Define (q,i) < (s,j) to mean q < s or q=s and i < j. The left output bl has spatial position i, and the right output br has position i+1; a top port tl at generator j has position j, while tr has position j+1. An occurrence at generator j is incident to position a exactly when j=a or j+1=a. Thus at an internal position a, the only incident generators are a-1 and a, in that order in each period; position 0 has only generator 0 and position n only generator n-1.")),
+            Paragraph(Text("For br at (q,i) with i+1<n, the next incident occurrence is (q,i+1), entered at tl. Its position is i+1, it is strictly later in the defined order, and no incident occurrence lies strictly between: the only two incident generators are i and i+1, consecutive in this period. For br at i=n-1, position n has only generator i, so its next occurrence is (q+1,i), entered at tr at position i+1=n. No incident occurrence lies between consecutive periods of this sole generator.")),
+            Paragraph(Text("For bl at (q,i) with i>0, the next incident occurrence is (q+1,i-1), entered at tr at position (i-1)+1=i. Generator i-1 has already occurred earlier in period q and generator i is the current occurrence. In the next period i-1 precedes i. Hence this successor is strictly later and there is no incident (s,j) with (q,i)<(s,j)<(q+1,i-1). For bl at i=0, position 0 has only generator 0, so the next occurrence is (q+1,0), entered at tl, again with no intervening incident occurrence. These four cases establish a top input at the same spatial position, strict chronological order and the quantified exclusion of every intervening incident occurrence.")),
+            Paragraph(Text("Now reduce the natural periods modulo m. Writing t for q in ZMod(m), q+1 becomes t+1. The four successors are precisely the four bottom-output clauses of external above. At q=m-1 this reduction identifies the next period with time zero, including both outer wires and the internal bl wires that cross the closing seam. The top-input clauses reverse these same wires, as external_involutive checks. This derives the positional matching from the repeated braid sequence; crossing signs do not change its wires. The chronological order is on natural occurrences before reduction, with no linear order imposed on cyclic time.")),
             Paragraph(Text("The smoothing parity p is 0 or 1. Cup(p,i) means i mod 2 equals p. Thus p=0 selects printed odd generators and p=1 selects printed even generators. Cup-cap pairs tl with tr and bl with br; vertical pairs tl with bl and tr with br. Reach is the equivalence closure of these local arcs and the external matching. Circle(P,p) is the actual quotient of darts by Reach.")),
             Paragraph(Text("The code of the interval at generator i and time t is (i+1,t). At a cup-cap crossing, both top ports have code (i+1,t-1) and both bottom ports have code (i+1,t). At an internal vertical crossing the left ports have code (i,t) and the right ports code (i+2,t-1). An unpaired left outer strand has code (0,0); an unpaired right outer strand has code (n+1,0). These outer codes occur only when the corresponding boundary generator is vertical.")),
             Entry("component-classification", "reach_iff_code", "Codes classify the actual connected components",
@@ -60,7 +63,7 @@ internal sealed class WeavingDiagramPortsDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Entry(string id,string name,string title,Formula statement,string prose) =>
         Describe.Lean(DescribeId.Create(id),DeclarationHandle.Create(Module+"."+name),H(title),
-            StatementSource.FromAuthor(F.Disp(statement)),AssessedProvenance.FromRepo(),Blocks(Paragraph(Text(prose))));
+            StatementSource.FromAuthor(F.Disp(statement)),AssessedProvenance.FromRepo(Source),Blocks(Paragraph(Text(prose))));
     private static Formula P => Id("P"); private static Formula Parity => Id("p");
     private static Formula X => Id("x"); private static Formula Y => Id("y");
     private static Formula I => Id("i"); private static Formula T => Id("t");

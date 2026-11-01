@@ -521,44 +521,4 @@ theorem edge_endpoints_distinct (P : Parameters) (p : ℕ) (hp : p < 2)
     split_ifs <;> simp only [Prod.mk.injEq] <;> intro hh <;>
       have := i.isLt <;> have := P.hn <;> omega
 
-/-- Periods are ordered first, then the zero - based printed generator order. -/
-def before {P : Parameters} (a b : ℕ × Fin P.n) : Prop :=
-  a.1 < b.1 ∨ (a.1 = b.1 ∧ a.2.val < b.2.val)
-
-/-- A strand position p meets exactly generators p - 1 and p when present. -/
-def incident {n : ℕ} (position : ℕ) (i : Fin n) : Prop :=
-  i.val = position ∨ i.val + 1 = position
-
-/-- Successor occurrence before passing to cyclic time. -/
-def chronologicalNext (P : Parameters) (q : ℕ) (i : Fin P.n) (right : Bool) :
-    ℕ × Fin P.n × Port :=
-  if right then
-    if h : i.val + 1 < P.n then (q,succIndex i h,.tl) else (q + 1,i,.tr)
-  else if h : i.val = 0 then (q + 1,i,.tl) else (q + 1,predIndex i h,.tr)
-
-/-- The external matching is the cyclic reduction of the chronologically next
-crossing incident to the same strand position. There is no intervening occurrence. -/
-theorem external_chronological (P : Parameters) (q : ℕ) (i : Fin P.n) (right : Bool) :
-    let y := chronologicalNext P q i right
-    let position := i.val + if right then 1 else 0
-    (y.2.2 = .tl ∨ y.2.2 = .tr) ∧
-    (y.2.1.val + if y.2.2 = .tr then 1 else 0) = position ∧
-    before (P := P) (q,i) (y.1,y.2.1) ∧
-    (∀ (s : ℕ) (j : Fin P.n), incident position j →
-      before (P := P) (q,i) (s,j) → ¬ before (P := P) (s,j) (y.1,y.2.1)) ∧
-    external P ((q : ZMod P.m),i,if right then .br else .bl) =
-      ((y.1 : ZMod P.m),y.2.1,y.2.2) := by
-  have hi := i.isLt
-  cases right <;> simp only [chronologicalNext,Bool.false_eq_true,↓reduceIte] <;>
-    split_ifs <;> simp_all [external,before,incident,predIndex,succIndex,Nat.cast_add] <;>
-    intros <;> try omega
-  all_goals
-    constructor
-    · omega
-    · intro s j hj hbefore
-      constructor
-      · omega
-      · intro hs
-        omega
-
 end D5.S3.Topology.WeavingDiagramPorts
