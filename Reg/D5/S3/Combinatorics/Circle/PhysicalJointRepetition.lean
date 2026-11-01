@@ -13,73 +13,67 @@ open _root_.D5.S3.Combinatorics.Circle.PeriodicShortening
 open _root_.D5.S3.Combinatorics.Circle.RunFirstEarTransport
 open _root_.D5.S3.Combinatorics.Circle.PhysicalJointRepetition
 
-structure Input where
-  d : ℕ
-  w : ℕ
-  r : ℕ
-  cut : ℕ
-  hd : 2 ≤ d
-  hw0 : 1 ≤ w
-  hw : w ≤ 2 ^ (d - 1) - 1
-  hr : 2 ≤ r
-  hcut : cut ≤ d
+abbrev Input := Σ _ : ℕ, Σ _ : ℕ, Σ _ : ℕ, ℕ
 
 abbrev signature : Signature where
   Params := Input
-  State p := List (Fin p.d)
+  State _ := ℕ
   Role := Bool
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output side p := match side with
+    | false => List (Fin (p.1 * p.2.2.1)) → Prop
+    | true => List (Fin (p.1 * p.2.2.1 + 1)) → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
   realize signature
-    (fun side p tau => match side with
+    (fun side p seed => match side with
       | false =>
-          OriginalOrder (p.d * p.r) (p.w * geom p.d p.r)
-            (repeatWord p.d p.r (Nat.zero_lt_of_lt p.hr) tau)
+          OriginalOrder (p.1 * p.2.2.1) seed
       | true =>
-          OriginalOrder (p.d * p.r + 1) (2 * (p.w * geom p.d p.r))
-            (earWord (p.d * p.r)
-              (repeatWord p.d p.r (Nat.zero_lt_of_lt p.hr) tau) p.cut))
+          OriginalOrder (p.1 * p.2.2.1 + 1) seed)
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun side _ _ => match side with
+    | false => fun _ => False
+    | true => fun _ => False) (fun e => nomatch e)
 
 def deleted (side : Bool) : Realization signature :=
   realize signature
-    (fun j p tau => if j = side then False else actual.readout j p tau)
+    (fun j p seed => if h : j = side then h ▸ rejected.readout side p seed else actual.readout j p seed)
     (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (p : Input) (tau : List (Fin p.d)),
-    OriginalOrder p.d p.w tau →
-    OriginalOrder (p.d + 1) (2 * p.w) (earWord p.d tau p.cut) →
-    R.readout false p tau ∧ R.readout true p tau
+  Law R := ∀ (d w r cut : ℕ) (hd : 2 ≤ d) (hw0 : 1 ≤ w)
+      (hw : w ≤ 2 ^ (d - 1) - 1) (hr : 2 ≤ r) (hcut : cut ≤ d)
+      (tau : List (Fin d)),
+    OriginalOrder d w tau →
+    OriginalOrder (d + 1) (2 * w) (earWord d tau cut) →
+    R.readout false ⟨d, w, r, cut⟩ (w * geom d r)
+        (repeatWord d r (Nat.zero_lt_of_lt hr) tau) ∧
+      R.readout true ⟨d, w, r, cut⟩ (2 * (w * geom d r))
+        (earWord (d * r)
+          (repeatWord d r (Nat.zero_lt_of_lt hr) tau) cut)
 
 private theorem actual_law : arena.Law actual := by
-  intro p tau hold hnew
+  intro d w r cut hd hw0 hw hr hcut tau hold hnew
   simpa [actual, realize] using
-    (physical_joint_repetition p.d p.w p.r p.cut p.hd p.hw0 p.hw p.hr p.hcut
-      tau hold hnew)
+    (physical_joint_repetition d w r cut hd hw0 hw hr hcut tau hold hnew)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  let p : Input := {
-    d := 2, w := 1, r := 2, cut := 0,
-    hd := by omega, hw0 := by omega, hw := by omega, hr := by omega, hcut := by omega }
-  have hold : OriginalOrder p.d p.w [0, 1] := by
+  have hold : OriginalOrder 2 1 [0, 1] := by
     refine ⟨by decide, by decide, ?_⟩
     intro n
     cases n with
     | zero => norm_num [OriginalOrder, actualSource, centered, modulus]
     | succ n =>
         cases n <;> norm_num [OriginalOrder, actualSource, centered, modulus]
-  have hnew : OriginalOrder (p.d + 1) (2 * p.w) (earWord p.d [0, 1] p.cut) := by
+  have hnew : OriginalOrder 3 2 (earWord 2 [0, 1] 0) := by
     refine ⟨by decide, by decide, ?_⟩
     intro n
     cases n with
@@ -91,21 +85,20 @@ private theorem rejected_law : ¬ arena.Law rejected := by
             cases n with
             | zero => norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
             | succ n => norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
-  simpa [rejected, realize] using (h p [0, 1] hold hnew)
+  simpa [rejected, realize] using
+    (h 2 1 2 0 (by omega) (by omega) (by omega) (by omega) (by omega)
+      [0, 1] hold hnew)
 
 private theorem deleted_law (side : Bool) : ¬ arena.Law (deleted side) := by
   intro h
-  let p : Input := {
-    d := 2, w := 1, r := 2, cut := 0,
-    hd := by omega, hw0 := by omega, hw := by omega, hr := by omega, hcut := by omega }
-  have hold : OriginalOrder p.d p.w [0, 1] := by
+  have hold : OriginalOrder 2 1 [0, 1] := by
     refine ⟨by decide, by decide, ?_⟩
     intro n
     cases n with
     | zero => norm_num [OriginalOrder, actualSource, centered, modulus]
     | succ n =>
         cases n <;> norm_num [OriginalOrder, actualSource, centered, modulus]
-  have hnew : OriginalOrder (p.d + 1) (2 * p.w) (earWord p.d [0, 1] p.cut) := by
+  have hnew : OriginalOrder 3 2 (earWord 2 [0, 1] 0) := by
     refine ⟨by decide, by decide, ?_⟩
     intro n
     cases n with
@@ -118,105 +111,80 @@ private theorem deleted_law (side : Bool) : ¬ arena.Law (deleted side) := by
             | zero => norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
             | succ n => norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
   cases side with
-  | false => simpa [deleted, actual, realize] using (h p [0, 1] hold hnew).1
-  | true => simpa [deleted, actual, realize] using (h p [0, 1] hold hnew).2
+  | false =>
+      have hh := (h 2 1 2 0 (by omega) (by omega) (by omega) (by omega) (by omega)
+        [0, 1] hold hnew).1
+      dsimp [deleted, rejected, actual, realize] at hh
+  | true =>
+      have hh := (h 2 1 2 0 (by omega) (by omega) (by omega) (by omega) (by omega)
+        [0, 1] hold hnew).2
+      dsimp [deleted, rejected, actual, realize] at hh
 
 private theorem source_bridge :
     (type_of% (@physical_joint_repetition)) ↔ arena.Law actual := by
   constructor
-  · intro h p tau hold hnew
-    simpa [actual, realize] using
-      (h p.d p.w p.r p.cut p.hd p.hw0 p.hw p.hr p.hcut tau hold hnew)
   · intro h d w r cut hd hw0 hw hr hcut tau hold hnew
-    let p : Input := {
-      d := d
-      w := w
-      r := r
-      cut := cut
-      hd := hd
-      hw0 := hw0
-      hw := hw
-      hr := hr
-      hcut := hcut }
-    simpa [actual, realize] using (h p tau hold hnew)
+    simpa [actual, realize] using
+      (h d w r cut hd hw0 hw hr hcut tau hold hnew)
+  · intro h d w r cut hd hw0 hw hr hcut tau hold hnew
+    simpa [actual, realize] using
+      (h d w r cut hd hw0 hw hr hcut tau hold hnew)
+
+private def identityWord4 : List (Fin 4) := [0, 1, 2, 3]
+
+private theorem zero4 : OriginalOrder 4 0 identityWord4 := by
+  have hf : actualSource 4 0 = fun _ => (0 : ℤ) := by
+    funext i
+    fin_cases i <;> norm_num [actualSource, centered, modulus]
+  refine ⟨List.Perm.refl _, ?_, ?_⟩
+  · simp [identityWord4, hf]
+  · intro n
+    have hs : ((identityWord4.take n).map (actualSource 4 0)).sum = 0 := by
+      rw [hf]
+      simp
+    rw [hs]
+    norm_num [modulus]
+
+private theorem bad4 : ¬ OriginalOrder 4 2 identityWord4 := by
+  intro h
+  have hh := h.2.2 3
+  norm_num [identityWord4, List.finRange_succ, actualSource, centered, modulus] at hh
+
+private def identityWord5 : List (Fin 5) := [0, 1, 2, 3, 4]
+
+private theorem zero5 : OriginalOrder 5 0 identityWord5 := by
+  have hf : actualSource 5 0 = fun _ => (0 : ℤ) := by
+    funext i
+    fin_cases i <;> norm_num [actualSource, centered, modulus]
+  refine ⟨List.Perm.refl _, ?_, ?_⟩
+  · simp [identityWord5, hf]
+  · intro n
+    have hs : ((identityWord5.take n).map (actualSource 5 0)).sum = 0 := by
+      rw [hf]
+      simp
+    rw [hs]
+    norm_num [modulus]
+
+private theorem bad5 : ¬ OriginalOrder 5 2 identityWord5 := by
+  intro h
+  have hh := (h.2.2 4).1
+  norm_num [identityWord5, actualSource, centered, modulus] at hh
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro side
-  let p : Input := {
-    d := 2
-    w := 1
-    r := 2
-    cut := 0
-    hd := by omega
-    hw0 := by omega
-    hw := by omega
-    hr := by omega
-    hcut := by omega }
-  refine ⟨p, [0, 1], [1, 0], ?_⟩
+  let p : Input := ⟨2, 1, 2, 0⟩
+  refine ⟨p, 0, 2, ?_⟩
   cases side with
   | false =>
-      have hgood := (actual_law p [0, 1] (by
-        refine ⟨by decide, by decide, ?_⟩
-        intro n
-        cases n with
-        | zero => norm_num [OriginalOrder, actualSource, centered, modulus]
-        | succ n =>
-            cases n <;> norm_num [OriginalOrder, actualSource, centered, modulus]) (by
-        refine ⟨by decide, by decide, ?_⟩
-        intro n
-        cases n with
-        | zero => norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
-        | succ n =>
-            cases n with
-            | zero => norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
-            | succ n =>
-                cases n with
-                | zero => norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
-                | succ n => norm_num [OriginalOrder, earWord, actualSource, centered, modulus])).1
-      have hbad : ¬ OriginalOrder (p.d * p.r) (p.w * geom p.d p.r)
-          (repeatWord p.d p.r (Nat.zero_lt_of_lt p.hr) [1, 0]) := by
-        intro h
-        have hh := h.2.2 1
-        norm_num [OriginalOrder, repeatWord, blockLabel, actualSource, centered, modulus,
-          geom, List.finRange] at hh
       intro he
-      apply hbad
-      have htransport : actual.readout false p [1, 0] := by
-        rw [← he]
-        simpa [actual, realize] using hgood
-      exact htransport
+      apply bad4
+      have hp := congrFun he identityWord4
+      simpa [actual, realize, p] using (hp.mp zero4)
   | true =>
-      have hgood := (actual_law p [0, 1] (by
-        refine ⟨by decide, by decide, ?_⟩
-        intro n
-        cases n with
-        | zero => norm_num [OriginalOrder, actualSource, centered, modulus]
-        | succ n =>
-            cases n <;> norm_num [OriginalOrder, actualSource, centered, modulus]) (by
-        refine ⟨by decide, by decide, ?_⟩
-        intro n
-        cases n with
-        | zero => norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
-        | succ n =>
-            cases n with
-            | zero => norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
-            | succ n =>
-                cases n with
-                | zero => norm_num [OriginalOrder, earWord, actualSource, centered, modulus]
-                | succ n => norm_num [OriginalOrder, earWord, actualSource, centered, modulus])).2
-      have hbad : ¬ OriginalOrder (p.d * p.r + 1) (2 * (p.w * geom p.d p.r))
-          (earWord (p.d * p.r)
-            (repeatWord p.d p.r (Nat.zero_lt_of_lt p.hr) [1, 0]) p.cut) := by
-        intro h
-        have hh := h.2.2 2
-        norm_num [OriginalOrder, earWord, repeatWord, blockLabel, actualSource, centered,
-          modulus, geom, List.finRange] at hh
       intro he
-      apply hbad
-      have htransport : actual.readout true p [1, 0] := by
-        rw [← he]
-        simpa [actual, realize] using hgood
-      exact htransport
+      apply bad5
+      have hp := congrFun he identityWord5
+      simpa [actual, realize, p] using (hp.mp zero5)
 
 def source_registration : Registration arena (type_of% (@physical_joint_repetition)) where
   actual := actual
@@ -266,18 +234,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     definition := none
     coordinates := #[0, 1, 2, 3]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg", "arg"]
-      booleanPredicate := true }, {
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "arg"]
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }, {
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg", "fn", "arg", "arg"]
-      booleanPredicate := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
