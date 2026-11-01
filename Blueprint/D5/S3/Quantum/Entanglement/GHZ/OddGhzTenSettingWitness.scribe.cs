@@ -20,6 +20,8 @@ internal sealed class OddGhzTenSettingWitnessDocument : IScribeDocumentDefinitio
                 "The real part of a complex quadratic form scales by a real scalar r. Complex.ofReal displays the scalar used to multiply the matrix."),
             PublishedNode("normSq_overlap_comm", "Symmetry of squared overlaps", NormSqOverlapFormula(),
                 "Exchanging two finite complex vectors conjugates their overlap and preserves its squared absolute value."),
+            PublishedNode("ghz_overlap_normSq", "Squared overlap with the GHZ vector", GhzOverlapNormSqFormula(),
+                "For every natural dimension d and every three-party complex vector v, the squared GHZ overlap is one over d times the squared absolute value of the sum of diagonal coordinates. Field division includes d = 0."),
             Paragraph(Text("Fin d indexes coordinates from zero. Three-party coordinates use Fin d × (Fin d × Fin d). The symbols psi, rho and sigma denote the corresponding Lean vector and state variables. Complex.ofReal and Nat.cast display scalar embeddings; all divisions in Complex or Real are field divisions, while Nat.mod and Nat.sub retain natural remainder and truncated subtraction. Pi.single is the coordinate delta vector. Matrix.vecMulVec, Matrix.kroneckerMap, Matrix.mulVec, dotProduct and star have their usual Lean meanings. The density states are D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState; CStarMatrix.ofMatrix.symm reads their underlying matrices. Nine labelled settings are summed with multiplicity, including when d = 1.")),
             Paragraph(Text("FormationBounds.spectral_ensemble_nonempty supplies a finite convex ensemble for each positive semidefinite trace-one coefficient matrix. Its Ensemble record stores the weights, Euclidean unit vectors and rank-one reconstruction.")),
             Paragraph(Text("Pure-state Schmidt rank is the rank of the coefficient matrix. The three-party cuts keep the other two indices in Fin d × Fin d. Supplementary V, printed page 22, uses the phase ω = exp(2πi/d), represented by WindowRegister.windowRoot.")),
@@ -101,6 +103,13 @@ internal sealed class OddGhzTenSettingWitnessDocument : IScribeDocumentDefinitio
         PublishedAll("f", Vec(Iota), PublishedAll("g", Vec(Iota),
             Eqn(C("Complex", "normSq", DotProduct(Call("star", V("f")), V("g"))),
                 C("Complex", "normSq", DotProduct(Call("star", V("g")), V("f")))))), false);
+
+    private static Formula GhzOverlapNormSqFormula() => PublishedAll("d", V("Nat"),
+        PublishedAll("v", Vec(Index()),
+            Eqn(C("Complex", "normSq", DotProduct(Call("star", Call("ghz", V("d"))), V("v"))),
+                Multiply(new Formula.Fraction(D(1), RealD()),
+                    C("Complex", "normSq", PublishedSum("i", Fin(V("d")),
+                        At(V("v"), Tuple(V("i"), V("i"), V("i")))))))));
 
     private static AssessedProvenance Lit() => AssessedProvenance.FromLiterature(Source);
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,

@@ -523,7 +523,7 @@ private theorem quadratic_energy {ι : Type*} [Fintype ι] (g : ι → ℂ) :
   classical
   simpa only [RHLinalg.hermForm, Matrix.one_mulVec, RCLike.re_to_complex,
     Complex.normSq_eq_norm_sq] using RHLinalg.hermForm_one g
-private theorem ghz_overlap_normSq {d : ℕ} (v : Fin d × Fin d × Fin d → ℂ) :
+theorem ghz_overlap_normSq {d : ℕ} (v : Fin d × Fin d × Fin d → ℂ) :
     Complex.normSq (star (ghz d) ⬝ᵥ v) = (1/(d : ℝ))*Complex.normSq (∑ i, v (i,i,i)) := by
   rw [ghz_overlap, Complex.normSq_mul]
   have hn : Complex.normSq (1 / Real.sqrt d : ℂ) = 1 / (d : ℝ) := by

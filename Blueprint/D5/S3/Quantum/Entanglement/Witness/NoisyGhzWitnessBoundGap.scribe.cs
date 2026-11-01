@@ -183,7 +183,7 @@ internal sealed class NoisyGhzWitnessBoundGapDocument : IScribeDocumentDefinitio
 
     private static Formula BiseparableFormula()
     {
-        var a = V("a"); var complement = C("Finset", "compl", a);
+        var a = V("a"); var complement = C("Compl", "compl", a);
         Formula Restrict(Formula part) => LambdaOf("i", Part(part), At(V("x"), C("Subtype", "val", V("i"))));
         var factorization = All("x", Word, Equal(At(V("φ"), V("x")),
             Multiply(At(V("u"), Restrict(a)), At(V("v"), Restrict(complement)))));

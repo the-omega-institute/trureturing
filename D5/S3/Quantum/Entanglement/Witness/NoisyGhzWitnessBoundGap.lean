@@ -155,24 +155,32 @@ private lemma support_bounds (ψ : Word (Fin 3) 3 → ℂ) :
     Finset.sum_le_sum_of_subset_of_nonneg (Finset.filter_subset _ _)
       (fun _ _ _ => Complex.normSq_nonneg _)⟩
 
-private lemma ghz_dot (ψ : Word (Fin 3) 3 → ℂ) :
-    star (ghz 3 3) ⬝ᵥ ψ =
-      (Real.sqrt 3 : ℂ)⁻¹ * ∑ i : Fin 3, ψ (fun _ => i) := by
-  classical
-  delta ghz
-  have hc (i : Fin 3) : (![i, i, i] : Word (Fin 3) 3) = (fun _ => i) := by
-    simp only [Matrix.vec_single_eq_const, Matrix.vecCons_const]
-  norm_num [dotProduct, sum_words, Fin.sum_univ_succ,
-    Fin.forall_fin_succ, Pi.star_apply, hc]
-  ring
-
 private lemma ghz_expectation (ψ : Word (Fin 3) 3 → ℂ) :
     3 * readout (rankOneDensity (ghz 3 3)) ψ =
       Complex.normSq (∑ i : Fin 3, ψ (fun _ => i)) := by
   classical
-  rw [expectation_rank_one, ghz_dot, Complex.normSq_mul]
-  norm_num [Complex.normSq_inv, Complex.normSq_ofReal, Real.sq_sqrt, Real.mul_self_sqrt]
-  ring
+  let e : (Fin 3 × Fin 3 × Fin 3) ≃ Word (Fin 3) 3 :=
+    { toFun := fun p => ![p.1, p.2.1, p.2.2]
+      invFun := fun x => (x 0, x 1, x 2)
+      left_inv := by rintro ⟨i, j, k⟩; rfl
+      right_inv := by intro x; funext i; fin_cases i <;> rfl }
+  have hghz : ghz 3 3 ∘ e = D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.ghz 3 := by
+    funext p
+    rcases p with ⟨i, j, k⟩
+    fin_cases i <;> fin_cases j <;> fin_cases k <;>
+      norm_num [ghz, D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.ghz,
+        e, Function.comp_def, Fin.sum_univ_succ, Pi.single_apply, Fin.forall_fin_succ]
+  have hoverlap : star (ghz 3 3) ⬝ᵥ ψ =
+      star (D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.ghz 3) ⬝ᵥ (ψ ∘ e) := by
+    rw [← hghz]
+    exact (comp_equiv_dotProduct_comp_equiv (star (ghz 3 3)) ψ e).symm
+  have hc (i : Fin 3) : e (i, i, i) = fun _ => i := by
+    dsimp [e]
+    simp only [Matrix.vec_single_eq_const, Matrix.vecCons_const]
+  rw [expectation_rank_one, hoverlap,
+    D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.ghz_overlap_normSq]
+  simp only [Function.comp_apply, hc]
+  norm_num [← mul_assoc]
 
 private lemma join_support (a : Finset (Fin 3)) (i j : Fin 3) :
     (Finset.univ.image ((a.piecewise (fun _ => i) (fun _ => j)))).card ≤ 2 := by
