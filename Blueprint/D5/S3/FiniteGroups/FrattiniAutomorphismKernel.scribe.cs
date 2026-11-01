@@ -80,7 +80,7 @@ internal sealed class FrattiniAutomorphismKernelDocument : IScribeDocumentDefini
         return Disp(BaseGroup(All("finite", Call("Finite", g),
             All("p", Seq(Mathbb, Grp(F.Id("N"))), new Formula.Logic(
                 Call("IsPGroup", p, g), FormulaLogicOperator.Implies,
-                Call("IsPGroup", p, Call("ker", Call("quotientAut", Call("frattini", g))))))));
+                Call("IsPGroup", p, Call("ker", Call("quotientAut", Call("frattini", g)))))))));
     }
 
 }
