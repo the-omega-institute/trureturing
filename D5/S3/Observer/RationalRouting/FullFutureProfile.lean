@@ -7,6 +7,7 @@
    digest: A finite floor cell determines every finite chronological future at every bounded scale. -/
 
 import D5.S3.Observer.RationalRouting.Source
+import Batteries.Tactic.OpenPrivate
 
 /-! Finite floor vectors and their complete chronological future profiles. -/
 
