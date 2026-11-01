@@ -129,10 +129,10 @@ private theorem det_perm_d (r a b o c d : Real) :
     Nat.succ_eq_add_one, Nat.reduceAdd, Fin.castLE, Fin.cast]
   ring
 
-/-- All six local original cosines lie strictly in the open interval exactly when
-    the common signed Gram determinant is negative.  This is a local algebraic
-    criterion; it does not assert a geometric realization or a face gluing. -/
 set_option maxHeartbeats 3000000 in
+/- All six local original cosines lie strictly in the open interval exactly when
+    the common signed Gram determinant is negative.  This is a local algebraic
+criterion; it does not assert a geometric realization or a face gluing. -/
 theorem all_edges_strict_iff_det_neg (r a b o c d : Real)
     (hr : 1 < r) (ha : 1 < a) (hb : 1 < b) (ho : 1 < o)
     (hc : 1 < c) (hd : 1 < d) :
