@@ -2,7 +2,6 @@
 
 from contextlib import ExitStack, contextmanager
 from contextvars import ContextVar
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -16,46 +15,7 @@ import time
 import uuid
 
 from worktree_protocol import (Refused, GitFailure, git, value, common, inventory, identity,
-                               acquire, git_scope, remote_endpoint, tree_scope)
-
-
-def remote_roots(source, branch):
-    roots = []
-    for remote in value(source, "remote").splitlines():
-        endpoint = remote_endpoint(source, remote)
-        refs = ["refs/heads/dev"]
-        if branch:
-            refs.append(branch)
-        result = git(source, "ls-remote", "--heads", "--", endpoint, *refs)
-        for row in result.stdout.splitlines():
-            oid, reference = row.split(b"\t")
-            if os.fsdecode(reference) not in refs:
-                raise Refused("unexpected_remote_ref")
-            tip = oid.decode("ascii")
-            git(source, "fetch", "--no-write-fetch-head", "--no-tags", "--", endpoint, tip)
-            roots.append(tip)
-    if not roots:
-        raise Refused("remote_preservation_unknown")
-    return roots
-
-
-def retained(source, oid, roots):
-    if not oid or set(oid) == {"0"}:
-        return
-    if git(source, "cat-file", "-t", oid).stdout.strip() != b"commit":
-        raise Refused("noncommit_recovery_object:" + oid)
-    if not any(git(source, "merge-base", "--is-ancestor", oid, root, check=False).returncode == 0
-               for root in roots):
-        raise Refused("local_only_history:" + oid)
-
-
-def reflog_oids(path):
-    for line in path.read_bytes().splitlines():
-        fields = line.split(b" ", 2)
-        if len(fields) != 3 or not all(re.fullmatch(rb"[0-9a-f]{40}|[0-9a-f]{64}", field)
-                                      for field in fields[:2]):
-            raise Refused("unknown_reflog:" + str(path))
-        yield from (field.decode("ascii") for field in fields[:2])
+                               acquire, git_scope, tree_scope)
 
 
 REMOVAL_RECORD = "worktree-removal"
@@ -288,12 +248,12 @@ def payload_removal_budget(force):
     if force:
         yield None
         return
-    deadline = time.monotonic() + 300
+    deadline = time.monotonic() + 1800
     def expired(signum, frame):
-        raise subprocess.TimeoutExpired(["worktree", "remove"], 300,
+        raise subprocess.TimeoutExpired(["worktree", "remove"], 1800,
                                         stderr=b"payload removal deadline expired")
     handler = signal.signal(signal.SIGALRM, expired)
-    previous = signal.setitimer(signal.ITIMER_REAL, 300)
+    previous = signal.setitimer(signal.ITIMER_REAL, 1800)
     try:
         yield deadline
     finally:
@@ -633,7 +593,7 @@ def remove(options):
                     _PAYLOAD_PLAN.reset(payload_token)
                 remaining = None if deadline is None else deadline - time.monotonic()
                 if remaining is not None and remaining <= 0:
-                    raise subprocess.TimeoutExpired(["worktree", "remove"], 300)
+                    raise subprocess.TimeoutExpired(["worktree", "remove"], 1800)
                 git(source, "worktree", "remove", *flags, "--", target,
                     timeout=remaining)
                 outcomes.append(dict(path=str(target), outcome="removed", checkpoint=checkpoint,
@@ -656,36 +616,3 @@ def remove(options):
     return dict(event="worktree_removal", items=outcomes,
                 status="failed" if any(item["outcome"] not in ("removed", "would_remove", "refused") for item in outcomes)
                 else "refused" if any(item["outcome"] == "refused" for item in outcomes) else "succeeded")
-
-
-def retire_branch(options):
-    reference = "refs/heads/" + options.branch
-    git(options.source, "check-ref-format", reference)
-    with ExitStack() as stack:
-        acquire(stack, options.source, "ref:" + reference, True)
-        if any(row.get("branch") == reference for row in inventory(options.source)):
-            raise Refused("branch_in_use")
-        current = value(options.source, "rev-parse", "--verify", reference)
-        if current != options.commit:
-            raise Refused("branch_identity_changed")
-        if value(options.source, "for-each-ref", "--format=%(symref)", reference):
-            raise Refused("symbolic_branch")
-        roots = remote_roots(options.source, reference)
-        retained(options.source, current, roots)
-        log = common(options.source) / "logs" / reference
-        if options.expected_reflog_sha256 is not None:
-            if (not re.fullmatch(r"[0-9a-f]{64}", options.expected_reflog_sha256)
-                    or not log.is_file() or log.is_symlink()
-                    or hashlib.sha256(log.read_bytes()).hexdigest() != options.expected_reflog_sha256):
-                raise Refused("branch_reflog_changed")
-        if log.exists():
-            for oid in set(reflog_oids(log)):
-                retained(options.source, oid, roots)
-        if not options.preview:
-            try:
-                git(options.source, "update-ref", "--no-deref", "-d", reference, current)
-            except (Refused, OSError, subprocess.SubprocessError) as error:
-                return dict(event="worktree_branch_retirement", branch=options.branch, commit=current,
-                            status="partial_or_indeterminate", error=str(error))
-        return dict(event="worktree_branch_retirement", branch=options.branch, commit=current,
-                    status="would_remove" if options.preview else "removed")
