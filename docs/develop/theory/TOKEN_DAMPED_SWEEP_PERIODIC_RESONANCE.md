@@ -2539,3 +2539,314 @@ $$
 At least one factor is at most the square root of this positive number. The corresponding eigenvalue satisfies $|\mu_j|\geq1-|1+\mu_j|$, proving the upper bound in (15.7). Strict positivity of the gap follows from Theorem 13.2 for every $c>0$; the right side tends to zero with $c$. The argument neither divides by $q$ nor assumes distinct or real eigenvalues. At $\alpha=1/3$, $q=0$ and $\theta=1/2$, so it includes that entire singular family explicitly. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 16. Undamped spectral information and the first dimension of optimizer failure
+
+**Definition 16.1 (The full complex spectral objective in the original family).** For every integer $m\geq1$ and every $v\in(0,\infty)^{m+1}$, use exactly $A,B,B_\alpha$ of Definition 1.1, with $z_0=z_{m+1}=0$, and put $U_v=A^{-1}B$. Extend the displayed original first row continuously to $\alpha\in[0,1]$. Its denominator $v_2+\alpha v_1$ is positive on this closed interval. Use the increasing normalized parameter from (12.1), with its inverse,
+
+$$
+q_v(\alpha)=\frac{\alpha(v_1+2v_2)-v_2}{v_2+\alpha v_1},
+\qquad
+\alpha_v(q)=\frac{v_2(1+q)}{v_1+2v_2-v_1q},
+\qquad -1\leq q\leq1,
+\tag{16.1}
+$$
+
+and write $T_{v,q}=A^{-1}B_{\alpha_v(q)}$. In particular $T_{v,1}=U_v$; $T_{v,-1}$ is the other original endpoint extension. The first row of $B_{\alpha_v(q)}$ is
+
+$$
+(B_{\alpha_v(q)}z)_1=-qz_1+(1+q)\frac{v_1}{v_1+v_2}z_2,
+\tag{16.2}
+$$
+
+where $z_2=0$ if $m=1$, and every other row is unchanged from $B$. Thus no original coordinate or zero endpoint is changed by this notation.
+
+For $q\in[-1,1]$ let
+
+$$
+p_v(\zeta,q)=\det(\zeta I_m-T_{v,q}),\qquad
+\mathsf S_v(q)=\{\mu_1(q),\ldots,\mu_m(q)\}
+\tag{16.3}
+$$
+
+be its monic complex characteristic polynomial and its entire multiset of complex roots, counted with algebraic multiplicities. Define
+
+$$
+\rho_v(q)=\max_{1\leq j\leq m}|\mu_j(q)|,\qquad
+\gamma_v=\min_{q\in[-1,1]}\rho_v(q),\qquad
+Q_v=\{q\in[-1,1]:\rho_v(q)=\gamma_v\}.
+\tag{16.4}
+$$
+
+The observation is
+
+$$
+\mathsf O(v)=(m,\mathsf S_v(1)).
+\tag{16.5}
+$$
+
+Equality of observations means equality of dimensions and equality of the entire undamped complex multisets, including multiplicities. The set $Q_v$ is an optimizer set; the energy form $Q(z)$ retains exactly its meaning in (12.1).
+
+The literal odd/even equations, centering, and Token-1 first row are those of [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, Section IV.A, page 3, and Section IV.B.1, page 4](https://arxiv.org/pdf/2608.27085v1). Their pair count is $m=n-1$, their centered $u$ is $z$, their $M$ is $U_v$, and their fixed $M_\alpha$ is $T_{v,q_v(\alpha)}$. Lemma 2 there supplies the undamped positive quadratic invariant, and Lemma 3 supplies determinant contraction in the open damping interval. The explicit energy, rank-one factorization, strict fixed-map contraction, low-dimensional transfers, finite-annihilation criteria and rate bounds in Sections 3 and 12–15 are supporting results here. In the complete [damped-sweep source](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean) and [finite-path source](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.lean), source pair $i$ and velocity $v_j$ have indices $i-1$ and $j-1$; `A`, `B`, `Balpha`, `Malpha` denote $A,B,B_\alpha,T_{v,q_v(\alpha)}$. The first-event weight `theta` there is $(1+q)/2$, not an undamped rotation angle. The local energy, loss and literal sweep identities used below are `local_energy_decomposition`, `Q_dampedEvent_loss`, `Q_event`, `Q_phase`, `sweep_stacked` and `source_factorization`; the strict fixed-map conclusion is `result`, with the finite-path rigidity, boundary observability and power-decay intermediates. Their complete [damped-sweep](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs) and [finite-path](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.scribe.cs) expositions have the same correspondence.
+
+Polynomial factorization with multiplicities, the elementary symmetric functions of the roots and the quadratic formula are used in their classical sense; see [NIST DLMF, version 1.2.8, §1.11(ii)–(iv), especially (1.11.10), (1.11.11) and (1.11.21)–(1.11.23)](https://dlmf.nist.gov/1.11). These facts and the cited Token identities are intermediates to the information assertion below. Mensing's homogeneous qualitative antecedent is credited in [the same Token v1, Section II and reference [11]](https://arxiv.org/html/2608.27085v1#bib.bib11); its quantitative full-text overlap is unknown and no result from that full text is assumed. The attribution is confined to the stated sources and versions, with no exhaustive-literature or priority assertion.
+
+**Theorem 16.2 (Retention through dimension two and exact failure in dimension three).** In Definition 16.1, equality of observations in dimension $m=1$ or $m=2$ determines $p_v(\zeta,q)$ for every $q\in[-1,1]$, and consequently determines the entire function $\rho_v$, the set $Q_v$ and the number $\gamma_v$.
+
+In dimension $m=3$, the actual strictly positive chains
+
+$$
+v^{(0)}=(3,1,2,6),\qquad v^{(1)}=(3,1,14,42)
+\tag{16.6}
+$$
+
+instead satisfy
+
+$$
+\mathsf O(v^{(0)})=\mathsf O(v^{(1)})
+=\left(3,\left\{-1,\frac{1+i\sqrt3}{2},\frac{1-i\sqrt3}{2}\right\}\right),
+\tag{16.7}
+$$
+
+with each undamped eigenvalue simple, and have identical original parameter maps
+
+$$
+q(\alpha)=\frac{5\alpha-1}{1+3\alpha},\qquad
+\alpha(q)=\frac{1+q}{5-3q}.
+\tag{16.8}
+$$
+
+Nevertheless their exact global full-spectrum optima are
+
+$$
+\boxed{\quad
+Q_{v^{(0)}}=\{0\},\quad \gamma_{v^{(0)}}=0;
+\qquad
+Q_{v^{(1)}}=\{-1/4\},\quad \gamma_{v^{(1)}}=\frac1{\sqrt2}>0.
+\quad}
+\tag{16.9}
+$$
+
+Both minima are attained uniquely on the entire closed interval. In the original damping variable their unique minimizing sets are respectively $\{1/5\}$ and $\{3/23\}$. Thus dimension three is the first possible failure of these normalized-$q$ information targets in the original positive-velocity family.
+
+*Proof.* First verify the domain and the existence of the minima used in (16.4). In (16.1), the inverse denominator is at least $2v_2>0$ for $-1\leq q\leq1$. Direct differentiation gives
+
+$$
+q_v'(\alpha)=\frac{2v_2(v_1+v_2)}{(v_2+\alpha v_1)^2}>0,
+\qquad q_v(0)=-1,\quad q_v(1)=1.
+\tag{16.10}
+$$
+
+Solving the first equation of (16.1) for $\alpha$ gives exactly its displayed inverse, so the correspondence is a bijection between the two closed intervals and between their interiors. Substituting it into the original first row gives (16.2). This also shows that the entries of $T_{v,q}$ and the coefficients of $p_v$ are continuous in $q$, indeed affine entries before taking the determinant. The only singular value is $q=0$, corresponding to $\alpha_*=v_2/(v_1+2v_2)$: by (13.8), $\det T_{v,q}=(-1)^m q$.
+
+For the full complex root domain, retain the original positive definite Hermitian form
+
+$$
+Q(z)=\sum_{j=1}^{m+1}\frac{|z_j-z_{j-1}|^2}{v_j},
+\qquad z_0=z_{m+1}=0.
+$$
+
+The source local reflection and sweep identities give precisely (12.7): if $P_1z=f_1\langle f_1,z\rangle_Q$, with the unit normal $f_1$ of Definition 12.1, then
+
+$$
+T_{v,q}=U_v\bigl(I-(1-q)P_1\bigr),\qquad
+Q(T_{v,q}z)=Q(z)-(1-q^2)|\langle f_1,z\rangle_Q|^2.
+\tag{16.11}
+$$
+
+These are polynomial identities in $q$, so the endpoint extensions and the singular interior value are included. The factor $U_v$ preserves $Q$. For every nonzero complex eigenvector, (16.11) implies $|\mu|\leq1$. At $q=-1$ the second factor is $I-2P_1$, a $Q$-reflection, and at $q=1$ it is $I$. Thus both endpoint maps preserve $Q$, and every eigenvalue at either endpoint has modulus one. Consequently $\rho_v(-1)=\rho_v(1)=1$. On $-1<q<1$, the strict fixed-map conclusion in Theorem 13.2 gives $\rho_v(q)<1$.
+
+Here is a root argument that includes every multiplicity and proves continuity of the actual maximum in (16.4). Given any sequence $q_n\to q$, list all $m$ complex roots of $p_v(\zeta,q_n)$ in any order, with multiplicities. The resulting tuples belong to the compact product of $m$ closed unit disks, by (16.11). Along any convergent subsequence of such tuples, with limit $(\nu_1,\ldots,\nu_m)$, continuity of the coefficients and of finite multiplication gives
+
+$$
+p_v(\zeta,q)=\prod_{j=1}^m(\zeta-\nu_j).
+$$
+
+Thus the limiting tuple is exactly the full root multiset at $q$. Its maximum modulus is $\rho_v(q)$, so along that subsequence $\rho_v(q_n)\to\rho_v(q)$. If convergence failed for the original sequence, an infinite subsequence staying a fixed positive distance from $\rho_v(q)$ would have a further convergent root-tuple subsequence, contradicting this conclusion. This proves continuity without a choice of continuously labeled roots. The extreme-value theorem now makes $\gamma_v$ attained and $Q_v$ nonempty and compact. The strict interior bound and the endpoint values also give $Q_v\subset(-1,1)$. These facts justify the optimization definitions on their full stated domain, independently of any simple-root assumption.
+
+In dimension one the existing scalar identity of Theorem 13.2 is $T_{v,q}=-q$ and $U_v=-1$. Therefore
+
+$$
+p_v(\zeta,q)=\zeta+q,\qquad
+\rho_v(q)=|q|,\qquad Q_v=\{0\},\qquad\gamma_v=0.
+\tag{16.12}
+$$
+
+All chains of that dimension have this same normalized polynomial, including its zero root and its two endpoint values.
+
+For dimension two use the original transfer formula (3.1), with positive velocities $(a,b,c)$, $\xi=a/(a+b)$, $\eta=c/(b+c)$ and the original event weight $\tau=(1+q)/2$. It gives, still in the original coordinates,
+
+$$
+T_{v,q}=\begin{pmatrix}
+-q&(1+q)\xi\\
+-2\eta q&2\eta\xi(1+q)-1
+\end{pmatrix}.
+\tag{16.13}
+$$
+
+Set $\kappa=2\xi\eta-1\in(-1,1)$. The determinant and trace of (16.13) are $q$ and $\kappa(1+q)$, respectively; at $q=1$ the undamped trace is $2\kappa$. If $\{\nu_1,\nu_2\}$ is the observed undamped multiset, its sum is that trace. Hence the observation fixes $\kappa=(\nu_1+\nu_2)/2$ and the entire polynomial
+
+$$
+p_v(\zeta,q)=\zeta^2-\kappa(1+q)\zeta+q.
+\tag{16.14}
+$$
+
+For completeness its full root and radius alternatives follow directly from the classical quadratic formula. Put $\Delta=\kappa^2(1+q)^2-4q$. If $\Delta\geq0$, the two real roots, with a double root when $\Delta=0$, are $[\kappa(1+q)\pm\sqrt\Delta]/2$, and
+
+$$
+\rho_v(q)=\frac{|\kappa|(1+q)+\sqrt\Delta}{2}.
+$$
+
+Indeed for real $t$ and $s\geq0$, $\max(|t+s|,|t-s|)=|t|+s$. If $\Delta<0$, then $q>0$ and the roots are a nonreal conjugate pair of product $q$; each has modulus $\sqrt q$, so $\rho_v(q)=\sqrt q$. At $q=-1$, (16.14) is $\zeta^2-1$; at $q=1$ it is $\zeta^2-2\kappa\zeta+1$; and at $q=0$ it is $\zeta(\zeta-\kappa)$, including the double zero when $\kappa=0$. Thus every branch, endpoint and multiplicity is determined by the observation. Equations (16.12)–(16.14), consumed here from the published scalar and two-coordinate transfers, prove the asserted retention, since equal radius functions have equal global minimum and argmin set on the same compact interval. This retention concerns normalized $q$; the conversion from $q$ back to $\alpha$ retains the actual first two velocities in (16.1).
+
+For the dimension-three comparison take the positive one-parameter velocity family
+
+$$
+v(c)=(3,1,c,3c),\qquad c>0.
+\tag{16.15}
+$$
+
+Substituting into the literal original rows, with $z_0=z_4=0$, gives
+
+$$
+A_c=\begin{pmatrix}1&0&0\\-2c&1+c&-2\\0&0&1\end{pmatrix},\qquad
+B_c=\begin{pmatrix}-1&3/2&0\\0&-(1+c)&0\\0&3/2&-1\end{pmatrix},
+\tag{16.16}
+$$
+
+$$
+B_{c,\alpha}=\begin{pmatrix}
+\dfrac{1-5\alpha}{1+3\alpha}&\dfrac{6\alpha}{1+3\alpha}&0\\
+0&-(1+c)&0\\
+0&3/2&-1
+\end{pmatrix}
+=\begin{pmatrix}
+-q&\tfrac34(1+q)&0\\
+0&-(1+c)&0\\
+0&3/2&-1
+\end{pmatrix}.
+\tag{16.17}
+$$
+
+In particular the entire family has exactly the original parameter correspondence (16.8). The original even row is $-2cw_1+(1+c)w_2-2w_3=b_2$. Solving it after the two odd rows gives
+
+$$
+A_c^{-1}=\begin{pmatrix}
+1&0&0\\
+\dfrac{2c}{1+c}&\dfrac1{1+c}&\dfrac2{1+c}\\
+0&0&1
+\end{pmatrix},
+\qquad
+T_{v(c),q}=\begin{pmatrix}
+-q&\tfrac34(1+q)&0\\
+-\dfrac{2cq}{1+c}&-1+\dfrac{3c(1+q)}{2(1+c)}+\dfrac3{1+c}&-\dfrac2{1+c}\\
+0&3/2&-1
+\end{pmatrix}.
+\tag{16.18}
+$$
+
+This is $A_c^{-1}B_{c,\alpha}$ itself. To compute its full characteristic polynomial, use $\det A_c=1+c>0$ and expand
+
+$$
+\zeta A_c-B_{c,\alpha}=
+\begin{pmatrix}
+\zeta+q&-\tfrac34(1+q)&0\\
+-2c\zeta&(1+c)(\zeta+1)&-2\zeta\\
+0&-3/2&\zeta+1
+\end{pmatrix}.
+$$
+
+The first-row expansion, divided by $1+c$, is
+
+$$
+\begin{aligned}
+p_{v(c)}(\zeta,q)
+&=(\zeta+q)\left((\zeta+1)^2-\frac{3\zeta}{1+c}\right)
+ -\frac{3c}{2(1+c)}(1+q)\zeta(\zeta+1)\\
+&=\zeta^3+\frac{c-2}{2(c+1)}(1-q)\zeta^2
+ -\frac{c-2}{2(c+1)}(1-q)\zeta+q.
+\end{aligned}
+\tag{16.19}
+$$
+
+For example, the coefficients of $\zeta^2$ and $\zeta$ before simplification are
+$2-3/(1+c)-3c/[2(1+c)]+q(1-3c/[2(1+c)])$
+and
+$1-3c/[2(1+c)]+q(2-3/(1+c)-3c/[2(1+c)])$;
+these are respectively $[(c-2)/(2(c+1))](1-q)$ and its negative. Thus (16.19) evaluates the determinant with no spectral value omitted.
+
+At $q=1$ this polynomial is $\zeta^3+1=(\zeta+1)(\zeta^2-\zeta+1)$ for every $c>0$. Its three distinct roots are exactly those in (16.7). The choices $c=2$ and $c=14$ in (16.15) give (16.6). Both chains therefore have the same entire undamped complex spectrum, not just the same trace, determinant or spectral radius, and (16.17) proves equality of their full original $\alpha$-to-$q$ maps.
+
+For $c=2$, (16.19) reduces to
+
+$$
+p_{v^{(0)}}(\zeta,q)=\zeta^3+q.
+\tag{16.20}
+$$
+
+At $q=0$ all three roots are zero, with algebraic multiplicity three. At any $q\ne0$ the three roots are distinct and all have modulus $|q|^{1/3}$: if $\mu^3=-q$, they are $\mu,\mu\omega,\mu\omega^2$, where $\omega=(-1+i\sqrt3)/2$ has modulus one. Hence $\rho_{v^{(0)}}(q)=|q|^{1/3}$ for the entire closed interval, proving its unique optimum in (16.9). In particular the singular value is included; its characteristic polynomial is exactly $\zeta^3$, in agreement with the finite-annihilation criterion of Theorem 13.2.
+
+For $c=14$, (16.19) instead gives
+
+$$
+p_{v^{(1)}}(\zeta,q)=\zeta^3+\frac25(1-q)\zeta^2
+                                  -\frac25(1-q)\zeta+q.
+\tag{16.21}
+$$
+
+Let $r=1/\sqrt2$ and $q_*=-1/4$. At this value the entire polynomial factors as
+
+$$
+p_{v^{(1)}}(\zeta,q_*)
+=(\zeta^2-1/2)(\zeta+1/2).
+\tag{16.22}
+$$
+
+Its full multiset is $\{r,-r,-1/2\}$, with all roots simple, and $1/2<r$ since $1/4<1/2$. Thus the actual maximum over all three complex roots is exactly $r$ at $q_*$. For every real $q$, evaluation at both boundary points of this candidate optimal disk gives the exact identities
+
+$$
+p_{v^{(1)}}(r,q)=\frac{4+\sqrt2}{5}(q+1/4),\qquad
+p_{v^{(1)}}(-r,q)=\frac{4-\sqrt2}{5}(q+1/4).
+\tag{16.23}
+$$
+
+To verify them, note that both values vanish at $q_*$ by (16.22) and that their coefficients of $q$ are $1-(2/5)(r^2-r)$ and $1-(2/5)(r^2+r)$, respectively. Substitution of $r^2=1/2$ gives precisely (16.23), whose two coefficients are strictly positive.
+
+If $-1\leq q<q_*$, the first value in (16.23) is negative. The monic real cubic (16.21) tends to $+\infty$ as its real argument tends to $+\infty$. The intermediate value theorem therefore gives a real root strictly larger than $r$. That root is an eigenvalue of the actual $T_{v^{(1)},q}$, so the maximum over its entire complex spectrum is strictly larger than $r$. If $q_*<q\leq1$, the second value in (16.23) is positive. The same monic cubic tends to $-\infty$ at $-\infty$, giving a real root strictly smaller than $-r$ and the same strict lower bound for the full spectral radius. Together with the exact three-root factorization at $q_*$, these two comparisons prove both global minimality and uniqueness on all of $[-1,1]$.
+
+The comparison uses a real root only as a lower bound for the maximum of all three root moduli; equality at the minimizer uses the complete complex factorization (16.22). In particular the other two roots at an arbitrary $q$ may be real, nonreal or multiple without altering either strict comparison. The determinant identity (16.21) remains the specification of all three algebraic roots at every such parameter, so no simple-root or real-spectrum restriction enters the argument.
+
+The endpoint and singular multisets can also be stated explicitly. For the first chain, $q=-1$ gives $\{1,(-1+i\sqrt3)/2,(-1-i\sqrt3)/2\}$, and $q=1$ gives (16.7); both radii are one. For the second chain the corresponding polynomials are
+
+$$
+\begin{aligned}
+p_{v^{(1)}}(\zeta,-1)&=(\zeta-1)(\zeta^2+\tfrac95\zeta+1),\\
+p_{v^{(1)}}(\zeta,1)&=(\zeta+1)(\zeta^2-\zeta+1),\\
+p_{v^{(1)}}(\zeta,0)&=\zeta(\zeta^2+\tfrac25\zeta-\tfrac25).
+\end{aligned}
+\tag{16.24}
+$$
+
+Their full multisets are respectively
+
+$$
+\left\{1,\frac{-9+i\sqrt{19}}{10},\frac{-9-i\sqrt{19}}{10}\right\},
+\qquad
+\left\{-1,\frac{1+i\sqrt3}{2},\frac{1-i\sqrt3}{2}\right\},
+\qquad
+\left\{0,\frac{-1+\sqrt{11}}5,\frac{-1-\sqrt{11}}5\right\}.
+\tag{16.25}
+$$
+
+All entries in each multiset are simple. The first two have radius one; the last is the singular interior map and has radius $(1+\sqrt{11})/5>r$. For the strict inequality, both sides are positive and $(1+\sqrt{11})^2/25>1/2$ is equivalent to $\sqrt{11}>1/4$, which holds. Thus both endpoint extensions, the two different zero-root multiplicities at $q=0$, and nonreal endpoint roots agree with the global comparison.
+
+Finally, applying the same strictly increasing inverse (16.8) to $0$ and $-1/4$ yields respectively $1/5$ and $3/23$. No other original $\alpha\in[0,1]$ can minimize, by bijectivity. The dimension-one and dimension-two retention already proved excludes a failure of either information target in those dimensions; (16.6)–(16.9) establishes both failures in dimension three. $\square$
+
+**Corollary 16.3 (No global optimizer selector or minimum-radius function of the observation).** There is no function of $\mathsf O(v)$ that selects an element of $Q_v$ for every original positive-velocity chain, and no function of $\mathsf O(v)$ equal to $\gamma_v$ for every such chain. The same two impossibilities hold even if the observation is augmented by the entire original map $\alpha\mapsto q_v(\alpha)$. In particular $Q_v$ itself is not a function of that augmented observation.
+
+*Proof.* For the two chains (16.6), both the ordinary and augmented observations coincide, by (16.7)–(16.8). A selector would have to return the same $q$ on these equal observations, but the two required singleton sets in (16.9) are disjoint. A minimum-radius function would have to return both $0$ and $1/\sqrt2$ on that same input, which is impossible. Likewise an exact set-valued rule would have to return both different singletons. This proves each assertion within the literal original family.
+
+The missing information is a distinction between actual chains in one undamped-spectral fiber: in (16.19) the coefficient $(c-2)/(2(c+1))$ disappears at $q=1$, while it changes the full damped polynomial for $q\ne1$. The equality of observations therefore does not identify the relation between the boundary damping and the undamped dynamics. The scalar and two-coordinate identities (16.12) and (16.14) retain enough of that relation to determine their normalized polynomials.
+
+These are fixed-map spectral-information statements. Each $T_{v,q}$ is held fixed when its spectrum or its powers are considered. The arbitrary-dimensional problem of determining $Q_v$ and $\gamma_v$ from the full original velocity chain, rather than from $\mathsf O(v)$ alone, remains unresolved here. The prescribed and mixed histories in Sections 1–11 keep their own distinct domains. The collision process, entry into the rotational regime, switching realizations, and uniform quantitative rates are not consequences of this information obstruction; the original energy and the fixed-chain bounds of Sections 12–15 retain their stated hypotheses. $\square$
+
+## 追加锚（本行以下为增补区）
