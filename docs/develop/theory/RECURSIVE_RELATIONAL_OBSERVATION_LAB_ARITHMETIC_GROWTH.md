@@ -3030,3 +3030,1470 @@ completion of the broader space–time–boundary–memory programme. $\square$
 [AAIISERIAL]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md#67-supplier-correspondence-and-exact-applicability-boundary
 
 ## 追加锚（本行以下为增补区）
+
+## 20. A paid private scrub and source-only resumption in a separate session
+
+**Definition 20.1 (fixed public data and actual hidden alternatives).**
+Fix the actually backed public syntax $y$, exact integers $k,r$, root
+binding and current grants of Definition 18.1. Let $\mathcal H$ be either
+its finite support family, or Definition 19.1's finite, effectively
+enumerated family of attained ordered histories. Write $J(h)$ for the
+support of $h\in\mathcal H$. The alternatives are actual schedules in
+that SAME acquired LAB fibre, with the authentic frontier acquisition,
+successful events and complete inner returns of §§9–11 and 15. A
+history description supplied without those events is not an alternative.
+
+Fix one effective program and publicly backed finite codebook $K$,
+independent of which $h$ is attained. It computes
+
+$$
+Q_h=K(h)\subseteq U_{J(h)},\qquad |Q_h|=r.
+\tag{LAGI.1}
+$$
+
+Its prefix procedure lists these distinct ORIGINAL $y$-leaf addresses
+in a fixed public order and executes their current-tag calls. The
+program may compute the codebook by terminating finite enumeration on
+public parameters, or interpret a supplied finite table. It is not an
+uncomputed infinite table of source responses. Public backing contains
+syntax, parameters and fixed codebook data, not a saved acquired
+address/reference correspondence or a hidden-history-dependent choice
+of program. Denote these fixed public data collectively by $\mathsf P$.
+
+A continuation policy, when supplied, is an effective $G$ or $T$ of
+Definition 18.1, with its declared output function. Correct complete
+continuation, and any injectivity of $h\mapsto Q_h$ needed for recovery
+of $J$ or order, are separate premises supplied by §§18–19. Neither
+follows merely from (LAGI.1). The fixed twenty-code table in §19.2, for
+example, supplies a finite codebook and a post-cut $T$ policy without
+requiring a new matching or capacity theorem.
+
+**Assumption 20.2 (owner-installed session and its access boundary).**
+Before the selected hidden schedule, the owner installs one NEW session
+request/reply connection and finite session control in the actual LAB
+supervisor. Its ingress is serialized by the existing arbiter. It enters
+only at genuine returned outer idle, with the inherited tape/arithmetic
+invariants and empty old transient fields; no scalar or pair macro is
+active. It holds that actual lock throughout the session. The session
+may acquire its old frontier and receive the selected finite schedule,
+thereby attaining and acquiring $h$ at $y$, before its $r$ code writes.
+All such input, including its consumed-position state, is supplementary
+private state. No hidden schedule suffix remains available after the cut.
+
+Its fixed outer control follows
+
+$$
+\mathsf{Prefix}\longrightarrow\mathsf{Scrub}
+\longrightarrow\mathsf{Reacquire}\longrightarrow\mathsf{Continue}
+\longrightarrow\mathsf{Print}\longrightarrow\mathsf{End}
+\longrightarrow\mathsf{ACK}\longrightarrow\mathsf{Return}.
+\tag{LAGI.2}
+$$
+
+Prefix and Continue have finite loops through the original internal
+source connection. The actual supervisor's dispatch and maintenance
+owner accepts these session-origin calls and returns to the designated
+session continuation after the inner driver's REAL root return. An
+internal return leaves the session lock held. Scrub is a new internal
+cut, not PairReady, and grants no external ingress. The eventual session
+report is a function only of $\mathsf P$ and permitted newly acquired
+continuation state. Its contract owes no old scalar/pair result, old
+frontier tail or unconsumed pre-cut reply. Its final full output,
+acknowledgement, root return and cleanup must restore the old returned idle.
+
+Every accepted event still uses Definition 11.1's SAME hook: original
+navigation and guard, reservation, actual source edit, all proper-ancestor
+tape appends, arithmetic successors computed from pre-edit banks, and
+discharge of pending work before the complete Growth reply is released.
+The bound internal receiver backs and consumes every literal kind/address
+bit and End, acknowledges, and waits for real inner return. Its session
+copies belong to the scratch below. Protected source headers/tapes,
+immutable attachment $e$, scalar/pair synchronization, original receivers
+and every literal legacy reply retain their meanings. No dispatch owner
+is bypassed and no produced traffic is suppressed. After session return
+the seven original public calls and scalar/pair connections remain usable.
+
+The post-cut session observer may traverse CURRENT logical source fields
+through the authentic root/grants and use its new scratch. It cannot read
+the auxiliary header/tapes, $e$, protected service banks or old receivers;
+call FetchGrowth/Next; inspect old paths or last-call state; enumerate
+resource/ownership metadata; or observe allocation names/age, representation
+width, elapsed work, capacity or exhaustion. Reference equality is used
+only to authenticate current traversed operands and bindings, with no raw
+name channel. Root, program, public backing and the fixed workspace layout
+are common on the fibre. There is no other alias, callback, request archive
+or later hidden input into this observer. This wiring and authority
+separation is an INSTALLATION premise: common ownership alone does not
+imply it. Protected legacy recall can still distinguish old histories for
+its own authorized users. Erasure below is relative to this session access
+boundary, conditional on the retained current source.
+
+All finite runs have sufficient finite material, exclusive current rights,
+complete supplied inputs and acknowledgements, and no interruption,
+revocation or competing writer. These are AA20.1's ideal finite-execution
+conditions, not a claim about an existing fixed-capacity device.
+
+**Definition 20.3 (public-shaped private backing).** Reserve before the
+hidden schedule a finite padded arena with a fixed public slot layout and
+authentic field references. Each writable slot has a fixed type and neutral
+value. Its immutable public navigation spine and slot schema contain no
+history-dependent data; they remain usable while data fields are cleared.
+Variable lists use occupancy fields within this SAME backing, rather than
+history-dependent allocated chains that could survive as a length channel.
+
+The data slots and a fixed register bank cover ALL supplementary pre-cut
+copies: received input and its cursor; $h,J$, order, selected code and
+labels; OLD/frontier rows, address bits and reference lists; parser and
+output buffers; counters and loop cursors; arithmetic operands and banks;
+saved continuations and call results; latches, phase flags and source
+cursors; allocator descriptors, occupancy/free-list fields and every
+mutable alias. Any supplementary supervisor/receiver copy is included.
+Original inner-service scratch must already be empty at its returned
+Ready, as required by AA20.2; a pending inner operation cannot enter Scrub.
+No supplementary pre-cut object is left outside this coverage. Source
+objects, committed tape backing and public data are separate retained
+components, not cells falsely counted as erased scratch.
+
+For fixed public parameters such backing is sufficient: the admitted
+$\mathcal H$ is finite, the codebook computations terminate, and each
+prefix is a finite sequence of finite traversals and complete calls.
+Execute their description-level procedures on every member of the finite
+enumeration to obtain a finite maximum workspace requirement, and pad
+all alternatives to any sufficient common size. The same argument applies
+to a supplied terminating finite continuation policy if a common arena
+for the whole session is desired. This is an effective finite computation,
+not access to the run's hidden choice. Source/tape reservations retain
+their own AA20.1 material requirements. Actual reference fields must have
+sufficient finite backing under the installation's representation; the
+argument bounds logical slots, not a uniform number of reference bits.
+It asserts neither a uniform arena bound over arbitrary source sizes nor
+free reference widths. Hidden-dependent arena length, optional spare
+objects or readable allocation descriptors would violate this definition.
+
+**Theorem 20.4 (conditional paid scrub, fresh difference acquisition and
+completed-cut simulation).** Under Definitions 20.1 and 20.3 and
+Assumption 20.2, a single fixed finite-control procedure using owned field
+operations implements the prefix, scrub and fresh acquisition phases of
+(LAGI.2). At its completed Scrub cut it has current
+source $z=E_y(Q_h)$, unchanged committed protected fields, one common
+private normal form $w_0$, and the common Reacquire program counter with
+the session lock held. All supplementary pre-cut distinctions have been
+removed from its private backing by actual writes. Fresh current-source
+traversal with public $y$ then recovers EXACTLY $Q_h$ on this actual image.
+
+At the declared complete-inner-return decision cuts, equal $\mathsf P$,
+current source and allowed new memory give equal selected observations,
+replies and next actions, modulo opaque fresh-name renaming. Each completed
+lawful session call has its actual $P/S$ source successor, complete
+tape/arithmetic successor and full literal reply. A supplied successful
+continuation policy therefore gives the session's full stipulated result
+and real outer return. The source relation transports through AA17's
+syntax, oriented support, terminal boundary and labelled causal membership
+maps on their actual images, commuting with each completed source call.
+These conclusions install neither a reset command in the unchanged legacy
+controller nor a successful codebook/policy where one has not been supplied.
+
+Proof. During Prefix, really acquire the actual frontier/history and
+evaluate $K$ in the padded backing. For each listed address, traverse
+from the bound root, acquire the CURRENT reference, check its correspondence
+with the address/tag, and submit the original addressed frame. Since its
+addresses are distinct eligible original leaves, LAB9.4 and Theorem 18.2
+give every guard and the endpoint $E_y(Q_h)$. After every call the actual
+supervisor completes the accepted-event hook, its bound receiver consumes
+the full reply, and the inner driver returns to Ready before session
+control advances. Thus the last prefix call leaves no pending edit,
+append, arithmetic commit or reply. The outer session is still busy.
+
+Now enumerate the $N$ arena data slots in their fixed PUBLIC order. Write
+each slot's neutral value, including unused padding. After $i$ writes the
+first $i$ slots are neutral, all remaining supplementary data are confined
+to the remaining slots and the designated register bank, and source,
+public spine and protected committed fields are unchanged. This invariant
+holds at zero by coverage. One owned write to slot $i+1$ establishes the
+next case without reading any old value. The fixed public spine prevents
+clearing a data link from losing the rest of the traversal. At $N$ no
+arena data remain. The scrub traversal's own index, target reference and
+latches reside in the designated bank, so the invariant has not silently
+discarded the scrubbing machine.
+
+Finish by explicit writes normalizing every register in that bank: source
+cursor to the common root, other private references to null, counters,
+flags and latches to their fixed neutral values. Set the phase to
+Reacquire and jump to its one common code location. The final straight-line
+tail uses only fixed public bindings; it needs no saved return address or
+old register value. Its control counter has that same final value in every
+run. The arbiter remains in its fixed session-held state. Thus, writing
+$\operatorname{view}_{\rm sess}$ for this observer's declared post-cut view,
+
+$$
+\operatorname{view}_{\rm sess}(C_h^{\rm scrub})
+  =(\mathsf P,E_y(Q_h),w_0,\mathsf{Reacquire},\mathsf{held}).
+\tag{LAGI.3}
+$$
+
+Here $w_0$ is independent even of $Q_h$; the retained SOURCE may deliberately
+encode $h$. Protected histories are not asserted equal. Every one of the
+$N$ data writes, each final register/cursor normalization, traversal step
+and control operation is charged. A hidden-dependent scrub length or final
+bank-direction/phase bit would falsify (LAGI.3), so padding and final
+normalization are essential. This constructs the private reset from owned
+writes, rather than defining a Reset operation to forget its arguments.
+
+Reacquire traverses the actual finite source using only parent/left/right
+source fields and authentic bindings. Its logical-arity parser treats a
+unary marker as part of beta, never as a logical child or OLD row. Compare
+with the backed public syntax at each original leaf $p$ of $y$:
+
+$$
+\begin{array}{c|c|c}
+y_p&z_p&\text{recovered membership}\\ \hline
+\alpha&\alpha&p\notin Q_h\\
+\alpha&\beta&p\in Q_h\\
+\beta&\beta&p\notin Q_h\\
+\beta&\langle\beta,\alpha\rangle&p\in Q_h
+\end{array}
+\tag{LAGI.4}
+$$
+
+Original leaves are prefix-incomparable and each was written at most once;
+no new child was targeted. These exhaust the actual image and distinguish
+all its membership bits, as in Theorem 18.2. In particular an original
+alpha becoming a branch is OUTSIDE this domain, not an additional decoding
+case. Original branch positions persist, so paid simultaneous traversal
+of $y$ and $z$ locates every comparison and binds actual current references.
+No inverse source edit, old pointer, numeral-to-reference cast, source
+inverse primitive or refusal probe is used. This proves recovery of $Q_h$
+for every allowed codebook, including a noninjective one. Only if the
+supplied codebook is injective on supports or ordered histories can its
+finite inverse additionally recover that old content. Such decoding is a
+NEW observation after the cut, not a surviving old private copy.
+
+For simulation retain as a proof invariant the actual successful word $w$,
+its complete ancestral tapes, $c=\overline{v(t)}$, the correct scalar fields
+$(B,r_s)=E(q(t))$, and unchanged $e$. At the cut domain, projection selects
+the current source $t$ and permitted new session memory. Scrub and source
+navigation stutter on the source and committed protected fields. When the
+session selects a call, its OWN traversal scratch is in the arena and the
+inner driver is genuinely at AA20.2 Ready: the preceding call has returned,
+and local session work has created no pending source operation. The installed
+dispatch edge submits its authenticated frame from that Ready, then holds
+the session continuation while the original driver is busy. AA20.3 and
+LAB11.1–11.2 give its guard/reservation/edit/maintenance/pre-edit commits,
+complete reply, End, acknowledgement and real root return. The source-call
+cut reached on return has
+
+$$
+(t,w)\longmapsto(g(t),wg),\qquad
+\mathcal W\longmapsto\mathcal W(wg),\qquad
+c\longmapsto\overline{v(g(t))},\qquad
+(B,r_s)\longmapsto E(q(g(t))),
+\tag{LAGI.5}
+$$
+
+for its actual accepted $g=P_p$ or $S_p$, with the full original Growth
+reply. Here $\mathcal W(wg)$ denotes literal ancestral tapes for that very
+word, not merely some compatible tapes. No intermediate pending state is
+treated as a completed successor. This proves how the new outer session
+reaches the actual inner cuts; an arbitrary outer Busy state supplies no
+such dispatch edge.
+
+AA21.1–21.2 is now used ONLY for this Ready-to-Ready $Q_c$ source-response
+projection. Tapes may differ between two equal sources, but are not selector
+inputs and do not change these guards, literal replies or source successors.
+Current logical field traversal likewise gives the same observations on
+isomorphic oriented trees. With no name/age channel, freshly bound references
+can be matched by the same structural correspondence, preserving the equality
+tests needed for authentication. Equal public data, current source and new
+memory therefore give equal next choices and replies. Induction over completed
+calls establishes the asserted source-only simulation; it does not equate
+the two runs' protected tape contents or their complete controller traffic.
+
+For $G$, clear all decision/call scratch after each complete inner return
+and enter one common Decision location; recompute its next call or Stop
+solely from the newly traversed geometry and $\mathsf P$. A retained old
+decision, call count, last address or terminal branch flag is not allowed.
+Temporary operands during one such decision are current-source-derived.
+For $T$, start with empty old memory at (LAGI.3), then retain only observations
+and choices actually acquired subsequently. Equal later geometry alone need
+not imply equal $T$ memory, as Proposition 18.5 already shows. Correctness
+and termination of a SUPPLIED successful policy, authentic operand acquisition
+and (LAGI.5) now give precisely its finite legal continuation. Its report is
+built from the declared public/new inputs, printed completely, followed by
+End and supplied ACK, then real outer root return and paid cleanup. The lock
+is released only at that old returned idle. The original tape/arithmetic
+invariants and all old public connections remain available there.
+
+Finally define the exact source-image domain
+
+$$
+\mathcal I_y=\{E_y(R): h\in\mathcal H,\ Q_h\subseteq R\subseteq U_{J(h)}\},
+\tag{LAGI.6}
+$$
+
+restricted to the cuts actually reached by the supplied continuation when
+one is fixed. These terms lie in $\mathcal D_+$. AA17.3 sends each term to
+its oriented MATERIAL support, including beta's unary marker, and to the
+terminal antichain of that support. Prefix closure and maximal-element
+extraction are its inverse support/boundary maps; arity parses the term.
+AA17.2 sends it to its labelled causal membership order with the specified
+birth types. Applying these existing inverse maps, then (LAGI.4), recovers
+the same $R$; applying them before a decision computes the same source input.
+For a lawful next original row $p$, the source step is
+$E_y(R)\mapsto E_y(R\cup\{p\})$. Taking ANY of the three views after that
+actual completed call equals decoding its actual-image view, making this
+same step, and taking the view again. This is the commuting correspondence,
+with $T$'s new memory transported unchanged as an additional component.
+It supplies no chosen ancestral serial extension, all-phase inverse, reverse
+source actuator or access right from a mathematical description.
+
+Interactive erasure and step/stutter simulation are mature methods:
+Hunt–Sands, [*Just Forget It*, extended ESOP08 version, §§2–3, especially
+Definitions 4–6][HSSESSION], includes state and input-cursor residue in an
+interactive erasure condition; Abadi–Lamport, [*The Existence of Refinement
+Mappings*, SRC Research Report 29, §2.4, conditions R1–R4][ALSESSION], supplies
+the state/step/stutter refinement method. Here the preserved geometry is an
+explicit allowed observation, so the claim is private normalization and
+conditional future congruence, not erasure of all information about $h$.
+These originals do not install LAB rights, wiring or reset. The source-specific
+composition above is `repo-derived`, reusing AA17/20/21, LAB4/10/11/15–19 and
+their declared guards and returns. NativeSelectedRA's local cleanup and
+PhysicalDivider's clean-round/return results concern separate installations;
+no mapping of their ports, backing or control to LAB is asserted. There is
+no fresh Lean certification, physical spacetime conclusion, thermodynamic
+deletion, unit-cost assertion or total-memory optimum. $\square$
+
+**Proposition 20.5 (unchanged-controller and whole-installation obstructions).**
+The new session theorem does not furnish a scrub/resume transition for the
+unchanged installed left-first $\mathsf R$. Nor does preserving the original
+legacy recall/Next semantics permit erasure of the whole installation's old
+history distinctions.
+
+Proof. Take the attained entry $\langle\beta,\alpha\rangle$, whose OLD list
+in Definition 9.3 is $(L:\beta,R:\alpha)$. After its first call $S_L$ and
+complete inner return, the source is
+$\langle\langle\beta,\alpha\rangle,\alpha\rangle$. The inner driver is Ready,
+but the outer $\mathsf R$ still owes its right-row $P_R$, list advancement
+and full return tail. Definitions 10.2 and 11.1 retain that actual continuation
+and lock; they do not enable Scrub. Erasing its OLD list/cursor/continuation
+cannot implement that unchanged control. Waiting for ordinary macro cleanup
+instead performs $P_R$ and yields
+$\langle\langle\beta,\alpha\rangle,\beta\rangle$, missing the requested
+$r=1$ source cut. This is the concrete old-macro obstruction supplied by
+LAB9–11, rather than another generic hidden-phase theorem. The general
+requirement to normalize or exclude accessible routing residue, including
+phase/direction, is already [Concurrent Native Cut Workspace §11][CWSSESSION].
+
+Separately reuse AA20.5's words
+$P_\varepsilon S_\varepsilon S_LP_R$ and
+$P_\varepsilon S_\varepsilon P_RS_L$. They have the same source
+$\langle\langle\beta,\alpha\rangle,\beta\rangle$, but FetchGrowth$(3)$
+returns $S_L$ versus $P_R$, and Next$(3)$ actually selects $S_{LL}$ versus
+$S_R$, with different complete replies and source successors. Keeping these
+literal semantics keeps a distinction accessible to authorized legacy users.
+Assumption 20.2 excludes those channels only from the new observer; it does
+not delete the records. Consequently an owner-installed session connection,
+common resumable control and explicit authority separation are additional
+installation obligations. Owned field writes suffice for the private scrub
+UNDER those obligations; the protected legacy installation by itself has
+acquired neither that command nor universal history erasure. $\square$
+
+[HSSESSION]: https://www.cse.chalmers.se/~dave/papers/Hunt-Sands-ESOP08-extended.pdf
+[ALSESSION]: https://lamport.azurewebsites.net/pubs/abadi-existence.pdf
+[CWSSESSION]: RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_NATIVE_CUT_WORKSPACE.md#11-routing-residue-and-the-row-only-handoff
+
+## 追加锚（本行以下为增补区）
+
+## 21. Exact post-reset label attainment at complete-call cuts
+
+**Definition 21.1 (finite histories and the label contract).** Fix the
+finite nonempty actually attained history set
+$$
+\mathcal H=\{(J,\sigma):J\in\mathcal J,\ \sigma\in\Sigma_J\},
+\qquad d_J=|\Sigma_J|\ge1,\qquad D=\max_{J\in\mathcal J}d_J .
+$$
+The finite order lists $\Sigma_J$ are supplied data of the experiment.
+Keep Definition 19.1's fixed public parameters, program, bindings and
+common reset label. A history $h=(J,\sigma)$ has exactly $r$
+distinct ORIGINAL-row writes before reset, and its reset source is
+$E_y(Q_h)$, where $Q_h\in F_J=\{Q\subseteq U_J:|Q|=r\}$. At every
+standardized completed-inner-call cut, the supplementary persistent
+component is one label from a finite alphabet; traversal references,
+temporary lookup, decoded history, codebook access, output material,
+inner protocol phases and all backing are charged in their existing
+coordinates and are not counted as this label. The final recall cut is
+after the last required original call and before the declared literal
+recall/return tail.
+
+The label contract permits free re-encoding of the admissible starts. It
+does not preserve the particular SDR or pairing chosen by an individual
+policy. The label is the only state that survives a completed-call cut
+besides the current source and the fixed public data. In particular, a
+policy that is allowed to retain a newly acquired copy of $h$ after
+reset is a different, unrestricted contract.
+
+**Proposition 21.2 (what LAB19 already settles).** An admissible
+history SDR exists exactly when
+$$
+\left|\bigcup_{J\in\mathcal S}F_J\right|
+   \ge \sum_{J\in\mathcal S}d_J
+\qquad(\mathcal S\subseteq\mathcal J).
+\tag{LAGL.1}
+$$
+If two histories use the same initial $Q$, their permitted initial inputs
+are identical, whether the supports differ or the orders differ. The
+current-source factorization then forces the same legal continuation; the
+former cannot exhaust two distinct menus and the latter cannot return two
+different old words. Thus no later newly generated memory repairs an
+initial collision. Conversely an SDR gives the post-reset transcript
+selector of Corollary 19.2. An unrestricted T may traverse that source,
+newly reacquire h, and retain it, giving the valid finite upper bound
+$|\mathcal H|$; reset does not forbid this new acquisition.
+
+Proof. This is precisely the weighted-history Hall criterion and its
+collision argument in Corollary 19.2, including its distinction between
+different supports and equal supports with different orders. The
+$|\mathcal H|$-label policy is the finite lookup table from the distinct
+reset sources to their histories, followed by actual traversal and
+retention after reset. It makes no claim that the old pre-reset copy
+survives. $\square$
+
+**Theorem 21.3 (exact supplementary alphabet for the geometry-label
+contract).** Assume (LAGL.1). Among geometry-controlled continuations
+whose only persistent post-reset supplement is the label of
+Definition 21.1, the minimum alphabet size at the standardized
+complete-call and final recall cuts is exactly
+$$
+D=\max_{J\in\mathcal J}d_J .
+\tag{LAGL.2}
+$$
+If (LAGL.1) fails, no such continuation exists. The value in (LAGL.2)
+is conditional on free re-encoding and does not minimize an
+unrestricted T that retains arbitrary newly acquired history.
+
+Proof. Fix $J$. Every successful completion reaches the same terminal
+source $E_y(U_J)$, independently of the order $\sigma\in\Sigma_J$.
+At the final recall cut the fixed public data and this geometry are
+therefore equal for all $d_J$ orders. The label must distinguish those
+orders, so every alphabet has at least $d_J$ values; taking the maximum
+gives the lower bound $D$. This is the source-specific terminal
+instance of the static max-fibre principle in Transport Memory
+Completion §16.1, whose finite equality-fibre supplier is
+DefectGraphMinimumColoring.minimum_repair_labels_eq_chromatic_eq_fiber_diversity.
+That supplier is reused only for the lower-bound pattern; no new generic
+max-fibre theorem is asserted here.
+
+It remains to attain the bound causally. Choose any history SDR
+$Q_{J,\sigma}$ supplied by Proposition 21.2 and partition it by the
+fixed local order rank $i$: layer $i$ contains the starts
+$Q_{J,\sigma_i}$ for supports with $d_J\ge i$, together with the
+terminals $U_J$ of those supports. The starts in a layer are distinct
+rank-$r$ subsets. The terminals are distinct antichain menus by
+Theorem 18.2. Pair each start with the terminal bearing the same support.
+The paired endpoint sets form disjoint chains (singletons are allowed):
+if a start $Q_{J,\sigma_i}$ equalled a terminal $U_K$, then
+$U_K\subseteq U_J$, so terminal antichainness gives $K=J$, and SDR
+injectivity excludes every other equality.
+
+Apply Bastide--Groenland--Jacob--Johnston, arXiv:2207.07391v2,
+Theorem 2, to this layer. Here $n=|\Lambda(y)|$, $m$ is the number
+of histories in the layer, and the endpoint family is exactly the
+distinct starts and terminals just described. Its disjoint skipless
+cover can be trimmed to the intervals between rank-$r$ starts and
+their terminals. Each trimmed interval is a saturated path in
+$2^{\Lambda(y)}$. Re-pair only within this layer: assign the history
+with support $J$ to the start of the path whose terminal is $U_J$.
+This is the permitted free re-encoding. The global set of starts remains
+distinct because the layers partition the original SDR, and every
+intermediate set remains a subset of its own $U_J$. No path is paired
+across layers, and the target order lists $\Sigma_J$ are unchanged.
+
+Use labels $1,\ldots,D$, with common default $1$ at the reset cut.
+At rank $r$, actual traversal of the current source recovers the
+actual $R=Q_{J,\sigma_i}$, identifies its global start and its layer
+$i$, and selects the first native edge of that layer's path. After
+that edge has completed its original guard, reservation, source edit,
+ancestral-tape and arithmetic maintenance, literal reply, End/ACK and
+real INNER return, commit label $i$. The first selection uses the
+current $R$ and needs no stored initialization flag. After any call
+the rank is greater than $r$, so every later choice uses the retained
+$i$ at one common selection program counter. A temporary table lookup
+or decoded history is current-input-derived and is erased at the
+standardized cut.
+
+The invariant is: the current recovered set $R$ lies on the true
+history's path in layer $i$, and $(R,i)$ uniquely determines the next
+untouched member of $U_J$, Stop, or the final $\sigma_i$. Each edge
+adds one original member of $U_J$; it never targets a newborn or
+decorative row. Before every edge the supervisor traverses the bound
+source, acquires the CURRENT target reference and current rights, and
+then discharges the original guard/reserve/source edit/ancestral tape and
+arithmetic hook, literal reply, End, acknowledgement and real INNER
+return. Thus the path is a legal native continuation, rather than a
+mathematical address list. After $|U_J|-r$ calls the geometry identifies
+$J$, the label identifies $\sigma_i$, and the policy emits the word
+only at the declared final recall cut before the lawful tail. No old
+tape, refusal, name, timing, capacity or output archive is used.
+
+The construction uses only finite search over the actually attained
+finite carrier and the existing Hall and disjoint-path suppliers. It
+produces a backed finite table for this effective input; it is neither
+free nor an efficient procedure and is not a uniform finite ROM for
+unbounded inputs. Source-derived dynamics are the current LAB parser,
+original guards, references, edits, replies and returns. Label-derived
+content is only the layer index $i$, together with the finite path
+table used to choose among already legal original rows. The causal
+first-edge commit and the $(R,i)$ invariant are the native addition
+beyond the static max-fibre lower bound and the stopped-prefix
+feasibility theorem. $\square$
+
+**Corollary 21.4 (edge cases).** If $r=0$, Hall forces
+$|\mathcal J|=1$ and $D=1$; the common start is $\varnothing$, so
+the default label is already correct. If $U_J=\varnothing$, then
+$F_J=\{\varnothing\}$, and Hall forces $d_J=1$; this is the singleton
+no-call path in layer $1$. If $D=1$, one label suffices and
+Theorem 21.3 reduces to the geometry-selector equivalence of
+Theorem 18.3. These statements include the case of an empty menu and
+the overlapping $r=0$ and singleton cases without a hidden
+initialization phase.
+
+**Corollary 21.5 (the delivered $m5k2r3$ attainment).** Reuse exactly
+the twenty-start, ten-terminal table already displayed in Corollary
+19.2 for $(m,k,r)=(5,2,3)$, preserving its coordinates and entries.
+Its first column consists of the ten distinct $z$-free triples and
+its second column of the ten distinct triples containing $z=L^5$.
+Index the two supplied orders on each $J$ so that the first column is
+layer $1$ and the second layer $2$. Both layers use the common
+default label $1$ at rank $3$; the single remaining original call
+commits the observed layer, leaving label $1$ for a $z$-free reset
+triple and label $2$ for a $z$-containing reset triple. At the
+terminal all ten supports have the same two-order fibre, so one label is
+impossible. Theorem 21.3 gives the matching two-label construction.
+Hence the exact alphabet is $2$, with no alternative table introduced.
+
+**Proposition 21.6 (conditional realization and transport boundary).**
+The preceding construction can be installed only under the current
+accepted LAB20 owner-installed session: finite public-shaped backing,
+authority separation, the session lock, authenticated current-reference
+acquisition, sufficient material and full Ready-to-Ready/INNER return
+conditions. Under those premises, transport the same source and label
+through AA17's syntax/material support, terminal-boundary and labelled
+causal-membership maps, and use the existing unary marker and literal
+source identity. The maps preserve the current $E_y(R)\to
+E_y(R\cup\{p\})$ edge and the final $(U_J,\sigma_i)$ readout.
+
+Proof. This is the scoped source-response and completed-call construction
+of Theorem 20.4, with its paid backing and authority premises retained.
+The current source is traversed afresh at each decision, the target
+reference is authenticated against the current tag, and all original
+maintenance and complete replies occur before the label commit. AA17's
+already supplied maps preserve the oriented material support, its
+terminal antichain and the causal membership order, including beta's
+unary marker; carrying the same finite label adds no new source edge.
+This establishes a representation correspondence for the admitted
+session. It does not install a resettable legacy Busy controller, prove
+a deployed device, recover full controller chronology, assert a
+thermodynamic deletion, or complete a universal spacetime construction.
+No fresh Lean application is claimed by reading the existing code. $\square$
+
+## 22. Sources, overlap and verification scope
+
+The weighted Hall and stopped-prefix results are reused from LAB19,
+Theorems 18.2--18.3 and Corollary 19.2; the terminal static max-fibre
+pattern is attributed to Transport Memory Completion §16.1 and its named
+DefectGraphMinimumColoring supplier. The disjoint saturated path step is
+the primary Bastide--Groenland--Jacob--Johnston theorem cited above and is
+literature-attested at that scope. LAB20 supplies the conditional paid
+installation and complete-return interface. Boundary Dynamics 106 and Joint Moment Fibers 65.5 remain
+separate suppliers for their own interfaces. This appendix adds the
+causal acquisition of the layer label, the rank-derived path generation,
+and the exact $D$-label attainment; it does not add a matching, WOM,
+colouring, or Lean theorem.
+
+All finite-search, backing, authority, current-reference, lawful-edge,
+full-return and free-re-encoding conditions are part of the statements
+above. No total or peak-memory bound, runtime bound, universal finite
+ROM, fixed encoder/pairing claim, deployed-device claim, full chronology
+recovery, thermodynamic claim, or universal spacetime completion is
+made. The long-term RRO objective remains open beyond this finite
+appendix.
+
+## 追加锚（本行以下为增补区）
+
+## 23. Fixed-encoder cut labels on the full native beta comb
+
+**Definition 23.1 (local cut-label contract).** Fix a finite nonempty
+actually attained history set
+$$
+\mathcal H=\{(J,\sigma):J\in\mathcal J,\ \sigma\in\Sigma_J\}.
+$$
+The public effective data include the current $y$, the antichain menus
+$U_J$, the fixed native rank-$r$ codes
+$$
+Q_h\subseteq U_{J(h)},\qquad |Q_h|=r,
+$$
+and the common default label $0$. The codes are distinct and are fixed
+before the run; they are not a history-dependent coloring. At every
+declared completed-call cut and at the final recall cut, the accessible
+state is the current geometry $R$ together with one value in one fixed
+nonempty finite label alphabet containing $0$, shared across all cuts. All scratch, decoded identity, last reply, parser,
+output, cursor, phase, control, alias, and other history-dependent
+supplements are cleared at the cut. Fixed public tables, paid transient
+calculation and acquisition, source material, authentic references, and
+the protocol phases retain their separate costs.
+
+For each $h$, let $\mathfrak P_h$ be the finite set of saturated legal
+paths
+$$
+\gamma_h=(R_{h,0},\ldots,R_{h,n_h}),\qquad
+R_{h,0}=Q_h,\quad R_{h,n_h}=U_{J(h)},\quad
+R_{h,i+1}=R_{h,i}\cup\{p_{h,i}\},
+$$
+where every $p_{h,i}$ is an untouched original row of $U_{J(h)}$.
+Singleton paths are allowed. For a choice
+${\boldsymbol\gamma}=(\gamma_h)_{h\in\mathcal H}$ define its local
+congestion by
+$$
+\operatorname{cong}({\boldsymbol\gamma})
+ =\max_R\bigl|\{h:R\in\gamma_h\}\bigr|,
+$$
+where the maximum includes initial and terminal vertices. The fixed-encoder
+capacity is
+$$
+M_{\rm fixed}
+ :=\min_{{\boldsymbol\gamma}\in\prod_h\mathfrak P_h}
+      \operatorname{cong}({\boldsymbol\gamma}).
+\tag{LAGF.1}
+$$
+
+**Theorem 23.2 (exact prescribed-path capacity).** Under the local
+cut-label contract, the least possible fixed label alphabet is exactly
+the number in (LAGF.1). This statement permits $|U_J|=r$; it does not add
+the condition $|U_J|>r$.
+
+Proof. Fix a prescribed family of paths. At a cut with geometry $R$, let
+$\mathcal H_R=\{h:R\in\gamma_h\}$. If two histories in $\mathcal H_R$
+had the same label, deterministic permitted-state factorization would
+give the same next call, next geometry, and next label. Their prescribed
+tails would then coincide. Distinct supports cannot have the same
+terminal menu because the $U_J$ form an antichain. Equal supports with
+different $\sigma$ cannot have the same final recall. Hence the labels
+at $R$ are injective on $\mathcal H_R$, giving the lower bound
+$|\Lambda|\ge\operatorname{cong}({\boldsymbol\gamma})$.
+
+In particular, an initial collision $Q_h=Q_{h'}$ would put two histories
+at the same current source with the common default label. The first
+permitted transition is then identical even if unbounded newly generated
+memory is allowed. Different menus cannot both be completed from that
+state, and different final words cannot both be recalled, so later memory
+cannot repair the collision.
+
+For the converse, fix a path family of congestion $M$ and use the one
+alphabet
+$$
+\Lambda_M=\{0,\ldots,M-1\}
+$$
+at every cut, including initialization and recall. At each reached vertex
+$R$, enumerate $\mathcal H_R$ in the fixed public history order and define
+an injection
+$$
+\lambda_R:\mathcal H_R\hookrightarrow\Lambda_M,\qquad
+\lambda_R(h_i)=i-1\quad(1\le i\le|\mathcal H_R|).
+$$
+All initial vertices have rank $r$, all later vertices have larger rank,
+and the initial codes are distinct. Thus $\mathcal H_{Q_h}=\{h\}$ and
+$\lambda_{Q_h}(h)=0$, literally the same default value already in
+$\Lambda_M$. No additional value is identified with or adjoined to this
+alphabet.
+
+The fixed finite table has input $(R,j)$ alone. For an occupied input
+$(R,\lambda_R(h))$ at a nonterminal vertex of $\gamma_h$, it returns the
+next original row $p$ and the value $\lambda_{R\cup\{p\}}(h)\in\Lambda_M$;
+at the terminal it returns Stop and $\sigma_h$. The injection makes this
+a single-valued table even at a shared middle or terminal. A current
+traversal obtains $R$, and the decoding and lookup are transient; only
+the displayed value in $\Lambda_M$ crosses the next counted cut. The
+current rank $|R|$ and this table determine the action without a retained
+initialization marker, phase or extra symbol. At a vertex of maximal
+occupancy all $M$ values are used, so this is exactly $M$ values globally,
+including $0$. Taking the minimum proves (LAGF.1). This is an effective
+finite search on the actually attained histories and menus. It makes no
+efficient-table or uniform-global-ROM claim. If $M=1$, every label at
+every cut is literally $0$, including along a nontrivial path. A singleton
+path starts and stops at $(Q_h,0)$ with no call or extra state. The cases
+$r=0$, terminal antichainness and path intersections are included: the
+common empty initial code permits only one history under injectivity,
+and intersections are counted at their shared geometry. $\square$
+
+**Definition 23.3 (the complete paired code on the native comb).** Let
+$m=2\ell$, $k=\ell-1$, and let
+$$
+y_0=\beta,\qquad y_{j+1}=\langle y_j,\beta\rangle.
+$$
+Use candidate indices $I=\{0,\ldots,2\ell-1\}$ with
+$p_i=L^iR$ and the uncovered candidate $z=L^{2\ell}$. For every
+$J\in\binom I{\ell-1}$ put
+$$
+U_J=\{z\}\cup(I\setminus J),\qquad
+N=\binom{2\ell}{\ell-1}.
+\tag{LAGF.2}
+$$
+Partition $I$ into fixed disjoint pairs
+$P_1,\ldots,P_\ell$. A rank-$\ell$ code in the accepted encoder always
+contains $z$. Classify the pair indices as full $A$, singleton $S$ with
+one selected value in each pair, and empty $C$. Its size equation is
+$$
+|C|=|A|+1.
+\tag{LAGF.3}
+$$
+For each fixed singleton data $(S,\text{selected values})$, put
+$a=|A|$ and let $W$ be the remaining $2a+1$ pair indices. Choose once
+and for all an effective containment perfect matching
+$$
+\mu_W:\binom W a\longrightarrow\binom W{a+1},
+\qquad A\subset\mu_W(A).
+\tag{LAGF.4}
+$$
+Such a matching exists because the inclusion graph is $(a+1)$-regular
+on both sides; a finite lexicographic search is an effective choice. Write
+$\mu_W(A)=A\cup\{c(A)\}$. Define
+$$
+Q(A)=\{z\}\cup\bigcup_{i\in A}P_i
+       \cup\{\text{the selected value in }P_i:i\in S\},
+$$
+and assign to it the terminal
+$$
+U(A)=Q(A)\cup P_{c(A)},\qquad
+J(A)=I\setminus(U(A)\setminus\{z\}).
+\tag{LAGF.5}
+$$
+The sole old order $\sigma_{J(A)}$ is the increasing order of the
+typed promotions at the members of $J(A)$.
+
+**Theorem 23.4 (full-family bijection and free cost).** The construction
+of Definition 23.3 assigns all $N$ accepted rank-$\ell$ starts and all
+$N$ terminal menus exactly once. It has terminal multiplicity
+$D=1$. Consequently the existing free-re-encoding theorem gives free
+capacity one in this family, while the fixed encoder retains the paired
+codes and may not re-pair their endpoints.
+
+Proof. Every rank-$\ell$ subset containing $z$ has a unique triple
+$(A,S,C)$ with its selected singleton values and satisfying (LAGF.3), so
+(LAGF.4) assigns it exactly one $c(A)$ and one terminal. Conversely, let
+$T=U_J\setminus\{z\}$ be any terminal candidate set, so $|T|=\ell+1$.
+Write $B,S,C_T$ for its full, singleton and empty pair-index sets, retaining
+the selected value at every singleton. Their two size equations are
+$$
+|B|+|S|+|C_T|=\ell,\qquad 2|B|+|S|=\ell+1.
+$$
+Consequently, for $a=|C_T|=|B|-1\ge0$,
+$$
+|B|=a+1,\qquad |S|=\ell-2a-1,\qquad |C_T|=a,
+\qquad 0\le a\le\left\lfloor\frac{\ell-1}{2}\right\rfloor.
+$$
+In particular $W=B\cup C_T$ has size $2a+1$ and is precisely the
+complement of this singleton data's pair-index set. Apply the already
+chosen matching (LAGF.4) for that same singleton data: since
+$B\in\binom W{a+1}$, its unique inverse is
+$A=\mu_W^{-1}(B)\in\binom W a$. Containment gives $A\subset B$, so
+$B\setminus A=\{c(A)\}$. The recovered code has full set $A$, the
+unchanged singleton data, and empty set $W\setminus A$ of size $a+1$;
+its candidate count is $2a+(\ell-2a-1)=\ell-1$. Removing the full pair
+$P_{c(A)}$ from $U_J$ therefore gives exactly this accepted rank-$\ell$
+code, and (LAGF.5) sends it back to $U_J$. Conversely, starting from a
+code and applying this inverse returns the same $A$ by the matching's
+injectivity. This proves both inverse identities for every constituent
+matching, without discarding any start, terminal or support. There are
+$\binom{2\ell}{\ell-1}=N$ starts and
+$\binom{2\ell}{\ell+1}=N$ terminals, each used exactly once. The increasing
+order is unique, so $D=1$. The terminal and free costs are therefore one
+by the already established terminal/free result; this paragraph does not
+alter that result. $\square$
+
+**Theorem 23.5 (sharp fixed-encoder value).** For every $\ell\ge1$, in
+the complete paired family of Definition 23.3,
+$$
+M_{\rm fixed}=\left\lceil\frac\ell2\right\rceil.
+\tag{LAGF.6}
+$$
+This holds for every constituent finite matching chosen in (LAGF.4).
+
+Proof. A code $Q(A)$ and its terminal $U(A)$ differ by the two members of
+the single pair $P_{c(A)}$. Its prescribed path has exactly two possible
+middle geometries, according to which member of that pair is written
+first. Form a simple graph $G$ whose vertices are all such middle
+geometries and whose edge for a history joins its two possible middles.
+At a middle $R$, an incident edge is determined by a singleton pair
+$P_i$ of $R$: deleting its displayed member recovers the preceding code,
+and the matching then determines the unique history. Hence no pair gives
+parallel edges and $\deg_G(R)$ is at most the number of singleton pairs,
+therefore at most $\ell$.
+
+There is a forced full subgraph. Restrict to middles with no full or
+empty pair, so every pair is singleton. These $2^\ell$ vertices are the
+vertices of the $\ell$-cube. For each vertex and each coordinate $i$, the
+code obtained by deleting its displayed member in $P_i$ has $a=0$ and the
+one-pair matching in (LAGF.4) forces $c=i$. Its history edge is exactly
+the cube edge flipping coordinate $i$. Thus every constituent matching
+contains the full cube, with $\ell2^{\ell-1}$ forced history edges.
+
+Choosing one middle for each history is orienting its edge toward the
+chosen middle. On the forced cube the sum of occupancies is
+$\ell2^{\ell-1}$, so some vertex has occupancy at least
+$\lceil\ell/2\rceil$. This proves the lower bound for every permissible
+choice of the two calls.
+
+For the upper bound use the balanced-orientation lemma: every finite
+simple graph of maximum degree at most $\ell$ has an orientation with
+indegree at most $\lceil\ell/2\rceil$. To see this, in each connected
+component add a dummy vertex adjacent to every odd-degree vertex. All
+degrees are then even, so an Euler tour, oriented along its traversal,
+gives equal in- and out-degree. Deleting the dummy edges leaves at every
+original vertex the two degrees differing by at most one. Orient each
+history edge toward its selected middle. The resulting label occupancy
+is its indegree and is at most $\lceil\ell/2\rceil$. The initial codes
+are all distinct and the terminal menus are all distinct by
+Theorem 23.4, so initial and final occupancies are one. The general
+formula (LAGF.1) now gives (LAGF.6). $\square$
+
+**Proposition 23.6 (native realization and transport boundary).** The
+full family above is an actually attained LAB family under the same
+conditional owner-installed session and paid access premises as
+Definitions 18.1 and 20.1--20.3. Starting from the known alpha root,
+promote the root, split the successive left-spine betas at
+$L^0,L^1,\ldots,L^{2\ell-1}$, and promote the newly created right alpha
+at $p_i$ exactly when $i\notin J$. This prepares the actual $x_J$.
+Acquire and seal its original frontier, then perform the promotions at
+the members of $J$ in increasing order, with complete returns; this
+attains the common $y_{2\ell}$ and the known order $\sigma_J$.
+
+At that source, each prescribed code write is a split at a distinct
+original beta row. The two remaining writes are the two members of the
+one pair $P_{c(A)}$, in the selected order. Traversal obtains each
+current operand and authentic reference before the call. No newborn row,
+decoration, refusal, cohort bit, old cursor, or hidden output is used.
+After reset, the current geometry and the one retained label are
+reacquired at each cut; the label is changed only by the local transition
+table of Theorem 23.2. Every call still performs the original guard,
+reservation, source edit, all ancestral-tape and arithmetic updates,
+literal reply, End/ACK, full INNER return, and lawful tail.
+
+The proof is conditional on LAB20's owner-installed session access,
+authenticated current-reference acquisition, sufficient backing, and
+Ready-to-Ready/INNER return premises. It does not turn an arbitrary legacy
+Busy state into a reset command, and public descriptions provide neither
+references nor permissions. AA17's syntax, material-support,
+terminal-boundary, and labelled causal-membership maps transport the same
+current geometry and label; they do not recover the erased chronology.
+No full-history reconstruction, total or peak resource optimum,
+thermodynamic erasure, deployed-device claim, or universal spacetime
+completion follows. $\square$
+
+**Corollary 23.7 (comparison and checks).** The fixed alphabet has
+supplementary fixed-width cost
+$$
+\left\lceil\log_2\left\lceil\frac\ell2\right\rceil\right\rceil
+$$
+bits. The terminal multiplicity and free-re-encoding cost are both one;
+the latter is the existing Theorem 18.3/21 result in its stated domain.
+Whole-history memory newly decoded after reset is valid, while retaining
+the pre-reset transcript would violate Definition 23.1. For $\ell=1,2$
+the formula gives one label. For $\ell=3$, there are
+$$
+N=\binom62=15,\qquad 3\cdot2^2=12
+$$
+forced cube edges and $2^3=8$ all-single middle geometries, giving exact
+fixed capacity $2$ versus free cost $1$. This is the first strict example
+inside this family, not a claim of a globally smallest example. The
+long-term space--time--boundary--memory objective remains open.
+
+The matching and path suppliers are the finite Hall theorem and the
+prescribed-pair warning of Bastide--Groenland--Jacob--Johnston,
+arXiv:2207.07391v2, together with directed-hypercube routing of
+Chakrabarty--Seshadhri, arXiv:2409.02206v2. The edge/vertex distinction
+and prescribed-pair boundary are also treated by
+Briet--Chakraborty--Garcia-Soriano--Matsliah, *Monotonicity Testing and Shortest-Path Routing on the Cube*, DOI 10.1007/s00493-012-2765-1. Balanced discrepancy and
+pseudoarboricity supply the mature orientation language (Ghaffari et al.,
+arXiv:1706.04746v2; Blumenstock--Fischer, arXiv:1811.06803v4), while
+Rivest--Shamir (1982) supplies only the monotone-write/rank-phase context.
+These sources are suppliers for standard combinatorics; the fixed native
+intermediate-capacity synthesis and its LAB realization are repo-derived.
+
+
+## 追加锚（本行以下为增补区）
+
+
+## 24. Uniform minimum-gap routing with authentic source scans
+
+The encoder in this appendix is one canonical member of Definition 23.3's
+admitted matching family, fixed before any run. All supports and their
+increasing old promotion orders are retained. The construction supplies a
+uniform rule in place of a finite matching/routing table; it neither
+changes an arbitrarily prescribed constituent matching nor re-pairs
+endpoints during a run. The exact fixed-encoder capacity remains the
+quantity established in Theorem 23.5.
+
+**Definition 24.1 (coordinates, phases and counted state).** For each
+integer $\ell\ge1$ use candidate indices $I=\{0,\ldots,2\ell-1\}$,
+original rows $p_i=L^iR$, and $z=L^{2\ell}$ of the same common
+$y=y_{2\ell}$ as Definition 23.3. Fix ordered candidate pairs
+$P_j=\{2j,2j+1\}$, $0\le j<\ell$; the two values in a pair are
+called $0$ and $1$ in this order. Candidate sets below abbreviate these
+original logical rows, never physical reference names. For every
+$J\subset I$ of size $\ell-1$ put
+$$
+u=I\setminus J,\qquad |u|=\ell+1,\qquad
+U_J=\{z\}\cup u,\qquad |U_J|=\ell+2,
+$$
+and prescribe the one old word
+$$
+\sigma_J=(P_{p_i}:i\in J\text{ in increasing order}).
+\tag{LAGU.1}
+$$
+Here $P_{p_i}$ denotes the native promotion, whereas $P_j$ denotes a
+candidate pair. The matching below gives a unique $q\subset u$ with
+$|q|=\ell-1$, and the reset code is $Q_J=\{z\}\cup q$, of TOTAL
+rank $\ell$. In particular $z$ has already been split before reset.
+
+At the original reset erase every supplementary old field, including
+labels, records, input positions, phase, continuations, source cursors
+and aliases, as in LAB20. Only the current $E_y(Q_J)$, the common label
+$0$, and the fixed public inputs/bindings/rights remain accessible.
+At subsequent standardized complete-call cuts the only additional
+persistent content is a label in
+$$
+\Lambda_\ell=\{0,\ldots,\lceil\ell/2\rceil-1\}.
+\tag{LAGU.2}
+$$
+All cuts use that SAME alphabet, including its literal value $0$.
+After normalization there is one common Decision control location.
+The non-$z$ ranks $\ell-1,\ell,\ell+1$ identify start, middle and
+terminal respectively; their total ranks are $\ell,\ell+1,\ell+2$.
+No private phase bit or initialization flag supplies this distinction.
+
+**Lemma 24.2 (the exact prefix matching and its inverse).** Fix the
+singleton pair positions and their selected values. Read the remaining
+pair positions in increasing order, writing $1$ for a full pair and $0$
+for an empty pair. A low word $v$ has length $n=2a+1$, $a$ ones and
+$a+1$ zeros. Let
+$$
+b_i=\#\{0\text{ in }v_1\cdots v_i\}
+       -\#\{1\text{ in }v_1\cdots v_i\},\quad
+b_0=0,\quad b_n=1.
+$$
+Let $t$ be the LAST index attaining $\min_{0\le i\le n}b_i$,
+including the empty prefix. Flip the $0$ in position $t+1$ to $1$.
+This is a containment bijection from the low words to the high words
+with $a+1$ ones and $a$ zeros. Its inverse takes the FIRST global-minimum
+prefix of a high word and flips its final $1$ to $0$. The chosen full
+pair depends on the singleton positions but not their values.
+
+Proof. Write $m=\min b_i$. Since $m\le0$ and $b_n=1$, $t<n$.
+The next step must be $+1$, hence $v_{t+1}=0$. With $k=t+1$, the
+flipped word has balances
+$$
+h_i=\begin{cases}b_i,&i<k,\\b_i-2,&i\ge k.\end{cases}
+$$
+For $i<k$, $h_i\ge m$. For $i\ge k$, the last-minimum property and
+integrality give $b_i\ge m+1$, hence $h_i\ge m-1$, with equality
+at $k$. Thus the FIRST global minimum of $h$ is at $k$, and $h_n=-1$.
+
+Conversely, let $h_0=0,h_n=-1$ be the high balances, and let $k$ be
+their first minimum. Then $k>0$, the step at $k$ is $-1$, and its bit
+is $1$. Put $d=h_k$. Every $i<k$ has $h_i\ge d+1$, and every
+$i\ge k$ has $h_i\ge d$. Flipping this bit gives low balances
+$b_i=h_i$ before $k$ and $b_i=h_i+2$ from $k$ onward. Their minimum
+is $d+1$, attained at $k-1$ and never thereafter. Consequently their
+LAST minimum is $k-1$, so the forward rule flips exactly this bit back.
+Both inverse identities follow, and the flip adds exactly one full pair.
+The deleted singleton values occur in neither calculation. This proves
+the result in every fixed singleton-position/value class, including
+$a=0$, where $0\leftrightarrow1$. $\square$
+
+The tie convention is essential. The low word $010$ has balances
+$0,1,0,1$ and maps to $011$. Choosing its first low minimum instead
+would give $110$; that variant also sends $100$ to $110$ and is not
+this bijection. Parenthesis matching and symmetric chains are mature
+suppliers; the elementary argument above fixes the exact convention
+used here without relying on an unread historical algorithm.
+
+**Proposition 24.3 (all supports, distinct starts, fixed endpoints).**
+Applying Lemma 24.2 in every singleton class defines an admitted
+$\mu_W$ in (LAGF.4), with a single uniform rule. For each $u$ in
+Definition 24.1, classify its pairs and apply the inverse rule to its
+high non-single word. If the flipped full pair is $P_c$, then
+$$
+q=u\setminus P_c,\qquad Q_J=\{z\}\cup q,\qquad
+U_J=Q_J\cup P_c.
+\tag{LAGU.3}
+$$
+All $\binom{2\ell}{\ell-1}$ supports occur, and all reset codes are
+distinct. No endpoint can be reassigned by the later routing rule.
+
+Proof. In $u$, if $B,S,C$ are its full, singleton and empty pair
+positions, then $2|B|+|S|=\ell+1$ and
+$|B|+|S|+|C|=\ell$. Hence $|B|=|C|+1$, so its non-single word is
+high. The inverse removes exactly one full pair, giving a candidate set
+of size $\ell-1$, contained in $u$, with the same singleton data.
+Conversely every such low set is mapped back to one high set by
+Lemma 24.2. The two inverse identities, separately on disjoint singleton
+classes, give the global bijection. Adding the common $z$ gives the
+stated TOTAL ranks. Distinct $u$ give distinct $q$ by injectivity of
+the inverse. This specializes, rather than reproves or enlarges,
+Theorem 23.4's family. $\square$
+
+**Definition 24.4 (middle graph and its gaps).** At candidate rank
+$\ell$, let $w\subset I$ and $R=\{z\}\cup w$. A singleton pair
+has a bit $x_j\in\{0,1\}$ specifying its displayed member. Delete
+ALL singleton positions and read the balanced non-single word $v$:
+full is $1$, empty is $0$, with equally many of each. Write its
+integer balances $H_0,\ldots,H_n$, including $H_0=H_n=0$, and
+$m=\min H_i$. The insertion gap $g(j)$ of a singleton position $j$
+is the number of non-single positions before it. Define
+$$
+F(w)=\{j:j\text{ is singleton and }H_{g(j)}=m\}.
+\tag{LAGU.4}
+$$
+Order $F(w)$ by pair index. A history edge joins its two possible
+middle geometries, obtained by adding respectively the $0$ or $1$
+member of its missing pair to its fixed $q$. An orientation of that
+edge chooses its head as the middle to be used. This graph is a graph
+of ALTERNATIVE middle geometries, not a source transition graph.
+Even a directed square below never commands a native cycle: an actual
+history executes only $Q_J\to R\to U_J$, adding one original row
+on each of its two native calls.
+
+**Theorem 24.5 (minimum-gap incidence and full cube components).** A
+singleton coordinate $j$ at $w$ is incident to a history edge if and
+only if $j\in F(w)$. Its other endpoint flips only $x_j$; its unique
+low intersection is $q=w\setminus\{2j+x_j\}$ and its unique high
+union is $u=w\cup\{2j+1-x_j\}$. Each connected component is the
+FULL cube on $F(w)$, with all non-single data and all inactive singleton
+values fixed. In particular its dimension is $f=|F(w)|\le\ell$;
+$f=0$ gives an isolated vertex.
+
+Proof. Fix a singleton $j$ with gap $g$. Removing its displayed
+member makes that pair empty, so the low non-single word is obtained
+by inserting a $0$ into $v$ at gap $g$. Before this inserted bit its
+prefix balances are $H_i$ for $0\le i\le g$; after it they are
+$H_i+1$ for $g\le i\le n$. The matching chooses precisely the
+inserted bit if and only if the last minimum is immediately before it.
+This is equivalent to
+$$
+H_i\ge H_g\quad(0\le i\le g),\qquad
+H_i+1>H_g\quad(g\le i\le n).
+\tag{LAGU.5}
+$$
+Since these are integers, the second set of inequalities is exactly
+$H_i\ge H_g$ for $i\ge g$. Thus (LAGU.5) holds if and only if
+$H_g=m$. This proves necessity and sufficiency, not only a way to
+construct some edges. For the high union, insert a $1$ at the same
+gap. Its balances are $H_i$ before and $H_i-1$ after. The inserted
+bit ends the FIRST minimum exactly when
+$H_i>H_g-1$ before it and $H_i-1\ge H_g-1$ after it. Integrality
+again reduces both to $H_i\ge H_g$, giving the same inverse criterion.
+The low/high words therefore match each other exactly as claimed.
+
+These inequalities include gaps $0,n$. Consecutive singleton positions
+share one gap because all singleton positions have been deleted; every
+one of them at a minimum gap is active. Changing any singleton value
+changes neither $v$, the gaps nor $F$. Flipping an active value is an
+edge by the equivalence, at every assignment of all active values;
+flipping an inactive value is never an edge. Along any edge the same
+active set persists. Arbitrary sequences of active flips therefore
+reach all $2^f$ assignments and no others. Distinct coordinates give
+distinct endpoints, and the intersection and union determine the
+unique history by Proposition 24.3. This proves the full-component
+claim. If $v$ is empty, its only gap has balance $0$ and every one
+of the $\ell$ singleton positions is active, giving the full
+$\ell$-cube. If no singleton is at a minimum gap, $F$ is empty and
+no history uses that vertex. $\square$
+
+**Theorem 24.6 (local optimal orientation and decoder).** Let
+$F=(j_0,\ldots,j_{f-1})$. Pair successive active coordinates
+$(j_0,j_1),(j_2,j_3),\ldots$. On each such two-coordinate face use
+$$
+00\longrightarrow01\longrightarrow11\longrightarrow10
+   \longrightarrow00.
+\tag{LAGU.6}
+$$
+If $f$ is odd, direct the last coordinate $0\to1$. Equivalently,
+the head value for the first coordinate of a pair is its partner's
+value, for the second it is its partner's complement, and for an
+unpaired last coordinate it is $1$. An edge in coordinate $j_k$
+newly commits label $\lfloor k/2\rfloor$ after reaching its head.
+At that middle, label $t$ identifies its incoming coordinate:
+$$
+\begin{array}{c|c}
+\text{active coordinates at positions }2t,2t+1&
+\text{incoming coordinate}\\ \hline
+\text{both exist, equal bits}&j_{2t}\\
+\text{both exist, unequal bits}&j_{2t+1}\\
+2t=f-1\text{ is the unpaired last position, bit }1&j_{2t}.
+\end{array}
+\tag{LAGU.7}
+$$
+The remaining call is the other candidate of that SAME incoming pair,
+never $z$. The exact common persistent alphabet has
+$M=\lceil\ell/2\rceil$ values, with exact fixed-width content
+$\lceil\log_2\lceil\ell/2\rceil\rceil$ bits, including zero bits
+for $\ell=1,2$.
+
+Proof. In one directed square, every vertex has exactly one incoming
+edge among its two coordinates. Inspecting (LAGU.6) gives the equal/unequal
+rule and the two head-value formulas. This remains true independently
+of every other coordinate. Each complete coordinate pair contributes
+one incoming edge at every vertex; the last unpaired coordinate
+contributes either zero or one. Consequently indegree is at most
+$\lceil f/2\rceil\le M$, and (LAGU.7) decodes each occupied label
+uniquely. Removing that displayed candidate from the middle gives
+$q$, and adding its partner gives $u$; Theorem 24.5 makes these the
+same prescribed endpoints. All labels are in (LAGU.2).
+
+For the lower bound restrict to the all-single middle cube. Each of
+its $\ell2^{\ell-1}$ edges is a forced distinct history: its low set
+has just one empty pair and otherwise singleton pairs, so its missing
+pair is forced even without choosing a matching convention. Each
+history must use one of the edge's two middle vertices. Among $2^\ell$
+vertices, some middle therefore receives at least
+$\lceil\ell/2\rceil$ histories. Two different histories there cannot
+have the same label: equal current source, label, public data and
+normalized control force the same future behavior, hence the same
+terminal and old word, whereas these histories have distinct terminal
+menus. This is also the faithful two-call instance of Theorem 23.2.
+Thus at least $M$ labels are necessary. The orientation attains this
+bound; initial and terminal geometries are each unique to a history,
+so their one default value does not enlarge the alphabet. At some
+all-single vertex all $M$ values occur. Fixed-width coding of exactly
+$M$ values requires and suffices with $\lceil\log_2 M\rceil$ bits;
+$M=1$ is the single literal label $0$ with no content bits. $\square$
+
+**Theorem 24.7 (one table-free complete-cut rule).** One fixed finite
+program, given public binary $\ell$ and actual source access in LAB20's
+session, handles every support of Definition 24.1 with the prescribed
+canonical encoding. Its permitted state at each counted cut is precisely
+the current geometry and the label in (LAGU.2), besides fixed public
+bindings and data. Its two post-reset calls exhaust the remaining
+original menu and permit literal recall of (LAGU.1).
+
+Proof. At common Decision, freshly count candidate memberships in the
+actual source. At start rank $\ell-1$, recover the low set $q$ and
+compute its matched empty pair $c$ by Lemma 24.2. For computation
+only, treat $c$ as singleton of value $0$. This virtual middle is
+$q\cup\{2c\}$; its active positions do not depend on that temporary
+value. Theorem 24.5 puts $c$ in its active set. Find its zero-based
+active rank $k$ and its partner if one exists. Choose the actual
+candidate in $P_c$ whose bit is the head value in Theorem 24.6,
+and compute the pending label $t=\lfloor k/2\rfloor$. No history
+table or retained $J$ is consulted. Reacquire the actual current operand
+and execute its original split through the complete inner call.
+Only AFTER that call's literal reply, End, ACK and real INNER return,
+commit $t$ and normalize all other supplementary fields/cursors.
+This is a newly acquired label. The original reset erased the old
+label; no exception lets a pre-reset value survive.
+
+At the resulting rank-$\ell$ candidate cut the label is preserved.
+There is NO second original Scrub at this middle. Fresh scans recover
+$F$ and the two bits addressed by the label; (LAGU.7) identifies the
+incoming coordinate $c$. Its missing candidate is still an untouched
+original beta row. Select that other candidate, acquire its current
+reference/rights, and complete its split through the same full return.
+Clear the label to $0$ in the terminal normalization. At candidate
+rank $\ell+1$, scanning the complement of $u$ now recovers $J$,
+so Stop and emit its increasing literal promotion word (LAGU.1),
+followed by the declared full output/return tail. Nothing uses the
+label to store the old word at the terminal cut.
+
+The invariant at each middle is that the reached vertex is the head
+of the actual history edge and its label is the active coordinate
+pair containing that edge. The decoder recovers exactly that edge,
+so the next write reaches its unique terminal, not another support's
+menu. At start and terminal, the distinct source sets already
+identify the history. These facts prove every phase and completion
+by induction over the two real calls. An invalid rank/label/shape is
+outside this actual image; a decoder rejection is not a hidden
+source-membership oracle. During one decision or busy call scratch
+may contain source-derived operands and a pending label, but no
+such extra field survives its next standardized cut. The same
+normalization applies to receiver copies and saved selections. $\square$
+
+**Proposition 24.8 (actual native preparation, encoding and continuation).**
+Under LAB20's owner-installed separate-session, authority, backing,
+exclusive-source and full-return premises, all alternatives in
+Definition 24.1 are actually attained from the allocated alpha root.
+Their codes and both remaining splits use the original LAB operations
+on that same source, with all original protocol and arithmetic work.
+
+Proof. Promote the root. For $i=0,\ldots,2\ell-1$, split the actual
+left-spine beta at $L^i$, and promote its newly born right alpha
+at $p_i$ exactly when $i\notin J$. Each preceding split really
+creates the next left beta and the right alpha. After these complete
+calls, the source $x_J$ has alpha exactly at the right rows in $J$,
+beta at the other right rows and at $z$, and the prescribed branch
+spine. Perform LAB9's actual frontier acquisition and seal: it lists
+these very original rows and their current types, addresses and
+bindings. Then perform the $P_{p_i}$ for $i\in J$ in increasing
+order, with full inner returns. This attains common $y_{2\ell}$
+and the real old word $\sigma_J$. The still-unprocessed original
+cohort is exactly $U_J=\{z\}\cup u$; the promotions in $J$ are
+not eligible again just because their source tags are now beta.
+
+Compute (LAGU.3) from the acquired support before reset, and split
+exactly the original rows in $Q_J=\{z\}\cup q$, for example $z$
+first and then $q$ in increasing order. There are $\ell$ such calls.
+They lie in $U_J$, are distinct and original, and each has current
+tag beta. This realizes precisely $E_y(Q_J)$. The original Scrub
+then removes ALL supplementary pre-reset state under Definition 20.3,
+including the just-used support, code, reference list, labels and
+prefix transcript. Its normal form has label $0$ and common control,
+with $z$ already written in the preserved geometry. Theorem 24.7
+performs the only remaining calls, on the two candidates of $P_c$,
+as actual current beta splits. No newborn child or unary marker is
+an original target.
+
+For acquisition, use AA17.3's material arity parser and AA20.1--20.2's
+actual parent/left/right fields and root binding. On this exact image,
+an original beta is either unsplit beta (material unary) or the exact
+split cherry $\langle\beta,\alpha\rangle$ (material binary);
+LAB20's table (LAGI.4) reads its membership. The public formula for
+$y$ locates expected logical rows for comparison. It supplies neither
+a physical reference nor a source oracle: the actual field traversal
+binds each current operand, and actual current grants authorize it.
+The session submits the real addressed frame and its original guard
+still tests the source. Every call reserves material, edits the actual
+source, appends every proper-ancestor routing tape, performs the
+pre-edit scalar/pair arithmetic hook and pending maintenance, builds
+and emits the full literal Growth reply, End and ACK, and reaches
+real INNER root return. The session receiver backs and consumes all
+traffic. Its final report and lawful outer tail restore returned idle.
+
+This is the supplied successful policy plugged into LAB20, not a new
+reset transition for arbitrary legacy Busy. Protected tapes, arithmetic
+banks and original legacy receivers retain their semantics and may
+contain old distinctions; authority separation excludes their use by
+this selector. No deployed runtime certification follows. $\square$
+
+**Theorem 24.9 (uniform selector-content and owned-navigation bounds).**
+On the actual image of Proposition 24.8, one decision of Theorem 24.7
+uses a constant number of ordered scans, $O(\ell)$ current-source
+membership probes, $O(\log(\ell+2))$ transient integer/Boolean CONTENT
+bits, and a constant number of authentic reference REGISTERS. Under
+the admitted direct-field contract the scans and bounded selected-operand
+reacquisition require $O(\ell)$ actual field/navigation operations
+per decision. Ordinary binary-counter work is conservatively
+$O(\ell\log(\ell+2))$. These coordinates exclude complete-call,
+frame/receiver, output and backing costs; reference widths are separate.
+
+Proof. For a scan, start at the authentic root. At original branch
+$L^i$, read its actual right field to obtain the row $p_i$, test
+its bounded local shape, then follow the actual left field to
+$L^{i+1}$. Stop at the public bound $i=2\ell$ and inspect $z$.
+Every $L^i$ for $i<2\ell$ was already a branch in $y$; all allowed
+later writes occur at its original leaves, so none removes or rewires
+this spine. A right-row write changes only its own bounded subtree
+from unary beta to the exact cherry. Splitting $z$ similarly leaves
+all preceding branches unchanged. AA20.2's reuse of the beta marker
+creates real child bindings and preserves these spine branches.
+Thus each step needs a bounded number of actual source-field reads
+and assignments, including material-arity checks. Logical row
+membership is obtained from these readings, never a bit-array oracle.
+Two consecutive right rows give one pair's occupancy and singleton
+value; their traversal needs only a constant number of reference
+registers. No path stack, syntax copy or stored membership array is
+needed. Public counters name expected positions, not references.
+
+Here is a constant-pass implementation of the mathematical selection.
+A rank scan distinguishes the three Decision cases and verifies the
+already-written $z$. At a start, one low-word pass maintains balance,
+minimum and the LAST minimum's non-single prefix index; the empty
+prefix is initialized explicitly. A further pass locates the next
+non-single pair, namely $c$. Treat that pair virtually as singleton
+in subsequent start passes. At a middle use the actual singleton
+pattern instead. One balanced-word pass computes the global minimum
+$m$. A further pass maintains its current prefix balance at every
+singleton gap; equality with $m$ enumerates exactly the active set,
+without storing $F$. Counting these active positions gives $f$ and,
+at a start, $k=\operatorname{rank}_F(c)$. One more pass reads the
+needed partner bit, or, at a middle, the bits at active positions
+$2t,2t+1$, and determines the coordinate to use. Inactive singletons
+contribute no balance step. Consecutive singletons therefore receive
+the same correct gap test. Each pass has at most $\ell$ pair tests.
+At most a fixed number of passes is used, independent of $\ell,J$
+and the cube dimension. There is no matching, cube, routing or
+membership table and no retained $F$ or complete word.
+
+All stored integer quantities are indices, ranks, signed balances,
+minima, $f,k,c,t$ or loop bounds of magnitude $O(\ell+2)$.
+A fixed number of ordinary binary counters and Boolean latches
+therefore needs $O(\log(\ell+2))$ content bits in total.
+Each elementary increment, comparison, copy or parity/halving step
+can be implemented in $O(\log(\ell+2))$ bit work, giving the stated
+conservative counter bound across $O(\ell)$ iterations. A fixed
+program and a fixed number of loops suffice for every binary input
+$\ell$; no table indexed by unbounded parameters is in its code.
+
+After computing the selected row index, reset the source cursor to
+the authentic root and reacquire that row by one more forward spine
+traversal of length at most $2\ell$. Hold only its authentic current
+operand and the constant number of bindings needed for dispatch.
+This is a bounded extra scan, so total direct-field/navigation work
+remains $O(\ell)$. Reference registers carry actual opaque references;
+their physical widths, assignment tariff, representation backing and
+rights are charged separately, not compressed into the binary-counter
+bound. At every counted cut, restore the source cursor to root,
+clear other mutable reference registers to null, neutralize counters,
+receiver scratch and aliases, and reach the one common Decision
+location while preserving exactly the allowed label. This is LAB20's
+paid private normalization restricted to the new scratch; it does
+not clear the newly committed label at the middle.
+
+If instead each candidate is reacquired independently from the root,
+$\sum_{i<2\ell}(i+1)=\ell(2\ell+1)$ gives the simpler
+$O(\ell^2)$ navigation bound. Persistent owned spine traversal
+already supplies the stronger linear upper bound under the stated
+field primitives. Neither bound proves optimal navigation, bounds
+reference bit work, nor bounds the original complete-call workload:
+address frames, ancestor maintenance, reply construction/consumption
+and real return still take their separately charged operations.
+$\square$
+
+**Proposition 24.10 (material and output coordinates remain substantial).**
+The selector-content bound is not a bound on total or peak memory,
+total time, energy, acquisition or physical installation capacity.
+In the exact AA20 literal-tape supplier, already at the common $y$
+the preparation and old promotions have created exactly $4\ell^2$
+routing tape cells. The addressed final old word has
+$\Theta(\ell^2)$ literal payload uniformly over the supports as
+$\ell$ grows.
+
+Proof. AA22.1 counts routing cells by the actual sum of logical event
+depths, including every successful promotion and split. In the present
+preparation and old word these events are the root promotion, the
+$2\ell$ left-spine splits and exactly one right-row promotion at
+EVERY candidate, whether before or after frontier acquisition. Thus
+$$
+D_y=0+\sum_{i=0}^{2\ell-1}i
+         +\sum_{i=0}^{2\ell-1}(i+1)
+   =\ell(2\ell-1)+\ell(2\ell+1)=4\ell^2.
+\tag{LAGU.8}
+$$
+The supplier really appends one side-bit cell per proper logical
+ancestor; these are actual attached tape cells, not only a depth
+statistic. Later code and continuation splits add further cells.
+Headers, source vertices, reference-bearing fields and their backing,
+arithmetic banks and maintenance, material reservation, parser and
+receiver/output/address frames, root bindings and granted authority
+all retain their own material and work costs. A constant number of
+reference registers is not a constant number of reference bits.
+
+For a recalled $P_{p_i}$, the address depth is $i+1$ and AA20.2's
+literal $A(p_i)=1^{i+1}0p_i$ alone has $2(i+1)+1$ bits, besides
+kind/tag/framing. If $|J|=\ell-1$, its sum of depths is at least
+$1+\cdots+(\ell-1)=\ell(\ell-1)/2$ and at most
+$2\ell(\ell-1)$. This proves the claimed asymptotic lower and upper
+bounds for the literal old word; at $\ell=1$ it is empty. A streaming
+word generator can use counters, but its actual printed bits and the
+bound complete-call receiver and address/reply backing are still
+material/work, and do not fit into the logarithmic selector-content
+coordinate. The receiver is not permitted to retain an uncounted
+copy of the target across a standardized cut.
+
+Initial root/frontier acquisition, computation and writing of the
+encoding, all complete calls and original scrub are paid separately.
+For each finite $\ell$ the LAB20 installation must supply sufficient
+finite common backing and current authority, including its frame,
+receiver, output and normalization arenas. One uniform finite program
+with growing finite supplied material is not one fixed-capacity
+physical installation for all $\ell$. The bounds above establish no
+total/peak-memory optimum, total-time or energy estimate, universal
+physical realization or runtime certification. $\square$
+
+**Proposition 24.11 (same-source transport and exact recovery scope).**
+Carry the SAME current source $E_y(R)$ and permitted label through
+AA17's syntax, oriented material-support, terminal-boundary and
+labelled causal-membership maps, retaining beta's material unary
+marker, original row interpretation, literal source identity, root
+binding and current rights. On this actual image each recovered view
+computes the same decisions, the same native successors and the
+same prescribed terminal word $\sigma_J$. This is task-specific
+recovery of current continuation and that increasing old word.
+
+Proof. AA17.3's arity parser recovers the source term from its oriented
+material support; maximal elements give the terminal boundary and
+prefix closure recovers the support. AA17.2 recovers the same term
+from its birth-typed labelled causal membership order. LAB20's
+source-difference map then recovers exactly the same $R$ against
+this $y$; the label is transported unchanged as an additional component.
+Consequently the prefix-minimum and local decoding formulas have
+identical arguments in each view. For a selected original row $p$,
+taking a view after the actual completed call
+$E_y(R)\to E_y(R\cup\{p\})$ equals recovering this same source,
+performing that very lawful call and taking its view. No independently
+chosen compatible source or history is substituted. At the terminal,
+complementing $u$ gives the very $J$ whose increasing promotions
+were attained in Proposition 24.8.
+
+These are the existing same-source maps with the allowed supplement,
+not authority or a reverse source actuator derived from a mathematical
+view. The bare source still does not determine arbitrary generation
+chronology, controller traffic or protected old records. Recovery of
+this selected order follows because the experiment prescribes one
+increasing order per support, not because all histories of the source
+have become distinguishable. The chosen canonical fixed encoder here,
+the arbitrary finite constituent matchings of §23 and the freely
+re-encoded endpoint theorem of §21 retain their separate quantifiers.
+The long-term space--time--boundary--memory objective remains open
+beyond this finite family. $\square$
+
+### 24.12. Suppliers and evidence boundary
+
+[AA17, AA20--22](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md#17-birth-typed-local-growth-and-its-causal-reconstruction)
+supply the source semantics, material unary/binary parser, actual
+reference/field/authority contract, Ready-only source-response semantics
+and located depth accounting. LAB9--11, 15 and 18--20 supply frontier
+acquisition, original-cohort eligibility, synchronization and the
+conditional separate-session installation. The named repository
+[EnabledPathSwapConnectivity.result](../../../D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.lean)
+is a finite-poset enabled-execution supplier, not this source-specific
+scan or routing theorem. The
+[DefectGraphMinimumColoring.minimum_repair_labels_eq_chromatic_eq_fiber_diversity](../../../D5/S3/ConceptDynamics/Coding/DefectGraphMinimumColoring.lean)
+supplier used in §21 concerns static finite task fibers; it is not
+used to replace the intermediate-cut proof above. Reading these
+sources supplies no new Lean verification.
+
+For mature parenthesis/symmetric-chain methods, Sagan--Savage,
+[*Mahonian Pairs*, arXiv:1101.4332v2, §5](https://arxiv.org/html/1101.4332v2),
+describes pairing and a change of the rightmost unpaired symbol in
+its stated convention. Greene--Kleitman, *Strong versions of Sperner's
+theorem*, [DOI 10.1016/0097-3165(76)90079-0](https://doi.org/10.1016/0097-3165(76)90079-0),
+is the bibliographic symmetric-chain attribution; its original full
+text is not part of the obtained evidence, and no exact historical
+algorithm correspondence is asserted here. DOI 10.37236/1755 identifies
+Griggs--Killian--Savage (2004), not Greene--Kleitman. The complete
+integer-prefix proof in Lemma 24.2 bears the matching claim.
+
+Bastide--Groenland--Jacob--Johnston,
+[arXiv:2207.07391v2, Theorem 2](https://arxiv.org/html/2207.07391v2),
+covers sets by disjoint skipless chains without preserving chosen
+endpoint pairings. Chakrabarty--Seshadhri,
+[arXiv:2409.02206v2](https://arxiv.org/html/2409.02206v2), retains the
+prescribed-pair caveat for directed-cube paths. Neither supplies the
+fixed-pair local selector asserted here. Ghaffari et al.,
+[arXiv:1706.04746v2](https://arxiv.org/html/1706.04746v2), treats
+degree splitting in a distributed orientation model; its communication
+bounds are not native source-navigation or memory bounds.
+Rivest--Shamir,
+[*How to Reuse a "Write-Once" Memory*](https://people.csail.mit.edu/rivest/pubs/RS82c.pdf),
+supplies monotone-write context, not LAB source access, reset authority
+or authentic operand acquisition.
+
+The source-specific addition is the canonical minimum-gap full-cube
+structure, its optimal local incoming-edge decoder, and their uniform
+implementation by charged authentic spine scans with explicit cut
+normalization. Matching, symmetric chains, orientations and finite
+information lower bounds are mature mathematics. This is repository-derived
+synthesis, with no worldwide novelty claim, fresh Lean theorem,
+ingestion result or deployed-runtime claim. All installation, actual-image,
+full-call, separate-charge and recovery-scope conditions above remain
+part of the conclusions.
+
+## 追加锚（本行以下为增补区）

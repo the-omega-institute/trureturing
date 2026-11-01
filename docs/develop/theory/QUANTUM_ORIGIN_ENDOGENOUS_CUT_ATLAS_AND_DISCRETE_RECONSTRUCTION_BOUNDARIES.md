@@ -1761,3 +1761,1146 @@ All table arguments lie in the original $K$. The matrices $P_N/2$ and $\delta$ o
 Every member of the tomography basis $\mathcal B$ of Definition 16.1 has rank one; the exceptional projections have rank eight. Thus (21.1) agrees with the trace table on $\mathcal B$, which proves $H=I_{16}/16$ and (21.4). The family uses a single complete table on each finite grid and no cross-grid hypothesis. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 22. Gaussian 整数原子的复八维全 dyadic 投影实现
+
+**定理 22.1（四维整数原子与八维互补投影）。** For every integer $m\ge2$, put $N=2^m$ and $h=N^{-1}$. There exist complementary rank-four orthogonal projections $P_m,Q_m\in K_{8,m}$ such that
+
+$$
+\{F\in K_{8,m}:0\le F\le P_m\}=\{0,P_m\},
+\qquad
+\{F\in K_{8,m}:0\le F\le Q_m\}=\{0,Q_m\}.
+\tag{22.1}
+$$
+
+The construction uses the following Gaussian Hermitian matrix, denoted by $G$ to distinguish it from the tomography matrix $H$ in (16.1):
+
+$$
+Q=\begin{pmatrix}1+i&1\\-1&1-i\end{pmatrix},
+\qquad
+G=H_{\mathbb H}=
+\begin{pmatrix}2I_2&Q\\Q^\dagger&2I_2\end{pmatrix}.
+\tag{22.2}
+$$
+
+**证明。** Matrix multiplication gives
+
+$$
+\begin{gathered}
+Q^\dagger Q=QQ^\dagger=3I_2,\qquad
+G^2-4G+I_4=0,\qquad G^{-1}=4I_4-G,\\
+(G-I_4)^2=2G,\qquad
+\operatorname{spec}(G)=\{2-\sqrt3,2-\sqrt3,2+\sqrt3,2+\sqrt3\},
+\qquad \det G=1.
+\end{gathered}
+\tag{22.3}
+$$
+
+For example, the off-diagonal block matrix $G-2I_4$ has square $3I_4$ and trace zero, giving the stated spectrum. Thus $G$ is positive definite. For every $z\in\mathbb Z[i]^4$, the value $z^\dagger Gz$ is an even integer: the diagonal terms are $2|z_j|^2$, and the off-diagonal terms occur as twice an integral real part. Positivity and the standard coordinate vectors therefore give
+
+$$
+\min_{0\ne z\in\mathbb Z[i]^4}z^\dagger Gz=2.
+\tag{22.4}
+$$
+
+Here the integral-interval argument of §20 applies to the realification
+
+$$
+\mathcal R(G)=
+\begin{pmatrix}\operatorname{Re}G&-\operatorname{Im}G\\
+\operatorname{Im}G&\operatorname{Re}G\end{pmatrix}.
+$$
+
+For completeness, its required hypotheses and their consequence can be checked without a lattice classification. This is an integral positive definite Gram matrix with determinant $(\det G)^2=1$. Its eight standard real basis vectors have squared norm two. In the order $e_1,e_2,e_3,e_4,ie_1,ie_2,ie_3,ie_4$, the nonzero-pairing graph contains the edges
+
+$$
+(1,3),(1,4),(1,7),(2,3),(2,8),(3,5),(4,6),
+$$
+
+which connect all eight vertices. If $X\in\operatorname{Herm}_4(\mathbb Z[i])$ and $0\le X\le G$, the integer matrix
+
+$$
+A=\mathcal R(G)^{-1}\mathcal R(X)
+$$
+
+is self-adjoint for this Gram inner product and has all eigenvalues in $[0,1]$. An eigenvalue strictly between zero and one is an algebraic integer whose conjugates are also eigenvalues of $A$. Its irreducible polynomial cannot have zero or one as a root, so all these conjugates lie strictly between zero and one. Their product would be a nonzero integer of absolute value less than one, a contradiction. Thus $A^2=A$. Its integral image and integral kernel split the lattice orthogonally. By (22.4), a vector of squared norm two cannot have nonzero components in both summands. Every standard real basis vector lies in one summand; the connected pairing graph places all of them in the same summand. The other summand is zero. Consequently
+
+$$
+\{X\in\operatorname{Herm}_4(\mathbb Z[i]):0\le X\le G\}=\{0,G\}.
+\tag{22.5}
+$$
+
+This is the §20 order-atomicity mechanism on the explicit Gaussian Gram matrix (22.2), rather than another assumption about a classified lattice.
+
+To realize the atom at every dyadic scale, set
+
+$$
+\begin{gathered}
+Q_0=Q-I_2=\begin{pmatrix}i&1\\-1&-i\end{pmatrix},
+\qquad
+S=\operatorname{diag}(iQ_0,iQ_0),\\
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+\qquad
+U=\begin{pmatrix}0&\sigma_x\\\sigma_x&0\end{pmatrix}.
+\end{gathered}
+$$
+
+Direct multiplication yields
+
+$$
+\begin{gathered}
+Q_0^\dagger=-Q_0,\quad Q_0^2=-2I_2,\quad
+S^\dagger=S,\quad U^\dagger=U,\quad S^2=2I_4,\quad U^2=I_4,\\
+SG=GS,\qquad UG=GU,\qquad SU+US=0.
+\end{gathered}
+\tag{22.6}
+$$
+
+Choose integers $c_1,c_2,c_3$ with
+
+$$
+c_1^2+2c_2^2+2c_3^2=N/2-2=:n_m.
+\tag{22.7}
+$$
+
+For $m=2$ use $(0,0,0)$, and for $m=3$ use $(0,1,0)$. For $m\ge4$, $n_m\equiv2\pmod4$, so it is not of the form $4^a(8b+7)$ with nonnegative integers $a,b$. Legendre's classical three-square theorem, used here only as an intermediate arithmetic tool, supplies $n_m=x^2+y^2+z^2$. Reduction modulo four shows that exactly one of $x,y,z$ is even. Relabel it as $x$ and put $c_1=x$, $c_2=(y+z)/2$, $c_3=(y-z)/2$. The latter two numbers are integers and satisfy (22.7). The arithmetic criterion used here is the [Legendre three-square criterion](https://mathworld.wolfram.com/SumofSquaresFunction.html).
+
+Define Gaussian integer matrices
+
+$$
+B=i c_1U+i c_2S+c_3US,\qquad C=I_4+(G-I_4)B.
+$$
+
+The three matrices $iU,iS,US$ are skew-Hermitian, commute with $G$, anticommute pairwise, and have squares $-I_4,-2I_4,-2I_4$. Equations (22.6)–(22.7) therefore imply
+
+$$
+\begin{gathered}
+B^\dagger=-B,\qquad B^2=-n_m I_4,\qquad BG=GB,\qquad CG=GC,\\
+C^\dagger C=CC^\dagger
+=I_4+2n_mG
+=(N-4)G+I_4
+=NG-G^2.
+\end{gathered}
+\tag{22.8}
+$$
+
+Indeed $C^\dagger=I_4-(G-I_4)B$, and their product is $I_4-(G-I_4)^2B^2$. This also proves (22.8) for the two separately chosen coarse scales.
+
+Now put
+
+$$
+V=\begin{pmatrix}G\\C\end{pmatrix},\qquad
+W=\begin{pmatrix}-C^\dagger\\G\end{pmatrix}.
+$$
+
+The commutation and norm identities above give
+
+$$
+V^\dagger V=W^\dagger W=NG,\qquad V^\dagger W=0.
+$$
+
+Both matrices have column rank four. Thus
+
+$$
+P_m=\frac1N VG^{-1}V^\dagger,\qquad
+Q_m=\frac1N WG^{-1}W^\dagger=I_8-P_m
+\tag{22.9}
+$$
+
+are complementary rank-four orthogonal projections. All entries of $G^{-1},V,W$ are Gaussian integers, so both projections lie on the original $h$ grid.
+
+It remains to prove their order-atomicity against all complex grid subeffects. If $0\le F\le P_m$ and $Z=NF\in\operatorname{Herm}_8(\mathbb Z[i])$, positivity implies $\operatorname{ran}Z\subseteq\operatorname{ran}V$. Let $X$ be the upper-left four-by-four block of $Z$. Since the upper block of $V$ is the invertible matrix $G$, restriction to this block reconstructs every operator supported on $\operatorname{ran}V$:
+
+$$
+Z=VG^{-1}XG^{-1}V^\dagger,\qquad 0\le X\le G.
+\tag{22.10}
+$$
+
+For example, write $Z=VTV^\dagger$ and obtain $X=GTG$; the upper-left block of $NP_m$ is $G$. Now $X$ is Gaussian Hermitian integral, so (22.5) gives $X=0$ or $X=G$, and hence $F=0$ or $F=P_m$. For $Q_m$, use the lower-right block of $Z=NF$ and the lower block $G$ of $W$; the same calculation applies. This proves (22.1). $\square$
+
+## 23. 所有复维数不小于八的单网格 Born 障碍
+
+**定理 23.1（全尺度全表反例与任意厄米拟合下界）。** For every pair of integers $d\ge8$, $m\ge2$, there is a table $p:K_{d,m}\to[0,1]$ satisfying Definition 16.1 with $\epsilon=0$ whose pinned matrix (16.1) is the density matrix
+
+$$
+H_0=(I_8/8)\oplus0_{d-8}.
+$$
+
+It obeys $p(E)=\operatorname{Tr}(H_0E)$ for every $E\in K_{d,m}$ of operator norm strictly less than one. At the rank-four projection $E_*=P_m\oplus0_{d-8}$, however,
+
+$$
+p(E_*)-\operatorname{Tr}(H_0E_*)=\frac12.
+\tag{23.1}
+$$
+
+Moreover, with $B_d=4d^2-3d$ as in §16,
+
+$$
+\inf_{H'\in\operatorname{Herm}_d}
+\ \sup_{E\in K_{d,m}}
+|p(E)-\operatorname{Tr}(H'E)|
+\ \ge\frac{1}{2(B_d+1)}.
+\tag{23.2}
+$$
+
+Consequently (18.1) fails for every fixed $d\ge8$.
+
+**证明。** Take $P_m,Q_m$ from Theorem 22.1. For the complementary block, use the same effect-set formula $K_{r,m}=\{M\in\operatorname{Herm}_r(h\mathbb Z[i]):0\le M\le I_r\}$ for every $r\ge1$, including $r=1$, and interpret $K_{0,m}$ as the singleton consisting of the zero-dimensional matrix. Define disjoint fibers
+
+$$
+\mathcal F_+=\{P_m\oplus M:M\in K_{d-8,m}\},\qquad
+\mathcal F_-=\{Q_m\oplus M:M\in K_{d-8,m}\},
+$$
+
+and define one function on the entire original grid by
+
+$$
+p(E)=\operatorname{Tr}(H_0E)+
+\begin{cases}
+1/2,&E\in\mathcal F_+,\\
+-1/2,&E\in\mathcal F_-,\\
+0,&E\notin\mathcal F_+\cup\mathcal F_-.
+\end{cases}
+\tag{23.3}
+$$
+
+On either fiber the trace value is $4/8=1/2$, so the modified values are one and zero. Elsewhere the trace value is in $[0,1]$. Thus $p$ takes values in $[0,1]$, and $p(0)=0$.
+
+We verify every labelled two- and three-entry menu, including zeros and repetitions. First, an effect whose upper-left eight-by-eight block is a projection has zero off-diagonal blocks relative to $\mathbb C^8\oplus\mathbb C^{d-8}$. To see this, write that block as $A$. For $x\in\ker A$, the equality $\langle(x,0),E(x,0)\rangle=0$ and positivity force $E(x,0)=0$. For $x\in\operatorname{ran}A$, apply the same reasoning to $I-E$. These two subspaces exhaust $\mathbb C^8$ and force the cross blocks to vanish.
+
+Suppose a menu contains $E_1=P_m\oplus M$. Each other entry has an eight-by-eight principal block $A_j$ in the same grid satisfying $0\le A_j\le Q_m$. By (22.1) each $A_j$ is zero or $Q_m$. Since their sum is $Q_m$, exactly one is $Q_m$, and all the others are zero. The preceding cross-block argument shows that this unique entry belongs to $\mathcal F_-$. Thus the perturbations in (23.3) cancel exactly. The argument with the two fibers exchanged is identical. If neither fiber occurs, the menu sum is just $\operatorname{Tr}(H_0I_d)=1$. This verifies the complete menu condition, without excluding any allowed coincidence of labels or entries.
+
+Every member of $\mathcal B$ has rank one, whereas every member of either fiber has rank at least four. Hence (23.3) agrees with the $H_0$ trace table on $\mathcal B$, and (16.1) pins precisely $H=H_0$. All fiber members have norm one, proving the claimed agreement on the open norm ball. Equation (23.1) follows because $E_*\in\mathcal F_+$.
+
+For an arbitrary Hermitian $H'$, set
+
+$$
+\eta=\sup_{E\in K_{d,m}}|p(E)-\operatorname{Tr}(H'E)|,\qquad D=H'-H_0.
+$$
+
+The basis values imply $|\operatorname{Tr}(DQ)|\le\eta$ for every $Q\in\mathcal B$. Expand $E_*$ using (16.6). The first inequality of (16.7), which holds with coefficient sum at most $B_d\|E_*\|_{\rm op}=B_d$ even outside the local ball, gives
+
+$$
+|\operatorname{Tr}(DE_*)|\le B_d\eta,\qquad
+\frac12\le
+|p(E_*)-\operatorname{Tr}(H'E_*)|+
+|\operatorname{Tr}(DE_*)|
+\le(B_d+1)\eta.
+$$
+
+This proves (23.2) for every $H'$, without any positivity or trace assumption on $H'$. Finally, at fixed $d$, (23.1) holds for arbitrarily large $m$, whereas any dimension-only multiple of $h=2^{-m}$ tends to zero. It contradicts (18.1) with $\epsilon=0$. $\square$
+
+**适用边界 23.2。** Theorems 20.2–21.1 already give the real rank-eight construction in complex dimension sixteen and its full-table obstruction. Theorems 22.1–23.1 supply the additional complex-dimension-eight construction, all $m\ge2$, its extension to every $d\ge8$, and the arbitrary-Hermitian lower bound. The single-grid problem (18.1) for $2\le d\le7$ is not settled by these constructions. The threshold eight and the three-square arithmetic restriction describe this construction; they are not an impossibility theorem for counterexamples in smaller complex dimensions. These conclusions concern the explicitly defined effect grids and menu relations, with no empirical assertion about physical realizations.
+
+## 24. 保留单侧谱余量的原网格内部稳定性
+
+**定理 24.1（任意维的单侧内部定理）。** For each integer $d\ge2$, retain $c_d,K_d,T_d,M_d$ from Definition 16.1 and define
+
+$$
+\begin{gathered}
+k_d=\left\lceil\log_2(2/c_d)\right\rceil,\qquad q_d=2^{k_d},\\
+U_d=(2q_d-1)K_d+4(q_d-1),\\
+L_d=U_d+T_d+1+\frac{8d(1+dM_d)}{c_d}.
+\end{gathered}
+\tag{24.1}
+$$
+
+For every $m\ge1$, every table satisfying Definition 16.1, and every $E\in K_{d,m}$ satisfying at least one of
+
+$$
+\lambda_{\max}(E)\le1-4dh,\qquad
+\lambda_{\min}(E)\ge4dh,
+\tag{24.2}
+$$
+
+the pinned matrix $H$ satisfies
+
+$$
+|p(E)-\operatorname{Tr}(HE)|\le L_d(\epsilon+h).
+\tag{24.3}
+$$
+
+In the fine-grid regime $h\le c_d/(8d)$, the sharper bounds are $U_d\epsilon$ under the first condition in (24.2) and $(U_d+T_d+1)\epsilon$ under the second.
+
+**证明。** Suppose first that $h\le c_d/(8d)$ and $E\le(1-4dh)I_d$. Round the diagonal entries and the real and imaginary parts above the diagonal of $E/2$ to nearest multiples of $h$, and fill the lower triangle by Hermitian symmetry. Denote the resulting Hermitian grid matrix by $S$. Each diagonal error is at most $h/2$, and each off-diagonal modulus error is at most $h/\sqrt2$. Therefore, by the maximum absolute row sum,
+
+$$
+\|S-E/2\|_{\rm op}
+\le\bigl(1/2+(d-1)/\sqrt2\bigr)h\le dh.
+$$
+
+Put $F=S+dhI_d$ and $R=2F-E$. All three matrices $F,R,2F$ have entries on the original grid: $d$ is integral, and $E$ and $S$ are grid matrices. The error bound gives
+
+$$
+\begin{gathered}
+0\le R\le4dhI_d,\qquad 0\le F,\qquad
+2F=E+R\le I_d,\\
+\|F\|_{\rm op}\le\|E\|_{\rm op}/2+2dh.
+\end{gathered}
+\tag{24.4}
+$$
+
+Thus $F,R,2F,E+R,I-2F$ are effects in the same $K_{d,m}$. In particular the labelled menus
+
+$$
+(F,F,I-2F),\quad(2F,I-2F),\quad
+(E,R,I-E-R),\quad(E+R,I-E-R)
+$$
+
+are legitimate. Subtracting their normalization relations, or applying (16.4) twice, yields
+
+$$
+|p(E)-2p(F)+p(R)|\le4\epsilon.
+\tag{24.5}
+$$
+
+This step is iterated only while retaining the upper margin. Set $E_0=E$ and let $E_{j+1}=F_j$ be the construction above applied to $E_j$. If $\|E_j\|_{\rm op}\le1-4dh$, then (24.4) gives $\|E_{j+1}\|_{\rm op}\le1/2$. Since $4dh\le c_d/2\le1/2$, this is again at most $1-4dh$. Consequently every step is legal. Induction in (24.4) gives
+
+$$
+\|E_j\|_{\rm op}
+\le2^{-j}\|E\|_{\rm op}+4dh(1-2^{-j}).
+$$
+
+At $j=k_d$ this is at most $c_d/2+4dh\le c_d$. Each remainder $R_j$ also has norm at most $4dh\le c_d/2$. Thus Theorem 16.2 applies to $E_{k_d}$ and all $R_j$ on the original grid.
+
+Write $e(A)=p(A)-\operatorname{Tr}(HA)$. Since $E_j=2E_{j+1}-R_j$ as matrices, (24.5) gives
+
+$$
+|e(E_j)|\le2|e(E_{j+1})|+(K_d+4)\epsilon,\qquad
+|e(E_{k_d})|\le K_d\epsilon.
+$$
+
+Summing this finite geometric recurrence yields
+
+$$
+|e(E)|\le
+\bigl[q_dK_d+(q_d-1)(K_d+4)\bigr]\epsilon
+=U_d\epsilon.
+$$
+
+If instead $\lambda_{\min}(E)\ge4dh$, then $I-E$ satisfies the upper-margin condition. The pair menu and (16.3) imply
+
+$$
+|e(E)+e(I-E)|
+=|p(E)+p(I-E)-\operatorname{Tr}H|
+\le(T_d+1)\epsilon.
+$$
+
+This proves the stated fine-grid lower-margin estimate.
+
+Finally, if $h>c_d/(8d)$, (16.3) and $0\le E\le I_d$ give, for every grid effect,
+
+$$
+|p(E)-\operatorname{Tr}(HE)|\le1+dM_d
+<\frac{8d(1+dM_d)}{c_d}\,h.
+$$
+
+This proves (24.3) also on coarse grids. $\square$
+
+**适用边界 24.2。** The region excluded by the disjunction (24.2) is exactly
+
+$$
+\{E\in K_{d,m}:
+\lambda_{\min}(E)<4dh,\quad
+\lambda_{\max}(E)>1-4dh\}.
+$$
+
+It consists of effects whose spectrum comes within the stated margin of both zero and one. In particular it contains every nontrivial projection, including the rank-four witness in Theorem 23.1. Thus (24.3) and the single-grid counterexamples have disjoint hypotheses at those witnesses.
+
+## 25. 跨尺度相容性强制的全局 Born 线性与噪声边界
+
+**定理 25.1（精确相容塔的唯一全局密度矩阵）。** Fix integers $d\ge2$ and $m_0\ge1$. For every $m\ge m_0$, let $p_m$ satisfy Definition 16.1 on $K_{d,m}$ with $\epsilon=0$, and assume
+
+$$
+p_{m+1}(E)=p_m(E)\qquad(E\in K_{d,m}).
+\tag{25.1}
+$$
+
+Then there exists a unique density matrix $H$, independent of $m$, such that
+
+$$
+\exists H\succeq0,\ \operatorname{Tr}H=1,\
+\forall m\ge m_0,\ \forall E\in K_{d,m},\qquad
+p_m(E)=\operatorname{Tr}(HE).
+\tag{25.2}
+$$
+
+Conversely every density matrix defines such an exact compatible tower by the trace formula.
+
+**证明。** The grids are nested. Every $Q\in\mathcal B$ lies in every one of them, and (25.1) makes its table value independent of scale. Thus all the matrices pinned by (16.1) are the same Hermitian matrix $H$. Equation (16.3) gives $\operatorname{Tr}H=1$. At scale $n$, Theorem 17.1 gives $\lambda_{\min}(H)\ge-D_d2^{-n}$. Letting $n$ tend to infinity proves $H\succeq0$.
+
+Fix $m\ge m_0$ and $E\in K_{d,m}$, and take $k_d,q_d$ from (24.1). At every auxiliary scale $n\ge m+k_d$, all matrices $E/2^j$, $0\le j\le k_d$, belong to $K_{d,n}$: their entries have denominator dividing $2^{m+j}$, and they remain effects. The doubling menus
+
+$$
+(F,F,I-2F),\qquad(2F,I-2F)
+$$
+
+give $p_n(2F)=2p_n(F)$ whenever $F,2F\in K_{d,n}$. Iteration gives
+
+$$
+p_n(E)=q_dp_n(E/q_d).
+$$
+
+Because $\|E/q_d\|_{\rm op}\le1/q_d\le c_d/2$, Theorem 16.2 with $\epsilon=0$ gives $p_n(E/q_d)=\operatorname{Tr}(HE/q_d)$. Compatibility then implies
+
+$$
+p_m(E)=p_n(E)=\operatorname{Tr}(HE).
+$$
+
+Only the positivity step uses a limit of auxiliary scales; the linear identity is exact at every $n\ge m+k_d$. Uniqueness follows from the basis $\mathcal B$. For the converse, positivity and trace one put every trace value in $[0,1]$ and make every menu sum one, while the same formula on nested grids is compatible. $\square$
+
+**定理 25.2（固定层数细化的逐尺度含噪稳定性）。** For each $d\ge2$, choose $k_d,q_d$ as in (24.1), and let $C_d^{\rm loc}$ be the constant of Corollary 17.2. Put
+
+$$
+C_d^{\rm ref}=1+2(q_d-1)+q_dC_d^{\rm loc}.
+\tag{25.3}
+$$
+
+For every $m\ge1$, $0\le\epsilon\le1/10$ and $\Delta\ge0$, suppose a table $p_m:K_{d,m}\to[0,1]$ admits a table $p_{m+k_d}$ satisfying Definition 16.1 with parameter $\epsilon$ on the finer grid and
+
+$$
+|p_{m+k_d}(E)-p_m(E)|\le\Delta
+\qquad(E\in K_{d,m}).
+\tag{25.4}
+$$
+
+Then there is a density matrix $\rho_{(m)}$, allowed to depend on $m$ and on these tables, such that
+
+$$
+\sup_{E\in K_{d,m}}
+|p_m(E)-\operatorname{Tr}(\rho_{(m)}E)|
+\le C_d^{\rm ref}(\epsilon+\Delta+h).
+\tag{25.5}
+$$
+
+In particular, for a family with such refinements the conclusion has quantifiers $\forall m\ \exists\rho_{(m)}\ \forall E\in K_{d,m}$; it does not assert a common density matrix for all $m$.
+
+**证明。** Denote the finer table by $p_f$ and its spacing by $h_f=h/q_d$. For every $E\in K_{d,m}$, all $E/2^j$ for $0\le j\le k_d$ are fine-grid effects. Equation (16.4) gives
+
+$$
+|p_f(2F)-2p_f(F)|\le2\epsilon.
+$$
+
+Iteration, with geometric accumulation of the errors, yields
+
+$$
+|p_f(E)-q_dp_f(E/q_d)|\le2(q_d-1)\epsilon.
+\tag{25.6}
+$$
+
+Apply Corollary 17.2 once to the finer table. It supplies a single density matrix $\rho_{(m)}$ working simultaneously for every finer effect of norm at most $c_d$, with error at most $C_d^{\rm loc}(\epsilon+h_f)$. Every $E/q_d$ under consideration lies in this ball. Combining this estimate, (25.4), and (25.6) gives the uniform bound
+
+$$
+\begin{aligned}
+|p_m(E)-\operatorname{Tr}(\rho_{(m)}E)|
+&\le\Delta+2(q_d-1)\epsilon
++q_dC_d^{\rm loc}(\epsilon+h/q_d)\\
+&=\Delta+\bigl[2(q_d-1)+q_dC_d^{\rm loc}\bigr]\epsilon
++C_d^{\rm loc}h\\
+&\le C_d^{\rm ref}(\epsilon+\Delta+h).
+\end{aligned}
+$$
+
+The local corollary includes both large noise and coarse grids, so no omitted scale regime remains. The same $\rho_{(m)}$ was chosen before $E$, proving (25.5). $\square$
+
+**命题 25.3（一致相邻尺度误差不强制共同密度矩阵）。** For every $d\ge2$, every $m_0\ge1$, and every real $\delta>0$, there exists an infinite family of exact Born tables $p_m(E)=\operatorname{Tr}(\rho_mE)$ on $K_{d,m}$, $m\ge m_0$, such that
+
+$$
+\sup_{E\in K_{d,m}}|p_{m+1}(E)-p_m(E)|\le\delta
+\qquad(m\ge m_0),
+\tag{25.7}
+$$
+
+but on every tail $m\ge M\ge m_0$,
+
+$$
+\inf_{\rho\succeq0,\ \operatorname{Tr}\rho=1}
+\ \sup_{m\ge M}\ \sup_{E\in K_{d,m}}
+|p_m(E)-\operatorname{Tr}(\rho E)|=\frac14.
+\tag{25.8}
+$$
+
+**证明。** Let $J=\lceil1/(2\delta)\rceil\ge1$, and let $r_m$ be the residue of $m-m_0$ in $\{0,\ldots,2J-1\}$. Define
+
+$$
+a_m=-\frac14+\frac{\min(r_m,\,2J-r_m)}{2J},
+\qquad
+\rho_m=\operatorname{diag}\left(\frac12+a_m,\frac12-a_m,0,\ldots,0\right).
+$$
+
+This is a triangular periodic ramp from $-1/4$ to $1/4$ and back, with
+
+$$
+|a_{m+1}-a_m|=\frac1{2J}\le\delta.
+$$
+
+All $\rho_m$ are positive semidefinite and trace one. Their trace tables satisfy every menu exactly. For any common effect $E$, its diagonal entries lie in $[0,1]$, so
+
+$$
+|p_{m+1}(E)-p_m(E)|
+=|a_{m+1}-a_m|\,|E_{11}-E_{22}|
+\le\delta,
+$$
+
+including the step across each period boundary. The fixed basis effect $D_1$ has table value $1/4$ when $r_m=0$ and $3/4$ when $r_m=J$, and both occur at arbitrarily large scales. For any fixed density matrix $\rho$, writing $t=\operatorname{Tr}(\rho D_1)$ gives
+
+$$
+\sup_{m\ge M}|p_m(D_1)-t|
+\ge\max\{|1/4-t|,|3/4-t|\}\ge1/4.
+$$
+
+This proves the lower bound in (25.8). The fixed density matrix $\operatorname{diag}(1/2,1/2,0,\ldots,0)$ attains the upper bound, since the error on every effect is $|a_m|\,|E_{11}-E_{22}|\le1/4$. Thus (25.8) is exact. $\square$
+
+**适用边界 25.4。** Exact refinement compatibility in Theorem 25.1 is a relation between different tables, additional to the complete menus within any one grid. If the table of Theorem 23.1 belonged to an exact compatible tower, Theorem 25.1 and its basis values would force the common density matrix to be $H_0$, contradicting (23.1). Thus none of those single-grid tables is a member of an exact compatible tower. Theorem 25.2 instead requires only one bounded-depth refinement for each base scale and permits different approximating densities. Proposition 25.3 shows that a positive uniform adjacent-scale defect alone cannot replace exact compatibility in the common-density conclusion, even when each individual table is already exactly Born.
+
+The linear representation for states on the full continuous effect interval has the classical antecedent of Busch's generalized Gleason theorem, cited in §6 and available as [Quantum States and Generalized Observables: A Simple Proof of Gleason's Theorem](https://arxiv.org/abs/quant-ph/9909073). That continuous-domain result is not assumed in the proofs above. The results here are repo-derived statements about the specified discrete grids: their order-atomic obstruction, one-sided parity-halving estimate, bounded-depth refinement estimate, and exact-compatible-tower consequence. No priority beyond these derivations, no pre-Hilbert reconstruction, and no empirical realization of the refinement hypotheses is asserted.
+
+## 追加锚（本行以下为增补区）
+
+## 26. 无预设内积的最小锐效应与三种范数
+
+**定义 26.1（操作载体、帧与两条原则）。** Let $A$ be a nonzero finite-dimensional real vector space, $A_+$ a closed, pointed, generating convex cone, and $u\in A^\vee$ strictly positive on $A_+\setminus\{0\}$. The dual cone is $A_+^\vee=\{f:f(A_+)\ge0\}$, and inequalities between functionals use this cone. States form $\Omega=\{x\in A_+:u(x)=1\}$; pure states are its extreme points. All effects in $[0,u]\subset A^\vee$ are admitted, each defining a binary cut $(f,u-f)$. A nonempty ordered frame $(\omega_1,\ldots,\omega_r)$ consists of pure states and effects $f_i$ with $\sum_i f_i\le u$ and $f_i(\omega_j)=\delta_{ij}$. Its unused effect $u-\sum_i f_i$ is allowed.
+
+Principle S says that each pure $\omega$ has a least saturating effect $e_\omega$: $e_\omega(\omega)=1$, and $e_\omega\le f$ whenever $f\in[0,u]$ and $f(\omega)=1$. It also requires reciprocity $e_\omega(\sigma)=e_\sigma(\omega)$ for all pure $\omega,\sigma$. Principle Sp says that every $x\in A$ has a signed frame decomposition $x=\sum_i\lambda_i\omega_i$, $\lambda_i\in\mathbb R$. Neither principle mentions an inner product. Define
+
+$$
+\|x\|_B=\inf_{x=a-b,\ a,b\in A_+}\bigl(u(a)+u(b)\bigr),\qquad
+\|f\|_u=\inf\{t\ge0:-tu\le f\le tu\}.
+\tag{26.1}
+$$
+
+**定理 26.2（最小锐效应的线性化与可量化范数分离）。** Under Definition 26.1 and S and Sp, every frame satisfies
+
+$$
+e_{\omega_i}(\omega_j)=\delta_{ij},\qquad \sum_i e_{\omega_i}\le u.
+\tag{26.2}
+$$
+
+The assignment $\omega\mapsto e_\omega$ extends uniquely to a linear isomorphism $\Phi:A\to A^\vee$. The form $\beta(x,y)=\Phi(x)(y)$ is symmetric positive definite and
+
+$$
+A_+=\{x:\beta(x,y)\ge0\text{ for all }y\in A_+\}.
+\tag{26.3}
+$$
+
+For every signed frame decomposition, including frames not maximal,
+
+$$
+\|x\|_B=\sum_i|\lambda_i|,\qquad
+\|\Phi(x)\|_u=\max_i|\lambda_i|,\qquad
+\|x\|_\beta=\sqrt{\beta(x,x)}=\left(\sum_i\lambda_i^2\right)^{1/2}.
+\tag{26.4}
+$$
+
+These quantities are independent of the decomposition. If a two-element frame exists, the parallelogram sides $\|x+y\|^2+\|x-y\|^2$ and $2\|x\|^2+2\|y\|^2$, at $x=\omega_1,y=\omega_2$, are respectively $8,4$ for the base norm, $2,4$ for the pulled-back order-unit norm, and $4,4$ for the $\beta$ norm. The $\beta$ norm satisfies the parallelogram law for every pair of vectors.
+
+**证明。** Since $0\le e_{\omega_i}\le f_i$, all off-diagonal evaluations vanish and (26.2) follows, with diagonal value one. Sp makes pure states span $A$. If $\sum_j c_j\omega_j=0$, reciprocity gives, for every pure $\sigma$,
+
+$$
+\left(\sum_j c_j e_{\omega_j}\right)(\sigma)
+=e_\sigma\left(\sum_j c_j\omega_j\right)=0.
+$$
+
+A functional vanishing on the spanning pure states vanishes everywhere. Thus $\Phi(\sum_jc_j\omega_j)=\sum_jc_je_{\omega_j}$ is well defined and linear. Reciprocity makes $\beta$ symmetric. On any frame decomposition (26.2) gives $\beta(x,x)=\sum_i\lambda_i^2$, which is strictly positive for $x\ne0$. Hence $\Phi$ is injective and, by equal finite dimensions, surjective; its extension is unique.
+
+For $x\in A_+$, (26.2) gives $\lambda_i=e_{\omega_i}(x)\ge0$ in any frame decomposition. Conversely nonnegative frame coefficients give an element of $A_+$. Thus if $x,y\ge0$, writing $x=\sum_i\lambda_i\omega_i$ shows $\beta(x,y)=\sum_i\lambda_i e_{\omega_i}(y)\ge0$. If $\beta(x,y)\ge0$ for all $y\ge0$, its values on the members of a frame for $x$ force every $\lambda_i\ge0$, proving (26.3).
+
+The positive and negative coefficient sums give $\|x\|_B\le\sum_i|\lambda_i|$. Put $h=\sum_i\operatorname{sgn}(\lambda_i)e_{\omega_i}$, with $\operatorname{sgn}(0)=0$. Equation (26.2) gives $-u\le h\le u$, so every $x=a-b$ with $a,b\ge0$ satisfies $h(x)\le u(a)+u(b)$. Since $h(x)=\sum_i|\lambda_i|$, the reverse bound follows. Set $M=\max_i|\lambda_i|$. The same effect inequality gives $-Mu\le\Phi(x)\le Mu$, while evaluation on $\omega_i$ forces any permissible bound $t$ to satisfy $t\ge|\lambda_i|$. This proves (26.4), including $x=0$. Finally bilinearity gives $\beta(x+y,x+y)+\beta(x-y,x-y)=2\beta(x,x)+2\beta(y,y)$. Substituting the two-frame coefficients $(1,1)$ and $(1,-1)$ in (26.4) gives the three stated pairs of sides. $\square$
+
+**适用边界 26.3。** The parallelogram law is derived for $\|\cdot\|_\beta$ only. It is not an operational axiom for either norm in (26.1). Theorem 26.2 packages state-effect self-duality with the explicit three-norm comparison; self-dualizing geometry has antecedents in Müller–Ududec, [Structure of reversible computation determines the self-duality of quantum theory](https://arxiv.org/abs/1110.3516), using bit symmetry, whereas the hypotheses here are S and signed Sp. No implication between those different premise sets is assumed.
+
+## 27. 光滑球锥的互易缺陷与多面体最小效应障碍
+
+**定理 27.1（球锥替代模型的精确分界）。** For $n\ge2$, let $C_p=\{(t,y)\in\mathbb R\oplus\mathbb R^n:t\ge\|y\|_p\}$ and $u(t,y)=t$. For $1<p<\infty$ put $q=p/(p-1)$. Every pure state is $\omega_x=(1,x)$ with $\|x\|_p=1$. Its complete saturating-effect set and its least member are
+
+$$
+\begin{aligned}
+f_s(t,y)&=(1-s)t+s\langle x^\sharp,y\rangle,\quad 0\le s\le\tfrac12,
+&x^\sharp_i&=\operatorname{sgn}(x_i)|x_i|^{p-1},\\
+e_x(t,y)&=\tfrac12\bigl(t+\langle x^\sharp,y\rangle\bigr).
+\end{aligned}
+\tag{27.1}
+$$
+
+At $x=e_1$ and $y=2^{-1/p}(e_1+e_2)$, the reciprocity defect is
+
+$$
+\left|e_x(\omega_y)-e_y(\omega_x)\right|
+=\frac12\left|2^{-1/p}-2^{1/p-1}\right|,
+\tag{27.2}
+$$
+
+which vanishes exactly at $p=2$. Both endpoint cones $C_1,C_\infty$ have no least saturating effect at any vertex pure state. By contrast, for every integer $N\ge1$, the classical cone $\mathbb R_+^N$ with $u(x)=\sum_i x_i$ satisfies S and Sp. Thus within these alternatives the smooth ball cones meet S exactly at $p=2$, while classical simplices remain admitted.
+
+**证明。** Strict convexity of the $p$ ball identifies all its boundary points as its extreme points. Hölder duality says that $f(t,y)=\alpha t+\langle g,y\rangle$ is an effect exactly when
+
+$$
+\|g\|_q\le\alpha,\qquad \|g\|_q\le1-\alpha.
+$$
+
+Saturation gives $1-\alpha=\langle g,x\rangle\le\|g\|_q\le1-\alpha$. Equality in Hölder for $1<p<\infty$ forces $g=sx^\sharp$, where $s=1-\alpha=\|g\|_q$, and the other inequality gives $0\le s\le1/2$. This also covers $g=0$. Conversely every effect in (27.1) saturates. Moreover
+
+$$
+f_s-e_x=(\tfrac12-s)\bigl(t-\langle x^\sharp,y\rangle\bigr)\ge0
+\quad\text{on }C_p,
+$$
+
+so $e_x$ is the least member. The two evaluations in (27.2) are $(1+2^{-1/p})/2$ and $(1+2^{1/p-1})/2$. Equality of their nonconstant terms is equivalent to $-1/p=1/p-1$, hence to $p=2$. At $p=2$, (27.1) is reciprocal for every pair. In fact every $C_p$ with $1<p<\infty$ satisfies Sp: if $z\ne0$, put $v=z/\|z\|_p$ and write
+
+$$
+(t,z)=\frac{t+\|z\|_p}{2}(1,v)+\frac{t-\|z\|_p}{2}(1,-v).
+$$
+
+The two states are distinguished by $e_v,e_{-v}$, whose sum is $u$; for $z=0$ choose any unit $v$. Thus failure of reciprocity is isolated even among these signed-spectral models.
+
+For $p=\infty$, take vertices $a=(1,1,1,1,\ldots,1)$, $b=(1,1,-1,1,\ldots,1)$, $c=(1,-1,1,1,\ldots,1)$, $d=(1,-1,-1,1,\ldots,1)$. The effects $h_1=(t+y_1)/2$ and $h_2=(t+y_2)/2$ saturate $a$. A least saturating effect $h$ would obey $0\le h\le h_1,h_2$, so $h(b)=h(c)=0$ and $h(a)=1$. But $a+d=b+c$ forces $h(d)=-1$, contradicting positivity. Their convex combinations give the saturating family $h_\theta=(t+\theta y_1+(1-\theta)y_2)/2$, $0\le\theta\le1$. Signed coordinate permutations carry this contradiction to every vertex. The square cross-section at $n=2$ is the local gbit cone, also the marginal cone for PR-box models.
+
+For $p=1$, use $a=(1,e_1)$, $b=(1,e_2)$, $c=(1,-e_2)$, $d=(1,-e_1)$ and saturating effects $h_\pm=(t+y_1\pm y_2)/2$. They are effects because their spatial dual $\ell^\infty$ norms are $1/2$. A least $h$ again vanishes at $b,c$, has $h(a)=1$, and violates positivity at $d$ by the same relation $a+d=b+c$. Signed permutations cover every cross-polytope vertex. Finally, in the classical cone the pure states are coordinate vectors $v_i$, an effect is a coordinate vector in $[0,1]^N$, and the least effect saturating $v_i$ is the $i$th coordinate functional. These are reciprocal and form the coordinate frame; $x=\sum_i x_iv_i$ proves Sp. $\square$
+
+## 28. Jordan 桥、相干面过滤与多线性干涉边界
+
+**定义 28.1（强对称与完整 compression 合同）。** In Definition 26.1 a reversible map is a linear cone automorphism preserving $u$, with group topology inherited from $\operatorname{GL}(A)$. Strong symmetry means that a group of such maps acts transitively on ordered frames of every fixed size for which frames exist. For a positive idempotent linear map $T:A\to A$, write $\operatorname{im}_+T=\operatorname{im}T\cap A_+$ and $\ker_+T=\ker T\cap A_+$. It is complemented if some positive idempotent $R$ satisfies $\operatorname{im}_+T=\ker_+R$ and $\ker_+T=\operatorname{im}_+R$.
+
+A coherent face filter is a positive idempotent $T$ such that $u(Tx)\le u(x)$ for $x\ge0$, both $T$ and its dual $T^\vee$ are complemented, its positive range is the specified face, and it is neutral: $u(Tx)=u(x)$ with $x\ge0$ implies $Tx=x$. This is the state-side version of an Alfsen–Shultz compression; neutrality follows from their full definition and is displayed here to specify the operational disturbance condition. The distinction between state-side filters and effect-side compressions, including both complement conditions, is given in Barnum–Müller–Ududec, [Higher-order interference and single-system postulates characterizing quantum theory](https://arxiv.org/abs/1403.4147), Definitions 13–14, using Alfsen–Shultz, Geometry of State Spaces of Operator Algebras (2003), Definition 7.22.
+
+Operationally choose disjoint blocks $B_i$ of a frame, set $a_i=\sum_{j\in B_i}e_{\omega_j}$, and define $F_i=\{x\ge0:a_i(x)=u(x)\}$. For a slit set $S$, let $F_S$ be the smallest face containing all $F_i$, $i\in S$, with $F_\varnothing=\{0\}$. A coherent slit family uses the coherent face filter onto $F_S$ for each $S$. This is a restriction on the operations used in the slit experiment, not a claim about every positive instrument.
+
+**定理 28.2（操作最小效应至二次 slit 响应的条件桥与反例判据）。** Suppose S, Sp and strong symmetry hold in Definition 26.1, and slit operations satisfy Definition 28.1. Then $A$ is order-isomorphic, preserving $u$, to a Euclidean Jordan algebra $J$ with its cone of squares and Jordan trace $\tau$; it is either simple or a classical algebra $\mathbb R^N$. In this representation $\beta(x,y)=\tau(x\circ y)$. For any orthogonal idempotents $p_1,\ldots,p_k$ in $J$, any state $\omega$, and any effect $e$, the coherent response is
+
+$$
+f(S)=e(Q(p_S)\omega),\quad p_S=\sum_{i\in S}p_i,\quad
+Q(a)=2L_a^2-L_{a\circ a},\quad L_a b=a\circ b.
+\tag{28.1}
+$$
+
+With $Q(a,b)=L_aL_b+L_bL_a-L_{a\circ b}$ and indicators $s_i=\mathbf1_{i\in S}$, its unique multilinear polynomial is
+
+$$
+f(S)=\sum_i e(Q(p_i)\omega)s_i
++2\sum_{i<j}e(Q(p_i,p_j)\omega)s_is_j.
+\tag{28.2}
+$$
+
+Consequently, for disjoint sets $B,T$ with $|T|\ge3$,
+
+$$
+I_T(B)=\sum_{R\subseteq T}(-1)^{|T|-|R|}f(B\cup R)=0.
+\tag{28.3}
+$$
+
+These identities hold in every Euclidean Jordan algebra, including the Albert algebra. Every simple such algebra of rank at least two has a state, effect and two slits with $I_{\{1,2\}}(\varnothing)=1/2$; the complex qubit realizes this value with $\omega=E=|+\rangle\langle+|$ and coordinate slits. Classical associative algebras have $I_{\{i,j\}}(B)=0$ identically. A response having any nonzero multilinear coefficient of degree at least three cannot be a coherent-compression response of such a system.
+
+**证明。** First match the hypotheses of the attributed intermediate classification [Barnum–Hilgert, Strongly symmetric spectral convex bodies are Jordan algebra state spaces, Theorem 1.1](https://arxiv.org/abs/1904.03753). The base $\Omega$ is compact: an unbounded sequence, divided by an auxiliary coordinate norm, would have a subsequential nonzero limit in $A_+$ annihilated by $u$, contrary to strict positivity. No choice of that auxiliary norm enters the conclusions. The base spans the hyperplane $u=1$ since the cone generates $A$. For $x\in\Omega$, Theorem 26.2 makes its Sp coefficients nonnegative, with sum one. Thus $\Omega$ is spectral in their Definition 3.4. Their measurement convention uses effects summing to $u$; adding the unused effect to the first frame effect changes none of its evaluations on frame members. Their frames therefore coincide with ours. The assumed reversible subgroup is contained in the affine automorphism group of $\Omega$, so its transitivity gives precisely their strong symmetry, Definition 3.5. The classification applies and gives a simplex or the normalized state space of a simple Euclidean Jordan algebra, not an arbitrary nonsimple Jordan state space. Homogenizing its affine isomorphism gives the stated linear cone isomorphism with $u=\tau$. There is no missing hypothesis for this application of their classification.
+
+For the remaining intermediate tools use finite-dimensional Jordan spectral and Peirce calculus, as in Faraut–Korányi, Analysis on Symmetric Cones (1994), and the Alfsen–Shultz compression identification: primitive idempotents are pure states, faces correspond to idempotents $p$, and their unique compressions under the trace pairing are $Q(p)$, with positive range $J_+\cap J_1(p)$, where $J_1(p)=\{x:p\circ x=x\}$. The trace pairing self-dualizes the cone of squares. These maps are self-adjoint for that pairing, positive, neutral and idempotent; $Q(1-p)$ is their complement, also on the dual. These are tools about all finite-dimensional Euclidean Jordan algebras, so both branches just obtained meet their hypotheses.
+
+To check that the derived pairing agrees with this trace representation, let $c$ be primitive and $a\in[0,1]$ satisfy $\tau(a\circ c)=1$. Decompose $a=\sum_j\alpha_jq_j$ in a Jordan frame, $0\le\alpha_j\le1$. The nonnegative weights $\tau(q_j\circ c)$ sum to one; hence they vanish wherever $\alpha_j<1$. For $r=\sum_{\alpha_j=1}q_j$ this gives $\tau(r\circ c)=1$. Since $\tau(Q(r)c)=\tau(r\circ c)=1$, neutrality gives $Q(r)c=c$. Its range implies $r\circ c=c$, so $(r-c)^2=r-c$ is a square and $c\le r$. Since $a\ge r$, $a\ge c$. Therefore the least saturating effect is $x\mapsto\tau(c\circ x)$, and spanning pure states identify $\Phi$ and $\beta$ with the trace pairing.
+
+In particular the operational faces in Definition 28.1 become the faces of the corresponding block idempotents. Their joins correspond to sums of orthogonal idempotents, so their filters are exactly (28.1). Conversely any finite orthogonal idempotent family can be refined into disjoint blocks of a Jordan frame, so this covers all families in the statement. The compression contract, including its selection as the available slit operation, is essential here; the state-space classification alone is not a specification of arbitrary instruments.
+
+Bilinearity of the Jordan product gives $Q(a+b)=Q(a)+Q(b)+2Q(a,b)$ and $Q(a,a)=Q(a)$. Hence $Q(p_S)=\sum_{i,j}s_is_jQ(p_i,p_j)$, and $s_i^2=s_i$ proves (28.2). For each monomial in that expression and $|T|\ge3$, at least one variable indexed by $T$ is absent. Pairing subsets $R$ that differ just in that variable cancels their contributions, proving (28.3) also with background $B$. Uniqueness of multilinear expansion on the Boolean cube follows inductively by evaluating at $s_k=0,1$ and subtracting; its coefficient at $\prod_{i\in T}s_i$ is $I_T(\varnothing)$. This proves the stated obstruction, with no associativity assumption on $J$.
+
+For the nonzero second-order witness, it suffices to find orthogonal primitive $p,q$ and $z$ with $z\circ z=p+q$, $p\circ z=q\circ z=z/2$ and $\tau(z)=0$. The attributed Jordan–von Neumann–Wigner classification supplies all simple types. In each matrix type over $\mathbb R,\mathbb C,\mathbb H$, and in the Albert algebra, take $p=E_{11}$, $q=E_{22}$, $z=E_{12}+E_{21}$ using real entries. Their real two-by-two Jordan multiplication proves the required identities, including in the Albert algebra. In a simple spin factor $\mathbb R\oplus\mathbb R^k$, $k\ge2$, the product is $(t,x)\circ(s,y)=(ts+x\cdot y,ty+sx)$ and $\tau(t,x)=2t$. Choose perpendicular unit vectors $v,w$ and take $p=(1,v)/2$, $q=(1,-v)/2$, $z=(0,w)$. Direct substitution proves the same identities.
+
+In all cases $c=(p+q+z)/2$ satisfies $c^2=c$, $\tau(c)=1$, so is a state and an effect under the trace pairing. With $\omega=c$ and $e(x)=\tau(c\circ x)$,
+
+$$
+Q(p+q)c=c,\qquad Q(p)c=p/2,\qquad Q(q)c=q/2,
+\qquad f(\{1,2\})=1,\quad f(\{1\})=f(\{2\})=1/4.
+$$
+
+Thus $I_2=1/2$. In the complex qubit $c=|+\rangle\langle+|$ is exactly this witness. For a classical algebra the Jordan product is coordinatewise, $Q(p)x=px$ for every idempotent, and disjoint supports give $Q(p_S)=\sum_{i\in S}Q(p_i)$. Every response is linear in the indicators and all second-order terms vanish. $\square$
+
+**适用边界 28.3。** Sorkin's [Quantum mechanics as quantum measure theory](https://arxiv.org/abs/gr-qc/9401003) supplies the inclusion-exclusion hierarchy; Jordan absence of higher-order interference is also literature-attested, including the Barnum–Müller–Ududec framework cited above. Theorem 28.2 is a repackaging of those tools with the S-to-trace bridge, the uniform value $I_2=1/2$, and the explicit multilinear-coefficient obstruction. A displayed cubic power alone is not an obstruction, since $s_i^3=s_i$ on indicators; coefficients must first be reduced to the unique multilinear expansion. For example $f(S)=\prod_{i=1}^3s_i$ has $I_{\{1,2,3\}}(\varnothing)=1$ and violates (28.3).
+
+## 29. 自复合的秩维缺口与复数域选择
+
+**假设 29.1（非平凡系统的自复合）。** Let $A$ satisfy Definition 26.1, S, Sp and strong symmetry, with maximum frame size $n\ge2$. Its connected identity component of reversible transformations is transitive on pure states. Assume a self-composite $C$ exists with the same operational, S, Sp and strong-symmetry properties, and with a connected reversible group transitive on its pure states. Alternatively impose simplicity of $C$ explicitly. Require rank multiplicativity $\operatorname{rank}C=n^2$ and local tomography: there are bilinear product maps $A\times A\to C$ and $A^\vee\times A^\vee\to C^\vee$ taking products of states to states and products of effects to effects, with $(u\otimes u)=u_C$ and $(f\otimes g)(x\otimes y)=f(x)g(y)$; product states span $C$, and product effects separate its vectors. These conditions identify its vector space with $A\otimes_{\mathbb R}A$, hence $\dim C=(\dim A)^2$; this dimension equality is the only composite property used in the type exclusion below.
+
+**定理 29.2（带精确缺口和隐藏核见证的自复合选型）。** Under Hypothesis 29.1, $A$ is order-isomorphic with trace normalization to $\operatorname{Herm}_n(\mathbb C)$ and $C$ to $\operatorname{Herm}_{n^2}(\mathbb C)$. For
+
+$$
+N_d(r)=r+\frac d2r(r-1)
+$$
+
+for all real $a,b,d$ the polynomial identity is
+
+$$
+N_d(a)N_d(b)-N_d(ab)
+=\frac{d(d-2)}4ab(a-1)(b-1).
+\tag{29.1}
+$$
+
+A real rank-$n$ system has self-composite dimension below the smallest simple rank-$n^2$ dimension by $n^2(n-1)^2/4$; a quaternionic one has dimension above the largest by $2n^2(n-1)^2$. A spin factor of dimension $k+1$ can pass the constraints only for $k=3$. The Albert algebra fails by $729\notin\{45,81,153\}$. Classical nontrivial simplices fail the connected pure-state-transitivity hypothesis and have identically zero $I_2$.
+
+**证明。** The bilinear product map induces a surjection $A\otimes_{\mathbb R}A\to C$ because product states span. Effects span $A^\vee$: boundedness on the compact base puts every functional in the linear span of $[0,u]$. The product pairing therefore makes that surjection injective, since factor-effect tensors span the tensor dual. This proves the dimension equality used below. Apply the classification inside Theorem 28.2 to $A$ and $C$. A connected group acting on the finite extreme-point set of a nontrivial simplex fixes each point, so cannot be transitive. More generally in a Jordan direct sum, cone automorphisms permute the finitely many simple summands; a connected group fixes each summand and cannot move pure states between them. Thus connected pure-state transitivity forces simplicity for either system; the alternative explicit simplicity assumption for $C$ suffices for that step. This also explains why full, possibly disconnected, strong symmetry alone cannot remove the classical branch.
+
+Use the Jordan–von Neumann–Wigner classification only as an intermediate type list, with dimensions as tabulated in Barnum–Hilgert §4.2. The simple types are $\operatorname{Herm}_r(\mathbb R)$, $\operatorname{Herm}_r(\mathbb C)$, $\operatorname{Herm}_r(\mathbb H)$, with dimensions $N_1(r),N_2(r),N_4(r)$; rank-two spin factors $\mathbb R\oplus\mathbb R^k$, $k\ge2$, of dimension $k+1$; and the rank-three Albert algebra of dimension $27$. Rank-two matrix types also occur in the spin-factor list and cause no additional cases. Since $n^2\ge4$, the only possible simple types for $C$ are the three matrix types of rank $n^2$.
+
+For (29.1), factor out $ab$ and put $h=d/2$. The remaining difference is
+
+$$
+[1+h(a-1)][1+h(b-1)]-[1+h(ab-1)]
+=h(h-1)(a-1)(b-1).
+$$
+
+Since $N_1(r)<N_2(r)<N_4(r)$ for $r>1$, substituting $a=b=n$ gives
+
+$$
+N_1(n^2)-N_1(n)^2=\frac{n^2(n-1)^2}{4}>0,
+\qquad
+N_4(n)^2-N_4(n^2)=2n^2(n-1)^2>0.
+\tag{29.2}
+$$
+
+Thus a real local system supplies fewer coordinates than any simple rank-$n^2$ candidate, and a quaternionic one supplies more than any candidate. This excludes even choosing a different composite matrix field. For a spin factor $n=2$, the rank-four dimensions are $\{N_1(4),N_2(4),N_4(4)\}=\{10,16,28\}$. Local tomography requires $(k+1)^2$ to be one of these; only $16$ is an integer square, so $k=3$ and the local algebra is $\operatorname{Herm}_2(\mathbb C)$. For the Albert algebra $n=3$ and $\dim C=27^2=729$, while rank nine permits only $\{N_1(9),N_2(9),N_4(9)\}=\{45,81,153\}$. Finally for a complex local system, $N_2(n)^2=n^4=N_2(n^2)$, and strict inequalities exclude the other two composite fields. Standard complex tensor products realize the required ranks, dimensions and product pairing, so this surviving case is inhabited.
+
+The real alternative also has an explicit operational obstruction in its standard tensor composite. Put
+
+$$
+A_0=\begin{pmatrix}0&1\\-1&0\end{pmatrix},\qquad
+B=A_0\otimes A_0,\qquad
+\rho_\pm=\frac{I_4\pm B}{4},\qquad P=\frac{I_4+B}{2}.
+\tag{29.3}
+$$
+
+Here $B^{\mathsf T}=B$, $B^2=I_4$ and $\operatorname{tr}B=0$. Thus its eigenvalues $1,-1$ each have multiplicity two, $\rho_\pm$ are real density matrices, and $P$ is an effect. For every real symmetric pair $E,F$, skew symmetry gives $\operatorname{tr}(A_0E)=\operatorname{tr}(A_0F)=0$, so
+
+$$
+\operatorname{tr}(\rho_\pm(E\otimes F))
+=\frac{\operatorname{tr}E\operatorname{tr}F}{4},\qquad
+\operatorname{tr}(P\rho_+)=1,\quad\operatorname{tr}(P\rho_-)=0.
+\tag{29.4}
+$$
+
+All local product-effect statistics agree although one global effect distinguishes perfectly. Embedding this two-by-two face and extending both states by zero gives the same witness for every real local rank $n\ge2$. It concretely identifies a hidden antisymmetric tensor coordinate. This standard real-composite phenomenon is consistent with the dimension exclusion, which also covers nonstandard simple composite candidates. For classical systems $Q(p)$ is coordinatewise masking, so Theorem 28.2 proves their asserted $I_2=0$. $\square$
+
+**适用边界 29.3。** Local-tomographic selection of complex Jordan systems has antecedents in Barnum–Wilce, [Local tomography and the Jordan structure of quantum theory](https://arxiv.org/abs/1202.4513), and real-theory tomography defects in Hardy–Wootters, [Limited Holism and Real-Vector-Space Quantum Theory](https://arxiv.org/abs/1005.4870). These are attributed context for the intermediate framework, not additional unproved premises. The repo-derived quantitative content here is the cross-field rank-square comparison (29.2), together with the explicit spin, Albert and hidden-kernel accounting in the stated self-composite signature. Simplicity or its connected-transitivity justification, rank multiplicativity and local tomography are all explicit hypotheses; none is inferred from S and Sp. This theorem concerns state-effect geometry and an inhabited type choice, not a uniqueness classification of all possible product embeddings.
+
+## 30. 产品统计确定的复合相干性与维数条件的边界
+
+**命题 30.1（条件相干性与一个保正但不相干的比较族）。** Suppose iterated composites for a fixed labelled list of factors exist, each is locally tomographic, and each iterated product effect is labelled by the same list of factor effects. Assume the proposed linear isomorphisms between bracketings preserve every such labelled product statistic. Then each comparison is unique, and all paths of comparisons with the same endpoints agree, including the pentagon. Dimension equalities alone do not give this conclusion, even when every chosen comparison is a positive normalization-preserving reversible map.
+
+**证明。** Iterated local tomography makes the labelled product effects span the dual at every bracketing: induction applies the separating product-effect condition at each binary node. If $U,V$ are two comparisons preserving those statistics, every labelled product effect annihilates $(U-V)x$ for every $x$, hence $U=V$. Any two paths have the same preservation property and endpoints; the same argument makes them equal. In particular both routes around the four-factor pentagon agree. Existence of the comparisons and consistent product-statistic labels are used here; pairwise dimension counts do not supply them.
+
+For explicit comparison data showing this distinction, take ordinary complex qubits $A$ and all their usual tensor powers. Identify all bracketings canonically as vector spaces. Let $X=\begin{pmatrix}0&1\\1&0\end{pmatrix}$. For the triple $(A,A,A)$ alone choose the comparison $\alpha_{A,A,A}=\operatorname{Ad}_{X\otimes I_2\otimes I_2}$ after canonical reassociation, where $\operatorname{Ad}_U(\rho)=U\rho U^\dagger$. For every other ordered triple of tensor powers choose canonical reassociation. Every chosen map is a positive trace-preserving order isomorphism, and all dimensions multiply correctly. In the pentagon from $((AA)A)A$ to $A(A(AA))$, the two-edge route uses $\alpha_{A\otimes A,A,A}$ and $\alpha_{A,A,A\otimes A}$ and is the identity. The three-edge route uses $\alpha_{A,A,A}\otimes\mathrm{id}_A$, then $\alpha_{A,A\otimes A,A}$, then $\mathrm{id}_A\otimes\alpha_{A,A,A}$. It acts by conjugation with $X\otimes X\otimes I_2\otimes I_2$. On the product state $|0000\rangle\langle0000|$ the two routes give respectively $|0000\rangle\langle0000|$ and $|1100\rangle\langle1100|$. A first-factor coordinate effect separates them, so the pentagon fails. These comparison data violate product-statistic preservation, exactly the extra condition used in the first part. $\square$
+
+**适用边界 30.2。** Sections 1–15 start from an inner product. Sections 26–30 instead derive the quadratic form from the ordered operational principles S and Sp and select the complex matrix type after adding the explicit symmetry and self-composite hypotheses. Once that geometry is available, the window-atlas and gluing questions in §§2–5 apply with their own stated hypotheses; no atlas statement is restated or used to assume the quadratic form.
+
+The repo-derived statements are the least-effect linearization with the simultaneous norm separations, the exact $\ell^p$ reciprocity defect and endpoint relation obstructions, the compression-response polynomial with its coefficient boundary and uniform second-order witness, the quantitative self-composite exclusions, and the distinction between statistical coherence and dimension equality. Self-duality, the Jordan classification, Jordan compression calculus, and absence of higher-order Jordan interference have the attributed antecedents specified inside those arguments. These statements are conditional mathematical derivations and quantitative repackagings, not claims of literature priority. All conclusions depend on the displayed principles and operation classes. No empirical claim is made, and no derivation of arbitrary state-update rules, general dynamics, or the physical validity of those principles is asserted.
+
+## 追加锚（本行以下为增补区）
+
+## 31. 原复 Gaussian dyadic 网格中低于八维的互补原子投影尾部排除
+
+**定理 31.1（复维数二至七的互补端点区间在充分细网格上不存在）。** 沿用定义 16.1 的完整复效果网格，记
+
+$$
+K_{d,m}=\{E\in\operatorname{Herm}_d(2^{-m}\mathbb Z[i]):0\le E\le I_d\}.
+$$
+
+对每个固定的 $d\in\{2,3,4,5,6,7\}$ 以及每个整数 $m\ge22$，不存在非平凡厄米投影 $P\in K_{d,m}$（即 $P^2=P$ 且 $P\ne0,I_d$），使两个原网格区间同时只有端点：
+
+$$
+\{F\in K_{d,m}:0\le F\le P\}=\{0,P\},\qquad
+\{F\in K_{d,m}:0\le F\le I_d-P\}=\{0,I_d-P\}.
+\tag{31.1}
+$$
+
+这里的序关系始终是通常的复厄米半正定序，子效果遍历原 $2^{-m}\mathbb Z[i]$ 网格上的全部复厄米效果。因此，在这些固定维数中，“对任意整数 $L\ge1$，总能在某个 $m\ge L$ 找到满足 (31.1) 的投影”的事件为假，统一取 $L=22$ 即可排除。数字 $22$ 只是充分截断，不声称最优，也不分类较粗的网格。
+
+**证明。** 置 $R=\mathbb Z[i]$、$\pi=1+i$、$N=2^m$。本证明中的局部记号 $H$ 和 $K$ 专指正定积分厄米 Gram 矩阵；$H$ 不是式 (16.1) 的层析矩阵，$K$ 也不是定义 16.1 的效果集。对秩 $r\ge1$ 的此类矩阵 $H$，在本证明内称它为原子，恰指
+
+$$
+\{Y\in\operatorname{Herm}_r(R):0\le Y\le H\}=\{0,H\}.
+\tag{31.2}
+$$
+
+这只是所需的积分区间性质，不附加其他原子性约定。反设存在 (31.1) 中的投影。
+
+（一）先把原网格区间转成积分正定区间。令 $A=NP$、$B=N(I_d-P)$，其秩分别为 $r$ 和 $s=d-r$，均非零。$A$ 在 $R^d$ 中的核是饱和子模：若 $a\ne0$ 且 $A(az)=0$，则 $Az=0$。Gaussian 整数环是主理想整环，故这个核是直和因子。取 Gaussian 幺模矩阵 $C$，使其最后 $s$ 列构成该核的一组基。于是
+
+$$
+C^*AC=\begin{pmatrix}H&0\\0&0\end{pmatrix},\qquad H\succ0,\quad H\in\operatorname{Herm}_r(R).
+$$
+
+令 $T$ 为 $C^{-1}$ 的前 $r$ 行，$J$ 为 $C$ 的前 $r$ 列，则
+
+$$
+TJ=I_r,\qquad A=T^*HT,\qquad H=J^*AJ.
+\tag{31.3}
+$$
+
+若 $0\le X\le A$，则 $X$ 在 $\ker A$ 上为零：对该核中的 $z$，有 $0\le z^*Xz\le z^*Az=0$，正性遂给出 $Xz=0$。所以在 $C$ 坐标中，$X$ 也只有左上块可能非零。由此
+
+$$
+Y\longmapsto T^*YT,\qquad X\longmapsto J^*XJ
+$$
+
+互为积分厄米区间 $[0,H]$ 与 $[0,A]$ 的逆双射。另一方面，$F\mapsto NF$ 把原复网格中的 $[0,P]$ 双射到积分区间 $[0,A]$；反向所得 $F$ 自动满足 $F\le P\le I_d$，确属原效果网格。因此 $P$ 的端点性质恰等价于 $H$ 的原子性。对 $B$ 作同样构造，得到秩 $s$ 的正定积分厄米原子 $K$。
+
+由 $A^2=NA$，代入 (31.3) 并在两侧分别乘 $J^*$ 和 $J$，得到 $H(TT^*)H=NH$，故
+
+$$
+TT^*=NH^{-1}.
+\tag{31.4}
+$$
+
+右侧因左侧而积分。$\det H$ 是正整数，且 $N^r/\det H=\det(TT^*)$ 也是整数，所以 $\det H\mid N^r$，从而 $\det H$ 是二的幂。同理 $\det K$ 是二的幂。
+
+（二）原子性给出只依赖秩的行列式上界。设 $r\ge2$，$\delta=\det H$。对 Hermitian 格 $(R^r,H)$ 使用实内积 $\operatorname{Re}(z^*Hw)$。原格的实 Gram 行列式为 $\delta^2$，欧氏余体积为 $\delta$；其 Hermitian 对偶格 $H^{-1}R^r$ 的实维数为 $2r$，欧氏余体积为 $1/\delta$。
+
+若 $\delta>(2r)^r$，可选
+
+$$
+\delta^{-1/(2r)}<t<\frac1{\sqrt{2r}}.
+$$
+
+在该实欧氏空间的正交坐标中，取边长为 $t$ 的开立方体。其体积 $t^{2r}$ 大于对偶格的余体积。经典基本平行多面体鸽巢论证给出立方体内两个不同的点，其差是非零对偶格向量：把立方体的各格平移片移入一个基本平行多面体，对重数积分；若没有这样的两点，重数处处至多一，立方体体积就不能大于该基本域体积。所得差向量 $x$ 满足
+
+$$
+0<\|x\|_H^2<2rt^2<1.
+$$
+
+写 $x=H^{-1}q$，其中 $0\ne q\in R^r$，便有 $q^*H^{-1}q<1$。$H$ 内积的 Cauchy 不等式给出，对任意 $z\in\mathbb C^r$，
+
+$$
+z^*qq^*z=|q^*z|^2
+\le(q^*H^{-1}q)(z^*Hz)\le z^*Hz.
+$$
+
+因此 $0<qq^*\le H$，而 $qq^*$ 是秩一积分厄米矩阵，在 $r\ge2$ 时不是 $H$，与原子性矛盾。故 $\det H\le(2r)^r$。秩一时，正积分标量的区间只有端点当且仅当该标量为 $1$；任何大于 $1$ 的标量都含真子标量 $1$。于是秩 $1\le r\le6$ 的原子统一满足
+
+$$
+1\le\det H\le12^6=2\,985\,984.
+\tag{31.5}
+$$
+
+（三）互补性把两边的行列式关联起来。记
+
+$$
+L_P=\operatorname{ran}(P)\cap R^d,\qquad
+L_Q=\operatorname{ran}(I_d-P)\cap R^d,
+$$
+
+其在环境标准 Hermitian 内积下的 Gram 行列式分别为 $\Delta_P,\Delta_Q$。$T^*$ 的列构成 $L_P$ 的一组基：它们张成 $\operatorname{ran}(P)$，而积分左逆 $J^*T^*=I_r$ 保证该复线性空间中的任意积分向量均有 Gaussian 整数坐标。因此 (31.4) 给出
+
+$$
+\Delta_P=\det(TT^*)=\frac{N^r}{\det H},\qquad
+\Delta_Q=\frac{N^s}{\det K}.
+\tag{31.6}
+$$
+
+为说明 $\Delta_P=\Delta_Q$，取 $L_P$ 的基矩阵 $U$，利用其本原性将它扩充成 $R^d$ 的 Gaussian 幺模基 $[U,V]$，并令 $Q=I_d-P$。$QV$ 的列构成 $QR^d$ 的基，且
+
+$$
+QR^d=L_Q^\#,
+$$
+
+其中右侧是在 $\operatorname{ran}(Q)$ 内、按标准 Hermitian 配对取的对偶格。包含关系 $QR^d\subseteq L_Q^\#$ 来自环境格的整数配对。反向地，$L_Q$ 也是饱和子模，因而是直和因子；其任一取值于 $R$ 的 Hermitian 配对泛函可延拓到 $R^d$。环境格的自对偶性将延拓泛函表示为某个 $R^d$ 中向量的配对，再作 $Q$ 投影即可表示原泛函。这证明反向包含。
+
+幺模基 $[U,V]$ 的 Gram 行列式为 $1$。沿 $U$ 块作经典 Schur 补，余块恰为 $QV$ 的 Gram 矩阵，其行列式为对偶格行列式 $1/\Delta_Q$。因此 $1=\Delta_P/\Delta_Q$。结合 (31.6)，得
+
+$$
+\frac{\det H}{\det K}=N^{r-s}.
+\tag{31.7}
+$$
+
+这里 $1\le r,s\le6$。若 $r\ne s$，两行列式中较大者至少为 $N$，因为较小者是至少为 $1$ 的正整数，而比值的绝对幂次至少为一。但 $m\ge22$ 给出 $N\ge2^{22}>12^6$，与 (31.5) 矛盾。所以只能 $r=s$，即 $d\in\{2,4,6\}$，且 $r=s\le3$。
+
+（四）对二幂行列式建立积分幺模上格。设积分正定 Hermitian $R$-格 $L$ 的 Gram 矩阵为 $H$，其 Hermitian 配对记为 $h$，且 $\det H=2^k$，$k>0$。模 $\pi$ 约化后，$H$ 在 $R/(\pi)=\mathbb F_2$ 上奇异。选取 $y\in R^r$，使其非零剩余类 $\bar y$ 位于该约化矩阵的根基，即 $(H\bmod\pi)\bar y=0$，并在环境 Hermitian 空间置 $x=y/\pi$。
+
+$Hy$ 的各坐标被 $\pi$ 整除，而 $\bar\pi=1-i$ 与 $\pi$ 相伴，所以 $x$ 与 $L$ 的配对均为 Gaussian 整数。再看范数的奇偶性。$h(y,y)$ 的每对非对角项之和是两倍整数；对任一 Gaussian 整数 $z$，$|z|^2\bmod2$ 等于其模 $\pi$ 剩余类。因此
+
+$$
+h(y,y)\bmod2
+=\sum_j(H_{jj}\bmod2)\bar y_j
+=\bar y^{\mathsf T}(H\bmod\pi)\bar y=0.
+$$
+
+第二个等号使用模 $\pi$ 后共轭为恒等、特征二中交叉项抵消及 $\bar y_j^2=\bar y_j$。于是 $h(x,x)=h(y,y)/2$ 是整数，$L'=L+Rx$ 是积分格。$\bar y\ne0$ 保证 $x\notin L$，而 $\pi x=y\in L$，所以 $L'/L$ 有恰好两个元素。实余体积因此减半；Hermitian Gram 行列式等于该实余体积，故
+
+$$
+\det L'=\frac{\det L}{2}.
+$$
+
+重复此过程，得到同秩的积分幺模 Gaussian 上格 $M\supseteq L$。若原行列式已经是 $1$，直接取 $M=L$。这一构造不使用非幺模形式的分类。
+
+（五）秩至多三时，这个上格是标准 Gaussian 格。此处只复用经典普通实 Hermite 常数
+
+$$
+\gamma_2=\frac2{\sqrt3},\qquad
+\gamma_4=\sqrt2,\qquad
+\gamma_6=\frac2{3^{1/6}},
+\qquad \gamma_2,\gamma_4,\gamma_6<2.
+\tag{31.8}
+$$
+
+这些数值见 Stephanie Vance，[A Mordell Inequality for Lattices over Maximal Orders，arXiv:0810.2336v5，§4.2、表 3](https://arxiv.org/html/0810.2336v5)。表中列出 $A_2,D_4,E_6$ 的 Hermite 不变量，紧邻正文明确说明这些维数的所列格在普通实格中最优；所以这里用的是全部普通实格的界，不是仅限 Eisenstein 格或 Gaussian 格的界。按归一化，实维数 $n$、欧氏余体积 $v$ 的格具有非零向量，平方范数至多为 $\gamma_n v^{2/n}$。
+
+Gaussian 积分幺模格 $M$ 的实化具有积分实 Gram 矩阵，其行列式为 $|\det H_M|^2=1$，欧氏余体积为 $1$。应用 (31.8) 于实维数 $2\operatorname{rank}_R M\in\{2,4,6\}$，得到平方范数小于 $2$ 的非零向量。整数正性迫使其平方范数为 $1$。若此向量为 $e$，则对每个 $z\in M$，$z-e\,h(e,z)$ 属于 $M$ 且与 $e$ 正交；因而正交分裂出标准 Gaussian 直和因子 $Re$。正交补仍是积分幺模格。逐秩重复，得到 $M$ 等距于标准格 $R^r$。
+
+在这个标准基下，原格 $L$ 的基向量组成一个满秩方阵 $D\in M_r(R)$，其 Gram 矩阵为
+
+$$
+H=D^*D=\sum_{j=1}^r d_j^*d_j,
+$$
+
+其中 $d_j$ 是 $D$ 的第 $j$ 行。满秩性保证各行非零；当 $r\ge2$ 时，每个 $d_j^*d_j$ 都是非零秩一积分厄米子形式，满足 $0<d_j^*d_j\le H$ 且不等于秩为 $r$ 的 $H$。所以秩二或三、行列式为二幂的正定积分 Hermitian 格不可能是原子。这排除了（三）中的 $d=4,6$。
+
+（六）剩余的平衡秩一情形给出奇偶矛盾。此时 $d=2$，且原子性迫使 $H=[1]$，故由 (31.3) 有
+
+$$
+A=vv^*,\qquad v=T^*=(a,b)^{\mathsf T}\in R^2,
+\qquad |a|^2+|b|^2=N.
+$$
+
+最后一个等式由 $A^2=NA$ 及 $v\ne0$ 得到。$TJ=1$ 的共轭式 $J^*v=1$ 表明 $v$ 本原，即 $a,b$ 没有共同的 Gaussian 非单位因子。把 $a,b$ 写成四个实整数坐标，其平方和为 $N$。当 $4\mid N$ 时，模四计算表明奇数坐标的个数只能为零或四。在两种情形中，每个 Gaussian 坐标的实部和虚部都有相同奇偶性，故 $a,b$ 都被 $1+i$ 整除，与本原性矛盾。这里 $m\ge22$ 当然保证 $4\mid N$。
+
+至此，每个 $d\in\{2,\ldots,7\}$ 的所有非平凡秩以及每个 $m\ge22$ 都已覆盖。全过程的积分子形式与序比较均允许复厄米矩阵，没有把子效果限制为实矩阵。定理得证。$\square$
+
+**数学来源与适用边界。** Gaussian 主理想整环上的饱和子模分裂、基本域鸽巢论证、格对偶、Schur 补和 Cauchy 不等式都是上述新网格推论中的经典中间工具；普通实 Hermite 常数仅按 (31.8) 的明确来源和归一化复用，不将这些工具另作新增结果。这里的承重结论是原复 dyadic 网格上 $d=2,\ldots,7$ 的互补端点投影对在充分细尺度中的统一排除，不作全局优先权或穷尽文献检索主张。
+
+结合定理 22.1 在 $d=8$、每个 $m\ge2$ 的构造，维数八恰是任意细原 dyadic 网格上存在这种非平凡互补端点投影对的最小复维数。这个阈值只针对该投影对机制。命题 19.1 要求的只是非零子效果范数为一，其区间仍可含多个非零元素；本节的排除不否定那个较弱的小块分解障碍。充分界限 $22$ 不给出最优截断或粗网格分类。原问题 (18.1) 在 $2\le d\le7$ 的全表格稳定性仍未解决；本节不推出低维 Born 稳定性，不排除其他全表格障碍，也不对物理实现作经验性断言。
+
+## 追加锚（本行以下为增补区）
+
+## 32. 非投影互补原子给出的四维全表反例与二维全表稳定性
+
+沿用定义 16.1 的原复 Gaussian dyadic 网格、全部带标签二元和三元菜单及式 (16.1) 的唯一层析矩阵。以下两个维数分支都只涉及同一尺度上的一张完整表；不同尺度之间没有相容性假设。
+
+**定理 32.1（四维非投影互补原子与主块拉回反例）。** 对每个整数 $d\ge4$ 和 $m\ge2$，存在一张完整表 $p_{d,m}:K_{d,m}\to[0,1]$，使定义 16.1 的全部菜单关系在 $\epsilon=0$ 时精确成立，其层析矩阵为
+
+$$
+H_d=(I_4/4)\oplus0_{d-4},
+\qquad
+\max_{X\in K_{d,m}}|p_{d,m}(X)-\operatorname{Tr}(H_dX)|=\frac14.
+\tag{32.1}
+$$
+
+最大误差在一个形如 $E_m\oplus0_{d-4}$ 的效果处取得，其中 $E_m$ 与 $I_4-E_m$ 都是满秩非投影，且它们各自的原四维网格区间只有两个端点。因此，定义 18.1 的估计在每个固定的 $d\ge4$ 都不存在有限常数 $L_d$；特别地，同时要求 $d=2,\ldots,7$ 全部成立的断言为假。
+
+**证明。** 记 $R=\mathbb Z[i]$、$N=2^m$、$M=N/2$。此时 $M$ 为偶整数且 $M\ge2$。Lagrange 四平方定理给出 $a,b\in R$，使
+
+$$
+|a|^2+|b|^2=M^2-1=:t.
+$$
+
+这里仅复用经典四平方存在性；例如 [Mathlib 的固定版本源码，`Nat.sum_four_squares`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/NumberTheory/SumFourSquares.lean) 明确给出每个非负整数的四平方表示。把四个整数按实部、虚部分成两对即得所需 $a,b$。
+
+置
+
+$$
+Q=\begin{pmatrix}a&b\\-\overline b&\overline a\end{pmatrix},
+\qquad
+A=\begin{pmatrix}MI_2&Q\\Q^*&MI_2\end{pmatrix},
+\qquad
+B=\begin{pmatrix}MI_2&-Q\\-Q^*&MI_2\end{pmatrix}.
+\tag{32.2}
+$$
+
+直接相乘得到
+
+$$
+Q^*Q=QQ^*=tI_2,\qquad
+A+B=NI_4,\qquad AB=BA=I_4.
+\tag{32.3}
+$$
+
+矩阵 $A-MI_4$ 的平方为 $tI_4$、迹为零，故 $A$ 的两个特征值为 $M\pm\sqrt{M^2-1}$，各重数二；$B$ 有相同的谱。两特征值都严格介于 $0$ 与 $N$ 之间，且
+
+$$
+\det A=\det B=(M^2-t)^2=1.
+\tag{32.4}
+$$
+
+此外，$A,B$ 的对角元均为偶整数。对任意 $z\in R^4$，对角项给出偶整数，非对角项成对给出两倍整数实部，所以 $z^*Az$ 与 $z^*Bz$ 均为偶整数。
+
+现在验证全部复积分子形式的区间性质。所用机制是 §§20、22 的积分收缩与正交分裂机制；这里用 Gaussian 奇偶性排除分裂，不要求固定根基的连通图。设 $G\in\operatorname{Herm}_4(R)$ 正定、$\det G=1$，且每个 $z^*Gz$ 都为偶整数。若 $X\in\operatorname{Herm}_4(R)$ 满足 $0\le X\le G$，则 $C=G^{-1}X$ 为 Gaussian 整数矩阵，并满足
+
+$$
+C^*G=GC=X,\qquad
+G^{1/2}CG^{-1/2}=G^{-1/2}XG^{-1/2}.
+\tag{32.5}
+$$
+
+右侧为谱在 $[0,1]$ 内的厄米矩阵。因此 $C$ 可对角化且所有特征值都在 $[0,1]$。其特征多项式的系数属于 $R$，又因根全实而属于 $\mathbb R$，所以实际上属于 $\mathbb Z$。若某个特征值 $\alpha$ 严格介于零与一之间，它在 $\mathbb Q$ 上的首一不可约多项式属于 $\mathbb Z[x]$ 并整除该特征多项式。其全部共轭根都在 $[0,1]$，而不可约性排除端点零和一。因此这些共轭根的乘积是绝对值严格介于零与一之间的非零整数，矛盾。故 $C^2=C$。
+
+于是 $R^4=\operatorname{im}C\oplus\ker C$，且两项关于 $G$ 正交。Gaussian 整数环为主理想整环，故两项都有自由基，其合并为 $R^4$ 的幺模基。在该基中，两个限制 Gram 矩阵均正定、积分且偶；两者的正整数行列式之积为一，所以各为一。若分裂非平凡，较小的一个非零直和因子的 Gaussian 秩为一或二。秩一的偶 Gram 矩阵不可能有行列式一。秩二时写成
+
+$$
+\begin{pmatrix}2u&x+iy\\x-iy&2v\end{pmatrix},
+\qquad u,v,x,y\in\mathbb Z.
+$$
+
+行列式一要求 $x^2+y^2=4uv-1\equiv3\pmod4$，与整数平方模四只能为零或一矛盾。因此分裂只能平凡，$C=0$ 或 $I_4$，从而 $X=0$ 或 $G$。
+
+将此结论分别应用于 $A,B$。令
+
+$$
+E_m=A/N,\qquad F_m=B/N.
+$$
+
+它们属于原 $K_{4,m}$，互补、满秩且互异，因为 $t>0$ 保证 $Q\ne0$。乘以 $N$ 给出原网格区间与积分区间的双射，因而
+
+$$
+\{X\in K_{4,m}:0\le X\le E_m\}=\{0,E_m\},
+\qquad
+\{X\in K_{4,m}:0\le X\le F_m\}=\{0,F_m\}.
+\tag{32.6}
+$$
+
+又有 $E_mF_m=N^{-2}I_4\succ0$，所以它们不是投影。两者的迹均为二。
+
+在整个 $K_{4,m}$ 上定义一张表
+
+$$
+p_{4,m}(X)=
+\begin{cases}
+3/4,&X=E_m,\\
+1/4,&X=F_m,\\
+\operatorname{Tr}(X)/4,&X\notin\{E_m,F_m\}.
+\end{cases}
+\tag{32.7}
+$$
+
+这些值都在 $[0,1]$。取任一原带标签二元或三元菜单 $X_1+\cdots+X_r=I_4$。若其中有 $E_m$，则每个其他项均在 $[0,F_m]$ 内，故由 (32.6) 只能为零或 $F_m$。它们的和是非零的 $F_m$，所以恰有一项为 $F_m$，其余均为零。菜单值之和为 $3/4+1/4=1$。含 $F_m$ 的情形完全相同。若两者都不出现，则所有项采用迹值，菜单和为 $\operatorname{Tr}(I_4)/4=1$。这一论证覆盖全部允许的零项、重复项和标签，没有删去任何菜单。
+
+定义 16.1 的每个层析基元素 $D_i,R_{ij},J_{ij}$ 都为秩一，而两个特殊效果都为秩四。故该基上全部表值为 $1/4$，唯一的原层析矩阵恰为 $H_4=I_4/4$。表值在两个特殊效果处与迹值相差 $1/4$，其余处相等，证明四维的 (32.1)。
+
+对任意 $d>4$，令 $C_d(X)$ 为 $X$ 的前四阶主块，并定义
+
+$$
+p_{d,m}(X)=p_{4,m}(C_d(X)),\qquad X\in K_{d,m}.
+\tag{32.8}
+$$
+
+主块映射把原 $K_{d,m}$ 映入原 $K_{4,m}$，保加法、半正定序并把 $I_d$ 映为 $I_4$。故每个原二元或三元菜单都被映成已验证的四维菜单，(32.8) 精确满足全部归一化关系。在原层析基上，$C_d$ 的像分别是四维层析基元素、零，或者跨越主块内外的 $R_{ij},J_{ij}$ 所给出的 $D_i/2$。这些像均秩至多一，因而都采用迹值。这正好是 $H_d=(I_4/4)\oplus0_{d-4}$ 的基读数，故式 (16.1) 唯一钉住此 $H_d$。对所有 $X$，其迹预测为 $\operatorname{Tr}(C_d(X))/4$，所以误差至多 $1/4$；在 $E_m\oplus0_{d-4}$ 处取得等号。
+
+最后，在任一固定 $d\ge4$ 中令 $m\to\infty$，本构造始终有 $\epsilon=0$，而
+
+$$
+\frac{\max_X|p_{d,m}(X)-\operatorname{Tr}(H_dX)|}{\epsilon+2^{-m}}
+=\frac N4\longrightarrow\infty.
+\tag{32.9}
+$$
+
+对任意有限 $L_d\ge0$，选择 $2^m>4L_d$ 即违反 (18.1)。没有改变其原尺度或误差量词。
+
+为明确与既有谱余量结论的关系，四维特殊效果的特征值为 $\delta_N,1-\delta_N$，各重数二，其中
+
+$$
+\delta_N=\frac{1-\sqrt{1-4/N^2}}2
+=\frac{2/N^2}{1+\sqrt{1-4/N^2}},
+\qquad N^{-2}\le\delta_N\le2N^{-2}.
+\tag{32.10}
+$$
+
+因此它们处于定理 24.1 排除的双侧边界带中，且在每个有限尺度都没有端点特征值。它们不属于定理 31.1 排除的投影对。$N=4$、$a=1+i,b=1$ 时，(32.2) 的 $A$ 正好是 (22.2) 的既有 Gram 矩阵；这里新增的关系是每个 dyadic $N$ 上直接在四维中同时实现 $A+B=NI_4$ 与 $AB=I_4$，并由此构成完整表，而非再次构造八维投影。$\square$
+
+**定理 32.2（原网格二维完整表的一致稳定性）。** 在定义 16.1 中取 $d=2$。对每个 $m\ge1$、$0\le\epsilon\le1/10$ 及满足全部原菜单条件的同一完整表，其原层析矩阵 $H$ 满足
+
+$$
+\max_{E\in K_{2,m}}|p(E)-\operatorname{Tr}(HE)|
+\le12190(\epsilon+2^{-m}).
+\tag{32.11}
+$$
+
+当 $N=2^m\ge160$ 时，更强的上界为 $12190\epsilon$。本结论不增加仿射性、跨尺度相容性或任意有理细分假设。
+
+**证明。** 写 $e(E)=p(E)-\operatorname{Tr}(HE)$。复用定理 16.2 和 24.1 的常数及其精细网格估计：
+
+$$
+c_2=1/10,\quad K_2=30,\quad M_2=4,\quad q_2=32,
+\qquad U_2=63\cdot30+4\cdot31=2014.
+\tag{32.12}
+$$
+
+先设 $N\ge160=8\cdot2/c_2$。于是范数至多 $c_2$ 的效果有 $|e|\le30\epsilon$，范数至多 $1-8/N$ 的效果有 $|e|\le2014\epsilon$。每次同网格合法加法的误差至多为式 (16.4) 的 $2\epsilon$。
+
+先控制任意非零秩一效果 $E$。积分秩一矩阵 $NE$ 可写成
+
+$$
+NE=t vv^*,\qquad t\in\mathbb Z_{>0},\quad v\in R^2\text{ 本原}.
+\tag{32.13}
+$$
+
+这里的本原是两个坐标生成单位理想。具体地，$NE$ 的复值域与 $R^2$ 的交是饱和秩一子模，Gaussian 主理想整环性质给出其本原生成元 $v$。每个积分列都是 $v$ 的 Gaussian 整数倍；厄米性及正性遂给出 $NE=t vv^*$，其中初始标量 $t$ 为正实数。取积分行 $\ell$ 满足 $\ell v=1$，则 $t=\ell(NE)\ell^*$ 为正整数，证明 (32.13)。记 $s=\|v\|^2$，有 $ts\le N$。
+
+若 $t\ge2$，把 $t$ 拆成 $\lfloor t/2\rfloor+\lceil t/2\rceil$。所得两个原网格正子效果之和为 $E$，各范数至多 $2/3\le1-8/N$，故一次合法加法给出
+
+$$
+|e(E)|\le(2U_2+2)\epsilon\le4062\epsilon.
+\tag{32.14}
+$$
+
+余下设 $t=1$。此时不可能有 $s=N$：因为 $4\mid N$，$v$ 的四个实整数坐标的平方和模四为零，奇数坐标数只能为零或四。在两种情形中，每个 Gaussian 坐标的实部、虚部奇偶性相同，两个坐标都被 $\pi=1+i$ 整除，与本原性矛盾。这正是定理 31.1 最后一步的既有二维奇偶观察。
+
+所以 $k=N-s\ge1$。对每个坐标取 $w_j\in\{0,1\}$ 表示 $v_j$ 模 $\pi$ 的剩余类，并置 $r=\|w\|^2$。本原性保证 $r\in\{1,2\}$，而 Gaussian 整数的范数模二等于其模 $\pi$ 剩余类，故 $r\equiv s\pmod2$。若 $k=1$，则 $s$ 为奇数，迫使 $r=1$；若 $k\ge2$，则直接有 $r\le2\le k$。因此
+
+$$
+vv^*+ww^*\le(s+r)I_2\le NI_2.
+\tag{32.15}
+$$
+
+这是二维原效果区间内的正性证书。又因为 $v\equiv w\pmod\pi$，两个向量
+
+$$
+u=(v+w)/\pi,\qquad z=(v-w)/\pi
+$$
+
+都属于 $R^2$。平行四边形恒等式给出
+
+$$
+vv^*+ww^*=uu^*+zz^*.
+\tag{32.16}
+$$
+
+定义 $W=ww^*/N$、$F=uu^*/N$、$G=zz^*/N$。由 (32.15)–(32.16)，$E,W,F,G$ 及共同和 $E+W=F+G$ 均为原同一 $K_{2,m}$ 中的效果。其范数满足
+
+$$
+\|W\|\le2/N\le c_2,\qquad
+\max(\|F\|,\|G\|)
+\le\frac{(\sqrt N+\sqrt2)^2}{2N}
+\le\frac{81}{128}<\frac34\le1-\frac8N.
+\tag{32.17}
+$$
+
+中间的数值界来自 $N\ge160\ge128$，从而 $\sqrt{2/N}\le1/8$。分别对 $E+W$ 与 $F+G$ 应用 (16.4)，再相减；共同和的表值与 (32.16) 的线性迹配对都消去。因此
+
+$$
+|e(E)+e(W)-e(F)-e(G)|\le4\epsilon,
+\qquad
+|e(E)|\le(30+2\cdot2014+4)\epsilon=4062\epsilon.
+\tag{32.18}
+$$
+
+即使辅助效果为零或彼此重复，相应菜单仍是原定义允许的菜单。合并 (32.14)、(32.18)，每个非零秩一原效果都有相同上界。
+
+对于秩二的 $E$，只在此处复用一个精确的二元形式表示结果：Myung-Hwan Kim 与 Poo-Sung Park，[2-universal Hermitian lattices over imaginary quadratic fields，arXiv:0810.1342v1，定理 2](https://arxiv.org/html/0810.1342v1#ThmThm2) 证明 $\mathbb Q(i)$ 上的三元格 $\langle1,1,1\rangle$ 表示每个正定二元积分 Hermitian 格。其 §2 的表示约定是 $M_\ell=XM_LX^*$，§3 定义 3 中的二元格为正定格。因此对正定的 $NE\in\operatorname{Herm}_2(R)$，该结果恰给出
+
+$$
+NE=XX^*,\qquad X\in M_{2\times3}(R).
+\tag{32.19}
+$$
+
+这里没有把二元供应推广到更高秩。将 $X$ 的三个列向量记为 $v_1,v_2,v_3$，便有
+
+$$
+E=\sum_{j=1}^3\frac{v_jv_j^*}{N}.
+$$
+
+每个非零项为已控制的秩一效果，全部部分和都为原网格效果：其条目积分除以同一个 $N$，且因所有项半正定而在序上不超过 $E\le I_2$。略去零列后，至多两次 (16.4) 给出
+
+$$
+|e(E)|\le\bigl(3\cdot4062+4\bigr)\epsilon=12190\epsilon.
+\tag{32.20}
+$$
+
+秩一情形已有更强界，零效果则由 $p(0)\le2\epsilon$ 控制。因此精细网格上覆盖了整个效果表，关系数不随 $m$ 增长。
+
+若 $N<160$，定理 16.2 的 $\|H\|\le4$ 和 $0\le E\le I_2$ 给出 $|e(E)|\le1+2\cdot4=9<1440/N\le12190/N$，证明 (32.11) 的全部粗尺度情形。$\square$
+
+定理 32.1 在每个固定 $d\ge4$ 中否定 (18.1)，定理 32.2 则肯定其中的 $d=2$ 分支。二者均保持定义 16.1 的原网格、同一完整表、原层析基及原菜单量词；定理 16.2、17.1–17.2、24.1 与投影专属的定理 31.1 继续按各自假设适用。这里没有解决 $d=3$ 的 (18.1)，也没有断言四维是任意效果完整表反例的最小维数。二维的额外步骤是 (32.15)–(32.18) 的同网格奇偶补全及其与二元表示供应的组合；Gaussian 主理想整环、四平方定理、积分收缩的代数整数论证和 Kim–Park 表示定理均为有明确作用的经典中间工具。以上推导不作全球文献优先权或物理实现断言。
+
+## 追加锚（本行以下为增补区）
