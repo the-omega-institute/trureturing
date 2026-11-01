@@ -38,10 +38,10 @@ abbrev sequenceSignature : Signature where
   finiteAnchor := inferInstance
 
 abbrev sequenceActual : Realization sequenceSignature.{u} :=
-  realize sequenceSignature (fun _ _ a => a) (fun e => nomatch e)
+  realize sequenceSignature (fun _ _ a => a) (fun e => Empty.elim e)
 
 abbrev sequenceRejected : Realization sequenceSignature.{u} :=
-  realize sequenceSignature (fun _ _ a => fun _ => a 0) (fun e => nomatch e)
+  realize sequenceSignature (fun _ _ a => fun _ => a 0) (fun e => Empty.elim e)
 
 private theorem sequence_dependence :
     ObservationalDependence sequenceSignature.{u} sequenceActual := by
@@ -99,7 +99,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,u+1,u,0,u,0,0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize sequenceSignature
-    (fun _ _ a => a) (fun e => nomatch e))
+    (fun _ _ a => a) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -158,7 +158,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,u+1,u,0,u,0,0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize sequenceSignature
-    (fun _ _ a => a) (fun e => nomatch e))
+    (fun _ _ a => a) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
