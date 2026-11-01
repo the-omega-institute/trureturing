@@ -535,4 +535,94 @@ def coprimeRegistration :
   familyRecord := none
   options := #[]
 
+abbrev joinedMatrixSignature : DependentFamily.Signature where
+  Params := ℕ × ℕ
+  State := fun _ => (ℕ → ℝ) × (ℕ → ℝ) × ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ _ => ℝ[X]
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def joinedMatrixActual : DependentFamily.Realization joinedMatrixSignature :=
+  DependentFamily.realize joinedMatrixSignature
+    (fun _ p b => (joinedPath b.1 b.2.1 b.2.2 p.1 p.2).charpoly)
+    (fun e => nomatch e)
+
+abbrev joinedMatrixArena : DependentFamily.Arena where
+  signature := joinedMatrixSignature
+  Law := fun R => ∀ (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ),
+    R.readout () (r, s) (bL, bR, a) =
+      continuant (fun k => bL k ^ 2) (r + 1) * continuant (fun k => bR k ^ 2) s +
+      continuant (fun k => bL k ^ 2) r * continuant (fun k => bR k ^ 2) (s + 1) -
+      (X + C a) * continuant (fun k => bL k ^ 2) r * continuant (fun k => bR k ^ 2) s
+
+abbrev joinedMatrixSourceScope := type_of% (@joined_path_charpoly)
+
+lemma joinedMatrix_source_bridge :
+    joinedMatrixSourceScope ↔ joinedMatrixArena.Law joinedMatrixActual := Iff.rfl
+
+lemma joinedMatrix_actual_positive : joinedMatrixArena.Law joinedMatrixActual :=
+  joinedMatrix_source_bridge.mp joined_path_charpoly
+
+def joinedMatrixRejected : DependentFamily.Realization joinedMatrixSignature :=
+  DependentFamily.realize joinedMatrixSignature
+    (fun role p b => joinedMatrixActual.readout role p b + 1) (fun e => nomatch e)
+
+lemma joinedMatrix_rejected_law : ¬ joinedMatrixArena.Law joinedMatrixRejected := by
+  intro h
+  have he := h (fun _ => 0) (fun _ => 0) 0 0 0
+  have hc := congrArg (fun p : ℝ[X] => p.coeff 0) he
+  norm_num [joinedMatrixRejected, joinedMatrixActual, DependentFamily.realize,
+    joined_path_charpoly, continuant] at hc
+
+lemma joinedMatrix_dependence :
+    DependentFamily.ObservationalDependence joinedMatrixSignature joinedMatrixActual := by
+  intro role
+  refine ⟨(0, 0), ((fun _ => 0), (fun _ => 0), 0),
+    ((fun _ => 0), (fun _ => 0), 1), ?_⟩
+  intro he
+  have hc := congrArg (fun p : ℝ[X] => p.coeff 0) he
+  norm_num [joinedMatrixActual, DependentFamily.realize, joined_path_charpoly, continuant] at hc
+
+def joinedMatrixFamilyRegistration :
+    DependentFamily.Registration joinedMatrixArena joinedMatrixSourceScope where
+  actual := joinedMatrixActual
+  bridge := joinedMatrix_source_bridge
+  variation := ⟨joinedMatrix_actual_positive, joinedMatrixRejected, joinedMatrix_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨joinedMatrixRejected, ?_, rfl, joinedMatrix_rejected_law⟩
+      intro index hne
+      exact False.elim (hne (Subsingleton.elim _ _))
+    · intro e; exact nomatch e
+  dependence := joinedMatrix_dependence
+
+def joinedMatrixRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
+      (@joined_path_charpoly) (DependentFamily.Realization joinedMatrixSignature) Type Unit where
+  unitName := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath.joined_path_charpoly.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath.joinedMatrixFamilyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨joinedMatrixArena⟩
+  objectArena := .source ⟨joinedMatrixArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source joinedMatrixArena ⟨joinedMatrixFamilyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
+  readout := some (DependentFamily.realize joinedMatrixSignature
+    (fun _ p b => (joinedPath b.1 b.2.1 b.2.2 p.1 p.2).charpoly) (fun e => nomatch e))
+  variation := .evidence ⟨(show True from trivial)⟩ trivial
+  sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
+  partialSensitivity := none
+  escapeFrom := some ((ℕ → ℝ) × (ℕ → ℝ) × ℝ)
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath

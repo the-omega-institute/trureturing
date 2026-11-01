@@ -36,14 +36,18 @@ internal sealed class KoljancicOblakEvenPathDocument : IScribeDocumentDefinition
             Node("characteristic", "Weighted branch characteristic correspondence", "weighted_path_charpoly", DescribeRole.Theorem,
                 "The actual characteristic polynomial of the weighted branch equals the continuant with squared edge parameters, in every order including zero and one. First-row expansion uses the existing det_sparse_front supplier in ForbiddenNeighbourDeterminant; both remaining principal submatrices have the same reversed-edge convention.", formula: Characteristic()),
             Node("joined-variation", "Complete central-loop variation", "joinedVariation", DescribeRole.Definition,
-                "Write U=P_left(r), V=P_right(s), F=XU-P_left(r+1), and G=XV-P_right(s+1). The displayed expression retains all six contributions to the variation of (X-a)UV-FV-UG. Each flux is zero when its branch is empty; for a positive branch length its flux is the attaching squared edge weight times the preceding continuant. This is an algebraic carrier; the joined matrix characteristic correspondence is still required.", formula: JoinedDefinition()),
+                "Write U=P_left(r), V=P_right(s), F=XU-P_left(r+1), and G=XV-P_right(s+1). The displayed expression retains all six contributions to the variation of (X-a)UV-FV-UG. Each flux is zero when its branch is empty; for a positive branch length its flux is the attaching squared edge weight times the preceding continuant. The joined_path_charpoly theorem supplies the corresponding actual central-loop matrix characteristic expression; the matrix support-tangent bridge is separate.", formula: JoinedDefinition()),
             Node("joined-deformation", "Actual simultaneous algebraic perturbation", "deformedJoinedContinuant", DescribeRole.Definition,
                 "Replace the central loop by a plus z times da and each branch squared edge parameter by q plus z times dq in the joined expression. The outer polynomial variable is z and the inner variable X is spectral. In the formula C embeds into the applicable coefficient ring. The complete coefficient-one product rule identifies this perturbation coefficient with joinedVariation; that identity is consumed in the recovery theorem.", formula: JoinedDeformation()),
             Node("joined-recovery", "Separation of central and branch variations", "joined_variation_injective", DescribeRole.Theorem,
                 "For every pair of branch lengths with odd sum, nonzero central loop and nonzero branch edge parameters, coprime branch continuants make the coefficient of z in the actual algebraic joined perturbation injective. The recovered edge indices below each branch length include its attaching edge. No lower bound on either individual branch length is imposed. The complete product rule first identifies that coefficient with joinedVariation. Reflection X to -X then separates the odd part C(a) times the product variation plus C(da)UV. Its leading coefficient recovers da, after which coprimality and strict degree bounds separate both branch variations. Applying the same separation to the remaining adjacent continuants and using branch_variation_injective recovers all edge parameters. This theorem assumes coprimality; it does not construct the required branches or prove the complete nSSP claim.", formula: JoinedRecovery()),
             Node("coprime", "Uniform positive coprime branch construction", "coprime_positive_branches", DescribeRole.Theorem,
                 "Every pair of lengths with odd sum admits two strictly positive squared-edge parameter sequences whose continuants are coprime. Put unit parameters on an even-length branch and a common positive parameter t on the other branch. The first branch has nonzero constant coefficient. The spectral resultant is a polynomial in t; at t=0 the other branch becomes X to its length, so the resultant is nonzero. A positive t outside its finite root set gives the required pair. Swapping the branches covers the other parity orientation. Zero and one lengths need no exceptions, and the final selected t is strictly positive; zero is used only to prove that the parameter polynomial is not identically zero.", formula: CoprimeBranches()),
-            Paragraph(Text("The remaining whole-event bridges are the central-loop characteristic identity joining two actual weighted branches; the correspondence between the algebraic joined variation and actual matrix support tangents and characteristic coefficients; the coefficient/adjugate trace pairing and unrestricted real commutant argument; and exact support enlargement to every nonempty loop set. The source Superpattern Lemma also preserves similarity, which is stronger than the existential event requires.")),
+            Node("joined-matrix", "Actual path with one central loop", "joinedPath", DescribeRole.Definition,
+                "The vertex set is Fin(s+1+r), with the loop at vertex r. The left branch edges have weights bL(0) through bL(r-1) from its far endpoint towards the loop; the right branch edges have weights bR(s-1) down to bR(0) from the loop towards its far endpoint. All diagonal entries except the central loop are zero. Natural-number subtraction in the displayed edge indices is truncated subtraction. Empty branches, either endpoint and the single-vertex carrier are included.", formula: JoinedMatrixDefinition()),
+            Node("joined-characteristic", "Actual central-loop characteristic identity", "joined_path_charpoly", DescribeRole.Theorem,
+                "For every pair of real edge sequences, every real loop weight and every pair of natural branch lengths, the characteristic polynomial of joinedPath equals the displayed branch-continuant expression. This is also (X-C(a))UV-FV-UG with U=P_left(r), V=P_right(s), F=XU-P_left(r+1) and G=XV-P_right(s+1). The proof uses the actual matrix determinant, the frozen sparse determinant expansion, the existing weighted_path_charpoly, and induction from either empty or one-vertex left branches. The front recurrence for continuants aligns the far-end deletion with the squared edge indexing. The formula assumes neither nonzero weights nor parity, and includes every endpoint and empty branch. It does not establish the support-tangent or unrestricted commutant bridges.", formula: JoinedMatrixCharacteristic()),
+            Paragraph(Text("The remaining whole-event bridges are the correspondence between the algebraic joined variation and actual matrix support tangents and characteristic coefficients; the coefficient/adjugate trace pairing and unrestricted real commutant argument; and exact support enlargement to every nonempty loop set. The source Superpattern Lemma also preserves similarity, which is stronger than the existential event requires.")),
             Paragraph(Text("Source attribution and license boundaries are recorded in Library/Eigenstructure/koljancic2026nssp.md. The continuant variation argument is a repository derivation; the source question and its published definitions are not claimed as new results.")))));
 
     private static DocumentBlock Node(string id, string title, string name, DescribeRole role, string prose,
@@ -131,6 +135,39 @@ internal sealed class KoljancicOblakEvenPathDocument : IScribeDocumentDefinition
             new Formula.Power(App(b, k), D(2)));
         return All("b", Sequence(), All("n", Nat(),
             Eq(Call("charpoly", Call("weightedPath", b, n)), Call("continuant", squares, n))));
+    }
+
+    private static Formula JoinedMatrixBinders(Formula body)
+    {
+        Formula real = Seq(Operatorname, Grp(V("Real")));
+        return All("bL", Sequence(), All("bR", Sequence(), All("a", real,
+            All("r", Nat(), All("s", Nat(), body)))));
+    }
+
+    private static Formula JoinedMatrixDefinition()
+    {
+        Formula bl = V("bL"), br = V("bR"), a = V("a"), r = V("r"), s = V("s");
+        Formula i = V("i"), j = V("j"), iv = Call("val", i), jv = Call("val", j);
+        Formula weight(Formula v) => If(Lt(v, r), App(bl, v),
+            App(br, Sub(Sub(Add(s, r), D(1)), v)));
+        Formula entry = If(Eq(i, j), If(Eq(iv, r), a, D(0)),
+            If(Eq(Add(iv, D(1)), jv), weight(iv),
+                If(Eq(Add(jv, D(1)), iv), weight(jv), D(0))));
+        Formula fin = Call("Fin", Add(Add(s, D(1)), r));
+        return JoinedMatrixBinders(All("i", fin, All("j", fin,
+            Eq(App(Call("joinedPath", bl, br, a, r, s), i, j), entry))));
+    }
+
+    private static Formula JoinedMatrixCharacteristic()
+    {
+        Formula bl = V("bL"), br = V("bR"), a = V("a"), r = V("r"), s = V("s"), k = V("k");
+        Formula square(Formula b) => Seq(LambdaLower, Sp, k, Colon, Sp, Nat(), Sp, Mapsto, Sp,
+            new Formula.Power(App(b, k), D(2)));
+        Formula P(Formula b, Formula n) => Call("continuant", square(b), n);
+        Formula expr = Sub(Add(Mul(P(bl, Add(r, D(1))), P(br, s)),
+            Mul(P(bl, r), P(br, Add(s, D(1))))),
+            Mul(Mul(Add(V("X"), Call("C", a)), P(bl, r)), P(br, s)));
+        return JoinedMatrixBinders(Eq(Call("charpoly", Call("joinedPath", bl, br, a, r, s)), expr));
     }
 
     private static Formula JoinedDefinition()

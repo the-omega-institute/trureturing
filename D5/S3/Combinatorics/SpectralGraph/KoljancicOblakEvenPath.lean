@@ -522,4 +522,106 @@ private lemma joined_endpoint_charpoly (bL bR : ℕ → ℝ) (a : ℝ) (s : ℕ)
       rw [weighted_path_charpoly, weighted_path_charpoly, continuant, map_pow]
       ring
 
+/-- The joined branch expression is the characteristic polynomial of the actual
+one-loop weighted path, for every pair of branch lengths, including empty branches. -/
+theorem joined_path_charpoly (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ) :
+    (joinedPath bL bR a r s).charpoly =
+      continuant (fun k => bL k ^ 2) (r + 1) * continuant (fun k => bR k ^ 2) s +
+      continuant (fun k => bL k ^ 2) r * continuant (fun k => bR k ^ 2) (s + 1) -
+      (X + C a) * continuant (fun k => bL k ^ 2) r *
+        continuant (fun k => bR k ^ 2) s := by
+  classical
+  induction r using Nat.twoStepInduction generalizing bL with
+  | zero =>
+      rw [joined_endpoint_charpoly]
+      simp only [continuant]
+      ring
+  | one =>
+      have shift1 (i j : Fin (s + 1)) :
+          joinedPath bL bR a 1 s i.succ j.succ =
+            joinedPath (fun k => bL (k + 1)) bR a 0 s i j := by
+        simp only [joinedPath, Fin.val_succ, Fin.succ_inj, Fin.ext_iff]
+        split_ifs <;> simp_all <;> first | omega | (congr 1 <;> omega)
+      have shift2 (i j : Fin s) :
+          joinedPath bL bR a 1 s i.succ.succ j.succ.succ = weightedPath bR s i j := by
+        simp only [joinedPath, weightedPath, Fin.val_succ, Fin.ext_iff]
+        split_ifs <;> simp_all <;> first | omega | (congr 1 <;> omega)
+      have minor1 : (joinedPath bL bR a 1 s).charmatrix.submatrix Fin.succ Fin.succ =
+          (joinedPath (fun k => bL (k + 1)) bR a 0 s).charmatrix := by
+        ext i j
+        simp only [Matrix.submatrix_apply, Matrix.charmatrix_apply,
+          Matrix.diagonal_apply, Fin.succ_inj, shift1]
+      have minor2 : (joinedPath bL bR a 1 s).charmatrix.submatrix
+          (fun i : Fin s => i.succ.succ) (fun j : Fin s => j.succ.succ) =
+          (weightedPath bR s).charmatrix := by
+        ext i j
+        simp only [Matrix.submatrix_apply, Matrix.charmatrix_apply,
+          Matrix.diagonal_apply, Fin.succ_inj, shift2]
+      have row (j : Fin s) : (joinedPath bL bR a 1 s).charmatrix 0 j.succ.succ = 0 := by
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff,
+          joinedPath, show ¬ (0 + 1 = j.val + 1 + 1) by omega]
+      have col (i : Fin s) : (joinedPath bL bR a 1 s).charmatrix i.succ.succ 0 = 0 := by
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff,
+          joinedPath, show ¬ (0 + 1 = i.val + 1 + 1) by omega]
+      have diag : (joinedPath bL bR a 1 s).charmatrix 0 0 = X := by
+        simp [Matrix.charmatrix_apply_eq, joinedPath]
+      have upper : (joinedPath bL bR a 1 s).charmatrix 0 1 = -C (bL 0) := by
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff, joinedPath]
+      have lower : (joinedPath bL bR a 1 s).charmatrix 1 0 = -C (bL 0) := by
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff, joinedPath]
+      unfold Matrix.charpoly
+      rw [_root_.D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant.det_sparse_front
+        _ row col, minor1, minor2, diag, upper, lower]
+      change X * (joinedPath (fun k => bL (k + 1)) bR a 0 s).charpoly -
+        (-C (bL 0)) * (-C (bL 0)) * (weightedPath bR s).charpoly = _
+      rw [joined_endpoint_charpoly, weighted_path_charpoly]
+      simp only [continuant, map_pow]
+      ring
+  | more r h0 h1 =>
+      have shift1 (i j : Fin (s + 1 + (r + 1))) :
+          joinedPath bL bR a (r + 2) s i.succ j.succ =
+            joinedPath (fun k => bL (k + 1)) bR a (r + 1) s i j := by
+        simp only [joinedPath, Fin.val_succ, Fin.succ_inj, Fin.ext_iff]
+        split_ifs <;> simp_all <;> first | omega | (congr 1 <;> omega)
+      have shift2 (i j : Fin (s + 1 + r)) :
+          joinedPath bL bR a (r + 2) s i.succ.succ j.succ.succ =
+            joinedPath (fun k => bL (k + 2)) bR a r s i j := by
+        simp only [joinedPath, Fin.val_succ, Fin.succ_inj, Fin.ext_iff]
+        split_ifs <;> simp_all <;> first | omega | (congr 1 <;> omega)
+      have minor1 : (joinedPath bL bR a (r + 2) s).charmatrix.submatrix Fin.succ Fin.succ =
+          (joinedPath (fun k => bL (k + 1)) bR a (r + 1) s).charmatrix := by
+        ext i j
+        simp only [Matrix.submatrix_apply, Matrix.charmatrix_apply,
+          Matrix.diagonal_apply, Fin.succ_inj, shift1]
+      have minor2 : (joinedPath bL bR a (r + 2) s).charmatrix.submatrix
+          (fun i : Fin (s + 1 + r) => i.succ.succ)
+          (fun j : Fin (s + 1 + r) => j.succ.succ) =
+          (joinedPath (fun k => bL (k + 2)) bR a r s).charmatrix := by
+        ext i j
+        simp only [Matrix.submatrix_apply, Matrix.charmatrix_apply,
+          Matrix.diagonal_apply, Fin.succ_inj, shift2]
+      have row (j : Fin (s + 1 + r)) :
+          (joinedPath bL bR a (r + 2) s).charmatrix 0 j.succ.succ = 0 := by
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff,
+          joinedPath, show ¬ (0 + 1 = j.val + 1 + 1) by omega]
+      have col (i : Fin (s + 1 + r)) :
+          (joinedPath bL bR a (r + 2) s).charmatrix i.succ.succ 0 = 0 := by
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff,
+          joinedPath, show ¬ (0 + 1 = i.val + 1 + 1) by omega]
+      have diag : (joinedPath bL bR a (r + 2) s).charmatrix 0 0 = X := by
+        simp [Matrix.charmatrix_apply_eq, joinedPath]
+      have upper : (joinedPath bL bR a (r + 2) s).charmatrix 0 1 = -C (bL 0) := by
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff, joinedPath]
+      have lower : (joinedPath bL bR a (r + 2) s).charmatrix 1 0 = -C (bL 0) := by
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff, joinedPath]
+      unfold Matrix.charpoly
+      rw [_root_.D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant.det_sparse_front
+        _ row col, minor1, minor2, diag, upper, lower]
+      change X * (joinedPath (fun k => bL (k + 1)) bR a (r + 1) s).charpoly -
+        (-C (bL 0)) * (-C (bL 0)) *
+          (joinedPath (fun k => bL (k + 2)) bR a r s).charpoly = _
+      rw [h1, h0, continuant_front (fun k => bL k ^ 2) (r + 1),
+        continuant_front (fun k => bL k ^ 2) r, map_pow]
+      ring
+
 end D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath
