@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A representation permuting a finite basis has one invariant dimension per orbit, with arbitrary stabilizers and characteristic. -/
+   digest: Finite permutation bases have one fixed dimension per orbit, in any characteristic. -/
 
 import D5.S3.VertexAlgebra.Lattice.FiniteGroupOrbitFixedLine
 import Mathlib.GroupTheory.GroupAction.Basic
@@ -36,7 +36,7 @@ set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.VertexAlgebra.Lattice.FinitePermutationInvariants
 
-open FiniteGroupOrbitFixedLine
+open Module FiniteGroupOrbitFixedLine
 
 variable {K G X V : Type*} [Field K] [Group G] [MulAction G X]
   [Fintype X] [AddCommGroup V] [Module K V]
