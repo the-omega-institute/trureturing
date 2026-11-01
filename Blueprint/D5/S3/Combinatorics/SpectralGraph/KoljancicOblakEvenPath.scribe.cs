@@ -24,7 +24,7 @@ internal sealed class KoljancicOblakEvenPathDocument : IScribeDocumentDefinition
             Node("continuant", "Zero-diagonal branch continuant", "continuant", DescribeRole.Definition,
                 "The empty branch has polynomial one and a one-vertex branch has polynomial X. Each successor step uses the squared weight of the newly attached edge."),
             Node("variation", "Edge-parameter first variation", "variation", DescribeRole.Definition,
-                "The formal linearized recurrence includes the variation of the edge parameter and the variation of the preceding continuant. A connection to the actual characteristic-coefficient differential remains to be proved."),
+                "The formal linearized recurrence includes the variation of the edge parameter and the variation of the preceding continuant. The actual evaluated characteristic differential is supplied by joined_path_charpoly_derivative."),
             Node("deformation", "Simultaneous polynomial edge perturbation", "deformedContinuant", DescribeRole.Definition,
                 "Each squared edge parameter is replaced by q plus z times dq. The outer polynomial variable is z; coefficients are polynomials in the spectral variable X. In its defining formula, z denotes the outer Polynomial.X and C embeds into the applicable polynomial ring."),
             Node("linearization", "Exact constant and first-order terms", "continuant_linearization", DescribeRole.Theorem,
@@ -48,8 +48,12 @@ internal sealed class KoljancicOblakEvenPathDocument : IScribeDocumentDefinition
             Node("joined-characteristic", "Actual central-loop characteristic identity", "joined_path_charpoly", DescribeRole.Theorem,
                 "For every pair of real edge sequences, every real loop weight and every pair of natural branch lengths, the characteristic polynomial of joinedPath equals the displayed branch-continuant expression. This is also (X-C(a))UV-FV-UG with U=P_left(r), V=P_right(s), F=XU-P_left(r+1) and G=XV-P_right(s+1). The proof uses the actual matrix determinant, the frozen sparse determinant expansion, the existing weighted_path_charpoly, and induction from either empty or one-vertex left branches. The front recurrence for continuants aligns the far-end deletion with the squared edge indexing. The formula assumes neither nonzero weights nor parity, and includes every endpoint and empty branch. It does not establish the support-tangent or unrestricted commutant bridges.", formula: JoinedMatrixCharacteristic()),
             Node("matrix-derivative", "Actual characteristic variation along edge and loop perturbations", "joined_path_charpoly_derivative", DescribeRole.Theorem,
-                "For every real edge and variation sequence, every loop weight and variation, every pair of natural branch lengths and every real spectral value x, the actual characteristic polynomial evaluated at x has the displayed derivative at perturbation parameter zero. Each edge is perturbed by b+t*db and the central loop by a+t*da. The squared-edge first variations are 2*b*db, with the complete joined product rule retained. The proof differentiates the continuant recurrence and applies joined_path_charpoly to the actual perturbed matrix. Zero edge weights, empty branches and endpoints remain included. This gives evaluated characteristic derivatives; the coefficient/adjugate trace and unrestricted commutant arguments, and the representation of all relevant support tangents, remain separate obligations.", formula: JoinedMatrixDerivative()),
-            Paragraph(Text("The remaining whole-event bridges are the representation of every relevant matrix support tangent by edge and loop variations; passage from evaluated characteristic derivatives to characteristic coefficients and the adjugate trace pairing and unrestricted real commutant argument; and exact support enlargement to every nonempty loop set. The source Superpattern Lemma also preserves similarity, which is stronger than the existential event requires.")),
+                "For every real edge and variation sequence, every loop weight and variation, every pair of natural branch lengths and every real spectral value x, the actual characteristic polynomial evaluated at x has the displayed derivative at perturbation parameter zero. Each edge is perturbed by b+t*db and the central loop by a+t*da. The squared-edge first variations are 2*b*db, with the complete joined product rule retained. The proof differentiates the continuant recurrence and applies joined_path_charpoly to the actual perturbed matrix. Zero edge weights, empty branches and endpoints remain included. The conditional application below uses these evaluated derivatives directly, together with an orthogonal diagonalization having distinct eigenvalues. It does not require a separate characteristic-coefficient or adjugate interface. The existence of that diagonalization for the selected branch weights and the final exact-support witnesses remain separate obligations.", formula: JoinedMatrixDerivative()),
+            Paragraph(Text("Conditional unrestricted commutant application. Let the two branch lengths have odd sum, let the loop and all r+s used edge weights be nonzero, and let the two squared-weight continuants be coprime. Suppose U is real orthogonal and U-transpose A U is diagonal with pairwise distinct diagonal entries, where A is the actual joinedPath. Under these explicit hypotheses the existing matrix derivative and recovery relations imply HasNSSP A. This conditional application supplies no existence assertion for U, the branch weights or the final exact-support witness.")),
+            new DocumentBlock.DisplayFormula(NsspBridge()),
+            Paragraph(Text("Put n=r+s+1. Parameterize a symmetric support tangent T(v) by its r left edges, one central loop and s right edges, so v lies in Real to the n. Its spectral diagonal readout is v mapped to diag(U-transpose T(v) U). If this readout vanishes, the derivative of every evaluated characteristic polynomial vanishes: the determinant differential at a diagonal matrix is a sum of determinants with one row replaced, and the zero diagonal of the direction leaves a zero column in each summand. Orthogonal conjugation preserves the characteristic polynomial. Applying joined_path_charpoly_derivative and polynomial extensionality therefore gives zero joinedVariation. The complete joined recovery theorem, with squared-edge variations 2*b*db, recovers every edge and loop direction. The readout is injective and hence surjective between two real spaces of dimension n.")),
+            Paragraph(Text("Now take an arbitrary real X satisfying entrywise A times X equal to zero and A X-transpose equal to X-transpose A. The matrix Y=U-transpose X-transpose U commutes with the diagonal spectral matrix. Distinct spectral entries force every off-diagonal entry of Y to vanish; symmetry of X is a consequence here and is never assumed. Entrywise annihilation gives trace(X-transpose T(v))=0 for every support tangent. Choose v whose spectral diagonal readout equals diag(Y). Invariance of trace under the orthogonal change of basis identifies that trace with the sum of the squares of the diagonal entries of Y. Thus Y=0 and X=0. This argument tests the full unrestricted real commutant.")),
+            Paragraph(Text("The remaining whole-event obligations are a compiled simple-spectrum orthogonal diagonalization for the constructed nonzero weighted paths; conversion of the positive coprime branch parameters into uniform singleton-loop exact-support witnesses at every positive even order and every loop position; enlargement to every nonempty loop set; and a proof of the full claim consuming these relations. Empty branches, endpoints and order two remain included in that goal. The source Superpattern Lemma also preserves similarity, which is stronger than the existential event requires.")),
             Paragraph(Text("Source attribution and license boundaries are recorded in Library/Eigenstructure/koljancic2026nssp.md. The continuant variation argument is a repository derivation; the source question and its published definitions are not claimed as new results.")))));
 
     private static DocumentBlock Node(string id, string title, string name, DescribeRole role, string prose,
@@ -260,6 +264,30 @@ internal sealed class KoljancicOblakEvenPathDocument : IScribeDocumentDefinition
         body = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("qR"), Sequence(), body);
         body = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("qL"), Sequence(), body);
         return All("r", Nat(), All("s", Nat(), Imp(Call("Odd", Add(r, s)), body)));
+    }
+
+    private static Formula NsspBridge()
+    {
+        Formula bl = V("bL"), br = V("bR"), a = V("a"), r = V("r"), s = V("s");
+        Formula u = V("U"), lam = V("lam"), k = V("k");
+        Formula real = Seq(Operatorname, Grp(V("Real")));
+        Formula fin = Call("Fin", Add(Add(s, D(1)), r));
+        Formula matrix = Call("Matrix", fin, fin, real);
+        Formula finiteSequence = new Formula.TypeArrow(fin, real);
+        Formula square(Formula b) => Seq(LambdaLower, Sp, k, Colon, Sp, Nat(), Sp, Mapsto, Sp,
+            new Formula.Power(App(b, k), D(2)));
+        Formula nonzero(Formula b, Formula n) => All("k", Nat(), Imp(Lt(k, n), Ne(App(b, k), D(0))));
+        Formula path = Call("joinedPath", bl, br, a, r, s), tr = Call("transpose", u);
+        Formula body = Imp(Eq(Mul(tr, u), D(1)), Imp(Eq(Mul(u, tr), D(1)),
+            Imp(Eq(Mul(Mul(tr, path), u), Call("diagonal", lam)),
+                Imp(Call("Injective", lam), Call("HasNSSP", path)))));
+        body = All("U", matrix, All("lam", finiteSequence, body));
+        body = Imp(Call("IsCoprime", Call("continuant", square(bl), r),
+            Call("continuant", square(br), s)), body);
+        body = Imp(nonzero(br, s), body);
+        body = Imp(nonzero(bl, r), body);
+        body = Imp(Call("Odd", Add(r, s)), body);
+        return JoinedMatrixBinders(Imp(Ne(a, D(0)), body));
     }
 
     private static Formula V(string s) => F.Id(s);
