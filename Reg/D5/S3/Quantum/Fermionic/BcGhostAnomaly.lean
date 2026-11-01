@@ -16,7 +16,6 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.Reg.D5.S3.Quantum.Fermionic.BcGhostBRST.C (R_zero_vacuum R_two_vacuum)
 open private parity_ket from D5.S3.Quantum.Fermionic.CountableOccupationFock
 open LeanInformationAudit
-open private create_ket annihilate_ket from D5.S3.Quantum.Fermionic.CountableOccupationFock
 open private L_vacuum L_vacuum_nonneg from D5.S3.Quantum.Fermionic.BcGhostVirasoro
 open private c_swap from D5.S3.Quantum.Fermionic.BcGhostCubic
 

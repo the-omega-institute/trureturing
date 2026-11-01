@@ -13,7 +13,6 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open _root_.Reg.D5.S3.Quantum.Fermionic.BcGhostBRST.C (R_zero_vacuum R_two_vacuum)
 open private L_vacuum from D5.S3.Quantum.Fermionic.BcGhostVirasoro
-open private create_ket from D5.S3.Quantum.Fermionic.CountableOccupationFock
 
 namespace Jacobi
 abbrev signature : Signature where

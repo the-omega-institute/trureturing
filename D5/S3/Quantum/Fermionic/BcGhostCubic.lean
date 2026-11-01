@@ -21,7 +21,6 @@ open scoped BigOperators
 open D5.S3.Quantum.Fermionic.CountableOccupationFock
 open D5.S3.Quantum.Fermionic.BcGhostFock
 open D5.S3.Quantum.Fermionic.BcGhostVirasoro (normal L)
-open private annihilate_ket from D5.S3.Quantum.Fermionic.CountableOccupationFock
 
 noncomputable section
 namespace D5.S3.Quantum.Fermionic.BcGhostBRST

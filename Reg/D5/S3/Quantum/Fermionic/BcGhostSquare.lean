@@ -12,7 +12,6 @@ open _root_.D5.S3.Quantum.Fermionic.BcGhostBRST
 open _root_.D5.S3.Quantum.Fermionic.BcGhostVirasoro (L)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open private create_ket annihilate_ket from D5.S3.Quantum.Fermionic.CountableOccupationFock
 open private L_vacuum L_vacuum_nonneg from D5.S3.Quantum.Fermionic.BcGhostVirasoro
 open private c_swap from D5.S3.Quantum.Fermionic.BcGhostCubic
 open private squareAnomaly_b squareAnomaly_vacuum from D5.S3.Quantum.Fermionic.BcGhostSquare
