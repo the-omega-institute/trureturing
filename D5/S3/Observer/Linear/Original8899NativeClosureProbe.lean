@@ -27,6 +27,8 @@ import Mathlib.Topology.Instances.Matrix
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Analysis.Matrix.Spectrum
 
+universe u
+
 noncomputable section
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -239,6 +241,8 @@ theorem native_to_ambient (B : V →L[ℝ] V) (C : V →L[ℝ] W)
       transport u ((eU B C T).comp ((GU B C T).comp (eU B C T))) = normalized B C T := by
     rw [transport_comp, transport_comp, he, hG]
     rfl
+  have hB : B.toLinearMap.toContinuousLinearMap = B := by ext x; rfl
+  have hC : C.toLinearMap.toContinuousLinearMap = C := by ext x; rfl
   have hn := D5.S3.Observer.Linear.DerivativeLayerNativeGramian.derivative_layer_native_gramian
     B.toLinearMap C.toLinearMap
   have hn' :
@@ -252,7 +256,7 @@ theorem native_to_ambient (B : V →L[ℝ] V) (C : V →L[ℝ] W)
       (∀ x : U B C, x ≠ 0 → 0 < ⟪x, HU B C x⟫_ℝ) ∧
       ∃ R : ℝ, 0 ≤ R ∧ ∀ T : ℝ, 0 < T → T ≤ 1 → T * ‖B‖ < 1 →
         ‖(eU B C T).comp ((GU B C T).comp (eU B C T)) - HU B C‖ ≤ R * T := by
-    simpa only [N, U, E, Q, dU, eU, GU, HU, PU, A, comp_assoc] using hn
+    simpa only [N, U, E, Q, dU, eU, GU, HU, PU, A, hB, hC, comp_assoc, smul_comp] using hn
   have hleft (T : ℝ) (hT : 0 < T) : (dV B C T).comp (eV B C T) = .id ℝ V := by
     have hh := congrArg (transport u) (hn'.1 T hT).1
     simpa only [transport_comp, hd, he, transport_id] using hh
@@ -295,6 +299,9 @@ def coordinates (b : OrthonormalBasis ι ℝ V) : (V →L[ℝ] V) →L[ℝ] Matr
       map_add' := by intro K L; simp
       map_smul' := by intro c K; simp }).toContinuousLinearMap
 
+@[simp] theorem coordinates_apply (b : OrthonormalBasis ι ℝ V) (K : V →L[ℝ] V) :
+    coordinates b K = LinearMap.toMatrix b.toBasis b.toBasis K.toLinearMap := rfl
+
 theorem coordinates_comp (b : OrthonormalBasis ι ℝ V) (K L : V →L[ℝ] V) :
     coordinates b (K.comp L) = coordinates b K * coordinates b L := by
   exact LinearMap.toMatrix_comp b.toBasis b.toBasis b.toBasis K.toLinearMap L.toLinearMap
@@ -324,7 +331,7 @@ theorem matrix_integral_gram (b : OrthonormalBasis ι ℝ V)
   let L : (V →L[ℝ] V) →L[ℝ] ℝ :=
     (innerSL ℝ (b i)).comp (ContinuousLinearMap.apply ℝ V (b j))
   have hentry (K : V →L[ℝ] V) : coordinates b K i j = L K := by
-    simp [coordinates, L, LinearMap.toMatrix_apply, OrthonormalBasis.repr_apply_apply]
+    simp [coordinates_apply, L, LinearMap.toMatrix_apply, OrthonormalBasis.repr_apply_apply]
   rw [hentry, ← L.intervalIntegral_comp_comm (hg.intervalIntegrable a c)]
   apply intervalIntegral.integral_congr
   intro t ht
@@ -345,7 +352,8 @@ theorem matrix_limit_posDef (b : OrthonormalBasis ι ℝ V)
     (ht : TransportFacts B C hN) :
     (coordinates b (H B C)).PosDef := by
   apply Matrix.PosDef.of_dotProduct_mulVec_pos
-  · rw [H, matrix_integral_gram b (P B C) (continuous_P B C)]
+  · change (coordinates b (H B C)).conjTranspose = coordinates b (H B C)
+    rw [H, matrix_integral_gram b (P B C) (continuous_P B C)]
     ext i j
     simp only [Matrix.conjTranspose_apply, star_trivial, real_inner_comm]
   · intro x hx
@@ -362,13 +370,13 @@ theorem matrix_limit_posDef (b : OrthonormalBasis ι ℝ V)
       ext i
       simp [v, OrthonormalBasis.coe_toBasis_repr_apply]
     have hmul : (coordinates b (H B C)).mulVec x = fun i => b.repr (H B C v) i := by
-      simpa only [coordinates, hrepr, OrthonormalBasis.coe_toBasis_repr_apply] using
+      simpa only [coordinates_apply, hrepr, OrthonormalBasis.coe_toBasis_repr_apply] using
         LinearMap.toMatrix_mulVec_repr b.toBasis b.toBasis (H B C).toLinearMap v
     have hq := b.repr.inner_map_map v (H B C v)
     have heq : x ⬝ᵥ (coordinates b (H B C)).mulVec x = ⟪v, H B C v⟫_ℝ := by
       rw [hmul]
       simpa only [v, b.repr.apply_symm_apply, EuclideanSpace.inner_eq_star_dotProduct,
-        WithLp.ofLp_toLp, star_trivial] using hq
+        WithLp.ofLp_toLp, star_trivial, dotProduct_comm] using hq
     simpa only [star_trivial, heq] using ht.positive v hv
 
 -- The same isometry also transports the ONE chosen frame. This equality is
@@ -382,7 +390,7 @@ theorem frame_transport (B : V →L[ℝ] V) (C : V →L[ℝ] W)
       coordinates b (transport u K) := by
   intro u bU
   ext i j
-  simp only [coordinates, LinearMap.toMatrix_apply, OrthonormalBasis.repr_apply_apply,
+  simp only [coordinates_apply, LinearMap.toMatrix_apply, OrthonormalBasis.repr_apply_apply,
     OrthonormalBasis.coe_toBasis_repr_apply, OrthonormalBasis.coe_toBasis,
     OrthonormalBasis.map_apply, transport_apply]
   exact (u.inner_map_map (u.symm (b i)) (K (u.symm (b j)))).symm.trans
@@ -412,7 +420,7 @@ theorem physical_determinant_limit (B : V →L[ℝ] V) (C : V →L[ℝ] W)
   have ht := native_to_ambient B C hN
   have hf := D5.S3.Observer.Linear.DerivativeLayerNormalizedObservation.derivative_layer_normalized_observation_facts B.toLinearMap C.toLinearMap
   have horth : OrthogonalFamily ℝ (fun j : Fin (finrank ℝ V) => E B C j)
-      (fun j => (E B C j).subtypeₗᵢ) := by simpa only [E, N] using hf.2.2.1
+      (fun j => (E B C j).subtypeₗᵢ) := hf.2.2.1
   have hspan : (⨆ j : Fin (finrank ℝ V), E B C j) = ⊤ := by
     have hs : N B C (finrank ℝ V) ⊔ (⨆ j : Fin (finrank ℝ V), E B C j) = ⊤ :=
       hf.2.2.2.1
@@ -448,7 +456,10 @@ theorem physical_determinant_limit (B : V →L[ℝ] V) (C : V →L[ℝ] W)
     Matrix.diagonal (fun i => Real.sqrt T * T ^ w i)
   have hdM (T : ℝ) : coordinates b (dV B C T) = D T := by
     ext i j
-    simp [coordinates, LinearMap.toMatrix_apply, hdBasis, D, Matrix.diagonal, eq_comm]
+    by_cases hij : i = j
+    · subst j
+      simp [coordinates_apply, LinearMap.toMatrix_apply, hdBasis, D, Matrix.diagonal]
+    · simp [coordinates_apply, LinearMap.toMatrix_apply, hdBasis, D, Matrix.diagonal, hij, Ne.symm hij]
   have hq : (∑ i, (2 * w i + 1)) = q := by
     calc
       _ = ∑ i : Fin (finrank ℝ V), ∑ j : Fin (finrank ℝ V),
@@ -481,11 +492,14 @@ theorem physical_determinant_limit (B : V →L[ℝ] V) (C : V →L[ℝ] W)
   let Hnative (T : ℝ) := LinearMap.toMatrix bU.toBasis bU.toBasis
     ((eU B C T).comp ((GU B C T).comp (eU B C T))).toLinearMap
   have hHM (T : ℝ) : Hnative T = coordinates b (normalized B C T) := by
-    rw [Hnative, frame_transport, ht.normalization]
+    dsimp only [Hnative]
+    rw [frame_transport, ht.normalization]
   have hlim : Tendsto Hnative (𝓝[>] (0 : ℝ)) (𝓝 (coordinates b (H B C))) := by
-    simpa only [hHM] using ((coordinates b).continuous.tendsto (H B C)).comp ht.limit
+    have hfun : Hnative = (fun T => coordinates b (normalized B C T)) := funext hHM
+    rw [hfun]
+    exact ((coordinates b).continuous.tendsto (H B C)).comp ht.limit
   have hdetbasis (K : V →L[ℝ] V) : (coordinates b K).det = (coordinates bstd K).det := by
-    simp only [coordinates, LinearMap.det_toMatrix]
+    simp only [coordinates_apply, LinearMap.det_toMatrix]
   have hGUframe (T : ℝ) : LinearMap.toMatrix bU.toBasis bU.toBasis (GU B C T).toLinearMap =
       coordinates b (G B C T) := by
     rw [frame_transport, ht.physical]
@@ -529,7 +543,7 @@ noncomputable section
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 open MeasureTheory ProbabilityTheory Filter Set Module ContinuousLinearMap
-open scoped BigOperators ENNReal Topology InnerProductSpace RealInnerProductSpace
+open scoped BigOperators ENNReal Topology InnerProductSpace RealInnerProductSpace Matrix.Norms.L2Operator
 namespace Original63SourceOnly
 
 open D5.S3.Observer.Linear
@@ -625,7 +639,7 @@ def quadraticLaw (M : Matrix a (Fin d) ℝ) (β v : ℝ) : Prop :=
 -- This is an actual joint-law conclusion on any supplied probability space.
 -- No covariance-only equality or assumed risk identity is a premise.
 def independentRealization (M : Matrix a (Fin d) ℝ) (β σ : ℝ) : Prop :=
-  ∀ (Ω : Type*) [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+  ∀ (Ω : Type u) [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
     (X : Ω → V d) (xi : Ω → EuclideanSpace ℝ a),
     Measurable X → Measurable xi → IndepFun X xi P →
     P.map X = multivariateGaussian 0 (β⁻¹ • (1 : Matrix (Fin d) (Fin d) ℝ)) →
@@ -636,7 +650,7 @@ def independentRealization (M : Matrix a (Fin d) ℝ) (β σ : ℝ) : Prop :=
 -- The same all-measurable risk statement on the SUPPLIED probability space.
 -- In particular, no finite-risk or L2 premise is imposed on the competitor.
 def realizedQuadraticLaw (M : Matrix a (Fin d) ℝ) (β σ : ℝ) : Prop :=
-  ∀ (Ω : Type*) [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
+  ∀ (Ω : Type u) [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityMeasure P]
     (X : Ω → V d) (xi : Ω → EuclideanSpace ℝ a),
     Measurable X → Measurable xi → IndepFun X xi P →
     P.map X = multivariateGaussian 0 (β⁻¹ • (1 : Matrix (Fin d) (Fin d) ℝ)) →
@@ -652,13 +666,13 @@ def realizedQuadraticLaw (M : Matrix a (Fin d) ℝ) (β σ : ℝ) : Prop :=
       ∫⁻ ω, loss (X ω) (est.1 (Y ω)) ∂P) = ENNReal.ofReal (Matrix.trace S / 2)
 
 def finiteExperiment (M : Matrix a (Fin d) ℝ) (β σ : ℝ) : Prop :=
-  independentRealization M β σ ∧ quadraticLaw M β (σ ^ 2) ∧
+  independentRealization.{u} M β σ ∧ quadraticLaw M β (σ ^ 2) ∧
   GaussianObservationLaw.mutualInformation M β (σ ^ 2)⁻¹ ≠ ∞ ∧
   information M β (σ ^ 2) =
     Real.log ((1 + ((β * σ ^ 2)⁻¹) • (M.transpose * M)).det) / 2 ∧
   GaussianObservationLaw.jointLaw M β (σ ^ 2)⁻¹ =
     GaussianObservationLaw.dataLaw M β (σ ^ 2)⁻¹ ⊗ₘ GaussianObservationLaw.posteriorKernel M β (σ ^ 2)⁻¹ ∧
-  realizedQuadraticLaw M β σ
+  realizedQuadraticLaw.{u} M β σ
 
 -- All FOUR clauses, simultaneously, for the actual matrix family in each branch.
 def noiseConclusion (B : V d →L[ℝ] V d) (C : V d →L[ℝ] V p)
@@ -714,7 +728,7 @@ def normalizedMomentApproximation (B : V d →L[ℝ] V d) (C : V d →L[ℝ] V p
 private theorem actualExperiment (n : ℕ) (β : ℝ) (hβ : 0 < β)
     {i : Type} [Fintype i] [DecidableEq i]
     (M : Matrix i (Fin (n + 1)) ℝ) (σ : ℝ) (hσ : 0 < σ ^ 2) :
-    finiteExperiment M β σ := by
+    finiteExperiment.{u} M β σ := by
   classical
   have hgaussianSquared {i : Type} [Fintype i] [DecidableEq i]
       (S : Matrix i i ℝ) (hS : S.PosSemidef) (u z : EuclideanSpace ℝ i) :
@@ -727,7 +741,8 @@ private theorem actualExperiment (n : ℕ) (β : ℝ) (hβ : 0 < β)
       calc
         (∫ x : EuclideanSpace ℝ i, x k ∂ν) =
             (EuclideanSpace.proj k) (∫ x : EuclideanSpace ℝ i, x ∂ν) :=
-          (EuclideanSpace.proj k).integral_comp_comm IsGaussian.integrable_id
+          (EuclideanSpace.proj k).integral_comp_comm
+            (φ := fun x : EuclideanSpace ℝ i => x) (μ := ν) IsGaussian.integrable_id
         _ = u k := by rw [integral_id_multivariateGaussian]; rfl
     have hsq (k : i) : (∫ x : EuclideanSpace ℝ i, (x k - z k) ^ 2 ∂ν) =
         S k k + (u k - z k) ^ 2 := by
@@ -737,7 +752,7 @@ private theorem actualExperiment (n : ℕ) (β : ℝ) (hβ : 0 < β)
       rw [variance_sub_const (hcoord k).aestronglyMeasurable,
         variance_eval_multivariateGaussian hS,
         integral_sub ((hcoord k).integrable (by norm_num)) (integrable_const _), hmean] at hv
-      simpa only [integral_const, measureReal_univ_eq_one, one_smul] using
+      simpa [integral_const, Measure.real] using
         (eq_add_of_sub_eq hv.symm)
     have hInt : Integrable (fun x : EuclideanSpace ℝ i => ‖x - z‖ ^ 2 / 2) ν := by
       simpa only [EuclideanSpace.real_norm_sq_eq, PiLp.sub_apply, Pi.sub_apply] using
@@ -747,24 +762,24 @@ private theorem actualExperiment (n : ℕ) (β : ℝ) (hβ : 0 < β)
       (ae_of_all _ (fun x => div_nonneg (sq_nonneg _) (by norm_num)))]
     congr 1
     simp_rw [EuclideanSpace.real_norm_sq_eq, PiLp.sub_apply]
-    rw [integral_div, integral_finsetSum _ (fun k _ =>
-      ((hcoord k).sub (memLp_const (z k))).integrable_sq)]
+    have hsqInt (k : i) : Integrable (fun x : EuclideanSpace ℝ i => (x k - z k) ^ 2) ν :=
+      ((hcoord k).sub (memLp_const (z k))).integrable_sq
+    rw [integral_div, integral_finsetSum _ (fun k _ => hsqInt k)]
     simp_rw [hsq]
     simp [Matrix.trace, Finset.sum_add_distrib, add_div]
 
   have hrisk {i : Type} [Fintype i] [DecidableEq i]
       (M : Matrix i (Fin (n + 1)) ℝ) (v : ℝ) (hv : 0 < v) : quadraticLaw M β v := by
-    let σ := Real.sqrt v
-    have hσ : σ ^ 2 = v := Real.sq_sqrt hv.le
-    have hL := GaussianObservationLaw.gaussian_observation_law_complete M β σ hβ (by rwa [hσ])
-    simp only [hσ] at hL
     let S := GaussianObservationLaw.covariance M β v⁻¹
     let A := GaussianObservationLaw.action (GaussianObservationLaw.gain M β v⁻¹)
     have hS : S.PosDef := (GaussianObservationLaw.precision_posDef M β v⁻¹ hβ (inv_pos.mpr hv).le).inv
     have htrace : 0 ≤ Matrix.trace S :=
       Finset.sum_nonneg (fun k _ => hS.posSemidef.diag_nonneg (i := k))
     have hdis : GaussianObservationLaw.jointLaw M β v⁻¹ =
-        GaussianObservationLaw.dataLaw M β v⁻¹ ⊗ₘ GaussianObservationLaw.posteriorKernel M β v⁻¹ := hL.1.2.2.2.2.2.2.1
+        GaussianObservationLaw.dataLaw M β v⁻¹ ⊗ₘ GaussianObservationLaw.posteriorKernel M β v⁻¹ := by
+      have h := GaussianObservationLaw.gaussian_observation_law_complete
+        M β (Real.sqrt v) hβ (by rwa [Real.sq_sqrt hv.le])
+      simpa only [Real.sq_sqrt hv.le] using h.1.2.2.2.2.2.2.1
     have hcond (y : EuclideanSpace ℝ i) : GaussianObservationLaw.posteriorKernel M β v⁻¹ y =
         multivariateGaussian (A y) S := by
       rw [GaussianObservationLaw.posteriorKernel, GaussianObservationLaw.translatedKernel_apply, GaussianObservationLaw.translate_gaussian, add_zero]
@@ -774,8 +789,12 @@ private theorem actualExperiment (n : ℕ) (β : ℝ) (hβ : 0 < β)
       unfold estimatorRisk
       rw [hdis, Measure.lintegral_compProd (by unfold loss; fun_prop)]
       simp_rw [hcond, loss, hgaussianSquared S hS.posSemidef]
-      simp_rw [ENNReal.ofReal_add (div_nonneg htrace (by norm_num))
-        (div_nonneg (sq_nonneg _) (by norm_num))]
+      have hsplit (y : EuclideanSpace ℝ i) :
+          ENNReal.ofReal (Matrix.trace S / 2 + ‖A y - est y‖ ^ 2 / 2) =
+            ENNReal.ofReal (Matrix.trace S / 2) + ENNReal.ofReal (‖A y - est y‖ ^ 2 / 2) :=
+        ENNReal.ofReal_add (div_nonneg htrace (by norm_num))
+          (div_nonneg (sq_nonneg _) (by norm_num))
+      simp_rw [hsplit]
       rw [lintegral_add_left measurable_const]
       simp
     have hattain : estimatorRisk M β v A = ENNReal.ofReal (Matrix.trace S / 2) := by
@@ -790,7 +809,7 @@ private theorem actualExperiment (n : ℕ) (β : ℝ) (hβ : 0 < β)
 
   have hrealization {i : Type} [Fintype i] [DecidableEq i]
       (M : Matrix i (Fin (n + 1)) ℝ) (σ : ℝ) (hσ : 0 < σ ^ 2) :
-      independentRealization M β σ := by
+      independentRealization.{u} M β σ := by
     intro Ω _ P _ X xi hX hxi hind hXlaw hxilaw
     let ν := P.map (fun ω => σ • xi ω)
     have hind' : IndepFun X (fun ω => σ • xi ω) P :=
@@ -820,7 +839,7 @@ private theorem actualExperiment (n : ℕ) (β : ℝ) (hβ : 0 < β)
       Matrix.fromCols_mulVec, Matrix.one_mulVec, Matrix.zero_mulVec] using hpush
 
   have hexperiment {i : Type} [Fintype i] [DecidableEq i]
-      (M : Matrix i (Fin (n + 1)) ℝ) (σ : ℝ) (hσ : 0 < σ ^ 2) : finiteExperiment M β σ := by
+      (M : Matrix i (Fin (n + 1)) ℝ) (σ : ℝ) (hσ : 0 < σ ^ 2) : finiteExperiment.{u} M β σ := by
     have h := GaussianObservationLaw.gaussian_observation_law_complete M β σ hβ hσ
     have hq := hrisk M (σ ^ 2) hσ
     refine ⟨hrealization M σ hσ, hq, h.1.1, ?_, ?_, ?_⟩
@@ -878,15 +897,17 @@ private theorem actualFrame (n r m : ℕ)
       (∀ j i : Fin (n + 1), (layer B C j).starProjection (b i) =
         if (j : ℕ) = w i then b i else 0) := by
   classical
+  have hdim : finrank ℝ (V (n + 1)) = n + 1 := by simp [V]
   have hlayers := DerivativeLayerNormalizedObservation.derivative_layer_normalized_observation_facts B.toLinearMap C.toLinearMap
-  have hnative := DerivativeLayerNativeGramian.derivative_layer_native_gramian B.toLinearMap C.toLinearMap
+  dsimp only at hlayers
+  simp only [hdim] at hlayers
   have hN : kernels B C (n + 1) = ⊥ := by
     apply le_antisymm
     · intro x hx
       apply hobs x
       intro k
       have hk := (Submodule.mem_iInf _).mp hx k
-      simpa [kernels, LinearMap.mem_ker, LinearMap.comp_apply] using hk
+      simpa only [LinearMap.mem_ker, LinearMap.comp_apply, Module.End.pow_apply] using hk
     · exact bot_le
   have hnest {j k : ℕ} (hjk : j ≤ k) : kernels B C k ≤ kernels B C j := by
     intro x hx
@@ -895,16 +916,16 @@ private theorem actualFrame (n r m : ℕ)
     exact (Submodule.mem_iInf _).mp hx ⟨i, lt_of_lt_of_le i.isLt hjk⟩
   have horth : OrthogonalFamily ℝ (fun j : Fin (n + 1) => layer B C j)
       (fun j => (layer B C j).subtypeₗᵢ) := by
-    simpa [kernels, layer] using hlayers.2.2.1
+    exact hlayers.2.2.1
   have hspan : (⨆ j : Fin (n + 1), layer B C j) = ⊤ := by
-    have hs := hlayers.2.2.2.1
-    simpa [kernels, layer, hN] using hs
+    have hs : kernels B C (n + 1) ⊔ (⨆ j : Fin (n + 1), layer B C j) = ⊤ :=
+      hlayers.2.2.2.1
+    simpa only [hN, bot_sup_eq] using hs
   have hinternal : DirectSum.IsInternal (fun j : Fin (n + 1) => layer B C j) :=
     horth.isInternal_iff.mpr (by rw [hspan]; simp)
-  have hdim : finrank ℝ (V (n + 1)) = n + 1 := by simp [V]
   let b0 := hinternal.subordinateOrthonormalBasis hdim horth
   let w0 : Fin (n + 1) → ℕ := fun i =>
-    (hinternal.subordinateOrthonormalBasisIndex hdim i horth : ℕ)
+    ((hinternal.subordinateOrthonormalBasisIndex hdim i horth : Fin (n + 1)) : ℕ)
   let perm := Tuple.sort w0
   let w := w0 ∘ perm
   let b := b0.reindex perm.symm
@@ -1000,7 +1021,7 @@ private theorem actualScalarStatistics (n : ℕ) (β : ℝ) (hβ : 0 < β)
       (bayesRisk M β v).toReal = (1 / 2 : ℝ) * ∑ j, v / (β * v + lam j) := by
   classical
   have hexperiment {i : Type} [Fintype i] [DecidableEq i]
-      (M : Matrix i (Fin (n + 1)) ℝ) (σ : ℝ) (hσ : 0 < σ ^ 2) : finiteExperiment M β σ :=
+      (M : Matrix i (Fin (n + 1)) ℝ) (σ : ℝ) (hσ : 0 < σ ^ 2) : finiteExperiment.{u} M β σ :=
     actualExperiment n β hβ M σ hσ
   have hrisk {i : Type} [Fintype i] [DecidableEq i]
       (M : Matrix i (Fin (n + 1)) ℝ) (v : ℝ) (hv : 0 < v) : quadraticLaw M β v := by
@@ -1211,7 +1232,10 @@ private theorem actualSpectrum (n r : ℕ)
   have heMatrix (T : ℝ) : LinearMap.toMatrix b.toBasis b.toBasis (e T).toLinearMap =
       Matrix.diagonal (fun i => (Real.sqrt T * T ^ w i)⁻¹) := by
     ext i j
-    simp [LinearMap.toMatrix_apply, heBasis, Matrix.diagonal, eq_comm]
+    by_cases hij : i = j
+    · subst j
+      simp [LinearMap.toMatrix_apply, heBasis, Matrix.diagonal]
+    · simp [LinearMap.toMatrix_apply, heBasis, Matrix.diagonal, hij, Ne.symm hij]
   have hrestore (T : ℝ) (hT : 0 < T)
       (K : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ) :
       D T * LinearMap.toMatrix b.toBasis b.toBasis
@@ -1219,7 +1243,8 @@ private theorem actualSpectrum (n r : ℕ)
         LinearMap.toMatrix b.toBasis b.toBasis (GaussianObservationLaw.action K).toLinearMap := by
     let E := Matrix.diagonal (fun i => (Real.sqrt T * T ^ w i)⁻¹)
     have hDE : D T * E = 1 := by
-      rw [D, E, Matrix.diagonal_mul_diagonal]
+      dsimp only [D, E]
+      rw [Matrix.diagonal_mul_diagonal]
       ext i j
       have hn : Real.sqrt T * T ^ w i ≠ 0 :=
         mul_ne_zero (Real.sqrt_pos.mpr hT).ne' (pow_pos hT _).ne'
@@ -1416,7 +1441,7 @@ private theorem actualTrajectory (n r m : ℕ)
       (trajectoryF B C hobs T hT).range) :
     let MT := trajectoryFamily B C hobs basis
     (∀ T (hT : 0 < T), (MT T).transpose * MT T = physicalG B C T ∧
-      (∀ σ : ℝ, 0 < σ ^ 2 → finiteExperiment (MT T) β σ)) ∧
+      (∀ σ : ℝ, 0 < σ ^ 2 → finiteExperiment.{u} (MT T) β σ)) ∧
     noiseConclusion B C m MT β ∧
     ∃ w : Fin (n + 1) → ℕ, ∃ c C' : ℝ,
       Monotone w ∧ (∀ i, w i ≤ m) ∧ w (Fin.last n) = m ∧
@@ -1434,7 +1459,7 @@ private theorem actualTrajectory (n r m : ℕ)
   classical
   intro MT
   have hexperiment {i : Type} [Fintype i] [DecidableEq i]
-      (M : Matrix i (Fin (n + 1)) ℝ) (σ : ℝ) (hσ : 0 < σ ^ 2) : finiteExperiment M β σ :=
+      (M : Matrix i (Fin (n + 1)) ℝ) (σ : ℝ) (hσ : 0 < σ ^ 2) : finiteExperiment.{u} M β σ :=
     actualExperiment n β hβ M σ hσ
   have hrisk {i : Type} [Fintype i] [DecidableEq i]
       (M : Matrix i (Fin (n + 1)) ℝ) (v : ℝ) (hv : 0 < v) : quadraticLaw M β v := by
@@ -1522,15 +1547,15 @@ private theorem actualOriginal63 (n r m cutoff : ℕ)
     let MM := momentM B C cutoff ell
     (∀ T (hT : 0 < T),
       (MT T).transpose * MT T = physicalG B C T ∧
-      (∀ σ : ℝ, 0 < σ ^ 2 → finiteExperiment (MT T) β σ)) ∧
+      (∀ σ : ℝ, 0 < σ ^ 2 → finiteExperiment.{u} (MT T) β σ)) ∧
     actualMomentCoordinates B C hobs cutoff ell ∧
     normalizedMomentApproximation B C cutoff ell ∧
-    (∀ T, 0 < T → ∀ σ : ℝ, 0 < σ ^ 2 → finiteExperiment (MM T) β σ) ∧
+    (∀ T, 0 < T → ∀ σ : ℝ, 0 < σ ^ 2 → finiteExperiment.{u} (MM T) β σ) ∧
     noiseConclusion B C m MT β ∧ noiseConclusion B C m MM β := by
   classical
   intro MT MM
   have hexperiment {i : Type} [Fintype i] [DecidableEq i]
-      (M : Matrix i (Fin (n + 1)) ℝ) (σ : ℝ) (hσ : 0 < σ ^ 2) : finiteExperiment M β σ :=
+      (M : Matrix i (Fin (n + 1)) ℝ) (σ : ℝ) (hσ : 0 < σ ^ 2) : finiteExperiment.{u} M β σ :=
     actualExperiment n β hβ M σ hσ
   have hrisk {i : Type} [Fintype i] [DecidableEq i]
       (M : Matrix i (Fin (n + 1)) ℝ) (v : ℝ) (hv : 0 < v) : quadraticLaw M β v := by
@@ -1615,7 +1640,7 @@ private theorem actualOriginal63 (n r m cutoff : ℕ)
       apply hobs x
       intro k
       have hk := (Submodule.mem_iInf _).mp hx k
-      simpa [kernels, LinearMap.mem_ker, LinearMap.comp_apply] using hk
+      simpa only [LinearMap.mem_ker, LinearMap.comp_apply, Module.End.pow_apply] using hk
     · exact bot_le
   have hnest {j k : ℕ} (hjk : j ≤ k) : kernels B C k ≤ kernels B C j := by
     intro x hx
@@ -2360,7 +2385,7 @@ private theorem actualGeometry :
       simpa [hMD, Matrix.toEuclideanLin] using hh
     have hr := M.toEuclideanLin.finrank_range_add_finrank_ker
     rw [LinearMap.range_eq_top.mpr hsurj] at hr
-    simp only [Module.finrank_top, finrank_euclideanSpace, Fintype.card_fin] at hr
+    simp only [finrank_top, finrank_euclideanSpace, Fintype.card_fin] at hr
     omega
   have hsdim : ∀ j : Fin 5, finrank ℝ (Ns j) = 4-(j : ℕ) := by
     intro j
@@ -3061,11 +3086,11 @@ namespace Original63SourceOnly
 
 -- This conclusion uses the same matrix, physical Gramian, joint law and
 -- posterior as the general experiment. It quantifies all measurable risks
--- through finiteExperiment, including competitors with infinite risk.
+-- through finiteExperiment.{u}, including competitors with infinite risk.
 def physicalExperiment {n r : ℕ}
     (B : V (n + 1) →L[ℝ] V (n + 1)) (C : V (n + 1) →L[ℝ] V (r + 1))
     (T β σ : ℝ) (M : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ) : Prop :=
-  M.transpose * M = physicalG B C T ∧ finiteExperiment M β σ ∧
+  M.transpose * M = physicalG B C T ∧ finiteExperiment.{u} M β σ ∧
   GaussianObservationLaw.covariance M β (σ ^ 2)⁻¹ =
     (β • (1 : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ) +
       (σ ^ 2)⁻¹ • physicalG B C T)⁻¹ ∧
@@ -3498,10 +3523,10 @@ private def Original63Clause : Prop :=
       let MM := momentM B C cutoff ell
       (∀ T (hT : 0 < T),
         (MT T).transpose * MT T = physicalG B C T ∧
-        (∀ σ : ℝ, 0 < σ ^ 2 → finiteExperiment (MT T) β σ)) ∧
+        (∀ σ : ℝ, 0 < σ ^ 2 → finiteExperiment.{u} (MT T) β σ)) ∧
       actualMomentCoordinates B C hobs cutoff ell ∧
       normalizedMomentApproximation B C cutoff ell ∧
-      (∀ T, 0 < T → ∀ σ : ℝ, 0 < σ ^ 2 → finiteExperiment (MM T) β σ) ∧
+      (∀ T, 0 < T → ∀ σ : ℝ, 0 < σ ^ 2 → finiteExperiment.{u} (MM T) β σ) ∧
       noiseConclusion B C m MT β ∧ noiseConclusion B C m MM β
 end Original63SourceOnly
 namespace Original8899FixedTransport
