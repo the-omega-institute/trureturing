@@ -8,6 +8,8 @@
 
 import D5.S3.Quantum.Fermionic.BcGhostFock
 
+/-! Ordered relative ghost words on the original finite occupation carrier. -/
+
 open scoped BigOperators
 open D5.S3.Quantum.Fermionic.CountableOccupationFock
 open D5.S3.Quantum.Fermionic.BcGhostFock
@@ -166,7 +168,7 @@ private theorem sum_crossing (B C : Finset ℕ) :
       ((B.product C).filter (fun p => p.2 + 4 ≤ p.1)).card := by
   classical
   rw [Finset.card_filter]
-  rw [← Finset.sum_product]
+  rw [Finset.sum_product]
   simp [Finset.card_filter]
 
 private theorem bword_sorted : ∀ (xs : List ℕ) (C : Finset ℕ),
@@ -194,56 +196,65 @@ private theorem bword_sorted : ∀ (xs : List ℕ) (C : Finset ℕ),
             omega
         · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y (by simpa using hy)
           simp [bSite] at he
-          have hy2 : 2 ≤ y := htwo y (by simp [hy])
+          have hy2 : 2 ≤ y := htwo y (List.mem_cons_of_mem x (by simpa using hy))
           omega
       have heven' : 2 * (x - 2) ∉ bOcc C xs := by simpa [bSite] using heven
       rw [if_neg heven']
       have hcount : lowerCount (bSite x) (bOcc C xs) = bStepExponent x C := by
-        unfold lowerCount bOcc bStepExponent bSite
-        have heq :
-            ((cOcc (asc C) ∪ xs.toFinset.image (fun r => 2 * (r - 2))).filter
-              (fun j => j < 2 * (x - 2))) =
-              ((if 3 ≤ x then {1} else ∅) ∪
-                (C.filter (fun s => s + 4 ≤ x)).image (fun s => 2 * s + 3)) := by
+        have heq : (bOcc C xs).filter (fun j => j < bSite x) =
+            (if 3 ≤ x then {1} else ∅) ∪
+              (C.filter (fun s => s + 4 ≤ x)).image (fun s => 2 * s + 3) := by
           ext j
-          simp only [Finset.mem_filter, Finset.mem_union, Finset.mem_singleton,
-            Finset.mem_image]
-          constructor
-          · rintro ⟨hj, hlt⟩
-            rcases hj with hj | ⟨y, hy, rfl⟩
-            · simp only [cOcc, Finset.mem_union, Finset.mem_singleton, Finset.mem_image] at hj
-              rcases hj with hj | ⟨s, hs, rfl⟩
-              · by_cases hx3 : 3 ≤ x
-                · have hj1 : j = 1 := by simpa [hx3] using hj
-                  subst j
-                  exact Or.inl (by simp [hx3])
-                · simp [hx3] at hj
-              · have hsC : s ∈ C := by simpa [asc] using hs
-                have hs4 : s + 4 ≤ x := by omega
-                exact Or.inr ⟨s, ⟨hsC, hs4⟩, rfl⟩
-            · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y (by simpa using hy)
-              have hy2 : 2 ≤ y := htwo y (by simp [hy])
-              simp [bSite] at hlt
-              omega
-          · intro hj
-            rcases hj with hj | ⟨s, hs, rfl⟩
-            · by_cases hx3 : 3 ≤ x
-              · have hj1 : j = 1 := by simpa [hx3] using hj
-                subst j
-                exact ⟨Or.inl (Or.inl rfl), by omega⟩
-              · simp [hx3] at hj
-            · have hs4 := hs.2
-              exact ⟨Or.inl (Or.inr ⟨s, hs.1, rfl⟩), by omega⟩
-        rw [heq]
-        simp [Finset.card_union_of_disjoint]
-      rw [show phase (bSite x) (bOcc C xs) = (-1 : ℂ) ^ bStepExponent x C by
-        simp [phase, hcount]]
-      have hset : insert (bSite x) (bOcc C xs) = bOcc C (x :: xs) := by
-        simp [bOcc, bSite, hxnot]
-      change _ • _ • ket (insert (bSite x) (bOcc C xs)) = _
+          simp only [bOcc, cOcc, asc, Finset.sort_toFinset, Finset.mem_filter,
+            Finset.mem_union, Finset.mem_image, Finset.mem_singleton]
+          by_cases hx3 : 3 ≤ x <;> simp only [hx3, ↓reduceIte,
+            Finset.mem_singleton, Finset.notMem_empty, false_or]
+          all_goals
+            constructor
+            · rintro ⟨(hj | ⟨t, ht, he⟩) | ⟨y, hy, he⟩, hlt⟩
+              · subst j
+                simp_all [bSite]
+                omega
+              · subst j
+                simp only [bSite] at hlt
+                first | exact Or.inr ⟨t, ⟨ht, by omega⟩, rfl⟩ |
+                  exact ⟨t, ⟨ht, by omega⟩, rfl⟩
+              · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y
+                  (by simpa using hy)
+                simp only [bSite] at he hlt
+                omega
+            · intro hj
+              first
+              | rcases hj with rfl | ⟨t, ⟨ht, htx⟩, rfl⟩
+                · exact ⟨Or.inl (Or.inl rfl), by simp [bSite]; omega⟩
+                · exact ⟨Or.inl (Or.inr ⟨t, ht, rfl⟩), by simp [bSite]; omega⟩
+              | rcases hj with ⟨t, ⟨ht, htx⟩, rfl⟩
+                exact ⟨Or.inl (Or.inr ⟨t, ht, rfl⟩), by simp [bSite]; omega⟩
+        have hd : Disjoint (if 3 ≤ x then ({1} : Finset ℕ) else ∅)
+            ((C.filter (fun s => s + 4 ≤ x)).image (fun s => 2 * s + 3)) := by
+          apply Finset.disjoint_left.mpr
+          intro j hj hk
+          split_ifs at hj with hx3
+          · have hj1 : j = 1 := Finset.mem_singleton.mp hj
+            obtain ⟨t, ht, he⟩ := Finset.mem_image.mp hk
+            omega
+          · exact Finset.notMem_empty j hj
+        unfold lowerCount bStepExponent
+        rw [heq, Finset.card_union_of_disjoint hd,
+          Finset.card_image_of_injective _ (by intro a b h; omega)]
+        split_ifs <;> simp
+      have hp : phase (2 * (x - 2)) (bOcc C xs) =
+          (-1 : ℂ) ^ bStepExponent x C := by
+        change (-1 : ℂ) ^ lowerCount (bSite x) (bOcc C xs) = _
+        rw [hcount]
+      rw [hp]
+      have hset : insert (2 * (x - 2)) (bOcc C xs) = bOcc C (x :: xs) := by
+        simp [bOcc, bSite, Finset.union_insert, Finset.insert_union]
       rw [hset, smul_smul, ← pow_add]
-      congr 1
-      simp [bStepExponent, Finset.sum_insert hxnot]
+      congr 2
+      simp only [List.toFinset_cons]
+      rw [Finset.sum_insert (by simpa using hxnot)]
+      omega
 
 private theorem bword_asc (B C : Finset ℕ)
     (hB : positiveSet B) (h1 : 1 ∉ B) :
@@ -317,7 +328,8 @@ private theorem W_is_Wcoord (B C : Finset ℕ)
             rcases hj with hj | ⟨s, hs, rfl⟩ <;> omega
           · have hrB : r ∈ B := Finset.mem_of_mem_erase hr
             have hrne : r ≠ 1 := by
-              intro h; subst r
+              intro h
+              subst r
               exact Finset.notMem_erase 1 B hr
             have hr2 : r = 2 := by
               unfold bSite at hjlt
@@ -330,7 +342,7 @@ private theorem W_is_Wcoord (B C : Finset ℕ)
             subst j
             constructor
             · exact Or.inr ⟨2, Finset.mem_erase.mpr ⟨by omega, h2⟩, by simp [bSite]⟩
-            · omega
+            · simp [bSite]
           · simp [h2] at hj
       unfold phase lowerCount
       rw [hfilter]
@@ -338,82 +350,92 @@ private theorem W_is_Wcoord (B C : Finset ℕ)
     rw [hphase, smul_smul]
     have hset : (cOcc (asc C) ∪ (B.erase 1).image bSite).erase 1 = occ B C := by
       ext j
-      simp [occ, cOcc, Finset.mem_erase, bSite, asc]
-      omega
+      simp only [cOcc, asc, Finset.sort_toFinset, occ, hB, ↓reduceIte,
+        Finset.empty_union, Finset.mem_erase, Finset.mem_union, Finset.mem_singleton,
+        Finset.mem_image, Finset.mem_filter]
+      constructor
+      · rintro ⟨hne, hj | hj⟩
+        · rcases hj with hj | hj
+          · exact (hne hj).elim
+          · exact Or.inr hj
+        · obtain ⟨r, ⟨hr1, hrB⟩, he⟩ := hj
+          have hr2 : 2 ≤ r := by have := hBpos r hrB; omega
+          exact Or.inl ⟨r, ⟨hrB, hr2⟩, he⟩
+      · intro hj
+        rcases hj with ⟨r, ⟨hrB, hr2⟩, he⟩ | ⟨t, ht, he⟩
+        · have hne : j ≠ 1 := by simp only [bSite] at he; omega
+          exact ⟨hne, Or.inr ⟨r, ⟨by omega, hrB⟩, he⟩⟩
+        · exact ⟨by omega, Or.inl (Or.inr ⟨t, ht, he⟩)⟩
     rw [hset]
-    unfold Wcoord sign signExponent
-    simp [hB]
+    have hf : (B.erase 1).filter (fun r => 3 ≤ r) = B.filter (fun r => 3 ≤ r) := by
+      ext r
+      simp only [Finset.mem_filter, Finset.mem_erase]
+      omega
+    have hx : (((B.erase 1).product C).filter (fun p => p.2 + 4 ≤ p.1)) =
+        ((B.product C).filter (fun p => p.2 + 4 ≤ p.1)) := by
+      ext p
+      simp only [Finset.mem_filter, Finset.mem_product, Finset.mem_erase]
+      omega
+    simp only [Wcoord, sign, signExponent, hf, hx, hB, true_and]
+    simp only [pow_add, smul_smul, mul_assoc]
   · change gword ((asc B).map bneg)
       ((-1 : ℂ) ^ C.card • ket (cOcc (asc C))) = _
     rw [map_smul, bword_asc B C hBpos hB]
-    have hset : cOcc (asc C) ∪ B.image bSite =
-        insert 1 ((B.filter (fun r => 2 ≤ r)).image bSite ∪ C.image (fun s => 2 * s + 3)) := by
-      ext j
-      simp [cOcc, asc, bSite, hB]
+    have hf : B.filter (fun r => 2 ≤ r) = B := by
+      apply Finset.filter_eq_self.mpr
+      intro r hr
+      have := hBpos r hr
+      have : r ≠ 1 := by intro he; exact hB (he ▸ hr)
       omega
+    have hset : cOcc (asc C) ∪ B.image bSite = occ B C := by
+      simp [occ, hB, hf, cOcc, asc, bSite, Finset.union_assoc,
+        Finset.union_left_comm, Finset.union_comm]
     rw [hset]
-    unfold Wcoord sign signExponent occ
-    simp [hB, hzeroB, hzeroC, pow_add, add_assoc, add_left_comm, add_comm]
+    simp [Wcoord, sign, signExponent, hB, pow_add, smul_smul, mul_assoc]
+
+private theorem mem_occ (j : ℕ) (B C : Finset ℕ) :
+    j ∈ occ B C ↔ (j = 1 ∧ 1 ∉ B) ∨
+      (∃ r ∈ B, 2 ≤ r ∧ bSite r = j) ∨ (∃ s ∈ C, 2 * s + 3 = j) := by
+  classical
+  by_cases h : 1 ∈ B <;>
+    simp [occ, h, bSite, and_assoc, or_assoc]
+
+private theorem occ_one (B C : Finset ℕ) : 1 ∈ occ B C ↔ 1 ∉ B := by
+  rw [mem_occ]
+  constructor
+  · rintro (h | ⟨r, hr, hr2, he⟩ | ⟨s, hs, he⟩)
+    · exact h.2
+    · simp only [bSite] at he
+      omega
+    · omega
+  · exact fun h => Or.inl ⟨rfl, h⟩
 
 private theorem occ_bSite_mem (r : ℕ) (B C : Finset ℕ) (hr : 2 ≤ r) :
     bSite r ∈ occ B C ↔ r ∈ B := by
-  classical
-  unfold occ bSite
-  split <;> rename_i h1
-  · simp only [Finset.mem_union, Finset.mem_filter, Finset.mem_image]
-    constructor
-    · intro h
-      rcases h with h | h
-      · rcases h with ⟨s, hs, he⟩
-        have hs2 := (Finset.mem_filter.mp hs).2
-        omega
-      · rcases h with ⟨s, hs, he⟩
-        omega
-    · intro h
-      exact Or.inl ⟨r, ⟨h, hr⟩, by simp [bSite]⟩
-  · simp only [Finset.mem_union, Finset.mem_singleton, Finset.mem_filter, Finset.mem_image]
-    constructor
-    · intro h
-      rcases h with h | h
-      · omega
-      · rcases h with h | h
-        · rcases h with ⟨s, hs, he⟩
-          have hs2 := (Finset.mem_filter.mp hs).2
-          omega
-        · rcases h with ⟨s, hs, he⟩
-          omega
-    · intro h
-      exact Or.inl (Or.inr ⟨r, ⟨h, hr⟩, by simp [bSite]⟩)
+  rw [mem_occ]
+  constructor
+  · rintro (⟨he, _⟩ | ⟨t, ht, ht2, he⟩ | ⟨s, hs, he⟩)
+    · simp only [bSite] at he
+      omega
+    · have : t = r := by simp only [bSite] at he; omega
+      exact this ▸ ht
+    · simp only [bSite] at he
+      omega
+  · intro h
+    exact Or.inr (Or.inl ⟨r, h, hr, rfl⟩)
 
 private theorem occ_cSite_mem (r : ℕ) (B C : Finset ℕ) :
     2 * r + 3 ∈ occ B C ↔ r ∈ C := by
-  classical
-  unfold occ
-  split <;> rename_i h1
-  · simp only [Finset.mem_union, Finset.mem_filter, Finset.mem_image]
-    constructor
-    · intro h
-      rcases h with h | h
-      · rcases h with ⟨s, hs, he⟩
-        have hs2 := (Finset.mem_filter.mp hs).2
-        omega
-      · rcases h with ⟨s, hs, he⟩
-        omega
-    · intro h
-      exact Or.inr ⟨r, h, by simp⟩
-  · simp only [Finset.mem_union, Finset.mem_singleton, Finset.mem_filter, Finset.mem_image]
-    constructor
-    · intro h
-      rcases h with h | h
-      · omega
-      · rcases h with h | h
-        · rcases h with ⟨s, hs, he⟩
-          have hs2 := (Finset.mem_filter.mp hs).2
-          omega
-        · rcases h with ⟨s, hs, he⟩
-          omega
-    · intro h
-      exact Or.inr (Or.inr ⟨r, h, by simp⟩)
+  rw [mem_occ]
+  constructor
+  · rintro (⟨he, _⟩ | ⟨t, ht, ht2, he⟩ | ⟨s, hs, he⟩)
+    · omega
+    · simp only [bSite] at he
+      omega
+    · have : s = r := by omega
+      exact this ▸ hs
+  · intro h
+    exact Or.inr (Or.inr ⟨r, h, rfl⟩)
 
 def invB (S : Finset ℕ) : Finset ℕ :=
   (if 1 ∉ S then {1} else ∅) ∪
@@ -432,20 +454,12 @@ abbrev occupationCarrier := allowed
 def pairToOccupation (p : pairCarrier) : occupationCarrier :=
   ⟨pairToOcc p, by
     change 3 ∉ occ p.1.1 p.1.2
-    classical
-    intro h
-    simp only [occ, Finset.mem_union, Finset.mem_singleton, Finset.mem_filter,
-      Finset.mem_image] at h
-    rcases h with h | h
-    · rcases h with h | h
-      · omega
-      · rcases h with ⟨r, hr, he⟩
-        omega
-    · rcases h with ⟨s, hs, he⟩
-      have hs0 : 0 ∉ p.1.2 := by
-        intro h0
-        exact Nat.not_succ_le_zero 0 ((Subtype.prop p).2 0 h0)
-      have : s ≠ 0 := by intro hs0'; exact hs0 (hs0' ▸ hs)
+    rw [mem_occ]
+    rintro (⟨h, _⟩ | ⟨r, hr, hr2, he⟩ | ⟨s, hs, he⟩)
+    · omega
+    · simp only [bSite] at he
+      omega
+    · have := p.2.2 s hs
       omega⟩
 
 def occToPair (S : Finset ℕ) : pairCarrier :=
@@ -467,110 +481,89 @@ def occToPair (S : Finset ℕ) : pairCarrier :=
       have hjcond := (Finset.mem_filter.mp hj).2
       omega⟩
 
+private theorem mem_invB (r : ℕ) (S : Finset ℕ) :
+    r ∈ invB S ↔ (r = 1 ∧ 1 ∉ S) ∨ (2 ≤ r ∧ bSite r ∈ S) := by
+  classical
+  simp only [invB, Finset.mem_union, Finset.mem_image, Finset.mem_filter]
+  have hh : (r ∈ if 1 ∉ S then ({1} : Finset ℕ) else ∅) ↔ r = 1 ∧ 1 ∉ S := by
+    by_cases h : 1 ∉ S <;> simp [h]
+  rw [hh]
+  congr 1
+  constructor
+  · rintro ⟨j, ⟨hj, heven⟩, he⟩
+    have hr : 2 ≤ r := by omega
+    have hjr : j = bSite r := by simp only [bSite]; omega
+    exact ⟨hr, hjr ▸ hj⟩
+  · rintro ⟨hr, hj⟩
+    exact ⟨bSite r, ⟨hj, by simp [bSite]⟩, by simp only [bSite]; omega⟩
+
+private theorem mem_invC (r : ℕ) (S : Finset ℕ) :
+    r ∈ invC S ↔ 1 ≤ r ∧ 2 * r + 3 ∈ S := by
+  classical
+  simp only [invC, Finset.mem_image, Finset.mem_filter]
+  constructor
+  · rintro ⟨j, ⟨hj, hodd, hj5⟩, he⟩
+    have hr : 1 ≤ r := by omega
+    have hjr : j = 2 * r + 3 := by omega
+    exact ⟨hr, hjr ▸ hj⟩
+  · rintro ⟨hr, hj⟩
+    exact ⟨2 * r + 3, ⟨hj, by omega, by omega⟩, by omega⟩
+
 private theorem invB_occ (B C : Finset ℕ) (hB : positiveSet B) :
     invB (occ B C) = B := by
-  classical
   ext r
-  by_cases hr1 : r = 1
-  · subst r
-    by_cases h1 : 1 ∈ B <;> simp [invB, occ, h1]
-  · have hr2 : 2 ≤ r := by omega
-    by_cases hrB : r ∈ B
-    · have hsite : bSite r ∈ occ B C := by
-        exact (occ_bSite_mem r B C hr2).2 hrB
-      simp only [invB, Finset.mem_union, Finset.mem_image, Finset.mem_filter]
-      constructor
-      · intro h
-        rcases h with h | ⟨j, ⟨hj, hjmod⟩, hEq⟩
-        · simp [hr1] at h
-        · rcases hj with hj | hj
-          · rcases hj with hj | ⟨s, hs, he⟩
-            · omega
-            · omega
-          · rcases hj with ⟨s, hs, he⟩
-            · omega
-        · omega
-      · intro h
-        right
-        refine ⟨bSite r, hsite, ?_, ?_⟩
-        · simp [bSite]
-        · simp [bSite]
-    · have hsite : bSite r ∉ occ B C := by
-        exact (occ_bSite_mem r B C hr2).not.mpr hrB
-      simp only [invB, Finset.mem_union, Finset.mem_image, Finset.mem_filter]
-      constructor
-      · intro h
-        rcases h with h | ⟨j, ⟨hj, hjmod⟩, hEq⟩
-        · simp [hr1] at h
-        · rcases hj with hj | hj
-          · rcases hj with hj | ⟨s, hs, he⟩
-            · omega
-            · omega
-          · rcases hj with ⟨s, hs, he⟩
-            omega
-      · intro h
-        exact False.elim (hrB h)
+  rw [mem_invB, occ_one]
+  by_cases hr : 2 ≤ r
+  · rw [occ_bSite_mem r B C hr]
+    simp only [hr, true_and]
+    constructor
+    · rintro (⟨he, _⟩ | h)
+      · omega
+      · exact h
+    · exact Or.inr
+  · constructor
+    · rintro (⟨rfl, h⟩ | ⟨h, _⟩)
+      · exact not_not.mp h
+      · contradiction
+    · intro h
+      have hp := hB r h
+      exact Or.inl ⟨by omega, by simpa using h⟩
 
 private theorem invC_occ (B C : Finset ℕ) (hC : positiveSet C) :
     invC (occ B C) = C := by
-  classical
-  ext s
-  by_cases hs : s ∈ C
-  · have hsite : 2 * s + 3 ∈ occ B C := (occ_cSite_mem s B C).2 hs
-    simp only [invC, Finset.mem_image, Finset.mem_filter]
-    constructor
-    · intro h
-      rcases h with ⟨j, ⟨hj, hjmod, hj5⟩, hEq⟩
-      rcases hj with hj | hj
-      · rcases hj with hj | ⟨r, hr, he⟩
-        · omega
-        · omega
-      · rcases hj with ⟨t, ht, he⟩
-        omega
-    · intro h
-      refine ⟨2 * s + 3, hsite, ?_, ?_, ?_⟩
-      · omega
-      · omega
-      · omega
-  · have hsite : 2 * s + 3 ∉ occ B C := (occ_cSite_mem s B C).not.mpr hs
-    simp only [invC, Finset.mem_image, Finset.mem_filter]
-    constructor
-    · intro h
-      rcases h with ⟨j, ⟨hj, hjmod, hj5⟩, hEq⟩
-      rcases hj with hj | hj
-      · rcases hj with hj | ⟨r, hr, he⟩
-        · omega
-        · omega
-      · rcases hj with ⟨t, ht, he⟩
-        omega
-    · intro h
-      exfalso
-      apply hs
-      exact (occ_cSite_mem s B C).1 hsite
+  ext r
+  rw [mem_invC, occ_cSite_mem]
+  exact ⟨And.right, fun h => ⟨hC r h, h⟩⟩
 
 private theorem occ_inv (S : Finset ℕ) (h3 : 3 ∉ S) : occ (invB S) (invC S) = S := by
-  classical
   ext j
-  by_cases hj3 : j = 3
-  · subst j
-    exact False.elim (h3 (by simp [occ]))
-  · simp only [occ, Finset.mem_union, Finset.mem_singleton, Finset.mem_filter,
-      Finset.mem_image]
+  rw [mem_occ]
+  constructor
+  · rintro (⟨rfl, h⟩ | ⟨r, hr, hr2, he⟩ | ⟨r, hr, he⟩)
+    · simpa only [mem_invB, bSite, Nat.reduceSub, Nat.reduceMul,
+        not_le, and_false, or_false, true_and, not_not] using h
+    · rcases (mem_invB r S).mp hr with ⟨h, _⟩ | ⟨_, h⟩
+      · omega
+      · exact he ▸ h
+    · exact he ▸ ((mem_invC r S).mp hr).2
+  · intro hj
     by_cases hj1 : j = 1
     · subst j
-      simp [invB, invC]
-    · by_cases hjeven : j % 2 = 0
-      · have hj2 : 2 ≤ j := by omega
-        simp [invB, invC, hj1, hjeven]
-        constructor <;> intro h
-        · omega
-        · omega
+      exact Or.inl ⟨rfl, by simpa [mem_invB] using hj⟩
+    · by_cases he : j % 2 = 0
+      · refine Or.inr (Or.inl ⟨j / 2 + 2, ?_, by omega, ?_⟩)
+        · rw [mem_invB]
+          right
+          exact ⟨by omega, by convert hj using 1 <;> simp only [bSite] <;> omega⟩
+        · simp only [bSite]
+          omega
       · have hjodd : j % 2 = 1 := by omega
-        by_cases hj5 : 5 ≤ j
-        · simp [invB, invC, hj1, hjodd, hj5]
-          constructor <;> intro h <;> omega
-        · have : j = 1 := by omega
-          contradiction
+        have hj5 : 5 ≤ j := by
+          have hj3 : j ≠ 3 := by intro h; exact h3 (h ▸ hj)
+          omega
+        refine Or.inr (Or.inr ⟨j / 2 - 1, ?_, by omega⟩)
+        rw [mem_invC]
+        exact ⟨by omega, by convert hj using 1 <;> omega⟩
 
 def pairOccupationEquiv : pairCarrier ≃ occupationCarrier where
   toFun := pairToOccupation
@@ -629,13 +622,13 @@ private theorem relative_eq_supportedAllowed : relative = supportedAllowed := by
   intro v
   constructor
   · intro hv
-    change ∀ S ∈ v.support, S ∈ allowed
+    rw [Finsupp.mem_supported]
     intro S hS
     exact relative_support_no_three ⟨v, hv⟩ S hS
   · intro hv
     change b 0 v = 0
     have hs : ∀ S ∈ v.support, 3 ∉ S := by
-      change ∀ S ∈ v.support, S ∈ allowed at hv
+      rw [Finsupp.mem_supported] at hv
       intro S hS
       exact hv S hS
     simpa [b] using no_three_annihilate v hs
@@ -665,7 +658,8 @@ private theorem signMap_involution : signMap.comp signMap = LinearMap.id := by
     induction n with
     | zero => simp
     | succ n ih => simp [pow_succ, ih, mul_assoc]
-  simpa [sign] using hpow (signExponent p.1.1 p.1.2)
+  rw [show sign p.1.1 p.1.2 * sign p.1.1 p.1.2 = 1 from
+    hpow (signExponent p.1.1 p.1.2), one_smul]
 
 def signEquiv : (pairCarrier →₀ ℂ) ≃ₗ[ℂ] (pairCarrier →₀ ℂ) :=
   LinearEquiv.ofBijective signMap ⟨
@@ -696,10 +690,6 @@ def bPrefix (r : ℕ) (B : Finset ℕ) : ℕ := (B.filter (fun t => t < r)).card
 
 def cPrefix (r : ℕ) (C : Finset ℕ) : ℕ := (C.filter (fun t => t < r)).card
 
-private theorem occ_one_mem (B C : Finset ℕ) (hB : 1 ∉ B) :
-    1 ∉ occ B C := by
-  unfold occ
-  split <;> simp [hB]
 
 private theorem bneg_W (r : ℕ) (B C : Finset ℕ)
     (hrpos : 1 ≤ r) (hB : positiveSet B) (hC : positiveSet C) :
