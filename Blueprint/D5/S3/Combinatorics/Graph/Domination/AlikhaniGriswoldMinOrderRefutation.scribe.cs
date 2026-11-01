@@ -23,7 +23,9 @@ internal sealed class AlikhaniGriswoldMinOrderRefutationDocument : IScribeDocume
                 new Formula.Not(P(ClaimBody())),
                 AssessedProvenance.FromRepo(Source),
                 "The explicit 21-vertex graph has the 25 listed undirected edges. Its core is induced on 0 through 6, with branches 7 through 12 and 13 through 20 rooted at 7 and 13 and incident on core sets {0} and {0,3,4}. The accepted ordinary decomposition gives message pairs (-1024,972) and (-3328,6912); the same supplied decomposition and exact table cancellation yield evaluation zero at -4. The graph is connected by the displayed paths from vertex 0. Since 1 <= 21 < 33, this contradicts the lower-bound conjunct and answers the source question negatively. No claim that 21 is minimal is made.",
-                null),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("alikhani-griswold-2026-minus-four-minimum-order"),
+                    ResolutionKind.Refuted)),
             Paragraph(Text("The result is a literal refutation of the complete source claim; it does not assert that 21 is the least counterexample order."))),
         []));
 
