@@ -18,7 +18,19 @@ Gluing these functions on their position sets gives a unique word. Every adjacen
 
 A final window does not determine total length: for every n the all-zero word of length n+3 ends in the same three zeros. Different values of n give different complete words. A window records a local pattern, not an erased prefix or a free clock.
 
-**Theorem 1.1 (The number of length-m admissible words is F(m+2)).**
+**Theorem 1.1 (Admissibility as exclusion).**
+
+$$\forall n \in \mathbb{N},\; \forall b \in \operatorname{Fin}(n) \to \operatorname{Bool},\; \operatorname{Adm}(n, b) \Leftrightarrow \left(\forall i \in \operatorname{Fin}(n),\; \forall j \in \operatorname{Fin}(n),\; \operatorname{val}(i) + 1 = \operatorname{val}(j) \Rightarrow \left(b(i) = \operatorname{false} \lor b(j) = \operatorname{false}\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/AdmissibleWords/AdmissibleCount.adm_iff_no_adjacent_true` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+AdmissibleCount.Adm owns the configuration predicate, with its existing decAdm instance. Coordinates are zero-based; a true Boolean means occupied. This characterization gives the adjacency reading used by reversal and quantum normalization.
+
+**Theorem 1.2 (The number of length-m admissible words is F(m+2)).**
 
 $$\operatorname{card} {w : Fin m \Rightarrow Bool \mid \operatorname{Adm} m w} = F_{m+2}$$
 
@@ -36,4 +48,5 @@ The carrier retains every position of a fixed-length binary word. Identifying it
 
 ## References
 
+- Truth anchor: `D5/S1/Words/AdmissibleWords/AdmissibleCount.adm_iff_no_adjacent_true`
 - Truth anchor: `D5/S1/Words/AdmissibleWords/AdmissibleCount.admissibleWord_card_eq_fib`

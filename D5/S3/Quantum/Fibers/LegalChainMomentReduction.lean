@@ -6,6 +6,7 @@
    utility: none
    digest: Actual smooth positive symplectic reduction and exact legal-chain dimensions. -/
 
+import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import D5.S3.Quantum.Fibers.LegalChainMomentCoordinates
 import D5.S3.Combinatorics.Graph.LegalWords.SupportSizeCount
 
@@ -13,6 +14,7 @@ import D5.S3.Combinatorics.Graph.LegalWords.SupportSizeCount
 
 noncomputable section
 namespace D5.S3.Quantum.Fibers.LegalChainMomentLayers
+open D5.S1.Words.AdmissibleWords.AdmissibleCount (adm_iff_no_adjacent_true)
 open D5.S3.Quantum.Fibers.LegalChainMomentCoordinates
 open D5.S3.Quantum.Fibers.LegalChainMomentQuotient
 open D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant

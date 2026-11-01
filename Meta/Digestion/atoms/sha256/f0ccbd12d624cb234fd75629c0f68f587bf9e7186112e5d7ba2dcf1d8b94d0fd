@@ -1,0 +1,50 @@
+**命题 22.3（原 Fibonacci 树上的几何读出及接口界）。** 采用原有有序树
+$T_0=\alpha,T_1=\beta,T_{n+2}=\langle T_{n+1},T_n\rangle$，
+其语法与组成归属见
+[基础公式卷定义1.1、数学引文1.2](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)。
+另供命题22.2的 $Q_0,Q_1$ 作为叶读出，令 $\ell$ 是实际叶数，定义
+
+$$
+\mathcal Q(\alpha)=Q_0,\quad\mathcal Q(\beta)=Q_1,\quad
+\mathcal Q(\langle s,t\rangle)=\mathcal Q(s)\#_{\ell(t)/(\ell(s)+\ell(t))}\mathcal Q(t).
+$$
+
+则取 $F_0=0,F_1=1$，对全部 $n\ge0$ 有
+
+$$
+\ell(T_n)=F_{n+1},\quad N_\beta(T_n)=F_n,\quad
+\mathcal Q(T_n)=Q_0\#_{\theta_n}Q_1,\qquad \theta_n=F_n/F_{n+1},
+$$
+
+并有精确误差
+
+$$
+|\theta_n-\varphi^{-1}|=\frac{\varphi^{-(n+1)}}{F_{n+1}},
+\qquad\varphi=(1+\sqrt5)/2.
+$$
+
+因此完整几何读出收敛，其有效边界极限为
+
+$$
+\operatorname{diag}\left(\frac5{4\cosh((2\varphi^{-1}-1)\log2)},1,1\right)\ne I_3.
+\tag{22.10}
+$$
+
+第一系数严格大于一；若先把每片叶压成 $I_3$，同一递归每层都为 $I_3$。
+几何读出的收敛不消去这份来源压缩差。
+
+证明。两个叶计数按相同树递推，初值给所列 Fibonacci 数。
+共同同余归一化后，同一测地线各点只是 $C$ 的谱幂，故
+
+$$
+(Q_0\#_aQ_1)\#_t(Q_0\#_bQ_1)=Q_0\#_{(1-t)a+tb}Q_1.
+$$
+
+叶数加权令参数等于 $\beta$ 叶数比例，归纳给 $\theta_n$。
+Binet 恒等式给 $F_{n+1}/\varphi-F_n=(-1)^n\varphi^{-(n+1)}$，
+除以 $F_{n+1}$ 得误差并涵盖 $n=0,1$。
+代入式（22.7）得极限；$0<\varphi^{-1}<1$ 和
+$\cosh\log2=5/4$ 证明第一系数大于一。
+本读出只保留叶比例，合并不同叶序与括号；
+叶数权不同于 Fibonacci 原子数值，不被当作忠实原生表示或顺序相干表示。
+

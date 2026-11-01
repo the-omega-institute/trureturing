@@ -1,0 +1,48 @@
+**本例消元不相容的压缩解释。** 以一般共同分块作为此例、命题22.3的树
+节点及命题22.4的 Fisher 对的中间比较接口，记
+$K_i=Q_i^{-1}$、$C_i=E^{\mathsf T}K_iE=G_i^{-1}$，并令
+
+$$
+V=K_0^{1/2}EC_0^{-1/2},\quad V^{\mathsf T}V=I,
+\quad T=K_0^{-1/2}K_1K_0^{-1/2}.
+$$
+
+对 $0<t<1$，经典压缩幂不等式
+$V^{\mathsf T}T^tV\preceq(V^{\mathsf T}TV)^t$
+及其等号在此可完整解释。补成正交标架，写
+$T=\left(\begin{smallmatrix}C&R_1\\R_1^{\mathsf T}&D_1\end{smallmatrix}\right)$。
+对每个 $s>0$，
+
+$$
+V^{\mathsf T}(T+sI)^{-1}V
+=(C+sI-R_1(D_1+sI)^{-1}R_1^{\mathsf T})^{-1}
+\succeq(C+sI)^{-1}.
+$$
+
+代入经典正幂积分
+
+$$
+x^t=\frac{\sin\pi t}{\pi}\int_0^\infty
+s^{t-1}\frac{x}{s+x}\,ds
+$$
+
+即得压缩不等式。$R_1\ne0$ 时每个参数的逆差为非零半正定，
+其正权积分不可能是零矩阵；等号当且仅当 $R_1=0$，
+亦即 $T$ 保持 $\operatorname{ran}V$。写回并用式（22.8）反序求逆，得到
+
+$$
+\mathcal S(Q_0\#_tQ_1)\succeq G_0\#_tG_1,\qquad 0\le t\le1.
+\tag{22.9}
+$$
+
+内部权重的矩阵等号要求
+$K_1E\subseteq\operatorname{ran}(K_0E)$；由式（22.3）
+
+$$
+K_iE=\binom{G_i^{-1}}{L_iG_i^{-1}},
+$$
+
+它们的列空间是图 $\{(u,L_i u)\}$，故等号恰为 $L_0=L_1$。
+端点自动等号；非零半正定缺口仍可有可见方向的核。
+这些压缩与短算子的经典中间方法只用于本例和下面的实际来源应用。
+

@@ -22,7 +22,7 @@ https://en.wikipedia.org/wiki/Perfect_graph
 The retrieved polyhedral-characterization passage identifies the polytope
 as the convex hull of independent-set indicator vectors. Only this standard
 construction is needed for the direct three-vertex calculation below.
-The existing `D5/L/Words/chvatal1975polytopes` note supplies the separately
+The existing `D5/L/Geometry/chvatal1975polytopes` note supplies the separately
 cited general path characterization; its Citation is unchanged.
 
 ## Shared source chain and declaration bridge

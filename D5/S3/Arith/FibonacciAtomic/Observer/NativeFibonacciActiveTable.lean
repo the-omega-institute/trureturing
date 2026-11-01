@@ -6,8 +6,8 @@
    utility: none
    digest: The full active table has an injective Fibonacci-width word realization and same-source native execution. -/
 
+import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import D5.S1.Words.AdmissibleWords.FibonacciGrayPath
-import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 import D5.S3.Arith.FibonacciAtomic.Observer.NativeActiveParityExecution
 import D5.S3.Arith.FibonacciAtomic.Observer.NativeControlConjugacy
 import Mathlib.Data.Fintype.EquivFin
@@ -24,7 +24,6 @@ open DelayedOriginalReadout (rights)
 open NativeActiveParityExecution (Control Phase Chart start endpoint dispatch next chi)
 open D5.S1.Words.AdmissibleWords.AdmissibleCount
 open D5.S1.Words.AdmissibleWords.FibonacciGrayPath
-open D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant (adm_iff_no_adjacent_true)
 open NativeSerialMachine (Op Event Trace Config nativeStep)
 open NativeControlConjugacy
 

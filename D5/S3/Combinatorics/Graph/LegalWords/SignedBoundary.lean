@@ -6,6 +6,7 @@
    utility: none
    digest: Native boundaries have mass-zero image and a natural kernel short exact sequence. -/
 
+import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.LegalWords.EdgeCount
 import D5.S3.Fourier.CharacterSelection.SignedIncidenceTotalUnimodularity

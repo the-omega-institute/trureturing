@@ -15,13 +15,13 @@ Direct frozen dependency keys (GID; statement_id):
 Assignment = PredictiveThermodynamic.Physical.Assignment; sha256:186896178b3ea09d109f4546cae53a1b2c485c3990a05a1b88d8deaaae3e423f
 Chain dependencies: D5.S3.Quantum.SpinChains.SupersymmetricFermion.FullEndpointIdentity, D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression; freeze in topological import order.
 Reused predicate: D5/S1/Words/AdmissibleWords/AdmissibleCount.Adm.
-Pointwise exclusion: D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.adm_iff_no_adjacent_true; sha256:1fd94a32ad20c5e9f47c8843c130133ce27a104e2f7f75cb9bf9916f8085bc2b.
+Pointwise exclusion: D5/S1/Words/AdmissibleWords/AdmissibleCount.adm_iff_no_adjacent_true; sha256:304ace6fff228e5b2d4b05c9c7aed7b23d949d0408f0b79dadf4d78143d4fbd4.
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
+import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import D5.S3.Quantum.Dynamics.PronkoFredkinAntiAdjointExpansion
 import D5.S3.Quantum.SpinChains.SupersymmetricFermion.FullEndpointIdentity
 import D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression
-import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 set_option linter.unusedSimpArgs false
 open scoped BigOperators Matrix Classical
 set_option quotPrecheck false in
@@ -38,7 +38,6 @@ local notation "spinP" => ((1 : Matrix Bool Bool ℂ) - visibleProjector)
 namespace D5.S3.Quantum.SpinChains.SupersymmetricFermion.EndpointIdentity
 noncomputable section
 open D5.S1.Words.AdmissibleWords.AdmissibleCount
-open D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant (adm_iff_no_adjacent_true)
 open D5.S3.Quantum.SpinChains.SupersymmetricFermion.JordanWigner
 open D5.S3.Quantum.SpinChains.SupersymmetricFermion.DressedOperators
 open D5.S3.Quantum.SpinChains.SupersymmetricFermion.SuperchargeProducts

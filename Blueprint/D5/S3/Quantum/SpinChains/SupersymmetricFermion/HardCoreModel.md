@@ -16,7 +16,7 @@ $$\forall N \in \mathit{Nat},\; (\mathrm{HardCore}\left(N\right):\mathit{Type}) 
 
 *Commentary.*
 
-Section 2.1, printed page 3: “nearest-neighbour exclusion: at most one of two adjacent sites may be occupied.” “We shall work with free boundary conditions what is equivalent to add two inaccessible but empty sites at j = 0 and j = N + 1.” The operators use the supercharge, projectors and Hamiltonian of that section. HardCore is the subtype defined by Adm(N,s), the admissible-word predicate of AdmissibleCount. ForbiddenNeighbourDeterminant.adm_iff_no_adjacent_true identifies that predicate with nearest-neighbour exclusion.
+Section 2.1, printed page 3: “nearest-neighbour exclusion: at most one of two adjacent sites may be occupied.” “We shall work with free boundary conditions what is equivalent to add two inaccessible but empty sites at j = 0 and j = N + 1.” The operators use the supercharge, projectors and Hamiltonian of that section. HardCore is the subtype defined by Adm(N,s), the admissible-word predicate of AdmissibleCount. AdmissibleCount.adm_iff_no_adjacent_true identifies that predicate with nearest-neighbour exclusion.
 
 **Definition 1.2 (HardCoreSpace).**
 
@@ -230,5 +230,4 @@ The product c(j)†c(j) is the occupation diagonal, including the zero operator 
 - Truth anchor: `D5/S3/Quantum/SpinChains/SupersymmetricFermion/HardCoreModel.periodThree`
 - Truth anchor: `D5/S3/Quantum/SpinChains/SupersymmetricFermion/HardCoreModel.stagII`
 - Dependency: [D5/S1/Words/AdmissibleWords/AdmissibleCount](../../../../S1/Words/AdmissibleWords/AdmissibleCount.md)
-- Dependency: [D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant](../../FockSpace/ForbiddenNeighbourDeterminant.md)
 - Dependency: [D5/S3/Quantum/SpinChains/SupersymmetricFermion/JordanWigner](JordanWigner.md)

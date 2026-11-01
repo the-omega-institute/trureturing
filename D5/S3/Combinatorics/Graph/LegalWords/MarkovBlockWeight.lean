@@ -8,7 +8,6 @@
 
 import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import D5.S3.Quantum.Entanglement.PhaseHistoryBound
-import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 import Mathlib.LinearAlgebra.Vandermonde
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Real.Basic
@@ -22,7 +21,6 @@ namespace D5.S3.Combinatorics.Graph.LegalWords.MarkovBlockWeight
 open scoped BigOperators Matrix
 open D5.S1.Words.AdmissibleWords.AdmissibleCount
 open D5.S3.Quantum.Entanglement.PhaseHistoryBound (transition)
-open D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant (adm_iff_no_adjacent_true)
 
 /-- The ordered product from the left bit, through the block, to the right bit. -/
 def pathMass (p : ℝ) : (n : ℕ) → Bool → (Fin n → Bool) → Bool → ℝ

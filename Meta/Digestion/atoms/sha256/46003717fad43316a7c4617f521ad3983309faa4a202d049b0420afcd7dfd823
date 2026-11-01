@@ -1,0 +1,17 @@
+**本例共用隐藏变量的算术比较。** 更一般的本接口混合
+$u^{\mathsf T}G_i u+c_i(\eta-L_i u)^2$，$c_i>0$，
+权重 $0<t<1$ 时，把 $a=(1-t)c_0,b=tc_1$ 完成平方，得到
+
+$$
+\begin{aligned}
+\eta_*&=\frac{aL_0u+bL_1u}{a+b},\\
+\min_\eta\bigl((1-t)\mathcal E_0+t\mathcal E_1\bigr)
+&=u^{\mathsf T}((1-t)G_0+tG_1)u+\frac{ab}{a+b}((L_0-L_1)u)^2.
+\end{aligned}
+$$
+
+本例 $c_0=c_1=1$，额外代价为 $9t(1-t)u_1^2/4$，
+中点恰为 $9u_1^2/16$。对所有方向都消失等价于共同 $L$，
+对某一个方向则只需 $(L_0-L_1)u=0$。
+这是同一个隐藏变量的极小化，未引入独立环境或量子操作。$\square$
+

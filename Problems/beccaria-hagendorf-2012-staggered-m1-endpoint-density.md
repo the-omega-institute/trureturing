@@ -28,7 +28,7 @@ The source tests the endpoint relation through $n\leq8$. The settlement is unive
 
 ## Route
 
-The hard-core subtype uses the existing admissible-word predicate `AdmissibleCount.Adm`. Its frozen characterization `ForbiddenNeighbourDeterminant.adm_iff_no_adjacent_true` supplies nearest-neighbour exclusion. The Jordan–Wigner tensor factors retain the parity sign.
+The hard-core subtype uses the existing admissible-word predicate `AdmissibleCount.Adm`. Its frozen characterization `AdmissibleCount.adm_iff_no_adjacent_true` supplies nearest-neighbour exclusion. The Jordan–Wigner tensor factors retain the parity sign.
 `HardCoreModel.annihilator_number` proves that the hard-core annihilator
 satisfies $c_j^\dagger c_j=n_j$ at every one-based site, with both sides
 zero outside the chain; thus $P_j=1-n_j$ is the source projector. Local dressed and cubic products cancel away from their interaction sites. Period-three coefficients cancel the hopping currents, leaving an occupation diagonal on the full space. Compression to the hard-core block and a finite occupation telescope yield
