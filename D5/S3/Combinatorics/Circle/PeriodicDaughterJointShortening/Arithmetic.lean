@@ -8,13 +8,10 @@
 import D5.S3.Combinatorics.Circle.PeriodicShorteningArithmetic
 import D5.S3.Combinatorics.Circle.RunFirstEarTransport
 
-/-! Source preparation only; no elaboration or kernel validation has been run.
-The ordinary derivation is the supplied parent proof dated 2026-11-01.
-Only native digit charges, geometric sums and centered uniqueness are reused;
-neither the PLUS-one shortening nor forward OLD repetition is invoked. -/
+/-! Native digit charges, geometric sums and centered uniqueness for the
+physical MINUS-one construction. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option maxHeartbeats 4000000
 
 namespace D5.S3.Combinatorics.Circle.PeriodicDaughterJointShortening
 open SourceWidth PeriodicShorteningArithmetic PeriodicShortening RunFirstEarTransport
@@ -54,7 +51,8 @@ structure ScaleFacts (d w r : ℕ) : Prop where
     2 * H d r * (n d + w) ≤ N d r - 1
   daughter_margin : G d r * n d ≤ modulus (length d r + 1) / 2
 
- theorem scale_facts (d w r : ℕ) (hd : 2 ≤ d)
+set_option maxHeartbeats 4000000 in
+theorem scale_facts (d w r : ℕ) (hd : 2 ≤ d)
     (hw : w ≤ 2 ^ (d - 1) - 1) (hr : 2 ≤ r) : ScaleFacts d w r := by
   have hlen : length d r + 1 = (d + 1) * r := by
     have := Nat.mul_pos (show 0 < d + 1 by omega) (show 0 < r by omega)
@@ -137,7 +135,7 @@ structure ScaleFacts (d w r : ℕ) : Prop where
       linear_combination htop + hReq + 2 * H d r * hq
     nlinarith [mul_nonneg (show 0 ≤ H d r by omega) hnw]
   have hdm : G d r * n d ≤ modulus (length d r + 1) / 2 := by
-    rw [hnew] at hnewhalf
+    rw [hnew] at hnewhalf ⊢
     have he := congrArg (fun z : ℤ => z * G d r) hq
     nlinarith only [hnewhalf, he, hG, hq8]
   exact ⟨hlen, hq, hq8, hH, hR, hG, Int.natCast_nonneg _, hwb,
@@ -153,7 +151,7 @@ def e (d w : ℕ) (i : Fin (d + 1)) : ℤ :=
 
 def beta (d w : ℕ) : Fin (d + 1) → ℤ := actualSource (d + 1) (2 * w)
 
- theorem phase_data (d w : ℕ) (hd : 2 ≤ d) (hw : w ≤ 2 ^ (d - 1) - 1)
+theorem phase_data (d w : ℕ) (hd : 2 ≤ d) (hw : w ≤ 2 ^ (d - 1) - 1)
     (i : Fin (d + 1)) :
     0 ≤ e d w i ∧
     alpha d w i = (2 : ℤ) ^ i.val * w - n d * e d w i ∧
@@ -193,23 +191,23 @@ def beta (d w : ℕ) : Fin (d + 1) → ℤ := actualSource (d + 1) (2 * w)
               (w : ℤ) + modulus (d + 1) * w := by
             rw [hiv, modulus, pow_succ, Nat.cast_mul, Nat.cast_ofNat]; ring
           rw [he, Int.add_mul_emod_self_left]
-      simp only [alpha, e, dif_neg hi, hbet]
+      simp only [alpha, e, dite_eq_right hi, hbet]
       refine ⟨Int.natCast_nonneg _, ?_, by ring⟩
       rw [hiv]; dsimp [n]; ring
   refine ⟨hdata.1, hdata.2.1, hdata.2.2, ?_, hb⟩
   rw [hdata.2.2, hdata.2.1, pow_succ, fs.q_eq]
   ring
 
- theorem phase_fresh (d w : ℕ) (hd : 2 ≤ d) (hw : w ≤ 2 ^ (d - 1) - 1) :
+theorem phase_fresh (d w : ℕ) (hd : 2 ≤ d) (hw : w ≤ 2 ^ (d - 1) - 1) :
     beta d w (Fin.last d) = w := by
   have hh := (phase_data d w hd hw (Fin.last d)).2.2.1
   simpa [alpha, e, two_mul] using hh
 
- theorem phase_cast (d w : ℕ) (hd : 2 ≤ d) (hw : w ≤ 2 ^ (d - 1) - 1)
+theorem phase_cast (d w : ℕ) (hd : 2 ≤ d) (hw : w ≤ 2 ^ (d - 1) - 1)
     (i : Fin d) : beta d w i.castSucc = 2 * actualSource d w i - charge d w i := by
   simpa [alpha, e, i.isLt] using (phase_data d w hd hw i.castSucc).2.2.1
 
- theorem phase_charge_sum (d w : ℕ) (hd : 2 ≤ d)
+theorem phase_charge_sum (d w : ℕ) (hd : 2 ≤ d)
     (hw : w ≤ 2 ^ (d - 1) - 1) : (∑ i : Fin (d + 1), e d w i) = 2 * w := by
   rw [Fin.sum_univ_castSucc]
   have he : (fun i : Fin d => e d w i.castSucc) = charge d w := by
@@ -228,7 +226,7 @@ def regularValue (d w r j : ℕ) (i : Fin (d + 1)) : ℤ :=
 def topValue (d w r : ℕ) (i : Fin d) : ℤ :=
   R d r * actualSource d w i + H d r * beta d w i.castSucc
 
- theorem defect_data (d w j : ℕ) (hd : 2 ≤ d) (hw : w ≤ 2 ^ (d - 1) - 1) :
+theorem defect_data (d w j : ℕ) (hd : 2 ≤ d) (hw : w ≤ 2 ^ (d - 1) - 1) :
     (∀ i, 0 ≤ defect d w j i) ∧
       (∑ i : Fin (d + 1), defect d w j i) = 2 * w * q d ^ j := by
   have he := phase_charge_sum d w hd hw
@@ -240,14 +238,14 @@ def topValue (d w r : ℕ) (i : Fin d) : ℤ :=
     dsimp [q]; nlinarith only [hh]
   constructor
   · intro i
-    exact add_nonneg (by dsimp [defect]; positivity) (phase_data d w hd hw i).1
+    exact add_nonneg (by positivity) (phase_data d w hd hw i).1
   · dsimp [defect]
     rw [Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul, hp, he]
     have hh := geom_mul (d + 1) j (by omega)
     change (q d - 1) * (geom (d + 1) j : ℤ) = q d ^ j - 1 at hh
     linear_combination 2 * (w : ℤ) * hh
 
- theorem regular_double (d w r j : ℕ) (hd : 2 ≤ d)
+theorem regular_double (d w r j : ℕ) (hd : 2 ≤ d)
     (hw : w ≤ 2 ^ (d - 1) - 1) (hr : 2 ≤ r) (i : Fin (d + 1)) :
     2 * regularValue d w r j i = G d r * beta d w i + defect d w j i := by
   have fs := scale_facts d w r hd hw hr
@@ -257,7 +255,8 @@ def topValue (d w r : ℕ) (i : Fin d) : ℤ :=
   rw [hg, (phase_data d w hd hw i).2.2.1, pow_succ]
   ring
 
- theorem regular_source (d w r j : ℕ) (hd : 2 ≤ d)
+set_option maxHeartbeats 4000000 in
+theorem regular_source (d w r j : ℕ) (hd : 2 ≤ d)
     (hw : w ≤ 2 ^ (d - 1) - 1) (hr : 2 ≤ r) (hj : j < r - 1)
     (i : Fin (d + 1)) (hp : j * (d + 1) + i.val < length d r) :
     actualSource (length d r) (seed d w r) ⟨j * (d + 1) + i.val, hp⟩ =
@@ -321,7 +320,8 @@ def topValue (d w r : ℕ) (i : Fin d) : ℤ :=
     change _ - _ = modulus (length d r) * _ at heq; linarith
   rw [heq', Int.sub_mul_emod_self_left]
 
- theorem top_source (d w r : ℕ) (hd : 2 ≤ d)
+set_option maxHeartbeats 4000000 in
+theorem top_source (d w r : ℕ) (hd : 2 ≤ d)
     (hw : w ≤ 2 ^ (d - 1) - 1) (hr : 2 ≤ r) (i : Fin d)
     (hp : (r - 1) * (d + 1) + i.val < length d r) :
     actualSource (length d r) (seed d w r) ⟨(r - 1) * (d + 1) + i.val, hp⟩ =
@@ -369,7 +369,8 @@ def topValue (d w r : ℕ) (i : Fin d) : ℤ :=
   rw [heq', Int.sub_mul_emod_self_left]
 
 /-- Exact periodic daughter source, with distinct physical labels in every block. -/
- theorem daughter_source (d w r j : ℕ) (hd : 2 ≤ d)
+set_option maxHeartbeats 4000000 in
+theorem daughter_source (d w r j : ℕ) (hd : 2 ≤ d)
     (hw : w ≤ 2 ^ (d - 1) - 1) (hr : 2 ≤ r) (i : Fin (d + 1))
     (hp : j * (d + 1) + i.val < length d r + 1) :
     actualSource (length d r + 1) (2 * seed d w r) ⟨j * (d + 1) + i.val, hp⟩ =
@@ -393,7 +394,8 @@ def topValue (d w r : ℕ) (i : Fin d) : ℤ :=
         modulus (length d r + 1) *
           ((2 : ℤ) ^ (i.val + 1) * w * (geom (d + 1) j : ℤ) + e d w i) := by
     rw [hp2, Nat.cast_mul, Nat.cast_ofNat, seed, Nat.cast_mul, fs.new_modulus]
-    change G d r * beta d w i = _
+    change G d r * beta d w i =
+      q d ^ j * 2 ^ i.val * (2 * ((w : ℤ) * G d r)) - _
     have hbraw := hb.2.2.2.1
     rw [pow_succ] at hbraw ⊢
     linear_combination G d r * hbraw +
