@@ -34,7 +34,20 @@ internal sealed class MultisetRookEulerianRealRootednessRefutationDocument : ISc
                 StatementSource.FromAuthor(F.Disp(CountEquality())), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The multiset m(a) contains a(c) copies of c+1 for each c in Fin(k), and ofFn(l) lists the row bounds in their original order. The map from natural to real coefficients is the canonical cast homomorphism. The total-content equality is essential: it makes each rearrangement have exactly n letters, so every original getD row query is in range. The theorem requires neither positivity nor monotonicity of the board and includes n=0, k=0 and zero-content labels.")),
                     Paragraph(Text("Partition completions by their next letter. Erasing that letter and prepending it are inverse on the corresponding class, and classes for different next letters are disjoint. The multiset equality records the exact multiplicities. Pinned List.mem_permutations' identifies the original permutation-list membership with permutation of the content list; toFinset removes repeated listings of the same word. A separate head-edge calculation identifies the recursive weight with X to the original asc. Summing the disjoint classes proves the recurrence equality. Thus the recurrence computes the full polynomial of the source, including all repeated letters, rather than a refinement or a finite replacement."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
+                H("A counterexample to full real-rootedness"),
+                StatementSource.FromAuthor(F.Disp(new Formula.Not(Id("claim")))),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Take n=120 and k=6. The board has three rows of length 2, four of length 3, ten of length 4, two of length 5, and 101 of length 6. All bounds are positive and weakly increasing. The content is (6,1,4,8,1,100), with total 120. Applying the exact recurrence equality gives the following full polynomial, including its two zero low coefficients.")),
+                    Paragraph(Math(ConcretePolynomial())),
+                    Paragraph(Text("In particular R(1)=73492650 and the degree is 11. At x=-1/100 the value of (R'(x))^2-R(x)R''(x) is exactly -2294232329562528073294509555513/12500000000000000000000000000000000000, which is negative. The original laguerre_splits theorem in SourceJensenPositiveExtension states that every real polynomial splitting over the reals has a nonnegative value of this expression at every real argument. Its hypotheses require no positivity, monicity, nonzero condition, root sign or simple roots. Applying it directly contradicts the displayed value.")),
+                    Paragraph(Text("Thus the first clause of Conjecture 28 fails for the original full multiset polynomial. This conclusion uses neither refined interlacing nor numerical root isolation. It preserves repeated columns and strict adjacent ascents. The earlier six-row interlacing counterexample remains a separate result about the second clause. Rectangular-board theorems and the distinct-letter theorem are unaffected."))),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("alexandersson-jal-quemener-2025-rook-eulerian-interlacing"),
+                    ResolutionKind.Refuted))
         ), []));
 
     private static Formula Id(string s) => F.Id(s);
@@ -79,4 +92,14 @@ internal sealed class MultisetRookEulerianRealRootednessRefutationDocument : ISc
     private static Formula CountEquality() => Parameters(Imp(Total,
         Equal(Call("map", Call("count", Call("ofFn", Id("l")), Call("m", Id("a")), Id("none")),
                 Call("NatCastReal")), Call("R", Id("l"), Id("a")))));
+
+    private static Formula ConcretePolynomial()
+    {
+        long[] coefficients = [0, 0, 1, 261, 21704, 591814, 5372605, 18550680,
+            27147806, 17137014, 4318325, 352440];
+        Formula polynomial = new Formula.Power(Id("X"), Num(2));
+        for (var d = 3; d < coefficients.Length; d++)
+            polynomial = Add(polynomial, Multiply(Num(coefficients[d]), new Formula.Power(Id("X"), Num(d))));
+        return F.Disp(Equal(Id("R"), polynomial));
+    }
 }
