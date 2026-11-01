@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual projected neutral-field mode support and finite raw Laurent coefficients. -/
+   digest: Actual full neutral-field raw three-leg Gaussian coefficient identity. -/
 
 import Batteries.Tactic.OpenPrivate
 import D5.S3.VertexAlgebra.HalfFock.ActualEnergyCovariance
@@ -17,9 +17,10 @@ normal coefficients remain pointwise finite sums in the actual tensor module.
 Output projection proves a common finite frequency restriction. The actual
 full corrected coefficients are finite scalar Laurent entries times the
 identity on arbitrary ground tensors. The raw mixed kernel blocks act in
-literal normal order. The full block Gaussian coefficient identity remains
-open; the Corr vacuum moment alone does not prove that identity. No analytic
-evaluation of an unrestricted Hahn series is introduced.
+literal normal order. Actual SO/SI coefficient lowering and the native IO
+base identify the full block Gaussian coefficient, with source and input
+factorials and ordinary output coefficient. No analytic evaluation of an
+unrestricted Hahn series is introduced.
 -/
 set_option autoImplicit false
 set_option maxRecDepth 4096
@@ -1061,10 +1062,16 @@ private theorem normalWord_cons (D : LatticeData) (T : ℂˣ) (B : Finset ℤ)
     normalWord D T B (a :: w) = ∑ m ∈ B,
         if m < 0 then rawModeOperator D T a m * normalWord D T B w
         else normalWord D T B w * rawModeOperator D T a m := by
-      simp only [normalWord, nativeModeBox, Finset.sum_product, nativeRawNormalTerm]
+      change (∑ m ∈ B.product (nativeModeBox D B w),
+        if m.1 < 0 then rawModeOperator D T a m.1 * nativeRawNormalTerm D T w m.2
+        else nativeRawNormalTerm D T w m.2 * rawModeOperator D T a m.1) = _
+      trans ∑ m ∈ B, ∑ n ∈ nativeModeBox D B w,
+        if m < 0 then rawModeOperator D T a m * nativeRawNormalTerm D T w n
+        else nativeRawNormalTerm D T w n * rawModeOperator D T a m
+      · exact Finset.sum_product B (nativeModeBox D B w) _
       apply Finset.sum_congr rfl
       intro m hm
-      by_cases hn : m < 0 <;> simp [hn, Finset.mul_sum, Finset.sum_mul]
+      by_cases hn : m < 0 <;> simp [hn, normalWord, Finset.mul_sum, Finset.sum_mul]
     _ = _ := by
       simp only [creationSum, annihilationSum, Finset.sum_mul, Finset.mul_sum,
         ← Finset.sum_add_distrib]
@@ -1078,14 +1085,14 @@ private theorem rawModeOperator_same_sign (D : LatticeData) (T : ℂˣ)
     rawModeOperator D T a m * rawModeOperator D T b n =
       rawModeOperator D T b n * rawModeOperator D T a m := by
   have hmn : m + n + 1 ≠ 0 := by rcases hs with hs | hs <;> omega
-  ext p
+  apply LinearMap.ext
+  intro p
   simp only [Module.End.mul_apply, rawModeOperator_eq, LinearMap.smul_apply,
     map_smul, smul_smul]
-  have hc := sub_eq_zero.mp (by simpa [hmn] using
-    current_heisenberg_apply D a.1 b.1 m n p)
+  have hc := sub_eq_zero.mp (by simpa only [if_neg hmn] using
+    (current_heisenberg_apply D a.1 b.1 m n p))
   rw [hc]
-  congr 1
-  ring
+  module
 
 private theorem creationSum_commute (D : LatticeData) (T : ℂˣ)
     (B : Finset ℤ) (a b : Index D) :
@@ -1098,8 +1105,10 @@ private theorem creationSum_commute (D : LatticeData) (T : ℂˣ)
   intro n hn
   apply Finset.sum_congr rfl
   intro m hm
-  split_ifs with hm' hn' hn' <;> simp_all only [zero_mul, mul_zero]
-  exact rawModeOperator_same_sign D T a b m n (Or.inl ⟨hm', hn'⟩)
+  by_cases hm' : m < 0 <;> by_cases hn' : n < 0
+  · simpa only [if_pos hm', if_pos hn'] using
+      rawModeOperator_same_sign D T a b n m (Or.inl ⟨hn', hm'⟩)
+  all_goals simp [hm', hn']
 
 private theorem annihilationSum_commute (D : LatticeData) (T : ℂˣ)
     (B : Finset ℤ) (a b : Index D) :
@@ -1112,8 +1121,9 @@ private theorem annihilationSum_commute (D : LatticeData) (T : ℂˣ)
   intro n hn
   apply Finset.sum_congr rfl
   intro m hm
-  split_ifs with hm' hn' hn' <;> simp_all only [zero_mul, mul_zero]
-  exact rawModeOperator_same_sign D T a b m n (Or.inr ⟨by omega, by omega⟩)
+  by_cases hm' : m < 0 <;> by_cases hn' : n < 0
+  all_goals try simp [hm', hn']
+  exact rawModeOperator_same_sign D T a b n m (Or.inr ⟨by omega, by omega⟩)
 
 private theorem normalWord_perm (D : LatticeData) (T : ℂˣ) (B : Finset ℤ)
     {u v : List (Index D)} (h : u.Perm v) :
@@ -1176,6 +1186,8 @@ private theorem normalReadoutBox_independent (D : LatticeData) (T : ℂˣ)
   classical
   apply (basisMonomials (Index D) ℂ).ext
   intro mon
+  change normalReadoutBox D T B input output (monomial mon 1) =
+    nativeNormalReadout D T input output (monomial mon 1)
   rw [normalReadoutBox_monomial, normalWord_box_independent D T B input output hB,
     nativeNormalReadout_monomial]
   simp [normalWord, LinearMap.sum_apply, coeff_sum]
@@ -1206,8 +1218,10 @@ theorem nativeNeutralLaurentEntry_zero (D : LatticeData) (T : ℂˣ)
     rw [correctionLift_C]
     simp [correctionEvaluation, algebraMap_eq]
   rw [hz, nativeNormalReadout_monomial]
-  simp [occurrences, nativeModeBox,
-    nativeRawNormalTerm, coeff_monomial]
+  have he : occurrences D (0 : Index D →₀ ℕ) = [] := by
+    simp only [occurrences, Finsupp.toMultiset_zero, Multiset.toList_zero]
+  rw [he]
+  simp [nativeModeBox, nativeRawNormalTerm, coeff_monomial, eq_comm]
 
 private theorem creationSum_coefficient (D : LatticeData) (T : ℂˣ)
     (B : Finset ℤ) (a : Index D) (output : Index D →₀ ℕ) (p : Oscillator D)
@@ -1223,16 +1237,19 @@ private theorem creationSum_coefficient (D : LatticeData) (T : ℂˣ)
             (if (a.1, (-m - 1).toNat) ∈ output.support then
               p.coeff (output - Finsupp.single (a.1, (-m - 1).toNat) 1) else 0)
         else 0 := by
-    split_ifs with hn
-    · simp [rawModeOperator, hn, coeff_X_mul']
-    · simp
-  simp only [creationSum, LinearMap.sum_apply, coeff_sum, term]
+    by_cases hn : m < 0
+    · simp only [if_pos hn, rawModeOperator, LinearMap.smul_apply,
+        LinearMap.mulLeft_apply, coeff_smul, smul_eq_mul, coeff_X_mul']
+    · simp only [if_neg hn, LinearMap.zero_apply, AddMonoidAlgebra.coeff_zero,
+        Finsupp.zero_apply]
+  simp only [creationSum, LinearMap.sum_apply, coeff_sum]
+  simp_rw [term]
   refine Finset.sum_bij_ne_zero (fun m _ _ => (a.1, (-m - 1).toNat)) ?_ ?_ ?_ ?_
   · intro m hm hn
     by_cases h : m < 0
     · by_contra ho
-      simp [h, ho] at hn
-    · simp [h] at hn
+      simp only [if_pos h, if_neg ho, mul_zero, ne_eq, not_true_eq_false] at hn
+    · simp only [if_neg h, ne_eq, not_true_eq_false] at hn
   · intro m hm hmn n hn hnn he
     have hm' : m < 0 := by by_contra hh; simp [hh] at hmn
     have hn' : n < 0 := by by_contra hh; simp [hh] at hnn
@@ -1249,7 +1266,8 @@ private theorem creationSum_coefficient (D : LatticeData) (T : ℂˣ)
         apply Prod.ext
         · exact hc
         · simp
-      simpa [show -(j.2 : ℤ) - 1 < 0 by omega, he, hj] using hn
+      simpa only [if_pos (show -(j.2 : ℤ) - 1 < 0 by omega), he,
+        if_pos hj] using hn
     · apply Prod.ext
       · exact hc
       · simp
@@ -1257,8 +1275,8 @@ private theorem creationSum_coefficient (D : LatticeData) (T : ℂˣ)
     have hm' : m < 0 := by by_contra hh; simp [hh] at hn
     have hj : (a.1, (-m - 1).toNat) ∈ output.support := by
       by_contra hh
-      simp [hm', hh] at hn
-    simp [hm', hj]
+      simp only [if_pos hm', if_neg hh, mul_zero, ne_eq, not_true_eq_false] at hn
+    rw [if_pos hm', if_pos hj]
 
 private theorem annihilationSum_coefficient (D : LatticeData) (T : ℂˣ)
     (B : Finset ℤ) (a : Index D) (input output : Index D →₀ ℕ)
@@ -1286,8 +1304,9 @@ private theorem annihilationSum_coefficient (D : LatticeData) (T : ℂˣ)
       apply Finset.sum_congr rfl
       intro c hc
       ring
-  simp only [annihilationSum, LinearMap.sum_apply, map_sum, coeff_sum, term,
-    ← Finset.sum_product]
+  simp only [annihilationSum, LinearMap.sum_apply, map_sum, coeff_sum]
+  simp_rw [term]
+  rw [← Finset.sum_product' B (Finset.univ : Finset (Fin D.rank))]
   refine Finset.sum_bij_ne_zero (fun mc _ _ => (mc.2, mc.1.toNat)) ?_ ?_ ?_ ?_
   · intro mc hmc hn
     have hm : ¬ mc.1 < 0 := by intro hh; simp [hh] at hn
@@ -1342,7 +1361,8 @@ private theorem nativeNormalReadout_X_mul (D : LatticeData) (T : ℂˣ)
         ∑ j ∈ input.support, (input j : ℂ) * nativeSourceInputKernel D T a j *
           nativeNormalReadout D T (input - Finsupp.single j 1) output (monomial mon 1) := by
     rw [← hbox, normalReadoutBox_X_monomial]
-    simp only [LinearMap.add_apply, Module.End.mul_apply, coeff_add]
+    simp only [LinearMap.add_apply, Module.End.mul_apply,
+      AddMonoidAlgebra.coeff_add, Finsupp.add_apply]
     rw [creationSum_coefficient D T B a output _ hC,
       annihilationSum_coefficient D T B a input output _ hA]
     congr 1
@@ -1591,12 +1611,19 @@ private theorem threeMoment_source_step {I : Type*} [Fintype I] [DecidableEq I]
           (nativeThreeLegOccupation d h (l - Finsupp.single b 1)) := by
   classical
   rw [threeOccupation_add_source, nativeMoment_step _ (nativeThreeLegMatrix_symm D T label)]
-  rw [← Finsupp.sum_fintype _ _ (by simp)]
-  simp only [nativeThreeLegOccupation, Finsupp.sum_sumElim, Function.comp_def,
-    Finsupp.sum, nativeThreeLegMatrix, Finsupp.sumElim_inl, Finsupp.sumElim_inr]
-  simp only [← nativeThreeLegOccupation, threeOccupation_sub_source,
-    threeOccupation_sub_input, threeOccupation_sub_output]
-  ring
+  simp only [Fintype.sum_sum_type, nativeThreeLegMatrix,
+    show ∀ x, nativeThreeLegOccupation d h l (.inl x) = d x from fun _ => rfl,
+    show ∀ x, nativeThreeLegOccupation d h l (.inr (.inl x)) = h x from fun _ => rfl,
+    show ∀ x, nativeThreeLegOccupation d h l (.inr (.inr x)) = l x from fun _ => rfl,
+    threeOccupation_sub_source, threeOccupation_sub_input, threeOccupation_sub_output]
+  have restrict (q : I →₀ ℕ) (f : I → ℂ) :
+      (∑ b, (q b : ℂ) * f b) = ∑ b ∈ q.support, (q b : ℂ) * f b := by
+    symm
+    apply Finset.sum_subset (Finset.subset_univ _)
+    intro b hb hout
+    simp only [Finsupp.notMem_support_iff.mp hout, Nat.cast_zero, zero_mul]
+  simp only [mul_assoc]
+  rw [restrict d, restrict h, restrict l, add_assoc]
 
 private theorem threeMoment_input_step {I : Type*} [Fintype I] [DecidableEq I]
     (D : LatticeData) (T : ℂˣ) (label : I ↪ Index D) (h l : I →₀ ℕ) (a : I) :
@@ -1606,10 +1633,12 @@ private theorem threeMoment_input_step {I : Type*} [Fintype I] [DecidableEq I]
         (nativeThreeLegOccupation 0 h (l - Finsupp.single a 1)) := by
   classical
   rw [threeOccupation_add_input, nativeMoment_step _ (nativeThreeLegMatrix_symm D T label)]
-  simp only [Fintype.sum_sum_type, nativeThreeLegOccupation, Finsupp.sumElim_inl,
-    Finsupp.sumElim_inr, Finsupp.zero_apply, nativeThreeLegMatrix, Nat.cast_zero,
-    zero_mul, mul_zero, Finset.sum_const_zero, zero_add]
-  simp only [← nativeThreeLegOccupation, threeOccupation_sub_output]
+  simp only [Fintype.sum_sum_type, nativeThreeLegMatrix,
+    show ∀ x, nativeThreeLegOccupation (0 : I →₀ ℕ) h l (.inl x) = 0 from fun _ => rfl,
+    show ∀ x, nativeThreeLegOccupation (0 : I →₀ ℕ) h l (.inr (.inl x)) = h x from fun _ => rfl,
+    show ∀ x, nativeThreeLegOccupation (0 : I →₀ ℕ) h l (.inr (.inr x)) = l x from fun _ => rfl,
+    Nat.cast_zero, zero_mul, mul_zero, Finset.sum_const_zero, zero_add,
+    threeOccupation_sub_output]
   rw [Finset.sum_eq_single a]
   · simp
   · intro b hb hba
@@ -1649,7 +1678,10 @@ private theorem threeMoment_IO {I : Type*} [Fintype I] [DecidableEq I]
     by_cases hz : h = 0
     · subst h
       rw [threeMoment_output_only]
-      split_ifs <;> simp_all [FactorialFockMetric.weight]
+      by_cases hl : l = 0
+      · subst l
+        simp [FactorialFockMetric.weight]
+      · simp only [if_neg hl, if_neg (Ne.symm hl), mul_zero]
     · obtain ⟨a, ha⟩ : ∃ a, h a ≠ 0 := by
         by_contra hh
         push_neg at hh
@@ -1669,7 +1701,7 @@ private theorem threeMoment_IO {I : Type*} [Fintype I] [DecidableEq I]
           · intro hh; rw [hh]
           · intro hh
             rw [← hr, hh, Finsupp.sub_add_single_one_cancel hl]
-        rw [← he, hweight]
+        simp only [← he, hweight]
         ring
 
 private def finiteEntry {I : Type*} (D : LatticeData) (T : ℂˣ)
