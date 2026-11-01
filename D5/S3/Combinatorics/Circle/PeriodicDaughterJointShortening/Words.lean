@@ -161,7 +161,18 @@ theorem literal_ear (d r cut : ℕ) (hr : 2 ≤ r) (tau : List (Fin d))
     have hh : List.finRange (s + 1) =
         (List.finRange s).map Fin.castSucc ++ [Fin.last s] :=
       List.finRange_succ_last
-    simpa [jt, Fin.castSucc, Fin.castAdd, Fin.castLE, Fin.last] using hh
+    have hh' : List.finRange (s + 1) =
+        (List.finRange s).map (fun j =>
+          (⟨j.val, Nat.lt_succ_of_lt j.isLt⟩ : Fin (s + 1))) ++
+            [⟨s, Nat.lt_succ_self s⟩] := by
+      rw [hh]
+      apply congrArg₂ List.append
+      · apply List.map_congr_left
+        intro j _
+        exact Fin.ext rfl
+      · apply congrArg List.singleton
+        exact Fin.ext rfl
+    simpa only [jt, Nat.add_sub_cancel] using hh'
   unfold shortenedWord commonCut
   rw [← hl, ear_after, hte]
   unfold daughterWord
