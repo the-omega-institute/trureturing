@@ -14,6 +14,8 @@ set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Graph.Products.LatticeRouting
 
+universe u v
+
 abbrev Point := ℤ × ℤ
 
 def squareAdj (p q : Point) : Prop := |p.1 - q.1| + |p.2 - q.2| = 1
@@ -31,12 +33,12 @@ theorem squareAdj_iff_mem (p q : Point) : squareAdj p q ↔ q ∈ neighbors p :=
   split_ifs <;> omega
 
 /-- A sparse lookup tree. Terminal keys are arbitrary finite bit strings. -/
-inductive Occupancy (V : Type) where
+inductive Occupancy (V : Type u) where
   | empty
   | node (value : Option V) (low high : Occupancy V)
 
 namespace Occupancy
-variable {V : Type}
+variable {V : Type u}
 
 def value : Occupancy V → Option V
   | .empty => none
@@ -159,7 +161,7 @@ def pointKey (p : Point) : List Bool :=
   bits 27 ((p.1 + 4096).toNat + 16384 * (p.2 + 4096).toNat)
 
 section Checker
-variable {V : Type} [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
+variable {V : Type u} [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
   (vs : List V) (es : List (V × V)) (c : V → Point)
 
 def edgeCheck : Bool := es.all fun e => decide (squareAdj (c e.1) (c e.2))
@@ -241,7 +243,7 @@ theorem rotation_adjacency (p q : Point) :
 
 /-- Strong product: the union of categorical and box-product edges.
 Mathlib's pinned `Prod` supplies only the box product. -/
-def strongProduct {V W : Type} (G : SimpleGraph V) (H : SimpleGraph W) :
+def strongProduct {V : Type u} {W : Type v} (G : SimpleGraph V) (H : SimpleGraph W) :
     SimpleGraph (V × W) where
   Adj x y := (G.boxProd H).Adj x y ∨ (G.Adj x.1 y.1 ∧ H.Adj x.2 y.2)
   symm.symm x y h := by
@@ -253,7 +255,7 @@ def strongProduct {V W : Type} (G : SimpleGraph V) (H : SimpleGraph W) :
     · exact (G.boxProd H).loopless.irrefl _ h
     · exact G.loopless.irrefl _ h.1
 
-instance {V W : Type} [DecidableEq V] [DecidableEq W]
+instance {V : Type u} {W : Type v} [DecidableEq V] [DecidableEq W]
     (G : SimpleGraph V) (H : SimpleGraph W) [DecidableRel G.Adj] [DecidableRel H.Adj] :
     DecidableRel (strongProduct G H).Adj := by
   intro x y
@@ -293,7 +295,7 @@ theorem kingAdj_zeroBased (p q : Point) :
   have hy : (zeroBased p).2 - (zeroBased q).2 = p.2 - q.2 := by dsimp [zeroBased]; ring
   simp only [kingAdj, hx, hy]
 
-def oneBasedRectangleEmbedding {V : Type} (G : SimpleGraph V) (c : V → Point)
+def oneBasedRectangleEmbedding {V : Type u} (G : SimpleGraph V) (c : V → Point)
     (hinj : Function.Injective c)
     (hadj : ∀ v w, G.Adj v w ↔ squareAdj (c v) (c w))
     {n m : ℕ}
