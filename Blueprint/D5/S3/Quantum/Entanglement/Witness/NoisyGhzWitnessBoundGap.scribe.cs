@@ -117,7 +117,10 @@ internal sealed class NoisyGhzWitnessBoundGapDocument : IScribeDocumentDefinitio
                         + "geometricMeasure ρ ≥ 13/108. "
                         + "The equality in claim at these parameters would imply 13/108 ≤ 1/9 = 12/108, "
                         + "a contradiction. No exact value of the convex roof is asserted."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("xu-et-al-2023-noisy-ghz-witness-bound-gap"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, bool literature) =>
         Describe.Lean(DescribeId.Create("noisy-ghz-" + name.ToLowerInvariant()),
