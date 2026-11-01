@@ -147,7 +147,11 @@ private theorem effective_symm (P : Matrix I I ℂ) (Q : Matrix E E ℂ)
     (hP : ∀ i k, P i k = P k i) (hQ : ∀ j k, Q j k = Q k j) :
     ∀ i k, effectiveKernel P Q R S i k = effectiveKernel P Q R S k i := by
   intro i k
-  cases i <;> cases k <;> simp [effectiveKernel, Matrix.transpose_apply, hP, hQ]
+  cases i <;> cases k
+  · exact hP _ _
+  · rfl
+  · rfl
+  · exact hQ _ _
 
 private theorem left_shared_step (P : Matrix I I ℂ) (R : Matrix I J ℂ)
     (hP : ∀ i k, P i k = P k i) (d : I →₀ ℕ) (n : J →₀ ℕ) (a : J) :
@@ -169,13 +173,15 @@ private theorem left_vanish (P : Matrix I I ℂ) (R : Matrix I J ℂ)
     (hP : ∀ i k, P i k = P k i) (d : I →₀ ℕ) (n : J →₀ ℕ)
     (h : d.degree < n.degree) :
     nativeMoment (leftKernel P R) (d.sumElim n) = 0 :=
-  shared_support _ R (left_shared_step P R hP) d n h
+  shared_support (fun d n => nativeMoment (leftKernel P R) (d.sumElim n))
+    R (left_shared_step P R hP) d n h
 
 private theorem right_vanish (Q : Matrix E E ℂ) (S : Matrix J E ℂ)
     (hQ : ∀ j k, Q j k = Q k j) (n : J →₀ ℕ) (e : E →₀ ℕ)
     (h : e.degree < n.degree) :
     nativeMoment (rightKernel Q S) (n.sumElim e) = 0 :=
-  shared_support _ S.transpose (right_shared_step Q S hQ) e n h
+  shared_support (fun e n => nativeMoment (rightKernel Q S) (n.sumElim e))
+    S.transpose (right_shared_step Q S hQ) e n h
 
 private theorem weighted_shift (f g : (J →₀ ℕ) → ℂ) (a : J) :
     (∑ᶠ n, (n a : ℂ) * f (n - Finsupp.single a 1) * g n / (weight n : ℂ)) =
@@ -336,8 +342,8 @@ private theorem moment_contraction (P : Matrix I I ℂ) (Q : Matrix E E ℂ)
     pairing (fun d n => nativeMoment (leftKernel P R) (d.sumElim n))
       (fun n e => nativeMoment (rightKernel Q S) (n.sumElim e)) d e =
       nativeMoment (effectiveKernel P Q R S) (d.sumElim e) := by
-  let F := fun d n => nativeMoment (leftKernel P R) (d.sumElim n)
-  let G := fun n e => nativeMoment (rightKernel Q S) (n.sumElim e)
+  let F := fun (d : I →₀ ℕ) (n : J →₀ ℕ) => nativeMoment (leftKernel P R) (d.sumElim n)
+  let G := fun (n : J →₀ ℕ) (e : E →₀ ℕ) => nativeMoment (rightKernel Q S) (n.sumElim e)
   have hF : ∀ d n i, F (d + Finsupp.single i 1) n =
       (∑ k, (d k : ℂ) * P i k * F (d - Finsupp.single k 1) n) +
       ∑ a, (n a : ℂ) * R i a * F d (n - Finsupp.single a 1) := by
@@ -361,7 +367,7 @@ private theorem moment_contraction (P : Matrix I I ℂ) (Q : Matrix E E ℂ)
           intro n hn
           have hn0 : 0 < n.degree := Nat.pos_of_ne_zero (by
             intro he
-            exact hn (Finsupp.degree_eq_zero_iff.mp he))
+            exact hn ((Finsupp.degree_eq_zero_iff n).mp he))
           rw [hf 0 n (by simpa using hn0)]
           simp)]
         have hb := right_boundary (effectiveKernel P Q R S) (rightKernel Q S)
@@ -429,9 +435,9 @@ theorem coefficient_contraction (P : Matrix I I ℂ) (Q : Matrix E E ℂ)
   have heq : (∑ᶠ n, c n) =
       ∑ n ∈ (Finsupp.finite_of_degree_le (σ := J) (min d.degree e.degree)).toFinset,
         c n := by
-    apply finsum_eq_sum_of_support_subset
+    apply finsum_eq_sum_of_support_subset_of_finite c _
+      (Finsupp.finite_of_degree_le (σ := J) (min d.degree e.degree))
     intro n hn
-    simp only [Set.Finite.mem_toFinset, Set.mem_setOf_eq]
     by_contra hh
     exact hn (coefficient_support P Q R S hP hQ d e n (Nat.lt_of_not_ge hh))
   rw [← heq]
@@ -450,6 +456,5 @@ theorem coefficient_contraction (P : Matrix I I ℂ) (Q : Matrix E E ℂ)
     Nat.cast_ne_zero.mpr (Nat.ne_of_gt (weight_pos n))
   simp only [c, nativeMoment, weight_join, Nat.cast_mul]
   field_simp
-  <;> ring
 
 end D5.S3.VertexAlgebra.TwistedGround.ElementaryGaussianContraction
