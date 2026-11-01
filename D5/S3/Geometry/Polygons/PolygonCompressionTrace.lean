@@ -32,6 +32,7 @@ noncomputable def feasible (H : Finset (ZMod n)) : Finset (Finset (ZMod n)) := b
 noncomputable def weight (P Q H X : Finset (ZMod n)) : ℝ :=
   Nat.card (ConditionFiber P Q H X)
 
+omit [NeZero n] in
 @[simp] theorem mem_feasible {H X : Finset (ZMod n)} :
     X ∈ feasible H ↔ X ⊆ H ∧ Independent X := by
   classical
@@ -134,8 +135,10 @@ theorem weight_zero_of_not_feasible (hn : 6 ≤ n)
   have : IsEmpty (ConditionFiber P Q H X) := ⟨fun T =>
     hX (T.2.2.2.2 ▸ trace_mem_feasible hn T.2.1 H)⟩
   have hz : Nat.card (ConditionFiber P Q H X) = 0 := Nat.card_eq_zero.mpr (Or.inl ‹_›)
+  unfold weight
   exact_mod_cast hz
 
+omit [NeZero n] in
 theorem feasible_projection (H : Finset (ZMod n)) (t : ZMod n) :
     (feasible H).image (fun X => X.erase t) = feasible (H.erase t) := by
   classical
@@ -261,11 +264,95 @@ theorem proper_of_subset_EK {K H : Finset (ZMod n)} (hK : K.Nonempty)
   have h := (mem_filter.mp (hH (he ▸ mem_univ k))).2.1
   exact h hk
 
+omit [NeZero n] in
 theorem feasible_of_independent {H : Finset (ZMod n)} (hH : Independent H) :
     feasible H = H.powerset := by
   classical
   ext X
   simp only [mem_feasible, mem_powerset]
   exact ⟨And.left, fun h => ⟨h, independent_subset hH h⟩⟩
+
+/-- A block-start ear replacement stays in the full independent trace universe. -/
+omit [NeZero n] in
+theorem shift_mem_feasible {H X : Finset (ZMod n)} {a : ZMod n}
+    (ha0 : a ∉ H) (ha1 : a + 1 ∈ H) (hX : X ∈ feasible H) :
+    shift (a + 1) (a + 2) X ∈ feasible H := by
+  classical
+  obtain ⟨hXH, hXI⟩ := mem_feasible.mp hX
+  apply mem_feasible.mpr
+  constructor
+  · exact insert_subset ha1 ((erase_subset _ X).trans hXH)
+  · intro i hi hi1
+    rcases mem_insert.mp hi with rfl | hi
+    · have he : a + 1 + 1 = a + 2 := by ring
+      rw [he] at hi1
+      rcases mem_insert.mp hi1 with heq | hmem
+      · have hprev : a = a + 1 := by linear_combination -heq
+        exact ha0 (hprev ▸ ha1)
+      · exact (mem_erase.mp hmem).1 rfl
+    · rcases mem_insert.mp hi1 with he | hi1
+      · have hia : i = a := by linear_combination he
+        exact ha0 (hia ▸ hXH (mem_erase.mp hi).2)
+      · exact hXI i (mem_erase.mp hi).2 (mem_erase.mp hi1).2
+
+/-- Consecutive neighbours are excluded by any trace containing the middle ear. -/
+omit [NeZero n] in
+theorem local_excludes {H X : Finset (ZMod n)} {a : ZMod n}
+    (hX : X ∈ feasible H) (ht : a + 2 ∈ X) : a + 1 ∉ X ∧ a + 3 ∉ X := by
+  have hI := (mem_feasible.mp hX).2
+  constructor
+  · intro hs
+    exact hI (a + 1) hs (by convert ht using 1; ring)
+  · intro hu
+    exact hI (a + 2) ht (by convert hu using 1; ring)
+
+/-- The actual complete-fibre count law uses feasibility only to remove zero terms. -/
+theorem local_weight_law (hn : 14 ≤ n) {P Q H X : Finset (ZMod n)} {a : ZMod n}
+    (hH : H ⊆ E_K (P ∪ Q)) (ha0 : a ∉ H)
+    (ha1 : a + 1 ∈ H) (ha2 : a + 2 ∈ H)
+    (hX : X ∈ feasible H) (ht : a + 2 ∈ X) :
+    weight P Q H X = weight P Q H (shift (a + 1) (a + 2) X) +
+      if insert (a + 3) (shift (a + 1) (a + 2) X) ∈ feasible H then
+        weight P Q H (insert (a + 3) (shift (a + 1) (a + 2) X)) else 0 := by
+  classical
+  have hex := local_excludes hX ht
+  let R := X.erase (a + 2)
+  have hR : R ⊆ ((H.erase (a + 1)).erase (a + 2)).erase (a + 3) := by
+    intro i hi
+    obtain ⟨hit, hiX⟩ := mem_erase.mp hi
+    exact mem_erase.mpr ⟨fun h => hex.2 (h ▸ hiX), mem_erase.mpr
+      ⟨hit, mem_erase.mpr ⟨fun h => hex.1 (h ▸ hiX), (mem_feasible.mp hX).1 hiX⟩⟩⟩
+  have hc := PolygonEarSlideCardinality.condition_fibre_card_at hn a hH ha0 ha1 ha2 hR
+  have hw : weight P Q H X = weight P Q H (shift (a + 1) (a + 2) X) +
+      if a + 3 ∈ H then
+        weight P Q H (insert (a + 3) (shift (a + 1) (a + 2) X)) else 0 := by
+    rw [show X = insert (a + 2) R from (insert_erase ht).symm] at ⊢
+    have he : (insert (a + 2) R).erase (a + 2) = R := by
+      simp [R]
+    simp only [shift, he]
+    unfold weight
+    exact_mod_cast hc
+  rw [hw]
+  congr 1
+  by_cases hu : a + 3 ∈ H
+  · simp only [hu, ite_true]
+    split_ifs with hf
+    · rfl
+    · exact weight_zero_of_not_feasible (by omega) P Q H _ hf
+  · have hf : insert (a + 3) (shift (a + 1) (a + 2) X) ∉ feasible H := by
+      intro h
+      exact hu ((mem_feasible.mp h).1 (mem_insert_self _ _))
+    simp [hu, hf]
+
+/-- Cyclic independence is exactly noncrossing of the actual ear chords. -/
+theorem independent_iff_noncrossing (hn : 6 ≤ n) (H : Finset (ZMod n)) :
+    Independent H ↔ ∀ i ∈ H, ∀ j ∈ H, ¬Cross (ear i) (ear j) := by
+  constructor
+  · intro h i hi j hj hc
+    rcases (cross_ear_iff_adjacent hn i j).mp hc with he | he
+    · exact h i hi (he ▸ hj)
+    · exact h j hj (he ▸ hi)
+  · intro h i hi hj
+    exact h i hi (i + 1) hj ((cross_ear_iff_adjacent hn i (i + 1)).mpr (Or.inl rfl))
 
 end D5.S3.Geometry.Polygons.PolygonCompressionTrace
