@@ -219,7 +219,12 @@ private theorem remainder_eq (a b c d : ℕ) (hd : 3≤d) (hc : 2≤c) (hdb : d<
     Matrix.vecTail,Function.comp_apply,bits_full,
     Finset.mem_range,Finset.mem_union,Finset.mem_sdiff,Finset.mem_insert,
     Finset.mem_singleton,Finset.mem_Ico]
-  omega
+  by_cases huv : i∈bits (d-1) 0 (JointChoice.v ch) <;>
+    by_cases hwh : i∈bits (b-1) (d+c) (JointChoice.h ch) <;>
+    by_cases hxm : i∈bits (a-1) (d+c+b) ((JointChoice.s ch)-1) <;>
+    by_cases hxu : i∈bits (a-1) (d+c+b) ((JointChoice.r ch)-1) <;>
+    simp_all
+  all_goals omega
 
 private theorem sumlist (P : Finset ℕ) (f : ℕ→ℤ) :
     (P.toList.map f).sum=∑ i∈P,f i := by
