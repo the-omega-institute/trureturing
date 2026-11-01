@@ -7,10 +7,7 @@ doi: 10.48550/arXiv.2608.00109
 url: https://arxiv.org/abs/2608.00109v1
 claim: Section 4 item 3 asks whether infinitely many connected finite simple graphs have ordinary domination polynomial zero at minus four.
 strata_touched:
-  - D5/S3/Combinatorics/Graph/Domination/MinusFourReplication
   - D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly
-  - D5/S3/Combinatorics/Graph/Domination/MinusFourFamily
-  - D5/S3/Combinatorics/Graph/Domination/MinusFourBaseStates
 license: citation-only
 triage: anchor
 ---
@@ -28,7 +25,7 @@ the substantive infinite-family event. The question imposes no fixed cyclomatic
 number, degree bound, planarity requirement, or condition on root multiplicity.
 
 Theorem 2.1 reports a 33-vertex, 36-edge graph and a polynomial with a factor x+4.
-Its actual edges are independently encoded in MinusFourFamily.sourceEdges.
+Its actual edges are independently encoded in MinusFourReassembly.sourceEdges.
 Core vertices 0,1,2,3 form a four-cycle. The components outside the core have roots
 4,6,8,10,12,18,21,24 and sizes 2,2,2,2,6,3,3,9. Vertex 5 has sole neighbor 4.
 The nine-vertex component uses exactly the explicit edges among labels 24 through
