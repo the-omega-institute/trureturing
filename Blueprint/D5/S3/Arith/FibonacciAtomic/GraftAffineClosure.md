@@ -232,6 +232,32 @@ For w=a_j the two quantities are consecutive Fibonacci numbers. Their coprimalit
 
 Every residue pair has actual nonnegative representatives, and C is invertible modulo H, so every observation pair also occurs. Recording the complete composition residue gives an autonomous representation with exactly H^2 states. If any representation identifies different residues, its deterministic updates give equal outputs after their common separating word, a contradiction. The minimum image size is therefore H^2, including the one-state case H=1.
 
+## Fixed rooted rational words on each positive-beta pair orbit
+
+Specialize the chronological pair run to the graft vector alpha=(1,0) and V={(a,b) in N squared: b>0}. Thus the two pair actions are Rpair(a,b)=(b,a+b) and Gpair(a,b)=(a+1,b). Both preserve V, including a=0. For each independently fixed v in V, let O(v) contain every endpoint of every finite chronological pair word from v, including the empty word. These are entire attained pair-action orbits, with no word-length bound.
+
+On positive rational numbers use the separate rooted actions Lroot(x)=x/(1+x) and Rroot(x)=x+1. E(s,x) executes the finite rooted word s chronologically, so E(st,x)=E(t,E(s,x)). A representation is any map iota from O(v) into the positive rationals and two rooted words u,w satisfying iota(Gpair(z))=E(u,iota(z)) and iota(Rpair(z))=E(w,iota(z)) for every z in O(v). The words may be chosen separately for each initial v, but remain fixed across its orbit, states and histories. No injectivity, effectiveness, acquisition or anchor certificate is assumed. Empty words are allowed.
+
+Such a representation exists exactly when u and w are empty and iota is constant on the entire orbit. Every positive rational constant supplies a representation with both words empty. On the separate whole domain V, the same two fixed-word equations hold exactly for constant maps with both words empty. In the formulas, K(v0,iota,u,w) denotes the two orbit equations, Kglobal(iota,u,w) the two whole-domain equations, and nil the empty rooted word. The constant c is a positive rational. All maps have the positive-rational codomain stated above; z ranges over the indicated domain.
+
+$$
+(\operatorname{K}\left(v0, iota, u, w\right)) \Leftrightarrow ((u = \operatorname{nil}\left(\right)) \land (w = \operatorname{nil}\left(\right)) \land (\forall z, (z \in \operatorname{O}\left(v0\right)) \implies (\operatorname{iota}\left(z\right) = \operatorname{iota}\left(v0\right))))
+$$
+
+$$
+(\operatorname{Kglobal}\left(iota, u, w\right)) \Leftrightarrow ((u = \operatorname{nil}\left(\right)) \land (w = \operatorname{nil}\left(\right)) \land (\exists c, \forall z, (z \in V) \implies (\operatorname{iota}\left(z\right) = c)))
+$$
+
+The exact rational input is the reconstruction theorem original_views_reconstruct in RationalRouting.Views. It identifies ratio(encode(s)) with E(s,1), sends this ratio back to the same literal word s, and reconstructs every positive rational x from originalWord(x). If d=originalWord(x), then E(d,1)=x. Equality E(s,x)=E(t,x) therefore gives E(ds,1)=E(dt,1), hence ds=dt by the word round trip, and s=t by prefix cancellation. The existing private ratio_fold and pair_ratio_step in Views identify this evaluator with the rational list fold on positive pairs; encode_good and rational_reconstruction supply its initial pair, while Source.attain_control supplies positivity at concatenation cuts. This derives freeness at every positive rational anchor from the supplied reconstruction laws; it is no extra premise and does not follow merely from matrix generation.
+
+Replace each chronological Gpair letter by u and each Rpair letter by w, preserving concatenation. The list-fold homomorphism law transports the two equations to every finite word W: iota(Run(W,z))=E(Phi(W),iota(z)) for every orbit state z. The literal chronological evaluator, rather than a reversed matrix product, is used. In GraftAffineClosure, false denotes Rpair and true denotes Gpair; in RationalRouting, false denotes Lroot and true denotes Rroot. The correspondence follows the actions and the substitution Phi, without identifying these Boolean names.
+
+At every initial pair (a,b), Gpair Rpair Rpair and Rpair Gpair Rpair Gpair both end at (a+b+1,a+2b+1). Transport and rational-anchor freeness give uww=wuwu. Taking word lengths forces u empty. Now Rpair cubed and Rpair Gpair to the power (a+b) Rpair Gpair to the power b both end at (a+2b,2a+3b). Iterated translation by alpha gives these exact endpoints and keeps every prefix in V. The exponents depend on the initial pair only as witnesses of a legal native pair equality; they do not change the fixed compiled words. With u empty, the second equality gives www=ww and forces w empty. Transport along an arbitrary reaching word now makes iota equal to its value at the initial state. The empty-word evaluation law proves the converse for every positive rational constant.
+
+For a map on all of V, restriction to the orbit of (0,1) first forces both compiled words empty. Gpair invariance and its finite iterates give iota(a,b)=iota(0,b). For each b>0, Rpair(b-1,1)=(1,b); applying the same invariance before and after this replacement yields iota(0,b)=iota(0,1). Thus the whole-domain map is constant, and the empty-word law again supplies every constant converse.
+
+This is a composition-level application of the exact rational reconstruction and generic fold and iteration laws. It gives no native root-graft permission: the Gpair composition effect can be realized by the LAB leftmost-beta split under its authentic binding, current rights, tapes, completed replies and sufficient finite material. Whole-frontier replacement uses its acquired entry leaf list and does not edit newly born leaves again. That actual source implementation and its physical or resource obligations remain separate from this pair-action inference. Full native trees or histories, state-dependent compiled words, inverse or signed actions and other codomains are outside this classification. No decoder acquisition, finite observation certificate, retention bound, noise margin or physical realization follows from it.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.Autonomous`
