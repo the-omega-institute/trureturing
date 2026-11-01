@@ -236,6 +236,7 @@ private theorem later_gates (B L M D z H r : ℤ)
     have hrDz : z+1≤r*D := by
       nlinarith only [hr.1,hD,hz,mul_nonneg (show 0≤r-1 by omega) (show 0≤D by omega)]
     dsimp only
+    simp
     refine ⟨hw,hwcap,g1,k1,?_,?_⟩
     · constructor <;> nlinarith
     · constructor <;> nlinarith
