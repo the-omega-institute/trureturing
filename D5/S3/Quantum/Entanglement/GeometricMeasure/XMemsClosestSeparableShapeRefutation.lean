@@ -12,6 +12,7 @@ import D5.S3.Quantum.Information.BargmannImaginaryMaximizers
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability
 import D5.S3.Quantum.Entanglement.FullySeparableExchangeObstruction
+import D5.S3.Quantum.Dynamics.CycleUniformMixing.OrbitIndexedSums
 
 /-! The low-branch reading of Consiglio–Apollaro–Wieśniak, arXiv:2209.01430v2,
 Appendix A, equation (A11). Qubit zero is the most significant bit. -/
@@ -280,11 +281,6 @@ private def localVector (t : ℝ) (c : ZMod 3) : Fin 2 → ℂ :=
 private def localState (t : ℝ) (c : ZMod 3) : Matrix (Fin 2) (Fin 2) ℂ :=
   D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity (localVector t c)
 
-private theorem star_character (c : ZMod 3) :
-    star (ZMod.stdAddChar c) = ZMod.stdAddChar (-c) := by
-  change (starRingEnd ℂ) (ZMod.stdAddChar c) = _
-  rw [AddChar.starComp_apply (by rw [ZMod.ringChar_zmod_n]; norm_num : 0 < ringChar (ZMod 3)), AddChar.inv_apply]
-
 private theorem localState_entry (t : ℝ) (c : ZMod 3) (i j : Fin 2) :
     localState t c i j = (magnitude t i * magnitude t j : ℝ) *
       ZMod.stdAddChar (c * ((i.val : ZMod 3) - (j.val : ZMod 3))) := by
@@ -297,7 +293,8 @@ private theorem localState_entry (t : ℝ) (c : ZMod 3) (i j : Fin 2) :
         D5.S3.Quantum.Information.BargmannImaginaryMaximizers.Latitude.latitude] <;>
       norm_num
   simp only [hv]
-  simp only [star_mul', star_character, Complex.star_def, Complex.conj_ofReal, Complex.ofReal_mul]
+  simp only [star_mul', Complex.star_def, Complex.conj_ofReal, Complex.ofReal_mul,
+    D5.S3.Quantum.Dynamics.CycleUniformMixing.OrbitIndexedSums.Fourier.char_star]
   rw [mul_sub, sub_eq_add_neg, AddChar.map_add_eq_mul]
   ring
 
@@ -317,7 +314,9 @@ private theorem localState_density (t : ℝ) (ht : 0 ≤ t) (ht1 : t ≤ 1) (c :
   rw [D5.S3.Quantum.Information.BargmannImaginaryMaximizers.Latitude.latitude_dot
     (1 - t) (by linarith) (by linarith)]
   have hz : star (ZMod.stdAddChar c) * ZMod.stdAddChar c = 1 := by
-    rw [star_character, ← AddChar.map_add_eq_mul]
+    change (starRingEnd ℂ) (ZMod.stdAddChar c) * ZMod.stdAddChar c = 1
+    rw [D5.S3.Quantum.Dynamics.CycleUniformMixing.OrbitIndexedSums.Fourier.char_star,
+      ← AddChar.map_add_eq_mul]
     simp
   rw [mul_assoc, hz, mul_one]
   push_cast
