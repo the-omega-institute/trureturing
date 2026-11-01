@@ -787,7 +787,8 @@ private lemma spectral_tangent_nssp {n : ℕ}
   have hy0 : Y = 0 := by
     rw [hY]
     have hd : ∀ i, Y i i = 0 := by
-      simpa using (Finset.sum_mul_self_eq_zero_iff Finset.univ (fun i => Y i i)).mp (by simpa using hs)
+      simpa using (Finset.sum_mul_self_eq_zero_iff Finset.univ (fun i => Y i i)).mp
+        (by simpa using hs)
     simp [hd]
   have hx : Xᵀ = 0 := by
     have he := congrArg (fun M => U * M * Uᵀ) hy0
@@ -804,7 +805,7 @@ private lemma det_diagonal_derivative_zero {n : ℕ} (d : Fin n → ℝ)
     ⟨detRowAlternating.toMultilinearMap, continuous_id.matrix_det⟩
   have hg : HasDerivAt (fun t : ℝ => diagonal d + t • B) B 0 := by
     simpa using (((hasDerivAt_id (0 : ℝ)).smul_const B).const_add (diagonal d))
-  have hf := (f.hasFDerivAt (diagonal d)).comp_hasDerivAt_of_eq hg (by simp)
+  have hf := (f.hasFDerivAt (diagonal d)).comp_hasDerivAt_of_eq (0 : ℝ) hg (by simp)
   have hz : f.linearDeriv (diagonal d) B = 0 := by
     rw [ContinuousMultilinearMap.linearDeriv_apply]
     apply Finset.sum_eq_zero
