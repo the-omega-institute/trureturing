@@ -529,7 +529,7 @@ private lemma average_lower (k : ℕ) (p : Fin k → ℝ) (ψ : Fin k → Word (
     have ht := congrArg Complex.re
       (D5.S3.Zeros.CriticalPoints.RankOneTraceBound.trace_rank_one_sum
         (fun i => WithLp.toLp 2 (ψ i)) p (fun _ => 1) b)
-    simpa only [mul_one, rankOneDensity, ← Complex.coe_smul,
+    simpa only [mul_one, rankOneDensity, Complex.coe_smul,
       EuclideanSpace.inner_eq_star_dotProduct, Matrix.toLpLin_apply,
       WithLp.ofLp_toLp, Complex.re_sum, Complex.re_ofReal_mul, readout,
       dotProduct_comm] using ht
