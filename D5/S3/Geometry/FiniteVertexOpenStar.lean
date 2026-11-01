@@ -21,9 +21,11 @@ variable {V : Type*} [Fintype V] [DecidableEq V]
 /-- The relative open star in the actual coordinate realization. -/
 def star : Set (FiniteVertexCylinder.Space M) := {x | 0 < x.val v}
 
+omit [Fintype V] in
 theorem isOpen_star : IsOpen (star M v) :=
   isOpen_lt continuous_const ((continuous_apply v).comp continuous_subtype_val)
 
+omit [Fintype V] in
 theorem vertex_mem_star (hv : ({v} : Finset V) ∈ M) :
     vertexPoint M v hv ∈ star M v := by
   simp [star, vertexPoint]
@@ -52,7 +54,7 @@ private theorem segment_pos (t : I) (x : star M v) :
   have hx : 0 < x.val.val v := x.property
   have ht0 := t.property.1
   have ht1 := t.property.2
-  change 0 < (1 - (t : ℝ)) * x.val.val v + (t : ℝ) * (Pi.single v (1 : ℝ) v)
+  change 0 < (1 - (t : ℝ)) * x.val.val v + (t : ℝ) * ((Pi.single v (1 : ℝ) : V → ℝ) v)
   rw [Pi.single_eq_same, mul_one]
   by_cases ht : (t : ℝ) < 1
   · have h := mul_pos (sub_pos.mpr ht) hx
@@ -84,8 +86,8 @@ def contraction (hv : ({v} : Finset V) ∈ M) :
     apply Subtype.ext
     apply Subtype.ext
     ext w
-    change (1 - (t : ℝ)) * (Pi.single v (1 : ℝ) w) +
-      (t : ℝ) * (Pi.single v (1 : ℝ) w) = Pi.single v (1 : ℝ) w
+    change (1 - (t : ℝ)) * ((Pi.single v (1 : ℝ) : V → ℝ) w) +
+      (t : ℝ) * ((Pi.single v (1 : ℝ) : V → ℝ) w) = (Pi.single v (1 : ℝ) : V → ℝ) w
     ring
 
 end D5.S3.Geometry.FiniteVertexOpenStar

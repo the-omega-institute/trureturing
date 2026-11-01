@@ -198,7 +198,9 @@ def homologyIso {C : Type u} [Category.{v} C] [HasCoproducts.{w} C] [Abelian C]
     exact (partHomeomorph a b hA hB ha hb).symm.contractibleSpace
   have hI : ContractibleSpace ↥(U a b hb ∩ V a b ha) :=
     (Homeomorph.setCongr (inter a b ha hb)).contractibleSpace
-  obtain ⟨r, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hq)
+  let r := q - 1
+  have hqr : q = r + 1 := (Nat.sub_add_cancel hq).symm
+  rw [hqr]
   exact biprod.mapIso
       ((openLeftEquiv a b hB hb K).symm.reducedSingularHomologyIso R (r + 1))
       ((openRightEquiv a b hA ha H).symm.reducedSingularHomologyIso R (r + 1)) ≪≫
