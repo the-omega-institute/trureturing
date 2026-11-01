@@ -7,12 +7,12 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra;
 internal sealed class BornJaccardFixedOverlapDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Actual positive compressions admit simultaneously prescribed overlap and exact interval defect.",
-        H("Born interval fixed-overlap attainment"),
+        "The exact Born interval defect maximum at prescribed overlap is attained for every allowed overlap.",
+        H("Born interval fixed-overlap maximum"),
         Blocks(Describe.Lean(
-            DescribeId.Create("born-jaccard-fixed-overlap-attainment"),
-            DeclarationHandle.Create("D5/S3/Quantum/Algebra/BornJaccardFixedOverlap.fixed_overlap_attainment"),
-            H("Actual-line attainment for every overlap"),
+            DescribeId.Create("born-jaccard-fixed-overlap-maximum"),
+            DeclarationHandle.Create("D5/S3/Quantum/Algebra/BornJaccardFixedOverlap.fixed_overlap_maximum"),
+            H("Exact maximum over all actual line pairs"),
             StatementSource.FromAuthor(Disp(Statement())),
             AssessedProvenance.FromRepo(),
             Blocks(
@@ -38,15 +38,26 @@ internal sealed class BornJaccardFixedOverlapDocument : IScribeDocumentDefinitio
                     + "product exactly r. Their sum and difference recover e and f, while "
                     + "comparison of the e and f coordinates proves their spans disjoint. "
                     + "The two line weights are both (M+m+r(M-m))/2.")),
+                Paragraph(Text("Write Defects(rho,c,R,T,r) for the set of real d for which "
+                    + "there are ordered complex lines L,N in T, both of dimension one, and "
+                    + "unit vectors u in L and v in N with absolute inner product r, such "
+                    + "that d is the original interval distance defect at R+map(L), R+T, "
+                    + "R+map(N). IsGreatest says both that the displayed value belongs to "
+                    + "this set and that every member is at most that value. Thus the "
+                    + "statement includes every ordered line pair and simultaneous attainment.")),
+                Paragraph(Text("For an arbitrary unit pair with eigenbasis coordinates (a,b) "
+                    + "and (z,w), the residual-square identity bounds normSq(a)+normSq(z)-1 "
+                    + "by the norm of conj(a)z+conj(b)w. The latter is exactly the prescribed "
+                    + "overlap. Spectral expansion makes the numerator of the actual defect "
+                    + "equal (M-m)(normSq(a)+normSq(z)-1). Multiplication by M-m and division "
+                    + "by the derived positive denominator give the universal upper bound.")),
                 Paragraph(Text("For every U contained in T, the actual orthogonal projection "
                     + "onto R+U is the sum of the projections onto R and U. Cyclicity of "
                     + "the trace identifies mu(T) with the real trace of the compression; "
                     + "the inner-product compression identity identifies its quadratic "
                     + "forms with those of rho. The actual interval meet and join therefore "
-                    + "give defect (mu(L)+mu(N)-mu(T))/(c+mu(R)+mu(T)). This proves the "
-                    + "attainment part of Theorem 2.1 of Born-weighted Jaccard projection "
-                    + "geometry. The universal upper bound and hence maximality remain "
-                    + "separate obligations. The cases r=0, M=m, and c+mu(R)=0 remain "
+                    + "give defect (mu(L)+mu(N)-mu(T))/(c+mu(R)+mu(T)). This proves the fixed-overlap maximum in Theorem 2.1 of Born-weighted "
+                    + "Jaccard projection geometry. The cases r=0, M=m, and c+mu(R)=0 remain "
                     + "included. This is a repository derivation, with no originality claim."))),
             DescribeRole.Theorem))));
 
@@ -54,24 +65,21 @@ internal sealed class BornJaccardFixedOverlapDocument : IScribeDocumentDefinitio
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula All(string name, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
-    private static Formula Some(string name, Formula domain, Formula body) =>
-        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), domain, body);
     private static Formula Par(Formula value) => Seq(Open, value, Close);
     private static Formula And(Formula a, Formula b) =>
         new Formula.Logic(Par(a), FormulaLogicOperator.And, Par(b));
     private static Formula Eqn(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Le(Formula a, Formula b) =>
-        new Formula.Relation(a, FormulaRelationOperator.LessOrEqual, b);
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Lt(Formula a, Formula b) =>
-        new Formula.Relation(a, FormulaRelationOperator.Less, b);
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula Imp(Formula a, Formula b) =>
         new Formula.Logic(Par(a), FormulaLogicOperator.Implies, Par(b));
     private static Formula Statement()
     {
         var n = F.Id("n"); var rho = F.Id("rho"); var c = F.Id("c");
         var R = F.Id("R"); var T = F.Id("T"); var r = F.Id("r");
-        var u = F.Id("u"); var v = F.Id("v");
         var naturals = Seq(Mathbb, Grp(F.Id("N")));
         var reals = Seq(Mathbb, Grp(F.Id("R")));
         var complex = Seq(Mathbb, Grp(F.Id("C")));
@@ -79,23 +87,10 @@ internal sealed class BornJaccardFixedOverlapDocument : IScribeDocumentDefinitio
         var subs = Call("Sub", space);
         var zero = D(0); var one = D(1);
         var M = Call("lam", rho, T, zero); var m = Call("lam", rho, T, one);
-        var L = Call("map", Call("span", u), Call("inclusion", T));
-        var N = Call("map", Call("span", v), Call("inclusion", T));
         var s = Seq(M, Plus, m);
         var den = Seq(c, Plus, Call("mu", rho, R), Plus, Par(s));
-        var lineFacts = And(Eqn(Call("dim", L), one),
-            And(Eqn(Call("dim", N), one),
-                And(Eqn(Call("meet", L, N), zero),
-                    And(Eqn(Call("join", L, N), T),
-                        Eqn(Call("Delta", rho, c, Call("join", R, L),
-                            Call("join", R, T), Call("join", R, N)),
-                            new Formula.Fraction(Seq(r, Par(Seq(M, Minus, m))), den))))));
-        var witness = Some("u", T, Some("v", T,
-            And(Eqn(Call("norm", u), one),
-                And(Eqn(Call("norm", v), one),
-                    And(Eqn(Call("norm", Call("inner", u, v)), r), lineFacts)))));
-        var body = And(Lt(zero, m), And(Le(m, M),
-            And(Eqn(Call("mu", rho, T), s), And(Lt(zero, den), witness))));
+        var body = Call("IsGreatest", Call("Defects", rho, c, R, T, r),
+            new Formula.Fraction(Seq(r, Par(Seq(M, Minus, m))), den));
         var assumptions = And(Le(D(2), n),
             And(Call("PosDef", rho), And(Eqn(Call("Tr", rho), one),
                 And(Le(zero, c), And(Le(T, Call("orthogonal", R)),

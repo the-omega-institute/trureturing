@@ -10,6 +10,8 @@ import D5.S3.Quantum.Algebra.BornJaccardTracialClassification
 import Mathlib.Analysis.InnerProductSpace.Spectrum
 import Mathlib.Tactic.FinCases
 
+/-! Simultaneous actual-line constructions in a two-dimensional projection interval. -/
+
 noncomputable section
 open scoped InnerProductSpace ComplexOrder
 open LinearMap
@@ -54,7 +56,8 @@ private theorem compression_trace (rho : Module.End ℂ (H n))
 private theorem projection_orthogonal_sup (R U : Submodule ℂ (H n))
     (hU : U ≤ R.orthogonal) :
     projection (R ⊔ U) = projection R + projection U := by
-  ext x
+  apply LinearMap.ext
+  intro x
   change (R ⊔ U).starProjection x = R.starProjection x + U.starProjection x
   apply Submodule.eq_starProjection_of_mem_of_inner_eq_zero
   · exact Submodule.add_mem_sup (R.starProjection_apply_mem x)
@@ -106,7 +109,8 @@ private theorem weight_unit_line (rho : Module.End ℂ (H n)) (w : H n)
     (hw : inner ℂ w w = 1) : weight rho (ℂ ∙ w) = (inner ℂ w (rho w)).re := by
   have hn : ‖w‖ ^ 2 = (1 : ℝ) := by
     have h := congrArg Complex.re hw
-    simpa only [inner_self_eq_norm_sq_to_K, Complex.ofReal_re, Complex.one_re] using h
+    norm_num [inner_self_eq_norm_sq_to_K, pow_two, Complex.mul_re] at h
+    nlinarith
   have hP : projection (ℂ ∙ w) = (InnerProductSpace.rankOne ℂ w w).toLinearMap := by
     ext v
     simp [projection, Submodule.starProjection_singleton, hn,
@@ -132,10 +136,10 @@ private theorem interval_defect (rho : Module.End ℂ (H n))
   have hwt := weight_orthogonal_sup rho R T hT
   have hwl := weight_orthogonal_sup rho R L (hL.trans hT)
   have hwn := weight_orthogonal_sup rho R N (hN.trans hT)
-  have hd : c + weight rho (R ⊔ T) ≠ 0 := by rw [hwt]; linarith
+  have hd : c + (weight rho R + weight rho T) ≠ 0 := by linarith
   simp only [distance, hj, hi, sup_eq_right.mpr hLT, inf_eq_left.mpr hLT,
-    sup_eq_left.mpr hNT, inf_eq_right.mpr hNT, if_neg hd, hwt, hwl, hwn]
-  field_simp
+    sup_eq_left.mpr hNT, inf_eq_right.mpr hNT, hwt, hwl, hwn, if_neg hd]
+  field_simp [ne_of_gt hden, hd]
   <;> ring
 
 private theorem pair_construction (rho : Module.End ℂ (H n)) (e f : H n)
@@ -178,11 +182,12 @@ private theorem pair_construction (rho : Module.End ℂ (H n)) (e f : H n)
   have hvv : inner ℂ v v = 1 := by
     simp only [v, inner_sub_left, inner_sub_right, inner_smul_left, inner_smul_right,
       Complex.conj_ofReal, hee, hff, hef, hfe, mul_one, mul_zero, sub_zero, zero_sub]
-    exact_mod_cast (show a * a - -(b * b) = 1 by nlinarith [hab])
+    exact_mod_cast (show a * a - b * -b = 1 by nlinarith [hab])
   have huv : inner ℂ u v = (r : ℂ) := by
     simp only [u, v, inner_add_left, inner_sub_right, inner_smul_left, inner_smul_right,
-      Complex.conj_ofReal, hee, hff, hef, hfe, mul_one, mul_zero, sub_zero, zero_sub]
-    exact_mod_cast (show a * a + -(b * b) = r by nlinarith [hab'])
+      Complex.conj_ofReal, hee, hff, hef, hfe, mul_one, mul_zero, sub_zero, zero_sub,
+      add_zero, zero_add]
+    exact_mod_cast (show a * a - b * b = r by nlinarith [hab'])
   have hjoin : (ℂ ∙ u) ⊔ (ℂ ∙ v) = E := by
     apply le_antisymm
       (sup_le ((Submodule.span_singleton_le_iff_mem _ _).2 huE)
@@ -245,10 +250,11 @@ private theorem pair_construction (rho : Module.End ℂ (H n)) (e f : H n)
     ring
   exact ⟨u, v, huE, hvE, huu, hvv, huv, hinf, hjoin, hwu, hwv⟩
 
+set_option maxHeartbeats 800000 in
 /-- For every allowed overlap, actual lines attain the proposed sharp value in
 the original interval distance. The universal upper bound is a separate assertion. -/
-theorem fixed_overlap_attainment (hn : 2 ≤ n)
-    (rho : Matrix (Fin n) (Fin n) ℂ) (hp : rho.PosDef) (ht : Matrix.trace rho = 1)
+private theorem fixed_overlap_attainment (_hn : 2 ≤ n)
+    (rho : Matrix (Fin n) (Fin n) ℂ) (hp : rho.PosDef) (_ht : Matrix.trace rho = 1)
     (c : ℝ) (hc : 0 ≤ c) (R T : Submodule ℂ (H n))
     (hTR : T ≤ R.orthogonal) (hT : Module.finrank ℂ T = 2)
     (r : ℝ) (hr : 0 ≤ r) (hr1 : r < 1) :
@@ -283,6 +289,7 @@ theorem fixed_overlap_attainment (hn : 2 ≤ n)
     rw [← compression_inner A T (B i) (B j)]
     change inner ℂ (B i) (K (B j)) = _
     rw [hs.apply_eigenvectorBasis hT j, inner_smul_right]
+    rfl
   have hpos (i : Fin 2) : 0 < lam i := by
     have h := native_matrix_faithfulness rho hp (B i)
       (show (B i : H n) ≠ 0 by
@@ -293,7 +300,8 @@ theorem fixed_overlap_attainment (hn : 2 ≤ n)
   have horder : lam 1 ≤ lam 0 := hs.eigenvalues_antitone hT (by decide)
   have hweight : weight A T = lam 0 + lam 1 := by
     rw [← compression_trace A T]
-    simpa only [Fin.sum_univ_two] using hs.re_trace_eq_sum_eigenvalues hT
+    simpa only [Fin.sum_univ_two, RCLike.re_to_complex] using
+      hs.re_trace_eq_sum_eigenvalues hT
   have hnon : 0 ≤ weight A R := by
     apply weight_nonneg
     intro x
@@ -324,11 +332,11 @@ theorem fixed_overlap_attainment (hn : 2 ≤ n)
   rw [hspan] at huT hvT hjoin
   have hun : ‖u‖ = 1 := by
     have h := congrArg Complex.re huu
-    rw [inner_self_eq_norm_sq_to_K, Complex.ofReal_re, Complex.one_re] at h
+    norm_num [inner_self_eq_norm_sq_to_K, pow_two, Complex.mul_re] at h
     nlinarith [norm_nonneg u]
   have hvn : ‖v‖ = 1 := by
     have h := congrArg Complex.re hvv
-    rw [inner_self_eq_norm_sq_to_K, Complex.ofReal_re, Complex.one_re] at h
+    norm_num [inner_self_eq_norm_sq_to_K, pow_two, Complex.mul_re] at h
     nlinarith [norm_nonneg v]
   have hu0 : u ≠ 0 := by intro h; simpa [h] using hun
   have hv0 : v ≠ 0 := by intro h; simpa [h] using hvn
@@ -346,9 +354,171 @@ theorem fixed_overlap_attainment (hn : 2 ≤ n)
   refine ⟨hpos 1, horder, hweight, hden, ⟨u, huT⟩, ⟨v, hvT⟩, hun, hvn, ?_, ?_⟩
   · change ‖inner ℂ u v‖ = r
     rw [huv, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hr]
-  · simp only [Submodule.map_span, Set.image_singleton, Submodule.subtype_apply]
+  · have hLu : (ℂ ∙ (⟨u, huT⟩ : T)).map T.subtype = ℂ ∙ u := by
+      rw [Submodule.map_span, Set.image_singleton]
+      rfl
+    have hNv : (ℂ ∙ (⟨v, hvT⟩ : T)).map T.subtype = ℂ ∙ v := by
+      rw [Submodule.map_span, Set.image_singleton]
+      rfl
+    dsimp only
+    rw [hLu, hNv]
     exact ⟨finrank_span_singleton hu0, finrank_span_singleton hv0, hinf, hjoin, hvalue⟩
 
-#print axioms fixed_overlap_attainment
+private theorem coordinate_overlap_bound (a b c d : ℂ)
+    (hab : Complex.normSq a + Complex.normSq b = 1)
+    (hcd : Complex.normSq c + Complex.normSq d = 1) :
+    Complex.normSq a + Complex.normSq c - 1 ≤ ‖star a * c + star b * d‖ := by
+  let z := star a * c + star b * d
+  let w := a * star b + c * star d
+  have hid : Complex.normSq z - Complex.normSq w =
+      (Complex.normSq a - Complex.normSq d) *
+        (Complex.normSq c - Complex.normSq b) := by
+    dsimp [z, w]
+    simp only [Complex.normSq_apply, Complex.add_re, Complex.add_im,
+      Complex.mul_re, Complex.mul_im, Complex.star_def, Complex.conj_re, Complex.conj_im]
+    ring
+  have hb : Complex.normSq b = 1 - Complex.normSq a := by linarith
+  have hd : Complex.normSq d = 1 - Complex.normSq c := by linarith
+  rw [hb, hd] at hid
+  have hs : (Complex.normSq a + Complex.normSq c - 1) ^ 2 ≤ ‖z‖ ^ 2 := by
+    rw [Complex.sq_norm]
+    nlinarith [Complex.normSq_nonneg w]
+  have hh : |Complex.normSq a + Complex.normSq c - 1| ≤ ‖z‖ :=
+    (sq_le_sq₀ (abs_nonneg _) (norm_nonneg _)).mp (by simpa only [sq_abs] using hs)
+  exact (le_abs_self _).trans hh
+
+private theorem unit_pair_geometry (T : Submodule ℂ (H n))
+    (hT : Module.finrank ℂ T = 2) (u v : H n) (huT : u ∈ T) (hvT : v ∈ T)
+    (hu : ‖u‖ = 1) (hv : ‖v‖ = 1) (r : ℝ)
+    (huv : ‖inner ℂ u v‖ = r) (hr : r < 1) :
+    (ℂ ∙ u) ⊓ (ℂ ∙ v) = ⊥ ∧ (ℂ ∙ u) ⊔ (ℂ ∙ v) = T := by
+  have hu0 : u ≠ 0 := by intro hz; simp [hz] at hu
+  have hv0 : v ≠ 0 := by intro hz; simp [hz] at hv
+  have hLu : Module.finrank ℂ (ℂ ∙ u) = 1 := finrank_span_singleton hu0
+  have hNv : Module.finrank ℂ (ℂ ∙ v) = 1 := finrank_span_singleton hv0
+  have hne : (ℂ ∙ u) ≠ (ℂ ∙ v) := by
+    intro heq
+    have hvmem : v ∈ ℂ ∙ u := heq.symm ▸ Submodule.mem_span_singleton_self v
+    obtain ⟨a, ha⟩ := Submodule.mem_span_singleton.mp hvmem
+    have han : ‖a‖ = 1 := by simpa only [← ha, norm_smul, hu, mul_one] using hv
+    have hinner : ‖inner ℂ u v‖ = 1 := by
+      rw [← ha, inner_smul_right, inner_self_eq_one_of_norm_eq_one hu, mul_one, han]
+    linarith
+  have hinf := (Submodule.isAtom_iff_finrank_eq_one.mpr hLu).inf_eq_bot_of_ne
+    (Submodule.isAtom_iff_finrank_eq_one.mpr hNv) hne
+  refine ⟨hinf, Submodule.eq_of_le_of_finrank_eq
+    (sup_le ((Submodule.span_singleton_le_iff_mem _ _).2 huT)
+      ((Submodule.span_singleton_le_iff_mem _ _).2 hvT)) ?_⟩
+  have h := Submodule.finrank_sup_add_finrank_inf_eq (ℂ ∙ u) (ℂ ∙ v)
+  rw [hinf, Submodule.finrank_bot, add_zero, hLu, hNv] at h
+  exact h.trans hT.symm
+
+private theorem compression_quadratic (A : Module.End ℂ (H n))
+    (T : Submodule ℂ (H n)) (hT : Module.finrank ℂ T = 2)
+    (hs : (compression A T).IsSymmetric) (x : T) :
+    let B := hs.eigenvectorBasis hT
+    (inner ℂ x (compression A T x)).re =
+      hs.eigenvalues hT 0 * Complex.normSq (inner ℂ (B 0) x) +
+      hs.eigenvalues hT 1 * Complex.normSq (inner ℂ (B 1) x) := by
+  let B := hs.eigenvectorBasis hT
+  have hdiag (i : Fin 2) : inner ℂ (B i) (compression A T x) =
+      (hs.eigenvalues hT i : ℂ) * inner ℂ (B i) x := by
+    simpa only [B, OrthonormalBasis.repr_apply_apply] using
+      hs.eigenvectorBasis_apply_self_apply hT x i
+  have h := congrArg Complex.re (B.sum_inner_mul_inner x (compression A T x))
+  simp only [Fin.sum_univ_two, hdiag] at h
+  rw [← h, ← inner_conj_symm x (B 0), ← inner_conj_symm x (B 1)]
+  simp only [Complex.add_re, Complex.mul_re, Complex.mul_im,
+    Complex.conj_re, Complex.conj_im, Complex.ofReal_re, Complex.ofReal_im,
+    Complex.normSq_apply]
+  ring
+
+set_option maxHeartbeats 1200000 in
+/-- The exact maximum over every actual ordered line pair of fixed overlap in an
+arbitrary two-dimensional orthogonal interval, for the actual density compression. -/
+theorem fixed_overlap_maximum (hn : 2 ≤ n)
+    (rho : Matrix (Fin n) (Fin n) ℂ) (hp : rho.PosDef) (ht : Matrix.trace rho = 1)
+    (c : ℝ) (hc : 0 ≤ c) (R T : Submodule ℂ (H n))
+    (hTR : T ≤ R.orthogonal) (hT : Module.finrank ℂ T = 2)
+    (r : ℝ) (hr : 0 ≤ r) (hr1 : r < 1) :
+    let lam := intervalEigenvalues rho hp T hT
+    IsGreatest {d : ℝ | ∃ L N : Submodule ℂ T,
+      Module.finrank ℂ L = 1 ∧ Module.finrank ℂ N = 1 ∧
+      ∃ u v : T, u ∈ L ∧ v ∈ N ∧ ‖u‖ = 1 ∧ ‖v‖ = 1 ∧ ‖inner ℂ u v‖ = r ∧
+        d = distance rho.toEuclideanLin c (R ⊔ L.map T.subtype) (R ⊔ N.map T.subtype) -
+          distance rho.toEuclideanLin c (R ⊔ L.map T.subtype) (R ⊔ T) -
+          distance rho.toEuclideanLin c (R ⊔ T) (R ⊔ N.map T.subtype)}
+      (r * (lam 0 - lam 1) / (c + weight rho.toEuclideanLin R + (lam 0 + lam 1))) := by
+  let A := rho.toEuclideanLin
+  let hs := compression_symmetric A
+    (Matrix.isSymmetric_toEuclideanLin_iff.mpr hp.isHermitian) T
+  let lam := hs.eigenvalues hT
+  let B := hs.eigenvectorBasis hT
+  obtain ⟨hpos, horder, hweight, hden, hatt⟩ :=
+    fixed_overlap_attainment hn rho hp ht c hc R T hTR hT r hr hr1
+  have hlam : intervalEigenvalues rho hp T hT = lam := rfl
+  simp only [hlam] at hpos horder hweight hden hatt ⊢
+  change weight A T = lam 0 + lam 1 at hweight
+  change 0 < c + weight A R + (lam 0 + lam 1) at hden
+  constructor
+  · obtain ⟨u, v, hu, hv, huv, hlines⟩ := hatt
+    have hu0 : u ≠ 0 := by intro hz; simp [hz] at hu
+    have hv0 : v ≠ 0 := by intro hz; simp [hz] at hv
+    exact ⟨ℂ ∙ u, ℂ ∙ v, finrank_span_singleton hu0, finrank_span_singleton hv0,
+      u, v, Submodule.mem_span_singleton_self u, Submodule.mem_span_singleton_self v,
+      hu, hv, huv, hlines.2.2.2.2.symm⟩
+  · rintro d ⟨L, N, hL, hN, u, v, huL, hvN, hu, hv, huv, hd⟩
+    have hu0 : u ≠ 0 := by intro hz; simp [hz] at hu
+    have hv0 : v ≠ 0 := by intro hz; simp [hz] at hv
+    have hspanL : ℂ ∙ u = L := Submodule.eq_of_le_of_finrank_eq
+      ((Submodule.span_singleton_le_iff_mem _ _).2 huL)
+      ((finrank_span_singleton hu0).trans hL.symm)
+    have hspanN : ℂ ∙ v = N := Submodule.eq_of_le_of_finrank_eq
+      ((Submodule.span_singleton_le_iff_mem _ _).2 hvN)
+      ((finrank_span_singleton hv0).trans hN.symm)
+    have hLu : L.map T.subtype = ℂ ∙ (u : H n) := by
+      rw [← hspanL, Submodule.map_span, Set.image_singleton]; rfl
+    have hNv : N.map T.subtype = ℂ ∙ (v : H n) := by
+      rw [← hspanN, Submodule.map_span, Set.image_singleton]; rfl
+    have hgeom := unit_pair_geometry T hT (u : H n) (v : H n) u.property v.property
+      hu hv r huv hr1
+    have hdef := interval_defect A c R T (ℂ ∙ (u : H n)) (ℂ ∙ (v : H n)) hTR
+      ((Submodule.span_singleton_le_iff_mem _ _).2 u.property)
+      ((Submodule.span_singleton_le_iff_mem _ _).2 v.property)
+      hgeom.1 hgeom.2 (by simpa only [hweight] using hden)
+    have hquad (x : T) (hx : ‖x‖ = 1) : weight A (ℂ ∙ (x : H n)) =
+        lam 0 * Complex.normSq (inner ℂ (B 0) x) +
+          lam 1 * Complex.normSq (inner ℂ (B 1) x) := by
+      rw [weight_unit_line A x (inner_self_eq_one_of_norm_eq_one hx),
+        ← compression_inner A T x x]
+      exact compression_quadratic A T hT hs x
+    have hunit (x : T) (hx : ‖x‖ = 1) :
+        Complex.normSq (inner ℂ (B 0) x) + Complex.normSq (inner ℂ (B 1) x) = 1 := by
+      have h := B.sum_sq_norm_inner_right x
+      simpa only [Fin.sum_univ_two, ← Complex.normSq_eq_norm_sq, hx, one_pow] using h
+    have hinner : star (inner ℂ (B 0) u) * inner ℂ (B 0) v +
+        star (inner ℂ (B 1) u) * inner ℂ (B 1) v = inner ℂ u v := by
+      have h := B.sum_inner_mul_inner u v
+      simpa only [Fin.sum_univ_two, ← inner_conj_symm u (B 0),
+        ← inner_conj_symm u (B 1), Complex.star_def] using h
+    have hbound : Complex.normSq (inner ℂ (B 0) u) +
+        Complex.normSq (inner ℂ (B 0) v) - 1 ≤ r := by
+      have h := coordinate_overlap_bound (inner ℂ (B 0) u) (inner ℂ (B 1) u)
+        (inner ℂ (B 0) v) (inner ℂ (B 1) v) (hunit u hu) (hunit v hv)
+      rwa [hinner, huv] at h
+    have hnum : weight A (ℂ ∙ (u : H n)) + weight A (ℂ ∙ (v : H n)) - weight A T ≤
+        r * (lam 0 - lam 1) := by
+      calc
+        _ = (lam 0 - lam 1) * (Complex.normSq (inner ℂ (B 0) u) +
+              Complex.normSq (inner ℂ (B 0) v) - 1) := by
+          rw [hquad u hu, hquad v hv, hweight]
+          linear_combination (lam 1) * (hunit u hu) + (lam 1) * (hunit v hv)
+        _ ≤ _ := by
+          simpa only [mul_comm r] using
+            mul_le_mul_of_nonneg_left hbound (sub_nonneg.mpr horder)
+    rw [hd, hLu, hNv, hdef]
+    simpa only [hweight] using div_le_div_of_nonneg_right hnum hden.le
+
+#print axioms fixed_overlap_maximum
 
 end D5.S3.Quantum.Algebra.BornJaccardFixedOverlap
