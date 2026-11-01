@@ -1,7 +1,7 @@
 /- GID: D5/S3/Geometry/Polygons/PolygonConditionedFan
    generality: G
-   mirror - B: D5/B/S3/Geometry/Polygons/PolygonConditionedFan
-   mirror - E: none(waiver:evidence - not - specified - by - formal - manifest)
+   mirror-B: D5/B/S3/Geometry/Polygons/PolygonConditionedFan
+   mirror-E: none(waiver:evidence - not - specified - by - formal - manifest)
    anchors: []
    utility: none
    digest: Literal forced - ear fans and actual conditioned polygon completions. -/
