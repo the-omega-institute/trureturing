@@ -47,21 +47,29 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Theory]
-    [InlineData("status", "unreadable")]
-    [InlineData("commit", "update_unknown")]
-    public void UnreadableShortcutPrerequisitesRetainLane(string failure, string reason)
+    [InlineData("status", "unreadable", false)]
+    [InlineData("status", "unreadable", true)]
+    [InlineData("commit", "update_unknown", false)]
+    [InlineData("commit", "update_unknown", true)]
+    [InlineData("merge-base", "merged_state_unknown", false)]
+    [InlineData("merge-base", "merged_state_unknown", true)]
+    public void UnreadableShortcutPrerequisitesRetainLane(string failure, string reason, bool force)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/unknown-state");
         var runner = fixture.CreateRunner((file, args, directory) => file == "git" && directory == lane
-            && args[0] == (failure == "status" ? "status" : "show")
+            && args[0] == (failure == "commit" ? "show" : failure)
                 ? GitFailure("shortcut prerequisite failed") : null);
 
-        var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
+        var result = fixture.RunWithRaw(runner, force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
 
         Assert.True(result.Success, result.Error);
         Assert.True(Directory.Exists(lane));
         Assert.Equal(reason, ReasonFor(result.Output, lane));
+        var warning = Assert.Single(ReadEvents(result.Error, "clean_lanes_warning"));
+        Assert.Equal(lane, warning.GetProperty("path").GetString());
+        Assert.Equal(reason, warning.GetProperty("reason").GetString());
+        Assert.False(string.IsNullOrWhiteSpace(warning.GetProperty("diagnostic").GetString()));
     }
 
     [Fact]

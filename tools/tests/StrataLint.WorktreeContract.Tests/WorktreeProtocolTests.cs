@@ -49,6 +49,23 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
 
+    [Fact]
+    public void AggregateCleanupWarnsAndSucceedsForOneRefusedTree()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
+                root, "plain", "clean-all", "directory",
+                "CleanupMakeTests.test_single_tree_refusal_keeps_aggregate_success_and_warning"],
+            root, TestBudgets.ProtocolProbeHangGuard, 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
     [Theory]
     [InlineData("self")]
     [InlineData("stable")]
@@ -253,8 +270,8 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("pool_revalidation_keeps_refusal_and_prior_eviction")]
     [InlineData("pool_removal_qualification_preserves_refusal_and_operational_failure")]
     [InlineData("pool_return_selected_eviction_refusal_fails_public_exit")]
-    [InlineData("pool_final_qualification_defers_later_candidates")]
-    [InlineData("pool_return_final_qualification_defers_later_candidates")]
+    [InlineData("pool_final_qualification_continues_later_candidates")]
+    [InlineData("pool_return_final_qualification_continues_later_candidates")]
     [InlineData("pool_claim_qualification_failure_cannot_become_no_idle")]
     [InlineData("pool_scope_operational_failure_is_failed")]
     [InlineData("qualification_process_boundary_distinguishes_operational_errors")]

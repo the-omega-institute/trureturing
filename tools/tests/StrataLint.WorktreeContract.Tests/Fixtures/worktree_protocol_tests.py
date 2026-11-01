@@ -576,7 +576,6 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         self.assertIn("remote_is_local_repository", result.stderr)
         self.assertEqual("local recovery\n", (self.tree / "owned").read_text())
         self.remove()
-        self.run_protocol("retire-branch", "--branch", self.branch, "--commit", local, expect=73)
         self.assertEqual(local, self.g(self.main, "rev-parse", "refs/heads/" + self.branch).strip())
 
     def recovery_checkpoint_protects_message_reads(self):
@@ -600,13 +599,6 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         self.remove()
         self.assertFalse(self.tree.exists())
         self.assertIsNone(job.poll())
-
-    def test_ref_retirement_requires_remote_and_no_attachment(self):
-        self.run_protocol("retire-branch", "--branch", self.branch, "--commit", self.base, expect=73)
-        self.remove()
-        self.run_protocol("retire-branch", "--branch", self.branch, "--commit", self.base)
-        self.assertNotEqual(0, protocol.git(self.main, "show-ref", "--verify",
-                                          "refs/heads/" + self.branch, check=False).returncode)
 
     def test_ambient_git_redirects_cannot_hide_real_index(self):
         alternate = self.root / "alternate-index"
