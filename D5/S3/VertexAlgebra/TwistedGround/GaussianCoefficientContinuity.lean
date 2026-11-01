@@ -26,7 +26,10 @@ private theorem quadratic_coeff_continuous (d : J →₀ ℕ) :
 private theorem power_coeff_continuous (n : ℕ) (d : J →₀ ℕ) :
     Continuous (fun K : Matrix J J ℂ => (quadratic K ^ n).coeff d) := by
   induction n generalizing d with
-  | zero => simp
+  | zero =>
+    simpa only [pow_zero] using
+      (continuous_const : Continuous (fun _ : Matrix J J ℂ =>
+        (1 : MvPolynomial J ℂ).coeff d))
   | succ n ih =>
     simp only [pow_succ, coeff_mul]
     apply continuous_finset_sum
