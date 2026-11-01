@@ -12,7 +12,9 @@ Full unrestricted physical J / Circle C3.1 remain OPEN. -/
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddlePolynomials
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Masks
-import Mathlib
+import Mathlib.Data.Int.DivMod
+import Mathlib.Data.Nat.Bitwise
+import Mathlib.Data.List.FinRange
 import Batteries.Tactic.OpenPrivate
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

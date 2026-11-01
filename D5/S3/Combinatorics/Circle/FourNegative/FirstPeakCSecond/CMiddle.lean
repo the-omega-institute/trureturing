@@ -15,7 +15,8 @@ import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddleXPolynomi
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddleCore
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Masks
-import Mathlib
+import Mathlib.Data.Nat.BitIndices
+import Mathlib.Data.List.FinRange
 import Batteries.Tactic.OpenPrivate
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
