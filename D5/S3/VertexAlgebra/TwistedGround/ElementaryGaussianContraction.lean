@@ -6,7 +6,7 @@
    utility: none
    digest: Finite factorial contraction of Gaussian kernels with zero shared diagonal. -/
 
-import D5.S3.VertexAlgebra.TwistedGround.OriginalCorrectionGaussian
+import D5.S3.VertexAlgebra.TwistedGround.NativeGaussianMoment
 import Mathlib.Algebra.BigOperators.Finprod
 
 set_option autoImplicit false
@@ -17,7 +17,7 @@ open scoped BigOperators
 
 namespace D5.S3.VertexAlgebra.TwistedGround.ElementaryGaussianContraction
 
-open OriginalCorrectionGaussian (nativeMoment nativeMoment_step sub_single_degree occupation_nonzero)
+open NativeGaussianMoment (nativeMoment nativeMoment_step sub_single_degree occupation_nonzero)
 open FactorialFockQuadraticEstimate (gaussianCoefficient gaussianCoefficient_zero)
 open FactorialFockMetric (weight weight_pos weight_add_single)
 
