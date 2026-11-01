@@ -381,4 +381,3 @@ theorem cusp_remainder_bound {t : ℝ} (ht : 0 < t) (ht' : t ≤ 1 / 2) :
 #print axioms log_argument_ratio_limit
 #print axioms D1_atBot
 end D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelCusp
-
