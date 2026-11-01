@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/GeometricMeasure/XMemsClosestSeparableShapeRefutation.claim; result=D5/S3/Quantum/Entanglement/GeometricMeasure/XMemsClosestSeparableShapeRefutation.result; claim=D5/S3/Quantum/Entanglement/GeometricMeasure/XMemsClosestSeparableShapeRefutation.claim
    digest: A fully separable three-qubit state beats every state of the conjectured CSS shape. -/
 
+import D5.S3.Geometry.Hyperideal.GramDomainContraction
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability
 
@@ -83,10 +84,7 @@ private theorem hsSq_entries {n : ℕ}
 
 private theorem pair_sqrt (u v : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v) :
     Real.sqrt (u * v) ≤ (u + v) / 2 := by
-  have h := Real.geom_mean_le_arith_mean2_weighted
-    (w₁ := (1 / 2 : ℝ)) (w₂ := (1 / 2 : ℝ))
-    (by norm_num) (by norm_num) hu hv (by norm_num)
-  rw [← Real.sqrt_eq_rpow, ← Real.sqrt_eq_rpow, ← Real.sqrt_mul hu] at h
+  have h := D5.S3.Geometry.Hyperideal.GramDomainContraction.twice_sqrt_product_le_add u v hu hv
   linarith
 
 private theorem weighted_sqrt (u v : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v) :
