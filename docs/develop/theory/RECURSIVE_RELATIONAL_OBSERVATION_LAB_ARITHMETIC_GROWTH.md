@@ -2770,3 +2770,263 @@ conclusion. $\square$
 [SATRESET]: https://arxiv.org/html/2207.07391v2#Thmtheorem2
 
 ## 追加锚（本行以下为增补区）
+
+## 19. Transient source encoding of an attained order and mandatory terminal recall
+
+**Definition 19.1 (old serial content and the added terminal task).**
+Keep exactly Definition 18.1's source, access, reset and full-return
+premises, with the acquired fixed $y,k$, candidate basis $A$, supports
+$\mathcal J$ and remaining ORIGINAL-row menus $U_J$ of (LAGR.1).
+For each $J$ let $\Sigma_J$ be a declared nonempty family of ACTUALLY
+attained length-$k$ ordered lists of successful typed original events
+on that support, and put
+
+$$
+\mathcal H=\{(J,\sigma):J\in\mathcal J,\ \sigma\in\Sigma_J\},
+\qquad d_J=|\Sigma_J|.
+\tag{LAGS.1}
+$$
+
+Theorem 15.2 supplies $\Sigma_J=\operatorname{Perm}(\{e_p:p\in J\})$
+and $d_J=k!$ for Definition 15.1's supplied arbitrary-order schedule
+family. Its original-row guard argument, with LAB9.3–9.4's acquired
+authentic addresses, tags and references, realizes every such order:
+an edit at one old leaf changes neither another old leaf's constructor
+nor its root reference. Each event is taken through its complete inner
+return. These are alternative actual supplied schedules, not multiple
+executions of one choice-free deterministic preparer. The word $\sigma$
+contains only these addressed typed successful events, not full controller
+traffic, raw identities, elapsed time or an annotation on an unchanged run.
+
+An encoder that has actually acquired $h=(J,\sigma)$ may perform exactly
+$r$ further distinct eligible ORIGINAL-row writes $Q\subseteq U_J$,
+each through full inner return. The logical reset erases ALL supplementary
+pre-reset private control and ordered records, including $h$, write order,
+old lists, cursors, scratch and readable private archives. Only current
+source geometry, fixed public $y,k,r$, one finite $h$-independent
+program/codebook, authentic fixed access bindings and common protocol
+obligations remain. As in §18, attached physical tapes are inaccessible
+selector inputs. The codebook is backed public data, not another source
+edit or a surviving run-dependent control state.
+
+After reset every run must complete exactly $U_J\setminus Q$, with
+no new-row or decorative write, and only at the completed cut output the
+exact old word $\sigma$, then discharge the full declared reply,
+acknowledgement, return and cleanup. No earlier output archive is allowed.
+Both $G$'s choices AND its final recall value depend only on current source
+geometry and fixed inputs. A last reply, saved selection, phase tag or
+history-dependent final control cannot supplement that final value.
+$T$ may retain only observations it actually acquires AFTER reset.
+There is no tape/Next/FetchGrowth access, pointer age, hidden-state readout
+or cohort-refusal probing. Every permitted observation and source reply
+has Definition 18.1's current-source factorization.
+
+**Corollary 19.2 (exact constrained transient encoding and terminal
+survival).** Under Definition 19.1, put
+$F_J=\{Q\subseteq U_J:|Q|=r\}$. A prefix encoder and $T$ can satisfy
+this complete success-and-recall task if and only if
+
+$$
+\left|\bigcup_{J\in\mathcal S}F_J\right|
+\ \ge\ \sum_{J\in\mathcal S}d_J
+\qquad\text{for every }\mathcal S\subseteq\mathcal J.
+\tag{LAGS.2}
+$$
+
+If any $d_J\ge2$, no prefix encoder and $G$ can satisfy the task,
+regardless of whether (LAGS.2) holds. When every $d_J=1$, the unique
+publicly specified order for each support adds no distinction, and
+Theorem 18.3's exhaustion-only feasibility criterion also suffices for $G$.
+
+For the attained beta comb of Corollary 18.4, with all supplied orders,
+write $N=\binom mk$, $t=m-k$, $d=k!$, $0\le k\le m$. The exact $T$
+capacity is
+
+$$
+\begin{array}{c|c}
+\text{prefix length}&\text{feasibility of completion and exact old-order recall}\\ \hline
+r=0&dN=1\\
+1\le r\le t&dN\le\binom{m+1}{r}\\
+r=t+1&d=1
+\end{array}
+\tag{LAGS.3}
+$$
+
+Outside $0\le r\le t+1$ there is no such prefix. In particular the
+attained case $(m,k,r)=(5,2,3)$ has twenty admissibly encoded ordered
+histories, one remaining original call per run, and ten terminal sources
+with two orders each. Here $T$ succeeds at $r=3$ and fails at $r=4$;
+$G$ fails for the added recall task at either length.
+
+Proof of the history criterion. By Theorem 18.2, every allowed code
+$Q\in F_J$ is realized by genuine original calls and its initial reset
+geometry is exactly $E_y(Q)$, with an injective acquired inverse to $Q$.
+Suppose distinct histories receive the same $Q$. Their INITIAL reset
+sources and all other permitted initial inputs then agree. Determinism
+and the current-source observation/reply premise force identical future
+choices, replies and successors for as long as both runs remain legal.
+An ineligible original-row call already fails the task; its refusal is
+not an extra observation. If the supports differ, their distinct menus
+$U_J$ cannot both be exhausted by the same suffix from this common $Q$,
+as in Theorem 18.3. If the supports agree but their orders differ, a
+common successful suffix cannot produce both required final words.
+Thus distinct histories require distinct INITIAL reset geometries even
+for $T$. This does not prohibit later equal $T$ geometries with different
+newly acquired transcripts.
+
+Conversely, distinct admissible codes give one fixed inverse table
+$Q\mapsto(J,\sigma)$. After reset, $T$ actually traverses its current
+source, recovers $Q$, decodes this table and retains that NEW observation's
+information. It completes $U_J\setminus Q$ once in a public order and
+recalls the decoded $\sigma$ only at exhaustion. A logical address in the
+table grants no call right: traversal from the surviving authentic bound
+root must acquire the CURRENT target reference, check its correspondence
+to the backed address and current tag, and use authenticated dispatch
+with current authority. Disjoint original rows preserve these references
+until called. Sufficient backing, complete source/arithmetic/tape
+maintenance, literal replies, acknowledgements and inner returns are
+required throughout. Codebook construction, acquisition, navigation,
+computation, retention and all traffic are paid separately.
+
+The matching step is the existing finite Hall theorem already used in
+§18 and [Acquired Relation History §9][ARHSERIAL], specifically pinned
+mathlib's `Finset.all_card_le_biUnion_card_iff_existsInjective'` in
+`Mathlib/Combinatorics/Hall/Finite.lean`. Its indices here are histories
+$h\in\mathcal H$, its representatives are subsets of $\Lambda(y)$,
+and the allowed set for $(J,\sigma)$ is $F_J$. Applying Hall to all
+histories over a support subfamily gives necessity of (LAGS.2).
+Conversely, any history subfamily $K\subseteq\mathcal H$ has support
+projection $\mathcal S$, neighborhood $\bigcup_{J\in\mathcal S}F_J$
+and size at most $\sum_{J\in\mathcal S}d_J$. Hence (LAGS.2) supplies
+Hall for EVERY history subfamily, proving sufficiency. Repetition of a
+menu is therefore counted by its actual attained order multiplicity,
+not by inventing additional geometric codes.
+
+Proof of the terminal obstruction. For a fixed $J$, two encoders of
+different orders may select different $Q$ and have different residual
+sets $U_J\setminus Q$. Nevertheless every successful complete run has
+TOTAL completed set $U_J$, hence terminal source $E_y(U_J)$ by
+Theorem 18.2. This source depends on $J$ and not $\sigma$. A final
+recall value derived only from that geometry and fixed inputs must agree
+for two orders on this support, contradicting exact recall. Changing the
+intermediate pairing or path cannot change this terminal equality.
+When $d_J=1$ for all $J$, Theorem 18.3 instead provides disjoint source
+paths whenever support Hall holds. Their terminal $U_J$ identifies $J$
+and its unique fixed order, so $G$ can also supply the final value.
+This is the existing task-kernel obstruction applied to the ADDED recall
+task. It leaves §18's exhaustion-only existential $G/T$ equivalence intact.
+
+Proof of the comb capacity, including all Hall subfamilies. Write
+$W=[m]\setminus J$, so $|W|=t$ and $U_J=W\cup\{z\}$.
+For $1\le r\le t$, the two disjoint allowed-code types are the
+$r$-subsets of $W$ without $z$ and $\{z\}\cup R$ with
+$R\subseteq W$, $|R|=r-1$. Use exactly the incidence counts
+$(v_i,d_i,e_i)$ of (LAGR.8): $v_0=\binom mr$,
+$v_1=\binom m{r-1}$, and $Nd_i=v_ie_i$ with $e_i>0$.
+For any support subfamily $\mathcal S$, its type-$i$ neighborhood
+$\Gamma_i(\mathcal S)$ satisfies
+$|\mathcal S|d_i\le|\Gamma_i(\mathcal S)|e_i$. Therefore
+
+$$
+\left|\bigcup_{J\in\mathcal S}F_J\right|
+=|\Gamma_0(\mathcal S)|+|\Gamma_1(\mathcal S)|
+\ge |\mathcal S|\frac{\binom{m+1}r}{N}
+\ge d|\mathcal S|
+\tag{LAGS.4}
+$$
+
+whenever the interior inequality in (LAGS.3) holds. This proves every
+weighted Hall inequality, not merely total counting. Conversely the
+whole family reaches exactly these two orbits, of total size
+$\binom{m+1}r$, so (LAGS.2) forces that inequality.
+
+At $r=0$ the only code is $\varnothing$, requiring $dN=1$.
+At $r=t+1$ each history over $J$ has ONLY code $U_J$. The reachable
+code set has size exactly $N$, with one distinct code per support;
+(LAGS.2) holds exactly when $d=1$. The nominal rank count
+$\binom{m+1}{t+1}$ is not the reachable code count. In particular
+size-$(t+1)$ sets without $z$ have zero incidence and cannot enter a
+positive-degree orbit argument; empty orbits are omitted as well.
+Each menu has $t+1$ rows, excluding all outside lengths. For $k=0$,
+$d=N=1$ and all lengths $0,\ldots,m+1$ work. For $k=1$, $d=1$,
+$N=m$: every $r=1,\ldots,m$ works, and $r=0$ works only at $m=1$.
+For $k=m\ge2$, $t=0$, $N=1$, $d=m!>1$, so neither $r=0$ nor
+$r=1$ works. At $m=0$, necessarily $k=0$ and $U=\{z\}$; precisely
+$r=0,1$ work. These cases also cover the overlaps at $m=1$ without
+using an interior orbit when $t=0$.
+
+Proof by an explicit attained comb codebook. For $m=5$ label candidate
+$i$ by the authentic logical address $p_i=L^{i-1}R$, and put $z=L^5$.
+For $i<j$ the two old words on $J=\{i,j\}$ are
+$(P_{p_i},P_{p_j})$ and $(P_{p_j},P_{p_i})$. The following is one fixed
+codebook; entries list the three ORIGINAL $y$-rows to split before reset.
+
+| $J$ | $Q$ for $(i,j)$ | $Q$ for $(j,i)$ |
+| --- | --- | --- |
+| $\{1,2\}$ | $\{3,4,5\}$ | $\{z,3,5\}$ |
+| $\{1,3\}$ | $\{2,4,5\}$ | $\{z,2,4\}$ |
+| $\{1,4\}$ | $\{2,3,5\}$ | $\{z,2,3\}$ |
+| $\{1,5\}$ | $\{2,3,4\}$ | $\{z,3,4\}$ |
+| $\{2,3\}$ | $\{1,4,5\}$ | $\{z,4,5\}$ |
+| $\{2,4\}$ | $\{1,3,5\}$ | $\{z,1,5\}$ |
+| $\{2,5\}$ | $\{1,3,4\}$ | $\{z,1,3\}$ |
+| $\{3,4\}$ | $\{1,2,5\}$ | $\{z,2,5\}$ |
+| $\{3,5\}$ | $\{1,2,4\}$ | $\{z,1,4\}$ |
+| $\{4,5\}$ | $\{1,2,3\}$ | $\{z,1,2\}$ |
+
+Each entry is contained in $U_J=([5]\setminus J)\cup\{z\}$.
+The first column of codes contains all ten triples without $z$; the
+second contains $z$ with each of the ten pairs exactly once. Thus all
+twenty codes are distinct. Every menu has four rows, leaving exactly
+one original call after this length-three prefix. Both orders on a
+support finish at the same $E_y(U_J)$, and different supports give
+different terminal sources by injectivity in Theorem 18.2. There are
+therefore exactly ten terminal sources with two old orders each.
+
+These histories have actual source preparations. From the known alpha
+root, promote the root; split successively at
+$\varepsilon,L,\ldots,L^4$, and promote the born right alpha at $p_i$
+exactly when $i\notin J$. This attains $x_J(y_5)$, whose original
+frontier is then lawfully acquired and sealed. Execute the two remaining
+promotions at $p_i,p_j$ in the specified supplied order, acquiring their
+successful events and completing each inner return. This attains $y_5$
+with the stated KNOWN old history. The three code writes are now splits
+at disjoint eligible old beta rows, in any fixed code-dependent public
+order. None targets a new child. These different actual schedules supply
+the information used by the encoder before reset; no order is freely
+attached to a source description. At $r=4$, by contrast, every prefix
+has already written its full four-row menu, leaving just ten reachable
+codes for twenty histories. $T$ cannot recover the erased order from
+such an initial reset source. Availability is thus not monotone in the
+number of prescribed writes.
+
+Finally, AA17.2–17.3 and Proposition 18.6 transport this same current
+source among syntax, oriented material support, terminal boundary and
+labelled causal membership order. At the reset cut a successful codebook
+therefore makes the old serial word recoverable from ANY of these
+actually acquired views. Mandatory completion identifies the two orders
+on a support in ALL these source views; $T$'s newly acquired retained
+information can survive that identification. This is a constrained
+transient encoding versus terminal survival correspondence on the
+original atomic $P/S$ source. Generic chronological nonrecovery and
+factorial supplements are already supplied by [Native Cutoff Completion
+Frontiers §§8–9][CCFSERIAL]; [AAII Definition 67.2][AAIISERIAL] retains the
+erased-order boundary of earned current syntax. The finite matching step
+is reused, not a new matching theorem. The present conditional corollary
+and sharp original-row application are `repo-derived`.
+
+All recovery is conditional on the admitted lawful owned traversal,
+authenticated dispatch, sufficient backing and complete maintenance and
+INNER-return cuts of Definition 18.1. AA21 is READY-scoped; the outer
+LAB supervisor may still be BUSY at these cuts. No Ready-only external
+service is imported. The resettable outer installation/phase bridge is
+UNVERIFIED. The reset is a declared logical controller operation, not a
+native inverse or thermodynamic deletion. There is no assertion of a
+total-resource optimum, fresh Lean certification, worldwide novelty or
+completion of the broader space–time–boundary–memory programme. $\square$
+
+[ARHSERIAL]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md#9-mathematical-scope-suppliers-and-remaining-obligations
+[CCFSERIAL]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CUTOFF_COMPLETION_FRONTIERS.md#8-exact-joint-price-of-discarded-labels-and-sweep-order
+[AAIISERIAL]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md#67-supplier-correspondence-and-exact-applicability-boundary
+
+## 追加锚（本行以下为增补区）
