@@ -12,7 +12,8 @@ import D5.S3.VertexAlgebra.TwistedGround.InfiniteGaussianVacuum
 import D5.S3.VertexAlgebra.TwistedGround.GaussianSewingLimit
 import D5.S3.VertexAlgebra.TwistedGround.GaussianCoefficientContinuity
 
-/-! Finite sewing and the support-net limits identify the complete countable Gaussian contraction. -/
+/-! Finite sewing and support-net limits identify the complete countable
+Gaussian contraction. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -73,7 +74,8 @@ def cutoffKernel (P : Matrix X X ℂ) (Q : Matrix Y Y ℂ) (A B : Data I)
     (R : X → ℓ²(I, ℂ)) (S : Y → ℓ²(I, ℂ)) (F : Finset I) :
     Matrix (X ⊕ Y) (X ⊕ Y) ℂ :=
   FiniteGaussianSewing.effectiveKernel P Q (A.block F) (B.block F)
-    (fun x i => R x i.val) (fun i y => S y i.val)
+    (Matrix.of (fun x i => (R x i.val : ℂ)))
+    (Matrix.of (fun i y => (S y i.val : ℂ)))
 
 private theorem finite_log (A B : Data I) (F : Finset I) :
     (1 / 2 : ℂ) * (∑' k : ℕ, Matrix.trace ((A.block F * B.block F) ^ (k + 1)) /
@@ -118,6 +120,10 @@ theorem cutoff_sewing (P : Matrix X X ℂ) (Q : Matrix Y Y ℂ)
       ext (i | i) (j | j) <;> rfl
     simpa only [hmat] using h
   rw [finite_log] at hf
+  change cutoff P Q A B R S d e F =
+    Complex.exp (TraceClassPowerSeries.traceLog (cutoffProduct A B F)) *
+      gaussianCoefficient (FiniteGaussianSewing.effectiveKernel P Q
+        (A.block F) (B.block F) r s) (d.sumElim e)
   rw [← hf.2]
   let g (n : Occupation F) := (weight n : ℂ) *
     gaussianCoefficient (Matrix.fromBlocks P r r.transpose (A.block F)) (d.sumElim n) *
@@ -130,7 +136,18 @@ theorem cutoff_sewing (P : Matrix X X ℂ) (Q : Matrix Y Y ℂ)
   have hp := row_finite P A R d F (restrictOccupation F n.val)
   have hq := row_finite Q B S e F (restrictOccupation F n.val)
   rw [hn] at hp hq
-  dsimp only [cutoff, g, occupationEquiv]
+  change row P A R d n.val =
+    gaussianCoefficient (Matrix.fromBlocks P r r.transpose (A.block F))
+      (d.sumElim (restrictOccupation F n.val)) at hp
+  change row Q B S e n.val =
+    gaussianCoefficient (Matrix.fromBlocks Q s.transpose s (B.block F))
+      (e.sumElim (restrictOccupation F n.val)) at hq
+  change (weight n.val : ℂ) * row P A R d n.val * row Q B S e n.val =
+    (weight (restrictOccupation F n.val) : ℂ) *
+      gaussianCoefficient (Matrix.fromBlocks P r r.transpose (A.block F))
+        (d.sumElim (restrictOccupation F n.val)) *
+      gaussianCoefficient (Matrix.fromBlocks (B.block F) s s.transpose Q)
+        ((restrictOccupation F n.val).sumElim e)
   rw [hp, hq, hswap, weight_restrict F n.val n.property]
 
 open GaussianSewingLimit
@@ -150,7 +167,8 @@ def effectiveKernel (P : Matrix X X ℂ) (Q : Matrix Y Y ℂ) (A B : Data I)
 private theorem finite_bilinear {U : Type*} {V : Type*} [Fintype U] [Fintype V]
     (F : Finset I) (R : U → ℓ²(I, ℂ)) (S : V → ℓ²(I, ℂ))
     (M : Matrix F F ℂ) (x : U) (y : V) :
-    ((fun x (i : F) => R x i.val) * M * (fun i : F => fun y => S y i.val)) x y =
+    (Matrix.of (fun (x : U) (i : F) => (R x i.val : ℂ)) * M *
+      Matrix.of (fun (i : F) (y : V) => (S y i.val : ℂ))) x y =
       bilinear (R x) (embedded F M (S y)) := by
   rw [bilinear_embedded]
   simp only [Matrix.mul_apply, Finset.sum_mul]
@@ -171,8 +189,8 @@ private theorem cutoff_mixed_transpose (P : Matrix X X ℂ) (Q : Matrix Y Y ℂ)
     simp only [← Matrix.nonsing_inv_eq_ringInverse, Matrix.transpose_nonsing_inv,
       Matrix.transpose_sub, Matrix.transpose_one, Matrix.transpose_mul, hA, hB]
   have h := congrArg (fun M : Matrix Y X ℂ => M y x)
-    (Matrix.transpose_mul ((fun x (i : F) => R x i.val) *
-      (1 - B.block F * A.block F)⁻¹ʳ) (fun i : F => fun y => S y i.val))
+    (Matrix.transpose_mul (Matrix.of (fun (x : X) (i : F) => (R x i.val : ℂ)) *
+      (1 - B.block F * A.block F)⁻¹ʳ) (Matrix.of (fun (i : F) (y : Y) => (S y i.val : ℂ))))
   simpa [cutoffKernel, FiniteGaussianSewing.effectiveKernel,
     Matrix.transpose_mul, hN, Matrix.mul_assoc] using h.symm
 
@@ -189,40 +207,58 @@ theorem cutoffKernel_tendsto (P : Matrix X X ℂ) (Q : Matrix Y Y ℂ)
   | inl x =>
     cases j with
     | inl x' =>
-      have h := tendsto_const_nhds.add (ordered_entries_tendsto A B (R x) (R x')).1
+      have h := (tendsto_const_nhds :
+        Tendsto (fun _ : Finset I => P x x') atTop (𝓝 (P x x'))).add
+          (ordered_entries_tendsto A B (R x) (R x')).1
       convert h using 1
+      all_goals try rfl
       funext F
       simp only [cutoffKernel, FiniteGaussianSewing.effectiveKernel,
         Matrix.fromBlocks_apply₁₁, Matrix.add_apply]
       congr 1
-      rw [Matrix.mul_assoc _ _ (B.block F), finite_bilinear, padded_inverse_mul]
+      change (Matrix.of (fun (a : X) (i : F) => (R a i.val : ℂ)) *
+        (1 - B.block F * A.block F)⁻¹ʳ * B.block F *
+        Matrix.of (fun (i : F) (a : X) => (R a i.val : ℂ))) x x' = _
+      rw [Matrix.mul_assoc _ _ (B.block F),
+        finite_bilinear F R R _ x x', padded_inverse_mul]
     | inr y =>
       have h := (ordered_entries_tendsto A B (R x) (S y)).2
       convert h using 1
+      all_goals try rfl
       funext F
       simp only [cutoffKernel, FiniteGaussianSewing.effectiveKernel,
         Matrix.fromBlocks_apply₁₂]
-      rw [finite_bilinear, padded_inverse, ContinuousLinearMap.add_apply, map_add]
+      rw [finite_bilinear F R S _ x y, padded_inverse,
+        ContinuousLinearMap.add_apply, map_add]
       ring
   | inr y =>
     cases j with
     | inl x =>
       have h := (ordered_entries_tendsto A B (R x) (S y)).2
       convert h using 1
+      all_goals try rfl
       funext F
       rw [cutoff_mixed_transpose]
       simp only [cutoffKernel, FiniteGaussianSewing.effectiveKernel,
         Matrix.fromBlocks_apply₁₂]
-      rw [finite_bilinear, padded_inverse, ContinuousLinearMap.add_apply, map_add]
+      rw [finite_bilinear F R S _ x y, padded_inverse,
+        ContinuousLinearMap.add_apply, map_add]
       ring
     | inr y' =>
-      have h := tendsto_const_nhds.add (ordered_entries_tendsto B A (S y) (S y')).1
+      have h := (tendsto_const_nhds :
+        Tendsto (fun _ : Finset I => Q y y') atTop (𝓝 (Q y y'))).add
+          (ordered_entries_tendsto B A (S y) (S y')).1
       convert h using 1
+      all_goals try rfl
       funext F
       simp only [cutoffKernel, FiniteGaussianSewing.effectiveKernel,
         Matrix.fromBlocks_apply₂₂, Matrix.add_apply]
       congr 1
-      rw [Matrix.mul_assoc _ _ (A.block F), finite_bilinear, padded_inverse_mul]
+      change (Matrix.of (fun (a : Y) (i : F) => (S a i.val : ℂ)) *
+        (1 - A.block F * B.block F)⁻¹ʳ * A.block F *
+        Matrix.of (fun (i : F) (a : Y) => (S a i.val : ℂ))) y y' = _
+      rw [Matrix.mul_assoc _ _ (A.block F),
+        finite_bilinear F S S _ y y', padded_inverse_mul]
 
 /-- Full infinite/countable internal-mode Gaussian sewing, with arbitrary
 finite ordinary external occupations and genuine absolute convergence.
@@ -252,9 +288,11 @@ private theorem coefficient_rename {J : Type*} {K : Type*}
   let r := restrictOccupation d.support d
   have hd : r.mapDomain (fun i : d.support => i.val) = d :=
     extend_restrict _ _ (fun _ h => h)
+  have hmap : r.mapDomain (fun i : d.support => e i.val) = d.mapDomain e := by
+    change r.mapDomain (e ∘ Subtype.val) = _
+    rw [Finsupp.mapDomain_comp, hd]
   calc
-    _ = coefficient L (r.mapDomain (fun i : d.support => e i.val)) := by
-      rw [Finsupp.mapDomain_comp, hd]
+    _ = coefficient L (r.mapDomain (fun i : d.support => e i.val)) := by rw [hmap]
     _ = _ := coefficient_finite_inclusion L (fun i : d.support => e i.val)
       (he.comp Subtype.val_injective) r
 
