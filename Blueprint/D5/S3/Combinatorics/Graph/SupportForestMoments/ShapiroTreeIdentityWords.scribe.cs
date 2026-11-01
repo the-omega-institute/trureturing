@@ -45,7 +45,9 @@ internal sealed class ShapiroTreeIdentityWordsDocument : IScribeDocumentDefiniti
                 + "outside those edges, which excludes a crossing with the leaf edge. "
                 + "Induction proves necessity. For sufficiency, crossing edges have disjoint "
                 + "endpoints, their transpositions commute, and repeated pairs cancel.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("shap2610"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         AssessedProvenance provenance, string prose, DescribeRole role,
