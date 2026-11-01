@@ -1,13 +1,13 @@
-/- GID: D5/S3/Combinatorics/Circle/PhysicalJointRepetition
+/- GID: D5/S3/Combinatorics/Circle/PhysicalJointRepetition/Repetition
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/PhysicalJointRepetition
+   mirror-B: D5/B/S3/Combinatorics/Circle/PhysicalJointRepetition/Repetition
    mirror-E: none(waiver:no-escape-mirror-specified)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Explicit descending charged repetition with one literal first-block ear. -/
 
 import Batteries.Tactic.OpenPrivate
-import D5.S3.Combinatorics.Circle.PhysicalJointRepetitionSource
+import D5.S3.Combinatorics.Circle.PhysicalJointRepetition.Source
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -19,7 +19,7 @@ open SourceWidth PeriodicShorteningArithmetic PeriodicShortening RunFirstEarTran
 open scoped BigOperators
 
 open private list_prefix_strip map_sum_linear prefix_nonneg_le block_perm old_block
-  from D5.S3.Combinatorics.Circle.PhysicalJointRepetitionSource
+  from D5.S3.Combinatorics.Circle.PhysicalJointRepetition.Source
 
 private theorem shift_source (k t : ℕ) (i : Fin k) :
     actualSource (k + 1) (2 * t) i.castSucc =

@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/Circle/PhysicalJointRepetitionSource
+/- GID: D5/S3/Combinatorics/Circle/PhysicalJointRepetition/Source
    generality: I
    mirror-B: none(waiver:private-consumed-foundations)
    mirror-E: none(waiver:no-escape-mirror-specified)

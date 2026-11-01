@@ -1,15 +1,15 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.PhysicalJointRepetition;
 
-internal sealed class PhysicalJointRepetitionDocument : IScribeDocumentDefinition
+internal sealed class RepetitionDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Explicit physical-J repetition at a fixed ear cut",
         H("Explicit physical-J repetition at a fixed ear cut"),
         Blocks(
             Describe.Lean(DescribeId.Create("physical-joint-repetition"),
-                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/PhysicalJointRepetition.physical_joint_repetition"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/PhysicalJointRepetition/Repetition.physical_joint_repetition"),
                 H("Explicit physical-J repetition at a fixed ear cut"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For d>=2, 1<=w<=2^(d-1)-1, r>=2 and cut<=d, a supplied old physical order and its supplied joint ear order produce an explicit descending-block repetition at lengths d*r and d*r+1. Every physical occurrence is retained, and the fresh label is inserted at the same numeric cut in the first block.")),
