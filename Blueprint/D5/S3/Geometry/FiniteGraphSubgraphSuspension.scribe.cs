@@ -32,8 +32,6 @@ internal sealed class FiniteGraphSubgraphSuspensionDocument : IScribeDocumentDef
                 "For every pair of finite graphs G,H on V, the actual gadget independence complex equals A union B. A face containing an apex belongs to that apex star, and a face containing none belongs to the hub star.", DescribeRole.Theorem),
             Node("intersection-faces", "intersection_faces", "Exact old intersection",
                 "For every H less than or equal to G, A intersect B equals the old-vertex embedding of the actual independence complex of G. Both retained edges in G minus H and H-edges remain constraints in this intersection. Arbitrary noninduced H is included.", DescribeRole.Theorem),
-            Node("intersectionhomeomorph", "intersectionHomeomorph", "Realizing the closed intersection",
-                "For every H less than or equal to G, the exact equality of faces and the existing coordinate embedding homeomorphism identify the actual realization of G with the intersection of the realized hub star and realized apex star cluster.", DescribeRole.Definition),
             Node("coordinates-mass", "Coordinates.mass", "Total apex mass",
                 "For every real gadget coordinate vector x, mass(x) is the finite sum of the coordinates at all apices.", DescribeRole.Definition),
             Node("coordinates-bad", "Coordinates.bad", "Mass outside one apex star",

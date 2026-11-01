@@ -106,19 +106,8 @@ def suspensionGraph (G H : SimpleGraph V) : SimpleGraph (Vertex H) where
     · simp [gadgetAdj]
     · cases a <;> simp [gadgetAdj]
 
-@[simp] theorem adj_old_old (G H : SimpleGraph V) (a b : V) :
-    (suspensionGraph G H).Adj (old a) (old b) ↔ G.Adj a b ∧ ¬ H.Adj a b := Iff.rfl
-@[simp] theorem adj_old_hub (G H : SimpleGraph V) (a : V) :
-    ¬ (suspensionGraph G H).Adj (old a) (hub H) := id
-@[simp] theorem adj_hub_old (G H : SimpleGraph V) (a : V) :
-    ¬ (suspensionGraph G H).Adj (hub H) (old a) := id
-@[simp] theorem adj_old_apex (G H : SimpleGraph V) (a : V) (M : MaxIndependent H) :
-    (suspensionGraph G H).Adj (old a) (apex M) ↔ a ∉ M.val := Iff.rfl
 @[simp] theorem adj_apex_old (G H : SimpleGraph V) (a : V) (M : MaxIndependent H) :
     (suspensionGraph G H).Adj (apex M) (old a) ↔ a ∉ M.val := Iff.rfl
-@[simp] theorem adj_apex_apex (G H : SimpleGraph V) (M N : MaxIndependent H) :
-    ¬ (suspensionGraph G H).Adj (apex M) (apex N) := id
-
 /-- The full-vertex convention adds no unwanted old neighbours outside the
 local vertex set of an arbitrary subgraph. No inducedness is used. -/
 theorem subgraph_apex_off_vertices (G : SimpleGraph V) (H : G.Subgraph)
@@ -229,10 +218,12 @@ theorem intersection_faces (hHG : H ≤ G) :
       exact hti ha hb hab (hHG hH))
     have hi : (suspensionGraph G H).IsIndepSet
         ((t.image (oldEmbedding H)) : Set (Vertex H)) := by
-      rintro a ha b hb hab hadj
-      obtain ⟨a, ha, rfl⟩ := Finset.mem_image.mp ha
-      obtain ⟨b, hb, rfl⟩ := Finset.mem_image.mp hb
-      exact hti ha hb (fun h => hab (congrArg old h)) hadj.1
+      rintro u hu v hv huv hadj
+      obtain ⟨a, ha, hau⟩ := Finset.mem_image.mp hu
+      obtain ⟨b, hb, hbv⟩ := Finset.mem_image.mp hv
+      subst u
+      subst v
+      exact hti ha hb (fun h => huv (congrArg old h)) hadj.1
     refine ⟨(starA_iff G H _).mpr ⟨htn.image _, hi, ?_⟩, M, htn.image _, hi, ?_⟩
     · intro N hN
       obtain ⟨a, _, he⟩ := Finset.mem_image.mp hN
@@ -240,15 +231,6 @@ theorem intersection_faces (hHG : H ≤ G) :
     · intro b hb
       obtain ⟨a, ha, rfl⟩ := Finset.mem_image.mp hb
       exact not_not.mpr (htM ha)
-
-/-- Existing realization preserves intersection; the coordinate embedding is
-the existing project homeomorphism, not an assumed graph equivalence. -/
-def intersectionHomeomorph (hHG : H ≤ G) :
-    Ispace G ≃ₜ ↥(realization (starA G H) ∩ realization (starB G H)) :=
-  (mapHomeomorph (independenceComplex G).toPreAbstractSimplicialComplex
-    (oldEmbedding H)).trans
-    (Homeomorph.setCongr ((congrArg realization (intersection_faces G H hHG)).symm.trans
-      (FiniteConeUnionWedge.realization_intersection _ _)))
 
 theorem closedStar_cone (a : Vertex H) (s : Finset (Vertex H))
     (hs : s ∈ closedStar G H a) : insert a s ∈ closedStar G H a := by
@@ -601,7 +583,8 @@ def aMap : C(↥(U G H), ↥(U G H)) :=
     (fun x => by simp [mass, FiniteCoordinateTruncation.normalize, eraseA, apex])
 
 theorem aMap_mass (x : U G H) : mass H (aMap G H x).val.val = 0 := by
-  simp [aMap, regionMap, mass, FiniteCoordinateTruncation.normalize, eraseA, apex]
+  change mass H (FiniteCoordinateTruncation.normalize (eraseA H x.val.val)) = 0
+  simp [mass, FiniteCoordinateTruncation.normalize, eraseA, apex]
 
 def aFirst : (ContinuousMap.id ↥(U G H)).Homotopy (aMap G H) :=
   regionStraight G H (fun x => mass H x < 1 / 2) _ _
@@ -653,6 +636,7 @@ def aSecond : (aMap G H).Homotopy (ContinuousMap.const _ (hubPoint G H)) :=
       (avoid _ (aMap G H x).val)
       (fun M => by simp [aMap, regionMap, FiniteCoordinateTruncation.normalize, eraseA, apex]) t)
     (fun t x => by
+      change mass H (mix t (aMap G H x).val.val (hubPoint G H).val.val) < 1 / 2
       rw [mass_mix, aMap_mass]
       simp [hubPoint, mass, vertex, apex, hub, Pi.single_apply])
 
@@ -885,6 +869,7 @@ def clusterFirst : (ContinuousMap.id ↥(cluster G H)).Homotopy (clusterCut G H)
       have hy0 := cut_bad_zero G H x.val M (by rw [hm0]; exact epsilon_pos H)
       apply le_antisymm
       · apply (delta_mix_bound H M hy0 t).trans
+        change (1 - (t : ℝ)) * bad H M x.val.val ≤ 0
         rw [hm0]; simp
       · exact delta_nonneg H (probability_mix (probability _ x.val)
           (cut_probability G H x.val) t).1)
@@ -984,10 +969,10 @@ def neighborhoodEquiv : ↥(O G H) ≃ₕ ↥(cluster G H) where
   left_inv := ⟨(neighborhoodFirst G H).symm⟩
   right_inv := by
     have he : (neighborhoodRetraction G H).comp (clusterInO G H) = ContinuousMap.id _ := by
-      ext x
+      apply ContinuousMap.ext
+      intro x
       exact retraction_fixes G H x
     rw [he]
-    rfl
 
 theorem contractible_O : ContractibleSpace ↥(O G H) := by
   letI := contractible_starB G H
@@ -1229,7 +1214,7 @@ theorem old_complement_iff (M : MaxIndependent H₀.spanningCoe) (a : V) :
   · intro ha
     have haW : a ∈ H₀.verts := by
       by_contra hn
-      exact ha (isolated_mem H₀.spanningCoe M a fun b hab => hn (H₀.edge_vert hab))
+      exact subgraph_apex_off_vertices G H₀ M a hn ha
     refine ⟨haW, ?_⟩
     rintro him
     obtain ⟨b, hb, he⟩ := Finset.mem_image.mp him
@@ -1294,7 +1279,7 @@ def reducedHomologyIso [Nonempty V] (hHG : H ≤ G) (q : ℕ) (_hq : 1 ≤ q) :
   let R := ModuleCat.of ℤ ℤ
   letI : ContractibleSpace ↥(Coordinates.U G H) := Coordinates.contractible_U G H
   letI : ContractibleSpace ↥(Coordinates.O G H) := Coordinates.contractible_O G H
-  letI : IsIso (TopCat.reducedMayerVietorisδ R
+  have hδ : IsIso (TopCat.reducedMayerVietorisδ R
       (X := TopCat.of (Ispace (suspensionGraph G H)))
       (U := Coordinates.U G H) (V := Coordinates.O G H) (Coordinates.isOpen_U G H)
       (Coordinates.isOpen_O G H) (Coordinates.open_cover G H) q) :=
@@ -1302,10 +1287,10 @@ def reducedHomologyIso [Nonempty V] (hHG : H ≤ G) (q : ℕ) (_hq : 1 ≤ q) :
       (Coordinates.isOpen_U G H) (Coordinates.isOpen_O G H) (Coordinates.open_cover G H) q
   exact (TauCeti.reducedSingularHomologySuccIso R q).app
       (TopCat.of (Ispace (suspensionGraph G H))) ≪≫
-    asIso (TopCat.reducedMayerVietorisδ R
+    @asIso _ _ _ _ (TopCat.reducedMayerVietorisδ R
       (X := TopCat.of (Ispace (suspensionGraph G H)))
       (U := Coordinates.U G H) (V := Coordinates.O G H) (Coordinates.isOpen_U G H)
-      (Coordinates.isOpen_O G H) (Coordinates.open_cover G H) q) ≪≫
+      (Coordinates.isOpen_O G H) (Coordinates.open_cover G H) q) hδ ≪≫
     (Coordinates.intersectionEquiv G H hHG).reducedSingularHomologyIso R q
 
 /-- Subgraph input in Mathlib's local-vertex representation. Outside H.verts,
