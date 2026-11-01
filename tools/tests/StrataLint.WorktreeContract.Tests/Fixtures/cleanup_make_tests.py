@@ -55,6 +55,14 @@ class CleanupMakeTests(NativeFixture):
         return self.run_command(["git", *arguments], cwd, input).stdout.strip()
 
     def build_cli(self, repository):
+        # The Make entrance exercises production sweep logic, but every deletion
+        # must stay inside this fixture. TMPDIR alone does not exclude /tmp.
+        source = repository / "tools/StrataLint.Cli/Commands/Worktrees/CleanLanesCommand.cs"
+        content = source.read_text()
+        original = "DefaultTempRoots(), now, Directory.SetCurrentDirectory);"
+        self.assertEqual(1, content.count(original))
+        source.write_text(content.replace(original,
+            "new[] { Path.GetTempPath() }, now, Directory.SetCurrentDirectory);"))
         self.mark_phase("canonical-build")
         self.run_command(["make", "--no-print-directory", "-C", repository / "tools", "dotnet",
                           "DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj"], phase="canonical-build")
@@ -114,8 +122,8 @@ class CleanupMakeTests(NativeFixture):
             self.git("checkout", "--detach", cwd=tree)
         (self.detached_dirty / "owned").write_text("detached tracked\n")
         (self.detached_dirty / "untracked").write_text("detached untracked\n")
-        # A current Git lock keeps the separate orphan/snapshot sweep out of
-        # host-wide temporary roots while exercising the real canonical door.
+        # Keep an intentional lock in the qualification fixture; independent
+        # sweeps still run within the fixture's isolated temporary root.
         self.current = self.add_lane("current-lock")
         self.git("worktree", "lock", "--reason", "fixture", self.current)
         self.mark_phase("participant-start")
