@@ -32,7 +32,7 @@ At a positive representative y, the lower endpoint is the maximum of zero and fl
 
 **Theorem 1.3 (Finite evaluation of every coordinate).**
 
-$$\forall B\in \mathbb {N},y\in \mathbb {Q},1\le B\land 0<y\longrightarrow (\operatorname {Contains}(C,\operatorname {representative}(C))\land (\forall x\in \mathbb {Q},\operatorname {Contains}(C,x)\longrightarrow \forall w\in \operatorname {List}(\operatorname {Bool}()),m\in \mathbb {N},1\le m\le B\longrightarrow \operatorname {evaluate}(C,w,m)=\operatorname {reply}(m,\operatorname {attain}(w,x))))$$
+$$\forall B\in \mathbb {N},y\in \mathbb {Q},1\le B\land 0<y\longrightarrow \operatorname {let} C: \operatorname {ProfileCell}()=\operatorname {containingCell}(B,y); (\operatorname {Contains}(C,\operatorname {representative}(C))\land (\forall x\in \mathbb {Q},\operatorname {Contains}(C,x)\longrightarrow \forall w\in \operatorname {List}(\operatorname {Bool}()),m\in \mathbb {N},1\le m\le B\longrightarrow \operatorname {evaluate}(C,w,m)=\operatorname {reply}(m,\operatorname {attain}(w,x))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/RationalRouting/FullFutureProfile.containing_cell_evaluator` (`✓ std3`). ∎
 
