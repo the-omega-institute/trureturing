@@ -25,7 +25,6 @@ This source artifact has not been elaborated or compiled.
 set_option backward.defeqAttrib.useBackward true
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
-set_option maxHeartbeats 1600000
 
 noncomputable section
 
@@ -44,9 +43,12 @@ def coordinateSmallHomologyIso (n : ℕ) :
     ((TopCat.of (Space K)).smallSingularSubcomplex (vertexOpen K) : SSet).homology
         (ModuleCat.of ℤ ℤ) n ≅
       ((singularHomologyFunctor (ModuleCat ℤ) n).obj (ModuleCat.of ℤ ℤ)).obj
-        (TopCat.of (Space K)) :=
-  TauCeti.smallSingularHomologyIso (ModuleCat.of ℤ ℤ) (vertexOpen K)
-    (isOpen_vertexOpen K) (vertexOpen_cover K) n
+        (TopCat.of (Space K)) := by
+  change (((TopCat.of (Space K)).smallSingularSubcomplex (vertexOpen K) : SSet).chainComplex
+    (ModuleCat.of ℤ ℤ)).homology n ≅
+      ((TopCat.toSSet.obj (TopCat.of (Space K))).chainComplex (ModuleCat.of ℤ ℤ)).homology n
+  exact TauCeti.smallSingularHomologyIso (X := TopCat.of (Space K))
+    (ModuleCat.of ℤ ℤ) (vertexOpen K) (isOpen_vertexOpen K) (vertexOpen_cover K) n
 
 section OrderedChains
 
@@ -96,7 +98,7 @@ theorem cechι_horizontal {p q : ℕ} (s : Finset V) (hs : s.card = p + 2)
     (σ : (smallSet K) _⦋q⦌)
     (hσ : ∀ v ∈ s, σ ∈ (memberSet K v).obj (Opposite.op ⦋q⦌)) :
     cechι K s hs σ hσ ≫ ((cechSingular K).d (p + 1) p).f q =
-      ∑ v : s, ((-1 : ℤ) ^ #{w ∈ s | w < v.1}) •
+      ∑ v : s, ((-1 : ℤ) ^ (s.filter (fun w => w < v.1)).card) •
         cechι K (s.erase v.1) (by rw [card_erase_of_mem v.2, hs]; omega)
           σ (fun w hw => hσ w (mem_of_mem_erase hw)) :=
   TauCeti.OrderedCover.basisι_d Z s hs σ hσ
@@ -111,13 +113,12 @@ theorem cechι_vertical {p q : ℕ} (s : Finset V) (hs : s.card = p + 1)
           (fun v hv => (memberSet K v).map (SimplexCategory.δ i).op (hσ v hv)) := by
   change _ ≫ (((alternatingFaceMapComplex (ChainComplex (ModuleCat ℤ) ℕ)).obj
     (rows Z (smallSet K) (memberSet K))).d (q + 1) q).f p = _
-  rw [AlternatingFaceMapComplex.obj_d_eq]
+  erw [AlternatingFaceMapComplex.obj_d_eq]
   simp only [TauCeti.OrderedCechSingular.sum_chainMap_f, HomologicalComplex.zsmul_f_apply,
     Preadditive.comp_sum, Preadditive.comp_zsmul]
   apply Finset.sum_congr rfl
   intro i hi
-  rw [cechι, TauCeti.OrderedCover.basisι_map]
-  rfl
+  simp [cechι, rows, SimplicialObject.δ, Preadditive.zsmul_comp]
 
 /-- Any simplex carried by the intersection witnesses that its finite set is a face. -/
 def carriedFace {p q : ℕ} (s : Finset V) (hs : s.card = p + 1)
@@ -152,14 +153,14 @@ def barycenterSimplex {p : ℕ} (s : Face K p) (q : ℕ) : (smallSet K) _⦋q⦌
   obtain ⟨v, hv⟩ := (K.isRelLowerSet_faces s.property.1).1
   refine ⟨v, ?_⟩
   rintro _ ⟨z, rfl⟩
-  simpa [σ] using barycenter_mem_intersection K s.property.1 v hv
+  simpa [σ, vertexOpen] using barycenter_mem_intersection K s.property.1 v hv
 
 theorem barycenterSimplex_carried {p : ℕ} (s : Face K p) (q : ℕ) :
     ∀ v ∈ s.val, barycenterSimplex K s q ∈
       (memberSet K v).obj (Opposite.op ⦋q⦌) := by
   intro v hv
   rintro _ ⟨z, rfl⟩
-  simpa [barycenterSimplex] using barycenter_mem_intersection K s.property.1 v hv
+  simpa [barycenterSimplex, vertexOpen] using barycenter_mem_intersection K s.property.1 v hv
 
 private def coefficientSection (p : ℕ) : orderedGroup K p ⟶ ((cechSingular K).X p).X 0 :=
   Sigma.desc fun s => cechι K s.val s.property.2 (barycenterSimplex K s 0)
@@ -187,7 +188,7 @@ def eraseFace {p : ℕ} (s : Face K (p + 1)) (v : s.val) : Face K p := by
 /-- Increasing-face deletion, with the ordinary rank sign. -/
 def orderedBoundary (p : ℕ) : orderedGroup K (p + 1) ⟶ orderedGroup K p :=
   Sigma.desc fun s => ∑ v : s.val,
-    ((-1 : ℤ) ^ #{w ∈ s.val | w < v.val}) • faceι K (eraseFace K s v)
+    ((-1 : ℤ) ^ (s.val.filter (fun w => w < v.val)).card) • faceι K (eraseFace K s v)
 
 @[reassoc]
 theorem coefficientSum_horizontal (p : ℕ) :
@@ -266,30 +267,31 @@ def intersectionSimplexEquiv {p : ℕ} (s : Face K p) (q : ℕ) :
       {σ : (smallSet K) _⦋q⦌ //
         ∀ v ∈ s.val, σ ∈ (memberSet K v).obj (Opposite.op ⦋q⦌)} where
   toFun σ := by
-    let c := (TopCat.of (intersection K s.val)).toSSetObjEquiv _ σ
+    let c := (TopCat.of (intersection K s.val)).toSSetObjEquiv (Opposite.op ⦋q⦌) σ
     let d : C(Convexity.StdSimplex ℝ (Fin (q + 1)), Space K) :=
       (ContinuousMap.subtypeVal _).comp c
-    let τ := ((TopCat.of (Space K)).toSSetObjEquiv _).symm d
+    let τ := ((TopCat.of (Space K)).toSSetObjEquiv (Opposite.op ⦋q⦌)).symm d
     have ht : ∀ v ∈ s.val, Set.range
-        ((TopCat.of (Space K)).toSSetObjEquiv _ τ) ⊆ vertexOpen K v := by
+        ((TopCat.of (Space K)).toSSetObjEquiv (Opposite.op ⦋q⦌) τ) ⊆ vertexOpen K v := by
       intro v hv
       rintro _ ⟨z, rfl⟩
-      simpa [τ, d] using (c z).property v hv
+      simpa [τ, d, vertexOpen] using (c z).property v hv
+    refine ⟨⟨τ, ?_⟩, ht⟩
     obtain ⟨v, hv⟩ := (K.isRelLowerSet_faces s.property.1).1
-    exact ⟨⟨τ, ⟨v, ht v hv⟩⟩, ht⟩
+    exact ⟨v, ht v hv⟩
   invFun σ :=
-    ((TopCat.of (intersection K s.val)).toSSetObjEquiv _).symm
-      ⟨fun z => ⟨(TopCat.of (Space K)).toSSetObjEquiv _ σ.val.val z,
+    ((TopCat.of (intersection K s.val)).toSSetObjEquiv (Opposite.op ⦋q⦌)).symm
+      ⟨fun z => ⟨(TopCat.of (Space K)).toSSetObjEquiv (Opposite.op ⦋q⦌) σ.val.val z,
           fun v hv => σ.property v hv ⟨z, rfl⟩⟩,
-        (((TopCat.of (Space K)).toSSetObjEquiv _ σ.val.val).continuous).subtype_mk _⟩
+        (((TopCat.of (Space K)).toSSetObjEquiv (Opposite.op ⦋q⦌) σ.val.val).continuous).subtype_mk _⟩
   left_inv σ := by
-    apply ((TopCat.of (intersection K s.val)).toSSetObjEquiv _).injective
+    apply ((TopCat.of (intersection K s.val)).toSSetObjEquiv (Opposite.op ⦋q⦌)).injective
     ext z
     simp
   right_inv σ := by
     apply Subtype.ext
     apply Subtype.ext
-    apply ((TopCat.of (Space K)).toSSetObjEquiv _).injective
+    apply ((TopCat.of (Space K)).toSSetObjEquiv (Opposite.op ⦋q⦌)).injective
     ext z
     simp
 
@@ -302,7 +304,7 @@ theorem intersectionSimplexEquiv_face {p q : ℕ} (s : Face K p)
   apply Subtype.ext
   apply ((TopCat.of (Space K)).toSSetObjEquiv _).injective
   ext z
-  simp [intersectionSimplexEquiv, TopCat.toSSetObjEquiv_naturality_apply]
+  rfl
 
 private def intersectionColumnι {p : ℕ} (s : Face K p) :
     intersectionChains K s ⟶ (cechSingular K).X p where
@@ -313,13 +315,12 @@ private def intersectionColumnι {p : ℕ} (s : Face K p) :
     rintro _ q rfl
     apply SSet.chainComplex_hom_ext
     intro σ
-    rw [← Category.assoc, Sigma.ι_comp_desc, cechι_vertical,
+    erw [← Category.assoc, Sigma.ι_comp_desc, cechι_vertical,
       ← Category.assoc, SSet.ιChainComplex_d, Preadditive.sum_comp]
-    simp only [Preadditive.zsmul_comp, Sigma.ι_comp_desc]
+    simp only [Preadditive.zsmul_comp, SSet.ιChainComplex, Sigma.ι_comp_desc]
     apply Finset.sum_congr rfl
     intro i hi
-    congr 1
-    rw [intersectionSimplexEquiv_face]
+    erw [intersectionSimplexEquiv_face]
 
 @[reassoc (attr := simp)]
 private theorem ι_intersectionColumnι {p q : ℕ} (s : Face K p)
@@ -343,31 +344,17 @@ private def columnToCoproduct (p : ℕ) : (cechSingular K).X p ⟶ columnCoprodu
     rintro _ q rfl
     apply cech_hom_ext K
     intro s hs σ hσ
-    let F := carriedFace K s hs σ hσ
-    let τ := (intersectionSimplexEquiv K F (q + 1)).symm ⟨σ, hσ⟩
-    have hτ : (intersectionSimplexEquiv K F (q + 1) τ).val = σ :=
-      congrArg Subtype.val ((intersectionSimplexEquiv K F (q + 1)).apply_symm_apply _)
     change (cechι K s hs σ hσ ≫ _) ≫ _ =
       (cechι K s hs σ hσ ≫ ((cechSingular K).X p).d (q + 1) q) ≫ _
     rw [cechι_vertical, Preadditive.sum_comp]
     simp only [cechι, TauCeti.OrderedCover.basisι_eq, Category.assoc, Sigma.ι_comp_desc,
       Preadditive.zsmul_comp]
-    rw [← HomologicalComplex.Hom.comm, ← Category.assoc, SSet.ιChainComplex_d,
+    erw [HomologicalComplex.Hom.comm, ← Category.assoc, SSet.ιChainComplex_d,
       Preadditive.sum_comp]
     simp only [Preadditive.zsmul_comp]
     apply Finset.sum_congr rfl
     intro i hi
     congr 1
-    have hiτ := intersectionSimplexEquiv_face K F τ i
-    rw [hτ] at hiτ
-    have hface : (intersectionSimplexEquiv K F q).symm
-        ⟨(smallSet K).δ i σ,
-          fun v hv => (memberSet K v).map (SimplexCategory.δ i).op (hσ v hv)⟩ =
-        (TopCat.toSSet.obj (TopCat.of (intersection K F.val))).δ i τ := by
-      apply (intersectionSimplexEquiv K F q).injective
-      apply Subtype.ext
-      simpa using hiτ.symm
-    simp only [hface, Category.assoc]
 
 @[reassoc (attr := simp)]
 private theorem cechι_columnToCoproduct {p q : ℕ}
@@ -380,6 +367,7 @@ private theorem cechι_columnToCoproduct {p q : ℕ}
           (carriedFace K s hs σ hσ)).f q := by
   rw [cechι, TauCeti.OrderedCover.basisι_eq]
   simp only [columnToCoproduct, Category.assoc, Sigma.ι_comp_desc]
+  rfl
 
 /-- Explicit basis identification with the coproduct of the actual intersection chain complexes. -/
 def columnCoproductIso (p : ℕ) : (cechSingular K).X p ≅ columnCoproduct K p where
@@ -389,7 +377,7 @@ def columnCoproductIso (p : ℕ) : (cechSingular K).X p ≅ columnCoproduct K p 
     ext q : 1
     apply cech_hom_ext K
     intro s hs σ hσ
-    rw [HomologicalComplex.comp_f, ← Category.assoc, cechι_columnToCoproduct,
+    erw [HomologicalComplex.comp_f, ← Category.assoc, cechι_columnToCoproduct,
       Category.assoc, ← HomologicalComplex.comp_f, Sigma.ι_comp_desc,
       ι_intersectionColumnι]
     simp only [Equiv.apply_symm_apply, HomologicalComplex.id_f, Category.comp_id]
@@ -397,14 +385,16 @@ def columnCoproductIso (p : ℕ) : (cechSingular K).X p ≅ columnCoproduct K p 
   inv_hom_id := by
     apply Sigma.hom_ext
     intro s
-    rw [Sigma.ι_comp_desc_assoc]
+    erw [Sigma.ι_comp_desc_assoc]
     ext q : 1
     apply SSet.chainComplex_hom_ext
     intro σ
-    rw [HomologicalComplex.comp_f, ← Category.assoc, ι_intersectionColumnι,
+    erw [HomologicalComplex.comp_f, ← Category.assoc, ι_intersectionColumnι,
       cechι_columnToCoproduct]
-    simp only [Equiv.symm_apply_apply, Category.comp_id]
-    rfl
+    have hF : carriedFace K s.val s.property.2
+        (intersectionSimplexEquiv K s q σ).val
+        (intersectionSimplexEquiv K s q σ).property = s := Subtype.ext rfl
+    simp only [hF, Equiv.symm_apply_apply, HomologicalComplex.id_f, Category.comp_id]
 
 private theorem homologyMap_sigmaMap_isIso {J : Type} [Finite J]
     {A B : J → ChainComplex (ModuleCat ℤ) ℕ} (f : ∀ j, A j ⟶ B j)
@@ -435,10 +425,12 @@ private theorem columnAugmentation_factorization (p : ℕ) :
     columnAugmentation K p = (columnCoproductIso K p).hom ≫
       coproductColumnAugmentation K p := by
   apply HomologicalComplex.to_single_hom_ext
+  change (columnAugmentation K p).f 0 =
+    (columnToCoproduct K p).f 0 ≫ (coproductColumnAugmentation K p).f 0
   apply cech_hom_ext K
   intro s hs σ hσ
-  rw [columnAugmentation, ChainComplex.toSingle₀Equiv_symm_apply_f_zero,
-    cechι_coefficientSum, HomologicalComplex.comp_f, ← Category.assoc,
+  erw [columnAugmentation, ChainComplex.toSingle₀Equiv_symm_apply_f_zero,
+    cechι_coefficientSum, ← Category.assoc,
     cechι_columnToCoproduct]
   simp only [coproductColumnAugmentation, HomologicalComplex.comp_f, Category.assoc,
     ← HomologicalComplex.comp_f, Sigma.ι_map_assoc, ι_comp_sigmaComparison,
@@ -473,7 +465,8 @@ theorem vertical_total_comparison :
   · intro p q hpq
     exact columnAugmentation_isIso K p q
   · intro p q hpq
-    have := columnAugmentation_isIso K p q
+    haveI : IsIso (HomologicalComplex.homologyMap ((verticalAugmentation K).f p) q) :=
+      columnAugmentation_isIso K p q
     infer_instance
 
 /-- Integral H1 of the ordered chain complex and of the actual coordinate realization.
