@@ -817,7 +817,9 @@ private lemma det_diagonal_derivative_zero {n : ℕ} (d : Fin n → ℝ)
     · subst j; simpa using hB i
     · simp [updateRow, Function.update_of_ne hji, diagonal_apply_ne _ hji]
   rw [hz] at hf
-  simpa only [Function.comp_def, f, Matrix.det] using hf
+  convert hf using 1
+  funext t
+  rfl
 
 private lemma charpoly_derivative_zero_of_spectral_diagonal_zero {n : ℕ}
     (A U B : Matrix (Fin n) (Fin n) ℝ) (lam : Fin n → ℝ)
