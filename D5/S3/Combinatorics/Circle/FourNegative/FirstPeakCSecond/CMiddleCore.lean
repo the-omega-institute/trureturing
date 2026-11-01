@@ -107,8 +107,7 @@ private theorem model_positive (y t e h : ℤ)
   obtain ⟨H,hH,rfl⟩ : ∃ H : ℤ, 0≤H ∧ h=2+H := ⟨h-2,by omega,by ring⟩
   dsimp [model]
   refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,?_⟩
-  all_goals first | ring | nlinarith [hY,hT,hE,hH] |
-    positivity | (apply sub_nonneg.mp; ring_nf; positivity)
+  all_goals first | ring | nlinarith [hY,hT,hE,hH] | positivity | (apply sub_nonneg.mp; ring_nf; positivity)
 
 /- The six later gates share the same integer rounding proof. The first four
 polynomial margins are kept separate, including the actual pre-ear first seam. -/
