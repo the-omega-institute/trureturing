@@ -286,7 +286,8 @@ private theorem cycle_term_cons (a : ℕ → R) {n m k : ℕ}
   have hz : (zPartition q : ℚ) ≠ 0 := by
     exact_mod_cast (zExponent_pos (partitionExponent q)).ne'
   have hk' : (k : ℚ) ≠ 0 := by exact_mod_cast hk.ne'
-  have hc : (q.parts.count k + 1 : ℚ) ≠ 0 := by positivity
+  have hc : (q.parts.count k + 1 : ℚ) ≠ 0 := by
+    exact Nat.cast_add_one_ne_zero (Multiset.count k q.parts)
   have hs : ((k : ℚ) * (q.parts.count k + 1)) * (zPartition p : ℚ)⁻¹ =
       (zPartition q : ℚ)⁻¹ := by
     rw [z_partition_cons p q hk hp]
@@ -802,11 +803,12 @@ private theorem cycleInput_product (l : List ℕ) :
       (2 : (LaurentPolynomial ℚ)) ^ l.length * (l.map fun a : ℕ => LaurentPolynomial.T (a : ℤ) +
         1 +
         LaurentPolynomial.T (-(a : ℤ))).prod := by
-    induction l with
-    | nil => simp
-    | cons a l ih =>
-      simp only [List.map_cons, List.prod_cons, List.length_cons, cycleInput, ih, pow_succ]
-      ring
+    change (l.map fun a : ℕ => (2 : LaurentPolynomial ℚ) *
+      (LaurentPolynomial.T (a : ℤ) + 1 + LaurentPolynomial.T (-(a : ℤ)))).prod =
+        (2 : LaurentPolynomial ℚ) ^ l.length *
+          (l.map fun a : ℕ => LaurentPolynomial.T (a : ℤ) + 1 +
+            LaurentPolynomial.T (-(a : ℤ))).prod
+    rw [List.prod_map_mul, List.map_const', List.prod_replicate]
   rw [he, laurent_product]
   congr 1
   exact (map_pow LaurentPolynomial.C (2 : ℚ) l.length).trans (by simp only [map_ofNat]) |>.symm
