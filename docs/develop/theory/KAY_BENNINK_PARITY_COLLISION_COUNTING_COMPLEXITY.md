@@ -185,7 +185,7 @@ v_2\!\left(\binom{2t}{t}\right)
 -2\left\lfloor\frac{t}{2^j}\right\rfloor\right)=1.
 $$
 
-For $1\le j\le k$ the summand is zero, at $j=k+1$ it is one, and afterwards it is zero. Since the unreduced denominator of $P([1],t)$ is $2^{2t}$, its reduced denominator is exactly $2^{2t-1}$, whose ordinary binary encoding has $2t$ bits. The binary input lengths along $t=2^k$ are $k+O(1)$, while both output lengths grow exponentially in $k$. A machine writing one output symbol per step cannot produce either output in polynomial input time. ∎
+For $1\le j\le k$ the summand is zero, at $j=k+1$ it is one, and afterwards it is zero. Since the unreduced denominator of $P([1],t)$ is $2^{2t}$, its reduced denominator is exactly $2^{2t-1}$, whose ordinary binary encoding has $2t$ bits. The binary input lengths along $t=2^k$ are $bk+O(1)$ bits, where $b\ge2$ is the fixed codeword width of Convention 1.2, while both output lengths grow exponentially in $k$. A machine writing one output symbol per step cannot produce either output in polynomial input time. ∎
 
 This obstruction is about explicit output representation; it is not a complete classification of binary-$t$ functions or compressed representations. Theorems 3.2 and 4.2 assert fixed-$2$ and unary-$t$ completeness, without asserting a classification for every other fixed $t$.
 
