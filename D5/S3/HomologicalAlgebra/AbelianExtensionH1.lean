@@ -15,7 +15,7 @@ noncomputable section
 namespace D5.S3.HomologicalAlgebra.AbelianExtensionH1
 open groupCohomology
 
-variable {N Q : Type*} {S : Type} [CommGroup N] [Group Q] [Group S]
+variable {N Q S : Type} [CommGroup N] [Group Q] [Group S]
 variable (E : GroupExtension N Q S)
 
 private theorem conj_kernel (x : Q) (hx : x ∈ E.rightHom.ker) : E.conjAct x = 1 := by
@@ -26,7 +26,7 @@ private theorem conj_kernel (x : Q) (hx : x ∈ E.rightHom.ker) : E.conjAct x = 
   rw [E.inl_conjAct_comm]
   change E.inl n * E.inl m * (E.inl n)⁻¹ = E.inl m
   rw [← map_mul, ← map_inv, ← map_mul]
-  simp [mul_comm]
+  simp
 
 /-- The actual quotient action, descended from conjugation in the given extension. -/
 def action : S →* MulAut N :=
@@ -40,7 +40,7 @@ private theorem inl_action (y : Q) (n : N) :
   rw [action_proj, E.inl_conjAct_comm]
 
 /-- Integral coefficients with the actual, potentially nontrivial quotient action. -/
-def coefficients : Rep ℤ S :=
+abbrev coefficients : Rep ℤ S :=
   letI := MulDistribMulAction.compHom N (action E)
   Rep.ofMulDistribMulAction S N
 
@@ -115,7 +115,7 @@ private theorem defect_cocycle (a : automorphisms E) (s t : S) :
 
 /-- Defects as pinned Mathlib one-cocycles. -/
 def cocycle (a : automorphisms E) : cocycles₁ (coefficients E) :=
-  ⟨Additive.ofMul ∘ defect E a, (mem_cocycles₁_iff _).2 (defect_cocycle E a)⟩
+    ⟨(fun s => Additive.ofMul (defect E a s)), (mem_cocycles₁_iff _).2 (defect_cocycle E a)⟩
 
 private theorem twist_map_mul (d : cocycles₁ (coefficients E)) (x y : Q) :
     E.inl (d (E.rightHom (x * y))).toMul * (x * y) =
@@ -130,10 +130,21 @@ private theorem twist_map_mul (d : cocycles₁ (coefficients E)) (x y : Q) :
 def twist (d : cocycles₁ (coefficients E)) : automorphisms E := by
   let f : Q →* Q := {
     toFun := fun y => E.inl (d (E.rightHom y)).toMul * y
-    map_one' := by simp
+    map_one' := by
+      change E.inl (d 1).toMul * 1 = 1
+      rw [cocycles₁_map_one, mul_one]
+      exact E.inl.map_one
     map_mul' := twist_map_mul E d }
   let e : E.Equiv E := GroupExtension.Equiv.ofMonoidHom f
-    (by ext n; simp [f]) (by ext y; simp [f])
+    (by
+      ext n
+      change E.inl (d (E.rightHom (E.inl n))).toMul * E.inl n = E.inl n
+      rw [E.rightHom_inl, cocycles₁_map_one]
+      change E.inl 1 * E.inl n = E.inl n
+      rw [map_one, one_mul]) (by
+      ext y
+      change E.rightHom (E.inl (d (E.rightHom y)).toMul * y) = E.rightHom y
+      rw [map_mul, E.rightHom_inl, one_mul])
   exact ⟨e.toMulEquiv, e.map_inl, e.rightHom_map⟩
 
 private theorem twist_apply (d : cocycles₁ (coefficients E)) (y : Q) :
