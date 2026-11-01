@@ -6,8 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Measurements/FewerEffectsOrthogonalityRefutation.claim; result=D5/S3/Quantum/Measurements/FewerEffectsOrthogonalityRefutation.result; claim=D5/S3/Quantum/Measurements/FewerEffectsOrthogonalityRefutation.claim
    digest: Four projectors of ranks 2,2,3,3 refute the fewer-effects orthogonality conjecture. -/
 
-import Mathlib.Analysis.Matrix.Order
 import D5.S3.Quantum.Information.NMLWMeasuredFidelitySeparation
+import D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone
 
 /-! Conjecture 2 in Liu and DeBrota, arXiv:2105.02074v2, Appendix C. The positive
 square root and squared Frobenius distance are those of Section IV. The construction
@@ -30,7 +30,7 @@ def gram {n d : ℕ} (f : Fin n → Matrix (Fin d) (Fin d) ℂ) :
 
 /-- Squared Frobenius distance of the square-root Gram matrix from the identity. -/
 def orthogonality {n d : ℕ} (f : Fin n → Matrix (Fin d) (Fin d) ℂ) : ℝ :=
-  ∑ i, ∑ j, Complex.normSq (gram f i j - (1 : Matrix (Fin n) (Fin n) ℂ) i j)
+  D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.hsNormSq (gram f - 1)
 
 /-- A POVM with exactly `n` nonzero effects on the `d` dimensional complex space. -/
 def IsPOVMWith (n d : ℕ) (f : Fin n → Matrix (Fin d) (Fin d) ℂ) : Prop :=
