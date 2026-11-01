@@ -793,17 +793,15 @@ private lemma signMatrix_action {n : ℕ} (k : ℤ) (a b d : ℝ)
       (b * ⟪WithLp.toLp 2 (fun _ : Fin n => (1 : ℝ)), y⟫) •
         WithLp.toLp 2 (fun _ : Fin n => (1 : ℝ)) := by
   apply WithLp.ofLp_injective 2
-  ext i
   dsimp only [signMatrix]
   simp only [Matrix.toEuclideanLin, Matrix.toLpLin_apply, WithLp.ofLp_toLp,
-    WithLp.ofLp_add, WithLp.ofLp_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul,
-    add_mulVec, smul_mulVec, one_mulVec, mulVec, dotProduct,
-    vecMulVec_apply, EuclideanSpace.inner_eq_star_dotProduct, Pi.star_apply,
-    star_trivial, mul_one, one_mul]
-  rw [show (∑ j, signVector n k i * signVector n k j * y.ofLp j) =
-      signVector n k i * ∑ j, y.ofLp j * signVector n k j by
-    rw [mul_sum]
-    exact sum_congr rfl fun j _ => by ring]
+    WithLp.ofLp_add, WithLp.ofLp_smul, add_mulVec, smul_mulVec, one_mulVec,
+    vecMulVec_mulVec, EuclideanSpace.inner_eq_star_dotProduct, star_trivial]
+  ext i
+  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, MulOpposite.smul_eq_mul_unop,
+    MulOpposite.unop_op]
+  rw [dotProduct_comm (signVector n k),
+    dotProduct_comm (fun _ : Fin n => (1 : ℝ))]
   ring
 
 private lemma rank_two_weight_gap {n : ℕ} (hn : 3 ≤ n) (k : ℤ)
