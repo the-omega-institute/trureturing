@@ -7,6 +7,7 @@
    digest: A three-qubit state refutes the Shannon branch-and-bound entropy lower bound. -/
 
 import D5.S3.Entropy.MaxEntropy
+import Mathlib.Data.Matrix.Diagonal
 
 /-! The full-support stabilizer standard form in Section V.C of Tarabunga et al.,
 arXiv:2411.05766v1, specialized to k = N and R = I. The conjecture following (69)
@@ -25,36 +26,34 @@ open D5.S3.Entropy.MaxEntropy (shannonEntropy)
 abbrev Bits (n : ℕ) := Fin n → ZMod 2
 
 /-- The quadratic exponent is evaluated in the binary field. -/
-def quadForm {n : ℕ} (q : Fin n → Fin n → ZMod 2) (x : Bits n) : ZMod 2 :=
+def quadForm {n : ℕ} (q : Matrix (Fin n) (Fin n) (ZMod 2)) (x : Bits n) : ZMod 2 :=
   ∑ i, ∑ j, x i * q i j * x j
 
 /-- The off-diagonal part of the source's upper-triangular matrix. -/
-def IsStrictUpper {n : ℕ} (q : Fin n → Fin n → ZMod 2) : Prop :=
+def IsStrictUpper {n : ℕ} (q : Matrix (Fin n) (Fin n) (ZMod 2)) : Prop :=
   ∀ i j, ¬ i < j → q i j = 0
-
-/-- The diagonal binary matrix with diagonal d. -/
-def diagMatrix {n : ℕ} (d : Bits n) : Fin n → Fin n → ZMod 2 :=
-  fun i j => if i = j then d i else 0
 
 /-- The source stabilizer amplitude. The exponent cᵀx of i is the integer sum
 of products of the representatives 0 and 1, rather than a binary-field sum. -/
-def stabAmp {n : ℕ} (q : Fin n → Fin n → ZMod 2) (c : Bits n) (x : Bits n) : ℂ :=
+def stabAmp {n : ℕ} (q : Matrix (Fin n) (Fin n) (ZMod 2)) (c : Bits n) (x : Bits n) : ℂ :=
   ((Real.sqrt (2 ^ n))⁻¹ : ℂ) * (-1) ^ (quadForm q x).val *
     Complex.I ^ (∑ i, (c i).val * (x i).val)
 
-/-- The source distribution p at k = N, R = I, indexed by diagonal matrices. -/
-def overlapProb {n : ℕ} (q : Fin n → Fin n → ZMod 2) (c : Bits n)
+/-- The source distribution p at k = N, R = I, indexed by the source's diagonal matrices,
+represented by Mathlib's `Matrix.diagonal`. -/
+def overlapProb {n : ℕ} (q : Matrix (Fin n) (Fin n) (ZMod 2)) (c : Bits n)
     (ψ : Bits n → ℂ) (d : Bits n) : ℝ :=
-  Complex.normSq (∑ x, star (stabAmp (diagMatrix d + q) c x) * ψ x)
+  Complex.normSq (∑ x, star (stabAmp (Matrix.diagonal d + q) c x) * ψ x)
 
-/-- The source distribution q at R = I, after taking absolute amplitudes. -/
+/-- The source distribution q at R = I, after taking absolute amplitudes, using the
+source's diagonal matrices represented by Mathlib's `Matrix.diagonal`. -/
 def absProb {n : ℕ} (ψ : Bits n → ℂ) (d : Bits n) : ℝ :=
-  Complex.normSq (∑ x, star (stabAmp (diagMatrix d) 0 x) * (‖ψ x‖ : ℂ))
+  Complex.normSq (∑ x, star (stabAmp (Matrix.diagonal d) 0 x) * (‖ψ x‖ : ℂ))
 
 /-- The Shannon branch-and-bound lower-bound conjecture, restricted to k = N, R = I. -/
 def claim : Prop :=
   ∀ n : ℕ, 1 ≤ n → ∀ ψ : Bits n → ℂ, (∑ x, Complex.normSq (ψ x)) = 1 →
-    ∀ (q : Fin n → Fin n → ZMod 2) (c : Bits n), IsStrictUpper q →
+    ∀ (q : Matrix (Fin n) (Fin n) (ZMod 2)) (c : Bits n), IsStrictUpper q →
       shannonEntropy (absProb ψ) ≤ shannonEntropy (overlapProb q c ψ)
 
 /-- Coordinate 0 is most significant: the values in order 000,…,111 are
@@ -87,22 +86,22 @@ private lemma normalization : (Real.sqrt 8)⁻¹ * (Real.sqrt 8)⁻¹ = (1 / 8 :
   norm_num
 
 private lemma overlap_term (d x : Bits 3) :
-    star (stabAmp (diagMatrix d) 0 x) * witness x =
-      (-1 : ℂ) ^ (quadForm (diagMatrix d) x).val * (coeff x : ℂ) / 8 := by
+    star (stabAmp (Matrix.diagonal d) 0 x) * witness x =
+      (-1 : ℂ) ^ (quadForm (Matrix.diagonal d) x).val * (coeff x : ℂ) / 8 := by
   calc
     _ = (((Real.sqrt 8)⁻¹ * (Real.sqrt 8)⁻¹ : ℝ) : ℂ) *
-        ((-1 : ℂ) ^ (quadForm (diagMatrix d) x).val * (coeff x : ℂ)) := by
+        ((-1 : ℂ) ^ (quadForm (Matrix.diagonal d) x).val * (coeff x : ℂ)) := by
       delta stabAmp witness
       simp
       ring_nf
     _ = _ := by rw [normalization]; push_cast; ring
 
 private lemma abs_term (d x : Bits 3) :
-    star (stabAmp (diagMatrix d) 0 x) * (‖witness x‖ : ℂ) =
-      (-1 : ℂ) ^ (quadForm (diagMatrix d) x).val * ((|coeff x| : ℝ) : ℂ) / 8 := by
+    star (stabAmp (Matrix.diagonal d) 0 x) * (‖witness x‖ : ℂ) =
+      (-1 : ℂ) ^ (quadForm (Matrix.diagonal d) x).val * ((|coeff x| : ℝ) : ℂ) / 8 := by
   calc
     _ = (((Real.sqrt 8)⁻¹ * (Real.sqrt 8)⁻¹ : ℝ) : ℂ) *
-        ((-1 : ℂ) ^ (quadForm (diagMatrix d) x).val * ((|coeff x| : ℝ) : ℂ)) := by
+        ((-1 : ℂ) ^ (quadForm (Matrix.diagonal d) x).val * ((|coeff x| : ℝ) : ℂ)) := by
       delta stabAmp witness
       simp [abs_of_nonneg (Real.sqrt_nonneg 8)]
       ring_nf
@@ -120,8 +119,8 @@ private lemma overlap_distribution (d : Bits 3) :
       ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 1) with h1 | h1 <;>
     rcases (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
       ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 2) with h2 | h2 <;>
-    delta quadForm diagMatrix coeff <;>
-    norm_num [sum_bits, Fin.sum_univ_three,
+    delta quadForm coeff <;>
+    norm_num [sum_bits, Fin.sum_univ_three, Matrix.diagonal_apply,
       h0, h1, h2, ZMod.val_add, ZMod.val_mul, ZMod.val_one_eq_one_mod,
       Complex.normSq_apply]
 
@@ -136,8 +135,8 @@ private lemma abs_distribution (d : Bits 3) :
       ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 1) with h1 | h1 <;>
     rcases (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
       ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 2) with h2 | h2 <;>
-    delta quadForm diagMatrix coeff <;>
-    norm_num [sum_bits, Fin.sum_univ_three,
+    delta quadForm coeff <;>
+    norm_num [sum_bits, Fin.sum_univ_three, Matrix.diagonal_apply,
       h0, h1, h2, ZMod.val_add, ZMod.val_mul, ZMod.val_one_eq_one_mod,
       Complex.normSq_apply]
 
