@@ -1,0 +1,10 @@
+**Definition 13.2 (a finite envelope for a read budget).** For an integer $b\ge1$ put
+
+$$
+E(b)=\prod_{\substack{p\text{ prime}\\p\le b+1}}
+ p^{\lfloor b/(p-1)\rfloor},\qquad E(0)=1.
+\tag{AQBRO.2}
+$$
+
+This is a public integer computed from $b$, independent of the hidden pair. The archive at envelope $E$ stores an immutable earned original label $e_E=v_0\bmod E$, a separate mutable current label $c_E=u\bmod E$, the actual action/reply record and cut names, and the installed procedures, binding and rights. The notation $\bmod E$ for a pair means coordinatewise reduction. Retaining an abstract label alone does not retain any of the other components.
+
