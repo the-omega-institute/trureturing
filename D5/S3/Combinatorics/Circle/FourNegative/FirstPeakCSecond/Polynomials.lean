@@ -11,7 +11,9 @@ Pinned source API: 1add3bcde3f5768e7c5b7c84867d9758df1e6e6b.
 All coefficient vectors come from the supplied tight-certificate.json.
 Variable order there is Y,T,J,E (its generator called J H).
 No loose B*t*y*z-M*Mn inequality is used. -/
-import D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
+import Mathlib.Data.Int.Basic
+import Mathlib.Tactic.Positivity.Basic
+import Mathlib.Tactic.Ring.RingNF
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
