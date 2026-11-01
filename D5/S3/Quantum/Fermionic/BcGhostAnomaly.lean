@@ -193,7 +193,7 @@ private theorem mixedDefect_odd (r : ℤ) :
   unfold mixedDefect
   calc
     _ = (parity*Qg+Qg*parity)*L r - L r*(parity*Qg+Qg*parity) -
-        Qg*(parity*L r-L r*parity)+(parity*L r-L r*parity)*Qg -
+        Qg*(parity*L r-L r*parity)-(parity*L r-L r*parity)*Qg -
         anomalyCoefficient r • (parity*c r+c r*parity) := by
           simp only [smul_add, smul_mul_assoc, mul_smul_comm]
           noncomm_ring
