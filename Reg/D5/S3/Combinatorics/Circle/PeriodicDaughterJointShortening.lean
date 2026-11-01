@@ -2,6 +2,8 @@ import D5.S3.Combinatorics.Circle.PeriodicDaughterJointShortening
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
+/-! Exact dependent-family audit of the full MINUS-one common-cut theorem. -/
+
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
@@ -124,11 +126,11 @@ private theorem zero_order (k : ℕ) (hk : 0 < k) (xs : List (Fin k))
   have hf : actualSource k 0 = fun _ => (0 : ℤ) := by
     funext i
     apply centered_unique hN ho (centered_bounds hN ho _) ⟨by omega, hhalf⟩
-    simp [actualSource, centered_mod]
+    simp [centered_mod]
   refine ⟨hp, ?_, ?_⟩
   · simp [hf]
   · intro h
-    simp only [hf, List.map_const, List.sum_replicate, nsmul_zero]
+    simp only [hf, List.map_const', List.sum_replicate, nsmul_zero, Set.mem_Icc]
     exact ⟨by omega, hhalf⟩
 
 private theorem bad5 : ¬ OriginalOrder 5 2 word5 := by
