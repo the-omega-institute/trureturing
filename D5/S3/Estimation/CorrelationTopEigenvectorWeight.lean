@@ -10,13 +10,14 @@ import D5.S3.Estimation.CorrelationWeightSpectralBound
 import D5.S3.Weil.ZetaLinear.PosIndex
 import Mathlib.Algebra.Order.Round
 import Mathlib.Order.Interval.Finset.Fin
+import Mathlib.Analysis.SpecificLimits.Basic
 
 /-! The eventual-existence reading of Stepanov--Herrmann--Guhr, Question III.5. -/
 
 set_option autoImplicit false
 
-open Matrix Finset
-open scoped BigOperators RealInnerProductSpace ComplexOrder
+open Matrix Finset Filter
+open scoped BigOperators RealInnerProductSpace ComplexOrder Topology
 
 namespace D5.S3.Estimation.CorrelationTopEigenvectorWeight
 
@@ -410,6 +411,48 @@ private lemma lower_sign_moments {n : ℕ} (k : ℤ) (hk : 0 < k)
     nlinarith only [hone]
   · nlinarith only [hs]
 
+private lemma rounded_ratio_tendsto (x : ℝ) :
+    Tendsto (fun n : ℕ => (roundedCount x n : ℝ) / (n : ℝ)) atTop
+      (𝓝 ((1 + Real.sqrt x) / 2)) := by
+  apply tendsto_sub_nhds_zero_iff.mp
+  apply squeeze_zero_norm' (a := fun n : ℕ => (1 / 2 : ℝ) * (n : ℝ)⁻¹)
+  · filter_upwards [eventually_ge_atTop 1] with n hn
+    have hnpos : 0 < (n : ℝ) := by exact_mod_cast (show 0 < n by omega)
+    have hr := abs_sub_round ((n : ℝ) * (1 + Real.sqrt x) / 2)
+    have hbound := mul_le_mul_of_nonneg_right hr (inv_nonneg.mpr hnpos.le)
+    rw [Real.norm_eq_abs]
+    calc
+      |(roundedCount x n : ℝ) / (n : ℝ) - (1 + Real.sqrt x) / 2| =
+          |((roundedCount x n : ℝ) - (n : ℝ) * (1 + Real.sqrt x) / 2) / (n : ℝ)| := by
+        congr 1
+        field_simp
+        <;> ring
+      _ = |(n : ℝ) * (1 + Real.sqrt x) / 2 - (roundedCount x n : ℝ)| *
+          (n : ℝ)⁻¹ := by
+        rw [abs_div, abs_of_pos hnpos, abs_sub_comm, div_eq_mul_inv]
+      _ ≤ _ := hbound
+  · simpa using (tendsto_inv_atTop_nhds_zero_nat (𝕜 := ℝ)).const_mul (1 / 2 : ℝ)
+
+private lemma roundedZ_tendsto (x : ℝ) (hx : 0 ≤ x) :
+    Tendsto (fun n : ℕ => roundedZ n (roundedCount x n)) atTop (𝓝 x) := by
+  have hr := rounded_ratio_tendsto x
+  have hi := tendsto_inv_atTop_nhds_zero_nat (𝕜 := ℝ)
+  have ht := ((((hr.const_mul 2).sub_const 1).pow 2).sub hi).div
+    (hi.const_sub 1) (show (1 : ℝ) - 0 ≠ 0 by norm_num)
+  have heq : (2 * ((1 + Real.sqrt x) / 2) - 1) ^ 2 = x := by
+    convert Real.sq_sqrt hx using 1 <;> ring
+  simp only [sub_zero, div_one, heq] at ht
+  apply ht.congr'
+  filter_upwards [eventually_ge_atTop 2] with n hn
+  have hnreal : (2 : ℝ) ≤ n := by exact_mod_cast hn
+  have hn0 : (n : ℝ) ≠ 0 := by linarith
+  have hn1 : (n : ℝ) - 1 ≠ 0 := by linarith
+  change ((2 * ((roundedCount x n : ℝ) / (n : ℝ)) - 1) ^ 2 - (n : ℝ)⁻¹) /
+    (1 - (n : ℝ)⁻¹) = roundedZ n (roundedCount x n)
+  dsimp only [roundedZ]
+  field_simp
+  <;> ring
+
 private lemma rounded_eventually {c σ : ℝ} (h : domainD c σ) (hcs : c < σ)
     (hp : let x := wedgeX c σ
       let a := σ / Real.sqrt (1 - x ^ 2)
@@ -424,7 +467,64 @@ private lemma rounded_eventually {c σ : ℝ} (h : domainD c σ) (hcs : c < σ)
       3 ≤ n ∧ 0 < k ∧ k < (n : ℤ) ∧ 2 * k ≠ (n : ℤ) ∧
         -1 < z ∧ z < 1 ∧ 0 < a ∧ 0 < b ∧ 0 < 1 - a - b ∧
         2 * ((n : ℝ) - 1) * c < ((n : ℝ) - 2) * (a + b) := by
-  sorry
+  dsimp only at hp
+  obtain ⟨hx0, hxhalf, _, ha0, hb0, hd0, hgap0⟩ := hp
+  let x := wedgeX c σ
+  let an := fun n : ℕ => σ / Real.sqrt (1 - roundedZ n (roundedCount x n) ^ 2)
+  let bn := fun n : ℕ => c - an n * roundedZ n (roundedCount x n)
+  have hq : 0 < Real.sqrt (1 - x ^ 2) := Real.sqrt_pos.mpr (by nlinarith only [hx0, hxhalf])
+  have hsq : Real.sqrt x ^ 2 = x := Real.sq_sqrt hx0.le
+  have hs0 : 0 < Real.sqrt x := Real.sqrt_pos.mpr hx0
+  have hs1 : Real.sqrt x < 1 := by nlinarith only [hsq, Real.sqrt_nonneg x, hxhalf]
+  have hr := rounded_ratio_tendsto x
+  have hz := roundedZ_tendsto x hx0.le
+  have hi := tendsto_inv_atTop_nhds_zero_nat (𝕜 := ℝ)
+  have han : Tendsto an atTop (𝓝 (σ / Real.sqrt (1 - x ^ 2))) :=
+    tendsto_const_nhds.div (tendsto_const_nhds.sub (hz.pow 2)).sqrt hq.ne'
+  have hbn : Tendsto bn atTop (𝓝 (c - σ / Real.sqrt (1 - x ^ 2) * x)) :=
+    tendsto_const_nhds.sub (han.mul hz)
+  have hdn := (han.const_sub 1).sub hbn
+  have hgn := ((((hi.const_mul 2).const_sub 1).mul (han.add hbn)).sub
+    (((hi.const_sub 1).const_mul 2).mul_const c))
+  simp only [mul_zero, sub_zero, one_mul, mul_one] at hgn
+  have hev : ∀ᶠ n : ℕ in atTop,
+      3 ≤ n ∧ 1 / 2 < (roundedCount x n : ℝ) / (n : ℝ) ∧
+        (roundedCount x n : ℝ) / (n : ℝ) < 1 ∧
+        -1 < roundedZ n (roundedCount x n) ∧ roundedZ n (roundedCount x n) < 1 ∧
+        0 < an n ∧ 0 < bn n ∧ 0 < 1 - an n - bn n ∧
+        0 < (1 - 2 * (n : ℝ)⁻¹) * (an n + bn n) -
+          2 * (1 - (n : ℝ)⁻¹) * c := by
+    filter_upwards [eventually_ge_atTop 3,
+      hr.eventually_const_lt (show 1 / 2 < (1 + Real.sqrt x) / 2 by linarith),
+      hr.eventually_lt_const (show (1 + Real.sqrt x) / 2 < 1 by linarith),
+      hz.eventually_const_lt (show -1 < x by linarith),
+      hz.eventually_lt_const (show x < 1 by linarith),
+      han.eventually_const_lt ha0, hbn.eventually_const_lt hb0,
+      hdn.eventually_const_lt hd0, hgn.eventually_const_lt (sub_pos.mpr hgap0)]
+      with n hn hr0 hr1 hz0 hz1 ha hb hd hg
+    exact ⟨hn, hr0, hr1, hz0, hz1, ha, hb, hd, hg⟩
+  obtain ⟨m, hm⟩ := eventually_atTop.mp hev
+  refine ⟨m, fun n hn => ?_⟩
+  obtain ⟨hn3, hr0, hr1, hz0, hz1, ha, hb, hd, hg⟩ := hm n hn
+  have hnpos : 0 < (n : ℝ) := by exact_mod_cast (show 0 < n by omega)
+  have hk0 := (lt_div_iff₀ hnpos).mp hr0
+  have hk1 := (div_lt_iff₀ hnpos).mp hr1
+  refine ⟨hn3, ?_, ?_, ?_, hz0, hz1, ha, hb, hd, ?_⟩
+  · have hk : 0 < (roundedCount x n : ℝ) := by linarith
+    exact_mod_cast hk
+  · have hk : (roundedCount x n : ℝ) < (n : ℝ) := by simpa using hk1
+    exact_mod_cast hk
+  · intro heq
+    have heqreal : 2 * (roundedCount x n : ℝ) = (n : ℝ) := by exact_mod_cast heq
+    linarith
+  · have hmul := mul_pos hg hnpos
+    have heq : ((1 - 2 * (n : ℝ)⁻¹) * (an n + bn n) -
+        2 * (1 - (n : ℝ)⁻¹) * c) * (n : ℝ) =
+        ((n : ℝ) - 2) * (an n + bn n) - 2 * ((n : ℝ) - 1) * c := by
+      field_simp
+      <;> ring
+    rw [heq] at hmul
+    exact sub_pos.mp hmul
 
 private lemma rank_two_realizes {n : ℕ} (hn : 3 ≤ n) (k : ℤ)
     (hk : 0 < k) (hkn : k < (n : ℤ)) (c σ : ℝ) (hσ : 0 < σ)
