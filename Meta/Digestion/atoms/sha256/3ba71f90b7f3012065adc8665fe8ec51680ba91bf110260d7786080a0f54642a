@@ -1,0 +1,40 @@
+**Theorem 39.5 (both factor directions and sharp slice threshold, including zero).** For every $k\ge0$ and $B\ge2$, the current full profile at resolution $C\ge1$ determines the original full profile at resolution $B$ on $I_k$ if and only if
+
+$$
+f_u\bigl(\mathcal H_B\cap(k,k+1)\bigr)\subseteq\mathcal H_C
+\quad\Longleftrightarrow\quad
+C\ge C_*:=B\bigl(c(k+1)+d\bigr)-c.
+\tag{39.7}
+$$
+
+The reverse factor holds if and only if
+
+$$
+f_u^{-1}\bigl(\mathcal H_C\cap f_u((k,k+1))\bigr)
+ \subseteq\mathcal H_B.
+\tag{39.8}
+$$
+
+Mutual recovery holds precisely when the two interior cut sets agree after transport. A current profile with extra cuts can recover the original profile without being recoverable from it. For $B=1$, the original full profile is already known from $k$, with no current read; the reverse factor still requires (39.8).
+
+Proof. By Theorem 39.2 these are exactly the respective half-open interval partitions. A factor from current to original exists precisely when every original interior cut survives in the current partition. Necessity follows by choosing two rational points on opposite sides of a missing cut within one current cell; sufficiency follows because each current cell then lies in one original cell. The same argument with roles reversed gives (39.8). It proves both directions, with cuts at the slice's endpoints irrelevant because the domain is already restricted to that slice.
+
+For the sharp value, any original cut can be written reduced as $j/m$ with $m\le B$ and $mk<j<m(k+1)$. Its image is
+
+$$
+f_u(j/m)=\frac{aj+bm}{cj+dm},\qquad
+cj+dm\le m\bigl(c(k+1)+d\bigr)-c\le C_*.
+\tag{39.9}
+$$
+
+This image is reduced: a common divisor of its two displayed entries divides $j,m$ after applying the integer inverse matrix. This is transformed-column reducedness, not merely lower-row coprimality. Thus $C\ge C_*$ suffices. The last $B$-grid cut
+
+$$
+t_*=k+1-1/B=\frac{B(k+1)-1}{B}
+\tag{39.10}
+$$
+
+is positive even for $k=0$, belongs strictly to the slice, and is reduced. Its image has reduced denominator exactly $C_*$. If $C<C_*$ that image is not in $\mathcal H_C$. Local finiteness gives rationals $x^-<t_*<x^+$ in the same $I_k$ with no current cut between their images. They have identical current full profiles and different original full profiles. This is a strict-below-threshold witness on the declared slice. For $c=0$, determinant one forces $a=d=1$, so $C_*=B$ and the same witness works. For $B=1$ there are no interior integer cuts in $I_k$, proving its separate statement. $\square$
+
+This is a sharp factor condition given only the declared slice and prefix. It is not an acquisition-cost optimum when additional old evidence is retained. The lower endpoint $0$ is always excluded; it causes no missing case in (39.7).
+
