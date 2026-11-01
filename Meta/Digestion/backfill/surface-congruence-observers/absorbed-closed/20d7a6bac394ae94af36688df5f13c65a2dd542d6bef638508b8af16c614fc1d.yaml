@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:20d7a6bac394ae94af36688df5f13c65a2dd542d6bef638508b8af16c614fc1d
   normalized_sha256: sha256:20d7a6bac394ae94af36688df5f13c65a2dd542d6bef638508b8af16c614fc1d
 cas_ref: sha256:20d7a6bac394ae94af36688df5f13c65a2dd542d6bef638508b8af16c614fc1d
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/FiniteGroups/FrattiniAutomorphismKernel.isPGroup_quotientAut_frattini_kernel
+    target_statement_id: sha256:6d573965918c8c133ef449bb7f5203740f193c697f1ba439b05ba40b822fd1f1
 receipts:
   unresolved_subitems: []
