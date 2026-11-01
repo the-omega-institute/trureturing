@@ -160,16 +160,17 @@ private theorem native_W0 (p : Parameters) :
   split_ifs with h0 hc2 hc3 hs hs h1 hc2 h2
   · rw [sum_range_rat]; simp only [pow_add]; norm_num; ring
   · simp [hs]; norm_num
-  · rw [Finset.sum_insert (by simp),Finset.sum_insert (by simp),sum_range_rat]
+  · rw [Finset.sum_insert (by simp only [Finset.mem_insert,Finset.mem_range]; omega),
+      Finset.sum_insert (by simp only [Finset.mem_range]; omega),sum_range_rat]
     rw [power_sub_q (s p) 1 (by omega)]
     simp only [pow_succ]; norm_num; ring
   · simp [hs]; norm_num
-  · rw [Finset.sum_insert (by simp),sum_range_rat]
+  · rw [Finset.sum_insert (by simp only [Finset.mem_range]; omega),sum_range_rat]
     rw [power_sub_q (s p) 1 (by omega)]
     norm_num; ring
   · rw [sum_range_rat]; simp only [pow_add]; norm_num; ring
   · rw [sum_range_rat,pow_succ]; ring
-  · rw [Finset.sum_insert (by simp),sum_range_rat,pow_succ]; ring
+  · rw [Finset.sum_insert (by simp only [Finset.mem_range]; omega),sum_range_rat,pow_succ]; ring
   · rw [sum_range_rat]
 
 private theorem support_partition (p : Parameters) :

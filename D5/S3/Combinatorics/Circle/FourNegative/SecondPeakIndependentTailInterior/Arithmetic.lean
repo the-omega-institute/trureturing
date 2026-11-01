@@ -16,8 +16,9 @@ open private Parameters Parameters.a Parameters.b Parameters.c Parameters.d
   Parameters.hc Parameters.hd Parameters.ha Parameters.hb r s v parameter_eqs dyadic_eqs from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Parameters
 open private lengths offsets uSupport vSupport wSupport xSupport support nativeMask native_total
+  roundingD roundingW roundingEps native_X0 native_W0 power_sub_q
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Supports
-open private qMask qExpr chartExpr from
+open private qMask qExpr qExpr_affine evenChartExpr boundaryChartExpr from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Model
 open private chart0_nonnegative from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Chart0
@@ -27,10 +28,10 @@ open scoped BigOperators
 
 private def modelMask (p : Parameters) : Fin 4 → Fin 4 → ℚ :=
   qMask (2^p.c) (2^p.d) (2^(r p)) (2^(s p))
-    (if p.c = 2 then 2*2^(v p)-1 else 2*2^(v p)) 1 (2^(s p)-1) (3*2^(s p))
+    (if p.c = 2 then 2*2^(v p)-1 else 2*2^(v p)) (roundingD p) (roundingW p)
 private def modelExpr (p : Parameters) (row kind bank : Fin 4) : ℚ :=
   qExpr (2^p.c) (2^p.d) (2^(r p)) (2^(s p))
-    (if p.c = 2 then 2*2^(v p)-1 else 2*2^(v p)) 1 (2^(s p)-1) (3*2^(s p)) row kind bank
+    (if p.c = 2 then 2*2^(v p)-1 else 2*2^(v p)) (roundingD p) (roundingW p) row kind bank
 
 private theorem sum_range_q (n : ℕ) :
     (∑ e ∈ Finset.range n, (2 : ℚ)^e) = 2^n-1 := by
@@ -83,25 +84,25 @@ private theorem mask_coordinates (p : Parameters) (j chain : Fin 4) :
   have hV2 : (nativeMask p 2 1 : ℚ) = 0 := by simp [native_cast,support,vSupport]
   have hV3 : (nativeMask p 3 1 : ℚ) = 0 := by simp [native_cast,support,vSupport]
   have hW1 : (nativeMask p 1 2 : ℚ) = 0 := by simp [native_cast,support,wSupport]
-  have hX0 : (nativeMask p 0 3 : ℚ) =
-      (2 : ℚ)^(r p)*(2^p.d+3*2^p.c+2) := by
+  have hX0 : (nativeMask p 0 3 : ℚ) = roundingD p := native_X0 p
+  have hX1 : (nativeMask p 1 3 : ℚ) = (2 : ℚ)^(r p)*2^p.c*2^p.d/8 := by
     rw [native_cast]
-    change (∑ e ∈ ({r p+p.d,r p+p.c+1,r p+p.c,r p+1} : Finset ℕ), (2 : ℚ)^e) = _
-    rw [Finset.sum_insert (by simp; omega),Finset.sum_insert (by simp; omega),
-      Finset.sum_insert (by simp; omega),Finset.sum_singleton]
-    simp only [pow_add,pow_one]; ring
-  have hX1 : (nativeMask p 1 3 : ℚ) = (2 : ℚ)^(r p)*2^p.c*2^p.d := by
-    rw [native_cast]
-    simp [support,xSupport,pow_add,mul_assoc]
+    change (∑ e ∈ ({p.a-3} : Finset ℕ), (2 : ℚ)^e) = _
+    rw [Finset.sum_singleton,power_sub_q p.a 3 (by omega),hx]
+    norm_num
   have hX3 : (nativeMask p 3 3 : ℚ) = 1 := by
     simp [native_cast,support,xSupport]
-  have hW0 : (nativeMask p 0 2 : ℚ) = (2 : ℚ)^(s p)-1 := by
+  have hW0 : (nativeMask p 0 2 : ℚ) = roundingW p := native_W0 p
+  have hW3 : (nativeMask p 3 2 : ℚ) = (2 : ℚ)^p.b/2-4*2^(s p) := by
     rw [native_cast]
-    simp [support,wSupport,sum_range_q]
-  have hW2 : (nativeMask p 2 2 : ℚ) = 3*(2 : ℚ)^(s p) := by
-    rw [native_cast]
-    change (∑ e ∈ ({s p,s p+1} : Finset ℕ), (2 : ℚ)^e) = _
-    rw [Finset.sum_insert (by simp),Finset.sum_singleton,pow_succ]
+    change (∑ e ∈ Finset.range (p.b-1) \ Finset.range (s p+2), (2 : ℚ)^e) = _
+    have hsub : Finset.range (s p+2) ⊆ Finset.range (p.b-1) := by
+      intro e he
+      simp only [Finset.mem_range] at he ⊢
+      dsimp [s] at he
+      omega
+    rw [Finset.sum_sdiff_eq_sub hsub,sum_range_q,sum_range_q,two_half p.b (by omega),pow_add]
+    norm_num
     ring
   have totalU := native_total_q p 0
   have totalW := native_total_q p 2
@@ -113,31 +114,102 @@ private theorem mask_coordinates (p : Parameters) (j chain : Fin 4) :
   fin_cases chain <;> fin_cases j <;>
     dsimp [modelMask,qMask] <;>
     first | exact hU0 | exact hU2 | exact hU3 | exact hV0 | exact hV1 |
-      exact hV2 | exact hV3 | exact hW1 | exact hW0 | exact hW2 | exact hX0 |
+      exact hV2 | exact hV3 | exact hW1 | exact hW0 | exact hW3 | exact hX0 |
       exact hX1 | exact hX3 | linarith
+
+private theorem even_nonnegative (mode : Fin 2) (Z V T R K : ℚ)
+    (hZ : 0 ≤ Z) (hV : 0 ≤ V) (hT : 0 ≤ T) (hR : 0 ≤ R)
+    (hK1 : 1 ≤ K) (hK4 : K ≤ 4)
+    (row kind bank : Fin 4) (hr : row.val < 2) (hk : kind.val < 2) :
+    let z := if mode = 0 then 4 else Z+8
+    let w := 4*z*(V+1)
+    let u := if mode = 0 then 2*(V+1)-1 else 2*(V+1)
+    0 ≤ qExpr z w (2*(T+1)) (R+1) u
+      ((T+1)*(w+3*z+2)/4-(K-1)/2) (K*(R+1)-1) row kind bank := by
+  let z : ℚ := if mode = 0 then 4 else Z+8
+  let w : ℚ := 4*z*(V+1)
+  let u : ℚ := if mode = 0 then 2*(V+1)-1 else 2*(V+1)
+  let D : ℚ := (T+1)*(w+3*z+2)/4
+  let h : ℚ := (K-1)/3
+  have h0 : 0 ≤ qExpr z w (2*(T+1)) (R+1) u D ((R+1)-1) row kind bank := by
+    have h := chart0_nonnegative mode 0 Z V T R hZ hV hT hR row kind bank hr hk
+    norm_num [evenChartExpr] at h
+    exact h
+  have h1 : 0 ≤ qExpr z w (2*(T+1)) (R+1) u (D-3/2) (4*(R+1)-1) row kind bank := by
+    have h := chart0_nonnegative mode 1 Z V T R hZ hV hT hR row kind bank hr hk
+    norm_num [evenChartExpr] at h
+    exact h
+  have hh : 0 ≤ h := by dsimp [h]; linarith
+  have hh1 : 0 ≤ 1-h := by dsimp [h]; linarith
+  have he := qExpr_affine z w (2*(T+1)) (R+1) u D (D-3/2) ((R+1)-1)
+    (4*(R+1)-1) h row kind bank
+  have heD : (1-h)*D+h*(D-3/2) = D-(K-1)/2 := by dsimp [h]; ring
+  have heW : (1-h)*((R+1)-1)+h*(4*(R+1)-1) = K*(R+1)-1 := by dsimp [h]; ring
+  rw [heD,heW] at he
+  change 0 ≤ qExpr z w (2*(T+1)) (R+1) u (D-(K-1)/2) (K*(R+1)-1) row kind bank
+  rw [he]
+  exact add_nonneg (mul_nonneg hh1 h0) (mul_nonneg hh h1)
 
 private theorem model_nonnegative (p : Parameters) (row kind bank : Fin 4)
     (hr : row.val < 2) (hk : kind.val < 2) :
     0 ≤ modelExpr p row kind bank := by
   let V : ℚ := 2^(v p)-1
-  let T : ℚ := 2^(r p)-1
   let R : ℚ := 2^(s p)-1
   have power_one (n : ℕ) : (1:ℚ) ≤ 2^n := by
     simpa using pow_le_pow_right₀ (by norm_num : (1:ℚ) ≤ 2) (Nat.zero_le n)
   have hV : 0 ≤ V := by dsimp [V]; linarith [power_one (v p)]
-  have hT : 0 ≤ T := by dsimp [T]; linarith [power_one (r p)]
   have hR : 0 ≤ R := by dsimp [R]; linarith [power_one (s p)]
   have hw := (dyadic_eqs p).1
-  by_cases hc : p.c = 2
-  · convert chart0_nonnegative 0 V T R (by norm_num) hV hT hR row kind bank hr hk using 1 <;>
-      simp [modelExpr,chartExpr,V,T,R,hw,hc]
-  · let Z : ℚ := 2^p.c-8
-    have hZ : 0 ≤ Z := by
-      have hc3 : 3 ≤ p.c := by have := p.hc; omega
-      have hp := pow_le_pow_right₀ (by norm_num : (1:ℚ) ≤ 2) hc3
-      norm_num at hp
-      dsimp [Z]; linarith
-    convert chart1_nonnegative Z V T R hZ hV hT hR row kind bank hr hk using 1 <;>
-      simp [modelExpr,chartExpr,Z,V,T,R,hw,hc]
+  have hc := p.hc
+  by_cases h0 : r p = 0
+  · by_cases hc2 : p.c = 2
+    · convert chart1_nonnegative 0 0 0 V R (by norm_num) hV hR row kind bank hr hk using 1 <;>
+        simp [modelExpr,boundaryChartExpr,roundingD,roundingW,V,R,hw,h0,hc2]
+    · by_cases hc3 : p.c = 3
+      · by_cases hs : s p = 0
+        · convert chart1_nonnegative 1 1 0 V R (by norm_num) hV hR row kind bank hr hk using 1 <;>
+            simp [modelExpr,boundaryChartExpr,roundingD,roundingW,roundingEps,V,R,hw,h0,hc2,hc3,hs] <;> (congr 1 <;> ring)
+        · convert chart1_nonnegative 1 0 0 V R (by norm_num) hV hR row kind bank hr hk using 1 <;>
+            simp [modelExpr,boundaryChartExpr,roundingD,roundingW,roundingEps,V,R,hw,h0,hc2,hc3,hs] <;> (congr 1 <;> ring)
+      · let Z : ℚ := 2^p.c-16
+        have hZ : 0 ≤ Z := by
+          have hc4 : 4 ≤ p.c := by omega
+          have hp := pow_le_pow_right₀ (by norm_num : (1:ℚ) ≤ 2) hc4
+          norm_num at hp
+          dsimp [Z]; linarith
+        by_cases hs : s p = 0
+        · convert chart1_nonnegative 2 1 Z V R hZ hV hR row kind bank hr hk using 1 <;>
+            simp [modelExpr,boundaryChartExpr,roundingD,roundingW,roundingEps,Z,V,R,hw,h0,hc2,hc3,hs] <;> (congr 1 <;> ring)
+        · convert chart1_nonnegative 2 0 Z V R hZ hV hR row kind bank hr hk using 1 <;>
+            simp [modelExpr,boundaryChartExpr,roundingD,roundingW,roundingEps,Z,V,R,hw,h0,hc2,hc3,hs] <;> (congr 1 <;> ring)
+  · let T : ℚ := 2^(r p-1)-1
+    have hT : 0 ≤ T := by dsimp [T]; linarith [power_one (r p-1)]
+    have ht : (2 : ℚ)^(r p) = 2 * 2^(r p-1) := by
+      have he : r p = (r p-1)+1 := by omega
+      conv_lhs => rw [he,pow_succ]
+      ring
+    let K : ℚ := if r p = 1 then (if p.c = 2 then 4 else 2) else if r p = 2 then 3 else 1
+    have hK1 : 1 ≤ K := by dsimp [K]; split_ifs <;> norm_num
+    have hK4 : K ≤ 4 := by dsimp [K]; split_ifs <;> norm_num
+    have hD : roundingD p = (2 : ℚ)^(r p-1)*(2^p.d+3*2^p.c+2)/4-(K-1)/2 := by
+      by_cases h1 : r p = 1
+      · by_cases hc2 : p.c = 2 <;> simp [roundingD,K,h0,h1,hc2] <;> ring
+      · by_cases h2 : r p = 2
+        · simp [roundingD,K,h0,h1,h2]; ring
+        · simp [roundingD,K,h0,h1,h2,ht]; ring
+    have hW : roundingW p = K*(2 : ℚ)^(s p)-1 := by
+      dsimp [roundingW,K]
+      split_ifs <;> simp_all
+    by_cases hc2 : p.c = 2
+    · convert even_nonnegative 0 0 V T R K (by norm_num) hV hT hR hK1 hK4 row kind bank hr hk using 1 <;>
+        simp [modelExpr,V,T,R,hw,hc2,hD,hW,ht]
+    · let Z : ℚ := 2^p.c-8
+      have hZ : 0 ≤ Z := by
+        have hc3 : 3 ≤ p.c := by omega
+        have hp := pow_le_pow_right₀ (by norm_num : (1:ℚ) ≤ 2) hc3
+        norm_num at hp
+        dsimp [Z]; linarith
+      convert even_nonnegative 1 Z V T R K hZ hV hT hR hK1 hK4 row kind bank hr hk using 1 <;>
+        simp [modelExpr,Z,V,T,R,hw,hc2,hD,hW,ht]
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior

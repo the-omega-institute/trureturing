@@ -4,7 +4,7 @@
    mirror-E: none(waiver:private-implementation-owned-by-endpoint)
    anchors: [mathlib/module/Mathlib.Data.Rat.Defs]
    utility: none
-   digest: Exact positive polynomial identities for the low-bit c2 chart. -/
+   digest: Exact positive polynomial identities at both even-rounding endpoints. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Model
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
