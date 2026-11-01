@@ -101,27 +101,27 @@ row-to-total source family and its issue reference remain unchanged.
 
 namespace Reg.D5.S3.Topology.TauCeti.Algebra.Homology.TotalComplex.Exposed
 
-abbrev epi_transfer_scope :=
-  type_of% (@HomologicalComplex.HomologySequence.epi_homologyMap_τ₂)
-theorem epi_transfer_actual : epi_transfer_scope :=
-  @HomologicalComplex.HomologySequence.epi_homologyMap_τ₂
+abbrev epi_transfer_scope.{a, b, c} :=
+  type_of% (@HomologicalComplex.HomologySequence.epi_homologyMap_τ₂.{a, b, c})
+theorem epi_transfer_actual.{a, b, c} : epi_transfer_scope.{a, b, c} :=
+  @HomologicalComplex.HomologySequence.epi_homologyMap_τ₂.{a, b, c}
 
-abbrev iso_transfer_scope :=
-  type_of% (@HomologicalComplex.HomologySequence.isIso_homologyMap_τ₂)
-theorem iso_transfer_actual : iso_transfer_scope :=
-  @HomologicalComplex.HomologySequence.isIso_homologyMap_τ₂
+abbrev iso_transfer_scope.{a, b, c} :=
+  type_of% (@HomologicalComplex.HomologySequence.isIso_homologyMap_τ₂.{a, b, c})
+theorem iso_transfer_actual.{a, b, c} : iso_transfer_scope.{a, b, c} :=
+  @HomologicalComplex.HomologySequence.isIso_homologyMap_τ₂.{a, b, c}
 
-abbrev epi_extension_scope := type_of% (@HomologicalComplex.epi_homologyMap_extendMap_iff)
-theorem epi_extension_actual : epi_extension_scope :=
-  @HomologicalComplex.epi_homologyMap_extendMap_iff
+abbrev epi_extension_scope.{a, b, c, d} := type_of% (@HomologicalComplex.epi_homologyMap_extendMap_iff.{a, b, c, d})
+theorem epi_extension_actual.{a, b, c, d} : epi_extension_scope.{a, b, c, d} :=
+  @HomologicalComplex.epi_homologyMap_extendMap_iff.{a, b, c, d}
 
-abbrev iso_extension_zero_scope :=
-  type_of% (@HomologicalComplex.isIso_homologyMap_extendMap_of_forall_ne)
-theorem iso_extension_zero_actual : iso_extension_zero_scope :=
-  @HomologicalComplex.isIso_homologyMap_extendMap_of_forall_ne
+abbrev iso_extension_zero_scope.{a, b, c, d} :=
+  type_of% (@HomologicalComplex.isIso_homologyMap_extendMap_of_forall_ne.{a, b, c, d})
+theorem iso_extension_zero_actual.{a, b, c, d} : iso_extension_zero_scope.{a, b, c, d} :=
+  @HomologicalComplex.isIso_homologyMap_extendMap_of_forall_ne.{a, b, c, d}
 
-abbrev short_exact_scope := type_of% (@HomologicalComplex₂.rowZeroShortComplex_shortExact)
-theorem short_exact_actual : short_exact_scope :=
-  @HomologicalComplex₂.rowZeroShortComplex_shortExact
+abbrev short_exact_scope.{a, b} := type_of% (@HomologicalComplex₂.rowZeroShortComplex_shortExact.{a, b})
+theorem short_exact_actual.{a, b} : short_exact_scope.{a, b} :=
+  @HomologicalComplex₂.rowZeroShortComplex_shortExact.{a, b}
 
 end Reg.D5.S3.Topology.TauCeti.Algebra.Homology.TotalComplex.Exposed
