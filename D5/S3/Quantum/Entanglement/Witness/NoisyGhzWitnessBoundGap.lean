@@ -171,13 +171,10 @@ private lemma ghz_expectation (ψ : Word (Fin 3) 3 → ℂ) :
   norm_num [Complex.normSq_inv, Complex.normSq_ofReal, Real.sq_sqrt, Real.mul_self_sqrt]
   ring
 
-private def join (a : Finset (Fin 3)) (i j : Fin 3) : Word (Fin 3) 3 := by
-  exact fun k => if k ∈ a then i else j
-
 private lemma join_support (a : Finset (Fin 3)) (i j : Fin 3) :
-    (Finset.univ.image (join a i j)).card ≤ 2 := by
+    (Finset.univ.image ((a.piecewise (fun _ => i) (fun _ => j)))).card ≤ 2 := by
   classical
-  have h : Finset.univ.image (join a i j) ⊆ {i, j} := by
+  have h : Finset.univ.image ((a.piecewise (fun _ => i) (fun _ => j))) ⊆ {i, j} := by
     apply Finset.coe_subset.mp
     simp only [Finset.coe_image, Finset.coe_univ, Set.image_univ,
       Finset.coe_insert, Finset.coe_singleton]
@@ -188,14 +185,14 @@ private lemma join_support (a : Finset (Fin 3)) (i j : Fin 3) :
   exact (Finset.card_le_card h).trans (by by_cases h : i = j <;> simp [h])
 
 private lemma join_injective (a : Finset (Fin 3)) (ha : a.Nonempty) (hc : aᶜ.Nonempty) :
-    Function.Injective (fun ij : Fin 3 × Fin 3 => join a ij.1 ij.2) := by
+    Function.Injective (fun ij : Fin 3 × Fin 3 => (a.piecewise (fun _ => ij.1) (fun _ => ij.2))) := by
   classical
   obtain ⟨k, hk⟩ := ha
   obtain ⟨l, hl⟩ := hc
   intro x y h
   apply Prod.ext
-  · simpa [join, hk] using congrFun h k
-  · simpa [join, Finset.mem_compl.mp hl] using congrFun h l
+  · simpa [hk] using congrFun h k
+  · simpa [Finset.mem_compl.mp hl] using congrFun h l
 
 private lemma trace_rank_one (ψ : Word (Fin 3) 3 → ℂ) :
     trace (rankOneDensity ψ) = ((∑ x, Complex.normSq (ψ x) : ℝ) : ℂ) := by
@@ -388,11 +385,11 @@ private lemma biseparable_overlap (φ : Word (Fin 3) 3 → ℂ) (hφ : IsBisepar
     3 * readout (rankOneDensity (ghz 3 3)) φ ≤ readout (supportProjector 3 3) φ := by
   classical
   obtain ⟨_, a, ha, hc, u, v, h⟩ := hφ
-  have hj (i j : Fin 3) : φ (join a i j) = u (fun _ => i) * v (fun _ => j) := by
+  have hj (i j : Fin 3) : φ ((a.piecewise (fun _ => i) (fun _ => j))) = u (fun _ => i) * v (fun _ => j) := by
     rw [h]
     congr 1
-    · congr 1; funext k; simp [join, k.property]
-    · congr 1; funext k; simp [join, Finset.mem_compl.mp k.property]
+    · congr 1; funext k; simp [k.property]
+    · congr 1; funext k; simp [Finset.mem_compl.mp k.property]
   have hd (i : Fin 3) : φ (fun _ => i) = u (fun _ => i) * v (fun _ => i) := h _
   rw [ghz_expectation, support_expectation]
   calc
@@ -401,16 +398,16 @@ private lemma biseparable_overlap (φ : Word (Fin 3) 3 → ℂ) (hφ : IsBisepar
           ∑ j : Fin 3, Complex.normSq (v (fun _ => j)) := by
       simpa [dotProduct, Complex.star_def, hd] using
         cs (star (fun i : Fin 3 => u (fun _ => i))) (fun j : Fin 3 => v (fun _ => j))
-    _ = ∑ ij : Fin 3 × Fin 3, Complex.normSq (φ (join a ij.1 ij.2)) := by
+    _ = ∑ ij : Fin 3 × Fin 3, Complex.normSq (φ ((a.piecewise (fun _ => ij.1) (fun _ => ij.2)))) := by
       simp only [Fintype.sum_prod_type, hj, Complex.normSq_mul, Finset.mul_sum, Finset.sum_mul]
       rw [Finset.sum_comm]
     _ ≤ _ := by
       classical
-      have hs : (∑ ij : Fin 3 × Fin 3, Complex.normSq (φ (join a ij.1 ij.2))) =
-          ∑ x ∈ Finset.univ.image (fun ij : Fin 3 × Fin 3 => join a ij.1 ij.2),
+      have hs : (∑ ij : Fin 3 × Fin 3, Complex.normSq (φ ((a.piecewise (fun _ => ij.1) (fun _ => ij.2))))) =
+          ∑ x ∈ Finset.univ.image (fun ij : Fin 3 × Fin 3 => (a.piecewise (fun _ => ij.1) (fun _ => ij.2))),
             Complex.normSq (φ x) :=
         (Finset.sum_image (f := fun x : Word (Fin 3) 3 => Complex.normSq (φ x))
-          (s := Finset.univ) (g := fun ij : Fin 3 × Fin 3 => join a ij.1 ij.2)
+          (s := Finset.univ) (g := fun ij : Fin 3 × Fin 3 => (a.piecewise (fun _ => ij.1) (fun _ => ij.2)))
           (fun x _ y _ hxy => join_injective a ha hc hxy)).symm
       rw [hs]
       apply Finset.sum_le_sum_of_subset_of_nonneg
