@@ -6,10 +6,12 @@
    utility: none
    digest: Perfect classical six-leg circuits have perfect two-wire factors. -/
 
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fin.VecNotation
+import Mathlib.Data.Fintype.Prod
 import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Tactic.FinCases
+
+/-! Index-one orthogonal arrays for the classical factorization question of Pozsgay and Wanless,
+arXiv:2308.07042v3, with the wire convention of equation (4.2). -/
 
 set_option autoImplicit false
 
@@ -376,14 +378,14 @@ private theorem last_latin {x : Type u} [Fintype x] [Nonempty x]
 theorem result : claim := by
   intro x _ _ a b c h
   by_cases hn : Nonempty x
-  · letI := hn
+  · have := hn
     obtain ⟨ha, hb, hc⟩ := factors_bijective a b c h
     obtain ⟨ha₁, hb₁⟩ := first_latin a b c h ha
     obtain ⟨ha₂, hb₂⟩ := second_latin a b c h ha hc ha₁
     obtain ⟨hc₁, hc₂⟩ := last_latin a b c h ha hb₂
     exact ⟨gate_perfect a ha ha₁ ha₂, gate_perfect b hb hb₁ hb₂,
       gate_perfect c hc hc₁ hc₂⟩
-  · haveI : IsEmpty x := not_nonempty_iff.mp hn
+  · have : IsEmpty x := not_nonempty_iff.mp hn
     have he (f : x × x → x × x) : IsIndexOneOA (gateGraph f) 2 := by
       intro cols _
       exact ⟨fun t => isEmptyElim t.1, fun t => isEmptyElim (t 0)⟩
