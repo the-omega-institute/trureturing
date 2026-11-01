@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.FourPathQuadraticMajorant
 import Reg.Support.SingleDependentReadout
 
+/-! The complete squared four-path response as a source-bound complex observation. -/
+
 open _root_.D5.S3.Quantum.Recovery.FourPathQuadraticMajorant
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
@@ -49,15 +51,16 @@ def registration : Registration arena (type_of% four_path_quadratic_majorant) wh
   variation := ⟨four_path_quadratic_majorant,rejected,rejected_fails⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_fails
   dependence := by
+    change ObservationalDependence signature actual
     intro i
-    refine ⟨0,0,1,?_⟩
+    refine ⟨(0:ℂ),(0:ℂ),(1:ℂ),?_⟩
     have hz : actual.readout () (0:ℂ) (0:ℂ)=0 := by simp [actual,realize]
     have ho : 0 < actual.readout () (0:ℂ) (1:ℂ) := by
       change 0 < ((‖(0:ℂ)+1‖+‖(0:ℂ)-1‖)/Real.sqrt 2 +
         ‖(Real.cos (Real.pi/8):ℂ)*0+Complex.I*(Real.sin (Real.pi/8):ℂ)*1‖+
         ‖(Real.cos (Real.pi/8):ℂ)*0-Complex.I*(Real.sin (Real.pi/8):ℂ)*1‖)^2
       apply sq_pos_of_pos
-      have first : 0 < (‖(0:ℂ)+1‖+‖(0:ℂ)-1‖)/Real.sqrt 2 := by norm_num; positivity
+      have first : 0 < (‖(0:ℂ)+1‖+‖(0:ℂ)-1‖)/Real.sqrt 2 := by norm_num
       linarith [norm_nonneg ((Real.cos (Real.pi/8):ℂ)*0+Complex.I*(Real.sin (Real.pi/8):ℂ)*1),
         norm_nonneg ((Real.cos (Real.pi/8):ℂ)*0-Complex.I*(Real.sin (Real.pi/8):ℂ)*1)]
     change actual.readout () (0:ℂ) (0:ℂ) ≠ actual.readout () (0:ℂ) (1:ℂ)
