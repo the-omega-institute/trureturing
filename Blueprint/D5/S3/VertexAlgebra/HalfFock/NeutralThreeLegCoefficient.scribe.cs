@@ -7,134 +7,125 @@ internal sealed class NeutralThreeLegCoefficientDocument : IScribeDocumentDefini
     private const string Prefix = "D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The actual corrected neutral field has a finite three-leg coefficient expansion with the literal Corr correction, repeated occupations, finite normal modes, and the native Gaussian correction readout.",
-        H("Native finite neutral three-leg coefficient identity"),
+        "Actual output-projected finite neutral corrected-field coefficients and their raw normal-mode Laurent realization; the full Gaussian coefficient identity remains open.",
+        H("Actual finite neutral-field coefficient bridge"),
         Blocks(
-            Paragraph(Text(
-                "The source is the actual correctedField on the full ActualTensor carrier. "
-                + "For an arbitrary finite repeated oscillator occupation d, coefficient extraction first exposes the literal Corr support "
-                + "and then expands each actual polynomial into the actual charged zero normal word. "
-                + "The pointwise mode sum remains a finsum on the input tensor, so no endomorphism-valued infinite sum is introduced.")),
-            Paragraph(Text(
-                "The zero-charge seed is the existing identity field. Its flat coefficient is therefore the genuine creation-left, "
-                + "annihilation-right normal product with the integer exponent selector. The correction is the supplied finite Corr, "
-                + "whose repeated labelled occurrences retain all diagonal and off-diagonal matching multiplicities. "
-                + "The source-vacuum linear-form readout is the actual Corr evaluation and gives the factorial Gaussian coefficient for every finite family.")),
-            Paragraph(Text(
-                "For a mode tuple, negative entries record output frequencies -k-1 and nonnegative entries record input frequencies k. "
-                + "The frequency projection is the finite set {-k-1 | k is in the output support} union {k | k is in the input support}; "
-                + "the Gram matrix only mixes colours at a fixed frequency. The native mode box theorem reduces the actual pointwise finsum "
-                + "to this finite product once the literal support condition is supplied.")),
-            Paragraph(Text(
-                "The exponent theorem is proved before any scalar evaluation. Corr bidegree supplies shift plus residual source weight equals "
-                + "the original source weight, the flat selector supplies the normal displacement, and the signed mode balance gives "
-                + "e = 2(E_T(output)-E_T(input)-E_S(source)), expressed in Lean with doubled twisted energies. "
-                + "Only after this finite regrouping may a nonzero T be substituted in the resulting Laurent monomial.")),
-            Paragraph(Text(
-                "The matching argument is the labelled-position Wick/Isserlis expansion: each new insertion either leaves its position unmatched "
-                + "or pairs it with one earlier unmatched position, and the pair derivation vanishes on an already formed pair. "
-                + "This is the finite algebraic bridge for arbitrary repeated occupations; it makes no analytic completion, whitening, damping, "
-                + "unitarity, sewing, string-theory, or AdS/CFT claim.")),
-            Paragraph(Text(
-                "After the finite projection and exponent regrouping, the raw three-leg generating kernel is the exponential of the four actual "
-                + "finite bilinear pieces: one half of the source-source covariance p_st G_ij T^(-2s-2t), the source-output creation symbol "
-                + "J_s(-k-1) T^(2k-2s+1), the source-input annihilation symbol omega_k G_ij J_s(k) T^(-2k-2s-1), and the identity propagation term "
-                + "eta_jk xi_jk. Source coefficients are divided by d!, input coefficients by h!, while output uses ordinary monomial coefficients; "
-                + "the diagonal source pair contributes p_ss G_ii with no extra factor two.")),
+            Paragraph(Text("This unit proves output-projected finite mode restriction and finite scalar Laurent realization for the actual neutral correctedField, on the original tensor carrier. Source, input and output occupations may have arbitrary repetitions. The Gram matrix is the original raw matrix, the only invertibility assumption is the native hu, and rank zero is included.")),
+            Paragraph(Text("The common finite mode set is {-k-1 : k is an output frequency} union {k : k is an input frequency}. Positive currents mix colours only at a fixed frequency. A negative mode outside the output frequency support can create a nonzero full vector, but its specified output coefficient vanishes. The support theorem therefore extracts that coefficient before restricting the sum.")),
+            Paragraph(Text("The flat normal recursion is factored into creation multiplication on the left and Gram-weighted annihilation on the right. The proof uses the existing same-sign Heisenberg commutation law, the native monomial derivative and actual pointwise finite-support theorem. Ground vectors are carried by identity; no scalar ground vacuum is chosen.")),
+            Paragraph(Text("The existing energy covariance supplies e = 2(E_T(output)-E_T(input)-E_S(source)), in doubled integral twisted-energy coordinates. The actual coefficients are represented by a finitely supported scalar Laurent polynomial. Evaluation is allowed only at a complex unit T and is a finite sum.")),
+            Paragraph(Text("The raw source-output and source-input blocks are consumed in the actual finite evaluated normal-operator expansion. The source-specific bridge from finite Corr and this normal action to the factorial coefficient of exp(SS/2 + SO + SI + IO) remains unproved. In particular, the actual entry divided by source d! and input h!, with ordinary output coefficient, has not yet been identified with the full block GaussianCoefficient.")),
+            Paragraph(Text("The intended remaining combinatorics is classical labelled-position Wick/Isserlis and the exponential formula: equal labels are distinct positions, so diagonal pairing counts have factors 2^m m! and off-diagonal counts m!. Wick (1950, Physical Review 80, 268) and Isserlis (1918, Biometrika 12, 134-139) supply the classical provenance; OriginalCorrectionGaussian supplies the repository actual Corr source-vacuum theorem. No new global novelty, positivity, unitarity, analytic completion, sewing, string-theory completion or AdS/CFT result is asserted.")),
             Describe.Lean(
                 DescribeId.Create("native-neutral-source"),
                 DeclarationHandle.Create(Prefix + "neutralSource"),
                 H("Actual neutral source"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The source is the full carrier element with the requested arbitrary finite oscillator occupation."))),
+                Blocks(Paragraph(Text("The charge-zero carrier element is Finsupp.single 0 (monomial d 1), with arbitrary finite multiplicities."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("native-neutral-coefficient-source"),
-                DeclarationHandle.Create(Prefix + "nativeNeutralCoefficient_source"),
-                H("Coefficient exposes correctedPolynomial"),
+                DescribeId.Create("native-neutral-coefficient"),
+                DeclarationHandle.Create(Prefix + "nativeNeutralCoefficient"),
+                H("Actual full corrected coefficient"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The actual corrected field reduces at charge zero to the literal correctedPolynomial."))),
-                DescribeRole.Theorem),
+                Blocks(Paragraph(Text("The field is correctedField on the existing ActualTensor carrier; no alternative Gaussian field is defined."))),
+                DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("native-neutral-expansion"),
                 DeclarationHandle.Create(Prefix + "nativeNeutralCoefficient_native_expansion"),
-                H("Finite actual Corr and normal-word expansion"),
+                H("Actual Corr and pointwise normal expansion"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The equality keeps Corr support, polynomial support, actual chargedField normal words, repeated occurrences, and pointwise flatTerm mode sums."))),
+                Blocks(Paragraph(Text("The finite Corr support and residual polynomial support precede the native pointwise flatTerm finsum."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("native-neutral-gaussian-readout"),
-                DeclarationHandle.Create(Prefix + "nativeNeutralCorrection_gaussian"),
-                H("Actual Corr Gaussian readout"),
+                DescribeId.Create("native-output-projection"),
+                DeclarationHandle.Create(Prefix + "nativeOutputProjection"),
+                H("Full ground-valued output coefficient"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The existing actual Corr source-vacuum readout is the factorial Gaussian coefficient for arbitrary finite linear forms."))),
-                DescribeRole.Theorem),
+                Blocks(Paragraph(Text("The polynomial coefficient map is tensored with identity and composed with the canonical scalar tensor identification. Its result is the entire ground vector."))),
+                DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("native-mode-energy-balance"),
-                DeclarationHandle.Create(Prefix + "native_mode_energy_balance"),
-                H("Signed native mode energy balance"),
+                DescribeId.Create("native-projected-support"),
+                DeclarationHandle.Create(Prefix + "nativeNeutralCoefficient_projected_support"),
+                H("Proved projected frequency support"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The negative output and nonnegative input occupations of every actual mode tuple satisfy the signed doubled-frequency balance."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("native-exponent-regrouping"),
-                DeclarationHandle.Create(Prefix + "nativeNeutralCoefficient_exponent_regrouping"),
-                H("Native exponent regrouping"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Corr bidegree, the actual flat selector, and the signed mode balance prove the common finite Laurent exponent before evaluation."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("native-projected-mode-sum"),
-                DeclarationHandle.Create(Prefix + "nativeNeutralCoefficient_projected_mode_sum"),
-                H("Finite projected actual mode sum"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The actual pointwise finsum equals the finite native mode box under the literal support condition."))),
+                Blocks(Paragraph(Text("For every word, exponent, repeated input and output occupation, ground vector and mode tuple, a nonzero projected flatTerm implies membership of every mode in the common output-negative/input-positive frequency set. There is no vector-support hypothesis."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("native-frequency-projected-mode-sum"),
                 DeclarationHandle.Create(Prefix + "nativeNeutralCoefficient_frequency_projected_mode_sum"),
-                H("Output/input frequency projected mode sum"),
+                H("Common finite projected mode sum"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The projection is instantiated with the native frequency set {-k-1 from output} union {k from input}; no color support assumption is used."))),
+                Blocks(Paragraph(Text("For each exponent and arbitrary ground vector, the output coefficient of the actual normal word equals the sum over the finite Cartesian mode box built from the output and input frequency supports."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("native-raw-kernel"),
-                DeclarationHandle.Create(Prefix + "nativeNeutralRawKernel"),
-                H("Explicit four-piece raw kernel"),
+                DescribeId.Create("native-output-energy"),
+                DeclarationHandle.Create(Prefix + "nativeNeutralCoefficient_output_energy_selection"),
+                H("Actual corrected output exponent selection"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The source-source, source-output, source-input, and identity-propagation terms are defined directly from pairScalar, jetScalar, frequency, G, and the Laurent powers of T."))),
+                Blocks(Paragraph(Text("The full ground-valued corrected entry vanishes unless e equals oddWeight(output) minus oddWeight(input) minus twice the source weight. The proof consumes existing full-field energy covariance."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("native-finite-projected-expansion"),
+                DeclarationHandle.Create(Prefix + "nativeNeutralCoefficient_finite_projected_expansion"),
+                H("Finite actual corrected entry"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The exact output projection is a finite Corr shift, residual monomial and normal-mode sum. Its integer selector is retained; normal creation and annihilation act on the original polynomial input and the ground identity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("native-laurent-coefficients"),
+                DeclarationHandle.Create(Prefix + "nativeNeutralLaurentCoefficients"),
+                H("Finite scalar Laurent entries"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A finitely supported integer coefficient function collects the actual Corr and normal-mode terms at their literal shifted exponents."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("native-source-covariance"),
-                DeclarationHandle.Create(Prefix + "nativeSourceSourceKernel_eq_covariance"),
-                H("Source-source kernel is the native covariance"),
+                DescribeId.Create("native-laurent-identification"),
+                DeclarationHandle.Create(Prefix + "nativeNeutralCoefficient_eq_laurent_coefficients"),
+                H("Actual full field equals finite scalar entries times ground identity"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("At T nonzero, the explicit source-source Laurent power is exactly the existing Corr covariance evaluated at T^-2."))),
+                Blocks(Paragraph(Text("At every integer exponent, source occupation, repeated input and output occupation, the actual projected correctedField coefficient is exactly the finite scalar Laurent coefficient multiplied by the arbitrary ground vector."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("native-raw-kernel-components"),
-                DeclarationHandle.Create(Prefix + "nativeNeutralRawKernel_components"),
-                H("Raw kernel component equality"),
+                DescribeId.Create("native-laurent-entry"),
+                DeclarationHandle.Create(Prefix + "nativeNeutralLaurentEntry"),
+                H("Finite evaluation at a nonzero parameter"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The four finite bilinear pieces are exposed as an equality, with the source-source diagonal carrying its one-half coefficient."))),
+                Blocks(Paragraph(Text("The evaluation parameter is a complex unit. Only the finite scalar coefficient function is evaluated, never an arbitrary Hahn series."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("native-laurent-ground-identity"),
+                DeclarationHandle.Create(Prefix + "nativeNeutralLaurentEntry_ground_identity"),
+                H("Finite evaluation retains the ground identity"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The finite scalar evaluation times any ground vector equals the finite Laurent-weighted sum of the actual projected correctedField coefficients."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("native-finite-wick-identity"),
-                DeclarationHandle.Create(Prefix + "nativeNeutralFiniteWickIdentity"),
-                H("Finite repeated-occupation native Wick identity"),
+                DescribeId.Create("native-raw-normal-term"),
+                DeclarationHandle.Create(Prefix + "nativeRawNormalTerm"),
+                H("Raw mixed blocks in normal order"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every finite labelled family and arbitrary occupation, the actual sourceVacuum Corr readout equals the exact factorial Gaussian coefficient."))),
+                Blocks(Paragraph(Text("Each negative mode uses the raw source-output Laurent coefficient as multiplication; each nonnegative mode uses the raw source-input coefficients as Gram-weighted derivatives. Every annihilation acts before the creation multiplications."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("native-raw-normal-expansion"),
+                DeclarationHandle.Create(Prefix + "nativeNeutralLaurentEntry_raw_normal_expansion"),
+                H("Actual Laurent entry consumes both raw mixed blocks"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The full actual finite Laurent entry equals the finite Corr shift and monomial expansion of these raw normal-mode operators. This is not yet the exponential coefficient of the full three-leg block matrix."))),
                 DescribeRole.Theorem))));
 }

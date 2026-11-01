@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Native finite neutral corrected-field coefficient identity with repeated occupations. -/
+   digest: Actual projected neutral-field mode support and finite raw Laurent coefficients. -/
 
 import Batteries.Tactic.OpenPrivate
 import D5.S3.VertexAlgebra.HalfFock.ActualEnergyCovariance
@@ -14,9 +14,12 @@ import D5.S3.VertexAlgebra.LatticeHalfFockCorrectedConformal
 /-!
 The source side is the actual `correctedField` and its literal finite Corr;
 normal coefficients remain pointwise finite sums in the actual tensor module.
-The Gaussian coefficient is the native Corr moment, with repeated labelled
-positions retained. This file does not introduce a replacement field or an
-analytic evaluation of an unrestricted Hahn series.
+Output projection proves a common finite frequency restriction. The actual
+full corrected coefficients are finite scalar Laurent entries times the
+identity on arbitrary ground tensors. The raw mixed kernel blocks act in
+literal normal order. The full block Gaussian coefficient identity remains
+open; the Corr vacuum moment alone does not prove that identity. No analytic
+evaluation of an unrestricted Hahn series is introduced.
 -/
 set_option autoImplicit false
 set_option maxRecDepth 4096
@@ -38,6 +41,7 @@ open LatticeHalfFock
 open LatticeHalfFockFiniteCorrection
 open LatticeHalfFockCorrectedField
 open LatticeHalfFockChargedTensorCoefficients
+open HalfFockSpectralFiberSource
 open D5.S3.VertexAlgebra.TwistedGround.OriginalCorrectionGaussian
 open D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate
 
@@ -58,17 +62,6 @@ theorem nativeNeutralCoefficient_source
     nativeNeutralCoefficient D hu d e x =
       (correctedPolynomial D hu 0 (monomial d 1)).coeff e x := by
   rw [nativeNeutralCoefficient, neutralSource, correctedField, Finsupp.lsum_single]
-
-/-- The actual neutral Corr readout has the factorial Gaussian coefficient for
-an arbitrary finite family of oscillator linear forms and arbitrary repeated
-occupations. -/
-theorem nativeNeutralCorrection_gaussian
-    {I : Type*} [Fintype I] [DecidableEq I]
-    (D : LatticeData) (z : ℂ) (c : I → Index D →₀ ℂ) (d : I →₀ ℕ) :
-    sourceVacuum D z (∏ i, linearForm D (c i) ^ d i) =
-      (FactorialFockMetric.weight d : ℂ) *
-        gaussianCoefficient (covarianceMatrix D z c) d := by
-  exact sourceVacuum_linearForms D z c d
 
 /-- With the genuine zero-charge seed, the native normal recursion is the
 literal creation-left/annihilation-right product and its integer exponent
@@ -320,38 +313,385 @@ theorem nativeModeBox_mem
       rcases modes with ⟨mode, modes⟩
       simp [nativeModeBox, allModes, ih]
 
-theorem nativeNeutralCoefficient_projected_mode_sum
-    (D : LatticeData) (hu : IsUnit D.G.det)
-    (word : List (Index D)) (e : ℤ) (x : ActualTensor D hu)
-    (B : Finset ℤ)
-    (support_condition : ∀ modes,
-      flatTerm D hu (chargedField D hu 0) word e x modes ≠ 0 →
-        allModes D (fun mode => mode ∈ B) word modes) :
-    (∑ᶠ modes : ModeTuple D word,
-      flatTerm D hu (chargedField D hu 0) word e x modes) =
-        ∑ modes ∈ nativeModeBox D B word,
-        flatTerm D hu (chargedField D hu 0) word e x modes := by
-  apply finsum_eq_sum_of_support_subset
-  intro modes hmode
-  exact (nativeModeBox_mem D B word modes).mpr
-    (support_condition modes hmode)
+/- Output extraction retains the entire ground vector. -/
+def nativeOutputProjection (D : LatticeData) (hu : IsUnit D.G.det)
+    (output : Index D →₀ ℕ) : ActualTensor D hu →ₗ[ℂ] ActualGround D hu :=
+  (TensorProduct.lid ℂ (ActualGround D hu)).toLinearMap.comp
+    (TensorProduct.map (lcoeff ℂ output) LinearMap.id)
 
+@[simp] private theorem nativeOutputProjection_tmul
+    (D : LatticeData) (hu : IsUnit D.G.det) (output : Index D →₀ ℕ)
+    (p : Oscillator D) (g : ActualGround D hu) :
+    nativeOutputProjection D hu output (p ⊗ₜ[ℂ] g) = p.coeff output • g := by
+  simp [nativeOutputProjection]
+
+private def creationPolynomial (D : LatticeData) :
+    (word : List (Index D)) → ModeTuple D word → Oscillator D
+  | [], _ => 1
+  | a :: w, m => if m.1 < 0 then
+      (jetScalar a.2 m.1 • X (a.1, (-m.1 - 1).toNat)) * creationPolynomial D w m.2
+    else creationPolynomial D w m.2
+
+private def creationScalar (D : LatticeData) :
+    (word : List (Index D)) → ModeTuple D word → ℂ
+  | [], _ => 1
+  | a :: w, m => if m.1 < 0 then jetScalar a.2 m.1 * creationScalar D w m.2
+    else creationScalar D w m.2
+
+private def rightPolynomial (D : LatticeData) :
+    (word : List (Index D)) → ModeTuple D word → Module.End ℂ (Oscillator D)
+  | [], _ => 1
+  | a :: w, m => if m.1 < 0 then rightPolynomial D w m.2
+    else rightPolynomial D w m.2 * (jetScalar a.2 m.1 • current D a.1 m.1)
+
+private theorem creationPolynomial_monomial (D : LatticeData)
+    (word : List (Index D)) (m : ModeTuple D word) :
+    creationPolynomial D word m =
+      creationScalar D word m • monomial (nativeNegativeOccupation D word m) 1 := by
+  induction word with
+  | nil => simp [creationPolynomial, creationScalar, nativeNegativeOccupation]
+  | cons a w ih =>
+    simp only [creationPolynomial, creationScalar, nativeNegativeOccupation]
+    split_ifs with h
+    · rw [ih]
+      simp [X, smul_monomial, monomial_mul_monomial, smul_eq_mul]
+    · simpa using ih m.2
+
+private theorem leftAction_tmul (D : LatticeData) (hu : IsUnit D.G.det)
+    (word : List (Index D)) (m : ModeTuple D word)
+    (p : Oscillator D) (g : ActualGround D hu) :
+    leftAction D hu word m (p ⊗ₜ[ℂ] g) =
+      (creationPolynomial D word m * p) ⊗ₜ[ℂ] g := by
+  induction word with
+  | nil => simp [leftAction, creationPolynomial]
+  | cons a w ih =>
+    simp only [leftAction, creationPolynomial]
+    split_ifs with h
+    · simp only [Module.End.mul_apply, ih, jetCurrent, LinearMap.smul_apply,
+        tensorCurrent, tensorEnd, TensorProduct.map_tmul, LinearMap.id_apply,
+        current, if_pos h, LinearMap.mulLeft_apply]
+      rw [← TensorProduct.smul_tmul']
+      congr 1
+      simp [smul_mul_assoc, mul_assoc]
+    · exact ih m.2
+
+private theorem rightAction_tmul (D : LatticeData) (hu : IsUnit D.G.det)
+    (word : List (Index D)) (m : ModeTuple D word)
+    (p : Oscillator D) (g : ActualGround D hu) :
+    rightAction D hu word m (p ⊗ₜ[ℂ] g) =
+      rightPolynomial D word m p ⊗ₜ[ℂ] g := by
+  induction word generalizing p with
+  | nil => rfl
+  | cons a w ih =>
+    simp only [rightAction, rightPolynomial]
+    split_ifs with h
+    · exact ih m.2 p
+    · simp only [Module.End.mul_apply, jetCurrent, LinearMap.smul_apply,
+        tensorCurrent, tensorEnd, TensorProduct.map_tmul, LinearMap.id_apply,
+        ← TensorProduct.smul_tmul', ih]
+      rfl
+
+private theorem flatTerm_tmul (D : LatticeData) (hu : IsUnit D.G.det)
+    (word : List (Index D)) (m : ModeTuple D word) (e : ℤ)
+    (p : Oscillator D) (g : ActualGround D hu) :
+    flatTerm D hu (chargedField D hu 0) word e (p ⊗ₜ[ℂ] g) m =
+      if e + 2 * modeSum D word m + jetShift D word = 0 then
+        (creationPolynomial D word m * rightPolynomial D word m p) ⊗ₜ[ℂ] g
+      else 0 := by
+  rw [current_charged_zero_identity, flatTerm, flatCoefficient_neutral_identity]
+  split_ifs
+  · rw [Module.End.mul_apply, rightAction_tmul, leftAction_tmul]
+  · rfl
+
+private theorem current_monomial_frequency_vanish (D : LatticeData)
+    (input : Index D →₀ ℕ) (i : Fin D.rank) (m : ℤ) (hm : 0 ≤ m)
+    (hout : m ∉ input.support.image (fun a => (a.2 : ℤ))) :
+    current D i m (monomial input 1) = 0 := by
+  have hz (j : Fin D.rank) : input (j, m.toNat) = 0 := by
+    by_contra hn
+    apply hout
+    exact Finset.mem_image.mpr ⟨(j, m.toNat), Finsupp.mem_support_iff.mpr hn,
+      Int.toNat_of_nonneg hm⟩
+  simp [current, not_lt.mpr hm, LatticeActualAnnihilation.annihilate,
+    LatticeSugawaraCurrents.weightedPartial, LinearMap.sum_apply, hz]
+
+private theorem positive_current_commute (D : LatticeData)
+    (i j : Fin D.rank) (m n : ℤ) (hm : 0 ≤ m) (hn : 0 ≤ n)
+    (p : Oscillator D) :
+    current D i m (current D j n p) = current D j n (current D i m p) := by
+  exact sub_eq_zero.mp (by simpa [show m + n + 1 ≠ 0 by omega] using
+    current_heisenberg_apply D i j m n p)
+
+private theorem rightPolynomial_positive_support (D : LatticeData)
+    (S : Finset ℤ) (word : List (Index D)) (m : ModeTuple D word)
+    (p : Oscillator D)
+    (hp : ∀ i n, 0 ≤ n → n ∉ S → current D i n p = 0)
+    (hn : rightPolynomial D word m p ≠ 0) :
+    allModes D (fun n => 0 ≤ n → n ∈ S) word m := by
+  induction word generalizing p with
+  | nil => trivial
+  | cons a w ih =>
+    by_cases h : m.1 < 0
+    · exact ⟨by omega, ih m.2 p hp (by simpa [rightPolynomial, h] using hn)⟩
+    · have hm : 0 ≤ m.1 := by omega
+      have htail : rightPolynomial D w m.2 (jetScalar a.2 m.1 • current D a.1 m.1 p) ≠ 0 := by
+        simpa [rightPolynomial, h] using hn
+      refine ⟨?_, ih m.2 _ ?_ htail⟩
+      · intro _
+        by_contra outside
+        exact htail (by simp [hp a.1 m.1 hm outside])
+      · intro i n hn outside
+        simp only [map_smul]
+        rw [positive_current_commute D i a.1 n m.1 hn hm, hp i n hn outside, map_zero,
+          smul_zero]
+
+private theorem negative_modes_support (D : LatticeData)
+    (output : Index D →₀ ℕ) (word : List (Index D)) (m : ModeTuple D word)
+    (hle : nativeNegativeOccupation D word m ≤ output) :
+    allModes D (fun n => n < 0 →
+      n ∈ output.support.image (fun a => -(a.2 : ℤ) - 1)) word m := by
+  induction word with
+  | nil => trivial
+  | cons a w ih =>
+    have ht : nativeNegativeOccupation D w m.2 ≤ output := by
+      exact le_trans (le_add_left le_rfl) hle
+    refine ⟨?_, ih m.2 ht⟩
+    intro h
+    have hs : Finsupp.single (a.1, (-m.1 - 1).toNat) 1 ≤ output := by
+      apply le_trans _ hle
+      simp only [nativeNegativeOccupation, if_pos h]
+      exact le_add_right le_rfl
+    have hn : output (a.1, (-m.1 - 1).toNat) ≠ 0 := by
+      have hh := (Finsupp.single_le_iff.mp hs)
+      omega
+    refine Finset.mem_image.mpr ⟨(a.1, (-m.1 - 1).toNat),
+      Finsupp.mem_support_iff.mpr hn, ?_⟩
+    rw [Int.toNat_of_nonneg (by omega : 0 ≤ -m.1 - 1)]
+    omega
+
+/-- Support is proved only after the actual output projection. Creation modes
+outside the output frequency vanish there; annihilation modes outside the input
+frequency vanish on the input, including arbitrary Gram colour mixing. -/
+theorem nativeNeutralCoefficient_projected_support
+    (D : LatticeData) (hu : IsUnit D.G.det)
+    (word : List (Index D)) (e : ℤ) (input output : Index D →₀ ℕ)
+    (g : ActualGround D hu) (m : ModeTuple D word)
+    (hn : nativeOutputProjection D hu output
+      (flatTerm D hu (chargedField D hu 0) word e
+        (monomial input 1 ⊗ₜ[ℂ] g) m) ≠ 0) :
+    allModes D (fun n => n ∈ nativeNeutralModeProjection D output input) word m := by
+  rw [flatTerm_tmul] at hn
+  split_ifs at hn with he
+  · rw [nativeOutputProjection_tmul] at hn
+    have hc : (creationPolynomial D word m * rightPolynomial D word m
+        (monomial input 1)).coeff output ≠ 0 := by
+      intro hz
+      exact hn (by rw [hz, zero_smul])
+    have hr : rightPolynomial D word m (monomial input 1) ≠ 0 := by
+      intro hz
+      simp [hz] at hc
+    have hle : nativeNegativeOccupation D word m ≤ output := by
+      by_contra hh
+      rw [creationPolynomial_monomial, smul_mul_assoc, coeff_smul,
+        coeff_monomial_mul', if_neg hh, mul_zero] at hc
+      exact hc rfl
+    have hp := rightPolynomial_positive_support D
+      (input.support.image (fun a => (a.2 : ℤ))) word m (monomial input 1)
+      (current_monomial_frequency_vanish D input) hr
+    have hm := negative_modes_support D output word m hle
+    induction word with
+    | nil => trivial
+    | cons a w ih =>
+      refine ⟨?_, ih m.2 hp.2 hm.2⟩
+      by_cases h : m.1 < 0
+      · exact Finset.mem_union_left _ (hm.1 h)
+      · exact Finset.mem_union_right _ (hp.1 (by omega))
+  · exact (hn (map_zero _)).elim
+
+/-- The common finite mode set is independent of the Hahn exponent. The
+projection commutes with the native pointwise finsum by its actual finite support. -/
 theorem nativeNeutralCoefficient_frequency_projected_mode_sum
     (D : LatticeData) (hu : IsUnit D.G.det)
-    (word : List (Index D)) (e : ℤ) (x : ActualTensor D hu)
-    (output input : Index D →₀ ℕ)
-    (support_condition : ∀ modes,
-      flatTerm D hu (chargedField D hu 0) word e x modes ≠ 0 →
-        allModes D
-          (fun mode => mode ∈ nativeNeutralModeProjection D output input)
-          word modes) :
-    (∑ᶠ modes : ModeTuple D word,
-      flatTerm D hu (chargedField D hu 0) word e x modes) =
-        ∑ modes ∈ nativeModeBox D
-          (nativeNeutralModeProjection D output input) word,
-          flatTerm D hu (chargedField D hu 0) word e x modes := by
-  exact nativeNeutralCoefficient_projected_mode_sum D hu word e x
-    (nativeNeutralModeProjection D output input) support_condition
+    (word : List (Index D)) (e : ℤ) (input output : Index D →₀ ℕ)
+    (g : ActualGround D hu) :
+    nativeOutputProjection D hu output
+      ((wordField D hu (chargedField D hu 0) word).coeff e
+        (monomial input 1 ⊗ₜ[ℂ] g)) =
+      ∑ m ∈ nativeModeBox D (nativeNeutralModeProjection D output input) word,
+        nativeOutputProjection D hu output
+          (flatTerm D hu (chargedField D hu 0) word e
+            (monomial input 1 ⊗ₜ[ℂ] g) m) := by
+  rw [wordField_coefficient,
+    map_finsum _ (flatTerm_finite D hu (chargedField D hu 0) word e _)]
+  apply finsum_eq_sum_of_support_subset
+  intro m hm
+  exact (nativeModeBox_mem D _ word m).mpr
+    (nativeNeutralCoefficient_projected_support D hu word e input output g m hm)
+
+private theorem neutralSource_grade (D : LatticeData) (d : Index D →₀ ℕ) :
+    neutralSource D d ∈ LatticePositiveEnergy.grade D (nativeSourceEnergy D d) := by
+  rw [LatticePositiveEnergy.grade_eq_span]
+  apply Submodule.subset_span
+  refine ⟨(0, d), ?_, ?_⟩
+  · simp [LatticePositiveEnergy.energy, LatticePositiveEnergy.chargeEnergy,
+      LatticeGeneratingFieldLocality.bilinear, nativeSourceEnergy,
+      LatticePositiveEnergy.oscillatorEnergy]
+  · simp [LatticePositiveEnergy.carrierBasis_apply, neutralSource]
+
+private theorem monomial_tensor_energy (D : LatticeData) (hu : IsUnit D.G.det)
+    (d : Index D →₀ ℕ) (g : ActualGround D hu) :
+    LatticeHalfFockGradedTrace.actualTensorL0 D hu (monomial d 1 ⊗ₜ[ℂ] g) =
+      ((D.rank : ℂ) / 16 + (LatticeHalfFockGradedTrace.oddWeight D d : ℂ) / 2) •
+        (monomial d 1 ⊗ₜ[ℂ] g) := by
+  simp only [LatticeHalfFockGradedTrace.actualTensorL0, tensorL, tensorEnd,
+    TensorProduct.map_tmul, LinearMap.id_apply]
+  rw [L_zero_monomial_coeff D (actualInverse D)
+    (actualInverse_left D hu) (actualInverse_right D hu) d 1,
+    LatticeHalfFockGradedTrace.oddWeight_eq_two_energy, TensorProduct.smul_tmul']
+
+private theorem outputProjection_energy (D : LatticeData) (hu : IsUnit D.G.det)
+    (output : Index D →₀ ℕ) (x : ActualTensor D hu) :
+    nativeOutputProjection D hu output (LatticeHalfFockGradedTrace.actualTensorL0 D hu x) =
+      ((D.rank : ℂ) / 16 + (LatticeHalfFockGradedTrace.oddWeight D output : ℂ) / 2) •
+        nativeOutputProjection D hu output x := by
+  induction x using TensorProduct.induction_on with
+  | zero => simp
+  | add x y hx hy => simp [map_add, hx, hy, smul_add]
+  | tmul p g =>
+    induction p using MvPolynomial.induction_on' with
+    | add p q hp hq => simp [TensorProduct.add_tmul, map_add, hp, hq, smul_add]
+    | monomial d c =>
+      have hm : (monomial d c : Oscillator D) = c • monomial d 1 := by
+        simp [smul_monomial]
+      rw [hm, TensorProduct.smul_tmul', map_smul, monomial_tensor_energy,
+        map_smul, map_smul]
+      by_cases h : d = output
+      · subst d
+        simp [smul_smul, mul_comm]
+      · simp [coeff_monomial, h, Ne.symm h]
+
+/-- The entire projected corrected entry has one Laurent exponent. This uses
+the existing full-field energy covariance, without any Hahn evaluation. -/
+theorem nativeNeutralCoefficient_output_energy_selection
+    (D : LatticeData) (hu : IsUnit D.G.det)
+    (d input output : Index D →₀ ℕ) (g : ActualGround D hu) (e : ℤ)
+    (hne : e ≠ (LatticeHalfFockGradedTrace.oddWeight D output : ℤ) -
+      (LatticeHalfFockGradedTrace.oddWeight D input : ℤ) - 2 * nativeSourceEnergy D d) :
+    nativeOutputProjection D hu output
+      (nativeNeutralCoefficient D hu d e (monomial input 1 ⊗ₜ[ℂ] g)) = 0 := by
+  have he := ActualEnergyCovariance.correctedField_signed_output D hu
+    (nativeSourceEnergy D d) (LatticeHalfFockGradedTrace.oddWeight D input : ℤ) e
+    (neutralSource D d) (neutralSource_grade D d) _ (by
+      simpa using monomial_tensor_energy D hu input g)
+  have hp := congrArg (nativeOutputProjection D hu output) he
+  rw [outputProjection_energy, map_smul] at hp
+  change _ • nativeOutputProjection D hu output
+      (nativeNeutralCoefficient D hu d e (monomial input 1 ⊗ₜ[ℂ] g)) =
+    _ • nativeOutputProjection D hu output
+      (nativeNeutralCoefficient D hu d e (monomial input 1 ⊗ₜ[ℂ] g)) at hp
+  have hc : ((D.rank : ℂ) / 16 + (LatticeHalfFockGradedTrace.oddWeight D output : ℂ) / 2) ≠
+      ((D.rank : ℂ) / 16 +
+        (((LatticeHalfFockGradedTrace.oddWeight D input : ℤ) + e +
+          2 * nativeSourceEnergy D d : ℤ) : ℂ) / 2) := by
+    intro hz
+    apply hne
+    have hz' : ((e : ℤ) : ℂ) =
+        (LatticeHalfFockGradedTrace.oddWeight D output : ℂ) -
+        (LatticeHalfFockGradedTrace.oddWeight D input : ℂ) -
+        2 * (nativeSourceEnergy D d : ℂ) := by
+      push_cast at hz
+      linear_combination 2 * hz
+    exact_mod_cast hz'
+  exact ((smul_eq_zero).mp (by rw [sub_smul, hp, sub_self])).resolve_left
+    (sub_ne_zero.mpr hc)
+
+/-- A finite expression for the actual full corrected coefficient, after
+output projection and with the original ground tensor unchanged. -/
+theorem nativeNeutralCoefficient_finite_projected_expansion
+    (D : LatticeData) (hu : IsUnit D.G.det) (d input output : Index D →₀ ℕ)
+    (e : ℤ) (g : ActualGround D hu) :
+    nativeOutputProjection D hu output
+      (nativeNeutralCoefficient D hu d e (monomial input 1 ⊗ₜ[ℂ] g)) =
+      ∑ shift ∈ (Corr D 0 (monomial d 1)).support,
+        ∑ mon ∈ ((Corr D 0 (monomial d 1)) shift).support,
+          ((Corr D 0 (monomial d 1)) shift).coeff mon •
+            ∑ m ∈ nativeModeBox D (nativeNeutralModeProjection D output input)
+                (occurrences D mon),
+              if e + 2 * (shift : ℤ) + 2 * modeSum D (occurrences D mon) m +
+                  jetShift D (occurrences D mon) = 0 then
+                ((creationPolynomial D (occurrences D mon) m *
+                  rightPolynomial D (occurrences D mon) m (monomial input 1)).coeff output) • g
+              else 0 := by
+  rw [nativeNeutralCoefficient_shift_expansion]
+  simp only [map_sum]
+  apply Finset.sum_congr rfl
+  intro shift hs
+  rw [polynomialField_expansion]
+  simp only [map_sum, map_smul, LinearMap.coe_sum, Finset.sum_apply]
+  apply Finset.sum_congr rfl
+  intro mon hm
+  congr 1
+  rw [nativeNeutralCoefficient_frequency_projected_mode_sum]
+  apply Finset.sum_congr rfl
+  intro m hmem
+  rw [flatTerm_tmul]
+  split_ifs <;> simp
+
+/-- Finite scalar Laurent entries obtained from the actual Corr and normal
+actions. Their exponent is collected before scalar evaluation. -/
+def nativeNeutralLaurentCoefficients (D : LatticeData)
+    (d input output : Index D →₀ ℕ) : ℤ →₀ ℂ :=
+  ∑ shift ∈ (Corr D 0 (monomial d 1)).support,
+    ∑ mon ∈ ((Corr D 0 (monomial d 1)) shift).support,
+      ∑ m ∈ nativeModeBox D (nativeNeutralModeProjection D output input) (occurrences D mon),
+        Finsupp.single
+          (-2 * (shift : ℤ) - 2 * modeSum D (occurrences D mon) m -
+            jetShift D (occurrences D mon))
+          (((Corr D 0 (monomial d 1)) shift).coeff mon *
+            (creationPolynomial D (occurrences D mon) m *
+              rightPolynomial D (occurrences D mon) m (monomial input 1)).coeff output)
+
+/-- Every coefficient of the genuine full corrected field is a scalar entry
+of one finite Laurent polynomial tensored with the identity on the whole ground
+module. No ground vacuum or positivity assumption is used. -/
+theorem nativeNeutralCoefficient_eq_laurent_coefficients
+    (D : LatticeData) (hu : IsUnit D.G.det) (d input output : Index D →₀ ℕ)
+    (e : ℤ) (g : ActualGround D hu) :
+    nativeOutputProjection D hu output
+      (nativeNeutralCoefficient D hu d e (monomial input 1 ⊗ₜ[ℂ] g)) =
+      nativeNeutralLaurentCoefficients D d input output e • g := by
+  rw [nativeNeutralCoefficient_finite_projected_expansion]
+  simp only [nativeNeutralLaurentCoefficients, Finsupp.sum_apply, Finset.sum_smul,
+    Finset.smul_sum]
+  apply Finset.sum_congr rfl
+  intro shift hs
+  apply Finset.sum_congr rfl
+  intro mon hm
+  apply Finset.sum_congr rfl
+  intro m hmem
+  have he : (e + 2 * (shift : ℤ) + 2 * modeSum D (occurrences D mon) m +
+      jetShift D (occurrences D mon) = 0) ↔
+      -2 * (shift : ℤ) - 2 * modeSum D (occurrences D mon) m -
+        jetShift D (occurrences D mon) = e := by omega
+  simp only [he, Finsupp.single_apply]
+  split_ifs <;> simp [smul_smul]
+
+/-- Evaluation is defined only on the proved finite scalar Laurent entries. -/
+def nativeNeutralLaurentEntry (D : LatticeData) (T : ℂˣ)
+    (d input output : Index D →₀ ℕ) : ℂ :=
+  (nativeNeutralLaurentCoefficients D d input output).sum (fun e c => c * (T : ℂ) ^ e)
+
+/-- Scalar evaluation of the finite actual entries retains the full ground
+identity. This is a finite sum, with no evaluation map on Hahn series. -/
+theorem nativeNeutralLaurentEntry_ground_identity
+    (D : LatticeData) (hu : IsUnit D.G.det) (T : ℂˣ)
+    (d input output : Index D →₀ ℕ) (g : ActualGround D hu) :
+    nativeNeutralLaurentEntry D T d input output • g =
+      ∑ e ∈ (nativeNeutralLaurentCoefficients D d input output).support,
+        (T : ℂ) ^ e • nativeOutputProjection D hu output
+          (nativeNeutralCoefficient D hu d e (monomial input 1 ⊗ₜ[ℂ] g)) := by
+  simp only [nativeNeutralLaurentEntry, Finsupp.sum, Finset.sum_smul,
+    nativeNeutralCoefficient_eq_laurent_coefficients, smul_smul, mul_comm]
 
 /-! The four raw finite bilinear pieces are recorded directly in the native
 coordinates.  These are coefficient symbols, rather than a replacement
@@ -406,36 +746,115 @@ def nativeNeutralRawKernel (D : LatticeData) (T : ℂ)
     ∑ b ∈ input.support, input b * output b *
       nativeIdentityPropagationKernel D b b
 
-theorem nativeNeutralRawKernel_components (D : LatticeData) (T : ℂ)
-    (source input output : Index D →₀ ℂ) :
-    nativeNeutralRawKernel D T source input output =
-      ((1 / 2 : ℂ) *
-        ∑ a ∈ source.support, ∑ b ∈ source.support,
-          source a * source b * nativeSourceSourceKernel D T a b) +
-      (∑ a ∈ source.support, ∑ b ∈ output.support,
-        source a * output b * nativeSourceOutputKernel D T a b) +
-      (∑ a ∈ source.support, ∑ b ∈ input.support,
-        source a * input b * nativeSourceInputKernel D T a b) +
-      (∑ b ∈ input.support, input b * output b *
-        nativeIdentityPropagationKernel D b b) := by
-  rfl
+private def rawModeOperator (D : LatticeData) (T : ℂˣ)
+    (a : Index D) (m : ℤ) : Module.End ℂ (Oscillator D) :=
+  if m < 0 then
+    nativeSourceOutputKernel D T a (a.1, (-m - 1).toNat) •
+      LinearMap.mulLeft ℂ (X (a.1, (-m - 1).toNat))
+  else ∑ j : Fin D.rank,
+    nativeSourceInputKernel D T a (j, m.toNat) • (pderiv (j, m.toNat)).toLinearMap
 
-/- The finite Wick readout is stated with an arbitrary finite labelled source
-family.  Taking each c i to a coordinate linear form gives the displayed
-source-source piece above; the theorem keeps the exact factorial occupation
-weight and does not collapse repeated labels. -/
-theorem nativeNeutralFiniteWickIdentity
-    {I : Type*} [Fintype I] [DecidableEq I]
-    (D : LatticeData) (T : ℂ) (c : I → Index D →₀ ℂ)
-    (d : I →₀ ℕ) :
-    sourceVacuum D (T ^ (-2 : ℤ))
-        (∏ i, linearForm D (c i) ^ d i) =
-      (FactorialFockMetric.weight d : ℂ) *
-        gaussianCoefficient (covarianceMatrix D (T ^ (-2 : ℤ)) c) d := by
-  exact sourceVacuum_linearForms D (T ^ (-2 : ℤ)) c d
+private theorem rawModeOperator_eq (D : LatticeData) (T : ℂˣ)
+    (a : Index D) (m : ℤ) :
+    rawModeOperator D T a m =
+      (T : ℂ) ^ (-2 * m - 2 * (a.2 : ℤ) - 3) • (jetScalar a.2 m • current D a.1 m) := by
+  by_cases h : m < 0
+  · have he : 2 * (((-m - 1).toNat : ℕ) : ℤ) -
+        2 * (sourceWeight D a : ℤ) + 1 = -2 * m - 2 * (a.2 : ℤ) - 3 := by
+      rw [Int.toNat_of_nonneg (by omega : 0 ≤ -m - 1)]
+      simp only [sourceWeight, Nat.cast_add, Nat.cast_one]
+      ring
+    have hm : -((((-m - 1).toNat : ℕ) : ℤ)) - 1 = m := by
+      rw [Int.toNat_of_nonneg (by omega : 0 ≤ -m - 1)]
+      omega
+    simp only [rawModeOperator, if_pos h, nativeSourceOutputKernel, if_true,
+      hm, he, current, smul_smul]
+    rw [mul_comm]
+  · have hm : ((m.toNat : ℕ) : ℤ) = m := Int.toNat_of_nonneg (by omega)
+    have he : -2 * (((m.toNat : ℕ) : ℤ)) - 2 * (sourceWeight D a : ℤ) - 1 =
+        -2 * m - 2 * (a.2 : ℤ) - 3 := by
+      rw [hm]
+      simp only [sourceWeight, Nat.cast_add, Nat.cast_one]
+      ring
+    simp only [rawModeOperator, if_neg h, nativeSourceInputKernel, hm, he, current,
+      LatticeActualAnnihilation.annihilate, LatticeSugawaraCurrents.weightedPartial,
+      Finset.smul_sum, smul_smul]
+    apply Finset.sum_congr rfl
+    intro j hj
+    congr 1
+    ring
+
+/-- The raw source/output and source/input symbols act in literal normal
+order: creation on the left and annihilation on the original input. -/
+def nativeRawNormalTerm (D : LatticeData) (T : ℂˣ) :
+    (word : List (Index D)) → ModeTuple D word → Module.End ℂ (Oscillator D)
+  | [], _ => 1
+  | a :: w, m => if m.1 < 0 then
+      rawModeOperator D T a m.1 * nativeRawNormalTerm D T w m.2
+    else nativeRawNormalTerm D T w m.2 * rawModeOperator D T a m.1
+
+private theorem nativeRawNormalTerm_eq (D : LatticeData) (T : ℂˣ)
+    (word : List (Index D)) (m : ModeTuple D word) (p : Oscillator D) :
+    nativeRawNormalTerm D T word m p =
+      (T : ℂ) ^ (-2 * modeSum D word m - jetShift D word) •
+        (creationPolynomial D word m * rightPolynomial D word m p) := by
+  induction word generalizing p with
+  | nil => simp [nativeRawNormalTerm, modeSum, jetShift, creationPolynomial, rightPolynomial]
+  | cons a w ih =>
+    have he : -2 * modeSum D (a :: w) m - jetShift D (a :: w) =
+        (-2 * m.1 - 2 * (a.2 : ℤ) - 3) +
+          (-2 * modeSum D w m.2 - jetShift D w) := by
+      simp only [modeSum, jetShift]
+      ring
+    rw [he, zpow_add₀ (Units.ne_zero T)]
+    simp only [nativeRawNormalTerm, creationPolynomial, rightPolynomial]
+    split_ifs with h
+    · rw [Module.End.mul_apply, rawModeOperator_eq, ih]
+      simp only [LinearMap.smul_apply, map_smul, current, if_pos h,
+        LinearMap.mulLeft_apply, smul_mul_assoc, smul_smul]
+      simp [smul_mul_assoc, smul_smul, mul_assoc, mul_comm, mul_left_comm]
+    · rw [Module.End.mul_apply, ih, rawModeOperator_eq]
+      simp only [LinearMap.smul_apply, Module.End.mul_apply, map_smul,
+        mul_smul_comm, smul_smul]
+      simp [smul_smul, mul_assoc, mul_comm, mul_left_comm]
+
+/-- The actual full corrected-field Laurent entry is the finite Corr sum
+of the raw normal-mode operators. Both mixed raw blocks are consumed here,
+with arbitrary repeated source/input/output occupations and ground identity. -/
+theorem nativeNeutralLaurentEntry_raw_normal_expansion
+    (D : LatticeData) (T : ℂˣ) (d input output : Index D →₀ ℕ) :
+    nativeNeutralLaurentEntry D T d input output =
+      ∑ shift ∈ (Corr D 0 (monomial d 1)).support,
+        ∑ mon ∈ ((Corr D 0 (monomial d 1)) shift).support,
+          ((Corr D 0 (monomial d 1)) shift).coeff mon * (T : ℂ) ^ (-2 * (shift : ℤ)) *
+            ∑ m ∈ nativeModeBox D (nativeNeutralModeProjection D output input) (occurrences D mon),
+              (nativeRawNormalTerm D T (occurrences D mon) m (monomial input 1)).coeff output := by
+  classical
+  let ev : (ℤ →₀ ℂ) →ₗ[ℂ] ℂ :=
+    Finsupp.lsum ℂ (fun e => (T : ℂ) ^ e • LinearMap.id)
+  have hev (q : ℤ →₀ ℂ) : ev q = q.sum (fun e c => c * (T : ℂ) ^ e) := by
+    rw [Finsupp.lsum_apply]
+    apply Finset.sum_congr rfl
+    intro e he
+    simp [mul_comm]
+  rw [nativeNeutralLaurentEntry, ← hev]
+  simp only [nativeNeutralLaurentCoefficients, map_sum, Finsupp.lsum_single,
+    LinearMap.smul_apply, LinearMap.id_apply, nativeRawNormalTerm_eq, coeff_smul,
+    smul_eq_mul, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro shift hs
+  apply Finset.sum_congr rfl
+  intro mon hm
+  apply Finset.sum_congr rfl
+  intro m hmem
+  have he : -2 * (shift : ℤ) - 2 * modeSum D (occurrences D mon) m -
+        jetShift D (occurrences D mon) =
+      -2 * (shift : ℤ) + (-2 * modeSum D (occurrences D mon) m -
+        jetShift D (occurrences D mon)) := by ring
+  rw [he, zpow_add₀ (Units.ne_zero T)]
+  ring
 
 #print axioms nativeNeutralCoefficient_source
-#print axioms nativeNeutralCorrection_gaussian
 #print axioms nativeNeutralCoefficient_shift_expansion
 #print axioms nativeNeutralCoefficient_native_expansion
 
