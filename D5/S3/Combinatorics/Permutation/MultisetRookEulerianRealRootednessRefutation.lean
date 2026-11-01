@@ -7,8 +7,10 @@
    digest: Remaining-content counting for the full multiset rook-Eulerian polynomial. -/
 
 import D5.S3.Combinatorics.Permutation.MultisetRookEulerianInterlacingRefutation
+import D5.S3.Zeros.Jensen.SourceJensenPositiveExtension
 import Mathlib.Data.Multiset.AddSub
 import Mathlib.Data.List.Forall2
+import Mathlib.Data.List.GetD
 
 /-! Exact completion counts for the original full word polynomial. -/
 
@@ -69,7 +71,6 @@ private theorem mem_completions (rows : List ℕ) (m : Multiset ℕ) (w : List �
           · rintro ⟨hm, hrow, htail⟩
             have hj : j ∈ m := hm ▸ (by simp)
             refine ⟨j, ⟨hj, hrow⟩, w, (ih _ _).mpr ⟨?_, htail⟩, rfl, rfl⟩
-            change (w : Multiset ℕ) = m.erase j
             rw [← hm]
             exact (Multiset.erase_cons_head j (w : Multiset ℕ)).symm
 
@@ -100,7 +101,8 @@ private theorem asc_cons_cons (i j : ℕ) (w : List ℕ) :
     asc (i :: j :: w) = (if i < j then 1 else 0) + asc (j :: w) := by
   simp only [asc, List.length_cons, Nat.add_sub_cancel, Finset.card_filter]
   rw [Finset.sum_range_succ']
-  simp [List.getD_cons_succ, add_comm]
+  simp only [List.getD_cons_succ, List.getD_cons_zero, Nat.zero_add]
+  omega
 
 private theorem weight_cons (last : Option ℕ) (j : ℕ) (w : List ℕ) :
     weight last (j :: w) = X ^ edge last j * X ^ asc (j :: w) := by
@@ -137,13 +139,13 @@ private theorem completions_eq_W {n k : ℕ} (lam : Fin n → ℕ) (α : Fin k �
   simp only [List.length_ofFn]
   constructor
   · rintro ⟨_, h⟩ i
-    simpa only [List.get_ofFn, List.get_eq_getElem,
+    simpa only [List.get_eq_getElem, List.getElem_ofFn,
       List.getD_eq_getElem _ _ (by omega : i.val < w.length)] using
       h i.val i.isLt (by omega)
   · intro h
     refine ⟨hlen.symm, ?_⟩
     intro i hi hw
-    simpa only [List.get_ofFn, List.get_eq_getElem,
+    simpa only [List.get_eq_getElem, List.getElem_ofFn,
       List.getD_eq_getElem _ _ hw] using h ⟨i, hi⟩
 
 /-- Exact full-R counting, under the source's total-content hypothesis.
@@ -158,5 +160,173 @@ theorem count_eq_R {n k : ℕ} (lam : Fin n → ℕ) (α : Fin k → ℕ)
   simp only [Polynomial.map_sum, weight_none, Polynomial.map_pow, Polynomial.map_X]
 
 #print axioms count_eq_R
+
+private def board : Fin 120 → ℕ := fun i =>
+  if i.val < 3 then 2 else if i.val < 7 then 3 else
+    if i.val < 17 then 4 else if i.val < 19 then 5 else 6
+
+private def content : Fin 6 → ℕ := ![6, 1, 4, 8, 1, 100]
+
+private def rows : List ℕ :=
+  List.replicate 3 2 ++ List.replicate 4 3 ++ List.replicate 10 4 ++
+    List.replicate 2 5 ++ List.replicate 101 6
+
+private def bag (a b c d e f : ℕ) : Multiset ℕ :=
+  ((List.replicate a 1 ++ List.replicate b 2 ++ List.replicate c 3 ++
+    List.replicate d 4 ++ List.replicate e 5 ++ List.replicate f 6) : List ℕ)
+
+private theorem cert_0 : count (rows.drop 120) (bag 0 0 0 0 0 0) (some 6) =
+    (1 : ℕ[X]) := by
+  norm_num [count, rows, bag]
+
+private theorem cert_1 : count (rows.drop 119) (bag 0 0 0 0 0 1) (some 6) =
+    (1 : ℕ[X]) := by
+  have hs : (bag 0 0 0 0 0 1).toFinset.filter (fun j => 0 < j ∧ j ≤ 6) = {6} := by decide +kernel
+  rw [count, hs]
+  norm_num only [Finset.sum_insert, Finset.sum_singleton, Finset.sum_empty,
+    Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty]
+  rw [cert_0]
+  norm_num [edge]
+  <;> ring
+
+private theorem cert_2 : count (rows.drop 118) (bag 0 0 0 0 0 2) (some 6) =
+    (1 : ℕ[X]) := by
+  have hs : (bag 0 0 0 0 0 2).toFinset.filter (fun j => 0 < j ∧ j ≤ 6) = {6} := by decide +kernel
+  rw [count, hs]
+  norm_num only [Finset.sum_insert, Finset.sum_singleton, Finset.sum_empty,
+    Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty]
+  rw [cert_1]
+  norm_num [edge]
+  <;> ring
+
+private theorem cert_3 : count (rows.drop 117) (bag 0 0 0 0 0 3) (some 6) =
+    (1 : ℕ[X]) := by
+  have hs : (bag 0 0 0 0 0 3).toFinset.filter (fun j => 0 < j ∧ j ≤ 6) = {6} := by decide +kernel
+  rw [count, hs]
+  norm_num only [Finset.sum_insert, Finset.sum_singleton, Finset.sum_empty,
+    Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty]
+  rw [cert_2]
+  norm_num [edge]
+  <;> ring
+
+private theorem cert_4 : count (rows.drop 116) (bag 0 0 0 0 0 4) (some 6) =
+    (1 : ℕ[X]) := by
+  have hs : (bag 0 0 0 0 0 4).toFinset.filter (fun j => 0 < j ∧ j ≤ 6) = {6} := by decide +kernel
+  rw [count, hs]
+  norm_num only [Finset.sum_insert, Finset.sum_singleton, Finset.sum_empty,
+    Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty]
+  rw [cert_3]
+  norm_num [edge]
+  <;> ring
+
+private theorem cert_5 : count (rows.drop 115) (bag 0 0 0 0 0 5) (some 6) =
+    (1 : ℕ[X]) := by
+  have hs : (bag 0 0 0 0 0 5).toFinset.filter (fun j => 0 < j ∧ j ≤ 6) = {6} := by decide +kernel
+  rw [count, hs]
+  norm_num only [Finset.sum_insert, Finset.sum_singleton, Finset.sum_empty,
+    Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty]
+  rw [cert_4]
+  norm_num [edge]
+  <;> ring
+
+private theorem cert_6 : count (rows.drop 114) (bag 0 0 0 0 0 6) (some 6) =
+    (1 : ℕ[X]) := by
+  have hs : (bag 0 0 0 0 0 6).toFinset.filter (fun j => 0 < j ∧ j ≤ 6) = {6} := by decide +kernel
+  rw [count, hs]
+  norm_num only [Finset.sum_insert, Finset.sum_singleton, Finset.sum_empty,
+    Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty]
+  rw [cert_5]
+  norm_num [edge]
+  <;> ring
+
+private theorem cert_7 : count (rows.drop 113) (bag 0 0 0 0 0 7) (some 6) =
+    (1 : ℕ[X]) := by
+  have hs : (bag 0 0 0 0 0 7).toFinset.filter (fun j => 0 < j ∧ j ≤ 6) = {6} := by decide +kernel
+  rw [count, hs]
+  norm_num only [Finset.sum_insert, Finset.sum_singleton, Finset.sum_empty,
+    Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty]
+  rw [cert_6]
+  norm_num [edge]
+  <;> ring
+
+private theorem cert_8 : count (rows.drop 112) (bag 0 0 0 0 0 8) (some 6) =
+    (1 : ℕ[X]) := by
+  have hs : (bag 0 0 0 0 0 8).toFinset.filter (fun j => 0 < j ∧ j ≤ 6) = {6} := by decide +kernel
+  rw [count, hs]
+  norm_num only [Finset.sum_insert, Finset.sum_singleton, Finset.sum_empty,
+    Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty]
+  rw [cert_7]
+  norm_num [edge]
+  <;> ring
+
+private theorem cert_9 : count (rows.drop 111) (bag 0 0 0 0 0 9) (some 6) =
+    (1 : ℕ[X]) := by
+  have hs : (bag 0 0 0 0 0 9).toFinset.filter (fun j => 0 < j ∧ j ≤ 6) = {6} := by decide +kernel
+  rw [count, hs]
+  norm_num only [Finset.sum_insert, Finset.sum_singleton, Finset.sum_empty,
+    Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty]
+  rw [cert_8]
+  norm_num [edge]
+  <;> ring
+
+private theorem cert_10 : count (rows.drop 110) (bag 0 0 0 0 0 10) (some 6) =
+    (1 : ℕ[X]) := by
+  have hs : (bag 0 0 0 0 0 10).toFinset.filter (fun j => 0 < j ∧ j ≤ 6) = {6} := by decide +kernel
+  rw [count, hs]
+  norm_num only [Finset.sum_insert, Finset.sum_singleton, Finset.sum_empty,
+    Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty]
+  rw [cert_9]
+  norm_num [edge]
+  <;> ring
+
+private theorem cert_11 : count (rows.drop 109) (bag 0 0 0 0 0 11) (some 6) =
+    (1 : ℕ[X]) := by
+  have hs : (bag 0 0 0 0 0 11).toFinset.filter (fun j => 0 < j ∧ j ≤ 6) = {6} := by decide +kernel
+  rw [count, hs]
+  norm_num only [Finset.sum_insert, Finset.sum_singleton, Finset.sum_empty,
+    Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty]
+  rw [cert_10]
+  norm_num [edge]
+  <;> ring
+
+private theorem cert_12 : count (rows.drop 108) (bag 0 0 0 0 0 12) (some 6) =
+    (1 : ℕ[X]) := by
+  have hs : (bag 0 0 0 0 0 12).toFinset.filter (fun j => 0 < j ∧ j ≤ 6) = {6} := by decide +kernel
+  rw [count, hs]
+  norm_num only [Finset.sum_insert, Finset.sum_singleton, Finset.sum_empty,
+    Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty]
+  rw [cert_11]
+  norm_num [edge]
+  <;> ring
+
+private theorem cert_13 : count (rows.drop 107) (bag 0 0 0 0 0 13) (some 6) =
+    (1 : ℕ[X]) := by
+  have hs : (bag 0 0 0 0 0 13).toFinset.filter (fun j => 0 < j ∧ j ≤ 6) = {6} := by decide +kernel
+  rw [count, hs]
+  norm_num only [Finset.sum_insert, Finset.sum_singleton, Finset.sum_empty,
+    Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty]
+  rw [cert_12]
+  norm_num [edge]
+  <;> ring
+
+private theorem cert_14 : count (rows.drop 106) (bag 0 0 0 0 0 14) (some 6) =
+    (1 : ℕ[X]) := by
+  have hs : (bag 0 0 0 0 0 14).toFinset.filter (fun j => 0 < j ∧ j ≤ 6) = {6} := by decide +kernel
+  rw [count, hs]
+  norm_num only [Finset.sum_insert, Finset.sum_singleton, Finset.sum_empty,
+    Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty]
+  rw [cert_13]
+  norm_num [edge]
+  <;> ring
+
+private theorem cert_15 : count (rows.drop 105) (bag 0 0 0 0 0 15) (some 6) =
+    (1 : ℕ[X]) := by
+  have hs : (bag 0 0 0 0 0 15).toFinset.filter (fun j => 0 < j ∧ j ≤ 6) = {6} := by decide +kernel
+  rw [count, hs]
+  norm_num only [Finset.sum_insert, Finset.sum_singleton, Finset.sum_empty,
+    Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty]
+  rw [cert_14]
+  norm_num [edge]
+  <;> ring
 
 end D5.S3.Combinatorics.Permutation.MultisetRookEulerianRealRootednessRefutation

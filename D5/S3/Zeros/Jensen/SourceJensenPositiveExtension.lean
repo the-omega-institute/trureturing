@@ -163,10 +163,10 @@ private theorem q_ratio_formula (n : ℕ) (q : ℝ[X]) (a : ℝ)
   field_simp [hd] at hv ⊢
   linear_combination -hv
 
-private def LaguerreAt (p : ℝ[X]) (x : ℝ) : Prop :=
+def LaguerreAt (p : ℝ[X]) (x : ℝ) : Prop :=
   0 ≤ p.derivative.eval x ^ 2 - p.eval x * p.derivative.derivative.eval x
 
-private theorem laguerre_splits (p : ℝ[X]) (hp : p.Splits) (x : ℝ) : LaguerreAt p x := by
+theorem laguerre_splits (p : ℝ[X]) (hp : p.Splits) (x : ℝ) : LaguerreAt p x := by
   classical
   by_cases hx : p.eval x = 0
   · simp [LaguerreAt, hx, sq_nonneg]
