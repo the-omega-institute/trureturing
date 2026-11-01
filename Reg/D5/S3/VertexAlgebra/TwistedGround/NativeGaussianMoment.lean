@@ -5,6 +5,7 @@ import D5.S3.VertexAlgebra.TwistedGround.NativeGaussianMoment
 /-! Dependent-family evidence for the full finite-mode Gaussian insertion equation. -/
 
 set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 open scoped BigOperators
 open LeanInformationAudit
@@ -68,14 +69,16 @@ private theorem rejected_fails : ¬ arena.{u}.Law rejected := by
   intro h
   have hh := h unitParameters 0
   dsimp only [unitParameters] at hh
-  change nativeMoment (fun _ _ : PUnit.{u+1} => 1) (Finsupp.single PUnit.unit 1) = 1 at hh
-  rw [nativeMoment, gaussianCoefficient_odd _ _ (by simp), mul_zero] at hh
+  change nativeMoment (fun _ _ : PUnit.{u+1} => 1)
+    ((0 : PUnit.{u+1} →₀ ℕ) + Finsupp.single PUnit.unit 1) = 1 at hh
+  rw [zero_add, nativeMoment, gaussianCoefficient_odd _ _ (by simp), mul_zero] at hh
   exact zero_ne_one hh
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro role
   refine ⟨unitParameters, 0, Finsupp.single PUnit.unit 1, ?_⟩
   intro h
+  dsimp only [unitParameters] at h
   change (∑ j : PUnit.{u+1}, ((0 : PUnit.{u+1} →₀ ℕ) j : ℂ) * 1 *
       nativeMoment (fun _ _ : PUnit.{u+1} => 1) (0 - Finsupp.single j 1)) =
     ∑ j : PUnit.{u+1}, ((Finsupp.single PUnit.unit 1 : PUnit.{u+1} →₀ ℕ) j : ℂ) * 1 *
