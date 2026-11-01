@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling
+/- GID: D5/S3/VertexAlgebra/LatticeMatterGhostCoupling
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling
+   mirror-B: D5/B/S3/VertexAlgebra/LatticeMatterGhostCoupling
    mirror-E: none(waiver:algebraic-matter-ghost-coupling)
    anchors: []
    utility: none

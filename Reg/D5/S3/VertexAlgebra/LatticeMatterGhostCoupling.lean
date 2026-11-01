@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
-import D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostCoupling
+import D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
 import Mathlib.LinearAlgebra.TensorProduct.Associator
 
 /-! Dependent-family registrations for the actual tensor coupling and Ward identities. -/

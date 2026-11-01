@@ -1,5 +1,5 @@
-import Reg.D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostCoupling
-import D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostCovariance
+import Reg.D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
+import D5.S3.VertexAlgebra.LatticeMatterGhostCovariance
 
 /-! Dependent-family registration for the original-operator matter anomaly. -/
 
