@@ -89,8 +89,9 @@ theorem resolvent_tendsto (A B : Data I) :
 mixed column. This does not replace the finite complement by zero. -/
 theorem mixed_complement_tendsto (r s : ℓ²(I, ℂ)) :
     Tendsto (fun F : Finset I => bilinear r ((1 - coordinateProjection F) s)) atTop (𝓝 0) := by
-  have h := (bilinear r).continuous.tendsto 0 |>.comp
-    (tendsto_const_nhds.sub (projection_vector_tendsto s))
+  have hz : Tendsto (fun F : Finset I => s - coordinateProjection F s) atTop (𝓝 0) := by
+    simpa using tendsto_const_nhds.sub (projection_vector_tendsto s)
+  have h := (bilinear r).continuous.tendsto 0 |>.comp hz
   simpa [ContinuousLinearMap.sub_apply] using h
 
 /-- Every ordered effective entry converges, including the exact finite

@@ -167,7 +167,7 @@ theorem exists_positive_scale (P : Matrix X X ℂ) (A : Data I)
   have hzero : ‖operator P A R (0 : ℂ)‖ < 1 := by
     simpa [operator] using (base_norm (X := X) A).trans_lt A.q_lt_one
   have he : ∀ᶠ t : ℝ in 𝓝 0, ‖operator P A R (t : ℂ)‖ < 1 :=
-    (isOpen_Iio.mem_nhds hzero).preimage (hc.continuousAt)
+    hc.continuousAt.preimage_mem_nhds (isOpen_Iio.mem_nhds hzero)
   obtain ⟨ε,hε,hball⟩ := Metric.mem_nhds_iff.mp he
   refine ⟨ε / 2, by positivity, hball ?_⟩
   simpa [Real.dist_eq, abs_of_pos (half_pos hε)] using half_lt_self hε

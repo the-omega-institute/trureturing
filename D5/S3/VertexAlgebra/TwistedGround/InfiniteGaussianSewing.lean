@@ -62,7 +62,7 @@ private def occupationEquiv (F : Finset I) :
 private theorem row_finite (P : Matrix X X ℂ) (A : Data I) (R : X → ℓ²(I, ℂ))
     (d : Occupation X) (F : Finset I) (n : Occupation F) :
     row P A R d (n.mapDomain (fun i : F => i.val)) =
-      gaussianCoefficient (Matrix.fromBlocks P (fun x i : F => R x i.val)
+      gaussianCoefficient (Matrix.fromBlocks P (fun x (i : F) => R x i.val)
         (fun i : F => fun x => R x i.val) (A.block F)) (d.sumElim n) := by
   let e : X ⊕ F → X ⊕ I := Sum.map id Subtype.val
   have he : Function.Injective e := Sum.map_injective Function.injective_id Subtype.val_injective
@@ -152,7 +152,7 @@ def effectiveKernel (P : Matrix X X ℂ) (Q : Matrix Y Y ℂ) (A B : Data I)
 private theorem finite_bilinear {U : Type*} {V : Type*} [Fintype U] [Fintype V]
     (F : Finset I) (R : U → ℓ²(I, ℂ)) (S : V → ℓ²(I, ℂ))
     (M : Matrix F F ℂ) (x : U) (y : V) :
-    ((fun x i : F => R x i.val) * M * (fun i : F => fun y => S y i.val)) x y =
+    ((fun x (i : F) => R x i.val) * M * (fun i : F => fun y => S y i.val)) x y =
       bilinear (R x) (embedded F M (S y)) := by
   rw [bilinear_embedded]
   simp only [Matrix.mul_apply, Finset.sum_mul]
@@ -173,7 +173,7 @@ private theorem cutoff_mixed_transpose (P : Matrix X X ℂ) (Q : Matrix Y Y ℂ)
     simp only [← Matrix.nonsing_inv_eq_ringInverse, Matrix.transpose_nonsing_inv,
       Matrix.transpose_sub, Matrix.transpose_one, Matrix.transpose_mul, hA, hB]
   have h := congrArg (fun M : Matrix Y X ℂ => M y x)
-    (Matrix.transpose_mul ((fun x i : F => R x i.val) *
+    (Matrix.transpose_mul ((fun x (i : F) => R x i.val) *
       (1 - B.block F * A.block F)⁻¹ʳ) (fun i : F => fun y => S y i.val))
   simpa [cutoffKernel, FiniteGaussianSewing.effectiveKernel,
     Matrix.transpose_mul, hN, Matrix.mul_assoc] using h.symm
