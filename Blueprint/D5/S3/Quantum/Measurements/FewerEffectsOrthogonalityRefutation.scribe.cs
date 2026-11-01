@@ -92,7 +92,10 @@ internal sealed class FewerEffectsOrthogonalityRefutationDocument : IScribeDocum
                             + "If claim held, its instance at n = 4, d = 10 and F would imply "
                             + "12 ≤ 10, a contradiction. The proposed minimum is therefore false. "
                             + "This comparison does not assert the minimum among all such POVMs."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("liu-debrota-2021-fewer-effects-orthogonality"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(
