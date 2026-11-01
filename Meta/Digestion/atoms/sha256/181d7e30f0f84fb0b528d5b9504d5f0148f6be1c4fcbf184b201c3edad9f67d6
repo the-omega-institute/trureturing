@@ -1,0 +1,55 @@
+**数学引文（本来源的剩余支持合并与 Bayes 消费）。** 以下计算作为定理 25.2–25.3 的条件律推导。字符基使用式 (24.23) 与 [O'Donnell 的既有拥有者][F24]；正概率条件化使用 [观察更新卷定义 2.1][U24]，逐输出分支及固定参数后验沿用 [输出分辨闭包卷 §§15–17][I24]。一般未来商仍归 [输出未来商卷 §6 及限定 Q6–Q7][Q24]。这些工具只在式 (25.1) 的当前共同来源上应用。
+
+对 $0\le t\le n$，令 $J_t=\{t+1,\ldots,n\}$，空字符为一；对每个 $U\subseteq J_t$ 定义
+
+$$
+\begin{aligned}
+c_t(U;h)
+&=\mathbf1_{U=\varnothing}
++\sum_{i:K_i\cap J_t=U}\theta_i\chi_{K_i\cap[t]}(h),\\
+Z_t(h)&=c_t(\varnothing;h),\qquad
+\lambda_t(U;h)=\frac{c_t(U;h)}{Z_t(h)}.
+\end{aligned}
+\tag{25.2}
+$$
+
+空和为零，$\lambda_t(\varnothing;h)=1$。先合并相同的剩余支持，再归一化；原 $T_i$ 两两不同不保证其剩余支持仍不同。已耗尽的关系进入 $Z_t$，合并后的非空系数也可以相消。准确的前缀质量与剩余律为
+
+$$
+\begin{aligned}
+\Pr(X_{1:t}=h)&=2^{-t}Z_t(h),\qquad Z_t(h)\ge1-\rho>0,\\
+\nu_t^h(y)
+&=2^{-(n-t)}\sum_{U\subseteq J_t}\lambda_t(U;h)\chi_U(y).
+\end{aligned}
+\tag{25.3}
+$$
+
+证明中的参数对应如下。固定前缀后，每项字符分解为 $\chi_{K_i\cap[t]}(h)\chi_{K_i\cap J_t}(y)$。对未读位求和时，非空剩余字符总和为零，空字符总和为 $2^{n-t}$，得到第一式。空支持的参数子和绝对值不超过 $\rho$，给正分母。把同一联合质量除以前缀质量并分组得到第二式。式 (25.1) 的每个完整串质量至少为 $2^{-n}(1-\rho)$，所以这些前缀和它们的全部后续位分支都具有正质量。
+
+同一阶段的两个实际前缀 $h,h'$ 有相同的完整剩余律，当且仅当
+
+$$
+\lambda_t(U;h)=\lambda_t(U;h')
+\qquad(\varnothing\ne U\subseteq J_t).
+\tag{25.4}
+$$
+
+充分性由式 (25.3) 得到；必要性用字符正交，从该律取期望恢复 $\lambda_t(U;h)=\sum_y\nu_t^h(y)\chi_U(y)$。这是全部合并系数的判据，不能逐项恢复已合并的原关系。$t=s$ 时没有耗尽的 $T_i$，$Z_s=1$，剩余系数正好为式 (24.22) 的 $\theta_i\chi_{P_i}(a)$；定理 24.5 的 $2^d$ 类只在这个切口直接适用。$t=n$ 没有非空剩余支持，所有完整历史都给 $\delta_\varepsilon$。
+
+设 $t<n$、$j=t+1$，实际取得下一响应 $z=X_j$，令 $\epsilon_z=(-1)^z$。响应概率和后继系数为
+
+$$
+\begin{aligned}
+\pi_t(z\mid h)&=\frac{1+\epsilon_z\lambda_t(\{j\};h)}2>0,\\
+\lambda_{t+1}(V;hz)
+&=\frac{\lambda_t(V;h)+\epsilon_z\lambda_t(V\cup\{j\};h)}
+{1+\epsilon_z\lambda_t(\{j\};h)}
+\qquad(V\subseteq J_{t+1}).
+\end{aligned}
+\tag{25.5}
+$$
+
+证明。对式 (25.3) 固定 $X_j=z$，把不含 $j$ 的字符与含 $j$ 的字符配对。对其余位求和只剩常数项 $1+\epsilon_z\lambda_t(\{j\};h)$，故得到响应概率；除以该正概率得到后继公式。$V=\varnothing$ 时分子与分母相同，仍归一化为一。相同当前阶段律因而给相同的两支概率，在同一个实际响应后给相同后继律。反向也可从两支概率与后继律重构当前律：$\nu_t^h(z,y)=\pi_t(z\mid h)\nu_{t+1}^{hz}(y)$。所以带阶段的预测类及其逐响应后继组成良定义的有限表；公式不重新访问已遗忘历史，也不生成或取得 $z$。这只证明约定 25.1 所假定顺序响应下的预测更新闭合，不证明取得接口的供应或其他动作菜单、干预与噪声接口的相容性。证毕。
+
+一般预测等价及同符号后继的成熟框架还见 [Shalizi–Crutchfield 的文献条目](../../../Library/Dynamics/shalizi2001computational.md)及原预印本 [Definition 5、Lemma 5](https://arxiv.org/html/cond-mat/9907176v2)。其原域是平稳离散时间过程；这里使用有限带阶段的纸面计算，不转用其熵最小性或几乎处处唯一性定理。下述来源消费与具体资源界为 repo-derived，不主张一般 Bayes、预测状态或图编码理论的文献新意。
+
