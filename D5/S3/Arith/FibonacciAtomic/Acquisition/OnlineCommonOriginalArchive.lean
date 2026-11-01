@@ -167,7 +167,6 @@ inductive TapeEvent where
   | compute
   | action : Bool → TapeEvent
   | reply : ℕ → ℕ → TapeEvent
-  deriving DecidableEq
 
 def stamp (H : ℕ) : Event → TapeEvent
   | .compute => .compute
