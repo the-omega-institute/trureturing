@@ -38,6 +38,18 @@ internal sealed class EntropyProductionCoherenceDeletionIdentityDocument
                         + "coordinatewise complex conjugation."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("basis-pinching-entropy"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity."
+                        + "von_neumann_entropy_basisPinchingState"),
+                H("Entropy of the coordinate pinching"),
+                StatementSource.FromAuthor(PinchingEntropyFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The entropy of coordinate-basis pinching is the negative sum of each "
+                        + "real diagonal entry times its real logarithm."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("entropy-production-coherence-deletion-identity"),
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity."
@@ -83,6 +95,21 @@ internal sealed class EntropyProductionCoherenceDeletionIdentityDocument
             Forall, Sp, a, Colon, Sp, coordinates, Comma, Sp,
             Call("diagonalStarAlgHom", Call("star", a)), Sp, Eq, Sp,
             Call("star", Call("diagonalStarAlgHom", a))));
+    }
+
+    private static Formula PinchingEntropyFormula()
+    {
+        Formula carrier = F.Id("n"), state = Rho, index = F.Id("i");
+        Formula diagonal = Call("Re", Call("densityMatrix", state, index, index));
+        Formula summand = Seq(diagonal, Sp, Call("log", diagonal));
+        return Disp(Seq(
+            Forall, Sp, carrier, Colon, Sp, Call("Type"), Comma, Sp,
+            OpenBracket, Call("Fintype", carrier), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", carrier), CloseBracket, Comma, Sp,
+            Forall, Sp, state, Colon, Sp, Call("DensityState", carrier), Comma, Sp,
+            Call("vonNeumannEntropy", Call("basisPinchingState", state)), Sp, Eq, Sp,
+            Minus, Open, Sum, Underscore, Grp(index, Sp, InMacro, Sp, carrier), Sp,
+            summand, Close));
     }
 
     private static Formula IdentityFormula()

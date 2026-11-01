@@ -7,7 +7,8 @@
    digest: A two-level qudit state refutes the mixed-state inverse sumset bound. -/
 
 import D5.S3.Observer.MatrixUnitCertificate
-import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Quantum.Divergence.GibbsVariationalIdentity
+import D5.S3.Quantum.Subentropy.StrongSubadditivityRefutation
 import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 
 /-! The single-qudit reading of Bu--Gu--Jaffe, arXiv:2401.14385v3,
@@ -27,6 +28,11 @@ open D5.S3.Observer.WindowRegister
 open D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
 open D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
+open D5.S3.Quantum.Divergence.GibbsVariationalIdentity
+open D5.S3.Quantum.Subentropy.StrongSubadditivityRefutation (diagonalState)
+open D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
+open D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
+open D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
 
 namespace D5.S3.Quantum.Magic.MixedStateInverseSumsetRefutation
 
@@ -90,49 +96,16 @@ private def rhoWeights (i : ZMod 7) : ℝ := if i = 0 ∨ i = 1 then 1 / 2 else 
 private def tauWeights (i : ZMod 7) : ℝ :=
   if i = 0 ∨ i = 4 then 1 / 4 else if i = 2 then 1 / 2 else 0
 
-private lemma sum_seven {a : Type*} [AddCommMonoid a] (f : ZMod 7 → a) :
-    ∑ i, f i = f 0 + f 1 + f 2 + f 3 + f 4 + f 5 + f 6 := by
-  rw [show (univ : Finset (ZMod 7)) = {0, 1, 2, 3, 4, 5, 6} from by decide]
-  simp -congrConsts +decide [sum_insert, sum_singleton]
-  ac_rfl
-
-private lemma rho_density :
-    0 ≤ CStarMatrix.ofMatrix (diagonal fun i => (rhoWeights i : ℂ)) ∧
-      trace (diagonal fun i => (rhoWeights i : ℂ)) = 1 := by
-  constructor
-  · apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
-    exact (Matrix.PosSemidef.diagonal (fun i => by
-      delta rhoWeights; split_ifs <;> norm_num [Complex.le_def])).nonneg
-  · delta rhoWeights
-    simp -congrConsts +decide [trace_diagonal, sum_seven]
-    norm_num
-
-private lemma sigma_density :
-    0 ≤ CStarMatrix.ofMatrix ((7 : ℂ)⁻¹ • (1 : Matrix (ZMod 7) (ZMod 7) ℂ)) ∧
-      trace ((7 : ℂ)⁻¹ • (1 : Matrix (ZMod 7) (ZMod 7) ℂ)) = 1 := by
-  constructor
-  · apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
-    rw [← diagonal_one, ← diagonal_smul]
-    exact (Matrix.PosSemidef.diagonal (fun _ => by norm_num [Complex.le_def])).nonneg
-  · norm_num [trace_smul, trace_one]
-
-private lemma tau_density :
-    0 ≤ CStarMatrix.ofMatrix (diagonal fun i => (tauWeights i : ℂ)) ∧
-      trace (diagonal fun i => (tauWeights i : ℂ)) = 1 := by
-  constructor
-  · apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
-    exact (Matrix.PosSemidef.diagonal (fun i => by
-      delta tauWeights; split_ifs <;> norm_num [Complex.le_def])).nonneg
-  · delta tauWeights
-    simp -congrConsts +decide [trace_diagonal, sum_seven]
-    norm_num
-
 private def rho : DensityState (ZMod 7) :=
-  ⟨CStarMatrix.ofMatrix (diagonal fun i => (rhoWeights i : ℂ)), rho_density⟩
+  diagonalState rhoWeights
+    (fun i => by delta rhoWeights; split_ifs <;> norm_num)
+    (by delta rhoWeights; simp -congrConsts +decide [ZMod, Fin.sum_univ_seven]; norm_num)
 private def sigma : DensityState (ZMod 7) :=
-  ⟨CStarMatrix.ofMatrix ((7 : ℂ)⁻¹ • (1 : Matrix (ZMod 7) (ZMod 7) ℂ)), sigma_density⟩
+  gibbsState 0 (IsSelfAdjoint.zero _)
 private def tau : DensityState (ZMod 7) :=
-  ⟨CStarMatrix.ofMatrix (diagonal fun i => (tauWeights i : ℂ)), tau_density⟩
+  diagonalState tauWeights
+    (fun i => by delta tauWeights; split_ifs <;> norm_num)
+    (by delta tauWeights; simp -congrConsts +decide [ZMod, Fin.sum_univ_seven]; norm_num)
 
 private lemma convolution_eq : convolution (2 : ZMod 7) 2 rho.1 rho.1 = tau.1 := by
   let u : Matrix (ZMod 7 × ZMod 7) (ZMod 7 × ZMod 7) ℂ := fun a b =>
@@ -146,32 +119,36 @@ private lemma convolution_eq : convolution (2 : ZMod 7) 2 rho.1 rho.1 = tau.1 :=
   ext a c
   delta rhoWeights tauWeights
   simp -congrConsts +decide [partialTraceRight, Matrix.mul_apply,
-    conjTranspose_apply, Fintype.sum_prod_type, sum_seven,
+    conjTranspose_apply, Fintype.sum_prod_type, ZMod, Fin.sum_univ_seven,
     diagonal_apply, u]
   fin_cases a <;> fin_cases c <;>
     norm_num [← (ZMod.val_injective 7).eq_iff, ZMod.val_add, ZMod.val_ofNat,
       ZMod.val_zero, ZMod.val_one_eq_one_mod, ZMod.val]
 
 private lemma rho_entropy : vonNeumannEntropy rho = Real.log 2 := by
-  unfold vonNeumannEntropy
-  change -(trace ((diagonal fun i => (rhoWeights i : ℂ)) *
-    CFC.log (diagonal fun i => (rhoWeights i : ℂ)))).re = _
-  rw [D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.cfc_log_diagonal,
-    diagonal_mul_diagonal, trace_diagonal, sum_seven]
-  delta rhoWeights
-  simp -congrConsts +decide [Complex.log_re]
-  ring
+  convert (von_neumann_entropy_basisPinchingState rho) using 1
+  · congr 1
+    apply Subtype.ext
+    change CStarMatrix.ofMatrix (diagonal fun i => (rhoWeights i : ℂ)) =
+      CStarMatrix.ofMatrix (diagonal (Matrix.diag (diagonal fun i => (rhoWeights i : ℂ))))
+    rw [Matrix.diag_diagonal]
+  · change Real.log 2 = -(∑ i : ZMod 7, rhoWeights i * Real.log (rhoWeights i))
+    delta rhoWeights
+    simp -congrConsts +decide [ZMod, Fin.sum_univ_seven]
+    ring
 
 private lemma tau_entropy : vonNeumannEntropy tau = 3 / 2 * Real.log 2 := by
-  unfold vonNeumannEntropy
-  change -(trace ((diagonal fun i => (tauWeights i : ℂ)) *
-    CFC.log (diagonal fun i => (tauWeights i : ℂ)))).re = _
-  rw [D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.cfc_log_diagonal,
-    diagonal_mul_diagonal, trace_diagonal, sum_seven]
-  delta tauWeights
-  simp -congrConsts +decide [Complex.log_re]
-  rw [show (4 : ℝ) = 2 ^ 2 from by norm_num, Real.log_pow]
-  ring
+  convert (von_neumann_entropy_basisPinchingState tau) using 1
+  · congr 1
+    apply Subtype.ext
+    change CStarMatrix.ofMatrix (diagonal fun i => (tauWeights i : ℂ)) =
+      CStarMatrix.ofMatrix (diagonal (Matrix.diag (diagonal fun i => (tauWeights i : ℂ))))
+    rw [Matrix.diag_diagonal]
+  · change 3 / 2 * Real.log 2 = -(∑ i : ZMod 7, tauWeights i * Real.log (tauWeights i))
+    delta tauWeights
+    simp -congrConsts +decide [ZMod, Fin.sum_univ_seven]
+    rw [show (4 : ℝ) = 2 ^ 2 from by norm_num, Real.log_pow]
+    ring
 
 private lemma weyl_diagonal (p q i : ZMod 7) :
     weyl 7 p q i i = if q = 0 then windowRoot 7 ^ (i.val * p.val) else 0 := by
@@ -193,7 +170,7 @@ private lemma characteristic_axis (p : ZMod 7) :
     charFun rho.1 (p, 0) = (1 + windowRoot 7 ^ (-p).val) / 2 := by
   change trace ((diagonal fun i => (rhoWeights i : ℂ)) * weyl 7 (-p) (-(0 : ZMod 7))) = _
   delta rhoWeights
-  simp -congrConsts +decide [trace, diagonal_mul, weyl_diagonal, sum_seven,
+  simp -congrConsts +decide [trace, diagonal_mul, weyl_diagonal, ZMod, Fin.sum_univ_seven,
     show (1 : ZMod 7).val = 1 from rfl]
   ring
 
@@ -238,18 +215,23 @@ private lemma characteristic_bound (x : ZMod 7 × ZMod 7) :
   · simp -congrConsts [characteristic_off_axis p q hq]
 
 private lemma mean_eq : meanState rho.1 = sigma.1 := by
-  change meanState rho.1 = (7 : ℂ)⁻¹ • (1 : Matrix (ZMod 7) (ZMod 7) ℂ)
+  rw [sigma, gibbs_state_zero]
+  norm_num -congrConsts only [ZMod.card, Nat.cast_ofNat]
+  change meanState rho.1 = (1 / 7 : ℝ) • (1 : Matrix (ZMod 7) (ZMod 7) ℂ)
   delta meanState
   have hf : univ.filter (fun x => ‖charFun rho.1 x‖ = 1) = {(0, 0)} := by
     ext x
     simp -congrConsts only [mem_filter, mem_univ, true_and, characteristic_norm_one, mem_singleton]
   rw [hf, sum_singleton, characteristic_axis]
   delta weyl
-  simp -congrConsts
+  norm_num -congrConsts [Matrix.smul_apply, Complex.real_smul]
+  ext i j
+  norm_num -congrConsts [Matrix.smul_apply, Complex.real_smul]
 private lemma rank_eq : meanRank rho.1 = 7 := by
   change (meanState rho.1).rank = 7
-  rw [mean_eq]
-  change ((7 : ℂ)⁻¹ • (1 : Matrix (ZMod 7) (ZMod 7) ℂ)).rank = 7
+  rw [mean_eq, sigma, gibbs_state_zero]
+  norm_num -congrConsts only [ZMod.card, Nat.cast_ofNat]
+  change ((1 / 7 : ℝ) • (1 : Matrix (ZMod 7) (ZMod 7) ℂ)).rank = 7
   rw [← diagonal_one, ← diagonal_smul, rank_diagonal]
   simp -congrConsts
 
@@ -275,23 +257,13 @@ private lemma purity_eq : purity rho.1 = 1 / 2 := by
   change (trace ((diagonal fun i => (rhoWeights i : ℂ)) *
     (diagonal fun i => (rhoWeights i : ℂ)))).re = _
   delta rhoWeights
-  simp -congrConsts +decide [diagonal_mul_diagonal, trace_diagonal, sum_seven]
+  simp -congrConsts +decide [diagonal_mul_diagonal, trace_diagonal, ZMod, Fin.sum_univ_seven]
   norm_num
 private lemma divergence_eq : quantumRelativeEntropy rho sigma = Real.log 7 - Real.log 2 := by
-  rw [quantum_relative_entropy_eq_neg_entropy_sub_cross, rho_entropy]
-  change -Real.log 2 - (trace ((diagonal fun i => (rhoWeights i : ℂ)) *
-    CFC.log ((7 : ℂ)⁻¹ • (1 : Matrix (ZMod 7) (ZMod 7) ℂ)))).re = _
-  have hd : (7 : ℂ)⁻¹ • (1 : Matrix (ZMod 7) (ZMod 7) ℂ) =
-      diagonal (fun _ : ZMod 7 => ((1 / 7 : ℝ) : ℂ)) := by
-    rw [← diagonal_one, ← diagonal_smul]
-    congr 1
-    ext i
-    norm_num
-  rw [hd, D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.cfc_log_diagonal,
-    diagonal_mul_diagonal, trace_diagonal, sum_seven]
-  delta rhoWeights
-  simp -congrConsts +decide [Complex.log_re]
-  ring
+  have h := entropy_uniform_identity rho
+  change vonNeumannEntropy rho + quantumRelativeEntropy rho sigma = Real.log 7 at h
+  rw [rho_entropy] at h
+  linarith
 
 private lemma doubling_eq :
     Real.exp (vonNeumannEntropy tau - vonNeumannEntropy rho) =
