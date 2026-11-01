@@ -114,7 +114,12 @@ registration. The thirteen retained gaps are nine `InnerFaceStages` records
 `CutoffGramLimit.normalized_gram_tendsto`, both public
 `CutoffSpectralBounds` bounds and `SecondEigenvalueLimit.result`
 (four `source.selection_missing` in total). These retain `IE-C050` and no
-certificate. The six failed targets are `InnerFaceStages.faceCount_new`,
+certificate. The three `source.observation_data` targets are
+`InnerFaceStages.adjacent_embed`, `inner_faces_distinct` and
+`late_edge_oriented`; the six `source.params` targets are
+`cutoff_adjacency`, `cutoff_gram_diag`, `cutoff_gram_offdiag`,
+`degreeCount_late_le`, `late_oriented_indegree_le` and `old_vertices_iff`.
+The six failed targets are `InnerFaceStages.faceCount_new`,
 the B-hosted Schur norm theorem, `RectangularDilation.eigenvalues_ofReal`,
 both unequal-dilation identities and the cutoff ordered-spectrum identity.
 Their respective readings are failure of observational dependence for the

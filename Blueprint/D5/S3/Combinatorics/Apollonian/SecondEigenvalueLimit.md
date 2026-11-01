@@ -6,9 +6,13 @@ The exact all-natural-stage second ordinary-adjacency eigenvalue limit.
 
 **Theorem 1.1 (The original limit along every natural stage).**
 
-$$limitClaim$$
+$$\lim_{n \to \infty, n \in \mathbb{N}} \frac{\operatorname{secondEigenvalue}(n)}{2^{n/2}} = \sqrt{2}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Apollonian/SecondEigenvalueLimit.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/radsarar-anando-2026-apollonian-second-eigenvalue` (proved) by `D5/S3/Combinatorics/Apollonian/SecondEigenvalueLimit.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"radsarar-anando-2026-apollonian-second-eigenvalue","declaration_gid":"D5/S3/Combinatorics/Apollonian/SecondEigenvalueLimit.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -23,6 +27,8 @@ The proof formalizes the accepted ordinary argument linked in the source note. A
 The actual cutoff equivalence transports the full ordinary adjacency spectrum without changing its order or multiplicity. The difference from the cutoff dilation is exactly the block diagonal formed from old adjacency and the actual late induced adjacency. Its Euclidean operator norm is at most the sum of their two norms. Real inclusion in the complex field preserves the ordered eigenvalues and the Hermitian operator norm, so the frozen complex perturbation theorem applies lawfully to the actual real matrices. The normalized late block is uniformly bounded by 3 sqrt(2)/2^(k/2), while the fixed old block tends to zero with the stage. First choosing k and then the later stage makes both errors and the cutoff spectral error small. This proves the limit on every sufficiently large natural stage, preserving odd stages through the original real-power normalization.
 
 This is an application and formal completion of the accepted ordinary proof. It makes no literature-priority claim and does not treat source-page answer counts as mathematical evidence. Statements about other leading eigenvalues, normalized adjacency, Laplacians, random subdivisions and subdivision of the outer face are outside the theorem.
+
+The public-theorem escape-registration audit is incomplete under the linked-issue exception in CLAUDE.md section 3.9: issue 24989, comment 6554047951 records 27 targets, 21 retained records (eight validated and thirteen unfinished), and six faithful failed attempts whose sources are not retained. All nineteen unfinished targets remain audit obligations; the mathematical result and the Proved resolution claim do not assert complete registration.
 
 ## References
 
