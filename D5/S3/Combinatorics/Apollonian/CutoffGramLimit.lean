@@ -69,7 +69,7 @@ theorem normalized_gram_tendsto (k : ℕ) :
   · subst v
     have he (t : ℕ) : normalizedGram k t u u =
         (faceCount k u : ℝ) / 2^k - ((faceCount k u : ℝ) / 2^k) * (1/2 : ℝ)^t := by
-      simp only [normalizedGram, smul_apply, smul_eq_mul, gram_diagonal_formula, pow_add]
+      simp only [normalizedGram, Matrix.smul_apply, smul_eq_mul, gram_diagonal_formula, pow_add]
       rw [div_pow]
       field_simp
       ring

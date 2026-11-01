@@ -15,6 +15,9 @@ namespace D5.S3.SpectralTopology.RectangularDilation
 open Matrix
 open scoped BigOperators
 
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 private theorem positive_second_filter_iff (l : List ℝ) (hs : l.Pairwise (· ≥ ·))
     (x : ℝ) (hx : 0 < x) :
     (l.filter fun y => decide (0 < y))[1]? = some x ↔ l[1]? = some x := by
@@ -100,17 +103,21 @@ theorem unequal_dilation_second
   let G : Matrix T T ℂ := fromBlocks (B * Bᴴ) 0 0 0
   have hG : G.IsHermitian := (isHermitian_mul_conjTranspose_self B).fromBlocks (by simp) isHermitian_zero
   have hXX : X * Xᴴ = G := by
-    simp [X, G, fromBlocks_conjTranspose, fromBlocks_multiply]
+    dsimp [X, G]
+    rw [fromBlocks_conjTranspose, fromBlocks_multiply]
+    simp
   have hn : 1 < Fintype.card T := by dsimp [T]; simp only [Fintype.card_sum]; omega
   have hg := second_eq_of_charpoly_padding (B * Bᴴ) G
     (isHermitian_mul_conjTranspose_self B) hG ha hn (Fintype.card κ)
-    (by simp [G, charpoly_fromBlocks_zero₁₂, charpoly_zero]) hp
+    (by
+      dsimp [G]
+      rw [charpoly_fromBlocks_zero₁₂, charpoly_zero]) hp
   let e := Fintype.equivFin T
   let Y : Matrix (Fin (Fintype.card T)) (Fin (Fintype.card T)) ℂ := X.reindex e e
   have hYY : Y * Yᴴ = G.reindex e e := by
     rw [show Yᴴ = Xᴴ.reindex e e by exact conjTranspose_reindex e e X]
     change X.submatrix e.symm e.symm * Xᴴ.submatrix e.symm e.symm = _
-    rw [← submatrix_mul_equiv, hXX]
+    rw [submatrix_mul_equiv, hXX]
     rfl
   have hYG := isHermitian_mul_conjTranspose_self Y
   have hy := second_eq_of_charpoly_padding G (Y * Yᴴ) hG hYG hn
@@ -174,5 +181,55 @@ theorem unequal_dilation_second
     (by simp only [Fintype.card_sum]; omega)
     (by simp only [Fintype.card_sum]; omega) hr (hdval.symm ▸ Real.sqrt_pos.mpr hp)
   exact hout.trans hdval
+
+private theorem eigenvalues_ofReal
+    {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (A : Matrix ι ι ℝ) (hA : A.IsHermitian)
+    (hC : (A.map Complex.ofReal).IsHermitian) :
+    hC.eigenvalues₀ = hA.eigenvalues₀ := by
+  apply List.ofFn_inj.mp
+  rw [← hC.sort_roots_charpoly_eq_eigenvalues₀,
+    ← hA.sort_roots_charpoly_eq_eigenvalues₀]
+  have hr : (A.map Complex.ofReal).charpoly.roots =
+      A.charpoly.roots.map (algebraMap ℝ ℂ) := by
+    rw [show A.map Complex.ofReal = A.map (algebraMap ℝ ℂ) from rfl,
+      charpoly_map]
+    exact ((charpoly_monic A).roots_map_of_card_eq_natDegree (algebraMap ℝ ℂ)
+      (Polynomial.splits_iff_card_roots.mp hA.splits_charpoly)).symm
+  rw [hr, Multiset.map_map]
+  rfl
+
+/-- The real unequal-block identity uses the ordinary real ordered spectra. -/
+theorem unequal_real_dilation_second
+    {ι κ : Type*} [Fintype ι] [Fintype κ] [DecidableEq ι] [DecidableEq κ]
+    (B : Matrix ι κ ℝ) (ha : 1 < Fintype.card ι)
+    (hP : (fromBlocks 0 B B.transpose (0 : Matrix κ κ ℝ)).IsHermitian)
+    (hp : 0 < (isHermitian_mul_conjTranspose_self B).eigenvalues₀ ⟨1, ha⟩) :
+    hP.eigenvalues₀ ⟨1, by simp only [Fintype.card_sum]; omega⟩ =
+      Real.sqrt ((isHermitian_mul_conjTranspose_self B).eigenvalues₀ ⟨1, ha⟩) := by
+  let C := B.map Complex.ofReal
+  have hCG : C * Cᴴ = (B * Bᴴ).map Complex.ofReal := by
+    rw [show Cᴴ = Bᴴ.map Complex.ofReal from by
+      ext i j; simp [C, conjTranspose_apply]]
+    exact (Matrix.map_mul (f := algebraMap ℝ ℂ) (L := B) (M := Bᴴ)).symm
+  have hGram : (isHermitian_mul_conjTranspose_self C).eigenvalues₀ =
+      (isHermitian_mul_conjTranspose_self B).eigenvalues₀ := by
+    have transfer (M : Matrix ι ι ℂ) (he : M = (B * Bᴴ).map Complex.ofReal)
+        (hM : M.IsHermitian) : hM.eigenvalues₀ =
+          (isHermitian_mul_conjTranspose_self B).eigenvalues₀ := by
+      subst M
+      exact eigenvalues_ofReal _ _ hM
+    exact transfer _ hCG _
+  let P := fromBlocks 0 B B.transpose (0 : Matrix κ κ ℝ)
+  have hPC : fromBlocks 0 C Cᴴ (0 : Matrix κ κ ℂ) = P.map Complex.ofReal := by
+    ext i j
+    rcases i with i | i <;> rcases j with j | j <;>
+      simp [P, C, fromBlocks, conjTranspose_apply]
+  have hH := hP.map Complex.ofReal (by intro x; simp)
+  have hD : (fromBlocks 0 C Cᴴ (0 : Matrix κ κ ℂ)).IsHermitian := by rw [hPC]; exact hH
+  have he := unequal_dilation_second C ha hD (by rw [hGram]; exact hp)
+  have hEV := eigenvalues_ofReal P hP hH
+  rw [hGram] at he
+  simpa only [hPC, hEV] using he
 
 end D5.S3.SpectralTopology.RectangularDilation

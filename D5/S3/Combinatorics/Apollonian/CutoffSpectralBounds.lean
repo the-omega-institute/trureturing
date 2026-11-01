@@ -91,9 +91,8 @@ theorem late_adjacency_normalized_le (k t : ℕ) (ht : 1 ≤ t) :
       3 * Real.sqrt 2 / (2 : ℝ) ^ ((k : ℝ) / 2) := by
   have hn := late_adjacency_norm_le k t
   have hb (n : ℕ) : ((2 : ℝ) ^ ((n : ℝ) / 2)) ^ 2 = (2 : ℝ) ^ n := by
-    rw [← Real.rpow_natCast, ← Real.rpow_mul (by norm_num : (0:ℝ) ≤ 2)]
-    congr 1
-    norm_num
+    rw [← Real.rpow_mul_natCast (by norm_num : (0:ℝ) ≤ 2)]
+    convert Real.rpow_natCast 2 n using 1 <;> congr 1 <;> norm_num
   have hden : 0 < (2 : ℝ) ^ (((k+t : ℕ) : ℝ) / 2) := Real.rpow_pos_of_pos (by norm_num) _
   have hk : 0 < (2 : ℝ) ^ ((k : ℝ) / 2) := Real.rpow_pos_of_pos (by norm_num) _
   have hpow : (2 : ℝ) ^ (k+t) = 2 * (2:ℝ)^k * (2:ℝ)^(k+t-k-1) := by
