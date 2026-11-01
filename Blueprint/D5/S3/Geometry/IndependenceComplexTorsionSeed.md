@@ -20,7 +20,7 @@ $$seedComplex=\operatorname{independenceComplex}\left(G_0\right)$$
 
 *Commentary.*
 
-H is the graph on Fin 11 decoded from the graph6 payload of JEhbtj{rve?, and G0 is its complement. seedComplex is exactly FiniteGraphVertexSubstitution.independenceComplex G0. Its eventual realization is FiniteConeCollapse.realization applied to its underlying pre-abstract complex.
+H is the graph on Fin 11 decoded from the graph6 payload of JEhbtj{rve?, and G0 is its complement. This exact classical graph6 seed appears in Adamaszek, Small flag complexes with torsion (2012), arXiv:1208.3892v1; the explicit Lean proof here is local. seedComplex is exactly FiniteGraphVertexSubstitution.independenceComplex G0. Its eventual realization is FiniteConeCollapse.realization applied to its underlying pre-abstract complex.
 
 **Definition 1.2 (The complete increasing edge basis).**
 
