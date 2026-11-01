@@ -61,7 +61,6 @@ private theorem bpos_eq (r : ℕ) : b (r : ℤ) = annihilate (2 * r + 3) := by
   have hr : ¬(r : ℤ) ≤ -2 := by omega
   simp [b, hr]
   congr 1
-  omega
 
 def asc (S : Finset ℕ) : List ℕ := S.sort (· ≤ ·)
 
@@ -113,7 +112,7 @@ private theorem cword_sorted : ∀ (xs : List ℕ), xs.Pairwise (· < ·) → xs
         simp only [cOcc, Finset.mem_union, Finset.mem_singleton, Finset.mem_image] at hx
         rcases hx with hx | ⟨y, hy, he⟩
         · omega
-        · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y (by simpa using hy)
+        · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y hy
           omega
       rw [if_neg hx]
       have hcount : lowerCount (2 * x + 3) (cOcc xs) = 1 := by
@@ -128,7 +127,7 @@ private theorem cword_sorted : ∀ (xs : List ℕ), xs.Pairwise (· < ·) → xs
           · rintro ⟨hj, hlt⟩
             rcases hj with rfl | ⟨y, hy, rfl⟩
             · simp
-            · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y (by simpa using hy)
+            · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y hy
               exact False.elim (by omega)
           · intro hj
             have hj0 : j = 1 := by simpa using hj
@@ -180,12 +179,13 @@ private theorem sum_crossing (B C : Finset ℕ) :
         simp only [Finset.mem_filter, Finset.mem_union, Finset.mem_map,
           Finset.mem_product, Function.Embedding.sectR_apply]
         constructor
-        · rintro ⟨hq, hp | hp, hlt⟩
-          · exact Or.inl ⟨rfl, hq, by simpa [hp] using hlt⟩
-          · exact Or.inr ⟨hq, hp, hlt⟩
-        · rintro (⟨rfl, hq, hlt⟩ | ⟨hq, hp, hlt⟩)
-          · exact ⟨hq, Or.inl rfl, hlt⟩
-          · exact ⟨hq, Or.inr hp, hlt⟩
+        · rintro ⟨⟨hp, hq⟩, hlt⟩
+          rcases Finset.mem_insert.mp hp with rfl | hp
+          · exact Or.inl ⟨q, ⟨hq, hlt⟩, rfl⟩
+          · exact Or.inr ⟨⟨hp, hq⟩, hlt⟩
+        · rintro (⟨q, ⟨hq, hlt⟩, rfl⟩ | ⟨⟨hp, hq⟩, hlt⟩)
+          · exact ⟨⟨Finset.mem_insert.mpr (Or.inl rfl), hq⟩, hlt⟩
+          · exact ⟨⟨Finset.mem_insert.mpr (Or.inr hp), hq⟩, hlt⟩
       rw [hdecomp]
       rw [Finset.card_union_of_disjoint]
       · simp
@@ -217,7 +217,7 @@ private theorem bword_sorted : ∀ (xs : List ℕ) (C : Finset ℕ),
           · have hsC : s ∈ C := by simpa [asc] using hs
             simp [bSite] at hse
             omega
-        · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y (by simpa using hy)
+        · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y hy
           simp [bSite] at he
           have hy2 : 2 ≤ y := htwo y (by simpa using hy)
           omega
@@ -239,21 +239,26 @@ private theorem bword_sorted : ∀ (xs : List ℕ) (C : Finset ℕ),
             · simp only [cOcc, Finset.mem_union, Finset.mem_singleton, Finset.mem_image] at hj
               rcases hj with hj | ⟨s, hs, rfl⟩
               · by_cases hx3 : 3 ≤ x
-                · exact Or.inl (by simp [hx3] at *; omega)
-                · omega
-              · by_cases hs4 : s + 4 ≤ x
-                · exact Or.inr ⟨s, (by simpa [asc] using hs), hs4, rfl⟩
-                · have hsC : s ∈ C := by simpa [asc] using hs
-                  omega
-            · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y (by simpa using hy)
-              have hy2 : 2 ≤ y := htwo y (by simpa using hy)
+                · have hj1 : j = 1 := by simpa [hx3] using hj
+                  subst j
+                  exact ⟨Or.inl (Or.inl rfl), by omega⟩
+                · simp [hx3] at hj
+              · have hsC := (Finset.mem_filter.mp hs).1
+                have hs4 := (Finset.mem_filter.mp hs).2
+                by_cases hsAsc : s ∈ asc C
+                · exact ⟨Or.inl (Or.inr ⟨s, hsAsc, rfl⟩), by omega⟩
+                · have hsC' : s ∈ C := by simpa [asc] using hsC
+                  exact False.elim (hsAsc (by simpa [asc] using hsC'))
+            · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y hy
+              have hy2 : 2 ≤ y := htwo y hy
               simp [bSite] at hlt
               omega
           · intro hj
             rcases hj with hj | ⟨s, hs, rfl⟩
-            · have hx3 : 3 ≤ x := by simpa using hj
+            · have hj1 : j = 1 := by simpa using hj
+              subst j
               exact ⟨Or.inl (Or.inl rfl), by omega⟩
-            · have hs4 : s + 4 ≤ x := by simpa using hs
+            · have hs4 := (Finset.mem_filter.mp hs).2
               exact ⟨Or.inl (Or.inr ⟨s, (Finset.mem_filter.mp hs).1, rfl⟩), by omega⟩
         rw [heq]
         simp [Finset.card_union_of_disjoint]
@@ -261,6 +266,7 @@ private theorem bword_sorted : ∀ (xs : List ℕ) (C : Finset ℕ),
         simp [phase, hcount]]
       have hset : insert (bSite x) (bOcc C xs) = bOcc C (x :: xs) := by
         simp [bOcc, bSite, hxnot]
+      change _ • _ • ket (insert (bSite x) (bOcc C xs)) = _
       rw [hset, smul_smul, ← pow_add]
       congr 1
       simp [bStepExponent, Finset.sum_insert hxnot]
@@ -382,25 +388,28 @@ private theorem occ_bSite_mem (r : ℕ) (B C : Finset ℕ) (hr : 2 ≤ r) :
   split <;> rename_i h1
   · simp only [Finset.mem_union, Finset.mem_filter, Finset.mem_image]
     constructor
-    · rintro (h | h)
-      · rcases h with ⟨s, hs, he⟩
-        have hs2 := hs.2
+    · intro h
+      rcases h with h | h
+      · rcases Finset.mem_image.mp h with ⟨s, hs, he⟩
+        have hs2 := (Finset.mem_filter.mp hs).2
         omega
-      · rcases h with ⟨s, hs, he⟩
+      · rcases Finset.mem_image.mp h with ⟨s, hs, he⟩
         omega
     · intro h
       exact Or.inl ⟨r, ⟨h, hr⟩, by simp [bSite]⟩
   · simp only [Finset.mem_union, Finset.mem_singleton, Finset.mem_filter, Finset.mem_image]
     constructor
-    · rintro (h | h | h)
-      · omega
-      · rcases h with ⟨s, hs, he⟩
-        have hs2 := hs.2
-        omega
-      · rcases h with ⟨s, hs, he⟩
-        omega
     · intro h
-      exact Or.inr (Or.inl ⟨r, ⟨h, hr⟩, by simp [bSite]⟩)
+      rcases h with h | h
+      · omega
+      · rcases h with h | h
+        · rcases Finset.mem_image.mp h with ⟨s, hs, he⟩
+          have hs2 := (Finset.mem_filter.mp hs).2
+          omega
+        · rcases Finset.mem_image.mp h with ⟨s, hs, he⟩
+          omega
+    · intro h
+      exact Or.inl (Or.inr ⟨r, ⟨h, hr⟩, by simp [bSite]⟩)
 
 private theorem occ_cSite_mem (r : ℕ) (B C : Finset ℕ) :
     2 * r + 3 ∈ occ B C ↔ r ∈ C := by
@@ -409,21 +418,26 @@ private theorem occ_cSite_mem (r : ℕ) (B C : Finset ℕ) :
   split <;> rename_i h1
   · simp only [Finset.mem_union, Finset.mem_filter, Finset.mem_image]
     constructor
-    · rintro (h | h)
-      · rcases h with ⟨s, hs, he⟩
+    · intro h
+      rcases h with h | h
+      · rcases Finset.mem_image.mp h with ⟨s, hs, he⟩
+        have hs2 := (Finset.mem_filter.mp hs).2
         omega
-      · rcases h with ⟨s, hs, he⟩
+      · rcases Finset.mem_image.mp h with ⟨s, hs, he⟩
         omega
     · intro h
       exact Or.inr ⟨r, h, by simp⟩
   · simp only [Finset.mem_union, Finset.mem_singleton, Finset.mem_filter, Finset.mem_image]
     constructor
-    · rintro (h | h | h)
+    · intro h
+      rcases h with h | h
       · omega
-      · rcases h with ⟨s, hs, he⟩
-        omega
-      · rcases h with ⟨s, hs, he⟩
-        omega
+      · rcases h with h | h
+        · rcases Finset.mem_image.mp h with ⟨s, hs, he⟩
+          have hs2 := (Finset.mem_filter.mp hs).2
+          omega
+        · rcases Finset.mem_image.mp h with ⟨s, hs, he⟩
+          omega
     · intro h
       exact Or.inr (Or.inr ⟨r, h, by simp⟩)
 
