@@ -236,9 +236,7 @@ private lemma projector_data :
     rankOneDensity (ghz 3 3) * rankOneDensity (ghz 3 3) = rankOneDensity (ghz 3 3) := by
   classical
   have hn : star (ghz 3 3) ⬝ᵥ ghz 3 3 = 1 := by
-    rw [D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.dot_star_self]
-    simpa only [← Complex.normSq_eq_norm_sq, Complex.ofReal_one] using
-      congrArg (fun x : ℝ => (x : ℂ)) ghz_unit
+    exact (D5.S3.Quantum.Information.MultiEntropyPositivityRefutation.unit_norm_iff _).mpr ghz_unit
   refine ⟨?_, ?_, ?_,
     (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake (ghz 3 3) hn 1).1⟩
   · simp only [supportProjector, diagonal_mul_diagonal]
@@ -518,10 +516,7 @@ private lemma ensemble_nonempty :
     D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.density_ensemble ρ
   refine ⟨_, k, p, ψ, hp, hs, ?_, ?_, rfl⟩
   · intro i
-    have h := congrArg Complex.re (hu i)
-    simpa only [IsUnitState,
-      D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.dot_star_self,
-      Complex.ofReal_re, Complex.normSq_eq_norm_sq, Complex.one_re] using h
+    exact (D5.S3.Quantum.Information.MultiEntropyPositivityRefutation.unit_norm_iff _).mp (hu i)
   · change noisyGhz 3 3 (3 / 8) = ∑ i, (algebraMap ℝ ℂ) (p i) • rankOneDensity (ψ i) at he
     simpa only [algebraMap_smul] using he
 
