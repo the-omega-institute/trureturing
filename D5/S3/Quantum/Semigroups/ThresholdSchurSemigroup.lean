@@ -14,7 +14,7 @@ import Mathlib.Analysis.Complex.RealDeriv
 import Mathlib.Analysis.Calculus.Deriv.Prod
 import Mathlib.Tactic
 
-/- The new content is the explicit complete threshold Kraus construction and the
+/-! The new content is the explicit complete threshold Kraus construction and the
 separating-gap identity used in its finite product and generator. The only public
 mathematical theorem is `result`; all adaptation lemmas are consumed on its live
 proof path. This is general finite-dimensional analysis (utility: none), not a
@@ -31,7 +31,7 @@ namespace D5.S3.Quantum.Semigroups.ThresholdSchurSemigroup
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Foundation.FiniteKrausChannel
 open Matrix
-open scoped BigOperators
+open scoped BigOperators Matrix CStarAlgebra ComplexOrder MatrixOrder Matrix.Norms.Elementwise
 
 variable {S : Type*} [Fintype S] [DecidableEq S]
 
@@ -52,6 +52,7 @@ private theorem cut_channel (p : S → Bool) (q : ℝ) (hq : 0 ≤ q) (hq1 : q �
     exact_mod_cast Real.mul_self_sqrt hq
   have ht : (Real.sqrt (1-q) : ℂ) * (Real.sqrt (1-q) : ℂ) = (1-q : ℝ) := by
     exact_mod_cast Real.mul_self_sqrt (sub_nonneg.mpr hq1)
+  push_cast at ht
   have hK : (∑ r, (cutKraus p q r)ᴴ * cutKraus p q r) = 1 := by
     ext s t
     by_cases h : s = t
@@ -67,7 +68,9 @@ private theorem cut_channel (p : S → Bool) (q : ℝ) (hq : 0 ≤ q) (hq1 : q �
   cases hs' : p s <;> cases ht' : p t <;>
     simp [cutKraus, Fintype.sum_option, Fintype.sum_bool,
       Matrix.mul_diagonal, Matrix.diagonal_mul, hs', ht', hs, ht] <;>
-    push_cast <;> ring
+    push_cast <;> first
+    | linear_combination X s t * hs + X s t * ht
+    | linear_combination X s t * hs
 
 private theorem identity_channel :
     ∃ channel : QuantumChannel S S, ∀ X : Matrix S S ℂ,
@@ -99,7 +102,8 @@ private theorem product_channel (n : ℕ) (p : Fin n → S → Bool) (q : Fin n 
           (∏ i : Fin n, if p i.castSucc s = p i.castSucc t then 1
             else (q i.castSucc : ℂ)) * X s t) :=
       congrArg CStarMatrix.ofMatrix (hf X)
-    rw [hfirst, hl]
+    rw [hfirst]
+    refine (hl _).trans ?_
     ext s t
     simp only [Fin.prod_univ_castSucc]
     ring
@@ -133,8 +137,10 @@ private theorem separating_gap_sum (loss : ℕ → ℝ) (hmono : Monotone loss)
     have hp (t : Fin (n+1)) :
         (∑ i : Fin n, if i.val < t.val then loss (i.val+1)-loss i.val else 0) =
           loss t.val-loss 0 := by
-      rw [Fin.sum_univ_eq_sum_range]
-      exact prefix_gap_sum loss n t.val (by omega)
+      calc
+        _ = ∑ i ∈ Finset.range n, if i < t.val then loss (i+1)-loss i else 0 :=
+          Fin.sum_univ_eq_sum_range (fun i => if i < t.val then loss (i+1)-loss i else 0) n
+        _ = _ := prefix_gap_sum loss n t.val (by omega)
     rw [hp, hp]
     ring
   rcases le_total s t with hst | hts
@@ -149,18 +155,25 @@ private theorem separating_gap_sum (loss : ℕ → ℝ) (hmono : Monotone loss)
       simp only [eq_comm]
     rw [he, hle t s hts, abs_of_nonneg (sub_nonneg.mpr (hmono hts))]
 
+/-- The finite image of the real label function. -/
+def labelSet (a : S → ℝ) : Finset ℝ := by
+  classical
+  exact Finset.univ.image a
+
 /-- Ordered distinct label data; original labels are retained by `rank`. -/
 structure ThresholdData (a : S → ℝ) where
   count : ℕ
   loss : ℕ → ℝ
   ordered : Monotone loss
   strictlyOrdered : StrictMono (fun i : Fin (count+1) => loss i.val)
+  exactImage : Nonempty S → ∀ i : Fin (count+1), ∃ s, a s = loss i.val
   rank : S → Fin (count+1)
   label_eq : ∀ s, a s = loss (rank s).val
+  count_eq : count = (labelSet a).card - 1
 
 private theorem threshold_data_exists (a : S → ℝ) : Nonempty (ThresholdData a) := by
   classical
-  let image := Finset.univ.image a
+  let image := labelSet a
   by_cases hn : image.Nonempty
   · obtain ⟨n, hncard⟩ := Nat.exists_eq_succ_of_ne_zero
       (Nat.ne_of_gt (Finset.card_pos.mpr hn))
@@ -168,15 +181,19 @@ private theorem threshold_data_exists (a : S → ℝ) : Nonempty (ThresholdData 
     let loss : ℕ → ℝ := fun i => (e ⟨min i n, by omega⟩).val
     let rank : S → Fin (n+1) := fun s =>
       e.symm ⟨a s, Finset.mem_image.mpr ⟨s, Finset.mem_univ s, rfl⟩⟩
-    refine ⟨⟨n, loss, ?_, ?_, rank, ?_⟩⟩
+    refine ⟨⟨n, loss, ?_, ?_, ?_, rank, ?_, ?_⟩⟩
     · intro i j hij
-      exact e.monotone (Nat.min_le_min_right n hij)
+      exact e.monotone (min_le_min_right n hij)
     · intro i j hij
       change (e ⟨min i.val n, _⟩).val < (e ⟨min j.val n, _⟩).val
       apply e.strictMono
       change min i.val n < min j.val n
       rw [min_eq_left (by omega : i.val ≤ n), min_eq_left (by omega : j.val ≤ n)]
       exact hij
+    · intro _ i
+      have hi := (e ⟨min i.val n, by omega⟩).property
+      obtain ⟨s, _, hs⟩ := Finset.mem_image.mp hi
+      exact ⟨s, hs⟩
     · intro s
       have hbound : (rank s).val ≤ n := by omega
       change a s = (e ⟨min (rank s).val n, _⟩).val
@@ -184,10 +201,19 @@ private theorem threshold_data_exists (a : S → ℝ) : Nonempty (ThresholdData 
         apply Fin.ext
         exact min_eq_left hbound
       rw [heq]
-      exact congrArg Subtype.val (e.apply_symm_apply _).symm
-  · refine ⟨⟨0, fun _ => 0, monotone_const, by intro i j hij; have he : i = j := Subsingleton.elim _ _; subst j; exact (lt_irrefl _ hij).elim, fun _ => 0, ?_⟩⟩
-    intro s
-    exact (hn ⟨a s, Finset.mem_image.mpr ⟨s, Finset.mem_univ s, rfl⟩⟩).elim
+      exact congrArg Subtype.val (e.apply_symm_apply
+        ⟨a s, Finset.mem_image.mpr ⟨s, Finset.mem_univ s, rfl⟩⟩).symm
+    · change n = image.card - 1
+      omega
+  · refine ⟨⟨0, fun _ => 0, monotone_const, by intro i j hij; have he : i = j := Fin.ext (by omega); subst j; exact (lt_irrefl _ hij).elim, ?_, fun _ => 0, ?_, ?_⟩⟩
+    · intro hs
+      obtain ⟨s⟩ := hs
+      exact (hn ⟨a s, Finset.mem_image.mpr ⟨s, Finset.mem_univ s, rfl⟩⟩).elim
+    · intro s
+      exact (hn ⟨a s, Finset.mem_image.mpr ⟨s, Finset.mem_univ s, rfl⟩⟩).elim
+    · change 0 = image.card - 1
+      have hz : image.card = 0 := Finset.card_eq_zero.mpr (Finset.not_nonempty_iff_eq_empty.mp hn)
+      rw [hz]
 
 /-- Canonical choice of the increasing image of the labels, constant past its end. -/
 def thresholds (a : S → ℝ) : ThresholdData a := Classical.choice (threshold_data_exists a)
@@ -203,8 +229,8 @@ private theorem channel_exists (a : S → ℝ) (u : ℝ) (hu : 0 ≤ u) :
     intro i
     refine ⟨Real.exp_nonneg _, Real.exp_le_one_iff.mpr ?_⟩
     have h := d.ordered (Nat.le_succ i.val)
-    dsimp
-    nlinarith
+    change -u*(d.loss (i.val+1)-d.loss i.val)/2 ≤ 0
+    nlinarith [mul_nonneg hu (sub_nonneg.mpr h)]
   obtain ⟨channel, hc⟩ := product_channel d.count p q hq
   refine ⟨channel, fun X => (hc X).trans ?_⟩
   ext s t
@@ -244,6 +270,8 @@ def generatorMatrix (a : S → ℝ) : Matrix (S × S) (S × S) ℂ :=
 private theorem threshold_iff (a : S → ℝ) (i : Fin (thresholds a).count) (s : S) :
     a s ≤ (thresholds a).loss i.val ↔ ((thresholds a).rank s).val ≤ i.val := by
   rw [(thresholds a).label_eq s]
+  change (thresholds a).loss ((thresholds a).rank s).val ≤
+    (thresholds a).loss i.castSucc.val ↔ (thresholds a).rank s ≤ i.castSucc
   exact (thresholds a).strictlyOrdered.le_iff_le
 
 private theorem generator_action (a : S → ℝ) (X : Matrix S S ℂ) :
@@ -259,14 +287,22 @@ private theorem generator_action (a : S → ℝ) (X : Matrix S S ℂ) :
     simp only [projection, Matrix.diagonal_mul, Matrix.mul_diagonal,
       Matrix.smul_apply, Matrix.sub_apply, Matrix.add_apply, smul_eq_mul,
       threshold_iff]
-    split_ifs <;> simp_all <;> ring
+    by_cases hs : ((thresholds a).rank s).val ≤ i.val <;>
+      by_cases ht : ((thresholds a).rank t).val ≤ i.val <;>
+      simp [hs, ht] <;> ring <;> simp
+  have hreal := separating_gap_sum (thresholds a).loss (thresholds a).ordered
+    (thresholds a).count ((thresholds a).rank s) ((thresholds a).rank t)
+  rw [← (thresholds a).label_eq s, ← (thresholds a).label_eq t] at hreal
+  have hcast : (∑ i : Fin (thresholds a).count,
+      if decide (((thresholds a).rank s).val ≤ i.val) =
+        decide (((thresholds a).rank t).val ≤ i.val)
+      then (0 : ℂ) else (gap a i : ℂ)) = ((|a s-a t| : ℝ) : ℂ) := by
+    simpa only [gap, Complex.ofReal_sum, apply_ite, Complex.ofReal_zero]
+      using congrArg (fun x : ℝ => (x : ℂ)) hreal
   simp only [generator, Matrix.sum_apply]
   simp_rw [hterm]
-  rw [← Finset.sum_mul, ← Finset.sum_div, ← Finset.sum_neg_distrib,
-    ← Complex.ofReal_sum]
-  dsimp only [gap]
-  rw [separating_gap_sum (thresholds a).loss (thresholds a).ordered,
-    ← (thresholds a).label_eq s, ← (thresholds a).label_eq t]
+  simp only [Complex.ofReal_zero]
+  rw [← Finset.sum_mul, ← Finset.sum_div, Finset.sum_neg_distrib, hcast]
   push_cast
   ring
 
@@ -303,8 +339,8 @@ private theorem evolution_exponential (a : S → ℝ) (u : ℝ) (X : Matrix S S 
     · simp [generatorMatrix, h]
   rw [hd, Matrix.exp_diagonal]
   ext st
-  simp [Matrix.diagonal_mulVec, Pi.exp_def, Complex.exp_eq_exp_ℂ, ← Complex.ofReal_exp,
-    evolution]
+  simp only [Matrix.mulVec_diagonal, Pi.coe_exp, ← Complex.exp_eq_exp_ℂ, evolution]
+  rw [Complex.ofReal_exp]
 
 private theorem channel_ext (f g : QuantumChannel S S)
     (h : ∀ X : Matrix S S ℂ,
@@ -350,13 +386,20 @@ theorem result (a : S → ℝ) :
     apply channel_ext
     intro X
     rw [hc, evolution_add, QuantumChannel.comp_apply]
-    have hv := congrArg CStarMatrix.ofMatrix (hc v X)
+    have hv : (channels v).toCompletelyPositiveMap (CStarMatrix.ofMatrix X) =
+        CStarMatrix.ofMatrix (evolution a v.val X) := by
+      simpa only [Equiv.apply_symm_apply] using congrArg CStarMatrix.ofMatrix (hc v X)
     rw [hv, hc]
   · apply LinearMap.ext
     intro X
-    apply CStarMatrix.ofMatrix.symm.injective
+    change (channels ⟨0, le_rfl⟩).toCompletelyPositiveMap X = X
     have h := hc ⟨0, le_rfl⟩ (CStarMatrix.ofMatrix.symm X)
-    simpa [evolution] using h
+    have hz : evolution a 0 (CStarMatrix.ofMatrix.symm X) =
+        CStarMatrix.ofMatrix.symm X := by
+      ext s t
+      simp [evolution]
+    apply CStarMatrix.ofMatrix.symm.injective
+    simpa only [Equiv.apply_symm_apply] using h.trans hz
   · intro X
     ext s t
     simp [evolution]
@@ -365,7 +408,10 @@ theorem result (a : S → ℝ) :
   · intro i
     refine ⟨sub_nonneg.mpr ((thresholds a).ordered (Nat.le_succ i.val)), ?_, ?_⟩
     · ext s t
-      simp [projection, Matrix.conjTranspose_apply]
+      by_cases h : s = t
+      · subst t
+        simp [projection, Matrix.conjTranspose_apply, Matrix.diagonal_apply]
+      · simp [projection, Matrix.conjTranspose_apply, Matrix.diagonal_apply, h, Ne.symm h]
     · rw [projection, Matrix.diagonal_mul_diagonal]
       congr 1
       ext s
@@ -373,7 +419,7 @@ theorem result (a : S → ℝ) :
   · intro s t
     rw [generator_action]
     ext i j
-    by_cases hi : i=s <;> by_cases hj : j=t <;> simp [Matrix.single, hi, hj]
+    by_cases hi : s=i <;> by_cases hj : t=j <;> simp [Matrix.single, hi, hj]
 
 #print axioms result
 

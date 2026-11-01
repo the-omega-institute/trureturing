@@ -23,6 +23,28 @@ internal sealed class ThresholdSchurSemigroupDocument : IScribeDocumentDefinitio
                 Blocks(Paragraph(Text("The fixed logical carrier supports all input matrices, not only diagonal states or populations."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("distinct-label-image"), DeclarationHandle.Create(Prefix + "labelSet"),
+                H("Distinct label image"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The finite image contains each distinct real label value exactly once."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("ordered-threshold-data"), DeclarationHandle.Create(Prefix + "ThresholdData"),
+                H("Ordered distinct image data"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The data contain a monotonically extended sequence, strictly increasing on its "
+                    + "first count+1 entries, and a rank map retaining every original label. "
+                    + "Every site belongs to the label image when the carrier is nonempty. "
+                    + "The number of cuts is the image cardinality minus one, truncated at zero."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("canonical-thresholds"), DeclarationHandle.Create(Prefix + "thresholds"),
+                H("Increasing image choice"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Choose the proved ordered image data; an empty carrier uses zero cuts."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("threshold-projection"), DeclarationHandle.Create(Prefix + "projection"),
                 H("Threshold projections"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -33,6 +55,12 @@ internal sealed class ThresholdSchurSemigroupDocument : IScribeDocumentDefinitio
                     + "current site. An all-equal family has no thresholds."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("adjacent-threshold-gap"), DeclarationHandle.Create(Prefix + "gap"),
+                H("Adjacent gap"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The gap is the upper adjacent image value minus the lower one."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("threshold-generator"), DeclarationHandle.Create(Prefix + "generator"),
                 H("Finite threshold generator"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -40,6 +68,14 @@ internal sealed class ThresholdSchurSemigroupDocument : IScribeDocumentDefinitio
                     "Sum gap(i) times P(i) X P(i) minus one half of P(i) X + X P(i). "
                     + "The generator superoperator matrix is diagonal in the matrix-unit basis "
                     + "indexed by ordered logical-label pairs."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("generator-matrix"), DeclarationHandle.Create(Prefix + "generatorMatrix"),
+                H("Generator in matrix-unit coordinates"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The superoperator matrix indexed by pairs of original labels is diagonal, "
+                    + "with diagonal value minus half their absolute real-label separation."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("threshold-semigroup"), DeclarationHandle.Create(Prefix + "result"),
