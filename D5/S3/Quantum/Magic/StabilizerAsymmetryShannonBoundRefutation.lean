@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Magic/StabilizerAsymmetryShannonBoundRefutation.claim; result=D5/S3/Quantum/Magic/StabilizerAsymmetryShannonBoundRefutation.result; claim=D5/S3/Quantum/Magic/StabilizerAsymmetryShannonBoundRefutation.claim
    digest: A three-qubit state refutes the Shannon branch-and-bound entropy lower bound. -/
 
+import D5.S0.Certificates.Hypergraphs.OrientationEntropyBalance
 import D5.S3.Entropy.TwoDeletionRunEntropyBounds
 import D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation
 
@@ -147,20 +148,39 @@ private lemma abs_distribution (d : Bits 3) :
 
 private lemma overlap_entropy :
     shannonEntropy (overlapProb 0 0 witness) = 2 * Real.log 2 := by
+  have h := D5.S0.Certificates.Hypergraphs.OrientationEntropyBalance.sum_entropy_formula
+    Finset.univ (fun _ : Fin 4 => 1) 4 (by decide) (by decide)
+  simp only [Real.logb] at h
+  have h2 : Real.log 2 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
+  norm_num [Fin.sum_univ_succ] at h
+  field_simp [h2] at h
+  have h4 : Real.log (4 : ℝ) = 2 * Real.log 2 := by
+    convert Real.log_pow (2 : ℝ) 2 using 1 <;> norm_num
+  rw [h4] at h
+  norm_num at h
   rw [shannonEntropy, sum_bits]
   simp only [overlap_distribution]
-  norm_num [Real.negMulLog_def, Real.log_div]
-  rw [show (4 : ℝ) = 2 ^ 2 by norm_num, Real.log_pow]
-  ring
+  norm_num [Real.negMulLog_def]
+  linarith only [h]
 
 private lemma abs_entropy :
     shannonEntropy (absProb witness) = 4 * Real.log 2 - (9 / 8) * Real.log 3 := by
+  have h := D5.S0.Certificates.Hypergraphs.OrientationEntropyBalance.sum_entropy_formula
+    Finset.univ (![9, 1, 1, 1, 1, 1, 1, 1] : Fin 8 → ℕ) 16 (by decide) (by decide)
+  simp only [Real.logb] at h
+  have h2 : Real.log 2 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
+  norm_num [Fin.sum_univ_succ, Fin.prod_univ_succ] at h
+  field_simp [h2] at h
+  have h16 : Real.log (16 : ℝ) = 4 * Real.log 2 := by
+    convert Real.log_pow (2 : ℝ) 4 using 1 <;> norm_num
+  have hprod : Real.log (387420489 : ℝ) = 18 * Real.log 3 := by
+    convert Real.log_pow (3 : ℝ) 18 using 1 <;> norm_num
+  rw [hprod, h16] at h
+  norm_num at h
   rw [shannonEntropy, sum_bits]
   simp only [abs_distribution]
-  norm_num [Real.negMulLog_def, Real.log_div]
-  rw [show (9 : ℝ) = 3 ^ 2 by norm_num, show (16 : ℝ) = 2 ^ 4 by norm_num]
-  simp only [Real.log_pow]
-  ring
+  norm_num [Real.negMulLog_def]
+  linarith only [h]
 
 private lemma log_gap : 9 * Real.log 3 < 16 * Real.log 2 := by
   have h := D5.S3.Entropy.TwoDeletionRunEntropyBounds.logb_three_bounds.2
