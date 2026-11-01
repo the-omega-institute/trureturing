@@ -9,6 +9,8 @@
 import D5.S3.Arith.FibonacciAtomic.Acquisition.SameHandleContinuation
 import Mathlib.Data.Nat.Log
 
+/-! Actual varying-modulus acquisition preserves one common-original archive. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -36,7 +38,10 @@ private theorem envelope_factorization (b p : ℕ) :
   have terms (q : ℕ) (hq : q ∈ primes b) :
       (q ^ (b / (q - 1))).factorization p = if q = p then b / (p - 1) else 0 := by
     rw [(Finset.mem_filter.mp hq).2.factorization_pow]
-    simp only [Finsupp.single_apply]
+    by_cases he : q = p
+    · subst q
+      simp
+    · simp [Finsupp.single_apply, he]
   simp_rw [Finset.sum_congr rfl terms]
   simp
 
@@ -57,7 +62,8 @@ private theorem envelope_covers (H b : ℕ) (hH : 0 < H) :
   constructor
   · intro h p
     by_cases hp : p.Prime
-    · have he := h p hp
+    · have hp2 := hp.two_le
+      have he := h p hp
       rw [envelope_factorization] at he
       split_ifs at he with hm
       · exact (Nat.le_div_iff_mul_le (by omega : 0 < p - 1)).mp he
@@ -65,6 +71,7 @@ private theorem envelope_covers (H b : ℕ) (hH : 0 < H) :
         simp [he]
     · simp [Nat.factorization_eq_zero_of_not_prime H hp]
   · intro h p hp
+    have hp2 := hp.two_le
     rw [envelope_factorization]
     by_cases hm : p ∈ primes b
     · rw [if_pos hm]
@@ -108,7 +115,8 @@ private theorem budget_spec {m : ℕ} (hm : 0 < m) :
     · simp [h1]
     · have hp := Nat.pow_pred_clog_lt_self (by decide : 1 < 2) (by omega : 1 < m)
       have hc := Nat.clog_pos (by decide : 1 < 2) (by omega : 1 < m)
-      have he : Nat.clog 2 m = (Nat.clog 2 m).pred + 1 := by omega
+      have he : Nat.clog 2 m = (Nat.clog 2 m).pred + 1 :=
+        (Nat.succ_pred_eq_of_pos hc).symm
       rw [he, pow_succ]
       omega
   · intro k hk
@@ -215,9 +223,9 @@ private theorem tape_append {Handle World : Type} {B : SourceService Handle Worl
     TapeRun B h x (es ++ fs) z := by
   induction he with
   | nil => exact hf
-  | compute _ ih => exact .compute ih
-  | action ha _ ih => exact .action ha ih
-  | read ha _ ih => exact .read ha ih
+  | compute _ ih => exact .compute (ih hf)
+  | action ha _ ih => exact .action ha (ih hf)
+  | read ha _ ih => exact .read ha (ih hf)
 
 private theorem tape_endpoint {Handle World : Type} {B : SourceService Handle World}
     {h : Handle} {x y : World} {es : List TapeEvent}
@@ -245,7 +253,11 @@ private theorem tape_cuts {Handle World : Type} {B : SourceService Handle World}
       B.value h z = runWord (cutWord es t) (B.value h x) := by
   revert hx
   induction hr with
-  | nil => intro hx t ht; have : t = 0 := by simpa [letters] using ht; subst t; exact ⟨_, hx, rfl⟩
+  | nil =>
+    intro hx t ht
+    have : t = 0 := by simpa [letters] using ht
+    subst t
+    exact ⟨_, hx, rfl⟩
   | compute _ ih => intro hx; exact ih hx
   | @action x z es y b ha hr ih =>
     intro hx t ht
@@ -431,11 +443,13 @@ private theorem initial_sound {Handle World : Type} (B : SourceService Handle Wo
   refine ⟨.nil _, hx, by decide, rfl, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · simp [initial, costBound, maximum]
   · simp [initial, costBound, budget]
-  · change (0 : ZMod (envelope 0) × ZMod (envelope 0)) = _
-    rw [envelope_zero]
+  · change (0 : ZMod (envelope 0) × ZMod (envelope 0)) =
+      residueSource (envelope 0) (B.value h x₀)
+    simp only [envelope_zero]
     exact Subsingleton.elim _ _
-  · change (0 : ZMod (envelope 0) × ZMod (envelope 0)) = _
-    rw [envelope_zero]
+  · change (0 : ZMod (envelope 0) × ZMod (envelope 0)) =
+      residueSource (envelope 0) (B.value h x₀)
+    simp only [envelope_zero]
     exact Subsingleton.elim _ _
   · simp [initial]
   · simp [initial, costBound, reads]
@@ -449,7 +463,7 @@ private theorem acquisition_agrees {Handle World : Type} (B : SourceService Hand
     residueSource E (B.value h y) = residueSource E (B.value h x) ∧
     paidReads es = (if E = 1 then 0 else 2 * costBound E) := by
   obtain ⟨t₀, y₀, hr₀, hv₀, hl₀, count, h1, lower, continued, all⟩ :=
-    same_handle_return E (by omega) B h (complete E hE) p x hx
+    same_handle_return.{0} E (by omega) B h (complete E hE) p x hx
   obtain ⟨hes, ht, hd, hv, hl, hn, h1, hc⟩ := all es t y d n hr
   refine ⟨hd, hl, ?_, hes ▸ count⟩
   exact hc.1.2.symm
@@ -461,7 +475,7 @@ private theorem request_exists {Handle World : Type} (B : SourceService Handle W
   by_cases hc : costBound H ≤ a.precision
   · exact ⟨_, _, .covered hc⟩
   · let E := envelope (budget (costBound H))
-    obtain ⟨t, y, hr, rest⟩ := same_handle_return E (by have := envelope_pos (budget (costBound H)); omega)
+    obtain ⟨t, y, hr, rest⟩ := same_handle_return.{0} E (by have := envelope_pos (budget (costBound H)); omega)
       B h (complete E (envelope_pos _)) p x hx
     exact ⟨_, y, .upgrade (by omega) hr⟩
 
@@ -482,7 +496,7 @@ private theorem request_deterministic {Handle World : Type} (B : SourceService H
     | @upgrade fs u z e k hm' actual' =>
       let E := envelope (budget (costBound H))
       obtain ⟨t₀, y₀, hr₀, hv₀, hl₀, count, h1, lower, continued, all⟩ :=
-        same_handle_return E (by have := envelope_pos (budget (costBound H)); omega)
+        same_handle_return.{0} E (by have := envelope_pos (budget (costBound H)); omega)
           B h (complete E (envelope_pos _)) p x hx
       obtain ⟨hes, ht, hd, hv, rest⟩ := all es t y d n actual
       obtain ⟨hfs, hu, he, hz, rest'⟩ := all fs u z e k actual'
@@ -524,7 +538,7 @@ private theorem upgrade_transport {Handle World : Type} (B : SourceService Handl
     UpgradeRecovery B h x₀ old x E es d y := by
   have old_endpoint := tape_endpoint oldrun hx₀
   obtain ⟨t₀, y₀, hr₀, hv₀, hl₀, count, h1, lower, continued, all⟩ :=
-    same_handle_return E (by omega) B h (complete E hE) p x old_endpoint.2
+    same_handle_return.{0} E (by omega) B h (complete E hE) p x old_endpoint.2
   obtain ⟨hes, ht, hd, hv, hl, hn, h1, hc⟩ := all es t y d n hr
   have horig : rewind E (letters old) d = residueSource E (B.value h x₀) := by
     rw [hd, old_endpoint.1, ← scratch_sound, rewind_scratch]
@@ -561,7 +575,9 @@ private theorem request_sound {Handle World : Type} (B : SourceService Handle Wo
   have hmax : maximum (a.requests ++ [H]) = max (maximum a.requests) (costBound H) := by
     simp [maximum, List.foldl_append]
   have hjoint : joint (a.requests ++ [H]) = Nat.lcm a.joint H := by
-    simp [joint, List.foldl_append, ← s.joint_eq]
+    rw [joint, List.foldl_append]
+    change Nat.lcm (joint a.requests) H = Nat.lcm a.joint H
+    rw [← s.joint_eq]
   cases hr with
   | covered covered =>
     have hp : budget (costBound (Nat.lcm a.joint H)) = a.precision := by
@@ -575,7 +591,9 @@ private theorem request_sound {Handle World : Type} (B : SourceService Handle Wo
       · have : K = H := by simpa using new
         subst K
         exact ⟨hH, (envelope_covers _ _ hH).mpr covered⟩
-    · change (if costBound (Nat.lcm a.joint H) = 0 then _ else _)
+    · change (if costBound (Nat.lcm a.joint H) = 0 then reads a.tape = 0 else
+        reads a.tape ≤ 4 * a.precision - 2 ∧
+          4 * a.precision - 2 < 8 * costBound (Nat.lcm a.joint H))
       rw [hc]
       by_cases hm : costBound a.joint = 0
       · have hp0 : a.precision = 0 := by simp [s.precision_eq, hm, budget]
@@ -608,7 +626,8 @@ private theorem request_sound {Handle World : Type} (B : SourceService Handle Wo
       rw [s.precision_eq]
       exact budget_mono ((budget_ge _).trans (s.precision_eq ▸ (le_of_lt miss)))
     have hcount : paidReads es = 2 * q := by
-      simpa only [if_neg hE1, envelope_cost] using count
+      rw [if_neg hE1] at count
+      simpa only [E, envelope_cost] using count
     refine ⟨tape, hl, hj, hjoint.symm, ?_, ?_, horig, he, ?_, ?_⟩
     · simpa [install, hmax, hc, s.maximum_eq]
     · change q = budget (costBound (Nat.lcm a.joint H))
@@ -620,7 +639,10 @@ private theorem request_sound {Handle World : Type} (B : SourceService Handle Wo
       · have : K = H := by simpa using new
         subst K
         exact ⟨hH, (envelope_covers _ _ hH).mpr (budget_ge k)⟩
-    · change (if costBound (Nat.lcm a.joint H) = 0 then _ else _)
+    · change (if costBound (Nat.lcm a.joint H) = 0 then
+        reads (a.tape ++ es.map (stamp E)) = 0 else
+        reads (a.tape ++ es.map (stamp E)) ≤ 4 * q - 2 ∧
+          4 * q - 2 < 8 * costBound (Nat.lcm a.joint H))
       rw [hjcost, if_neg hk.ne']
       change reads (a.tape ++ es.map (stamp E)) ≤ 4 * q - 2 ∧ 4 * q - 2 < 8 * k
       rw [reads_append, reads_stamp, hcount]
@@ -648,7 +670,8 @@ private theorem continue_sound {Handle World : Type} (B : SourceService Handle W
   have endpoint := tape_endpoint actual s.lawful
   refine ⟨tape_append s.tape actual, endpoint.2, s.positive, s.joint_eq, s.maximum_eq,
     s.precision_eq, s.original_eq, ?_, s.covered, ?_⟩
-  · change scratch _ a.current w = _
+  · change scratch (envelope a.precision) a.current w =
+      residueSource (envelope a.precision) (B.value h y)
     rw [s.current_eq, scratch_sound, endpoint.1, letters_actions]
   · simpa only [advanceMemory, reads_append, reads_actions, Nat.add_zero] using s.payment
 
@@ -716,11 +739,11 @@ private theorem request_compatible {Handle World : Type} (B : SourceService Hand
   · rw [next.original_eq, reduce_source, s.original_eq]
   · cases hr with
     | covered hc =>
-      change reduce _ _ d a.current = a.current
+      change reduce (envelope a.precision) (envelope a.precision) d a.current = a.current
       rw [s.current_eq, reduce_source]
-    | upgrade hc actual =>
+    | @upgrade es t y e n hc actual =>
       have earned := (acquisition_agrees B h complete p _ (envelope_pos _) x s.lawful actual).1
-      change reduce _ _ d _ = a.current
+      change reduce (envelope a.precision) (envelope (budget (costBound H))) d e = a.current
       rw [earned, reduce_source, s.current_eq]
   · intro t ht
     rw [next.original_eq, s.original_eq, scratch_sound, reduce_source, scratch_sound]
