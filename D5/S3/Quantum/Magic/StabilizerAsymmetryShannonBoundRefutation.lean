@@ -6,10 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Magic/StabilizerAsymmetryShannonBoundRefutation.claim; result=D5/S3/Quantum/Magic/StabilizerAsymmetryShannonBoundRefutation.result; claim=D5/S3/Quantum/Magic/StabilizerAsymmetryShannonBoundRefutation.claim
    digest: A three-qubit state refutes the Shannon branch-and-bound entropy lower bound. -/
 
-import D5.S3.Entropy.MaxEntropy
 import D5.S3.Entropy.TwoDeletionRunEntropyBounds
-import Mathlib.Data.Matrix.Diagonal
-import Mathlib.LinearAlgebra.QuadraticForm.Basic
+import D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation
 
 /-! The full-support stabilizer standard form in Section V.C of Tarabunga et al.,
 arXiv:2411.05766v1, specialized to k = N and R = I. The conjecture following (69)
@@ -80,10 +78,6 @@ private lemma witness_unit : (∑ x, Complex.normSq (witness x)) = 1 := by
   norm_num [Complex.normSq_div, Complex.normSq_ofReal,
     Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 8)]
 
-private lemma normalization : (Real.sqrt 8)⁻¹ * (Real.sqrt 8)⁻¹ = (1 / 8 : ℝ) := by
-  rw [← mul_inv, Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 8)]
-  norm_num
-
 private lemma overlap_term (d x : Bits 3) :
     star (stabAmp (Matrix.diagonal d) 0 x) * witness x =
       (-1 : ℂ) ^ (Matrix.toQuadraticForm' (Matrix.diagonal d) x).val * (coeff x : ℂ) / 8 := by
@@ -93,7 +87,11 @@ private lemma overlap_term (d x : Bits 3) :
       delta stabAmp witness
       simp
       ring_nf
-    _ = _ := by rw [normalization]; push_cast; ring
+    _ = _ := by
+      rw [← pow_two,
+        D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation.scale_sq]
+      push_cast
+      ring
 
 private lemma abs_term (d x : Bits 3) :
     star (stabAmp (Matrix.diagonal d) 0 x) * (‖witness x‖ : ℂ) =
@@ -104,7 +102,11 @@ private lemma abs_term (d x : Bits 3) :
       delta stabAmp witness
       simp [abs_of_nonneg (Real.sqrt_nonneg 8)]
       ring_nf
-    _ = _ := by rw [normalization]; push_cast; ring
+    _ = _ := by
+      rw [← pow_two,
+        D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation.scale_sq]
+      push_cast
+      ring
 
 private lemma overlap_distribution (d : Bits 3) :
     overlapProb 0 0 witness d =
