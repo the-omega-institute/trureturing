@@ -15,11 +15,11 @@ open scoped Matrix
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-universe u
+universe u_1
 noncomputable section
 
 abbrev signature : Signature where
-  Params := Type u
+  Params := Type u_1
   State x := x × x → x × x
   Role := Unit
   finiteRole := inferInstance
@@ -28,24 +28,24 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u} :=
+def actual : Realization signature.{u_1} :=
   realize signature (fun _ _ a => gateGraph a) (fun e => nomatch e)
 
 /-- Collapse the graph to its first output column. -/
-def rejected : Realization signature.{u} :=
+def rejected : Realization signature.{u_1} :=
   realize signature (fun _ _ a t _ => (a t).1) (fun e => nomatch e)
 
 /-- Keep all finite carriers, hypotheses and three factor conclusions. -/
 abbrev arena : Arena where
-  signature := signature.{u}
-  Law R := ∀ (x : Type u) [Fintype x] [DecidableEq x] (a b c : x × x → x × x),
+  signature := signature.{u_1}
+  Law R := ∀ (x : Type u_1) [Fintype x] [DecidableEq x] (a b c : x × x → x × x),
     IsIndexOneOA (circuitGraph a b c) 3 →
       IsIndexOneOA (R.readout () x a) 2 ∧ IsIndexOneOA (gateGraph b) 2 ∧
         IsIndexOneOA (gateGraph c) 2
 
 private instance : Fact (Nat.Prime 5) := ⟨by decide⟩
 
-private abbrev Field := ULift.{u} (ZMod 5)
+private abbrev Field := ULift.{u_1} (ZMod 5)
 
 private def witnessA (t : Field × Field) : Field × Field :=
   (t.1 + t.2, t.1 + 4 * t.2)
@@ -71,7 +71,7 @@ private theorem minors : ∀ cols : Fin 3 → Fin 6, Function.Injective cols →
 private def vector (t : Field × Field × Field) : Fin 3 → Field :=
   ![t.1, t.2.1, t.2.2]
 
-private theorem vector_bijective : Function.Bijective vector.{u} := by
+private theorem vector_bijective : Function.Bijective vector.{u_1} := by
   constructor
   · intro s t h
     exact Prod.ext (congrFun h 0) (Prod.ext (congrFun h 1) (congrFun h 2))
@@ -90,7 +90,7 @@ private theorem witness_graph (t : Field × Field × Field) (i : Fin 6) :
   decide
 
 private theorem witness_perfect :
-    IsIndexOneOA (circuitGraph witnessA.{u} witnessB witnessC) 3 := by
+    IsIndexOneOA (circuitGraph witnessA.{u_1} witnessB witnessC) 3 := by
   intro cols hc
   have hm := (Matrix.mulVec_injective_of_det_ne_zero (minors cols hc)).bijective_of_finite
   have he : (fun t => fun i => circuitGraph witnessA witnessB witnessC t (cols i)) =
@@ -100,7 +100,7 @@ private theorem witness_perfect :
   rw [he]
   exact hm.comp vector_bijective
 
-theorem rejected_law : ¬ arena.{u}.Law rejected := by
+theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
   intro law
   have bad := (law Field witnessA witnessB witnessC witness_perfect).1
   have hinj : Function.Injective (![0, 1] : Fin 2 → Fin 4) := by decide
@@ -112,15 +112,15 @@ theorem rejected_law : ¬ arena.{u}.Law rejected := by
   change (witnessA t).1 = 1 at hone
   exact zero_ne_one (hzero.symm.trans hone)
 
-theorem dependence : ObservationalDependence signature.{u} actual := by
+theorem dependence : ObservationalDependence signature.{u_1} actual := by
   intro i
-  refine ⟨ULift.{u} Bool, (fun _ => (⟨false⟩, ⟨false⟩)),
+  refine ⟨ULift.{u_1} Bool, (fun _ => (⟨false⟩, ⟨false⟩)),
     (fun _ => (⟨true⟩, ⟨true⟩)), ?_⟩
   intro h
   have he := congrFun (congrFun h (⟨false⟩, ⟨false⟩)) 2
   exact Bool.noConfusion (congrArg ULift.down he)
 
-def source_registration : Registration arena.{u} claim.{u} where
+def source_registration : Registration arena.{u_1} claim.{u_1} where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨result, rejected, rejected_law⟩
@@ -134,8 +134,8 @@ def source_registration : Registration arena.{u} claim.{u} where
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@_root_.D5.S3.Combinatorics.Latin.ClassicalPerfectTensorFactorization.result.{u})
-      (Realization signature.{u}) Unit Unit := {
+      (@_root_.D5.S3.Combinatorics.Latin.ClassicalPerfectTensorFactorization.result.{u_1})
+      (Realization signature.{u_1}) Unit Unit := {
   unitName := `Reg.D5.S3.Combinatorics.Latin.ClassicalPerfectTensorFactorization.unit
   realizationName :=
     `Reg.D5.S3.Combinatorics.Latin.ClassicalPerfectTensorFactorization.source_registration
