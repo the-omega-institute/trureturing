@@ -297,6 +297,9 @@ theorem result : ∀ N : ℕ, ∃ n : ℕ, N < n ∧ ∃ G : SimpleGraph (Fin n)
     G.Connected ∧ ∑ S ∈ domSets G, (-4 : ℤ) ^ S.card = 0 :=
   result_of_reassembly source_reassembly
 
+#print axioms source_reassembly
+#print axioms result
+
 end
 
 end D5.S3.Combinatorics.Graph.Domination.MinusFourReassembly

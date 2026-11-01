@@ -38,7 +38,7 @@ independently written, with attribution for the factual graph and question. No
 author code or substantial source prose is reproduced.
 
 The published base and its reported root are existing results. The repository
-family construction and finite-state reduction are conditional until the exact
-base evaluation has a kernel proof. The bounded prior source screen found no
+family construction uses a separate exact restriction/reassembly proof and
+small finite component evaluations for the base value. The bounded prior source screen found no
 exact later resolution in the checked surfaces; it establishes neither worldwide
 novelty nor exhaustive absence of earlier work.
