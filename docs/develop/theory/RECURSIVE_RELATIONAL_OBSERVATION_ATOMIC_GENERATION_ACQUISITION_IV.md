@@ -1489,7 +1489,7 @@ remains open.
 
 ## 18. Exact inherited-prefix allocation on the full native domain
 
-**本批导航。** 本批增补 §§18–23：先给出带实际标号前驱替换的精确有限分配，再把它递归安装为一个全域前向 head recorder，随后给出 base-4 必要系数和任意 block 的证书上界。它不改判 §§9–17 的既有条目；Question 12.2 的对数级充分性仍开放。
+**本批导航。** 本批增补 §§18–22：先给出带实际标号前驱替换的精确有限分配，再把它递归安装为一个全域前向 head recorder，随后给出 base-4 必要系数和任意 block 的证书上界。它不改判 §§9–17 的既有条目；Question 12.2 的对数级充分性仍开放。
 
 **Definition 18.1 (finite inherited-prefix allocation).** Let $b_1,\ldots,b_m$ be a finite labelled multiset of binary words; repetitions are retained as different tokens. For every binary word $q$ put
 
@@ -1505,7 +1505,7 @@ The empty word is included among the possible $q$. A completion is a family of d
 
 **Lemma 18.2 (exact finite extension optimum).** Every completion in Definition 18.1 has maximum length at least $L^*(b)$. A completion with maximum length exactly $L^*(b)$ exists. It is obtained by processing tokens in decreasing $|b_i|$, breaking ties by a fixed lexicographic order of their labels, and assigning to each token the lexicographically first unused length-$L^*(b)$ word extending its lower word. Thus $L^*(b)$ is the exact inherited-prefix optimum, not merely a Kraft upper bound.
 
-**Proof.** Put $L=L^*(b)$ and first consider any completion with maximum length at most $K$. For a prefix $q$ with $D_b(q)>0$, the $D_b(q)$ completed words extending $q$ are distinct and prefix-free. Extend each of them, only for counting, to an arbitrary descendant of length $K$. Their depth-$K$ cylinders below $q$ are disjoint, and there are only $2^{K-|q|}$ such descendants. Hence
+**Proof.** Put $L=L^*(b)$ and first consider any completion with maximum length at most $K$. For a prefix $q$ with $D_b(q)>0$, at least one completed word extends $q$, so any maximum length $K$ first satisfies $K\ge |q|$. The $D_b(q)$ completed words extending $q$ are distinct and prefix-free. Extend each of them, only for counting, to an arbitrary descendant of length $K$. Their depth-$K$ cylinders below $q$ are disjoint, and there are only $2^{K-|q|}$ such descendants. Hence
 
 $$
 D_b(q)\le 2^{K-|q|},qquad
