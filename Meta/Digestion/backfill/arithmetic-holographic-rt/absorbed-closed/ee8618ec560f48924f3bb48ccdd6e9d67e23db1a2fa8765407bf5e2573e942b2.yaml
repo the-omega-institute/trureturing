@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:ee8618ec560f48924f3bb48ccdd6e9d67e23db1a2fa8765407bf5e2573e942b2
   normalized_sha256: sha256:ee8618ec560f48924f3bb48ccdd6e9d67e23db1a2fa8765407bf5e2573e942b2
 cas_ref: sha256:ee8618ec560f48924f3bb48ccdd6e9d67e23db1a2fa8765407bf5e2573e942b2
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Semigroups/ThresholdSchurSemigroup.result
+    target_statement_id: sha256:63bf2d9627f954cf741b6b6024dc0d147e54acd5f8848600cac0932e2f43fa8f
 receipts:
   unresolved_subitems: []
