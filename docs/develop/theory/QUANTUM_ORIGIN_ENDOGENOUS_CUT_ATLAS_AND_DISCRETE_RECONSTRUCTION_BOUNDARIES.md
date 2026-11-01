@@ -1559,3 +1559,205 @@ If $0\le F\le P$, its range lies in $\operatorname{ran}P=\operatorname{ran}V$. C
 For instance, $N=8$ admits $a=2+i,b=1+i$. The four-square input establishes the construction for arbitrarily fine dyadic grids at fixed dimension. This construction supplies no admissible non-Born table. The question in Definition 18.1 still concerns all labelled menus, including relations involving proper subprojections and their complements. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 20. 偶幺模格给出的固定十六维互补原子对
+
+**定义 20.1（格与模二二次空间）。** In Euclidean $\mathbb R^8$, put
+
+$$
+L=\{x\in\mathbb Z^8:\textstyle\sum_i x_i\in2\mathbb Z\}
+\ \cup\
+\{x\in(\mathbb Z+\tfrac12)^8:\textstyle\sum_i x_i\in2\mathbb Z\}.
+$$
+
+This is the classical $E_8$ root lattice. A root means a vector of squared norm two. Write $\overline L=L/2L$, and define
+
+$$
+b(\overline x,\overline y)=(x,y)\pmod2,
+\qquad q(\overline x)=\|x\|^2/2\pmod2.
+$$
+
+For the classical lattice description and root count, see [E8 lattice](https://en.wikipedia.org/wiki/E8_lattice). The lattice and finite quadratic-space facts needed here are proved below. The four-square theorem used in the construction is Lagrange's classical theorem.
+
+**定理 20.2（固定十六维的互补原子对）。** For every integer $m\ge2$, $N=2^m$, $h=N^{-1}$, there are real rank-eight orthogonal projections $P_N,Q_N\in K_{16,m}$ with $P_N+Q_N=I_{16}$ such that
+
+$$
+\{F\in K_{16,m}:F\le P_N\}=\{0,P_N\},\qquad
+\{F\in K_{16,m}:F\le Q_N\}=\{0,Q_N\}.
+\tag{20.1}
+$$
+
+The sets include all complex Gaussian Hermitian effects on the original grid.
+
+**证明。** Let $D=\{x\in\mathbb Z^8:\sum_i x_i\in2\mathbb Z\}$ and $u=(1/2,\ldots,1/2)$. Then $L=D\cup(u+D)$, with $2u\in D$, $(u,D)\subset\mathbb Z$ and $\|u\|^2=2$. Every vector of $D$ has even squared norm, so $L$ is even and integral. The covolume of $D$ is two and $[L:D]=2$, giving covolume one for $L$. Thus any integral basis Gram matrix has determinant one. This also proves nondegeneracy of $b$; evenness makes $b$ alternating and $q$ well defined.
+
+The four vectors
+
+$$
+\begin{aligned}
+g_1&=(1,1,1,1,0,0,0,0),\\
+g_2&=(1,1,0,0,1,1,0,0),\\
+g_3&=(1,0,1,0,1,0,1,0),\\
+g_4&=2e_1
+\end{aligned}
+$$
+
+have $q=0$ and pairwise $b=0$. Their classes are independent: the coordinate parity of an element of $2L$ is either all zero or all one. The first three parity vectors are independent and their eighth coordinates vanish, so a combination can have either of these two patterns only when its three coefficients vanish. Also $2e_1\notin2L$, since $e_1\notin L$. Their classes span a four-dimensional totally $q$-singular subspace $A$. Nondegeneracy gives $A=A^{\perp_b}$. On each of the fifteen cosets other than $A$, the restriction of $q$ is a nonconstant affine function with linear part $a\mapsto b(x,a)$, and takes the value one eight times. On $A$ it is zero. Thus there are $120$ classes with $q=1$.
+
+The roots in $D$ are the $112$ vectors $\pm e_i\pm e_j$, $i<j$. The half-integral roots are the $128$ vectors with coordinates $\pm1/2$ and an even number of minus signs. There are no other roots. Two distinct roots in the same class modulo $2L$ differ by $2x$ for nonzero $x\in L$, whose squared norm is at least eight. The squared distance of two roots is at most eight, with equality only for opposite roots. The $240$ roots therefore give $120$ distinct opposite pairs and exhaust the $120$ classes with $q=1$.
+
+Let $V$ be any four-dimensional $b$-isotropic subspace of $\overline L$ with $q|_V\ne0$. Choose a basis $v_1,\ldots,v_4$ of $V$ with $q(v_1)=1$ and $q(v_j)=0$ for $j>1$. A symplectic basis extension gives an isotropic complement with basis $w_1,\ldots,w_4$ and $b(v_i,w_j)=\delta_{ij}$. If $q$ vanishes on this complement, replace $w_2$ by $w_2+v_2$. The span remains isotropic and complementary to $V$, and $q(w_2+v_2)=1$.
+
+On the resulting $W$, $q$ is a nonzero linear functional. Its eight classes with value one span $W$: for any fixed such class $z$, every class $w$ with value zero is $z+(z+w)$. Choose root representatives of these eight classes. Their pairwise inner products are even. Distinct classes exclude equal or opposite roots, so the Cauchy inequality forces these even inner products to be zero. They form the asserted orthogonal frame.
+
+The required integral-interval property is as follows. Let $B$ be a real matrix of a $\mathbb Z$-basis of $L$ and $C=B^{\mathsf T}B$. If $X\in\operatorname{Herm}_8(\mathbb Z[i])$ and $0\le X\le C$, then $X=0$ or $X=C$.
+
+First let $Y$ be real integral symmetric with $0\le Y\le C$. Unimodularity makes $C^{-1}Y$ integral. It is self-adjoint for the inner product with Gram matrix $C$, with eigenvalues in $[0,1]$. Each eigenvalue is an algebraic integer and all its algebraic conjugates are eigenvalues of this integral matrix. A nontrivial eigenvalue would have all conjugates strictly between zero and one, whose product cannot be a nonzero integer. Hence all eigenvalues are zero or one, and $C^{-1}Y$ is an integral orthogonal projection splitting $L$ into orthogonal sublattices.
+
+This splitting is trivial. Nonzero vectors of $L$ have squared norm at least two, so every root lies wholly in one summand. The integer roots $\pm e_i\pm e_j$ have a connected graph under nonzero inner product and span $\mathbb R^8$. They all lie in one summand, and the other vanishes. Thus $Y=0$ or $Y=C$.
+
+For general Hermitian $X$, its entrywise real part $Y$ is integral symmetric and satisfies $0\le Y\le C$ on real vectors. If $Y=0$, positivity and zero diagonal force $X=0$. If $Y=C$, apply that argument to $C-X$. This covers all Gaussian Hermitian subeffects.
+
+The quaternion endomorphisms used in the construction have the following form. For integers $a,b,c,e$ with odd $t=a^2+b^2+c^2+e^2$, put
+
+$$
+A=\begin{pmatrix}
+a&-b&-c&-e\\
+b&a&-e&c\\
+c&e&a&-b\\
+e&-c&b&a
+\end{pmatrix},\qquad T=\operatorname{diag}(A,A).
+$$
+
+Then $T^{\mathsf T}T=TT^{\mathsf T}=tI_8$, both $T$ and $T^{\mathsf T}$ preserve $L$, and $\overline T$ is an isometry of $q$ on $L/2L$ with inverse $\overline{T^{\mathsf T}}$.
+
+The displayed matrix is the standard integral matrix of left quaternion multiplication; multiplication gives $A^{\mathsf T}A=AA^{\mathsf T}=tI_4$. All row and column sums are odd, with common parity $a+b+c+e\equiv t\pmod2$. The sum of the row sums is $4a$. Thus $T$ preserves integral vectors of even coordinate sum. For half-integral $x=n+u\in L$, $\sum_i n_i$ is even. All coordinates of $Tx$ are half-integral and
+
+$$
+\sum_i(Tx)_i=\sum_j\Bigl(\sum_iT_{ij}\Bigr)n_j+4a\in2\mathbb Z.
+$$
+
+Hence $T$ preserves $L$. Transposition replaces $b,c,e$ by their negatives, so the same holds for $T^{\mathsf T}$. Since $t$ is odd, their compositions are the identity modulo $2L$. Also $q(\overline{Tx})=tq(\overline x)=q(\overline x)$.
+
+Put $t=N/2-1$, which is positive and odd. Lagrange's four-square theorem supplies integers $a,b,c,e$ with squared sum $t$; take $T$ from the quaternion construction above. Let $R$ have columns $e_1+e_2,e_1-e_2,\ldots,e_7+e_8,e_7-e_8$. Then $RR^{\mathsf T}=2I_8$. Its column group contains $2L$, since
+
+$$
+2x=\sum_{j=1}^8(x,r_j)r_j\qquad(x\in L).
+$$
+
+This group has covolume $16$, so its image $U$ in $L/2L$ has dimension four. It is $b$-isotropic with $q|_U\ne0$. Apply the isotropic-complement argument above to $\overline T^{-1}U$, obtaining an isotropic complement $W$ and an orthogonal root frame $S$ whose classes span $W$.
+
+Define real $8$-by-$16$ matrices
+
+$$
+V_+=[\,R\ \ TS\,],\qquad V_-=[\,-T^{\mathsf T}R\ \ S\,].
+$$
+
+Their columns generate $L$ as an integral group. The first column group contains $2L$ from $R$ and has image $U+\overline T W=L/2L$. The second contains $2L$ from $S$ and has image $\overline T^{-1}U+W=L/2L$. Here $2L\subset S\mathbb Z^8$ follows from the same orthogonal-frame identity as for $R$. Direct multiplication gives
+
+$$
+V_+V_+^{\mathsf T}=V_-V_-^{\mathsf T}=2(1+t)I_8=NI_8,
+\qquad V_+V_-^{\mathsf T}=0.
+$$
+
+Consequently
+
+$$
+P_N=V_+^{\mathsf T}V_+/N,\qquad Q_N=V_-^{\mathsf T}V_-/N
+$$
+
+are complementary rank-eight orthogonal projections. Integrality of $L$ puts them on the original $h$ grid.
+
+For either matrix $V$, suppose $F\in K_{16,m}$ lies below $V^{\mathsf T}V/N$. Set $Z=NF\in\operatorname{Herm}_{16}(\mathbb Z[i])$. The inequality $0\le Z\le V^{\mathsf T}V$ implies $\ker V\subset\ker Z$, so
+
+$$
+Z=V^{\mathsf T}A_0V,\qquad 0\le A_0\le I_8,
+\qquad A_0=VZV^{\mathsf T}/N^2.
+$$
+
+Write $V=BM$ in an integral basis $B$ of $L$. The columns generate $L$, so the integral matrix $M$ has an integral right inverse $J$. Thus
+
+$$
+X=J^{\mathsf T}ZJ=B^{\mathsf T}A_0B
+\in\operatorname{Herm}_8(\mathbb Z[i]),\qquad
+0\le X\le B^{\mathsf T}B.
+$$
+
+the integral-interval argument above gives $X=0$ or $B^{\mathsf T}B$, hence $A_0=0$ or $I_8$ and $F=0$ or $V^{\mathsf T}V/N$. This proves both interval assertions for every complex grid subeffect. $\square$
+
+## 21. 完整有限菜单表的统一取消估计反例族
+
+**定理 21.1（固定维数的全表反例）。** Fix complex dimension $d=16$. For every integer $m\ge7$, put $N=2^m$, $h=N^{-1}$, and choose $P_N,Q_N$ from Theorem 20.2. On the whole original effect set $K=K_{16,m}$ define one table
+
+$$
+p_N(E)=\begin{cases}
+3/4,&E=P_N,\\
+1/4,&E=Q_N,\\
+\operatorname{Tr}(E)/16,&E\notin\{P_N,Q_N\}.
+\end{cases}
+\tag{21.1}
+$$
+
+It takes values in $[0,1]$ and satisfies exactly
+
+$$
+\sum_{j=1}^r p_N(E_j)=1
+\quad\left(r\in\{2,3\},\ E_j\in K,\ \sum_jE_j=I_{16}\right)
+\tag{21.2}
+$$
+
+for all labelled tuples, including zeros and repetitions. With the registered nearest-coordinate rounding $R_h$, ties toward zero, set at $E=P_N$
+
+$$
+G=16hI_{16},\qquad F=R_h(P_N/2)+G,\qquad D=2F-P_N.
+$$
+
+These are original-grid effects and
+
+$$
+p_N(P_N)+p_N(D)-2p_N(F)=\frac14.
+\tag{21.3}
+$$
+
+For $\epsilon=0$, the residual divided by $\epsilon+h$ equals $2^m/4$ and is unbounded. Thus no finite dimension-only constants $C_{16},C'_{16}$ satisfy the registered cancellation estimate. The matrix $H$ of (16.1) is $I_{16}/16$, and
+
+$$
+|p_N(P_N)-\operatorname{Tr}(HP_N)|=\frac14,
+\tag{21.4}
+$$
+
+which also refutes the uniform assertion (18.1).
+
+**证明。** The trace table and both exceptional values lie in $[0,1]$. If a tuple summing to $I_{16}$ contains $P_N$, its other entries lie below $Q_N$. By (20.1), they are zero or $Q_N$, and exactly one is $Q_N$. The same argument applies to a tuple containing $Q_N$. Its table values therefore sum to $3/4+1/4=1$, with any extra zero contributing zero. If neither exceptional projection occurs, the sum is the trace sum $\operatorname{Tr}(I_{16})/16=1$. This covers every labelled two- and three-entry menu and every allowed repetition.
+
+For $\delta=R_h(P_N/2)-P_N/2$, coordinate rounding and the maximum absolute row sum give
+
+$$
+\|\delta\|_{\rm op}\le\alpha h,\qquad
+\alpha=\tfrac12+15/\sqrt2<16.
+$$
+
+Each diagonal error is at most $h/2$ and each off-diagonal modulus is at most $h/\sqrt2$. Hence, for $N\ge128$,
+
+$$
+\begin{aligned}
+F&=P_N/2+16hI_{16}+\delta\succeq(16-\alpha)hI_{16},
+&\|F\|_{\rm op}&\le\tfrac12+(16+\alpha)h<\tfrac12+32h\le\tfrac34,\\
+D&=32hI_{16}+2\delta\succeq2(16-\alpha)hI_{16},
+&\|D\|_{\rm op}&\le(32+2\alpha)h<64h\le\tfrac12.
+\end{aligned}
+$$
+
+Rounding makes $F$ a grid matrix and $D=2F-P_N$ is on the same grid. The bounds prove $F,D\in K$ and exclude equality with $P_N$ or $Q_N$, both of norm one. Thus $p_N(F)$ and $p_N(D)$ are their trace values. The arithmetic identity $P_N+D=2F$ gives
+
+$$
+p_N(P_N)+p_N(D)-2p_N(F)
+=\frac34-\operatorname{Tr}(P_N)/16
+=\frac34-\frac8{16}=\frac14.
+$$
+
+All table arguments lie in the original $K$. The matrices $P_N/2$ and $\delta$ occur only in arithmetic. Every grid in the family obeys $N\ge128\ge4d$, and $\epsilon=0\in[0,1/10]$. Given finite $C_{16},C'_{16}\ge0$, choose $m\ge7$ with $2^m>4C'_{16}$ to contradict the proposed bound.
+
+Every member of the tomography basis $\mathcal B$ of Definition 16.1 has rank one; the exceptional projections have rank eight. Thus (21.1) agrees with the trace table on $\mathcal B$, which proves $H=I_{16}/16$ and (21.4). The family uses a single complete table on each finite grid and no cross-grid hypothesis. $\square$
+
+## 追加锚（本行以下为增补区）
