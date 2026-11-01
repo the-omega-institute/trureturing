@@ -110,22 +110,22 @@ private theorem model_positive (y t e h : ℤ)
   dsimp [model]
   refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,?_⟩
   · have hp : (0 : ℤ) ≤ e*h*t*(y*e*t+y+1) := by positivity
-    omega
+    nlinarith [hp]
   · have hp : (0 : ℤ) ≤ e*h*t*t*(y+1) := by positivity
-    omega
+    nlinarith [hp]
   · have hp : (0 : ℤ) ≤ e*h*t*(e*t)*t + (e*t)*t + e*t := by positivity
-    omega
+    nlinarith [hp]
   · have hp : (0 : ℤ) ≤ t*y*(e*t) + (y*(e*t)+y+1) := by positivity
-    omega
+    nlinarith [hp]
   · have hp : (0 : ℤ) ≤ y*(e*t)+y+1 + 2*(t*y*(e*t)) := by positivity
-    omega
+    nlinarith [hp]
   · have hp : (0 : ℤ) ≤ (y-1)*(e*t)+y := by positivity
-    omega
+    nlinarith [hp]
   · ring
-  · have hp : (0 : ℤ) ≤ 2*(e*h*t*t*(y+1)+t+1)-1 := by positivity
-    omega
-  · have hp : (0 : ℤ) ≤ 2*(e*h*t*(e*t)*t+(e*t)*t+e*t+1)-(e*t)-1 := by positivity
-    omega
+  · have hp : (0 : ℤ) ≤ 2*(e*h*t*t*(y+1)+t) := by positivity
+    nlinarith [hp]
+  · have hp : (0 : ℤ) ≤ 2*(e*h*t*(e*t)*t+(e*t)*t)+e*t := by positivity
+    nlinarith [hp]
 
 /- The six later gates share the same integer rounding proof. The first four
 polynomial margins are kept separate, including the actual pre-ear first seam. -/
@@ -421,7 +421,7 @@ private theorem x_inventory (a b c d m q w : ℕ)
       ↑(V (full a b c d 1 ^^^ w) ++ V w) + ↑(U (full a b c d 0)) +
       ↑(W (full a b c d 2)) + {terminal a b c d 0} + {terminal a b c d 1} +
       {terminal a b c d 2} + {terminal a b c d 3} := by
-        simp [xPackets,←hnum,blocksWord,←Multiset.coe_add, List.singleton_append,
+        simp [xPackets,←hnum,blocksWord,←Multiset.coe_add,←Multiset.cons_coe,
           List.append_assoc] <;> ac_rfl
     _ = ↑(X (full a b c d 3)) + ↑(V (full a b c d 1)) + ↑(U (full a b c d 0)) +
       ↑(W (full a b c d 2)) + {terminal a b c d 0} + {terminal a b c d 1} +
@@ -457,7 +457,7 @@ private theorem v_inventory (a b c d q R : ℕ)
       ↑(V (full a b c d 1 ^^^ q) ++ V q) + ↑(U (full a b c d 0)) +
       ↑(W (full a b c d 2)) + {terminal a b c d 0} + {terminal a b c d 1} +
       {terminal a b c d 2} + {terminal a b c d 3} := by
-        simp [vPackets,←hnum,blocksWord,←Multiset.coe_add, List.singleton_append,
+        simp [vPackets,←hnum,blocksWord,←Multiset.coe_add,←Multiset.cons_coe,
           List.append_assoc] <;> ac_rfl
     _ = ↑(X (full a b c d 3)) + ↑(V (full a b c d 1)) + ↑(U (full a b c d 0)) +
       ↑(W (full a b c d 2)) + {terminal a b c d 0} + {terminal a b c d 1} +
@@ -493,7 +493,8 @@ private theorem mask_positive (a b c d m : ℕ) (r : Fin 4)
   have hn:=new_base_bounds a b c d ha hb hc hd r
   intro i hi
   obtain ⟨j,hj,_,rfl⟩ := (chamberLabels_mem _ _ _ _).mp hi
-  rw [h.2.1 r j (by omega),h.2.2.1 r j (by omega),if_pos (by omega)]
+  rw [h.2.1 r j (by omega),h.2.2.1 r j (by omega)]
+  simp only [if_pos (by omega)]
   have hp : (0 : ℤ) ≤ (2 : ℤ)^j := by positivity
   exact ⟨mul_nonneg hp (by have := (h.1 r).1; omega),
     mul_nonneg hp (by have := hn.1; omega)⟩
@@ -552,7 +553,7 @@ private theorem row_source (a b c d : ℕ) (hac : c≤a) (hcd : d≤c) :
   have hx : (2:ℤ)^(c-d)*2^(a-c)*2^d=2^a := by rw [hh,he]; ring
   dsimp [actualRow,model,base,newBase,charge]
   simp only [hx,←he]
-  repeat' constructor <;> try trivial <;> ring_nf
+  repeat' constructor <;> try trivial <;> ring_nf <;> ring
 
 private theorem power_pred (j : ℕ) (hj : 1≤j) :
     (2:ℤ)^j=2*2^(j-1) := by
@@ -656,11 +657,10 @@ private theorem packet_positive (a b c d : ℕ)
       · subst P
         simp only [List.mem_append] at hi
         rcases hi with hi|hi
-        · exact mask_positive a b c d (full a b c d 2) 2 ha hb hc hd i hi
-        · simp only [List.mem_append] at hi
-          rcases hi with hi|hi
+        · rcases hi with hi|hi
+          · exact mask_positive a b c d (full a b c d 2) 2 ha hb hc hd i hi
           · exact mask_positive a b c d q 3 ha hb hc hd i hi
-          · exact mask_positive a b c d w 1 ha hb hc hd i hi
+        · exact mask_positive a b c d w 1 ha hb hc hd i hi
       · simp at hP
   · intro P hP i hi
     simp only [vPackets,List.mem_cons,List.mem_singleton] at hP
@@ -668,11 +668,10 @@ private theorem packet_positive (a b c d : ℕ)
     · exact mask_positive a b c d (full a b c d 1 ^^^ q) 1 ha hb hc hd i hi
     · simp only [List.mem_append] at hi
       rcases hi with hi|hi
-      · exact mask_positive a b c d (full a b c d 0) 0 ha hb hc hd i hi
-      · simp only [List.mem_append] at hi
-        rcases hi with hi|hi
+      · rcases hi with hi|hi
+        · exact mask_positive a b c d (full a b c d 0) 0 ha hb hc hd i hi
         · exact mask_positive a b c d q 1 ha hb hc hd i hi
-        · exact mask_positive a b c d 1 3 ha hb hc hd i hi
+      · exact mask_positive a b c d 1 3 ha hb hc hd i hi
     · exact mask_positive a b c d (full a b c d 3 ^^^ R) 3 ha hb hc hd i hi
     · rcases hP with hP|hP
       · subst P
