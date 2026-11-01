@@ -66,9 +66,8 @@ private lemma top_pair_of_weights {n : ℕ} (hn : 3 ≤ n) (μ w : Fin n → ℝ
       μ j * ∑ k ∈ univ.erase i, w k := by
     rw [mul_sum]
     exact sum_le_sum fun k hk => mul_le_mul_of_nonneg_right (hmax k hk) (hw k)
-  have hsw := sum_erase_add univ w (mem_univ i)
-  rw [hsum] at hsw
-  have hrest : ∑ x ∈ univ.erase i, w x = 1 - w i := by linarith
+  have hrest : ∑ x ∈ univ.erase i, w x = 1 - w i := by
+    rw [sum_erase_eq_sub (mem_univ i), hsum]
   rw [hrest] at hsumle
   have hsm := sum_erase_add univ (fun k => μ k * w k) (mem_univ i)
   have hdiff := mul_nonneg (sub_nonneg.mpr (htop j))
@@ -123,11 +122,9 @@ private theorem weight_gap {ι : Type*} [Fintype ι] [DecidableEq ι]
   have hμ : ∀ j, 0 ≤ μ j := fun j => by rw [hself]; positivity
   have hzero : ∀ j, μ j = 0 → e j = 0 := by
     intro j hj
-    have heq := hself j
-    rw [hj] at heq
-    have ha0 := mul_nonneg ha.le (sq_nonneg (s j))
-    have hb0 := mul_nonneg hb.le (sq_nonneg (e j))
-    have hz : b * e j ^ 2 = 0 := by linarith
+    have hz : b * e j ^ 2 = 0 :=
+      ((add_eq_zero_iff_of_nonneg (mul_nonneg ha.le (sq_nonneg (s j)))
+        (mul_nonneg hb.le (sq_nonneg (e j)))).mp ((hself j).symm.trans hj)).2
     exact sq_eq_zero_iff.mp ((mul_eq_zero.mp hz).resolve_left hb.ne')
   let x : Matrix ι (Fin 2) ℝ := fun j t => if t = 0 then a * s j else b * e j
   let y : Matrix (Fin 2) ι ℝ := fun t j => if t = 0 then s j else e j
@@ -274,8 +271,8 @@ private lemma symmetric_sum {n : ℕ} (f : Fin n → Fin n → ℝ)
   linarith only [h]
 
 private lemma delta_norm {n : ℕ} (hn : 0 < n) : ‖delta n‖ ^ 2 = 1 := by
-  rw [EuclideanSpace.real_norm_sq_eq]
-  simp only [delta, PiLp.toLp_apply, sum_const, card_univ,
+  rw [delta.eq_1, EuclideanSpace.real_norm_sq_eq]
+  simp only [PiLp.toLp_apply, sum_const, card_univ,
     Fintype.card_fin, nsmul_eq_mul]
   rw [inv_pow, Real.sq_sqrt (Nat.cast_nonneg n),
     mul_inv_cancel₀ (by exact_mod_cast hn.ne')]
