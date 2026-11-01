@@ -167,7 +167,7 @@ private theorem x_floor_gates (y t e h s g : ℤ)
   have hvMn : 0<v.Mn := by omega
   have hvD : 1≤v.D := hD'
   have hc := ceil_bounds v.B v.M v.Mn v.D g hvB hvM hvMn hvD
-    (by dsimp [v,model]) (by dsimp [v,model]) (by linarith only [hg])
+    (by dsimp [v,model]) (by simpa only [hrel] using hF) (by linarith only [hg])
   change 1≤r ∧ r≤g ∧ v.B≤r*v.Mn ∧ r*v.Mn<v.B+v.Mn ∧
     r*v.M<v.B ∧ r*v.Mn≤2*v.B-1 at hc
   have hg0 : 0≤g := by omega
@@ -233,7 +233,7 @@ private theorem x_one_gates (t h s : ℤ) (ht : 4≤t) (hh : 4≤h)
     (by
       have hz : 4≤v.z := by dsimp [v,model]; omega
       omega)
-    (by rfl) (by dsimp [v,model]) (by linarith)
+    (by rfl) (by simpa only [hrel] using F) (by linarith)
   change 1≤r ∧ r≤h ∧ v.B≤r*v.Mn ∧ r*v.Mn<v.B+v.Mn ∧
     r*v.M<v.B ∧ r*v.Mn≤2*v.B-1 at hc
   have hrD : v.z+1≤r*v.D := by
@@ -290,7 +290,7 @@ private theorem dynamic_first (h : ℤ) (hh : 8≤h)
   have hvMn : 0<v.Mn := by omega
   have hvD : 1≤v.D := hD'
   have hc := ceil_bounds v.B v.M v.Mn v.D h hvB hvM hvMn
-    (by norm_num [v,model]) (by rfl) (by dsimp [v,model]) (by linarith)
+    (by norm_num [v,model]) (by rfl) (by simpa only [hrel] using F) (by linarith)
   change 1≤r ∧ r≤h ∧ v.B≤r*v.Mn ∧ r*v.Mn<v.B+v.Mn ∧
     r*v.M<v.B ∧ r*v.Mn≤2*v.B-1 at hc
   have hrLo := mul_le_mul_of_nonneg_right hc.2.2.1 (show 0≤v.M by omega)
