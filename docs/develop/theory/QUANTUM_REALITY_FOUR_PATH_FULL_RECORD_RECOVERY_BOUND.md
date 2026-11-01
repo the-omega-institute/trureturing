@@ -629,13 +629,14 @@ The derivation is therefore a source-specific application of the existing basis,
 
 ## 追加锚（本行以下为增补区）
 
-## 8. A quadratic equality gap for complete refinements
+## 8. A homogeneous equality gap for complete refinements
 
-**Definition 8.1 (certificate coordinates and ray distance).** Let \(T\) be the unitary in (3.5). For a finite family \(b_j\in\mathbb C^2\), write
+**Definition 8.1 (certificate coordinates and ray distance).** Let $T$ be the unitary in (3.5). For a finite family $b_j\in\mathbb C^2$, write
 
 $$
 b_j=T\begin{pmatrix}\xi_j\\\eta_j\end{pmatrix},
-\qquad p_j=|\xi_j|^2,\qquad q_j=|\eta_j|^2.
+\qquad p_j=|\xi_j|^2,\qquad q_j=|\eta_j|^2,
+\qquad w_j=p_j+q_j=\|b_j\|^2.
 \tag{8.1}
 $$
 
@@ -646,7 +647,7 @@ $$
 \tag{8.2}
 $$
 
-be the union of the two extremal complex rays. Since \(T\) is unitary, the squared Euclidean distance from \(b_j\) to \(\mathcal E\) is
+be the union of the two extremal complex rays. Since $T$ is unitary, the squared Euclidean distance from $b_j$ to $\mathcal E$ is
 
 $$
 d_j^2=\operatorname{dist}(b_j,\mathcal E)^2=\min\{p_j,q_j\}.
@@ -660,36 +661,43 @@ $$
 \tag{8.4}
 $$
 
-**Theorem 8.2 (uniform quadratic gap and complete-resolution consequence).** For every \(b\in\mathbb C^2\),
+Whenever $w_j=0$, interpret $p_jq_j/w_j$ as zero. The same convention applies to an individual vector with coordinates $p,q,w$.
+
+**Theorem 8.2 (homogeneous gap and ordinary aggregate distance).** For every nonzero $b=T(\xi,\eta)^{\mathsf T}\in\mathbb C^2$, put $p=|\xi|^2$, $q=|\eta|^2$, and $w=p+q=\|b\|^2$. Then
 
 $$
-\delta(b)\ge \frac1{800}\,|\xi|^2|\eta|^2,
-\qquad b=T(\xi,\eta)^{\mathsf T}.
+\delta(b)\ge \frac{pq}{800w}
+\ge\frac{\operatorname{dist}(b,\mathcal E)^2}{1600}.
 \tag{8.5}
 $$
 
-Equality in the certificate \(\delta(b)=0\) holds exactly for \(b=0\) or \(b\in\mathcal E\). Consequently, if a finite complete resolution satisfies \(\sum_j b_jb_j^\dagger=I_2\), then
+At $b=0$ all three quantities are zero under the stated convention. Equality in the certificate $\delta(b)=0$ holds exactly for $b\in\mathcal E$. For every finite family the first two bounds below hold; if it is a complete resolution $\sum_j b_jb_j^\dagger=I_2$, the third holds as well:
 
 $$
-\sum_j p_jq_j\le 800\sum_j\delta(b_j).
+\begin{aligned}
+\sum_j\frac{p_jq_j}{w_j}&\le800\sum_j\delta(b_j),\\
+\sum_j d_j^2&\le1600\sum_j\delta(b_j),\\
+\sum_j p_jq_j&\le800\sum_j\delta(b_j)
+\quad\text{if }\sum_jb_jb_j^\dagger=I_2.
+\end{aligned}
 \tag{8.6}
 $$
 
-If the protocol satisfies the near-optimality premise
-\(\|\Phi-\operatorname{id}\|_\diamond\le1-c+\varepsilon\), then (3.11)--(3.15) give
-\(\eta=(1+c)/2-f\le\varepsilon/2\). The two nonnegative equality-chain defects in (3.8)--(3.13) sum to \(16\eta\), so in particular
-\(\sum_j\delta(b_j)\le8\varepsilon\). Under this premise, (8.6) gives
+For a protocol of Definition 1.2, use exactly the refinement (3.2)--(3.4), with the same original $U_y$ on every spectral piece of outcome $y$. If $\varepsilon\in[0,1]$ and
+$\|\Phi-\operatorname{id}_{M_4}\|_\diamond\le1-c+\varepsilon$, then
 
 $$
-\sum_j p_jq_j\le6400\varepsilon,
-\qquad
-\sum_j d_j^4\le6400\varepsilon.
+\begin{aligned}
+\sum_j d_j^2&\le12800\varepsilon,\\
+\sum_j p_jq_j&\le6400\varepsilon,\\
+\sum_j d_j^4&\le6400\varepsilon.
+\end{aligned}
 \tag{8.7}
 $$
 
-Thus the second equality-chain defect has an outcome-count-independent fourth-power distance consequence for the actual extremal rays of the \(C_0\) certificate.
+In particular, the ordinary aggregate squared distance has a constant independent of the finite outcome count. These are estimates for certificate vectors of the actual protocol, rather than estimates in a channel norm.
 
-Proof. The homogeneity of (8.4) allows us to assume \(p+q=1\) when \(b\ne0\), where \(p=|\xi|^2\), \(q=|\eta|^2\). Use the notation \(x,y,a,m,I,L,A,B\) from (2.3) and (2.8). Equations (2.6) and (2.7) give
+Proof. The homogeneity of (8.4) allows us to assume $p+q=1$ when $b\ne0$, where $p=|\xi|^2$, $q=|\eta|^2$. Use the notation $x,y,a,m,I,L,A,B$ from (2.3) and (2.8). Equations (2.6) and (2.7) give
 
 $$
 A+B\le I-d,
@@ -708,7 +716,7 @@ I-L=\gamma(a,p,q)\,pq,
 \tag{8.9}
 $$
 
-We first obtain a uniform lower gap between the two coefficients in (8.8) and (8.9). Put \(e=(c-s)^2=2s^2\). Since \(a,m\ge s\) and \(L\ge\sqrt2+2m\), the denominator in (8.9) obeys
+We first obtain a uniform lower gap between the two coefficients in (8.8) and (8.9). Put $e=(c-s)^2=2s^2$. Since $a,m\ge s$ and $L\ge\sqrt2+2m$, the denominator in (8.9) obeys
 
 $$
 (a+m)(I+L)\ge4\sqrt2s+8s^2.
@@ -722,9 +730,9 @@ $$
 \tag{8.11}
 $$
 
-follows from \(e=2s^2\) and \(\sqrt2+2s\ge4\sqrt2s\); after squaring the latter positive inequality it is \(17\sqrt2\ge24\), which follows from \(2>(24/17)^2\). Hence \(\gamma(a,p,q)\le1/2\).
+follows from $e=2s^2$ and $\sqrt2+2s\ge4\sqrt2s$; after squaring the latter positive inequality it is $17\sqrt2\ge24$, which follows from $2>(24/17)^2$. Hence $\gamma(a,p,q)\le1/2$.
 
-If \(a\le3/5\), then \(1/(8a^3)\ge125/216\), and \(1/\sqrt2\ge125/216\). Therefore
+If $a\le3/5$, then $1/(8a^3)\ge125/216$, and $1/\sqrt2\ge125/216$. Therefore
 
 $$
 \min\left\{\frac1{\sqrt2},\frac1{8a^3}\right\}-\gamma(a,p,q)
@@ -732,7 +740,7 @@ $$
 \tag{8.12}
 $$
 
-For \(a\ge3/5\), the second denominator estimate in the proof of Lemma 2.1 gives
+For $a\ge3/5$, the second denominator estimate in the proof of Lemma 2.1 gives
 
 $$
 (a+m)(I+L)\ge\frac{19}{5}\sqrt2\,a+\frac{361}{50}a^2.
@@ -747,7 +755,7 @@ F(t)=\frac{19}{5}\sqrt2+\frac{361}{50}t
 \tag{8.14}
 $$
 
-This is concave. On \([3/5,c]\) its endpoint values are positive. To check this without approximation, use
+This is concave. On $[3/5,c]$ its endpoint values are positive. To check this without approximation, use
 
 $$
 \frac75<\sqrt2<\frac{99}{70},
@@ -765,7 +773,7 @@ F(c)>\frac{5909}{500}-\frac{55448}{4851}>0.
 \tag{8.16}
 $$
 
-Concavity then gives \(F(t)>0\) throughout the interval. Combining (8.13)--(8.14) yields
+Concavity then gives $F(t)>0$ throughout the interval. Combining (8.13)--(8.14) yields
 
 $$
 (a+m)(I+L)\ge\frac{3200}{99}\sqrt2 e\,a^3,
@@ -774,7 +782,7 @@ $$
 \tag{8.17}
 $$
 
-Since \(a\le c<1\), (8.17) implies
+On this range $8a^3\ge216/125>\sqrt2$, so the minimum below is its second entry. Since $a\le c<1$, (8.17) implies
 
 $$
 \min\left\{\frac1{\sqrt2},\frac1{8a^3}\right\}-\gamma(a,p,q)
@@ -790,17 +798,80 @@ L-(A+B)\ge\frac{pq}{800}.
 \tag{8.19}
 $$
 
-Because \(L^2\ge2\), \(L+A+B\ge1\), and the defect is
+Because $L^2\ge2$, $L+A+B\ge1$, and the defect is
 
 $$
 \delta(b)=L^2-(A+B)^2=(L-(A+B))(L+A+B),
 $$
 
-we obtain \(\delta(b)\ge pq/800\) in the normalized case. Rescaling gives (8.5) for arbitrary \(b\). If \(pq=0\), then \(x=y=0\), (2.10) gives \(I=L\), and (2.6)--(2.7) give \(A+B=I\); hence \(\delta(b)=0\). If \(pq>0\), (8.5) is strict, so these are all equality cases. Finally, (8.6) follows by summing (8.5), and (8.7) follows from \(\min(p_j,q_j)^2\le p_jq_j\). \(\square\)
+we obtain $\delta(b)\ge pq/800$ in the normalized case. For an arbitrary nonzero vector let $\widehat b=b/\sqrt w$. Its squared coordinate magnitudes are $p/w$ and $q/w$, while $\delta(\widehat b)=\delta(b)/w$. Hence
 
-**Proposition 8.3 (the controlled aggregate and its boundary).** The consequence (8.7) is invariant under arbitrary splitting of a refined Kraus vector into proportional pieces. A bound on the ordinary aggregate \(\sum_j d_j^2\) cannot follow from \(\sum_j\delta(b_j)\) with a constant independent of the number of pieces.
+$$
+\frac{\delta(b)}w
+\ge\frac{pq}{800w^2},
+\qquad
+\delta(b)\ge\frac{pq}{800w}.
+$$
 
-Proof. Replacing one vector \(b\) by \(m\) copies \(m^{-1/2}b\) preserves \(\sum_jb_jb_j^\dagger\). It multiplies \(\sum_j p_jq_j\) by \(1/m\), and it also multiplies \(\sum_jd_j^4\) by \(1/m\), exactly as in (8.7). In contrast, \(\sum_jd_j^2\) is unchanged. For a concrete complete resolution, take the two \(T\)-coordinate vectors \(z_1=(1,1)^{\mathsf T}/\sqrt2\) and \(z_2=(1,-1)^{\mathsf T}/\sqrt2\), and set \(b_i=Tz_i\). Then \(\sum_i b_ib_i^\dagger=I_2\), while each \(d_i^2=1/2\). Splitting both vectors into \(m\) proportional pieces leaves \(\sum_jd_j^2=1\) and sends \(\sum_jp_jq_j\) to \(1/(2m)\). Thus no outcome-count-independent inequality of the form \(\sum_jd_j^2\le C\sum_j\delta(b_j)\) is possible. This is the obstruction to upgrading (8.7) to an ordinary aggregate Euclidean distance without an additional normalization or a new structural hypothesis. \(\square\)
+If $p\le q$, then $pq/(p+q)\ge p/2$; the reverse ordering gives $pq/(p+q)\ge q/2$. Together with (8.3), this proves the second inequality in (8.5). On a normalized coordinate axis, the explicit expressions (3.7) give $A=\sqrt2$ and $B=2a$, while (2.10) gives $I=L$. Thus $\delta=0$ on both axes, and degree-two homogeneity gives equality on both entire complex rays and at zero. If $pq>0$, the first lower bound in (8.5) is positive. These are therefore exactly the certificate equality cases.
 
-Theorem 8.2 supplies only the equality-set bridge for the complete refinement. It does not align the common feedback unitary across spectral pieces, lift the controlled aggregate to the reference-inclusive diamond norm, or classify the \(\varepsilon=0\) implemented channel. Therefore the exact uniform square-root stability assertion for the original full-record arbitrary-feedback class remains unresolved.
+Summing the two bounds in (8.5) proves the first two lines of (8.6). For a complete resolution, positivity of the other summands gives $b_jb_j^\dagger\preceq I_2$, whence $w_j=\|b_j\|^2\le1$. Consequently $p_jq_j\le p_jq_j/w_j$ whenever $w_j>0$; zero vectors contribute zero to both quantities. This proves the third line of (8.6).
 
+For the asserted protocol consequence, keep the actual $K_j=U_y\operatorname{diag}(R_0b_j)$ of (3.3). Write $f$ for its overlap (3.11), and put
+
+$$
+\tau_j=\|R_0b_j\|_{\ell^1}^2-|\operatorname{Tr}K_j|^2\ge0,
+\qquad \Delta=\frac{1+c}{2}-f\ge0.
+$$
+
+The nonnegativity is (3.12)--(3.13), applied to these same feedback unitaries. Completeness, (3.9), and (3.11) give the identity
+
+$$
+\sum_j\delta(b_j)+\sum_j\tau_j
+=\operatorname{Tr}H-16f=16\Delta.
+$$
+
+The existing lower witness (3.15) and the near-optimality premise imply
+$2(1-f)\le1-c+\varepsilon$, hence $\Delta\le\varepsilon/2$. Thus $\sum_j\delta(b_j)\le8\varepsilon$, with no replacement or optimization of the feedback. Equations (8.6) and $d_j^4=\min(p_j,q_j)^2\le p_jq_j$ now prove (8.7). $\square$
+
+**Proposition 8.3 (proportional refinement and the actual defect).** Replace any vector $b$ in a finite family by proportional pieces $t_1b,\ldots,t_rb$, where $r\ge1$, $t_\ell\in\mathbb C$, and $\sum_\ell|t_\ell|^2=1$. This preserves its contribution to completeness and to each of
+
+$$
+\sum_j\delta(b_j),\qquad
+\sum_j d_j^2,\qquad
+\sum_j\frac{p_jq_j}{w_j}.
+$$
+
+When this is a refinement of (3.3)--(3.4) retaining the same original outcome and feedback $U_y$ on every piece, it preserves the actual channel and $\sum_j\tau_j$ as well. The contributions to the quartic sums $\sum_jp_jq_j$ and $\sum_jd_j^4$ are instead multiplied by $\sum_\ell|t_\ell|^4\le1$.
+
+Proof. For the pieces, $p_\ell=|t_\ell|^2p$, $q_\ell=|t_\ell|^2q$, and $w_\ell=|t_\ell|^2w$. Degree-two homogeneity of (8.4) gives $\delta(t_\ell b)=|t_\ell|^2\delta(b)$; (8.3) gives the same scaling for squared ray distance. For $t_\ell\ne0$ and $w>0$,
+
+$$
+\frac{p_\ell q_\ell}{w_\ell}
+=|t_\ell|^2\frac{pq}{w}.
+$$
+
+Zero pieces and the zero vector satisfy the same identity under the convention of Definition 8.1. Summation proves the three aggregate conservation statements, while
+$\sum_\ell(t_\ell b)(t_\ell b)^\dagger=bb^\dagger$ proves completeness conservation. The corresponding actual Kraus operators are $t_\ell K$, since the original $U_y$ remains common. Hence
+
+$$
+\sum_\ell(t_\ell K)X(t_\ell K)^\dagger=KXK^\dagger
+$$
+
+for every $X$, and both terms defining $\tau$ scale by $|t_\ell|^2$. This proves the channel and trace-defect assertions. Finally, each quartic contribution scales by $|t_\ell|^4$. The inequality $\sum_\ell|t_\ell|^4\le(\sum_\ell|t_\ell|^2)^2=1$ proves the stated decrease. In particular, $r$ equal pieces $b/\sqrt r$ preserve the actual total defect and the ordinary aggregate squared distance, while dividing the quartic contributions by $r$. The ordinary aggregate bound (8.6) is therefore compatible with arbitrary proportional refinement. $\square$
+
+The coefficient separation (8.12) and (8.18) strengthens the source-specific certificate of Lemma 2.1. Its protocol application uses the actual-feedback trace estimate (3.12), the fixed-decomposition estimate cited there from Gregoratti--Werner, Proposition 8, rather than a new fidelity-to-diamond upper bound. Theorem 3.1 supplies the existing lower witness, and the attaining channel remains the one in Theorem 6.2. No global literature-priority claim is made for this equality-gap argument.
+
+Theorem 8.2 controls the certificate vectors in the actual feedback-preserving refinement, including an ordinary aggregate squared-distance bound. At exact optimality every nonzero refined vector lies on one of the two certificate rays. What remains unproved is the control of the actual corrected Kraus operators, with their common feedback across spectral pieces, that would turn the two defect budgets into a bound on $\|\Phi-\Phi_*\|_\diamond$, uniform over every finite outcome count, arbitrary $U(4)$ feedback, and every finite untouched reference. This section establishes neither implemented-channel uniqueness at $\varepsilon=0$, qualitative channel stability, nor the quantitative square-root rate.
+
+The unresolved assertion is that there exists a finite $K>0$ such that, for every protocol of Definition 1.2 and every $\varepsilon\in[0,1]$,
+
+$$
+\|\Phi-\operatorname{id}_{M_4}\|_\diamond\le1-c+\varepsilon
+\quad\Longrightarrow\quad
+\|\Phi-\Phi_*\|_\diamond\le K\sqrt\varepsilon.
+$$
+
+Here $\Phi_*$ is exactly (6.14), $K$ is independent of all effects, feedback and finite outcome counts, and both norms are the unhalved norm (1.6), including every finite untouched reference. The record (1.1) and retention of every original outcome remain fixed.
+
+## 追加锚（本行以下为增补区）
