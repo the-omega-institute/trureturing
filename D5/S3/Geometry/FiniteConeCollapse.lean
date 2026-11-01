@@ -93,7 +93,7 @@ theorem faceSimplex_eq_convexHull (s : Finset V) :
       have hwv : w ≠ v := fun h => hw (h.symm ▸ hv)
       simp [Pi.single_apply, hwv, Ne.symm hwv]
 
-private theorem realization_mem_iff (M : PreAbstractSimplicialComplex V) (x : V → ℝ) :
+theorem realization_mem_iff (M : PreAbstractSimplicialComplex V) (x : V → ℝ) :
     x ∈ realization M ↔ ∃ s ∈ M, x ∈ faceSimplex s := by
   simp only [realization, mem_setOf_eq, faceSimplex_eq_convexHull]
 

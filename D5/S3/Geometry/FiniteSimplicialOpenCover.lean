@@ -23,16 +23,9 @@ variable (K : PreAbstractSimplicialComplex V)
 /-- The actual finite coordinate carrier, including the empty realization. -/
 abbrev Space := ↥(FiniteConeCollapse.realization K)
 
-/-- A useful public form of the existing coordinate-simplex identity. -/
-theorem mem_realization_iff (x : V → ℝ) :
-    x ∈ FiniteConeCollapse.realization K ↔
-      ∃ s ∈ K, x ∈ FiniteConeCollapse.faceSimplex s := by
-  simp only [FiniteConeCollapse.realization, Set.mem_setOf_eq,
-    FiniteConeCollapse.faceSimplex_eq_convexHull]
-
 theorem coordinate_data (x : Space K) :
     (∀ v, 0 ≤ x.val v) ∧ (∑ v, x.val v) = 1 := by
-  obtain ⟨s, hs, hx⟩ := (mem_realization_iff K x.val).1 x.property
+  obtain ⟨s, hs, hx⟩ := (FiniteConeCollapse.realization_mem_iff K x.val).1 x.property
   exact ⟨hx.1, hx.2.1⟩
 
 /-- The real open vertex star. Ghost vertices give empty stars. -/
@@ -69,7 +62,7 @@ theorem intersection_subset_support {s f : Finset V} {x : Space K}
 theorem face_of_nonempty_intersection {s : Finset V} (hs : s.Nonempty)
     (h : (intersection K s).Nonempty) : s ∈ K := by
   obtain ⟨x, hx⟩ := h
-  obtain ⟨f, hf, hxf⟩ := (mem_realization_iff K x.val).1 x.property
+  obtain ⟨f, hf, hxf⟩ := (FiniteConeCollapse.realization_mem_iff K x.val).1 x.property
   exact (K.isRelLowerSet_faces hf).2 (intersection_subset_support K hx hxf) hs
 
 /-- Equal weights on exactly the vertices of `s`. -/
@@ -97,7 +90,7 @@ theorem barycenterCoords_mem_faceSimplex {s : Finset V} (hs : s.Nonempty) :
 
 /-- A barycenter is constructed only from an actual nonempty face. -/
 def barycenter {s : Finset V} (hs : s ∈ K) : Space K :=
-  ⟨barycenterCoords s, (mem_realization_iff K _).2
+  ⟨barycenterCoords s, (FiniteConeCollapse.realization_mem_iff K _).2
     ⟨s, hs, barycenterCoords_mem_faceSimplex (K.isRelLowerSet_faces hs).1⟩⟩
 
 theorem barycenter_mem_intersection {s : Finset V} (hs : s ∈ K) :
@@ -131,8 +124,8 @@ def contractIntersection {s : Finset V} (hs : s ∈ K)
   let y : V → ℝ :=
     fun v => (1 - (t : ℝ)) * x.val.val v + (t : ℝ) * barycenterCoords s v
   have hy : y ∈ FiniteConeCollapse.realization K := by
-    obtain ⟨f, hf, hxf⟩ := (mem_realization_iff K x.val.val).1 x.val.property
-    exact (mem_realization_iff K y).2
+    obtain ⟨f, hf, hxf⟩ := (FiniteConeCollapse.realization_mem_iff K x.val.val).1 x.val.property
+    exact (FiniteConeCollapse.realization_mem_iff K y).2
       ⟨f, hf, segment_mem_original_face K hs x.val x.property hxf t⟩
   refine ⟨⟨y, hy⟩, ?_⟩
   intro v hv

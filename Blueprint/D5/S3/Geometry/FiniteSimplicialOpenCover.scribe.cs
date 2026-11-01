@@ -11,7 +11,7 @@ internal sealed class FiniteSimplicialOpenCoverDocument : IScribeDocumentDefinit
             Node("vertexopen", "vertexOpen", "Open vertex stars",
                 "For a finite linearly ordered vertex type V and pre-abstract simplicial complex K, the carrier is the subtype of real coordinate vectors in FiniteConeCollapse.realization K. The star of v consists exactly of points with strictly positive v coordinate. Ghost vertices give empty stars.", DescribeRole.Definition),
             Node("vertexopen-cover", "vertexOpen_cover", "A cover of the actual carrier",
-                "The vertex stars are open in the coordinate subspace topology and cover the entire carrier. Every realized point has nonnegative coordinates summing to one, so some coordinate is positive. The carrier may be empty.", DescribeRole.Theorem),
+                "The vertex stars are open in the coordinate subspace topology and cover the entire carrier. The existing FiniteConeCollapse.realization_mem_iff identifies a realized point with a point in an actual face simplex, giving nonnegative coordinates summing to one, so some coordinate is positive. The carrier may be empty.", DescribeRole.Theorem),
             Node("face-of-nonempty-intersection", "face_of_nonempty_intersection", "Intersections detect faces",
                 "If a nonempty finite vertex set has a point in its positive-coordinate intersection, it is a face of K. Positivity places all selected vertices in a support face of that same point; downward closure then applies.", DescribeRole.Theorem),
             Node("intersectioncontraction", "intersectionContraction", "Straight-line contraction",
