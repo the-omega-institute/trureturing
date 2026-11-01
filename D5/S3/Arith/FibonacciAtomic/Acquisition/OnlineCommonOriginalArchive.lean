@@ -598,20 +598,18 @@ private theorem request_sound {Handle World : Type} (B : SourceService Handle Wo
       rw [← show E = envelope q from rfl, he] at ec
       simp [costBound] at ec
       omega
-    obtain ⟨hd, hl, returned, count⟩ := acquisition_agrees B h complete p E hE x s.lawful actual
+    obtain ⟨tape, horig, hd, he, count, continued, recovery⟩ :=
+      upgrade_transport B h complete p x₀ x hx₀ a.tape s.tape E hE actual
+    have hl := (tape_endpoint tape hx₀).2
     have hjcost : costBound (Nat.lcm a.joint H) = k := by
       rw [hc, max_eq_right]
       exact (budget_ge _).trans (s.precision_eq ▸ (le_of_lt miss))
     have pq : a.precision ≤ q := by
       rw [s.precision_eq]
       exact budget_mono ((budget_ge _).trans (s.precision_eq ▸ (le_of_lt miss)))
-    have old_endpoint := (tape_endpoint s.tape hx₀).1
-    have horig : rewind E (letters a.tape) d = residueSource E (B.value h x₀) := by
-      rw [hd, old_endpoint, ← scratch_sound, rewind_scratch]
     have hcount : paidReads es = 2 * q := by
       simpa only [if_neg hE1, envelope_cost] using count
-    refine ⟨tape_append s.tape (service_tape actual), hl, hj, hjoint.symm,
-      ?_, ?_, horig, hd.trans returned.symm, ?_, ?_⟩
+    refine ⟨tape, hl, hj, hjoint.symm, ?_, ?_, horig, he, ?_, ?_⟩
     · simpa [install, hmax, hc, s.maximum_eq]
     · change q = budget (costBound (Nat.lcm a.joint H))
       rw [hjcost]

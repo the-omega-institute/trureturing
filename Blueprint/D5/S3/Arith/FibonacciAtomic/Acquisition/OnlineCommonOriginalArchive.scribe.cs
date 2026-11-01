@@ -132,8 +132,9 @@ internal sealed class OnlineCommonOriginalArchiveDocument : IScribeDocumentDefin
                 + "of that same source and cuts. The return concerns the upgrade entry and preserves earlier "
                 + "continuations; it neither rewinds the actual integer nor recovers a past source handle."),
             Theorem(Result(),
-                "Induction over actual request and continuation segments establishes Sound. At a miss, physical "
-                + "acquisition returns the current source modulo the new envelope. Local rewind recovers the "
+                "Induction over actual request and continuation segments establishes Sound. At a miss, the "
+                + "invariant consumes the arbitrary-modulus UpgradeRecovery theorem at the newly chosen envelope. "
+                + "Physical acquisition returns the current source modulo that envelope. Local rewind recovers the "
                 + "same v0 from its authentic old prefix. The executed full tape then labels every actual past "
                 + "cut. A miss jumps to a larger dyadic budget; except at the first upgrade it is at least twice "
                 + "the preceding positive budget. Each stage pays exactly twice its envelope cost. Induction "
