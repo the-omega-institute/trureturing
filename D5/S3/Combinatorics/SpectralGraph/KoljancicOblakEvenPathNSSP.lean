@@ -10,6 +10,8 @@ import D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath
 import D5.S3.Quantum.Matrix.GibbsStochasticSimpleSpectrum
 import Mathlib.Analysis.Normed.Module.FiniteDimension
 
+/-! Exact-support synthesis for the full even double-path event. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -275,7 +277,9 @@ private lemma joined_simple (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ)
         · simp [h, hu, hl]
         · simp [h, hu, hl]
   rw [hj] at H
-  simpa only [HasSimpleEigenvalues, joinedPath, Nat.add_right_comm s 1 r, e] using H
+  unfold HasSimpleEigenvalues at H ⊢
+  unfold joinedPath
+  simpa only [Nat.add_right_comm s 1 r, e] using H
 
 private lemma joined_diagonalization (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ)
     (hL : ∀ k < r, bL k ≠ 0) (hR : ∀ k < s, bR k ≠ 0) :
@@ -312,7 +316,7 @@ private lemma joined_diagonalization (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ)
       conjTranspose_eq_transpose_of_trivial] using Unitary.coe_star_mul_self U
   · simpa only [Unitary.coe_star, star_eq_conjTranspose,
       conjTranspose_eq_transpose_of_trivial] using Unitary.coe_mul_star_self U
-  · simpa only [conjStarAlgAut_star_apply, Unitary.coe_star, star_eq_conjTranspose,
+  · simpa only [Unitary.conjStarAlgAut_star_apply, Unitary.coe_star, star_eq_conjTranspose,
       conjTranspose_eq_transpose_of_trivial, RCLike.ofReal_real_eq_id, Function.id_comp]
       using hA.conjStarAlgAut_star_eigenvectorUnitary
 
@@ -333,11 +337,7 @@ private lemma singleton_support (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ)
   by_cases hij : i = j
   · subst j
     have hn : ¬ i.val + 1 = i.val := by omega
-    have he : i.val = r ↔ i = (⟨r, by omega⟩ : Fin (s + 1 + r)) := by
-      constructor
-      · exact Fin.ext
-      · intro h; exact congrArg Fin.val h
-    by_cases hi : i.val = r <;> simp [hi, hn, he, ha]
+    by_cases hi : i.val = r <;> simp [hi, hn, ha, Fin.ext_iff]
   · by_cases hu : i.val + 1 = j.val
     · have hl : ¬ j.val + 1 = i.val := by omega
       by_cases h : i.val < r
@@ -367,6 +367,132 @@ private lemma singleton_witness (r s : ℕ) (hodd : Odd (r + s)) :
   · exact singleton_support bL bR 1 r s one_ne_zero hL hR
   · apply joined_nssp bL bR 1 r s one_ne_zero hodd hL hR
     simpa only [hsL, hsR] using hc
+
+
+private def nsspTest {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) :
+    Matrix (Fin n) (Fin n) ℝ →ₗ[ℝ]
+      (Matrix (Fin n) (Fin n) ℝ × Matrix (Fin n) (Fin n) ℝ) where
+  toFun X := (fun i j => A i j * X i j, A * Xᵀ - Xᵀ * A)
+  map_add' X Y := by
+    apply Prod.ext
+    · ext i j; exact mul_add _ _ _
+    · simp only [transpose_add, Matrix.mul_add, Matrix.add_mul, Prod.add_snd]
+      abel
+  map_smul' c X := by
+    apply Prod.ext
+    · ext i j
+      simp only [Matrix.smul_apply, smul_eq_mul, Prod.smul_fst, RingHom.id_apply]
+      ring
+    · simp [transpose_smul, Matrix.mul_smul, Matrix.smul_mul, smul_sub]
+
+private def nsspFamily (n : ℕ) :
+    Matrix (Fin n) (Fin n) ℝ →ₗ[ℝ]
+      (Matrix (Fin n) (Fin n) ℝ →L[ℝ]
+        (Matrix (Fin n) (Fin n) ℝ × Matrix (Fin n) (Fin n) ℝ)) where
+  toFun A := (nsspTest A).toContinuousLinearMap
+  map_add' A B := by
+    apply ContinuousLinearMap.ext
+    intro X
+    change nsspTest (A + B) X = nsspTest A X + nsspTest B X
+    apply Prod.ext
+    · ext i j; exact add_mul _ _ _
+    · change (A + B) * Xᵀ - Xᵀ * (A + B) =
+        (A * Xᵀ - Xᵀ * A) + (B * Xᵀ - Xᵀ * B)
+      simp only [Matrix.add_mul, Matrix.mul_add]
+      abel
+  map_smul' c A := by
+    apply ContinuousLinearMap.ext
+    intro X
+    change nsspTest (c • A) X = c • nsspTest A X
+    apply Prod.ext
+    · ext i j
+      simp only [nsspTest, LinearMap.coe_mk, AddHom.coe_mk, Prod.smul_fst,
+        Matrix.smul_apply, smul_eq_mul]
+      ring
+    · change (c • A) * Xᵀ - Xᵀ * (c • A) = c • (A * Xᵀ - Xᵀ * A)
+      simp only [Matrix.smul_mul, Matrix.mul_smul, smul_sub]
+
+private lemma nssp_open (n : ℕ) :
+    IsOpen {A : Matrix (Fin n) (Fin n) ℝ | HasNSSP A} := by
+  have hs : {A : Matrix (Fin n) (Fin n) ℝ | HasNSSP A} =
+      nsspFamily n ⁻¹' {f | Function.Injective f} := by
+    ext A
+    change HasNSSP A ↔ Function.Injective (nsspTest A)
+    rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+    constructor
+    · intro H X HX
+      have hp := congrArg Prod.fst HX
+      have hc := congrArg Prod.snd HX
+      exact H X (fun i j => congrFun (congrFun hp i) j) hc
+    · intro H X hp hc
+      apply H X
+      apply Prod.ext
+      · ext i j; exact hp i j
+      · exact hc
+  rw [hs]
+  exact ContinuousLinearMap.isOpen_injective.preimage
+    (nsspFamily n).continuous_of_finiteDimensional
+
+private lemma loop_enlargement {n : ℕ} (L : Finset (Fin n)) (l : Fin n) (hl : l ∈ L)
+    (A : Matrix (Fin n) (Fin n) ℝ)
+    (hs : ∀ i j, A i j ≠ 0 ↔ pathPattern {l} i j) (ha : HasNSSP A) :
+    ∃ B : Matrix (Fin n) (Fin n) ℝ,
+      (∀ i j, B i j ≠ 0 ↔ pathPattern L i j) ∧ HasNSSP B := by
+  classical
+  let D : Matrix (Fin n) (Fin n) ℝ := diagonal (fun i => if i ∈ L ∧ i ≠ l then 1 else 0)
+  let B : ℝ → Matrix (Fin n) (Fin n) ℝ := fun t => A + t • D
+  have hc : Continuous B := continuous_const.add (continuous_id.smul continuous_const)
+  have htend : Filter.Tendsto B (nhds 0) (nhds A) := by
+    simpa only [B, zero_smul, add_zero] using (hc.continuousAt : ContinuousAt B 0)
+  have hevent : ∀ᶠ t in nhds (0 : ℝ), HasNSSP (B t) :=
+    htend.eventually ((nssp_open n).mem_nhds ha)
+  obtain ⟨eps, heps, hball⟩ := Metric.mem_nhds_iff.mp hevent
+  have htpos : 0 < eps / 2 := half_pos heps
+  have hnssp : HasNSSP (B (eps / 2)) := by
+    apply hball
+    rw [Metric.mem_ball, Real.dist_eq, sub_zero, abs_of_pos htpos]
+    exact half_lt_self heps
+  refine ⟨B (eps / 2), ?_, hnssp⟩
+  intro i j
+  by_cases hij : i = j
+  · subst j
+    by_cases hi : i = l
+    · subst i
+      have hn : A l l ≠ 0 := (hs l l).mpr (Or.inr (Or.inr ⟨rfl, by simp⟩))
+      simp [B, D, hi, hn, pathPattern, hl]
+    · have hz : A i i = 0 := by
+        by_contra hne
+        have H := (hs i i).mp hne
+        simp [pathPattern, hi] at H
+      by_cases hm : i ∈ L
+      · simp [B, D, hz, hi, hm, pathPattern, htpos.ne']
+      · simp [B, D, hz, hi, hm, pathPattern]
+  · have hb : B (eps / 2) i j = A i j := by
+      simp [B, D, diagonal_apply_ne _ hij]
+    rw [hb]
+    simpa only [pathPattern, hij, false_and, or_false] using hs i j
+
+private lemma singleton_at {n : ℕ} (hn : 0 < n) (heven : Even n) (l : Fin n) :
+    ∃ A : Matrix (Fin n) (Fin n) ℝ,
+      (∀ i j, A i j ≠ 0 ↔ pathPattern {l} i j) ∧ HasNSSP A := by
+  let r := l.val
+  let s := n - 1 - r
+  have hnum : s + 1 + r = n := by dsimp [s, r]; omega
+  have hodd : Odd (r + s) := by
+    apply Nat.odd_iff.mpr
+    have he := Nat.even_iff.mp heven
+    omega
+  have H := singleton_witness r s hodd
+  rw [hnum] at H
+  have hl : (⟨r, by dsimp [r]; exact l.isLt⟩ : Fin n) = l := Fin.ext rfl
+  simpa only [hl] using H
+
+/-- The full existential event, with unrestricted real test matrices. -/
+theorem result : D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath.claim := by
+  intro n hn heven L hL
+  obtain ⟨l, hl⟩ := hL
+  obtain ⟨A, hs, ha⟩ := singleton_at hn heven l
+  exact loop_enlargement L l hl A hs ha
 
 
 end D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPathNSSP
