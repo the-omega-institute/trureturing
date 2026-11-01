@@ -74,14 +74,14 @@ private theorem diagonal_joint_choice (a b c d : ℕ)
   obtain ⟨ch⟩ := parameterChoice a b c d hc hcd hdb hba ha
   have hpow : (2:ℕ)^(b-c-1)≤2^(b-1) :=
     Nat.pow_le_pow_right (by decide) (by omega)
-  refine ⟨{ s:=ch.s, r:=ch.r, h:=ch.h, v:=ch.v,
-    bounds:=⟨ch.r_pos,ch.r_le_s,ch.s_cap,ch.v_cap,
-      lt_of_lt_of_le ch.h_cap hpow⟩,
-    submask:=by intro e _ he; exact ch.submask e he,
-    good:=?_ }⟩
+  refine ⟨⟨(ParameterChoice.s ch), (ParameterChoice.r ch), (ParameterChoice.h ch),
+    (ParameterChoice.v ch),
+    ⟨(ParameterChoice.r_pos ch),(ParameterChoice.r_le_s ch),(ParameterChoice.s_cap ch),(ParameterChoice.v_cap ch),
+      lt_of_lt_of_le (ParameterChoice.h_cap ch) hpow⟩,
+    (by intro e _ he; exact (ParameterChoice.submask ch) e he), ?_⟩⟩
   intro i
   rw [gate_agrees]
-  exact ch.gates i
+  exact (ParameterChoice.gates ch) i
 
 -- Shared conversion for high-middle, half-step and quarter-step. No gates
 -- are assumed: the four actual rectangle margins imply all twelve here.
@@ -92,24 +92,24 @@ private def remaining_joint_choice (a b c d : ℕ)
     have hp := pow_le_pow_right₀ (by norm_num : (1:ℤ)≤2) hc
     norm_num at hp
     exact hp
-  have hs : (ch.s:ℤ)=(2:ℤ)^(a-d)*((2:ℤ)^(d-1)-1)+(ch.r:ℤ) := by
-    rw [ch.anchor]
+  have hs : ((NativeChoice.s ch):ℤ)=(2:ℤ)^(a-d)*((2:ℤ)^(d-1)-1)+((NativeChoice.r ch):ℤ) := by
+    rw [(NativeChoice.anchor ch)]
     simp only [Nat.cast_add,Nat.cast_mul,Nat.cast_pow,Nat.cast_ofNat,
       Nat.cast_sub Nat.one_le_two_pow,Nat.cast_one]
   have hprod : (2:ℤ)^(a-d)*(2:ℤ)^d=(2:ℤ)^a := by
     rw [←pow_add]
     congr 1
     omega
-  have hq : 2*((ch.s:ℤ)-(ch.r:ℤ))=(2:ℤ)^a-2*(2:ℤ)^(a-d) := by
+  have hq : 2*(((NativeChoice.s ch):ℤ)-((NativeChoice.r ch):ℤ))=(2:ℤ)^a-2*(2:ℤ)^(a-d) := by
     rw [half_power d (by omega)] at hprod
     rw [hs]
     nlinarith only [hprod]
-  have hq0 : 0≤(ch.s:ℤ)-(ch.r:ℤ) := by
-    have hr : (ch.r:ℤ)≤(ch.s:ℤ) := by exact_mod_cast ch.bounds.2.1
+  have hq0 : 0≤((NativeChoice.s ch):ℤ)-((NativeChoice.r ch):ℤ) := by
+    have hr : ((NativeChoice.r ch):ℤ)≤((NativeChoice.s ch):ℤ) := by exact_mod_cast (NativeChoice.bounds ch).2.1
     omega
-  have hr : (1:ℤ)≤(ch.r:ℤ) := by exact_mod_cast ch.bounds.1
-  have hsc : 2*(ch.s:ℤ)≤(2:ℤ)^a := by
-    have hh : (ch.s:ℤ)≤(2:ℤ)^(a-1) := by exact_mod_cast ch.bounds.2.2.1
+  have hr : (1:ℤ)≤((NativeChoice.r ch):ℤ) := by exact_mod_cast (NativeChoice.bounds ch).1
+  have hsc : 2*((NativeChoice.s ch):ℤ)≤(2:ℤ)^a := by
+    have hh : ((NativeChoice.s ch):ℤ)≤(2:ℤ)^(a-1) := by exact_mod_cast (NativeChoice.bounds ch).2.2.1
     rw [half_power a (by omega)]
     omega
   have hR : (2:ℤ)^b=2*(2:ℤ)^c*(2:ℤ)^(b-c-1) := by
@@ -117,29 +117,28 @@ private def remaining_joint_choice (a b c d : ℕ)
     conv_lhs => rw [he]
     simp only [pow_add,pow_one]
     ring
-  have hcap : 2*(2:ℤ)^c*((ch.h:ℤ)+1)≤(2:ℤ)^b := by
-    have hh : (ch.h:ℤ)<(2:ℤ)^(b-c-1) := by
-      exact_mod_cast ch.bounds.2.2.2.2
+  have hcap : 2*(2:ℤ)^c*(((NativeChoice.h ch):ℤ)+1)≤(2:ℤ)^b := by
+    have hh : ((NativeChoice.h ch):ℤ)<(2:ℤ)^(b-c-1) := by
+      exact_mod_cast (NativeChoice.bounds ch).2.2.2.2
     rw [hR]
     exact mul_le_mul_of_nonneg_left (by omega) (by positivity)
   have hrect : ∀ i, 0≤rectangleMargin (2^a) (2^b) (2^c) (2^d)
-      (2^(a-d)) ((ch.s:ℤ)-(ch.r:ℤ)) ch.s ch.r ch.h ch.v i := by
+      (2^(a-d)) (((NativeChoice.s ch):ℤ)-((NativeChoice.r ch):ℤ)) (NativeChoice.s ch) (NativeChoice.r ch) (NativeChoice.h ch) (NativeChoice.v ch) i := by
     intro i
-    have hh := ch.good i
+    have hh := (NativeChoice.good ch) i
     rw [rectangle_agrees] at hh
     simpa only [sub_add_cancel] using hh
   have hgates := rectangle_to_twelve (2^a) (2^b) (2^c) (2^d)
-    (2^(a-d)) ((ch.s:ℤ)-(ch.r:ℤ)) ch.s ch.r ch.h ch.v
+    (2^(a-d)) (((NativeChoice.s ch):ℤ)-((NativeChoice.r ch):ℤ)) (NativeChoice.s ch) (NativeChoice.r ch) (NativeChoice.h ch) (NativeChoice.v ch)
     hz (double_power_le c d hcd) (double_power_le d b hdb)
     (double_power_le b a hba) hq (by ring) hq0 hr hsc
     (by positivity) hcap hrect
   have hpow : (2:ℕ)^(b-c-1)≤2^(b-1) :=
     Nat.pow_le_pow_right (by decide) (by omega)
-  refine { s:=ch.s, r:=ch.r, h:=ch.h, v:=ch.v,
-    bounds:=⟨ch.bounds.1,ch.bounds.2.1,ch.bounds.2.2.1,
-      ch.bounds.2.2.2.1,lt_of_lt_of_le ch.bounds.2.2.2.2 hpow⟩,
-    submask:=by intro e _ he; exact ch.submask e he,
-    good:=?_ }
+  refine ⟨(NativeChoice.s ch), (NativeChoice.r ch), (NativeChoice.h ch), (NativeChoice.v ch),
+    ⟨(NativeChoice.bounds ch).1,(NativeChoice.bounds ch).2.1,(NativeChoice.bounds ch).2.2.1,
+      (NativeChoice.bounds ch).2.2.2.1,lt_of_lt_of_le (NativeChoice.bounds ch).2.2.2.2 hpow⟩,
+    (by intro e _ he; exact (NativeChoice.submask ch) e he), ?_⟩
   intro i
   rw [gate_agrees]
   exact hgates i
@@ -148,13 +147,13 @@ private def remaining_joint_choice (a b c d : ℕ)
 -- In particular this conversion does not demand r<=g or s=q+r.
 private def small_c2_joint_choice (a b d : ℕ) (ch : Choice a b d) :
     JointChoice a b 2 d := by
-  refine { s:=ch.s, r:=ch.r, h:=ch.h, v:=ch.v,
-    bounds:=ch.bounds, submask:=ch.submask, good:=?_ }
+  refine ⟨(Choice.s ch), (Choice.r ch), (Choice.h ch), (Choice.v ch),
+    (Choice.bounds ch), (Choice.submask ch), ?_⟩
   intro i
-  have hm := ch.good (⟨i.val,by omega⟩ : Fin 19)
-  have he : margin (2^d) (2^a) (2^b) ch.s ch.r ch.h ch.v
+  have hm := (Choice.good ch) (⟨i.val,by omega⟩ : Fin 19)
+  have he : margin (2^d) (2^a) (2^b) (Choice.s ch) (Choice.r ch) (Choice.h ch) (Choice.v ch)
       (⟨i.val,by omega⟩ : Fin 19) =
-      gate (2^d) (2^2) (2^a) (2^b) ch.s ch.r ch.h ch.v i := by
+      gate (2^d) (2^2) (2^a) (2^b) (Choice.s ch) (Choice.r ch) (Choice.h ch) (Choice.v ch) i := by
     fin_cases i <;> dsimp [margin,gate] <;> norm_num <;> ring
   rw [he] at hm
   exact hm

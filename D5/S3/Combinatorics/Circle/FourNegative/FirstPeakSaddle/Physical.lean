@@ -42,7 +42,7 @@ private theorem bits_mem (len off m i : ℕ) :
   simp only [bits,List.mem_toFinset,chamberLabels_mem]
 
 private theorem bits_region (len off m i : ℕ) (hi : i∈bits len off m) :
-    off≤i ∧ i<off+len := by
+    off ≤ i ∧ i < off + len := by
   obtain ⟨e,he,_,hh⟩ := (bits_mem len off m i).mp hi
   omega
 
@@ -97,11 +97,11 @@ private theorem bits_difference_sum (len off m u : ℕ) (hm : m<2^len) (hu : u<2
 
 private def selected (a b c d : ℕ) (ch : JointChoice a b c d) : Fin 3 → Finset ℕ :=
   let U := bits (d-1) 0 (2^(d-1)-1)
-  let Uv := bits (d-1) 0 ch.v
-  let Wh := bits (b-1) (d+c) ch.h
+  let Uv := bits (d-1) 0 (JointChoice.v ch)
+  let Wh := bits (b-1) (d+c) (JointChoice.h ch)
   let X := bits (a-1) (d+c+b) (2^(a-1)-1)
-  let Xm := bits (a-1) (d+c+b) (ch.s-1)
-  let Xu := bits (a-1) (d+c+b) (ch.r-1)
+  let Xm := bits (a-1) (d+c+b) ((JointChoice.s ch)-1)
+  let Xu := bits (a-1) (d+c+b) ((JointChoice.r ch)-1)
   let V := bits (c-1) d (2^(c-1)-1)
   ![(U \ Uv) ∪ Wh ∪ (X \ Xm), Xm \ Xu, Uv ∪ V ∪ Xu]
 
@@ -110,7 +110,7 @@ private theorem selected_good (a b c d : ℕ) (hd : 3≤d) (hc : 2≤c) (hdb : d
     (∀ j : Fin 3, ∀ i∈selected a b c d ch j,
       i<a+b+c+d ∧ i≠a+b+c+d-1 ∧ i≠d+c-1 ∧ i≠d-1 ∧ i≠d+c+b-1) ∧
     (∀ j l : Fin 3, j≠l → Disjoint (selected a b c d ch j) (selected a b c d ch l)) := by
-  have hsub := bits_submask (a-1) (d+c+b) (ch.s-1) (ch.r-1) ch.submask
+  have hsub := bits_submask (a-1) (d+c+b) ((JointChoice.s ch)-1) ((JointChoice.r ch)-1) (JointChoice.submask ch)
   have g0 : ∀ i∈selected a b c d ch 0,
       i<a+b+c+d ∧ i≠a+b+c+d-1 ∧ i≠d+c-1 ∧ i≠d-1 ∧ i≠d+c+b-1 := by
     intro i hi
@@ -118,7 +118,7 @@ private theorem selected_good (a b c d : ℕ) (hd : 3≤d) (hc : 2≤c) (hdb : d
     rcases hi with (hi|hi)|hi
     · have hb := bits_region (d-1) (0) (2^(d-1)-1) i hi.1
       omega
-    · have hb := bits_region (b-1) (d+c) (ch.h) i hi
+    · have hb := bits_region (b-1) (d+c) ((JointChoice.h ch)) i hi
       omega
     · have hb := bits_region (a-1) (d+c+b) (2^(a-1)-1) i hi.1
       omega
@@ -126,18 +126,18 @@ private theorem selected_good (a b c d : ℕ) (hd : 3≤d) (hc : 2≤c) (hdb : d
       i<a+b+c+d ∧ i≠a+b+c+d-1 ∧ i≠d+c-1 ∧ i≠d-1 ∧ i≠d+c+b-1 := by
     intro i hi
     simp only [selected,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Finset.mem_union,Finset.mem_sdiff] at hi
-    have hb := bits_region (a-1) (d+c+b) (ch.s-1) i hi.1
+    have hb := bits_region (a-1) (d+c+b) ((JointChoice.s ch)-1) i hi.1
     omega
   have g2 : ∀ i∈selected a b c d ch 2,
       i<a+b+c+d ∧ i≠a+b+c+d-1 ∧ i≠d+c-1 ∧ i≠d-1 ∧ i≠d+c+b-1 := by
     intro i hi
     simp only [selected,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Finset.mem_union,Finset.mem_sdiff] at hi
     rcases hi with (hi|hi)|hi
-    · have hb := bits_region (d-1) (0) (ch.v) i hi
+    · have hb := bits_region (d-1) (0) ((JointChoice.v ch)) i hi
       omega
     · have hb := bits_region (c-1) d (2^(c-1)-1) i hi
       omega
-    · have hb := bits_region (a-1) (d+c+b) (ch.r-1) i hi
+    · have hb := bits_region (a-1) (d+c+b) ((JointChoice.r ch)-1) i hi
       omega
   have d01 : Disjoint (selected a b c d ch 0) (selected a b c d ch 1) := by
     apply Finset.disjoint_left.mpr
@@ -145,10 +145,10 @@ private theorem selected_good (a b c d : ℕ) (hd : 3≤d) (hc : 2≤c) (hdb : d
     simp only [selected,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Finset.mem_union,Finset.mem_sdiff] at hi hj
     rcases hi with (hi|hi)|hi
     · have hb := bits_region (d-1) (0) (2^(d-1)-1) i hi.1
-      have hc := bits_region (a-1) (d+c+b) (ch.s-1) i hj.1
+      have hc := bits_region (a-1) (d+c+b) ((JointChoice.s ch)-1) i hj.1
       omega
-    · have hb := bits_region (b-1) (d+c) (ch.h) i hi
-      have hc := bits_region (a-1) (d+c+b) (ch.s-1) i hj.1
+    · have hb := bits_region (b-1) (d+c) ((JointChoice.h ch)) i hi
+      have hc := bits_region (a-1) (d+c+b) ((JointChoice.s ch)-1) i hj.1
       omega
     · exact hi.2 hj.1
   have d02 : Disjoint (selected a b c d ch 0) (selected a b c d ch 2) := by
@@ -162,21 +162,21 @@ private theorem selected_good (a b c d : ℕ) (hd : 3≤d) (hc : 2≤c) (hdb : d
         have hc := bits_region (c-1) d (2^(c-1)-1) i hj
         omega
       · have hb := bits_region (d-1) (0) (2^(d-1)-1) i hi.1
-        have hc := bits_region (a-1) (d+c+b) (ch.r-1) i hj
+        have hc := bits_region (a-1) (d+c+b) ((JointChoice.r ch)-1) i hj
         omega
     · rcases hj with (hj|hj)|hj
-      · have hb := bits_region (b-1) (d+c) (ch.h) i hi
-        have hc := bits_region (d-1) (0) (ch.v) i hj
+      · have hb := bits_region (b-1) (d+c) ((JointChoice.h ch)) i hi
+        have hc := bits_region (d-1) (0) ((JointChoice.v ch)) i hj
         omega
-      · have hb := bits_region (b-1) (d+c) (ch.h) i hi
+      · have hb := bits_region (b-1) (d+c) ((JointChoice.h ch)) i hi
         have hc := bits_region (c-1) d (2^(c-1)-1) i hj
         omega
-      · have hb := bits_region (b-1) (d+c) (ch.h) i hi
-        have hc := bits_region (a-1) (d+c+b) (ch.r-1) i hj
+      · have hb := bits_region (b-1) (d+c) ((JointChoice.h ch)) i hi
+        have hc := bits_region (a-1) (d+c+b) ((JointChoice.r ch)-1) i hj
         omega
     · rcases hj with (hj|hj)|hj
       · have hb := bits_region (a-1) (d+c+b) (2^(a-1)-1) i hi.1
-        have hc := bits_region (d-1) (0) (ch.v) i hj
+        have hc := bits_region (d-1) (0) ((JointChoice.v ch)) i hj
         omega
       · have hb := bits_region (a-1) (d+c+b) (2^(a-1)-1) i hi.1
         have hc := bits_region (c-1) d (2^(c-1)-1) i hj
@@ -187,10 +187,10 @@ private theorem selected_good (a b c d : ℕ) (hd : 3≤d) (hc : 2≤c) (hdb : d
     intro i hi hj
     simp only [selected,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Finset.mem_union,Finset.mem_sdiff] at hi hj
     rcases hj with (hj|hj)|hj
-    · have hb := bits_region (a-1) (d+c+b) (ch.s-1) i hi.1
-      have hc := bits_region (d-1) (0) (ch.v) i hj
+    · have hb := bits_region (a-1) (d+c+b) ((JointChoice.s ch)-1) i hi.1
+      have hc := bits_region (d-1) (0) ((JointChoice.v ch)) i hj
       omega
-    · have hb := bits_region (a-1) (d+c+b) (ch.s-1) i hi.1
+    · have hb := bits_region (a-1) (d+c+b) ((JointChoice.s ch)-1) i hi.1
       have hc := bits_region (c-1) d (2^(c-1)-1) i hj
       omega
     · exact hi.2 hj
@@ -207,13 +207,13 @@ private theorem remainder_eq (a b c d : ℕ) (hd : 3≤d) (hc : 2≤c) (hdb : d<
     (ch : JointChoice a b c d) :
     Finset.range (a+b+c+d) \ (selected a b c d ch 0 ∪ selected a b c d ch 1 ∪
       selected a b c d ch 2 ∪ {a+b+c+d-1,d+c-1,d-1,d+c+b-1}) =
-    bits (b-1) (d+c) (2^(b-1)-1) \ bits (b-1) (d+c) ch.h := by
+    bits (b-1) (d+c) (2^(b-1)-1) \ bits (b-1) (d+c) (JointChoice.h ch) := by
   ext i
-  have hu := bits_region (d-1) 0 ch.v i
-  have hw := bits_region (b-1) (d+c) ch.h i
-  have hm := bits_region (a-1) (d+c+b) (ch.s-1) i
-  have hx := bits_submask (a-1) (d+c+b) (ch.s-1) (ch.r-1) ch.submask
-  have hx' : i∈bits (a-1) (d+c+b) (ch.r-1) → i∈bits (a-1) (d+c+b) (ch.s-1) := hx
+  have hu := bits_region (d-1) 0 (JointChoice.v ch) i
+  have hw := bits_region (b-1) (d+c) (JointChoice.h ch) i
+  have hm := bits_region (a-1) (d+c+b) ((JointChoice.s ch)-1) i
+  have hx := bits_submask (a-1) (d+c+b) ((JointChoice.s ch)-1) ((JointChoice.r ch)-1) (JointChoice.submask ch)
+  have hx' : i∈bits (a-1) (d+c+b) ((JointChoice.r ch)-1) → i∈bits (a-1) (d+c+b) ((JointChoice.s ch)-1) := hx
   simp only [selected,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
     Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,
     Matrix.vecTail,Function.comp_apply,bits_full,
@@ -233,24 +233,24 @@ private theorem selected_mass (a b c d : ℕ) (hd : 3≤d) (hc : 2≤c) (hdb : d
     (hW : ∀ e<b-1, f (d+c+e)=(2:ℤ)^e*L)
     (hX : ∀ e<a-1, f (d+c+b+e)=(2:ℤ)^e*M) :
     ((selected a b c d ch 0).toList.map f).sum =
-      ((2:ℤ)^(d-1)-1-ch.v)*A+ch.h*L+((2:ℤ)^(a-1)-ch.s)*M ∧
-    ((selected a b c d ch 1).toList.map f).sum = ((ch.s:ℤ)-ch.r)*M ∧
-    ((selected a b c d ch 2).toList.map f).sum = ch.v*A+((2:ℤ)^(c-1)-1)*B+((ch.r:ℤ)-1)*M := by
-  have hb := ch.bounds
-  have hs : 1≤ch.s := by omega
-  have hm : ch.s-1<2^(a-1) := by omega
-  have hu : ch.r-1<2^(a-1) := by omega
+      ((2:ℤ)^(d-1)-1-(JointChoice.v ch))*A+(JointChoice.h ch)*L+((2:ℤ)^(a-1)-(JointChoice.s ch))*M ∧
+    ((selected a b c d ch 1).toList.map f).sum = (((JointChoice.s ch):ℤ)-(JointChoice.r ch))*M ∧
+    ((selected a b c d ch 2).toList.map f).sum = (JointChoice.v ch)*A+((2:ℤ)^(c-1)-1)*B+(((JointChoice.r ch):ℤ)-1)*M := by
+  have hb := (JointChoice.bounds ch)
+  have hs : 1≤(JointChoice.s ch) := by omega
+  have hm : (JointChoice.s ch)-1<2^(a-1) := by omega
+  have hu : (JointChoice.r ch)-1<2^(a-1) := by omega
   have hp (n : ℕ) : 2^n-1<2^n := by have := Nat.one_le_two_pow (n:=n); omega
-  have hsub := bits_submask (a-1) (d+c+b) (ch.s-1) (ch.r-1) ch.submask
-  have mU := bits_difference_sum (d-1) 0 (2^(d-1)-1) ch.v (hp _) hb.2.2.2.1
+  have hsub := bits_submask (a-1) (d+c+b) ((JointChoice.s ch)-1) ((JointChoice.r ch)-1) (JointChoice.submask ch)
+  have mU := bits_difference_sum (d-1) 0 (2^(d-1)-1) (JointChoice.v ch) (hp _) hb.2.2.2.1
     (bits_subset_full _ _ _) f A hU
-  have mW := bits_sum (b-1) (d+c) ch.h hb.2.2.2.2 f L hW
-  have mX := bits_difference_sum (a-1) (d+c+b) (2^(a-1)-1) (ch.s-1)
+  have mW := bits_sum (b-1) (d+c) (JointChoice.h ch) hb.2.2.2.2 f L hW
+  have mX := bits_difference_sum (a-1) (d+c+b) (2^(a-1)-1) ((JointChoice.s ch)-1)
     (hp _) hm (bits_subset_full _ _ _) f M hX
-  have mQ := bits_difference_sum (a-1) (d+c+b) (ch.s-1) (ch.r-1) hm hu hsub f M hX
+  have mQ := bits_difference_sum (a-1) (d+c+b) ((JointChoice.s ch)-1) ((JointChoice.r ch)-1) hm hu hsub f M hX
   have mV := bits_sum (c-1) d (2^(c-1)-1) (hp _) f B hV
-  have mv := bits_sum (d-1) 0 ch.v hb.2.2.2.1 f A hU
-  have mu := bits_sum (a-1) (d+c+b) (ch.r-1) hu f M hX
+  have mv := bits_sum (d-1) 0 (JointChoice.v ch) hb.2.2.2.1 f A hU
+  have mu := bits_sum (a-1) (d+c+b) ((JointChoice.r ch)-1) hu f M hX
   have dis (l o m l' o' m' : ℕ) (he : o+l≤o' ∨ o'+l'≤o) :
       Disjoint (bits l o m) (bits l' o' m') := by
     apply Finset.disjoint_left.mpr
@@ -258,27 +258,27 @@ private theorem selected_mass (a b c d : ℕ) (hd : 3≤d) (hc : 2≤c) (hdb : d
     have hi' := bits_region l o m i hi
     have hj' := bits_region l' o' m' i hj
     omega
-  have duw : Disjoint (bits (d-1) 0 (2^(d-1)-1) \ bits (d-1) 0 ch.v)
-      (bits (b-1) (d+c) ch.h) := by
+  have duw : Disjoint (bits (d-1) 0 (2^(d-1)-1) \ bits (d-1) 0 (JointChoice.v ch))
+      (bits (b-1) (d+c) (JointChoice.h ch)) := by
     apply Finset.disjoint_left.mpr
     intro i hi hj
     exact Finset.disjoint_left.mp (dis _ _ _ _ _ _ (Or.inl (by omega)))
       (Finset.mem_sdiff.mp hi).1 hj
-  have dux : Disjoint (bits (d-1) 0 (2^(d-1)-1) \ bits (d-1) 0 ch.v)
-      (bits (a-1) (d+c+b) (2^(a-1)-1) \ bits (a-1) (d+c+b) (ch.s-1)) := by
+  have dux : Disjoint (bits (d-1) 0 (2^(d-1)-1) \ bits (d-1) 0 (JointChoice.v ch))
+      (bits (a-1) (d+c+b) (2^(a-1)-1) \ bits (a-1) (d+c+b) ((JointChoice.s ch)-1)) := by
     apply Finset.disjoint_left.mpr
     intro i hi hj
     exact Finset.disjoint_left.mp (dis _ _ _ _ _ _ (Or.inl (by omega)))
       (Finset.mem_sdiff.mp hi).1 (Finset.mem_sdiff.mp hj).1
-  have dwx : Disjoint (bits (b-1) (d+c) ch.h)
-      (bits (a-1) (d+c+b) (2^(a-1)-1) \ bits (a-1) (d+c+b) (ch.s-1)) := by
+  have dwx : Disjoint (bits (b-1) (d+c) (JointChoice.h ch))
+      (bits (a-1) (d+c+b) (2^(a-1)-1) \ bits (a-1) (d+c+b) ((JointChoice.s ch)-1)) := by
     apply Finset.disjoint_left.mpr
     intro i hi hj
     exact Finset.disjoint_left.mp (dis _ _ _ _ _ _ (Or.inl (by omega))) hi
       (Finset.mem_sdiff.mp hj).1
-  have duv := dis (d-1) 0 ch.v (c-1) d (2^(c-1)-1) (Or.inl (by omega))
-  have dux' := dis (d-1) 0 ch.v (a-1) (d+c+b) (ch.r-1) (Or.inl (by omega))
-  have dvx := dis (c-1) d (2^(c-1)-1) (a-1) (d+c+b) (ch.r-1) (Or.inl (by omega))
+  have duv := dis (d-1) 0 (JointChoice.v ch) (c-1) d (2^(c-1)-1) (Or.inl (by omega))
+  have dux' := dis (d-1) 0 (JointChoice.v ch) (a-1) (d+c+b) ((JointChoice.r ch)-1) (Or.inl (by omega))
+  have dvx := dis (c-1) d (2^(c-1)-1) (a-1) (d+c+b) ((JointChoice.r ch)-1) (Or.inl (by omega))
   simp only [sumlist,selected,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
     Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,
     Matrix.vecHead,Matrix.vecTail,Function.comp_apply]
@@ -325,10 +325,10 @@ private theorem actualSource_of_nativeChoice
   let N := sourceMod a b c d
   let f := oldValue a b c d
   let g := newValue a b c d
-  let s : ℤ := ch.s
-  let r : ℤ := ch.r
-  let h : ℤ := ch.h
-  let v : ℤ := ch.v
+  let s : ℤ := (JointChoice.s ch)
+  let r : ℤ := (JointChoice.r ch)
+  let h : ℤ := (JointChoice.h ch)
+  let v : ℤ := (JointChoice.v ch)
   let E1 := (t-2*v)*A-2*s*M+2*h*L
   let E2 := B+L-2*v*A-2*r*M+2*h*L
   let E3 := 2*(h+1)*L-2*M
@@ -351,7 +351,6 @@ private theorem actualSource_of_nativeChoice
   have hmod : modulus k=N := by
     dsimp [k,N,sourceMod,modulus]
     simp only [pow_add]
-    ring
   have hmod' : modulus (k+1)=2*N+1 := by
     dsimp [k,N,sourceMod,modulus]
     simp only [pow_add, pow_succ]
@@ -420,7 +419,7 @@ private theorem actualSource_of_nativeChoice
       0≤f i ∧ 0≤g i := by
     have hh := good.1 j i (Finset.mem_toList.mp hi)
     exact allpos i hh.1 hh.2
-  have Gform : G=bits (b-1) (d+c) (2^(b-1)-1) \ bits (b-1) (d+c) ch.h :=
+  have Gform : G=bits (b-1) (d+c) (2^(b-1)-1) \ bits (b-1) (d+c) (JointChoice.h ch) :=
     remainder_eq a b c d (by omega) hc hdb hba ch
   have posG (i : ℕ) (hi : i∈G.toList) : 0≤f i ∧ 0≤g i := by
     have hi' := Finset.mem_toList.mp hi
@@ -516,29 +515,29 @@ private theorem actualSource_of_nativeChoice
       (R.toList.map g).sum+g nu)=F3 := by
     dsimp [F2] at f2
     dsimp [F3]; nlinarith only [f2,j2,ng2,relzn]
-  have hm0 := ch.good 0
+  have hm0 := (JointChoice.good ch) 0
   change 0≤E1 at hm0
-  have hm1 := ch.good 1
+  have hm1 := (JointChoice.good ch) 1
   change 0≤A-1-E1 at hm1
-  have hm2 := ch.good 2
+  have hm2 := (JointChoice.good ch) 2
   change 0≤F1 at hm2
-  have hm3 := ch.good 3
+  have hm3 := (JointChoice.good ch) 3
   change 0≤A-1-F1 at hm3
-  have hm4 := ch.good 4
+  have hm4 := (JointChoice.good ch) 4
   change 0≤E2 at hm4
-  have hm5 := ch.good 5
+  have hm5 := (JointChoice.good ch) 5
   change 0≤L-1-E2 at hm5
-  have hm6 := ch.good 6
+  have hm6 := (JointChoice.good ch) 6
   change 0≤F2 at hm6
-  have hm7 := ch.good 7
+  have hm7 := (JointChoice.good ch) 7
   change 0≤Ln-1-F2 at hm7
-  have hm8 := ch.good 8
+  have hm8 := (JointChoice.good ch) 8
   change 0≤E3 at hm8
-  have hm9 := ch.good 9
+  have hm9 := (JointChoice.good ch) 9
   change 0≤B-1-E3 at hm9
-  have hm10 := ch.good 10
+  have hm10 := (JointChoice.good ch) 10
   change 0≤F3 at hm10
-  have hm11 := ch.good 11
+  have hm11 := (JointChoice.good ch) 11
   change 0≤Bn-1-F3 at hm11
   have hN0 : 0≤N := by
     have hb := tab.1 0

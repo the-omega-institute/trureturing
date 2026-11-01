@@ -41,20 +41,20 @@ private theorem euclidean_gap_hit (g m b : ℤ) (hg : 4≤g) (hm : 2≤m)
     have hu : 0≤u ∧ u<m :=
       ⟨Int.emod_nonneg _ (by omega),Int.emod_lt_of_pos _ (by omega)⟩
     have he : b=u+m*i := Int.emod_add_mul_ediv b m
-    have hi : 0≤i := by
+    have hi : 0≤ i := by
       by_contra hn
       have hp := mul_le_mul_of_nonneg_left (show i≤-1 by omega) (show 0≤m by omega)
       nlinarith only [hp,he,hu.2,hb.1]
     by_cases hlow : u≤1
     · have hig : i<g := by
         by_contra hn
-        have hh := mul_le_mul_of_nonneg_right (show g≤i by omega) (show 0≤m by omega)
+        have hh := mul_le_mul_of_nonneg_right (show g≤ i by omega) (show 0≤m by omega)
         nlinarith only [hh,he,hsmall,hu.1,hm]
       refine ⟨0,i,u,by omega,by omega,hi,hig,by omega,?_⟩
       refine ⟨0,?_⟩; nlinarith only [he]
     · have hig : i≤g-2 := by
         by_contra hn
-        have hh := mul_le_mul_of_nonneg_right (show g-1≤i by omega) (show 0≤m by omega)
+        have hh := mul_le_mul_of_nonneg_right (show g-1≤ i by omega) (show 0≤m by omega)
         nlinarith only [hh,he,hsmall,show 2≤u by omega]
       refine ⟨m-u,i+1,0,by omega,by omega,by omega,by omega,Or.inl rfl,?_⟩
       refine ⟨0,?_⟩; nlinarith only [he]

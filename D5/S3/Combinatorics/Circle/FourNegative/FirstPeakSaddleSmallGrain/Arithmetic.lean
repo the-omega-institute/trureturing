@@ -94,7 +94,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         have hxi : (2:ℤ)^a = 4*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 2*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 8 := by exact_mod_cast ht
-        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> simp only [hxi,hyi,hti] <;> ring
+        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
       have hh := half_power a (by omega)
@@ -115,7 +115,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         have hxi : (2:ℤ)^a = 4*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 2*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 16+10*(T:ℤ) := by exact_mod_cast ht
-        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> simp only [hxi,hyi,hti] <;> ring
+        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
       have hs : 1≤s := by dsimp [s]; omega
@@ -132,7 +132,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         have hxi : (2:ℤ)^a = 4*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 2*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 32+10*(T:ℤ) := by exact_mod_cast ht
-        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> simp only [hxi,hyi,hti] <;> ring
+        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
       have hs : 1≤s := by dsimp [s]; omega
@@ -149,7 +149,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         have hxi : (2:ℤ)^a = 4*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 2*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 64+10*(T:ℤ) := by exact_mod_cast ht
-        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> simp only [hxi,hyi,hti] <;> ring
+        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
       have hh := half_power a (by omega)
@@ -170,7 +170,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         have hxi : (2:ℤ)^a = 4*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 2*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 128+10*(T:ℤ) := by exact_mod_cast ht
-        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> simp only [hxi,hyi,hti] <;> ring
+        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
       have hh := half_power a (by omega)
@@ -193,7 +193,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         have hxi : (2:ℤ)^a = 8*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 2*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 8 := by exact_mod_cast ht
-        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> simp only [hxi,hyi,hti] <;> ring
+        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
       have hh := half_power a (by omega)
@@ -214,7 +214,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         have hxi : (2:ℤ)^a = 8*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 2*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 16+10*(T:ℤ) := by exact_mod_cast ht
-        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> simp only [hxi,hyi,hti] <;> ring
+        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
       have hs : 1≤s := by dsimp [s]; omega
@@ -231,7 +231,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         have hxi : (2:ℤ)^a = 8*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 2*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 32+10*(T:ℤ) := by exact_mod_cast ht
-        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> simp only [hxi,hyi,hti] <;> ring
+        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
       have hs : 1≤s := by dsimp [s]; omega
@@ -248,7 +248,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         have hxi : (2:ℤ)^a = 8*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 2*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 64+10*(T:ℤ) := by exact_mod_cast ht
-        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> simp only [hxi,hyi,hti] <;> ring
+        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
       have hh := half_power a (by omega)
@@ -269,7 +269,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         have hxi : (2:ℤ)^a = 8*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 2*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 128+10*(T:ℤ) := by exact_mod_cast ht
-        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> simp only [hxi,hyi,hti] <;> ring
+        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
       have hh := half_power a (by omega)
@@ -292,7 +292,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         have hxi : (2:ℤ)^a = 8*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 4*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 8 := by exact_mod_cast ht
-        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> simp only [hxi,hyi,hti] <;> ring
+        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
       have hh := half_power a (by omega)
@@ -313,7 +313,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         have hxi : (2:ℤ)^a = 8*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 4*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 16+10*(T:ℤ) := by exact_mod_cast ht
-        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> simp only [hxi,hyi,hti] <;> ring
+        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
       have hs : 1≤s := by dsimp [s]; omega
@@ -330,7 +330,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         have hxi : (2:ℤ)^a = 8*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 4*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 32+10*(T:ℤ) := by exact_mod_cast ht
-        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> simp only [hxi,hyi,hti] <;> ring
+        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
       have hs : 1≤s := by dsimp [s]; omega
@@ -347,7 +347,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         have hxi : (2:ℤ)^a = 8*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 4*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 64+10*(T:ℤ) := by exact_mod_cast ht
-        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> simp only [hxi,hyi,hti] <;> ring
+        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
       have hh := half_power a (by omega)
@@ -368,7 +368,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         have hxi : (2:ℤ)^a = 8*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 4*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 128+10*(T:ℤ) := by exact_mod_cast ht
-        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> simp only [hxi,hyi,hti] <;> ring
+        convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
       have hh := half_power a (by omega)
