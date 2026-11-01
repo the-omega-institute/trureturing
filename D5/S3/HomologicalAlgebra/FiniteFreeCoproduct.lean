@@ -7,78 +7,57 @@
    digest: Explicit finite basis coordinates for a coproduct of copies of Z. -/
 
 import Mathlib.Algebra.Category.ModuleCat.Colimits
-import Mathlib.CategoryTheory.Limits.Shapes.Products
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+import Mathlib.LinearAlgebra.Finsupp.Pi
 
+/-! Finite coordinates obtained from Mathlib's actual Finsupp coproduct cocone. -/
+
+set_option backward.defeqAttrib.useBackward true
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
-/-! Explicit finite coordinates for the categorical free integer module. -/
-
 noncomputable section
 open CategoryTheory Limits
-open scoped BigOperators
 
 namespace D5.S3.HomologicalAlgebra.FiniteFreeCoproduct
 
 variable {I J : Type} [Fintype I] [DecidableEq I] [DecidableEq J] (e : I ≃ J)
 
-private def column (j : J) : I → ℤ := fun i => if e i = j then 1 else 0
-
-omit [Fintype I] in
-private theorem column_image (i : I) : column e (e i) = Pi.single i 1 := by
-  ext k
-  simp [column, e.injective.eq_iff, Pi.single_apply, eq_comm]
-
-/-- A finite coproduct basis is sent to its actual integer coordinate vector. -/
-def coordinateIso : (∐ fun _ : J => ModuleCat.of ℤ ℤ) ≅ ModuleCat.of ℤ (I → ℤ) where
-  hom := Sigma.desc fun j => ModuleCat.ofHom ((LinearMap.id : ℤ →ₗ[ℤ] ℤ).smulRight (column e j))
-  inv := ModuleCat.ofHom (Fintype.linearCombination ℤ
-    (fun i => (Sigma.ι (fun _ : J => ModuleCat.of ℤ ℤ) (e i)) 1))
-  hom_inv_id := by
-    apply Sigma.hom_ext
-    intro j
-    obtain ⟨i, rfl⟩ := e.surjective j
-    rw [Sigma.ι_comp_desc_assoc]
-    apply ModuleCat.hom_ext
-    apply LinearMap.ext_ring
-    change Fintype.linearCombination ℤ
-      (fun k => (Sigma.ι (fun _ : J => ModuleCat.of ℤ ℤ) (e k)) 1)
-      (column e (e i)) = (Sigma.ι (fun _ : J => ModuleCat.of ℤ ℤ) (e i)) 1
-    rw [column_image, Fintype.linearCombination_apply_single, one_smul]
-  inv_hom_id := by
-    apply ModuleCat.hom_ext
-    apply LinearMap.ext
-    intro f
-    simp only [ModuleCat.hom_comp, ModuleCat.hom_ofHom, LinearMap.comp_apply,
-      ModuleCat.hom_id, LinearMap.id_apply, Fintype.linearCombination_apply]
-    simp only [map_sum, map_smul]
-    have hcol (i : I) :
-        (Sigma.desc fun j => ModuleCat.ofHom ((LinearMap.id : ℤ →ₗ[ℤ] ℤ).smulRight (column e j)))
-          ((Sigma.ι (fun _ : J => ModuleCat.of ℤ ℤ) (e i)) 1) = Pi.single i 1 := by
-      have h := congrArg (fun f => f.hom (1 : ℤ))
-        (Sigma.ι_comp_desc (fun j => ModuleCat.ofHom ((LinearMap.id : ℤ →ₗ[ℤ] ℤ).smulRight (column e j))) (e i))
-      simpa only [ModuleCat.hom_comp, LinearMap.comp_apply, ModuleCat.hom_ofHom, LinearMap.smulRight_apply,
-        LinearMap.id_apply, one_smul, column_image] using h
-    simp only [hcol]
-    ext i
-    simp [Pi.single_apply]
+/-- Reindex Mathlib's concrete coproduct and pass to finite function coordinates. -/
+def coordinateIso : (∐ fun _ : J => ModuleCat.of ℤ ℤ) ≅ ModuleCat.of ℤ (I → ℤ) :=
+  colimit.isoColimitCocone ⟨_, ModuleCat.finsuppCoconeIsColimit ℤ ℤ J⟩ ≪≫
+    ((Finsupp.domLCongr e.symm : (J →₀ ℤ) ≃ₗ[ℤ] I →₀ ℤ).trans
+      (Finsupp.linearEquivFunOnFinite ℤ ℤ I)).toModuleIso
 
 @[reassoc (attr := simp)]
 theorem ι_coordinateIso (j : J) :
     Sigma.ι (fun _ : J => ModuleCat.of ℤ ℤ) j ≫ (coordinateIso e).hom =
-      ModuleCat.ofHom ((LinearMap.id : ℤ →ₗ[ℤ] ℤ).smulRight (fun i => if e i = j then (1 : ℤ) else 0)) :=
-  Sigma.ι_comp_desc _ _
+      ModuleCat.ofHom ((LinearMap.id : ℤ →ₗ[ℤ] ℤ).smulRight
+        (fun i => if e i = j then (1 : ℤ) else 0)) := by
+  dsimp only [coordinateIso, Iso.trans_hom]
+  rw [colimit.isoColimitCocone_ι_hom_assoc]
+  apply ModuleCat.hom_ext
+  apply LinearMap.ext
+  intro z
+  ext i
+  simp [ModuleCat.finsuppCocone, ModuleCat.hom_comp,
+    LinearEquiv.toModuleIso, Finsupp.domLCongr_apply, Finsupp.domCongr_apply,
+    Finsupp.single_apply, eq_comm]
+  by_cases h : i = e.symm j
+  · subst i
+    simp
+  · have hj : j ≠ e i := by
+      intro hj
+      exact h (e.eq_symm_apply.mpr hj.symm)
+    simp [h, hj]
 
 @[simp]
 theorem coordinateIso_basis (i : I) :
-    (coordinateIso e).hom ((Sigma.ι (fun _ : J => ModuleCat.of ℤ ℤ) (e i)) 1) =
+    (coordinateIso e).hom.hom ((Sigma.ι (fun _ : J => ModuleCat.of ℤ ℤ) (e i)).hom 1) =
       Pi.single i 1 := by
-  have h := congrArg (fun f => f.hom (1 : ℤ)) (ι_coordinateIso e (e i))
-  have h' : (coordinateIso e).hom
-      ((Sigma.ι (fun _ : J => ModuleCat.of ℤ ℤ) (e i)) 1) = column e (e i) := by
-    simpa only [ModuleCat.hom_comp, LinearMap.comp_apply, ModuleCat.hom_ofHom, LinearMap.smulRight_apply,
-      LinearMap.id_apply, one_smul] using h
-  exact h'.trans (column_image e i)
+  change (Sigma.ι (fun _ : J => ModuleCat.of ℤ ℤ) (e i) ≫
+    (coordinateIso e).hom).hom 1 = _
+  rw [ι_coordinateIso]
+  ext k
+  simp [LinearMap.smulRight_apply, e.injective.eq_iff, Pi.single_apply, eq_comm]
 
 end D5.S3.HomologicalAlgebra.FiniteFreeCoproduct

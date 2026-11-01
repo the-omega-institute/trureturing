@@ -22,10 +22,15 @@ are open vertex stars, and are not closed stars of faces.
 This source artifact has not been elaborated or compiled.
 -/
 
+set_option backward.defeqAttrib.useBackward true
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+set_option maxHeartbeats 1600000
+
 noncomputable section
 
-open CategoryTheory Limits AlgebraicTopology Set Finset Topology
-open scoped BigOperators unitInterval ContinuousMap Simplicial
+open CategoryTheory Limits AlgebraicTopology Finset Topology
+open scoped BigOperators ContinuousMap Simplicial
 
 namespace D5.S3.Geometry.FiniteSimplicialSingularHomology
 
@@ -53,7 +58,10 @@ abbrev Z : ModuleCat ℤ := ModuleCat.of ℤ ℤ
 /-- Actual increasing faces: no truncation or dimension bound is imposed on `K`. -/
 def Face (p : ℕ) := {s : Finset V // s ∈ K ∧ s.card = p + 1}
 
-instance (p : ℕ) : Fintype (Face K p) := Fintype.ofFinite _
+instance (p : ℕ) : Fintype (Face K p) := by
+  classical
+  unfold Face
+  infer_instance
 
 /-- The free integer module on the actual ordered `p`-faces. -/
 abbrev orderedGroup (p : ℕ) : ModuleCat ℤ := ∐ fun _ : Face K p => Z
@@ -235,6 +243,10 @@ def verticalAugmentation : cechSingular K ⟶ singleRow (orderedChainComplex K) 
   comm' := by
     rintro _ p rfl
     apply HomologicalComplex.to_single_hom_ext
+    simp only [HomologicalComplex.comp_f, columnAugmentation,
+      ChainComplex.toSingle₀Equiv_symm_apply_f_zero, singleRow,
+      Functor.mapHomologicalComplex_obj_d, ChainComplex.single₀_map_f_zero,
+      orderedChainComplex, ChainComplex.of_d]
     change coefficientSum K (p + 1) ≫ orderedBoundary K p =
       ((cechSingular K).d (p + 1) p).f 0 ≫ coefficientSum K p
     exact coefficientSum_horizontal K p
@@ -397,25 +409,25 @@ def columnCoproductIso (p : ℕ) : (cechSingular K).X p ≅ columnCoproduct K p 
 private theorem homologyMap_sigmaMap_isIso {J : Type} [Finite J]
     {A B : J → ChainComplex (ModuleCat ℤ) ℕ} (f : ∀ j, A j ⟶ B j)
     (q : ℕ) (hf : ∀ j, IsIso (HomologicalComplex.homologyMap (f j) q)) :
-    IsIso (HomologicalComplex.homologyMap (Sigma.map f) q) := by
+    IsIso (HomologicalComplex.homologyMap (CategoryTheory.Limits.Sigma.map f) q) := by
   let H := HomologicalComplex.homologyFunctor (ModuleCat ℤ) (ComplexShape.down ℕ) q
-  have hnat : Sigma.map (fun j => H.map (f j)) ≫ sigmaComparison H B =
-      sigmaComparison H A ≫ H.map (Sigma.map f) := by
+  have hnat : CategoryTheory.Limits.Sigma.map (fun j => H.map (f j)) ≫ sigmaComparison H B =
+      sigmaComparison H A ≫ H.map (CategoryTheory.Limits.Sigma.map f) := by
     apply Sigma.hom_ext
     intro j
     simp only [Sigma.ι_map_assoc, ι_comp_sigmaComparison,
       ι_comp_sigmaComparison_assoc, ← H.map_comp, Sigma.ι_map]
-  have hmap : H.map (Sigma.map f) = inv (sigmaComparison H A) ≫
-      Sigma.map (fun j => H.map (f j)) ≫ sigmaComparison H B := by
+  have hmap : H.map (CategoryTheory.Limits.Sigma.map f) = inv (sigmaComparison H A) ≫
+      CategoryTheory.Limits.Sigma.map (fun j => H.map (f j)) ≫ sigmaComparison H B := by
     rw [hnat, IsIso.inv_hom_id_assoc]
-  change IsIso (H.map (Sigma.map f))
+  change IsIso (H.map (CategoryTheory.Limits.Sigma.map f))
   rw [hmap]
   haveI : ∀ j, IsIso (H.map (f j)) := hf
   infer_instance
 
 private def coproductColumnAugmentation (p : ℕ) :
     columnCoproduct K p ⟶ (ChainComplex.single₀ (ModuleCat ℤ)).obj (orderedGroup K p) :=
-  Sigma.map (fun s : Face K p =>
+  CategoryTheory.Limits.Sigma.map (fun s : Face K p =>
       coefficientAugmentation Z (TopCat.toSSet.obj (TopCat.of (intersection K s.val)))) ≫
     sigmaComparison (ChainComplex.single₀ (ModuleCat ℤ)) (fun _ : Face K p => Z)
 

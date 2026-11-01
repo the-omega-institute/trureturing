@@ -7,6 +7,9 @@
    digest: Positive coordinate stars form an open cover with contractible face intersections. -/
 
 import D5.S3.Geometry.FiniteConeCollapse
+import Mathlib.Topology.Homotopy.Contractible
+
+/-! The positive coordinate stars of a finite simplicial realization. -/
 
 noncomputable section
 open Set Finset Topology
@@ -148,10 +151,14 @@ theorem continuous_contractIntersection {s : Finset V} (hs : s ∈ K) :
   apply Continuous.subtype_mk
   apply continuous_pi
   intro v
-  exact ((continuous_const.sub (continuous_subtype_val.comp continuous_fst)).mul
-    ((continuous_apply v).comp
-      (continuous_subtype_val.comp (continuous_subtype_val.comp continuous_snd)))).add
-    ((continuous_subtype_val.comp continuous_fst).mul continuous_const)
+  change Continuous (fun z : I × intersection K s =>
+    (1 - (z.1 : ℝ)) * z.2.val.val v + (z.1 : ℝ) * barycenterCoords s v)
+  have ht : Continuous (fun z : I × intersection K s => (z.1 : ℝ)) :=
+    continuous_subtype_val.comp continuous_fst
+  have hx : Continuous (fun z : I × intersection K s => z.2.val.val v) :=
+    (continuous_apply v).comp (continuous_subtype_val.comp
+      (continuous_subtype_val.comp continuous_snd))
+  exact ((continuous_const.sub ht).mul hx).add (ht.mul continuous_const)
 
 /-- This is a homotopy in the intersection, not merely in the ambient vector space. -/
 def intersectionContraction {s : Finset V} (hs : s ∈ K) :

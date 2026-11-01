@@ -21,6 +21,7 @@ import D5.S3.Topology.TauCeti.Algebra.Homology.FiniteDegreeComparison
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Subdivision.Small.Equiv
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Contractible
 import Mathlib.Algebra.Homology.SingleHomology
+import Mathlib.Algebra.Category.ModuleCat.Colimits
 
 /-!
 The horizontal direction is the supplied ordered free cover complex, with
@@ -35,21 +36,25 @@ the chosen vertex in the supplied row contraction is requested or used.
 This source artifact has not been elaborated or compiled.
 -/
 
+set_option backward.defeqAttrib.useBackward true
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 open CategoryTheory Limits Opposite AlgebraicTopology
-open scoped Simplicial BigOperators
+open scoped Simplicial BigOperators ZeroObject
 
 universe w v u
 
 namespace TauCeti.OrderedCechSingular
 
-variable {C : Type u} [Category.{v} C] [Preadditive C] [HasZeroObject C]
+variable {C : Type u} [Category.{v} C] [Abelian C]
   [HasCoproducts.{w} C] (R : C)
   {ι : Type w} [LinearOrder ι]
 
 lemma sum_chainMap_f {L M : ChainComplex C ℕ} {J : Type*} [Fintype J]
     (f : J → (L ⟶ M)) (n : ℕ) : (∑ j, f j).f n = ∑ j, (f j).f n :=
-  (HomologicalComplex.Hom.fAddMonoidHom n).map_sum f Finset.univ
+  map_sum (HomologicalComplex.Hom.fAddMonoidHom n) f Finset.univ
 
 section SimplicialCover
 
@@ -60,16 +65,17 @@ def rows : SimplicialObject (ChainComplex C ℕ) where
   obj n := OrderedCover.complex R (fun i => (P i).obj n)
   map f := OrderedCover.map R (A.map f) (fun i a ha => (P i).map f ha)
   map_id n := by
-    simpa only [A.map_id] using
+    simpa only [A.map_id, CategoryTheory.types_id] using
       (OrderedCover.map_id R (P := fun i => (P i).obj n))
   map_comp f g := by
-    simpa only [A.map_comp, TypeCat.comp_apply] using
+    simpa only [A.map_comp, CategoryTheory.types_comp] using
       (OrderedCover.map_comp R (A.map f) (A.map g)
         (fun i a ha => (P i).map f ha) (fun i a ha => (P i).map g ha))
 
 /-- Outer degree is the ordered Cech degree; inner degree is singular degree. -/
 def bicomplex : HomologicalComplex₂ C (ComplexShape.down ℕ) (ComplexShape.down ℕ) :=
-  ((alternatingFaceMapComplex (ChainComplex C ℕ)).obj (rows R A P)).flip
+  HomologicalComplex₂.flip
+    ((alternatingFaceMapComplex (ChainComplex C ℕ)).obj (rows R A P))
 
 /-- A zero column away from Cech degree zero. -/
 abbrev singleColumn (L : ChainComplex C ℕ) :
@@ -85,7 +91,7 @@ private def horizontalColumnMap : (bicomplex R A P).X 0 ⟶ A.chainComplex R whe
       (((alternatingFaceMapComplex (ChainComplex C ℕ)).obj (rows R A P)).d
         (q + 1) q).f 0 ≫
         (OrderedCover.augmentation R (fun i => (P i).obj (op ⦋q⦌))).f 0
-    rw [AlternatingFaceMapComplex.obj_d_eq]
+    erw [AlternatingFaceMapComplex.obj_d_eq, AlternatingFaceMapComplex.obj_d_eq]
     change _ ≫ (∑ i : Fin (q + 2), (-1 : ℤ) ^ (i : ℕ) •
       (sigmaConst.obj R).map (A.δ i)) = _
     simp only [Preadditive.comp_sum, Preadditive.sum_comp, Preadditive.comp_zsmul,
@@ -95,9 +101,9 @@ private def horizontalColumnMap : (bicomplex R A P).X 0 ⟶ A.chainComplex R whe
     intro i hi
     congr 1
     symm
-    exact (HomologicalComplex.congr_hom
-      (OrderedCover.map_augmentation R (A.δ i)
-        (fun j a ha => (P j).map (SimplexCategory.δ i).op ha)) 0)
+    apply OrderedCover.basis_hom_ext R
+    intro s hs a ha
+    simp [rows, SimplicialObject.δ, Category.assoc]
 
 /-- The actual horizontal augmentation: sum the inclusions in Cech degree zero. -/
 def horizontalAugmentation :
@@ -106,32 +112,52 @@ def horizontalAugmentation :
     ext q : 1
     have h := (OrderedCover.augmentation R
       (fun i => (P i).obj (op ⦋q⦌))).comm 1 0
-    simpa only [HomologicalComplex.comp_f, HomologicalComplex.single_obj_d,
+    change (OrderedCover.complex R (fun i => (P i).obj (op ⦋q⦌))).d 1 0 ≫
+      (OrderedCover.augmentation R (fun i => (P i).obj (op ⦋q⦌))).f 0 = 0
+    simpa only [HomologicalComplex.single_obj_d,
       CategoryTheory.Limits.comp_zero] using h.symm⟩
 
-/-- On a horizontal row this is exactly the supplied augmentation, with `R` unchanged. -/
+/-- Evaluation transports a single column to the scalar single complex. -/
+def singleColumnRowIso (L : ChainComplex C ℕ) (q : ℕ) :
+    (singleColumn L).flip.X q ≅ (ChainComplex.single₀ C).obj (L.X q) :=
+  (HomologicalComplex.singleMapHomologicalComplex
+    (HomologicalComplex.eval C (ComplexShape.down ℕ) q) (ComplexShape.down ℕ) 0).app L
+
+/-- The row augmentation agrees after the canonical single-complex identification. -/
 theorem horizontalAugmentation_flip_column (q : ℕ) :
     (((HomologicalComplex₂.flipFunctor C _ _).map
-      (horizontalAugmentation R A P)).f q) =
+      (horizontalAugmentation R A P)).f q) ≫
+        (singleColumnRowIso (A.chainComplex R) q).hom =
       OrderedCover.augmentation R (fun i => (P i).obj (op ⦋q⦌)) := by
   apply HomologicalComplex.to_single_hom_ext
-  rfl
+  simp [singleColumnRowIso, horizontalAugmentation, horizontalColumnMap,
+    ChainComplex.single₀, HomologicalComplex.singleObjXSelf,
+    HomologicalComplex.singleObjXIsoOfEq]
 
 /-- All row comparisons use the existing chosen-vertex contraction. -/
-theorem horizontal_row_isIso [CategoryWithHomology C]
+theorem horizontal_row_isIso
     (hP : ∀ n, ⋃ i, (P i).obj n = Set.univ) (q p : ℕ) :
     IsIso (HomologicalComplex.homologyMap
       (((HomologicalComplex₂.flipFunctor C _ _).map
         (horizontalAugmentation R A P)).f q) p) := by
-  rw [horizontalAugmentation_flip_column]
-  obtain ⟨E, hE⟩ := OrderedCover.augmentation_homotopy_equiv R
-    (fun i => (P i).obj (op ⦋q⦌)) (hP _)
-  rw [← hE]
-  change IsIso (E.toHomologyIso p).hom
-  infer_instance
+  let f := (((HomologicalComplex₂.flipFunctor C _ _).map
+    (horizontalAugmentation R A P)).f q)
+  let e := singleColumnRowIso (A.chainComplex R) q
+  have hcomp : IsIso (HomologicalComplex.homologyMap (f ≫ e.hom) p) := by
+    dsimp only [f, e]
+    rw [horizontalAugmentation_flip_column]
+    obtain ⟨E, hE⟩ := OrderedCover.augmentation_homotopy_equiv R
+      (fun i => (P i).obj (op ⦋q⦌)) (hP _)
+    rw [← hE]
+    change IsIso (E.toHomologyIso p).hom
+    infer_instance
+  have hcomp' : IsIso (HomologicalComplex.homologyMap f p ≫
+      HomologicalComplex.homologyMap e.hom p) := by
+    simpa only [HomologicalComplex.homologyMap_comp] using hcomp
+  exact (isIso_comp_right_iff _ _).1 hcomp'
 
 /-- The finite-degree comparison applies in the horizontal direction after flipping. -/
-theorem horizontal_flipped_total_comparison [Abelian C]
+theorem horizontal_flipped_total_comparison
     (hP : ∀ n, ⋃ i, (P i).obj n = Set.univ) :
     (∀ n ≤ 1, IsIso (HomologicalComplex.homologyMap
       (HomologicalComplex₂.total.map
@@ -172,28 +198,36 @@ private def singleColumnInclusion : L ⟶ (singleColumn L).total (ComplexShape.d
 
 private def singleColumnProjectionX (n : ℕ) :
     ((singleColumn L).total (ComplexShape.down ℕ)).X n ⟶ L.X n :=
-  (singleColumn L).totalDesc fun p q h => match p, h with
-    | 0, h => (L.XIsoOfEq (by simpa using h)).hom
-    | _ + 1, _ => 0
+  (singleColumn L).totalDesc fun p q h =>
+    if hp : p = 0 then by
+      subst p
+      exact (L.XIsoOfEq (by simpa using h)).hom
+    else 0
 
 private theorem singleColumnInclusion_isIso_f (n : ℕ) :
     IsIso ((singleColumnInclusion L).f n) := by
   refine ⟨singleColumnProjectionX L n, ?_, ?_⟩
-  · simp only [singleColumnInclusion, singleColumnProjectionX, ι_totalDesc,
+  · simp only [singleColumnInclusion, singleColumnProjectionX, ι_totalDesc, dif_pos rfl,
       HomologicalComplex.XIsoOfEq_rfl, Iso.refl_hom]
+    simp
   · apply total.hom_ext
     intro p q hpq
     cases p with
     | zero =>
       have hq : q = n := by simpa using hpq
       subst n
-      simp only [singleColumnProjectionX, ι_totalDesc, Category.assoc,
-        HomologicalComplex.XIsoOfEq_rfl, Iso.refl_hom, Category.id_comp,
-        singleColumnInclusion, Category.comp_id]
+      simp only [singleColumnProjectionX, singleColumnInclusion, ι_totalDesc_assoc,
+        dite_true, Nat.zero_add, HomologicalComplex.XIsoOfEq_rfl,
+        Iso.refl_hom, Category.id_comp, Category.comp_id]
+      exact (singleColumn L).XXIsoOfEq_hom_ιTotal (ComplexShape.down ℕ)
+        (x₁ := 0) (y₁ := 0) rfl hq
+        (ComplexShape.π (ComplexShape.down ℕ) (ComplexShape.down ℕ)
+          (ComplexShape.down ℕ) (0, q)) (by simp)
     | succ p =>
       have hz : IsZero (((singleColumn L).X (p + 1)).X q) := by
-        change IsZero (0 : C)
-        exact isZero_zero C
+        exact (HomologicalComplex.eval C (ComplexShape.down ℕ) q).map_isZero
+          (HomologicalComplex.isZero_single_obj_X (ComplexShape.down ℕ) 0 L
+            (p + 1) (by omega))
       exact hz.eq_of_src _ _
 
 /-- Totalization of an actual single column, including all zero summands and signs. -/
@@ -205,14 +239,26 @@ def singleColumnTotalIso : (singleColumn L).total (ComplexShape.down ℕ) ≅ L 
 private def singleRowFlipIso : (singleRow L).flip ≅ singleColumn L :=
   HomologicalComplex.Hom.isoOfComponents
     (fun q => HomologicalComplex.Hom.isoOfComponents
-      (fun p => by cases q <;> exact Iso.refl _)
+      (fun p => if hq : q = 0 then by subst q; exact Iso.refl _
+        else (HomologicalComplex.isZero_single_obj_X (ComplexShape.down ℕ) 0
+          (L.X p) q hq).iso
+          ((HomologicalComplex.eval C (ComplexShape.down ℕ) p).map_isZero
+            (HomologicalComplex.isZero_single_obj_X (ComplexShape.down ℕ) 0 L q hq)))
       (by
         intro p p' h
-        cases q <;> simp [singleRow, singleColumn, ChainComplex.single₀_map_f_zero]))
+        by_cases hq : q = 0
+        · subst q
+          simp [singleRow, singleColumn, ChainComplex.single₀_map_f_zero]
+        · exact (HomologicalComplex.isZero_single_obj_X (ComplexShape.down ℕ) 0
+            (L.X p) q hq).eq_of_src _ _))
     (by
       intro q q' h
       ext p : 1
-      cases q <;> cases q' <;> simp [singleRow, singleColumn])
+      have hq : q ≠ 0 := by
+        have : q' + 1 = q := h
+        omega
+      exact (HomologicalComplex.isZero_single_obj_X (ComplexShape.down ℕ) 0
+        (L.X p) q hq).eq_of_src _ _)
 
 /-- Totalization of an actual single row via the signed native interchange. -/
 def singleRowTotalIso : (singleRow L).total (ComplexShape.down ℕ) ≅ L :=
@@ -221,7 +267,7 @@ def singleRowTotalIso : (singleRow L).total (ComplexShape.down ℕ) ≅ L :=
 
 variable {L}
 
-theorem horizontal_total_comparison [Abelian C]
+theorem horizontal_total_comparison
     (A : SSet.{w}) (P : ι → A.Subcomplex)
     (hP : ∀ n, ⋃ i, (P i).obj n = Set.univ) :
     (∀ n ≤ 1, IsIso (HomologicalComplex.homologyMap
@@ -241,6 +287,7 @@ theorem horizontal_total_comparison [Abelian C]
     simp only [ιTotal_map_assoc, ιTotal_totalFlipIso_f_hom,
       ιTotal_totalFlipIso_f_hom_assoc, Linear.units_smul_comp, Linear.comp_units_smul,
       ιTotal_map, flipFunctor_map_f_f]
+    rfl
   have hmap : total.map φ (ComplexShape.down ℕ) =
       (D.totalFlipIso (ComplexShape.down ℕ)).inv ≫ total.map ψ (ComplexShape.down ℕ) ≫
         (E.totalFlipIso (ComplexShape.down ℕ)).hom := by
@@ -262,13 +309,13 @@ end TotalIdentifications
 
 section ActualCover
 
-variable (X : TopCat.{w}) (U : ι → Set X)
+variable {ι₀ : Type} [LinearOrder ι₀] (X : TopCat.{0}) (U : ι₀ → Set X)
 
 /-- The actual simplicial set of subordinate singular simplices. -/
-abbrev small : SSet.{w} := X.smallSingularSubcomplex U
+abbrev small : SSet.{0} := X.smallSingularSubcomplex U
 
 /-- Subordinate simplices whose whole range is in one specified cover member. -/
-def member (i : ι) : (small X U).Subcomplex where
+def member (i : ι₀) : (small X U).Subcomplex where
   obj n := {σ | Set.range (X.toSSetObjEquiv n σ.val) ⊆ U i}
   map f σ := by
     intro hσ
@@ -324,7 +371,7 @@ theorem ι_coefficientAugmentation (σ : A _⦋0⦌) :
   rw [coefficientAugmentation, ChainComplex.toSingle₀Equiv_symm_apply_f_zero]
   exact ι_sumCoefficients R A σ
 
-theorem coefficientAugmentation_homology_zero [CategoryWithHomology C] :
+theorem coefficientAugmentation_homology_zero :
     HomologicalComplex.homologyMap (coefficientAugmentation R A) 0 ≫
       (HomologicalComplex.singleObjHomologySelfIso (ComplexShape.down ℕ) 0 R).hom =
         A.homology₀ε R := by
@@ -338,17 +385,21 @@ theorem coefficientAugmentation_homology_zero [CategoryWithHomology C] :
       c.liftCycles (A.ιChainComplex σ) 0 (by simp) (by simp) := by
     apply (cancel_mono (c.iCycles 0)).1
     simp [e, Category.assoc]
+    exact Category.comp_id _
   rw [← Category.assoc, ← Category.assoc, hσ]
-  rw [Category.assoc, Category.assoc,
+  simp only [Category.assoc]
+  rw [← Category.assoc (A.ιChainComplex σ) e.inv, hσ]
+  rw [
     HomologicalComplex.homologyπ_naturality_assoc,
     HomologicalComplex.homologyπ_singleObjHomologySelfIso_hom]
   simp only [HomologicalComplex.singleObjCyclesSelfIso_hom,
-    HomologicalComplex.cyclesMap_i_assoc, HomologicalComplex.liftCycles_i_assoc,
+    HomologicalComplex.cyclesMap_i, HomologicalComplex.cyclesMap_i_assoc, HomologicalComplex.liftCycles_i_assoc,
     ChainComplex.single₀ObjXSelf, Iso.refl_hom, Category.comp_id,
     ι_coefficientAugmentation,
     SSet.liftCycles_ιChainComplex_homologyπ_homology₀ε]
+  exact (SSet.liftCycles_ιChainComplex_homologyπ_homology₀ε A R σ).symm
 
-theorem isIso_coefficientAugmentation_of_contractible [CategoryWithHomology C]
+theorem isIso_coefficientAugmentation_of_contractible
     (X : TopCat.{w}) [ContractibleSpace X] (n : ℕ) :
     IsIso (HomologicalComplex.homologyMap
       (coefficientAugmentation R (TopCat.toSSet.obj X)) n) := by
