@@ -14,6 +14,14 @@ triage: anchor
 
 # On the Integer Domination Root Conjecture
 
+## Verified locator
+
+- DOI: https://doi.org/10.48550/arXiv.2608.00109
+- Version: https://arxiv.org/abs/2608.00109v1
+- Theorem 2.1 gives the finite base; Section 4 item 3 is the infinite-family question.
+
+## Source and scope
+
 Saeid Alikhani and Max Griswold, arXiv:2608.00109v1, Section 4 item 3:
 
 > Does there exist an infinite family of graphs G satisfying D(G, -4) = 0?
