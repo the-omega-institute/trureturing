@@ -172,3 +172,4 @@ This is a finite coefficient sewing theorem in classical Gaussian/Fock calculus,
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.row_polynomial`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/FiniteSqueezedVacuum](FiniteSqueezedVacuum.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/InfiniteGaussianFock](InfiniteGaussianFock.md)
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/NativeGaussianMoment](NativeGaussianMoment.md)
