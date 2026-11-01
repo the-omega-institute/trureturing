@@ -19,6 +19,14 @@ open SourceWidth PeriodicShortening RunFirstEarTransport
 open private DD AA BB LL MM NN BBn LLn MMn EE dyadicT dyadicZ dyadicY
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap.Algebra
 open private SeamBounds chooseH roundDelta secondNew selection_bounds
+  SeamBounds.H_nonneg SeamBounds.H_upper
+  SeamBounds.first_old_nonneg SeamBounds.first_old_cap
+  SeamBounds.delta_nonneg SeamBounds.second_old_cap
+  SeamBounds.third_old_nonneg SeamBounds.third_old_cap
+  SeamBounds.fresh_cap SeamBounds.first_new_nonneg
+  SeamBounds.first_new_cap SeamBounds.second_new_nonneg
+  SeamBounds.second_new_cap SeamBounds.third_new_nonneg
+  SeamBounds.third_new_cap
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap.Selection
 open private MaskPartition native_partition
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap.NativeMasks
@@ -105,8 +113,8 @@ private theorem joint_construction (a b c d : ℕ)
 
   -- The signed bounds above are established before the first Int.toNat.
   let HZ := chooseH x y z t lam
-  have H0 : 0 ≤ HZ := bounds.H_nonneg
-  have Hupper : HZ ≤ z-1 := bounds.H_upper
+  have H0 : 0 ≤ HZ := (SeamBounds.H_nonneg bounds)
+  have Hupper : HZ ≤ z-1 := (SeamBounds.H_upper bounds)
   let H := HZ.toNat
   have eH : (H:ℤ)=HZ := Int.toNat_of_nonneg H0
   have Hcap : H ≤ 2^c-1 := by
@@ -269,23 +277,23 @@ private theorem joint_construction (a b c d : ℕ)
     apply four_strip f (P 0) (P 1) (P 2) (P 3) (T 0) (T 1) (T 2) (T 3) (N/2) 0
       (fun i hi => (pos 0 i hi).1) (fun i hi => (pos 1 i hi).1)
       (fun i hi => (pos 2 i hi).1) (fun i hi => (pos 3 i hi).1) le_rfl
-    · constructor <;> nlinarith only [os0,nat2.2.2.1,bounds.first_old_nonneg,
-        bounds.first_old_cap,hNodd,Int.emod_add_mul_ediv N 2]
-    · constructor <;> nlinarith only [os1,nat3.2.2.1,bounds.delta_nonneg,
-        bounds.second_old_cap,hNodd,Int.emod_add_mul_ediv N 2]
-    · constructor <;> nlinarith only [os2,nat0.2.2.1,bounds.third_old_nonneg,
-        bounds.third_old_cap,hNodd,Int.emod_add_mul_ediv N 2]
+    · constructor <;> nlinarith only [os0,nat2.2.2.1,(SeamBounds.first_old_nonneg bounds),
+        (SeamBounds.first_old_cap bounds),hNodd,Int.emod_add_mul_ediv N 2]
+    · constructor <;> nlinarith only [os1,nat3.2.2.1,(SeamBounds.delta_nonneg bounds),
+        (SeamBounds.second_old_cap bounds),hNodd,Int.emod_add_mul_ediv N 2]
+    · constructor <;> nlinarith only [os2,nat0.2.2.1,(SeamBounds.third_old_nonneg bounds),
+        (SeamBounds.third_old_cap bounds),hNodd,Int.emod_add_mul_ediv N 2]
     · exact lastold
     · simpa [l,word,P,T] using hfzero
-  have initial : 0 ≤ A ∧ A ≤ N := ⟨by omega,bounds.fresh_cap⟩
+  have initial : 0 ≤ A ∧ A ≤ N := ⟨by omega,(SeamBounds.fresh_cap bounds)⟩
   have newtail : InStrip g N A l := by
     change InStrip g N A (P 0 ++ T 0 :: P 1 ++ T 1 :: P 2 ++ T 2 :: P 3 ++ [T 3])
     apply four_strip g (P 0) (P 1) (P 2) (P 3) (T 0) (T 1) (T 2) (T 3) N A
       (fun i hi => (pos 0 i hi).2) (fun i hi => (pos 1 i hi).2)
       (fun i hi => (pos 2 i hi).2) (fun i hi => (pos 3 i hi).2) initial.1
-    · constructor <;> nlinarith only [ns0,nat2.2.2.2,bounds.first_new_nonneg,bounds.first_new_cap]
-    · constructor <;> nlinarith only [ns1,nat3.2.2.2,bounds.second_new_nonneg,bounds.second_new_cap]
-    · constructor <;> nlinarith only [ns2,nat0.2.2.2,bounds.third_new_nonneg,bounds.third_new_cap]
+    · constructor <;> nlinarith only [ns0,nat2.2.2.2,(SeamBounds.first_new_nonneg bounds),(SeamBounds.first_new_cap bounds)]
+    · constructor <;> nlinarith only [ns1,nat3.2.2.2,(SeamBounds.second_new_nonneg bounds),(SeamBounds.second_new_cap bounds)]
+    · constructor <;> nlinarith only [ns2,nat0.2.2.2,(SeamBounds.third_new_nonneg bounds),(SeamBounds.third_new_cap bounds)]
     · exact lastnew
     · simpa [l,word,P,T] using hgzero
   -- Install the independently proved fresh-prefix gate as the tail's first bound.

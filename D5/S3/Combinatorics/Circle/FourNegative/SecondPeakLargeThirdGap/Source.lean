@@ -147,9 +147,9 @@ private theorem bank_masses (a b c d h m low : ℕ)
     · exact series r
   have wseries : ∀ i<b-1, f (d+c+i)=2^i*F 2 := by
     simpa [chainLength,chainStart] using series 2
-  have sh := chamberLabels_sum (b-1) (d+c) h part.hcap f (F 2) wseries
-  have sq := chamberLabels_sum (b-1) (d+c) (m ^^^ h) part.qcap f (F 2) wseries
-  have sl := chamberLabels_sum (b-1) (d+c) low part.lowcap f (F 2) wseries
+  have sh := chamberLabels_sum (b-1) (d+c) h (MaskPartition.hcap part) f (F 2) wseries
+  have sq := chamberLabels_sum (b-1) (d+c) (m ^^^ h) (MaskPartition.qcap part) f (F 2) wseries
+  have sl := chamberLabels_sum (b-1) (d+c) low (MaskPartition.lowcap part) f (F 2) wseries
   have su := full 0
   have sv := full 1
   have sx := full 3
