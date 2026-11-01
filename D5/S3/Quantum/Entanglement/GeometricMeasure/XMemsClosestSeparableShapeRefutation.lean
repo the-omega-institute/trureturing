@@ -80,9 +80,9 @@ private theorem fullySeparable_iff (n : ℕ) (ρ : Matrix (Fin n → Fin 2) (Fin
     · intro x y
       have hexy := congrArg (fun M => M x y) he.symm
       rw [← e.symm.sum_comp] at hexy
+      dsimp only [D5.S3.Quantum.Information.ActualPureQubitCostInfimum.densityBridge]
       simpa only [Matrix.sum_apply, Matrix.smul_apply, Complex.real_smul,
         hzp, Matrix.piProd, Matrix.of_apply, Function.comp_apply,
-        D5.S3.Quantum.Information.ActualPureQubitCostInfimum.densityBridge,
         CStarMatrix.ofMatrix_apply] using hexy
   · rintro ⟨k, p, σ, hp, hsum, he⟩
     apply mem_convexHull_of_exists_fintype p
