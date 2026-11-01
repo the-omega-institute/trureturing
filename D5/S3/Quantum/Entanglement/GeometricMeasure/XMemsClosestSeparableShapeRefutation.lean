@@ -13,6 +13,7 @@ import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability
 import D5.S3.Quantum.Entanglement.FullySeparableExchangeObstruction
 import D5.S3.Quantum.Dynamics.CycleUniformMixing.OrbitIndexedSums
+import D5.S3.Quantum.QuantumChannels.TwirlingPhaseRetrievabilityCounterexample
 
 /-! The low-branch reading of Consiglio–Apollaro–Wieśniak, arXiv:2209.01430v2,
 Appendix A, equation (A11). Qubit zero is the most significant bit. -/
@@ -321,10 +322,10 @@ private theorem localState_density (t : ℝ) (ht : 0 ≤ t) (ht1 : t ≤ 1) (c :
   rw [D5.S3.Quantum.Information.BargmannImaginaryMaximizers.Latitude.latitude_dot
     (1 - t) (by linarith) (by linarith)]
   have hz : star (ZMod.stdAddChar c) * ZMod.stdAddChar c = 1 := by
-    change (starRingEnd ℂ) (ZMod.stdAddChar c) * ZMod.stdAddChar c = 1
-    rw [D5.S3.Quantum.Dynamics.CycleUniformMixing.OrbitIndexedSums.Fourier.char_star,
-      ← AddChar.map_add_eq_mul]
-    simp
+    have h := D5.S3.Quantum.QuantumChannels.TwirlingPhaseRetrievabilityCounterexample.chi_unit
+      1 (Multiplicative.ofAdd c)
+    change star (ZMod.stdAddChar ((1 : ZMod 3) * c)) * ZMod.stdAddChar (1 * c) = 1 at h
+    simpa only [one_mul] using h
   rw [mul_assoc, hz, mul_one]
   push_cast
   ring
