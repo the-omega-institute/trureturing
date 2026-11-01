@@ -9,10 +9,7 @@
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Mathlib.Analysis.Convex.Contractible
-import Mathlib.Analysis.Normed.Module.Convex
-import Mathlib.Topology.Algebra.Module.LocallyConvex
 import Mathlib.Topology.Homotopy.Lifting
-import Mathlib.Tactic.Linarith
 
 /-! The planar Borsuk--Ulam route used by the chiral-event settlement. -/
 
