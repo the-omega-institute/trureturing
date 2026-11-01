@@ -15,7 +15,7 @@ The coefficients and factorial weights are the native polynomial Gaussian
 coefficients and factorial Fock weights. Pairings in this module are bilinear;
 there is no complex conjugation. The finite mode type may be empty.
 
-The intended vacuum identity is the classical squeezed Gaussian/Bargmann-Wick
+The vacuum identity is the classical squeezed Gaussian/Bargmann-Wick
 identity. Finite field sewing, Gram transport, countable limits and physical
 realization are separate obligations.
 -/
@@ -273,7 +273,6 @@ private theorem coefficientDerivative_bound (A : Matrix I I ℂ) (d : I →₀ �
 division by the scaling parameter. -/
 private theorem insertion_hasDerivAt (A B : Matrix I I ℂ)
     (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i)
-    (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
     (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1)
     {S : ℝ} (hS : 1 < S)
     (hSA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) ((S : ℂ) • A)‖ < 1)
@@ -295,6 +294,23 @@ private theorem insertion_hasDerivAt (A B : Matrix I I ℂ)
     funext d
     dsimp [u]
     ring
+  have hcoefficient (z : ℂ) (hz : ‖z‖ ≤ S) (d : I →₀ ℕ) :
+      ‖(weight (d + α) : ℂ) * gaussianCoefficient (z • A) d *
+        gaussianCoefficient B (d + α)‖ ≤
+      ‖(weight (d + α) : ℂ) * gaussianCoefficient ((S : ℂ) • A) d *
+        gaussianCoefficient B (d + α)‖ := by
+    have hc : ‖gaussianCoefficient (z • A) d‖ ≤
+        ‖gaussianCoefficient ((S : ℂ) • A) d‖ := by
+      simp only [gaussianCoefficient_smul, norm_mul, norm_pow, Complex.norm_real,
+        Real.norm_eq_abs, abs_of_pos (zero_lt_one.trans hS)]
+      exact mul_le_mul_of_nonneg_right
+        (pow_le_pow_left₀ (norm_nonneg _) hz _) (norm_nonneg _)
+    simp only [norm_mul]
+    exact mul_le_mul_of_nonneg_right
+      (mul_le_mul_of_nonneg_left hc (norm_nonneg _)) (norm_nonneg _)
+  have hbase := (Summable.of_nonneg_of_le (fun d => norm_nonneg _)
+    (hcoefficient 1 (by simpa using hS.le))
+    (insertion_norm_summable ((S : ℂ) • A) B hscaledSym hBsym hSA hB α)).of_norm
   have hb (d : I →₀ ℕ) (z : ℂ) (hz : z ∈ Metric.ball (0 : ℂ) S) :
       ‖insertionDerivativeTerm A B α d z‖ ≤ u d := by
     have hdz := coefficientDerivative_bound A d hS
@@ -319,8 +335,7 @@ private theorem insertion_hasDerivAt (A B : Matrix I I ℂ)
     (convex_ball (0 : ℂ) S).isPreconnected
     (fun d z _ => insertionTerm_hasDerivAt A B α d z) hb
     (y₀ := (1 : ℂ)) (by simpa using hS)
-    (by simpa only [one_smul] using
-      (insertion_norm_summable A B hAsym hBsym hA hB α).of_norm)
+    hbase
     (by simpa using ht)
 
 private def created (α : I →₀ ℕ) (f : (I →₀ ℕ) → ℂ) (d : I →₀ ℕ) : ℂ :=
@@ -665,7 +680,6 @@ private theorem coefficientDerivative_eq (A : Matrix I I ℂ) (d : I →₀ ℕ)
 
 private theorem vacuum_derivative_moment (A B : Matrix I I ℂ)
     (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i)
-    (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
     (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1)
     {S : ℝ} (hS : 1 < S)
     (hSA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) ((S : ℂ) • A)‖ < 1)
@@ -674,7 +688,7 @@ private theorem vacuum_derivative_moment (A B : Matrix I I ℂ)
     HasDerivAt (fun z : ℂ => insertion (z • A) B 0)
       ((1 / 2 : ℂ) * ∑ i, ∑ j, A i j *
         insertion (t • A) B (Finsupp.single i 1 + Finsupp.single j 1)) t := by
-  have h := insertion_hasDerivAt A B hAsym hBsym hA hB hS hSA 0 ht
+  have h := insertion_hasDerivAt A B hAsym hBsym hB hS hSA 0 ht
   have hsym : ∀ i j, (t • A) i j = (t • A) j i := by
     intro i j
     simp only [Matrix.smul_apply]
@@ -854,7 +868,6 @@ private theorem scaled_strict (A : Matrix I I ℂ) {S : ℝ} (hS : 0 ≤ S)
 
 private theorem vacuum_hasDerivAt (A B : Matrix I I ℂ)
     (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i)
-    (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
     (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1)
     {S : ℝ} (hS : 1 < S)
     (hSA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) ((S : ℂ) • A)‖ < 1)
@@ -877,7 +890,7 @@ private theorem vacuum_hasDerivAt (A B : Matrix I I ℂ)
     apply Finset.sum_congr rfl
     intro j hj
     rw [add_comm (Finsupp.single i 1) (Finsupp.single j 1)]
-  convert vacuum_derivative_moment A B hAsym hBsym hA hB hS hSA ht hAt using 1
+  convert vacuum_derivative_moment A B hAsym hBsym hB hS hSA ht hAt using 1
   rw [htrace, hsol, mul_smul_comm, Matrix.trace_smul]
   simp only [smul_eq_mul, mul_smul_comm]
   rw [← mul_assoc A]
@@ -943,7 +956,7 @@ theorem vacuum_trace_log (A B : Matrix I I ℂ)
   let F : ℂ → ℂ := fun t => insertion (t • A) B 0 * Complex.exp (-vacuumTraceLog A B t)
   have hF (t : ℂ) (ht : t ∈ Metric.ball (0 : ℂ) S) : HasDerivAt F 0 t := by
     have hnorm : ‖t‖ < S := by simpa using ht
-    have hZ := vacuum_hasDerivAt A B hAsym hBsym hA hB hS hSA hnorm
+    have hZ := vacuum_hasDerivAt A B hAsym hBsym hB hS hSA hnorm
     have hL := hlog t hnorm
     convert hZ.mul hL.neg.cexp using 1 <;> first | rfl | ring
   have hconst : F 1 = F 0 := Metric.isOpen_ball.is_const_of_deriv_eq_zero

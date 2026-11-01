@@ -89,14 +89,14 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℂ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.TwistedGround.FiniteSqueezedVacuum
     definition := none
     coordinates := #[0, 9]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "arg", "fn", "arg", "arg", "body", "fn", "arg", "arg"]
+        "arg", "arg", "fn", "arg", "fn", "arg", "body", "fn", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn"]
