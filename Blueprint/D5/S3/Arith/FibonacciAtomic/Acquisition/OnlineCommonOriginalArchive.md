@@ -8,7 +8,7 @@ The source is one natural pair v0, including zero, at one opaque retained bindin
 
 **Definition 1.1 (One public integer covers a budget).**
 
-$$(\forall b \in \operatorname{Nat}\left(\right), \operatorname{envelope}\left(b\right) = \operatorname{primeProduct}\left(\operatorname{primesAtMost}\left(\operatorname{add}\left(b, 1\right)\right), \operatorname{primePowerExponent}\left(\operatorname{div}\left(b, \operatorname{primeMinusOne}\left(\right)\right)\right)\right))$$
+$$(\forall b \in \operatorname{Nat}\left(\right), \operatorname{envelope}\left(b\right) = \prod_{p \in \operatorname{Nat}\left(\right), \operatorname{Prime}\left(p\right) \land p \le b+1} p^{\left\lfloor\frac{b}{p-1}\right\rfloor}), \operatorname{envelope}\left(0\right) = 1$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/Acquisition/OnlineCommonOriginalArchive.envelope` (`✓ std3`).
 
