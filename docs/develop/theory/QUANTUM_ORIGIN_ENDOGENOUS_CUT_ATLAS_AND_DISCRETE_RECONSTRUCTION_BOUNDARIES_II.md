@@ -657,3 +657,291 @@ For the ordinary real reduction in (67.4), skewness gives $g(x,J_Qx)=0$ and orth
 The skew polar factor, real spectral calculus, binomial series, real linear combination, two-reflection amplification, polarization, commutants and two-axis Euler decomposition are established intermediate methods. No literature priority or new primitive gate is inferred from their use. The construction neither certifies an actual source's band from finite root data, forces transport commutation, selects a prior $J_0$ without (64.3), nor makes a multifrequency delay invisible outside the actual readout commutant. It does not derive source preparation, a Born probability rule, physical complex observations or complex tensor independence. Word reversal has square $I$, whereas $J_Q^2=-I$; no source-word identification or retained-failure decoder is supplied. Native source acquisition, restricted controller synthesis, tighter counted bounds and any physical observation or discard contract retain their separate mathematical or operational obligations.
 
 ## 追加锚（本行以下为增补区）
+
+## 69. Correcting the actual forward delay with counted source calls
+
+**定义 69.1（The delayed extractor and a selected return exponent）。** Use the actual spectral-band source, controller interface and comparison direction of Definitions 62.1–62.2. Thus
+
+$$
+C_Q=(Q+Q^*)/2,\qquad K_Q=(Q-Q^*)/2,\qquad
+\|C_Q\|\le\cos a<1,\qquad0<a<\pi/2,
+\tag{69.1}
+$$
+
+and $J_Q=K_Q(I-C_Q^2)^{-1/2}$, $S_Q=\operatorname{diag}(I,J_Q)$. Only actual controlled forward $Q$ queries and known real orthogonal controller gates are supplied. All calls are counted, with no inverse, fractional reference duration, other free source gate, measurement, outcome selection or work discard. For a fixed integer $r\ge0$, Theorem 63.1 supplies the orthogonal $F_Q$ with
+
+$$
+\begin{gathered}
+N=(2r+1)\left(2\left\lceil\frac{\pi(r+2)}4\right\rceil+1\right),
+\qquad\epsilon_r=2\cos^{2r+2}a,\\
+\|F_Q(e_0\otimes\cdot)-e_0\otimes(I_B\otimes Q^N)S_Q\|
+\le\epsilon_r.
+\end{gathered}
+\tag{69.2}
+$$
+
+Its displayed schedule uses $2N$ forward calls. The bypass source action is exactly $Q^N$, and the error includes the active-sector work residual. The source-return task here corrects that additional delay using further forward calls, uniformly on every unknown logical/source input.
+
+In the $J_Q$-complex comparison coordinates, collect equal eigenangles and write the finite spectral resolution
+
+$$
+Q=\sum_{j=1}^s e^{i\theta_j}P_j,\qquad
+\theta_j\in[a,\pi-a],\qquad
+\sum_{j=1}^sP_j=I,
+\tag{69.3}
+$$
+
+where the $P_j$ are nonzero orthogonal complex spectral projections. The same formulas represent real rotations on their underlying real subspaces. This spectral description alone supplies no physical ray observations, probabilities or complex partial trace. A selected integer return exponent will always be required to satisfy $T\ge N$.
+
+**定理 69.2（Exact query bookkeeping and two source-return criteria）。** Appending $T-N$ unconditional forward queries to the circuit in (69.2) gives the ready-input isometry
+
+$$
+\mathcal T_{Q,T}
+=(I_C\otimes I_B\otimes Q^{T-N})F_Q(e_0\otimes\cdot)
+\tag{69.4}
+$$
+
+with displayed query count and joint error
+
+$$
+q_{\rm total}=N+T,\qquad
+\|\mathcal T_{Q,T}-e_0\otimes(I_B\otimes Q^T)S_Q\|
+\le\epsilon_r.
+\tag{69.5}
+$$
+
+A certificate $\|Q^T-I\|\le\delta$ therefore gives the phase-fixed real conclusion
+
+$$
+\|\mathcal T_{Q,T}-e_0\otimes S_Q\|\le\epsilon_r+\delta.
+\tag{69.6}
+$$
+
+If a $J_Q$-complex projective criterion is separately stipulated, a different certificate $\|Q^T-e^{i\varphi}I\|\le\delta$ gives the same bound relative to $e_0\otimes e^{i\varphi}S_Q$.
+
+Proof. The appended source factor is orthogonal, so it preserves the error in (69.2). The number of calls is $2N+(T-N)=N+T$. Subtracting the appropriate delayed and undelayed target operators and using $\|S_Q\|=1$ proves both estimates by the triangle inequality. These are whole logical/source operator-norm estimates, including all work-output components, and persist under any untouched finite real reference. Source return removes the extra $Q$ delay: the active branch still intentionally applies $J_Q$, while the bypass intentionally applies identity. Real phase-fixed return and complex projective return are different criteria; neither follows from return on one root vector. $\square$
+
+## 70. Finite catalogs give counted late delay repair
+
+**定理 70.1（Catalog-dependent phase-fixed and projective delay repair）。** Fix a nonempty finite angle catalog $\Theta=\{\theta_1,\ldots,\theta_s\}\subset[a,\pi-a]$, an integer $M\ge2$, and the delay $N$ in (69.2). There is a selected integer
+
+$$
+T=N\ell,\qquad 1\le\ell\le M^s,
+\tag{70.1}
+$$
+
+which works for every actual orthogonal source satisfying (69.1) whose canonical angles belong to this catalog, regardless of their multiplicities or unknown eigenbasis, and yields
+
+$$
+\|Q^T-I\|\le\frac{2\pi}{M},\qquad
+\|\mathcal T_{Q,T}-e_0\otimes S_Q\|
+\le\epsilon_r+\frac{2\pi}{M},\qquad
+q_{\rm total}\le N(1+M^s).
+\tag{70.2}
+$$
+
+For the separately declared complex projective criterion, another selected integer satisfies
+
+$$
+\begin{gathered}
+T=N\ell,\qquad1\le\ell\le M^{s-1},\\
+\|Q^T-e^{iT\theta_1}I\|\le\frac{2\pi}{M},\qquad
+\|\mathcal T_{Q,T}-e_0\otimes e^{iT\theta_1}S_Q\|
+\le\epsilon_r+\frac{2\pi}{M},\\
+q_{\rm total}\le N(1+M^{s-1}).
+\end{gathered}
+\tag{70.3}
+$$
+
+When $s=1$, $\ell=1$ gives exact projective source return without implying an exact phase-fixed operator period.
+
+Proof. Use the standard simultaneous Dirichlet phase-box mechanism already used on a chosen grid in the [clocks continuation, Theorem 9.1](https://github.com/the-omega-institute/trureturing/blob/615d1d58b1cf668e5979245ecb6bdc9ac5ec1525/docs/develop/theory/AURIC_CIRCLES_PERIODS_AND_ENDOGENOUS_CLOCKS_V78_CONTINUATION.md#statement-9-1). That theorem compares a weighted root vector up to a common phase. Here its proof mechanism is applied to all $s$ absolute phases to certify the full real source operator, then to $s-1$ relative phases for the projective criterion.
+
+Put $\alpha_j=N\theta_j/(2\pi)$ and partition $[0,1)^s$ into $M^s$ boxes of side $1/M$. Among $M^s+1$ points $n\alpha\bmod1$, $n=0,\ldots,M^s$, two occupy the same box. Their positive index difference $\ell$ lies between one and $M^s$, with every $\ell\alpha_j$ at distance at most $1/M$ from an integer. The chord bound gives
+
+$$
+\max_j|e^{iN\ell\theta_j}-1|\le2\pi/M.
+\tag{70.4}
+$$
+
+On every actual eigenspace the same scalar residual bound holds. Taking their maximum is exactly the source operator norm, so it covers every unknown vector and every allowed eigenbasis at once. Equation (69.6) and $T\le NM^s$ prove (70.2).
+
+For (70.3), apply the same argument to $N(\theta_j-\theta_1)/(2\pi)$, $j=2,\ldots,s$, in $s-1$ dimensions. All residual phases then lie within $2\pi/M$ of the common phase $e^{iT\theta_1}$. If $s=1$ there are no relative phases and $Q^N=e^{iN\theta_1}I$ exactly. The count follows from (69.5).
+
+The finite pigeonhole step is also the standard principle represented by [mathlib's `Fintype.exists_ne_map_eq_of_card_lt`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Data/Fintype/Pigeonhole.lean). It is an intermediate tool in this counted application. No continuous reference duration or callable logarithm is used. The quantifier fixes the catalog and tolerance before choosing $T$; it gives no one universal exponent for all catalogs in a continuum, no computed return integer, and no general calibration or search procedure. An actual repair uses a selected integer together with its certified residual. $\square$
+
+## 71. Visible phase graphs reduce the return requirement for declared readouts
+
+**定义 71.1（Actual matched spectral blocks and the complex visibility graph）。** Fix the actual matched spectral projections in (69.3) and a declared family $\mathcal O$ of $J_Q$-complex-linear Hermitian readouts on $H=B\otimes_{\mathbb R}V$ in its induced complex description. For $\widehat P_j=I_B\otimes P_j$, define an undirected graph on $\{1,\ldots,s\}$ by joining distinct $j,k$ when some $E\in\mathcal O$ has
+
+$$
+\widehat P_jE\widehat P_k\ne0.
+\tag{71.1}
+$$
+
+Let its connected components be $\mathcal V_1,\ldots,\mathcal V_c$ and put $p=s-c$. The actual graph, catalog and readout family are premises. Their exact block support is not inferred from a finite sample of vanishing readings, and a nominal graph is not substituted for the actual matched blocks.
+
+**定理 71.2（Exact readout return and its counted approximation）。** For $D_T=I_B\otimes Q^T$, the ideal delayed target has the same quadratic readouts as $S_Q$ on every unit input for every $E\in\mathcal O$ if and only if $e^{iT\theta_j}$ is constant on each graph component. Choose one anchor $b_h\in\mathcal V_h$. For every integer $M\ge2$ there is an integer
+
+$$
+T=N\ell,\qquad1\le\ell\le M^{s-c}
+\tag{71.2}
+$$
+
+and the unitary comparison operator
+
+$$
+D_0=\sum_{h=1}^c e^{iT\theta_{b_h}}
+                    \sum_{j\in\mathcal V_h}P_j
+\tag{71.3}
+$$
+
+such that
+
+$$
+\begin{gathered}
+\|Q^T-D_0\|\le2\pi/M,\qquad
+[I_B\otimes D_0,E]=0\quad(E\in\mathcal O),\\
+\|\mathcal T_{Q,T}-e_0\otimes(I_B\otimes D_0)S_Q\|
+\le\epsilon_r+2\pi/M,\\
+\|\mathcal T_{Q,T}^*(I_C\otimes E)\mathcal T_{Q,T}-S_Q^*ES_Q\|
+\le2\|E\|(\epsilon_r+2\pi/M),\qquad
+q_{\rm total}\le N(1+M^{s-c}).
+\end{gathered}
+\tag{71.4}
+$$
+
+These are declared-readout return bounds, not full source return between graph components.
+
+Proof. Apply the actual-source commutant criterion (65.1). On the $j,k$ spectral block,
+
+$$
+\widehat P_j[D_T,E]\widehat P_k
+=(e^{iT\theta_j}-e^{iT\theta_k})\widehat P_jE\widehat P_k.
+\tag{71.5}
+$$
+
+A nonzero edge block therefore forces equal phases. Equality propagates along paths. Conversely every readout is block diagonal across graph components; phases constant on each component consequently commute with every such readout. Together with all-input Hermitian polarization in Theorem 65.1 this proves the exact criterion, without interpreting the quadratic readouts as probabilities.
+
+There are exactly $p=s-c$ nonanchor indices. Apply the phase-box argument inside Theorem 70.1 to the $p$ numbers $N(\theta_j-\theta_{b_h})/(2\pi)$ for $j\in\mathcal V_h\setminus\{b_h\}$. It gives (71.2) with every relative phase residual at most $2\pi/M$. The spectral operator norm then proves $\|Q^T-D_0\|\le2\pi/M$. The phases of $D_0$ have unit modulus and are constant on the components, so it is unitary and commutes with the declared readouts. It is a comparison operator, not an additional free source gate.
+
+Combining (69.5) with the source residual gives the joint comparison bound in (71.4). Its comparator is an isometry whose compressed readout equals $S_Q^*ES_Q$. Subtracting two isometric compressions as in (65.4) bounds the actual readout difference by $2\|E\|(\epsilon_r+2\pi/M)$. Finally $T\le NM^{s-c}$ gives the count. These estimates retain every work-output component.
+
+For all complex source/logical Hermitian readouts, every pair of distinct nonzero spectral blocks has an available nonzero Hermitian cross block, so the graph is complete and $c=1$. This recovers the projective bound (70.3). For complex logical-controller-only readouts, $\widehat P_j(E_B\otimes I)\widehat P_k=0$ for $j\ne k$, so $c=s$. Then there are no phase constraints: $\ell=1$ and $D_0=Q^N$ exactly, with no appended return calls needed. This does not identify complex reduction with discarding an ordinary real source factor, as shown in Theorem 67.4. Additional arithmetic relations may lower the number of independent approximation constraints; no optimality is claimed for counting the supplied $s-c$ phase differences. $\square$
+
+## 72. An incommensurate source with a finite delay-repair certificate
+
+**定理 72.1（An explicit 2251-call phase-fixed application）。** Let
+
+$$
+Q=\operatorname{diag}(e^{\theta_1J_2},e^{\theta_2J_2}),\qquad
+\theta_1=\pi/4,\qquad\theta_2=\frac\pi{2\sqrt2},\qquad
+J_2=\begin{pmatrix}0&-1\\1&0\end{pmatrix}.
+\tag{72.1}
+$$
+
+Use $a=\pi/6$, $r=15$, so $N=899$, the extractor uses $1798$ calls, and $\epsilon_r=2(3/4)^{16}<1/32$. Appending $453$ actual forward calls, corresponding to $T=1352$, gives
+
+$$
+q_{\rm total}=2251,\qquad
+\|\mathcal T_{Q,1352}-e_0\otimes S_Q\|<3/64.
+\tag{72.2}
+$$
+
+The estimate is real and phase fixed relative to $S_Q$ on every source vector and includes all work residuals. It removes the additional delay while retaining the intended active-branch $J_Q$ action; it does not assert an untouched or catalytic source under coherent logical control. This same source has no positive integer exact power return, either as a real operator or up to a common complex scalar.
+
+Proof. Both angles in (72.1) lie in $[\pi/6,\pi/2]$, so the actual band and extractor bounds hold. An integer power return would require $T\theta_2/(2\pi)=T/(4\sqrt2)$ to be an integer, which is impossible for positive integer $T$. Return up to one common complex scalar would require $T(\theta_2-\theta_1)/(2\pi)$ to be an integer, but $1/(4\sqrt2)-1/8$ is irrational. These statements concern powers of this $Q$ and do not rule out other exact controller circuits.
+
+For the selected $T=1352=8\cdot169$, the first angle returns exactly: $T\theta_1=2\pi\cdot169$. For the second angle use the elementary Pell identity as an intermediate arithmetic certificate,
+
+$$
+239^2-2\cdot169^2=-1,\qquad
+|169\sqrt2-239|=\frac1{169\sqrt2+239}.
+\tag{72.3}
+$$
+
+Since $T\theta_2=2\pi\cdot169\sqrt2$, the chord bound on the actual second rotation plane gives
+
+$$
+\|Q^{1352}-I\|
+\le\frac{2\pi}{169\sqrt2+239}
+<\frac\pi{204}<\frac1{64}.
+\tag{72.4}
+$$
+
+Here $\sqrt2>1$ makes the denominator exceed $408$, and $\pi<22/7$ gives $\pi/204<11/714<1/64$, since $704<714$. The exact first return and second residual bound control the whole source by the maximum of its two spectral residuals. Now $1352-899=453$ and (69.6) give $1798+453=2251$ calls and total error less than $1/32+1/64=3/64$. The arbitrary-$T$ append rule is used; $T$ need not be a multiple of $N$. The certificate neither ignores a common phase nor depends on numerical search or enumeration, and claims neither an optimal count nor a general synthesis procedure. $\square$
+
+## 73. The calibration cost of a selected recurrence
+
+**定理 73.1（Actual-source return and comparison with a nominal direction）。** Let $Q_0$ be a nominal real orthogonal reference on the same actual real carrier $(V,g)$ as $Q$, with a selected integer $T\ge N$ and certificate $\|Q_0^T-I\|\le\delta_0$. Let $Q$ be the actual real orthogonal query with $\|Q-Q_0\|\le\kappa$, separately retaining the actual band premise (69.1). Run the extractor and appended queries with this actual $Q$. Then
+
+$$
+\|\mathcal T_{Q,T}-e_0\otimes S_Q\|
+\le\epsilon_r+\delta_0+T\kappa.
+\tag{73.1}
+$$
+
+This comparison requires no matching eigenvectors of $Q$ and $Q_0$, and its target uses the actual $J_Q$. If the nominal reference also has the same certified band parameter $a$, then
+
+$$
+\|J_Q-J_{Q_0}\|\le\kappa/\sin a,\qquad
+\|\mathcal T_{Q,T}-e_0\otimes S_{Q_0}\|
+\le\epsilon_r+\delta_0+(T+1/\sin a)\kappa.
+\tag{73.2}
+$$
+
+Proof. Product telescoping and orthogonality give
+
+$$
+Q^T-Q_0^T=\sum_{j=0}^{T-1}Q^{T-1-j}(Q-Q_0)Q_0^j,
+\qquad \|Q^T-Q_0^T\|\le T\kappa.
+\tag{73.3}
+$$
+
+Thus $\|Q^T-I\|\le\delta_0+T\kappa$ and (69.6) proves (73.1). This uses operator matching on the same actual carrier and common metric, so it does not assume a matched spectral eigenbasis. Closeness of unordered angle lists alone does not supply the premise $\|Q-Q_0\|\le\kappa$.
+
+For (73.2), the skew parts differ by at most $\kappa$, and their least singular values are each at least $\sin a$. Apply the standard polar comparison from the Sylvester calculation in the [companion volume, Theorem 44.1, equations (44.15)–(44.16)](https://github.com/the-omega-institute/trureturing/blob/ddcf91008d0d847190eca49c04686ef709e3ee40/docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md):
+
+$$
+\|J_Q-J_{Q_0}\|
+\le\frac{2\|K_Q-K_{Q_0}\|}
+ {\sigma_{\min}(K_Q)+\sigma_{\min}(K_{Q_0})}
+\le\frac\kappa{\sin a}.
+\tag{73.4}
+$$
+
+The polar estimate is an intermediate comparison tool, not a callable polar-map or calibration operation. Since $\|S_Q-S_{Q_0}\|=\|J_Q-J_{Q_0}\|$, another triangle inequality proves the nominal-direction estimate.
+
+For a requested real return tolerance $\epsilon$ relative to the intended $S_Q$, (73.1) supplies the sufficient budget $T\kappa\le\epsilon-\epsilon_r-\delta_0$ when the right side is positive. It is neither necessary nor optimal. A longer selected recurrence does not by itself offset finite uncertainty in the actual query. Uncertainty in the actual band or readout graph is not controlled merely by naming a nominal finite spectrum. $\square$
+
+## 74. Continuous unknown intervals do not share a universal waiting repair
+
+**定理 74.1（A uniform real waiting obstruction and a relative-phase version）。** Fix $0<a<b\le\pi/2$, $L=b-a$, and the single-plane actual family $Q_\theta=e^{\theta J}$. Every positive integer $T$ obeys
+
+$$
+\sup_{\theta\in[a,b]}\|Q_\theta^T-I\|
+\ge2\sin\!\left(\frac{\min\{TL,2\pi\}}4\right).
+\tag{74.1}
+$$
+
+For a fixed append-and-wait repair of (69.2), $T\ge N$. Once $NL\ge2\pi$, the displayed extractor followed by that waiting repair has worst-case phase-fixed error exactly two on the bypass. An arbitrary implementation with uniform joint error at most $\epsilon_r$ relative to the same delayed target has corresponding worst-case lower bound $2-\epsilon_r$. These are real phase-fixed statements.
+
+If a permitted angle interval has $TL\ge\pi$, a two-frequency source with angles in that interval can instead have $Q^T$ send a source ray to an orthogonal complex ray. Thus fixing one waiting exponent does not provide uniform multifrequency source return under a complex projective criterion either.
+
+Proof. The phase set $e^{iT\theta}$ traverses an arc of angular length $TL$. If $TL\ge2\pi$, it covers the whole circle and its maximum chord distance from one is two. If $TL<2\pi$, a chord-distance ball of radius $d<2$ about one covers an arc of length $4\arcsin(d/2)$. To contain the whole image arc requires $TL\le4\arcsin(d/2)$; if the maximum is already two, the claimed lower bound also holds. This proves (74.1).
+
+When $NL\ge2\pi$ and $T\ge N$, some actual $\theta$ satisfies $Q_\theta^T=-I$. The displayed bypass is exactly $Q_\theta^T$, so its distance from the identity bypass is two; the norm of the difference of two unit-output isometries is at most two. For any other $\epsilon_r$-accurate delayed implementation, the triangle inequality subtracts at most $\epsilon_r$ at that same angle. Identifying $-I$ with identity would change the real target criterion.
+
+For the projective version choose two actual angles separated by $\pi/T$, which fit in the allowed interval when $TL\ge\pi$. On their equal superposition the relative accumulated phase is $\pi$, yielding an orthogonal complex ray exactly as in Theorem 66.1. That example retains the actual two-frequency source and is independent of any absolute common phase.
+
+There is no conflict with Theorem 70.1: its integer is chosen after fixing a finite catalog. Finite dimension gives an existence result separately for each source, without one selected integer valid over a continuous uncalibrated family. The [companion volume, Theorem 54.1](https://github.com/the-omega-institute/trureturing/blob/ddcf91008d0d847190eca49c04686ef709e3ee40/docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md) is a separate analytic interval bound for the full forward-only phase-fixed task, rather than solely this append-and-wait strategy. $\square$
+
+## 75. Return certificates, declared observations and acquisition scope
+
+**定义 75.1（The callable return contract）。** An actual repair in §§69–74 uses a supplied coherent controlled reference, its actual certified band, the native real controller resources, a selected integer return certificate and the stated calibration precision. The graph route additionally uses the actual matched spectral blocks and declared $J_Q$-complex-linear Hermitian readouts. These source, operation and observation premises are distinct. Source-only channel data, finite root tests or a single returning trajectory do not acquire all of them.
+
+The [companion volume, Definitions 42.2 and 47.1](https://github.com/the-omega-institute/trureturing/blob/ddcf91008d0d847190eca49c04686ef709e3ee40/docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md) separates comparison maps from actual menus. Its Theorem 45.1 uses extra reference durations for a special exact echo; those durations are not supplied here. The clocks continuation's phase-box proof, standard Dirichlet pigeonhole arguments, spectral norm identities, the elementary Pell certificate, polar perturbation and graph-block commutator calculation are credited intermediate tools inside this counted source-return application. No new general recurrence theorem, first-return-time claim, general-method novelty or literature priority is asserted. An abstract logarithm of $Q$ is not made a callable flow.
+
+A readout-return certificate preserves only the stated observations and does not establish full source return between visibility components. A complex projective return differs from the real phase-fixed operator criterion, and the complex readout graph does not supply ordinary real discard or complex tensor independence. No Born law, independent ready source, physical complex observation contract, word-reversal identification or native retained-failure decoder is derived. The intended active source action remains $J_Q$, with $J_Q^2=-I$ rather than the square-$I$ word reversal.
+
+## 追加锚（本行以下为增补区）
