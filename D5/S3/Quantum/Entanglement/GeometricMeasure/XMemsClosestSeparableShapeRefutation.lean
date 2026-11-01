@@ -49,11 +49,11 @@ def IsCssShape {n : ℕ} (σ : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :
 /-- Real convex mixtures of products of one-qubit density matrices. -/
 def FullySeparable (n : ℕ) : Set (Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :=
   convexHull ℝ {σ | ∃ p : Fin n → Matrix (Fin 2) (Fin 2) ℂ,
-    (∀ k, IsDensity (p k)) ∧ σ = fun x y => ∏ k, p k (x k) (y k)}
+    (∀ k, IsDensity (p k)) ∧ σ = Matrix.piProd p}
 
 /-- Squared Hilbert–Schmidt distance. -/
 def hsSq {n : ℕ} (ρ σ : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) : ℝ :=
-  (Matrix.trace ((ρ - σ)ᴴ * (ρ - σ))).re
+  D5.S3.Quantum.Tomography.RankOneContextCommutator.hilbertSchmidtSquare (ρ - σ)
 
 /-- Every low-branch X-MEMS has a closest fully separable state of form (A11). -/
 def claim : Prop := ∀ n : ℕ, 2 ≤ n → ∀ γ : ℂ,
@@ -81,10 +81,6 @@ private theorem hsSq_entries {n : ℕ}
   simp only [D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.entryNormSq,
     Matrix.sub_apply, Complex.normSq_eq_norm_sq, Complex.ofReal_re]
 
-private def product (p : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ) :
-    Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) ℂ :=
-  fun x y => ∏ k, p k (x k) (y k)
-
 private theorem pair_sqrt (u v : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v) :
     Real.sqrt (u * v) ≤ (u + v) / 2 := by
   have h := Real.geom_mean_le_arith_mean2_weighted
@@ -102,14 +98,14 @@ private theorem weighted_sqrt (u v : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v) :
 
 private theorem product_bounds (p : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ)
     (hp : ∀ k, IsDensity (p k)) :
-    (product p ![0,0,0] ![1,1,1]).re ≤
-      (product p ![0,0,1] ![0,0,1]).re / 6 +
-        3 * (product p ![1,1,0] ![1,1,0]).re / 2 ∧
-    (product p ![0,0,0] ![1,1,1]).re ≤
-      (product p ![0,0,0] ![0,0,0]).re / 12 +
-        (product p ![0,1,1] ![0,1,1]).re / 12 +
-        3 * (product p ![1,0,1] ![1,0,1]).re / 4 +
-        3 * (product p ![1,1,0] ![1,1,0]).re / 4 := by
+    (Matrix.piProd p ![0,0,0] ![1,1,1]).re ≤
+      (Matrix.piProd p ![0,0,1] ![0,0,1]).re / 6 +
+        3 * (Matrix.piProd p ![1,1,0] ![1,1,0]).re / 2 ∧
+    (Matrix.piProd p ![0,0,0] ![1,1,1]).re ≤
+      (Matrix.piProd p ![0,0,0] ![0,0,0]).re / 12 +
+        (Matrix.piProd p ![0,1,1] ![0,1,1]).re / 12 +
+        3 * (Matrix.piProd p ![1,0,1] ![1,0,1]).re / 4 +
+        3 * (Matrix.piProd p ![1,1,0] ![1,1,0]).re / 4 := by
   let a : Fin 3 → ℝ := fun k => (p k 0 0).re
   let b : Fin 3 → ℝ := fun k => (p k 1 1).re
   have ha (k) : 0 ≤ a k := (hp k).1.diag_nonneg.1
@@ -123,19 +119,20 @@ private theorem product_bounds (p : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ)
   have hd (k : Fin 3) (i : Fin 2) : p k i i = ((p k i i).re : ℂ) :=
     ((hp k).1.isHermitian.coe_re_apply_self i).symm
   have hdiag (x : Fin 3 → Fin 2) :
-      (product p x x).re = ∏ k, (p k (x k) (x k)).re := by
-    have he : product p x x = ((∏ k, (p k (x k) (x k)).re : ℝ) : ℂ) := by
+      (Matrix.piProd p x x).re = ∏ k, (p k (x k) (x k)).re := by
+    have he : Matrix.piProd p x x = ((∏ k, (p k (x k) (x k)).re : ℝ) : ℂ) := by
       rw [Complex.ofReal_prod]
+      change (∏ k, p k (x k) (x k)) = _
       exact Finset.prod_congr rfl (fun k _ => hd k (x k))
     exact congrArg Complex.re he
-  have hn : (product p ![0,0,0] ![1,1,1]).re ≤
+  have hn : (Matrix.piProd p ![0,0,0] ![1,1,1]).re ≤
       Real.sqrt (∏ k, a k * b k) := by
     apply (Complex.re_le_norm _).trans
     apply Real.le_sqrt_of_sq_le
     have he (k : Fin 3) : ‖p k 0 1‖ ^ 2 ≤ a k * b k := by
       simpa only [Complex.normSq_eq_norm_sq, a, b] using
         D5.S3.Quantum.Matrix.CartesianVariance.psd_entry_bound (hp k).1 0 1
-    dsimp only [product]
+    dsimp only [Matrix.piProd]
     simpa [norm_prod, Fin.prod_univ_succ, mul_pow] using
       Finset.prod_le_prod₀ (fun k (_ : k ∈ Finset.univ) => sq_nonneg ‖p k 0 1‖)
         (fun k (_ : k ∈ Finset.univ) => he k)
@@ -143,7 +140,7 @@ private theorem product_bounds (p : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ)
       (a 0 * a 1 * b 2) * (b 0 * b 1 * a 2) := by
     simp [Fin.prod_univ_succ]
     ring
-  have hfirst : (product p ![0,0,0] ![1,1,1]).re ≤
+  have hfirst : (Matrix.piProd p ![0,0,0] ![1,1,1]).re ≤
       (a 0 * a 1 * b 2) / 6 + 3 * (b 0 * b 1 * a 2) / 2 := by
     apply hn.trans
     rw [he]
@@ -164,7 +161,7 @@ private theorem product_bounds (p : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ)
     (Real.sqrt_nonneg (a 1 * b 1 * (a 2 * b 2)))
   have hm1 := mul_le_mul_of_nonneg_left hp1 (div_nonneg ha0 (by norm_num : (0:ℝ) ≤ 6))
   have hm2 := mul_le_mul_of_nonneg_left hp2 (by positivity : 0 ≤ 3 * b 0 / 2)
-  have hsecond : (product p ![0,0,0] ![1,1,1]).re ≤
+  have hsecond : (Matrix.piProd p ![0,0,0] ![1,1,1]).re ≤
       a 0 * a 1 * a 2 / 12 + a 0 * b 1 * b 2 / 12 +
         3 * (b 0 * a 1 * b 2) / 4 + 3 * (b 0 * b 1 * a 2) / 4 := by
     rw [hroot] at hn
@@ -208,9 +205,9 @@ private theorem separable_bounds (σ : Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2
   apply (convexHull_min (t := s) ?_ hc) hσ
   rintro _ ⟨p, hp, rfl⟩
   obtain ⟨h1, h2⟩ := product_bounds p hp
-  change (product p ![0,0,0] ![1,1,1]).re ≤ ((product p ![0,0,1] ![0,0,1]).re / 6 + 3 * (product p ![1,1,0] ![1,1,0]).re / 2) / 5 +
-      4 / 5 * ((product p ![0,0,0] ![0,0,0]).re / 12 + (product p ![0,1,1] ![0,1,1]).re / 12 +
-        3 * (product p ![1,0,1] ![1,0,1]).re / 4 + 3 * (product p ![1,1,0] ![1,1,0]).re / 4)
+  change (Matrix.piProd p ![0,0,0] ![1,1,1]).re ≤ ((Matrix.piProd p ![0,0,1] ![0,0,1]).re / 6 + 3 * (Matrix.piProd p ![1,1,0] ![1,1,0]).re / 2) / 5 +
+      4 / 5 * ((Matrix.piProd p ![0,0,0] ![0,0,0]).re / 12 + (Matrix.piProd p ![0,1,1] ![0,1,1]).re / 12 +
+        3 * (Matrix.piProd p ![1,0,1] ![1,0,1]).re / 4 + 3 * (Matrix.piProd p ![1,1,0] ![1,1,0]).re / 4)
   linarith
 
 private theorem shape_distance (a b : ℝ) (d : ℂ) :
@@ -253,7 +250,7 @@ private def localVector (t : ℝ) (c : ZMod 3) : Fin 2 → ℂ :=
   fun i => (magnitude t i : ℂ) * ZMod.stdAddChar (c * (i.val : ZMod 3))
 
 private def localState (t : ℝ) (c : ZMod 3) : Matrix (Fin 2) (Fin 2) ℂ :=
-  Matrix.vecMulVec (localVector t c) (star (localVector t c))
+  D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity (localVector t c)
 
 private theorem star_character (c : ZMod 3) :
     star (ZMod.stdAddChar c) = ZMod.stdAddChar (-c) := by
@@ -263,7 +260,7 @@ private theorem star_character (c : ZMod 3) :
 private theorem localState_entry (t : ℝ) (c : ZMod 3) (i j : Fin 2) :
     localState t c i j = (magnitude t i * magnitude t j : ℝ) *
       ZMod.stdAddChar (c * ((i.val : ZMod 3) - (j.val : ZMod 3))) := by
-  dsimp only [localState]
+  dsimp only [localState, D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity]
   simp only [Matrix.vecMulVec_apply, Pi.star_apply]
   dsimp only [localVector]
   simp only [star_mul', star_character, Complex.star_def, Complex.conj_ofReal, Complex.ofReal_mul]
@@ -286,7 +283,7 @@ private theorem localState_density (t : ℝ) (ht : 0 ≤ t) (ht1 : t ≤ 1) (c :
 
 private def phaseProduct (a b : ZMod 3) :
     Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) ℂ :=
-  product ![localState (9 / 10) a, localState (199 / 400) b,
+  Matrix.piProd ![localState (9 / 10) a, localState (199 / 400) b,
     localState (199 / 400) (-a-b)]
 
 private def wordMagnitude (x : Fin 3 → Fin 2) : ℝ :=
@@ -303,8 +300,8 @@ private theorem phaseProduct_entry (a b : ZMod 3) (x y : Fin 3 → Fin 2) :
         (ZMod.stdAddChar (a * (((x 0).val : ZMod 3) - ((y 0).val : ZMod 3))) *
           ZMod.stdAddChar (b * (((x 1).val : ZMod 3) - ((y 1).val : ZMod 3))) *
           ZMod.stdAddChar ((-a-b) * (((x 2).val : ZMod 3) - ((y 2).val : ZMod 3)))) := by
-      dsimp only [phaseProduct, product, wordMagnitude]
-      simp only [Fin.prod_univ_succ, Fin.prod_univ_zero,
+      dsimp only [phaseProduct, Matrix.piProd, wordMagnitude]
+      simp only [Matrix.of_apply, Fin.prod_univ_succ, Fin.prod_univ_zero,
         Matrix.cons_val_zero, Matrix.cons_val_succ, mul_one, localState_entry,
         Complex.ofReal_mul, Fin.succ_zero_eq_one, Fin.succ_one_eq_two]
       ring
@@ -372,7 +369,7 @@ private theorem word_cases (x : Fin 3 → Fin 2) :
 
 private theorem tau_mixture : tau =
     (5 / 54 : ℝ) • (∑ a : ZMod 3, ∑ b : ZMod 3, phaseProduct a b) +
-      (1 / 6 : ℝ) • product (fun _ => localState 0 0) := by
+      (1 / 6 : ℝ) • Matrix.piProd (fun _ => localState 0 0) := by
   have hc : wordMagnitude ![1,1,1] * wordMagnitude ![0,0,0] = (119997 / 1600000 : ℝ) := by
     rw [mul_comm]
     exact corner_magnitude
@@ -380,7 +377,7 @@ private theorem tau_mixture : tau =
   rw [Matrix.add_apply, Matrix.smul_apply, Matrix.smul_apply, phase_average_entry]
   rcases word_cases x with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
     rcases word_cases y with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
-    dsimp only [tau, wordIndex, product] <;>
+    dsimp only [tau, wordIndex, Matrix.piProd] <;>
     simp only [Fin.prod_univ_succ, Fin.prod_univ_zero, localState_entry] <;>
     dsimp only [magnitude] <;>
     norm_num [wordMagnitude_sq, ← pow_two, corner_magnitude, hc,
@@ -393,7 +390,7 @@ private theorem tau_separable : tau ∈ FullySeparable 3 := by
       localState (199 / 400) (-a-b)], ?_, rfl⟩
     intro k
     fin_cases k <;> exact localState_density _ (by norm_num) (by norm_num) _
-  have hb : product (fun _ => localState 0 0) ∈ FullySeparable 3 := by
+  have hb : Matrix.piProd (fun _ => localState 0 0) ∈ FullySeparable 3 := by
     apply subset_convexHull ℝ _
     exact ⟨_, fun _ => localState_density 0 (by norm_num) (by norm_num) 0, rfl⟩
   have hc : Convex ℝ (FullySeparable 3) := convex_convexHull ℝ _
