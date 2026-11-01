@@ -90,6 +90,15 @@ theorem source_bridge : sourceScope.{u} ↔ arena.{u}.Law actual.{u} := by
 theorem actual_positive : arena.{u}.Law actual.{u} :=
   source_bridge.mp (@local_average_consistency.{u})
 
+theorem actual_dependence : ObservationalDependence signature.{u} actual.{u} := by
+  intro i
+  let P : Inputs.{u} :=
+    ⟨⟨ULift.{u} ℝ,inferInstance,inferInstance,inferInstance⟩,1,1,1,0,1,0,1⟩
+  refine ⟨P,fun _ => ⟨0⟩,fun t => ⟨t⟩,?_⟩
+  intro heq
+  have he := congrArg (fun f : functions P => (f 1).down) heq
+  exact zero_ne_one he
+
 end Averages
 
 namespace Representatives
@@ -162,6 +171,13 @@ theorem source_bridge : sourceScope.{u} ↔ arena.{u}.Law actual.{u} := by
 
 theorem actual_positive : arena.{u}.Law actual.{u} :=
   source_bridge.mp (@exists_continuous_representatives.{u})
+
+theorem actual_dependence : ObservationalDependence signature.{u} actual.{u} := by
+  intro i
+  let P : Inputs.{u} := ⟨⟨ULift.{u} ℝ,inferInstance,inferInstance,inferInstance⟩,1⟩
+  refine ⟨P,∅,{0},?_⟩
+  change (∅ : family P) ≠ {0}
+  exact Set.empty_ne_singleton 0
 
 end Representatives
 
