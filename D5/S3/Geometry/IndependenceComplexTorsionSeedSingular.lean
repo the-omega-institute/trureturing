@@ -20,7 +20,7 @@ homology hypothesis is introduced here.
 
 noncomputable section
 open CategoryTheory Limits
-open scoped BigOperators
+open scoped BigOperators Finset
 
 namespace D5.S3.Geometry.IndependenceComplexTorsionSeedSingular
 
@@ -130,7 +130,7 @@ def edgeCoordinates : FiniteSimplicialSingularHomology.orderedGroup K 1 ≅ Modu
 def triangleCoordinates : FiniteSimplicialSingularHomology.orderedGroup K 2 ≅ ModuleCat.of ℤ IndependenceComplexTorsionSeed.C2 :=
   coordinateIso triangleFaceEquiv
 
-private theorem boundaryCoordinates_apply {p : ℕ} {I : Type*}
+private theorem boundaryCoordinates_apply {p : ℕ} {I : Type}
     [Fintype I] [DecidableEq I] (e : I ≃ FiniteSimplicialSingularHomology.Face K p)
     (s : FiniteSimplicialSingularHomology.Face K (p + 1)) (i : I) :
     ((FiniteSimplicialSingularHomology.faceι K s ≫ FiniteSimplicialSingularHomology.orderedBoundary K p ≫
@@ -141,7 +141,7 @@ private theorem boundaryCoordinates_apply {p : ℕ} {I : Type*}
   simp only [Preadditive.sum_comp, Preadditive.zsmul_comp, FiniteSimplicialSingularHomology.faceι,
     ι_coordinateIso]
   simp [ModuleCat.comp_apply, LinearMap.smulRight_apply,
-    FiniteSimplicialSingularHomology.eraseFace, Subtype.ext_iff, ← Finset.sum_coe_sort]
+    FiniteSimplicialSingularHomology.eraseFace, Subtype.ext_iff, Finset.sum_coe_sort]
 
 private theorem edge_boundary_certificate : ∀ (e : IndependenceComplexTorsionSeed.EdgeIndex) (v : IndependenceComplexTorsionSeed.Vertex),
     IndependenceComplexTorsionSeed.edgeBoundary e v =
@@ -176,7 +176,7 @@ theorem edge_boundary_comm :
     ((FiniteSimplicialSingularHomology.faceι K (edgeFaceEquiv e)) 1)) v =
       ((FiniteSimplicialSingularHomology.faceι K (edgeFaceEquiv e) ≫ FiniteSimplicialSingularHomology.orderedBoundary K 0 ≫
         (coordinateIso vertexFaceEquiv).hom) 1) v
-  rw [coordinateIso_basis, boundaryCoordinates_apply]
+  erw [coordinateIso_basis, boundaryCoordinates_apply]
   simpa only [IndependenceComplexTorsionSeed.d1, Fintype.linearCombination_apply_single, one_smul,
     vertexFaceEquiv_val, edgeFaceEquiv_val] using edge_boundary_certificate e v
 
@@ -194,7 +194,7 @@ theorem triangle_boundary_comm :
     ((FiniteSimplicialSingularHomology.faceι K (triangleFaceEquiv t)) 1)) e =
       ((FiniteSimplicialSingularHomology.faceι K (triangleFaceEquiv t) ≫ FiniteSimplicialSingularHomology.orderedBoundary K 1 ≫
         (coordinateIso edgeFaceEquiv).hom) 1) e
-  rw [coordinateIso_basis, boundaryCoordinates_apply]
+  erw [coordinateIso_basis, boundaryCoordinates_apply]
   simpa only [IndependenceComplexTorsionSeed.d2, Fintype.linearCombination_apply_single, one_smul,
     edgeFaceEquiv_val, triangleFaceEquiv_val] using triangle_boundary_certificate t e
 
