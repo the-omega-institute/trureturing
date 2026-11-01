@@ -70,7 +70,7 @@ $$\forall q \in \operatorname{Nat} \to \operatorname{Real},\; \forall dq \in \op
 
 *Commentary.*
 
-The formal linearized recurrence includes the variation of the edge parameter and the variation of the preceding continuant. A connection to the actual characteristic-coefficient differential remains to be proved.
+The formal linearized recurrence includes the variation of the edge parameter and the variation of the preceding continuant. The actual evaluated characteristic differential is supplied by joined_path_charpoly_derivative.
 
 **Definition 1.6 (Simultaneous polynomial edge perturbation).**
 
@@ -154,7 +154,7 @@ $$\forall qL \in \operatorname{Nat} \to \operatorname{Real},\; \forall qR \in \o
 
 *Commentary.*
 
-Write U=P_left(r), V=P_right(s), F=XU-P_left(r+1), and G=XV-P_right(s+1). The displayed expression retains all six contributions to the variation of (X-a)UV-FV-UG. Each flux is zero when its branch is empty; for a positive branch length its flux is the attaching squared edge weight times the preceding continuant. This is an algebraic carrier; the joined matrix characteristic correspondence is still required.
+Write U=P_left(r), V=P_right(s), F=XU-P_left(r+1), and G=XV-P_right(s+1). The displayed expression retains all six contributions to the variation of (X-a)UV-FV-UG. Each flux is zero when its branch is empty; for a positive branch length its flux is the attaching squared edge weight times the preceding continuant. The joined_path_charpoly theorem supplies the corresponding actual central-loop matrix characteristic expression; the matrix support-tangent bridge is separate.
 
 **Definition 1.12 (Actual simultaneous algebraic perturbation).**
 
@@ -198,7 +198,59 @@ $$\forall r \in \operatorname{Nat},\; \forall s \in \operatorname{Nat},\; \opera
 
 Every pair of lengths with odd sum admits two strictly positive squared-edge parameter sequences whose continuants are coprime. Put unit parameters on an even-length branch and a common positive parameter t on the other branch. The first branch has nonzero constant coefficient. The spectral resultant is a polynomial in t; at t=0 the other branch becomes X to its length, so the resultant is nonzero. A positive t outside its finite root set gives the required pair. Swapping the branches covers the other parity orientation. Zero and one lengths need no exceptions, and the final selected t is strictly positive; zero is used only to prove that the parameter polynomial is not identically zero.
 
-The remaining whole-event bridges are the central-loop characteristic identity joining two actual weighted branches; the correspondence between the algebraic joined variation and actual matrix support tangents and characteristic coefficients; the coefficient/adjugate trace pairing and unrestricted real commutant argument; and exact support enlargement to every nonempty loop set. The source Superpattern Lemma also preserves similarity, which is stronger than the existential event requires.
+**Definition 1.15 (Actual path with one central loop).**
+
+$$\forall bL \in \operatorname{Nat} \to \operatorname{Real},\; \forall bR \in \operatorname{Nat} \to \operatorname{Real},\; \forall a \in \operatorname{Real},\; \forall r \in \operatorname{Nat},\; \forall s \in \operatorname{Nat},\; \forall i \in \operatorname{Fin}\left(s + 1 + r\right),\; \forall j \in \operatorname{Fin}\left(s + 1 + r\right),\; \operatorname{joinedPath}\left(bL, bR, a, r, s\right)\left(i, j\right) = \operatorname{if} (i = j) \operatorname{then} \operatorname{if} (\operatorname{val}\left(i\right) = r) \operatorname{then} a \operatorname{else} 0 \operatorname{else} \operatorname{if} (\operatorname{val}\left(i\right) + 1 = \operatorname{val}\left(j\right)) \operatorname{then} \operatorname{if} (\operatorname{val}\left(i\right) < r) \operatorname{then} bL\left(\operatorname{val}\left(i\right)\right) \operatorname{else} bR\left(s + r - 1 - \operatorname{val}\left(i\right)\right) \operatorname{else} \operatorname{if} (\operatorname{val}\left(j\right) + 1 = \operatorname{val}\left(i\right)) \operatorname{then} \operatorname{if} (\operatorname{val}\left(j\right) < r) \operatorname{then} bL\left(\operatorname{val}\left(j\right)\right) \operatorname{else} bR\left(s + r - 1 - \operatorname{val}\left(j\right)\right) \operatorname{else} 0$$
+
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.joinedPath` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Sara Koljančić and Polona Oblak (2026). *Combinatorial aspects of the non-symmetric Strong Spectral Property for graphs*. DOI: [10.48550/arXiv.2604.21552](https://doi.org/10.48550/arXiv.2604.21552). URL: <https://arxiv.org/abs/2604.21552v1>.
+
+*Commentary.*
+
+The vertex set is Fin(s+1+r), with the loop at vertex r. The left branch edges have weights bL(0) through bL(r-1) from its far endpoint towards the loop; the right branch edges have weights bR(s-1) down to bR(0) from the loop towards its far endpoint. All diagonal entries except the central loop are zero. Natural-number subtraction in the displayed edge indices is truncated subtraction. Empty branches, either endpoint and the single-vertex carrier are included.
+
+**Theorem 1.16 (Actual central-loop characteristic identity).**
+
+$$\forall bL \in \operatorname{Nat} \to \operatorname{Real},\; \forall bR \in \operatorname{Nat} \to \operatorname{Real},\; \forall a \in \operatorname{Real},\; \forall r \in \operatorname{Nat},\; \forall s \in \operatorname{Nat},\; \operatorname{charpoly}\left(\operatorname{joinedPath}\left(bL, bR, a, r, s\right)\right) = \operatorname{continuant}\left(\lambda k: \operatorname{Nat} \mapsto bL\left(k\right)^{2}, r + 1\right) \cdot \operatorname{continuant}\left(\lambda k: \operatorname{Nat} \mapsto bR\left(k\right)^{2}, s\right) + \operatorname{continuant}\left(\lambda k: \operatorname{Nat} \mapsto bL\left(k\right)^{2}, r\right) \cdot \operatorname{continuant}\left(\lambda k: \operatorname{Nat} \mapsto bR\left(k\right)^{2}, s + 1\right) - \left(X + \operatorname{C}\left(a\right)\right) \cdot \operatorname{continuant}\left(\lambda k: \operatorname{Nat} \mapsto bL\left(k\right)^{2}, r\right) \cdot \operatorname{continuant}\left(\lambda k: \operatorname{Nat} \mapsto bR\left(k\right)^{2}, s\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.joined_path_charpoly` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Sara Koljančić and Polona Oblak (2026). *Combinatorial aspects of the non-symmetric Strong Spectral Property for graphs*. DOI: [10.48550/arXiv.2604.21552](https://doi.org/10.48550/arXiv.2604.21552). URL: <https://arxiv.org/abs/2604.21552v1>.
+
+*Commentary.*
+
+For every pair of real edge sequences, every real loop weight and every pair of natural branch lengths, the characteristic polynomial of joinedPath equals the displayed branch-continuant expression. This is also (X-C(a))UV-FV-UG with U=P_left(r), V=P_right(s), F=XU-P_left(r+1) and G=XV-P_right(s+1). The proof uses the actual matrix determinant, the frozen sparse determinant expansion, the existing weighted_path_charpoly, and induction from either empty or one-vertex left branches. The front recurrence for continuants aligns the far-end deletion with the squared edge indexing. The formula assumes neither nonzero weights nor parity, and includes every endpoint and empty branch. It does not establish the support-tangent or unrestricted commutant bridges.
+
+**Theorem 1.17 (Actual characteristic variation along edge and loop perturbations).**
+
+$$\forall bL \in \operatorname{Nat} \to \operatorname{Real},\; \forall bR \in \operatorname{Nat} \to \operatorname{Real},\; \forall dbL \in \operatorname{Nat} \to \operatorname{Real},\; \forall dbR \in \operatorname{Nat} \to \operatorname{Real},\; \forall a \in \operatorname{Real},\; \forall da \in \operatorname{Real},\; \forall r \in \operatorname{Nat},\; \forall s \in \operatorname{Nat},\; \forall x \in \operatorname{Real},\; \operatorname{HasDerivAt}\left(\lambda t: \operatorname{Real} \mapsto \operatorname{eval}\left(x, \operatorname{charpoly}\left(\operatorname{joinedPath}\left(\lambda k: \operatorname{Nat} \mapsto bL\left(k\right) + t \cdot dbL\left(k\right), \lambda k: \operatorname{Nat} \mapsto bR\left(k\right) + t \cdot dbR\left(k\right), a + t \cdot da, r, s\right)\right)\right), \operatorname{eval}\left(x, \operatorname{joinedVariation}\left(\lambda k: \operatorname{Nat} \mapsto bL\left(k\right)^{2}, \lambda k: \operatorname{Nat} \mapsto bR\left(k\right)^{2}, \lambda k: \operatorname{Nat} \mapsto 2 \cdot bL\left(k\right) \cdot dbL\left(k\right), \lambda k: \operatorname{Nat} \mapsto 2 \cdot bR\left(k\right) \cdot dbR\left(k\right), a, da, r, s\right)\right), 0\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.joined_path_charpoly_derivative` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Sara Koljančić and Polona Oblak (2026). *Combinatorial aspects of the non-symmetric Strong Spectral Property for graphs*. DOI: [10.48550/arXiv.2604.21552](https://doi.org/10.48550/arXiv.2604.21552). URL: <https://arxiv.org/abs/2604.21552v1>.
+
+*Commentary.*
+
+For every real edge and variation sequence, every loop weight and variation, every pair of natural branch lengths and every real spectral value x, the actual characteristic polynomial evaluated at x has the displayed derivative at perturbation parameter zero. Each edge is perturbed by b+t*db and the central loop by a+t*da. The squared-edge first variations are 2*b*db, with the complete joined product rule retained. The proof differentiates the continuant recurrence and applies joined_path_charpoly to the actual perturbed matrix. Zero edge weights, empty branches and endpoints remain included. The conditional application below uses these evaluated derivatives directly, together with an orthogonal diagonalization having distinct eigenvalues. It does not require a separate characteristic-coefficient or adjugate interface. The existence of that diagonalization for the selected branch weights and the final exact-support witnesses remain separate obligations.
+
+Conditional unrestricted commutant application. Let the two branch lengths have odd sum, let the loop and all r+s used edge weights be nonzero, and let the two squared-weight continuants be coprime. Suppose U is real orthogonal and U-transpose A U is diagonal with pairwise distinct diagonal entries, where A is the actual joinedPath. Under these explicit hypotheses the existing matrix derivative and recovery relations imply HasNSSP A. This conditional application supplies no existence assertion for U, the branch weights or the final exact-support witness.
+
+$$
+\forall bL \in \operatorname{Nat} \to \operatorname{Real},\; \forall bR \in \operatorname{Nat} \to \operatorname{Real},\; \forall a \in \operatorname{Real},\; \forall r \in \operatorname{Nat},\; \forall s \in \operatorname{Nat},\; a \ne 0 \Rightarrow \left(\operatorname{Odd}\left(r + s\right) \Rightarrow \left(\left(\forall k \in \operatorname{Nat},\; k < r \Rightarrow bL\left(k\right) \ne 0\right) \Rightarrow \left(\left(\forall k \in \operatorname{Nat},\; k < s \Rightarrow bR\left(k\right) \ne 0\right) \Rightarrow \left(\operatorname{IsCoprime}\left(\operatorname{continuant}\left(\lambda k: \operatorname{Nat} \mapsto bL\left(k\right)^{2}, r\right), \operatorname{continuant}\left(\lambda k: \operatorname{Nat} \mapsto bR\left(k\right)^{2}, s\right)\right) \Rightarrow \left(\forall U \in \operatorname{Matrix}\left(\operatorname{Fin}\left(s + 1 + r\right), \operatorname{Fin}\left(s + 1 + r\right), \operatorname{Real}\right),\; \forall lam \in \operatorname{Fin}\left(s + 1 + r\right) \to \operatorname{Real},\; \operatorname{transpose}\left(U\right) \cdot U = 1 \Rightarrow \left(U \cdot \operatorname{transpose}\left(U\right) = 1 \Rightarrow \left(\operatorname{transpose}\left(U\right) \cdot \operatorname{joinedPath}\left(bL, bR, a, r, s\right) \cdot U = \operatorname{diagonal}\left(lam\right) \Rightarrow \left(\operatorname{Injective}\left(lam\right) \Rightarrow \operatorname{HasNSSP}\left(\operatorname{joinedPath}\left(bL, bR, a, r, s\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)
+$$
+
+Put n=r+s+1. Parameterize a symmetric support tangent T(v) by its r left edges, one central loop and s right edges, so v lies in Real to the n. Its spectral diagonal readout is v mapped to diag(U-transpose T(v) U). If this readout vanishes, the derivative of every evaluated characteristic polynomial vanishes: the determinant differential at a diagonal matrix is a sum of determinants with one row replaced, and the zero diagonal of the direction leaves a zero column in each summand. Orthogonal conjugation preserves the characteristic polynomial. Applying joined_path_charpoly_derivative and polynomial extensionality therefore gives zero joinedVariation. The complete joined recovery theorem, with squared-edge variations 2*b*db, recovers every edge and loop direction. The readout is injective and hence surjective between two real spaces of dimension n.
+
+Now take an arbitrary real X satisfying entrywise A times X equal to zero and A X-transpose equal to X-transpose A. The matrix Y=U-transpose X-transpose U commutes with the diagonal spectral matrix. Distinct spectral entries force every off-diagonal entry of Y to vanish; symmetry of X is a consequence here and is never assumed. Entrywise annihilation gives trace(X-transpose T(v))=0 for every support tangent. Choose v whose spectral diagonal readout equals diag(Y). Invariance of trace under the orthogonal change of basis identifies that trace with the sum of the squares of the diagonal entries of Y. Thus Y=0 and X=0. This argument tests the full unrestricted real commutant.
+
+The remaining whole-event obligations are a compiled simple-spectrum orthogonal diagonalization for the constructed nonzero weighted paths; conversion of the positive coprime branch parameters into uniform singleton-loop exact-support witnesses at every positive even order and every loop position; enlargement to every nonempty loop set; and a proof of the full claim consuming these relations. Empty branches, endpoints and order two remain included in that goal. The source Superpattern Lemma also preserves similarity, which is stronger than the existential event requires.
 
 Source attribution and license boundaries are recorded in Library/Eigenstructure/koljancic2026nssp.md. The continuant variation argument is a repository derivation; the source question and its published definitions are not claimed as new results.
 
@@ -212,7 +264,10 @@ Source attribution and license boundaries are recorded in Library/Eigenstructure
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.coprime_positive_branches`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.deformedContinuant`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.deformedJoinedContinuant`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.joinedPath`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.joinedVariation`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.joined_path_charpoly`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.joined_path_charpoly_derivative`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.joined_variation_injective`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.pathPattern`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.variation`
