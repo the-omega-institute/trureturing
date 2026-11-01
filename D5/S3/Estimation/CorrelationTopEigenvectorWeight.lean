@@ -122,7 +122,8 @@ private lemma delta_norm {n : ℕ} (hn : 0 < n) : ‖delta n‖ ^ 2 = 1 := by
   have hn0 : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
   have hs : Real.sqrt (n : ℝ) ^ 2 = n := Real.sq_sqrt (Nat.cast_nonneg n)
   rw [← real_inner_self_eq_norm_sq]
-  simp only [delta, EuclideanSpace.inner_toLp_toLp, dotProduct, Pi.star_apply,
+  dsimp only [delta]
+  simp only [EuclideanSpace.inner_toLp_toLp, dotProduct, Pi.star_apply,
     star_trivial, ← sq, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
   rw [inv_pow, hs, mul_inv_cancel₀ hn0]
 
@@ -162,8 +163,7 @@ private lemma correlation_rayleigh {n : ℕ} (hn : 3 ≤ n)
     exact sum_congr rfl fun i _ => sum_congr rfl fun j _ => by ring
   rw [hinner, inv_pow, Real.sq_sqrt (Nat.cast_nonneg n), hsum]
   dsimp only [meanCorr]
-  field_simp
-  <;> ring
+  field_simp (disch := first | assumption | positivity | linarith)
 
 private lemma correlation_centered_moments {n : ℕ} (hn : 3 ≤ n)
     (a : Matrix (Fin n) (Fin n) ℝ) (ha : IsCorrelation a) (hs : 0 < stdCorr a) :
@@ -175,7 +175,8 @@ private lemma correlation_centered_moments {n : ℕ} (hn : 3 ≤ n)
   have hn1 : (n : ℝ) - 1 ≠ 0 := by linarith
   have ht : ∑ j, ha.1.isHermitian.eigenvalues j = (n : ℝ) := by
     rw [← RHLinalg.rtrace_eq_sum_eigenvalues ha.1.isHermitian]
-    simp [RHLinalg.rtrace, Matrix.trace, ha.2]
+    dsimp only [RHLinalg.rtrace]
+    simp [Matrix.trace, ha.2]
   have hf : ∑ j, ha.1.isHermitian.eigenvalues j ^ 2 =
       (n : ℝ) + 2 * ∑ i, ∑ j with j < i, a i j ^ 2 := by
     rw [← RHLinalg.frobSq_hermitian_eq_sum_sq_eigenvalues ha.1.isHermitian]
@@ -185,7 +186,8 @@ private lemma correlation_centered_moments {n : ℕ} (hn : 3 ≤ n)
     simp only [ha.2, one_pow, sum_const, card_univ, Fintype.card_fin,
       nsmul_eq_mul, mul_one] at hsum
     convert hsum using 1
-    simp only [RHLinalg.frobSq, Matrix.trace, diag_apply, mul_apply,
+    dsimp only [RHLinalg.frobSq]
+    simp only [Matrix.trace, diag_apply, mul_apply,
       conjTranspose_apply, star_trivial, RCLike.re_to_real, ← sq]
     exact sum_comm
   have hstd : stdCorr a ^ 2 = 2 / ((n : ℝ) * ((n : ℝ) - 1)) *
@@ -200,8 +202,8 @@ private lemma correlation_centered_moments {n : ℕ} (hn : 3 ≤ n)
       simp only [sub_sq, sum_add_distrib, sum_sub_distrib, one_pow, mul_one,
         ← mul_sum, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
     rw [he, hf, ht, hstd]
-    field_simp
-    <;> ring
+    field_simp (disch := first | assumption | positivity | linarith)
+    ring
 
 private lemma correlation_spectral_data {n : ℕ} (hn : 3 ≤ n)
     (a : Matrix (Fin n) (Fin n) ℝ) (ha : IsCorrelation a) (hs : 0 < stdCorr a)
@@ -338,15 +340,17 @@ private lemma wedge_parameters {c σ : ℝ} (h : domainD c σ) (hcs : c < σ) :
   · apply (mul_pos_iff_of_pos_right hq).mp
     change 0 < (1 - σ / Real.sqrt (1 - x ^ 2) -
       (c - σ / Real.sqrt (1 - x ^ 2) * x)) * Real.sqrt (1 - x ^ 2)
-    convert sub_pos.mpr hd using 1 <;> field_simp <;> ring
+    convert sub_pos.mpr hd using 1
+    field_simp (disch := first | assumption | positivity | linarith)
+    ring
   · apply (mul_lt_mul_iff_left₀ hq).mp
     change 2 * c * Real.sqrt (1 - x ^ 2) <
       (σ / Real.sqrt (1 - x ^ 2) + (c - σ / Real.sqrt (1 - x ^ 2) * x)) *
         Real.sqrt (1 - x ^ 2)
     have heq : (σ / Real.sqrt (1 - x ^ 2) + (c - σ / Real.sqrt (1 - x ^ 2) * x)) *
         Real.sqrt (1 - x ^ 2) = σ * (1 - x) + c * Real.sqrt (1 - x ^ 2) := by
-      field_simp
-      <;> ring
+      field_simp (disch := first | assumption | positivity | linarith)
+      ring
     rw [heq]
     linarith only [hg]
 
@@ -426,8 +430,7 @@ private lemma rounded_ratio_tendsto (x : ℝ) :
       |(roundedCount x n : ℝ) / (n : ℝ) - (1 + Real.sqrt x) / 2| =
           |((roundedCount x n : ℝ) - (n : ℝ) * (1 + Real.sqrt x) / 2) / (n : ℝ)| := by
         congr 1
-        field_simp
-        <;> ring
+        field_simp (disch := first | assumption | positivity | linarith)
       _ = |(n : ℝ) * (1 + Real.sqrt x) / 2 - (roundedCount x n : ℝ)| *
           (n : ℝ)⁻¹ := by
         rw [abs_div, abs_of_pos hnpos, abs_sub_comm, div_eq_mul_inv]
@@ -441,7 +444,8 @@ private lemma roundedZ_tendsto (x : ℝ) (hx : 0 ≤ x) :
   have ht := ((((hr.const_mul 2).sub_const 1).pow 2).sub hi).div
     (hi.const_sub 1) (show (1 : ℝ) - 0 ≠ 0 by norm_num)
   have heq : (2 * ((1 + Real.sqrt x) / 2) - 1) ^ 2 = x := by
-    convert Real.sq_sqrt hx using 1 <;> ring
+    convert Real.sq_sqrt hx using 1
+    ring
   simp only [sub_zero, div_one, heq] at ht
   apply ht.congr'
   filter_upwards [eventually_ge_atTop 2] with n hn
@@ -451,10 +455,9 @@ private lemma roundedZ_tendsto (x : ℝ) (hx : 0 ≤ x) :
   change ((2 * ((roundedCount x n : ℝ) / (n : ℝ)) - 1) ^ 2 - (n : ℝ)⁻¹) /
     (1 - (n : ℝ)⁻¹) = roundedZ n (roundedCount x n)
   dsimp only [roundedZ]
-  field_simp
-  <;> ring
+  field_simp (disch := first | assumption | positivity | linarith)
 
-private lemma rounded_eventually {c σ : ℝ} (h : domainD c σ) (hcs : c < σ)
+private lemma rounded_eventually {c σ : ℝ}
     (hp : let x := wedgeX c σ
       let a := σ / Real.sqrt (1 - x ^ 2)
       let b := c - a * x
@@ -522,8 +525,7 @@ private lemma rounded_eventually {c σ : ℝ} (h : domainD c σ) (hcs : c < σ)
     have heq : ((1 - 2 * (n : ℝ)⁻¹) * (an n + bn n) -
         2 * (1 - (n : ℝ)⁻¹) * c) * (n : ℝ) =
         ((n : ℝ) - 2) * (an n + bn n) - 2 * ((n : ℝ) - 1) * c := by
-      field_simp
-      <;> ring
+      field_simp (disch := first | assumption | positivity | linarith)
     rw [heq] at hmul
     exact sub_pos.mp hmul
 
@@ -552,7 +554,8 @@ private lemma rank_two_realizes {n : ℕ} (hn : 3 ≤ n) (k : ℤ)
           posSemidef_vecMulVec_self_star (fun _ : Fin n => (1 : ℝ))
       exact ((PosSemidef.one.smul hd0.le).add (hs.smul ha0.le)).add (he.smul hb0.le)
     · intro i
-      simp only [signMatrix, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, one_apply_eq,
+      dsimp only [signMatrix]
+      simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, one_apply_eq,
         vecMulVec_apply, mul_one, ← sq, signVector_sq]
       ring
   obtain ⟨hcount, hsign⟩ := lower_sign_moments k hk hkn
@@ -563,8 +566,9 @@ private lemma rank_two_realizes {n : ℕ} (hn : 3 ≤ n) (k : ℤ)
   have hentry : ∀ i j : Fin n, j < i →
       signMatrix n k a b (1 - a - b) i j = a * (signVector n k i * signVector n k j) + b := by
     intro i j hij
-    simp only [signMatrix, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, one_apply,
-      if_neg hij.ne.symm, vecMulVec_apply, mul_one, mul_zero, zero_add]
+    dsimp only [signMatrix]
+    simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, one_apply,
+      ite_eq_right hij.ne.symm, vecMulVec_apply, mul_one, mul_zero, zero_add]
   have hmean : meanCorr (signMatrix n k a b (1 - a - b)) = c := by
     have hsum : (∑ i, ∑ j with j < i, signMatrix n k a b (1 - a - b) i j) =
         a * (∑ i, ∑ j with j < i, signVector n k i * signVector n k j) +
@@ -575,8 +579,8 @@ private lemma rank_two_realizes {n : ℕ} (hn : 3 ≤ n) (k : ℤ)
         _ = _ := by simp only [mul_sum, mul_one, ← sum_add_distrib]
     rw [meanCorr, hsum, hcountEq, hsignEq, hb]
     dsimp only [roundedZ]
-    field_simp
-    <;> ring
+    field_simp (disch := first | assumption | positivity | linarith)
+    ring
   refine ⟨hcorr, hmean, ?_⟩
   have hsecond : (∑ i, ∑ j with j < i,
       signMatrix n k a b (1 - a - b) i j ^ 2) =
@@ -608,8 +612,7 @@ private lemma rank_two_realizes {n : ℕ} (hn : 3 ≤ n) (k : ℤ)
         a ^ 2 + b ^ 2 + 2 * a * b * roundedZ n k := by
       rw [hsecond, hcountEq, hsignEq]
       dsimp only [roundedZ]
-      field_simp
-      <;> ring
+      field_simp (disch := first | assumption | positivity | linarith)
     rw [hsecondEq, hamean]
     nlinarith only [hasq]
   rw [stdCorr, hmean, hvar, Real.sqrt_sq hσ.le]
@@ -623,11 +626,12 @@ private lemma signMatrix_action {n : ℕ} (k : ℤ) (a b d : ℝ)
         WithLp.toLp 2 (fun _ : Fin n => (1 : ℝ)) := by
   apply WithLp.ofLp_injective 2
   ext i
+  dsimp only [signMatrix]
   simp only [Matrix.toEuclideanLin, Matrix.toLpLin_apply, WithLp.ofLp_toLp,
     WithLp.ofLp_add, WithLp.ofLp_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul,
-    signMatrix, add_mulVec, smul_mulVec, one_mulVec, mulVec, dotProduct,
+    add_mulVec, smul_mulVec, one_mulVec, mulVec, dotProduct,
     vecMulVec_apply, EuclideanSpace.inner_eq_star_dotProduct, Pi.star_apply,
-    star_trivial, mul_one, one_mul, sum_add_distrib, ← mul_sum, ← sum_mul]
+    star_trivial, mul_one, one_mul]
   rw [show (∑ j, signVector n k i * signVector n k j * y.ofLp j) =
       signVector n k i * ∑ j, y.ofLp j * signVector n k j by
     rw [mul_sum]
@@ -635,7 +639,7 @@ private lemma signMatrix_action {n : ℕ} (k : ℤ) (a b d : ℝ)
   ring
 
 private lemma rank_two_weight_gap {n : ℕ} (hn : 3 ≤ n) (k : ℤ)
-    (hk : 0 < k) (hkn : k < (n : ℤ)) (hbalance : 2 * k ≠ (n : ℤ))
+    (hk : 0 < k) (hkn : k < (n : ℤ))
     (a b d : ℝ) (ha : 0 < a) (hb : 0 < b)
     (hgap : 2 * ((n : ℝ) - 1) * (a * roundedZ n k + b) <
       ((n : ℝ) - 2) * (a + b)) :
@@ -649,7 +653,7 @@ private lemma rank_two_weight_gap {n : ℕ} (hn : 3 ≤ n) (k : ℤ)
   have hnormu : ‖u‖ ^ 2 = (n : ℝ) := by
     rw [← real_inner_self_eq_norm_sq]
     simp only [u, EuclideanSpace.inner_toLp_toLp, dotProduct, Pi.star_apply,
-      star_trivial, one_mul, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, mul_one]
+      star_trivial, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, mul_one]
   have hnorms : ‖s‖ ^ 2 = (n : ℝ) := by
     rw [← real_inner_self_eq_norm_sq]
     simp only [s, EuclideanSpace.inner_toLp_toLp, dotProduct, Pi.star_apply,
@@ -707,7 +711,7 @@ private lemma rank_two_weight_gap {n : ℕ} (hn : 3 ≤ n) (k : ℤ)
     rw [henergy, htrace, heu]
     have hmul := mul_lt_mul_of_pos_right hgap hnpos
     dsimp only [roundedZ] at hmul
-    field_simp at hmul
+    field_simp (disch := first | assumption | positivity | linarith) at hmul
     nlinarith only [hmul]
   obtain ⟨j, hji, hweight⟩ := RankTwoEigenvectorWeight.weight_gap μ e f a b ha hb hdiag
     hscalar i (fun j => sub_le_sub_right (htop j) d)
@@ -715,23 +719,24 @@ private lemma rank_two_weight_gap {n : ℕ} (hn : 3 ≤ n) (k : ℤ)
   have hd : delta n = (Real.sqrt (n : ℝ))⁻¹ • u := by
     apply WithLp.ofLp_injective 2
     ext t
-    simp [delta, u]
+    dsimp only [delta, u]
+    simp
   rw [hd, inner_smul_right, inner_smul_right, mul_pow, mul_pow]
   exact mul_lt_mul_of_pos_left hweight (by positivity)
 
 private lemma wedge_construction {c σ : ℝ} (h : domainD c σ) (hcs : c < σ) :
     ∃ m : ℕ, ∀ n ≥ m, ∃ a : Matrix (Fin n) (Fin n) ℝ,
       IsCorrelation a ∧ meanCorr a = c ∧ stdCorr a = σ ∧ SatisfiesWGap a := by
-  obtain ⟨m, hm⟩ := rounded_eventually h hcs (wedge_parameters h hcs)
+  obtain ⟨m, hm⟩ := rounded_eventually (wedge_parameters h hcs)
   refine ⟨m, fun n hn => ?_⟩
-  obtain ⟨hn3, hk, hkn, hbal, hzl, hzu, ha, hb, hd, hineq⟩ := hm n hn
+  obtain ⟨hn3, hk, hkn, _hbal, hzl, hzu, ha, hb, hd, hineq⟩ := hm n hn
   let k := roundedCount (wedgeX c σ) n
   let a := σ / Real.sqrt (1 - roundedZ n k ^ 2)
   let b := c - a * roundedZ n k
   obtain ⟨hcorr, hmean, hstd⟩ := rank_two_realizes hn3 k hk hkn c σ h.1.2.1
     ⟨hzl, hzu⟩ a b rfl rfl ha hb hd
   refine ⟨signMatrix n k a b (1 - a - b), hcorr, hmean, hstd, ?_⟩
-  apply rank_two_weight_gap hn3 k hk hkn hbal a b (1 - a - b) ha hb
+  apply rank_two_weight_gap hn3 k hk hkn a b (1 - a - b) ha hb
   have heq : a * roundedZ n k + b = c := by dsimp [b]; ring
   rwa [heq]
 
