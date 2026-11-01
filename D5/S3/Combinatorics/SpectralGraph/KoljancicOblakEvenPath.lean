@@ -540,8 +540,14 @@ theorem joined_path_charpoly (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ) :
       have shift1 (i j : Fin (s + 1)) :
           joinedPath bL bR a 1 s i.succ j.succ =
             joinedPath (fun k => bL (k + 1)) bR a 0 s i j := by
-        simp only [joinedPath, Fin.val_succ, Fin.succ_inj, Fin.ext_iff]
-        split_ifs <;> simp_all <;> first | omega | (congr 1 <;> omega)
+        have hd : i.val + 1 = 1 ↔ i.val = 0 := by omega
+        have he : i.val + 1 + 1 = j.val + 1 ↔ i.val + 1 = j.val := by omega
+        have hf : j.val + 1 + 1 = i.val + 1 ↔ j.val + 1 = i.val := by omega
+        have hli : i.val + 1 < 1 ↔ i.val < 0 := by omega
+        have hii : s + 1 - 1 - (i.val + 1) = s + 0 - 1 - i.val := by omega
+        have hlj : j.val + 1 < 1 ↔ j.val < 0 := by omega
+        have hij : s + 1 - 1 - (j.val + 1) = s + 0 - 1 - j.val := by omega
+        simp only [joinedPath, Fin.val_succ, Fin.succ_inj, hd, he, hf, hli, hlj, hii, hij]
       have shift2 (i j : Fin s) :
           joinedPath bL bR a 1 s i.succ.succ j.succ.succ = weightedPath bR s i j := by
         simp only [joinedPath, weightedPath, Fin.val_succ, Fin.ext_iff]
@@ -581,13 +587,25 @@ theorem joined_path_charpoly (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ) :
       have shift1 (i j : Fin (s + 1 + (r + 1))) :
           joinedPath bL bR a (r + 2) s i.succ j.succ =
             joinedPath (fun k => bL (k + 1)) bR a (r + 1) s i j := by
-        simp only [joinedPath, Fin.val_succ, Fin.succ_inj, Fin.ext_iff]
-        split_ifs <;> simp_all <;> first | omega | (congr 1 <;> omega)
+        have hd : i.val + 1 = (r + 2) ↔ i.val = (r + 1) := by omega
+        have he : i.val + 1 + 1 = j.val + 1 ↔ i.val + 1 = j.val := by omega
+        have hf : j.val + 1 + 1 = i.val + 1 ↔ j.val + 1 = i.val := by omega
+        have hli : i.val + 1 < (r + 2) ↔ i.val < (r + 1) := by omega
+        have hii : s + (r + 2) - 1 - (i.val + 1) = s + (r + 1) - 1 - i.val := by omega
+        have hlj : j.val + 1 < (r + 2) ↔ j.val < (r + 1) := by omega
+        have hij : s + (r + 2) - 1 - (j.val + 1) = s + (r + 1) - 1 - j.val := by omega
+        simp only [joinedPath, Fin.val_succ, Fin.succ_inj, hd, he, hf, hli, hlj, hii, hij]
       have shift2 (i j : Fin (s + 1 + r)) :
           joinedPath bL bR a (r + 2) s i.succ.succ j.succ.succ =
             joinedPath (fun k => bL (k + 2)) bR a r s i j := by
-        simp only [joinedPath, Fin.val_succ, Fin.succ_inj, Fin.ext_iff]
-        split_ifs <;> simp_all <;> first | omega | (congr 1 <;> omega)
+        have hd : i.val + 1 + 1 = (r + 2) ↔ i.val = r := by omega
+        have he : i.val + 1 + 1 + 1 = j.val + 1 + 1 ↔ i.val + 1 = j.val := by omega
+        have hf : j.val + 1 + 1 + 1 = i.val + 1 + 1 ↔ j.val + 1 = i.val := by omega
+        have hli : i.val + 1 + 1 < (r + 2) ↔ i.val < r := by omega
+        have hii : s + (r + 2) - 1 - (i.val + 1 + 1) = s + r - 1 - i.val := by omega
+        have hlj : j.val + 1 + 1 < (r + 2) ↔ j.val < r := by omega
+        have hij : s + (r + 2) - 1 - (j.val + 1 + 1) = s + r - 1 - j.val := by omega
+        simp only [joinedPath, Fin.val_succ, Fin.succ_inj, hd, he, hf, hli, hlj, hii, hij]
       have minor1 : (joinedPath bL bR a (r + 2) s).charmatrix.submatrix Fin.succ Fin.succ =
           (joinedPath (fun k => bL (k + 1)) bR a (r + 1) s).charmatrix := by
         ext i j
