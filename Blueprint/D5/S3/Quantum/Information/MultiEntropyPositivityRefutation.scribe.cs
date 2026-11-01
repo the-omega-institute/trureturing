@@ -15,6 +15,11 @@ internal sealed class MultiEntropyPositivityRefutationDocument : IScribeDocument
         "The fourth replica invariant of the antisymmetric three-qutrit state is -35/58773123072, so the replica invariant need not be positive on normalized pure states.",
         H("Multi-entropy positivity fails on three qutrits"),
         Blocks(
+            Describe.Lean(DescribeId.Create("gjk-unit-norm-iff"), DeclarationHandle.Create(Prefix + "unit_norm_iff"),
+                H("Two normalization expressions"), StatementSource.FromAuthor(Disp(UnitNormIffFormula())),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For a vector on any finite index type, unitVector is equivalent to the sum of squared absolute values being one. The former uses the complex inner product and the latter a real sum."))),
+                DescribeRole.Theorem),
             Node("E", "Replica invariant", InvariantFormula(),
                 "Section 1.2, printed pp. 6–7, equations (1.10)–(1.11): \"Consider m = n^{q−1} replicas, arranged as a q−1 dimensional regular hyper-cubical lattice.\" and \"The permutation σ_q is taken to be identity and the rest of the permutations are taken to be the generators of independent Z_n symmetries i.e. σ_a = g_a for a = 1, …, q − 1.\". The local basis at party a is L(a). Replicas are functions Fin(q - 1) to ZMod(n); shift is StabilizerMultiEntropyCollapse.shift. With zero-based party labels, shift translates coordinate a when a < q - 1 and leaves the last party fixed. star is complex conjugation. The finite sums and products include every basis assignment and every replica exactly once. Type universes are implicit.",
                 AssessedProvenance.FromLiterature(Source), DescribeRole.Definition),
@@ -62,6 +67,17 @@ internal sealed class MultiEntropyPositivityRefutationDocument : IScribeDocument
         Seq(Prod, Underscore, Grp(F.Id(name), Colon, Sp, type), Sp, value);
     private static Formula Fun(string name, Formula type, Formula body) =>
         Parenthesized(Seq(F.Id("fun"), Sp, Parenthesized(Seq(F.Id(name), Colon, Sp, type)), Sp, Mapsto, Sp, body));
+
+    private static Formula UnitNormIffFormula()
+    {
+        var vector = Arrow(Iota, ComplexType());
+        var sum = SumOver("x", Iota, Call("Complex.normSq", At(Varphi, F.Id("x"))));
+        var equivalence = new Formula.Logic(Call("unitVector", Varphi), FormulaLogicOperator.Iff,
+            Parenthesized(Equal(sum, D(1))));
+        var phi = Seq(Forall, Sp, Parenthesized(Seq(Varphi, Colon, Sp, vector)), Comma, Sp, Parenthesized(equivalence));
+        return Seq(Forall, Sp, Parenthesized(Seq(Iota, Colon, Sp, F.Id("Type"))), Comma, Sp,
+            Instance(Call("Fintype", Iota), phi));
+    }
 
     private static Formula InvariantFormula()
     {
