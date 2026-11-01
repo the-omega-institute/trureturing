@@ -5,12 +5,6 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange, mathlib/module/Mathlib.Data.Nat.Bitwise]
    utility: none
    digest: UniformBounds and the 18 tight-quotient identities for adjacent charts C1/C2. -/
-/- SOURCE_ONLY_UNCOMPILED. Caller construction, tight bound and ordinary proof.
-No Pro validation, kernel validation, report or official acceptance is claimed.
-Pinned source API: 1add3bcde3f5768e7c5b7c84867d9758df1e6e6b.
-All coefficient vectors come from the supplied tight-certificate.json.
-Variable order there is Y,T,J,E (its generator called J H).
-No loose B*t*y*z-M*Mn inequality is used. -/
 import Mathlib.Data.Int.Basic
 import Mathlib.Tactic.Positivity.Basic
 import Mathlib.Tactic.Ring.RingNF

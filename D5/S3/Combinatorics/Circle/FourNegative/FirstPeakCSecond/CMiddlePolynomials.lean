@@ -5,10 +5,6 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange, mathlib/module/Mathlib.Data.Nat.Bitwise]
    utility: none
    digest: Row/model and the 16 exact strict S1/S2 coefficient identities. -/
-/- SOURCE_ONLY_UNCOMPILED. Full FirstPeakCSecond consumed implementation.
-Repository API pin: 1add3bcde3f5768e7c5b7c84867d9758df1e6e6b.
-Caller construction and ordinary proof; no Pro or kernel validation.
-Full unrestricted physical J / Circle C3.1 remain OPEN. -/
 import Mathlib.Data.Int.Basic
 import Mathlib.Tactic.Convert
 import Mathlib.Tactic.Positivity.Basic

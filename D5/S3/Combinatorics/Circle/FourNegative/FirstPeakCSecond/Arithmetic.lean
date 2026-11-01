@@ -5,8 +5,6 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange, mathlib/module/Mathlib.Data.Nat.Bitwise]
    utility: none
    digest: Exhaustive dyadic chart substitution and tight integer allocation gates for the strict branch. -/
-/- SOURCE_ONLY_UNCOMPILED. Caller ordinary construction and tight H bound.
-No build is authorized in this attempt. All tactic scripts remain unelaborated. -/
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Polynomials
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.PolynomialsSeparated
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.PolynomialsCorner

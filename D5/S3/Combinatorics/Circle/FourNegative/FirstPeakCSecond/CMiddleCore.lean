@@ -5,10 +5,6 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange, mathlib/module/Mathlib.Data.Nat.Bitwise]
    utility: none
    digest: CMiddle integer gates, physical masks, packet inventory, masses and native seam identities. -/
-/- SOURCE_ONLY_UNCOMPILED. Full FirstPeakCSecond consumed implementation.
-Repository API pin: 1add3bcde3f5768e7c5b7c84867d9758df1e6e6b.
-Caller construction and ordinary proof; no Pro or kernel validation.
-Full unrestricted physical J / Circle C3.1 remain OPEN. -/
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddlePolynomials
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Masks

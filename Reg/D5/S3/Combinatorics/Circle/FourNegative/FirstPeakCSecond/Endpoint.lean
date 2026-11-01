@@ -2,15 +2,6 @@ import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Endpoint
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
-/- SOURCE_ONLY_UNCOMPILED
-Pinned contract: 1add3bcde3f5768e7c5b7c84867d9758df1e6e6b.
-This includes the source-family proof AND full typed Contract.Registration.
-The readout application uses the existing DependentFamily enrollment_1.
-sourceSelection paths below are exact-target candidates obtained from the pinned
-nine-binder existential/OriginalOrder syntax; only later elaboration/inspector
-can validate their binding. No declared_validated or report claim is made.
-The source theorem is caller-attributed; Pro supplied neither it nor validation.
--/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 open LeanInformationAudit
