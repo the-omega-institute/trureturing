@@ -107,6 +107,8 @@ theorem actualSource_first_peak_c_second_joint_lift (a b c d : ℕ)
     have hB : 1≤B := by dsimp [B]; nlinarith only [mul_nonneg (show 0≤x*t by positivity) (show 0≤y+1 by omega),ht]
     have bounds := uniform_bounds a b c d hd hdb hbc hca
     change UniformBounds x y z t H g s at bounds
+    rcases bounds with ⟨boldLower,boldUpper,bnewLower,bnewUpper,
+      btightOld,btightCeil,bgrainCapacity,bthird⟩
     have caps := reserve_capacity a b c d hd hdb hbc hca
     change 1≤g ∧ 1≤s ∧ 2*s≤x ∧ g∣s at caps
     have hsn : (sn:ℤ)=s := reserve_cast a b c d hd
@@ -115,16 +117,16 @@ theorem actualSource_first_peak_c_second_joint_lift (a b c d : ℕ)
     have hHexact : x/(2*z)=H := Int.ediv_eq_of_eq_mul_right (by omega) hHphysical
     have hcapPhysical : B≤(x/(2*z))*Mn := by
       rw [hHexact]
-      have hh := bounds.tightCeil
+      have hh := btightCeil
       change 0≤H*Mn-B at hh
       omega
     have hbank : H*M≤B-1 := by
-      have hh := bounds.tightOld
+      have hh := btightOld
       change 0≤B-H*M-1 at hh
       omega
     have hrs := tight_ceiling B M D H hB hM hMn hH (by simpa only [hHexact] using hcapPhysical) hbank
     change 1≤r ∧ r≤H ∧ B≤r*Mn ∧ r*Mn<B+Mn ∧ r*M≤B-1 at hrs
-    have hrg : r≤g := by have hh := bounds.grainCapacity; omega
+    have hrg : r≤g := by have hh := bgrainCapacity; omega
     have hgs : g≤s := by
       obtain ⟨v,hv⟩ := caps.2.2.2
       have hvpos : 1≤v := by
@@ -134,7 +136,7 @@ theorem actualSource_first_peak_c_second_joint_lift (a b c d : ℕ)
       nlinarith only [hv,mul_nonneg (show 0≤g by omega) (show 0≤v-1 by omega)]
     have hthird : if decide (z=2*y) then (0≤L-B-H*M ∧ 0≤2*B-L-1) else
         (0≤L-2*B-H*D ∧ 0≤z*B-2*L-1) := by
-      rcases bounds.third with hh|hh
+      rcases bthird with hh|hh
       · simpa [hh.1] using hh.2
       · have hn : z≠2*y := by nlinarith only [hh.1,hy]
         simpa [hn] using hh.2
@@ -147,7 +149,7 @@ theorem actualSource_first_peak_c_second_joint_lift (a b c d : ℕ)
       (0≤2*(Bn-r*Mn) ∧ 2*(Bn-r*Mn)≤Bn-1) ∧
       (0≤2*(L-r*M-w*B) ∧ 2*(L-r*M-w*B)≤L-1) ∧
       (0≤2*(Ln-r*Mn-w*Bn) ∧ 2*(Ln-r*Mn-w*Bn)≤Ln-1) := by
-      by_cases hadj : z=2*y <;> simpa [w,hadj] using gates
+      by_cases hadj : z=2*y <;> simpa [w,hadj,Mn,Bn,Ln] using gates
     -- Every integer capacity is established before converting any selected mask.
     have hr0 : 0≤r := by omega
     have hw0 : 0≤w := gates.1
@@ -366,9 +368,9 @@ theorem actualSource_first_peak_c_second_joint_lift (a b c d : ℕ)
       rw [nt3.2]
       omega
     have oldfirst : 0≤t*A-2*s*M ∧ t*A-2*s*M≤A-1 := by
-      exact ⟨bounds.oldLower,by have hh := bounds.oldUpper; omega⟩
+      exact ⟨boldLower,by have hh := boldUpper; omega⟩
     have newfirst : 0≤2*(t-1)*A-2*s*Mn ∧ 2*(t-1)*A-2*s*Mn≤A-1 := by
-      exact ⟨bounds.newLower,by have hh := bounds.newUpper; omega⟩
+      exact ⟨bnewLower,by have hh := bnewUpper; omega⟩
     -- These equations identify the seams of this very word, in both rows.
     have S0 : 2*((P.toList.map f).sum+f nx)=t*A-2*s*M := by nlinarith only [m0,nf0,relx]
     have S1 : (P.toList.map f).sum+f nx+(Q.toList.map f).sum+f nu=B-r*M := by
