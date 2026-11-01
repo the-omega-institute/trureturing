@@ -647,7 +647,7 @@ private theorem read_or_derive_trace {A : PositiveMatrix} (hA : Unimodular A)
   | none => simp [ProfileProgram.actualReads, he]
   | some r =>
       have hr := determined_reply_correct hA hl hD hx he
-      rw [ite_eq_left he, hr]
+      simp [hr]
 
 def splitInterval (C : ProfileCell) (t : ℚ) (upperSide : Bool) : ProfileCell :=
   if upperSide then ⟨max C.lower t, C.upper⟩ else ⟨C.lower, min C.upper t⟩
@@ -758,7 +758,7 @@ private theorem acquisition_spec {A : PositiveMatrix} (hA : Unimodular A)
   obtain ⟨hU, hIU⟩ := original_upper_bounds hx
   let Q := profileScale A I B
   have hQ : 1 ≤ Q := by
-    have hd := (diagonal_positive hA).2
+    have hd : 0 < A.d := (diagonal_positive hA).2
     dsimp [Q, profileScale]
     simpa using Nat.mul_le_mul hB (show 1 ≤ A.c * originalUpper I + A.d by omega)
   have hD : 1 ≤ Q ^ 2 := one_le_pow₀ hQ
@@ -861,7 +861,7 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
   have hA := unimodular_wordMatrix u.reverse
   let Q := profileScale A I B
   have hQ : 1 ≤ Q := by
-    have hd := (diagonal_positive hA).2
+    have hd : 0 < A.d := (diagonal_positive hA).2
     dsimp [Q, profileScale]
     simpa using Nat.mul_le_mul hB (show 1 ≤ A.c * originalUpper I + A.d by omega)
   have hD : 1 ≤ Q ^ 2 := one_le_pow₀ hQ
