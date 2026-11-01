@@ -89,6 +89,36 @@ public sealed partial class CleanLanesCommandTests
         }
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void InterruptedRemovalRechecksWritesAfterSelection(bool atRemovalEntry)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddInterruptedRemoval("harness/interrupted-late-write");
+        var injected = false;
+        var runner = fixture.CreateRunner((file, args, directory) =>
+        {
+            var trigger = atRemovalEntry
+                ? file == "python3" && IsProtocol(args, "remove") && !args.Contains("--preview")
+                : IsLaneGit(file, args, directory, lane, "rev-parse", "--verify", "HEAD^{commit}");
+            if (trigger && !injected)
+            {
+                injected = true;
+                File.WriteAllText(Path.Combine(lane, "later.txt"), "later ordinary work\n");
+            }
+            return null;
+        });
+
+        var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
+
+        Assert.Equal(!atRemovalEntry, result.Success);
+        Assert.True(injected);
+        Assert.Equal(atRemovalEntry ? "checkpoint_failed:interrupted_removal_tree_changed" : "race_changed", ReasonFor(result.Output, lane));
+        Assert.True(fixture.WorktreeRegistered(lane));
+        Assert.Equal("later ordinary work\n", File.ReadAllText(Path.Combine(lane, "later.txt")));
+    }
+
     private sealed partial class CleanLanesFixture
     {
         internal string AddInterruptedRemoval(string branch, bool landed = true)
