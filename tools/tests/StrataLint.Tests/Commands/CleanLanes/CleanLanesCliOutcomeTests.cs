@@ -6,13 +6,12 @@ namespace StrataLint.Tests;
 public sealed partial class CleanLanesCommandTests
 {
     [Fact]
-    public void CliReturnsExitTwoAndPreservesPartialFailureStreams()
+    public void CliReturnsExitTwoAndPreservesGlobalFailureStreams()
     {
-        const string partialItem =
-            "{\"event\":\"clean_lanes_item\",\"kind\":\"stale_worktree\","
-            + "\"path\":\"/tmp/partial\",\"branch\":\"harness/partial\","
-            + "\"head\":\"abcdef0123456789\",\"action\":\"partially_removed\","
-            + "\"reason\":\"worktree_remove_failed_state_indeterminate\"}\n";
+        const string failedItem =
+            "{\"event\":\"clean_lanes_item\",\"kind\":\"idle_pool\","
+            + "\"path\":null,\"branch\":null,\"head\":null,\"action\":\"failed\","
+            + "\"reason\":\"inventory:pool inventory unavailable\"}\n";
         const string completedItem =
             "{\"event\":\"clean_lanes_item\",\"kind\":\"stale_worktree\","
             + "\"path\":\"/tmp/healthy\",\"branch\":\"harness/healthy\","
@@ -20,14 +19,15 @@ public sealed partial class CleanLanesCommandTests
             + "\"reason\":\"stale_behind\"}\n";
         const string summary =
             "{\"event\":\"clean_lanes_summary\",\"mode\":\"force\","
+            + "\"status\":\"failed\",\"extra_sweeps\":\"not_requested\","
             + "\"scope\":\"lanes_only\",\"base_revision\":\"origin/dev\","
             + "\"base_commit\":\"fedcba9876543210\",\"item_count\":2,"
-            + "\"removable_count\":1,\"removed_count\":1,\"partial_count\":1}\n";
+            + "\"removable_count\":1,\"removed_count\":1,\"partial_count\":0,\"failed_count\":1}\n";
         const string error = "CLEAN_LANES_PARTIAL_FAILURE count=1\n";
         var console = new BufferedConsole();
         var environment = new StubCliEnvironment(
             new AdmissionOutcome.InfrastructureFailure("unused"),
-            cleanLanes: new CommandResult(false, partialItem + completedItem + summary, error));
+            cleanLanes: new CommandResult(false, failedItem + completedItem + summary, error));
 
         var exitCode = CliApplication.Run(
             ["clean-lanes", "--force", "--lanes-only"],
@@ -35,7 +35,7 @@ public sealed partial class CleanLanesCommandTests
             console);
 
         Assert.Equal(2, exitCode);
-        Assert.Equal(partialItem + completedItem + summary, console.Output);
+        Assert.Equal(failedItem + completedItem + summary, console.Output);
         Assert.Equal(error, console.Error);
         Assert.Equal(["--force", "--lanes-only"], environment.CleanLanesArguments);
     }

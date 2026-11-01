@@ -789,6 +789,10 @@ def clean_from_anchor(options, caller, disk_descriptor):
         if (options.verbose or category == "worktree_remnant" or result["action"] == "failed"
                 or result["reason"] == "unreadable"):
             emit("host_cleanup_item", category=category, **result)
+        if result["action"] == "failed":
+            print(json.dumps(dict(event="host_cleanup_warning", path=result["path"],
+                                  action=result["action"], reason=result["reason"],
+                                  diagnostic=result.get("detail") or result["reason"])), file=sys.stderr)
 
     def unobservable(path, error):
         reason = "vanished" if isinstance(error, FileNotFoundError) else "unreadable"
@@ -849,7 +853,7 @@ def clean_from_anchor(options, caller, disk_descriptor):
                         clean_staging(lake)
     except OSError as error:
         inventory_error = str(error)
-    failed = inventory_error is not None or lanes_exit != 0 or any(key.endswith(":failed") for key in counts)
+    failed = inventory_error is not None or lanes_exit != 0
     emit("host_cleanup_summary", mode="delete" if options.delete else "dry_run",
          min_age_hours=options.min_age_hours, counts=dict(counts), skipped=dict(skipped),
          candidate_apparent_bytes=apparent_bytes, worktree_exit=lanes_exit,

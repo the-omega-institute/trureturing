@@ -15,7 +15,6 @@ public sealed partial class CleanLanesCommandTests
         using var fixture = new CleanLanesFixture();
         const string branch = "harness/removal-outer-deadline";
         var lane = fixture.AddLandedLane(branch);
-        fixture.AddOrphan("harness/retained-after-removal-deadline", merged: true);
         var deletionObserved = false;
         var runner = fixture.CreateRunner((file, args, directory) =>
         {
@@ -50,20 +49,19 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(deletionObserved);
         Assert.False(Directory.Exists(lane));
         Assert.True(fixture.BranchExists(branch));
-        Assert.False(result.Success);
-        AssertQualificationPublicExit(result, true, 2);
+        Assert.True(result.Success, result.Error);
+        AssertQualificationPublicExit(result, true, 0);
         var item = Assert.Single(ReadItems(result.Output), row => row.GetProperty("path").GetString() == lane);
         Assert.Equal("partially_removed", item.GetProperty("action").GetString());
         Assert.Equal("worktree_remove_failed_state_indeterminate", item.GetProperty("reason").GetString());
         Assert.Contains(settlementFailure ? "Win32Exception:native settlement failed after deletion"
             : "TimeoutException:outer removal deadline after native deletion", item.GetProperty("diagnostic").GetString());
         var invocation = Assert.Single(runner.Invocations, call => IsProtocol(call.Arguments, "remove"));
-        Assert.Equal(TimeSpan.FromSeconds(600), invocation.Timeout);
+        Assert.Equal(TimeSpan.FromSeconds(2100), invocation.Timeout);
         var summary = ReadSummary(result.Output);
         Assert.Equal(1, summary.GetProperty("partial_count").GetInt32());
         Assert.Equal(0, summary.GetProperty("failed_count").GetInt32());
-        Assert.Equal("deferred", summary.GetProperty("extra_sweeps").GetString());
-        Assert.True(fixture.BranchExists("harness/retained-after-removal-deadline"));
+        Assert.Equal("completed", summary.GetProperty("extra_sweeps").GetString());
     }
 
     [Theory]
@@ -76,6 +74,7 @@ public sealed partial class CleanLanesCommandTests
         const string recovery = "refs/heads/harness/recovery-confirmed";
         const string candidate = "refs/heads/harness/recovery-candidate";
         fixture.AddOrphan("harness/recovery-confirmed", merged: true);
+        fixture.AddOrphan("harness/recovery-candidate", merged: true);
         var row = new Dictionary<string, object>
         {
             ["path"] = lane, ["recovery_branch"] = recovery, ["recovery_branch_candidate"] = candidate,
@@ -88,8 +87,8 @@ public sealed partial class CleanLanesCommandTests
 
         var result = fixture.RunWithRaw(runner, "--force");
 
-        Assert.False(result.Success);
-        AssertQualificationPublicExit(result, true, 2);
+        Assert.True(result.Success, result.Error);
+        AssertQualificationPublicExit(result, true, 0);
         var item = Assert.Single(ReadItems(result.Output), row => row.GetProperty("path").GetString() == lane);
         Assert.Equal("partially_removed", item.GetProperty("action").GetString());
         Assert.Equal(recovery, item.GetProperty("recovery_branch").GetString());
@@ -97,7 +96,53 @@ public sealed partial class CleanLanesCommandTests
         Assert.Single(item.GetProperty("native_locks").EnumerateArray());
         Assert.Contains("native deletion interrupted", item.GetProperty("diagnostic").GetString());
         Assert.True(fixture.BranchExists("harness/recovery-confirmed"));
+        Assert.True(fixture.BranchExists("harness/recovery-candidate"));
         Assert.Equal(1, ReadSummary(result.Output).GetProperty("partial_count").GetInt32());
-        Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
     }
+
+    [Theory]
+    [InlineData("timeout", true)]
+    [InlineData("refused", true)]
+    [InlineData("failed", true)]
+    [InlineData("refused", false)]
+    [InlineData("failed", false)]
+    [InlineData("deferred", false)]
+    [InlineData("deferred", true)]
+    public void SingleTreeProblemsWarnAndContinueAllSweeps(string failure, bool force)
+    {
+        using var fixture = new CleanLanesFixture();
+        const string retainedBranch = "harness/a-retained";
+        var retained = fixture.AddLandedLane(retainedBranch);
+        var control = fixture.AddLandedLane("harness/z-control");
+        if (failure == "deferred") fixture.LockLane(retained, "worktree-init:malformed");
+        var judge = fixture.AddGitlessJudgeSnapshot("trureturing-judge-control");
+        var runner = fixture.CreateRunner((file, args, _) =>
+        {
+            if (failure == "deferred" && file == "python3" && IsProtocol(args, "qualify"))
+                throw new TimeoutException("fixture qualification deadline");
+            if (file != "python3" || !IsProtocol(args, "remove") || !args.Contains(retained)) return null;
+            if (failure == "timeout") throw new TimeoutException("fixture removal deadline");
+            return new ProcessOutput(failure == "refused" ? 73 : 74, [], Encoding.UTF8.GetBytes(
+                failure == "refused" ? "WORKTREE_RETAINED nested_git_boundary:fixture\n"
+                    : "WORKTREE_FAILED qualification_failed:fixture removal failed\n"));
+        });
+
+        var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
+
+        Assert.True(result.Success, result.Error);
+        AssertQualificationPublicExit(result, force, 0);
+        Assert.True(Directory.Exists(retained));
+        Assert.Equal(!force, Directory.Exists(control));
+        Assert.Equal(!force, Directory.Exists(judge));
+        Assert.True(fixture.BranchExists(retainedBranch));
+        Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        var warning = Assert.Single(ReadEvents(result.Error, "clean_lanes_warning"), row =>
+            row.GetProperty("path").GetString() == retained);
+        var item = Assert.Single(ReadItems(result.Output), row => row.GetProperty("path").GetString() == retained);
+        Assert.Equal(item.GetProperty("action").GetString(), warning.GetProperty("action").GetString());
+        Assert.Equal(item.GetProperty("reason").GetString(), warning.GetProperty("reason").GetString());
+        Assert.False(string.IsNullOrWhiteSpace(warning.GetProperty("diagnostic").GetString()));
+    }
+
 }
