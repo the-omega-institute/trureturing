@@ -1,0 +1,5 @@
+source_id = "sic-k-fidelity-pauli-weight-geometry"
+path = "docs/develop/theory/SIC_K_FIDELITY_PAULI_WEIGHT_GEOMETRY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
