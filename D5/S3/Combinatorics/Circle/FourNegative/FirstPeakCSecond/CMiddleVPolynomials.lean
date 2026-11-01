@@ -185,14 +185,6 @@ private theorem cert_h2_e2_new_peak_2 (Y T H E : ℤ)
       8*T^2 from by positivity) using 1 <;>
     dsimp [model] <;> ring
 
-private theorem cert_h2_e2_old_seam_3 (Y T H E : ℤ)
-    (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
-  let v := model (4+T) (4+T) (2) (2)
-  let r : ℤ := 1
-  let R : ℤ := 3
-  let C := (v.t+1)*v.z
-  0 ≤ 2*(0) := by norm_num
-
 private theorem cert_h2_e2_old_peak_3 (Y T H E : ℤ)
     (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
   let v := model (4+T) (4+T) (2) (2)
@@ -207,14 +199,6 @@ private theorem cert_h2_e2_old_peak_3 (Y T H E : ℤ)
       26*T^2 +
       2*T^3 from by positivity) using 1 <;>
     dsimp [model] <;> ring
-
-private theorem cert_h2_e2_new_seam_3 (Y T H E : ℤ)
-    (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
-  let v := model (4+T) (4+T) (2) (2)
-  let r : ℤ := 1
-  let R : ℤ := 3
-  let C := (v.t+1)*v.z
-  0 ≤ 2*(0) := by norm_num
 
 private theorem cert_h2_e2_new_peak_3 (Y T H E : ℤ)
     (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
@@ -265,9 +249,9 @@ private theorem margins_h2_e2 (Y T H E : ℤ)
     cert_h2_e2_old_peak_2 Y T H E hY hT hH hE,
     cert_h2_e2_new_seam_2 Y T H E hY hT hH hE,
     cert_h2_e2_new_peak_2 Y T H E hY hT hH hE,
-    cert_h2_e2_old_seam_3 Y T H E hY hT hH hE,
+    (by norm_num),
     cert_h2_e2_old_peak_3 Y T H E hY hT hH hE,
-    cert_h2_e2_new_seam_3 Y T H E hY hT hH hE,
+    (by norm_num),
     cert_h2_e2_new_peak_3 Y T H E hY hT hH hE⟩
 
 private theorem cert_h2_t8_old_seam_0 (Y T H E : ℤ)
@@ -519,14 +503,6 @@ private theorem cert_h2_t8_new_peak_2 (Y T H E : ℤ)
       16*T^3*E from by positivity) using 1 <;>
     dsimp [model] <;> ring
 
-private theorem cert_h2_t8_old_seam_3 (Y T H E : ℤ)
-    (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
-  let v := model (8+T) (8+T) (4*(1+E)) (2)
-  let r : ℤ := 2*(1+E)
-  let R : ℤ := 6*(1+E)+1
-  let C := (v.t+1)*v.z
-  0 ≤ 2*(0) := by norm_num
-
 private theorem cert_h2_t8_old_peak_3 (Y T H E : ℤ)
     (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
   let v := model (8+T) (8+T) (4*(1+E)) (2)
@@ -545,14 +521,6 @@ private theorem cert_h2_t8_old_peak_3 (Y T H E : ℤ)
       4*T^3 +
       4*T^3*E from by positivity) using 1 <;>
     dsimp [model] <;> ring
-
-private theorem cert_h2_t8_new_seam_3 (Y T H E : ℤ)
-    (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
-  let v := model (8+T) (8+T) (4*(1+E)) (2)
-  let r : ℤ := 2*(1+E)
-  let R : ℤ := 6*(1+E)+1
-  let C := (v.t+1)*v.z
-  0 ≤ 2*(0) := by norm_num
 
 private theorem cert_h2_t8_new_peak_3 (Y T H E : ℤ)
     (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
@@ -607,9 +575,9 @@ private theorem margins_h2_t8 (Y T H E : ℤ)
     cert_h2_t8_old_peak_2 Y T H E hY hT hH hE,
     cert_h2_t8_new_seam_2 Y T H E hY hT hH hE,
     cert_h2_t8_new_peak_2 Y T H E hY hT hH hE,
-    cert_h2_t8_old_seam_3 Y T H E hY hT hH hE,
+    (by norm_num),
     cert_h2_t8_old_peak_3 Y T H E hY hT hH hE,
-    cert_h2_t8_new_seam_3 Y T H E hY hT hH hE,
+    (by norm_num),
     cert_h2_t8_new_peak_3 Y T H E hY hT hH hE⟩
 
 private theorem cert_h2_t4_e16_old_seam_0 (Y T H E : ℤ)
@@ -776,14 +744,6 @@ private theorem cert_h2_t4_e16_new_peak_2 (Y T H E : ℤ)
       12288*E^2 from by positivity) using 1 <;>
     dsimp [model] <;> ring
 
-private theorem cert_h2_t4_e16_old_seam_3 (Y T H E : ℤ)
-    (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
-  let v := model (4) (4) (16*(1+E)) (2)
-  let r : ℤ := 8*(1+E)
-  let R : ℤ := 24*(1+E)+1
-  let C := (v.t+1)*v.z
-  0 ≤ 2*(0) := by norm_num
-
 private theorem cert_h2_t4_e16_old_peak_3 (Y T H E : ℤ)
     (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
   let v := model (4) (4) (16*(1+E)) (2)
@@ -796,14 +756,6 @@ private theorem cert_h2_t4_e16_old_peak_3 (Y T H E : ℤ)
       1284 +
       1280*E from by positivity) using 1 <;>
     dsimp [model] <;> ring
-
-private theorem cert_h2_t4_e16_new_seam_3 (Y T H E : ℤ)
-    (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
-  let v := model (4) (4) (16*(1+E)) (2)
-  let r : ℤ := 8*(1+E)
-  let R : ℤ := 24*(1+E)+1
-  let C := (v.t+1)*v.z
-  0 ≤ 2*(0) := by norm_num
 
 private theorem cert_h2_t4_e16_new_peak_3 (Y T H E : ℤ)
     (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
@@ -852,9 +804,9 @@ private theorem margins_h2_t4_e16 (Y T H E : ℤ)
     cert_h2_t4_e16_old_peak_2 Y T H E hY hT hH hE,
     cert_h2_t4_e16_new_seam_2 Y T H E hY hT hH hE,
     cert_h2_t4_e16_new_peak_2 Y T H E hY hT hH hE,
-    cert_h2_t4_e16_old_seam_3 Y T H E hY hT hH hE,
+    (by norm_num),
     cert_h2_t4_e16_old_peak_3 Y T H E hY hT hH hE,
-    cert_h2_t4_e16_new_seam_3 Y T H E hY hT hH hE,
+    (by norm_num),
     cert_h2_t4_e16_new_peak_3 Y T H E hY hT hH hE⟩
 
 end D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddle
