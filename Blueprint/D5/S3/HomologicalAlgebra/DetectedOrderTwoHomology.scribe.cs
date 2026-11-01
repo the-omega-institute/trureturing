@@ -59,11 +59,11 @@ internal sealed class DetectedOrderTwoHomologyDocument : IScribeDocumentDefiniti
                 Seq(cls, Eq, D(0), Sp, Iff, Sp, bounds)),
             "detected_order_two" => All("z", ker, All("c", y,
                 All("phi", Call("integerLinearMap", x, Call("ZMod", D(2))),
-                Seq(Call("f", s, c), Eq, D(2), Cdot, z, Sp, Rightarrow, Sp,
+                Seq(Call("f", s, c), Eq, D(2), Cdot, Sp, z, Sp, Rightarrow, Sp,
                     Open, All("b", y, Seq(Call("apply", phi, Call("f", s, b)), Eq, D(0))), Close,
                     Sp, Rightarrow, Sp, Call("apply", phi, z), Sp, Neq, Sp, D(0),
                     Sp, Rightarrow, Sp, cls, Sp, Neq, Sp, D(0), Sp, Land, Sp,
-                    D(2), Cdot, cls, Eq, D(0))))),
+                    D(2), Cdot, Sp, cls, Eq, D(0))))),
             _ => throw new System.InvalidOperationException(declaration)
         };
         return Disp(All("S", Call("ShortComplex", Call("ModuleCat", Seq(Mathbb, Grp(F.Id("Z"))))), body));

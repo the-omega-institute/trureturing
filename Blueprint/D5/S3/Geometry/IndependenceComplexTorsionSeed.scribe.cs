@@ -112,7 +112,7 @@ internal sealed class IndependenceComplexTorsionSeedDocument : IScribeDocumentDe
             "seedChainComplex" => Seq(F.Id("seedChainComplex"), Eq,
                 Call("moduleCatMk", Boundary(2), Boundary(1))),
             "d1_z" => Seq(Apply(Boundary(1), z), Eq, D(0)),
-            "d2_boundingChain" => Seq(Apply(Boundary(2), F.Id("boundingChain")), Eq, D(2), Cdot, z),
+            "d2_boundingChain" => Seq(Apply(Boundary(2), F.Id("boundingChain")), Eq, D(2), Cdot, Sp, z),
             "detector_d2" => Seq(Forall, Sp, c, Colon, Sp,
                 Seq(Call("Fin", D(2,4)), Sp, To, Sp, Mathbb, Grp(F.Id("Z"))), Comma, Sp,
                 Call("detector", Apply(Boundary(2), c)), Eq, D(0)),
@@ -121,7 +121,7 @@ internal sealed class IndependenceComplexTorsionSeedDocument : IScribeDocumentDe
                 Call("range", Boundary(2)), Close),
             "seedClass" => Seq(cls, Eq, Call("cycleClassMap", F.Id("seedChainComplex"), z)),
             "seedClass_nonzero_killed_by_two" => Seq(cls, Sp, Neq, Sp, D(0), Sp, Land, Sp,
-                D(2), Cdot, cls, Eq, D(0)),
+                D(2), Cdot, Sp, cls, Eq, D(0)),
             "seedClass_addOrderOf" => Seq(Call("addOrderOf", cls), Eq, D(2)),
             _ => throw new System.InvalidOperationException(declaration)
         };
