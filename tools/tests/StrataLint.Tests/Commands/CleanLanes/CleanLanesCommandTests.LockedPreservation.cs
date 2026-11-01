@@ -10,13 +10,11 @@ public sealed partial class CleanLanesCommandTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void ResumedRemovalProtectsPredecessorsThroughFullOrphanSweep(bool interruptAfterReplacement)
+    public void ResumedRemovalKeepsPredecessorRecoverySnapshots(bool interruptAfterReplacement)
     {
         using var fixture = new CleanLanesFixture();
         const string branch = "harness/resumed-recovery";
-        const string control = "harness/retirable-control";
         var lane = fixture.AddLandedLane(branch);
-        fixture.AddOrphan(control, merged: true);
         var root = TestRepositoryLayout.FindRoot();
         var script = """
             import argparse, json, sys
@@ -53,7 +51,6 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.Run("--force");
         Assert.True(result.Success, result.Error);
         Assert.False(Directory.Exists(lane), result.Output);
-        Assert.False(fixture.BranchExists(control), result.Output);
         if (interruptAfterReplacement)
         {
             using var roots = JsonDocument.Parse(prepared.StandardOutput);

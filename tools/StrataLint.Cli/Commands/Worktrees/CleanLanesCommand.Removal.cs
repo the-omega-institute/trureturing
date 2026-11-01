@@ -135,18 +135,6 @@ internal static partial class CleanLanesCommand
                     nativeLocks = locks.Clone();
                 else if (outcome.Value.TryGetProperty("native_locks", out var failedLocks))
                     nativeLocks = failedLocks.Clone();
-                if (outcome.Value.TryGetProperty("recovery_roots", out var roots))
-                    foreach (var root in roots.EnumerateArray())
-                        protectObservedWorktree?.Invoke(item with
-                        {
-                            Branch = root.GetString()!["refs/heads/".Length..],
-                        });
-                foreach (var reference in new[] { recoveryBranch, recoveryBranchCandidate })
-                    if (reference is not null)
-                        protectObservedWorktree?.Invoke(item with
-                        {
-                            Branch = reference["refs/heads/".Length..],
-                        });
                 var state = outcome.Value.GetProperty("outcome").GetString();
                 if (state == "refused" && removal.ExitCode is 68 or 73
                     && receipt.GetProperty("status").GetString() == "refused")
@@ -194,8 +182,6 @@ internal static partial class CleanLanesCommand
                         + ":stderr=" + BoundedDiagnostic(removal.Error) + ":stdout=" + BoundedDiagnostic(removal.Output)));
         }
 
-        // Retain both observed branches and refs created for detached recovery
-        // through the invocation's later orphan sweep.
         return new(LaneRemovalOutcome.Removed, selection.RemovalReason(), recoveryBranch, NativeLocks: nativeLocks);
     }
 

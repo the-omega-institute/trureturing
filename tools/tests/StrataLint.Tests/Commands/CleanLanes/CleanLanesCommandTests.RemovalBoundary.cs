@@ -15,7 +15,6 @@ public sealed partial class CleanLanesCommandTests
         using var fixture = new CleanLanesFixture();
         const string branch = "harness/removal-outer-deadline";
         var lane = fixture.AddLandedLane(branch);
-        fixture.AddOrphan("harness/retained-after-removal-deadline", merged: true);
         var deletionObserved = false;
         var runner = fixture.CreateRunner((file, args, directory) =>
         {
@@ -63,7 +62,6 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(1, summary.GetProperty("partial_count").GetInt32());
         Assert.Equal(0, summary.GetProperty("failed_count").GetInt32());
         Assert.Equal("completed", summary.GetProperty("extra_sweeps").GetString());
-        Assert.False(fixture.BranchExists("harness/retained-after-removal-deadline"));
     }
 
     [Theory]
@@ -118,7 +116,6 @@ public sealed partial class CleanLanesCommandTests
         var retained = fixture.AddLandedLane(retainedBranch);
         var control = fixture.AddLandedLane("harness/z-control");
         if (failure == "deferred") fixture.LockLane(retained, "worktree-init:malformed");
-        fixture.AddOrphan("harness/orphan-control", merged: true);
         var judge = fixture.AddGitlessJudgeSnapshot("trureturing-judge-control");
         var runner = fixture.CreateRunner((file, args, _) =>
         {
@@ -138,7 +135,6 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(Directory.Exists(retained));
         Assert.Equal(!force, Directory.Exists(control));
         Assert.Equal(!force, Directory.Exists(judge));
-        Assert.Equal(!force, fixture.BranchExists("harness/orphan-control"));
         Assert.True(fixture.BranchExists(retainedBranch));
         Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
         var warning = Assert.Single(ReadEvents(result.Error, "clean_lanes_warning"), row =>
@@ -149,56 +145,4 @@ public sealed partial class CleanLanesCommandTests
         Assert.False(string.IsNullOrWhiteSpace(warning.GetProperty("diagnostic").GetString()));
     }
 
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void RefusedTreeKeepsRecordedRecoveryRootsDuringOrphanSweep(bool force)
-    {
-        using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddLandedLane("harness/recorded-recovery-tree");
-        const string recovery = "harness/old-recovery-root";
-        const string predecessor = "harness/predecessor-recovery-root";
-        fixture.AddOrphan(recovery, merged: true);
-        fixture.AddOrphan(predecessor, merged: true);
-        fixture.AddOrphan("harness/unrelated-orphan", merged: true);
-        File.WriteAllText(Path.Combine(fixture.WorktreeGitDirectory(lane), "worktree-removal"),
-            JsonSerializer.Serialize(new { commit = fixture.Head(lane), recovery_branch = "refs/heads/" + recovery,
-                predecessors = new[] { new { commit = fixture.Head(lane), recovery_branch = "refs/heads/" + predecessor } } }));
-        var runner = fixture.CreateRunner((file, args, _) => file == "python3" && IsProtocol(args, "remove")
-            && args.Contains(lane) ? new ProcessOutput(73, [], Encoding.UTF8.GetBytes(
-                "WORKTREE_RETAINED nested_git_boundary:.lake/packages/fixture\n")) : null);
-
-        var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
-        Assert.True(fixture.BranchExists(recovery));
-        Assert.True(fixture.BranchExists(predecessor));
-        Assert.Equal(!force, fixture.BranchExists("harness/unrelated-orphan"));
-        Assert.DoesNotContain(ReadItems(result.Output), row => row.GetProperty("kind").GetString() == "orphan_branch"
-            && row.GetProperty("action").GetString() is "removed" or "would_remove"
-            && row.GetProperty("branch").GetString() is recovery or predecessor);
-    }
-
-    [Fact]
-    public void MissingRemovalReceiptKeepsNewRecoveryCandidate()
-    {
-        using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddLandedLane("harness/new-recovery-tree");
-        const string candidate = "lane/governance/recovery-created-before-timeout";
-        fixture.AddOrphan("harness/unrelated-orphan", merged: true);
-        var runner = fixture.CreateRunner((file, args, _) =>
-        {
-            if (file != "python3" || !IsProtocol(args, "remove") || !args.Contains(lane)) return null;
-            fixture.AddOrphan(candidate, merged: true);
-            throw new TimeoutException("receipt unavailable after recovery creation");
-        });
-
-        var result = fixture.RunWithRaw(runner, "--force");
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
-        Assert.True(fixture.BranchExists(candidate));
-        Assert.False(fixture.BranchExists("harness/unrelated-orphan"));
-    }
 }

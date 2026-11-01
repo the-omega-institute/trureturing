@@ -15,9 +15,7 @@ public sealed partial class CleanLanesCommandTests
     {
         using var fixture = new CleanLanesFixture();
         const string branch = "lane/governance/idle-selected";
-        const string orphan = "harness/retained-after-selected-refusal";
         var path = fixture.AddMergedLane(branch);
-        fixture.AddOrphan(orphan, merged: true);
         var payload = JsonSerializer.Serialize(new
         {
             @event = "worktree_pool", status = "failed", capacity = 4,
@@ -41,7 +39,6 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
         Assert.True(Directory.Exists(path));
         Assert.True(fixture.BranchExists(branch));
-        Assert.Equal(!force, fixture.BranchExists(orphan));
     }
 
     [Theory]
@@ -141,7 +138,6 @@ public sealed partial class CleanLanesCommandTests
     {
         using var fixture = new CleanLanesFixture();
         var path = fixture.AddMergedLane("lane/governance/idle-busy");
-        fixture.AddOrphan("harness/retained-after-pool-contention", merged: true);
         var payload = JsonSerializer.Serialize(new
         {
             @event = "worktree_pool", status = "failed", capacity = 4,
@@ -167,7 +163,6 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(0, summary.GetProperty("removed_count").GetInt32());
         Assert.Equal("deferred", summary.GetProperty("extra_sweeps").GetString());
         Assert.True(Directory.Exists(path));
-        Assert.True(fixture.BranchExists("harness/retained-after-pool-contention"));
     }
 
     [Fact]
@@ -178,7 +173,6 @@ public sealed partial class CleanLanesCommandTests
         const string failedBranch = "lane/governance/idle-failed";
         var removedPath = fixture.AddMergedLane(removedBranch);
         var failedPath = fixture.AddMergedLane(failedBranch);
-        fixture.AddOrphan("harness/retained-after-sweep-failure", merged: true);
         var payload = JsonSerializer.Serialize(new
         {
             @event = "worktree_pool", status = "failed", capacity = 4,
@@ -210,7 +204,6 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(2, summary.GetProperty("removed_count").GetInt32());
         Assert.Equal(1, summary.GetProperty("failed_count").GetInt32());
         Assert.Equal("completed", summary.GetProperty("extra_sweeps").GetString());
-        Assert.False(fixture.BranchExists("harness/retained-after-sweep-failure"));
     }
 
     [Theory]
@@ -220,7 +213,6 @@ public sealed partial class CleanLanesCommandTests
     {
         using var fixture = new CleanLanesFixture();
         var path = fixture.AddMergedLane("lane/governance/idle-unresolved");
-        fixture.AddOrphan("harness/retained-after-unresolved-pool", merged: true);
         var payload = hasReceipt ? JsonSerializer.Serialize(new
         {
             @event = "worktree_pool", status = "failed", capacity = 4,
@@ -235,7 +227,6 @@ public sealed partial class CleanLanesCommandTests
         Assert.Contains(ReadItems(result.Output), row => row.GetProperty("action").GetString() == "failed");
         Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
         Assert.True(Directory.Exists(path));
-        Assert.True(fixture.BranchExists("harness/retained-after-unresolved-pool"));
     }
 
     [Theory]
@@ -247,7 +238,6 @@ public sealed partial class CleanLanesCommandTests
         using var fixture = new CleanLanesFixture();
         const string branch = "lane/governance/idle-fixture";
         var path = fixture.AddMergedLane(branch);
-        fixture.AddOrphan("harness/retained-after-idle-failure", merged: true);
         const string recovery = "refs/heads/lane/governance/recovery-confirmed";
         const string candidate = "refs/heads/lane/governance/recovery-candidate";
         var payload = JsonSerializer.Serialize(new
@@ -272,7 +262,6 @@ public sealed partial class CleanLanesCommandTests
         var summary = ReadSummary(result.Output);
         Assert.Equal("completed", summary.GetProperty("extra_sweeps").GetString());
         Assert.Equal(1, summary.GetProperty(action == "failed" ? "failed_count" : "partial_count").GetInt32());
-        Assert.False(fixture.BranchExists("harness/retained-after-idle-failure"));
     }
 
     [Fact]
@@ -309,15 +298,11 @@ public sealed partial class CleanLanesCommandTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void IdlePoolCarriesNativeLocksAndProtectsPredecessorRoots(bool checkpointFailed)
+    public void IdlePoolCarriesNativeLockEvidence(bool checkpointFailed)
     {
         using var fixture = new CleanLanesFixture();
         const string branch = "lane/governance/idle-evidence";
-        const string predecessor = "harness/pool-predecessor";
-        const string control = "harness/pool-retirable-control";
         var path = fixture.AddMergedLane(branch);
-        fixture.AddOrphan(predecessor, merged: true);
-        fixture.AddOrphan(control, merged: true);
         var locks = new[] { new { path = path + "/index.lock", size = 9, age_seconds = 0.0,
             action = "native_lock_cleared" } };
         var payload = JsonSerializer.Serialize(new
@@ -327,8 +312,7 @@ public sealed partial class CleanLanesCommandTests
                 outcome = checkpointFailed ? "checkpoint_failed" : "removed", reason = "idle_disk_pressure",
                 error = checkpointFailed ? "checkpoint retry failed" : null,
                 checkpoint = checkpointFailed ? null : new { native_locks = locks },
-                native_locks = checkpointFailed ? locks : null,
-                recovery_roots = new[] { "refs/heads/" + predecessor } } },
+                native_locks = checkpointFailed ? locks : null } },
         });
         var runner = fixture.CreateRunner((file, args, _) => file == "python3" && args.Contains("pool")
             ? new ProcessOutput(checkpointFailed ? 74 : 0, Encoding.UTF8.GetBytes(payload), []) : null);
@@ -340,8 +324,6 @@ public sealed partial class CleanLanesCommandTests
         var evidence = Assert.Single(item.GetProperty("native_locks").EnumerateArray());
         Assert.Equal(path + "/index.lock", evidence.GetProperty("path").GetString());
         Assert.Equal(9, evidence.GetProperty("size").GetInt32());
-        Assert.True(fixture.BranchExists(predecessor));
-        Assert.False(fixture.BranchExists(control));
     }
 
     [Fact]

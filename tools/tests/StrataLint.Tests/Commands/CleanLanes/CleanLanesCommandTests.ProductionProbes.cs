@@ -307,18 +307,13 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void RecycledBranchesSurviveSamePassOrphanSweep()
+    public void RemovedLaneRetainsItsRecoverySnapshot()
     {
         using var fixture = new CleanLanesFixture();
         const string branch = "harness/recycle-recovery";
         var lane = fixture.AddLandedLane(branch);
         var head = fixture.Head(lane);
-        var runner = fixture.CreateRunner((file, args, _) =>
-        {
-            if (IsProtocol(args, "retire-branch") && ProtocolValue(args, "--branch") == branch)
-                throw new InvalidOperationException("recovery branch must not enter orphan retirement");
-            return null;
-        });
+        var runner = fixture.CreateRunner();
         var result = fixture.RunWithRaw(runner, "--force");
         Assert.True(result.Success, result.Error);
         Assert.False(Directory.Exists(lane));

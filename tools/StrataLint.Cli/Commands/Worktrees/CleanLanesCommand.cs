@@ -67,17 +67,9 @@ internal static partial class CleanLanesCommand
             // child's working directory is explicit. Inputs are resolved above.
             anchorProcess?.Invoke(root);
             var events = new List<CleanLaneEvent>();
-            // Snapshot candidates before any removal can create recovery refs.
-            // A missing receipt must not expose a newly created recovery branch.
-            var orphanCandidates = options.LanesOnly ? [] : ReadManagedBranches(root, runner);
-            var activeBranches = inventory
-                .Where(static item => item.Branch is not null)
-                .Select(static item => item.Branch!)
-                .ToHashSet(StringComparer.Ordinal);
             var protectedInventory = inventory.ToList();
             void ProtectObservedWorktree(RegisteredWorktree observed)
             {
-                if (observed.Branch is not null) activeBranches.Add(observed.Branch);
                 protectedInventory.Add(observed);
             }
 
@@ -94,17 +86,6 @@ internal static partial class CleanLanesCommand
                 ProtectObservedWorktree);
             if (!options.LanesOnly && extraSweepsAllowed)
             {
-                // 建树时的回收够不到这两类:判官树的判据(未注册 / 无 .git 的快照)
-                // 区分不了「跑完了」和「正在跑」,而建树常发生在派席前后;孤儿分支
-                // 不占一棵树,删它是纯分支操作,不属于「顺手回收旧树」。
-                InspectOrphanBranches(
-                    root,
-                    devCommit,
-                    options.Force,
-                    activeBranches,
-                    orphanCandidates,
-                    events,
-                    runner);
                 InspectTempJudges(
                     commonGitDirectory,
                     options.Force,
@@ -364,7 +345,7 @@ internal static partial class CleanLanesCommand
             remainingPaths.Remove(item.Path);
         }
 
-        // Per-tree refusals and failures retain their own paths and refs. Only
+        // Per-tree refusals and failures retain their own paths. Only
         // failures without a tree identity defer the independent extra sweeps.
         return !events.Any(static item => item.Path is null
             && item.Action is "failed" or "partially_removed");
@@ -382,69 +363,6 @@ internal static partial class CleanLanesCommand
                 && (item.SelectedForRemoval || item.Reason is not
                     ("main_worktree" or "nested_worktree" or "recently_updated" or "not_far_behind"
                     or "locked_recent" or "initialization_in_progress" or "idle_pool" or "idle_locked" or "idle_dirty")));
-
-    private static string[] ReadManagedBranches(string repositoryRoot, IWorktreeProcessRunner runner) =>
-        Decode(RunGit(repositoryRoot,
-            ["for-each-ref", "--format=%(refname:short)", "refs/heads"], runner,
-            "could not enumerate managed branches").StandardOutput)
-            .Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-            .Where(WorktreeCommand.IsManagedBranch).Order(StringComparer.Ordinal).ToArray();
-
-    private static void InspectOrphanBranches(
-        string repositoryRoot,
-        string? devCommit,
-        bool force,
-        IReadOnlySet<string> activeBranches,
-        IReadOnlyList<string> candidates,
-        ICollection<CleanLaneEvent> events,
-        IWorktreeProcessRunner runner)
-    {
-        var branches = candidates.Where(branch => !activeBranches.Contains(branch));
-        foreach (var branch in branches)
-        {
-            // 枚举与解析之间,别的会话可能合并后删掉了该分支;缺 ref 只跳过这一项。
-            var head = TryResolveBranchCommit(repositoryRoot, branch, runner);
-            if (head is null)
-            {
-                events.Add(new CleanLaneEvent(
-                    "orphan_branch",
-                    null,
-                    branch,
-                    null,
-                    "skipped",
-                    "vanished"));
-                continue;
-            }
-
-            var merged = devCommit is null ? null : IsAncestor(repositoryRoot, head, devCommit, runner);
-            if (merged != true)
-            {
-                events.Add(new CleanLaneEvent(
-                    "orphan_branch",
-                    null,
-                    branch,
-                    head,
-                    "skipped",
-                    devCommit is null ? "dev_unknown" : merged is null ? "merged_state_unknown" : "unmerged"));
-                continue;
-            }
-
-            if (!DeleteObservedRef(repositoryRoot, branch, head, runner, preview: !force))
-            {
-                events.Add(new CleanLaneEvent("orphan_branch", null, branch, head,
-                    "skipped", "remote_preservation_or_use_unconfirmed"));
-                continue;
-            }
-
-            events.Add(new CleanLaneEvent(
-                "orphan_branch",
-                null,
-                branch,
-                head,
-                force ? "removed" : "would_remove",
-                "merged_without_worktree"));
-        }
-    }
 
     private static void InspectTempJudges(
         string commonGitDirectory,
@@ -527,15 +445,6 @@ internal static partial class CleanLanesCommand
         }
     }
 
-    private static bool DeleteObservedRef(
-        string repositoryRoot, string branch, string observedHead, IWorktreeProcessRunner runner,
-        bool preview = false)
-    {
-        var arguments = new List<string> { "retire-branch", "--branch", branch, "--commit", observedHead };
-        if (preview) arguments.Add("--preview");
-        return WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner).Success;
-    }
-
     private static bool HasSameRepositoryPointer(string path, string commonGitDirectory)
     {
         var pointerPath = Path.Combine(path, ".git");
@@ -572,23 +481,6 @@ internal static partial class CleanLanesCommand
             ["rev-parse", "--verify", "--end-of-options", $"{revision}^{{commit}}"],
             runner,
             $"revision does not resolve: {revision}").StandardOutput).Trim();
-
-    private static string? TryResolveBranchCommit(
-        string repositoryRoot,
-        string branch,
-        IWorktreeProcessRunner runner)
-    {
-        var result = runner.Run(
-            "git",
-            ["rev-parse", "-q", "--verify", "--end-of-options", $"refs/heads/{branch}^{{commit}}"],
-            repositoryRoot,
-            TimeSpan.FromSeconds(120));
-        if (result.ExitCode == 0) return Decode(result.StandardOutput).Trim();
-        if (result.ExitCode == 1 && result.StandardOutput.Length == 0) return null;
-        var error = Decode(result.StandardError).Trim();
-        throw new InvalidOperationException(
-            error.Length == 0 ? $"revision does not resolve: refs/heads/{branch}" : error);
-    }
 
     private static string ResolveCommonGitDirectory(
         string repositoryRoot,

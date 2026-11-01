@@ -380,7 +380,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal("removed", item.GetProperty("action").GetString());
         var recovery = item.GetProperty("recovery_branch").GetString()!;
         Assert.StartsWith("refs/heads/lane/governance/recovery-", recovery);
-        Assert.Equal(lanesOnly, fixture.BranchExists("lane/governance/recovery-old"));
+        Assert.True(fixture.BranchExists("lane/governance/recovery-old"));
         CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory, "worktree", "add", stale, recovery["refs/heads/".Length..]);
         if (dirty)
         {
@@ -394,16 +394,14 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void LanesOnlySpareOrphanBranchesAndUnregisteredSnapshots()
+    public void LanesOnlySpareUnregisteredSnapshots()
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddLandedLane("harness/scoped");
-        fixture.AddOrphan("harness/orphan", merged: true);
         var snapshot = fixture.AddGitlessJudgeSnapshot("trureturing-snapshot");
         var result = fixture.Run("--force", "--lanes-only");
         Assert.True(result.Success, result.Error);
         Assert.False(Directory.Exists(lane));
-        Assert.True(fixture.BranchExists("harness/orphan"));
         Assert.True(Directory.Exists(snapshot));
     }
 
