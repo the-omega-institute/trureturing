@@ -16,10 +16,10 @@ namespace Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteTrace
 namespace WeightedCoordinate
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature ℕ (fun _ => ℝ) (fun _ => ℂ)
+  _root_.Reg.Support.SingleDependentReadout.signature ℝ (fun _ => ℕ) (fun _ => ℂ)
 
 def actual : Realization signature :=
-  realize signature (fun _ n r => (n + 1 : ℂ) * sourceValue r n) (fun e => nomatch e)
+  realize signature (fun _ r n => (n + 1 : ℂ) * sourceValue r n) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
@@ -27,7 +27,7 @@ def rejected : Realization signature :=
 def arena : Arena where
   signature := signature
   Law R := ∀ {B r : ℝ}, r ≤ B → ∀ n : ℕ,
-    ‖R.readout () n r‖ ≤ traceWeightBound B n
+    ‖R.readout () r n‖ ≤ traceWeightBound B n
 
 private theorem rejected_fails : ¬ arena.Law rejected := by
   intro h
@@ -36,8 +36,11 @@ private theorem rejected_fails : ¬ arena.Law rejected := by
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨0, 0, 1, ?_⟩
-  norm_num [actual, realize, sourceValue, halfBinomial]
+  refine ⟨1, 0, 1, ?_⟩
+  intro h
+  have hh := congrArg Complex.re h
+  norm_num [actual, realize, sourceValue, halfBinomial, Complex.div_re] at hh
+  nlinarith [Real.sqrt_nonneg (2 : ℝ)]
 
 def evidence : Registration arena (type_of% @traceWeightValue_bound) where
   actual := actual
@@ -61,7 +64,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ n r => (n + 1 : ℂ) * sourceValue r n) (fun e => nomatch e))
+    (fun _ r n => (n + 1 : ℂ) * sourceValue r n) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -69,10 +72,10 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteTrace
     definition := none
-    coordinates := #[3]
+    coordinates := #[1]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "arg", "arg"]
-      stateBinder := 1
+      stateBinder := 3
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
