@@ -5,18 +5,6 @@
    anchors: []
    utility: none
    digest: Pauli-weight formula and alternating truncation bounds for qubit SIC k-fidelities. -/
-/-
-admission_basis: escape-witness
-Direct frozen dependencies:
-  D5/S3/Quantum/FiniteDimensional, D5/S3/Quantum/PureState/PureStateHandshake,
-  D5/S3/Quantum/Foundation/FiniteKrausChannel, D5/S3/Quantum/Foundation/FiniteKrausRepresentation.
-escape_witness: kFidelity_eq_pauliWeight_alternating_sum
-pauli_process_matrix_and_fidelity_characterization: proof_shape: content
-isQubitSICProjector_iff_exists_unitVectorQubitSIC: proof_shape: content
-qubit_sic_matrices_and_per_qubit_traces: proof_shape: content
-kFidelity_eq_pauliWeight_alternating_sum: proof_shape: content
-cp_kFidelity_alternating_truncation_bound: proof_shape: content
--/
 import D5.S3.Quantum.FiniteDimensional
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation

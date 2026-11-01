@@ -6,7 +6,7 @@ Multi-qubit Pauli process matrices, Pauli-twirl weight distributions, single-qub
 
 **Definition 1.1 (Computational basis index).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.QubitIndex`
+$$\forall n \in \mathbb{N},\; \operatorname{QubitIndex}\left(n\right) = \left(\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.QubitIndex` (`✓ std3`).
 
@@ -20,7 +20,7 @@ For n qubits, QubitIndex(n) is the function type Fin n -> Fin 2 indexing the 2^n
 
 **Definition 1.2 (Multi-qubit Pauli string label).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.PauliLabel`
+$$\forall n \in \mathbb{N},\; \operatorname{PauliLabel}\left(n\right) = \left(\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(4\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.PauliLabel` (`✓ std3`).
 
@@ -34,7 +34,7 @@ For n qubits, PauliLabel(n) is the function type Fin n -> Fin 4 indexing the 4^n
 
 **Definition 1.3 (Linear superoperator on n qubits).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.QubitMap`
+$$\forall n \in \mathbb{N},\; \operatorname{QubitMap}\left(n\right) = \operatorname{MatrixMap}\left(\operatorname{QubitIndex}\left(n\right), \operatorname{QubitIndex}\left(n\right), \mathbb{C}\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.QubitMap` (`✓ std3`).
 
@@ -48,11 +48,13 @@ For n qubits, QubitMap(n) is the space of complex-linear maps on 2^n by 2^n comp
 
 **Definition 1.4 (Single-qubit Pauli matrices).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauli1`
+$$\operatorname{pauli1}\left(0\right) = 1 \land \left(\operatorname{pauli1}\left(1\right) = \operatorname{qubitX} \land \left(\operatorname{pauli1}\left(2\right) = \begin{pmatrix}0 & -\operatorname{I} \\ \operatorname{I} & 0\end{pmatrix} \land \operatorname{pauli1}\left(3\right) = \operatorname{qubitZ}\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauli1` (`✓ std3`).
 
-*Citation.* K. Mayer (2021). *A short note on the 0-fidelity*. DOI: [10.48550/arXiv.2109.09629](https://doi.org/10.48550/arXiv.2109.09629). URL: <https://arxiv.org/abs/2109.09629v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* K. Mayer (2021). *A short note on the 0-fidelity*. DOI: [10.48550/arXiv.2109.09629](https://doi.org/10.48550/arXiv.2109.09629). URL: <https://arxiv.org/abs/2109.09629v1>.
 
 *Commentary.*
 
@@ -60,11 +62,13 @@ Maps 0, 1, 2, 3 in Fin 4 to the 2 by 2 complex matrices I, X, Y, Z.
 
 **Definition 1.5 (Tensor-product Pauli operator).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauliN`
+$$\forall n \in \mathbb{N},\; \forall b \in \operatorname{PauliLabel}\left(n\right),\; \forall x \in \operatorname{QubitIndex}\left(n\right),\; \forall y \in \operatorname{QubitIndex}\left(n\right),\; \operatorname{pauliN}\left(n, b\right)\left(x, y\right) = \prod_{i \in \operatorname{Fin}\left(n\right)} \operatorname{pauli1}\left(b\left(i\right)\right)\left(x\left(i\right), y\left(i\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauliN` (`✓ std3`).
 
-*Citation.* K. Mayer (2021). *A short note on the 0-fidelity*. DOI: [10.48550/arXiv.2109.09629](https://doi.org/10.48550/arXiv.2109.09629). URL: <https://arxiv.org/abs/2109.09629v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* K. Mayer (2021). *A short note on the 0-fidelity*. DOI: [10.48550/arXiv.2109.09629](https://doi.org/10.48550/arXiv.2109.09629). URL: <https://arxiv.org/abs/2109.09629v1>.
 
 *Commentary.*
 
@@ -72,11 +76,13 @@ For a multi-qubit label beta in PauliLabel(n), pauliN(n, beta) is the n-fold ten
 
 **Definition 1.6 (Pauli Hamming weight).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.hammingWeight`
+$$\forall n \in \mathbb{N},\; \forall b \in \operatorname{PauliLabel}\left(n\right),\; \operatorname{hammingWeight}\left(b\right) = \operatorname{card}\left(\left\{i \in \operatorname{Fin}\left(n\right) \mid b\left(i\right) \ne 0\right\}\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.hammingWeight` (`✓ std3`).
 
-*Citation.* K. Mayer (2021). *A short note on the 0-fidelity*. DOI: [10.48550/arXiv.2109.09629](https://doi.org/10.48550/arXiv.2109.09629). URL: <https://arxiv.org/abs/2109.09629v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* K. Mayer (2021). *A short note on the 0-fidelity*. DOI: [10.48550/arXiv.2109.09629](https://doi.org/10.48550/arXiv.2109.09629). URL: <https://arxiv.org/abs/2109.09629v1>.
 
 *Commentary.*
 
@@ -84,7 +90,7 @@ Counts the number of qubit positions i in Fin n at which beta(i) is nonzero.
 
 **Definition 1.7 (Pauli process-matrix coefficients).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.processMatrix`
+$$\forall n \in \mathbb{N},\; \forall L \in \operatorname{QubitMap}\left(n\right),\; \forall b \in \operatorname{PauliLabel}\left(n\right),\; \forall g \in \operatorname{PauliLabel}\left(n\right),\; \operatorname{processMatrix}\left(L, b, g\right) = \left(4^{n}\right)^{-1} \cdot \sum_{u \in \operatorname{QubitIndex}\left(n\right)} \sum_{x \in \operatorname{QubitIndex}\left(n\right)} \sum_{v \in \operatorname{QubitIndex}\left(n\right)} \sum_{y \in \operatorname{QubitIndex}\left(n\right)} \operatorname{pauliN}\left(n, b\right)\left(x, u\right) \cdot L\left(\operatorname{single}\left(x, y, 1\right)\right)\left(u, v\right) \cdot \operatorname{pauliN}\left(n, g\right)\left(v, y\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.processMatrix` (`✓ std3`).
 
@@ -98,7 +104,7 @@ Gives the unique expansion coefficient chi_{beta, gamma} of an n-qubit linear ma
 
 **Definition 1.8 (Diagonal Pauli-twirl weight).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauliTwirlWeight`
+$$\forall n \in \mathbb{N},\; \forall L \in \operatorname{QubitMap}\left(n\right),\; \forall b \in \operatorname{PauliLabel}\left(n\right),\; \operatorname{pauliTwirlWeight}\left(L, b\right) = \operatorname{processMatrix}\left(L, b, b\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauliTwirlWeight` (`✓ std3`).
 
@@ -112,7 +118,7 @@ Evaluates the diagonal Pauli process-matrix coefficient q_beta = chi_{beta, beta
 
 **Definition 1.9 (Aggregated weight-w Pauli-twirl mass).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauliWeightSum`
+$$\forall n \in \mathbb{N},\; \forall L \in \operatorname{QubitMap}\left(n\right),\; \forall w \in \mathbb{N},\; \operatorname{pauliWeightSum}\left(L, w\right) = \sum_{b \in \left\{c \in \operatorname{PauliLabel}\left(n\right) \mid \operatorname{hammingWeight}\left(c\right) = w\right\}} \operatorname{pauliTwirlWeight}\left(L, b\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauliWeightSum` (`✓ std3`).
 
@@ -126,7 +132,7 @@ Sums the diagonal Pauli-twirl weights q_beta(Lambda) over all labels beta of Ham
 
 **Definition 1.10 (Normalized maximally entangled state vector).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.maxEntangledVec`
+$$\forall n \in \mathbb{N},\; \forall p \in \left(\operatorname{QubitIndex}\left(n\right) \times \operatorname{QubitIndex}\left(n\right)\right),\; \operatorname{maxEntangledVec}\left(n\right)\left(p\right) = \operatorname{ite}\left(\operatorname{fst}\left(p\right) = \operatorname{snd}\left(p\right), \operatorname{sqrt}\left(2^{n}\right)^{-1}, 0\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.maxEntangledVec` (`✓ std3`).
 
@@ -138,7 +144,7 @@ Defines the bipartite unit vector |Phi> = 2^{-n/2} sum_x |x> tensor |x> on Qubit
 
 **Definition 1.11 (Maximally entangled rank-one projector).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.maxEntangledProj`
+$$\forall n \in \mathbb{N},\; \operatorname{maxEntangledProj}\left(n\right) = \operatorname{vecMulVec}\left(\operatorname{maxEntangledVec}\left(n\right), \operatorname{star}\left(\operatorname{maxEntangledVec}\left(n\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.maxEntangledProj` (`✓ std3`).
 
@@ -150,7 +156,7 @@ Forms the rank-one projector |Phi><Phi| = vecMulVec(|Phi>, star |Phi|) of the ma
 
 **Definition 1.12 (Entanglement process fidelity).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.processFidelity`
+$$\forall n \in \mathbb{N},\; \forall L \in \operatorname{QubitMap}\left(n\right),\; \operatorname{processFidelity}\left(L\right) = \operatorname{dotProduct}\left(\operatorname{star}\left(\operatorname{maxEntangledVec}\left(n\right)\right), \operatorname{mulVec}\left(\operatorname{kron}\left(\operatorname{id}, L\right)\left(\operatorname{maxEntangledProj}\left(n\right)\right), \operatorname{maxEntangledVec}\left(n\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.processFidelity` (`✓ std3`).
 
@@ -162,11 +168,13 @@ Evaluates F(Lambda) = <Phi | (id tensor Lambda)(|Phi><Phi|) | Phi> relative to t
 
 **Definition 1.13 (Multi-qubit Pauli channel).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauliChannel`
+$$\forall n \in \mathbb{N},\; \forall q \in \operatorname{PauliLabel}\left(n\right) \to \mathbb{R},\; \forall X \in \operatorname{Matrix}\left(\operatorname{QubitIndex}\left(n\right), \operatorname{QubitIndex}\left(n\right), \mathbb{C}\right),\; \operatorname{pauliChannel}\left(q\right)\left(X\right) = \sum_{b \in \operatorname{PauliLabel}\left(n\right)} q\left(b\right) \cdot \operatorname{pauliN}\left(n, b\right) \cdot X \cdot \operatorname{pauliN}\left(n, b\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauliChannel` (`✓ std3`).
 
-*Citation.* K. Mayer (2021). *A short note on the 0-fidelity*. DOI: [10.48550/arXiv.2109.09629](https://doi.org/10.48550/arXiv.2109.09629). URL: <https://arxiv.org/abs/2109.09629v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* K. Mayer (2021). *A short note on the 0-fidelity*. DOI: [10.48550/arXiv.2109.09629](https://doi.org/10.48550/arXiv.2109.09629). URL: <https://arxiv.org/abs/2109.09629v1>.
 
 *Commentary.*
 
@@ -174,7 +182,7 @@ Constructs the linear map X |-> sum_beta q_beta P_beta X P_beta associated with 
 
 **Definition 1.14 (Complex Pauli-twirled superoperator).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.complexPauliTwirl`
+$$\forall n \in \mathbb{N},\; \forall L \in \operatorname{QubitMap}\left(n\right),\; \forall X \in \operatorname{Matrix}\left(\operatorname{QubitIndex}\left(n\right), \operatorname{QubitIndex}\left(n\right), \mathbb{C}\right),\; \operatorname{complexPauliTwirl}\left(L\right)\left(X\right) = \sum_{b \in \operatorname{PauliLabel}\left(n\right)} \operatorname{pauliTwirlWeight}\left(L, b\right) \cdot \operatorname{pauliN}\left(n, b\right) \cdot X \cdot \operatorname{pauliN}\left(n, b\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.complexPauliTwirl` (`✓ std3`).
 
@@ -188,7 +196,7 @@ Constructs the diagonal Pauli map X |-> sum_beta q_beta(Lambda) P_beta X P_beta 
 
 **Definition 1.15 (Real part of a Pauli-twirl weight).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.realTwirlWeight`
+$$\forall n \in \mathbb{N},\; \forall L \in \operatorname{QubitMap}\left(n\right),\; \forall b \in \operatorname{PauliLabel}\left(n\right),\; \operatorname{realTwirlWeight}\left(L, b\right) = \operatorname{re}\left(\operatorname{pauliTwirlWeight}\left(L, b\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.realTwirlWeight` (`✓ std3`).
 
@@ -202,7 +210,7 @@ Projects pauliTwirlWeight(Lambda, beta) to its real part.
 
 **Definition 1.16 (Real part of the weight-w Pauli-twirl sum).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.realWeightSum`
+$$\forall n \in \mathbb{N},\; \forall L \in \operatorname{QubitMap}\left(n\right),\; \forall w \in \mathbb{N},\; \operatorname{realWeightSum}\left(L, w\right) = \operatorname{re}\left(\operatorname{pauliWeightSum}\left(L, w\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.realWeightSum` (`✓ std3`).
 
@@ -216,7 +224,7 @@ Projects pauliWeightSum(Lambda, w) to its real part.
 
 **Definition 1.17 (Real part of entanglement process fidelity).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.realProcessFidelity`
+$$\forall n \in \mathbb{N},\; \forall L \in \operatorname{QubitMap}\left(n\right),\; \operatorname{realProcessFidelity}\left(L\right) = \operatorname{re}\left(\operatorname{processFidelity}\left(L\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.realProcessFidelity` (`✓ std3`).
 
@@ -230,7 +238,7 @@ Projects processFidelity(Lambda) to its real part.
 
 **Definition 1.18 (Single-qubit SIC projector family).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.IsQubitSICProjector`
+$$\forall r \in \operatorname{Fin}\left(4\right) \to \operatorname{QubitMatrix},\; \operatorname{IsQubitSICProjector}\left(r\right) \Leftrightarrow \left(\left(\forall a \in \operatorname{Fin}\left(4\right),\; \operatorname{IsHermitian}\left(r\left(a\right)\right) \land \left(r\left(a\right) \cdot r\left(a\right) = r\left(a\right) \land \operatorname{trace}\left(r\left(a\right)\right) = 1\right)\right) \land \left(\forall a \in \operatorname{Fin}\left(4\right),\; \forall b \in \operatorname{Fin}\left(4\right),\; a \ne b \Rightarrow \operatorname{trace}\left(r\left(a\right) \cdot r\left(b\right)\right) = 3^{-1}\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.IsQubitSICProjector` (`✓ std3`).
 
@@ -242,7 +250,7 @@ Predicates that four 2 by 2 complex matrices are Hermitian, idempotent, unit-tra
 
 **Definition 1.19 (Single-qubit unit-vector SIC family).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.IsUnitVectorQubitSIC`
+$$\forall s \in \operatorname{Fin}\left(4\right) \to \left(\operatorname{Fin}\left(2\right) \to \mathbb{C}\right),\; \operatorname{IsUnitVectorQubitSIC}\left(s\right) \Leftrightarrow \left(\left(\forall a \in \operatorname{Fin}\left(4\right),\; \operatorname{dotProduct}\left(\operatorname{star}\left(s\left(a\right)\right), s\left(a\right)\right) = 1\right) \land \left(\forall a \in \operatorname{Fin}\left(4\right),\; \forall b \in \operatorname{Fin}\left(4\right),\; a \ne b \Rightarrow \operatorname{normSq}\left(\operatorname{dotProduct}\left(\operatorname{star}\left(s\left(a\right)\right), s\left(b\right)\right)\right) = 3^{-1}\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.IsUnitVectorQubitSIC` (`✓ std3`).
 
@@ -254,11 +262,13 @@ Predicates that four vectors in C^2 have unit norm and pairwise squared inner-pr
 
 **Definition 1.20 (Single-qubit SIC overlap matrix B).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.sicOverlapB`
+$$\forall a \in \operatorname{Fin}\left(4\right),\; \forall b \in \operatorname{Fin}\left(4\right),\; \operatorname{sicOverlapB}\left(a, b\right) = \operatorname{ite}\left(a = b, 1, 3^{-1}\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.sicOverlapB` (`✓ std3`).
 
-*Citation.* J. M. Renes, R. Blume-Kohout, A. J. Scott, C. M. Caves (2004). *Symmetric Informationally Complete Quantum Measurements*. DOI: [10.1063/1.1737053](https://doi.org/10.1063/1.1737053). URL: <https://arxiv.org/abs/quant-ph/0310075v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* J. M. Renes, R. Blume-Kohout, A. J. Scott, C. M. Caves (2004). *Symmetric Informationally Complete Quantum Measurements*. DOI: [10.1063/1.1737053](https://doi.org/10.1063/1.1737053). URL: <https://arxiv.org/abs/quant-ph/0310075v1>.
 
 *Commentary.*
 
@@ -266,7 +276,7 @@ Defines the 4 by 4 overlap matrix B = (2 / 3) I_4 + (1 / 3) J_4 with 1 on the di
 
 **Definition 1.21 (Single-qubit overlap-inverse deviation matrix A).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.sicMatrixA`
+$$\forall a \in \operatorname{Fin}\left(4\right),\; \forall b \in \operatorname{Fin}\left(4\right),\; \operatorname{sicMatrixA}\left(a, b\right) = \operatorname{ite}\left(a = b, -4^{-1}, 4^{-1}\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.sicMatrixA` (`✓ std3`).
 
@@ -280,7 +290,7 @@ Defines A = (1 / 4) J_4 - (1 / 2) I_4 with -1 / 4 on the diagonal and 1 / 4 off 
 
 **Definition 1.22 (Tensor-product multi-qubit SIC projector).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.productSIC`
+$$\forall n \in \mathbb{N},\; \forall r \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \operatorname{QubitMatrix}\right),\; \forall a \in \operatorname{PauliLabel}\left(n\right),\; \forall x \in \operatorname{QubitIndex}\left(n\right),\; \forall y \in \operatorname{QubitIndex}\left(n\right),\; \operatorname{productSIC}\left(r, a\right)\left(x, y\right) = \prod_{i \in \operatorname{Fin}\left(n\right)} r\left(i\right)\left(a\left(i\right)\right)\left(x\left(i\right), y\left(i\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.productSIC` (`✓ std3`).
 
@@ -292,7 +302,7 @@ Forms the n-qubit tensor-product projector rho^{(1)}_{a_1} tensor ... tensor rho
 
 **Definition 1.23 (Subset tensor kernel M_T).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.sicSubsetKernel`
+$$\forall n \in \mathbb{N},\; \forall T \in \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right),\; \forall a \in \operatorname{PauliLabel}\left(n\right),\; \forall b \in \operatorname{PauliLabel}\left(n\right),\; \operatorname{sicSubsetKernel}\left(n, T, a, b\right) = \prod_{i \in \operatorname{Fin}\left(n\right)} \operatorname{ite}\left(i \in T, \operatorname{sicMatrixA}\left(a\left(i\right), b\left(i\right)\right), \left(\operatorname{I}_{4}\right)\left(a\left(i\right), b\left(i\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.sicSubsetKernel` (`✓ std3`).
 
@@ -306,7 +316,7 @@ Evaluates the entry (M_T)_{a, b} of the n-fold tensor product placing A on qubit
 
 **Definition 1.24 (Truncated SIC k-fidelity).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.kFidelity`
+$$\forall n \in \mathbb{N},\; \forall r \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \operatorname{QubitMatrix}\right),\; \forall k \in \mathbb{N},\; \forall L \in \operatorname{QubitMap}\left(n\right),\; \operatorname{kFidelity}\left(r, k, L\right) = \left(4^{n}\right)^{-1} \cdot \sum_{T \in \left\{S \in \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right) \mid \operatorname{card}\left(S\right) \le k\right\}} \left(-1\right)^{\operatorname{card}\left(T\right)} \cdot \left(\sum_{a \in \operatorname{PauliLabel}\left(n\right)} \sum_{b \in \operatorname{PauliLabel}\left(n\right)} \operatorname{sicSubsetKernel}\left(n, T, a, b\right) \cdot \operatorname{trace}\left(\operatorname{productSIC}\left(r, b\right) \cdot L\left(\operatorname{productSIC}\left(r, a\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.kFidelity` (`✓ std3`).
 
@@ -320,7 +330,7 @@ Defines F_k(Lambda) = 4^{-n} sum_{|T| <= k} (-1)^{|T|} sum_{a, b} (M_T)_{a, b} T
 
 **Definition 1.25 (Real part of the SIC k-fidelity).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.realKFidelity`
+$$\forall n \in \mathbb{N},\; \forall r \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \operatorname{QubitMatrix}\right),\; \forall k \in \mathbb{N},\; \forall L \in \operatorname{QubitMap}\left(n\right),\; \operatorname{realKFidelity}\left(r, k, L\right) = \operatorname{re}\left(\operatorname{kFidelity}\left(r, k, L\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.realKFidelity` (`✓ std3`).
 
@@ -334,7 +344,7 @@ Projects kFidelity(rho, k, Lambda) to its real part.
 
 **Definition 1.26 (Per-qubit diagonal SIC functional e).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.sicE`
+$$\forall r \in \operatorname{Fin}\left(4\right) \to \operatorname{QubitMatrix},\; \forall b \in \operatorname{Fin}\left(4\right),\; \forall g \in \operatorname{Fin}\left(4\right),\; \operatorname{sicE}\left(r, b, g\right) = 4^{-1} \cdot \sum_{a \in \operatorname{Fin}\left(4\right)} \operatorname{trace}\left(r\left(a\right) \cdot \operatorname{pauli1}\left(b\right) \cdot r\left(a\right) \cdot \operatorname{pauli1}\left(g\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.sicE` (`✓ std3`).
 
@@ -348,7 +358,7 @@ Defines e(beta, gamma) = (1 / 4) sum_a Tr(rho_a P_beta rho_a P_gamma) for a sing
 
 **Definition 1.27 (Per-qubit A-weighted SIC functional alpha).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.sicAlpha`
+$$\forall r \in \operatorname{Fin}\left(4\right) \to \operatorname{QubitMatrix},\; \forall u \in \operatorname{Fin}\left(4\right),\; \forall v \in \operatorname{Fin}\left(4\right),\; \operatorname{sicAlpha}\left(r, u, v\right) = 4^{-1} \cdot \sum_{a \in \operatorname{Fin}\left(4\right)} \sum_{b \in \operatorname{Fin}\left(4\right)} \operatorname{sicMatrixA}\left(a, b\right) \cdot \operatorname{trace}\left(r\left(b\right) \cdot \operatorname{pauli1}\left(u\right) \cdot r\left(a\right) \cdot \operatorname{pauli1}\left(v\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.sicAlpha` (`✓ std3`).
 
@@ -362,7 +372,7 @@ Defines alpha(beta, gamma) = (1 / 4) sum_{a, b} A_{a, b} Tr(rho_b P_beta rho_a P
 
 **Theorem 1.28 (Pauli process-matrix expansion, process fidelity identity, and CP/TP properties).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauli_process_matrix_and_fidelity_characterization`
+$$\forall n \in \mathbb{N},\; \left(\forall L \in \operatorname{QubitMap}\left(n\right),\; \left(\forall X \in \operatorname{Matrix}\left(\operatorname{QubitIndex}\left(n\right), \operatorname{QubitIndex}\left(n\right), \mathbb{C}\right),\; L\left(X\right) = \sum_{b \in \operatorname{PauliLabel}\left(n\right)} \sum_{g \in \operatorname{PauliLabel}\left(n\right)} \operatorname{processMatrix}\left(L, b, g\right) \cdot \operatorname{pauliN}\left(n, b\right) \cdot X \cdot \operatorname{pauliN}\left(n, g\right)\right) \land \left(\forall c \in \operatorname{PauliLabel}\left(n\right) \to \left(\operatorname{PauliLabel}\left(n\right) \to \mathbb{C}\right),\; \left(\forall X \in \operatorname{Matrix}\left(\operatorname{QubitIndex}\left(n\right), \operatorname{QubitIndex}\left(n\right), \mathbb{C}\right),\; L\left(X\right) = \sum_{b \in \operatorname{PauliLabel}\left(n\right)} \sum_{g \in \operatorname{PauliLabel}\left(n\right)} c\left(b, g\right) \cdot \operatorname{pauliN}\left(n, b\right) \cdot X \cdot \operatorname{pauliN}\left(n, g\right)\right) \Rightarrow \left(\forall b \in \operatorname{PauliLabel}\left(n\right),\; \forall g \in \operatorname{PauliLabel}\left(n\right),\; c\left(b, g\right) = \operatorname{processMatrix}\left(L, b, g\right)\right)\right)\right) \land \left(\left(\forall L \in \operatorname{QubitMap}\left(n\right),\; \operatorname{processFidelity}\left(L\right) = \operatorname{pauliTwirlWeight}\left(L, 0\right) \land \left(\operatorname{pauliWeightSum}\left(L, 0\right) = \operatorname{pauliTwirlWeight}\left(L, 0\right) \land \sum_{w \in \operatorname{range}\left(n + 1\right)} \operatorname{pauliWeightSum}\left(L, w\right) = \sum_{b \in \operatorname{PauliLabel}\left(n\right)} \operatorname{pauliTwirlWeight}\left(L, b\right)\right)\right) \land \left(\left(\forall L \in \operatorname{QubitMap}\left(n\right),\; \left(\operatorname{IsTracePreserving}\left(L\right) \Leftrightarrow \sum_{b \in \operatorname{PauliLabel}\left(n\right)} \sum_{g \in \operatorname{PauliLabel}\left(n\right)} \operatorname{processMatrix}\left(L, b, g\right) \cdot \operatorname{pauliN}\left(n, g\right) \cdot \operatorname{pauliN}\left(n, b\right) = 1\right) \land \left(\operatorname{IsTracePreserving}\left(L\right) \Rightarrow \left(\sum_{b \in \operatorname{PauliLabel}\left(n\right)} \operatorname{pauliTwirlWeight}\left(L, b\right) = 1 \land \sum_{w \in \operatorname{range}\left(n + 1\right)} \operatorname{pauliWeightSum}\left(L, w\right) = 1\right)\right)\right) \land \left(\left(\forall L \in \operatorname{QubitMap}\left(n\right),\; \operatorname{IsCompletelyPositive}\left(L\right) \Rightarrow \left(\left(\forall b \in \operatorname{PauliLabel}\left(n\right),\; \operatorname{im}\left(\operatorname{pauliTwirlWeight}\left(L, b\right)\right) = 0 \land 0 \le \operatorname{re}\left(\operatorname{pauliTwirlWeight}\left(L, b\right)\right)\right) \land \left(\left(\forall w \in \mathbb{N},\; \operatorname{ofReal}\left(\operatorname{realWeightSum}\left(L, w\right)\right) = \operatorname{pauliWeightSum}\left(L, w\right) \land 0 \le \operatorname{realWeightSum}\left(L, w\right)\right) \land \operatorname{ofReal}\left(\operatorname{realProcessFidelity}\left(L\right)\right) = \operatorname{processFidelity}\left(L\right)\right)\right)\right) \land \left(\forall q \in \operatorname{PauliLabel}\left(n\right) \to \mathbb{R},\; \left(\forall b \in \operatorname{PauliLabel}\left(n\right),\; \forall g \in \operatorname{PauliLabel}\left(n\right),\; \operatorname{processMatrix}\left(\operatorname{pauliChannel}\left(q\right), b, g\right) = \operatorname{ite}\left(b = g, \operatorname{ofReal}\left(q\left(b\right)\right), 0\right)\right) \land \left(\left(\left(\forall b \in \operatorname{PauliLabel}\left(n\right),\; 0 \le q\left(b\right)\right) \Rightarrow \operatorname{IsCompletelyPositive}\left(\operatorname{pauliChannel}\left(q\right)\right)\right) \land \left(\sum_{b \in \operatorname{PauliLabel}\left(n\right)} q\left(b\right) = 1 \Rightarrow \operatorname{IsTracePreserving}\left(\operatorname{pauliChannel}\left(q\right)\right)\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauli_process_matrix_and_fidelity_characterization` (`✓ std3`). ∎
 
@@ -376,7 +386,7 @@ Every n-qubit linear map Lambda admits a unique expansion Lambda(X) = sum_{beta,
 
 **Theorem 1.29 (Equivalence of projector and unit-vector single-qubit SICs).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.isQubitSICProjector_iff_exists_unitVectorQubitSIC`
+$$\forall r \in \operatorname{Fin}\left(4\right) \to \operatorname{QubitMatrix},\; \operatorname{IsQubitSICProjector}\left(r\right) \Leftrightarrow \left(\exists s \in \operatorname{Fin}\left(4\right) \to \left(\operatorname{Fin}\left(2\right) \to \mathbb{C}\right),\; \operatorname{IsUnitVectorQubitSIC}\left(s\right) \land \left(\forall a \in \operatorname{Fin}\left(4\right),\; r\left(a\right) = \operatorname{rankOneDensity}\left(s\left(a\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.isQubitSICProjector_iff_exists_unitVectorQubitSIC` (`✓ std3`). ∎
 
@@ -390,7 +400,7 @@ A family of four 2 by 2 complex matrices satisfies IsQubitSICProjector if and on
 
 **Theorem 1.30 (Overlap-inverse matrices, 2-design moments, diagonal per-qubit functionals, and SIC-choice independence).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.qubit_sic_matrices_and_per_qubit_traces`
+$$\forall n \in \mathbb{N},\; \left(\operatorname{sicOverlapB} \cdot \left(1 - \operatorname{sicMatrixA}\right) = 1 \land \left(1 - \operatorname{sicMatrixA}\right) \cdot \operatorname{sicOverlapB} = 1\right) \land \left(\left(\forall a \in \operatorname{Fin}\left(4\right),\; \left(\operatorname{sicOverlapB} \cdot \left(1 - \operatorname{matrixOf}\left(\left(\lambda i \in \operatorname{Fin}\left(4\right), j \in \operatorname{Fin}\left(4\right) \mapsto \frac{1 - \operatorname{ite}\left(i = j, 5, 0\right)}{4}\right)\right)\right)\right)\left(a, a\right) = \frac{7}{4}\right) \land \left(\left(\forall a \in \operatorname{PauliLabel}\left(n\right),\; \forall b \in \operatorname{PauliLabel}\left(n\right),\; \prod_{i \in \operatorname{Fin}\left(n\right)} \left(1 - \operatorname{sicMatrixA}\right)\left(a\left(i\right), b\left(i\right)\right) = \sum_{T \in \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right)} \left(-1\right)^{\operatorname{card}\left(T\right)} \cdot \operatorname{sicSubsetKernel}\left(n, T, a, b\right) \land \prod_{i \in \operatorname{Fin}\left(n\right)} \left(1 - \operatorname{sicMatrixA}\right)\left(a\left(i\right), b\left(i\right)\right) = \frac{\left(-1\right)^{\operatorname{card}\left(\left\{i \in \operatorname{Fin}\left(n\right) \mid a\left(i\right) \ne b\left(i\right)\right\}\right)} \cdot 5^{n - \operatorname{card}\left(\left\{i \in \operatorname{Fin}\left(n\right) \mid a\left(i\right) \ne b\left(i\right)\right\}\right)}}{4^{n}}\right) \land \left(\left(\forall r \in \operatorname{Fin}\left(4\right) \to \operatorname{QubitMatrix},\; \operatorname{IsQubitSICProjector}\left(r\right) \Rightarrow \left(\left(\forall u \in \operatorname{Fin}\left(2\right),\; \forall v \in \operatorname{Fin}\left(2\right),\; \forall x \in \operatorname{Fin}\left(2\right),\; \forall y \in \operatorname{Fin}\left(2\right),\; \sum_{a \in \operatorname{Fin}\left(4\right)} r\left(a\right)\left(u, x\right) \cdot r\left(a\right)\left(v, y\right) = \frac{2}{3} \cdot \left(\operatorname{ite}\left(u = x \land v = y, 1, 0\right) + \operatorname{ite}\left(u = y \land v = x, 1, 0\right)\right)\right) \land \left(\sum_{a \in \operatorname{Fin}\left(4\right)} r\left(a\right) = 2 \cdot \operatorname{I}_{2} \land \left(\left(\forall X \in \operatorname{QubitMatrix},\; \forall Y \in \operatorname{QubitMatrix},\; \sum_{a \in \operatorname{Fin}\left(4\right)} \operatorname{trace}\left(r\left(a\right) \cdot X\right) \cdot \operatorname{trace}\left(r\left(a\right) \cdot Y\right) = \frac{2}{3} \cdot \left(\operatorname{trace}\left(X \cdot Y\right) + \operatorname{trace}\left(X\right) \cdot \operatorname{trace}\left(Y\right)\right)\right) \land \left(\left(\forall b \in \operatorname{Fin}\left(4\right),\; \forall g \in \operatorname{Fin}\left(4\right),\; \operatorname{sicE}\left(r, b, g\right) = \operatorname{ite}\left(b = g, \operatorname{ite}\left(b = 0, 1, 3^{-1}\right), 0\right)\right) \land \left(\forall b \in \operatorname{Fin}\left(4\right),\; \forall g \in \operatorname{Fin}\left(4\right),\; \operatorname{sicAlpha}\left(r, b, g\right) = \operatorname{ite}\left(b = g, \operatorname{ite}\left(b = 0, 0, 3^{-1}\right), 0\right)\right)\right)\right)\right)\right)\right) \land \left(\left(\forall r \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \operatorname{QubitMatrix}\right),\; \forall T \in \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right),\; \forall b \in \operatorname{PauliLabel}\left(n\right),\; \forall g \in \operatorname{PauliLabel}\left(n\right),\; \left(4^{n}\right)^{-1} \cdot \sum_{a \in \operatorname{PauliLabel}\left(n\right)} \sum_{c \in \operatorname{PauliLabel}\left(n\right)} \operatorname{sicSubsetKernel}\left(n, T, a, c\right) \cdot \operatorname{trace}\left(\operatorname{productSIC}\left(r, c\right) \cdot \operatorname{pauliN}\left(n, b\right) \cdot \operatorname{productSIC}\left(r, a\right) \cdot \operatorname{pauliN}\left(n, g\right)\right) = \prod_{i \in \operatorname{Fin}\left(n\right)} \operatorname{ite}\left(i \in T, \operatorname{sicAlpha}\left(r\left(i\right), b\left(i\right), g\left(i\right)\right), \operatorname{sicE}\left(r\left(i\right), b\left(i\right), g\left(i\right)\right)\right)\right) \land \left(\left(\forall r \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \operatorname{QubitMatrix}\right),\; \left(\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{IsQubitSICProjector}\left(r\left(i\right)\right)\right) \Rightarrow \left(\forall k \in \mathbb{N},\; \forall L \in \operatorname{QubitMap}\left(n\right),\; \operatorname{kFidelity}\left(r, k, L\right) = \sum_{b \in \operatorname{PauliLabel}\left(n\right)} \operatorname{pauliTwirlWeight}\left(L, b\right) \cdot \left(\sum_{T \in \left\{S \in \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right) \mid \operatorname{card}\left(S\right) \le k\right\}} \left(-1\right)^{\operatorname{card}\left(T\right)} \cdot \left(\prod_{i \in T} \operatorname{sicAlpha}\left(r\left(i\right), b\left(i\right), b\left(i\right)\right)\right) \cdot \left(\prod_{i \in T^{c}} \operatorname{sicE}\left(r\left(i\right), b\left(i\right), b\left(i\right)\right)\right)\right) \land \operatorname{kFidelity}\left(r, k, L\right) = \operatorname{kFidelity}\left(r, k, \operatorname{complexPauliTwirl}\left(L\right)\right)\right)\right) \land \left(\forall r \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \operatorname{QubitMatrix}\right),\; \forall s \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \operatorname{QubitMatrix}\right),\; \left(\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{IsQubitSICProjector}\left(r\left(i\right)\right)\right) \Rightarrow \left(\left(\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{IsQubitSICProjector}\left(s\left(i\right)\right)\right) \Rightarrow \left(\forall k \in \mathbb{N},\; \forall L \in \operatorname{QubitMap}\left(n\right),\; \operatorname{kFidelity}\left(r, k, L\right) = \operatorname{kFidelity}\left(s, k, L\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.qubit_sic_matrices_and_per_qubit_traces` (`✓ std3`). ∎
 
@@ -404,7 +414,7 @@ Establishes B(I_4 - A) = (I_4 - A)B = I_4 whereas the matrix with entries (1 - 5
 
 **Theorem 1.31 (Universal Pauli-weight alternating binomial formula for SIC k-fidelities).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.kFidelity_eq_pauliWeight_alternating_sum`
+$$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \forall r \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \operatorname{QubitMatrix}\right),\; \left(\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{IsQubitSICProjector}\left(r\left(i\right)\right)\right) \Rightarrow \left(\forall L \in \operatorname{QubitMap}\left(n\right),\; \operatorname{kFidelity}\left(r, k, L\right) = \operatorname{pauliWeightSum}\left(L, 0\right) + \left(-1\right)^{k} \cdot \sum_{w \in \operatorname{Icc}\left(1, n\right)} \left(3^{-1}\right)^{w} \cdot \operatorname{choose}\left(w - 1, k\right) \cdot \operatorname{pauliWeightSum}\left(L, w\right) \land \left(\left(n \le k \Rightarrow \operatorname{kFidelity}\left(r, k, L\right) = \operatorname{processFidelity}\left(L\right)\right) \land \left(\operatorname{kFidelity}\left(r, 0, L\right) = \sum_{b \in \operatorname{PauliLabel}\left(n\right)} \left(3^{-1}\right)^{\operatorname{hammingWeight}\left(b\right)} \cdot \operatorname{pauliTwirlWeight}\left(L, b\right) \land \left(\operatorname{IsCompletelyPositive}\left(L\right) \Rightarrow \left(\operatorname{ofReal}\left(\operatorname{realKFidelity}\left(r, k, L\right)\right) = \operatorname{kFidelity}\left(r, k, L\right) \land \operatorname{realKFidelity}\left(r, k, L\right) = \operatorname{realWeightSum}\left(L, 0\right) + \left(-1\right)^{k} \cdot \sum_{w \in \operatorname{Icc}\left(1, n\right)} \left(3^{-1}\right)^{w} \cdot \operatorname{choose}\left(w - 1, k\right) \cdot \operatorname{realWeightSum}\left(L, w\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.kFidelity_eq_pauliWeight_alternating_sum` (`✓ std3`). ∎
 
@@ -418,7 +428,7 @@ For every n, k, every choice of single-qubit SICs, and every complex-linear map 
 
 **Theorem 1.32 (Alternating truncation error identity and support characterization for completely positive maps).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.cp_kFidelity_alternating_truncation_bound`
+$$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \forall r \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \operatorname{QubitMatrix}\right),\; \left(\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{IsQubitSICProjector}\left(r\left(i\right)\right)\right) \Rightarrow \left(\forall L \in \operatorname{QubitMap}\left(n\right),\; \operatorname{IsCompletelyPositive}\left(L\right) \Rightarrow \left(\left(-1\right)^{k} \cdot \left(\operatorname{realKFidelity}\left(r, k, L\right) - \operatorname{realProcessFidelity}\left(L\right)\right) = \sum_{w \in \operatorname{Icc}\left(k + 1, n\right)} \left(3^{-1}\right)^{w} \cdot \operatorname{choose}\left(w - 1, k\right) \cdot \operatorname{realWeightSum}\left(L, w\right) \land \left(0 \le \sum_{w \in \operatorname{Icc}\left(k + 1, n\right)} \left(3^{-1}\right)^{w} \cdot \operatorname{choose}\left(w - 1, k\right) \cdot \operatorname{realWeightSum}\left(L, w\right) \land \left(\left(\operatorname{Odd}\left(k\right) \Rightarrow \operatorname{realKFidelity}\left(r, k, L\right) \le \operatorname{realProcessFidelity}\left(L\right)\right) \land \left(\left(\operatorname{Even}\left(k\right) \Rightarrow \operatorname{realProcessFidelity}\left(L\right) \le \operatorname{realKFidelity}\left(r, k, L\right)\right) \land \left(\left(\forall i \in \mathbb{N},\; \forall j \in \mathbb{N},\; \operatorname{Odd}\left(j\right) \Rightarrow \left(\operatorname{Even}\left(i\right) \Rightarrow \operatorname{realKFidelity}\left(r, j, L\right) \le \operatorname{realKFidelity}\left(r, i, L\right)\right)\right) \land \left(\left(\operatorname{realKFidelity}\left(r, k, L\right) = \operatorname{realProcessFidelity}\left(L\right) \Leftrightarrow \left(\forall w \in \operatorname{Icc}\left(k + 1, n\right),\; \operatorname{realWeightSum}\left(L, w\right) = 0\right)\right) \land \left(\operatorname{realKFidelity}\left(r, k, L\right) = \operatorname{realProcessFidelity}\left(L\right) \Leftrightarrow \left(\forall b \in \operatorname{PauliLabel}\left(n\right),\; k < \operatorname{hammingWeight}\left(b\right) \Rightarrow \operatorname{realTwirlWeight}\left(L, b\right) = 0\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.cp_kFidelity_alternating_truncation_bound` (`✓ std3`). ∎
 

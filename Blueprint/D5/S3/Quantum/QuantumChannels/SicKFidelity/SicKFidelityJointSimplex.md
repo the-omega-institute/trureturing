@@ -6,7 +6,7 @@ Universal alternating linear relation among F_0, ..., F_{n-1} and the entangleme
 
 **Definition 1.1 (Joint k-fidelity simplex vertices).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.simplexVertex`
+$$\forall n \in \mathbb{N},\; \left(\forall k \in \operatorname{Fin}\left(n\right),\; \operatorname{simplexVertex}\left(n, 0\right)\left(k\right) = 1\right) \land \left(\forall j \in \operatorname{Fin}\left(n\right),\; \forall k \in \operatorname{Fin}\left(n\right),\; \operatorname{simplexVertex}\left(n, \operatorname{succ}\left(j\right)\right)\left(k\right) = \left(-1\right)^{k} \cdot \left(3^{-1}\right)^{j + 1} \cdot \operatorname{choose}\left(j, k\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.simplexVertex` (`✓ std3`).
 
@@ -20,7 +20,7 @@ Defines the n + 1 vectors V_0, ..., V_n in R^n by V_0 = (1, ..., 1) and (V_w)_k 
 
 **Definition 1.2 (Joint lower-order k-fidelity vector).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.jointKFidelityVec`
+$$\forall n \in \mathbb{N},\; \forall r \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)\right),\; \forall L \in \operatorname{QubitMap}\left(n\right),\; \forall k \in \operatorname{Fin}\left(n\right),\; \operatorname{jointKFidelityVec}\left(r, L\right)\left(k\right) = \operatorname{realKFidelity}\left(r, k, L\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.jointKFidelityVec` (`✓ std3`).
 
@@ -34,7 +34,7 @@ Collects the first n real SIC k-fidelities (F_0(Lambda), ..., F_{n-1}(Lambda)) i
 
 **Definition 1.3 (CPTP joint k-fidelity range).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.jointKFidelityRange`
+$$\forall n \in \mathbb{N},\; \forall r \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)\right),\; \operatorname{jointKFidelityRange}\left(n, r\right) = \left\{v \in \left(\operatorname{Fin}\left(n\right) \to \mathbb{R}\right) \mid \exists L \in \operatorname{QubitMap}\left(n\right),\; \operatorname{IsCompletelyPositive}\left(L\right) \land \left(\operatorname{IsTracePreserving}\left(L\right) \land v = \operatorname{jointKFidelityVec}\left(r, L\right)\right)\right\}$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.jointKFidelityRange` (`✓ std3`).
 
@@ -48,7 +48,7 @@ Defines the subset of R^n consisting of all joint vectors (F_0(Lambda), ..., F_{
 
 **Theorem 1.4 (Universal linear relation and exact fidelity reconstruction for trace-preserving maps).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.tp_exact_fidelity_reconstruction`
+$$\forall n \in \mathbb{N},\; \forall r \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)\right),\; \left(\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{IsQubitSICProjector}\left(r\left(i\right)\right)\right) \Rightarrow \left(\forall L \in \operatorname{QubitMap}\left(n\right),\; \operatorname{IsTracePreserving}\left(L\right) \Rightarrow \left(3 \cdot \sum_{k \in \operatorname{range}\left(n\right)} \left(-2\right)^{k} \cdot \operatorname{kFidelity}\left(r, k, L\right) + \left(-2\right)^{n} \cdot \operatorname{processFidelity}\left(L\right) = 1 \land \left(\operatorname{processFidelity}\left(L\right) = \left(\left(-2\right)^{n}\right)^{-1} \cdot \left(1 - 3 \cdot \sum_{k \in \operatorname{range}\left(n\right)} \left(-2\right)^{k} \cdot \operatorname{kFidelity}\left(r, k, L\right)\right) \land \left(\operatorname{IsCompletelyPositive}\left(L\right) \Rightarrow \left(3 \cdot \sum_{k \in \operatorname{range}\left(n\right)} \left(-2\right)^{k} \cdot \operatorname{realKFidelity}\left(r, k, L\right) + \left(-2\right)^{n} \cdot \operatorname{realProcessFidelity}\left(L\right) = 1 \land \operatorname{realProcessFidelity}\left(L\right) = \left(\left(-2\right)^{n}\right)^{-1} \cdot \left(1 - 3 \cdot \sum_{k \in \operatorname{range}\left(n\right)} \left(-2\right)^{k} \cdot \operatorname{realKFidelity}\left(r, k, L\right)\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.tp_exact_fidelity_reconstruction` (`✓ std3`). ∎
 
@@ -62,7 +62,7 @@ For every n, every choice of single-qubit SICs, and every trace-preserving compl
 
 **Theorem 1.5 (Affine independence, n-simplex joint range, and unique barycentric Pauli-weight recovery).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.cptp_joint_kFidelity_simplex_range`
+$$\forall n \in \mathbb{N},\; \forall r \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)\right),\; \left(\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{IsQubitSICProjector}\left(r\left(i\right)\right)\right) \Rightarrow \left(\operatorname{AffineIndependent}\left(\mathbb{R}, \operatorname{simplexVertex}\left(n\right)\right) \land \left(\operatorname{jointKFidelityRange}\left(n, r\right) = \operatorname{convexHull}\left(\mathbb{R}, \operatorname{range}\left(\operatorname{simplexVertex}\left(n\right)\right)\right) \land \left(\left(\forall L \in \operatorname{QubitMap}\left(n\right),\; \operatorname{IsCompletelyPositive}\left(L\right) \Rightarrow \left(\operatorname{IsTracePreserving}\left(L\right) \Rightarrow \left(\left(\forall i \in \operatorname{Fin}\left(n + 1\right),\; 0 \le \operatorname{realWeightSum}\left(L, i\right)\right) \land \left(\sum_{i \in \operatorname{Fin}\left(n + 1\right)} \operatorname{realWeightSum}\left(L, i\right) = 1 \land \left(\sum_{i \in \operatorname{Fin}\left(n + 1\right)} \operatorname{realWeightSum}\left(L, i\right) \cdot \operatorname{simplexVertex}\left(n, i\right) = \operatorname{jointKFidelityVec}\left(r, L\right) \land \left(\forall c \in \operatorname{Fin}\left(n + 1\right) \to \mathbb{R},\; \sum_{i \in \operatorname{Fin}\left(n + 1\right)} c\left(i\right) = 1 \Rightarrow \left(\sum_{i \in \operatorname{Fin}\left(n + 1\right)} c\left(i\right) \cdot \operatorname{simplexVertex}\left(n, i\right) = \operatorname{jointKFidelityVec}\left(r, L\right) \Rightarrow \left(\forall i \in \operatorname{Fin}\left(n + 1\right),\; c\left(i\right) = \operatorname{realWeightSum}\left(L, i\right)\right)\right)\right)\right)\right)\right)\right)\right) \land \left(\forall L \in \operatorname{QubitMap}\left(n\right),\; \operatorname{IsCompletelyPositive}\left(L\right) \Rightarrow \left(\operatorname{IsTracePreserving}\left(L\right) \Rightarrow \left(\operatorname{realProcessFidelity}\left(L\right) = \operatorname{realWeightSum}\left(L, 0\right) \land \operatorname{realProcessFidelity}\left(L\right) = \left(\left(-2\right)^{n}\right)^{-1} \cdot \left(1 - 3 \cdot \sum_{k \in \operatorname{Fin}\left(n\right)} \left(-2\right)^{k} \cdot \operatorname{jointKFidelityVec}\left(r, L\right)\left(k\right)\right)\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.cptp_joint_kFidelity_simplex_range` (`✓ std3`). ∎
 
@@ -72,7 +72,7 @@ Lean statement: `D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSim
 
 *Commentary.*
 
-For every n >= 1, the n + 1 vertices V_0, ..., V_n in R^n are affinely independent, the set of joint k-fidelity vectors (F_0(Lambda), ..., F_{n-1}(Lambda)) over completely positive trace-preserving n-qubit maps equals the n-simplex conv{V_0, ..., V_n}, the Pauli-weight sums (Q_0(Lambda), ..., Q_n(Lambda)) are the unique barycentric coordinates of (F_0(Lambda), ..., F_{n-1}(Lambda)) in this simplex, and F(Lambda) = Q_0(Lambda) = (-2)^{-n} (1 - 3 sum_{k=0}^{n-1} (-2)^k F_k(Lambda)).
+For every n, the n + 1 vertices V_0, ..., V_n in R^n are affinely independent, the set of joint k-fidelity vectors (F_0(Lambda), ..., F_{n-1}(Lambda)) over completely positive trace-preserving n-qubit maps equals the n-simplex conv{V_0, ..., V_n}, the Pauli-weight sums (Q_0(Lambda), ..., Q_n(Lambda)) are the unique barycentric coordinates of (F_0(Lambda), ..., F_{n-1}(Lambda)) in this simplex, and F(Lambda) = Q_0(Lambda) = (-2)^{-n} (1 - 3 sum_{k=0}^{n-1} (-2)^k F_k(Lambda)).
 
 ## References
 

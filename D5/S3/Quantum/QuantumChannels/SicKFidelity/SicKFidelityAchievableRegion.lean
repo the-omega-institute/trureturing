@@ -6,16 +6,6 @@
    utility: none
    digest: Achievable (k-fidelity, process fidelity) regions and single-Fk non-identifiability. -/
 
-/-
-admission_basis: escape-witness
-Direct frozen dependencies: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight,
-  D5/S3/Quantum/Foundation/FiniteKrausChannel.
-escape_witness: achievableRegion_intermediate_and_high_characterization
-achievableRegion_zero_characterization: proof_shape: content
-achievableRegion_intermediate_and_high_characterization: proof_shape: content
-kFidelity_non_identifiability_of_processFidelity: proof_shape: content
--/
-
 import D5.S3.Quantum.QuantumChannels.SicKFidelity.SicKFidelityPauliWeight
 
 /-! # Achievable `(k-fidelity, process fidelity)` regions and single-`F_k` non-identifiability -/

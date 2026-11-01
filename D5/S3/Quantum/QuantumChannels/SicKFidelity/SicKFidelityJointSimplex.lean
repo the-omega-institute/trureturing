@@ -6,15 +6,6 @@
    utility: none
    digest: Exact trace-preserving linear reconstruction and CPTP joint k-fidelity simplex range. -/
 
-/-
-admission_basis: escape-witness
-Direct frozen dependencies: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight,
-  D5/S3/Quantum/Foundation/FiniteKrausChannel.
-escape_witness: cptp_joint_kFidelity_simplex_range
-tp_exact_fidelity_reconstruction: proof_shape: content
-cptp_joint_kFidelity_simplex_range: proof_shape: content
--/
-
 import D5.S3.Quantum.QuantumChannels.SicKFidelity.SicKFidelityPauliWeight
 
 /-! # Trace-preserving linear reconstruction and CPTP joint `k`-fidelity simplex geometry -/
@@ -225,12 +216,12 @@ private theorem simplexVertex_affineIndependent (n : ℕ) :
   · exact sub_eq_zero.mp hd0
   · exact sub_eq_zero.mp (hd_succ_all n j (by simp))
 
-/-- Joint range of `(F_0(Λ), …, F_{n-1}(Λ))` over `n`-qubit CPTP maps `Λ` (`n ≥ 1`):
+/-- Joint range of `(F_0(Λ), …, F_{n-1}(Λ))` over `n`-qubit CPTP maps `Λ`:
 the `n + 1` vertices `V_0, …, V_n` are affinely independent in `ℝ^n`, the realized joint range is
 the `n`-simplex `conv{V_0, …, V_n}`, the Pauli-weight sums `(Q_0(Λ), …, Q_n(Λ))` are the unique
 barycentric coordinates of `(F_0(Λ), …, F_{n-1}(Λ))` in this simplex, and the process fidelity
 `F(Λ) = Q_0(Λ)` is uniquely recovered by the alternating linear formula. -/
-theorem cptp_joint_kFidelity_simplex_range (n : ℕ) (_hn : 1 ≤ n)
+theorem cptp_joint_kFidelity_simplex_range (n : ℕ)
     (ρ : Fin n → Fin 4 → Matrix (Fin 2) (Fin 2) ℂ)
     (hρ : ∀ i : Fin n, IsQubitSICProjector (ρ i)) :
     AffineIndependent ℝ (simplexVertex n) ∧

@@ -149,7 +149,7 @@ def rejected : Realization sig :=
 
 abbrev arena : Arena where
   signature := sig
-  Law O := ∀ (n : ℕ), 1 ≤ n →
+  Law O := ∀ (n : ℕ),
     ∀ (ρ : Fin n → Fin 4 → Matrix (Fin 2) (Fin 2) ℂ),
       (∀ i : Fin n, IsQubitSICProjector (ρ i)) →
       AffineIndependent ℝ (simplexVertex n) ∧
@@ -170,7 +170,7 @@ abbrev arena : Arena where
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨hCP, hTP, _, hrpf1, hjv⟩ := pauliId1_props
-  have hr := ((h 1 (by decide) (canonicalSICFamily 1)
+  have hr := ((h 1 (canonicalSICFamily 1)
     (canonicalSICFamily_isQubitSICProjector 1)).2.2.2 pauliId1 hCP hTP).2
   rw [show rejected.readout () () 1 = 0 from rfl, hrpf1, Fin.sum_univ_one, Fin.val_zero, hjv] at hr
   norm_num at hr
@@ -215,7 +215,7 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "arg", "arg", "body", "body", "body",
+      path := #["body", "body", "body", "arg", "arg", "arg", "body", "body", "body",
         "arg", "arg", "fn", "arg", "arg", "arg"]
       stateBinder := 0
       functionOperand := false

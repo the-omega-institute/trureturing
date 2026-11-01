@@ -4,7 +4,7 @@ fingerprints:
 cas_ref: sha256:53834d8c0bb2d3c471e3b22129c2081608836f9b55038946a4b914625e2bad29
 coverage_gids:
   - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.cptp_joint_kFidelity_simplex_range
-    target_statement_id: sha256:9042c1926d9e2be99f49ff706d942b2004683415c4d8ba40c13fdeb615fda750
+    target_statement_id: sha256:d04f0a4526009ac56a3ba36e9244078603ac40fd63bbd578206ee3c29523c275
   - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.jointKFidelityRange
     target_statement_id: sha256:1f0bac151a0f949fa68b2aa5d9416b8d2b1ebd4acb54371a761eb3bf8d51f623
   - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.jointKFidelityVec
