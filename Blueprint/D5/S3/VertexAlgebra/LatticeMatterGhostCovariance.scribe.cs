@@ -9,6 +9,12 @@ internal sealed class LatticeMatterGhostCovarianceDocument : IScribeDocumentDefi
         H("The exact matter anomaly after shifted finite cancellation"), Blocks(
             Paragraph(Text("Assume only that H is a two-sided inverse of the complex lattice Gram matrix. The original matter Virasoro theorem and original ghost weight-minus-one Ward identity determine the two commutators. The construction remains on the algebraic tensor product and uses no completion or tensor commutant assumption.")),
             Describe.Lean(
+                DescribeId.Create("latticematterghostcovariance-paired"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeMatterGhostCovariance.paired"),
+                H("The shifted original-operator action family"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every D,H and integers r,k, paired D H r k is the tensor map sugawaraMode D H k tensor BcGhostFock.c (r-k). Its statewise support is finite. Translating the finite captures by m maps to m+r supplies the actual noncentral cancellation."))), DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("latticematterghostcovariance-covariance"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeMatterGhostCovariance.covariance"),
                 H("Original-operator covariance with the rank anomaly"), StatementSource.WithoutFormula(),
