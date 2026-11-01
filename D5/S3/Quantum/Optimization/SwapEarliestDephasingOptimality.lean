@@ -10,7 +10,6 @@ import Mathlib.Algebra.BigOperators.Group.List.Basic
 import Mathlib.Data.List.MinMax
 import Mathlib.Data.Finset.Max
 import Mathlib.Logic.Function.Iterate
-import Mathlib.Tactic.Omega
 import Mathlib.Tactic.Linarith
 
 /-! The swapping recurrences (38) and (39) of Kamin, Shchukin, Schmidt and van Loock,
@@ -66,22 +65,65 @@ private def potential (x : List ℕ) : ℤ :=
 private def boundary (p : ℕ) (x : List ℕ) : ℤ :=
   ((List.zipWith max (p :: x) x).sum : ℕ) - (x.sum : ℤ)
 
+private theorem merge_cons (a : ℕ) (x : List ℕ) (i : ℕ) :
+    merge (a :: x) (i + 1) = a :: merge x i := by
+  simp [merge, Nat.add_assoc]
+
+private theorem boundary_cons (p a : ℕ) (x : List ℕ) :
+    boundary p (a :: x) = (max p a : ℕ) - (a : ℤ) + boundary a x := by
+  simp [boundary, Nat.cast_add]
+  omega
+
 private theorem merge_length (x : List ℕ) (i : ℕ) (h : i + 1 < x.length) :
     (merge x i).length + 1 = x.length := by
-  sorry
+  simp only [merge, List.length_append, List.length_take, List.length_cons, List.length_drop]
+  omega
 
 private theorem maximum_merge (x : List ℕ) (i : ℕ) (h : i + 1 < x.length) :
     (merge x i).foldr max 0 = x.foldr max 0 := by
-  sorry
+  induction i generalizing x with
+  | zero =>
+    cases x with
+    | nil => simp at h
+    | cons a x =>
+      cases x with
+      | nil => simp at h
+      | cons b x => simp [merge, max_assoc]
+  | succ i ih =>
+    cases x with
+    | nil => simp at h
+    | cons a x =>
+      rw [merge_cons, List.foldr_cons, ih x (by simpa using h), List.foldr_cons]
 
 private theorem potential_eq_boundary (x : List ℕ) :
     potential x = boundary (x.foldr max 0) x := by
-  sorry
+  cases x with
+  | nil => simp [potential, boundary]
+  | cons a x =>
+    simp [potential, boundary, Nat.cast_add]
 
 private theorem boundary_step_le (p : ℕ) (x : List ℕ) (i : ℕ)
     (h : i + 1 < x.length) :
     boundary p x ≤ (swapCost x i : ℤ) + boundary p (merge x i) := by
-  sorry
+  induction i generalizing p x with
+  | zero =>
+    cases x with
+    | nil => simp at h
+    | cons a x =>
+      cases x with
+      | nil => simp at h
+      | cons b x =>
+        cases x with
+        | nil => simp [boundary, merge, swapCost, Nat.cast_add]; omega
+        | cons c x => simp [boundary, merge, swapCost, Nat.cast_add]; omega
+  | succ i ih =>
+    cases x with
+    | nil => simp at h
+    | cons a x =>
+      rw [merge_cons, boundary_cons, boundary_cons]
+      have hi := ih a x (by simpa using h)
+      simp only [swapCost, List.getElem?_cons_succ, Nat.add_assoc] at *
+      omega
 
 private theorem boundary_step_eq (p : ℕ) (x : List ℕ) (i : ℕ)
     (h : i + 1 < x.length)
@@ -89,34 +131,124 @@ private theorem boundary_step_eq (p : ℕ) (x : List ℕ) (i : ℕ)
       max (x[i]?.getD 0) (x[i + 1]?.getD 0) ≤
         max ((p :: x)[j]?.getD 0) ((p :: x)[j + 1]?.getD 0)) :
     boundary p x = (swapCost x i : ℤ) + boundary p (merge x i) := by
-  sorry
+  induction i generalizing p x with
+  | zero =>
+    cases x with
+    | nil => simp at h
+    | cons a x =>
+      cases x with
+      | nil => simp at h
+      | cons b x =>
+        have hl := hg 0 (by simp)
+        cases x with
+        | nil =>
+          simp [boundary, merge, swapCost, Nat.cast_add] at hl ⊢
+          omega
+        | cons c x =>
+          have hr := hg 2 (by simp)
+          simp [boundary, merge, swapCost, Nat.cast_add] at hl hr ⊢
+          omega
+  | succ i ih =>
+    cases x with
+    | nil => simp at h
+    | cons a x =>
+      rw [merge_cons, boundary_cons, boundary_cons]
+      have hi := ih a x (by simpa using h) (fun j hj => by
+        have hjg := hg (j + 1) (by simpa using Nat.succ_lt_succ hj)
+        simpa [Nat.add_assoc] using hjg)
+      simp only [swapCost, List.getElem?_cons_succ, Nat.add_assoc] at *
+      omega
 
 private theorem potential_step_le (x : List ℕ) (i : ℕ) (h : i + 1 < x.length) :
     potential x ≤ (swapCost x i : ℤ) + potential (merge x i) := by
-  sorry
+  rw [potential_eq_boundary, potential_eq_boundary, maximum_merge x i h]
+  exact boundary_step_le _ x i h
 
 private theorem potential_step_eq (x : List ℕ) (i : ℕ) (h : IsGreedyStep x i) :
     potential x = (swapCost x i : ℤ) + potential (merge x i) := by
-  sorry
+  rw [potential_eq_boundary, potential_eq_boundary, maximum_merge x i h.1]
+  apply boundary_step_eq _ x i h.1
+  intro j hj
+  cases j with
+  | zero =>
+    have hv := h.1
+    have hi : i < x.length := by omega
+    have ha := List.le_max_of_le (List.getElem_mem (by omega : i < x.length))
+      (le_rfl : x[i] ≤ x[i])
+    have hb := List.le_max_of_le (List.getElem_mem h.1)
+      (le_rfl : x[i + 1] ≤ x[i + 1])
+    simp only [List.getElem?_eq_getElem (by omega : i < x.length),
+      List.getElem?_eq_getElem h.1, Option.getD_some, List.getElem?_cons_zero,
+      List.getElem?_cons_succ] at *
+    exact (max_le ha hb).trans (le_max_left _ _)
+  | succ j =>
+    simpa [Nat.add_assoc] using h.2 j (by simpa using hj)
 
 private theorem greedy_exists (x : List ℕ) (h : 1 < x.length) :
     ∃ i, IsGreedyStep x i := by
-  sorry
+  have hn : (Finset.range (x.length - 1)).Nonempty :=
+    ⟨0, Finset.mem_range.mpr (by omega)⟩
+  obtain ⟨i, hi, he⟩ := Finset.exists_mem_eq_inf' hn
+    (fun j => max (x[j]?.getD 0) (x[j + 1]?.getD 0))
+  refine ⟨i, ?_, ?_⟩
+  · have := Finset.mem_range.mp hi
+    omega
+  · intro j hj
+    rw [← he]
+    exact Finset.inf'_le _ (Finset.mem_range.mpr (by omega))
 
 private theorem potential_terminal (x : List ℕ) (h : x.length ≤ 1) :
     potential x = 0 := by
-  sorry
+  cases x with
+  | nil => simp [potential]
+  | cons a x =>
+    cases x with
+    | nil => simp [potential]
+    | cons b x => simp at h
 
 private theorem bellman_potential (n : ℕ) (x : List ℕ) (h : x.length ≤ n) :
     (((bellman^[n]) (fun _ => 0)) x : ℤ) = potential x := by
-  sorry
+  induction n generalizing x with
+  | zero =>
+    have hx : x = [] := List.length_eq_zero_iff.mp (by omega)
+    subst x
+    simp [potential]
+  | succ n ih =>
+    rw [Function.iterate_succ_apply']
+    by_cases hx : 1 < x.length
+    · simp only [bellman, dif_pos hx]
+      have hn : (Finset.range (x.length - 1)).Nonempty :=
+        ⟨0, Finset.mem_range.mpr (by omega)⟩
+      apply le_antisymm
+      · obtain ⟨i, hi⟩ := greedy_exists x hx
+        have him : i ∈ Finset.range (x.length - 1) :=
+          Finset.mem_range.mpr (by have := hi.1; omega)
+        have hm := Finset.inf'_le
+          (fun j => swapCost x j + ((bellman^[n]) (fun _ => 0)) (merge x j)) him
+        have hrec := ih (merge x i) (by have := merge_length x i hi.1; omega)
+        have hcast := Int.ofNat_le.mpr hm
+        rw [Nat.cast_add, hrec, ← potential_step_eq x i hi] at hcast
+        exact hcast
+      · obtain ⟨i, hi, he⟩ := Finset.exists_mem_eq_inf' hn
+          (fun j => swapCost x j + ((bellman^[n]) (fun _ => 0)) (merge x j))
+        have hiv : i + 1 < x.length := by have := Finset.mem_range.mp hi; omega
+        rw [he, Nat.cast_add, ih (merge x i) (by have := merge_length x i hiv; omega)]
+        exact potential_step_le x i hiv
+    · simp only [bellman, dif_neg hx, Nat.cast_zero]
+      exact (potential_terminal x (by omega)).symm
 
 private theorem dstar_potential (x : List ℕ) : (dstar x : ℤ) = potential x := by
   exact bellman_potential x.length x le_rfl
 
 private theorem greedy_cost_potential (x : List ℕ) (hs : List ℕ)
     (h : IsGreedyRun x hs) : (runCost x hs : ℤ) = potential x := by
-  sorry
+  induction hs generalizing x with
+  | nil =>
+    exact (potential_terminal x h).symm
+  | cons i hs ih =>
+    obtain ⟨hi, ht⟩ := h
+    change ((swapCost x i + runCost (merge x i) hs : ℕ) : ℤ) = _
+    rw [Nat.cast_add, ih (merge x i) ht, ← potential_step_eq x i hi]
 
 /-- The earliest-pair conjecture (41), for every number of segments and every tie choice. -/
 theorem result : claim := by
