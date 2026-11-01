@@ -31,14 +31,14 @@ internal sealed class NeutralThreeLegGaussianKernelDocument : IScribeDocumentDef
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("matrix-square-mass"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/NeutralThreeLegGaussianKernel.Damping.matrix_square_mass"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/NeutralThreeLegGaussianKernel.matrix_square_mass"),
                 H("Actual all-frequency matrix square mass"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The squared absolute entries of the actual colored three-leg kernel are summable and their full matrix sum is at most 13 N eta^2."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("operator-realization"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/NeutralThreeLegGaussianKernel.Damping.operator_realization"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/NeutralThreeLegGaussianKernel.operator_realization"),
                 H("Native symmetric one-particle contraction"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The constructed bounded complex-linear Hilbert-Schmidt operator has the exact native matrix entries, holomorphic transpose symmetry, norm at most sqrt(13 N eta^2) and norm strictly below 1/2."))),
