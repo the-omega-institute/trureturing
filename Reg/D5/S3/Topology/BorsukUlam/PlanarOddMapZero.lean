@@ -47,7 +47,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(fun v => (v 0 : ℂ)), 0, EuclideanSpace.single 0 1, ?_⟩
-  simp [actual, realize, EuclideanSpace.single, PiLp.single_apply]
+  simp [actual, realize, EuclideanSpace.single]
 
 def source_registration : Registration arena (type_of% @planar_odd_map_zero) where
   actual := actual
