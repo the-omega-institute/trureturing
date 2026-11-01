@@ -8,6 +8,7 @@
 
 import D5.S3.VertexAlgebra.HalfFock.NeutralThreeLegModeExpansion
 import D5.S3.VertexAlgebra.TwistedGround.OriginalCorrectionGaussian
+import D5.S3.VertexAlgebra.TwistedGround.NativeGaussianMoment
 
 /-!
 The source side is the actual `correctedField` and its literal finite Corr;
@@ -511,8 +512,8 @@ theorem nativeNeutralLaurentEntry_recurrence (D : LatticeData) (T : ℂˣ)
   rw [nativeNeutralLaurentEntry_source_insertion, nativeNeutralLaurentEntry_unpaired]
 
 
-open private nativeMoment nativeMoment_step weight_sub_single sub_single_degree
-  covariance_symm from D5.S3.VertexAlgebra.TwistedGround.OriginalCorrectionGaussian
+open D5.S3.VertexAlgebra.TwistedGround.NativeGaussianMoment
+  (nativeMoment nativeMoment_step weight_sub_single sub_single_degree)
 
 /-- Finite raw SS/SI/SO/IO block matrix. The three summands of the index type
 are source, input and output labels, respectively. -/
