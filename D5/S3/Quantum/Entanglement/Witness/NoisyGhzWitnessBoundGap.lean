@@ -7,7 +7,6 @@
    digest: The optimized GHZ witness bound is strictly below the convex roof. -/
 
 import D5.S3.Quantum.Information.MultiEntropyPositivityRefutation
-import D5.S3.Quantum.Recovery.PurifiedLocalPath
 
 /-! The geometric GME measure and optimized witness bound of Xu et al.,
 arXiv:2211.05563v1, Section "Estimating entanglement measures" and Appendix
@@ -17,7 +16,7 @@ set_option autoImplicit false
 set_option maxRecDepth 2048
 set_option linter.style.longLine false
 noncomputable section
-open scoped BigOperators ComplexOrder
+open scoped BigOperators ComplexOrder MatrixOrder
 open Matrix
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 open D5.S3.Quantum.Entanglement.OccupancyWordSectors (Word)
@@ -179,10 +178,13 @@ private lemma join_support (a : Finset (Fin 3)) (i j : Fin 3) :
     (Finset.univ.image (join a i j)).card ≤ 2 := by
   classical
   have h : Finset.univ.image (join a i j) ⊆ {i, j} := by
-    intro x hx
-    obtain ⟨k, _, rfl⟩ := Finset.mem_image.mp hx
-    rw [join]
-    split_ifs <;> simp
+    apply Finset.coe_subset.mp
+    simp only [Finset.coe_image, Finset.coe_univ, Set.image_univ,
+      Finset.coe_insert, Finset.coe_singleton]
+    change Set.range (fun k : Fin 3 => if k ∈ a then i else j) ⊆ ({i, j} : Set (Fin 3))
+    simpa only [Set.range_const, Set.union_singleton, Set.pair_comm] using
+      (Set.range_ite_subset (p := fun k : Fin 3 => k ∈ a)
+        (f := fun _ => i) (g := fun _ => j))
   exact (Finset.card_le_card h).trans (by by_cases h : i = j <;> simp [h])
 
 private lemma join_injective (a : Finset (Fin 3)) (ha : a.Nonempty) (hc : aᶜ.Nonempty) :
@@ -265,14 +267,10 @@ private lemma orthogonal_positive :
     split_ifs <;> simp
   have hg : (rankOneDensity (ghz 3 3)).IsHermitian :=
     (posSemidef_vecMulVec_self_star (ghz 3 3)).isHermitian
-  constructor
-  · have h := posSemidef_conjTranspose_mul_self
-      (supportProjector 3 3 - rankOneDensity (ghz 3 3))
-    simpa only [conjTranspose_sub, hp.eq, hg.eq, sub_mul, mul_sub, hpp, hpg, hgp, hgg,
-      sub_self, sub_zero] using h
-  · have h := posSemidef_conjTranspose_mul_self q
-    simpa only [q, conjTranspose_sub, conjTranspose_one, hp.eq, sub_mul, mul_sub,
-      one_mul, mul_one, hpp, sub_self, sub_zero] using h
+  have hP : IsStarProjection (supportProjector 3 3) := ⟨hpp, hp.isSelfAdjoint⟩
+  have hG : IsStarProjection (rankOneDensity (ghz 3 3)) := ⟨hgg, hg.isSelfAdjoint⟩
+  exact ⟨(hG.sub_of_mul_eq_left hP hgp).nonneg.posSemidef,
+    hP.one_sub_nonneg.posSemidef⟩
 
 private lemma witness_value : witnessValue 3 3 (3 / 8) = -(1 / 3) := by
   classical
@@ -492,10 +490,15 @@ private lemma pure_lower (ψ : Word (Fin 3) 3 → ℂ) (hψ : IsUnitState ψ) :
   linarith
 
 private lemma trace_expectation (a : Matrix (Word (Fin 3) 3) (Word (Fin 3) 3) ℂ)
-    (ψ : Word (Fin 3) 3 → ℂ) : (trace (rankOneDensity ψ * a)).re = readout a ψ := by
-  classical
+    (ψ : Word (Fin 3) 3 → ℂ) (hψ : IsUnitState ψ) :
+    (trace (rankOneDensity ψ * a)).re = readout a ψ := by
+  have hn : star ψ ⬝ᵥ ψ = 1 := by
+    rw [D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.dot_star_self]
+    simpa only [← Complex.normSq_eq_norm_sq, Complex.ofReal_one] using
+      congrArg (fun x : ℝ => (x : ℂ)) hψ
   rw [trace_mul_comm]
-  simp [rankOneDensity, mul_vecMulVec, trace_vecMulVec, readout, dotProduct_comm]
+  exact congrArg Complex.re
+    (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake ψ hn a).2.2.symm
 
 private lemma trace_b : (trace (noisyGhz 3 3 (3 / 8) * b)).re - 1 / 9 = 13 / 108 := by
   classical
@@ -555,8 +558,11 @@ private lemma average_lower (k : ℕ) (p : Fin k → ℝ) (ψ : Fin k → Word (
   have htrace : (trace (noisyGhz 3 3 (3 / 8) * b)).re =
       ∑ i, p i * readout b (ψ i) := by
     rw [he]
-    simp [Finset.sum_mul, trace_sum, trace_smul,
-      Complex.real_smul, trace_expectation]
+    simp only [Finset.sum_mul, smul_mul_assoc, trace_sum, trace_smul, Complex.re_sum,
+      Complex.real_smul, Complex.re_ofReal_mul]
+    apply Finset.sum_congr rfl
+    intro i _
+    rw [trace_expectation b (ψ i) (hu i)]
   have h := Finset.sum_le_sum (fun i (_ : i ∈ Finset.univ) =>
     mul_le_mul_of_nonneg_left (pure_lower (ψ i) (hu i)) (hp i))
   have ht := trace_b
