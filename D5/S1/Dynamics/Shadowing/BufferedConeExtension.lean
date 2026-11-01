@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Finite buffered mixed old/new graph extension retaining whole paths.
--/
+   digest: Finite buffered mixed old/new graph extension retaining whole paths. -/
 
 import D5.S1.Dynamics.Shadowing.FiniteObservationSofic
 import D5.S1.Dynamics.Shadowing.MittagLefflerInverseLimit
