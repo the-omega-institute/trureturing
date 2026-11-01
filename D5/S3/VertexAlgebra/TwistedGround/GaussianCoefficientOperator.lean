@@ -265,9 +265,12 @@ theorem coefficientOperator_zero_extension (D : Data (S ⊕ T)) :
     have h := ContinuousLinearMap.adjoint_inner_right
       (sourceInclusion (S := S) (T := T)).toContinuousLinearMap
       (lp.single 2 d (1 : ℂ)) x
-    simpa only [sourceInclusion, coordinateInclusion_single,
-      LinearIsometry.coe_toContinuousLinearMap, lp.inner_single_left,
-      RCLike.inner_apply, map_one, mul_one] using h
+    change ⟪lp.single 2 d (1 : ℂ),
+        ContinuousLinearMap.adjoint
+          (sourceInclusion (S := S) (T := T)).toContinuousLinearMap x⟫_ℂ =
+      ⟪coordinateInclusion Sum.inl Sum.inl_injective (lp.single 2 d (1 : ℂ)), x⟫_ℂ at h
+    rw [coordinateInclusion_single] at h
+    simpa only [lp.inner_single_left, RCLike.inner_apply, map_one, mul_one] using h
   apply lp.ext_continuousLinearMap (by norm_num : (2 : ℝ≥0∞) ≠ ⊤)
   intro a
   apply ContinuousLinearMap.ext
