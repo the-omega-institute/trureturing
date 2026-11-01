@@ -169,7 +169,18 @@ private theorem family_admissible_zero
     (hf₁ : admissible om f₁) (hf₂ : admissible om f₂) :
     ContinuousOn (fun v => (f₁ (family v) : ℂ) + (f₂ (family v) : ℂ) * Complex.I)
       D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere := by
-  sorry
+  have hmem : ∀ v ∈ D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere,
+      family v ∈ om := by
+    intro v hv
+    exact hom (family_mem_collision v hv)
+  have h₁ : ContinuousOn (fun v => f₁ (family v))
+      D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere :=
+    hf₁.1.comp family_continuous hmem
+  have h₂ : ContinuousOn (fun v => f₂ (family v))
+      D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere :=
+    hf₂.1.comp family_continuous hmem
+  exact (Complex.continuous_ofReal.comp_continuousOn h₁).add
+    ((Complex.continuous_ofReal.comp_continuousOn h₂).mul continuousOn_const)
 
 private theorem family_admissible_odd
     (om : Set event) (hom : collisionEvents ⊆ om) (f : event → ℝ)
