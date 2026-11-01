@@ -24,7 +24,9 @@ internal sealed class SpeziaSerpentineHigherExteriorTraceDocument : IScribeDocum
     private static DocumentBlock Entry(string id, string name, string title, Formula formula, string prose,
         AssessedProvenance provenance, DescribeRole role) => Describe.Lean(DescribeId.Create(id),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role,
+        name == "result" ? new OpenProblemResolutionClaim(
+            ProblemSlugRef.Create("sp322844-serpentine-higher"), ResolutionKind.Proved) : null);
     private static Formula ClaimBody() => All("n", Nat(), All("k", Nat(), new Formula.Logic(
         Parenthesized(new Formula.Relation(D(2), FormulaRelationOperator.LessThan, V("k"))), FormulaLogicOperator.Implies,
         Parenthesized(new Formula.Relation(Call(Owner + "traceExt", V("k"), Call(Owner + "M", V("n"))), FormulaRelationOperator.Equal, D(0))))));

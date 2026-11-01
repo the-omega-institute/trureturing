@@ -22,6 +22,10 @@ $$\forall (n: \mathbb{N}), \forall (k: \mathbb{N}), (2 < k) \Rightarrow (\operat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/SpeziaSerpentineHigherExteriorTrace.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sp322844-serpentine-higher` (proved) by `D5/S3/Quantum/Matrix/SpeziaSerpentineHigherExteriorTrace.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sp322844-serpentine-higher","declaration_gid":"D5/S3/Quantum/Matrix/SpeziaSerpentineHigherExteriorTrace.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Stefano Spezia (2018). *OEIS A322844 and the serpentine matrix A317614*. URL: <https://oeis.org/A322844>.
