@@ -52,7 +52,7 @@ internal sealed class FewerEffectsOrthogonalityRefutationDocument : IScribeDocum
                     + "nonzero effects. This is the universal statement corresponding to Conjecture 2 "
                     + "in Appendix C, apssamp.tex, lines 795–797, with the consecutive blocks above "
                     + "fixing the coordinate representation of its construction.",
-                AssessedProvenance.FromRepo(Source)),
+                AssessedProvenance.FromLiterature(Source)),
             Describe.Lean(
                 DescribeId.Create("result"),
                 DeclarationHandle.Create(Module + ".result"),
