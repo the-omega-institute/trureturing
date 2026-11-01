@@ -459,7 +459,7 @@ private lemma loop_enlargement {n : ℕ} (L : Finset (Fin n)) (l : Fin n) (hl : 
     by_cases hi : i = l
     · subst i
       have hn : A l l ≠ 0 := (hs l l).mpr (Or.inr (Or.inr ⟨rfl, by simp⟩))
-      simp [B, D, hi, hn, pathPattern, hl]
+      simp [B, D, hn, pathPattern, hl]
     · have hz : A i i = 0 := by
         by_contra hne
         have H := (hs i i).mp hne
