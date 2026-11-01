@@ -11,7 +11,7 @@ import Mathlib.Analysis.InnerProductSpace.Positive
 
 /-!
 The HTMB scenario and pure-state conjecture of Tavakoli, Zambrini Cruzeiro, Uola and Abbott,
-arXiv:2010.04751v3, equations (32)–(33). Both trit parity equivalences are imposed.
+arXiv:2010.04751v3, equation (33). Both trit parity equivalences are imposed.
 The resulting additive projector grid either has a constant axis or has both axes in one plane.
 -/
 
@@ -213,7 +213,7 @@ private theorem expectation_le_basis {d : ℕ}
     rw [← inner_conj_symm (WithLp.toLp 2 (z k))
       ((stdOrthonormalBasis ℂ s) l : EuclideanSpace ℂ (Fin d)), Complex.mul_conj']
     simp only [← Complex.ofReal_pow, Complex.ofReal_re,
-      EuclideanSpace.inner_eq_star_dotProduct, WithLp.ofLp_toLp]
+      EuclideanSpace.inner_eq_star_dotProduct]
 
 private theorem discrimination_bound {d : ℕ}
     (v : ZMod 3 → EuclideanSpace ℂ (Fin d))
@@ -313,7 +313,8 @@ private theorem value_reduction {d : ℕ}
   have hr1 := hr 1
   have hr2 := hr 2
   simp only [sum_trit] at hc0 hc1 hc2 hr0 hr1 hr2
-  simp only [htmbValue, Fintype.sum_prod_type, sum_trit]
+  delta htmbValue
+  simp only [Fintype.sum_prod_type, sum_trit]
   rw [hadd 1 1, hadd 1 2, hadd 2 1, hadd 2 2]
   simp only [add_mul, sub_mul, trace_add, trace_sub, Complex.add_re, Complex.sub_re]
   linear_combination (1 / 18 : ℝ) * (hc1 + hc2 - 2 * hc0 + hr1 + hr2 - 2 * hr0)
