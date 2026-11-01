@@ -129,7 +129,8 @@ def source_registration : Registration arena.{u} (type_of% @serial_endpoint_pair
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@serial_endpoint_pairing.{u}) (Realization signature.{u}) Unit Unit := {
   unitName := `Reg.D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing.unit
-  realizationName := `Reg.D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing.source_registration
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -174,8 +175,13 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+private def identity_decidable (c : Perm (Fin 2)) : Decidable (c = 1) :=
+  decidable_of_iff (c 0 = 0 ∧ c 1 = 1)
+    (by simp only [Equiv.ext_iff, Fin.forall_fin_two, Perm.one_apply])
+
 def actual : Realization signature :=
-  realize signature (fun _ _ c => decide (c = 1)) (fun e => nomatch e)
+  realize signature (fun _ _ c => @decide (c = 1) (identity_decidable c))
+    (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e => nomatch e)
@@ -188,7 +194,7 @@ abbrev arena : Arena where
 private theorem identity_ne_swap : (1 : Perm (Fin 2)) ≠ swap 0 1 := by
   intro h
   have hz := congrArg (fun c : Perm (Fin 2) => c 0) h
-  simpa using hz
+  simp at hz
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -199,7 +205,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 def source_registration : Registration arena (type_of% @two_forms) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  bridge := by simp only [actual, realize, decide_eq_true_eq]
   variation := ⟨by
     intro c
     simpa only [actual, realize, decide_eq_true_eq] using two_forms c,
