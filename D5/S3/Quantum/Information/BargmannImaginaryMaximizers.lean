@@ -247,7 +247,7 @@ private theorem latitude_overlap_polar (a b : ℝ)
     <;> ring
 end D5.S3.Quantum.Information.BargmannImaginaryMaximizers.Family
 namespace D5.S3.Quantum.Information.BargmannImaginaryMaximizers.Latitude
-private noncomputable def latitude (t : ℝ) (z : ℂ) : Fin 2 → ℂ :=
+noncomputable def latitude (t : ℝ) (z : ℂ) : Fin 2 → ℂ :=
   ![(Real.sqrt (1-t) : ℂ), (Real.sqrt t : ℂ)*z]
 private theorem two_mode_unitary {ι : Type*} [Fintype ι] (p q : Fin 2 → ℂ) (z : ι → ℂ) (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) (hp : star p ⬝ᵥ p = ((1-t : ℝ) : ℂ)) (hq : star q ⬝ᵥ q = (t : ℂ)) (hpq : star p ⬝ᵥ q = 0) : ∃ U ∈ Matrix.unitaryGroup (Fin 2) ℂ, ∀ j, p + z j • q = U *ᵥ latitude t (z j) := by
   classical
@@ -315,7 +315,7 @@ private theorem phase_one_im_pos {n : ℕ} [NeZero n] (hn : 3 ≤ n) : 0 < ((fun
   exact Real.sin_pos_of_pos_of_lt_pi hlo hhi
 end D5.S3.Quantum.Information.BargmannImaginaryMaximizers.Character
 namespace D5.S3.Quantum.Information.BargmannImaginaryMaximizers.Latitude
-private theorem latitude_dot (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) (z w : ℂ) : star (latitude t z) ⬝ᵥ latitude t w = ((1-t : ℝ) : ℂ) + (t : ℂ)*star z*w := by
+theorem latitude_dot (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) (z w : ℂ) : star (latitude t z) ⬝ᵥ latitude t w = ((1-t : ℝ) : ℂ) + (t : ℂ)*star z*w := by
   have hs0 : (Real.sqrt (1-t) : ℂ) * Real.sqrt (1-t) = ((1-t : ℝ) : ℂ) := by
     exact_mod_cast Real.mul_self_sqrt (by linarith : 0 ≤ 1-t)
   have hs1 : (Real.sqrt t : ℂ) * Real.sqrt t = (t : ℂ) := by
