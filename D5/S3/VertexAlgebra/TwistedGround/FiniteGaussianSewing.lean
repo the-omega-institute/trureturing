@@ -149,7 +149,7 @@ theorem row_polynomial {X : Type v} [Fintype X] [DecidableEq X]
       choose q hq using fun j : X => ih _ (hj j) (r - Finsupp.single j 1) rfl
       let q' : X → MvPolynomial H ℂ := fun j => if r j = 0 then 0 else q j
       refine ⟨(r i + 1 : ℂ)⁻¹ • ((∑ j, K (.inl i) (.inl j) • q' j) +
-        ∑ j, K (.inl i) (.inr j) • (X j * p)), ?_⟩
+        ∑ j, K (.inl i) (.inr j) • (MvPolynomial.X j * p)), ?_⟩
       have hn : (r i + 1 : ℂ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero (r i)
       rw [map_smul, map_add, map_sum, map_sum]
       simp_rw [map_smul, polynomialGaussian_X_mul, hp]
@@ -165,7 +165,7 @@ theorem row_polynomial {X : Type v} [Fintype X] [DecidableEq X]
 
 /-- Genuine absolute summability of the all-occupation factorial contraction
 of two finite polynomial insertions, using only strict shared contractions. -/
-theorem polynomial_pair_norm_summable (A B : Matrix H H ℂ)
+private theorem polynomial_pair_norm_summable (A B : Matrix H H ℂ)
     (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i)
     (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
     (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1)
@@ -195,5 +195,194 @@ theorem row_pair_norm_summable {X : Type v} {Y : Type w}
   obtain ⟨q, hq⟩ := row_polynomial L hL e
   simpa only [hp, hq, row] using polynomial_pair_norm_summable _ _
     (fun i j => hK (.inr i) (.inr j)) (fun i j => hL (.inr i) (.inr j)) hA hB p q
+
+
+private theorem annihilate_created_monomial (i : H) (α : H →₀ ℕ)
+    (f : (H →₀ ℕ) → ℂ) :
+    annihilate i (created α f) = fun n =>
+      (α i : ℂ) * created (α - Finsupp.single i 1) f n +
+        created α (annihilate i f) n := by
+  funext n
+  have hshift (hα : α ≤ n) : n + Finsupp.single i 1 - α =
+      n - α + Finsupp.single i 1 := by
+    ext j
+    have hj := hα j
+    by_cases hji : j = i
+    · subst j
+      simp only [Finsupp.tsub_apply, Finsupp.add_apply, Finsupp.single_eq_same]
+      omega
+    · simp [Finsupp.tsub_apply, Finsupp.add_apply, Finsupp.single_apply, Ne.symm hji]
+  by_cases hz : α i = 0
+  · have hsub : α - Finsupp.single i 1 = α := by
+      ext j
+      by_cases hji : j = i
+      · subst j
+        simp [Finsupp.tsub_apply, hz]
+      · simp [Finsupp.tsub_apply, Finsupp.single_apply, Ne.symm hji]
+    have hiff : α ≤ n + Finsupp.single i 1 ↔ α ≤ n := by
+      constructor
+      · intro h j
+        by_cases hji : j = i
+        · subst j
+          simp [hz]
+        · simpa [Finsupp.add_apply, Finsupp.single_apply, Ne.symm hji] using h j
+      · intro h
+        exact h.trans le_self_add
+    by_cases h : α ≤ n
+    · simp only [annihilate, created, h, hiff.mpr h, ite_true, hz,
+        Nat.cast_zero, zero_mul, zero_add, Finsupp.tsub_apply, tsub_zero, hshift h]
+    · simp [annihilate, created, h, hiff, hz]
+  · have hα : α - Finsupp.single i 1 + Finsupp.single i 1 = α :=
+      Finsupp.sub_add_single_one_cancel hz
+    by_cases h : α ≤ n
+    · have hplus : α ≤ n + Finsupp.single i 1 := h.trans le_self_add
+      have hminus : α - Finsupp.single i 1 ≤ n := tsub_le_self.trans h
+      have harg : n - (α - Finsupp.single i 1) = n - α + Finsupp.single i 1 := by
+        ext j
+        have hj := h j
+        by_cases hji : j = i
+        · subst j
+          simp only [Finsupp.tsub_apply, Finsupp.add_apply, Finsupp.single_eq_same]
+          omega
+        · simp [Finsupp.tsub_apply, Finsupp.add_apply, Finsupp.single_apply, Ne.symm hji]
+      simp only [annihilate, created, h, hplus, hminus, ite_true, harg,
+        hshift h, Finsupp.tsub_apply]
+      have hn : ((n i - α i : ℕ) : ℂ) + (α i : ℂ) = (n i : ℂ) := by
+        exact_mod_cast Nat.sub_add_cancel (h i)
+      linear_combination -f (n - α + Finsupp.single i 1) * hn
+    · by_cases hplus : α ≤ n + Finsupp.single i 1
+      · have hminus : α - Finsupp.single i 1 ≤ n := by
+          intro j
+          have hj := hplus j
+          by_cases hji : j = i
+          · subst j
+            simp only [Finsupp.tsub_apply, Finsupp.add_apply, Finsupp.single_eq_same] at *
+            omega
+          · simpa [Finsupp.tsub_apply, Finsupp.add_apply, Finsupp.single_apply, Ne.symm hji]
+              using hj
+        have heq : α i = n i + 1 := by
+          have hu := hplus i
+          simp only [Finsupp.add_apply, Finsupp.single_eq_same] at hu
+          by_contra hh
+          apply h
+          intro j
+          by_cases hji : j = i
+          · subst j
+            omega
+          · simpa [Finsupp.add_apply, Finsupp.single_apply, Ne.symm hji] using hplus j
+        have harg : n - (α - Finsupp.single i 1) = n + Finsupp.single i 1 - α := by
+          ext j
+          by_cases hji : j = i
+          · subst j
+            simp only [Finsupp.tsub_apply, Finsupp.add_apply, Finsupp.single_eq_same]
+            omega
+          · simp [Finsupp.tsub_apply, Finsupp.add_apply, Finsupp.single_apply, Ne.symm hji]
+        simp [annihilate, created, h, hplus, hminus, harg, heq]
+      · have hminus : ¬ α - Finsupp.single i 1 ≤ n := by
+          intro hh
+          apply hplus
+          rw [← hα]
+          exact add_le_add_right hh _
+        simp [annihilate, created, h, hplus, hminus]
+
+private theorem pairing_add_right (f g k : (H →₀ ℕ) → ℂ)
+    (hg : Summable (fun n : H →₀ ℕ => (weight n : ℂ) * f n * g n))
+    (hk : Summable (fun n : H →₀ ℕ => (weight n : ℂ) * f n * k n)) :
+    pairing f (fun n => g n + k n) = pairing f g + pairing f k := by
+  unfold pairing
+  simp only [mul_add]
+  exact hg.tsum_add hk
+
+/-- The actual two-sided creation moment, defined by the original bilinear
+factorial pairing and the original creation shifts. -/
+def bilinearMoment (A B : Matrix H H ℂ) (α β : H →₀ ℕ) : ℂ :=
+  pairing (created α (gaussianCoefficient A)) (created β (gaussianCoefficient B))
+
+/-- True creation/annihilation recurrence with both insertion monomials.
+The coordinate multiplicity is β_i, with zero-coordinate boundary terms
+included. Every infinite finite-sum exchange uses native summability. -/
+private theorem bilinearMoment_creation_step (A B : Matrix H H ℂ)
+    (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i)
+    (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
+    (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1)
+    (α β : H →₀ ℕ) (i : H) :
+    bilinearMoment A B (α + Finsupp.single i 1) β =
+      (β i : ℂ) * bilinearMoment A B α (β - Finsupp.single i 1) +
+        ∑ j, B i j * bilinearMoment A B α (β + Finsupp.single j 1) := by
+  let f := created α (gaussianCoefficient A)
+  let g := created (β - Finsupp.single i 1) (gaussianCoefficient B)
+  let t : H → (H →₀ ℕ) → ℂ := fun j n =>
+    B i j * created (β + Finsupp.single j 1) (gaussianCoefficient B) n
+  have hg : Summable (fun n : H →₀ ℕ => (weight n : ℂ) * f n * ((β i : ℂ) * g n)) := by
+    convert (created_pair_summable A B hAsym hBsym hA hB α
+      (β - Finsupp.single i 1)).mul_left (β i : ℂ) using 1
+    funext n
+    dsimp [f, g]
+    ring
+  have ht (j : H) : Summable (fun n : H →₀ ℕ => (weight n : ℂ) * f n * t j n) := by
+    convert (created_pair_summable A B hAsym hBsym hA hB α
+      (β + Finsupp.single j 1)).mul_left (B i j) using 1
+    funext n
+    dsimp [f, t]
+    ring
+  have hts : Summable (fun n : H →₀ ℕ => (weight n : ℂ) * f n * ∑ j, t j n) := by
+    simpa only [Finset.mul_sum] using summable_sum (s := Finset.univ) (fun j _ => ht j)
+  unfold bilinearMoment
+  rw [add_comm α, ← created_add, pairing_creation_annihilation,
+    annihilate_created_monomial, gaussian_annihilate B hBsym]
+  simp_rw [created_sum, created_const, created_add]
+  change pairing f (fun n => (β i : ℂ) * g n + ∑ j, t j n) = _
+  rw [pairing_add_right _ _ _ hg hts, pairing_const_right,
+    pairing_sum_right _ _ ht]
+  simp only [t, pairing_const_right]
+  rfl
+
+
+private theorem bilinearMoment_swap (A B : Matrix H H ℂ) (α β : H →₀ ℕ) :
+    bilinearMoment A B α β = bilinearMoment B A β α :=
+  pairing_comm _ _
+
+open scoped Matrix.Norms.L2Operator
+
+/-- The ordered resolvent equation for the actual two-sided factorial
+moments. This solves the creation/annihilation system without dividing by
+the vacuum scalar, and without assuming that A and B commute. -/
+theorem bilinearMoment_resolvent_step (A B : Matrix H H ℂ)
+    (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i)
+    (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
+    (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1)
+    (α β : H →₀ ℕ) :
+    (fun i => bilinearMoment A B (α + Finsupp.single i 1) β) =
+      Matrix.mulVec (1 - B * A)⁻¹ʳ
+        (Matrix.mulVec B (fun i => (α i : ℂ) *
+          bilinearMoment A B (α - Finsupp.single i 1) β) +
+          fun i => (β i : ℂ) * bilinearMoment A B α (β - Finsupp.single i 1)) := by
+  let U : H → ℂ := fun i => bilinearMoment A B (α + Finsupp.single i 1) β
+  let V : H → ℂ := fun i => bilinearMoment A B α (β + Finsupp.single i 1)
+  let u : H → ℂ := fun i => (β i : ℂ) * bilinearMoment A B α (β - Finsupp.single i 1)
+  let v : H → ℂ := fun i => (α i : ℂ) * bilinearMoment A B (α - Finsupp.single i 1) β
+  have hU : U = B.mulVec V + u := by
+    funext i
+    simpa only [U, V, u, Matrix.mulVec, dotProduct, Pi.add_apply, add_comm] using
+      bilinearMoment_creation_step A B hAsym hBsym hA hB α β i
+  have hV : V = A.mulVec U + v := by
+    funext i
+    have h := bilinearMoment_creation_step B A hBsym hAsym hB hA β α i
+    simp_rw [← bilinearMoment_swap A B] at h
+    simpa only [U, V, v, Matrix.mulVec, dotProduct, Pi.add_apply, add_comm] using h
+  have hrec : U = (B * A).mulVec U + (B.mulVec v + u) := by
+    rw [hV, Matrix.mulVec_add, Matrix.mulVec_mulVec] at hU
+    simpa only [add_assoc] using hU
+  have heq : (1 - B * A).mulVec U = B.mulVec v + u := by
+    rw [Matrix.sub_mulVec, Matrix.one_mulVec]
+    exact sub_eq_iff_eq_add.mpr (by simpa only [add_comm] using hrec)
+  have hBA : ‖B * A‖ < 1 := (norm_mul_le B A).trans_lt
+    ((mul_le_of_le_one_left (norm_nonneg A) hB.le).trans_lt hA)
+  have hu := isUnit_one_sub_of_norm_lt_one hBA
+  change U = Matrix.mulVec ((1 - B * A)⁻¹ʳ) (B.mulVec v + u)
+  calc
+    U = Matrix.mulVec ((1 - B * A)⁻¹ʳ) ((1 - B * A).mulVec U) := by
+      rw [Matrix.mulVec_mulVec, Ring.inverse_mul_cancel _ hu, Matrix.one_mulVec]
+    _ = _ := by rw [heq]
 
 end D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing

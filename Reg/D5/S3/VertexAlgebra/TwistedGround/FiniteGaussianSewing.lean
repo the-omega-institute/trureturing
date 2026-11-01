@@ -158,4 +158,97 @@ def convergenceAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+
+namespace Moment
+
+abbrev signature : Signature where
+  Params := Σ H : Type u, H
+  State p := p.1 → ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize _ (fun _ p f => f p.2) (fun e => nomatch e)
+
+def rejected : Realization signature.{u} :=
+  realize _ (fun _ _ _ => 0) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {H : Type u} [Fintype H] [DecidableEq H]
+    (A B : Matrix H H ℂ)
+    (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i)
+    (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
+    (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1)
+    (α β : H →₀ ℕ),
+    (fun i => R.readout () ⟨H,i⟩
+      (fun j => bilinearMoment A B (α + Finsupp.single j 1) β)) =
+      Matrix.mulVec (1 - B * A)⁻¹ʳ
+        (Matrix.mulVec B (fun i => (α i : ℂ) *
+          bilinearMoment A B (α - Finsupp.single i 1) β) +
+          fun i => (β i : ℂ) * bilinearMoment A B α (β - Finsupp.single i 1))
+
+private theorem rejected_fails : ¬ arena.{u}.Law rejected := by
+  intro h
+  let I := PUnit.{u+1}
+  let i : I := PUnit.unit
+  have hv := @_root_.D5.S3.VertexAlgebra.TwistedGround.FiniteSqueezedVacuum.vacuum_trace_log
+    I inferInstance inferInstance 0 0 (fun _ _ => rfl) (fun _ _ => rfl) (by simp) (by simp)
+  have h00 : bilinearMoment (0 : Matrix I I ℂ) 0 0 0 = 1 := by
+    simpa [bilinearMoment,
+      _root_.D5.S3.VertexAlgebra.TwistedGround.FiniteSqueezedVacuum.created_zero,
+      _root_.D5.S3.VertexAlgebra.TwistedGround.FiniteSqueezedVacuum.pairing] using hv.2.2
+  have hh := congrFun (@h I inferInstance inferInstance 0 0
+    (fun _ _ => rfl) (fun _ _ => rfl) (by simp) (by simp) 0 (Finsupp.single i 1)) i
+  simpa [rejected, realize, Matrix.zero_mul, Ring.inverse_one, h00] using hh
+
+private theorem actual_dependence : ObservationalDependence signature.{u} actual := by
+  intro i
+  refine ⟨⟨PUnit.{u+1}, PUnit.unit⟩, (fun _ => 0), (fun _ => 1), ?_⟩
+  norm_num [actual, realize]
+
+def evidence : Registration arena.{u} (type_of% (@bilinearMoment_resolvent_step.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@bilinearMoment_resolvent_step.{u}, rejected, rejected_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_fails⟩
+      intro j hj
+      change Unit at i j
+      exact (hj (@Subsingleton.elim Unit inferInstance j i)).elim
+    · intro e
+      cases e
+  dependence := actual_dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@bilinearMoment_resolvent_step.{u}) (Realization signature.{u}) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing.Moment.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing.Moment.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Moment
+
 end Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing
