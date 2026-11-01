@@ -7,6 +7,7 @@
    digest: Two continuous invariant parity-odd variables vanish on a chiral event. -/
 
 import Mathlib.LinearAlgebra.Matrix.Permutation
+import D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing
 import D5.S3.Topology.BorsukUlam.PlanarOddMapZero
 
 /-! The preregistered two-variable lower bound for chiral four-particle events. -/
@@ -135,38 +136,6 @@ private theorem family_continuous :
     fin_cases j <;>
     fun_prop
 
-private theorem perm_two_cases (sigma : Equiv.Perm (Fin 2)) :
-    sigma = 1 ∨ sigma = Equiv.swap 0 1 := by
-  have h0 : sigma 0 = 0 ∨ sigma 0 = 1 := by
-    rcases Fin.eq_zero_or_eq_succ (sigma 0) with h | ⟨j, h⟩
-    · exact Or.inl h
-    · right
-      simpa [Fin.eq_zero j] using h
-  rcases h0 with h0 | h0
-  · left
-    ext i
-    fin_cases i
-    · simpa using congrArg Fin.val h0
-    · have h01 : sigma 0 ≠ sigma 1 := sigma.injective.ne (by decide)
-      have hi : sigma 1 = 1 := by
-        rcases Fin.eq_zero_or_eq_succ (sigma 1) with h | ⟨j, h⟩
-        · exact False.elim (h01 (h0.trans h.symm))
-        · simpa [Fin.eq_zero j] using h
-      simpa using congrArg Fin.val hi
-  · right
-    ext i
-    fin_cases i
-    · simpa using congrArg Fin.val h0
-    · have h01 : sigma 0 ≠ sigma 1 := sigma.injective.ne (by decide)
-      have hi : sigma 1 = 0 := by
-        rcases Fin.eq_zero_or_eq_succ (sigma 1) with h | ⟨j, h⟩
-        · exact h
-        · exfalso
-          apply h01
-          have hj : sigma 1 = 1 := by simpa [Fin.eq_zero j] using h
-          exact h0.trans hj.symm
-      simpa [Equiv.swap_apply_def] using congrArg Fin.val hi
-
 private theorem fixed_axes (h : Matrix (Fin 4) (Fin 4) ℝ)
     (hhL : h.transpose * eta * h = eta)
     (hp : h.mulVec ![30, 0, 0, 1] = ![30, 0, 0, 1])
@@ -277,7 +246,8 @@ private theorem family_chiral
     chiral (family v) := by
   intro hbad
   rcases hbad with ⟨lam, hlam, sigma, tau, hact⟩
-  rcases perm_two_cases sigma with hsigma | hsigma
+  rcases D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing.two_forms sigma with
+    hsigma | hsigma
   · subst sigma
     have hp : lam.mulVec ![30, 0, 0, 1] = parityVector ![30, 0, 0, 1] := by
       simpa [act.eq_1, parity.eq_1, family.eq_1] using congrFun hact 0
@@ -335,7 +305,8 @@ private theorem family_chiral
       fin_cases i <;> simp [eta.eq_1, parityVector.eq_1, Matrix.mulVec,
         dotProduct, Fin.sum_univ_four]
     have haxes := fixed_axes h hhL hp' hq'
-    rcases perm_two_cases tau with htau | htau
+    rcases D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing.two_forms tau with
+      htau | htau
     · subst tau
       apply identity_stabilizer_contra (v 0) (v 2) (Real.sqrt (4 + v 1))
         (Real.sqrt (4 - v 1)) h hdet haxes

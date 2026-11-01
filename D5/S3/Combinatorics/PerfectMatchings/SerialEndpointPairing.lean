@@ -75,7 +75,7 @@ private theorem through_iff (M : CutModule.{u}) :
 
 end CutModule
 
-private theorem two_forms (c : Perm (Fin 2)) : c = 1 ∨ c = swap 0 1 := by
+theorem two_forms (c : Perm (Fin 2)) : c = 1 ∨ c = swap 0 1 := by
   generalize h0 : c (0 : Fin 2) = z
   fin_cases z
   · have h1 : c 1 = 1 := by
