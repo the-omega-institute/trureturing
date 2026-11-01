@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.PeriodicDaughterJointShortening;
 
 internal sealed class PeriodicDaughterJointShorteningDocument : IScribeDocumentDefinition
 {
