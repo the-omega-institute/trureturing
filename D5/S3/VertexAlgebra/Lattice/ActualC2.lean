@@ -1,21 +1,24 @@
-/- GID: D5/S3/VertexAlgebra/LatticeActualC2
+/- GID: D5/S3/VertexAlgebra/Lattice/ActualC2
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeActualC2
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/ActualC2
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: A negative-norm charge collapses the literal full-state actual C2 space.
-/-
+-/
 
 import D5.S3.VertexAlgebra.Lattice.NormFourFixedPeirce
 import D5.S3.VertexAlgebra.Lattice.NormFourVacuumC2Algebra
 import Batteries.Tactic.OpenPrivate
 
+/-! The literal full-state C2 space collapses for any negative-norm charge.
+The proof uses unrestricted higher negative modes, whole-span left -1
+stability, the actual ground coefficient and actual creation. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 4000000
 
-namespace D5.S3.VertexAlgebra.LatticeActualC2
+namespace D5.S3.VertexAlgebra.Lattice.ActualC2
 
 open LatticeGeneratingFieldLocality LatticeAllStateField LatticeAllStateReconstruction
 open LatticeActualStateFieldCalculus LatticeActualStateDerivative
@@ -37,7 +40,7 @@ def C2 (D : LatticeData) : Submodule ℂ (Carrier D) :=
 private theorem higher_product_mem (D : LatticeData) (r : ℕ)
     (a b : Carrier D) :
     mu D a (-((r : ℤ) + 2)) b ∈ C2 D := by
-  induction r generalizing a with
+  induction r generalizing a b with
   | zero =>
       exact Submodule.subset_span ⟨a, b, rfl⟩
   | succ r ih =>
@@ -92,8 +95,15 @@ private theorem ground_pair_mem (D : LatticeData) (α : Charge D)
     (hα : bilinear D α α < 0) : vacuum D ∈ C2 D := by
   let n : ℤ := bilinear D α α - 1
   have pair := ground_product D α (-α) n
-  have pair_mem : mu D (ground D α) n (ground D (-α)) ∈ C2 D :=
-    Submodule.subset_span ⟨ground D α, ground D (-α), rfl⟩
+  let r : ℕ := (-bilinear D α α - 2).toNat
+  have hrnonneg : 0 ≤ -bilinear D α α - 2 := by omega
+  have hr : (r : ℤ) = -bilinear D α α - 2 := by
+    dsimp [r]
+    exact Int.toNat_of_nonneg hrnonneg
+  have pair_mem : mu D (ground D α) n (ground D (-α)) ∈ C2 D := by
+    have h := higher_product_mem D r (ground D α) (ground D (-α))
+    simpa only [n, hr, show -((-bilinear D α α - 2) + 2) = bilinear D α α - 1 by ring]
+      using h
   have epsilon_ne_zero : epsilon D α (-α) ≠ 0 := by
     unfold epsilon paritySign
     split_ifs <;> norm_num
@@ -110,11 +120,10 @@ the vacuum into C2 and creation then forces the span to be the whole carrier. -/
 theorem negative_norm_c2_eq_top (D : LatticeData) (α : Charge D)
     (hα : bilinear D α α < 0) : C2 D = ⊤ := by
   apply le_antisymm le_top
-  apply top_unique
-  intro u hu
+  intro u _
   have vacuum_mem : vacuum D ∈ C2 D := ground_pair_mem D α hα
   have created := left_minus_one_mem D u (vacuum D) vacuum_mem
   simpa only [stateField_creation] using created
 
 end
-end D5.S3.VertexAlgebra.LatticeActualC2
+end D5.S3.VertexAlgebra.Lattice.ActualC2
