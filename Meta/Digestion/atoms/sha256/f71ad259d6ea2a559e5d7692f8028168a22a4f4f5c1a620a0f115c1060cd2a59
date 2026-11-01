@@ -1,0 +1,13 @@
+**Theorem 39.2 (complete full-profile cell and continued prediction).** Equality of $\mathsf P_B$, equality of $\mathsf F_B$ and the following no-cut condition are equivalent:
+
+$$
+0<x<y,\qquad \mathcal H_B\cap(x,y]=\varnothing.
+\tag{39.2}
+$$
+
+The cells are $(0,1/B)\cap\mathbb Q$ and $[\ell,r)\cap\mathbb Q$ between successive positive cuts of $\mathcal H_B$. Every cell has finite rational endpoints with reduced denominators at most $B$. There are infinitely many cells on the whole carrier. One cell, together with $B$, suffices to evaluate every coordinate of $\mathsf P_B$ by finite exact arithmetic and to update this profile through any actual finite forward continuation.
+
+Proof. The cut theorem 11.2 gives the cuts $\mathcal C_m$ of the entire single-scale future family. Every reduced denominator there is at most $m$, so $\bigcup_{m\le B}\mathcal C_m\subseteq\mathcal H_B$. Conversely a reduced $p/q$ with $q\le B$ is already a cut of the instantaneous $q_q$, hence belongs to $\mathcal C_q$. Thus this union equals $\mathcal H_B$. The instantaneous grids have the same union, proving both equivalences, with the right endpoint included exactly as in (11.4). Local finiteness follows by counting finitely many numerators at each of the finitely many denominators on a bounded interval. Integer cuts ensure finite upper endpoints. Distinct cuts $p/q,p'/q'$ differ by at least $1/(qq')\ge1/B^2$; this is supporting Farey arithmetic, not a new enumeration theorem.
+
+For evaluation choose $y_0=\ell$ when $\ell>0$, and $y_0=r/2$ in the first cell. Evaluate $q_m(f_v(y_0))$ using the actual matrix convention of §6. The equivalence proves this equals the value for every possible source in the cell, for every finite $v$, not just for words in a stored list. For a new action $a$, equal profiles before it give equal profiles after it by replacing $v$ with the chronological concatenation $av$. Consequently the cell containing $f_a(y_0)$ is the updated full-profile cell. This proves continued use and finite evaluation, without executing a prediction or acquiring a literal original history. $\square$
+

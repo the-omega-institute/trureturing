@@ -32,11 +32,65 @@ internal sealed class RankOfContextualityNonPowerTwoDocument : IScribeDocumentDe
                 "Section 2, PDF page 4: “With any set of observables V = {Vᵢ}, we can identify their commutation relations and represent them by a hypergraph H on this set where hyperedges are subsets of the powerset of V that denote contexts, i.e. sets of mutually commuting observables.” Binary observables are Hermitian involutions. Their spectral projections are multiplied in the list order, and the Born probability is the trace against the density matrix."),
             Node("claim", "The construction question", Seq(N("claim"), Sp, Iff, Sp, Existence()), AssessedProvenance.FromLiterature(Source),
                 "Section 9 (Section IX in the arXiv source), PDF page 19: “" + Question + "” The observable and context counts m and k, their lists C, the behavior P and its integer rank r are all existential. The final universal quantifier excludes every power 2^n, including n = 0."),
+            SquareNode("idx", "The square's row and column indices", SquareIndexFormula(),
+                "The eighteen equations list all three positions of each of the six contexts. Labels zero through eight are in row-major order; the first three contexts are rows and the last three are columns. The ordered context C(x) is the list of these three indices."),
+            SquareNode("parity3", "The parity of three binary outcomes", All("a", SquareOutcome(),
+                Eqn(SquareCall("parity3", N("a")), App(Q("Bool", "xor"),
+                    App(Q("Bool", "xor"), Call("a", D(0)), Call("a", D(1))), Call("a", D(2))))),
+                "Exclusive-or of the three outcomes records whether an odd number are true."),
+            SquareNode("target", "The square's prescribed context parities", All("x", Fin(D(6)),
+                Eqn(SquareCall("target", N("x")), Call("ite", Eqn(N("x"), D(5)),
+                    Q("Bool", "true"), Q("Bool", "false")))),
+                "Only context five, the third column, has target true, corresponding to a negative product."),
+            SquareNode("bv_parity", "Parity as a natural-number residue", All("a", SquareOutcome(),
+                Eqn(App(Q("Bool", "toNat"), SquareCall("parity3", N("a"))),
+                    App(Q("Nat", "mod"), Add(Add(
+                        App(Q("Bool", "toNat"), Call("a", D(0))),
+                        App(Q("Bool", "toNat"), Call("a", D(1)))),
+                        App(Q("Bool", "toNat"), Call("a", D(2)))), D(2)))),
+                "The natural value of the Boolean parity is the sum of the three natural bit values modulo two.", DescribeRole.Lemma),
+            SquareNode("parity_miss", "Every assignment misses a square parity", All("g", Arrow(Fin(D(9)), N("Bool")),
+                Ex("x", Fin(D(6)), new Formula.Relation(
+                    SquareCall("parity3", Fn("i", Fin(D(3)), Call("g",
+                        App(Q("List", "get"), SquareCall("C", N("x")), N("i"))))),
+                    FormulaRelationOperator.NotEqual, SquareCall("target", N("x"))))),
+                "For every Boolean assignment to the nine observables, at least one of the six context parities differs from its prescribed target.", DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("rank-context-product-pm-get-idx"),
+                DeclarationHandle.Create(Prefix + "pm_get_idx"), H("Context lookup agrees with square indexing"),
+                StatementSource.FromAuthor(Disp(All("s", Fin(D(6)), All("i", Fin(D(3)),
+                    Eqn(App(Q("List", "get"), SquareCall("C", N("s")), N("i")),
+                        SquareCall("idx", N("s"), N("i"))))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Looking up position i in the square context s gives its row-major observable index."))),
+                DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("rank-three-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("A quantum rank that is not a power of two"), StatementSource.FromAuthor(Disp(N("claim"))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The behavior is the product of two Peres–Mermin squares: 18 observable labels, 36 paired contexts, and the maximally mixed state on Fin 16. Each square has five positive parity contexts and one negative parity context. For every context c, the uniform weight on the 16 assignments with the sole parity defect at c agrees with the square away from c. The three products with matching row defects cover every paired context, since at most two of the three rows occur in that pair. For the lower bound, each noncontextual product-scenario model has noncontextual copy marginals. One bad first-copy context for one model and one bad second-copy context for another produce a paired context that neither model reproduces. Thus every cover has at least three distinct members, and the displayed three-member cover is optimal. The rank is 3, which is odd and greater than one, so it is not 2^n for any natural n."))), DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("horodecki-2022-rank-of-contextuality-non-power-of-two"), ResolutionKind.Proved)))));
+
+    private static DocumentBlock SquareNode(string name, string title, Formula formula, string prose,
+        DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+            DescribeId.Create("rank-context-square-" + name.ToLowerInvariant().Replace('_', '-')),
+            DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), role);
+    private static Formula SquareCall(string name, params Formula[] args) => App(Q("Square", name), args);
+    private static Formula SquareOutcome() => Arrow(Fin(D(3)), N("Bool"));
+    private static Formula SquareIndexFormula()
+    {
+        int[] labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 0, 3, 6, 1, 4, 7, 2, 5, 8];
+        Formula entry(int n) => Eqn(SquareCall("idx", D((byte)(n / 3)), D((byte)(n % 3))), D((byte)labels[n]));
+        Formula body = entry(labels.Length - 1);
+        for (var n = labels.Length - 2; n >= 0; n--) body = And(entry(n), body);
+        var x = N("x");
+        Formula entries = Q("List", "nil");
+        for (var i = 2; i >= 0; i--)
+            entries = App(Q("List", "cons"), SquareCall("idx", x, D((byte)i)), entries);
+        var contexts = All("x", Fin(D(6)), Eqn(
+            Parenthesized(Seq(SquareCall("C", x), Colon, Sp, Call("List", Fin(D(9))))), entries));
+        return And(body, contexts);
+    }
 
     private static DocumentBlock Node(string name, string title, Formula formula, AssessedProvenance provenance, string prose) =>
         Describe.Lean(DescribeId.Create("rank-context-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),

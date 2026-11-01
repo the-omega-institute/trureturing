@@ -1,0 +1,43 @@
+**Theorem 5.1 (a returned label is a callable current state).** Suppose Theorem 2.1 succeeds, and retain its acquired output as an immutable entry label $b_{\rm entry}=\eta_n(C_0)$. Install a separate current register $b=\eta_n(C_*)$ with the supplied FARG100.5 updates. Then, for every finite subsequent legal word $w$, processing the actual source operations and the same supplied parameters in this updater gives
+
+$$
+b_w=\eta_n(w(C_*)),\qquad
+\operatorname{Out}(b_w)=F_H(w(C_*)).
+\tag{AQBR.16}
+$$
+
+Thus, using $b$ and public operation inputs, the controller may output the current task value without another source read. Both the current reader and the finite-word predictor are actual installed algorithms. A prediction for an unexecuted word is not an acquired observation of that word's effects.
+
+**Proof.** Here are the exact local interfaces being installed. On an axis with new threshold $e$, modulus $M=p^{h-e}$, and $\nu_{p,h-e}(0)=h-e$, the reader is
+
+$$
+S(r,u)\mapsto r,\qquad D(z)\mapsto e+\nu_{p,h-e}(z).
+\tag{AQBR.17}
+$$
+
+These exponents give the current gcd and then $F_H$. For the actual input $c_i=p^e\delta_i$, use
+
+$$
+D(z)\mapsto D(z+\delta_i),\qquad
+S(r,u)\mapsto S(r,u+p^{e-r}\delta_i).
+\tag{AQBR.18}
+$$
+
+For the actual positive input $m=p^av$, $p\nmid v$, use
+
+$$
+\begin{aligned}
+D(z)&\mapsto D(mz),\\
+S(r,u)&\mapsto
+\begin{cases}
+S(r+a,vu),&r+a<e,\\
+D(p^{r+a-e}vu),&r+a\ge e.
+\end{cases}
+\end{aligned}
+\tag{AQBR.19}
+$$
+
+Coordinates are reduced modulo $M$. As proved in FARG100.5, these are well defined and agree with the actual arithmetic, including saturation, $e=0$, $e=h$, and a scalar whose residue is zero. It is sufficient to handle the scalar's residue modulo $H$ in local computation, using positive representative $H$ for zero; reading and delivering the original parameter $m$ to the source is still charged. All library additions have the required divisibility by $p^e$.
+
+At installation, (AQBR.11), (AQBR.9) and representative independence give $b=\eta_n(C_*)$. Each next actual operation and its local update commute by these supplied formulas. Induction on the word gives (AQBR.16). This is the concrete infinite-positive-source correspondence of FARG100 and `global_encoding_complete`, rather than an application of a finite-source universality theorem to an unproved infinite domain. The finite-carrier [`controlled_behavior_universal_property`](../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean) supplies the general factorization perspective, not the acquisition or this domain bridge. $\square$
+

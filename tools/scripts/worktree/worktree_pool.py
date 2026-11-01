@@ -14,22 +14,15 @@ import uuid
 from worktree_protocol import (GitFailure, Refused, acquire, common, git, git_environment, git_scope,
                                identity, inventory, remote_endpoint, scope_fds, tree_scope, value)
 from worktree_publication import commit_snapshot, confirm
-from worktree_preservation import REMOVAL_RECORD, interrupted_removal, qualify, remove
+from worktree_preservation import REMOVAL_RECORD, finished_operations, interrupted_removal, qualify, remove
 
 IDLE_PREFIX = "refs/heads/lane/governance/idle-"
 IDLE_CAPACITY = 4
 PINS = ("lean-toolchain", "lake-manifest.json")
-OPERATIONS = ("MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "rebase-merge", "rebase-apply", "sequencer")
 
 
 def idle_reference(reference):
     return reference.startswith(IDLE_PREFIX) and len(reference) > len(IDLE_PREFIX)
-
-
-def finished_operations(metadata):
-    for marker in OPERATIONS:
-        if (metadata / marker).exists():
-            raise Refused("unfinished_operation:" + marker)
 
 
 def clean(path, metadata):
@@ -54,7 +47,6 @@ def idle_state(source, path, dev, removal_stack=None):
     if (metadata / REMOVAL_RECORD).exists():
         if removal_stack is None:
             raise Refused("idle_removal_pending")
-        finished_operations(metadata)
         pending = interrupted_removal(path, metadata, removal_stack, source, reference,
                                       reconverge=False) is not None
     if not pending:
@@ -413,9 +405,7 @@ def claim(options):
                     for pin in PINS:
                         if (path / pin).read_bytes() != expected[pin]:
                             raise Refused("claim_pin_changed:" + pin)
-                    for marker in OPERATIONS:
-                        if (metadata / marker).exists():
-                            raise Refused("unfinished_operation:" + marker)
+                    finished_operations(metadata)
                     return dict(event="worktree_init", status="claimed", path=str(path), branch=options.branch,
                                 base_revision=base, allocation_time=allocated,
                                 dotnet_restore="skipped" if options.skip_restore else "restored")
