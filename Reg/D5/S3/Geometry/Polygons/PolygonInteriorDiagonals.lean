@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Geometry.Polygons.PolygonInteriorDiagonals
 import Reg.Support.DependentFamily
 
+/-! Native diagonal readout on the complete coordinate and size family. -/
+
 namespace Reg.D5.S3.Geometry.Polygons.PolygonInteriorDiagonals
 open _root_.D5.S3.Geometry.Polygons.PolygonInteriorDiagonals
 open _root_.D5.S3.Geometry.Polygons.PolygonEarSlide
@@ -10,12 +12,12 @@ open Set Module
 universe u
 
 abbrev source_scope := type_of% (@isDiagonal_iff_openSegment_subset_interior.{u})
-def source : source_scope := @isDiagonal_iff_openSegment_subset_interior.{u}
+def source : source_scope.{u} := @isDiagonal_iff_openSegment_subset_interior.{u}
 
 structure Parameters where
   E : Type u
   group : NormedAddCommGroup E
-  space : @NormedSpace ℝ E _ group.toAddCommGroup
+  space : @NormedSpace ℝ E _ group.toSeminormedAddCommGroup
   n : ℕ
   nonzero : NeZero n
 
@@ -31,32 +33,42 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-noncomputable def actual : Realization signature :=
-  realize signature (fun _ p e => Carrier.IsDiagonal e) (fun e => nomatch e)
+noncomputable def actual : Realization signature.{u} :=
+  realize signature.{u} (fun _ p e => Carrier.IsDiagonal e) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature
-  Law O := ∀ (p : Parameters) (hdim : finrank ℝ p.E = 2) (hn : 3 ≤ p.n)
+  signature := signature.{u}
+  Law O := ∀ (p : Parameters.{u}) (hdim : finrank ℝ p.E = 2) (hn : 3 ≤ p.n)
     (poly : Polygon p.E p.n) (B : BoundaryModel poly) (i j : ZMod p.n),
     O.readout () p s(i,j) ↔ vertex poly i ≠ vertex poly j ∧
       openSegment ℝ (vertex poly i) (vertex poly j) ⊆
         interior (convexHull ℝ (range poly.vertices))
 
-theorem bridge : source_scope ↔ arena.Law actual := by
+theorem bridge : source_scope.{u} ↔ arena.{u}.Law actual.{u} := by
   constructor
   · intro h p hdim hn poly B i j
     exact @h p.E p.group p.space p.n p.nonzero hdim hn poly B i j
   · intro h E group space n nonzero hdim hn poly B i j
     exact h ⟨E,group,space,n,nonzero⟩ hdim hn poly B i j
 
-theorem actual_law : arena.Law actual := bridge.mp source
+theorem actual_law : arena.{u}.Law actual.{u} := bridge.{u}.mp source.{u}
 
-theorem dependence : ObservationalDependence signature actual := by
+theorem dependence : ObservationalDependence signature.{u} actual.{u} := by
   intro role
   let p : Parameters.{u} := ⟨PUnit.{u+1}, inferInstance, inferInstance, 4, inferInstance⟩
   refine ⟨p, s((0 : ZMod 4),0), s((0 : ZMod 4),2), ?_⟩
   change Carrier.IsDiagonal s((0 : ZMod 4),0) ≠ Carrier.IsDiagonal s((0 : ZMod 4),2)
   decide
+
+noncomputable def rejected : Realization signature.{u} :=
+  realize signature.{u} (fun _ _ _ => True) (fun e => nomatch e)
+
+theorem rejected_of_model (p : Parameters.{u}) (hdim : finrank ℝ p.E = 2)
+    (hn : 3 ≤ p.n) (poly : Polygon p.E p.n) (B : BoundaryModel poly) :
+    ¬ arena.{u}.Law rejected.{u} := by
+  intro law
+  have h := (law p hdim hn poly B 0 0).mp trivial
+  exact h.1 rfl
 
 /-!
 The enrolled readout is the native diagonal predicate over all unordered label
