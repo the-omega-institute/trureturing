@@ -14,7 +14,7 @@ open _root_.D5.S3.Combinatorics.Circle.PeriodicDaughterJointShortening
 
 /- Exact dependent-family pattern from settled PhysicalJointRepetition Reg,
 51518b6ee6ccebd7ee3cb0e03e5c13589a570a9c, adapted to K=(d+1)*r-1 and
-its explicit global cut. Source preparation only; no registration validation. -/
+its explicit global cut. -/
 abbrev Input := Σ _ : ℕ, Σ _ : ℕ, Σ _ : ℕ, ℕ
 
 abbrev signature : Signature where

@@ -52,6 +52,7 @@ structure ScaleFacts (d w r : ℕ) : Prop where
   daughter_margin : G d r * n d ≤ modulus (length d r + 1) / 2
 
 set_option maxHeartbeats 4000000 in
+-- Polynomial certificates combine native charges and three modulus identities.
 theorem scale_facts (d w r : ℕ) (hd : 2 ≤ d)
     (hw : w ≤ 2 ^ (d - 1) - 1) (hr : 2 ≤ r) : ScaleFacts d w r := by
   have hlen : length d r + 1 = (d + 1) * r := by
@@ -186,7 +187,6 @@ theorem phase_data (d w : ℕ) (hd : 2 ≤ d) (hw : w ≤ 2 ^ (d - 1) - 1)
         · rw [fs.daughter_half]
           constructor <;> nlinarith [fs.w_bound, fs.q_eq, fs.w_nonneg]
         · rw [centered_mod]
-          change ((2 : ℤ) ^ i.val * (2 * w : ℕ)) % modulus (d + 1) = _
           have he : (2 : ℤ) ^ i.val * (2 * w : ℕ) =
               (w : ℤ) + modulus (d + 1) * w := by
             rw [hiv, modulus, pow_succ, Nat.cast_mul, Nat.cast_ofNat]; ring
@@ -256,6 +256,7 @@ theorem regular_double (d w r j : ℕ) (hd : 2 ≤ d)
   ring
 
 set_option maxHeartbeats 4000000 in
+-- Polynomial certificates combine native charges and three modulus identities.
 theorem regular_source (d w r j : ℕ) (hd : 2 ≤ d)
     (hw : w ≤ 2 ^ (d - 1) - 1) (hr : 2 ≤ r) (hj : j < r - 1)
     (i : Fin (d + 1)) (hp : j * (d + 1) + i.val < length d r) :
@@ -282,8 +283,10 @@ theorem regular_source (d w r j : ℕ) (hd : 2 ≤ d)
     have hlow := mul_le_mul_of_nonneg_left hrow.2.2.2.2.1 hg0
     have hhi := mul_le_mul_of_nonneg_left hrow.2.2.2.2.2 hg0
     have hwH := mul_le_mul_of_nonneg_left hJ (show 0 ≤ 2 * (w : ℤ) by positivity)
-    have hz := mul_nonneg (show 0 ≤ 2 * (w : ℤ) by positivity) (show 0 ≤ H d r by linarith [fs.H_ge])
-    constructor <;> nlinarith only [hdbl, hb0, hB, hlow, hhi, hwH, hz, fs.regular_margin, fs.old_half]
+    have hz := mul_nonneg (show 0 ≤ 2 * (w : ℤ) by positivity)
+      (show 0 ≤ H d r by linarith [fs.H_ge])
+    constructor <;>
+      nlinarith only [hdbl, hb0, hB, hlow, hhi, hwH, hz, fs.regular_margin, fs.old_half]
   obtain ⟨hN, ho⟩ := TwoRunSource.modulus_positive_odd (length d r) (by
     have := fs.length_succ; have := Nat.mul_le_mul (show 3 ≤ d + 1 by omega) hr; omega)
   apply centered_unique hN ho (centered_bounds hN ho _) hcap
@@ -321,6 +324,7 @@ theorem regular_source (d w r j : ℕ) (hd : 2 ≤ d)
   rw [heq', Int.sub_mul_emod_self_left]
 
 set_option maxHeartbeats 4000000 in
+-- Polynomial certificates combine native charges and three modulus identities.
 theorem top_source (d w r : ℕ) (hd : 2 ≤ d)
     (hw : w ≤ 2 ^ (d - 1) - 1) (hr : 2 ≤ r) (i : Fin d)
     (hp : (r - 1) * (d + 1) + i.val < length d r) :
@@ -368,8 +372,9 @@ theorem top_source (d w r : ℕ) (hd : 2 ≤ d)
     change _ - _ = modulus (length d r) * _ at heq; linarith
   rw [heq', Int.sub_mul_emod_self_left]
 
-/-- Exact periodic daughter source, with distinct physical labels in every block. -/
 set_option maxHeartbeats 4000000 in
+-- Polynomial certificates combine native charges and three modulus identities.
+/-- Exact periodic daughter source, with distinct physical labels in every block. -/
 theorem daughter_source (d w r j : ℕ) (hd : 2 ≤ d)
     (hw : w ≤ 2 ^ (d - 1) - 1) (hr : 2 ≤ r) (i : Fin (d + 1))
     (hp : j * (d + 1) + i.val < length d r + 1) :

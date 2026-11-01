@@ -7,19 +7,18 @@
    digest: Generic minus-one physical joint transport with periodic daughter. -/
 import D5.S3.Combinatorics.Circle.PeriodicDaughterJointShortening.Words
 
-/-! Prepared source, not elaborated. This is the MINUS-one transport at
-K=(d+1)*r-1. Both outputs are the full actual OriginalOrder predicates. -/
+/-! MINUS-one transport at K=(d+1)*r-1 with both full actual
+OriginalOrder predicates. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option maxHeartbeats 4000000
 
 namespace D5.S3.Combinatorics.Circle.PeriodicDaughterJointShortening
 open SourceWidth PeriodicShorteningArithmetic PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
 
-/- The following list helpers are the minimum consumed versions of the private
-helpers in PeriodicShortening / PhysicalJointRepetition (pins in the manifest).
-They are kept private to this owner; no abstract order replaces OriginalOrder. -/
+/- The linear sum and prefix-to-strip helpers are ports of the private
+PeriodicShortening helpers at 447f4235385fe941888b620340cd4429dfbf0e61.
+The remaining list identities organize native source prefixes. -/
 private theorem sum_linear {α : Type*} (l : List α) (f g : α → ℤ) (u v : ℤ) :
     (l.map (fun x => u * f x + v * g x)).sum =
       u * (l.map f).sum + v * (l.map g).sum := by

@@ -9,13 +9,12 @@ import D5.S3.Combinatorics.Circle.PeriodicDaughterJointShortening.Arithmetic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option maxHeartbeats 4000000
 
 namespace D5.S3.Combinatorics.Circle.PeriodicDaughterJointShortening
 open SourceWidth PeriodicShorteningArithmetic PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
 
- theorem length_split (d r : ℕ) (hr : 2 ≤ r) :
+theorem length_split (d r : ℕ) (hr : 2 ≤ r) :
     length d r = (r - 1) * (d + 1) + d := by
   have he : (d + 1) * r = (r - 1) * (d + 1) + (d + 1) := by
     calc
@@ -60,7 +59,7 @@ def daughterWord (d r : ℕ) (hr : 2 ≤ r) (eta : List (Fin (d + 1))) :
 
 /-- Port of the consumed private ear-prefix lemma from RunFirstEarTransport
 at 447f4235385fe941888b620340cd4429dfbf0e61. It includes saturated takes. -/
- theorem ear_prefix_sum (d : ℕ) (sigma : List (Fin d)) (cut : ℕ)
+theorem ear_prefix_sum (d : ℕ) (sigma : List (Fin d)) (cut : ℕ)
     (hc : cut ≤ sigma.length) (f : Fin (d + 1) → ℤ) (h : ℕ) :
     (((earWord d sigma cut).take h).map f).sum =
       ((sigma.take (if h ≤ cut then h else h - 1)).map
@@ -93,7 +92,7 @@ at 447f4235385fe941888b620340cd4429dfbf0e61. It includes saturated takes. -/
                   List.take_succ_cons, List.sum_cons, add_assoc] using
                   congrArg (f x.castSucc + ·) he
 
- theorem ear_sum (d : ℕ) (tau : List (Fin d)) (cut : ℕ) (f : Fin (d + 1) → ℤ) :
+theorem ear_sum (d : ℕ) (tau : List (Fin d)) (cut : ℕ) (f : Fin (d + 1) → ℤ) :
     ((earWord d tau cut).map f).sum =
       (tau.map (fun i => f i.castSucc)).sum + f (Fin.last d) := by
   have he := congrArg (fun xs : List (Fin d) =>
@@ -103,7 +102,7 @@ at 447f4235385fe941888b620340cd4429dfbf0e61. It includes saturated takes. -/
     List.sum_append, List.map_singleton, List.sum_singleton]
   omega
 
- theorem lower_length (d r cut : ℕ) (hr : 2 ≤ r) (tau : List (Fin d))
+theorem lower_length (d r cut : ℕ) (hr : 2 ≤ r) (tau : List (Fin d))
     (htau : tau.Perm (List.finRange d)) :
     (lowerWord d r hr (earWord d tau cut)).length = (r - 1) * (d + 1) := by
   have ht : tau.length = d := by simpa using htau.length_eq
@@ -121,7 +120,7 @@ at 447f4235385fe941888b620340cd4429dfbf0e61. It includes saturated takes. -/
     | cons x xs ih => simp [ih, he, Nat.succ_mul]
   simpa using hlen (List.finRange (r - 1))
 
- theorem ear_after (k : ℕ) (xs ys : List (Fin k)) (cut : ℕ) :
+theorem ear_after (k : ℕ) (xs ys : List (Fin k)) (cut : ℕ) :
     earWord k (xs ++ ys) (xs.length + cut) =
       xs.map Fin.castSucc ++ earWord k ys cut := by
   induction xs with
@@ -131,7 +130,7 @@ at 447f4235385fe941888b620340cd4429dfbf0e61. It includes saturated takes. -/
         List.take_succ_cons, List.drop_succ_cons, List.map_cons] using
           congrArg (fun zs => x.castSucc :: zs) ih
 
- theorem literal_ear (d r cut : ℕ) (hr : 2 ≤ r) (tau : List (Fin d))
+theorem literal_ear (d r cut : ℕ) (hr : 2 ≤ r) (tau : List (Fin d))
     (htau : tau.Perm (List.finRange d)) :
     earWord (length d r) (shortenedWord d r hr tau cut) (commonCut d r cut) =
       daughterWord d r hr (earWord d tau cut) := by
@@ -175,7 +174,7 @@ at 447f4235385fe941888b620340cd4429dfbf0e61. It includes saturated takes. -/
 /-- The product-inventory proof is the ascending version of the consumed
 private block_perm argument in PhysicalJointRepetition at settled
 51518b6ee6ccebd7ee3cb0e03e5c13589a570a9c. No transport theorem is imported. -/
- theorem daughter_perm (d r : ℕ) (hr : 2 ≤ r) (eta : List (Fin (d + 1)))
+theorem daughter_perm (d r : ℕ) (hr : 2 ≤ r) (eta : List (Fin (d + 1)))
     (heta : eta.Perm (List.finRange (d + 1))) :
     (daughterWord d r hr eta).Perm (List.finRange (length d r + 1)) := by
   classical
@@ -226,7 +225,7 @@ private block_perm argument in PhysicalJointRepetition at settled
     exact List.mem_map.mpr ⟨(j, i), by simp, hv⟩
   exact (List.Perm.flatMap_left _ (fun j _ => heta.map _)).trans hcomplete
 
- theorem ear_perm (d : ℕ) (tau : List (Fin d)) (cut : ℕ)
+theorem ear_perm (d : ℕ) (tau : List (Fin d)) (cut : ℕ)
     (htau : tau.Perm (List.finRange d)) :
     (earWord d tau cut).Perm (List.finRange (d + 1)) := by
   have he : (earWord d tau cut).Perm (tau.map Fin.castSucc ++ [Fin.last d]) := by
@@ -249,7 +248,7 @@ private block_perm argument in PhysicalJointRepetition at settled
 def removeFresh (k : ℕ) (i : Fin (k + 1)) : Option (Fin k) :=
   if hi : i.val < k then some ⟨i.val, hi⟩ else none
 
- theorem old_perm_of_ear (k : ℕ) (sigma : List (Fin k)) (cut : ℕ)
+theorem old_perm_of_ear (k : ℕ) (sigma : List (Fin k)) (cut : ℕ)
     (he : (earWord k sigma cut).Perm (List.finRange (k + 1))) :
     sigma.Perm (List.finRange k) := by
   have hmap (xs : List (Fin k)) :
@@ -268,7 +267,7 @@ def removeFresh (k : ℕ) (i : Fin (k + 1)) : Option (Fin k) :=
   have hh := he.filterMap (removeFresh k)
   simpa only [hleft, hright] using hh
 
- theorem shortened_perm (d r cut : ℕ) (hr : 2 ≤ r) (tau : List (Fin d))
+theorem shortened_perm (d r cut : ℕ) (hr : 2 ≤ r) (tau : List (Fin d))
     (htau : tau.Perm (List.finRange d)) :
     (shortenedWord d r hr tau cut).Perm (List.finRange (length d r)) := by
   apply old_perm_of_ear (length d r) _ (commonCut d r cut)

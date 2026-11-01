@@ -22,5 +22,5 @@ internal sealed class PeriodicDaughterJointShorteningDocument : IScribeDocumentD
                 DescribeRole.Theorem),
             new DocumentBlock.Section(H("Unbounded four-gap application"), Blocks(
                 Paragraph(Text("Let a>=2, b>a and b>=3. Set d=a+b-1, w=2^a+1, r=2. The two base gaps are a and b-1, both at least two; the library two-negative nondecreasing/strict joint-lift theorems supply a common-cut witness according as a<=b-1 or b-1<a. Since b-1>=2, d-1>=a+1 and 2^a+1<=2^(d-1)-1. Then K=2(a+b)-1 and U=(2^a+1)(1+2^(a+b))=1+2^a+2^(a+b)+2^(2a+b), the four gaps (a,b,a,b-1). This is an entire unbounded application, including (s,s+1,s,s); it is explanatory algebra under the generic endpoint, with no additional specialization theorem or registration.")),
-                Paragraph(Text("This prepared source has not been elaborated, kernel checked, emitted or officially accepted. Full arbitrary b-maximum J and CircleJ/C3.1 remain open."))))), []));
+                Paragraph(Text("Full arbitrary b-maximum J and CircleJ/C3.1 remain open."))))), []));
 }
