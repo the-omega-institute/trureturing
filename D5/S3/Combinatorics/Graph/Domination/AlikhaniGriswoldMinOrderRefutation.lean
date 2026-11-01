@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/Domination/AlikhaniGriswoldMinOrderRefutation
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.zero_of_messages]
+   anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/Domination/AlikhaniGriswoldMinOrderRefutation.claim; result=D5/S3/Combinatorics/Graph/Domination/AlikhaniGriswoldMinOrderRefutation.result; claim=D5/S3/Combinatorics/Graph/Domination/AlikhaniGriswoldMinOrderRefutation.claim
    digest: A connected 21-vertex ordinary-domination witness at minus four refutes the complete order-33 minimality claim. -/
 
