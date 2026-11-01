@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Positive additive duration detects all rooted named paths exactly in the absence of branching.
+On a recurrent quiver, positive additive duration detects all rooted named paths exactly in the absence of branching.
 
 **Theorem 1.1 (Recurrent branching is exactly the reconstruction obstruction).**
 
