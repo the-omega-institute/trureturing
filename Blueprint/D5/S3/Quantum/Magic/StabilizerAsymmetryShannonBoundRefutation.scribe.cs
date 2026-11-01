@@ -14,10 +14,6 @@ internal sealed class StabilizerAsymmetryShannonBoundRefutationDocument : IScrib
         "A three-qubit state violates the proposed Shannon entropy lower bound for stabilizer bases.",
         H("A counterexample to the Shannon branch-and-bound lower bound"),
         Blocks(
-            Definition("bits", "Bits", "Binary strings", BitsFormula(),
-                "Bits n is the set of n binary coordinates, indexed by Fin n and valued in ZMod 2. "
-                    + "It represents the binary strings in the stabilizer standard form of Section V.C, draft.tex lines 749–764. "
-                    + "The definitions also allow n equal to zero."),
             Definition("strict-upper", "IsStrictUpper", "The strictly upper-triangular part", StrictUpperFormula(),
                 "A matrix is strictly upper triangular when every entry on or below its diagonal is zero. "
                     + "This is the condition on the off-diagonal part Q′ in the splitting Q = Qd + Q′ of draft.tex line 769."),
@@ -93,9 +89,6 @@ internal sealed class StabilizerAsymmetryShannonBoundRefutationDocument : IScrib
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
-    private static Formula BitsFormula() => All("n", Naturals(),
-        Equal(LocalCall("Bits", X("n")), Arrow(FinOf(X("n")), BinaryField())));
-
     private static Formula StrictUpperFormula() => All("n", Naturals(), All("q", MatrixType(),
         Equivalence(LocalCall("IsStrictUpper", X("q")), All("i", FinOf(X("n")), All("j", FinOf(X("n")),
             Arrow(new Formula.Not(Parenthesized(LessThan(X("i"), X("j")))),
@@ -111,30 +104,30 @@ internal sealed class StabilizerAsymmetryShannonBoundRefutationDocument : IScrib
         Formula phase = new Formula.Power(Qualified("Complex", "I"), SumOver("i", FinOf(X("n")),
             Multiply(At(Qualified("ZMod", "val"), At(X("c"), X("i"))),
                 At(Qualified("ZMod", "val"), At(X("x"), X("i"))))));
-        return All("n", Naturals(), All("q", MatrixType(), All("c", BitsOf(X("n")), All("x", BitsOf(X("n")),
+        return All("n", Naturals(), All("q", MatrixType(), All("c", BinaryType(X("n")), All("x", BinaryType(X("n")),
             Equal(LocalCall("stabAmp", X("q"), X("c"), X("x")), Multiply(Multiply(scale, sign), phase))))));
     }
 
-    private static Formula OverlapProbFormula() => All("n", Naturals(), All("q", MatrixType(), All("c", BitsOf(X("n")),
-        All("ψ", StateType(), All("d", BitsOf(X("n")), Equal(LocalCall("overlapProb", X("q"), X("c"), X("ψ"), X("d")),
-            At(Qualified("Complex", "normSq"), SumOver("x", BitsOf(X("n")),
+    private static Formula OverlapProbFormula() => All("n", Naturals(), All("q", MatrixType(), All("c", BinaryType(X("n")),
+        All("ψ", StateType(), All("d", BinaryType(X("n")), Equal(LocalCall("overlapProb", X("q"), X("c"), X("ψ"), X("d")),
+            At(Qualified("Complex", "normSq"), SumOver("x", BinaryType(X("n")),
                 Multiply(At(Qualified("Star", "star"), LocalCall("stabAmp",
                     Parenthesized(Add(At(Qualified("Matrix", "diagonal"), X("d")), X("q"))), X("c"), X("x"))),
                     At(X("ψ"), X("x")))))))))));
 
-    private static Formula AbsProbFormula() => All("n", Naturals(), All("ψ", StateType(), All("d", BitsOf(X("n")),
-        Equal(LocalCall("absProb", X("ψ"), X("d")), At(Qualified("Complex", "normSq"), SumOver("x", BitsOf(X("n")),
+    private static Formula AbsProbFormula() => All("n", Naturals(), All("ψ", StateType(), All("d", BinaryType(X("n")),
+        Equal(LocalCall("absProb", X("ψ"), X("d")), At(Qualified("Complex", "normSq"), SumOver("x", BinaryType(X("n")),
             Multiply(At(Qualified("Star", "star"), LocalCall("stabAmp", At(Qualified("Matrix", "diagonal"), X("d")),
                 At(Qualified("Function", "const"), FinOf(X("n")), Typed(D(0), BinaryField())), X("x"))),
                 At(Qualified("Complex", "ofReal"), new Formula.Norm(At(X("ψ"), X("x")))))))))));
 
     private static Formula ClaimFormula()
     {
-        Formula unit = Equal(SumOver("x", BitsOf(X("n")), At(Qualified("Complex", "normSq"), At(X("ψ"), X("x")))),
+        Formula unit = Equal(SumOver("x", BinaryType(X("n")), At(Qualified("Complex", "normSq"), At(X("ψ"), X("x")))),
             Typed(D(1), Reals()));
         Formula inequality = LE(Entropy(LocalCall("absProb", X("ψ"))), Entropy(LocalCall("overlapProb", X("q"), X("c"), X("ψ"))));
         return Equivalence(Local("claim"), All("n", Naturals(), Arrow(LE(D(1), X("n")), All("ψ", StateType(),
-            Arrow(unit, All("q", MatrixType(), All("c", BitsOf(X("n")), Arrow(LocalCall("IsStrictUpper", X("q")), inequality))))))));
+            Arrow(unit, All("q", MatrixType(), All("c", BinaryType(X("n")), Arrow(LocalCall("IsStrictUpper", X("q")), inequality))))))));
     }
 
     private static Formula X(string name) => name == "ψ" ? Psi : F.Id(name);
@@ -158,9 +151,9 @@ internal sealed class StabilizerAsymmetryShannonBoundRefutationDocument : IScrib
     private static Formula Complexes() => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula BinaryField() => At(Qualified("ZMod"), D(2));
     private static Formula FinOf(Formula n) => At(Qualified("Fin"), n);
-    private static Formula BitsOf(Formula n) => LocalCall("Bits", n);
+    private static Formula BinaryType(Formula n) => Arrow(FinOf(n), BinaryField());
     private static Formula MatrixType() => At(Qualified("Matrix"), FinOf(X("n")), FinOf(X("n")), BinaryField());
-    private static Formula StateType() => Arrow(BitsOf(X("n")), Complexes());
+    private static Formula StateType() => Arrow(BinaryType(X("n")), Complexes());
     private static Formula Entropy(Formula p) => At(Qualified("D5", "S3", "Entropy", "MaxEntropy", "shannonEntropy"), p);
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, Typed(X(name), type), Comma, Sp, Parenthesized(body));
