@@ -123,7 +123,7 @@ abbrev scalarSignature : Signature :=
 def actualKernel : Realization scalarSignature :=
   realize scalarSignature (fun _ _ t => K t) (fun e => nomatch e)
 
-private theorem kernel_dependence : ObservationalDependence scalarSignature actualKernel := by
+theorem kernel_dependence : ObservationalDependence scalarSignature actualKernel := by
   intro role
   obtain ⟨n, x, y, hxy⟩ := actual_dependence ()
   by_contra hh

@@ -44,7 +44,7 @@ private lemma damped_ramp (n : ℕ) (t : ℝ) :
   have he : Real.exp (-t / 2) * Real.exp t = Real.exp (t / 2) := by
     rw [← Real.exp_add]; congr 1; ring
   unfold mangoldtRamp ramp
-  rw [mul_left_comm, mul_max_of_nonneg (Real.exp_nonneg _), mul_zero]
+  rw [mul_left_comm, mul_max_of_nonneg _ _ (Real.exp_nonneg _), mul_zero]
   congr 2
   rw [mul_sub, ← mul_div_assoc, he, mul_one]
 
@@ -165,14 +165,16 @@ theorem kernel_lipschitz {a b : ℝ} {N : ℕ} (ha : 0 < a) (hab : a ≤ b)
         rw [← mul_sub, abs_mul, abs_of_nonneg ArithmeticFunction.vonMangoldt_nonneg]
         exact mul_le_mul_of_nonneg_left (ramp_bound ha.le hu hv n) ArithmeticFunction.vonMangoldt_nonneg
       _ = _ := by
-        dsimp only [A, P]
-        simp_rw [mul_add, mul_one, add_div]
-        simp only [Finset.sum_add_distrib, Finset.sum_mul, Finset.mul_sum,
-          Finset.sum_div, mul_div_assoc]
-        congr 1
-        apply Finset.sum_congr rfl
-        intro n _
-        ring
+        calc
+          _ = ∑ n ∈ Finset.range N,
+              ((Real.exp (b / 2) * (ArithmeticFunction.vonMangoldt n / (n : ℝ)) +
+                ArithmeticFunction.vonMangoldt n) / 2) * |u - v| := by
+            apply Finset.sum_congr rfl
+            intro n _
+            ring
+          _ = _ := by
+            rw [← Finset.sum_mul, ← Finset.sum_div, Finset.sum_add_distrib, ← Finset.mul_sum]
+            rfl
   rw [finite_decomposition (ha.le.trans hu.1) hu.2 hN,
     finite_decomposition (ha.le.trans hv.1) hv.2 hN]
   calc

@@ -6,7 +6,12 @@ internal sealed class CompleteMangoldtLaplaceDocument : IScribeDocumentDefinitio
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Inclusive Mangoldt ramps and complete Mertens transform", H("Inclusive Mangoldt ramps and complete Mertens transform"),
-        Blocks(Paragraph(Text("The function U is the existing CompleteMertensPeak.U, with inclusive Chebyshev psi and the actual Euler constant. The locally finite positive-part ramp is zero when an integer term enters, so continuity includes every prime-power endpoint. Positive Tonelli and the complete Mangoldt LSeries at two pay the infinite arithmetic exchange before the complex integral is evaluated. The Fourier line is s=2+2*pi*i*t.")),
+        Blocks(
+            Describe.Lean(DescribeId.Create("completemangoldtlaplace-mangoldtPart-eq-range"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.mangoldtPart_eq_range"),
+                H("The exact finite ramp window"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every nonnegative real t and every natural N with t<N, the complete Mangoldt ramp sum equals the finite sum over n<N. The strict window cutoff retains every nonzero arithmetic ramp."))), DescribeRole.Theorem),
+            Paragraph(Text("The function U is the existing CompleteMertensPeak.U, with inclusive Chebyshev psi and the actual Euler constant. The locally finite positive-part ramp is zero when an integer term enters, so continuity includes every prime-power endpoint. Positive Tonelli and the complete Mangoldt LSeries at two pay the infinite arithmetic exchange before the complex integral is evaluated. The Fourier line is s=2+2*pi*i*t.")),
             Describe.Lean(DescribeId.Create("mangoldt-ramp-nonneg"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.mangoldtRamp_nonneg"),
                 H("mangoldtRamp nonneg"), StatementSource.WithoutFormula(),
