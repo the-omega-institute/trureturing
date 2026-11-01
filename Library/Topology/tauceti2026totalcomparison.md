@@ -40,8 +40,11 @@ package dependency. The retained construction consists of row-zero inclusion,
 positive-row quotient by extension along `n ↦ n+1`, natural antidiagonal
 splitting, the simultaneous cutoff induction and the exact comparison theorem.
 Native finite-antidiagonal, total-map, extension-homology and homology-diagram
-interfaces are reused. Auxiliary declarations are private. Augmentation,
-symmetry and singular-chain subtrees are omitted.
+interfaces are reused. The local epi and isomorphism homology-transfer lemmas,
+extension-homology transport lemmas, successor embedding, row reindexing and
+its morphism, natural short-complex morphism and short-exactness theorem are
+public for finite-degree comparison. The remaining auxiliary declarations
+are private. Augmentation and singular-chain subtrees are omitted.
 
 The telescope has independent object and morphism universes, every abelian
 category, every first-quadrant bicomplex and its actual morphism. Rowwise

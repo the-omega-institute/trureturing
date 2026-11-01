@@ -65,7 +65,7 @@ private lemma mono_homologyMap_τ₂ (j : ι)
 
 /-- The map `φ.τ₂` is surjective on homology in degree `j` if `φ.τ₁` and `φ.τ₃` are surjective in
 degree `j` and `φ.τ₁` is injective in the degrees following `j`. -/
-private lemma epi_homologyMap_τ₂ (j : ι)
+lemma epi_homologyMap_τ₂ (j : ι)
     (h₁ : Epi (homologyMap φ.τ₁ j))
     (h₂ : Epi (homologyMap φ.τ₃ j))
     (h₃ : ∀ k, c.Rel j k → Mono (homologyMap φ.τ₁ k)) :
@@ -88,7 +88,7 @@ private lemma epi_homologyMap_τ₂ (j : ι)
 /-- The map `φ.τ₂` is an isomorphism on homology in degree `j` if `φ.τ₁` and `φ.τ₃` are
 isomorphisms in degree `j`, `φ.τ₃` is surjective in the degrees preceding `j`, and `φ.τ₁` is
 injective in the degrees following `j`. -/
-private lemma isIso_homologyMap_τ₂ (j : ι)
+lemma isIso_homologyMap_τ₂ (j : ι)
     (h₁ : ∀ i, c.Rel i j → Epi (homologyMap φ.τ₃ i))
     (h₂ : IsIso (homologyMap φ.τ₁ j))
     (h₃ : IsIso (homologyMap φ.τ₃ j))
@@ -104,11 +104,11 @@ namespace HomologicalComplex
 variable {C : Type u} [Category.{v} C] [Abelian C]
   {ι ι' : Type*} {c : ComplexShape ι} {c' : ComplexShape ι'}
   {K L : HomologicalComplex C c} (φ : K ⟶ L) {e : c.Embedding c'}
-private lemma epi_homologyMap_extendMap_iff {j : ι} {j' : ι'} (hj' : e.f j = j') :
+lemma epi_homologyMap_extendMap_iff {j : ι} {j' : ι'} (hj' : e.f j = j') :
     Epi (homologyMap (extendMap φ e) j') ↔ Epi (homologyMap φ j) :=
   (MorphismProperty.epimorphisms C).arrow_mk_iso_iff
     (Arrow.isoMk (K.extendHomologyIso e hj') (L.extendHomologyIso e hj') (by simp))
-private lemma isIso_homologyMap_extendMap_of_forall_ne {j' : ι'} (hj' : ∀ j, e.f j ≠ j') :
+lemma isIso_homologyMap_extendMap_of_forall_ne {j' : ι'} (hj' : ∀ j, e.f j ≠ j') :
     IsIso (homologyMap (extendMap φ e) j') :=
   ⟨0, (K.extend_exactAt e j' hj').isZero_homology.eq_of_src _ _,
     (L.extend_exactAt e j' hj').isZero_homology.eq_of_src _ _⟩
@@ -125,7 +125,7 @@ private instance hasTotal_down_nat [HasFiniteCoproducts C]
 
 end HomologicalComplex₂
 namespace ComplexShape
-private def embeddingDownNatSucc : (ComplexShape.down ℕ).Embedding (ComplexShape.down ℕ) :=
+def embeddingDownNatSucc : (ComplexShape.down ℕ).Embedding (ComplexShape.down ℕ) :=
   embeddingDown'Add (1 : ℕ) 1
 @[simp] private lemma embeddingDownNatSucc_f (n : ℕ) : embeddingDownNatSucc.f n = n + 1 := rfl
 private instance : embeddingDownNatSucc.IsRelIff :=
@@ -146,7 +146,7 @@ omit [HasFiniteCoproducts C] in
 /-- The rows `≥ 1` of `K`, reindexed so that row `q + 1` of `K` is row `q`. The summands are
 `(K.X p).X (q + 1)` up to reducible unfolding, which lets rewriting identify them with those of
 `K`. -/
-private abbrev rowsSucc : HomologicalComplex₂ C (ComplexShape.down ℕ) (ComplexShape.down ℕ) where
+abbrev rowsSucc : HomologicalComplex₂ C (ComplexShape.down ℕ) (ComplexShape.down ℕ) where
   X p :=
     { X q := (K.X p).X (q + 1)
       d q q' := (K.X p).d (q + 1) (q' + 1)
@@ -367,7 +367,7 @@ variable {K} {L : HomologicalComplex₂ C (ComplexShape.down ℕ) (ComplexShape.
 
 omit [HasFiniteCoproducts C] in
 /-- The map of the bicomplexes of rows `≥ 1` induced by `φ`. -/
-private abbrev rowsSuccMap : rowsSucc K ⟶ rowsSucc L where
+abbrev rowsSuccMap : rowsSucc K ⟶ rowsSucc L where
   f p := { f q := (φ.f p).f (q + 1) }
 
 @[reassoc]
@@ -382,7 +382,7 @@ private lemma dropRowZeroX_naturality (n : ℕ) :
 
 variable [HasZeroObject C] in
 /-- The map of short complexes induced by `φ`. -/
-private noncomputable def rowZeroShortComplexMap :
+noncomputable def rowZeroShortComplexMap :
     rowZeroShortComplex K ⟶ rowZeroShortComplex L where
   τ₁ := ((eval C (ComplexShape.down ℕ) 0).mapHomologicalComplex _).map φ
   τ₂ := total.map φ (ComplexShape.down ℕ)
@@ -405,7 +405,7 @@ variable {C : Type u} [Category.{v} C] [Abelian C]
 
 /-- The short complex `row 0 ⟶ Tot K ⟶ extend(Tot (rowsSucc K), n ↦ n + 1)` is short exact; it is split in each
 degree. -/
-private lemma rowZeroShortComplex_shortExact
+lemma rowZeroShortComplex_shortExact
     (K : HomologicalComplex₂ C (ComplexShape.down ℕ) (ComplexShape.down ℕ)) :
     (rowZeroShortComplex K).ShortExact :=
   shortExact_of_degreewise_shortExact _ fun n ↦ (rowZeroShortComplexXSplitting K n).shortExact
