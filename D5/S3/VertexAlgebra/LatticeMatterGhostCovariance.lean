@@ -4,7 +4,7 @@
    mirror-E: none(waiver:algebraic-matter-ghost-covariance)
    anchors: []
    utility: none
-   digest: Shifted finite cancellation leaves the exact rank anomaly of the native matter coupling. -/
+   digest: Finite shifted cancellation gives the matter coupling rank anomaly. -/
 
 import D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
 
@@ -93,7 +93,10 @@ private theorem weighted_finite (D : LatticeData)
     (a : ℤ → ℂ) : Function.HasFiniteSupport (fun k : ℤ => a k • paired D H r k x) := by
   apply (paired_finite D H r x).subset
   intro k hk hn
-  exact hk (by rw [hn, smul_zero])
+  apply hk
+  change a k • paired D H r k x = 0
+  change paired D H r k x = 0 at hn
+  rw [hn, smul_zero]
 
 private theorem matter_commutator (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -129,20 +132,19 @@ private theorem ghost_commutator (D : LatticeData)
         BcGhostFock.c (-m) (BcGhostVirasoro.L r w)) := by abel
       _ = _ := by
         rw [h, ← neg_smul]
-        congr 1 <;> push_cast <;> ring
+        congr 1; push_cast; ring
   simp only [summand, ghostVirasoro, paired, LinearMap.sub_apply,
     LinearMap.smul_apply, Module.End.mul_apply, TensorProduct.map_tmul,
     LinearMap.id_apply]
   rw [← TensorProduct.tmul_sub, hr, TensorProduct.tmul_smul]
 
-private theorem central_sum (D : LatticeData)
-    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (r : ℤ) (x : State D) :
+private theorem central_sum (D : LatticeData) (r : ℤ) (x : State D) :
     (∑ᶠ m : ℤ, (if m+r = 0 then (D.rank : ℂ)/12*((m : ℂ)^3-m) else 0) •
       ghostC D (-m) x) =
       (-((D.rank : ℂ)/12*((r : ℂ)^3-r))) • ghostC D r x := by
   rw [finsum_eq_single _ (-r) (fun m hm => by
     simp [show m+r ≠ 0 by omega])]
-  simp only [neg_add_cancel, if_true, neg_neg, Int.cast_neg]
+  simp only [neg_add_cancel, ite_true, neg_neg, Int.cast_neg]
   congr 1
   ring
 
@@ -222,7 +224,7 @@ theorem covariance (D : LatticeData)
     intro k hk
     by_contra hn
     have ht : k < r-(A : ℤ) ∨ U < k := by
-      simpa only [Finset.mem_coe, Finset.mem_Icc, not_and_or, not_le] using hn
+      simpa only [Finset.mem_coe, J, Finset.mem_Icc, not_and_or, not_le] using hn
     apply hk
     simp only [x, paired, TensorProduct.map_tmul]
     rcases ht with ht | ht
@@ -236,22 +238,31 @@ theorem covariance (D : LatticeData)
     have he : m = -r := by
       by_contra hn
       exact hm (by simp [show m+r ≠ 0 by omega])
-    simpa only [he] using hcentral
+    simpa only [he, Finset.mem_coe] using hcentral
   have hw : Function.HasFiniteSupport (fun k : ℤ =>
       ((k-2*r : ℤ) : ℂ) • paired D H r k x) := by
     apply I.finite_toSet.subset
     intro k hk
     apply hJI (hpairedJ ?_)
     intro hz
-    exact hk (by rw [hz, smul_zero])
+    change paired D H r k x = 0 at hz
+    apply hk
+    change ((k-2*r : ℤ) : ℂ) • paired D H r k x = 0
+    rw [hz, smul_zero]
   have hshift : Function.HasFiniteSupport (fun m : ℤ =>
       ((m-r : ℤ) : ℂ) • paired D H r (m+r) x) := by
     apply I.finite_toSet.subset
     intro m hm
     have hk : m+r ∈ J := hpairedJ (by
       intro hz
-      exact hm (by rw [hz, smul_zero]))
-    convert hJshift (m+r) hk using 1 <;> congr 1 <;> omega
+      change paired D H r (m+r) x = 0 at hz
+      apply hm
+      change ((m-r : ℤ) : ℂ) • paired D H r (m+r) x = 0
+      rw [hz, smul_zero])
+    have hmem := hJshift (m+r) hk
+    have he : m+r-r = m := by omega
+    rw [he] at hmem
+    exact Finset.mem_coe.mpr hmem
   have hmatter : T D H (matterMode D H r x) - matterMode D H r (T D H x) =
       (∑ᶠ k : ℤ, ((k-2*r : ℤ) : ℂ) • paired D H r k x) +
         (-((D.rank : ℂ)/12*((r : ℂ)^3-r))) • ghostC D r x := by
@@ -259,14 +270,14 @@ theorem covariance (D : LatticeData)
       matterMode D H r (∑ᶠ m : ℤ, summand D H m x) = _
     rw [map_finsum (matterMode D H r) hx, ← finsum_sub_distrib hM hMx]
     calc
-      _ = ∑ᶠ m : ℤ, ((m-r : ℤ) : ℂ) • paired D H r (m+r) x +
+      _ = ∑ᶠ m : ℤ, (((m-r : ℤ) : ℂ) • paired D H r (m+r) x +
           (if m+r = 0 then (D.rank : ℂ)/12*((m : ℂ)^3-m) else 0) •
-            ghostC D (-m) x := by
+            ghostC D (-m) x) := by
         apply finsum_congr
         intro m
         exact LinearMap.congr_fun (matter_commutator D H hHG hGH m r) x
       _ = _ := by
-        rw [finsum_add_distrib hshift hc, central_sum D H r x]
+        rw [finsum_add_distrib hshift hc, central_sum D r x]
         congr 1
         calc
           _ = ∑ᶠ m : ℤ, ((m+r-2*r : ℤ) : ℂ) • paired D H r (m+r) x := by
