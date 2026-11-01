@@ -33,7 +33,7 @@ Application with the explicit Catalan denominators.
 For the full B-37.2 application, retain all the hypotheses above but allow A or B to be empty. Define the integer function Npq as follows; Catalan(k) is the natural Catalan number, choose(q,j) is the binomial coefficient, and n-p-j-2 uses natural subtraction.
 
 $$
-(\operatorname{Npq}\left(n, p, q\right) = \left(\sum_{(j = 0)}\right)^{q} (({-1}^{j} \cdot \operatorname{choose}\left(q, j\right)) \cdot \operatorname{Catalan}\left((((n - p) - j) - 2)\right)))
+\forall n \in Nat,\; \forall p \in Nat,\; \forall q \in Nat,\; (\operatorname{Npq}\left(n, p, q\right) = \sum _{j\in \operatorname{range}\left((q + 1)\right)} ((((-1)^{j} \cdot \operatorname{Int}\left(\operatorname{choose}\left(q, j\right)\right)) \cdot \operatorname{Int}\left(\operatorname{Catalan}\left((((n - p) - j) - 2)\right)\right))))
 $$
 
 The pairwise noncrossing hypothesis on K is exactly PolygonEarContraction.Compatible(K). Apply PolygonConditionalCounts.conditional_card first to P,Q and then separately to Q,P, using disjointness in the corresponding orientation. WholeFiber is the complete fibre with empty observation, so these applications give the two integer identities below. They do not identify the two denominators.
