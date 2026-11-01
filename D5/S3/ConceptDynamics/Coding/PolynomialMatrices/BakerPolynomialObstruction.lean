@@ -1,30 +1,10 @@
-/- GID: D5/S3/ConceptDynamics/Coding/BakerPolynomialObstruction
+/- GID: D5/S3/ConceptDynamics/Coding/PolynomialMatrices/BakerPolynomialObstruction
    generality: I
-   mirror-B: D5/B/S3/ConceptDynamics/Coding/BakerPolynomialObstruction
-   mirror-E: none(waiver:source-artifact-awaiting-canonical-validation)
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PolynomialMatrices/BakerPolynomialObstruction
+   mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
    digest: The Baker pair over coefficientwise nonnegative polynomials admits no exchange chain. -/
-
-/-
-UNCOMPILED SOURCE ARTIFACT. No Lean elaboration, kernel check, scoped report,
-or axiom-closure check has been run on this file. Build resources are queued;
-this status is not a mathematical rejection. Transfer to a canonical compatible
-worktree before running the repository's make lean / lean-report-scoped doors.
-
-Provenance: Baker's polynomial pair, as asked in Jeandel, arXiv:2609.03567v1,
-archived source SSE.tex, question after \\end{document}. This file addresses
-precisely the semiring Polynomial Nat, all natural lags (including zero), and
-arbitrary finite rectangular intermediate dimensions through exchange_chain_lag.
-It makes no claim about integer evaluations, real coefficient polynomials,
-publication status, priority, or uniqueness. The ordinary proof review supplied
-to this implementation stage is not a Lean validation receipt.
-
-Library first: the rational irreducibility input is dbonacci_irreducible at 2;
-the change of variable is algEquivAevalNegX; prime-power divisors are handled
-by dvd_prime_pow. Matrix sizes are preserved by the existing exchange_chain_lag.
-All remaining declarations below are consumed by the two final obstructions.
--/
 
 import D5.S0.Tower.DBonacci.Irreducibility
 import D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
@@ -34,6 +14,17 @@ import Mathlib.Algebra.GroupWithZero.Associated
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Tactic
+
+/-!
+# Baker polynomial obstruction
+
+The fixed pair in Jeandel's archived draft question admits no coupled lag
+witnesses over Polynomial Nat, and hence no finite rectangular exchange chain.
+The source question is after the end of the rendered arXiv:2609.03567v1 document.
+Four-slot escape audit is unfinished: https://github.com/the-omega-institute/trureturing/issues/25126.
+The proof reuses the order-two multinacci irreducibility theorem, the negated-X
+automorphism, prime-power divisors, and the existing exchange-chain lag theorem.
+-/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
