@@ -49,7 +49,6 @@ internal sealed class MinusFourBaseStatesDocument : IScribeDocumentDefinition
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(FormulaDsl.Id(name))), [.. args]);
     private static Formula Nat => Seq(Mathbb, Grp(FormulaDsl.Id("N")));
-    private static Formula Integer => Seq(Mathbb, Grp(FormulaDsl.Id("Z")));
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, P(Seq(FormulaDsl.Id(name), Colon, type)), Comma, Sp, body);
     private static Formula Some(string name, Formula type, Formula body) =>

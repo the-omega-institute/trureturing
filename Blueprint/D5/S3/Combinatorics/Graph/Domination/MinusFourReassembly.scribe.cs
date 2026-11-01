@@ -29,7 +29,6 @@ internal sealed class MinusFourReassemblyDocument : IScribeDocumentDefinition
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(FormulaDsl.Id(name))), [.. args]);
     private static Formula Nat => Seq(Mathbb, Grp(FormulaDsl.Id("N")));
-    private static Formula Integer => Seq(Mathbb, Grp(FormulaDsl.Id("Z")));
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, P(Seq(FormulaDsl.Id(name), Colon, type)), Comma, Sp, body);
     private static Formula Some(string name, Formula type, Formula body) =>
@@ -38,8 +37,6 @@ internal sealed class MinusFourReassemblyDocument : IScribeDocumentDefinition
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
     private static Formula And(Formula left, Formula right) =>
         new Formula.Logic(P(left), FormulaLogicOperator.And, P(right));
-    private static Formula ImpliesF(Formula left, Formula right) =>
-        new Formula.Logic(P(left), FormulaLogicOperator.Implies, P(right));
     private static Formula MinusFour => P(Seq(Minus, D(4)));
     private static Formula BaseValue => Call("evaluation", FormulaDsl.Id("sourceGraph"), MinusFour);
     private static Formula FamilyEvent()
