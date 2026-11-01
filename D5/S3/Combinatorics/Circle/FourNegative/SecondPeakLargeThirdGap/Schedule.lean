@@ -134,7 +134,7 @@ private theorem joint_construction (a b c d : ℕ)
   have eh : (h:ℤ)=lam*HZ := by simp only [h,Nat.cast_mul,elam,eH]
   have em : (m:ℤ)=(z-1)*lam := by
     simp only [m,Nat.cast_mul,
-      Nat.cast_sub (by have := Nat.two_pow_pos c; omega),
+      Nat.cast_sub (show 1 ≤ (2:ℕ)^c by have := Nat.two_pow_pos c; omega),
       Nat.cast_pow,Nat.cast_ofNat,Nat.cast_one,elam,z]
   have elow : (low:ℤ)=lam-1 := by
     dsimp [low]
