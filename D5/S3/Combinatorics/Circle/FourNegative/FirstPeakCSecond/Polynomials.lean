@@ -32,6 +32,24 @@ private structure UniformBounds (x y z t H g s : ℤ) : Prop where
     (4*y≤z ∧ 0 ≤ (x*z*t+z*t+z+1)-2*(x*t*(y+1)+t+1)-H*(y*z+y+1) ∧
     0 ≤ z*(x*t*(y+1)+t+1)-2*(x*z*t+z*t+z+1)-1)
 
+private theorem uniformBounds_mk (x y z t H g s : ℤ)
+    (oldLower : 0 ≤ t*(x*(y*z+y+1)+1)-2*s*(t*y*z+(y*z+y+1)))
+    (oldUpper : 0 ≤ (x*(y*z+y+1)+1)-1-
+      (t*(x*(y*z+y+1)+1)-2*s*(t*y*z+(y*z+y+1))))
+    (newLower : 0 ≤ 2*(t-1)*(x*(y*z+y+1)+1)-2*s*(2*(t*y*z+(y*z+y+1))-(y*z+y+1)))
+    (newUpper : 0 ≤ (x*(y*z+y+1)+1)-1-
+      (2*(t-1)*(x*(y*z+y+1)+1)-2*s*(2*(t*y*z+(y*z+y+1))-(y*z+y+1))))
+    (tightOld : 0 ≤ (x*t*(y+1)+t+1)-H*(t*y*z+(y*z+y+1))-1)
+    (tightCeil : 0 ≤ H*(2*(t*y*z+(y*z+y+1))-(y*z+y+1))-(x*t*(y+1)+t+1))
+    (grainCapacity : 0 ≤ g-H)
+    (third : (z=2*y ∧ 0 ≤ (x*z*t+z*t+z+1)-(x*t*(y+1)+t+1)-H*(t*y*z+(y*z+y+1)) ∧
+      0 ≤ 2*(x*t*(y+1)+t+1)-(x*z*t+z*t+z+1)-1) ∨
+      (4*y≤z ∧ 0 ≤ (x*z*t+z*t+z+1)-2*(x*t*(y+1)+t+1)-H*(y*z+y+1) ∧
+      0 ≤ z*(x*t*(y+1)+t+1)-2*(x*z*t+z*t+z+1)-1)) :
+    UniformBounds x y z t H g s :=
+  ⟨oldLower, oldUpper, newLower, newUpper, tightOld, tightCeil, grainCapacity, third⟩
+
+
 set_option maxHeartbeats 1600000 in
 private theorem adjacent_t8_old_first_lower (Y T J E : ℤ)
     (hY : 0≤Y) (hT : 0≤T) (hJ : 0≤J) (hE : 0≤E) :

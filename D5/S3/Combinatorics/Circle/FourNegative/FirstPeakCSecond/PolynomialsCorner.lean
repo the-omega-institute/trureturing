@@ -14,7 +14,7 @@ import Batteries.Tactic.OpenPrivate
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond
-open private UniformBounds UniformBounds.mk
+open private UniformBounds uniformBounds_mk
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Polynomials
 
 set_option maxHeartbeats 1600000 in
@@ -240,15 +240,16 @@ private theorem chart_small_corner (Y T J E : ℤ)
   let Mn : ℤ := 2*M-D
   UniformBounds x y z t H g s := by
   dsimp only
-  refine ⟨small_corner_old_first_lower Y T J E hY hT hJ hE,
-    small_corner_old_first_peak Y T J E hY hT hJ hE,
-    small_corner_new_first_lower Y T J E hY hT hJ hE,
-    small_corner_new_first_peak Y T J E hY hT hJ hE,
-    small_corner_tight_old_bank Y T J E hY hT hJ hE,
-    small_corner_tight_r_capacity Y T J E hY hT hJ hE,
-    small_corner_bit_divisor_capacity Y T J E hY hT hJ hE, ?_⟩
-  left
-  exact ⟨by ring, small_corner_third_tight_lower Y T J E hY hT hJ hE,
-    small_corner_third_upper Y T J E hY hT hJ hE⟩
+  apply uniformBounds_mk
+  · exact small_corner_old_first_lower Y T J E hY hT hJ hE
+  · exact small_corner_old_first_peak Y T J E hY hT hJ hE
+  · exact small_corner_new_first_lower Y T J E hY hT hJ hE
+  · exact small_corner_new_first_peak Y T J E hY hT hJ hE
+  · exact small_corner_tight_old_bank Y T J E hY hT hJ hE
+  · exact small_corner_tight_r_capacity Y T J E hY hT hJ hE
+  · exact small_corner_bit_divisor_capacity Y T J E hY hT hJ hE
+  · left
+    exact ⟨by ring, small_corner_third_tight_lower Y T J E hY hT hJ hE,
+      small_corner_third_upper Y T J E hY hT hJ hE⟩
 
 end D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond

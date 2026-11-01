@@ -14,7 +14,7 @@ import Batteries.Tactic.OpenPrivate
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond
-open private UniformBounds UniformBounds.mk
+open private UniformBounds uniformBounds_mk
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Polynomials
 
 set_option maxHeartbeats 1600000 in
@@ -871,17 +871,18 @@ private theorem chart_separated (Y T J E : ℤ)
   let Mn : ℤ := 2*M-D
   UniformBounds x y z t H g s := by
   dsimp only
-  refine ⟨separated_old_first_lower Y T J E hY hT hJ hE,
-    separated_old_first_peak Y T J E hY hT hJ hE,
-    separated_new_first_lower Y T J E hY hT hJ hE,
-    separated_new_first_peak Y T J E hY hT hJ hE,
-    separated_tight_old_bank Y T J E hY hT hJ hE,
-    separated_tight_r_capacity Y T J E hY hT hJ hE,
-    separated_bit_divisor_capacity Y T J E hY hT hJ hE, ?_⟩
-  right
-  refine ⟨?_, separated_third_gate_width Y T J E hY hT hJ hE,
-    separated_w_capacity_strict Y T J E hY hT hJ hE⟩
-  have hy : 0 ≤ 2*(4+T)*(1+Y) := by positivity
-  nlinarith only [mul_nonneg hy hE]
+  apply uniformBounds_mk
+  · exact separated_old_first_lower Y T J E hY hT hJ hE
+  · exact separated_old_first_peak Y T J E hY hT hJ hE
+  · exact separated_new_first_lower Y T J E hY hT hJ hE
+  · exact separated_new_first_peak Y T J E hY hT hJ hE
+  · exact separated_tight_old_bank Y T J E hY hT hJ hE
+  · exact separated_tight_r_capacity Y T J E hY hT hJ hE
+  · exact separated_bit_divisor_capacity Y T J E hY hT hJ hE
+  · right
+    refine ⟨?_, separated_third_gate_width Y T J E hY hT hJ hE,
+      separated_w_capacity_strict Y T J E hY hT hJ hE⟩
+    have hy : 0 ≤ 2*(4+T)*(1+Y) := by positivity
+    nlinarith only [mul_nonneg hy hE]
 
 end D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond
