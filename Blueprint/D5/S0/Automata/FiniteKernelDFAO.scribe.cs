@@ -41,7 +41,7 @@ internal sealed class FiniteKernelDFAODocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         LibraryNoteRef source, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("finite-kernel-" + name.Replace('_', '-')),
+        Describe.Lean(DescribeId.Create("finite-kernel-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             AssessedProvenance.FromLiterature(source), Blocks(Paragraph(Text(prose))), role);
 
@@ -115,10 +115,10 @@ internal sealed class FiniteKernelDFAODocument : IScribeDocumentDefinition
         Imp(Member(F.Id("b"), Call("Kernel", F.Id("q"), F.Id("a"))),
         Imp(Less(F.Id("j"), F.Id("q")), Member(Lambda("n", NatType(), Call("b",
             Add(Mul(F.Id("q"), F.Id("n")), F.Id("j")))),
-            Call("Kernel", F.Id("q"), F.Id("a"))))))))));
+            Call("Kernel", F.Id("q"), F.Id("a")))))))))));
 
     private static Formula SelfFormula() => Disp(All("D", AnyType(), All("q", NatType(),
-        All("a", Sequence(F.Id("D")), Member(F.Id("a"), Call("Kernel", F.Id("q"), F.Id("a"))))));
+        All("a", Sequence(F.Id("D")), Member(F.Id("a"), Call("Kernel", F.Id("q"), F.Id("a")))))));
 
     private static Formula EquivalenceFormula() => Disp(FiniteSequence(IffOf(
         And(Le(D(2), F.Id("k")), Call("Finite", Call("Kernel", F.Id("k"), F.Id("a")))),
