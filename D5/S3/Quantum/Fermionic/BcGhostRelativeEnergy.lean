@@ -196,24 +196,6 @@ private theorem energy_nonneg_of_not_mem_one {S : Finset ℕ} (h1 : 1 ∉ S) :
   intro j hj
   exact siteEnergy_nonneg_of_ne_one (by intro h; subst j; exact h1 hj)
 
-theorem relativeEnergy_nonneg (S : Finset ℕ) : 0 ≤ relativeEnergy S := by
-  classical
-  unfold relativeEnergy
-  induction S using Finset.induction_on with
-  | empty => norm_num [energy]
-  | @insert j S hj ih =>
-      by_cases h1 : j = 1
-      · subst j
-        rw [energy, Finset.sum_insert hj, siteEnergy_one]
-        have hS : 1 ∉ S := by simpa using hj
-        have hq := energy_nonneg_of_not_mem_one hS
-        dsimp [energy] at ih ⊢
-        omega
-      · rw [energy, Finset.sum_insert hj]
-        have hn : 0 ≤ siteEnergy j := siteEnergy_nonneg_of_ne_one h1
-        dsimp [energy] at ih ⊢
-        omega
-
 theorem relativeEnergy_split (S : Finset ℕ) :
     relativeEnergy S = (if 1 ∉ S then 1 else 0) +
       ∑ j ∈ (S.erase 1).erase 3, siteEnergy j := by
@@ -246,6 +228,17 @@ theorem relativeEnergy_split (S : Finset ℕ) :
       unfold relativeEnergy energy
       rw [hm1, Finset.erase_eq_of_not_mem h3]
       ring
+
+theorem relativeEnergy_nonneg (S : Finset ℕ) : 0 ≤ relativeEnergy S := by
+  classical
+  rw [relativeEnergy_split]
+  apply add_nonneg
+  · split_ifs <;> norm_num
+  · apply Finset.sum_nonneg
+    intro j hj
+    have hj3 : j ≠ 3 := (Finset.mem_erase.mp hj).1
+    have hj1 : j ≠ 1 := (Finset.mem_erase.mp (Finset.mem_erase.mp hj).2).1
+    exact (siteEnergy_pos_of_ne_one_three hj1 hj3).le
 
 def level (S : Finset ℕ) : ℕ := (relativeEnergy S).toNat
 
