@@ -217,7 +217,8 @@ theorem relativeEnergy_split (S : Finset ℕ) :
       ∑ j ∈ (S.erase 1).erase 3, siteEnergy j := by
   classical
   by_cases h1 : 1 ∈ S
-  · have h3' : 3 ∈ S.erase 1 ↔ 3 ∈ S := by
+  · simp only [h1, not_true_eq_false, if_false]
+    have h3' : 3 ∈ S.erase 1 ↔ 3 ∈ S := by
       simp [h1]
     by_cases h3 : 3 ∈ S
     · have hm3 : 3 ∈ S.erase 1 := h3'.mpr h3
@@ -226,22 +227,23 @@ theorem relativeEnergy_split (S : Finset ℕ) :
         ← Finset.sum_erase_add (S.erase 1) siteEnergy hm3,
         siteEnergy_one, siteEnergy_three]
       ring
-    · have hm3 : 3 ∉ S.erase 1 := by simpa [h3']
+    · have hm3 : 3 ∉ S.erase 1 := by simpa using h3
       unfold relativeEnergy energy
       rw [← Finset.sum_erase_add S siteEnergy h1,
         Finset.erase_eq_of_not_mem hm3, siteEnergy_one]
       ring
-  · have hm1 : S.erase 1 = S := Finset.erase_eq_of_not_mem h1
+  · simp only [h1, not_false_eq_true, if_true]
+    have hm1 : S.erase 1 = S := Finset.erase_eq_of_not_mem h1
     have h3' : 3 ∈ S.erase 1 ↔ 3 ∈ S := by simp [hm1]
     by_cases h3 : 3 ∈ S
     · have hm3 : 3 ∈ S.erase 1 := h3'.mpr h3
       unfold relativeEnergy energy
-      rw [hm1, ← Finset.sum_erase_add S siteEnergy hm3, siteEnergy_three]
-      simp [h1]
-    · have hm3 : 3 ∉ S.erase 1 := by simpa [h3']
+      rw [hm1, ← Finset.sum_erase_add S siteEnergy h3, siteEnergy_three]
+      ring
+    · have hm3 : 3 ∉ S.erase 1 := by simpa using h3
       unfold relativeEnergy energy
-      rw [hm1, Finset.erase_eq_of_not_mem hm3]
-      simp [h1]
+      rw [hm1, Finset.erase_eq_of_not_mem h3]
+      ring
 
 def level (S : Finset ℕ) : ℕ := (relativeEnergy S).toNat
 
@@ -443,7 +445,7 @@ def levelKets (ell : ℕ) : Set Fock :=
 theorem level_ket_linearIndependent (ell : ℕ) :
     LinearIndependent ℂ (fun S : {S : Finset ℕ // S ∈ levelOccupationSets ell} => ket S) := by
   simpa [ket] using
-    (Finsupp.linearIndependent_single_one ℂ (Finset ℕ)).comp
+    (Finsupp.linearIndependent_single_one (Finset ℕ) ℂ).comp
       (fun S : {S : Finset ℕ // S ∈ levelOccupationSets ell} => S.1)
       Subtype.val_injective
 

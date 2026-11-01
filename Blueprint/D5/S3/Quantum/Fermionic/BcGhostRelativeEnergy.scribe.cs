@@ -37,7 +37,6 @@ internal sealed class BcGhostRelativeEnergyDocument : IScribeDocumentDefinition
         var s = V("S"); var v = V("v"); var ell = V("ell");
         var sets = C("Finset", V("Nat")); var fock = V("Fock");
         var energy = C("energy", s); var relative = C("relativeEnergy", s);
-        var eigen = Eqn(C("relativeOperator", v), Smul(C("Nat.cast", ell), v));
         var noThree = A("S", sets, Imp(C("mem", D(3), s), Eqn(C("coeff", v, s), D(0))));
         var exactEnergy = A("S", sets, Imp(C("nonzero", C("coeff", v, s)),
             Eqn(relative, C("Int.ofNat", ell))));
@@ -59,7 +58,7 @@ internal sealed class BcGhostRelativeEnergyDocument : IScribeDocumentDefinition
                     "RelativeLevel means b0(v)=0 and (L0+id)(v)=ell*v. Injectivity of integer casting into Complex recovers the exact integral occupation level."),
                 Node("relative_ground_line", A("v", fock,
                     Imp(And(C("RelativeKernel", v), Eqn(C("relativeOperator", v), D(0))),
-                        C("exists_scalar_multiple", v, K(C("singleton", D(1))))))),
+                        C("exists_scalar_multiple", v, K(C("singleton", D(1)))))),
                     "The shift is fixed by the actual identity L0(c1 vacuum)=-c1 vacuum. Relative energy is the indicator of the missing site one plus strictly positive contributions from sites other than one and three. The literal b0 kernel excludes site three, leaving only the ground line."),
                 Node("relative_level_support", A("ell", V("Nat"), A("v", fock,
                     Imp(C("RelativeLevel", ell, v), A("S", sets,
