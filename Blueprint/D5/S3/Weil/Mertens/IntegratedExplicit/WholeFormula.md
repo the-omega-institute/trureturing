@@ -8,7 +8,7 @@ For every real y>0, the complete actual zero occurrence series equals U(exp(y))-
 
 **Theorem 1.1 (explicitDiscrepancy line integrable).**
 
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitDiscrepancy_line_integrable`
+$$\forall x0 \in \mathrm{Real},\; \mathrm{IntegrableOn}\left((\lambda \mathit{x1}:\mathrm{Real}. \mathrm{exp}\left(-\mathrm{transformLine}\left(\mathit{x0}\right) \cdot \mathrm{ofReal}\left(\mathit{x1}\right)\right) \cdot \mathrm{explicitDiscrepancy}\left(\mathit{x1}\right)), \mathrm{Ioi}\left(0\right), \mathrm{volume}\left(\mathrm{Real}, \mathrm{RealMeasureSpace}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitDiscrepancy_line_integrable` (`✓ std3`). ∎
 
@@ -20,7 +20,7 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 
 **Theorem 1.2 (explicitDiscrepancy line zero).**
 
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitDiscrepancy_line_zero`
+$$\forall x0 \in \mathrm{Real},\; \mathit{x0} \ne 0 \Rightarrow \mathrm{integral}\left(\mathrm{restrict}\left(\mathrm{volume}\left(\mathrm{Real}, \mathrm{RealMeasureSpace}\right), \mathrm{Ioi}\left(0\right)\right), (\lambda \mathit{x2}:\mathrm{Real}. \mathrm{exp}\left(-\mathrm{transformLine}\left(\mathit{x0}\right) \cdot \mathrm{ofReal}\left(\mathit{x2}\right)\right) \cdot \mathrm{explicitDiscrepancy}\left(\mathit{x2}\right))\right) = 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitDiscrepancy_line_zero` (`✓ std3`). ∎
 
@@ -32,7 +32,7 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 
 **Theorem 1.3 (explicitFourierResidual integrable).**
 
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitFourierResidual_integrable`
+$$\mathrm{Integrable}\left(\mathrm{explicitFourierResidual}, \mathrm{volume}\left(\mathrm{Real}, \mathrm{RealMeasureSpace}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitFourierResidual_integrable` (`✓ std3`). ∎
 
@@ -44,7 +44,7 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 
 **Theorem 1.4 (explicitFourierResidual continuousAt).**
 
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitFourierResidual_continuousAt`
+$$\forall x0 \in \mathrm{Real},\; 0 < \mathit{x0} \Rightarrow \mathrm{ContinuousAt}\left(\mathrm{explicitFourierResidual}, \mathit{x0}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitFourierResidual_continuousAt` (`✓ std3`). ∎
 
@@ -56,7 +56,7 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 
 **Theorem 1.5 (explicitFourierResidual fourier).**
 
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitFourierResidual_fourier`
+$$\forall x0 \in \mathrm{Real},\; \mathrm{fourier}\left(\mathrm{explicitFourierResidual}, \mathit{x0}\right) = \mathrm{integral}\left(\mathrm{restrict}\left(\mathrm{volume}\left(\mathrm{Real}, \mathrm{RealMeasureSpace}\right), \mathrm{Ioi}\left(0\right)\right), (\lambda \mathit{x1}:\mathrm{Real}. \mathrm{exp}\left(-\mathrm{transformLine}\left(\mathit{x0}\right) \cdot \mathrm{ofReal}\left(\mathit{x1}\right)\right) \cdot \mathrm{explicitDiscrepancy}\left(\mathit{x1}\right))\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitFourierResidual_fourier` (`✓ std3`). ∎
 
@@ -68,7 +68,7 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 
 **Theorem 1.6 (explicitFourierResidual fourier zero).**
 
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitFourierResidual_fourier_zero`
+$$\mathrm{fourier}\left(\mathrm{explicitFourierResidual}\right) = 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitFourierResidual_fourier_zero` (`✓ std3`). ∎
 
@@ -80,7 +80,7 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 
 **Theorem 1.7 (actual integrated explicit formula).**
 
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.actual_integrated_explicit_formula`
+$$\forall x0 \in \mathrm{Real},\; 0 < \mathit{x0} \Rightarrow \mathrm{actualH}\left(\mathit{x0}\right) = \mathrm{ofReal}\left(\mathrm{U}\left(\mathrm{exp}\left(\mathit{x0}\right)\right) - \mathrm{log}\left(2 \cdot \mathrm{pi}\right) + \mathrm{trivialT}\left(\mathit{x0}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.actual_integrated_explicit_formula` (`✓ std3`). ∎
 

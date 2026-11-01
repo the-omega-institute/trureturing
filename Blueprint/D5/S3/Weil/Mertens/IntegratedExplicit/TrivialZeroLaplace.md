@@ -8,7 +8,7 @@ The natural index n represents j=n+1. The full coefficient series has mass 1-log
 
 **Theorem 1.1 (trivialCoeff nonneg).**
 
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialCoeff_nonneg`
+$$\forall x0 \in \mathrm{Nat},\; 0 \le \mathrm{trivialCoeff}\left(\mathit{x0}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialCoeff_nonneg` (`✓ std3`). ∎
 
@@ -20,7 +20,7 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 
 **Theorem 1.2 (trivialCoeff hasSum).**
 
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialCoeff_hasSum`
+$$\mathrm{HasSum}\left(\mathrm{trivialCoeff}, 1 - \mathrm{log}\left(2\right), \mathrm{unconditional}\left(\mathrm{Nat}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialCoeff_hasSum` (`✓ std3`). ∎
 
@@ -32,7 +32,7 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 
 **Theorem 1.3 (trivialT summable).**
 
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialT_summable`
+$$\forall x0 \in \mathrm{Real},\; 0 \le \mathit{x0} \Rightarrow \mathrm{Summable}\left((\lambda \mathit{x2}:\mathrm{Nat}. \mathrm{trivialCoeff}\left(\mathit{x2}\right) \cdot \mathrm{exp}\left(-\left(2 \cdot \left(\mathrm{cast}\left(\mathit{x2}\right) + 1\right)\right) \cdot \mathit{x0}\right)), \mathrm{unconditional}\left(\mathrm{Nat}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialT_summable` (`✓ std3`). ∎
 
@@ -44,7 +44,7 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 
 **Theorem 1.4 (trivialT nonneg).**
 
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialT_nonneg`
+$$\forall x0 \in \mathrm{Real},\; 0 \le \mathit{x0} \Rightarrow 0 \le \mathrm{trivialT}\left(\mathit{x0}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialT_nonneg` (`✓ std3`). ∎
 
@@ -56,7 +56,7 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 
 **Theorem 1.5 (trivialT le mass).**
 
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialT_le_mass`
+$$\forall x0 \in \mathrm{Real},\; 0 \le \mathit{x0} \Rightarrow \mathrm{trivialT}\left(\mathit{x0}\right) \le 1 - \mathrm{log}\left(2\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialT_le_mass` (`✓ std3`). ∎
 
@@ -68,7 +68,7 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 
 **Theorem 1.6 (trivialT continuousOn).**
 
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialT_continuousOn`
+$$\mathrm{ContinuousOn}\left(\mathrm{trivialT}, \mathrm{Ici}\left(0\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialT_continuousOn` (`✓ std3`). ∎
 
@@ -80,7 +80,7 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 
 **Theorem 1.7 (trivialT continuousAt).**
 
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialT_continuousAt`
+$$\forall x0 \in \mathrm{Real},\; 0 < \mathit{x0} \Rightarrow \mathrm{ContinuousAt}\left(\mathrm{trivialT}, \mathit{x0}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialT_continuousAt` (`✓ std3`). ∎
 
@@ -92,7 +92,7 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 
 **Theorem 1.8 (trivialT laplace integrable).**
 
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialT_laplace_integrable`
+$$\forall x0 \in \mathrm{Complex},\; 0 < \mathrm{re}\left(\mathit{x0}\right) \Rightarrow \mathrm{IntegrableOn}\left((\lambda \mathit{x2}:\mathrm{Real}. \mathrm{exp}\left(-\mathit{x0} \cdot \mathrm{ofReal}\left(\mathit{x2}\right)\right) \cdot \mathrm{ofReal}\left(\mathrm{trivialT}\left(\mathit{x2}\right)\right)), \mathrm{Ioi}\left(0\right), \mathrm{volume}\left(\mathrm{Real}, \mathrm{RealMeasureSpace}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialT_laplace_integrable` (`✓ std3`). ∎
 
@@ -104,7 +104,7 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 
 **Theorem 1.9 (trivialT laplace hasSum).**
 
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialT_laplace_hasSum`
+$$\forall x0 \in \mathrm{Complex},\; 0 < \mathrm{re}\left(\mathit{x0}\right) \Rightarrow \mathrm{HasSum}\left((\lambda \mathit{x2}:\mathrm{Nat}. \frac{\mathrm{ofReal}\left(\mathrm{trivialCoeff}\left(\mathit{x2}\right)\right)}{\mathit{x0} + 2 \cdot \left(\mathrm{cast}\left(\mathit{x2}\right) + 1\right)}), \mathrm{integral}\left(\mathrm{restrict}\left(\mathrm{volume}\left(\mathrm{Real}, \mathrm{RealMeasureSpace}\right), \mathrm{Ioi}\left(0\right)\right), (\lambda \mathit{x2}:\mathrm{Real}. \mathrm{exp}\left(-\mathit{x0} \cdot \mathrm{ofReal}\left(\mathit{x2}\right)\right) \cdot \mathrm{ofReal}\left(\mathrm{trivialT}\left(\mathit{x2}\right)\right))\right), \mathrm{unconditional}\left(\mathrm{Nat}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivialT_laplace_hasSum` (`✓ std3`). ∎
 
@@ -116,7 +116,7 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 
 **Theorem 1.10 (trivial partial fraction).**
 
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivial_partial_fraction`
+$$\forall x0 \in \mathrm{Complex},\; \forall x1 \in \mathrm{Complex},\; \mathit{x0} \ne 0 \Rightarrow \left(2 \cdot \mathit{x0} + 1 \ne 0 \Rightarrow \left(\mathit{x1} + 2 \cdot \mathit{x0} \ne 0 \Rightarrow \frac{1}{2 \cdot \mathit{x0} \cdot \left(\mathit{x1} + 2 \cdot \mathit{x0}\right)} + \frac{\mathit{x1} - 1}{2 \cdot \mathit{x0} \cdot \left(2 \cdot \mathit{x0} + 1\right) \cdot \left(\mathit{x1} + 2 \cdot \mathit{x0}\right)} = \frac{1}{2 \cdot \mathit{x0} \cdot \left(2 \cdot \mathit{x0} + 1\right)}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.trivial_partial_fraction` (`✓ std3`). ∎
 

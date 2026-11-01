@@ -6,7 +6,7 @@ A closed off-line zero refutes the universal midline claim.
 
 **Theorem 1.1 (A closed off-line zero refutes universal midline location).**
 
-$$\forall x0 \in \left(\forall x0 \in \mathrm{Complex},\; \mathrm{Type}\right),\; \forall x1 \in \left(\forall x1 \in \mathrm{Complex},\; \mathrm{Type}\right),\; \forall x2 \in \mathrm{Real},\; \forall x3 \in \mathrm{Complex},\; \forall x4 \in \mathit{x0}\left(\mathit{x3}\right),\; \forall x5 \in \mathit{x1}\left(\mathit{x3}\right),\; \mathrm{re}\left(\mathit{x3}\right) \ne \mathit{x2} \Rightarrow \left(\neg \left(\forall x7 \in \mathrm{Complex},\; \forall x8 \in \mathit{x0}\left(\mathit{x7}\right),\; \forall x9 \in \mathit{x1}\left(\mathit{x7}\right),\; \mathrm{re}\left(\mathit{x7}\right) = \mathit{x2}\right)\right)$$
+$$\forall x0 \in \mathrm{Complex} \to \mathrm{Type},\; \forall x1 \in \mathrm{Complex} \to \mathrm{Type},\; \forall x2 \in \mathrm{Real},\; \forall x3 \in \mathrm{Complex},\; \forall x4 \in \mathit{x0}\left(\mathit{x3}\right),\; \forall x5 \in \mathit{x1}\left(\mathit{x3}\right),\; \mathrm{re}\left(\mathit{x3}\right) \ne \mathit{x2} \Rightarrow \left(\neg \left(\forall x7 \in \mathrm{Complex},\; \forall x8 \in \mathit{x0}\left(\mathit{x7}\right),\; \forall x9 \in \mathit{x1}\left(\mathit{x7}\right),\; \mathrm{re}\left(\mathit{x7}\right) = \mathit{x2}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Zeros/OffLineWitness.closed_zero_midline_refutation` (`✓ std3`). ∎
 
