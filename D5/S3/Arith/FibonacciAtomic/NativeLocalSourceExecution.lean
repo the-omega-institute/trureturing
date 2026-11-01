@@ -89,7 +89,9 @@ private theorem replay_left (l r : Source) (es : List Event) :
   | cons e es ih =>
     rcases e with ⟨p,k⟩
     simp only [List.map_cons, replay, edit]
-    cases h : edit l p k <;> simp [h, ih]
+    cases h : edit l p k with
+    | none => rfl
+    | some v => simpa only [Option.map_some,Option.bind_some,FreeMagma.mul_eq] using ih v
 
 private theorem replay_right (l r : Source) (es : List Event) :
     replay (.mul l r) (es.map (fun e => (true :: e.1,e.2))) =
@@ -99,7 +101,9 @@ private theorem replay_right (l r : Source) (es : List Event) :
   | cons e es ih =>
     rcases e with ⟨p,k⟩
     simp only [List.map_cons, replay, edit]
-    cases h : edit r p k <;> simp [h, ih]
+    cases h : edit r p k with
+    | none => rfl
+    | some v => simpa only [Option.map_some,Option.bind_some,FreeMagma.mul_eq] using ih v
 
 private theorem frontier_replay (t : Source) :
     replay t (oldFrontier t) = some (substitution t) := by
@@ -125,7 +129,7 @@ private theorem native_beta_count (t : Source) (h : Native t) : 0 < (composition
   induction t with
   | of b => cases b <;> simp_all [Native, native, composition]
   | mul l r ihl ihr =>
-    have hl : Native l := (Bool.and_eq_true.mp h).1
+    have hl : Native l := (Bool.and_eq_true_iff.mp h).1
     have := ihl hl
     simp only [composition, Prod.snd_add]
     omega
@@ -137,11 +141,11 @@ private theorem native_split (t : Source) (h : Native t) :
   | of b => cases b <;> simp_all [Native, native, leftmost, splitLeft, edit,
       substitution, FreeMagma.lift_of, composition]
   | mul l r ihl ihr =>
-    obtain ⟨hl,hr⟩ := Bool.and_eq_true.mp h
+    obtain ⟨hl,hr⟩ := Bool.and_eq_true_iff.mp h
     obtain ⟨eq,hn,hc⟩ := ihl hl
     refine ⟨?_, ?_, ?_⟩
     · simp only [leftmost, edit, eq, Option.map_some, splitLeft]
-    · exact Bool.and_eq_true.mpr ⟨hn,hr⟩
+    · exact Bool.and_eq_true_iff.mpr ⟨hn,hr⟩
     · simp only [splitLeft, composition, hc]
       ext <;> simp [add_assoc, add_comm, add_left_comm]
 
@@ -149,7 +153,7 @@ private theorem substitution_native (t : Source) : Native (substitution t) := by
   induction t with
   | of b => cases b <;> rfl
   | mul l r ihl ihr =>
-    exact Bool.and_eq_true.mpr ⟨ihl,native_right _ ihr⟩
+    exact Bool.and_eq_true_iff.mpr ⟨ihl,native_right _ ihr⟩
 
 private theorem substitution_composition (t : Source) :
     composition (substitution t) = ((composition t).2,
@@ -165,7 +169,6 @@ private theorem event_edit (t u : Source) (p : Address) (k : Bool)
       simp only [edit] at h
       split_ifs at h with eq
       · cases b <;> cases h <;> rfl
-      · cases h
     | mul l r => cases h
   | cons d p ih =>
     cases t with
@@ -192,7 +195,7 @@ private theorem event_edit (t u : Source) (p : Address) (k : Bool)
 private theorem replay_event_index (t u : Source) (es : List Event)
     (h : replay t es = some u) : eventIndex u = eventIndex t + es.length := by
   induction es generalizing t with
-  | nil => simpa [replay] using h.symm ▸ (rfl : eventIndex t = eventIndex t)
+  | nil => cases h; rfl
   | cons e es ih =>
     rcases e with ⟨p,k⟩
     obtain ⟨v,hv,hu⟩ := Option.bind_eq_some_iff.mp h
@@ -200,6 +203,78 @@ private theorem replay_event_index (t u : Source) (es : List Event)
     have := ih v hu
     simp only [List.length_cons]
     omega
+
+private theorem edit_preserves_sort (a : Bool) (t u : Source) (p : Address) (k : Bool)
+    (hn : native a t = true) (h : edit t p k = some u) : native a u = true := by
+  induction p generalizing a t u with
+  | nil =>
+    cases t with
+    | of b =>
+      simp only [edit] at h
+      split_ifs at h with eq
+      · cases h
+        cases b <;> cases a <;> rfl
+    | mul l r => cases h
+  | cons d p ih =>
+    cases t with
+    | of b => cases h
+    | mul l r =>
+      obtain ⟨hl,hr⟩ := Bool.and_eq_true_iff.mp hn
+      cases d with
+      | false =>
+        obtain ⟨v,hv,rfl⟩ := Option.map_eq_some_iff.mp h
+        exact Bool.and_eq_true_iff.mpr ⟨ih false l v hl hv,hr⟩
+      | true =>
+        obtain ⟨v,hv,rfl⟩ := Option.map_eq_some_iff.mp h
+        exact Bool.and_eq_true_iff.mpr ⟨hl,ih true r v hr hv⟩
+
+private theorem replay_preserves_sort (a : Bool) (t u : Source) (es : List Event)
+    (hn : native a t = true) (h : replay t es = some u) : native a u = true := by
+  induction es generalizing t with
+  | nil => cases h; exact hn
+  | cons e es ih =>
+    rcases e with ⟨p,k⟩
+    obtain ⟨v,hv,hu⟩ := Option.bind_eq_some_iff.mp h
+    exact ih v (edit_preserves_sort a t v p k hn hv) hu
+
+private theorem construct_from_birth (t : Source) (a : Bool) (hn : native a t = true) :
+    ∃ es : List Event, replay (.of a) es = some t := by
+  induction t generalizing a with
+  | of b =>
+    cases a <;> cases b
+    · exact ⟨[],rfl⟩
+    · simp [native] at hn
+    · exact ⟨[([],true)],rfl⟩
+    · exact ⟨[],rfl⟩
+  | mul l r ihl ihr =>
+    obtain ⟨hl,hr⟩ := Bool.and_eq_true_iff.mp hn
+    obtain ⟨es,he⟩ := ihl false hl
+    obtain ⟨fs,hf⟩ := ihr true hr
+    let rootEvents : List Event := if a then [([],true),([],false)] else [([],false)]
+    have start : replay (.of a) rootEvents = some (.mul (.of false) (.of true)) := by
+      cases a <;> rfl
+    refine ⟨rootEvents ++ es.map (fun e => (false :: e.1,e.2)) ++
+      fs.map (fun e => (true :: e.1,e.2)),?_⟩
+    rw [replay_append,replay_append,start]
+    simp only [Option.bind_some]
+    rw [replay_left,he]
+    simp only [Option.map_some,Option.bind_some]
+    rw [replay_right,hf]
+    rfl
+
+private theorem attained_iff (t : Source) :
+    (∃ es : List Event, replay (.of true) es = some t) ↔ native true t = true := by
+  constructor
+  · rintro ⟨es,he⟩
+    exact replay_preserves_sort true (.of true) t es rfl he
+  · exact construct_from_birth t true
+
+private theorem positive_attained_iff (t : Source) :
+    Native t ↔ (∃ es : List Event, replay (.of true) es = some t) ∧ t ≠ .of true := by
+  rw [attained_iff]
+  cases t with
+  | of b => cases b <;> simp [Native,native] <;> intro bad <;> cases bad
+  | mul l r => simp only [Native,native]; simp
 
 /-- Full old-frontier execution and current-leftmost execution use the original
 guarded source edits. Each accepted primitive adds exactly one event. -/
@@ -214,9 +289,13 @@ theorem native_execution :
     (∀ t : Source, Native t →
       eventIndex (substitution t) = eventIndex t + t.length ∧
       eventIndex (splitLeft t) = eventIndex t + 1 ∧
-      (eventIndex t = 1 ↔ t = .of false)) := by
+      (eventIndex t = 1 ↔ t = .of false)) ∧
+    (∀ t : Source, (∃ es : List Event, replay (.of true) es = some t) ↔
+      native true t = true) ∧
+    (∀ t : Source, Native t ↔
+      (∃ es : List Event, replay (.of true) es = some t) ∧ t ≠ .of true) := by
   refine ⟨fun t => ⟨frontier_replay t,frontier_length t,substitution_native t⟩,
-    native_split, replay_event_index, ?_⟩
+    native_split, replay_event_index, ?_,attained_iff,positive_attained_iff⟩
   intro t hn
   have beta := native_beta_count t hn
   have len := composition_length t
@@ -240,5 +319,7 @@ theorem native_execution :
         omega
     · rintro rfl
       rfl
+
+#print axioms native_execution
 
 end D5.S3.Arith.FibonacciAtomic.NativeLocalSourceExecution
