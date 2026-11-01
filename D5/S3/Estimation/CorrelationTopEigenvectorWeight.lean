@@ -33,16 +33,14 @@ private lemma two_point_energy {n : ℕ} (hn : 3 ≤ n) (μ : Fin n → ℝ)
     norm_num
     ring
   have hrest : ∑ k ∈ s, μ k = -(μ i + μ j) := by
-    have hi := sum_erase_add univ μ (mem_univ i)
-    have hj := sum_erase_add (univ.erase i) μ hj
     dsimp only [s]
-    linarith
+    rw [sum_erase_eq_sub hj, sum_erase_eq_sub (mem_univ i), hsum]
+    ring
   have hrestsq : (∑ k ∈ s, μ k ^ 2) + (μ i ^ 2 + μ j ^ 2) =
       ∑ k, μ k ^ 2 := by
-    have hi := sum_erase_add univ (fun k => μ k ^ 2) (mem_univ i)
-    have hj := sum_erase_add (univ.erase i) (fun k => μ k ^ 2) hj
     dsimp only [s]
-    linarith
+    rw [sum_erase_eq_sub hj, sum_erase_eq_sub (mem_univ i)]
+    ring
   have hcs := sum_mul_sq_le_sq_mul_sq s μ (fun _ => (1 : ℝ))
   simp only [mul_one, one_pow, sum_const, nsmul_eq_mul, mul_one, hrest, hcard,
     neg_sq] at hcs
