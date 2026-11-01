@@ -7,6 +7,7 @@
    digest: The optimized GHZ witness bound is strictly below the convex roof. -/
 
 import D5.S3.Quantum.Information.MultiEntropyPositivityRefutation
+import D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness
 
 /-! The geometric GME measure and optimized witness bound of Xu et al.,
 arXiv:2211.05563v1, Section "Estimating entanglement measures" and Appendix
@@ -512,40 +513,33 @@ private lemma trace_b : (trace (noisyGhz 3 3 (3 / 8) * b)).re - 1 / 9 = 13 / 108
   rw [witness_value, ht]
   norm_num
 
-private lemma basis_resolution : (∑ x : Word (Fin 3) 3, rankOneDensity (Pi.single x 1)) = 1 := by
-  classical
-  simpa only [rankOneDensity, Pi.star_single, star_one,
-    ← Matrix.single_eq_single_vecMulVec_single] using
-      (Matrix.sum_single_one : (∑ i : Word (Fin 3) 3, Matrix.single i i (1 : ℂ)) = 1)
-
 private lemma ensemble_nonempty :
     {t : ℝ | ∃ (k : ℕ) (p : Fin k → ℝ) (ψ : Fin k → Word (Fin 3) 3 → ℂ),
       (∀ i, 0 ≤ p i) ∧ (∑ i, p i) = 1 ∧ (∀ i, IsUnitState (ψ i)) ∧
       noisyGhz 3 3 (3 / 8) = ∑ i, p i • rankOneDensity (ψ i) ∧
       t = ∑ i, p i * geometricMeasurePure (ψ i)}.Nonempty := by
   classical
-  let e := (Fintype.equivFin (Option (Word (Fin 3) 3))).symm
-  let w : Option (Word (Fin 3) 3) → ℝ := fun i => if i = none then 5 / 8 else 1 / 72
-  let v : Option (Word (Fin 3) 3) → Word (Fin 3) 3 → ℂ := fun i => i.elim (ghz 3 3) (fun x => Pi.single x 1)
-  refine ⟨_, Fintype.card (Option (Word (Fin 3) 3)), (fun i => w (e i)),
-    (fun i => v (e i)), ?_, ?_, ?_, ?_, rfl⟩
+  let ρ : D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState (Word (Fin 3) 3) :=
+    ⟨CStarMatrix.ofMatrix (noisyGhz 3 3 (3 / 8)), by
+      apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+      dsimp only [noisyGhz]
+      exact ((Matrix.PosSemidef.one.smul
+        (by norm_num : (0 : ℝ) ≤ (3 / 8) / (3 : ℝ) ^ 3)).add
+        ((posSemidef_vecMulVec_self_star (ghz 3 3)).smul
+          (by norm_num : (0 : ℝ) ≤ 1 - 3 / 8))).nonneg, by
+      change trace (noisyGhz 3 3 (3 / 8)) = 1
+      rw [noisyGhz, trace_add, trace_smul, trace_smul, trace_one, trace_rank_one, ghz_unit]
+      norm_num [Word, Complex.real_smul]⟩
+  obtain ⟨k, p, ψ, hp, hs, hu, he⟩ :=
+    D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.density_ensemble ρ
+  refine ⟨_, k, p, ψ, hp, hs, ?_, ?_, rfl⟩
   · intro i
-    dsimp [w]
-    split_ifs <;> norm_num
-  · rw [e.sum_comp]
-    norm_num [w, Fintype.sum_option, Word, Fintype.card_fun]
-  · intro i
-    cases h : e i with
-    | none => simpa [v, h] using ghz_unit
-    | some x => simpa [v, h] using basis_unit x
-  · change noisyGhz 3 3 (3 / 8) =
-      ∑ i, (fun j : Option (Word (Fin 3) 3) => w j • rankOneDensity (v j)) (e i)
-    conv_rhs =>
-      rw [show (∑ i, (fun j : Option (Word (Fin 3) 3) => w j • rankOneDensity (v j)) (e i)) =
-          ∑ j : Option (Word (Fin 3) 3), w j • rankOneDensity (v j) from
-        e.sum_comp (fun j : Option (Word (Fin 3) 3) => w j • rankOneDensity (v j))]
-    norm_num [w, v, Fintype.sum_option, ← Finset.smul_sum, basis_resolution, noisyGhz]
-    module
+    have h := congrArg Complex.re (hu i)
+    simpa only [IsUnitState,
+      D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.dot_star_self,
+      Complex.ofReal_re, Complex.normSq_eq_norm_sq, Complex.one_re] using h
+  · change noisyGhz 3 3 (3 / 8) = ∑ i, (algebraMap ℝ ℂ) (p i) • rankOneDensity (ψ i) at he
+    simpa only [algebraMap_smul] using he
 
 private lemma average_lower (k : ℕ) (p : Fin k → ℝ) (ψ : Fin k → Word (Fin 3) 3 → ℂ)
     (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) (hu : ∀ i, IsUnitState (ψ i))

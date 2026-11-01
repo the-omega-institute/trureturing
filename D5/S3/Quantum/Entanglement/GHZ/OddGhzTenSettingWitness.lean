@@ -436,7 +436,7 @@ set_option linter.unusedTactic false
 private theorem cutRank_le_d {d : ℕ} (k : Fin 3) (ψ : Fin d × Fin d × Fin d → ℂ) :
     cutRank k ψ ≤ d := by
   fin_cases k <;> exact (Matrix.rank_le_card_height _).trans (by simp)
-private theorem density_ensemble {ι : Type*} [Fintype ι] [DecidableEq ι]
+theorem density_ensemble {ι : Type*} [Fintype ι] [DecidableEq ι]
     (ρ : DensityState ι) :
     ∃ (m : ℕ) (p : Fin m → ℝ) (ψ : Fin m → ι → ℂ),
       (∀ i, 0 ≤ p i) ∧ ∑ i, p i = 1 ∧ (∀ i, star (ψ i) ⬝ᵥ ψ i = 1) ∧
