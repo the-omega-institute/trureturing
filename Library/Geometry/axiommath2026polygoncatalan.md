@@ -44,3 +44,8 @@ The source result is reused enumeration. Actual ear contraction and the
 conditioned original-carrier application belong to the receiver's
 `PolygonEarContraction` and `PolygonConditionalCounts`; they are separate
 from the imported enumeration theorem. No global originality claim is made.
+
+## Verified locator
+
+- Source: https://github.com/AxiomMath/ClusterAlgebras/tree/a9174706bce3bcb0fa342b4614f98ef2acb7f91c
+- Theorem: [`ClusterAlgebras.TypeA.encard_setOf_isTriangulation`](https://github.com/AxiomMath/ClusterAlgebras/blob/a9174706bce3bcb0fa342b4614f98ef2acb7f91c/ClusterAlgebras/TypeA/Flips.lean#L535-L548), lines 535–548 at that pinned revision.
