@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakIndependentTailInterior/Arithmetic
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakIndependentTailInterior/Arithmetic
+   mirror-B: none(waiver:owning-blueprint-scribe)
    mirror-E: none(waiver:private-consumed-coordinate-bridges)
    anchors: [mathlib/module/Mathlib.Data.Nat.Bitwise]
    utility: none

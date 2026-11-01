@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakIndependentTailInterior/Physical
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakIndependentTailInterior/Physical
+   mirror-B: none(waiver:owning-blueprint-scribe)
    mirror-E: none(waiver:private-consumed-occurrence-construction)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
@@ -19,7 +19,7 @@ open private lengths offsets nativeMask native_cap chainLabels native_inventory 
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Supports
 open private size negatives chainStart chainLength base newBase oldValue newValue chain_values from
   D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open private blocksWord blocksWord_flatMap from
+open private blocksWord from
   D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 open scoped BigOperators
 
@@ -86,13 +86,6 @@ private theorem positive_bank (p : Parameters) (j : Fin 4) (i : ℕ) (hi : i ∈
   have h2 := positive_chain p j 2 i
   have h3 := positive_chain p j 3 i
   tauto
-
-private theorem blocks_nodup (p : Parameters) : ∀ b ∈ blocks p, b.1.Nodup := by
-  have hnd := (physical_inventory p).nodup_iff.mpr (List.nodup_range (n := size p.a p.b p.c p.d))
-  change (blocksWord (blocks p)).Nodup at hnd
-  rw [blocksWord_flatMap] at hnd
-  intro b hb
-  exact (List.nodup_append.mp ((List.nodup_flatMap.mp hnd).1 b hb)).1
 
 private theorem chain_mass (p : Parameters) (j chain : Fin 4) :
     ((chainLabels p j chain).map (oldValue p.a p.b p.c p.d)).sum =

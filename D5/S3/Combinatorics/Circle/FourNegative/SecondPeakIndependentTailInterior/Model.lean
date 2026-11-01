@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakIndependentTailInterior/Model
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakIndependentTailInterior/Model
+   mirror-B: none(waiver:owning-blueprint-scribe)
    mirror-E: none(waiver:private-consumed-model)
    anchors: [mathlib/module/Mathlib.Data.Rat.Defs]
    utility: none
@@ -9,6 +9,8 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior
+
+open scoped BigOperators
 
 private def qHead (z w t rho : ℚ) : Fin 4 → ℚ :=
   let x := 8*t*z*w

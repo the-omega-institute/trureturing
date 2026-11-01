@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakIndependentTailInterior/Endpoint
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakIndependentTailInterior/Endpoint
+   mirror-B: none(waiver:owning-blueprint-scribe)
    mirror-E: none(waiver:literal-first-ear-endpoint)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none

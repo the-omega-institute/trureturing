@@ -1,10 +1,10 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakIndependentTailInterior/FirstEar
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakIndependentTailInterior/FirstEar
+   mirror-B: none(waiver:owning-blueprint-scribe)
    mirror-E: none(waiver:private-consumed-first-positive-bank-transport)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
-   digest: Certificate consumption with the same physical word and literal first ear. -/
+   digest: Packet-strip consumption with the same physical word and literal first ear. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Certificate
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -17,24 +17,18 @@ open private Parameters Parameters.a Parameters.b Parameters.c Parameters.d
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Parameters
 open private lengths offsets from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Supports
-open private bank terminal order blocks word physical_inventory positive_bank blocks_nodup from
+open private bank terminal blocks word physical_inventory positive_bank from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Physical
 open private old_packet_checks new_packet_checks from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Certificate
-open private size seed sourceMod base oldValue newValue negatives source_signs source_totals
-  chain_values chain_signs chainLength chainStart packet_masses from
+open private size seed sourceMod base oldValue newValue negatives source_signs
+  chain_values chain_signs chainLength from
   D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open private positive_block_strip from D5.S3.Combinatorics.Circle.ThreeBitSource
 open private strip_append_iff from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Transport
 open private blocksWord from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 open private packetChecks withEar strip_iff_packetChecks from
   D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
-open private DataCertificate orderedPackets finiteChecks_equiv finiteEarChecks_equiv
-  DataCertificate.packets DataCertificate.positiveLabels DataCertificate.oldEndpoints DataCertificate.newEndpoints from
-  D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
-open private finitePackets finite_packet_checks finite_ear_checks from
-  D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Equivalence
-open private oldMass newMass from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 open private label lift_order marked_word from
   D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 

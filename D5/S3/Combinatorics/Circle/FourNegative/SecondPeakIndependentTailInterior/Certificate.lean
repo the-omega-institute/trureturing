@@ -1,10 +1,10 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakIndependentTailInterior/Certificate
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakIndependentTailInterior/Certificate
+   mirror-B: none(waiver:owning-blueprint-scribe)
    mirror-E: none(waiver:private-consumed-UXWV-certificate)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
-   digest: All actual finite checks and an unconditional native UXWV certificate. -/
+   digest: Constructed integer endpoint checks for both original source rows. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Values
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -15,7 +15,7 @@ open private Parameters Parameters.a Parameters.b Parameters.c Parameters.d
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Parameters
 open private modelExpr model_nonnegative from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Arithmetic
-open private bank terminal order blocks word physical_inventory positive_bank blocks_nodup from
+open private bank terminal order blocks word physical_inventory positive_bank from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Physical
 open private Nq head_coordinates modulus_coordinate cap_coordinate negative_coordinates mass_coordinates from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Values
@@ -28,13 +28,6 @@ open private offsets lengths from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Supports
 open private blocksWord from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 open private packetChecks withEar from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
-open private orderedPackets finiteChecks finiteEarChecks DataCertificate DataCertificate.mk
-  finiteChecks_equiv finiteEarChecks_equiv from
-  D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
-open private finitePackets finite_packets_perm finite_packet_checks finite_ear_checks from
-  D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Equivalence
-open private oldMass newMass from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
-
 private def iMass (p : Parameters) (row bankIndex : Fin 4) : ℤ :=
   ((bank p bankIndex).map (if row = 0 then oldValue p.a p.b p.c p.d
     else newValue p.a p.b p.c p.d)).sum
