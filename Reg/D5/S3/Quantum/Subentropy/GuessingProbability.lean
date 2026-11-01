@@ -226,21 +226,21 @@ def source_registration : Registration arena.{u,v} (type_of% @success_bounds.{u,
       exact nomatch e
   dependence := dependence
 
-def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@success_bounds.{u,v}) (Realization signature.{u}) Unit Unit where
+def registration.{u_1, u_2} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@success_bounds.{u_1,u_2}) (Realization signature.{u_1}) Unit Unit where
   unitName := `Reg.D5.S3.Quantum.Subentropy.GuessingProbability.success_bounds_unit
   realizationName :=
     `Reg.D5.S3.Quantum.Subentropy.GuessingProbability.SuccessBounds.source_registration
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u_1,u_2}⟩
+  objectArena := .source ⟨arena.{u_1,u_2}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨source_registration⟩
+  realization := .source arena.{u_1,u_2} ⟨source_registration.{u_1,u_2}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u} actual.readout actual.anchor)
+  readout := some (realize signature.{u_1} actual.{u_1}.readout actual.{u_1}.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
