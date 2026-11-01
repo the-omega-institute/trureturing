@@ -161,7 +161,9 @@ private lemma component_bound {n : ℕ} (x : Fin n → ℝ) (j : Fin n)
     calc
       _ ≤ L (g / 2) d N * ||x i - x j - h| - |x i - x j|| := hlip
       _ ≤ L (g / 2) d N * |h| := mul_le_mul_of_nonneg_left hdif hL
-      _ ≤ _ := by nlinarith [abs_nonneg c]
+      _ ≤ _ := by
+        have hnon : 0 ≤ |h| * (scale |h| / 2 + |c| + 2 * |h|) := by positivity
+        nlinarith
 
 /-- The actual finite configuration has an explicit quadratic Schur error on a fixed window. -/
 theorem near_node_remainder {n : ℕ} (x : Fin n → ℝ) (j : Fin n)

@@ -50,7 +50,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   change |(L 1 2 testN + 1) * 1 - (L 1 2 testN + 1) * 2| ≤ L 1 2 testN * |1 - 2| at ht
   have he : (L 1 2 testN + 1) * 1 - (L 1 2 testN + 1) * 2 = -(L 1 2 testN + 1) := by ring
   rw [he, abs_neg, abs_of_nonneg (by linarith [testL_nonneg])] at ht
-  norm_num at ht
+  norm_num at ht <;> linarith
 
 def evidence : Registration arena (type_of% @kernel_lipschitz) where
   actual := actual
