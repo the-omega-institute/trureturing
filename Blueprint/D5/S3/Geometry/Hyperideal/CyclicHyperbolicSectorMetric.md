@@ -38,5 +38,6 @@ When the scalar angular norm is at least pi, use the hyperbolic segment between 
 
 - Truth anchor: `D5/S3/Geometry/Hyperideal/CyclicHyperbolicSectorMetric.cyclic_sector_metric`
 - Dependency: [D5/S3/Geometry/HyperbolicSupportBoundary](../HyperbolicSupportBoundary.md)
+- Dependency: [D5/S3/Geometry/Hyperideal/CyclicHyperbolicSectorSupport](CyclicHyperbolicSectorSupport.md)
 - Dependency: [D5/S3/Geometry/Hyperideal/LengthGramMetricSegments](LengthGramMetricSegments.md)
 - Dependency: [D5/S3/Topology/FiniteOrbitChainMetric](../../Topology/FiniteOrbitChainMetric.md)
