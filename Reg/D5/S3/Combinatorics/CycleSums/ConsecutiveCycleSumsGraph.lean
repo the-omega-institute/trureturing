@@ -45,8 +45,9 @@ theorem predecessorBadLaw : ¬ predecessorArena.Law predecessorBad := by
   change ((⊥ : SimpleGraph (Fin 2)).induce
     ((Finset.univ : Finset (Fin 2)) : Set (Fin 2))).Connected at hc
   have hbot : (⊥ : SimpleGraph (Fin 2)).Connected :=
-    (SimpleGraph.induceUnivIso (⊥ : SimpleGraph (Fin 2))).connected_iff.mp (by
-      simpa only [Finset.coe_univ] using hc)
+    (SimpleGraph.induceUnivIso (⊥ : SimpleGraph (Fin 2))).connected_iff.mp
+      (Eq.mp (congrArg (fun C : Set (Fin 2) =>
+        ((⊥ : SimpleGraph (Fin 2)).induce C).Connected) Finset.coe_univ) hc)
   exact SimpleGraph.not_connected_bot hbot
 
 theorem predecessorDependence : ObservationalDependence PredecessorSig predecessorActual := by

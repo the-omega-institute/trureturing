@@ -597,8 +597,9 @@ theorem result : ∀ N : ℕ, ∃ n : ℕ, N < n ∧ ∃ G : SimpleGraph (Fin n)
       (G := sourceGraph) (C := (univ : Finset (Fin 33))) (0 : Fin 33) (mem_univ _) (by
         intro v _ hv
         exact ⟨parent v, mem_univ _, parent_lower v hv, (parent_edge v hv).symm⟩)
-    exact (sourceGraph.induceUnivIso.connected_iff).mp (by
-      simpa only [Finset.coe_univ] using hc)
+    exact (sourceGraph.induceUnivIso.connected_iff).mp
+      (Eq.mp (congrArg (fun C : Set (Fin 33) => (sourceGraph.induce C).Connected)
+        Finset.coe_univ) hc)
   · exact leaf_of_unique sourceGraph 5 4 (by decide)
 
 #print axioms result
