@@ -66,7 +66,7 @@ internal sealed class FiniteIncrementPathBoundDocument : IScribeDocumentDefiniti
         Formula step = Seq(Forall, Sp, k, Colon, Sp, Naturals, Comma, Sp,
             k, Sp, Lt, Sp, n, Sp, Rightarrow, Sp,
             Paren(Seq(increment, Sp, InMacro, Sp, v, Sp, Land, Sp,
-                Langle, wk, Comma, increment, Rangle, Sp, Leq, Sp, D(0))));
+                Langle, Sp, wk, Comma, Sp, increment, Rangle, Sp, Leq, Sp, D(0))));
         return Disp(new Formula.Aligned([
             Seq(Forall, Sp, e, Colon, Sp, Seq(Operatorname, Grp(F.Id("Type"))), Comma, Sp,
                 Seq(OpenBracket, Call("NormedAddCommGroup", e), CloseBracket), Comma, Sp,
