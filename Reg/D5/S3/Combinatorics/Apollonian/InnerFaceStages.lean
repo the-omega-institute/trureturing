@@ -712,5 +712,78 @@ def registration_cutoff_gram_offdiag : Contract.Registration.{_,_,_,0,0,0,_,_,_,
   familyRecord := none
   options := #[]
 
+structure CutoffParameters where
+  k : ℕ
+  t : ℕ
+  u : Vertex k ⊕ LateVertex k t
+abbrev cutoffAdjacencySignature : Signature :=
+  Reg.Support.SingleDependentReadout.signature CutoffParameters
+    (fun p => Vertex p.k ⊕ LateVertex p.k p.t) (fun _ => ℝ)
+abbrev cutoff_adjacency_actual : Realization cutoffAdjacencySignature :=
+  realize cutoffAdjacencySignature
+    (fun _ p v => adjacency (p.k + p.t) (cutoffEquiv p.k p.t p.u) (cutoffEquiv p.k p.t v))
+    (fun e => nomatch e)
+abbrev cutoff_adjacency_arena : Arena where
+  signature := cutoffAdjacencySignature
+  Law R := ∀ k t (u v : Vertex k ⊕ LateVertex k t), R.readout () ⟨k,t,u⟩ v =
+    Matrix.fromBlocks (adjacency k) (cutoffBlock k t) (cutoffBlock k t).transpose
+      (lateAdjacency k t) u v
+private def cutoff_adjacency_rejected : Realization cutoffAdjacencySignature :=
+  realize cutoffAdjacencySignature (fun _ _ _ => 0) (fun e => nomatch e)
+private theorem cutoff_adjacency_reject :
+    ¬ cutoff_adjacency_arena.Law cutoff_adjacency_rejected := by
+  intro h
+  have hh : (0 : ℝ) = 1 := h 0 0 (Sum.inl (0 : Vertex 0)) (Sum.inl (1 : Vertex 0))
+  norm_num at hh
+def cutoff_adjacency_family : Registration cutoff_adjacency_arena
+    (type_of% (@_root_.D5.S3.Combinatorics.Apollonian.InnerFaceStages.cutoff_adjacency)) where
+  actual := cutoff_adjacency_actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Combinatorics.Apollonian.InnerFaceStages.cutoff_adjacency,
+    cutoff_adjacency_rejected, cutoff_adjacency_reject⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _
+    cutoff_adjacency_actual cutoff_adjacency_rejected cutoff_adjacency_reject
+  dependence := by
+    intro i
+    cases i
+    refine ⟨⟨0,0,Sum.inl (0 : Vertex 0)⟩, Sum.inl (0 : Vertex 0),
+      Sum.inl (1 : Vertex 0), ?_⟩
+    change (0 : ℝ) ≠ 1
+    norm_num
+def registration_cutoff_adjacency : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Combinatorics.Apollonian.InnerFaceStages.cutoff_adjacency)
+    (Realization cutoffAdjacencySignature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Apollonian.InnerFaceStages.cutoff_adjacency_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Apollonian.InnerFaceStages.cutoff_adjacency_family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨cutoff_adjacency_arena⟩
+  objectArena := .source ⟨cutoff_adjacency_arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source cutoff_adjacency_arena ⟨cutoff_adjacency_family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize cutoffAdjacencySignature
+    (fun _ p v => adjacency (p.k + p.t) (cutoffEquiv p.k p.t p.u) (cutoffEquiv p.k p.t v))
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Apollonian.InnerFaceStages
+    definition := none
+    coordinates := #[0,1,2]
+    readouts := #[{
+      path := #["body","body","body","body","fn","arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end
 end Reg.D5.S3.Combinatorics.Apollonian.InnerFaceStages

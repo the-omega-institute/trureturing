@@ -72,6 +72,8 @@ their [canonical exposition](../Blueprint/D5/S3/Combinatorics/Apollonian/InnerFa
 The exact unproved proposition is `InnerFaceStages.limitClaim`;
 `secondEigenvalue` uses the decreasing real ordinary-adjacency spectrum,
 with index one and multiplicities, and the normalization is a real power.
+`cutoffEquiv` is the exact old/late vertex bijection, and `cutoff_adjacency`
+identifies every entry with the corresponding ordinary adjacency block.
 These combinatorial statements alone do not establish the spectral limit.
 No frozen graph-specific spectral resolution is asserted here.
 

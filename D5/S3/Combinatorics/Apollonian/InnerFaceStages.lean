@@ -13,7 +13,7 @@ public import Mathlib.Algebra.BigOperators.Fin
 public import Mathlib.Tactic.FinCases
 public import Mathlib.Tactic.NormNum
 public import Mathlib.Tactic.Ring
-public import Mathlib.Data.Real.Basic
+public import Mathlib.Basic.Real.Basic
 public import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 public import Mathlib.Analysis.Matrix.Spectrum
 public import Mathlib.Analysis.SpecialFunctions.Pow.Real
@@ -459,7 +459,7 @@ private theorem lateCommonCount_zero (k : ℕ) (u v : Vertex k) : lateCommonCoun
   apply Finset.sum_eq_zero
   intro w _
   have h := birth_le k w
-  simp only [lateCommonCount, Nat.add_zero] at *
+  simp only [Nat.add_zero] at *
   simp [show ¬ k < birth k w by omega]
 
 private theorem lateCommonCount_succ (k t : ℕ) (u v : Vertex k) :
@@ -548,7 +548,7 @@ theorem oriented_outdegree_le_three (n : ℕ) (u : Vertex n) :
       have hb := birth_le n u
       simp only [Oriented, adjacent, birth, show ¬ n + 1 < birth n u by omega,
         and_false, ite_false, Finset.sum_const_zero, add_zero]
-      convert ih u using 1 <;> rfl
+      exact ih u
     | inr f =>
       have he : (∑ v : Vertex (n + 1), if Oriented (n + 1) (Sum.inr f) v then 1 else 0) =
           degreeCount (n + 1) (Sum.inr f) := by
@@ -588,9 +588,63 @@ def adjacency (n : ℕ) : Matrix (Vertex n) (Vertex n) ℝ := (graph n).adjMatri
 /-- The actual vertices born after the fixed cutoff. -/
 abbrev LateVertex (k t : ℕ) := {w : Vertex (k + t) // k < birth (k + t) w}
 
+/-- The cutoff partition, with actual old vertices and actual later-born vertices. -/
+noncomputable def cutoffEquiv (k t : ℕ) : Vertex k ⊕ LateVertex k t ≃ Vertex (k + t) :=
+  Equiv.ofBijective (Sum.elim (embed k t) Subtype.val) ⟨by
+    intro u v h
+    cases u with
+    | inl u =>
+      cases v with
+      | inl v => exact congrArg Sum.inl (embed_injective k t h)
+      | inr v =>
+        change embed k t u = v.val at h
+        have hb := v.property
+        rw [← h, birth_embed] at hb
+        have hu := birth_le k u
+        omega
+    | inr u =>
+      cases v with
+      | inl v =>
+        change u.val = embed k t v at h
+        have hb := u.property
+        rw [h, birth_embed] at hb
+        have hv := birth_le k v
+        omega
+      | inr v => exact congrArg Sum.inr (Subtype.ext h), by
+    intro w
+    by_cases hb : birth (k + t) w ≤ k
+    · obtain ⟨u, hu⟩ := (old_vertices_iff k t w).mp hb
+      exact ⟨Sum.inl u, hu⟩
+    · exact ⟨Sum.inr ⟨w, Nat.lt_of_not_ge hb⟩, rfl⟩⟩
+
 /-- The old-to-late block of the ordinary adjacency matrix, without weights or normalization. -/
 def cutoffBlock (k t : ℕ) : Matrix (Vertex k) (LateVertex k t) ℝ :=
   fun u w => adjacency (k + t) (embed k t u) w.val
+
+/-- The ordinary adjacency induced on vertices born after the cutoff. -/
+def lateAdjacency (k t : ℕ) : Matrix (LateVertex k t) (LateVertex k t) ℝ :=
+  fun u v => adjacency (k + t) u.val v.val
+
+/-- The exact old/new adjacency decomposition under the actual cutoff bijection. -/
+theorem cutoff_adjacency (k t : ℕ) (u v : Vertex k ⊕ LateVertex k t) :
+    adjacency (k + t) (cutoffEquiv k t u) (cutoffEquiv k t v) =
+      Matrix.fromBlocks (adjacency k) (cutoffBlock k t) (cutoffBlock k t).transpose
+        (lateAdjacency k t) u v := by
+  cases u with
+  | inl u =>
+    cases v with
+    | inl v =>
+      change (if adjacent (k + t) (embed k t u) (embed k t v) then (1 : ℝ) else 0) =
+        if adjacent k u v then 1 else 0
+      simp only [adjacent_embed]
+    | inr v => rfl
+  | inr u =>
+    cases v with
+    | inl v =>
+      change (graph (k + t)).adjMatrix ℝ u.val (embed k t v) =
+        (graph (k + t)).adjMatrix ℝ (embed k t v) u.val
+      exact ((graph (k + t)).isSymm_adjMatrix (α := ℝ)).apply _ _
+    | inr v => rfl
 
 /-- Each Gram entry counts actual common neighbours born after the cutoff. -/
 private theorem cutoff_gram_entry (k t : ℕ) (u v : Vertex k) :
