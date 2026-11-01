@@ -71,17 +71,6 @@ def rows : SimplicialObject (ChainComplex C ℕ) where
 def bicomplex : HomologicalComplex₂ C (ComplexShape.down ℕ) (ComplexShape.down ℕ) :=
   ((alternatingFaceMapComplex (ChainComplex C ℕ)).obj (rows R A P)).flip
 
-/-- Each row is literally the supplied ordered-cover chain complex. -/
-theorem flip_column (q : ℕ) :
-    (bicomplex R A P).flip.X q = OrderedCover.complex R (fun i => (P i).obj (op ⦋q⦌)) :=
-  rfl
-
-/-- The two actual differentials commute before totalization. -/
-theorem horizontal_vertical_commute (p p' q q' : ℕ) :
-    ((bicomplex R A P).d p p').f q ≫ ((bicomplex R A P).X p').d q q' =
-      ((bicomplex R A P).X p).d q q' ≫ ((bicomplex R A P).d p p').f q' :=
-  (bicomplex R A P).d_comm p p' q q'
-
 /-- A zero column away from Cech degree zero. -/
 abbrev singleColumn (L : ChainComplex C ℕ) :
     HomologicalComplex₂ C (ComplexShape.down ℕ) (ComplexShape.down ℕ) :=
@@ -210,7 +199,7 @@ private theorem singleColumnInclusion_isIso_f (n : ℕ) :
 /-- Totalization of an actual single column, including all zero summands and signs. -/
 def singleColumnTotalIso : (singleColumn L).total (ComplexShape.down ℕ) ≅ L := by
   haveI := singleColumnInclusion_isIso_f L
-  haveI := HomologicalComplex.isIso_of_components (singleColumnInclusion L)
+  haveI := HomologicalComplex.Hom.isIso_of_components (singleColumnInclusion L)
   exact (asIso (singleColumnInclusion L)).symm
 
 private def singleRowFlipIso : (singleRow L).flip ≅ singleColumn L :=

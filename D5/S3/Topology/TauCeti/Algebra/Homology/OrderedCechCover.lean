@@ -512,7 +512,8 @@ private lemma mapX_comm (f : A → B) (hf : ∀ i a, a ∈ P i → f a ∈ Q i) 
 /-- A function of covered bases induces the actual ordered chain map. -/
 def map (f : A → B) (hf : ∀ i a, a ∈ P i → f a ∈ Q i) :
     complex R P ⟶ complex R Q :=
-  ChainComplex.ofHom (mapX R f hf) (mapX_comm R f hf)
+  ChainComplex.ofHom (mapX R f hf) (fun p => by
+    simpa only [complex, ChainComplex.of_d] using mapX_comm R f hf p)
 
 @[reassoc (attr := simp)]
 lemma basisι_map (f : A → B) (hf : ∀ i a, a ∈ P i → f a ∈ Q i)
@@ -558,6 +559,6 @@ lemma map_augmentation (f : A → B) (hf : ∀ i a, a ∈ P i → f a ∈ Q i) :
   simp only [HomologicalComplex.comp_f, Category.assoc, basisι_map_assoc,
     basisι_augmentation, basisι_augmentation_assoc,
     ChainComplex.single₀_map_f_zero]
-  exact (Sigma.ι_comp_map' _ _ _).trans (Category.id_comp _)
+  simpa using (Sigma.ι_comp_map' f (fun _ : A => 𝟙 R) a)
 
 end TauCeti.OrderedCover
