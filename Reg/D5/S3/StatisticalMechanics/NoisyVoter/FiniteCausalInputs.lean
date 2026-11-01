@@ -111,7 +111,7 @@ def factorization_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, 
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (@history)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.NoisyVoter.FiniteCausalInputs
     definition := none
@@ -275,7 +275,7 @@ def law_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (@history)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.NoisyVoter.FiniteCausalInputs
     definition := none
