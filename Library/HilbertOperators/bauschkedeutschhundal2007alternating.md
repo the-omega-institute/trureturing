@@ -34,3 +34,9 @@ convergence of the actual powers. This is a proof of established
 mathematics. The citations supply the classical statement; no external
 Lean source or article text is copied, and the original von Neumann
 publication is not the source of a direct quotation here.
+
+## Verified locator
+
+https://arxiv.org/pdf/0710.2387v1, printed page 1, Theorem 1.1: the
+classical von Neumann two-subspace strong convergence theorem for closed
+linear subspaces of a real or complex Hilbert space.
