@@ -4,6 +4,8 @@
 
 A heterogeneous Gaussian coefficient operator from the actual joint Fock vector.
 
+The Gaussian/Fock construction and factorial Bargmann/Fock normalization are classical, as described in FactorialFockMetric and InfiniteGaussianFock; AssessedProvenance.FromRepo identifies the repository Lean formalization and Mathlib reuse, not authorship of the classical construction or a literature novelty claim.
+
 Let S and T be arbitrary mode types with decidable equality. The input D is InfiniteGaussianFock.Data on S plus T: an actual bounded complex-linear one-particle map L, holomorphically symmetric matrix K(i,j)=(L e(j))(i), 0<=q<1, norm(L)<=q, and a summable pair square series with total at most M. The completed Gaussian vector is the one constructed by InfiniteGaussianFock from common finite principal blocks. Columns and their summability are conclusions, not additional input certificates.
 
 **Theorem 1.1 (Exact occupation splitting and normalization).**
