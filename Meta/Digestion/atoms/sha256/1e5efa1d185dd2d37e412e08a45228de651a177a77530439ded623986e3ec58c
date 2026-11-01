@@ -1,0 +1,18 @@
+Conversely, suppose a feasible measure is supported in $\mathcal S$. Write $m_\sigma=\mu(\mathcal S_\sigma)$. Its moment is
+
+$$
+m_+E_++m_-E_-=I_2.
+\tag{9.26}
+$$
+
+The two $E_\sigma$ are orthogonal rank-one projections summing to $I_2$. Multiplying (9.26) by either projection and taking trace yields $m_+=m_-=1$. Scalar feedback phases cancel from $G_{(E,U)}$, so (6.4) gives
+
+$$
+\Phi_\mu
+ =m_+G_{(E_+,U_+)}+m_-G_{(E_-,U_-)}
+ =\Phi_*.
+\tag{9.27}
+$$
+
+Theorem 6.2 gives its error $q$, completing all implications. The displayed atoms themselves have zero certificate and trace defects by Theorem 8.2 and (6.11), so $\mathcal S$ is precisely the set of atoms eligible for optimizing support, subject to the moment masses in (9.26).
+

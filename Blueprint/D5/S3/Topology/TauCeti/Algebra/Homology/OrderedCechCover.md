@@ -58,9 +58,22 @@ Write composition in categorical order. The section followed by the augmentation
 
 The result includes empty intersections, zero coefficient objects, infinite index and point types, and empty covers whenever their union is A. If iota is empty, the cover equation forces A to be empty. There is no topology, good-cover, abelian-category, module, field, extra-exactness or supplied-contraction hypothesis. This statement concerns the ordered free complex of a set cover; no singular-chain total-complex comparison is asserted.
 
+**Definition 1.5 (Maps on the same intersection generators).**
+
+Lean statement: `D5/S3/Topology/TauCeti/Algebra/Homology/OrderedCechCover.map`
+
+*Formalization.* `D5/S3/Topology/TauCeti/Algebra/Homology/OrderedCechCover.map` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For point types A and B, families P and Q with the same ordered index type, and a function f from A to B taking P(i) into Q(i) for every i, there is a chain map from the ordered free complex of P to that of Q. It sends each generator (s,a) to (s,f(a)). The finite index set and every deletion sign are preserved. These maps preserve identity and composition.
+
 ## References
 
 - Truth anchor: `D5/S3/Topology/TauCeti/Algebra/Homology/OrderedCechCover.augmentation`
 - Truth anchor: `D5/S3/Topology/TauCeti/Algebra/Homology/OrderedCechCover.augmentation_homotopy_equiv`
 - Truth anchor: `D5/S3/Topology/TauCeti/Algebra/Homology/OrderedCechCover.complex`
 - Truth anchor: `D5/S3/Topology/TauCeti/Algebra/Homology/OrderedCechCover.freeFunctor`
+- Truth anchor: `D5/S3/Topology/TauCeti/Algebra/Homology/OrderedCechCover.map`
