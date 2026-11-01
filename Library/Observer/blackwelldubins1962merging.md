@@ -4,7 +4,7 @@ authors: David Blackwell and Lester Dubins
 year: 1962
 title: Merging of Opinions with Increasing Information
 doi: 10.1214/aoms/1177704456
-url: http://www.dklevine.com/archive/refs4565.pdf
+url: https://doi.org/10.1214/aoms/1177704456
 claim: Theorem 2 gives joint almost-everywhere and L1 conditional dominated convergence along monotone sigma-algebras.
 strata_touched:
   - D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/JointConditionalDominatedConvergence
