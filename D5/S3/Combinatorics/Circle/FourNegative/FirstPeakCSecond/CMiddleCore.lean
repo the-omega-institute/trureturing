@@ -107,7 +107,7 @@ private theorem model_positive (y t e h : ℤ)
   obtain ⟨H,hH,rfl⟩ : ∃ H : ℤ, 0≤H ∧ h=2+H := ⟨h-2,by omega,by ring⟩
   dsimp [model]
   refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,?_⟩
-  all_goals first | ring | nlinarith [hY,hT,hE,hH] | positivity | (apply sub_nonneg.mp; ring_nf; positivity)
+  all_goals first | ring | (apply sub_nonneg.mp <;> norm_num <;> positivity)
 
 /- The six later gates share the same integer rounding proof. The first four
 polynomial margins are kept separate, including the actual pre-ear first seam. -/
@@ -328,7 +328,7 @@ private theorem chain_inventory (a b c d : ℕ)
       (chamberLabels (b-1) (d+c) (2^(b-1)-1) ++ [d+c+b-1]) ++
       (chamberLabels (a-1) (d+c+b) (2^(a-1)-1) ++ [d+c+b+a-1]) =
       List.range (size a b c d) by
-    simpa only [mask,full,terminal,chainLength,chainStart,List.append_assoc,Nat.zero_add] using h
+    simpa [mask,full,terminal,chainLength,chainStart,size,List.append_assoc] using h
   have hu : chamberLabels (d-1) 0 (2^(d-1)-1) ++ [d-1] = List.range' 0 d := by
     simpa only [Nat.zero_add] using merge 0 d (by omega)
   rw [hu,merge d c (by omega),merge (d+c) b (by omega),merge (d+c+b) a (by omega)]
@@ -403,9 +403,7 @@ private theorem x_inventory (a b c d m q w : ℕ)
       ↑(V (full a b c d 1 ^^^ w) ++ V w) + ↑(U (full a b c d 0)) +
       ↑(W (full a b c d 2)) + {terminal a b c d 0} + {terminal a b c d 1} +
       {terminal a b c d 2} + {terminal a b c d 3} := by
-        simp only [xPackets,←hnum,blocksWord,←Multiset.coe_add,Multiset.coe_cons,
-          Multiset.coe_nil,add_zero]
-        ac_rfl
+        simp [xPackets,←hnum,blocksWord,←Multiset.coe_add, List.append_assoc]
     _ = ↑(X (full a b c d 3)) + ↑(V (full a b c d 1)) + ↑(U (full a b c d 0)) +
       ↑(W (full a b c d 2)) + {terminal a b c d 0} + {terminal a b c d 1} +
       {terminal a b c d 2} + {terminal a b c d 3} := by
@@ -440,9 +438,7 @@ private theorem v_inventory (a b c d q R : ℕ)
       ↑(V (full a b c d 1 ^^^ q) ++ V q) + ↑(U (full a b c d 0)) +
       ↑(W (full a b c d 2)) + {terminal a b c d 0} + {terminal a b c d 1} +
       {terminal a b c d 2} + {terminal a b c d 3} := by
-        simp only [vPackets,←hnum,blocksWord,←Multiset.coe_add,Multiset.coe_cons,
-          Multiset.coe_nil,add_zero]
-        ac_rfl
+        simp [vPackets,←hnum,blocksWord,←Multiset.coe_add, List.append_assoc]
     _ = ↑(X (full a b c d 3)) + ↑(V (full a b c d 1)) + ↑(U (full a b c d 0)) +
       ↑(W (full a b c d 2)) + {terminal a b c d 0} + {terminal a b c d 1} +
       {terminal a b c d 2} + {terminal a b c d 3} := by
@@ -478,8 +474,9 @@ private theorem mask_positive (a b c d m : ℕ) (r : Fin 4)
   intro i hi
   obtain ⟨j,hj,_,rfl⟩ := (chamberLabels_mem _ _ _ _).mp hi
   rw [h.2.1 r j (by omega),h.2.2.1 r j (by omega),if_pos (by omega)]
-  exact ⟨mul_nonneg (by positivity) (by have := (h.1 r).1; omega),
-    mul_nonneg (by positivity) (by omega)⟩
+  have hp : (0 : ℤ) ≤ (2 : ℤ)^j := by positivity
+  exact ⟨mul_nonneg hp (by have := (h.1 r).1; omega),
+    mul_nonneg hp (by have := (hn r).1; omega)⟩
 
 private theorem complement_mass (a b c d m : ℕ) (r : Fin 4)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
@@ -535,11 +532,13 @@ private theorem row_source (a b c d : ℕ) (hac : c≤a) (hcd : d≤c) :
   have hx : (2:ℤ)^(c-d)*2^(a-c)*2^d=2^a := by rw [hh,he]; ring
   dsimp [actualRow,model,base,newBase,charge]
   simp only [hx,←he]
-  repeat' constructor <;> ring
+  repeat' constructor <;> try trivial <;> ring
 
 private theorem power_pred (j : ℕ) (hj : 1≤j) :
     (2:ℤ)^j=2*2^(j-1) := by
   rw [show j=(j-1)+1 by omega,pow_succ]
+  have he : 1 + (j - 1) - 1 = j - 1 := by omega
+  rw [he]
   ring
 
 private theorem terminal_double (a b c d : ℕ) (r : Fin 4)
@@ -626,24 +625,36 @@ private theorem packet_positive (a b c d : ℕ)
   constructor
   · intro P hP i hi
     simp only [xPackets,List.mem_cons,List.mem_singleton] at hP
-    rcases hP with rfl|rfl|rfl|hP
+    rcases hP with rfl|rfl|rfl|rfl
     · simp only [List.mem_append] at hi
-      aesop (add safe apply (mask_positive a b c d _ _ ha hb hc hd))
+      rcases hi with hi|hi
+      · exact mask_positive a b c d (full a b c d 3 ^^^ m) 3 ha hb hc hd i hi
+      · exact mask_positive a b c d (full a b c d 0) 0 ha hb hc hd i hi
+    · exact mask_positive a b c d (m-q) 3 ha hb hc hd i hi
+    · exact mask_positive a b c d (full a b c d 1 ^^^ w) 1 ha hb hc hd i hi
     · simp only [List.mem_append] at hi
-      aesop (add safe apply (mask_positive a b c d _ _ ha hb hc hd))
-    · simp only [List.mem_append] at hi
-      aesop (add safe apply (mask_positive a b c d _ _ ha hb hc hd))
-    · simp at hP
+      rcases hi with hi|hi
+      · exact mask_positive a b c d (full a b c d 2) 2 ha hb hc hd i hi
+      · simp only [List.mem_append] at hi
+        rcases hi with hi|hi
+        · exact mask_positive a b c d q 3 ha hb hc hd i hi
+        · exact mask_positive a b c d w 1 ha hb hc hd i hi
   · intro P hP i hi
     simp only [vPackets,List.mem_cons,List.mem_singleton] at hP
-    rcases hP with rfl|rfl|rfl|hP
+    rcases hP with rfl|rfl|rfl|rfl
+    · exact mask_positive a b c d (full a b c d 1 ^^^ q) 1 ha hb hc hd i hi
     · simp only [List.mem_append] at hi
-      aesop (add safe apply (mask_positive a b c d _ _ ha hb hc hd))
+      rcases hi with hi|hi
+      · exact mask_positive a b c d (full a b c d 0) 0 ha hb hc hd i hi
+      · simp only [List.mem_append] at hi
+        rcases hi with hi|hi
+        · exact mask_positive a b c d q 1 ha hb hc hd i hi
+        · exact mask_positive a b c d 1 3 ha hb hc hd i hi
+    · exact mask_positive a b c d (full a b c d 3 ^^^ R) 3 ha hb hc hd i hi
     · simp only [List.mem_append] at hi
-      aesop (add safe apply (mask_positive a b c d _ _ ha hb hc hd))
-    · simp only [List.mem_append] at hi
-      aesop (add safe apply (mask_positive a b c d _ _ ha hb hc hd))
-    · simp at hP
+      rcases hi with hi|hi
+      · exact mask_positive a b c d (full a b c d 2) 2 ha hb hc hd i hi
+      · exact mask_positive a b c d (R-1) 3 ha hb hc hd i hi
 
 private theorem fresh_positive (a b c d : ℕ) (e : ℕ) (bs : List (List ℕ×ℕ))
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
