@@ -75,7 +75,7 @@ internal sealed class KoljancicOblakMinimumArcsDocument : IScribeDocumentDefinit
                 Node("bound","The connected-support lower bound","nssp_arc_bound_of_connected",bound,
                     "The kernel of the transposed incidence matrix consists of functions constant along every arc. Under ConnectedSupport, evaluation at any one vertex is injective on that kernel, so its dimension is at most one. Transpose invariance of rank and rank-nullity give incidence rank at least n−1. Combining this with the centralizer-cycle bound gives 2n−1 arcs. Connectivity is an explicit hypothesis of this theorem.",DescribeRole.Theorem,false),
                 Node("path","The endpoint-looped double path","endpointSupport",path,
-                    "There is one loop at vertex zero and two opposite arcs between consecutive vertices. All other ordered pairs are absent.",DescribeRole.Definition,true),
+                    "At positive order there is one loop at vertex zero and two opposite arcs between consecutive vertices. All other ordered pairs are absent.",DescribeRole.Definition,true),
                 Node("upper","Universal real attainment construction","endpoint_requires",upper,
                     "Let F be the transpose of an obstruction. Its entries at the loop and both neighbouring diagonals vanish. Commutation along each odd offset, read from the terminal end of the path, forces that entire offset to vanish. Apply the same argument to the transposed matrices for the lower odd offsets. The endpoint loop then forces the remaining entries in the first column to vanish. Commutation propagates the zero column successively along every nonzero path arc. Thus F, and hence the obstruction, is zero. This is the construction of Theorem 5.5 of Koljančić and Oblak, formalized for arbitrary nonzero real weights.",DescribeRole.Theorem,true),
                 Node("attainment","Exactly 2n−1 arcs","endpoint_attainment",attainment,
@@ -122,5 +122,5 @@ internal sealed class KoljancicOblakMinimumArcsDocument : IScribeDocumentDefinit
     private static Formula Min(Formula n)=>Sub(Mul(D(2),n),D(1));
     private static Formula Tr(Formula x)=>Call("transpose",x);
     private static Formula Pair(Formula a,Formula b)=>Seq(Open,a,Comma,Sp,b,Close);
-    private static Formula If(Formula h,Formula a,Formula b)=>Seq(C("if"),Sp,Open,h,Close,Sp,C("then"),Sp,a,Sp,C("else"),Sp,b);
+    private static Formula If(Formula h,Formula a,Formula b)=>Seq(Open,C("if"),Sp,Open,h,Close,Sp,C("then"),Sp,a,Sp,C("else"),Sp,b,Close);
 }
