@@ -71,7 +71,7 @@ private theorem oa_surjective {r : Type v} {x : Type u} [Fintype r] [Fintype x]
     (i j k : Fin n) (hc : Function.Injective ![i, j, k]) (a b c : x) :
     ∃ t, rows t i = a ∧ rows t j = b ∧ rows t k = c := by
   obtain ⟨t, ht⟩ := (h ![i, j, k] hc).2 ![a, b, c]
-  try dsimp only at ht
+  dsimp only at ht
   exact ⟨t, congrFun ht 0, congrFun ht 1, congrFun ht 2⟩
 
 private theorem gate_perfect {x : Type u} [Fintype x] (f : x × x → x × x)
@@ -198,7 +198,7 @@ private theorem first_latin {x : Type u} [Fintype x] [Nonempty x]
     intro y
     apply Function.Injective.bijective_of_finite
     intro s t he
-    try dsimp only at he
+    dsimp only at he
     have hp : (circuit a b c (s, y, d)).1 = (circuit a b c (t, y, d)).1 := by
       change (b ((a (s, y)).1, d)).1 = (b ((a (t, y)).1, d)).1
       rw [he]
@@ -208,7 +208,7 @@ private theorem first_latin {x : Type u} [Fintype x] [Nonempty x]
     intro w
     apply Function.Injective.bijective_of_finite
     intro s t he
-    try dsimp only at he
+    dsimp only at he
     have hp : (circuit a b c (w, s, d)).1 = (circuit a b c (w, t, d)).1 := by
       change (b ((a (w, s)).1, d)).1 = (b ((a (w, t)).1, d)).1
       rw [he]
@@ -219,11 +219,11 @@ private theorem first_latin {x : Type u} [Fintype x] [Nonempty x]
   · intro z
     apply Function.Injective.bijective_of_finite
     intro s t he
-    try dsimp only at he
+    dsimp only at he
     obtain ⟨u, hu⟩ := (hal d).2 s
-    try dsimp only at hu
+    dsimp only at hu
     obtain ⟨v, hv⟩ := (hal d).2 t
-    try dsimp only at hv
+    dsimp only at hv
     have hp : (circuit a b c (u, d, z)).1 = (circuit a b c (v, d, z)).1 := by
       change (b ((a (u, d)).1, z)).1 = (b ((a (v, d)).1, z)).1
       rw [hu, hv, he]
@@ -233,13 +233,13 @@ private theorem first_latin {x : Type u} [Fintype x] [Nonempty x]
   · intro s
     apply Function.Injective.bijective_of_finite
     intro u v he
-    try dsimp only at he
+    dsimp only at he
     obtain ⟨t, ht⟩ := ha.2 (s, d)
     have ht₁ := congrArg Prod.fst ht
     have hp : (circuit a b c (t.1, t.2, u)).1 =
         (circuit a b c (t.1, t.2, v)).1 := by
       change (b ((a t).1, u)).1 = (b ((a t).1, v)).1
-      try dsimp only at *
+      dsimp only at *
       rw [ht₁, he]
     exact congrArg (fun w : x × x × x => w.2.2)
       (oa_injective h 0 1 3 (by decide)
@@ -278,16 +278,13 @@ private theorem second_latin {x : Type u} [Fintype x] [Nonempty x]
   · intro z
     apply Function.Injective.bijective_of_finite
     intro u v he
-    try dsimp only at he
+    dsimp only at he
     obtain ⟨s, hs⟩ := ha.2 (u, d)
     obtain ⟨t, ht⟩ := ha.2 (v, d)
-    try dsimp only at ht
     have hqr : c ((a s).2, (b ((a s).1, z)).2) =
         c ((a t).2, (b ((a t).1, z)).2) := by
-      try dsimp only at *
       rw [hs, ht]
       change c (d, (b (u, z)).2) = c (d, (b (v, z)).2)
-      try dsimp only at *
       rw [he]
     have hst : (s.1, s.2, z) = (t.1, t.2, z) :=
       oa_injective h 2 4 5 (by decide) rfl
@@ -298,9 +295,9 @@ private theorem second_latin {x : Type u} [Fintype x] [Nonempty x]
   · intro v
     apply Function.Injective.bijective_of_finite
     intro s t he
-    try dsimp only at he
+    dsimp only at he
     obtain ⟨u, hu⟩ := (h₁.1 d).2 v
-    try dsimp only at hu
+    dsimp only at hu
     have hqr : c ((a (u, d)).2, (b ((a (u, d)).1, s)).2) =
         c ((a (u, d)).2, (b ((a (u, d)).1, t)).2) := by
       rw [hu, he]
@@ -320,25 +317,21 @@ private theorem last_latin {x : Type u} [Fintype x] [Nonempty x]
     · intro v
       apply Function.Injective.bijective_of_finite
       intro s t he
-      try dsimp only at he
+      dsimp only at he
       obtain ⟨w, hw⟩ := (h₂.1 d).2 v
-      try dsimp only at hw
+      dsimp only at hw
       obtain ⟨u, hu⟩ := ha.2 (w, s)
       obtain ⟨v, hv⟩ := ha.2 (w, t)
-      try dsimp only at hv
       have hp : (circuit a b c (u.1, u.2, d)).1 =
           (circuit a b c (v.1, v.2, d)).1 := by
         change (b ((a u).1, d)).1 = (b ((a v).1, d)).1
-        try dsimp only at *
         rw [hu, hv]
       have ho : (circuit a b c (u.1, u.2, d)).2.1 =
           (circuit a b c (v.1, v.2, d)).2.1 := by
         change (c ((a u).2, (b ((a u).1, d)).2)).1 =
           (c ((a v).2, (b ((a v).1, d)).2)).1
-        try dsimp only at *
         rw [hu, hv]
         change (c (s, (b (w, d)).2)).1 = (c (t, (b (w, d)).2)).1
-        try dsimp only at *
         rw [hw, he]
       have huv : u = v := congrArg (fun w : x × x × x => (w.1, w.2.1))
         (oa_injective h 2 3 4 (by decide)
@@ -348,20 +341,19 @@ private theorem last_latin {x : Type u} [Fintype x] [Nonempty x]
     · intro v
       apply Function.Injective.bijective_of_finite
       intro s t he
-      try dsimp only at he
+      dsimp only at he
       obtain ⟨w, hw⟩ := ha.2 (d, v)
       obtain ⟨u, hu⟩ := (h₂.2 d).2 s
-      try dsimp only at hu
+      dsimp only at hu
       obtain ⟨v, hv⟩ := (h₂.2 d).2 t
-      try dsimp only at hv
+      dsimp only at hv
       have ho : (circuit a b c (w.1, w.2, u)).2.1 =
           (circuit a b c (w.1, w.2, v)).2.1 := by
         change (c ((a w).2, (b ((a w).1, u)).2)).1 =
           (c ((a w).2, (b ((a w).1, v)).2)).1
-        try dsimp only at *
         rw [hw]
         change (c (_, (b (d, u)).2)).1 = (c (_, (b (d, v)).2)).1
-        try dsimp only at *
+        dsimp only at *
         rw [hu, hv, he]
       have huv := congrArg (fun w : x × x × x => w.2.2)
         (oa_injective h 0 1 4 (by decide)
@@ -371,25 +363,21 @@ private theorem last_latin {x : Type u} [Fintype x] [Nonempty x]
     · intro v
       apply Function.Injective.bijective_of_finite
       intro s t he
-      try dsimp only at he
+      dsimp only at he
       obtain ⟨w, hw⟩ := (h₂.1 d).2 v
-      try dsimp only at hw
+      dsimp only at hw
       obtain ⟨u, hu⟩ := ha.2 (w, s)
       obtain ⟨v, hv⟩ := ha.2 (w, t)
-      try dsimp only at hv
       have hp : (circuit a b c (u.1, u.2, d)).1 =
           (circuit a b c (v.1, v.2, d)).1 := by
         change (b ((a u).1, d)).1 = (b ((a v).1, d)).1
-        try dsimp only at *
         rw [hu, hv]
       have ho : (circuit a b c (u.1, u.2, d)).2.2 =
           (circuit a b c (v.1, v.2, d)).2.2 := by
         change (c ((a u).2, (b ((a u).1, d)).2)).2 =
           (c ((a v).2, (b ((a v).1, d)).2)).2
-        try dsimp only at *
         rw [hu, hv]
         change (c (s, (b (w, d)).2)).2 = (c (t, (b (w, d)).2)).2
-        try dsimp only at *
         rw [hw, he]
       have huv : u = v := congrArg (fun w : x × x × x => (w.1, w.2.1))
         (oa_injective h 2 3 5 (by decide)
@@ -399,20 +387,19 @@ private theorem last_latin {x : Type u} [Fintype x] [Nonempty x]
     · intro v
       apply Function.Injective.bijective_of_finite
       intro s t he
-      try dsimp only at he
+      dsimp only at he
       obtain ⟨w, hw⟩ := ha.2 (d, v)
       obtain ⟨u, hu⟩ := (h₂.2 d).2 s
-      try dsimp only at hu
+      dsimp only at hu
       obtain ⟨v, hv⟩ := (h₂.2 d).2 t
-      try dsimp only at hv
+      dsimp only at hv
       have ho : (circuit a b c (w.1, w.2, u)).2.2 =
           (circuit a b c (w.1, w.2, v)).2.2 := by
         change (c ((a w).2, (b ((a w).1, u)).2)).2 =
           (c ((a w).2, (b ((a w).1, v)).2)).2
-        try dsimp only at *
         rw [hw]
         change (c (_, (b (d, u)).2)).2 = (c (_, (b (d, v)).2)).2
-        try dsimp only at *
+        dsimp only at *
         rw [hu, hv, he]
       have huv := congrArg (fun w : x × x × x => w.2.2)
         (oa_injective h 0 1 5 (by decide)
