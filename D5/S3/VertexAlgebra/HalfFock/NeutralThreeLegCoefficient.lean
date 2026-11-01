@@ -7,6 +7,7 @@
    digest: Actual full neutral-field raw three-leg Gaussian coefficient identity. -/
 
 import D5.S3.VertexAlgebra.HalfFock.NeutralThreeLegModeExpansion
+import D5.S3.VertexAlgebra.TwistedGround.OriginalCorrectionGaussian
 
 /-!
 The source side is the actual `correctedField` and its literal finite Corr;
