@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Observer.RationalRouting.TwoReplyProfile
 
+/-! Source-owned full-profile variation, sensitivity and dependence. -/
+
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Observer.RationalRouting
@@ -81,7 +83,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Observer.RationalRouting.FullFutureProfile
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body","body","body","body","body","arg"]
+    readouts := #[{
+      path := #["body","body","body","body","body","arg"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
@@ -164,7 +167,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Observer.RationalRouting.FullFutureProfile
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body","body","body","body","body","fn","arg"]
+    readouts := #[{
+      path := #["body","body","body","body","body","fn","arg"]
       stateBinder := 4
       functionOperand := false
       stateOperand := none
@@ -247,7 +251,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Observer.RationalRouting.FullFutureProfile
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body","body","body","body","arg","body","body","body","body","body","body","fn","arg"]
+    readouts := #[{
+      path := #["body","body","body","body","arg","body","body","body","body","body","body","fn","arg"]
       stateBinder := 6
       functionOperand := false
       stateOperand := none
@@ -327,7 +332,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Observer.RationalRouting.FullFutureProfile
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body","body","fn","arg"]
+    readouts := #[{
+      path := #["body","body","fn","arg"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none

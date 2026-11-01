@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Observer.RationalRouting.TwoReplyProfile
 
+/-! Source-owned full-profile variation, sensitivity and dependence. -/
+
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Observer.RationalRouting
@@ -49,6 +51,7 @@ def arena : Arena where
     let C := R.readout () (u,I,B) x
     let Q := profileScale A I B
     let J := firstInterval A (Q ^ 2) I (reply (Q ^ 2) z)
+    let V := A.a * originalUpper I + A.b + 1
     C = containingCell B x ∧
       (∀ y : ℚ, C.Contains y ↔ 0 < y ∧ SameFuture B y x) ∧
       (∀ v : List Bool, ∀ m : ℕ, 1 ≤ m → m ≤ B →
@@ -58,7 +61,9 @@ def arena : Arena where
       (∀ r : ℤ, determinedReply A I (Q ^ 2) = some r ↔
         ∀ y : ℚ, I.Contains y → reply (Q ^ 2) (mobius A y) = r) ∧
       (∀ s : ℕ, 1 ≤ s → ∀ r : ℤ, determinedReply A J s = some r ↔
-        ∀ y : ℚ, J.Contains y → reply s (mobius A y) = r)
+        ∀ y : ℚ, J.Contains y → reply s (mobius A y) = r) ∧
+      AcquisitionScans A I B z C ∧
+      BoundedReplies Q V (program.actualReads z)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -103,7 +108,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Observer.RationalRouting.TwoReplyProfile
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body","body","body","body","body","body","body","body","body","body","value"]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","body","body","body","value"]
       stateBinder := 5
       functionOperand := false
       stateOperand := none
