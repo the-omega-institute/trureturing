@@ -97,6 +97,7 @@ namespace Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.CauchySchw
 open _root_.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open Matrix
+open scoped MatrixOrder ComplexOrder
 noncomputable section
 universe u
 /-- Read the real quadratic value appearing in the first diagonal factor. -/
@@ -110,14 +111,18 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {h : Type u} [Fintype h] [DecidableEq h]
-    (H : Matrix h h ℂ) (hH : H.PosSemidef) (x y : h → ℂ),
+    (H : Matrix h h ℂ) (_hH : H.PosSemidef) (x y : h → ℂ),
     ‖star x ⬝ᵥ (H *ᵥ y)‖ ^ 2 ≤
       R.readout () () (star x ⬝ᵥ (H *ᵥ x)) * (star y ⬝ᵥ (H *ᵥ y)).re
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hh := h (h := ULift.{u} Unit) 1 Matrix.PosSemidef.one
     (fun _ => 1) (fun _ => 1)
-  norm_num [rejected, realize, dotProduct] at hh
+  change ‖star (fun _ : ULift.{u} Unit => (1 : ℂ)) ⬝ᵥ
+    ((1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) *ᵥ (fun _ => 1))‖ ^ 2 ≤
+      (-1 : ℝ) * (star (fun _ : ULift.{u} Unit => (1 : ℂ)) ⬝ᵥ
+        ((1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) *ᵥ (fun _ => 1))).re at hh
+  norm_num [dotProduct] at hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
