@@ -15,16 +15,19 @@ internal sealed class FewerEffectsOrthogonalityRefutationDocument : IScribeDocum
         H("Orthogonality with fewer effects than dimensions"),
         Blocks(
             Node("gram", "The square-root Gram matrix", GramFormula(),
-                "For a family f of complex matrices, the (i,j) entry is the trace of the product "
-                    + "of CFC.sqrt (f i) and CFC.sqrt (f j). For positive semidefinite effects these "
-                    + "are the positive square roots, and this is their Hilbert–Schmidt Gram matrix. "
+                "For a family f of complex matrices, the (i,j) entry is "
+                    + "GeneralizedFidelity.fidelity 1 (f i) (f j). At reference matrix 1, this is "
+                    + "the trace of the product of CFC.sqrt (f i) and CFC.sqrt (f j). For positive "
+                    + "semidefinite effects these are the positive square roots, giving the source's "
+                    + "entry [S] at (i,j) and its Hilbert–Schmidt Gram matrix. "
                     + "The formula accepts arbitrary complex matrices without a positivity hypothesis. "
                     + "It expresses the definition in Section IV, apssamp.tex, lines 403–406.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("orthogonality", "Squared distance from the identity", OrthogonalityFormula(),
-                "Orthogonality is the sum of the squared complex moduli of the entries of the "
-                    + "Gram matrix minus the n by n identity. Complex.normSq takes values in the "
-                    + "real numbers. This is the squared Frobenius distance in Section IV, "
+                "Orthogonality applies CHaarConcatenationNonmonotone.hsNormSq to the Gram matrix "
+                    + "minus the n by n identity. This is the sum of the squared complex moduli "
+                    + "of its entries, taking values in the real numbers: the source's squared "
+                    + "Frobenius distance of S from the identity in Section IV, "
                     + "apssamp.tex, lines 410–420; the definition itself does not assume that f is a POVM.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("IsPOVMWith", "Exactly n nonzero effects", IsPOVMWithFormula(),
@@ -59,13 +62,15 @@ internal sealed class FewerEffectsOrthogonalityRefutationDocument : IScribeDocum
                 Blocks(
                     Paragraph(Text(
                         "At n = 4 and d = 10, the proposed construction consists of coordinate "
-                            + "projectors with ranks 2, 2, 2, 4. Each diagonal entry is zero or one, "
-                            + "so each matrix is idempotent and positive semidefinite. Uniqueness "
-                            + "of the positive square root therefore makes each matrix its own square root.")),
+                            + "projectors with ranks 2, 2, 2, 4. Each diagonal entry is zero or one. "
+                            + "NMLWMeasuredFidelitySeparation.sqrt_diagonal computes the positive "
+                            + "square root by taking the real square root of each nonnegative diagonal "
+                            + "entry. Since the square roots of zero and one are zero and one, "
+                            + "each matrix is its own positive square root.")),
                     Paragraph(Text(
                         "Define another family F of diagonal projectors on the consecutive coordinate "
                             + "blocks [0,2), [2,4), [4,7), [7,10). Its ranks are 2, 2, 3, 3. "
-                            + "The same idempotence and positivity argument makes each of these "
+                            + "The same diagonal square-root formula makes each of these "
                             + "matrices its own positive square root.")),
                     Paragraph(Text(
                         "For the proposed construction, multiply the diagonal square roots and "
@@ -99,16 +104,13 @@ internal sealed class FewerEffectsOrthogonalityRefutationDocument : IScribeDocum
     private static Formula GramFormula() => FamilyBinders(Equal(
         Typed(LocalCall("gram", X("f")), Mat(X("n"))),
         LambdaOf("i", FinOf(X("n")), LambdaOf("j", FinOf(X("n")),
-            At(Qualified("Matrix", "trace"), Multiply(
-                At(Qualified("CFC", "sqrt"), At(X("f"), X("i"))),
-                At(Qualified("CFC", "sqrt"), At(X("f"), X("j")))))))));
+            At(Qualified("D5", "S3", "Quantum", "GeneralizedFidelity", "fidelity"),
+                Typed(D(1), Mat(X("d"))), At(X("f"), X("i")), At(X("f"), X("j")))))));
 
     private static Formula OrthogonalityFormula() => FamilyBinders(Equal(
         Typed(LocalCall("orthogonality", X("f")), Reals()),
-        SumOver("i", FinOf(X("n")), SumOver("j", FinOf(X("n")),
-            At(Qualified("Complex", "normSq"), Subtract(
-                LocalCall("gram", X("f"), X("i"), X("j")),
-                At(Typed(D(1), Mat(X("n"))), X("i"), X("j"))))))));
+        At(Qualified("D5", "S3", "Quantum", "RandomCircuits", "CHaarConcatenationNonmonotone", "hsNormSq"),
+            Subtract(LocalCall("gram", X("f")), Typed(D(1), Mat(X("n")))))));
 
     private static Formula IsPOVMWithFormula() => FamilyBinders(Equivalence(
         LocalCall("IsPOVMWith", X("n"), X("d"), X("f")),
