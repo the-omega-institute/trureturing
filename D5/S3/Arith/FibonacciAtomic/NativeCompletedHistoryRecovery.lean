@@ -98,7 +98,9 @@ private theorem run_native (t : Source) (hn : Native t) (W : List Letter) : Nati
   induction W using List.reverseRecOn with
   | nil => exact hn
   | append_singleton W X ih =>
-    simpa only [run_append, run, List.foldl_cons, List.foldl_nil] using act_native X _ ih
+    rw [run_append]
+    change Native (act X (run t W))
+    exact act_native X _ ih
 
 private theorem run_bound (t : Source) (hn : Native t) (W : List Letter) :
     eventIndex t + W.length ≤ eventIndex (run t W) := by
@@ -108,9 +110,9 @@ private theorem run_bound (t : Source) (hn : Native t) (W : List Letter) :
     have step := act_index X (run t W) (run_native t hn W)
     have pos := (run t W).length_pos
     rw [run_append]
-    simp only [run, List.foldl_cons, List.foldl_nil]
+    change eventIndex t + (W ++ [X]).length ≤ eventIndex (act X (run t W))
     simp only [List.length_append, List.length_singleton]
-    cases X <;> simp_all <;> omega
+    cases X <;> simp only at step <;> omega
 
 private theorem g_not_beta (t : Source) : splitLeft t ≠ .of false := by
   cases t with
@@ -144,7 +146,7 @@ private theorem collapse_sound (z p : Source) (h : collapse z = some p) :
 
 private theorem rho_not_alpha (t : Source) : substitution t ≠ .of true := by
   cases t with
-  | of b => cases b <;> simp [substitution, FreeMagma.lift_of]
+  | of b => cases b <;> simp [substitution, FreeMagma.lift_of, FreeMagma.of.injEq]
   | mul l r => intro h; cases h
 
 private theorem H_native (t : Source) (hn : Native t) : Native (H t) := by
@@ -155,7 +157,8 @@ private theorem H_native (t : Source) (hn : Native t) : Native (H t) := by
     have sub : native true (substitution r) = true := by
       cases eq : substitution r with
       | of b => simp [native]
-      | mul a b => exact eq ▸ (NativeLocalSourceExecution.native_execution.1 r).2.2
+      | mul a b =>
+        simpa only [Native,eq,native] using (NativeLocalSourceExecution.native_execution.1 r).2.2
     exact Bool.and_eq_true_iff.mpr ⟨ihl hl,sub⟩
 
 private theorem f_eq_g_H (t : Source) (hn : Native t) : substitution t = splitLeft (H t) := by
@@ -196,7 +199,7 @@ private theorem rho_predecessor_complete (t : Source) : rhoPredecessor (substitu
     SourceTransportCentralizer.source_transport_centralizer.2.2.1 substitution
       ⟨fun s t => substitution.map_mul s t,fun _ => rfl⟩
   have same : expand D = t := inj eq
-  simp only [rhoPredecessor,hD,Option.bind_some,same,↓reduceIte]
+  simp [rhoPredecessor,hD,same]
 
 private theorem collapse_act (X : Letter) (t : Source) (hn : Native t) :
     collapse (act X t) = some (match X with | .F => H t | .G => t) := by
@@ -236,7 +239,8 @@ private theorem previous_last (n0 : Nat) (h0 : 1 < n0) (t : Source)
       · subst W
         exact Or.inl ht
       · exact Or.inr (run_output t hn W hw)
-    simp only [previous,act,collapse_g s ns,Option.bind_some,if_pos selected]
+    change previous n0 (splitLeft s) = some (s,.G)
+    simp [previous,collapse_g s ns,selected]
   | F =>
     have eq := collapse_act .F s ns
     have hc := H_index s ns
@@ -244,8 +248,9 @@ private theorem previous_last (n0 : Nat) (h0 : 1 < n0) (t : Source)
     have not_boundary : eventIndex (H s) ≠ n0 := by omega
     have not_selected : ¬ (eventIndex (H s) = n0 ∨ (collapse (H s)).isSome) := by
       simp [not_boundary,collapse_H]
-    simp only [previous,eq,Option.bind_some,if_neg not_selected,
-      rho_predecessor_complete s,if_pos ns]
+    change previous n0 (act .F s) = some (s,.F)
+    change collapse (substitution s) = some (H s) at eq
+    simp [previous,act,eq,not_selected,rho_predecessor_complete s,ns]
 
 private theorem previous_sound (n0 : Nat) (z p : Source) (X : Letter)
     (hz : Native z) (hp : previous n0 z = some (p,X)) :
@@ -253,22 +258,22 @@ private theorem previous_sound (n0 : Nat) (z p : Source) (X : Letter)
   obtain ⟨c,hc,hp⟩ := Option.bind_eq_some_iff.mp hp
   split_ifs at hp with select
   · cases hp
-    obtain ⟨eq,hn⟩ := collapse_sound z c hc
+    obtain ⟨eq,hn⟩ := collapse_sound z p hc
     have np := hn hz
     refine ⟨np,eq,?_⟩
-    have hi := act_index .G c np
-    change eventIndex (splitLeft c) = eventIndex c + 1 at hi
+    have hi := act_index .G p np
+    change eventIndex (splitLeft p) = eventIndex p + 1 at hi
     rw [eq] at hi
     omega
   · obtain ⟨q,hq,hp⟩ := Option.bind_eq_some_iff.mp hp
     split_ifs at hp with nq
     cases hp
-    have eq := rho_predecessor_sound z q hq
+    have eq := rho_predecessor_sound z p hq
     refine ⟨nq,eq,?_⟩
-    have hi := act_index .F q nq
-    change eventIndex (substitution q) = _ at hi
+    have hi := act_index .F p nq
+    change eventIndex (substitution p) = _ at hi
     rw [eq] at hi
-    have := q.length_pos
+    have := p.length_pos
     omega
 
 private theorem recover_fuel_complete (n0 : Nat) (h0 : 1 < n0) (t : Source)
@@ -279,7 +284,7 @@ private theorem recover_fuel_complete (n0 : Nat) (h0 : 1 < n0) (t : Source)
   | nil =>
     intro fuel hf
     simp only [run,List.foldl_nil]
-    rw [recoverFuel]
+    rw [recoverFuel.eq_def]
     simp [hn,ht,show ¬ n0 ≤ 1 by omega]
   | append_singleton W X ih =>
     intro fuel hf
@@ -298,7 +303,7 @@ private theorem recover_fuel_complete (n0 : Nat) (h0 : 1 < n0) (t : Source)
     cases fuel with
     | zero => omega
     | succ k =>
-      rw [recoverFuel]
+      rw [recoverFuel.eq_def]
       rw [if_neg (by simp only [not_or]; exact ⟨by omega,not_not.mpr nr,by omega⟩),
         if_neg (by omega),previous_last n0 h0 t hn ht W X]
       simp only []
@@ -314,18 +319,18 @@ private theorem recover_fuel_sound (fuel n0 : Nat) (z t : Source) (W : List Lett
       W.length ≤ eventIndex z - n0 ∧ (recoverFuel fuel n0 z).1 = W.length := by
   induction fuel generalizing z t W with
   | zero =>
-    rw [recoverFuel] at h
+    rw [recoverFuel.eq_def] at h
     split_ifs at h with bad base
     cases h
     refine ⟨by omega,by tauto,base,rfl,by simp,?_⟩
-    rw [recoverFuel,if_neg bad,if_pos base]
+    rw [recoverFuel.eq_def,if_neg bad,if_pos base]
     rfl
   | succ k ih =>
-    rw [recoverFuel] at h
+    rw [recoverFuel.eq_def] at h
     split_ifs at h with bad base
     · cases h
       refine ⟨by omega,by tauto,base,rfl,by simp,?_⟩
-      rw [recoverFuel,if_neg bad,if_pos base]
+      rw [recoverFuel.eq_def,if_neg bad,if_pos base]
       rfl
     · cases hp : previous n0 z with
       | none => simp only [hp] at h; cases h
@@ -343,7 +348,7 @@ private theorem recover_fuel_sound (fuel n0 : Nat) (z t : Source) (W : List Lett
           exact step
         · simp only [List.length_append,List.length_singleton]
           omega
-        · rw [recoverFuel,if_neg bad,if_neg base,hp]
+        · rw [recoverFuel.eq_def,if_neg bad,if_neg base,hp]
           simp only []
           rw [if_pos bound]
           change (recoverFuel k n0 p).1+1 = (V ++ [X]).length
@@ -354,10 +359,10 @@ private theorem recover_fuel_bound (fuel n0 : Nat) (z : Source) :
     (recoverFuel fuel n0 z).1 ≤ fuel := by
   induction fuel generalizing n0 z with
   | zero =>
-    rw [recoverFuel]
+    rw [recoverFuel.eq_def]
     split_ifs <;> exact Nat.le_refl 0
   | succ k ih =>
-    rw [recoverFuel]
+    rw [recoverFuel.eq_def]
     split_ifs with bad base
     · exact Nat.zero_le _
     · exact Nat.zero_le _
@@ -365,6 +370,7 @@ private theorem recover_fuel_bound (fuel n0 : Nat) (z : Source) :
       | none => exact Nat.zero_le _
       | some pair =>
         rcases pair with ⟨p,X⟩
+        simp only []
         split_ifs with bound
         · exact Nat.succ_le_succ (ih n0 p)
         · exact Nat.zero_le _
@@ -502,7 +508,7 @@ private theorem edit_canonical (t : Source) (p : NativeLocalSourceExecution.Addr
     | mul l r =>
       cases d <;>
         simp only [NativeLocalSourceExecution.edit,ActualLeafHistoryRigidity.subtree,
-          ActualImageAddressCertificate.replace,ih] <;> split_ifs <;> rfl
+          ActualImageAddressCertificate.replace,ih] <;> split_ifs <;> simp_all
 
 private theorem guarded_cons (t : Source) (p : NativeLocalSourceExecution.Address)
     (k : Bool) (cs : List Geometry.NativeGuardedLeafRepair.Call) :
@@ -515,7 +521,7 @@ private theorem guarded_cons (t : Source) (p : NativeLocalSourceExecution.Addres
   | some v =>
     cases v with
     | of b => cases b <;> simp [Geometry.NativeGuardedLeafRepair.run,toCall,hs,
-        substitution,FreeMagma.lift_of]
+        substitution,FreeMagma.lift_of,FreeMagma.of.injEq]
     | mul l r => simp [Geometry.NativeGuardedLeafRepair.run,toCall,hs]
 
 private theorem replay_guarded (t : Source) (es : List NativeLocalSourceExecution.Event) :
@@ -553,7 +559,7 @@ private theorem guarded_append (t : Source) (cs ds : List Geometry.NativeGuarded
       Geometry.NativeGuardedLeafRepair.run t (c :: cs) =
         (NativeLocalSourceExecution.edit t (fromCall c).1 (fromCall c).2).bind
           (fun u => Geometry.NativeGuardedLeafRepair.run u cs) := by
-    simpa only [to_from] using guarded_cons t (fromCall c).1 (fromCall c).2 cs
+    cases c <;> exact guarded_cons t _ _ cs
   induction cs generalizing t with
   | nil => rfl
   | cons c cs ih => simp only [List.cons_append,step,ih,Option.bind_assoc]
@@ -626,7 +632,7 @@ def firstChoice : List Letter → Bool
 private theorem first_choice_sufficient (U : List Letter) :
     ∃ D : Bool → List Letter, ∀ W : List Letter,
       run (.of false) W = run K U → D (firstChoice W) = W := by
-  exact (supplement_separation firstChoice U).mpr (by decide)
+  exact (supplement_separation firstChoice U).mpr (by simp [firstChoice])
 
 private theorem attained_native (t : Source) (positive : 0 < eventIndex t)
     (attained : ∃ cs : List Geometry.NativeGuardedLeafRepair.Call,
