@@ -29,8 +29,6 @@ abbrev oldSignature : Signature :=
   Reg.Support.SingleDependentReadout.signature (ℕ × ℕ) (fun p => Vertex (p.1 + p.2)) (fun _ => ℕ)
 abbrev faceSignature : Signature :=
   Reg.Support.SingleDependentReadout.signature (Σ n, Face n) (fun p => Vertex p.1) (fun _ => Prop)
-abbrev cornerSignature : Signature :=
-  Reg.Support.SingleDependentReadout.signature (Σ n, Face n) (fun _ => Fin 3) (fun p => Vertex p.1)
 abbrev diagonalSignature : Signature :=
   Reg.Support.SingleDependentReadout.signature (ℕ × ℕ) (fun p => Vertex p.1) (fun _ => ℝ)
 abbrev gramSignature : Signature :=
@@ -587,55 +585,6 @@ def registration_inner_faces_distinct : Contract.Registration.{_,_,_,0,0,0,_,_,_
     definition := none
     coordinates := #[0,1]
     readouts := #[{ path := #["body","body","body","domain","body","fn","arg"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-abbrev inner_face_nonouter_actual : Realization cornerSignature :=
-  realize cornerSignature (fun _ p i => corner p.1 p.2 i) (fun e => nomatch e)
-abbrev inner_face_nonouter_arena : Arena where
-  signature := cornerSignature
-  Law R := ∀ n (f : Face n), ∃ i, ∀ v : Fin 3, R.readout () ⟨n,f⟩ i ≠ seed n v.castSucc
-private def inner_face_nonouter_rejected : Realization cornerSignature :=
-  realize cornerSignature (fun _ p _ => seed p.1 0) (fun e => nomatch e)
-private theorem inner_face_nonouter_reject : ¬ inner_face_nonouter_arena.Law inner_face_nonouter_rejected := by
-  intro h
-  obtain ⟨i, hi⟩ := h 0 (0 : Face 0)
-  exact hi 0 rfl
-def inner_face_nonouter_family : Registration inner_face_nonouter_arena (type_of% (@_root_.D5.S3.Combinatorics.Apollonian.InnerFaceStages.inner_face_nonouter)) where
-  actual := inner_face_nonouter_actual
-  bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Combinatorics.Apollonian.InnerFaceStages.inner_face_nonouter, inner_face_nonouter_rejected, inner_face_nonouter_reject⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ inner_face_nonouter_actual inner_face_nonouter_rejected inner_face_nonouter_reject
-  dependence := by
-    intro i
-    cases i
-    refine ⟨⟨0,(0 : Face 0)⟩, (0 : Fin 3), (1 : Fin 3), ?_⟩
-    decide
-def registration_inner_face_nonouter : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Combinatorics.Apollonian.InnerFaceStages.inner_face_nonouter)
-    (Realization cornerSignature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.Apollonian.InnerFaceStages.inner_face_nonouter_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Apollonian.InnerFaceStages.inner_face_nonouter_family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨inner_face_nonouter_arena⟩
-  objectArena := .source ⟨inner_face_nonouter_arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source inner_face_nonouter_arena ⟨inner_face_nonouter_family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize cornerSignature (fun _ p i => corner p.1 p.2 i) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Apollonian.InnerFaceStages
-    definition := none
-    coordinates := #[0,1]
-    readouts := #[{ path := #["body","body","arg","body","body","arg","fn","arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

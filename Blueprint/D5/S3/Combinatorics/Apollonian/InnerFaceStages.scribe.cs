@@ -45,8 +45,6 @@ internal sealed class InnerFaceStagesDocument : IScribeDocumentDefinition
                 "For all natural n,k and v in Vertex n satisfying k < birth n v, degreeCount n v ≤ 3·2^(n−k−1). This is derived from the exact birth-degree law and monotonicity of the natural power, without a degree assumption.", DescribeRole.Theorem),
             Node("seed", "The labelled seed vertices",
                 "For every n, seed n includes Fin 4 in Vertex n by iterating inl. Indices 0,1,2 give the distinguished outer triangle, and index 3 is the original centre.", DescribeRole.Definition),
-            Node("inner_face_nonouter", "The outer triangle is excluded from the face index",
-                "For every n and f in Face n, there exists a corner index i such that corner n f i differs from seed n v.castSucc for every v in Fin 3. At stage zero this corner is o; at a successor stage it is the newly inserted centre. Consequently no indexed triangle is the outer seed triangle.", DescribeRole.Theorem),
             Node("seed_degrees", "Exact seed degrees at every stage",
                 "For every natural n and v in Fin 4, degreeCount n (seed n v) is 3·2^n when v=3 and 2^(n+1)+1 otherwise. These are precisely the centre and the three outer vertices. The proof sums the constructor’s incident-face increments; the source’s displayed degrees are not premises.", DescribeRole.Theorem),
             Node("degreeCount_eq_degree", "The count is the ordinary graph degree",

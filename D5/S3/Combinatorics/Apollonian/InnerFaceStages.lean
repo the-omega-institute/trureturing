@@ -372,29 +372,6 @@ theorem old_vertices_iff (k t : ℕ) (w : Vertex (k + t)) :
     rw [birth_embed]
     exact birth_le k u
 
-/-- The number of old incident faces doubles at each subdivision. -/
-private theorem faceCount_embed (n t : ℕ) (v : Vertex n) :
-    faceCount (n + t) (embed n t v) = 2 ^ t * faceCount n v := by
-  induction t with
-  | zero => simp [embed]
-  | succ t ih =>
-    change faceCount (n + t + 1) (Sum.inl (embed n t v)) = _
-    rw [faceCount_old, ih, pow_succ]
-    ring
-
-/-- Degree accumulates the geometric sequence of incident-face counts. -/
-private theorem degreeCount_embed (n t : ℕ) (v : Vertex n) :
-    degreeCount (n + t) (embed n t v) + faceCount n v =
-      degreeCount n v + 2 ^ t * faceCount n v := by
-  induction t with
-  | zero => simp [embed]
-  | succ t ih =>
-    change degreeCount (n + t + 1) (Sum.inl (embed n t v)) + _ = _
-    rw [degreeCount_old, faceCount_embed, pow_succ]
-    have hh : 2 ^ t * 2 * faceCount n v = 2 * (2 ^ t * faceCount n v) := by ring
-    rw [hh]
-    omega
-
 private theorem degreeCount_eq_faceCount (n : ℕ) (v : Vertex n) (hv : 0 < birth n v) :
     degreeCount n v = faceCount n v := by
   induction n with
@@ -437,25 +414,6 @@ private theorem seed_injective (n : ℕ) : Function.Injective (seed n) := by
   induction n with
   | zero => exact Function.injective_id
   | succ n ih => exact Sum.inl_injective.comp ih
-
-/-- Every indexed inner face contains a corner outside the outer seed triangle. -/
-theorem inner_face_nonouter (n : ℕ) (f : Face n) :
-    ∃ i, ∀ v : Fin 3, corner n f i ≠ seed n v.castSucc := by
-  cases n with
-  | zero =>
-    refine ⟨0, ?_⟩
-    intro v
-    change (3 : Fin 4) ≠ v.castSucc
-    intro h
-    have he := congrArg Fin.val h
-    have hv := v.isLt
-    simp only [Fin.val_castSucc] at he
-    omega
-  | succ n =>
-    rcases f with ⟨f, i⟩
-    refine ⟨i, ?_⟩
-    intro v
-    simp [corner, seed]
 
 private theorem seed_counts_zero (v : Fin 4) :
     degreeCount 0 v = 3 ∧ faceCount 0 v = if v = 3 then 3 else 2 := by
@@ -540,17 +498,9 @@ private theorem degreeCount_split (k t : ℕ) (u : Vertex k) :
     rw [hd]
     omega
 
-/-- The diagonal common-neighbour count is the actual degree increment. -/
-private theorem lateCommonCount_diag_geometric (k t : ℕ) (u : Vertex k) :
-    lateCommonCount k t u u + faceCount k u = 2 ^ t * faceCount k u := by
-  have h := degreeCount_embed k t u
-  rw [degreeCount_split] at h
-  omega
-
 private theorem lateCommonCount_diag (k t : ℕ) (u : Vertex k) :
     lateCommonCount k t u u = degreeCount (k + t) (embed k t u) - degreeCount k u := by
-  have h := degreeCount_embed k t u
-  have hg := lateCommonCount_diag_geometric k t u
+  have h := degreeCount_split k t u
   omega
 
 /-- A late common neighbour can occur only across an edge already present at the cutoff. -/
