@@ -130,12 +130,12 @@ private theorem joint_construction (a b c d : ℕ)
   change (m ^^^ h)+h=m ∧ MaskPartition (c+s) h (m ^^^ h) low at masks
   have part : MaskPartition (b-1) h (m ^^^ h) low := by
     simpa only [show c+s=b-1 by dsimp [s]; omega] using masks.2
-  have elam : (lamN:ℤ)=lam := by dsimp [lamN,s,lam]; norm_cast
-  have eh : (h:ℤ)=lam*HZ := by dsimp [h]; rw [Nat.cast_mul,elam,eH]
+  have elam : (lamN:ℤ)=lam := by dsimp [lamN,s,lam]
+  have eh : (h:ℤ)=lam*HZ := by simp only [h,Nat.cast_mul,elam,eH]
   have em : (m:ℤ)=(z-1)*lam := by
-    dsimp [m]
-    rw [Nat.cast_mul,Nat.cast_sub (by have := Nat.two_pow_pos c; omega),elam]
-    norm_cast
+    simp only [m,Nat.cast_mul,
+      Nat.cast_sub (by have := Nat.two_pow_pos c; omega),
+      Nat.cast_pow,Nat.cast_ofNat,Nat.cast_one,elam,z]
   have elow : (low:ℤ)=lam-1 := by
     dsimp [low]
     rw [Nat.cast_sub (by dsimp [lamN]; have := Nat.two_pow_pos s; omega),elam]
@@ -162,7 +162,7 @@ private theorem joint_construction (a b c d : ℕ)
     push_cast
     simp only [pow_add]
     ring
-  have hsourceMod : sourceMod a b c d=N := by dsimp [sourceMod,N,NN,x,y,z,t]; ring
+  have hsourceMod : sourceMod a b c d=N := by dsimp [sourceMod,N,NN,x,y,z,t]
   have hmod : modulus k=N := by dsimp [modulus,k,N,NN,x,y,z,t]; ring
   have hmodn : modulus (k+1)=2*N+1 := by dsimp [modulus,k,N,NN,x,y,z,t]; ring
   let P := bank a b c d h m low
