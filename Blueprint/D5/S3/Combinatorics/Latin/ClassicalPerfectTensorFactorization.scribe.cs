@@ -157,7 +157,10 @@ internal sealed class ClassicalPerfectTensorFactorizationDocument : IScribeDocum
                         + "the three required strength-two properties. If x is empty, the row type "
                         + "x × x and the target type Fin 2 → x are both empty, so every two-column "
                         + "projection is bijective. This gives the same conclusion in the remaining case."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("pozsgay-wanless-2024-nonlinear-perfect-tensor-factors"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ArrayFormula()
     {
