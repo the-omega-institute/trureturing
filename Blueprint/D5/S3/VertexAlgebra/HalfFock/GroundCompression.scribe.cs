@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.HalfFock;
 internal sealed class LatticeHalfFockGroundCompressionDocument : IScribeDocumentDefinition
 {
  public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
