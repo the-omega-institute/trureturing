@@ -49,6 +49,23 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
 
+    [Fact]
+    public void AggregateCleanupWarnsAndSucceedsForOneRefusedTree()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
+                root, "plain", "clean-all", "directory",
+                "CleanupMakeTests.test_single_tree_refusal_keeps_aggregate_success_and_warning"],
+            root, TestBudgets.ProtocolProbeHangGuard, 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
     [Theory]
     [InlineData("self")]
     [InlineData("stable")]

@@ -227,6 +227,26 @@ class CleanupMakeTests(NativeFixture):
                     self.assertEqual("detached untracked\n", (recovery / "untracked").read_text())
         self.assertIsNone(self.job.poll(), "independent participant must survive cleanup")
 
+    def test_single_tree_refusal_keeps_aggregate_success_and_warning(self):
+        nested = self.cache / ".lake/nested-repository"
+        self.git("init", nested)
+        self.build_cli(self.repository)
+        arguments = ["make", "--no-print-directory", "-C", self.repository / "tools", "clean-all",
+                     "BASE=dev", "FORCE=1", "VERBOSE=1",
+                     "CLEAN_CODEX_HOME=" + str(self.root / "codex"),
+                     "CLEAN_SSHX_HOME=" + str(self.root / "sshx"),
+                     "CLEAN_TMP_ROOT=" + self.environment["TMPDIR"]]
+        result = self.run_command(arguments, self.root, phase="aggregate-tree-refusal", check=False)
+        self.assert_aggregate_result(result)
+        warnings = [json.loads(line) for line in result.stderr.splitlines() if line.startswith('{')]
+        warning = next(row for row in warnings if row.get("event") == "clean_lanes_warning"
+                       and row.get("path") == str(self.cache))
+        self.assertEqual("skipped", warning["action"])
+        self.assertIn("nested_git_boundary:", warning["reason"])
+        self.assertTrue(warning["diagnostic"])
+        self.assertTrue(nested.exists())
+        self.assertFalse(self.dirty.exists())
+
     def test_aggregate_survives_repository_removal(self):
         selected = self.add_lane("aggregate-anchor")
         shutil.copytree(self.repository / "tools", selected / "tools",
