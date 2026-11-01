@@ -11,7 +11,6 @@ open _root_.D5.S3.Quantum.Fermionic.BcGhostFock
 open _root_.D5.S3.Quantum.Fermionic.BcGhostVirasoro
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open private create_ket from D5.S3.Quantum.Fermionic.CountableOccupationFock
 open private epsilon_L_vacuum epsilon_vacuum from D5.S3.Quantum.Fermionic.BcGhostVirasoro
 
 namespace Support
