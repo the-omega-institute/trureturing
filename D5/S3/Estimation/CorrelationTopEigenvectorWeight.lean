@@ -641,9 +641,9 @@ private lemma rounded_eventually {c σ : ℝ}
   let an := fun n : ℕ => σ / Real.sqrt (1 - roundedZ n (roundedCount x n) ^ 2)
   let bn := fun n : ℕ => c - an n * roundedZ n (roundedCount x n)
   have hq : 0 < Real.sqrt (1 - x ^ 2) := Real.sqrt_pos.mpr (by nlinarith only [hx0, hxhalf])
-  have hsq : Real.sqrt x ^ 2 = x := Real.sq_sqrt hx0.le
   have hs0 : 0 < Real.sqrt x := Real.sqrt_pos.mpr hx0
-  have hs1 : Real.sqrt x < 1 := by nlinarith only [hsq, Real.sqrt_nonneg x, hxhalf]
+  have hs1 : Real.sqrt x < 1 :=
+    (Real.sqrt_lt' (by norm_num : (0 : ℝ) < 1)).mpr (by linarith only [hxhalf])
   have hr := rounded_ratio_tendsto x
   have hz := roundedZ_tendsto x hx0.le
   have hi := tendsto_inv_atTop_nhds_zero_nat (𝕜 := ℝ)
