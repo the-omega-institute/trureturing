@@ -112,7 +112,7 @@ private theorem cword_sorted : ∀ (xs : List ℕ), xs.Pairwise (· < ·) → xs
         simp only [cOcc, Finset.mem_union, Finset.mem_singleton, Finset.mem_image] at hx
         rcases hx with hx | ⟨y, hy, he⟩
         · omega
-        · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y hy
+        · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y (by simpa using hy)
           omega
       rw [if_neg hx]
       have hcount : lowerCount (2 * x + 3) (cOcc xs) = 1 := by
@@ -127,7 +127,7 @@ private theorem cword_sorted : ∀ (xs : List ℕ), xs.Pairwise (· < ·) → xs
           · rintro ⟨hj, hlt⟩
             rcases hj with rfl | ⟨y, hy, rfl⟩
             · simp
-            · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y hy
+            · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y (by simpa using hy)
               exact False.elim (by omega)
           · intro hj
             have hj0 : j = 1 := by simpa using hj
@@ -165,34 +165,8 @@ private theorem sum_crossing (B C : Finset ℕ) :
     B.sum (fun r => (C.filter (fun s => s + 4 ≤ r)).card) =
       ((B.product C).filter (fun p => p.2 + 4 ≤ p.1)).card := by
   classical
-  induction B using Finset.induction_on with
-  | empty => simp
-  | @insert r B hr ih =>
-      rw [Finset.sum_insert hr, ih]
-      have hdecomp :
-          ((insert r B).product C).filter (fun p => p.2 + 4 ≤ p.1) =
-            (Finset.map (Function.Embedding.sectR r ℕ)
-                (C.filter (fun s => s + 4 ≤ r))) ∪
-              ((B.product C).filter (fun p => p.2 + 4 ≤ p.1)) := by
-        ext p
-        rcases p with ⟨p, q⟩
-        simp only [Finset.mem_filter, Finset.mem_union, Finset.mem_map,
-          Finset.mem_product, Function.Embedding.sectR_apply]
-        constructor
-        · rintro ⟨⟨hp, hq⟩, hlt⟩
-          rcases Finset.mem_insert.mp hp with rfl | hp
-          · exact Or.inl ⟨q, ⟨hq, hlt⟩, rfl⟩
-          · exact Or.inr ⟨⟨hp, hq⟩, hlt⟩
-        · rintro (⟨q, ⟨hq, hlt⟩, rfl⟩ | ⟨⟨hp, hq⟩, hlt⟩)
-          · exact ⟨⟨Finset.mem_insert.mpr (Or.inl rfl), hq⟩, hlt⟩
-          · exact ⟨⟨Finset.mem_insert.mpr (Or.inr hp), hq⟩, hlt⟩
-      rw [hdecomp]
-      rw [Finset.card_union_of_disjoint]
-      · simp
-      · rw [Finset.disjoint_left]
-        intro p hp hq
-        have hq' := Finset.mem_filter.mp hq |>.1
-        exact hr (Finset.mem_product.mp hq').1
+  simp only [Finset.card_filter, Finset.sum_product]
+  rfl
 
 private theorem bword_sorted : ∀ (xs : List ℕ) (C : Finset ℕ),
     xs.Pairwise (· < ·) → xs.Nodup → (∀ r ∈ xs, 2 ≤ r) →
@@ -217,7 +191,7 @@ private theorem bword_sorted : ∀ (xs : List ℕ) (C : Finset ℕ),
           · have hsC : s ∈ C := by simpa [asc] using hs
             simp [bSite] at hse
             omega
-        · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y hy
+        · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y (by simpa using hy)
           simp [bSite] at he
           have hy2 : 2 ≤ y := htwo y (by simpa using hy)
           omega
@@ -241,28 +215,25 @@ private theorem bword_sorted : ∀ (xs : List ℕ) (C : Finset ℕ),
               · by_cases hx3 : 3 ≤ x
                 · have hj1 : j = 1 := by simpa [hx3] using hj
                   subst j
-                  exact ⟨Or.inl (Or.inl rfl), by omega⟩
+                  exact ⟨Or.inl (by simp [hx3]), by omega⟩
                 · simp [hx3] at hj
-              · have hsC := (Finset.mem_filter.mp hs).1
-                have hs4 := (Finset.mem_filter.mp hs).2
-                by_cases hsAsc : s ∈ asc C
-                · exact ⟨Or.inl (Or.inr ⟨s, hsAsc, rfl⟩), by omega⟩
-                · have hsC' : s ∈ C := by simpa [asc] using hsC
-                  exact False.elim (hsAsc (by simpa [asc] using hsC'))
-            · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y hy
-              have hy2 : 2 ≤ y := htwo y hy
+              · have hsC : s ∈ C := by simpa [asc] using hs
+                have hs4 : s + 4 ≤ x := by omega
+                exact ⟨Or.inr ⟨s, ⟨hsC, hs4⟩, rfl⟩, by omega⟩
+            · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y (by simpa using hy)
+              have hy2 : 2 ≤ y := htwo y (by simpa using hy)
               simp [bSite] at hlt
               omega
           · intro hj
             rcases hj with hj | ⟨s, hs, rfl⟩
             · have hj1 : j = 1 := by simpa using hj
               subst j
-              exact ⟨Or.inl (Or.inl rfl), by omega⟩
-            · have hs4 := (Finset.mem_filter.mp hs).2
-              exact ⟨Or.inl (Or.inr ⟨s, (Finset.mem_filter.mp hs).1, rfl⟩), by omega⟩
+              exact ⟨Or.inl (by simp), by omega⟩
+            · have hs4 := hs.2
+              exact ⟨Or.inl (Or.inr ⟨s, hs.1, rfl⟩), by omega⟩
         rw [heq]
         simp [Finset.card_union_of_disjoint]
-      rw [show phase (2 * (x - 2)) (bOcc C xs) = (-1 : ℂ) ^ bStepExponent x C by
+      rw [show phase (bSite x) (bOcc C xs) = (-1 : ℂ) ^ bStepExponent x C by
         simp [phase, hcount]]
       have hset : insert (bSite x) (bOcc C xs) = bOcc C (x :: xs) := by
         simp [bOcc, bSite, hxnot]
