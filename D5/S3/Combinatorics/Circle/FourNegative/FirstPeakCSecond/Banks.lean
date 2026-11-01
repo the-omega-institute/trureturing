@@ -112,7 +112,15 @@ private theorem positive_mem (a b c d : ℕ) (r : Fin 4) (i : ℕ) :
       if r=0 then i<d-1 else if r=1 then d ≤ i ∧ i < d+(c-1)
       else if r=2 then d+c ≤ i ∧ i < d+c+(b-1)
       else d+c+b ≤ i ∧ i < d+c+b+(a-1) := by
-  fin_cases r <;> simp [positives,mem_shift,Finset.mem_range] <;> omega
+  have hshift (off len : ℕ) :
+      i∈shift off (Finset.range len) ↔ off ≤ i ∧ i < off+len := by
+    rw [mem_shift]
+    simp only [Finset.mem_range]
+    constructor
+    · rintro ⟨e,he,rfl⟩; omega
+    · rintro ⟨hlo,hhi⟩
+      exact ⟨i-off,by omega,by omega⟩
+  fin_cases r <;> simp [positives,hshift,Finset.mem_range]
 
 private theorem banks_inventory (a b c d p q w : ℕ)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
@@ -156,26 +164,22 @@ private theorem banks_inventory (a b c d p q w : ℕ)
     all_goals simp only [banks,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
       Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,
       Matrix.vecTail,Function.comp_apply,Finset.mem_union,Finset.mem_sdiff] at hi hj
-    all_goals have hPi : i∈support (d+c+b) p → d+c+b ≤ i ∧ i < d+c+b+(a-1) := bp i
-    all_goals have hQi : i∈support (d+c+b) q → d+c+b ≤ i ∧ i < d+c+b+(a-1) := bq i
-    all_goals simp only [positive_mem] at hi hj
-    all_goals simp at hi hj
-    all_goals first | tauto | omega
+    all_goals by_cases hpi : i∈support (d+c+b) p
+    all_goals try have hpb := bp i hpi
+    all_goals simp [positive_mem,hpi] at hi hj
+    all_goals omega
   refine ⟨good,dis,?_⟩
   ext i
-  have hPi := bp i
-  have hQi := bq i
-  have hWi := bw i
   have hnot : ¬(i∈support (d+c+b) p ∧ i∈support (d+c+b) q) :=
     fun hh => Finset.disjoint_left.mp hdis hh.1 hh.2
-  simp only [banks,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
-    Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,
-    Matrix.vecTail,Function.comp_apply,Finset.mem_sdiff,Finset.mem_union,Finset.mem_insert,
-    Finset.mem_singleton,Finset.mem_range,positive_mem]
-  simp only [↓reduceIte,show (3:Fin 4)≠0 by decide,show (3:Fin 4)≠1 by decide,
-    show (3:Fin 4)≠2 by decide,show (1:Fin 4)≠0 by decide,show (2:Fin 4)≠0 by decide,
-    show (2:Fin 4)≠1 by decide]
-  omega
+  by_cases hpi : i∈support (d+c+b) p <;>
+    by_cases hqi : i∈support (d+c+b) q <;> by_cases hwi : i∈support d w
+  all_goals try exact (hnot ⟨hpi,hqi⟩).elim
+  all_goals try have hpb := bp i hpi
+  all_goals try have hqb := bq i hqi
+  all_goals try have hwb := bw i hwi
+  all_goals simp [banks,positive_mem,hpi,hqi,hwi]
+  all_goals omega
 
 private theorem shift_sum (off n : ℕ) (f : ℕ→ℤ) (B : ℤ)
     (hf : ∀ e<n,f (off+e)=(2:ℤ)^e*B) :
