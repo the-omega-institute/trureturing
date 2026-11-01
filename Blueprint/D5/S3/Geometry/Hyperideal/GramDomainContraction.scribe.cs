@@ -17,10 +17,10 @@ internal sealed class GramDomainContractionDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(F.Disp(F.Seq(
                     F.Forall, F.Sp, F.Id("u"), F.Sp, F.Id("v"), F.Colon,
                     F.Mathbb, F.Grp(F.Id("R")), F.Comma, F.Sp,
-                    F.D(0), F.Le, F.Id("u"), F.Implies,
-                    F.D(0), F.Le, F.Id("v"), F.Implies,
+                    F.D(0), F.Le, F.Sp, F.Id("u"), F.Implies,
+                    F.D(0), F.Le, F.Sp, F.Id("v"), F.Implies,
                     F.D(2), F.Cdot, F.Sqrt, F.Grp(F.Id("u"), F.Cdot, F.Id("v")),
-                    F.Le, F.Id("u"), F.Plus, F.Id("v")))),
+                    F.Le, F.Sp, F.Id("u"), F.Plus, F.Id("v")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Twice the geometric mean of two nonnegative real numbers is bounded by their sum."))),
                 DescribeRole.Theorem),
