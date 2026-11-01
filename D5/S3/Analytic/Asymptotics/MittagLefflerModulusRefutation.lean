@@ -8,10 +8,13 @@
 
 /-
 result
-proof_shape: bind-only (specializes source_closed_beta_family and contradicts the original equivalence).
-escape_witness: none
+proof_shape: content (after expanding the same-delivery public and private helpers).
+escape_witness: source_endpoint_scaled_limit, expanded through source_barnes_identity,
+  the actual kernel majorants, moving-left disappearance, the two right residues
+  and the fixed-line remainder estimate. The final specialization alone is binding;
+  source_closed_beta_family is part of this delivery and is not a frozen premise.
 admission_basis: open-problem-resolution (#22376; Refuted)
-Direct frozen dependencies (declaration statement_id):
+Frozen boundary after same-delivery expansion (declaration statement_id):
   D5.S3.Analytic.ExpRatioCM.Defs.CompletelyMonotoneOn sha256:f25bdc23dc3c3d7bb2a8e428111edb1df2af60971e1fe8d8bb2e2ab069581ea0
   D5.S3.Analytic.KilbasSaigo.Series.tendsto_inv_phi sha256:436b65354c91edb4d68046ee98b7908f63798e7e947243d30fdda75c7a1ca6b6
   D5.S3.Analytic.KilbasSaigo.Series.phi sha256:48f40d9fffa359115ae3e097c1dc944669272f609e0a351f61dcfa5c7d2fc422
