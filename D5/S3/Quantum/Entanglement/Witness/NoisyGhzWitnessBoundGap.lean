@@ -14,7 +14,6 @@ arXiv:2211.05563v1, Section "Estimating entanglement measures" and Appendix
 "Multipartite states admitting Schmidt decomposition". -/
 
 set_option autoImplicit false
-set_option maxHeartbeats 1000000
 set_option maxRecDepth 2048
 set_option linter.style.longLine false
 noncomputable section
@@ -111,7 +110,7 @@ private def wordEquiv : Word 3 3 ≃ Fin 3 × Fin 3 × Fin 3 where
 private lemma sum_words {α : Type*} [AddCommMonoid α] (f : Word 3 3 → α) :
     ∑ x, f x = ∑ i : Fin 3, ∑ j : Fin 3, ∑ k : Fin 3, f ![i, j, k] := by
   classical
-  simpa only [Fintype.sum_prod_type] using (wordEquiv.symm.sum_comp f).symm
+  simpa [wordEquiv, Fintype.sum_prod_type] using (wordEquiv.symm.sum_comp f).symm
 
 private lemma cs {ι : Type*} [Fintype ι] (u v : ι → ℂ) :
     Complex.normSq (star u ⬝ᵥ v) ≤
@@ -126,7 +125,7 @@ private lemma expectation_rank_one (φ ψ : Word 3 3 → ℂ) :
   simp only [expectation, rankOneDensity, vecMulVec_mulVec, op_smul_eq_smul,
     dotProduct_smul, smul_eq_mul]
   rw [star_dotProduct ψ φ]
-  simp [Complex.star_def, Complex.mul_conj]
+  simp [Complex.mul_conj]
 
 private lemma expectation_add (a c : Matrix (Word 3 3) (Word 3 3) ℂ)
     (ψ : Word 3 3 → ℂ) : expectation (a + c) ψ = expectation a ψ + expectation c ψ := by
@@ -141,7 +140,7 @@ private lemma expectation_smul (r : ℝ) (a : Matrix (Word 3 3) (Word 3 3) ℂ)
 private lemma expectation_one (ψ : Word 3 3 → ℂ) :
     expectation 1 ψ = ∑ x, Complex.normSq (ψ x) := by
   classical
-  simp [expectation, dotProduct, Pi.star_apply, Complex.star_def,
+  simp [expectation, dotProduct, Pi.star_apply,
     ← Complex.normSq_eq_conj_mul_self, Complex.re_sum]
 
 private lemma expectation_sub (a c : Matrix (Word 3 3) (Word 3 3) ℂ)
@@ -155,7 +154,7 @@ private lemma support_expectation (ψ : Word 3 3 → ℂ) :
         Complex.normSq (ψ x) := by
   classical
   simp only [expectation, supportProjector, mulVec_diagonal, dotProduct,
-    Pi.star_apply, Pi.mul_apply, Finset.sum_filter]
+    Pi.star_apply, Finset.sum_filter]
   rw [Complex.re_sum]
   apply Finset.sum_congr rfl
   intro x hx
@@ -175,7 +174,6 @@ private lemma ghz_dot (ψ : Word 3 3 → ℂ) :
       (Real.sqrt 3 : ℂ)⁻¹ * ∑ i : Fin 3, ψ (fun _ => i) := by
   classical
   have hc (i : Fin 3) : (![i, i, i] : Word 3 3) = (fun _ => i) := by
-  classical
     funext k; fin_cases k <;> rfl
   norm_num [dotProduct, sum_words, ghz, Fin.sum_univ_succ, Fin.exists_fin_succ,
     Fin.forall_fin_succ, Pi.star_apply, hc]
@@ -187,6 +185,7 @@ private lemma ghz_expectation (ψ : Word 3 3 → ℂ) :
   classical
   rw [expectation_rank_one, ghz_dot, Complex.normSq_mul]
   norm_num [Complex.normSq_inv, Complex.normSq_ofReal, Real.sq_sqrt, Real.mul_self_sqrt]
+  ring
 
 private def join (a : Finset (Fin 3)) (i j : Fin 3) : Word 3 3 :=
   fun k => if k ∈ a then i else j
@@ -195,12 +194,11 @@ private lemma join_support (a : Finset (Fin 3)) (i j : Fin 3) :
     (Finset.univ.image (join a i j)).card ≤ 2 := by
   classical
   have h : Finset.univ.image (join a i j) ⊆ {i, j} := by
-  classical
     intro x hx
     obtain ⟨k, _, rfl⟩ := Finset.mem_image.mp hx
     simp only [join]
     split_ifs <;> simp
-  exact (Finset.card_le_card h).trans (by by_cases h : i = j <;> simp [h, Finset.card_pair])
+  exact (Finset.card_le_card h).trans (by by_cases h : i = j <;> simp [h])
 
 private lemma join_injective (a : Finset (Fin 3)) (ha : a.Nonempty) (hc : aᶜ.Nonempty) :
     Function.Injective (fun ij : Fin 3 × Fin 3 => join a ij.1 ij.2) := by
@@ -215,7 +213,7 @@ private lemma join_injective (a : Finset (Fin 3)) (ha : a.Nonempty) (hc : aᶜ.N
 private lemma trace_rank_one (ψ : Word 3 3 → ℂ) :
     trace (rankOneDensity ψ) = ((∑ x, Complex.normSq (ψ x) : ℝ) : ℂ) := by
   classical
-  simp [rankOneDensity, trace_vecMulVec, dotProduct, Complex.mul_conj, ← map_sum]
+  simp [rankOneDensity, trace_vecMulVec, dotProduct, Complex.mul_conj]
 
 private lemma ghz_supported (x : Word 3 3) :
     (if (Finset.univ.image x).card ≤ 2 then (1 : ℂ) else 0) * ghz 3 3 x = ghz 3 3 x := by
@@ -232,11 +230,10 @@ private lemma finite_ranks : trace (supportProjector 3 3) = 21 ∧ trace q = 6 :
   have hc : (Finset.univ.filter fun x : Word 3 3 =>
       (Finset.univ.image x).card ≤ 2).card = 21 := by decide
   have hp : trace (supportProjector 3 3) = 21 := by
-  classical
     simpa [supportProjector, trace_diagonal, Finset.sum_boole] using
       congrArg (fun k : ℕ => (k : ℂ)) hc
   refine ⟨hp, ?_⟩
-  simp [q, trace_sub, hp, trace_one, Word, Fintype.card_fun]
+  norm_num [q, trace_sub, hp, trace_one, Word]
 private lemma ghz_unit : IsUnit (ghz 3 3) := by
   classical
   norm_num [IsUnit, sum_words, ghz, Fin.sum_univ_succ, Fin.exists_fin_succ,
@@ -248,31 +245,32 @@ private lemma projector_data :
     rankOneDensity (ghz 3 3) * rankOneDensity (ghz 3 3) = rankOneDensity (ghz 3 3) := by
   classical
   have hn : star (ghz 3 3) ⬝ᵥ ghz 3 3 = 1 := by
-  classical
     simpa [dotProduct, Pi.star_apply, Complex.star_def, ← Complex.normSq_eq_conj_mul_self,
       ← map_sum] using congrArg (fun x : ℝ => (x : ℂ)) ghz_unit
   refine ⟨?_, ?_, ?_, (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake (ghz 3 3) hn 1).1⟩
-  · ext x y
-    simp only [supportProjector, diagonal_mul_diagonal]
-    split_ifs <;> simp
+  · simp only [supportProjector, diagonal_mul_diagonal]
+    congr 1
+    funext x
+    split_ifs <;> norm_num
   · ext x y
     simp only [supportProjector, diagonal_mul, rankOneDensity, vecMulVec_apply, Pi.star_apply]
     rw [← mul_assoc, ghz_supported]
   · ext x y
     simp only [supportProjector, mul_diagonal, rankOneDensity, vecMulVec_apply, Pi.star_apply]
-    have h := congrArg star (ghz_supported y)
-    simpa [mul_assoc, mul_left_comm, mul_comm] using congrArg (fun z => ghz 3 3 x * z) h
+    by_cases h : (Finset.univ.image y).card ≤ 2
+    · simp [h]
+    · have hz : ghz 3 3 y = 0 := by simpa [h] using (ghz_supported y).symm
+      simp [h, hz]
 
 private lemma orthogonal_positive :
     (supportProjector 3 3 - rankOneDensity (ghz 3 3)).PosSemidef ∧ q.PosSemidef := by
   classical
   obtain ⟨hpp, hpg, hgp, hgg⟩ := projector_data
   have hp : (supportProjector 3 3).IsHermitian := by
-  classical
     apply isHermitian_diagonal_of_self_adjoint
     funext x
     simp only [Pi.star_apply]
-    split_ifs <;> simp [IsSelfAdjoint]
+    split_ifs <;> simp
   have hg : (rankOneDensity (ghz 3 3)).IsHermitian :=
     (posSemidef_vecMulVec_self_star (ghz 3 3)).isHermitian
   constructor
@@ -303,7 +301,6 @@ private lemma zero_biseparable : IsBiseparable (basis (fun _ => 0)) := by
   have he : x = (fun _ => 0) ↔
       (∀ i : ↥({0} : Finset (Fin 3)), x i = 0) ∧
       (∀ i : ↥({0} : Finset (Fin 3))ᶜ, x i = 0) := by
-  classical
     constructor
     · intro h; subst x; simp
     · rintro ⟨h, g⟩
@@ -311,7 +308,7 @@ private lemma zero_biseparable : IsBiseparable (basis (fun _ => 0)) := by
       by_cases hi : i ∈ ({0} : Finset (Fin 3))
       · exact h ⟨i, hi⟩
       · exact g ⟨i, Finset.mem_compl.mpr hi⟩
-  simp only [basis, Pi.single_apply, eq_comm (a := (fun _ : Fin 3 => (0 : Fin 3)))]
+  simp only [basis, Pi.single_apply]
   by_cases h : ∀ i : ↥({0} : Finset (Fin 3)), x i = 0 <;>
     by_cases g : ∀ i : ↥({0} : Finset (Fin 3))ᶜ, x i = 0 <;>
       simp_all
@@ -322,12 +319,12 @@ private lemma test_unit : IsUnit testPsi := by
 private lemma test_expectation : expectation (witnessOp 3 3) testPsi = -(1 / 3) := by
   classical
   have hp : expectation (supportProjector 3 3) testPsi = 1 := by
-  classical
+    have he (i : Fin 3) : (![i, i, i] : Word 3 3) = (fun _ => i) := by
+      funext k; fin_cases k <;> rfl
     norm_num [support_expectation, Finset.sum_filter, sum_words, testPsi,
-      Fin.sum_univ_succ, funext_iff, Fin.forall_fin_succ,
+      Fin.sum_univ_succ, he, Finset.image_const, funext_iff, Fin.forall_fin_succ,
       Complex.normSq_div, Complex.normSq_ofReal, Real.sq_sqrt, Real.mul_self_sqrt]
   have hs : (∑ i : Fin 3, testPsi (fun _ => i)) = 6 / (Real.sqrt 18 : ℂ) := by
-  classical
     norm_num [testPsi, Fin.sum_univ_succ, funext_iff, Fin.forall_fin_succ]
     ring
   have hg := ghz_expectation testPsi
@@ -362,7 +359,6 @@ private lemma hat_bdd (r : ℝ) : BddAbove {t : ℝ | ∃ ψ φ : Word 3 3 → �
   rw [hφ.1, hψ, one_mul] at hp
   have hw := witness_bounds ψ hψ
   have hr : r * expectation (witnessOp 3 3) ψ ≤ |r| := by
-  classical
     by_cases h : 0 ≤ r
     · rw [abs_of_nonneg h]
       have ht := mul_le_mul_of_nonneg_left hw.2 h
@@ -377,7 +373,6 @@ private lemma hat_lower (r : ℝ) : -r / 3 - 1 / 9 ≤ hatE 3 3 r := by
   have hm : -r / 3 - 1 / 9 ∈ {t : ℝ | ∃ ψ φ : Word 3 3 → ℂ,
       IsUnit ψ ∧ IsBiseparable φ ∧
         t = expectation (r • witnessOp 3 3 + rankOneDensity φ) ψ - 1} := by
-  classical
     refine ⟨testPsi, basis (fun _ => 0), test_unit, zero_biseparable, ?_⟩
     rw [expectation_add, expectation_smul, expectation_rank_one, test_expectation, test_overlap]
     ring
@@ -395,7 +390,6 @@ private lemma biseparable_overlap (φ : Word 3 3 → ℂ) (hφ : IsBiseparable �
   classical
   obtain ⟨_, a, ha, hc, u, v, h⟩ := hφ
   have hj (i j : Fin 3) : φ (join a i j) = u (fun _ => i) * v (fun _ => j) := by
-  classical
     rw [h]
     congr 1
     · congr 1; funext k; simp [join, k.property]
@@ -406,15 +400,20 @@ private lemma biseparable_overlap (φ : Word 3 3 → ℂ) (hφ : IsBiseparable �
     Complex.normSq (∑ i : Fin 3, φ (fun _ => i)) ≤
         (∑ i : Fin 3, Complex.normSq (u (fun _ => i))) *
           ∑ j : Fin 3, Complex.normSq (v (fun _ => j)) := by
-  classical
-      simpa only [dotProduct, Pi.star_apply, star_star, Complex.normSq_conj, hd] using
+      simpa [dotProduct, Complex.star_def, hd] using
         cs (star (fun i : Fin 3 => u (fun _ => i))) (fun j : Fin 3 => v (fun _ => j))
     _ = ∑ ij : Fin 3 × Fin 3, Complex.normSq (φ (join a ij.1 ij.2)) := by
-  classical
       simp only [Fintype.sum_prod_type, hj, Complex.normSq_mul, Finset.mul_sum, Finset.sum_mul]
+      rw [Finset.sum_comm]
     _ ≤ _ := by
-  classical
-      rw [← Finset.sum_image (fun x _ y _ hxy => join_injective a ha hc hxy)]
+      classical
+      have hs : (∑ ij : Fin 3 × Fin 3, Complex.normSq (φ (join a ij.1 ij.2))) =
+          ∑ x ∈ Finset.univ.image (fun ij : Fin 3 × Fin 3 => join a ij.1 ij.2),
+            Complex.normSq (φ x) :=
+        (Finset.sum_image (f := fun x : Word 3 3 => Complex.normSq (φ x))
+          (s := Finset.univ) (g := fun ij : Fin 3 × Fin 3 => join a ij.1 ij.2)
+          (fun x _ y _ hxy => join_injective a ha hc hxy)).symm
+      rw [hs]
       apply Finset.sum_le_sum_of_subset_of_nonneg
       · intro x hx
         obtain ⟨ij, _, rfl⟩ := Finset.mem_image.mp hx
@@ -433,7 +432,6 @@ private lemma d_positive : dmat.PosDef := by
   have he : dmat = (2 / 3 : ℝ) • (1 : Matrix (Word 3 3) (Word 3 3) ℂ) +
       (2 / 3 : ℝ) • (supportProjector 3 3 - rankOneDensity (ghz 3 3)) +
       (1 / 3 : ℝ) • q := by
-  classical
     dsimp [dmat, q]
     module
   rw [he]
@@ -451,28 +449,26 @@ private lemma weighted_cs (φ ψ : Word 3 3 → ℂ) :
     Complex.normSq (star φ ⬝ᵥ ψ) ≤ expectation dinv φ * expectation dmat ψ := by
   classical
   have hi : dinv.PosSemidef := by
-  classical
     dsimp only [dinv]
     exact (((posSemidef_vecMulVec_self_star (ghz 3 3)).smul
       (by norm_num : (0 : ℝ) ≤ 3 / 2)).add
       (orthogonal_positive.1.smul (by norm_num : (0 : ℝ) ≤ 3 / 4))).add orthogonal_positive.2
   have hm : dmat *ᵥ (dinv *ᵥ φ) = φ := by
-  classical
-    rw [← mulVec_mulVec, d_inverse, one_mulVec]
+    rw [mulVec_mulVec, d_inverse, one_mulVec]
   have hr : star (dinv *ᵥ φ) ⬝ᵥ φ = star φ ⬝ᵥ dinv *ᵥ φ := by
-  classical
     rw [star_mulVec, hi.isHermitian.eq, ← dotProduct_mulVec]
   have hc := d_positive.star_dotProduct_mulVec_mul_le ψ (dinv *ᵥ φ)
-  dsimp only at hc
   rw [hm, hr] at hc
   have he := (Complex.le_def.mp hc).1
   have hz := (Complex.nonneg_iff.mp (d_positive.posSemidef.dotProduct_mulVec_nonneg ψ)).2
   have hn : Complex.normSq (star ψ ⬝ᵥ φ) = Complex.normSq (star φ ⬝ᵥ ψ) := by
-  classical
     rw [star_dotProduct ψ φ]
     exact Complex.normSq_conj _
-  simpa only [Complex.star_def, ← Complex.normSq_eq_conj_mul_self, Complex.ofReal_re,
-    Complex.mul_re, ← hz, mul_zero, sub_zero, hn, expectation, mul_comm] using he
+  change ((star (star ψ ⬝ᵥ φ)) * (star ψ ⬝ᵥ φ)).re ≤
+    ((star ψ ⬝ᵥ dmat *ᵥ ψ) * (star φ ⬝ᵥ dinv *ᵥ φ)).re at he
+  rw [Complex.star_def, ← Complex.normSq_eq_conj_mul_self, Complex.ofReal_re, hn,
+    Complex.mul_re, ← hz, zero_mul, sub_zero] at he
+  simpa only [expectation, mul_comm] using he
 
 private lemma pure_lower (ψ : Word 3 3 → ℂ) (hψ : IsUnit ψ) :
     expectation b ψ - 1 / 9 ≤ geometricMeasurePure ψ := by
@@ -481,14 +477,12 @@ private lemma pure_lower (ψ : Word 3 3 → ℂ) (hψ : IsUnit ψ) :
     Complex.nonneg_iff.mp (d_positive.posSemidef.dotProduct_mulVec_nonneg ψ) |>.1
   have hs : sSup {t : ℝ | ∃ φ, IsBiseparable φ ∧
       t = Complex.normSq (star φ ⬝ᵥ ψ)} ≤ expectation dmat ψ := by
-  classical
     apply csSup_le
     · exact ⟨_, basis (fun _ => 0), zero_biseparable, rfl⟩
     · rintro t ⟨φ, hφ, rfl⟩
       exact (weighted_cs φ ψ).trans (mul_le_of_le_one_left hd (inverse_bound φ hφ))
   have hu : expectation 1 ψ = 1 := by rw [expectation_one]; exact hψ
   have he : expectation dmat ψ + expectation b ψ = 10 / 9 := by
-  classical
     simp only [dmat, b, q, witnessOp, expectation_add, expectation_sub, expectation_smul] at *
     linarith
   dsimp only [geometricMeasurePure]
@@ -505,7 +499,6 @@ private lemma trace_b : (trace (noisyGhz 3 3 (3 / 8) * b)).re - 1 / 9 = 13 / 108
   obtain ⟨_, _, hgp, _⟩ := projector_data
   have hq : rankOneDensity (ghz 3 3) * q = 0 := by simp [q, mul_sub, hgp]
   have ht : (trace (noisyGhz 3 3 (3 / 8) * q)).re = 1 / 12 := by
-  classical
     norm_num [noisyGhz, add_mul, Matrix.smul_mul, hq, trace_smul, finite_ranks.2,
       Complex.real_smul]
   simp only [b, mul_add, Matrix.mul_smul, trace_add, trace_smul,
@@ -517,7 +510,7 @@ private lemma trace_b : (trace (noisyGhz 3 3 (3 / 8) * b)).re - 1 / 9 = 13 / 108
 
 private lemma basis_resolution : (∑ x : Word 3 3, rankOneDensity (basis x)) = 1 := by
   classical
-  simpa only [basis, rankOneDensity, star_single, star_one,
+  simpa only [basis, rankOneDensity, Pi.star_single, star_one,
     ← Matrix.single_eq_single_vecMulVec_single] using
       (Matrix.sum_single_one : (∑ i : Word 3 3, Matrix.single i i (1 : ℂ)) = 1)
 
@@ -541,8 +534,12 @@ private lemma ensemble_nonempty :
     cases h : e i with
     | none => simpa [v, h] using ghz_unit
     | some x => simpa [v, h] using basis_unit x
-  · rw [e.sum_comp]
+  · change noisyGhz 3 3 (3 / 8) =
+      ∑ i, (fun j : Option (Word 3 3) => w j • rankOneDensity (v j)) (e i)
+    conv_rhs => rw [show (∑ i, (fun j : Option (Word 3 3) => w j • rankOneDensity (v j)) (e i)) =
+        ∑ j : Option (Word 3 3), w j • rankOneDensity (v j) from e.sum_comp (fun j : Option (Word 3 3) => w j • rankOneDensity (v j))]
     norm_num [w, v, Fintype.sum_option, ← Finset.smul_sum, basis_resolution, noisyGhz]
+    module
 
 private lemma average_lower (k : ℕ) (p : Fin k → ℝ) (ψ : Fin k → Word 3 3 → ℂ)
     (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) (hu : ∀ i, IsUnit (ψ i))
@@ -551,9 +548,8 @@ private lemma average_lower (k : ℕ) (p : Fin k → ℝ) (ψ : Fin k → Word 3
   classical
   have htrace : (trace (noisyGhz 3 3 (3 / 8) * b)).re =
       ∑ i, p i * expectation b (ψ i) := by
-  classical
     rw [he]
-    simp [Finset.sum_mul, Matrix.smul_mul, trace_sum, trace_smul,
+    simp [Finset.sum_mul, trace_sum, trace_smul,
       Complex.real_smul, trace_expectation]
   have h := Finset.sum_le_sum (fun i (_ : i ∈ Finset.univ) =>
     mul_le_mul_of_nonneg_left (pure_lower (ψ i) (hu i)) (hp i))
