@@ -124,7 +124,7 @@ internal sealed class PolygonStrictNormalizationDocument : IScribeDocumentDefini
             AndF(EqF(X("B"), Emptyset), EqF(X("A"), C("univ", Whole(X("P"), X("Q")))))));
     private static Formula GraphConclusions()
     {
-        var neighborhood = C("N_Y", X("A"));
+        var neighborhood = new Formula.Apply(Seq(X("N"), Underscore, Grp(X("Y"))), [X("A")]);
         return All("A", C("Finset", X("X")), AndF(
             R(Card(X("A")), Leq, Card(neighborhood)), AndF(
             Imp(AndF(R(X("A"), Neq, Emptyset), R(X("A"), Neq, X("X"))),
