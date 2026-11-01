@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:83e560ea59b1a0733ff61b856173952562a62ac1f2f11c97c9b2a321e7a4950e
+  normalized_sha256: sha256:83e560ea59b1a0733ff61b856173952562a62ac1f2f11c97c9b2a321e7a4950e
+cas_ref: sha256:83e560ea59b1a0733ff61b856173952562a62ac1f2f11c97c9b2a321e7a4950e
+coverage_gids:
+  - gid: D5/S3/Constants/Moments/CatalanDifferenceMoments.catalan_difference_ratio_envelope
+    target_statement_id: sha256:1f3e974f7b76df0d3d6b6a86825fcca55e5ea468e41abc01963dba61b147e0ce
+receipts:
+  unresolved_subitems: []

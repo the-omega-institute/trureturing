@@ -35,6 +35,15 @@ internal sealed class StabilizerAsymmetryShannonBoundRefutationDocument : IScrib
                     + "and use Matrix.diagonal d with zero c. The resulting squared overlaps specialize the distribution qR "
                     + "of draft.tex line 776 to R equal to the identity. Function.const denotes the zero binary vector in the displayed formula."),
             Describe.Lean(
+                DescribeId.Create("shannon-bound-sum-bits"), DeclarationHandle.Create(Prefix + "sum_bits"),
+                H("A sum over the eight binary words"), StatementSource.FromAuthor(Disp(SumBitsFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For any type A in any universe with an additive commutative monoid structure, "
+                        + "the sum of f over all functions Fin 3 to ZMod 2 is the displayed eight-term sum. "
+                        + "The coordinates are ordered 0, 1, 2, with zero before one in each coordinate."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
                 DescribeId.Create("shannon-bound-claim"), DeclarationHandle.Create(Prefix + "claim"),
                 H("The Shannon lower-bound assertion"), StatementSource.FromAuthor(Disp(ClaimFormula())),
                 AssessedProvenance.FromRepo(Source),
@@ -131,6 +140,20 @@ internal sealed class StabilizerAsymmetryShannonBoundRefutationDocument : IScrib
         Formula inequality = LE(Entropy(LocalCall("absProb", X("ψ"))), Entropy(LocalCall("overlapProb", X("q"), X("c"), X("ψ"))));
         return Equivalence(Local("claim"), All("n", Naturals(), Arrow(LE(D(1), X("n")), All("ψ", StateType(),
             Arrow(unit, All("q", MatrixType(), All("c", BinaryType(X("n")), Arrow(LocalCall("IsStrictUpper", X("q")), inequality))))))));
+    }
+
+    private static Formula SumBitsFormula()
+    {
+        Formula words = BinaryType(D(3));
+        Formula Term(byte a, byte b, byte c) => At(X("f"),
+            Seq(Bang, OpenBracket, D(a), Comma, Sp, D(b), Comma, Sp, D(c), CloseBracket));
+        Formula right = Add(Add(Add(Add(Add(Add(Add(
+            Term(0, 0, 0), Term(0, 0, 1)), Term(0, 1, 0)), Term(0, 1, 1)),
+            Term(1, 0, 0)), Term(1, 0, 1)), Term(1, 1, 0)), Term(1, 1, 1));
+        return All("A", Seq(Qualified("Type"), Star),
+            Seq(OpenBracket, At(Qualified("AddCommMonoid"), X("A")), CloseBracket, Sp,
+                All("f", Arrow(words, X("A")),
+                    Equal(SumOver("x", words, At(X("f"), X("x"))), right))));
     }
 
     private static Formula X(string name) => name == "ψ" ? Psi : F.Id(name);
