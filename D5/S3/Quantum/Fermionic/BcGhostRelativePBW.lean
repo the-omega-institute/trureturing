@@ -349,13 +349,13 @@ private theorem W_is_Wcoord (B C : Finset ℕ)
               unfold bSite at hjlt
               omega
             subst r
-            simp [hrB]
+            simp [bSite, hrB]
         · intro hj
           by_cases h2 : 2 ∈ B
           · have hj0 : j = 0 := by simpa [h2] using hj
             subst j
             constructor
-            · exact ⟨Or.inr ⟨2, Finset.mem_erase.mpr ⟨by omega, h2⟩, by simp [bSite]⟩⟩
+            · exact Or.inr ⟨2, Finset.mem_erase.mpr ⟨by omega, h2⟩, by simp [bSite]⟩
             · omega
           · simp [h2] at hj
       unfold phase lowerCount
@@ -458,8 +458,21 @@ abbrev occupationCarrier := allowed
 def pairToOccupation (p : pairCarrier) : occupationCarrier :=
   ⟨pairToOcc p, by
     change 3 ∉ occ p.1.1 p.1.2
-    simp [occ]
-    omega⟩
+    classical
+    intro h
+    simp only [occ, Finset.mem_union, Finset.mem_singleton, Finset.mem_filter,
+      Finset.mem_image] at h
+    rcases h with h | h
+    · rcases h with h | h
+      · omega
+      · rcases h with ⟨r, hr, he⟩
+        omega
+    · rcases h with ⟨s, hs, he⟩
+      have hs0 : 0 ∉ p.1.2 := by
+        intro h0
+        exact Nat.not_succ_le_zero 0 ((Subtype.prop p).2 0 h0)
+      have : s ≠ 0 := by intro hs0'; exact hs0 (hs0' ▸ hs)
+      omega⟩
 
 def occToPair (S : Finset ℕ) : pairCarrier :=
   ⟨(invB S, invC S), by
@@ -482,34 +495,108 @@ def occToPair (S : Finset ℕ) : pairCarrier :=
 
 private theorem invB_occ (B C : Finset ℕ) (hB : positiveSet B) :
     invB (occ B C) = B := by
+  classical
   ext r
   by_cases hr1 : r = 1
   · subst r
-    simp [invB, occ]
+    by_cases h1 : 1 ∈ B <;> simp [invB, occ, h1]
   · have hr2 : 2 ≤ r := by omega
     by_cases hrB : r ∈ B
     · have hsite : bSite r ∈ occ B C := by
-        unfold bSite
         exact (occ_bSite_mem r B C hr2).2 hrB
-      simp [invB, occ, hr1, hrB, hr2, hsite, bSite]
+      simp only [invB, Finset.mem_union, Finset.mem_image, Finset.mem_filter]
+      constructor
+      · intro h
+        rcases h with h | ⟨j, ⟨hj, hjmod⟩, hEq⟩
+        · simp [hr1] at h
+        · rcases hj with hj | hj
+          · rcases hj with hj | ⟨s, hs, he⟩
+            · omega
+            · omega
+          · rcases hj with ⟨s, hs, he⟩
+            · omega
+        · omega
+      · intro h
+        right
+        refine ⟨bSite r, hsite, ?_, ?_⟩
+        · simp [bSite]
+        · simp [bSite]
     · have hsite : bSite r ∉ occ B C := by
-        unfold bSite
         exact (occ_bSite_mem r B C hr2).not.mpr hrB
-      simp [invB, occ, hr1, hrB, hr2, hsite, bSite]
+      simp only [invB, Finset.mem_union, Finset.mem_image, Finset.mem_filter]
+      constructor
+      · intro h
+        rcases h with h | ⟨j, ⟨hj, hjmod⟩, hEq⟩
+        · simp [hr1] at h
+        · rcases hj with hj | hj
+          · rcases hj with hj | ⟨s, hs, he⟩
+            · omega
+            · omega
+          · rcases hj with ⟨s, hs, he⟩
+            omega
+      · intro h
+        exact False.elim (hrB h)
 
 private theorem invC_occ (B C : Finset ℕ) (hC : positiveSet C) :
     invC (occ B C) = C := by
+  classical
   ext s
   by_cases hs : s ∈ C
   · have hsite : 2 * s + 3 ∈ occ B C := (occ_cSite_mem s B C).2 hs
-    simp [invC, occ, hs, hsite]
+    simp only [invC, Finset.mem_image, Finset.mem_filter]
+    constructor
+    · intro h
+      rcases h with ⟨j, ⟨hj, hjmod, hj5⟩, hEq⟩
+      rcases hj with hj | hj
+      · rcases hj with hj | ⟨r, hr, he⟩
+        · omega
+        · omega
+      · rcases hj with ⟨t, ht, he⟩
+        omega
+    · intro h
+      refine ⟨2 * s + 3, hsite, ?_, ?_, ?_⟩
+      · omega
+      · omega
+      · omega
   · have hsite : 2 * s + 3 ∉ occ B C := (occ_cSite_mem s B C).not.mpr hs
-    simp [invC, occ, hs, hsite]
+    simp only [invC, Finset.mem_image, Finset.mem_filter]
+    constructor
+    · intro h
+      rcases h with ⟨j, ⟨hj, hjmod, hj5⟩, hEq⟩
+      rcases hj with hj | hj
+      · rcases hj with hj | ⟨r, hr, he⟩
+        · omega
+        · omega
+      · rcases hj with ⟨t, ht, he⟩
+        omega
+    · intro h
+      exfalso
+      apply hs
+      exact (occ_cSite_mem s B C).1 hsite
 
 private theorem occ_inv (S : Finset ℕ) (h3 : 3 ∉ S) : occ (invB S) (invC S) = S := by
+  classical
   ext j
-  simp [occ, invB, invC]
-  omega
+  by_cases hj3 : j = 3
+  · subst j
+    exact False.elim (h3 (by simp [occ]))
+  · simp only [occ, Finset.mem_union, Finset.mem_singleton, Finset.mem_filter,
+      Finset.mem_image]
+    by_cases hj1 : j = 1
+    · subst j
+      simp [invB, invC]
+    · by_cases hjeven : j % 2 = 0
+      · have hj2 : 2 ≤ j := by omega
+        simp [invB, invC, hj1, hjeven]
+        constructor <;> intro h
+        · omega
+        · omega
+      · have hjodd : j % 2 = 1 := by omega
+        by_cases hj5 : 5 ≤ j
+        · simp [invB, invC, hj1, hjodd, hj5]
+          constructor <;> intro h <;> omega
+        · have : j = 1 := by omega
+          contradiction
 
 def pairOccupationEquiv : pairCarrier ≃ occupationCarrier where
   toFun := pairToOccupation
@@ -598,8 +685,13 @@ private theorem signMap_involution : signMap.comp signMap = LinearMap.id := by
   apply Finsupp.lhom_ext
   intro p a
   change signMap (signMap (Finsupp.single p a)) = Finsupp.single p a
-  rw [signMap_single, map_smul, signMap_single]
-  simp [sign, pow_add]
+  rw [signMap_single, map_smul, signMap_single, smul_smul]
+  have hpow : ∀ n : ℕ, ((-1 : ℂ) ^ n) * ((-1 : ℂ) ^ n) = 1 := by
+    intro n
+    induction n with
+    | zero => simp
+    | succ n ih => simp [pow_succ, ih, mul_assoc]
+  simpa [sign] using hpow (signExponent p.1.1 p.1.2)
 
 def signEquiv : (pairCarrier →₀ ℂ) ≃ₗ[ℂ] (pairCarrier →₀ ℂ) :=
   LinearEquiv.ofBijective signMap ⟨
