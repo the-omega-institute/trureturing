@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Topology.Measures;
 
@@ -37,35 +38,34 @@ internal sealed class IntervalLpCompactnessDocument : IScribeDocumentDefinition
         var interval = Call("Ioc", F.D(0), Call("mul", n, d));
         var err = Call("power", Call("enorm", Call("sub", Call("f", t), Call("meshAverage", d, n, f, t))), q);
         var inc = Call("power", Call("enorm", Call("sub", Call("f", Call("add", t, h)), Call("f", t))), q);
+        var increments = Call("LIntegralOn", Call("Ioc", F.D(0), d), h,
+            Call("LIntegralOn", Call("Ioc", F.D(0), Call("sub", Call("mul", n, d), h)), t, inc));
+        var bound = Le(Call("LIntegralOn", interval, t, err),
+            Call("mul", Call("inv", Call("ofReal", d)), Call("mul", F.D(2), increments)));
+        var premises = And(Call("RealBanach", e), Lt(F.D(0), d), Call("StronglyMeasurable", f),
+            Call("IntegrableOn", f, interval), Le(F.D(1), q));
         return All("E", Id("Types"), All("d", Id("Real"), All("N", Id("Nat"),
-            All("f", new Formula.TypeArrow(Id("Real"), e), All("q", Id("Real"),
-                Implies(And(Call("RealBanach", e), Lt(F.D(0), d), Call("StronglyMeasurable", f),
-                        Call("IntegrableOn", f, interval), Le(F.D(1), q)),
-                    Le(Call("LIntegralOn", interval, t, err),
-                        Call("mul", Call("inv", Call("ofReal", d)), Call("mul", F.D(2),
-                            Call("LIntegralOn", Call("Ioc", F.D(0), d), h,
-                                Call("LIntegralOn", Call("Ioc", F.D(0), Call("sub", Call("mul", n, d), h)), t, inc))))))))));
+            All("f", new Formula.TypeArrow(Id("Real"), e), All("q", Id("Real"), Implies(premises, bound))))));
     }
     private static Formula CompactnessStatement()
     {
         var e = Id("E"); var p = Id("p"); var t = Id("T"); var s = Id("S");
         var a = Id("a"); var b = Id("b"); var h = Id("h"); var eps = Id("epsilon"); var delta = Id("delta"); var f = Id("f");
         var lp = Call("Lp", e, p, Call("RestrictedVolume", Call("Ioc", F.D(0), t)));
+        var compactIntegrals = Call("IsCompact", Call("closure", Call("image", Call("IntervalIntegral", a, b), s)));
         var integrals = All("a", Id("Real"), All("b", Id("Real"),
-            Implies(And(Le(F.D(0), a), Lt(a, b), Le(b, t)),
-                Call("IsCompact", Call("closure", Call("image", Call("IntervalIntegral", a, b), s))))));
-        var translations = All("epsilon", Id("Real"), Implies(Lt(F.D(0), eps),
-            Exists("delta", Id("Real"), And(Lt(F.D(0), delta),
-                All("h", Id("Real"), Implies(And(Lt(F.D(0), h), Lt(h, delta), Lt(h, t)),
-                    All("f", lp, Implies(Call("Member", f, s),
-                        Lt(Call("eLpNorm", Call("InternalDifference", f, h), p,
-                            Call("RestrictedVolume", Call("Ioc", F.D(0), Call("sub", t, h)))),
-                            Call("ofReal", eps))))))))));
+            Implies(And(Le(F.D(0), a), Lt(a, b), Le(b, t)), compactIntegrals)));
+        var incrementNorm = Call("eLpNorm", Call("InternalDifference", f, h), p,
+            Call("RestrictedVolume", Call("Ioc", F.D(0), Call("sub", t, h))));
+        var forEveryFunction = All("f", lp, Implies(Call("Member", f, s), Lt(incrementNorm, Call("ofReal", eps))));
+        var forEveryShift = All("h", Id("Real"),
+            Implies(And(Lt(F.D(0), h), Lt(h, delta), Lt(h, t)), forEveryFunction));
+        var smallShifts = Exists("delta", Id("Real"), And(Lt(F.D(0), delta), forEveryShift));
+        var translations = All("epsilon", Id("Real"), Implies(Lt(F.D(0), eps), smallShifts));
+        var premises = And(Call("RealBanach", e), Lt(F.D(0), t), Le(F.D(1), p),
+            new Formula.Relation(p, FormulaRelationOperator.NotEqual, F.Infty), integrals, translations);
         return All("E", Id("Types"), All("T", Id("Real"), All("p", Id("ENNReal"),
-            All("S", Call("Set", lp), Implies(
-                And(Call("RealBanach", e), Lt(F.D(0), t), Le(F.D(1), p),
-                    new Formula.Relation(p, FormulaRelationOperator.NotEqual, F.Infty), integrals, translations),
-                Call("IsCompact", Call("closure", s)))))));
+            All("S", Call("Set", lp), Implies(premises, Call("IsCompact", Call("closure", s)))))));
     }
     private static Formula Id(string s) => F.Id(s);
     private static Formula Call(string s, params Formula[] args) => new Formula.Apply(Id(s), [.. args]);
