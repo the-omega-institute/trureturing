@@ -43,5 +43,5 @@ internal sealed class BcGhostOccupationRadiusDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create("D5/S3/Quantum/Fermionic/BcGhostOccupationRadius.virasoro_radius"),
                 H("The original ghost Virasoro radius bound"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every integer r, the original locally finite L_r maps Radius A into Radius A+max(0,-r). The finite normal-order sum is captured on q in [r-A,A]. In the right normal-order branch the b annihilator preserves Radius A before the c high-mode cutoff is used."))), DescribeRole.Theorem)))));
+                Blocks(Paragraph(Text("For every integer r, the original locally finite L_r maps Radius A into Radius A+max(0,-r). The finite normal-order sum is captured on q in [r-A,A]. In the right normal-order branch the b annihilator preserves Radius A before the c high-mode cutoff is used."))), DescribeRole.Theorem))));
 }

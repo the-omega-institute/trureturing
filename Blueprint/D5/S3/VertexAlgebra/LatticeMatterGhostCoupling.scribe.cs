@@ -97,5 +97,5 @@ internal sealed class LatticeMatterGhostCouplingDocument : IScribeDocumentDefini
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.ward_c"),
                 H("All-integer c Ward identity"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For arbitrary D,H and every integer r, T C_r+C_r T=0. The proof uses the original c CAR and finite support on x and C_r x, with no desired identity assumed."))), DescribeRole.Theorem)))));
+                Blocks(Paragraph(Text("For arbitrary D,H and every integer r, T C_r+C_r T=0. The proof uses the original c CAR and finite support on x and C_r x, with no desired identity assumed."))), DescribeRole.Theorem))));
 }
