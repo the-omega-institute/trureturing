@@ -105,7 +105,7 @@ private theorem window_eq_snoc (x : ℤ → A) (i : ℤ) :
   ext j
   cases j using Fin.lastCases <;> simp [window]
 
-private theorem code_shift (x : ℤ → A) (i : ℤ) :
+theorem code_shift (x : ℤ → A) (i : ℤ) :
     code h (shift i x) = shift i (code h x) := by
   ext j
   change h (window (shift i x) j) = h (window x (i + j))
@@ -356,10 +356,30 @@ noncomputable def fullLiftHomeomorph (bh : Bipermutative h) (Y : Subshift A ℤ)
 def baseShift (Y : Subshift A ℤ) (y : Y.carrier) : Y.carrier :=
   ⟨shift 1 y.1, Y.mapsTo 1 y.2⟩
 
+/-- The entire inverse image is invariant under every integer shift. -/
+def integerShift (Y : Subshift A ℤ) (g : ℤ) (x : LiftPoint h Y) : LiftPoint h Y :=
+  ⟨shift g x.1, by
+    rw [code_shift (h := h) x.1 g]
+    exact Y.mapsTo g x.2⟩
+
+theorem integerShift_add (Y : Subshift A ℤ) (g j : ℤ) (x : LiftPoint h Y) :
+    integerShift Y (g + j) x = integerShift Y g (integerShift Y j x) := by
+  apply Subtype.ext
+  funext i
+  simp [integerShift, shift, add_assoc, add_comm g j]
+
+instance integerShiftAction (h : (Fin (k + 2) → A) → A) (Y : Subshift A ℤ) :
+    AddAction ℤ (LiftPoint h Y) where
+  vadd := integerShift Y
+  zero_vadd x := by
+    apply Subtype.ext
+    funext i
+    change x.1 (0 + i) = x.1 i
+    rw [zero_add]
+  add_vadd := integerShift_add Y
+
 def liftShift (Y : Subshift A ℤ) (x : LiftPoint h Y) : LiftPoint h Y :=
-  ⟨shift 1 x.1, by
-    rw [code_shift (h := h) x.1 1]
-    exact Y.mapsTo 1 x.2⟩
+  integerShift Y 1 x
 
 noncomputable def skewStep (bh : Bipermutative h) (Y : Subshift A ℤ)
     (z : Y.carrier × Prefix A k) : Y.carrier × Prefix A k :=

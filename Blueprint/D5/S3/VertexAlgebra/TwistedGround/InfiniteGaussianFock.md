@@ -4,9 +4,9 @@
 
 Actual infinite joint Gaussian coefficients from common finite principal blocks.
 
-This module has current scoped native/kernel and Scribe evidence for the infinite-mode Gaussian Fock construction. It does not establish the full field or scientific programme. The normalization is the classical factorial Bargmann/Fock normalization, with weight(d)=product_i d(i)! and scale(d)=sqrt(weight(d)). No literature novelty is claimed.
+This module constructs the infinite-mode Gaussian Fock coefficients and vector. It does not establish the full field or scientific programme. The normalization is the classical factorial Bargmann/Fock normalization, with weight(d)=product_i d(i)! and scale(d)=sqrt(weight(d)). No literature novelty is claimed.
 
-The input is a genuine bounded complex-linear one-particle operator L on l2(I). Its actual coordinate matrix K(i,j)=(L e_j)(i) is symmetric in the holomorphic sense K(i,j)=K(j,i), without conjugation. Assume 0<=q<1, norm(L)<=q, summability of the nonnegative pair-indexed series sum_(i,j) abs(K(i,j))^2, and its total <=M. No Gaussian coefficient, norm or summability certificate is a premise.
+The input is a genuine bounded complex-linear one-particle operator L on l2(I). Its actual coordinate matrix K(i,j)=(L e_j)(i) is symmetric in the holomorphic sense K(i,j)=K(j,i), without conjugation. Assume 0<=q<1, norm(L)<=q, summability of the nonnegative pair-indexed series sum_(i,j) abs(K(i,j))^2, and its total <=M. No Gaussian coefficient, norm or summability certificate is a premise. The coefficient, common-block and scalar summability layers do not assume countability of I.
 
 **Theorem 1.1 (Natural principal compression).**
 
@@ -90,9 +90,9 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/InfiniteGaussianFock.vector_n
 
 *Commentary.*
 
-After proving summability, form the actual l2 element with coordinate scale(d)*g(d). Parseval identifies its squared norm with the full weighted occupation sum. Its vacuum coefficient is one, its odd-degree coefficients vanish, and for empty mode types it is exactly the vacuum unit vector. HilbertBasis.hasSum_repr supplies unconditional convergence of its ON expansion. The next module consumes this actual vector to construct the coefficient operator.
+For countable I, after proving summability, form the actual l2 element with coordinate scale(d)*g(d). Parseval identifies its squared norm with the full weighted occupation sum. Its vacuum coefficient is one, its odd-degree coefficients vanish, and for empty mode types it is exactly the vacuum unit vector. HilbertBasis.hasSum_repr supplies unconditional convergence of its ON expansion. A required future continuation is to construct the coefficient operator from this actual vector; no current consumer is asserted here.
 
-Still external: identify the abstract K and its Gaussian polynomial with full native normal+Corr inputs, Gram whitening, positive-frequency damping and same-term exponent regrouping. Official checks, freeze and delivery remain pending; the faithful dependent-family Reg registration remains open under linked issue 24524.
+Still external: identify the abstract K and its Gaussian polynomial with full native normal+Corr inputs, Gram whitening, positive-frequency damping and same-term exponent regrouping. Official checks, freeze and delivery remain pending; the faithful four-slot dependent-family audit remains unfinished under linked issues 24524 and 24498. The current owner has no valid registration: lawful realization/readout, source selection and reconstruction, variation, sensitivity and observational-dependence evidence remain missing. Inherited finite-supplier audit findings do not describe a current-owner registration.
 
 ## References
 

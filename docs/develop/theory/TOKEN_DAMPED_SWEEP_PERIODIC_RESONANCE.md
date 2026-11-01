@@ -1303,3 +1303,1550 @@ Finally $\theta=\arccos(-1/2)=2\pi/3$ and every gap is one. Thus every term of $
 **Definition 7.5 (Unrestricted variable-parameter stable-space problem).** For (7.1)–(7.3) without (U), the unrestricted problem is to determine $S_{\varepsilon,\boldsymbol\alpha}$ for every fixed positive triple, every prescribed binary schedule and every prescribed sequence $\alpha_j\in(0,1)$. This domain permits approach to either endpoint, arbitrary signs of $\lambda_j$, and arbitrary interspersions of zero and nonzero $\lambda_j$. Theorem 7.2 gives angular-divergence sufficiency on the subdomain (U), including singular histories, while Theorem 7.3 gives the complete classification on the smaller subdomain (U) with pointwise nonvanishing. Proposition 7.4 specifies one history outside (U); it supplies no general classification on the unrestricted domain. The fixed-parameter singular classification and orthogonal-pair annihilation in Theorem 6.2 retain their stated constant-parameter hypotheses.
 
 ## 追加锚（本行以下为增补区）
+## 8. Unrestricted histories and finite total logarithmic loss
+
+**Definition 8.1 (Event products and tail inputs).** Use the entire domain of Definition 7.1, without (U). In particular the literal matrices are
+
+$$
+A=\begin{pmatrix}1&0\\-2c&b+c\end{pmatrix},\quad
+B=\begin{pmatrix}-1&2a/(a+b)\\0&-(b+c)\end{pmatrix},\quad
+B_\alpha=\begin{pmatrix}
+[b(1-2\alpha)-\alpha a]/(b+\alpha a)&2\alpha a/(b+\alpha a)\\
+0&-(b+c)
+\end{pmatrix},\quad M=A^{-1}B,\quad N_\alpha=A^{-1}B_\alpha,
+$$
+
+where $a,b,c>0$, and the binary schedule and its interior event parameters are prescribed before $u_0$. Retain the original $Q,G,\theta,t_j,d_j$ of (7.3), and set
+
+$$
+\lambda_j=\frac{\alpha_j(a+2b)-b}{b+\alpha_j a},\qquad
+\delta_j=1-\lambda_j^2\in(0,1],\qquad
+\alpha_j=\frac{b(1+\lambda_j)}{a+2b-a\lambda_j}.
+\tag{8.1}
+$$
+
+The last formula is an increasing bijection from $(-1,1)$ to $(0,1)$: its denominator is positive, its derivative is $2b(a+b)/(a+2b-a\lambda)^2>0$, and its endpoint values are $0,1$. Thus a prescribed sequence in $(-1,1)$ specifies actual original event parameters. Zero $\lambda_j$ means exactly the singular parameter $b/(a+2b)$.
+
+Let $e=h/\|h\|_Q$, $h=(a,a+b)^T$, and $J=(M-\cos\theta I)/\sin\theta$, as in Section 7. For each event set
+
+$$
+e_j=M^{-t_j}e,\quad q_j=Je_j,\quad
+P_j=e_je_j^TG,\quad K_j=P_j+\lambda_j(I-P_j).
+$$
+
+For event indices $s\leq n$ define only the finite products
+
+$$
+\Phi_{s,s}=I,\qquad
+\Phi_{s,n}=K_{n-1}\cdots K_s\quad(n>s),\qquad
+F_n=\Phi_{0,n}.
+\tag{8.2}
+$$
+
+These definitions are also used on a finite list, within its index range. The adjoint of a real matrix $T$ is $T^*=G^{-1}T^TG$. All norms and orthogonality below refer to $Q$. An infinite nonsingular tail starts at an index $s$ such that $\lambda_j\ne0$ for every $j\geq s$; put
+
+$$
+D_s=\sum_{j=s}^\infty-\log|\lambda_j|\in(0,\infty].
+\tag{8.3}
+$$
+
+Its input $z$ is in interaction coordinates. For an actual whole history this input is
+
+$$
+z=M^{-t_s}u_{t_s}=F_su_0.
+\tag{8.4}
+$$
+
+The finite products do not invert any event factor. The source correspondence is the one in Definition 7.1: source $m=2$, velocities $(a,b,c)$, centered coordinates $(x,y)$ and zero exterior coordinates; source indices are reduced by one in Lean. The source $M_\alpha$ is $N_\alpha$, and its private first-event weight `theta` is $\tau_j=\alpha_j(a+b)/(b+\alpha_ja)$, not the rotation angle $\theta$. The local energy decomposition, loss, reflection identities and literal factorization are the complete `local_energy_decomposition`, `Q_dampedEvent_loss`, `Q_event`, `Q_sweepTheta_eq_iff`, `dampedEvent_eq_of_fixed`, `sweepTheta_of_fixed` and `source_factorization` bodies in [TokenDampedSweepContraction](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean), with its complete [Scribe](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs). The same Dirichlet form, zero extension, rigidity, observability and fixed-map power implication occur in [FinitePathDynamics](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.lean) and its complete [Scribe](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.scribe.cs). The [source note](../../../Library/Dynamics/wallner2026passbucket.md) and [fixed-map statement](../../../Problems/wallner-krupke-schmidt-fekete-2026-token-spectral-contraction.md) concern repeated fixed $\alpha$. Their primary original is [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, Sections III and IV](https://arxiv.org/html/2608.27085v1#S3): the linear map has positive velocities and zero centered endpoints in the alternating, catch-up-free rotational regime. Arbitrarily prescribed variable histories remain the abstract linear domain (7.2); no collision realization is assumed.
+
+**Theorem 8.2 (Finite lists, chronology and finite annihilation).** For every allowed history let $\nu(t)$ count events strictly before time $t$. Then
+
+$$
+u_t=M^tF_{\nu(t)}u_0,\qquad
+\|u_t\|_Q=\|F_{\nu(t)}u_0\|_Q.
+\tag{8.5}
+$$
+
+For $r<\infty$ events the exact full-time limiting norm is $\|F_ru_0\|_Q$, and the stable space is $\ker F_r$. Its dimension is $2-\operatorname{rank}F_r$. In particular the empty list has $F_0=I$ and stable space $\{0\}$; so does every finite wholly nonsingular list. Every finite list containing a singular factor has rank zero or one, distinguishable by its finite matrix $F_r$.
+
+For any finite or infinite event list, an initial vector reaches zero in finite time exactly when $F_nu_0=0$ for some finite event prefix $n$, with $n=0$ allowed for $u_0=0$. A nonzero vector can first reach zero only just after a singular event $j$, and the exact condition at that event is
+
+$$
+F_ju_0\ne0,\qquad \lambda_j=0,\qquad e_j^TGF_ju_0=0.
+\tag{8.6}
+$$
+
+All initial states have been annihilated by the end of event $j$ exactly when $F_{j+1}=0$. If $F_j\ne0$, this is equivalent to $\lambda_j=0$ and the finite row $e_j^TGF_j=0$.
+
+*Proof.* The original factorization (7.5), with its actual event parameter at each occurrence, is $N_{\alpha_j}=M(P+\lambda_j(I-P))$. Conjugating its second factor by $M^{t_j}$ gives exactly $K_j$. Before the first event the interaction vector is $u_0$; an undamped transfer leaves it fixed and event $j$ multiplies it by $K_j$. Induction over chronological time proves (8.5). This is the identity (7.8) without any use of (U). Also
+
+$$
+\|K_jw\|_Q^2=\|w\|_Q^2-\delta_j|\langle q_j,w\rangle_Q|^2,
+\qquad |\lambda_j|\|w\|_Q\leq\|K_jw\|_Q\leq\|w\|_Q.
+\tag{8.7}
+$$
+
+After a finite list the norm therefore remains exactly $\|F_ru_0\|_Q$. Positive definiteness gives decay precisely on its kernel: $x_t^2\leq aQ(u_t)$ and $y_t^2\leq cQ(u_t)$, while continuity supplies the converse implication. Rank-nullity gives the dimension assertions. Each $K_j$ has eigenvalues $1,\lambda_j$, so finite nonsingular products are invertible; a singular factor has rank one and cannot subsequently increase rank.
+
+The map $M$ never kills a nonzero vector. A nonsingular $K_j$ cannot do so either. At a singular event $K_j=P_j=e_je_j^TG$, which kills exactly $e_j^{\perp_Q}$. This proves (8.6), including the actual first zero time $t_j+1$. Applied to every input, the same calculation proves the matrix and row conditions. Zero is preserved by every later transfer. These finite tests therefore cover every possible finite annihilation, also within an infinite history. $\square$
+
+**Theorem 8.3 (Exact positive-definite norm for a finite-loss nonsingular tail).** Suppose the event list is infinite, every $\lambda_j$ for $j\geq s$ is nonzero, and $D_s<\infty$. Define the prescribed real rows
+
+$$
+b_{s,j}=q_j^TG\Phi_{s,j}\quad(j\geq s),\qquad
+H_{s,n}=G-\sum_{j=s}^{n-1}\delta_j b_{s,j}^Tb_{s,j}.
+$$
+
+Then the following matrix series converges entrywise, with absolute convergence of every entry:
+
+$$
+H_s=G-\sum_{j=s}^\infty\delta_j b_{s,j}^Tb_{s,j}.
+\tag{8.8}
+$$
+
+It is positive definite and satisfies, for every $z\in\mathbb R^2$ and $n\geq s$,
+
+$$
+e^{-2D_s}Q(z)\leq z^TH_sz\leq Q(z),\qquad
+0\leq z^T(H_{s,n}-H_s)z\leq2D_nQ(z).
+\tag{8.9}
+$$
+
+The exact full chronological limiting norm for tail input $z$ is $\sqrt{z^TH_sz}$. Consequently no nonzero vector reaching this tail is erased, and its stable space is $\{0\}$. This plane norm is not the absolute value of one linear functional.
+
+*Proof.* Apply the exact loss (8.7) successively, starting with $z$ at index $s$. For every finite $n$ it gives
+
+$$
+\|\Phi_{s,n}z\|_Q^2
+=Q(z)-\sum_{j=s}^{n-1}\delta_j|b_{s,j}z|^2
+=z^TH_{s,n}z.
+\tag{8.10}
+$$
+
+The nonnegative loss sum is bounded by $Q(z)$. Applied to the two ordinary coordinate vectors this bounds the sums of both diagonal entries of the series in (8.8). Absolute summability of its off-diagonal entries follows from Cauchy--Schwarz:
+
+$$
+\sum_j\delta_j|(b_{s,j})_1(b_{s,j})_2|
+\leq\left(\sum_j\delta_j|(b_{s,j})_1|^2\right)^{1/2}
+     \left(\sum_j\delta_j|(b_{s,j})_2|^2\right)^{1/2}.
+$$
+
+Thus (8.8) exists with the asserted convergence. The lower inequality in (8.7) gives
+
+$$
+\|\Phi_{s,n}z\|_Q\geq
+\exp\left(-\sum_{j=s}^{n-1}-\log|\lambda_j|\right)\|z\|_Q
+\geq e^{-D_s}\|z\|_Q.
+$$
+
+Pass to the limit in (8.10) to obtain positive definiteness and the first two bounds of (8.9). For $0<r<1$, integrating $1/x$ on $[r,1]$ gives $1-r\leq-\log r$, so $1-r^2\leq2(-\log r)$. Since each $\Phi_{s,j}$ is nonexpansive, $|b_{s,j}z|^2\leq Q(z)$. The remaining loss after index $n$ is therefore at most
+
+$$
+Q(z)\sum_{j=n}^\infty\delta_j\leq2D_nQ(z),
+$$
+
+which proves the prescribed-data error bound. In particular it tends to zero independently of any unknown trajectory limit. Formula (8.5) transfers this limiting norm through every undamped phase: the interaction vector is constant between events and $M$ preserves its norm. Every nonzero $z$ has a positive limit. An absolute linear functional on a real plane vanishes on a nonzero vector, whereas this positive-definite norm does not; hence a single covector cannot represent it. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 9. A disjoint-block criterion for infinite logarithmic loss
+
+**Definition 9.1 (Prescribed loss blocks and their junctions).** Consider an infinite nonsingular tail starting at $s$, with $D_s=\infty$. Its block boundaries are the prescribed integers
+
+$$
+n_0=s,\qquad
+n_{k+1}=\min\left\{n>n_k:
+\sum_{j=n_k}^{n-1}-\log|\lambda_j|\geq\log2\right\}.
+\tag{9.1}
+$$
+
+Each defining set is nonempty, since removing a finite number of finite terms leaves an infinite sum. Thus every block is finite, $n_k\to\infty$, and the blocks are disjoint consecutive portions of the tail. Define
+
+$$
+T_k=\Phi_{n_k,n_{k+1}},\qquad \mathfrak d_k=\det T_k,
+\qquad R_k=T_k^*T_k,\qquad r_k=\operatorname{tr}R_k,
+$$
+
+$$
+\sigma_k=\left(\frac{r_k+\sqrt{r_k^2-4\mathfrak d_k^2}}2\right)^{1/2},\qquad
+\zeta_k^2=\frac{\mathfrak d_k^2}{\sigma_k^2},\qquad
+\mu_k=\frac{\mathfrak d_k}{\sigma_k^2}.
+\tag{9.2}
+$$
+
+All these are finite-block data. In particular $\mathfrak d_k=\prod_{j=n_k}^{n_{k+1}-1}\lambda_j\ne0$ and $|\mathfrak d_k|\leq1/2$. The two eigenvalues of $R_k$ are $\sigma_k^2\geq\zeta_k^2>0$. Let $E_k$ be the projection onto the larger eigenspace:
+
+$$
+E_k=\begin{cases}
+(R_k-\zeta_k^2I)/(\sigma_k^2-\zeta_k^2),&\sigma_k^2>\zeta_k^2,\\
+I,&\sigma_k^2=\zeta_k^2.
+\end{cases}
+$$
+
+Choose $\bar f_k$ by projecting the first of the ordered pair $e,Je$ with nonzero projection, and normalizing that projection to unit $Q$-norm. Starting with $f_0=\bar f_0$, specify signs and unit output vectors recursively by
+
+$$
+g_k=\sigma_k^{-1}T_kf_k,\qquad
+f_{k+1}=\chi(\langle\bar f_{k+1},g_k\rangle_Q)\bar f_{k+1},
+\qquad \chi(x)=\begin{cases}1,&x\geq0,\\-1,&x<0.\end{cases}
+$$
+
+Set
+
+$$
+c_k=\langle f_{k+1},g_k\rangle_Q\geq0,\qquad
+s_k=\langle f_{k+1},Jg_k\rangle_Q,\qquad
+\eta_k=s_k^2=1-\langle\bar f_{k+1},g_k\rangle_Q^2.
+\tag{9.3}
+$$
+
+The two prescribed nonnegative series are
+
+$$
+\mathcal B_s=\sum_{k=0}^\infty(1-\sigma_k),\qquad
+\mathcal A_s=\sum_{k=0}^\infty\eta_k.
+\tag{9.4}
+$$
+
+The loss-block criterion is $\mathcal B_s+\mathcal A_s=\infty$. It uses a contraction deficit from each disjoint finite block and the junction between that block's principal output line and the next block's principal input line. No block is the growing prefix from $s$ to $n_k$, except the first block. The boundaries use only $|\lambda_j|$, and neither series asks for the norm limit of growing prefix products or the fate of an initial vector.
+
+**Theorem 9.2 (Infinite-loss tail classification and exact functional).** On the entire domain of Definition 9.1, every tail input decays if and only if
+
+$$
+\boxed{\quad\mathcal B_s+\mathcal A_s=\infty.\quad}
+\tag{9.5}
+$$
+
+In this branch the stable space is $\mathbb R^2$ and every full chronological limiting norm is zero. In the complementary branch both series are finite; the stable space is one line and the exact full chronological limiting norm is $|\ell_s(z)|$, for the following nonzero prescribed-data functional.
+
+Let $K$ be the least nonnegative integer such that $\sigma_k\geq3/4$ for every $k\geq K$, and put $\rho=8/9$. Define real rows, starting at $K$, by
+
+$$
+a_K=f_K^TG,\qquad b_K=(Jf_K)^TG,
+$$
+
+$$
+a_{k+1}=c_ka_k+\mu_ks_kb_k,\qquad
+b_{k+1}=-s_ka_k+\mu_kc_kb_k\quad(k\geq K).
+\tag{9.6}
+$$
+
+The row series and scalar product
+
+$$
+\Lambda=a_K+\sum_{k=K}^\infty\big((c_k-1)a_k+\mu_ks_kb_k\big),
+\qquad \gamma=\prod_{k=K}^\infty\sigma_k
+\tag{9.7}
+$$
+
+converge, the row series absolutely and the product to a positive number. The functional is
+
+$$
+\boxed{\quad\ell_s(z)=\gamma\Lambda\Phi_{s,n_K}z.\quad}
+\tag{9.8}
+$$
+
+For $n\geq K$, write $S_n=\sum_{k=n}^\infty(1-\sigma_k)$ and $E_n=\sum_{k=n}^\infty s_k^2$. In dual $Q$-norm the independently specified truncations satisfy
+
+$$
+\left\|\ell_s-
+\left(\prod_{k=K}^{n-1}\sigma_k\right)a_n\Phi_{s,n_K}\right\|_{Q,*}
+\leq S_n+E_n+\rho\sqrt{\frac{2E_n}{1-\rho^2}}.
+\tag{9.9}
+$$
+
+Thus the limiting object has a prescribed-data error bound as well as exact original-model correspondence. There is no finite annihilation of a nonzero tail input in either branch.
+
+*Proof.* All finite-dimensional constructions in Definition 9.1 take place in the original plane with its fixed inner product $Q$. To verify them, represent a $Q$-self-adjoint matrix in the orthonormal basis $e,Je$. The matrix of $R_k$ then has the real symmetric form $\begin{pmatrix}x&y\\y&z\end{pmatrix}$. Its characteristic discriminant is $(x-z)^2+4y^2\geq0$. Its quadratic form is $\|T_kw\|_Q^2>0$ for $w\ne0$, so both characteristic roots are positive. The ordinary two-by-two characteristic identity gives exactly the roots (9.2) and, when they differ, the self-adjoint idempotent $E_k$ displayed above. When they agree, $x=z$ and $y=0$, so $R_k=\sigma_k^2I$. This also verifies that $E_k$ is nonzero and that projecting one of $e,Je$ must succeed. This is the real two-dimensional spectral decomposition, consumed here only to decompose the actual finite blocks.
+
+Nonexpansiveness of the factors gives $0<\sigma_k\leq1$. The orthonormal pair $f_k,Jf_k$ diagonalizes $R_k$, so $T_kf_k$ and $T_kJf_k$ are orthogonal, with lengths $\sigma_k,\zeta_k$. Orientation in the basis $e,Je$ gives
+
+$$
+T_kf_k=\sigma_kg_k,\qquad
+T_kJf_k=\sigma_k\mu_kJg_k,
+\qquad 0<|\mu_k|\leq1.
+\tag{9.10}
+$$
+
+Indeed the coefficient of $Jg_k$ has modulus $\zeta_k$ and sign $\operatorname{sgn}(\det T_k)$, and $\zeta_k=|\mathfrak d_k|/\sigma_k$. Since $J$ is an orthogonal quarter-turn, (9.3) yields
+
+$$
+g_k=c_kf_{k+1}-s_kJf_{k+1},\qquad
+Jg_k=s_kf_{k+1}+c_kJf_{k+1},\qquad c_k^2+s_k^2=1.
+$$
+
+Thus a block input with coordinates $(A,B)$ in $f_k,Jf_k$ has output coordinates
+
+$$
+\sigma_k(c_kA+\mu_ks_kB,\ -s_kA+\mu_kc_kB)
+\tag{9.11}
+$$
+
+in $f_{k+1},Jf_{k+1}$. This is an exact finite identity for the prescribed original block, with its sign of determinant retained.
+
+If $\mathcal B_s=\infty$, the original input at boundary $n_m$ has norm at most
+
+$$
+\left(\prod_{k=0}^{m-1}\sigma_k\right)\|z\|_Q
+\leq\exp\left(-\sum_{k=0}^{m-1}(1-\sigma_k)\right)\|z\|_Q\longrightarrow0.
+$$
+
+Only disjoint-block submultiplicativity is used in this bound. Monotonicity of every intermediate event norm proves full-time decay. This establishes (9.5) in the first branch without any angle assumption.
+
+Suppose henceforth $\mathcal B_s<\infty$. Then $\sigma_k\to1$, so the prescribed $K$ exists, and
+
+$$
+|\mu_k|\leq\frac{1/2}{(3/4)^2}=\rho=\frac89<1\quad(k\geq K).
+\tag{9.12}
+$$
+
+Also the product in (9.7) is positive: on $[3/4,1]$, integration of $1/x$ gives $0\leq-\log x\leq(4/3)(1-x)$, so its logarithmic sum is finite. The finitely many blocks before $K$ are nonsingular. This is the only reduction to a uniform contraction bound, and it concerns the normalized disjoint blocks, not the original $\lambda_j$.
+
+For an arbitrary input at boundary $n_K$, divide the actual input at boundary $n_k$ by $\prod_{i=K}^{k-1}\sigma_i$. Write the resulting vector as $A_kf_k+B_kJf_k$. By (9.11),
+
+$$
+A_{k+1}=c_kA_k+\mu_ks_kB_k,\qquad
+B_{k+1}=-s_kA_k+\mu_kc_kB_k,
+$$
+
+$$
+A_{k+1}^2+B_{k+1}^2
+=A_k^2+B_k^2-(1-\mu_k^2)B_k^2.
+\tag{9.13}
+$$
+
+These are exactly the scalar identities used in (7.10), with the block junctions supplying the angles. The proof uses these identities and the bound (9.12), rather than requiring the block angles to be integer multiples of $\theta$. In particular the normalized norms decrease to a limit $l\geq0$, and
+
+$$
+(1-\rho^2)\sum_{k=K}^\infty B_k^2\leq A_K^2+B_K^2.
+\tag{9.14}
+$$
+
+If $l>0$, eventually $A_k^2\geq l^2/2$, since $B_k\to0$. The second recurrence gives
+
+$$
+s_k^2A_k^2=(\mu_kc_kB_k-B_{k+1})^2
+\leq2\rho^2B_k^2+2B_{k+1}^2.
+$$
+
+It follows that $\sum s_k^2<\infty$. Thus $\mathcal A_s=\infty$ forces $l=0$ for every normalized input, and hence for every original input. Monotonicity between block boundaries again gives the full chronological conclusion.
+
+It remains to prove the complementary branch, its exact functional and its nonzero value on some input. Suppose $\mathcal A_s<\infty$. The rows in (9.6) give $A_k=a_kw$ and $B_k=b_kw$ for normalized input $w$ at $n_K$. The maps in (9.13) are nonexpansive, so $\|a_k\|_{Q,*}\leq1$. Apply (9.14) to the two unit inputs $e,Je$ and add. The dual norm identity $\|f\|_{Q,*}^2=|fe|^2+|fJe|^2$ gives
+
+$$
+\sum_{k=K}^\infty\|b_k\|_{Q,*}^2\leq\frac2{1-\rho^2}.
+\tag{9.15}
+$$
+
+Because $c_k\geq0$, one has $1-c_k=s_k^2/(1+c_k)\leq s_k^2$. Therefore, for every $n\geq K$,
+
+$$
+\begin{aligned}
+\sum_{k=n}^\infty
+\|(c_k-1)a_k+\mu_ks_kb_k\|_{Q,*}
+&\leq E_n+\rho\sqrt{E_n}
+\left(\sum_{k=n}^\infty\|b_k\|_{Q,*}^2\right)^{1/2}\\
+&\leq E_n+\rho\sqrt{\frac{2E_n}{1-\rho^2}}.
+\end{aligned}
+\tag{9.16}
+$$
+
+This proves absolute convergence of (9.7), including the displayed tail bound. Its summands are $a_{k+1}-a_k$, so $a_k\to\Lambda$ in the row space. For every $w$, (9.14) gives $B_k\to0$, and hence (9.13) gives the exact normalized norm limit $|\Lambda w|$. In particular $\|\Lambda\|_{Q,*}\leq1$.
+
+To show this row is nonzero, choose $N\geq K$ with
+
+$$
+\sum_{k=N}^\infty s_k^2<\frac{(1-\rho)^2}{4}.
+$$
+
+The finite normalized blocks from $K$ to $N$ are all invertible, so an input $w$ at $n_K$ can be chosen whose normalized vector at $n_N$ is $f_N$. Its subsequent coordinates satisfy $A_N=1,B_N=0$ and $|A_k|\leq1$. The second recurrence implies by induction
+
+$$
+|B_k|\leq\sum_{i=N}^{k-1}\rho^{k-1-i}|s_i|\quad(k>N).
+$$
+
+Weighted Cauchy--Schwarz gives
+
+$$
+|B_k|^2\leq\frac1{1-\rho}
+\sum_{i=N}^{k-1}\rho^{k-1-i}s_i^2,
+\qquad
+\sum_{k=N}^\infty B_k^2\leq
+\frac1{(1-\rho)^2}\sum_{i=N}^\infty s_i^2<\frac14.
+$$
+
+The second inequality follows by summing the nonnegative geometric weights, first over finite ranges and then taking their increasing limit. Telescoping (9.13) from this unit input yields $l^2\geq1-\sum_{k=N}^\infty B_k^2>3/4$. Consequently $\Lambda w\ne0$. This is the finite-prefix nonsingularity argument of (7.16)--(7.17), now applied to the explicitly normalized original blocks; it requires no uniform inverse.
+
+The actual tail input $z$ reaches $n_K$ as $\Phi_{s,n_K}z$. Restoring the divided scalar factors gives (9.8) and the exact limiting norm. Both $\gamma>0$ and invertibility of $\Phi_{s,n_K}$ preserve nonzeroness of the functional. Its kernel is therefore a line. At every intermediate time the actual norm lies between successive block-boundary norms, so this is the limit along the entire chronological history, including unbounded gaps and arbitrary first-event time.
+
+For completeness, $\gamma_n=\prod_{k=K}^{n-1}\sigma_k$ satisfies $0\leq\gamma_n-\gamma\leq S_n$: finite products of $1-r_i$ are at least $1-\sum r_i$, and passage to the limit gives this bound. Combine it with (9.16), $\|a_n\|_{Q,*}\leq1$, $\gamma\leq1$ and nonexpansiveness of $\Phi_{s,n_K}$ to obtain (9.9). Thus neither the scalar product nor the functional is an unspecified limiting remainder. All tail factors are nonsingular, so Theorem 8.2 excludes finite annihilation of a nonzero input. This completes both directions of (9.5) and all limiting-space assertions. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 10. Singular events and every finite-prefix composition
+
+**Theorem 10.1 (Infinitely many singular events).** Suppose the event list is infinite and its singular event indices, in increasing order, are $i_0<i_1<\cdots$. Define the prescribed nonzero row and finite-block coefficients
+
+$$
+\beta=e_{i_0}^TG\Phi_{0,i_0},\qquad
+\kappa_k=\left\langle e_{i_{k+1}},
+\Phi_{i_k+1,i_{k+1}}e_{i_k}\right\rangle_Q.
+\tag{10.1}
+$$
+
+Every $|\kappa_k|\leq1$. If any $\kappa_k=0$, every initial state is annihilated by time $t_{i_{k+1}}+1$. Otherwise put
+
+$$
+C=\sum_{k=0}^\infty-\log|\kappa_k|\in[0,\infty],\qquad
+p=e^{-C},\quad e^{-\infty}=0.
+\tag{10.2}
+$$
+
+The exact full chronological limit and stable space are
+
+$$
+\lim_{t\to\infty}\|u_t\|_Q=p|\beta u_0|,\qquad
+S_{\varepsilon,\boldsymbol\alpha}=
+\begin{cases}
+\ker\beta,&C<\infty,\\
+\mathbb R^2,&C=\infty.
+\end{cases}
+\tag{10.3}
+$$
+
+In the case of a zero $\kappa_k$ the limit is zero and the stable space is also $\mathbb R^2$. The row $\beta$ has one-dimensional kernel. A vector in that kernel is killed at the first singular event. If all $\kappa_k$ are nonzero, every vector outside that kernel remains nonzero at every finite time; when $C=\infty$, these surviving vectors decay only asymptotically. These alternatives are entirely prescribed finite-block and scalar-series conditions.
+
+*Proof.* Every factor preceding $i_0$ is nonsingular, so $\Phi_{0,i_0}$ is invertible. Since $e_{i_0}^TG\ne0$, the row $\beta$ is nonzero. Immediately after the first singular event the interaction vector is $e_{i_0}\beta u_0$. Each intervening factor up to the next singular event is one of the factors in the finite map $\Phi_{i_k+1,i_{k+1}}$; the singular event itself is projection onto $\mathbb Re_{i_{k+1}}$. Induction therefore gives the exact vectors immediately after the successive singular events:
+
+$$
+F_{i_m+1}u_0=e_{i_m}(\beta u_0)
+\prod_{k=0}^{m-1}\kappa_k\quad(m\geq0).
+\tag{10.4}
+$$
+
+Nonexpansiveness of the intervening finite map and Cauchy--Schwarz imply $|\kappa_k|\leq1$. A zero coefficient kills the whole already rank-one image. If all are nonzero, the absolute finite products in (10.4) converge to $e^{-C}$, simply by taking their logarithms. At the singular-event subsequence the norms thus have exactly the limit (10.3). All chronological norms are nonincreasing by (8.7), and this subsequence tends to infinite time, so the same limit holds at every time.
+
+For $\beta u_0=0$, (10.4) already vanishes at $m=0$. For $\beta u_0\ne0$ and all $\kappa_k\ne0$, its vectors never vanish. Nonsingular intervening factors cannot kill them either. Before $i_0$ all factors are invertible. This proves every finite-annihilation and survival assertion and distinguishes an infinite logarithmic sum from a zero finite factor. $\square$
+
+**Theorem 10.2 (Eventually nonsingular histories and exact prefix transport).** Suppose an infinite event list has only finitely many singular events. Take $s=0$ if there are none, and otherwise take $s$ to be one plus the last singular event index. Put $F=\Phi_{0,s}$. Apply the following alternatives to the wholly nonsingular tail beginning at $s$.
+
+1. If $D_s<\infty$, its prescribed matrix $H_s$ from Theorem 8.3 gives
+
+$$
+\lim_{t\to\infty}\|u_t\|_Q
+=\sqrt{u_0^TF^TH_sFu_0},\qquad
+S_{\varepsilon,\boldsymbol\alpha}=\ker F.
+\tag{10.5}
+$$
+
+The dimension is $2-\operatorname{rank}F$. Every nonzero prefix image persists with positive limiting norm.
+
+2. If $D_s=\infty$ and $\mathcal B_s+\mathcal A_s=\infty$, every limiting norm is zero and $S_{\varepsilon,\boldsymbol\alpha}=\mathbb R^2$.
+
+3. If $D_s=\infty$ and $\mathcal B_s+\mathcal A_s<\infty$, let $\ell_s$ be (9.8) and form the prescribed row $f=\ell_sF$. Then
+
+$$
+\lim_{t\to\infty}\|u_t\|_Q=|fu_0|,\qquad
+S_{\varepsilon,\boldsymbol\alpha}=
+\begin{cases}
+\ker f,&f\ne0,\\
+\mathbb R^2,&f=0.
+\end{cases}
+\tag{10.6}
+$$
+
+In every alternative an individual state is annihilated in finite time exactly when $Fu_0=0$. Thus $F=0$ means finite all-state annihilation. If $F\ne0$ and $f=0$ in alternative 3, the nonzero prefix image is asymptotically erased even though the tail functional is nonzero. The same distinction applies to alternative 2. If $F$ has rank one and $f\ne0$, then $\ker f=\ker F$; if $F$ has rank two, $f\ne0$ and its kernel is a line. These statements decide all stable-space dimensions, including the possible zero composed functional.
+
+*Proof.* The exact interaction input at index $s$ is $Fu_0$, by (8.4). All later event factors are nonsingular. Consequently a zero in the tail is equivalent to having reached it with zero input, and a vector killed anywhere in the prefix also has $Fu_0=0$. This proves the finite-annihilation assertion without inverting a singular factor.
+
+If $D_s<\infty$, apply Theorem 8.3 to $z=Fu_0$. Positive definiteness of $H_s$ makes its limiting quadratic form zero precisely on $\ker F$, proving (10.5) and its dimension. In particular a rank-one prefix image is not erased unless it was zero. In the second alternative Theorem 9.2 gives zero for every tail input. In the third it gives exactly the composition (10.6). The nonzero functional $\ell_s$ vanishes on a line, but a rank-one image of $F$ may be precisely that line, giving $f=0$ with $F\ne0$. If $F$ is invertible this cannot happen. If $\operatorname{rank}F=1$ and $\ell_s$ is nonzero on its image, both $f$ and $F$ vanish exactly on the same kernel. These facts prove all assertions in the original coordinate plane and at the original initial-state scale. $\square$
+
+**Corollary 10.3 (Whole-history decision and angle arithmetic).** For every prescribed history in Definition 8.1 the following disjoint cases give the complete stable space and exact full-time norm limit: a finite event list is Theorem 8.2; an infinite list with infinitely many singular indices is Theorem 10.1; an infinite list with finitely many singular indices is Theorem 10.2. In particular universal decay is decided as follows:
+
+$$
+\begin{array}{c|l}
+\text{history}&\text{necessary and sufficient condition for universal decay}\\ \hline
+r<\infty&F_r=0\\
+\text{infinitely many singular indices}&
+\text{some }\kappa_k=0\text{, or all nonzero and }C=\infty\\
+\text{eventually nonsingular, }D_s<\infty&F=0\\
+\text{eventually nonsingular, }D_s=\infty&
+\mathcal B_s+\mathcal A_s=\infty\text{, or }
+[\mathcal B_s+\mathcal A_s<\infty\text{ and }\ell_sF=0].
+\end{array}
+\tag{10.7}
+$$
+
+The stable-space dimensions in these cases are respectively the finite rank-nullity value, one or two, the rank-nullity value for $F$, and one or two. The stable space is zero-dimensional exactly in the finite nonsingular case or the finite-$D_s$ case with rank-two $F$. Every state outside the specified stable space has strictly positive limiting $Q$-norm. Finite annihilation remains the separate finite condition in Theorem 8.2.
+
+All block and series data are prescribed independently of the initial state. Convergent series determine the functionals and their kernels exactly; no uniform finite-time decision procedure for arbitrary real infinite histories is asserted. The cases allow arbitrary signs, arbitrarily small nonzero factors, approaches to either endpoint, every first-event time and all positive integer gaps. They impose no arithmetic restriction on the original angle.
+
+*Proof.* Every event list has exactly one of the three listed types. The corresponding theorems give (10.7), the exact limits and the stable subspaces, so rank-nullity and the kernels of the nonzero rows give the asserted dimensions. In particular, if an infinite list is wholly nonsingular and has infinite $D_s$, its stable space is either the whole plane or a line by Theorem 9.2, never $\{0\}$. Any singular prefix has rank at most one, so cannot produce another zero-dimensional case. The zero and nonzero composed rows in (10.6) are both included.
+
+For the arithmetic boundary, if $\theta/(2\pi)$ is rational, the possible event lines $\mathbb RM^{-t_j}e$ form a finite family. If it is irrational, $d\theta$ is neither an integer multiple of $\pi$ nor an odd multiple of $\pi/2$ for any positive integer $d$, since either equation would force the ratio to be rational. These are precisely the arithmetic observations of Corollary 6.3. None is needed to form the finite products, loss blocks, their principal lines or the singular coefficients (10.1). Consequently both arithmetic types, including exact resonances and orthogonal gaps whenever available, are already covered. Arbitrarily long blocks in (9.1) remain finite by divergence of their prescribed logarithmic loss; no compactness or uniform inverse assumption on the original event factors has been introduced. $\square$
+
+**Proposition 10.4 (A nonzero tail functional erased by a surviving prefix image).** There is an actual original history with just one singular event, a nonzero rank-one prefix image, and a nonzero infinite-loss tail functional whose composition with that prefix is zero. The entire history decays for every input, but no finite time annihilates the whole plane.
+
+Take $(a,b,c)=(2,1,3)$, events $t_j=j$, and
+
+$$
+\lambda_0=0,\qquad \lambda_{2k+1}=\frac12,\qquad
+\lambda_{2k+2}=1-2^{-k-3},\qquad
+\alpha_j=\frac{1+\lambda_j}{4-2\lambda_j}\quad(k\geq0).
+\tag{10.8}
+$$
+
+*Proof.* For this triple the literal transfer is $M=\begin{pmatrix}-1&4/3\\-3/2&1\end{pmatrix}$, the angle is $\pi/2$, and the unit vectors $e=(2,3)^T/\sqrt6$, $q=(2,0)^T/\sqrt6$ obey $Me=q$, $Mq=-e$ and $\langle e,q\rangle_Q=0$. Hence the interaction factors at even indices fix $e$ and those at odd indices fix $q$. The first factor is exactly $F_1=P_0=ee^TG$, which has a nonzero rank-one image. The tail starting at $s=1$ is nonsingular and has $D_1=\infty$, since every odd index contributes $\log2$.
+
+For an arbitrary tail input $z=xe+yq$, the odd tail factors multiply its $e$ coordinate by $1/2$, and the even tail factors multiply its $q$ coordinate by $1-2^{-k-3}$. Therefore its exact limiting norm is $p|y|$, where $p=\prod_{k\geq0}(1-2^{-k-3})\geq3/4$, by the finite-product inequality used above. One may take $\ell_1=pq^TG\ne0$, while $\ell_1F_1=0$. For an actual initial input $u_0$, write $\beta=e^TGu_0$. After $n\geq1$ events its interaction vector is
+
+$$
+F_nu_0=2^{-\#\{j<n:j\text{ odd}\}}\beta e.
+$$
+
+It tends to zero for every $u_0$. When $\beta\ne0$ it remains nonzero at every finite $n$, and when $\beta=0$ it is killed at the first event. In particular $F_n$ is never the zero map at a finite time. Identity (8.5) transfers these exact facts to the full original chronological trajectory. This realizes the zero-composition alternative in (10.6) without replacing asymptotic erasure by finite annihilation. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 11. Weighted sufficiency and actual original-matrix consumers
+
+**Theorem 11.1 (Adjacent-minimum weighted sufficiency).** For every infinite original history in Definition 8.1, including singular events, define
+
+$$
+W=\sum_{j=0}^\infty
+\min(\delta_j,\delta_{j+1})\sin^2(d_j\theta).
+\tag{11.1}
+$$
+
+If $W=\infty$, every original initial state tends to zero. No uniform bound on $|\lambda_j|$, inverse, sign, angle or gaps is required. This condition is sufficient and is not necessary.
+
+*Proof.* Use the prescribed frames (7.9) and the exact recurrences (7.10), whose algebra applies to every $\lambda_j\in(-1,1)$. For an arbitrary actual trajectory put
+
+$$
+L_j=\delta_jB_j^2,\qquad w_j=\min(\delta_j,\delta_{j+1}).
+$$
+
+The loss identity gives $\sum_jL_j\leq Q(u_0)$. The second coordinate recurrence yields
+
+$$
+s_j^2A_j^2=(\lambda_jc_jB_j-B_{j+1})^2
+\leq2\lambda_j^2c_j^2B_j^2+2B_{j+1}^2.
+$$
+
+Multiplying by $w_j$ and using both $w_j\leq\delta_j$ and $w_j\leq\delta_{j+1}$ gives
+
+$$
+w_js_j^2A_j^2\leq2L_j+2L_{j+1}.
+$$
+
+The other coordinate has $w_js_j^2B_j^2\leq L_j$. Hence
+
+$$
+w_js_j^2\|v_j\|_Q^2\leq3L_j+2L_{j+1}.
+\tag{11.2}
+$$
+
+The actual norms decrease to some $l\geq0$. If $l>0$, summing (11.2) would give $l^2W\leq5Q(u_0)<\infty$, a contradiction. Thus $l=0$, and (8.5) gives decay at every chronological time, with no restriction on $\|u_0\|_Q$. Zero factors cause no difficulty in these inequalities. Nonnecessity follows from Propositions 11.3 and 11.4 below. $\square$
+
+**Proposition 11.2 (Refutation of the asymmetric weight).** The proposed sufficient weight
+
+$$
+\omega_j=\begin{cases}
+\min\left(\delta_{j+1},
+\dfrac{\delta_j}{\lambda_j^2\cos^2(d_j\theta)}\right),
+&\lambda_j\cos(d_j\theta)\ne0,\\
+\delta_{j+1},&\lambda_j\cos(d_j\theta)=0
+\end{cases}
+\tag{11.3}
+$$
+
+is not sufficient for universal decay. There is an actual wholly nonsingular original history for which $\sum_j\omega_j\sin^2(d_j\theta)=\infty$ and a nonzero state has strictly positive full-time limiting $Q$-norm.
+
+Take the positive triple $(a,b,c)=(2,1,3)$, an event at every time $t_j=j$, and prescribe
+
+$$
+r_k=2^{-k-3},\qquad
+\lambda_{2k}=1-r_k,\qquad \lambda_{2k+1}=\frac12,\qquad
+\alpha_j=\frac{1+\lambda_j}{4-2\lambda_j}.
+\tag{11.4}
+$$
+
+Then the exact limit for $u_0=xe+yq$ is
+
+$$
+\lim_{t\to\infty}\|u_t\|_Q=p|y|,\qquad
+p=\prod_{k=0}^\infty(1-r_k)\geq\frac34,
+\tag{11.5}
+$$
+
+where $e=(2,3)^T/\sqrt6$ and $q=(2,0)^T/\sqrt6$. In particular the prescribed state $u_0=q$ has limit at least $3/4$.
+
+*Proof.* Direct specialization of the original matrices gives
+
+$$
+A=\begin{pmatrix}1&0\\-6&4\end{pmatrix},\quad
+B=\begin{pmatrix}-1&4/3\\0&-4\end{pmatrix},\quad
+M=\begin{pmatrix}-1&4/3\\-3/2&1\end{pmatrix},\quad
+Q(x,y)=\frac{x^2}{2}+(y-x)^2+\frac{y^2}{3}.
+\tag{11.6}
+$$
+
+Here $2ac/((a+b)(b+c))-1=0$, so the original angle is $\theta=\pi/2$, $M^2=-I$, and $J=M$. Calculation gives $Q(e)=Q(q)=1$, $\langle e,q\rangle_Q=0$, $Me=q$ and $Mq=-e$. Thus the actual event lines $\mathbb RM^{-j}e$ are alternately $\mathbb Re$ and $\mathbb Rq$. In interaction coordinates $K_{2k}$ fixes $e$ and multiplies $q$ by $\lambda_{2k}$, whereas $K_{2k+1}$ fixes $q$ and multiplies $e$ by $1/2$. These are the factors of the literal $N_{\alpha_j}=M(P+\lambda_j(I-P))$, with no replacement of the original maps. Equation (8.1) is exactly the last formula in (11.4), so all parameters are interior and every event determinant is nonzero.
+
+For $u_0=xe+yq$, the exact interaction vector after $n$ events is
+
+$$
+F_nu_0=
+2^{-\#\{j<n:j\text{ odd}\}}xe+
+\left(\prod_{\{k:2k<n\}}(1-r_k)\right)yq.
+\tag{11.7}
+$$
+
+Its first coefficient tends to zero. The second coefficient tends to the product $p$. Finite products satisfy $\prod(1-r_k)\geq1-\sum r_k$, by induction from $(1-x)(1-y)\geq1-x-y$. As $\sum_{k\geq0}r_k=1/4$, this gives $p\geq3/4$. Formula (8.5) now proves (11.5) for the entire chronological trajectory, not merely a selected subsequence.
+
+Every actual gap is one, so $\cos(d_j\theta)=0$ and $\sin^2(d_j\theta)=1$. The second branch of the stated candidate (11.3) therefore gives, for every $k$,
+
+$$
+\omega_{2k}\sin^2(d_{2k}\theta)=\delta_{2k+1}=\frac34.
+$$
+
+Its series diverges, despite (11.5). Both types of event factor remain nonsingular; the zero cosine is a legal orthogonal gap, not a singular transfer. For comparison the correct series is finite:
+
+$$
+W\leq2\sum_{k=0}^\infty\delta_{2k}
+=2\sum_{k=0}^\infty(2r_k-r_k^2)<4\sum_{k=0}^\infty r_k=1.
+$$
+
+The example isolates the failure of assigning the next large loss to a component that the next event fixes. It refutes the full proposed weight, including its explicitly stated zero-cosine endpoint. $\square$
+
+**Proposition 11.3 (Wholly nonsingular endpoint approach with $W<\infty$ and universal decay).** In the same actual original system $(a,b,c)=(2,1,3)$, with $t_j=j$, prescribe before choosing any initial vector
+
+$$
+\lambda_{3k}=\frac{k+1}{k+2},\qquad
+\lambda_{3k+1}=\lambda_{3k+2}=1-2^{-k-4},\qquad
+\alpha_j=\frac{1+\lambda_j}{4-2\lambda_j}\quad(k\geq0).
+\tag{11.8}
+$$
+
+Then $0<\lambda_j<1$, $\alpha_j\to1$, $W<1$, and every original initial state tends to zero. No nonzero initial state is annihilated at any finite time. Thus (11.1) is genuinely nonnecessary even for wholly nonsingular endpoint-approaching variable histories.
+
+*Proof.* The inverse parameter correspondence (8.1) gives actual $0<\alpha_j<1$ at each event, and $\lambda_j\to1$ along all three residue classes implies $\alpha_j\to1$. The geometry and matrices are exactly (11.6). For $u_0=xe+yq$ the interaction vector is
+
+$$
+F_nu_0=
+\left(\prod_{\substack{0\leq j<n\\j\text{ odd}}}\lambda_j\right)xe+
+\left(\prod_{\substack{0\leq j<n\\j\text{ even}}}\lambda_j\right)yq.
+\tag{11.9}
+$$
+
+This follows because each even event contracts only the $q$ coordinate and each odd event only the $e$ coordinate, exactly as in (11.7). Among the indices $3k$, parity agrees with the parity of $k$. The sums
+
+$$
+\sum_{\substack{k\geq0\\k\text{ even}}}(1-\lambda_{3k})
+=\sum_{r=0}^\infty\frac1{2r+2}=\infty,\qquad
+\sum_{\substack{k\geq0\\k\text{ odd}}}(1-\lambda_{3k})
+=\sum_{r=0}^\infty\frac1{2r+3}=\infty
+$$
+
+both diverge. For example the second is at least one half of $\sum_{r\geq0}1/(r+2)$, and grouping the latter in consecutive dyadic ranges gives a positive lower bound on each group. Since $-\log\lambda\geq1-\lambda$, both parity products in (11.9) tend to zero. It follows that $\|F_nu_0\|_Q\to0$ for every $x,y$, and (8.5) proves actual full-time decay at every initial scale.
+
+To bound $W$, call the indices $3k+1,3k+2$ weak indices. Every consecutive pair of indices contains a weak index, and its minimum loss is at most the sum of the losses of its weak members. Each weak index belongs to at most two such pairs. As every gap has squared sine one,
+
+$$
+W\leq2\sum_{j\text{ weak}}\delta_j
+=4\sum_{k=0}^\infty\left[1-(1-2^{-k-4})^2\right]
+<8\sum_{k=0}^\infty2^{-k-4}=1.
+$$
+
+Every finite event product is invertible since all its $\lambda_j$ are positive. The original $M$ is also invertible, so a nonzero input never becomes zero at a finite time. The decay just proved is therefore asymptotic and is not an annihilation artifact. The history and parameters depend on neither $x$ nor $y$. $\square$
+
+**Proposition 11.4 (Singular-history nonnecessity).** In the same system prescribe
+
+$$
+t_0=0,\qquad t_j=2j-1\quad(j\geq1),\qquad
+\alpha_j=\frac14\quad(j\geq0).
+\tag{11.10}
+$$
+
+Then every initial state is zero from time $2$ onward, while the infinite series (11.1) equals $1$.
+
+*Proof.* The singular parameter is $b/(a+2b)=1/4$, hence every $\lambda_j=0$ and every $\delta_j=1$. The literal first Token-1 row and the inverse of $A$ in (11.6) give
+
+$$
+B_{1/4}=\begin{pmatrix}0&2/3\\0&-4\end{pmatrix},\qquad
+N_{1/4}=A^{-1}B_{1/4}
+=\begin{pmatrix}0&2/3\\0&0\end{pmatrix},\qquad N_{1/4}^2=0.
+$$
+
+The first two events are consecutive at times $0,1$, so every actual state is annihilated by time $2$, and every later transfer preserves zero. This is also the orthogonal singular-projection mechanism of Theorem 6.2, used here as an original-history consumer. The first gap is $d_0=1$ and every later gap is $2$. Since $\theta=\pi/2$, their squared sines are respectively $1$ and $0$, giving $W=1$. This supplies singular nonnecessity with infinitely many events and infinitely many singular factors. $\square$
+
+## 追加锚（本行以下为增补区）
+## 12. An evaluated boundary determinant for every original chain
+
+**Definition 12.1 (Fixed transfer, normalized observation and source correspondence).** Let $m\geq1$, $v_1,\ldots,v_{m+1}>0$ and $0<\alpha<1$. Throughout Sections 12–15 set
+
+$$
+T=A^{-1}B_\alpha=N_\alpha,\qquad U=A^{-1}B=M,
+\qquad z_0=z_{m+1}=0,
+$$
+
+with exactly the real matrices of Definition 1.1, acting also on $\mathbb C^m$. Thus $T$ is one fixed map at every iteration. Define
+
+$$
+\begin{gathered}
+s_i=v_i+v_{i+1},\qquad g_i=\frac{s_i}{v_iv_{i+1}},\qquad
+G_{ii}=g_i,\quad G_{i,i+1}=G_{i+1,i}=-\frac1{v_{i+1}},\quad
+G_{ij}=0\quad(|i-j|>1),\\
+\langle x,y\rangle_Q=x^*Gy,\qquad
+Q(z)=z^*Gz=\sum_{j=1}^{m+1}\frac{|z_j-z_{j-1}|^2}{v_j},\qquad
+f_i=\frac{e_i}{\sqrt{g_i}},\qquad
+\ell(z)=\langle f_1,z\rangle_Q
+=\sqrt{g_1}\left(z_1-\frac{v_1}{s_1}z_2\right),\\
+\theta_\alpha=\frac{\alpha s_1}{v_2+\alpha v_1},\qquad
+q=2\theta_\alpha-1
+=\frac{\alpha(v_1+2v_2)-v_2}{v_2+\alpha v_1},\qquad
+\sigma=1-q^2
+=\frac{4\alpha(1-\alpha)v_2s_1}{(v_2+\alpha v_1)^2}>0.
+\end{gathered}
+\tag{12.1}
+$$
+
+Here $e_i$ is the original coordinate vector; $z_2=0$ for $m=1$. A star on a vector or an ordinary matrix means conjugate transpose. For an endomorphism of the state space, $R^{\dagger}=G^{-1}R^*G$ denotes its $Q$-adjoint. Observation output spaces have the standard Hermitian inner product, so $\ell^{\dagger}a=af_1$ and $\mathcal O_T^{\dagger}=G^{-1}\mathcal O_T^*$. The form is positive definite, since its defining sum can vanish only when all consecutive differences, and hence all coordinates, vanish. Put
+
+$$
+\mathcal O_Tz=(\ell(z),\ell(Tz),\ldots,\ell(T^{m-1}z))^T,
+\qquad H_T=\mathcal O_T^{\dagger}\mathcal O_T
+=\sum_{k=0}^{m-1}(T^{\dagger})^k f_1\ell T^k.
+\tag{12.2}
+$$
+
+The determinant of $H_T$ is the normalized boundary-observation Gram determinant: in any $Q$-orthonormal basis it is the usual determinant of $\mathcal O_T^*\mathcal O_T$. Equivalently it is $\det(\mathcal O_T^*\mathcal O_T)/\det G$ when the observation matrix is written in the original coordinates.
+
+The original hypotheses and rows are those of [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, Section III and Section IV.A, page 3, and Section IV.B.1, page 4](https://arxiv.org/html/2608.27085v1#S4). Their $u=x-x^*$ is $z$ here, their $M_\alpha$ is $T$, their $M$ is $U$, and their endpoint values after centering are zero. The collision interpretation presupposes the alternating, catch-up-free rotational regime. No entry time into that regime is a hypothesis or conclusion of the estimates below.
+
+For the complete [finite-path source](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.lean), [damped-sweep source](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean), and their [finite-path](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.scribe.cs) and [damped-sweep](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs) expositions, pair $i$ and velocity $v_j$ have indices $i-1$ and $j-1$. The definitions `A`, `B`, `Balpha`, `Malpha` are the literal $A,B,B_\alpha,T$; the private weight `theta` is $\theta_\alpha$. The form, local reflection identity, first-event loss and factorization used below are the intermediates `local_energy_decomposition`, `Q_dampedEvent_loss`, `Q_event`, `Q_phase`, `sweep_stacked` and `source_factorization`. The rigidity and boundary-zero implications are `harmonic_dirichlet_zero` and `boundary_zero_observability`. The fixed-map qualitative conclusion is `TokenDampedSweepContraction.result`, with its power implication `real_mulVec_powers_tendsto_zero`; the [source note](../../../Library/Dynamics/wallner2026passbucket.md) and [fixed-map statement](../../../Problems/wallner-krupke-schmidt-fekete-2026-token-spectral-contraction.md) specify the same correspondence. These results are supporting conclusions, rather than additional claims about variable histories.
+
+The homogeneous qualitative antecedent is R. A. Mensing, *Ansätze für Bewegungsplanungs-Probleme mit dem Ziel der verketteten Arbeitsteilung*, bachelor's thesis (2021), credited in [v1, Section II and reference [11]](https://arxiv.org/html/2608.27085v1#bib.bib11). Its full-text quantitative coverage is unknown and no quantitative result from it is used. No non-overlap or publication-priority assertion concerning that thesis is part of these statements.
+
+**Theorem 12.2 (Explicit velocity product and damping independence).** For every chain and parameter in Definition 12.1, put
+
+$$
+\boxed{\displaystyle
+\mathcal D(v)=
+\frac{\left(\sum_{j=1}^{m+1}v_j\right)\prod_{j=2}^{m}v_j}
+     {\prod_{i=1}^{m}(v_i+v_{i+1})}
+\prod_{i=1}^{m-1}
+\left(\frac{4v_iv_{i+2}}
+{(v_i+v_{i+1})(v_{i+1}+v_{i+2})}\right)^{m-i}.}
+\tag{12.3}
+$$
+
+Every empty product is one. Then
+
+$$
+\det H_T=\det H_U=\mathcal D(v),\qquad 0<\mathcal D(v)\leq1.
+\tag{12.4}
+$$
+
+In particular this determinant is independent of $\alpha$, including the singular interior parameter
+
+$$
+\alpha_* =\frac{v_2}{v_1+2v_2},\qquad q=0.
+\tag{12.5}
+$$
+
+For $m=1$ it is exactly one. The determinant identity also holds for the endpoint extensions $\alpha=0,1$ of the original rows.
+
+*Proof.* We first use the local reflection identities cited in Definition 12.1 in their present coordinates. Set $P_i z=f_i\langle f_i,z\rangle_Q$ and $E_i=I-2P_i$. Since $\langle f_i,f_i\rangle_Q=1$, $P_i$ is an orthogonal projection for $Q$. Directly,
+
+$$
+(E_i z)_i=-z_i+\frac{2v_{i+1}}{s_i}z_{i-1}
+                         +\frac{2v_i}{s_i}z_{i+1},
+\qquad (E_i z)_j=z_j\quad(j\ne i).
+\tag{12.6}
+$$
+
+The local energy decomposition cited in Definition 12.1 has center $c=(v_{i+1}z_{i-1}+v_i z_{i+1})/s_i$ and coefficient $g_i$ on $|z_i-c|^2$. Consequently it is exactly this $Q$-reflection: $E_i^2=I$ and $Q(E_i z)=Q(z)$, also for complex inputs. Distinct same-parity normals are orthogonal, so same-parity reflections commute. Write
+
+$$
+F=\prod_{i\ {m odd}}E_i,\qquad J_0=\prod_{i\ {m even}}E_i.
+$$
+
+The product over an empty parity class is $I$. The original odd rows give the first phase $Fz$; the original even rows then give the second phase $J_0Fz$. Invertibility of $A$ therefore identifies $U=J_0F$. For the first damped event the original row is precisely $D_1=(1-\theta_\alpha)I+\theta_\alpha E_1$. Indeed its first diagonal coefficient is $1-2\theta_\alpha=-q$ and its right coefficient is $2\theta_\alpha v_1/s_1=2\alpha v_1/(v_2+\alpha v_1)$. Every other odd row and every even relation is unchanged. Since the remaining odd reflections commute with $E_1$ and with $D_1$,
+
+$$
+\begin{gathered}
+U^{\dagger}U=I,\qquad
+T=UK_q,\qquad K_q=E_1D_1=I-(1-q)P_1,\\
+Q(Tz)=Q(z)-(1-q^2)|\ell(z)|^2.
+\end{gathered}
+\tag{12.7}
+$$
+
+This is the source factorization and loss, expressed with a unit normal. It uses no inverse of $T$ or of $K_q$. Positivity of the original parameters gives $0<\theta_\alpha<1$ because the denominator exceeds the numerator by $v_2(1-\alpha)>0$. Thus $-1<q<1$ and every $T$ is nonexpansive for $Q$. At $\alpha=0,1$, $q=-1,1$ respectively; the same factorization is valid and both endpoint transfers are $Q$-isometries.
+
+We next evaluate the undamped observation determinant. The Gram matrix $C$ of $f_1,\ldots,f_m$ has diagonal one and adjacent entries $-c_i$, where
+
+$$
+c_i=\frac{1/v_{i+1}}{\sqrt{g_i g_{i+1}}}
+=\sqrt{\frac{v_iv_{i+2}}{s_i s_{i+1}}}>0
+\qquad(1\leq i<m).
+\tag{12.8}
+$$
+
+For adjacent indices the reflection rule gives $E_i f_j=f_j+2c_{\min(i,j)}f_i$; it gives $E_i f_i=-f_i$ and fixes every other $f_j$. In the ordered list
+
+$$
+w_1=f_1,\quad w_{2r}=U^r f_1\ (r\geq1),\quad
+w_{2r+1}=U^{-r}f_1\ (r\geq1),\qquad 1\leq j\leq m,
+\tag{12.9}
+$$
+
+$w_j$ lies in $\operatorname{span}(f_1,\ldots,f_j)$, and the absolute value of its $f_j$ coefficient is
+
+$$
+a_j=2^{j-1}\prod_{i=1}^{j-1}c_i.
+\tag{12.10}
+$$
+
+Here is an explicit induction that accounts for both parities. First $Uf_1=-J_0f_1=-f_1-2c_1f_2$ when $m\geq2$. On a normal with even index $i$, applying $U=J_0F$ can reach index $i+2$ only through $f_i\mapsto2c_i f_{i+1}\mapsto4c_i c_{i+1}f_{i+2}$. On a normal with odd index $i$, $U$ reaches at most $i+1$. Therefore, for an input supported through an even index $i$, only its last coefficient contributes at index $i+2$, by the multiplier $4c_i c_{i+1}$. This proves (12.10) on all even indices from the displayed base. For $U^{-1}=FJ_0$, an odd index $i$ reaches $i+2$ by the same multiplier $4c_i c_{i+1}$, whereas an even index reaches at most $i+1$. Starting with $f_1$, this proves the odd-index assertion. Every such induction step is used only when its terminal index is at most $m$; no nonexistent endpoint normal is introduced.
+
+The Laurent order (12.9) is the cyclic unitary order $1,z,z^{-1},z^2,z^{-2},\ldots$ used in [Simon, *CMV matrices: Five years after*, arXiv:math/0603093v1, Section 2, (2.15) and (2.33)–(2.34)](https://arxiv.org/pdf/math/0603093v1). Here unitarity is (12.7), and cyclicity follows from the nonzero coefficients (12.10). The coefficients in this calculation are the explicit overlaps (12.8) of the original chain; no identification of original coordinates with an unspecified CMV matrix is required.
+
+Triangularity in (12.9)–(12.10) now gives
+
+$$
+\det\big(\langle w_i,w_j\rangle_Q\big)_{i,j=1}^m
+=\det C\prod_{j=1}^m a_j^2
+=\det C\prod_{i=1}^{m-1}(4c_i^2)^{m-i}.
+\tag{12.11}
+$$
+
+The exponents of $U$ in (12.9) form the consecutive integer interval
+$-\lfloor(m-1)/2\rfloor,\ldots,\lfloor m/2\rfloor$, in a different order. Applying the common isometry $U^{\lfloor m/2\rfloor}$ to $f_1,U^{-1}f_1,\ldots,U^{-(m-1)}f_1$ gives exactly that interval. A common isometry and a simultaneous permutation preserve a Gram determinant. The vectors $U^{-k}f_1$ represent the rows $\ell U^k$, so (12.11) is $\det H_U$.
+
+It remains to evaluate $\det C$. Let $\Delta_k$ be the leading $k\times k$ determinant of $G$ and let $S_k=\sum_{j=1}^k v_j$. Expanding the last row of this tridiagonal determinant gives
+
+$$
+\Delta_0=1,\qquad \Delta_1=\frac{v_1+v_2}{v_1v_2},\qquad
+\Delta_k=g_k\Delta_{k-1}-\frac1{v_k^2}\Delta_{k-2}
+=\frac{S_{k+1}}{\prod_{j=1}^{k+1}v_j}.
+\tag{12.12}
+$$
+
+For the final equality induction substitutes the formulas for $k-1,k-2$; the numerator reduces by
+$(v_k+v_{k+1})S_k-v_{k+1}S_{k-1}=v_kS_{k+1}$.
+Consequently
+
+$$
+\det C=\frac{\det G}{\prod_{i=1}^m g_i}
+=\frac{S_{m+1}\prod_{j=2}^{m}v_j}{\prod_{i=1}^m s_i}.
+\tag{12.13}
+$$
+
+Combining (12.8), (12.11) and (12.13) proves exactly the finite velocity product (12.3), with no remaining determinant or recurrence in that expression.
+
+Finally, the rank-one difference $T-U=-(1-q)Uf_1\ell$ gives, for $k\geq1$, the finite identity
+
+$$
+T^k=U^k-(1-q)\sum_{j=0}^{k-1}U^{k-j}f_1\ell T^j.
+\tag{12.14}
+$$
+
+It follows either by telescoping $T^k-U^k$ or by induction using $T=U-(1-q)Uf_1\ell$. Applying $\ell$ shows that the $k$th damped observation row is the $k$th undamped row minus a linear combination of earlier damped rows. Successive substitution makes the change from $\mathcal O_U$ to $\mathcal O_T$ lower triangular with diagonal entries one. Its determinant is one. Taking the squared absolute determinant in orthonormal coordinates proves $\det H_T=\det H_U$. This argument works for every real $q$, so in particular at zero and at both endpoints. Every factor in (12.3) is positive. The undamped observation rows have norm one, because $U$ is an isometry and $f_1$ is a unit vector. Hadamard's inequality therefore gives $\det H_U\leq1$. When $m=1$, both the prefactor and the empty product in (12.3) equal one. This proves all claims. $\square$
+
+## 13. Evaluated contraction, spectrum and finite annihilation
+
+**Definition 13.1 (Constants evaluated from the velocities).** In the domain of Definition 12.1, define
+
+$$
+\begin{gathered}
+b_1=1,\qquad b_m=\left(\frac{m-1}{m}\right)^{m-1}\quad(m\geq2),\\
+d(v)=\begin{cases}1,&\mathcal D(v)=1,\\b_m\mathcal D(v),&\mathcal D(v)<1,\end{cases}
+\qquad \eta=\sigma d(v),\qquad r=1-\eta.
+\end{gathered}
+\tag{13.1}
+$$
+
+These are finite expressions in the dimension, original velocities and original damping. In particular $0<d(v)\leq1$, $0<\eta\leq1$ and $0\leq r<1$. Powers $0^0$ in integer-time bounds mean one.
+
+**Theorem 13.2 (Finite-step, all-time and complex-spectral certificates).** For every $m\geq1$, every positive velocity vector of length $m+1$, every fixed $0<\alpha<1$, every $z\in\mathbb C^m$ and every integer $t\geq0$,
+
+$$
+\boxed{\quad Q(T^m z)\leq rQ(z),\qquad
+Q(T^t z)\leq r^{\lfloor t/m\rfloor}Q(z).\quad}
+\tag{13.2}
+$$
+
+Every complex spectral value $\mu$ of the original $T$ satisfies
+
+$$
+\boxed{\quad |\mu|\leq r^{1/(2m)}<1.\quad}
+\tag{13.3}
+$$
+
+For every integer $0\leq p<m$ there is a nonzero complex, and also a nonzero real, input with $Q(T^p z)=Q(z)$; thus no such window gives a strict contraction for all inputs. At $q=0$ all statements remain valid. All initial states are annihilated after finitely many sweeps if and only if
+
+$$
+q=0\quad\hbox{and}\quad \mathcal D(v)=1.
+\tag{13.4}
+$$
+
+In that case $T^m=0$, and $m$ is the least all-state annihilation time. More generally, for any fixed initial state, finite annihilation is equivalent to $T^m z=0$. For $m=1$, the exact identities are $Tz=-qz$, $d(v)=1$, $r=q^2$, including $T=0$ at $\alpha_*$.
+
+*Proof.* Since $T$ is nonexpansive, each functional $\ell T^k$ has dual $Q$-norm at most one. Thus $H_T$ is positive definite by Theorem 12.2, has determinant $\mathcal D(v)$, and has trace at most $m$. Let its positive eigenvalues be $h_1\leq\cdots\leq h_m$. For $m\geq2$, the arithmetic-geometric mean inequality gives
+
+$$
+\prod_{j=2}^m h_j
+\leq\left(\frac{\sum_{j=2}^m h_j}{m-1}\right)^{m-1}
+\leq\left(\frac m{m-1}\right)^{m-1},
+\qquad h_1\geq b_m\mathcal D(v).
+\tag{13.5}
+$$
+
+If $\mathcal D(v)=1$, the product of all $h_j$ is one while their sum is at most $m$. The same inequality applied to all $m$ numbers forces equality and $h_j=1$ for every $j$, so $H_T=I$. For $m=1$ this follows directly from the unit observation. These arguments prove, in all cases,
+
+$$
+\sum_{k=0}^{m-1}|\ell(T^k z)|^2
+=\langle z,H_Tz\rangle_Q\geq d(v)Q(z).
+\tag{13.6}
+$$
+
+Summing the exact loss (12.7) along these $m$ actual iterates gives
+
+$$
+Q(T^m z)=Q(z)-\sigma\sum_{k=0}^{m-1}|\ell(T^k z)|^2.
+\tag{13.7}
+$$
+
+Combining (13.6)–(13.7) proves the first estimate in (13.2). Apply it repeatedly at block boundaries and use nonexpansiveness for the remaining $0,\ldots,m-1$ steps to obtain the second, including $t=0$ and the convention when $r=0$. A complex spectral value in finite dimension has a nonzero complex eigenvector. Substitution in the first estimate yields $|\mu|^{2m}Q(z)\leq rQ(z)$, and $Q(z)>0$ proves (13.3). The constants came from the evaluated velocity product, rather than an unknown spectral radius or a norm of a growing power.
+
+For a shorter window $p<m$, its $p$ observation functionals have a common kernel of dimension at least $m-p>0$. Their real coefficients also give a nonzero vector in the real kernel. The loss summed over those $p$ steps vanishes on that kernel, proving the assertion about every shorter window. This is the usual finite-observability rank argument, here consumed by the literal source map and the determinant (12.3).
+
+Every reflection has determinant $-1$, so (12.7) gives
+
+$$
+\det U=(-1)^m,\qquad \det T=(-1)^m q.
+\tag{13.8}
+$$
+
+If $\mathcal D(v)=1$, the stronger identity $H_T=I$ already proved gives $Q(T^m z)=q^2Q(z)$. Hence $q=0$ implies $T^m=0$. Conversely, if every input is annihilated in finite time, apply this assertion to a basis and take the largest of its finitely many annihilation times. This makes $T$ nilpotent. Its determinant is zero, so $q=0$ by (13.8). A nilpotent map in dimension $m$ satisfies $T^m=0$: its increasing sequence of kernels must stabilize by index $m$, and once two consecutive kernels coincide all later ones coincide. At $q=0$, (13.7) then gives $H_T=I$, so $\mathcal D(v)=1$. A nilpotence time $p<m$ is impossible by the shorter-window assertion. This proves (13.4) and its exact time.
+
+The same kernel-stabilization argument proves the individual-state assertion without assuming that the whole map is nilpotent. Explicitly, if $\ker T^j=\ker T^{j+1}$, then $T^{j+2}z=0$ implies $Tz\in\ker T^{j+1}=\ker T^j$, hence $z\in\ker T^{j+1}$; induction gives equality of every later kernel. If no equality occurs before index $m$, all $m$ inclusions from $\ker I=0$ are strict, so $\ker T^m$ is the entire space and again stable. Thus $\bigcup_{j\geq0}\ker T^j=\ker T^m$. Finally, in dimension one the original first row is $-q$ and $A=1$, proving the exact scalar formulas.
+
+An actual two-coordinate consumer also describes the finite-annihilation branch. For every $a>b>0$, take
+
+$$
+m=2,\qquad (v_1,v_2,v_3)=\left(a,b,\frac{b(a+b)}{a-b}\right),
+\qquad \alpha=\frac b{a+2b}.
+\tag{13.9}
+$$
+
+Then the original transfer is
+
+$$
+T=\begin{pmatrix}0&a/(a+b)\\0&0\end{pmatrix},\qquad
+T\ne0,\quad T^2=0,\quad \mathcal D(v)=1.
+\tag{13.10}
+$$
+
+These velocities and this parameter are strictly in their required domains. The singular first row has zero diagonal and right coefficient $a/(a+b)$. The original even relation has left coefficient $2v_3/(b+v_3)=(a+b)/a$ when solved for its new coordinate. It therefore gives $z'_2=-z_2+[(a+b)/a]z'_1=0$. This proves exactly the displayed matrix and its nilpotence. Alternatively (12.8) gives $c_1^2=1/2$, and (12.11) gives $\mathcal D=(1-c_1^2)4c_1^2=1$. The orthogonal singular mechanism is the one in Theorem 6.2; here its original velocity family consumes the evaluated condition $\mathcal D=1$ in (13.4), with no inverse of the damped map. $\square$
+
+## 14. Original-coordinate error tolerances and sweep counts
+
+**Definition 14.1 (Initial error and a finite zero test).** For the same original parameters let
+
+$$
+S=\sum_{j=1}^{m+1}v_j,\qquad S_i=\sum_{j=1}^i v_j,\qquad
+x_i^*=\frac{S_i}{S},\qquad z_i=x_i(0)-x_i^*,
+\qquad E_0=\max_{1\leq i\leq m}|z_i|.
+\tag{14.1}
+$$
+
+The initial data $x(0)$ may be real or complex. The centered iterates are $x_i(t)-x_i^*=(T^t z)_i$. Set
+
+$$
+h_i=\frac{S_i(S-S_i)}{S},\qquad h=\max_{1\leq i\leq m}h_i>0,
+\qquad Q_0=\sum_{j=1}^{m+1}\frac{|z_j-z_{j-1}|^2}{v_j},
+\qquad A_0=\sqrt{hQ_0}.
+\tag{14.2}
+$$
+
+A zero tolerance has the following finite algebraic criterion in the original parameters and data. To specify it without an unevaluated power norm, write $L_i=2v_{i+1}/s_i$, $R_i=2v_i/s_i$ and let $\delta_{ij}$ be the Kronecker symbol, zero whenever an index is outside $1,\ldots,m$. For odd $i$ define rows
+
+$$
+\begin{aligned}
+D_{1j}&=-q\delta_{1j}+\frac{2\alpha v_1}{v_2+\alpha v_1}\delta_{2j},\\
+D_{ij}&=-\delta_{ij}+L_i\delta_{i-1,j}+R_i\delta_{i+1,j}
+\quad(i\geq3\text{ odd}),
+\end{aligned}
+$$
+
+and set $D_{0j}=D_{m+1,j}=0$ whenever these exterior rows are needed. The following coefficients are completely explicit:
+
+$$
+C_{ij}=\begin{cases}
+D_{ij},&i\text{ odd},\\
+-\delta_{ij}+L_iD_{i-1,j}+R_iD_{i+1,j},&i\text{ even}.
+\end{cases}
+\tag{14.3}
+$$
+
+Define the finite vector
+
+$$
+Z_i=\sum_{j_0,\ldots,j_{m-1}=1}^{m}
+C_{i,j_{m-1}}\left(\prod_{a=1}^{m-1}C_{j_a,j_{a-1}}\right)z_{j_0}
+\qquad(1\leq i\leq m).
+\tag{14.4}
+$$
+
+For $m=1$ the product is empty. All sums and products in (14.1)–(14.4) are finite, with ranges fixed by $m$.
+
+**Theorem 14.2 (An evaluated tolerance certificate with every tolerance branch).** Define the original-coordinate error $E(t)=\max_i|x_i(t)-x_i^*|$. For every initial state and every integer $t\geq0$,
+
+$$
+E(t)\leq A_0 r^{\lfloor t/m\rfloor/2}.
+\tag{14.5}
+$$
+
+For a prescribed real tolerance $\epsilon$, a certificate means an integer $K\geq0$ such that $E(t)\leq\epsilon$ for every integer $t\geq K$. The following complete alternatives apply.
+
+1. If $\epsilon<0$, no such integer exists.
+2. If $\epsilon\geq0$ and $Q_0=0$, take $K=0$.
+3. If $\epsilon=0$ and $Q_0>0$, a certificate exists exactly when the explicit vector $Z$ of (14.4) is zero. In that case $K=m$ is a certificate; otherwise no finite $K$ is a certificate.
+4. If $\epsilon>0$ and $A_0\leq\epsilon$, take $K=0$.
+5. If $\epsilon>0$, $A_0>\epsilon$ and $r=0$, take $K=m$.
+6. If $\epsilon>0$, $A_0>\epsilon$ and $0<r<1$, take
+
+$$
+\boxed{\quad K=m\left\lceil
+\frac{\log(A_0^2/\epsilon^2)}{-\log r}
+\right\rceil.\quad}
+\tag{14.6}
+$$
+
+These are sufficient sweep counts, with no assertion of minimality. Every positive tolerance has a finite certificate. The singular interior parameter (12.5), every finite-annihilation input and the scalar case are included.
+
+*Proof.* Fix an index $i$. Cauchy–Schwarz on the first $i$ edge differences and on the last $m+1-i$ edge differences separately gives, for any complex zero-endpoint vector $w$,
+
+$$
+\sum_{j=1}^i\frac{|w_j-w_{j-1}|^2}{v_j}
+\geq\frac{|w_i|^2}{S_i},\qquad
+\sum_{j=i+1}^{m+1}\frac{|w_j-w_{j-1}|^2}{v_j}
+\geq\frac{|w_i|^2}{S-S_i}.
+$$
+
+Both denominators are positive, including at $i=1,m$. Addition yields
+
+$$
+|w_i|^2\leq h_iQ(w),\qquad
+\max_i|w_i|\leq\sqrt{hQ(w)}.
+\tag{14.7}
+$$
+
+This coefficient is the exact Dirichlet point-evaluation coefficient: equality for a prescribed value $w_i$ is obtained by taking $w_j=(S_j/S_i)w_i$ on the left and $w_j=[(S-S_j)/(S-S_i)]w_i$ on the right. Thus (14.7) uses the original coordinates and both zero endpoints, rather than an unspecified equivalence constant between norms. Applying (13.2) proves (14.5).
+
+The original odd row gives exactly $D_{ij}$, and the original even equation solved for its new coordinate is $w'_i=-w_i+L_iw'_{i-1}+R_iw'_{i+1}$. Consequently $C$ in (14.3) is exactly $T$ in original coordinates. Repeated finite matrix multiplication shows that (14.4) is $T^m z$, with no limit involved. By the individual-state assertion of Theorem 13.2, a nonzero state reaches zero at a finite time precisely when $Z=0$. Zero is invariant under all subsequent powers. This proves branch 3; if $Z\ne0$, the state is nonzero at every finite time, so its maximum coordinate modulus cannot meet zero tolerance.
+
+Branch 1 follows from $E(t)\geq0$. Positive definiteness of $Q$ proves branch 2. In branch 4, (14.5) and $r\leq1$ prove the assertion for all times. In branch 5, (13.2) makes every state zero after $m$ steps. For branch 6 the logarithm in the numerator is positive and $-\log r>0$. The integer in (14.6) ensures $r^{K/m}A_0^2\leq\epsilon^2$. Every $t\geq K$ has $\lfloor t/m\rfloor\geq K/m$, so (14.5) proves the desired all-later-time bound. These alternatives exhaust all real tolerances and initial states. No step divides by $q$; the zero test is finite even at $q=0$, where a general spectral-radius formula would not decide individual finite annihilation. $\square$
+
+**Theorem 14.3 (A usable certificate in dimension, velocity ratio and damping).** Let
+
+$$
+v_- =\min_j v_j,\qquad v_+=\max_j v_j,\qquad R=\frac{v_+}{v_-}\geq1,
+$$
+
+and define the fully evaluated positive constants
+
+$$
+\boxed{\quad
+d_R=\frac{b_m(m+1)}{2^mR^{m^2}},\qquad
+\eta_R=\frac{4\alpha(1-\alpha)}{1+\alpha R}\,d_R,
+\qquad A_R=\sqrt{m(m+1)R}\,E_0.\quad}
+\tag{14.8}
+$$
+
+Then $0<\eta_R<1$ and, for all integer times and all real or complex initial states,
+
+$$
+\begin{gathered}
+Q(T^m z)\leq(1-\eta_R)Q(z),\qquad
+E(t)\leq A_R\exp\left(-\frac{\eta_R}2\lfloor t/m\rfloor\right),\\
+|\mu|\leq(1-\eta_R)^{1/(2m)}\quad(\mu\in\operatorname{spec}_{\mathbb C}T).
+\end{gathered}
+\tag{14.9}
+$$
+
+For $\epsilon>0$, if $E_0=0$ or $A_R\leq\epsilon$, take $K_R=0$; otherwise the following depends only on $m,R,\alpha,E_0,\epsilon$:
+
+$$
+\boxed{\quad K_R=m\left\lceil
+\frac{\log\big(m(m+1)R E_0^2/\epsilon^2\big)}{\eta_R}
+\right\rceil.\quad}
+\tag{14.10}
+$$
+
+It guarantees $E(t)\leq\epsilon$ for every $t\geq K_R$. Zero and negative tolerances retain the exact alternatives of Theorem 14.2.
+
+*Proof.* Scale every velocity by $v_-^{-1}$ in (12.3), which leaves each factor unchanged. The scaled velocities lie in $[1,R]$. The prefactor in that formula is at least $(m+1)/(2R)^m$, and each factor inside the product is at least $R^{-2}$. As $\sum_{i=1}^{m-1}(m-i)=m(m-1)/2$,
+
+$$
+\mathcal D(v)\geq\frac{m+1}{2^mR^{m^2}}.
+\tag{14.11}
+$$
+
+This also holds for $m=1$, where its right side is $R^{-1}\leq1=\mathcal D$. Hence $d(v)\geq d_R$, including the branch $\mathcal D=1$. If $a=v_1/v_2\leq R$, then (12.1) gives
+
+$$
+\sigma=4\alpha(1-\alpha)\frac{1+a}{(1+\alpha a)^2}
+\geq\frac{4\alpha(1-\alpha)}{1+\alpha a}
+\geq\frac{4\alpha(1-\alpha)}{1+\alpha R}.
+\tag{14.12}
+$$
+
+The first inequality uses $1+a\geq1+\alpha a$. Therefore $\eta\geq\eta_R>0$. Also $d_R\leq1$ and $4\alpha(1-\alpha)\leq1<1+\alpha R$, proving $\eta_R<1$. The $Q$ and spectral bounds follow directly from Theorem 13.2 with this smaller evaluated constant.
+
+For the coordinate prefactor, $h_i\leq S/4\leq(m+1)v_+/4$. The elementary estimate $|a-b|^2\leq2|a|^2+2|b|^2$, summed along the zero-endpoint path, gives
+
+$$
+Q_0\leq\frac4{v_-}\sum_{i=1}^m|z_i|^2
+\leq\frac{4m}{v_-}E_0^2,\qquad
+hQ_0\leq m(m+1)R E_0^2=A_R^2.
+\tag{14.13}
+$$
+
+Use (14.7), the $m$-step bound, and $1-x\leq e^{-x}$ for $x\geq0$ to prove the coordinate estimate in (14.9). The stated integer (14.10) makes its square at the block boundary at most $\epsilon^2$. The same floor argument as in Theorem 14.2 proves it for every later integer time. All constants are explicit finite expressions; the use of $R$ removes absolute velocity scale from this conservative certificate. $\square$
+
+## 15. Fixed-chain endpoint orders and two failures of uniform gaps
+
+**Theorem 15.1 (Matching linear endpoint orders for every fixed chain).** Fix any $m\geq1$ and any positive velocity vector. Let $\rho_\alpha$ be the complex spectral radius of the literal $T=A^{-1}B_\alpha$. With $d=d(v)>0$ from (13.1), for all $0<\alpha<1$,
+
+$$
+\frac{d}{2m}\,
+\frac{4\alpha(1-\alpha)v_2s_1}{(v_2+\alpha v_1)^2}
+\leq1-\rho_\alpha\leq1-|q|^{1/m}\leq1-|q|.
+\tag{15.1}
+$$
+
+In particular set
+
+$$
+c_v=\frac{dv_2}{ms_1}>0,\qquad
+\alpha_* =\frac{v_2}{v_1+2v_2}.
+$$
+
+The following explicit two-sided estimates establish linear order at each endpoint:
+
+$$
+\begin{array}{ll}
+c_v\alpha\leq1-\rho_\alpha\leq\dfrac{2s_1}{v_2}\alpha,
+&0<\alpha\leq\min(1/2,\alpha_*),\\[5pt]
+c_v(1-\alpha)\leq1-\rho_\alpha\leq2(1-\alpha),
+&\max(1/2,\alpha_*)\leq\alpha<1.
+\end{array}
+\tag{15.2}
+$$
+
+At the exact endpoint extensions of the original matrices, $\rho_0=\rho_1=1$ and $Q$ is preserved. The constants in (15.2) are fixed-chain bounds, with no assertion of optimal coefficients or an optimal damping parameter.
+
+*Proof.* Put $a=1/(2m)\in(0,1]$. The function $(1-x)^a$ is concave on $[0,1)$ and continuous at one, so its tangent at zero gives $(1-x)^a\leq1-ax$ for $0\leq x\leq1$. Theorem 13.2 therefore implies
+
+$$
+1-\rho_\alpha\geq1-(1-\sigma d)^{1/(2m)}\geq\frac{\sigma d}{2m}.
+$$
+
+By (13.8), the product of the $m$ eigenvalue moduli, counted with algebraic multiplicity, is $|q|$. Each is at most $\rho_\alpha$, hence $\rho_\alpha\geq|q|^{1/m}$. Finally $|q|^{1/m}\geq|q|$ for $|q|\in[0,1]$. This proves (15.1), including $q=0$ and $m=1$.
+
+For $\alpha\leq1/2$, the numerator in $\sigma$ has $\alpha(1-\alpha)\geq\alpha/2$, and its denominator is at most $s_1^2$. Thus $\sigma\geq2\alpha v_2/s_1$, giving the first lower bound of (15.2). For $\alpha\geq1/2$ the same calculation with $\alpha(1-\alpha)\geq(1-\alpha)/2$ gives its second lower bound. If $\alpha\leq\alpha_*$ then $q\leq0$ and
+
+$$
+1-|q|=1+q=2\theta_\alpha
+=\frac{2\alpha s_1}{v_2+\alpha v_1}
+\leq\frac{2s_1}{v_2}\alpha.
+$$
+
+If $\alpha\geq\alpha_*$ then $q\geq0$ and
+
+$$
+1-|q|=1-q=2(1-\theta_\alpha)
+=\frac{2v_2(1-\alpha)}{v_2+\alpha v_1}\leq2(1-\alpha).
+$$
+
+These inequalities prove both upper bounds in (15.2) on the displayed nonempty endpoint neighborhoods. At $\alpha=0,1$, (12.7) makes the endpoint matrices isometries for the positive definite $Q$. Each complex eigenvalue therefore has modulus one, and the nonempty finite-dimensional spectrum gives radius one. This also identifies the exact endpoint obstruction to an interior contraction certificate. $\square$
+
+**Proposition 15.2 (Increasing dimensions with a bounded velocity ratio).** For every fixed $\alpha\in(0,1)$ there is a family of actual original chains, with dimensions $m\to\infty$ and velocity ratios at most two, whose fixed-map spectral gaps tend to zero. More explicitly choose
+
+$$
+a=\begin{cases}1,&\alpha\ne1/3,\\2,&\alpha=1/3,\end{cases}
+\qquad v^{(m)}=(a,1,\ldots,1),\qquad
+q_a=\frac{\alpha(a+2)-1}{1+\alpha a}.
+\tag{15.3}
+$$
+
+Then $0<|q_a|<1$ and
+
+$$
+0<1-\rho(T_m)\leq1-|q_a|^{1/m}\longrightarrow0.
+\tag{15.4}
+$$
+
+*Proof.* All $m+1$ velocities are positive and their ratio is $a\leq2$. For $a=1$, $q_a$ vanishes exactly at $\alpha=1/3$. At that excluded value the choice $a=2$ gives $q_a=1/5\ne0$. In either case $-1<q_a<1$ follows from (12.1), independently of $m$. These are the literal first velocities and unchanged tails of the original matrices; (13.8) gives $|\det T_m|=|q_a|$. The spectral-radius lower bound used in (15.1) proves (15.4), and $|q_a|^{1/m}=\exp(\log|q_a|/m)\to1$. Thus even with fixed interior damping and a fixed upper bound on the velocity ratio, a dimension-independent positive gap cannot hold across this family. This is a spectral obstruction for actual source transfers, rather than an inference from a small finite-time loss alone. $\square$
+
+**Proposition 15.3 (Increasing velocity ratios in the original two-coordinate system).** Fix any $\alpha\in(0,1)$ and take
+
+$$
+m=2,\qquad (v_1,v_2,v_3)=(1,1,c),\qquad 0<c\leq1,
+\qquad \theta=\frac{2\alpha}{1+\alpha},\qquad q=2\theta-1.
+\tag{15.5}
+$$
+
+Then $R=1/c$ and the literal original transfer is
+
+$$
+T_c=\begin{pmatrix}
+-q&\theta\\
+-\dfrac{2cq}{1+c}&\dfrac{2c\theta}{1+c}-1
+\end{pmatrix}.
+\tag{15.6}
+$$
+
+Its complex spectral gap obeys
+
+$$
+0<1-\rho(T_c)\leq\sqrt{\frac{2c\theta}{1+c}}
+\longrightarrow0\qquad(c\downarrow0).
+\tag{15.7}
+$$
+
+Consequently fixed dimension and fixed interior damping alone give no positive gap uniform over all positive velocity vectors. This includes $\alpha=1/3$, when all maps in this family are singular.
+
+*Proof.* Solving the original first row gives $z'_1=-qz_1+\theta z_2$. The original second row gives $z'_2=-z_2+[2c/(1+c)]z'_1$. These are exactly (15.6), with both original centered endpoints zero. Direct evaluation gives
+
+$$
+\det T_c=q,\qquad
+\operatorname{tr}T_c=-q-1+\frac{2c\theta}{1+c},\qquad
+\det(-I-T_c)=1+\operatorname{tr}T_c+\det T_c
+=\frac{2c\theta}{1+c}>0.
+$$
+
+If $\mu_1,\mu_2$ are its two complex eigenvalues with multiplicity, then
+
+$$
+|1+\mu_1|\,|1+\mu_2|=\frac{2c\theta}{1+c}.
+$$
+
+At least one factor is at most the square root of this positive number. The corresponding eigenvalue satisfies $|\mu_j|\geq1-|1+\mu_j|$, proving the upper bound in (15.7). Strict positivity of the gap follows from Theorem 13.2 for every $c>0$; the right side tends to zero with $c$. The argument neither divides by $q$ nor assumes distinct or real eigenvalues. At $\alpha=1/3$, $q=0$ and $\theta=1/2$, so it includes that entire singular family explicitly. $\square$
+
+## 追加锚（本行以下为增补区）
+## 16. Undamped spectral information and the first dimension of optimizer failure
+
+**Definition 16.1 (The full complex spectral objective in the original family).** For every integer $m\geq1$ and every $v\in(0,\infty)^{m+1}$, use exactly $A,B,B_\alpha$ of Definition 1.1, with $z_0=z_{m+1}=0$, and put $U_v=A^{-1}B$. Extend the displayed original first row continuously to $\alpha\in[0,1]$. Its denominator $v_2+\alpha v_1$ is positive on this closed interval. Use the increasing normalized parameter from (12.1), with its inverse,
+
+$$
+q_v(\alpha)=\frac{\alpha(v_1+2v_2)-v_2}{v_2+\alpha v_1},
+\qquad
+\alpha_v(q)=\frac{v_2(1+q)}{v_1+2v_2-v_1q},
+\qquad -1\leq q\leq1,
+\tag{16.1}
+$$
+
+and write $T_{v,q}=A^{-1}B_{\alpha_v(q)}$. In particular $T_{v,1}=U_v$; $T_{v,-1}$ is the other original endpoint extension. The first row of $B_{\alpha_v(q)}$ is
+
+$$
+(B_{\alpha_v(q)}z)_1=-qz_1+(1+q)\frac{v_1}{v_1+v_2}z_2,
+\tag{16.2}
+$$
+
+where $z_2=0$ if $m=1$, and every other row is unchanged from $B$. Thus no original coordinate or zero endpoint is changed by this notation.
+
+For $q\in[-1,1]$ let
+
+$$
+p_v(\zeta,q)=\det(\zeta I_m-T_{v,q}),\qquad
+\mathsf S_v(q)=\{\mu_1(q),\ldots,\mu_m(q)\}
+\tag{16.3}
+$$
+
+be its monic complex characteristic polynomial and its entire multiset of complex roots, counted with algebraic multiplicities. Define
+
+$$
+\rho_v(q)=\max_{1\leq j\leq m}|\mu_j(q)|,\qquad
+\gamma_v=\min_{q\in[-1,1]}\rho_v(q),\qquad
+Q_v=\{q\in[-1,1]:\rho_v(q)=\gamma_v\}.
+\tag{16.4}
+$$
+
+The observation is
+
+$$
+\mathsf O(v)=(m,\mathsf S_v(1)).
+\tag{16.5}
+$$
+
+Equality of observations means equality of dimensions and equality of the entire undamped complex multisets, including multiplicities. The set $Q_v$ is an optimizer set; the energy form $Q(z)$ retains exactly its meaning in (12.1).
+
+The literal odd/even equations, centering, and Token-1 first row are those of [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, Section IV.A, page 3, and Section IV.B.1, page 4](https://arxiv.org/pdf/2608.27085v1). Their pair count is $m=n-1$, their centered $u$ is $z$, their $M$ is $U_v$, and their fixed $M_\alpha$ is $T_{v,q_v(\alpha)}$. Lemma 2 there supplies the undamped positive quadratic invariant, and Lemma 3 supplies determinant contraction in the open damping interval. The explicit energy, rank-one factorization, strict fixed-map contraction, low-dimensional transfers, finite-annihilation criteria and rate bounds in Sections 3 and 12–15 are supporting results here. In the complete [damped-sweep source](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean) and [finite-path source](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.lean), source pair $i$ and velocity $v_j$ have indices $i-1$ and $j-1$; `A`, `B`, `Balpha`, `Malpha` denote $A,B,B_\alpha,T_{v,q_v(\alpha)}$. The first-event weight `theta` there is $(1+q)/2$, not an undamped rotation angle. The local energy, loss and literal sweep identities used below are `local_energy_decomposition`, `Q_dampedEvent_loss`, `Q_event`, `Q_phase`, `sweep_stacked` and `source_factorization`; the strict fixed-map conclusion is `result`, with the finite-path rigidity, boundary observability and power-decay intermediates. Their complete [damped-sweep](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs) and [finite-path](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.scribe.cs) expositions have the same correspondence.
+
+Polynomial factorization with multiplicities, the elementary symmetric functions of the roots and the quadratic formula are used in their classical sense; see [NIST DLMF, version 1.2.8, §1.11(ii)–(iv), especially (1.11.10), (1.11.11) and (1.11.21)–(1.11.23)](https://dlmf.nist.gov/1.11). These facts and the cited Token identities are intermediates to the information assertion below. Mensing's homogeneous qualitative antecedent is credited in [the same Token v1, Section II and reference [11]](https://arxiv.org/html/2608.27085v1#bib.bib11); its quantitative full-text overlap is unknown and no result from that full text is assumed. The attribution is confined to the stated sources and versions, with no exhaustive-literature or priority assertion.
+
+**Theorem 16.2 (Retention through dimension two and exact failure in dimension three).** In Definition 16.1, equality of observations in dimension $m=1$ or $m=2$ determines $p_v(\zeta,q)$ for every $q\in[-1,1]$, and consequently determines the entire function $\rho_v$, the set $Q_v$ and the number $\gamma_v$.
+
+In dimension $m=3$, the actual strictly positive chains
+
+$$
+v^{(0)}=(3,1,2,6),\qquad v^{(1)}=(3,1,14,42)
+\tag{16.6}
+$$
+
+instead satisfy
+
+$$
+\mathsf O(v^{(0)})=\mathsf O(v^{(1)})
+=\left(3,\left\{-1,\frac{1+i\sqrt3}{2},\frac{1-i\sqrt3}{2}\right\}\right),
+\tag{16.7}
+$$
+
+with each undamped eigenvalue simple, and have identical original parameter maps
+
+$$
+q(\alpha)=\frac{5\alpha-1}{1+3\alpha},\qquad
+\alpha(q)=\frac{1+q}{5-3q}.
+\tag{16.8}
+$$
+
+Nevertheless their exact global full-spectrum optima are
+
+$$
+\boxed{\quad
+Q_{v^{(0)}}=\{0\},\quad \gamma_{v^{(0)}}=0;
+\qquad
+Q_{v^{(1)}}=\{-1/4\},\quad \gamma_{v^{(1)}}=\frac1{\sqrt2}>0.
+\quad}
+\tag{16.9}
+$$
+
+Both minima are attained uniquely on the entire closed interval. In the original damping variable their unique minimizing sets are respectively $\{1/5\}$ and $\{3/23\}$. Thus dimension three is the first possible failure of these normalized-$q$ information targets in the original positive-velocity family.
+
+*Proof.* First verify the domain and the existence of the minima used in (16.4). In (16.1), the inverse denominator is at least $2v_2>0$ for $-1\leq q\leq1$. Direct differentiation gives
+
+$$
+q_v'(\alpha)=\frac{2v_2(v_1+v_2)}{(v_2+\alpha v_1)^2}>0,
+\qquad q_v(0)=-1,\quad q_v(1)=1.
+\tag{16.10}
+$$
+
+Solving the first equation of (16.1) for $\alpha$ gives exactly its displayed inverse, so the correspondence is a bijection between the two closed intervals and between their interiors. Substituting it into the original first row gives (16.2). This also shows that the entries of $T_{v,q}$ and the coefficients of $p_v$ are continuous in $q$, indeed affine entries before taking the determinant. The only singular value is $q=0$, corresponding to $\alpha_*=v_2/(v_1+2v_2)$: by (13.8), $\det T_{v,q}=(-1)^m q$.
+
+For the full complex root domain, retain the original positive definite Hermitian form
+
+$$
+Q(z)=\sum_{j=1}^{m+1}\frac{|z_j-z_{j-1}|^2}{v_j},
+\qquad z_0=z_{m+1}=0.
+$$
+
+The source local reflection and sweep identities give precisely (12.7): if $P_1z=f_1\langle f_1,z\rangle_Q$, with the unit normal $f_1$ of Definition 12.1, then
+
+$$
+T_{v,q}=U_v\bigl(I-(1-q)P_1\bigr),\qquad
+Q(T_{v,q}z)=Q(z)-(1-q^2)|\langle f_1,z\rangle_Q|^2.
+\tag{16.11}
+$$
+
+These are polynomial identities in $q$, so the endpoint extensions and the singular interior value are included. The factor $U_v$ preserves $Q$. For every nonzero complex eigenvector, (16.11) implies $|\mu|\leq1$. At $q=-1$ the second factor is $I-2P_1$, a $Q$-reflection, and at $q=1$ it is $I$. Thus both endpoint maps preserve $Q$, and every eigenvalue at either endpoint has modulus one. Consequently $\rho_v(-1)=\rho_v(1)=1$. On $-1<q<1$, the strict fixed-map conclusion in Theorem 13.2 gives $\rho_v(q)<1$.
+
+Here is a root argument that includes every multiplicity and proves continuity of the actual maximum in (16.4). Given any sequence $q_n\to q$, list all $m$ complex roots of $p_v(\zeta,q_n)$ in any order, with multiplicities. The resulting tuples belong to the compact product of $m$ closed unit disks, by (16.11). Along any convergent subsequence of such tuples, with limit $(\nu_1,\ldots,\nu_m)$, continuity of the coefficients and of finite multiplication gives
+
+$$
+p_v(\zeta,q)=\prod_{j=1}^m(\zeta-\nu_j).
+$$
+
+Thus the limiting tuple is exactly the full root multiset at $q$. Its maximum modulus is $\rho_v(q)$, so along that subsequence $\rho_v(q_n)\to\rho_v(q)$. If convergence failed for the original sequence, an infinite subsequence staying a fixed positive distance from $\rho_v(q)$ would have a further convergent root-tuple subsequence, contradicting this conclusion. This proves continuity without a choice of continuously labeled roots. The extreme-value theorem now makes $\gamma_v$ attained and $Q_v$ nonempty and compact. The strict interior bound and the endpoint values also give $Q_v\subset(-1,1)$. These facts justify the optimization definitions on their full stated domain, independently of any simple-root assumption.
+
+In dimension one the existing scalar identity of Theorem 13.2 is $T_{v,q}=-q$ and $U_v=-1$. Therefore
+
+$$
+p_v(\zeta,q)=\zeta+q,\qquad
+\rho_v(q)=|q|,\qquad Q_v=\{0\},\qquad\gamma_v=0.
+\tag{16.12}
+$$
+
+All chains of that dimension have this same normalized polynomial, including its zero root and its two endpoint values.
+
+For dimension two use the original transfer formula (3.1), with positive velocities $(a,b,c)$, $\xi=a/(a+b)$, $\eta=c/(b+c)$ and the original event weight $\tau=(1+q)/2$. It gives, still in the original coordinates,
+
+$$
+T_{v,q}=\begin{pmatrix}
+-q&(1+q)\xi\\
+-2\eta q&2\eta\xi(1+q)-1
+\end{pmatrix}.
+\tag{16.13}
+$$
+
+Set $\kappa=2\xi\eta-1\in(-1,1)$. The determinant and trace of (16.13) are $q$ and $\kappa(1+q)$, respectively; at $q=1$ the undamped trace is $2\kappa$. If $\{\nu_1,\nu_2\}$ is the observed undamped multiset, its sum is that trace. Hence the observation fixes $\kappa=(\nu_1+\nu_2)/2$ and the entire polynomial
+
+$$
+p_v(\zeta,q)=\zeta^2-\kappa(1+q)\zeta+q.
+\tag{16.14}
+$$
+
+For completeness its full root and radius alternatives follow directly from the classical quadratic formula. Put $\Delta=\kappa^2(1+q)^2-4q$. If $\Delta\geq0$, the two real roots, with a double root when $\Delta=0$, are $[\kappa(1+q)\pm\sqrt\Delta]/2$, and
+
+$$
+\rho_v(q)=\frac{|\kappa|(1+q)+\sqrt\Delta}{2}.
+$$
+
+Indeed for real $t$ and $s\geq0$, $\max(|t+s|,|t-s|)=|t|+s$. If $\Delta<0$, then $q>0$ and the roots are a nonreal conjugate pair of product $q$; each has modulus $\sqrt q$, so $\rho_v(q)=\sqrt q$. At $q=-1$, (16.14) is $\zeta^2-1$; at $q=1$ it is $\zeta^2-2\kappa\zeta+1$; and at $q=0$ it is $\zeta(\zeta-\kappa)$, including the double zero when $\kappa=0$. Thus every branch, endpoint and multiplicity is determined by the observation. Equations (16.12)–(16.14), consumed here from the published scalar and two-coordinate transfers, prove the asserted retention, since equal radius functions have equal global minimum and argmin set on the same compact interval. This retention concerns normalized $q$; the conversion from $q$ back to $\alpha$ retains the actual first two velocities in (16.1).
+
+For the dimension-three comparison take the positive one-parameter velocity family
+
+$$
+v(c)=(3,1,c,3c),\qquad c>0.
+\tag{16.15}
+$$
+
+Substituting into the literal original rows, with $z_0=z_4=0$, gives
+
+$$
+A_c=\begin{pmatrix}1&0&0\\-2c&1+c&-2\\0&0&1\end{pmatrix},\qquad
+B_c=\begin{pmatrix}-1&3/2&0\\0&-(1+c)&0\\0&3/2&-1\end{pmatrix},
+\tag{16.16}
+$$
+
+$$
+B_{c,\alpha}=\begin{pmatrix}
+\dfrac{1-5\alpha}{1+3\alpha}&\dfrac{6\alpha}{1+3\alpha}&0\\
+0&-(1+c)&0\\
+0&3/2&-1
+\end{pmatrix}
+=\begin{pmatrix}
+-q&\tfrac34(1+q)&0\\
+0&-(1+c)&0\\
+0&3/2&-1
+\end{pmatrix}.
+\tag{16.17}
+$$
+
+In particular the entire family has exactly the original parameter correspondence (16.8). The original even row is $-2cw_1+(1+c)w_2-2w_3=b_2$. Solving it after the two odd rows gives
+
+$$
+A_c^{-1}=\begin{pmatrix}
+1&0&0\\
+\dfrac{2c}{1+c}&\dfrac1{1+c}&\dfrac2{1+c}\\
+0&0&1
+\end{pmatrix},
+\qquad
+T_{v(c),q}=\begin{pmatrix}
+-q&\tfrac34(1+q)&0\\
+-\dfrac{2cq}{1+c}&-1+\dfrac{3c(1+q)}{2(1+c)}+\dfrac3{1+c}&-\dfrac2{1+c}\\
+0&3/2&-1
+\end{pmatrix}.
+\tag{16.18}
+$$
+
+This is $A_c^{-1}B_{c,\alpha}$ itself. To compute its full characteristic polynomial, use $\det A_c=1+c>0$ and expand
+
+$$
+\zeta A_c-B_{c,\alpha}=
+\begin{pmatrix}
+\zeta+q&-\tfrac34(1+q)&0\\
+-2c\zeta&(1+c)(\zeta+1)&-2\zeta\\
+0&-3/2&\zeta+1
+\end{pmatrix}.
+$$
+
+The first-row expansion, divided by $1+c$, is
+
+$$
+\begin{aligned}
+p_{v(c)}(\zeta,q)
+&=(\zeta+q)\left((\zeta+1)^2-\frac{3\zeta}{1+c}\right)
+ -\frac{3c}{2(1+c)}(1+q)\zeta(\zeta+1)\\
+&=\zeta^3+\frac{c-2}{2(c+1)}(1-q)\zeta^2
+ -\frac{c-2}{2(c+1)}(1-q)\zeta+q.
+\end{aligned}
+\tag{16.19}
+$$
+
+For example, the coefficients of $\zeta^2$ and $\zeta$ before simplification are
+$2-3/(1+c)-3c/[2(1+c)]+q(1-3c/[2(1+c)])$
+and
+$1-3c/[2(1+c)]+q(2-3/(1+c)-3c/[2(1+c)])$;
+these are respectively $[(c-2)/(2(c+1))](1-q)$ and its negative. Thus (16.19) evaluates the determinant with no spectral value omitted.
+
+At $q=1$ this polynomial is $\zeta^3+1=(\zeta+1)(\zeta^2-\zeta+1)$ for every $c>0$. Its three distinct roots are exactly those in (16.7). The choices $c=2$ and $c=14$ in (16.15) give (16.6). Both chains therefore have the same entire undamped complex spectrum, not just the same trace, determinant or spectral radius, and (16.17) proves equality of their full original $\alpha$-to-$q$ maps.
+
+For $c=2$, (16.19) reduces to
+
+$$
+p_{v^{(0)}}(\zeta,q)=\zeta^3+q.
+\tag{16.20}
+$$
+
+At $q=0$ all three roots are zero, with algebraic multiplicity three. At any $q\ne0$ the three roots are distinct and all have modulus $|q|^{1/3}$: if $\mu^3=-q$, they are $\mu,\mu\omega,\mu\omega^2$, where $\omega=(-1+i\sqrt3)/2$ has modulus one. Hence $\rho_{v^{(0)}}(q)=|q|^{1/3}$ for the entire closed interval, proving its unique optimum in (16.9). In particular the singular value is included; its characteristic polynomial is exactly $\zeta^3$, in agreement with the finite-annihilation criterion of Theorem 13.2.
+
+For $c=14$, (16.19) instead gives
+
+$$
+p_{v^{(1)}}(\zeta,q)=\zeta^3+\frac25(1-q)\zeta^2
+                                  -\frac25(1-q)\zeta+q.
+\tag{16.21}
+$$
+
+Let $r=1/\sqrt2$ and $q_*=-1/4$. At this value the entire polynomial factors as
+
+$$
+p_{v^{(1)}}(\zeta,q_*)
+=(\zeta^2-1/2)(\zeta+1/2).
+\tag{16.22}
+$$
+
+Its full multiset is $\{r,-r,-1/2\}$, with all roots simple, and $1/2<r$ since $1/4<1/2$. Thus the actual maximum over all three complex roots is exactly $r$ at $q_*$. For every real $q$, evaluation at both boundary points of this candidate optimal disk gives the exact identities
+
+$$
+p_{v^{(1)}}(r,q)=\frac{4+\sqrt2}{5}(q+1/4),\qquad
+p_{v^{(1)}}(-r,q)=\frac{4-\sqrt2}{5}(q+1/4).
+\tag{16.23}
+$$
+
+To verify them, note that both values vanish at $q_*$ by (16.22) and that their coefficients of $q$ are $1-(2/5)(r^2-r)$ and $1-(2/5)(r^2+r)$, respectively. Substitution of $r^2=1/2$ gives precisely (16.23), whose two coefficients are strictly positive.
+
+If $-1\leq q<q_*$, the first value in (16.23) is negative. The monic real cubic (16.21) tends to $+\infty$ as its real argument tends to $+\infty$. The intermediate value theorem therefore gives a real root strictly larger than $r$. That root is an eigenvalue of the actual $T_{v^{(1)},q}$, so the maximum over its entire complex spectrum is strictly larger than $r$. If $q_*<q\leq1$, the second value in (16.23) is positive. The same monic cubic tends to $-\infty$ at $-\infty$, giving a real root strictly smaller than $-r$ and the same strict lower bound for the full spectral radius. Together with the exact three-root factorization at $q_*$, these two comparisons prove both global minimality and uniqueness on all of $[-1,1]$.
+
+The comparison uses a real root only as a lower bound for the maximum of all three root moduli; equality at the minimizer uses the complete complex factorization (16.22). In particular the other two roots at an arbitrary $q$ may be real, nonreal or multiple without altering either strict comparison. The determinant identity (16.21) remains the specification of all three algebraic roots at every such parameter, so no simple-root or real-spectrum restriction enters the argument.
+
+The endpoint and singular multisets can also be stated explicitly. For the first chain, $q=-1$ gives $\{1,(-1+i\sqrt3)/2,(-1-i\sqrt3)/2\}$, and $q=1$ gives (16.7); both radii are one. For the second chain the corresponding polynomials are
+
+$$
+\begin{aligned}
+p_{v^{(1)}}(\zeta,-1)&=(\zeta-1)(\zeta^2+\tfrac95\zeta+1),\\
+p_{v^{(1)}}(\zeta,1)&=(\zeta+1)(\zeta^2-\zeta+1),\\
+p_{v^{(1)}}(\zeta,0)&=\zeta(\zeta^2+\tfrac25\zeta-\tfrac25).
+\end{aligned}
+\tag{16.24}
+$$
+
+Their full multisets are respectively
+
+$$
+\left\{1,\frac{-9+i\sqrt{19}}{10},\frac{-9-i\sqrt{19}}{10}\right\},
+\qquad
+\left\{-1,\frac{1+i\sqrt3}{2},\frac{1-i\sqrt3}{2}\right\},
+\qquad
+\left\{0,\frac{-1+\sqrt{11}}5,\frac{-1-\sqrt{11}}5\right\}.
+\tag{16.25}
+$$
+
+All entries in each multiset are simple. The first two have radius one; the last is the singular interior map and has radius $(1+\sqrt{11})/5>r$. For the strict inequality, both sides are positive and $(1+\sqrt{11})^2/25>1/2$ is equivalent to $\sqrt{11}>1/4$, which holds. Thus both endpoint extensions, the two different zero-root multiplicities at $q=0$, and nonreal endpoint roots agree with the global comparison.
+
+Finally, applying the same strictly increasing inverse (16.8) to $0$ and $-1/4$ yields respectively $1/5$ and $3/23$. No other original $\alpha\in[0,1]$ can minimize, by bijectivity. The dimension-one and dimension-two retention already proved excludes a failure of either information target in those dimensions; (16.6)–(16.9) establishes both failures in dimension three. $\square$
+
+**Corollary 16.3 (No global optimizer selector or minimum-radius function of the observation).** There is no function of $\mathsf O(v)$ that selects an element of $Q_v$ for every original positive-velocity chain, and no function of $\mathsf O(v)$ equal to $\gamma_v$ for every such chain. The same two impossibilities hold even if the observation is augmented by the entire original map $\alpha\mapsto q_v(\alpha)$. In particular $Q_v$ itself is not a function of that augmented observation.
+
+*Proof.* For the two chains (16.6), both the ordinary and augmented observations coincide, by (16.7)–(16.8). A selector would have to return the same $q$ on these equal observations, but the two required singleton sets in (16.9) are disjoint. A minimum-radius function would have to return both $0$ and $1/\sqrt2$ on that same input, which is impossible. Likewise an exact set-valued rule would have to return both different singletons. This proves each assertion within the literal original family.
+
+The missing information is a distinction between actual chains in one undamped-spectral fiber: in (16.19) the coefficient $(c-2)/(2(c+1))$ disappears at $q=1$, while it changes the full damped polynomial for $q\ne1$. The equality of observations therefore does not identify the relation between the boundary damping and the undamped dynamics. The scalar and two-coordinate identities (16.12) and (16.14) retain enough of that relation to determine their normalized polynomials.
+
+These are fixed-map spectral-information statements. Each $T_{v,q}$ is held fixed when its spectrum or its powers are considered. The arbitrary-dimensional problem of determining $Q_v$ and $\gamma_v$ from the full original velocity chain, rather than from $\mathsf O(v)$ alone, remains unresolved here. The prescribed and mixed histories in Sections 1–11 keep their own distinct domains. The collision process, entry into the rotational regime, switching realizations, and uniform quantitative rates are not consequences of this information obstruction; the original energy and the fixed-chain bounds of Sections 12–15 retain their stated hypotheses. $\square$
+
+## 追加锚（本行以下为增补区）

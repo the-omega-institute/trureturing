@@ -1276,3 +1276,2843 @@ Clifford 复合和非负正交可加平方权重；相关内容与上轮相同�
 [9] 
 [《加乘、对数与算术谱》V19](https://github.com/the-omega-institute/trureturing/blob/e168d4bbef773d94df790275d1f4f2a9e373103f/docs/develop/theory/AURIC_SUM_PRODUCT_LOGARITHMS_AND_ARITHMETIC_SPECTRA_V19.md)，§7.3。
 振幅平方使实指数加倍；载体与实际读出边界另列。
+
+## 13. 固定三端口来源的有限相干标定
+
+**定义 13.1（乘性权重与互斥端口读数）。** 令
+$w:\mathbb C\to[0,\infty)$ 为有限值函数，满足
+
+$$
+w(0)=0,\qquad w(1)=1,\qquad w(zz')=w(z)w(z'),
+\qquad \sup_{|z|\le1}w(z)<\infty.
+$$
+
+最后一个条件约束未归一权重。对有限非零向量
+$v\in\mathbb C^m$ 和端口事件 $C\subseteq\{1,\ldots,m\}$，定义
+
+$$
+\Pi_w(C\mid v)=\frac{\sum_{j\in C}w(v_j)}{\sum_{j=1}^m w(v_j)}.
+$$
+
+非零 $z$ 满足 $w(z)w(z^{-1})=1$，故权重严格正，分母严格正；
+乘性也给 $\Pi_w(C\mid cv)=\Pi_w(C\mid v)$（$c\ne0$）。
+允许的零指数约定为 $w_0(0)=0$、$w_0(z)=1$（$z\ne0$），
+不在零点使用 $0^0$，也不预设零点连续性。
+共同局域权重及保留事件的前例见
+[V46 定义 3.2、定理 3.3、命题 3.4](AURIC_LOG_RECURSION_SQUARED_PROBABILITIES_AND_ENDOGENOUS_ERROR_GEOMETRY_V46.md)；
+连续乘性分类见本卷定理 3.2 与
+[V47 定理 4.2](AURIC_EXISTENTIAL_QUANTIFIERS_SQUARE_WEIGHTS_AND_PROMPT_ERROR_RELATIONS_V47.md)。
+
+**假设 13.2（同源相干控制及事件合同）。** 固定同一个完整来源 $\Omega$，
+观察者包含环境、参考、控制、记录、预测与自我读出。
+在其内部声明三端口复线性接口、同一幅度标定以及
+
+$$
+\psi=(a,0,b)^{\mathsf T},\qquad a,b\in\mathbb C,\quad ab\ne0,
+\qquad H_0=\begin{pmatrix}1&1\\1&-1\end{pmatrix},
+\qquad G_\lambda=(\lambda H_0)\oplus1,\quad \lambda\in\mathbb C^\times.
+$$
+
+第三端口的系数固定为一，是非零的直和旁观分支。
+端口是互斥记录标签；粗事件固定为 $C=\{1,2\}$。
+若将 $\Pi_w$ 解释为实际概率，供应前件包括端口与报告的对应、
+一次作用前后同一事件的对应、同源制备及相干比较。
+两次控制采用同一个 $\lambda$，中途不重标定活动块与旁观块的相对幅度。
+记 $[v]$ 为非零向量的复射线，完整相干回返指全部相对幅度和相位的射线相等。
+
+该接口是完整来源内部的直和，未声明张量参考、任意复制、任意输入制备、
+任意停止时刻或任意控制的取得。精确矩阵的数学定义不供应实际精确控制；
+门族稠密也须另给逼近、相干比较与读数误差合同。
+若采用酉实现后的门前缀记号，则 $\Psi_k=U_k\cdots U_1\Omega$；
+有限接口仍只是其中的指定坐标。
+本卷定理 9.5 的原生连续驱动及局部 Markov 条件保持其原域，
+这里另行声明有限控制合同，不由其替换或取得那些条件。
+
+**定理 13.3（两次相干回返与一次粗事件守恒的指数标定）。**
+在定义 13.1、假设 13.2 下，若同一来源实际供应
+
+$$
+[G_\lambda^2\psi]=[\psi],\qquad
+\Pi_w(C\mid G_\lambda\psi)=\Pi_w(C\mid\psi),
+$$
+
+则
+
+$$
+\boxed{\lambda=\pm\frac1{\sqrt2},\qquad w(z)=|z|^2\quad(z\in\mathbb C),
+\qquad G_\lambda^\dagger G_\lambda=I_3.}
+$$
+
+证明中只由定义 13.1 即得到唯一 $p\ge0$ 使
+$w(z)=|z|^p$（$z\ne0$），零点仍单独取零。
+这一分类是下述有限标定所需的标准 Cauchy 正则性步骤，
+不另立为新的乘性函数分类原理。
+
+证明。先给所需的完整分类。若 $|z|\le1$ 而 $w(z)>1$，
+则所有 $z^n$ 仍在闭单位盘内，$w(z^n)=w(z)^n$ 却无界，矛盾。
+所以盘内权重实际不超过一。对 $|u|=1$，
+$w(u),w(u^{-1})\le1$ 且乘积为一，故 $w(u)=1$。
+写 $z=ru$，$r>0$，便有 $w(z)=w(r)$；相位不变性由此推出。
+令 $f(r)=w(r)>0$。当 $0<r\le s$ 时，
+$f(r)=f(s)f(r/s)\le f(s)$，故 $f$ 单调不减。
+于是
+
+$$
+F(t)=\log f(e^t),\qquad F(s+t)=F(s)+F(t)
+$$
+
+为实值单调可加函数。置 $p=F(1)\ge0$，加性给
+$F(q)=pq$（$q\in\mathbb Q$）。以两侧有理数夹逼任意实数 $t$，
+单调性给 $F(t)=pt$，故 $f(r)=r^p$。
+在 $r=e$ 处取值确定 $p$，所以唯一。
+反向，每个 $p\ge0$ 连同上述零点约定都满足定义 13.1，
+包括在零点不连续的 $p=0$。
+这里采用经典可加方程的正则性机制：
+[Hamel，*Eine Basis aller Zahlen und die unstetigen Lösungen der Funktionalgleichung:
+f(x+y)=f(x)+f(y)*，Math. Ann. 60，459–462](https://doi.org/10.1007/BF01457624)，
+特别是第 462 页关于有限实值解的正则性；
+所需单调情形已在上文用有理数夹逼直接证明。
+
+再作有限相干标定。由 $H_0^2=2I_2$，
+
+$$
+G_\lambda^2\psi=(2\lambda^2a,0,b)^{\mathsf T}.
+$$
+
+射线回返给某个 $c\ne0$，使此向量等于 $c\psi$。
+$b\ne0$ 先给 $c=1$，$a\ne0$ 再给
+
+$$
+2\lambda^2=1.
+$$
+
+这一等式来自相干复合和旁观幅度标定，未使用平方概率或预设酉性。
+令 $A=w(a)>0$、$B=w(b)>0$、$k=2w(\lambda)>0$。
+由于 $G_\lambda\psi=(\lambda a,\lambda a,b)^{\mathsf T}$，
+同一粗事件守恒等于
+
+$$
+\frac{kA}{kA+B}=\frac A{A+B}.
+$$
+
+交叉相乘给 $(k-1)AB=0$，于是 $2w(\lambda)=1$。
+对 $2\lambda^2=1$ 用乘性，得到
+
+$$
+w(2)w(\lambda)^2=1,\qquad w(2)=4.
+$$
+
+分类给 $w(2)=2^p$，故 $p=2$。
+复数方程 $2\lambda^2=1$ 的解为 $\lambda=\pm1/\sqrt2$，且
+
+$$
+G_\lambda^\dagger G_\lambda
+=\operatorname{diag}(2|\lambda|^2,2|\lambda|^2,1)=I_3.
+$$
+
+本卷 §9.3 已用原生旁观单点选择二；V46 §3.2 已在给定正交细分下选择二。
+这里增加的是未知复缩放的指定控制、同源两次射线回返与一次事件守恒的联合有限合同。
+分类步骤及旁观思想分别沿用上述先例；这一合同推导不承担文献优先权结论。
+∎
+
+**命题 13.4（标定条件的非退化域）。**
+若在假设 13.2 的向量形状中允许 $a=0$ 或 $b=0$，
+上述两个合同不再确定指数与控制缩放。
+完整射线回返也不能换成只在指定端口基底中的概率返回。
+
+证明。若 $b=0$、$a\ne0$，任意 $\lambda\ne0$ 都给
+$G_\lambda^2\psi=2\lambda^2\psi$，而一次作用前后 $C$ 的概率均为一。
+若 $a=0$、$b\ne0$，控制根本没有作用到非零活动幅度，两项合同均自动成立。
+二者可配任意定义 13.1 所允许的 $p\ge0$。
+再取 $ab\ne0$、$w(z)=|z|^2$、$\lambda=i/\sqrt2$，则
+$G_\lambda^2\psi=(-a,0,b)^{\mathsf T}$ 与 $\psi$ 的端口概率完全相同，
+但 $b$ 固定使可能的射线比例只能为一，而 $-a\ne a$，故射线不相等。
+此外只有平衡输入 $(1,0)$ 时，任意非零 $(\lambda,\lambda)$
+在归一读数下都给 $(1/2,1/2)$，不能据此区分 $p$。
+∎
+
+**命题 13.5（有限二分标定不替代权重正则性）。**
+去掉定义 13.1 的闭单位盘有界性后，存在有限值、非负、乘性且相位不变的
+$w:\mathbb C\to[0,\infty)$，使
+
+$$
+w(0)=0,\quad w(1)=1,\quad w(2)=4,
+\quad w(1/\sqrt2)=1/2,\quad w(3)=27.
+$$
+
+它对 $\lambda=\pm1/\sqrt2$、任意 $ab\ne0$ 通过定理 13.3 的两个有限合同，
+却不是平方权重。其归一读数始终在 $[0,1]$。
+
+证明。$\log2,\log3$ 在 $\mathbb Q$ 上线性无关：
+非平凡有理关系清除分母后将给 $2^m3^n=1$ 的非平凡整数关系，
+与唯一素分解矛盾。采用 Hamel 基扩张，取含这两个数的 $\mathbb Q$ 基，
+指定基值并作 $\mathbb Q$ 线性延拓，构造可加 $F:\mathbb R\to\mathbb R$，使
+
+$$
+F(\log2)=2\log2,\qquad F(\log3)=3\log3.
+$$
+
+这一基构造及基值的任意有限实值指定，采用上述 Hamel 文第 459–461 页的标准机制。
+令 $w(0)=0$、$w(z)=\exp F(\log|z|)$（$z\ne0$）。
+实 log 的乘加关系与 $F$ 的加性给乘性，相位不变性来自取模。
+加性又给 $F(-\tfrac12\log2)=-\log2$，故所有指定值成立。
+射线回返由 $2\lambda^2=1$；粗事件守恒由 $2w(\lambda)=1$，
+两者均不需要先把此 $w$ 分类为幂。
+若它在闭单位盘有界，定理 13.3 证明内的分类将给单一幂律；
+$w(2)=4$ 将迫使 $w(3)=9$，矛盾。
+任意有限非零向量的权重和严格正且有限，归一值仍在 $[0,1]$。
+因此归一读数有界不能供应未归一权重有界；该反例只界定函数类，
+不主张它是实际可实现的概率响应。
+∎
+
+## 14. 有限细分深度下的指数可辨识性
+
+**定义 14.1（已标定幅度的有限二分族）。**
+取 $p\ge0$，令 $w_p(0)=0$、$w_p(z)=|z|^p$（$z\ne0$），并取
+$|\lambda|=1/\sqrt2$。固定同源非零活动幅度 $a$、旁观幅度 $b$。
+对每个给定整数 $n\ge0$，活动分支细分为 $2^n$ 个互斥记录叶，
+每层把当前活动幅度 $x$ 变成 $(\lambda x,\lambda x)$，旁观幅度仍为 $b$。
+所有活动叶始终对应同一粗事件 $C$，记其归一质量为 $q_n$。
+这是幅度标定及精确幂族内的比较族，未加入定理 13.3 的粗事件守恒条件。
+
+若解释为实际比较，每个给定有限深度所需的同源制备、相位及幅度标定、
+空端口初始化、记录容量、内部控制与同一事件读出均须供应。
+数学递归不供应免费子系统，也不从有限层供应实际无限层。
+树上振幅的乘法与平方守恒复用
+[V46 定理 6.1、命题 6.2](AURIC_LOG_RECURSION_SQUARED_PROBABILITIES_AND_ENDOGENOUS_ERROR_GEOMETRY_V46.md)；
+log 赔率坐标沿用本卷 §3。
+
+**定理 14.2（细分深度与粗事件 log 赔率漂移）。**
+在定义 14.1 下，置 $A=|a|^p>0$、$B=|b|^p>0$，则
+
+$$
+q_n=\frac{A2^{n(1-p/2)}}{A2^{n(1-p/2)}+B}\in(0,1),
+\qquad \operatorname{logit}q=\log\frac q{1-q},
+$$
+
+$$
+\boxed{\operatorname{logit}q_n-\operatorname{logit}q_0
+=n\left(1-\frac p2\right)\log2.}
+$$
+
+对任一整数 $n\ge1$，$q_n=q_0$ 当且仅当 $p=2$。
+形式数列在 $p<2$ 时趋于一，在 $p>2$ 时趋于零，在 $p=2$ 时恒定。
+
+证明。第 $n$ 层每个活动叶的幅度为 $a\lambda^n$，模长为 $|a|2^{-n/2}$。
+$2^n$ 个活动叶的总权重为 $A2^{n(1-p/2)}$，旁观权重为 $B$，归一得到 $q_n$。
+其赔率为 $(A/B)2^{n(1-p/2)}$，取实 log 即得公式。
+所有 log 参数严格正，$p=0$ 时 $A=B=1$ 也成立。
+$n=0$ 不提供指数约束；$n\ge1$ 时严格单调的 logit 给所述等价。
+数列极限直接由指数符号得出，仅为数学极限。
+这个有限深度公式把 V46 已有的一层 $2^{1-p/2}$ 因子与树乘法、
+本卷已有的 log 赔率接成指数灵敏度；它没有把上一层概率再平方，
+也不把该合成另称为新的通用细分原则。
+∎
+
+**推论 14.3（两种读数误差下的指数界）。**
+在定理 14.2 下，给定整数 $n\ge1$ 和有限 $\epsilon\ge0$，若
+
+$$
+|\operatorname{logit}q_n-\operatorname{logit}q_0|\le\epsilon,
+$$
+
+则
+
+$$
+\boxed{|p-2|\le\frac{2\epsilon}{n\log2}.}
+$$
+
+若掌握的是 $|q_n-q_0|\le\delta_q$（$\delta_q\ge0$），且
+$q_0,q_n\in[\tau,1-\tau]$、$0<\tau<1/2$，则
+
+$$
+\boxed{|p-2|\le\frac{2\delta_q}{n\tau(1-\tau)\log2}.}
+$$
+
+证明。第一式整理定理 14.2 的精确等式。
+第二式用中值定理及
+$(\operatorname{logit}q)'=1/[q(1-q)]\le1/[\tau(1-\tau)]$；
+两端点之间的闭区间也包含在 $[\tau,1-\tau]$ 内。
+接近零或一时这个转换常数发散，故概率误差本身没有这里所需的统一 logit 控制。
+两式条件均在精确幂族及精确细分幅度内使用，不处理全域近似乘性。
+∎
+
+## 15. 相干回返与分裂权重同时近似时的区间
+
+**定理 15.1（双缺陷给出的必要指数区间）。**
+设非零输入上的权重已严格分类为 $w(z)=|z|^p$、$p\ge0$，零点取零。
+在假设 13.2 的同一控制形状及幅度标定下，给定 $\lambda\ne0$，分别有
+
+$$
+|2\lambda^2-1|\le\delta_r,\qquad
+|2|\lambda|^p-1|\le\eta_s,
+\qquad 0\le\delta_r<1,\quad0\le\eta_s<1.
+$$
+
+则
+
+$$
+\boxed{
+\frac{2\log(2/(1+\eta_s))}{\log(2/(1-\delta_r))}
+\le p\le
+\frac{2\log(2/(1-\eta_s))}{\log(2/(1+\delta_r))}.}
+$$
+
+并有较松的对称估计
+
+$$
+\boxed{|p-2|\le
+\frac{2[-\log(1-\delta_r)-\log(1-\eta_s)]}
+{\log(2/(1+\delta_r))}.}
+$$
+
+这里 $\delta_r$ 是已标定相干系数的缺陷，$\eta_s$ 是未归一分裂权重的缺陷；
+二者都不是任意报告概率差或未标定射线距离的别名。
+
+证明。反三角不等式和第二个前件分别给
+
+$$
+1-\delta_r\le2|\lambda|^2\le1+\delta_r,
+\qquad 1-\eta_s\le2|\lambda|^p\le1+\eta_s.
+$$
+
+置 $u=\log(2|\lambda|^2)$、$v=\log(2|\lambda|^p)$，则
+
+$$
+\log(1-\delta_r)\le u\le\log(1+\delta_r),\qquad
+\log(1-\eta_s)\le v\le\log(1+\eta_s),
+$$
+
+$$
+p=2\frac{\log2-v}{\log2-u}.
+$$
+
+因 $1+\delta_r<2$、$1+\eta_s<2$，分子分母严格正，
+故分别取上述区间端点得到必要区间，分母取端点时不反转错误方向。
+特别地 $p=0$ 不可能满足 $\eta_s<1$，与正的下界一致。
+又有
+
+$$
+|u|\le-\log(1-\delta_r),\qquad
+|v|\le-\log(1-\eta_s),\qquad
+\log2-u\ge\log\frac2{1+\delta_r}>0.
+$$
+
+将其代入 $p-2=2(u-v)/(\log2-u)$ 即得对称界。
+$\delta_r=\eta_s=0$ 恢复 $p=2$。
+本区间没有反向断言任意区间内的 $p$ 都满足原复相干缺陷。
+∎
+
+**推论 15.2（同一粗事件读数到分裂缺陷的条件转换）。**
+在定理 15.1 的精确幂族与指定控制形状下，取 $ab\ne0$，令
+$q=\Pi_w(C\mid G_\lambda\psi)$、$q_0=\Pi_w(C\mid\psi)$，则
+
+$$
+k=2|\lambda|^p=\frac{q(1-q_0)}{q_0(1-q)},\qquad
+|k-1|=\frac{|q-q_0|}{q_0(1-q)}.
+$$
+
+若 $q,q_0\in[\tau,1-\tau]$、$0<\tau<1/2$，且
+$|q-q_0|\le d<\tau^2$，则可在定理 15.1 中取 $\eta_s=d/\tau^2<1$，
+前提是相干缺陷 $\delta_r<1$ 已独立取得。
+
+证明。由 $q_0=A/(A+B)$、$q=kA/(kA+B)$，其中
+$A=|a|^p>0$、$B=|b|^p>0$，消去 $A/B$ 得第一式，减去一得第二式。
+因 $q_0(1-q)\ge\tau^2$，得所需界。
+若旁观质量或初始活动质量趋零，分母可趋零，不能从任意小的报告差
+直接取得同样小的分裂缺陷；控制矩阵的误差也需另给通向实际报告的桥。
+∎
+
+## 16. 平方标定的几何与动力学扩展接口
+
+**定义 16.1（沿用的关系坐标与支撑约定）。**
+在平方标定后的二元接口 $v=(\alpha,\beta)^{\mathsf T}$ 上，采用
+[V52 定义 2.1、定理 2.2、推论 2.3](AURIC_PURE_STATE_QUOTIENT_GEOMETRY_QUADRATIC_RELATION_GENERATORS_AND_LOSSLESS_RECURSION_V52.md)
+的保尺度外积坐标，记作
+
+$$
+N=|\alpha|^2+|\beta|^2,\quad
+(X,Y,Z)=(2\Re(\bar\alpha\beta),2\Im(\bar\alpha\beta),|\alpha|^2-|\beta|^2).
+$$
+
+这些是满足 $N^2=X^2+Y^2+Z^2$、$N\ge0$ 的纯关系坐标；
+一般二阶正矩阵则采用本卷定理 7.1 的 $N^2\ge X^2+Y^2+Z^2$。
+非零外积只消去共同相位，归一再消去正尺度；纯态球面与混态球体分开使用。
+在 $\alpha\beta\ne0$ 的图上，令
+$\beta/\alpha=e^{u+i\theta}$、$u=\log|\beta/\alpha|$，采用本卷定理 7.2 的
+
+$$
+(X,Y,Z)/N=(\operatorname{sech}u\cos\theta,
+\operatorname{sech}u\sin\theta,-\tanh u),
+\qquad \log(p_1/p_0)=2u.
+$$
+
+两极换图；相位与模长 log 分开。共同相位下的全域多项式关系采用
+V52 定理 5.2、推论 5.3 的生成元 $g_{ij}=z_i\bar z_j$，
+局部比值是有理不变量，不属于其最低多项式次数的断言。
+二维实线性复乘法的行列式 $\det_{\mathbb R}m_z=|z|^2$
+沿用 V47 §4 的代数范数解释，未据此单独指定概率。
+
+对高维 Hermitian 关系矩阵，约定 $p_i=g_{ii}\ge0$，
+在纯二元边上要求 $|g_{ij}|^2=p_ip_j$，并采用
+[V51 定理 8.2](AURIC_CONSTRAINT_RECURSION_PURE_STATE_DUALITY_AND_ENDOGENOUS_STATIC_HISTORY_V51.md)
+及 [V44 定理 7.4、命题 9.1](AURIC_BOUNDARY_EXTENSION_AND_HIGHER_DIMENSIONAL_RELATIONAL_ATLAS_V44.md)
+的闭路相容条件。在全边情形可写为
+$g_{ij}g_{jk}=p_jg_{ik}$；有 $p_a>0$ 时以
+$z_i=g_{ia}/\sqrt{p_a}$ 恢复共同相位之外的振幅。
+零质量行列先由 $|g_{ij}|^2=p_ip_j$ 置零，不为它们定义相位或作除法。
+部分图在每个正支撑连通分量内取闭路乘积为一，各分量各留一个共同相位。
+相位 log 的闭路和只要求属于 $2\pi\mathbb Z$。
+高维纯态的 $2d-2$ 个归一实自由度采用 V52 定理 4.1；
+单个固定三实坐标不能作所有 $d\ge3$ 纯态的局部光滑可逆坐标，
+须保留 V44 §12 的维数边界。
+
+**假设 16.2（扩展到过程所需的额外供应）。**
+若要从标定操作扩展到一般 $U:\mathbb C^d\to\mathbb C^m$，
+另给其复线性及全部数学输入上的平方总质量保持；
+一般等距与等维酉性采用
+[V52 命题 8.5](AURIC_PURE_STATE_QUOTIENT_GEOMETRY_QUADRATIC_RELATION_GENERATORS_AND_LOSSLESS_RECURSION_V52.md)
+的极化论证。单一固定输入的保质量不替代这个全称量词。
+直和旁观分支不供应张量参考、联合读出或完全正更新的认证。
+
+若另给连续 $U:\mathbb R\to U(d)$、$U(0)=I$ 及
+$U(t+s)=U(t)U(s)$，采用
+[《相容预测波与关系谱》定理 4.9 及其有限维连续群说明](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md)
+的指数表示 $U(t)=e^{-itH}$、$H=H^\dagger$（相位单位取 $\hbar=1$）。
+连续复合参数、平移齐次群律、物理钟的对应及单位标定另行供应；
+固定 $t$ 时的指数算子对输入态仍复线性。
+指定 Hermitian $H(t)$ 及非零实常数 $\hbar$ 后的比值 Riccati 方程，采用
+[V55 定理 10.2](AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md)，
+只在所用非零图上求商。
+保二次锥的滤波与保总质量的酉操作，采用同卷 §9 的区分；
+条件分支须另留成功质量及互补记录。
+
+实 log 的乘加坐标采用
+[V17 §2](AURIC_SUM_PRODUCT_LOGARITHMS_AND_QUANTUM_PYTHAGOREAN_GEOMETRY_V17.md)
+与本卷 §3；复 log 使用局部图或支信息，采用
+[DLMF §4.2(i)](https://dlmf.nist.gov/4.2#i) 及
+[§4.8(i)，式 4.8.1–4.8.2](https://dlmf.nist.gov/4.8#i) 的一般值与主支条件。
+非交换控制的矩阵对数不作无条件的加法替换。
+
+**假设 16.3（实际关系与理论结论的范围）。**
+平方标定保留复线性域、乘性及未归一正则性、互斥报告、同源相干控制和同一事件合同。
+原生 $F[\cdot]$ 读出与 $(N,X,Y,Z)$ 的对应仍需具体定义及变换桥；
+共轭使 $Y$ 反号的坐标事实不指定物理手性。
+同一推导可在实振幅上作相应标定，故这里未选择复数域、张量复合、
+空间维数、Hamiltonian、实际时间尺度或全部量子物理的起源。
+门词长度的单增也未给范数、熵、记录容量或可解码复杂度的单增条件。
+
+若接入实际历史关系，必须保留各自来源前件：
+[量子续卷 IV §§206–208](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md)
+的平方探测权重、既定率律及历史桥属于其输入；
+[RRO §§62–67](RECURSIVE_RELATIONAL_OBSERVATION_FIBONACCI_NATIVE_TERMINAL_CERTIFICATION.md)
+的自然过去域、档案及可测恢复限定属于其输入。
+自然域内的必要恢复条件不无条件转移到更大的过去域；
+可测精确恢复不供应有限存储、有限精度或统一在线恢复过程。
+这些关系未充当定理 13.3 的指数起源前提或实际取得证明。
+全域近似乘性的稳定性及实际控制到已标定相干缺陷的误差桥在此仍未供应。
+
+## 追加锚（本行以下为增补区）
+
+## 17. 同一固定来源的射线误差与控制可行域
+
+**定义 17.1（独立标定的有限误差合同）。** 沿用定义 13.1、假设 13.2 的同一来源、同一非零 $a,b$、同一幅度坐标、同一实际互斥事件 $C=\{1,2\}$，以及精确候选族
+
+$$
+w_p(0)=0,\quad w_p(z)=|z|^p\ (z\ne0),\quad p\ge0,
+\qquad G_\lambda=(\lambda H_0)\oplus1,\quad 0<|\lambda|<\infty.
+$$
+
+这里的幂分类直接采用定理 13.3 证明中的有界乘性分类；
+不把近似乘性、零点连续性或有界归一概率当作它的替代条件。
+以下另给幅度比标定
+
+$$
+r=|a|/|b|\in(0,\infty),\qquad \ell=\log r,\qquad L=\log2,
+$$
+
+以及非零向量射线上的接口几何
+
+$$
+D([u],[v])=\sqrt{1-\frac{|\langle u,v\rangle|^2}{\|u\|^2\|v\|^2}}.
+$$
+
+另供有限实数 $\varepsilon\ge0$ 和两个非空闭区间
+$I_j=[\underline q_j,\overline q_j]\subset(0,1)$（$j=0,1$，允许单点），合同为
+
+$$
+D([G_\lambda^2\psi],[\psi])\le\varepsilon,\qquad
+q_0=\Pi_{w_p}(C\mid\psi)\in I_0,\qquad
+q_1=\Pi_{w_p}(C\mid G_\lambda\psi)\in I_1.
+\tag{17.1}
+$$
+
+$I_j$ 包含的是该指定来源与事件的真概率；其取得不在合同内。
+$D$ 是所声明复内积的几何量，不被定义为未知 $w_p$ 探测器的返回概率。
+$r$ 的标定也不能先用平方读数反解 $r=\sqrt{q_0/(1-q_0)}$。
+如果实际使用 (17.1)，独立的幅度比标定、射线误差证书及真概率区间均须供应。
+这里不规定抽样、独立同分布、置信度、复制、重置或额外控制权限。
+该合同与定理 13.3 的精确回返及精确守恒合同分别使用。
+
+所用几何的代数先例是
+[V52 推论 2.3](AURIC_PURE_STATE_QUOTIENT_GEOMETRY_QUADRATIC_RELATION_GENERATORS_AND_LOSSLESS_RECURSION_V52.md)
+的纯态内积，以及
+[V55 定理 9.2](AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md)
+的二元行列式距离。
+[Fuchs–van de Graaf，*Cryptographic Distinguishability Measures for Quantum Mechanical States*，§§4.2–4.3，命题 3](https://arxiv.org/html/quant-ph/9712042v2)
+给出迹距离及纯态重叠的标准背景；其测量概率解释不作为未知幂权的输入。
+
+**定理 17.2（射线证书的精确模长域与相位纤维）。** 在定义 17.1 下，置
+
+$$
+x=2\lambda^2=h e^{i\theta},\qquad h=2|\lambda|^2>0,
+\qquad \alpha=\arctan r\in(0,\pi/2),
+\qquad \beta=\arcsin(\min\{\varepsilon,1\}).
+$$
+
+则
+
+$$
+D([G_\lambda^2\psi],[\psi])^2
+=\frac{r^2|x-1|^2}{(1+r^2)(1+r^2h^2)}.
+\tag{17.2}
+$$
+
+存在满足射线证书的相位，当且仅当 $h$ 属于下列区间 $H$：
+
+$$
+\begin{aligned}
+h_-&=\begin{cases}
+\tan(\alpha-\beta)/r,&\beta<\alpha,\\
+0,&\beta\ge\alpha,
+\end{cases}\\
+h_+&=\begin{cases}
+\tan(\alpha+\beta)/r,&\alpha+\beta<\pi/2,\\
++\infty,&\alpha+\beta\ge\pi/2,
+\end{cases}\\
+H&=\{h\in(0,\infty):h_-\le h\le h_+\}.
+\end{aligned}
+\tag{17.3}
+$$
+
+$h_-=0$ 与 $h_+=+\infty$ 都不表示取得相应端点。
+每个有限正端点均取得，且 $1\in H$。
+对一个给定 $h>0$，全部允许相位恰满足
+
+$$
+\cos\theta\ge T_\varepsilon(r,h),\qquad
+T_\varepsilon(r,h)=
+\frac{h^2+1-\varepsilon^2(1+r^2)(1+r^2h^2)/r^2}{2h}.
+\tag{17.4}
+$$
+
+$T>1$ 时无相位；$-1<T\le1$ 时为模 $2\pi$ 的闭相位弧；
+$T\le-1$ 时所有相位均可。每个允许 $h,\theta$ 对应
+$\lambda=\pm\sqrt{h/2}\,e^{i\theta/2}$。
+
+证明。$G_\lambda^2\psi=(xa,0,b)^{\mathsf T}$。
+在其与 $\psi$ 所在的二维坐标平面，Gram 行列式为
+$|a|^2|b|^2|x-1|^2$；除以两向量的平方范数乘积给 (17.2)。
+$a,b$ 的各自相位相消，但相干控制的相位 $\theta$ 保留。
+固定 $h$ 后，$|he^{i\theta}-1|^2=h^2+1-2h\cos\theta$
+在 $\theta=0$ 最小，因此存在相位的充要条件是
+
+$$
+f_r(h):=\frac{r|h-1|}{\sqrt{(1+r^2)(1+r^2h^2)}}\le\varepsilon.
+\tag{17.5}
+$$
+
+两个实正方向的角分别为 $\arctan(rh)$ 和 $\alpha$，故
+$f_r(h)=\sin|\arctan(rh)-\alpha|$。
+这个角差绝对值小于 $\pi/2$；$\varepsilon<1$ 时可在其上取单调的反正弦，
+$\varepsilon\ge1$ 时全部 $h>0$ 均可。
+由 $0<\arctan(rh)<\pi/2$ 反解角区间，即得 (17.3)，
+包括与零、$\pi/2$ 相接时的开端点。
+不极小化相位而直接整理 (17.2)，则给 (17.4)。
+取 $\theta=0$ 证明每个 $h\in H$ 都有同一形状的有限非零候选矩阵。
+∎
+
+**推论 17.3（源条件数、临界容差与端点）。** 上述 $H$ 的全部容差域为
+
+$$
+\begin{aligned}
+h_->0&\iff \varepsilon<\frac r{\sqrt{1+r^2}},\\
+h_+<\infty&\iff \varepsilon<\frac1{\sqrt{1+r^2}},\\
+h_+<2&\iff \varepsilon<\varepsilon_*(r),\qquad
+\varepsilon_*(r)=\frac r{\sqrt{(1+r^2)(1+4r^2)}}.
+\end{aligned}
+\tag{17.6}
+$$
+
+等于前两个阈值时，分别已经失去正下端点、有限上端点。
+在 $\varepsilon=\varepsilon_*(r)$ 时，$h_+=2$ 为可取得端点。
+特别地，在信息性有限端点域
+
+$$
+0\le\varepsilon<\varepsilon_*(r)
+\tag{17.7}
+$$
+
+内有 $0<h_-\le1\le h_+<2$；$\varepsilon=0$ 给 $H=\{1\}$。
+
+证明。前两式由 (17.3) 分别在 $\beta=\alpha$、
+$\beta=\pi/2-\alpha$ 处得到。
+$f_r$ 在 $[1,\infty)$ 严格递增，且
+$f_r(2)=\varepsilon_*(r)$；此值严格小于前两个阈值，给余下结论。
+$r\downarrow0$ 或 $r\to\infty$ 时 $\varepsilon_*(r)\to0$。
+这说明同一几何精度在极不平衡来源上失去固定的模长分辨力，
+不把它误当成来源无关的控制系数误差。
+例如 (17.2) 实际只给
+
+$$
+|x-1|\le\frac\varepsilon r\sqrt{(1+r^2)(1+r^2h^2)},
+$$
+
+右端同时含来源比与未知控制模。∎
+
+## 18. 任意非零固定振幅的联合指数逆问题
+
+**定理 18.1（显式且共同可取得的指数集合）。** 在定义 17.1 下，记
+
+$$
+J_j=[A_j,B_j]=
+[\operatorname{logit}\underline q_j,\operatorname{logit}\overline q_j],
+\qquad \operatorname{logit}q=\log\frac q{1-q},
+$$
+
+并由定理 17.2 的 $H$ 定义扩展实端点
+
+$$
+c_-=\ell+\tfrac12\log(h_-/2),\qquad
+c_+=\ell+\tfrac12\log(h_+/2).
+\tag{18.1}
+$$
+
+$h_-=0$ 时 $c_-=-\infty$，$h_+=+\infty$ 时 $c_+=+\infty$；
+相应无限端点不属于所定义的实数区间
+
+$$
+\mathcal C=\{c\in\mathbb R:c_-\le c\le c_+\}.
+$$
+
+为计算全部正指数，建立如下有限不等式表；无限端点对应的行省略：
+
+| 条件 | 写成 $s p\le t$ 的系数 $(s,t)$ |
+| --- | --- |
+| 初始区间的上界 | $(\ell,B_0)$ |
+| 初始区间的下界 | $(-\ell,-A_0)$ |
+| $c_->-\infty$ 时的输出上界 | $(c_-,B_1-L)$ |
+| $c_+<+\infty$ 时的输出下界 | $(-c_+,L-A_1)$ |
+
+若表中某行 $s=0,t<0$，置 $P_+=\varnothing$。
+否则丢弃 $s=0$ 的行，定义
+
+$$
+P_{\rm lo}=\max\bigl(\{0\}\cup\{t/s:s<0\}\bigr),\qquad
+P_{\rm hi}=\min\bigl(\{+\infty\}\cup\{t/s:s>0\}\bigr),
+$$
+
+$$
+P_+=\{p\in(0,\infty):P_{\rm lo}\le p\le P_{\rm hi}\}.
+\tag{18.2}
+$$
+
+于是 (17.1) 的必要且充分兼容指数集合恰为
+
+$$
+\boxed{P=P_+\ \cup\
+\begin{cases}
+\{0\},&0\in J_0\text{ 且 }L\in J_1,\\
+\varnothing,&\text{其余情形}.
+\end{cases}}
+\tag{18.3}
+$$
+
+它是同一固定 $a,b$ 上对一个共同有限非零 $\lambda$ 的存在结论。
+对每个 $p\in P_+$，可从非空交集
+
+$$
+\mathcal C\cap\left[\frac{A_1-L}{p},\frac{B_1-L}{p}\right]
+\tag{18.4}
+$$
+
+任选一个有限 $c$，并用同一个见证
+
+$$
+h=2e^{2(c-\ell)},\qquad \lambda=\sqrt{h/2}>0
+\tag{18.5}
+$$
+
+同时实现几何证书及两个概率区间。
+全部复相位见证再由 (17.4) 给出；不能把各项约束分别优化所得的不同控制拼成见证。
+
+证明。令 $A=|a|^p$、$B=|b|^p$，二者严格正，$p=0$ 时均为一。
+由同一端口归一式，精确有
+
+$$
+q_0=\frac{r^p}{1+r^p},\qquad
+q_1=\frac{2|\lambda|^p r^p}{1+2|\lambda|^p r^p},
+$$
+
+$$
+\operatorname{logit}q_0=p\ell,\qquad
+\operatorname{logit}q_1=L+p\left(\ell+\tfrac12\log(h/2)\right).
+\tag{18.6}
+$$
+
+这直接复用本卷 §3 的赔率坐标与推论 15.2 的精确消元。
+实 log 的正数域及幂公式采用
+[NIST DLMF 4.8.13](https://dlmf.nist.gov/4.8#E13)；
+复相位始终留在 (17.4)，不取一个全局复 log。
+
+$p>0$ 时，$h\mapsto\ell+\tfrac12\log(h/2)$
+把 $H$ 双射到 $\mathcal C$。
+$q_0\in I_0$ 恰为 $A_0\le p\ell\le B_0$。
+$q_1\in I_1$ 则恰为 (18.4) 非空。
+由于 (18.4) 中第二个区间为有限闭区间，交集非空当且仅当
+
+$$
+c_-p\le B_1-L\quad(c_->-\infty),\qquad
+c_+p\ge A_1-L\quad(c_+<+\infty).
+$$
+
+无限端点没有附加约束，也不被选作 $c$。
+因此全部条件恰是表中的有限线性不等式。
+$s>0$ 给上界 $p\le t/s$，$s<0$ 给下界 $p\ge t/s$；
+$s=0$ 的矛盾与恒真行按陈述处理，得到 (18.2)。这证明必要性。
+
+反向，若 $p\in P_+$，这些不等式保证 (18.4) 含有限 $c$。
+(18.5) 给 $h\in H$ 和 $\theta=0$，故定理 17.2 保证几何证书；
+(18.6) 保证两个概率区间，使用的 $a,b,p,\lambda$ 全部相同。
+若 $p=0$，原两概率恰为 $1/2,2/3$，与 $h$ 无关；
+选 $h=1,\lambda=1/\sqrt2$ 给零几何误差。
+故零指数的条件恰是 (18.3)，而非对 (18.1) 的无限端点作 $0\cdot\infty$。
+∎
+
+**推论 18.2（闭性、有限端点与全部退化类型）。** 在定理 18.1 的域内，
+$P_+$ 是 $(0,\infty)$ 中的相对闭区间或空集。
+有限正端点若存在就实际取得；零和无穷必须分别按 (18.3) 及 $p<\infty$ 处理。
+具体地，$P_{\rm hi}\le0$ 或 $P_{\rm lo}>P_{\rm hi}$ 给空的正部分；
+$P_{\rm lo}=P_{\rm hi}>0$ 给单点；
+$0<P_{\rm lo}<P_{\rm hi}<\infty$ 给双闭有界区间；
+$P_{\rm lo}=0<P_{\rm hi}<\infty$ 给 $(0,P_{\rm hi}]$；
+$P_{\rm hi}=+\infty$ 给相应无界区间。还可只有 $P=\{0\}$。
+
+若 $r\ne1$，初始区间本身给有限的正指数范围：
+
+$$
+\begin{cases}
+\max\{0,A_0/\ell\}\le p\le B_0/\ell,&\ell>0,\\
+\max\{0,B_0/\ell\}\le p\le A_0/\ell,&\ell<0,
+\end{cases}
+\qquad p>0.
+\tag{18.7}
+$$
+
+若 $r=1$，初始约束恰为 $1/2\in I_0$，否则整个 $P$ 为空。
+因此非平衡来源的 $P$ 总有界，而不预设它非空或包含二。
+
+若 $0<h_-\le h_+<\infty$，整个 $P$ 在 $[0,\infty)$ 中闭。
+在信息性域 (17.7) 内，$P$ 还是紧区间或空集，全部有限端点取得。
+超出该域时，(17.3)、(18.2)–(18.3) 仍给全部容差情形，
+不一概宣称集合闭或指数有有限上界。
+
+证明。对正指数的结论直接由有限个非严格线性不等式及 (18.5) 得到。
+(18.7) 是 $A_0\le p\ell\le B_0$ 按 $\ell$ 的符号求解。
+若 $p_k\downarrow0$ 且 $h_k\in[h_-,h_+]$ 是共同见证，
+在紧模长域内 $\ell+\tfrac12\log(h_k/2)$ 一致有界。
+由 (18.6)，两 logit 必趋于 $0,L$，闭区间条件便给 $0\in P$。
+这证明紧模长域内不会漏掉零极限，连同正端点取得即得闭性。
+若零指数可行，表中各右端均非负；任一正解与零之间的所有正数亦满足表中不等式。
+因此加入零不会产生分离的区间。
+
+在 (17.7) 内模长域紧。$r\ne1$ 时由 (18.7) 有界；
+$r=1$ 时 $c_+<0$，表中最后一行给有限上界
+$p\le(L-A_1)/(-c_+)$，或判为不相容。
+故此域内 $P$ 紧。
+
+闭性在退化模长域内确实会失败：取 $r=1$、
+$\varepsilon\ge1/\sqrt2$、$I_0=I_1=\{1/2\}$。
+此时 $H=(0,\infty)$，对每个 $p>0$ 取
+$\lambda=2^{-1/p}$，两概率均为 $1/2$，而 $p=0$ 给 $q_1=2/3$。
+所以 $P=(0,\infty)$，下端点零不取得。
+这也展示为什么闭概率区间并不自动给闭的投影参数集合。
+空集可由 $r=1,1/2\notin I_0$ 实现；
+$\varepsilon=0,r=1,I_0=I_1=\{1/2\}$ 给单点 $\{2\}$；
+同取 $I_1=\{2/3\}$ 给单点 $\{0\}$。
+下节给出有界非单点及无界集合的共同见证。∎
+
+## 19. 平衡来源的锋利端点与失去有限上界的阈值
+
+**定理 19.1（平衡来源的全部容差域）。** 在定义 17.1 下令 $r=1$。
+若 $1/2\notin I_0$，则 $P=\varnothing$。
+以下设 $1/2\in I_0$，并记 $v_-=A_1,v_+=B_1$、
+$\varepsilon_*=1/\sqrt{10}$。
+对 $0\le\varepsilon<1/\sqrt2$，令
+
+$$
+t=\frac{\varepsilon}{\sqrt{1-\varepsilon^2}},\qquad
+h_- =\frac{1-t}{1+t},\qquad h_+=\frac{1+t}{1-t},
+\qquad a_\varepsilon=\log(2/h_-)>0,
+\qquad b_\varepsilon=\log(2/h_+).
+\tag{19.1}
+$$
+
+兼容集合精确如下，所有方括号内的有限端点都取得。
+
+1. 若 $0\le\varepsilon<\varepsilon_*$，则 $b_\varepsilon>0$。
+   $v_->L$ 时 $P=\varnothing$；$v_-\le L$ 时
+
+$$
+\boxed{P=\left[
+\frac{2\max\{0,L-v_+\}}{a_\varepsilon},\
+\frac{2(L-v_-)}{b_\varepsilon}
+\right].}
+\tag{19.2}
+$$
+
+2. 若 $\varepsilon=\varepsilon_*$，则 $h_+=2$、$b_\varepsilon=0$。
+   $v_->L$ 时 $P=\varnothing$；$v_-\le L$ 时
+
+$$
+\boxed{P=\left[\frac{2\max\{0,L-v_+\}}{a_\varepsilon},\infty\right).}
+\tag{19.3}
+$$
+
+3. 若 $\varepsilon_*<\varepsilon<1/\sqrt2$，则 $b_\varepsilon<0$，且
+
+$$
+\boxed{P=\left[
+\max\left\{0,\frac{2(L-v_+)}{a_\varepsilon},
+\frac{2(v_--L)}{-b_\varepsilon}\right\},\infty\right).}
+\tag{19.4}
+$$
+
+4. 若 $\varepsilon\ge1/\sqrt2$，则
+
+$$
+\boxed{P=(0,\infty)\ \cup\
+\begin{cases}
+\{0\},&v_-\le L\le v_+,\\
+\varnothing,&\text{其余情形}.
+\end{cases}}
+\tag{19.5}
+$$
+
+证明。$\alpha=\pi/4$，在 $\beta<\pi/4$ 时用正切和差公式得到 (19.1)。
+此时 $h_-h_+=1$，且
+$c_-=-a_\varepsilon/2<0$、$c_+=-b_\varepsilon/2$。
+定理 18.1 的初始约束自动满足，其余两行恰是
+
+$$
+-\tfrac12a_\varepsilon p\le v_+-L,\qquad
+-\tfrac12b_\varepsilon p\ge v_--L.
+\tag{19.6}
+$$
+
+当 $b_\varepsilon>0$，两式分别给 (19.2) 的下、上界；
+$v_->L$ 时连 $p=0$ 也不可能。
+当 $b_\varepsilon=0$，第二式恰为 $v_-\le L$，没有指数上界，给 (19.3)。
+当 $b_\varepsilon<0$，第二式也变成下界，给 (19.4)。
+这些式子中的零端点恰在 $v_-\le L\le v_+$ 时出现，
+故 (18.3) 正好将其纳入，没有把不允许的零指数填入。
+当 $\varepsilon\ge1/\sqrt2$，$H=(0,\infty)$，
+$\mathcal C=\mathbb R$，任意 $p>0$ 均可用 (18.5) 实现，给 (19.5)。
+
+端点的共同见证也可直接写出。
+在 (19.2) 的正下端点取 $h=h_-$、$\operatorname{logit}q_1=v_+$；
+在其正上端点取 $h=h_+$、$\operatorname{logit}q_1=v_-$。
+(19.3) 的正下端点取前一个见证。
+(19.4) 若正的最大项来自第二项或第三项，分别取
+$(h_-,v_+)$ 或 $(h_+,v_-)$；并列最大时同样满足另一不等式。
+零端点均可取 $h=1$。
+每个见证统一使用 $\lambda=\sqrt{h/2}$ 与原固定 $a,b,p$；
+区间内部的共同取得由 (18.4)–(18.5) 保证。
+∎
+
+**推论 19.2（有限上界的精确丧失与共享参数族）。**
+仍设 $r=1$、$1/2\in I_0$。
+若 $I_1\cap(0,2/3]\ne\varnothing$，兼容集合非空，
+且具有有限上界当且仅当 $\varepsilon<1/\sqrt{10}$。
+若 $I_1\subset(2/3,1)$，则在 $\varepsilon\le1/\sqrt{10}$ 时为空，
+在 $\varepsilon>1/\sqrt{10}$ 时非空且无界。
+特别地，精确输出 $q_1=1/2$ 也在临界容差处失去有限指数上界。
+
+证明。有限域及空集部分由定理 19.1 得到。
+为给出无界性所需的共同见证，固定一个 $v\in J_1$，对 $p>0$ 置
+
+$$
+\lambda_p=e^{(v-L)/p},\qquad
+h_p=2e^{2(v-L)/p}.
+\tag{19.7}
+$$
+
+同一个候选在两次相干作用及一次概率读数中均用 $\lambda_p$。
+由 (18.6)，$q_0=1/2$、$q_1=(1+e^{-v})^{-1}$，
+且 $h_p\to2$。
+临界 $\varepsilon=1/\sqrt{10}$ 时，若 $v\le L$，则 $h_p\le2=h_+$，
+而对全部充分大的 $p$ 又有 $h_p\ge h_->0$；$v=L$ 时恒为端点二。
+所以恰在临界处已取得任意大的有限指数。
+超过临界时二是 $H$ 的内点，任意固定有限 $v$ 都对充分大的 $p$ 给 $h_p\in H$。
+这证明所有声称的无界性，而没有把模长和概率的独立最优值相拼。
+每个 $p$ 对应一个候选合同；没有断言同一装置同时具有不同的 $p$ 或 $\lambda_p$。
+∎
+
+## 20. 固定不确定控制的有限细分与校准歧义
+
+**定义 20.1（分别供应的有限深度读数）。** 保留定义 17.1 的同一个固定
+$a,b,p,\lambda$、幅度比和两次作用的几何证书。
+对每个另行供应的有限深度 $n\ge1$，按定义 14.1 的树形细分操作，
+每个节点均将活动幅度 $z$ 变成 $(\lambda z,\lambda z)$，
+全树共用这个未知但固定的 $\lambda$，旁观幅度仍为 $b$。
+这里只取消定义 14.1 中预先确定的 $|\lambda|=1/\sqrt2$；
+空端口、同源比较、同一粗事件及每个给定有限深度的资源仍须供应。
+每个被供应深度的真概率 $q_n$ 另有非空闭区间 $I_n\subset(0,1)$。
+若同时保留一次读数，深度集合须含 $1$ 且使用原来的 $I_1$。
+各节点的控制不允许单独选择不同的误差符号或缩放。
+
+**定理 20.2（一个共同漂移的有限深度联合逆像）。**
+对任意非空有限深度集合 $F\subset\mathbb N_{>0}$，
+令 $J_n=[A_n,B_n]=\operatorname{logit}I_n$（$n\in F$），并仍用 $J_0$。
+在定义 20.1 下精确有
+
+$$
+\begin{aligned}
+q_n&=\frac{r^p(2|\lambda|^p)^n}{1+r^p(2|\lambda|^p)^n},\\
+\operatorname{logit}q_n&=p\ell+n d,\qquad
+ d=L+\tfrac p2\log(h/2),\quad h=2|\lambda|^2.
+\end{aligned}
+\tag{20.1}
+$$
+
+对 $p>0$，构造两组仿射函数：
+
+$$
+\begin{aligned}
+\mathcal L_p&=\left\{\frac{A_n-p\ell}{n}:n\in F\right\}
+\cup\left\{L+\tfrac p2\log(h_-/2):h_->0\right\},\\
+\mathcal U_p&=\left\{\frac{B_n-p\ell}{n}:n\in F\right\}
+\cup\left\{L+\tfrac p2\log(h_+/2):h_+<\infty\right\}.
+\end{aligned}
+$$
+
+则共同兼容的正指数集合恰为
+
+$$
+\boxed{P_{F,+}=\{p>0:A_0\le p\ell\le B_0,\quad
+\max\mathcal L_p\le\min\mathcal U_p\}.}
+\tag{20.2}
+$$
+
+这是显式有限线性不等式组：对每个下函数 $a+sp$ 和上函数 $b+tp$
+加入 $(s-t)p\le b-a$，再加入初始区间的两行，
+按 (18.2) 的同一端点规则即得完整区间及空集判据。
+零指数应且仅应在
+
+$$
+0\in J_0,\qquad nL\in J_n\quad\text{对每个 }n\in F
+\tag{20.3}
+$$
+
+时另加。
+对每个 $p\in P_{F,+}$，从
+$[\max\mathcal L_p,\min\mathcal U_p]$ 取一个共同的有限 $d$，并令
+
+$$
+\lambda=\exp((d-L)/p),\qquad h=2\exp(2(d-L)/p).
+\tag{20.4}
+$$
+
+这一个 $\lambda$ 同时实现所有被供应深度及几何证书。
+仅取各深度分别得到的指数集合之交，而不检查共同 $d$，一般不等于 (20.2)。
+
+证明。第 $n$ 层有 $2^n$ 个互斥活动叶，振幅全为 $a\lambda^n$；
+其总权重为 $|a|^p(2|\lambda|^p)^n$，旁观权重仍为 $|b|^p$。
+直接归一得到 (20.1)，包括 $p=0$ 的 $q_n=2^n/(1+2^n)$。
+对 $p>0$，$h\in H$ 恰使 $d$ 落在两个几何仿射端点之间，
+无限端点不施加有限限制。
+第 $n$ 个读数恰要求 $(A_n-p\ell)/n\le d\le(B_n-p\ell)/n$。
+由于 $F$ 非空有限，所有读数端点有限，两组函数均非空，
+共同实数 $d$ 存在当且仅当 (20.2) 的最大下界不超过最小上界。
+两两比较就是陈述中的有限线性组；因此不需要将各深度的控制分别优化。
+
+反向取其交中的 $d$，(20.4) 给有限非零的实正 $\lambda$，
+同一个 $h\in H$，故几何证书成立，(20.1) 则同时给全部概率区间。
+零指数由上述 $q_n$ 的精确值独立结算，得到 (20.3)。
+这证明必要性及共同取得性。
+例如令 $r=1,\varepsilon\ge1/\sqrt2,F=\{1,2\}$，
+$J_1=\{0\},J_2=\{1\}$。
+每个深度单独都允许任意 $p>0$，联合却要求 $d=0$、$2d=1$，故为空。
+这里全部概率均严格在零一之间，矛盾只来自缺少共同控制。
+∎
+
+**推论 20.3（平衡来源在任意给定深度的锋利集合）。**
+若 $r=1,1/2\in I_0$，仅另供一个有限深度 $n\ge1$ 的区间 $I_n$，
+则定理 19.1 的所有公式逐字采用
+
+$$
+v_-=A_n/n,\qquad v_+=B_n/n
+\tag{20.5}
+$$
+
+替换原来的 $A_1,B_1$ 后，便是这一深度的精确兼容集合。
+特别地，$\varepsilon<1/\sqrt{10}$ 且 $B_n<nL$ 时，两个锋利正端点为
+
+$$
+\boxed{\frac{2(L-B_n/n)}{a_\varepsilon}
+\le p\le
+\frac{2(L-A_n/n)}{b_\varepsilon}.}
+\tag{20.6}
+$$
+
+证明。$\ell=0$ 使 (20.1) 化为 $\operatorname{logit}q_n/n=d$，
+所以输出约束正好变成 $d\in[A_n/n,B_n/n]$。
+这与定理 19.1 中的一次输出 logit 条件完全相同，
+同一端点见证、相位条件、零指数规则及无界阈值随之适用。
+这里的替换在证明内部使用既有区间求解，不另设一个一般 logit 分类。
+∎
+
+**定理 20.4（固定系统控制误差留下不可由深度消除的精确歧义）。**
+取同一个平衡来源 $r=1$，并供应 $q_0=1/2$。
+任意非空有限深度集合 $F$ 上，若供应的精确读数均为 $q_n=1/2$，
+则所有兼容指数与控制模恰满足
+
+$$
+p>0,\qquad |\lambda|=2^{-1/p},\qquad h(p)=2^{1-2/p}\in H.
+$$
+
+每个这样的指数可取 $\lambda=2^{-1/p}$ 作为共同实正见证：
+
+$$
+2|\lambda|^p=1.
+\tag{20.7}
+$$
+
+相应的全部指数集合与 $F$ 的大小及深度无关，精确为
+
+$$
+\boxed{P_F=
+\begin{cases}
+[2L/a_\varepsilon,\ 2L/b_\varepsilon],
+ &0\le\varepsilon<1/\sqrt{10},\\
+[2L/a_\varepsilon,\ \infty),
+ &1/\sqrt{10}\le\varepsilon<1/\sqrt2,\\
+(0,\infty),&\varepsilon\ge1/\sqrt2.
+\end{cases}}
+\tag{20.8}
+$$
+
+$\varepsilon=0$ 时仅有 $p=2$；任意固定 $\varepsilon>0$ 都留下非单点歧义。
+在有界情形两个端点均由同一个来源及各自一个共同控制取得。
+对一个分别供应的深度 $n$，若误差给为
+$|\operatorname{logit}q_n-\operatorname{logit}q_0|\le E$，则精确约束是
+
+$$
+\left|L+\tfrac p2\log(h/2)\right|\le E/n.
+\tag{20.9}
+$$
+
+因此深度可缩小共同漂移，却不能单凭它把固定的控制不确定性从指数中分离。
+
+证明。任一正深度的 $q_n=q_0=1/2$，由 (20.1) 都恰给 $d=0$。
+$p=0$ 给 $d=L\ne0$，被排除。
+$p>0$ 时，$d=0$ 等价于 $2|\lambda|^p=1$，
+即 $|\lambda|=2^{-1/p}$ 及 (20.7) 的 $h(p)$。
+实正相位使几何证书当且仅当 $h(p)\in H$；
+其他允许相位仍由 (17.4) 限定，不要求它们都合格。
+函数 $p\mapsto h(p)$ 在 $(0,\infty)$ 严格递增，
+像为 $(0,2)$，其反解为 $p=2L/\log(2/h)$。
+与定理 17.2 的 $H$ 相交并反解，或在定理 19.1 中取 $v_-=v_+=0$，
+即得 (20.8)，包括临界 $h_+=2$ 只对应 $p\to\infty$，
+及 $h_-=0$ 只对应 $p\downarrow0$ 的非取得端点。
+若 $0<\varepsilon<1/\sqrt{10}$，则 $h_-<1<h_+$，
+所以严格有 $2L/a_\varepsilon<2<2L/b_\varepsilon$。
+更大容差的集合包含这些非单点见证，故亦不唯一。
+
+对每个固定 $p$ 采用 (20.7) 中的同一个 $\lambda$，
+所有活动树上均有 $2|\lambda|^p=1$，所以每个被供应的有限深度都保持质量一半。
+这不是为每层选择一个新的控制，也不需要更换 $a,b$。
+(20.9) 则由 (20.1) 直接除以 $n$。
+这些共同见证即使在零读数误差时仍存在，故任何有限加深都不能排除它们。
+这里没有假定实际无限细分，也没有让一个装置同时实现全部候选指数。
+∎
+
+**定义 20.5（条件综合所消费的先例与适用边界）。**
+(17.2)–(20.9) 是固定三端口候选族上的条件逆问题及其细分应用，
+作为 `repo-derived` 的纸面综合使用，不提出全球优先权。
+本卷定理 13.3、14.2、15.1 及推论 15.2 分别供应精确平方标定、
+已知幅度的细分漂移、系数双缺陷界及真概率到权重的消元；
+这里的逆像还使用独立幅度比和指定几何证书，不改动那些结论的前提。
+[V17 定理 2.3](AURIC_SUM_PRODUCT_LOGARITHMS_AND_QUANTUM_PYTHAGOREAN_GEOMETRY_V17.md)、
+[V47 定理 4.2、命题 10.1](AURIC_EXISTENTIAL_QUANTIFIERS_SQUARE_WEIGHTS_AND_PROMPT_ERROR_RELATIONS_V47.md)
+及本卷 §3 的 log／幂工具只作中间步骤；
+V52 §§2、5 的商几何与二次不变量、V55 §§9–10 的滤波及 Riccati 结构亦不由本应用重新提出。
+
+[Lax，*The Born Rule for Projective Measurements from Metric Non-Expansion and Calibration*，§§2–6、10.2](https://arxiv.org/html/2604.27339v2)
+研究全曲线 Fisher 非扩张、平方根读数正则性和基准备标定下的 PVM 刚性。
+这里的有限固定来源证书不是其全曲线条件，也不将其精确刚性结论当作本合同的误差逆像。
+[Söllner 等，*Testing Born's Rule in Quantum Mechanics for Three Mutually Exclusive Events*，§§1.2、2.1](https://arxiv.org/html/1201.0195v1)
+区分干涉偏离与独立探测器非线性标定；其计数、探测器与统计假设不提供 (17.1) 的幅度或射线证书。
+这些几何、正则性及校准先例属于 `literature-attested` 的中间结构，
+不作为新增的通用度量、分类或平方起源定理。
+
+若把本合同接入实际来源，仍须保留假设 16.3 的范围。
+[量子续卷 IV §§206–208](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md)
+把平方纤维权重、旧源率及检测响应列为输入；
+[RRO §§62–67](RECURSIVE_RELATIONAL_OBSERVATION_FIBONACCI_NATIVE_TERMINAL_CERTIFICATION.md)
+在指定自然过去域内讨论可测恢复。
+二者均不替代本合同的独立证书，不把可测恢复提升为有限精度取得。
+候选族外的一般门误差、近似乘性稳定性、源复制、完整过程认证、
+复数域唯一性、张量结构或物理时间仍不由这个有限逆问题给出。
+
+## 追加锚（本行以下为增补区）
+
+## 21. 同一事件的相干幂读数与全部参数纤维
+
+**假设 21.1（分别供应的有限相干前缀合同）。** 保留定义 13.1 和假设 13.2 的
+复线性三端口、同一幅度坐标、非零 $a,b,\lambda$ 及同一事件 $C=\{1,2\}$。
+权重采用定理 13.3 证明中已分类的 $w_p$，$p\ge0$，零点权重仍单独为零。
+给定非空有限集合 $K\subset\mathbb N_0$，另行供应
+
+$$
+Q_k=\Pi_{w_p}(C\mid G_\lambda^k\psi),\qquad k\in K.
+\tag{21.1}
+$$
+
+每个被供应的前缀从同一来源的同一 $\psi=(a,0,b)^{\mathsf T}$ 出发，
+在读出之前执行同一个精确 $G_\lambda$ 的相干复合；中间不插入端口测量、
+去相干、细分叶记录或活动块相对旁观块的重新标定。
+$a,b,p,\lambda$ 在一个候选实现的所有前缀中固定；不同候选实现可以具有不同参数。
+初始读数仅在 $0\in K$ 时列入本合同，不因记号而额外供应。
+如果 (21.1) 被解释为实际概率，则同源制备、精确控制、指定前缀、端口对应及
+同事件真概率的供应均是前件；这里只比较各前缀分别供应的律，未指定它们的联合抽样律。
+不附加定理 13.3 的精确相干回返或粗事件守恒。
+来源比 $r=|a|/|b|$ 与控制模 $|\lambda|$ 初始均未知，但都有限、严格正。
+
+用 $Q_k$ 区别定义 20.1 中树形细分的 $q_n$。
+本合同的相干复合与保留叶记录的区别，沿用
+[V17 命题 13.1](AURIC_SUM_PRODUCT_LOGARITHMS_AND_QUANTUM_PYTHAGOREAN_GEOMETRY_V17.md)
+中相干幂与逐步去相干递归的区别；它不将两个合同的报告互相替换。
+
+**定理 21.2（奇偶 logit 关系及完整可观察纤维）。** 在假设 21.1 下，令
+
+$$
+L=\log2,\qquad e_k=k-2\lfloor k/2\rfloor\in\{0,1\},\qquad
+Z_k=\operatorname{logit}Q_k.
+$$
+
+全部 $Q_k$ 严格在 $(0,1)$ 内，并精确满足
+
+$$
+\frac{Q_k}{1-Q_k}
+=r^p|\lambda|^{kp}2^{p\lfloor k/2\rfloor+e_k}.
+\tag{21.2}
+$$
+
+对 $p>0$ 定义
+
+$$
+u=p\log r,\qquad v=p\log(\sqrt2|\lambda|),\qquad t=\frac{pL}{2}>0.
+$$
+
+则
+
+$$
+\boxed{Z_k=u+kv+e_k(L-t),\qquad
+Y_k:=Z_k-e_kL=u+kv-e_kt.}
+\tag{21.3}
+$$
+
+给定任意精确报告 $Q=(Q_k)_{k\in K}\in(0,1)^K$，记
+$M_K$ 的第 $k$ 行为 $(1,k,-e_k)$。它的全部正指数候选恰为
+
+$$
+\mathcal F_+(Q)=\{(u,v,t)\in\mathbb R^2\times(0,\infty):
+M_K(u,v,t)^{\mathsf T}=Y\}.
+\tag{21.4}
+$$
+
+对每个这样的点，全部原参数见证可且仅可写成
+
+$$
+\begin{gathered}
+p=2t/L,\qquad r=e^{u/p},\qquad
+|\lambda|=2^{-1/2}e^{v/p},\qquad h=2|\lambda|^2=e^{2v/p},\\
+b=c,\qquad a=cr e^{i\phi},\qquad
+\lambda=2^{-1/2}e^{v/p}e^{i\eta},\\
+c\in\mathbb C^\times,\qquad \phi,\eta\in\mathbb R/(2\pi\mathbb Z).
+\end{gathered}
+\tag{21.5}
+$$
+
+所以即使 $(u,v,t)$ 唯一，来源的共同非零复尺度 $c$、来源相对相位 $\phi$
+及控制相位 $\eta$ 仍全部自由。
+零指数纤维则存在当且仅当
+
+$$
+\boxed{Z_k=e_kL\ (k\in K),\quad\text{即}\quad
+Q_k=\begin{cases}1/2,&k\text{ 偶},\\2/3,&k\text{ 奇}.
+\end{cases}}
+\tag{21.6}
+$$
+
+在此纤维上 $r,|\lambda|$ 可分别为任意有限正数，$c,\phi,\eta$ 仍自由；
+不得由 $u=v=t=0$ 反解除以 $p$ 的公式。
+如果同时供应三个端口的概率，则偶数前缀恰为 $(Q_k,0,1-Q_k)$，
+奇数前缀恰为 $(Q_k/2,Q_k/2,1-Q_k)$；它们在本模型内不细化上述纤维。
+
+证明。由 $H_0^2=2I_2$，对每个 $m\ge0$ 有
+
+$$
+G_\lambda^{2m}\psi=((2\lambda^2)^ma,0,b)^{\mathsf T},\qquad
+G_\lambda^{2m+1}\psi=(2^m\lambda^{2m+1}a,
+2^m\lambda^{2m+1}a,b)^{\mathsf T}.
+\tag{21.7}
+$$
+
+所有写出的活动幅度和旁观幅度均非零。偶数前缀有一个非零活动端口，
+奇数前缀有两个相等的非零活动端口；其权重和除以旁观权重即得 (21.2)。
+该计算对 $p=0$ 使用非零端口权重一、空端口权重零，给 (21.6)，
+并未在空端口上使用 $0^0$。
+对 $p>0$ 取实 log，并用 $\lfloor k/2\rfloor=(k-e_k)/2$，得到 (21.3)。
+
+反向，任取 (21.4) 的一个点，以 (21.5) 构造参数。
+指数、来源比和控制模均属于原允许域，且同一个 $a,b,\lambda$ 同时满足所有前缀等式。
+任意原参数又由 $c=b$、$\phi=\arg(a/b)$、$\eta=\arg\lambda$ 唯一确定这些自由度，
+故没有遗漏额外尺度或相位。$p=0$ 的任意非零原参数都给相同支持签名，
+反之不符合该签名的报告不可能由 $p=0$ 产生。
+奇数两个活动端口权重相等，偶数第二端口为空，给最后的端口断言。∎
+
+**命题 21.3（概率族不认证相干回返）。** 在假设 21.1 的整个候选族上，
+任意有限 $K$，乃至形式上全部非负整数前缀的概率族，都不能识别 $\phi$ 或 $\eta$，
+也不能单凭这些概率认证 $[G_\lambda^2\psi]=[\psi]$。
+
+证明。(21.2) 与两相位无关，故固定 $p,r,|\lambda|,c$ 而任意改变两相位保持全部报告。
+尤其取 $|\lambda|=1/\sqrt2$，$\eta=0$ 给 $G_\lambda^2\psi=\psi$，
+$\eta=\pi/2$ 给 $G_\lambda^2\psi=(-a,0,b)^{\mathsf T}$。
+因 $ab\ne0$，后一向量与 $\psi$ 不同射线，而两个实现的全部前缀概率相同。
+这是本卷命题 13.4 的同一相位障碍在完整前缀族中的保留。
+相位与基概率的分离还见
+[V47 命题 10.1](AURIC_EXISTENTIAL_QUANTIFIERS_SQUARE_WEIGHTS_AND_PROMPT_ERROR_RELATIONS_V47.md)
+及 [V52 §§2、5](AURIC_PURE_STATE_QUOTIENT_GEOMETRY_QUADRATIC_RELATION_GENERATORS_AND_LOSSLESS_RECURSION_V52.md)；
+这里未把完整外积关系缩减为其对角概率。∎
+
+## 22. 未知来源比与未知控制模的最小前缀设计
+
+**定理 22.1（指数识别的必要充分设计）。** 在假设 21.1 的未知 $r,|\lambda|$ 域内，
+下列条件等价：
+
+1. 精确报告在整个 $p\ge0$ 候选域识别指数，即相同报告的任意两个实现具有相同 $p$。
+2. $K$ 至少含三个不同整数，且同时含奇数与偶数。
+3. $M_K$ 的列秩为三。
+
+满足这些条件时，正指数报告还唯一确定 $r,|\lambda|$，
+但保留 (21.5) 的全部相位与尺度；零指数报告只确定 $p=0$，不确定两模长。
+不满足这些条件时，每个具有正指数见证的精确报告，都具有每一个 $p>0$ 的见证。
+特别地，零指数签名也与所有正指数相容。
+因此最少需要三个不同前缀，三个中的奇偶不能全同。
+
+证明。若 $K$ 至少有三个数且兼有奇偶，从同一奇偶类取 $i<j$，另一类取 $k$。
+若 $A+Bn+Ce_n=0$ 对 $n\in K$ 成立，则在 $i,j$ 相减给 $B=0$，
+再与 $k$ 比较给 $C=0$，最后 $A=0$。所以秩为三。
+此时 (21.4) 至多一个解；两个正指数见证必有同一 $t,u,v$，
+由 (21.5) 取得相同指数及两模长。
+若一个正指数实现与零指数有同一报告，则其 $Y=0$，
+满列秩迫使 $u=v=t=0$，与 $t>0$ 矛盾。
+零指数内部的模长自由度已由定理 21.2 给出。
+
+反之，若 $K$ 只有一种奇偶，$e_n$ 在 $K$ 上恒定；
+若 $K$ 至多两个数，则总有实数 $\alpha,\beta$ 使 $e_n=\alpha+\beta n$ 对 $n\in K$ 成立。
+这些情形覆盖条件 2 的全部否定情形，且使 $M_K$ 不满列秩。
+固定任一正指数解 $(u_0,v_0,t_0)$，对任意 $t>0$ 置
+
+$$
+u(t)=u_0+\alpha(t-t_0),\qquad
+v(t)=v_0+\beta(t-t_0).
+\tag{22.1}
+$$
+
+于是 $u(t)+nv(t)-e_nt=u_0+nv_0-e_nt_0$。
+(21.5) 对每个 $t>0$ 给一个有限非零的具体候选参数组，
+不是仅有参数计数或无穷小变化。
+对零指数签名 $Y=0$，直接取 $u=\alpha t,v=\beta t$ 即得所有正指数的见证。
+因此条件 1 失败，且最后的强断言成立。∎
+
+**推论 22.2（三个前缀的闭式与有效性判据）。** 若另供 $K=\{0,1,2\}$ 的精确概率，
+置
+
+$$
+\widehat p=2+\frac{Z_0-2Z_1+Z_2}{L}.
+\tag{22.2}
+$$
+
+若 $\widehat p>0$，全部正指数纤维的模长参数恰为
+
+$$
+p=\widehat p,\qquad u=Z_0,\qquad v=(Z_2-Z_0)/2,\qquad
+r=e^{Z_0/p},\qquad h=e^{(Z_2-Z_0)/p}.
+\tag{22.3}
+$$
+
+若 $\widehat p<0$，无允许候选。若 $\widehat p=0$，仅当
+$(Z_0,Z_1,Z_2)=(0,L,0)$ 时有候选，且全部为零指数；其余报告无候选。
+一般三个不同前缀也有闭式：取同奇偶的 $i<j$，另一奇偶的 $k$，令
+
+$$
+s=e_i=e_j,\quad \delta=e_k-s\in\{-1,1\},\quad
+\alpha=\frac{j-k}{j-i},\quad \beta=\frac{k-i}{j-i}.
+$$
+
+则
+
+$$
+v=\frac{Z_j-Z_i}{j-i},\qquad
+t=L-\frac{Z_k-\alpha Z_i-\beta Z_j}{\delta},\qquad
+u=Z_i-iv-s(L-t).
+\tag{22.4}
+$$
+
+$k$ 不必介于 $i,j$ 之间；这些式子包括外插。
+
+证明。(21.3) 在同奇偶的 $i,j$ 相减确定 $v$。
+$\alpha+\beta=1$、$\alpha i+\beta j=k$ 使差分消去 $u,v$，
+留下 $Z_k-\alpha Z_i-\beta Z_j=\delta(L-t)$，即 (22.4)。
+取 $i=0,j=2,k=1$ 得 (22.2)–(22.3)。
+该三行矩阵可逆，所以 $t>0$ 时任意三个实 logits 均由唯一正指数点实现；
+$t<0$ 不允许；$t=0$ 时正指数不允许，而零指数只允许 (21.6)。∎
+
+**推论 22.3（另知来源比时最小数目可变）。** 若来源比已独立固定为 $r_*$，
+令 $\ell_* =\log r_*$，$c_k=\ell_*-e_kL/2$。
+在这个受限域内，指数可识别当且仅当
+
+$$
+(c_k)_{k\in K}\notin\operatorname{span}\{(k)_{k\in K}\}.
+\tag{22.5}
+$$
+
+例如 $r_*\ne1$ 时，单独供应 $Q_0$ 已识别指数；
+$r_*=1$ 时，前缀 $\{1,2\}$ 足够，而 $\{0,1\}$ 不足。
+这些情形不降低定理 22.1 在未知来源比域中的最小数目。
+
+证明。对 $p>0$，(21.3) 化为
+$Y_k=pc_k+kv$，其中 $v$ 仍可为任意实数。
+两个不同指数给相同 $Y$ 当且仅当 $c$ 是向量 $(k)$ 的倍数；
+若 $c=\gamma(k)$，任意改变 $p>0$ 并把 $v$ 改为 $v-\gamma\,\Delta p$ 即给见证。
+此时 $Y=0$ 也有所有正指数见证 $v=-\gamma p$，与零指数不能区分。
+若 (22.5) 成立，线性关系迫使两个指数相等，
+并排除正指数与 $Y=0$ 的零指数签名相交。
+对 $K=\{0\}$，$(k)=0$ 而 $c_0=\ell_*$；
+对 $r_*=1,K=\{1,2\}$，$c=(-L/2,0)$ 不与 $(1,2)$ 成比例；
+$K=\{0,1\}$ 则 $c=(0,-L/2)$ 与 $(0,1)$ 成比例，得到各例。∎
+
+## 23. 任意有限内区间报告的锋利共同参数逆像
+
+**定义 23.1（确定性区间输入与正指数坐标域）。** 在假设 21.1 下，
+每个 $k\in K$ 另供非空闭区间
+
+$$
+I_k=[\underline Q_k,\overline Q_k],\qquad
+0<\underline Q_k\le\overline Q_k<1,
+$$
+
+含该前缀同事件的真概率，允许单点。
+这些是确定性包含前件，不指定置信度或样本取得。
+记
+
+$$
+[A_k,B_k]=\operatorname{logit}I_k,\qquad
+ a_k=A_k-e_kL,\qquad b_k=B_k-e_kL,
+$$
+
+$$
+\mathcal Q_K=\{(u,v,t)\in\mathbb R^3:
+ a_k\le u+kv-e_kt\le b_k\ (k\in K)\}.
+\tag{23.1}
+$$
+
+这里暂不限制 $t$，以便投影后另行施加 $t>0$；
+$t=0$ 的形式坐标点不自动代表原零指数候选。
+
+**定理 23.2（有限消元、全部端点及共同取得）。** 在定义 23.1 下，
+对 $i,j\in K$ 定义仿射函数
+
+$$
+C_{ij}(t)=b_j-a_i+(e_j-e_i)t.
+$$
+
+当 $|K|\ge2$ 时定义两组有限非空仿射函数
+
+$$
+\mathcal V_-(t)=\left\{\frac{C_{ij}(t)}{j-i}:j<i\right\},\qquad
+\mathcal V_+(t)=\left\{\frac{C_{ij}(t)}{j-i}:j>i\right\}.
+\tag{23.2}
+$$
+
+构造关于实数 $t$ 的有限不等式表 $\mathcal T_K$：
+对每个 $f\in\mathcal V_-$ 和 $g\in\mathcal V_+$ 加入 $f(t)\le g(t)$，
+写成 $c_\nu t\le d_\nu$。
+当 $|K|=1$ 时取空表。
+若某行 $c_\nu=0,d_\nu<0$，置 $D_K=\varnothing$；
+否则定义扩展实端点
+
+$$
+\tau_- =\max\left(\{-\infty\}\cup
+ \{d_\nu/c_\nu:c_\nu<0\}\right),\qquad
+\tau_+ =\min\left(\{+\infty\}\cup
+ \{d_\nu/c_\nu:c_\nu>0\}\right),
+$$
+
+$$
+D_K=\{t\in\mathbb R:\tau_-\le t\le\tau_+\}.
+\tag{23.3}
+$$
+
+$\tau_->\tau_+$ 时此集为空；无限端点不表示有限参数的取得。
+则所有区间同时兼容的指数恰为
+
+$$
+\boxed{P_{K,+}=\{2t/L:t\in D_K\cap(0,\infty)\},\qquad
+P_K=P_{K,+}\cup P_{K,0},}
+\tag{23.4}
+$$
+
+$$
+P_{K,0}=\begin{cases}
+\{0\},&A_k\le e_kL\le B_k\quad(k\in K),\\
+\varnothing,&\text{其余情形}.
+\end{cases}
+\tag{23.5}
+$$
+
+这些判据为必要且充分。
+特别地，$P_{K,+}$ 可能为空、正单点、有限区间、正半直线或整个 $(0,\infty)$。
+在没有零系数矛盾行时，它非空当且仅当
+$\tau_-\le\tau_+$ 且 $\tau_+>0$。
+非空时每个有限正上端点、每个严格正下端点均取得；
+若下确界为零，正指数支不取得零，仅按 (23.5) 决定是否另有零指数支。
+$D_K=\{0\}$ 或 $D_K\subset(-\infty,0]$ 时没有正指数，
+即使形式坐标可行，也不得用它宣告原候选存在。
+
+对每个 $t\in D_K\cap(0,\infty)$，全部正指数见证由下面同一组参数给出：
+当 $|K|\ge2$，任选
+
+$$
+\max\mathcal V_-(t)\le v\le\min\mathcal V_+(t),\qquad
+\max_{k\in K}(a_k-kv+e_kt)\le u\le
+\min_{k\in K}(b_k-kv+e_kt),
+\tag{23.6}
+$$
+
+再应用 (21.5)；$|K|=1$ 时 $v$ 任取实数，再按同一式取 $u$。
+全部自由相位与尺度均保留。
+零指数兼容时，任意非零 $a,b,\lambda$ 同时实现所有区间。
+
+证明。给定 $v,t$，共同 $u$ 存在当且仅当 (23.6) 的下界不大于上界。
+有限最大下界不超过有限最小上界，等价于对所有 $i,j\in K$ 有
+
+$$
+a_i-iv+e_it\le b_j-jv+e_jt,
+\quad\text{即}\quad (j-i)v\le C_{ij}(t).
+\tag{23.7}
+$$
+
+$i=j$ 的条件是已有的 $a_i\le b_i$。
+$j<i$ 给 $v$ 的下界，$j>i$ 给上界；因两组非空有限，
+共同有限 $v$ 存在当且仅当两组的每个下界都不超过每个上界。
+这正是表 $\mathcal T_K$，且反向可以先取一个 $v$，再取一个 $u$。
+单前缀时一个 $u$ 总能实现该区间，故投影为全实轴。
+按每行 $c_\nu$ 的符号反解，得到 (23.3)，
+包括零系数矛盾、无上界、无下界及端点相等的情形。
+所以 $D_K$ 正是 $\mathcal Q_K$ 在 $t$ 轴上的投影，且每个属于投影的有限点都有原像。
+
+对 $t>0$，(21.5) 将这些原像逐点还原为一个共同的 $p,a,b,\lambda$；
+(21.3) 和严格递增的 logit 使全部真概率落入给定区间。
+任一正指数原候选又必须产生该表中的一个点，故两向包含均成立。
+正下端点和有限正上端点属于闭集 $D_K$，以上反向构造证明其同时取得，
+不需要把每个报告各自取得的不同控制拼接。
+$p=0$ 时只允许 (21.6)，恰给 (23.5)，并保留其全部原参数自由度。
+这也证明所列空集及零端点判据。
+
+上述消元在此仅消费标准的有限半空间投影：
+[Goemans，*Linear Programming and Polyhedral Combinatorics*，§3 开篇，定义 3.4 后的 Fourier–Motzkin 消元](https://math.mit.edu/~goemans/18433S15/polyhedral.pdf)
+明确给出最大下界与最小上界的反向见证；
+[Boyd–Vandenberghe，*Convex Optimization*，§§2.2.4、4.3](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)
+给出多面体与线性约束表述。
+(23.7) 已把所需两次消元完整写出，不另提出一般线性规划或投影定理。∎
+
+**推论 23.3（充分设计的有限锋利界）。** 若 $K$ 满足定理 22.1 的设计条件，
+则 $\mathcal Q_K$ 或为空，或为有界闭集，故非空 $D_K$ 有有限且取得的两端点。
+因此非空正指数集合总有有限上端点，但其下确界仍可为不取得的零。
+若设计条件失败而 $\mathcal Q_K$ 非空，则 $D_K=\mathbb R$，
+从而 $P_{K,+}=(0,\infty)$；单凭这些区间不能给正指数上界。
+
+取同奇偶的 $i<j$ 和另一奇偶的 $k$，使用 (22.4) 的 $\alpha,\beta,\delta$，
+置仅支撑在这三个前缀上的系数
+
+$$
+\gamma_i=\alpha/\delta,\qquad
+\gamma_j=\beta/\delta,\qquad \gamma_k=-1/\delta.
+$$
+
+则对所有共同候选均有 $t=\sum_n\gamma_nY_n$，因此
+
+$$
+T_-:=\sum_{\gamma_n\ge0}\gamma_na_n+
+       \sum_{\gamma_n<0}\gamma_nb_n
+\le t\le
+T_+:=\sum_{\gamma_n\ge0}\gamma_nb_n+
+       \sum_{\gamma_n<0}\gamma_na_n.
+\tag{23.8}
+$$
+
+若 $K$ 恰为这三个数，$D_K=[T_-,T_+]$，界为锋利界；
+若另有其他前缀，(23.8) 只是必要界，全部兼容性仍由定理 23.2 决定。
+特别地，对 $K=\{0,1,2\}$，正指数集合精确为
+
+$$
+\boxed{(0,\infty)\ \cap\
+\left[2+\frac{A_0+A_2-2B_1}{L},\quad
+      2+\frac{B_0+B_2-2A_1}{L}\right],}
+\tag{23.9}
+$$
+
+零指数仍单独检验 $0\in[A_0,B_0]$、$L\in[A_1,B_1]$、$0\in[A_2,B_2]$。
+
+证明。满列秩允许选出三个可逆行。
+这三行的 $Y$ 分别属于有限闭区间，逆矩阵将其盒子映为有界闭集，
+$\mathcal Q_K$ 是其中的闭子集，故紧致；投影的端点亦取得。
+设计条件失败时，证明 22.1 中的 $e_n=\alpha+\beta n$ 成立。
+对 $\mathcal Q_K$ 任一点沿 (22.1) 的同一方向平移，保持全部区间，
+并能将 $t$ 变成任意实数，所以 $D_K=\mathbb R$。
+
+(22.4) 减去 $e_nL$ 后给 $t=\sum\gamma_nY_n$。
+按每个系数的符号取区间端点，即得 (23.8)。
+恰有三行时可逆矩阵将整个 logits 盒子双射到 $\mathcal Q_K$，
+线性函数 $\sum\gamma_nY_n$ 的最小值和最大值均在所述盒角取得。
+盒子内连接这两个角的线段又实现两值之间的每一点，故没有缺口。
+这证明三前缀的锋利性；更多前缀要过滤同一盒像，不保证各三行的见证相同。
+代入 $i=0,j=2,k=1$ 得 (23.9)。∎
+
+**命题 23.4（不一致、单点与不取得的零下界）。** 令
+$\sigma(x)=e^x/(1+e^x)$，以下用 $J_k=[A_k,B_k]$ 指定
+$I_k=\sigma(J_k)$；所有概率区间均为严格内区间。
+
+(a) 对 $K=\{0,2,4\}$，精确 logits $Z_0=Z_2=0,Z_4=1$ 无候选，
+尽管任一单前缀报告都分别具有每个 $p>0$ 的见证。
+
+(b) 对 $K=\{0,1,2\}$，取任意 $t_*>0,c\in\mathbb R$，
+$J_0=J_2=\{c\},J_1=\{c+L-t_*\}$，则指数集合恰为 $\{2t_*/L\}$。
+$J_0=J_2=\{0\},J_1=\{L\}$ 则恰给 $\{0\}$。
+
+(c) 取 $c>0,d>0$，$J_0=J_2=\{c\}$、$J_1=[c+L-d,c+L]$，
+则全部指数集合为 $(0,2d/L]$，下确界零不取得。
+把 $d$ 置为零时，形式坐标域非空而原候选集合为空。
+
+证明。(a) 偶数前缀要求 $Z_k=u+kv$。
+前两个报告给 $u=v=0$，与 $Z_4=1$ 矛盾；零指数也不满足最后一个报告。
+任意一个报告则可先任选 $p>0,|\lambda|>0$，再按 (21.2) 选择 $r>0$ 实现。
+
+(b) 三行逆式给 $u=c,v=0,t=t_*>0$，故唯一指数如述。
+第二组报告只有 $t=0,u=v=0$，正指数不允许而支持签名恰合格。
+
+(c) 三行约束给 $u=c,v=0,0\le t\le d$。
+每个 $0<t\le d$ 均由 $p=2t/L,r=e^{c/p},|\lambda|=1/\sqrt2$ 同时实现，
+所有相位与非零共同尺度任取。零指数却要求 $Z_0=0$，与 $c>0$ 矛盾。
+当 $p\downarrow0$ 时，此见证族的 $r\to\infty$；每个见证的振幅比仍有限，
+但不存在一个有限比的零指数极限候选。
+$d=0$ 时 $\mathcal Q_K=\{(c,0,0)\}$，没有正指数，支持签名又失败。
+这说明投影中的零点与原零指数支不可混同。∎
+
+## 24. 在同一前缀纤维中保留旧标定与射线证书
+
+**定理 24.1（独立来源限制及射线证书的同见证过滤）。** 在定义 23.1 下，
+另行供应非空来源比集合 $R\subset(0,\infty)$ 及有限 $\varepsilon\ge0$，
+要求同一候选满足
+
+$$
+r\in R,\qquad D([G_\lambda^2\psi],[\psi])\le\varepsilon.
+\tag{24.1}
+$$
+
+若同时保留旧合同的初始、一次概率区间，则将已供应的 $0,1$ 纳入同一索引集合；
+同一前缀的多个区间先取交，空交即无候选。
+这一合并只联合已有供应，不为缺少的前缀增添读数。
+
+令 $H_\varepsilon(r)$ 与 $T_\varepsilon(r,h)$ 逐个 $r$ 按 (17.3)–(17.4) 定义。
+全部正指数候选恰为 (23.1) 中满足
+
+$$
+\begin{gathered}
+t>0,\quad p=2t/L,\quad r=e^{u/p}\in R,\quad h=e^{2v/p},\\
+h\in H_\varepsilon(r),\qquad
+\cos(2\eta)\ge T_\varepsilon(r,h)
+\end{gathered}
+\tag{24.2}
+$$
+
+的点及相位，再由 (21.5) 还原；来源的 $c,\phi$ 仍自由。
+若仅求存在一个合格相位，可省略 (24.2) 的最后一行，但不能省略
+同一点的 $h\in H_\varepsilon(r)$。
+该判据给全部允许相位弧及 $\lambda$ 的两个平方根分支。
+零指数候选先检验 (23.5)，再以任意 $r\in R$、$h>0$ 及同一相位条件过滤；
+因 $h=1,\eta=0$ 总合格，$R$ 非空时零指数存在性恰由 (23.5) 决定。
+
+特别地，若旧合同独立固定 $r=r_*$，在同一 $\mathcal Q_K$ 中加入
+
+$$
+u=(2\log r_*/L)t,
+\tag{24.3}
+$$
+
+然后使用 $H_\varepsilon(r_*)$ 即可。
+若另给 $0<r_-\le r\le r_+<\infty$，比值限制等价于
+$(2\log r_-/L)t\le u\le(2\log r_+/L)t$。
+但 $r$ 未固定时，射线条件仍含 $r=e^{u/p}$ 与 $h=e^{2v/p}$ 的联合非线性关系，
+不能把某个先选的来源比给出的 $H$ 当作与 $u,t$ 无关的固定线性条件。
+若旧合同固定的是字面 $a_*,b_*$，还须在 (21.5) 中固定
+$c=b_*$、$re^{i\phi}=a_*/b_*$，而不是为不同前缀另取来源。
+
+证明。定理 17.2 的距离恒等式对任意有限 $r,h>0$ 及
+$2\lambda^2=he^{2i\eta}$ 都成立；它不依赖 $p$。
+把 (21.5) 还原的同一参数代入 (17.2)，完整距离条件恰为
+$\cos(2\eta)\ge T_\varepsilon(r,h)$。
+存在这样的相位恰为 $h\in H_\varepsilon(r)$，且实正相位 $\eta=0$ 可实现每个这样的 $h$。
+故 (24.2) 与全部概率区间、来源限制及射线证书同时等价。
+反向选取同一点、同一相位并用 (21.5)，就得到所需共同见证；
+不同条件分别存在见证不替代这个共同存在量词。
+$p=0$ 时概率只依赖支持，而几何仍检验所选择的实际 $r,h,\eta$；
+$h=1,\eta=0$ 使距离为零，证明零指数存在性断言。
+(24.3) 及有界比值条件由 $u=p\log r$、$p>0$ 直接等价变换得到。
+未知比值时，存在相位所需的条件具体为
+
+$$
+\frac{e^{u/p}|e^{2v/p}-1|}
+{\sqrt{(1+e^{2u/p})(1+e^{2u/p}e^{4v/p})}}\le\varepsilon,
+\tag{24.4}
+$$
+
+其 $r$ 与 $h$ 必须来自同一点；(23.3) 对纯概率的区间形状不自动扩展到该过滤像。
+字面固定来源只需在完整还原纤维中取其对应的尺度与相位，距离式保持不变。∎
+
+**定理 24.2（额外相干概率对定理 20.4 歧义的直接消费）。** 保留定理 20.4 的
+平衡来源 $r=1$、任意非空有限树深度集合 $F$、全部精确树报告
+$q_0=q_n=1/2$（$n\in F$）及同一几何容差。
+令 $P_F$ 为 (20.8) 的精确候选指数集合。
+现在另按假设 21.1 供应同一来源、同一控制、同事件的相干前缀概率。
+对每个这样的共同候选，精确有
+
+$$
+\boxed{\operatorname{logit}Q_k=\lfloor k/2\rfloor(p-2)L.}
+\tag{24.5}
+$$
+
+因此单独另供任一 $k\ge2$ 的相干真概率便确定
+
+$$
+p=2+\frac{\operatorname{logit}Q_k}{\lfloor k/2\rfloor L},
+\tag{24.6}
+$$
+
+并仅在此值属于 $P_F$ 时兼容。
+若另供有限集合 $K$ 上的闭内区间 $I_k$，记其 logits 为 $[A_k,B_k]$，
+则全部共同指数精确为
+
+$$
+\boxed{P_F\ \cap\!
+\bigcap_{\substack{k\in K\\k\ge2}}
+\left[2+\frac{A_k}{\lfloor k/2\rfloor L},\quad
+      2+\frac{B_k}{\lfloor k/2\rfloor L}\right],}
+\tag{24.7}
+$$
+
+前提是每个供应的 $k\in\{0,1\}$ 都满足 $0\in[A_k,B_k]$；
+若任一个失败，集合为空。
+每个允许指数均由同一个 $|\lambda|=2^{-1/p}$ 实现全部树与相干报告，
+允许相位恰按 (17.4) 用 $r=1,h=2^{1-2/p}$ 过滤。
+特别地，另供 $Q_2=1/2$ 给 $p=2,h=1$；单供 $Q_0,Q_1$ 不缩小 $P_F$。
+
+证明。定理 20.4 已给 $p>0$ 和 $|\lambda|=2^{-1/p}$，
+故 (21.3) 的 $u=0$、$v=(p/2-1)L$。
+代入得
+
+$$
+Z_k=(k-e_k)(p/2-1)L=\lfloor k/2\rfloor(p-2)L,
+$$
+
+即 (24.5)。$k\ge2$ 时系数严格正，反解给 (24.6)，
+逐个单调反解区间给 (24.7)；$k=0,1$ 时恒为零。
+任一 $p\in P_F$ 取实正 $\lambda=2^{-1/p}$，由定理 20.4 同时实现所有旧树报告和几何证书，
+又由 (24.5) 同时实现新相干区间。
+其余允许相位不影响这些概率，并由原距离条件逐点限定，所以必要性与共同取得性均成立。
+新增约束来自另行供应的相干复合报告；在固定树合同内增加 $F$ 的深度或大小仍保持
+定理 20.4 的原歧义，不能据此取得 (24.5) 的数据。∎
+
+**命题 24.3（平方标定后仍保留的相位歧义）。** 在定理 24.2 的额外报告
+$Q_2=1/2$ 下，任意 $\varepsilon>0$ 仍允许不精确回返的相位见证。
+当 $\varepsilon=0$ 时，原射线证书另行迫使 $\lambda=\pm1/\sqrt2$；
+这一相位结论来自证书而非概率。
+
+证明。此时 $p=2,r=h=1$。由 (17.2)，
+$D([G_\lambda^2\psi],[\psi])=|\sin\eta|$。
+任意 $\varepsilon>0$ 可取 $0<\eta<\pi/2$ 且 $\sin\eta\le\varepsilon$，
+并置 $\lambda=e^{i\eta}/\sqrt2$。
+全部树报告及全部相干报告均为一半，射线证书合格，却有 $e^{2i\eta}\ne1$，故不回返。
+$\varepsilon=0$ 则要求 $\sin\eta=0$，即 $\eta=0$ 或 $\pi$ 模 $2\pi$，得到两个实根。
+来源相对相位及共同尺度在两种情形下仍未由概率识别。∎
+
+**定义 24.4（条件综合的来源与适用域）。** (21.1)–(24.7) 的对象是本卷指定
+三端口候选族上的同事件有限逆问题，作为 `repo-derived` 的条件纸面综合使用。
+承重增量是未知来源比与控制模下相干奇偶报告的完整纤维、最小设计、
+任意有限内区间的共同取得及其对 (20.8) 的额外数据过滤；
+不把标准秩计算、有限半空间消元、乘性分类、Hopf 坐标或酉群表示另立为新通用结果。
+来源复用为本卷定义 13.1、假设 13.2、定理 17.2 及 §§18–20，
+[V17 §2、命题 13.1](AURIC_SUM_PRODUCT_LOGARITHMS_AND_QUANTUM_PYTHAGOREAN_GEOMETRY_V17.md)
+的 log 坐标和两种递归，
+[V47 §§4、10](AURIC_EXISTENTIAL_QUANTIFIERS_SQUARE_WEIGHTS_AND_PROMPT_ERROR_RELATIONS_V47.md)
+的幂分类与相位限制，
+[V52 §§2、5](AURIC_PURE_STATE_QUOTIENT_GEOMETRY_QUADRATIC_RELATION_GENERATORS_AND_LOSSLESS_RECURSION_V52.md)
+的商几何及共同相位不变量，
+[V55 §§9–10](AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md)
+的几何与条件动力学边界。
+标准有限半空间工具的文献适用域见定理 23.2 所附作者来源；
+上述有限三端口综合不据此主张全球优先权。
+
+实际供应仍须满足假设 21.1 和 16.3；(23.4) 的可识别性是精确概率或确定性包含区间上的
+纤维结论，不等于有限样本可取得、可认证或具有给定资源界的估计。
+[量子续卷 IV §§206–208](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md)
+的平方检测权重、既定率和历史桥仍是其各自输入，不供应这里的概率或控制。
+概率 $0,1$ 若作为单点报告，在本卷 $ab\lambda\ne0$ 的有限前缀域没有见证；
+本节内区间反演不把无穷 logit 当作有限参数。
+正指数纤维的闭包不替代 (21.6) 的零指数支，端口概率不补回相位回返。
+一般过程认证、实际控制或复制权限、近似乘性稳定性、复数域唯一性、
+张量复合、物理时间及无前件量子起源均不属于这个逆问题的结论。
+
+## 追加锚（本行以下为增补区）
+
+## 25. 共享变动标定路径的相干前缀纤维
+
+**假设 25.1（一条路径、全部连续前缀与两种分别声明的漂移承诺）。**
+沿用定义 13.1 的有限值非负乘性权重及未归一闭单位盘有界性，
+采用定理 13.3 证明中已分类的 $w_p$，$p\ge0$；零点始终单独取零。
+保留假设 21.1 的同源、复线性三端口、同一幅度坐标、
+$\psi=(a,0,b)^{\mathsf T}$、$ab\ne0$、旁观系数一及同一事件 $C=\{1,2\}$。
+将其中重复的同一个标量改为一条预先固定、各项有限非零的路径
+
+$$
+G_j=(\lambda_jH_0)\oplus1,\quad \lambda_j\in\mathbb C^\times,
+\qquad P_0=I_3,\quad P_k=G_k\cdots G_1\quad(1\le k\le N).
+\tag{25.1}
+$$
+
+每个候选共用同一 $a,b,p,\lambda_1,\ldots,\lambda_N$；
+第 $k$ 个比较使用这条路径的前 $k$ 项，不为不同终点重新选择路径。
+另行供应全部连续前缀 $k=0,\ldots,N$ 的同事件真概率
+$Q_k=\Pi_{w_p}(C\mid P_k\psi)$，或含这些真概率的确定性闭内区间。
+中间不测量、不去相干、不记录细分叶，也不重新标定活动块相对旁观块。
+各前缀分别供应的概率不被当作逐步测量的联合抽样律。
+主要结论取有限 $N\ge2$，记 $m=N-1$、$L=\log2$；
+$N\le1$ 的空约束边界另述。
+
+定义实 log 模长、奇偶记号及相邻变化
+
+$$
+x_j=\log(\sqrt2|\lambda_j|),\qquad
+ e_k=k-2\lfloor k/2\rfloor,\qquad s_i=(-1)^i,
+\qquad \delta_i=x_{i+1}-x_i\quad(1\le i\le m).
+\tag{25.2}
+$$
+
+以下是两种不同的、必须分别供应的承诺，预算均有限非负：
+
+$$
+\mathsf E_D:\quad |\delta_i|\le D\quad(1\le i\le m),
+\qquad
+\mathsf T_V:\quad \sum_{i=1}^m|\delta_i|\le V.
+\tag{25.3}
+$$
+
+$x_j$ 加同一个常数不改变这两个承诺；没有对 $x_1$、原始模长、
+控制相位或相位变化给出界。$\mathsf T_V$ 只含一个全路径预算，
+不表示每个相邻变化都可各花一次 $V$。
+两者若同时供应就同时检验，未供应者不自动加入。
+来源比 $r=|a|/|b|$ 初始未知且有限正；若另知来源，则在下面的同一纤维中限制它。
+这些前件不供应制备、复制、重置、相干控制、概率区间的取得或置信度。
+
+**定理 25.2（全部正指数与零指数原参数纤维）。**
+给定任意精确 logits $z_k=\operatorname{logit}Q_k\in\mathbb R$，$0\le k\le N$。
+对 $p>0$，全部原参数见证恰为
+
+$$
+\begin{aligned}
+u&=z_0,\qquad r=\exp(z_0/p),\\
+x_j&=\frac{z_j-z_{j-1}-(-1)^{j+1}(L-pL/2)}p,
+       &&1\le j\le N,\\
+b&=c,\qquad a=cr e^{i\phi},\qquad
+\lambda_j=2^{-1/2}e^{x_j}e^{i\eta_j},\\
+c&\in\mathbb C^\times,\qquad
+\phi,\eta_1,\ldots,\eta_N\in\mathbb R/(2\pi\mathbb Z),
+\end{aligned}
+\tag{25.4}
+$$
+
+其中仅保留满足已供应漂移承诺的 $x$。
+每个正指数及整个 logit 向量确定唯一 $r$ 和唯一模长路径，
+但共同非零复尺度、来源相对相位及每步控制相位全部自由。
+不加漂移承诺时，任意有限实 $z$ 都有每个 $p>0$ 的见证。
+若另行固定 $r=r_*$，就在同一纤维中加入 $z_0=p\log r_*$；
+若字面固定来源 $a_*,b_*$，还须取 $c=b_*$、$re^{i\phi}=a_*/b_*$。
+这些限制对所有前缀共同施加，不为不同终点重新选择来源。
+
+零指数有见证当且仅当
+
+$$
+z_k=e_kL\quad(0\le k\le N),\qquad
+Q_k=\begin{cases}1/2,&k\text{ 偶},\\2/3,&k\text{ 奇}.
+\end{cases}
+\tag{25.5}
+$$
+
+此时 $r$ 为任意有限正数，$c,\phi,\eta_j$ 自由，
+$x$ 为满足所供应承诺的任意有限实路径。
+两种预算均非负，故常路径 $x_j=0$ 总给零指数的一个合格模长见证。
+不能把 (25.4) 在 $p=0$ 代入，或从形式坐标 $u=0$ 推断零指数的 $r=1$。
+
+若另供完整端口概率，偶数前缀为 $(Q_k,0,1-Q_k)$，
+奇数前缀为 $(Q_k/2,Q_k/2,1-Q_k)$，在这个控制形状内不再细化纤维。
+
+证明。令 $\Lambda_k=\prod_{j=1}^k\lambda_j$，$\Lambda_0=1$。
+活动块是标量乘同一个 $H_0$，故所有标量可交换，$H_0^2=2I_2$ 给
+
+$$
+P_{2h}\psi=(2^h\Lambda_{2h}a,0,b)^{\mathsf T},\qquad
+P_{2h+1}\psi=(2^h\Lambda_{2h+1}a,
+                2^h\Lambda_{2h+1}a,b)^{\mathsf T}.
+\tag{25.6}
+$$
+
+所有显示的活动幅度及旁观幅度非零，因此归一分母有限正，且
+
+$$
+\frac{Q_k}{1-Q_k}
+=r^p|\Lambda_k|^p2^{p\lfloor k/2\rfloor+e_k},\qquad
+z_k=u+p\sum_{j=1}^kx_j+e_k(L-pL/2),\quad u=p\log r.
+\tag{25.7}
+$$
+
+这里实 log 只用于正数，未取复 log。
+$p>0$ 时，$k=0$ 确定 $u$；相邻两式相减唯一确定每个 $x_j$，即 (25.4)。
+反向按 (25.4) 取任意相位与尺度，逐项求和使 (25.7) 望远镜消去，
+同时恢复所有给定 $z_k$，没有为不同终点另取来源或控制。
+任一原参数组又可由 $c=b$、$\phi=\arg(a/b)$、$\eta_j=\arg\lambda_j$ 表示，
+所以这确为全部纤维。
+$p=0$ 时每个非零端口权重一、空端口权重零，(25.6) 直接给 (25.5)，
+不对空端口使用 $0^0$。支持签名外没有零指数见证；签名内的模长与相位均不影响概率。
+最后，奇数的两个活动幅度相等，偶数的第二活动幅度为零，给端口断言。∎
+
+**命题 25.3（无模长漂移、无承诺及相位边界）。**
+$D=0$ 或 $V=0$ 恰要求全部 $|\lambda_j|$ 相同。
+此时 (25.7) 的概率式化为 (21.3)，故概率层面恢复 §§21–23 的固定模长逆问题；
+只有再要求 $\eta_j$ 相同，才恢复字面上重复同一个复控制。
+若去掉两种漂移承诺，则任意内区间报告都兼容所有正指数，
+零指数仍只按 (25.5) 单独判断。
+即使知道全部模长路径，端口概率也不认证 $[P_2\psi]=[\psi]$。
+
+证明。非负绝对值的和为零当且仅当每一项为零，
+故两种零预算都给 $x_j=x_1$；反向显然。
+将常值代入 (25.7) 即得 (21.3)，相位仍未进入等式。
+无承诺时从每个内区间各取一个有限 logit，(25.4) 对任意 $p>0$ 给共同见证。
+回返方面，$P_2\psi=(2\lambda_2\lambda_1a,0,b)^{\mathsf T}$；
+因 $ab\ne0$，射线回返当且仅当 $2\lambda_2\lambda_1=1$。
+在 $|\lambda_1|=|\lambda_2|=1/\sqrt2$ 时，将 $\eta_1+\eta_2$ 从零改成 $\pi$
+保持全部概率与两种漂移预算，却将活动幅度反号，故不回返。
+这是命题 21.3 的相位障碍在共享变动路径上的保留。∎
+
+## 26. 精确连续报告的两种预算逆像与阈值
+
+**定理 26.1（逐相邻 log 模长界的完整精确逆像）。**
+在假设 25.1 下，对 $1\le i\le m$ 置
+
+$$
+\Delta^2z_i=z_{i+1}-2z_i+z_{i-1},\qquad
+R_i=2L-s_i\Delta^2z_i,\qquad
+R_{\min}=\min_iR_i,\quad R_{\max}=\max_iR_i.
+\tag{26.1}
+$$
+
+仅供应 $\mathsf E_D$ 时，兼容正指数恰满足
+
+$$
+\boxed{|R_i-pL|\le pD\quad(1\le i\le m),\quad p>0.}
+\tag{26.2}
+$$
+
+完整闭式如下；所有集合再与 $(0,\infty)$ 相交。
+
+(a) $0\le D<L$：若有 $R_i\le0$，集合为空；否则为
+
+$$
+\left[\frac{R_{\max}}{L+D},\frac{R_{\min}}{L-D}\right],
+\tag{26.3}
+$$
+
+下端点大于上端点时仍为空，相等时为正单点。
+
+(b) $D=L$：若有 $R_i<0$，集合为空；否则为
+
+$$
+(0,\infty)\cap\left[\frac{R_{\max}}{2L},\infty\right).
+\tag{26.4}
+$$
+
+(c) $D>L$：总为非空无界集合
+
+$$
+(0,\infty)\cap
+\left[\max\left\{0,\frac{R_{\max}}{L+D},
+                         \frac{-R_{\min}}{D-L}\right\},\infty\right).
+\tag{26.5}
+$$
+
+每个有限正端点由 (25.4) 的同一个来源与路径取得。
+零指数应且仅应在 (25.5) 成立时另加，不能由正支的下确界代替。
+特别地，$D=0$ 时正支存在当且仅当所有 $R_i$ 等于同一个正数，
+其指数为该数除以 $L$。
+
+证明。对 (25.7) 取二阶差分，因 $\Delta^2e_i=2s_i$，得到
+
+$$
+\Delta^2z_i=p\delta_i+s_i(2-p)L,
+\qquad R_i=p(L-s_i\delta_i).
+\tag{26.6}
+$$
+
+因此 (26.2) 与全部相邻漂移界等价。
+反向由 (25.4) 还原路径时，同一个恒等式给
+$\delta_i=s_i(L-R_i/p)$，恰满足所需承诺，故判据充分。
+若 $D<L$，(26.2) 等价于
+$p(L-D)\le R_i\le p(L+D)$，强迫 $R_i>0$，
+并分别给 (26.3) 的共同上下界。
+$D=L$ 时等价于 $0\le R_i\le2pL$，得到 (26.4)。
+$D>L$ 时正 $R_i$ 只给第一种下界，负 $R_i$ 只给第二种下界，
+零值不给限制，合并就是 (26.5)。
+这些是不严格有限线性不等式；任一属于其中的有限正端点均经 (25.4) 给有限非零参数。
+零指数签名与漂移无关，且有常路径见证，故只按 (25.5) 判断。∎
+
+**定理 26.2（一个总变差预算的完整精确逆像）。**
+仅供应 $\mathsf T_V$ 时，兼容正指数恰为
+
+$$
+\boxed{\sum_{i=1}^m|R_i-pL|\le pV,\qquad p>0.}
+\tag{26.7}
+$$
+
+以下有限表给其全部端点，包括空集及单点。
+对每个 $\sigma\in\{-1,1\}^m$ 置
+
+$$
+A_\sigma=\sum_i\sigma_iR_i,\qquad
+C_\sigma=V+L\sum_i\sigma_i.
+\tag{26.8}
+$$
+
+若某行 $C_\sigma=0,A_\sigma>0$，正支为空；否则定义
+
+$$
+p_- =\max\left(\{0\}\cup\{A_\sigma/C_\sigma:C_\sigma>0\}\right),
+\qquad
+p_+ =\min\left(\{+\infty\}\cup\{A_\sigma/C_\sigma:C_\sigma<0\}\right).
+\tag{26.9}
+$$
+
+正支精确为 $(0,\infty)\cap[p_-,p_+]$。
+它非空当且仅当没有上述矛盾行、$p_-\le p_+$ 且 $p_+>0$；
+$p_-=p_+>0$ 给单点，其余有限正端点均取得。
+零指数仍仅按 (25.5) 另加。
+
+有界性的全部阈值为：
+
+1. $V<mL$ 时，每个非空正支有有限正上端点，且
+   $p\le\sum_iR_i/(mL-V)$。
+2. $V=mL$ 时，正支非空当且仅当 $\sum_iR_i\ge0$；一旦非空便无界。
+3. $V>mL$ 时，对任意有限报告，总有全部充分大的有限 $p$ 合格。
+
+若至少一个 $R_i\ne0$，非空正支的下端点严格正；
+若全部 $R_i=0$，则 $V<mL$ 时正支为空，$V\ge mL$ 时正支为 $(0,\infty)$。
+
+证明。(26.6) 给
+$\sum_i|\delta_i|=p^{-1}\sum_i|R_i-pL|$，
+故 (26.7) 必要且经 (25.4) 充分。
+有限实向量 $v$ 满足 $\sum_i|v_i|=\max_\sigma\sum_i\sigma_iv_i$：
+任意符号和不超过绝对值和，按每个非零项的符号取 $\sigma_i$ 即取等。
+应用于 $v_i=R_i-pL$，(26.7) 等价于全部 $A_\sigma\le C_\sigma p$。
+按 $C_\sigma$ 的正、负、零分别解出下界、上界和矛盾行，即得 (26.9) 及所有端点判据。
+反向见证仍为同一个 (25.4)，不将各项分别取得的路径拼合。
+
+对全负号一行，有 $(mL-V)p\le\sum_iR_i$，证明第一项。
+为判定临界及超临界域，令 $\rho=1/p>0$，则 (26.7) 等价于
+
+$$
+f(\rho):=\sum_i|\rho R_i-L|\le V,\qquad f(0)=mL.
+\tag{26.10}
+$$
+
+全部充分小的正 $\rho$ 都满足 $\rho R_i<L$，所以
+$f(\rho)=mL-\rho\sum_iR_i$。
+若 $V=mL$ 且和非负，这已给任意大的合格 $p$；
+若和为负，则对所有 $\rho>0$ 有
+$f(\rho)\ge\sum_i(L-\rho R_i)>mL$，故没有正支。
+若 $V>mL$，由上述小 $\rho$ 公式同样得到所有充分大的 $p$ 合格。
+又由三角不等式，(26.7) 推出
+$\sum_i|R_i|\le p(V+mL)$，故非零 $R$ 给严格正下界。
+$R=0$ 时 (26.7) 就是 $mL\le V$。
+零指数的判断独立，证明完毕。∎
+
+**推论 26.3（支持签名的精确正零混淆边界）。**
+对完整零指数签名 $z_k=e_kL$，所有 $R_i=0$。
+它与正指数混淆，当且仅当逐相邻预算 $D\ge L$，
+或在单独使用总变差承诺时 $V\ge mL$。
+越过相应阈值后，该签名与每个 $p>0$ 相容；阈值本身已取得。
+一个共同平衡来源上的正指数见证为
+
+$$
+a=b=1,\qquad
+\lambda_j=\begin{cases}1,&j\text{ 奇},\\1/2,&j\text{ 偶},\end{cases}
+\qquad x_j=(-1)^{j+1}L/2.
+\tag{26.11}
+$$
+
+它有 $|\delta_i|=L$、总变差 $mL$，并且每两个相邻控制复合均为 $I_3$。
+$p=0$ 则可在同一平衡来源上取常控制 $\lambda_j=1/\sqrt2$。
+
+证明。将 $R=0$ 代入 (26.2)、(26.7) 即得必要阈值及正支的全部指数。
+(26.11) 中任意两个相邻标量的乘积为 $1/2$，所以
+$G_{j+1}G_j=((\lambda_{j+1}\lambda_j)H_0^2)\oplus1=I_3$。
+偶数前缀回到 $\psi$，奇数前缀为 $(1,1,1)^{\mathsf T}$，
+故对所有 $p\ge0$ 读数恰为 (25.5)。
+$x$ 的相邻差绝对值为 $L$，直接取得阈值。
+这里是指定变动控制的回返，不能据此声称同一个控制重复两次也回返。∎
+
+
+## 27. 共享真 logit 向量的有限内区间逆像
+
+**定义 27.1（共同区间盒及两种路径约束）。**
+对所有 $k=0,\ldots,N$，另供非空闭区间
+
+$$
+I_k\subset(0,1),\qquad J_k=\operatorname{logit}I_k=[\alpha_k,\beta_k],
+\qquad \mathcal B=\prod_{k=0}^NJ_k.
+\tag{27.1}
+$$
+
+端点均为有限实数，允许单点；同一前缀若已有多个区间，先取交。
+空交即无候选。对一个共同 $z\in\mathcal B$ 定义
+$R_i(z)=2L-s_i(z_{i+1}-2z_i+z_{i-1})$。
+记下列两个有限线性约束域；此处暂允许 $p\in\mathbb R$，正支再另取 $p>0$：
+
+$$
+\begin{aligned}
+\mathcal H_E&=\{(z,p):z\in\mathcal B,\
+ -pD\le R_i(z)-pL\le pD\ (1\le i\le m)\},\\
+\mathcal H_T&=\{(z,p):z\in\mathcal B,\
+ \sum_i\sigma_iR_i(z)\le p(V+L\sum_i\sigma_i)
+ \quad(\sigma\in\{-1,1\}^m)\}.
+\end{aligned}
+\tag{27.2}
+$$
+
+$\mathcal H_T$ 在 $p>0$ 上等价于
+$\sum_i|R_i(z)-pL|\le pV$。
+两种承诺同时供应时取这两个域之交，始终只用一份 $z$。
+
+**定理 27.2（必要充分的有限端点表与全部共同原参数）。**
+选择与所供应承诺对应的 $\mathcal H$。
+将 (27.1)–(27.2) 的各行展开成关于 $z_0,\ldots,z_N,p$ 的线性不等式，
+依次消去 $z_0,\ldots,z_N$，所需规则具体如下。
+在一次消元中，当前变量为 $w$，其余变量为 $\xi$；
+将每行写成 $a w+f(\xi)\le c$。
+$a=0$ 的行保留；$a<0$ 给下函数 $\ell(\xi)=(c-f(\xi))/a$，
+$a>0$ 给上函数 $h(\xi)=(c-f(\xi))/a$。
+以每一对 $\ell\le h$ 替换所有含 $w$ 的行。
+若只有下函数或只有上函数，不生成配对行。
+所得最终有限表写作
+
+$$
+c_\nu p\le d_\nu.
+\tag{27.3}
+$$
+
+若有 $c_\nu=0,d_\nu<0$，置 $D_{\mathcal H}=\varnothing$。
+否则令
+
+$$
+\pi_- =\max\left(\{0\}\cup\{d_\nu/c_\nu:c_\nu<0\}\right),\qquad
+\pi_+ =\min\left(\{+\infty\}\cup\{d_\nu/c_\nu:c_\nu>0\}\right).
+\tag{27.4}
+$$
+
+则全部共同兼容的原指数为
+
+$$
+\boxed{P_+=(0,\infty)\cap[\pi_-,\pi_+],\qquad
+P=P_+\ \cup\
+\begin{cases}
+\{0\},&\alpha_k\le e_kL\le\beta_k\quad(0\le k\le N),\\
+\varnothing,&\text{其余情形},
+\end{cases}}
+\tag{27.5}
+$$
+
+有矛盾行时取 $P_+=\varnothing$。
+正支非空当且仅当没有矛盾行、$\pi_-\le\pi_+$ 且 $\pi_+>0$。
+$\pi_-=\pi_+>0$ 为正单点；$\pi_+\le0$ 或上下界反序给空正支。
+每个严格正下端点和每个有限正上端点均取得；
+$\pi_-=0$ 时正支不取得零，是否有原零指数仅由 (27.5) 的支持签名检验决定。
+无穷上端点只表示任意大的有限候选，不表示无限参数。
+
+每个合格 $p>0$ 的全部原参数，可且仅可按以下方式取得：
+反向恢复被消去的变量，在每一步取
+$\max\ell\le w\le\min h$ 中的任意有限值，恢复一个共同 $z$，
+再用 (25.4)。只有一侧约束时取满足该侧的任意有限值，两侧都无约束则任取实数。
+遍历所有这些选择及 (25.4) 的自由相位与尺度，恰得全部见证。
+零指数存在时，任意有限正来源比及任意满足已供应漂移承诺的路径均合格，
+相位与尺度仍自由。
+
+证明。固定其余变量 $\xi$，有限行对 $w$ 的可行集就是所有下半直线与上半直线的交。
+两侧均有约束时，最大下值不超过最小上值，当且仅当每一个下值不超过每一个上值；
+这正是配对规则，且闭区间中可取有限 $w$。
+仅有一侧时有限最大值或最小值总能被某个有限 $w$ 满足；
+无约束时亦然。零系数行须原样成立。
+因此每一步保留投影的两向等价，并保留反向选择的全部纤维。
+归纳到全部 $z$ 消去后，(27.3) 恰是 $\mathcal H$ 在实 $p$ 轴上的投影。
+按 $c_\nu$ 符号求解即得 (27.4) 及全部空集、单点和端点判据。
+
+对任一合格有限正 $p$，逆序选择给一个有限共同 $z\in\mathcal B$。
+定理 25.2 给唯一来源比与模长路径；(26.6) 保证该路径满足所供应预算。
+logit 严格单调，因此同一参数组的每个概率落入对应 $I_k$。
+反过来，任一原正指数见证给出其全部真 logits，满足 (27.2)，
+并在逐次消元中被保留，所以没有遗漏。
+有限正端点本身满足所有最终非严格行，反向选择与指数还原说明端点也有共同见证。
+$p=0$ 的原概率只能是 (25.5)，恰给 (27.5)；
+常路径满足所有非负预算，证明零支的充分性。
+这与将形式线性域中的 $p=0$ 当作原零指数无关。
+
+此处消费的是定理 23.2 已使用的有限半空间投影机制，
+[Goemans，*Linear Programming and Polyhedral Combinatorics*，§3、定义 3.4 后的 Fourier–Motzkin 消元](https://math.mit.edu/~goemans/18433S15/polyhedral.pdf)
+给出相同的上下函数配对与反向存在性。
+这里将它用于共享路径的具体 (27.2)，不把一般消元另立为新结果。∎
+
+**推论 27.3（区间逆像的无界阈值与小长度边界）。**
+$\mathcal B$ 非空且有限时，两种单独承诺有下列精确阈值。
+
+(a) 对 $\mathsf E_D$，$D<L$ 时非空正支总有有限上端点；
+$D=L$ 时，正支非空当且仅当
+
+$$
+\exists z\in\mathcal B\quad R_i(z)\ge0\quad(1\le i\le m),
+\tag{27.6}
+$$
+
+一旦非空便无界；$D>L$ 时总有全部充分大的有限正指数。
+
+(b) 对 $\mathsf T_V$，$V<mL$ 时非空正支总有有限上端点；
+$V=mL$ 时，正支非空当且仅当
+
+$$
+\max_{z\in\mathcal B}\sum_iR_i(z)\ge0,
+\tag{27.7}
+$$
+
+一旦非空便无界；$V>mL$ 时总有全部充分大的有限正指数。
+
+(c) $N=0$ 或 $N=1$ 时相邻变化索引为空，两个承诺均无额外约束。
+任意非空内区间盒都兼容每个 $p>0$，零指数仍只按支持签名判断。
+$N=0$ 时没有控制参数，$N=1$ 时有一个任意有限非零控制；
+不在这些情形使用含 $m$ 的除法或长度阈值。
+
+证明。$D<L$ 时，对每个见证都有
+$p\le R_i(z)/(L-D)$。例如固定 $i=1$，
+$R_1$ 在有限闭盒上有有限最大值，给统一有限上界；
+若最大值非正就无正支。
+$D=L$ 时，定理 26.1 对每个 $z$ 的存在条件正是全部 $R_i(z)\ge0$。
+选一个满足 (27.6) 的共同 $z$，固定它并令
+$p\ge\max_iR_i(z)/(2L)$，就得到任意大的见证。
+$D>L$ 时对盒中任意固定 $z$ 应用 (26.5) 即可。
+
+$V<mL$ 时，定理 26.2 给
+$p\le\max_{z\in\mathcal B}\sum_iR_i(z)/(mL-V)$；
+最大值存在且有限。临界时定理 26.2 对每个固定 $z$ 的充要条件是和非负；
+闭盒上的线性函数取得最大值，故 (27.7) 等价于存在这样的同一个 $z$。
+选定该向量便给无界正支。超临界时固定任一 $z$ 再应用定理 26.2。
+最后 $N\le1$ 时 (25.4) 对任意正指数、任意盒中 logits 均可反解，
+没有相邻变化需要检验；零支仍由非零端口的支持数给出。∎
+
+**命题 27.4（重叠局部见证不保证同一全路径）。**
+取 $N=3,p=2,D=0$，或将 $D=0$ 换为 $V=0$，并给
+
+$$
+J_0=J_3=\{0\},\qquad J_1=J_2=[1,2].
+\tag{27.8}
+$$
+
+前缀三元组 $\{0,1,2\}$ 与 $\{1,2,3\}$ 各自都有合法的正指数二见证，
+但不存在同时满足这四个区间的该指数与路径。
+事实上，这四个区间在零漂移下没有任何原指数见证。
+
+证明。第一个三元组可取 logits $(0,1,2)$，
+在 (21.3) 中取 $p=2,u=0,v=1$；第二个可取其索引 $1,2,3$ 上的
+$(2,1,0)$，取 $p=2,u=3,v=-1$。
+二者都是有限非零来源与常模长控制，由 (25.4) 可直接还原。
+但一个共同 $p=2$ 的零漂移见证必须有 $z_k=u+kv$，
+两端 $z_0=z_3=0$ 迫使 $u=v=0$，违反中间两个区间。
+对任意 $p>0$，零漂移的完整式为
+$z_k=u+kv+e_k(L-pL/2)$。
+$z_0=0$ 给 $u=0$；$z_3=0$ 给 $3v=-(L-pL/2)$；
+于是 $z_1=-2v$、$z_2=2v$，不可能同时为正。
+零指数又在 $k=1$ 要求 $L<1$，也不在 $J_1$。
+所以整个候选集合为空。
+局部实现使用不同的重叠 logits 和来源，不能把它们的残差界独立优化后合并。
+(27.2) 中的一份共同 $z$ 正是排除这个错误拼接所需的量词。∎
+
+**命题 27.5（形式零点与原零指数的区别）。**
+在 (27.2) 中代入形式 $p=0$，两种约束都恰要求所有 $R_i(z)=0$，
+即
+
+$$
+z_k=e_kL+c+kv\quad(0\le k\le N)
+\tag{27.9}
+$$
+
+对某些实 $c,v$ 成立。
+原零指数却还须 $c=v=0$；因此消元域含零不等于有原零指数。
+例如固定 $c\ne0$，给精确报告 $z_k=e_kL+c$：
+在 $D<L$ 或分别在 $V<mL$ 下，形式投影含零而全部原指数集合为空；
+在 $D\ge L$ 或分别在 $V\ge mL$ 下，原指数集合恰为 $(0,\infty)$，零下确界不取得。
+
+证明。形式 $p=0$ 时逐项上下界强迫 $R_i=0$；
+总变差的全部符号行也等价于 $\sum_i|R_i|\le0$。
+$R_i=0$ 等价于 $\Delta^2(z_i-e_iL)=0$；
+一阶差分因此为常数，得到 (27.9)。
+原零指数签名由 (25.5) 唯一给定，$k=0,1$ 即迫使 $c=v=0$。
+示例的 $R=0$，正支按定理 26.1–26.2 的阈值判断；
+$c\ne0$ 排除原零指数。
+阈值以上的每个 $p>0$ 可取 $r=e^{c/p}$ 及 (26.11) 的模长路径，
+所有相位与共同非零尺度任取，直接实现全部报告。
+$p\downarrow0$ 时允许的来源比可趋零或无穷；
+每个有限正指数的来源仍有限非零，不能借这种极限填入原零支。∎
+
+
+## 28. 同报告歧义的锋利模量与长度量词
+
+**定理 28.1（精确同报告的最佳相对歧义界）。**
+设两个正指数候选 $p,p'>0$ 都满足假设 25.1，
+在全部 $k=0,\ldots,N$ 上给出相同精确概率；
+每个候选各用自己的一条共同路径，且都服从相同的已供应预算。
+记 $S=p+p'$、$\Delta=|p'-p|$。则
+
+$$
+\mathsf E_D:\quad L\Delta\le DS,
+\qquad
+\mathsf T_V:\quad mL\Delta\le VS.
+\tag{28.1}
+$$
+
+这些界对每一对正指数都是充足的存在判据：
+相应不等式成立，当且仅当存在两个合法候选给出同一整族报告。
+充足性甚至可要求两个候选使用完全相同的平衡来源 $a=b=1$、实正控制，
+以及每两个相邻控制精确复合为 $I_3$。
+这里的充足性是对某个共同报告族的存在结论，
+不表示任意指定报告只要满足该数值界便都有这两个候选；指定报告仍用 §§26–27。
+
+若 $D<L$ 或分别 $V<mL$，设
+$\epsilon=D/L$ 或分别 $\epsilon=V/(mL)$，则
+
+$$
+\frac{\Delta}{S}\le\epsilon<1,
+\qquad
+\frac{1-\epsilon}{1+\epsilon}
+\le\frac{p'}p\le
+\frac{1+\epsilon}{1-\epsilon}.
+\tag{28.2}
+$$
+
+在上述亚临界域，每个有限边界均取得。
+在全部有限非负预算域内，同报告正指数候选对的 $\Delta/S$ 的最佳上确界分别为
+$\min\{D/L,1\}$ 与 $\min\{V/(mL),1\}$。
+对应预算严格低于阈值时，上确界取得，包括零预算时的零歧义。
+当 $D\ge L$ 或分别 $V\ge mL$ 时，任意一对有限正指数均可同报告，
+最佳相对上确界为一，但有限正指数恒有 $\Delta/S<1$，故上确界不取得；
+此时也没有统一的有限比值界。零指数混淆的精确阈值仍是推论 26.3。
+
+证明。共同报告给共同 $R_i$。对两个候选用 (26.6) 相减，得到
+
+$$
+(p'-p)L=s_i(p'\delta'_i-p\delta_i).
+\tag{28.3}
+$$
+
+逐项取绝对值得 $L\Delta\le D(p+p')$；
+先取绝对值再对全部 $m$ 项求和，则得 $mL\Delta\le V(p+p')$。
+故两种必要界均成立。
+
+为给出完整反向见证，可交换两个候选，设 $p'\ge p$，置
+
+$$
+\gamma=\frac{L(p'-p)}{p+p'}\in[0,L),\qquad
+x_j^{(p)}=-\frac\gamma2(-1)^{j+1},\qquad
+x_j^{(p')}=\frac\gamma2(-1)^{j+1},
+\qquad
+\lambda_j^{(q)}=2^{-1/2}e^{x_j^{(q)}}\quad(q=p,p').
+\tag{28.4}
+$$
+
+两个候选都用 $a=b=1$，故 $u=u'=0$。
+其每个相邻变化的绝对值恰为 $\gamma$，总变差恰为 $m\gamma$，
+所以 (28.1) 的对应前件正好保证所供应预算。
+每个相邻 $x$ 之和为零，故 $2\lambda_{j+1}^{(q)}\lambda_j^{(q)}=1$，
+两步复合精确为 $I_3$。
+由 (25.7)，两个候选都给
+
+$$
+z_{2h}=0,\qquad
+z_{2h+1}=L-\frac{pp'}{p+p'}L.
+\tag{28.5}
+$$
+
+例如在较小指数候选上，奇数前缀为
+$L-p(L+\gamma)/2$，代入 $\gamma$ 就得 (28.5)；
+较大指数候选为 $L-p'(L-\gamma)/2$，值相同。
+同一个平衡来源、各自同一条嵌套路径因而同时实现所有前缀。
+$\gamma=0$ 给两个相同指数；其余情形未重置路径或改变终点的标量。
+整理 (28.1) 得 (28.2)，在 $\epsilon<1$ 时取
+$p'=p(1+\epsilon)/(1-\epsilon)$ 就使对应预算和比值界均取等。
+在临界或超临界域，任意有限正指数对都有
+$\gamma<L\le D$ 或分别 $m\gamma<mL\le V$，故 (28.4) 仍合格。
+取 $p=1,p'=t\ge1$，则相对差 $(t-1)/(t+1)$ 随 $t\to\infty$ 趋于一，
+而任意有限正指数对的相对差严格小于一；同时比值 $p'/p=t$ 无界。
+这证明全部预算域的最佳上确界、取等范围及存在断言。∎
+
+**推论 28.2（固定逐步预算与固定总预算的长度区别）。**
+长度增长指另行供应更长的连续前缀族，仍使用假设 25.1 的嵌套路径和同事件；
+它不指树形细分，也不指重复抽样次数。
+固定有限逐步预算 $D\ge0$ 时，同报告正指数候选对的最佳相对上确界
+$\min\{D/L,1\}$ 不随 $N$ 改变。
+$D<L$ 时该上确界取得；$D\ge L$ 时它为一且不取得。
+对任意满足 $\Delta/S\le D/L$ 的两个固定正指数，
+(28.4) 的一对交替路径可延长到每个有限长度，
+始终满足同一个逐步预算并保持全部同报告。
+
+固定有限总预算 $V\ge0$ 时，对每个给定有限 $N\ge2$，
+精确同报告正指数候选对的最佳相对上确界为
+$\min\{V/((N-1)L),1\}$。
+$V<mL$ 时，相对边界 $V/(mL)$ 取得，包括 $V=0$ 的零歧义；
+$V\ge mL$ 时，任意一对有限正指数均可同报告，上确界为一且不取得，
+也没有统一的有限比值界。
+固定 $V$ 并令 $N$ 增大时，该最佳相对上确界趋零。
+固定真指数 $p>0$ 且 $mL>V$ 时，任一同报告正指数满足
+
+$$
+|p'-p|\le\frac{2pV}{mL-V}.
+\tag{28.6}
+$$
+
+但不限制指数尺度时，固定正总预算 $V>0$ 并不给趋零的统一绝对歧义界；
+$V=0$ 时精确同报告的正指数歧义为零。
+若另有 $p+p'\le S_*$，则有绝对界 $V S_*/(mL)$。
+这些不同量词不能互换。
+
+证明。逐步预算部分使用 (28.4)，其 $\gamma$ 与长度无关，
+最佳上确界及取得范围由定理 28.1 的分域结论给出。
+总预算部分的上界由 (28.1) 及 $\Delta/S<1$ 给出。
+在 $V<mL$ 时，令 $\gamma=V/m\in[0,L)$，
+再按 (28.2) 选指数对，就取得相对边界。
+在 $V\ge mL$ 时，在 (28.4) 中取 $p=1,p'=t\ge1$，
+两条路径各花总变差 $mL(t-1)/(t+1)<mL\le V$，
+而相对歧义 $(t-1)/(t+1)$ 随 $t\to\infty$ 趋于一且在有限 $t$ 时小于一。
+这证明临界及超临界域的最佳上确界为一而不取得。
+上述亚临界域的取等候选可随有限长度变化，
+不能声称一对固定不同指数在所有长度上都服从同一个有限总预算。
+在 $mL>V$ 下，(28.2) 的上比值界给
+$p'-p\le2pV/(mL-V)$，下比值界给
+$p-p'\le2pV/(mL+V)$，取较大者得 (28.6)。
+对 $V>0$，在每个充分大 $m$ 取
+$p=m^2$、$p'=m^2(mL+V)/(mL-V)$，则
+$\Delta=2m^2V/(mL-V)$ 不趋零，而 (28.4) 仍是合法的有限长度见证。
+$V=0$ 时精确报告的两个正指数当然相同。
+有尺度上界时直接将 $S\le S_*$ 代入 (28.1)。
+
+若另行假设同一对无限路径的所有有限限制均有统一总预算 $V$，
+且其每个前缀都同报告，则 (28.1) 对任意 $m$ 成立，迫使 $\Delta=0$。
+这仅是该额外全称数学前件的推论；
+任何给定有限供应或可延长的数学记号都不自动供应全部无限报告。∎
+
+## 29. 有限 logit 宽度的完整可达歧义与不消失下限
+
+**定理 29.1（同一内区间盒的统一界与最佳存在模量）。**
+给定有限 $w\ge0$，所有报告的 logit 区间满宽至多为 $w$，
+即 $\beta_k-\alpha_k\le w$；$w$ 是全宽而非半宽。
+两个正指数候选 $p,p'>0$ 均满足同一个区间盒及同一类预算时，必有
+
+$$
+\boxed{\mathsf E_D:\quad L\Delta\le D S+4w,\qquad
+\mathsf T_V:\quad mL\Delta\le V S+4mw,}
+\quad S=p+p',\quad\Delta=|p'-p|.
+\tag{29.1}
+$$
+
+而且，对任意给定 $p,p',w$，对应不等式是存在这种共同区间盒及合法候选对的充要条件。
+可以同时要求两个候选的控制实正、每两个相邻控制复合为 $I_3$。
+有限宽度下来源比允许各候选不同，均在候选内部固定；
+$w=0$ 时可取定理 28.1 的同一平衡来源。
+与定理 28.1 一样，这个最佳存在模量不替代指定区间盒的共同可行性检验。
+
+若各宽度不同，记 $w_k=\beta_k-\alpha_k$，还有必要界
+
+$$
+L\Delta\le DS+w_{i-1}+2w_i+w_{i+1}\quad(1\le i\le m),
+\tag{29.2}
+$$
+
+$$
+mL\Delta\le VS+\sum_{i=1}^m(w_{i-1}+2w_i+w_{i+1}).
+\tag{29.3}
+$$
+
+不将这些局部必要界当作一般不等宽盒的充分条件。
+
+证明。令两个候选的真 logit 向量为 $z,z'$，$h=z'-z$。
+同盒给 $|h_k|\le w_k$，所以
+
+$$
+|\Delta^2h_i|\le w_{i-1}+2w_i+w_{i+1}.
+\tag{29.4}
+$$
+
+由 $R_i(z')-R_i(z)=-s_i\Delta^2h_i$ 及 (26.6)，有
+
+$$
+(p'-p)L=p's_i\delta'_i-ps_i\delta_i-s_i\Delta^2h_i.
+\tag{29.5}
+$$
+
+逐项三角不等式给 (29.2)；对全部 $i$ 求和并各用一个总预算给 (29.3)。
+所有 $w_k\le w$ 时即得 (29.1)，证明必要性。
+
+反向设 $p'\ge p$，令 $B=D$ 或分别 $B=V/m$，并置
+
+$$
+\gamma=\min\left\{B,\frac{L(p'-p)}{p+p'}\right\},\qquad
+A=\frac{L(p'-p)-(p+p')\gamma}{4}\ge0.
+\tag{29.6}
+$$
+
+对应 (29.1) 恰保证 $A\le w$。
+使用交替路径
+
+$$
+x_j=-\tfrac\gamma2(-1)^{j+1},\qquad
+x'_j=\tfrac\gamma2(-1)^{j+1},\qquad
+u=-A/2,\quad u'=A/2,
+\tag{29.7}
+$$
+
+并以 (25.4) 取来源比 $r=e^{u/p}$、$r'=e^{u'/p'}$、共同尺度 $c=1$ 和全部相位零。
+两条路径的相邻变化绝对值均为 $\gamma$，总变差为 $m\gamma$，
+故相应预算成立；每个相邻 $x$ 之和为零，故两步复合为 $I_3$。
+由 (25.7)，偶数前缀之差为 $u'-u=A$；奇数前缀之差为
+
+$$
+A-\frac{L(p'-p)}2+\frac{(p+p')\gamma}{2}=-A.
+\tag{29.8}
+$$
+
+故对每个前缀取以 $(z_k+z'_k)/2$ 为中心、满宽 $w$ 的闭 logit 区间，
+两个真值都在其中。有限端点经 logistic 变换给严格内概率区间。
+所有前缀使用同一来源参数及各自同一条路径，因而这是共同取得，
+不是独立调节每个二阶残差。
+$p'=p$ 或 $w=0$ 仍由相同公式处理；$w=0$ 时 $A=0$，恢复平衡来源见证。
+这证明最佳存在模量的完整充分性。∎
+
+**推论 29.2（零预算下锋利且不随长度消失的宽度下限）。**
+即使 $D=0$ 或 $V=0$，任意有限 $N\ge2$ 及任意 $w>0$，
+都存在满宽为 $w$ 的共同区间盒，使两个正指数相差恰为
+
+$$
+\boxed{4w/L.}
+\tag{29.9}
+$$
+
+不能单凭更长连续前缀把任意确定性同盒候选的统一绝对歧义压到此值以下。
+对固定总预算及相同满宽 $w$，(29.1) 给
+
+$$
+\Delta\le\frac{V}{mL}S+\frac{4w}{L};
+\tag{29.10}
+$$
+
+相对预算项随长度缩小，确定性区间项保持不变。
+若另给固定真指数 $p$ 且 $mL>V$，则
+
+$$
+|p'-p|\le\frac{2Vp+4mw}{mL-V}.
+\tag{29.11}
+$$
+
+在 $mL>V$ 下，(29.11) 的界亦可由合法候选和某个共同满宽盒取得；
+它随长度的极限为 $4w/L$，是当前确定性宽度模型的最坏情形界，
+不表示每个实际盒都留下这么大的歧义。
+
+证明。令 $p'=p+4w/L$，在定理 29.1 取 $B=0$，
+得到 $\gamma=0,A=w$、$u=-w/2,u'=w/2$。
+两候选的全部控制均为 $1/\sqrt2$，来源比分别为
+$e^{-w/(2p)}$ 和 $e^{w/(2p')}$，均有限正。
+偶数前缀真 logits 为 $-w/2,w/2$；奇数前缀为
+$-w/2+L-pL/2$、$w/2+L-p'L/2$，两值相差 $-w$。
+所以全部区间可同时以满宽 $w$ 容纳这两个候选，且所有两步都精确回返。
+任意长度均可用这同一对常路径与来源，故下限确实不依赖长度。
+
+(29.10) 只是 (29.1) 的总预算式除以 $mL$。
+若 $p'\ge p$，将 $S=2p+(p'-p)$ 代入 (29.1)，整理得 (29.11)。
+若 $p'\le p$，同理得较小上界 $(2Vp+4mw)/(mL+V)$。
+取 $p'=p+(2Vp+4mw)/(mL-V)$，则 (29.1) 的总预算式取等，
+其合法取得由 (29.6)–(29.8) 给出。
+当 $w=0$ 时恢复精确报告界；当 $w>0$ 固定时，(29.11) 的极限为 (29.9)。
+来源比若另行独立固定，须在定理 27.2 中加入对应的 $z_0=p\log r$，
+上述允许来源比变化的最坏盒见证不被冒称为固定来源比下的锋利常数。
+这里没有抽样独立性、平均误差或随次数缩窄区间的前件，故也没有统计精度结论。∎
+
+**定理 29.3（有限宽度下正指数与支持签名的完整混淆模量）。**
+取 $p>0$、满宽上限 $w\ge0$。
+存在一个同时容纳零指数和正指数 $p$ 的全部连续前缀内区间盒、
+且两个候选分别服从同一类预算，当且仅当
+
+$$
+\mathsf E_D:\quad p(L-D)\le4w,
+\qquad\text{或分别}\qquad
+\mathsf T_V:\quad p(mL-V)\le4mw.
+\tag{29.12}
+$$
+
+可要求所有两步相邻复合精确为 $I_3$，并可令两个候选使用同一个来源。
+因此在预算低于相应精确混淆阈值且 $w>0$ 时，可与零支同盒的最大正指数分别为
+$4w/(L-D)$ 与 $4mw/(mL-V)$，这些正端点均取得。
+$w=0$ 时恰恢复推论 26.3，不能由形式 $p=0$ 连续代入来证明。
+
+证明。零指数的真 logit 为 $z_k^0=e_kL$，故全部 $R_i(z^0)=0$。
+若另一个候选为 $z$，同盒给 $|z_k-z_k^0|\le w$，
+于是 $|R_i(z)|\le4w$。
+由 (26.6)，$pL\le|R_i(z)|+p|\delta_i|$；
+逐项使用逐步预算或求和后使用一个总预算，即得必要式 (29.12)。
+
+反向置 $B=D$ 或分别 $B=V/m$，令
+
+$$
+\gamma=\min\{B,L\},\qquad
+A=p(L-\gamma)/4,\qquad
+x_j=\tfrac\gamma2(-1)^{j+1},\qquad u=A.
+\tag{29.13}
+$$
+
+(29.12) 保证 $0\le A\le w$。
+正指数取 $r=e^{A/p}$、$c=1$、来源相对相位零、
+$\lambda_j=2^{-1/2}e^{x_j}$。
+其相邻变化绝对值为 $\gamma$、总变差 $m\gamma$，两步相邻复合为 $I_3$。
+它相对零指数签名的 logit 差在偶数前缀为 $A$，奇数前缀为
+$A-p(L-\gamma)/2=-A$。
+对每个前缀取以这两个值为端点的区间，再按需扩大到满宽 $w$，便有共同内区间盒。
+零指数可用同一 $r$、同一来源尺度与相对相位，但取常控制 $1/\sqrt2$；
+其漂移为零、两步回返精确，全部报告恰为支持签名。
+因而给出了原零指数支的独立见证，没有借用除以 $p$ 的公式处理零支。
+在预算低于阈值且 $w>0$ 时，取 (29.12) 等号即取得所述正端点。
+$w=0$ 时它要求 $D\ge L$ 或分别 $V\ge mL$，与精确结论一致。∎
+
+## 30. 共享路径逆问题的来源与条件范围
+
+**定义 30.1（消费的先例与结论归属）。**
+(25.1)–(29.13) 是本卷三端口候选族上共享变动模长路径的条件纸面综合，
+按 `repo-derived` 使用，不据此主张全球优先权。
+它把固定标量的 §§21–24 扩展为每次使用各有标量、但所有终点共用一条路径的逆问题；
+完整原参数纤维、两种独立漂移承诺、共同内区间取得、
+支持签名混淆阈值及锋利的长度与宽度模量是这里的具体结论。
+固定标量的既有结论保留原来的固定条件；
+允许标量变化后的反例不反驳定理 13.3 对同一个控制重复两次的标定。
+(28.4) 的精确两步回返也不认证每一步酉性：
+若 $x_j\ne0$，则 $G_j^\dagger G_j=\operatorname{diag}(e^{2x_j},e^{2x_j},1)\ne I_3$。
+
+权重的有界乘性分类、log 赔率及相干奇偶结构分别消费本卷定义 13.1、
+定理 13.3 的分类证明、§3 及定理 21.2；
+[V17 §2、命题 13.1](AURIC_SUM_PRODUCT_LOGARITHMS_AND_QUANTUM_PYTHAGOREAN_GEOMETRY_V17.md)
+供应实 log 坐标及相干幂与记录后递归的区分；
+[V47 §§4、10](AURIC_EXISTENTIAL_QUANTIFIERS_SQUARE_WEIGHTS_AND_PROMPT_ERROR_RELATIONS_V47.md)
+供应幂族与概率不定相位的既有边界。
+[V52 §§2、5](AURIC_PURE_STATE_QUOTIENT_GEOMETRY_QUADRATIC_RELATION_GENERATORS_AND_LOSSLESS_RECURSION_V52.md)
+的完整外积、Hopf 商及共同相位不变量保留其全部非对角关系；
+本节的事件概率并未供应那些关系。
+[V55 §§9–10](AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md)
+的滤波、保质量和条件动力学仍各守自己的前件，
+不由某个指定来源的两步回返推广到全部输入或全部过程。
+
+二阶差分与斜率变差属于标准有限差分结构：
+[Kim–Koh–Boyd–Gorinevsky，*l1 Trend Filtering*，SIAM Review 51(2)，339–360，DOI 10.1137/070690274](https://web.stanford.edu/~boyd/papers/l1_trend_filter.html)
+使用二阶差分的绝对值惩罚来控制斜率变化。
+这里消费的是该已知结构，(26.6) 则明确给出它与本模型交替支撑项及指数的对应；
+没有采用其统计估计假设、惩罚参数选择或趋势估计误差结论。
+定理 27.2 的有限消元使用其所附 Goemans 来源及本卷定理 23.2 的既有机制。
+它们作为 `literature-attested` 中间工具，不被另立为新增的通用差分、总变差或多面体定理。
+
+**假设 30.2（解释与取得的独立前件）。**
+上述结论始终限于精确 $w_p$、精确控制形状、非零活动及旁观来源、
+嵌套路径、已供应真概率或确定性包含区间，以及明确供应的 log 模长漂移承诺。
+漂移承诺不是由端口概率推得的实际标定证书，也不限制自由控制相位。
+两步回返见证是数学构造，不把任何未供应的相干回返当作观测事实。
+报告为概率零或一的单点时，非零有限参数域内无见证；
+这里不以无穷 logit 或零控制填补该边界。
+一般控制误差、近似乘性稳定性、概率区间的有限资源取得、置信度、
+重复性、源复制及内部控制权限均须另行建立。
+
+[量子续卷 IV §§206–208](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md)
+的平方检测权重、既定率及历史桥，和
+[RRO §§62–67](RECURSIVE_RELATIONAL_OBSERVATION_FIBONACCI_NATIVE_TERMINAL_CERTIFICATION.md)
+的自然过去域、档案及可测恢复，各是其原结论的输入；
+它们不供应本逆问题的同源前缀概率、模长漂移预算或相位比较。
+这里没有从归一读数有界推出原始权重有界，
+也没有推出复数域唯一性、张量结构、物理时间、全部输入酉性、一般过程认证或无条件量子起源。
+可辨识性只比较声明候选族的纤维，不自动给出取得、可操作性或认证的资源界。
+
+## 追加锚（本行以下为增补区）
+## 31. 原生两调用旧终端事件的有限平方标定
+
+本节把第 13 节的全局权重类接到原来源的一个实际有限字。它不使用
+Hadamard 块、非原生连续旋钮或任意输入；所用两次调用都是旧菜单中的
+正向整数调用。第 13 节已经证明的全局分类在这里直接复用，不重新证明。
+
+**定义 31.1（原 ready、三条旧配置和全载体事件）。** 取续卷 III
+(138.1)、(151.9) 的同一个 \(89\) 配置载体、唯一 ready \(e_0=R_0v\)、
+固定边界以及
+
+$$
+x=\varphi^{-1},\qquad c=x\sqrt{x},\qquad
+\zeta=e^{3\pi i/5},\qquad x+x^2=1.
+\tag{31.1}
+$$
+
+ready 的内部位为
+\((b_1,\ldots,b_9)=(0,0,1,0,0,0,1,0,0)\)。
+令 \(e_{\rm r}=e_0\)，令 \(e_-\) 为只把 \(b_7\) 从 \(1\) 改为 \(0\) 的合法基配置，
+令 \(e_+\) 再把 \(b_8\) 从 \(0\) 改为 \(1\)；三者的旧十位标签分别是
+
+$$
+w_{\rm r}=1000100010,\qquad
+w_-=1000100000,\qquad
+w_+=1000100001.
+\tag{31.2}
+$$
+
+这些是原 \(N_w\) 的标签，不是新增读口。按续卷 IV (205.1)、(211.1) 的
+同一 \(\Xi\)，写
+
+$$
+\widehat e_s=\Xi(e_s\otimes|0\rangle),
+\qquad z_*=01000,
+\qquad s\in\{{\rm r},-,+\}.
+\tag{31.3}
+$$
+
+完整载体仍是全部 \(610\) 个配置，包含原 \(178\) 维接口和 \(432\) 维补空间；
+这里只列出本有限历史实际支撑的三列。定义旧终端配置事件
+
+$$
+ C_{\rm r}=\{Q:(b_{-1},\ldots,b_8)(Q)=w_{\rm r}\}.
+\tag{31.4}
+$$
+
+在完整载体上它是同一个字面旧标签的全支撑集合，报告仍有全部
+\(\Omega_{10}=\{0,1\}^{10}\) 的 \(1024\) 个标签。因为 \(C_{\rm r}\) 固定
+\(b_7=1\)，地址 \(8\) 的合法翻转边在 \(C_{\rm r}\) 内不存在；又因为地址 \(8\)
+不改变 \(b_7\)，任何边也不能从补集进入 \(C_{\rm r}\)。这是配置支撑和局部性
+给出的事件不变性；它不把相干矩阵局部性偷换成实际配置局部性。
+
+**假设 31.2（有限原生历史和忠实事件响应）。** 保留第 13 节定义 13.1
+的一个全局函数 \(w:\mathbb C\to[0,\infty)\)：
+
+$$
+w(0)=0,\qquad w(1)=1,\qquad w(zz')=w(z)w(z'),\qquad
+\sup_{|z|\le1}w(z)<\infty,
+\tag{31.5}
+$$
+
+并对非零有限向量使用同一未归一权重的归一读数 \(\Pi_w\)，零点仍按第 13
+节的 \(p=0\) 约定单独处理。取原正向调用字
+
+$$
+P=(7),\qquad G=(8).
+\tag{31.6}
+$$
+
+它们都只调用一次 \(K_j\)，没有分数调用、逆字、隐藏准备、额外端口或后选择。
+在同一个唯一 ready 上，准备历史是 \(\mathsf T(P)\)，控制历史是
+\(\mathsf T(PG)\)；二者都在原前缀域 \(\{0,\ldots,10\}^{<\infty}\) 内。
+实际终端报告是原 \(W=(b_{-1},\ldots,b_8)\)，并保留真实调用顺序、跳时、
+细档案、失败、拒绝、停止和告警坐标。若使用 \(\mathsf R(P,\epsilon)\) 或
+\(\mathsf R(PG,\epsilon)\)，则还保留 IV 的十五次 \(d\)、实际 \(J=b_{13}\)
+报告和其完整微历史；本节的校准事件仍只读原 \(W\)。
+
+在两个端点历史上，假设实际终端响应忠实地由 \(\Pi_w\) 给出，并且原事件
+确实守恒：
+
+$$
+\Pr(C_{\rm r}\mid\mathsf T(P))
+ =\Pi_w(C_{\rm r}\mid K_7e_0),\qquad
+\Pr(C_{\rm r}\mid\mathsf T(PG))
+ =\Pi_w(C_{\rm r}\mid K_8K_7e_0),
+\tag{31.7}
+$$
+
+$$
+\Pr(C_{\rm r}\mid\mathsf T(P))
+ =\Pr(C_{\rm r}\mid\mathsf T(PG)).
+\tag{31.8}
+$$
+
+式 (31.8) 是实际报告事件的来源合同，不能由 (31.4) 的矩阵支撑不变性
+单独推出。它也不是成功后选择：两条完整有限历史的所有失败坐标均保留，
+理想零失败若采用则是独立的显式前件。续卷 III (138.2)、(145.2)、
+(152.8)、(169.2) 和续卷 IV (211.2)、(212.2) 的同一 causal-prefix、
+接缝和档案条件全部保留；没有为这两个字另抽源、另置时钟或重写旧核。
+
+**定理 31.3（原生旧终端事件选择平方响应）。** 在定义 31.1 和假设
+31.2 的全部前件下，
+
+$$
+\boxed{w(z)=|z|^2\quad(z\in\mathbb C),\qquad
+\Pi_w(C\mid v)=\frac{\sum_{j\in C}|v_j|^2}{\sum_j|v_j|^2}}
+\tag{31.9}
+$$
+
+对所有非零有限波幅成立，包括 \(p=0\) 的排除；零波幅仍取 \(w(0)=0\)。
+
+**证明。** 先把三个配置上的原生矩阵写出。按地址 \(7\) 的中心位
+\(b_7=0,1\) 排列 \((e_-,e_{\rm r})\)，按 (138.2a) 有
+
+$$
+K_7=\zeta\,[I+(\zeta-1)Q],
+\qquad Q=\begin{pmatrix}x&c\\c&x^2\end{pmatrix}.
+\tag{31.10}
+$$
+
+所以存在
+
+$$
+s=\zeta\bigl(1+(\zeta-1)x^2\bigr),\qquad
+\mu=\zeta(\zeta-1)c
+\tag{31.11}
+$$
+
+使得
+
+$$
+K_7e_0=s\,e_{\rm r}+\mu e_- .
+\tag{31.12}
+$$
+
+在 \(e_-\) 所在的地址 \(8\) 二点块中，\(b_7=b_9=0\)；按同一局部矩阵，
+
+$$
+u=\zeta\bigl(1+(\zeta-1)x\bigr),\qquad
+K_8e_-=u\,e_-+\mu e_+ .
+\tag{31.13}
+$$
+
+而 \(b_7=1\) 使 \(e_{\rm r}\) 在地址 \(8\) 为单点块，故
+\(K_8e_{\rm r}=\zeta e_{\rm r}\)。由 (31.12)--(31.13)，端点波幅精确为
+
+$$
+\psi_P=s\,e_{\rm r}+\mu e_-,\qquad
+\psi_{PG}=\zeta s\,e_{\rm r}+\mu u\,e_-+\mu^2e_+ .
+\tag{31.14}
+$$
+
+这两个等式在全 \(89\) 维空间成立，其他 \(86\) 个配置的幅度为零；在完整
+\(610\) 维空间则由 (31.3) 逐列提升，其他 \(607\) 个配置仍在载体中。
+
+由 \(\zeta+\bar\zeta=-x\)、\(|\zeta-1|^2=2+x=x^{-2}\) 和 \(c^2=x^3\)，
+
+$$
+|\mu|^2=(2+x)x^3=x,\qquad |s|^2=1-|\mu|^2=x^2,\qquad
+|u|^2=x^2.
+\tag{31.15}
+$$
+
+因此 \(|\mu|=\sqrt{x}\)、\(|s|=|u|=x\)，且三者都非零。第 13 节定理
+13.3 的分类部分已从 (31.5) 得到唯一 \(p\ge0\)，使
+\(w(z)=|z|^p\) 对 \(z\ne0\)；相位权重为一，所以 (31.14) 和 (31.7)--(31.8)
+给出
+
+$$
+\frac{x^p}{x^p+x^{p/2}}
+=\frac{x^p}{x^p+x^{3p/2}+x^p},\qquad\text{即}\qquad
+1=x^p+x^{p/2}.
+\tag{31.16}
+$$
+
+令 \(r=x^{p/2}\in(0,1]\)。则 \(r^2+r=1\)。正方程在 \((0,1]\) 中只有
+\(r=x\)，因为 \(x^2+x=1\) 且另一根为负；由于 \(0<x<1\)，
+\(x^{p/2}=x\) 给 \(p=2\)。特别地，\(p=0\) 时左边为 \(1\) 而右边为 \(2\)，
+所以零指数约定没有被隐去。代回已供应的全局分类即得 (31.9)。∎
+
+**命题 31.4（有限实际历史关系和边界）。** 在定理 31.3 的同一来源前件
+下，令 \(a\in\{(7),(7,8)\}\)。存在可测的完整历史双射
+
+$$
+\widehat{\mathsf H}_{a,\epsilon}
+\longleftrightarrow
+\mathsf H_{a,\epsilon}
+\tag{31.17}
+$$
+
+其在本有限校准段逐时刻为
+
+$$
+\widehat Q_t=(q_t,z_*)\quad(0\le t\le |a|),
+\tag{31.18}
+$$
+
+并保留每个旧配置、每个跳时、每个单位调用及接缝左右值。它同时保留
+所有 \(1024\) 个 \(W\) 标签、无路径零标签、完整真实档案、失败／拒绝／停止／
+告警坐标和（若采用 \(\mathsf R\)）读器的十五次实际调用及 \(J\)；它不增加
+配置隐藏读口、跳时读口、准备或复位。
+
+**证明。** 续卷 III (152.8)、(169.2) 的旧前缀历史取同一个 ready、旧
+源驱动和旧档案核。续卷 IV (211.2) 对每个 \(j\le10\) 给出
+\(\widehat K_j\Xi=\Xi(K_j\otimes I)\)，且在 \(z_*\) 上地址 \(10\) 只有对角
+作用；故 \(j=7,8\) 的两次调用逐段把旧配置路径送到 (31.18)，不改变
+\(z_*\)，也不在接缝重抽。IV 定理 212.2 证明中的“无读器程序”条款直接由
+(211.3)、(212.5) 给出原完整 \(\mathsf T(a)\) 历史的 ready 嵌入，故得到
+本节 \(\mathsf T\) 的关系。对 \(\mathsf R(a,f)\)，该定理的既有历史映射另行把
+相同源／档案种子、调用次序、跳时、报告、垃圾和所有失败坐标逐项保留；
+即使 \(f=\epsilon\)，十五次原读器调用和实际 \(J\) 仍全部保留。
+映射与逆映射均只在既有合法生成支持上逐坐标作用，故可测且不把实际历史
+投影成另一条比较波。∎
+
+[首续卷](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md)
+§§68--71 已在固定黄金门下研究归一终端响应。定理 68.2 从五站点全零源经
+\(K_2,K_1\) 制备，用 Bob 的 \(I,K_3\) 两设置及 Alice 边缘无信号，在归一
+幂律 \(p>0\) 族内选择 \(p=2\)。定理 71.1 则在共同连续径向逐坐标响应类内，
+对十站点唯一初态、地址 \(0,\ldots,6\) 的全部有限制备字和 Bob 的 \(I,K_5\)
+两设置，利用制备闭包与响应连续性得到平方响应的必要充分条件。这些既有
+机制和前件各保其域，本节不主张一般指数选择或平方响应的全球新颖性。
+
+本节的来源特定增量限于从原唯一 ready 出发的 \(P=(7),G=(8)\)、字面旧
+事件 \(C_{\rm r}\) 的两调用端点守恒应用、(31.14)--(31.16) 的有限推导，
+以及全部 \(89/610\) 配置载体和完整历史的对应；没有把上述 Bob 设置、
+无信号或全字量词移作本节前件。第 13 节的权重分类、III 的 native-wave
+矩阵和 IV 的全历史提升均为既有供应。它没有声称所列事件合同自动来自矩阵、全时配置率、
+所有时间概率、创新律、仪器后继、CP、张量复合或完整量子起源。端点权重
+也不决定速率、全历史核或未来报告；任何源改变都必须另给其完整微观历史。
+
+Aaronson，[quant-ph/0401062v2] §2，直接讨论乘性振幅权重、\(p\)-范数保持
+和 \(2\)-范数的特殊性；它没有本来源的 \(K_7,K_8\)、旧标签或全历史接口。
+Galley--Masanes，[1801.06414v4] §5.2 把无信号作为复合系统和测量框架中的
+额外约束；这里没有把它当作单一 \(89/610\) 终端事件的替代证明。
+Dürr--Goldstein--Tumulka--Zanghì，[quant-ph/0407116v1] §§2.7、5.2
+把平方分布等变和最小跳率作为给定 Hamiltonian／配置过程的动力学输入；
+这里的 (31.8) 同样是明确来源合同，不是由文献或矩阵局部性自动得到。
