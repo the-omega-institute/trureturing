@@ -7,6 +7,8 @@
    digest: Literal ascending daughter blocks with one shortened top block. -/
 import D5.S3.Combinatorics.Circle.PeriodicDaughterJointShortening.Arithmetic
 
+/-! Ascending physical block inventories and the literal common-cut ear. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -117,7 +119,7 @@ theorem lower_length (d r cut : ℕ) (hr : 2 ≤ r) (tau : List (Fin d))
         s.length * (d + 1) := by
     induction s with
     | nil => simp
-    | cons x xs ih => simp [ih, he, Nat.succ_mul]
+    | cons x xs ih => simp [ih, he, Nat.succ_mul, Nat.add_comm]
   simpa using hlen (List.finRange (r - 1))
 
 theorem ear_after (k : ℕ) (xs ys : List (Fin k)) (cut : ℕ) :
@@ -152,10 +154,11 @@ theorem literal_ear (d r cut : ℕ) (hr : 2 ≤ r) (tau : List (Fin d))
     rw [hfresh]
   have hfr : List.finRange r =
       (List.finRange (r - 1)).map (fun j => (⟨j.val, by omega⟩ : Fin r)) ++ [jt] := by
-    have hh : List.finRange ((r - 1) + 1) =
-        (List.finRange (r - 1)).map Fin.castSucc ++ [Fin.last (r - 1)] :=
+    obtain ⟨s, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : r ≠ 0)
+    have hh : List.finRange (s + 1) =
+        (List.finRange s).map Fin.castSucc ++ [Fin.last s] :=
       List.finRange_succ_last
-    simpa [show r - 1 + 1 = r by omega, jt] using hh
+    simpa [jt] using hh
   unfold shortenedWord commonCut
   rw [← hl, ear_after, hte]
   unfold daughterWord
@@ -197,7 +200,8 @@ theorem daughter_perm (d r : ℕ) (hr : 2 ≤ r) (eta : List (Fin (d + 1)))
       rw [hjd, hkd] at hh
       exact hh
     rw [hjk] at hv
-    exact Prod.ext (Fin.ext hjk) (Fin.ext (by omega))
+    have hih : i.val = h.val := by omega
+    exact Prod.ext (Fin.ext hjk) (Fin.ext hih)
   let row : Fin r → List (Fin (length d r + 1)) :=
     fun j => (List.finRange (d + 1)).map (fun i => θ (j, i))
   have hcomplete : ((List.finRange r).flatMap row).Perm
@@ -216,7 +220,8 @@ theorem daughter_perm (d r : ℕ) (hr : 2 ≤ r) (eta : List (Fin (d + 1)))
       dsimp [length]; omega
     let j : Fin r := ⟨x.val / (d + 1), by
       apply (Nat.div_lt_iff_lt_mul (by omega : 0 < d + 1)).2
-      simpa [← hlen, Nat.mul_comm] using x.isLt⟩
+      have hx : x.val < (d + 1) * r := by rw [← hlen]; exact x.isLt
+      simpa only [Nat.mul_comm] using hx⟩
     let i : Fin (d + 1) := ⟨x.val % (d + 1), Nat.mod_lt _ (by omega)⟩
     have hv : θ (j, i) = x := by
       apply Fin.ext
@@ -259,7 +264,7 @@ theorem old_perm_of_ear (k : ℕ) (sigma : List (Fin k)) (cut : ℕ)
   have hf : removeFresh k (Fin.last k) = none := by simp [removeFresh]
   have hleft : (earWord k sigma cut).filterMap (removeFresh k) = sigma := by
     simp only [earWord, List.filterMap_append, List.filterMap_cons, hf,
-      List.filterMap_nil, hmap, List.append_nil, List.nil_append]
+      List.filterMap_nil, hmap, List.append_nil]
     exact List.take_append_drop cut sigma
   have hright : (List.finRange (k + 1)).filterMap (removeFresh k) = List.finRange k := by
     rw [List.finRange_succ_last, List.filterMap_append, hmap]
