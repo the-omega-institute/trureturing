@@ -14,6 +14,14 @@ internal sealed class OddGhzTenSettingWitnessDocument : IScribeDocumentDefinitio
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The ten-setting GHZ witness bounds fidelity and genuine multipartite Schmidt dimension in every odd local dimension.",
         H("The ten-setting GHZ witness in odd dimensions"), Blocks(
+            PublishedNode("density_ensemble", "Finite spectral ensembles", DensityEnsembleFormula(),
+                "Every finite-dimensional density matrix is a convex sum of rank-one matrices of unit vectors. The real weights are nonnegative and sum to one; Complex.ofReal displays their inclusion into the complex matrix scalars."),
+            PublishedNode("quadratic_smul", "Real scaling of a quadratic form", QuadraticSmulFormula(),
+                "The real part of a complex quadratic form scales by a real scalar r. Complex.ofReal displays the scalar used to multiply the matrix."),
+            PublishedNode("normSq_overlap_comm", "Symmetry of squared overlaps", NormSqOverlapFormula(),
+                "Exchanging two finite complex vectors conjugates their overlap and preserves its squared absolute value."),
+            PublishedNode("ghz_overlap_normSq", "Squared overlap with the GHZ vector", GhzOverlapNormSqFormula(),
+                "For every natural dimension d and every three-party complex vector v, the squared GHZ overlap is one over d times the squared absolute value of the sum of diagonal coordinates. Field division includes d = 0."),
             Paragraph(Text("Fin d indexes coordinates from zero. Three-party coordinates use Fin d × (Fin d × Fin d). The symbols psi, rho and sigma denote the corresponding Lean vector and state variables. Complex.ofReal and Nat.cast display scalar embeddings; all divisions in Complex or Real are field divisions, while Nat.mod and Nat.sub retain natural remainder and truncated subtraction. Pi.single is the coordinate delta vector. Matrix.vecMulVec, Matrix.kroneckerMap, Matrix.mulVec, dotProduct and star have their usual Lean meanings. The density states are D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState; CStarMatrix.ofMatrix.symm reads their underlying matrices. Nine labelled settings are summed with multiplicity, including when d = 1.")),
             Paragraph(Text("FormationBounds.spectral_ensemble_nonempty supplies a finite convex ensemble for each positive semidefinite trace-one coefficient matrix. Its Ensemble record stores the weights, Euclidean unit vectors and rank-one reconstruction.")),
             Paragraph(Text("Pure-state Schmidt rank is the rank of the coefficient matrix. The three-party cuts keep the other two indices in Fin d × Fin d. Supplementary V, printed page 22, uses the phase ω = exp(2πi/d), represented by WindowRegister.windowRoot.")),
@@ -50,6 +58,58 @@ internal sealed class OddGhzTenSettingWitnessDocument : IScribeDocumentDefinitio
                     ProblemSlugRef.Create("cobucci-tavakoli-2024-odd-ghz-ten-setting-witness"),
                     ResolutionKind.Proved)))));
 
+
+    private static DocumentBlock PublishedNode(string name, string title, Formula formula, string prose) =>
+        Describe.Lean(DescribeId.Create("ctw-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+    private static Formula PublishedV(string name) => name switch
+    {
+        "ι" => Iota, "ρ" => Rho, "ψ" => Psi, _ => V(name)
+    };
+    private static Formula PublishedAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Parenthesized(Seq(PublishedV(name), Colon, Sp, type)), Comma, Sp, Parenthesized(body));
+    private static Formula PublishedEx(string name, Formula type, Formula body) =>
+        Seq(Exists, Sp, Parenthesized(Seq(PublishedV(name), Colon, Sp, type)), Comma, Sp, Parenthesized(body));
+    private static Formula PublishedInstance(Formula type, Formula body) =>
+        Seq(OpenBracket, type, CloseBracket, Comma, Sp, Parenthesized(body));
+    private static Formula PublishedIndex(Formula body, bool decidable) =>
+        PublishedAll("ι", V("Type"), PublishedInstance(Call("Fintype", Iota),
+            decidable ? PublishedInstance(Call("DecidableEq", Iota), body) : body));
+    private static Formula PublishedSum(string name, Formula type, Formula body) =>
+        Seq(Sum, Underscore, Grp(PublishedV(name), Colon, Sp, type), Sp, Parenthesized(body));
+    private static Formula DensityEnsembleFormula()
+    {
+        var i = V("i"); var p = At(V("p"), i); var psi = At(Psi, i);
+        var reconstruction = Eqn(At(Seq(Q("CStarMatrix", "ofMatrix"), Dot, V("symm")), C("Subtype", "val", Rho)),
+            PublishedSum("i", Fin(V("m")), C("HSMul", "hSMul", Coeff(p),
+                C("Matrix", "vecMulVec", psi, Call("star", psi)))));
+        var ensemble = PublishedEx("m", V("Nat"), PublishedEx("p", Arrow(Fin(V("m")), V("Real")),
+            PublishedEx("ψ", Arrow(Fin(V("m")), Vec(Iota)),
+                And(PublishedAll("i", Fin(V("m")), Leq(D(0), p)),
+                And(Eqn(PublishedSum("i", Fin(V("m")), p), D(1)),
+                And(PublishedAll("i", Fin(V("m")), Eqn(DotProduct(Call("star", psi), psi), D(1))), reconstruction))))));
+        return PublishedIndex(PublishedAll("ρ", Call("DensityState", Iota), ensemble), true);
+    }
+    private static Formula QuadraticSmulFormula()
+    {
+        var g = V("g"); var a = V("A"); var r = V("r");
+        Formula Quadratic(Formula matrix) => C("Complex", "re", DotProduct(Call("star", g), C("Matrix", "mulVec", matrix, g)));
+        return PublishedIndex(PublishedAll("g", Vec(Iota), PublishedAll("r", V("Real"),
+            PublishedAll("A", Call("Matrix", Iota, Iota, V("Complex")),
+                Eqn(Quadratic(C("HSMul", "hSMul", Coeff(r), a)), Multiply(r, Quadratic(a)))))), false);
+    }
+    private static Formula NormSqOverlapFormula() => PublishedIndex(
+        PublishedAll("f", Vec(Iota), PublishedAll("g", Vec(Iota),
+            Eqn(C("Complex", "normSq", DotProduct(Call("star", V("f")), V("g"))),
+                C("Complex", "normSq", DotProduct(Call("star", V("g")), V("f")))))), false);
+
+    private static Formula GhzOverlapNormSqFormula() => PublishedAll("d", V("Nat"),
+        PublishedAll("v", Vec(Index()),
+            Eqn(C("Complex", "normSq", DotProduct(Call("star", Call("ghz", V("d"))), V("v"))),
+                Multiply(new Formula.Fraction(D(1), RealD()),
+                    C("Complex", "normSq", PublishedSum("i", Fin(V("d")),
+                        At(V("v"), Tuple(V("i"), V("i"), V("i")))))))));
 
     private static AssessedProvenance Lit() => AssessedProvenance.FromLiterature(Source);
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
