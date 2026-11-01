@@ -108,6 +108,8 @@ $$\forall (d:Decomposition), \forall (x:\mathbb{Z}), \operatorname{evaluation}\l
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Saeid Alikhani; Max Griswold (2026). *On the Integer Domination Root Conjecture*. DOI: [10.48550/arXiv.2608.00109](https://doi.org/10.48550/arXiv.2608.00109). URL: <https://arxiv.org/abs/2608.00109v1>.
+
 *Commentary.*
 
 Restrict a subset along the vertex equivalence to a core subset and one local subset per branch. Disjoint assembly and restriction are inverse, and assembly cardinality is the core cardinality plus the sum of local cardinalities. Domination of each branch leaf forces internal domination of its root, while the nonroot-neighbor law handles all other branch vertices. The core-neighbor law gives exactly coreCovered. This yields a bijection between ordinary dominating sets and covered core/root states with internally dominating branch choices. Transport the cardinality weights along this bijection. The pinned Fintype.prod_sum identity factors the independent branch choices, giving exactly stateEvaluation for every d and integer x.
@@ -120,6 +122,8 @@ $$\forall (d:Decomposition), \forall (x:\mathbb{Z}), \forall (table:\operatornam
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Saeid Alikhani; Max Griswold (2026). *On the Integer Domination Root Conjecture*. DOI: [10.48550/arXiv.2608.00109](https://doi.org/10.48550/arXiv.2608.00109). URL: <https://arxiv.org/abs/2608.00109v1>.
+
 *Commentary.*
 
 The inputs are an arbitrary d, integer x and table. The first premise requires every entry to equal the exact message for that same d, weight and root state; the second requires the covered core expression for the same table to vanish. Substitute the first premise into the general reassembly identity and then use the second. Both premises are checked in the live application below. This theorem does not assume the graph's evaluation is zero.
@@ -130,7 +134,13 @@ $$\forall (N:\mathbb{N}), \exists (n:\mathbb{N}), (N < n) \land (\exists (G:\ope
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/alikhani-griswold-2026-connected-minus-four-family` (proved) by `D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"alikhani-griswold-2026-connected-minus-four-family","declaration_gid":"D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* Saeid Alikhani; Max Griswold (2026). *On the Integer Domination Root Conjecture*. DOI: [10.48550/arXiv.2608.00109](https://doi.org/10.48550/arXiv.2608.00109). URL: <https://arxiv.org/abs/2608.00109v1>.
 
 *Commentary.*
 

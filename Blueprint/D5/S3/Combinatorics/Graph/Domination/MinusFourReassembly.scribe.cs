@@ -7,7 +7,7 @@ internal sealed class MinusFourReassemblyDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/alikhanigriswold2026integerdominationroots");
+        LibraryNoteRef.Create("D5/L/Zeros/alikhanigriswold2026integerdominationroots");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A rooted-component decomposition gives a general weighted domination identity. Its checked application to the published graph, followed by support replication, gives connected graphs of unbounded order with root minus four.",
