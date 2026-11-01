@@ -1606,3 +1606,277 @@ The normalized sector embeddings and chart identities are the reused V53 structu
 Alignment without fixed-label state preservation, a different shared initial encoding, restrictions to real local states or to a smaller input cone, and changed chart/readout conventions give different contracts. Multiple independently prepared copies of each unknown local state also fall outside this single-copy real-linear argument. Neither the finite probes nor the averaging group supplies native preparation, tomography, a Born law, source independence or arbitrary source control. The attaining real completely positive operations retain their stated acquisition and implementation obligations.
 
 ## 追加锚（本行以下为增补区）
+
+## 89. The fixed-chart success contract in arbitrary local dimensions
+
+**定义 89.1（Rectangular dimensions and compatible conditional error）。** Use the two-sector encoding and fixed local charts of §§80,84 for arbitrary complex dimensions $d,e\ge2$, and put
+
+$$
+\mathcal H=\mathbb C^d\otimes_{\mathbb C}\mathbb C^e,\qquad
+r=\min(d,e),\qquad \kappa_r=\frac{r-1}{r+1}.
+\tag{89.1}
+$$
+
+The real source is $W=V_A\otimes_{\mathbb R}V_B$, its sector projections are $P_\pm=(I\pm J_AJ_B)/2$, and the aligned output is $S_-$. Reuse $\Phi$, the normalized embeddings $\iota_\pm$, and $U_B=I\otimes_{\mathbb R}C_B$ from (80.2)–(80.4). For product densities,
+
+$$
+\eta(\rho,\sigma)=\tfrac12\iota_-(\rho\otimes\sigma)
++\tfrac12\iota_+(T_B(\rho\otimes\sigma)).
+\tag{89.2}
+$$
+
+The individual embeddings are positive, trace preserving and trace-norm preserving. Formula (89.2) assumes no positive extension of the independent encoding to entangled complex inputs.
+
+Let $L:\operatorname{Sym}_{\mathbb R}(W)\to\operatorname{Sym}_{\mathbb R}(S_-)$ be a single fixed real-linear success map positive on the full real cone and trace nonincreasing. Define
+
+$$
+\begin{gathered}
+A=\iota_-^{-1}\operatorname{Tw}_JL\iota_-,\qquad
+B=\iota_-^{-1}\operatorname{Tw}_JL\iota_+,\\
+E(P)=\tfrac12(A(P)+B(T_BP)),\qquad p(P)=\operatorname{Tr}E(P).
+\end{gathered}
+\tag{89.3}
+$$
+
+The restrictions $A,B$ are positive trace-nonincreasing maps on the full complex Hermitian cone. Conditional accuracy is the subnormalized requirement
+
+$$
+\tfrac12\|E(P)-p(P)P\|_1\le\epsilon p(P).
+\tag{89.4}
+$$
+
+For positive success weight it is half trace distance after normalization. At zero success it assigns no conditional state and gives no positive guaranteed rate. As in §84, it tests the twirled output against all fixed $J$-compatible effects. Original real normalized-output accuracy implies this requirement by twirl contraction, while the converse is not asserted. The trace weight becomes a success probability only under an additional instrument and Born contract. The inputs are single independently realified local states with fixed labels.
+
+## 90. A finite weighted family of local state probes
+
+**定义 90.1（Coordinate and fourth-root phase tests）。** In a local dimension $s\ge2$, take the $s$ coordinate pure projectors with individual weight $1/[s(s+1)]$. Also take every flat phase projector $|\phi_z\rangle\langle\phi_z|$, where
+
+$$
+|\phi_z\rangle=\frac1{\sqrt s}\sum_{j=0}^{s-1}z_j|j\rangle,
+\qquad z_0=1,\qquad z_j\in\{1,i,-1,-i\}\quad(j>0),
+\tag{90.1}
+$$
+
+with individual weight $s/[(s+1)4^{s-1}]$. Denote this weighted family by $\mathcal D_s$ and its weights by $w_Q$. They sum to one and have support size
+
+$$
+N_s=s+4^{s-1}.
+\tag{90.2}
+$$
+
+The joint fixed-chart test is $\mathcal D_d\times\mathcal D_e$, with product weights and $N_dN_e$ pure product probes. For $s=2$ the local family is exactly the six Pauli pure states, all with weight $1/6$, recovering (86.1). For $s=3$ it has nineteen states: three coordinate states of weight $1/12$ and sixteen flat states of weight $3/64$, giving $361$ weighted product probes for $d=e=3$. These are mathematical test families; available preparations, tomographic effects and sampling resources are separate premises.
+
+## 91. A sharp dimension-dependent frontier from the finite state moments
+
+**定理 91.1（Weighted finite-probe mean and guaranteed-success bound）。** Suppose (89.4) holds on $\mathcal D_d\times\mathcal D_e$, and let $\bar p$ be the weighted average of $p(P)$ over that family. If $\bar p>0$, then
+
+$$
+\epsilon\ge\kappa_r\frac{\max\{0,2\bar p-1\}}{2\bar p}.
+\tag{91.1}
+$$
+
+The same necessary bound holds with any strictly positive guaranteed success $p_{\min}$ on that family in place of $\bar p$. A positive mean alone does not imply a positive guarantee on each probe. For $0\le\epsilon\le\kappa_r/2$, the mean bound is equivalently
+
+$$
+\bar p\le\frac{\kappa_r}{2(\kappa_r-\epsilon)}.
+\tag{91.2}
+$$
+
+Exact compatible decoding therefore has weighted mean success at most $1/2$. A deterministic decoder has worst conditional half trace-norm error at least
+
+$$
+\frac{r-1}{2(r+1)},
+\tag{91.3}
+$$
+
+which is $1/6$ for $r=2$ and $1/4$ for $r=3$. These coefficients depend on the smaller local dimension. Theorem 92.1 has uniform success on all product densities and attains the worst conditional-error bounds, so they give the optimal guaranteed-success frontier for both this finite family and the entire product-state family in the stated positive-map class. When $\bar p=0$, every finite probe has zero weight of success and no normalized conditional state is claimed.
+
+Proof. First verify the precise state moments used by this finite test. Let $F_s$ swap two copies of $\mathbb C^s$ and $D_s^{\rm diag}=\sum_j|jj\rangle\langle jj|$. Uniformly averaging the flat-family fourth-root phases gives
+
+$$
+M_{\rm flat}=\frac{I+F_s-D_s^{\rm diag}}{s^2}.
+\tag{91.4}
+$$
+
+A phase expectation survives exactly when the two ket indices and two bra indices have equal multisets. The two pairings give $I+F_s$; subtracting $D_s^{\rm diag}$ corrects their double count when all indices coincide. Fixing $z_0=1$ only removes a common phase and does not change this projector moment. The coordinate family's second moment is $D_s^{\rm diag}/s$. Its total mixture weight is $1/(s+1)$ and the flat family's is $s/(s+1)$, so
+
+$$
+\sum_{Q\in\mathcal D_s}w_QQ=I_s/s,\qquad
+\sum_{Q\in\mathcal D_s}w_QQ^{\otimes2}
+=\frac{I+F_s}{s(s+1)}.
+\tag{91.5}
+$$
+
+Each family's first moment already is $I_s/s$. The same second moment holds for a Haar-distributed pure density. For an elementary check, coordinate phase invariance leaves only the same two pairings. If $u$ is a Haar unit vector, coordinate symmetry makes $A_s=\mathbb E|u_j|^4$ and $B_s=\mathbb E(|u_j|^2|u_k|^2)$ independent of distinct $j,k$. Mixing two coordinates by a Hadamard and averaging their phases gives $A_s=A_s/2+B_s$, hence $A_s=2B_s$. Expanding $(\sum_j|u_j|^2)^2=1$ then gives $B_s=1/[s(s+1)]$, proving (91.5) for Haar pure states too. Thus $\mathcal D_s$ is a finite weighted complex projective state $2$-design. Only its state moments are used; no unitary-design hypothesis enters.
+
+Now take independent normalized Haar local unitaries $g=(U_A,U_B)\in U(d)\times U(e)$ as a mathematical proof device. Set $C_g=\operatorname{Ad}(U_A\otimes U_B)$ and $\widetilde C_g=\operatorname{Ad}(U_A\otimes\overline{U_B})$. Because $T_BC_g=\widetilde C_gT_B$, the averages
+
+$$
+\overline A=\int C_g^{-1}AC_g\,dg,\qquad
+\overline B=\int C_g^{-1}B\widetilde C_g\,dg,\qquad
+F=\overline BT_B
+\tag{91.6}
+$$
+
+leave both restrictions positive and trace nonincreasing. The maps $\overline A,F$ are covariant under ordinary local unitary conjugations, with $F$ the ordinary conjugation average of $BT_B$.
+
+Let $P_0=|0_A0_B\rangle\langle0_A0_B|$ and $f(P)=\operatorname{Tr}(PE(P))$. The Haar mean of $p(P)$ equals $\operatorname{Tr}((\overline A(P_0)+F(P_0))/2)$; the Haar mean of $f(P)$ equals its expectation in $P_0$. These means equal the corresponding weighted means on $\mathcal D_d\times\mathcal D_e$. In fact $p(P)$ is linear in each local density, and $f(P)$ is quadratic in each, so their means use respectively the first and second state moments (91.5). The $T_B$ term is covered by applying its linear transpose to the relevant moment tensor. This uses no positive extension of the joint complex-input map.
+
+For every tested pure product, (89.4) and the pure effect $P$ give $f(P)\ge(1-\epsilon)p(P)$. Taking only these finite weighted means, then identifying them with the Haar means, gives
+
+$$
+\bar f\ge(1-\epsilon)\bar p.
+\tag{91.7}
+$$
+
+No conditional-error assumption is made on pure states outside the finite family. The input-dependent weights remain inside $p(P)$. The unitary integrals are not native source commands or implemented random operations.
+
+Local covariance makes the trace functionals scalar. Write $\operatorname{Tr}\overline A(X)=\alpha\operatorname{Tr}X$ and $\operatorname{Tr}\overline B(X)=\beta\operatorname{Tr}X$. Positivity and trace nonincrease give $0\le\alpha,\beta\le1$, and
+
+$$
+\bar p=(\alpha+\beta)/2.
+\tag{91.8}
+$$
+
+The ordinary local covariance of $F$ has the four-block form
+
+$$
+\begin{gathered}
+F(X)=aX+b\operatorname{Tr}_B(X)\otimes I_e
++cI_d\otimes\operatorname{Tr}_A(X)
++t\operatorname{Tr}(X)I_{de},\\
+\beta=a+eb+dc+de\,t,
+\end{gathered}
+\tag{91.9}
+$$
+
+where $a,b,c,t$ are real. To obtain this standard conjugation-commutant form, split each local Hermitian space into scalar and traceless parts. Unitary conjugation on the traceless part has scalar commutant; the independent product action gives four inequivalent scalar/traceless blocks. The displayed maps span the scalar actions on those blocks. The local assertion can also be checked using diagonal phases, coordinate permutations and two-coordinate unitary rotations. This is a covariance calculation, without any positivity assumption on $F$ itself. The coefficients $b,c$ need not be nonnegative; positivity is retained for $\overline B$ before composing with $T_B$.
+
+Since $T_BP_0=P_0$, positivity of $\overline B(P_0)=F(P_0)$ on the coordinate vectors $|1_A1_B\rangle$, $|0_A1_B\rangle$ and $|1_A0_B\rangle$ gives
+
+$$
+t\ge0,\qquad v:=b+t\ge0,\qquad w:=c+t\ge0.
+\tag{91.10}
+$$
+
+Let $\Omega_2$ be the rank-two coordinate Bell density on the first two basis vectors of each factor. Its partial transpose has antisymmetric expectation $-1/2$, and its reduced densities are the corresponding rank-two projections divided by two. Evaluating the positive $\overline B(\Omega_2)=F(T_B\Omega_2)$ on that vector gives
+
+$$
+0\le\frac{-a+b+c}{2}+t,\qquad a\le v+w.
+\tag{91.11}
+$$
+
+Put $f_B=\operatorname{Tr}(P_0F(P_0))$. Replacing $b,c$ by $v-t,w-t$ yields
+
+$$
+f_B=a+v+w-t,\qquad
+\beta=a+ev+dw+(de-d-e)t.
+\tag{91.12}
+$$
+
+For $r=\min(d,e)$, the required rectangular coefficient bound follows from
+
+$$
+\begin{aligned}
+2\beta-(r+1)f_B
+&=(1-r)a+(2e-r-1)v+(2d-r-1)w\\
+&\quad+[2(de-d-e)+r+1]t\\
+&\ge2(e-r)v+2(d-r)w+[2(de-d-e)+r+1]t\ge0.
+\end{aligned}
+\tag{91.13}
+$$
+
+The first inequality uses $a\le v+w$ and $1-r<0$. The last uses (91.10), $d,e\ge2$ and $de-d-e\ge0$. Thus $f_B\le2\beta/(r+1)$ even when $b$ or $c$ is negative. The aligned positive restriction has survival overlap at most its trace $\alpha$, so
+
+$$
+\bar f\le\alpha/2+\beta/(r+1)
+=\bar p-\kappa_r\beta/2.
+\tag{91.14}
+$$
+
+Combining this with (91.7) gives $\epsilon\ge\kappa_r\beta/(2\bar p)$. Finally $\alpha\le1$ and (91.8) imply $\beta\ge\max\{0,2\bar p-1\}$, proving (91.1). The right side is nondecreasing in positive $\bar p$, so $\bar p\ge p_{\min}>0$ proves the guaranteed-success version. Algebraic rearrangement on the stated error interval gives (91.2), and deterministic success gives (91.3). Full-cone positivity was used on the actual sector-embedded Bell and product densities, independently of which finite preparations are tested. $\square$
+
+## 92. Real Kraus attainment by correcting the smaller factor
+
+**定理 92.1（The rectangular frontier is attained with uniform success）。** Under Definition 89.1, for any $0<p\le1$ there is a real completely positive trace-nonincreasing success map with weight exactly $p$ on every product density and conditional error at most
+
+$$
+\kappa_r\frac{\max\{0,2p-1\}}{2p}.
+\tag{92.1}
+$$
+
+The bound is attained whenever the chosen smaller factor has a pure density. In particular all finite-design probes attain it. The outputs are $J$ compatible on this input family, so the same frontier is attained for the actual normalized real-output half trace norm. For $0\le\epsilon\le\kappa_r/2$, the optimal worst guaranteed success is $\kappa_r/[2(\kappa_r-\epsilon)]$ on both the finite test family and the entire product family.
+
+Proof. The standard approximate-transpose channel on dimension $r$ is
+
+$$
+\Theta_r(Y)=\frac{\operatorname{Tr}(Y)I_r+Y^{\mathsf T}}{r+1}.
+\tag{92.2}
+$$
+
+Use its explicit real matrix Kraus operators
+
+$$
+K_{ii}=\sqrt{\frac2{r+1}}|i\rangle\langle i|,\qquad
+K_{ij}=\frac{|i\rangle\langle j|+|j\rangle\langle i|}{\sqrt{r+1}}
+\quad(i<j).
+\tag{92.3}
+$$
+
+For each coordinate $i$, the squared Kraus sum has coefficient $[2+(r-1)]/(r+1)=1$. Their action on a matrix has diagonal entries $(\operatorname{Tr}Y+Y_{ii})/(r+1)$ and off-diagonal entries $Y_{ji}/(r+1)$, verifying (92.2). Thus $\Theta_r$ is complex completely positive and trace preserving, and realification of its Kraus operators gives a real completely positive lift. This is the established transpose-approximation ingredient of Buscemi–D’Ariano–Perinotti–Sacchi, [Optimal realization of the transposition maps, §2, equations (15), (17)–(18)](https://arxiv.org/pdf/quant-ph/0304175v1); merging the repeated off-diagonal Kraus terms gives (92.3). It is used as an intermediate channel rather than a new general construction.
+
+Choose a factor $j$ of complex dimension $r$, and let $U_j$ be its real coordinate conjugation on $W$, exchanging $S_+$ and $S_-$. The fixed chart matters when $j=A$. For product $X=\rho\otimes\sigma$,
+
+$$
+\begin{aligned}
+U_B\iota_+(T_BX)U_B^*&=\iota_-(T_BX),\\
+U_A\iota_+(T_BX)U_A^*&=\iota_-(T_AX).
+\end{aligned}
+\tag{92.4}
+$$
+
+The first identity follows from $U_B^2=I$. For the second, $U_AU_B$ acts as full coordinate conjugation on the aligned complex tensor chart, so conjugating $\iota_-(T_BX)$ applies the full transpose and leaves $T_AX$. Thus either choice transposes precisely the factor subsequently corrected by $\Theta_r$.
+
+Let $O_\ell$ be the real lift on $S_-$ of the local Kraus operators (92.3) on that factor, so $\sum_\ell O_\ell^*O_\ell=I_{S_-}$. These Kraus lifts need not be orthogonal individually. Put $c_0=\min(1,2p)$ and $c_1=\max(0,2p-1)$, and define
+
+$$
+L_p(Y)=c_0P_-YP_-
++c_1\sum_\ell O_\ell U_jP_+YP_+U_j^*O_\ell^*.
+\tag{92.5}
+$$
+
+Its real Kraus operators are $\sqrt{c_0}P_-$ and $\sqrt{c_1}O_\ell U_jP_+$, with squared sum $c_0P_-+c_1P_+\preceq I_W$. This proves complete positivity and trace nonincrease on the whole real input cone.
+
+For product $X$ whose chosen factor has density $\rho_j$, let $X_j^{\rm noisy}$ replace only that density by $(I_r+\rho_j)/(r+1)$. The chart identities and $\Theta_r(\rho_j^{\mathsf T})=(I_r+\rho_j)/(r+1)$ give the already compatible output
+
+$$
+E_p(X)=\iota_-^{-1}L_p(\eta(X))
+=\tfrac{c_0}{2}X+\tfrac{c_1}{2}X_j^{\rm noisy},\qquad
+\operatorname{Tr}E_p(X)=(c_0+c_1)/2=p.
+\tag{92.6}
+$$
+
+Its conditional error is
+
+$$
+\begin{aligned}
+D(E_p(X)/p,X)
+&=\frac{c_1}{2p}\frac r{r+1}D(\rho_j,I_r/r)\\
+&\le\frac{c_1}{2p}\frac{r-1}{r+1}.
+\end{aligned}
+\tag{92.7}
+$$
+
+Tensoring with the other positive trace-one density preserves the Hermitian trace norm. Convexity gives $D(\rho_j,I_r/r)\le1-1/r$, with equality for a pure density by its eigenvalues. This proves (92.1) and equality on the finite family. For $p\le1/2$ only aligned weight is accepted and error is zero; for $p\ge1/2$ all aligned weight is kept while wrong-sector weight is accepted with coefficient $2p-1$. These statements hold also for mixed product inputs. Since the output is compatible, trace-norm preservation of $\iota_-$ gives the same actual real-state distance. The zero map supplies $p=0$ without a normalized conditional output.
+
+Theorem 91.1 supplies the corresponding necessary guaranteed-success bound, while the uniform maps attain it. For example, $d=2$ with arbitrary $e\ge2$ admits deterministic worst error $1/6$ by correcting Alice's qubit when it is the smaller factor. This does not declare complex partial transpose completely positive. The whole map (92.5) is real completely positive because the conjugation is real orthogonal and the following real Kraus lift is explicit. Physical implementation requires the sector instrument, $U_j$ and the local Kraus dilation as additional resources. The controlled-reference service of §76 can construct the syndrome with an instrument, but grants neither conjugation nor an arbitrary local source dilation. Any retained success record or discarded dilation environment belongs to that implementation. $\square$
+
+## 93. Finite-test, state-space and implementation boundaries
+
+**定义 93.1（The arbitrary-dimension decoder scope）。** The dimension-sensitive coefficient inequality (91.13), finite weighted input tests and smaller-factor attaining operation apply to two independently realified factors under the fixed-label full-positive-cone contract. They extend the qubit frontier of §§86–87 and recover its exact 36-probe family at $d=e=2$. They do not supply the approximate $n$-factor frontier. Exact $n$-factor success remains the separate statement of Theorem 85.1.
+
+The finite design is a weighted family of pure states. Its first moment matches the average success weight, and its second moment matches the average target overlap. No nonlinear error estimate is transferred by an unproved design property, and no finite-probe hypothesis is strengthened into an assumption on untested Haar states. Haar conjugations, the four-block conjugation commutant, phase-moment cancellation, Bell positivity and the approximate-transpose Kraus channel are credited intermediate proof tools. The Haar integrals and test families grant no native preparation, random source unitary, tomography or measurement resource. No literature-priority claim is made for these conditional encoding-and-frontier applications.
+
+The general lower bounds concern the compatible twirled output and also constrain the stronger real-output requirement by twirl contraction. The attaining maps have compatible product outputs and attain both forms. Trace weights require an extra instrument/Born interpretation; tensor independence, full-cone physical applicability and the source operations used by (92.5) are distinct premises. Multiple independent copies of each unknown input, restricted state cones, different shared encodings, changed fixed charts or alignment without preserving labels change the problem. A discarded dilation environment is not an unaccounted reset or an information-erasure conclusion.
+
+## 追加锚（本行以下为增补区）
