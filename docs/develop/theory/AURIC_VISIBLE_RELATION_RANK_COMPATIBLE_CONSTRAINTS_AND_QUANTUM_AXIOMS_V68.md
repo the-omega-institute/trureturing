@@ -68,7 +68,6 @@ AURIC 量子起源研究\quad 定义、定理与纸面证明\quad v68.0\\[4pt]
 2026 年 11 月 1 日\quad Asia/Singapore
 \end{center}
 \begin{abstract}
-
 本文将“退相干是关系降秩、两个线性关系锁定更明确的关系”的直觉分解为可证明的命题。
 完全纯退相干是 Hilbert--Schmidt 算符空间到可见块代数的正交投影；
 其线性像可以降维，而约化密度矩阵的秩不减。与此不同，正关系残差的共同零空间
@@ -154,8 +153,9 @@ $$
 
 本轮唯一一次活动 HEAD 请求于新加坡时间 2026-11-01 17:07:01 发生本地 socket 权限拒绝，
 未收到 HTTP 响应；没有重试，也没有取得更新提交。以下项目论证固定于
-\par\noindent`5cf95e1ae01f7ed86735c04ad8d752cb19b1a58b`。
-\par
+
+`5cf95e1ae01f7ed86735c04ad8d752cb19b1a58b`。
+
 本轮重新核对八份保留原文的 Git blob 身份，匹配保留的固定理论树。
 重点查读 V38 §§3、7 的过程与记录段落；V52 定理 4.1–4.2 与命题 8.5；
 V55 §§2、7.1、10.1；V56 §6.1；
@@ -201,6 +201,8 @@ $$
 有限维接口 $\mathcal{H}$ 及记录角色 $R$ 是其中已声明的子空间或张量端口。
 对接口输入的全称量词描述同一操作的作用规律，不引入多个实际本体。
 
+> **Markdown 编者注。** 第 2 节的记录公式采用有限结果菜单、正交单位记录及同一有限内部联合空间。$M_r$ 是已声明输入到输出接口的线性算子；要把同一局部通道用于全部输入及保留参考，ready 记录须独立纯准备，参考上作用须为恒等。这些统一接口条件不是从单个实际 $\Omega$ 自动得到；命题的条件向量只在 $p_r>0$ 时有定义。这里不以有限维补基论证无条件的无限维酉扩张。
+
 <a id="statement-2-2"></a>
 
 #### 定义 2.2（记录、非选择读出与条件读出）
@@ -223,7 +225,7 @@ $$
 V\rho V^\dagger,\qquad
 \Phi(\rho)=\sum_rM_r\rho M_r^\dagger,\qquad
 \rho_r=\frac{M_r\rho M_r^\dagger}{p_r},\quad
-p_r=\operatorname{tr}(M_r\rho M_r^\dagger)>0 .
+p_r=\operatorname{Tr}(M_r\rho M_r^\dagger)>0 .
 $$
 
 </div>
@@ -289,8 +291,10 @@ $$
 </div>
 
 算符空间 $\mathcal{B}(\mathcal{H})$ 使用 Hilbert–Schmidt 内积
-$\langle X,Y\rangle_2=\operatorname{tr}(X^\dagger Y)$。
+$\langle X,Y\rangle_2=\operatorname{Tr}(X^\dagger Y)$。
 $\mathcal{A}_{\mathbf P}$ 中的效果恰是不访问跨块相干的效果。
+
+> **Markdown 编者注。** 第 3–6 节的矩阵、线性维数、归一 Choi 矩阵及归一态均取 $1\le d<\infty$；PVM 的结果菜单有限，可保留零投影。效果指 $0\le E\le I$。支持在包含关系中指支持子空间，在取迹或算子不等式中指其正交投影；一般保秩结论的输入、输出是同一个矩阵空间。记录 Gram 的指标是系统的有限正交基，$D_\alpha$ 只在非零振幅支撑上可逆。qubit 行列式及表格使用归一、两个振幅均非零的纯输入；“完整纯态”指连同纯记录准备的完整等距输出，混合记录若有参考须一并保留。
 
 <a id="thm-pinching"></a>
 
@@ -324,7 +328,7 @@ $$
 <div style="display:block;width:100%;min-width:0;box-sizing:border-box;overflow-x:auto;max-width:100%;overflow-y:hidden">
 
 $$
-\boxed{\operatorname{tr}\rho^2-\operatorname{tr}\mathcal{D}_{\mathbf P}(\rho)^2
+\boxed{\operatorname{Tr}\rho^2-\operatorname{Tr}\mathcal{D}_{\mathbf P}(\rho)^2
 =\|\rho-\mathcal{D}_{\mathbf P}(\rho)\|_2^2\ge0.}
 $$
 
@@ -335,7 +339,7 @@ $$
 由投影正交性，
 $\mathcal{D}^2(X)=\sum_{r,s}P_rP_sXP_sP_r=\sum_rP_rXP_r$。
 迹循环给
-$\langle Y,\mathcal{D} X\rangle_2=\sum_r\operatorname{tr}(P_rY^\dagger P_rX) =\langle\mathcal{D} Y,X\rangle_2$。
+$\langle Y,\mathcal{D} X\rangle_2=\sum_r\operatorname{Tr}(P_rY^\dagger P_rX) =\langle\mathcal{D} Y,X\rangle_2$。
 像恰为块对角矩阵；第 $r$ 块有 $d_r^2$ 个复矩阵单位，
 Hermitian 块也有 $d_r^2$ 个实自由度，迹一去掉一维。
 最后 $\mathcal{D}\rho$ 与 $\rho-\mathcal{D}\rho$ 正交，Pythagoras 恒等式给纯度公式。
@@ -389,7 +393,7 @@ $\operatorname{supp}\Phi(P)\subseteq Q$。正性与保单位给 $0\le\Phi(P)\le 
 <div style="display:block;width:100%;min-width:0;box-sizing:border-box;overflow-x:auto;max-width:100%;overflow-y:hidden">
 
 $$
-\operatorname{rank} P=\operatorname{tr}\Phi(P)\le\operatorname{tr} Q=\operatorname{rank} Q .
+\operatorname{rank} P=\operatorname{Tr}\Phi(P)\le\operatorname{Tr} Q=\operatorname{rank} Q .
 $$
 
 </div>
@@ -618,7 +622,7 @@ $L_j\psi=0$ 是振幅约束；$Q$ 是非负关系残差。
 <div style="display:block;width:100%;min-width:0;box-sizing:border-box;overflow-x:auto;max-width:100%;overflow-y:hidden">
 
 $$
-\boxed{\operatorname{tr}(Q\rho)=0
+\boxed{\operatorname{Tr}(Q\rho)=0
 \iff\operatorname{supp}\rho\subseteq\mathcal K
 \iff L\sqrt\rho=0.}
 $$
@@ -634,7 +638,7 @@ $$
 <div style="display:block;width:100%;min-width:0;box-sizing:border-box;overflow-x:auto;max-width:100%;overflow-y:hidden">
 
 $$
-\operatorname{tr}(Q\rho)=\sum_j\operatorname{tr}(L_j\rho L_j^\dagger)
+\operatorname{Tr}(Q\rho)=\sum_j\operatorname{Tr}(L_j\rho L_j^\dagger)
 =\sum_j\|L_j\sqrt\rho\|_2^2.
 $$
 
@@ -679,12 +683,12 @@ $$
 #### 推论 4.3（近似关系的稳定性）
 
 设 $R$ 为共同核投影，且
-$Q\ge\Delta(I-R)$，$\Delta>0$。若 $\operatorname{tr}(Q\rho)\le\epsilon$，则
+$Q\ge\Delta(I-R)$，$\Delta>0$。若 $\operatorname{Tr}(Q\rho)\le\epsilon$，则
 
 <div style="display:block;width:100%;min-width:0;box-sizing:border-box;overflow-x:auto;max-width:100%;overflow-y:hidden">
 
 $$
-\operatorname{tr}((I-R)\rho)\le\frac{\epsilon}{\Delta}.
+\operatorname{Tr}((I-R)\rho)\le\frac{\epsilon}{\Delta}.
 $$
 
 </div>
@@ -711,6 +715,8 @@ $|\eta\rangle=(\langle\phi|\otimes I)|\Psi\rangle/\sqrt f$ 为单位向量，
 纯态距离式可由两向量张成的二维矩阵直接求得；
 取迹收缩则由 Hermitian 迹范数的效果上确界及效果回拉立即得到。
 
+> **Markdown 编者注。** 这里比较的两态之差为无迹 Hermitian 算子，迹距离等于效果 $0\le E\le I$ 上期望差绝对值的上确界；一般 Hermitian 算子的迹范数则用 $-I\le A\le I$ 的对偶上确界。$\phi$ 是单位向量，$\epsilon\ge0$；共同核可以为零，此时第一界仍成立，第二界只适用于一维共同核。
+
 ∎
 
 这把“结果稳定”具体化为关系残差与谱隙的比值。
@@ -718,6 +724,8 @@ V55 的关系图共同核与条件滤波已经有这一机制。[[6](#ref-v55)]
 条件滤波 $K_\tau=e^{-\tau Q}$ 的残差下降
 $\dot q_\tau=-2\operatorname{Var}_{\rho_\tau}(Q)$ 必须同时保留成功质量；
 不能把选定成功分支的结论改称无条件退相干。
+
+> **Markdown 编者注。** 此处沿用 V55 定理 10.1 的定义：$\tau\ge0$，$Z_\tau=\operatorname{Tr}(K_\tau\rho K_\tau)>0$，$\rho_\tau=K_\tau\rho K_\tau/Z_\tau$，$q_\tau=\operatorname{Tr}(Q\rho_\tau)$；有限参数下 $K_\tau$ 可逆。$\dot Z_\tau=-2q_\tau Z_\tau$ 与残差导数同时成立，不能丢掉成功质量。
 
 <a id="section-4-2"></a>
 
@@ -735,12 +743,14 @@ $\mathcal K=\operatorname{ran} P\cap\operatorname{ran} Q$。
 <div style="display:block;width:100%;min-width:0;box-sizing:border-box;overflow-x:auto;max-width:100%;overflow-y:hidden">
 
 $$
-\rho_{PQ}=\frac{R\rho R}{\operatorname{tr}(R\rho)},\qquad \operatorname{tr}(R\rho)>0 .
+\rho_{PQ}=\frac{R\rho R}{\operatorname{Tr}(R\rho)},\qquad \operatorname{Tr}(R\rho)>0 .
 $$
 
 </div>
 
 该记录组合锁定一个与输入无关的纯态，当且仅当 $\operatorname{rank} R=1$。
+
+> **Markdown 编者注。** 此处“锁定”要求至少存在一个正概率输入，并对所有正概率输入得到同一纯态；$R=0$ 时记录组合不可能发生，不以空量词算作锁定。以下例子中的 $U$ 取酉（更一般可取输出等距），$a,b$ 是各 $Z$ 本征向量的标签；若使用计算位 $0,1$，对应本征值为 $(-1)^a,(-1)^b$。
 
 **证明。**
 
@@ -792,6 +802,8 @@ $n_1\cdot r=s_1$、$n_2\cdot r=s_2$，而 $n_1,n_2$ 独立，
 Bloch 正性给 $\lambda^2\le1-|r_0|^2$；
 通常留下线段，另知纯态才通常剩下两个端点。
 这延续 v67 的仿射约束分类，不与振幅零残差混用。
+
+> **Markdown 编者注。** $r_0$ 是该仿射直线上与单位方向 $t$ 正交的唯一点。$|r_0|<1$ 时可行集为非退化闭线段，另加纯性给两个端点；$|r_0|=1$ 时只有一个切点，$|r_0|>1$ 时没有密度态解。“通常”不包括这两种边界。
 
 <a id="statement-4-5"></a>
 
@@ -945,6 +957,8 @@ $p_n\to0$，不能宣称无条件地准备了目标。
 失败分支也仍属于完整 $\Omega$ 的内部记录历史。
 这是“关系越来越明确”对应纯态时需要保留的成功质量。
 
+> **Markdown 编者注。** 定理 5.2 的目标向量及显示误差界针对单位纯输入。对混合输入，若 $s=\operatorname{Tr}(R\rho)>0$，相同未归一算子极限给条件态趋于 $R\rho R/s$；其一般不纯，只有共同空间一维才统一成为该射线。$s=0$ 时成功质量趋零，零质量步骤的条件态不定义。
+
 <a id="section-5-3"></a>
 
 ### 5.3. 第二层：不选结果的可见代数收缩
@@ -1021,7 +1035,7 @@ $\|X\|_1\le\sqrt d\|X\|_2$。
 <div style="display:block;width:100%;min-width:0;box-sizing:border-box;overflow-x:auto;max-width:100%;overflow-y:hidden">
 
 $$
-\boxed{\mathcal E_{\mathcal M}(X)=\frac{\operatorname{tr} X}{d}I,\qquad
+\boxed{\mathcal E_{\mathcal M}(X)=\frac{\operatorname{Tr} X}{d}I,\qquad
 \rho_n\longrightarrow\frac Id.}
 $$
 
@@ -1030,7 +1044,7 @@ $$
 **证明。**
 
 到 $\mathbb{C} I$ 的正交投影系数是
-$\langle I,X\rangle_2/\langle I,I\rangle_2=\operatorname{tr} X/d$。
+$\langle I,X\rangle_2/\langle I,I\rangle_2=\operatorname{Tr} X/d$。
 反过来，若 $\mathcal M$ 不止标量，则有非零无迹 Hermitian 元 $H\in\mathcal M$。
 充分小的 $\delta>0$ 使 $I/d\pm\delta H$ 都是不同固定密度态。
 
@@ -1052,7 +1066,7 @@ $$
 <div style="display:block;width:100%;min-width:0;box-sizing:border-box;overflow-x:auto;max-width:100%;overflow-y:hidden">
 
 $$
-\boxed{\mathcal{D}_x\mathcal{D}_z(X)=\operatorname{tr}(X)\frac I2.}
+\boxed{\mathcal{D}_x\mathcal{D}_z(X)=\operatorname{Tr}(X)\frac I2.}
 $$
 
 </div>
@@ -1126,6 +1140,7 @@ $\langle Qu_i,Qu_j\rangle=\langle u_i,Q u_j\rangle =\lambda_j\delta_{ij}$。
 这是通常所称的两投影 Jordan 引理；原始研究文献中有明确的二值测量用途和证明。[[13](#ref-jordan)]
 
 > **编者来源角色说明（保留原引用）。** 实际查读的 Nagaj–Wocjan–Zhang，arXiv:0904.1549，第 4 页将两投影分解列为 §2.1 的事实；附录 A 第 13 页的 Lemma 2 明确给出一维／二维不变分解，并注明短证明见 Regev [20]。该文第 13–14 页随后用这个 lemma 证明反射乘积的谱／旋转定理。V68 在此处保留自己的完整构造与证明；该来源承担分解与历史归属说明，不被新增为本文证明的必要依赖。
+
 在二维块中，
 
 <div style="display:block;width:100%;min-width:0;box-sizing:border-box;overflow-x:auto;max-width:100%;overflow-y:hidden">
@@ -1242,8 +1257,8 @@ $$
 <div style="display:block;width:100%;min-width:0;box-sizing:border-box;overflow-x:auto;max-width:100%;overflow-y:hidden">
 
 $$
-\operatorname{tr}(K_w\rho K_w^\dagger)
-=\operatorname{tr}(K_w\bar\rho K_w^\dagger).
+\operatorname{Tr}(K_w\rho K_w^\dagger)
+=\operatorname{Tr}(K_w\bar\rho K_w^\dagger).
 $$
 
 </div>
@@ -1380,7 +1395,7 @@ $(1,1,1)G(1,1,1)^T=3-6a<0$。
 
 $$
 \boxed{K(v,w)=\sum_oK_+(r_ov,r_ow)\qquad
-\text{对所有输入历史 }v,w.}\tag{C}
+\text{对所有输入历史 }v,w.}\qquad\text{(C)}
 $$
 
 </div>
@@ -1434,6 +1449,8 @@ $$
    $\Phi(\rho)=\sum_oM_o\rho M_o^\dagger$。
 
 4. 在 R 声明的独立准备积核上，最小组合表示为相应 Hilbert 空间的张量积。
+
+> **Markdown 编者注。** 本定理的 $\psi$ 为单位输入，归一分支公式仅在 $p_o>0$ 时使用。历史集不要求有限或可数；每个过程的结果集有限，$M_o:\mathcal H_K\to\mathcal H_{K_+}$ 是有界压缩；若这些 Hilbert 空间无限维，密度输入指正迹一的迹类算子，Kraus 和是其上的通道，完全正性指所有有限参考扩张。单分支的“相容逆”须在两个最小生成空间上互为双边逆，才得满射酉。独立组合项使用全部已声明的历史对及积核，其代数张成在 Hilbert 张量积中稠密。W 只确定单位区间内的径向权重；离散细化菜单不能代替其全实区间前提。
 
 **证明。**
 
@@ -1605,7 +1622,7 @@ V58、V59 提供了其中若干问题的条件重构入口，不能把其前提�
 哪一项能被更弱、可操作的关系条件替代，并给出等价证明或反模型。
 把多个要求并入同一个编号，只降低文本长度，不自动降低理论假设强度。
 
-\paragraph{本轮的精确命题。}
+**本轮的精确命题。**
 *两个读口通过重复投影保留共同结构。
 在振幅空间上，共同结构一维且输入在共同空间上有非零质量时，
 指定结果的条件序列趋于唯一纯态；
@@ -1614,76 +1631,67 @@ V58、V59 提供了其中若干问题的条件重构入口，不能把其前提�
 这个表述同时保留了唯一本体、历史内生性、AURIC 二元模块和用户关于关系锁定的直觉，
 并给出每一部分可检验的数学条件。
 
-## 参考文献
+## 固定来源与文献
 
 <a id="ref-v18"></a>
 
 **[1]** trureturing 固定提交，
-\repo{AURIC_TRIANGULATION_COLLAPSE_AND_RECURSIVE_UNITARY_GATES_V18.md}
-{V18：Triangulation, Collapse and Recursive Unitary Gates}。
+[V18：Triangulation, Collapse and Recursive Unitary Gates](https://github.com/the-omega-institute/trureturing/blob/5cf95e1ae01f7ed86735c04ad8d752cb19b1a58b/docs/develop/theory/AURIC_TRIANGULATION_COLLAPSE_AND_RECURSIVE_UNITARY_GATES_V18.md)。
 使用定义 4.1、定理 8.1、命题 8.2–8.3 及定理 9.1。
 
 <a id="ref-v22"></a>
 
 **[2]** trureturing 固定提交，
-\repo{AURIC_RELATIVE_GATE_HISTORIES_OBSERVATION_QUOTIENTS_AND_RECURSIVE_CLOSURE_V22.md}
-{V22：Relative Gate Histories, Observation Quotients and Recursive Closure}，
+[V22：Relative Gate Histories, Observation Quotients and Recursive Closure](https://github.com/the-omega-institute/trureturing/blob/5cf95e1ae01f7ed86735c04ad8d752cb19b1a58b/docs/develop/theory/AURIC_RELATIVE_GATE_HISTORIES_OBSERVATION_QUOTIENTS_AND_RECURSIVE_CLOSURE_V22.md)，
 定义 6.1、定理 6.2–6.4，完整正核及全交叉项完备式。
 
 <a id="ref-v37"></a>
 
 **[3]** trureturing 固定提交，
-\repo{AURIC_BINARY_RELATIONS_UNITARY_REPRESENTATION_AND_GOLDEN_GATE_UNIVERSALITY_V37.md}
-{V37：Binary Relations, Unitary Representation and Golden Gate Universality}，
+[V37：Binary Relations, Unitary Representation and Golden Gate Universality](https://github.com/the-omega-institute/trureturing/blob/5cf95e1ae01f7ed86735c04ad8d752cb19b1a58b/docs/develop/theory/AURIC_BINARY_RELATIONS_UNITARY_REPRESENTATION_AND_GOLDEN_GATE_UNIVERSALITY_V37.md)，
 §§3–4。复用此前核对来源并重读所用编码部分。
 
 <a id="ref-v38"></a>
 
 **[4]** trureturing 固定提交，
-\repo{AURIC_COMPLETE_QUANTUM_PROCESSES_INTERNAL_MEMORY_AND_RANK_BOUNDARY_STABILITY_V38.md}
-{V38：Complete Quantum Processes, Internal Memory and Rank Boundary Stability}，
+[V38：Complete Quantum Processes, Internal Memory and Rank Boundary Stability](https://github.com/the-omega-institute/trureturing/blob/5cf95e1ae01f7ed86735c04ad8d752cb19b1a58b/docs/develop/theory/AURIC_COMPLETE_QUANTUM_PROCESSES_INTERNAL_MEMORY_AND_RANK_BOUNDARY_STABILITY_V38.md)，
 §§3、7，过程秩及内部记录。
 
 <a id="ref-v52"></a>
 
 **[5]** trureturing 固定提交，
-\repo{AURIC_PURE_STATE_QUOTIENT_GEOMETRY_QUADRATIC_RELATION_GENERATORS_AND_LOSSLESS_RECURSION_V52.md}
-{V52：Pure-State Quotient Geometry, Quadratic Relation Generators and Lossless Recursion}，
+[V52：Pure-State Quotient Geometry, Quadratic Relation Generators and Lossless Recursion](https://github.com/the-omega-institute/trureturing/blob/5cf95e1ae01f7ed86735c04ad8d752cb19b1a58b/docs/develop/theory/AURIC_PURE_STATE_QUOTIENT_GEOMETRY_QUADRATIC_RELATION_GENERATORS_AND_LOSSLESS_RECURSION_V52.md)，
 定理 4.1–4.2、命题 8.5。
 
 <a id="ref-v55"></a>
 
 **[6]** trureturing 固定提交，
-\repo{AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md}
-{V55：Exterior Closure of Binary Relations, Three-Axis Errors and Conditional Quantum Origin}，
+[V55：Exterior Closure of Binary Relations, Three-Axis Errors and Conditional Quantum Origin](https://github.com/the-omega-institute/trureturing/blob/5cf95e1ae01f7ed86735c04ad8d752cb19b1a58b/docs/develop/theory/AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md)，
 §§2、7.1、10.1。
 
 <a id="ref-v56"></a>
 
 **[7]** trureturing 固定提交，
-\repo{AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md}
-{V56：Universal Internal Binary Cuts, Operator Three-Axis Purity and Endogenous Recursion}，
+[V56：Universal Internal Binary Cuts, Operator Three-Axis Purity and Endogenous Recursion](https://github.com/the-omega-institute/trureturing/blob/5cf95e1ae01f7ed86735c04ad8d752cb19b1a58b/docs/develop/theory/AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md)，
 §6.1。
 
 <a id="ref-v58"></a>
 
 **[8]** trureturing 固定提交，
-\repo{AURIC_RELATIONAL_AXIOMS_COMMON_COMPLEX_PHASE_AND_CONDITIONAL_QUANTUM_RECONSTRUCTION_V58.md}
-{V58：Relational Axioms, Common Complex Phase and Conditional Quantum Reconstruction}，
+[V58：Relational Axioms, Common Complex Phase and Conditional Quantum Reconstruction](https://github.com/the-omega-institute/trureturing/blob/5cf95e1ae01f7ed86735c04ad8d752cb19b1a58b/docs/develop/theory/AURIC_RELATIONAL_AXIOMS_COMMON_COMPLEX_PHASE_AND_CONDITIONAL_QUANTUM_RECONSTRUCTION_V58.md)，
 公理 R/P/C/G、局部 Clifford 结构及总重构定理。
 
 <a id="ref-v59"></a>
 
 **[9]** trureturing 固定提交，
-\repo{AURIC_LOCAL_TOMOGRAPHY_COHERENT_READOUT_ORBITS_AND_QUANTUM_POSITIVITY_ORIGIN_V59.md}
-{V59：Local Tomography, Coherent Readout Orbits and Quantum Positivity Origin}，
+[V59：Local Tomography, Coherent Readout Orbits and Quantum Positivity Origin](https://github.com/the-omega-institute/trureturing/blob/5cf95e1ae01f7ed86735c04ad8d752cb19b1a58b/docs/develop/theory/AURIC_LOCAL_TOMOGRAPHY_COHERENT_READOUT_ORBITS_AND_QUANTUM_POSITIVITY_ORIGIN_V59.md)，
 RC 定义、定理 3.2–3.3、推论 3.4 及总定理 8.3，关系响应相容与正性供应。
 
 <a id="ref-watrous"></a>
 
 **[10]** John Watrous,
 *The Theory of Quantum Information*, Chapter 4, Definition 4.4.
-[作者公开教材原文](https://cs.uwaterloo.ca/ watrous/TQI/TQI.4.pdf)。
+[作者公开教材原文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.4.pdf)。
 使用 pinching 的定义与非选择测量解释；本文秩及范数证明自足。
 
 <a id="ref-alternating"></a>
