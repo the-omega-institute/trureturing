@@ -22,6 +22,10 @@ $$\forall (n: Nat), (1 \le n) \Rightarrow (\operatorname{KageyA350532Binomials}.
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/Combinatorics/KageyA350532Trinomials.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kagey350532-trinomials` (proved) by `D5/S3/Factorization/Combinatorics/KageyA350532Trinomials.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kagey350532-trinomials","declaration_gid":"D5/S3/Factorization/Combinatorics/KageyA350532Trinomials.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* P. Kagey; OEIS Foundation Inc. (2022). *OEIS A350532, sparse perfect powers over Z/2Z*. URL: <https://oeis.org/A350532>.

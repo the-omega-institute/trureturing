@@ -49,7 +49,9 @@ internal sealed class KageyA350532BinomialsDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "The two-term case has exactly n possibilities in degree 2*n. "
                     + "Each is the square of a degree-n polynomial with two terms; the lower exponent can be any natural number strictly below n."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kagey350532-perfectpowers"), ResolutionKind.Proved)))));
 
     private static Formula CountDefinition()
     {

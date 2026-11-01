@@ -48,6 +48,10 @@ $$\forall (n: Nat), \operatorname{T}\left(2 \cdot n, 2\right) = n$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/Combinatorics/KageyA350532Binomials.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kagey350532-perfectpowers` (proved) by `D5/S3/Factorization/Combinatorics/KageyA350532Binomials.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kagey350532-perfectpowers","declaration_gid":"D5/S3/Factorization/Combinatorics/KageyA350532Binomials.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* P. Kagey; OEIS Foundation Inc. (2022). *OEIS A350532, sparse perfect powers over Z/2Z*. URL: <https://oeis.org/A350532>.

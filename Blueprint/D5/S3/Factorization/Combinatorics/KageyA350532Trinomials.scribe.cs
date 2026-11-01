@@ -31,7 +31,9 @@ internal sealed class KageyA350532TrinomialsDocument : IScribeDocumentDefinition
                     "Squaring gives a bijection with degree-n trinomials. "
                     + "Their two lower exponents form a two-element subset of Finset.range n, giving Nat.choose n 2. "
                     + "The binomial-coefficient identity gives the stated natural-number quotient."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kagey350532-trinomials"), ResolutionKind.Proved)))));
 
     private static Formula ClaimBody()
     {
