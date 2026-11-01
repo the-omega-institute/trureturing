@@ -405,9 +405,7 @@ def claim(options):
                     for pin in PINS:
                         if (path / pin).read_bytes() != expected[pin]:
                             raise Refused("claim_pin_changed:" + pin)
-                    for marker in OPERATIONS:
-                        if (metadata / marker).exists():
-                            raise Refused("unfinished_operation:" + marker)
+                    finished_operations(metadata)
                     return dict(event="worktree_init", status="claimed", path=str(path), branch=options.branch,
                                 base_revision=base, allocation_time=allocated,
                                 dotnet_restore="skipped" if options.skip_restore else "restored")
