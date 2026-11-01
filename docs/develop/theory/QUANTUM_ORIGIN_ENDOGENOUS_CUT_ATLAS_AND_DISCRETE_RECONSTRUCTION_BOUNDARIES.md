@@ -1770,7 +1770,7 @@ $$
 J(x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8)=(-x_2,x_1,x_4,-x_3,-x_6,x_5,x_8,-x_7).
 $$
 
-Thus $J^2=-I$ and $J$ is a signed permutation with four sign reversals, so it preserves both cosets in the displayed description of $L$. Regard $(L,J)$ as a torsion-free $\mathbb Z[i]$-module of rank four; it is free because $\mathbb Z[i]$ is a PID. Let $i$ act by $J$ and define $h(x,y)=(x,y)+i(Jx,y)$, with the first variable conjugate-linear. Its real part is the Euclidean form on $L.
+Thus $J^2=-I$ and $J$ is a signed permutation with four sign reversals, so it preserves both cosets in the displayed description of $L$. Regard $(L,J)$ as a torsion-free $\mathbb Z[i]$-module of rank four; it is free because $\mathbb Z[i]$ is a PID. Let $i$ act by $J$ and define $h(x,y)=(x,y)+i(Jx,y)$, with the first variable conjugate-linear. Its real part is the Euclidean form on $L$.
 
 For $m\ge1$, put $N=2^m$ and
 
@@ -1872,7 +1872,7 @@ $$
 X=E^*ZE=B^*HB\in\operatorname{Herm}_4(\mathbb Z[i]),\qquad 0\le X\le C.
 $$
 
-The Gaussian interval property forces $X=0$ or $C$, and positive definiteness of $B$ then forces $H=0$ or $I_4$. Thus $F=0$ or $V^*V/N$.
+The Gaussian interval property forces $X=0$ or $C$, and invertibility of $B$ then forces $H=0$ or $I_4$. Thus $F=0$ or $V^*V/N$.
 
 **定理 22.5（固定八维的高斯互补原子对）。** For every integer $m\ge2$, with $N=2^m$, there are complementary rank-four Hermitian projections $P_N,Q_N\in K_{8,m}$ such that
 
@@ -1889,6 +1889,6 @@ For the stated existential event, given $L\ge1$ choose $d=8$ and $m=\max\{L,5\}$
 The construction reuses from Theorem 20.2 the $E_8$ lattice, root-class representatives and orthogonality, the integral-interval argument, and the quaternion norm and preservation calculation. The new content is their Gaussian-compatible assembly: the local-ring complement with nonzero $q$, the paired complex frames, and simultaneous generation of both complementary families.
 
 
-\square
+$\square$
 
 ## 追加锚（本行以下为增补区）
