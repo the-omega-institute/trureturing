@@ -3,6 +3,8 @@ import Reg.Support.DependentFamily
 import D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
 import Mathlib.LinearAlgebra.TensorProduct.Associator
 
+/-! Dependent-family registrations for the actual tensor coupling and Ward identities. -/
+
 open scoped BigOperators TensorProduct
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -33,7 +35,8 @@ theorem state_nontrivial (D : LatticeData) : Nontrivial (State D) := by
   have hn : z ≠ 0 := by
     intro h
     rw [h, map_zero] at hz
-    simpa [vacuum, ket] using hz
+    have hh := congrArg (fun w : Fock => w ∅) hz
+    norm_num [vacuum, ket] at hh
   exact ⟨⟨z, 0, hn⟩⟩
 
 namespace Support
@@ -59,12 +62,14 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   exact h zeroLattice 0 0
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  letI := state_nontrivial zeroLattice
+  haveI := state_nontrivial zeroLattice
   obtain ⟨z, hz⟩ := exists_ne (0 : State zeroLattice)
   refine ⟨zeroLattice, (fun _ => 0), (fun _ => z), ?_⟩
   intro h
   have hf : Function.HasFiniteSupport (fun _ : ℤ => z) :=
-    Eq.mp h (by simp [Function.HasFiniteSupport, Function.support])
+    Eq.mp h (by
+      change (Function.support (fun _ : ℤ => (0 : State zeroLattice))).Finite
+      simpa only [Function.support_zero] using Set.finite_empty)
   change (Function.support (fun _ : ℤ => z)).Finite at hf
   have he : Function.support (fun _ : ℤ => z) = Set.univ := by ext; simp [hz]
   rw [he] at hf
@@ -103,7 +108,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -133,7 +143,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   exact h zeroLattice 0 0
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  letI := state_nontrivial zeroLattice
+  haveI := state_nontrivial zeroLattice
   let p : signature.Params := ⟨zeroLattice,0,0⟩
   obtain ⟨y, hy⟩ := exists_ne (lhs p)
   refine ⟨p, lhs p, y, ?_⟩
@@ -173,7 +183,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
     definition := none
     coordinates := #[0, 1, 2]
-    readouts := #[{ path := #["body", "body", "body", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -204,16 +219,17 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   exact h zeroLattice 0 0 ∅ (by intro m hm; exact (hm (map_zero _)).elim)
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  letI := state_nontrivial zeroLattice
+  haveI := state_nontrivial zeroLattice
   let p : signature.Params := ⟨zeroLattice,0,0⟩
   obtain ⟨y, hy⟩ := exists_ne (lhs p)
   refine ⟨p, lhs p, y, ?_⟩
   intro h
   exact hy (Eq.mp h rfl).symm
-def family : Registration arena (type_of% @finite_capture) where
+def family : Registration arena (type_of% @_root_.D5.S3.VertexAlgebra.LatticeMatterGhostCoupling.finite_capture) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨finite_capture, rejected, rejected_law⟩
+  variation := ⟨_root_.D5.S3.VertexAlgebra.LatticeMatterGhostCoupling.finite_capture,
+    rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro role
@@ -223,7 +239,7 @@ def family : Registration arena (type_of% @finite_capture) where
     · intro e; exact nomatch e
   dependence := dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@finite_capture) (Realization signature) Unit Unit where
+    (@_root_.D5.S3.VertexAlgebra.LatticeMatterGhostCoupling.finite_capture) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.LatticeMatterGhostCoupling.Capture.unit
   realizationName := `Reg.D5.S3.VertexAlgebra.LatticeMatterGhostCoupling.Capture.family
   realizationSource := none
@@ -244,7 +260,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
     definition := none
     coordinates := #[0, 1, 2]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -278,7 +299,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     (by simp [_root_.D5.S3.Quantum.Fermionic.BcGhostOccupationRadius.Radius])
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  letI := state_nontrivial zeroLattice
+  haveI := state_nontrivial zeroLattice
   let p : signature.Params := ⟨zeroLattice,0,0,0⟩
   obtain ⟨y, hy⟩ := exists_ne (lhs p)
   refine ⟨p, lhs p, y, ?_⟩
@@ -318,7 +339,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
     definition := none
     coordinates := #[0, 1, 2, 3]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -334,7 +360,8 @@ abbrev signature : Signature where
   Output _ _ := Prop
   Anchor := Empty
   finiteAnchor := inferInstance
-def lhs (p : signature.Params) : signature.State p := T p.1 p.2.1 * ghostB p.1 p.2.2 + ghostB p.1 p.2.2 * T p.1 p.2.1
+def lhs (p : signature.Params) : signature.State p :=
+  T p.1 p.2.1 * ghostB p.1 p.2.2 + ghostB p.1 p.2.2 * T p.1 p.2.1
 def actual : Realization signature := realize signature
   (fun _ p y => lhs p = y) (fun e => nomatch e)
 def rejected : Realization signature := realize signature
@@ -348,7 +375,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   exact h zeroLattice 0 0
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  letI := state_nontrivial zeroLattice
+  haveI := state_nontrivial zeroLattice
   let p : signature.Params := ⟨zeroLattice,0,0⟩
   obtain ⟨y, hy⟩ := exists_ne (lhs p)
   refine ⟨p, lhs p, y, ?_⟩
@@ -388,7 +415,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
     definition := none
     coordinates := #[0, 1, 2]
-    readouts := #[{ path := #["body", "body", "body", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -404,7 +436,8 @@ abbrev signature : Signature where
   Output _ _ := Prop
   Anchor := Empty
   finiteAnchor := inferInstance
-def lhs (p : signature.Params) : signature.State p := T p.1 p.2.1 * ghostC p.1 p.2.2 + ghostC p.1 p.2.2 * T p.1 p.2.1
+def lhs (p : signature.Params) : signature.State p :=
+  T p.1 p.2.1 * ghostC p.1 p.2.2 + ghostC p.1 p.2.2 * T p.1 p.2.1
 def actual : Realization signature := realize signature
   (fun _ p y => lhs p = y) (fun e => nomatch e)
 def rejected : Realization signature := realize signature
@@ -418,7 +451,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   exact h zeroLattice 0 0
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  letI := state_nontrivial zeroLattice
+  haveI := state_nontrivial zeroLattice
   let p : signature.Params := ⟨zeroLattice,0,0⟩
   obtain ⟨y, hy⟩ := exists_ne (lhs p)
   refine ⟨p, lhs p, y, ?_⟩
@@ -458,7 +491,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
     definition := none
     coordinates := #[0, 1, 2]
-    readouts := #[{ path := #["body", "body", "body", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -526,7 +564,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

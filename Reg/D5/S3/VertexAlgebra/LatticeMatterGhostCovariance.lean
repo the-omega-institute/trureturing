@@ -1,6 +1,8 @@
 import Reg.D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
 import D5.S3.VertexAlgebra.LatticeMatterGhostCovariance
 
+/-! Dependent-family registration for the original-operator matter anomaly. -/
+
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
@@ -55,7 +57,7 @@ def family : Registration arena (type_of% @covariance) where
     · intro e; exact nomatch e
   dependence := by
     intro role
-    letI := state_nontrivial zeroLattice
+    haveI := state_nontrivial zeroLattice
     let p : signature.Params := ⟨zeroLattice,0,0⟩
     obtain ⟨y, hy⟩ := exists_ne (lhs p)
     refine ⟨p, lhs p, y, ?_⟩

@@ -2,16 +2,28 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Quantum.Fermionic.BcGhostOccupationRadius
 
+/-! Faithful dependent-family registrations for original occupation radius estimates. -/
+
 open scoped BigOperators
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Fermionic.CountableOccupationFock
 open _root_.D5.S3.Quantum.Fermionic.BcGhostFock
 open _root_.D5.S3.Quantum.Fermionic.BcGhostOccupationRadius
+open private radius_zero radius_ket from
+  D5.S3.Quantum.Fermionic.BcGhostOccupationRadius
 open private L_vacuum from D5.S3.Quantum.Fermionic.BcGhostVirasoro
 
 noncomputable section
 namespace Reg.D5.S3.Quantum.Fermionic.BcGhostOccupationRadius
+
+private theorem radius_vacuum : Radius 2 vacuum := by
+  exact radius_ket (Finset.empty_subset (sites 2))
+
+private theorem outside_radius : ¬ Radius 2 (ket {2}) := by
+  intro h
+  have hs : 2 ∈ sites 2 := h {2} (by simp [ket]) (by simp)
+  exact (by decide : 2 ∉ sites 2) hs
 
 namespace Existence
 abbrev signature : Signature where
@@ -32,13 +44,14 @@ abbrev arena : Arena where
   Law R := ∀ w : Fock, ∃ A : ℕ, 2 ≤ A ∧ R.readout () A w
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  simpa using h 0
+  obtain ⟨A, hA, hfalse⟩ := h 0
+  exact hfalse
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
   refine ⟨2, 0, ket {2}, ?_⟩
   intro h
-  have hh : Radius 2 (ket {2}) := Eq.mp h (by simp [Radius])
-  norm_num [Radius, sites, ket, Finset.range_succ] at hh
+  have hh : Radius 2 (ket {2}) := Eq.mp h (radius_zero 2)
+  exact outside_radius hh
 def family : Registration arena (type_of% @exists_radius) where
   actual := actual
   bridge := Iff.rfl
@@ -73,7 +86,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Fermionic.BcGhostOccupationRadius
     definition := none
     coordinates := #[1]
-    readouts := #[{ path := #["body", "arg", "body", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "arg", "body", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -95,9 +113,13 @@ theorem dependence : ObservationalDependence signature actual := by
   intro role
   cases role
   · refine ⟨-2, 0, vacuum, ?_⟩
-    norm_num [actual, realize, b, create_vacuum, ket]
+    intro h
+    have he := congrArg (fun w : Fock => w {0}) h
+    norm_num [actual, realize, b, create_vacuum, ket] at he
   · refine ⟨1, 0, vacuum, ?_⟩
-    norm_num [actual, realize, c, create_vacuum, ket]
+    intro h
+    have he := congrArg (fun w : Fock => w {1}) h
+    norm_num [actual, realize, c, create_vacuum, ket] at he
 end Modes
 
 namespace High
@@ -110,16 +132,21 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := (h (A := 2) (by decide) (w := vacuum)
-    (by simp [Radius, vacuum, ket, sites, Finset.range_succ]) 3 (by decide)).1
-  simpa [rejected, realize, vacuum, ket] using he
+    radius_vacuum 3 (by decide)).1
+  have hh := congrArg (fun w : Fock => w ∅) he
+  norm_num [rejected, realize, vacuum, ket] at hh
 private def replaced (role : Bool) : Realization Modes.signature := realize Modes.signature
   (fun other t w => if other = role then w else Modes.actual.readout other t w)
   (fun e => nomatch e)
 private theorem replaced_law (role : Bool) : ¬ arena.Law (replaced role) := by
   intro h
   have he := h (A := 2) (by decide) (w := vacuum)
-    (by simp [Radius, vacuum, ket, sites, Finset.range_succ]) 3 (by decide)
-  cases role <;> simp [replaced, realize, vacuum, ket] at he
+    radius_vacuum 3 (by decide)
+  cases role
+  · have hh := congrArg (fun w : Fock => w ∅) he.1
+    norm_num [replaced, realize, vacuum, ket] at hh
+  · have hh := congrArg (fun w : Fock => w ∅) he.2
+    norm_num [replaced, realize, vacuum, ket] at hh
 def family : Registration arena (type_of% @high_modes) where
   actual := Modes.actual
   bridge := Iff.rfl
@@ -154,8 +181,17 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Fermionic.BcGhostOccupationRadius
     definition := none
     coordinates := #[4]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false },
-      { path := #["body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false },
+      { path := #["body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "fn"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -171,15 +207,17 @@ abbrev arena : Arena where
       Radius (max A (max t.natAbs 2)) (R.readout true t w)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have he := (h (A := 2) (by decide) (w := 0) (by simp [Radius]) 0).1
-  norm_num [rejected, realize, Radius, sites, ket, Finset.range_succ] at he
+  have he := (h (A := 2) (by decide) (w := 0) (radius_zero 2) 0).1
+  exact outside_radius he
 private def replaced (role : Bool) : Realization Modes.signature := realize Modes.signature
   (fun other t w => if other = role then ket {2} else Modes.actual.readout other t w)
   (fun e => nomatch e)
 private theorem replaced_law (role : Bool) : ¬ arena.Law (replaced role) := by
   intro h
-  have he := h (A := 2) (by decide) (w := 0) (by simp [Radius]) 0
-  cases role <;> norm_num [replaced, realize, Radius, sites, ket, Finset.range_succ] at he
+  have he := h (A := 2) (by decide) (w := 0) (radius_zero 2) 0
+  cases role
+  · exact outside_radius he.1
+  · exact outside_radius he.2
 def family : Registration arena (type_of% @mode_radius) where
   actual := Modes.actual
   bridge := Iff.rfl
@@ -214,8 +252,17 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Fermionic.BcGhostOccupationRadius
     definition := none
     coordinates := #[4]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false },
-      { path := #["body", "body", "body", "body", "body", "arg", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false },
+      { path := #["body", "body", "body", "body", "body", "arg", "arg", "fn"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -241,8 +288,8 @@ abbrev arena : Arena where
     Radius (A+(-r).toNat) (R.readout () r w)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have he := h (A := 2) (by decide) (w := 0) (by simp [Radius]) 0
-  norm_num [rejected, realize, Radius, sites, ket, Finset.range_succ] at he
+  have he := h (A := 2) (by decide) (w := 0) (radius_zero 2) 0
+  exact outside_radius he
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
   refine ⟨-2, 0, vacuum, ?_⟩
@@ -253,7 +300,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   have he := congrArg (fun w : Fock => w {0,3}) h
   rw [L_vacuum] at he
   have hi : Finset.Icc ((-2 : ℤ)+2) 1 = {0,1} := by decide
-  norm_num [hi, b, c, create_vacuum, create_ket, phase, lowerCount, ket] at he
+  rw [hi] at he
+  norm_num [b, c, create_vacuum, create_ket, phase, lowerCount, ket] at he
 def family : Registration arena (type_of% @virasoro_radius) where
   actual := actual
   bridge := Iff.rfl
@@ -288,7 +336,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Fermionic.BcGhostOccupationRadius
     definition := none
     coordinates := #[4]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
