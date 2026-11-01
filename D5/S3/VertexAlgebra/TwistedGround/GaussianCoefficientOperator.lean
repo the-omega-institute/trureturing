@@ -258,6 +258,16 @@ theorem coefficientOperator_zero_extension (D : Data (S ⊕ T)) :
       ((coefficientOperator D).comp
         (ContinuousLinearMap.adjoint (sourceInclusion (S := S) (T := T)).toContinuousLinearMap)) =
       blockOperator D := by
+  have hprojection (x : Ambient S T) (d : Occupation S) :
+      ContinuousLinearMap.adjoint
+        (sourceInclusion (S := S) (T := T)).toContinuousLinearMap x d =
+        x (Sum.inl d) := by
+    have h := ContinuousLinearMap.adjoint_inner_right
+      (sourceInclusion (S := S) (T := T)).toContinuousLinearMap
+      (lp.single 2 d (1 : ℂ)) x
+    simpa only [sourceInclusion, coordinateInclusion_single,
+      LinearIsometry.coe_toContinuousLinearMap, lp.inner_single_left,
+      RCLike.inner_apply, map_one, mul_one] using h
   apply lp.ext_continuousLinearMap (by norm_num : (2 : ℝ≥0∞) ≠ ⊤)
   intro a
   apply ContinuousLinearMap.ext
@@ -275,8 +285,7 @@ theorem coefficientOperator_zero_extension (D : Data (S ⊕ T)) :
         (lp.single 2 (Sum.inl d) c) = lp.single 2 d c := by
       apply lp.ext
       funext e
-      simp [sourceInclusion, coordinateInclusion_adjoint_apply, lp.single_apply,
-        Pi.single_apply]
+      simp [hprojection, lp.single_apply, Pi.single_apply]
     change outputInclusion ((coefficientOperator D)
       (ContinuousLinearMap.adjoint (sourceInclusion (S := S) (T := T)).toContinuousLinearMap
         (lp.single 2 (Sum.inl d) c))) = blockOperator D (lp.single 2 (Sum.inl d) c)
@@ -288,7 +297,7 @@ theorem coefficientOperator_zero_extension (D : Data (S ⊕ T)) :
         (lp.single 2 (Sum.inr h) c) = 0 := by
       apply lp.ext
       funext d
-      simp [sourceInclusion, coordinateInclusion_adjoint_apply, lp.single_apply, Pi.single_apply]
+      simp [hprojection, lp.single_apply, Pi.single_apply]
     have hs : (lp.single 2 (Sum.inr h) c : Ambient S T) =
         c • coordinateBasis (Occupation S ⊕ Occupation T) (Sum.inr h) := by
       rw [coordinateBasis_apply]
