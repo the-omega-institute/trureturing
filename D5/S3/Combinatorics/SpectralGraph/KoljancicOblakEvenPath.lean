@@ -718,6 +718,8 @@ theorem joined_path_charpoly_derivative (bL bR dbL dbR : ℕ → ℝ)
         Pi.sub_apply, Pi.add_apply, Pi.mul_apply])
 
 
+open scoped Matrix.Norms.Elementwise
+
 private def spectralTangent {n : ℕ} (U : Matrix (Fin n) (Fin n) ℝ)
     (T : (Fin n → ℝ) →ₗ[ℝ] Matrix (Fin n) (Fin n) ℝ) :
     (Fin n → ℝ) →ₗ[ℝ] (Fin n → ℝ) where
@@ -780,12 +782,12 @@ private lemma spectral_tangent_nssp {n : ℕ}
       _ = 0 := by rw [hU', one_mul]; exact hz v
   have hs : ∑ i, Y i i * Y i i = 0 := by
     rw [hY] at hp
-    simpa only [trace, diag_apply, diagonal_mul, ← hv, spectralTangent,
-      LinearMap.coe_mk, AddHom.coe_mk] using hp
+    have hv' (i) : (Uᵀ * T v * U) i i = Y i i := congrFun hv i
+    simpa only [trace, diag_apply, diagonal_mul, hv'] using hp
   have hy0 : Y = 0 := by
     rw [hY]
     have hd : ∀ i, Y i i = 0 := by
-      simpa using (Finset.sum_mul_self_eq_zero_iff.mp hs)
+      simpa using (Finset.sum_mul_self_eq_zero_iff Finset.univ (fun i => Y i i)).mp (by simpa using hs)
     simp [hd]
   have hx : Xᵀ = 0 := by
     have he := congrArg (fun M => U * M * Uᵀ) hy0
@@ -800,8 +802,9 @@ private lemma det_diagonal_derivative_zero {n : ℕ} (d : Fin n → ℝ)
   classical
   let f : ContinuousMultilinearMap ℝ (fun _ : Fin n => Fin n → ℝ) ℝ :=
     ⟨detRowAlternating.toMultilinearMap, continuous_id.matrix_det⟩
-  have hf := (f.hasFDerivAt (diagonal d)).comp_hasDerivAt 0
-    (((hasDerivAt_id (0 : ℝ)).smul_const B).const_add (diagonal d))
+  have hg : HasDerivAt (fun t : ℝ => diagonal d + t • B) B 0 := by
+    simpa using (((hasDerivAt_id (0 : ℝ)).smul_const B).const_add (diagonal d))
+  have hf := (f.hasFDerivAt (diagonal d)).comp_hasDerivAt_of_eq hg (by simp)
   have hz : f.linearDeriv (diagonal d) B = 0 := by
     rw [ContinuousMultilinearMap.linearDeriv_apply]
     apply Finset.sum_eq_zero
@@ -823,7 +826,8 @@ private lemma charpoly_derivative_zero_of_spectral_diagonal_zero {n : ℕ}
     (-(Uᵀ * B * U)) (by intro i; simp [hB i])
   refine H.congr_of_eventuallyEq (Filter.Eventually.of_forall fun t => ?_)
   have he : (Uᵀ * (A + t • B) * U).charpoly = (A + t • B).charpoly := by
-    rw [charpoly_mul_comm, Matrix.mul_assoc, ← Matrix.mul_assoc U Uᵀ, hU, one_mul]
+    rw [charpoly_mul_comm, ← Matrix.mul_assoc, hU, one_mul]
+  change ((A + t • B).charpoly).eval x = _
   rw [← he, eval_charpoly]
   congr 1
   rw [Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul, hA]
@@ -831,5 +835,106 @@ private lemma charpoly_derivative_zero_of_spectral_diagonal_zero {n : ℕ}
   by_cases hij : i = j
   · subst j; simp [Matrix.scalar, diagonal_apply]; ring
   · simp [Matrix.scalar, diagonal_apply_ne _ hij, hij]
+
+
+private def leftDirection {r s : ℕ} (v : Fin (s + 1 + r) → ℝ) (k : ℕ) : ℝ :=
+  if h : k < r then v ⟨k, by omega⟩ else 0
+
+private def rightDirection {r s : ℕ} (v : Fin (s + 1 + r) → ℝ) (k : ℕ) : ℝ :=
+  if h : k < s then v ⟨r + 1 + k, by omega⟩ else 0
+
+private def joinedTangent (r s : ℕ) :
+    (Fin (s + 1 + r) → ℝ) →ₗ[ℝ]
+      Matrix (Fin (s + 1 + r)) (Fin (s + 1 + r)) ℝ where
+  toFun v := joinedPath (leftDirection v) (rightDirection v) (v ⟨r, by omega⟩) r s
+  map_add' v w := by
+    ext i j
+    simp only [joinedPath, leftDirection, rightDirection, Pi.add_apply, Matrix.add_apply]
+    split_ifs <;> simp_all
+  map_smul' c v := by
+    ext i j
+    simp only [joinedPath, leftDirection, rightDirection, Pi.smul_apply, Matrix.smul_apply,
+      smul_eq_mul, RingHom.id_apply]
+    split_ifs <;> simp_all
+
+private lemma joinedPath_affine (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ)
+    (v : Fin (s + 1 + r) → ℝ) (t : ℝ) :
+    joinedPath (fun k => bL k + t * leftDirection v k)
+      (fun k => bR k + t * rightDirection v k) (a + t * v ⟨r, by omega⟩) r s =
+      joinedPath bL bR a r s + t • joinedTangent r s v := by
+  ext i j
+  simp only [joinedPath, joinedTangent, LinearMap.coe_mk, AddHom.coe_mk,
+    Matrix.add_apply, Matrix.smul_apply, smul_eq_mul]
+  split_ifs <;> ring
+
+/-- The actual joined-path derivative controls every unrestricted real commutant.
+The displayed diagonalization hypotheses are explicit intermediate obligations;
+this conditional bridge does not prove the complete existential claim. -/
+theorem joined_path_nssp_of_diagonalization (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ)
+    (ha : a ≠ 0) (hodd : Odd (r + s))
+    (hL : ∀ k < r, bL k ≠ 0) (hR : ∀ k < s, bR k ≠ 0)
+    (hcop : IsCoprime (continuant (fun k => bL k ^ 2) r)
+      (continuant (fun k => bR k ^ 2) s))
+    (U : Matrix (Fin (s + 1 + r)) (Fin (s + 1 + r)) ℝ)
+    (lam : Fin (s + 1 + r) → ℝ)
+    (hU : Uᵀ * U = 1) (hU' : U * Uᵀ = 1)
+    (hA : Uᵀ * joinedPath bL bR a r s * U = diagonal lam)
+    (hlam : Function.Injective lam) : HasNSSP (joinedPath bL bR a r s) := by
+  classical
+  apply spectral_tangent_nssp _ U lam (joinedTangent r s) hU hU' hA hlam
+  · intro v i j hz
+    change joinedPath (leftDirection v) (rightDirection v) (v ⟨r, by omega⟩) r s i j = 0
+    simp only [joinedPath] at hz ⊢
+    split_ifs at hz ⊢ <;> try assumption <;> try rfl
+    all_goals
+      first
+      | exact False.elim (ha hz)
+      | exact False.elim (hL _ (by assumption) hz)
+      | by_cases hk : s + r - 1 - i.val < s
+        · exact False.elim (hR _ hk hz)
+        · simp [rightDirection, hk]
+      | by_cases hk : s + r - 1 - j.val < s
+        · exact False.elim (hR _ hk hz)
+        · simp [rightDirection, hk]
+  · have kernel (v : Fin (s + 1 + r) → ℝ)
+        (hv : spectralTangent U (joinedTangent r s) v = 0) : v = 0 := by
+      have hvar : joinedVariation (fun k => bL k ^ 2) (fun k => bR k ^ 2)
+          (fun k => 2 * bL k * leftDirection v k)
+          (fun k => 2 * bR k * rightDirection v k) a (v ⟨r, by omega⟩) r s = 0 := by
+        apply Polynomial.funext
+        intro x
+        have H := joined_path_charpoly_derivative bL bR (leftDirection v)
+          (rightDirection v) a (v ⟨r, by omega⟩) r s x
+        simp_rw [joinedPath_affine] at H
+        have H0 := charpoly_derivative_zero_of_spectral_diagonal_zero
+          (joinedPath bL bR a r s) U (joinedTangent r s v) lam hU' hA
+          (fun i => congrFun hv i) x
+        simpa using H.unique H0
+      have hz : (deformedJoinedContinuant (fun k => bL k ^ 2) (fun k => bR k ^ 2)
+          (fun k => 2 * bL k * leftDirection v k)
+          (fun k => 2 * bR k * rightDirection v k) a (v ⟨r, by omega⟩) r s).coeff 1 = 0 := by
+        rw [joined_linearization, hvar]
+      obtain ⟨hc, hl, hr⟩ := joined_variation_injective _ _ _ _ _ _ r s ha hodd
+        (fun k hk => pow_ne_zero _ (hL k hk)) (fun k hk => pow_ne_zero _ (hR k hk)) hcop hz
+      have dl (k : ℕ) (hk : k < r) : leftDirection v k = 0 := by
+        exact (mul_eq_zero.mp (hl k hk)).resolve_left
+          (mul_ne_zero (by norm_num) (hL k hk))
+      have dr (k : ℕ) (hk : k < s) : rightDirection v k = 0 := by
+        exact (mul_eq_zero.mp (hr k hk)).resolve_left
+          (mul_ne_zero (by norm_num) (hR k hk))
+      ext i
+      by_cases hil : i.val < r
+      · simpa [leftDirection, hil] using dl i.val hil
+      · by_cases hic : i.val = r
+        · have hi : i = ⟨r, by omega⟩ := Fin.ext hic
+          simpa [hi] using hc
+        · have hir : i.val - (r + 1) < s := by omega
+          have hi : (⟨r + 1 + (i.val - (r + 1)), by omega⟩ : Fin (s + 1 + r)) = i :=
+            Fin.ext (by simp only [Fin.val_mk]; omega)
+          simpa [rightDirection, hir, hi] using dr (i.val - (r + 1)) hir
+    intro v w hvw
+    apply sub_eq_zero.mp
+    apply kernel
+    rw [map_sub, hvw, sub_self]
 
 end D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath
