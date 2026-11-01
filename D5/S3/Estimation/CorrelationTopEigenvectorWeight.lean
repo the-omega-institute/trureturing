@@ -274,13 +274,11 @@ private lemma symmetric_sum {n : ℕ} (f : Fin n → Fin n → ℝ)
   linarith only [h]
 
 private lemma delta_norm {n : ℕ} (hn : 0 < n) : ‖delta n‖ ^ 2 = 1 := by
-  have hn0 : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
-  have hs : Real.sqrt (n : ℝ) ^ 2 = n := Real.sq_sqrt (Nat.cast_nonneg n)
-  rw [← real_inner_self_eq_norm_sq]
-  dsimp only [delta]
-  simp only [EuclideanSpace.inner_toLp_toLp, dotProduct, Pi.star_apply,
-    star_trivial, ← sq, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
-  rw [inv_pow, hs, mul_inv_cancel₀ hn0]
+  rw [EuclideanSpace.real_norm_sq_eq]
+  simp only [delta, PiLp.toLp_apply, sum_const, card_univ,
+    Fintype.card_fin, nsmul_eq_mul]
+  rw [inv_pow, Real.sq_sqrt (Nat.cast_nonneg n),
+    mul_inv_cancel₀ (by exact_mod_cast hn.ne')]
 
 private lemma eigenbasis_rayleigh {n : ℕ} (a : Matrix (Fin n) (Fin n) ℝ)
     (v : OrthonormalBasis (Fin n) ℝ (EuclideanSpace ℝ (Fin n))) (l : Fin n → ℝ)
@@ -804,14 +802,11 @@ private lemma rank_two_weight_gap {n : ℕ} (hn : 3 ≤ n) (k : ℤ)
   let f := fun j => ⟪v j, s⟫
   let μ := fun j => l j - d
   have hnormu : ‖u‖ ^ 2 = (n : ℝ) := by
-    rw [← real_inner_self_eq_norm_sq]
-    simp only [u, EuclideanSpace.inner_toLp_toLp, dotProduct, Pi.star_apply,
-      star_trivial, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, mul_one]
+    simpa only [u, PiLp.toLp_apply, one_pow, sum_const, card_univ,
+      Fintype.card_fin, nsmul_eq_mul, mul_one] using EuclideanSpace.real_norm_sq_eq u
   have hnorms : ‖s‖ ^ 2 = (n : ℝ) := by
-    rw [← real_inner_self_eq_norm_sq]
-    simp only [s, EuclideanSpace.inner_toLp_toLp, dotProduct, Pi.star_apply,
-      star_trivial, ← sq, signVector_sq, sum_const, card_univ, Fintype.card_fin,
-      nsmul_eq_mul, mul_one]
+    simpa only [s, PiLp.toLp_apply, signVector_sq, sum_const, card_univ,
+      Fintype.card_fin, nsmul_eq_mul, mul_one] using EuclideanSpace.real_norm_sq_eq s
   have heu : ∑ j, e j ^ 2 = (n : ℝ) := by rw [v.sum_sq_inner_right, hnormu]
   have hfs : ∑ j, f j ^ 2 = (n : ℝ) := by rw [v.sum_sq_inner_right, hnorms]
   have hvs : ∀ j, (signMatrix n k a b d).toEuclideanLin (v j) = l j • v j :=
