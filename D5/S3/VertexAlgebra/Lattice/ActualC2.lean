@@ -97,20 +97,24 @@ private theorem ground_pair_mem (D : LatticeData) (α : Charge D)
   have pair := ground_product D α (-α) n
   let r : ℕ := (-bilinear D α α - 1).toNat
   have hrnonneg : 0 ≤ -bilinear D α α - 1 := by omega
-  have hr : (r : ℤ) = -bilinear D α α - 2 := by
+  have hr : (r : ℤ) = -bilinear D α α - 1 := by
     dsimp [r]
     exact Int.toNat_of_nonneg hrnonneg
   have pair_mem : mu D (ground D α) n (ground D (-α)) ∈ C2 D := by
     have h := higher_product_mem D r (ground D α) (ground D (-α))
-    simpa only [n, hr, show -((-bilinear D α α - 1) + 2) = bilinear D α α - 1 by ring]
-      using h
+    have index : -((r : ℤ) + 2) = n := by
+      rw [hr]
+      dsimp [n]
+      ring
+    rw [index] at h
+    exact h
   have epsilon_ne_zero : epsilon D α (-α) ≠ 0 := by
     unfold epsilon paritySign
     split_ifs <;> norm_num
   have pair_value : mu D (ground D α) n (ground D (-α)) =
       epsilon D α (-α) • vacuum D := by
     rw [pair]
-    simp [n, creationCoeff, exponential_constant, ground, vacuum, bilinear]
+    simp [n, creationCoeff, exponential_constant, vacuum, bilinear]
   rw [pair_value] at pair_mem
   have recovered := (C2 D).smul_mem (epsilon D α (-α))⁻¹ pair_mem
   simpa only [smul_smul, inv_mul_cancel₀ epsilon_ne_zero, one_smul] using recovered
@@ -123,6 +127,7 @@ theorem negative_norm_c2_eq_top (D : LatticeData) (α : Charge D)
   intro u _
   have vacuum_mem : vacuum D ∈ C2 D := ground_pair_mem D α hα
   have created := left_minus_one_mem D u (vacuum D) vacuum_mem
+  change ((Y D u)[[-1]]) (vacuum D) ∈ C2 D at created
   rw [stateField_creation D u] at created
   exact created
 
