@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-implementation-owned-by-endpoint)
    mirror-E: none(waiver:private-implementation-owned-by-endpoint)
-   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
    utility: none
    digest: Complete shifted polynomial identities; each coefficient is explicit. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap.Algebra

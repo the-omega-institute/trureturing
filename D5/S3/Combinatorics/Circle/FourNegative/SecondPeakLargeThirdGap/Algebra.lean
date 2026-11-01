@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-implementation-owned-by-endpoint)
    mirror-E: none(waiver:private-implementation-owned-by-endpoint)
-   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
    utility: none
    digest: Exact four-chain and independent dyadic polynomial expressions. -/
 import Mathlib.Data.Int.DivMod
