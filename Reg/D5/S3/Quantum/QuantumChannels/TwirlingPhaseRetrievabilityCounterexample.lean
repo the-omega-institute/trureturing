@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.QuantumChannels.TwirlingPhaseRetrievabilityCounterexample
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound audits of the encoding scale and cyclic character unit identity. -/
+
 namespace Reg.D5.S3.Quantum.QuantumChannels.TwirlingPhaseRetrievabilityCounterexample
 
 open _root_.D5.S3.Quantum.QuantumChannels.TwirlingPhaseRetrievabilityCounterexample
@@ -46,8 +48,8 @@ def source_registration : Registration arena (type_of% @scale_normSq) where
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@scale_normSq) (Realization signature) Unit Unit := {
-  unitName := `D5.S3.Quantum.QuantumChannels.TwirlingPhaseRetrievabilityCounterexample.scale_normSq.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.QuantumChannels.TwirlingPhaseRetrievabilityCounterexample.source_registration
+  unitName := .str ``scale_normSq "__information_unit"
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -119,7 +121,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro he
   have hbad := congrFun he 1
   change (0 : ℂ) * 1 = 1 * 1 at hbad
-  simpa using hbad
+  simp at hbad
 
 def source_registration : Registration arena (type_of% @chi_unit) where
   actual := actual
@@ -132,8 +134,8 @@ def source_registration : Registration arena (type_of% @chi_unit) where
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@chi_unit) (Realization signature) Unit Unit := {
-  unitName := `D5.S3.Quantum.QuantumChannels.TwirlingPhaseRetrievabilityCounterexample.chi_unit.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.QuantumChannels.TwirlingPhaseRetrievabilityCounterexample.ChiUnit.source_registration
+  unitName := .str ``chi_unit "__information_unit"
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩

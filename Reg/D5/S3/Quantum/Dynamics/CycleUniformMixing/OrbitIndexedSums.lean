@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Dynamics.CycleUniformMixing.OrbitIndexedSums
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound audit of conjugation of the standard cyclic character. -/
+
 namespace Reg.D5.S3.Quantum.Dynamics.CycleUniformMixing.OrbitIndexedSums.Fourier
 
 open _root_.D5.S3.Quantum.Dynamics.CycleUniformMixing.OrbitIndexedSums.Fourier (char_star)
@@ -31,7 +33,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hbad := @h 1 inferInstance 0
   change (0 : ℂ) = ZMod.stdAddChar (-(0 : ZMod 1)) at hbad
-  simpa using hbad
+  simp at hbad
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -50,8 +52,8 @@ def source_registration : Registration arena (type_of% @char_star) where
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@char_star) (Realization signature) Unit Unit := {
-  unitName := `D5.S3.Quantum.Dynamics.CycleUniformMixing.OrbitIndexedSums.Fourier.char_star.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.Dynamics.CycleUniformMixing.OrbitIndexedSums.Fourier.source_registration
+  unitName := .str ``char_star "__information_unit"
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
