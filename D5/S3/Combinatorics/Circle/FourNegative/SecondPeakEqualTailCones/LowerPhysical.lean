@@ -160,7 +160,7 @@ private theorem lower_bank_masses (a b s : ℕ) (hs : 2≤s)
     push_cast
     simpa [start,length] using full 3
   intro r
-  fin_cases r <;> dsimp only [lowerBank,dot,lowerNativeAllocation,lowerAllocation] <;>
+  fin_cases r <;> dsimp [lowerBank,dot,lowerNativeAllocation,lowerAllocation] <;>
     (try simp only [List.map_append,List.sum_append])
   · rw [su]
     dsimp [B,v]

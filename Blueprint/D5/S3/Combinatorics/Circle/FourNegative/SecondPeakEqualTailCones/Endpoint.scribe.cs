@@ -19,8 +19,7 @@ internal sealed class EndpointDocument : IScribeDocumentDefinition
                         "permutation sigma:List(Fin k) and one literal cut j<=k satisfy both " +
                         "OriginalOrder(k,A,sigma) and OriginalOrder(k+1,2A,earWord(k,sigma,j)). Each " +
                         "OriginalOrder retains its physical permutation, exact zero total, and every natural " +
-                        "take-prefix, including empty and overlong prefixes. Status is SOURCE_ONLY_UNELABORATED; " +
-                        "actual kernel, audit and official acceptance remain outstanding.")),
+                        "take-prefix, including empty and overlong prefixes.")),
                     Paragraph(Text(
                         "Write x=2^a,y=2^b,z=2^s, D=y(z+1)+1 and N=xyz^2-1. The old heads are A=xD+1, " +
                         "B=xz(y+1)+z+1, L=xz^2+z^2+z+1, M=yz^2+D. The new heads are 2A, Bn=2B-1, Ln=2L-z-1, " +
@@ -114,10 +113,9 @@ internal sealed class EndpointDocument : IScribeDocumentDefinition
                         "2B-A-L, A-B-L, L(2Bn-3A-Ln)+Az^2, L(3A-Bn-1-Ln)-Az^2, A-2L, Az^2, " +
                         "L(A-1-2Ln)-Az^2, M-L, L(y-3)-M+1. LowerSeams proves Delta=M*Ln-Mn*L=Az^2. " +
                         "Rounding and Delta give all 12 cumulative gates with caps (M-1,Mn-1), (B-1,Bn-1), " +
-                        "(A-1,A-1), and both fourth seams are exactly zero. The residual M-2CL may be negative: " +
-                        "the true old requirement is L-A+1<=M-2CL<=L, rather than the unnecessary positive " +
-                        "residual restriction. Removing that extra restriction does not weaken OriginalOrder. " +
-                        "LowerSchedule consumes the gates through Checks, checks_strip and lift_order for " +
+                        "(A-1,A-1), and both fourth seams are exactly zero. The signed residual satisfies " +
+                        "L-A+1<=M-2CL<=L and may be negative. LowerSchedule consumes the gates through " +
+                        "Checks, checks_strip and lift_order for " +
                         "both full actual source orders and all natural prefixes, including the fresh prefix.")),
                     Paragraph(Text(
                         "Complete ordinary Pro reviews approve the threshold cone, its old-union extension, " +
@@ -141,9 +139,7 @@ internal sealed class EndpointDocument : IScribeDocumentDefinition
                         "whole-family law, coordinates [0,1,2] and both actual OriginalOrder function readouts. " +
                         "It proves rejected-family variation, deletion sensitivity for each role, and actual " +
                         "observational dependence on a valid parameter fiber. Literal sourceSelection paths " +
-                        "traverse the full theorem body. FamilyRecord is none and continuation is unknown. " +
-                        "Compilation and current source reconstruction must validate this registration; a proxy " +
-                        "proposition or a specialized parameter fiber does not supply the family theorem.")),
+                        "traverse the full theorem body. FamilyRecord is none and continuation is unknown.")),
                     Paragraph(Text(
                         "Multiplication by 2 acts on residues modulo 2^k-1 and 2^(k+1)-1; the actual centered " +
                         "sections produce these arithmetic source rows. The eight recurrences link four physical " +
@@ -159,7 +155,7 @@ internal sealed class EndpointDocument : IScribeDocumentDefinition
                         "FirstPeakSecondMaximum.Native, Chambers.Masks, SourceWidth, the pinned packet " +
                         "Checks/strip bridge and marked-ear transport provide reused physical source APIs. " +
                         "EqualLastTwo lies in the opposite b<a region. No literature novelty, general " +
-                        "group-action transport, unrestricted second-gap theorem, kernel acceptance or official " +
+                        "group-action transport, unrestricted second-gap theorem or official " +
                         "acceptance is asserted. Lower-a cases with b<2s+1, the other complementary regions " +
                         "and full J/C3.1 remain OPEN."))),
                 DescribeRole.Theorem)), []));

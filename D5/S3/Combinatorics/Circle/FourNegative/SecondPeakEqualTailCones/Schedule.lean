@@ -109,6 +109,7 @@ private def newPackets (a b s : ℕ) : List (List ℕ×ℕ) :=
   [(bank a b s 0,terminal a b s 0),(bank a b s 1,terminal a b s 1),
    (rank a b s::bank a b s 2,terminal a b s 2),(bank a b s 3,terminal a b s 3)]
 
+set_option maxHeartbeats 1000000 in
 private theorem physical_strips (a b s : ℕ) (hs : 2≤s)
     (hcone : (2*s+2≤a ∧ a+1≤b) ∨ (s+1≤a ∧ max (a+1) (3*s+1)≤b)) :
     InStrip (f a b s) (N a b s/2) 0 (pre a b s++post a b s) ∧
@@ -125,8 +126,14 @@ private theorem physical_strips (a b s : ℕ) (hs : 2≤s)
   have gates := polynomial_checks (2^a) (2^b) (2^s) ((2:ℤ)^(s-1)-1)
     (H b s) (p a b s) (C a b s) (F b) (E a) hu hw hx
     (bounds.1 2).1 (bounds.2 2).1 (all_gates a b s hs hcone)
-  have mf := bank_masses a b s hs bd.1 bd.2.1 bd.2.2 false
-  have mg := bank_masses a b s hs bd.1 bd.2.1 bd.2.2 true
+  have mf (r : Fin 4) :
+      ((bank a b s r).map (f a b s)).sum=
+        dot (heads (2^a) (2^b) (2^s)) (nativeAllocation a b s r) :=
+    bank_masses a b s hs bd.1 bd.2.1 bd.2.2 false r
+  have mg (r : Fin 4) :
+      ((bank a b s r).map (g a b s)).sum=
+        dot (newHeads (2^a) (2^b) (2^s)) (nativeAllocation a b s r) :=
+    bank_masses a b s hs bd.1 bd.2.1 bd.2.2 true r
   have nt (r : Fin 4) :
       2*f a b s (terminal a b s r)=successor (2^a) (2^b) (2^s) (termOrder r)-N a b s ∧
       2*g a b s (terminal a b s r)=newSuccessor (2^a) (2^b) (2^s) (termOrder r)-(2*N a b s+1) := by
@@ -145,22 +152,29 @@ private theorem physical_strips (a b s : ℕ) (hs : 2≤s)
       ((oldPackets a b s).map (fun B => (2*(B.1.map (f a b s)).sum,2*f a b s B.2))) := by
     rw [hcap]
     simpa only [oldPackets,List.map_cons,List.map_nil,mf,
-      (nt 0).1,(nt 1).1,(nt 2).1,(nt 3).1,termOrder,nativeAllocation]
+      (nt 0).1,(nt 1).1,(nt 2).1,(nt 3).1,termOrder,N,nativeAllocation,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three]
       using gates.1
   have newchecks : Checks (2*N a b s) 0
       ((newPackets a b s).map (fun B => (2*(B.1.map (g a b s)).sum,2*g a b s B.2))) := by
     simpa only [newPackets,List.map_cons,List.map_nil,List.sum_cons,mg,hear,
       (nt 0).2,(nt 1).2,(nt 2).2,(nt 3).2,
-      termOrder,mul_add,add_comm,nativeAllocation] using gates.2
+      termOrder,N,mul_add,add_comm,nativeAllocation,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] using gates.2
   have oldstrip : InStrip (f a b s) (N a b s/2) 0 (blocksWord (oldPackets a b s)) := by
     apply checks_strip _ _ _ (by omega) ?_ ?_ oldchecks
     · intro B hB i hi
       simp only [oldPackets,List.mem_cons,List.mem_nil_iff,or_false] at hB
-      rcases hB with rfl|rfl|rfl|rfl <;>
-        exact bank_positive a b s hs bd.1 bd.2.1 false _ i hi
+      rcases hB with rfl|rfl|rfl|rfl
+      · exact bank_positive a b s hs bd.1 bd.2.1 false 0 i hi
+      · exact bank_positive a b s hs bd.1 bd.2.1 false 1 i hi
+      · exact bank_positive a b s hs bd.1 bd.2.1 false 2 i hi
+      · exact bank_positive a b s hs bd.1 bd.2.1 false 3 i hi
     · intro B hB
       simp only [oldPackets,List.mem_cons,List.mem_nil_iff,or_false] at hB
-      rcases hB with rfl|rfl|rfl|rfl <;> exact (negs _).1
+      rcases hB with rfl|rfl|rfl|rfl
+      · exact (negs 0).1
+      · exact (negs 1).1
+      · exact (negs 2).1
+      · exact (negs 3).1
   have newstrip : InStrip (g a b s) (N a b s) 0 (blocksWord (newPackets a b s)) := by
     apply checks_strip _ _ _ hN ?_ ?_ newchecks
     · intro B hB i hi
@@ -176,7 +190,11 @@ private theorem physical_strips (a b s : ℕ) (hs : 2≤s)
       · exact bank_positive a b s hs bd.1 bd.2.1 true 3 i hi
     · intro B hB
       simp only [newPackets,List.mem_cons,List.mem_nil_iff,or_false] at hB
-      rcases hB with rfl|rfl|rfl|rfl <;> exact (negs _).2
+      rcases hB with rfl|rfl|rfl|rfl
+      · exact (negs 0).2
+      · exact (negs 1).2
+      · exact (negs 2).2
+      · exact (negs 3).2
   constructor
   · simpa only [oldPackets,blocksWord,pre,post,List.append_assoc,List.singleton_append] using oldstrip
   · simpa only [newPackets,blocksWord,pre,post,List.append_assoc,List.singleton_append,

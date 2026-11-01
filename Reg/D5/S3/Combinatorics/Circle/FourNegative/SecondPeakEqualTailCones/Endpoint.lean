@@ -2,7 +2,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTailCones.Endpoint
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
-/-! Full five-binder dependent source registration; SOURCE_ONLY_UNELABORATED. -/
+/-! Full five-binder dependent source registration. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 open LeanInformationAudit

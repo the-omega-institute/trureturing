@@ -103,6 +103,7 @@ private def lowerNewPackets (a b s : ℕ) : List (List ℕ×ℕ) :=
   [(lowerBank a b s 0,terminal a b s 0),(lowerBank a b s 1,terminal a b s 1),
    (rank a b s::lowerBank a b s 2,terminal a b s 2),(lowerBank a b s 3,terminal a b s 3)]
 
+set_option maxHeartbeats 1000000 in
 private theorem lower_physical_strips (a b s : ℕ) (hs : 2≤s)
     (ha : 2≤a) (has : a+1≤s) (hb : 2*s+1≤b) :
     InStrip (f a b s) (N a b s/2) 0 (lowerPre a b s++lowerPost a b s) ∧
@@ -124,8 +125,14 @@ private theorem lower_physical_strips (a b s : ℕ) (hs : 2≤s)
     (lower_rounding_capacity a b s hs ha has hb).1
   have gates := lower_polynomial_checks (2^a) (2^b) (2^s) ((2:ℤ)^(s-1)-1)
     (lowerC a b s) (F b) (E a) hu hw hx (bounds.1 2).1 (bounds.2 2).1 hgates
-  have mf := lower_bank_masses a b s hs ha has hb false
-  have mg := lower_bank_masses a b s hs ha has hb true
+  have mf (r : Fin 4) :
+      ((lowerBank a b s r).map (f a b s)).sum=
+        dot (heads (2^a) (2^b) (2^s)) (lowerNativeAllocation a b s r) :=
+    lower_bank_masses a b s hs ha has hb false r
+  have mg (r : Fin 4) :
+      ((lowerBank a b s r).map (g a b s)).sum=
+        dot (newHeads (2^a) (2^b) (2^s)) (lowerNativeAllocation a b s r) :=
+    lower_bank_masses a b s hs ha has hb true r
   have nt (r : Fin 4) :
       2*f a b s (terminal a b s r)=successor (2^a) (2^b) (2^s) (termOrder r)-N a b s ∧
       2*g a b s (terminal a b s r)=newSuccessor (2^a) (2^b) (2^s) (termOrder r)-(2*N a b s+1) := by
@@ -144,22 +151,29 @@ private theorem lower_physical_strips (a b s : ℕ) (hs : 2≤s)
       ((lowerOldPackets a b s).map (fun B => (2*(B.1.map (f a b s)).sum,2*f a b s B.2))) := by
     rw [hcap]
     simpa only [lowerOldPackets,List.map_cons,List.map_nil,mf,
-      (nt 0).1,(nt 1).1,(nt 2).1,(nt 3).1,termOrder,lowerNativeAllocation]
+      (nt 0).1,(nt 1).1,(nt 2).1,(nt 3).1,termOrder,N,lowerNativeAllocation,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three]
       using gates.1
   have newchecks : Checks (2*N a b s) 0
       ((lowerNewPackets a b s).map (fun B => (2*(B.1.map (g a b s)).sum,2*g a b s B.2))) := by
     simpa only [lowerNewPackets,List.map_cons,List.map_nil,List.sum_cons,mg,hear,
       (nt 0).2,(nt 1).2,(nt 2).2,(nt 3).2,
-      termOrder,mul_add,add_comm,lowerNativeAllocation] using gates.2
+      termOrder,N,mul_add,add_comm,lowerNativeAllocation,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] using gates.2
   have oldstrip : InStrip (f a b s) (N a b s/2) 0 (blocksWord (lowerOldPackets a b s)) := by
     apply checks_strip _ _ _ (by omega) ?_ ?_ oldchecks
     · intro B hB i hi
       simp only [lowerOldPackets,List.mem_cons,List.mem_nil_iff,or_false] at hB
-      rcases hB with rfl|rfl|rfl|rfl <;>
-        exact lower_bank_positive a b s hs ha (by omega) false _ i hi
+      rcases hB with rfl|rfl|rfl|rfl
+      · exact lower_bank_positive a b s hs ha (by omega) false 0 i hi
+      · exact lower_bank_positive a b s hs ha (by omega) false 1 i hi
+      · exact lower_bank_positive a b s hs ha (by omega) false 2 i hi
+      · exact lower_bank_positive a b s hs ha (by omega) false 3 i hi
     · intro B hB
       simp only [lowerOldPackets,List.mem_cons,List.mem_nil_iff,or_false] at hB
-      rcases hB with rfl|rfl|rfl|rfl <;> exact (negs _).1
+      rcases hB with rfl|rfl|rfl|rfl
+      · exact (negs 0).1
+      · exact (negs 1).1
+      · exact (negs 2).1
+      · exact (negs 3).1
   have newstrip : InStrip (g a b s) (N a b s) 0 (blocksWord (lowerNewPackets a b s)) := by
     apply checks_strip _ _ _ hN ?_ ?_ newchecks
     · intro B hB i hi
@@ -175,7 +189,11 @@ private theorem lower_physical_strips (a b s : ℕ) (hs : 2≤s)
       · exact lower_bank_positive a b s hs ha (by omega) true 3 i hi
     · intro B hB
       simp only [lowerNewPackets,List.mem_cons,List.mem_nil_iff,or_false] at hB
-      rcases hB with rfl|rfl|rfl|rfl <;> exact (negs _).2
+      rcases hB with rfl|rfl|rfl|rfl
+      · exact (negs 0).2
+      · exact (negs 1).2
+      · exact (negs 2).2
+      · exact (negs 3).2
   constructor
   · simpa only [lowerOldPackets,blocksWord,lowerPre,lowerPost,List.append_assoc,List.singleton_append] using oldstrip
   · simpa only [lowerNewPackets,blocksWord,lowerPre,lowerPost,List.append_assoc,List.singleton_append,
