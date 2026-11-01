@@ -142,32 +142,36 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def readout (_ : Unit) (p : signature.Params) (P : signature.State p) : Prop := by
+def readout (_ : Unit) (p : signature.Params) (P : signature.State p) : Bool := by
+  classical
   letI : NeZero p.val := ⟨by have := p.property; omega⟩
-  exact Compatible (reducedCenters P)
+  exact decide (Compatible (reducedCenters P))
 
 def actual : Realization signature := realize signature readout (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {m : ℕ} [NeZero m] (hm : 6 ≤ m) {P : Finset (ZMod (m + 1))},
-    Compatible P → 1 ∈ P → R.readout () ⟨m, hm⟩ P
+    Compatible P → 1 ∈ P → R.readout () ⟨m, hm⟩ P = true
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact h (m := 6) (by decide) (P := {1}) (by simp [Compatible]) (by simp)
+  have hh := h (m := 6) (by decide) (P := {1}) (by simp [Compatible]) (by simp)
+  change false = true at hh
+  cases hh
 
 private theorem dependence : ObservationalDependence signature actual := by
+  classical
   intro i
   refine ⟨⟨6, by decide⟩, {1}, {2, 3}, ?_⟩
-  change Compatible (reducedCenters ({1} : Finset (ZMod 7))) ≠
-    Compatible (reducedCenters ({2, 3} : Finset (ZMod 7)))
+  change decide (Compatible (reducedCenters ({1} : Finset (ZMod 7)))) ≠
+    decide (Compatible (reducedCenters ({2, 3} : Finset (ZMod 7))))
   have good : Compatible (reducedCenters ({1} : Finset (ZMod 7))) := by
     simp [reducedCenters, Compatible]
   have bad : ¬Compatible (reducedCenters ({2, 3} : Finset (ZMod 7))) := by
@@ -177,13 +181,17 @@ private theorem dependence : ObservationalDependence signature actual := by
     exact h (by simp : (2 : ZMod 6) ∈ ({1, 2} : Finset (ZMod 6)))
       (by simp : (1 : ZMod 6) ∈ ({1, 2} : Finset (ZMod 6))) (by decide)
       (local_crossings (by decide)).1
-  intro h
-  exact bad (h ▸ good)
+  simp [good, bad]
 
 def source_registration : Registration arena (type_of% @reduced_centres_compatible) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@reduced_centres_compatible, rejected, rejected_law⟩
+  bridge := by
+    classical
+    simp [arena, actual, realize, readout]
+  variation := ⟨by
+    intro m inst hm P hP h1
+    simpa [actual, realize, readout] using (@reduced_centres_compatible m inst hm P hP h1),
+    rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
