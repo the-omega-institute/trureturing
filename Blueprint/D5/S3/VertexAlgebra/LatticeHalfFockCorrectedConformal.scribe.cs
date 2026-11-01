@@ -8,6 +8,16 @@ internal sealed class LatticeHalfFockCorrectedConformalDocument : IScribeDocumen
         "The actual corrected conformal state is the native half-Fock tensor stress field.",
         H("Corrected conformal state on the actual half-Fock module"),
         Blocks(
+            Describe.Lean(DescribeId.Create("neutral-charged-identity-supplier"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockCorrectedConformal.current_charged_zero_identity"),
+                H("Actual neutral charged field is the identity"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
+                Blocks(Paragraph(Text("The unchanged zero-charge calculation is public for the canonical GroundCompression consumer. Zero-charge translation is constant, the creation exponential is one, and the ground representation sends its identity to the identity. This is the actual chargedField on the entire tensor module."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("neutral-identity-coefficient-supplier"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockCorrectedConformal.current_identity_coefficient"),
+                H("Identity field coefficient supplier"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
+                Blocks(Paragraph(Text("The unchanged identity-field coefficient proof is public and consumed by canonical GroundCompression: for every integer exponent e and every tensor state v, its coefficient is v if e=0 and zero otherwise."))), DescribeRole.Theorem),
             Paragraph(Text("Let D be an integral symmetric even-diagonal lattice datum of arbitrary finite rank, "
                 + "hu:IsUnit D.G.det, and H any complex rank-by-rank matrix satisfying H*gramComplex(D)=1. "
                 + "There is no positive-rank, positivity, symmetry-of-H, homogeneity or eigenstate assumption. "
