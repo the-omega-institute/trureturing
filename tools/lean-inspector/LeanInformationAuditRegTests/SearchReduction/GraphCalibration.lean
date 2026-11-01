@@ -189,7 +189,13 @@ run_cmd do
           catch error => pure (some (← error.toMessageData.toString))
         let some message := rejection
           | throwError "trigger rejected-verdict control was accepted"
-        unless message.startsWith "tactic 'decide' proved that the proposition" do
+        let normalized := String.intercalate " " <|
+          ((message.replace "\n" " ").splitOn " ").filter (· != "")
+        let expected := "Tactic `decide` proved that the proposition " ++
+          "LeanInformationAudit.SearchReduction.classifyGraph " ++
+          "integrationTriggerSharedWitness.graphReading = " ++
+          "LeanInformationAudit.SearchReduction.Verdict.nonBindOnly is false"
+        unless normalized == expected do
           throwError "trigger rejected-verdict control failed for another reason: {message}"
         if (← getEnv).contains `integrationTriggerSharedWitness then
           throwError "trigger temporary publication escaped its environment"
