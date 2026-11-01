@@ -468,6 +468,39 @@ private theorem negative_modes_support (D : LatticeData)
     rw [Int.toNat_of_nonneg (by omega : 0 ≤ -m.1 - 1)]
     omega
 
+private theorem normalPolynomial_projected_support (D : LatticeData)
+    (word : List (Index D)) (input output : Index D →₀ ℕ) (m : ModeTuple D word)
+    (hc : (creationPolynomial D word m * rightPolynomial D word m
+      (monomial input 1)).coeff output ≠ 0) :
+    allModes D (fun n => n ∈ nativeNeutralModeProjection D output input) word m := by
+  have hr : rightPolynomial D word m (monomial input 1) ≠ 0 := by
+    intro hz
+    simp [hz] at hc
+  have hle : nativeNegativeOccupation D word m ≤ output := by
+    by_contra hh
+    rw [creationPolynomial_monomial, smul_mul_assoc, coeff_smul,
+      coeff_monomial_mul', if_neg hh, smul_zero] at hc
+    exact hc rfl
+  have hp := rightPolynomial_positive_support D
+    (input.support.image (fun a => (a.2 : ℤ))) word m (monomial input 1)
+    (current_monomial_frequency_vanish D input) hr
+  have hm := negative_modes_support D output word m hle
+  have combine (w : List (Index D)) : ∀ m : ModeTuple D w,
+      allModes D (fun n => 0 ≤ n →
+        n ∈ input.support.image (fun a => (a.2 : ℤ))) w m →
+      allModes D (fun n => n < 0 →
+        n ∈ output.support.image (fun a => -(a.2 : ℤ) - 1)) w m →
+      allModes D (fun n => n ∈ nativeNeutralModeProjection D output input) w m := by
+    induction w with
+    | nil => intros; trivial
+    | cons a w ih =>
+      intro m hp hm
+      refine ⟨?_, ih m.2 hp.2 hm.2⟩
+      by_cases h : m.1 < 0
+      · exact Finset.mem_union_left _ (hm.1 h)
+      · exact Finset.mem_union_right _ (hp.1 (by omega))
+  exact combine word m hp hm
+
 /-- Support is proved only after the actual output projection. Creation modes
 outside the output frequency vanish there; annihilation modes outside the input
 frequency vanish on the input, including arbitrary Gram colour mixing. -/
@@ -486,33 +519,7 @@ theorem nativeNeutralCoefficient_projected_support
         (monomial input 1)).coeff output ≠ 0 := by
       intro hz
       exact hn (by rw [hz, zero_smul])
-    have hr : rightPolynomial D word m (monomial input 1) ≠ 0 := by
-      intro hz
-      simp [hz] at hc
-    have hle : nativeNegativeOccupation D word m ≤ output := by
-      by_contra hh
-      rw [creationPolynomial_monomial, smul_mul_assoc, coeff_smul,
-        coeff_monomial_mul', if_neg hh, smul_zero] at hc
-      exact hc rfl
-    have hp := rightPolynomial_positive_support D
-      (input.support.image (fun a => (a.2 : ℤ))) word m (monomial input 1)
-      (current_monomial_frequency_vanish D input) hr
-    have hm := negative_modes_support D output word m hle
-    have combine (w : List (Index D)) : ∀ m : ModeTuple D w,
-        allModes D (fun n => 0 ≤ n →
-          n ∈ input.support.image (fun a => (a.2 : ℤ))) w m →
-        allModes D (fun n => n < 0 →
-          n ∈ output.support.image (fun a => -(a.2 : ℤ) - 1)) w m →
-        allModes D (fun n => n ∈ nativeNeutralModeProjection D output input) w m := by
-      induction w with
-      | nil => intros; trivial
-      | cons a w ih =>
-        intro m hp hm
-        refine ⟨?_, ih m.2 hp.2 hm.2⟩
-        by_cases h : m.1 < 0
-        · exact Finset.mem_union_left _ (hm.1 h)
-        · exact Finset.mem_union_right _ (hp.1 (by omega))
-    exact combine word m hp hm
+    exact normalPolynomial_projected_support D word input output m hc
   · exact (hn (map_zero _)).elim
 
 /-- The common finite mode set is independent of the Hahn exponent. The
@@ -1031,6 +1038,356 @@ theorem nativeNeutralCoefficient_source_insertion
   rw [← nativeNeutralLaurentEntry_at_energy D hu T (d + Finsupp.single a 1) input output g,
     nativeNeutralLaurentEntry_source_insertion, add_smul, Finset.sum_smul]
   simp only [mul_smul]
+
+private def normalWord (D : LatticeData) (T : ℂˣ) (B : Finset ℤ)
+    (w : List (Index D)) : Module.End ℂ (Oscillator D) :=
+  ∑ m ∈ nativeModeBox D B w, nativeRawNormalTerm D T w m
+
+private def creationSum (D : LatticeData) (T : ℂˣ) (B : Finset ℤ)
+    (a : Index D) : Module.End ℂ (Oscillator D) :=
+  ∑ m ∈ B, if m < 0 then rawModeOperator D T a m else 0
+
+private def annihilationSum (D : LatticeData) (T : ℂˣ) (B : Finset ℤ)
+    (a : Index D) : Module.End ℂ (Oscillator D) :=
+  ∑ m ∈ B, if m < 0 then 0 else rawModeOperator D T a m
+
+private theorem normalWord_cons (D : LatticeData) (T : ℂˣ) (B : Finset ℤ)
+    (a : Index D) (w : List (Index D)) :
+    normalWord D T B (a :: w) =
+      creationSum D T B a * normalWord D T B w +
+        normalWord D T B w * annihilationSum D T B a := by
+  classical
+  simp only [normalWord, nativeModeBox, Finset.sum_product, nativeRawNormalTerm,
+    creationSum, annihilationSum, Finset.sum_mul, Finset.mul_sum,
+    ← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro m hm
+  by_cases hn : m < 0 <;> simp [hn, Finset.mul_sum, Finset.sum_mul]
+
+private theorem rawModeOperator_same_sign (D : LatticeData) (T : ℂˣ)
+    (a b : Index D) (m n : ℤ)
+    (hs : (m < 0 ∧ n < 0) ∨ (0 ≤ m ∧ 0 ≤ n)) :
+    rawModeOperator D T a m * rawModeOperator D T b n =
+      rawModeOperator D T b n * rawModeOperator D T a m := by
+  have hmn : m + n + 1 ≠ 0 := by rcases hs with hs | hs <;> omega
+  ext p
+  simp only [Module.End.mul_apply, rawModeOperator_eq, LinearMap.smul_apply,
+    map_smul, smul_smul]
+  have hc := sub_eq_zero.mp (by simpa [hmn] using
+    current_heisenberg_apply D a.1 b.1 m n p)
+  rw [hc]
+  congr 1
+  ring
+
+private theorem creationSum_commute (D : LatticeData) (T : ℂˣ)
+    (B : Finset ℤ) (a b : Index D) :
+    creationSum D T B a * creationSum D T B b =
+      creationSum D T B b * creationSum D T B a := by
+  classical
+  simp only [creationSum, Finset.sum_mul, Finset.mul_sum]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro n hn
+  apply Finset.sum_congr rfl
+  intro m hm
+  split_ifs with hm' hn' hn' <;> simp_all only [zero_mul, mul_zero]
+  exact rawModeOperator_same_sign D T a b m n (Or.inl ⟨hm', hn'⟩)
+
+private theorem annihilationSum_commute (D : LatticeData) (T : ℂˣ)
+    (B : Finset ℤ) (a b : Index D) :
+    annihilationSum D T B a * annihilationSum D T B b =
+      annihilationSum D T B b * annihilationSum D T B a := by
+  classical
+  simp only [annihilationSum, Finset.sum_mul, Finset.mul_sum]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro n hn
+  apply Finset.sum_congr rfl
+  intro m hm
+  split_ifs with hm' hn' hn' <;> simp_all only [zero_mul, mul_zero]
+  exact rawModeOperator_same_sign D T a b m n (Or.inr ⟨by omega, by omega⟩)
+
+private theorem normalWord_perm (D : LatticeData) (T : ℂˣ) (B : Finset ℤ)
+    {u v : List (Index D)} (h : u.Perm v) :
+    normalWord D T B u = normalWord D T B v := by
+  induction h with
+  | nil => rfl
+  | cons a h ih => simp only [normalWord_cons, ih]
+  | swap a b w =>
+    simp only [normalWord_cons, mul_add, add_mul, ← mul_assoc]
+    rw [creationSum_commute D T B a b, annihilationSum_commute D T B a b]
+    noncomm_ring
+  | trans h₁ h₂ ih₁ ih₂ => exact ih₁.trans ih₂
+
+private theorem nativeModeBox_mono (D : LatticeData) (B C : Finset ℤ)
+    (h : B ⊆ C) (w : List (Index D)) :
+    nativeModeBox D B w ⊆ nativeModeBox D C w := by
+  induction w with
+  | nil => exact le_refl _
+  | cons a w ih => exact Finset.product_subset_product h ih
+
+private theorem rawNormal_projected_support (D : LatticeData) (T : ℂˣ)
+    (w : List (Index D)) (input output : Index D →₀ ℕ) (m : ModeTuple D w)
+    (hn : (nativeRawNormalTerm D T w m (monomial input 1)).coeff output ≠ 0) :
+    allModes D (fun n => n ∈ nativeNeutralModeProjection D output input) w m := by
+  rw [nativeRawNormalTerm_eq, coeff_smul, smul_eq_mul] at hn
+  exact normalPolynomial_projected_support D w input output m (mul_ne_zero_iff.mp hn).2
+
+private theorem normalWord_box_independent (D : LatticeData) (T : ℂˣ)
+    (B : Finset ℤ) (input output : Index D →₀ ℕ)
+    (hB : nativeNeutralModeProjection D output input ⊆ B) (w : List (Index D)) :
+    (normalWord D T B w (monomial input 1)).coeff output =
+      (normalWord D T (nativeNeutralModeProjection D output input) w
+        (monomial input 1)).coeff output := by
+  classical
+  simp only [normalWord, LinearMap.sum_apply, coeff_sum]
+  symm
+  apply Finset.sum_subset (nativeModeBox_mono D _ _ hB w)
+  intro m hm hout
+  by_contra hn
+  exact hout ((nativeModeBox_mem D _ w m).mpr
+    (rawNormal_projected_support D T w input output m hn))
+
+private def normalReadoutBox (D : LatticeData) (T : ℂˣ) (B : Finset ℤ)
+    (input output : Index D →₀ ℕ) : Oscillator D →ₗ[ℂ] ℂ :=
+  (basisMonomials (Index D) ℂ).constr ℂ (fun mon =>
+    (normalWord D T B (occurrences D mon) (monomial input 1)).coeff output)
+
+private theorem normalReadoutBox_monomial (D : LatticeData) (T : ℂˣ)
+    (B : Finset ℤ) (input output mon : Index D →₀ ℕ) :
+    normalReadoutBox D T B input output (monomial mon 1) =
+      (normalWord D T B (occurrences D mon) (monomial input 1)).coeff output :=
+  (basisMonomials (Index D) ℂ).constr_basis ℂ _ mon
+
+private theorem normalReadoutBox_independent (D : LatticeData) (T : ℂˣ)
+    (B : Finset ℤ) (input output : Index D →₀ ℕ)
+    (hB : nativeNeutralModeProjection D output input ⊆ B) :
+    normalReadoutBox D T B input output = nativeNormalReadout D T input output := by
+  classical
+  apply (basisMonomials (Index D) ℂ).ext
+  intro mon
+  rw [normalReadoutBox_monomial, normalWord_box_independent D T B input output hB,
+    nativeNormalReadout_monomial]
+  simp [normalWord, LinearMap.sum_apply, coeff_sum]
+
+private theorem normalReadoutBox_X_monomial (D : LatticeData) (T : ℂˣ)
+    (B : Finset ℤ) (input output mon : Index D →₀ ℕ) (a : Index D) :
+    normalReadoutBox D T B input output (X a * monomial mon 1) =
+      ((creationSum D T B a * normalWord D T B (occurrences D mon) +
+          normalWord D T B (occurrences D mon) * annihilationSum D T B a)
+        (monomial input 1)).coeff output := by
+  have enumeration : (a :: occurrences D mon).Perm
+      (occurrences D (Finsupp.single a 1 + mon)) := by
+    apply Multiset.coe_eq_coe.mp
+    simp [occurrences, Finsupp.toMultiset_add, Finsupp.toMultiset_single,
+      ← Multiset.cons_coe, Multiset.coe_toList, add_comm]
+  rw [show (X a * monomial mon (1 : ℂ) : Oscillator D) =
+      monomial (Finsupp.single a 1 + mon) 1 by simp [X],
+    normalReadoutBox_monomial, ← normalWord_perm D T B enumeration, normalWord_cons]
+
+/-- The actual neutral zero-source field propagates every input monomial
+unchanged, with the identity on the entire ground module. -/
+theorem nativeNeutralLaurentEntry_zero (D : LatticeData) (T : ℂˣ)
+    (input output : Index D →₀ ℕ) :
+    nativeNeutralLaurentEntry D T 0 input output = if input = output then 1 else 0 := by
+  rw [nativeNeutralLaurentEntry_readout]
+  have hz : correctionAt D T (monomial 0 1) = (monomial 0 1 : Oscillator D) := by
+    change correctionEvaluation D T (correctionLift D 0 (C 1)) = C 1
+    rw [correctionLift_C]
+    simp [correctionEvaluation, algebraMap_eq]
+  rw [hz, nativeNormalReadout_monomial]
+  simp [occurrences, nativeModeBox,
+    nativeRawNormalTerm, coeff_monomial]
+
+private theorem creationSum_coefficient (D : LatticeData) (T : ℂˣ)
+    (B : Finset ℤ) (a : Index D) (output : Index D →₀ ℕ) (p : Oscillator D)
+    (hB : output.support.image (fun j => -(j.2 : ℤ) - 1) ⊆ B) :
+    (creationSum D T B a p).coeff output =
+      ∑ j ∈ output.support, nativeSourceOutputKernel D T a j *
+        p.coeff (output - Finsupp.single j 1) := by
+  classical
+  have term (m : ℤ) :
+      ((if m < 0 then rawModeOperator D T a m else 0) p).coeff output =
+        if m < 0 then
+          nativeSourceOutputKernel D T a (a.1, (-m - 1).toNat) *
+            (if (a.1, (-m - 1).toNat) ∈ output.support then
+              p.coeff (output - Finsupp.single (a.1, (-m - 1).toNat) 1) else 0)
+        else 0 := by
+    split_ifs with hn
+    · simp [rawModeOperator, hn, coeff_X_mul']
+    · simp
+  simp only [creationSum, LinearMap.sum_apply, coeff_sum, term]
+  refine Finset.sum_bij_ne_zero (fun m _ _ => (a.1, (-m - 1).toNat)) ?_ ?_ ?_ ?_
+  · intro m hm hn
+    by_cases h : m < 0
+    · by_contra ho
+      simp [h, ho] at hn
+    · simp [h] at hn
+  · intro m hm hmn n hn hnn he
+    have hm' : m < 0 := by by_contra hh; simp [hh] at hmn
+    have hn' : n < 0 := by by_contra hh; simp [hh] at hnn
+    have he' := congrArg Prod.snd he
+    have h₁ := Int.toNat_of_nonneg (by omega : 0 ≤ -m - 1)
+    have h₂ := Int.toNat_of_nonneg (by omega : 0 ≤ -n - 1)
+    omega
+  · intro j hj hn
+    have hc : a.1 = j.1 := by
+      by_contra hh
+      simp [nativeSourceOutputKernel, hh] at hn
+    refine ⟨-(j.2 : ℤ) - 1, hB (Finset.mem_image.mpr ⟨j, hj, rfl⟩), ?_, ?_⟩
+    · have he : (a.1, (-(-(j.2 : ℤ) - 1) - 1).toNat) = j := by
+        apply Prod.ext
+        · exact hc
+        · simp
+      simpa [show -(j.2 : ℤ) - 1 < 0 by omega, he, hj] using hn
+    · apply Prod.ext
+      · exact hc
+      · simp
+  · intro m hm hn
+    have hm' : m < 0 := by by_contra hh; simp [hh] at hn
+    have hj : (a.1, (-m - 1).toNat) ∈ output.support := by
+      by_contra hh
+      simp [hm', hh] at hn
+    simp [hm', hj]
+
+private theorem annihilationSum_coefficient (D : LatticeData) (T : ℂˣ)
+    (B : Finset ℤ) (a : Index D) (input output : Index D →₀ ℕ)
+    (N : Module.End ℂ (Oscillator D))
+    (hB : input.support.image (fun j => (j.2 : ℤ)) ⊆ B) :
+    (N (annihilationSum D T B a (monomial input 1))).coeff output =
+      ∑ j ∈ input.support, (input j : ℂ) * nativeSourceInputKernel D T a j *
+        (N (monomial (input - Finsupp.single j 1) 1)).coeff output := by
+  classical
+  have term (m : ℤ) :
+      (N ((if m < 0 then 0 else rawModeOperator D T a m)
+        (monomial input 1))).coeff output =
+      ∑ c : Fin D.rank, if m < 0 then 0 else
+        (input (c, m.toNat) : ℂ) * nativeSourceInputKernel D T a (c, m.toNat) *
+          (N (monomial (input - Finsupp.single (c, m.toNat) 1) 1)).coeff output := by
+    by_cases hm : m < 0
+    · simp [hm]
+    · have hderiv (c : Fin D.rank) :
+          pderiv (c, m.toNat) (monomial input (1 : ℂ)) =
+            (input (c, m.toNat) : ℂ) • monomial (input - Finsupp.single (c, m.toNat) 1) 1 := by
+        simp [pderiv_monomial, smul_monomial]
+      simp only [hm, if_false, rawModeOperator, LinearMap.sum_apply,
+        LinearMap.smul_apply, Derivation.coeFn_coe, hderiv, map_sum, map_smul,
+        coeff_sum, coeff_smul, smul_eq_mul]
+      apply Finset.sum_congr rfl
+      intro c hc
+      ring
+  simp only [annihilationSum, LinearMap.sum_apply, map_sum, coeff_sum, term,
+    ← Finset.sum_product]
+  refine Finset.sum_bij_ne_zero (fun mc _ _ => (mc.2, mc.1.toNat)) ?_ ?_ ?_ ?_
+  · intro mc hmc hn
+    have hm : ¬ mc.1 < 0 := by intro hh; simp [hh] at hn
+    apply Finsupp.mem_support_iff.mpr
+    intro hz
+    simp [hz, hm] at hn
+  · intro mc hmc hn nd hnd hnd' he
+    have hm : ¬ mc.1 < 0 := by intro hh; simp [hh] at hn
+    have hn' : ¬ nd.1 < 0 := by intro hh; simp [hh] at hnd'
+    have hc := congrArg Prod.fst he
+    have hk := congrArg Prod.snd he
+    have h₁ := Int.toNat_of_nonneg (by omega : 0 ≤ mc.1)
+    have h₂ := Int.toNat_of_nonneg (by omega : 0 ≤ nd.1)
+    exact Prod.ext (by omega) hc
+  · intro j hj hn
+    refine ⟨((j.2 : ℤ), j.1), Finset.mem_product.mpr
+      ⟨hB (Finset.mem_image.mpr ⟨j, hj, rfl⟩), Finset.mem_univ _⟩, ?_, ?_⟩
+    · simpa using hn
+    · simp
+  · intro mc hmc hn
+    have hm : ¬ mc.1 < 0 := by intro hh; simp [hh] at hn
+    simp [hm]
+
+private theorem nativeNeutralModeProjection_mono (D : LatticeData)
+    (input output input' output' : Index D →₀ ℕ)
+    (hi : input' ≤ input) (ho : output' ≤ output) :
+    nativeNeutralModeProjection D output' input' ⊆
+      nativeNeutralModeProjection D output input := by
+  exact Finset.union_subset_union
+    (Finset.image_subset_image (Finsupp.support_mono ho))
+    (Finset.image_subset_image (Finsupp.support_mono hi))
+
+private theorem nativeNormalReadout_X_mul (D : LatticeData) (T : ℂˣ)
+    (input output : Index D →₀ ℕ) (a : Index D) (p : Oscillator D) :
+    nativeNormalReadout D T input output (X a * p) =
+      ∑ j ∈ output.support, nativeSourceOutputKernel D T a j *
+        nativeNormalReadout D T input (output - Finsupp.single j 1) p +
+      ∑ j ∈ input.support, (input j : ℂ) * nativeSourceInputKernel D T a j *
+        nativeNormalReadout D T (input - Finsupp.single j 1) output p := by
+  classical
+  let B := nativeNeutralModeProjection D output input
+  have hC : output.support.image (fun j => -(j.2 : ℤ) - 1) ⊆ B :=
+    Finset.subset_union_left
+  have hA : input.support.image (fun j => (j.2 : ℤ)) ⊆ B :=
+    Finset.subset_union_right
+  have hbox : normalReadoutBox D T B input output = nativeNormalReadout D T input output :=
+    normalReadoutBox_independent D T B input output (le_refl _)
+  have base (mon : Index D →₀ ℕ) :
+      nativeNormalReadout D T input output (X a * monomial mon 1) =
+        ∑ j ∈ output.support, nativeSourceOutputKernel D T a j *
+          nativeNormalReadout D T input (output - Finsupp.single j 1) (monomial mon 1) +
+        ∑ j ∈ input.support, (input j : ℂ) * nativeSourceInputKernel D T a j *
+          nativeNormalReadout D T (input - Finsupp.single j 1) output (monomial mon 1) := by
+    rw [← hbox, normalReadoutBox_X_monomial]
+    simp only [LinearMap.add_apply, Module.End.mul_apply, coeff_add]
+    rw [creationSum_coefficient D T B a output _ hC,
+      annihilationSum_coefficient D T B a input output _ hA]
+    congr 1
+    · apply Finset.sum_congr rfl
+      intro j hj
+      rw [← normalReadoutBox_monomial,
+        normalReadoutBox_independent D T B input (output - Finsupp.single j 1)
+          (nativeNeutralModeProjection_mono D input output input _ le_rfl tsub_le_self)]
+    · apply Finset.sum_congr rfl
+      intro j hj
+      rw [← normalReadoutBox_monomial,
+        normalReadoutBox_independent D T B (input - Finsupp.single j 1) output
+          (nativeNeutralModeProjection_mono D input output _ output tsub_le_self le_rfl)]
+  let rhs : Oscillator D →ₗ[ℂ] ℂ :=
+    (∑ j ∈ output.support, nativeSourceOutputKernel D T a j •
+      nativeNormalReadout D T input (output - Finsupp.single j 1)) +
+    ∑ j ∈ input.support, ((input j : ℂ) * nativeSourceInputKernel D T a j) •
+      nativeNormalReadout D T (input - Finsupp.single j 1) output
+  have maps : (nativeNormalReadout D T input output).comp
+      (LinearMap.mulLeft ℂ (X a)) = rhs := by
+    apply (basisMonomials (Index D) ℂ).ext
+    intro mon
+    simpa [rhs, LinearMap.comp_apply, LinearMap.mulLeft_apply,
+      LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul] using base mon
+  simpa [rhs, LinearMap.comp_apply, LinearMap.mulLeft_apply,
+    LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul] using
+    LinearMap.congr_fun maps p
+
+/-- The unpaired source insertion is the actual SO/SI coefficient lowering:
+creation has no output multiplicity and annihilation has the input multiplicity. -/
+theorem nativeNeutralLaurentEntry_unpaired (D : LatticeData) (T : ℂˣ)
+    (d input output : Index D →₀ ℕ) (a : Index D) :
+    nativeNormalReadout D T input output (X a * correctionAt D T (monomial d 1)) =
+      ∑ j ∈ output.support, nativeSourceOutputKernel D T a j *
+        nativeNeutralLaurentEntry D T d input (output - Finsupp.single j 1) +
+      ∑ j ∈ input.support, (input j : ℂ) * nativeSourceInputKernel D T a j *
+        nativeNeutralLaurentEntry D T d (input - Finsupp.single j 1) output := by
+  simp only [nativeNormalReadout_X_mul, nativeNeutralLaurentEntry_readout]
+
+/-- Complete source insertion for the actual full corrected-field entry,
+including SS, SO and SI and the native IO base. -/
+theorem nativeNeutralLaurentEntry_recurrence (D : LatticeData) (T : ℂˣ)
+    (d input output : Index D →₀ ℕ) (a : Index D) :
+    nativeNeutralLaurentEntry D T (d + Finsupp.single a 1) input output =
+      (∑ j ∈ output.support, nativeSourceOutputKernel D T a j *
+        nativeNeutralLaurentEntry D T d input (output - Finsupp.single j 1) +
+      ∑ j ∈ input.support, (input j : ℂ) * nativeSourceInputKernel D T a j *
+        nativeNeutralLaurentEntry D T d (input - Finsupp.single j 1) output) +
+      ∑ b ∈ d.support, (d b : ℂ) * nativeSourceSourceKernel D T a b *
+        nativeNeutralLaurentEntry D T (d - Finsupp.single b 1) input output := by
+  rw [nativeNeutralLaurentEntry_source_insertion, nativeNeutralLaurentEntry_unpaired]
+
+#print axioms nativeNeutralLaurentEntry_zero
+#print axioms nativeNeutralLaurentEntry_unpaired
+#print axioms nativeNeutralLaurentEntry_recurrence
 
 #print axioms nativeNeutralCoefficient_source_insertion
 #print axioms nativeNeutralCoefficient_source
