@@ -33,11 +33,16 @@ separation through the Gram matrix of the old-to-late adjacency block.
 
 ## Gap
 
-The all-stage spectral limit remains to be composed from the actual cutoff
-norm, Gram convergence and ordered-spectrum identities.
-The full target quantifies along every natural stage, including odd stages;
-a conditional estimate model or a finite computation does not settle it.
-The forward preregistration is [issue #24989](https://github.com/the-omega-institute/trureturing/issues/24989).
+The exact all-stage spectral limit is **Proved** by
+`D5.S3.Combinatorics.Apollonian.SecondEigenvalueLimit.result : InnerFaceStages.limitClaim`.
+It quantifies along every natural stage, including odd stages, without an
+additional degree or spectral hypothesis. This is the formal completion of
+the accepted ordinary proof attributed in the source note, rather than a
+claim to a new ordinary solution or worldwide priority.
+The forward preregistration is
+[issue #24989, comment 6550398124](https://github.com/the-omega-institute/trureturing/issues/24989#issuecomment-6550398124).
+It retains unit 24989, cutoff `2026-11-01T11:00:00Z` and `predictions: []`;
+the earlier unit 24905 settlement is unchanged.
 
 ## Route
 
@@ -69,12 +74,15 @@ and preliminary bounds are not assumptions.
 The finite source construction and its graph laws belong to
 [InnerFaceStages](../D5/S3/Combinatorics/Apollonian/InnerFaceStages.lean), with
 their [canonical exposition](../Blueprint/D5/S3/Combinatorics/Apollonian/InnerFaceStages.md).
-The exact unproved proposition is `InnerFaceStages.limitClaim`;
+The exact proposition proved by
+[SecondEigenvalueLimit.result](../D5/S3/Combinatorics/Apollonian/SecondEigenvalueLimit.lean)
+is `InnerFaceStages.limitClaim`;
 `secondEigenvalue` uses the decreasing real ordinary-adjacency spectrum,
 with index one and multiplicities, and the normalization is a real power.
 `cutoffEquiv` is the exact old/late vertex bijection, and `cutoff_adjacency`
 identifies every entry with the corresponding ordinary adjacency block.
-These combinatorial statements alone do not establish the spectral limit.
+The final result combines these combinatorial statements with the spectral
+and analytic interfaces below.
 The actual late adjacency norm interface belongs to
 [CutoffSpectralBounds](../D5/S3/Combinatorics/Apollonian/CutoffSpectralBounds.lean).
 Its bound uses the proved birth orientation and the finite Schur operator bound.
@@ -90,22 +98,57 @@ It identifies the second decreasing eigenvalue of $[[0,B],[B^\top,0]]$
 with the square root of the second Gram eigenvalue when the latter is positive.
 The positive prefix retains signs, zero padding and algebraic multiplicities;
 the old and late vertex sets need not have equal sizes.
-The [unfinished graph registrations](https://github.com/the-omega-institute/trureturing/issues/24989#issuecomment-6552933239)
-remain separate from mathematical compilation, under the linked-issue route.
-The additional spectral registration obligations are tracked under
-[the same issue](https://github.com/the-omega-institute/trureturing/issues/24989).
-No frozen graph-specific spectral resolution is asserted here.
+The final proof identifies the limiting second Gram eigenvalue as two,
+proves eventual positivity, transports the cutoff spectrum with its
+multiplicities, and controls the actual full adjacency remainder. Its
+[canonical exposition](../Blueprint/D5/S3/Combinatorics/Apollonian/SecondEigenvalueLimit.md)
+records the `Proved` source-resolution claim.
+
+The [unfinished registration audit](https://github.com/the-omega-institute/trureturing/issues/24989#issuecomment-6554047951)
+remains separate from mathematical proof under CLAUDE.md section 3.9.
+There are 27 public targets: 21 retained records, comprising eight validated
+and thirteen unfinished records, plus six faithful failed attempts with no
+retained source. No target lacks an attempt; nineteen lack a completed
+registration. The thirteen retained gaps are nine `InnerFaceStages` records
+(three `source.observation_data`, six `source.params`),
+`CutoffGramLimit.normalized_gram_tendsto`, both public
+`CutoffSpectralBounds` bounds and `SecondEigenvalueLimit.result`
+(four `source.selection_missing` in total). These retain `IE-C050` and no
+certificate. The six failed targets are `InnerFaceStages.faceCount_new`,
+the B-hosted Schur norm theorem, `RectangularDilation.eigenvalues_ofReal`,
+both unequal-dilation identities and the cutoff ordered-spectrum identity.
+Their respective readings are failure of observational dependence for the
+constant-three count, absence of the `RCLike (ULift Real)` negative witness,
+`contract.discovery:rigid_universes`, lifted finite-matrix transparency
+failure for both unequal identities, and absence of a compiled finite
+second-Gram positivity witness. Existing valid sources and binding evidence
+remain in place; the resolution claim does not assert complete registration.
 
 ## Triage
 
-The remaining mathematical steps are to identify the limiting diagonal's
-second decreasing eigenvalue as $2$, transfer the fixed-cutoff matrix limit
-to second-eigenvalue convergence and eventual positivity, apply the existing
-scaling and perturbation results to the actual full adjacency decomposition,
-and compose the limits in the order $t\to\infty$ followed by $k\to\infty$.
-The result must cover all natural stages with the original real-power
-normalization. Existing generic perturbation and scaling declarations remain
-suppliers for this composition.
+- **Proved:** the centre has limiting Gram weight three, the three outer
+  seeds have weight two, and every other weight is at most two. Thus the
+  second decreasing limiting eigenvalue is exactly two, with multiplicity.
+- **Proved:** fixed-cutoff Gram convergence gives convergence of its ordered
+  second eigenvalue and eventual positivity. The unequal-block dilation
+  identity then yields the cutoff second-eigenvalue limit $\sqrt2$.
+- **Proved:** exact vertex transport decomposes the adjacency error into
+  the fixed old block and the actual late induced block. After normalization,
+  the former tends to zero with the stage and the latter is bounded by
+  $3\sqrt2/2^{k/2}$. Choosing the cutoff first and then the stage proves the
+  full natural-stage limit, including odd stages. The graph bounds are
+  consequences of the construction, not supplied spectral assumptions.
+- **Unresolved adjacent questions:** limits for further leading eigenvalues,
+  rates of convergence, and variants using other face conventions or
+  operators are not settled by this theorem. The fixed-cutoff method gives
+  a route to examine them, but the necessary limiting weights, ordered
+  positive-prefix conditions and remainder estimates must be checked for
+  each target. No new such theorem is asserted here.
+- **Source scope:** this resolves the stated second-eigenvalue question at
+  the mathematical level by formalizing the attributed ordinary argument.
+  The source's broader question about other leading eigenvalues remains
+  outside this result. The nineteen unfinished registration targets remain
+  audit obligations under the linked issue.
 
 ## ASSUMED-UNVERIFIED
 
