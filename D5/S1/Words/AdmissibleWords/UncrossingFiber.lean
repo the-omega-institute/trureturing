@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S1/Words/AdmissibleWords/UncrossingFiber
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Data.Multiset, mathlib/module/Mathlib.Data.Finset.Card]
+   anchors: [mathlib/module/Mathlib.Data.Multiset.Sum, mathlib/module/Mathlib.Data.Finset.Card]
    utility: none
    digest: Bounded residual uncrossing reaches explicit threshold rows and connects original native admissible occupancy fibers via a fence bijection. -/
 
