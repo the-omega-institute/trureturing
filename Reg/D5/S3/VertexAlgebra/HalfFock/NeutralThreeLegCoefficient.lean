@@ -256,29 +256,37 @@ theorem source_bridge : (type_of% (@nativeNeutralLaurentEntry_raw_normal_expansi
 end RawNormal
 
 namespace SourceInsertion
+structure Params extends Evaluation.Params where
+  a : Index D
 abbrev signature : Signature where
-  Params := RawNormal.Params
-  State p := (Index p.D →₀ ℕ) × (Index p.D →₀ ℕ) × (Index p.D →₀ ℕ) × Index p.D
+  Params := Params
+  State p := ActualGround p.D p.hu
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := ℂ
+  Output _ p := ActualGround p.D p.hu
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize _ (fun _ p s =>
-    nativeNormalReadout p.D p.T s.2.1 s.2.2.1
-      (MvPolynomial.X s.2.2.2 * correctionAt p.D p.T (MvPolynomial.monomial s.1 1)) +
-    ∑ b ∈ s.1.support, (s.1 b : ℂ) * nativeSourceSourceKernel p.D p.T s.2.2.2 b *
-      nativeNeutralLaurentEntry p.D p.T (s.1 - Finsupp.single b 1) s.2.1 s.2.2.1)
+def actual : Realization signature := realize _ (fun _ p g =>
+    nativeNormalReadout p.D p.T p.input p.output
+      (MvPolynomial.X p.a * correctionAt p.D p.T (MvPolynomial.monomial p.d 1)) • g +
+    ∑ b ∈ p.d.support, ((p.d b : ℂ) * nativeSourceSourceKernel p.D p.T p.a b) •
+      (nativeNeutralLaurentEntry p.D p.T (p.d - Finsupp.single b 1) p.input p.output • g))
   (fun e => nomatch e)
 
 def law (R : Realization signature) : Prop :=
-  ∀ (D : LatticeData) (T : ℂˣ) (d input output : Index D →₀ ℕ) (a : Index D),
-    nativeNeutralLaurentEntry D T (d + Finsupp.single a 1) input output =
-      R.readout () ⟨D, T⟩ (d, input, output, a)
+  ∀ (D : LatticeData) (hu : IsUnit D.G.det) (T : ℂˣ)
+    (d input output : Index D →₀ ℕ) (a : Index D) (g : ActualGround D hu),
+    let E : ℤ := (LatticeHalfFockGradedTrace.oddWeight D output : ℤ) -
+      (LatticeHalfFockGradedTrace.oddWeight D input : ℤ) -
+      2 * nativeSourceEnergy D (d + Finsupp.single a 1)
+    (T : ℂ) ^ E • nativeOutputProjection D hu output
+      (nativeNeutralCoefficient D hu (d + Finsupp.single a 1) E
+        (MvPolynomial.monomial input 1 ⊗ₜ[ℂ] g)) =
+      R.readout () ⟨⟨D, hu, T, d, input, output⟩, a⟩ g
 
-theorem source_bridge : (type_of% (@nativeNeutralLaurentEntry_source_insertion)) ↔
+theorem source_bridge : (type_of% (@nativeNeutralCoefficient_source_insertion)) ↔
     law actual := Iff.rfl
 end SourceInsertion
 end Reg.D5.S3.VertexAlgebra.HalfFock.NeutralThreeLegCoefficient

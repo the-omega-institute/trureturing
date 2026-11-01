@@ -146,10 +146,10 @@ internal sealed class NeutralThreeLegCoefficientDocument : IScribeDocumentDefini
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("native-source-insertion"),
-                DeclarationHandle.Create(Prefix + "nativeNeutralLaurentEntry_source_insertion"),
-                H("Actual entry source insertion with SS contractions"),
+                DeclarationHandle.Create(Prefix + "nativeNeutralCoefficient_source_insertion"),
+                H("Actual corrected coefficient source insertion with SS contractions"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For arbitrary repeated occupations, inserting source a gives the unpaired normal readout plus the sum over b of d(b) SS(a,b) times the native entry with one b removed. The proof evaluates the actual correction lift at T to minus two and reuses its source-partial formula. No Gaussian coefficient equality is assumed. Identification of the unpaired readout with the full three-leg Gaussian recurrence remains open."))),
+                Blocks(Paragraph(Text("For arbitrary repeated occupations and any ground vector, T to the forced exponent times the actual corrected-field coefficient after inserting source a equals the unpaired normal readout times that vector plus the sum over b of d(b) SS(a,b) times the native entry with one b removed, acting by ground identity. The proof evaluates the actual correction lift at T to minus two and reuses its source-partial formula. The scalar recurrence is a consumed helper. No Gaussian coefficient equality is assumed. Identification of the unpaired readout with the full three-leg Gaussian recurrence remains open."))),
                 DescribeRole.Theorem))));
 }

@@ -989,7 +989,7 @@ private theorem nativeNeutralLaurentEntry_readout (D : LatticeData) (T : ℂˣ)
 uses the literal SS kernel with multiplicity d(b), including diagonal pairs;
 the unpaired branch retains the actual normal readout. This is a recurrence
 for the native field, not a Gaussian identity assumed as input. -/
-theorem nativeNeutralLaurentEntry_source_insertion
+private theorem nativeNeutralLaurentEntry_source_insertion
     (D : LatticeData) (T : ℂˣ) (d input output : Index D →₀ ℕ) (a : Index D) :
     nativeNeutralLaurentEntry D T (d + Finsupp.single a 1) input output =
       nativeNormalReadout D T input output
@@ -1011,7 +1011,28 @@ theorem nativeNeutralLaurentEntry_source_insertion
   simp only [smul_eq_mul]
   ring
 
-#print axioms nativeNeutralLaurentEntry_source_insertion
+/-- The SS insertion recurrence for the actual corrected-field coefficient at
+its forced exponent. The entire ground module is carried by identity. The
+remaining unpaired normal readout has not been replaced by a Gaussian premise. -/
+theorem nativeNeutralCoefficient_source_insertion
+    (D : LatticeData) (hu : IsUnit D.G.det) (T : ℂˣ)
+    (d input output : Index D →₀ ℕ) (a : Index D) (g : ActualGround D hu) :
+    let E : ℤ := (LatticeHalfFockGradedTrace.oddWeight D output : ℤ) -
+      (LatticeHalfFockGradedTrace.oddWeight D input : ℤ) -
+      2 * nativeSourceEnergy D (d + Finsupp.single a 1)
+    (T : ℂ) ^ E • nativeOutputProjection D hu output
+        (nativeNeutralCoefficient D hu (d + Finsupp.single a 1) E
+          (monomial input 1 ⊗ₜ[ℂ] g)) =
+      nativeNormalReadout D T input output
+        (X a * correctionAt D T (monomial d 1)) • g +
+      ∑ b ∈ d.support, ((d b : ℂ) * nativeSourceSourceKernel D T a b) •
+        (nativeNeutralLaurentEntry D T (d - Finsupp.single b 1) input output • g) := by
+  dsimp only
+  rw [← nativeNeutralLaurentEntry_at_energy D hu T (d + Finsupp.single a 1) input output g,
+    nativeNeutralLaurentEntry_source_insertion, add_smul, Finset.sum_smul]
+  simp only [mul_smul]
+
+#print axioms nativeNeutralCoefficient_source_insertion
 #print axioms nativeNeutralCoefficient_source
 #print axioms nativeNeutralCoefficient_shift_expansion
 #print axioms nativeNeutralCoefficient_native_expansion
