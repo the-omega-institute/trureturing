@@ -45,6 +45,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   norm_num at hx
 
 set_option maxHeartbeats 1000000 in
+-- The dependence proof normalizes two four-by-four Gram determinants.
 def family : _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration
     arena (ContractibleSpace X) where
   actual := actual
