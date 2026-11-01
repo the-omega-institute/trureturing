@@ -35,7 +35,7 @@ private abbrev NativeBouquet (b : List PositiveDimension) :=
   FiniteSimplicialJoin.Space (bouquetComplex b)
 
 section Coefficients
-variable {k : Type} [Ring k] [IsDomain k]
+variable {k : Type} [Ring k]
     (M : ModuleCat k) [Module.IsTorsionFree k M]
 
 /-- Finite native positive bouquets have torsion-free actual singular homology

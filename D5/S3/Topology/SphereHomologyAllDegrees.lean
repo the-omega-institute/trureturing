@@ -56,12 +56,12 @@ theorem isZero_reducedHomology_sphere
               (⟨b (Fin.last (d + 1)), by simp⟩ : sphere (0 : E) 1) q)
 
 section Modules
-variable {k : Type w} [Ring k] [IsDomain k]
+variable {k : Type w} [Ring k]
     (M : ModuleCat.{w} k) [Module.IsTorsionFree k M]
 
 /-- Actual sphere homology is torsion-free in all positive degrees, including
 all off-dimensional degrees. The coefficient module may be any torsion-free
-module over a domain. -/
+module over a ring. -/
 theorem isTorsionFree_singularHomology_sphere
     {d : ℕ} {E : Type w} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     (b : OrthonormalBasis (Fin (d + 1)) ℝ E) (q : ℕ) (hq : 0 < q) :
