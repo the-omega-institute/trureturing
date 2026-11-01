@@ -32,7 +32,7 @@ For arbitrary nonempty L, choose a vertex l in L and use branch lengths l.val an
 | `joined_variation_injective` | content | Full central-loop perturbation coefficient recovers the loop and both complete branch edge variations; conditional on nonzero parameters, odd total branch length and coprime continuants. |
 | `coprime_positive_branches` | content | Uniform positive branch construction by a nonzero parameter resultant and finite root avoidance. |
 | `joined_path_charpoly` | content | Actual central-loop matrix characteristic polynomial, uniformly in both branch lengths and all real weights; consumed by `joined_path_charpoly_derivative` and its source-owner audit family. |
-| `joined_path_charpoly_derivative` | content | Actual evaluated characteristic derivative under arbitrary edge and loop perturbations, with squared-edge variations `2*b*db`; consumed by its source-owner audit family. |
+| `joined_path_charpoly_derivative` | content | Actual evaluated characteristic derivative under arbitrary edge and loop perturbations, with squared-edge variations `2*b*db`; consumed by the companion unrestricted-commutant proof and its source-owner audit family. |
 | `KoljancicOblakEvenPathNSSP.result` | content after expansion through the same-unit continuant relations; the spectral and openness assembly is bind-only | Exact all-positive-even/all-nonempty-loop-set event; proposed `open-problem-resolution` admission for #25129, subject to independent whole-unit assessment. |
 | private `continuant_coeff` | content | Fixed leading coefficient and upper support bound; consumed by variation recovery. |
 | private `variation_coeff` | content | Strict upper support bound for variations; consumed by variation recovery. |
