@@ -62,14 +62,16 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   exact h zeroLattice 0 0
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  haveI := state_nontrivial zeroLattice
+  have := state_nontrivial zeroLattice
   obtain ⟨z, hz⟩ := exists_ne (0 : State zeroLattice)
   refine ⟨zeroLattice, (fun _ => 0), (fun _ => z), ?_⟩
   intro h
   have hf : Function.HasFiniteSupport (fun _ : ℤ => z) :=
     Eq.mp h (by
       change (Function.support (fun _ : ℤ => (0 : State zeroLattice))).Finite
-      simpa only [Function.support_zero] using Set.finite_empty)
+      apply (Set.finite_empty : (∅ : Set ℤ).Finite).subset
+      intro m hm
+      exact (hm rfl).elim)
   change (Function.support (fun _ : ℤ => z)).Finite at hf
   have he : Function.support (fun _ : ℤ => z) = Set.univ := by ext; simp [hz]
   rw [he] at hf
@@ -143,7 +145,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   exact h zeroLattice 0 0
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  haveI := state_nontrivial zeroLattice
+  have := state_nontrivial zeroLattice
   let p : signature.Params := ⟨zeroLattice,0,0⟩
   obtain ⟨y, hy⟩ := exists_ne (lhs p)
   refine ⟨p, lhs p, y, ?_⟩
@@ -219,13 +221,14 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   exact h zeroLattice 0 0 ∅ (by intro m hm; exact (hm (map_zero _)).elim)
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  haveI := state_nontrivial zeroLattice
+  have := state_nontrivial zeroLattice
   let p : signature.Params := ⟨zeroLattice,0,0⟩
   obtain ⟨y, hy⟩ := exists_ne (lhs p)
   refine ⟨p, lhs p, y, ?_⟩
   intro h
   exact hy (Eq.mp h rfl).symm
-def family : Registration arena (type_of% @_root_.D5.S3.VertexAlgebra.LatticeMatterGhostCoupling.finite_capture) where
+def family : Registration arena
+    (type_of% @_root_.D5.S3.VertexAlgebra.LatticeMatterGhostCoupling.finite_capture) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨_root_.D5.S3.VertexAlgebra.LatticeMatterGhostCoupling.finite_capture,
@@ -239,7 +242,8 @@ def family : Registration arena (type_of% @_root_.D5.S3.VertexAlgebra.LatticeMat
     · intro e; exact nomatch e
   dependence := dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.VertexAlgebra.LatticeMatterGhostCoupling.finite_capture) (Realization signature) Unit Unit where
+    (@_root_.D5.S3.VertexAlgebra.LatticeMatterGhostCoupling.finite_capture)
+    (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.LatticeMatterGhostCoupling.Capture.unit
   realizationName := `Reg.D5.S3.VertexAlgebra.LatticeMatterGhostCoupling.Capture.family
   realizationSource := none
@@ -299,7 +303,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     (by simp [_root_.D5.S3.Quantum.Fermionic.BcGhostOccupationRadius.Radius])
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  haveI := state_nontrivial zeroLattice
+  have := state_nontrivial zeroLattice
   let p : signature.Params := ⟨zeroLattice,0,0,0⟩
   obtain ⟨y, hy⟩ := exists_ne (lhs p)
   refine ⟨p, lhs p, y, ?_⟩
@@ -375,7 +379,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   exact h zeroLattice 0 0
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  haveI := state_nontrivial zeroLattice
+  have := state_nontrivial zeroLattice
   let p : signature.Params := ⟨zeroLattice,0,0⟩
   obtain ⟨y, hy⟩ := exists_ne (lhs p)
   refine ⟨p, lhs p, y, ?_⟩
@@ -451,7 +455,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   exact h zeroLattice 0 0
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  haveI := state_nontrivial zeroLattice
+  have := state_nontrivial zeroLattice
   let p : signature.Params := ⟨zeroLattice,0,0⟩
   obtain ⟨y, hy⟩ := exists_ne (lhs p)
   refine ⟨p, lhs p, y, ?_⟩
