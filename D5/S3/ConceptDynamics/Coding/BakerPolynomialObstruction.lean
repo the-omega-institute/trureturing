@@ -56,17 +56,25 @@ private def rForm (a c : ℕ[X]) : Matrix (Fin 2) (Fin 2) ℕ[X] :=
 private def sForm (h g : ℕ[X]) : Matrix (Fin 2) (Fin 2) ℕ[X] :=
   !![X * h, (X + 1) * g; g, h]
 
+private theorem add_left_cancel_nat {p q r : ℕ[X]} (h : p + q = p + r) : q = r := by
+  apply Polynomial.ext
+  intro n
+  have hc := congrArg (fun f : ℕ[X] => f.coeff n) h
+  simp only [coeff_add] at hc
+  exact Nat.add_left_cancel hc
+
 private theorem r_form (R : Matrix (Fin 2) (Fin 2) ℕ[X])
     (hR : A * R = R * B) : R = rForm (R 0 0) (R 1 0) := by
   have hb : (X + 1) * R 1 0 = R 0 1 := by
+    apply add_left_cancel_nat (p := R 0 0)
     simpa [A, B, Matrix.mul_apply, Fin.sum_univ_two] using
       congrArg (fun M : Matrix (Fin 2) (Fin 2) ℕ[X] => M 0 0) hR
   have h10 : X * R 0 0 + R 1 0 = R 1 0 + R 1 1 := by
     simpa [A, B, Matrix.mul_apply, Fin.sum_univ_two] using
       congrArg (fun M : Matrix (Fin 2) (Fin 2) ℕ[X] => M 1 0) hR
   have hd : X * R 0 0 = R 1 1 :=
-    add_right_cancel (h10.trans (add_comm _ _))
-  ext i j
+    add_left_cancel_nat ((add_comm _ _).trans h10)
+  funext i j
   fin_cases i <;> fin_cases j
   · rfl
   · simpa [rForm] using hb.symm
@@ -79,11 +87,12 @@ private theorem s_form (S : Matrix (Fin 2) (Fin 2) ℕ[X])
     simpa [A, B, Matrix.mul_apply, Fin.sum_univ_two, mul_comm] using
       congrArg (fun M : Matrix (Fin 2) (Fin 2) ℕ[X] => M 1 0) hS
   have he : S 0 0 = X * S 1 1 :=
-    add_right_cancel (h10.trans (add_comm _ _))
+    add_left_cancel_nat ((add_comm _ _).trans h10)
   have hf : S 0 1 = (X + 1) * S 1 0 := by
-    simpa [A, B, Matrix.mul_apply, Fin.sum_univ_two, mul_comm] using
+    apply add_left_cancel_nat (p := S 1 1)
+    simpa [A, B, Matrix.mul_apply, Fin.sum_univ_two, mul_comm, add_comm] using
       congrArg (fun M : Matrix (Fin 2) (Fin 2) ℕ[X] => M 1 1) hS
-  ext i j
+  funext i j
   fin_cases i <;> fin_cases j
   · simpa [sForm] using he
   · simpa [sForm] using hf
@@ -129,9 +138,7 @@ private abbrev matrixToQ :
 
 private theorem toQ_natDegree (f : ℕ[X]) : (toQ f).natDegree = f.natDegree := by
   change (f.map (Nat.castRingHom ℚ)).natDegree = f.natDegree
-  exact natDegree_map_eq_of_injective (by
-    intro a b h
-    exact_mod_cast h) f
+  exact natDegree_map_eq_of_injective (f := Nat.castRingHom ℚ) Nat.cast_injective f
 
 private def detPolynomial : ℚ[X] := 1 - X - X ^ 2
 
@@ -155,32 +162,20 @@ private theorem detPolynomial_natDegree : detPolynomial.natDegree = 2 := by
   compute_degree!
 
 private theorem det_A : Matrix.det (matrixToQ A) = detPolynomial := by
-  rw [Matrix.det_fin_two]
-  change toQ 1 * toQ 1 - toQ (X + 1) * toQ X = detPolynomial
-  have hx : toQ X = X := Polynomial.map_X _
-  simp only [map_one, map_add, hx]
-  unfold detPolynomial
-  ring
+  simp [Matrix.det_fin_two, matrixToQ, A, toQ, detPolynomial]
+  <;> ring
 
 private def normForm (f k : ℚ[X]) : ℚ[X] := X * f ^ 2 - (X + 1) * k ^ 2
 
 private theorem det_rForm (a c : ℕ[X]) :
     Matrix.det (matrixToQ (rForm a c)) = normForm (toQ a) (toQ c) := by
-  rw [Matrix.det_fin_two]
-  change toQ a * toQ (X * a) - toQ ((X + 1) * c) * toQ c = _
-  have hx : toQ X = X := Polynomial.map_X _
-  simp only [map_mul, map_add, map_one, hx]
-  unfold normForm
-  ring
+  simp [Matrix.det_fin_two, matrixToQ, rForm, toQ, normForm]
+  <;> ring
 
 private theorem det_sForm (h g : ℕ[X]) :
     Matrix.det (matrixToQ (sForm h g)) = normForm (toQ h) (toQ g) := by
-  rw [Matrix.det_fin_two]
-  change toQ (X * h) * toQ h - toQ ((X + 1) * g) * toQ g = _
-  have hx : toQ X = X := Polynomial.map_X _
-  simp only [map_mul, map_add, map_one, hx]
-  unfold normForm
-  ring
+  simp [Matrix.det_fin_two, matrixToQ, sForm, toQ, normForm]
+  <;> ring
 
 private theorem prime_power_divisor_degree {f : ℚ[X]} {n : ℕ}
     (hf : f ∣ detPolynomial ^ n) : f ≠ 0 ∧ ∃ j : ℕ, f.natDegree = 2 * j := by
@@ -261,7 +256,7 @@ private theorem product_row_degrees (a c h g : ℕ[X])
     omega
   have hd01 : ((rForm a c * sForm h g) 0 1).natDegree =
       a.natDegree + h.natDegree + 1 := by
-    rw [h01, natDegree_mul xadd1_ne_nat hsum, natDegree_add_nat,
+    rw [h01, natDegree_mul xadd1_ne_nat hsum, natDegree_add_nat (a * g) (c * h),
       natDegree_mul ha hg, natDegree_mul hc hh]
     simp only [natDegree_add_one, natDegree_X]
     omega
