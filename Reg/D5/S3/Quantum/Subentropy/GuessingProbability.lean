@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Subentropy.GuessingProbability
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound audits of guessing-probability bounds and measurement trace normalization. -/
+
 noncomputable section
 set_option autoImplicit false
 open Matrix Set
@@ -23,7 +25,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {X : Type u} {B : Type v} [Fintype X] [Fintype B] [DecidableEq B]
-    (p : X → ℝ) (hp : ∀ x, 0 ≤ p x) (hs : ∑ x, p x = 1) (ρ : X → DensityState B),
+    (p : X → ℝ) (_hp : ∀ x, 0 ≤ p x) (_hs : ∑ x, p x = 1) (ρ : X → DensityState B),
     (successProbabilitySet p ρ).Nonempty ∧ BddAbove (successProbabilitySet p ρ) ∧
       0 < pGuess p ρ ∧ pGuess p ρ ≤ 1 ∧
       R.readout () () (1 - pGuess p ρ) (-Real.log (pGuess p ρ)) ∧
@@ -72,7 +74,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "arg", "arg", "arg", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -96,8 +99,8 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {X : Type u} {B : Type v} [Fintype X] [Fintype B] [DecidableEq B]
-    (ρ : Matrix B B ℂ) (hρ : Matrix.trace ρ = 1)
-    (M : X → Matrix B B ℂ) (hsM : ∑ x, M x = 1),
+    (ρ : Matrix B B ℂ) (_hρ : Matrix.trace ρ = 1)
+    (M : X → Matrix B B ℂ) (_hsM : ∑ x, M x = 1),
     ∑ x, R.readout () () (Matrix.trace (M x * ρ)) = 1
 
 theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
