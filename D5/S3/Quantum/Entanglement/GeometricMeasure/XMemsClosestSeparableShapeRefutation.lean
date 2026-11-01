@@ -91,7 +91,8 @@ private theorem pair_sqrt (u v : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v) :
 private theorem weighted_sqrt (u v : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v) :
     Real.sqrt (u * v) ≤ u / 6 + 3 * v / 2 := by
   have h := pair_sqrt (u / 3) (3 * v) (by positivity) (by positivity)
-  have he : u / 3 * (3 * v) = u * v := by ring
+  have he : u / 3 * (3 * v) = u * v := by
+    rw [← mul_assoc, div_mul_cancel₀ _ (by norm_num : (3 : ℝ) ≠ 0)]
   rw [he] at h
   linarith
 
@@ -151,8 +152,10 @@ private theorem product_bounds (p : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ)
     simp [Fin.prod_univ_succ]
   have hp1 := pair_sqrt (a 1 * a 2) (b 1 * b 2) (by positivity) (by positivity)
   have hp2 := pair_sqrt (a 1 * b 2) (b 1 * a 2) (by positivity) (by positivity)
-  have harg1 : a 1 * a 2 * (b 1 * b 2) = a 1 * b 1 * (a 2 * b 2) := by ring
-  have harg2 : a 1 * b 2 * (b 1 * a 2) = a 1 * b 1 * (a 2 * b 2) := by ring
+  have harg1 : a 1 * a 2 * (b 1 * b 2) = a 1 * b 1 * (a 2 * b 2) :=
+    mul_mul_mul_comm _ _ _ _
+  have harg2 : a 1 * b 2 * (b 1 * a 2) = a 1 * b 1 * (a 2 * b 2) := by
+    rw [mul_mul_mul_comm, mul_comm (b 2) (a 2)]
   rw [harg1] at hp1
   rw [harg2] at hp2
   have hw := weighted_sqrt (a 0) (b 0) ha0 hb0
@@ -217,8 +220,8 @@ private theorem shape_distance (a b : ℝ) (d : ℂ) :
   simp only [sum_words]
   dsimp only [xmems, cssShape]
   norm_num [Complex.normSq_apply,
-    show (fun _ : Fin 3 => (0 : Fin 2)) = ![0,0,0] from by decide,
-    show (fun _ : Fin 3 => (1 : Fin 2)) = ![1,1,1] from by decide]
+    show (fun _ : Fin 3 => (0 : Fin 2)) = ![0,0,0] from by simp only [Matrix.vec_single_eq_const, Matrix.vecCons_const],
+    show (fun _ : Fin 3 => (1 : Fin 2)) = ![1,1,1] from by simp only [Matrix.vec_single_eq_const, Matrix.vecCons_const]]
   ring
 
 private theorem shape_lower (σ : Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) ℂ)
@@ -227,8 +230,8 @@ private theorem shape_lower (σ : Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) ℂ
   obtain ⟨a, b, d, _, _, _, _, _, _, rfl⟩ := hs
   have hd := separable_bounds (cssShape 3 a b d) hσ
   dsimp only [cssShape] at hd
-  norm_num [show (fun _ : Fin 3 => (0 : Fin 2)) = ![0,0,0] from by decide,
-    show (fun _ : Fin 3 => (1 : Fin 2)) = ![1,1,1] from by decide] at hd
+  norm_num [show (fun _ : Fin 3 => (0 : Fin 2)) = ![0,0,0] from by simp only [Matrix.vec_single_eq_const, Matrix.vecCons_const],
+    show (fun _ : Fin 3 => (1 : Fin 2)) = ![1,1,1] from by simp only [Matrix.vec_single_eq_const, Matrix.vecCons_const]] at hd
   rw [shape_distance]
   nlinarith only [hd, sq_nonneg (a / 2 - 3 / 16), sq_nonneg (b / 3 - 3 / 16),
     sq_nonneg ((1 - a - b) / 3 - 1 / 48), sq_nonneg (d.re - 1 / 16), sq_nonneg d.im]
@@ -363,8 +366,11 @@ private theorem corner_magnitude : wordMagnitude ![0,0,0] * wordMagnitude ![1,1,
 private theorem word_cases (x : Fin 3 → Fin 2) :
     x = ![0,0,0] ∨ x = ![0,0,1] ∨ x = ![0,1,0] ∨ x = ![0,1,1] ∨
       x = ![1,0,0] ∨ x = ![1,0,1] ∨ x = ![1,1,0] ∨ x = ![1,1,1] := by
-  revert x
-  decide
+  classical
+  have h := sum_words (fun y => if x = y then (1 : ℕ) else 0)
+  by_contra hx
+  simp only [not_or] at hx
+  simp_all
 
 private theorem tau_mixture : tau =
     (5 / 54 : ℝ) • (∑ a : ZMod 3, ∑ b : ZMod 3, phaseProduct a b) +
@@ -418,8 +424,8 @@ private theorem tau_distance : hsSq (xmems 3 (11 / 112)) tau =
   simp only [sum_words]
   dsimp only [xmems, tau, wordIndex]
   norm_num [Complex.normSq_apply,
-    show (fun _ : Fin 3 => (0 : Fin 2)) = ![0,0,0] from by decide,
-    show (fun _ : Fin 3 => (1 : Fin 2)) = ![1,1,1] from by decide]
+    show (fun _ : Fin 3 => (0 : Fin 2)) = ![0,0,0] from by simp only [Matrix.vec_single_eq_const, Matrix.vecCons_const],
+    show (fun _ : Fin 3 => (1 : Fin 2)) = ![1,1,1] from by simp only [Matrix.vec_single_eq_const, Matrix.vecCons_const]]
 
 private theorem distance_gap : (417965512477 / 90316800000000 : ℝ) < 109 / 23520 := by
   norm_num
