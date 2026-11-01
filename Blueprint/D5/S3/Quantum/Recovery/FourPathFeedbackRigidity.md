@@ -14,7 +14,7 @@ $$\forall n \in \mathbb{N},\; \forall U \in \operatorname{Matrix}\left(\operator
 
 *Commentary.*
 
-Source: QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND, Section 9, Theorem 9.4, the finite core from (9.22) through the first equality of (9.23). The canonical proof atom_id is 71554aa3b6c686d67a22ccc475f486cb7cb2ce48dad3074847c88544498c9516, a child of source atom 9f4e8ab8a85221187bed0676209bd5de7796bcad65dacfa00d3b7b0bfa8f7df5; the Lean theorem is trace_saturation_forces_polar_feedback.
+The finite core uses the trace-saturation implication from (9.22) through the first equality of (9.23); the Lean theorem is trace_saturation_forces_polar_feedback.
 
 For each natural n, the system index is Fin(n+1). U is an actual complex unitary matrix and v has no zero coordinate. The trace saturation hypothesis uses the sum of all coordinate moduli. The conclusion gives one complex scalar z of norm one, common to every diagonal coordinate, and sets every off-diagonal coordinate to zero. star is complex conjugation, ite is the indicated conditional, and the real norm in the denominator is cast to the complex numbers.
 
