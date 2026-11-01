@@ -17,7 +17,7 @@ internal sealed class PolygonPrescribedEarsDocument : IScribeDocumentDefinition
     }
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Prescribed complete ears of a cyclic triangulation", H("Exact native realization"), Blocks(
-            Paragraph(Text("The vertices are ZMod(n), chords are unordered pairs Sym2(ZMod(n)), and a triangulation is a finite set of internal diagonals that is pairwise noncrossing and maximal: each missing internal diagonal crosses a member. EarCenters(T) is the complete set of i for which the chord joining i-1 to i+1 belongs to T. Compatible(P) means that the distinct prescribed ear chords do not cross. V(n)=ZMod(n), F(n)=Finset(Sym2(V(n))), and natSub is natural subtraction.")),
+            Paragraph(Text("The vertices are ZMod(n), chords are unordered pairs Sym2(ZMod(n)), and a triangulation is a finite set of internal diagonals that is pairwise noncrossing and maximal: each missing internal diagonal crosses a member. EarCenters(T) is the complete set of i for which the chord joining i-1 to i+1 belongs to T. Compatible(P) means that the distinct prescribed ear chords do not cross. V(n)=ZMod(n), Symtwo denotes Sym2, F(n)=Finset(Sym2(V(n))), and natSub is natural subtraction. The prescribed complete-ear existence statement appears in AURIC_FIB_ATOM_INTRINSIC_CLASSIFICATION_AND_POLYGON_GEOMETRY, B33.3 and B37.2; the same-family path-fibre application appears in B37.7.")),
             Describe.Lean(DescribeId.Create("polygon-prescribed-complete-ears"),
                 DeclarationHandle.Create("D5/S3/Geometry/Polygons/PolygonPrescribedEars.prescribed_complete_ears"),
                 H("Every compatible prescribed complete ear set"),

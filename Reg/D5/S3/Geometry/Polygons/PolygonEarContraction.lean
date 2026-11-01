@@ -73,6 +73,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨⟨6, by decide⟩, {1}, {1, 2}, ?_⟩
   cases i <;> simp [actual, realize, readout, reducedCenters]
+  all_goals decide
 
 def source_registration : Registration arena (type_of% @reduced_centres_card) where
   actual := actual
