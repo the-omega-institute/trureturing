@@ -33,7 +33,7 @@ internal sealed class RankOfContextualityNonPowerTwoDocument : IScribeDocumentDe
             Node("claim", "The construction question", Seq(N("claim"), Sp, Iff, Sp, Existence()), AssessedProvenance.FromLiterature(Source),
                 "Section 9 (Section IX in the arXiv source), PDF page 19: “" + Question + "” The observable and context counts m and k, their lists C, the behavior P and its integer rank r are all existential. The final universal quantifier excludes every power 2^n, including n = 0."),
             SquareNode("idx", "The square's row and column indices", SquareIndexFormula(),
-                "The eighteen equations list all three positions of each of the six contexts. Labels zero through eight are in row-major order; the first three contexts are rows and the last three are columns."),
+                "The eighteen equations list all three positions of each of the six contexts. Labels zero through eight are in row-major order; the first three contexts are rows and the last three are columns. The ordered context C(x) is the list of these three indices."),
             SquareNode("parity3", "The parity of three binary outcomes", All("a", SquareOutcome(),
                 Eqn(SquareCall("parity3", N("a")), App(Q("Bool", "xor"),
                     App(Q("Bool", "xor"), Call("a", D(0)), Call("a", D(1))), Call("a", D(2))))),
@@ -83,7 +83,13 @@ internal sealed class RankOfContextualityNonPowerTwoDocument : IScribeDocumentDe
         Formula entry(int n) => Eqn(SquareCall("idx", D((byte)(n / 3)), D((byte)(n % 3))), D((byte)labels[n]));
         Formula body = entry(labels.Length - 1);
         for (var n = labels.Length - 2; n >= 0; n--) body = And(entry(n), body);
-        return body;
+        var x = N("x");
+        Formula entries = Q("List", "nil");
+        for (var i = 2; i >= 0; i--)
+            entries = App(Q("List", "cons"), SquareCall("idx", x, D((byte)i)), entries);
+        var contexts = All("x", Fin(D(6)), Eqn(
+            Parenthesized(Seq(SquareCall("C", x), Colon, Sp, Call("List", Fin(D(9))))), entries));
+        return And(body, contexts);
     }
 
     private static DocumentBlock Node(string name, string title, Formula formula, AssessedProvenance provenance, string prose) =>

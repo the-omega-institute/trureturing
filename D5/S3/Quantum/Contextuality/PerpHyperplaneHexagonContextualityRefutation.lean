@@ -231,13 +231,6 @@ private theorem negative_certificate_exact :
     exact Finset.mem_inter.mpr ⟨hcp, Finset.mem_filter.mpr
       ⟨hlw, (triple_negative u v hup.1 hvp.1 hne hb).mpr he⟩⟩
 
-private theorem incidence_swap (h : Finset (Finset point)) (s : Finset point) :
-    (∑ l ∈ h, (l ∩ s).card) = ∑ q ∈ s, (h.filter fun l => q ∈ l).card := by
-  exact D5.S3.Combinatorics.Graph.DominatingSetAverageBound.sum_inter_card h s id
-
-private theorem binary_cases : ∀ x : ZMod 2, x = 0 ∨ x = 1 :=
-  Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩
-
 private theorem line_perp_profile (l : Finset point) (hl : l ∈ lines w) :
     (l ∩ perpPoints).card = if l ∈ counterexample then 3 else 1 := by
   classical
@@ -270,8 +263,8 @@ private theorem line_perp_profile (l : Finset point) (hl : l ∈ lines w) :
       · rw [B_add_right, hpu, hpv, zero_add]
   rw [he]
   simp only [hm]
-  rcases binary_cases (B pole u) with hx | hx <;>
-    rcases binary_cases (B pole v) with hy | hy <;>
+  rcases D5.S3.QuantumBounds.MerminMeasurementDependence.bit_cases (B pole u) with hx | hx <;>
+    rcases D5.S3.QuantumBounds.MerminMeasurementDependence.bit_cases (B pole v) with hy | hy <;>
     simp [triple, Finset.filter_insert, Finset.filter_singleton, B_add_right,
       hx, hy, hne, Ne.symm hsu, Ne.symm hsv, CharTwo.add_self_eq_zero]
 
@@ -280,7 +273,9 @@ private theorem line_perp_profile (l : Finset point) (hl : l ∈ lines w) :
 private theorem hexagon_card (h : Finset (Finset point)) (hh : IsClassicalHexagon h) :
     h.card = 63 := by
   classical
-  have hi := incidence_swap h (points w)
+  have hi : (∑ l ∈ h, (l ∩ points w).card) =
+      ∑ q ∈ points w, (h.filter fun l => q ∈ l).card :=
+    D5.S3.Combinatorics.Graph.DominatingSetAverageBound.sum_inter_card h (points w) id
   have he : (∑ l ∈ h, (l ∩ points w).card) = h.card * 3 := by
     calc
       _ = ∑ _l ∈ h, 3 := by
@@ -412,7 +407,9 @@ private theorem counterexample_degree_le : contextualityDegree counterexample �
 private theorem hexagon_intersection_ge (h : Finset (Finset point))
     (hh : IsClassicalHexagon h) : 15 ≤ (counterexample ∩ h).card := by
   classical
-  have hi := incidence_swap h perpPoints
+  have hi : (∑ l ∈ h, (l ∩ perpPoints).card) =
+      ∑ q ∈ perpPoints, (h.filter fun l => q ∈ l).card :=
+    D5.S3.Combinatorics.Graph.DominatingSetAverageBound.sum_inter_card h perpPoints id
   have hp : ∀ q ∈ perpPoints, q ∈ points w := by
     intro q hq
     delta perpPoints at hq
