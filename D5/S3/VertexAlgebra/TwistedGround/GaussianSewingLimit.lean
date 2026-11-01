@@ -147,10 +147,8 @@ theorem padded_inverse (A B : Data I) (F : Finset I) :
     have hh := congrArg (embedded F)
       (Ring.mul_inverse_cancel (1 - B.block F * A.block F)
         (isUnit_one_sub_of_norm_lt_one hm))
-    rw [embedded_mul, embedded_sub, embedded_one, sub_mul,
-      embedded_left, embedded_mul, ← compressed_embedded,
-      ← compressed_embedded, embedded_one] at hh
-    exact hh
+    simpa only [embedded_mul, embedded_sub, embedded_one, sub_mul,
+      embedded_left, ← compressed_embedded, W, N] using hh
   have hWP : W * coordinateProjection F = W := by
     dsimp [W]
     rw [mul_assoc, compressed_embedded A F, embedded_right]

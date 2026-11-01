@@ -49,16 +49,6 @@ theorem coefficient_finite_inclusion {J : Type u} {K : Type v}
 variable {X : Type u} {I : Type v} {Y : Type w}
 variable [Fintype X] [DecidableEq X] [DecidableEq I] [Fintype Y] [DecidableEq Y]
 
-private def occupationEquiv (F : Finset I) :
-    {n : Occupation I // n.support ⊆ F} ≃ Occupation F where
-  toFun n := restrictOccupation F n.val
-  invFun n := ⟨n.mapDomain (fun i : F => i.val), by
-    intro i hi
-    obtain ⟨j,_,rfl⟩ := Finset.mem_image.mp (Finsupp.mapDomain_support hi)
-    exact j.property⟩
-  left_inv n := Subtype.ext (extend_restrict F n.val n.property)
-  right_inv n := Finsupp.comapDomain_mapDomain _ Subtype.val_injective n
-
 private theorem row_finite (P : Matrix X X ℂ) (A : Data I) (R : X → ℓ²(I, ℂ))
     (d : Occupation X) (F : Finset I) (n : Occupation F) :
     row P A R d (n.mapDomain (fun i : F => i.val)) =

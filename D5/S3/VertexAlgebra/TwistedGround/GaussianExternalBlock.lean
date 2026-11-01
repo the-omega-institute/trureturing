@@ -24,14 +24,15 @@ inside the Hilbert inner product cancels its conjugate linear first slot. -/
 def bilinear {J : Type u} (r : ℓ²(J, ℂ)) : ℓ²(J, ℂ) →L[ℂ] ℂ :=
   innerSL ℂ (star r)
 
+theorem bilinear_eq_tsum {J : Type u} (r z : ℓ²(J, ℂ)) :
+    bilinear r z = ∑' j, r j * z j := by
+  simp [bilinear, lp.inner_eq_tsum, lp.star_apply, RCLike.inner_apply, mul_comm]
+
 @[simp] theorem bilinear_single {J : Type u} [DecidableEq J]
     (r : ℓ²(J, ℂ)) (j : J) (c : ℂ) :
     bilinear r (lp.single 2 j c) = r j * c := by
-  simp [bilinear, lp.inner_single_right, lp.star_apply, RCLike.inner_apply]
-
-theorem bilinear_eq_tsum {J : Type u} (r z : ℓ²(J, ℂ)) :
-    bilinear r z = ∑' j, r j * z j := by
-  simp [bilinear, lp.inner_eq_tsum, lp.star_apply, RCLike.inner_apply]
+  rw [bilinear_eq_tsum]
+  simp [lp.single_apply, Pi.single_apply, mul_ite]
 
 /-- Bilinear rank-one operator with actual l2 vectors. -/
 def rank {J : Type u} (r s : ℓ²(J, ℂ)) : ℓ²(J, ℂ) →L[ℂ] ℓ²(J, ℂ) :=

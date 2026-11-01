@@ -75,7 +75,7 @@ theorem occupationCutoff_tendsto (A B : Data I) :
       dsimp [f]
       split_ifs <;> simp)
 
-private def occupationEquiv (F : Finset I) :
+def occupationEquiv (F : Finset I) :
     {d : Occupation I // d.support ⊆ F} ≃ Occupation F where
   toFun d := restrictOccupation F d.val
   invFun d := ⟨d.mapDomain (fun i : F => i.val), by
