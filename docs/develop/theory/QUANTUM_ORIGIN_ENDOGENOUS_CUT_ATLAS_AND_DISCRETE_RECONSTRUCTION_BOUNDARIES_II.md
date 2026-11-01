@@ -4311,3 +4311,432 @@ Trace-norm contraction, completion by a failure flag, orthogonal-state mixtures 
 The grouped preparation, independent local tensor powers, fixed labels, operation access and discarded records remain supplied implementation premises. The result gives no efficient circuit, clean source or reference return, free reset or erasure, arbitrary external-reference preservation, cloning operation, Born-law derivation or derivation of complex amplitudes from information conservation. Correct fixed-label output density and the trace-weight accounting proved here are the stated mathematical task.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 156. An all-spectrum affine channel and its reused restricted optimum
+
+Sections 156–158 directly reuse the fixed-affine mixed-state transposition result and the averaged-marginal/sum-of-swaps Choi construction of Brzić–Grinko–Studziński–Quintino, [*Optimal physical approximations of pure-state cloning and transposition are complementary channels*, Theorem 3, equations (16)–(18), and Appendix D, Lemma 9 and equations (D9)–(D24)](https://arxiv.org/pdf/2603.23628v3). The parameter correspondence is their $d=q$ with the same copy count $N$. In particular, their maximum visibility is exactly
+
+$$
+\eta_{\max}=\frac{N}{N+q\min(N,q-1)}.
+$$
+
+The formulas, full-space affine channel, swap-spectrum threshold and affine-class optimality below are attributed reuse. The subsequent Schur-dependent noise, conditional-marginal accounting and determinant-tail comparison are a separate synthesis of standard ingredients; no priority claim is made for that synthesis.
+
+<a id="statement-156-1"></a>
+
+**定义 156.1（All-spectrum transposition task）。** Let $q\ge2$ and $N\ge1$. Inputs are independently supplied powers $\tau^{\otimes N}$ of arbitrary complex density matrices on $\mathbb C^q$. Write
+
+$$
+s=\min(N,q-1),\qquad
+D(\rho,\sigma)=\frac12\lVert\rho-\sigma\rVert_1,
+\qquad A_{N,q}=\frac{s(q-1)}{N+qs}.
+$$
+
+Each local complex channel constructed below is required to be complex completely positive on its entire input matrix cone. Applying such a channel inside a real orientation decoder retains the separately declared preparation, chart, instrument and dilation premises.
+
+<a id="statement-156-2"></a>
+
+**命题 156.2（Reused affine channel and uniform error）。** On all matrices on $(\mathbb C^q)^{\otimes N}$, define
+
+<a id="eq-156-1"></a>
+
+$$
+\Phi_{N,q}(X)=
+\frac{s\operatorname{Tr}(X)I_q+
+\displaystyle\sum_{j=1}^N
+(\operatorname{Tr}_{\widehat j}X)^{\mathsf T}}
+{N+qs}.
+\tag{156.1}
+$$
+
+This is a complex completely positive trace-preserving channel. For every density matrix $\tau$,
+
+<a id="eq-156-2"></a>
+
+$$
+\begin{aligned}
+\Phi_{N,q}(\tau^{\otimes N})
+&=\frac{sI_q+N\tau^{\mathsf T}}{N+qs},\\
+D\bigl(\Phi_{N,q}(\tau^{\otimes N}),\tau^{\mathsf T}\bigr)
+&=\frac{qs}{N+qs}D(\tau,I_q/q)
+\le A_{N,q}.
+\end{aligned}
+\tag{156.2}
+$$
+
+For fixed $q$, this is a uniform $O(1/N)$ bound over all spectra. It is the optimal worst error within the class of complex completely positive trace-preserving channels required to have one universal affine output
+
+$$
+v\tau^{\mathsf T}+(1-v)I_q/q,
+\qquad 0\le v\le1,
+$$
+
+on every density power. This restricted optimum does not identify the all-channel mixed-state minimax value. Sections 157–158 display the reused proof in the conventions of this task. Sections 159–161 give a generally non-affine full-space channel with the same uniform bound, the optimal pure-input action and a further exponential estimate for each fixed strictly full-rank density.
+
+## 157. The reused swap-content positivity threshold acts on the full input cone
+
+<a id="statement-157-1"></a>
+
+**引理 157.1（Reused minimum content of the added box）。** Use input-first Choi convention. Let $F_{j,o}$ swap input factor $j$ with the output, with identity on every other factor, and put
+
+$$
+L_N=\sum_{j=1}^N F_{j,o}.
+$$
+
+Then
+
+<a id="eq-157-1"></a>
+
+$$
+\lambda_{\min}(L_N)=-s,\qquad
+\lambda_{\max}(L_N)=N,\qquad
+ aI+L_N\succeq0\ \Longleftrightarrow\ a\ge s.
+\tag{157.1}
+$$
+
+**证明。** This is Appendix D, Lemma 9 of the cited transposition paper, with $d=q$. For the explicit branching calculation, put
+
+$$
+C_m=\sum_{1\le i<j\le m}F_{i,j}.
+$$
+
+On a Young diagram $\lambda$, $C_m$ acts by the sum of box contents, with $c(b)=\operatorname{column}(b)-\operatorname{row}(b)$. Since $L_N=C_{N+1}-C_N$, the branch $\lambda\to\mu=\lambda+\square$ has eigenvalue equal to the added-box content.
+
+Every populated $\mu$ has at most $q$ rows and $N+1$ boxes, so the added content is at least $-\min(N,q-1)=-s$ and at most $N$. Both endpoints occur. If $N\le q-1$, the fully antisymmetric diagram $\mu=(1^{N+1})$ supplies $-N$. If $N\ge q-1$, take the input diagram $\lambda=(N-q+2,1^{q-2})$ and add a new $q$th row, with content $1-q$. The one-row symmetric branch supplies $N$. This proves (157.1). $\square$
+
+**证明 of the channel assertion in Proposition 156.2。** The input-first Choi numerator of (156.1), with $a$ in place of $s$, is $aI+L_N$. The transpose-of-marginal Choi identity gives each swap with identity on the unused input slots. Taking $a=s$ in (157.1) proves complete positivity. The output partial trace of the normalized Choi matrix is
+
+$$
+\frac{qs+N}{N+qs}I=I,
+$$
+
+so the map is trace preserving. These statements hold on the entire tensor input, without restriction to symmetric or repeated inputs. Evaluation on $\tau^{\otimes N}$ gives (156.2); the density bound $D(\tau,I_q/q)\le(q-1)/q$ gives its last inequality. $\square$
+
+## 158. Reused affine-class sharpness and the boundary of that conclusion
+
+<a id="statement-158-1"></a>
+
+**命题 158.1（Reused universal affine-output threshold）。** Suppose a complex completely positive trace-preserving map $\mathcal C$ satisfies
+
+<a id="eq-158-1"></a>
+
+$$
+\mathcal C(\tau^{\otimes N})
+=v\tau^{\mathsf T}+(1-v)I_q/q
+\quad\text{for every density matrix }\tau,
+\qquad0\le v\le1.
+\tag{158.1}
+$$
+
+Then $v\le N/(N+qs)$. The channel $\Phi_{N,q}$ attains this limit and the corresponding worst error $A_{N,q}$.
+
+**证明。** As in the cited Theorem 3 and Appendix D, average the input of $\mathcal C$ over copy permutations. This preserves complete positivity, trace preservation and every repeated-power output. The unique input-permutation-invariant linear map with the values in (158.1) is
+
+<a id="eq-158-2"></a>
+
+$$
+\mathcal C_v(X)
+=\frac{1-v}{q}\operatorname{Tr}(X)I_q
++\frac vN\sum_{j=1}^N
+(\operatorname{Tr}_{\widehat j}X)^{\mathsf T}.
+\tag{158.2}
+$$
+
+For the uniqueness statement, repeated density powers span the permutation-fixed operator space. Scale density powers to arbitrary positive definite Hermitian powers. A homogeneous polynomial identity valid on that open cone holds on all Hermitian powers; polarization spans the symmetric tensor power of the real space $\operatorname{Herm}(\mathbb C^q)$. Under the tensor-operator identification this is exactly the fixed space of conjugation by input-copy permutations. Both the averaged map and (158.2) factor through that space. Thus the equality does not assume covariance of the original $\mathcal C$.
+
+By (157.1), the least Choi eigenvalue of (158.2) is
+
+$$
+\frac{1-v}{q}-\frac{vs}{N}.
+$$
+
+Its nonnegativity gives
+
+<a id="eq-158-3"></a>
+
+$$
+v\le\frac N{N+qs},
+\tag{158.3}
+$$
+
+and (156.1) attains equality. The affine output has worst error $(1-v)(q-1)/q$, attained on pure densities, giving $A_{N,q}$ at this endpoint. $\square$
+
+For $N\le q-1$, this class gives no improvement over the one-copy visibility $v=1/(q+1)$. The result concerns complex-linear completely positive maps. Standalone conjugation on a real carrier is real orthogonal and transposes its represented complex state exactly; consequently (158.3) gives no lower bound for that standalone real task. Its use in a joint decoder requires the declared local complex-operation and untouched-reference contracts.
+
+Non-affine channels can improve the restricted affine optimum. For $N=2$ and $q\ge3$, the earlier two-copy mixed extension has worst error $(q-1)/(q+2)$, strictly below the affine-class value $(q-1)/(q+1)$. Thus the full mixed-state minimax problem remains separate.
+
+## 159. A Schur-dependent noise channel is completely positive on each entire block
+
+<a id="statement-159-1"></a>
+
+**定义 159.1（Block-dependent shift）。** Let $R_\lambda$ be the central input Schur projector for a diagram $\lambda\vdash N$ with at most $q$ rows. Define
+
+<a id="eq-159-1"></a>
+
+$$
+a_\lambda=
+\max\left\{0,-\min_{\substack{\mu=\lambda+\square\\\ell(\mu)\le q}}
+c(\mu\setminus\lambda)\right\},
+\qquad0\le a_\lambda\le s.
+\tag{159.1}
+$$
+
+On the full $\lambda$ block, set
+
+<a id="eq-159-2"></a>
+
+$$
+\begin{aligned}
+\mathcal B_\lambda(Y)
+&=\frac{a_\lambda\operatorname{Tr}(Y)I_q+
+\displaystyle\sum_{j=1}^N
+(\operatorname{Tr}_{\widehat j}Y)^{\mathsf T}}
+{N+qa_\lambda},
+\qquad Y=R_\lambda YR_\lambda,\\
+\mathcal U_{N,q}(X)
+&=\sum_\lambda
+\mathcal B_\lambda(R_\lambda XR_\lambda).
+\end{aligned}
+\tag{159.2}
+$$
+
+<a id="statement-159-2"></a>
+
+**命题 159.2（Full-block complete positivity and trace preservation）。** Each $\mathcal B_\lambda$ is completely positive and trace preserving on its block, including when $a_\lambda=0$. Therefore $\mathcal U_{N,q}$ is a completely positive trace-preserving map on the entire input matrix cone.
+
+**证明。** The central symmetric-group idempotents $R_\lambda$ are real symmetric, so input transpose in the Choi compression leaves them fixed. They commute with $L_N$ because $L_N$ is invariant under all input-copy permutations. The Choi matrix of $\mathcal B_\lambda$ is the compression of
+
+$$
+\frac{a_\lambda I+L_N}{N+qa_\lambda}
+$$
+
+to $R_\lambda\otimes I_q$. Every added-box content on this block becomes nonnegative after the shift (159.1). The output partial trace is $R_\lambda$, proving the required block trace preservation. The denominator is positive even at $a_\lambda=0$, since $N\ge1$. Combining the blocks with their direct-sum instrument proves the assertion for $\mathcal U_{N,q}$. $\square$
+
+## 160. Conditional marginals cancel before the weighted noise is bounded
+
+<a id="statement-160-1"></a>
+
+**命题 160.1（Exact conditional-marginal identity）。** For a mixed input $\tau$, put
+
+$$
+w_\lambda=\operatorname{Tr}(R_\lambda\tau^{\otimes N}),
+\qquad
+X_\lambda=
+\frac{R_\lambda\tau^{\otimes N}R_\lambda}{w_\lambda}
+\quad\text{when }w_\lambda>0.
+$$
+
+All one-copy marginals of $X_\lambda$ are one density matrix $\tau_\lambda$, and
+
+<a id="eq-160-1"></a>
+
+$$
+\sum_\lambda w_\lambda\tau_\lambda=\tau.
+\tag{160.1}
+$$
+
+The individual conditional marginals need not equal $\tau$. In an eigenbasis $\tau=\operatorname{diag}(x_1,\ldots,x_q)$ their exact entries are
+
+<a id="eq-160-2"></a>
+
+$$
+(\tau_\lambda)_{ii}
+=\frac{x_i\partial_iw_\lambda(x)}{Nw_\lambda(x)},
+\qquad w_\lambda(x)=f_\lambda s_\lambda(x),
+\tag{160.2}
+$$
+
+where $f_\lambda$ is the symmetric-group multiplicity and $s_\lambda$ the Schur polynomial.
+
+**证明。** The central projector and the repeated power are permutation invariant, so the conditional input has equal one-copy marginals. Since $\tau^{\otimes N}$ commutes with every $R_\lambda$, summing its block compressions recovers the original power; taking a one-copy partial trace gives (160.1).
+
+For (160.2), differentiate $\operatorname{Tr}(R_\lambda\tau^{\otimes N})$ with respect to $x_i$. Permutation symmetry makes its $N$ derivative summands equal, and multiplication by $x_i$ gives the stated diagonal entry. Phase invariance makes the off-diagonal entries zero. The polynomial identity remains valid at zero eigenvalues whenever $w_\lambda>0$. Euler homogeneity gives trace one; alternatively, summing derivatives of
+
+$$
+\sum_\lambda w_\lambda(x)=\left(\sum_i x_i\right)^N
+$$
+
+recovers (160.1). For a uniform rank-$r$ spectrum, the conditional marginal is again $\tau$, as in the preceding orbit result. $\square$
+
+<a id="statement-160-2"></a>
+
+**定理 160.2（Uniform all-spectrum bound with the pure optimum retained）。** The block channel satisfies the exact difference formula
+
+<a id="eq-160-3"></a>
+
+$$
+\mathcal U_{N,q}(\tau^{\otimes N})-\tau^{\mathsf T}
+=\sum_\lambda w_\lambda
+\frac{qa_\lambda}{N+qa_\lambda}
+\left(\frac{I_q}{q}-\tau_\lambda^{\mathsf T}\right),
+\tag{160.3}
+$$
+
+and therefore
+
+<a id="eq-160-4"></a>
+
+$$
+\begin{aligned}
+D\bigl(\mathcal U_{N,q}(\tau^{\otimes N}),\tau^{\mathsf T}\bigr)
+&\le\sum_\lambda w_\lambda
+\frac{a_\lambda(q-1)}{N+qa_\lambda}\\
+&\le A_{N,q}\Pr_w(a_\lambda>0)
+\le A_{N,q}.
+\end{aligned}
+\tag{160.4}
+$$
+
+For a pure density $\rho_z$, its action is the reused optimal symmetric-power conjugation channel:
+
+<a id="eq-160-5"></a>
+
+$$
+\mathcal U_{N,q}(\rho_z^{\otimes N})
+=\frac{I_q+N\rho_z^{\mathsf T}}{N+q}.
+\tag{160.5}
+$$
+
+**证明。** Substitute the conditional marginals into (159.2) and subtract (160.1) after transpose. This gives (160.3): the changed conditional marginals cancel at zero noise, rather than being replaced individually by $\tau$. The triangle inequality and $D(\tau_\lambda,I_q/q)\le(q-1)/q$ give the first line of (160.4). The function $a\mapsto a(q-1)/(N+qa)$ is increasing for $a\ge0$, with value zero at $a=0$ and at most $A_{N,q}$ for $a\le s$, giving the rest.
+
+For a pure input only $\lambda=(N)$ is populated. Its least added content is $-1$, so $a_\lambda=1$, and (159.2) gives (160.5). This is the optimal pure-input action already supplied by the cited transposition result and §104. The uniform mixed estimate (160.4) is not asserted sharp. $\square$
+
+## 161. Disjoint antisymmetric comparison effects give a determinant tail
+
+<a id="statement-161-1"></a>
+
+**定理 161.1（Pointwise determinant-tail upper bound）。** Pad $\lambda$ with zero rows up to row $q$. Let $m=\lfloor N/q\rfloor$ and $d_\tau=\det\tau$. Define
+
+<a id="eq-161-1"></a>
+
+$$
+H_{m,q}(d)=
+\sum_{j=0}^{\min(q-2,m)}
+\binom mj d^j(1-d)^{m-j}.
+\tag{161.1}
+$$
+
+Then
+
+<a id="eq-161-2"></a>
+
+$$
+D\bigl(\mathcal U_{N,q}(\tau^{\otimes N}),\tau^{\mathsf T}\bigr)
+\le A_{N,q}H_{\lfloor N/q\rfloor,q}(\det\tau).
+\tag{161.2}
+$$
+
+**证明。** If $\lambda_q\ge q-1$, every addable box has content at least $\lambda_q+1-q\ge0$. Hence
+
+$$
+\Pr_w(a_\lambda>0)\le\Pr_w(\lambda_q<q-1).
+\tag{161.3}
+$$
+
+Partition the copies into $m$ disjoint groups of $q$, leaving any remainder untouched. For each group consider the rank-one projector onto $\bigwedge^q(\mathbb C^q)$. Its probability on $\tau^{\otimes q}$ is $d_\tau$. The group projectors commute and their outcomes on the product input are independent, so the success count has distribution $\operatorname{Bin}(m,d_\tau)$.
+
+If $j$ groups occupy their full antisymmetric subspaces, their range carries $\det^j$ tensored with a polynomial $U(q)$ representation on the remaining copies. Tensoring by $\det^j$ adds $j$ full height-$q$ columns, so every diagram in that range satisfies $\lambda_q\ge j$. The spectral projector for $\lambda_q<q-1$ is consequently orthogonal to every outcome with at least $q-1$ successful groups. Taking probabilities yields
+
+$$
+\Pr_w(\lambda_q<q-1)
+\le \Pr\{\operatorname{Bin}(m,d_\tau)\le q-2\}
+=H_{m,q}(d_\tau).
+\tag{161.4}
+$$
+
+Combining (161.3)–(161.4) with (160.4) proves (161.2). These disjoint projectors are comparison effects for the probability bound. The channel remains exactly (159.2); no additional measurement of its input has been introduced. $\square$
+
+<a id="statement-161-2"></a>
+
+**推论 161.2（Fixed-spectrum exponential improvement, with its boundary cases）。** For a fixed strictly full-rank density $\tau$, $d_\tau>0$. If $m\ge\max(1,q-2)$, then
+
+$$
+H_{m,q}(d_\tau)
+\le\min\left\{1,(q-1)m^{q-2}
+\exp[-d_\tau(m-q+2)]\right\}.
+\tag{161.5}
+$$
+
+Thus (161.2) gives exponential improvement at fixed spectrum. A declared floor $\det\tau\ge d_0>0$ makes this improvement uniform on that specified class, with its rate depending on $d_0$.
+
+**证明。** For $0\le j\le q-2$ and the stated $m$, use $\binom mj\le m^j\le m^{q-2}$, $d_\tau^j\le1$ and
+
+$$
+(1-d_\tau)^{m-j}
+\le\exp[-d_\tau(m-j)]
+\le\exp[-d_\tau(m-q+2)].
+$$
+
+There are at most $q-1$ summands, and the tail is also a probability, proving (161.5). For $m=0$, (161.1) is $H_{0,q}(d)=1$, including $d=0$. For a rank-deficient density, $d_\tau=0$ and $H_{m,q}(0)=1$ for every $m$, with the zero-power term interpreted as one. In particular, when $m<q-1$, the event in (161.4) is certain and the determinant comparison gives no reduction. $\square$
+
+Strict positivity alone supplies no uniform determinant-sensitive improvement or state-independent exponential rate over all full-rank spectra: their determinants can approach zero. The uniform $O(1/N)$ estimate $A_{N,q}$ nevertheless remains valid over all spectra, including this entire full-rank class.
+
+For the preceding four-dimensional perturbation family,
+
+$$
+\det\tau_\theta
+=\frac{\theta^2(2-\theta)^2}{256}.
+$$
+
+This parameter must remain in (161.2); merely asserting $\theta>0$ cannot supply a common determinant-tail rate. The finite-copy full-rank lower bound in §§148–155 and this upper bound therefore retain compatible scopes.
+
+## 162. The all-spectrum upper bound returns to the real orientation decoder
+
+Let local dimensions be $d,e$ and copy counts $k,l$. The existing two preparation contracts have $M=2^{k+l-1}$ or $M=2$ populated orientation sectors, good-sector weight $p_0=1-1/M$ and one bad sector. All local powers may have arbitrary spectra.
+
+In the bad sector, one available correction applies $\mathcal U_{l,e}$ to Bob's transposed copies while retaining one untouched Alice copy. The alternative first conjugates the full real carrier, then applies $\mathcal U_{k,d}$ to Alice while retaining one Bob copy. Choose the corrected party by the smaller known uniform coefficient
+
+$$
+B=\min\{A_{k,d},A_{l,e}\}.
+\tag{162.1}
+$$
+
+The retained party is not subjected to this local Schur measurement. Complex completely positive block maps have real Kraus lifts; the full real conjugation, if used, is real orthogonal. Thus the specified operation is real completely positive on its entire input cone, beyond the repeated-input family.
+
+<a id="statement-162-1"></a>
+
+**命题 162.1（Uniform heralded upper bound, without an unknown-spectrum side choice）。** For guaranteed success $p>0$, the stated preparation and output contracts admit
+
+$$
+\epsilon_{\mathrm{all\ mixed}}^*(p)
+\le B\frac{\max\{0,p-p_0\}}p.
+\tag{162.2}
+$$
+
+**证明。** For $p\le p_0$, accept suitably scaled exact good sectors. For $p>p_0$, accept every good sector and accept the bad-sector channel with factor $M(p-p_0)$. The success is exactly $p$ on every mixed input pair. The accepted bad-sector mass is $p-p_0$, with error at most $B$ before normalization, proving (162.2). $\square$
+
+This side choice uses only dimensions and copy counts. The pointwise determinant estimate (161.2) applies to the selected side; it does not authorize choosing the better unknown determinant without an additional lawful mechanism. The earlier two-copy mixed channels may supply a smaller known uniform coefficient when their reused bound improves on $A_{N,q}$.
+
+For grouped equal dimensions $q$ and $N$ copies per party, restriction to the pure subfamily and the preceding upper construction give
+
+$$
+\frac{q-1}{2(N+q)}
+\le\epsilon_{\mathrm{all\ mixed}}^*(1)
+\le\frac{s(q-1)}{2(N+qs)},
+\qquad s=\min(N,q-1).
+\tag{162.3}
+$$
+
+For fixed $q$, these bounds establish the inverse-copy minimax rate, leaving its constant unresolved. Stronger mixed lower bounds still apply. In particular, at $q=4$ and $N=96$, the preceding rank-two obstruction strengthens the lower side to
+
+$$
+\frac1{64}\le\epsilon_{\mathrm{all\ mixed}}^*(1)\le\frac1{24}.
+\tag{162.4}
+$$
+
+For $q=2$, the affine bound already equals the all-copy mixed optimum $1/[2(N+2)]$ established in §113. That equality reuses the earlier result; the non-affine refinement supplies additional pointwise information.
+
+## 163. Sources, joint input relations and unresolved all-spectrum scope
+
+The source setting is pinned at `e38cb35074e618f65f662702b8485cbaa47f9789`. The fixed labels, normalized chart embeddings and compatible-output contracts reuse §§80, 84, 89 and 92–93. The preparation laws, sector matching and weights reuse §§94–101; the pure frontier reuses §§102–109. The all-copy qubit and two-copy mixed results reuse §§110–127. The mixed Schur support argument in §§128–136 supplies the stronger lower bound in (162.4). These are conditional paper dependencies, not new Lean evidence.
+
+The fixed-affine optimum, coefficient $N/[N+q\min(N,q-1)]$, averaged-marginal extension and sum-of-swaps Choi positivity threshold in §§156–158 are directly reused from Brzić–Grinko–Studziński–Quintino, [arXiv:2603.23628v3, Theorem 3, equations (16)–(18), and Appendix D, Lemma 9 and equations (D9)–(D24)](https://arxiv.org/pdf/2603.23628v3), with $d=q$ and the same $N$. Their Theorem 1 also supplies the optimal symmetric-power pure action retained in (160.5). The restricted affine optimum is not presented as a new theorem or as the optimum over all channels.
+
+Schur–Weyl branching, the central-transposition content formula, Jucys–Murphy eigenvalues, Schur characters, density-power polarization and the determinant representation are standard ingredients. General references are W. Fulton and J. Harris, *Representation Theory: A First Course*, and B. E. Sagan, *The Symmetric Group*. The Choi and transpose/swap conventions follow J. Watrous, [*The Theory of Quantum Information*, Chapter 2](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf). The Schur-dependent noise construction, exact conditional-marginal cancellation and determinant-tail comparison are displayed as a conditional synthesis. No independent priority claim is made for that all-spectrum application.
+
+V78's shared-history framework distinguishes a sufficient common relation from the mere existence of an encompassing system. Here independently supplied tensor powers and the grouped phase encoding are declared joint input relations. They do not follow from a common history label or from information conservation. The construction works inside that specified interface and derives neither the Born rule nor complex quantum structure.
+
+The affine-class optimum, uniform all-spectrum upper bound and fixed-spectrum determinant bound are distinct conclusions. Neither $\mathcal U_{N,q}$ nor (162.2) is asserted to solve the full mixed-state minimax constant or sharp success/error curve. Native Schur access, dilations, routing, discarded records, external-reference preservation and clean source return retain separate operation contracts. This construction supplies no free instrument, efficient implementation, clean reference return or additional state information for side selection. The claims here are conditional paper deductions, without Lean compilation, experimental validation or a physical realization claim.
+
+## 追加锚（本行以下为增补区）
