@@ -16,7 +16,7 @@ Assignment = PredictiveThermodynamic.Physical.Assignment; sha256:186896178b3ea09
 Chain dependencies: D5.S3.Quantum.SpinChains.SupersymmetricFermion.FullEndpointIdentity, D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression; freeze in topological import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import order.
 Reused predicate: D5/S1/Words/AdmissibleWords/AdmissibleCount.Adm.
-Pointwise exclusion: D5/S1/Words/AdmissibleWords/AdmissibleCount.adm_iff_no_adjacent_true; sha256:1fd94a32ad20c5e9f47c8843c130133ce27a104e2f7f75cb9bf9916f8085bc2b.
+Pointwise exclusion: D5/S1/Words/AdmissibleWords/AdmissibleCount.adm_iff_no_adjacent_true; sha256:304ace6fff228e5b2d4b05c9c7aed7b23d949d0408f0b79dadf4d78143d4fbd4.
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 import D5.S3.Quantum.Dynamics.PronkoFredkinAntiAdjointExpansion
