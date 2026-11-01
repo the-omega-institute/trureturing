@@ -1,0 +1,11 @@
+**Definition 1.4 (a genuinely narrowed alternative domain).** The archive-conditioned contract instead admits a nonempty $E\subseteq E_{s_o}$. The archived fact that $C_0\in E$ must already be genuinely obtained. All entries in this $E$ share the same accessible initial archive, code and public data. Thus no further initial accessible discriminator varies inside $E$. This is a different initial-knowledge contract from (AQBR.4).
+
+For an effective construction a sufficient finite presentation of this domain is its exact residue support
+
+$$
+R_E=\{C\bmod H:C\in E\}\subseteq\{0,\ldots,H-1\}.
+\tag{AQBR.6}
+$$
+
+An authentic supplied list or bitmap for (AQBR.6), or a terminating supplied algorithm producing it, is permitted and charged. Equivalently one may supply and charge a decoder on the actual projection image used in Theorem 2.1, with a valid domain guarantee. The existence of an abstract $E$, or of a semantic decoder, does not give an algorithm that extracts such a presentation from an arbitrary archive description. The source handle cannot be consulted while making this table. Full-fiber support in (AQBR.4) is computable by testing the public code on the $H$ residues; no archive narrowing is needed in that case.
+

@@ -114,7 +114,91 @@ $$\operatorname{claim} = (\forall (N: \mathbb{N}), (((2: \mathbb{N}) \le N) \Rig
 
 For every natural N at least two and every nondegenerate four-dimensional binary subspace U, the natural cardinality of negativeLines U is odd. The source states this conjecture in xiv-MSGDH2.tex, lines 2255–2260. Cardinalities and the dimension in these formulas are natural numbers; neither is cast to an integer or a complex number.
 
-**Theorem 1.10 (Every linear doily has odd negative-line parity).**
+**Definition 1.10 (The single-qubit multiplication exponent).**
+
+$$\forall (u: (\operatorname{ZMod}\left(2\right) \times \operatorname{ZMod}\left(2\right))), (\forall (v: (\operatorname{ZMod}\left(2\right) \times \operatorname{ZMod}\left(2\right))), ((\operatorname{localExponent}\left(u, v\right): \operatorname{ZMod}\left(4\right)) = ((((\operatorname{Nat.cast}\left(((\operatorname{ZMod.val}\left((u).1\right)) \cdot (\operatorname{ZMod.val}\left((u).2\right)): \mathbb{N})\right): \operatorname{ZMod}\left(4\right))) + ((\operatorname{Nat.cast}\left(((\operatorname{ZMod.val}\left((v).1\right)) \cdot (\operatorname{ZMod.val}\left((v).2\right)): \mathbb{N})\right): \operatorname{ZMod}\left(4\right)))) - ((\operatorname{Nat.cast}\left(((\operatorname{ZMod.val}\left(((u) + (v)).1\right)) \cdot (\operatorname{ZMod.val}\left(((u) + (v)).2\right)): \mathbb{N})\right): \operatorname{ZMod}\left(4\right)))) + (((2: \operatorname{ZMod}\left(4\right))) \cdot ((\operatorname{Nat.cast}\left(((\operatorname{ZMod.val}\left((u).2\right)) \cdot (\operatorname{ZMod.val}\left((v).1\right)): \mathbb{N})\right): \operatorname{ZMod}\left(4\right))))))$$
+
+*Formalization.* `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.localExponent` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Axel Muller; Metod Saniga; Alain Giorgetti; Henri de Boutray; Frédéric Holweck (2022). *Multi-qubit doilies: enumeration for all ranks and classification for ranks four and five*. DOI: [10.1016/j.jocs.2022.101853](https://doi.org/10.1016/j.jocs.2022.101853). URL: <https://arxiv.org/abs/2206.03599v2>.
+
+*Commentary.*
+
+For binary labels u and v, take the natural representatives of their coordinates. Cast each natural coordinate product into ZMod 4 before adding and subtracting. The exponent is the product of the coordinates of u plus that of v, minus that of their binary sum, plus twice the second coordinate of u times the first of v. Thus subtraction takes place modulo four, rather than in the natural numbers.
+
+**Definition 1.11 (The multiplication phase for Pauli words).**
+
+$$\forall (N: \mathbb{N}), (\forall (u: (\operatorname{Fin}\left(N\right) \to (\operatorname{ZMod}\left(2\right) \times \operatorname{ZMod}\left(2\right)))), (\forall (v: (\operatorname{Fin}\left(N\right) \to (\operatorname{ZMod}\left(2\right) \times \operatorname{ZMod}\left(2\right)))), ((\operatorname{phase}\left(u, v\right): \mathbb{C}) = \prod_{(j: \operatorname{Fin}\left(N\right))} (\operatorname{DFunLike.coe}\left(\operatorname{AddChar.zmodChar}\left((4: \mathbb{N}), \operatorname{Complex.I_{pow\ four}}\right)\right)\left(\operatorname{localExponent}\left(u\left(j\right), v\left(j\right)\right)\right)))))$$
+
+*Formalization.* `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.phase` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Axel Muller; Metod Saniga; Alain Giorgetti; Henri de Boutray; Frédéric Holweck (2022). *Multi-qubit doilies: enumeration for all ranks and classification for ranks four and five*. DOI: [10.1016/j.jocs.2022.101853](https://doi.org/10.1016/j.jocs.2022.101853). URL: <https://arxiv.org/abs/2206.03599v2>.
+
+*Commentary.*
+
+Multiply the fourth roots of unity supplied by the single-qubit exponents over all j in Fin N. The additive character sends a residue a modulo four to i raised to its natural representative. DFunLike.coe denotes evaluation of this character as a function; Complex.I_pow_four supplies the identity i to the fourth power equals one. At N equal to zero the empty product is one.
+
+**Theorem 1.12 (Symmetry of the binary form).**
+
+$$\forall (N: \mathbb{N}), (\forall (u: (\operatorname{Fin}\left(N\right) \to (\operatorname{ZMod}\left(2\right) \times \operatorname{ZMod}\left(2\right)))), (\forall (v: (\operatorname{Fin}\left(N\right) \to (\operatorname{ZMod}\left(2\right) \times \operatorname{ZMod}\left(2\right)))), (\operatorname{B}\left(u, v\right) = \operatorname{B}\left(v, u\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.B_comm` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Axel Muller; Metod Saniga; Alain Giorgetti; Henri de Boutray; Frédéric Holweck (2022). *Multi-qubit doilies: enumeration for all ranks and classification for ranks four and five*. DOI: [10.1016/j.jocs.2022.101853](https://doi.org/10.1016/j.jocs.2022.101853). URL: <https://arxiv.org/abs/2206.03599v2>.
+
+*Commentary.*
+
+The form is symmetric: swapping u and v interchanges the two cross terms in every coordinate, and commutativity of binary multiplication and addition preserves their sum.
+
+**Theorem 1.13 (Additivity in the second argument).**
+
+$$\forall (N: \mathbb{N}), (\forall (u: (\operatorname{Fin}\left(N\right) \to (\operatorname{ZMod}\left(2\right) \times \operatorname{ZMod}\left(2\right)))), (\forall (v: (\operatorname{Fin}\left(N\right) \to (\operatorname{ZMod}\left(2\right) \times \operatorname{ZMod}\left(2\right)))), (\forall (w: (\operatorname{Fin}\left(N\right) \to (\operatorname{ZMod}\left(2\right) \times \operatorname{ZMod}\left(2\right)))), (\operatorname{B}\left(u, (v) + (w)\right) = (\operatorname{B}\left(u, v\right)) + (\operatorname{B}\left(u, w\right))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.B_add_right` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Axel Muller; Metod Saniga; Alain Giorgetti; Henri de Boutray; Frédéric Holweck (2022). *Multi-qubit doilies: enumeration for all ranks and classification for ranks four and five*. DOI: [10.1016/j.jocs.2022.101853](https://doi.org/10.1016/j.jocs.2022.101853). URL: <https://arxiv.org/abs/2206.03599v2>.
+
+*Commentary.*
+
+The pairing of u with v + w is the sum of its pairings with v and w. Symmetry reduces this to additivity in the first argument, where coordinate distributivity and the finite-sum addition identity give the equality.
+
+**Theorem 1.14 (The form is alternating).**
+
+$$\forall (N: \mathbb{N}), (\forall (u: (\operatorname{Fin}\left(N\right) \to (\operatorname{ZMod}\left(2\right) \times \operatorname{ZMod}\left(2\right)))), (\operatorname{B}\left(u, u\right) = (0: \operatorname{ZMod}\left(2\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.B_self` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Axel Muller; Metod Saniga; Alain Giorgetti; Henri de Boutray; Frédéric Holweck (2022). *Multi-qubit doilies: enumeration for all ranks and classification for ranks four and five*. DOI: [10.1016/j.jocs.2022.101853](https://doi.org/10.1016/j.jocs.2022.101853). URL: <https://arxiv.org/abs/2206.03599v2>.
+
+*Commentary.*
+
+In every coordinate the self-pairing is the sum of two equal binary products. Their sum is zero in characteristic two, so the full self-pairing vanishes.
+
+**Theorem 1.15 (The product of an isotropic triple).**
+
+$$\forall (N: \mathbb{N}), (\forall (u: (\operatorname{Fin}\left(N\right) \to (\operatorname{ZMod}\left(2\right) \times \operatorname{ZMod}\left(2\right)))), (\forall (v: (\operatorname{Fin}\left(N\right) \to (\operatorname{ZMod}\left(2\right) \times \operatorname{ZMod}\left(2\right)))), ((u \ne (0: (\operatorname{Fin}\left(N\right) \to (\operatorname{ZMod}\left(2\right) \times \operatorname{ZMod}\left(2\right))))) \Rightarrow ((v \ne (0: (\operatorname{Fin}\left(N\right) \to (\operatorname{ZMod}\left(2\right) \times \operatorname{ZMod}\left(2\right))))) \Rightarrow ((u \ne v) \Rightarrow ((\operatorname{B}\left(u, v\right) = (0: \operatorname{ZMod}\left(2\right))) \Rightarrow (\operatorname{lineProduct}\left(\operatorname{Finset.insert}\left(u, \operatorname{Finset.insert}\left(v, \operatorname{Singleton.singleton}\left((u) + (v)\right)\right)\right)\right) = ((\operatorname{phase}\left(u, v\right): \mathbb{C})) \cdot ((1: \operatorname{Matrix}\left((\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right)), \mathbb{C}\right))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.lineProduct_triple` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Axel Muller; Metod Saniga; Alain Giorgetti; Henri de Boutray; Frédéric Holweck (2022). *Multi-qubit doilies: enumeration for all ranks and classification for ranks four and five*. DOI: [10.1016/j.jocs.2022.101853](https://doi.org/10.1016/j.jocs.2022.101853). URL: <https://arxiv.org/abs/2206.03599v2>.
+
+*Commentary.*
+
+For distinct nonzero orthogonal labels u and v, the vectors u, v and u + v are distinct. Their pairings vanish by symmetry, additivity and alternation, so their observables commute. Reorder the finite-set product as the ordered product of these three observables. Multiplication of the first two gives phase u v times the observable of u + v. The latter squares to the identity, giving the stated complex scalar times the matrix identity.
+
+**Theorem 1.16 (Every linear doily has odd negative-line parity).**
 
 $$\forall (N: \mathbb{N}), (((2: \mathbb{N}) \le N) \Rightarrow (\forall (U: \operatorname{Submodule}\left(\operatorname{ZMod}\left(2\right), (\operatorname{Fin}\left(N\right) \to (\operatorname{ZMod}\left(2\right) \times \operatorname{ZMod}\left(2\right)))\right)), ((\operatorname{IsLinearDoily}\left(U\right)) \Rightarrow (\operatorname{Odd}\left(\operatorname{Finset.card}\left(\operatorname{negativeLines}\left(U\right)\right)\right)))))$$
 
@@ -145,13 +229,19 @@ For a finite family of complex signs, its product is minus one exactly when the 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.B`
+- Truth anchor: `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.B_add_right`
+- Truth anchor: `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.B_comm`
+- Truth anchor: `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.B_self`
 - Truth anchor: `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.IsLinearDoily`
 - Truth anchor: `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.canonicalLabel`
 - Truth anchor: `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.claim`
 - Truth anchor: `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.lineProduct`
+- Truth anchor: `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.lineProduct_triple`
 - Truth anchor: `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.lines`
+- Truth anchor: `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.localExponent`
 - Truth anchor: `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.negativeLines`
 - Truth anchor: `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.observable`
+- Truth anchor: `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.phase`
 - Truth anchor: `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.points`
 - Truth anchor: `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.result`
 - Dependency: [D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm](../Information/BinaryStabilizerGraphNormalForm.md)

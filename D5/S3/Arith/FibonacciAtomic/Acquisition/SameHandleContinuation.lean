@@ -204,11 +204,11 @@ private theorem scratch_cons (H : ℕ) (c : ZMod H × ZMod H) (b : Bool) (w : Li
     scratch H c (b :: w) = scratch H (update H b c) w := by
   cases b <;> rfl
 
-private theorem scratch_sound (H : ℕ) (w : List Bool) (v : ℕ × ℕ) :
+theorem scratch_sound (H : ℕ) (w : List Bool) (v : ℕ × ℕ) :
     scratch H (residueSource H v) w = residueSource H (runWord w v) := by
   exact (PositiveClosingExecution.residue_run H w v).symm
 
-private theorem predict_sound (H : ℕ) (hH : 1 ≤ H) (w : List Bool) (v : ℕ × ℕ) :
+theorem predict_sound (H : ℕ) (hH : 1 ≤ H) (w : List Bool) (v : ℕ × ℕ) :
     predict H (residueSource H v) w = terminalGcd H w v := by
   unfold predict
   rw [scratch_sound]
@@ -296,7 +296,7 @@ private theorem protocol_invariant {Handle World : Type} (B : SourceService Hand
     have ht := ih hi.1
     exact ⟨ht.1, ht.2.trans hi.2⟩
 
-private theorem continuation_exists {Handle World : Type} (B : SourceService Handle World)
+theorem continuation_exists {Handle World : Type} (B : SourceService Handle World)
     (h : Handle) (H : ℕ) (complete : Completion B h H) (w : List Bool)
     (x : World) (e c : ZMod H × ZMod H) (hx : B.lawful h x) :
     ∃ y, ProtocolRun B h H ⟨x, e, c, .ready⟩ (continuationEvents w)

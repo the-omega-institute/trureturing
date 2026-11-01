@@ -1,0 +1,38 @@
+**定理 B-37.2（两种条件完成律的归一化严格和界）。** 在同一个 $n\ge14$ 多边形中，取互不相交的实际耳集 $P,Q$，其并 $K=P\cup Q$ 两两不交叉，且
+
+$$
+(p,q)=(|P|,|Q|)\in\{(2,2),(3,3),(2,4),(4,2)\}.
+$$
+
+这里 $p,q$ 是两集合的大小，不是六耳配置的交叉数。定义全部条件完成及共同耳载体为
+
+$$
+\begin{aligned}
+\mathcal X(P\mid Q)&=\{T\in\mathcal T_n:P\subseteq\operatorname{Ear}(T),
+\ Q\cap\operatorname{Ear}(T)=\varnothing\},\\
+E_K&=\{e\in\mathcal E_n\setminus K:e\text{ 兼容 }K\text{ 的每条耳}\},\\
+N_{pq}&=\sum_{j=0}^q(-1)^j\binom qj c_{p+j},
+\qquad c_h=C_{n-h-2}\quad(0\le h\le\lfloor n/2\rfloor).
+\end{aligned}
+\tag{37.3}
+$$
+
+则 $|\mathcal X(P\mid Q)|=N_{pq}>0$。对完整耳交叉相交子族
+$\mathcal C\subseteq\mathcal X(P\mid Q)$、$\mathcal D'\subseteq\mathcal X(Q\mid P)$，有
+
+$$
+\frac{|\mathcal C|}{N_{pq}}+\frac{|\mathcal D'|}{N_{qp}}\le1.
+\tag{37.4}
+$$
+
+两族均非空时严格小于一；等号恰为一侧为空、另一侧等于自己的全部条件完成。对于跨侧实际成员 $V,W$，准确有
+
+$$
+\operatorname{Ear}(V)\cap\operatorname{Ear}(W)
+=(\operatorname{Ear}(V)\cap E_K)\cap(\operatorname{Ear}(W)\cap E_K).
+\tag{37.5}
+$$
+
+证明。共同耳不能在 $K$ 内，又须兼容两成员分别强制的 $P,Q$，所以(37.5)成立。对禁止的 $Q$ 作有限容斥，用式(32.1)的实际删耳双射计每个含有事件，得到 $N_{pq}$。存在完整耳集恰为 $P$ 的剖分：$p=2$ 用定理B-32.3证明中的双耳构造；$p=3,4$ 用定理B-33.3证明中删耳、在邻点集合中选两个非相邻点、添回的构造。该构造只需选中中心独立、$p\ge3$ 及 $n-p\ge6$，不需其抽象边覆盖条件。因此它同样适用于这里的 $P$，并且避开 $Q$，证明 $N_{pq}>0$；反侧同理。
+
+以下消费第34节的局部双族对应与层比较，逐项保留这里的条件；不直接套用其 $q=1$ 四见证定理。对 $J\subseteq E_K$，把本侧在 $J$ 上的实际精确迹权重记作 $w_J^{pq}(R)$。
