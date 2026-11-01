@@ -188,23 +188,22 @@ private theorem separable_bounds (σ : Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2
         (σ ![0,1,1] ![0,1,1]).re / 12 +
         3 * (σ ![1,0,1] ![1,0,1]).re / 4 +
         3 * (σ ![1,1,0] ![1,1,0]).re / 4)}
+  let f : Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) ℂ → ℝ := fun σ =>
+    (((σ ![0,0,1] ![0,0,1]).re / 6 + 3 * (σ ![1,1,0] ![1,1,0]).re / 2) / 5 +
+      4 / 5 * ((σ ![0,0,0] ![0,0,0]).re / 12 +
+        (σ ![0,1,1] ![0,1,1]).re / 12 +
+        3 * (σ ![1,0,1] ![1,0,1]).re / 4 +
+        3 * (σ ![1,1,0] ![1,1,0]).re / 4)) - (σ ![0,0,0] ![1,1,1]).re
+  have hf : IsLinearMap ℝ f := by
+    constructor
+    · intro x y
+      simp only [f, Matrix.add_apply, Complex.add_re]
+      ring
+    · intro u x
+      simp only [f, Matrix.smul_apply, Complex.smul_re, smul_eq_mul]
+      ring
   have hc : Convex ℝ s := by
-    intro x hx y hy u v hu hv huv
-    have hxv : (x ![0,0,0] ![1,1,1]).re ≤ ((x ![0,0,1] ![0,0,1]).re / 6 + 3 * (x ![1,1,0] ![1,1,0]).re / 2) / 5 +
-      4 / 5 * ((x ![0,0,0] ![0,0,0]).re / 12 + (x ![0,1,1] ![0,1,1]).re / 12 +
-        3 * (x ![1,0,1] ![1,0,1]).re / 4 + 3 * (x ![1,1,0] ![1,1,0]).re / 4) := hx
-    have hyv : (y ![0,0,0] ![1,1,1]).re ≤ ((y ![0,0,1] ![0,0,1]).re / 6 + 3 * (y ![1,1,0] ![1,1,0]).re / 2) / 5 +
-      4 / 5 * ((y ![0,0,0] ![0,0,0]).re / 12 + (y ![0,1,1] ![0,1,1]).re / 12 +
-        3 * (y ![1,0,1] ![1,0,1]).re / 4 + 3 * (y ![1,1,0] ![1,1,0]).re / 4) := hy
-    have he (i j : Fin 3 → Fin 2) : ((u • x + v • y) i j).re =
-        u * (x i j).re + v * (y i j).re := by
-      simp only [Matrix.add_apply, Matrix.smul_apply, Complex.add_re, Complex.smul_re,
-        smul_eq_mul]
-    change ((u • x + v • y) ![0,0,0] ![1,1,1]).re ≤ (((u • x + v • y) ![0,0,1] ![0,0,1]).re / 6 + 3 * ((u • x + v • y) ![1,1,0] ![1,1,0]).re / 2) / 5 +
-      4 / 5 * (((u • x + v • y) ![0,0,0] ![0,0,0]).re / 12 + ((u • x + v • y) ![0,1,1] ![0,1,1]).re / 12 +
-        3 * ((u • x + v • y) ![1,0,1] ![1,0,1]).re / 4 + 3 * ((u • x + v • y) ![1,1,0] ![1,1,0]).re / 4)
-    simp only [he]
-    nlinarith only [mul_le_mul_of_nonneg_left hxv hu, mul_le_mul_of_nonneg_left hyv hv]
+    simpa only [f, s, sub_nonneg] using convex_halfSpace_ge hf (0 : ℝ)
   apply (convexHull_min (t := s) ?_ hc) hσ
   rintro _ ⟨p, hp, rfl⟩
   obtain ⟨h1, h2⟩ := product_bounds p hp
