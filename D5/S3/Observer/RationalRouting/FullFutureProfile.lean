@@ -258,27 +258,70 @@ def scanEndpoints : ℕ → ℚ → GridEndpoint × GridEndpoint
       if n = 0 then (zeroEndpoint.maximum l, r)
       else let C := scanEndpoints n y; (C.1.maximum l, C.2.minimum r)
 
+/-- The executable pass is tail recursive. Its state contains the current
+index and the two selected pairs, with no list of earlier candidates. -/
+def endpointScanLoop : ℕ → ℕ → ℚ → GridEndpoint × GridEndpoint → GridEndpoint × GridEndpoint
+  | 0, _, _, C => C
+  | n+1, m, y, C =>
+      let j := gridQuotient (m+1) y
+      let l : GridEndpoint := ⟨j,m+1,Nat.succ_pos m⟩
+      let r : GridEndpoint := ⟨j+1,m+1,Nat.succ_pos m⟩
+      endpointScanLoop n (m+1) y (C.1.maximum l,C.2.minimum r)
+
+def tailScanEndpoints : ℕ → ℚ → GridEndpoint × GridEndpoint
+  | 0, _ => (zeroEndpoint,oneEndpoint)
+  | n+1, y =>
+      let j := gridQuotient 1 y
+      endpointScanLoop n 1 y
+        (zeroEndpoint.maximum ⟨j,1,by omega⟩,⟨j+1,1,by omega⟩)
+
+private theorem endpoint_loop_eq (n m : ℕ) (hm : 1 ≤ m) (y : ℚ) :
+    endpointScanLoop n m y (scanEndpoints m y) = scanEndpoints (m+n) y := by
+  induction n generalizing m with
+  | zero => simp [endpointScanLoop]
+  | succ n ih =>
+    have hm₀ : m ≠ 0 := by omega
+    have hs : scanEndpoints (m+1) y =
+        ((scanEndpoints m y).1.maximum ⟨gridQuotient (m+1) y,m+1,Nat.succ_pos m⟩,
+         (scanEndpoints m y).2.minimum ⟨gridQuotient (m+1) y+1,m+1,Nat.succ_pos m⟩) := by
+      simp only [scanEndpoints,ite_eq_right hm₀]
+    simp only [endpointScanLoop]
+    rw [← hs,ih (m+1) (by omega)]
+    congr 1 <;> omega
+
+private theorem tail_scan_eq (B : ℕ) (y : ℚ) : tailScanEndpoints B y = scanEndpoints B y := by
+  cases B with
+  | zero => rfl
+  | succ n =>
+    simpa only [tailScanEndpoints,scanEndpoints,ite_true,Nat.one_add] using
+      endpoint_loop_eq n 1 le_rfl y
+
+
 /-- Only the two selected endpoints are converted to reduced rationals. -/
 def fastContainingCell (B : ℕ) (y : ℚ) : ProfileCell :=
-  let C := scanEndpoints B y
+  let C := tailScanEndpoints B y
   ⟨C.1.value, C.2.value⟩
 
 /-- Integer cross-product selection computes the same exact cell as the
 mathematical grid intersection, while avoiding reductions in the scan. -/
 theorem fast_containing_cell_eq (B : ℕ) (y : ℚ) :
     fastContainingCell B y = containingCell B y := by
+  rw [show fastContainingCell B y =
+      (⟨(scanEndpoints B y).1.value,(scanEndpoints B y).2.value⟩ : ProfileCell) by
+    simp only [fastContainingCell,tail_scan_eq]]
   induction B with
-  | zero => simp [fastContainingCell, scanEndpoints, GridEndpoint.value,
+  | zero => simp [scanEndpoints, GridEndpoint.value,
       zeroEndpoint, oneEndpoint, containingCell]
   | succ n ih =>
     have he₁ := congrArg ProfileCell.lower ih
     have he₂ := congrArg ProfileCell.upper ih
-    simp only [fastContainingCell] at he₁ he₂
+    change (scanEndpoints n y).1.value = (containingCell n y).lower at he₁
+    change (scanEndpoints n y).2.value = (containingCell n y).upper at he₂
     by_cases hn : n = 0
     · subst n
-      simp only [fastContainingCell, scanEndpoints, ite_true, endpoint_maximum]
+      simp only [scanEndpoints, ite_true, endpoint_maximum]
       simp [GridEndpoint.value, zeroEndpoint, grid_quotient_eq, containingCell]
-    · simp only [fastContainingCell, scanEndpoints, ite_eq_right hn,
+    · simp only [scanEndpoints, ite_eq_right hn,
         endpoint_maximum, endpoint_minimum]
       rw [he₁, he₂]
       simp only [containingCell, ite_eq_right hn, GridEndpoint.value,

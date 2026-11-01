@@ -33,6 +33,6 @@ internal sealed class FullFutureProfileDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "fast_containing_cell_eq"),
                 H("Selecting endpoints without reductions in the scan"),
                 StatementSource.FromLean(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The executable endpoint scan uses integer quotients and cross-product comparisons. Each iteration retains only the selected lower and upper numerator-denominator pairs. Reduction takes place when those final two pairs become rational endpoints. Its projection agrees exactly with the mathematical cell intersection, so the moving-cut acquisition can use this representation without changing the output cell."))),
+                Blocks(Paragraph(Text("The executable endpoint scan uses integer quotients and cross-product comparisons. The executable pass is tail recursive; its state is the current denominator and the selected lower and upper numerator-denominator pairs. An exact refinement proof identifies its output with the recursive grid-intersection specification. Reduction takes place when those final two pairs become rational endpoints. Its projection agrees exactly with the mathematical cell intersection, so the moving-cut acquisition can use this representation without changing the output cell."))),
                 DescribeRole.Theorem))));
 }

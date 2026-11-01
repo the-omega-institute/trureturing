@@ -886,25 +886,21 @@ private theorem endpoint_den_bound (e : GridEndpoint) : e.value.den ≤ e.denomi
   rw [he]
   exact Nat.le_of_dvd e.positive hd
 
-private theorem endpoint_scan_denominators (B : ℕ) (hB : 1 ≤ B) (y : ℚ) :
-    (scanEndpoints B y).1.denominator ≤ B ∧
-      (scanEndpoints B y).2.denominator ≤ B := by
+private theorem containing_cell_denominators (B : ℕ) (hB : 1 ≤ B) (y : ℚ) :
+    (containingCell B y).lower.den ≤ B ∧ (containingCell B y).upper.den ≤ B := by
   induction B with
   | zero => omega
   | succ n ih =>
+    have hl := endpoint_den_bound ⟨reply (n+1) y,n+1,Nat.succ_pos n⟩
+    have hu := endpoint_den_bound ⟨reply (n+1) y+1,n+1,Nat.succ_pos n⟩
+    simp only [GridEndpoint.value,Int.cast_add,Int.cast_one] at hl hu
     by_cases hn : n=0
     · subst n
-      simp only [scanEndpoints,ite_true,GridEndpoint.maximum]
-      split_ifs <;> exact ⟨le_rfl,le_rfl⟩
-    · obtain ⟨hl,hu⟩ := ih (by omega)
-      simp only [scanEndpoints,ite_eq_right hn,GridEndpoint.maximum,GridEndpoint.minimum]
+      simp only [containingCell,ite_true,max_def]
+      split_ifs <;> constructor <;> (try dsimp only) <;> first | exact hl | exact hu | norm_num
+    · obtain ⟨hprevL,hprevU⟩ := ih (by omega)
+      simp only [containingCell,ite_eq_right hn,max_def,min_def]
       split_ifs <;> constructor <;> (try dsimp only) <;> omega
-
-private theorem containing_cell_denominators (B : ℕ) (hB : 1 ≤ B) (y : ℚ) :
-    (containingCell B y).lower.den ≤ B ∧ (containingCell B y).upper.den ≤ B := by
-  rw [← fast_containing_cell_eq]
-  have h := endpoint_scan_denominators B hB y
-  exact ⟨(endpoint_den_bound _).trans h.1,(endpoint_den_bound _).trans h.2⟩
 
 /-- Binary widths of the actual scale names and nonnegative complete replies.
 One delimiter bit per integer is included. Provenance and service work are separate. -/
@@ -1136,6 +1132,7 @@ private theorem scale_widths (A : PositiveMatrix) (I : ProfileCell) (B : ℕ) :
   have hq := product_size B (A.c*U+A.d)
   simp only [Nat.size_one] at hv'
   change Nat.size (B*(A.c*U+A.d)) ≤ _ ∧ _
+  dsimp only [U,mu] at *
   constructor <;> omega
 
 private theorem first_interval_uniform_width {A : PositiveMatrix} (hA : Unimodular A)
@@ -1169,7 +1166,7 @@ private theorem first_interval_uniform_width {A : PositiveMatrix} (hA : Unimodul
     simpa only [D,pow_two,two_mul] using product_size Q Q
   have hw := first_interval_width A D I (reply D (mobius A x))
   intro e he
-  dsimp only [acquisitionWidth,integerWidth] at *
+  dsimp only [acquisitionWidth,integerWidth,Q,D,V,mu] at *
   omega
 
 /-- All integer operands of one original-denominator cut test, including its
@@ -1204,7 +1201,7 @@ private theorem cut_operand_widths (B : ℕ) (C : ProfileCell) :
   simp only [integerWidth,Int.natAbs_natCast] at hmul hmul' hcross
   change integerWidth (nextNumerator C.lower m) ≤ _ at hj
   dsimp only [integerWidth] at hln hun hj hdiv hld hud
-  simp only [cutOperands,List.mem_cons,List.mem_singleton] at hn
+  simp only [cutOperands,List.mem_cons,List.not_mem_nil,or_false] at hn
   rcases hn with rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl <;>
     simp only [integerWidth,Int.natAbs_natCast] <;> omega
 
@@ -1264,7 +1261,7 @@ private theorem grid_operand_widths (B : ℕ) (y : ℚ) :
   change integerWidth (gridQuotient m y) ≤ integerWidth ((m : ℤ)*y.num) at hp
   change integerWidth (gridQuotient n y) ≤ integerWidth ((n : ℤ)*y.num) at hq
   simp only [integerWidth,Int.natAbs_natCast] at *
-  simp only [gridOperands,List.mem_cons,List.mem_singleton] at hk
+  simp only [gridOperands,List.mem_cons,List.not_mem_nil,or_false] at hk
   rcases hk with rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl <;>
     simp only [integerWidth,Int.natAbs_natCast,Int.natAbs_zero,Nat.size_zero] <;> omega
 
@@ -1287,6 +1284,7 @@ private theorem representative_width (C : ProfileCell) :
     have htwo : integerWidth 2 = 2 := by decide
     simp only [integerWidth,Int.natAbs_natCast] at hm
     dsimp only [integerWidth] at htwo
+    push_cast at hw ⊢
     omega
 
 private theorem split_interval_width (C : ProfileCell) (t : ℚ) (side : Bool) :
@@ -1294,7 +1292,7 @@ private theorem split_interval_width (C : ProfileCell) (t : ℚ) (side : Bool) :
   have hl := max_rational_width C.lower t
   have hu := min_rational_width C.upper t
   dsimp only [ProfileCell.width,splitInterval] at *
-  split_ifs <;> omega
+  split_ifs <;> dsimp only at * <;> omega
 
 private theorem cut_rational_width {I : ProfileCell} (hl : 0 ≤ I.lower)
     {B m U : ℕ} (hm : 1 ≤ m) (hmB : m ≤ B) (hU : I.upper ≤ (U : ℚ))
@@ -1308,7 +1306,7 @@ private theorem cut_rational_width {I : ProfileCell} (hl : 0 ≤ I.lower)
   have hjw := (Nat.size_le_size hjabs).trans (product_size m U)
   have hmw := Nat.size_le_size hmB
   have hw := div_int_width j (m : ℤ)
-  simp only [integerWidth,Int.natAbs_natCast] at hw
+  simp only [integerWidth,Int.natAbs_natCast,Int.cast_natCast] at hw
   omega
 
 
@@ -1349,18 +1347,25 @@ inductive EndpointScanRun : ℕ → ℚ → GridEndpoint × GridEndpoint → ℕ
         (C.1.maximum ⟨gridQuotient (n+1) y,n+1,by omega⟩,
          C.2.minimum ⟨gridQuotient (n+1) y+1,n+1,by omega⟩) (d+1) (k+2)
 
-private theorem endpoint_scan_run (B : ℕ) (y : ℚ) :
-    ∃ k ≤ 2*B, EndpointScanRun B y (scanEndpoints B y) B k := by
-  induction B with
-  | zero => exact ⟨0,by omega,EndpointScanRun.zero y⟩
+private theorem endpoint_loop_run (n m : ℕ) (hm : 1 ≤ m) (y : ℚ)
+    (C : GridEndpoint × GridEndpoint) (d k : ℕ) (run : EndpointScanRun m y C d k) :
+    EndpointScanRun (m+n) y (endpointScanLoop n m y C) (d+n) (k+2*n) := by
+  induction n generalizing m C d k with
+  | zero => simpa only [endpointScanLoop,Nat.add_zero,Nat.mul_zero] using run
   | succ n ih =>
-    by_cases hn : n=0
-    · subst n
-      exact ⟨1,by omega,by simpa [scanEndpoints] using EndpointScanRun.first y⟩
-    · obtain ⟨k,hk,run⟩ := ih
-      refine ⟨k+2,by omega,?_⟩
-      simpa only [scanEndpoints,ite_eq_right hn] using
-        EndpointScanRun.next n (by omega) y _ n k run
+    have next := EndpointScanRun.next m hm y C d k run
+    have tail := ih (m+1) (by omega) _ (d+1) (k+2) next
+    simpa only [endpointScanLoop,Nat.mul_add,Nat.mul_one,Nat.add_assoc,
+      Nat.add_comm,Nat.add_left_comm] using tail
+
+private theorem endpoint_scan_run (B : ℕ) (y : ℚ) :
+    ∃ k ≤ 2*B, EndpointScanRun B y (tailScanEndpoints B y) B k := by
+  cases B with
+  | zero => exact ⟨0,by omega,EndpointScanRun.zero y⟩
+  | succ n =>
+    refine ⟨1+2*n,by omega,?_⟩
+    simpa only [tailScanEndpoints,Nat.add_comm] using
+      endpoint_loop_run n 1 le_rfl y _ 1 1 (EndpointScanRun.first y)
 
 /-- Original-denominator arithmetic, with all fixed endpoint arithmetic kept
 outside these counters. The trace is proof data, not an acquired archive. -/
@@ -1372,7 +1377,7 @@ def AcquisitionScans (A : PositiveMatrix) (I : ProfileCell) (B : ℕ) (z : ℚ)
       let Q := profileScale A I B
       let J := firstInterval A (Q^2) I (reply (Q^2) z)
       CutScanRun B J (findCut B J) n₁) ∧
-    EndpointScanRun B K.representative (scanEndpoints B K.representative) B k ∧
+    EndpointScanRun B K.representative (tailScanEndpoints B K.representative) B k ∧
     output = fastContainingCell B K.representative ∧
     n₀+n₁+B ≤ 3*B ∧ n₀+n₁+k ≤ 4*B ∧
     ∀ e : ℕ, I.width ≤ e →
@@ -1443,6 +1448,7 @@ private theorem acquisition_scans {A : PositiveMatrix} (hA : Unimodular A)
           4*K.width ≤ acquisitionWidth A I B e := by
         intro e he
         have hjw := first_width e he
+        change 4*J.width ≤ acquisitionWidth A I B e at hjw
         have hsplit := split_interval_width J ((j : ℚ)/m)
           (decide (p ≤ reply s (mobius A x)))
         change K.width ≤ max J.width (rationalWidth ((j : ℚ)/m)) at hsplit
