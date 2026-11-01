@@ -10,11 +10,6 @@ import Mathlib.LinearAlgebra.AffineSpace.AffineSubspace.Basic
 import Mathlib.FieldTheory.Finiteness
 import Mathlib.Algebra.Field.ZMod
 import Mathlib.Data.Nat.Digits.Defs
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Order.Interval.Finset.Fin
-import Lean.Elab.Tactic.Omega
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
 
 /-! Affine partitions of the punctured vector space in the conjecture of Heimendahl,
 Heinrich and Gross, arXiv:2011.11651v3. -/
@@ -34,7 +29,8 @@ abbrev vector (p n : ℕ) := Fin n → ZMod p
 def isAffinePartition (p n : ℕ) [Fact p.Prime]
     (parts : Finset (AffineSubspace (ZMod p) (vector p n))) : Prop :=
   (∀ k ∈ parts, (k : Set (vector p n)).Nonempty) ∧
-  (∀ k ∈ parts, ∀ l ∈ parts, k ≠ l → Disjoint (k : Set (vector p n)) (l : Set (vector p n))) ∧
+  (∀ k ∈ parts, ∀ l ∈ parts, k ≠ l →
+    Disjoint (k : Set (vector p n)) (l : Set (vector p n))) ∧
   ∀ v : vector p n, v ≠ 0 ↔ ∃ k ∈ parts, v ∈ k
 
 /-- The objective in the affine partition problem. -/
@@ -42,7 +38,7 @@ def sqSum {p n : ℕ} [Fact p.Prime]
     (parts : Finset (AffineSubspace (ZMod p) (vector p n))) : ℕ :=
   ∑ k ∈ parts, Nat.card k ^ 2
 
-/-- A flag cell, fixing the first nonzero coordinate and its value. -/
+/-- A coordinate cell with all earlier coordinates zero. -/
 def flagCell (p n : ℕ) [Fact p.Prime] (i : Fin n) (x : ZMod p) :
     AffineSubspace (ZMod p) (vector p n) where
   carrier := {v | (∀ j < i, v j = 0) ∧ v i = x}
@@ -69,14 +65,16 @@ def flagValue (p n : ℕ) : ℕ := ∑ k ∈ Finset.range n, (p - 1) * p ^ (2 * 
 private def radix (p s : ℕ) : ℕ := Nat.ofDigits (p ^ 2) (Nat.digits p s)
 
 private lemma radix_zero (p : ℕ) : radix p 0 = 0 := by
-  simp [radix]
+  change Nat.ofDigits (p ^ 2) (Nat.digits p 0) = 0
+  rw [Nat.digits_zero, Nat.ofDigits_nil]
 
 private lemma radix_step {p : ℕ} (hp : 2 ≤ p) (s : ℕ) :
     radix p s = s % p + p ^ 2 * radix p (s / p) := by
   by_cases hs : s = 0
   · subst s
     simp [radix_zero]
-  · unfold radix
+  · change Nat.ofDigits (p ^ 2) (Nat.digits p s) =
+      s % p + p ^ 2 * Nat.ofDigits (p ^ 2) (Nat.digits p (s / p))
     rw [Nat.digits_def' (by omega) (Nat.pos_of_ne_zero hs), Nat.ofDigits_cons]
 
 private lemma radix_affine {p : ℕ} (hp : 2 ≤ p) (q r : ℕ) (hr : r < p) :
@@ -150,7 +148,7 @@ private lemma power_family_bound {p : ℕ} (hp : 2 ≤ p) {a : Type*}
 private lemma radix_value {p : ℕ} (hp : 2 ≤ p) (n : ℕ) :
     radix p (p ^ n - 1) = flagValue p n := by
   induction n with
-  | zero => simp [flagValue, radix_zero]
+  | zero => exact radix_zero p
   | succ n ih =>
     have he : p ^ (n + 1) - 1 = p * (p ^ n - 1) + (p - 1) := by
       have hpow := Nat.one_le_pow n p (by omega)
@@ -160,7 +158,10 @@ private lemma radix_value {p : ℕ} (hp : 2 ≤ p) (n : ℕ) :
       rw [pow_succ]
       nlinarith
     rw [he, radix_affine hp _ _ (by omega), ih]
-    simp only [flagValue, Finset.sum_range_succ', Nat.mul_zero, pow_zero, mul_one]
+    change (p - 1) + p ^ 2 * (∑ k ∈ Finset.range n, (p - 1) * p ^ (2 * k)) =
+      ∑ k ∈ Finset.range (n + 1), (p - 1) * p ^ (2 * k)
+    rw [Finset.sum_range_succ']
+    simp only [Nat.mul_zero, pow_zero, mul_one]
     rw [Finset.mul_sum, Nat.add_comm]
     congr 1
     apply Finset.sum_congr rfl
@@ -172,7 +173,7 @@ private lemma affine_card {p n : ℕ} [Fact p.Prime]
     (k : AffineSubspace (ZMod p) (vector p n)) (hk : (k : Set (vector p n)).Nonempty) :
     Nat.card k = p ^ Module.finrank (ZMod p) k.direction := by
   obtain ⟨v, hv⟩ := hk
-  haveI : Nonempty k := ⟨⟨v, hv⟩⟩
+  have : Nonempty k := ⟨⟨v, hv⟩⟩
   rw [← Nat.card_congr (Equiv.vaddConst (⟨v, hv⟩ : k)),
     Module.natCard_eq_pow_finrank (K := ZMod p), Nat.card_zmod]
 
@@ -279,12 +280,7 @@ private lemma flag_partition {p n : ℕ} [Fact p.Prime] :
   · intro v
     constructor
     · intro hv
-      have hex : ∃ j : Fin n, v j ≠ 0 := by
-        by_contra hn
-        apply hv
-        funext j
-        by_contra hj
-        exact hn ⟨j, hj⟩
+      have hex : ∃ j : Fin n, v j ≠ 0 := Function.ne_iff.mp hv
       let nz := Finset.univ.filter (fun j : Fin n => v j ≠ 0)
       have hnz : nz.Nonempty := by
         obtain ⟨j, hj⟩ := hex
@@ -305,7 +301,9 @@ private lemma flag_partition {p n : ℕ} [Fact p.Prime] :
 private lemma flag_sum {p n : ℕ} [Fact p.Prime] :
     sqSum (flagPartition p n) = flagValue p n := by
   classical
-  unfold sqSum flagPartition
+  change (∑ k ∈ Finset.univ.image
+    (fun a : Fin n × {x : ZMod p // x ≠ 0} => flagCell p n a.1 a.2.1),
+      Nat.card k ^ 2) = flagValue p n
   rw [Finset.sum_image (fun a _ b _ h => flag_index_injective h)]
   simp_rw [flag_cell_card]
   rw [Fintype.sum_prod_type]
@@ -323,7 +321,8 @@ private lemma partition_bound {p n : ℕ} [Fact p.Prime]
   have hp : 2 ≤ p := (Fact.out : p.Prime).two_le
   have h := power_family_bound hp parts (fun k => Nat.card k)
     (fun k hk => ⟨_, affine_card k (hparts.1 k hk)⟩)
-  simpa only [sqSum, partition_card parts hparts, radix_value hp] using h
+  rw [partition_card parts hparts, radix_value hp] at h
+  exact h
 
 /-- The flag partition attains the maximum over every affine partition of the punctured space. -/
 def claim : Prop :=
