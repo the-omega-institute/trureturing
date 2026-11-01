@@ -21,7 +21,8 @@ noncomputable section
 
 open Matrix
 open scoped BigOperators InnerProductSpace ComplexOrder
-open D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity (projector)
+open D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity
+  (projector trace_projectors)
 
 namespace D5.S3.Quantum.Contextuality.PureStateHTMBBound
 
@@ -45,10 +46,6 @@ def claim : Prop :=
         projector (ψ x)) →
     htmbValue ψ m n ≤ 2 / 3
 
-private theorem sum_trit {α : Type*} [AddCommMonoid α] (f : ZMod 3 → α) :
-    ∑ i, f i = f 0 + f 1 + f 2 := by
-  exact Fin.sum_univ_three f
-
 private theorem additive_form {d : ℕ}
     (p : ZMod 3 × ZMod 3 → Matrix (Fin d) (Fin d) ℂ)
     (h : ∀ a ∈ ({1, 2} : Finset (ZMod 3)), ∀ k : ZMod 3,
@@ -68,8 +65,10 @@ private theorem additive_form {d : ℕ}
   have e12 := hs 1 (by simp) 2
   have e21 := hs 2 (by simp) 1
   have e22 := hs 2 (by simp) 2
-  simp only [Finset.sum_filter, Fintype.sum_prod_type, sum_trit] at e11 e12 e21 e22
-  have h01 : (0 : ZMod 3) ≠ 1 := by decide
+  simp only [Finset.sum_filter, Fintype.sum_prod_type,
+    (@id (∀ f : ZMod 3 → ℂ, ∑ i, f i = f 0 + f 1 + f 2)
+      Fin.sum_univ_three)] at e11 e12 e21 e22
+  have h01 : (0 : ZMod 3) ≠ 1 := zero_ne_one
   have h02 : (0 : ZMod 3) ≠ 2 := by decide
   have h12 : (1 : ZMod 3) ≠ 2 := by decide
   have h30 : (3 : ZMod 3) = 0 := rfl
@@ -110,9 +109,7 @@ private theorem projector_difference_span {d : ℕ}
     a ∈ Submodule.span ℂ ({c, e} : Set (EuclideanSpace ℂ (Fin d))) ∧
     b ∈ Submodule.span ℂ ({c, e} : Set (EuclideanSpace ℂ (Fin d))) := by
   classical
-  have ha0 : a ≠ 0 := by
-    intro hz
-    simp [hz] at ha
+  have ha0 : a ≠ 0 := norm_ne_zero_iff.mp (by rw [ha]; exact one_ne_zero)
   have hab : LinearIndependent ℂ ![a, b] := by
     apply (LinearIndependent.pair_iff' ha0).2
     intro z hz
@@ -194,26 +191,11 @@ private theorem expectation_le_basis {d : ℕ}
   rw [Finset.sum_comm]
   apply Finset.sum_le_sum
   intro k _
-  have h := overlap_le_basis s v (WithLp.toLp 2 (z k)) hv hvs
-  convert h using 1 <;>
-    simp only [projector, vecMulVec_mul_vecMulVec, trace_vecMulVec, dotProduct_smul,
-      EuclideanSpace.inner_eq_star_dotProduct]
-  · rw [smul_eq_mul, dotProduct_comm (fun i => star (v i))]
-    change (⟪v, WithLp.toLp 2 (z k)⟫_ℂ * ⟪WithLp.toLp 2 (z k), v⟫_ℂ).re =
-      ‖⟪v, WithLp.toLp 2 (z k)⟫_ℂ‖ ^ 2
-    rw [← inner_conj_symm (WithLp.toLp 2 (z k)) v, Complex.mul_conj']
-    simp only [← Complex.ofReal_pow, Complex.ofReal_re]
-  · apply Finset.sum_congr rfl
-    intro l _
-    rw [smul_eq_mul, dotProduct_comm (fun i =>
-      star (((stdOrthonormalBasis ℂ s) l : EuclideanSpace ℂ (Fin d)) i))]
-    change (⟪((stdOrthonormalBasis ℂ s) l : EuclideanSpace ℂ (Fin d)),
-      WithLp.toLp 2 (z k)⟫_ℂ * ⟪WithLp.toLp 2 (z k),
-      ((stdOrthonormalBasis ℂ s) l : EuclideanSpace ℂ (Fin d))⟫_ℂ).re = _
-    rw [← inner_conj_symm (WithLp.toLp 2 (z k))
-      ((stdOrthonormalBasis ℂ s) l : EuclideanSpace ℂ (Fin d)), Complex.mul_conj']
-    simp only [← Complex.ofReal_pow, Complex.ofReal_re,
-      EuclideanSpace.inner_eq_star_dotProduct]
+  change (projector v * projector (WithLp.toLp 2 (z k))).trace.re ≤ ∑ l,
+    (projector ((stdOrthonormalBasis ℂ s) l : EuclideanSpace ℂ (Fin d)) *
+      projector (WithLp.toLp 2 (z k))).trace.re
+  simpa only [trace_projectors, Complex.ofReal_re] using
+    overlap_le_basis s v (WithLp.toLp 2 (z k)) hv hvs
 
 private theorem discrimination_bound {d : ℕ}
     (v : ZMod 3 → EuclideanSpace ℂ (Fin d))
@@ -238,7 +220,7 @@ private theorem discrimination_bound {d : ℕ}
         _ = 1 := by
           rw [hm.2, mul_one, projector, trace_vecMulVec]
           change (⟪(stdOrthonormalBasis ℂ s) k, (stdOrthonormalBasis ℂ s) k⟫_ℂ).re = 1
-          rw [inner_self_eq_one_of_norm_eq_one ((stdOrthonormalBasis ℂ s).orthonormal.1 k)]
+          rw [inner_self_eq_one_of_norm_eq_one (𝕜 := ℂ) ((stdOrthonormalBasis ℂ s).orthonormal.1 k)]
           rfl
     _ = Module.finrank ℂ s := by simp
     _ ≤ 2 := by exact_mod_cast hs
@@ -312,9 +294,11 @@ private theorem value_reduction {d : ℕ}
   have hr0 := hr 0
   have hr1 := hr 1
   have hr2 := hr 2
-  simp only [sum_trit] at hc0 hc1 hc2 hr0 hr1 hr2
+  simp only [(@id (∀ f : ZMod 3 → ℝ, ∑ i, f i = f 0 + f 1 + f 2)
+    Fin.sum_univ_three)] at hc0 hc1 hc2 hr0 hr1 hr2
   delta htmbValue
-  simp only [Fintype.sum_prod_type, sum_trit]
+  simp only [Fintype.sum_prod_type, (@id (∀ f : ZMod 3 → ℝ, ∑ i, f i = f 0 + f 1 + f 2)
+    Fin.sum_univ_three)]
   rw [hadd 1 1, hadd 1 2, hadd 2 1, hadd 2 2]
   simp only [add_mul, sub_mul, trace_add, trace_sub, Complex.add_re, Complex.sub_re]
   linear_combination (1 / 18 : ℝ) * (hc1 + hc2 - 2 * hc0 + hr1 + hr2 - 2 * hr0)

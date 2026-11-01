@@ -55,7 +55,7 @@ private theorem projector_hermitian {d : ℕ} (v : EuclideanSpace ℂ (Fin d)) :
   intro i j
   simp [projector, conjTranspose_apply, vecMulVec_apply, mul_comm]
 
-private theorem trace_projectors {d : ℕ} (v w : EuclideanSpace ℂ (Fin d)) :
+theorem trace_projectors {d : ℕ} (v w : EuclideanSpace ℂ (Fin d)) :
     (projector v * projector w).trace = (‖⟪v, w⟫_ℂ‖ ^ 2 : ℝ) := by
   rw [projector, projector, vecMulVec_mul_vecMulVec, trace_vecMulVec, dotProduct_smul]
   change (star (fun i => v i) ⬝ᵥ (fun i => w i)) *
