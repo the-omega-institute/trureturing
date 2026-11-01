@@ -142,7 +142,7 @@ private lemma smooth_bound {a b u v : ℝ} (ha : 0 < a) (hu : u ∈ Icc a b)
         (abs_add _ _).trans (add_le_add_right (abs_add _ _) _)
       _ ≤ _ := by
         simp only [abs_mul, abs_of_pos (Real.exp_pos _)]
-        simpa only [one_mul] using add_le_add (add_le_add h₁ h₂) h₃
+        simpa only [one_mul, mul_one, add_assoc] using add_le_add (add_le_add h₁ h₂) h₃
   simpa only [Real.norm_eq_abs] using Convex.norm_image_sub_le_of_norm_hasDerivWithin_le
     (fun t (ht : t ∈ Icc a b) => (smooth_derivative (ha.trans_le ht.1)).hasDerivWithinAt)
     hb (convex_Icc a b) hv hu

@@ -52,7 +52,7 @@ private theorem S_zero {n : ℕ} (x : Fin n → ℝ) (j : Fin n) (hp : (H x).Pos
     simp [b, H, Matrix.mulVec_single_one]
   dsimp only [S]
   rw [hb, ← Matrix.mulVec_mulVec, Matrix.inv_mul_of_invertible, Matrix.one_mulVec,
-    Matrix.dotProduct_single_one, Matrix.mulVec_single_one]
+    dotProduct_single_one, Matrix.mulVec_single_one]
   simp [H, K_zero]
 
 private theorem dependence : ObservationalDependence signature actual := by

@@ -82,13 +82,13 @@ private lemma schur_identity {n : ℕ} (x : Fin n → ℝ) (j : Fin n)
     rw [even_abs (-h), abs_neg]
   have hv : v j = firstLiMass := by simp [v, column, K_zero]
   have hc₁ : v ⬝ᵥ ((H x)⁻¹ *ᵥ u x j h) = u x j h j := by
-    rw [hs.dotProduct_mulVec_comm, hi, Matrix.dotProduct_single_one]
+    rw [hs.dotProduct_mulVec_comm, hi, dotProduct_single_one]
   have hc₂ : u x j h ⬝ᵥ ((H x)⁻¹ *ᵥ v) = u x j h j := by
-    rw [hi, Matrix.dotProduct_single_one]
+    rw [hi, dotProduct_single_one]
   dsimp only [S]
   rw [hu]
   simp only [Matrix.mulVec_add, add_dotProduct, dotProduct_add,
-    hi, Matrix.dotProduct_single_one, hv, hc₁, hc₂, hj]
+    hi, dotProduct_single_one, hv, hc₁, hc₂, hj]
   ring
 
 private lemma inverse_quadratic_bound {n : ℕ} (x : Fin n → ℝ) (w : Fin n → ℝ)
@@ -227,7 +227,9 @@ private lemma radius_controls {C ell Q r : ℝ} (hC : 0 ≤ C) (hell : 0 ≤ ell
   have heprod : Real.exp (scale r / 2) * Real.sqrt r = 1 := by
     have hh : (Real.exp (scale r / 2) * Real.sqrt r) ^ 2 = 1 := by
       rw [mul_pow, he, hsqrt, one_div_mul_cancel hr.ne']
-    nlinarith [Real.exp_pos (scale r / 2)]
+    have hpos : 0 ≤ Real.exp (scale r / 2) * Real.sqrt r :=
+      mul_nonneg (Real.exp_nonneg _) hsqrt0
+    nlinarith
   have hsexp : scale r ≤ Real.exp (scale r / 2) := by
     have ht : 1 + scale r / 4 ≤ Real.exp (scale r / 4) := by
       linarith [Real.add_one_le_exp (scale r / 4)]
@@ -241,7 +243,8 @@ private lemma radius_controls {C ell Q r : ℝ} (hC : 0 ≤ C) (hell : 0 ≤ ell
     simpa only [heprod] using mul_le_mul_of_nonneg_right hsexp hsqrt0
   have hqrs : Q * r * scale r ≤ 1 / 8 := by
     calc
-      _ = (Q * Real.sqrt r) * (scale r * Real.sqrt r) := by nlinarith [hsqrt]
+      _ = Q * (Real.sqrt r) ^ 2 * scale r := by rw [hsqrt]
+      _ = (Q * Real.sqrt r) * (scale r * Real.sqrt r) := by ring
       _ ≤ (1 / 8 : ℝ) * 1 := mul_le_mul hqs hss
         (mul_nonneg (by linarith : (0 : ℝ) ≤ scale r) hsqrt0) (by norm_num)
       _ = _ := by ring
