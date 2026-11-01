@@ -1,0 +1,1859 @@
+{
+  "question": "Does ordinary L_G determine the degree sequence of an arbitrary graph G, loops included?",
+  "source": {
+    "arxiv": "2609.07728v1",
+    "problem": "11.4",
+    "url": "https://arxiv.org/html/2609.07728v1",
+    "sealed_directory": "/private/tmp/omega-next-source-intake-20260915.hNXvvf",
+    "sha256": {
+      "loopy-polynomial-v1.html": "e38f48ed00c59fd2a80f59395a3b08c6a42ea0ead467ac5cce029b3886394332",
+      "loopy-polynomial-v1.txt": "6cc23937d307b3489593ddcbd8d0d9b3052e3a7afe173626be80603f43243ced",
+      "loopy-polynomial-abs.html": "37136fb76243d67b39d9386cdf98c5ff6752ad3f75f038065018611a04b09d83"
+    },
+    "read_scope": "Definition 1.1, Proposition 2.9, degree convention and Section 6.5/Problem 11.4; not a whole-paper independent review"
+  },
+  "semantics": {
+    "graphs": "Finite graphs, loops and parallel edges allowed; vertex count explicitly includes isolates.",
+    "polynomial": "Ordinary L in Z[t,x_0,x_1,...]; L_G=L_(G/e)+t L_(G-e); contracted nonloop retained as a loop; bouquet m -> x_m; disjoint union -> product.",
+    "degree": "One per endpoint, hence two per loop.",
+    "canonical_monomial": "(nonnegative integer t exponent, sorted x-index tuple retaining repeated x_0); full integer coefficient dictionary"
+  },
+  "reuse": {
+    "repository": "https://github.com/hamurav/loopy-collisions",
+    "commit": "e7e6b31111203dd6d1304b329b9aed8e0fac3d29",
+    "tag": "v1.2.0",
+    "license": "MIT, exact notice retained",
+    "sha256": {
+      "gp.py": "5e4c7663d53fc02c654ac7e69116a40abbd4a029e780602cb262cedcd6cef026",
+      "LICENSE.txt": "edba575257db964ddf6a476086929ff433b3435e17b19b43195ec5a5654b1564"
+    },
+    "discovery": "unchanged loopy_recursive",
+    "cross_check": "unchanged loopy_forest on controls, every pilot graph, stress controls and candidate only",
+    "independence": "Algorithmic cross-checks sharing one upstream source and authorship; no independent definition-derived evaluator or Lean certificate."
+  },
+  "domain": {
+    "n": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "loop_entries": [
+      0,
+      1,
+      2
+    ],
+    "loop_order": "nondecreasing tuples, lexicographic",
+    "nonloop_multiplicities": [
+      0,
+      1,
+      2
+    ],
+    "pair_order": "lexicographic upper-triangular unordered pairs",
+    "phases_per_bucket": [
+      "all binary vectors in lexicographic order",
+      "all ternary vectors containing 2 in lexicographic order"
+    ],
+    "bucket": "(n, loop tuple); release table only after both phases",
+    "bucket_basis": "Proposition 2.9: unique maximal-x-degree term determines n and loop multiset, excluding cross-bucket equality.",
+    "relabelling_basis": "Any labeled graph in the box can have its loops sorted by relabeling; every nonloop vector is retained. Counts are encodings, not nonisomorphic graphs.",
+    "degree_use": "Compute and compare two degree multisets only after full exact polynomial equality; no degree-based generation, filtering, buckets or order."
+  },
+  "bounds": {
+    "invocations": 1,
+    "retries": 0,
+    "total_seconds": 300,
+    "stop_generation_seconds": 240,
+    "controls_seconds": 30,
+    "pilot_stress_seconds": 60,
+    "rss_stop_mib": 512,
+    "finalization_reserve_seconds": 1
+  },
+  "platform": {
+    "system": "Darwin",
+    "machine": "arm64",
+    "python": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
+    "rss_api": "resource.getrusage(RUSAGE_SELF).ru_maxrss",
+    "rss_raw_unit": "bytes",
+    "rss_enforcement": "Peak RSS observed at evaluation/graph/control boundaries; no OS hard RSS enforcement."
+  },
+  "paths": {
+    "implementation": "/Users/macstudio/omega/trureturing-loopy-degree-probe-20260915/docs/reports/loopy-degree-pilot/probe.py",
+    "upstream_code": "/Users/macstudio/omega/trureturing-loopy-degree-probe-20260915/docs/reports/loopy-degree-pilot/gp.py",
+    "license": "/Users/macstudio/omega/trureturing-loopy-degree-probe-20260915/docs/reports/loopy-degree-pilot/LICENSE.txt",
+    "output": "/Users/macstudio/omega/trureturing-loopy-degree-probe-20260915/docs/reports/loopy-degree-pilot/results.json"
+  },
+  "producer": {
+    "skill": "none; direct Codex CLI implementation",
+    "subagents": 0,
+    "review_seats": 0,
+    "prior_exposure": "repository and admitted plan; no peer results read"
+  },
+  "started_utc": "2026-09-15T15:06:17Z",
+  "controls": [
+    {
+      "name": "empty",
+      "n": 0,
+      "edges": [],
+      "expected": [
+        {
+          "t": 0,
+          "xs": [],
+          "coefficient": 1
+        }
+      ],
+      "checks_completed": 2,
+      "passed": true
+    },
+    {
+      "name": "bouquet_0",
+      "n": 1,
+      "edges": [],
+      "expected": [
+        {
+          "t": 0,
+          "xs": [
+            0
+          ],
+          "coefficient": 1
+        }
+      ],
+      "checks_completed": 2,
+      "passed": true
+    },
+    {
+      "name": "bouquet_1",
+      "n": 1,
+      "edges": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected": [
+        {
+          "t": 0,
+          "xs": [
+            1
+          ],
+          "coefficient": 1
+        }
+      ],
+      "checks_completed": 2,
+      "passed": true
+    },
+    {
+      "name": "bouquet_2",
+      "n": 1,
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "expected": [
+        {
+          "t": 0,
+          "xs": [
+            2
+          ],
+          "coefficient": 1
+        }
+      ],
+      "checks_completed": 2,
+      "passed": true
+    },
+    {
+      "name": "edgeless_(0, 0)",
+      "n": 2,
+      "edges": [],
+      "expected": [
+        {
+          "t": 0,
+          "xs": [
+            0,
+            0
+          ],
+          "coefficient": 1
+        }
+      ],
+      "checks_completed": 2,
+      "passed": true
+    },
+    {
+      "name": "edgeless_(0, 2)",
+      "n": 2,
+      "edges": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "expected": [
+        {
+          "t": 0,
+          "xs": [
+            0,
+            2
+          ],
+          "coefficient": 1
+        }
+      ],
+      "checks_completed": 8,
+      "passed": true
+    },
+    {
+      "name": "one_edge_(0, 0)",
+      "n": 2,
+      "edges": [
+        [
+          0,
+          1
+        ]
+      ],
+      "expected": [
+        {
+          "t": 0,
+          "xs": [
+            1
+          ],
+          "coefficient": 1
+        },
+        {
+          "t": 1,
+          "xs": [
+            0,
+            0
+          ],
+          "coefficient": 1
+        }
+      ],
+      "checks_completed": 8,
+      "passed": true
+    },
+    {
+      "name": "one_edge_(0, 2)",
+      "n": 2,
+      "edges": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "expected": [
+        {
+          "t": 0,
+          "xs": [
+            3
+          ],
+          "coefficient": 1
+        },
+        {
+          "t": 1,
+          "xs": [
+            0,
+            2
+          ],
+          "coefficient": 1
+        }
+      ],
+      "checks_completed": 8,
+      "passed": true
+    },
+    {
+      "name": "one_edge_(1, 2)",
+      "n": 2,
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "expected": [
+        {
+          "t": 0,
+          "xs": [
+            4
+          ],
+          "coefficient": 1
+        },
+        {
+          "t": 1,
+          "xs": [
+            1,
+            2
+          ],
+          "coefficient": 1
+        }
+      ],
+      "checks_completed": 8,
+      "passed": true
+    },
+    {
+      "name": "two_edges_(0, 0)",
+      "n": 2,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "expected": [
+        {
+          "t": 0,
+          "xs": [
+            2
+          ],
+          "coefficient": 1
+        },
+        {
+          "t": 1,
+          "xs": [
+            1
+          ],
+          "coefficient": 1
+        },
+        {
+          "t": 2,
+          "xs": [
+            0,
+            0
+          ],
+          "coefficient": 1
+        }
+      ],
+      "checks_completed": 8,
+      "passed": true
+    },
+    {
+      "name": "two_edges_(1, 2)",
+      "n": 2,
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "expected": [
+        {
+          "t": 0,
+          "xs": [
+            5
+          ],
+          "coefficient": 1
+        },
+        {
+          "t": 1,
+          "xs": [
+            4
+          ],
+          "coefficient": 1
+        },
+        {
+          "t": 2,
+          "xs": [
+            1,
+            2
+          ],
+          "coefficient": 1
+        }
+      ],
+      "checks_completed": 8,
+      "passed": true
+    },
+    {
+      "name": "edge_and_isolate",
+      "n": 3,
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "expected": [
+        {
+          "t": 0,
+          "xs": [
+            0,
+            4
+          ],
+          "coefficient": 1
+        },
+        {
+          "t": 1,
+          "xs": [
+            0,
+            1,
+            2
+          ],
+          "coefficient": 1
+        }
+      ],
+      "checks_completed": 8,
+      "passed": true
+    }
+  ],
+  "stress": [
+    {
+      "n": 4,
+      "loops": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "passed": true,
+      "polynomial": [
+        {
+          "t": 0,
+          "xs": [
+            12
+          ],
+          "coefficient": 1
+        },
+        {
+          "t": 1,
+          "xs": [
+            11
+          ],
+          "coefficient": 3
+        },
+        {
+          "t": 2,
+          "xs": [
+            10
+          ],
+          "coefficient": 6
+        },
+        {
+          "t": 3,
+          "xs": [
+            9
+          ],
+          "coefficient": 10
+        },
+        {
+          "t": 4,
+          "xs": [
+            8
+          ],
+          "coefficient": 15
+        },
+        {
+          "t": 5,
+          "xs": [
+            7
+          ],
+          "coefficient": 21
+        },
+        {
+          "t": 6,
+          "xs": [
+            0,
+            6
+          ],
+          "coefficient": 4
+        },
+        {
+          "t": 6,
+          "xs": [
+            6
+          ],
+          "coefficient": 24
+        },
+        {
+          "t": 7,
+          "xs": [
+            0,
+            5
+          ],
+          "coefficient": 8
+        },
+        {
+          "t": 7,
+          "xs": [
+            5
+          ],
+          "coefficient": 24
+        },
+        {
+          "t": 8,
+          "xs": [
+            0,
+            4
+          ],
+          "coefficient": 12
+        },
+        {
+          "t": 8,
+          "xs": [
+            2,
+            2
+          ],
+          "coefficient": 3
+        },
+        {
+          "t": 8,
+          "xs": [
+            4
+          ],
+          "coefficient": 18
+        },
+        {
+          "t": 9,
+          "xs": [
+            0,
+            3
+          ],
+          "coefficient": 16
+        },
+        {
+          "t": 9,
+          "xs": [
+            1,
+            2
+          ],
+          "coefficient": 6
+        },
+        {
+          "t": 9,
+          "xs": [
+            3
+          ],
+          "coefficient": 6
+        },
+        {
+          "t": 10,
+          "xs": [
+            0,
+            0,
+            2
+          ],
+          "coefficient": 6
+        },
+        {
+          "t": 10,
+          "xs": [
+            0,
+            2
+          ],
+          "coefficient": 8
+        },
+        {
+          "t": 10,
+          "xs": [
+            1,
+            1
+          ],
+          "coefficient": 3
+        },
+        {
+          "t": 11,
+          "xs": [
+            0,
+            0,
+            1
+          ],
+          "coefficient": 6
+        },
+        {
+          "t": 12,
+          "xs": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "coefficient": 1
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "loops": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "passed": true,
+      "polynomial": [
+        {
+          "t": 0,
+          "xs": [
+            13
+          ],
+          "coefficient": 1
+        },
+        {
+          "t": 1,
+          "xs": [
+            12
+          ],
+          "coefficient": 3
+        },
+        {
+          "t": 2,
+          "xs": [
+            11
+          ],
+          "coefficient": 6
+        },
+        {
+          "t": 3,
+          "xs": [
+            10
+          ],
+          "coefficient": 10
+        },
+        {
+          "t": 4,
+          "xs": [
+            9
+          ],
+          "coefficient": 15
+        },
+        {
+          "t": 5,
+          "xs": [
+            8
+          ],
+          "coefficient": 21
+        },
+        {
+          "t": 6,
+          "xs": [
+            0,
+            7
+          ],
+          "coefficient": 3
+        },
+        {
+          "t": 6,
+          "xs": [
+            1,
+            6
+          ],
+          "coefficient": 1
+        },
+        {
+          "t": 6,
+          "xs": [
+            7
+          ],
+          "coefficient": 24
+        },
+        {
+          "t": 7,
+          "xs": [
+            0,
+            6
+          ],
+          "coefficient": 6
+        },
+        {
+          "t": 7,
+          "xs": [
+            1,
+            5
+          ],
+          "coefficient": 2
+        },
+        {
+          "t": 7,
+          "xs": [
+            6
+          ],
+          "coefficient": 24
+        },
+        {
+          "t": 8,
+          "xs": [
+            0,
+            5
+          ],
+          "coefficient": 9
+        },
+        {
+          "t": 8,
+          "xs": [
+            1,
+            4
+          ],
+          "coefficient": 3
+        },
+        {
+          "t": 8,
+          "xs": [
+            2,
+            3
+          ],
+          "coefficient": 3
+        },
+        {
+          "t": 8,
+          "xs": [
+            5
+          ],
+          "coefficient": 18
+        },
+        {
+          "t": 9,
+          "xs": [
+            0,
+            4
+          ],
+          "coefficient": 12
+        },
+        {
+          "t": 9,
+          "xs": [
+            1,
+            3
+          ],
+          "coefficient": 7
+        },
+        {
+          "t": 9,
+          "xs": [
+            2,
+            2
+          ],
+          "coefficient": 3
+        },
+        {
+          "t": 9,
+          "xs": [
+            4
+          ],
+          "coefficient": 6
+        },
+        {
+          "t": 10,
+          "xs": [
+            0,
+            0,
+            3
+          ],
+          "coefficient": 3
+        },
+        {
+          "t": 10,
+          "xs": [
+            0,
+            1,
+            2
+          ],
+          "coefficient": 3
+        },
+        {
+          "t": 10,
+          "xs": [
+            0,
+            3
+          ],
+          "coefficient": 6
+        },
+        {
+          "t": 10,
+          "xs": [
+            1,
+            2
+          ],
+          "coefficient": 5
+        },
+        {
+          "t": 11,
+          "xs": [
+            0,
+            0,
+            2
+          ],
+          "coefficient": 3
+        },
+        {
+          "t": 11,
+          "xs": [
+            0,
+            1,
+            1
+          ],
+          "coefficient": 3
+        },
+        {
+          "t": 12,
+          "xs": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "coefficient": 1
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "loops": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "passed": true,
+      "polynomial": [
+        {
+          "t": 0,
+          "xs": [
+            20
+          ],
+          "coefficient": 1
+        },
+        {
+          "t": 1,
+          "xs": [
+            19
+          ],
+          "coefficient": 3
+        },
+        {
+          "t": 2,
+          "xs": [
+            18
+          ],
+          "coefficient": 6
+        },
+        {
+          "t": 3,
+          "xs": [
+            17
+          ],
+          "coefficient": 10
+        },
+        {
+          "t": 4,
+          "xs": [
+            16
+          ],
+          "coefficient": 15
+        },
+        {
+          "t": 5,
+          "xs": [
+            15
+          ],
+          "coefficient": 21
+        },
+        {
+          "t": 6,
+          "xs": [
+            2,
+            12
+          ],
+          "coefficient": 4
+        },
+        {
+          "t": 6,
+          "xs": [
+            14
+          ],
+          "coefficient": 24
+        },
+        {
+          "t": 7,
+          "xs": [
+            2,
+            11
+          ],
+          "coefficient": 8
+        },
+        {
+          "t": 7,
+          "xs": [
+            13
+          ],
+          "coefficient": 24
+        },
+        {
+          "t": 8,
+          "xs": [
+            2,
+            10
+          ],
+          "coefficient": 12
+        },
+        {
+          "t": 8,
+          "xs": [
+            6,
+            6
+          ],
+          "coefficient": 3
+        },
+        {
+          "t": 8,
+          "xs": [
+            12
+          ],
+          "coefficient": 18
+        },
+        {
+          "t": 9,
+          "xs": [
+            2,
+            9
+          ],
+          "coefficient": 16
+        },
+        {
+          "t": 9,
+          "xs": [
+            5,
+            6
+          ],
+          "coefficient": 6
+        },
+        {
+          "t": 9,
+          "xs": [
+            11
+          ],
+          "coefficient": 6
+        },
+        {
+          "t": 10,
+          "xs": [
+            2,
+            2,
+            6
+          ],
+          "coefficient": 6
+        },
+        {
+          "t": 10,
+          "xs": [
+            2,
+            8
+          ],
+          "coefficient": 8
+        },
+        {
+          "t": 10,
+          "xs": [
+            5,
+            5
+          ],
+          "coefficient": 3
+        },
+        {
+          "t": 11,
+          "xs": [
+            2,
+            2,
+            5
+          ],
+          "coefficient": 6
+        },
+        {
+          "t": 12,
+          "xs": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "coefficient": 1
+        }
+      ]
+    }
+  ],
+  "buckets": [
+    {
+      "n": 0,
+      "loops": [],
+      "generated": 1,
+      "processed": 1,
+      "simple_processed": 1,
+      "multiplicity_two_processed": 0,
+      "equal_polynomial_hits": 0,
+      "unique_polynomials": 1,
+      "complete": true
+    },
+    {
+      "n": 1,
+      "loops": [
+        0
+      ],
+      "generated": 1,
+      "processed": 1,
+      "simple_processed": 1,
+      "multiplicity_two_processed": 0,
+      "equal_polynomial_hits": 0,
+      "unique_polynomials": 1,
+      "complete": true
+    },
+    {
+      "n": 1,
+      "loops": [
+        1
+      ],
+      "generated": 1,
+      "processed": 1,
+      "simple_processed": 1,
+      "multiplicity_two_processed": 0,
+      "equal_polynomial_hits": 0,
+      "unique_polynomials": 1,
+      "complete": true
+    },
+    {
+      "n": 1,
+      "loops": [
+        2
+      ],
+      "generated": 1,
+      "processed": 1,
+      "simple_processed": 1,
+      "multiplicity_two_processed": 0,
+      "equal_polynomial_hits": 0,
+      "unique_polynomials": 1,
+      "complete": true
+    },
+    {
+      "n": 2,
+      "loops": [
+        0,
+        0
+      ],
+      "generated": 3,
+      "processed": 3,
+      "simple_processed": 2,
+      "multiplicity_two_processed": 1,
+      "equal_polynomial_hits": 0,
+      "unique_polynomials": 3,
+      "complete": true
+    },
+    {
+      "n": 2,
+      "loops": [
+        0,
+        1
+      ],
+      "generated": 3,
+      "processed": 3,
+      "simple_processed": 2,
+      "multiplicity_two_processed": 1,
+      "equal_polynomial_hits": 0,
+      "unique_polynomials": 3,
+      "complete": true
+    },
+    {
+      "n": 2,
+      "loops": [
+        0,
+        2
+      ],
+      "generated": 3,
+      "processed": 3,
+      "simple_processed": 2,
+      "multiplicity_two_processed": 1,
+      "equal_polynomial_hits": 0,
+      "unique_polynomials": 3,
+      "complete": true
+    },
+    {
+      "n": 2,
+      "loops": [
+        1,
+        1
+      ],
+      "generated": 3,
+      "processed": 3,
+      "simple_processed": 2,
+      "multiplicity_two_processed": 1,
+      "equal_polynomial_hits": 0,
+      "unique_polynomials": 3,
+      "complete": true
+    },
+    {
+      "n": 2,
+      "loops": [
+        1,
+        2
+      ],
+      "generated": 3,
+      "processed": 3,
+      "simple_processed": 2,
+      "multiplicity_two_processed": 1,
+      "equal_polynomial_hits": 0,
+      "unique_polynomials": 3,
+      "complete": true
+    },
+    {
+      "n": 2,
+      "loops": [
+        2,
+        2
+      ],
+      "generated": 3,
+      "processed": 3,
+      "simple_processed": 2,
+      "multiplicity_two_processed": 1,
+      "equal_polynomial_hits": 0,
+      "unique_polynomials": 3,
+      "complete": true
+    },
+    {
+      "n": 3,
+      "loops": [
+        0,
+        0,
+        0
+      ],
+      "generated": 27,
+      "processed": 27,
+      "simple_processed": 8,
+      "multiplicity_two_processed": 19,
+      "equal_polynomial_hits": 17,
+      "unique_polynomials": 10,
+      "complete": true
+    },
+    {
+      "n": 3,
+      "loops": [
+        0,
+        0,
+        1
+      ],
+      "generated": 27,
+      "processed": 27,
+      "simple_processed": 8,
+      "multiplicity_two_processed": 19,
+      "equal_polynomial_hits": 9,
+      "unique_polynomials": 18,
+      "complete": true
+    },
+    {
+      "n": 3,
+      "loops": [
+        0,
+        0,
+        2
+      ],
+      "generated": 27,
+      "processed": 27,
+      "simple_processed": 8,
+      "multiplicity_two_processed": 19,
+      "equal_polynomial_hits": 9,
+      "unique_polynomials": 18,
+      "complete": true
+    },
+    {
+      "n": 3,
+      "loops": [
+        0,
+        1,
+        1
+      ],
+      "generated": 27,
+      "processed": 27,
+      "simple_processed": 8,
+      "multiplicity_two_processed": 19,
+      "equal_polynomial_hits": 9,
+      "unique_polynomials": 18,
+      "complete": true
+    },
+    {
+      "n": 3,
+      "loops": [
+        0,
+        1,
+        2
+      ],
+      "generated": 27,
+      "processed": 27,
+      "simple_processed": 8,
+      "multiplicity_two_processed": 19,
+      "equal_polynomial_hits": 0,
+      "unique_polynomials": 27,
+      "complete": true
+    },
+    {
+      "n": 3,
+      "loops": [
+        0,
+        2,
+        2
+      ],
+      "generated": 27,
+      "processed": 27,
+      "simple_processed": 8,
+      "multiplicity_two_processed": 19,
+      "equal_polynomial_hits": 9,
+      "unique_polynomials": 18,
+      "complete": true
+    },
+    {
+      "n": 3,
+      "loops": [
+        1,
+        1,
+        1
+      ],
+      "generated": 27,
+      "processed": 27,
+      "simple_processed": 8,
+      "multiplicity_two_processed": 19,
+      "equal_polynomial_hits": 17,
+      "unique_polynomials": 10,
+      "complete": true
+    },
+    {
+      "n": 3,
+      "loops": [
+        1,
+        1,
+        2
+      ],
+      "generated": 27,
+      "processed": 27,
+      "simple_processed": 8,
+      "multiplicity_two_processed": 19,
+      "equal_polynomial_hits": 9,
+      "unique_polynomials": 18,
+      "complete": true
+    },
+    {
+      "n": 3,
+      "loops": [
+        1,
+        2,
+        2
+      ],
+      "generated": 27,
+      "processed": 27,
+      "simple_processed": 8,
+      "multiplicity_two_processed": 19,
+      "equal_polynomial_hits": 9,
+      "unique_polynomials": 18,
+      "complete": true
+    },
+    {
+      "n": 3,
+      "loops": [
+        2,
+        2,
+        2
+      ],
+      "generated": 27,
+      "processed": 27,
+      "simple_processed": 8,
+      "multiplicity_two_processed": 19,
+      "equal_polynomial_hits": 17,
+      "unique_polynomials": 10,
+      "complete": true
+    },
+    {
+      "n": 4,
+      "loops": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "generated": 729,
+      "processed": 729,
+      "simple_processed": 64,
+      "multiplicity_two_processed": 665,
+      "equal_polynomial_hits": 663,
+      "unique_polynomials": 66,
+      "complete": true
+    },
+    {
+      "n": 4,
+      "loops": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "generated": 729,
+      "processed": 729,
+      "simple_processed": 64,
+      "multiplicity_two_processed": 665,
+      "equal_polynomial_hits": 564,
+      "unique_polynomials": 165,
+      "complete": true
+    },
+    {
+      "n": 4,
+      "loops": [
+        0,
+        0,
+        0,
+        2
+      ],
+      "generated": 729,
+      "processed": 729,
+      "simple_processed": 64,
+      "multiplicity_two_processed": 665,
+      "equal_polynomial_hits": 564,
+      "unique_polynomials": 165,
+      "complete": true
+    },
+    {
+      "n": 4,
+      "loops": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "generated": 729,
+      "processed": 729,
+      "simple_processed": 64,
+      "multiplicity_two_processed": 665,
+      "equal_polynomial_hits": 486,
+      "unique_polynomials": 243,
+      "complete": true
+    },
+    {
+      "n": 4,
+      "loops": [
+        0,
+        0,
+        1,
+        2
+      ],
+      "generated": 729,
+      "processed": 729,
+      "simple_processed": 64,
+      "multiplicity_two_processed": 665,
+      "equal_polynomial_hits": 324,
+      "unique_polynomials": 405,
+      "complete": true
+    },
+    {
+      "n": 4,
+      "loops": [
+        0,
+        0,
+        2,
+        2
+      ],
+      "generated": 729,
+      "processed": 729,
+      "simple_processed": 64,
+      "multiplicity_two_processed": 665,
+      "equal_polynomial_hits": 486,
+      "unique_polynomials": 243,
+      "complete": true
+    },
+    {
+      "n": 4,
+      "loops": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "generated": 729,
+      "processed": 729,
+      "simple_processed": 64,
+      "multiplicity_two_processed": 665,
+      "equal_polynomial_hits": 564,
+      "unique_polynomials": 165,
+      "complete": true
+    },
+    {
+      "n": 4,
+      "loops": [
+        0,
+        1,
+        1,
+        2
+      ],
+      "generated": 729,
+      "processed": 729,
+      "simple_processed": 64,
+      "multiplicity_two_processed": 665,
+      "equal_polynomial_hits": 324,
+      "unique_polynomials": 405,
+      "complete": true
+    },
+    {
+      "n": 4,
+      "loops": [
+        0,
+        1,
+        2,
+        2
+      ],
+      "generated": 729,
+      "processed": 729,
+      "simple_processed": 64,
+      "multiplicity_two_processed": 665,
+      "equal_polynomial_hits": 324,
+      "unique_polynomials": 405,
+      "complete": true
+    },
+    {
+      "n": 4,
+      "loops": [
+        0,
+        2,
+        2,
+        2
+      ],
+      "generated": 729,
+      "processed": 729,
+      "simple_processed": 64,
+      "multiplicity_two_processed": 665,
+      "equal_polynomial_hits": 564,
+      "unique_polynomials": 165,
+      "complete": true
+    },
+    {
+      "n": 4,
+      "loops": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "generated": 729,
+      "processed": 729,
+      "simple_processed": 64,
+      "multiplicity_two_processed": 665,
+      "equal_polynomial_hits": 663,
+      "unique_polynomials": 66,
+      "complete": true
+    },
+    {
+      "n": 4,
+      "loops": [
+        1,
+        1,
+        1,
+        2
+      ],
+      "generated": 729,
+      "processed": 729,
+      "simple_processed": 64,
+      "multiplicity_two_processed": 665,
+      "equal_polynomial_hits": 564,
+      "unique_polynomials": 165,
+      "complete": true
+    },
+    {
+      "n": 4,
+      "loops": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "generated": 729,
+      "processed": 729,
+      "simple_processed": 64,
+      "multiplicity_two_processed": 665,
+      "equal_polynomial_hits": 486,
+      "unique_polynomials": 243,
+      "complete": true
+    },
+    {
+      "n": 4,
+      "loops": [
+        1,
+        2,
+        2,
+        2
+      ],
+      "generated": 729,
+      "processed": 729,
+      "simple_processed": 64,
+      "multiplicity_two_processed": 665,
+      "equal_polynomial_hits": 564,
+      "unique_polynomials": 165,
+      "complete": true
+    },
+    {
+      "n": 4,
+      "loops": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "generated": 729,
+      "processed": 729,
+      "simple_processed": 64,
+      "multiplicity_two_processed": 665,
+      "equal_polynomial_hits": 663,
+      "unique_polynomials": 66,
+      "complete": true
+    }
+  ],
+  "counts": {
+    "generated": 11227,
+    "recursive_completed": 11227,
+    "forest_completed": 292,
+    "processed": 11227,
+    "pilot_agreements": 292,
+    "exact_table_lookups": 11227,
+    "equal_polynomial_hits": 7908,
+    "degree_comparisons": 7908,
+    "unique_polynomials": 3319,
+    "evaluation_calls_started": 11591,
+    "evaluation_calls_completed": 11591,
+    "recursive_calls_started": 11263,
+    "recursive_calls_completed": 11263,
+    "forest_calls_started": 328,
+    "forest_calls_completed": 328
+  },
+  "last_generated_cursor": {
+    "n": 4,
+    "loops": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "phase": "multiplicity_two",
+    "nonloop_vector": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  "last_processed_cursor": {
+    "n": 4,
+    "loops": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "phase": "multiplicity_two",
+    "nonloop_vector": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  "pending_evaluation": null,
+  "candidate": null,
+  "pilot_and_stress_passed": true,
+  "rss_observations": 46710,
+  "peak_rss_raw": 20905984,
+  "stage_seconds": {
+    "preflight": 0.088362542,
+    "definition_controls": 0.0008684169999999963,
+    "pilot_and_stress": 0.054517208,
+    "n4_search": 2.1318006670000003
+  },
+  "limits": [
+    "Finite experimental evidence only; no theorem, solution, priority or KPI claim.",
+    "No independent semantic review or renewed literature/priority search in this probe.",
+    "Candidate verification, if successful here, still requires a later separately bounded independent definition-derived evaluation and renewed source/reuse checks."
+  ],
+  "preparation_seconds": 346.4487040042877,
+  "implementation_sha256": "734796a8a4ebc285eab96adb49db58aa083b9c612f5e10d3d31b9aa917d726ca",
+  "sealed_hashes_verified": true,
+  "outcome": "bounded_nonfinding",
+  "termination_reason": "fixed_range_exhausted",
+  "numeric_elapsed_seconds": 2.275548834,
+  "worker_elapsed_seconds_at_numeric_end": 348.64194679260254,
+  "peak_rss_mib": 19.9375,
+  "coverage_by_n": [
+    {
+      "n": 0,
+      "generated": 1,
+      "processed": 1,
+      "simple_processed": 1,
+      "multiplicity_two_processed": 0
+    },
+    {
+      "n": 1,
+      "generated": 3,
+      "processed": 3,
+      "simple_processed": 3,
+      "multiplicity_two_processed": 0
+    },
+    {
+      "n": 2,
+      "generated": 18,
+      "processed": 18,
+      "simple_processed": 12,
+      "multiplicity_two_processed": 6
+    },
+    {
+      "n": 3,
+      "generated": 270,
+      "processed": 270,
+      "simple_processed": 80,
+      "multiplicity_two_processed": 190
+    },
+    {
+      "n": 4,
+      "generated": 10935,
+      "processed": 10935,
+      "simple_processed": 960,
+      "multiplicity_two_processed": 9975
+    }
+  ],
+  "prefix_interpretation": "All cursors through last_processed_cursor in the stated bucket/phase order completed comparison. last_generated_cursor and pending_evaluation distinguish unfinished work. Controls/stress excluded from coverage.",
+  "finished_utc": "2026-09-15T15:06:19Z"
+}

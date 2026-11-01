@@ -560,6 +560,46 @@ verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]]
+# Searches exact ordinary-loopy-polynomial collisions in the admitted finite box.
+pattern = "docs/reports/loopy-degree-pilot/probe.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
+# Preserves the unchanged MIT ordinary-loopy-polynomial implementation.
+pattern = "docs/reports/loopy-degree-pilot/gp.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
+# Preserves the exact upstream MIT notice.
+pattern = "docs/reports/loopy-degree-pilot/LICENSE.txt"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
+# Records finite exact coverage, controls, resource observations and any candidate.
+pattern = "docs/reports/loopy-degree-pilot/results.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
 # Supplies prime-corner ordering and constants to the slab search tools.
 pattern = "docs/reports/prime-slab-corner-order-0909.json"
 kind = "data"
