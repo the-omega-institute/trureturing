@@ -168,8 +168,6 @@ theorem count_erase_one (S : Finset ℕ) (h1 : 1 ∈ S) :
   have h := count_insert_one (S.erase 1) (Finset.notMem_erase 1 S)
   simpa only [Finset.insert_erase h1] using h.symm
 
-theorem count_nonnegative (S : Finset ℕ) : 0 ≤ count S := Nat.zero_le _
-
 /-- Exact enumeration of the two occupied-site branches; no spectral premise is used. -/
 theorem sum_localCount (S : Finset ℕ) (N : ℕ) (hN : 3 ≤ N)
     (hS : ∀ j ∈ S, j + 3 ≤ N) :
@@ -321,8 +319,6 @@ def M : Module.End ℂ Fock where
   map_add' := modeSum_add
   map_smul' := modeSum_smul
 
-theorem M_eq_modeSum (v : Fock) : M v = ∑ᶠ k : ℕ, U k v := rfl
-
 theorem M_eq_sum (v : Fock) (N : ℕ) (hN : capture v ≤ N) :
     M v = ∑ k ∈ Finset.range N, U k v := modeSum_eq_sum v N hN
 
@@ -447,11 +443,6 @@ theorem P_coefficient (v : Fock) (S : Finset ℕ) :
   rw [P, diagonal_coefficient]
   split_ifs <;> simp
 
-theorem invM_coefficient (v : Fock) (S : Finset ℕ) :
-    invM v S = if count S = 0 then 0 else (count S : ℂ)⁻¹ * v S := by
-  rw [invM, diagonal_coefficient]
-  split_ifs <;> simp
-
 theorem M_mul_invM : M * invM = 1 - P := by
   apply end_ext
   intro S
@@ -468,13 +459,6 @@ theorem invM_mul_M : invM * M = 1 - P := by
   · have hc : (count S : ℂ) ≠ 0 := by exact_mod_cast h
     simp [Module.End.mul_apply, M_ket, h, hc, smul_smul]
 
-theorem P_idempotent : P * P = P := by
-  apply end_ext
-  intro S
-  by_cases h : count S = 0 <;> simp [Module.End.mul_apply, h]
-
-theorem P_sq : P ^ 2 = P := by simpa only [pow_two] using P_idempotent
-
 theorem M_mul_P : M * P = 0 := by
   apply end_ext
   intro S
@@ -484,16 +468,6 @@ theorem P_mul_M : P * M = 0 := by
   apply end_ext
   intro S
   by_cases h : count S = 0 <;> simp [Module.End.mul_apply, M_ket, h]
-
-theorem invM_mul_P : invM * P = 0 := by
-  apply end_ext
-  intro S
-  by_cases h : count S = 0 <;> simp [Module.End.mul_apply, h]
-
-theorem P_mul_invM : P * invM = 0 := by
-  apply end_ext
-  intro S
-  by_cases h : count S = 0 <;> simp [Module.End.mul_apply, h]
 
 /-- Site 3 is uncounted: the full zero eigenspace has two, not one, basis states. -/
 theorem count_zero_iff (S : Finset ℕ) :
@@ -578,11 +552,6 @@ theorem full_kernel : LinearMap.ker M =
 
 @[simp] theorem b0_down : b 0 (ket {1}) = 0 := by
   simp [annihilate_ket]
-
-@[simp] theorem b0_other_ground : b 0 (ket {1, 3}) = -ket {1} := by
-  have hf : ({1, 3} : Finset ℕ).filter (· < 3) = {1} := by decide
-  have he : ({1, 3} : Finset ℕ).erase 3 = {1} := by decide
-  simp [annihilate_ket, phase, lowerCount, hf, he]
 
 /-- Literal relative condition: every coefficient occupying site 3 vanishes. -/
 theorem b0_eq_zero_iff_coefficients (v : Fock) :
