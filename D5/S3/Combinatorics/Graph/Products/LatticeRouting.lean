@@ -9,7 +9,6 @@ import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Combinatorics.SimpleGraph.Maps
 import Mathlib.Combinatorics.SimpleGraph.Prod
 import Mathlib.Data.Int.NatAbs
-import Mathlib.Tactic.Ring.Basic
 import Mathlib.Tactic.SplitIfs
 import Lean.Elab.Tactic.Omega
 
@@ -23,6 +22,10 @@ abbrev Point := ℤ × ℤ
 
 def squareAdj (p q : Point) : Prop := |p.1 - q.1| + |p.2 - q.2| = 1
 
+instance (p q : Point) : Decidable (squareAdj p q) := by
+  unfold squareAdj
+  infer_instance
+
 theorem squareAdj_symm (p q : Point) : squareAdj p q ↔ squareAdj q p := by
   simp only [squareAdj, abs_sub_comm]
 
@@ -30,6 +33,8 @@ def neighbors (p : Point) : List Point :=
   [(p.1 + 1, p.2), (p.1 - 1, p.2), (p.1, p.2 + 1), (p.1, p.2 - 1)]
 
 theorem squareAdj_iff_mem (p q : Point) : squareAdj p q ↔ q ∈ neighbors p := by
+  rcases p with ⟨px, py⟩
+  rcases q with ⟨qx, qy⟩
   simp only [squareAdj, neighbors, List.mem_cons, List.not_mem_nil, or_false,
     Prod.mk.injEq]
   simp only [abs_eq_max_neg, max_def]
@@ -145,8 +150,9 @@ theorem fill_spec (key : V → List Bool) (xs : List V) (t t' : Occupancy V)
       obtain ⟨hkeep', hall⟩ := ih u h
       refine ⟨fun q w hq => hkeep' q w (hkeep q w hq), ?_⟩
       intro b hb
-      rcases List.mem_cons.mp hb with rfl | hb
-      · exact hkeep' (key a) a hnew
+      rcases List.mem_cons.mp hb with hb | hb
+      · subst b
+        exact hkeep' (key a) a hnew
       · exact hall b hb
 
 end Occupancy
@@ -239,9 +245,9 @@ theorem rotation_adjacency (p q : Point) :
     kingAdj (rotate p) (rotate q) ↔ squareAdj p q := by
   have hid := rotation_identity (p.1 - q.1) (p.2 - q.2)
   have hx : (rotate p).1 - (rotate q).1 = (p.1 - q.1) + (p.2 - q.2) := by
-    dsimp [rotate]; ring
+    dsimp [rotate]; omega
   have hy : (rotate p).2 - (rotate q).2 = (p.1 - q.1) - (p.2 - q.2) := by
-    dsimp [rotate]; ring
+    dsimp [rotate]; omega
   simp only [kingAdj, squareAdj, hx, hy, hid]
 
 /-- Strong product: the union of categorical and box-product edges.
@@ -262,7 +268,8 @@ instance {V : Type u} {W : Type v} [DecidableEq V] [DecidableEq W]
     (G : SimpleGraph V) (H : SimpleGraph W) [DecidableRel G.Adj] [DecidableRel H.Adj] :
     DecidableRel (strongProduct G H).Adj := by
   intro x y
-  unfold strongProduct
+  change Decidable (((G.Adj x.1 y.1 ∧ x.2 = y.2) ∨
+    (H.Adj x.2 y.2 ∧ x.1 = y.1)) ∨ (G.Adj x.1 y.1 ∧ H.Adj x.2 y.2))
   infer_instance
 
 def finPoint {n m : ℕ} (p : Point)
@@ -294,8 +301,8 @@ theorem zeroBased_injective : Function.Injective zeroBased := by
 
 theorem kingAdj_zeroBased (p q : Point) :
     kingAdj (zeroBased p) (zeroBased q) ↔ kingAdj p q := by
-  have hx : (zeroBased p).1 - (zeroBased q).1 = p.1 - q.1 := by dsimp [zeroBased]; ring
-  have hy : (zeroBased p).2 - (zeroBased q).2 = p.2 - q.2 := by dsimp [zeroBased]; ring
+  have hx : (zeroBased p).1 - (zeroBased q).1 = p.1 - q.1 := by dsimp [zeroBased]; omega
+  have hy : (zeroBased p).2 - (zeroBased q).2 = p.2 - q.2 := by dsimp [zeroBased]; omega
   simp only [kingAdj, hx, hy]
 
 def oneBasedRectangleEmbedding {V : Type u} (G : SimpleGraph V) (c : V → Point)
@@ -304,20 +311,27 @@ def oneBasedRectangleEmbedding {V : Type u} (G : SimpleGraph V) (c : V → Point
     {n m : ℕ}
     (hb : ∀ v, 1 ≤ (rotate (c v)).1 ∧ (rotate (c v)).1 ≤ n ∧
       1 ≤ (rotate (c v)).2 ∧ (rotate (c v)).2 ≤ m) :
-    G ↪g strongProduct (SimpleGraph.pathGraph n) (SimpleGraph.pathGraph m) where
-  toFun v := finPoint (zeroBased (rotate (c v))) (by
+    G ↪g strongProduct (SimpleGraph.pathGraph n) (SimpleGraph.pathGraph m) := by
+  have bounds (v : V) :
+      0 ≤ (zeroBased (rotate (c v))).1 ∧ (zeroBased (rotate (c v))).1 < n ∧
+      0 ≤ (zeroBased (rotate (c v))).2 ∧ (zeroBased (rotate (c v))).2 < m := by
     have h := hb v
     dsimp [zeroBased]
-    omega)
-  inj' v w h := by
+    omega
+  let f (v : V) : Fin n × Fin m := finPoint (zeroBased (rotate (c v))) (bounds v)
+  have hf (v : V) : (((f v).1.val : ℤ), ((f v).2.val : ℤ)) =
+      zeroBased (rotate (c v)) := finPoint_cast _ _
+  refine { toFun := f, inj' := ?_, map_rel_iff' := ?_ }
+  · intro v w h
     apply hinj
     apply rotate_injective
     apply zeroBased_injective
     have h' := congrArg (fun x : Fin n × Fin m => ((x.1.val : ℤ), (x.2.val : ℤ))) h
-    simpa only [finPoint_cast] using h'
-  map_rel_iff' := by
-    intro v w
-    rw [strong_paths_iff, finPoint_cast, finPoint_cast, kingAdj_zeroBased, rotation_adjacency]
+    exact (hf v).symm.trans (h'.trans (hf w))
+  · intro v w
+    change (strongProduct (SimpleGraph.pathGraph n) (SimpleGraph.pathGraph m)).Adj
+      (f v) (f w) ↔ G.Adj v w
+    rw [strong_paths_iff, hf, hf, kingAdj_zeroBased, rotation_adjacency]
     exact (hadj v w).symm
 
 end D5.S3.Combinatorics.Graph.Products.LatticeRouting

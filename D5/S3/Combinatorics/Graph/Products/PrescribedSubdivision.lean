@@ -8,6 +8,8 @@
 import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Combinatorics.SimpleGraph.Maps
 import Mathlib.Data.Fintype.Sigma
+import Mathlib.Data.Finset.Sort
+import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Tactic.SplitIfs
 import Lean.Elab.Tactic.Omega
 
@@ -32,6 +34,8 @@ structure Data (V : Type u) (E : Type v) where
   different : ∀ e, left e ≠ right e
 
 variable {V : Type u} {E : Type v} (D : Data V E)
+
+namespace Data
 
 abbrev Vertex := V ⊕ (Σ e : E, Fin (3 * D.k e))
 abbrev Slot := Σ e : E, Fin (3 * D.k e + 1)
@@ -105,13 +109,8 @@ def pathVertex (e : E) (i : Fin (3 * D.k e + 2)) : D.Vertex :=
 
 @[simp] theorem pathVertex_inner (e : E) (i : Fin (3 * D.k e)) :
     D.pathVertex e ⟨i.val + 1, by omega⟩ = .inr ⟨e, i⟩ := by
-  simp only [pathVertex]
-  split_ifs with h0 hL
-  · omega
-  · omega
-  · congr 2
-    apply Fin.ext
-    omega
+  have hi := i.isLt
+  simp [pathVertex, show i.val ≠ 3 * D.k e by omega]
 
 /-- All path vertices are distinct, including the old endpoints. -/
 theorem pathVertex_injective (e : E) : Function.Injective (D.pathVertex e) := by
@@ -120,18 +119,16 @@ theorem pathVertex_injective (e : E) : Function.Injective (D.pathVertex e) := by
   have hi := i.isLt
   have hj := j.isLt
   unfold pathVertex at h
-  split_ifs at h <;> simp_all only [Sum.inl.injEq, inner_eq_iff,
-    Sum.inl_ne_inr, Sum.inr_ne_inl]
-  all_goals apply Fin.ext; omega
+  split_ifs at h <;> simp_all [inner_eq_iff] <;> apply Fin.ext <;> omega
 
 /-- An oriented successor edge, with no quotient or implicit fresh-vertex identification. -/
 def edgePair (s : D.Slot) : D.Vertex × D.Vertex :=
-  let e := s.1
-  let i := s.2.val
-  ((if h0 : i = 0 then .inl (D.left e)
-    else .inr ⟨e, ⟨i - 1, by have := s.2.isLt; omega⟩⟩),
-   (if hL : i = 3 * D.k e then .inl (D.right e)
-    else .inr ⟨e, ⟨i, by have := s.2.isLt; omega⟩⟩))
+  match s with
+  | ⟨e, i⟩ =>
+    ((if h0 : i.val = 0 then .inl (D.left e)
+      else .inr ⟨e, ⟨i.val - 1, by have := i.isLt; omega⟩⟩),
+     (if hL : i.val = 3 * D.k e then .inl (D.right e)
+      else .inr ⟨e, ⟨i.val, by have := i.isLt; omega⟩⟩))
 
 theorem edgePair_path (s : D.Slot) :
     D.edgePair s =
@@ -164,15 +161,16 @@ theorem arc_iff_slot (a b : D.Vertex) :
       | inl b => exact False.elim h
       | inr b =>
         rcases b with ⟨e, i⟩
+        have hib := i.isLt
         rcases h with ⟨ha, hi⟩
         refine ⟨⟨e, ⟨0, by omega⟩⟩, ?_⟩
         have hp := D.positive e
         simp only [edgePair, ha]
         dsimp
-        split_ifs <;> simp_all only [Prod.mk.injEq, Sum.inl.injEq,
-          inner_eq_iff, Sum.inl_ne_inr, Sum.inr_ne_inl] <;> omega
+        split_ifs <;> simp_all [Fin.ext_iff] <;> omega
     | inr a =>
       rcases a with ⟨e, i⟩
+      have hib := i.isLt
       cases b with
       | inl b =>
         rcases h with ⟨hb, hi⟩
@@ -180,8 +178,7 @@ theorem arc_iff_slot (a b : D.Vertex) :
         refine ⟨⟨e, ⟨3 * D.k e, by omega⟩⟩, ?_⟩
         simp only [edgePair, hb]
         dsimp
-        split_ifs <;> simp_all only [Prod.mk.injEq, Sum.inl.injEq,
-          inner_eq_iff, Sum.inl_ne_inr, Sum.inr_ne_inl] <;> omega
+        split_ifs <;> simp_all [Fin.ext_iff] <;> omega
       | inr b =>
         rcases b with ⟨f, j⟩
         rcases h with ⟨hef, hij⟩
@@ -211,7 +208,9 @@ theorem edgePair_injective : Function.Injective D.edgePair := by
     · have hef : e = f := by
         have he0 : (0 : ℕ) ≠ 3 * D.k e := by omega
         have hf0 : (0 : ℕ) ≠ 3 * D.k f := by omega
-        simpa [edgePair, hi0, hj0, he0, hf0] using hs
+        have hh : e = f ∧ (0 : ℕ) = 0 := by
+          simpa only [edgePair, hi0, hj0, he0, hf0, ↓reduceDIte, inner_eq_iff] using hs
+        exact hh.1
       subst f
       congr 1
       exact Fin.ext (by omega)
@@ -231,7 +230,7 @@ theorem edgePair_injective : Function.Injective D.edgePair := by
         simpa only [D.edgePair_path] using hf
       have hpos := D.pathVertex_injective e hpath
       congr 1
-      exact Fin.ext (congrArg Fin.val hpos)
+      exact Fin.ext (congrArg (fun p : Fin (3 * D.k e + 2) => p.val) hpos)
 
 def edge (s : D.Slot) : Sym2 D.Vertex := s((D.edgePair s).1, (D.edgePair s).2)
 
@@ -248,11 +247,14 @@ theorem edge_injective : Function.Injective D.edge := by
     exact D.arc_asymmetric _ _ hs hts
 
 section Finite
-variable [Fintype V] [Fintype E] [DecidableEq V] [DecidableEq E]
+variable [Fintype V] [Fintype E]
+
+section Enumeration
+variable [LinearOrder V] [LinearOrder E]
 
 def vertices : List D.Vertex :=
-  (Finset.univ.toList.map Sum.inl) ++
-    ((Finset.univ : Finset E).toList.flatMap fun e =>
+  ((Finset.univ : Finset V).sort (· ≤ ·)).map Sum.inl ++
+    (((Finset.univ : Finset E).sort (· ≤ ·)).flatMap fun e =>
       (List.finRange (3 * D.k e)).map fun i => Sum.inr ⟨e, i⟩)
 
 theorem mem_vertices (a : D.Vertex) : a ∈ D.vertices := by
@@ -261,7 +263,7 @@ theorem mem_vertices (a : D.Vertex) : a ∈ D.vertices := by
   | inr a => rcases a with ⟨e, i⟩; simp [vertices]
 
 def slots : List D.Slot :=
-  (Finset.univ : Finset E).toList.flatMap fun e =>
+  ((Finset.univ : Finset E).sort (· ≤ ·)).flatMap fun e =>
     (List.finRange (3 * D.k e + 1)).map fun i => ⟨e, i⟩
 
 theorem mem_slots (s : D.Slot) : s ∈ D.slots := by
@@ -283,15 +285,20 @@ theorem adj_iff_edgePairs (a b : D.Vertex) :
     · exact Or.inl ((D.arc_iff_slot a b).mpr ⟨s, hs⟩)
     · exact Or.inr ((D.arc_iff_slot b a).mpr ⟨s, hs⟩)
 
+end Enumeration
+
 theorem card_vertices : Fintype.card D.Vertex = Fintype.card V + ∑ e, 3 * D.k e := by
   simp [Vertex, Fintype.card_sum, Fintype.card_sigma]
+
+variable [DecidableEq V] [DecidableEq E]
 
 theorem edgeFinset_eq : D.graph.edgeFinset = Finset.univ.image D.edge := by
   ext z
   induction z using Sym2.inductionOn with
   | hf a b =>
-    simp only [SimpleGraph.mem_edgeFinset, SimpleGraph.mem_edgeSet,
-      graph, Finset.mem_image, Finset.mem_univ, true_and, edge]
+    rw [SimpleGraph.mem_edgeFinset, SimpleGraph.mem_edgeSet]
+    change (D.Arc a b ∨ D.Arc b a) ↔ _
+    simp only [Finset.mem_image, Finset.mem_univ, true_and, edge]
     constructor
     · rintro (h | h)
       · obtain ⟨s, hs⟩ := (D.arc_iff_slot a b).mp h
@@ -314,4 +321,5 @@ theorem subdivision_count : (∑ e, 3 * D.k e) = 3 * ∑ e, D.k e := by
   rw [Finset.mul_sum]
 
 end Finite
+end Data
 end D5.S3.Combinatorics.Graph.Products.PrescribedSubdivision

@@ -112,11 +112,11 @@ theorem step_last (a b : Point)
   · subst z
     simp only [step, segmentLength, sub_self, Int.natAbs_zero, zero_add,
       sign_zero, mul_zero, add_zero, signed_natAbs]
-    congr 1 <;> ring
+    congr 1 <;> omega
   · subst w
     simp only [step, segmentLength, sub_self, Int.natAbs_zero, add_zero,
       sign_zero, mul_zero, signed_natAbs]
-    congr 1 <;> ring
+    congr 1 <;> omega
 
 /-- An equivalent right-closed convention, exactly the scientific verifier's loop. -/
 def verifierFrom (a : Point) : List Point → List Point

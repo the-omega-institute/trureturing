@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Products;
 
 internal sealed class PrescribedSubdivisionDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/Graph/Products/PrescribedSubdivision.";
+    private const string Prefix = "D5/S3/Combinatorics/Graph/Products/PrescribedSubdivision/Data.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Explicit fresh vertices, endpoint incidence and edge counts for prescribed triple subdivisions.",
         H("Prescribed graph subdivisions"), Blocks(
