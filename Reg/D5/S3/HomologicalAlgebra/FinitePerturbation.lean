@@ -77,7 +77,7 @@ private def sample : Parameters.{u,v,w} := by
     pd := by simp
     contraction := by
       ext x
-    change (0 : ℤ) = x.down - x.down
+      change (0 : ℤ) = x.down - x.down
       simp
     hh := by simp
     hi := by simp

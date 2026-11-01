@@ -51,7 +51,7 @@ example : delta ≠ 0 ∧ model.I 2 (1,0) = ((1,0),(-1,0)) ∧
     model.transferred 2 (1,0) = (0,1) ∧ model.transferred 2 ≠ 0 := by
   have bi := binding
   have lift : model.I 2 (1,0) = ((1,0),(-1,0)) := by
-    simp [I,K,inversePolynomial,Finset.sum_range_succ,bi.2.1,bi.2.2.1,bi.2.2.2.1,h,delta,i]
+    simp [I,K,inversePolynomial,Finset.sum_range_succ,pow_two,bi.2.1,bi.2.2.1,bi.2.2.2.1,h,delta,i]
   have transfer : model.transferred 2 (1,0) = (0,1) := by
     simp [transferred,lift,bi.2.2.1,bi.2.2.2.2,delta,p]
   refine ⟨?_,lift,transfer,?_⟩
@@ -74,7 +74,7 @@ example : model.D ≠ model.d0 ∧ model.I 2 ≠ model.i ∧
     norm_num [D,bi.1,bi.2.2.1,d0,delta] at val
   · intro eq
     have val := DFunLike.congr_fun eq (1,0)
-    norm_num [I,K,inversePolynomial,Finset.sum_range_succ,
+    norm_num [I,K,inversePolynomial,Finset.sum_range_succ,pow_two,
       bi.2.1,bi.2.2.1,bi.2.2.2.1,h,delta,i] at val
   · intro eq
     have val := DFunLike.congr_fun eq ((1,0),(0,0))
@@ -86,13 +86,13 @@ example : model.I 2 (0,1) = ((0,1),(0,0)) ∧ model.P 2 = p ∧
     model.H 2 = h ∧ model.transferred 2 (0,1) = 0 := by
   have bi := binding
   refine ⟨?_,?_,?_,?_⟩
-  · simp [I,K,inversePolynomial,Finset.sum_range_succ,
+  · simp [I,K,inversePolynomial,Finset.sum_range_succ,pow_two,
       bi.2.1,bi.2.2.1,bi.2.2.2.1,h,delta,i]
-  · ext x <;> simp [P,J,inversePolynomial,Finset.sum_range_succ,
+  · ext x <;> simp [P,J,inversePolynomial,Finset.sum_range_succ,pow_two,
       bi.2.1,bi.2.2.1,bi.2.2.2.2,h,delta,p]
-  · ext x <;> simp [H,K,inversePolynomial,Finset.sum_range_succ,
+  · ext x <;> simp [H,K,inversePolynomial,Finset.sum_range_succ,pow_two,
       bi.2.1,bi.2.2.1,h,delta]
-  · simp [transferred,I,K,inversePolynomial,Finset.sum_range_succ,
+  · simp [transferred,I,K,inversePolynomial,Finset.sum_range_succ,pow_two,
       bi.2.1,bi.2.2.1,bi.2.2.2.1,bi.2.2.2.2,h,delta,i,p]
 
 set_option pp.universes true in
