@@ -86,7 +86,6 @@ private theorem high_a_adjacent_coordinates (a b s : ℕ) (hs : 2≤s)
       convert pow_monomial (a-1) 5 (s-2) (a-3*s) (0) 3 1 0
         (by omega) using 1 <;> norm_num <;> ring
     · change (2:ℤ)^(b-a-1)=1
-      dsimp only [u,v,w]
       convert pow_monomial (b-a-1) 0 (s-2) (a-3*s) (0) 0 0 0
         (by omega) using 1 <;> norm_num <;> ring
   have he : (epsilon a b:ℤ)=chartEpsilon 0 u v w := by
@@ -159,8 +158,6 @@ private theorem high_a_separated_coordinates (a b s : ℕ) (hs : 2≤s)
     simp only [epsilon,if_neg hne,Nat.cast_pow,Nat.cast_ofNat]
     change (2:ℤ)^(b-a-2)=w
     dsimp only [u,v,w]
-    convert pow_monomial (b-a-2) 0 (s-2) (a-3*s) (b-a-2) 0 0 1
-      (by omega) using 1 <;> norm_num <;> ring
   have hd : (cutDelta b s:ℤ)=chartDelta 1 := by
     have hbhigh : 3*s+1≤b := by omega
     simp [cutDelta,chartDelta,hbhigh]
@@ -291,7 +288,6 @@ private theorem low_b_adjacent_coordinates (a b s : ℕ) (hs : 2≤s)
       convert pow_monomial (a-1) 7 (a-2*s-2) (3*s-b) (0) 3 2 0
         (by omega) using 1 <;> norm_num <;> ring
     · change (2:ℤ)^(b-a-1)=1
-      dsimp only [u,v,w]
       convert pow_monomial (b-a-1) 0 (a-2*s-2) (3*s-b) (0) 0 0 0
         (by omega) using 1 <;> norm_num <;> ring
   have he : (epsilon a b:ℤ)=chartEpsilon 3 u v w := by
@@ -364,8 +360,6 @@ private theorem low_b_separated_coordinates (a b s : ℕ) (hs : 2≤s)
     simp only [epsilon,if_neg hne,Nat.cast_pow,Nat.cast_ofNat]
     change (2:ℤ)^(b-a-2)=v
     dsimp only [u,v,w]
-    convert pow_monomial (b-a-2) 0 (a-2*s-2) (b-a-2) (3*s-b) 0 1 0
-      (by omega) using 1 <;> norm_num <;> ring
   have hd : (cutDelta b s:ℤ)=chartDelta 4 := by
     have hblow : ¬3*s+1≤b := by omega
     simp [cutDelta,chartDelta,hblow]
@@ -414,7 +408,6 @@ private theorem a_eq_s_plus1_coordinates (a b s : ℕ) (hs : 2≤s)
       convert pow_monomial (b-2*s) 3 (s-2) (b-3*s-1) (0) 1 1 0
         (by omega) using 1 <;> norm_num <;> ring
     · change (2:ℤ)^(a-s-1)=1
-      dsimp only [u,v,w]
       convert pow_monomial (a-s-1) 0 (s-2) (b-3*s-1) (0) 0 0 0
         (by omega) using 1 <;> norm_num <;> ring
     · change (2:ℤ)^(b-1)=64*u^3*v
