@@ -10,7 +10,7 @@ import Mathlib.Analysis.Normed.Module.Connected
 import Mathlib.Algebra.Category.ModuleCat.Abelian
 import Mathlib.Algebra.Category.ModuleCat.Colimits
 import Mathlib.Algebra.Module.Torsion.Free
-import Mathlib.Tactic
+import Mathlib.Tactic.NormNum
 
 noncomputable section
 open CategoryTheory Limits AlgebraicTopology Metric Module
