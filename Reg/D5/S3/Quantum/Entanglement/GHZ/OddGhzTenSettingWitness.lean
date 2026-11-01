@@ -212,10 +212,10 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "arg", "fn"]
+      path := #["body", "body", "body", "body", "fn", "arg"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+      functionOperand := false
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

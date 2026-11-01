@@ -67,10 +67,10 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "arg", "fn", "arg", "arg", "body", "fn"]
+      path := #["body", "body", "body", "arg", "fn", "arg", "arg", "body"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+      functionOperand := false
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
