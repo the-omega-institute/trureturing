@@ -110,7 +110,9 @@ private def wordEquiv : Word 3 3 ≃ Fin 3 × Fin 3 × Fin 3 where
 private lemma sum_words {α : Type*} [AddCommMonoid α] (f : Word 3 3 → α) :
     ∑ x, f x = ∑ i : Fin 3, ∑ j : Fin 3, ∑ k : Fin 3, f ![i, j, k] := by
   classical
-  simpa [wordEquiv, Fintype.sum_prod_type] using (wordEquiv.symm.sum_comp f).symm
+  have h := (wordEquiv.symm.sum_comp f).symm
+  rw [wordEquiv] at h
+  simpa [Fintype.sum_prod_type] using h
 
 private lemma cs {ι : Type*} [Fintype ι] (u v : ι → ℂ) :
     Complex.normSq (star u ⬝ᵥ v) ≤
@@ -122,7 +124,8 @@ private lemma cs {ι : Type*} [Fintype ι] (u v : ι → ℂ) :
 private lemma expectation_rank_one (φ ψ : Word 3 3 → ℂ) :
     expectation (rankOneDensity φ) ψ = Complex.normSq (star φ ⬝ᵥ ψ) := by
   classical
-  simp only [expectation, rankOneDensity, vecMulVec_mulVec, op_smul_eq_smul,
+  rw [expectation]
+  simp only [rankOneDensity, vecMulVec_mulVec, op_smul_eq_smul,
     dotProduct_smul, smul_eq_mul]
   rw [star_dotProduct ψ φ]
   simp [Complex.mul_conj]
@@ -153,7 +156,8 @@ private lemma support_expectation (ψ : Word 3 3 → ℂ) :
       ∑ x ∈ Finset.univ.filter (fun x : Word 3 3 => (Finset.univ.image x).card ≤ 2),
         Complex.normSq (ψ x) := by
   classical
-  simp only [expectation, supportProjector, mulVec_diagonal, dotProduct,
+  rw [expectation, supportProjector]
+  simp only [mulVec_diagonal, dotProduct,
     Pi.star_apply, Finset.sum_filter]
   rw [Complex.re_sum]
   apply Finset.sum_congr rfl
@@ -173,9 +177,10 @@ private lemma ghz_dot (ψ : Word 3 3 → ℂ) :
     star (ghz 3 3) ⬝ᵥ ψ =
       (Real.sqrt 3 : ℂ)⁻¹ * ∑ i : Fin 3, ψ (fun _ => i) := by
   classical
+  delta ghz
   have hc (i : Fin 3) : (![i, i, i] : Word 3 3) = (fun _ => i) := by
     funext k; fin_cases k <;> rfl
-  norm_num [dotProduct, sum_words, ghz, Fin.sum_univ_succ, Fin.exists_fin_succ,
+  norm_num [dotProduct, sum_words, Fin.sum_univ_succ,
     Fin.forall_fin_succ, Pi.star_apply, hc]
   ring
 
@@ -196,7 +201,7 @@ private lemma join_support (a : Finset (Fin 3)) (i j : Fin 3) :
   have h : Finset.univ.image (join a i j) ⊆ {i, j} := by
     intro x hx
     obtain ⟨k, _, rfl⟩ := Finset.mem_image.mp hx
-    simp only [join]
+    rw [join]
     split_ifs <;> simp
   exact (Finset.card_le_card h).trans (by by_cases h : i = j <;> simp [h])
 
@@ -223,7 +228,8 @@ private lemma ghz_supported (x : Word 3 3) :
     have he : x = fun _ => j := funext hj
     subst x
     simp [Finset.image_const]
-  · simp [ghz, h]
+  · delta ghz
+    simp [h]
 
 private lemma finite_ranks : trace (supportProjector 3 3) = 21 ∧ trace q = 6 := by
   classical
@@ -233,11 +239,15 @@ private lemma finite_ranks : trace (supportProjector 3 3) = 21 ∧ trace q = 6 :
     simpa [supportProjector, trace_diagonal, Finset.sum_boole] using
       congrArg (fun k : ℕ => (k : ℂ)) hc
   refine ⟨hp, ?_⟩
-  norm_num [q, trace_sub, hp, trace_one, Word]
+  rw [q]
+  norm_num [ trace_sub, hp, trace_one, Word]
 private lemma ghz_unit : IsUnit (ghz 3 3) := by
   classical
-  norm_num [IsUnit, sum_words, ghz, Fin.sum_univ_succ, Fin.exists_fin_succ,
-    Fin.forall_fin_succ, Complex.normSq_inv, Complex.normSq_ofReal, Real.sq_sqrt, Real.mul_self_sqrt]
+  delta ghz
+  simp only [Fin.exists_fin_succ]
+  norm_num [IsUnit, sum_words, Fin.sum_univ_succ,
+    Fin.forall_fin_succ, Complex.normSq_inv, Complex.normSq_ofReal, Real.sq_sqrt,
+    Real.mul_self_sqrt]
 private lemma projector_data :
     supportProjector 3 3 * supportProjector 3 3 = supportProjector 3 3 ∧
     supportProjector 3 3 * rankOneDensity (ghz 3 3) = rankOneDensity (ghz 3 3) ∧
@@ -245,9 +255,11 @@ private lemma projector_data :
     rankOneDensity (ghz 3 3) * rankOneDensity (ghz 3 3) = rankOneDensity (ghz 3 3) := by
   classical
   have hn : star (ghz 3 3) ⬝ᵥ ghz 3 3 = 1 := by
-    simpa [dotProduct, Pi.star_apply, Complex.star_def, ← Complex.normSq_eq_conj_mul_self,
-      ← map_sum] using congrArg (fun x : ℝ => (x : ℂ)) ghz_unit
-  refine ⟨?_, ?_, ?_, (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake (ghz 3 3) hn 1).1⟩
+    rw [D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.dot_star_self]
+    simpa only [← Complex.normSq_eq_norm_sq, Complex.ofReal_one] using
+      congrArg (fun x : ℝ => (x : ℂ)) ghz_unit
+  refine ⟨?_, ?_, ?_,
+    (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake (ghz 3 3) hn 1).1⟩
   · simp only [supportProjector, diagonal_mul_diagonal]
     congr 1
     funext x
@@ -286,12 +298,14 @@ private lemma witness_value : witnessValue 3 3 (3 / 8) = -(1 / 3) := by
   classical
   obtain ⟨_, _, hgp, hgg⟩ := projector_data
   have ht : trace (rankOneDensity (ghz 3 3)) = 1 := by rw [trace_rank_one, ghz_unit]; rfl
-  norm_num [witnessValue, noisyGhz, witnessOp, add_mul, mul_sub, sub_mul,
+  rw [witnessValue, noisyGhz]
+  norm_num [witnessOp, add_mul, mul_sub, sub_mul,
     Matrix.smul_mul, Matrix.mul_smul, smul_smul, trace_add, trace_sub, trace_smul,
     hgp, hgg, ht, finite_ranks.1, Complex.real_smul]
 private lemma basis_unit (x : Word 3 3) : IsUnit (basis x) := by
   classical
-  simp [IsUnit, basis, Pi.single_apply]
+  rw [IsUnit, basis]
+  simp [Pi.single_apply]
 private lemma zero_biseparable : IsBiseparable (basis (fun _ => 0)) := by
   classical
   refine ⟨basis_unit _, {0}, by simp, by decide,
@@ -314,18 +328,22 @@ private lemma zero_biseparable : IsBiseparable (basis (fun _ => 0)) := by
       simp_all
 private lemma test_unit : IsUnit testPsi := by
   classical
-  norm_num [IsUnit, sum_words, testPsi, Fin.sum_univ_succ, funext_iff,
-    Fin.forall_fin_succ, Complex.normSq_div, Complex.normSq_ofReal, Real.sq_sqrt, Real.mul_self_sqrt]
+  delta testPsi
+  norm_num [IsUnit, sum_words, Fin.sum_univ_succ, funext_iff,
+    Fin.forall_fin_succ, Complex.normSq_div, Complex.normSq_ofReal, Real.sq_sqrt,
+    Real.mul_self_sqrt]
 private lemma test_expectation : expectation (witnessOp 3 3) testPsi = -(1 / 3) := by
   classical
   have hp : expectation (supportProjector 3 3) testPsi = 1 := by
     have he (i : Fin 3) : (![i, i, i] : Word 3 3) = (fun _ => i) := by
       funext k; fin_cases k <;> rfl
-    norm_num [support_expectation, Finset.sum_filter, sum_words, testPsi,
+    delta testPsi
+    norm_num [support_expectation, Finset.sum_filter, sum_words,
       Fin.sum_univ_succ, he, Finset.image_const, funext_iff, Fin.forall_fin_succ,
       Complex.normSq_div, Complex.normSq_ofReal, Real.sq_sqrt, Real.mul_self_sqrt]
   have hs : (∑ i : Fin 3, testPsi (fun _ => i)) = 6 / (Real.sqrt 18 : ℂ) := by
-    norm_num [testPsi, Fin.sum_univ_succ, funext_iff, Fin.forall_fin_succ]
+    delta testPsi
+    norm_num [Fin.sum_univ_succ, funext_iff, Fin.forall_fin_succ]
     ring
   have hg := ghz_expectation testPsi
   rw [hs] at hg
@@ -334,7 +352,8 @@ private lemma test_expectation : expectation (witnessOp 3 3) testPsi = -(1 / 3) 
   linarith
 private lemma test_overlap : Complex.normSq (star (basis (fun _ => 0)) ⬝ᵥ testPsi) = 8 / 9 := by
   classical
-  norm_num [basis, dotProduct, Pi.single_apply, testPsi, Complex.normSq_div,
+  delta testPsi
+  norm_num [basis, dotProduct, Pi.single_apply, Complex.normSq_div,
     Complex.normSq_ofReal, Real.sq_sqrt, Real.mul_self_sqrt]
 
 private lemma witness_bounds (ψ : Word 3 3 → ℂ) (hψ : IsUnit ψ) :
@@ -385,6 +404,8 @@ private lemma epsilon_upper : epsilonO 3 3 (3 / 8) ≤ 1 / 9 := by
     rw [witness_value]
     linarith [hat_lower r]
 
+/-- The nine words constant on each side of a cut all lie in the support of `P`.
+Cauchy–Schwarz for the two factors bounds the three constant-word amplitudes. -/
 private lemma biseparable_overlap (φ : Word 3 3 → ℂ) (hφ : IsBiseparable φ) :
     3 * expectation (rankOneDensity (ghz 3 3)) φ ≤ expectation (supportProjector 3 3) φ := by
   classical
@@ -441,10 +462,12 @@ private lemma d_positive : dmat.PosDef := by
 private lemma d_inverse : dmat * dinv = 1 := by
   classical
   obtain ⟨hpp, hpg, hgp, hgg⟩ := projector_data
-  simp only [dmat, dinv, q, add_mul, mul_add, sub_mul, mul_sub,
+  rw [dmat, dinv, q]
+  simp only [add_mul, mul_add, sub_mul, mul_sub,
     Matrix.smul_mul, Matrix.mul_smul, smul_smul, one_mul, mul_one, hpp, hpg, hgp, hgg]
   module
 
+/-- Apply the positive-definite Cauchy–Schwarz inequality to `ψ` and `D⁻¹ φ`. -/
 private lemma weighted_cs (φ ψ : Word 3 3 → ℂ) :
     Complex.normSq (star φ ⬝ᵥ ψ) ≤ expectation dinv φ * expectation dmat ψ := by
   classical
@@ -501,7 +524,8 @@ private lemma trace_b : (trace (noisyGhz 3 3 (3 / 8) * b)).re - 1 / 9 = 13 / 108
   have ht : (trace (noisyGhz 3 3 (3 / 8) * q)).re = 1 / 12 := by
     norm_num [noisyGhz, add_mul, Matrix.smul_mul, hq, trace_smul, finite_ranks.2,
       Complex.real_smul]
-  simp only [b, mul_add, Matrix.mul_smul, trace_add, trace_smul,
+  rw [b]
+  simp only [mul_add, Matrix.mul_smul, trace_add, trace_smul,
     Complex.add_re, Complex.real_smul, Complex.re_ofReal_mul]
   change -(2 / 3) * witnessValue 3 3 (3 / 8) +
     (1 / 9) * (trace (noisyGhz 3 3 (3 / 8) * q)).re - 1 / 9 = 13 / 108
@@ -536,8 +560,10 @@ private lemma ensemble_nonempty :
     | some x => simpa [v, h] using basis_unit x
   · change noisyGhz 3 3 (3 / 8) =
       ∑ i, (fun j : Option (Word 3 3) => w j • rankOneDensity (v j)) (e i)
-    conv_rhs => rw [show (∑ i, (fun j : Option (Word 3 3) => w j • rankOneDensity (v j)) (e i)) =
-        ∑ j : Option (Word 3 3), w j • rankOneDensity (v j) from e.sum_comp (fun j : Option (Word 3 3) => w j • rankOneDensity (v j))]
+    conv_rhs =>
+      rw [show (∑ i, (fun j : Option (Word 3 3) => w j • rankOneDensity (v j)) (e i)) =
+          ∑ j : Option (Word 3 3), w j • rankOneDensity (v j) from
+        e.sum_comp (fun j : Option (Word 3 3) => w j • rankOneDensity (v j))]
     norm_num [w, v, Fintype.sum_option, ← Finset.smul_sum, basis_resolution, noisyGhz]
     module
 
@@ -573,5 +599,6 @@ theorem result : ¬ claim := by
   have hl := roof_lower
   rw [he] at hu
   linarith
+
 
 end D5.S3.Quantum.Entanglement.Witness.NoisyGhzWitnessBoundGap
