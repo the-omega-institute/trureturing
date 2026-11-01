@@ -12,6 +12,7 @@ import Mathlib.Analysis.Normed.Module.FiniteDimension
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+import Mathlib.LinearAlgebra.Matrix.Permutation
 import Mathlib.Topology.MetricSpace.IsometricSMul
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
@@ -207,7 +208,22 @@ private theorem parity_collision_iff (x : event) :
     simpa [parity, parityVector, minkowski] using h.2
 
 private theorem rotation_proper : rotation ∈ properOrthochronous := by
-  sorry
+  refine ⟨?_, ?_, ?_⟩
+  · ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [rotation, eta, Matrix.mul_apply, Fin.sum_univ_four]
+  · let t : Equiv.Perm (Fin 4) := Equiv.swap 1 2
+    have ht : t.permMatrix ℝ * eta = rotation := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [t, rotation, eta, Matrix.mul_apply, Fin.sum_univ_four,
+          Equiv.swap_apply_def]
+    rw [← ht, Matrix.det_mul, Matrix.det_permutation]
+    have hsign : Equiv.Perm.sign t = -1 := by
+      dsimp [t]
+      exact Equiv.Perm.sign_swap (by decide)
+    norm_num [hsign, eta, Matrix.det_diagonal, Fin.prod_univ_four]
+  · norm_num [rotation]
 
 private theorem family_admissible_odd
     (om : Set event) (hom : collisionEvents ⊆ om) (f : event → ℝ)
