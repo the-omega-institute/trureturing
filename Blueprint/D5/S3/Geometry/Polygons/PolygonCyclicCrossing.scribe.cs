@@ -49,9 +49,13 @@ internal sealed class PolygonCyclicCrossingDocument : IScribeDocumentDefinition
             body = Imp(R(X(pair.Item1), Neq, X(pair.Item2)), body);
         return Setup(Labels(body));
     }
-    private static Formula Crossing() => Setup(All("e", C("Sym2", C("ZMod", X("n"))),
-        All("f", C("Sym2", C("ZMod", X("n"))),
-            R(C("Cross", X("e"), X("f")), Iff, C("ProperCross", X("p"), X("e"), X("f")))));
+    private static Formula Crossing()
+    {
+        Formula body = R(C("Cross", X("e"), X("f")), Iff,
+            C("ProperCross", X("p"), X("e"), X("f")));
+        body = All("f", C("Sym2", C("ZMod", X("n"))), body);
+        return Setup(All("e", C("Sym2", C("ZMod", X("n"))), body));
+    }
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Cyclic arcs and proper crossing of actual polygon chords", H("The same polygon and all labelled chords"), Blocks(
             Paragraph(Text("Let p be an actual real normed plane polygon satisfying BoundaryModel, with n at least three. Use precisely its existing ZMod.finEquiv relabelling and successor edges. Pair(a,b) is the native unordered pair, and Cross is its existing cyclic alternation predicate. ProperCross(p,e,f) instead requires representatives of e and f whose actual endpoints are distinct within each chord, whose two endpoint sets are disjoint, and whose actual open segments have a common point. It contains no cyclic-order or native-Cross condition. Thus loops, shared endpoints and coincident chords are explicitly excluded even though Mathlib's open segment from a point to itself is nonempty.")),
