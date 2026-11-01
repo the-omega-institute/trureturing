@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Arbitrary-state failure of finite negative-word strong generation in negative rank one.
--/
+   digest: Arbitrary-state failure of finite negative-word strong generation in negative rank one. -/
 
 import D5.S3.VertexAlgebra.Energy.LatticeCoefficientEnergy
 import D5.S3.VertexAlgebra.Sectors.LatticeSectorIntertwiner
