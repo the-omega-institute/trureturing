@@ -5,7 +5,7 @@ year: 2025
 title: On independence complexes of graph products
 doi: null
 url: https://arxiv.org/abs/2505.06457v2
-claim: "Theorem 21 gives a suspended independence-complex conclusion for induced subgraphs of lexicographic products; Question 22 asks for unsuspended membership in the hereditary class W."
+claim: "Theorem 21 gives a suspended independence-complex conclusion for induced subgraphs of lexicographic products; Question 22 asks for unsuspended membership in the hereditary class W. Theorem 31 gives hereditary SW for strong path products of widths one through four; Question 32 asks whether this extends to every width."
 strata_touched:
   - D5/S3/Geometry/FiniteGraphVertexSubstitution
   - D5/S3/Geometry/HereditaryLexicographicProduct
@@ -51,7 +51,7 @@ that conclusion.
 - Version v2, Section 2 (the definitions of $I(G)$, $G\circ H$, and
   $\mathcal P$, $\mathcal{SP}$, $\mathcal W$, $\mathcal{SW}$), and the
   paragraph immediately preceding Proposition 7.
-- Theorem 21 and Question 22.
+- Theorem 21 and Question 22; Theorem 31 and Question 32.
 
 ## Local realization refinement
 
@@ -93,3 +93,19 @@ records the exact target, proof route and bounded literature standing.
 This is a local formal proof, not a theorem attributed to the source author,
 a global novelty certificate or official problem acceptance. The attempted
 source-readout registration remains unfinished under issue #22742.
+
+## Strong path products and Question 32
+
+Theorem 31 states that $P_n\boxtimes P_m$ belongs to $\mathcal{SW}$ for
+any $n$ and $1\leq m\leq4$. Here membership in $\mathcal{SW}$ concerns
+the independence complexes of all induced subgraphs, not only the full
+strong product. Question 32 asks: “Can Theorem 31 be extended to any $m$?”
+Thus the target is the hereditary statement for arbitrary positive width;
+a statement only about the independence complex of the full rectangle
+would not answer it.
+
+Theorem 33 has a different scope: if a positive width $m$ has that
+hereditary property for every $n$, then the independence complex of the
+full graph $P_n\boxtimes P_{m+k}$ has the homotopy type of a wedge of
+spheres for $1\leq k\leq4$. Its conclusion does not itself assert the
+hereditary property at those larger widths.

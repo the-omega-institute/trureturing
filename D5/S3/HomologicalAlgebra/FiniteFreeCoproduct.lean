@@ -1,6 +1,6 @@
 /- GID: D5/S3/HomologicalAlgebra/FiniteFreeCoproduct
    generality: G
-   mirror-B: none(waiver:source-artifact-awaiting-canonical-validation)
+   mirror-B: D5/B/S3/HomologicalAlgebra/FiniteFreeCoproduct
    mirror-E: none(waiver:finite-free-modules)
    anchors: []
    utility: none

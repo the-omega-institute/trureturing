@@ -1,6 +1,6 @@
 /- GID: D5/S3/Geometry/IndependenceComplexTorsionSeedSingular
-   generality: S
-   mirror-B: none(waiver:source-artifact-awaiting-canonical-validation)
+   generality: I
+   mirror-B: D5/B/S3/Geometry/IndependenceComplexTorsionSeedSingular
    mirror-E: none(waiver:actual-coordinate-singular-homology)
    anchors: []
    utility: none
@@ -16,7 +16,6 @@ independence complex, ordered edge and triangle enumerations, boundary maps,
 and categorical homology class. No replacement quotient or additional
 homology hypothesis is introduced here.
 
-This source artifact has not been elaborated or compiled.
 -/
 
 noncomputable section

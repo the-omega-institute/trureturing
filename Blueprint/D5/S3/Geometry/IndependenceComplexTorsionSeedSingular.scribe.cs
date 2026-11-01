@@ -15,7 +15,7 @@ internal sealed class IndependenceComplexTorsionSeedSingularDocument : IScribeDo
             Node("seedh1isosingular", "seedH1IsoSingular", "The same coordinate realization",
                 "The seed short-complex homology is isomorphic to Mathlib singular H1 of the actual coordinate realization of seedComplex.toPreAbstractSimplicialComplex with coefficient object ModuleCat.of Z Z. This composes the boundary identification with the generic ordered-to-singular comparison.", DescribeRole.Definition),
             Node("singularseedclass-nonzero-killed-by-two", "singularSeedClass_nonzero_killed_by_two", "The transported class has order two",
-                "The image of the original seedClass under this isomorphism is nonzero and its natural-number scalar multiple by two is zero. Injectivity transports nonvanishing and linearity transports the annihilation equation. This is a singular seed; the unbounded family in Carnero Bravo Question 32 is a separate conclusion.", DescribeRole.Theorem))));
+                "The image of the original seedClass under this isomorphism is nonzero and its natural-number scalar multiple by two is zero. Injectivity transports nonvanishing and linearity transports the annihilation equation. This is a singular seed; the induced king-grid obstruction needed to answer Carnero Bravo Question 32 is a separate conclusion.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(

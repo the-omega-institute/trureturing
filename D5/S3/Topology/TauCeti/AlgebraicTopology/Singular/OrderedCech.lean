@@ -1,6 +1,6 @@
 /- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Singular/OrderedCech
    generality: G
-   mirror-B: none(waiver:source-artifact-awaiting-canonical-validation)
+   mirror-B: D5/B/S3/Topology/TauCeti/AlgebraicTopology/Singular/OrderedCech
    mirror-E: none(waiver:abstract-chain-construction)
    anchors: []
    utility: none
@@ -33,7 +33,6 @@ commute as morphisms in a category of chain complexes.
 Only the augmentation is natural in the singular direction. No naturality of
 the chosen vertex in the supplied row contraction is requested or used.
 
-This source artifact has not been elaborated or compiled.
 -/
 
 set_option backward.defeqAttrib.useBackward true

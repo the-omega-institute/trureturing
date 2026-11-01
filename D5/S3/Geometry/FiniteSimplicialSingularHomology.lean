@@ -1,10 +1,10 @@
 /- GID: D5/S3/Geometry/FiniteSimplicialSingularHomology
    generality: G
-   mirror-B: none(waiver:source-artifact-awaiting-canonical-validation)
+   mirror-B: D5/B/S3/Geometry/FiniteSimplicialSingularHomology
    mirror-E: none(waiver:coordinate-topology)
    anchors: [mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic]
    utility: none
-   digest: The positive-coordinate vertex cover of the actual finite realization. -/
+   digest: Ordered integer H1 of a finite coordinate complex compares with its actual singular H1. -/
 
 import D5.S3.Geometry.FiniteSimplicialOpenCover
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Contractible
@@ -19,7 +19,6 @@ its coordinate subspace topology. An intersection is defined by strict
 positivity of every coordinate indexed by the finite set. In particular these
 are open vertex stars, and are not closed stars of faces.
 
-This source artifact has not been elaborated or compiled.
 -/
 
 set_option backward.defeqAttrib.useBackward true
@@ -306,21 +305,39 @@ theorem intersectionSimplexEquiv_face {p q : ℕ} (s : Face K p)
   ext z
   rfl
 
-private def intersectionColumnι {p : ℕ} (s : Face K p) :
-    intersectionChains K s ⟶ (cechSingular K).X p where
-  f q := Sigma.desc fun σ =>
+private def intersectionColumnMap {p : ℕ} (s : Face K p) (q : ℕ) :
+    (intersectionChains K s).X q ⟶ ((cechSingular K).X p).X q :=
+  Sigma.desc fun σ =>
     cechι K s.val s.property.2 (intersectionSimplexEquiv K s q σ).val
       (intersectionSimplexEquiv K s q σ).property
+
+@[reassoc]
+private theorem ι_intersectionColumnMap {p q : ℕ} (s : Face K p)
+    (σ : (TopCat.toSSet.obj (TopCat.of (intersection K s.val))) _⦋q⦌) :
+    (TopCat.toSSet.obj (TopCat.of (intersection K s.val))).ιChainComplex σ ≫
+        intersectionColumnMap K s q =
+      cechι K s.val s.property.2 (intersectionSimplexEquiv K s q σ).val
+        (intersectionSimplexEquiv K s q σ).property :=
+  Sigma.ι_comp_desc _ _
+
+private theorem intersectionColumnMap_comm {p : ℕ} (s : Face K p) (q : ℕ) :
+    intersectionColumnMap K s (q + 1) ≫ ((cechSingular K).X p).d (q + 1) q =
+      (intersectionChains K s).d (q + 1) q ≫ intersectionColumnMap K s q := by
+  apply SSet.chainComplex_hom_ext
+  intro σ
+  rw [← Category.assoc, ι_intersectionColumnMap, cechι_vertical,
+    ← Category.assoc, SSet.ιChainComplex_d, Preadditive.sum_comp]
+  simp only [Preadditive.zsmul_comp, ι_intersectionColumnMap]
+  apply Finset.sum_congr rfl
+  intro i hi
+  rw [intersectionSimplexEquiv_face]
+
+private def intersectionColumnι {p : ℕ} (s : Face K p) :
+    intersectionChains K s ⟶ (cechSingular K).X p where
+  f := intersectionColumnMap K s
   comm' := by
     rintro _ q rfl
-    apply SSet.chainComplex_hom_ext
-    intro σ
-    erw [← Category.assoc, Sigma.ι_comp_desc, cechι_vertical,
-      ← Category.assoc, SSet.ιChainComplex_d, Preadditive.sum_comp]
-    simp only [Preadditive.zsmul_comp, SSet.ιChainComplex, Sigma.ι_comp_desc]
-    apply Finset.sum_congr rfl
-    intro i hi
-    erw [intersectionSimplexEquiv_face]
+    exact intersectionColumnMap_comm K s q
 
 @[reassoc (attr := simp)]
 private theorem ι_intersectionColumnι {p q : ℕ} (s : Face K p)
@@ -329,7 +346,7 @@ private theorem ι_intersectionColumnι {p q : ℕ} (s : Face K p)
         (intersectionColumnι K s).f q =
       cechι K s.val s.property.2 (intersectionSimplexEquiv K s q σ).val
         (intersectionSimplexEquiv K s q σ).property :=
-  Sigma.ι_comp_desc _ _
+  ι_intersectionColumnMap K s σ
 
 abbrev columnCoproduct (p : ℕ) : ChainComplex (ModuleCat ℤ) ℕ :=
   ∐ fun s : Face K p => intersectionChains K s
@@ -369,32 +386,47 @@ private theorem cechι_columnToCoproduct {p q : ℕ}
   simp only [columnToCoproduct, Category.assoc, Sigma.ι_comp_desc]
   rfl
 
+private def coproductToColumn (p : ℕ) : columnCoproduct K p ⟶ (cechSingular K).X p :=
+  Sigma.desc (intersectionColumnι K)
+
+@[reassoc]
+private theorem ι_coproductToColumn {p q : ℕ} (s : Face K p) :
+    (Sigma.ι (fun t : Face K p => intersectionChains K t) s).f q ≫
+        (coproductToColumn K p).f q = (intersectionColumnι K s).f q := by
+  exact congrArg (fun f : intersectionChains K s ⟶ (cechSingular K).X p => f.f q)
+    (Sigma.ι_comp_desc (intersectionColumnι K) s)
+
 /-- Explicit basis identification with the coproduct of the actual intersection chain complexes. -/
 def columnCoproductIso (p : ℕ) : (cechSingular K).X p ≅ columnCoproduct K p where
   hom := columnToCoproduct K p
-  inv := Sigma.desc (intersectionColumnι K)
+  inv := coproductToColumn K p
   hom_inv_id := by
-    ext q : 1
+    apply HomologicalComplex.Hom.ext
+    intro q
     apply cech_hom_ext K
     intro s hs σ hσ
-    erw [HomologicalComplex.comp_f, ← Category.assoc, cechι_columnToCoproduct,
-      Category.assoc, ← HomologicalComplex.comp_f, Sigma.ι_comp_desc,
+    change (cechι K s hs σ hσ ≫ (columnToCoproduct K p).f q) ≫
+      (coproductToColumn K p).f q = cechι K s hs σ hσ
+    rw [cechι_columnToCoproduct, Category.assoc, ι_coproductToColumn,
       ι_intersectionColumnι]
-    simp only [Equiv.apply_symm_apply, HomologicalComplex.id_f, Category.comp_id]
-    rfl
+    simp only [Equiv.apply_symm_apply]
   inv_hom_id := by
     apply Sigma.hom_ext
     intro s
-    erw [Sigma.ι_comp_desc_assoc]
-    ext q : 1
+    rw [coproductToColumn, Sigma.ι_comp_desc_assoc, Category.comp_id]
+    apply HomologicalComplex.Hom.ext
+    intro q
     apply SSet.chainComplex_hom_ext
     intro σ
-    erw [HomologicalComplex.comp_f, ← Category.assoc, ι_intersectionColumnι,
-      cechι_columnToCoproduct]
+    change ((TopCat.toSSet.obj (TopCat.of (intersection K s.val))).ιChainComplex σ ≫
+      (intersectionColumnι K s).f q) ≫ (columnToCoproduct K p).f q =
+      (TopCat.toSSet.obj (TopCat.of (intersection K s.val))).ιChainComplex σ ≫
+        (Sigma.ι (fun t : Face K p => intersectionChains K t) s).f q
+    rw [ι_intersectionColumnι, cechι_columnToCoproduct]
     have hF : carriedFace K s.val s.property.2
         (intersectionSimplexEquiv K s q σ).val
         (intersectionSimplexEquiv K s q σ).property = s := Subtype.ext rfl
-    simp only [hF, Equiv.symm_apply_apply, HomologicalComplex.id_f, Category.comp_id]
+    simp only [hF, Equiv.symm_apply_apply]
 
 private theorem homologyMap_sigmaMap_isIso {J : Type} [Finite J]
     {A B : J → ChainComplex (ModuleCat ℤ) ℕ} (f : ∀ j, A j ⟶ B j)
