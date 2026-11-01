@@ -180,11 +180,8 @@ private theorem weight_gap {ι : Type*} [Fintype ι] [DecidableEq ι]
   have hsum : ∀ f : ι → ℝ, (∀ k, k ≠ i → k ≠ j → f k = 0) →
       ∑ k, f k = f i + f j := by
     intro f hf
-    rw [← sum_subset (subset_univ ({i, j} : Finset ι))]
-    · exact sum_pair hji.symm
-    · intro k _ hk
-      simp only [mem_insert, mem_singleton, not_or] at hk
-      exact hf k hk.1 hk.2
+    exact sum_eq_add i j hji.symm (fun k _ hk => hf k hk.1 hk.2)
+      (by simp) (by simp)
   have hm := hsum μ hz
   have he := hsum (fun k => e k ^ 2) (fun k hki hkj => by rw [hzero k (hz k hki hkj)]; norm_num)
   have hme := hsum (fun k => μ k * e k ^ 2)
