@@ -90,5 +90,72 @@ set_option pp.proofs false in
 #print axioms source_registration
 #print axioms registration
 
+namespace ProjectorTrace
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+/-- Retain the unit-vector hypothesis while observing its projector's trace. -/
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {d : ℕ} (v : EuclideanSpace ℂ (Fin d)) (_hv : ‖v‖ = 1),
+    R.readout () d (projector v) = 1
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h (WithLp.toLp 2 (fun _ : Fin 1 => (1 : ℂ)))
+    (by simp [EuclideanSpace.norm_eq])
+  norm_num [rejected, realize] at hb
+
+def family : Registration arena (type_of% @projector_trace) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨projector_trace, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@projector_trace) (Realization signature) Unit Unit := {
+  unitName :=
+    `Reg.D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity.projector_trace_unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity.ProjectorTrace.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ M => Matrix.trace M) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+set_option pp.proofs false in
+#print _root_.D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity.projector_trace
+#print axioms family
+#print axioms registration
+
+end ProjectorTrace
+
 end
 end Reg.D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity
