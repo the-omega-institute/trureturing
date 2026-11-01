@@ -28,8 +28,6 @@ The actual cutoff equivalence transports the full ordinary adjacency spectrum wi
 
 This is an application and formal completion of the accepted ordinary proof. It makes no literature-priority claim and does not treat source-page answer counts as mathematical evidence. Statements about other leading eigenvalues, normalized adjacency, Laplacians, random subdivisions and subdivision of the outer face are outside the theorem.
 
-The public-theorem escape-registration audit is incomplete under the linked-issue exception in CLAUDE.md section 3.9: issue 24989, comment 6554047951 records 27 targets, 21 retained records (eight validated and thirteen unfinished), and six faithful failed attempts whose sources are not retained. All nineteen unfinished targets remain audit obligations; the mathematical result and the Proved resolution claim do not assert complete registration.
-
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Apollonian/SecondEigenvalueLimit.result`
