@@ -94,7 +94,7 @@ def factorization_family : Registration arena (type_of% (@finite_history_factori
     change true = false at he
     cases he
 
-def factorization_registration : Contract.Registration
+def factorization_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@finite_history_factorization) (Realization signature) (type_of% (@history)) Unit where
   unitName := `D5.S3.StatisticalMechanics.NoisyVoter.FiniteCausalInputs.finite_history_factorization.__information_unit
   realizationName := ``factorization_family
@@ -256,7 +256,7 @@ def law_family : Registration lawArena (type_of% (@history_law_of_positive_coord
     change true = false at he
     cases he
 
-def law_registration : Contract.Registration
+def law_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@history_law_of_positive_coordinate_laws) (Realization lawSignature)
     (type_of% (@history)) Unit where
   unitName := `D5.S3.StatisticalMechanics.NoisyVoter.FiniteCausalInputs.history_law_of_positive_coordinate_laws.__information_unit
