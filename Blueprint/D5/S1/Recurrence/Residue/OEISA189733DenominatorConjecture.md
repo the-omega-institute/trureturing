@@ -36,6 +36,10 @@ $$\forall k \in \mathrm{Nat},\; (\operatorname{a}\left(6 \cdot k\right), \operat
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/OEISA189733DenominatorConjecture.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a189733-curtz-denominator-conjecture` (proved) by `D5/S1/Recurrence/Residue/OEISA189733DenominatorConjecture.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a189733-curtz-denominator-conjecture","declaration_gid":"D5/S1/Recurrence/Residue/OEISA189733DenominatorConjecture.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul Curtz (2011). *OEIS A189733, denominators of the first row of a rational difference array*. URL: <https://oeis.org/A189733>.
