@@ -62,6 +62,10 @@ $$\forall n \in \mathbb{N},\; 1 \le n \Rightarrow \left(\exists q \in \mathbb{Z}
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/HannaA301310Divisibility.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/h301310-divisibility` (proved) by `D5/S3/ArithSums/HannaA301310Divisibility.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"h301310-divisibility","declaration_gid":"D5/S3/ArithSums/HannaA301310Divisibility.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2018). *OEIS A301310, A301311 and A301432: geometric binomial averages*. URL: <https://oeis.org/A301310/internal>.

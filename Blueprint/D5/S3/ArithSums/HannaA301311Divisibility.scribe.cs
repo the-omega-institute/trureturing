@@ -54,7 +54,9 @@ internal sealed class HannaA301311DivisibilityDocument : IScribeDocumentDefiniti
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The divisibility theorem", ClaimBody(),
                 "The convergent geometric average at m=2 is m(2m+1) times an integer, giving the factor 10. Summability is proved before identifying the infinite sum.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("h301311-divisibility"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,
