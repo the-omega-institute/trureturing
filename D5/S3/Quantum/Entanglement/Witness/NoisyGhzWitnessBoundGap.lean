@@ -184,7 +184,7 @@ private lemma join_support (a : Finset (Fin 3)) (i j : Fin 3) :
     simpa only [Set.range_const, Set.union_singleton, Set.pair_comm] using
       (Set.range_ite_subset (p := fun k : Fin 3 => k ∈ a)
         (f := fun _ => i) (g := fun _ => j))
-  exact (Finset.card_le_card h).trans (by by_cases h : i = j <;> simp [h])
+  exact (Finset.card_le_card h).trans Finset.card_le_two
 
 private lemma join_injective (a : Finset (Fin 3)) (ha : a.Nonempty) (hc : aᶜ.Nonempty) :
     Function.Injective (fun ij : Fin 3 × Fin 3 => (a.piecewise (fun _ => ij.1) (fun _ => ij.2))) := by
