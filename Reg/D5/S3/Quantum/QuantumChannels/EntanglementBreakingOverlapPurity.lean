@@ -157,5 +157,105 @@ set_option pp.proofs false in
 
 end ProjectorTrace
 
+namespace UnitRay
+
+universe u
+
+/-- Observe the outer projector as its generating vector varies. -/
+abbrev signature : Signature where
+  Params := Type u
+  State n := n → ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ n := Matrix n n ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ _ ψ => vecMulVec ψ (star ψ)) (fun e => nomatch e)
+
+def rejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+/-- Retain both normalization hypotheses and the equality on a common complex ray. -/
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {n : Type u} [Fintype n] {ψ χ : n → ℂ}
+    (_hψ : star ψ ⬝ᵥ ψ = 1) (_hχ : star χ ⬝ᵥ χ = 1)
+    (z : ℂ) (_hz : ψ = z • χ),
+    R.readout () n ψ = vecMulVec χ (star χ)
+
+theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hh := @h (ULift.{u} Unit) inferInstance (fun _ => 1) (fun _ => 1)
+    (by simp [dotProduct]) (by simp [dotProduct]) 1 (by simp)
+  have he := congrArg (fun M => M (ULift.up ()) (ULift.up ())) hh
+  simp [rejected, realize, vecMulVec_apply] at he
+  exact zero_ne_one he
+
+theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro i
+  refine ⟨ULift.{u} Unit, (fun _ => 0), (fun _ => 1), ?_⟩
+  intro h
+  have he := congrArg (fun M => M (ULift.up ()) (ULift.up ())) h
+  simp [actual, realize, vecMulVec_apply] at he
+
+def family : Registration arena.{u} (type_of% (@vecMulVec_eq_of_unit_ray.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@vecMulVec_eq_of_unit_ray, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@vecMulVec_eq_of_unit_ray.{u}) (Realization signature.{u}) Unit Unit := {
+  unitName :=
+    `Reg.D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity.unit_ray_unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity.UnitRay.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some
+    (realize signature (fun _ _ ψ => vecMulVec ψ (star ψ)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+set_option pp.proofs false in
+#print
+  _root_.D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity.vecMulVec_eq_of_unit_ray
+#print axioms family
+#print axioms registration
+
+end UnitRay
+
 end
 end Reg.D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity
