@@ -1913,4 +1913,181 @@ $$
 
 该路径保留一个原始结果的共享反馈，因而不使用把谱列拆成独立控制的非法反例。它只给出下界；全局最佳常数仍是开放问题。
 
+## 14. 两列加权估计与改进的显式常数
+
+上一节的局部估计只选取一列来控制反馈。把两列的系数平方作为权重相加，可以同时保留共享反馈约束并降低常数。以下计算给出一个替代上一节数值上界的全局显式界。
+
+取
+
+$$
+\eta=\frac1{17},\qquad
+\mathcal N_\sigma=\{E:t_\sigma(E)<\eta\}\times U(4).
+$$
+
+在 $(b_\sigma,b_{-\sigma})$ 基中写
+
+$$
+F=E^{\mathsf T}=\begin{pmatrix}1-t&z\\\bar z&t\end{pmatrix},
+\qquad |z|^2\le t(1-t).
+$$
+
+令 $u=\sqrt{\det F}$。二阶正平方根的恒等式为
+
+$$
+B=F^{1/2}=\frac{F+uI}{\sqrt{1+2u}}.
+$$
+
+标准基的两个坐标在该基中的模均为 $h=1/\sqrt2$，所以每一列 $b_\ell=Be_\ell$ 的 $b_\sigma$ 坐标满足
+
+$$
+|z_\ell|\ge
+\frac{h\bigl(1-t-\sqrt{t(1-t)}\bigr)}{\sqrt{1+2\sqrt{t(1-t)}}}.
+$$
+
+当 $t<1/17$ 时，$\sqrt{t(1-t)}\le4/17$，从而
+
+$$
+|z_\ell|^2\ge\frac{72}{425}>\frac1{17}>|r_\ell|^2,
+\qquad
+b_\ell=z_\ell b_\sigma+r_\ell,\qquad r_\ell\perp b_\sigma.
+$$
+
+这里 $r_\ell$ 是 $b_{-\sigma}$ 方向分量。由完备关系，
+
+$$
+\sum_{\ell=1}^2|z_\ell|^2=1-t,
+\qquad
+\sum_{\ell=1}^2\|r_\ell\|^2=t.
+$$
+
+定理 8.2 给出 $t\le1600a(E)$，而二元矩阵的直接展开给出
+
+$$
+\|E-E_\sigma\|_{\mathrm F}^2
+=2\bigl(t^2+|z|^2\bigr)\le2t\le3200a(E).
+$$
+
+对每一列重复引理 10.1 的模长估计。置
+$\kappa_R=\|R_0\|_{\mathrm{op}}^2$、
+$m_\sigma=\min_i|(R_0b_\sigma)_i|$，并令
+$d_U^2=\min_{|\mu|=1}\|U-\mu U_\sigma\|_{\mathrm F}^2$。
+存在相位 $\mu_\ell$ 使
+
+$$
+|z_\ell|^2m_\sigma^2d_U^2
+\le4\tau_\ell+8\kappa_R\|r_\ell\|^2.
+$$
+
+两列相加并使用 $t<\eta$，得到
+
+$$
+d_U^2\le
+\frac{4}{m_\sigma^2(1-\eta)}\tau(E,U)
++\frac{12800\kappa_R}{m_\sigma^2(1-\eta)}a(E).
+$$
+
+因此在 $\mathcal N_\sigma$ 内，
+
+$$
+\rho(E,U)\le
+\left(3200+\frac{12800\kappa_R}{m_\sigma^2(1-\eta)}\right)a(E)
++\frac{4}{m_\sigma^2(1-\eta)}\tau(E,U).
+$$
+
+固定记录给出
+
+$$
+\kappa_R=2+\frac1{\sqrt2},\qquad
+m_+^2=\frac12,
+\qquad m_-^2=\sin^2(\pi/8)=\frac{2-\sqrt2}{4}.
+$$
+
+故
+
+$$
+C_{+,\mathrm{loc}}=57600+13600\sqrt2,
+\qquad
+C_{-,\mathrm{loc}}=139200+81600\sqrt2.
+$$
+
+在两个邻域的补集上，令 $F^{1/2}=\left(\begin{smallmatrix}A&C\\\bar C&D\end{smallmatrix}\right)$，并以标准基计算列坐标平方 $p_\ell,q_\ell$。正性、$B^2=F$ 和 $A+D=\operatorname{Tr}B$ 给出精确恒等式
+
+$$
+\sum_{\ell=1}^2\min\{p_\ell,q_\ell\}=\min\{t,1-t\}.
+$$
+
+结合定理 8.2，若 $t\in[\eta,1-\eta]$，则
+
+$$
+a(E)\ge\frac{\eta}{1600}=\frac1{27200}.
+$$
+
+另一方面，取距离定义中的较近投影，效果项至多为 $1$；任意两个四阶酉矩阵的相位商 Frobenius 距离至多为 $8$。所以
+
+$$
+\rho(E,U)\le9
+$$
+
+在补集上成立。于是补集的系数至多为 $244800$，从而整个紧参数空间满足
+
+$$
+\boxed{
+C_{\mathrm{prod}}\le139200+81600\sqrt2<254600.}
+$$
+
+相应的协议积分界可以取
+
+$$
+\boxed{\displaystyle
+\int\rho\,d\mu
+\le8(139200+81600\sqrt2)\,\varepsilon
+<2036800\,\varepsilon.}
+$$
+
+该界仍不是最佳值。为提高下界，保留同一共享反馈并令
+
+$$
+U_t=\operatorname{diag}(e^{-ixt},e^{ixt},1,1)U_+,
+\qquad
+x>1,
+$$
+
+同时取 $b(t)=T(\cos t,i\sin t)^{\mathsf T}$、
+$E_t=\overline{b(t)}\,\overline{b(t)}^\dagger$。在 $t\to0$ 时，取相位商后的反馈偏差和效果偏差满足
+
+$$
+\rho(E_t,U_t)=2(1+x^2)t^2+O(t^4),
+$$
+
+而共同实际反馈产生的缺陷为
+
+$$
+g(E_t,U_t)=\bigl(\kappa_0+A(x-1)^2\bigr)t^2+O(t^4),
+$$
+
+其中
+
+$$
+\kappa_0=2-\sqrt2+2\sqrt2(2\sin(\pi/8)-\cos(\pi/8)),
+\qquad
+A=\sqrt2\bigl(\sqrt2+2\cos(\pi/8)\bigr).
+$$
+
+令 $x_*$ 为
+
+$$
+A(x_*^2-1)=\kappa_0x_*.
+$$
+
+则 $x_*=1.01500811195\ldots$，并得到合法共享反馈路径的下界
+
+$$
+\boxed{
+C_{\mathrm{prod}}\ge
+\frac{2(1+x_*^2)}{\kappa_0+A(x_*-1)^2}
+=29.3209568043\ldots .}
+$$
+
+这里的反馈仍对该原始结果的全部谱列共同作用；可将该归一化效果作为任意正权重的一个原始协议结果，因此没有使用独立拆分反馈或后选择。
+
 ## 追加锚（本行以下为增补区）
