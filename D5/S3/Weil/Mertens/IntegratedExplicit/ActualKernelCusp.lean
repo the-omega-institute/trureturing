@@ -41,7 +41,6 @@ private lemma hasDerivAt_R {t : ℝ} (ht : 0 < t) (ht2 : t < Real.log 2) :
   · rfl
   · dsimp [r1]
     field_simp [ht.ne']
-    <;> ring
 
 private lemma hasDerivAt_r1 {t : ℝ} (ht : 0 < t) (ht2 : t < Real.log 2) :
     HasDerivAt r1 (r2 t) t := by
@@ -90,7 +89,6 @@ private lemma r1_limit : Tendsto r1 (𝓝[>] 0) (𝓝 0) := by
     filter_upwards [self_mem_nhdsWithin] with t ht
     change 0 < t at ht
     field_simp [ht.ne']
-    <;> ring
   have hh := (((hk.div_const 2).sub hep).add
     ((he.mul_const (Real.log (2 * Real.pi))).add
       (((he.mul hl).add hx).div_const 2))).sub_const (1 / 2 + c)
@@ -198,7 +196,7 @@ theorem cusp_quadratic_limit :
     · simpa using (show ContinuousAt (fun t : ℝ => 2 * t) 0 by
         fun_prop).tendsto.mono_left (y := 𝓝[>] 0) nhdsWithin_le_nhds
     · have hc : (firstLiMass - 7) / 4 / 2 = (firstLiMass - 7) / 8 := by ring
-      simpa only [hc] using r2_limit.div_const 2
+      simpa only [hc, mul_one] using r2_limit.div_const 2
   apply HasDerivAt.lhopital_zero_nhdsGT (f' := r1) (g' := fun t : ℝ => 2 * t)
     (hw.mono fun t ht => hasDerivAt_R ht.1 ht.2)
     (Eventually.of_forall fun t => by
@@ -279,7 +277,6 @@ private lemma reciprocal_exp_bounds {x : ℝ} (hx : 0 < x) :
   have hid : 1 / (Real.exp x - 1) - 1 / x =
       (x - (Real.exp x - 1)) / ((Real.exp x - 1) * x) := by
     field_simp [he.ne', hx.ne']
-    <;> ring
   constructor
   · rw [hid]
     apply (le_div_iff₀ (mul_pos he hx)).mpr
@@ -350,7 +347,8 @@ theorem cusp_remainder_bound {t : ℝ} (ht : 0 < t) (ht' : t ≤ 1 / 2) :
       (hasDerivAt_R hx.1 (hx.2.le.trans ht' |>.trans_lt half_lt_log_two)) using 1 <;>
         (try funext u) <;> simp only [Pi.pow_apply, Pi.mul_apply, Pi.sub_apply, id_eq] <;> ring
   have hmono_add : MonotoneOn (fun u : ℝ => 2 * u ^ 2 + R u) (Icc 0 t) := by
-    apply monotoneOn_of_deriv_nonneg (convex_Icc 0 t)
+    apply monotoneOn_of_deriv_nonneg (f := fun u : ℝ => 2 * u ^ 2 + R u)
+      (convex_Icc 0 t)
       ((continuous_const.mul (continuous_id.pow 2)).add R_continuous).continuousOn
     · rw [interior_Icc]
       exact fun x hx => (hp x hx).differentiableAt.differentiableWithinAt
@@ -360,7 +358,8 @@ theorem cusp_remainder_bound {t : ℝ} (ht : 0 < t) (ht' : t ≤ 1 / 2) :
       have h := (abs_le.mp (r1_bound hx.1 (hx.2.le.trans ht'))).1
       linarith
   have hmono_sub : MonotoneOn (fun u : ℝ => 2 * u ^ 2 - R u) (Icc 0 t) := by
-    apply monotoneOn_of_deriv_nonneg (convex_Icc 0 t)
+    apply monotoneOn_of_deriv_nonneg (f := fun u : ℝ => 2 * u ^ 2 - R u)
+      (convex_Icc 0 t)
       ((continuous_const.mul (continuous_id.pow 2)).sub R_continuous).continuousOn
     · rw [interior_Icc]
       exact fun x hx => (hm x hx).differentiableAt.differentiableWithinAt
