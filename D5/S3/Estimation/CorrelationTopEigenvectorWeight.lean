@@ -7,6 +7,7 @@
    digest: The remaining correlation domain admits the weight gap exactly above sigma=c. -/
 
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+import Mathlib.Algebra.Order.BigOperators.Group.LocallyFinite
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic.Linarith
@@ -262,29 +263,20 @@ private lemma small_dimension_obstruction {n : ℕ} (hn : n ≤ 2)
 private lemma symmetric_sum {n : ℕ} (f : Fin n → Fin n → ℝ)
     (hf : ∀ i j, f i j = f j i) :
     ∑ i, ∑ j, f i j = (∑ i, f i i) + 2 * ∑ i, ∑ j with j < i, f i j := by
-  classical
-  have hsplit : ∀ i j, f i j =
-      (if j < i then f i j else 0) + (if i < j then f i j else 0) +
-        (if i = j then f i j else 0) := by
+  have h := sum_sum_Ioi_add_eq_sum_sum_off_diag (α := (Fin n)ᵒᵈ) f
+  simp only [← filter_lt_eq_Ioi] at h
+  change (∑ i, ∑ j with j < i, (f j i + f i j)) = _ at h
+  have hs : ∀ i j, f j i + f i j = 2 * f i j := by
     intro i j
-    rcases lt_trichotomy i j with hij | hij | hij
-    · simp [hij, hij.ne, not_lt_of_ge hij.le]
-    · subst j; simp
-    · simp [hij, hij.ne.symm, not_lt_of_ge hij.le]
-  have hupper : (∑ i, ∑ j, if i < j then f i j else 0) =
-      ∑ i, ∑ j with j < i, f i j := by
-    rw [sum_comm]
-    simp_rw [sum_filter]
-    exact sum_congr rfl fun i _ => sum_congr rfl fun j _ => by rw [hf j i]
-  calc
-    ∑ i, ∑ j, f i j = ∑ i, ∑ j,
-        ((if j < i then f i j else 0) + (if i < j then f i j else 0) +
-          (if i = j then f i j else 0)) :=
-      sum_congr rfl fun i _ => sum_congr rfl fun j _ => hsplit i j
-    _ = (∑ i, ∑ j with j < i, f i j) +
-        (∑ i, ∑ j, if i < j then f i j else 0) + ∑ i, f i i := by
-      simp only [sum_add_distrib, sum_ite_eq, mem_univ, ite_true, sum_filter]
-    _ = _ := by rw [hupper]; ring
+    rw [hf j i]
+    ring
+  simp_rw [hs] at h
+  simp only [← mul_sum, compl_singleton,
+    sum_erase_eq_sub (mem_univ _), sum_sub_distrib] at h
+  rw [sum_comm] at h
+  change 2 * (∑ i : Fin n, ∑ j with j < i, f i j) =
+    (∑ i : Fin n, ∑ j, f i j) - ∑ i : Fin n, f i i at h
+  linarith only [h]
 
 private lemma delta_norm {n : ℕ} (hn : 0 < n) : ‖delta n‖ ^ 2 = 1 := by
   have hn0 : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
