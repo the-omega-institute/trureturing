@@ -1095,7 +1095,7 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
   have hD : 1 ≤ Q ^ 2 := one_le_pow₀ hQ
   let J := firstInterval A (Q ^ 2) I (reply (Q ^ 2) (mobius A x))
   have hJ : J.Contains x := (first_interval_exact hA hD hx.1 rfl x).mpr ⟨hx,rfl⟩
-  refine ⟨he, ?_, ?_, ht, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨he, ?_, ?_, ht, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · rw [he]
     intro y
     rw [containing_cell_exact B hB hx.1 y]
@@ -1123,7 +1123,9 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
     apply trace_payload hQ hz.1 _ ht
     simpa only [Nat.cast_add,Nat.cast_mul,Nat.cast_one] using hz.2
   · rw [he]
-    exact containing_cell_denominators B hB x
+    exact (containing_cell_denominators B hB x).1
+  · rw [he]
+    exact (containing_cell_denominators B hB x).2
   · have hz := current_value_bounds hA hx.1
       (hx.2.2.trans_le (original_upper_bounds hx).2)
     apply trace_widths hQ hz.1 _ ht
