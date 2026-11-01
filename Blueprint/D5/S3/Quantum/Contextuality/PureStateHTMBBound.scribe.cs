@@ -81,8 +81,8 @@ internal sealed class PureStateHTMBBoundDocument : IScribeDocumentDefinition
                         "Otherwise choose i and j with Pᵢ₀ different from P₀₀ and P₀ⱼ different from P₀₀. "
                             + "The key geometric fact is that if unit-vector projectors satisfy "
                             + "P(a) − P(b) = P(c) − P(e) ≠ 0, then a and b lie in the span of c and e. "
-                            + "Indeed, a and b are linearly independent: a scalar relation between unit vectors would have "
-                            + "a scalar of norm one and would make their projectors equal. For w orthogonal to c and e, "
+                            + "Indeed, a and b are linearly independent: the unit-ray projector identity makes their "
+                            + "projectors equal whenever the unit vectors are scalar multiples. For w orthogonal to c and e, "
                             + "applying the matrix equality to w gives ⟨a,w⟩a = ⟨b,w⟩b. Independence forces both coefficients "
                             + "to vanish. Taking the orthogonal complement twice in finite dimension puts a and b in the stated span.")),
                     Paragraph(Text(

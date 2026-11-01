@@ -24,7 +24,7 @@ open Matrix
 open scoped BigOperators InnerProductSpace ComplexOrder
 open D5.S3.Quantum.Foundation.FiniteStateChannel (DensityState)
 open D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity
-  (projector projector_trace trace_projectors)
+  (projector projector_trace trace_projectors vecMulVec_eq_of_unit_ray)
 
 namespace D5.S3.Quantum.Contextuality.PureStateHTMBBound
 
@@ -115,16 +115,15 @@ private theorem projector_difference_span {d : ℕ}
   have hab : LinearIndependent ℂ ![a, b] := by
     apply (LinearIndependent.pair_iff' ha0).2
     intro z hz
-    have hz1 : ‖z‖ = 1 := by
-      have hn := hb
-      rw [← hz, norm_smul, ha, mul_one] at hn
-      exact hn
     have hp : projector b = projector a := by
-      rw [← hz]
-      change vecMulVec (z • a.ofLp) (star (z • a.ofLp)) =
+      change vecMulVec b.ofLp (star b.ofLp) =
         vecMulVec a.ofLp (star a.ofLp)
-      simp [star_smul, smul_vecMulVec, vecMulVec_smul, smul_smul,
-        RCLike.star_def, RCLike.conj_mul, hz1]
+      apply vecMulVec_eq_of_unit_ray (z := z)
+      · simpa only [EuclideanSpace.inner_eq_star_dotProduct, dotProduct_comm] using
+          inner_self_eq_one_of_norm_eq_one (𝕜 := ℂ) hb
+      · simpa only [EuclideanSpace.inner_eq_star_dotProduct, dotProduct_comm] using
+          inner_self_eq_one_of_norm_eq_one (𝕜 := ℂ) ha
+      · exact congrArg (fun v : EuclideanSpace ℂ (Fin d) => v.ofLp) hz.symm
     apply hne
     rw [← h, hp, sub_self]
   let s := Submodule.span ℂ ({c, e} : Set (EuclideanSpace ℂ (Fin d)))
