@@ -5,7 +5,7 @@ year: 1986
 title: Compact sets in the space Lp(0,T;B)
 doi: 10.1007/BF01762360
 url: https://doi.org/10.1007/BF01762360
-claim: Theorem 1 characterizes relative compactness in Banach-valued finite-exponent Lp by compact interval integrals and uniform internal translations.
+claim: Theorem 1 characterizes finite-exponent Lp compactness by interval integrals and internal translations; Section 8 Theorem 5 gives intermediate-space compactness from a compact spatial embedding and weaker-space translations, including continuous compactness at infinity.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -89,3 +89,90 @@ https://github.com/TauCetiProject/TauCeti/blob/ef2b35da80dbe9f123fd200fcf160a036
 Uniform-approximation transfer source:
 https://github.com/uda-lab/leray-hopf/blob/e704400f2fb2f26b2ee7f4372c3e1ecbbc82f3dc/LerayHopf/Bochner/StepFunctionCompactness.lean,
 `LerayHopf.totallyBounded_of_uniform_approx'`.
+
+## Section 8: compactness in an intermediate Banach space
+
+Section 8, Theorem 5, printed page 84, assumes Banach spaces
+X compactly embedded in B, with B continuously embedded in Y. A family
+bounded in Lp(0,T;X), for 1 <= p <= infinity, whose positive internal time
+translations tend uniformly to zero in Lp(0,T-h;Y), is relatively compact
+in Lp(0,T;B), and also in C([0,T];B) when p = infinity. The closed-interval
+interpretation of Simon's C(0,T;B) is the convention in Section 1. The
+spatial estimate is Lemma 8, equation (8.4), on pages 84–85, credited there
+to J. L. Lions. These statements do not require reflexivity.
+
+The corresponding application uses arbitrary real Banach X, B and Y in
+independent universes, continuous injective linear maps i:X->B and j:B->Y
+with i compact, T>0, and any possibly empty norm-bounded set S of actual
+X-valued Lp classes. Its sole time premise says that, for every epsilon>0,
+some delta>0 makes the Lp seminorm of
+t mapped to j(i(f(t+h)-f(t))) on Ioc(0,T-h) less than epsilon, simultaneously
+for f in S and 0<h<min(delta,T). Right-closed and open intervals give the
+same Lebesgue almost-everywhere classes. The conclusion concerns compact
+closure of the actual image under i.compLpL. At infinity, a map from the
+original subtype S to C([0,T];B) additionally assigns the unique continuous
+almost-everywhere representative of i(f), and its range has compact
+closure for the uniform norm.
+
+The general Ehrling Lean proof used as external supply is authored by
+Nickrobbins95 in prove2me/formalpedia, immutable revision
+`e82fff3d729d46e3ddaf6b51f4bb376b16554bae`,
+[`envs/0df444a/Solutions/Sol_HunterPDE_Parabolic_ehrling.lean`](https://github.com/prove2me/formalpedia/blob/e82fff3d729d46e3ddaf6b51f4bb376b16554bae/envs/0df444a/Solutions/Sol_HunterPDE_Parabolic_ehrling.lean),
+Apache-2.0, SHA256
+`f8fa04fd3e3b739baee4f88e36e7af15f64423f95fa77d846cc8111865419ac9`.
+It supplies, for each a>0, a real C_a with
+norm(i(x)) <= a*norm(x) + C_a*norm(j(i(x))). Independent universes are
+received through the faithful external telescope with the proof body
+unchanged. This is external proof supply, not new mathematical content;
+no external proof code or port module is retained for this application.
+
+Choose M>0 bounding the Lp norms of S and put c=max(C_a,0). The shifted
+and unshifted restrictions each have X-valued seminorm at most M, so the
+internal B- and Y-valued translation seminorms satisfy
+D_B <= 2*a*M + c*D_Y. Taking a small and then using the uniform Y
+translation premise gives uniform B translation control, also at
+p=infinity. Positive translation maps Ioc(0,T-h) measure-preservingly
+onto Ioc(h,T). Restricting and transporting the almost-everywhere
+compLpL identity is essential: it identifies the internal differences of
+actual image classes without assuming pointwise equality of chosen
+representatives.
+
+For finite p, Bochner integrals of S on each 0<=a<b<=T form a bounded
+set in X: their norms are at most M*(b-a)^(1-1/p). Compactness of i gives
+compact closures of their B images. Commutation of i with the Bochner
+integral and the restricted compLpL identity turn these into the
+interval-integral sets required by
+`IntervalLpCompactness.isCompact_closure_of_integrals_translations`,
+applied with E=B. Thus that endpoint's stronger interval-integral premise
+is derived from the spatial hypothesis; it is not an added assumption
+of the complete Section 8 application.
+
+At infinity,
+`IntervalLInfinityRepresentative.exists_continuous_representatives`
+provides the representative map, uniqueness and a common modulus for
+the B-valued image family. Compact closure requires an additional
+spatial step. The compact set K=closure(i '' closedBall(0,M)) contains
+every representative value. Indeed, the almost-everywhere X norm bound
+puts the values in K almost everywhere; the continuous distance to K
+vanishes almost everywhere and hence throughout the closed interval,
+using the equivalence of Ioc and Icc for Lebesgue almost-everywhere
+equality and equality of continuous functions on a nondegenerate closed
+interval. This includes both endpoints and assumes no pointwise X lift
+of a B-valued representative. Ascoli gives uniform-norm compact closure
+of the representative family. Clamped extension and the continuous map
+to actual L-infinity identify its image with the original compLpL image;
+containment in the compact image of the representative closure gives
+compact closure there too.
+
+The owning `IntervalLpCompactness` Blueprint exposition gives this
+derived application of the two existing D5 endpoints. Their private mesh,
+averaging, Fubini, almost-everywhere and endpoint constructions, the
+Tau Ceti and leray-hopf ports described above, and pinned Mathlib's
+seminorm, Bochner, measure-preservation, compact-operator, infDist,
+closed-interval equality, Ascoli, isometry and continuous-to-Lp results
+receive full credit. No newly retained Lean declaration, greater
+mathematical generality or literature originality is claimed. Neither
+endpoint alone states the complete application. It adds no separability,
+finite-dimensionality, time derivative, extra pointwise modulus,
+prechosen continuous representative, endpoint value, boundary-tail,
+whole-line translation or family-nonemptiness hypothesis.
