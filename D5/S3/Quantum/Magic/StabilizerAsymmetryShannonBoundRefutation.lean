@@ -8,6 +8,7 @@
 
 import D5.S3.Entropy.MaxEntropy
 import Mathlib.Data.Matrix.Diagonal
+import Mathlib.LinearAlgebra.QuadraticForm.Basic
 
 /-! The full-support stabilizer standard form in Section V.C of Tarabunga et al.,
 arXiv:2411.05766v1, specialized to k = N and R = I. The conjecture following (69)
@@ -25,18 +26,15 @@ open D5.S3.Entropy.MaxEntropy (shannonEntropy)
 /-- Computational basis strings, with one binary coordinate for each qubit. -/
 abbrev Bits (n : ℕ) := Fin n → ZMod 2
 
-/-- The quadratic exponent is evaluated in the binary field. -/
-def quadForm {n : ℕ} (q : Matrix (Fin n) (Fin n) (ZMod 2)) (x : Bits n) : ZMod 2 :=
-  ∑ i, ∑ j, x i * q i j * x j
-
 /-- The off-diagonal part of the source's upper-triangular matrix. -/
 def IsStrictUpper {n : ℕ} (q : Matrix (Fin n) (Fin n) (ZMod 2)) : Prop :=
   ∀ i j, ¬ i < j → q i j = 0
 
-/-- The source stabilizer amplitude. The exponent cᵀx of i is the integer sum
-of products of the representatives 0 and 1, rather than a binary-field sum. -/
+/-- The source stabilizer amplitude, with the source's binary quadratic exponent
+represented by Mathlib's `Matrix.toQuadraticForm'`. The exponent cᵀx of i is the
+integer sum of products of the representatives 0 and 1, rather than a binary-field sum. -/
 def stabAmp {n : ℕ} (q : Matrix (Fin n) (Fin n) (ZMod 2)) (c : Bits n) (x : Bits n) : ℂ :=
-  ((Real.sqrt (2 ^ n))⁻¹ : ℂ) * (-1) ^ (quadForm q x).val *
+  ((Real.sqrt (2 ^ n))⁻¹ : ℂ) * (-1) ^ (Matrix.toQuadraticForm' q x).val *
     Complex.I ^ (∑ i, (c i).val * (x i).val)
 
 /-- The source distribution p at k = N, R = I, indexed by the source's diagonal matrices,
@@ -87,10 +85,10 @@ private lemma normalization : (Real.sqrt 8)⁻¹ * (Real.sqrt 8)⁻¹ = (1 / 8 :
 
 private lemma overlap_term (d x : Bits 3) :
     star (stabAmp (Matrix.diagonal d) 0 x) * witness x =
-      (-1 : ℂ) ^ (quadForm (Matrix.diagonal d) x).val * (coeff x : ℂ) / 8 := by
+      (-1 : ℂ) ^ (Matrix.toQuadraticForm' (Matrix.diagonal d) x).val * (coeff x : ℂ) / 8 := by
   calc
     _ = (((Real.sqrt 8)⁻¹ * (Real.sqrt 8)⁻¹ : ℝ) : ℂ) *
-        ((-1 : ℂ) ^ (quadForm (Matrix.diagonal d) x).val * (coeff x : ℂ)) := by
+        ((-1 : ℂ) ^ (Matrix.toQuadraticForm' (Matrix.diagonal d) x).val * (coeff x : ℂ)) := by
       delta stabAmp witness
       simp
       ring_nf
@@ -98,10 +96,10 @@ private lemma overlap_term (d x : Bits 3) :
 
 private lemma abs_term (d x : Bits 3) :
     star (stabAmp (Matrix.diagonal d) 0 x) * (‖witness x‖ : ℂ) =
-      (-1 : ℂ) ^ (quadForm (Matrix.diagonal d) x).val * ((|coeff x| : ℝ) : ℂ) / 8 := by
+      (-1 : ℂ) ^ (Matrix.toQuadraticForm' (Matrix.diagonal d) x).val * ((|coeff x| : ℝ) : ℂ) / 8 := by
   calc
     _ = (((Real.sqrt 8)⁻¹ * (Real.sqrt 8)⁻¹ : ℝ) : ℂ) *
-        ((-1 : ℂ) ^ (quadForm (Matrix.diagonal d) x).val * ((|coeff x| : ℝ) : ℂ)) := by
+        ((-1 : ℂ) ^ (Matrix.toQuadraticForm' (Matrix.diagonal d) x).val * ((|coeff x| : ℝ) : ℂ)) := by
       delta stabAmp witness
       simp [abs_of_nonneg (Real.sqrt_nonneg 8)]
       ring_nf
@@ -119,8 +117,10 @@ private lemma overlap_distribution (d : Bits 3) :
       ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 1) with h1 | h1 <;>
     rcases (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
       ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 2) with h2 | h2 <;>
-    delta quadForm coeff <;>
+    delta coeff <;>
     norm_num [sum_bits, Fin.sum_univ_three, Matrix.diagonal_apply,
+      Matrix.toQuadraticForm', LinearMap.BilinMap.toQuadraticMap_apply,
+      Matrix.toLinearMap₂'_apply', dotProduct, Matrix.mulVec,
       h0, h1, h2, ZMod.val_add, ZMod.val_mul, ZMod.val_one_eq_one_mod,
       Complex.normSq_apply]
 
@@ -135,8 +135,10 @@ private lemma abs_distribution (d : Bits 3) :
       ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 1) with h1 | h1 <;>
     rcases (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
       ∀ a : ZMod 2, a = 0 ∨ a = 1) (d 2) with h2 | h2 <;>
-    delta quadForm coeff <;>
+    delta coeff <;>
     norm_num [sum_bits, Fin.sum_univ_three, Matrix.diagonal_apply,
+      Matrix.toQuadraticForm', LinearMap.BilinMap.toQuadraticMap_apply,
+      Matrix.toLinearMap₂'_apply', dotProduct, Matrix.mulVec,
       h0, h1, h2, ZMod.val_add, ZMod.val_mul, ZMod.val_one_eq_one_mod,
       Complex.normSq_apply]
 
