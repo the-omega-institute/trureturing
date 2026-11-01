@@ -45,14 +45,14 @@ theorem exists_independent_layers {V : Type*} (G : SimpleGraph V)
     cases bv : b v
     · have count := Finset.card_filter_add_card_filter_not
         (s := (Finset.univ : Finset (Fin k))) (fun c => c.val < k - z v)
-      have prefix : (Finset.univ.filter (fun c : Fin k => c.val < k - z v)).card =
+      have hprefix : (Finset.univ.filter (fun c : Fin k => c.val < k - z v)).card =
           k - z v := by
         simpa only [Nat.min_eq_right (Nat.sub_le k (z v))] using
           (Fin.card_filter_val_lt (n := k) (m := k - z v))
       have complement : (Finset.univ.filter (fun c : Fin k => k - z v ≤ c.val)).card =
           z v := by
         simp only [not_lt] at count
-        rw [prefix] at count
+        rw [hprefix] at count
         simp only [Finset.card_univ, Fintype.card_fin] at count
         have := hv v
         omega
