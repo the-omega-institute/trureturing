@@ -1,0 +1,46 @@
+**定理 7.1（固定黄金门的精确酉性与正向逆）。**
+
+$$
+\boxed{K=\zeta\bigl[I+(\zeta-1)\mathcal P\bigr]}
+$$
+
+在完整三比特空间上为酉算子，且
+
+$$
+K^{10}=I,\qquad K^{-1}=K^9,\qquad K^5=2\mathcal P-I.
+$$
+
+它保持无相邻 $11$ 的五模式合法空间。
+
+**证明。**
+
+$\varphi^{-1}+\varphi^{-2}=1$，故
+$Q=qq^*$，其中 $q=(\varphi^{-1/2},\varphi^{-1})^T$ 为单位向量。
+左右控制为 $00$ 时 $\mathcal P=Q$，为 $11$ 时为 $I$， 为 $01$ 或 $10$ 时为零；因此 $\mathcal P^2=\mathcal P=\mathcal P^*$。
+$K$ 在其核与像上分别取单位模特征值 $\zeta,\zeta^2$。
+两者的十次方都为一，五次方分别为 $-1,1$，全部等式成立。 唯一非对角转换为 $000\leftrightarrow010$，它保持合法性。
+
+∎
+
+在原五模式内，这个投影写成
+
+$$
+\mathcal P_A=|q_A\rangle\langle q_A|+|101\rangle\langle101|,
+\quad
+q_A=\varphi^{-1/2}|000\rangle+\varphi^{-1}|010\rangle.
+$$
+
+黄金数及相位还带有实际组合关系，不能由归一化单独选定。 Fibonacci 融合的正权重满足 $\varphi^2=\varphi+1$。 若两个投影满足 $PQP=\lambda P$、$QPQ=\lambda Q$，定义
+$B_P=s[I+tP]$、$B_Q=s[I+tQ]$，直接展开得到
+
+$$
+B_PB_QB_P-B_QB_PB_Q
+=s^3t(1+t+\lambda t^2)(P-Q).
+$$
+
+非平凡的编织相容要求 $1+t+\lambda t^2=0$。 在 $\lambda=\varphi^{-2}$、$t=z-1$ 时化为
+$z^2+\varphi^{-1}z+1=0$，其两个单位模根为 $e^{\pm3\pi i/5}$。
+共同相位 $s$ 仍是约定；项目选择 $s=z=\zeta$。 这说明黄金门消费了特定关系与组合相容，提供的信息多于“每列归一”。
+
+<a id="section-7-2"></a>
+

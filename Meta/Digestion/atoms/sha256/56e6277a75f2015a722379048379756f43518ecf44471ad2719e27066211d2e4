@@ -1,0 +1,62 @@
+**定理 13.2（三目标的统一总变差阻碍）。** 对每个非负列归一 $5\times5$ 矩阵 $T$，记
+
+$$
+e_j(T)=\operatorname{TV}\bigl(Tp(\rho_j),p(U_\star\rho_jU_\star^*)\bigr),
+\qquad j\in\{0,1,d\}.
+$$
+
+则同时有
+
+$$
+\boxed{e_0(T)+e_1(T)+4e_d(T)\ge\nu\sqrt{11}},\qquad
+\boxed{\max_{j\in\{0,1,d\}}e_j(T)\ge
+\delta:=\frac{\nu\sqrt{11}}6
+=\frac{\sqrt{11}}{6(1+2\sqrt3+\sqrt{11})}>0.}
+\tag{13.3}
+$$
+
+特别地，$\inf_T\max_je_j(T)\ge\delta$；同一个 $T$ 必须同时作用于三个输入。此常数不声称最优。
+
+证明。由 $m=R_{U_\star}^{-1}n_B$，$U_\star^*E_2U_\star=\nu\sqrt{11}(I+m\cdot\sigma)/2$，故
+
+$$
+p_2(U_\star\rho_dU_\star^*)=0,\qquad
+p_2(U_\star\rho_0U_\star^*)+p_2(U_\star\rho_1U_\star^*)
+=\operatorname{Tr}E_2=\nu\sqrt{11}.
+\tag{13.4}
+$$
+
+第二式也可直接用 $U_\star\rho_iU_\star^*=\rho_i$ 与 $\rho_0+\rho_1=I$ 检验。下面证明逐坐标支配
+
+$$
+p_t(\rho_d)\ge\frac14\bigl(p_t(\rho_0)+p_t(\rho_1)\bigr)\qquad(t\in S).
+\tag{13.5}
+$$
+
+依 (12.4)，只需 $n_t\cdot m\le1/2$。四种内积为
+
+$$
+\begin{aligned}
+n_A\cdot m&=-\frac{4c-2s+1}{\sqrt{33}},&
+n_B\cdot m&=\frac{10c+1}{11},\\
+n_C\cdot m&=\frac1{\sqrt{11}},&
+n_D\cdot m&=\frac{6c-8s+1}{11}.
+\end{aligned}
+\tag{13.6}
+$$
+
+$-1/3<c<0$，因为 $1<\sqrt5<7/3$；又 $0<s<1$。因此第一项严格小于 $7/(3\sqrt{33})<1/2$，最后的不等式由 $196<297$ 给出；第二、四项严格小于 $1/11<1/2$，第三项也小于 $1/2$。由 $p_t(\rho_d)=w_t(1-n_t\cdot m)/2$ 和 $p_t(\rho_0)+p_t(\rho_1)=w_t$ 即得 (13.5)。这是对固定五效果逐项的检验，包括重复的 $0,25$，不从“信息完备”一词推测正性。
+
+对两个归一分布，单个事件的概率差至多其 TV。非负 $T$ 保持 (13.5)，故由输出坐标 $2$ 得
+
+$$
+\begin{aligned}
+e_d(T)&\ge (Tp(\rho_d))_2\\
+&\ge\frac14\bigl((Tp(\rho_0))_2+(Tp(\rho_1))_2\bigr)\\
+&\ge\frac14\bigl(\nu\sqrt{11}-e_0(T)-e_1(T)\bigr).
+\end{aligned}
+\tag{13.7}
+$$
+
+移项给第一界，再用 $e_0+e_1+4e_d\le6\max_je_j$ 给第二界。即使 (13.7) 最后一行的括号为负，移项后的不等式仍然有效。所有分母严格正且 $\nu>0$，故 $\delta>0$。证明只用三个纯态；$\rho_0+\rho_1=I$ 是纸面矩阵恒等式，不是免费执行随机混合的权限。∎
+

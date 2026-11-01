@@ -1,0 +1,26 @@
+**定理 8.3（码内门的相位平衡原生表示）。**
+
+固定单位向量 $\eta\perp\operatorname{ran}V$，令 $P_V=VV^*$、
+$P_\eta=|\eta\rangle\langle\eta|$。则
+
+$$
+\mathcal G_U=VUV^*+\det(U)^{-1}P_\eta+
+(I-P_V-P_\eta)
+$$
+
+定义一个忠实的群同态 $U(2)\to SU(13)$，满足
+$\mathcal G_UV=VU$。每个 $\mathcal G_U$ 都能用同一原七地址的正向有限字
+在算符范数下任意逼近。
+
+**证明。**
+
+在正交分解 $\operatorname{ran}V\oplus\mathbb C\eta\oplus (\operatorname{ran}V+\mathbb C\eta)^\perp$ 中，该算子为
+$U,\det(U)^{-1},I$ 三个块。
+因此酉、行列式一，乘法性由行列式乘法性给出，单射性由首块给出。 原生逼近来自上一证明的 $SU(13)$ 闭包。
+
+∎
+
+相位补偿发生在同一载体的内部正交补，不改变码内目标。 这保证在此数学编译问题中相位可以正确保留； 它不额外宣称任意相干受控程序选择器已由原菜单供应。
+
+<a id="cor:nativeread"></a>
+

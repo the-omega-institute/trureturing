@@ -1,0 +1,45 @@
+**定理 14.2（完整标签核、有限编译和实际误差）。** 设同一概率接口下的两组完整终端律 $P_j^{\rm in},P_j^{\rm out}$ 满足
+
+$$
+\operatorname{TV}(P_j^{\rm in},\mathsf I p_j)\le a_j^{\rm err},\qquad
+\operatorname{TV}(P_j^{\rm out},\mathsf I q_j)\le b_j^{\rm err}.
+\tag{14.4}
+$$
+
+这里 $a_j^{\rm err},b_j^{\rm err}\ge0$ 为误差界，与制备字 $a_j$ 区别。对每一个固定的非负列归一 $\Omega\times\Omega$ 矩阵 $\mathsf K$，令
+
+$$
+r_j(\mathsf K)=\operatorname{TV}(\mathsf KP_j^{\rm in},P_j^{\rm out}),\qquad
+d_j=a_j^{\rm err}+b_j^{\rm err}.
+$$
+
+则
+
+$$
+\begin{aligned}
+r_0(\mathsf K)+r_1(\mathsf K)+4r_d(\mathsf K)
+&\ge\nu\sqrt{11}-(d_0+d_1+4d_d),\\
+\max_jr_j(\mathsf K)&\ge\delta-\max_jd_j.
+\end{aligned}
+\tag{14.5}
+$$
+
+所以 $\max_jd_j<\delta$ 是一个明确的严格正误差区间。核甚至可以使用全部旧终端标签，结论仍成立；它仍须不依赖三种制备设置或其档案。
+
+证明。取任一固定确定性粗映射 $\mathsf D:\Omega\to S$，在五个 $\ell_t$ 上为其逆，在其余标签上例如全映到 $0$。这只用于证明，原记录仍完整保留。于是 $\mathsf D\mathsf I=I_5$，$T=\mathsf D\mathsf K\mathsf I$ 是定理 13.2 允许的同一个五阶列随机矩阵。随机映射收缩 TV，因为对任意实向量 $x$ 有
+
+$$
+\sum_s\left|\sum_tT_{st}x_t\right|
+\le\sum_{s,t}T_{st}|x_t|=\sum_t|x_t|.
+$$
+
+三角不等式和这项收缩性给
+
+$$
+\operatorname{TV}(Tp_j,q_j)
+\le a_j^{\rm err}+r_j(\mathsf K)+b_j^{\rm err}.
+\tag{14.6}
+$$
+
+应用 (13.3) 的加权界及最大值界即得 (14.5)。$\mathsf D$ 不按成功条件化，故从未除以小成功概率，也没有丢弃任何泄漏或失败质量。∎
+
