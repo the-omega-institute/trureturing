@@ -436,3 +436,195 @@ In particular, equality in the fixed-Kraus entanglement-fidelity estimate would 
 The proof uses the exact record (1.1), all-outcome retention, finite POVMs on its full two-dimensional record space, and arbitrary four-dimensional unitary feedback. It proves the inequality for every finite outcome count, without a uniform bound on that count. It does not assert a result for postselected protocols, a different record, a chosen encoding subspace, or a global optimizer obtained by restricting feedback to an ansatz.
 
 ## 追加锚（本行以下为增补区）
+
+## 6. Finite attainment for the original full-record problem
+
+**Definition 6.1 (two-outcome protocol for the fixed record).** Keep exactly $R_0$ and $C_0$ from (1.1), the ordinary transpose in (1.4), and the unhalved norm (1.6). Set
+
+$$
+\theta=\pi/8,\qquad c=\cos\theta,\qquad s=\sin\theta,
+\qquad h=1/\sqrt2,\qquad \alpha=e^{-i\pi/4}.
+\tag{6.1}
+$$
+
+Choose $k=2$, with outcomes labelled $+$ and $-$, and define the effects
+
+$$
+D_+=\frac12\begin{pmatrix}1&\alpha\\\bar\alpha&1\end{pmatrix},
+\qquad
+D_-=\frac12\begin{pmatrix}1&-\alpha\\-\bar\alpha&1\end{pmatrix},
+\tag{6.2}
+$$
+
+and feedback matrices
+
+$$
+\begin{aligned}
+U_+&=\operatorname{diag}
+ (1,e^{i\pi/4},e^{i\theta},e^{-i\theta}),\\
+U_-&=\operatorname{diag}
+ (1,-e^{i\pi/4},-i e^{i\theta},i e^{-i\theta}).
+\end{aligned}
+\tag{6.3}
+$$
+
+These choices use the two columns of the basis $T$ in (3.5), with the phase correction associated to the diagonal Kraus operators in (3.4); the corresponding general polar-correction construction is Gregoratti–Werner, [Proposition 8, equations (18)–(21)](https://arxiv.org/html/quant-ph/0209025v1#ThmThe8). Their feasibility and their full diamond error are established below.
+
+**Theorem 6.2 (an attained exact minimum).** The effects (6.2) are Hermitian positive semidefinite and sum to $I_2$, and (6.3) belongs to $U(4)^2$. For the channel implemented by these same effects and feedback,
+
+$$
+\Phi_*(X)=\sum_{\varepsilon\in\{+,-\}}
+ U_\varepsilon\bigl((R_0D_\varepsilon^{\mathsf T}R_0^\dagger)
+                  \circ X\bigr)U_\varepsilon^\dagger,
+\tag{6.4}
+$$
+
+both outcomes are retained and
+
+$$
+\boxed{\ \|\Phi_*-\operatorname{id}_{M_4}\|_\diamond=1-\cos(\pi/8).\ }
+\tag{6.5}
+$$
+
+Consequently, over the entire protocol class of Definition 1.2, including arbitrary finite outcome counts and arbitrary unitary feedback,
+
+$$
+\min_{\substack{k\ge1,\ D_y\succeq0,\ \sum_yD_y=I_2\\
+                 U_y\in U(4),\ 1\le y\le k}}
+\left\|\sum_{y=1}^k
+ U_y\bigl((R_0D_y^{\mathsf T}R_0^\dagger)\circ\,·\,\bigr)U_y^\dagger
+ -\operatorname{id}_{M_4}\right\|_\diamond
+=1-\cos(\pi/8).
+\tag{6.6}
+$$
+
+The lower comparison in this statement is Theorem 3.1, reused without reproof. The construction specializes (3.5)–(3.7) and the polar-correction formula cited in Definition 6.1; the upper comparison is an estimate on every amplified operator.
+
+Proof. Put
+
+$$
+b_+=h\begin{pmatrix}1\\\alpha\end{pmatrix},\qquad
+b_-=h\begin{pmatrix}1\\-\alpha\end{pmatrix}.
+\tag{6.7}
+$$
+
+These are exactly the columns of $T$ in (3.5), so they form an orthonormal basis of $\mathbb C^2$. Their conjugates also form an orthonormal basis, and direct comparison with (6.2) gives
+
+$$
+D_\varepsilon=\bar b_\varepsilon\bar b_\varepsilon^\dagger,
+\qquad D_\varepsilon^{\mathsf T}=b_\varepsilon b_\varepsilon^\dagger,
+\qquad \varepsilon\in\{+,-\}.
+\tag{6.8}
+$$
+
+Thus the two effects are positive rank-one orthogonal projections and $D_++D_-=I_2$. All entries on the diagonals of (6.3) have modulus one, proving $U_+,U_-\in U(4)$. In particular, the vectors multiplying $R_0$ are $b_\varepsilon$, while the measured effects project onto $\bar b_\varepsilon$; this respects the ordinary transpose in (1.4).
+
+For $v_\varepsilon=R_0b_\varepsilon$, multiplication using the unchanged four rows of (1.1) gives
+
+$$
+v_+=\begin{pmatrix}
+h\\\alpha h\\e^{-i\theta}c\\e^{i\theta}c
+\end{pmatrix},\qquad
+v_-=\begin{pmatrix}
+h\\-\alpha h\\i e^{-i\theta}s\\-i e^{i\theta}s
+\end{pmatrix}.
+\tag{6.9}
+$$
+
+In detail, the last two rows use
+
+$$
+\begin{aligned}
+\frac{1+\alpha}{2}&=e^{-i\theta}c,&
+\frac{1-\alpha}{2}&=i e^{-i\theta}s,\\
+\frac{1+i\alpha}{2}&=e^{i\theta}c,&
+\frac{1-i\alpha}{2}&=-i e^{i\theta}s.
+\end{aligned}
+\tag{6.10}
+$$
+
+These are the two coordinate-axis instances of (3.7). The Schur-to-Kraus identity (3.4) and the actual unitaries (6.3) now yield
+
+$$
+\begin{aligned}
+A_+&=U_+\operatorname{diag}(v_+)
+     =\operatorname{diag}(h,h,c,c),\\
+A_-&=U_-\operatorname{diag}(v_-)
+     =\operatorname{diag}(h,h,s,s),\\
+\Phi_*(X)&=A_+XA_+^\dagger+A_-XA_-^\dagger.
+\end{aligned}
+\tag{6.11}
+$$
+
+Both summands are the original measurement outcomes. There is no branch removal or conditioning on a successful outcome. Moreover,
+
+$$
+A_+^\dagger A_++A_-^\dagger A_-
+=\operatorname{diag}(2h^2,2h^2,c^2+s^2,c^2+s^2)=I_4,
+\tag{6.12}
+$$
+
+so this channel is trace preserving as well as completely positive.
+
+Define complementary system projections and a unitary
+
+$$
+P=\operatorname{diag}(1,1,0,0),\qquad
+Q=\operatorname{diag}(0,0,1,1),\qquad Z=P-Q.
+\tag{6.13}
+$$
+
+Then $P+Q=I_4$, $PQ=0$, and $Z^\dagger Z=I_4$. Since $A_+=hP+cQ$, $A_-=hP+sQ$, and $h(c+s)=c$ by (2.1), expansion of (6.11) gives, for every $X\in M_4(\mathbb C)$,
+
+$$
+\begin{aligned}
+\Phi_*(X)
+ &=PXP+QXQ+c(PXQ+QXP)\\
+ &=\frac{1+c}{2}X+\frac{1-c}{2}ZXZ^\dagger.
+\end{aligned}
+\tag{6.14}
+$$
+
+This equality describes the channel of the displayed full-record protocol itself; it does not require an extra randomization step.
+
+Fix any integer $n\ge1$ and any operator $X\in M_n(\mathbb C)\otimes M_4(\mathbb C)$. With $W=I_n\otimes Z$, equation (6.14) gives
+
+$$
+(\operatorname{id}_{M_n}\otimes(\Phi_*-\operatorname{id}_{M_4}))(X)
+=\frac{1-c}{2}(WXW^\dagger-X).
+\tag{6.15}
+$$
+
+Unitary conjugation preserves the trace norm: indeed $(WXW^\dagger)^\dagger(WXW^\dagger)=WX^\dagger XW^\dagger$, so the eigenvalues of $X^\dagger X$ and hence the singular values of $X$ are unchanged. The trace-norm triangle inequality therefore implies
+
+$$
+\begin{aligned}
+\|(\operatorname{id}_{M_n}\otimes(\Phi_*-\operatorname{id}_{M_4}))(X)\|_1
+&\le\frac{1-c}{2}\bigl(\|WXW^\dagger\|_1+\|X\|_1\bigr)\\
+&=(1-c)\|X\|_1.
+\end{aligned}
+\tag{6.16}
+$$
+
+This estimate holds for every finite untouched reference and every operator $X$, without a Hermiticity or positivity assumption. Taking the suprema in precisely (1.6) proves
+
+$$
+\|\Phi_*-\operatorname{id}_{M_4}\|_\diamond\le1-c.
+\tag{6.17}
+$$
+
+The feasibility established in (6.8) and (6.3) places this same channel in the full class of Theorem 3.1. That theorem gives the reverse inequality, proving (6.5). It also bounds every competitor in (6.6), while (6.2)–(6.4) give a finite attaining competitor; hence the infimum is a minimum with the displayed value. This supplies the attainment and exact-minimum conclusions left undecided in Section 5, while retaining the lower bound (3.1) and its full arbitrary-feedback domain. $\square$
+
+## 7. Correspondence and limits of the attaining application
+
+**Proposition 7.1 (source-specific application and its domain).** Theorem 6.2 concerns exactly the record, branch convention, deterministic outcome retention, unknown system space, and reference-inclusive norm of Definitions 1.1–1.3. Its exact-minimum conclusion follows from a member with diagonal feedback and the universal lower comparison, without imposing a diagonal restriction on competing feedback. The intermediate basis and polar correction are existing ingredients; the source-specific consequence is their concrete $C_0$ application (6.2)–(6.17), together with Theorem 3.1. This consequence asserts neither uniqueness of the optimizer nor an extension to postselection, changed records, uncertain controls, or a procedure for acquiring physical outcome probabilities.
+
+Proof. The basis correspondence is literal: $b_+=T(1,0)^{\mathsf T}$ and $b_-=T(0,1)^{\mathsf T}$ for (3.5). Equation (6.8) enforces the same transpose convention as (1.5), and its common completeness relation is $D_++D_-=I_2$ on the entire original record space. Equations (6.9)–(6.11) retain the original $R_0$, use genuine elements of $U(4)$ on all of $M_4$, and sum both outcomes. The projections $P,Q$ in (6.13) only express the resulting channel; they do not restrict its allowed inputs. The reference quantifier and the unhalved normalization are exactly those of (1.6), as shown by (6.15)–(6.17). The universal comparison uses Theorem 3.1, whose competitors have no diagonal-feedback restriction.
+
+For the external correspondence, set $t_\varepsilon=\operatorname{diag}(v_\varepsilon)$ and write $t_\varepsilon=V_\varepsilon|t_\varepsilon|$ for its polar decomposition. All entries in (6.9) are nonzero, so $V_\varepsilon$ is unitary and (6.3) is precisely $V_\varepsilon^\dagger$. Thus $U_\varepsilon t_\varepsilon=|t_\varepsilon|=A_\varepsilon$. This is the specialization of Gregoratti–Werner, [*Quantum Lost and Found*, Proposition 8, equations (18)–(21)](https://arxiv.org/html/quant-ph/0209025v1#ThmThe8), with input and output dimension four and the fixed two-operator decomposition furnished by (6.7). Their proposition concerns optimal corrected entanglement fidelity for a fixed decomposition. Here the additional full diamond comparison is the concrete operator identity (6.14) and its uniform amplified trace-norm estimate (6.16); it is not inferred from fidelity or Choi-overlap equality.
+
+The rank-two correlation example in Buscemi–Chiribella–D’Ariano, [*Inverting Quantum Decoherence by Classical Feedback from the Environment*, equation (9)](https://arxiv.org/html/quant-ph/0504195v5), is the entrywise conjugate of $C_0$, with the Heisenberg/Schrödinger correspondence specified in Section 4. Their Theorem 2 gives the extremal-rank constraint and the qubit/qutrit random-unitary conclusion; neither supplies (6.16). Yu–Duan–Xu, [*Bounds on the distance between a unital quantum channel and the convex hull of unitary channels*, Lemma 2 and Theorem 2](https://arxiv.org/html/1201.1172v1), compare an uncorrected channel with mixed-unitary competitors, a different optimization domain from (1.4). No such change of competitor domain enters (6.6).
+
+The derivation is therefore a source-specific application of the existing basis, polar correction, and elementary norm inequalities, with the lower bound supplied by Theorem 3.1; it does not assert a new general norm theorem or global literature priority. Every premise used for the exact value is displayed above or in the cited existing lower theorem, and no inaccessible manuscript or unpublished protocol claim is a premise. The construction fixes the record, effects, and feedback exactly and proves a channel identity on arbitrary operators; it supplies no additional premise about uncertain physical implementations or access to measured probabilities. $\square$
+
+## 追加锚（本行以下为增补区）
