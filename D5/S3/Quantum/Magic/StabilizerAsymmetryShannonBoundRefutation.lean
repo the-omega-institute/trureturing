@@ -7,6 +7,7 @@
    digest: A three-qubit state refutes the Shannon branch-and-bound entropy lower bound. -/
 
 import D5.S3.Entropy.MaxEntropy
+import D5.S3.Entropy.TwoDeletionRunEntropyBounds
 import Mathlib.Data.Matrix.Diagonal
 import Mathlib.LinearAlgebra.QuadraticForm.Basic
 
@@ -160,9 +161,11 @@ private lemma abs_entropy :
   ring
 
 private lemma log_gap : 9 * Real.log 3 < 16 * Real.log 2 := by
-  have h := Real.log_lt_log (by norm_num : (0 : ℝ) < 3 ^ 9)
-    (by norm_num : (3 : ℝ) ^ 9 < 2 ^ 16)
-  simpa only [Real.log_pow, Nat.cast_ofNat] using h
+  have h := D5.S3.Entropy.TwoDeletionRunEntropyBounds.logb_three_bounds.2
+  rw [Real.logb] at h
+  have h2 : 0 < Real.log 2 := Real.log_pos (by norm_num)
+  have h3 := (div_lt_iff₀ h2).mp h
+  linarith
 
 /-- The certified three-qubit counterexample to the source's Shannon conjecture. -/
 theorem result : ¬ claim := by
