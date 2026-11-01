@@ -397,6 +397,18 @@ private theorem beta_fibre (z : Source)
     · exact (List.cons.inj eq).2
     · cases eq
 
+private theorem beta_fibre_decoded (z : Source)
+    (reached : ∃ W : List Letter, W ≠ [] ∧ run (.of false) W = z) :
+    ∃! U : List Letter, recover 2 z = some (K,U) ∧
+      ∀ W : List Letter, run (.of false) W = z ↔ W = .F :: U ∨ W = .G :: U := by
+  obtain ⟨U,fibre,unique⟩ := beta_fibre z reached
+  refine ⟨U,⟨?_,fibre⟩,?_⟩
+  · have eq : run K U = z := (run_first .F U).symm.trans
+      ((fibre (.F :: U)).mpr (Or.inl rfl))
+    exact (recover_iff 2 z K U).mpr ⟨by decide,rfl,rfl,eq⟩
+  · intro V hv
+    exact unique V hv.2
+
 private theorem supplement_separation {A : Type} (E : List Letter → A)
     (U : List Letter) :
     (∃ D : A → List Letter, ∀ W : List Letter,
@@ -599,8 +611,8 @@ theorem completed_history_recovery :
         run s V = run t W → s = t ∧ V = W) ∧
     (∀ W : List Letter, run (.of false) W = .of false ↔ W = []) ∧
     (∀ z : Source, (∃ W : List Letter, W ≠ [] ∧ run (.of false) W = z) →
-      ∃! U : List Letter, ∀ W : List Letter,
-        run (.of false) W = z ↔ W = .F :: U ∨ W = .G :: U) ∧
+      ∃! U : List Letter, recover 2 z = some (K,U) ∧
+        ∀ W : List Letter, run (.of false) W = z ↔ W = .F :: U ∨ W = .G :: U) ∧
     (∀ (A : Type) (E : List Letter → A) (U : List Letter),
       (∃ D : A → List Letter, ∀ W : List Letter,
         run (.of false) W = run K U → D (E W) = W) ↔
@@ -629,7 +641,7 @@ theorem completed_history_recovery :
     (∀ U : List Letter,
       ∃ D : Bool → List Letter, ∀ W : List Letter,
         run (.of false) W = run K U → D (firstChoice W) = W) := by
-  refine ⟨recover_iff,?_,?_,previous_sound,run_injective,beta_empty,beta_fibre,
+  refine ⟨recover_iff,?_,?_,previous_sound,run_injective,beta_empty,beta_fibre_decoded,
     fun _ E U => supplement_separation E U,replay_guarded,guarded_attained,
     fun t W hn => ⟨primitive_word t W hn,primitive_length t W hn⟩,
     native_run,first_choice_sufficient⟩

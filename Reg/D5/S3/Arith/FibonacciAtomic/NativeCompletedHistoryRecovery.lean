@@ -47,8 +47,8 @@ abbrev arena : Arena where
         run s V = run t W → s = t ∧ V = W) ∧
     (∀ W : List Letter, run (.of false) W = .of false ↔ W = []) ∧
     (∀ z : Source, (∃ W : List Letter, W ≠ [] ∧ run (.of false) W = z) →
-      ∃! U : List Letter, ∀ W : List Letter,
-        run (.of false) W = z ↔ W = .F :: U ∨ W = .G :: U) ∧
+      ∃! U : List Letter, recover 2 z = some (K,U) ∧
+        ∀ W : List Letter, run (.of false) W = z ↔ W = .F :: U ∨ W = .G :: U) ∧
     (∀ (A : Type) (E : List Letter → A) (U : List Letter),
       (∃ D : A → List Letter, ∀ W : List Letter,
         run (.of false) W = run K U → D (E W) = W) ↔
