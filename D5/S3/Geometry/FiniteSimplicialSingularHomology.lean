@@ -401,7 +401,7 @@ def columnCoproductIso (p : ℕ) : (cechSingular K).X p ≅ columnCoproduct K p 
   hom := columnToCoproduct K p
   inv := coproductToColumn K p
   hom_inv_id := by
-    apply HomologicalComplex.Hom.ext
+    apply HomologicalComplex.hom_ext
     intro q
     apply cech_hom_ext K
     intro s hs σ hσ
@@ -414,7 +414,7 @@ def columnCoproductIso (p : ℕ) : (cechSingular K).X p ≅ columnCoproduct K p 
     apply Sigma.hom_ext
     intro s
     rw [coproductToColumn, Sigma.ι_comp_desc_assoc, Category.comp_id]
-    apply HomologicalComplex.Hom.ext
+    apply HomologicalComplex.hom_ext
     intro q
     apply SSet.chainComplex_hom_ext
     intro σ
