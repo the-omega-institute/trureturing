@@ -59,8 +59,7 @@ def previous (n0 : Nat) (z : Source) : Option (Source × Letter) := do
 
 /-- One recursive computation returns its accepted predecessor count and answer.
 The count includes accepted descents even when a later check rejects. -/
-def recoverFuel : Nat → Nat → Source → Nat × Option (Source × List Letter)
-  | fuel, n0, z =>
+def recoverFuel (fuel n0 : Nat) (z : Source) : Nat × Option (Source × List Letter) :=
     if n0 ≤ 1 ∨ ¬ Native z ∨ eventIndex z < n0 then (0,none)
     else if eventIndex z = n0 then (0,some (z,[]))
     else match fuel with
@@ -146,7 +145,16 @@ private theorem collapse_sound (z p : Source) (h : collapse z = some p) :
 
 private theorem rho_not_alpha (t : Source) : substitution t ≠ .of true := by
   cases t with
-  | of b => cases b <;> simp [substitution, FreeMagma.lift_of, FreeMagma.of.injEq]
+  | of b =>
+    cases b with
+    | false =>
+      change (FreeMagma.mul (.of false) (.of true) : Source) ≠ .of true
+      intro h
+      cases h
+    | true =>
+      change (FreeMagma.of false : Source) ≠ .of true
+      intro h
+      cases h
   | mul l r => intro h; cases h
 
 private theorem H_native (t : Source) (hn : Native t) : Native (H t) := by
@@ -270,11 +278,10 @@ private theorem previous_sound (n0 : Nat) (z p : Source) (X : Letter)
     cases hp
     have eq := rho_predecessor_sound z p hq
     refine ⟨nq,eq,?_⟩
-    have hi := act_index .F p nq
-    change eventIndex (substitution p) = _ at hi
-    rw [eq] at hi
-    have := p.length_pos
-    omega
+    rw [← eq]
+    change eventIndex p < eventIndex (act .F p)
+    rw [act_index .F p nq]
+    exact Nat.lt_add_of_pos_right p.length_pos
 
 private theorem recover_fuel_complete (n0 : Nat) (h0 : 1 < n0) (t : Source)
     (hn : Native t) (ht : eventIndex t = n0) (W : List Letter) :
@@ -515,13 +522,16 @@ private theorem guarded_cons (t : Source) (p : NativeLocalSourceExecution.Addres
     Geometry.NativeGuardedLeafRepair.run t (toCall (p,k) :: cs) =
       (NativeLocalSourceExecution.edit t p k).bind
         (fun u => Geometry.NativeGuardedLeafRepair.run u cs) := by
+  have distinct : (FreeMagma.of true : Source) ≠ .of false := by
+    intro h
+    cases h
   rw [edit_canonical]
   cases k <;> cases hs : ActualLeafHistoryRigidity.subtree p t with
   | none => simp [Geometry.NativeGuardedLeafRepair.run,toCall,hs]
   | some v =>
     cases v with
     | of b => cases b <;> simp [Geometry.NativeGuardedLeafRepair.run,toCall,hs,
-        substitution,FreeMagma.lift_of,FreeMagma.of.injEq]
+        substitution,FreeMagma.lift_of,distinct,Ne.symm distinct]
     | mul l r => simp [Geometry.NativeGuardedLeafRepair.run,toCall,hs]
 
 private theorem replay_guarded (t : Source) (es : List NativeLocalSourceExecution.Event) :
@@ -559,7 +569,9 @@ private theorem guarded_append (t : Source) (cs ds : List Geometry.NativeGuarded
       Geometry.NativeGuardedLeafRepair.run t (c :: cs) =
         (NativeLocalSourceExecution.edit t (fromCall c).1 (fromCall c).2).bind
           (fun u => Geometry.NativeGuardedLeafRepair.run u cs) := by
-    cases c <;> exact guarded_cons t _ _ cs
+    cases c with
+    | promote p => exact guarded_cons t p true cs
+    | split p => exact guarded_cons t p false cs
   induction cs generalizing t with
   | nil => rfl
   | cons c cs ih => simp only [List.cons_append,step,ih,Option.bind_assoc]
