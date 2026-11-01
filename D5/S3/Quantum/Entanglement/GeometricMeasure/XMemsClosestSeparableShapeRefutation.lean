@@ -285,9 +285,17 @@ private theorem magnitude_sq (t : ℝ) (ht : 0 ≤ t) (ht1 : t ≤ 1) (i : Fin 2
 private theorem localState_density (t : ℝ) (ht : 0 ≤ t) (ht1 : t ≤ 1) (c : ZMod 3) :
     IsDensity (localState t c) := by
   refine ⟨Matrix.posSemidef_vecMulVec_self_star _, ?_⟩
-  simp only [Matrix.trace, Matrix.diag, Fin.sum_univ_succ, Fin.sum_univ_zero,
-    localState_entry]
-  norm_num [← pow_two, magnitude_sq t ht ht1]
+  change (Matrix.vecMulVec (localVector t c) (star (localVector t c))).trace = 1
+  rw [Matrix.trace_vecMulVec, dotProduct_comm]
+  dsimp only [localVector]
+  rw [D5.S3.Quantum.Information.BargmannImaginaryMaximizers.Latitude.latitude_dot
+    (1 - t) (by linarith) (by linarith)]
+  have hz : star (ZMod.stdAddChar c) * ZMod.stdAddChar c = 1 := by
+    rw [star_character, ← AddChar.map_add_eq_mul]
+    simp
+  rw [mul_assoc, hz, mul_one]
+  push_cast
+  ring
 
 private def phaseProduct (a b : ZMod 3) :
     Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) ℂ :=
