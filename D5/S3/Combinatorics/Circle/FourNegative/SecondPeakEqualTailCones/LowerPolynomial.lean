@@ -33,6 +33,7 @@ private theorem lower_polynomials (u v w : ℤ) (hu : 0≤u) (hv : 0≤v) (hw : 
   intro i
   fin_cases i
   · -- P1: old1_lower; 21 positive coefficients.
+    change 0<lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) (0 : Fin 13)
     have he : lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) 0 =
         4256 + 33*w + 2725*v +
         13*v*w + 610*v^2 + v^2*w +
@@ -46,6 +47,7 @@ private theorem lower_polynomials (u v w : ℤ) (hu : 0≤u) (hv : 0≤v) (hw : 
     rw [he]
     positivity
   · -- P2: old1_cap; 19 positive coefficients.
+    change 0<lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) (1 : Fin 13)
     have he : lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) 1 =
         5088 + 40*w + 1787*v +
         4*v*w + 208*v^2 + 8*v^3 +
@@ -59,6 +61,7 @@ private theorem lower_polynomials (u v w : ℤ) (hu : 0≤u) (hv : 0≤v) (hw : 
     rw [he]
     positivity
   · -- P3: new1_lower; 21 positive coefficients.
+    change 0<lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) (2 : Fin 13)
     have he : lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) 2 =
         7358 + 57*w + 5034*v +
         25*v*w + 1170*v^2 + 2*v^2*w +
@@ -72,6 +75,7 @@ private theorem lower_polynomials (u v w : ℤ) (hu : 0≤u) (hv : 0≤v) (hw : 
     rw [he]
     positivity
   · -- P4: new1_cap; 19 positive coefficients.
+    change 0<lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) (3 : Fin 13)
     have he : lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) 3 =
         10178 + 80*w + 3574*v +
         8*v*w + 416*v^2 + 16*v^3 +
@@ -85,6 +89,7 @@ private theorem lower_polynomials (u v w : ℤ) (hu : 0≤u) (hv : 0≤v) (hw : 
     rw [he]
     positivity
   · -- P5: old2_lower; 19 positive coefficients.
+    change 0<lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) (4 : Fin 13)
     have he : lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) 4 =
         3332 + 28*w + 1337*v +
         4*v*w + 179*v^2 + 8*v^3 +
@@ -98,6 +103,7 @@ private theorem lower_polynomials (u v w : ℤ) (hu : 0≤u) (hv : 0≤v) (hw : 
     rw [he]
     positivity
   · -- P6: old2_cap; 11 positive coefficients.
+    change 0<lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) (5 : Fin 13)
     have he : lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) 5 =
         147 + 4*w + 42*v +
         3*v^2 + 141*u + u*w +
@@ -108,6 +114,7 @@ private theorem lower_polynomials (u v w : ℤ) (hu : 0≤u) (hv : 0≤v) (hw : 
     rw [he]
     positivity
   · -- P7: new2_lower_timesL; 51 positive coefficients.
+    change 0<lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) (6 : Fin 13)
     have he : lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) 6 =
         972314 + 8884*w + 679621*v +
         3768*v*w + 188200*v^2 + 524*v^2*w +
@@ -131,6 +138,7 @@ private theorem lower_polynomials (u v w : ℤ) (hu : 0≤u) (hv : 0≤v) (hw : 
     rw [he]
     positivity
   · -- P8: new2_cap_timesL; 51 positive coefficients.
+    change 0<lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) (7 : Fin 13)
     have he : lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) 7 =
         1322132 + 12172*w + 793313*v +
         4048*v*w + 189986*v^2 + 444*v^2*w +
@@ -154,6 +162,7 @@ private theorem lower_polynomials (u v w : ℤ) (hu : 0≤u) (hv : 0≤v) (hw : 
     rw [he]
     positivity
   · -- P9: old3_cap; 19 positive coefficients.
+    change 0<lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) (8 : Fin 13)
     have he : lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) 8 =
         3955 + 36*w + 1502*v +
         4*v*w + 190*v^2 + 8*v^3 +
@@ -167,6 +176,7 @@ private theorem lower_polynomials (u v w : ℤ) (hu : 0≤u) (hv : 0≤v) (hw : 
     rw [he]
     positivity
   · -- P10: new3_lower_timesL; 41 positive coefficients.
+    change 0<lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) (9 : Fin 13)
     have he : lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) 9 =
         295232 + 2304*w + 180304*v +
         832*v*w + 44037*v^2 + 100*v^2*w +
@@ -187,6 +197,7 @@ private theorem lower_polynomials (u v w : ℤ) (hu : 0≤u) (hv : 0≤v) (hw : 
     rw [he]
     positivity
   · -- P11: new3_cap_timesL; 51 positive coefficients.
+    change 0<lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) (10 : Fin 13)
     have he : lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) 10 =
         795074 + 9540*w + 529648*v +
         3400*v*w + 140455*v^2 + 404*v^2*w +
@@ -210,6 +221,7 @@ private theorem lower_polynomials (u v w : ℤ) (hu : 0≤u) (hv : 0≤v) (hw : 
     rw [he]
     positivity
   · -- P12: C_nonnegative; 21 positive coefficients.
+    change 0<lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) (11 : Fin 13)
     have he : lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) 11 =
         9016 + 73*w + 4431*v +
         17*v*w + 813*v^2 + v^2*w +
@@ -223,6 +235,7 @@ private theorem lower_polynomials (u v w : ℤ) (hu : 0≤u) (hv : 0≤v) (hw : 
     rw [he]
     positivity
   · -- P13: C_capacity; 29 positive coefficients.
+    change 0<lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) (12 : Fin 13)
     have he : lowerPolynomial (4+u) (2*(2*(4+u)+v)^2+w) (2*(4+u)+v) 12 =
         31781 + 256*w + 16141*v +
         64*v*w + 3057*v^2 + 4*v^2*w +

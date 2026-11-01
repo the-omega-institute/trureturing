@@ -117,7 +117,9 @@ private theorem native_bounds (a b s : ℕ) (hs : 2≤s)
   have hpF := Nat.two_pow_pos (b-1)
   have hpE := Nat.two_pow_pos (a-1)
   have hp0 := p0_power a b s hs ha hb hbs
-  have hsafe : 1+epsilon a b≤p0 b s := by omega
+  have hsafe : 1+epsilon a b≤p0 b s := by
+    rw [hp0]
+    omega
   have hpbound : p a b s≤H b s := by
     dsimp only [p,H]
     rw [hp0]
