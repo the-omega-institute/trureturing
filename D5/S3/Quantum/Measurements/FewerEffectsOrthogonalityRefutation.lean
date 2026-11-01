@@ -8,10 +8,9 @@
 
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
 
 /-! Conjecture 2 in Liu and DeBrota, arXiv:2105.02074v2, Appendix C. The positive
-square root and squared Frobenius distance are those of Section III. The construction
+square root and squared Frobenius distance are those of Section IV. The construction
 has ranks 2,2,2,4 in dimension ten; projectors of ranks 2,2,3,3 give a smaller value. -/
 
 set_option autoImplicit false
