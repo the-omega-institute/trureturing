@@ -1761,3 +1761,134 @@ All table arguments lie in the original $K$. The matrices $P_N/2$ and $\delta$ o
 Every member of the tomography basis $\mathcal B$ of Definition 16.1 has rank one; the exceptional projections have rank eight. Thus (21.1) agrees with the trace table on $\mathcal B$, which proves $H=I_{16}/16$ and (21.4). The family uses a single complete table on each finite grid and no cross-grid hypothesis. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 22. 高斯兼容的固定八维互补原子对
+
+**定义 22.1（$E_8$ 的高斯结构与完整复效果集）。** Let $L$ be the $E_8$ lattice of Definition 20.1, now viewed in two quaternion blocks with the orthogonal complex structure
+
+$$
+J(x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8)=(-x_2,x_1,x_4,-x_3,-x_6,x_5,x_8,-x_7).
+$$
+
+Thus $J^2=-I$ and $J$ is a signed permutation with four sign reversals, so it preserves both cosets in the displayed description of $L$. Regard $(L,J)$ as a torsion-free $\mathbb Z[i]$-module of rank four; it is free because $\mathbb Z[i]$ is a PID. Let $i$ act by $J$ and define $h(x,y)=(x,y)+i(Jx,y)$, with the first variable conjugate-linear. Its real part is the Euclidean form on $L.
+
+For $m\ge1$, put $N=2^m$ and
+
+$$
+K_{8,m}=\{E\in\operatorname{Herm}_8((1/N)\mathbb Z[i]):0\le E\le I_8\}.
+$$
+
+The order is the Loewner order on the full complex Hermitian space; no real-only restriction is made.
+
+**引理 22.2（局部环中的相容拉格朗日分解）。** Put $A=\mathbb Z[i]/2\mathbb Z[i]$ and $M=L/2L$. Writing $\varepsilon=1+i$, one has $A\simeq\mathbb F_2[\varepsilon]/(\varepsilon^2)$, and conjugation is the identity on $A$. The reduction of $h$ is therefore a perfect alternating $A$-bilinear form on the free rank-four $A$-module $M$. The function
+
+$$
+q(\bar x)=\|x\|^2/2\pmod 2
+$$
+
+has polar form $b(\bar x,\bar y)=\operatorname{Re}h(x,y)\pmod2$, and $q(i\bar x)=q(\bar x)$. Every root class is primitive modulo $(1+i)L$, and there is a free rank-two Lagrangian summand $U\subset M$ containing it with $q|_U\ne0$. More generally, every free rank-two Lagrangian $V$ with $q|_V\ne0$ has a free Lagrangian complement $W$ with $q|_W\ne0$.
+
+**证明。** Since $h$ is unimodular, its reduction is perfect. Since all lattice norms are even, the diagonal of the reduced form is zero; over $A$ this is the alternating assertion. Also $q(\varepsilon x)=0$, so on an isotropic summand $q$ factors through $A/(\varepsilon)=\mathbb F_2$. A root cannot be divisible by $1+i$: such a division would produce a lattice vector of squared norm one. It is therefore primitive in $M$, and symplectic Gram--Schmidt extends its class to a hyperbolic $A$-basis. Taking it together with an isotropic vector in the orthogonal rank-two complement gives $U$; its restriction of $q$ is nonzero because it already takes the value one on the root.
+
+For the second assertion, choose an $A$-basis $u_1,u_2$ of $V$ with $q(u_1)=1$ and $q(u_2)=0$. Choose dual partners $w_1,w_2$ and perform the usual symplectic adjustment $w_2\mapsto w_2+h(w_1,w_2)u_1$; this makes the partner span isotropic while preserving the dual pairings. If $q$ vanishes on that complement, replace $w_2$ by $w_2+u_2$. Isotropy and complementarity remain, and
+
+$$
+q(w_2+u_2)=q(w_2)+q(u_2)+b(w_2,u_2)=1.
+$$
+
+Thus the resulting complement has nonzero $q$.
+
+**引理 22.3（配对根框架与同时生成）。** Let $U$ and $W$ be free rank-two Lagrangian summands supplied by Lemma 22.2. Each has eight $q=1$ classes, and those classes span its underlying four-dimensional $\mathbb F_2$-space. Using the root-class result and orthogonality argument already proved in Theorem 20.2, choose one root from each pair under multiplication by $i$. The resulting four roots form a Gaussian-orthogonal frame: if $R$ and $S$ are the corresponding $4\times4$ complex column matrices, then
+
+$$
+RR^*=SS^*=2I_4,\qquad 2L\subset R\mathbb Z[i]^4,\quad 2L\subset S\mathbb Z[i]^4,
+$$
+
+and their reductions have images $U$ and $W$, respectively.
+
+**证明。** The eight $q=1$ classes in either summand span it because, after fixing one class $z$ with $q(z)=1$, every $q=0$ class $w$ is $z+(z+w)$ with both summands of $q=1$. The root representatives supplied by Theorem 20.2 are pairwise real-orthogonal for distinct classes. Multiplication by $i$ has no fixed $q=1$ class: fixed classes lie in $\varepsilon U$ or $\varepsilon W$, where $q$ vanishes. Thus the eight classes split into four $i$-pairs. For representatives $r_j$, both $r_j$ and $Jr_j$ occur in the real orthogonal frame, so the real and imaginary parts of $h(r_j,r_k)$ vanish for $j\ne k$, while $h(r_j,r_j)=2$. This gives $RR^*=2I_4$, and the same holds for $S$.
+
+For every $x\in L$, the frame identity gives
+
+$$
+2x=\sum_{j=1}^4 r_jh(r_j,x),
+$$
+
+so the Gaussian span contains $2L$. The eight classes represented by $r_j$ and $Jr_j$ span exactly the stated Lagrangian image modulo $2L$.
+
+**引理 22.4（同一格上的高斯区间刚性与互补框架）。** Fix $m\ge2$, $N=2^m$, and $t=N/2-1$. Let $\overline T$ be the reduction modulo $2L$ of the quaternion endomorphism $T=\operatorname{diag}(A,A)$ from Theorem 20.2, with $a^2+b^2+c^2+e^2=t$. Then $T$ is complex-linear for $J$, preserves $L$, $T^*T=TT^*=tI_4$, and $\overline T$ preserves $h$, $q$, and the Lagrangian structure. If $V=\overline T^{-1}U$ and $W$ is a complement from Lemma 22.2, define
+
+$$
+V_+=[\,R\ \ TS\,],\qquad V_-=[\,-T^*R\ \ S\,].
+$$
+
+Then
+
+$$
+V_+V_+^*=V_-V_-^*=NI_4,\qquad V_+V_-^*=0,
+$$
+
+and each combined column group generates $L$ over $\mathbb Z[i]$.
+
+**证明。** The quaternion matrix in Theorem 20.2 is left multiplication, while $J$ is right multiplication by $i$ in the chosen two-block identification; hence they commute. The preservation, norm identity, and reduction properties are exactly the inherited quaternion calculation, with $t$ odd. Since $W$ complements $\overline T^{-1}U$, the two quotient images
+
+$$
+U+\overline T W=M,\qquad \overline T^{-1}U+W=M
+$$
+
+are full. The combined plus span contains $2L$ via $R$, and the combined minus span contains $2L$ via $S$; together with these quotient images this proves generation. No containment of $2L$ by either transformed block is required.
+
+Using Lemma 22.3 and $TT^*=tI_4$, direct multiplication gives
+
+$$
+V_+V_+^*=2I_4+2tI_4=NI_4,\qquad V_-V_-^*=2tI_4+2I_4=NI_4,\qquad V_+V_-^*=-2T+2T=0.
+$$
+
+Consequently
+
+$$
+P_N=V_+^*V_+/N,\qquad Q_N=V_-^*V_-/N
+$$
+
+are rank-four Hermitian projections in $\operatorname{Mat}_8((1/N)\mathbb Z[i])$. The stacked matrix satisfies $[V_+;V_-][V_+;V_-]^*=NI_8$, so $P_N+Q_N=I_8$ and the projections are complementary.
+
+It remains to record the interval argument for the full complex domain. Let $B$ be any Gaussian basis matrix of $L$ and put $C=B^*B$. If $X\in\operatorname{Herm}_4(\mathbb Z[i])$ and $0\le X\le C$, its realification $\rho(X)$ is an integral real symmetric matrix with
+
+$$
+0\le\rho(X)\le\rho(C).
+$$
+
+The matrix $\rho(C)$ is the Gram matrix of the real $\mathbb Z$-basis $(B,iB)$ of $L$. The integral-interval argument proved in Theorem 20.2 therefore gives $\rho(X)=0$ or $\rho(C)$, hence $X=0$ or $X=C$. This tests every Gaussian Hermitian $X$, not merely real matrices.
+
+Now let $V$ be either $V_+$ or $V_-$, and let $F\in K_{8,m}$ satisfy $F\le V^*V/N$. Set $Z=NF$. Then $Z$ is integral and
+
+$$
+0\le Z\le V^*V,\qquad H=VZV^*/N^2\text{ satisfies }0\le H\le I_4,\qquad Z=V^*HV.
+$$
+
+Write $V=BD$ with $D\in\operatorname{Mat}_{4\times8}(\mathbb Z[i])$. Generation makes $D$ surjective, so choose an integral right inverse $E$ with $DE=I_4$. Then
+
+$$
+X=E^*ZE=B^*HB\in\operatorname{Herm}_4(\mathbb Z[i]),\qquad 0\le X\le C.
+$$
+
+The Gaussian interval property forces $X=0$ or $C$, and positive definiteness of $B$ then forces $H=0$ or $I_4$. Thus $F=0$ or $V^*V/N$.
+
+**定理 22.5（固定八维的高斯互补原子对）。** For every integer $m\ge2$, with $N=2^m$, there are complementary rank-four Hermitian projections $P_N,Q_N\in K_{8,m}$ such that
+
+$$
+\{F\in K_{8,m}:F\le P_N\}=\{0,P_N\},\qquad
+\{F\in K_{8,m}:F\le Q_N\}=\{0,Q_N\}.
+\tag{22.1}
+$$
+
+**证明。** Apply Lemma 22.4 to the frames from Lemma 22.3. Its displayed matrices give complementary rank-four projections on the original Gaussian dyadic grid, and the final descent argument applies to each projection separately.
+
+For the stated existential event, given $L\ge1$ choose $d=8$ and $m=\max\{L,5\}$. Then $N=2^m\ge32=4d$, while Theorem 22.5 applies because $m\ge2$. The same pair serves both complete complex subeffect intervals, so the fixed dimension is independent of $L$ and $m$, and all event quantifiers are satisfied.
+
+The construction reuses from Theorem 20.2 the $E_8$ lattice, root-class representatives and orthogonality, the integral-interval argument, and the quaternion norm and preservation calculation. The new content is their Gaussian-compatible assembly: the local-ring complement with nonzero $q$, the paired complex frames, and simultaneous generation of both complementary families.
+
+
+\square
+
+## 追加锚（本行以下为增补区）
