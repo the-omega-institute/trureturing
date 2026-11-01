@@ -18,30 +18,25 @@ internal sealed class StabilizerAsymmetryShannonBoundRefutationDocument : IScrib
                 "Bits n is the set of n binary coordinates, indexed by Fin n and valued in ZMod 2. "
                     + "It represents the binary strings in the stabilizer standard form of Section V.C, draft.tex lines 749–764. "
                     + "The definitions also allow n equal to zero."),
-            Definition("quad-form", "quadForm", "The binary quadratic exponent", QuadFormFormula(),
-                "The quadratic form sums x i times q i j times x j over all ordered coordinate pairs. "
-                    + "All products and both sums are in ZMod 2. This is the exponent xᵀQx in draft.tex line 760; "
-                    + "the definition itself allows every binary matrix q."),
             Definition("strict-upper", "IsStrictUpper", "The strictly upper-triangular part", StrictUpperFormula(),
                 "A matrix is strictly upper triangular when every entry on or below its diagonal is zero. "
                     + "This is the condition on the off-diagonal part Q′ in the splitting Q = Qd + Q′ of draft.tex line 769."),
-            Definition("diag-matrix", "diagMatrix", "The diagonal binary matrix", DiagMatrixFormula(),
-                "The diagonal matrix has entry d i at position (i,i) and zero elsewhere, with all entries in ZMod 2. "
-                    + "It is the diagonal part Qd in draft.tex line 769."),
             Definition("stab-amp", "stabAmp", "Stabilizer amplitudes", StabAmpFormula(),
                 "The amplitude is the stabilizer standard form of draft.tex lines 757–764 with k = N and R equal to the identity, "
                     + "so the translation quotient has one element. Its magnitude factor is the inverse square root of two to the power n. "
-                    + "The quadratic exponent is first computed in ZMod 2 and then represented by its natural value zero or one. "
+                    + "Mathlib's Matrix.toQuadraticForm' computes the quadratic exponent xᵀqx in ZMod 2, "
+                    + "which is then represented by its natural value zero or one. "
                     + "The exponent of Complex.I is instead the natural-number sum of the products of the natural representatives of c i and x i; "
-                    + "this sum is not reduced modulo two. The definition allows arbitrary q; a stabilizer basis uses diagMatrix d + q with q strictly upper triangular."),
+                    + "this sum is not reduced modulo two. The definition allows arbitrary q; a stabilizer basis uses Matrix.diagonal d + q "
+                    + "with q strictly upper triangular. Mathlib's Matrix.diagonal has entries d i on the diagonal and zero elsewhere."),
             Definition("overlap-prob", "overlapProb", "Squared stabilizer overlaps", OverlapProbFormula(),
                 "For a fixed q, c and state ψ, the value at d is the squared complex norm of the overlap with "
-                    + "the stabilizer amplitude whose matrix is diagMatrix d + q. Complex conjugation acts on the stabilizer amplitude. "
+                    + "the stabilizer amplitude whose matrix is Matrix.diagonal d + q. Complex conjugation acts on the stabilizer amplitude. "
                     + "This specializes the distribution p of draft.tex line 769 to k = N and R equal to the identity. "
                     + "The function is defined for arbitrary ψ, q and c; the unit-vector and triangular conditions enter the conjecture."),
             Definition("abs-prob", "absProb", "Squared overlaps after taking absolute amplitudes", AbsProbFormula(),
                 "Replace each state amplitude by its nonnegative real norm, included in the complex scalars, "
-                    + "and use the diagonal matrix with zero c. The resulting squared overlaps specialize the distribution qR "
+                    + "and use Matrix.diagonal d with zero c. The resulting squared overlaps specialize the distribution qR "
                     + "of draft.tex line 776 to R equal to the identity. Function.const denotes the zero binary vector in the displayed formula."),
             Describe.Lean(
                 DescribeId.Create("shannon-bound-claim"), DeclarationHandle.Create(Prefix + "claim"),
@@ -67,19 +62,27 @@ internal sealed class StabilizerAsymmetryShannonBoundRefutationDocument : IScrib
                             + "Enumerating the eight binary strings gives the squared norm "
                             + "(1 + 0 + 4 + 1 + 1 + 0 + 0 + 1)/8 = 1.")),
                     Paragraph(Text(
-                        "The product of two inverse square roots of eight is 1/8. Consequently, for each pair d,x of three-bit strings, "
-                            + "the overlap summand at q = 0 and c = 0 is (−1) to the natural representative of quadForm (diagMatrix d) x, "
+                        "FourMUBBoundEntanglementRefutation.scale_sq gives (√8)⁻² = 1/8. "
+                            + "Consequently, for each pair d,x of three-bit strings, "
+                            + "the overlap summand at q = 0 and c = 0 is (−1) to the natural representative of "
+                            + "Matrix.toQuadraticForm' (Matrix.diagonal d) x, "
                             + "times v x divided by eight, all in the complex scalars. The corresponding absolute-amplitude summand "
                             + "has |v x| in place of v x. The quadratic exponent is computed in ZMod 2 before taking its natural representative.")),
                     Paragraph(Text(
                         "Splitting each coordinate of d into its two possible values and summing over the eight x gives "
                             + "overlapProb 0 0 ψ = (1/4,1/4,0,0,0,1/4,0,1/4), "
-                            + "whereas absProb ψ = (9/16,1/16,1/16,1/16,1/16,1/16,1/16,1/16), in the same binary order. "
-                            + "Substituting these values into the Shannon sum, using the logarithm of a quotient and of a power, "
-                            + "gives respectively 2 log 2 and 4 log 2 − (9/8) log 3.")),
+                            + "whereas absProb ψ = (9/16,1/16,1/16,1/16,1/16,1/16,1/16,1/16), in the same binary order.")),
                     Paragraph(Text(
-                        "Since 0 < 3⁹ = 19683 < 65536 = 2¹⁶, strict monotonicity of the real logarithm and the power identity give "
-                            + "9 log 3 < 16 log 2. Now apply the asserted inequality to n = 3, the unit vector ψ and the zero q and c; "
+                        "Apply OrientationEntropyBalance.sum_entropy_formula first to four counts all equal to one with total four, "
+                            + "and then to the eight counts (9,1,1,1,1,1,1,1) with total sixteen. "
+                            + "Expanding Real.logb and clearing the positive factor log 2 converts the formula to natural logarithms. "
+                            + "The power identities log 4 = 2 log 2, log 16 = 4 log 2 and log (9⁹) = 18 log 3, "
+                            + "together with the displayed distributions and the zero Shannon summands, "
+                            + "give respectively 2 log 2 and 4 log 2 − (9/8) log 3.")),
+                    Paragraph(Text(
+                        "The upper bound in TwoDeletionRunEntropyBounds.logb_three_bounds is logb 2 3 < 5/3. "
+                            + "Expand Real.logb and use log 2 > 0 to obtain 9 log 3 < 15 log 2 < 16 log 2. "
+                            + "Now apply the asserted inequality to n = 3, the unit vector ψ and the zero q and c; "
                             + "the zero matrix is strictly upper triangular because every entry is zero. "
                             + "The two entropy values would give 4 log 2 − (9/8) log 3 ≤ 2 log 2, "
                             + "contradicting the strict logarithmic inequality. Thus the Shannon lower bound fails already for k = N = 3 and R = I."))),
@@ -93,26 +96,18 @@ internal sealed class StabilizerAsymmetryShannonBoundRefutationDocument : IScrib
     private static Formula BitsFormula() => All("n", Naturals(),
         Equal(LocalCall("Bits", X("n")), Arrow(FinOf(X("n")), BinaryField())));
 
-    private static Formula QuadFormFormula() => All("n", Naturals(), All("q", MatrixType(), All("x", BitsOf(X("n")),
-        Equal(LocalCall("quadForm", X("q"), X("x")), SumOver("i", FinOf(X("n")),
-            SumOver("j", FinOf(X("n")), Multiply(Multiply(At(X("x"), X("i")),
-                At(X("q"), X("i"), X("j"))), At(X("x"), X("j")))))))));
-
     private static Formula StrictUpperFormula() => All("n", Naturals(), All("q", MatrixType(),
         Equivalence(LocalCall("IsStrictUpper", X("q")), All("i", FinOf(X("n")), All("j", FinOf(X("n")),
             Arrow(new Formula.Not(Parenthesized(LessThan(X("i"), X("j")))),
                 Equal(At(X("q"), X("i"), X("j")), Typed(D(0), BinaryField()))))))));
-
-    private static Formula DiagMatrixFormula() => All("n", Naturals(), All("d", BitsOf(X("n")),
-        Equal(LocalCall("diagMatrix", X("d")), LambdaOf("i", FinOf(X("n")), LambdaOf("j", FinOf(X("n")),
-            At(Qualified("ite"), Equal(X("i"), X("j")), At(X("d"), X("i")), Typed(D(0), BinaryField())))))));
 
     private static Formula StabAmpFormula()
     {
         Formula root = At(Qualified("Real", "sqrt"), new Formula.Power(Typed(D(2), Reals()), X("n")));
         Formula scale = At(Qualified("Inv", "inv"), Typed(At(Qualified("Complex", "ofReal"), root), Complexes()));
         Formula sign = new Formula.Power(Parenthesized(new Formula.Negate(Typed(D(1), Complexes()))),
-            At(Qualified("ZMod", "val"), LocalCall("quadForm", X("q"), X("x"))));
+            At(Qualified("ZMod", "val"), At(Seq(Operatorname,
+                Grp(F.Id("Matrix"), Dot, F.Id("toQuadraticForm"), Apos)), X("q"), X("x"))));
         Formula phase = new Formula.Power(Qualified("Complex", "I"), SumOver("i", FinOf(X("n")),
             Multiply(At(Qualified("ZMod", "val"), At(X("c"), X("i"))),
                 At(Qualified("ZMod", "val"), At(X("x"), X("i"))))));
@@ -124,12 +119,12 @@ internal sealed class StabilizerAsymmetryShannonBoundRefutationDocument : IScrib
         All("ψ", StateType(), All("d", BitsOf(X("n")), Equal(LocalCall("overlapProb", X("q"), X("c"), X("ψ"), X("d")),
             At(Qualified("Complex", "normSq"), SumOver("x", BitsOf(X("n")),
                 Multiply(At(Qualified("Star", "star"), LocalCall("stabAmp",
-                    Parenthesized(Add(LocalCall("diagMatrix", X("d")), X("q"))), X("c"), X("x"))),
+                    Parenthesized(Add(At(Qualified("Matrix", "diagonal"), X("d")), X("q"))), X("c"), X("x"))),
                     At(X("ψ"), X("x")))))))))));
 
     private static Formula AbsProbFormula() => All("n", Naturals(), All("ψ", StateType(), All("d", BitsOf(X("n")),
         Equal(LocalCall("absProb", X("ψ"), X("d")), At(Qualified("Complex", "normSq"), SumOver("x", BitsOf(X("n")),
-            Multiply(At(Qualified("Star", "star"), LocalCall("stabAmp", LocalCall("diagMatrix", X("d")),
+            Multiply(At(Qualified("Star", "star"), LocalCall("stabAmp", At(Qualified("Matrix", "diagonal"), X("d")),
                 At(Qualified("Function", "const"), FinOf(X("n")), Typed(D(0), BinaryField())), X("x"))),
                 At(Qualified("Complex", "ofReal"), new Formula.Norm(At(X("ψ"), X("x")))))))))));
 
@@ -164,13 +159,11 @@ internal sealed class StabilizerAsymmetryShannonBoundRefutationDocument : IScrib
     private static Formula BinaryField() => At(Qualified("ZMod"), D(2));
     private static Formula FinOf(Formula n) => At(Qualified("Fin"), n);
     private static Formula BitsOf(Formula n) => LocalCall("Bits", n);
-    private static Formula MatrixType() => Arrow(FinOf(X("n")), Arrow(FinOf(X("n")), BinaryField()));
+    private static Formula MatrixType() => At(Qualified("Matrix"), FinOf(X("n")), FinOf(X("n")), BinaryField());
     private static Formula StateType() => Arrow(BitsOf(X("n")), Complexes());
     private static Formula Entropy(Formula p) => At(Qualified("D5", "S3", "Entropy", "MaxEntropy", "shannonEntropy"), p);
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, Typed(X(name), type), Comma, Sp, Parenthesized(body));
-    private static Formula LambdaOf(string name, Formula type, Formula body) =>
-        Seq(LambdaLower, Sp, Typed(X(name), type), Sp, Mapsto, Sp, Parenthesized(body));
     private static Formula SumOver(string name, Formula type, Formula body) =>
         Seq(new Formula.Subscript(Sum, Seq(X(name), Colon, Sp, type)), Sp, Parenthesized(body));
     private static Formula Arrow(Formula domain, Formula codomain) =>
