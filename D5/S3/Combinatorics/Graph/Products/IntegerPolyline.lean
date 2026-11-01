@@ -28,12 +28,12 @@ instance (p : List Point) : Decidable (axisAligned p) := by
   infer_instance
 
 /-- Exclude the right endpoint; the next segment contributes it. -/
-def prefix (a b : Point) : List Point :=
+def segmentPrefix (a b : Point) : List Point :=
   (List.range (segmentLength a b)).map (step a b)
 
 def expandFrom (a : Point) : List Point → List Point
   | [] => [a]
-  | b :: bs => prefix a b ++ expandFrom b bs
+  | b :: bs => segmentPrefix a b ++ expandFrom b bs
 
 def expand : List Point → List Point
   | [] => []
@@ -65,7 +65,7 @@ theorem length_expandFrom (a : Point) (bs : List Point) :
     (expandFrom a bs).length = lengthFrom a bs + 1 := by
   induction bs generalizing a with
   | nil => simp [expandFrom, lengthFrom]
-  | cons b bs ih => simp [expandFrom, lengthFrom, prefix, ih, Nat.add_assoc]
+  | cons b bs ih => simp [expandFrom, lengthFrom, segmentPrefix, ih, Nat.add_assoc]
 
 theorem length_expand (p : List Point) (hne : p ≠ []) :
     (expand p).length = length p + 1 := by
@@ -80,10 +80,10 @@ theorem sampleFrom_eq_getElem? (a : Point) (bs : List Point) (i : ℕ) :
     cases i <;> simp [sampleFrom, expandFrom]
   | cons b bs ih =>
     rw [sampleFrom, expandFrom, List.getElem?_append]
-    have hl : (prefix a b).length = segmentLength a b := by simp [prefix]
+    have hl : (segmentPrefix a b).length = segmentLength a b := by simp [segmentPrefix]
     rw [hl]
     split_ifs with hi
-    · simp [prefix, List.getElem?_map, List.getElem?_range, hi]
+    · simp [segmentPrefix, List.getElem?_map, List.getElem?_range, hi]
     · exact ih b (i - segmentLength a b)
 
 theorem sample_eq_getD (p : List Point) (i : ℕ) :
@@ -130,13 +130,14 @@ def verifierExpand : List Point → List Point
 
 theorem prefix_shift (a b : Point)
     (ha : a.1 = b.1 ∨ a.2 = b.2) :
-    prefix a b ++ [b] = a :: ((List.range (segmentLength a b)).map fun i => step a b (i+1)) := by
+    segmentPrefix a b ++ [b] = a :: ((List.range (segmentLength a b)).map fun i => step a b (i+1)) := by
   have he := step_last a b ha
   have hz := step_zero a b
   have h := congrArg (List.map (step a b)) (List.range_succ (n := segmentLength a b))
   have h' := congrArg (List.map (step a b)) (List.range_succ_eq_map (n := segmentLength a b))
-  simpa only [prefix, List.map_append, List.map_singleton, List.map_cons,
-    List.map_map, Function.comp_apply, Nat.succ_eq_add_one, he, hz] using h.symm.trans h'
+  simpa only [segmentPrefix, List.map_append, List.map_singleton, List.map_cons,
+    List.map_nil, List.map_map, Function.comp_def, Nat.succ_eq_add_one, he, hz]
+    using h.symm.trans h'
 
 theorem expandFrom_verifier (a : Point) (bs : List Point)
     (ha : axisAligned (a :: bs)) : expandFrom a bs = a :: verifierFrom a bs := by
@@ -152,7 +153,7 @@ theorem expandFrom_verifier (a : Point) (bs : List Point)
       simp only [List.tail_cons, List.zip_cons_cons, List.mem_cons] at *
       exact Or.inr hab'
     rw [expandFrom, ih b htail]
-    change prefix a b ++ ([b] ++ verifierFrom b bs) = _
+    change segmentPrefix a b ++ ([b] ++ verifierFrom b bs) = _
     rw [← List.append_assoc, prefix_shift a b hab]
     simp [verifierFrom]
 
