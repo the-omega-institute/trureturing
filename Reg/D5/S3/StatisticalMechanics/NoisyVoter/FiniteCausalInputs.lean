@@ -122,7 +122,7 @@ def factorization_registration : Contract.Registration
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "arg",
         "body", "body", "fn", "arg"]
-      stateBinder := 7
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "fn", "fn", "arg"]
       booleanPredicate := false }] }
@@ -301,7 +301,7 @@ def law_registration : Contract.Registration
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 9
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg", "fn", "fn", "arg"]
       booleanPredicate := false }] }
