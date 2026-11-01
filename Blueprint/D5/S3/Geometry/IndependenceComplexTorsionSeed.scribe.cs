@@ -24,7 +24,9 @@ internal sealed class IndependenceComplexTorsionSeedDocument : IScribeDocumentDe
                 + "decide and algebraic proofs, without native_decide, proof placeholders or custom axioms.")),
             Node("actual-seed", "seedComplex", "The project's actual independence complex",
                 "H is the graph on Fin 11 decoded from the graph6 payload of JEhbtj{rve?, and G0 is its "
-                + "complement. seedComplex is exactly FiniteGraphVertexSubstitution.independenceComplex G0. "
+                + "complement. This exact classical graph6 seed appears in Adamaszek, Small flag complexes "
+                + "with torsion (2012), arXiv:1208.3892v1; the explicit Lean proof here is local. "
+                + "seedComplex is exactly FiniteGraphVertexSubstitution.independenceComplex G0. "
                 + "Its eventual realization is FiniteConeCollapse.realization applied to its underlying "
                 + "pre-abstract complex.", DescribeRole.Definition),
             Node("edge-basis", "edgeSimplexEquiv", "The complete increasing edge basis",

@@ -106,12 +106,14 @@ $P_n\boxtimes P_m$ is always a wedge of spheres. A counterexample among
 induced subgraphs targets Question 32 and need not answer Question 35.
 
 `IndependenceComplexTorsionSeed` constructs an order-two class in the
-integer finite ordered chain homology of the complement of the graph
-with graph6 encoding `JEhbtj{rve?`. The graph, all 32 increasing edges,
-all 24 increasing triangles, the cycle, a chain bounding its double and
-a mod-two detecting functional are explicit local mathematical data.
-This calculation is not attributed to the paper and does not constitute
-a separate solved original problem or a novelty claim.
+integer finite ordered chain homology of the independence complex of the
+complement of the graph with graph6 encoding `JEhbtj{rve?`. This exact
+classical graph6 seed appears in Adamaszek, *Small flag complexes with
+torsion* (2012), [arXiv:1208.3892v1](https://arxiv.org/abs/1208.3892v1).
+The local explicit Lean proof supplies all 32 increasing edges, all 24
+increasing triangles, the cycle, a chain bounding its double and a mod-two
+detecting functional. The classical seed and its local formal proof do not
+constitute a separate solved original problem or a novelty claim.
 
 The finite-chain class alone supplies no comparison with singular
 homology of the coordinate realization. Such a comparison, its transport
