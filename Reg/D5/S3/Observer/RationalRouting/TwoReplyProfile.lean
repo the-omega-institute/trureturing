@@ -65,7 +65,10 @@ def arena : Arena where
       AcquisitionScans A I B z C ∧
       BoundedReplies Q V (program.actualReads z) ∧
       C.lower.den ≤ B ∧ C.upper.den ≤ B ∧
-      replyWidths (program.actualReads z) ≤ 6*Nat.size Q + 2*Nat.size V + 4
+      replyWidths (program.actualReads z) ≤ 6*Nat.size Q + 2*Nat.size V + 4 ∧
+      C.lower.num.natAbs ≤ B*originalUpper I ∧ C.upper.num.natAbs ≤ B*originalUpper I ∧
+      J.width ≤ max I.width (max (Nat.size (Q^2)) (integerWidth (reply (Q^2) z)) +
+        Nat.size (max (max A.a A.b) (max A.c A.d)) + 3)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h

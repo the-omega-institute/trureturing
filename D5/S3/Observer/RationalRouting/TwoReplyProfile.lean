@@ -1056,6 +1056,170 @@ private theorem trace_widths {Q V : ℕ} (hQ : 1 ≤ Q) {z : ℚ}
     simp only [replyWidths] <;> omega
 
 
+private theorem containing_cell_bounded (B : ℕ) (hB : 1 ≤ B) (y : ℚ)
+    (U : ℕ) (hU : y < U) :
+    0 ≤ (containingCell B y).lower ∧ (containingCell B y).upper ≤ U := by
+  induction B with
+  | zero => omega
+  | succ n ih =>
+    by_cases hn : n = 0
+    · subst n
+      have hfloor : reply 1 y + 1 ≤ (U : ℤ) := by
+        have hh : ⌊y⌋ < (U : ℤ) := Int.floor_lt.mpr hU
+        simpa [reply] using (show ⌊y⌋ + 1 ≤ (U : ℤ) by omega)
+      simp only [containingCell,ite_true]
+      constructor
+      · exact le_max_left _ _
+      · simpa using (show (reply 1 y : ℚ) + 1 ≤ U by exact_mod_cast hfloor)
+    · obtain ⟨hl,hu⟩ := ih (by omega)
+      simp only [containingCell,ite_eq_right hn]
+      exact ⟨hl.trans (le_max_left _ _),(min_le_left _ _).trans hu⟩
+
+private theorem rational_numerator_bound {q : ℚ} (hq : 0 ≤ q) {B U : ℕ}
+    (hd : q.den ≤ B) (hU : q ≤ U) : q.num.natAbs ≤ B*U := by
+  have hn : (q.num : ℚ) = q * q.den := by
+    calc
+      (q.num : ℚ) = ((q.num : ℚ) / q.den) * q.den :=
+        (div_mul_cancel₀ _ (by exact_mod_cast q.den_pos.ne')).symm
+      _ = q * q.den := by rw [Rat.num_div_den]
+  have hb : (q.num : ℚ) ≤ (B*U : ℕ) := by
+    rw [hn]
+    push_cast
+    calc
+      q * (q.den : ℚ) ≤ (U : ℚ) * q.den :=
+        mul_le_mul_of_nonneg_right hU (by positivity)
+      _ ≤ (U : ℚ) * B := mul_le_mul_of_nonneg_left (by exact_mod_cast hd) (by positivity)
+      _ = (B : ℚ) * U := mul_comm _ _
+  have hb' : q.num ≤ (B*U : ℕ) := by exact_mod_cast hb
+  have hnum : 0 ≤ q.num := Rat.num_nonneg.mpr hq
+  exact_mod_cast (show (q.num.natAbs : ℤ) ≤ (B*U : ℕ) by
+    rw [Int.natAbs_of_nonneg hnum]; exact hb')
+
+private theorem containing_cell_numerators (B : ℕ) (hB : 1 ≤ B) {y : ℚ}
+    (hy : 0 < y) (U : ℕ) (hU : y < U) :
+    (containingCell B y).lower.num.natAbs ≤ B*U ∧
+      (containingCell B y).upper.num.natAbs ≤ B*U := by
+  obtain ⟨hl,hu⟩ := containing_cell_bounded B hB y U hU
+  have hi := (containing_cell_exact B hB hy y).mpr ⟨hy,fun _ _ _ => rfl⟩
+  obtain ⟨hdl,hdu⟩ := containing_cell_denominators B hB y
+  exact ⟨rational_numerator_bound hl hdl (hi.2.1.trans (hi.2.2.le.trans hu)),
+    rational_numerator_bound (hy.le.trans hi.2.2.le) hdu hu⟩
+
+/-- Binary magnitude width of a signed integer, without its sign delimiter. -/
+def integerWidth (n : ℤ) : ℕ := Nat.size n.natAbs
+
+/-- The larger of the two reduced endpoint-coordinate widths. -/
+def rationalWidth (q : ℚ) : ℕ := max (integerWidth q.num) (Nat.size q.den)
+
+def ProfileCell.width (C : ProfileCell) : ℕ := max (rationalWidth C.lower) (rationalWidth C.upper)
+
+private theorem sum_size (a b : ℕ) :
+    Nat.size (a+b) ≤ max (Nat.size a) (Nat.size b) + 1 := by
+  apply Nat.size_le.mpr
+  have ha := (Nat.size_le.mp (le_max_left (Nat.size a) (Nat.size b)))
+  have hb := (Nat.size_le.mp (le_max_right (Nat.size a) (Nat.size b)))
+  rw [pow_succ]
+  omega
+
+private theorem integer_mul_width (a b : ℤ) :
+    integerWidth (a*b) ≤ integerWidth a + integerWidth b := by
+  simpa only [integerWidth,Int.natAbs_mul] using product_size a.natAbs b.natAbs
+
+private theorem integer_sub_width (a b : ℤ) :
+    integerWidth (a-b) ≤ max (integerWidth a) (integerWidth b) + 1 := by
+  exact (Nat.size_le_size (Int.natAbs_sub_le a b)).trans (sum_size a.natAbs b.natAbs)
+
+private theorem integer_add_one_width (a : ℤ) :
+    integerWidth (a+1) ≤ integerWidth a + 2 := by
+  have hh := (Nat.size_le_size (Int.natAbs_add_le a 1)).trans (sum_size a.natAbs 1)
+  simp only [Int.natAbs_one,Nat.size_one] at hh
+  dsimp only [integerWidth]
+  omega
+
+private theorem div_int_width (n d : ℤ) :
+    rationalWidth ((n : ℚ)/d) ≤ max (integerWidth n) (max 1 (integerWidth d)) := by
+  rw [← Rat.divInt_eq_div]
+  apply max_le
+  · dsimp only [integerWidth]
+    rw [Rat.num_divInt]
+    have he := Int.natAbs_ediv_le_natAbs (d.sign*n) (d.gcd n)
+    have hs : d.sign.natAbs ≤ 1 := by rw [Int.natAbs_sign]; split_ifs <;> omega
+    have hn : (d.sign*n).natAbs ≤ n.natAbs := by
+      rw [Int.natAbs_mul]
+      simpa using Nat.mul_le_mul_right n.natAbs hs
+    exact (Nat.size_le_size (he.trans hn)).trans (le_max_left _ _)
+  · rw [Rat.den_divInt]
+    split_ifs
+    · simpa only [Nat.size_one] using (le_max_left 1 (integerWidth d)).trans
+        (le_max_right (integerWidth n) (max 1 (integerWidth d)))
+    · exact (Nat.size_le_size (Nat.div_le_self _ _)).trans
+        ((le_max_right 1 (integerWidth d)).trans (le_max_right _ _))
+
+private theorem max_rational_width (x y : ℚ) :
+    rationalWidth (max x y) ≤ max (rationalWidth x) (rationalWidth y) := by
+  rcases le_total x y with h | h
+  · rw [max_eq_right h]; exact le_max_right _ _
+  · rw [max_eq_left h]; exact le_max_left _ _
+
+private theorem min_rational_width (x y : ℚ) :
+    rationalWidth (min x y) ≤ max (rationalWidth x) (rationalWidth y) := by
+  rcases le_total x y with h | h
+  · rw [min_eq_left h]; exact le_max_left _ _
+  · rw [min_eq_right h]; exact le_max_right _ _
+
+private theorem threshold_width (A : PositiveMatrix) (D : ℕ) (r : ℤ) :
+    let mu := Nat.size (max (max A.a A.b) (max A.c A.d))
+    let H := max (Nat.size D) (integerWidth r) + mu + 1
+    integerWidth ((D : ℤ)*A.a-r*A.c) ≤ H ∧
+      integerWidth (r*A.d-(D : ℤ)*A.b) ≤ H := by
+  dsimp only
+  let mu := Nat.size (max (max A.a A.b) (max A.c A.d))
+  have ha : Nat.size A.a ≤ mu := Nat.size_le_size
+    ((le_max_left A.a A.b).trans (le_max_left _ _))
+  have hb : Nat.size A.b ≤ mu := Nat.size_le_size
+    ((le_max_right A.a A.b).trans (le_max_left _ _))
+  have hc : Nat.size A.c ≤ mu := Nat.size_le_size
+    ((le_max_left A.c A.d).trans (le_max_right _ _))
+  have hd : Nat.size A.d ≤ mu := Nat.size_le_size
+    ((le_max_right A.c A.d).trans (le_max_right _ _))
+  have hDa := integer_mul_width (D : ℤ) A.a
+  have hrc := integer_mul_width r A.c
+  have hrd := integer_mul_width r A.d
+  have hDb := integer_mul_width (D : ℤ) A.b
+  have hlo := integer_sub_width ((D : ℤ)*A.a) (r*A.c)
+  have hup := integer_sub_width (r*A.d) ((D : ℤ)*A.b)
+  simp only [integerWidth,Int.natAbs_natCast] at hDa hrc hrd hDb
+  dsimp only [integerWidth] at *
+  constructor <;> omega
+
+private theorem first_interval_width (A : PositiveMatrix) (D : ℕ) (I : ProfileCell) (r : ℤ) :
+    let mu := Nat.size (max (max A.a A.b) (max A.c A.d))
+    (firstInterval A D I r).width ≤
+      max I.width (max (Nat.size D) (integerWidth r) + mu + 3) := by
+  dsimp only
+  let mu := Nat.size (max (max A.a A.b) (max A.c A.d))
+  have h₀ := threshold_width A D r
+  have h₁ := threshold_width A D (r+1)
+  have hr := integer_add_one_width r
+  have quotient (k : ℤ) :
+      rationalWidth (thresholdIntercept A D k / thresholdSlope A D k) ≤
+        max (integerWidth (k*A.d-(D : ℤ)*A.b))
+          (max 1 (integerWidth ((D : ℤ)*A.a-k*A.c))) := by
+    convert div_int_width (k*A.d-(D : ℤ)*A.b) ((D : ℤ)*A.a-k*A.c) using 1 <;>
+      simp [thresholdIntercept,thresholdSlope]
+  have q₀ := quotient r
+  have q₁ := quotient (r+1)
+  have hm₀ := max_rational_width 0 (thresholdIntercept A D r / thresholdSlope A D r)
+  have hm₁ := max_rational_width I.lower
+    (max 0 (thresholdIntercept A D r / thresholdSlope A D r))
+  have hm₂ := min_rational_width I.upper
+    (thresholdIntercept A D (r+1) / thresholdSlope A D (r+1))
+  have hz : rationalWidth 0 = 1 := by norm_num [rationalWidth,integerWidth]
+  dsimp only [ProfileCell.width,firstInterval]
+  dsimp only [ProfileCell.width] at *
+  split_ifs <;> omega
+
+
 /-- Actual acquisition on one authentic chronological prefix. The finite
 output is exactly the original cell and evaluates every future word and every
 scale through the requested bound; the actual-read trace has at most two rows. -/
@@ -1081,7 +1245,10 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
       AcquisitionScans A I B z C ∧
       BoundedReplies Q V (program.actualReads z) ∧
       C.lower.den ≤ B ∧ C.upper.den ≤ B ∧
-      replyWidths (program.actualReads z) ≤ 6*Nat.size Q + 2*Nat.size V + 4 := by
+      replyWidths (program.actualReads z) ≤ 6*Nat.size Q + 2*Nat.size V + 4 ∧
+      C.lower.num.natAbs ≤ B*originalUpper I ∧ C.upper.num.natAbs ≤ B*originalUpper I ∧
+      J.width ≤ max I.width (max (Nat.size (Q^2)) (integerWidth (reply (Q^2) z)) +
+        Nat.size (max (max A.a A.b) (max A.c A.d)) + 3) := by
   dsimp only
   rw [chronological_matrix u hx.1]
   obtain ⟨he, ht⟩ := acquisition_spec (unimodular_wordMatrix u.reverse) hl hB hx
@@ -1095,7 +1262,7 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
   have hD : 1 ≤ Q ^ 2 := one_le_pow₀ hQ
   let J := firstInterval A (Q ^ 2) I (reply (Q ^ 2) (mobius A x))
   have hJ : J.Contains x := (first_interval_exact hA hD hx.1 rfl x).mpr ⟨hx,rfl⟩
-  refine ⟨he, ?_, ?_, ht, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨he, ?_, ?_, ht, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · rw [he]
     intro y
     rw [containing_cell_exact B hB hx.1 y]
@@ -1130,5 +1297,13 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
       (hx.2.2.trans_le (original_upper_bounds hx).2)
     apply trace_widths hQ hz.1 _ ht
     simpa only [Nat.cast_add,Nat.cast_mul,Nat.cast_one] using hz.2
+
+  · rw [he]
+    exact (containing_cell_numerators B hB hx.1 (originalUpper I)
+      (hx.2.2.trans_le (original_upper_bounds hx).2)).1
+  · rw [he]
+    exact (containing_cell_numerators B hB hx.1 (originalUpper I)
+      (hx.2.2.trans_le (original_upper_bounds hx).2)).2
+  · exact first_interval_width _ _ _ _
 
 end D5.S3.Observer.RationalRouting

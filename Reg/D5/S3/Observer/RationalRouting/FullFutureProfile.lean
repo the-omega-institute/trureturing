@@ -116,7 +116,8 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature := realize signature (fun _ By x => @decide ((containingCell By.1 By.2).Contains x)
-    (Classical.propDecidable _)) Empty.elim
+    (inferInstanceAs (Decidable (0 < x ∧ (containingCell By.1 By.2).lower ≤ x ∧
+      x < (containingCell By.1 By.2).upper)))) Empty.elim
 
 def rejected : Realization signature := realize signature (fun _ _ _ => true) Empty.elim
 
@@ -175,7 +176,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ By x => @decide ((containingCell By.1 By.2).Contains x)
-    (Classical.propDecidable _)) Empty.elim)
+    (inferInstanceAs (Decidable (0 < x ∧ (containingCell By.1 By.2).lower ≤ x ∧
+      x < (containingCell By.1 By.2).upper)))) Empty.elim)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
