@@ -17,7 +17,7 @@ import D5.S3.VertexAlgebra.TwistedGround.GaussianCoefficientContinuity
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
-open scoped BigOperators lp
+open scoped BigOperators lp Ring
 open Filter Topology
 
 namespace D5.S3.VertexAlgebra.TwistedGround.InfiniteGaussianSewing

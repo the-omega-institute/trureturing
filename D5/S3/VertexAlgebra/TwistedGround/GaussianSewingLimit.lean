@@ -16,7 +16,7 @@ import Mathlib.Analysis.Normed.Ring.Units
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
-open scoped BigOperators InnerProductSpace lp ENNReal Matrix.Norms.L2Operator
+open scoped BigOperators InnerProductSpace lp ENNReal Ring Matrix.Norms.L2Operator
 open Filter Topology
 namespace D5.S3.VertexAlgebra.TwistedGround.GaussianSewingLimit
 open InfiniteGaussianFock CountableGaussianCutoff GaussianExternalBlock
@@ -31,22 +31,27 @@ private theorem norm_le_hsSize (T : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ))
   let e := Equiv.ofInjective b b.orthonormal.linearIndependent.injective
   have hv : Summable (fun i : Set.range b => ‖T (c i)‖ ^ 2) := by
     apply e.summable_iff.mp
-    simpa [c, TraceClassFiniteBlocks.setBasis_apply, e, b, coordinateBasis_apply] using
+    simpa only [Function.comp_def, c, TraceClassFiniteBlocks.setBasis_apply,
+      Equiv.ofInjective_apply, e, b, coordinateBasis_apply] using
       (matrix_columns T hT).1
   obtain ⟨U,hU,_,_,hnorm⟩ :=
     HilbertSchmidt.exists_hilbertSchmidt_of_square_summable_columns c (fun i => T (c i)) hv
   have hUT : U = T := by
     apply lp.ext_continuousLinearMap (by norm_num : (2 : ℝ≥0∞) ≠ ⊤)
     intro j
-    ext z
+    apply ContinuousLinearMap.ext
+    intro z
     have hj : U (lp.single 2 j 1) = T (lp.single 2 j 1) := by
-      simpa [c, TraceClassFiniteBlocks.setBasis_apply, b, coordinateBasis_apply] using
+      simpa only [c, TraceClassFiniteBlocks.setBasis_apply, Equiv.ofInjective_apply,
+        e, b, coordinateBasis_apply] using
         hU (e j)
     have hz : lp.single 2 j z = z • (lp.single 2 j (1 : ℂ) : ℓ²(I, ℂ)) := by
       simp [← lp.single_smul]
     simp [ContinuousLinearMap.comp_apply, hz, hj]
   rw [hUT] at hnorm
-  simpa only [hs_basis_square T hT] using hnorm
+  change ‖T‖ ≤ Real.sqrt
+    (∑' i, ‖T (TraceClassFiniteBlocks.setBasis (coordinateBasis I) i)‖ ^ 2) at hnorm
+  simpa only [hs_basis_square T hT, hsSize] using hnorm
 
 /-- HS compression convergence supplies operator-norm convergence by the
 existing square-summable-column synthesis theorem. -/
@@ -64,6 +69,7 @@ No operator-norm limit of the coordinate projections is asserted. -/
 theorem projection_vector_tendsto (z : ℓ²(I, ℂ)) :
     Tendsto (fun F : Finset I => coordinateProjection F z) atTop (𝓝 z) := by
   have h := lp.hasSum_single (p := (2 : ℝ≥0∞)) (by norm_num : (2 : ℝ≥0∞) ≠ ⊤) z
+  change Tendsto (fun F : Finset I => ∑ i ∈ F, lp.single 2 i (z i : ℂ)) atTop (𝓝 z) at h
   convert h using 1
   funext F
   ext i
@@ -92,9 +98,12 @@ mixed column. This does not replace the finite complement by zero. -/
 theorem mixed_complement_tendsto (r s : ℓ²(I, ℂ)) :
     Tendsto (fun F : Finset I => bilinear r ((1 - coordinateProjection F) s)) atTop (𝓝 0) := by
   have hz : Tendsto (fun F : Finset I => s - coordinateProjection F s) atTop (𝓝 0) := by
-    simpa using tendsto_const_nhds.sub (projection_vector_tendsto s)
+    simpa using (tendsto_const_nhds : Tendsto (fun _ : Finset I => s) atTop (𝓝 s)).sub
+      (projection_vector_tendsto s)
   have h := (bilinear r).continuous.tendsto 0 |>.comp hz
-  simpa [ContinuousLinearMap.sub_apply] using h
+  change Tendsto (fun F : Finset I => bilinear r (s - coordinateProjection F s))
+    atTop (𝓝 (bilinear r 0)) at h
+  simpa only [map_zero, map_sub, sub_apply, one_apply_eq_self] using h
 
 /-- Every ordered effective entry converges, including the exact finite
 mixed-block complement subtraction. -/
@@ -117,7 +126,8 @@ theorem ordered_entries_tendsto (A B : Data I) (r s : ℓ²(I, ℂ)) :
 
 private theorem embedded_one (F : Finset I) :
     embedded F 1 = coordinateProjection F := by
-  simp [embedded, coordinateProjection]
+  ext z i
+  simp [embedded, coordinateProjection, one_apply_eq_self]
 
 private theorem embedded_sub (F : Finset I) (M N : Matrix F F ℂ) :
     embedded F (M - N) = embedded F M - embedded F N := by
@@ -185,9 +195,10 @@ private theorem bilinear_finiteInclusion (F : Finset I) (r : ℓ²(I, ℂ))
 entry paired against the original mixed l2 row and column. -/
 theorem bilinear_embedded (F : Finset I) (M : Matrix F F ℂ) (r s : ℓ²(I, ℂ)) :
     bilinear r (embedded F M s) = ∑ i : F, ∑ j : F, r i.val * M i j * s j.val := by
-  unfold embedded
-  rw [ContinuousLinearMap.comp_apply, ContinuousLinearMap.comp_apply,
-    bilinear_finiteInclusion]
+  change bilinear r (Data.finiteInclusion F
+    (Matrix.toEuclideanCLM (𝕜 := ℂ) M
+      (ContinuousLinearMap.adjoint (Data.finiteInclusion F).toContinuousLinearMap s))) = _
+  rw [bilinear_finiteInclusion]
   apply Finset.sum_congr rfl
   intro i hi
   simp [Matrix.toEuclideanCLM_toLp, Matrix.mulVec, dotProduct,

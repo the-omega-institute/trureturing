@@ -10,7 +10,8 @@ import D5.S3.VertexAlgebra.TwistedGround.GaussianExternalBlock
 import D5.S3.VertexAlgebra.TwistedGround.GaussianCoefficientScaling
 import Mathlib.Analysis.Normed.Group.Tannery
 
-/-! Positive external scaling transfers the joint Gaussian norm estimate to each occupation slice. -/
+/-! Positive external scaling transfers the joint Gaussian norm estimate
+to each occupation slice. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -57,6 +58,7 @@ theorem row_square_summable (P : Matrix X X ℂ) (A : Data I)
   apply (summable_mul_left_iff hconst).mp
   convert hs using 1
   funext n
+  simp only [Function.comp_apply]
   rw [hcoeff, hweight, Nat.cast_mul, norm_mul, mul_pow]
   ring
 
@@ -112,6 +114,6 @@ theorem cutoff_tendsto (P : Matrix X X ℂ) (Q : Matrix Y Y ℂ)
     simp [f, hF]
   · exact Filter.Eventually.of_forall (fun F n => by
       dsimp [f]
-      split_ifs <;> simp)
+      split_ifs <;> simp [g] <;> positivity)
 
 end D5.S3.VertexAlgebra.TwistedGround.InfiniteGaussianRows
