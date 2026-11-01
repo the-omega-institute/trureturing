@@ -67,7 +67,7 @@ internal sealed class GuessingProbabilityDocument : IScribeDocumentDefinition
                 new Formula.BoundVariable(FormulaIdentifier.Create("X"), F.Id("FiniteType")),
                 new Formula.BoundVariable(FormulaIdentifier.Create("B"), F.Id("FiniteType")),
                 new Formula.BoundVariable(FormulaIdentifier.Create("R"), matrix),
-                new Formula.BoundVariable(FormulaIdentifier.Create("M"), Seq(xType, To, matrix)),
+                new Formula.BoundVariable(FormulaIdentifier.Create("M"), Seq(xType, Sp, To, Sp, matrix)),
             ],
             Seq(Call("trace", r), Sp, Eq, Sp, D(1), Sp, Land, Sp,
                 Call("sum", m), Sp, Eq, Sp, D(1), Sp, Rightarrow, Sp,
@@ -100,10 +100,10 @@ internal sealed class GuessingProbabilityDocument : IScribeDocumentDefinition
             [
                 new Formula.BoundVariable(FormulaIdentifier.Create("X"), F.Id("FiniteType")),
                 new Formula.BoundVariable(FormulaIdentifier.Create("B"), F.Id("FiniteType")),
-                new Formula.BoundVariable(FormulaIdentifier.Create("p"), Seq(xType, To, real)),
+                new Formula.BoundVariable(FormulaIdentifier.Create("p"), Seq(xType, Sp, To, Sp, real)),
                 new Formula.BoundVariable(FormulaIdentifier.Create("rho"),
-                    Seq(xType, To, Call("DensityState", bType))),
-                new Formula.BoundVariable(FormulaIdentifier.Create("M"), Seq(xType, To, matrix)),
+                    Seq(xType, Sp, To, Sp, Call("DensityState", bType))),
+                new Formula.BoundVariable(FormulaIdentifier.Create("M"), Seq(xType, Sp, To, Sp, matrix)),
             ],
             Seq(hypotheses, Sp, Rightarrow, Sp, D(0), Sp, Le, Sp, success,
                 Sp, Land, Sp, success, Sp, Le, Sp, D(1))));
