@@ -56,7 +56,7 @@ internal sealed class RectangularSupportDocument : IScribeDocumentDefinition
     {
         var ball = All("v", X("V"), Iffn(Mem(X("v"), Ball()), Leq(Call("dist", X("G"), X("u"), X("v")), X("N"))));
         var initial = All("v", X("V"), Iffn(Mem(Call("inl", X("v")), Labels()), Mem(X("v"), Ball())));
-        var fresh = All("n", Call("PNat"), All("v", X("V"),
+        var fresh = All("n", Named("PNat"), All("v", X("V"),
             Iffn(Mem(Call("inr", Seq(Open, X("n"), Comma, X("v"), Close)), Labels()),
                 And(Leq(Call("val", X("n")), X("N")), Mem(X("v"), Ball())))));
         var positive = All("c", Coord(), Imp(Mem(X("c"), Coordinates()), Call("positive", X("c"))));

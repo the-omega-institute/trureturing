@@ -77,7 +77,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   obtain ⟨f, _, hf⟩ := hr.2.2.2.2.2
   have hs := (hf (FiniteCausalInputs.testAssignment true) ()).2 (0 : Fin 1)
   change Sum.inr ((⟨1, by decide⟩ : ℕ+), true) ∈ L (⊤ : SimpleGraph Bool) true 0 at hs
-  simpa [L] using hs
+  simpa [L, K] using hs
 
 def support_family : Registration arena (type_of% (@rectangular_history_support)) where
   actual := actual
