@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Estimation.CorrelationTopEigenvectorWeight
 import Reg.Support.DependentFamily
 
+/-! Source-bound registration of the mean-correlation coordinate in the settlement. -/
+
 namespace Reg.D5.S3.Estimation.CorrelationTopEigenvectorWeight
 open _root_.D5.S3.Estimation.CorrelationTopEigenvectorWeight
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -10,55 +12,56 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-/-- Observe the strict comparison at the source's standard-deviation coordinate. -/
+/-- Observe the mean correlation, retaining the matrix dimension as a parameter. -/
 abbrev signature : Signature where
-  Params := ℝ
-  State _ := ℝ
+  Params := ℕ
+  State n := Matrix (Fin n) (Fin n) ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
+  Output _ _ := ℝ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ c σ => @decide (c < σ) (Classical.propDecidable _))
-    (fun e => nomatch e)
+  realize signature (fun _ _ a => meanCorr a) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => true) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 /-- Retain the full eventual-existence statement and its domain restriction. -/
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ c σ : ℝ, domainD c σ →
     ((∃ m : ℕ, ∀ n ≥ m, ∃ a : Matrix (Fin n) (Fin n) ℝ,
-      IsCorrelation a ∧ meanCorr a = c ∧ stdCorr a = σ ∧ SatisfiesWGap a) ↔
-      R.readout () c σ = true)
+      IsCorrelation a ∧ R.readout () n a = c ∧ stdCorr a = σ ∧ SatisfiesWGap a) ↔ c < σ)
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hs : 1 ≤ Real.sqrt 3 := by
+  have hs : (3 / 2 : ℝ) ≤ Real.sqrt 3 := by
     nlinarith [Real.sqrt_nonneg (3 : ℝ),
       Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)]
-  have hd : domainD (1 / 4) (1 / 4) := by
+  have hd : domainD (2 / 5) (3 / 5) := by
     refine ⟨by norm_num, by norm_num, ?_⟩
-    rintro (hbad | ⟨hbad, _⟩)
+    rintro (hbad | ⟨_, hbad⟩)
     · nlinarith
     · norm_num at hbad
-  have hex := (h (1 / 4) (1 / 4) hd).mpr rfl
-  exact (lt_irrefl (1 / 4 : ℝ)) ((result (1 / 4) (1 / 4) hd).mp hex)
+  obtain ⟨m, hm⟩ := (h (2 / 5) (3 / 5) hd).mpr (by norm_num)
+  obtain ⟨a, _, hmean, _⟩ := hm m le_rfl
+  change (0 : ℝ) = 2 / 5 at hmean
+  norm_num at hmean
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨0, 0, 1, ?_⟩
-  simp [actual, realize]
+  refine ⟨2, 1, (fun _ _ => 1), ?_⟩
+  change meanCorr (1 : Matrix (Fin 2) (Fin 2) ℝ) ≠ meanCorr (fun _ _ => 1)
+  simp only [meanCorr, Finset.sum_filter, Fin.sum_univ_two]
+  norm_num [Matrix.one_apply]
 
 def source_registration : Registration arena claim where
   actual := actual
-  bridge := by simp [claim, actual, realize]
-  variation := ⟨by simpa [arena, actual, realize, claim] using result,
-    rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨result, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -84,8 +87,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ c σ => @decide (c < σ) (Classical.propDecidable _))
-    (fun e => nomatch e))
+    (fun _ _ a => meanCorr a) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -96,13 +98,14 @@ def registration :
       owner := `D5.S3.Estimation.CorrelationTopEigenvectorWeight
       name := `D5.S3.Estimation.CorrelationTopEigenvectorWeight.claim
       path := #[] }
-    coordinates := #[0]
+    coordinates := #[4]
     readouts := #[{
-      path := #["body", "body", "body", "arg"]
-      stateBinder := 0
+      path := #["body", "body", "body", "fn", "arg", "arg", "body", "body",
+        "body", "arg", "body", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 6
       functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
