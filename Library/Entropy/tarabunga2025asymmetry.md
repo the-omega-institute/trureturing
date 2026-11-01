@@ -26,5 +26,5 @@ Source: https://arxiv.org/abs/2411.05766v1
 - DOI: https://doi.org/10.1088/2058-9565/adfd0d (journal version; title, authors, journal, volume, issue and article number (the page field) from Crossref; the journal text was not read).
 - URL: https://arxiv.org/abs/2411.05766v1. The e-print member `draft.tex` has 1216 lines and md5 `3972b4e08038d87ddf28211e09c89fdc`. Locations:
   - Section V.C and the stabilizer standard form, l. 747–764;
-  - the distributions $p_{Q',c,R}$ and $q_R$, l. 768 and 775;
+  - the distributions $p_{Q',c,R}$ and $q_R$, l. 769 and 776;
   - Eq. (69), l. 776–779; the conjecture for $\alpha=1$, l. 782.
