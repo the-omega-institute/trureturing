@@ -8,6 +8,8 @@
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap.NativeMasks
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 
+/-! All physical bank occurrences and their exact paired native source masses. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap
@@ -34,13 +36,13 @@ private def word (a b c d h m low : ℕ) : List ℕ :=
 
 /-- The native bit partition is promoted to a permutation of ALL physical labels. -/
 private theorem bank_inventory (a b c d h m low : ℕ)
-    (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
+    (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d)
     (part : MaskPartition (b-1) h (m ^^^ h) low) :
     (word a b c d h m low).Perm (List.range (a+b+c+d)) := by
   let W := chamberLabels (b-1) (d+c)
   have hw : (W h ++ W (m ^^^ h) ++ W low).Perm (List.range' (d+c) (b-1)) := by
     simpa only [List.append_assoc] using partition_labels (b-1) (d+c) h (m ^^^ h) low part
-  have merge (o len : ℕ) (hlen : 1≤len) :
+  have merge (o len : ℕ) (hlen : 1 ≤ len) :
       List.range' o (len-1) ++ [o+len-1]=List.range' o len := by
     simpa only [show o+(len-1)=o+len-1 by omega,show len-1+1=len by omega] using
       (List.range'_1_concat (s:=o) (n:=len-1)).symm
@@ -90,11 +92,11 @@ private theorem bank_inventory (a b c d h m low : ℕ)
       ac_rfl
 
 private theorem bank_good (a b c d h m low : ℕ)
-    (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
+    (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d)
     (j : Fin 4) (i : ℕ) (hi : i∈bank a b c d h m low j) :
     i<size a b c d ∧ i∉negatives a b c d := by
   have masked (len off mask : ℕ) (hm : i∈chamberLabels len off mask) :
-      off≤i ∧ i<off+len := by
+      off ≤ i ∧ i<off+len := by
     obtain ⟨e,he,_,hei⟩ := (chamberLabels_mem _ _ _ _).mp hm
     omega
   fin_cases j
@@ -113,7 +115,7 @@ private theorem bank_good (a b c d h m low : ℕ)
 
 /-- Each of the eight bank sums is proved from the actual chain formulas. -/
 private theorem bank_masses (a b c d h m low : ℕ)
-    (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
+    (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d)
     (part : MaskPartition (b-1) h (m ^^^ h) low) :
     ∀ side : Bool,
     let F := if side then newBase a b c d else base a b c d

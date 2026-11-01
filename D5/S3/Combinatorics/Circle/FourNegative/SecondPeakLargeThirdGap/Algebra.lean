@@ -5,7 +5,17 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Exact four-chain and independent dyadic polynomial expressions. -/
-import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+import Mathlib.Data.Int.DivMod
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
+import Batteries.Tactic.OpenPrivate
+import Lean.Elab.Tactic.Omega
+
+/-! Exact four-chain and independent dyadic polynomial expressions. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

@@ -7,6 +7,8 @@
    digest: Native shifted high-mask and low-mask partition of physical W occurrences. -/
 import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Masks
 
+/-! Native shifted high-mask and low-mask partition of physical W occurrences. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap
@@ -28,7 +30,7 @@ private structure MaskPartition (len h q low : ℕ) : Prop where
 /-- Uniqueness of binary geometric sums proves the exact native shift. -/
 private theorem scaled_bits (s n : ℕ) :
     (2^s*n).bitIndices.toFinset=n.bitIndices.toFinset.image (s+·) := by
-  apply Finset.geomSum_injective (by decide : 2≤(2:ℕ))
+  apply Finset.geomSum_injective (by decide : 2 ≤ (2:ℕ))
   dsimp only
   rw [Finset.sum_toFinset_bitIndices_two_pow,
     Finset.sum_image (by intro i hi j hj hij; exact Nat.add_left_cancel hij)]
@@ -40,7 +42,7 @@ private theorem full_bits (c : ℕ) :
   ext i
   simp [List.mem_toFinset,Nat.mem_bitIndices,Nat.testBit_two_pow_sub_one]
 
-private theorem native_partition (c s H : ℕ) (hH : H≤2^c-1) :
+private theorem native_partition (c s H : ℕ) (hH : H ≤ 2^c-1) :
     let lam := 2^s
     let m := (2^c-1)*lam
     let h := lam*H
@@ -60,7 +62,7 @@ private theorem native_partition (c s H : ℕ) (hH : H≤2^c-1) :
     have hp := Nat.two_pow_le_of_mem_bitIndices (List.mem_toFinset.mp hi)
     apply Finset.mem_range.mpr
     by_contra hnot
-    have hpow := Nat.pow_le_pow_right (by decide : 0<2) (show c≤i by omega)
+    have hpow := Nat.pow_le_pow_right (by decide : 0<2) (show c ≤ i by omega)
     omega
   have hbits : h.bitIndices.toFinset=H.bitIndices.toFinset.image (s+·) := by
     exact scaled_bits s H
@@ -99,8 +101,8 @@ private theorem native_partition (c s H : ℕ) (hH : H≤2^c-1) :
   have mlow : m+low=2^(c+s)-1 := by
     dsimp [m,low,lam]
     rw [pow_add,Nat.sub_mul,Nat.one_mul]
-    have hmul : 2^s≤2^c*2^s := by
-      simpa using Nat.mul_le_mul_right (2^s) (show 1≤2^c by omega)
+    have hmul : 2^s ≤ 2^c*2^s := by
+      simpa using Nat.mul_le_mul_right (2^s) (show 1 ≤ 2^c by omega)
     omega
   have ml := mask_complement (c+s) m low mlow
   have fullpos : 0<2^(c+s) := Nat.two_pow_pos _

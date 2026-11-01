@@ -7,25 +7,28 @@
    digest: Complete shifted polynomial identities; each coefficient is explicit. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap.Algebra
 
+/-! Complete shifted polynomial identities; each coefficient is explicit. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap
 open private gate dyadicT dyadicZ dyadicY DD AA BB LL MM NN BBn LLn MMn EE KK JJ from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap.Algebra
 
-/-- Gate 4: ceil_E_lower; all 168 nonzero shifted coefficients. -/
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 4000000 in
+-- Normalize the full explicit shifted polynomial and all its nonnegative monomials.
+/-- Gate 4: ceil_E_lower; all 168 nonzero shifted coefficients. -/
 private theorem ceil_E_lower (x R Z lam : ℤ)
-    (hx : 4≤x) (hR : 1≤R) (hZ : 1≤Z) (hlam : 1≤lam) :
-    0≤gate 4 x R Z lam := by
+    (hx : 4 ≤ x) (hR : 1 ≤ R) (hZ : 1 ≤ Z) (hlam : 1 ≤ lam) :
+    0 ≤ gate 4 x R Z lam := by
   let u := x-4
   let v := R-1
   let w := Z-1
   let q := lam-1
-  have hu : 0≤u := by dsimp [u]; omega
-  have hv : 0≤v := by dsimp [v]; omega
-  have hw : 0≤w := by dsimp [w]; omega
-  have hq : 0≤q := by dsimp [q]; omega
+  have hu : 0 ≤ u := by dsimp [u]; omega
+  have hv : 0 ≤ v := by dsimp [v]; omega
+  have hw : 0 ≤ w := by dsimp [w]; omega
+  have hq : 0 ≤ q := by dsimp [q]; omega
   have expansion : gate 4 x R Z lam =
       217434
       + 217472 * q
@@ -200,20 +203,21 @@ private theorem ceil_E_lower (x R Z lam : ℤ)
   rw [expansion]
   positivity
 
-/-- Gate 5: ceil_H_upper; all 144 nonzero shifted coefficients. -/
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 4000000 in
+-- Normalize the full explicit shifted polynomial and all its nonnegative monomials.
+/-- Gate 5: ceil_H_upper; all 144 nonzero shifted coefficients. -/
 private theorem ceil_H_upper (x R Z lam : ℤ)
-    (hx : 4≤x) (hR : 1≤R) (hZ : 1≤Z) (hlam : 1≤lam) :
-    0≤gate 5 x R Z lam := by
+    (hx : 4 ≤ x) (hR : 1 ≤ R) (hZ : 1 ≤ Z) (hlam : 1 ≤ lam) :
+    0 ≤ gate 5 x R Z lam := by
   let u := x-4
   let v := R-1
   let w := Z-1
   let q := lam-1
-  have hu : 0≤u := by dsimp [u]; omega
-  have hv : 0≤v := by dsimp [v]; omega
-  have hw : 0≤w := by dsimp [w]; omega
-  have hq : 0≤q := by dsimp [q]; omega
+  have hu : 0 ≤ u := by dsimp [u]; omega
+  have hv : 0 ≤ v := by dsimp [v]; omega
+  have hw : 0 ≤ w := by dsimp [w]; omega
+  have hq : 0 ≤ q := by dsimp [q]; omega
   have expansion : gate 5 x R Z lam =
       113316
       + 113278 * q
@@ -364,20 +368,21 @@ private theorem ceil_H_upper (x R Z lam : ℤ)
   rw [expansion]
   positivity
 
-/-- Gate 6: ceil_old_cap; all 108 nonzero shifted coefficients. -/
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 4000000 in
+-- Normalize the full explicit shifted polynomial and all its nonnegative monomials.
+/-- Gate 6: ceil_old_cap; all 108 nonzero shifted coefficients. -/
 private theorem ceil_old_cap (x R Z lam : ℤ)
-    (hx : 4≤x) (hR : 1≤R) (hZ : 1≤Z) (hlam : 1≤lam) :
-    0≤gate 6 x R Z lam := by
+    (hx : 4 ≤ x) (hR : 1 ≤ R) (hZ : 1 ≤ Z) (hlam : 1 ≤ lam) :
+    0 ≤ gate 6 x R Z lam := by
   let u := x-4
   let v := R-1
   let w := Z-1
   let q := lam-1
-  have hu : 0≤u := by dsimp [u]; omega
-  have hv : 0≤v := by dsimp [v]; omega
-  have hw : 0≤w := by dsimp [w]; omega
-  have hq : 0≤q := by dsimp [q]; omega
+  have hu : 0 ≤ u := by dsimp [u]; omega
+  have hv : 0 ≤ v := by dsimp [v]; omega
+  have hw : 0 ≤ w := by dsimp [w]; omega
+  have hq : 0 ≤ q := by dsimp [q]; omega
   have expansion : gate 6 x R Z lam =
       28034
       + 28030 * q

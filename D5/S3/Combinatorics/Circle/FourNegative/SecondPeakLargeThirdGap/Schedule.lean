@@ -10,6 +10,8 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap.Source
 import D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 import D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Physical
 
+/-! The ceiling selector gives both complete physical source orders at literal cut zero. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap
@@ -34,15 +36,15 @@ open private label lift_order marked_word
 
 set_option maxHeartbeats 3000000 in
 private theorem joint_construction (a b c d : ℕ)
-    (ha : 2≤a) (had : a+1≤d) (hdc : a+d+1≤c) (hcb : c+1≤b) :
+    (ha : 2 ≤ a) (had : a+1 ≤ d) (hdc : a+d+1 ≤ c) (hcb : c+1 ≤ b) :
     ∃ sigma : List (Fin (a+b+c+d)),
       OriginalOrder (a+b+c+d) (1+2^a+2^(a+b)+2^(a+b+c)) sigma ∧
       OriginalOrder (a+b+c+d+1) (2*(1+2^a+2^(a+b)+2^(a+b+c)))
         (earWord (a+b+c+d) sigma 0) := by
   classical
-  have hb : 2≤b := by omega
-  have hc : 2≤c := by omega
-  have hd : 2≤d := by omega
+  have hb : 2 ≤ b := by omega
+  have hc : 2 ≤ c := by omega
+  have hd : 2 ≤ d := by omega
   let k := a+b+c+d
   let seedN := 1+2^a+2^(a+b)+2^(a+b+c)
   let x : ℤ := 2^a
@@ -63,12 +65,12 @@ private theorem joint_construction (a b c d : ℕ)
   let N := NN x y z t
   let f := oldValue a b c d
   let g := newValue a b c d
-  have hx : 4≤x := by
+  have hx : 4 ≤ x := by
     dsimp [x]
-    simpa using pow_le_pow_right₀ (by norm_num : (1:ℤ)≤2) ha
-  have hR : 1≤R := by dsimp [R]; exact one_le_pow₀ (by norm_num)
-  have hZ : 1≤Z := by dsimp [Z]; exact one_le_pow₀ (by norm_num)
-  have hlam : 1≤lam := by dsimp [lam]; exact one_le_pow₀ (by norm_num)
+    simpa using pow_le_pow_right₀ (by norm_num : (1:ℤ) ≤ 2) ha
+  have hR : 1 ≤ R := by dsimp [R]; exact one_le_pow₀ (by norm_num)
+  have hZ : 1 ≤ Z := by dsimp [Z]; exact one_le_pow₀ (by norm_num)
+  have hlam : 1 ≤ lam := by dsimp [lam]; exact one_le_pow₀ (by norm_num)
   have ht : t=dyadicT x R := by
     calc
       t=(2:ℤ)^(a+1)*2^(d-a-1) := by
@@ -103,11 +105,11 @@ private theorem joint_construction (a b c d : ℕ)
 
   -- The signed bounds above are established before the first Int.toNat.
   let HZ := chooseH x y z t lam
-  have H0 : 0≤HZ := bounds.H_nonneg
-  have Hupper : HZ≤z-1 := bounds.H_upper
+  have H0 : 0 ≤ HZ := bounds.H_nonneg
+  have Hupper : HZ ≤ z-1 := bounds.H_upper
   let H := HZ.toNat
   have eH : (H:ℤ)=HZ := Int.toNat_of_nonneg H0
-  have Hcap : H≤2^c-1 := by
+  have Hcap : H ≤ 2^c-1 := by
     have hlt : (H:ℤ)<(2:ℤ)^c := by rw [eH]; change HZ<z; omega
     have hltN : H<2^c := by exact_mod_cast hlt
     omega
@@ -159,7 +161,7 @@ private theorem joint_construction (a b c d : ℕ)
   let T := terminal a b c d
   let l := word a b c d h m low
   have hp : l.Perm (List.range k) := bank_inventory a b c d h m low ha hb hc hd part
-  have pos (j : Fin 4) (i : ℕ) (hi : i∈P j) : 0≤f i ∧ 0≤g i := by
+  have pos (j : Fin 4) (i : ℕ) (hi : i∈P j) : 0 ≤ f i ∧ 0 ≤ g i := by
     have good := bank_good a b c d h m low ha hb hc hd j i hi
     have signs := source_signs a b c d ha hb hc hd i good.1
     rw [if_neg good.2] at signs
@@ -242,7 +244,7 @@ private theorem joint_construction (a b c d : ℕ)
   have ns2 : A+((P 0).map g).sum+g (T 0)+((P 1).map g).sum+g (T 1)+
       ((P 2).map g).sum+g (T 2)=Bn-lam*Ln := by
     nlinarith only [totalnew,mg.2.2.2,nat1.2.1]
-  have half (n : ℕ) (hn : 1≤n) : (2:ℤ)^n=2*2^(n-1) := by
+  have half (n : ℕ) (hn : 1 ≤ n) : (2:ℤ)^n=2*2^(n-1) := by
     conv_lhs => rw [show n=(n-1)+1 by omega,pow_succ]
     ring
   have hNodd : N%2=1 := by
@@ -254,13 +256,13 @@ private theorem joint_construction (a b c d : ℕ)
     omega
   have basebounds := (chain_values a b c d ha hb hc hd).1
   have newbounds := new_base_bounds a b c d ha hb hc hd
-  have hA : 1≤A ∧ A<N := by simpa [hbase,hsourceMod] using basebounds 0
-  have hN0 : 0≤N := by omega
-  have lastold : 0≤-f (T 3) ∧ -f (T 3)≤N/2 := by
-    have hL : 1≤L ∧ L<N := by simpa [hbase,hsourceMod] using basebounds 2
+  have hA : 1 ≤ A ∧ A<N := by simpa [hbase,hsourceMod] using basebounds 0
+  have hN0 : 0 ≤ N := by omega
+  have lastold : 0 ≤ -f (T 3) ∧ -f (T 3) ≤ N/2 := by
+    have hL : 1 ≤ L ∧ L<N := by simpa [hbase,hsourceMod] using basebounds 2
     omega
-  have lastnew : 0≤-g (T 3) ∧ -g (T 3)≤N := by
-    have hLn : 1≤Ln ∧ Ln<2*N+1 := by simpa [hnewbase,hsourceMod] using newbounds 2
+  have lastnew : 0 ≤ -g (T 3) ∧ -g (T 3) ≤ N := by
+    have hLn : 1 ≤ Ln ∧ Ln<2*N+1 := by simpa [hnewbase,hsourceMod] using newbounds 2
     omega
   have oldstrip : InStrip f (N/2) 0 l := by
     change InStrip f (N/2) 0 (P 0 ++ T 0 :: P 1 ++ T 1 :: P 2 ++ T 2 :: P 3 ++ [T 3])
@@ -275,7 +277,7 @@ private theorem joint_construction (a b c d : ℕ)
         bounds.third_old_cap,hNodd,Int.emod_add_mul_ediv N 2]
     · exact lastold
     · simpa [l,word,P,T] using hfzero
-  have initial : 0≤A ∧ A≤N := ⟨by omega,bounds.fresh_cap⟩
+  have initial : 0 ≤ A ∧ A ≤ N := ⟨by omega,bounds.fresh_cap⟩
   have newtail : InStrip g N A l := by
     change InStrip g N A (P 0 ++ T 0 :: P 1 ++ T 1 :: P 2 ++ T 2 :: P 3 ++ [T 3])
     apply four_strip g (P 0) (P 1) (P 2) (P 3) (T 0) (T 1) (T 2) (T 3) N A
