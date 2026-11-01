@@ -64,9 +64,9 @@ internal sealed class FiniteCausalInputsDocument : IScribeDocumentDefinition
     {
         var membership = new Formula.Relation(X("c"), FormulaRelationOperator.MemberOf, Inputs());
         var positivity = All("c", Coord(), Imp(membership, Call("positive", X("c"))));
+        var decoded = Call("decode", X("base"), X("u"), X("N"), App(Restriction("x"), X("w")));
         var factorization = All("x", Assignment("O"), All("w", X("O"),
-            Eqn(App(History("x"), X("w")), Call("decode", X("base"), X("u"), X("N"),
-                App(Restriction("x"), X("w")))));
+            Eqn(App(History("x"), X("w")), decoded)));
         return Disp(All("V", Named("Type"), All("O", Named("Type"),
             Graph(RootHorizon(And(positivity, factorization))))));
     }
@@ -85,10 +85,13 @@ internal sealed class FiniteCausalInputsDocument : IScribeDocumentDefinition
             App(X("m"), X("c")), X("Q")));
         var law = Eqn(Map("P", History("x")), Map("Q", History("y")));
         var marginals = DepArr("c", PositiveCoords(), Call("Measure", Call("Value", X("G"), Val())));
-        var body = All("P", Call("Measure", X("O")), All("Q", Call("Measure", X("Oprime")),
-            All("x", Assignment("O"), All("y", Assignment("Oprime"),
-                All("m", marginals, Imp(hx, Imp(hy, Imp(hix, Imp(hiy,
-                    Imp(hlx, Imp(hly, RootHorizon(law))))))))))));
+        var body = All("u", X("V"), All("N", Nat(), law));
+        body = Imp(hlx, Imp(hly, body));
+        body = Imp(hix, Imp(hiy, body));
+        body = Imp(hx, Imp(hy, body));
+        body = All("m", marginals, body);
+        body = All("x", Assignment("O"), All("y", Assignment("Oprime"), body));
+        body = All("P", Call("Measure", X("O")), All("Q", Call("Measure", X("Oprime")), body));
         return Disp(All("V", Named("Type"), All("O", Named("Type"), All("Oprime", Named("Type"),
             Graph(Inst(Call("MeasurableSpace", X("O")),
                 Inst(Call("MeasurableSpace", X("Oprime")), body)))))));

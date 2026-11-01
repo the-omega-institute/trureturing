@@ -140,7 +140,7 @@ structure LawQuery where
   P : @MeasureTheory.Measure Ω measurableΩ
   Q : @MeasureTheory.Measure Ω' measurableΩ'
   y : (c : Coord V) → Ω' → Value G c
-  base : (c : Coord V) → Value G c
+  μ : (c : {c : Coord V // positive c}) → MeasureTheory.Measure (Value G c.val)
   u : V
   N : ℕ
 
@@ -171,18 +171,23 @@ def lawArena : Arena where
     [mΩ : MeasurableSpace Ω] [mΩ' : MeasurableSpace Ω']
     (P : MeasureTheory.Measure Ω) (Q : MeasureTheory.Measure Ω')
     (x : (c : Coord V) → Ω → Value G c) (y : (c : Coord V) → Ω' → Value G c)
-    (hx : ∀ c, Measurable (x c)) (hy : ∀ c, Measurable (y c))
-    (base : (c : Coord V) → Value G c) (u : V) (N : ℕ),
-    P.map (restrictInputs x u N) = Q.map (restrictInputs y u N) →
-      R.readout () ⟨V, Ω, Ω', G, hG, mΩ, mΩ', P, Q, y, base, u, N⟩ x =
+    (μ : (c : {c : Coord V // positive c}) → MeasureTheory.Measure (Value G c.val))
+    (hx : ∀ c, positive c → Measurable (x c))
+    (hy : ∀ c, positive c → Measurable (y c))
+    (hix : ProbabilityTheory.iIndepFun (fun c : {c : Coord V // positive c} => x c.val) P)
+    (hiy : ProbabilityTheory.iIndepFun (fun c : {c : Coord V // positive c} => y c.val) Q)
+    (hlx : ∀ c : {c : Coord V // positive c}, ProbabilityTheory.HasLaw (x c.val) (μ c) P)
+    (hly : ∀ c : {c : Coord V // positive c}, ProbabilityTheory.HasLaw (y c.val) (μ c) Q)
+    (u : V) (N : ℕ),
+      R.readout () ⟨V, Ω, Ω', G, hG, mΩ, mΩ', P, Q, y, μ, u, N⟩ x =
         Q.map (history y u N)
 
-theorem law_bridge : (type_of% (@history_map_eq_of_input_map_eq)) ↔
+theorem law_bridge : (type_of% (@history_law_of_positive_coordinate_laws)) ↔
     lawArena.Law lawActual := by
   constructor
-  · intro h V Ω Ω' G hG mΩ mΩ' P Q x y hx hy base u N hinput
-    exact @h V Ω Ω' G hG mΩ mΩ' P Q x y hx hy base u N hinput
-  · intro h V Ω Ω' G hG mΩ mΩ' P Q x y hx hy base u N hinput
-    exact @h V Ω Ω' G hG mΩ mΩ' P Q x y hx hy base u N hinput
+  · intro h V Ω Ω' G hG mΩ mΩ' P Q x y μ hx hy hix hiy hlx hly u N
+    exact @h V Ω Ω' G hG mΩ mΩ' P Q x y μ hx hy hix hiy hlx hly u N
+  · intro h V Ω Ω' G hG mΩ mΩ' P Q x y μ hx hy hix hiy hlx hly u N
+    exact @h V Ω Ω' G hG mΩ mΩ' P Q x y μ hx hy hix hiy hlx hly u N
 
 end Reg.D5.S3.StatisticalMechanics.NoisyVoter.FiniteCausalInputs

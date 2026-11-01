@@ -180,9 +180,19 @@ theorem history_law_of_positive_coordinate_laws [MeasurableSpace Ω] [Measurable
     (hiy : iIndepFun (fun c : {c : Coord V // positive c} => y c.val) Q)
     (hlx : ∀ c : {c : Coord V // positive c}, HasLaw (x c.val) (μ c) P)
     (hly : ∀ c : {c : Coord V // positive c}, HasLaw (y c.val) (μ c) Q)
-    (base : (c : Coord V) → Value G c) (u : V) (N : ℕ) :
+    (u : V) (N : ℕ) :
     P.map (history x u N) = Q.map (history y u N) := by
   classical
+  letI := hix.isProbabilityMeasure
+  have hΩ : Nonempty Ω := by
+    by_contra h
+    have hz : (Set.univ : Set Ω) = ∅ := by
+      ext ω
+      exact (h ⟨ω⟩).elim
+    have he : P Set.univ = 1 := measure_univ
+    rw [hz, measure_empty] at he
+    exact zero_ne_one he
+  let base (c : Coord V) : Value G c := x c (Classical.choice hΩ)
   let inclusion (c : {c // c ∈ historyInputs (G := G) u N}) : {c : Coord V // positive c} :=
     ⟨c.val, (finite_history_factorization base u N).1 c.val c.property⟩
   have hinj : Function.Injective inclusion := by
