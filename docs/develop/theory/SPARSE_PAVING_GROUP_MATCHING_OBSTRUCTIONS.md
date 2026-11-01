@@ -759,3 +759,499 @@ hyperplanes, rather than the minimal sumset equality used in
 Theorem 3.3. No complete classification in that wider class is asserted.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. Prime-cyclic grounds: strict gaps and the actual-basis obstruction
+
+**约定 7.1（The full prime domain）。** Throughout Sections 7–11,
+$p$ is any prime and $G=(\mathbb F_p,+)$. The finite loopless matroids
+$M,N$ have independently specified grounds $A,B\subseteq\mathbb F_p$
+and common rank $r$, with
+
+$$
+1\le r\le |A|\le |B|<p,\qquad 0\notin B,
+$$
+
+and both $N$ and its dual are paving. Rank-zero duals are allowed,
+with the convention of Definition 1.2. A specified source basis is
+$S\in\mathcal B(M)$. Matching means a bijection from $S$ onto an
+actual basis of this fixed $N$, with every sum outside $A$, exactly
+as in Definition 1.3. In particular $0$ may belong to $A$, and neither
+ground is assigned an order or a sign. For $s\in S$ and nonempty
+$X\subseteq S$, use the sets $C_s,C_X,U_X,V_X$ of Definition 1.4,
+now interpreted in $\mathbb F_p$. For $d\in\mathbb F_p\setminus\{0\}$
+and integers $u\le v$ with $v-u<p$, write
+
+$$
+I_d[u,v]=\{td\in\mathbb F_p:t\in\mathbb Z,\ u\le t\le v\}.
+$$
+
+This interval has $v-u+1$ elements. Its indices are integers reduced
+modulo $p$ in the displayed set; no lifting of sums to the integers
+is implicit. An arithmetic progression of length $k<p$ means
+$a+I_d[0,k-1]$ for some nonzero $d$. A semi-progression means a set
+from which one element can be deleted to leave a progression, as in
+[AZ, Section 3.5].
+
+**定理 7.2（Every strict gap, and the exact prime obstruction）。**
+Under Convention 7.1, every strict inequality $|A|<|B|$ makes $M$
+matched to $N$. If $|A|=|B|=m$, then for every specified basis $S$,
+
+$$
+S\text{ fails to match }N
+\quad\Longleftrightarrow\quad
+C_S\text{ is a circuit-hyperplane of the actual }N.
+\tag{P-O}
+$$
+
+In any such failure,
+
+$$
+r\ge2,\qquad m\ge r+1,\qquad
+|C_S|=r,\qquad |U_S|=m-r,\qquad
+S+(U_S\cup\{0\})=A.
+\tag{P-E}
+$$
+
+Proof. The additive input is the classical Cauchy–Davenport theorem,
+in the precise prime-group form [BDM, Theorem 1.1]: for nonempty
+$X,Y\subseteq\mathbb F_p$,
+$|X+Y|\ge\min\{p,|X|+|Y|-1\}$. Since
+$X+V_X\subseteq A$ and $|A|<p$, applying it with
+$Y=V_X=U_X\cup\{0\}$ gives
+
+$$
+|X|+|U_X|\le |A|,\qquad
+|C_X|\ge |B|-|A|+|X|\qquad(\varnothing\ne X\subseteq S).
+\tag{P-U}
+$$
+
+Indeed the alternative lower bound $p$ is impossible for a sumset
+contained in $A$; $0\notin B$ ensures $|V_X|=|U_X|+1$.
+This uses no exclusion of zero from $A$.
+
+The independent-representative criterion is the classical Rado theorem
+[AZ, Theorem 3.6], applied to the sets $(C_s)_{s\in S}$ in $N$:
+
+$$
+S\text{ matches }N
+\quad\Longleftrightarrow\quad
+\rho_N(C_X)\ge |X|\quad(X\subseteq S).
+\tag{P-R}
+$$
+
+An independent representative set has $r$ distinct elements, so it is
+an actual basis, rather than a basis of a relaxation. The sparse paving
+facts proved in Theorem 2.1 are independent of its ambient-group
+assumption: subsets of size at most $r-1$ are independent, hyperplanes
+have size at most $r$, and a nonspanning subset of size at least $r$
+is exactly an $r$-element circuit-hyperplane. Their proof uses only
+paving and the dual rank identity. These are also the supplied
+`small_indep`, `dual_paving_card_bound` and `nonspanning_structure`
+arguments in [Native]; no prime-group structure is needed for them.
+
+If $|A|<|B|$, (P-U) gives $|C_X|\ge |X|+1$ for every nonempty
+$X\subseteq S$. For $|X|<r$, paving supplies an independent
+$|X|$-subset of $C_X$; for $|X|=r$, the set $C_X$ has at least
+$r+1$ elements and therefore spans. The empty subset has rank zero.
+Thus (P-R) proves the strict-gap assertion.
+
+At equality, (P-U) gives $|C_X|\ge |X|$. Every proper subset of
+$S$ therefore passes (P-R), so failure is equivalent to
+$\rho_N(C_S)<r$. Since $|C_S|\ge r$, the sparse paving facts
+identify precisely a circuit-hyperplane of size $r$. Conversely such
+a hyperplane has rank $r-1$ and fails (P-R) at $X=S$.
+This is the supplied sparse paving obstruction mechanism, now with
+the prime additive estimate: the group-independent Hall and
+one-representative repair argument in [Native, `sparse_hall_obstruction`]
+has the same conclusion. Its published `basiswise_obstruction` theorem
+has a torsion-free hypothesis; it is not itself applied to
+$\mathbb F_p$ here. The Hall/Rado mechanism, dual rank argument and
+repair are credited supply.
+
+Looplessness rules out $r=1$ because a singleton circuit would be a
+loop. If $m=r$, the target is free and has no circuit-hyperplane;
+hence failure requires $m\ge r+1$. Complementary cardinalities give
+$|U_S|=m-r$. Finally Cauchy–Davenport and the containment in $A$
+give
+
+$$
+m\ge |S+(U_S\cup\{0\})|
+\ge \min\{p,r+(m-r+1)-1\}=m.
+$$
+
+The containment is consequently equality, proving (P-E).
+
+## 8. Complete arithmetic classification below saturation
+
+**定理 8.1（Every specified failing basis when $m\le p-2$）。**
+Assume Convention 7.1 and $|A|=|B|=m\le p-2$. A specified
+$S\in\mathcal B(M)$ fails to match $N$ if and only if
+$r\ge2$, $q=m-r\ge1$, and there exist
+$a\in\mathbb F_p$, $d\in\mathbb F_p\setminus\{0\}$ and an
+integer $0\le j\le q$ such that
+
+$$
+\begin{aligned}
+A&=a+I_d[0,m-1],\\
+S&=a+I_d[j,j+r-1],\\
+U&=I_d[-j,q-j]\setminus\{0\}\subseteq B,\\
+H&=B\setminus U\text{ is a circuit-hyperplane of }N.
+\end{aligned}
+\tag{P-A}
+$$
+
+In each such configuration $U=U_S$, $H=C_S$,
+$|U|=q$, $|H|=r$ and $\rho_N(H)=r-1$. The individual
+admissible sets, not just their union, are exactly
+
+$$
+C_{a+(j+i)d}
+ =B\setminus I_d[-j-i,m-1-j-i]
+\qquad(0\le i<r).
+\tag{P-C}
+$$
+
+Proof. Suppose $S$ fails. Theorem 7.2 gives $r\ge2$, $q\ge1$
+and, for $V=U_S\cup\{0\}$,
+
+$$
+S+V=A,\qquad |S|=r,\qquad |V|=q+1,\qquad
+|S+V|=m=|S|+|V|-1\le p-2.
+\tag{P-V}
+$$
+
+Invoke the classical Vosper critical-pair theorem in the version
+actually supplied by [BDM, Theorem 1.3]. The pair $(S,V)$ is
+nonempty and critical, both sets have at least two elements, and
+$|S|+|V|=m+1\le p-1$. Thus neither the whole-group outcome,
+nor the outcome $|S|+|V|=p$, nor a singleton outcome is possible.
+The remaining outcome says that $S$ and $V$ are arithmetic
+progressions with the same nonzero difference $d$. Write
+
+$$
+S=s_0+I_d[0,r-1],\qquad V=v_0+I_d[0,q].
+$$
+
+Since $0\in V$ and $q<p$, a unique integer $j\in[0,q]$
+satisfies $v_0=-jd$. Put $a=s_0-jd$. Every integer from $0$
+to $r+q-1=m-1$ is the sum of an index in $[0,r-1]$ and one
+in $[0,q]$. Hence, in the field itself,
+
+$$
+A=S+V=a+I_d[0,m-1],\qquad
+S=a+I_d[j,j+r-1].
+$$
+
+These sums give $m$ distinct residues since $m<p$. Removing zero
+from $V$ gives $U_S=I_d[-j,q-j]\setminus\{0\}$.
+Its complement $C_S$ in $B$ is the actual circuit-hyperplane
+of (P-O), proving necessity of every condition in (P-A).
+
+For sufficiency, first determine all blocking translations for the
+displayed $A,S$, including translations outside $B$. They are
+
+$$
+\{b\in\mathbb F_p:S+b\subseteq A\}=I_d[-j,q-j].
+\tag{P-W}
+$$
+
+To prove this identity without discarding wraparound, suppose
+$S+b\subseteq A$. The first point of $S+b$ is uniquely
+$a+td$ for an integer $0\le t\le m-1$, so
+$b=(t-j)d$. If $t>q=m-r$, then
+$1\le m-t\le r-1$. The point at index $m-t$ of this
+translated block is $a+md$. It is outside $A$, because the
+$m+1$ residues $a,a+d,\ldots,a+md$ are distinct for $m<p$.
+This is a contradiction. Therefore $t\le q$, giving
+$-j\le t-j\le q-j$. Conversely a translation with these
+indices puts all $r$ block indices between $0$ and $m-1$.
+This proves (P-W), including all possible cyclic translations.
+
+The set on the right of (P-W) contains zero exactly at index zero;
+its other $q$ elements form $U$. Because $0\notin B$ and
+$U\subseteq B$, intersecting (P-W) with $B$ gives $U_S=U$,
+and consequently $C_S=B\setminus U=H$. Since $H$ is an actual
+circuit-hyperplane, (P-O) proves failure. For each individual
+$s=a+(j+i)d$, the equality
+$-s+A=I_d[-j-i,m-1-j-i]$ proves (P-C).
+Taking complements and unions recovers exactly $U_S=U$ and
+$C_S=H$, so no additional admissibility condition is omitted.
+
+**推论 8.2（All failing bases and the nonprogression consequence）。**
+Under the hypotheses of Theorem 8.1 the entire family of failing
+source bases is
+
+$$
+\left\{
+ a+I_d[j,j+r-1]:
+ \begin{array}{l}
+ r\ge2,\ q=m-r\ge1,\ a\in\mathbb F_p,\ d\ne0,\ 0\le j\le q,\\
+ A=a+I_d[0,m-1],\ a+I_d[j,j+r-1]\in\mathcal B(M),\\
+ U=I_d[-j,q-j]\setminus\{0\}\subseteq B,\\
+ B\setminus U\text{ is a circuit-hyperplane of }N
+ \end{array}
+\right\}.
+\tag{P-F}
+$$
+
+Here $j$ is an integer and $a,d$ range over the field; repeated
+representations denote the same source set. Thus $M$ is not matched
+to $N$ exactly when this family is nonempty. In particular $M$ is
+matched to $N$ if $A$ is not a progression. This includes every
+semi-progression that is not a progression, and therefore includes
+the neither-progression-nor-semi-progression case in this range.
+
+Proof. The necessity and sufficiency in Theorem 8.1 apply separately
+to every actual source basis; taking precisely those bases gives
+(P-F). The statement does not require any uniqueness of the
+progression representation of a cyclic set. If $A$ is not a
+progression, the required representation of $A$ cannot occur.
+
+## 9. Saturated grounds and the degenerate boundaries
+
+**定理 9.1（The complete saturated criterion and forced assignment）。**
+Assume Convention 7.1 and $|A|=|B|=p-1$. There is a unique
+$\alpha\in\mathbb F_p$ such that
+
+$$
+A=\mathbb F_p\setminus\{\alpha\},\qquad
+B=\mathbb F_p\setminus\{0\}.
+$$
+
+For every specified basis $S$, the unique assignment satisfying the
+sum exclusion, even before a target basis is required, is
+
+$$
+f_\alpha(s)=\alpha-s\qquad(s\in S).
+\tag{P-S}
+$$
+
+It is injective, takes values in $B$, and has image
+$T_\alpha=\alpha-S$. Thus
+
+$$
+\begin{aligned}
+C_s&=\{\alpha-s\},& C_S&=\alpha-S,&
+U_S&=B\setminus(\alpha-S),\\
+S\text{ matches }N
+&\quad\Longleftrightarrow\quad \alpha-S\in\mathcal B(N),\\
+S\text{ fails to match }N
+&\quad\Longleftrightarrow\quad
+\alpha-S\text{ is a circuit-hyperplane of }N.
+\end{aligned}
+\tag{P-T}
+$$
+
+Equivalently, all failing source bases are exactly
+
+$$
+\{\alpha-H:H\text{ is a circuit-hyperplane of }N,
+                     \ \alpha-H\in\mathcal B(M)\}.
+\tag{P-H}
+$$
+
+Proof. The two ground descriptions follow from their cardinalities
+and the exclusion of zero from $B$. The condition $s+b\notin A$
+is precisely $s+b=\alpha$, so it forces $b=\alpha-s$.
+Since $s\in A$, this target is nonzero. Distinct source elements
+have distinct forced targets. Every admissible map therefore equals
+(P-S), and it matches an actual target basis exactly when its image
+is a basis. Every $r$-subset in a sparse paving matroid is either
+a basis or a circuit-hyperplane [AZ, Theorem 3.3], giving (P-T).
+Reflection $x\mapsto\alpha-x$ is an involution, so reflecting each
+actual target circuit-hyperplane gives precisely (P-H).
+This proves both directions and uniqueness for every rank, including
+$r=1$ and $r=p-1$.
+
+For comparison with (P-E), the full set of blocking translations is
+
+$$
+\{b:S+b\subseteq A\}=\mathbb F_p\setminus(\alpha-S).
+$$
+
+It contains zero, and its intersection with $B$ is $U_S$.
+In a failure its cardinality is $p-r$; adjoining zero to $U_S$
+recovers this set. Cauchy–Davenport gives
+$|S+(U_S\cup\{0\})|\ge r+(p-r)-1=p-1$, so containment
+in $A$ is again equality. The critical-pair cardinalities here are
+$|S|+|U_S\cup\{0\}|=p$. This is exactly the separate
+$|X|+|Y|=p$, $|X+Y|=p-1$ alternative in [BDM, Theorem 1.3],
+which does not force the progression conclusion used in Section 8.
+
+**推论 9.2（Ranks, small primes, full grounds and coloops）。**
+In the full domain of Convention 7.1 the following boundaries hold.
+
+1. If $r=1$, every source basis matches. If $r=|A|$, its sole
+   source basis matches every prescribed actual basis of $N$.
+   In particular a rank-zero dual of $N$ forces
+   $r=|A|=|B|$ and both matroids are free.
+2. For $p=2$ and $p=3$, every allowed pair is matched.
+3. Put $q_B=|B|-r$. If $q_B\ge2$, $N$ has no coloops.
+   If $q_B=1$ and $r\ge2$, either $N$ is uniform or it has a
+   unique coloop $e$ and a unique circuit-hyperplane
+   $H=B\setminus\{e\}$. In the latter case its bases are
+   precisely the $r$-subsets containing $e$.
+4. In this nonuniform corank-one case, at equality
+   $m=r+1\le p-2$, a specified source basis fails exactly when
+   (P-A) holds with $j=0$ or $j=1$ and respectively
+   $\{d\}=\{e\}$ or $\{-d\}=\{e\}$.
+   At saturation $m=r+1=p-1$, the exact criterion is instead
+   $S=A\setminus\{\alpha-e\}$.
+5. Every uniform target is matched when $|A|\le |B|<p$.
+   At saturation every source ground is a progression: for any
+   nonzero $d$ it equals $\alpha+d+I_d[0,p-2]$.
+
+Proof. For $r=1$, (P-U) makes the admissible set nonempty and
+looplessness makes each of its elements a basis. If $r=|A|$,
+fix any actual basis $T$ of $N$. The prime-group matching property
+[AZ, Theorem 1.2], applied to the equally sized sets $A,T$ with
+$0\notin T$, supplies a matching onto $T$. This is an application
+of the classical group result, not a new group matching theorem.
+If $q_B=0$, the inequalities $r\le |A|\le |B|=r$ force equality,
+and a matroid of full ground rank is free.
+
+For $p=2$, the inequalities force $|A|=|B|=r=1$.
+For $p=3$, either $r=1$, or $r=2$ forces
+$|A|=|B|=2=r$. These cases have already been proved affirmative;
+no prime or rank has been removed from either classification.
+
+The coloop facts are the group-independent argument of Proposition
+4.1. Explicitly, if $q_B\ge2$, paving of the dual forbids loops
+in the dual, hence forbids primal coloops. If $q_B=1$, let $L$
+be the loops of the rank-one dual and $D=B\setminus L$ its
+nonempty nonloop set. Its bases are the singletons in $D$,
+so primal bases are exactly $B\setminus\{d\}$ for $d\in D$.
+The set $D$ is the unique primal circuit and $L$ the primal
+coloops. Paving gives $|D|\ge r$; as $|B|=r+1$, either
+$L=\varnothing$ and $N$ is uniform, or $L=\{e\}$ and
+$D=B\setminus\{e\}$ is the unique circuit-hyperplane.
+
+For nonsaturated equality, $q=m-r=1$ leaves just $j=0,1$
+in (P-A), with $U=\{d\}$ and $U=\{-d\}$ respectively;
+the complement is $H$ exactly when $U=\{e\}$.
+At saturation, (P-T) requires
+$\alpha-S=B\setminus\{e\}$. Reflection takes $B$ onto $A$
+and $e$ onto $\alpha-e$, giving the stated equivalent criterion.
+Every set mentioned here is still required to be the specified
+actual source basis. Source coloops require no extra restriction.
+
+Uniform targets have no circuit-hyperplanes, so (P-O) excludes
+failures at equality; strict gaps follow from Theorem 7.2.
+Finally the $p-1$ nonzero multiples of any $d\ne0$ are all the
+nonzero elements of the field, proving the last progression formula.
+The nonprogression consequence of Corollary 8.2 therefore addresses
+exactly the nonsaturated range in which it can have instances.
+
+## 10. The original prime question and symbolic negative families
+
+**命题 10.1（Nonsaturated progression failures for every prime $p\ge5$）。**
+For every prime $p\ge5$ set
+
+$$
+A=\{1,2,3\},\qquad S=\{1,2\},\qquad
+B=\{1,-1,-2\},\qquad H=\{-1,-2\}\subseteq\mathbb F_p.
+$$
+
+Let $M$ be uniform of rank two on $A$ and let $N$ have as bases
+all two-element subsets of $B$ other than $H$.
+Then $M,N$ satisfy Convention 7.1, $A$ is a progression,
+$|A|=|B|=3\le p-2$, and the specified basis $S$ fails to match
+the actual $N$. Here the unique coloop of $N$ is $1$.
+
+Proof. The residues $1,2,3$ are distinct, as are $1,-1,-2$,
+and none of the latter is zero, because $p\ge5$.
+The one-deleted-base construction supplied in Section 4 and [Family]
+applies with $r=2$, $q=1$ and this ground $B$ and hole $H$.
+It gives a loopless rank-two matroid, paving together with its dual,
+and makes $H$ a circuit-hyperplane; its bases are
+$\{1,-1\}$ and $\{1,-2\}$. Thus $1$ is a coloop, consistently
+with Corollary 9.2. This uses the finite-set construction itself,
+not a reduction of an integer matroid modulo $p$.
+
+In (P-A) take $a=1$, $d=1$, $j=0$, $r=2$, $m=3$.
+The blocking set is $U=\{1\}$ and its complement in $B$ is $H$.
+Theorem 8.1 proves failure. More explicitly the admissible sets are
+
+$$
+C_1=\{-1,-2\},\qquad C_2=\{-2\}.
+$$
+
+Indeed $1+1=2$, $2+1=3$ and $2+(-1)=1$ belong to $A$,
+whereas $1+(-1)=0$, $2+(-2)=0$ and $1+(-2)=-1$
+are outside $A$. The last exclusion holds for every $p\ge5$.
+Every admissible injective image must therefore be the deleted
+basis $H$. All assertions are symbolic in $p$.
+
+**命题 10.2（Saturated self-matching failures for every prime $p\ge5$）。**
+For every prime $p\ge5$ put
+
+$$
+E=\mathbb F_p\setminus\{0\},\qquad
+S=\{1,2\},\qquad H=\{-1,-2\}.
+$$
+
+Let $M=N$ be the rank-two matroid on $E$ whose bases are all
+two-element subsets other than $H$. It is loopless and sparse
+paving, its ground is a progression, it has no coloops, and
+$S\in\mathcal B(M)$ fails to match $N$.
+The actual basis $S'=\{1,-1\}$ of the same $M$ does match $N$.
+
+Proof. Apply the supplied one-deleted-base construction with
+$r=2$ and $q=p-3\ge2$. It gives looplessness and both paving
+properties. The dual has rank at least two, so $N$ has no coloops.
+The sets $S$ and $H$ are distinct: $1\notin H$ for $p\ge5$.
+Thus $S$ is an actual source basis. Theorem 9.1 with $\alpha=0$
+forces the target image $-S=H$, which is a nonbasis.
+The ground is the progression $1+I_1[0,p-2]$.
+The set $S'$ is a basis because $1\notin H$, and its forced
+image is $-S'=S'$, an actual basis; sending each element to its
+negative gives both sums zero outside $E$. This also distinguishes
+failure of a specified basis from failure of every source basis.
+
+**定理 10.3（Disposition of Question 6.1 and [AZ, Question 2.8]）。**
+Under Convention 7.1, every strict gap matches, with no progression
+condition. Equal-size failures for $m\le p-2$ are exactly (P-A),
+basis by basis, and for $m=p-1$ are exactly (P-T).
+Consequently the one-element-gap clause [AZ, Question 2.8(1)] is
+affirmative for every prime, even without its progression premise.
+The universal equality assertion in [AZ, Question 2.8(2)] is false
+for every prime $p\ge5$, already on progression source grounds;
+for $p=2,3$ every allowed instance is affirmative.
+For a particular equality instance, being a progression or a
+semi-progression alone does not prescribe a negative answer: its
+answer is exactly the basiswise classification above.
+
+Proof. Theorem 7.2 applies to every strict gap, including
+$|B|=|A|+1$. Theorems 8.1 and 9.1 cover the two exhaustive
+possibilities for equal size $m<p$. Propositions 10.1 and 10.2
+supply progression equality failures for every $p\ge5$ in the two
+regimes. Corollary 9.2 handles $p=2,3$ and gives affirmative
+equality instances, including all uniform targets. These are the
+original common positive rank and actual-target quantifiers of
+[AZ, Definition 1.3]: $n=r$, $E(M)=A$, $E(N)=B$.
+The strict clause and the equality clause therefore retain their
+separate truth values. This answers precisely Question 6.1.
+The hypotheses still require dual paving and a prime-order group;
+the larger-hyperplane problem of Question 6.2 and the composite-order
+case of Proposition 5.4 are not consequences of these assertions.
+
+## 11. Source correspondence for the prime classification
+
+The prime-domain deductions in Theorems 7.2, 8.1 and 9.1 use the
+following mathematical suppliers. The arithmetic necessary-and-sufficient
+conditions (P-A) and (P-T), together with their actual-basis
+interpretation and the prime families in Section 10, are the
+repo-derived conclusions of this append. The critical-pair theorem,
+Hall/Rado criteria, sparse paving structure, representative repair
+and finite deleted-base construction are attributed ingredients.
+
+| Source | Exact mathematical scope used in Sections 7–10 |
+| --- | --- |
+| [BDM] T. Boothby, M. DeVos and A. Montejano, *A new proof of Kemperman's theorem*, [arXiv:1301.0095v2](https://arxiv.org/pdf/1301.0095v2) | Theorem 1.1, p. 1, supplies Cauchy–Davenport for nonempty subsets of the prime cyclic group. Theorem 1.3, p. 3, supplies Vosper's complete critical-pair alternatives. In Theorem 8.1 its two inputs are $S$ and $U_S\cup\{0\}$, of sizes $r$ and $m-r+1$, with sumset size $m\le p-2$; both have size at least two. At saturation their size sum is $p$, so the exceptional $p-1$-element sumset alternative is retained. This exposition is the supplier for these classical statements; neither the historical Vosper originals nor Kemperman's historical original is needed as an independently inspected source. |
+| [AZ] [arXiv:2202.07719v3](https://arxiv.org/pdf/2202.07719v3) | Definition 1.3 fixes actual target bases and exclusion from $A$. Theorem 3.6 supplies Rado; Theorem 3.3 supplies the sparse paving alternative; Theorem 1.2 supplies prime-group matching for the free-source boundary. Question 2.8(1) assumes a progression and a one-element gap; Question 2.8(2) assumes equality and a progression or semi-progression. All these parameters are retained in Theorem 10.3. Lemmas 3.14 and 3.15 are not used to obtain either the union estimate or the prime classification. |
+| [Native] [SparsePavingMatchingObstruction.lean](../../../D5/S3/Combinatorics/Matroids/SparsePavingMatchingObstruction.lean) and its [mathematical exposition](../../../Blueprint/D5/S3/Combinatorics/Matroids/SparsePavingMatchingObstruction.md), at repository revision `89f08a1b675ec6c0179eaac17ef0b040c635d13b` | The supplied proof-local `sparse_hall_obstruction` is group-independent and retains actual bases. Its `small_indep`, `dual_paving_card_bound` and `nonspanning_structure` give the structural supply used in Theorem 7.2. The public `basiswise_obstruction` assumes torsion-freeness; the prime argument replaces its additive input by [BDM, Theorem 1.1]. Sections 1–4 of this volume supply the torsion-free strict-gap and equality results, not a prime-domain theorem. |
+| [Family] [AliabadiZerbibMatroidMatching.lean](../../../D5/S3/Combinatorics/Matroids/AliabadiZerbibMatroidMatching.lean), at the same repository revision | The supplied `allowed_exchange`, `extend_avoiding`, `punctured` and complementary-basis arguments give the finite one-deleted-base matroid and both paving properties. Section 4 states their finite-set form for $r\ge2$, $q\ge1$, which is used in Propositions 10.1 and 10.2. The supplied integer interval family itself does not assert reduction modulo a prime or the complete prime classification. |
+| [AWY] [arXiv:2412.04516v4](https://arxiv.org/pdf/2412.04516v4) | Theorem 3.2 requires positive ordered grounds of size $n+1$ and $\max E(M)\preceq n\min E(N)$; Theorem 3.3 adds a rectification-size restriction. Neither supplies the full prime domain here. Remark 3.6 gives the same corank-one sparse paving dichotomy as the matroid part of Corollary 9.2. No order or rectification premise from this source enters the prime proofs. |
+| [AK] [arXiv:2509.14339v2](https://arxiv.org/pdf/2509.14339v2) | Theorem 3.9 repeats the earlier strict-gap and nonprogression sufficient conditions. Theorem 3.10 treats paving targets with a hyperplane-nullity parameter, and Theorem 3.23 permits a relaxed target; those conclusions do not supply the fixed-actual-target equality classification. The prime deductions use neither Lemma 2.8 nor Claim 3.3, whose specific defects are treated in Section 5. |
+
+## 追加锚（本行以下为增补区）
