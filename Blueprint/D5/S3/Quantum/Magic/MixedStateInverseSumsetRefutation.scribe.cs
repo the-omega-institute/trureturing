@@ -92,7 +92,10 @@ internal sealed class MixedStateInverseSumsetRefutationDocument : IScribeDocumen
                         "Seven is prime, both convolution parameters are nonzero, and 2 squared plus 2 squared equals one in ZMod 7. "
                             + "The computed mean state and convolution supply the two required matrix equalities, and the bounds on A supply both positivity hypotheses. "
                             + "Applying the proposed universal inequality to these density states and c would put log 7 − log 2 at most (1/2) log 7, contradicting the strict inequality above."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bu-gu-jaffe-2025-mixed-state-inverse-sumset"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(
