@@ -1,0 +1,443 @@
+/- GID: D5/S3/Observer/RationalRouting/TwoReplyProfile
+   generality: I
+   mirror-B: D5/B/S3/Observer/RationalRouting/TwoReplyProfile
+   mirror-E: none(waiver:uniform-symbolic-acquisition)
+   anchors: []
+   utility: none
+   digest: Original bounded-scale future profiles are acquired at the actual moving cut. -/
+
+import D5.S3.Observer.RationalRouting.FullFutureProfile
+
+/-! Exact original intervals and acquisition at one attained current state. -/
+
+set_option autoImplicit false
+
+namespace D5.S3.Observer.RationalRouting
+
+open D5.S3.PrimeForms.Crossing.ExactPropagation
+open D5.S3.PrimeForms.SternBrocot.WordNodesAreReduced
+
+/-- The known attained matrix acts on a possible original, not on a copied source. -/
+def mobius (A : PositiveMatrix) (x : ℚ) : ℚ :=
+  ((A.a : ℚ) * x + A.b) / ((A.c : ℚ) * x + A.d)
+
+private theorem diagonal_positive {A : PositiveMatrix} (hA : Unimodular A) :
+    0 < A.a ∧ 0 < A.d := by
+  have ha : A.a ≠ 0 := by intro h; simp [Unimodular, h] at hA
+  have hd : A.d ≠ 0 := by intro h; simp [Unimodular, h] at hA
+  omega
+
+private theorem denominator_positive {A : PositiveMatrix} (hA : Unimodular A)
+    {x : ℚ} (hx : 0 < x) : 0 < (A.c : ℚ) * x + A.d := by
+  have hd : (0 : ℚ) < A.d := by exact_mod_cast (diagonal_positive hA).2
+  positivity
+
+private theorem mobius_positive {A : PositiveMatrix} (hA : Unimodular A)
+    {x : ℚ} (hx : 0 < x) : 0 < mobius A x := by
+  have ha : (0 : ℚ) < A.a := by exact_mod_cast (diagonal_positive hA).1
+  exact div_pos (by positivity) (denominator_positive hA hx)
+
+private theorem mobius_strict {A : PositiveMatrix} (hA : Unimodular A)
+    {x y : ℚ} (hx : 0 < x) (hy : 0 < y) (hxy : x < y) :
+    mobius A x < mobius A y := by
+  have hd : (A.a : ℚ) * A.d - (A.b : ℚ) * A.c = 1 := by
+    have hh : (A.a : ℚ) * A.d = (A.b : ℚ) * A.c + 1 := by exact_mod_cast hA
+    linarith
+  dsimp [mobius]
+  rw [div_lt_div_iff₀ (denominator_positive hA hx) (denominator_positive hA hy)]
+  have he : ((A.a : ℚ) * y + A.b) * ((A.c : ℚ) * x + A.d) -
+      ((A.a : ℚ) * x + A.b) * ((A.c : ℚ) * y + A.d) = y - x := by
+    linear_combination (y - x) * hd
+  linarith
+
+private theorem attain_append (u v : List Bool) (x : ℚ) :
+    attain (u ++ v) x = attain v (attain u x) := by
+  induction u generalizing x with
+  | nil => rfl
+  | cons b u ih => exact ih (step b x)
+
+private theorem matrix_cons_eval (b : Bool) (w : List Bool) {x : ℚ} (hx : 0 < x) :
+    mobius (wordMatrix (b :: w)) x = step b (mobius (wordMatrix w) x) := by
+  have hp := denominator_positive (unimodular_wordMatrix w) hx
+  have hz := mobius_positive (unimodular_wordMatrix w) hx
+  cases b
+  · have hsum : (wordMatrix w).c * x + (wordMatrix w).d +
+        ((wordMatrix w).a * x + (wordMatrix w).b) ≠ 0 := by
+      have hn : 0 < ((wordMatrix w).a : ℚ) * x + (wordMatrix w).b := by
+        have ha : (0 : ℚ) < (wordMatrix w).a := by
+          exact_mod_cast (diagonal_positive (unimodular_wordMatrix w)).1
+        positivity
+      linarith
+    ring_nf at hsum
+    dsimp [wordMatrix, PositiveMatrix.mul, leftStep, mobius, step]
+    push_cast
+    field_simp [hp.ne', hsum]
+    <;> ring
+  · dsimp [wordMatrix, PositiveMatrix.mul, rightStep, mobius, step]
+    push_cast
+    field_simp [hp.ne']
+    <;> ring
+
+private theorem chronological_matrix (u : List Bool) {x : ℚ} (hx : 0 < x) :
+    attain u x = mobius (wordMatrix u.reverse) x := by
+  suffices h : ∀ w : List Bool, attain w.reverse x = mobius (wordMatrix w) x by
+    simpa using h u.reverse
+  intro w
+  induction w with
+  | nil => simp [attain, wordMatrix, mobius, rootMatrix]
+  | cons b w ih =>
+    rw [List.reverse_cons, attain_append]
+    simp only [attain]
+    rw [ih, matrix_cons_eval b w hx]
+
+/-- Coefficients of the original inequality for a current threshold. -/
+def thresholdSlope (A : PositiveMatrix) (D : ℕ) (r : ℤ) : ℚ :=
+  (D : ℚ) * A.a - (r : ℚ) * A.c
+
+def thresholdIntercept (A : PositiveMatrix) (D : ℕ) (r : ℤ) : ℚ :=
+  (r : ℚ) * A.d - (D : ℚ) * A.b
+
+private theorem threshold_determinant {A : PositiveMatrix} (hA : Unimodular A)
+    (D : ℕ) (r : ℤ) :
+    thresholdSlope A D r * A.d + (A.c : ℚ) * thresholdIntercept A D r = D := by
+  have hd : (A.a : ℚ) * A.d = (A.b : ℚ) * A.c + 1 := by exact_mod_cast hA
+  dsimp [thresholdSlope, thresholdIntercept]
+  linear_combination (D : ℚ) * hd
+
+private theorem raw_cell_inequalities {A : PositiveMatrix} (hA : Unimodular A)
+    (D : ℕ) (r : ℤ) {x : ℚ} (hx : 0 < x) :
+    reply D (mobius A x) = r ↔
+      thresholdIntercept A D r ≤ thresholdSlope A D r * x ∧
+      thresholdSlope A D (r + 1) * x < thresholdIntercept A D (r + 1) := by
+  rw [reply, Int.floor_eq_iff]
+  have hp := denominator_positive hA hx
+  rw [mobius, ← mul_div_assoc, le_div_iff₀ hp, div_lt_iff₀ hp]
+  dsimp [thresholdSlope, thresholdIntercept]
+  push_cast
+  constructor <;> rintro ⟨hl, hu⟩ <;> constructor <;> nlinarith
+
+private theorem actual_lower_slope {A : PositiveMatrix} (hA : Unimodular A)
+    {D : ℕ} (hD : 1 ≤ D) {r : ℤ} {x : ℚ} (hx : 0 < x)
+    (hr : reply D (mobius A x) = r) : 0 < thresholdSlope A D r := by
+  have hi := ((raw_cell_inequalities hA D r hx).mp hr).1
+  have he := threshold_determinant hA D r
+  have hp : (0 : ℚ) < D := by exact_mod_cast (show 0 < D by omega)
+  by_contra hn
+  have hk : thresholdSlope A D r ≤ 0 := le_of_not_gt hn
+  have hl : thresholdIntercept A D r ≤ 0 :=
+    hi.trans (mul_nonpos_of_nonpos_of_nonneg hk hx.le)
+  have hkd := mul_nonpos_of_nonpos_of_nonneg hk (Nat.cast_nonneg A.d : (0 : ℚ) ≤ A.d)
+  have hcl := mul_nonpos_of_nonneg_of_nonpos (Nat.cast_nonneg A.c : (0 : ℚ) ≤ A.c) hl
+  linarith
+
+/-- Inverting a raw cell clips its lower endpoint at zero. An upper endpoint
+at or beyond the image asymptote imposes no new original upper bound. -/
+def firstInterval (A : PositiveMatrix) (D : ℕ) (I : ProfileCell) (r : ℤ) : ProfileCell :=
+  ⟨max I.lower (max 0 (thresholdIntercept A D r / thresholdSlope A D r)),
+    if 0 < thresholdSlope A D (r + 1) then
+      min I.upper (thresholdIntercept A D (r + 1) / thresholdSlope A D (r + 1))
+    else I.upper⟩
+
+private theorem first_interval_exact {A : PositiveMatrix} (hA : Unimodular A)
+    {D : ℕ} (hD : 1 ≤ D) {I : ProfileCell} {r : ℤ} {x : ℚ} (hx : 0 < x)
+    (hr : reply D (mobius A x) = r) (y : ℚ) :
+    (firstInterval A D I r).Contains y ↔ I.Contains y ∧ reply D (mobius A y) = r := by
+  have hk := actual_lower_slope hA hD hx hr
+  have hp : (0 : ℚ) < D := by exact_mod_cast (show 0 < D by omega)
+  have upper_all (hn : thresholdSlope A D (r + 1) ≤ 0) (hy : 0 < y) :
+      thresholdSlope A D (r + 1) * y < thresholdIntercept A D (r + 1) := by
+    have he := threshold_determinant hA D (r + 1)
+    have hkd := mul_nonpos_of_nonpos_of_nonneg hn (Nat.cast_nonneg A.d : (0 : ℚ) ≤ A.d)
+    have hl : 0 < thresholdIntercept A D (r + 1) := by
+      by_contra h
+      have hcl := mul_nonpos_of_nonneg_of_nonpos
+        (Nat.cast_nonneg A.c : (0 : ℚ) ≤ A.c) (le_of_not_gt h)
+      linarith
+    exact lt_of_le_of_lt (mul_nonpos_of_nonpos_of_nonneg hn hy.le) hl
+  by_cases hu : 0 < thresholdSlope A D (r + 1)
+  · simp only [firstInterval, if_pos hu, ProfileCell.Contains, max_le_iff, lt_min_iff]
+    constructor
+    · rintro ⟨hy, ⟨hil, ⟨_, hl⟩⟩, hiu, hh⟩
+      refine ⟨⟨hy, hil, hiu⟩, (raw_cell_inequalities hA D r hy).mpr ?_⟩
+      exact ⟨by simpa only [mul_comm] using (div_le_iff₀ hk).mp hl,
+        by simpa only [mul_comm] using (lt_div_iff₀ hu).mp hh⟩
+    · rintro ⟨⟨hy, hil, hiu⟩, hh⟩
+      have ht := (raw_cell_inequalities hA D r hy).mp hh
+      exact ⟨hy, ⟨hil, ⟨hy.le, (div_le_iff₀ hk).mpr (by simpa only [mul_comm] using ht.1)⟩⟩,
+        hiu, (lt_div_iff₀ hu).mpr (by simpa only [mul_comm] using ht.2)⟩
+  · simp only [firstInterval, if_neg hu, ProfileCell.Contains, max_le_iff]
+    constructor
+    · rintro ⟨hy, ⟨hil, ⟨_, hl⟩⟩, hiu⟩
+      refine ⟨⟨hy, hil, hiu⟩, (raw_cell_inequalities hA D r hy).mpr ?_⟩
+      exact ⟨by simpa only [mul_comm] using (div_le_iff₀ hk).mp hl,
+        upper_all (le_of_not_gt hu) hy⟩
+    · rintro ⟨⟨hy, hil, hiu⟩, hh⟩
+      have ht := (raw_cell_inequalities hA D r hy).mp hh
+      exact ⟨hy, ⟨hil, ⟨hy.le,
+        (div_le_iff₀ hk).mpr (by simpa only [mul_comm] using ht.1)⟩⟩, hiu⟩
+
+/-- The least numerator strictly above a rational endpoint, computed by one
+integer division without reducing a fraction in the denominator loop. -/
+def nextNumerator (l : ℚ) (m : ℕ) : ℤ :=
+  ((m : ℤ) * l.num) / (l.den : ℤ) + 1
+
+private theorem next_numerator_eq (l : ℚ) (m : ℕ) :
+    nextNumerator l m = reply m l + 1 := by
+  rw [nextNumerator, reply]
+  congr 1
+  rw [← Rat.floor_intCast_div_natCast]
+  congr 1
+  push_cast
+  rw [mul_div_assoc, Rat.num_div_den]
+
+/-- The scan is over the original denominators only. Repeated fractions need
+no distinctness test: any selected pair names the same unresolved cut. -/
+def findCut : ℕ → ProfileCell → Option (ℤ × ℕ)
+  | 0, _ => none
+  | n + 1, C =>
+      let j := nextNumerator C.lower (n + 1)
+      if j * (C.upper.den : ℤ) < (n + 1 : ℕ) * C.upper.num then
+        some (j, n + 1)
+      else findCut n C
+
+private theorem candidate_upper (C : ProfileCell) (m : ℕ) (j : ℤ) :
+    j * (C.upper.den : ℤ) < (m : ℤ) * C.upper.num ↔
+      (j : ℚ) < (m : ℚ) * C.upper := by
+  have hd : (0 : ℚ) < C.upper.den := by exact_mod_cast C.upper.pos
+  have he : (m : ℚ) * C.upper =
+      ((m : ℚ) * C.upper.num) / C.upper.den := by
+    rw [mul_div_assoc, Rat.num_div_den]
+  rw [he, lt_div_iff₀ hd]
+  exact_mod_cast (Iff.rfl : j * (C.upper.den : ℤ) < (m : ℤ) * C.upper.num ↔ _)
+
+private theorem candidate_lower (C : ProfileCell) (m : ℕ) (hm : 1 ≤ m) :
+    C.lower < (nextNumerator C.lower m : ℚ) / m := by
+  have hp : (0 : ℚ) < m := by exact_mod_cast (show 0 < m by omega)
+  rw [lt_div_iff₀ hp, next_numerator_eq]
+  have h := Int.lt_floor_add_one ((m : ℚ) * C.lower)
+  simpa [reply, mul_comm] using h
+
+private theorem candidate_le {C : ProfileCell} {m : ℕ} (hm : 1 ≤ m) {j : ℤ}
+    (hj : C.lower < (j : ℚ) / m) : nextNumerator C.lower m ≤ j := by
+  have hp : (0 : ℚ) < m := by exact_mod_cast (show 0 < m by omega)
+  have hf : reply m C.lower < j := by
+    apply Int.floor_lt.mpr
+    have ht := (lt_div_iff₀ hp).mp hj
+    simpa [mul_comm] using ht
+  rw [next_numerator_eq]
+  omega
+
+private theorem find_cut_spec (B : ℕ) (C : ProfileCell) :
+    (∀ j m, findCut B C = some (j, m) →
+      1 ≤ m ∧ m ≤ B ∧ C.lower < (j : ℚ) / m ∧ (j : ℚ) / m < C.upper) ∧
+    (findCut B C = none → ∀ m : ℕ, 1 ≤ m → m ≤ B →
+      ∀ j : ℤ, ¬ (C.lower < (j : ℚ) / m ∧ (j : ℚ) / m < C.upper)) := by
+  induction B with
+  | zero =>
+    constructor
+    · intro j m h; simp [findCut] at h
+    · intro _ m hm hmB; omega
+  | succ n ih =>
+    dsimp only [findCut]
+    split_ifs with hc
+    · constructor
+      · intro j m h
+        have he := Option.some.inj h
+        cases he
+        refine ⟨by omega, le_rfl, candidate_lower C (n + 1) (by omega), ?_⟩
+        have hp : (0 : ℚ) < ((n + 1 : ℕ) : ℚ) := by exact_mod_cast Nat.succ_pos n
+        exact (div_lt_iff₀ hp).mpr
+          (by simpa only [mul_comm] using (candidate_upper C (n + 1) _).mp hc)
+      · intro h; simp at h
+    · constructor
+      · intro j m h
+        obtain ⟨hm, hmB, hl, hu⟩ := ih.1 j m h
+        exact ⟨hm, by omega, hl, hu⟩
+      · intro h m hm hmB j hj
+        by_cases he : m = n + 1
+        · subst m
+          have hj' := candidate_le hm hj.1
+          have hp : (0 : ℚ) < ((n + 1 : ℕ) : ℚ) := by exact_mod_cast Nat.succ_pos n
+          have hupper : (j : ℚ) < ((n + 1 : ℕ) : ℚ) * C.upper := by
+            simpa only [mul_comm] using (div_lt_iff₀ hp).mp hj.2
+          have hsmall : (nextNumerator C.lower (n + 1) : ℚ) <
+              ((n + 1 : ℕ) : ℚ) * C.upper :=
+            lt_of_le_of_lt (by exact_mod_cast hj') hupper
+          exact hc ((candidate_upper C (n + 1) _).mpr hsmall)
+        · exact ih.2 h m hm (by omega) j hj
+
+private theorem different_reply_cut {m : ℕ} (hm : 1 ≤ m) {x y : ℚ}
+    (h : reply m x < reply m y) :
+    x < ((reply m x + 1 : ℤ) : ℚ) / m ∧
+      ((reply m x + 1 : ℤ) : ℚ) / m ≤ y := by
+  have hp : (0 : ℚ) < m := by exact_mod_cast (show 0 < m by omega)
+  constructor
+  · rw [lt_div_iff₀ hp]
+    simpa [reply, mul_comm] using Int.lt_floor_add_one ((m : ℚ) * x)
+  · rw [div_le_iff₀ hp]
+    have he : reply m x + 1 ≤ reply m y := by omega
+    have ht := Int.le_floor.mp he
+    simpa [mul_comm] using ht
+
+private theorem no_interior_cut_same {B : ℕ} {C : ProfileCell}
+    (h : ∀ m : ℕ, 1 ≤ m → m ≤ B → ∀ j : ℤ,
+      ¬ (C.lower < (j : ℚ) / m ∧ (j : ℚ) / m < C.upper))
+    {x y : ℚ} (hx : C.Contains x) (hy : C.Contains y) : SameInstant B x y := by
+  intro m hm hmB
+  apply le_antisymm
+  · by_contra hn
+    have hl : reply m y < reply m x := lt_of_not_ge hn
+    have ht := different_reply_cut hm hl
+    exact h m hm hmB _ ⟨hy.2.1.trans_lt ht.1, ht.2.trans_lt hx.2.2⟩
+  · by_contra hn
+    have hl : reply m x < reply m y := lt_of_not_ge hn
+    have ht := different_reply_cut hm hl
+    exact h m hm hmB _ ⟨hx.2.1.trans_lt ht.1, ht.2.trans_lt hy.2.2⟩
+
+private theorem raw_fraction_bounds (D s : ℕ) (hs : 1 ≤ s) (p r : ℤ) :
+    reply D ((p : ℚ) / s) = r ↔
+      r * (s : ℤ) ≤ (D : ℤ) * p ∧ (D : ℤ) * p < (r + 1) * s := by
+  have hp : (0 : ℚ) < s := by exact_mod_cast (show 0 < s by omega)
+  rw [reply, Int.floor_eq_iff, ← mul_div_assoc, le_div_iff₀ hp, div_lt_iff₀ hp]
+  exact_mod_cast (Iff.rfl : r * (s : ℤ) ≤ (D : ℤ) * p ∧
+    (D : ℤ) * p < (r + 1) * s ↔ _)
+
+private theorem raw_fraction_unique (Q : ℕ) (hQ : 1 ≤ Q)
+    (s₁ s₂ : ℕ) (h₁ : 1 ≤ s₁) (h₂ : 1 ≤ s₂) (h₁Q : s₁ ≤ Q) (h₂Q : s₂ ≤ Q)
+    (p₁ p₂ r : ℤ)
+    (hr₁ : reply (Q ^ 2) ((p₁ : ℚ) / s₁) = r)
+    (hr₂ : reply (Q ^ 2) ((p₂ : ℚ) / s₂) = r) :
+    (p₁ : ℚ) / s₁ = (p₂ : ℚ) / s₂ := by
+  obtain ⟨hl₁, hu₁⟩ := (raw_fraction_bounds (Q ^ 2) s₁ h₁ p₁ r).mp hr₁
+  obtain ⟨hl₂, hu₂⟩ := (raw_fraction_bounds (Q ^ 2) s₂ h₂ p₂ r).mp hr₂
+  have hs₁ : (0 : ℤ) < s₁ := by exact_mod_cast (show 0 < s₁ by omega)
+  have hs₂ : (0 : ℤ) < s₂ := by exact_mod_cast (show 0 < s₂ by omega)
+  have hprod : (s₁ : ℤ) * s₂ ≤ (Q : ℤ) ^ 2 := by
+    have hh := Nat.mul_le_mul h₁Q h₂Q
+    have hc : (s₁ : ℤ) * s₂ ≤ (Q : ℤ) * Q := by exact_mod_cast hh
+    nlinarith
+  have hD : (0 : ℤ) ≤ (Q : ℤ) ^ 2 := sq_nonneg _
+  push_cast at hl₁ hu₁ hl₂ hu₂
+  have hup : (Q : ℤ) ^ 2 * (p₁ * s₂ - p₂ * s₁) < (s₁ : ℤ) * s₂ := by
+    nlinarith [mul_lt_mul_of_pos_right hu₁ hs₂,
+      mul_le_mul_of_nonneg_right hl₂ hs₁.le]
+  have hlo : (Q : ℤ) ^ 2 * (p₂ * s₁ - p₁ * s₂) < (s₁ : ℤ) * s₂ := by
+    nlinarith [mul_lt_mul_of_pos_right hu₂ hs₁,
+      mul_le_mul_of_nonneg_right hl₁ hs₂.le]
+  have he : p₁ * s₂ = p₂ * s₁ := by
+    apply le_antisymm
+    · by_contra h
+      have hh : 1 ≤ p₁ * s₂ - p₂ * s₁ := by omega
+      have hm := mul_le_mul_of_nonneg_left hh hD
+      nlinarith
+    · by_contra h
+      have hh : 1 ≤ p₂ * s₁ - p₁ * s₂ := by omega
+      have hm := mul_le_mul_of_nonneg_left hh hD
+      nlinarith
+  apply (div_eq_div_iff (by exact_mod_cast hs₁.ne') (by exact_mod_cast hs₂.ne')).mpr
+  exact_mod_cast he
+
+def transportNumerator (A : PositiveMatrix) (j : ℤ) (m : ℕ) : ℤ :=
+  (A.a : ℤ) * j + (A.b : ℤ) * m
+
+def transportDenominator (A : PositiveMatrix) (j : ℤ) (m : ℕ) : ℕ :=
+  A.c * j.toNat + A.d * m
+
+private theorem transport_bounds {A : PositiveMatrix} (hA : Unimodular A)
+    {B U m : ℕ} (hm : 1 ≤ m) (hmB : m ≤ B) {j : ℤ}
+    (hj : 0 ≤ j) (hjU : j.toNat ≤ m * U) :
+    1 ≤ transportDenominator A j m ∧
+      transportDenominator A j m ≤ B * (A.c * U + A.d) := by
+  have hd := (diagonal_positive hA).2
+  constructor
+  · dsimp [transportDenominator]
+    have hdm : 1 ≤ A.d * m := by nlinarith
+    omega
+  · calc
+      transportDenominator A j m ≤ A.c * (m * U) + A.d * m :=
+        Nat.add_le_add_right (Nat.mul_le_mul_left A.c hjU) _
+      _ = m * (A.c * U + A.d) := by ring
+      _ ≤ B * (A.c * U + A.d) := Nat.mul_le_mul_right _ hmB
+
+private theorem transport_value {A : PositiveMatrix} (hA : Unimodular A)
+    {m : ℕ} (hm : 1 ≤ m) {j : ℤ} (hj : 0 < j) :
+    mobius A ((j : ℚ) / m) =
+      (transportNumerator A j m : ℚ) / transportDenominator A j m := by
+  have hmc : (0 : ℚ) < m := by exact_mod_cast (show 0 < m by omega)
+  have hjc : (0 : ℚ) < j := by exact_mod_cast hj
+  have hjn : (j.toNat : ℤ) = j := Int.toNat_of_nonneg hj.le
+  have hjq : (j.toNat : ℚ) = j := by exact_mod_cast hjn
+  have hd : (0 : ℚ) < A.d := by exact_mod_cast (diagonal_positive hA).2
+  have hs : (0 : ℚ) < (A.c : ℚ) * j + (A.d : ℚ) * m := by positivity
+  dsimp [mobius, transportNumerator, transportDenominator]
+  push_cast
+  rw [hjq]
+  field_simp
+  <;> ring
+
+private theorem cut_integer_bounds {I : ProfileCell} (hl : 0 ≤ I.lower)
+    {U m : ℕ} (hm : 1 ≤ m) (hU : I.upper ≤ (U : ℚ)) {j : ℤ}
+    (hj : I.lower < (j : ℚ) / m ∧ (j : ℚ) / m < I.upper) :
+    0 < j ∧ j.toNat ≤ m * U := by
+  have hmc : (0 : ℚ) < m := by exact_mod_cast (show 0 < m by omega)
+  have hjp : (0 : ℚ) < (j : ℚ) / m := hl.trans_lt hj.1
+  have hjq : (0 : ℚ) < j := (div_pos_iff_of_pos_right hmc).mp hjp
+  have hjz : (0 : ℤ) < j := by exact_mod_cast hjq
+  have hjupper : (j : ℚ) < (U : ℚ) * m :=
+    (div_lt_iff₀ hmc).mp (hj.2.trans_le hU)
+  have hjupperZ : j ≤ (m * U : ℕ) := by
+    have hh : j < (U : ℤ) * m := by exact_mod_cast hjupper
+    push_cast
+    nlinarith
+  exact ⟨hjz, by omega⟩
+
+private theorem first_interval_lower_nonneg (A : PositiveMatrix) (D : ℕ)
+    (I : ProfileCell) (r : ℤ) : 0 ≤ (firstInterval A D I r).lower := by
+  exact (le_max_left _ _).trans (le_max_right _ _)
+
+private theorem first_interval_cut_unique {A : PositiveMatrix} (hA : Unimodular A)
+    {B U : ℕ} (hB : 1 ≤ B) {I : ProfileCell} (hl : 0 ≤ I.lower)
+    (hU : I.upper ≤ (U : ℚ)) {x : ℚ} (hx : I.Contains x) :
+    let Q := B * (A.c * U + A.d)
+    let J := firstInterval A (Q ^ 2) I (reply (Q ^ 2) (mobius A x))
+    ∀ j₁ j₂ : ℤ, ∀ m₁ m₂ : ℕ,
+      1 ≤ m₁ → m₁ ≤ B → 1 ≤ m₂ → m₂ ≤ B →
+      J.lower < (j₁ : ℚ) / m₁ → (j₁ : ℚ) / m₁ < J.upper →
+      J.lower < (j₂ : ℚ) / m₂ → (j₂ : ℚ) / m₂ < J.upper →
+      (j₁ : ℚ) / m₁ = (j₂ : ℚ) / m₂ := by
+  dsimp only
+  let Q := B * (A.c * U + A.d)
+  let r := reply (Q ^ 2) (mobius A x)
+  let J := firstInterval A (Q ^ 2) I r
+  have hQ : 1 ≤ Q := by
+    have hd := (diagonal_positive hA).2
+    dsimp [Q]
+    nlinarith
+  have hD : 1 ≤ Q ^ 2 := one_le_pow₀ hQ
+  intro j₁ j₂ m₁ m₂ hm₁ hm₁B hm₂ hm₂B hl₁ hu₁ hl₂ hu₂
+  have hpos₁ : 0 < (j₁ : ℚ) / m₁ :=
+    (first_interval_lower_nonneg A (Q ^ 2) I r).trans_lt hl₁
+  have hpos₂ : 0 < (j₂ : ℚ) / m₂ :=
+    (first_interval_lower_nonneg A (Q ^ 2) I r).trans_lt hl₂
+  have hi₁ := (first_interval_exact hA hD hx.1 rfl _).mp ⟨hpos₁, hl₁.le, hu₁⟩
+  have hi₂ := (first_interval_exact hA hD hx.1 rfl _).mp ⟨hpos₂, hl₂.le, hu₂⟩
+  have hjI₁ : I.lower < (j₁ : ℚ) / m₁ ∧ (j₁ : ℚ) / m₁ < I.upper := by
+    exact ⟨(le_max_left _ _).trans_lt hl₁, hi₁.1.2.2⟩
+  have hjI₂ : I.lower < (j₂ : ℚ) / m₂ ∧ (j₂ : ℚ) / m₂ < I.upper := by
+    exact ⟨(le_max_left _ _).trans_lt hl₂, hi₂.1.2.2⟩
+  obtain ⟨hj₁, hj₁U⟩ := cut_integer_bounds hl hm₁ hU hjI₁
+  obtain ⟨hj₂, hj₂U⟩ := cut_integer_bounds hl hm₂ hU hjI₂
+  obtain ⟨hs₁, hs₁Q⟩ := transport_bounds hA hm₁ hm₁B hj₁.le hj₁U
+  obtain ⟨hs₂, hs₂Q⟩ := transport_bounds hA hm₂ hm₂B hj₂.le hj₂U
+  have hv₁ := transport_value hA hm₁ hj₁
+  have hv₂ := transport_value hA hm₂ hj₂
+  have he := raw_fraction_unique Q hQ _ _ hs₁ hs₂ hs₁Q hs₂Q
+    (transportNumerator A j₁ m₁) (transportNumerator A j₂ m₂) r
+    (by rw [← hv₁]; exact hi₁.2) (by rw [← hv₂]; exact hi₂.2)
+  rw [← hv₁, ← hv₂] at he
+  rcases lt_trichotomy ((j₁ : ℚ) / m₁) ((j₂ : ℚ) / m₂) with h | h | h
+  · exact False.elim ((ne_of_lt (mobius_strict hA hpos₁ hpos₂ h)) he)
+  · exact h
+  · exact False.elim ((ne_of_lt (mobius_strict hA hpos₂ hpos₁ h)) he.symm)
+
+end D5.S3.Observer.RationalRouting

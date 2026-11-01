@@ -8,6 +8,8 @@
 
 import D5.S3.Observer.RationalRouting.Source
 
+/-! Finite floor vectors and their complete chronological future profiles. -/
+
 set_option autoImplicit false
 
 namespace D5.S3.Observer.RationalRouting
@@ -29,7 +31,7 @@ private theorem left_threshold (m j : ℤ) {x : ℚ} (hx : 0 < x)
       j ≤ ⌊((m - j : ℤ) : ℚ) * x⌋) := by
   rw [Int.le_floor, Int.le_floor]
   have hd : 0 < 1 + x := by linarith
-  rw [mul_div_assoc, le_div_iff₀ hd]
+  rw [← mul_div_assoc, le_div_iff₀ hd]
   push_cast
   constructor <;> intro h <;> nlinarith
 
@@ -68,7 +70,10 @@ private theorem instant_step {B : ℕ} {x y : ℚ} (hx : 0 < x) (hy : 0 < y)
       rw [hc] at hv
       change (j ≤ ⌊(m : ℚ) * (x / (1 + x))⌋ ↔
         j ≤ ⌊(m : ℚ) * (y / (1 + y))⌋)
-      rw [left_threshold (m : ℤ) j hx hjm, left_threshold (m : ℤ) j hy hjm, hv]
+      have htx := left_threshold (m : ℤ) j hx hjm
+      have hty := left_threshold (m : ℤ) j hy hjm
+      simp only [Int.cast_natCast] at htx hty
+      rw [htx, hty, hv]
     apply le_antisymm
     · exact (threshold _ hxb.1 hxb.2).mp le_rfl
     · exact (threshold _ hyb.1 hyb.2).mpr le_rfl
@@ -129,7 +134,9 @@ theorem containing_cell_exact (B : ℕ) (hB : 1 ≤ B) {y : ℚ} (hy : 0 < y) (x
   | succ n ih =>
     by_cases hn : n = 0
     · subst n
-      simp only [containingCell, if_pos rfl, ProfileCell.Contains, max_le_iff]
+      change (0 < x ∧ max 0 ((reply 1 y : ℚ) / 1) ≤ x ∧
+        x < ((reply 1 y : ℚ) + 1) / 1) ↔ _
+      simp only [max_le_iff]
       constructor
       · rintro ⟨hx, ⟨_, hl⟩, hu⟩
         refine ⟨hx, ?_⟩
@@ -168,5 +175,30 @@ def ProfileCell.representative (C : ProfileCell) : ℚ :=
 
 def ProfileCell.evaluate (C : ProfileCell) (w : List Bool) (m : ℕ) : ℤ :=
   reply m (attain w C.representative)
+
+/-- The finite cell contains its computable representative and evaluates every
+future coordinate correctly, uniformly over all positive sources in that cell. -/
+theorem containing_cell_evaluator (B : ℕ) (hB : 1 ≤ B) {y : ℚ} (hy : 0 < y) :
+    (containingCell B y).Contains (containingCell B y).representative ∧
+    ∀ x : ℚ, (containingCell B y).Contains x → ∀ w : List Bool,
+      ∀ m : ℕ, 1 ≤ m → m ≤ B →
+        (containingCell B y).evaluate w m = reply m (attain w x) := by
+  let C := containingCell B y
+  have hself : C.Contains y := (containing_cell_exact B hB hy y).mpr
+    ⟨hy, fun _ _ _ => rfl⟩
+  have hrep : C.Contains C.representative := by
+    dsimp [ProfileCell.Contains, ProfileCell.representative]
+    split_ifs with hl
+    · exact ⟨hl, le_rfl, hself.2.1.trans_lt hself.2.2⟩
+    · have hu : 0 < C.upper := hy.trans hself.2.2
+      exact ⟨by positivity, by linarith, by linarith⟩
+  refine ⟨hrep, ?_⟩
+  intro x hx w m hm hmB
+  have hr := (containing_cell_exact B hB hy C.representative).mp hrep
+  have hxy := (containing_cell_exact B hB hy x).mp hx
+  have hi : SameInstant B C.representative x := by
+    intro n hn hnB
+    exact (hr.2 n hn hnB).trans (hxy.2 n hn hnB).symm
+  exact ((instantaneous_iff_full_future hr.1 hxy.1).mp hi w) m hm hmB
 
 end D5.S3.Observer.RationalRouting
