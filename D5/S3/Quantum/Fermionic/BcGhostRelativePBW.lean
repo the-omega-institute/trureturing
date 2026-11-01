@@ -418,6 +418,7 @@ theorem relative_eq_supportedAllowed : relative = supportedAllowed := by
   · intro hv
     change b 0 v = 0
     have hs : ∀ S ∈ v.support, 3 ∉ S := by
+      change ∀ S ∈ v.support, S ∈ allowed at hv
       intro S hS
       exact hv S hS
     simpa [b] using no_three_annihilate v hs
@@ -586,5 +587,21 @@ theorem relative_pbw_complete :
   rcases relative_pbw_mode_intertwining with
     ⟨hbneg, hcpos, hcneg, hbpos, hprojB, hprojC⟩
   exact ⟨W_is_Wcoord, hunit, hbij, hbneg, hcpos, hcneg, hbpos, hprojB, hprojC⟩
+
+private example : W ∅ ∅ = ket {1} := by
+  rw [W_is_Wcoord]
+  simp [Wcoord, sign, occ]
+
+private example : W {1} {2} = -ket {7} := by
+  rw [W_is_Wcoord]
+  norm_num [Wcoord, sign, signExponent, occ]
+
+private example : W {1, 2} ∅ = -ket ∅ := by
+  rw [W_is_Wcoord]
+  norm_num [Wcoord, sign, signExponent, occ]
+
+private example : W {5} {1} = -ket {1, 5, 6} := by
+  rw [W_is_Wcoord]
+  norm_num [Wcoord, sign, signExponent, occ]
 
 end D5.S3.Quantum.Fermionic.BcGhostRelativePBW

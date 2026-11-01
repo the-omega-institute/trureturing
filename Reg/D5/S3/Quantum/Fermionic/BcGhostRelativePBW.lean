@@ -13,7 +13,7 @@ open LeanInformationAudit
 
 abbrev signature : Signature where
   Params := Unit
-  State _ := Unit
+  State _ := Fock
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -22,14 +22,14 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature := realize signature
-  (fun _ _ => relative_pbw_complete) (fun e => nomatch e)
+  (fun _ _ v => v = vacuum ∧ relative_pbw_complete) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law R := R.readout () ()
+  Law R := R.readout () () vacuum
 
 def rejected : Realization signature := realize signature
-  (fun _ _ => False) (fun e => nomatch e)
+  (fun _ _ _ => False) (fun e => nomatch e)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -37,7 +37,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 def family : Registration arena (type_of% @relative_pbw_complete) where
   actual := actual
-  bridge := Iff.rfl
+  bridge := by simp [actual, arena]
   variation := ⟨relative_pbw_complete, rejected, rejected_law⟩
   sensitivity := by
     constructor
@@ -49,8 +49,8 @@ def family : Registration arena (type_of% @relative_pbw_complete) where
       exact nomatch e
   dependence := by
     intro role
-    refine ⟨(), (), ?_⟩
-    exact relative_pbw_complete
+    refine ⟨(), vacuum, 0, ?_⟩
+    simp [actual, relative_pbw_complete]
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@relative_pbw_complete) (Realization signature) Type Unit where
@@ -65,7 +65,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ => relative_pbw_complete) (fun e => nomatch e))
+  readout := some (realize signature
+    (fun _ _ v => v = vacuum ∧ relative_pbw_complete) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
