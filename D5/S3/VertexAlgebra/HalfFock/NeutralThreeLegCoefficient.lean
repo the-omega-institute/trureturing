@@ -1114,9 +1114,11 @@ private theorem normalWord_perm (D : LatticeData) (T : ℂˣ) (B : Finset ℤ)
   | nil => rfl
   | cons a h ih => simp only [normalWord_cons, ih]
   | swap a b w =>
-    simp only [normalWord_cons, mul_add, add_mul, ← mul_assoc]
-    rw [creationSum_commute D T B a b, annihilationSum_commute D T B a b]
-    noncomm_ring
+    simp only [normalWord_cons]
+    have hc : creationSum D T B a * (creationSum D T B b * normalWord D T B w) =
+        creationSum D T B b * (creationSum D T B a * normalWord D T B w) := by
+      rw [← mul_assoc, creationSum_commute D T B a b, mul_assoc]
+    noncomm_ring [hc, annihilationSum_commute D T B a b]
   | trans h₁ h₂ ih₁ ih₂ => exact ih₁.trans ih₂
 
 private theorem nativeModeBox_mono (D : LatticeData) (B C : Finset ℤ)
@@ -1385,6 +1387,465 @@ theorem nativeNeutralLaurentEntry_recurrence (D : LatticeData) (T : ℂˣ)
         nativeNeutralLaurentEntry D T (d - Finsupp.single b 1) input output := by
   rw [nativeNeutralLaurentEntry_source_insertion, nativeNeutralLaurentEntry_unpaired]
 
+
+open private nativeMoment nativeMoment_step weight_sub_single sub_single_degree
+  covariance_symm from D5.S3.VertexAlgebra.TwistedGround.OriginalCorrectionGaussian
+
+/-- Finite raw SS/SI/SO/IO block matrix. The three summands of the index type
+are source, input and output labels, respectively. -/
+def nativeThreeLegMatrix {I : Type*} (D : LatticeData) (T : ℂˣ)
+    (label : I ↪ Index D) : Matrix (I ⊕ (I ⊕ I)) (I ⊕ (I ⊕ I)) ℂ := by
+  classical
+  exact fun
+  | .inl a, .inl b => nativeSourceSourceKernel D T (label a) (label b)
+  | .inl a, .inr (.inl b) => nativeSourceInputKernel D T (label a) (label b)
+  | .inl a, .inr (.inr b) => nativeSourceOutputKernel D T (label a) (label b)
+  | .inr (.inl a), .inl b => nativeSourceInputKernel D T (label b) (label a)
+  | .inr (.inr a), .inl b => nativeSourceOutputKernel D T (label b) (label a)
+  | .inr (.inl a), .inr (.inr b) => if a = b then 1 else 0
+  | .inr (.inr a), .inr (.inl b) => if b = a then 1 else 0
+  | _, _ => 0
+
+/-- The finite three-leg monomial occupation retains every repeated position. -/
+def nativeThreeLegOccupation {I : Type*} (d input output : I →₀ ℕ) :
+    (I ⊕ (I ⊕ I)) →₀ ℕ := d.sumElim (input.sumElim output)
+
+
+/-- Literal raw coherent exponent: SS/2 + SO + SI + IO. -/
+def nativeThreeLegRawPolynomial {I : Type*} [Fintype I]
+    (D : LatticeData) (T : ℂˣ) (label : I ↪ Index D) :
+    MvPolynomial (I ⊕ (I ⊕ I)) ℂ :=
+  (1 / 2 : ℂ) • (∑ a, ∑ b, nativeSourceSourceKernel D T (label a) (label b) •
+    (X (.inl a) * X (.inl b))) +
+  (∑ a, ∑ b, nativeSourceOutputKernel D T (label a) (label b) •
+    (X (.inl a) * X (.inr (.inr b)))) +
+  (∑ a, ∑ b, nativeSourceInputKernel D T (label a) (label b) •
+    (X (.inl a) * X (.inr (.inl b)))) +
+  ∑ b, X (.inr (.inl b)) * X (.inr (.inr b))
+
+private theorem nativeThreeLeg_quadratic {I : Type*} [Fintype I] [DecidableEq I]
+    (D : LatticeData) (T : ℂˣ) (label : I ↪ Index D) :
+    quadratic (nativeThreeLegMatrix D T label) = nativeThreeLegRawPolynomial D T label := by
+  classical
+  have hi : (∑ a : I, ∑ b : I, nativeSourceInputKernel D T (label b) (label a) •
+      (X (.inr (.inl a)) * X (.inl b) : MvPolynomial (I ⊕ (I ⊕ I)) ℂ)) =
+      ∑ a : I, ∑ b : I, nativeSourceInputKernel D T (label a) (label b) •
+        (X (.inl a) * X (.inr (.inl b))) := by
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro a ha
+    apply Finset.sum_congr rfl
+    intro b hb
+    rw [mul_comm]
+  have ho : (∑ a : I, ∑ b : I, nativeSourceOutputKernel D T (label b) (label a) •
+      (X (.inr (.inr a)) * X (.inl b) : MvPolynomial (I ⊕ (I ⊕ I)) ℂ)) =
+      ∑ a : I, ∑ b : I, nativeSourceOutputKernel D T (label a) (label b) •
+        (X (.inl a) * X (.inr (.inr b))) := by
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro a ha
+    apply Finset.sum_congr rfl
+    intro b hb
+    rw [mul_comm]
+  simp only [quadratic, Fintype.sum_sum_type, nativeThreeLegMatrix,
+    Finset.sum_add_distrib, zero_smul, Finset.sum_const_zero, zero_add, add_zero,
+    ite_smul, one_smul, zero_smul]
+  simp only [Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  rw [hi, ho]
+  simp only [show ∀ a : I, (X (.inr (.inr a)) * X (.inr (.inl a)) :
+      MvPolynomial (I ⊕ (I ⊕ I)) ℂ) = X (.inr (.inl a)) * X (.inr (.inr a))
+    from fun _ => mul_comm _ _]
+  unfold nativeThreeLegRawPolynomial
+  module
+
+/-- Ordinary coefficient of the finite raw coherent exponential. Homogeneity
+makes its coefficient a single finite power divided by its exponential factorial. -/
+def nativeThreeLegExponentialCoefficient {I : Type*} [Fintype I]
+    (D : LatticeData) (T : ℂˣ) (label : I ↪ Index D) (d h l : I →₀ ℕ) : ℂ :=
+  let o := nativeThreeLegOccupation d h l
+  (((o.degree / 2).factorial : ℂ)⁻¹ •
+    nativeThreeLegRawPolynomial D T label ^ (o.degree / 2)).coeff o
+
+private theorem nativeThreeLegExponentialCoefficient_eq {I : Type*}
+    [Fintype I] [DecidableEq I] (D : LatticeData) (T : ℂˣ)
+    (label : I ↪ Index D) (d h l : I →₀ ℕ) :
+    nativeThreeLegExponentialCoefficient D T label d h l =
+      gaussianCoefficient (nativeThreeLegMatrix D T label) (nativeThreeLegOccupation d h l) := by
+  simp only [nativeThreeLegExponentialCoefficient, gaussianCoefficient, gaussianPiece,
+    nativeThreeLeg_quadratic]
+
+private theorem nativeSourceSourceKernel_symm (D : LatticeData) (T : ℂˣ)
+    (a b : Index D) :
+    nativeSourceSourceKernel D T a b = nativeSourceSourceKernel D T b a := by
+  have he (u v : Index D) : nativeSourceSourceKernel D T u v =
+      covariance D ((T : ℂ) ^ (-2 : ℤ)) u v := by
+    simp only [nativeSourceSourceKernel, covariance, sourceWeight]
+    congr 1
+    rw [← zpow_natCast, ← zpow_mul]
+    congr 1
+    push_cast
+    ring
+  rw [he, he, covariance_symm]
+
+private theorem nativeThreeLegMatrix_symm {I : Type*} (D : LatticeData) (T : ℂˣ)
+    (label : I ↪ Index D) :
+    ∀ i j, nativeThreeLegMatrix D T label i j = nativeThreeLegMatrix D T label j i := by
+  intro i j
+  rcases i with i | i <;> rcases j with j | j
+  · exact nativeSourceSourceKernel_symm D T (label i) (label j)
+  · rcases j with j | j <;> rfl
+  · rcases i with i | i <;> rfl
+  · rcases i with i | i <;> rcases j with j | j <;> rfl
+
+private theorem threeOccupation_add_source {I : Type*}
+    (d h l : I →₀ ℕ) (a : I) :
+    nativeThreeLegOccupation (d + Finsupp.single a 1) h l =
+      nativeThreeLegOccupation d h l + Finsupp.single (.inl a) 1 := by
+  classical
+  ext i
+  rcases i with i | i
+  · simp [nativeThreeLegOccupation, Finsupp.single_apply]
+  · rcases i with i | i <;> simp [nativeThreeLegOccupation, Finsupp.single_apply]
+
+private theorem threeOccupation_add_input {I : Type*}
+    (d h l : I →₀ ℕ) (a : I) :
+    nativeThreeLegOccupation d (h + Finsupp.single a 1) l =
+      nativeThreeLegOccupation d h l + Finsupp.single (.inr (.inl a)) 1 := by
+  classical
+  ext i
+  rcases i with i | i
+  · simp [nativeThreeLegOccupation, Finsupp.single_apply]
+  · rcases i with i | i <;> simp [nativeThreeLegOccupation, Finsupp.single_apply]
+
+private theorem threeOccupation_add_output {I : Type*}
+    (d h l : I →₀ ℕ) (a : I) :
+    nativeThreeLegOccupation d h (l + Finsupp.single a 1) =
+      nativeThreeLegOccupation d h l + Finsupp.single (.inr (.inr a)) 1 := by
+  classical
+  ext i
+  rcases i with i | i
+  · simp [nativeThreeLegOccupation, Finsupp.single_apply]
+  · rcases i with i | i <;> simp [nativeThreeLegOccupation, Finsupp.single_apply]
+
+private theorem threeOccupation_sub_source {I : Type*}
+    (d h l : I →₀ ℕ) (a : I) :
+    nativeThreeLegOccupation d h l - Finsupp.single (.inl a) 1 =
+      nativeThreeLegOccupation (d - Finsupp.single a 1) h l := by
+  classical
+  ext i
+  rcases i with i | i
+  · simp [nativeThreeLegOccupation, Finsupp.single_apply, Finsupp.tsub_apply]
+  · rcases i with i | i <;>
+      simp [nativeThreeLegOccupation, Finsupp.single_apply, Finsupp.tsub_apply]
+
+private theorem threeOccupation_sub_input {I : Type*}
+    (d h l : I →₀ ℕ) (a : I) :
+    nativeThreeLegOccupation d h l - Finsupp.single (.inr (.inl a)) 1 =
+      nativeThreeLegOccupation d (h - Finsupp.single a 1) l := by
+  classical
+  ext i
+  rcases i with i | i
+  · simp [nativeThreeLegOccupation, Finsupp.single_apply, Finsupp.tsub_apply]
+  · rcases i with i | i <;>
+      simp [nativeThreeLegOccupation, Finsupp.single_apply, Finsupp.tsub_apply]
+
+private theorem threeOccupation_sub_output {I : Type*}
+    (d h l : I →₀ ℕ) (a : I) :
+    nativeThreeLegOccupation d h l - Finsupp.single (.inr (.inr a)) 1 =
+      nativeThreeLegOccupation d h (l - Finsupp.single a 1) := by
+  classical
+  ext i
+  rcases i with i | i
+  · simp [nativeThreeLegOccupation, Finsupp.single_apply, Finsupp.tsub_apply]
+  · rcases i with i | i <;>
+      simp [nativeThreeLegOccupation, Finsupp.single_apply, Finsupp.tsub_apply]
+
+private theorem threeOccupation_weight {I : Type*} (d h l : I →₀ ℕ) :
+    FactorialFockMetric.weight (nativeThreeLegOccupation d h l) =
+      FactorialFockMetric.weight d * FactorialFockMetric.weight h *
+        FactorialFockMetric.weight l := by
+  simp only [nativeThreeLegOccupation, FactorialFockMetric.weight,
+    Finsupp.prod_sumElim, Function.comp_def]
+  ring
+
+private theorem threeMoment_source_step {I : Type*} [Fintype I] [DecidableEq I]
+    (D : LatticeData) (T : ℂˣ) (label : I ↪ Index D) (d h l : I →₀ ℕ) (a : I) :
+    nativeMoment (nativeThreeLegMatrix D T label)
+        (nativeThreeLegOccupation (d + Finsupp.single a 1) h l) =
+      (∑ b ∈ d.support, (d b : ℂ) * nativeSourceSourceKernel D T (label a) (label b) *
+        nativeMoment (nativeThreeLegMatrix D T label)
+          (nativeThreeLegOccupation (d - Finsupp.single b 1) h l)) +
+      (∑ b ∈ h.support, (h b : ℂ) * nativeSourceInputKernel D T (label a) (label b) *
+        nativeMoment (nativeThreeLegMatrix D T label)
+          (nativeThreeLegOccupation d (h - Finsupp.single b 1) l)) +
+      ∑ b ∈ l.support, (l b : ℂ) * nativeSourceOutputKernel D T (label a) (label b) *
+        nativeMoment (nativeThreeLegMatrix D T label)
+          (nativeThreeLegOccupation d h (l - Finsupp.single b 1)) := by
+  classical
+  rw [threeOccupation_add_source, nativeMoment_step _ (nativeThreeLegMatrix_symm D T label)]
+  rw [← Finsupp.sum_fintype _ _ (by simp)]
+  simp only [nativeThreeLegOccupation, Finsupp.sum_sumElim, Function.comp_def,
+    Finsupp.sum, nativeThreeLegMatrix]
+  simp only [← nativeThreeLegOccupation, threeOccupation_sub_source,
+    threeOccupation_sub_input, threeOccupation_sub_output]
+  ring
+
+private theorem threeMoment_input_step {I : Type*} [Fintype I] [DecidableEq I]
+    (D : LatticeData) (T : ℂˣ) (label : I ↪ Index D) (h l : I →₀ ℕ) (a : I) :
+    nativeMoment (nativeThreeLegMatrix D T label)
+        (nativeThreeLegOccupation 0 (h + Finsupp.single a 1) l) =
+      (l a : ℂ) * nativeMoment (nativeThreeLegMatrix D T label)
+        (nativeThreeLegOccupation 0 h (l - Finsupp.single a 1)) := by
+  classical
+  rw [threeOccupation_add_input, nativeMoment_step _ (nativeThreeLegMatrix_symm D T label)]
+  simp only [Fintype.sum_sum_type, nativeThreeLegOccupation, Finsupp.sumElim_inl,
+    Finsupp.sumElim_inr, Finsupp.zero_apply, nativeThreeLegMatrix, Nat.cast_zero,
+    zero_mul, mul_zero, Finset.sum_const_zero, zero_add]
+  simp only [← nativeThreeLegOccupation, threeOccupation_sub_output]
+  rw [Finset.sum_eq_single a]
+  · simp
+  · intro b hb hba
+    simp [Ne.symm hba]
+  · simp
+
+private theorem threeMoment_output_only {I : Type*} [Fintype I] [DecidableEq I]
+    (D : LatticeData) (T : ℂˣ) (label : I ↪ Index D) (l : I →₀ ℕ) :
+    nativeMoment (nativeThreeLegMatrix D T label) (nativeThreeLegOccupation 0 0 l) =
+      if l = 0 then 1 else 0 := by
+  classical
+  by_cases hl : l = 0
+  · subst l
+    simp [nativeThreeLegOccupation, nativeMoment, FactorialFockMetric.weight,
+      gaussianCoefficient_zero]
+  · obtain ⟨a, ha⟩ : ∃ a, l a ≠ 0 := by
+      by_contra hh
+      push_neg at hh
+      exact hl (Finsupp.ext hh)
+    conv_lhs => rw [← Finsupp.sub_add_single_one_cancel ha]
+    rw [threeOccupation_add_output,
+      nativeMoment_step _ (nativeThreeLegMatrix_symm D T label)]
+    simp [nativeThreeLegOccupation, nativeThreeLegMatrix, Fintype.sum_sum_type, hl]
+
+private theorem threeMoment_IO {I : Type*} [Fintype I] [DecidableEq I]
+    (D : LatticeData) (T : ℂˣ) (label : I ↪ Index D) (h l : I →₀ ℕ) :
+    nativeMoment (nativeThreeLegMatrix D T label) (nativeThreeLegOccupation 0 h l) =
+      (FactorialFockMetric.weight l : ℂ) * (if h = l then 1 else 0) := by
+  classical
+  suffices hh : ∀ n (h : I →₀ ℕ), h.degree = n → ∀ l,
+      nativeMoment (nativeThreeLegMatrix D T label) (nativeThreeLegOccupation 0 h l) =
+        (FactorialFockMetric.weight l : ℂ) * (if h = l then 1 else 0) from hh _ h rfl l
+  intro n
+  induction n using Nat.strong_induction_on with
+  | h n ih =>
+    intro h hn l
+    by_cases hz : h = 0
+    · subst h
+      rw [threeMoment_output_only]
+      split_ifs <;> simp_all [FactorialFockMetric.weight]
+    · obtain ⟨a, ha⟩ : ∃ a, h a ≠ 0 := by
+        by_contra hh
+        push_neg at hh
+        exact hz (Finsupp.ext hh)
+      have hdeg := sub_single_degree h a ha
+      have hr := Finsupp.sub_add_single_one_cancel ha
+      conv_lhs => rw [← hr]
+      rw [threeMoment_input_step, ih (h - Finsupp.single a 1).degree (by omega) _ rfl]
+      by_cases hl : l a = 0
+      · have hne : h ≠ l := by intro he; simpa [he, hl] using ha
+        simp [hl, hne]
+      · have hweight : (FactorialFockMetric.weight l : ℂ) =
+            (l a : ℂ) * (FactorialFockMetric.weight (l - Finsupp.single a 1) : ℂ) := by
+          exact_mod_cast weight_sub_single l a hl
+        have he : h = l ↔ h - Finsupp.single a 1 = l - Finsupp.single a 1 := by
+          constructor
+          · intro hh; rw [hh]
+          · intro hh
+            rw [← hr, hh, Finsupp.sub_add_single_one_cancel hl]
+        rw [← he, hweight]
+        ring
+
+private def finiteEntry {I : Type*} (D : LatticeData) (T : ℂˣ)
+    (label : I ↪ Index D) (d h l : I →₀ ℕ) : ℂ :=
+  nativeNeutralLaurentEntry D T (d.embDomain label) (h.embDomain label) (l.embDomain label)
+
+private theorem finiteEntry_step {I : Type*} (D : LatticeData) (T : ℂˣ)
+    (label : I ↪ Index D) (d h l : I →₀ ℕ) (a : I) :
+    finiteEntry D T label (d + Finsupp.single a 1) h l =
+      (∑ j ∈ l.support, nativeSourceOutputKernel D T (label a) (label j) *
+        finiteEntry D T label d h (l - Finsupp.single j 1) +
+      ∑ j ∈ h.support, (h j : ℂ) * nativeSourceInputKernel D T (label a) (label j) *
+        finiteEntry D T label d (h - Finsupp.single j 1) l) +
+      ∑ j ∈ d.support, (d j : ℂ) * nativeSourceSourceKernel D T (label a) (label j) *
+        finiteEntry D T label (d - Finsupp.single j 1) h l := by
+  classical
+  simp only [finiteEntry, Finsupp.embDomain_add, Finsupp.embDomain_single]
+  rw [nativeNeutralLaurentEntry_recurrence]
+  simp only [Finsupp.support_embDomain, Finset.sum_map,
+    Finsupp.embDomain_apply_self, ← Finsupp.embDomain_single label,
+    ← Finsupp.embDomain_tsub]
+
+private theorem threeMoment_eq_actual {I : Type*} [Fintype I] [DecidableEq I]
+    (D : LatticeData) (T : ℂˣ) (label : I ↪ Index D) (d h l : I →₀ ℕ) :
+    nativeMoment (nativeThreeLegMatrix D T label) (nativeThreeLegOccupation d h l) =
+      (FactorialFockMetric.weight l : ℂ) * finiteEntry D T label d h l := by
+  classical
+  suffices hh : ∀ n (d : I →₀ ℕ), d.degree = n → ∀ h l,
+      nativeMoment (nativeThreeLegMatrix D T label) (nativeThreeLegOccupation d h l) =
+        (FactorialFockMetric.weight l : ℂ) * finiteEntry D T label d h l from hh _ d rfl h l
+  intro n
+  induction n using Nat.strong_induction_on with
+  | h n ih =>
+    intro d hn h l
+    by_cases hz : d = 0
+    · subst d
+      rw [threeMoment_IO]
+      simp [finiteEntry, nativeNeutralLaurentEntry_zero]
+    · obtain ⟨a, ha⟩ : ∃ a, d a ≠ 0 := by
+        by_contra hh
+        push_neg at hh
+        exact hz (Finsupp.ext hh)
+      let r := d - Finsupp.single a 1
+      have hr : r + Finsupp.single a 1 = d := Finsupp.sub_add_single_one_cancel ha
+      have hdeg : r.degree < n := by have := sub_single_degree d a ha; dsimp [r]; omega
+      conv_lhs => rw [← hr]
+      conv_rhs => rw [← hr]
+      rw [threeMoment_source_step, finiteEntry_step]
+      have ihR := ih r.degree hdeg r rfl
+      simp_rw [ihR]
+      have ihS (b : I) (hb : b ∈ r.support) :
+          nativeMoment (nativeThreeLegMatrix D T label)
+              (nativeThreeLegOccupation (r - Finsupp.single b 1) h l) =
+            (FactorialFockMetric.weight l : ℂ) *
+              finiteEntry D T label (r - Finsupp.single b 1) h l := by
+        have hd := sub_single_degree r b (Finsupp.mem_support_iff.mp hb)
+        exact ih _ (by omega) _ rfl h l
+      rw [Finset.mul_add, Finset.mul_add]
+      simp only [Finset.mul_sum]
+      have hs : (∑ b ∈ r.support, (r b : ℂ) * nativeSourceSourceKernel D T (label a) (label b) *
+          nativeMoment (nativeThreeLegMatrix D T label)
+            (nativeThreeLegOccupation (r - Finsupp.single b 1) h l)) =
+          ∑ b ∈ r.support, (FactorialFockMetric.weight l : ℂ) *
+            ((r b : ℂ) * nativeSourceSourceKernel D T (label a) (label b) *
+              finiteEntry D T label (r - Finsupp.single b 1) h l) := by
+        apply Finset.sum_congr rfl
+        intro b hb
+        rw [ihS b hb]
+        ring
+      rw [hs]
+      have ho : (∑ b ∈ l.support, (l b : ℂ) * nativeSourceOutputKernel D T (label a) (label b) *
+          ((FactorialFockMetric.weight (l - Finsupp.single b 1) : ℂ) *
+            finiteEntry D T label r h (l - Finsupp.single b 1))) =
+          ∑ b ∈ l.support, (FactorialFockMetric.weight l : ℂ) *
+            (nativeSourceOutputKernel D T (label a) (label b) *
+              finiteEntry D T label r h (l - Finsupp.single b 1)) := by
+        apply Finset.sum_congr rfl
+        intro b hb
+        have hw : (FactorialFockMetric.weight l : ℂ) =
+            (l b : ℂ) * (FactorialFockMetric.weight (l - Finsupp.single b 1) : ℂ) := by
+          exact_mod_cast weight_sub_single l b (Finsupp.mem_support_iff.mp hb)
+        rw [hw]
+        ring
+      rw [ho]
+      have hi : (∑ b ∈ h.support, (h b : ℂ) * nativeSourceInputKernel D T (label a) (label b) *
+          ((FactorialFockMetric.weight l : ℂ) * finiteEntry D T label r (h - Finsupp.single b 1) l)) =
+          ∑ b ∈ h.support, (FactorialFockMetric.weight l : ℂ) *
+            ((h b : ℂ) * nativeSourceInputKernel D T (label a) (label b) *
+              finiteEntry D T label r (h - Finsupp.single b 1) l) := by
+        apply Finset.sum_congr rfl
+        intro b hb
+        ring
+      rw [hi]
+      ring
+
+private theorem actual_eq_threeGaussian {I : Type*} [Fintype I] [DecidableEq I]
+    (D : LatticeData) (T : ℂˣ) (label : I ↪ Index D) (d h l : I →₀ ℕ) :
+    finiteEntry D T label d h l =
+      (FactorialFockMetric.weight d : ℂ) * (FactorialFockMetric.weight h : ℂ) *
+        gaussianCoefficient (nativeThreeLegMatrix D T label) (nativeThreeLegOccupation d h l) := by
+  have he := threeMoment_eq_actual D T label d h l
+  rw [nativeMoment, threeOccupation_weight] at he
+  push_cast at he
+  have hl : (FactorialFockMetric.weight l : ℂ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt (FactorialFockMetric.weight_pos l))
+  apply mul_left_cancel₀ hl
+  linear_combination -he
+
+/-- Exact full neutral corrected-field coefficient in finite raw coordinates.
+The source and input factorials divide the coefficient; the output coefficient
+is ordinary. This holds on every ground vector, including rank zero. -/
+private theorem nativeNeutralCoefficient_three_leg_gaussian {I : Type*} [Fintype I] [DecidableEq I]
+    (D : LatticeData) (hu : IsUnit D.G.det) (T : ℂˣ) (label : I ↪ Index D)
+    (d h l : I →₀ ℕ) (g : ActualGround D hu) :
+    let E : ℤ := (LatticeHalfFockGradedTrace.oddWeight D (l.embDomain label) : ℤ) -
+      (LatticeHalfFockGradedTrace.oddWeight D (h.embDomain label) : ℤ) -
+      2 * nativeSourceEnergy D (d.embDomain label)
+    (((FactorialFockMetric.weight d : ℂ) * (FactorialFockMetric.weight h : ℂ))⁻¹) •
+      ((T : ℂ) ^ E • nativeOutputProjection D hu (l.embDomain label)
+        (nativeNeutralCoefficient D hu (d.embDomain label) E
+          (monomial (h.embDomain label) 1 ⊗ₜ[ℂ] g))) =
+      nativeThreeLegExponentialCoefficient D T label d h l • g := by
+  rw [nativeThreeLegExponentialCoefficient_eq]
+  dsimp only
+  rw [← nativeNeutralLaurentEntry_at_energy]
+  change _ • (finiteEntry D T label d h l • g) = _
+  rw [actual_eq_threeGaussian, smul_smul]
+  have hd : (FactorialFockMetric.weight d : ℂ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt (FactorialFockMetric.weight_pos d))
+  have hh : (FactorialFockMetric.weight h : ℂ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt (FactorialFockMetric.weight_pos h))
+  field_simp
+
+
+/-- Restriction to a finite label set, with no change of colour or factorials. -/
+def nativeRestrictedOccupation (D : LatticeData) (K : Finset (Index D))
+    (d : Index D →₀ ℕ) : K →₀ ℕ :=
+  d.comapDomain (Function.Embedding.subtype (fun a => a ∈ K)) Subtype.val_injective.injOn
+
+/-- Ordinary exponential coefficient of the literal finite raw three-leg kernel. -/
+def nativeFiniteRawGaussianCoefficient (D : LatticeData) (T : ℂˣ)
+    (K : Finset (Index D)) (d h l : Index D →₀ ℕ) : ℂ :=
+  nativeThreeLegExponentialCoefficient D T (Function.Embedding.subtype (fun a => a ∈ K))
+    (nativeRestrictedOccupation D K d) (nativeRestrictedOccupation D K h)
+    (nativeRestrictedOccupation D K l)
+
+/-- The actual full neutral corrected field equals the finite raw coherent
+Gaussian coefficient on every ground vector. Any finite label set containing
+the occupied labels is valid; finite-support independence is proved, not assumed.
+Only source and input factorials divide this ordinary output coefficient. -/
+theorem nativeNeutralCoefficient_full_raw_gaussian
+    (D : LatticeData) (hu : IsUnit D.G.det) (T : ℂˣ)
+    (d h l : Index D →₀ ℕ) (K : Finset (Index D))
+    (hd : d.support ⊆ K) (hh : h.support ⊆ K) (hl : l.support ⊆ K)
+    (g : ActualGround D hu) :
+    let E : ℤ := (LatticeHalfFockGradedTrace.oddWeight D l : ℤ) -
+      (LatticeHalfFockGradedTrace.oddWeight D h : ℤ) - 2 * nativeSourceEnergy D d
+    (((FactorialFockMetric.weight d : ℂ) * (FactorialFockMetric.weight h : ℂ))⁻¹) •
+      ((T : ℂ) ^ E • nativeOutputProjection D hu l
+        (nativeNeutralCoefficient D hu d E (monomial h 1 ⊗ₜ[ℂ] g))) =
+      nativeFiniteRawGaussianCoefficient D T K d h l • g := by
+  classical
+  let label : K ↪ Index D := Function.Embedding.subtype (fun a => a ∈ K)
+  have reconstruct (q : Index D →₀ ℕ) (hq : q.support ⊆ K) :
+      (nativeRestrictedOccupation D K q).embDomain label = q := by
+    apply Finsupp.embDomain_comapDomain
+    intro a ha
+    exact ⟨⟨a, hq ha⟩, rfl⟩
+  have weight_restrict (q : Index D →₀ ℕ) (hq : q.support ⊆ K) :
+      FactorialFockMetric.weight (nativeRestrictedOccupation D K q) =
+        FactorialFockMetric.weight q := by
+    calc
+      _ = FactorialFockMetric.weight
+          ((nativeRestrictedOccupation D K q).embDomain label) := by
+            simp only [FactorialFockMetric.weight, Finsupp.prod_embDomain]
+      _ = _ := congrArg FactorialFockMetric.weight (reconstruct q hq)
+  have he := nativeNeutralCoefficient_three_leg_gaussian D hu T label
+    (nativeRestrictedOccupation D K d) (nativeRestrictedOccupation D K h)
+    (nativeRestrictedOccupation D K l) g
+  simpa only [reconstruct d hd, reconstruct h hh, reconstruct l hl,
+    weight_restrict d hd, weight_restrict h hh, nativeFiniteRawGaussianCoefficient] using he
+
+#print axioms nativeNeutralCoefficient_full_raw_gaussian
+#print axioms nativeNeutralCoefficient_three_leg_gaussian
 #print axioms nativeNeutralLaurentEntry_zero
 #print axioms nativeNeutralLaurentEntry_unpaired
 #print axioms nativeNeutralLaurentEntry_recurrence
