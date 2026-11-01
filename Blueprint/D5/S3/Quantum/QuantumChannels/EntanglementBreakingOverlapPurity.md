@@ -16,7 +16,19 @@ Lean statement: `D5/S3/Quantum/QuantumChannels/EntanglementBreakingOverlapPurity
 
 For a vector v in complex Euclidean d-space, projector v is the actual complex matrix with entries v_i times the conjugate of v_j. A unit vector gives a positive semidefinite matrix of trace one.
 
-**Theorem 1.2 (Unit-vector projectors have trace one).**
+**Theorem 1.2 (Unit vectors on one ray have the same projector).**
+
+$$\forall n \in Type,\; [Fintype\left(n\right)] \forall psi \in n \to \mathbb{C},\; \forall chi \in n \to \mathbb{C},\; dotProduct\left(star\left(psi\right), psi\right) = 1 \Rightarrow dotProduct\left(star\left(chi\right), chi\right) = 1 \Rightarrow \forall z \in \mathbb{C},\; psi = z \cdot chi \Rightarrow vecMulVec\left(psi, star\left(psi\right)\right) = vecMulVec\left(chi, star\left(chi\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/EntanglementBreakingOverlapPurity.vecMulVec_eq_of_unit_ray` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Two unit complex vectors on the same ray have equal outer projectors because their scalar ratio has squared norm one.
+
+**Theorem 1.3 (Unit-vector projectors have trace one).**
 
 $$\forall d \in \mathbb{N}, v \in EuclideanSpace\left(\mathbb{C}, Fin\left(d\right)\right),\; \left\lVert v \right\rVert = 1 \Rightarrow trace\left(projector\left(v\right)\right) = 1$$
 
@@ -28,7 +40,7 @@ $$\forall d \in \mathbb{N}, v \in EuclideanSpace\left(\mathbb{C}, Fin\left(d\rig
 
 For every natural dimension and every unit complex Euclidean vector, its outer projector has complex trace one.
 
-**Theorem 1.3 (Projector trace products are squared overlaps).**
+**Theorem 1.4 (Projector trace products are squared overlaps).**
 
 $$\forall d \in \mathbb{N}, v \in EuclideanSpace\left(\mathbb{C}, Fin\left(d\right)\right), w \in EuclideanSpace\left(\mathbb{C}, Fin\left(d\right)\right),\; trace\left(projector\left(v\right) \cdot projector\left(w\right)\right) = ofReal\left(\left\lVert \langle v, w \rangle_{\mathbb{C}} \right\rVert^{2}\right)$$
 
@@ -40,7 +52,7 @@ $$\forall d \in \mathbb{N}, v \in EuclideanSpace\left(\mathbb{C}, Fin\left(d\rig
 
 For arbitrary complex Euclidean vectors v and w, the trace of the product of their outer projectors is the complex coercion of the squared norm of their inner product.
 
-**Definition 1.4 (The mean of the prepared states).**
+**Definition 1.5 (The mean of the prepared states).**
 
 Lean statement: `D5/S3/Quantum/QuantumChannels/EntanglementBreakingOverlapPurity.meanOutput`
 
@@ -52,7 +64,7 @@ Lean statement: `D5/S3/Quantum/QuantumChannels/EntanglementBreakingOverlapPurity
 
 For a fixed list of measurement weights alpha and unit output vectors psi, meanOutput is the sum of alpha divided by d times the output projectors. The main theorem proves that this matrix equals the image of I divided by d under the specified Holevo channel.
 
-**Theorem 1.5 (Equation (7) determines the purity).**
+**Theorem 1.6 (Equation (7) determines the purity).**
 
 Lean statement: `D5/S3/Quantum/QuantumChannels/EntanglementBreakingOverlapPurity.affine_overlap_purity_and_rigidity`
 
@@ -75,5 +87,6 @@ This is the matrix-purity and centered-Gram portion of Theorem 5, under its rank
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/EntanglementBreakingOverlapPurity.projector`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/EntanglementBreakingOverlapPurity.projector_trace`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/EntanglementBreakingOverlapPurity.trace_projectors`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/EntanglementBreakingOverlapPurity.vecMulVec_eq_of_unit_ray`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteTraceDistance](../Foundation/FiniteTraceDistance.md)
