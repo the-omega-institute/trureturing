@@ -15,7 +15,8 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
-open private MaskPartition partition_labels
+open private MaskPartition MaskPartition.hcap MaskPartition.qcap MaskPartition.lowcap
+  partition_labels
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap.NativeMasks
 open private size base newBase chainLength chainStart oldValue newValue
   chain_values negatives source_signs

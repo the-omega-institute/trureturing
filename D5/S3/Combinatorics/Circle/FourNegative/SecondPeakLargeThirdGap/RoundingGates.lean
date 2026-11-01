@@ -12,7 +12,8 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap.Algebra
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap
-open private gate dyadicT dyadicZ dyadicY DD AA BB LL MM NN BBn LLn MMn EE KK JJ from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap.Algebra
+open private gate dyadicT dyadicZ dyadicY DD AA BB LL MM NN BBn LLn MMn EE KK JJ
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap.Algebra
 
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 4000000 in
@@ -29,7 +30,8 @@ private theorem ceil_new_lower_K (x R Z lam : ℤ)
   have hv : 0 ≤ v := by dsimp [v]; omega
   have hw : 0 ≤ w := by dsimp [w]; omega
   have hq : 0 ≤ q := by dsimp [q]; omega
-  have expansion : gate 7 x R Z lam =
+  have expansion (u v w q : ℤ) :
+      gate 7 (u+4) (v+1) (w+1) (q+1) =
       51392040
       + 51384320 * q
       + 153103872 * w
@@ -430,9 +432,15 @@ private theorem ceil_new_lower_K (x R Z lam : ℤ)
       + 768 * u^9 * v^4 * w^2 * q
       + 256 * u^9 * v^4 * w^3
       + 256 * u^9 * v^4 * w^3 * q := by
-    dsimp [gate, dyadicT, dyadicZ, dyadicY, DD, AA, BB, LL, MM, NN, BBn, LLn, MMn, EE, KK, JJ, u, v, w, q]
+    dsimp [gate, dyadicT, dyadicZ, dyadicY, DD, AA, BB, LL, MM, NN, BBn, LLn, MMn, EE, KK, JJ]
     ring
-  rw [expansion]
+  have hux : u+4=x := by dsimp [u]; ring
+  have hvr : v+1=R := by dsimp [v]; ring
+  have hwz : w+1=Z := by dsimp [w]; ring
+  have hql : q+1=lam := by dsimp [q]; ring
+  have ex := expansion u v w q
+  rw [hux,hvr,hwz,hql] at ex
+  rw [ex]
   positivity
 
 set_option maxRecDepth 10000 in
@@ -450,7 +458,8 @@ private theorem ceil_new_upper_J (x R Z lam : ℤ)
   have hv : 0 ≤ v := by dsimp [v]; omega
   have hw : 0 ≤ w := by dsimp [w]; omega
   have hq : 0 ≤ q := by dsimp [q]; omega
-  have expansion : gate 8 x R Z lam =
+  have expansion (u v w q : ℤ) :
+      gate 8 (u+4) (v+1) (w+1) (q+1) =
       8757210
       + 8754430 * q
       + 53182464 * w
@@ -811,9 +820,15 @@ private theorem ceil_new_upper_J (x R Z lam : ℤ)
       + 1280 * u^8 * v^4 * w^2 * q
       + 512 * u^8 * v^4 * w^3
       + 512 * u^8 * v^4 * w^3 * q := by
-    dsimp [gate, dyadicT, dyadicZ, dyadicY, DD, AA, BB, LL, MM, NN, BBn, LLn, MMn, EE, KK, JJ, u, v, w, q]
+    dsimp [gate, dyadicT, dyadicZ, dyadicY, DD, AA, BB, LL, MM, NN, BBn, LLn, MMn, EE, KK, JJ]
     ring
-  rw [expansion]
+  have hux : u+4=x := by dsimp [u]; ring
+  have hvr : v+1=R := by dsimp [v]; ring
+  have hwz : w+1=Z := by dsimp [w]; ring
+  have hql : q+1=lam := by dsimp [q]; ring
+  have ex := expansion u v w q
+  rw [hux,hvr,hwz,hql] at ex
+  rw [ex]
   positivity
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap
