@@ -4,7 +4,7 @@
    mirror-E: none(waiver:relative-ghost-pbw)
    anchors: []
    utility: none
-   digest: Actual relative bc ghost words and occupation coordinates on the original Fock carrier. -/
+   digest: Relative bc ghost PBW coordinates on the original Fock carrier. -/
 
 import D5.S3.Quantum.Fermionic.BcGhostFock
 
@@ -639,7 +639,7 @@ private theorem relative_eq_supportedAllowed : relative = supportedAllowed := by
       change v ∈ Finsupp.supported ℂ ℂ allowed at hv
       rw [Finsupp.mem_supported] at hv
       intro S hS
-      exact hv S hS
+      exact hv hS
     simpa [b] using no_three_annihilate v hs
 
 def relativeSupportedEquiv : relative ≃ₗ[ℂ] supportedAllowed :=
@@ -767,10 +767,13 @@ private theorem count_occ (j : ℕ) (B C : Finset ℕ) :
       have ha2 := (Finset.mem_filter.mp ha).2
       have hb2 := (Finset.mem_filter.mp hb).2
       simp only [bSite] at he
-      omega), count_image j C (fun s => 2 * s + 3) (by intro a ha b hb he; omega)]
+      omega), count_image j C (fun s => 2 * s + 3) (by
+      intro a ha b hb he
+      change 2 * a + 3 = 2 * b + 3 at he
+      omega)]
   simp only [Finset.filter_filter]
   by_cases hB : 1 ∈ B <;> by_cases hj : 1 < j <;>
-    simp [hB, hj, lowerCount]
+    simp [hB, hj, lowerCount, Finset.filter_singleton] <;> omega
 
 private theorem cross_insert_b (r : ℕ) (B C : Finset ℕ) (h : r ∉ B) :
     ((insert r B ×ˢ C).filter (fun p => p.2 + 4 ≤ p.1)).card =
@@ -799,7 +802,11 @@ private theorem bprefix_split (r : ℕ) (B : Finset ℕ)
   apply Finset.sum_congr rfl
   intro t ht
   have hp := hB t ht
-  by_cases ht1 : t = 1 <;> by_cases htr : t < r <;> simp_all <;> omega
+  by_cases ht1 : t = 1
+  · subst t
+    simp [show 1 < r by omega]
+  · have ht2 : 2 ≤ t := by omega
+    simp [ht1, ht2]
 
 private theorem bcard_split (r : ℕ) (B : Finset ℕ) (hB : positiveSet B) :
     B.card = (if 1 ∈ B then 1 else 0) +
@@ -1132,6 +1139,14 @@ private theorem relative_pbw_basis :
     Function.Bijective basisEquiv := by
   exact ⟨basisEquiv_single, basisEquiv.bijective⟩
 
+private theorem down_positive (r : ℕ) (hr : 1 ≤ r) :
+    c (r : ℤ) down = 0 ∧ b (r : ℤ) down = 0 := by
+  have he : positiveSet ∅ := by intro t ht; simp at ht
+  have hw : W ∅ ∅ = down := by simp [W, asc, gword]
+  constructor
+  · simpa only [hw] using cpos_absent r ∅ ∅ hr he he (by simp)
+  · simpa only [hw] using bpos_absent r ∅ ∅ he he (by simp)
+
 theorem relative_pbw_complete :
     (∀ (B C : Finset ℕ), positiveSet B → positiveSet C → W B C = Wcoord B C) ∧
     (∀ p : pairCarrier, basisEquiv (Finsupp.single p 1) = Wrel p) ∧
@@ -1153,10 +1168,15 @@ theorem relative_pbw_complete :
       if r ∈ B then W B C else 0) ∧
     (∀ (r : ℕ) (B C : Finset ℕ), 1 ≤ r → positiveSet B → positiveSet C →
       cneg r (b (r : ℤ) (W B C)) =
-      if r ∈ C then W B C else 0) := by
+      if r ∈ C then W B C else 0) ∧
+    (∀ (B C : Finset ℕ), positiveSet B → positiveSet C →
+      invB (occ B C) = B ∧ invC (occ B C) = C) ∧
+    (∀ S : Finset ℕ, 3 ∉ S → occ (invB S) (invC S) = S) ∧
+    (∀ r : ℕ, 1 ≤ r → c (r : ℤ) down = 0 ∧ b (r : ℤ) down = 0) := by
   rcases relative_pbw_basis with ⟨hunit, hbij⟩
   rcases relative_pbw_mode_intertwining with
     ⟨hbneg, hcpos, hcneg, hbpos, hprojB, hprojC⟩
-  exact ⟨W_is_Wcoord, hunit, hbij, hbneg, hcpos, hcneg, hbpos, hprojB, hprojC⟩
+  exact ⟨W_is_Wcoord, hunit, hbij, hbneg, hcpos, hcneg, hbpos, hprojB, hprojC,
+    fun B C hB hC => ⟨invB_occ B C hB, invC_occ B C hC⟩, occ_inv, down_positive⟩
 
 end D5.S3.Quantum.Fermionic.BcGhostRelativePBW
