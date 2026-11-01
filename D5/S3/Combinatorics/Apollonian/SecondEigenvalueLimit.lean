@@ -10,6 +10,7 @@ import D5.S3.Combinatorics.Apollonian.CutoffGramLimit
 import D5.S3.Combinatorics.Apollonian.CutoffOrderedSpectrum
 import Mathlib.Analysis.CStarAlgebra.Basic
 
+/-! The actual cutoff blocks and face weights determine the all-stage ordinary spectrum. -/
 noncomputable section
 namespace D5.S3.Combinatorics.Apollonian.SecondEigenvalueLimit
 open InnerFaceStages CutoffGramLimit CutoffOrderedSpectrum Matrix Filter
@@ -23,12 +24,11 @@ private theorem weight_old (k : ℕ) (v : Vertex k) :
     weight (k+1) (Sum.inl v) = weight k v := by
   simp only [weight, faceCount_old, Nat.cast_mul, Nat.cast_ofNat, pow_succ]
   field_simp
-  <;> ring
 
 private theorem weight_seed (k : ℕ) (v : Fin 4) :
     weight k (seed k v) = if v = 3 then 3 else 2 := by
   induction k with
-  | zero => simpa only [weight, seed, pow_zero, div_one] using
+  | zero => simpa [weight, seed] using
       congrArg (fun n : ℕ => (n : ℝ)) (seed_counts_zero v).2
   | succ k ih => simpa only [seed, weight_old] using ih
 
@@ -38,7 +38,7 @@ private theorem weight_other_le (k : ℕ) (v : Vertex k) (hv : v ≠ seed k 3) :
   | zero =>
     have h := (seed_counts_zero v).2
     have hv' : v ≠ 3 := hv
-    simp only [if_neg hv'] at h
+    simp [hv'] at h
     simp [weight, h]
   | succ k ih =>
     cases v with
@@ -56,7 +56,7 @@ private theorem diagonal_hermitian (k : ℕ) : (limitingDiagonal k).IsHermitian 
   exact isHermitian_diagonal_iff.mpr (fun _ => by simp [IsSelfAdjoint])
 
 /-- At every fixed cutoff, the second decreasing eigenvalue of the face-weight diagonal is two. -/
-theorem limiting_diagonal_second (k : ℕ) :
+private theorem limiting_diagonal_second (k : ℕ) :
     (diagonal_hermitian k).eigenvalues₀ (secondIndex k) = 2 := by
   classical
   let c := seed k 3
@@ -68,7 +68,9 @@ theorem limiting_diagonal_second (k : ℕ) :
   have ha : a ∈ s := by simp [s, hac]
   have hsplit : (Finset.univ : Finset (Vertex k)).val = c ::ₘ a ::ₘ r.val := by
     calc
-      _ = c ::ₘ s.val := (Multiset.cons_erase (by simp : c ∈ (Finset.univ : Finset (Vertex k)).val)).symm
+      _ = c ::ₘ s.val := by
+        exact (Multiset.cons_erase
+          (by simp : c ∈ (Finset.univ : Finset (Vertex k)).val)).symm
       _ = _ := congrArg (Multiset.cons c) (Multiset.cons_erase ha).symm
   have hwc : weight k c = 3 := by simpa [c] using weight_seed k 3
   have hwa : weight k a = 2 := by simpa [a] using weight_seed k 0
@@ -103,7 +105,7 @@ theorem limiting_diagonal_second (k : ℕ) :
   simpa [secondIndex, hcard] using hsort
 
 
-private theorem hermitian_complex {ι : Type*} [Fintype ι] [DecidableEq ι]
+private theorem hermitian_complex {ι : Type*}
     {A : Matrix ι ι ℝ} (hA : A.IsHermitian) : (A.map Complex.ofReal).IsHermitian :=
   hA.map Complex.ofReal (by intro x; simp)
 
@@ -126,7 +128,9 @@ private theorem norm_complex {ι : Type*} [Fintype ι] [DecidableEq ι]
     simp only [IsHermitian.eigenvalues,
       SpectralTopology.RectangularDilation.eigenvalues_ofReal A hA (hermitian_complex hA)]
   rw [he]
-  exact ((algebraMap_isometry ℝ ℂ).postcomp_pi).norm_map_of_map_zero (by ext; simp)
+  have hi : Isometry (fun f : ι → ℝ => fun i => (f i : ℂ)) :=
+    (algebraMap_isometry ℝ ℂ).postcomp_pi
+  exact hi.norm_map_of_map_zero (by funext i; rfl) hA.eigenvalues
 
 private theorem real_weyl {ι : Type*} [Fintype ι] [DecidableEq ι]
     {A B : Matrix ι ι ℝ} (hA : A.IsHermitian) (hB : B.IsHermitian)
@@ -142,7 +146,14 @@ private theorem real_weyl {ι : Type*} [Fintype ι] [DecidableEq ι]
     have he : (A-B).map Complex.ofReal = A.map Complex.ofReal - B.map Complex.ofReal := by
       ext i j; simp
     rw [he] at hb
-    simpa only [map_sub, ContinuousLinearMap.coe_coe] using hb
+    have heval := congrArg (fun f : EuclideanSpace ℂ ι →ₗ[ℂ] EuclideanSpace ℂ ι => f x)
+      (coe_toEuclideanCLM_eq_toEuclideanLin
+        (A.map Complex.ofReal - B.map Complex.ofReal))
+    have hb' : ‖toEuclideanLin (A.map Complex.ofReal - B.map Complex.ofReal) x‖ ≤
+        ‖A-B‖ * ‖x‖ := by
+      rw [← heval]
+      exact hb
+    simpa only [map_sub, LinearMap.sub_apply] using hb'
   have hh := SpectralTopology.HermitianEigenvaluePerturbation.abs_eigenvalue_sub_eigenvalue_le
     (isSymmetric_toEuclideanLin_iff.mpr hAC)
     (isSymmetric_toEuclideanLin_iff.mpr hBC) finrank_euclideanSpace hbound j
@@ -158,13 +169,12 @@ private theorem real_smul_eigenvalues {ι : Type*} [Fintype ι] [DecidableEq ι]
   let hSC := hermitian_complex (hA.smul (IsSelfAdjoint.all c))
   have he : (c • A).map Complex.ofReal = (c:ℂ) • A.map Complex.ofReal := by
     ext i j; simp
+  have hSC' : ((c:ℂ) • A.map Complex.ofReal).IsHermitian := he ▸ hSC
   have hh := Quantum.Matrix.LinGProperty.eigenvalues_zero_smul_finite
-    (A.map Complex.ofReal) hAC c hc (he ▸ hSC) j
-  have ht : (he ▸ hSC).eigenvalues₀ = hSC.eigenvalues₀ := by
-    apply List.ofFn_inj.mp
-    rw [← (he ▸ hSC).sort_roots_charpoly_eq_eigenvalues₀,
-      ← hSC.sort_roots_charpoly_eq_eigenvalues₀, ← he]
-  rw [congrFun ht j,
+    (A.map Complex.ofReal) hAC c hc hSC' j
+  have hval := Quantum.Matrix.LinGProperty.eigenvalues_zero_eq_of_charpoly
+    hSC' hSC (congrArg Matrix.charpoly he).symm j
+  rw [hval,
     SpectralTopology.RectangularDilation.eigenvalues_ofReal (c • A) _ hSC,
     SpectralTopology.RectangularDilation.eigenvalues_ofReal A hA hAC] at hh
   exact hh
@@ -175,7 +185,7 @@ private theorem gram_hermitian (k t : ℕ) : (normalizedGram k t).IsHermitian :=
       (IsSelfAdjoint.all (((2:ℝ)^(k+t))⁻¹))
 
 /-- The actual normalized fixed-cutoff Gram spectrum has second eigenvalue tending to two. -/
-theorem normalized_gram_second_tendsto (k : ℕ) :
+private theorem normalized_gram_second_tendsto (k : ℕ) :
     Tendsto (fun t => (gram_hermitian k t).eigenvalues₀ (secondIndex k))
       atTop (nhds 2) := by
   have hn := (tendsto_iff_norm_sub_tendsto_zero.mp (normalized_gram_tendsto k))
@@ -186,10 +196,12 @@ theorem normalized_gram_second_tendsto (k : ℕ) :
 
 private theorem scale_sq (n : ℕ) : ((2:ℝ)^((n:ℝ)/2))^2 = (2:ℝ)^n := by
   rw [← Real.rpow_mul_natCast (by norm_num : (0:ℝ) ≤ 2)]
-  convert Real.rpow_natCast 2 n using 1 <;> congr 1 <;> norm_num
+  convert Real.rpow_natCast 2 n using 1
+  congr 1
+  norm_num
 
 /-- The actual unequal cutoff dilation has the original normalized second-eigenvalue limit. -/
-theorem cutoff_second_normalized_tendsto (k : ℕ) :
+private theorem cutoff_second_normalized_tendsto (k : ℕ) :
     Tendsto (fun t => cutoffSecond k t / (2:ℝ)^(((k+t:ℕ):ℝ)/2))
       atTop (nhds (Real.sqrt 2)) := by
   have hG := normalized_gram_second_tendsto k
@@ -205,6 +217,7 @@ theorem cutoff_second_normalized_tendsto (k : ℕ) :
     simpa only [conjTranspose_eq_transpose_of_trivial] using hs
   have hpos : 0 < (isHermitian_mul_conjTranspose_self (cutoffBlock k t)).eigenvalues₀
       (secondIndex k) := by rw [hs'] at ht; exact pos_of_mul_pos_right ht (by positivity)
+  simp only [Function.comp_apply]
   rw [cutoff_second_eq_sqrt_gram k t hpos, hs', Real.sqrt_mul (by positivity), Real.sqrt_inv]
   have hroot : Real.sqrt ((2:ℝ)^(k+t)) = (2:ℝ)^(((k+t:ℕ):ℝ)/2) := by
     rw [← scale_sq (k+t), Real.sqrt_sq (by positivity)]
@@ -241,7 +254,7 @@ private theorem block_norm_le {ι κ : Type*} [Fintype ι] [Fintype κ]
   have hy : ‖toEuclideanCLM (n := ι ⊕ κ) (𝕜 := ℝ) (fromBlocks A 0 0 B) x‖^2 =
       ‖toEuclideanLin A u‖^2 + ‖toEuclideanLin B v‖^2 := by
     rw [hyvec]
-    simp only [EuclideanSpace.norm_sq_eq, Fintype.sum_sum_type, WithLp.toLp_apply,
+    simp only [EuclideanSpace.norm_sq_eq, Fintype.sum_sum_type,
       Sum.elim_inl, Sum.elim_inr]
   have hAu : ‖toEuclideanLin A u‖ ≤ ‖A‖ * ‖x‖ :=
     ((toEuclideanCLM (n := ι) (𝕜 := ℝ) A).le_opNorm u).trans
@@ -260,7 +273,7 @@ private theorem actual_cutoff_perturbation (k t : ℕ) :
       ‖adjacency k‖ + ‖lateAdjacency k t‖ := by
   let e := cutoffEquiv k t
   let M := (adjacency (k+t)).reindex e.symm e.symm
-  let hA := (graph (k+t)).isHermitian_adjMatrix ℝ
+  have hA : (adjacency (k+t)).IsHermitian := (graph (k+t)).isHermitian_adjMatrix ℝ
   have hM : M.IsHermitian := hA.reindex e.symm
   have hD : (cutoffDilation k t).IsHermitian := by
     simpa only [cutoffDilation, conjTranspose_eq_transpose_of_trivial] using
@@ -269,10 +282,14 @@ private theorem actual_cutoff_perturbation (k t : ℕ) :
     simp only [Fintype.card_sum]; have h := card_vertex_ge_four k; omega⟩
   have he : hM.eigenvalues₀ j = secondEigenvalue (k+t) := by
     have h := hM.sort_roots_charpoly_eq_eigenvalues₀
-    dsimp [M] at h
-    rw [charpoly_reindex, hA.sort_roots_charpoly_eq_eigenvalues₀] at h
+    have hcp : M.charpoly = (adjacency (k+t)).charpoly :=
+      charpoly_reindex e.symm (adjacency (k+t))
+    rw [hcp, hA.sort_roots_charpoly_eq_eigenvalues₀] at h
     have hh := congrArg (fun l : List ℝ => l[1]?) h
-    simpa [secondEigenvalue, secondIndex, j] using hh.symm
+    have hN : 1 < Fintype.card (Vertex k ⊕ LateVertex k t) := j.isLt
+    have hF : 1 < Fintype.card (Vertex (k+t)) := (secondIndex (k+t)).isLt
+    simp only [List.getElem?_ofFn, dif_pos hN, dif_pos hF] at hh
+    exact Option.some.inj hh.symm
   have hdiff : M - cutoffDilation k t = fromBlocks (adjacency k) 0 0 (lateAdjacency k t) := by
     ext u v
     have h := cutoff_adjacency k t u v
@@ -292,7 +309,7 @@ private theorem actual_normalized_perturbation (k t : ℕ) (ht : 1 ≤ t) :
   have hh := div_le_div_of_nonneg_right (actual_cutoff_perturbation k t)
     (by positivity : (0:ℝ) ≤ 2^(((k+t:ℕ):ℝ)/2))
   rw [add_div] at hh
-  exact hh.trans (add_le_add_left (CutoffSpectralBounds.late_adjacency_normalized_le k t ht) _)
+  exact hh.trans (add_le_add le_rfl (CutoffSpectralBounds.late_adjacency_normalized_le k t ht))
 
 private theorem inverse_scale_tendsto :
     Tendsto (fun n : ℕ => ((2:ℝ)^((n:ℝ)/2))⁻¹) atTop (nhds 0) := by
@@ -301,6 +318,7 @@ private theorem inverse_scale_tendsto :
   simp only [Real.sqrt_zero] at h
   convert h using 1
   funext n
+  change ((2:ℝ)^((n:ℝ)/2))⁻¹ = Real.sqrt ((1/2:ℝ)^n)
   rw [div_pow, one_pow, one_div, Real.sqrt_inv, ← scale_sq n, Real.sqrt_sq (by positivity)]
 
 /-- Along every natural stage, the second largest ordinary adjacency eigenvalue, with
@@ -321,7 +339,7 @@ theorem result : limitClaim := by
       atTop (nhds 0) := by
     have hh := inverse_scale_tendsto.comp (show Tendsto (fun t : ℕ => k+t) atTop atTop by
       simpa only [Nat.add_comm] using tendsto_add_atTop_nat k)
-    simpa only [div_eq_mul_inv, mul_zero] using hh.const_mul ‖adjacency k‖
+    simpa only [Function.comp_apply, div_eq_mul_inv, mul_zero] using hh.const_mul ‖adjacency k‖
   obtain ⟨U, hU⟩ := Metric.tendsto_atTop.mp hOld (ε/3) hε3
   refine ⟨k + max 1 (max T U), ?_⟩
   intro n hn

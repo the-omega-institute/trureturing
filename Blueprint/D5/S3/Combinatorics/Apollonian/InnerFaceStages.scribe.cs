@@ -31,6 +31,12 @@ internal sealed class InnerFaceStagesDocument : IScribeDocumentDefinition
                 "For n and v in Vertex n, degreeCount n v is the sum over all u in Vertex n of the zero-one indicator of actual adjacency from v to u.", DescribeRole.Definition),
             Node("faceCount_old", "Incident faces of a retained vertex",
                 "For every natural n and v in Vertex n, faceCount (n+1) (inl v) = 2*faceCount n v. Each incident parent face gives exactly two incident children.", DescribeRole.Theorem),
+            Node("faceCount_new", "Incident faces at insertion",
+                "For every natural n and current inner face f, the vertex inr f at stage n+1 belongs to exactly three inner child faces.", DescribeRole.Theorem),
+            Node("seed_injective", "Distinct persistent seed vertices",
+                "For every natural n the map seed n from Fin 4 to Vertex n is injective.", DescribeRole.Theorem),
+            Node("seed_counts_zero", "Exact initial counts",
+                "Every seed vertex has degreeCount 0 equal to three. Its initial incident inner-face count is three for the central vertex 3 and two for each outer vertex 0,1,2.", DescribeRole.Theorem),
             Node("degreeCount_old", "Degree increment of a retained vertex",
                 "For every natural n and v in Vertex n, degreeCount (n+1) (inl v) = degreeCount n v + faceCount n v. The retained vertex acquires exactly one neighbour from each currently incident inner face.", DescribeRole.Theorem),
             Node("inner_faces_distinct", "Inner-face indices do not duplicate triangles",
@@ -85,8 +91,8 @@ internal sealed class InnerFaceStagesDocument : IScribeDocumentDefinition
                 "For every natural n, secondIndex n is index one in Fin (card (Vertex n)). The proved lower bound four supplies its strict bound. Indices are zero based.", DescribeRole.Definition),
             Node("secondEigenvalue", "The ordinary ordered second eigenvalue",
                 "For every natural n, secondEigenvalue n is Mathlib’s decreasing real Hermitian eigenvalues₀ list for (graph n).adjMatrix over the reals, evaluated at secondIndex n. The imported ordered-spectrum API counts eigenvalues with their characteristic-polynomial multiplicities. It uses the actual simple graph and ordinary adjacency.", DescribeRole.Definition),
-            Node("limitClaim", "The exact remaining spectral target",
-                "limitClaim is Tendsto, along all natural n tending to infinity, of secondEigenvalue n divided by the real power 2^((n:Real)/2), to sqrt(2). The real exponent preserves odd stages. This declaration defines the original target and does not prove it; the graph and count laws alone do not establish this limit.", DescribeRole.Definition))));
+            Node("limitClaim", "The exact spectral target",
+                "limitClaim is Tendsto, along all natural n tending to infinity, of secondEigenvalue n divided by the real power 2^((n:Real)/2), to sqrt(2). The real exponent preserves odd stages. This declaration defines the original target; SecondEigenvalueLimit.result proves it from the actual graph and its cutoff spectral estimates.", DescribeRole.Definition))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("apollonian-" + name.ToLowerInvariant().Replace("_", "-")),

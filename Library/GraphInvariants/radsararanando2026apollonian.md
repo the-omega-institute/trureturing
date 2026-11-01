@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Combinatorics/Apollonian/CutoffSpectralBounds
   - D5/S3/Combinatorics/Apollonian/CutoffGramLimit
   - D5/S3/Combinatorics/Apollonian/CutoffOrderedSpectrum
+  - D5/S3/Combinatorics/Apollonian/SecondEigenvalueLimit
   - D5/S3/SpectralTopology/RectangularDilation
 license: CC-BY-SA-4.0
 triage: anchor
@@ -65,7 +66,15 @@ The accepted ordinary proof in
 uses exact degrees, at most two inner faces through an edge, and orientation
 from newer to older endpoints. The corresponding all-stage spectral target
 is tracked by [issue #24989](https://github.com/the-omega-institute/trureturing/issues/24989).
-An ordinary proof is distinct from a compiled graph-specific spectral theorem.
+`D5.S3.Combinatorics.Apollonian.SecondEigenvalueLimit.result` proves the exact
+`InnerFaceStages.limitClaim`. At fixed cutoff, the second limiting Gram weight
+is two: the central seed has weight three, the outer seeds have weight two,
+and all other weights are at most two. Gram convergence and the unequal-block
+dilation identity give the cutoff limit. The actual adjacency remainder is
+controlled by the fixed old block and the birth-oriented late block. Choosing
+the cutoff and then the stage proves the stated limit along all natural
+stages, with the original real-power normalization. This formalizes the accepted
+ordinary argument; it is not a separate claim to an original solution.
 
 The finite source and literature screen did not authenticate an exact competing
 deterministic second-eigenvalue limit. Its unread limits include the complete

@@ -693,7 +693,7 @@ def secondIndex (n : ℕ) : Fin (Fintype.card (Vertex n)) :=
 noncomputable def secondEigenvalue (n : ℕ) : ℝ :=
   ((graph n).isHermitian_adjMatrix ℝ).eigenvalues₀ (secondIndex n)
 
-/-- The original all-natural-stage limit, retained as the exact unproved integration target. -/
+/-- The original all-natural-stage limit, proved in `SecondEigenvalueLimit.result`. -/
 def limitClaim : Prop :=
   Filter.Tendsto (fun n : ℕ => secondEigenvalue n / (2 : ℝ) ^ ((n : ℝ) / 2))
     Filter.atTop (nhds (Real.sqrt 2))
