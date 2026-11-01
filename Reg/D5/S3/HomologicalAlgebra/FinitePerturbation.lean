@@ -53,7 +53,7 @@ abbrev arena : Arena where
       r.readout () ⟨R,U,V,inferInstance,inferInstance,inferInstance,
         inferInstance,inferInstance,c⟩ n
 
-private def liftedRingHom : ULift.{u} ℤ →+* ℤ := ULift.ringEquiv
+private def liftedRingHom : ULift.{u} ℤ →+* ℤ := ULift.ringEquiv.toRingHom
 
 private def sample : Parameters.{u,v,w} := by
   let R := ULift.{u} ℤ
@@ -75,7 +75,10 @@ private def sample : Parameters.{u,v,w} := by
     pi := by ext x; rfl
     di := by simp
     pd := by simp
-    contraction := by ext x; simp [i,p]
+    contraction := by
+      ext x
+    change (0 : ℤ) = x.down - x.down
+      simp
     hh := by simp
     hi := by simp
     ph := by simp
@@ -84,14 +87,16 @@ private def sample : Parameters.{u,v,w} := by
 
 private theorem sample_nilpotent :
     (sample.{u,v,w}.input.h*sample.input.delta)^1 = 0 := by
-  simp [sample]
+  ext x
+  rfl
 
 private theorem sample_zero_fails : ¬ sample.{u,v,w}.input.Conclusion 0 := by
   intro out
   have eq := out.K_left
   have val := DFunLike.congr_fun eq (show sample.V from ⟨1⟩)
   have down := congrArg ULift.down val
-  norm_num [K,inversePolynomial,sample] at down
+  change (0 : ℤ) = 1 at down
+  exact zero_ne_one down
 
 theorem rejected_law : ¬ arena.Law rejected.{u,v,w} := by
   intro law
@@ -145,12 +150,15 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.HomologicalAlgebra.FinitePerturbation
+    definition := none
     coordinates := #[0,1,2,3,4,5,6,7,8]
     readouts := #[{
       path := #["body","body","body","body","body","body","body","body",
-        "body","body","body","body"]
-      stateBinder := 9
-      functionOperand := true }] }
+        "body","body","body","body","fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }

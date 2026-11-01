@@ -82,6 +82,19 @@ example : model.D ≠ model.d0 ∧ model.I 2 ≠ model.i ∧
   · rw [bi.2.1,bi.2.2.1]
     ext x <;> simp [h,delta]
 
+example : model.I 2 (0,1) = ((0,1),(0,0)) ∧ model.P 2 = p ∧
+    model.H 2 = h ∧ model.transferred 2 (0,1) = 0 := by
+  have bi := binding
+  refine ⟨?_,?_,?_,?_⟩
+  · simp [I,K,inversePolynomial,Finset.sum_range_succ,
+      bi.2.1,bi.2.2.1,bi.2.2.2.1,h,delta,i]
+  · ext x <;> simp [P,J,inversePolynomial,Finset.sum_range_succ,
+      bi.2.1,bi.2.2.1,bi.2.2.2.2,h,delta,p]
+  · ext x <;> simp [H,K,inversePolynomial,Finset.sum_range_succ,
+      bi.2.1,bi.2.2.1,h,delta]
+  · simp [transferred,I,K,inversePolynomial,Finset.sum_range_succ,
+      bi.2.1,bi.2.2.1,bi.2.2.2.1,bi.2.2.2.2,h,delta,i,p]
+
 set_option pp.universes true in
 #check @Input.finite_perturbation
 #print axioms Input.finite_perturbation
