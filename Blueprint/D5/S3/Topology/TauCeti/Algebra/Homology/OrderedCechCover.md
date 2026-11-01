@@ -70,18 +70,6 @@ Lean statement: `D5/S3/Topology/TauCeti/Algebra/Homology/OrderedCechCover.map`
 
 For point types A and B, families P and Q with the same ordered index type, and a function f from A to B taking P(i) into Q(i) for every i, there is a chain map from the ordered free complex of P to that of Q. It sends each generator (s,a) to (s,f(a)). The finite index set and every deletion sign are preserved. These maps preserve identity and composition.
 
-**Theorem 1.6 (Naturality of the specified augmentation).**
-
-Lean statement: `D5/S3/Topology/TauCeti/Algebra/Homology/OrderedCechCover.map_augmentation`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Topology/TauCeti/Algebra/Homology/OrderedCechCover.map_augmentation` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every such cover-preserving function, the chain map followed by the target augmentation equals the source augmentation followed by the map on the complex concentrated at zero induced by f on the point coproducts. This naturality concerns the specified augmentation; no naturality of the chosen contraction vertex is assumed.
-
 ## References
 
 - Truth anchor: `D5/S3/Topology/TauCeti/Algebra/Homology/OrderedCechCover.augmentation`
@@ -89,4 +77,3 @@ For every such cover-preserving function, the chain map followed by the target a
 - Truth anchor: `D5/S3/Topology/TauCeti/Algebra/Homology/OrderedCechCover.complex`
 - Truth anchor: `D5/S3/Topology/TauCeti/Algebra/Homology/OrderedCechCover.freeFunctor`
 - Truth anchor: `D5/S3/Topology/TauCeti/Algebra/Homology/OrderedCechCover.map`
-- Truth anchor: `D5/S3/Topology/TauCeti/Algebra/Homology/OrderedCechCover.map_augmentation`
