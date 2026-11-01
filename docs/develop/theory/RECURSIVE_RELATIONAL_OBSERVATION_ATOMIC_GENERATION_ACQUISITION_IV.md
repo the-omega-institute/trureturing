@@ -1486,3 +1486,307 @@ ordering, and the broader space/time/boundary/memory recovery programme
 remains open.
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Exact inherited-prefix allocation on the full native domain
+
+**本批导航。** 本批增补 §§18–22：先给出带实际标号前驱替换的精确有限分配，再把它递归安装为一个全域前向 head recorder，随后给出 base-4 必要系数和任意 block 的证书上界。它不改判 §§9–17 的既有条目；Question 12.2 的对数级充分性仍开放。
+
+**Definition 18.1 (finite inherited-prefix allocation).** Let $m\ge1$ and let $b_1,\ldots,b_m$ be a finite nonempty labelled multiset of binary words; repetitions are retained as different tokens. A lower word may be empty. For every binary word $q$ put
+
+$$
+D_b(q)=\bigl|\{i:q\preceq b_i\}\bigr|,
+\qquad
+L^*(b)=\max_{\substack{q\text{ binary}\\D_b(q)>0}}
+ \left(|q|+\left\lceil\log_2D_b(q)\right\rceil\right).
+\tag{IV.40}
+$$
+
+The empty word is included among the possible $q$. A completion is a family of distinct words $x_i$ such that $b_i\preceq x_i$ and the family $\{x_i\}$ is prefix-free. The objective is to minimize $\max_{1\le i\le m}|x_i|$. The labels matter in the objective's tie-breaking, even when two lower words coincide.
+
+**Lemma 18.2 (exact finite extension optimum).** Every completion in Definition 18.1 has maximum length at least $L^*(b)$. A completion with maximum length exactly $L^*(b)$ exists. It is obtained by processing tokens in decreasing $|b_i|$, breaking ties by a fixed lexicographic order of their labels, and assigning to each token the lexicographically first unused length-$L^*(b)$ word extending its lower word. Thus $L^*(b)$ is the exact inherited-prefix optimum, not merely a Kraft upper bound.
+
+**Proof.** Put $L=L^*(b)$ and first consider any completion with maximum length at most $K$. For a prefix $q$ with $D_b(q)>0$, at least one completed word extends $q$, so any maximum length $K$ first satisfies $K\ge |q|$. The $D_b(q)$ completed words extending $q$ are distinct and prefix-free. Extend each of them, only for counting, to an arbitrary descendant of length $K$. Their depth-$K$ cylinders below $q$ are disjoint, and there are only $2^{K-|q|}$ such descendants. Hence
+
+$$
+D_b(q)\le 2^{K-|q|},\qquad
+K\ge |q|+\left\lceil\log_2D_b(q)\right\rceil.
+\tag{IV.41}
+$$
+Taking the maximum gives $K\ge L^*(b)$. This padding is a counting device; it does not alter the completed words.
+
+For sufficiency, assign all words at the common depth $L$. Equation (IV.40) implies $|b_i|\le L$. Suppose the greedy rule fails for the current token $i$. Every one of the $2^{L-|b_i|}$ leaves below $b_i$ is already occupied by an earlier token $j$. Since earlier lower words have $|b_j|\ge|b_i|$ and $b_j\preceq x_j$ while $b_i\preceq x_j$, one has $b_i\preceq b_j$. Therefore
+
+$$
+D_b(b_i)\ge 1+2^{L-|b_i|},
+$$
+contradicting (IV.40) at $q=b_i$. The assignment never fails. Equal-length distinct words are prefix-free, and each extends its own lower word. The prescribed order makes the construction a single finite deterministic algorithm. $\square$
+
+**Definition 18.3 (labelled native substitution).** For a noninitial reachable source $t$, let $\operatorname{Pred}(t)$ be AAII Definition 99.1's complete labelled incoming set. For each edge $e:u\to t$ and each $h\in\mathcal H(u)$, form one token
+
+$$
+(e,h)\longmapsto he,\qquad b_{e,h}=J(h).
+\tag{IV.42}
+$$
+
+The token is retained even when two unlabelled source changes look identical. By the actual last-event partition (IV.3), these are exactly the $F(t)$ histories in the complete fibre, with no selected-schedule restriction. The lower word is the literal old data; it is never replaced by a static rank or a newly chosen entry.
+
+## 19. One computable linear recorder and its forward inverse
+
+**Theorem 19.1 (full-domain inherited-prefix recorder).** There is one deterministic computable, horizon-independent map $J$ on every finite legal native history such that, for every reachable $t$,
+
+$$
+\begin{aligned}
+J(\varepsilon)&=\varepsilon,\\
+J(h)&\preceq J(he) &&(e\text{ enabled after }h),\\
+G(t)&\le M_J(t)\le G(t)+N(t)-1 &&(N(t)>0),\\
+M_J(t)&=0 &&(F(t)=1),
+\end{aligned}
+\tag{IV.43}
+$$
+
+where $G(t)=\lceil\log_2F(t)\rceil$ and $M_J(t)=\max_{h\in\mathcal H(t)}|J(h)|$. At each source, the displayed $M_J(t)$ is the exact minimum possible maximum length subject to the already fixed inherited words from its labelled predecessors. The current source computes the finite table and its width, so a fixed-head decoder reads exactly $M_J(t)$ forward data bits and recovers the complete addressed history without reading a journal end.
+
+**Proof.** Set $J(\varepsilon)=\varepsilon$. Induct on the native grade $N(t)$. For $t\ne\alpha$, recursively compute all predecessor tables, form the labelled tokens (IV.42), and apply Lemma 18.2. Define every $J(he)$ to be the assigned word and put
+
+$$
+L(t)=L^*\bigl((J(h))_{(e,h)}\bigr)=M_J(t).
+\tag{IV.44}
+$$
+
+The predecessor grade is $N(t)-1$, so the recursion terminates at the known alpha root. The finite event set, complete labelled addresses, integer ceilings, sorting, and leaf selection are all effective. No future endpoint, horizon, compatible-family limit, compactness choice, or source-supplied codebook is consulted. Lemma 18.2 gives literal extension of every old word and injective prefix freedom at the complete current fibre. It also proves the claimed local optimum.
+
+It remains to bound the width. Write $W(u)=2^{L(u)}$ and, with edge multiplicity, $S(t)=\sum_{e:u\to t}W(u)$. For a prefix $q$ of depth $d$, a predecessor table of width $L(u)$ contributes at most $2^{L(u)-d}$ lower words extending $q$ when $d\le L(u)$, and contributes none otherwise. Thus
+
+$$
+2^dD_b(q)\le S(t).
+\tag{IV.45}
+$$
+Taking the maximum in (IV.40) gives $L(t)\le\lceil\log_2S(t)\rceil$, hence $W(t)<2S(t)$ unless $S(t)=1$, in which case $W(t)=1$. Since $W(\alpha)=F(\alpha)=1$, (IV.3) and induction on $N$ give
+
+$$
+W(t)<2^{N(t)}F(t)\qquad(N(t)>0).
+\tag{IV.46}
+$$
+The empty-prefix term in (IV.40) gives $L(t)\ge\lceil\log_2F(t)\rceil=G(t)$. From (IV.46), $L(t)<N(t)+\log_2F(t)\le N(t)+G(t)$; integrality yields the upper inequality in (IV.43). If $F(t)=1$, positivity of (IV.3) forces one incoming edge from a singleton predecessor. Induction gives its lower word $\varepsilon$, so (IV.40) gives $L(t)=0$.
+
+For recovery, acquire the actual current source $t$ and its common bindings and rights. Compute the same finite predecessor tree and table in paid scratch, then read exactly $L(t)$ bits from the fixed installed head. The table is injective, so the bits select exactly one $h$. A singleton table reads no bit. For an enabled actual edge $e:t\to v$, compute the prospective finite table in scratch and append the suffix of $J(he)$ after the already present literal prefix $J(h)$. This syntax calculation is not an observation of a future live source, and all temporary tables may be cleared after their charged finite use. No end, absence, length, tail, timing, allocator, or persistent codebook observation is used. $\square$
+
+**Example 19.2 (the first nontrivial native fibre).** At
+$t^*=\langle\langle\beta,\alpha\rangle,\beta\rangle$, the complete histories are
+$P_\varepsilon S_\varepsilon P_R S_L$ and
+$P_\varepsilon S_\varepsilon S_L P_R$. The two incoming lower words at this endpoint are empty, so the rule assigns the distinct one-bit words $0$ and $1$ in the fixed event order. FetchGrowth$(3)$ therefore returns $P_R$ or $S_L$; on the same current source, Next$(3)$ executes $S_R$ or $S_{L^2}$, respectively, while the original full reply, End, supplied ACK and Return phases remain unchanged. This is a concrete native recovery of a serial distinction, not a static endpoint rank.
+
+**Correspondence 19.3 (unchanged original service).** The recorder in Theorem 19.1 is installed only in the data-payload slot of the existing acquired service. The genuine source/root reference, fixed program, exclusive rights, acquired record/input/output bindings, finite paid backing and progress obligations remain those of Assumption 5.1 and §11. All seven original requests—Tag, addressed $P$, addressed $S$, HasPromotion, HasSplit, FetchGrowth and Next—and the complete Tag, Boolean, Refusal, Growth, Recall, Next, OutOfRange and BadFrame replies remain in force. FetchGrowth and Next use the recovered full addressed history and the same current live source; Next retains both old and new recalled pairs and performs the actual new edit. Every completed request still reserves backing, serializes edit and record maintenance, builds and seals its full reply, emits Print and End, receives the supplied local ACK, Returns to the same actual root and clears occupied work. The construction adds no reset, hidden archive, free reference, extra refusal, interrupt, crash recovery or journal-end channel. This is conditional finite service under the unchanged rights and backing hypotheses; it is not a bound on total physical cost, computation, latency or capacity.
+
+**Definition 19.4 (actual inherited-prefix congestion).** Fix the single event order and recursive recorder $J$ of Theorem 19.1. For every noninitial reachable source $t$, use its actual labelled predecessor words, with their full multiplicities, to define
+
+$$
+\begin{aligned}
+D_t(q)&=\sum_{e:u\to t}
+ \bigl|\{h\in\mathcal H(u):q\preceq J(h)\}\bigr|,\\
+C(t)&=\max_{\substack{q\text{ binary}\\D_t(q)>0}}
+ \frac{2^{|q|}D_t(q)}{F(t)}.
+\end{aligned}
+\tag{IV.46a}
+$$
+
+Set $C(\alpha)=1$. The maximum is over the finite nonempty set of prefixes of these actual lower words. In particular $D_t(\varepsilon)=F(t)\ge1$ and $C(t)\ge1$. Equal lower words on different labelled tokens remain separate contributions. The words in (IV.46a) are the ones already chosen recursively by $J$, not independently optimized codebooks at each endpoint, static ranks, or words chosen for a future horizon.
+
+**Proposition 19.5 (exact width and the missing uniform condition).** For this fixed recorder, at every reachable source,
+
+$$
+\begin{aligned}
+L(t)&=\left\lceil\log_2\bigl(F(t)C(t)\bigr)\right\rceil,\\
+F(t)C(t)&\le 2^{L(t)}<2F(t)C(t),\\
+0&\le L(t)-G(t)\le\left\lceil\log_2C(t)\right\rceil.
+\end{aligned}
+\tag{IV.46b}
+$$
+
+A sufficient all-source inherited-prefix congestion condition for the original logarithmic target is the existence of fixed finite constants $K\ge1$ and $a\ge0$, independent of $t$, such that
+
+$$
+C(t)\le K\bigl(N(t)+2\bigr)^a
+\qquad\text{for every reachable actual source }t.
+\tag{IV.46c}
+$$
+
+Under this condition the same deterministic computable horizon-independent $J$ satisfies
+
+$$
+\begin{aligned}
+M_J(t)=L(t)
+ &\le G(t)+\left\lceil\log_2K+a\log_2(N(t)+2)\right\rceil\\
+ &\le G(t)+a\log_2(N(t)+2)+\log_2K+1\\
+ &\le G(t)+c\log_2(N(t)+2),
+ \qquad c=a+\log_2K+1.
+\end{aligned}
+\tag{IV.46d}
+$$
+
+Conversely, if this fixed $J$ satisfies $L(t)\le G(t)+c\log_2(N(t)+2)$ at every actual source for one finite $c\ge0$, then
+
+$$
+C(t)\le\frac{2^{L(t)}}{F(t)}
+ \le\frac{2^{G(t)}}{F(t)}\bigl(N(t)+2\bigr)^c
+ <2\bigl(N(t)+2\bigr)^c.
+\tag{IV.46e}
+$$
+
+Thus polynomial congestion and logarithmic overhead are equivalent uniform growth conditions for this particular recursively chosen recorder. Finite constants may be enlarged to computable integers without changing either existence assertion; no such constants are needed to run the already specified algorithm.
+
+**Proof.** For noninitial $t$, let $A=\max_{D_t(q)>0}2^{|q|}D_t(q)$. The maximum exists by Definition 19.4 and equals $F(t)C(t)$. Since each $|q|$ is an integer, (IV.40) and (IV.44) give
+
+$$
+L(t)=\max_{D_t(q)>0}\left\lceil\log_2\bigl(2^{|q|}D_t(q)\bigr)\right\rceil
+ =\left\lceil\log_2A\right\rceil.
+$$
+
+Consequently $A\le2^{L(t)}<2A$. The ceiling inequality $\lceil x+y\rceil\le\lceil x\rceil+\lceil y\rceil$, with $x=\log_2F(t)$ and $y=\log_2C(t)$, proves the upper bound on $L-G$; its lower bound is Theorem 19.1. At the initial source, $F=1$, $C=1$ and $L=G=0$, so the same conclusions hold. Singleton native fibres also have $C=1$: their actual inherited words are empty by Theorem 19.1. This does not exclude empty lower words from the finite allocation problem.
+
+Substitute (IV.46c) into the exact first identity of (IV.46b) and use $\lceil x+y\rceil\le\lceil x\rceil+\lceil y\rceil$ again to obtain the first line of (IV.46d). A ceiling adds less than one, and $\log_2(N+2)\ge1$ absorbs the displayed nonnegative constant $\log_2K+1$, proving the other lines. Equation (IV.46e) follows from (IV.46b), the assumed bound on $L$, and $2^{G(t)}/F(t)<2$. These estimates retain the distinction between $\log_2F$, its ceiling $G$, the exact width ceiling, and the additive constant in (IV.46d). $\square$
+
+The all-source polynomial condition (IV.46c) remains unproved. The linear argument (IV.46) supplies only $C(t)<2^{N(t)}$ for $N(t)>0$, not a polynomial bound. Proving (IV.46c) would settle logarithmic sufficiency by this construction under the unchanged source, rights, paid scratch and complete-service hypotheses of Correspondence 19.3. Failure of every polynomial bound for this chosen $J$ would rule out logarithmic overhead for this $J$ only; it would not rule out another deterministic computable coherent recorder. Likewise (IV.46c) is not asserted necessary for the existence of a different recorder. A universal-class negative answer would still require an obstruction applying to every admissible recorder on the original full native domain.
+
+## 20. A necessary logarithmic coefficient from the base-4 family
+
+**Theorem 20.1 (base-4 coefficient for every coherent head recorder).** For $r\ge1$, use the native block terms of Definition 13.1 with
+
+$$
+ s_i=4^{r-i+1}+1,\qquad T_r=t_r,\qquad B_r=r(r+1).
+\tag{IV.47}
+$$
+
+Then, for every recorder satisfying Definition 9.1 on the entire native domain,
+
+$$
+M_J(T_r)-G(T_r)>r\log_2(3/2)-2.
+\tag{IV.48}
+$$
+
+Consequently, if some such recorder satisfied
+$M_J(t)\le G(t)+c\log_2(N(t)+2)$ for all actual endpoints, then necessarily
+
+$$
+ c\ge\kappa:=\frac12\log_2(3/2).
+\tag{IV.49}
+$$
+This is a necessary coefficient only; it supplies neither logarithmic sufficiency nor sharpness.
+
+**Proof.** The complete native product in Proposition 13.2, reindexed by $m=r-i+1$, is
+
+$$
+F(T_r)=\prod_{m=1}^r f_m,\qquad
+ f_m=\sum_{k=1}^m4^k+2m-1
+ =\frac43\,4^m+2m-\frac73.
+\tag{IV.50}
+$$
+At the $i$th selected cut, every old history has $s_i$ actual suffixes: perform the left-spine splits at $p,pL,\ldots,pL^{s_i-1}$ and promote the right child born at the first split at $pR$. The promotion can be inserted after any one of the $s_i$ splits. These are legal native $S$ and $P$ events, and the full endpoint fibre still includes every delayed interleaving. The cylinder argument (IV.22), iterated as in Theorem 14.1, gives
+
+$$
+M_J(T_r)\ge\sum_{m=1}^r\left\lceil\log_2(4^m+1)\right\rceil
+=B_r+r.
+\tag{IV.51}
+$$
+For every $m\ge1$,
+
+$$
+ f_m\le\frac43\,4^m\left(1+\frac{3m}{2}4^{-m}\right).
+\tag{IV.52}
+$$
+Using $\ln(1+u)\le u$ and $\sum_{m\ge1}m4^{-m}=4/9$ gives
+
+$$
+\log_2F(T_r)
+ \le B_r+r\log_2(4/3)+\frac{2}{3\ln2}
+ <B_r+r\log_2(4/3)+1,
+\tag{IV.53}
+$$
+where $\ln2>2/3$. Since $G=\lceil\log_2F\rceil$, (IV.53) implies
+$G(T_r)<B_r+r\log_2(4/3)+2$. Combining this with (IV.51) proves (IV.48).
+
+The endpoint has
+
+$$
+N(T_r)=\frac{4^{r+1}-4}{3}+2r+1,
+\tag{IV.54}
+$$
+so $\log_2(N(T_r)+2)/r\to2$. Divide (IV.48) by this quantity and let $r\to\infty$ to obtain (IV.49). Every displayed continuation is an actual addressed operation of (IV.1); no deletion, graft, restricted schedule, extra observation or fixed finite-capacity device is used. $\square$
+
+## 21. The arbitrary-block rounded-depth certificate
+
+**Definition 21.1 (certificate separated from recorder redundancy).** For any positive block list $s_1,\ldots,s_r$, let
+
+$$
+T=T(s_1,\ldots,s_r),\qquad
+N=1+\sum_{i=1}^r(s_i+1),\qquad
+f_i=\sum_{j=i}^rs_j+r-i,
+$$
+
+so that Proposition 13.2 gives $F(T)=\prod_i f_i$. Define
+
+$$
+L_{\rm cut}=\sum_{i=1}^r\left\lceil\log_2s_i\right\rceil,\qquad
+E=\max\{0,L_{\rm cut}-G(T)\}.
+\tag{IV.55}
+$$
+The number $E$ is the excess forced by this selected-cut lower-bound certificate after comparison with the static endpoint width. It is a lower bound on $M_J(T)-G(T)$ for every admissible $J$; it is not the actual redundancy of Theorem 19.1 or of any other recorder.
+
+**Theorem 21.2 (uniform ceiling on the certificate).** Let $\gamma$ be the unique positive solution of
+
+$$
+(1+\gamma)^{1+\gamma}=2\gamma^\gamma.
+\tag{IV.56}
+$$
+Then $0<\gamma<1/3$, and every positive block list satisfies
+
+$$
+E\le\gamma\log_2N.
+\tag{IV.57}
+$$
+Thus changing the block sizes inside this certificate mechanism cannot produce a superlogarithmic all-recorder obstruction. Equation (IV.57) says nothing about an upper bound on actual recorder redundancy.
+
+**Proof.** The function
+$\phi(a)=(1+a)\ln(1+a)-a\ln a$ is strictly increasing for $a>0$, tends to $0$ as $a\downarrow0$, and satisfies $\phi(1/3)>\ln2$ because
+$(4/3)^4/(1/3)=256/27>8$. Hence (IV.56) has one positive solution and it lies in $(0,1/3)$. The same equation and elementary differentiation give, for $x\ge0$,
+
+$$
+2x\le(1+x)^{1+\gamma}.
+\tag{IV.58}
+$$
+
+Put $d(s)=2^{\lceil\log_2s\rceil}$ and
+$R=2^{L_{\rm cut}}/F(T)$. We prove $R\le N^\gamma$ by induction while adding the outer blocks. The empty list has $N=1$ and $R=1$. Suppose the inner tail has event count $n$ and ratio at most $n^\gamma$. Adding an outer block of size $s$ changes the count to
+$N_{\rm new}=n+s+1$ and the product factor to $n+s-1$, so
+
+$$
+R_{\rm new}=\frac{d(s)R_{\rm tail}}{n+s-1}.
+\tag{IV.59}
+$$
+If $s=1$, then $d(s)=1$ and $R_{\rm new}\le n^{\gamma-1}\le1$. If $s\ge2$, writing $x=(s-1)/n$ and using the integer inequality $d(s)\le2(s-1)$ gives
+
+$$
+R_{\rm new}
+ \le \frac{2x}{1+x}n^\gamma
+ \le (1+x)^\gamma n^\gamma
+ = (n+s-1)^\gamma
+ \le N_{\rm new}^\gamma,
+\tag{IV.60}
+$$
+where the middle inequality is (IV.58). Consequently
+
+$$
+L_{\rm cut}-G(T)\le L_{\rm cut}-\log_2F(T)=\log_2R\le\gamma\log_2N.
+$$
+Taking the positive part proves (IV.57). The native correspondence is the one in §§13–16: at each block the actual edits are $S_p,S_{pL},\ldots,S_{pL^{s_i-1}}$ and $P_{pR}$, with all complete interleavings retained, and $N=a+2c-1$. $\square$
+
+## 22. Sources, scope and the unresolved logarithmic target
+
+**Correspondence 22.1 (what is reused and what is added).** AA §§17–22 and AAII §99 supply the actual known-alpha grammar, complete labelled predecessor partition, event count, native legality, and the acquired source/rights/service hypotheses. Sections 13–16 supply the complete block fibres and the recorder-independent cylinder lower bound. The new ordinary synthesis is Lemma 18.2's exact inherited-prefix allocation installed recursively in Theorem 19.1, together with its full-domain forward inverse and linear bound (IV.43). Proposition 19.5 identifies the exact actual-word congestion condition sufficient for this same recorder to meet a logarithmic bound; that condition is not established here. The base-4 coefficient (IV.49) and certificate ceiling (IV.57) are separate consequences of the same actual native family; they are not claims that the linear recorder is logarithmic.
+
+Cover's [*Enumerative Source Encoding*, §I, Propositions 1–2 and inverse algorithm](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf) supplies static finite-set indexing only. Kaspi–Merhav's [restricted-input formulation](https://arxiv.org/html/1301.0079v1) supplies the mature side-information/prefix-confusability frame. These sources do not supply literal native inherited-prefix coherence, the original seven-request service, or a worst-endpoint logarithmic bound. No worldwide novelty claim is made, and no inaccessible primary theorem is used as a load-bearing premise.
+
+**Correspondence 22.2 (remaining boundary).** Theorem 19.1 proves existence, computability, horizon independence, actual labelled predecessor substitution, full-fibre prefix freedom and the explicit bound
+$G(t)\le M_J(t)\le G(t)+N(t)-1$. Theorem 20.1 proves the necessary coefficient $\kappa$ when a logarithmic estimate exists. Theorem 21.2 shows only that the displayed rounded-depth certificate cannot itself yield a superlogarithmic counterexample. Proposition 19.5 leaves the all-source polynomial bound (IV.46c) for the actual recursively inherited words unproved; success of this constructor is only a sufficient route to existence, and its failure would not be a universal-class impossibility. The original question—one computable $J$ and one finite $c$ satisfying the logarithmic bound for every actual endpoint, or a universal-class counterexample—therefore remains open in this increment. No Lean/kernel verification, numerical result, total-cost optimum, physical impossibility or completion of the persistent RRO goal is asserted.
+
+## 追加锚（本行以下为增补区）
