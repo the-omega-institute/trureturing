@@ -6,9 +6,9 @@ Explicit physical-J repetition at a fixed ear cut
 
 **Theorem 1.1 (Explicit physical-J repetition at a fixed ear cut).**
 
-Lean statement: `D5/S3/Combinatorics/Circle/PhysicalJointRepetition.physical_joint_repetition`
+Lean statement: `D5/S3/Combinatorics/Circle/PhysicalJointRepetition/Repetition.physical_joint_repetition`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/PhysicalJointRepetition.physical_joint_repetition` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/PhysicalJointRepetition/Repetition.physical_joint_repetition` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -26,4 +26,4 @@ The theorem consumes supplied base witnesses and does not construct them. It cov
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Circle/PhysicalJointRepetition.physical_joint_repetition`
+- Truth anchor: `D5/S3/Combinatorics/Circle/PhysicalJointRepetition/Repetition.physical_joint_repetition`
