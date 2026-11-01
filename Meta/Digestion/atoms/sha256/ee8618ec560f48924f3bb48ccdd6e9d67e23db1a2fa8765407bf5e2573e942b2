@@ -1,0 +1,8 @@
+把相邻不同 $a_i$ 之间的阈值投影记为 $P_i$，连续尺度延拓的生成元为
+
+$$
+\mathcal G_{\rm scale}(\rho)=\sum_i(a_{i+1}-a_i)
+\left(P_i\rho P_i-\frac{P_i\rho+\rho P_i}{2}\right).
+$$
+
+每个矩阵单位只受分开其两个 $a$ 值的阈值项作用，速率总和为 $|a_s-a_t|/2$；系数非负给出 CPTP 半群。

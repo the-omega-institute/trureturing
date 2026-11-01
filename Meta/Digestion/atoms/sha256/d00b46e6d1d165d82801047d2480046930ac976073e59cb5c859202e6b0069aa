@@ -1,0 +1,1 @@
+若有固定 $k$ 个不同的 $b_s$，从 $n$ 降至 $\lfloor\lambda n\rfloor$、$0\le\lambda<1$，误差趋于 $2(k-1)/k$。
