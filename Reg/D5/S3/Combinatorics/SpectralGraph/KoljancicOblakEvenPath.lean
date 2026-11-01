@@ -388,7 +388,7 @@ lemma joined_rejected_law : ¬ joinedArena.Law joinedRejected := by
   intro h
   have hc := h (fun _ => 1) (fun _ => 1) (fun _ => 0) (fun _ => 0) 1 1 0 1
     (by norm_num) (by decide) (by intro k hk; omega)
-    (by intro k hk; norm_num) (by simp [continuant]) rfl
+    (by intro k hk; norm_num) (by simp [continuant, isCoprime_one_left]) rfl
   norm_num at hc
 
 lemma joined_dependence :
@@ -433,6 +433,102 @@ def joinedRegistration :
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
   partialSensitivity := none
   escapeFrom := some (ℝ × (ℕ → ℝ) × (ℕ → ℝ))
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+abbrev coprimeSignature : DependentFamily.Signature where
+  Params := ℕ × ℕ
+  State := fun _ => (ℕ → ℝ) × (ℕ → ℝ)
+  Role := Bool
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ _ => ℝ[X]
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def coprimeActual : DependentFamily.Realization coprimeSignature :=
+  DependentFamily.realize coprimeSignature
+    (fun role p q => if role then continuant q.2 p.2 else continuant q.1 p.1)
+    (fun e => nomatch e)
+
+abbrev coprimeArena : DependentFamily.Arena where
+  signature := coprimeSignature
+  Law := fun R => ∀ r s : ℕ, Odd (r + s) →
+    ∃ qL qR : ℕ → ℝ, (∀ k, 0 < qL k) ∧ (∀ k, 0 < qR k) ∧
+      IsCoprime (R.readout false (r, s) (qL, qR)) (R.readout true (r, s) (qL, qR))
+
+abbrev coprimeSourceScope := type_of% (@coprime_positive_branches)
+
+lemma coprime_source_bridge : coprimeSourceScope ↔ coprimeArena.Law coprimeActual := Iff.rfl
+
+lemma coprime_actual_positive : coprimeArena.Law coprimeActual :=
+  coprime_source_bridge.mp coprime_positive_branches
+
+def coprimeRejected (role : Bool) : DependentFamily.Realization coprimeSignature :=
+  DependentFamily.realize coprimeSignature
+    (fun index p q => if index = role then 0 else coprimeActual.readout index p q)
+    (fun e => nomatch e)
+
+lemma coprime_rejected_law (role : Bool) : ¬ coprimeArena.Law (coprimeRejected role) := by
+  intro h
+  obtain ⟨qL, qR, _, _, hc⟩ := h 2 1 (by decide)
+  cases role with
+  | false =>
+      change IsCoprime (0 : ℝ[X]) (continuant qR 1) at hc
+      have hu := isCoprime_zero_left.mp hc
+      have hc1 := coeff_eq_zero_of_natDegree_lt (p := continuant qR 1)
+        (show (continuant qR 1).natDegree < 1 by rw [natDegree_eq_zero_of_isUnit hu]; omega)
+      norm_num [continuant] at hc1
+  | true =>
+      change IsCoprime (continuant qL 2) (0 : ℝ[X]) at hc
+      have hu := isCoprime_zero_right.mp hc
+      have hc2 := coeff_eq_zero_of_natDegree_lt (p := continuant qL 2)
+        (show (continuant qL 2).natDegree < 2 by rw [natDegree_eq_zero_of_isUnit hu]; omega)
+      norm_num [continuant] at hc2
+
+lemma coprime_dependence :
+    DependentFamily.ObservationalDependence coprimeSignature coprimeActual := by
+  intro role
+  refine ⟨(2, 2), ((fun _ => 1), (fun _ => 1)), ((fun _ => 0), (fun _ => 0)), ?_⟩
+  cases role <;> simp [coprimeActual, DependentFamily.realize, continuant]
+
+def coprimeFamilyRegistration : DependentFamily.Registration coprimeArena coprimeSourceScope where
+  actual := coprimeActual
+  bridge := coprime_source_bridge
+  variation := ⟨coprime_actual_positive, coprimeRejected false, coprime_rejected_law false⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨coprimeRejected role, ?_, rfl, coprime_rejected_law role⟩
+      intro index hne
+      funext p q
+      simp [coprimeRejected, DependentFamily.realize, hne]
+    · intro e; exact nomatch e
+  dependence := coprime_dependence
+
+def coprimeRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
+      (@coprime_positive_branches) (DependentFamily.Realization coprimeSignature) Type Unit where
+  unitName := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath.coprime_positive_branches.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath.coprimeFamilyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨coprimeArena⟩
+  objectArena := .source ⟨coprimeArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source coprimeArena ⟨coprimeFamilyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
+  readout := some (DependentFamily.realize coprimeSignature
+    (fun role p q => if role then continuant q.2 p.2 else continuant q.1 p.1)
+    (fun e => nomatch e))
+  variation := .evidence ⟨(show True from trivial)⟩ trivial
+  sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
+  partialSensitivity := none
+  escapeFrom := some ((ℕ → ℝ) × (ℕ → ℝ))
   sourceSelection := none
   continuation := .unknown
   familyRecord := none
