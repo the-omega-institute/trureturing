@@ -51,6 +51,14 @@ internal sealed class GuessingProbabilityDocument : IScribeDocumentDefinition
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(F.Id(name), [.. arguments]);
 
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula FiniteTypes(Formula body) => Seq(Forall, Sp,
+        Parenthesized(Seq(F.Id("X"), Sp, F.Id("B"), Colon, Sp, F.Id("Type"))), Sp,
+        OpenBracket, Call("Fintype", F.Id("X")), CloseBracket, Sp,
+        OpenBracket, Call("Fintype", F.Id("B")), CloseBracket, Sp,
+        OpenBracket, Call("DecidableEq", F.Id("B")), CloseBracket, Comma, Sp, body);
+
     private static Formula MeasurementTraceSumFormula()
     {
         Formula xType = F.Id("X");
@@ -60,18 +68,17 @@ internal sealed class GuessingProbabilityDocument : IScribeDocumentDefinition
         Formula complex = Seq(Mathbb, Grp(F.Id("C")));
         Formula matrix = Call("Matrix", bType, bType, complex);
         Formula summand = Seq(Call("M", F.Id("x")), Sp, r);
-        Formula total = Seq(Sum, Underscore, Grp(Seq(F.Id("x"), Sp, InMacro, Sp, xType)),
+        Formula total = Seq(new Formula.Subscript(Sum,
+                new Formula.Relation(F.Id("x"), FormulaRelationOperator.MemberOf, xType)),
             Sp, Call("Re", Call("trace", summand)));
-        return Disp(new Formula.BindMany(FormulaQuantifier.ForAll,
+        return Disp(FiniteTypes(new Formula.BindMany(FormulaQuantifier.ForAll,
             [
-                new Formula.BoundVariable(FormulaIdentifier.Create("X"), F.Id("FiniteType")),
-                new Formula.BoundVariable(FormulaIdentifier.Create("B"), F.Id("FiniteType")),
                 new Formula.BoundVariable(FormulaIdentifier.Create("R"), matrix),
                 new Formula.BoundVariable(FormulaIdentifier.Create("M"), Seq(xType, Sp, To, Sp, matrix)),
             ],
             Seq(Call("trace", r), Sp, Eq, Sp, D(1), Sp, Land, Sp,
                 Call("sum", m), Sp, Eq, Sp, D(1), Sp, Rightarrow, Sp,
-                total, Sp, Eq, Sp, D(1))));
+                total, Sp, Eq, Sp, D(1)))));
     }
 
     private static Formula SuccessBoundsFormula()
@@ -93,19 +100,19 @@ internal sealed class GuessingProbabilityDocument : IScribeDocumentDefinition
         Formula allEffects = new Formula.BindMany(FormulaQuantifier.ForAll,
             [new Formula.BoundVariable(FormulaIdentifier.Create("x"), xType)],
             Call("PosSemidef", Call("M", x)));
-        Formula hypotheses = Seq(allWeights, Sp, Land, Sp, sumP, Sp, Eq, Sp, D(1),
-            Sp, Land, Sp, allEffects, Sp, Land, Sp, sumM, Sp, Eq, Sp, D(1));
+        Formula hypotheses = Seq(Parenthesized(allWeights), Sp, Land, Sp,
+            sumP, Sp, Eq, Sp, D(1), Sp, Land, Sp, Parenthesized(allEffects),
+            Sp, Land, Sp, sumM, Sp, Eq, Sp, D(1));
         Formula success = Call("successProbability", p, rho, m);
-        return Disp(new Formula.BindMany(FormulaQuantifier.ForAll,
+        Formula conclusion = Seq(D(0), Sp, Le, Sp, success,
+            Sp, Land, Sp, success, Sp, Le, Sp, D(1));
+        return Disp(FiniteTypes(new Formula.BindMany(FormulaQuantifier.ForAll,
             [
-                new Formula.BoundVariable(FormulaIdentifier.Create("X"), F.Id("FiniteType")),
-                new Formula.BoundVariable(FormulaIdentifier.Create("B"), F.Id("FiniteType")),
                 new Formula.BoundVariable(FormulaIdentifier.Create("p"), Seq(xType, Sp, To, Sp, real)),
                 new Formula.BoundVariable(FormulaIdentifier.Create("rho"),
                     Seq(xType, Sp, To, Sp, Call("DensityState", bType))),
                 new Formula.BoundVariable(FormulaIdentifier.Create("M"), Seq(xType, Sp, To, Sp, matrix)),
             ],
-            Seq(hypotheses, Sp, Rightarrow, Sp, D(0), Sp, Le, Sp, success,
-                Sp, Land, Sp, success, Sp, Le, Sp, D(1))));
+            Seq(Parenthesized(hypotheses), Sp, Rightarrow, Sp, Parenthesized(conclusion)))));
     }
 }
