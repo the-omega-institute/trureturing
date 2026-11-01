@@ -602,6 +602,11 @@ class IdlePoolCases:
                     self.assertEqual("sweep_failed", failed["outcome"])
                 self.assertTrue(newer.exists())
                 self.g(self.main, "worktree", "remove", newer)
+                if action == "return":
+                    returned = next(row for row in result["items"] if row["path"] == str(self.tree))
+                    self.assertEqual("removed", returned["outcome"])
+                    self.assertFalse(self.tree.exists())
+                    self.g(self.main, "worktree", "add", self.tree, self.branch)
 
     def pool_validation_failure_after_eviction_preserves_receipt(self):
         self.pool_validation_failures("pool")
