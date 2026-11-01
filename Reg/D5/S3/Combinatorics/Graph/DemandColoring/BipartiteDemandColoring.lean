@@ -50,7 +50,8 @@ def registration : Registration arena.{u} (type_of% (@exists_independent_layers.
   · constructor
     · intro i
       refine ⟨rejected, ?_, ?_, hbad⟩
-      · intro j h; exact (h (Subsingleton.elim _ _)).elim
+      · intro j h
+        exact (h (Subsingleton.elim (show Unit from j) (show Unit from i))).elim
       · funext e; exact nomatch e
     · intro e; exact nomatch e
   · intro i
@@ -58,6 +59,7 @@ def registration : Registration arena.{u} (type_of% (@exists_independent_layers.
     let b : G.Coloring Bool := SimpleGraph.Coloring.mk (fun _ => false) (by simp [G])
     refine ⟨⟨ULift.{u} Bool, G, b, 1, fun v => if v.down then 1 else 0⟩,
       ULift.up false, ULift.up true, ?_⟩
+    change (0 : ℕ) ≠ 1
     decide
 
 noncomputable def registration_1 :
@@ -88,9 +90,13 @@ noncomputable def registration_1 :
     owner := `D5.S3.Combinatorics.Graph.DemandColoring.BipartiteDemandColoring
     definition := none
     coordinates := #[0, 1, 2, 3, 4]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body",
-      "arg", "body", "arg", "body", "arg"], stateBinder := 8,
-      functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
+      "arg", "body", "arg", "body", "arg"]
+      stateBinder := 8
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[{ name := `relaxedAutoImplicit, value := .bool false }] }

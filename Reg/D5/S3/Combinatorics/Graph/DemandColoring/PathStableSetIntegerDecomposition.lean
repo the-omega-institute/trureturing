@@ -40,7 +40,8 @@ def registration : Registration arena (type_of% (@exists_admissible_layers)) := 
     sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ hbad
     dependence := ?_ }
   intro i
-  refine ⟨⟨2, 1, fun v => v.val⟩, 0, 1, ?_⟩
+  refine ⟨⟨2, 1, fun v => v.val⟩, (0 : Fin 2), (1 : Fin 2), ?_⟩
+  change (0 : ℕ) ≠ 1
   decide
 
 noncomputable def registration_1 :
@@ -69,8 +70,12 @@ noncomputable def registration_1 :
     owner := `D5.S3.Combinatorics.Graph.DemandColoring.PathStableSetIntegerDecomposition
     definition := none
     coordinates := #[0,1,2]
-    readouts := #[{ path := #["body","body","body","body","body","arg","body","arg","body","arg"],
-      stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body","body","body","body","body","arg","body","arg","body","arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[{ name := `relaxedAutoImplicit, value := .bool false }] }
@@ -94,8 +99,10 @@ def registration : Registration arena (type_of% (@lattice_mem_nat_smul_polytope_
   classical
   have hbad : ¬ arena.Law rejected := by
     intro h
-    have member : (fun _ : Fin 1 => ((0 : ℤ) : ℝ)) ∈ (0 : ℝ) • polytope 1 := by
-      exact ⟨0, ⟨by simp, by simp⟩, by simp⟩
+    have member : (fun _ : Fin 1 => ((0 : ℤ) : ℝ)) ∈ ((0 : ℕ) : ℝ) • polytope 1 := by
+      refine ⟨0, ⟨by simp, by simp⟩, ?_⟩
+      funext i
+      simp
     obtain ⟨W, _, equal⟩ := (h 1 0 (fun _ => 0)).mp member
     have impossible := congrFun equal 0
     simpa [rejected, realize, signature] using impossible
@@ -106,7 +113,7 @@ def registration : Registration arena (type_of% (@lattice_mem_nat_smul_polytope_
     sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ hbad
     dependence := ?_ }
   intro i
-  refine ⟨⟨2, 1, fun v => (v.val : ℤ)⟩, 0, 1, ?_⟩
+  refine ⟨⟨2, 1, fun v => (v.val : ℤ)⟩, (0 : Fin 2), (1 : Fin 2), ?_⟩
   norm_num [actual, realize, signature]
 
 noncomputable def registration_1 :
@@ -136,8 +143,12 @@ noncomputable def registration_1 :
     owner := `D5.S3.Combinatorics.Graph.DemandColoring.PathStableSetIntegerDecomposition
     definition := none
     coordinates := #[0,1,2]
-    readouts := #[{ path := #["body","body","body","arg","arg","body","arg","fn","arg","body"],
-      stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body","body","body","arg","arg","body","arg","fn","arg","body"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[{ name := `relaxedAutoImplicit, value := .bool false }] }
