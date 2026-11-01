@@ -38,7 +38,8 @@ of length at most one. -/
 def bellman (v : List ℕ → ℕ) (x : List ℕ) : ℕ :=
   if h : 1 < x.length then
     (Finset.range (x.length - 1)).inf'
-      (Finset.nonempty_range_iff.mpr (by omega)) (fun i => swapCost x i + v (merge x i))
+      (Finset.nonempty_range_iff.mpr (Nat.sub_ne_zero_of_lt h))
+      (fun i => swapCost x i + v (merge x i))
   else 0
 
 /-- The source's optimal dephasing recurrence (39). Length-many Bellman steps suffice
@@ -205,15 +206,14 @@ private theorem potential_step_eq (x : List ℕ) (i : ℕ) (h : IsGreedyStep x i
 private theorem greedy_exists (x : List ℕ) (h : 1 < x.length) :
     ∃ i, IsGreedyStep x i := by
   have hn : (Finset.range (x.length - 1)).Nonempty :=
-    Finset.nonempty_range_iff.mpr (by omega)
+    Finset.nonempty_range_iff.mpr (Nat.sub_ne_zero_of_lt h)
   obtain ⟨i, hi, he⟩ := Finset.exists_mem_eq_inf' hn
     (fun j => max (x[j]?.getD 0) (x[j + 1]?.getD 0))
   refine ⟨i, ?_, ?_⟩
-  · have := Finset.mem_range.mp hi
-    omega
+  · exact Nat.lt_sub_iff_add_lt.mp (Finset.mem_range.mp hi)
   · intro j hj
     rw [← he]
-    exact Finset.inf'_le _ (Finset.mem_range.mpr (by omega))
+    exact Finset.inf'_le _ (Finset.mem_range.mpr (Nat.lt_sub_iff_add_lt.mpr hj))
 
 private theorem potential_terminal (x : List ℕ) (h : x.length ≤ 1) :
     potential x = 0 := by
@@ -232,7 +232,7 @@ private theorem bellman_potential (n : ℕ) (x : List ℕ) (h : x.length ≤ n) 
     (((bellman^[n]) (fun _ => 0)) x : ℤ) = potential x := by
   induction n generalizing x with
   | zero =>
-    have hx : x = [] := List.length_eq_zero_iff.mp (by omega)
+    have hx : x = [] := List.length_eq_zero_iff.mp (Nat.eq_zero_of_le_zero h)
     subst x
     dsimp only [potential]
     simp
@@ -242,11 +242,11 @@ private theorem bellman_potential (n : ℕ) (x : List ℕ) (h : x.length ≤ n) 
     · dsimp only [bellman]
       simp only [dite_eq_left hx]
       have hn : (Finset.range (x.length - 1)).Nonempty :=
-        Finset.nonempty_range_iff.mpr (by omega)
+        Finset.nonempty_range_iff.mpr (Nat.sub_ne_zero_of_lt hx)
       apply le_antisymm
       · obtain ⟨i, hi⟩ := greedy_exists x hx
         have him : i ∈ Finset.range (x.length - 1) :=
-          Finset.mem_range.mpr (by have := hi.1; omega)
+          Finset.mem_range.mpr (Nat.lt_sub_iff_add_lt.mpr hi.1)
         have hm := Finset.inf'_le
           (fun j => swapCost x j + ((bellman^[n]) (fun _ => 0)) (merge x j)) him
         have hrec := ih (merge x i) (by have := merge_length x i hi.1; omega)
@@ -255,7 +255,7 @@ private theorem bellman_potential (n : ℕ) (x : List ℕ) (h : x.length ≤ n) 
         exact hcast
       · obtain ⟨i, hi, he⟩ := Finset.exists_mem_eq_inf' hn
           (fun j => swapCost x j + ((bellman^[n]) (fun _ => 0)) (merge x j))
-        have hiv : i + 1 < x.length := by have := Finset.mem_range.mp hi; omega
+        have hiv : i + 1 < x.length := Nat.lt_sub_iff_add_lt.mp (Finset.mem_range.mp hi)
         rw [he, Int.natCast_add, ih (merge x i) (by have := merge_length x i hiv; omega)]
         exact potential_step_le x i hiv
     · dsimp only [bellman]
