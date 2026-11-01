@@ -227,3 +227,75 @@ set_option pp.proofs false in
 #print axioms registration
 
 end Reg.D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.Overlap
+
+namespace Reg.D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.GhzOverlap
+/-- Read the squared modulus of the GHZ overlap. -/
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ z => Complex.normSq z) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ z => Complex.normSq z + 1) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {d : ℕ} (v : Fin d × Fin d × Fin d → ℂ),
+    R.readout () () (star (ghz d) ⬝ᵥ v) =
+      (1 / (d : ℝ)) * Complex.normSq (∑ i, v (i, i, i))
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h (d := 0) 0
+  norm_num [rejected, realize] at hh
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  norm_num [actual, realize]
+
+def source_registration : Registration arena (type_of% @ghz_overlap_normSq) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@ghz_overlap_normSq, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@ghz_overlap_normSq) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.GhzOverlap.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.GhzOverlap.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => Complex.normSq z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+set_option pp.proofs false in
+#print ghz_overlap_normSq
+#print axioms source_registration
+#print axioms registration
+
+end Reg.D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.GhzOverlap
