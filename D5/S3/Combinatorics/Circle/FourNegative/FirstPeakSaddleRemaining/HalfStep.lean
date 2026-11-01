@@ -9,7 +9,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.HalfK4Ce
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.HalfF4Certificates
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.HalfBothCertificates
 
-/-! SOURCE_ONLY_UNCOMPILED. The three charts cover dyadic KF>=4; they
+/-! The three charts cover dyadic KF>=4; they
 are not a claim that every real K,F with KF>=4 lies in one of the charts. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

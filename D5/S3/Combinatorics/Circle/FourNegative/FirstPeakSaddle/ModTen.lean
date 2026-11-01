@@ -7,7 +7,7 @@
    digest: Exact dyadic mod-ten phases shared by direct small-c2 and quarter-step. -/
 import Mathlib.Tactic
 
-/-! SOURCE_ONLY_UNCOMPILED. Shared private phase proofs, with no arithmetic
+/-! Shared private phase proofs, with no arithmetic
 feasibility premise and no bounded exponent enumeration. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

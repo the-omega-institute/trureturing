@@ -8,7 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Masks
 
-/-! SOURCE_ONLY_UNCOMPILED. Original nineteen margins: twelve paired seams
+/-! Original nineteen margins: twelve paired seams
 and seven capacity bounds. Every polynomial proof term is preserved. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -34,50 +34,6 @@ private def margin (t x y s r h v : ℤ) : Fin 19 → ℤ :=
 
 private def Margins (t x y s r h v : ℤ) : Prop :=
   ∀ i : Fin 19, 0 ≤ margin t x y s r h v i
-
-set_option linter.unusedVariables false in
-private theorem chart_K1_J1_t8 :
-    Margins 8 (4*1*1*8) (2*1*8) (16*1*1) (4*1*1) (0) 0 := by
-  intro i
-  fin_cases i
-  · -- old_first_lower
-    convert (show (0 : ℤ) ≤ 1768 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- old_first_upper
-    convert (show (0 : ℤ) ≤ 824 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_first_lower
-    convert (show (0 : ℤ) ≤ 942 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_first_upper
-    convert (show (0 : ℤ) ≤ 1650 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- old_second_lower
-    convert (show (0 : ℤ) ≤ 678 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- old_second_upper
-    convert (show (0 : ℤ) ≤ 382 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_second_lower
-    convert (show (0 : ℤ) ≤ 1998 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_second_upper
-    convert (show (0 : ℤ) ≤ 118 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- old_third_lower
-    convert (show (0 : ℤ) ≤ 936 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- old_third_upper
-    convert (show (0 : ℤ) ≤ 3424 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_third_lower
-    convert (show (0 : ℤ) ≤ 2024 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_third_upper
-    convert (show (0 : ℤ) ≤ 6696 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- s_positive
-    convert (show (0 : ℤ) ≤ 15 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- s_capacity
-    convert (show (0 : ℤ) ≤ 0 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- r_positive
-    convert (show (0 : ℤ) ≤ 3 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- r_capacity
-    convert (show (0 : ℤ) ≤ 12 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- v_positive
-    convert (show (0 : ℤ) ≤ 0 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- v_capacity
-    convert (show (0 : ℤ) ≤ 6 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- h_capacity
-    convert (show (0 : ℤ) ≤ 8 by norm_num) using 1 <;> dsimp [margin] <;> ring
 
 set_option linter.unusedVariables false in
 private theorem chart_K1_J1_0 (T : ℤ) (hT : 0≤T) :
@@ -256,50 +212,6 @@ private theorem chart_K1_J1_3 (T : ℤ) (hT : 0≤T) :
     convert (show (0 : ℤ) ≤ 248+20*T by positivity) using 1 <;> dsimp [margin] <;> ring
 
 set_option linter.unusedVariables false in
-private theorem chart_K1_J2_t8 :
-    Margins 8 (4*1*2*8) (2*1*8) (16*1*2) (4*1*2) (0) 0 := by
-  intro i
-  fin_cases i
-  · -- old_first_lower
-    convert (show (0 : ℤ) ≤ 3528 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- old_first_upper
-    convert (show (0 : ℤ) ≤ 1656 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_first_lower
-    convert (show (0 : ℤ) ≤ 1870 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_first_upper
-    convert (show (0 : ℤ) ≤ 3314 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- old_second_lower
-    convert (show (0 : ℤ) ≤ 1310 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- old_second_upper
-    convert (show (0 : ℤ) ≤ 774 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_second_lower
-    convert (show (0 : ℤ) ≤ 3910 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_second_upper
-    convert (show (0 : ℤ) ≤ 254 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- old_third_lower
-    convert (show (0 : ℤ) ≤ 2984 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- old_third_upper
-    convert (show (0 : ℤ) ≤ 5728 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_third_lower
-    convert (show (0 : ℤ) ≤ 6120 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_third_upper
-    convert (show (0 : ℤ) ≤ 11304 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- s_positive
-    convert (show (0 : ℤ) ≤ 31 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- s_capacity
-    convert (show (0 : ℤ) ≤ 0 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- r_positive
-    convert (show (0 : ℤ) ≤ 7 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- r_capacity
-    convert (show (0 : ℤ) ≤ 24 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- v_positive
-    convert (show (0 : ℤ) ≤ 0 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- v_capacity
-    convert (show (0 : ℤ) ≤ 6 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- h_capacity
-    convert (show (0 : ℤ) ≤ 8 by norm_num) using 1 <;> dsimp [margin] <;> ring
-
-set_option linter.unusedVariables false in
 private theorem chart_K1_J2_0 (T : ℤ) (hT : 0≤T) :
     Margins (16+10*T) (4*1*2*(16+10*T)) (2*1*(16+10*T)) (1*2*(2*(16+10*T)-4)) (2) (1) (2+T) := by
   intro i
@@ -474,50 +386,6 @@ private theorem chart_K1_J2_3 (T : ℤ) (hT : 0≤T) :
     convert (show (0 : ℤ) ≤ 102+8*T by positivity) using 1 <;> dsimp [margin] <;> ring
   · -- h_capacity
     convert (show (0 : ℤ) ≤ 248+20*T by positivity) using 1 <;> dsimp [margin] <;> ring
-
-set_option linter.unusedVariables false in
-private theorem chart_K2_J1_t8 :
-    Margins 8 (4*2*1*8) (2*2*8) (16*2*1) (4*2*1) (0) 0 := by
-  intro i
-  fin_cases i
-  · -- old_first_lower
-    convert (show (0 : ℤ) ≤ 6600 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- old_first_upper
-    convert (show (0 : ℤ) ≤ 3704 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_first_lower
-    convert (show (0 : ℤ) ≤ 2894 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_first_upper
-    convert (show (0 : ℤ) ≤ 7410 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- old_second_lower
-    convert (show (0 : ℤ) ≤ 30 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- old_second_upper
-    convert (show (0 : ℤ) ≤ 2054 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_second_lower
-    convert (show (0 : ℤ) ≤ 2630 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_second_upper
-    convert (show (0 : ℤ) ≤ 1534 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- old_third_lower
-    convert (show (0 : ℤ) ≤ 1800 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- old_third_upper
-    convert (show (0 : ℤ) ≤ 15104 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_third_lower
-    convert (show (0 : ℤ) ≤ 3912 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- new_third_upper
-    convert (show (0 : ℤ) ≤ 29896 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- s_positive
-    convert (show (0 : ℤ) ≤ 31 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- s_capacity
-    convert (show (0 : ℤ) ≤ 0 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- r_positive
-    convert (show (0 : ℤ) ≤ 7 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- r_capacity
-    convert (show (0 : ℤ) ≤ 24 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- v_positive
-    convert (show (0 : ℤ) ≤ 0 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- v_capacity
-    convert (show (0 : ℤ) ≤ 6 by norm_num) using 1 <;> dsimp [margin] <;> ring
-  · -- h_capacity
-    convert (show (0 : ℤ) ≤ 24 by norm_num) using 1 <;> dsimp [margin] <;> ring
 
 set_option linter.unusedVariables false in
 private theorem chart_K2_J1_0 (T : ℤ) (hT : 0≤T) :

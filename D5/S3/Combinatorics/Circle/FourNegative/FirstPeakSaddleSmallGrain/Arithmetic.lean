@@ -8,7 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleSmallGrain.Certificates
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddle.ModTen
 
-/-! SOURCE_ONLY_UNCOMPILED. No fixed-q, grain bound or anchor is imposed.
+/-! No fixed-q, grain bound or anchor is imposed.
 The exceptional all-one mask and the even-s/r=1-or-2 submask are retained. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -16,9 +16,9 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleSmallGrain
 open private half_power from D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
 open private phase_cover from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddle.ModTen
 open private
-  margin Margins chart_K1_J1_t8 chart_K1_J1_0 chart_K1_J1_1
-  chart_K1_J1_2 chart_K1_J1_3 chart_K1_J2_t8 chart_K1_J2_0 chart_K1_J2_1
-  chart_K1_J2_2 chart_K1_J2_3 chart_K2_J1_t8 chart_K2_J1_0 chart_K2_J1_1
+  margin Margins chart_K1_J1_0 chart_K1_J1_1
+  chart_K1_J1_2 chart_K1_J1_3 chart_K1_J2_0 chart_K1_J2_1
+  chart_K1_J2_2 chart_K1_J2_3 chart_K2_J1_0 chart_K2_J1_1
   chart_K2_J1_2 chart_K2_J1_3
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleSmallGrain.Certificates
 
@@ -90,7 +90,47 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
       let h : ℕ := 0
       let v : ℕ := 0
       have hm : Margins (2^d) (2^a) (2^b) s r h v := by
-        have hc := chart_K1_J1_t8
+        have hc : Margins 8 (4*1*1*8) (2*1*8) (16*1*1) (4*1*1) (0) 0 := by
+          intro i
+          fin_cases i
+          · -- old_first_lower
+            convert (show (0 : ℤ) ≤ 1768 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- old_first_upper
+            convert (show (0 : ℤ) ≤ 824 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_first_lower
+            convert (show (0 : ℤ) ≤ 942 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_first_upper
+            convert (show (0 : ℤ) ≤ 1650 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- old_second_lower
+            convert (show (0 : ℤ) ≤ 678 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- old_second_upper
+            convert (show (0 : ℤ) ≤ 382 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_second_lower
+            convert (show (0 : ℤ) ≤ 1998 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_second_upper
+            convert (show (0 : ℤ) ≤ 118 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- old_third_lower
+            convert (show (0 : ℤ) ≤ 936 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- old_third_upper
+            convert (show (0 : ℤ) ≤ 3424 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_third_lower
+            convert (show (0 : ℤ) ≤ 2024 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_third_upper
+            convert (show (0 : ℤ) ≤ 6696 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- s_positive
+            convert (show (0 : ℤ) ≤ 15 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- s_capacity
+            convert (show (0 : ℤ) ≤ 0 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- r_positive
+            convert (show (0 : ℤ) ≤ 3 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- r_capacity
+            convert (show (0 : ℤ) ≤ 12 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- v_positive
+            convert (show (0 : ℤ) ≤ 0 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- v_capacity
+            convert (show (0 : ℤ) ≤ 6 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- h_capacity
+            convert (show (0 : ℤ) ≤ 8 by norm_num) using 1 <;> dsimp [margin] <;> ring
         have hxi : (2:ℤ)^a = 4*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 2*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 8 := by exact_mod_cast ht
@@ -189,7 +229,47 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
       let h : ℕ := 0
       let v : ℕ := 0
       have hm : Margins (2^d) (2^a) (2^b) s r h v := by
-        have hc := chart_K1_J2_t8
+        have hc : Margins 8 (4*1*2*8) (2*1*8) (16*1*2) (4*1*2) (0) 0 := by
+          intro i
+          fin_cases i
+          · -- old_first_lower
+            convert (show (0 : ℤ) ≤ 3528 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- old_first_upper
+            convert (show (0 : ℤ) ≤ 1656 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_first_lower
+            convert (show (0 : ℤ) ≤ 1870 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_first_upper
+            convert (show (0 : ℤ) ≤ 3314 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- old_second_lower
+            convert (show (0 : ℤ) ≤ 1310 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- old_second_upper
+            convert (show (0 : ℤ) ≤ 774 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_second_lower
+            convert (show (0 : ℤ) ≤ 3910 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_second_upper
+            convert (show (0 : ℤ) ≤ 254 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- old_third_lower
+            convert (show (0 : ℤ) ≤ 2984 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- old_third_upper
+            convert (show (0 : ℤ) ≤ 5728 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_third_lower
+            convert (show (0 : ℤ) ≤ 6120 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_third_upper
+            convert (show (0 : ℤ) ≤ 11304 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- s_positive
+            convert (show (0 : ℤ) ≤ 31 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- s_capacity
+            convert (show (0 : ℤ) ≤ 0 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- r_positive
+            convert (show (0 : ℤ) ≤ 7 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- r_capacity
+            convert (show (0 : ℤ) ≤ 24 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- v_positive
+            convert (show (0 : ℤ) ≤ 0 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- v_capacity
+            convert (show (0 : ℤ) ≤ 6 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- h_capacity
+            convert (show (0 : ℤ) ≤ 8 by norm_num) using 1 <;> dsimp [margin] <;> ring
         have hxi : (2:ℤ)^a = 8*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 2*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 8 := by exact_mod_cast ht
@@ -288,7 +368,47 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
       let h : ℕ := 0
       let v : ℕ := 0
       have hm : Margins (2^d) (2^a) (2^b) s r h v := by
-        have hc := chart_K2_J1_t8
+        have hc : Margins 8 (4*2*1*8) (2*2*8) (16*2*1) (4*2*1) (0) 0 := by
+          intro i
+          fin_cases i
+          · -- old_first_lower
+            convert (show (0 : ℤ) ≤ 6600 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- old_first_upper
+            convert (show (0 : ℤ) ≤ 3704 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_first_lower
+            convert (show (0 : ℤ) ≤ 2894 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_first_upper
+            convert (show (0 : ℤ) ≤ 7410 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- old_second_lower
+            convert (show (0 : ℤ) ≤ 30 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- old_second_upper
+            convert (show (0 : ℤ) ≤ 2054 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_second_lower
+            convert (show (0 : ℤ) ≤ 2630 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_second_upper
+            convert (show (0 : ℤ) ≤ 1534 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- old_third_lower
+            convert (show (0 : ℤ) ≤ 1800 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- old_third_upper
+            convert (show (0 : ℤ) ≤ 15104 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_third_lower
+            convert (show (0 : ℤ) ≤ 3912 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- new_third_upper
+            convert (show (0 : ℤ) ≤ 29896 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- s_positive
+            convert (show (0 : ℤ) ≤ 31 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- s_capacity
+            convert (show (0 : ℤ) ≤ 0 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- r_positive
+            convert (show (0 : ℤ) ≤ 7 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- r_capacity
+            convert (show (0 : ℤ) ≤ 24 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- v_positive
+            convert (show (0 : ℤ) ≤ 0 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- v_capacity
+            convert (show (0 : ℤ) ≤ 6 by norm_num) using 1 <;> dsimp [margin] <;> ring
+          · -- h_capacity
+            convert (show (0 : ℤ) ≤ 24 by norm_num) using 1 <;> dsimp [margin] <;> ring
         have hxi : (2:ℤ)^a = 8*(2:ℤ)^d := by exact_mod_cast hx
         have hyi : (2:ℤ)^b = 4*(2:ℤ)^d := by exact_mod_cast hy
         have hti : (2:ℤ)^d = 8 := by exact_mod_cast ht

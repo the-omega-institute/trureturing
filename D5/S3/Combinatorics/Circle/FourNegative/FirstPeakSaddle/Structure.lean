@@ -8,7 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 import Mathlib.Data.Nat.Bitwise
 
-/-! SOURCE_ONLY_UNCOMPILED. This private interface contains actual natural masks.
+/-! This private interface contains actual natural masks.
 Native supplies arithmetic existence in six exhaustive regions.
 Field order is s,r,h,v. Gate arguments are t,z,x,y,s,r,h,v, all integers. -/
 set_option autoImplicit false

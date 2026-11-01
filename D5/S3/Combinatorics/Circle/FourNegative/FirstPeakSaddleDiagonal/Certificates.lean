@@ -11,8 +11,8 @@ import Mathlib.Data.Nat.Bitwise
 import Mathlib.Data.Nat.Prime.Basic
 import Mathlib.Tactic
 
-/-! SOURCE_ONLY_UNCOMPILED. Native ring and positivity terms relocated verbatim
-from the completed diagonal preparation. Consumed by GeneralArithmetic. -/
+/-! Native ring and positivity proofs of the diagonal margins.
+The strict and equality charts are consumed by GeneralArithmetic. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 8000000

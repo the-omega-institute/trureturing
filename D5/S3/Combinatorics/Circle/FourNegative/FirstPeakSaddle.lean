@@ -8,10 +8,10 @@
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddle.Native
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddle.Physical
 
-/-! SOURCE_ONLY_UNCOMPILED. Complete attempted theorem for all a>b>d>c>=2.
+/-! Complete theorem for all a>b>d>c>=2.
 The six exhaustive native arithmetic branches are consumed by the complete
 physical constructor. No arithmetic choice or gate is a public hypothesis.
-This source has not been elaborated; no kernel or official claim is made. -/
+-/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddle

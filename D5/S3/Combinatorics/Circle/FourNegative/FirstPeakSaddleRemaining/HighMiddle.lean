@@ -7,7 +7,7 @@
    digest: High-middle exact margins, complete residue selection and native dyadic masks. -/
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.Arithmetic
 
-/-! SOURCE_ONLY_UNCOMPILED. Each sparse certificate is factored by Horner's
+/-! Each sparse certificate is factored by Horner's
 identity. `ring` must prove its equality to the original source margin;
 `positivity` must prove its sign for unbounded nonnegative parameters.
 No JSON, generator exit status or sampled parameter bound is a Lean premise. -/

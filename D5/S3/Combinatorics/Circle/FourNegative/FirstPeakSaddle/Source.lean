@@ -8,7 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddle.Structure
 import D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
 
-/-! SOURCE_ONLY_UNCOMPILED. All rows, offsets and lengths are those of the existing
+/-! All rows, offsets and lengths are those of the existing
 PacketNormalForm.Source, whose chain_values consumes MaxPlusTwo.SourceTable.source_table.
 We retain that concrete source, rather than posit a second realization.
 For x=2^a,y=2^b,z=2^c,t=2^d,N=xyzt-1,Q=2N+1, the recurrences below are

@@ -12,7 +12,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.HalfStep
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.QuarterStep
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleSmallGrain.Arithmetic
 
-/-! SOURCE_ONLY_UNCOMPILED. Every branch constructs actual natural masks.
+/-! Every branch constructs actual natural masks.
 The small-c2 branch uses its direct twelve gates and its separate submask;
 it has no fixed-q, grain-bound or anchor obligation. The other five branches
 use the fixed-q rectangle construction, with its general z>=4 implication.

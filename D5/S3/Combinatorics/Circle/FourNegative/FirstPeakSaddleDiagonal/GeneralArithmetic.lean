@@ -8,7 +8,7 @@
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.CyclicArithmetic
 
-/-! SOURCE_ONLY_UNCOMPILED. All strict/equality diagonal selections are native.
+/-! All strict/equality diagonal selections are native.
 rectangle_to_twelve is proved here for every z>=4; its proof uses positive
 factored slacks and no restriction on the dyadic grain. The final consumer
 converts these exact gate coordinates to the general physical JointChoice. -/

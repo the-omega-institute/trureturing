@@ -10,9 +10,9 @@ import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Masks
 import D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
-/-! SOURCE_ONLY_UNCOMPILED. Generic physical construction for every strict saddle.
+/-! Generic physical construction for every strict saddle.
 All new declarations are private and occur on the path to actualSource_of_nativeChoice.
-No arithmetic selection, public endpoint, build or acceptance is supplied by this file. -/
+-/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddle
