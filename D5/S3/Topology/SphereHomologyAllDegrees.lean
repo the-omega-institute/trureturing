@@ -7,6 +7,8 @@
    digest: Actual sphere singular homology in every positive degree over torsion-free coefficients. -/
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Sphere
 import Mathlib.Analysis.Normed.Module.Connected
+import Mathlib.Algebra.Category.ModuleCat.Abelian
+import Mathlib.Algebra.Category.ModuleCat.Colimits
 import Mathlib.Algebra.Module.Torsion.Free
 import Mathlib.Tactic
 
