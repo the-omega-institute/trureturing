@@ -4,16 +4,24 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A negative-norm charge collapses the literal full-state actual C2 space.
--/
+   digest: A negative-norm charge collapses the literal full-state actual C2 space. -/
 
 import D5.S3.VertexAlgebra.Lattice.NormFourFixedPeirce
 import D5.S3.VertexAlgebra.Lattice.NormFourVacuumC2Algebra
 import Batteries.Tactic.OpenPrivate
 
-/-! The literal full-state C2 space collapses for any negative-norm charge.
-The proof uses unrestricted higher negative modes, whole-span left -1
-stability, the actual ground coefficient and actual creation. -/
+/-!
+proof_shape: negative_norm_c2_eq_top: content; consumed private helpers are
+  higher-mode induction, commutator span stability, ground-pair recovery and creation.
+escape_witness: negative_norm_c2_eq_top; the negative-norm ground pair puts the
+  vacuum in C2, and actual creation then witnesses every carrier state.
+admission_basis: escape-witness
+escape-audit: unfinished; no source-faithful enrolled Reg template;
+  issue https://github.com/the-omega-institute/trureturing/issues/25088
+Direct frozen dependencies:
+  NormFourFixedPeirce (sha256:1e1478289a565d96c00677349de88d3082918b4a2104c9e71e77cf6025b7b499),
+  NormFourVacuumC2Algebra (sha256:a46189d9f94c9e71d9ee224bf6f01b25aecd8b9105d8bd3654ad796c53376852)
+-/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
