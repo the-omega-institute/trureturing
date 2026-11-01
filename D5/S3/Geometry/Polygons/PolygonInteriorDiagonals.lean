@@ -102,7 +102,7 @@ private theorem common_level_only_two [FiniteDimensional ℝ E] (hdim : finrank 
   have := congrArg (fun g : E →ᵃ[ℝ] ℝ => g x) heq
   simpa [hzero] using this
 
-private theorem maximal_endpoints {K : Set E} {a b z : E}
+theorem maximal_endpoints {K : Set E} {a b z : E}
     (ha : a ∈ K) (hb : b ∈ K) (hz : z ∈ openSegment ℝ a b)
     (f : E →L[ℝ] ℝ) (hmax : ∀ x ∈ K, f x ≤ f z) :
     f a = f z ∧ f b = f z := by
