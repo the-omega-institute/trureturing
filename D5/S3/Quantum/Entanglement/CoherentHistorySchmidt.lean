@@ -54,7 +54,7 @@ private theorem complement_iff {a b c : Multiset α} (hb : b ≤ a) :
     rw [h, add_comm, Multiset.sub_add_cancel hb]
 
 omit [Fintype α] in
-private theorem legal_iff {a : Multiset α} {t s : ℕ} (u : Word α t) (v : Word α s) :
+theorem legal_iff {a : Multiset α} {t s : ℕ} (u : Word α t) (v : Word α s) :
     occupation (Fin.append u v) = a ↔
       ∃ b : Boundary a t, occupation u = b.val ∧ occupation v = a - b.val := by
   rw [occupation_append]

@@ -1,0 +1,15 @@
+For any choice $G_n\in\mathcal G(n,\ell_n)$, the following are equivalent:
+
+1. $E(G_n)-E^\ast(n,\ell_n)=o(n^{-1})$;
+2. $nE(G_n)\to F_4(\alpha)$;
+3. After labelling the hubs whenever they exist, $G_n$ is eventually a two-layer graph with exactly four hubs, and its profile satisfies
+   $$
+   x_{[4],n}\to\alpha-2,
+   \qquad
+   x_{[4]\setminus\{i\},n}\to\frac{3-\alpha}{4}\quad(1\le i\le4),
+   $$
+   while the total mass of all one- and two-neighborhood types tends to zero. Equivalently, $G_n$ is eventually a two-layer graph with exactly four hubs, the total mass of all one- and two-neighborhood types tends to zero, and
+   $$
+   \frac{D_{i,n}}n\to\frac{1+\alpha}{4}\quad(1\le i\le4).
+   $$
+

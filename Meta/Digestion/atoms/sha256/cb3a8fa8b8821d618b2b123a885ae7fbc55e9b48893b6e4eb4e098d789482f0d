@@ -1,0 +1,7 @@
+**Definition 3.1 (joint finite-horizon cost).** Let $\mathcal D_N$ be the
+subset of $\{0,1\}$ consisting of the even/even indicator $d=0$ and the
+odd/odd indicator $d=1$ that attain $R_{2N}^*$; it contains one or both
+indicators according as the two values in Lemma 2.2 are unequal or equal.
+For $n\ge0$, let $K_n$ be the least expected actual paid count among lawful
+fixed-horizon policies whose terminal risk is $R_n^*$.
+

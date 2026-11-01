@@ -1,0 +1,5 @@
+真正最新且与本题直接相关的两项进展是：
+
+1. [《真实切面恢复》](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACTUAL_CUT_REINSTATEMENT.md)新增 §§18--20：指定实际一阶来源的近似 Walsh $\ell^1$ 范数可指数大，同时整个允许的一阶类仍有两条常量探测词的合法取得方法；已知目标公式还有 $O(H)$ 计数器求值。**一个谱表示的系数范数，不等于所有电路或实际取得协议的成本。**
+2. [《统一联合律桥》](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_UNIFIED_JOINT_LAW_BRIDGE.md)新增 §2：给定完整实际过去的下一探针校准律，才能由塔式递归推出条件乘积律。相同单次边缘不提供独立乘法。它还区分完整概率律的可识别性与一份有限记录对隐藏来源的零误差识别。
+

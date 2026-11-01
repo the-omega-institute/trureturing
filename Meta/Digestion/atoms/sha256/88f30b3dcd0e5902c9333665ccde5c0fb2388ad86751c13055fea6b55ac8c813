@@ -1,0 +1,42 @@
+**假设与定义 B-42.1（完整实际域及同族计数）。** 固定假设B-37.1的任意一个标号严格凸 $n$ 边形，$n\ge20$，六条两两兼容的实际耳 $D$ 按 $E(K_4)$ 标号。四个任意指定的实际剖分满足完整耳集等号 $\operatorname{Ear}(T_a)=S_a$。原族 $\mathcal F$ 包含这四个见证，且任意两个不同成员的完整实际耳集相交。兼容允许共端点，仅禁止内部交叉。$M_1,M_2,M_3$ 是三个互不相交的匹配对，$Q_i=D\setminus M_i$；$\Gamma(H)$ 始终是精确 $D$ 迹为 $H$ 的整个实际完成纤维，所有 $D$ 外耳、不同完成及其重数均保留。
+
+采用第33节的 $c_r=C_{n-r-2}$、$w_r$、通用部分 $\mathcal U$ 及阈值 $L$，写
+
+$$
+\begin{gathered}
+W=w_2=c_2-4c_3+6c_4-4c_5+c_6,\quad
+w_3=c_3-3c_4+3c_5-c_6,\quad w_4=c_4-2c_5+c_6,\\
+u_0=|\mathcal U|,\quad L=u_0+W+2w_4+6w_3,\quad
+h=W-w_4>0,\quad \delta=1-w_4/W\in(0,1),\\
+\mathcal A_i=\mathcal F\cap\Gamma(M_i),\quad a_i=|\mathcal A_i|,\quad
+A=\sum_i a_i,\quad e=A-W,\quad
+b_i=|\mathcal F\cap\Gamma(Q_i)|,\quad u=|\mathcal F\cap\mathcal U|.
+\end{gathered}
+\tag{42.1}
+$$
+
+对于 $\{i,j,k\}=\{1,2,3\}$、$i<j$，沿用(37.13)的准确分组
+
+$$
+\begin{gathered}
+t_k=\sum_{x\in M_k}\bigl(|\mathcal F\cap\Gamma(M_i\cup\{x\})|
+ +|\mathcal F\cap\Gamma(M_j\cup(M_k\setminus\{x\}))|\bigr),\\
+s=W+2w_3+w_4,\quad \eta=u_0-u,\quad \ell_i=2w_3-t_i,\\
+z_{ij}=a_i+a_j+b_i+b_j+t_k,\quad d_{ij}=s-z_{ij},\quad
+J_{\rm loss}=2\eta+\sum_i\ell_i+\sum_{i<j}d_{ij}.
+\end{gathered}
+\tag{42.2}
+$$
+
+定义共同保护载体与三个对专属载体为
+
+$$
+\begin{aligned}
+E_0&=\{g\in\mathcal E_n\setminus D:g\text{ 兼容全部 }D\},\\
+E_i&=\{g\in\mathcal E_n\setminus D:g\text{ 兼容 }D\setminus M_i,
+\ g\text{ 交叉 }M_i\text{ 的至少一耳}\}.
+\end{aligned}
+$$
+
+实际有限简单三部图 $H_{\mathcal F}$ 的顶点集是 $\mathcal A_1\dot\cup\mathcal A_2\dot\cup\mathcal A_3$。不同侧两个实际剖分连边，当且仅当它们在 $E_0$ 中没有共同耳；同侧不连边。记其最小顶点覆盖数为 $\tau$、最大匹配数为 $\nu$。这里 $\tau$ 专指图不变量，不表示第33节的迹映射。原族不要求对称、饱和、包含极大或具有指定完整双耳／三耳成员；三核活跃时仍保留原剩余条件 $A>W$ 的全部族。
+

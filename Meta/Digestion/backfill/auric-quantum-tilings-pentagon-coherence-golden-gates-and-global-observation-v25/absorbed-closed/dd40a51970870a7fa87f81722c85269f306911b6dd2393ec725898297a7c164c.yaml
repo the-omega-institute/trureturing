@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:dd40a51970870a7fa87f81722c85269f306911b6dd2393ec725898297a7c164c
+  normalized_sha256: sha256:dd40a51970870a7fa87f81722c85269f306911b6dd2393ec725898297a7c164c
+cas_ref: sha256:dd40a51970870a7fa87f81722c85269f306911b6dd2393ec725898297a7c164c
+coverage_gids:
+  - gid: D5/S3/QuantumStates/GNSCompatibleStateExtension.normalized_gns
+    target_statement_id: sha256:78e39c601930a0439d9c501f6c0ca12ebf340d9b55332b095598751d415ba912
+receipts:
+  unresolved_subitems: []

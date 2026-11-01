@@ -1,0 +1,73 @@
+**Lemma 2.1 (A residual identity).** Let $s\ge2$, let $q\in[s-1,s]$, and let $x\in\mathcal P_s(q-1)$. Set
+
+$$
+d_T=s-|T|,\qquad \delta=\sum_Tx_Td_T=s-q.
+$$
+
+For each $i$ define
+
+$$
+w_i=\sum_{T\ni i}|T|^2x_T.
+$$
+
+Then
+
+$$
+w_i=(s-1)^2y_i+(2s-1)(q-s+1)+R_i,
+$$
+
+where
+
+$$
+R_i=(2s-1)\sum_{T\not\ni i}x_T(d_T-1)
++\sum_{T\ni i}x_Td_T(d_T-1)\ge0.
+$$
+
+Consequently,
+
+$$
+J_s(x)\ge
+\frac{s^2\bigl((3s^2-3s+1)q-s(s-1)(2s-1)\bigr)}{2q^2}.
+$$
+
+Equality holds exactly when
+
+$$
+x_{[s]}=q-s+1,
+\qquad
+x_{[s]\setminus\{i\}}=\frac{s-q}{s}\quad(1\le i\le s),
+$$
+
+and every other type has zero mass.
+
+**Proof.** For an incidence $i\in T$, the identity
+
+$$
+|T|^2=(s-1)^2+(2s-1)(1-d_T)+d_T(d_T-1)
+$$
+
+holds. Summing over $T\ni i$ and adding and subtracting the global sum $(2s-1)\sum_Tx_T(1-d_T)=(2s-1)(q-s+1)$ gives the displayed $R_i$. If $i\notin T$, then $d_T\ge1$; if $i\in T$, then $d_T\ge0$, so every summand in $R_i$ is nonnegative.
+
+Since $2J_s=\sum_iw_i/y_i^2$, we obtain
+
+$$
+2J_s\ge (s-1)^2\sum_i\frac1{y_i}
+ +(2s-1)(q-s+1)\sum_i\frac1{y_i^2}.
+$$
+
+The coefficient of the second sum is nonnegative. Strict convexity of $t\mapsto t^{-1}$ and $t\mapsto t^{-2}$, together with $\sum_i y_i=q$, gives
+
+$$
+\sum_i y_i^{-1}\ge\frac{s^2}{q},
+\qquad
+\sum_i y_i^{-2}\ge\frac{s^3}{q^2}.
+$$
+
+Substitution gives the bound. Equality forces all $y_i=q/s$ and every $R_i=0$. A positive type of size at most $s-2$ would contribute a positive term to $R_i$ for some $i\in T$, so only sizes $s-1$ and $s$ can occur. The common mass and the equal marginals then force the displayed values. Direct substitution gives equality. ∎
+
+For $s=4$ write
+
+$$
+F_4(a)=\frac{8(37a-47)}{(a+1)^2}.
+$$
+

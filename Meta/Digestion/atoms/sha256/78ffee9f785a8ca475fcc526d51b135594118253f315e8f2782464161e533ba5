@@ -1,0 +1,25 @@
+## 五、真正更接近 $P/NP$ 的观察者：它只需保留一条完成路径
+
+项目新的最小预测核心理论，已经开始把“预测全部未来”与“足以安全行动”分开。
+
+例如，在有限配置模型中，设配置为 $C\subseteq E$，可执行动作是合法新增一个事件，记
+
+$$
+\operatorname{En}(C)
+=
+\{e\notin C:C\cup\{e\}\text{ 合法}\}.
+$$
+
+若当前读出为 $r(C)$，项目给出一种取得判据：每个包含多个配置的读出纤维，都必须有共同启用事件，
+
+$$
+\bigcap_{C\in r^{-1}(q)}
+\operatorname{En}(C)\ne\varnothing.
+$$
+
+这样观察者就能在不知道准确配置时，选择一个对所有当前可能配置都合法的动作，并用有限增长最终取得配置。这个判据仍将读出本身的安装、计算与访问成本留作独立问题。[来源：最小预测核心桥 §9–10](https://github.com/the-omega-institute/trureturing/blob/388e1086d5de6323c9dd6913d26e72fd91ddfdb6/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_KERNEL_MINIMAL_PREDICTIVE_CORE_BRIDGE.md)
+
+对于 SAT，可以进一步放宽：**我们只需要找到某条正确完成路径，不需要恢复全部世界。**
+
+<a id="definition-2"></a>
+

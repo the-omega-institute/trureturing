@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ac52a7cb466aa36c93b94f3fcdcaf6dc81b2580fd739d27da48d388024d0fccb
+  normalized_sha256: sha256:ac52a7cb466aa36c93b94f3fcdcaf6dc81b2580fd739d27da48d388024d0fccb
+cas_ref: sha256:ac52a7cb466aa36c93b94f3fcdcaf6dc81b2580fd739d27da48d388024d0fccb
+coverage_gids:
+  - gid: D5/S3/Quantum/Magic/ParitySectorMoments.parity_clifford_label_reduction
+    target_statement_id: sha256:bbb60c6a84afce95c0653a690e247fdea148f88bfa4c02df049428ddcf4a1b38
+receipts:
+  unresolved_subitems: []

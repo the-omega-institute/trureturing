@@ -37,45 +37,8 @@ theorem staircase_lower (n : ℕ) (hn : 3 ≤ n)
     rw [Fin.prod_univ_castSucc]
     simp only [responseBit,addX,Fin.snoc_castSucc,Fin.snoc_last,Bool.false_eq_true,ite_false]
     rfl
-  have settingWeight_eq_sum {n : ℕ} (x : Fin n → Bool) :
-      (fun x => hammingDist x (fun _ => false)) x = ∑ i, (x i).toNat := by
-    classical
-    dsimp only
-    unfold hammingDist
-    rw [Finset.card_filter]
-    apply Finset.sum_congr rfl
-    intro i hi
-    cases x i <;> simp
-  have settingWeight_snoc {d : ℕ} (x : Fin d → Bool) (b : Bool) :
-      (fun x => hammingDist x (fun _ => false)) (Fin.snoc x b) = (fun x => hammingDist x (fun _ => false)) x + b.toNat := by
-    rw [settingWeight_eq_sum,Fin.sum_univ_castSucc,settingWeight_eq_sum]
-    simp
   have addX_target {d : ℕ} (x : Setting d) : target (addX x) = target x := by
     simp [target,addX,settingWeight_snoc]
-  have bit_cases (z : ZMod 2) : z = 0 ∨ z = 1 := by
-    have hv : z.val < 2 := ZMod.val_lt z
-    have hz : z.val = 0 ∨ z.val = 1 := by omega
-    rcases hz with hz | hz
-    · left
-      rw [← ZMod.natCast_zmod_val z,hz]
-      simp
-    · right
-      rw [← ZMod.natCast_zmod_val z,hz]
-      simp
-  have bitSign_add (a b : ZMod 2) : bitSign (a + b) = bitSign a * bitSign b := by
-    rcases bit_cases a with rfl | rfl <;> rcases bit_cases b with rfl | rfl <;>
-      simp [bitSign,boolSign,show (1 : ZMod 2) + 1 = 0 from by decide]
-  have bitSign_boolBit (b : Bool) : bitSign ((fun b : Bool => (b.toNat : ZMod 2)) b) = boolSign b := by
-    cases b <;> simp [bitSign,boolSign]
-  have boolBit_bitBool (z : ZMod 2) : (fun b : Bool => (b.toNat : ZMod 2)) ((fun z : ZMod 2 => decide (z = 1)) z) = z :=
-    by rcases bit_cases z with rfl | rfl <;> simp []
-  have prod_boolSign {n : ℕ} (x : Fin n → Bool) (I : Finset (Fin n)) :
-      (∏ i ∈ I, boolSign (x i)) = bitSign (∑ i ∈ I, (fun b : Bool => (b.toNat : ZMod 2)) (x i)) := by
-    classical
-    induction I using Finset.induction_on with
-    | empty => simp [bitSign,boolSign]
-    | @insert i I hi ih =>
-        rw [Finset.prod_insert hi, Finset.sum_insert hi, bitSign_add, bitSign_boolBit, ih]
   have full_response_signed_character {n : ℕ} (lambda : Strategy n) (x : Setting n) :
       response lambda x Finset.univ =
         bitSign (tableParity lambda + ∑ i, tableGamma lambda i * (fun b : Bool => (b.toNat : ZMod 2)) (x.1 i)) := by
@@ -172,9 +135,6 @@ theorem staircase_lower (n : ℕ) (hn : 3 ≤ n)
       (fun x => hammingDist x (fun _ => false)) (evenExtension x) =
         (fun x => hammingDist x (fun _ => false)) (fun i => (fun z : ZMod 2 => decide (z = 1)) (x i)) + ((fun z : ZMod 2 => decide (z = 1)) (∑ i, x i)).toNat := by
     exact settingWeight_snoc _ _
-  have parity_sum {n : ℕ} (x : Fin n → Bool) :
-      ∑ i, (fun b : Bool => (b.toNat : ZMod 2)) (x i) = ((fun x => hammingDist x (fun _ => false)) x : ZMod 2) := by
-    rw [settingWeight_eq_sum, Nat.cast_sum]
   have bitSign_natCast (w : ℕ) :
       bitSign (w : ZMod 2) = boolSign (decide (w % 2 = 1)) := by
     simp [bitSign,ZMod.natCast_eq_one_iff_odd,Nat.odd_iff]

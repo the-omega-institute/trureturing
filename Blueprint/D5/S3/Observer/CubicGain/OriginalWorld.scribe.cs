@@ -16,6 +16,13 @@ internal sealed class OriginalWorldDocument : IScribeDocumentDefinition
         Paragraph(Text("For encoded_response the sole parameter is C:Coordinates; StrictParent C is not required. Its equality is originalResponse(encodeWorld(parentWorld C))=response C, with both sides the ordered pair of actual fifth and sixth responses. The encoding preserves the entire polynomial, so this identity does not fit a new gain to either reading. The regular analytic chart applies both statements to C=(t b,b,regularError(t b,b)).")),
         Paragraph(Text("The bounded-response estimate is for the actual drift d and all four ordinary coefficients, not only for gain samples. The fixed coefficient transform gives the explicit bound 10 max(G,0) from a bound G on the samples, while |d|≤24+max(D,0) follows from |ε|≤D. The map includes zero drift, zero gain samples, lower degrees and repeated roots; only the identically zero gain is excluded by the literal history.")),
         Describe.Lean(
+            DescribeId.Create("cubic-gain-ordinary-coefficient-degree"),
+            DeclarationHandle.Create("D5/S3/Observer/CubicGain/OriginalWorld.coefficient_degree"),
+            H("Four ordinary coefficients have degree at most three"),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("Polynomial.ofFn 4 c has degree at most three for every real coefficient vector c. Leading coefficients may vanish, and the zero polynomial is included in this degree statement."))),
+            DescribeRole.Theorem),
+        Describe.Lean(
             DescribeId.Create("cubic-gain-originalparenthomeomorph"),
             DeclarationHandle.Create("D5/S3/Observer/CubicGain/OriginalWorld.originalParentHomeomorph"),
             H("originalParentHomeomorph"),

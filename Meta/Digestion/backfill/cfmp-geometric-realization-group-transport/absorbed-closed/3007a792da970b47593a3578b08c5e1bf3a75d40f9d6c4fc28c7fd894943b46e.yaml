@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3007a792da970b47593a3578b08c5e1bf3a75d40f9d6c4fc28c7fd894943b46e
+  normalized_sha256: sha256:3007a792da970b47593a3578b08c5e1bf3a75d40f9d6c4fc28c7fd894943b46e
+cas_ref: sha256:3007a792da970b47593a3578b08c5e1bf3a75d40f9d6c4fc28c7fd894943b46e
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/SL2F5Involution.sl2_zmod5_square_one_eq_one_or_neg_one
+    target_statement_id: sha256:4ac89173f38d655dcbcf244e76a4f31037e6a24d55e50f5a560cb68df7201f3e
+receipts:
+  unresolved_subitems: []
