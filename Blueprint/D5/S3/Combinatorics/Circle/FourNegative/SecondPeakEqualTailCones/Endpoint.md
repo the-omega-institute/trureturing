@@ -53,3 +53,5 @@ Attribution: the supplied strengthened threshold and wide ordinary proofs provid
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakEqualTailCones/Endpoint.actualSource_second_peak_equal_tail_cones_joint_lift`
+- Dependency: [D5/S3/Combinatorics/Circle/FourNegative/SecondPeakEqualTailCones/LowerSchedule](LowerSchedule.md)
+- Dependency: [D5/S3/Combinatorics/Circle/FourNegative/SecondPeakEqualTailCones/Schedule](Schedule.md)
