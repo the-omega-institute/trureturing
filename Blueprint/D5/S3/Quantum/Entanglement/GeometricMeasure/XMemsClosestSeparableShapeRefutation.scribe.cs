@@ -147,7 +147,10 @@ internal sealed class XMemsClosestSeparableShapeRefutationDocument : IScribeDocu
                         + "This excludes the proposed shape for a closest fully separable state "
                         + "in this instance; it does not identify the actual closest state or "
                         + "address the high branch."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("consiglio-apollaro-wiesniak-2022-xmems-css-shape"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(
