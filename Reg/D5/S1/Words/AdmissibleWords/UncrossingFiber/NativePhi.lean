@@ -102,7 +102,6 @@ noncomputable def registration : Registration arena (type_of% (@fence_inter_unio
   sensitivity := sensitivity
   dependence := dependence
 end Audit_fence_inter_union
-
 namespace Audit_phi_involutive
 abbrev signature := singleSignature Nat (fun n => Fin n → Bool) (fun n => Fin n → Bool)
 def actual : Realization signature :=
@@ -137,7 +136,6 @@ def registration : Registration arena (type_of% (@phi_involutive)) where
   sensitivity := sensitivity
   dependence := dependence
 end Audit_phi_involutive
-
 namespace Audit_support_phi_injective
 abbrev signature := singleSignature Nat (fun n => Fin n → Bool) (fun n => Finset (Fin n))
 def actual : Realization signature :=
@@ -174,7 +172,6 @@ def registration : Registration arena (type_of% (@support_phi_injective)) where
   sensitivity := sensitivity
   dependence := dependence
 end Audit_support_phi_injective
-
 namespace Audit_phi_support_fence
 abbrev signature := FenceObservation.signature
 abbrev actual := FenceObservation.actual
@@ -208,7 +205,6 @@ noncomputable def registration : Registration arena (type_of% (@phi_support_fenc
   sensitivity := sensitivity
   dependence := dependence
 end Audit_phi_support_fence
-
 namespace Audit_phi_support_fence_iff
 abbrev signature := FenceObservation.signature
 abbrev actual := FenceObservation.actual
@@ -242,7 +238,6 @@ noncomputable def registration : Registration arena (type_of% (@phi_support_fenc
   sensitivity := sensitivity
   dependence := dependence
 end Audit_phi_support_fence_iff
-
 namespace Audit_mem_fenceFamily
 abbrev signature := singleSignature Nat (fun n => Finset (Fin n)) (fun _ => Bool)
 noncomputable def actual : Realization signature := by
@@ -287,7 +282,6 @@ noncomputable def registration : Registration arena (type_of% (@mem_fenceFamily)
   sensitivity := sensitivity
   dependence := dependence
 end Audit_mem_fenceFamily
-
 namespace Audit_fenceFamily_closed
 abbrev signature := singleSignature Nat (fun n => Finset (Finset (Fin n))) (fun _ => Bool)
 noncomputable def actual : Realization signature := by
@@ -345,7 +339,6 @@ noncomputable def registration : Registration arena (type_of% (@fenceFamily_clos
   sensitivity := sensitivity
   dependence := dependence
 end Audit_fenceFamily_closed
-
 namespace Audit_phiRows_margin
 abbrev Parameters := Sigma (fun n : Nat => Fin n)
 abbrev signature := singleSignature Parameters
@@ -465,7 +458,6 @@ noncomputable def registration : Registration arena (type_of% (@adm_phi_forward_
   sensitivity := sensitivity
   dependence := dependence
 end Audit_adm_phi_forward_consumer
-
 namespace Audit_nativePath_invariants
 abbrev signature := singleSignature Nat (fun n => Multiset (Fin n → Bool)) (fun _ => Nat)
 def actual : Realization signature :=
@@ -571,7 +563,6 @@ def sourceSelection : Contract.SourceSelection where
     stateOperand := some #["arg"]
     booleanPredicate := true }]
 
-/-- Direct source registration using the enrolled dependent-family template. -/
 noncomputable def audit :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@fence_inter_union)
       (Realization signature) Unit Unit := by
@@ -598,7 +589,6 @@ noncomputable def audit :
     familyRecord := none
     options := #[] }
 end Audit_fence_inter_union
-
 namespace Audit_phi_involutive
 
 def sourceSelection : Contract.SourceSelection where
@@ -612,7 +602,6 @@ def sourceSelection : Contract.SourceSelection where
     stateOperand := some #["arg"]
     booleanPredicate := false }]
 
-/-- Direct source registration using the enrolled dependent-family template. -/
 noncomputable def audit :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@phi_involutive)
       (Realization signature) Unit Unit := by
@@ -639,7 +628,6 @@ noncomputable def audit :
     familyRecord := none
     options := #[] }
 end Audit_phi_involutive
-
 namespace Audit_support_phi_injective
 
 def sourceSelection : Contract.SourceSelection where
@@ -653,7 +641,6 @@ def sourceSelection : Contract.SourceSelection where
     stateOperand := none
     booleanPredicate := false }]
 
-/-- Direct source registration using the enrolled dependent-family template. -/
 noncomputable def audit :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@support_phi_injective)
       (Realization signature) Unit Unit := by
@@ -694,7 +681,6 @@ def sourceSelection : Contract.SourceSelection where
     stateOperand := some #["arg"]
     booleanPredicate := true }]
 
-/-- Direct source registration using the enrolled dependent-family template. -/
 noncomputable def audit :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@phi_support_fence)
       (Realization signature) Unit Unit := by
@@ -735,7 +721,6 @@ def sourceSelection : Contract.SourceSelection where
     stateOperand := some #["arg"]
     booleanPredicate := true }]
 
-/-- Direct source registration using the enrolled dependent-family template. -/
 noncomputable def audit :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@phi_support_fence_iff)
       (Realization signature) Unit Unit := by
@@ -776,7 +761,6 @@ def sourceSelection : Contract.SourceSelection where
     stateOperand := some #["arg"]
     booleanPredicate := true }]
 
-/-- Direct source registration using the enrolled dependent-family template. -/
 noncomputable def audit :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@mem_fenceFamily)
       (Realization signature) Unit Unit := by
@@ -817,7 +801,6 @@ def sourceSelection : Contract.SourceSelection where
     stateOperand := some #["arg"]
     booleanPredicate := true }]
 
-/-- Direct source registration using the enrolled dependent-family template. -/
 noncomputable def audit :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@fenceFamily_closed)
       (Realization signature) Unit Unit := by
@@ -858,7 +841,6 @@ def sourceSelection : Contract.SourceSelection where
     stateOperand := some #["fn", "arg", "arg"]
     booleanPredicate := false }]
 
-/-- Direct source registration using the enrolled dependent-family template. -/
 noncomputable def audit :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@phiRows_margin)
       (Realization signature) Unit Unit := by
@@ -899,7 +881,6 @@ def sourceSelection : Contract.SourceSelection where
     stateOperand := some #["arg"]
     booleanPredicate := true }]
 
-/-- Direct source registration using the enrolled dependent-family template. -/
 noncomputable def audit :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@adm_phi_forward_consumer)
       (Realization signature) Unit Unit := by
@@ -940,7 +921,6 @@ def sourceSelection : Contract.SourceSelection where
     stateOperand := none
     booleanPredicate := false }]
 
-/-- Direct source registration using the enrolled dependent-family template. -/
 noncomputable def audit :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@nativePath_invariants)
       (Realization signature) Unit Unit := by
@@ -981,7 +961,6 @@ def sourceSelection : Contract.SourceSelection where
     stateOperand := none
     booleanPredicate := false }]
 
-/-- Direct source registration using the enrolled dependent-family template. -/
 noncomputable def audit :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@adm_phi_route_bound)
       (Realization signature) Unit Unit := by
