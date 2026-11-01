@@ -147,3 +147,5 @@ theorem attributed to Carnero Bravo or an originality claim. The supplied
 comparison and sphere-wedge obstruction remain separate obligations. This
 interface alone does not settle Question 32 and makes no claim about Question
 35 or an additional solved original problem.
+The source-readout registrations remain unfinished under
+[issue #25256](https://github.com/the-omega-institute/trureturing/issues/25256).

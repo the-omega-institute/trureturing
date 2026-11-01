@@ -209,7 +209,8 @@ theorem routingCheck_sound
         have hv := (List.all_eq_true.mp hh.2) v (hvs v)
         have hw := (List.all_eq_true.mp hv) (c w) hq
         rw [hread w] at hw
-        simpa only [ne_eq, not_true_eq_false, false_or, decide_eq_true_eq] using hw
+        have hresult : c w ≠ c w ∨ G.Adj v w := of_decide_eq_true hw
+        exact hresult.resolve_left (fun hne => hne rfl)
 
 end Checker
 
